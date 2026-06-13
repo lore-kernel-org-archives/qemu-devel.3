@@ -4,49 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C6D0CD98DC
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C699CD98CF
 	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 20:42:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wYV8K-0007ht-O7; Sat, 13 Jun 2026 16:39:12 -0400
+	id 1wYV6E-00029v-59; Sat, 13 Jun 2026 16:37:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYV8I-0007Zq-Al; Sat, 13 Jun 2026 16:39:10 -0400
+ id 1wYV64-0001cl-5w; Sat, 13 Jun 2026 16:36:53 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYV8G-0003uM-Ob; Sat, 13 Jun 2026 16:39:10 -0400
+ id 1wYV62-0003HH-DT; Sat, 13 Jun 2026 16:36:51 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1781382964; bh=wW//6R9DcVQincR5nU8HAvA6a7TrUpycElpGLnaC2BU=;
+ t=1781382963; bh=y4R+0lv/Ip/IJfxR+IGI+lwzpO9fm3pE+KIrDmMRibo=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=MSHSfYMQWQ9LL3SCtWKbQ1SWHZ05DOzrMuTbjLwxdiP++sIptDzaKGppytn7x7Ohs
- H7ICkLYVyDZduq4MHWgHxboEveuXbd22sVGDHFZBgY1fs9nIGRc89oIjg0erY4qfJg
- WK6Rp5sAvt6UkVEG6bM/SkRLcwRblSm/QIH44MjQbmG7v656O3CrGWZpnd5+jRHUJD
- LUr0mNH5e8SxBTBqK6sTvIU2fYws/boaPRxXpTaohwNXwwJT6ObTYDF3+GJMFLz48I
- OrSqECbgfzNjNzJbRlUqBLH2IsYaUStX45CEk65BUFXIcJkqpDibf3jHOwd190ux9H
- QGUY1Ab0BV4sg==
+ b=BrvpSCKXYxhf0H3OoggXlpMor/znEnXq8ajO+40CPzTc6dbt2O5i5O2iRoOQ3Jmfl
+ mwjlL0ZEZXu7iY17hGLPso1ApZZadXhfpf/EbIHYfGb2YBHwMBAVuZvXGq6YsRFaQ+
+ 8XodHW5TnSp43Ftc/HJgSQhRcg3GZoaInvKEgS/VLqCmAdglFs6JeX5UKBpXf1Ggsw
+ TprvS2xQWmKzFijehYbli0Uk7ZALDOqZsY25rxZNTcTTn4UQON4+ZgFLuiQA1zO8Sk
+ TpnQChF1/6jCpP+ZnwiUWQBp/ZuO0Fl7GN1ChMHnK1QJLj2gACVRYJ/CtqsGtRBs74
+ hDvotAAfazXsg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 493ED1B6EFA;
- Sat, 13 Jun 2026 23:36:04 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 132881B6EE5;
+ Sat, 13 Jun 2026 23:36:03 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id B2BC33CE94B;
- Sat, 13 Jun 2026 23:36:22 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 7C72B3CE937;
+ Sat, 13 Jun 2026 23:36:21 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, GuoHan Zhao <zhaoguohan@kylinos.cn>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+Cc: qemu-stable@nongnu.org, Alistair Francis <alistair.francis@wdc.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.2 31/72] vfio-user: reject zero migration page size
- capability
-Date: Sat, 13 Jun 2026 23:34:57 +0300
-Message-ID: <20260613203542.1809153-31-mjt@tls.msk.ru>
+Subject: [Stable-11.0.2 11/72] target/riscv: Update the local interrupt mask
+Date: Sat, 13 Jun 2026 23:34:37 +0300
+Message-ID: <20260613203542.1809153-11-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.2-20260613224644@cover.tls.msk.ru>
 References: <qemu-stable-11.0.2-20260613224644@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -71,41 +69,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: GuoHan Zhao <zhaoguohan@kylinos.cn>
+From: Alistair Francis <alistair.francis@wdc.com>
 
-check_migr_pgsize() validates that no page-size bits smaller than
-VFIO_USER_DEF_PGSIZE are set, but it still accepts pgsize=0. This can replace
-the default migration page size with an unusable value.
+The RISC-V spec describes bits 0-15 as standard fixed interrupts. The
+AIA spec on the other hand describes bits 0-12 as standard fixed
+interrupts. This conflict causes issues for us as we don't dynamically
+determine if AIA is enabled when setting the *delegable_ints consts.
 
-Reject a zero migration page size during version capability parsing, matching
-the lower-bound check used for the DMA page-size capability.
+This means currently we incorrectly treat the LCOFIP bit as delegable,
+even if AIA is disabled, which is incorrect (see the issues mentioned
+below).
 
-Fixes: 36227628d824 (vfio-user: implement message send infrastructure)
-Signed-off-by: GuoHan Zhao <zhaoguohan@kylinos.cn>
-Link: https://lore.kernel.org/qemu-devel/20260522081306.4186242-2-zhaoguohan@kylinos.cn
-Signed-off-by: Cédric Le Goater <clg@redhat.com>
-(cherry picked from commit 497b5c5b05ac2be00ae16c723e2445ebbc486cb2)
+The AIA spec indicates that implementations can determine which bits of
+13-63 in mvien are writable, so let's just make it bits 15-63 to match
+the main spec.
+
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3133
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3134
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3135
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3138
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3140
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Message-ID: <20260513051841.1671987-1-alistair.francis@wdc.com>
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+(cherry picked from commit 27f9566dcd98bdde045ef5ae7b8199456c8a51c1)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/vfio-user/proxy.c b/hw/vfio-user/proxy.c
-index 3fe5b0138b..3167d27b03 100644
---- a/hw/vfio-user/proxy.c
-+++ b/hw/vfio-user/proxy.c
-@@ -1081,9 +1081,11 @@ static bool check_migr_pgsize(VFIOUserProxy *proxy, QObject *qobj, Error **errp)
-         return false;
-     }
+diff --git a/target/riscv/csr.c b/target/riscv/csr.c
+index 35e98df420..d65d176fe8 100644
+--- a/target/riscv/csr.c
++++ b/target/riscv/csr.c
+@@ -1764,13 +1764,13 @@ static RISCVException write_stimecmph(CPURISCVState *env, int csrno,
+ #define VSTOPI_NUM_SRCS 5
  
--    /* must be larger than default */
--    if (pgsize & (VFIO_USER_DEF_PGSIZE - 1)) {
--        error_setg(errp, "pgsize 0x%"PRIx64" too small", pgsize);
-+    /* must not be zero or smaller than default */
-+    if (pgsize < VFIO_USER_DEF_PGSIZE ||
-+        (pgsize & (VFIO_USER_DEF_PGSIZE - 1))) {
-+        error_setg(errp, "%s 0x%"PRIx64" too small",
-+                   VFIO_USER_CAP_PGSIZE, pgsize);
-         return false;
-     }
+ /*
+- * All core local interrupts except the fixed ones 0:12. This macro is for
++ * All core local interrupts except the fixed ones 0:15. This macro is for
+  * virtual interrupts logic so please don't change this to avoid messing up
+  * the whole support, For reference see AIA spec: `5.3 Interrupt filtering and
+  * virtual interrupts for supervisor level` and `6.3.2 Virtual interrupts for
+  * VS level`.
+  */
+-#define LOCAL_INTERRUPTS   (~0x1FFFULL)
++#define LOCAL_INTERRUPTS   (~0xFFFFULL)
  
+ static const uint64_t delegable_ints =
+     S_MODE_INTERRUPTS | VS_MODE_INTERRUPTS | MIP_LCOFIP;
 -- 
 2.47.3
 
