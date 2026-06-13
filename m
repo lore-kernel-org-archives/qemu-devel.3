@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C035CD98CF
-	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 20:43:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC4BCCD98DC
+	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 20:43:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wYV9Q-000140-A7; Sat, 13 Jun 2026 16:40:20 -0400
+	id 1wYVBO-0006Ea-DV; Sat, 13 Jun 2026 16:42:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYV9K-0000t5-Kv; Sat, 13 Jun 2026 16:40:14 -0400
+ id 1wYVBC-0005pN-H0; Sat, 13 Jun 2026 16:42:12 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYV9I-0004VE-S5; Sat, 13 Jun 2026 16:40:14 -0400
+ id 1wYVBA-0005Sw-3Y; Sat, 13 Jun 2026 16:42:09 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1781382965; bh=hruUjaXdQAdvaQCyFc5bpqH3UnncxRCYx7iu6J++zHc=;
+ t=1781382966; bh=8146qO6KFVKscfnp7ME4DCWZ2VVfJ/m5ZGh/Be/5xEg=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=Y5YW5ldHpqSeEQOe+ZJ7iHwYHBIMWamDxy37xHqCFBmReB2Y//O6pq5/oJxnGV7Cc
- 0NUYzKIE2JXYsZ77YFTq3GHuMd7ujwqa50W1ae3N5mIAx1R4BVXQnXYZSM/yerQGHJ
- Vxxsg1Yfs5sARtQ8xI0MexeqXOtZiSF8nlw02jRwswJ54+8IWWrIDqM4O8x2RJyFFR
- ZZde7v3aptbzAUk2VnYNN60E+FMjRzJxduTy8L/Am8qGteCf5TxDPEDk8gwZdKQaUf
- UCQIUAtnOq7rVmr61i0N97ekk8t38cholkllTBeya8NS84QucIW0TCHmrud4P2rO4X
- wNnpIhOFINFzg==
+ b=TuP4nU6uDBgIvvpUNoU2OsRVNymTIXBXBRyZmZ5ib3ifjxGECu8zR9yI4LP6lytjX
+ FGE7uAvGQ9TAjd088qIjhw7ESJ2Dd6cd/LA8BVEdh2vnNPHgzDFkIDTSnIX/TmF1K8
+ GNSWjz/ZvbphRXB6jOmGoRC3+qOAUwuKyjjs9UguZ6OTfa9ar5WVFdRs6G4Sl3L6DA
+ dWGxcyQ1fUxpq2DAz4xkqBk5AU//tt9z5iEe3Oz3iL876tAgfYcgyVPWWjIrvHObQi
+ lk0wiavI8EljrVUMKS0xwpthcOwyNMu3rY02xr9kgnEIV+zaocrDXh91vikaw+WWLH
+ clRGFExTNNLtg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 2D6201B6F08;
- Sat, 13 Jun 2026 23:36:05 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 713241B6F21;
+ Sat, 13 Jun 2026 23:36:06 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 9856B3CE958;
- Sat, 13 Jun 2026 23:36:23 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id D9D553CE96A;
+ Sat, 13 Jun 2026 23:36:24 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Christian Schoenebeck <qemu_oss@crudebyte.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.2 44/72] hw/9pfs: change V9fsPath.size to size_t and
- v9fs_path_sprintf() return type
-Date: Sat, 13 Jun 2026 23:35:10 +0300
-Message-ID: <20260613203542.1809153-44-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
+ "Denis V. Lunev" <den@openvz.org>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.2 62/72] qcow2: Fix corruption on discard during write
+ with COW
+Date: Sat, 13 Jun 2026 23:35:28 +0300
+Message-ID: <20260613203542.1809153-62-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.2-20260613224644@cover.tls.msk.ru>
 References: <qemu-stable-11.0.2-20260613224644@cover.tls.msk.ru>
@@ -69,79 +69,149 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Christian Schoenebeck <qemu_oss@crudebyte.com>
+From: Kevin Wolf <kwolf@redhat.com>
 
-- Change V9fsPath.size from uint16_t to size_t to support paths larger
-  than 65536 bytes.
+Most code in qcow2 that accesses (and potentially modifies) L2 tables
+does so while holding s->lock.
 
-- Change v9fs_path_sprintf() return type from void to int to allow error
-  reporting.
+There is one exception, which is allocating writes. They hold the lock
+initially while allocating clusters, but drop it for writing the guest
+payload before taking the lock again for updating the L2 tables. This
+allows concurrent requests that touch other parts of the image file to
+continue in parallel and is an important performance optimisation.
 
-Link: https://lore.kernel.org/qemu-devel/2d2348d94ff43fbe4cc0aea24fb312c5c15ee809.1779126034.git.qemu_oss@crudebyte.com
-Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
-(cherry picked from commit dbaf84e148b0c8b66dcb47788a6bb13806e401e4)
+However, this means that other requests that run while the lock is
+dropped for writing guest data must synchronise with the list of
+allocating requests in s->cluster_allocs and wait if they would overlap.
+For writes, this is done in handle_dependencies(), but discard and write
+zeros operations neglect to synchronise with s->cluster_allocs.
+
+This means that discard can free a cluster whose L2 entry will already
+be modified in qcow2_alloc_cluster_link_l2() by a previously started
+write. In the case of a pre-allocated zero cluster that is in the
+process of being overwritten, this means that discard can lead to a
+situation where the cluster is still mapped (because the write will
+restore the L2 entry just without the zero flag), but its refcount has
+been decreased, resulting in a corrupted image.
+
+Add the missing synchronisation to qcow2_cluster_discard() and
+qcow2_subcluster_zeroize() to fix the problem.
+
+Cc: qemu-stable@nongnu.org
+Reported-by: Denis V. Lunev <den@openvz.org>
+Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+Message-ID: <20260427170520.101242-4-kwolf@redhat.com>
+Reviewed-by: Denis V. Lunev <den@openvz.org>
+Tested-by: Denis V. Lunev <den@openvz.org>
+Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+(cherry picked from commit b8bfb1478d61512f851badd0d912c6661a2efee7)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/fsdev/file-op-9p.h b/fsdev/file-op-9p.h
-index b85c9934de..e8d0661c4b 100644
---- a/fsdev/file-op-9p.h
-+++ b/fsdev/file-op-9p.h
-@@ -112,7 +112,7 @@ struct FsContext {
- };
- 
- struct V9fsPath {
--    uint16_t size;
-+    size_t size;
-     char *data;
- };
- P9ARRAY_DECLARE_TYPE(V9fsPath);
-diff --git a/hw/9pfs/9p.c b/hw/9pfs/9p.c
-index e590c414ab..88894ec9d2 100644
---- a/hw/9pfs/9p.c
-+++ b/hw/9pfs/9p.c
-@@ -203,16 +203,24 @@ void v9fs_path_free(V9fsPath *path)
- }
- 
- 
--void v9fs_path_sprintf(V9fsPath *path, const char *fmt, ...)
-+int v9fs_path_sprintf(V9fsPath *path, const char *fmt, ...)
+diff --git a/block/qcow2-cluster.c b/block/qcow2-cluster.c
+index c655bf6df4..8b1e80bd0b 100644
+--- a/block/qcow2-cluster.c
++++ b/block/qcow2-cluster.c
+@@ -1392,6 +1392,9 @@ count_single_write_clusters(BlockDriverState *bs, int nb_clusters,
+  * the same cluster. In this case we need to wait until the previous
+  * request has completed and updated the L2 table accordingly.
+  *
++ * If allow_shortening == true, instead of waiting for a dependency, *cur_bytes
++ * can be shortened so that the cluster allocations don't overlap.
++ *
+  * Returns:
+  *   0       if there was no dependency. *cur_bytes indicates the number of
+  *           bytes from guest_offset that can be read before the next
+@@ -1403,7 +1406,9 @@ count_single_write_clusters(BlockDriverState *bs, int nb_clusters,
+  */
+ static int coroutine_fn handle_dependencies(BlockDriverState *bs,
+                                             uint64_t guest_offset,
+-                                            uint64_t *cur_bytes, QCowL2Meta **m)
++                                            uint64_t *cur_bytes,
++                                            bool allow_shortening,
++                                            QCowL2Meta **m)
  {
-     va_list ap;
-+    int ret;
+     BDRVQcow2State *s = bs->opaque;
+     QCowL2Meta *old_alloc;
+@@ -1434,7 +1439,7 @@ static int coroutine_fn handle_dependencies(BlockDriverState *bs,
  
-     v9fs_path_free(path);
+         /* Conflict */
  
-     va_start(ap, fmt);
--    /* Bump the size for including terminating NULL */
--    path->size = g_vasprintf(&path->data, fmt, ap) + 1;
-+    ret = g_vasprintf(&path->data, fmt, ap);
-     va_end(ap);
-+    if (ret < 0) {
-+        error_report_once("9pfs: unusual path formatting failure; "
-+                         "invalidating associated FID");
-+        return -1;
-+    }
-+    /* Bump the size for including terminating NULL */
-+    path->size = ret + 1;
-+    return 0;
+-        if (start < old_start) {
++        if (start < old_start && allow_shortening) {
+             /* Stop at the start of a running allocation */
+             bytes = old_start - start;
+         } else {
+@@ -1469,6 +1474,29 @@ static int coroutine_fn handle_dependencies(BlockDriverState *bs,
+     return 0;
  }
  
- void v9fs_path_copy(V9fsPath *dst, const V9fsPath *src)
-diff --git a/hw/9pfs/9p.h b/hw/9pfs/9p.h
-index 65cc45e344..b2df659b0e 100644
---- a/hw/9pfs/9p.h
-+++ b/hw/9pfs/9p.h
-@@ -456,8 +456,8 @@ static inline uint8_t v9fs_request_cancelled(V9fsPDU *pdu)
- void coroutine_fn v9fs_reclaim_fd(V9fsPDU *pdu);
- void v9fs_path_init(V9fsPath *path);
- void v9fs_path_free(V9fsPath *path);
--void G_GNUC_PRINTF(2, 3) v9fs_path_sprintf(V9fsPath *path, const char *fmt,
--                                           ...);
-+int G_GNUC_PRINTF(2, 3) v9fs_path_sprintf(V9fsPath *path, const char *fmt,
-+                                          ...);
- void v9fs_path_copy(V9fsPath *dst, const V9fsPath *src);
- size_t v9fs_readdir_response_size(V9fsString *name);
- int v9fs_name_to_path(V9fsState *s, V9fsPath *dirpath,
++static void coroutine_mixed_fn wait_for_dependencies(BlockDriverState *bs,
++                                                     uint64_t guest_offset,
++                                                     uint64_t bytes)
++{
++    BDRVQcow2State *s = bs->opaque;
++    QCowL2Meta *m = NULL;
++    int ret;
++
++    /*
++     * Discard has some non-coroutine callers (creating internal snapshots and
++     * make empty). They are calling from qemu-img or in a drained section, so
++     * we know that no writes can be in progress.
++     */
++    if (!qemu_in_coroutine()) {
++        assert(QLIST_EMPTY(&s->cluster_allocs));
++        return;
++    }
++
++    do {
++        ret = handle_dependencies(bs, guest_offset, &bytes, false, &m);
++    } while (ret == -EAGAIN);
++}
++
+ /*
+  * Checks how many already allocated clusters that don't require a new
+  * allocation there are at the given guest_offset (up to *bytes).
+@@ -1840,7 +1868,7 @@ again:
+          *         the right synchronisation between the in-flight request and
+          *         the new one.
+          */
+-        ret = handle_dependencies(bs, start, &cur_bytes, m);
++        ret = handle_dependencies(bs, start, &cur_bytes, true, m);
+         if (ret == -EAGAIN) {
+             /* Currently handle_dependencies() doesn't yield if we already had
+              * an allocation. If it did, we would have to clean up the L2Meta
+@@ -2000,6 +2028,15 @@ int qcow2_cluster_discard(BlockDriverState *bs, uint64_t offset,
+     int64_t cleared;
+     int ret;
+ 
++    /*
++     * If we're touching a cluster for which allocating writes are in flight,
++     * wait for them to complete to avoid conflicting metadata updates.
++     *
++     * We don't need to allocate a QCowL2Meta for the discard operation because
++     * s->lock is held for the duration of the whole operation.
++     */
++    wait_for_dependencies(bs, offset, bytes);
++
+     /* Caller must pass aligned values, except at image end */
+     assert(QEMU_IS_ALIGNED(offset, s->cluster_size));
+     assert(QEMU_IS_ALIGNED(end_offset, s->cluster_size) ||
+@@ -2160,6 +2197,15 @@ int coroutine_fn qcow2_subcluster_zeroize(BlockDriverState *bs, uint64_t offset,
+     int64_t cleared;
+     int ret;
+ 
++    /*
++     * If we're touching a cluster for which allocating writes are in flight,
++     * wait for them to complete to avoid conflicting metadata updates.
++     *
++     * We don't need to allocate a QCowL2Meta for the zeroize operation because
++     * s->lock is held for the duration of the whole operation.
++     */
++    wait_for_dependencies(bs, offset, bytes);
++
+     /* If we have to stay in sync with an external data file, zero out
+      * s->data_file first. */
+     if (data_file_is_raw(bs)) {
 -- 
 2.47.3
 
