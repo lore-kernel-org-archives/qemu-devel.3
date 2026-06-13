@@ -4,43 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BCFC1CD8CA8
-	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 20:11:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9D08CD98D2
+	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 20:11:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wYUgT-0004Mk-1A; Sat, 13 Jun 2026 16:10:25 -0400
+	id 1wYUbI-000871-EH; Sat, 13 Jun 2026 16:05:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYUgK-0004HW-V6; Sat, 13 Jun 2026 16:10:17 -0400
+ id 1wYUbF-00083x-Oh; Sat, 13 Jun 2026 16:05:01 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYUgJ-00033t-3S; Sat, 13 Jun 2026 16:10:16 -0400
+ id 1wYUbD-0008HF-Qy; Sat, 13 Jun 2026 16:05:01 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1781381071; bh=AAH7Sf+1DjyfLt1oV2PXB7mUXaVH9euBh2Fe44O6az4=;
+ t=1781381067; bh=NTPbAcRAk/i3e4hn3QAdPZgjwMMfgqEmn2fizpJcvU4=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=q6l0sF2vEUom7EFenWXNJoewa0JlWDJD5ufW9TGGmshCtfv9C1Rs0JlLhQu2cNdX9
- T91dQTHD5ybx8rIIYYjV38riWtCoc2J98n0HiyhHdnUBnynEG6IJCbZiYhIHEdLSkZ
- /QarCxJ+E+CfjJwSDtl6Q6guRty6mMKXQqCm+z7pnV9aRW+7UoBtVdrw9ywK9YnQyi
- AXksGe8yPmGqPi5/dMsj+FPpv3Uv57or/bpub3JWjNhqFHV1jxxyc514yzVGpApENw
- tkCTnO9hdPw1cB4M8pJKI7vvmPCCMFnnLdf0LzLKLfhCoeHgbzgtGFOM5tQpWjvA2r
- 1RsgbyzykCtCQ==
+ b=oHctomOR5d13rE+ZLDu4EhNXDiVFCS5tfeDMcL2o1LT8AVyxnzYS/yFC6//3R2sBG
+ nf5Ruv2ns6J0AXezk1sH/5IsLbqTq+BdYbIm4YJdSfdx8U6ae+0Y08XzpdNQoI6W+W
+ IoIqGX3fy7O1wlZkFXFOBhLOHq6ciLbjFwRgB6IG0qVsnTEzhajt5WPiE3B1fKvyzo
+ MrNJEc2NtShopsy5ZTYuITconxbN/KtQZNvqNL/yAy5xtHYR66ZIlLIY7/0HVfPzms
+ ng4e9kdPPDLlvQk5stPCvXCyBlk/DAKpbcaC5cmVPO9hPvs4zTmrsgzmMrL2hzCJtL
+ 2nbZkosS7hi4Q==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 291A21B6EAA;
- Sat, 13 Jun 2026 23:04:31 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 620F91B6E6F;
+ Sat, 13 Jun 2026 23:04:27 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 7CE6F3CE904;
- Sat, 13 Jun 2026 23:04:49 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id C065B3CE8D2;
+ Sat, 13 Jun 2026 23:04:45 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Munkhbaatar Enkhbaatar <munkhuu0825@gmail.com>,
- Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.4 58/61] hw/usb/hcd-ohci: Clean up USBPacket before
- freeing ISO TD packet
-Date: Sat, 13 Jun 2026 23:03:41 +0300
-Message-ID: <20260613200411.1808021-58-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Abhigyan Kumar <314abh@gmail.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.2.4 08/61] target/riscv: Fix medeleg[11] read-only zero
+ bit for M-mode ECALL
+Date: Sat, 13 Jun 2026 23:02:51 +0300
+Message-ID: <20260613200411.1808021-8-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.2.4-20260613224639@cover.tls.msk.ru>
 References: <qemu-stable-10.2.4-20260613224639@cover.tls.msk.ru>
@@ -69,34 +70,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Munkhbaatar Enkhbaatar <munkhuu0825@gmail.com>
+From: Abhigyan Kumar <314abh@gmail.com>
 
-ohci_service_iso_td() allocates a USBPacket and frees it after synchronous
-completion, but it does not call usb_packet_cleanup() first.
+RISC-V Privileged Specification 3.1.8 (Machine Trap Delegation Registers
+(medeleg and mideleg)) mentions:
 
-Call usb_packet_cleanup() before g_free() so resources owned by USBPacket
-are released.
+"For exceptions that cannot occur in less privileged modes, the
+corresponding medeleg bits should be read-only zero. In particular,
+medeleg[11] is read-only zero."
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3463
+QEMU incorrectly included RISCV_EXCP_M_ECALL in DELEGABLE_EXCPS. It
+allowed the 11th bit to be written and read as set. Fixed by removing it
+from the DELEGABLE_EXCPS mask, adhering to the specification.
 
-Signed-off-by: Munkhbaatar Enkhbaatar <munkhuu0825@gmail.com>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-(cherry picked from commit 163f9a4e0651b3b4a1438d919489a200d3646ba3)
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3438
+Signed-off-by: Abhigyan Kumar <314abh@gmail.com>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Message-ID: <20260427060849.749179-2-314abh@gmail.com>
+[ Changes by AF:
+ - Remove comment
+]
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+(cherry picked from commit a0946caf1d9ec21446ebdcb5eab2400baa4323ae)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/usb/hcd-ohci.c b/hw/usb/hcd-ohci.c
-index 15406c51f6..51b3adf52f 100644
---- a/hw/usb/hcd-ohci.c
-+++ b/hw/usb/hcd-ohci.c
-@@ -756,6 +756,7 @@ static int ohci_service_iso_td(OHCIState *ohci, struct ohci_ed *ed)
-     } else {
-         ret = pkt->status;
-     }
-+    usb_packet_cleanup(pkt);
-     g_free(pkt);
- 
-     trace_usb_ohci_iso_td_so(start_offset, end_offset, start_addr, end_addr,
+diff --git a/target/riscv/csr.c b/target/riscv/csr.c
+index c52c35efc4..c4d2ab0858 100644
+--- a/target/riscv/csr.c
++++ b/target/riscv/csr.c
+@@ -1790,7 +1790,6 @@ static const uint64_t all_ints = M_MODE_INTERRUPTS | S_MODE_INTERRUPTS |
+                          (1ULL << (RISCV_EXCP_U_ECALL)) | \
+                          (1ULL << (RISCV_EXCP_S_ECALL)) | \
+                          (1ULL << (RISCV_EXCP_VS_ECALL)) | \
+-                         (1ULL << (RISCV_EXCP_M_ECALL)) | \
+                          (1ULL << (RISCV_EXCP_INST_PAGE_FAULT)) | \
+                          (1ULL << (RISCV_EXCP_LOAD_PAGE_FAULT)) | \
+                          (1ULL << (RISCV_EXCP_STORE_PAGE_FAULT)) | \
 -- 
 2.47.3
 
