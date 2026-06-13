@@ -4,44 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6DE42CD98CF
-	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 20:05:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B090CD98CF
+	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 20:05:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wYUb7-0007yt-PI; Sat, 13 Jun 2026 16:04:54 -0400
+	id 1wYUbE-00083e-Ej; Sat, 13 Jun 2026 16:05:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYUb2-0007tX-SN; Sat, 13 Jun 2026 16:04:48 -0400
+ id 1wYUbB-00081q-Sz; Sat, 13 Jun 2026 16:04:57 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYUb1-0008AB-5C; Sat, 13 Jun 2026 16:04:48 -0400
+ id 1wYUbA-0008EN-3O; Sat, 13 Jun 2026 16:04:57 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1781381066; bh=dhHlJAaTORu7C3UvV+NEVKgaFND271vwYTCYqrx0Res=;
+ t=1781381067; bh=swJPghRYkB1uTjjPYnVOReACv00PfjlprlEMRvXDaTM=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=VyVcsXZ+dKzmImSdpAT2bR6wM1keB5k0WmAIT2GPRuTj/dRCU58vFuwEYqiCF/8xO
- BTIv1JinLoNg/7oyI5rxDTgv6uzm2BxEHA3r9Apo+9coR2VyS8+maPSfeMVKHTEyDS
- tXJ6JmIRzgOmizfPoD2uwV9cTNrDrTBpAAApOZ/pSzIW5ilnHV4aTNSKKZcj9WyoNV
- nVWTYcJHXy3kdysBC2AgsP+taTz/LUwdcwNTLPFi82xuaddErcjE++krWvXOe769FJ
- kvWVL/RpXWakLpOKEPzMlkYuBCvQdBDiqh+aynZWDCWJjlN8CuK9zKMlvlzZ2OFX1J
- /kcWa0YIvXnsw==
+ b=AIK1AIVFg/XNrF6TuIgCAi8fct7sWMrpOVCN/qN1e7PIdgAJ2ug/7UEqJlXJOabuL
+ 5bAtn5PaS1vd/T0MpyJiuYt/bOoJyZ16tZfiqJvpZUVkKT+iG3BQDR9Qx2bnb6pFVL
+ CJ5ppl3yuEAyq3hIH2htH0FKRbg5d3e0tM06b5UbJkQE3DQ4QqN+A4M7FzshsrAPdR
+ Jr4RwY3+h7rNUW1d4ti14LjkWJF/esC8L5i+f31y/c3bpZWoJ3gGNhOvlHg8r1WSXy
+ f6xWKsWQhjukiILhtXcJtjbNkic/cMwwutzjVzrpxSTDS/Chgrmzqp2dNtaRRq6UJj
+ uFTPwAOhhBMJQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id DC22F1B6E68;
- Sat, 13 Jun 2026 23:04:26 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 323641B6E6C;
+ Sat, 13 Jun 2026 23:04:27 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 424DA3CE8CB;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 9052C3CE8CF;
  Sat, 13 Jun 2026 23:04:45 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Frank Chang <frank.chang@sifive.com>,
- Max Chou <max.chou@sifive.com>,
+Cc: qemu-stable@nongnu.org, Anton Blanchard <antonb@tenstorrent.com>,
  Alistair Francis <alistair.francis@wdc.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.4 01/61] target/riscv: Update MISA.C for Zc* extensions
-Date: Sat, 13 Jun 2026 23:02:44 +0300
-Message-ID: <20260613200411.1808021-1-mjt@tls.msk.ru>
+Subject: [Stable-10.2.4 05/61] target/riscv: rvv: Handle source overlap of
+ vector widening reduction instructions
+Date: Sat, 13 Jun 2026 23:02:48 +0300
+Message-ID: <20260613200411.1808021-5-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.2.4-20260613224639@cover.tls.msk.ru>
 References: <qemu-stable-10.2.4-20260613224639@cover.tls.msk.ru>
@@ -70,84 +70,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Frank Chang <frank.chang@sifive.com>
+From: Anton Blanchard <antonb@tenstorrent.com>
 
-MISA.C is set if the following extensions are selected:
-  * Zca and not F.
-  * Zca, Zcf and F (but not D) is specified (RV32 only).
-  * Zca, Zcf and Zcd if D is specified (RV32 only).
-  * Zca, Zcd if D is specified (RV64 only).
+Widening reductions read vs2 as a vector of SEW elements and vs1[0] as a
+scalar of 2*SEW. The ISA does not allow the same vector register to be read
+with different EEWs, so they must not overlap.
 
-Therefore, MISA.C must be set according to the Zc* extension rules.
+vs1 is read as a scalar from element 0, so it is treated as a single vector
+register (independent of LMUL) when checking overlap.
 
-Warn the user if RVC is explicitly disabled but MISA.C is required by
-the rules above.
-
-Signed-off-by: Frank Chang <frank.chang@sifive.com>
-Reviewed-by: Max Chou <max.chou@sifive.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20260424050509.3935180-2-frank.chang@sifive.com>
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3208
+Signed-off-by: Anton Blanchard <antonb@tenstorrent.com>
+Acked-by: Alistair Francis <alistair.francis@wdc.com>
+Message-ID: <20260417080328.31918-1-antonb@tenstorrent.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-(cherry picked from commit f0433a8bc4ac5626499ff09ba5d165dbf7a4a980)
+(cherry picked from commit caf3bef5f01e85b8bbd24e1851b50616fa03a5bb)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
-index d3968251fa..6a094c921e 100644
---- a/target/riscv/tcg/tcg-cpu.c
-+++ b/target/riscv/tcg/tcg-cpu.c
-@@ -1120,6 +1120,44 @@ static void riscv_cpu_enable_implied_rules(RISCVCPU *cpu)
-     }
+diff --git a/target/riscv/insn_trans/trans_rvv.c.inc b/target/riscv/insn_trans/trans_rvv.c.inc
+index 2a487179f6..214b79d2ed 100644
+--- a/target/riscv/insn_trans/trans_rvv.c.inc
++++ b/target/riscv/insn_trans/trans_rvv.c.inc
+@@ -3090,6 +3090,7 @@ GEN_OPIVV_TRANS(vredxor_vs, reduction_check)
+ static bool reduction_widen_check(DisasContext *s, arg_rmrr *a)
+ {
+     return reduction_check(s, a) && (s->sew < MO_64) &&
++           !is_overlapped(a->rs1, 1, a->rs2, 1 << MAX(s->lmul, 0)) &&
+            ((s->sew + 1) <= (s->cfg_ptr->elen >> 4));
  }
  
-+/*
-+ * MISA.C is set if the following extensions are selected:
-+ *   - Zca and not F.
-+ *   - Zca, Zcf and F (but not D) is specified on RV32.
-+ *   - Zca, Zcf and Zcd if D is specified on RV32.
-+ *   - Zca, Zcd if D is specified on RV64.
-+ */
-+static void riscv_cpu_update_misa_c(RISCVCPU *cpu)
-+{
-+    CPURISCVState *env = &cpu->env;
-+    bool set_misa_c = false;
-+
-+    if (riscv_has_ext(env, RVC)) {
-+        return;
-+    }
-+
-+    if (cpu->cfg.ext_zca && !riscv_has_ext(env, RVF)) {
-+        set_misa_c = true;
-+    } else if (riscv_cpu_mxl(env) == MXL_RV32 &&
-+               cpu->cfg.ext_zca && cpu->cfg.ext_zcf &&
-+               (riscv_has_ext(env, RVD) ? cpu->cfg.ext_zcd :
-+                                          riscv_has_ext(env, RVF))) {
-+        set_misa_c = true;
-+    } else if (riscv_cpu_mxl(env) == MXL_RV64 &&
-+               cpu->cfg.ext_zca && cpu->cfg.ext_zcd) {
-+        set_misa_c = true;
-+    }
-+
-+    if (set_misa_c) {
-+        if (cpu_misa_ext_is_user_set(RVC)) {
-+            warn_report("RVC mandated by Zca/Zcf/Zcd extensions");
-+            return;
-+        }
-+
-+        riscv_cpu_set_misa_ext(env, env->misa_ext | RVC);
-+    }
-+}
-+
- void riscv_tcg_cpu_finalize_features(RISCVCPU *cpu, Error **errp)
- {
-     CPURISCVState *env = &cpu->env;
-@@ -1127,6 +1165,7 @@ void riscv_tcg_cpu_finalize_features(RISCVCPU *cpu, Error **errp)
- 
-     riscv_cpu_init_implied_exts_rules();
-     riscv_cpu_enable_implied_rules(cpu);
-+    riscv_cpu_update_misa_c(cpu);
- 
-     riscv_cpu_validate_misa_priv(env, &local_err);
-     if (local_err != NULL) {
 -- 
 2.47.3
 
