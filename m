@@ -4,110 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6BFC3CD98CF
-	for <qemu-devel@archiver.kernel.org>; Fri, 12 Jun 2026 23:39:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6BA4FCD98CF
+	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 00:35:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wYBSa-0001Jk-9w; Fri, 12 Jun 2026 19:38:48 -0400
+	id 1wYCKj-0007Xg-Ln; Fri, 12 Jun 2026 20:34:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1wYBSV-0001JX-Au
- for qemu-devel@nongnu.org; Fri, 12 Jun 2026 19:38:43 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <misanjum@linux.ibm.com>)
+ id 1wYCKh-0007XD-2D; Fri, 12 Jun 2026 20:34:43 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1wYBST-0000K9-Jm
- for qemu-devel@nongnu.org; Fri, 12 Jun 2026 19:38:43 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781307520;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=r8wdQzok3I/V8ejLSzcP7/1sVH4wjDG7aoCehjhLLEs=;
- b=RVZ2rXceoe5XzHUna1X0uE8ZQBkUGjcN8WSab3sjfMtQo4VDGBESfQvSA9bJb656GP+FCg
- ry0dqKxtV5/RoYdL6d6dqsPIbCioS4r0Dqpphjua1kstwTimo/I2kanVY6nyFj0YMxz5tC
- trHvHTSI4LRc5ltO932dQBSoibfHXZw=
-Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com
- [209.85.214.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-307-MQOwNeRMP--d7rgj3_exAA-1; Fri, 12 Jun 2026 19:38:39 -0400
-X-MC-Unique: MQOwNeRMP--d7rgj3_exAA-1
-X-Mimecast-MFC-AGG-ID: MQOwNeRMP--d7rgj3_exAA_1781307518
-Received: by mail-pl1-f199.google.com with SMTP id
- d9443c01a7336-2c0c20f7581so15439935ad.0
- for <qemu-devel@nongnu.org>; Fri, 12 Jun 2026 16:38:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1781307518; x=1781912318; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=r8wdQzok3I/V8ejLSzcP7/1sVH4wjDG7aoCehjhLLEs=;
- b=VNVe/d4fiaHSoQkKIqM8v4ScmLEzLUWXBriN9r/wh6zrDbutzd/uME1w8cfg6qsLZH
- 8j2CGuIwfhc1C+fGsRJNAbsdUWqVQBl773I0RX3CZ/dHoZLCIZBWtyvlSDnc4l3RXPrE
- SL11ys7Qvb7wBV9ug1QY6NNNujX6rLR6nRGcEvCdxYG5SbFzWMYrPR12tELVzu9IggqL
- 9b+u3FOUkyaDPtJBHzw6vO992tWa6ZQ0nTXHq4Br8yKpeO8Ob6rNs8a/81UFZ/zM7lTy
- 3gevhfpDw1sx0qGvuOL7WgrACTqo8SnHUm0TcwYdfUMwE5393yCcHxkVOtG1yOEguXcK
- Kx2A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781307518; x=1781912318;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=r8wdQzok3I/V8ejLSzcP7/1sVH4wjDG7aoCehjhLLEs=;
- b=Nd0xSNUGdX2z4kZcktDblHaijPAkLDleA88Dj12N9oUz3MdqWH5kY7pcNzX5nCbu4S
- fk9xNvTrXQI3fc62yk20vihOYt35/oQDE4t4R1wsABB6vnpXAS7LG8dXlucrlzlmMZlC
- wqE2wYGG82/NCpOpI/KXnOZPIxXFOxvinz51I1nJyhJXO9aovz+pQbESd82UqpDkJ212
- PO5MqHbrHH0xgIFb6jXfum9l4dGqpDyVmh7WXHRy7X8Ah69FtJwYC7u10k4UnXjPPacm
- 3XbqtgtMy3RFIA01ZqGskLyGIP8fJf9pM6caMcc5u4yA6zxx7YrSEM0J5/TeI2NBHjWQ
- BlEQ==
-X-Forwarded-Encrypted: i=1;
- AFNElJ9UYPqPXvPX/90IZfyKfAlv599/aRknsQxuWeOSQM1iG+ZBZcsUR+WU5zOWhyyefRHUzwQoOW+53nL/@nongnu.org
-X-Gm-Message-State: AOJu0YxxGp4XFE4A2iAUY2GomUoLZEyrs5UDtID4m5zVXj/hM5GBD05f
- 4L6zGWugo8641RJXPMuz/fABVVaacqKjCaAdyapXP7/ngxXOl185DrefK2r4TSq+mNh7jjXvAML
- ycENgK1C0daxPPWQgYhwbQXTSOgJqdx3PfSHDnvW0eM6uE4rac/p03+qJ
-X-Gm-Gg: Acq92OHXdIfavvvMqQ8+ju68DufQGe0441bI8bVH2Y54Dqwr/Mm9Z9CF9RMfLcR4LUH
- pRZNbKkeO8jVv3yJZ4M3z1V1IMcSqYdSn4QMi3gAJMMciukPRXyjcZ3TUJqD0cPm0VVIsA43ynR
- ZQxjbHIpAIs8P2swXlP/ngpLq/w3hlelvhcgGnMFeVnR3GMzLRCqGeyravZNquNlBy4atUgNDhD
- r+ZrM2Yb7V2bfRdQab8tW+R7z27Ho8/X+1o5unVUXIOCfMr9jxhMrtfPhLThs+sQwU60YUIynOz
- bE4mbM5Dc9vs4mh3sAm9xhztENU56evjHOEjs87sNKePIcFrnFEpQ2ag/SQQAoV/jKGeNKvdLJx
- OtzhPOCAsOu4X1v5JzceqZmW6ak/CELN4yfmsn4u+hVin6ySog0mVTFa3xshHjOby
-X-Received: by 2002:a17:903:2cf:b0:2c1:6715:a4ea with SMTP id
- d9443c01a7336-2c411f73a6emr57357515ad.30.1781307518104; 
- Fri, 12 Jun 2026 16:38:38 -0700 (PDT)
-X-Received: by 2002:a17:903:2cf:b0:2c1:6715:a4ea with SMTP id
- d9443c01a7336-2c411f73a6emr57357315ad.30.1781307517639; 
- Fri, 12 Jun 2026 16:38:37 -0700 (PDT)
-Received: from [192.168.68.51] (n175-34-8-244.mrk21.qld.optusnet.com.au.
- [175.34.8.244]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2c42fca9f44sm36715305ad.37.2026.06.12.16.38.34
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 12 Jun 2026 16:38:36 -0700 (PDT)
-Message-ID: <3490ea2e-2c23-41d1-a12a-a8202e67d428@redhat.com>
-Date: Sat, 13 Jun 2026 09:38:32 +1000
+ (Exim 4.90_1) (envelope-from <misanjum@linux.ibm.com>)
+ id 1wYCKe-0006ns-Vt; Fri, 12 Jun 2026 20:34:42 -0400
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 65CNLMAj3113361; Sat, 13 Jun 2026 00:34:29 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=pp1; bh=2m6DPr+AuQQQSCNQl
+ PMiXGlvYGuLdakrZ+nFlps0/iQ=; b=kJ9ED9y4oPAprMISSllkoZoBX3O0+fs3V
+ INdi7JxYEUK9fW2efaJJ8tmHKOwcOniz1bdA0+AlbFmywC4eCXlq5XjazKGTm5wH
+ 7y0gSAuoMgr0BTTB2DtKr3Z5D5tdRpP7xilO+zhV78BZs9TU/dzhk/MqLD18QbLH
+ wQ/vFDhks46kLl7wMINMGEUjWkDN+dE6jsu5SZxA6Ox24HEHhBfw19hDYviScnvd
+ iinaxDHcBwBZdVzOOPQ4fqjyDnWwSVNy3Bzc9KHP3eVK9cj3bRfICnZtDrdDggZC
+ QhUko0wc5kesAJ9fvuqF44M+bWaGqwP+gdEsO7NCn4mltxpVnxYSQ==
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4eqe8aty58-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Sat, 13 Jun 2026 00:34:28 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 65D0JdD8017722;
+ Sat, 13 Jun 2026 00:34:27 GMT
+Received: from smtprelay07.dal12v.mail.ibm.com ([172.16.1.9])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4eqe09t890-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Sat, 13 Jun 2026 00:34:27 +0000 (GMT)
+Received: from smtpav01.wdc07v.mail.ibm.com (smtpav01.wdc07v.mail.ibm.com
+ [10.39.53.228])
+ by smtprelay07.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 65D0YQS03408522
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Sat, 13 Jun 2026 00:34:26 GMT
+Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 6D4475807A;
+ Sat, 13 Jun 2026 00:34:26 +0000 (GMT)
+Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 03FB058071;
+ Sat, 13 Jun 2026 00:34:24 +0000 (GMT)
+Received: from localhost.localdomain (unknown [9.61.241.131])
+ by smtpav01.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Sat, 13 Jun 2026 00:34:23 +0000 (GMT)
+From: Misbah Anjum N <misanjum@linux.ibm.com>
+To: deller@kernel.org, harshpb@linux.ibm.com
+Cc: deller@gmx.de, qemu-devel@nongnu.org, qemu-ppc@nongnu.org,
+ Misbah Anjum N <misanjum@linux.ibm.com>
+Subject: Re: [PATCH] linux-user: Implement /proc/cpuinfo for ppc cpus
+Date: Sat, 13 Jun 2026 06:04:14 +0530
+Message-Id: <20260613003414.23336-1-misanjum@linux.ibm.com>
+X-Mailer: git-send-email 2.39.5 (Apple Git-154)
+In-Reply-To: <20260609220929.83951-1-deller@kernel.org>
+References: <20260609220929.83951-1-deller@kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/net/e1000: Use address_space_stb for Rx descriptor
- status write on aarch64
-To: Liu Gang <liugang24219@sangfor.com.cn>, qemu-devel@nongnu.org
-Cc: jasowang@redhat.com, Ding Hui <dinghui@sangfor.com.cn>,
- Peter Maydell <peter.maydell@linaro.org>
-References: <20260527091711.3901-1-liugang24219@sangfor.com.cn>
-Content-Language: en-US
-From: Gavin Shan <gshan@redhat.com>
-In-Reply-To: <20260527091711.3901-1-liugang24219@sangfor.com.cn>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=gshan@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Proofpoint-ORIG-GUID: -7HrXVDzbu2WigHve8pSsom_WMkNMjZD
+X-Authority-Analysis: v=2.4 cv=TdKmcxQh c=1 sm=1 tr=0 ts=6a2ca594 cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+ a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
+ a=RzCfie-kr_QcCd8fBx8p:22 a=VnNF1IyMAAAA:8 a=GtmRUcFNR2mHwVtkHvcA:9
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjEyMDIzMCBTYWx0ZWRfX+qGla0OK6Is1
+ jEu4yLyuDh8sRpRbTlMz2KPjGGcCHbRLHz5xCRg8Xc8qlKirw5zIwUHwGbT5fXUxsBVYTonWo4h
+ hgJFCv5uFBuk+GfhUC33GUsusLuw99RYrSCUvgOjtoF5S9NfwHIWkwJXwmzN7lQHdhPjX9nB5Af
+ AiDEJmXEf6NglZvo572maHvy0D1YvVAJwS11EdL/q+Rmkq+/k0Ljcz0kXoNqmyBxaWhpSwRIDvy
+ Uj5gyVD6OI7zScOwQfuW8QpcUGTbdu4OiBN1HQsc7zk0cPTXLcjO4pZSe/v8ZJm0c5G26FrN8rs
+ uYZJNIHGsZDJCzRRftwn1D01u44AT5eqClH1zCrlFtqJQ3V1dUj77/88QH7yzWWWlDr0PtCzvwl
+ nzjCSIRjI1wubRpCHFNi54EQeHqgr3l3G2IBTzPu9VLBjqkhko3XdOl+rUKkAbvc+Da+/2r1Wdb
+ RWNCKeFmw2rAs0GTLFA==
+X-Proofpoint-GUID: Z7FlYoIF6IqEnJIHnObkwJat4Wfplw52
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjEyMDIzMCBTYWx0ZWRfXz2x3a+2W6Ers
+ f8GLsIZwOEi+K1UyZjKE+FkPszhoecM7hGG72n/Y5nwk9tV1JDhV4p53vcFmNbKGwyH7qWDtQRL
+ cAZ79Y0MFkJHmB3L/7KqIeiuUXmWgpI=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-12_03,2026-06-12_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 malwarescore=0 clxscore=1011 impostorscore=0 adultscore=0
+ bulkscore=0 priorityscore=1501 lowpriorityscore=0 spamscore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606040000 definitions=main-2606120230
+Received-SPF: pass client-ip=148.163.158.5;
+ envelope-from=misanjum@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,78 +120,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Liu & Ding,
+Built and tested qemu-ppc64le on ppc64le host
 
-On 5/27/26 7:17 PM, Liu Gang wrote:
-> From: LiuGang <liugang24219@sangfor.com.cn>
-> 
-> In x86 environments, writing the Rx descriptor status byte with a single
-> pci_dma_write() works correctly. However, on aarch64 with glibc 2.24+,
-> the memcpy/memmove implementation uses a branchless sequence that copies
-> the same byte three times when count == 1. This results in three
-> consecutive STRB operations.
-> Ref: https://sourceware.org/git/?p=glibc.git;a=blob;f=sysdeps/aarch64/memcpy.S;hb=refs/heads/release/2.24/master#l124
-> 
-> When the guest uses an e1000 NIC and DPDK, this behavior can cause
-> packet reception to stop or packets to be dropped repeatedly. Under
-> normal operation, DPDK clears the DD flag after processing a packet and
-> then updates RDT. But due to the triple STRB from memcpy/memmove, the
-> DD flag may be cleared and then immediately set again. This causes DPDK
-> to consume the same packet twice, making RDT be incremented by one extra.
-> As a result, RDH == RDT, and QEMU mistakenly considers the receive
-> queue full, stopping packet reception.
-> 
-> The issue can be reproduced on aarch64 using the adapted test program:
-> https://github.com/cdkey/e1000_poc
-> 
-> Replace pci_dma_write() with address_space_stb() to write the DD status
-> byte directly, avoiding the problematic memcpy/memmove sequence and
-> resolving the issue.
-> 
-> Fixes: 034d00d48581("e1000: set RX descriptor status in a separate
-> operation")
-> Signed-off-by: Liu Gang <liugang24219@sangfor.com.cn>
-> Signed-off-by: Ding Hui <dinghui@sangfor.com.cn>
-> ---
->   hw/net/e1000.c | 12 ++++++++++--
->   1 file changed, 10 insertions(+), 2 deletions(-)
-> 
-> diff --git a/hw/net/e1000.c b/hw/net/e1000.c
-> index 202ad40401..f7be035e0f 100644
-> --- a/hw/net/e1000.c
-> +++ b/hw/net/e1000.c
-> @@ -869,6 +869,14 @@ e1000_receiver_overrun(E1000State *s, size_t size)
->       set_ics(s, 0, E1000_ICS_RXO);
->   }
->   
-> +static inline void
-> +e1000_dma_write_byte(PCIDevice *d, dma_addr_t addr, uint8_t val)
-> +{
-> +    AddressSpace *as = pci_get_address_space(d);
-> +    dma_barrier(as, DMA_DIRECTION_FROM_DEVICE);
-> +    address_space_stb(as, addr, val, MEMTXATTRS_UNSPECIFIED, NULL);
-> +}
-> +
->   static ssize_t
->   e1000_receive_iov(NetClientState *nc, const struct iovec *iov, int iovcnt)
->   {
-> @@ -980,8 +988,8 @@ e1000_receive_iov(NetClientState *nc, const struct iovec *iov, int iovcnt)
->           }
->           pci_dma_write(d, base, &desc, sizeof(desc));
->           desc.status |= (vlan_status | E1000_RXD_STAT_DD);
-> -        pci_dma_write(d, base + offsetof(struct e1000_rx_desc, status),
-> -                      &desc.status, sizeof(desc.status));
-> +        e1000_dma_write_byte(d, base + offsetof(struct e1000_rx_desc, status),
-> +                             desc.status);
->   
->           if (++s->mac_reg[RDH] * sizeof(desc) >= s->mac_reg[RDLEN])
->               s->mac_reg[RDH] = 0;
+Test environment:
+- Host: ppc64le Linux (POWER10)
+- QEMU version: v11.0.50 (v11.0.0-1849-g193963218a-dirty) - upstream qemu with patch applied
+- Target: ppc64le-linux-user
 
-Could you please try the following series to see if this issue gets fixed?
+Manual tests performed:
+- Verified /proc/cpuinfo is readable by PPC binaries under qemu-user
+- Verified qemu-ppc64le -cpu POWER10 /bin/cat /proc/cpuinfo returns the expected PPC-specific cpuinfo output
+- Tested POWER8, POWER9, and POWER10 CPU models
+- Confirmed different PVR values for different CPU types
+- Verified all required fields present (processor, cpu, clock, revision, timebase, platform, model, machine)
+- CPU count correctly reported (48 online CPUs)
+- Tested with both custom test program and system binaries (/bin/cat)
 
-https://lore.kernel.org/qemu-arm/311f0568-facf-49de-83e8-7844f5c60e29@redhat.com/
+Test Logs:
+1. POWER9 CPU model test:
+$ qemu-ppc64le -cpu POWER9 /tmp/test-cpuinfo | head -10
+=== /proc/cpuinfo via qemu-user ===
+processor:	: 0
+cpu:		: POWER9, altivec supported
+clock		: 3425.000000MHz
+revision	: 2.2 (pvr 004e 1202)
+
+processor:	: 1
+cpu:		: POWER9, altivec supported
+clock		: 3425.000000MHz
+revision	: 2.2 (pvr 004e 1202)
+
+2. POWER10 CPU model test:
+$ qemu-ppc64le -cpu POWER10 /tmp/test-cpuinfo | head -10
+=== /proc/cpuinfo via qemu-user ===
+processor:	: 0
+cpu:		: POWER10, altivec supported
+clock		: 3425.000000MHz
+revision	: 2.0 (pvr 0080 0200)
+
+processor:	: 1
+cpu:		: POWER10, altivec supported
+clock		: 3425.000000MHz
+revision	: 2.0 (pvr 0080 0200)
+
+3. System binary test:
+$ qemu-ppc64le -cpu POWER9 /bin/cat /proc/cpuinfo | tail -5
+timebase	: 512000000
+platform	: pSeries
+model		: IBM pSeries (QEMU user v11.0.50)
+machine		: CHRP IBM pSeries
+
+Qemu Unit tests:
+make check: 118/118 tests PASSED
+Ok:                118
+Fail:              0
+
+All tests passed. The patch correctly implements /proc/cpuinfo for PPC user-mode emulation without breaking existing functionality. Output format is consistent and provides accurate CPU information.
+
+Tested-by: Misbah Anjum N <misanjum@linux.ibm.com>
 
 Thanks,
-Gavin
-
+Misbah Anjum N
 
