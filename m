@@ -4,68 +4,136 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2D71CD8CA8
-	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 11:50:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF81BCD98C5
+	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 14:55:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wYMsG-00044s-06; Sat, 13 Jun 2026 07:50:04 -0400
+	id 1wYPka-0002rh-RM; Sat, 13 Jun 2026 10:54:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1wYMsD-000444-OU
- for qemu-devel@nongnu.org; Sat, 13 Jun 2026 07:50:01 -0400
-Received: from mr-2005l-snip4-2.eps.apple.com ([57.103.71.15]
- helo=outbound.mr.icloud.com)
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wYPkU-0002rF-FP
+ for qemu-devel@nongnu.org; Sat, 13 Jun 2026 10:54:14 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1wYMsB-0005O0-JN
- for qemu-devel@nongnu.org; Sat, 13 Jun 2026 07:50:01 -0400
-Received: from outbound.mr.icloud.com (unknown [127.0.0.2])
- by p00-icloudmta-asmtp-us-west-2a-100-percent-2 (Postfix) with ESMTPS id
- 816D31800209; Sat, 13 Jun 2026 11:49:54 +0000 (UTC)
-X-ICL-Out-Info: HUtFAUMHWwJACUgBTUQeDx5WFlZNRAJCTQ1OHVwPUhxEDlYCVRcOVk1UF1sMWg5WMEwWQx9SD1sTTRlRAVJFVAIZHldQQgVCAlwcWg5DClAcXFZVHxcZUU0KWFsIWwQPH0wMUQJCBVZeVAodBFQHXQVdVlACWktCBEtFaFwFXBxAF0gdX2pLVhQEDV0dRQ5WGVoMUg9bDhwWS1heBFNWDjIPTnArD15zXQBMCy8aX3BCDVVxWnRaHzJ8SAQrD1oFMn86AS1CBUICXBxaDkMKUBxcVlUfCUtGCUkdDg5CGEYfVCdXAloKWx4=
-Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; t=1781351395; x=1783943395;
- bh=M4JbZdgIszBviQd60ZM6YwQDrlfpLNK8VKTNX4k72m4=;
- h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To:x-icloud-hme;
- b=VayxBA+S8O9gG0FriqFBF4un2UmcEJ2V8RHf4JLfCQgOnFOO/A82KAeXwWnHepEbDKiQLmF4iLif8NIzTEF7n65GpJuRpk52QLt7wJ8rfOb/hbYmDlp5bKFGf6dXAm15zlcjpREnYjaUZUXxd2ViaqO5ydS5AOSzL+wXQ/QyQ/uT1S1GU8UZIQ4Fl3tvmY4nLL/yDxlkXccIzfLqT0nvVSty0mzb1KMjHDAiOGD746kNWYVap3uwVCiz8WfH5JXaCDcbzJCq6P3loSrKD5RYvBYHgGJ2TReyBrH7SDmisbfLoPnfbxVvqkNvGmFVvtmSAPv72Qtag3L9YsUN1+HlZQ==
-mail-alias-created-date: 1752046281608
-Received: from smtpclient.apple (unknown [17.57.152.38])
- by p00-icloudmta-asmtp-us-west-2a-100-percent-2 (Postfix) with ESMTPSA id
- 2D2E0180014A; Sat, 13 Jun 2026 11:49:53 +0000 (UTC)
-Content-Type: text/plain;
-	charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3891.100.17.1.3\))
-Subject: Re: [PULL 15/28] hw/intc: arm_gicv3_hvf: save/restore Apple GIC state
-From: Mohamed Mediouni <mohamed@unpredictable.fr>
-In-Reply-To: <a35bb538-541d-487c-b28f-39e265ac80a0@oss.qualcomm.com>
-Date: Sat, 13 Jun 2026 13:49:40 +0200
-Cc: qemu-devel@nongnu.org,
- Peter Maydell <peter.maydell@linaro.org>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <B66CF85A-948B-4B24-B7C1-BE07F817BFB2@unpredictable.fr>
-References: <20260501101505.3485916-1-peter.maydell@linaro.org>
- <20260501101505.3485916-16-peter.maydell@linaro.org>
- <a35bb538-541d-487c-b28f-39e265ac80a0@oss.qualcomm.com>
-To: =?utf-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-X-Mailer: Apple Mail (2.3891.100.17.1.3)
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjEzMDEyMCBTYWx0ZWRfX4JSi4i3gKis9
- hO6fyGLOoR7CQtWbA7zJkUmDkZYKTAdhK5WIKtOc6Vm+azyuw3nzDK5/iOwcp3dX/ny7SGIGdZz
- B7hj98C48H+9FSWQn+vjdTWKz+sioJj9rvzI/LS84wd3gYUyaTxRJGC2TWhlBHXtCHoUkUZ9qh7
- +c1HgQCWl2vWiZwgk02gT6W/92dWR1hpH9YDAa1MOz7hKvrKs0Xg4j6zvtrjxjQBTDfJ+w0fGUv
- zG4NcLBgwOtbTpgx83598mPygBdKZKDn7PRGfbVKC1rWCRnk8fvO1I6YtWQ6AuwCVoSPzEB97jQ
- 8OMt0q+lLofQxTA2k/v
-X-Proofpoint-GUID: jFfBnyRAoAXRlNkBB6BS_seYHdHM_q0P
-X-Proofpoint-ORIG-GUID: jFfBnyRAoAXRlNkBB6BS_seYHdHM_q0P
-Received-SPF: pass client-ip=57.103.71.15;
- envelope-from=mohamed@unpredictable.fr; helo=outbound.mr.icloud.com
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wYPkS-0001Ab-8A
+ for qemu-devel@nongnu.org; Sat, 13 Jun 2026 10:54:13 -0400
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 65DAwIAH2801220
+ for <qemu-devel@nongnu.org>; Sat, 13 Jun 2026 14:53:59 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:message-id
+ :mime-version:subject:to; s=qcppdkim1; bh=BVFfzkFdC27UB6PPiRra5l
+ X3Q+2M56T17VX/mbZp2kc=; b=f1V2O90hbRTIuXegNAVYp2QiHSfLxxG4ANAhr5
+ xggFQQ+m23ekKY8WSB7BztFK8S2SBuHj/jt6cEbNhQaBTMTnKWXNfzcHTgUc1i1H
+ IlBX5aEM+8NO2crFqxlL+SpWOjvgre/kLpnzp8AAVKxUL7WJ9fGD377j9rWR0kX2
+ bco2oJYb07rOw55jrViREmAVYgyBElZNBVgLeyYbPi08/1E0D8M2dmDyR9/FH60G
+ 3eKIqL5qxEShLLJPosi6xYPEXyenDnFQmviECtDnAa/rdzfePsHFTEHgLWYA2v4L
+ A5MVjZE2dqDyoQ/abS/lYS4oG4FKMsUcZXIcEqJ6dBo9yjyQ==
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
+ [209.85.222.200])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4eryc6safb-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Sat, 13 Jun 2026 14:53:59 +0000 (GMT)
+Received: by mail-qk1-f200.google.com with SMTP id
+ af79cd13be357-9157f453a27so293249385a.1
+ for <qemu-devel@nongnu.org>; Sat, 13 Jun 2026 07:53:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1781362439; x=1781967239; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=BVFfzkFdC27UB6PPiRra5lX3Q+2M56T17VX/mbZp2kc=;
+ b=YmCiHcR75i6Q8TsfkA/6i7AXYOZJy+FWFrhTG2jsRHCMi6ccXRysyEvrCWG1ng0xZk
+ 73HJ48QsOTAUmjJVSKPsGNb20lzSSLiuuxi2y2WuHD+DLPAH1xuRSZlr7xV2dwnVSqVV
+ Mhq6TQOPtRIV/QFdX4xKhShx0nfrc769VMXxuZQ849w5MRJUzg+0wcI29lBAUrDSSE6A
+ EdkoSEL2MrMR1NFB7I7baEnZhm3lQFHBkYFYqdUNyQh2bJYQZe6CthJKolKKREoSGcuy
+ dm6k8KQ6d6b+nJNIz1q41Zmn1IG/uDaYVPrWN3TzBYqrPivIJyiH7nmVUJKVuS4lrJ6B
+ jq5A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1781362439; x=1781967239;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=BVFfzkFdC27UB6PPiRra5lX3Q+2M56T17VX/mbZp2kc=;
+ b=QD7B2qtz+g1nfkMCVktXxAitFB9M/t6tOdIw+mRv8TsdLS+ZSbS4MkXZGaZ0CbaP3Y
+ q3QTWvF0JA6CXVWOoZO05yEHRq7SmukbusCkitaz4AZsorGqz6dX66HP9463pqnDRrJO
+ xGcllUpn07c1wXQgeiSmUCd02RdgH+WFU96/fbTXY4NE26xf0coN20EmsqZJ+uDoi/jb
+ AnLM9Xh107VwpgnEjnGEL198v9ozAfqQsoygtiZxdjiwqgAnza5HS+YQ2FzRfYEPQs9g
+ knCrrTmQHkdLBbBruXHg4MNKRJJHm+j2iqogQUjSbeZtY+P5xEYVS3Hweh5ee3tKvefL
+ m7xg==
+X-Gm-Message-State: AOJu0YwZ59FnNmwjCNqu0TEvbGX+mOfnJ56VKtEw9crBeQuBD9bPOlOS
+ ZzTcxR3CofcQKuc58UTd52i3I58OwuT+WcOgDbxJRyiXgtAV1IPloynVYcgFquE9h/A0+/EG4Ut
+ SICamnoWiByWrzXTz2QAUEb3EU/nd0CfxL1iFosgEoE2SJMEbFfpt1l+B/EmOJJdUWw==
+X-Gm-Gg: Acq92OE8ouduOAVUV1+xUM5SX/c68nnbLT5KuC6fpCfv8zf6lsNYm0lOdYH5MKHO+Eo
+ DmdbyjwmyTsUx9300/M5bx6rlflSLn6qnESdzGl3sBGifn3weOOMiLG0TXKz+7OlPTDToWsV8k7
+ NueFKV5vaPp3N5upfgiqsH9zFJgLf3T1i3Suyv4eP/Uj2XnqQBHzBvNUnR2p27OABoi/oyls3r7
+ Sz74/PmmUPXB8GjJEeG6IjEVoWXlCHv8WmOSrQaSfFcJALFU6mX7f0KegMcB5x3SwFKy1tpFRB2
+ XsfjBBNtkKIa4oW03DRYWX7qE/IxmkcdznMsU7ElfTeiQ4EetU5fdnCg2s7FjtsaxZ+tl3eSwdq
+ oVWFXmeHBNDCGdIN4PIcwFkTchgJNBTcHP/5OaHWbAQ9TmXQ+gxBlOGlo1vs3D+mbxh4VN7GjDr
+ FbHvQ=
+X-Received: by 2002:a05:620a:4708:b0:915:cf88:1e41 with SMTP id
+ af79cd13be357-9161bf6c4bfmr1077324385a.45.1781362439117; 
+ Sat, 13 Jun 2026 07:53:59 -0700 (PDT)
+X-Received: by 2002:a05:620a:4708:b0:915:cf88:1e41 with SMTP id
+ af79cd13be357-9161bf6c4bfmr1077319385a.45.1781362438577; 
+ Sat, 13 Jun 2026 07:53:58 -0700 (PDT)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-492202edec6sm85069285e9.3.2026.06.13.07.53.57
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Sat, 13 Jun 2026 07:53:57 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+To: qemu-devel@nongnu.org
+Cc: Roman Bolshakov <rbolshakov@ddn.com>,
+ Mohamed Mediouni <mohamed@unpredictable.fr>,
+ Phil Dennis-Jordan <phil@philjordan.eu>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+Subject: [PATCH] accel/hvf: Reduce hvf_kernel_irqchip_override scope
+Date: Sat, 13 Jun 2026 16:53:56 +0200
+Message-ID: <20260613145356.88410-1-philmd@oss.qualcomm.com>
+X-Mailer: git-send-email 2.53.0
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjEzMDE1NCBTYWx0ZWRfX1gCK6+yrS0Vs
+ /FwvZSf6s48YIja19/50ae2HJ1BlMfyURjhmI8aUnHcMJ2eEWNVITYRZEhY79HT3iboryRbp+Hz
+ Gl2soDxrqRhh0fTxdbxmtsA76vT1kJU=
+X-Authority-Analysis: v=2.4 cv=Oop/DS/t c=1 sm=1 tr=0 ts=6a2d6f07 cx=c_pps
+ a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+ a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
+ a=EUspDBNiAAAA:8 a=_OBq5Gq_yKkiNieWEFgA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=PEH46H7Ffwr30OY-TuGO:22
+X-Proofpoint-GUID: FAlmXfwjY3nK7F97Ug-2H-VQCGEt0Jg-
+X-Proofpoint-ORIG-GUID: FAlmXfwjY3nK7F97Ug-2H-VQCGEt0Jg-
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjEzMDE1NCBTYWx0ZWRfXx7TCjlQG4mp1
+ W5KRqo2M09r3gsOCHpGYDyiK+Jkw7uNx1yLvIdtOFt076AjKdJ3IYqhgY8xL4Wao+5scWpLMigk
+ LowM7yRYJ7lrK0rvxotOOj1wQ2VDx3HAFQAHcAGsNAwQS1XaA/7p892orWFCJ5WNJjA2MAmRWIp
+ k4kXloMfY2qsPM5cgp44K/ijCoTMeXxQ0xh6E9pQ8GQy8OCQX5ZRubIkDtM2Ek0EEodN+Xmgwhb
+ OseCRLNEwclgcDNAhoPr9cjEH0MqrgTtP7KTQrvh6V81ruqeF08XYlS2nQn06LplZJWxiaRkHMT
+ qz1XHQUAf/U/fO/cuTqQKuVhJrcXE9t6MeZePDbaU2HK/eG9hubmWs8wpISO66OAcMqJ2ulDZ08
+ N2eyuQtCl9yFjcsEHtkAm6oqlikvorIUsOK1/uwuae18k47788Zip9Auu6h7R9t9MY7nMkrBc0/
+ Lgj69w+Fqt9S3TWP0uA==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-13_02,2026-06-12_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 phishscore=0 impostorscore=0 lowpriorityscore=0
+ clxscore=1015 bulkscore=0 spamscore=0 malwarescore=0 suspectscore=0
+ adultscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606040000
+ definitions=main-2606130154
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_PASS=-0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -82,118 +150,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+hvf_kernel_irqchip_override is only used within the
+accel/hvf/hvf-all.c file, no need to expose the symbol.
 
+Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+---
+ include/system/hvf_int.h | 1 -
+ accel/hvf/hvf-all.c      | 2 +-
+ 2 files changed, 1 insertion(+), 2 deletions(-)
 
-> On 13. Jun 2026, at 13:45, Philippe Mathieu-Daud=C3=A9 =
-<philmd@oss.qualcomm.com> wrote:
->=20
-> Hi Mohamed,
->=20
-> On 1/5/26 12:14, Peter Maydell wrote:
->> From: Mohamed Mediouni <mohamed@unpredictable.fr>
->> On HVF, some of the GIC state is in an opaque Apple-provided =
-structure.
->> Save/restore that state to be able to save/restore VMs that use the =
-hardware GIC.
->> Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
->> Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
->> Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
->> Message-id: 20260429190532.26538-3-mohamed@unpredictable.fr
->> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
->> ---
->>  hw/intc/arm_gicv3_common.c         |  1 +
->>  hw/intc/arm_gicv3_hvf.c            | 94 =
-++++++++++++++++++++++++++++--
->>  hw/intc/arm_gicv3_hvf_stub.c       | 25 ++++++++
->>  hw/intc/meson.build                |  1 +
->>  include/hw/intc/arm_gicv3_common.h |  3 +
->>  5 files changed, 120 insertions(+), 4 deletions(-)
->>  create mode 100644 hw/intc/arm_gicv3_hvf_stub.c
->=20
->=20
->> diff --git a/hw/intc/arm_gicv3_hvf.c b/hw/intc/arm_gicv3_hvf.c
->> index 22f19d274d..ae881092ea 100644
->> --- a/hw/intc/arm_gicv3_hvf.c
->> +++ b/hw/intc/arm_gicv3_hvf.c
->> @@ -13,6 +13,7 @@
->>  #include "qemu/error-report.h"
->>  #include "qemu/module.h"
->>  #include "system/runstate.h"
->> +#include "migration/vmstate.h"
->>  #include "system/hvf.h"
->>  #include "system/hvf_int.h"
->>  #include "hvf_arm.h"
->> @@ -37,8 +38,13 @@ struct HVFARMGICv3Class {
->>    typedef struct HVFARMGICv3Class HVFARMGICv3Class;
->>  -/* This is reusing the GICv3State typedef from ARM_GICV3_ITS_COMMON =
-*/
->> -DECLARE_OBJ_CHECKERS(GICv3State, HVFARMGICv3Class,
->> +typedef struct HVFGICv3State {
->> +    GICv3State parent_obj;
->> +    uint32_t size;
->> +    void *state;
->> +} HVFGICv3State;
->> +
->> +DECLARE_OBJ_CHECKERS(HVFGICv3State, HVFARMGICv3Class,
->>                       HVF_GICV3, TYPE_HVF_GICV3);
->>    /*
->> @@ -668,7 +674,7 @@ static const ARMCPRegInfo gicv3_cpuif_reginfo[] =3D=
+diff --git a/include/system/hvf_int.h b/include/system/hvf_int.h
+index d5eaf26dda8..58fb865ebae 100644
+--- a/include/system/hvf_int.h
++++ b/include/system/hvf_int.h
+@@ -113,5 +113,4 @@ bool hvf_arch_cpu_realize(CPUState *cpu, Error **errp);
+ uint32_t hvf_arch_get_default_ipa_bit_size(void);
+ uint32_t hvf_arch_get_max_ipa_bit_size(void);
+ 
+-extern bool hvf_kernel_irqchip_override;
+ #endif
+diff --git a/accel/hvf/hvf-all.c b/accel/hvf/hvf-all.c
+index 946dbca59d0..21b9b71a6df 100644
+--- a/accel/hvf/hvf-all.c
++++ b/accel/hvf/hvf-all.c
+@@ -25,7 +25,7 @@
+ bool hvf_allowed;
+ bool hvf_kernel_irqchip;
+ bool hvf_nested_virt;
+-bool hvf_kernel_irqchip_override;
++static bool hvf_kernel_irqchip_override;
+ 
+ void hvf_nested_virt_enable(bool nested_virt)
  {
->>  static void hvf_gicv3_realize(DeviceState *dev, Error **errp)
->>  {
->>      ERRP_GUARD();
->> -    GICv3State *s =3D HVF_GICV3(dev);
->> +    GICv3State *s =3D (GICv3State *)HVF_GICV3(dev);
->>      HVFARMGICv3Class *kgc =3D HVF_GICV3_GET_CLASS(s);
->>      int i;
->>  @@ -715,6 +721,86 @@ static void hvf_gicv3_realize(DeviceState *dev, =
-Error **errp)
->>      }
->>  }
->>  +/*
->> + * HVF doesn't have a way to save the RDIST pending tables
->> + * to guest memory, only to an opaque data structure.
->> + */
->> +static bool gicv3_is_hvf(void *opaque)
->> +{
->> +    return hvf_enabled() && hvf_irqchip_in_kernel();
->> +}
-> Unfortunately this commit (48396ad6ce9) breaks bisection:
->=20
-> ../../hw/intc/arm_gicv3_hvf.c:730:29: error: call to undeclared =
-function 'hvf_irqchip_in_kernel'; ISO C99 and later do not support =
-implicit function declarations [-Wimplicit-function-declaration]
->  730 |     return hvf_enabled() && hvf_irqchip_in_kernel();
->      |                             ^
-> 1 error generated.
-
-Hi,
-
-My mistake. Will try to see in which rev of the patchset I intro=E2=80=99d=
- this one=E2=80=A6
-and will see how to avoid it going forward...
-
-On a side note, two bugs affecting HVF right now:
-
-- looks like on M1 there=E2=80=99s an issue affecting detecting 36-bit =
-PAs
-
-think that bug was intro=E2=80=99d by me but will have to look more into =
-it
-
-- and qemu master is broken rn with HVF (and there=E2=80=99s an unmerged =
-patch for
-that)
-
->=20
-> The method is declared / defined in the following commit =
-(2a3c965516f).
->=20
-> Please be careful to avoid that in future to avoid manual operations.
->=20
-> Regards,
->=20
-> Phil.
-
+-- 
+2.53.0
 
 
