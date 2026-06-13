@@ -4,43 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C699CD98CF
-	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 20:42:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E50B2CD98CF
+	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 20:42:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wYV6E-00029v-59; Sat, 13 Jun 2026 16:37:02 -0400
+	id 1wYV9m-0002jZ-UK; Sat, 13 Jun 2026 16:40:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYV64-0001cl-5w; Sat, 13 Jun 2026 16:36:53 -0400
+ id 1wYV9l-0002hb-NV; Sat, 13 Jun 2026 16:40:41 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYV62-0003HH-DT; Sat, 13 Jun 2026 16:36:51 -0400
+ id 1wYV9j-0004nI-Qu; Sat, 13 Jun 2026 16:40:41 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1781382963; bh=y4R+0lv/Ip/IJfxR+IGI+lwzpO9fm3pE+KIrDmMRibo=;
+ t=1781382965; bh=sq3wfnIuv+1QgSiiJ3QDn+46DBYkyT99RJCkygeD7uc=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=BrvpSCKXYxhf0H3OoggXlpMor/znEnXq8ajO+40CPzTc6dbt2O5i5O2iRoOQ3Jmfl
- mwjlL0ZEZXu7iY17hGLPso1ApZZadXhfpf/EbIHYfGb2YBHwMBAVuZvXGq6YsRFaQ+
- 8XodHW5TnSp43Ftc/HJgSQhRcg3GZoaInvKEgS/VLqCmAdglFs6JeX5UKBpXf1Ggsw
- TprvS2xQWmKzFijehYbli0Uk7ZALDOqZsY25rxZNTcTTn4UQON4+ZgFLuiQA1zO8Sk
- TpnQChF1/6jCpP+ZnwiUWQBp/ZuO0Fl7GN1ChMHnK1QJLj2gACVRYJ/CtqsGtRBs74
- hDvotAAfazXsg==
+ b=jtW4MGuSUo9ncyHe78zxUmCtDcQNvUuQGsVtBzdVpRminDk3jQ897adi8EEKYt5PO
+ u5THKG8tJ11DRRm6ZOSQnZdCh1scgIPiTvHlHDSWmDig/yBxSXkPfiwOARS7Ky7iqW
+ 5W74ZW9yOfovzCNA+ZfzumtnLOZ+8+CZRvZYhY+GUzRs6IEwaoHMd+vBKZutD80gW+
+ Gr8xlqyP0NO8iuKfd0B1xqiu8NR0Df378DUB9kI2WPHL1woj5nxR+CpslNqSSLD1Dt
+ oIyNn4v40Tkfj/rUghcmWO2LFEHgS2p5Mo27tm/4UarvRJH3K4okQF8kd1bbFH8Miz
+ bw/+DTz25647Q==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 132881B6EE5;
- Sat, 13 Jun 2026 23:36:03 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 6D2321B6F10;
+ Sat, 13 Jun 2026 23:36:05 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 7C72B3CE937;
- Sat, 13 Jun 2026 23:36:21 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id D6EAF3CE95C;
+ Sat, 13 Jun 2026 23:36:23 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Alistair Francis <alistair.francis@wdc.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+Cc: qemu-stable@nongnu.org, Christian Schoenebeck <qemu_oss@crudebyte.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.2 11/72] target/riscv: Update the local interrupt mask
-Date: Sat, 13 Jun 2026 23:34:37 +0300
-Message-ID: <20260613203542.1809153-11-mjt@tls.msk.ru>
+Subject: [Stable-11.0.2 48/72] tests/9pfs: add deep absolute path test
+Date: Sat, 13 Jun 2026 23:35:14 +0300
+Message-ID: <20260613203542.1809153-48-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.2-20260613224644@cover.tls.msk.ru>
 References: <qemu-stable-11.0.2-20260613224644@cover.tls.msk.ru>
@@ -69,53 +68,117 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alistair Francis <alistair.francis@wdc.com>
+From: Christian Schoenebeck <qemu_oss@crudebyte.com>
 
-The RISC-V spec describes bits 0-15 as standard fixed interrupts. The
-AIA spec on the other hand describes bits 0-12 as standard fixed
-interrupts. This conflict causes issues for us as we don't dynamically
-determine if AIA is enabled when setting the *delegable_ints consts.
+Add fs_deep_absolute_path test that creates a deep directory
+structure with an absolute path length exceeding 16-bit range
+(i.e. >65536) to verify the previous buffer overflow fix.
 
-This means currently we incorrectly treat the LCOFIP bit as delegable,
-even if AIA is disabled, which is incorrect (see the issues mentioned
-below).
+This is a slow test (may take several seconds) and therefore
+registered as "slow" test and not running by default.
 
-The AIA spec indicates that implementations can determine which bits of
-13-63 in mvien are writable, so let's just make it bits 15-63 to match
-the main spec.
+Use -m slow to run this test.
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3133
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3134
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3135
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3138
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3140
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Message-ID: <20260513051841.1671987-1-alistair.francis@wdc.com>
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-(cherry picked from commit 27f9566dcd98bdde045ef5ae7b8199456c8a51c1)
+Link: https://gitlab.com/qemu-project/qemu/-/issues/3358
+Link: https://lore.kernel.org/qemu-devel/933552b2cfc2c442fac7f4e68c777dce20ee8d7e.1779126034.git.qemu_oss@crudebyte.com
+Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
+(cherry picked from commit 198627807a6b94e2aab157cf345f98edb1ac1a7a)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-index 35e98df420..d65d176fe8 100644
---- a/target/riscv/csr.c
-+++ b/target/riscv/csr.c
-@@ -1764,13 +1764,13 @@ static RISCVException write_stimecmph(CPURISCVState *env, int csrno,
- #define VSTOPI_NUM_SRCS 5
+diff --git a/tests/qtest/virtio-9p-test.c b/tests/qtest/virtio-9p-test.c
+index ac38ccf595..1c69d41e33 100644
+--- a/tests/qtest/virtio-9p-test.c
++++ b/tests/qtest/virtio-9p-test.c
+@@ -14,6 +14,7 @@
  
- /*
-- * All core local interrupts except the fixed ones 0:12. This macro is for
-+ * All core local interrupts except the fixed ones 0:15. This macro is for
-  * virtual interrupts logic so please don't change this to avoid messing up
-  * the whole support, For reference see AIA spec: `5.3 Interrupt filtering and
-  * virtual interrupts for supervisor level` and `6.3.2 Virtual interrupts for
-  * VS level`.
-  */
--#define LOCAL_INTERRUPTS   (~0x1FFFULL)
-+#define LOCAL_INTERRUPTS   (~0xFFFFULL)
+ #include "qemu/osdep.h"
+ #include "qemu/module.h"
++#include "libqos/virtio.h"
+ #include "libqos/virtio-9p-client.h"
  
- static const uint64_t delegable_ints =
-     S_MODE_INTERRUPTS | VS_MODE_INTERRUPTS | MIP_LCOFIP;
+ #define twalk(...) v9fs_twalk((TWalkOpt) __VA_ARGS__)
+@@ -752,6 +753,72 @@ static void fs_use_after_unlink(void *obj, void *data,
+     g_assert_cmpint(attr.size, ==, 2001);
+ }
+ 
++/* https://gitlab.com/qemu-project/qemu/-/issues/3358 */
++static void fs_deep_absolute_path(void *obj, void *data,
++                                  QGuestAllocator *t_alloc)
++{
++    QVirtio9P *v9p = obj;
++    v9fs_set_allocator(t_alloc);
++
++    if (!g_test_slow()) {
++        g_test_skip("This is a slow test, run with -m slow");
++        return;
++    }
++
++    GString *path = g_string_new("/");
++    char name[256];
++    uint32_t current_fid = 0;
++
++    tattach({ .client = v9p });
++
++    /* Create deep directory structure until absolute path length
++     * exceeds 16-bit range.
++     */
++    while (path->len <= 65536) {
++        /* use 255-byte name (NAME_MAX) to reduce iterations to ~257 */
++        memset(name, 'A', 255);
++        name[255] = '\0';
++
++        /* create the directory relative to current FID */
++        tmkdir({
++            .client = v9p,
++            .dfid = current_fid,
++            .name = name
++        });
++
++        /* just for locally tracking the current path length */
++        g_string_append(path, name);
++        g_string_append(path, "/");
++
++        /* acquire new FID for the newly created directory */
++        char *wnames[] = { name };
++        current_fid = twalk({
++            .client = v9p,
++            .fid = current_fid,
++            .nwname = 1,
++            .wnames = wnames
++        }).newfid;
++
++        /* Reset descriptor pool to avoid exhaustion. The simplified
++         * virtio test driver does never free descriptors back to the pool
++         * after use, so we must manually reset it for the required high
++         * amount of 9p requests here.
++         */
++        qvirtqueue_reset_pool(v9p->vq);
++    }
++
++    /* check if the deepest directory is accessible */
++    v9fs_attr attr = {};
++    tgetattr({
++        .client = v9p,
++        .fid = current_fid,
++        .request_mask = P9_GETATTR_BASIC,
++        .rgetattr.attr = &attr
++    });
++
++    g_string_free(path, TRUE);
++}
++
+ static void cleanup_9p_local_driver(void *data)
+ {
+     /* remove previously created test dir when test is completed */
+@@ -819,6 +886,8 @@ static void register_virtio_9p_test(void)
+                  &opts);
+     qos_add_test("local/use_after_unlink", "virtio-9p", fs_use_after_unlink,
+                  &opts);
++    qos_add_test("local/deep_absolute_path", "virtio-9p",
++                 fs_deep_absolute_path, &opts);
+ }
+ 
+ libqos_init(register_virtio_9p_test);
 -- 
 2.47.3
 
