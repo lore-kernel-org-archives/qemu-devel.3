@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1FE4CD98CF
-	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 20:41:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F46FCD8CA8
+	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 20:41:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wYV8u-00004z-PY; Sat, 13 Jun 2026 16:39:51 -0400
+	id 1wYV68-0001oz-BK; Sat, 13 Jun 2026 16:36:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYV8n-0008Ri-0T; Sat, 13 Jun 2026 16:39:41 -0400
+ id 1wYV62-0001aA-BT; Sat, 13 Jun 2026 16:36:50 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYV8j-000486-TU; Sat, 13 Jun 2026 16:39:40 -0400
+ id 1wYV5z-0003FR-LO; Sat, 13 Jun 2026 16:36:49 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1781382964; bh=y3EvD+HGZtAGlIf1KZvi3tGEQakW/9VhWWOSw41RWQc=;
+ t=1781382963; bh=UHMqgPHGlj8+eniKPa2ZlWyJsrrz5RAQJ32gOb+/r4w=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=ki6s+sf4RswAsKCBUIRW4Q+qJgRFw1Uje2+IjAxEt5DAszcrsSTBZiYDPdIsy7MkC
- zyZzZ8Gvnq1v5uaAQ5COpwYNrb+nsUY2M3lKqxZqyYZnp1zF6/VnpWqrkton7ovHiL
- lWhjIWMVuDqGZ6Iu4tQ8QKlksnMX3PsvWyNJN+xQgWxvGn9cb7zkK16vHDeBzhZEfT
- y74eljn+bVjsGuoKn3dx6YOHZXxdjXWRxEEfaxlQaIF8/MoPWOEG/yv/GX5n8owE8o
- wAXUZu7P40hLx/I+qTaHmSGPQXlDRiQFHbxiaNYN16BvwNYS/NNn8N0d1SW9SeIYxM
- 7YHn4RwKFTo7Q==
+ b=CC4ZwXco5tLHRiXr7JubdWcnmKleyzcdFMajfdkKEHZSTi5FSRq6YmlElXPH36ojr
+ kWNDvrhfDqRaBcGKVD1JUh1EcYgfVGqy7LjQs6VGo6QzOf9x/kpIKDuCj4D+KrDRF7
+ N5Jlv8pDYkjB5DCWRQip+yGXHQLrtu1tt0lU5BtbD4Er/BMn/LaDuS7hCJj/twaacH
+ hjXo/m6HhhLYnUNY0eh3IQkNaCUcIcg1NxryaaVsoAicVRHTX25Rz7kWNb2Q3VfsDl
+ YXrXsUllYmJHSmu470fcvrEqpSVvCvOavqYIkR10gRXdCJwvd/HqdIxH/NKMTR8LIr
+ QVB4DG6QBNryw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 9D09A1B6EFF;
- Sat, 13 Jun 2026 23:36:04 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 05A111B6EE4;
+ Sat, 13 Jun 2026 23:36:03 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 11CB83CE950;
- Sat, 13 Jun 2026 23:36:23 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 6FE313CE936;
+ Sat, 13 Jun 2026 23:36:21 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Jason Wang <jasowang@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.2 36/72] hw/net/rocker_of_dpa: Check group ID pointers
- are not NULL
-Date: Sat, 13 Jun 2026 23:35:02 +0300
-Message-ID: <20260613203542.1809153-36-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Zishun Yi <vulab@iscas.ac.cn>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.2 10/72] target/riscv: Add mseccfg to VMStateDescription
+Date: Sat, 13 Jun 2026 23:34:36 +0300
+Message-ID: <20260613203542.1809153-10-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.2-20260613224644@cover.tls.msk.ru>
 References: <qemu-stable-11.0.2-20260613224644@cover.tls.msk.ru>
@@ -69,56 +69,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: Zishun Yi <vulab@iscas.ac.cn>
 
-In of_dpa_cmd_add_l2_flood(), we use rocker_tlv_parse_nested()
-to fill in a tlvs[] array. If the guest command is valid then
-the entries should be pointers to TLV data items with group IDs.
-However, if the guest gives us bogus data then rocker_tlv_parse_nested()
-indicates this by leaving the tlvs[] entries NULL. In the other
-places that use this function, we check for this before using
-the value, but here we forgot, and the result is that QEMU can
-crash:
+Currently, the Machine Security Configuration Register (mseccfg) was
+missing from the live migration state. This omission causes the register
+to be reset to zero on the destination host after migration.
 
-#0  __memcpy_avx_unaligned_erms () at ../sysdeps/x86_64/multiarch/memmove-vec-unaligned-erms.S:331
-#1  0x00005555574f7137 in __asan_memcpy ()
-#2  0x0000555558106792 in ldl_he_p (ptr=0x8) at /home/pm215/qemu/include/qemu/bswap.h:278
-#3  0x0000555558106755 in ldl_le_p (ptr=0x8) at /home/pm215/qemu/include/qemu/bswap.h:311
-#4  0x00005555580f85ed in rocker_tlv_get_le32 (tlv=0x0) at ../../hw/net/rocker/rocker_tlv.h:114
-#5  0x000055555810a8ad in of_dpa_cmd_add_l2_flood (of_dpa=0x506000082e38, group=0x503000b4e440, group_tlvs=0x7fff68702c20)
-    at ../../hw/net/rocker/rocker_of_dpa.c:2032
-#6  0x0000555558108a74 in of_dpa_cmd_group_do (of_dpa=0x506000082e38, group_id=1073741824, group=0x503000b4e440, group_tlvs=0x7fff68702c20)
-    at ../../hw/net/rocker/rocker_of_dpa.c:2115
-#7  0x0000555558108730 in of_dpa_cmd_group_add (of_dpa=0x506000082e38, group_id=1073741824, group_tlvs=0x7fff68702c20)
-    at ../../hw/net/rocker/rocker_of_dpa.c:2135
-#8  0x00005555580f66ec in of_dpa_group_cmd
-    (of_dpa=0x506000082e38, info=0x514000072e40, buf=0x5070002356c0 "\001", cmd=7, group_tlvs=0x7fff68702c20)
-    at ../../hw/net/rocker/rocker_of_dpa.c:2194
+Fixed by adding vmstate_mseccfg subsection
 
-Check for NULL values and return an error.
+This vulnerability was discovered and reported by SpecHunter, an
+AI-driven architecture specification analysis tool.
 
-Cc: qemu-stable@nongnu.org
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/1851
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Jason Wang <jasowang@redhat.com>
-(cherry picked from commit 8526b7d6b67beda0c83e4a8aec1449475fe5dd65)
+Link: https://github.com/yizishun/rv-isa-sec/blob/a22e4459cd026ae970791dfbd9cfe5d110fbd46b/output/riscv-isa-manual/pr-1879/qemu.txt#L121
+Signed-off-by: Zishun Yi <vulab@iscas.ac.cn>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Message-ID: <20260511124828.3210477-1-vulab@iscas.ac.cn>
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+(cherry picked from commit eccb1d6940256668109dc6dc42450ced9f324134)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/net/rocker/rocker_of_dpa.c b/hw/net/rocker/rocker_of_dpa.c
-index 3190a0e75c..958f3006c1 100644
---- a/hw/net/rocker/rocker_of_dpa.c
-+++ b/hw/net/rocker/rocker_of_dpa.c
-@@ -2029,6 +2029,10 @@ static int of_dpa_cmd_add_l2_flood(OfDpa *of_dpa, OfDpaGroup *group,
-                             group_tlvs[ROCKER_TLV_OF_DPA_GROUP_IDS]);
- 
-     for (i = 0; i < group->l2_flood.group_count; i++) {
-+        if (!tlvs[i + 1]) {
-+            err = -ROCKER_EINVAL;
-+            goto err_out;
-+        }
-         group->l2_flood.group_ids[i] = rocker_tlv_get_le32(tlvs[i + 1]);
+diff --git a/target/riscv/machine.c b/target/riscv/machine.c
+index 09c032a879..6776e7bf5a 100644
+--- a/target/riscv/machine.c
++++ b/target/riscv/machine.c
+@@ -423,6 +423,25 @@ static const VMStateDescription vmstate_sstc = {
      }
+ };
  
++static bool mseccfg_needed(void *opaque)
++{
++    RISCVCPU *cpu = opaque;
++
++    return cpu->cfg.ext_smepmp || cpu->cfg.ext_zkr
++        || cpu->cfg.ext_smmpm || cpu->cfg.ext_zicfilp;
++}
++
++static const VMStateDescription vmstate_mseccfg = {
++    .name = "cpu/mseccfg",
++    .version_id = 1,
++    .minimum_version_id = 1,
++    .needed = mseccfg_needed,
++    .fields = (const VMStateField[]) {
++        VMSTATE_UINTTL(env.mseccfg, RISCVCPU),
++        VMSTATE_END_OF_LIST()
++    }
++};
++
+ const VMStateDescription vmstate_riscv_cpu = {
+     .name = "cpu",
+     .version_id = 11,
+@@ -499,6 +518,7 @@ const VMStateDescription vmstate_riscv_cpu = {
+         &vmstate_ssp,
+         &vmstate_ctr,
+         &vmstate_sstc,
++        &vmstate_mseccfg,
+         NULL
+     }
+ };
 -- 
 2.47.3
 
