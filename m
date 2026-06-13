@@ -4,46 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C89BCD98CF
-	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 20:38:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84D66CD8CA8
+	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 20:38:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wYV6x-0004Du-Nz; Sat, 13 Jun 2026 16:37:47 -0400
+	id 1wYV7G-0004QC-Bx; Sat, 13 Jun 2026 16:38:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYV6u-00048Y-Tp; Sat, 13 Jun 2026 16:37:44 -0400
+ id 1wYV6x-0004EY-RB; Sat, 13 Jun 2026 16:37:47 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYV6t-0003Sa-DT; Sat, 13 Jun 2026 16:37:44 -0400
+ id 1wYV6w-0003WS-As; Sat, 13 Jun 2026 16:37:47 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1781382963; bh=oeWCQUoPxo3Y5KEpbVvM3clq9pSKvlzk66CPh2w8/2o=;
+ t=1781382963; bh=lGk/OGkifKx4LKSM9herBoN6ehFZjTS6Al80zJPhBAI=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=lVtE0b8pjV1Qqb/e1J0b8HPbmpKrz1k3QuFBOatjvtc9hstb7HIyMExbYt5u5+PrF
- jYt50rOBXAONF8qC7ngZ4q2LxbQipUfw9z59CmSokwHUxCe90XltXwe6ttsaTc/E0Y
- iH+2ZwyokEPX5TVYVWu8pw2gySt7iRWmRsOyp8UofWUzWuG95fCOZM+D+Kylv5A6Kr
- 7A6Pa4kxY8y1tKSVm0Glx6Qp0JFbEJls2/xX8jd2rCBGgdoYMB+ZobIWu9F4j+qvVK
- VeixeobHHOhQ82Po3NmKF+g9KBo92hoYE6DHEgT0pVVV+bMgzF+aqR3AFNr4zzHOiC
- kXqliyXqMNlzA==
+ b=aWyZ+QgWF1pj0184S2w+HEtpd3KphPSgdHTpxsR2FKZUSdo9v7yQ0+fcmFWwidKgE
+ pgxRgP7tqFkoFzCONNS8mbq3pO9gLier1DrAUgqW4FaG0v50IIkjHt2S9H7/DQxrx5
+ Q0YNV2Hn9LhVK86K0lfEdI9qvLzmKbpPRvsTHgCD5OsXhzwwExdHFZDd0bX7A3yshc
+ SM0CElrVemBnFOGLAJCe9HdS3WZPvDErqfF0pAJSurmNqwQE61ovt/B03f0XgQAomq
+ XvreNPgXFDgLLmIu+Vxf8Yv5uN/r1ACII1em4lT9bnT3pNTF+Wa2Hg6ZtizMppqw3E
+ VAb8dM2jkhOyg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 68C841B6EEB;
+ by isrv.corpit.ru (Postfix) with ESMTP id 871141B6EED;
  Sat, 13 Jun 2026 23:36:03 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id D0AEF3CE93D;
+ by tsrv.corpit.ru (Postfix) with ESMTP id EFE453CE93F;
  Sat, 13 Jun 2026 23:36:21 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- boy juju <agx1657748706@gmail.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.2 17/72] ui/vnc: fix OOB read access in VNC SASL
- mechname array
-Date: Sat, 13 Jun 2026 23:34:43 +0300
-Message-ID: <20260613203542.1809153-17-mjt@tls.msk.ru>
+Subject: [Stable-11.0.2 19/72] ui/vnc: fix OOB write in lossy rect worker code
+Date: Sat, 13 Jun 2026 23:34:45 +0300
+Message-ID: <20260613203542.1809153-19-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.2-20260613224644@cover.tls.msk.ru>
 References: <qemu-stable-11.0.2-20260613224644@cover.tls.msk.ru>
@@ -75,34 +73,46 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Daniel P. Berrangé <berrange@redhat.com>
 
-When reading the SASL mechname array off the VNC connection, if
-malicious, the received data may contain embedded NULs. If this
-happens the memory buffer returned by g_strndup may be shorter
-than the original data. Unfortunately the code continued to
-index into this buffer with an offset equal to the original
-length. This is a potential OOB read of the array.
+Incorrect calculation of the boundary condition when tracking lossy
+rectangles in the worker thread will result in an OOB write which
+can corrupt further worker state, and/or trigger any guard pages
+that may lie beyond the VncWorker struct. This can be triggered
+through careful choice of the display resolution in the guest
+OS by an unprivileged user.
 
-Fixes: 5847d9e1 (ui/vnc: simplify and avoid strncpy)
-Reported-by: boy juju <agx1657748706@gmail.com>
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Fixes: CVE-2026-48002
+Reported-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-Message-ID: <20260521103353.1645561-2-berrange@redhat.com>
-(cherry picked from commit ae18df638fb4285c7b645f98c43f5ebc2e123a55)
+Message-ID: <20260521103353.1645561-4-berrange@redhat.com>
+[Marc-André - added assert() suggest by philmd@linaro.org]
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+(cherry picked from commit 46ee49034d26d04d95ba8f3183d4fbfa9d2b89b4)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/ui/vnc-auth-sasl.c b/ui/vnc-auth-sasl.c
-index 3f4cfc471d..9f15980fca 100644
---- a/ui/vnc-auth-sasl.c
-+++ b/ui/vnc-auth-sasl.c
-@@ -490,6 +490,8 @@ static int protocol_client_auth_sasl_mechname(VncState *vs, uint8_t *data, size_
-     char *mechname = g_strndup((const char *) data, len);
-     trace_vnc_auth_sasl_mech_choose(vs, mechname);
+diff --git a/ui/vnc.c b/ui/vnc.c
+index ccc73bd7aa..8ab44c830c 100644
+--- a/ui/vnc.c
++++ b/ui/vnc.c
+@@ -2994,13 +2994,15 @@ void vnc_sent_lossy_rect(VncWorker *worker, int x, int y, int w, int h)
+ {
+     int i, j;
  
-+    /* If 'data' had embedded NUL the dup'd string might now be shorter */
-+    len = strlen(mechname);
-     if (strncmp(vs->sasl.mechlist, mechname, len) == 0) {
-         if (vs->sasl.mechlist[len] != '\0' &&
-             vs->sasl.mechlist[len] != ',') {
+-    w = (x + w) / VNC_STAT_RECT;
+-    h = (y + h) / VNC_STAT_RECT;
++    w = DIV_ROUND_UP((x + w), VNC_STAT_RECT);
++    h = DIV_ROUND_UP((y + h), VNC_STAT_RECT);
++    assert(h <= VNC_STAT_ROWS);
++    assert(w <= VNC_STAT_COLS);
+     x /= VNC_STAT_RECT;
+     y /= VNC_STAT_RECT;
+ 
+-    for (j = y; j <= h; j++) {
+-        for (i = x; i <= w; i++) {
++    for (j = y; j < h; j++) {
++        for (i = x; i < w; i++) {
+             worker->lossy_rect[j][i] = 1;
+         }
+     }
 -- 
 2.47.3
 
