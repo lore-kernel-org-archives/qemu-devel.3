@@ -4,42 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB428CD98CF
-	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 19:57:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98BB4CD98CF
+	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 19:57:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wYURM-0007KG-VA; Sat, 13 Jun 2026 15:54:49 -0400
+	id 1wYUSL-0000hP-Iq; Sat, 13 Jun 2026 15:55:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYURL-0007GZ-MZ; Sat, 13 Jun 2026 15:54:47 -0400
+ id 1wYUSG-0000NG-62; Sat, 13 Jun 2026 15:55:45 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYURJ-0004Ex-US; Sat, 13 Jun 2026 15:54:47 -0400
+ id 1wYUSD-0004h8-5m; Sat, 13 Jun 2026 15:55:42 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1781380260; bh=SdGDZFdD/4V4Mw/3tAMa7XZO+qTSfaLogGTks896J1I=;
+ t=1781380261; bh=5/rsleK4VKiBqumnsjYhUN9Uc6/t1nX/VfUewIfRMcc=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=KffTiG5Wo1er651hR+NxH2Hnvy6A9n7mu1VxoxkcU6cOs8Z/TRlVfeBNakrYtXwGT
- mus2+jeIggW1fzjW2hdY9dLGxGYXZ4yjRu1J+7v2pjS6YPFuYcXeS7TB6+zPpWE75V
- QW6wb/Z/6iYaezoO8MjGCDDmp1uhjF3p8o53cHKJQ5nvUoQc39rgsdZlPussADvUNp
- bMG026fOTbjvNXC9aFj9g+q388hI0FqWFn9SBk1Avza4BUHUilS9mliNFEuEx8FjFW
- cwIsT1HMIt9e/hgfNW0u+lmqFcYDotjDElvdnJsKQRTBwopY9ct+c7XWexPb0M0XRs
- Q8t1cnei0StBg==
+ b=RcDCt4CGlMKVb46QqVCU0g0v9OQBaKLu0CjsSsZM1SJe6Baqz1rrz4C6/jJjGLoKt
+ FL+vs8xOaAu1hYKA1hlavsDhsqPG0KaHW0IzymTh/0GS40bP+NMRLxvdT8MIgdSQ2V
+ 8nY68SvJtT6AAXyNhC5HICvVImmxcPMv10WIZjL8+7GnbWMKdsLlXhzWnDy1ZlUqff
+ 3guAh1ScuC+qMgZgkXzF00wUwFmQLN1r1uLdBoRxfYSKK48qqaTcNrDgS1ZvsX0gCw
+ gm42nDCwNOyCvluTh/gnf1uOWNNsQEn94h3mh40OwASgezuPu99sUSZ5WL7QhR9za/
+ TPF9uz6IKIXew==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 675B31B6E34;
- Sat, 13 Jun 2026 22:51:00 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 03A0A1B6E3C;
+ Sat, 13 Jun 2026 22:51:01 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id B6E3E3CE8AE;
- Sat, 13 Jun 2026 22:51:18 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 4E3423CE8B6;
+ Sat, 13 Jun 2026 22:51:19 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Christian Schoenebeck <qemu_oss@crudebyte.com>,
+Cc: qemu-stable@nongnu.org, Farhan Ali <alifm@linux.ibm.com>,
+ Niklas Schnelle <schnelle@linux.ibm.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>,
+ Omar Elghoul <oelghoul@linux.ibm.com>, Cornelia Huck <cohuck@redhat.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.11 37/56] hw/9pfs: add error handling to v9fs_fix_path()
-Date: Sat, 13 Jun 2026 22:50:51 +0300
-Message-ID: <20260613195116.1807273-37-mjt@tls.msk.ru>
+Subject: [Stable-10.0.11 45/56] s390x/pci: Fix interrupt forwarding disable
+ for interpreted devices
+Date: Sat, 13 Jun 2026 22:50:59 +0300
+Message-ID: <20260613195116.1807273-45-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.11-20260613224446@cover.tls.msk.ru>
 References: <qemu-stable-10.0.11-20260613224446@cover.tls.msk.ru>
@@ -68,39 +72,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Christian Schoenebeck <qemu_oss@crudebyte.com>
+From: Farhan Ali <alifm@linux.ibm.com>
 
-Update v9fs_fix_path() to return int and propagate errors from
-v9fs_path_sprintf(). This allows callers to detect and handle
-path formatting failures.
+Remove the FH_MASK_ENABLE check when disabling interrupt forwarding
+during device reset. This check was broken for the default case in
+the switch statement above, preventing proper cleanup of interrupt
+forwarding.
 
-Link: https://lore.kernel.org/qemu-devel/a0592741a918b7cbe751980ec7ec0c03f505924c.1779126034.git.qemu_oss@crudebyte.com
-Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
-(cherry picked from commit 54dd352c59269fdb5241e7b6dbcecaff107e7f5a)
+The pbdev->aif check in s390_pci_kvm_aif_disable() already guards
+against double-disabling of interrupt forwarding.
+
+Cc: qemu-stable@nongnu.org
+Reported-by: Niklas Schnelle <schnelle@linux.ibm.com>
+Signed-off-by: Farhan Ali <alifm@linux.ibm.com>
+Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
+Tested-by: Omar Elghoul <oelghoul@linux.ibm.com>
+Message-ID: <20260521182946.1607-1-alifm@linux.ibm.com>
+Signed-off-by: Cornelia Huck <cohuck@redhat.com>
+(cherry picked from commit 442f727b8bebabf20a4f6a7536a4ff2885402030)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/9pfs/9p.c b/hw/9pfs/9p.c
-index c439fecf5c..a4ebbce5d6 100644
---- a/hw/9pfs/9p.c
-+++ b/hw/9pfs/9p.c
-@@ -1407,13 +1407,15 @@ static void print_sg(struct iovec *sg, int cnt)
- }
+diff --git a/hw/s390x/s390-pci-bus.c b/hw/s390x/s390-pci-bus.c
+index 2591ee49c1..8b63156c30 100644
+--- a/hw/s390x/s390-pci-bus.c
++++ b/hw/s390x/s390-pci-bus.c
+@@ -1492,7 +1492,7 @@ static void s390_pci_device_reset(DeviceState *dev)
+         break;
+     }
  
- /* Will call this only for path name based fid */
--static void v9fs_fix_path(V9fsPath *dst, V9fsPath *src, int len)
-+static int v9fs_fix_path(V9fsPath *dst, V9fsPath *src, int len)
- {
-     V9fsPath str;
-+    int ret;
-     v9fs_path_init(&str);
-     v9fs_path_copy(&str, dst);
--    v9fs_path_sprintf(dst, "%s%s", src->data, str.data + len);
-+    ret = v9fs_path_sprintf(dst, "%s%s", src->data, str.data + len);
-     v9fs_path_free(&str);
-+    return ret;
- }
- 
- static inline bool is_ro_export(FsContext *ctx)
+-    if (pbdev->interp && (pbdev->fh & FH_MASK_ENABLE)) {
++    if (pbdev->interp) {
+         /* Interpreted devices were using interrupt forwarding */
+         s390_pci_kvm_aif_disable(pbdev);
+     } else if (pbdev->summary_ind) {
 -- 
 2.47.3
 
