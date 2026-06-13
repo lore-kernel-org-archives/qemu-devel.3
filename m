@@ -4,47 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1BD5CCD8CA8
-	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 19:58:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 903BBCD98CF
+	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 19:58:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wYUQQ-0003ip-7n; Sat, 13 Jun 2026 15:53:50 -0400
+	id 1wYUQM-0003aR-LP; Sat, 13 Jun 2026 15:53:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYUQO-0003dZ-Cw; Sat, 13 Jun 2026 15:53:48 -0400
+ id 1wYUPx-00028H-5r; Sat, 13 Jun 2026 15:53:22 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYUQM-0003yR-E6; Sat, 13 Jun 2026 15:53:48 -0400
+ id 1wYUPv-0003qD-Ch; Sat, 13 Jun 2026 15:53:20 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1781380259; bh=XD1LPMK2wPincHYlBJSY1xOKD+wvkR4bcKatvgwgKhE=;
+ t=1781380259; bh=WrtPf0nfxyN23GhsGSLuduvp38PumZWYYytwYcp1rys=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=wSejl2kEX2GrqMv1xBLqsAKbELFuX6MG44HFskS3Igp8sYhuad/ZyHQ2BWLOaS8DG
- /okPOT3AgPDXyNdjCKSxmvolIrEy3o+fDB3qaMI6Beavtz0Cu6ExFI0eFm1Y1BBtOp
- H4p2dFLPk4loXps1fMRFJm7kyM4GS7gVLhrwq9mFdE//peyJofUhiVgAscT4akk5tk
- yoq+OlmKgcT9MQthaGpZvxGHDlPnYIAP4N1wIK5K1XiELru96kf5XW4lvm7v/AR6Ng
- ZVoq7Wh70jDc0ZDTkuFcTctqFUjB8CJ9e5XDJH0HSYPRLV6hlmhG01Qdsu192ybN5D
- qPPmFXWsjNHkA==
+ b=h5SF2Au/cHvBuAsbAArgLkcE/yGH64K1dILZA5lAytigwgqB6JxATiEAZhLLFiTHZ
+ EhaL/DYr1g9mIJ0AOWGbd4YVkZ4pugAs2rjMbHD6EHUCzEdjkqGMcHxOrRUNlwf2U8
+ IdppTpO4B994nBSZzm1FuRUelGatMXrAVdIEXqsSShk1n9+ydoN+nsbbifSbjU/wu9
+ 8akzm4QjzFVaaHIZva4KP5LsIcjs1GytMhi8VCrd4Dp9in+MC0t+xc/vl/lE9yxtyd
+ U0uEes8eyc1kvAjSJ9Bupu/vn6YEUTfYcjGiR+jlSbPaPqnOPJ/utzpEYCGwI72yLx
+ CCboa6qj+LgtA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id A76F81B6E2A;
+ by isrv.corpit.ru (Postfix) with ESMTP id 66CB41B6E26;
  Sat, 13 Jun 2026 22:50:59 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 0C5933CE8A4;
- Sat, 13 Jun 2026 22:51:18 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id BFE433CE8A0;
+ Sat, 13 Jun 2026 22:51:17 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Jason Wang <jasowang@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.11 27/56] hw/net/rocker_of_dpa: Check group ID pointers
- are not NULL
-Date: Sat, 13 Jun 2026 22:50:41 +0300
-Message-ID: <20260613195116.1807273-27-mjt@tls.msk.ru>
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.11 23/56] target/arm: SVE2 FMAXP, FMINP must honour AH=1
+Date: Sat, 13 Jun 2026 22:50:37 +0300
+Message-ID: <20260613195116.1807273-23-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.11-20260613224446@cover.tls.msk.ru>
 References: <qemu-stable-10.0.11-20260613224446@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -71,54 +72,80 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Peter Maydell <peter.maydell@linaro.org>
 
-In of_dpa_cmd_add_l2_flood(), we use rocker_tlv_parse_nested()
-to fill in a tlvs[] array. If the guest command is valid then
-the entries should be pointers to TLV data items with group IDs.
-However, if the guest gives us bogus data then rocker_tlv_parse_nested()
-indicates this by leaving the tlvs[] entries NULL. In the other
-places that use this function, we check for this before using
-the value, but here we forgot, and the result is that QEMU can
-crash:
-
-#0  __memcpy_avx_unaligned_erms () at ../sysdeps/x86_64/multiarch/memmove-vec-unaligned-erms.S:331
-#1  0x00005555574f7137 in __asan_memcpy ()
-#2  0x0000555558106792 in ldl_he_p (ptr=0x8) at /home/pm215/qemu/include/qemu/bswap.h:278
-#3  0x0000555558106755 in ldl_le_p (ptr=0x8) at /home/pm215/qemu/include/qemu/bswap.h:311
-#4  0x00005555580f85ed in rocker_tlv_get_le32 (tlv=0x0) at ../../hw/net/rocker/rocker_tlv.h:114
-#5  0x000055555810a8ad in of_dpa_cmd_add_l2_flood (of_dpa=0x506000082e38, group=0x503000b4e440, group_tlvs=0x7fff68702c20)
-    at ../../hw/net/rocker/rocker_of_dpa.c:2032
-#6  0x0000555558108a74 in of_dpa_cmd_group_do (of_dpa=0x506000082e38, group_id=1073741824, group=0x503000b4e440, group_tlvs=0x7fff68702c20)
-    at ../../hw/net/rocker/rocker_of_dpa.c:2115
-#7  0x0000555558108730 in of_dpa_cmd_group_add (of_dpa=0x506000082e38, group_id=1073741824, group_tlvs=0x7fff68702c20)
-    at ../../hw/net/rocker/rocker_of_dpa.c:2135
-#8  0x00005555580f66ec in of_dpa_group_cmd
-    (of_dpa=0x506000082e38, info=0x514000072e40, buf=0x5070002356c0 "\001", cmd=7, group_tlvs=0x7fff68702c20)
-    at ../../hw/net/rocker/rocker_of_dpa.c:2194
-
-Check for NULL values and return an error.
+The behaviour of floating-point maximum and minimum insns has
+some odd special cases when FPCR.AH=1. We get this right in most
+places (for instance, the ASIMD FMAXP, FMINP) but forgot about
+it for the SVE2 versions of FMAXP and FMINP.
 
 Cc: qemu-stable@nongnu.org
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/1851
+Fixes: 384433e70983 ("target/arm: Implement FPCR.AH semantics for FMINP and FMAXP")
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Jason Wang <jasowang@redhat.com>
-(cherry picked from commit 8526b7d6b67beda0c83e4a8aec1449475fe5dd65)
+Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+Message-id: 20260521122913.1565011-2-peter.maydell@linaro.org
+(cherry picked from commit 446050c4dfe4566ae3fcba9c6588c89a66ed4b33)
+(Mjt: fixup for lack of v10.2.0-1344-g895d4367d6
+ "target/arm/tcg: Use "or SME" feature checks where needed")
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/net/rocker/rocker_of_dpa.c b/hw/net/rocker/rocker_of_dpa.c
-index b4da3cc0ec..6f10212521 100644
---- a/hw/net/rocker/rocker_of_dpa.c
-+++ b/hw/net/rocker/rocker_of_dpa.c
-@@ -2033,6 +2033,10 @@ static int of_dpa_cmd_add_l2_flood(OfDpa *of_dpa, OfDpaGroup *group,
-                             group_tlvs[ROCKER_TLV_OF_DPA_GROUP_IDS]);
+diff --git a/target/arm/tcg/helper-sve.h b/target/arm/tcg/helper-sve.h
+index 0b1b588783..45ad81938e 100644
+--- a/target/arm/tcg/helper-sve.h
++++ b/target/arm/tcg/helper-sve.h
+@@ -2736,6 +2736,20 @@ DEF_HELPER_FLAGS_6(sve2_fminp_zpzz_s, TCG_CALL_NO_RWG,
+ DEF_HELPER_FLAGS_6(sve2_fminp_zpzz_d, TCG_CALL_NO_RWG,
+                    void, ptr, ptr, ptr, ptr, fpst, i32)
  
-     for (i = 0; i < group->l2_flood.group_count; i++) {
-+        if (!tlvs[i + 1]) {
-+            err = -ROCKER_EINVAL;
-+            goto err_out;
-+        }
-         group->l2_flood.group_ids[i] = rocker_tlv_get_le32(tlvs[i + 1]);
-     }
++DEF_HELPER_FLAGS_6(sve2_ah_fmaxp_zpzz_h, TCG_CALL_NO_RWG,
++                   void, ptr, ptr, ptr, ptr, fpst, i32)
++DEF_HELPER_FLAGS_6(sve2_ah_fmaxp_zpzz_s, TCG_CALL_NO_RWG,
++                   void, ptr, ptr, ptr, ptr, fpst, i32)
++DEF_HELPER_FLAGS_6(sve2_ah_fmaxp_zpzz_d, TCG_CALL_NO_RWG,
++                   void, ptr, ptr, ptr, ptr, fpst, i32)
++
++DEF_HELPER_FLAGS_6(sve2_ah_fminp_zpzz_h, TCG_CALL_NO_RWG,
++                   void, ptr, ptr, ptr, ptr, fpst, i32)
++DEF_HELPER_FLAGS_6(sve2_ah_fminp_zpzz_s, TCG_CALL_NO_RWG,
++                   void, ptr, ptr, ptr, ptr, fpst, i32)
++DEF_HELPER_FLAGS_6(sve2_ah_fminp_zpzz_d, TCG_CALL_NO_RWG,
++                   void, ptr, ptr, ptr, ptr, fpst, i32)
++
+ DEF_HELPER_FLAGS_5(sve2_eor3, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, ptr, i32)
+ DEF_HELPER_FLAGS_5(sve2_bcax, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, ptr, i32)
+ DEF_HELPER_FLAGS_5(sve2_bsl1n, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, ptr, i32)
+diff --git a/target/arm/tcg/sve_helper.c b/target/arm/tcg/sve_helper.c
+index d786b4b111..20accbc568 100644
+--- a/target/arm/tcg/sve_helper.c
++++ b/target/arm/tcg/sve_helper.c
+@@ -775,6 +775,14 @@ DO_ZPZZ_PAIR_FP(sve2_fminp_zpzz_h, float16, H1_2, float16_min)
+ DO_ZPZZ_PAIR_FP(sve2_fminp_zpzz_s, float32, H1_4, float32_min)
+ DO_ZPZZ_PAIR_FP(sve2_fminp_zpzz_d, float64, H1_8, float64_min)
  
++DO_ZPZZ_PAIR_FP(sve2_ah_fmaxp_zpzz_h, float16, H1_2, helper_vfp_ah_maxh)
++DO_ZPZZ_PAIR_FP(sve2_ah_fmaxp_zpzz_s, float32, H1_4, helper_vfp_ah_maxs)
++DO_ZPZZ_PAIR_FP(sve2_ah_fmaxp_zpzz_d, float64, H1_8, helper_vfp_ah_maxd)
++
++DO_ZPZZ_PAIR_FP(sve2_ah_fminp_zpzz_h, float16, H1_2, helper_vfp_ah_minh)
++DO_ZPZZ_PAIR_FP(sve2_ah_fminp_zpzz_s, float32, H1_4, helper_vfp_ah_mins)
++DO_ZPZZ_PAIR_FP(sve2_ah_fminp_zpzz_d, float64, H1_8, helper_vfp_ah_mind)
++
+ #undef DO_ZPZZ_PAIR_FP
+ 
+ /* Three-operand expander, controlled by a predicate, in which the
+diff --git a/target/arm/tcg/translate-sve.c b/target/arm/tcg/translate-sve.c
+index 81616210aa..810c44b007 100644
+--- a/target/arm/tcg/translate-sve.c
++++ b/target/arm/tcg/translate-sve.c
+@@ -7022,8 +7022,8 @@ TRANS_FEAT_NONSTREAMING(HISTSEG, aa64_sve2, gen_gvec_ool_arg_zzz,
+ DO_ZPZZ_FP(FADDP, aa64_sve2, sve2_faddp_zpzz)
+ DO_ZPZZ_FP(FMAXNMP, aa64_sve2, sve2_fmaxnmp_zpzz)
+ DO_ZPZZ_FP(FMINNMP, aa64_sve2, sve2_fminnmp_zpzz)
+-DO_ZPZZ_FP(FMAXP, aa64_sve2, sve2_fmaxp_zpzz)
+-DO_ZPZZ_FP(FMINP, aa64_sve2, sve2_fminp_zpzz)
++DO_ZPZZ_AH_FP(FMAXP, aa64_sve2, sve2_fmaxp_zpzz, sve2_ah_fmaxp_zpzz)
++DO_ZPZZ_AH_FP(FMINP, aa64_sve2, sve2_fminp_zpzz, sve2_ah_fminp_zpzz)
+ 
+ /*
+  * SVE Integer Multiply-Add (unpredicated)
 -- 
 2.47.3
 
