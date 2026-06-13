@@ -4,43 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 818BACD98CF
-	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 19:55:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7B08CD98CF
+	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 19:55:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wYUR4-0005Ww-25; Sat, 13 Jun 2026 15:54:30 -0400
+	id 1wYUR4-0005cK-Pv; Sat, 13 Jun 2026 15:54:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYUQu-0005Ng-Dz; Sat, 13 Jun 2026 15:54:21 -0400
+ id 1wYUQr-0005Ha-Kj; Sat, 13 Jun 2026 15:54:17 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYUQs-0004D1-9F; Sat, 13 Jun 2026 15:54:19 -0400
+ id 1wYUQp-00044a-Jb; Sat, 13 Jun 2026 15:54:17 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1781380260; bh=jzTERscFogQIAubT8OAwUrpBgRPGf1ywHEbZJuQg5x0=;
+ t=1781380260; bh=nuxwsAgdnZIL6F2A++Fdzh2BbY3cK18S5aJ3r5v1GUA=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=SZPheyTtWfhPmdMc6GHgOBIbqd9jT7RuJ9ii7lp4xV56xuk4jj1E0fUVjdEkfreyq
- 9TKwDi6gppqf9i0D2eGA6SCFn0Z9Ae/Tq9+M3sXCKxpvkL9fkeRkqfvA3trihCFLOH
- KtEYHR4aeM8cEpgSmNIKSV9pufzYOZc8HpkeHnN+UQn/Q5RArXMOiDCpmYENQLNZf6
- Zj/zCCh5GlL36enSeH/EOB0WJ/yAhH/ZvOvGnRGTWbrMObFQ8S7eq9Ma6h24scuYom
- J71SCRqFEz7udW7oy1MmHS/VINsxQ7h357KQKzrrml3/HLpBnkNEa3VZnaR7icq9gY
- xDYKvQXKuslfA==
+ b=cp+xpwOu3vadEMO/V15y6vHi4vctPs8yCiCydxVv9rB5kXP738BzGrGKlQzJ8nUP2
+ sSk03DpPlP/5SZDCtu0+flNa/crzSuuHooKzAWX1DnDqBvOjdvyoHjPcBN7XHtxGxY
+ FvKCtPsziZbE8D+p0L6tOJ0qBDW01uxN1CDzkMNwuUjZdKxZI9SnygSdY94hbSuyD9
+ 2Oxk9eHgXfRe5fLYe9hJNXqRSFYZnr4izYCg4+L5cResBGWjKf0EqcmnuOUAi8l3Ff
+ 0Is/5YiuejNTofubThk+KCMK+Jl07W2qRnhQlCGb3+86NRCocjU/FRYoqizlMLz7kA
+ 93DeHyLuwkX0Q==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 16E3F1B6E30;
+ by isrv.corpit.ru (Postfix) with ESMTP id 07E061B6E2F;
  Sat, 13 Jun 2026 22:51:00 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 70F5F3CE8AA;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 5D7C43CE8A9;
  Sat, 13 Jun 2026 22:51:18 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org, Matt Turner <mattst88@gmail.com>,
+ Yoshinori Sato <yoshinori.sato@nifty.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
  Helge Deller <deller@gmx.de>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.11 33/56] linux-user/s390x: restore fpu_status rounding
- mode from FPC on sigreturn
-Date: Sat, 13 Jun 2026 22:50:47 +0300
-Message-ID: <20260613195116.1807273-33-mjt@tls.msk.ru>
+Subject: [Stable-10.0.11 32/56] linux-user/sh4: restore FP rounding mode on
+ sigreturn
+Date: Sat, 13 Jun 2026 22:50:46 +0300
+Message-ID: <20260613195116.1807273-32-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.11-20260613224446@cover.tls.msk.ru>
 References: <qemu-stable-10.0.11-20260613224446@cover.tls.msk.ru>
@@ -71,107 +73,89 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Matt Turner <mattst88@gmail.com>
 
-QEMU keeps the s390x floating-point control register (FPC) in env->fpc.
-The rounding mode bits [2:0] of FPC are reflected into the derived
-env->fpu_status via set_float_rounding_mode(); every architectural
-write to FPC goes through HELPER(sfpc) which keeps the two in sync.
+The SH4 FPSCR rounding-mode (RM) and denormal (DN) bits are not held
+only in env->fpscr: they are also reflected into the derived
+env->fp_status via set_float_rounding_mode()/set_flush_to_zero(). The
+guest keeps the two in sync by routing every write to FPSCR through
+helper_ld_fpscr().
 
-restore_sigregs() restored FPC with a direct assignment:
+restore_sigcontext() wrote the saved value straight into env->fpscr and
+never touched env->fp_status, so on sigreturn the interrupted code
+resumed with whatever FP rounding mode and flush-to-zero setting the
+signal handler last installed. (regs->flags = 0 forces the FR/SZ/PR TB
+flags to be recomputed, but fp_status is runtime float state, not a TB
+flag, so it was left stale.) This is the FP analogue of the T/M/Q bit
+problem just fixed for the integer status register.
 
-    __get_user(env->fpc, &sc->fpregs.fpc);
+Factor the FPSCR -> fp_status synchronisation out of helper_ld_fpscr()
+into cpu_load_fpscr() and use it from restore_sigcontext() so the
+rounding mode round-trips correctly across signal delivery.
 
-This wrote env->fpc correctly but never updated env->fpu_status, so on
-sigreturn the interrupted code resumed with whatever rounding mode the
-signal handler last installed in fpu_status.
-
-Factor the two-step "write fpc + sync fpu_status" logic out of
-HELPER(sfpc) into cpu_s390x_load_fpc(), declare it in cpu.h, and call
-it from restore_sigregs() in place of the direct assignment.
-
-cpu_s390x_load_fpc() partially reuses the sanity check from
-HELPER(sfpc): if the FPC value has an invalid rounding mode or reserved
-bits set, it falls back to 0, matching the kernel's fpu_lfpc_safe()
-behavior where a corrupt signal frame value causes a specification
-exception and 0 is used instead.
-
-HELPER(sfpc) now calls cpu_s390x_load_fpc() after its full
-specification-exception check, including the FEAT_FLOATING_POINT_EXT
-test that is not needed for the signal restore path.
-
-Fixes: 2941e0fa05 ("linux-user/s390x: Save/restore fpc when handling a signal")
+Fixes: c3b5bc8ab3 ("SH4: Signal handling for the user space emulator, by Magnus Damm.")
 Cc: qemu-stable@nongnu.org
+Reviewed-by: Yoshinori Sato <yoshinori.sato@nifty.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Matt Turner <mattst88@gmail.com>
 Signed-off-by: Helge Deller <deller@gmx.de>
-(cherry picked from commit 2762cd51ee033dccb3167110376dd125244cc819)
+(cherry picked from commit a740f17ed0fbc5cd38e3cb12136c58d38aba098d)
+(Mjt: context fixup in target/sh4/cpu.h)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/linux-user/s390x/signal.c b/linux-user/s390x/signal.c
-index df49c24708..40455b6deb 100644
---- a/linux-user/s390x/signal.c
-+++ b/linux-user/s390x/signal.c
-@@ -331,7 +331,11 @@ static void restore_sigregs(CPUS390XState *env, target_sigregs *sc)
-     for (i = 0; i < 16; i++) {
-         __get_user(env->aregs[i], &sc->regs.acrs[i]);
+diff --git a/linux-user/sh4/signal.c b/linux-user/sh4/signal.c
+index cc36425c49..00290d6e40 100644
+--- a/linux-user/sh4/signal.c
++++ b/linux-user/sh4/signal.c
+@@ -173,7 +173,12 @@ static void restore_sigcontext(CPUSH4State *regs, struct target_sigcontext *sc)
+     for (i=0; i<16; i++) {
+         __get_user(regs->fregs[i], &sc->sc_fpregs[i]);
      }
--    __get_user(env->fpc, &sc->fpregs.fpc);
+-    __get_user(regs->fpscr, &sc->sc_fpscr);
++    /* Resync the derived float_status state, not just env->fpscr. */
 +    {
-+        uint32_t fpc;
-+        __get_user(fpc, &sc->fpregs.fpc);
-+        cpu_s390x_load_fpc(env, fpc);
++        uint32_t fpscr;
++        __get_user(fpscr, &sc->sc_fpscr);
++        cpu_load_fpscr(regs, fpscr);
 +    }
-     for (i = 0; i < 16; i++) {
-         __get_user(*get_freg(env, i), &sc->fpregs.fprs[i]);
-     }
-diff --git a/target/s390x/cpu.h b/target/s390x/cpu.h
-index 5b7992deda..afd0d28bad 100644
---- a/target/s390x/cpu.h
-+++ b/target/s390x/cpu.h
-@@ -942,6 +942,7 @@ void s390_init_sigp(void);
- /* helper.c */
- void s390_cpu_set_psw(CPUS390XState *env, uint64_t mask, uint64_t addr);
- uint64_t s390_cpu_get_psw_mask(CPUS390XState *env);
-+void cpu_s390x_load_fpc(CPUS390XState *env, uint32_t fpc);
+     __get_user(regs->fpul, &sc->sc_fpul);
  
- /* outside of target/s390x/ */
- S390CPU *s390_cpu_addr2state(uint16_t cpu_addr);
-diff --git a/target/s390x/tcg/fpu_helper.c b/target/s390x/tcg/fpu_helper.c
-index 5041c13962..6216e0accd 100644
---- a/target/s390x/tcg/fpu_helper.c
-+++ b/target/s390x/tcg/fpu_helper.c
-@@ -897,6 +897,19 @@ static const int fpc_to_rnd[8] = {
-     float_round_to_odd,
- };
- 
-+void cpu_s390x_load_fpc(CPUS390XState *env, uint32_t fpc)
-+{
-+    /*
-+     * Mimic kernel fpu_lfpc_safe(): a corrupt signal frame value that would
-+     * trigger a specification exception instead results in FPC being set to 0.
-+     */
-+    if (fpc_to_rnd[fpc & 0x7] == -1 || fpc & 0x03030088u) {
-+        fpc = 0;
-+    }
-+    env->fpc = fpc;
-+    set_float_rounding_mode(fpc_to_rnd[fpc & 0x7], &env->fpu_status);
-+}
-+
- /* set fpc */
- void HELPER(sfpc)(CPUS390XState *env, uint64_t fpc)
- {
-@@ -904,12 +917,7 @@ void HELPER(sfpc)(CPUS390XState *env, uint64_t fpc)
-         (!s390_has_feat(S390_FEAT_FLOATING_POINT_EXT) && fpc & 0x4)) {
-         tcg_s390_program_interrupt(env, PGM_SPECIFICATION, GETPC());
-     }
--
--    /* Install everything in the main FPC.  */
--    env->fpc = fpc;
--
--    /* Install the rounding mode in the shadow fpu_status.  */
--    set_float_rounding_mode(fpc_to_rnd[fpc & 0x7], &env->fpu_status);
-+    cpu_s390x_load_fpc(env, fpc);
+     regs->tra = -1;         /* disable syscall checks */
+diff --git a/target/sh4/cpu.h b/target/sh4/cpu.h
+index d536d5d715..2ada25ee00 100644
+--- a/target/sh4/cpu.h
++++ b/target/sh4/cpu.h
+@@ -397,4 +397,7 @@ static inline void cpu_get_tb_cpu_state(CPUSH4State *env, vaddr *pc,
+ #endif
  }
  
- /* set fpc and signal */
++/* Set FPSCR and the derived float_status rounding/flush-to-zero state. */
++void cpu_load_fpscr(CPUSH4State *env, uint32_t val);
++
+ #endif /* SH4_CPU_H */
+diff --git a/target/sh4/op_helper.c b/target/sh4/op_helper.c
+index 99394b714c..d70587f328 100644
+--- a/target/sh4/op_helper.c
++++ b/target/sh4/op_helper.c
+@@ -202,7 +202,7 @@ void helper_macw(CPUSH4State *env, int32_t arg0, int32_t arg1)
+     }
+ }
+ 
+-void helper_ld_fpscr(CPUSH4State *env, uint32_t val)
++void cpu_load_fpscr(CPUSH4State *env, uint32_t val)
+ {
+     env->fpscr = val & FPSCR_MASK;
+     if ((val & FPSCR_RM_MASK) == FPSCR_RM_ZERO) {
+@@ -213,6 +213,11 @@ void helper_ld_fpscr(CPUSH4State *env, uint32_t val)
+     set_flush_to_zero((val & FPSCR_DN) != 0, &env->fp_status);
+ }
+ 
++void helper_ld_fpscr(CPUSH4State *env, uint32_t val)
++{
++    cpu_load_fpscr(env, val);
++}
++
+ static void update_fpscr(CPUSH4State *env, uintptr_t retaddr)
+ {
+     int xcpt, cause, enable;
 -- 
 2.47.3
 
