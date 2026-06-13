@@ -4,103 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86527CD98C5
-	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 05:18:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48EA5CD98CF
+	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 05:22:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wYGkq-0004B6-Mg; Sat, 13 Jun 2026 01:18:00 -0400
+	id 1wYGpS-0004yS-UG; Sat, 13 Jun 2026 01:22:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kylefoxaustin.github@gmail.com>)
- id 1wYGkp-0004Ar-0D
- for qemu-devel@nongnu.org; Sat, 13 Jun 2026 01:17:59 -0400
-Received: from mail-ej1-x62d.google.com ([2a00:1450:4864:20::62d])
+ id 1wYGpP-0004y5-1D
+ for qemu-devel@nongnu.org; Sat, 13 Jun 2026 01:22:43 -0400
+Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <kylefoxaustin.github@gmail.com>)
- id 1wYGkm-0001Cp-7Q
- for qemu-devel@nongnu.org; Sat, 13 Jun 2026 01:17:58 -0400
-Received: by mail-ej1-x62d.google.com with SMTP id
- a640c23a62f3a-bed2b9bfa02so219975166b.1
- for <qemu-devel@nongnu.org>; Fri, 12 Jun 2026 22:17:54 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1781327873; cv=none;
+ id 1wYGpM-0003kX-64
+ for qemu-devel@nongnu.org; Sat, 13 Jun 2026 01:22:42 -0400
+Received: by mail-ed1-x531.google.com with SMTP id
+ 4fb4d7f45d1cf-691c5776f95so3219403a12.3
+ for <qemu-devel@nongnu.org>; Fri, 12 Jun 2026 22:22:39 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1781328158; cv=none;
  d=google.com; s=arc-20240605;
- b=jFs44djhocoTgF37GtGE8dSho8Esym9oDsSSDVQEmJS2hA/hOmheC5JXYbYQMKFD/y
- UOetQ1L7hX4ZS3JCtdqSeJ/7r/qc4SwFDkCqmCa3crqTYFjm6eByfowQk5hdzSwR4T+y
- PLDkc1k57suW+U6Ronzzop7fXUVX1LVQol/S4WGSeLiEzawJDdQnMeveHX6ph/UvvVwR
- yDqISiZAurlclmyUW9hKyr0g8l4G5wz5CUZICYilydxZyjYXS4bG2WAeK7VJJDvs0rsw
- HE48sHwcjYVe5PoUg8nv1uJCcF3en9SS20XDJ8VtZJk6P52g2NzbI14r3bo/19Dt33/S
- 7FGQ==
+ b=LbVYLrCpj5/yDusowpI0DgPlXH2xAnKwc92ueLueoz2jG5TDWHqKS0nEM27mA0JXFR
+ rR0qvK3uqRhLxD6mDOgveOJUiRSudEhCWWp8FWQk1hYcbClQaRsxFXMRuJ2or7bYJKzh
+ RA5QvfQrj7LlXAsxfq9UFwCNPZoTsuLAtsk8g6N34j/60G0RNok/xxfb4UX/RLykno3z
+ SXxxL67Sa/7fCsDJ1rTVr1ItjGvGsyp9UV9Zn9PjgFe5i/DiQv2HhxaWFOMKuS2Ryulo
+ fCGgJru3uQUuRLUan7pUeS71yp9tkze1e45tbTKljerkmv37Xi3HVlysXr+CAFV4X0iv
+ 55Hg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:dkim-signature;
- bh=RDj3QVT1rdOi4kEFxEgIgjDtQzMJzkMLnUabvtQLe5U=;
- fh=ilIAX3G+tcfZpT7ytEnnXCpx93tQ810LDBhVCzb4wQk=;
- b=Q4dzsIzgDcVZU1XjYqP/0XBeuysr2kWTFo4yeD9TO8qJ9tHLJ7GEyaTfQP2pctj5eh
- +j3G2kMToFo0IiU3+3t5Q4y8mkToXw2UeafRbI+aR5OO6nhWXs3tWdc7/S9dYktPWehy
- XM7xYa20zcc0NydG1+GNWMdQAkpjZ4Hcrs5eifjca/lGeSUEAV8f+8OX3VjvzfcfX+wB
- xYY4IXR03+VrNnOXRklhmP7cvWddlQ2C95JRovGm+yGEHYsOWYanEKCzBvq7XHrA97GD
- 06yjyg6WpBNiMw8zD+eq4s4eStHRlvyiM20ADveeSA5/PrB3yOPeZDHV6LprLpgQJb+B
- 4u0w==; darn=nongnu.org
+ bh=8it+egN+vgeOFmSRjEavP5t+0d6gXiZXjFH/DtNplZE=;
+ fh=bQ77hYeGxUaKpndQZOZqmQlyf9/Y6hMIykJPPm9URPQ=;
+ b=UChKKJ2ipPMTnbZokSy4k3bkZSuvOzRaVhzLxATggp3UHttMQOVS+Gy2lqdLfRIy0v
+ HHpg2Q+14CakVIRPxumW6dEVgERS6d3E+KnfbyDE8yMdpSquSbV+FeqtWWhhiEczj0HV
+ GB7siiMnKUFS3Qh7bRs1GBb5f/5EiPTtpbbKxM+zwwBf6Q5p5TpJQ3W+qfzi23iLXM0F
+ CR24CtwWjr5CL3ywUwLB/umNHt94PyMjdlDctnG2QPdMVPKj4w+bEoCsPlkKK5Oe9FKT
+ 2ak+47MFpNYgCYNF758CpmCGK+EFro8LYnr3Y98Z73OjC+WvQjlLj+a0y6FqcgFBx/bN
+ 3Shg==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1781327873; x=1781932673; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1781328158; x=1781932958; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=RDj3QVT1rdOi4kEFxEgIgjDtQzMJzkMLnUabvtQLe5U=;
- b=mscMPf7sBBlom4hEFEZ6Phv0uIZk+2wU0+mcbDufTN7S+x5Yq4BwWu3JlM0bRu5Fm7
- QHGuKwfp+4syckfgpbu4smip1UD7LGLVUnBVsE3y988lP6W+lw8vVQKpk90QrVvl+4AT
- TR4QnZda+SzEWsMl0Xmtbrr6Pky7Vm+MjGx2qta7NpAUnO4zIgwO5Fc/TQKo3zOzQ3KP
- 6NcbW65Bdyx8zKmSsgzmUKb3rERz4fjhveoBTBgU9axcCzgI39cWWIewppytxlHM52wj
- qcSTYm52niCaMHT59N9xkBY+VLdsmjGtibE8PRsxMXUyQU+XxF/U7b277r6OqWRwoMrL
- ofTQ==
+ bh=8it+egN+vgeOFmSRjEavP5t+0d6gXiZXjFH/DtNplZE=;
+ b=o8vwMg42MdXVeN3nCzhZr9CfD/0XY32J3NPfraK6P/07HR633iPQZ/4Sbe1yRiQ4IT
+ IK5jwBQIxUxQnz6zPdM1C+88nI/ATWBXQIDczrhcjFqV5Fid8Cwhqaktc7VGPzHpK6tt
+ D/7mOmVDvcPhiDAiB6y+DheePUq9MfTF3sWKfvK3BvCjS5wILUOxK1djzlFN2RIMXo2Q
+ ywXJ4+z/w9EtyJPb0aGqKPj7wlgwLuY+yDzP80NazRso4W36mAnXO7V4Hwliw6JU0ZoF
+ 2flr1ikLV5MMVBPQ1RJMjUpJc8YkXd5ecaiVYjOuCaJtezYjl0ZjNNuxk4mzE9JMv+C6
+ wAyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781327873; x=1781932673;
+ d=1e100.net; s=20251104; t=1781328158; x=1781932958;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=RDj3QVT1rdOi4kEFxEgIgjDtQzMJzkMLnUabvtQLe5U=;
- b=qAvOAt9M0eP1suq6BjIUwcP8Vwlbo2CukSXO91J+mUjf+KqeKkkn+hjag3LCe6fbsZ
- 4TEW/6ypH/Mwg+8mWHyyh8YIgxl174EaHO9oYU9culOoY4EEzf0IjY6qbDCakURnT4H1
- RPDyKsqGj+cBFERyMuSHb9WAW+NTD+sWA3GFIMW1rKK20FGHQaZgYnQMtpAlsOm9Sc84
- EkPV6Wexytul9KcE6USw7pzMZ+TEyuXDqD+XGjDzBnCc2LxEPbegj4K2x6y+jTXzQgEC
- SPASDGGg3sIzRA8oHzP8Gl1pC2mGJ5/pwwe4kyjz8vspXSMFilJTGq59x/WylpvCJeP3
- Q/pw==
+ bh=8it+egN+vgeOFmSRjEavP5t+0d6gXiZXjFH/DtNplZE=;
+ b=e3uU1wEKoz2GlS3ELx8YRo8naScJVn/KZ7tonck7DaMcTW78r80RSZyH+VLVmTgQ1+
+ lqDHfOLbCTcxRNN6Cjs07g5O95rL/Ar+j06IuZUIsghJqmLOXDWEUEDlr6+TXcU1dAfz
+ 5K5z2ugG7L1neYrSIrSeo75Q98ux5bH38+Yn5I/vrcrtxzdIFZ06OmUU/IK1dhBUQYSW
+ SPjTSg99+bwJSmWI1LisfKa8aKWRtNbbbwsmvDITSozTY7vklZ8tYs4l8hcXlaNvYV7R
+ vtxtR7xFycWEpPr6JsHt8HXPSwTVZTnXsPAlQ5BHK2WnhC9hbbLhEwqtJwv9zPgjd65O
+ RjrQ==
 X-Forwarded-Encrypted: i=1;
- AFNElJ/B1Amdsw3nTMwClSwF/N5hVYkMGMNY5RVRsxJwgBUNOtwe8FreweoomkGWEK+Xz2NhsQyyDmoTV8BX@nongnu.org
-X-Gm-Message-State: AOJu0YwRezFy8qUQuoPobfcjEQpI4UtrWsO+PYaBMLTyrIZOs9R5Ke30
- zqSGLCFezqouhTCBPMcmzvLImsahRufCD9NwaN8UiNC1LAS6IuQn+wrVfRcuETtPV4i37EZ5Lyv
- o6aJE30yGKVI4YqmdYs84wAaia+2wljQ=
-X-Gm-Gg: Acq92OHUYGE5GqwCvPKGtGJfRNtpgifvVIguRtDMYn780qjJalEV4qDTmMyogBIrR0a
- 328rBWQ58SFUXmBmizVEON36lXujk+XmgOx1dhUKGx3oPTVaitwv6ZFlfZy+uO5Op0hz5Kvshu8
- F5l3C2NTDHuxpxIq2E+b6BVuq8zCgD8zfqTibHrIvVhHRTZ87f9ItZmStEDyoUg5Pr5wNpGPJMI
- p05emNBOCyCPla24SUHgVJvduQ7v9ZPIfxwaYZM7wkcR4OHq+ow1dGdgIvNJjfozGhvEzIDpENR
- yfo=
-X-Received: by 2002:a17:907:9997:b0:bdb:805f:e57f with SMTP id
- a640c23a62f3a-bff4961f7b2mr109246266b.1.1781327872829; Fri, 12 Jun 2026
- 22:17:52 -0700 (PDT)
+ AFNElJ+TZIKpwXvZQiQlQrmwbf2x6ZZ4yK04MFIbq1HNEER1Ss2ms6KFyr2Y05o5Qak7oNpLGjGTb1jMcNF3@nongnu.org
+X-Gm-Message-State: AOJu0YxJKsc4NaBfCqHZ/heR7tvWpzLoMaQmHSY0Dvoiv3viMGk1Lbw1
+ cfJuGB/41cbCiJbr01ThozId29tW7ZrbgYVcQxHnC6OznSViLsiwO7Xkv64RRFo6YDxfm7Nyb/i
+ NPTRLflH+E73+/OzFI0CR31tqT3VrwDE=
+X-Gm-Gg: Acq92OG3iIKsvFLPgO5rrfExEYOHadhNGAJkd9lZRQuaYaIA0vBS11/lBAwADStzFcn
+ HUNuCMBs59cBPYmEfekya2w5YzzzM4PFsJjsR0HvDpu+l6pf4SjDu3hwXEUbL12g4Ak+pftvG1a
+ FPdORcaLwqdMee5gS+J3pYi8r5d1L8+8eFU+7KOiAbRPxWLlK17/j70aDyyjKAkHQJR69WH9q0c
+ i1a5GS3JK2cDvhQm/0VV8T5alyQZThoLY1eRSAtHYR9bSi+7hkhGdRhx3RL714XvBwZvwnPicRg
+ 5YA=
+X-Received: by 2002:a17:906:8a4b:b0:bd1:fe8f:59ab with SMTP id
+ a640c23a62f3a-bfe2a2198eamr194270566b.23.1781328157761; Fri, 12 Jun 2026
+ 22:22:37 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260605035012.2876664-1-kylefoxaustin.github@gmail.com>
- <CAFEAcA_JpBaHDucOfvc9NYkQhQBu0Py9hULTNcXajUo9gW6VGw@mail.gmail.com>
-In-Reply-To: <CAFEAcA_JpBaHDucOfvc9NYkQhQBu0Py9hULTNcXajUo9gW6VGw@mail.gmail.com>
+References: <20260605034729.2874861-1-kylefoxaustin.github@gmail.com>
+ <CAFEAcA_=2j+jHuqcCF0S9X=4q3dhY8=EKJuGCkuuUSG1jaO0bQ@mail.gmail.com>
+In-Reply-To: <CAFEAcA_=2j+jHuqcCF0S9X=4q3dhY8=EKJuGCkuuUSG1jaO0bQ@mail.gmail.com>
 From: kylefoxaustin <kylefoxaustin.github@gmail.com>
-Date: Sat, 13 Jun 2026 00:17:42 -0500
-X-Gm-Features: AVVi8CdgS-IVnxnNJ_U9mnjYAgaQ3mOQWR-uudE4h-3GIwAMRQou631oa5SkMhw
-Message-ID: <CANqqvPcJOA7vKYiq6gU9ai3DYCN0yiwW6S-o2xh2JGQNZtLZnA@mail.gmail.com>
-Subject: Re: [PATCH] target/arm: honour CCR.BFHFNMIGN for probed data BusFaults
+Date: Sat, 13 Jun 2026 00:22:26 -0500
+X-Gm-Features: AVVi8CdAsw54szzgiQrTO3kXZFGcrF7r9CpU5YPZlpAAF0-7zH1CKVJm9hvnYr0
+Message-ID: <CANqqvPeUAHNpw5_h=Lq4ts=W6sE49occngXga+o=Yezem0dr3g@mail.gmail.com>
+Subject: Re: [PATCH] target/arm: align down misaligned PMSAv7 MPU region base
+ instead of dropping it
 To: Peter Maydell <peter.maydell@linaro.org>
 Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org
-Content-Type: multipart/alternative; boundary="00000000000016acb306541bb720"
-Received-SPF: pass client-ip=2a00:1450:4864:20::62d;
- envelope-from=kylefoxaustin.github@gmail.com; helo=mail-ej1-x62d.google.com
+Content-Type: multipart/alternative; boundary="0000000000001264a006541bc874"
+Received-SPF: pass client-ip=2a00:1450:4864:20::531;
+ envelope-from=kylefoxaustin.github@gmail.com; helo=mail-ed1-x531.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,357 +117,116 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---00000000000016acb306541bb720
+--0000000000001264a006541bc874
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-Hi Peter!
-Thanks, great catch.  You're right that the SG stack-word load is an
-AccType_NORMAL access and should honour BFHFNMIGN.
+Hi Peter,
+yeah sorry for sending this in.   Based on your feedback I went a bit deepe=
+r
+and realized what you pointed out: I was chasing a software bug that
+exists in the guest and QEMU shouldn't emulate one particular
+implementation's choice as if it were architectural.
 
-I'm working on v2 to incorporate.  Basically v2 adds the check in
-v7m_read_sg_stack_word():
-on the BusFault path it records BFSR/BFAR as before but, when BFHFNMIGN is
-set at negative
-execution priority, it completes the access returning UNKNOWN data and
-returns true, instead of pending ARMV7M_EXCP_BUS. I left the vector-table,
-stacking and unstacking EXCP_BUS sites untouched, per your note that those
-are AccType_VECTABLE/STACK/UNSTACK and are not required to honour it.
+It is based on NXP's proprietary M7 sdk firmware which I can't modify.
+Plan is to clearly document local workaround and see if I can
+later convince NXP to fix it on their end.
 
-One question on the register bank: I kept ccr[M_REG_NS] in the new check to
-match the expression in the transaction_failed hook from v1, but the nearby
-STKOFHFNMIGN code in this file uses ccr[is_secure]. Happy to switch both
-sites to [secure] if you think that's more correct here.
-
-v2 follows soon for review.
-
-again many thanks!
+Please drop this one; thanks for the review!!.
 
 -- Kyle
 
 
-On Mon, Jun 8, 2026 at 6:24=E2=80=AFAM Peter Maydell <peter.maydell@linaro.=
+On Mon, Jun 8, 2026 at 4:37=E2=80=AFAM Peter Maydell <peter.maydell@linaro.=
 org>
 wrote:
 
-> On Fri, 5 Jun 2026 at 04:50, Kyle Fox <kylefoxaustin.github@gmail.com>
+> On Fri, 5 Jun 2026 at 04:47, Kyle Fox <kylefoxaustin.github@gmail.com>
 > wrote:
 > >
-> > M-profile CCR.BFHFNMIGN lets software executing at a negative execution
-> > priority (in HardFault/NMI, or with FAULTMASK set) suppress precise dat=
-a
-> > BusFaults caused by load/store instructions: the access completes
-> > returning UNKNOWN data, the fault status is recorded in BFSR/BFAR, but =
-no
-> > BusFault exception is taken. Software uses this to probe for the presen=
-ce
-> > of a device.
+> > When a PMSAv7 (ARMv7-M) MPU region's DRBAR base is not aligned to its
+> > DRSR region size, get_phys_addr_pmsav7() logged a guest-error and
+> > skipped the region entirely (continue). The architecture calls a
+> > misaligned base UNPREDICTABLE, but real Cortex-M hardware does not
+> > disable the region: RBAR.ADDR is only bits [31:log2(size)], so the
+> > sub-size low bits are simply ignored and the region matches against the
+> > aligned-down base.
 > >
-> > QEMU stored CCR.BFHFNMIGN but never consumed it: arm_cpu_do_transaction=
-_
-> > failed() always raised the external abort, which
-> arm_v7m_cpu_do_interrupt()
-> > pended as a BusFault and then escalated to a HardFault it could not tak=
-e
-> at
-> > priority -1, aborting the VM with "Lockup: can't escalate 3 to
-> HardFault".
-> >
-> > Honour the bit in arm_cpu_do_transaction_failed(): when the access is a
-> > data access from M-profile code at negative priority with BFHFNMIGN set=
-,
-> > record PRECISERR/BFARVALID and BFAR and return without raising, so the
-> > faulting instruction completes instead of re-faulting forever.
-> Instruction
-> > fetches are unaffected, since BFHFNMIGN applies only to data accesses.
-> >
-> > This surfaced running the real NXP i.MX 95 System Manager firmware on t=
-he
-> > emulated Cortex-M33: its SystemMemoryProbe() (set BFHFNMIGN + FAULTMASK=
-,
-> > do the access, test CFSR.BFARVALID) locked up the VM. With this change
-> the
-> > SM's debug-monitor memory-probe commands run and recover correctly.
-> >
-> > Signed-off-by: Kyle Fox <kylefoxaustin.github@gmail.com>
-> > ---
-> > Found while bringing up an out-of-tree i.MX 95 machine running the real
-> NXP
-> > System Manager firmware on the emulated Cortex-M33; the change is
-> generic to
-> > any ARMv7-M guest that probes for devices via BusFault suppression. It =
-is
-> > independent of (and posted alongside) a separate PMSAv7 MPU align-down
-> fix
-> > from the same bring-up.
-> >
-> > The new path only runs for an M-profile data access at negative priorit=
-y
-> with
-> > CCR.BFHFNMIGN set - the previously-broken case that aborted the VM.
-> Normal
-> > BusFaults (no BFHFNMIGN, or at non-negative priority) and instruction
-> fetches
-> > are unchanged.
-> >
-> > Tested on master: qemu-system-arm builds clean, and the ARMv7-M / MPS2
-> qtests
-> > pass with no regression -- boot-serial (incl. stm32vldiscovery,
-> Cortex-M3),
-> > the stm32l4x5 suite (Cortex-M4: exti/gpio/rcc/syscfg/usart), microbit,
-> > sse-timer and cmsdk-apb-watchdog.
-> >
-> >  target/arm/tcg/tlb_helper.c | 24 ++++++++++++++++++++++++
-> >  1 file changed, 24 insertions(+)
-> >
-> > diff --git a/target/arm/tcg/tlb_helper.c b/target/arm/tcg/tlb_helper.c
-> > index f90765cb59..cbef9cb03e 100644
-> > --- a/target/arm/tcg/tlb_helper.c
-> > +++ b/target/arm/tcg/tlb_helper.c
-> > @@ -10,6 +10,7 @@
-> >  #include "helper.h"
-> >  #include "internals.h"
-> >  #include "cpu-features.h"
-> > +#include "hw/intc/armv7m_nvic.h"
-> >
-> >  /*
-> >   * Returns true if the stage 1 translation regime is using LPAE format
-> page
-> > @@ -318,8 +319,31 @@ void arm_cpu_do_transaction_failed(CPUState *cs,
-> hwaddr physaddr,
-> >                                     MemTxResult response, uintptr_t
-> retaddr)
-> >  {
-> >      ARMCPU *cpu =3D ARM_CPU(cs);
-> > +    CPUARMState *env =3D &cpu->env;
-> >      ARMMMUFaultInfo fi =3D {};
-> >
-> > +    /*
-> > +     * For M-profile, CCR.BFHFNMIGN lets software executing at a
-> negative
-> > +     * priority (in HardFault/NMI, or with FAULTMASK set) suppress
-> precise
-> > +     * data BusFaults from load/store instructions: the access complet=
-es
-> > +     * returning UNKNOWN data (the store is dropped), the fault status
-> is
-> > +     * recorded in BFSR/BFAR, but no BusFault exception is taken. This
-> is
-> > +     * the mechanism software uses to probe for the presence of a devi=
-ce
-> > +     * (e.g. the NXP System Manager's SystemMemoryProbe). Honour it by
-> > +     * recording the status and returning without raising, so the
-> faulting
-> > +     * instruction completes rather than re-faulting forever. BFHFNMIG=
-N
-> > +     * applies only to data accesses, so instruction fetches are
-> unaffected.
-> > +     */
-> > +    if (arm_feature(env, ARM_FEATURE_M) &&
-> > +        access_type !=3D MMU_INST_FETCH &&
-> > +        (env->v7m.ccr[M_REG_NS] & R_V7M_CCR_BFHFNMIGN_MASK) &&
-> > +        armv7m_nvic_neg_prio_requested(env->nvic, env->v7m.secure)) {
-> > +        env->v7m.cfsr[M_REG_NS] |=3D
-> > +            (R_V7M_CFSR_PRECISERR_MASK | R_V7M_CFSR_BFARVALID_MASK);
-> > +        env->v7m.bfar =3D addr;
-> > +        return;
-> > +    }
+> > NXP's i.MX95 Cortex-M7 firmware (and the MCUXpresso SDK demos) rely on
+> > this. The M7 sets up a deny-all background region (region 0, whole
+> > address space, AP=3D000) and then grants the peripheral space with a
+> > 512 MiB region programmed as DRBAR=3D0x4c800000 - misaligned, intended =
+as
+> > 0x40000000. QEMU dropped that region, so a privileged access to e.g.
+> > LPUART3 at 0x42570000 fell through to the deny-all region and took a
+> > MemManage fault (CFSR.DACCVIOL), trapping the firmware in its default
+> > fault handler before it could print anything.
 >
-> Thanks for this patch. This looks good, but it misses a very
-> obscure corner case, which is the load of the word from the stack
-> performed by the SG instruction. In the pseudocode that is an
-> AccType_NORMAL access, so it should honour BFHFNMIGN. In QEMU
-> we (for complicated reasons) implement that load manually in
-> v7m_read_sg_stack_word(), so it doesn't go through the TCG TLB
-> and this transaction_failed hook. So v7m_read_sg_stack_word()
-> should check BFHFNMIGN to see if it should pend the ARMV7M_EXCP_BUS.
->
-> The other places where we manually pend EXCP_BUS are all ones
-> which should not or are not required to honour BFHFNMIGN
-> (vector table loads, stacking and unstacking, which are
-> AccType_VECTABLE, AccType_STACK, AccType_UNSTACK).
+> This is a guest software bug -- software must not rely on UNPREDICTABLE
+> behaviour, even if the hardware implementation happens to do the
+> same thing every time. Other M-profile CPUs might do something different.
+> The right thing to do here is to fix the broken software...
 >
 > thanks
 > -- PMM
 >
 
---00000000000016acb306541bb720
+--0000000000001264a006541bc874
 Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-<div dir=3D"ltr"><div>Hi Peter!</div><div>Thanks, great catch.=C2=A0 You&#3=
-9;re right that the SG stack-word load is an</div>AccType_NORMAL access and=
- should honour BFHFNMIGN.<br><div><br></div><div>I&#39;m working on v2 to i=
-ncorporate.=C2=A0 Basically=C2=A0v2 adds the check in v7m_read_sg_stack_wor=
-d():=C2=A0</div><div>on the BusFault path it=C2=A0records BFSR/BFAR as befo=
-re but, when BFHFNMIGN is set at negative</div>execution priority, it compl=
-etes the access returning UNKNOWN data and<br>returns true, instead of pend=
-ing ARMV7M_EXCP_BUS. I left the vector-table,<br>stacking and unstacking EX=
-CP_BUS sites untouched, per your note that those<br>are AccType_VECTABLE/ST=
-ACK/UNSTACK and are not required to honour it.<br><br>One question on the r=
-egister bank: I kept ccr[M_REG_NS] in the new check to<br>match the express=
-ion in the transaction_failed hook from v1, but the nearby<br>STKOFHFNMIGN =
-code in this file uses ccr[is_secure]. Happy to switch both<br>sites to [se=
-cure] if you think that&#39;s more correct here.<br><br>v2 follows soon for=
- review.<br><br><div>again many thanks!</div><div><br></div>-- Kyle</div><d=
-iv dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote"><d=
-iv dir=3D"ltr" class=3D"gmail_attr">On Mon, Jun 8, 2026 at 6:24=E2=80=AFAM =
-Peter Maydell &lt;<a href=3D"mailto:peter.maydell@linaro.org" target=3D"_bl=
-ank">peter.maydell@linaro.org</a>&gt; wrote:<br></div><blockquote class=3D"=
-gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(20=
-4,204,204);padding-left:1ex">On Fri, 5 Jun 2026 at 04:50, Kyle Fox &lt;<a h=
-ref=3D"mailto:kylefoxaustin.github@gmail.com" target=3D"_blank">kylefoxaust=
-in.github@gmail.com</a>&gt; wrote:<br>
+<div dir=3D"ltr"><div>Hi Peter,</div><div>yeah sorry for sending this in.=
+=C2=A0 =C2=A0Based on your feedback I went a bit deeper<br>and realized wha=
+t you pointed out: I was chasing a software bug that=C2=A0<br>exists in the=
+ guest and QEMU shouldn&#39;t emulate one particular=C2=A0<br>implementatio=
+n&#39;s choice as if it were architectural.</div><div><br>It is based on NX=
+P&#39;s proprietary M7 sdk firmware which I can&#39;t modify.=C2=A0=C2=A0<b=
+r>Plan is to clearly document local workaround and see if I can=C2=A0<br>la=
+ter convince NXP to fix it on their end.=C2=A0</div><div><br></div>Please d=
+rop this one; thanks for the review!!.<br><br>-- Kyle</div><div dir=3D"ltr"=
+><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote"><div dir=3D"ltr"=
+ class=3D"gmail_attr">On Mon, Jun 8, 2026 at 4:37=E2=80=AFAM Peter Maydell =
+&lt;<a href=3D"mailto:peter.maydell@linaro.org" target=3D"_blank">peter.may=
+dell@linaro.org</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" s=
+tyle=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);pad=
+ding-left:1ex">On Fri, 5 Jun 2026 at 04:47, Kyle Fox &lt;<a href=3D"mailto:=
+kylefoxaustin.github@gmail.com" target=3D"_blank">kylefoxaustin.github@gmai=
+l.com</a>&gt; wrote:<br>
 &gt;<br>
-&gt; M-profile CCR.BFHFNMIGN lets software executing at a negative executio=
-n<br>
-&gt; priority (in HardFault/NMI, or with FAULTMASK set) suppress precise da=
-ta<br>
-&gt; BusFaults caused by load/store instructions: the access completes<br>
-&gt; returning UNKNOWN data, the fault status is recorded in BFSR/BFAR, but=
- no<br>
-&gt; BusFault exception is taken. Software uses this to probe for the prese=
-nce<br>
-&gt; of a device.<br>
+&gt; When a PMSAv7 (ARMv7-M) MPU region&#39;s DRBAR base is not aligned to =
+its<br>
+&gt; DRSR region size, get_phys_addr_pmsav7() logged a guest-error and<br>
+&gt; skipped the region entirely (continue). The architecture calls a<br>
+&gt; misaligned base UNPREDICTABLE, but real Cortex-M hardware does not<br>
+&gt; disable the region: RBAR.ADDR is only bits [31:log2(size)], so the<br>
+&gt; sub-size low bits are simply ignored and the region matches against th=
+e<br>
+&gt; aligned-down base.<br>
 &gt;<br>
-&gt; QEMU stored CCR.BFHFNMIGN but never consumed it: arm_cpu_do_transactio=
-n_<br>
-&gt; failed() always raised the external abort, which arm_v7m_cpu_do_interr=
-upt()<br>
-&gt; pended as a BusFault and then escalated to a HardFault it could not ta=
-ke at<br>
-&gt; priority -1, aborting the VM with &quot;Lockup: can&#39;t escalate 3 t=
-o HardFault&quot;.<br>
-&gt;<br>
-&gt; Honour the bit in arm_cpu_do_transaction_failed(): when the access is =
-a<br>
-&gt; data access from M-profile code at negative priority with BFHFNMIGN se=
-t,<br>
-&gt; record PRECISERR/BFARVALID and BFAR and return without raising, so the=
+&gt; NXP&#39;s i.MX95 Cortex-M7 firmware (and the MCUXpresso SDK demos) rel=
+y on<br>
+&gt; this. The M7 sets up a deny-all background region (region 0, whole<br>
+&gt; address space, AP=3D000) and then grants the peripheral space with a<b=
+r>
+&gt; 512 MiB region programmed as DRBAR=3D0x4c800000 - misaligned, intended=
+ as<br>
+&gt; 0x40000000. QEMU dropped that region, so a privileged access to e.g.<b=
+r>
+&gt; LPUART3 at 0x42570000 fell through to the deny-all region and took a<b=
+r>
+&gt; MemManage fault (CFSR.DACCVIOL), trapping the firmware in its default<=
+br>
+&gt; fault handler before it could print anything.<br>
 <br>
-&gt; faulting instruction completes instead of re-faulting forever. Instruc=
-tion<br>
-&gt; fetches are unaffected, since BFHFNMIGN applies only to data accesses.=
-<br>
-&gt;<br>
-&gt; This surfaced running the real NXP i.MX 95 System Manager firmware on =
-the<br>
-&gt; emulated Cortex-M33: its SystemMemoryProbe() (set BFHFNMIGN + FAULTMAS=
-K,<br>
-&gt; do the access, test CFSR.BFARVALID) locked up the VM. With this change=
- the<br>
-&gt; SM&#39;s debug-monitor memory-probe commands run and recover correctly=
-.<br>
-&gt;<br>
-&gt; Signed-off-by: Kyle Fox &lt;<a href=3D"mailto:kylefoxaustin.github@gma=
-il.com" target=3D"_blank">kylefoxaustin.github@gmail.com</a>&gt;<br>
-&gt; ---<br>
-&gt; Found while bringing up an out-of-tree i.MX 95 machine running the rea=
-l NXP<br>
-&gt; System Manager firmware on the emulated Cortex-M33; the change is gene=
-ric to<br>
-&gt; any ARMv7-M guest that probes for devices via BusFault suppression. It=
- is<br>
-&gt; independent of (and posted alongside) a separate PMSAv7 MPU align-down=
- fix<br>
-&gt; from the same bring-up.<br>
-&gt;<br>
-&gt; The new path only runs for an M-profile data access at negative priori=
-ty with<br>
-&gt; CCR.BFHFNMIGN set - the previously-broken case that aborted the VM. No=
-rmal<br>
-&gt; BusFaults (no BFHFNMIGN, or at non-negative priority) and instruction =
-fetches<br>
-&gt; are unchanged.<br>
-&gt;<br>
-&gt; Tested on master: qemu-system-arm builds clean, and the ARMv7-M / MPS2=
- qtests<br>
-&gt; pass with no regression -- boot-serial (incl. stm32vldiscovery, Cortex=
--M3),<br>
-&gt; the stm32l4x5 suite (Cortex-M4: exti/gpio/rcc/syscfg/usart), microbit,=
-<br>
-&gt; sse-timer and cmsdk-apb-watchdog.<br>
-&gt;<br>
-&gt;=C2=A0 target/arm/tcg/tlb_helper.c | 24 ++++++++++++++++++++++++<br>
-&gt;=C2=A0 1 file changed, 24 insertions(+)<br>
-&gt;<br>
-&gt; diff --git a/target/arm/tcg/tlb_helper.c b/target/arm/tcg/tlb_helper.c=
-<br>
-&gt; index f90765cb59..cbef9cb03e 100644<br>
-&gt; --- a/target/arm/tcg/tlb_helper.c<br>
-&gt; +++ b/target/arm/tcg/tlb_helper.c<br>
-&gt; @@ -10,6 +10,7 @@<br>
-&gt;=C2=A0 #include &quot;helper.h&quot;<br>
-&gt;=C2=A0 #include &quot;internals.h&quot;<br>
-&gt;=C2=A0 #include &quot;cpu-features.h&quot;<br>
-&gt; +#include &quot;hw/intc/armv7m_nvic.h&quot;<br>
-&gt;<br>
-&gt;=C2=A0 /*<br>
-&gt;=C2=A0 =C2=A0* Returns true if the stage 1 translation regime is using =
-LPAE format page<br>
-&gt; @@ -318,8 +319,31 @@ void arm_cpu_do_transaction_failed(CPUState *cs, =
-hwaddr physaddr,<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0MemTxResult r=
-esponse, uintptr_t retaddr)<br>
-&gt;=C2=A0 {<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 ARMCPU *cpu =3D ARM_CPU(cs);<br>
-&gt; +=C2=A0 =C2=A0 CPUARMState *env =3D &amp;cpu-&gt;env;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 ARMMMUFaultInfo fi =3D {};<br>
-&gt;<br>
-&gt; +=C2=A0 =C2=A0 /*<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0* For M-profile, CCR.BFHFNMIGN lets software exec=
-uting at a negative<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0* priority (in HardFault/NMI, or with FAULTMASK s=
-et) suppress precise<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0* data BusFaults from load/store instructions: th=
-e access completes<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0* returning UNKNOWN data (the store is dropped), =
-the fault status is<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0* recorded in BFSR/BFAR, but no BusFault exceptio=
-n is taken. This is<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0* the mechanism software uses to probe for the pr=
-esence of a device<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0* (e.g. the NXP System Manager&#39;s SystemMemory=
-Probe). Honour it by<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0* recording the status and returning without rais=
-ing, so the faulting<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0* instruction completes rather than re-faulting f=
-orever. BFHFNMIGN<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0* applies only to data accesses, so instruction f=
-etches are unaffected.<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0*/<br>
-&gt; +=C2=A0 =C2=A0 if (arm_feature(env, ARM_FEATURE_M) &amp;&amp;<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 access_type !=3D MMU_INST_FETCH &amp;&amp=
-;<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 (env-&gt;v7m.ccr[M_REG_NS] &amp; R_V7M_CC=
-R_BFHFNMIGN_MASK) &amp;&amp;<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 armv7m_nvic_neg_prio_requested(env-&gt;nv=
-ic, env-&gt;v7m.secure)) {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 env-&gt;v7m.cfsr[M_REG_NS] |=3D<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 (R_V7M_CFSR_PRECISERR_MASK =
-| R_V7M_CFSR_BFARVALID_MASK);<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 env-&gt;v7m.bfar =3D addr;<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 return;<br>
-&gt; +=C2=A0 =C2=A0 }<br>
-<br>
-Thanks for this patch. This looks good, but it misses a very<br>
-obscure corner case, which is the load of the word from the stack<br>
-performed by the SG instruction. In the pseudocode that is an<br>
-AccType_NORMAL access, so it should honour BFHFNMIGN. In QEMU<br>
-we (for complicated reasons) implement that load manually in<br>
-v7m_read_sg_stack_word(), so it doesn&#39;t go through the TCG TLB<br>
-and this transaction_failed hook. So v7m_read_sg_stack_word()<br>
-should check BFHFNMIGN to see if it should pend the ARMV7M_EXCP_BUS.<br>
-<br>
-The other places where we manually pend EXCP_BUS are all ones<br>
-which should not or are not required to honour BFHFNMIGN<br>
-(vector table loads, stacking and unstacking, which are<br>
-AccType_VECTABLE, AccType_STACK, AccType_UNSTACK).<br>
+This is a guest software bug -- software must not rely on UNPREDICTABLE<br>
+behaviour, even if the hardware implementation happens to do the<br>
+same thing every time. Other M-profile CPUs might do something different.<b=
+r>
+The right thing to do here is to fix the broken software...<br>
 <br>
 thanks<br>
 -- PMM<br>
 </blockquote></div></div>
 
---00000000000016acb306541bb720--
+--0000000000001264a006541bc874--
 
