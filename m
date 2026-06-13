@@ -4,44 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A567CD98CF
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D23B2CD8CA8
 	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 20:44:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wYVBL-0006AG-6T; Sat, 13 Jun 2026 16:42:20 -0400
+	id 1wYVCK-0000nY-Ri; Sat, 13 Jun 2026 16:43:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYVB8-0005kh-KS; Sat, 13 Jun 2026 16:42:08 -0400
+ id 1wYVCF-0000XC-Am; Sat, 13 Jun 2026 16:43:17 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYVB3-0005RM-2V; Sat, 13 Jun 2026 16:42:03 -0400
+ id 1wYVCB-0005lN-9m; Sat, 13 Jun 2026 16:43:14 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1781382966; bh=8HHM1w7x1VDQswcT8xzFVme9fABgIN0/85/hbVFQpwc=;
+ t=1781382967; bh=m5IAU8IqElonT7fQAjsY3AIw/X/Ijl9y7o08uPY1MMQ=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=n0ldSWnTxDB8csS5p2Rrjsgedb4UjlFJ5798D6FgN2I2wFFpQiQYhEdt584/c5f0j
- gcu95sIpKTugqenLDvImWG/Gqr1qLc5qlPQTkFUOSqrCB8d8aoGHYYhQ04xg+HA+jk
- S3icv6zyCPb4fyy+nyTluAccYCj2dt5+zaqGZwQjiKUY7OS790pwQMs419GSZDWPtk
- wOQ7+FzV3SrKBFonTLAoOwWahOjW6vxJP3vdD8IoEaeFsABujreWv1A1xcARdIbzcg
- T0YIbIzUL/uORuTPZjjQ+wejKMyF2tx0JL5JDZAAHkrmPJz5DSD67l7nwZOtW+ecFo
- U+VzJQ2dh7HFw==
+ b=uIrN6UCdILxnjd/SiXYHcTSek6biXFlwVA2GULxSxBLWqrly1Y86Svc1HN1BYU9cD
+ YjGX5FVLSDDgDFyYA+Qo9UbSgd46pn7XpvFUR1fKKf5f5XlDwXoDYV5ByVlwzN2Kj8
+ 5Egg358bypv6J+SH39qMeSlSGbm/xBPYyPR2vtSmw+dc5hH7qx5ya/wh6OtFE+8d3A
+ yyvrbajt1M3j3jUU4Qi5LcneFyLY2fzvCCSxyj1jBDw2BvTDUvLzGvNOSYq5wWANWL
+ 7UFxkuoLYd/ZWMY2g2JSWnoePDNHq22gSmyemENq0jj7qRbZmCQIm11SLrrGMpam8N
+ r9kPhOx2sqVmg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 528501B6F1E;
- Sat, 13 Jun 2026 23:36:06 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 3258D1B6F2B;
+ Sat, 13 Jun 2026 23:36:07 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id B87103CE968;
- Sat, 13 Jun 2026 23:36:24 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 992213CE974;
+ Sat, 13 Jun 2026 23:36:25 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>,
- Feifan Qian <bea1e@proton.me>, Paolo Bonzini <pbonzini@redhat.com>,
- Kevin Wolf <kwolf@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.2 60/72] virtio-blk: add missing VIRTIO_BLK_T_SCSI_CMD
- size check (CVE-2026-48914)
-Date: Sat, 13 Jun 2026 23:35:26 +0300
-Message-ID: <20260613203542.1809153-60-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Xinhui Yang <cyan@cyano.uk>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Helge Deller <deller@gmx.de>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.2 72/72] linux-user/strace: add fsmount series of
+ syscalls
+Date: Sat, 13 Jun 2026 23:35:38 +0300
+Message-ID: <20260613203542.1809153-72-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.2-20260613224644@cover.tls.msk.ru>
 References: <qemu-stable-11.0.2-20260613224644@cover.tls.msk.ru>
@@ -70,50 +70,176 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Stefan Hajnoczi <stefanha@redhat.com>
+From: Xinhui Yang <cyan@cyano.uk>
 
-Check that the iovec containing struct virtio_scsi_inhdr is large enough
-before storing an error value there.
+Following the addition of fsmount(2) series of syscalls in the syscall
+handler, strace support is added, with a dedicated function to print the
+parameters of fsconfig(2), which contains parameters that can be
+interpreted as multiple types.
 
-Feifan Qian <bea1e@proton.me> pointed out that this can be used to
-corrupt heap memory when the descriptor uses an MMIO address and a
-length of 1, forcing QEMU to allocate a 1-byte heap bounce buffer.
-virtio_stl_p() stores 4 bytes and therefore corrupts whatever is beyond
-the bounce buffer.
+Snippet of the strace dump when running `mount -t tmpfs tmpfs /media`:
 
-Fixes: CVE-2026-48914
-Fixes: f34e73cd69bd ("virtio-blk: report non-zero status when failing SG_IO requests")
-Reported-by: Feifan Qian <bea1e@proton.me>
-Cc: Paolo Bonzini <pbonzini@redhat.com>
-Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
-Message-ID: <20260526154957.1741622-1-stefanha@redhat.com>
-Reviewed-by: Kevin Wolf <kwolf@redhat.com>
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-(cherry picked from commit aeea0c2804c42f24915467a1e4c70e649e39b8e0)
+18 fsopen(tmpfs,1) = 3
+18 read(3,0x407fcf1c,8191) = -1 errno=61 (No data available)
+18 fsconfig(3,FSCONFIG_SET_STRING,"source","tmpfs",0) = 0
+18 read(3,0x407fce3c,8191) = -1 errno=61 (No data available)
+18 fsconfig(3,FSCONFIG_CMD_CREATE,NULL,NULL,0) = 0
+18 read(3,0x407fce3c,8191) = -1 errno=61 (No data available)
+18 fsmount(3,1,0) = 4
+18 read(3,0x407fce3c,8191) = -1 errno=61 (No data available)
+18 statx(4,"",AT_EMPTY_PATH|AT_STATX_SYNC_AS_STAT,0x1000,0x407fee98) = 0
+18 move_mount(4,,-100,/media,4) = 0
+18 read(3,0x407fcfcc,8191) = -1 errno=61 (No data available)
+18 close(3) = 0
+18 close(4) = 0
+
+v2: Fixed build on RHEL9 due to missing syscalls (Helge)
+
+Signed-off-by: Xinhui Yang <cyan@cyano.uk>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Signed-off-by: Helge Deller <deller@gmx.de>
+(cherry picked from commit 6e0aa9f6c731df3f8d1071cfd5ec63fe7b923713)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/block/virtio-blk.c b/hw/block/virtio-blk.c
-index 9cb9f1fb2b..6b92066aff 100644
---- a/hw/block/virtio-blk.c
-+++ b/hw/block/virtio-blk.c
-@@ -199,10 +199,16 @@ static void virtio_blk_handle_scsi(VirtIOBlockReq *req)
+diff --git a/linux-user/strace.c b/linux-user/strace.c
+index 2cbaf94c89..3a81cc95f4 100644
+--- a/linux-user/strace.c
++++ b/linux-user/strace.c
+@@ -4344,6 +4344,111 @@ print_statx(CPUArchState *cpu_env, const struct syscallname *name,
+ }
+ #endif
  
-     /*
-      * The scsi inhdr is placed in the second-to-last input segment, just
--     * before the regular inhdr.
-+     * before the regular inhdr. VIRTIO implementations normally do not rely on
-+     * the precise message framing, but legacy implementations did and so we do
-+     * too for the legacy virtio-blk SCSI request type.
-      *
-      * Just put anything nonzero so that the ioctl fails in the guest.
-      */
-+    if (elem->in_sg[elem->in_num - 2].iov_len != sizeof(*scsi)) {
-+        status = VIRTIO_BLK_S_IOERR;
-+        goto fail;
++#if defined(TARGET_NR_fsconfig) && defined(NR_fsconfig)
++static void
++print_fsconfig_cmd_name(int cmd)
++{
++    switch (cmd) {
++    case FSCONFIG_SET_FLAG:
++        qemu_log("%s%s", "FSCONFIG_SET_FLAG", get_comma(0));
++        break;
++    case FSCONFIG_SET_STRING:
++        qemu_log("%s%s", "FSCONFIG_SET_STRING", get_comma(0));
++        break;
++    case FSCONFIG_SET_BINARY:
++        qemu_log("%s%s", "FSCONFIG_SET_BINARY", get_comma(0));
++        break;
++    case FSCONFIG_SET_PATH:
++        qemu_log("%s%s", "FSCONFIG_SET_PATH", get_comma(0));
++        break;
++    case FSCONFIG_SET_PATH_EMPTY:
++        qemu_log("%s%s", "FSCONFIG_SET_PATH_EMPTY", get_comma(0));
++        break;
++    case FSCONFIG_SET_FD:
++        qemu_log("%s%s", "FSCONFIG_SET_FD", get_comma(0));
++        break;
++    case FSCONFIG_CMD_CREATE:
++        qemu_log("%s%s", "FSCONFIG_CMD_CREATE", get_comma(0));
++        break;
++    case FSCONFIG_CMD_RECONFIGURE:
++        qemu_log("%s%s", "FSCONFIG_CMD_RECONFIGURE", get_comma(0));
++        break;
++#ifdef FSCONFIG_CMD_CREATE_EXCL
++    case FSCONFIG_CMD_CREATE_EXCL:
++        /* Only available since Linux 6.6. */
++        qemu_log("%s%s", "FSCONFIG_CMD_CREATE_EXCL", get_comma(0));
++        break;
++#endif
++    default:
++        qemu_log("%s (%d)%s", "UNKNOWN_CMD", cmd, get_comma(0));
++        break;
 +    }
-     scsi = (void *)elem->in_sg[elem->in_num - 2].iov_base;
-     virtio_stl_p(vdev, &scsi->errors, 255);
-     status = VIRTIO_BLK_S_UNSUPP;
++}
++
++static void
++print_fsconfig(CPUArchState *cpu_env, const struct syscallname *name,
++            abi_long arg0, abi_long arg1, abi_long arg2,
++            abi_long arg3, abi_long arg4, abi_long arg5)
++{
++    /*
++     * fsconfig(int fd, int cmd, char* key, void* value, int aux)
++     * Where:
++     * fd: file descriptor returned by fsopen().
++     * cmd: integer constant specifying a command.
++     * key: a string, can be NULL on certain commands.
++     * value: any data in a buffer, can be NULL, raw buffer or a string.
++     * aux: axillary values such as flags for FSCONFIG_SET_PATH.
++     */
++    int cmd = (int) arg1;
++    print_syscall_prologue(name);
++    print_raw_param("%d", arg0, 0);
++    print_fsconfig_cmd_name(cmd);
++    /* Process arg2 (key). */
++    switch (cmd) {
++    case FSCONFIG_SET_FLAG:
++    case FSCONFIG_SET_STRING:
++    case FSCONFIG_SET_BINARY:
++    case FSCONFIG_SET_PATH:
++    case FSCONFIG_SET_PATH_EMPTY:
++    case FSCONFIG_SET_FD:
++        print_string(arg2, 0);
++        break;
++    default:
++        print_pointer(arg2, 0);
++        break;
++    }
++    /* Process arg3 (value). */
++    switch (cmd) {
++    case FSCONFIG_SET_STRING:
++    case FSCONFIG_SET_PATH:
++    case FSCONFIG_SET_PATH_EMPTY:
++        print_string(arg3, 0);
++        break;
++    default:
++        print_pointer(arg3, 0);
++        break;
++    }
++    /*
++     * Process arg4 (aux).
++     * On FSCONFIG_SET_PATH and FSCONFIG_SET_PATH_EMPTY, aux can
++     * be either 0 or AT_FDCWD.
++     * On FSCONFIG_SET_BINARY, aux is an integer to state the length
++     * of the buffer pointed by arg3.
++     * Otherwise, it must be 0.
++     */
++    switch (cmd) {
++    case FSCONFIG_SET_PATH:
++    case FSCONFIG_SET_PATH_EMPTY:
++        print_at_dirfd(arg4, 1);
++        break;
++    default:
++        print_raw_param("%d", arg4, 1);
++        break;
++    }
++    print_syscall_epilogue(name);
++}
++#endif
++
+ #ifdef TARGET_NR_ioctl
+ static void
+ print_ioctl(CPUArchState *cpu_env, const struct syscallname *name,
+diff --git a/linux-user/strace.list b/linux-user/strace.list
+index 6162a407f9..e363892e0a 100644
+--- a/linux-user/strace.list
++++ b/linux-user/strace.list
+@@ -1722,3 +1722,18 @@
+ #ifdef TARGET_NR_rseq
+ { TARGET_NR_rseq, "rseq" , "%s(%p,%u,%d,%#x)", NULL, NULL },
+ #endif
++#ifdef TARGET_NR_fsopen
++{ TARGET_NR_fsopen, "fsopen", "%s(%s,%d)", NULL, NULL },
++#endif
++#if defined(TARGET_NR_fsconfig) && defined(NR_fsconfig)
++{ TARGET_NR_fsconfig, "fsconfig", NULL, print_fsconfig, NULL },
++#endif
++#ifdef TARGET_NR_fsmount
++{ TARGET_NR_fsmount, "fsmount", "%s(%d,%d,%d)", NULL, NULL },
++#endif
++#ifdef TARGET_NR_move_mount
++{ TARGET_NR_move_mount, "move_mount", "%s(%d,%s,%d,%s,%d)", NULL, NULL },
++#endif
++#ifdef TARGET_NR_fspick
++{ TARGET_NR_fspick, "fspick", "%s(%d,%s,%d)", NULL, NULL },
++#endif
 -- 
 2.47.3
 
