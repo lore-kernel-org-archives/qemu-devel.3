@@ -4,45 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F76FCD98CF
-	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 20:07:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70D99CD98CF
+	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 20:07:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wYUbP-0008Gy-Ub; Sat, 13 Jun 2026 16:05:12 -0400
+	id 1wYUdU-0003E4-TS; Sat, 13 Jun 2026 16:07:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYUbO-0008AD-64; Sat, 13 Jun 2026 16:05:10 -0400
+ id 1wYUco-0002Ht-Nd; Sat, 13 Jun 2026 16:06:46 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYUbM-00008M-Ay; Sat, 13 Jun 2026 16:05:09 -0400
+ id 1wYUcm-0000em-UK; Sat, 13 Jun 2026 16:06:38 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1781381067; bh=vN1tXsRI4q1sMHMFwDoc8WDDIJjrazVuNF6Lz6vNf2s=;
+ t=1781381068; bh=n0YukLLGYQno0FZhxD8nDgudpOyPh15NVnvrjUIbGiA=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=XpLL/8OCpV8EAhPWKQjiopwW5Gy+3XSl6pX7QX90hABninQ0ztcWjoVo1MSORyHhO
- 0ZMluJ6E7BU1U+4nwyujz/fwDqO+n2WgOJNWPZhOHgkka76ZTRGoAzC6zgJ+4cnBCe
- rACCakvEKxd2GbbSLVd3N9T1f0hbOpN54CQw6W/J0y1FpRMsLjYW8ei8ml6RDoZLep
- ETVqsQGBDbw7avZ/Rs2tkml7IYmkWMqjElkpMi2VVYLANgg7L9l+8ijFZVENPm3NSd
- NzDVKVh0Lsu6/vPchfhum/7/dmJlCFBYHQyLOpJzmaNJAUCFtoj5xFF4XNropsy4L5
- Ofb2vIBvcV7Pw==
+ b=QG8Zf+XBaIS4hSR53DS45IIOZZZ3J59VJrJvYTcBJ1Og2Jg3YYzliQQfvPS4AA6xe
+ BMgE80sJkcKyQy1fdzUkCNC2ymsiwMjGORwSUvZ/rbGDhnwJ4/mHNNmhkgedxrKluQ
+ 9ucvzAhrxGDIoSz5EHVKktBxZA4ho3uGinKnAvcSKfmELCZhWIr1eBQoYHHSmvBXvs
+ ai1fWu3L/3lJfVj/fV/tcZtyip4GR/UI48nLiWtwrTyOGSl6sOxWjpEFl4vbXFfjPx
+ 088e3Bp4d2xNgtFmBGTTRQjQTJ40wBY0dY3EeqnXgr4B0PEVf4LrGjNSYzC5mL7SO1
+ kk8bMMejpkFOw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id A6E8A1B6E73;
- Sat, 13 Jun 2026 23:04:27 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 62F541B6E7F;
+ Sat, 13 Jun 2026 23:04:28 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 0FE1D3CE8D6;
+ by tsrv.corpit.ru (Postfix) with ESMTP id C0C093CE8E1;
  Sat, 13 Jun 2026 23:04:46 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Zishun Yi <vulab@iscas.ac.cn>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.4 12/61] target/riscv: clear mseccfg on reset for all
- dependent extensions
-Date: Sat, 13 Jun 2026 23:02:55 +0300
-Message-ID: <20260613200411.1808021-12-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Wei Che Kao <skps96g313.cs10@gmail.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.2.4 23/61] apic: fix delivery bitmask with modified xAPIC
+ ids
+Date: Sat, 13 Jun 2026 23:03:06 +0300
+Message-ID: <20260613200411.1808021-23-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.2.4-20260613224639@cover.tls.msk.ru>
 References: <qemu-stable-10.2.4-20260613224639@cover.tls.msk.ru>
@@ -71,46 +69,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Zishun Yi <vulab@iscas.ac.cn>
+From: Paolo Bonzini <pbonzini@redhat.com>
 
-Currently, the `mseccfg` CSR is only cleared to 0 during reset if the
-`ext_smepmp` is enabled. However, this register is now shared by
-several other extensions such as `zkr`, `smmpm`, and `zicfilp`.
+Self-IPIs (or all-but-self IPIs) in QEMU can cause a out-of-bounds access
+to deliver_bitmask, because the access uses the APIC ID register which
+is writable by the guest.  However, foreach_apic uses the delivery
+bitmask indexes to look up the local_apics[] array, which is indexed
+by *initial* APIC id.  Using the right id fixes both a possible heap
+write overflow if the modified APIC id is too large for max_apic_words,
+and a mis-delivery of both self and all-but-self IPIs.
 
-Fix by clearing `mseccfg` if any dependent extension is present, and
-adjusting the relevant comments.
-
-This vulnerability was discovered and reported by SpecHunter, an
-AI-driven architecture specification analysis tool.
-
-Link: https://github.com/yizishun/rv-isa-sec/blob/master/output/riscv-svvptc/pr-134/qemu.txt
-Signed-off-by: Zishun Yi <vulab@iscas.ac.cn>
-Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Message-ID: <20260512052240.330815-1-vulab@iscas.ac.cn>
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-(cherry picked from commit 8158a74f0a0db8626d7836eb03eca7aba46c18b5)
+Reported-by: Wei Che Kao <skps96g313.cs10@gmail.com>
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+(cherry picked from commit 153dc2fa7bbe0491290d22c4bbb6807074f24260)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index 73d4280d7c..b41c5a2c08 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -755,10 +755,14 @@ static void riscv_cpu_reset_hold(Object *obj, ResetType type)
+diff --git a/hw/intc/apic.c b/hw/intc/apic.c
+index aad253af15..69162668eb 100644
+--- a/hw/intc/apic.c
++++ b/hw/intc/apic.c
+@@ -647,13 +647,6 @@ static void apic_deliver(APICCommonState *s, uint32_t dest, uint8_t dest_mode,
+     APICCommonState *apic_iter;
+     uint32_t deliver_bitmask_size = max_apic_words * sizeof(uint32_t);
+     g_autofree uint32_t *deliver_bitmask = g_new(uint32_t, max_apic_words);
+-    uint32_t current_apic_id;
+-
+-    if (is_x2apic_mode(s)) {
+-        current_apic_id = s->initial_apic_id;
+-    } else {
+-        current_apic_id = s->id;
+-    }
  
-     /*
-      * Clear mseccfg and unlock all the PMP entries upon reset.
--     * This is allowed as per the priv and smepmp specifications
--     * and is needed to clear stale entries across reboots.
-+     * This is required as per the priv, smepmp, and other security
-+     * extension specifications that share this CSR, and is needed
-+     * to clear stale entries across reboots.
-      */
--    if (riscv_cpu_cfg(env)->ext_smepmp) {
-+    if (riscv_cpu_cfg(env)->ext_smepmp ||
-+        riscv_cpu_cfg(env)->ext_zkr ||
-+        riscv_cpu_cfg(env)->ext_smmpm ||
-+        riscv_cpu_cfg(env)->ext_zicfilp) {
-         env->mseccfg = 0;
+     switch (dest_shorthand) {
+     case 0:
+@@ -661,14 +654,20 @@ static void apic_deliver(APICCommonState *s, uint32_t dest, uint8_t dest_mode,
+         break;
+     case 1:
+         memset(deliver_bitmask, 0x00, deliver_bitmask_size);
+-        apic_set_bit(deliver_bitmask, current_apic_id);
++        /*
++         * The self and all-but-self cases do not use apic_match_dest() and
++         * directly fill in deliver_bitmask; the bitmask's indexes in turn
++         * map to local_apics[] slots which are never changed even if the
++         * xAPIC id is modified.  So use s->initial_apic_id instead of s->id.
++         */
++        apic_set_bit(deliver_bitmask, s->initial_apic_id);
+         break;
+     case 2:
+         memset(deliver_bitmask, 0xff, deliver_bitmask_size);
+         break;
+     case 3:
+         memset(deliver_bitmask, 0xff, deliver_bitmask_size);
+-        apic_reset_bit(deliver_bitmask, current_apic_id);
++        apic_reset_bit(deliver_bitmask, s->initial_apic_id);
+         break;
      }
  
 -- 
