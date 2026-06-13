@@ -4,51 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2355CD98CF
-	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 20:09:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84DFBCD8CA8
+	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 20:09:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wYUdc-0003OH-98; Sat, 13 Jun 2026 16:07:30 -0400
+	id 1wYUbr-0000rg-EQ; Sat, 13 Jun 2026 16:05:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYUcM-0001fJ-Vz; Sat, 13 Jun 2026 16:06:12 -0400
+ id 1wYUbm-0000mo-Cj; Sat, 13 Jun 2026 16:05:35 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYUcK-0000bH-Mz; Sat, 13 Jun 2026 16:06:10 -0400
+ id 1wYUbk-0000DE-AD; Sat, 13 Jun 2026 16:05:34 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1781381068; bh=DJZuAd6uoTybgvHP17Px/QZ+fzo7XTUkf9sXHlZo+24=;
+ t=1781381067; bh=ip2pqWDKYOwxi3LwiZS0HA5t1/dp131pu1KfGKKzz+4=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=tffcVPVdOIqYv1CY8KA9FmPUt3J+XOxdB28H1PomO8frHNIqOGs1RQprLBORkPiuY
- mQs+V8+xyrHfeY0NmoGRomzZCkq/bJGN4907Pos003WOr9mOaPvgYO7SJ8YRnaIGwb
- 4ySahaEvFsWgWAZy6nPJLbLmDZi7mxf88FpbzBPMV4lXEdGP1DMxDFk994sm97kzEW
- Tras/cqDBlLAxFHZoNvMUu0nOHsxPHqrt91ah1IOjLZquF4JW+UYjskDP0GblW+DVW
- wAtqmhZhSxS/meR3meJemuBrC/pcolBhhQS/zf5SylO3VZ3y/r6N31SLDgwafKzOHd
- Ox9NlEtuUXnzQ==
+ b=NIVNb1ViKjKtpjuIIgg04XzVPUqadOdXgCtTOAUBu9Qy/1df1n0dqDJK8XDcttGV3
+ ztHvhtVth1i9YNYo8oy6RaRFXB4SFy9Nlf6NvXTMNlmshbH8mwHGzIE6iV2n/5AhyP
+ t1h3QRk0VyO0XJJLkDfzt3exsewY5WpU8ZWjiGInIWeeK7ENVwwB/oMoQgLGHjbpeA
+ vTrTO5AYrHkwSCxLY3/OiUIvFH3q3akT5Gw0GIYU07NnOFZdJ3lnTjgimgXrsIEsID
+ KhgotmUzjce6IMpDiSka4f9iAlSWcJYV0OM0THQlm9bH+39+l7tUsanwh7PSOe7ofX
+ heZes8gWxK/dQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 35D841B6E7B;
- Sat, 13 Jun 2026 23:04:28 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id B5B8B1B6E74;
+ Sat, 13 Jun 2026 23:04:27 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 8FC773CE8DE;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 1F7273CE8D7;
  Sat, 13 Jun 2026 23:04:46 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Heechan Kang <gganji11@naver.com>,
- Feifan Qian <bea1e@proton.me>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+Cc: qemu-stable@nongnu.org,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.4 20/61] ui: fix validation of VNC extended clipboard
- data length
-Date: Sat, 13 Jun 2026 23:03:03 +0300
-Message-ID: <20260613200411.1808021-20-mjt@tls.msk.ru>
+Subject: [Stable-10.2.4 13/61] target/riscv/csr.c: fix read of pmpaddr(0-63)
+ CSRs
+Date: Sat, 13 Jun 2026 23:02:56 +0300
+Message-ID: <20260613200411.1808021-13-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.2.4-20260613224639@cover.tls.msk.ru>
 References: <qemu-stable-10.2.4-20260613224639@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -73,69 +71,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Heechan Kang <gganji11@naver.com>
+From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 
-QEMU's VNC extended clipboard handler inflates a client-controlled
-compressed clipboard payload. The code checks the declared text size
-against the total inflated buffer size:
+The priv spec defines, for RV64, that the upper 10 bits of
+pmpaddr0-pmpaddr63 are WARL and are supposed to be cleared.
 
-    if (tsize < size)
+After this patch, using the bug reproducer in [1], writing
+ffffffffffffffff in pmpaddr0 and reading it back now results in
+003fffffffffffff.  Here's the 'diff -cp' dump before and after
+this change:
 
-but then copies from:
+*************** IN:
+*** 5272,5278 ****
+   pmpcfg10 0000000000000000
+   pmpcfg12 0000000000000000
+   pmpcfg14 0000000000000000
+!  pmpaddr0 ffffffffffffffff
+   pmpaddr1 0000000000000000
+   pmpaddr2 0000000000000000
+   pmpaddr3 0000000000000000
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Message-ID: <20260514123342.2139464-1-daniel.barboza@oss.qualcomm.com>
 
-    tbuf = buf + 4;
-    qemu_clipboard_set_data(..., tsize, tbuf, true);
-
-The correct bound is the remaining data length after the 4-byte length
-field, not the total inflated buffer length.
-
-As a result, a VNC client can make QEMU copy up to 3 bytes past the end
-of the inflated heap buffer. With a second VNC client, those copied
-bytes are observable through the normal VNC extended clipboard PROVIDE
-path.
-
-Fixes: CVE-2026-8343
-Reported-by: Heechan Kang <gganji11@naver.com>
-Reported-by: Feifan Qian <bea1e@proton.me>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Signed-off-by: Heechan Kang <gganji11@naver.com>
-[DB: added #include and 'return' statements]
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Message-ID: <20260512095543.459949-1-berrange@redhat.com>
-(cherry picked from commit e56b4bbff1df260487b80abe1f967f687fa115d3)
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+(cherry picked from commit 53cc9747ed7c9b95ba084d614976dd48c9a57a97)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/ui/vnc-clipboard.c b/ui/vnc-clipboard.c
-index 124b6fbd9c..fa05d86f42 100644
---- a/ui/vnc-clipboard.c
-+++ b/ui/vnc-clipboard.c
-@@ -23,6 +23,7 @@
-  */
+diff --git a/target/riscv/csr.c b/target/riscv/csr.c
+index c360f77c92..9f81cd3960 100644
+--- a/target/riscv/csr.c
++++ b/target/riscv/csr.c
+@@ -5328,6 +5328,23 @@ static RISCVException read_pmpaddr(CPURISCVState *env, int csrno,
+                                    target_ulong *val)
+ {
+     *val = pmpaddr_csr_read(env, csrno - CSR_PMPADDR0);
++
++    /*
++     * For RV64, bits 54-63 of the address registers
++     * PMPAADDR(0-63) is a WARL zero field (priv spec,
++     * section "Physical Memory Protection CSRs").
++     *
++     * We'll have to add an annoying TARGET_RISCV64 gate
++     * here to avoid complaints about masking bits 0-53
++     * of a potential 32 bit target_ulong '*var'.
++     */
++#ifdef TARGET_RISCV64
++    if (env->misa_mxl == MXL_RV64
++        && csrno >= CSR_PMPADDR0 && csrno <= CSR_PMPADDR63) {
++        target_ulong read_mask = MAKE_64BIT_MASK(0, 54);
++        *val &= read_mask;
++    }
++#endif
+     return RISCV_EXCP_NONE;
+ }
  
- #include "qemu/osdep.h"
-+#include "qemu/error-report.h"
- #include "vnc.h"
- #include "vnc-jobs.h"
- 
-@@ -282,10 +283,16 @@ void vnc_client_cut_text_ext(VncState *vs, int32_t len, uint32_t flags, uint8_t
-             buf && size >= 4) {
-             uint32_t tsize = read_u32(buf, 0);
-             uint8_t *tbuf = buf + 4;
--            if (tsize < size) {
-+            if (tsize <= size - 4) {
-                 qemu_clipboard_set_data(&vs->cbpeer, vs->cbinfo,
-                                         QEMU_CLIPBOARD_TYPE_TEXT,
-                                         tsize, tbuf, true);
-+            } else {
-+                error_report("vnc: malformed extended clipboard payload "
-+                             "with text length %u exceeding available %u",
-+                             tsize, size - 4);
-+                vnc_client_error(vs);
-+                return;
-             }
-         }
-     }
 -- 
 2.47.3
 
