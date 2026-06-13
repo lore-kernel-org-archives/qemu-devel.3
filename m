@@ -4,44 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D23B2CD8CA8
-	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 20:44:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2EB2CCD98D6
+	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 20:44:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wYVCK-0000nY-Ri; Sat, 13 Jun 2026 16:43:20 -0400
+	id 1wYV96-0000GK-Gd; Sat, 13 Jun 2026 16:40:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYVCF-0000XC-Am; Sat, 13 Jun 2026 16:43:17 -0400
+ id 1wYV8q-0008Vg-84; Sat, 13 Jun 2026 16:39:44 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYVCB-0005lN-9m; Sat, 13 Jun 2026 16:43:14 -0400
+ id 1wYV8o-0004EJ-Fq; Sat, 13 Jun 2026 16:39:44 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1781382967; bh=m5IAU8IqElonT7fQAjsY3AIw/X/Ijl9y7o08uPY1MMQ=;
+ t=1781382964; bh=qPeqdKxBJoa6vMIIrWN4BZr+z637BJiDM9Ba4X2UnAY=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=uIrN6UCdILxnjd/SiXYHcTSek6biXFlwVA2GULxSxBLWqrly1Y86Svc1HN1BYU9cD
- YjGX5FVLSDDgDFyYA+Qo9UbSgd46pn7XpvFUR1fKKf5f5XlDwXoDYV5ByVlwzN2Kj8
- 5Egg358bypv6J+SH39qMeSlSGbm/xBPYyPR2vtSmw+dc5hH7qx5ya/wh6OtFE+8d3A
- yyvrbajt1M3j3jUU4Qi5LcneFyLY2fzvCCSxyj1jBDw2BvTDUvLzGvNOSYq5wWANWL
- 7UFxkuoLYd/ZWMY2g2JSWnoePDNHq22gSmyemENq0jj7qRbZmCQIm11SLrrGMpam8N
- r9kPhOx2sqVmg==
+ b=SZJxBp5o2ecadobl2ALLVl3+9+aCscj9zuNR+L/bPcbpwglPv1AxqEE3v3Ka0/fZB
+ u7+WkGCWdQqyW2KBHAFJ9/f69kNzU7vUmlF5qkc/56KyFkHWn0dNLopfXO4IA5Jmst
+ 2akntZj4WIEllnZe2WrdtqXA2hrYQwwhMavY4V7AuP9DIwD4rqXPk1fivj+rQHZCML
+ y5kPfZ/ZuVRD078rpHOLPmNQ4RqBLT4/PCdDfh0fb4sojGWUuv9KuR+c85htnpkF5E
+ +0/d8JCyeQ5V6YE9TVlaEN/uYmpaV9lD30XwpXTsMdNZQqsfkB5ciOyLoTgTe3t2+W
+ 81lsn2xV9vt2g==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 3258D1B6F2B;
- Sat, 13 Jun 2026 23:36:07 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id C94241B6F02;
+ Sat, 13 Jun 2026 23:36:04 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 992213CE974;
- Sat, 13 Jun 2026 23:36:25 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 3E9E43CE953;
+ Sat, 13 Jun 2026 23:36:23 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Xinhui Yang <cyan@cyano.uk>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+Cc: qemu-stable@nongnu.org, Matt Turner <mattst88@gmail.com>,
  Helge Deller <deller@gmx.de>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.2 72/72] linux-user/strace: add fsmount series of
- syscalls
-Date: Sat, 13 Jun 2026 23:35:38 +0300
-Message-ID: <20260613203542.1809153-72-mjt@tls.msk.ru>
+Subject: [Stable-11.0.2 39/72] linux-user/mips: save/restore FCSR across
+ signal delivery
+Date: Sat, 13 Jun 2026 23:35:05 +0300
+Message-ID: <20260613203542.1809153-39-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.2-20260613224644@cover.tls.msk.ru>
 References: <qemu-stable-11.0.2-20260613224644@cover.tls.msk.ru>
@@ -70,176 +69,98 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Xinhui Yang <cyan@cyano.uk>
+From: Matt Turner <mattst88@gmail.com>
 
-Following the addition of fsmount(2) series of syscalls in the syscall
-handler, strace support is added, with a dedicated function to print the
-parameters of fsconfig(2), which contains parameters that can be
-interpreted as multiple types.
+QEMU keeps the MIPS FPU control/status register (FCSR, fcr31) in
+env->active_fpu.fcr31.  The rounding mode, flush-to-zero (FS), and
+NaN-2008 mode bits in fcr31 are reflected into the derived
+env->active_fpu.fp_status via set_float_rounding_mode() and friends;
+every architectural write to FCSR goes through helper_ctc1() which
+calls restore_fp_status() to keep the two in sync.
 
-Snippet of the strace dump when running `mount -t tmpfs tmpfs /media`:
+Both target_sigcontext variants (O32 and N32/N64) have an sc_fpc_csr
+field that holds FCSR, but setup_sigcontext() never wrote it and
+restore_sigcontext() never read it.  As a result:
 
-18 fsopen(tmpfs,1) = 3
-18 read(3,0x407fcf1c,8191) = -1 errno=61 (No data available)
-18 fsconfig(3,FSCONFIG_SET_STRING,"source","tmpfs",0) = 0
-18 read(3,0x407fce3c,8191) = -1 errno=61 (No data available)
-18 fsconfig(3,FSCONFIG_CMD_CREATE,NULL,NULL,0) = 0
-18 read(3,0x407fce3c,8191) = -1 errno=61 (No data available)
-18 fsmount(3,1,0) = 4
-18 read(3,0x407fce3c,8191) = -1 errno=61 (No data available)
-18 statx(4,"",AT_EMPTY_PATH|AT_STATX_SYNC_AS_STAT,0x1000,0x407fee98) = 0
-18 move_mount(4,,-100,/media,4) = 0
-18 read(3,0x407fcfcc,8191) = -1 errno=61 (No data available)
-18 close(3) = 0
-18 close(4) = 0
+  - The signal frame always delivered sc_fpc_csr == 0 to the handler,
+    so sigaction(SA_SIGINFO) handlers that inspect the interrupted
+    context see the wrong FCSR.
 
-v2: Fixed build on RHEL9 due to missing syscalls (Helge)
+  - On sigreturn, active_fpu.fcr31 retained whatever value the signal
+    handler last installed (if any), and active_fpu.fp_status was
+    never resynced.  Interrupted code resumed with the wrong rounding
+    mode, FS flag, and NaN-2008 semantics.
 
-Signed-off-by: Xinhui Yang <cyan@cyano.uk>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Fix setup_sigcontext() to save fcr31 into sc_fpc_csr.  Fix
+restore_sigcontext() to read it back (masked to fcr31_rw_bitmask as
+the kernel does) and call cpu_mips_restore_fp_status() to resync
+fp_status from the restored fcr31.
+
+Add cpu_mips_restore_fp_status() in target/mips/fpu.c (which already
+defines ieee_rm and includes fpu_helper.h), and declare it in cpu.h.
+
+Fixes: 084d0497a0 ("mips-linux-user: Save and restore fpu and dsp from sigcontext")
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Matt Turner <mattst88@gmail.com>
 Signed-off-by: Helge Deller <deller@gmx.de>
-(cherry picked from commit 6e0aa9f6c731df3f8d1071cfd5ec63fe7b923713)
+(cherry picked from commit 84b920ccb5ee5287747af2d36d1ece6367b6a40e)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/linux-user/strace.c b/linux-user/strace.c
-index 2cbaf94c89..3a81cc95f4 100644
---- a/linux-user/strace.c
-+++ b/linux-user/strace.c
-@@ -4344,6 +4344,111 @@ print_statx(CPUArchState *cpu_env, const struct syscallname *name,
+diff --git a/linux-user/mips/signal.c b/linux-user/mips/signal.c
+index d69a5d73dd..1b10012726 100644
+--- a/linux-user/mips/signal.c
++++ b/linux-user/mips/signal.c
+@@ -134,6 +134,7 @@ static inline void setup_sigcontext(CPUMIPSState *regs,
+     for (i = 0; i < 32; ++i) {
+         __put_user(regs->active_fpu.fpr[i].d, &sc->sc_fpregs[i]);
+     }
++    __put_user(regs->active_fpu.fcr31, &sc->sc_fpc_csr);
  }
- #endif
  
-+#if defined(TARGET_NR_fsconfig) && defined(NR_fsconfig)
-+static void
-+print_fsconfig_cmd_name(int cmd)
-+{
-+    switch (cmd) {
-+    case FSCONFIG_SET_FLAG:
-+        qemu_log("%s%s", "FSCONFIG_SET_FLAG", get_comma(0));
-+        break;
-+    case FSCONFIG_SET_STRING:
-+        qemu_log("%s%s", "FSCONFIG_SET_STRING", get_comma(0));
-+        break;
-+    case FSCONFIG_SET_BINARY:
-+        qemu_log("%s%s", "FSCONFIG_SET_BINARY", get_comma(0));
-+        break;
-+    case FSCONFIG_SET_PATH:
-+        qemu_log("%s%s", "FSCONFIG_SET_PATH", get_comma(0));
-+        break;
-+    case FSCONFIG_SET_PATH_EMPTY:
-+        qemu_log("%s%s", "FSCONFIG_SET_PATH_EMPTY", get_comma(0));
-+        break;
-+    case FSCONFIG_SET_FD:
-+        qemu_log("%s%s", "FSCONFIG_SET_FD", get_comma(0));
-+        break;
-+    case FSCONFIG_CMD_CREATE:
-+        qemu_log("%s%s", "FSCONFIG_CMD_CREATE", get_comma(0));
-+        break;
-+    case FSCONFIG_CMD_RECONFIGURE:
-+        qemu_log("%s%s", "FSCONFIG_CMD_RECONFIGURE", get_comma(0));
-+        break;
-+#ifdef FSCONFIG_CMD_CREATE_EXCL
-+    case FSCONFIG_CMD_CREATE_EXCL:
-+        /* Only available since Linux 6.6. */
-+        qemu_log("%s%s", "FSCONFIG_CMD_CREATE_EXCL", get_comma(0));
-+        break;
-+#endif
-+    default:
-+        qemu_log("%s (%d)%s", "UNKNOWN_CMD", cmd, get_comma(0));
-+        break;
+ static inline void
+@@ -165,6 +166,12 @@ restore_sigcontext(CPUMIPSState *regs, struct target_sigcontext *sc)
+     for (i = 0; i < 32; ++i) {
+         __get_user(regs->active_fpu.fpr[i].d, &sc->sc_fpregs[i]);
+     }
++    {
++        uint32_t fcr31;
++        __get_user(fcr31, &sc->sc_fpc_csr);
++        regs->active_fpu.fcr31 = fcr31 & regs->active_fpu.fcr31_rw_bitmask;
++        cpu_mips_restore_fp_status(regs);
 +    }
+ }
+ 
+ /*
+diff --git a/target/mips/cpu.h b/target/mips/cpu.h
+index ed662135cb..3b4da9887b 100644
+--- a/target/mips/cpu.h
++++ b/target/mips/cpu.h
+@@ -1366,6 +1366,9 @@ void cpu_mips_clock_init(MIPSCPU *cpu);
+ /* helper.c */
+ target_ulong exception_resume_pc(CPUMIPSState *env);
+ 
++/* fpu.c */
++void cpu_mips_restore_fp_status(CPUMIPSState *env);
++
+ /**
+  * mips_cpu_create_with_clock:
+  * @typename: a MIPS CPU type.
+diff --git a/target/mips/fpu.c b/target/mips/fpu.c
+index c7c487c1f9..8b661865ca 100644
+--- a/target/mips/fpu.c
++++ b/target/mips/fpu.c
+@@ -17,6 +17,11 @@ const FloatRoundMode ieee_rm[4] = {
+     float_round_down
+ };
+ 
++void cpu_mips_restore_fp_status(CPUMIPSState *env)
++{
++    restore_fp_status(env);
 +}
 +
-+static void
-+print_fsconfig(CPUArchState *cpu_env, const struct syscallname *name,
-+            abi_long arg0, abi_long arg1, abi_long arg2,
-+            abi_long arg3, abi_long arg4, abi_long arg5)
-+{
-+    /*
-+     * fsconfig(int fd, int cmd, char* key, void* value, int aux)
-+     * Where:
-+     * fd: file descriptor returned by fsopen().
-+     * cmd: integer constant specifying a command.
-+     * key: a string, can be NULL on certain commands.
-+     * value: any data in a buffer, can be NULL, raw buffer or a string.
-+     * aux: axillary values such as flags for FSCONFIG_SET_PATH.
-+     */
-+    int cmd = (int) arg1;
-+    print_syscall_prologue(name);
-+    print_raw_param("%d", arg0, 0);
-+    print_fsconfig_cmd_name(cmd);
-+    /* Process arg2 (key). */
-+    switch (cmd) {
-+    case FSCONFIG_SET_FLAG:
-+    case FSCONFIG_SET_STRING:
-+    case FSCONFIG_SET_BINARY:
-+    case FSCONFIG_SET_PATH:
-+    case FSCONFIG_SET_PATH_EMPTY:
-+    case FSCONFIG_SET_FD:
-+        print_string(arg2, 0);
-+        break;
-+    default:
-+        print_pointer(arg2, 0);
-+        break;
-+    }
-+    /* Process arg3 (value). */
-+    switch (cmd) {
-+    case FSCONFIG_SET_STRING:
-+    case FSCONFIG_SET_PATH:
-+    case FSCONFIG_SET_PATH_EMPTY:
-+        print_string(arg3, 0);
-+        break;
-+    default:
-+        print_pointer(arg3, 0);
-+        break;
-+    }
-+    /*
-+     * Process arg4 (aux).
-+     * On FSCONFIG_SET_PATH and FSCONFIG_SET_PATH_EMPTY, aux can
-+     * be either 0 or AT_FDCWD.
-+     * On FSCONFIG_SET_BINARY, aux is an integer to state the length
-+     * of the buffer pointed by arg3.
-+     * Otherwise, it must be 0.
-+     */
-+    switch (cmd) {
-+    case FSCONFIG_SET_PATH:
-+    case FSCONFIG_SET_PATH_EMPTY:
-+        print_at_dirfd(arg4, 1);
-+        break;
-+    default:
-+        print_raw_param("%d", arg4, 1);
-+        break;
-+    }
-+    print_syscall_epilogue(name);
-+}
-+#endif
-+
- #ifdef TARGET_NR_ioctl
- static void
- print_ioctl(CPUArchState *cpu_env, const struct syscallname *name,
-diff --git a/linux-user/strace.list b/linux-user/strace.list
-index 6162a407f9..e363892e0a 100644
---- a/linux-user/strace.list
-+++ b/linux-user/strace.list
-@@ -1722,3 +1722,18 @@
- #ifdef TARGET_NR_rseq
- { TARGET_NR_rseq, "rseq" , "%s(%p,%u,%d,%#x)", NULL, NULL },
- #endif
-+#ifdef TARGET_NR_fsopen
-+{ TARGET_NR_fsopen, "fsopen", "%s(%s,%d)", NULL, NULL },
-+#endif
-+#if defined(TARGET_NR_fsconfig) && defined(NR_fsconfig)
-+{ TARGET_NR_fsconfig, "fsconfig", NULL, print_fsconfig, NULL },
-+#endif
-+#ifdef TARGET_NR_fsmount
-+{ TARGET_NR_fsmount, "fsmount", "%s(%d,%d,%d)", NULL, NULL },
-+#endif
-+#ifdef TARGET_NR_move_mount
-+{ TARGET_NR_move_mount, "move_mount", "%s(%d,%s,%d,%s,%d)", NULL, NULL },
-+#endif
-+#ifdef TARGET_NR_fspick
-+{ TARGET_NR_fspick, "fspick", "%s(%d,%s,%d)", NULL, NULL },
-+#endif
+ const char fregnames[32][4] = {
+     "f0",  "f1",  "f2",  "f3",  "f4",  "f5",  "f6",  "f7",
+     "f8",  "f9",  "f10", "f11", "f12", "f13", "f14", "f15",
 -- 
 2.47.3
 
