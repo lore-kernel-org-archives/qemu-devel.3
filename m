@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 125A6CD98CF
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 893A1CD98D2
 	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 20:10:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wYUej-0005WM-OJ; Sat, 13 Jun 2026 16:08:38 -0400
+	id 1wYUfz-0002Xe-HQ; Sat, 13 Jun 2026 16:09:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYUeM-0004vp-Hl; Sat, 13 Jun 2026 16:08:16 -0400
+ id 1wYUfu-000208-V4; Sat, 13 Jun 2026 16:09:51 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYUeK-0002YG-QU; Sat, 13 Jun 2026 16:08:14 -0400
+ id 1wYUfr-00031m-07; Sat, 13 Jun 2026 16:09:49 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1781381069; bh=ucz4V6JP5lRfknuxDlu60gNWuS3zMx4gsfF/yjL0abs=;
+ t=1781381070; bh=NeizuiU9CNw1ZzTV6M1T2A/yYQYGEMCvWTUWZVtOwzs=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=vuwDiG4uD8Msw62X3hXADzQdhZYc/Miu4/o628EhA59weXcPgpGSZ7j6iYpHRyaJA
- hQFcjZfsFr2u1oOzqq+YGj67BdqHOr2m4gZtEOCkMbANWIatxH5eEuAhS3st5+gFsH
- O50p9AolYdIBizyupjSHm+At0xaGCag4GbeV/Zkw/4wgNxtIXiN+ob/REt4TeGECcW
- R1HvWTjqTELk32Tc3agAicUgNVtbZpqCxvkp4gglR0UjLEW4eZ3zhXi3QDgx3jrDaO
- VLFJEwfhMN1fc+BossaO6K2nedFFh3f9Y4OQGCgtToWzvuIUblarku8WEF833Hj7Sf
- 2F6dsNpyNUTEQ==
+ b=vSFGFoVgTSTrjY3K9nrE6jGcgHCWjEpY4W7Q3EGU3Wrcda8u66TfSktnONsdnnikZ
+ Lnrw3YgoZZXkGOpna9kfr+U2yhzAgozpPQZaPMBzzC7b3A7Aff/6OPWsAJsFzPc5jU
+ knCVH6szoG01X7DXbzQ9NZQcNjY3wBShajjhm4pczkZ2mFw/tGXnIPwxSQOORrP4mW
+ S5cPg+K9RR3/qBLenRJis6Q0fkGYP0knmY2uM8Um0Ixw3XsFpwjODA5hbxE0+5+Ta4
+ hVfmk/0pCoIeYDx4596ZEEpmS0jGNFX0sVzQ2zblHRUffWcAGme5Upsma2hqMzbV/h
+ 7rcR8HUjDbrUw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id A69371B6E92;
- Sat, 13 Jun 2026 23:04:29 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id E2B411B6EA7;
+ Sat, 13 Jun 2026 23:04:30 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 116E03CE8F3;
- Sat, 13 Jun 2026 23:04:48 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 4BD6A3CE901;
+ Sat, 13 Jun 2026 23:04:49 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Christian Schoenebeck <qemu_oss@crudebyte.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.4 41/61] hw/9pfs: change V9fsPath.size to size_t and
- v9fs_path_sprintf() return type
-Date: Sat, 13 Jun 2026 23:03:24 +0300
-Message-ID: <20260613200411.1808021-41-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
+ "Denis V. Lunev" <den@openvz.org>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.2.4 55/61] iotests/046: Test that discard/write_zeroes
+ wait for dependencies
+Date: Sat, 13 Jun 2026 23:03:38 +0300
+Message-ID: <20260613200411.1808021-55-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.2.4-20260613224639@cover.tls.msk.ru>
 References: <qemu-stable-10.2.4-20260613224639@cover.tls.msk.ru>
@@ -69,79 +69,138 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Christian Schoenebeck <qemu_oss@crudebyte.com>
+From: Kevin Wolf <kwolf@redhat.com>
 
-- Change V9fsPath.size from uint16_t to size_t to support paths larger
-  than 65536 bytes.
+This is a regression test for the bug fixed in the previous commit where
+discard and write_zeroes operations wouldn't consider their dependencies
+in s->cluster_allocs. Without the fix, this results in a corrupted
+image.
 
-- Change v9fs_path_sprintf() return type from void to int to allow error
-  reporting.
-
-Link: https://lore.kernel.org/qemu-devel/2d2348d94ff43fbe4cc0aea24fb312c5c15ee809.1779126034.git.qemu_oss@crudebyte.com
-Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
-(cherry picked from commit dbaf84e148b0c8b66dcb47788a6bb13806e401e4)
+Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+Message-ID: <20260427170520.101242-5-kwolf@redhat.com>
+Reviewed-by: Denis V. Lunev <den@openvz.org>
+Tested-by: Denis V. Lunev <den@openvz.org>
+Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+(cherry picked from commit 389f5bcc744d3ddc127d550a57261aed9bbba1f3)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/fsdev/file-op-9p.h b/fsdev/file-op-9p.h
-index b85c9934de..e8d0661c4b 100644
---- a/fsdev/file-op-9p.h
-+++ b/fsdev/file-op-9p.h
-@@ -112,7 +112,7 @@ struct FsContext {
- };
- 
- struct V9fsPath {
--    uint16_t size;
-+    size_t size;
-     char *data;
- };
- P9ARRAY_DECLARE_TYPE(V9fsPath);
-diff --git a/hw/9pfs/9p.c b/hw/9pfs/9p.c
-index 6ee1c08d0a..ec493f74a8 100644
---- a/hw/9pfs/9p.c
-+++ b/hw/9pfs/9p.c
-@@ -203,16 +203,24 @@ void v9fs_path_free(V9fsPath *path)
+diff --git a/tests/qemu-iotests/046 b/tests/qemu-iotests/046
+index 4c9ed4d26e..e03dd40147 100755
+--- a/tests/qemu-iotests/046
++++ b/tests/qemu-iotests/046
+@@ -184,6 +184,48 @@ aio_write -P 160 0x104000 0x18000
+ resume A
+ aio_flush
+ EOF
++
++# Create a pre-allocated zero cluster, then start a write on it and discard it
++# before the L2 update is made
++cat  <<EOF
++write -P 181 0x120000 0x10000
++write -z 0x120000 0x10000
++
++break write_aio A
++aio_write -P 180 0x120000 0x10000
++wait_break A
++aio_discard 0x120000 0x10000
++resume A
++aio_flush
++EOF
++
++# Create a pre-allocated zero cluster, then start a write on it and a
++# concurrent zero write with MAY_UNMAP before the L2 update is made
++cat  <<EOF
++write -P 181 0x130000 0x10000
++write -z 0x130000 0x10000
++
++break write_aio A
++aio_write -P 180 0x130000 0x10000
++wait_break A
++aio_write -z -u 0x130000 0x10000
++resume A
++aio_flush
++EOF
++
++# Create a pre-allocated zero cluster, then start a write on it and a
++# concurrent zero write without MAY_UNMAP before the L2 update is made
++cat  <<EOF
++write -P 181 0x140000 0x10000
++write -z 0x140000 0x10000
++
++break write_aio A
++aio_write -P 180 0x140000 0x10000
++wait_break A
++aio_write -z 0x140000 0x10000
++resume A
++aio_flush
++EOF
  }
  
- 
--void v9fs_path_sprintf(V9fsPath *path, const char *fmt, ...)
-+int v9fs_path_sprintf(V9fsPath *path, const char *fmt, ...)
- {
-     va_list ap;
-+    int ret;
- 
-     v9fs_path_free(path);
- 
-     va_start(ap, fmt);
--    /* Bump the size for including terminating NULL */
--    path->size = g_vasprintf(&path->data, fmt, ap) + 1;
-+    ret = g_vasprintf(&path->data, fmt, ap);
-     va_end(ap);
-+    if (ret < 0) {
-+        error_report_once("9pfs: unusual path formatting failure; "
-+                         "invalidating associated FID");
-+        return -1;
-+    }
-+    /* Bump the size for including terminating NULL */
-+    path->size = ret + 1;
-+    return 0;
+ overlay_io | $QEMU_IO blkdebug::"$TEST_IMG" | _filter_qemu_io |\
+@@ -264,6 +306,10 @@ verify_io()
+     # Undefined content for 0x10c000 0x8000
+     echo read -P 160 0x114000 0x8000
+     echo read -P 17  0x11c000 0x4000
++
++    echo read -P 0   0x120000 0x10000
++    echo read -P 0   0x130000 0x10000
++    echo read -P 0   0x140000 0x10000
  }
  
- void v9fs_path_copy(V9fsPath *dst, const V9fsPath *src)
-diff --git a/hw/9pfs/9p.h b/hw/9pfs/9p.h
-index 65cc45e344..b2df659b0e 100644
---- a/hw/9pfs/9p.h
-+++ b/hw/9pfs/9p.h
-@@ -456,8 +456,8 @@ static inline uint8_t v9fs_request_cancelled(V9fsPDU *pdu)
- void coroutine_fn v9fs_reclaim_fd(V9fsPDU *pdu);
- void v9fs_path_init(V9fsPath *path);
- void v9fs_path_free(V9fsPath *path);
--void G_GNUC_PRINTF(2, 3) v9fs_path_sprintf(V9fsPath *path, const char *fmt,
--                                           ...);
-+int G_GNUC_PRINTF(2, 3) v9fs_path_sprintf(V9fsPath *path, const char *fmt,
-+                                          ...);
- void v9fs_path_copy(V9fsPath *dst, const V9fsPath *src);
- size_t v9fs_readdir_response_size(V9fsString *name);
- int v9fs_name_to_path(V9fsState *s, V9fsPath *dirpath,
+ verify_io | $QEMU_IO "$TEST_IMG" | _filter_qemu_io
+diff --git a/tests/qemu-iotests/046.out b/tests/qemu-iotests/046.out
+index b1a03f4041..6341df335c 100644
+--- a/tests/qemu-iotests/046.out
++++ b/tests/qemu-iotests/046.out
+@@ -139,6 +139,36 @@ wrote XXX/XXX bytes at offset XXX
+ XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
+ wrote XXX/XXX bytes at offset XXX
+ XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++wrote XXX/XXX bytes at offset XXX
++XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++wrote XXX/XXX bytes at offset XXX
++XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++blkdebug: Suspended request 'A'
++blkdebug: Resuming request 'A'
++wrote XXX/XXX bytes at offset XXX
++XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++discarded  XXX/XXX bytes at offset XXX
++XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++wrote XXX/XXX bytes at offset XXX
++XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++wrote XXX/XXX bytes at offset XXX
++XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++blkdebug: Suspended request 'A'
++blkdebug: Resuming request 'A'
++wrote XXX/XXX bytes at offset XXX
++XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++wrote XXX/XXX bytes at offset XXX
++XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++wrote XXX/XXX bytes at offset XXX
++XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++wrote XXX/XXX bytes at offset XXX
++XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++blkdebug: Suspended request 'A'
++blkdebug: Resuming request 'A'
++wrote XXX/XXX bytes at offset XXX
++XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++wrote XXX/XXX bytes at offset XXX
++XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
+ 
+ == Verify image content ==
+ read 65536/65536 bytes at offset 0
+@@ -239,5 +269,11 @@ read 32768/32768 bytes at offset 1130496
+ 32 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
+ read 16384/16384 bytes at offset 1163264
+ 16 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++read 65536/65536 bytes at offset 1179648
++64 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++read 65536/65536 bytes at offset 1245184
++64 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++read 65536/65536 bytes at offset 1310720
++64 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
+ No errors were found on the image.
+ *** done
 -- 
 2.47.3
 
