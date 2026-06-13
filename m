@@ -4,48 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2798CD98C5
-	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 15:32:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91370CD98D8
+	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 15:32:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wYQJe-00084V-Vh; Sat, 13 Jun 2026 11:30:35 -0400
+	id 1wYQJp-00086u-Sk; Sat, 13 Jun 2026 11:30:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
- (envelope-from <357c20fc244c04dcbd36b13aa20a5c9b2034e9f0@kylie.crudebyte.com>)
- id 1wYQJd-00083m-0g; Sat, 13 Jun 2026 11:30:33 -0400
+ (envelope-from <2dcb1243c80ea97d085af5171785850cf012be36@kylie.crudebyte.com>)
+ id 1wYQJm-00086L-U4; Sat, 13 Jun 2026 11:30:44 -0400
 Received: from kylie.crudebyte.com ([5.189.157.229])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
- (envelope-from <357c20fc244c04dcbd36b13aa20a5c9b2034e9f0@kylie.crudebyte.com>)
- id 1wYQJb-0005Qy-KG; Sat, 13 Jun 2026 11:30:32 -0400
+ (envelope-from <2dcb1243c80ea97d085af5171785850cf012be36@kylie.crudebyte.com>)
+ id 1wYQJl-0005WT-FJ; Sat, 13 Jun 2026 11:30:42 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=crudebyte.com; s=kylie; h=Cc:To:Subject:Date:From:References:In-Reply-To:
  Message-ID:Content-Type:Content-Transfer-Encoding:MIME-Version:Content-ID:
- Content-Description; bh=CJCZqEwpDo0kNpINRxGPflnSQ7lBBvvEzLU2Ny1xHJQ=; b=bz3uJ
- 4oIpJm06elFs0Ct33WN+Oh9TU2PoK+/gQgsX4Wx4ePflfak16er0WqACffmpNjXau5j6O+Tt56qgl
- bFHwCwF4gLXJ0wpDyCv55xWaJpsSaYOhNCzIa1KYBCDvD1km42LCRP3ZoORO0/FK6txEj1Wj7bpn5
- ZPhXrK216s4DoDzVTtFOcYTsV4DIjIJ0MFmof/6Qd1As0LAloAxPDpU6exsYQE5Liy33UpWwJGxRS
- PArcst/HyAIQjXRVrnNSXqDBB/CaZ+9ya0XPrMLAd1Ftl+scaBNYviMnOMygne0zLKq0MhwRGUSbN
- z6jDFQEc8X2z4a0cs9yVYhCP9ahvaHRmBl0kMJTXJeNvZp1Ro4m7JmFl6oLXELXJOC60bakaQkOW2
- MqqHiPhgIv9CZwK3wd3DIbq31FNPCfZQgsZ9DxlArZ7YYdOkE2HExB+rDPJmSdlKc3mInbVQjz8vd
- Zu1BKZVzzeUqIo4agnYeTkENK+IW5Czng+fptO/5bomoAF3DTjnxm2xinkyPbMY0Xui9QL79kx2RK
- lCZBk3yFalNI6/+AsRFZTRI+e0fWJXIoug9SdEPpnwqrfnahmtHmdSHnNcNa7uwTMrTNzKpKdlbXK
- OZvLKRzgIZ3YHpfk8LMhGB/t3poJ8jqdyy0toKN74uKAN8nr1V+ltKQT47GAL0=;
-Message-ID: <357c20fc244c04dcbd36b13aa20a5c9b2034e9f0.1781361555.git.qemu_oss@crudebyte.com>
+ Content-Description; bh=QKz/pA4DSBTbw13vXd4yB2hXkK7fGrlgKI9R5osFqTs=; b=Ox8eL
+ gdHvkm+ko3HxxbWMVEXaaje2oqc+4M9EtgWqYthwuXd0Kz+u48AJMBcl76EqHNE5C6wRLGfLn3GbU
+ AFmX55SkbZhZDoFFlNUDAWHnDe38Vy9M0NN+0xqWlAjmtvRTs397R0ziJ0ngUSOBDBIDuxwdmliaz
+ R4/bbc55vf+t6D0V3O4XyBx3hU4RPNC/lYNFCYTS0dogaWzF2z2ewFCEdT3Un0AxCevzHRrlsmZuS
+ F9brSedC40s+IA1V4pe00HEaFBFUfMnAuKZgtW0hRAguntuf1mSVSZYmkl+38CvPby/Zuu26iSV7k
+ 9MpcqkKJgINTX7iKUGrs+Qo1IGemiW//NXwBqTKj1vtLkj5+XSeAIjXOa4uKtZanZHznTPJoiWf24
+ kzfNU9DKwxkDKhC0LS0DK7JadeM4ekxZyB5m3SCxTiEVN2mmH+qa2rxfadIOTf7i61vuUY30l53OL
+ G3OWSjibd12CzQBIskWQe/5bch79dafinVhJsvBoLRmMUrZG2iOWsomDvXzAsUFWPqkH4jYdeYB8r
+ qwqfZJSwUsIcBnV8RRWgBdA/VeXfcmh+kJMtsIKpjLhGhbJmz1PYanpg4qS+EiauUtG7/1dkVdQDY
+ pW1VjiZv7nJPBAPy8kRV51C7HlkrPDsCdPYWAAQK2puQoXAIFu0KO7jxRD7wVY=;
+Message-ID: <2dcb1243c80ea97d085af5171785850cf012be36.1781361555.git.qemu_oss@crudebyte.com>
 In-Reply-To: <cover.1781361555.git.qemu_oss@crudebyte.com>
 References: <cover.1781361555.git.qemu_oss@crudebyte.com>
 From: Christian Schoenebeck <qemu_oss@crudebyte.com>
 Date: Sat, 13 Jun 2026 16:55:49 +0200
-Subject: [PATCH v3 08/12] hw/9pfs: add xattr count query interface to fs synth
- driver
+Subject: [PATCH v3 09/12] tests/9p: increase P9_MAX_SIZE for test client
 To: qemu-devel@nongnu.org,
     qemu-stable@nongnu.org
 Cc: Greg Kurz <groug@kaod.org>,
     Feifan Qian <bea1e@proton.me>
 Received-SPF: pass client-ip=5.189.157.229;
- envelope-from=357c20fc244c04dcbd36b13aa20a5c9b2034e9f0@kylie.crudebyte.com;
+ envelope-from=2dcb1243c80ea97d085af5171785850cf012be36@kylie.crudebyte.com;
  helo=kylie.crudebyte.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -68,62 +67,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a synthetic "/stat/xattr_count" file path that, if being read
-by 9p client, returns the 9p server internal xattr FID counter to
-client.
+Increase the maximum 9P message size ('msize') of 9p test client from
+4k to 32k to support larger messages.
 
-This allows to test and verify that the xattr FID limit is being
-enforced correctly.
+This is needed for the xattr tests being added with the subsequent
+patches which are going to transmit xattrs of size 8k. It would have
+also been possible to send them in multiple chunks, however let's not
+overcomplicate things.
+
+This new msize is still reasonable small compared to common msize
+values on production systems.
 
 Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
 ---
- hw/9pfs/9p-synth.c | 26 ++++++++++++++++++++++++++
- 1 file changed, 26 insertions(+)
+ tests/qtest/libqos/virtio-9p-client.h | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/hw/9pfs/9p-synth.c b/hw/9pfs/9p-synth.c
-index 4b0732e093..3b3654b282 100644
---- a/hw/9pfs/9p-synth.c
-+++ b/hw/9pfs/9p-synth.c
-@@ -565,6 +565,19 @@ static ssize_t v9fs_synth_qtest_flush_write(void *buf, int len, off_t offset,
-     return 1;
- }
+diff --git a/tests/qtest/libqos/virtio-9p-client.h b/tests/qtest/libqos/virtio-9p-client.h
+index c432b0daee..4b04324503 100644
+--- a/tests/qtest/libqos/virtio-9p-client.h
++++ b/tests/qtest/libqos/virtio-9p-client.h
+@@ -21,7 +21,8 @@
+ #include "qgraph.h"
+ #include "tests/qtest/libqtest-single.h"
  
-+/* transmits internal xattr counter to client */
-+static ssize_t v9fs_synth_read_xattr_count(void *buf, int len, off_t offset,
-+                                           void *arg)
-+{
-+    FsContext *ctx = arg;
-+    size_t local_count = ctx->xattr_fid_count;
-+    if (len < (int)sizeof(size_t)) {
-+        return -ENOSPC;
-+    }
-+    memcpy(buf, &local_count, sizeof(size_t));
-+    return sizeof(size_t);
-+}
-+
- static int synth_init(FsContext *ctx, Error **errp)
- {
-     QLIST_INIT(&synth_root.child);
-@@ -626,6 +639,19 @@ static int synth_init(FsContext *ctx, Error **errp)
-                 g_free(name);
-             }
-         }
-+
-+        /* Directory for internal statistic queries */
-+        {
-+            V9fsSynthNode *stat_dir = NULL;
-+            ret = qemu_v9fs_synth_mkdir(NULL, 0755, "stat", &stat_dir);
-+            assert(!ret);
-+
-+            /* File for internal xattr count query */
-+            ret = qemu_v9fs_synth_add_file(stat_dir, 0444, "xattr_count",
-+                                           v9fs_synth_read_xattr_count,
-+                                           NULL, ctx);
-+            assert(!ret);
-+        }
-     }
+-#define P9_MAX_SIZE 4096 /* Max size of a T-message or R-message */
++/* Max size of a T-message or R-message */
++#define P9_MAX_SIZE (32 * 1024)
  
-     return 0;
+ typedef struct {
+     QTestState *qts;
 -- 
 2.47.3
 
