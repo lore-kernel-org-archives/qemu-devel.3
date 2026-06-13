@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8046CD98CF
-	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 20:43:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 307F9CD8CA8
+	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 20:43:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wYVAb-0004aL-2s; Sat, 13 Jun 2026 16:41:33 -0400
+	id 1wYV7y-0005un-31; Sat, 13 Jun 2026 16:38:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYVAZ-0004UC-RW; Sat, 13 Jun 2026 16:41:31 -0400
+ id 1wYV7v-0005b2-8A; Sat, 13 Jun 2026 16:38:47 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYVAX-00056E-RY; Sat, 13 Jun 2026 16:41:31 -0400
+ id 1wYV7t-0003tP-Ho; Sat, 13 Jun 2026 16:38:46 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1781382965; bh=zb56gFXKrBxhm7F3CspMLidaMJreYiHvIKwE6YJdNk8=;
+ t=1781382964; bh=avXEFBMXyDcCefkdmfwuGAjiUyl870djlo++1qvZzJI=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=f+L+H20sAxbteDh9UTW/Z2CdvKlpV1vLJA+Wc1nv4bD4iJuaf/tcY1/bQ40JvaX+K
- oLH9q5KM5UlFgiUu9T7RBooCGRly1aUZrDu4Y9wYHEEJjb735kNWm/0SK4mZHVTb2U
- /5g0CXwGFTaYddzFXcrxwKzMjPgkfTPOnJnAX7r32ogo2xpEYIaxmglzqcz37bZ0Zt
- a7F7/iIS1JftiwP7gM1gMesHkJl+Y6wSWAx9qK9hnUGsj67w4G/3/8Ooy7Ax/0vbOq
- IWEYhJtvf+PDg4d3WdM1f3j72lYzb6qmc+uCRwXB1KvfjIHa8C1HysjvVZfvYeSRsr
- PRTH3o9vyueUA==
+ b=U+q5A3Oo0eBprxbIeEpL0s5/W6Y5GPbyKwECcm1cnbz8LHXvilLc0K+ZL2/H18jia
+ zaAkg+5cr+5E4XtqQm92is1qNyecYpgQ3uZWIG/s7a427oSzEoTFgwY9StVoXExg+5
+ r0NdKw5XbCyeZtndwGsvkjWIqk28xXRe/bbqCTAvgc3/s6AKbVL28a0ojpmlPhUtxr
+ oJpWiMUBSdFIz6ZQwcmT6mP2QuIo9bBUH726+DB+DqH9C2PmmoCpUiwCpSq1/g3qH3
+ gkanh3lRZq4XGza+FbRthYrK2G2nKwAqIEoDad9tGMsXbnCsj7oo5dTihi5licRHT3
+ yUUKV9Mr4okFw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id D0B001B6F18;
- Sat, 13 Jun 2026 23:36:05 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 2B7961B6EF8;
+ Sat, 13 Jun 2026 23:36:04 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 428903CE962;
- Sat, 13 Jun 2026 23:36:24 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 936E33CE949;
+ Sat, 13 Jun 2026 23:36:22 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Warner Losh <imp@bsdimp.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
+Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.2 54/72] gitlab: remove x64-freebsd-14-build Cirrus job
-Date: Sat, 13 Jun 2026 23:35:20 +0300
-Message-ID: <20260613203542.1809153-54-mjt@tls.msk.ru>
+Subject: [Stable-11.0.2 29/72] target/arm: Set correct fp flags for FLOGB when
+ FPCR.AH = 1
+Date: Sat, 13 Jun 2026 23:34:55 +0300
+Message-ID: <20260613203542.1809153-29-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.2-20260613224644@cover.tls.msk.ru>
 References: <qemu-stable-11.0.2-20260613224644@cover.tls.msk.ru>
@@ -72,98 +72,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Stefan Hajnoczi <stefanha@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
 
-Cirrus has shut down and the x64-freebsd-14-build is failing:
-https://gitlab.com/qemu-project/qemu/-/jobs/14656732122
+Our implementation of the FLOGB insn does the operations entirely
+in the helper function, without needing to use fpu functions.
+This means it needs to handle all the fp status flags itself.
+We aren't setting float_flag_input_denormal_used when we
+use (i.e. do not flush to zero) an input denormal, which means
+that FPCR.IDC isn't set when it should be for FPCR.AH=1.
+We missed this when we added float_flag_input_denormal_used
+and made the fpu/ code set it.
 
-Remove the x64-freebsd-14-build job to get the CI pipeline passing
-again. The next commit will be to remove Cirrus integration from the
-GitLab YAML and lcitool since it is no longer used.
+Add the missing float_raise().
 
-Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Reviewed-by: Warner Losh <imp@bsdimp.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@mailo.com>
-Message-id: 20260602162457.828969-2-stefanha@redhat.com
-Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
-(cherry picked from commit 4023f38b50a42a9a936ee3c1c3a9642110e42916)
+Cc: qemu-stable@nongnu.org
+Fixes: d38a57a3f ("target/arm: Enable FEAT_AFP for '-cpu max'")
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20260521122913.1565011-4-peter.maydell@linaro.org
+(cherry picked from commit 23ece2805f9a3f90f317aac1b49ee45783b57636)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/.gitlab-ci.d/cirrus.yml b/.gitlab-ci.d/cirrus.yml
-index b71ab090b6..4769d00c67 100644
---- a/.gitlab-ci.d/cirrus.yml
-+++ b/.gitlab-ci.d/cirrus.yml
-@@ -30,17 +30,3 @@
-     - cirrus-run -v --show-build-log always .gitlab-ci.d/cirrus/$NAME.yml
-   variables:
-     QEMU_JOB_CIRRUS: 1
--
--x64-freebsd-14-build:
--  extends: .cirrus_build_job
--  variables:
--    NAME: freebsd-14
--    CIRRUS_VM_INSTANCE_TYPE: freebsd_instance
--    CIRRUS_VM_IMAGE_SELECTOR: image_family
--    CIRRUS_VM_IMAGE_NAME: freebsd-14-3
--    CIRRUS_VM_CPUS: 8
--    CIRRUS_VM_RAM: 8G
--    UPDATE_COMMAND: pkg update; pkg upgrade -y
--    INSTALL_COMMAND: pkg install -y
--    CONFIGURE_ARGS: --target-list-exclude=arm-softmmu,i386-softmmu,mips64el-softmmu,mipsel-softmmu,mips-softmmu,ppc-softmmu,sh4eb-softmmu,xtensa-softmmu --enable-rust
--    TEST_TARGETS: check
-diff --git a/.gitlab-ci.d/cirrus/freebsd-14.vars b/.gitlab-ci.d/cirrus/freebsd-14.vars
-deleted file mode 100644
-index 98fbde6cc6..0000000000
---- a/.gitlab-ci.d/cirrus/freebsd-14.vars
-+++ /dev/null
-@@ -1,16 +0,0 @@
--# THIS FILE WAS AUTO-GENERATED
--#
--#  $ lcitool variables freebsd-14 qemu
--#
--# https://gitlab.com/libvirt/libvirt-ci
--
--CCACHE='/usr/local/bin/ccache'
--CPAN_PKGS=''
--CROSS_PKGS=''
--MAKE='/usr/local/bin/gmake'
--NINJA='/usr/local/bin/ninja'
--PACKAGING_COMMAND='pkg'
--PIP3='/usr/local/bin/pip'
--PKGS='alsa-lib bash bison bzip2 ca_root_nss capstone4 ccache4 cmocka coreutils ctags curl cyrus-sasl dbus diffutils dtc flex fusefs-libs3 gettext git glib gmake gnutls gsed gtk-vnc gtk3 json-c libepoxy libffi libgcrypt libjpeg-turbo libnfs libslirp libspice-server libssh libtasn1 llvm lzo2 meson mtools ncurses nettle ninja opencv pixman pkgconf png py311-numpy py311-pillow py311-pip py311-pyyaml py311-setuptools py311-sphinx py311-sphinx_rtd_theme py311-tomli py311-wheel python3 rpm2cpio rust rust-bindgen-cli sdl2 sdl2_image snappy sndio socat spice-protocol tesseract usbredir virglrenderer vte3 vulkan-tools xorriso zstd'
--PYPI_PKGS=''
--PYTHON='/usr/local/bin/python3'
-diff --git a/MAINTAINERS b/MAINTAINERS
-index ad215eced8..8cc89d4feb 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -4502,9 +4502,7 @@ FreeBSD Hosted Continuous Integration
- M: Ed Maste <emaste@freebsd.org>
- M: Li-Wen Hsu <lwhsu@freebsd.org>
- S: Maintained
--F: .gitlab-ci.d/cirrus/freebsd*
- F: tests/vm/freebsd
--W: https://cirrus-ci.com/github/qemu/qemu
- 
- Functional testing framework
- M: Thomas Huth <th.huth+qemu@posteo.eu>
-diff --git a/tests/lcitool/refresh b/tests/lcitool/refresh
-index 4289cc381a..ad6a1e6fe8 100755
---- a/tests/lcitool/refresh
-+++ b/tests/lcitool/refresh
-@@ -313,11 +313,6 @@ try:
-                         enable_rust=False,
-                         trailer="".join(debian_all_test_cross_compilers))
- 
--    #
--    # Cirrus packages lists for GitLab
--    #
--    generate_cirrus("freebsd-14")
--
-     #
-     # GitLab packages lists
-     #
+diff --git a/target/arm/tcg/sve_helper.c b/target/arm/tcg/sve_helper.c
+index 179cbd74fb..d884ba474f 100644
+--- a/target/arm/tcg/sve_helper.c
++++ b/target/arm/tcg/sve_helper.c
+@@ -5036,6 +5036,7 @@ static int16_t do_float16_logb_as_int(float16 a, float_status *s)
+         if (frac != 0) {
+             if (!get_flush_inputs_to_zero(s)) {
+                 /* denormal: bias - fractional_zeros */
++                float_raise(float_flag_input_denormal_used, s);
+                 return -15 - clz32(frac);
+             }
+             /* flush to zero */
+@@ -5064,6 +5065,7 @@ static int32_t do_float32_logb_as_int(float32 a, float_status *s)
+         if (frac != 0) {
+             if (!get_flush_inputs_to_zero(s)) {
+                 /* denormal: bias - fractional_zeros */
++                float_raise(float_flag_input_denormal_used, s);
+                 return -127 - clz32(frac);
+             }
+             /* flush to zero */
+@@ -5092,6 +5094,7 @@ static int64_t do_float64_logb_as_int(float64 a, float_status *s)
+         if (frac != 0) {
+             if (!get_flush_inputs_to_zero(s)) {
+                 /* denormal: bias - fractional_zeros */
++                float_raise(float_flag_input_denormal_used, s);
+                 return -1023 - clz64(frac);
+             }
+             /* flush to zero */
 -- 
 2.47.3
 
