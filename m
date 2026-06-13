@@ -4,42 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A22FECD98CF
-	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 20:13:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06CBCCD8CA8
+	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 20:13:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wYUen-00066Y-1v; Sat, 13 Jun 2026 16:08:41 -0400
+	id 1wYUfy-0002LO-7e; Sat, 13 Jun 2026 16:09:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYUei-0005Kn-G4; Sat, 13 Jun 2026 16:08:36 -0400
+ id 1wYUfk-0001xg-S2; Sat, 13 Jun 2026 16:09:44 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYUeg-0002Yx-Id; Sat, 13 Jun 2026 16:08:36 -0400
+ id 1wYUfe-0002lJ-2Z; Sat, 13 Jun 2026 16:09:37 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1781381069; bh=GuFVx0cmuNzha1cFRS6vzUxrjZMJrsQl4zqv0yrBrKQ=;
+ t=1781381070; bh=vpSwl0/wKEuLSNmbrgsPgxoD8nEahv3mQTobcLyg8ms=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=lCrbLIo/uPUwpH3KTbTGeEDGeGcE2Dm3CjP9kt+igM1PyCUjwdIoQZ/XG+TAbzj+X
- j2YWzH7wlAIhJGzwFWIsCzaPSMCBkrFB7RkRz77DYV6LPeIOIX1W55QsROaQyFoL31
- afwh9ATaEePEW4GtvPhHzMpot+PTstmARc/bz9Z1/Sp/ZBBAhlFL8jLWik/Y0ZooKa
- RQaRF3hiongvlEfQNKAiEGtsbJ/4TrgA3xmVN22syaVOAZiaag7oRlRqYuwGPgIqk1
- H5+/Vp1MpJeJLp2ZVN6m1uOzrxQT6gqSjTEQt2ue0/GjSCH1Dve1pnuCU4wVeN1BuX
- xIcImXTAS1IRQ==
+ b=u3Vpb88sbwRYg4xNBj9hUAMWVhXjVm2Eh1k3L525n3SqmbWY9OtBvWHcsbtz77PMv
+ YovEYDFCqaPCrZlGoo2h4HRnFYk/L1p4u7htUtgz9iFxB17GxB757EKyZNIBBT0q0o
+ 4h0EgGkYW+BE/pacjsuETvwNcXRddaK6Oo4A4DghtWrvG1Vf7VHVXPSi8OEk50b4Bz
+ PTFJ3b41FxEJBTdcStBdc7WF5sRN/lV9JYkpRO6UkC4XDPlBaTawkGSMGaKNqjUfg6
+ JVRP0zmNL4rqqPqPvG96s2Y1cDtVzzaX3x4rxKAy5dSyTbHD7juHcu5vrlvBF5+oBO
+ dsAjffPHphY9A==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id BD6641B6E94;
- Sat, 13 Jun 2026 23:04:29 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id B3AC01B6EA3;
+ Sat, 13 Jun 2026 23:04:30 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 1F0F73CE8F4;
- Sat, 13 Jun 2026 23:04:48 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 18F463CE8FE;
+ Sat, 13 Jun 2026 23:04:49 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Christian Schoenebeck <qemu_oss@crudebyte.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.4 42/61] hw/9pfs: add error handling to v9fs_fix_path()
-Date: Sat, 13 Jun 2026 23:03:25 +0300
-Message-ID: <20260613200411.1808021-42-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>,
+ Feifan Qian <bea1e@proton.me>, Paolo Bonzini <pbonzini@redhat.com>,
+ Kevin Wolf <kwolf@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.2.4 52/61] virtio-blk: add missing VIRTIO_BLK_T_SCSI_CMD
+ size check (CVE-2026-48914)
+Date: Sat, 13 Jun 2026 23:03:35 +0300
+Message-ID: <20260613200411.1808021-52-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.2.4-20260613224639@cover.tls.msk.ru>
 References: <qemu-stable-10.2.4-20260613224639@cover.tls.msk.ru>
@@ -68,39 +70,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Christian Schoenebeck <qemu_oss@crudebyte.com>
+From: Stefan Hajnoczi <stefanha@redhat.com>
 
-Update v9fs_fix_path() to return int and propagate errors from
-v9fs_path_sprintf(). This allows callers to detect and handle
-path formatting failures.
+Check that the iovec containing struct virtio_scsi_inhdr is large enough
+before storing an error value there.
 
-Link: https://lore.kernel.org/qemu-devel/a0592741a918b7cbe751980ec7ec0c03f505924c.1779126034.git.qemu_oss@crudebyte.com
-Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
-(cherry picked from commit 54dd352c59269fdb5241e7b6dbcecaff107e7f5a)
+Feifan Qian <bea1e@proton.me> pointed out that this can be used to
+corrupt heap memory when the descriptor uses an MMIO address and a
+length of 1, forcing QEMU to allocate a 1-byte heap bounce buffer.
+virtio_stl_p() stores 4 bytes and therefore corrupts whatever is beyond
+the bounce buffer.
+
+Fixes: CVE-2026-48914
+Fixes: f34e73cd69bd ("virtio-blk: report non-zero status when failing SG_IO requests")
+Reported-by: Feifan Qian <bea1e@proton.me>
+Cc: Paolo Bonzini <pbonzini@redhat.com>
+Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
+Message-ID: <20260526154957.1741622-1-stefanha@redhat.com>
+Reviewed-by: Kevin Wolf <kwolf@redhat.com>
+Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+(cherry picked from commit aeea0c2804c42f24915467a1e4c70e649e39b8e0)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/9pfs/9p.c b/hw/9pfs/9p.c
-index ec493f74a8..0800ac12a4 100644
---- a/hw/9pfs/9p.c
-+++ b/hw/9pfs/9p.c
-@@ -1417,13 +1417,15 @@ static void print_sg(struct iovec *sg, int cnt)
- }
+diff --git a/hw/block/virtio-blk.c b/hw/block/virtio-blk.c
+index 065373cc59..7c4c803a8c 100644
+--- a/hw/block/virtio-blk.c
++++ b/hw/block/virtio-blk.c
+@@ -199,10 +199,16 @@ static void virtio_blk_handle_scsi(VirtIOBlockReq *req)
  
- /* Will call this only for path name based fid */
--static void v9fs_fix_path(V9fsPath *dst, V9fsPath *src, int len)
-+static int v9fs_fix_path(V9fsPath *dst, V9fsPath *src, int len)
- {
-     V9fsPath str;
-+    int ret;
-     v9fs_path_init(&str);
-     v9fs_path_copy(&str, dst);
--    v9fs_path_sprintf(dst, "%s%s", src->data, str.data + len);
-+    ret = v9fs_path_sprintf(dst, "%s%s", src->data, str.data + len);
-     v9fs_path_free(&str);
-+    return ret;
- }
- 
- static inline bool is_ro_export(FsContext *ctx)
+     /*
+      * The scsi inhdr is placed in the second-to-last input segment, just
+-     * before the regular inhdr.
++     * before the regular inhdr. VIRTIO implementations normally do not rely on
++     * the precise message framing, but legacy implementations did and so we do
++     * too for the legacy virtio-blk SCSI request type.
+      *
+      * Just put anything nonzero so that the ioctl fails in the guest.
+      */
++    if (elem->in_sg[elem->in_num - 2].iov_len != sizeof(*scsi)) {
++        status = VIRTIO_BLK_S_IOERR;
++        goto fail;
++    }
+     scsi = (void *)elem->in_sg[elem->in_num - 2].iov_base;
+     virtio_stl_p(vdev, &scsi->errors, 255);
+     status = VIRTIO_BLK_S_UNSUPP;
 -- 
 2.47.3
 
