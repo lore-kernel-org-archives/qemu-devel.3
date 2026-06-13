@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41B7BCD8CA8
-	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 19:57:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52614CD98CF
+	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 19:57:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wYUQv-0005L9-U9; Sat, 13 Jun 2026 15:54:23 -0400
+	id 1wYUSK-0000W5-Eb; Sat, 13 Jun 2026 15:55:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYUQp-00051P-Rw; Sat, 13 Jun 2026 15:54:15 -0400
+ id 1wYURr-0008Tp-Dn; Sat, 13 Jun 2026 15:55:22 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYUQn-000448-U9; Sat, 13 Jun 2026 15:54:15 -0400
+ id 1wYURo-0004fg-Li; Sat, 13 Jun 2026 15:55:19 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1781380259; bh=Wqggm+YI9CGOXrC37tB98c0M6KNUDE9ZIppSxjX+MCI=;
+ t=1781380260; bh=rpvjZq/2pzh5O9kB+yE4Ip4VINuiyEDjuByKZP0xWxM=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=rYB69xuLgW1OFh8fDOPQBvbQcbkBSCOyah2ieWY9t95q1SE9EUawi+9B2fPBJ+AX+
- IGgzxJhAcY7qebuDs7a44LPpzuPeDmiq9NwelGQnWqzH2bXHNY6po5N99yxLGYdtN5
- 02YWXcLrDIOCRPgtyEVgBESPXAphvnF/WmzJCvgIEJMC2y83oPwG75oFd/j9//E010
- eChbERPcuZdGCWLrCaFlEGdNZyEXE5fYtQU5S9RdKJ8hLG0DJijmYwY2ljy3w617Gb
- jzkmkwYUQAvaTFLOTqkMQnJnm3KQre/+URXMlW5cfQyhxRlX4AM+VEswetfEKxZUsj
- yN7i01bDPzkzg==
+ b=VbEas/il91NBintHdq7rBhIt/kU0fG5zKXVshDYOfuoBhctz8bKaM8/kc2SBfjpWq
+ BoQDYMdOBuvrJdrjYvgLC4COntv5uHoFvJg1Wl/EWc9khey/3fJVQr/Fde+Uq4GWtY
+ a8N3y2U1kIWPrWlxqh/c6iaPkzptrVXh5rqyWBN72xNOFPJAt5CBZjoHFQtUZ0fm3I
+ fjKwULiXO1EY8tiSCvwUbq1y5odSB2x0zszH8rSkLtjMVJALDv0q/wjQe0ZIP2miaf
+ PUqurelTDmC7O9pADiJ0KiQdyvk6OJs1TDhrLPU90eIu+F6C4Uy/jdAG8JV9tKhSjf
+ Mk4MacLSS13tA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id E89421B6E2E;
- Sat, 13 Jun 2026 22:50:59 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id C61601B6E3A;
+ Sat, 13 Jun 2026 22:51:00 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 4BA593CE8A8;
- Sat, 13 Jun 2026 22:51:18 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 297DE3CE8B4;
+ Sat, 13 Jun 2026 22:51:19 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Matt Turner <mattst88@gmail.com>,
- Yoshinori Sato <yoshinori.sato@nifty.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Helge Deller <deller@gmx.de>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.11 31/56] linux-user/sh4: preserve T/M/Q bits across
- signal delivery
-Date: Sat, 13 Jun 2026 22:50:45 +0300
-Message-ID: <20260613195116.1807273-31-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
+ Stefan Hajnoczi <stefanha@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.11 43/56] tests/unit: add test-envlist covering
+ setenv/unsetenv name matching
+Date: Sat, 13 Jun 2026 22:50:57 +0300
+Message-ID: <20260613195116.1807273-43-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.11-20260613224446@cover.tls.msk.ru>
 References: <qemu-stable-10.0.11-20260613224446@cover.tls.msk.ru>
@@ -71,97 +71,246 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Matt Turner <mattst88@gmail.com>
+From: "Denis V. Lunev" <den@openvz.org>
 
-QEMU keeps the SH4 T, M and Q status-register bits outside env->sr, in
-the dedicated env->sr_t, env->sr_m and env->sr_q fields; cpu_read_sr()
-folds them back into the architectural SR value and cpu_write_sr()
-splits them back out.
+util/envlist had no test coverage. Add tests/unit/test-envlist
+exercising the public envlist API and pinning down the prefix-match
+hazard fixed in the previous commit:
 
-setup_sigcontext() saved the bare env->sr (so the T/M/Q bits were always
-zero in the signal frame) and restore_sigcontext() wrote the value
-straight back into env->sr without updating sr_t/sr_m/sr_q. As a result
-the T bit was never preserved across signal delivery: on sigreturn the
-interrupted code resumed with whatever T value the signal handler last
-left behind. Any conditional branch (or addc/subc/rotcl/div1, etc.)
-immediately following the interrupted instruction could then take the
-wrong path.
+  - envlist_unsetenv("FOO") must not remove an entry named "FOOBAR";
+  - envlist_setenv("FOO=...") must not replace an existing "FOOBAR=..."
+    entry placed earlier in the list (envlist_setenv() inserts at the
+    head, so the first prefix match wins under the old strncmp rule).
 
-This is the cause of the long-standing intermittent failures of the
-tests/tcg/multiarch/signals.c test on sh4, which was marked BROKEN. With
-a SIGRTMIN timer firing every millisecond across many threads, the race
-was hit a few percent of the time and corrupted the guest heap, surfacing
-as a SIGSEGV in memset, a malloc assertion, or an rseq registration abort.
+Also cover the rest of the contract: head-insertion order observed
+through envlist_to_environ(), replacement of an existing variable,
+the count argument of envlist_to_environ(), and the documented EINVAL
+paths (NULL inputs, setenv without '=', unsetenv with '=').
 
-Traced on a deterministic rr recording: a cmp/hi set T=0, the timer
-signal interrupted the very next instruction (a bf), the handler left
-T=1, and the resumed bf took glibc calloc's MORECORE_CLEARS branch,
-using the old top-chunk size as the clear length for a freshly split
-small chunk and running memset off the end of the heap.
-
-Fix setup_sigcontext()/restore_sigcontext() to use cpu_read_sr() and
-cpu_write_sr() so the T, M and Q bits round-trip correctly, and drop the
-BROKEN annotation on the sh4 signals test.
-
-Fixes: c3b5bc8ab3 ("SH4: Signal handling for the user space emulator, by Magnus Damm.")
-Cc: qemu-stable@nongnu.org
-Reviewed-by: Yoshinori Sato <yoshinori.sato@nifty.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Matt Turner <mattst88@gmail.com>
-Signed-off-by: Helge Deller <deller@gmx.de>
-(cherry picked from commit 6bf4c0295cccf74f3c5c0b674328b97d6fd1505c)
+Signed-off-by: Denis V. Lunev <den@openvz.org>
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+Message-id: 20260520212628.479772-3-den@openvz.org
+Cc: Stefan Hajnoczi <stefanha@redhat.com>
+Cc: Markus Armbruster <armbru@redhat.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>
+Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
+(cherry picked from commit 05221c600a5f3ef657d71aeaea632c5f1bab3a2d)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/linux-user/sh4/signal.c b/linux-user/sh4/signal.c
-index d70be24c38..cc36425c49 100644
---- a/linux-user/sh4/signal.c
-+++ b/linux-user/sh4/signal.c
-@@ -131,8 +131,10 @@ static void setup_sigcontext(struct target_sigcontext *sc,
-     COPY(gregs[14]); COPY(gregs[15]);
-     COPY(gbr); COPY(mach);
-     COPY(macl); COPY(pr);
--    COPY(sr); COPY(pc);
-+    COPY(pc);
- #undef COPY
-+    /* The T, M and Q bits live outside env->sr; fold them back in. */
-+    __put_user(cpu_read_sr(regs), &sc->sc_sr);
+diff --git a/tests/unit/meson.build b/tests/unit/meson.build
+index d5248ae51d..1a85f85d18 100644
+--- a/tests/unit/meson.build
++++ b/tests/unit/meson.build
+@@ -48,6 +48,7 @@ tests = {
+   'test-qapi-util': [],
+   'test-interval-tree': [],
+   'test-fifo': [],
++  'test-envlist': [],
+ }
  
-     for (i=0; i<16; i++) {
-         __put_user(regs->fregs[i], &sc->sc_fpregs[i]);
-@@ -159,8 +161,14 @@ static void restore_sigcontext(CPUSH4State *regs, struct target_sigcontext *sc)
-     COPY(gregs[14]); COPY(gregs[15]);
-     COPY(gbr); COPY(mach);
-     COPY(macl); COPY(pr);
--    COPY(sr); COPY(pc);
-+    COPY(pc);
- #undef COPY
-+    /* The T, M and Q bits live outside env->sr; unfold them. */
-+    {
-+        uint32_t sr;
-+        __get_user(sr, &sc->sc_sr);
-+        cpu_write_sr(regs, sr);
+ if have_system or have_tools
+diff --git a/tests/unit/test-envlist.c b/tests/unit/test-envlist.c
+new file mode 100644
+index 0000000000..53813dd4de
+--- /dev/null
++++ b/tests/unit/test-envlist.c
+@@ -0,0 +1,196 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++/*
++ * envlist tests
++ *
++ * Copyright 2026 Virtuozzo International GmbH
++ *
++ * Authors:
++ *  Denis V. Lunev <den@openvz.org>
++ */
++
++#include "qemu/osdep.h"
++#include "qemu/envlist.h"
++
++static void free_environ(char **env)
++{
++    char **p;
++
++    for (p = env; *p != NULL; p++) {
++        g_free(*p);
 +    }
- 
-     for (i=0; i<16; i++) {
-         __get_user(regs->fregs[i], &sc->sc_fpregs[i]);
-diff --git a/tests/tcg/sh4/Makefile.target b/tests/tcg/sh4/Makefile.target
-index 7852fa62d8..b7a8737be0 100644
---- a/tests/tcg/sh4/Makefile.target
-+++ b/tests/tcg/sh4/Makefile.target
-@@ -3,13 +3,6 @@
- # SuperH specific tweaks
- #
- 
--# This triggers failures for sh4-linux about 10% of the time.
--# Random SIGSEGV at unpredictable guest address, cause unknown.
--run-signals: signals
--	$(call skip-test, $<, "BROKEN")
--run-plugin-signals-with-%:
--	$(call skip-test, $<, "BROKEN")
--
- VPATH += $(SRC_PATH)/tests/tcg/sh4
- 
- test-macl: CFLAGS += -O -g
++    g_free(env);
++}
++
++static const char *find_env(char **env, const char *name)
++{
++    size_t name_len = strlen(name);
++    char **p;
++
++    for (p = env; *p != NULL; p++) {
++        if (strncmp(*p, name, name_len) == 0 && (*p)[name_len] == '=') {
++            return *p + name_len + 1;
++        }
++    }
++    return NULL;
++}
++
++static void test_envlist_basic(void)
++{
++    envlist_t *el = envlist_create();
++    char **env;
++    size_t count;
++
++    /* empty list */
++    env = envlist_to_environ(el, &count);
++    g_assert_cmpuint(count, ==, 0);
++    g_assert_null(env[0]);
++    free_environ(env);
++
++    /* add */
++    g_assert_cmpint(envlist_setenv(el, "A=1"), ==, 0);
++    g_assert_cmpint(envlist_setenv(el, "B=2"), ==, 0);
++
++    env = envlist_to_environ(el, &count);
++    g_assert_cmpuint(count, ==, 2);
++    g_assert_cmpstr(find_env(env, "A"), ==, "1");
++    g_assert_cmpstr(find_env(env, "B"), ==, "2");
++    free_environ(env);
++
++    /* replace */
++    g_assert_cmpint(envlist_setenv(el, "A=42"), ==, 0);
++    env = envlist_to_environ(el, &count);
++    g_assert_cmpuint(count, ==, 2);
++    g_assert_cmpstr(find_env(env, "A"), ==, "42");
++    g_assert_cmpstr(find_env(env, "B"), ==, "2");
++    free_environ(env);
++
++    /* unset existing */
++    g_assert_cmpint(envlist_unsetenv(el, "A"), ==, 0);
++    env = envlist_to_environ(el, &count);
++    g_assert_cmpuint(count, ==, 1);
++    g_assert_null(find_env(env, "A"));
++    g_assert_cmpstr(find_env(env, "B"), ==, "2");
++    free_environ(env);
++
++    /* unset non-existing is a no-op success */
++    g_assert_cmpint(envlist_unsetenv(el, "NOPE"), ==, 0);
++    env = envlist_to_environ(el, &count);
++    g_assert_cmpuint(count, ==, 1);
++    free_environ(env);
++
++    envlist_free(el);
++}
++
++/*
++ * envlist_setenv() inserts at the head; envlist_to_environ() walks
++ * head-to-tail, so the last setenv comes out first.
++ */
++static void test_envlist_head_insertion_order(void)
++{
++    envlist_t *el = envlist_create();
++    char **env;
++    size_t count;
++
++    g_assert_cmpint(envlist_setenv(el, "A=1"), ==, 0);
++    g_assert_cmpint(envlist_setenv(el, "B=2"), ==, 0);
++    g_assert_cmpint(envlist_setenv(el, "C=3"), ==, 0);
++
++    env = envlist_to_environ(el, &count);
++    g_assert_cmpuint(count, ==, 3);
++    g_assert_cmpstr(env[0], ==, "C=3");
++    g_assert_cmpstr(env[1], ==, "B=2");
++    g_assert_cmpstr(env[2], ==, "A=1");
++    g_assert_null(env[3]);
++
++    free_environ(env);
++    envlist_free(el);
++}
++
++static void test_envlist_einval(void)
++{
++    envlist_t *el = envlist_create();
++
++    /* NULL list */
++    g_assert_cmpint(envlist_setenv(NULL, "A=1"), ==, EINVAL);
++    g_assert_cmpint(envlist_unsetenv(NULL, "A"), ==, EINVAL);
++
++    /* NULL string */
++    g_assert_cmpint(envlist_setenv(el, NULL), ==, EINVAL);
++    g_assert_cmpint(envlist_unsetenv(el, NULL), ==, EINVAL);
++
++    /* setenv: missing '=' */
++    g_assert_cmpint(envlist_setenv(el, "NOEQ"), ==, EINVAL);
++
++    /* unsetenv: name must not contain '=' */
++    g_assert_cmpint(envlist_unsetenv(el, "A=B"), ==, EINVAL);
++
++    envlist_free(el);
++}
++
++/*
++ * Regression: envlist_unsetenv("FOO") must not remove an entry named
++ * "FOOBAR" -- the previous strncmp(entry, name, strlen(name)) lookup
++ * prefix-matched. To trigger the bug, the longer-named entry has to
++ * be ahead of the target in the list: envlist_setenv() inserts at
++ * the head, so we add FOO first and FOOBAR last.
++ */
++static void test_envlist_unsetenv_no_prefix_match(void)
++{
++    envlist_t *el = envlist_create();
++    char **env;
++    size_t count;
++
++    g_assert_cmpint(envlist_setenv(el, "FOO=y"), ==, 0);
++    g_assert_cmpint(envlist_setenv(el, "FOOBAR=x"), ==, 0);
++
++    g_assert_cmpint(envlist_unsetenv(el, "FOO"), ==, 0);
++
++    env = envlist_to_environ(el, &count);
++    g_assert_cmpuint(count, ==, 1);
++    g_assert_cmpstr(find_env(env, "FOOBAR"), ==, "x");
++    g_assert_null(find_env(env, "FOO"));
++
++    free_environ(env);
++    envlist_free(el);
++}
++
++/*
++ * envlist_setenv() must not replace a prior FOOBAR=... entry when
++ * setting FOO=... The pre-fix code happened to be safe here only
++ * because it included the trailing '=' byte in its strncmp length;
++ * this test pins down the post-fix contract that the name boundary
++ * is a property of the entry, not of the encoded form.
++ */
++static void test_envlist_setenv_no_prefix_match(void)
++{
++    envlist_t *el = envlist_create();
++    char **env;
++    size_t count;
++
++    g_assert_cmpint(envlist_setenv(el, "FOOBAR=x"), ==, 0);
++    g_assert_cmpint(envlist_setenv(el, "FOO=y"), ==, 0);
++
++    env = envlist_to_environ(el, &count);
++    g_assert_cmpuint(count, ==, 2);
++    g_assert_cmpstr(find_env(env, "FOOBAR"), ==, "x");
++    g_assert_cmpstr(find_env(env, "FOO"), ==, "y");
++
++    free_environ(env);
++    envlist_free(el);
++}
++
++int main(int argc, char *argv[])
++{
++    g_test_init(&argc, &argv, NULL);
++
++    g_test_add_func("/envlist/basic", test_envlist_basic);
++    g_test_add_func("/envlist/head_insertion_order",
++                    test_envlist_head_insertion_order);
++    g_test_add_func("/envlist/einval", test_envlist_einval);
++    g_test_add_func("/envlist/unsetenv_no_prefix_match",
++                    test_envlist_unsetenv_no_prefix_match);
++    g_test_add_func("/envlist/setenv_no_prefix_match",
++                    test_envlist_setenv_no_prefix_match);
++
++    return g_test_run();
++}
 -- 
 2.47.3
 
