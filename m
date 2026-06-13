@@ -4,43 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B18CCD98CF
-	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 20:08:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10309CD98D2
+	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 20:08:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wYUdK-0002ue-8Y; Sat, 13 Jun 2026 16:07:10 -0400
+	id 1wYUeZ-0004wI-UJ; Sat, 13 Jun 2026 16:08:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYUcS-0001qF-SF; Sat, 13 Jun 2026 16:06:18 -0400
+ id 1wYUdR-0003E5-CI; Sat, 13 Jun 2026 16:07:19 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYUcO-0000cF-QY; Sat, 13 Jun 2026 16:06:15 -0400
+ id 1wYUdP-0001nW-IJ; Sat, 13 Jun 2026 16:07:17 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1781381068; bh=TK4SlTaF6zr7OToS+ROaVrUc2rpi387eGAhpz7Mk+QA=;
+ t=1781381069; bh=2rNFmlkSpmLlwayTQ00o3VehZhrNYH28oiDRdsxui9E=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=VltxvA2Npx+/w8LmKnvasmlqAlQvLnaUd1DQb0cGDVB1mpzdhfKZKFJHN6uLZzdPP
- W/lvvSdcMWd7CMOUFEOJwxVN+KZ1qctrph7o/bzV++kve+SBGIjYZPNlpMoJAqgBh+
- 7iA+3ugFDS4OPuxur2ro34igBkhIdRGmP1v4On1yCsc7mCJrZ1edLcHAvb2dW948Pe
- 6J8+KC1VXKlEJylxN+jtf40fxHGWX7Uh7IMFJ3hCLdWOBPVsCN8/aMow5cFE3vAMbp
- 9d5Y+EvdPCayScvnvPFr5ZUtdBxePU8HeexNAM5q6/koohp/HssNX4q4afAekecv0F
- QA6pd4hbXgjXQ==
+ b=R4UuaXMUZ0GZaRrPZZtHmiWH6/wYNrprRDhR6DGnaXCR2R4ispgqVN98qbQr3Nf/+
+ K1g0qhDal7gyboa+IkE1XYMfuN10vK7DK7g+fMqqy1QHD7hiuEYSjlH2s2wiHU2Vlu
+ TC4FChQkMgbJ/7em4EF0jPQe/CXiccK9BImvPcVwKgyE1bv1CT5zy9djFKsSDM3LfW
+ ZukdVEJ903WI2lIHUZKA1Tdxz77AtpEIcZ185gIfUt96utZ+xlLPH37tUhuIuyc5Jj
+ teUkZhtzuUq6UCvuu/9CKykMXQ0Tc+W9AM1kdt/+oXvUT4ozlhWwxlKQDQmuOLss3a
+ murSpZeASoFGA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 535B51B6E7E;
- Sat, 13 Jun 2026 23:04:28 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 0D3E31B6E88;
+ Sat, 13 Jun 2026 23:04:29 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id B2A2E3CE8E0;
- Sat, 13 Jun 2026 23:04:46 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 6A45A3CE8EA;
+ Sat, 13 Jun 2026 23:04:47 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.4 22/61] lsi53c895a: clear tag byte when processing
- messages
-Date: Sat, 13 Jun 2026 23:03:05 +0300
-Message-ID: <20260613200411.1808021-22-mjt@tls.msk.ru>
+Subject: [Stable-10.2.4 32/61] target/arm: SME BFCVT,
+ BFCVTN have "Alternate BFloat16 behaviors"
+Date: Sat, 13 Jun 2026 23:03:15 +0300
+Message-ID: <20260613200411.1808021-32-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.2.4-20260613224639@cover.tls.msk.ru>
 References: <qemu-stable-10.2.4-20260613224639@cover.tls.msk.ru>
@@ -69,40 +70,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Paolo Bonzini <pbonzini@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
 
-Instead of simply ORing the message byte, clear what
-was there before.
+The Arm ARM A1.5.10 notes that some instructions have "Alternate
+Bfloat16 behaviors" when FPCR.AH == 1.  We implement these using the
+FPST_AH and FPST_AH_F16 fp_status words.  The list includes the SME
+BFVCT (single-precision to BFloat16) and BFCVTN, but we forgot to
+make those use FPST_AH_F16 when we implemented them. (We get the
+ASIMD and SVE insns on the list right.)
+
+Add the missing logic to select the right FPST.
 
 Cc: qemu-stable@nongnu.org
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit 4494dec8c2bfd8a5d9b1eabe4a26ab850a4f6700)
+Fixes: 465d36db0e1 ("target/arm: Implement SME2 BFCVT, BFCVTN, FCVT, FCVTN")
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Message-id: 20260521180854.1744788-1-peter.maydell@linaro.org
+(cherry picked from commit ca33de98447c2c2825c1af73cfacf4f65a9bc6c6)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/scsi/lsi53c895a.c b/hw/scsi/lsi53c895a.c
-index 28a10aad19..897929d357 100644
---- a/hw/scsi/lsi53c895a.c
-+++ b/hw/scsi/lsi53c895a.c
-@@ -1041,16 +1041,19 @@ static void lsi_do_msgout(LSIState *s)
-             }
-             break;
-         case 0x20: /* SIMPLE queue */
-+            s->select_tag &= ~0xff;
-             s->select_tag |= lsi_get_msgbyte(s) | LSI_TAG_VALID;
-             trace_lsi_do_msgout_simplequeue(s->select_tag & 0xff);
-             break;
-         case 0x21: /* HEAD of queue */
-             qemu_log_mask(LOG_UNIMP, "lsi_scsi: HEAD queue not implemented\n");
-+            s->select_tag &= ~0xff;
-             s->select_tag |= lsi_get_msgbyte(s) | LSI_TAG_VALID;
-             break;
-         case 0x22: /* ORDERED queue */
-             qemu_log_mask(LOG_UNIMP,
-                           "lsi_scsi: ORDERED queue not implemented\n");
-+            s->select_tag &= ~0xff;
-             s->select_tag |= lsi_get_msgbyte(s) | LSI_TAG_VALID;
-             break;
-         case 0x0d:
+diff --git a/target/arm/tcg/translate-sme.c b/target/arm/tcg/translate-sme.c
+index 091c56da4f..e9ee8e3740 100644
+--- a/target/arm/tcg/translate-sme.c
++++ b/target/arm/tcg/translate-sme.c
+@@ -1415,9 +1415,9 @@ static bool do_zz_fpst(DisasContext *s, arg_zz_n *a, int data,
+ }
+ 
+ TRANS_FEAT(BFCVT, aa64_sme2, do_zz_fpst, a, 0,
+-           FPST_A64, gen_helper_sme2_bfcvt)
++           s->fpcr_ah ? FPST_AH : FPST_A64, gen_helper_sme2_bfcvt)
+ TRANS_FEAT(BFCVTN, aa64_sme2, do_zz_fpst, a, 0,
+-           FPST_A64, gen_helper_sme2_bfcvtn)
++           s->fpcr_ah ? FPST_AH : FPST_A64, gen_helper_sme2_bfcvtn)
+ TRANS_FEAT(FCVT_n, aa64_sme2, do_zz_fpst, a, 0,
+            FPST_A64, gen_helper_sme2_fcvt_n)
+ TRANS_FEAT(FCVTN, aa64_sme2, do_zz_fpst, a, 0,
 -- 
 2.47.3
 
