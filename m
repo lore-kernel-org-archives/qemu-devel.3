@@ -4,44 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D311BCD8CA8
-	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 19:56:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3FFBCD98CF
+	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 19:56:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wYUPD-00014c-QA; Sat, 13 Jun 2026 15:52:36 -0400
+	id 1wYURR-0007RG-4e; Sat, 13 Jun 2026 15:54:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYUOS-0000hj-HX; Sat, 13 Jun 2026 15:51:49 -0400
+ id 1wYURP-0007M6-15; Sat, 13 Jun 2026 15:54:51 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYUOQ-0003Su-PS; Sat, 13 Jun 2026 15:51:48 -0400
+ id 1wYURN-0004L6-A7; Sat, 13 Jun 2026 15:54:50 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1781380258; bh=jL3Sl70exSH7G5xeGK3CC+IHQDNidsmUOqIu95etxZY=;
+ t=1781380260; bh=VhI+fbgmarYkeYX4Ah1lvu9hKCxU9Pd13pZKpXtCVes=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=cl4R4MuNkPuW1cc3G7FwO7JvbF2k4t3bSu9FmvjOx6Jcb/AS17qL1twExjyFZZnJF
- 2Nqu1fiHMwkkfHzCuG/7kEsxSTRyrHNVN+rTkb+vYXBg8C4GYnU7FEhGxii7Mi1eYi
- fygDrLmhAQZz5Nxaj73vc+BcBV/E3Fy35HrW8brPpXuqBaOrz97Xehq8GwFG8/KBdB
- A1ipLrqIB2Ag1aU3ZlYG87GH18b3ik6ds0pa7kqd1GGr1R6qn3PXZkX3Q7//IARW1L
- 4TOQJcfhzo3e8CLxXnKVmNePR1SAxbzbXJi6ERBYHjCN3I/FMTazxeXdCGyOU6dtnk
- /AZU4Yx/K890Q==
+ b=MW4FR9Vp/UtLeXqBXTzwMBF2Qwz5izi5VGeSt6bU7SoEBQgLMnHk0blY9lh93BIXQ
+ 0W6t0/af8bXly19hBjZink5uXYnXGF5mtJDcKRgbL9m9Ko4oDifSnnrV0wX2jYabPR
+ DgE+WYMuKJ2FGq9jeNWqIsI5l1ZKvBmpObvXwcen7V740NzxJr61lYrjRLc3V7CyKb
+ pPEjijLf67xuB24In+2gH8p1x+klXaS83rjaC+J3E4R3CaVKsk6Ghp49XqvuvPhI5I
+ pwe2bnyKPUWWWpEH73EaLewfNRf/OzZQPlsMWm+5Xt4cb08iQwwIApNbdSPVAsN5S0
+ B8Svr8VtyKK+g==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 459A11B6E15;
- Sat, 13 Jun 2026 22:50:58 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 85EEB1B6E36;
+ Sat, 13 Jun 2026 22:51:00 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 9E5DA3CE88F;
- Sat, 13 Jun 2026 22:51:16 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id DF2803CE8B0;
+ Sat, 13 Jun 2026 22:51:18 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Frank Chang <frank.chang@sifive.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.11 06/56] hw/char: sifive_uart: Implement txctrl.txen
- and rxctrl.rxen
-Date: Sat, 13 Jun 2026 22:50:20 +0300
-Message-ID: <20260613195116.1807273-6-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Christian Schoenebeck <qemu_oss@crudebyte.com>,
+ Fabiano Rosas <farosas@suse.de>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.11 39/56] tests/qtest/libqos: add
+ qvirtqueue_reset_pool() for descriptor pool reset
+Date: Sat, 13 Jun 2026 22:50:53 +0300
+Message-ID: <20260613195116.1807273-39-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.11-20260613224446@cover.tls.msk.ru>
 References: <qemu-stable-10.0.11-20260613224446@cover.tls.msk.ru>
@@ -70,113 +69,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Frank Chang <frank.chang@sifive.com>
+From: Christian Schoenebeck <qemu_oss@crudebyte.com>
 
-Implement txctrl.txen and rxctrl.rxen as follows:
+Add a function to reset the virtqueue descriptor pool state without
+reinitializing the device. This is useful for tests that issue a high
+number of requests and are limited by the simplified virtio test
+driver's descriptor tracking, which decrements num_free but never
+increments it back.
 
-* txctrl.txen
-  The txen bit controls whether the Tx channel is active. When cleared,
-  transmission of Tx FIFO contents is suppressed, and the txd pin is
-  driven high.
+The function is safe for synchronous test code where requests are
+sent and completed before the next request is issued.
 
-* rxctrl.rxen:
-  The rxen bit controls whether the Rx channel is active. When cleared,
-  the state of the rxd pin is ignored, and no characters will be
-  enqueued into the Rx FIFO.
-
-Therefore, the Tx FIFO should not be dequeued when txctrl.txen is
-cleared, and the Rx FIFO should not be enqueued when rxctrl.rxen is
-cleared.
-
-Signed-off-by: Frank Chang <frank.chang@sifive.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20260312033201.1619554-2-frank.chang@sifive.com>
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-(cherry picked from commit e6051fa61b9f6fe9c40d8392b6da1f33e9d88332)
+Acked-by: Fabiano Rosas <farosas@suse.de>
+Link: https://lore.kernel.org/qemu-devel/96cf23eea1204b34443218fe76bd4a5eaf9163e8.1779126034.git.qemu_oss@crudebyte.com
+Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
+(cherry picked from commit be33c56898f8b18617cff91525f0b68abee8de07)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/char/sifive_uart.c b/hw/char/sifive_uart.c
-index c4258c2ebf..2efe0e02bd 100644
---- a/hw/char/sifive_uart.c
-+++ b/hw/char/sifive_uart.c
-@@ -84,6 +84,11 @@ static gboolean sifive_uart_xmit(void *do_not_use, GIOCondition cond,
-         return G_SOURCE_REMOVE;
-     }
- 
-+    /* Don't pop the FIFO if transmit is disabled. */
-+    if (!SIFIVE_UART_TXEN(s->txctrl)) {
-+        return G_SOURCE_REMOVE;
-+    }
-+
-     /* Don't pop the FIFO in case the write fails */
-     characters = fifo8_peek_bufptr(&s->tx_fifo,
-                                    fifo8_num_used(&s->tx_fifo), &numptr);
-@@ -112,11 +117,19 @@ static gboolean sifive_uart_xmit(void *do_not_use, GIOCondition cond,
-     return G_SOURCE_REMOVE;
+diff --git a/tests/qtest/libqos/virtio.c b/tests/qtest/libqos/virtio.c
+index 2e7979652f..dfa94700cb 100644
+--- a/tests/qtest/libqos/virtio.c
++++ b/tests/qtest/libqos/virtio.c
+@@ -442,6 +442,29 @@ bool qvirtqueue_get_buf(QTestState *qts, QVirtQueue *vq, uint32_t *desc_idx,
+     return true;
  }
  
--static void sifive_uart_write_tx_fifo(SiFiveUARTState *s, const uint8_t *buf,
--                                      int size)
-+static void sifive_uart_trigger_tx_fifo(SiFiveUARTState *s)
- {
-     uint64_t current_time = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
- 
-+    if (!timer_pending(s->fifo_trigger_handle)) {
-+        timer_mod(s->fifo_trigger_handle, current_time +
-+            TX_INTERRUPT_TRIGGER_DELAY_NS);
-+    }
++/*
++ * qvirtqueue_reset_pool:
++ * @vq: The virtqueue to reset
++ *
++ * Reset the descriptor pool state without reinitializing the device.
++ * This is useful for tests that issue a high number of requests and
++ * are limited by the simplified virtio test driver's descriptor tracking,
++ * which decrements num_free but never increments it back.
++ *
++ * This is only safe for synchronous test code where requests are
++ * sent and completed before the next request is issued. Do not use
++ * with asynchronous code where multiple requests may be in-flight.
++ *
++ * Note: This only resets the available descriptor pool (free_head,
++ * num_free). The used ring position (last_used_idx) is NOT reset
++ * and should continue to track consumed responses across iterations.
++ */
++void qvirtqueue_reset_pool(QVirtQueue *vq)
++{
++    vq->free_head = 0;
++    vq->num_free = vq->size;
 +}
 +
-+static void sifive_uart_write_tx_fifo(SiFiveUARTState *s, const uint8_t *buf,
-+                                      int size)
-+{
-     if (size > fifo8_num_free(&s->tx_fifo)) {
-         size = fifo8_num_free(&s->tx_fifo);
-         qemu_log_mask(LOG_GUEST_ERROR, "sifive_uart: TX FIFO overflow");
-@@ -128,10 +141,7 @@ static void sifive_uart_write_tx_fifo(SiFiveUARTState *s, const uint8_t *buf,
-         s->txfifo |= SIFIVE_UART_TXFIFO_FULL;
-     }
- 
--    if (!timer_pending(s->fifo_trigger_handle)) {
--        timer_mod(s->fifo_trigger_handle, current_time +
--                      TX_INTERRUPT_TRIGGER_DELAY_NS);
--    }
-+    sifive_uart_trigger_tx_fifo(s);
- }
- 
- static uint64_t
-@@ -188,6 +198,9 @@ sifive_uart_write(void *opaque, hwaddr addr,
-         return;
-     case SIFIVE_UART_TXCTRL:
-         s->txctrl = val64;
-+        if (SIFIVE_UART_TXEN(s->txctrl) && !fifo8_is_empty(&s->tx_fifo)) {
-+            sifive_uart_trigger_tx_fifo(s);
-+        }
-         return;
-     case SIFIVE_UART_RXCTRL:
-         s->rxctrl = val64;
-@@ -235,7 +248,7 @@ static int sifive_uart_can_rx(void *opaque)
+ void qvirtqueue_set_used_event(QTestState *qts, QVirtQueue *vq, uint16_t idx)
  {
-     SiFiveUARTState *s = opaque;
+     g_assert(vq->event);
+diff --git a/tests/qtest/libqos/virtio.h b/tests/qtest/libqos/virtio.h
+index 7adc7cbd10..d6486ba7f9 100644
+--- a/tests/qtest/libqos/virtio.h
++++ b/tests/qtest/libqos/virtio.h
+@@ -148,6 +148,8 @@ void qvirtqueue_kick(QTestState *qts, QVirtioDevice *d, QVirtQueue *vq,
+ bool qvirtqueue_get_buf(QTestState *qts, QVirtQueue *vq, uint32_t *desc_idx,
+                         uint32_t *len);
  
--    return s->rx_fifo_len < sizeof(s->rx_fifo);
-+    return SIFIVE_UART_RXEN(s->rxctrl) && (s->rx_fifo_len < sizeof(s->rx_fifo));
- }
++void qvirtqueue_reset_pool(QVirtQueue *vq);
++
+ void qvirtqueue_set_used_event(QTestState *qts, QVirtQueue *vq, uint16_t idx);
  
- static void sifive_uart_event(void *opaque, QEMUChrEvent event)
-diff --git a/include/hw/char/sifive_uart.h b/include/hw/char/sifive_uart.h
-index 0846cf6218..33bb03b03b 100644
---- a/include/hw/char/sifive_uart.h
-+++ b/include/hw/char/sifive_uart.h
-@@ -51,6 +51,8 @@ enum {
- 
- #define SIFIVE_UART_TXFIFO_FULL    0x80000000
- 
-+#define SIFIVE_UART_TXEN(txctrl)        (txctrl & 0x1)
-+#define SIFIVE_UART_RXEN(rxctrl)        (rxctrl & 0x1)
- #define SIFIVE_UART_GET_TXCNT(txctrl)   ((txctrl >> 16) & 0x7)
- #define SIFIVE_UART_GET_RXCNT(rxctrl)   ((rxctrl >> 16) & 0x7)
- 
+ void qvirtio_start_device(QVirtioDevice *vdev);
 -- 
 2.47.3
 
