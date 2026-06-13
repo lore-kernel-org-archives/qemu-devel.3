@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE82BCD98CF
-	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 20:40:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C23E5CD98CF
+	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 20:41:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wYV9H-0000at-FU; Sat, 13 Jun 2026 16:40:11 -0400
+	id 1wYV7w-0005jd-Eb; Sat, 13 Jun 2026 16:38:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYV9D-0000Th-Jl; Sat, 13 Jun 2026 16:40:08 -0400
+ id 1wYV7u-0005Xe-NW; Sat, 13 Jun 2026 16:38:46 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYV9B-0004F4-OX; Sat, 13 Jun 2026 16:40:07 -0400
+ id 1wYV7t-0003rM-2e; Sat, 13 Jun 2026 16:38:46 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1781382964; bh=Wqggm+YI9CGOXrC37tB98c0M6KNUDE9ZIppSxjX+MCI=;
+ t=1781382964; bh=6xlNGyXQ+fCOU4K82Yr9pLl9TrVrEkNSH6c86ZKUM2U=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=dH+m4u6rmw7CoCPKhAJvOOLteb6BOFXkWhXU2l3elwBaLsACLzgq3zeb+VexL8Fmb
- q9CsKJ3SeSVpWGQItDp4MobIUUENsHjbPFW8C19xI/I9ptDtXQy0EBzZ0eA3ecKkv0
- c4sy2NjgYtvs0aE++PXBKVrs9AnR9HTu1OvEL6g5PYYFiRx2YPyGMtWh8a/fx0TwlQ
- TZSTNwKarPk3lHlLQd0FLUxnHCzHlXhHNhJC5GUh7W9l3QPbXnFcMBHKmIyanCRnoc
- bAZDYdt+RDquo8Uchm47oNo2EbBufWoX4EBi3XOfqtEO9Bhpu+wjklW5TGzytuQmju
- tDdsMtIrHZvUA==
+ b=fm0bYMOGeP4LdhTt6nmfrWaWfHU9PTMi6Zv5kOU7zw1KGa5noTgMPtzkv2qKmSpms
+ OVGzpYkEFYSKyay5j+UCd17Wq/8TCTK7EqXCsvMdGMLGpiJ4ho5syiY69WRFqW2HU0
+ 3mQCeLEQUyLz3RNEfHK8sebbpjZiS4bXEUNYemm9VqIub4k8qcDnbXHIopLd0Dyke1
+ Vktq5GZGovqhLKXg+Kwr9rl2CebHfO8aB45+oQWJero0pDs8HZXgd9wXuJXKB6FKk/
+ tTgt/Q+vvwaKdrOIsw1crbXeLFm6j+dCi6m2uuMz7BW9Sbp20fVfz5ZqsWV2eorRI7
+ 56NraMxrJVMyg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id DBD991B6F03;
+ by isrv.corpit.ru (Postfix) with ESMTP id 1B8881B6EF7;
  Sat, 13 Jun 2026 23:36:04 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 4D3203CE954;
- Sat, 13 Jun 2026 23:36:23 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 839053CE948;
+ Sat, 13 Jun 2026 23:36:22 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Matt Turner <mattst88@gmail.com>,
- Yoshinori Sato <yoshinori.sato@nifty.com>,
+Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>,
- Helge Deller <deller@gmx.de>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.2 40/72] linux-user/sh4: preserve T/M/Q bits across
- signal delivery
-Date: Sat, 13 Jun 2026 23:35:06 +0300
-Message-ID: <20260613203542.1809153-40-mjt@tls.msk.ru>
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.2 28/72] target/arm: Use FPST_A64_F16 for SVE FCVTLT_hs
+Date: Sat, 13 Jun 2026 23:34:54 +0300
+Message-ID: <20260613203542.1809153-28-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.2-20260613224644@cover.tls.msk.ru>
 References: <qemu-stable-11.0.2-20260613224644@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -71,97 +71,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Matt Turner <mattst88@gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
 
-QEMU keeps the SH4 T, M and Q status-register bits outside env->sr, in
-the dedicated env->sr_t, env->sr_m and env->sr_q fields; cpu_read_sr()
-folds them back into the architectural SR value and cpu_write_sr()
-splits them back out.
+We should be using the F16-specific float_status for conversions from
+half-precision, because halfprec inputs never set Input Denormal.  If
+we use the FPST_A64 fpstatus then we will incorrectly set FPCR.IDC
+for input-denormals when FPCR.AH=1.
 
-setup_sigcontext() saved the bare env->sr (so the T/M/Q bits were always
-zero in the signal frame) and restore_sigcontext() wrote the value
-straight back into env->sr without updating sr_t/sr_m/sr_q. As a result
-the T bit was never preserved across signal delivery: on sigreturn the
-interrupted code resumed with whatever T value the signal handler last
-left behind. Any conditional branch (or addc/subc/rotcl/div1, etc.)
-immediately following the interrupted instruction could then take the
-wrong path.
+In commit e07b48995aaa we updated most of the halfprec-to-other
+conversion insns to use FPST_A64_F16 as part of implementing
+FEAT_AHP.  However we missed the SVE FCVTLT instruction, which has a
+halfprec-to-single encoding.
 
-This is the cause of the long-standing intermittent failures of the
-tests/tcg/multiarch/signals.c test on sh4, which was marked BROKEN. With
-a SIGRTMIN timer firing every millisecond across many threads, the race
-was hit a few percent of the time and corrupted the guest heap, surfacing
-as a SIGSEGV in memset, a malloc assertion, or an rseq registration abort.
+Correct the FPST we use for the hs variant of FCVTLT.
 
-Traced on a deterministic rr recording: a cmp/hi set T=0, the timer
-signal interrupted the very next instruction (a bf), the handler left
-T=1, and the resumed bf took glibc calloc's MORECORE_CLEARS branch,
-using the old top-chunk size as the clear length for a freshly split
-small chunk and running memset off the end of the heap.
-
-Fix setup_sigcontext()/restore_sigcontext() to use cpu_read_sr() and
-cpu_write_sr() so the T, M and Q bits round-trip correctly, and drop the
-BROKEN annotation on the sh4 signals test.
-
-Fixes: c3b5bc8ab3 ("SH4: Signal handling for the user space emulator, by Magnus Damm.")
 Cc: qemu-stable@nongnu.org
-Reviewed-by: Yoshinori Sato <yoshinori.sato@nifty.com>
+Fixes: e07b48995aaa ("target/arm: Use FPST_A64_F16 for halfprec-to-other conversions")a
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Matt Turner <mattst88@gmail.com>
-Signed-off-by: Helge Deller <deller@gmx.de>
-(cherry picked from commit 6bf4c0295cccf74f3c5c0b674328b97d6fd1505c)
+Message-id: 20260521122913.1565011-3-peter.maydell@linaro.org
+(cherry picked from commit aa42300f86d172d7252f0cb95c2efd7570ad6b8f)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/linux-user/sh4/signal.c b/linux-user/sh4/signal.c
-index d70be24c38..cc36425c49 100644
---- a/linux-user/sh4/signal.c
-+++ b/linux-user/sh4/signal.c
-@@ -131,8 +131,10 @@ static void setup_sigcontext(struct target_sigcontext *sc,
-     COPY(gregs[14]); COPY(gregs[15]);
-     COPY(gbr); COPY(mach);
-     COPY(macl); COPY(pr);
--    COPY(sr); COPY(pc);
-+    COPY(pc);
- #undef COPY
-+    /* The T, M and Q bits live outside env->sr; fold them back in. */
-+    __put_user(cpu_read_sr(regs), &sc->sc_sr);
+diff --git a/target/arm/tcg/translate-sve.c b/target/arm/tcg/translate-sve.c
+index 6a5c508743..f9dfda4a7a 100644
+--- a/target/arm/tcg/translate-sve.c
++++ b/target/arm/tcg/translate-sve.c
+@@ -7826,7 +7826,7 @@ TRANS_FEAT(BFCVTNT, aa64_sme_sve_bf16, gen_gvec_fpst_arg_zpz,
+            s->fpcr_ah ? FPST_AH : FPST_A64)
  
-     for (i=0; i<16; i++) {
-         __put_user(regs->fregs[i], &sc->sc_fpregs[i]);
-@@ -159,8 +161,14 @@ static void restore_sigcontext(CPUSH4State *regs, struct target_sigcontext *sc)
-     COPY(gregs[14]); COPY(gregs[15]);
-     COPY(gbr); COPY(mach);
-     COPY(macl); COPY(pr);
--    COPY(sr); COPY(pc);
-+    COPY(pc);
- #undef COPY
-+    /* The T, M and Q bits live outside env->sr; unfold them. */
-+    {
-+        uint32_t sr;
-+        __get_user(sr, &sc->sc_sr);
-+        cpu_write_sr(regs, sr);
-+    }
+ TRANS_FEAT(FCVTLT_hs, aa64_sme_or_sve2, gen_gvec_fpst_arg_zpz,
+-           gen_helper_sve2_fcvtlt_hs, a, 0, FPST_A64)
++           gen_helper_sve2_fcvtlt_hs, a, 0, FPST_A64_F16)
+ TRANS_FEAT(FCVTLT_sd, aa64_sme_or_sve2, gen_gvec_fpst_arg_zpz,
+            gen_helper_sve2_fcvtlt_sd, a, 0, FPST_A64)
  
-     for (i=0; i<16; i++) {
-         __get_user(regs->fregs[i], &sc->sc_fpregs[i]);
-diff --git a/tests/tcg/sh4/Makefile.target b/tests/tcg/sh4/Makefile.target
-index 7852fa62d8..b7a8737be0 100644
---- a/tests/tcg/sh4/Makefile.target
-+++ b/tests/tcg/sh4/Makefile.target
-@@ -3,13 +3,6 @@
- # SuperH specific tweaks
- #
- 
--# This triggers failures for sh4-linux about 10% of the time.
--# Random SIGSEGV at unpredictable guest address, cause unknown.
--run-signals: signals
--	$(call skip-test, $<, "BROKEN")
--run-plugin-signals-with-%:
--	$(call skip-test, $<, "BROKEN")
--
- VPATH += $(SRC_PATH)/tests/tcg/sh4
- 
- test-macl: CFLAGS += -O -g
 -- 
 2.47.3
 
