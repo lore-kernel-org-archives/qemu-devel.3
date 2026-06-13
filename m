@@ -4,44 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B6A4CD98CF
-	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 20:09:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50AF7CD98D2
+	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 20:09:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wYUec-0004yf-Nn; Sat, 13 Jun 2026 16:08:31 -0400
+	id 1wYUbL-000886-GA; Sat, 13 Jun 2026 16:05:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYUdq-0003r4-4N; Sat, 13 Jun 2026 16:07:43 -0400
+ id 1wYUbJ-00087A-KI; Sat, 13 Jun 2026 16:05:05 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYUdo-0002Dt-D0; Sat, 13 Jun 2026 16:07:41 -0400
+ id 1wYUbH-0008Lj-H9; Sat, 13 Jun 2026 16:05:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1781381069; bh=LlFJ5MNrrFqn2jreYasQuWyv+SrH/nQ9Zgl3Dd/fIBM=;
+ t=1781381067; bh=K/2M/YfypKeoQSCUkywskKAY1uAxR35uq7wX055EdlE=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=GPgrQJ6m6wRDRc5BGeG1cspEvjGxmLVlLKQSuOBYKmWD9fsBac1wkEHiIoakYhiOR
- U4izr9rlArrfuPbDFQjEaULxdEZhgPIeF2Gh2LLTLX+HcVetUS+eEKoYplTd0vENoZ
- EzIUyblnGASczp6qwW/BgbmjsVDj52HF5jPnUzP081nuyoYq4+zFbwi8VAnw735yOO
- yU1IDx/zZ34gOC9QF1RYxIlRu6WvvO/gg6iUoPR42bf8Rijoadr66X76Wn7GdjPAq+
- Yh0WDKY1EaCKeXLZd3TFun0pjQTPi1XSJp9/rRnGIvVq5qzpWJ0ZqilZT/fwl/beli
- a+7Q6x7fMvnKA==
+ b=LQwzxBpkOM/8byeHLNKKtFDv9PX3DBMRRU7mpSL2Bm9O3WxmkYCm21HsJIvHMLwID
+ xXo6/oHppksH/tOTYmirtI9OxYTlHN64jbI+4zg+WZN3w9wQ5BQpZ49rH+iqs0H6N/
+ TdtydQuTiUzlXjkoIVUxIvzqPBFkFmboNgvofVr0j5UnD1alKEk6mhN3f8RowhGL/M
+ 4znNEP0GbnbGFjdv9Mf4YlKQ3t/7rWv03U0KoJO9FMngGmU7GE64pTEmaszm9c6zrn
+ j//JumLEzkUkKaBsxNt4bTRO4GG0SWTBYGQ1QW+IGJ4eO6ViP9n2U//ukocDXQcRVJ
+ 8qgpHfRAb+/QQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 3BB841B6E8B;
- Sat, 13 Jun 2026 23:04:29 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 77B6A1B6E70;
+ Sat, 13 Jun 2026 23:04:27 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 98D0A3CE8ED;
- Sat, 13 Jun 2026 23:04:47 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id CF3E13CE8D3;
+ Sat, 13 Jun 2026 23:04:45 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Matt Turner <mattst88@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Helge Deller <deller@gmx.de>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.4 35/61] linux-user/ppc: restore fp_status from FPSCR on
- sigreturn
-Date: Sat, 13 Jun 2026 23:03:18 +0300
-Message-ID: <20260613200411.1808021-35-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Zishun Yi <vulab@iscas.ac.cn>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.2.4 09/61] target/riscv/pmp: Fix integer overflow in TOR
+ and NA4 address computation
+Date: Sat, 13 Jun 2026 23:02:52 +0300
+Message-ID: <20260613200411.1808021-9-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.2.4-20260613224639@cover.tls.msk.ru>
 References: <qemu-stable-10.2.4-20260613224639@cover.tls.msk.ru>
@@ -70,48 +71,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Matt Turner <mattst88@gmail.com>
+From: Zishun Yi <vulab@iscas.ac.cn>
 
-restore_user_regs() restores the PPC FPSCR with a direct assignment:
+According to the RISC-V Privileged Manual: "The Sv32 page-based
+virtual-memory scheme described in sv32 supports 34-bit physical
+addresses for RV32, so the PMP scheme must support addresses wider than
+XLEN for RV32."
 
-    env->fpscr = (uint32_t) fpscr;
+However, the current QEMU implementation uses `target_ulong` (which
+resolves to `uint32_t` on RV32) for PMP address variables.  When
+shifting these addresses left (e.g., `this_addr << 2`), an integer
+overflow occurs, truncating the high bits of the 34-bit physical
+address.
 
-ppc_store_fpscr() exists precisely to write FPSCR and keep the derived
-env->fp_status in sync: it calls fpscr_set_rounding_mode() to update
-the softfloat rounding mode, and set_float_rebias_overflow/underflow()
-to reflect the FP_OE/FP_UE enable bits.  The direct assignment bypasses
-all of this.
+Fix this issue by changing the types of PMP address variables
+(`this_addr` and `prev_addr`) to `hwaddr`.
 
-On sigreturn, interrupted code resumes with whatever rounding mode and
-overflow/underflow-rebias state the signal handler last installed in
-fp_status, rather than the state that was saved at signal delivery.
+This issue was discovered and reported by SpecHunter, an AI-driven
+architecture specification analysis tool.
 
-Replace the direct assign with ppc_store_fpscr().  The FPSCR_MTFS_MASK
-applied inside ppc_store_fpscr() only excludes the computed FP_FEX and
-FP_VX bits, which it re-derives correctly from the exception and enable
-bits in the restored value.
-
-Fixes: bcd4933a23 ("linux-user: ppc signal handling")
-Cc: qemu-stable@nongnu.org
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Matt Turner <mattst88@gmail.com>
-Signed-off-by: Helge Deller <deller@gmx.de>
-(cherry picked from commit 3f50dd46664bdf94f10aca8b76dc4dcb9182a5ae)
+Link: https://github.com/yizishun/rv-isa-sec/blob/master/output/riscv-isa-manual/pr-2472/qemu.txt
+Signed-off-by: Zishun Yi <vulab@iscas.ac.cn>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Message-ID: <20260511102627.3120140-1-vulab@iscas.ac.cn>
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+(cherry picked from commit 612f22c19db8adbe9b155f199ede01e86cc1546c)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/linux-user/ppc/signal.c b/linux-user/ppc/signal.c
-index a9c10e0987..ab1afea30a 100644
---- a/linux-user/ppc/signal.c
-+++ b/linux-user/ppc/signal.c
-@@ -420,7 +420,7 @@ static void restore_user_regs(CPUPPCState *env,
-             __get_user(*fpr, &frame->mc_fregs[i]);
-         }
-         __get_user(fpscr, &frame->mc_fregs[32]);
--        env->fpscr = (uint32_t) fpscr;
-+        ppc_store_fpscr(env, (uint32_t) fpscr);
-     }
- 
- #if !defined(TARGET_PPC64)
+diff --git a/target/riscv/pmp.c b/target/riscv/pmp.c
+index 3ef62d26ad..f97b084efd 100644
+--- a/target/riscv/pmp.c
++++ b/target/riscv/pmp.c
+@@ -215,8 +215,8 @@ static void pmp_decode_napot(hwaddr a, hwaddr *sa, hwaddr *ea)
+ void pmp_update_rule_addr(CPURISCVState *env, uint32_t pmp_index)
+ {
+     uint8_t this_cfg = env->pmp_state.pmp[pmp_index].cfg_reg;
+-    target_ulong this_addr = env->pmp_state.pmp[pmp_index].addr_reg;
+-    target_ulong prev_addr = 0u;
++    hwaddr this_addr = env->pmp_state.pmp[pmp_index].addr_reg;
++    hwaddr prev_addr = 0u;
+     hwaddr sa = 0u;
+     hwaddr ea = 0u;
+     int g = pmp_get_granularity_g(env);
 -- 
 2.47.3
 
