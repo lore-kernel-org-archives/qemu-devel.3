@@ -4,50 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3450DCD8CA8
-	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 20:45:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96459CD8CA8
+	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 20:45:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wYV7M-0004SO-PK; Sat, 13 Jun 2026 16:38:15 -0400
+	id 1wYVA7-000358-Ix; Sat, 13 Jun 2026 16:41:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYV6y-0004FE-Ty; Sat, 13 Jun 2026 16:37:49 -0400
+ id 1wYVA5-000323-Uh; Sat, 13 Jun 2026 16:41:01 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYV6x-0003TD-Dj; Sat, 13 Jun 2026 16:37:48 -0400
+ id 1wYVA4-0004ng-9I; Sat, 13 Jun 2026 16:41:01 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1781382963; bh=ZO2V1hRxjxtkQY97w81DzNP/KhHOgRzafHWy3erJ3rg=;
+ t=1781382965; bh=ubdO+zpxQThsSC68lkwISaMv3bI5tKubzpj/X8KopDg=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=dJ/OOzRmDx6HSiScSikd38QCe8xJ6CPv8TpYkVkMYXrfjiQTuDTJR4CzwnzPt1Sab
- 7KYWltOS8KTH8t3W9sDmwwIr3qSm2r0mBR3zYC2cSTRks/jOCEfXlNVHyanFJXnJKn
- S+LMQFeCpbLiVuAunAajBEjUFBBRYG21sp64s9ROLIys4GY3bWNpvWyAvjJIBRuuT2
- MFAywvrnGGBaD0vAEZyst+vGihpvA2HJGAECXCslUdDHZITtnMpNEiTMPogi+mOmBR
- iRnpX+2R9PXWyFQwZdI5xqToEDvDd+hn3EiMbdJ8BlLbtBMYgUsBemHVnrtFyclzxS
- 59mgruLEaofHw==
+ b=gs2CH7z/wMSUT3Jol1LvY5Es8xf35jYd5Kk3SGviw4bxY7Ho0NANnvMcEpgndAE4U
+ C87kTRdkBcVYCjBdkFb8IscHK6O95QfEKFCm/yb0peXEC8rWa7m/a1iAMZriyAUmfY
+ 1gGZYUjh2DMSshLNAKZZN5ManNzBEK2OYli3t+lk2FNipFQx2wS7k3Hdm2Eocg3etd
+ JH2jABmIWoTJi3Ussld4aqs8J/z/xrOUP82JTwB3GWPYtNg6oVAiKlrOCaCatOxxv1
+ d/sNSGt4RtrCeM6bbZs1ACp1BhQUJLttmM7S54tlw01o2Vle45roVumy5uutvrwkgx
+ l8RWv1DokP9PA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 789591B6EEC;
- Sat, 13 Jun 2026 23:36:03 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 7E2D51B6F12;
+ Sat, 13 Jun 2026 23:36:05 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id E05923CE93E;
- Sat, 13 Jun 2026 23:36:21 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id E40DB3CE95D;
+ Sat, 13 Jun 2026 23:36:23 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- boy juju <agx1657748706@gmail.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+Cc: qemu-stable@nongnu.org, sin99xx <sin99xx@proton.me>,
+ Christian Schoenebeck <qemu_oss@crudebyte.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.2 18/72] ui/vnc: fix OOB write in VNC stats array
-Date: Sat, 13 Jun 2026 23:34:44 +0300
-Message-ID: <20260613203542.1809153-18-mjt@tls.msk.ru>
+Subject: [Stable-11.0.2 49/72] 9pfs: fix missing rename lock in
+ v9fs_co_readdir_many (CVE-2026-48004)
+Date: Sat, 13 Jun 2026 23:35:15 +0300
+Message-ID: <20260613203542.1809153-49-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.2-20260613224644@cover.tls.msk.ru>
 References: <qemu-stable-11.0.2-20260613224644@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -72,54 +70,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel P. Berrangé <berrange@redhat.com>
+From: sin99xx <sin99xx@proton.me>
 
-The VncSurface struct maintains update statistics in an array:
+v9fs_co_readdir_many() dispatches do_readdir_many() to a worker thread
+that reads V9fsFidState's path.data without holding a rename lock.
 
-    VncRectStat stats[VNC_STAT_ROWS][VNC_STAT_COLS];
+A concurrent rename request, e.g. of its parent dir, causes the FID's
+absolute path to be altered by freeing the old path string and
+assigning a new one. This causes a heap-use-after-free race condition
+while do_readdir_many() is still accessing the old object.
 
-where the dimensions are defined as:
+This allows a DoS by an unprivileged guest user.
 
-  #define VNC_STAT_RECT  64
-  #define VNC_STAT_COLS (VNC_MAX_WIDTH / VNC_STAT_RECT)
-  #define VNC_STAT_ROWS (VNC_MAX_HEIGHT / VNC_STAT_RECT)
+Fix this by wrapping the worker thread dispatch block within a pair of
+v9fs_path_read_lock() and v9fs_path_unlock() calls, like it's done at
+other places.
 
-If VNC_MAX_WIDTH / VNC_MAX_HEIGHT are not an exact multiple of
-VNC_STAT_REC, the COLS/ROWS will be undersized by 1.
-
-Unfortunately:
-
-  #define VNC_MAX_HEIGHT 2160
-
-is not a multiple of 64, so there is potential for OOB reads and
-writes in the 'stats' array, if the guest surface is over 2112
-pixels in height. An array overflow occurs when vnc_update_stats()
-records new statistics, either scribbling over data later in the
-VncDisplay struct that 'stats' is embedded in, or performing an
-OOB write on the allocated struct memory.
-
-Fixes: CVE-2026-48002
-Reported-by: boy juju <agx1657748706@gmail.com>
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-Message-ID: <20260521103353.1645561-3-berrange@redhat.com>
-(cherry picked from commit c3c6226fa48180edf9d4646d4112fb1becbc149b)
+Fixes: 2149675b195f ("9pfs: add new function v9fs_co_readdir_many()")
+Fixes: CVE-2026-48004
+Reported-by: sin99xx <sin99xx@proton.me>
+Signed-off-by: sin99xx <sin99xx@proton.me>
+[Christian Schoenebeck: add commit log message]
+Link: https://lore.kernel.org/qemu-devel/E1wPkYi-000adH-4E@kylie.crudebyte.com
+Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
+(cherry picked from commit 5a8da7e979f1f56b1cab82c2354833f309f1a78f)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/ui/vnc.h b/ui/vnc.h
-index ec8d0c91b5..ad41b418b9 100644
---- a/ui/vnc.h
-+++ b/ui/vnc.h
-@@ -92,8 +92,8 @@ typedef void VncSendHextileTile(VncState *vs,
- #define VNC_DIRTY_BPL(x) (sizeof((x)->dirty) / VNC_MAX_HEIGHT * BITS_PER_BYTE)
+diff --git a/hw/9pfs/codir.c b/hw/9pfs/codir.c
+index bce7dd96e9..5568399343 100644
+--- a/hw/9pfs/codir.c
++++ b/hw/9pfs/codir.c
+@@ -220,13 +220,16 @@ int coroutine_fn v9fs_co_readdir_many(V9fsPDU *pdu, V9fsFidState *fidp,
+                                       bool dostat)
+ {
+     int err = 0;
++    V9fsState *s = pdu->s;
  
- #define VNC_STAT_RECT  64
--#define VNC_STAT_COLS (VNC_MAX_WIDTH / VNC_STAT_RECT)
--#define VNC_STAT_ROWS (VNC_MAX_HEIGHT / VNC_STAT_RECT)
-+#define VNC_STAT_COLS DIV_ROUND_UP(VNC_MAX_WIDTH, VNC_STAT_RECT)
-+#define VNC_STAT_ROWS DIV_ROUND_UP(VNC_MAX_HEIGHT, VNC_STAT_RECT)
- 
- #define VNC_AUTH_CHALLENGE_SIZE 16
+     if (v9fs_request_cancelled(pdu)) {
+         return -EINTR;
+     }
++    v9fs_path_read_lock(s);
+     v9fs_co_run_in_worker({
+         err = do_readdir_many(pdu, fidp, entries, offset, maxsize, dostat);
+     });
++    v9fs_path_unlock(s);
+     return err;
+ }
  
 -- 
 2.47.3
