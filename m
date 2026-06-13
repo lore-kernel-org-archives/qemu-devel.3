@@ -4,44 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5CA6CD98CF
-	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 20:45:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F605CD8CA8
+	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 20:45:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wYVBl-0006pr-HY; Sat, 13 Jun 2026 16:42:45 -0400
+	id 1wYV9h-0002XD-2M; Sat, 13 Jun 2026 16:40:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYVBa-0006Ty-UZ; Sat, 13 Jun 2026 16:42:36 -0400
+ id 1wYV9f-0002Ox-Es; Sat, 13 Jun 2026 16:40:35 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYVBY-0005Tn-Ix; Sat, 13 Jun 2026 16:42:34 -0400
+ id 1wYV9c-0004VU-Uz; Sat, 13 Jun 2026 16:40:35 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1781382966; bh=effkG/M7ewMd9+pWv2wvWsr68cl3JK9vqRmhBkgxO6k=;
+ t=1781382965; bh=O/VAYKtFT/ySzeCdN9vtq7zt1BEiR6EfG4DYJe0VKwM=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=Qu3lnlfoyGwPefPQhFWY8CGSGhYgSiCc5cfhK8ml1GWXbeX5X4ccEK4jIWEW7vECT
- wKAkegFN6tC1BZ/IiTyoplzw4iQFipMejX+2ES94QXqZ2YokqlumbiAWehfnlMyFVe
- EsJcCIYtamvBcPn0ExyNaSB9VWvooFC6m3IegOY9CmIVEIhorVXK/dnzO4kNOqZr79
- td29TC2iuB9i65fqm0Nz7PGIk9/DcyTEvEq9QUqdzjA/MsyfEfTfVuhmrjIDm78IDu
- Xqx3oGgFIuKDLgYpZR9+f3C6MATPmcW2fq7UcXHhhfRFXWph4KQ+SVzmJrRnO1qkhF
- 32u32FQLhGbjA==
+ b=DnKrche/6bxqNXmYjQ8d6ywybzIfr0fu+hy+aLWdraJoTJppdRkuejTo9xkRLwLyn
+ xU7/wcNGPbrQl3UMcZVqvanmFieGehdZKzVESCxfQfOcwFdO4ziFz8KHgtWe30tLSA
+ ElOY2g4VY0k3ITnoTBEbvwAOrUBrv/EiSY9M4QWm5wgmfY+XvCUj8/pdExRoEIWxWe
+ j455GUK+oT5JdBlYoZttaWmk5aX3M+QeRWu1YABaKHhqU5BNaaliuXpfC9GO8+qBPP
+ kq8TqV+QfOwN5WV7IDKkDE4clLJvacmNZeFt6e8kRB7O/Pk8lZl9cEVQ850GzUO/iL
+ NsUjmWDfp5hpw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 9088E1B6F23;
- Sat, 13 Jun 2026 23:36:06 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 44D101B6F0A;
+ Sat, 13 Jun 2026 23:36:05 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 046CB3CE96C;
- Sat, 13 Jun 2026 23:36:25 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id A48793CE959;
+ Sat, 13 Jun 2026 23:36:23 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Thomas Lamprecht <t.lamprecht@proxmox.com>,
- Fiona Ebner <f.ebner@proxmox.com>, Kevin Wolf <kwolf@redhat.com>,
+Cc: qemu-stable@nongnu.org, Christian Schoenebeck <qemu_oss@crudebyte.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.2 64/72] qcow2: Fix data loss on zero write with
- detect-zeroes=unmap
-Date: Sat, 13 Jun 2026 23:35:30 +0300
-Message-ID: <20260613203542.1809153-64-mjt@tls.msk.ru>
+Subject: [Stable-11.0.2 45/72] hw/9pfs: add error handling to v9fs_fix_path()
+Date: Sat, 13 Jun 2026 23:35:11 +0300
+Message-ID: <20260613203542.1809153-45-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.2-20260613224644@cover.tls.msk.ru>
 References: <qemu-stable-11.0.2-20260613224644@cover.tls.msk.ru>
@@ -70,187 +68,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Thomas Lamprecht <t.lamprecht@proxmox.com>
+From: Christian Schoenebeck <qemu_oss@crudebyte.com>
 
-Commit b8bfb1478d ("qcow2: Fix corruption on discard during write with
-COW") added a wait_for_dependencies() at the start of
-qcow2_subcluster_zeroize(). That fixes the inconsistency it set out to
-fix, but turns the lock-protected pre-check in the caller,
-qcow2_co_pwrite_zeroes(), into a stale one: the wait yields s->lock,
-so an in-flight allocating write whose QCowL2Meta is already on
-s->cluster_allocs (but whose L2 entry is not yet linked) gets to link
-its entry during the yield. When the zeroize wakes, the cluster is now
-NORMAL, and with BDRV_REQ_MAY_UNMAP the free path in zero_in_l2_slice()
-unmaps the just-written cluster, silently dropping the data write's
-payload.
+Update v9fs_fix_path() to return int and propagate errors from
+v9fs_path_sprintf(). This allows callers to detect and handle
+path formatting failures.
 
-This is reachable with detect-zeroes=unmap (the default for VirtIO
-disks with discard on in Proxmox VE), under which the block layer
-auto-promotes all-zero buffers to BDRV_REQ_ZERO_WRITE |
-BDRV_REQ_MAY_UNMAP. A memory-constrained Debian guest running 'apt
-full-upgrade' on such a disk reproduces it as random SIGSEGVs:
-swapped-out code pages come back as zero.
-
-Wait for in-flight dependencies before the lock-protected check in
-qcow2_co_pwrite_zeroes(). If a write linked its L2 entry during the
-wait, the type check now fails and the block layer falls back to a
-bounce-buffered zero write that only touches the requested subrange,
-preserving the racing write's data. Promote wait_for_dependencies() to
-qcow2_wait_for_dependencies() so qcow2.c can call it.
-
-Fixes: b8bfb1478d ("qcow2: Fix corruption on discard during write with COW")
-Fixes: 7534bb105b ("qcow2: Fix corruption on discard during write with COW") in 11.0.x series
-Cc: qemu-stable@nongnu.org
-Tested-by: Fiona Ebner <f.ebner@proxmox.com>
-Reviewed-by: Fiona Ebner <f.ebner@proxmox.com>
-Signed-off-by: Thomas Lamprecht <t.lamprecht@proxmox.com>
-Message-ID: <20260522151318.238064-1-t.lamprecht@proxmox.com>
-[kwolf: Reverted unnecessary change to 'nr' assignment]
-Reviewed-by: Kevin Wolf <kwolf@redhat.com>
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-(cherry picked from commit 1d47eb68983577a4e06fe1c165d90e128b191b86)
+Link: https://lore.kernel.org/qemu-devel/a0592741a918b7cbe751980ec7ec0c03f505924c.1779126034.git.qemu_oss@crudebyte.com
+Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
+(cherry picked from commit 54dd352c59269fdb5241e7b6dbcecaff107e7f5a)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/block/qcow2-cluster.c b/block/qcow2-cluster.c
-index 8b1e80bd0b..e02fae6a0c 100644
---- a/block/qcow2-cluster.c
-+++ b/block/qcow2-cluster.c
-@@ -1474,9 +1474,9 @@ static int coroutine_fn handle_dependencies(BlockDriverState *bs,
-     return 0;
+diff --git a/hw/9pfs/9p.c b/hw/9pfs/9p.c
+index 88894ec9d2..d704de644f 100644
+--- a/hw/9pfs/9p.c
++++ b/hw/9pfs/9p.c
+@@ -1417,13 +1417,15 @@ static void print_sg(struct iovec *sg, int cnt)
  }
  
--static void coroutine_mixed_fn wait_for_dependencies(BlockDriverState *bs,
--                                                     uint64_t guest_offset,
--                                                     uint64_t bytes)
-+void coroutine_mixed_fn qcow2_wait_for_dependencies(BlockDriverState *bs,
-+                                                    uint64_t guest_offset,
-+                                                    uint64_t bytes)
+ /* Will call this only for path name based fid */
+-static void v9fs_fix_path(V9fsPath *dst, V9fsPath *src, int len)
++static int v9fs_fix_path(V9fsPath *dst, V9fsPath *src, int len)
  {
-     BDRVQcow2State *s = bs->opaque;
-     QCowL2Meta *m = NULL;
-@@ -2035,7 +2035,7 @@ int qcow2_cluster_discard(BlockDriverState *bs, uint64_t offset,
-      * We don't need to allocate a QCowL2Meta for the discard operation because
-      * s->lock is held for the duration of the whole operation.
-      */
--    wait_for_dependencies(bs, offset, bytes);
-+    qcow2_wait_for_dependencies(bs, offset, bytes);
- 
-     /* Caller must pass aligned values, except at image end */
-     assert(QEMU_IS_ALIGNED(offset, s->cluster_size));
-@@ -2204,7 +2204,7 @@ int coroutine_fn qcow2_subcluster_zeroize(BlockDriverState *bs, uint64_t offset,
-      * We don't need to allocate a QCowL2Meta for the zeroize operation because
-      * s->lock is held for the duration of the whole operation.
-      */
--    wait_for_dependencies(bs, offset, bytes);
-+    qcow2_wait_for_dependencies(bs, offset, bytes);
- 
-     /* If we have to stay in sync with an external data file, zero out
-      * s->data_file first. */
-diff --git a/block/qcow2.c b/block/qcow2.c
-index 81fd299b4c..19271b10a4 100644
---- a/block/qcow2.c
-+++ b/block/qcow2.c
-@@ -4234,10 +4234,16 @@ qcow2_co_pwrite_zeroes(BlockDriverState *bs, int64_t offset, int64_t bytes,
-         }
- 
-         qemu_co_mutex_lock(&s->lock);
--        /* We can have new write after previous check */
-         offset -= head;
-         bytes = s->subcluster_size;
-         nr = s->subcluster_size;
-+        /*
-+         * Wait for in-flight allocating writes first: otherwise the type
-+         * check below could pass on UNALLOCATED while a yet-to-link_l2 write
-+         * completes during qcow2_subcluster_zeroize()'s own wait, letting the
-+         * resumed MAY_UNMAP discard the just-written data.
-+         */
-+        qcow2_wait_for_dependencies(bs, offset, bytes);
-         ret = qcow2_get_host_offset(bs, offset, &nr, &off, &type);
-         if (ret < 0 ||
-             (type != QCOW2_SUBCLUSTER_UNALLOCATED_PLAIN &&
-diff --git a/block/qcow2.h b/block/qcow2.h
-index 192a45d596..ce517040c4 100644
---- a/block/qcow2.h
-+++ b/block/qcow2.h
-@@ -966,6 +966,10 @@ int coroutine_fn GRAPH_RDLOCK
- qcow2_subcluster_zeroize(BlockDriverState *bs, uint64_t offset, uint64_t bytes,
-                          int flags);
- 
-+void coroutine_mixed_fn
-+qcow2_wait_for_dependencies(BlockDriverState *bs, uint64_t guest_offset,
-+                            uint64_t bytes);
-+
- int GRAPH_RDLOCK
- qcow2_expand_zero_clusters(BlockDriverState *bs,
-                            BlockDriverAmendStatusCB *status_cb,
-diff --git a/tests/qemu-iotests/046 b/tests/qemu-iotests/046
-index e03dd40147..0d84b5c1c7 100755
---- a/tests/qemu-iotests/046
-+++ b/tests/qemu-iotests/046
-@@ -226,6 +226,26 @@ aio_write -z 0x140000 0x10000
- resume A
- aio_flush
- EOF
-+
-+# Start an allocating write to a previously unallocated cluster and, before
-+# its L2 update is linked, issue a concurrent sub-cluster zero write with
-+# MAY_UNMAP that targets a disjoint range within the same cluster. The zero
-+# write's head/tail are zero (cluster is unallocated), so qcow2_co_pwrite_zeroes
-+# would expand it to the full subcluster. Without waiting for dependencies
-+# before the zero write's "unallocated" type check, that check passes,
-+# qcow2_subcluster_zeroize then yields in wait_for_dependencies, the allocating
-+# write links its L2 entry, and the resumed zeroize unmaps the cluster -
-+# silently discarding the just-written data. Waiting first makes the zero write
-+# fall back to a bounce-buffered real write, which only touches its own
-+# subrange.
-+cat <<EOF
-+break write_aio A
-+aio_write -P 180 0x200000 0x4000
-+wait_break A
-+aio_write -z -u 0x204000 0x4000
-+resume A
-+aio_flush
-+EOF
+     V9fsPath str;
++    int ret;
+     v9fs_path_init(&str);
+     v9fs_path_copy(&str, dst);
+-    v9fs_path_sprintf(dst, "%s%s", src->data, str.data + len);
++    ret = v9fs_path_sprintf(dst, "%s%s", src->data, str.data + len);
+     v9fs_path_free(&str);
++    return ret;
  }
  
- overlay_io | $QEMU_IO blkdebug::"$TEST_IMG" | _filter_qemu_io |\
-@@ -310,6 +330,9 @@ verify_io()
-     echo read -P 0   0x120000 0x10000
-     echo read -P 0   0x130000 0x10000
-     echo read -P 0   0x140000 0x10000
-+
-+    echo read -P 180 0x200000 0x4000
-+    echo read -P 0   0x204000 0xc000
- }
- 
- verify_io | $QEMU_IO "$TEST_IMG" | _filter_qemu_io
-diff --git a/tests/qemu-iotests/046.out b/tests/qemu-iotests/046.out
-index 6341df335c..137cf527f1 100644
---- a/tests/qemu-iotests/046.out
-+++ b/tests/qemu-iotests/046.out
-@@ -169,6 +169,12 @@ wrote XXX/XXX bytes at offset XXX
- XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
- wrote XXX/XXX bytes at offset XXX
- XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+blkdebug: Suspended request 'A'
-+blkdebug: Resuming request 'A'
-+wrote XXX/XXX bytes at offset XXX
-+XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+wrote XXX/XXX bytes at offset XXX
-+XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
- 
- == Verify image content ==
- read 65536/65536 bytes at offset 0
-@@ -275,5 +281,9 @@ read 65536/65536 bytes at offset 1245184
- 64 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
- read 65536/65536 bytes at offset 1310720
- 64 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+read 16384/16384 bytes at offset 2097152
-+16 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+read 49152/49152 bytes at offset 2113536
-+48 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
- No errors were found on the image.
- *** done
+ static inline bool is_ro_export(FsContext *ctx)
 -- 
 2.47.3
 
