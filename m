@@ -4,45 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7AB33CD98CF
-	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 19:54:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D426CD98C5
+	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 19:54:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wYUOe-0000nY-Ly; Sat, 13 Jun 2026 15:52:01 -0400
+	id 1wYUP7-00010O-7K; Sat, 13 Jun 2026 15:52:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYUOJ-0000g0-Jx; Sat, 13 Jun 2026 15:51:40 -0400
+ id 1wYUOb-0000nV-UT; Sat, 13 Jun 2026 15:51:58 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYUOH-0003OH-Ky; Sat, 13 Jun 2026 15:51:39 -0400
+ id 1wYUOZ-0003W7-7h; Sat, 13 Jun 2026 15:51:56 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1781380258; bh=sQpU8Vswr6SJPWvzmO4YEOhikEXlfhzJYrMt0/HMdtA=;
+ t=1781380258; bh=zsJVNZ1Rfy4icEIHnNZvc/oaxs0tIHiyU/YVug6Mbvk=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=sjIgbWhAtiUJbfDsyRDCA4vEAHp9dt3AK2w7WmPEluqv0EnarrZaVDiRCFLkIdNuJ
- Ll26ydruT6bBSMqrQnRfo4GWz/LGQl1eRYFJznj12z8lINZma4LWXTrbPUBEGzYZoE
- jKycfWbviJUpVi4xGGtzFE/sjT+5wRTuIOAlb1OLDYx7IDKfQjO0S/hqbA2vUnBYiJ
- Dd3QLkjC5iZ+pQDU/k+XbkJxg1Ci9E/jzlyXeSivC5K4tSN+S1ubEsZs5NMJo12DJa
- CWEaetQdTKYv7w3LvYvjvAzNq56B8y/2wLV6LhdBD66ei+EHm8n5MCufUfrUUwZwj7
- +NdTax+s/k7rg==
+ b=es9UKFvmXSkxcFzWkUN/O1adFA+rzWdnGImZgSP62l9HxAb3T1giGyUFKyCCeYUgC
+ MGgUlHKlR1crqIKLbWb+CjHHbOgY6688oNqO+fof5J71b5/eihIZl4AncYpr+f2OGG
+ c1lY2t/Uf8WVpQ4wqaPL6SPeWo48yxJjgia4UERykIRnYjGkClkxhtFaE9ndjXyePm
+ cPCBu1VgBkHYhkWac38NakNKxGUhynhlQDKQLh2E+j2RNdoBRPrMjxdeiisamBp3Zd
+ xF4b/b3WWVTarNQV7ZCmXXUNgqcZaHIQiTKd7NlgzwZLGC6s874PEkWTvD9VUo2mj6
+ VqZRPFZeL8kUg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 166401B6E12;
+ by isrv.corpit.ru (Postfix) with ESMTP id 927D61B6E1A;
  Sat, 13 Jun 2026 22:50:58 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 6B5FD3CE88C;
+ by tsrv.corpit.ru (Postfix) with ESMTP id ECDF13CE894;
  Sat, 13 Jun 2026 22:51:16 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Andrew Jones <andrew.jones@oss.qualcomm.com>,
+Cc: qemu-stable@nongnu.org, Alistair Francis <alistair.francis@wdc.com>,
  Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Nutty Liu <nutty.liu@hotmail.com>, Tomasz Jeznach <tjeznach@rivosinc.com>,
- Alistair Francis <alistair.francis@wdc.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.11 03/56] hw/riscv/riscv-iommu: Fix Svnapot 64KB pages
-Date: Sat, 13 Jun 2026 22:50:17 +0300
-Message-ID: <20260613195116.1807273-3-mjt@tls.msk.ru>
+Subject: [Stable-10.0.11 11/56] target/riscv: Update the local interrupt mask
+Date: Sat, 13 Jun 2026 22:50:25 +0300
+Message-ID: <20260613195116.1807273-11-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.11-20260613224446@cover.tls.msk.ru>
 References: <qemu-stable-10.0.11-20260613224446@cover.tls.msk.ru>
@@ -71,109 +69,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Andrew Jones <andrew.jones@oss.qualcomm.com>
+From: Alistair Francis <alistair.francis@wdc.com>
 
-The Svnapot extension encodes a 64KB leaf PTE by setting PTE_N and
-storing bits [3:0] of the PPN as a NAPOT size indicator. The IOMMU
-model wasn't checking PTE_N and therefore was using the raw (NAPOT-
-encoded) PPN directly in the physical address, yielding an address
-32 KB above the correct base.
+The RISC-V spec describes bits 0-15 as standard fixed interrupts. The
+AIA spec on the other hand describes bits 0-12 as standard fixed
+interrupts. This conflict causes issues for us as we don't dynamically
+determine if AIA is enabled when setting the *delegable_ints consts.
 
-Fix both riscv_iommu_spa_fetch() and pdt_memory_read() by mirroring
-the Svnapot handling already present in target/riscv/cpu_helper.c:
+This means currently we incorrectly treat the LCOFIP bit as delegable,
+even if AIA is disabled, which is incorrect (see the issues mentioned
+below).
 
-  napot_bits  = ctz64(ppn) + 1          /* 4 for 64KB */
-  napot_mask  = (1 << napot_bits) - 1   /* 0xF */
-  phys_base   = PPN_PHYS(ppn & ~napot_mask)
-  page_offset = addr & (PPN_PHYS(napot_mask) | (TARGET_PAGE_SIZE - 1))
+The AIA spec indicates that implementations can determine which bits of
+13-63 in mvien are writable, so let's just make it bits 15-63 to match
+the main spec.
 
-The spec only defines napot_bits == 4 (64KB); any other value is
-treated as a reserved encoding.
-
-This is a fix, rather than new feature support, because the spec
-says "IOMMU implementations must support the Svnapot standard
-extension for NAPOT Translation Contiguity."
-
-Fixes: 0c54acb8243d ("hw/riscv: add RISC-V IOMMU base emulation")
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Andrew Jones <andrew.jones@oss.qualcomm.com>
-Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Reviewed-by: Nutty Liu <nutty.liu@hotmail.com>
-Reviewed-by: Tomasz Jeznach <tjeznach@rivosinc.com>
-Message-ID: <20260508205129.377032-1-andrew.jones@oss.qualcomm.com>
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3133
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3134
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3135
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3138
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3140
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-(cherry picked from commit fcbd93e96be2ed0e5139542f54be31efa6d2b1dc)
+Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Message-ID: <20260513051841.1671987-1-alistair.francis@wdc.com>
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+(cherry picked from commit 27f9566dcd98bdde045ef5ae7b8199456c8a51c1)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
-index 92ba45bed7..91db1e1b46 100644
---- a/hw/riscv/riscv-iommu.c
-+++ b/hw/riscv/riscv-iommu.c
-@@ -234,6 +234,25 @@ static bool riscv_iommu_msi_check(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
-     return true;
- }
+diff --git a/target/riscv/csr.c b/target/riscv/csr.c
+index f8241ea3f4..a62b16feae 100644
+--- a/target/riscv/csr.c
++++ b/target/riscv/csr.c
+@@ -1757,13 +1757,13 @@ static RISCVException write_stimecmph(CPURISCVState *env, int csrno,
+ #define VSTOPI_NUM_SRCS 5
  
-+/* Returns the NAPOT page mask, or 0 for reserved encodings. */
-+static hwaddr riscv_iommu_napot_page_mask(hwaddr ppn, hwaddr addr, hwaddr *out)
-+{
-+    int napot_bits = ctz64(ppn) + 1;
-+    hwaddr napot_mask, page_mask;
-+
-+    /* The spec only defines 64KB (napot_bits == 4) */
-+    if (napot_bits != 4) {
-+        return 0;
-+    }
-+
-+    napot_mask = (1ULL << napot_bits) - 1;
-+    page_mask = PPN_PHYS(napot_mask) | (TARGET_PAGE_SIZE - 1);
-+
-+    *out = PPN_PHYS(ppn & ~napot_mask) | (addr & page_mask);
-+
-+    return page_mask;
-+}
-+
  /*
-  * RISCV IOMMU Address Translation Lookup - Page Table Walk
-  *
-@@ -455,9 +474,20 @@ static int riscv_iommu_spa_fetch(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
-         } else {
-             /* Leaf PTE, translation completed. */
-             sc[pass].step = sc[pass].levels;
--            base = PPN_PHYS(ppn) | (addr & ((1ULL << va_skip) - 1));
--            /* Update address mask based on smallest translation granularity */
--            iotlb->addr_mask &= (1ULL << va_skip) - 1;
-+
-+            if (pte & PTE_N) {
-+                hwaddr mask = riscv_iommu_napot_page_mask(ppn, addr, &base);
-+
-+                if (!mask) {
-+                    break;
-+                }
-+                iotlb->addr_mask &= mask;
-+            } else {
-+                base = PPN_PHYS(ppn) | (addr & ((1ULL << va_skip) - 1));
-+                /* Update address mask based on smallest translation granularity */
-+                iotlb->addr_mask &= (1ULL << va_skip) - 1;
-+            }
-+
-             /* Continue with S-Stage translation? */
-             if (pass && sc[0].step != sc[0].levels) {
-                 pass = S_STAGE;
-@@ -994,7 +1024,13 @@ static MemTxResult pdt_memory_read(RISCVIOMMUState *s,
-             return MEMTX_ACCESS_ERROR; /* Misaligned PPN */
-         } else {
-             /* Leaf PTE, translation completed. */
--            base = PPN_PHYS(ppn) | (addr & ((1ULL << va_skip) - 1));
-+            if (pte & PTE_N) {
-+                if (!riscv_iommu_napot_page_mask(ppn, addr, &base)) {
-+                    return MEMTX_ACCESS_ERROR;
-+                }
-+            } else {
-+                base = PPN_PHYS(ppn) | (addr & ((1ULL << va_skip) - 1));
-+            }
-             break;
-         }
+- * All core local interrupts except the fixed ones 0:12. This macro is for
++ * All core local interrupts except the fixed ones 0:15. This macro is for
+  * virtual interrupts logic so please don't change this to avoid messing up
+  * the whole support, For reference see AIA spec: `5.3 Interrupt filtering and
+  * virtual interrupts for supervisor level` and `6.3.2 Virtual interrupts for
+  * VS level`.
+  */
+-#define LOCAL_INTERRUPTS   (~0x1FFFULL)
++#define LOCAL_INTERRUPTS   (~0xFFFFULL)
  
+ static const uint64_t delegable_ints =
+     S_MODE_INTERRUPTS | VS_MODE_INTERRUPTS | MIP_LCOFIP;
 -- 
 2.47.3
 
