@@ -4,44 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F6C1CD98CF
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62D70CD98D2
 	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 19:58:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wYUSr-0001sk-DO; Sat, 13 Jun 2026 15:56:22 -0400
+	id 1wYUSn-0001nB-Fa; Sat, 13 Jun 2026 15:56:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYUSn-0001nt-Mg; Sat, 13 Jun 2026 15:56:17 -0400
+ id 1wYUSl-0001mm-VS; Sat, 13 Jun 2026 15:56:15 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYUSl-0004uU-A7; Sat, 13 Jun 2026 15:56:17 -0400
+ id 1wYUSj-0004oQ-J9; Sat, 13 Jun 2026 15:56:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1781380261; bh=QOOCDw+z6uidYOH1zEIlqJ50MIz7h1OpLNgNEKkZT2w=;
+ t=1781380261; bh=1tPYqxfalQvrH6IzMDSuSMzVqSC8HCP4VLvVLuJifHw=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=JmmJ/+WiuuwFv0I/8tEpwVwr983xkfNMdBKpAiJVGv8wwmH4wbUANY8+/WXYqb/ES
- IVAUzLyJui6PPrZ0M4zTa93MEb9vBg3K0H9ZERA1vLDd7umDkgUPELJ3DtWX+3fc6X
- XpH1QLJNW3efCp6Pg3YHSwTnTJ/EomzwLZiISUOQfiGpq/isQYQUb57+4iFOp759Qv
- 0yvVVBH4NZYHUrbKcQf4ruSFSa5S1HNXsVEENUxQqyHfT7sdLRWfWghrkMdtf33m/P
- IHJP6huSOnyQx1dBTRX0PvsgmDnNpYzHPVd1nq2ZNFwEorwn5Cue8bbUkSYJ1c5y8f
- HjV8N7wvDTV1g==
+ b=gOTzF19DBo45pzwcC17L5shKocUZfx0wmeLdTMKKXezBJgRj4LYFtDfr8TwsiW8DJ
+ lfBCM3cbG5JScIR/8u1H/ZnuctDLI23Wdie58Eoh0TUhBvwEblHe1qqFC2yIm9ERMc
+ taKAFPNU8e/vnKnLzhz/Uu1GzF+mhOE2eWtpQKtQTbKGfzRhR6f3ntBLvk2RpuSBK0
+ VwFk4r83QGjJzzCLEqDrg6q1bD7blpnUnSyYY45/VPlbdeaYq9b0k0Dh5jDLFa1mOj
+ CSXbNJxA6YTos/KH6PktNitVXvwe5QrlrrYA8G2EW5p9hoSYDXP+xpUVdbZynw7+f4
+ QxYvnMpIUF0sw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 73DAD1B6E43;
+ by isrv.corpit.ru (Postfix) with ESMTP id 638441B6E42;
  Sat, 13 Jun 2026 22:51:01 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id CC36C3CE8BD;
+ by tsrv.corpit.ru (Postfix) with ESMTP id BB43E3CE8BC;
  Sat, 13 Jun 2026 22:51:19 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Fabiano Rosas <farosas@suse.de>,
- Stefan Hajnoczi <stefanha@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
+Cc: qemu-stable@nongnu.org, Thomas Lamprecht <t.lamprecht@proxmox.com>,
+ Fiona Ebner <f.ebner@proxmox.com>, Kevin Wolf <kwolf@redhat.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.11 52/56] qed: Don't try to flush during incoming
- migration
-Date: Sat, 13 Jun 2026 22:51:06 +0300
-Message-ID: <20260613195116.1807273-52-mjt@tls.msk.ru>
+Subject: [Stable-10.0.11 51/56] qcow2: Fix data loss on zero write with
+ detect-zeroes=unmap
+Date: Sat, 13 Jun 2026 22:51:05 +0300
+Message-ID: <20260613195116.1807273-51-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.11-20260613224446@cover.tls.msk.ru>
 References: <qemu-stable-10.0.11-20260613224446@cover.tls.msk.ru>
@@ -70,147 +70,187 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Fabiano Rosas <farosas@suse.de>
+From: Thomas Lamprecht <t.lamprecht@proxmox.com>
 
-It's not possible to access the image file while there is an incoming
-migration in progress, the QEMU process doesn't hold any locks to the
-storage at this point so nodes are inactive. Attempting to flush leads
-to an assert at bdrv_co_write_req_prepare():
+Commit b8bfb1478d ("qcow2: Fix corruption on discard during write with
+COW") added a wait_for_dependencies() at the start of
+qcow2_subcluster_zeroize(). That fixes the inconsistency it set out to
+fix, but turns the lock-protected pre-check in the caller,
+qcow2_co_pwrite_zeroes(), into a stale one: the wait yields s->lock,
+so an in-flight allocating write whose QCowL2Meta is already on
+s->cluster_allocs (but whose L2 entry is not yet linked) gets to link
+its entry during the yield. When the zeroize wakes, the cluster is now
+NORMAL, and with BDRV_REQ_MAY_UNMAP the free path in zero_in_l2_slice()
+unmaps the just-written cluster, silently dropping the data write's
+payload.
 
-   assert(!(bs->open_flags & BDRV_O_INACTIVE))
+This is reachable with detect-zeroes=unmap (the default for VirtIO
+disks with discard on in Proxmox VE), under which the block layer
+auto-promotes all-zero buffers to BDRV_REQ_ZERO_WRITE |
+BDRV_REQ_MAY_UNMAP. A memory-constrained Debian guest running 'apt
+full-upgrade' on such a disk reproduces it as random SIGSEGVs:
+swapped-out code pages come back as zero.
 
-The issue is reproducible by running iotest 181 on a host under cpu
-load. The migration must coincide with the header already containing
-the QED_F_NEED_CHECK flag.
+Wait for in-flight dependencies before the lock-protected check in
+qcow2_co_pwrite_zeroes(). If a write linked its L2 entry during the
+wait, the type check now fails and the block layer falls back to a
+bounce-buffered zero write that only touches the requested subrange,
+preserving the racing write's data. Promote wait_for_dependencies() to
+qcow2_wait_for_dependencies() so qcow2.c can call it.
 
-The sequence of events is as follows, with the respective call stacks
-referenced below:
-
-During block device init, bdrv_qed_attach_aio_context() starts the
-'need_check' timer. The timer will not fire during incoming migration
-as it uses QEMU_CLOCK_VIRTUAL (to avoid this very issue, as the code
-comment indicates).                                                   (0)
-
-However, there's still bdrv_qed_drain_begin() which uses the fact that
-the timer is live to decide whether to start the
-qed_need_check_timer_entry() directly.                                (1)
-
-The qed_need_check_timer_entry() eventually calls into
-qed_write_header() -> bdrv_co_pwrite() leading to the assert.         (2)
-
-Skip creating the 'need_check' timer whenever the image is inactive.
-
-The stacks:
-
-(0) == issues timer_mod ==
- #6  in qed_start_need_check_timer       at ../block/qed.c:340
- #7  in bdrv_qed_attach_aio_context      at ../block/qed.c:373
- #8  in bdrv_qed_do_open                 at ../block/qed.c:556
- #9  in bdrv_qed_open_entry              at ../block/qed.c:582
- #10 in coroutine_trampoline             at ../util/coroutine-ucontext.c:175
- #0  in qemu_coroutine_switch<+120>      at ../util/coroutine-ucontext.c:321
- #1  in qemu_aio_coroutine_enter<+356>   at ../util/qemu-coroutine.c:293
- #2  in aio_co_enter<+179>               at ../util/async.c:710
- #3  in aio_co_wake<+53>                 at ../util/async.c:695
- #4  in thread_pool_co_cb<+47>           at ../util/thread-pool.c:283
- #5  in thread_pool_completion_bh<+241>  at ../util/thread-pool.c:202
- #6  in aio_bh_call<+109>                at ../util/async.c:173
- #7  in aio_bh_poll<+299>                at ../util/async.c:220
- #8  in aio_poll<+690>                   at ../util/aio-posix.c:745
- #9  in bdrv_qed_open<+392>              at ../block/qed.c:607
- #10 in bdrv_open_driver<+327>           at ../block.c:1678
- #11 in bdrv_open_common<+1619>          at ../block.c:2008
- #12 in bdrv_open_inherit<+2556>         at ../block.c:4191
- #13 in bdrv_open<+118>                  at ../block.c:4286
- #14 in blk_new_open<+199>               at ../block/block-backend.c:458
- #15 in blockdev_init<+2011>             at ../blockdev.c:612
- #16 in drive_new<+3008>                 at ../blockdev.c:1008
- #17 in drive_init_func<+51>             at ../system/vl.c:662
- #18 in qemu_opts_foreach<+227>          at ../util/qemu-option.c:1148
- #19 in configure_blockdev<+350>         at ../system/vl.c:721
- #20 in qemu_create_early_backends<+343> at ../system/vl.c:2076
- #21 in qemu_init<+12483>                at ../system/vl.c:3778
- #22 in main<+46>                        at ../system/main.c:71
-
-(1) == sees timer_pending ==
- #6  in bdrv_qed_drain_begin             at ../block/qed.c:391
- #7  in bdrv_do_drained_begin            at ../block/io.c:366
- #8  in bdrv_do_drained_begin_quiesce    at ../block/io.c:386
- #9  in bdrv_child_cb_drained_begin      at ../block.c:1207
- #10 in bdrv_parent_drained_begin_single at ../block/io.c:133
- #11 in bdrv_parent_drained_begin        at ../block/io.c:64
- #12 in bdrv_do_drained_begin            at ../block/io.c:364
- #13 in bdrv_drained_begin               at ../block/io.c:393
- #14 in blk_drain                        at ../block/block-backend.c:2101
- #15 in blk_unref                        at ../block/block-backend.c:544
- #16 in bdrv_open_inherit                at ../block.c:4197
- #17 in bdrv_open                        at ../block.c:4286
- #18 in blk_new_open                     at ../block/block-backend.c:458
- #19 in blockdev_init                    at ../blockdev.c:612
- #20 in drive_new                        at ../blockdev.c:1008
- #21 in drive_init_func                  at ../system/vl.c:662
- #22 in qemu_opts_foreach                at ../util/qemu-option.c:1148
- #23 in configure_blockdev               at ../system/vl.c:721
- #24 in qemu_create_early_backends       at ../system/vl.c:2076
- #25 in qemu_init                        at ../system/vl.c:3778
- #26 in main                             at ../system/main.c:71
-
-(2) == crashes ==
- #5  in __assert_fail (assertion="!(bs->open_flags & BDRV_O_INACTIVE)", file="../block/io.c", line=1977
- #6  in bdrv_co_write_req_prepare  at ../block/io.c:1977
- #7  in bdrv_aligned_pwritev       at ../block/io.c:2099
- #8  in bdrv_co_pwritev_part       at ../block/io.c:2316
- #9  in bdrv_co_pwritev            at ../block/io.c:2233
- #10 in bdrv_co_pwrite             at ../include/block/block_int-io.h:77
- #11 in qed_write_header           at ../block/qed.c:128
- #12 in qed_need_check_timer       at ../block/qed.c:305
- #13 in qed_need_check_timer_entry at ../block/qed.c:319
-
-Note that this issue is not exactly the same as what's been reported
-in Gitlab, but given how easily this reproduces, I imagine it has to
-be happening in that setup as well.
-
-Link: https://gitlab.com/qemu-project/qemu/-/work_items/3515
-Signed-off-by: Fabiano Rosas <farosas@suse.de>
-Message-ID: <20260603193813.2327596-1-farosas@suse.de>
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+Fixes: b8bfb1478d ("qcow2: Fix corruption on discard during write with COW")
+Fixes: 9c3d7bf39f ("qcow2: Fix corruption on discard during write with COW") in 10.0.x series
+Cc: qemu-stable@nongnu.org
+Tested-by: Fiona Ebner <f.ebner@proxmox.com>
+Reviewed-by: Fiona Ebner <f.ebner@proxmox.com>
+Signed-off-by: Thomas Lamprecht <t.lamprecht@proxmox.com>
+Message-ID: <20260522151318.238064-1-t.lamprecht@proxmox.com>
+[kwolf: Reverted unnecessary change to 'nr' assignment]
 Reviewed-by: Kevin Wolf <kwolf@redhat.com>
 Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-(cherry picked from commit 7e573b660fefdebd21cb755d0d34bb5942fd3af3)
+(cherry picked from commit 1d47eb68983577a4e06fe1c165d90e128b191b86)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/block/qed.c b/block/qed.c
-index ac24449ffb..c9c0c01d22 100644
---- a/block/qed.c
-+++ b/block/qed.c
-@@ -351,16 +351,22 @@ static void bdrv_qed_detach_aio_context(BlockDriverState *bs)
- {
-     BDRVQEDState *s = bs->opaque;
- 
--    qed_cancel_need_check_timer(s);
--    timer_free(s->need_check_timer);
--    s->need_check_timer = NULL;
-+    if (s->need_check_timer) {
-+        qed_cancel_need_check_timer(s);
-+        timer_free(s->need_check_timer);
-+        s->need_check_timer = NULL;
-+    }
+diff --git a/block/qcow2-cluster.c b/block/qcow2-cluster.c
+index c20011d34c..23eeb9fc56 100644
+--- a/block/qcow2-cluster.c
++++ b/block/qcow2-cluster.c
+@@ -1474,9 +1474,9 @@ static int coroutine_fn handle_dependencies(BlockDriverState *bs,
+     return 0;
  }
  
--static void bdrv_qed_attach_aio_context(BlockDriverState *bs,
--                                        AioContext *new_context)
-+static void GRAPH_RDLOCK bdrv_qed_attach_aio_context(BlockDriverState *bs,
-+                                                     AioContext *new_context)
+-static void coroutine_mixed_fn wait_for_dependencies(BlockDriverState *bs,
+-                                                     uint64_t guest_offset,
+-                                                     uint64_t bytes)
++void coroutine_mixed_fn qcow2_wait_for_dependencies(BlockDriverState *bs,
++                                                    uint64_t guest_offset,
++                                                    uint64_t bytes)
  {
-     BDRVQEDState *s = bs->opaque;
+     BDRVQcow2State *s = bs->opaque;
+     QCowL2Meta *m = NULL;
+@@ -2037,7 +2037,7 @@ int qcow2_cluster_discard(BlockDriverState *bs, uint64_t offset,
+      * We don't need to allocate a QCowL2Meta for the discard operation because
+      * s->lock is held for the duration of the whole operation.
+      */
+-    wait_for_dependencies(bs, offset, bytes);
++    qcow2_wait_for_dependencies(bs, offset, bytes);
  
-+    if (bdrv_is_inactive(bs)) {
-+        return;
-+    }
+     /* Caller must pass aligned values, except at image end */
+     assert(QEMU_IS_ALIGNED(offset, s->cluster_size));
+@@ -2208,7 +2208,7 @@ int coroutine_fn qcow2_subcluster_zeroize(BlockDriverState *bs, uint64_t offset,
+      * We don't need to allocate a QCowL2Meta for the zeroize operation because
+      * s->lock is held for the duration of the whole operation.
+      */
+-    wait_for_dependencies(bs, offset, bytes);
++    qcow2_wait_for_dependencies(bs, offset, bytes);
+ 
+     /* If we have to stay in sync with an external data file, zero out
+      * s->data_file first. */
+diff --git a/block/qcow2.c b/block/qcow2.c
+index 7774e7f090..6f1612a5d8 100644
+--- a/block/qcow2.c
++++ b/block/qcow2.c
+@@ -4088,10 +4088,16 @@ qcow2_co_pwrite_zeroes(BlockDriverState *bs, int64_t offset, int64_t bytes,
+         }
+ 
+         qemu_co_mutex_lock(&s->lock);
+-        /* We can have new write after previous check */
+         offset -= head;
+         bytes = s->subcluster_size;
+         nr = s->subcluster_size;
++        /*
++         * Wait for in-flight allocating writes first: otherwise the type
++         * check below could pass on UNALLOCATED while a yet-to-link_l2 write
++         * completes during qcow2_subcluster_zeroize()'s own wait, letting the
++         * resumed MAY_UNMAP discard the just-written data.
++         */
++        qcow2_wait_for_dependencies(bs, offset, bytes);
+         ret = qcow2_get_host_offset(bs, offset, &nr, &off, &type);
+         if (ret < 0 ||
+             (type != QCOW2_SUBCLUSTER_UNALLOCATED_PLAIN &&
+diff --git a/block/qcow2.h b/block/qcow2.h
+index a9e3481c6e..e1cd91df19 100644
+--- a/block/qcow2.h
++++ b/block/qcow2.h
+@@ -958,6 +958,10 @@ int coroutine_fn GRAPH_RDLOCK
+ qcow2_subcluster_zeroize(BlockDriverState *bs, uint64_t offset, uint64_t bytes,
+                          int flags);
+ 
++void coroutine_mixed_fn
++qcow2_wait_for_dependencies(BlockDriverState *bs, uint64_t guest_offset,
++                            uint64_t bytes);
 +
-     s->need_check_timer = aio_timer_new(new_context,
-                                         QEMU_CLOCK_VIRTUAL, SCALE_NS,
-                                         qed_need_check_timer_cb, s);
+ int GRAPH_RDLOCK
+ qcow2_expand_zero_clusters(BlockDriverState *bs,
+                            BlockDriverAmendStatusCB *status_cb,
+diff --git a/tests/qemu-iotests/046 b/tests/qemu-iotests/046
+index e03dd40147..0d84b5c1c7 100755
+--- a/tests/qemu-iotests/046
++++ b/tests/qemu-iotests/046
+@@ -226,6 +226,26 @@ aio_write -z 0x140000 0x10000
+ resume A
+ aio_flush
+ EOF
++
++# Start an allocating write to a previously unallocated cluster and, before
++# its L2 update is linked, issue a concurrent sub-cluster zero write with
++# MAY_UNMAP that targets a disjoint range within the same cluster. The zero
++# write's head/tail are zero (cluster is unallocated), so qcow2_co_pwrite_zeroes
++# would expand it to the full subcluster. Without waiting for dependencies
++# before the zero write's "unallocated" type check, that check passes,
++# qcow2_subcluster_zeroize then yields in wait_for_dependencies, the allocating
++# write links its L2 entry, and the resumed zeroize unmaps the cluster -
++# silently discarding the just-written data. Waiting first makes the zero write
++# fall back to a bounce-buffered real write, which only touches its own
++# subrange.
++cat <<EOF
++break write_aio A
++aio_write -P 180 0x200000 0x4000
++wait_break A
++aio_write -z -u 0x204000 0x4000
++resume A
++aio_flush
++EOF
+ }
+ 
+ overlay_io | $QEMU_IO blkdebug::"$TEST_IMG" | _filter_qemu_io |\
+@@ -310,6 +330,9 @@ verify_io()
+     echo read -P 0   0x120000 0x10000
+     echo read -P 0   0x130000 0x10000
+     echo read -P 0   0x140000 0x10000
++
++    echo read -P 180 0x200000 0x4000
++    echo read -P 0   0x204000 0xc000
+ }
+ 
+ verify_io | $QEMU_IO "$TEST_IMG" | _filter_qemu_io
+diff --git a/tests/qemu-iotests/046.out b/tests/qemu-iotests/046.out
+index 6341df335c..137cf527f1 100644
+--- a/tests/qemu-iotests/046.out
++++ b/tests/qemu-iotests/046.out
+@@ -169,6 +169,12 @@ wrote XXX/XXX bytes at offset XXX
+ XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
+ wrote XXX/XXX bytes at offset XXX
+ XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++blkdebug: Suspended request 'A'
++blkdebug: Resuming request 'A'
++wrote XXX/XXX bytes at offset XXX
++XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++wrote XXX/XXX bytes at offset XXX
++XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
+ 
+ == Verify image content ==
+ read 65536/65536 bytes at offset 0
+@@ -275,5 +281,9 @@ read 65536/65536 bytes at offset 1245184
+ 64 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
+ read 65536/65536 bytes at offset 1310720
+ 64 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++read 16384/16384 bytes at offset 2097152
++16 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++read 49152/49152 bytes at offset 2113536
++48 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
+ No errors were found on the image.
+ *** done
 -- 
 2.47.3
 
