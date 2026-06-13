@@ -4,49 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84D66CD8CA8
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4705CD98CF
 	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 20:38:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wYV7G-0004QC-Bx; Sat, 13 Jun 2026 16:38:07 -0400
+	id 1wYV7q-0005C3-Ie; Sat, 13 Jun 2026 16:38:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYV6x-0004EY-RB; Sat, 13 Jun 2026 16:37:47 -0400
+ id 1wYV7U-0004YH-7M; Sat, 13 Jun 2026 16:38:22 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYV6w-0003WS-As; Sat, 13 Jun 2026 16:37:47 -0400
+ id 1wYV7S-0003hc-LK; Sat, 13 Jun 2026 16:38:19 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1781382963; bh=lGk/OGkifKx4LKSM9herBoN6ehFZjTS6Al80zJPhBAI=;
+ t=1781382963; bh=WG1eqqDRC0XESaMjrceBdpmpNaVRXVi8x92Ta+mAlxQ=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=aWyZ+QgWF1pj0184S2w+HEtpd3KphPSgdHTpxsR2FKZUSdo9v7yQ0+fcmFWwidKgE
- pgxRgP7tqFkoFzCONNS8mbq3pO9gLier1DrAUgqW4FaG0v50IIkjHt2S9H7/DQxrx5
- Q0YNV2Hn9LhVK86K0lfEdI9qvLzmKbpPRvsTHgCD5OsXhzwwExdHFZDd0bX7A3yshc
- SM0CElrVemBnFOGLAJCe9HdS3WZPvDErqfF0pAJSurmNqwQE61ovt/B03f0XgQAomq
- XvreNPgXFDgLLmIu+Vxf8Yv5uN/r1ACII1em4lT9bnT3pNTF+Wa2Hg6ZtizMppqw3E
- VAb8dM2jkhOyg==
+ b=ljsxOOPweHSiNCrMU/r2D9K7CkImQeAXrN1pDwTMRb2e202e+fwhmiLxTRWMilSat
+ dhgJokMoK7crtwkfQIG/zQaVFhecRExGhDCYdoHY7HUvMWGV2XLWTr/C5Q/gkWUAnC
+ qBLqtM0MqjWzQnUTPz7ud+SDLLyve0qmRh7UFWs1WcefqQBOn8dOoHnnFWCKGQqZTe
+ 2K59Ny60n/IWAXMzLfnwk2AF9Bt29XoW/+6PXxDhPYojZ/07PzGm0nwNaGNwrZ5pTO
+ kVjCjayzJAwYT1plzuQmYw84TTybZtfXGYZ7GTjmWoI7Pchv8M1jPezHKkw6xoU7VO
+ w+BcHac8oQFYg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 871141B6EED;
+ by isrv.corpit.ru (Postfix) with ESMTP id D13B31B6EF3;
  Sat, 13 Jun 2026 23:36:03 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id EFE453CE93F;
- Sat, 13 Jun 2026 23:36:21 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 46BB83CE944;
+ Sat, 13 Jun 2026 23:36:22 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.2 19/72] ui/vnc: fix OOB write in lossy rect worker code
-Date: Sat, 13 Jun 2026 23:34:45 +0300
-Message-ID: <20260613203542.1809153-19-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Wei Che Kao <skps96g313.cs10@gmail.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.2 24/72] apic: fix delivery bitmask with modified xAPIC
+ ids
+Date: Sat, 13 Jun 2026 23:34:50 +0300
+Message-ID: <20260613203542.1809153-24-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.2-20260613224644@cover.tls.msk.ru>
 References: <qemu-stable-11.0.2-20260613224644@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -71,48 +69,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel P. Berrangé <berrange@redhat.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
 
-Incorrect calculation of the boundary condition when tracking lossy
-rectangles in the worker thread will result in an OOB write which
-can corrupt further worker state, and/or trigger any guard pages
-that may lie beyond the VncWorker struct. This can be triggered
-through careful choice of the display resolution in the guest
-OS by an unprivileged user.
+Self-IPIs (or all-but-self IPIs) in QEMU can cause a out-of-bounds access
+to deliver_bitmask, because the access uses the APIC ID register which
+is writable by the guest.  However, foreach_apic uses the delivery
+bitmask indexes to look up the local_apics[] array, which is indexed
+by *initial* APIC id.  Using the right id fixes both a possible heap
+write overflow if the modified APIC id is too large for max_apic_words,
+and a mis-delivery of both self and all-but-self IPIs.
 
-Fixes: CVE-2026-48002
-Reported-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-Message-ID: <20260521103353.1645561-4-berrange@redhat.com>
-[Marc-André - added assert() suggest by philmd@linaro.org]
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-(cherry picked from commit 46ee49034d26d04d95ba8f3183d4fbfa9d2b89b4)
+Reported-by: Wei Che Kao <skps96g313.cs10@gmail.com>
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+(cherry picked from commit 153dc2fa7bbe0491290d22c4bbb6807074f24260)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/ui/vnc.c b/ui/vnc.c
-index ccc73bd7aa..8ab44c830c 100644
---- a/ui/vnc.c
-+++ b/ui/vnc.c
-@@ -2994,13 +2994,15 @@ void vnc_sent_lossy_rect(VncWorker *worker, int x, int y, int w, int h)
- {
-     int i, j;
+diff --git a/hw/intc/apic.c b/hw/intc/apic.c
+index 8766ed00b9..ced7df49bd 100644
+--- a/hw/intc/apic.c
++++ b/hw/intc/apic.c
+@@ -648,13 +648,6 @@ static void apic_deliver(APICCommonState *s, uint32_t dest, uint8_t dest_mode,
+     APICCommonState *apic_iter;
+     uint32_t deliver_bitmask_size = max_apic_words * sizeof(uint32_t);
+     g_autofree uint32_t *deliver_bitmask = g_new(uint32_t, max_apic_words);
+-    uint32_t current_apic_id;
+-
+-    if (is_x2apic_mode(s)) {
+-        current_apic_id = s->initial_apic_id;
+-    } else {
+-        current_apic_id = s->id;
+-    }
  
--    w = (x + w) / VNC_STAT_RECT;
--    h = (y + h) / VNC_STAT_RECT;
-+    w = DIV_ROUND_UP((x + w), VNC_STAT_RECT);
-+    h = DIV_ROUND_UP((y + h), VNC_STAT_RECT);
-+    assert(h <= VNC_STAT_ROWS);
-+    assert(w <= VNC_STAT_COLS);
-     x /= VNC_STAT_RECT;
-     y /= VNC_STAT_RECT;
- 
--    for (j = y; j <= h; j++) {
--        for (i = x; i <= w; i++) {
-+    for (j = y; j < h; j++) {
-+        for (i = x; i < w; i++) {
-             worker->lossy_rect[j][i] = 1;
-         }
+     switch (dest_shorthand) {
+     case 0:
+@@ -662,14 +655,20 @@ static void apic_deliver(APICCommonState *s, uint32_t dest, uint8_t dest_mode,
+         break;
+     case 1:
+         memset(deliver_bitmask, 0x00, deliver_bitmask_size);
+-        apic_set_bit(deliver_bitmask, current_apic_id);
++        /*
++         * The self and all-but-self cases do not use apic_match_dest() and
++         * directly fill in deliver_bitmask; the bitmask's indexes in turn
++         * map to local_apics[] slots which are never changed even if the
++         * xAPIC id is modified.  So use s->initial_apic_id instead of s->id.
++         */
++        apic_set_bit(deliver_bitmask, s->initial_apic_id);
+         break;
+     case 2:
+         memset(deliver_bitmask, 0xff, deliver_bitmask_size);
+         break;
+     case 3:
+         memset(deliver_bitmask, 0xff, deliver_bitmask_size);
+-        apic_reset_bit(deliver_bitmask, current_apic_id);
++        apic_reset_bit(deliver_bitmask, s->initial_apic_id);
+         break;
      }
+ 
 -- 
 2.47.3
 
