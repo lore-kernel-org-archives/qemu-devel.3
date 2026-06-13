@@ -4,42 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 967B2CD98D6
-	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 20:45:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9AB5CCD98CF
+	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 20:45:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wYVBI-00060o-CP; Sat, 13 Jun 2026 16:42:16 -0400
+	id 1wYVAg-0004wP-2d; Sat, 13 Jun 2026 16:41:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYVB8-0005ms-ST; Sat, 13 Jun 2026 16:42:08 -0400
+ id 1wYVAe-0004rI-5C; Sat, 13 Jun 2026 16:41:36 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYVB4-0005Rl-V9; Sat, 13 Jun 2026 16:42:05 -0400
+ id 1wYVAc-0005Jg-IA; Sat, 13 Jun 2026 16:41:35 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1781382966; bh=yBluAs/gE8DSO3TfUiji3YFG4b/s0M7RfG8jpYCyV4I=;
+ t=1781382966; bh=7nNrOIUeTfp+RJapRBAV6b2JLZ6fd4BEihLhXZZY+hs=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=h7mOqQqLyQaIL3AGWruYQy0LREPhGj1IsgWD7IXvSsEgd6UjE9gHkWoGg80Z4BTng
- 2KrG3/POR51SYD/9U8FueCMvWi2eRpLODRKfHnkgd2tOYU65dO2P4QqOTunWjIT7ua
- M8ZJyMZ4MGPkIRb8XJYdafDt8YD2uJ29NGI8rS9z/h2MGK/3vcnluJ9X+WQaC+i9Hq
- HPAITxymCN2TRqtMbHojaaAMJ2mvy6IDvsVkNASM7HnA9hzk4zEO2OLqXzzCOGzdQZ
- vHCbTnNSnEX0Q4TpXtCgedXtfvDb9h/wlKMfOwmN2c6d6+Mck9xgPNuaLCL0vJpWb/
- KYQSsxA9JWYVw==
+ b=wV+XK7hDEynQqzaEnNwQMvpwKbB+PK6Cdy38UIETxa7DcID3LxuXlZ0SyMN1SEe52
+ 5VZPF907AmlB+n8GiiY2u7hMITeMrtDy3s1mALyw031d7zA1gjXq8s47rt7CH/Unvv
+ md2Q+pzgldw1G99gywQXWaR5U5qcl4v6z5vt3NRx5wR6XR8mbFDRWBc6cOk5fXOJKt
+ cp9gem7fsCPqL78ECC5SoMBpGBSxOZxXNPi+z4pI8kw3O56rEo0RKnMJzCD4+I45T2
+ 0GW+qJYs7+rjmKXI5wgMwudr3ik3TgTK8VEaRC8laenx3QyACaSLhXhyFqMN+R8yrO
+ DolYM5qhQ1RFw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 617DE1B6F20;
+ by isrv.corpit.ru (Postfix) with ESMTP id 1E6711B6F1B;
  Sat, 13 Jun 2026 23:36:06 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id CAB413CE969;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 7883D3CE965;
  Sat, 13 Jun 2026 23:36:24 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
- "Denis V. Lunev" <den@openvz.org>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.2 61/72] qemu-io: Add 'aio_discard' command
-Date: Sat, 13 Jun 2026 23:35:27 +0300
-Message-ID: <20260613203542.1809153-61-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Farhan Ali <alifm@linux.ibm.com>,
+ Niklas Schnelle <schnelle@linux.ibm.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>,
+ Omar Elghoul <oelghoul@linux.ibm.com>, Cornelia Huck <cohuck@redhat.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.2 57/72] s390x/pci: Fix interrupt forwarding disable for
+ interpreted devices
+Date: Sat, 13 Jun 2026 23:35:23 +0300
+Message-ID: <20260613203542.1809153-57-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.2-20260613224644@cover.tls.msk.ru>
 References: <qemu-stable-11.0.2-20260613224644@cover.tls.msk.ru>
@@ -68,154 +72,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Kevin Wolf <kwolf@redhat.com>
+From: Farhan Ali <alifm@linux.ibm.com>
 
-Testing interactions between multiple requests that include discard
-requests require that qemu-io can do the discard asynchronously, like it
-already does for reads and writes. To this effect, add an 'aio_discard'
-command.
+Remove the FH_MASK_ENABLE check when disabling interrupt forwarding
+during device reset. This check was broken for the default case in
+the switch statement above, preventing proper cleanup of interrupt
+forwarding.
 
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-Message-ID: <20260427170520.101242-3-kwolf@redhat.com>
-Reviewed-by: Denis V. Lunev <den@openvz.org>
-Tested-by: Denis V. Lunev <den@openvz.org>
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-(cherry picked from commit 7f8466e2ce620e3c6a6e2f32d616367174d4dbe9)
+The pbdev->aif check in s390_pci_kvm_aif_disable() already guards
+against double-disabling of interrupt forwarding.
+
+Cc: qemu-stable@nongnu.org
+Reported-by: Niklas Schnelle <schnelle@linux.ibm.com>
+Signed-off-by: Farhan Ali <alifm@linux.ibm.com>
+Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
+Tested-by: Omar Elghoul <oelghoul@linux.ibm.com>
+Message-ID: <20260521182946.1607-1-alifm@linux.ibm.com>
+Signed-off-by: Cornelia Huck <cohuck@redhat.com>
+(cherry picked from commit 442f727b8bebabf20a4f6a7536a4ff2885402030)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/qemu-io-cmds.c b/qemu-io-cmds.c
-index f6d077908f..de4c1966fe 100644
---- a/qemu-io-cmds.c
-+++ b/qemu-io-cmds.c
-@@ -2218,6 +2218,120 @@ static int discard_f(BlockBackend *blk, int argc, char **argv)
-     return 0;
- }
+diff --git a/hw/s390x/s390-pci-bus.c b/hw/s390x/s390-pci-bus.c
+index 4de7b587e8..eb2b6185db 100644
+--- a/hw/s390x/s390-pci-bus.c
++++ b/hw/s390x/s390-pci-bus.c
+@@ -1504,7 +1504,7 @@ static void s390_pci_device_reset(DeviceState *dev)
+         break;
+     }
  
-+static void aio_discard_help(void)
-+{
-+    printf(
-+"\n"
-+" asynchronously discards a range of bytes from the given offset\n"
-+"\n"
-+" Example:\n"
-+" 'aio_discard 512 1k' - discards 1 kilobyte from 512 bytes into the file\n"
-+"\n"
-+" Discards a segment of the currently open file.\n"
-+" -C, -- report statistics in a machine parsable format\n"
-+" -q, -- quiet mode, do not show I/O statistics\n"
-+" The discard is performed asynchronously and the aio_flush command must be\n"
-+" used to ensure all outstanding aio requests have been completed.\n"
-+" Note that due to its asynchronous nature, this command will be\n"
-+" considered successful once the request is submitted, independently\n"
-+" of potential I/O errors.\n"
-+"\n");
-+}
-+
-+static int aio_discard_f(BlockBackend *blk, int argc, char **argv);
-+
-+static const cmdinfo_t aio_discard_cmd = {
-+    .name       = "aio_discard",
-+    .cfunc      = aio_discard_f,
-+    .perm       = BLK_PERM_WRITE,
-+    .argmin     = 2,
-+    .argmax     = -1,
-+    .args       = "[-Cq] off len",
-+    .oneline    = "asynchronously discards a number of bytes",
-+    .help       = aio_discard_help,
-+};
-+
-+static void aio_discard_done(void *opaque, int ret)
-+{
-+    struct aio_ctx *ctx = opaque;
-+    struct timespec t2;
-+
-+    clock_gettime(CLOCK_MONOTONIC, &t2);
-+
-+    if (ret < 0) {
-+        printf("aio_discard failed: %s\n", strerror(-ret));
-+        block_acct_failed(blk_get_stats(ctx->blk), &ctx->acct);
-+        goto out;
-+    }
-+
-+    block_acct_done(blk_get_stats(ctx->blk), &ctx->acct);
-+
-+    if (ctx->qflag) {
-+        goto out;
-+    }
-+
-+    /* Finally, report back -- -C gives a parsable format */
-+    t2 = tsub(t2, ctx->t1);
-+    print_report("discarded ", &t2, ctx->offset, ctx->qiov.size,
-+                 ctx->qiov.size, 1, ctx->Cflag);
-+out:
-+    g_free(ctx);
-+}
-+
-+static int aio_discard_f(BlockBackend *blk, int argc, char **argv)
-+{
-+    int c, ret;
-+    int64_t count;
-+    struct aio_ctx *ctx = g_new0(struct aio_ctx, 1);
-+
-+    ctx->blk = blk;
-+
-+    while ((c = getopt(argc, argv, "Cq")) != -1) {
-+        switch (c) {
-+        case 'C':
-+            ctx->Cflag = true;
-+            break;
-+        case 'q':
-+            ctx->qflag = true;
-+            break;
-+        default:
-+            g_free(ctx);
-+            qemuio_command_usage(&aio_discard_cmd);
-+            return -EINVAL;
-+        }
-+    }
-+
-+    if (optind != argc - 2) {
-+        g_free(ctx);
-+        qemuio_command_usage(&aio_discard_cmd);
-+        return -EINVAL;
-+    }
-+
-+    ctx->offset = cvtnum(argv[optind]);
-+    if (ctx->offset < 0) {
-+        ret = ctx->offset;
-+        print_cvtnum_err(ret, argv[optind]);
-+        g_free(ctx);
-+        return ret;
-+    }
-+    optind++;
-+
-+    count = cvtnum(argv[optind]);
-+    if (count < 0) {
-+        print_cvtnum_err(count, argv[optind]);
-+        g_free(ctx);
-+        return count;
-+    }
-+
-+    clock_gettime(CLOCK_MONOTONIC, &ctx->t1);
-+    ctx->qiov.size = count;
-+    block_acct_start(blk_get_stats(blk), &ctx->acct, ctx->qiov.size,
-+                     BLOCK_ACCT_UNMAP);
-+    blk_aio_pdiscard(blk, ctx->offset, count, aio_discard_done, ctx);
-+
-+    return 0;
-+}
-+
- static int alloc_f(BlockBackend *blk, int argc, char **argv)
- {
-     BlockDriverState *bs = blk_bs(blk);
-@@ -2800,6 +2914,7 @@ static void __attribute((constructor)) init_qemuio_commands(void)
-     qemuio_add_command(&length_cmd);
-     qemuio_add_command(&info_cmd);
-     qemuio_add_command(&discard_cmd);
-+    qemuio_add_command(&aio_discard_cmd);
-     qemuio_add_command(&alloc_cmd);
-     qemuio_add_command(&map_cmd);
-     qemuio_add_command(&reopen_cmd);
+-    if (pbdev->interp && (pbdev->fh & FH_MASK_ENABLE)) {
++    if (pbdev->interp) {
+         /* Interpreted devices were using interrupt forwarding */
+         s390_pci_kvm_aif_disable(pbdev);
+     } else if (pbdev->summary_ind) {
 -- 
 2.47.3
 
