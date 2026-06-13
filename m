@@ -4,49 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C64B2CD98CF
-	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 19:56:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 185BFCD98CF
+	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 19:57:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wYUQL-0003Xb-Cp; Sat, 13 Jun 2026 15:53:45 -0400
+	id 1wYUQH-00031S-0u; Sat, 13 Jun 2026 15:53:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYUPu-00022a-Um; Sat, 13 Jun 2026 15:53:19 -0400
+ id 1wYUQ0-0002BJ-HJ; Sat, 13 Jun 2026 15:53:25 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYUPt-0003pi-4H; Sat, 13 Jun 2026 15:53:18 -0400
+ id 1wYUPz-0003xc-10; Sat, 13 Jun 2026 15:53:24 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1781380259; bh=IpFa7+QIKU+aijfHMlQQl7oLLzt0xPJpnWQaAj6Kelg=;
+ t=1781380259; bh=yD4AK9VhDi+yOSHsYzVOjhXAvYebuMP7cZnmRKzZfzU=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=smrCWrTmiwC6y0Dy26D8dqP0sAXSa5kkcK1j9cQIRxj8RjqoW/VW387hgFJ83adyQ
- dJR1n6XF44LOkO6P+PlkqWue+wbzHjGM+9v469nbhcAOqplk+pYQmLHotVW68U47jN
- sExuxveJ6TjC3voNETT1godTFJDZs+s6kou6EZAj86RXrQB9bxGFjhOzNYxBvdlsWE
- ISnwC4tEyzzoxenLb26L91Iqkse2ITo5zymbpIrtQiMM/VzkNwCTEzUASQwCCf3naS
- 0RVzM/SwU4OLuKbFO3GAIOjJWPo0YYru0YUpaZsrHm02Nu0u/PhkOkvX9uQsIw00oT
- yrYLJ/0CkdDXQ==
+ b=Psg1jlureK3DtXoDWtKTiZObpTVK1uAIwxvu9vMdAZFagkSWeZF5oZEZ7gLzw4T4u
+ 6z9e7OihyzQ5wPc3dnr/BaiZwi+lkaiWpD9l6LAxpGoiKBTYcnXwX1OIHKrDAbErZc
+ XgZHbtA0lXdCrJS/bpexSCEKRjKkHOVPN1eoIYRSkwk71MKYU8qXbN7DYauxQePF7Q
+ iOcMEM5iasy4bbyEwB/TF67NTor+MJuOvaLjEzTXvbopzuAyk+eSPeXOPxHJ06E8DB
+ o0Sc35QBx16zj+LGRWFcg2kX9vGo62oPG8NCigLtMgrNwHBom7FR8VoACYwLYcZMRo
+ PmjzL3GxXH8xQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 56ED01B6E25;
+ by isrv.corpit.ru (Postfix) with ESMTP id 87CF91B6E28;
  Sat, 13 Jun 2026 22:50:59 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id AAB4E3CE89F;
+ by tsrv.corpit.ru (Postfix) with ESMTP id E00663CE8A2;
  Sat, 13 Jun 2026 22:51:17 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
- Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- Stefan Hajnoczi <stefanha@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.11 22/56] block/linux-aio: bound ioq_submit() recursion
- depth
-Date: Sat, 13 Jun 2026 22:50:36 +0300
-Message-ID: <20260613195116.1807273-22-mjt@tls.msk.ru>
+Subject: [Stable-10.0.11 25/56] target/arm: Set correct fp flags for FLOGB
+ when FPCR.AH = 1
+Date: Sat, 13 Jun 2026 22:50:39 +0300
+Message-ID: <20260613195116.1807273-25-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.11-20260613224446@cover.tls.msk.ru>
 References: <qemu-stable-10.0.11-20260613224446@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -71,127 +72,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: "Denis V. Lunev" <den@openvz.org>
+From: Peter Maydell <peter.maydell@linaro.org>
 
-qemu_laio_process_completions() wraps its body in defer_call_begin /
-defer_call_end. Inside the section, completion callbacks wake coroutines
-that queue new aiocbs; laio_do_submit() defers laio_deferred_fn. At the
-bottom of qemu_laio_process_completions() the defer_call_end() fires
-laio_deferred_fn, which calls ioq_submit(), closing the cycle:
+Our implementation of the FLOGB insn does the operations entirely
+in the helper function, without needing to use fpu functions.
+This means it needs to handle all the fp status flags itself.
+We aren't setting float_flag_input_denormal_used when we
+use (i.e. do not flush to zero) an input denormal, which means
+that FPCR.IDC isn't set when it should be for FPCR.AH=1.
+We missed this when we added float_flag_input_denormal_used
+and made the fpu/ code set it.
 
-  ioq_submit
-    -> io_submit(2)                           // some sync completions
-    -> qemu_laio_process_completions          // defer_call_begin
-         -> aio_co_wake                       // resumes coroutine
-              -> laio_do_submit
-                   -> defer_call(laio_deferred_fn, s)   // enqueued
-         -> defer_call_end                    // nesting drops to 0
-              -> laio_deferred_fn
-                   -> ioq_submit              // +1 stack frame, loop
+Add the missing float_raise().
 
-When io_submit(2) returns asynchronously (O_DIRECT) the cycle
-terminates in one extra frame: the fresh aiocb is still in flight, no
-completion is drained, no coroutine wakes, no new submission queues.
-When submissions complete synchronously (non-O_DIRECT, or per-descriptor
-drivers such as vmdk) each level enqueues more work for the next
-defer_call_end() to drain, so recursion grows without bound and QEMU
-crashes with SIGSEGV on the thread guard page.
-
-The cycle was closed by two performance commits, each correct in
-isolation:
-
-  076682885d ("block/linux-aio: convert to blk_io_plug_call() API")
-    -- introduced laio_deferred_fn and wired
-       laio_do_submit -> defer_call(laio_deferred_fn, s).
-
-  84d61e5f36 ("virtio: use defer_call() in virtio_irqfd_notify()")
-    -- added defer_call_begin/end around qemu_laio_process_completions
-       so virtio-irqfd notifications batch across a completion pass.
-
-The supported aio=native + cache=none pairing keeps submissions
-asynchronous, so the cycle stays bounded; nothing in the code enforces
-that contract. Observed in production as a SIGSEGV during a backup job
-configured with --cached + aio=native; reproducible on upstream with
-qemu-io against vmdk.
-
-Cap ioq_submit() recursion with a counter on LaioQueue, which is only
-accessed from the AioContext home thread. On overflow, return without
-submitting. The pending work is drained by s->completion_bh, which
-qemu_laio_process_completions() has already scheduled on entry -- no
-work is lost; one event-loop round-trip of latency is paid only when
-the bound is hit, which cannot happen on a supported configuration.
-
-Signed-off-by: Denis V. Lunev <den@openvz.org>
-CC: Kevin Wolf <kwolf@redhat.com>
-CC: Hanna Reitz <hreitz@redhat.com>
-CC: Stefan Hajnoczi <stefanha@redhat.com>
-CC: Paolo Bonzini <pbonzini@redhat.com>
-Message-ID: <20260520142503.251959-2-den@openvz.org>
-Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
-(cherry picked from commit 6864bec553b2e37699739615e604fc3c7bae0e1d)
+Cc: qemu-stable@nongnu.org
+Fixes: d38a57a3f ("target/arm: Enable FEAT_AFP for '-cpu max'")
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20260521122913.1565011-4-peter.maydell@linaro.org
+(cherry picked from commit 23ece2805f9a3f90f317aac1b49ee45783b57636)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/block/linux-aio.c b/block/linux-aio.c
-index d0f9bc389a..880549786d 100644
---- a/block/linux-aio.c
-+++ b/block/linux-aio.c
-@@ -36,6 +36,19 @@
- /* Maximum number of requests in a batch. (default value) */
- #define DEFAULT_MAX_BATCH 32
- 
-+/*
-+ * Bound on how deep ioq_submit() may recurse on a single LaioQueue via the
-+ * ioq_submit -> qemu_laio_process_completions -> defer_call_end ->
-+ * laio_deferred_fn -> ioq_submit cycle. The cycle terminates naturally
-+ * when io_submit(2) returns asynchronously (O_DIRECT), but can grow
-+ * without bound when submissions complete synchronously. On overflow
-+ * the caller returns without submitting; the outermost
-+ * qemu_laio_process_completions() has already scheduled s->completion_bh
-+ * (via qemu_bh_schedule() at the top of that function), which resumes
-+ * submission from the next event-loop dispatch.
-+ */
-+#define IOQ_SUBMIT_MAX_DEPTH 8
-+
- struct qemu_laiocb {
-     Coroutine *co;
-     LinuxAioState *ctx;
-@@ -61,6 +74,7 @@ typedef struct {
-     unsigned int in_queue;
-     unsigned int in_flight;
-     bool blocked;
-+    unsigned int submit_depth;
-     QSIMPLEQ_HEAD(, qemu_laiocb) pending;
- } LaioQueue;
- 
-@@ -331,6 +345,7 @@ static void ioq_init(LaioQueue *io_q)
-     io_q->in_queue = 0;
-     io_q->in_flight = 0;
-     io_q->blocked = false;
-+    io_q->submit_depth = 0;
- }
- 
- static void ioq_submit(LinuxAioState *s)
-@@ -340,6 +355,11 @@ static void ioq_submit(LinuxAioState *s)
-     struct iocb *iocbs[MAX_EVENTS];
-     QSIMPLEQ_HEAD(, qemu_laiocb) completed;
- 
-+    if (s->io_q.submit_depth >= IOQ_SUBMIT_MAX_DEPTH) {
-+        return;
-+    }
-+    s->io_q.submit_depth++;
-+
-     do {
-         if (s->io_q.in_flight >= MAX_EVENTS) {
-             break;
-@@ -385,6 +405,8 @@ static void ioq_submit(LinuxAioState *s)
-          * pended requests will be submitted from there.
-          */
-     }
-+
-+    s->io_q.submit_depth--;
- }
- 
- static uint64_t laio_max_batch(LinuxAioState *s, uint64_t dev_max_batch)
+diff --git a/target/arm/tcg/sve_helper.c b/target/arm/tcg/sve_helper.c
+index 20accbc568..57a8cfdccd 100644
+--- a/target/arm/tcg/sve_helper.c
++++ b/target/arm/tcg/sve_helper.c
+@@ -4740,6 +4740,7 @@ static int16_t do_float16_logb_as_int(float16 a, float_status *s)
+         if (frac != 0) {
+             if (!get_flush_inputs_to_zero(s)) {
+                 /* denormal: bias - fractional_zeros */
++                float_raise(float_flag_input_denormal_used, s);
+                 return -15 - clz32(frac);
+             }
+             /* flush to zero */
+@@ -4768,6 +4769,7 @@ static int32_t do_float32_logb_as_int(float32 a, float_status *s)
+         if (frac != 0) {
+             if (!get_flush_inputs_to_zero(s)) {
+                 /* denormal: bias - fractional_zeros */
++                float_raise(float_flag_input_denormal_used, s);
+                 return -127 - clz32(frac);
+             }
+             /* flush to zero */
+@@ -4796,6 +4798,7 @@ static int64_t do_float64_logb_as_int(float64 a, float_status *s)
+         if (frac != 0) {
+             if (!get_flush_inputs_to_zero(s)) {
+                 /* denormal: bias - fractional_zeros */
++                float_raise(float_flag_input_denormal_used, s);
+                 return -1023 - clz64(frac);
+             }
+             /* flush to zero */
 -- 
 2.47.3
 
