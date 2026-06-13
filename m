@@ -4,45 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE5D3CD98CF
-	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 20:08:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA6B8CD8CA8
+	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 20:09:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wYUeh-0005HB-Kp; Sat, 13 Jun 2026 16:08:35 -0400
+	id 1wYUeX-0004vr-7y; Sat, 13 Jun 2026 16:08:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYUeE-0004fY-9X; Sat, 13 Jun 2026 16:08:06 -0400
+ id 1wYUcs-0002I6-1l; Sat, 13 Jun 2026 16:06:46 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYUeB-0002En-Qj; Sat, 13 Jun 2026 16:08:05 -0400
+ id 1wYUco-0000h6-Vq; Sat, 13 Jun 2026 16:06:41 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1781381069; bh=Wqggm+YI9CGOXrC37tB98c0M6KNUDE9ZIppSxjX+MCI=;
+ t=1781381068; bh=wxy35K4pdc3G9Rb1kvd/xkr870aM02UNR8jP5r7tZSw=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=I9pW3OrS0CEJJGmi0aTM7FMMDzA4bgCmNUWDGTxQPSsVEfIhtI/DpQxV/BaJmsQro
- cdljc1DUS4YgQrclKH/VCkaABmHq+pnx3p71r/xGbobiSbYOg6kHWwWFrMl972KQ9Y
- +RsM/J1OegTvZVZDU+qnbmO5UZCQy7vr3xyFRK3rN0RyZ4Adw+PfwrtjLNSrQq1XcN
- 6GWCyrGG/ZfH33UtxH5ocBlhLp1cYgYyLLE5Kq626sHGE1x+IHgEkQzFtumwDeGLQE
- CemXaMjZ3VbgV60GHoAxY/qdbh6Gdaw+wKT/6J6iaoecCvraXB/f5YDRmrYoB6415B
- pYBuzY9xVwshw==
+ b=K7IHKcauUajz8onllXADFD21pVV7Wk5yaBRaMumZwIoMqPB3YuTnj51yqz4KDaC6b
+ aI6SDqRzcTJlEY3PkCwseQMxb5SdnOOYeo/BRxMZccLkQOKnBHUAizv0M1itggAGRN
+ iBbqgSzl0a9tKQAFIbrNCMB4kUGvhnHG4aSGi1D0efMFE8CWLT1wnBdW3As1MzBbmo
+ 3WWn2KeKa+EDWeOjdGQbUwbN1VjIwPmNfV8bzTWZ1GjWn+6l1dcLchY6i7BPaQs8C5
+ L2rQE3uD47HxZ1E6VFy8O1xSFcDGMhTx/WXcIHLacISG/lCIvTCc+MS0xUL2s5LogY
+ gLuAYsQToTbgw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 5C50E1B6E8D;
- Sat, 13 Jun 2026 23:04:29 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 726AD1B6E80;
+ Sat, 13 Jun 2026 23:04:28 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id B7A683CE8EF;
- Sat, 13 Jun 2026 23:04:47 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id D04D83CE8E2;
+ Sat, 13 Jun 2026 23:04:46 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Matt Turner <mattst88@gmail.com>,
- Yoshinori Sato <yoshinori.sato@nifty.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Helge Deller <deller@gmx.de>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.4 37/61] linux-user/sh4: preserve T/M/Q bits across
- signal delivery
-Date: Sat, 13 Jun 2026 23:03:20 +0300
-Message-ID: <20260613200411.1808021-37-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Jinjie Ruan <ruanjinjie@huawei.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.2.4 24/61] mc146818rtc: Fix get_guest_rtc_ns() overflow bug
+Date: Sat, 13 Jun 2026 23:03:07 +0300
+Message-ID: <20260613200411.1808021-24-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.2.4-20260613224639@cover.tls.msk.ru>
 References: <qemu-stable-10.2.4-20260613224639@cover.tls.msk.ru>
@@ -71,97 +68,96 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Matt Turner <mattst88@gmail.com>
+From: Jinjie Ruan <ruanjinjie@huawei.com>
 
-QEMU keeps the SH4 T, M and Q status-register bits outside env->sr, in
-the dedicated env->sr_t, env->sr_m and env->sr_q fields; cpu_read_sr()
-folds them back into the architectural SR value and cpu_write_sr()
-splits them back out.
+In get_guest_rtc_ns(), "s->base_rtc" is uint64_t, which multiplied by
+"NANOSECONDS_PER_SECOND" may overflow the uint64_t type, which will
+cause the QEMU Linux Virtual Machine's RTC time to jump and in turn
+triggers a kernel Soft Lockup and ultimately leads to a crash.
 
-setup_sigcontext() saved the bare env->sr (so the T/M/Q bits were always
-zero in the signal frame) and restore_sigcontext() wrote the value
-straight back into env->sr without updating sr_t/sr_m/sr_q. As a result
-the T bit was never preserved across signal delivery: on sigreturn the
-interrupted code resumed with whatever T value the signal handler last
-left behind. Any conditional branch (or addc/subc/rotcl/div1, etc.)
-immediately following the interrupted instruction could then take the
-wrong path.
+Fix it by avoiding adding s->base_rtc in get_guest_rtc_ns_offset(),
+because get_guest_rtc_ns() is used either take the remainder of
+NANOSECONDS_PER_SECOND or take the quotient of NANOSECONDS_PER_SECOND.
 
-This is the cause of the long-standing intermittent failures of the
-tests/tcg/multiarch/signals.c test on sh4, which was marked BROKEN. With
-a SIGRTMIN timer firing every millisecond across many threads, the race
-was hit a few percent of the time and corrupted the guest heap, surfacing
-as a SIGSEGV in memset, a malloc assertion, or an rseq registration abort.
-
-Traced on a deterministic rr recording: a cmp/hi set T=0, the timer
-signal interrupted the very next instruction (a bf), the handler left
-T=1, and the resumed bf took glibc calloc's MORECORE_CLEARS branch,
-using the old top-chunk size as the clear length for a freshly split
-small chunk and running memset off the end of the heap.
-
-Fix setup_sigcontext()/restore_sigcontext() to use cpu_read_sr() and
-cpu_write_sr() so the T, M and Q bits round-trip correctly, and drop the
-BROKEN annotation on the sh4 signals test.
-
-Fixes: c3b5bc8ab3 ("SH4: Signal handling for the user space emulator, by Magnus Damm.")
+Fixes: 56038ef6234e ("RTC: Update the RTC clock only when reading it")
+Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
+Link: https://lore.kernel.org/r/20260114013257.3500578-1-ruanjinjie@huawei.com
 Cc: qemu-stable@nongnu.org
-Reviewed-by: Yoshinori Sato <yoshinori.sato@nifty.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Matt Turner <mattst88@gmail.com>
-Signed-off-by: Helge Deller <deller@gmx.de>
-(cherry picked from commit 6bf4c0295cccf74f3c5c0b674328b97d6fd1505c)
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+(cherry picked from commit 4b6c088c88ccc9e7cafc72759c99742b3993f9f7)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/linux-user/sh4/signal.c b/linux-user/sh4/signal.c
-index d70be24c38..cc36425c49 100644
---- a/linux-user/sh4/signal.c
-+++ b/linux-user/sh4/signal.c
-@@ -131,8 +131,10 @@ static void setup_sigcontext(struct target_sigcontext *sc,
-     COPY(gregs[14]); COPY(gregs[15]);
-     COPY(gbr); COPY(mach);
-     COPY(macl); COPY(pr);
--    COPY(sr); COPY(pc);
-+    COPY(pc);
- #undef COPY
-+    /* The T, M and Q bits live outside env->sr; fold them back in. */
-+    __put_user(cpu_read_sr(regs), &sc->sc_sr);
+diff --git a/hw/rtc/mc146818rtc.c b/hw/rtc/mc146818rtc.c
+index 8631386b9f..98da775d9f 100644
+--- a/hw/rtc/mc146818rtc.c
++++ b/hw/rtc/mc146818rtc.c
+@@ -77,12 +77,13 @@ static inline bool rtc_running(MC146818RtcState *s)
+             (s->cmos_data[RTC_REG_A] & 0x70) <= 0x20);
+ }
  
-     for (i=0; i<16; i++) {
-         __put_user(regs->fregs[i], &sc->sc_fpregs[i]);
-@@ -159,8 +161,14 @@ static void restore_sigcontext(CPUSH4State *regs, struct target_sigcontext *sc)
-     COPY(gregs[14]); COPY(gregs[15]);
-     COPY(gbr); COPY(mach);
-     COPY(macl); COPY(pr);
--    COPY(sr); COPY(pc);
-+    COPY(pc);
- #undef COPY
-+    /* The T, M and Q bits live outside env->sr; unfold them. */
-+    {
-+        uint32_t sr;
-+        __get_user(sr, &sc->sc_sr);
-+        cpu_write_sr(regs, sr);
-+    }
- 
-     for (i=0; i<16; i++) {
-         __get_user(regs->fregs[i], &sc->sc_fpregs[i]);
-diff --git a/tests/tcg/sh4/Makefile.target b/tests/tcg/sh4/Makefile.target
-index 7852fa62d8..b7a8737be0 100644
---- a/tests/tcg/sh4/Makefile.target
-+++ b/tests/tcg/sh4/Makefile.target
-@@ -3,13 +3,6 @@
- # SuperH specific tweaks
- #
- 
--# This triggers failures for sh4-linux about 10% of the time.
--# Random SIGSEGV at unpredictable guest address, cause unknown.
--run-signals: signals
--	$(call skip-test, $<, "BROKEN")
--run-plugin-signals-with-%:
--	$(call skip-test, $<, "BROKEN")
+-static uint64_t get_guest_rtc_ns(MC146818RtcState *s)
++/*
++ * Note: get_rtc_ns_since_last_update() does not include the base_rtc seconds
++ * value.  This does not matter if the caller only needs the nanoseconds part.
++ */
++static uint64_t get_rtc_ns_since_last_update(MC146818RtcState *s)
+ {
+-    uint64_t guest_clock = qemu_clock_get_ns(rtc_clock);
 -
- VPATH += $(SRC_PATH)/tests/tcg/sh4
+-    return s->base_rtc * NANOSECONDS_PER_SECOND +
+-        guest_clock - s->last_update + s->offset;
++    return qemu_clock_get_ns(rtc_clock) - s->last_update + s->offset;
+ }
  
- test-macl: CFLAGS += -O -g
+ static void rtc_coalesced_timer_update(MC146818RtcState *s)
+@@ -258,7 +259,7 @@ static void check_update_timer(MC146818RtcState *s)
+         return;
+     }
+ 
+-    guest_nsec = get_guest_rtc_ns(s) % NANOSECONDS_PER_SECOND;
++    guest_nsec = get_rtc_ns_since_last_update(s) % NANOSECONDS_PER_SECOND;
+     next_update_time = qemu_clock_get_ns(rtc_clock)
+         + NANOSECONDS_PER_SECOND - guest_nsec;
+ 
+@@ -510,7 +511,7 @@ static void cmos_ioport_write(void *opaque, hwaddr addr,
+                 /* if disabling set mode, update the time */
+                 if ((s->cmos_data[RTC_REG_B] & REG_B_SET) &&
+                     (s->cmos_data[RTC_REG_A] & 0x70) <= 0x20) {
+-                    s->offset = get_guest_rtc_ns(s) % NANOSECONDS_PER_SECOND;
++                    s->offset = get_rtc_ns_since_last_update(s) % NANOSECONDS_PER_SECOND;
+                     rtc_set_time(s);
+                 }
+             }
+@@ -623,10 +624,8 @@ static void rtc_update_time(MC146818RtcState *s)
+ {
+     struct tm ret;
+     time_t guest_sec;
+-    int64_t guest_nsec;
+ 
+-    guest_nsec = get_guest_rtc_ns(s);
+-    guest_sec = guest_nsec / NANOSECONDS_PER_SECOND;
++    guest_sec = s->base_rtc + get_rtc_ns_since_last_update(s) / NANOSECONDS_PER_SECOND;
+     gmtime_r(&guest_sec, &ret);
+ 
+     /* Is SET flag of Register B disabled? */
+@@ -637,7 +636,7 @@ static void rtc_update_time(MC146818RtcState *s)
+ 
+ static int update_in_progress(MC146818RtcState *s)
+ {
+-    int64_t guest_nsec;
++    uint64_t guest_nsec;
+ 
+     if (!rtc_running(s)) {
+         return 0;
+@@ -652,7 +651,7 @@ static int update_in_progress(MC146818RtcState *s)
+         }
+     }
+ 
+-    guest_nsec = get_guest_rtc_ns(s);
++    guest_nsec = get_rtc_ns_since_last_update(s);
+     /* UIP bit will be set at last 244us of every second. */
+     if ((guest_nsec % NANOSECONDS_PER_SECOND) >=
+         (NANOSECONDS_PER_SECOND - UIP_HOLD_LENGTH)) {
 -- 
 2.47.3
 
