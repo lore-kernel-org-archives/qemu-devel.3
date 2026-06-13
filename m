@@ -4,47 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D36DCD98CF
-	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 20:00:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD2E6CD98CF
+	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 20:04:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wYURQ-0007Mx-16; Sat, 13 Jun 2026 15:54:52 -0400
+	id 1wYUaa-0007jY-G4; Sat, 13 Jun 2026 16:04:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYURN-0007Le-VC; Sat, 13 Jun 2026 15:54:49 -0400
+ id 1wYUaX-0007it-V1; Sat, 13 Jun 2026 16:04:18 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYURM-0004JD-1Y; Sat, 13 Jun 2026 15:54:49 -0400
+ id 1wYUaT-0007vU-Sa; Sat, 13 Jun 2026 16:04:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1781380260; bh=Bm7Wys1D0tjjtNRwoqgFNMii+XlEExctWDXCQ/8d92A=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=FBOXm6mMCli8UiSgtTH5a9kicBMeteuGl2fnyaq4xd3VIjsd/HG5TI7ejP7Y0UsNO
- BdMLPg6zibqAhqlmXw6korSmChoqojCSZy70E3f7256oalsH/PrCbthzpiV6Y0Xi7O
- LYoXZoNJczujpjEDOqiZU936j1+Y2QwZSadJ1U0AUg0PanIYsK1C0QybQVnkSMpVHI
- t4schfQzwyonFjz624xUb/VDAmwmeOamkKwi8oEk1IcmLFurzdPcyi595w3RWtZBR1
- lqp7yOv8FBcmQFuD89JW31g2kxHKqPV48vBc78tDSUkD/OfoamJ6g5/huwcFVArCUC
- AIoQL1jmWRC+w==
+ t=1781381032; bh=QWhbTru6STPoSvmJPTlT9d7qsbNcNyJT5s5iT/D+LRQ=;
+ h=From:To:Cc:Subject:Date;
+ b=b2vlPVbwihXiNZrw2Bxq7hji3RfR9abNGOmGwOalp7xjJ/t4VR5Zjmjz1X+tcxgiI
+ LuNG4PP9B3trBzwAoEoo4v8ehzYQXFcpnoOlH//cHxLf6w3Vdf4hCVk9hQLWrDirqS
+ NcSdRVWQb7lqzDr259FRYx3FP8D55tY/e+TEpDh2easNyrpCDcDzdhsTDVqdZqcnfA
+ 9QUmday21fXlVSXOe6nCfv8gM+kz0hSfpFsN+qQo2jxIvYDOXmly3IBJWLbP4uQKYr
+ dArm++heohRJPvB1NqNwJ0ukgH397uwl1eEbkamv5LQSD1aAfCGMFyTXvTR1b/ZAp4
+ eq6d74BArgaqA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 768BC1B6E35;
- Sat, 13 Jun 2026 22:51:00 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 9BA661B6E67;
+ Sat, 13 Jun 2026 23:03:52 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id CFFAC3CE8AF;
- Sat, 13 Jun 2026 22:51:18 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 039C83CE8CA;
+ Sat, 13 Jun 2026 23:04:11 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Christian Schoenebeck <qemu_oss@crudebyte.com>,
- Wang Jihe <wangjihe.mail@gmail.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.11 38/56] hw/9pfs: let callers of v9fs_path_sprintf()
- and v9fs_fix_path() handle errors
-Date: Sat, 13 Jun 2026 22:50:52 +0300
-Message-ID: <20260613195116.1807273-38-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org,
+	Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.2.4 00/61] Patch Round-up for stable 10.2.4,
+ freeze on 2026-06-23
+Date: Sat, 13 Jun 2026 23:02:43 +0300
+Message-ID: <qemu-stable-10.2.4-20260613224639@cover.tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-10.0.11-20260613224446@cover.tls.msk.ru>
-References: <qemu-stable-10.0.11-20260613224446@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -69,138 +68,152 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Christian Schoenebeck <qemu_oss@crudebyte.com>
+The following patches are queued for QEMU stable v10.2.4:
 
-This patch mitigates issues with very large absolute paths.
+  https://gitlab.com/qemu-project/qemu/-/commits/staging-10.2
 
-- Add error handling to all v9fs_path_sprintf() calls in
-  local_name_to_path()
+Patch freeze is 2026-06-23, and the release is planned for 2026-06-25:
 
-- Update callers of v9fs_fix_path() to check return values.
+  https://wiki.qemu.org/Planning/10.2
 
-- When path formatting fails, clunk the affected FIDs to prevent use of
-  invalid paths.
+This is expected to be the last stable release in 10.2.x series,
+11.0 takes the lead now.
 
-- Use g_autofree for temporary variables to simplify code.
+Please respond here or CC qemu-stable@nongnu.org on any additional patches
+you think should (or shouldn't) be included in the release.
 
-Even though paths are usually limited to PATH_MAX (typically 4k) on guest,
-this limitation can be circumvented by using *at() functions on guest and
-creating very deep directory structures. This was a problem for QEMU 9p
-server, as it currently tracks the absolute path for each FID internally
-that always requires assembly of a (potentially ver large) absolute path.
+The changes which are staging for inclusion, with the original commit hash
+from master branch, are given below the bottom line.
 
-A true long-term fix would be getting rid of storing an absolute path for
-each FID internally. However that would likely be a massive change with
-uncertain implications.
+Thanks!
 
-This patch therefore just mitigates the problem by immediately clunking
-(i.e. closing) all FIDs whose path exceed a limit that we could handle.
-As this only accounts to very unusual large absolute paths not ever been
-reported on (sane) production machines, this is currently considered an
-acceptable mitigation that should only (counter)affect malicious attempts.
+/mjt
 
-Fixes: 2f008a8c97e2 ("hw/9pfs: Use the correct signed type ...")
-Reported-by: Wang Jihe <wangjihe.mail@gmail.com>
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3358
-Link: https://lore.kernel.org/qemu-devel/1d11dcbfc95b811dcdb48c6d7f3894d0ebd073a2.1779126034.git.qemu_oss@crudebyte.com
-Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
-(cherry picked from commit 3802c0e755a53b126e717415b54226a468bf7ddf)
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-
-diff --git a/hw/9pfs/9p-local.c b/hw/9pfs/9p-local.c
-index 928523afcc..5167c43609 100644
---- a/hw/9pfs/9p-local.c
-+++ b/hw/9pfs/9p-local.c
-@@ -1243,26 +1243,35 @@ static int local_name_to_path(FsContext *ctx, V9fsPath *dir_path,
-         } else if (!strcmp(name, "..")) {
-             if (!strcmp(dir_path->data, ".")) {
-                 /* ".." relative to the root is "." */
--                v9fs_path_sprintf(target, ".");
-+                if (v9fs_path_sprintf(target, ".") < 0) {
-+                    return -1;
-+                }
-             } else {
--                char *tmp = g_path_get_dirname(dir_path->data);
-+                g_autofree char *tmp = g_path_get_dirname(dir_path->data);
-                 /* Symbolic links are resolved by the client. We can assume
-                  * that ".." relative to "foo/bar" is equivalent to "foo"
-                  */
--                v9fs_path_sprintf(target, "%s", tmp);
--                g_free(tmp);
-+                if (v9fs_path_sprintf(target, "%s", tmp) < 0) {
-+                    return -1;
-+                }
-             }
-         } else {
-             assert(!strchr(name, '/'));
--            v9fs_path_sprintf(target, "%s/%s", dir_path->data, name);
-+            if (v9fs_path_sprintf(target, "%s/%s", dir_path->data, name) < 0) {
-+                return -1;
-+            }
-         }
-     } else if (!strcmp(name, "/") || !strcmp(name, ".") ||
-                !strcmp(name, "..")) {
-             /* This is the root fid */
--        v9fs_path_sprintf(target, ".");
-+        if (v9fs_path_sprintf(target, ".") < 0) {
-+            return -1;
-+        }
-     } else {
-         assert(!strchr(name, '/'));
--        v9fs_path_sprintf(target, "./%s", name);
-+        if (v9fs_path_sprintf(target, "./%s", name) < 0) {
-+            return -1;
-+        }
-     }
-     return 0;
- }
-diff --git a/hw/9pfs/9p.c b/hw/9pfs/9p.c
-index a4ebbce5d6..7d53f070cc 100644
---- a/hw/9pfs/9p.c
-+++ b/hw/9pfs/9p.c
-@@ -3304,12 +3304,14 @@ static int coroutine_fn v9fs_complete_rename(V9fsPDU *pdu, V9fsFidState *fidp,
-             goto out;
-         }
-     } else {
--        char *dir_name = g_path_get_dirname(fidp->path.data);
-+        g_autofree char *dir_name = g_path_get_dirname(fidp->path.data);
-         V9fsPath dir_path;
- 
-         v9fs_path_init(&dir_path);
--        v9fs_path_sprintf(&dir_path, "%s", dir_name);
--        g_free(dir_name);
-+        err = v9fs_path_sprintf(&dir_path, "%s", dir_name);
-+        if (err < 0) {
-+            goto out;
-+        }
- 
-         err = v9fs_co_name_to_path(pdu, &dir_path, name->data, &new_path);
-         v9fs_path_free(&dir_path);
-@@ -3330,7 +3332,10 @@ static int coroutine_fn v9fs_complete_rename(V9fsPDU *pdu, V9fsFidState *fidp,
-     while (g_hash_table_iter_next(&iter, &fid, (gpointer *) &tfidp)) {
-         if (v9fs_path_is_ancestor(&fidp->path, &tfidp->path)) {
-             /* replace the name */
--            v9fs_fix_path(&tfidp->path, &new_path, strlen(fidp->path.data));
-+            if (v9fs_fix_path(&tfidp->path, &new_path,
-+                              strlen(fidp->path.data)) < 0) {
-+                clunk_fid(s, tfidp->fid);
-+            }
-         }
-     }
- out:
-@@ -3427,7 +3432,10 @@ static int coroutine_fn v9fs_fix_fid_paths(V9fsPDU *pdu, V9fsPath *olddir,
-     while (g_hash_table_iter_next(&iter, &fid, (gpointer *) &tfidp)) {
-         if (v9fs_path_is_ancestor(&oldpath, &tfidp->path)) {
-             /* replace the name */
--            v9fs_fix_path(&tfidp->path, &newpath, strlen(oldpath.data));
-+            if (v9fs_fix_path(&tfidp->path, &newpath,
-+                              strlen(oldpath.data)) < 0) {
-+                clunk_fid(s, tfidp->fid);
-+            }
-         }
-     }
- out:
--- 
-2.47.3
-
+--------------------------------------
+01 f0433a8bc4ac Frank Chang:
+   target/riscv: Update MISA.C for Zc* extensions
+02 613bb1949fff Frank Chang:
+   target/riscv: Update MISA.X for non-standard extensions
+03 fcbd93e96be2 Andrew Jones:
+   hw/riscv/riscv-iommu: Fix Svnapot 64KB pages
+04 249483623242 Zishun Yi:
+   target/riscv: Allow mseccfg access based on ext_zicfilp
+05 caf3bef5f01e Anton Blanchard:
+   target/riscv: rvv: Handle source overlap of vector widening reduction 
+   instructions
+06 e6051fa61b9f Frank Chang:
+   hw/char: sifive_uart: Implement txctrl.txen and rxctrl.rxen
+07 e07077a76607 Frank Chang:
+   hw/char: Check interrupt after txctrl register is written
+08 a0946caf1d9e Abhigyan Kumar:
+   target/riscv: Fix medeleg[11] read-only zero bit for M-mode ECALL
+09 612f22c19db8 Zishun Yi:
+   target/riscv/pmp: Fix integer overflow in TOR and NA4 address computation
+10 eccb1d694025 Zishun Yi:
+   target/riscv: Add mseccfg to VMStateDescription
+11 27f9566dcd98 Alistair Francis:
+   target/riscv: Update the local interrupt mask
+12 8158a74f0a0d Zishun Yi:
+   target/riscv: clear mseccfg on reset for all dependent extensions
+13 53cc9747ed7c Daniel Henrique Barboza:
+   target/riscv/csr.c: fix read of pmpaddr(0-63) CSRs
+14 dd3a906d3505 Matt Turner:
+   linux-user/mips64: fix elf_core_copy_regs register layout in core files
+15 6033df08e93d Matt Turner:
+   linux-user/mips64: fix mipsn32 elf_core_copy_regs entry width
+16 ae18df638fb4 Daniel P. Berrangé:
+   ui/vnc: fix OOB read access in VNC SASL mechname array
+17 c3c6226fa481 Daniel P. Berrangé:
+   ui/vnc: fix OOB write in VNC stats array
+18 46ee49034d26 Daniel P. Berrangé:
+   ui/vnc: fix OOB write in lossy rect worker code
+19 d0c7b82d3a89 Daniel P. Berrangé:
+   ui/vnc: fix OOB read updating VNC update frequency stats
+20 e56b4bbff1df Heechan Kang:
+   ui: fix validation of VNC extended clipboard data length
+21 5297a0fc6531 Paolo Bonzini:
+   lsi53c895a: fix use-after-free of cancelled request
+22 4494dec8c2bf Paolo Bonzini:
+   lsi53c895a: clear tag byte when processing messages
+23 153dc2fa7bbe Paolo Bonzini:
+   apic: fix delivery bitmask with modified xAPIC ids
+24 4b6c088c88cc Jinjie Ruan:
+   mc146818rtc: Fix get_guest_rtc_ns() overflow bug
+25 6864bec553b2 Denis V. Lunev:
+   block/linux-aio: bound ioq_submit() recursion depth
+26 446050c4dfe4 Peter Maydell:
+   target/arm: SVE2 FMAXP, FMINP must honour AH=1
+27 aa42300f86d1 Peter Maydell:
+   target/arm: Use FPST_A64_F16 for SVE FCVTLT_hs
+28 23ece2805f9a Peter Maydell:
+   target/arm: Set correct fp flags for FLOGB when FPCR.AH = 1
+29 e6c47bebdf86 Chenyi Qiang:
+   vfio/container: Restrict dma_map_file() to shared RAM or RAM devices
+30 f12e7ba6f438 Richard Henderson:
+   target/arm: Enable REVD for SVE2.1
+31 bb957530471c Peter Maydell:
+   target/arm: Don't assert if 64-bit EL2 AT insn sees a Domain fault
+32 ca33de98447c Peter Maydell:
+   target/arm: SME BFCVT, BFCVTN have "Alternate BFloat16 behaviors"
+33 8526b7d6b67b Peter Maydell:
+   hw/net/rocker_of_dpa: Check group ID pointers are not NULL
+34 71d027cfee85 Peter Maydell:
+   hw/net/rocker_of_dpa: Avoid unaligned accesses in _of_dpa_flow_match()
+35 3f50dd46664b Matt Turner:
+   linux-user/ppc: restore fp_status from FPSCR on sigreturn
+36 84b920ccb5ee Matt Turner:
+   linux-user/mips: save/restore FCSR across signal delivery
+37 6bf4c0295ccc Matt Turner:
+   linux-user/sh4: preserve T/M/Q bits across signal delivery
+38 a740f17ed0fb Matt Turner:
+   linux-user/sh4: restore FP rounding mode on sigreturn
+39 2762cd51ee03 Matt Turner:
+   linux-user/s390x: restore fpu_status rounding mode from FPC on sigreturn
+40 abb0cc02fb56 Christian Schoenebeck:
+   hw/9pfs: add NULL check in v9fs_path_is_ancestor()
+41 dbaf84e148b0 Christian Schoenebeck:
+   hw/9pfs: change V9fsPath.size to size_t and v9fs_path_sprintf() return 
+   type
+42 54dd352c5926 Christian Schoenebeck:
+   hw/9pfs: add error handling to v9fs_fix_path()
+43 3802c0e755a5 Christian Schoenebeck:
+   hw/9pfs: let callers of v9fs_path_sprintf() and v9fs_fix_path() handle 
+   errors
+44 be33c56898f8 Christian Schoenebeck:
+   tests/qtest/libqos: add qvirtqueue_reset_pool() for descriptor pool reset
+45 198627807a6b Christian Schoenebeck:
+   tests/9pfs: add deep absolute path test
+46 5a8da7e979f1 sin99xx:
+   9pfs: fix missing rename lock in v9fs_co_readdir_many (CVE-2026-48004)
+47 c131ae56c13f Denis V. Lunev:
+   util/envlist: fix prefix-match in envlist_unsetenv() name lookup
+48 05221c600a5f Denis V. Lunev:
+   tests/unit: add test-envlist covering setenv/unsetenv name matching
+49 1f1ccb6f3c48 Alexandra Winter:
+   target/s390x: Make container ids in SysIB_15x 1-based
+50 442f727b8beb Farhan Ali:
+   s390x/pci: Fix interrupt forwarding disable for interpreted devices
+51 b4e28c304bc5 Fiona Ebner:
+   block/io: fallback to bounce buffer if BLKZEROOUT is not supported 
+   because of alignment
+52 aeea0c2804c4 Stefan Hajnoczi:
+   virtio-blk: add missing VIRTIO_BLK_T_SCSI_CMD size check (CVE-2026-48914)
+53 7f8466e2ce62 Kevin Wolf:
+   qemu-io: Add 'aio_discard' command
+54 b8bfb1478d61 Kevin Wolf:
+   qcow2: Fix corruption on discard during write with COW
+55 389f5bcc744d Kevin Wolf:
+   iotests/046: Test that discard/write_zeroes wait for dependencies
+56 1d47eb689835 Thomas Lamprecht:
+   qcow2: Fix data loss on zero write with detect-zeroes=unmap
+57 7e573b660fef Fabiano Rosas:
+   qed: Don't try to flush during incoming migration
+58 163f9a4e0651 Munkhbaatar Enkhbaatar:
+   hw/usb/hcd-ohci: Clean up USBPacket before freeing ISO TD packet
+59 a6a1f92d5a23 Richard Henderson:
+   fpu: Handle all rounding modes in partsN_uncanon_normal
+60 767c32fe6983 Xinhui Yang:
+   linux-user: implement fsmount(2) series of syscalls
+61 6e0aa9f6c731 Xinhui Yang:
+   linux-user/strace: add fsmount series of syscalls
 
