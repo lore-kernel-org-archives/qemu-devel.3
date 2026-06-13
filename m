@@ -4,46 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E66E2CD98C5
-	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 19:53:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3826CD98D2
+	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 19:53:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wYUOZ-0000mI-HK; Sat, 13 Jun 2026 15:51:56 -0400
+	id 1wYUPb-0001YA-TY; Sat, 13 Jun 2026 15:53:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYUOE-0000fg-GG; Sat, 13 Jun 2026 15:51:37 -0400
+ id 1wYUOx-0000sv-Jk; Sat, 13 Jun 2026 15:52:19 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYUOB-0003Kq-DK; Sat, 13 Jun 2026 15:51:34 -0400
+ id 1wYUOv-0003Wj-Vl; Sat, 13 Jun 2026 15:52:19 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1781380257; bh=inLTUl1F9CV/1Qe+bJHhKqhS2pNLKl4mln2I7ChZc9c=;
- h=From:To:Cc:Subject:Date;
- b=DYRgAUimARPaBXjm8WR+gpRiHASB+mQDwc10+3lihUb2dz92pkSGekzLL920X5m5a
- +h5MuUYPTYhA8tX6kc4NZKm6RRx8+PLywa3ziNigtUmOJfdjT7rBs7ddBm4ajRWiDm
- 5pQzPmwbjB78gXQ53gj1kxriJpwOBNfsnDPesU/4m/EOC3B3fCYSCXDTCM4TtkeIwi
- uhK7wxZ6fWcIjKY+PAhhpF9izCxypKc6f5i8iK9wCMlN6hJNfFco6TQozpS/x52ES+
- dreeZ+LaNK1oqPS+or6lbSAjodduL4DBJoEMyBQ1VTlZJNiGxq38B9elt1E2j4E2Gb
- MX2RLn68GkxNA==
+ t=1781380258; bh=Og0HyygInrFZE1Y0Zj4aatklk05kvCIP9+RnLzuxhzs=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References;
+ b=DSj87jpEHK40KpH/stRw2uPqmbjy59FPHpnf6MFao1X9G+ZmHvdo3mtfmFG1GpPCM
+ w5IjPDhC1jrQ9ehvhJ1vUHwEg5SnEUMQOBm6gmgbYoe1p168NN4iOIByqvzioBDUgQ
+ +g0dDsE7o8vfx90vr3tQlJLPHC7iKzLQgONzJdefgouDOqpwWGiU9qHkxupV2MZhsU
+ gC4si94G58BFnOlUgGHD6EPAsx0Ifc8f4uWWmsTmg6xDVrMolz6ouSfuDAP0SMt2Ku
+ B2kr8HA6CWrrgzfZ5MlNLpoYmh+cYnCB1FGhc4bKCNuY9/kMJADU0ekI79JCUFaF7y
+ q9zZsw/eb2tDQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id D4F261B6E0F;
- Sat, 13 Jun 2026 22:50:57 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id A2F5B1B6E1B;
+ Sat, 13 Jun 2026 22:50:58 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 389503CE889;
- Sat, 13 Jun 2026 22:51:16 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 0706A3CE895;
+ Sat, 13 Jun 2026 22:51:17 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
-	Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.11 00/56] Patch Round-up for stable 10.0.11,
- freeze on 2026-06-23
-Date: Sat, 13 Jun 2026 22:50:14 +0300
-Message-ID: <qemu-stable-10.0.11-20260613224446@cover.tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Zishun Yi <vulab@iscas.ac.cn>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.11 12/56] target/riscv: clear mseccfg on reset for all
+ dependent extensions
+Date: Sat, 13 Jun 2026 22:50:26 +0300
+Message-ID: <20260613195116.1807273-12-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
+In-Reply-To: <qemu-stable-10.0.11-20260613224446@cover.tls.msk.ru>
+References: <qemu-stable-10.0.11-20260613224446@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -68,138 +71,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following patches are queued for QEMU stable v10.0.11:
+From: Zishun Yi <vulab@iscas.ac.cn>
 
-  https://gitlab.com/qemu-project/qemu/-/commits/staging-10.0
+Currently, the `mseccfg` CSR is only cleared to 0 during reset if the
+`ext_smepmp` is enabled. However, this register is now shared by
+several other extensions such as `zkr`, `smmpm`, and `zicfilp`.
 
-Patch freeze is 2026-06-23, and the release is planned for 2026-06-25:
+Fix by clearing `mseccfg` if any dependent extension is present, and
+adjusting the relevant comments.
 
-  https://wiki.qemu.org/Planning/10.0
+This vulnerability was discovered and reported by SpecHunter, an
+AI-driven architecture specification analysis tool.
 
-Please respond here or CC qemu-stable@nongnu.org on any additional patches
-you think should (or shouldn't) be included in the release.
+Link: https://github.com/yizishun/rv-isa-sec/blob/master/output/riscv-svvptc/pr-134/qemu.txt
+Signed-off-by: Zishun Yi <vulab@iscas.ac.cn>
+Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Message-ID: <20260512052240.330815-1-vulab@iscas.ac.cn>
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+(cherry picked from commit 8158a74f0a0db8626d7836eb03eca7aba46c18b5)
+Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-The changes which are staging for inclusion, with the original commit hash
-from master branch, are given below the bottom line.
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index 2ff56bd017..9e4f54d250 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -1101,10 +1101,14 @@ static void riscv_cpu_reset_hold(Object *obj, ResetType type)
+ 
+     /*
+      * Clear mseccfg and unlock all the PMP entries upon reset.
+-     * This is allowed as per the priv and smepmp specifications
+-     * and is needed to clear stale entries across reboots.
++     * This is required as per the priv, smepmp, and other security
++     * extension specifications that share this CSR, and is needed
++     * to clear stale entries across reboots.
+      */
+-    if (riscv_cpu_cfg(env)->ext_smepmp) {
++    if (riscv_cpu_cfg(env)->ext_smepmp ||
++        riscv_cpu_cfg(env)->ext_zkr ||
++        riscv_cpu_cfg(env)->ext_smmpm ||
++        riscv_cpu_cfg(env)->ext_zicfilp) {
+         env->mseccfg = 0;
+     }
+ 
+-- 
+2.47.3
 
-Thanks!
-
-/mjt
-
---------------------------------------
-01 f0433a8bc4ac Frank Chang:
-   target/riscv: Update MISA.C for Zc* extensions
-02 613bb1949fff Frank Chang:
-   target/riscv: Update MISA.X for non-standard extensions
-03 fcbd93e96be2 Andrew Jones:
-   hw/riscv/riscv-iommu: Fix Svnapot 64KB pages
-04 249483623242 Zishun Yi:
-   target/riscv: Allow mseccfg access based on ext_zicfilp
-05 61240e3a06dc Florian Lugou:
-   hw/char: sifive_uart: Avoid infinite delay of async xmit function
-06 e6051fa61b9f Frank Chang:
-   hw/char: sifive_uart: Implement txctrl.txen and rxctrl.rxen
-07 a0946caf1d9e Abhigyan Kumar:
-   target/riscv: Fix medeleg[11] read-only zero bit for M-mode ECALL
-08 612f22c19db8 Zishun Yi:
-   target/riscv/pmp: Fix integer overflow in TOR and NA4 address computation
-09 b0daaa172a1c TANG Tiancheng:
-   target/riscv: Save stimer and vstimer in CPU vmstate
-10 eccb1d694025 Zishun Yi:
-   target/riscv: Add mseccfg to VMStateDescription
-11 27f9566dcd98 Alistair Francis:
-   target/riscv: Update the local interrupt mask
-12 8158a74f0a0d Zishun Yi:
-   target/riscv: clear mseccfg on reset for all dependent extensions
-13 ae18df638fb4 Daniel P. Berrangé:
-   ui/vnc: fix OOB read access in VNC SASL mechname array
-14 c3c6226fa481 Daniel P. Berrangé:
-   ui/vnc: fix OOB write in VNC stats array
-15 46ee49034d26 Daniel P. Berrangé:
-   ui/vnc: fix OOB write in lossy rect worker code
-16 d0c7b82d3a89 Daniel P. Berrangé:
-   ui/vnc: fix OOB read updating VNC update frequency stats
-17 e56b4bbff1df Heechan Kang:
-   ui: fix validation of VNC extended clipboard data length
-18 5297a0fc6531 Paolo Bonzini:
-   lsi53c895a: fix use-after-free of cancelled request
-19 4494dec8c2bf Paolo Bonzini:
-   lsi53c895a: clear tag byte when processing messages
-20 153dc2fa7bbe Paolo Bonzini:
-   apic: fix delivery bitmask with modified xAPIC ids
-21 4b6c088c88cc Jinjie Ruan:
-   mc146818rtc: Fix get_guest_rtc_ns() overflow bug
-22 6864bec553b2 Denis V. Lunev:
-   block/linux-aio: bound ioq_submit() recursion depth
-23 446050c4dfe4 Peter Maydell:
-   target/arm: SVE2 FMAXP, FMINP must honour AH=1
-24 aa42300f86d1 Peter Maydell:
-   target/arm: Use FPST_A64_F16 for SVE FCVTLT_hs
-25 23ece2805f9a Peter Maydell:
-   target/arm: Set correct fp flags for FLOGB when FPCR.AH = 1
-26 bb957530471c Peter Maydell:
-   target/arm: Don't assert if 64-bit EL2 AT insn sees a Domain fault
-27 8526b7d6b67b Peter Maydell:
-   hw/net/rocker_of_dpa: Check group ID pointers are not NULL
-28 71d027cfee85 Peter Maydell:
-   hw/net/rocker_of_dpa: Avoid unaligned accesses in _of_dpa_flow_match()
-29 3f50dd46664b Matt Turner:
-   linux-user/ppc: restore fp_status from FPSCR on sigreturn
-30 84b920ccb5ee Matt Turner:
-   linux-user/mips: save/restore FCSR across signal delivery
-31 6bf4c0295ccc Matt Turner:
-   linux-user/sh4: preserve T/M/Q bits across signal delivery
-32 a740f17ed0fb Matt Turner:
-   linux-user/sh4: restore FP rounding mode on sigreturn
-33 2762cd51ee03 Matt Turner:
-   linux-user/s390x: restore fpu_status rounding mode from FPC on sigreturn
-34 44f51c1a3cf4 Sean Wei:
-   hw/9pfs: move G_GNUC_PRINTF to header
-35 abb0cc02fb56 Christian Schoenebeck:
-   hw/9pfs: add NULL check in v9fs_path_is_ancestor()
-36 dbaf84e148b0 Christian Schoenebeck:
-   hw/9pfs: change V9fsPath.size to size_t and v9fs_path_sprintf() return 
-   type
-37 54dd352c5926 Christian Schoenebeck:
-   hw/9pfs: add error handling to v9fs_fix_path()
-38 3802c0e755a5 Christian Schoenebeck:
-   hw/9pfs: let callers of v9fs_path_sprintf() and v9fs_fix_path() handle 
-   errors
-39 be33c56898f8 Christian Schoenebeck:
-   tests/qtest/libqos: add qvirtqueue_reset_pool() for descriptor pool reset
-40 198627807a6b Christian Schoenebeck:
-   tests/9pfs: add deep absolute path test
-41 5a8da7e979f1 sin99xx:
-   9pfs: fix missing rename lock in v9fs_co_readdir_many (CVE-2026-48004)
-42 c131ae56c13f Denis V. Lunev:
-   util/envlist: fix prefix-match in envlist_unsetenv() name lookup
-43 05221c600a5f Denis V. Lunev:
-   tests/unit: add test-envlist covering setenv/unsetenv name matching
-44 1f1ccb6f3c48 Alexandra Winter:
-   target/s390x: Make container ids in SysIB_15x 1-based
-45 442f727b8beb Farhan Ali:
-   s390x/pci: Fix interrupt forwarding disable for interpreted devices
-46 b4e28c304bc5 Fiona Ebner:
-   block/io: fallback to bounce buffer if BLKZEROOUT is not supported 
-   because of alignment
-47 aeea0c2804c4 Stefan Hajnoczi:
-   virtio-blk: add missing VIRTIO_BLK_T_SCSI_CMD size check (CVE-2026-48914)
-48 7f8466e2ce62 Kevin Wolf:
-   qemu-io: Add 'aio_discard' command
-49 b8bfb1478d61 Kevin Wolf:
-   qcow2: Fix corruption on discard during write with COW
-50 389f5bcc744d Kevin Wolf:
-   iotests/046: Test that discard/write_zeroes wait for dependencies
-51 1d47eb689835 Thomas Lamprecht:
-   qcow2: Fix data loss on zero write with detect-zeroes=unmap
-52 7e573b660fef Fabiano Rosas:
-   qed: Don't try to flush during incoming migration
-53 163f9a4e0651 Munkhbaatar Enkhbaatar:
-   hw/usb/hcd-ohci: Clean up USBPacket before freeing ISO TD packet
-54 a6a1f92d5a23 Richard Henderson:
-   fpu: Handle all rounding modes in partsN_uncanon_normal
-55 767c32fe6983 Xinhui Yang:
-   linux-user: implement fsmount(2) series of syscalls
-56 6e0aa9f6c731 Xinhui Yang:
-   linux-user/strace: add fsmount series of syscalls
 
