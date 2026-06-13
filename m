@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97553CD98CF
-	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 19:58:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1BD5CCD8CA8
+	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 19:58:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wYUSv-00020p-K1; Sat, 13 Jun 2026 15:56:25 -0400
+	id 1wYUQQ-0003ip-7n; Sat, 13 Jun 2026 15:53:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYUSp-0001sl-Hn; Sat, 13 Jun 2026 15:56:21 -0400
+ id 1wYUQO-0003dZ-Cw; Sat, 13 Jun 2026 15:53:48 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYUSn-0004vU-PO; Sat, 13 Jun 2026 15:56:19 -0400
+ id 1wYUQM-0003yR-E6; Sat, 13 Jun 2026 15:53:48 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1781380261; bh=wFgYv/PwAt0u78hux03pZXLxBHjnBUUTcA3SqqslMOQ=;
+ t=1781380259; bh=XD1LPMK2wPincHYlBJSY1xOKD+wvkR4bcKatvgwgKhE=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=xMWbUbef0BZuVk7fMMSvhesrhH4pY/e8AF3CMR2fzFxSNUrN42K1t2zR7DQaT+z0W
- nr7CrcYpFbZ1060pUSS/VlcTwwH1JicPzyuYGMWz5LnhEbx8N8VqASWzizCx4stvdY
- 1U+KwFF3spv0dQNlsJAB1VHJ945XOuiuLNe6n+tXYxvnIdbW0I3I8FNYV1GaC0P+IA
- z50jJwvBR4woPBKCcrSHVjD4xG+mnprnvdBj/JkFXgUSlMWqIyeWJw+Ux2Dy727xyp
- vytjxSToFUWl3ILP1TQFltFZzhSYnI/qBe6vUq9przPUUWWqa3/C3uH3t7P+ga8pnF
- t/MhqgEfzemCg==
+ b=wSejl2kEX2GrqMv1xBLqsAKbELFuX6MG44HFskS3Igp8sYhuad/ZyHQ2BWLOaS8DG
+ /okPOT3AgPDXyNdjCKSxmvolIrEy3o+fDB3qaMI6Beavtz0Cu6ExFI0eFm1Y1BBtOp
+ H4p2dFLPk4loXps1fMRFJm7kyM4GS7gVLhrwq9mFdE//peyJofUhiVgAscT4akk5tk
+ yoq+OlmKgcT9MQthaGpZvxGHDlPnYIAP4N1wIK5K1XiELru96kf5XW4lvm7v/AR6Ng
+ ZVoq7Wh70jDc0ZDTkuFcTctqFUjB8CJ9e5XDJH0HSYPRLV6hlmhG01Qdsu192ybN5D
+ qPPmFXWsjNHkA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 8FBCB1B6E44;
- Sat, 13 Jun 2026 22:51:01 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id A76F81B6E2A;
+ Sat, 13 Jun 2026 22:50:59 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id DC3D13CE8BE;
- Sat, 13 Jun 2026 22:51:19 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 0C5933CE8A4;
+ Sat, 13 Jun 2026 22:51:18 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Munkhbaatar Enkhbaatar <munkhuu0825@gmail.com>,
- Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.11 53/56] hw/usb/hcd-ohci: Clean up USBPacket before
- freeing ISO TD packet
-Date: Sat, 13 Jun 2026 22:51:07 +0300
-Message-ID: <20260613195116.1807273-53-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ Jason Wang <jasowang@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.11 27/56] hw/net/rocker_of_dpa: Check group ID pointers
+ are not NULL
+Date: Sat, 13 Jun 2026 22:50:41 +0300
+Message-ID: <20260613195116.1807273-27-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.11-20260613224446@cover.tls.msk.ru>
 References: <qemu-stable-10.0.11-20260613224446@cover.tls.msk.ru>
@@ -69,34 +69,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Munkhbaatar Enkhbaatar <munkhuu0825@gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
 
-ohci_service_iso_td() allocates a USBPacket and frees it after synchronous
-completion, but it does not call usb_packet_cleanup() first.
+In of_dpa_cmd_add_l2_flood(), we use rocker_tlv_parse_nested()
+to fill in a tlvs[] array. If the guest command is valid then
+the entries should be pointers to TLV data items with group IDs.
+However, if the guest gives us bogus data then rocker_tlv_parse_nested()
+indicates this by leaving the tlvs[] entries NULL. In the other
+places that use this function, we check for this before using
+the value, but here we forgot, and the result is that QEMU can
+crash:
 
-Call usb_packet_cleanup() before g_free() so resources owned by USBPacket
-are released.
+#0  __memcpy_avx_unaligned_erms () at ../sysdeps/x86_64/multiarch/memmove-vec-unaligned-erms.S:331
+#1  0x00005555574f7137 in __asan_memcpy ()
+#2  0x0000555558106792 in ldl_he_p (ptr=0x8) at /home/pm215/qemu/include/qemu/bswap.h:278
+#3  0x0000555558106755 in ldl_le_p (ptr=0x8) at /home/pm215/qemu/include/qemu/bswap.h:311
+#4  0x00005555580f85ed in rocker_tlv_get_le32 (tlv=0x0) at ../../hw/net/rocker/rocker_tlv.h:114
+#5  0x000055555810a8ad in of_dpa_cmd_add_l2_flood (of_dpa=0x506000082e38, group=0x503000b4e440, group_tlvs=0x7fff68702c20)
+    at ../../hw/net/rocker/rocker_of_dpa.c:2032
+#6  0x0000555558108a74 in of_dpa_cmd_group_do (of_dpa=0x506000082e38, group_id=1073741824, group=0x503000b4e440, group_tlvs=0x7fff68702c20)
+    at ../../hw/net/rocker/rocker_of_dpa.c:2115
+#7  0x0000555558108730 in of_dpa_cmd_group_add (of_dpa=0x506000082e38, group_id=1073741824, group_tlvs=0x7fff68702c20)
+    at ../../hw/net/rocker/rocker_of_dpa.c:2135
+#8  0x00005555580f66ec in of_dpa_group_cmd
+    (of_dpa=0x506000082e38, info=0x514000072e40, buf=0x5070002356c0 "\001", cmd=7, group_tlvs=0x7fff68702c20)
+    at ../../hw/net/rocker/rocker_of_dpa.c:2194
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3463
+Check for NULL values and return an error.
 
-Signed-off-by: Munkhbaatar Enkhbaatar <munkhuu0825@gmail.com>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-stable@nongnu.org
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/1851
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-(cherry picked from commit 163f9a4e0651b3b4a1438d919489a200d3646ba3)
+Signed-off-by: Jason Wang <jasowang@redhat.com>
+(cherry picked from commit 8526b7d6b67beda0c83e4a8aec1449475fe5dd65)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/usb/hcd-ohci.c b/hw/usb/hcd-ohci.c
-index adf400a18a..b7296ae036 100644
---- a/hw/usb/hcd-ohci.c
-+++ b/hw/usb/hcd-ohci.c
-@@ -756,6 +756,7 @@ static int ohci_service_iso_td(OHCIState *ohci, struct ohci_ed *ed)
-     } else {
-         ret = pkt->status;
-     }
-+    usb_packet_cleanup(pkt);
-     g_free(pkt);
+diff --git a/hw/net/rocker/rocker_of_dpa.c b/hw/net/rocker/rocker_of_dpa.c
+index b4da3cc0ec..6f10212521 100644
+--- a/hw/net/rocker/rocker_of_dpa.c
++++ b/hw/net/rocker/rocker_of_dpa.c
+@@ -2033,6 +2033,10 @@ static int of_dpa_cmd_add_l2_flood(OfDpa *of_dpa, OfDpaGroup *group,
+                             group_tlvs[ROCKER_TLV_OF_DPA_GROUP_IDS]);
  
-     trace_usb_ohci_iso_td_so(start_offset, end_offset, start_addr, end_addr,
+     for (i = 0; i < group->l2_flood.group_count; i++) {
++        if (!tlvs[i + 1]) {
++            err = -ROCKER_EINVAL;
++            goto err_out;
++        }
+         group->l2_flood.group_ids[i] = rocker_tlv_get_le32(tlvs[i + 1]);
+     }
+ 
 -- 
 2.47.3
 
