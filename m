@@ -4,34 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0DE8DCD8CA8
-	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 20:08:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E271CD8CA8
+	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 20:08:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wYUdy-00049s-JM; Sat, 13 Jun 2026 16:07:51 -0400
+	id 1wYUei-0005II-Ne; Sat, 13 Jun 2026 16:08:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYUdK-0002zF-2Y; Sat, 13 Jun 2026 16:07:10 -0400
+ id 1wYUcy-0002NP-14; Sat, 13 Jun 2026 16:06:49 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYUdI-0000vX-6a; Sat, 13 Jun 2026 16:07:09 -0400
+ id 1wYUcw-0000ty-6i; Sat, 13 Jun 2026 16:06:47 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1781381068; bh=w02VivT/cF+Rutjk6NRJRm4HwYkPwmYx6ggLrW6L6O0=;
+ t=1781381068; bh=1u4cWwjncfEDAZbvdKDFHxkIX4fuYmM1cM6NpQu0xQ8=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=hYeXB9RvKvPxRJMkhGIH9sOp1SeyXY1wwwpob407eLCWrrQreI9vjCSlUtHOurGeJ
- t04GfuirHtOUtFpqPn/3su1WPa2HzaW+X5eHX/6zk7Ro6MHVeCCvBjEkYtmUhQHtK4
- RupUzEqg5Pk3vJJAhLBJdAq1Z9rt4/SXLsNomUNIzurRmgHdVjGQLdRwnpHn1qumMw
- /rlGgbfChgKQwTuPOzFmApSLcjSfCYQTxKxX/sUUnpaWKwYBAS8zmkKLe1EG8+3gsh
- Yg0zWmTAoikd8mYwAtaV8e5sx5UTnjAoAgD9DmvDfRs+KfRuRLOIODx6MqKSnkjO4v
- chujfZv/U9+eA==
+ b=QxFKZARfEG8oOVegV0COfNoRDBINFyK4q3Lw2apTXlH+TJ4Vyly9K+i9tO4rH1YhQ
+ 06t+2MHqTIq+0FJj3jCPdjJhqCf/fpPyN3Hq7BMgTNTARAnbzMqgIRkJFdZUIWJn9p
+ ecssJvoZVAnfBlWeEHI9KOmocpuSxQDuLbkFGN0t+oVNiih/tXwBfSBD6ObA1Xpjnm
+ 4o9NRh+TDGJsiXSM1QtokBNpzCk71s/8USLbDfjIbuAYnNhTGy+Go0N4q9X3z/1vC8
+ PsdoiCTwsb6K5WvuW+4OYnCgx/jCXpe+uW813/JAvpysLrVGMTOYbQxGWMq4qgTieJ
+ PlZk1SwfT9O7w==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id B894F1B6E84;
+ by isrv.corpit.ru (Postfix) with ESMTP id A728F1B6E83;
  Sat, 13 Jun 2026 23:04:28 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 20A3B3CE8E6;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 0F8183CE8E5;
  Sat, 13 Jun 2026 23:04:47 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
@@ -39,10 +39,9 @@ Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.4 28/61] target/arm: Set correct fp flags for FLOGB when
- FPCR.AH = 1
-Date: Sat, 13 Jun 2026 23:03:11 +0300
-Message-ID: <20260613200411.1808021-28-mjt@tls.msk.ru>
+Subject: [Stable-10.2.4 27/61] target/arm: Use FPST_A64_F16 for SVE FCVTLT_hs
+Date: Sat, 13 Jun 2026 23:03:10 +0300
+Message-ID: <20260613200411.1808021-27-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.2.4-20260613224639@cover.tls.msk.ru>
 References: <qemu-stable-10.2.4-20260613224639@cover.tls.msk.ru>
@@ -74,54 +73,42 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Peter Maydell <peter.maydell@linaro.org>
 
-Our implementation of the FLOGB insn does the operations entirely
-in the helper function, without needing to use fpu functions.
-This means it needs to handle all the fp status flags itself.
-We aren't setting float_flag_input_denormal_used when we
-use (i.e. do not flush to zero) an input denormal, which means
-that FPCR.IDC isn't set when it should be for FPCR.AH=1.
-We missed this when we added float_flag_input_denormal_used
-and made the fpu/ code set it.
+We should be using the F16-specific float_status for conversions from
+half-precision, because halfprec inputs never set Input Denormal.  If
+we use the FPST_A64 fpstatus then we will incorrectly set FPCR.IDC
+for input-denormals when FPCR.AH=1.
 
-Add the missing float_raise().
+In commit e07b48995aaa we updated most of the halfprec-to-other
+conversion insns to use FPST_A64_F16 as part of implementing
+FEAT_AHP.  However we missed the SVE FCVTLT instruction, which has a
+halfprec-to-single encoding.
+
+Correct the FPST we use for the hs variant of FCVTLT.
 
 Cc: qemu-stable@nongnu.org
-Fixes: d38a57a3f ("target/arm: Enable FEAT_AFP for '-cpu max'")
+Fixes: e07b48995aaa ("target/arm: Use FPST_A64_F16 for halfprec-to-other conversions")a
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20260521122913.1565011-4-peter.maydell@linaro.org
-(cherry picked from commit 23ece2805f9a3f90f317aac1b49ee45783b57636)
+Message-id: 20260521122913.1565011-3-peter.maydell@linaro.org
+(cherry picked from commit aa42300f86d172d7252f0cb95c2efd7570ad6b8f)
+(Mjt: context fixup across v10.2.0-1344-g895d4367d6
+     "target/arm/tcg: Use "or SME" feature checks where needed")
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/arm/tcg/sve_helper.c b/target/arm/tcg/sve_helper.c
-index 7e547a7795..0da164c6dd 100644
---- a/target/arm/tcg/sve_helper.c
-+++ b/target/arm/tcg/sve_helper.c
-@@ -5032,6 +5032,7 @@ static int16_t do_float16_logb_as_int(float16 a, float_status *s)
-         if (frac != 0) {
-             if (!get_flush_inputs_to_zero(s)) {
-                 /* denormal: bias - fractional_zeros */
-+                float_raise(float_flag_input_denormal_used, s);
-                 return -15 - clz32(frac);
-             }
-             /* flush to zero */
-@@ -5060,6 +5061,7 @@ static int32_t do_float32_logb_as_int(float32 a, float_status *s)
-         if (frac != 0) {
-             if (!get_flush_inputs_to_zero(s)) {
-                 /* denormal: bias - fractional_zeros */
-+                float_raise(float_flag_input_denormal_used, s);
-                 return -127 - clz32(frac);
-             }
-             /* flush to zero */
-@@ -5088,6 +5090,7 @@ static int64_t do_float64_logb_as_int(float64 a, float_status *s)
-         if (frac != 0) {
-             if (!get_flush_inputs_to_zero(s)) {
-                 /* denormal: bias - fractional_zeros */
-+                float_raise(float_flag_input_denormal_used, s);
-                 return -1023 - clz64(frac);
-             }
-             /* flush to zero */
+diff --git a/target/arm/tcg/translate-sve.c b/target/arm/tcg/translate-sve.c
+index b9dba6ec31..a537d28c9f 100644
+--- a/target/arm/tcg/translate-sve.c
++++ b/target/arm/tcg/translate-sve.c
+@@ -7825,7 +7825,7 @@ TRANS_FEAT(BFCVTNT, aa64_sve_bf16, gen_gvec_fpst_arg_zpz,
+            s->fpcr_ah ? FPST_AH : FPST_A64)
+ 
+ TRANS_FEAT(FCVTLT_hs, aa64_sve2, gen_gvec_fpst_arg_zpz,
+-           gen_helper_sve2_fcvtlt_hs, a, 0, FPST_A64)
++           gen_helper_sve2_fcvtlt_hs, a, 0, FPST_A64_F16)
+ TRANS_FEAT(FCVTLT_sd, aa64_sve2, gen_gvec_fpst_arg_zpz,
+            gen_helper_sve2_fcvtlt_sd, a, 0, FPST_A64)
+ 
 -- 
 2.47.3
 
