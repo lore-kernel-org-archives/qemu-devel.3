@@ -4,44 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4284CD98CF
-	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 19:59:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0269DCD98CF
+	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 19:59:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wYUSM-0000vA-QC; Sat, 13 Jun 2026 15:55:50 -0400
+	id 1wYUSQ-0001No-0J; Sat, 13 Jun 2026 15:55:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYUSJ-0000Vf-Oq; Sat, 13 Jun 2026 15:55:48 -0400
+ id 1wYUSN-000182-Oc; Sat, 13 Jun 2026 15:55:51 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYUSI-0004n4-66; Sat, 13 Jun 2026 15:55:47 -0400
+ id 1wYUSL-0004ni-NF; Sat, 13 Jun 2026 15:55:51 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1781380261; bh=LkH5qk2YoO9eDK46e5ppGBdSzMNPpSzzsoNyAuBkG9k=;
+ t=1781380261; bh=3eStd9tzp10nIvgv3uD2QnV70tB8KVSRJ2k3TMOWGvA=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=KY75LCAYv8sO8438vFU+RgsiW6HAmsFt3wvya39kRjkcGc6ee9mYpCc2LWBCoYk1c
- 4ZuOicaHQR8PQwo9E+Kg4r9lodzMj38SUcwI/I4hr2arf+i7ab2pRoBVqYgJitaaTG
- orUN9T7t3J4wFvhFoNdo49w2djdgu8plKIkK0A/KP72VTCitR4ZzPhBiiy3RqiauDY
- 2qT0RcASPJTsXVfL77CgYBlPdpDeIJgAGqGJHwSJGvzVkvYBKd/VrxxUM3CjNe7yvG
- 4+rA1X67qWiB8b1uWlCokV7hsmy0DNWDW9pvix/vSmPgWoMg24B+0vtQTcfEEwQpPK
- +X7omTkYftSYg==
+ b=qSzNYNvMdC61SXM+3uCyQ0je8ZYxNX0jj+qU3lAXs9GyXikrvTrM1QB3sS/ieSGx0
+ uzhrDLUVCYqSCPWJg2iaWteVZf9yX52r+kS8So67AyfUXUz+lPZ76v4bmgauIk9+fz
+ VkHdqi2mLl8B1v4BPofG2pX10xli1BmMYPQkX1NTGbSzLdHdfGAI11wwQajIkBi424
+ Oe/yDsrMho8l8B53UaLpBRGwA49804Oy5nTQhV6bIj34PIx/XfHPJ7INgfD5AnaLFQ
+ OinJVVo6XquFKPvnJgnKBHPoRwYZyIWUFfvg5t58NJS1a38vg7SRgehvx/bZeOYsSq
+ 97AT/SrOxEqHQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 257FC1B6E3E;
+ by isrv.corpit.ru (Postfix) with ESMTP id 431071B6E40;
  Sat, 13 Jun 2026 22:51:01 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 7B4EF3CE8B8;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 9D4A43CE8BA;
  Sat, 13 Jun 2026 22:51:19 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>,
- Feifan Qian <bea1e@proton.me>, Paolo Bonzini <pbonzini@redhat.com>,
- Kevin Wolf <kwolf@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.11 47/56] virtio-blk: add missing VIRTIO_BLK_T_SCSI_CMD
- size check (CVE-2026-48914)
-Date: Sat, 13 Jun 2026 22:51:01 +0300
-Message-ID: <20260613195116.1807273-47-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
+ "Denis V. Lunev" <den@openvz.org>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.11 49/56] qcow2: Fix corruption on discard during write
+ with COW
+Date: Sat, 13 Jun 2026 22:51:03 +0300
+Message-ID: <20260613195116.1807273-49-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.11-20260613224446@cover.tls.msk.ru>
 References: <qemu-stable-10.0.11-20260613224446@cover.tls.msk.ru>
@@ -70,50 +69,149 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Stefan Hajnoczi <stefanha@redhat.com>
+From: Kevin Wolf <kwolf@redhat.com>
 
-Check that the iovec containing struct virtio_scsi_inhdr is large enough
-before storing an error value there.
+Most code in qcow2 that accesses (and potentially modifies) L2 tables
+does so while holding s->lock.
 
-Feifan Qian <bea1e@proton.me> pointed out that this can be used to
-corrupt heap memory when the descriptor uses an MMIO address and a
-length of 1, forcing QEMU to allocate a 1-byte heap bounce buffer.
-virtio_stl_p() stores 4 bytes and therefore corrupts whatever is beyond
-the bounce buffer.
+There is one exception, which is allocating writes. They hold the lock
+initially while allocating clusters, but drop it for writing the guest
+payload before taking the lock again for updating the L2 tables. This
+allows concurrent requests that touch other parts of the image file to
+continue in parallel and is an important performance optimisation.
 
-Fixes: CVE-2026-48914
-Fixes: f34e73cd69bd ("virtio-blk: report non-zero status when failing SG_IO requests")
-Reported-by: Feifan Qian <bea1e@proton.me>
-Cc: Paolo Bonzini <pbonzini@redhat.com>
-Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
-Message-ID: <20260526154957.1741622-1-stefanha@redhat.com>
-Reviewed-by: Kevin Wolf <kwolf@redhat.com>
+However, this means that other requests that run while the lock is
+dropped for writing guest data must synchronise with the list of
+allocating requests in s->cluster_allocs and wait if they would overlap.
+For writes, this is done in handle_dependencies(), but discard and write
+zeros operations neglect to synchronise with s->cluster_allocs.
+
+This means that discard can free a cluster whose L2 entry will already
+be modified in qcow2_alloc_cluster_link_l2() by a previously started
+write. In the case of a pre-allocated zero cluster that is in the
+process of being overwritten, this means that discard can lead to a
+situation where the cluster is still mapped (because the write will
+restore the L2 entry just without the zero flag), but its refcount has
+been decreased, resulting in a corrupted image.
+
+Add the missing synchronisation to qcow2_cluster_discard() and
+qcow2_subcluster_zeroize() to fix the problem.
+
+Cc: qemu-stable@nongnu.org
+Reported-by: Denis V. Lunev <den@openvz.org>
 Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-(cherry picked from commit aeea0c2804c42f24915467a1e4c70e649e39b8e0)
+Message-ID: <20260427170520.101242-4-kwolf@redhat.com>
+Reviewed-by: Denis V. Lunev <den@openvz.org>
+Tested-by: Denis V. Lunev <den@openvz.org>
+Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+(cherry picked from commit b8bfb1478d61512f851badd0d912c6661a2efee7)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/block/virtio-blk.c b/hw/block/virtio-blk.c
-index add6ad9d55..8b9739c2c3 100644
---- a/hw/block/virtio-blk.c
-+++ b/hw/block/virtio-blk.c
-@@ -203,10 +203,16 @@ static void virtio_blk_handle_scsi(VirtIOBlockReq *req)
+diff --git a/block/qcow2-cluster.c b/block/qcow2-cluster.c
+index ce8c0076b3..c20011d34c 100644
+--- a/block/qcow2-cluster.c
++++ b/block/qcow2-cluster.c
+@@ -1392,6 +1392,9 @@ count_single_write_clusters(BlockDriverState *bs, int nb_clusters,
+  * the same cluster. In this case we need to wait until the previous
+  * request has completed and updated the L2 table accordingly.
+  *
++ * If allow_shortening == true, instead of waiting for a dependency, *cur_bytes
++ * can be shortened so that the cluster allocations don't overlap.
++ *
+  * Returns:
+  *   0       if there was no dependency. *cur_bytes indicates the number of
+  *           bytes from guest_offset that can be read before the next
+@@ -1403,7 +1406,9 @@ count_single_write_clusters(BlockDriverState *bs, int nb_clusters,
+  */
+ static int coroutine_fn handle_dependencies(BlockDriverState *bs,
+                                             uint64_t guest_offset,
+-                                            uint64_t *cur_bytes, QCowL2Meta **m)
++                                            uint64_t *cur_bytes,
++                                            bool allow_shortening,
++                                            QCowL2Meta **m)
+ {
+     BDRVQcow2State *s = bs->opaque;
+     QCowL2Meta *old_alloc;
+@@ -1434,7 +1439,7 @@ static int coroutine_fn handle_dependencies(BlockDriverState *bs,
  
-     /*
-      * The scsi inhdr is placed in the second-to-last input segment, just
--     * before the regular inhdr.
-+     * before the regular inhdr. VIRTIO implementations normally do not rely on
-+     * the precise message framing, but legacy implementations did and so we do
-+     * too for the legacy virtio-blk SCSI request type.
-      *
-      * Just put anything nonzero so that the ioctl fails in the guest.
-      */
-+    if (elem->in_sg[elem->in_num - 2].iov_len != sizeof(*scsi)) {
-+        status = VIRTIO_BLK_S_IOERR;
-+        goto fail;
+         /* Conflict */
+ 
+-        if (start < old_start) {
++        if (start < old_start && allow_shortening) {
+             /* Stop at the start of a running allocation */
+             bytes = old_start - start;
+         } else {
+@@ -1469,6 +1474,29 @@ static int coroutine_fn handle_dependencies(BlockDriverState *bs,
+     return 0;
+ }
+ 
++static void coroutine_mixed_fn wait_for_dependencies(BlockDriverState *bs,
++                                                     uint64_t guest_offset,
++                                                     uint64_t bytes)
++{
++    BDRVQcow2State *s = bs->opaque;
++    QCowL2Meta *m = NULL;
++    int ret;
++
++    /*
++     * Discard has some non-coroutine callers (creating internal snapshots and
++     * make empty). They are calling from qemu-img or in a drained section, so
++     * we know that no writes can be in progress.
++     */
++    if (!qemu_in_coroutine()) {
++        assert(QLIST_EMPTY(&s->cluster_allocs));
++        return;
 +    }
-     scsi = (void *)elem->in_sg[elem->in_num - 2].iov_base;
-     virtio_stl_p(vdev, &scsi->errors, 255);
-     status = VIRTIO_BLK_S_UNSUPP;
++
++    do {
++        ret = handle_dependencies(bs, guest_offset, &bytes, false, &m);
++    } while (ret == -EAGAIN);
++}
++
+ /*
+  * Checks how many already allocated clusters that don't require a new
+  * allocation there are at the given guest_offset (up to *bytes).
+@@ -1840,7 +1868,7 @@ again:
+          *         the right synchronisation between the in-flight request and
+          *         the new one.
+          */
+-        ret = handle_dependencies(bs, start, &cur_bytes, m);
++        ret = handle_dependencies(bs, start, &cur_bytes, true, m);
+         if (ret == -EAGAIN) {
+             /* Currently handle_dependencies() doesn't yield if we already had
+              * an allocation. If it did, we would have to clean up the L2Meta
+@@ -2002,6 +2030,15 @@ int qcow2_cluster_discard(BlockDriverState *bs, uint64_t offset,
+     int64_t cleared;
+     int ret;
+ 
++    /*
++     * If we're touching a cluster for which allocating writes are in flight,
++     * wait for them to complete to avoid conflicting metadata updates.
++     *
++     * We don't need to allocate a QCowL2Meta for the discard operation because
++     * s->lock is held for the duration of the whole operation.
++     */
++    wait_for_dependencies(bs, offset, bytes);
++
+     /* Caller must pass aligned values, except at image end */
+     assert(QEMU_IS_ALIGNED(offset, s->cluster_size));
+     assert(QEMU_IS_ALIGNED(end_offset, s->cluster_size) ||
+@@ -2164,6 +2201,15 @@ int coroutine_fn qcow2_subcluster_zeroize(BlockDriverState *bs, uint64_t offset,
+     int64_t cleared;
+     int ret;
+ 
++    /*
++     * If we're touching a cluster for which allocating writes are in flight,
++     * wait for them to complete to avoid conflicting metadata updates.
++     *
++     * We don't need to allocate a QCowL2Meta for the zeroize operation because
++     * s->lock is held for the duration of the whole operation.
++     */
++    wait_for_dependencies(bs, offset, bytes);
++
+     /* If we have to stay in sync with an external data file, zero out
+      * s->data_file first. */
+     if (data_file_is_raw(bs)) {
 -- 
 2.47.3
 
