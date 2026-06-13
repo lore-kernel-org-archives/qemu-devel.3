@@ -4,43 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8BCACD98CF
-	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 20:42:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51E1ACD8CA8
+	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 20:42:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wYV7u-0005RA-2H; Sat, 13 Jun 2026 16:38:46 -0400
+	id 1wYVAE-0003JL-8C; Sat, 13 Jun 2026 16:41:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYV7r-0005JG-O9; Sat, 13 Jun 2026 16:38:43 -0400
+ id 1wYVAC-0003Hi-Cl; Sat, 13 Jun 2026 16:41:08 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYV7p-0003mJ-Rs; Sat, 13 Jun 2026 16:38:43 -0400
+ id 1wYVAA-00055G-ED; Sat, 13 Jun 2026 16:41:08 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1781382964; bh=WoDzbd+bsFS1hjb4l+NXgUrDQ81yYUUXj+/8Gg3rZ10=;
+ t=1781382965; bh=VEkwjzgqpOMRnj24Pf/csY6+NNWUGNA5MVFit704Ems=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=oQkV7kHEKKnssx0rVTwnWKay3rkAQuGsa8DoStteL701rDRsbGAH3h5ZmpqpIDqL6
- D7qI4ncEXHwrQfPTHUnh8pNLIRoCYByc8HiLv7tmkiWB9VcljslOywKAf6niwci83Y
- DUX123fDfnct9u0yhcWSKmyBpPD73f0xzOOsSBQPKaG7OAiZGn6F6Aq4ruAPQkTiA2
- hQPgHR7mN3BZWT102y4q1r5SKJ5AAq3wpYUU1/+I91acenzYZvIixHcvryR60APn3i
- HnzNg7XKHbGe/S5AO+jIZ5iTBX7U8RQ89Oc3VeCjD2TIp9IbwVQ1oMDtBYuhx0qAXW
- Wobv9Y9wplPlQ==
+ b=uOWD3HaFf+ZpNzDyni5Jj5jUU4ah5S00KRUdaqoYt3gsUk4IbQORX7AkjzhQw2u/O
+ pJ82xzjabhV1xIcEXhUzoo15C67foVpDDBl16AeRgjQGTnYUV+95yrQquOU0itcrd9
+ miopFihtuLiKxmCevDDHuKnWaWukDFd4lROoV0sfJQTXtPBstlRqWh5C2USUGZ4z4i
+ HzhUyanwPUxMvf2/hUiTC5c0wIPMXIR0XxDnLvesb9G5XLDpyRD5jJ4n9DloEj2q69
+ ChICw72TMlY6He4R+SgD23aD/MgZzSBItQLhmjX8a/QXXPwYe5H8wEh4Mijs5hn8Pi
+ zV5Xja5/Cl6RA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 0C0BD1B6EF6;
- Sat, 13 Jun 2026 23:36:04 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id B1D371B6F16;
+ Sat, 13 Jun 2026 23:36:05 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 756353CE947;
- Sat, 13 Jun 2026 23:36:22 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 241C23CE960;
+ Sat, 13 Jun 2026 23:36:24 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+Cc: qemu-stable@nongnu.org,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.2 27/72] target/arm: SVE2 FMAXP, FMINP must honour AH=1
-Date: Sat, 13 Jun 2026 23:34:53 +0300
-Message-ID: <20260613203542.1809153-27-mjt@tls.msk.ru>
+Subject: [Stable-11.0.2 52/72] ci: drop cirrus MacOS build
+Date: Sat, 13 Jun 2026 23:35:18 +0300
+Message-ID: <20260613203542.1809153-52-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.2-20260613224644@cover.tls.msk.ru>
 References: <qemu-stable-11.0.2-20260613224644@cover.tls.msk.ru>
@@ -70,80 +73,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: Alex Bennée <alex.bennee@linaro.org>
 
-The behaviour of floating-point maximum and minimum insns has
-some odd special cases when FPCR.AH=1. We get this right in most
-places (for instance, the ASIMD FMAXP, FMINP) but forgot about
-it for the SVE2 versions of FMAXP and FMINP.
+CirrusCI is closing down soon so time to migrate.
 
-Cc: qemu-stable@nongnu.org
-Fixes: 384433e70983 ("target/arm: Implement FPCR.AH semantics for FMINP and FMAXP")
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
-Message-id: 20260521122913.1565011-2-peter.maydell@linaro.org
-(cherry picked from commit 446050c4dfe4566ae3fcba9c6588c89a66ed4b33)
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20260526110243.470002-6-alex.bennee@linaro.org>
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+(cherry picked from commit 984b192bdf371e275fb4226ca5047c1fff1de972)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/arm/tcg/helper-sve-defs.h b/target/arm/tcg/helper-sve-defs.h
-index c3541a8ca8..cd05dd0fb4 100644
---- a/target/arm/tcg/helper-sve-defs.h
-+++ b/target/arm/tcg/helper-sve-defs.h
-@@ -2914,6 +2914,20 @@ DEF_HELPER_FLAGS_6(sve2_fminp_zpzz_s, TCG_CALL_NO_RWG,
- DEF_HELPER_FLAGS_6(sve2_fminp_zpzz_d, TCG_CALL_NO_RWG,
-                    void, ptr, ptr, ptr, ptr, fpst, i32)
+diff --git a/.gitlab-ci.d/cirrus.yml b/.gitlab-ci.d/cirrus.yml
+index f2a9a64b76..b71ab090b6 100644
+--- a/.gitlab-ci.d/cirrus.yml
++++ b/.gitlab-ci.d/cirrus.yml
+@@ -44,17 +44,3 @@ x64-freebsd-14-build:
+     INSTALL_COMMAND: pkg install -y
+     CONFIGURE_ARGS: --target-list-exclude=arm-softmmu,i386-softmmu,mips64el-softmmu,mipsel-softmmu,mips-softmmu,ppc-softmmu,sh4eb-softmmu,xtensa-softmmu --enable-rust
+     TEST_TARGETS: check
+-
+-aarch64-macos-build:
+-  extends: .cirrus_build_job
+-  variables:
+-    NAME: macos-14
+-    CIRRUS_VM_INSTANCE_TYPE: macos_instance
+-    CIRRUS_VM_IMAGE_SELECTOR: image
+-    CIRRUS_VM_IMAGE_NAME: ghcr.io/cirruslabs/macos-runner:sonoma
+-    UPDATE_COMMAND: brew update
+-    INSTALL_COMMAND: brew install
+-    PATH_EXTRA: /opt/homebrew/ccache/libexec:/opt/homebrew/gettext/bin
+-    PKG_CONFIG_PATH: /opt/homebrew/curl/lib/pkgconfig:/opt/homebrew/ncurses/lib/pkgconfig:/opt/homebrew/readline/lib/pkgconfig
+-    CONFIGURE_ARGS: --target-list-exclude=arm-softmmu,i386-softmmu,mips64-softmmu,mipsel-softmmu,mips-softmmu,ppc-softmmu,sh4-softmmu,xtensaeb-softmmu --enable-rust
+-    TEST_TARGETS: check-unit check-block check-qapi-schema check-softfloat check-qtest-x86_64
+diff --git a/.gitlab-ci.d/cirrus/macos-14.vars b/.gitlab-ci.d/cirrus/macos-14.vars
+deleted file mode 100644
+index def77cfdea..0000000000
+--- a/.gitlab-ci.d/cirrus/macos-14.vars
++++ /dev/null
+@@ -1,16 +0,0 @@
+-# THIS FILE WAS AUTO-GENERATED
+-#
+-#  $ lcitool variables macos-14 qemu
+-#
+-# https://gitlab.com/libvirt/libvirt-ci
+-
+-CCACHE='/opt/homebrew/bin/ccache'
+-CPAN_PKGS=''
+-CROSS_PKGS=''
+-MAKE='/opt/homebrew/bin/gmake'
+-NINJA='/opt/homebrew/bin/ninja'
+-PACKAGING_COMMAND='brew'
+-PIP3='/opt/homebrew/bin/pip3'
+-PKGS='bash bc bindgen bison bzip2 capstone ccache cmocka coreutils ctags curl dbus diffutils dtc flex gcovr gettext git glib gnu-sed gnutls gtk+3 gtk-vnc jemalloc jpeg-turbo json-c libcbor libepoxy libffi libgcrypt libiscsi libnfs libpng libslirp libssh libtasn1 libusb llvm lzo make meson mtools ncurses nettle ninja pixman pkg-config python-setuptools python3 rpm2cpio rust sdl2 sdl2_image snappy socat sparse spice-protocol swtpm tesseract usbredir vde vte3 vulkan-tools xorriso zlib zstd'
+-PYPI_PKGS='PyYAML numpy pillow sphinx sphinx-rtd-theme tomli'
+-PYTHON='/opt/homebrew/bin/python3'
+diff --git a/tests/lcitool/refresh b/tests/lcitool/refresh
+index e4d01d792b..fa4a16e358 100755
+--- a/tests/lcitool/refresh
++++ b/tests/lcitool/refresh
+@@ -311,7 +311,6 @@ try:
+     # Cirrus packages lists for GitLab
+     #
+     generate_cirrus("freebsd-14")
+-    generate_cirrus("macos-14")
  
-+DEF_HELPER_FLAGS_6(sve2_ah_fmaxp_zpzz_h, TCG_CALL_NO_RWG,
-+                   void, ptr, ptr, ptr, ptr, fpst, i32)
-+DEF_HELPER_FLAGS_6(sve2_ah_fmaxp_zpzz_s, TCG_CALL_NO_RWG,
-+                   void, ptr, ptr, ptr, ptr, fpst, i32)
-+DEF_HELPER_FLAGS_6(sve2_ah_fmaxp_zpzz_d, TCG_CALL_NO_RWG,
-+                   void, ptr, ptr, ptr, ptr, fpst, i32)
-+
-+DEF_HELPER_FLAGS_6(sve2_ah_fminp_zpzz_h, TCG_CALL_NO_RWG,
-+                   void, ptr, ptr, ptr, ptr, fpst, i32)
-+DEF_HELPER_FLAGS_6(sve2_ah_fminp_zpzz_s, TCG_CALL_NO_RWG,
-+                   void, ptr, ptr, ptr, ptr, fpst, i32)
-+DEF_HELPER_FLAGS_6(sve2_ah_fminp_zpzz_d, TCG_CALL_NO_RWG,
-+                   void, ptr, ptr, ptr, ptr, fpst, i32)
-+
- DEF_HELPER_FLAGS_5(sve2_eor3, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, ptr, i32)
- DEF_HELPER_FLAGS_5(sve2_bcax, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, ptr, i32)
- DEF_HELPER_FLAGS_5(sve2_bsl1n, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, ptr, i32)
-diff --git a/target/arm/tcg/sve_helper.c b/target/arm/tcg/sve_helper.c
-index 062d8881bd..179cbd74fb 100644
---- a/target/arm/tcg/sve_helper.c
-+++ b/target/arm/tcg/sve_helper.c
-@@ -778,6 +778,14 @@ DO_ZPZZ_PAIR_FP(sve2_fminp_zpzz_h, float16, H1_2, float16_min)
- DO_ZPZZ_PAIR_FP(sve2_fminp_zpzz_s, float32, H1_4, float32_min)
- DO_ZPZZ_PAIR_FP(sve2_fminp_zpzz_d, float64, H1_8, float64_min)
- 
-+DO_ZPZZ_PAIR_FP(sve2_ah_fmaxp_zpzz_h, float16, H1_2, helper_vfp_ah_maxh)
-+DO_ZPZZ_PAIR_FP(sve2_ah_fmaxp_zpzz_s, float32, H1_4, helper_vfp_ah_maxs)
-+DO_ZPZZ_PAIR_FP(sve2_ah_fmaxp_zpzz_d, float64, H1_8, helper_vfp_ah_maxd)
-+
-+DO_ZPZZ_PAIR_FP(sve2_ah_fminp_zpzz_h, float16, H1_2, helper_vfp_ah_minh)
-+DO_ZPZZ_PAIR_FP(sve2_ah_fminp_zpzz_s, float32, H1_4, helper_vfp_ah_mins)
-+DO_ZPZZ_PAIR_FP(sve2_ah_fminp_zpzz_d, float64, H1_8, helper_vfp_ah_mind)
-+
- #undef DO_ZPZZ_PAIR_FP
- 
- /* Three-operand expander, controlled by a predicate, in which the
-diff --git a/target/arm/tcg/translate-sve.c b/target/arm/tcg/translate-sve.c
-index 5bace3fda1..6a5c508743 100644
---- a/target/arm/tcg/translate-sve.c
-+++ b/target/arm/tcg/translate-sve.c
-@@ -7666,8 +7666,8 @@ TRANS_FEAT_NONSTREAMING(HISTSEG, aa64_sve2, gen_gvec_ool_arg_zzz,
- DO_ZPZZ_FP(FADDP, aa64_sme_or_sve2, sve2_faddp_zpzz)
- DO_ZPZZ_FP(FMAXNMP, aa64_sme_or_sve2, sve2_fmaxnmp_zpzz)
- DO_ZPZZ_FP(FMINNMP, aa64_sme_or_sve2, sve2_fminnmp_zpzz)
--DO_ZPZZ_FP(FMAXP, aa64_sme_or_sve2, sve2_fmaxp_zpzz)
--DO_ZPZZ_FP(FMINP, aa64_sme_or_sve2, sve2_fminp_zpzz)
-+DO_ZPZZ_AH_FP(FMAXP, aa64_sme_or_sve2, sve2_fmaxp_zpzz, sve2_ah_fmaxp_zpzz)
-+DO_ZPZZ_AH_FP(FMINP, aa64_sme_or_sve2, sve2_fminp_zpzz, sve2_ah_fminp_zpzz)
- 
- static bool do_fmmla(DisasContext *s, arg_rrrr_esz *a,
-                      gen_helper_gvec_4_ptr *fn)
+     #
+     # VM packages lists
 -- 
 2.47.3
 
