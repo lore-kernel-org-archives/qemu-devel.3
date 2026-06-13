@@ -4,49 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E303CD98CF
-	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 20:11:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1907ECD8CA8
+	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 20:11:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wYUfG-0001QE-0w; Sat, 13 Jun 2026 16:09:10 -0400
+	id 1wYUgU-0004c3-Ma; Sat, 13 Jun 2026 16:10:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYUfD-0001Ca-SV; Sat, 13 Jun 2026 16:09:07 -0400
+ id 1wYUgM-0004Im-Qt; Sat, 13 Jun 2026 16:10:18 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYUfB-0002fx-QW; Sat, 13 Jun 2026 16:09:07 -0400
+ id 1wYUgK-000359-WA; Sat, 13 Jun 2026 16:10:18 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1781381070; bh=WBscJ52Kswc1ZMYXolaPaqnmlI8GCz9M9YD2ob2apxU=;
+ t=1781381071; bh=74FjXEQfqoGSiytNTqpkUThHlv28JADau+k5i8/mkWc=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=XOyR3K3ZD+LfMTeoc8e8BFOBR23DiXePF1OQkN4QeTcQtxY+GTYGdWDhS0WZdM/3y
- EMaW7bbz3dKDIx4p92dfKBtVUKddTWudXfK1JK0D8qFpOQcaXA+GJaZ9aeZoSSLQw7
- Wz4eGrpsfSQ5pyNp6YufRIuVoCoqBcDiyWBg7ORQxye5upcN9TuX0EpLuCH/7lbQCy
- l0JX1qQU+9wpGdD0KUxL44xuDyUhqjg9YAPP1Z7oPOgsqWuzqLTbV5ls1jMgbH9rx1
- a4j05nYYgjmtFegOQyes7T59tGW4q6Ee+lsYjiuCVfx7mvkMX1aujmhWxv153FB1nb
- E5NSd5eQA3nng==
+ b=gsOWJZfPHTfKZRylSGfRmr23Fo72Ent5ilXUoMk872lrIE2uiU/NcamBBvwPcdhOV
+ t9kEUAAZ6wCqaQuxSWqudKzJlxhew9f9zl1fYgPYabDuCh4xcmX1D/tJqVo1xWTQ6n
+ RQA1xhYgD/yVJYgxq1DXfT9yHaIvn2qtv77ejJWEDKI7CPVUNPGNZleFvBFSBebYjF
+ V21rA3i3hYxHAOv7prThQaNTEqlzGeyf5ggoBZmBxaFkDSTW1+5Pe80uyvLqLSO6n0
+ 9E/IBJ66K2ndV5H1NgvA1dpbkAt5qAr8/bjfCDbGwD+CWCMhrPid9P8rrQ+hjVi0tW
+ 4pwdVmD4I5npQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 2914A1B6E9F;
- Sat, 13 Jun 2026 23:04:30 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 44B0D1B6EAB;
+ Sat, 13 Jun 2026 23:04:31 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 832753CE8FA;
- Sat, 13 Jun 2026 23:04:48 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 966253CE905;
+ Sat, 13 Jun 2026 23:04:49 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
- Stefan Hajnoczi <stefanha@redhat.com>,
- Markus Armbruster <armbru@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.4 48/61] tests/unit: add test-envlist covering
- setenv/unsetenv name matching
-Date: Sat, 13 Jun 2026 23:03:31 +0300
-Message-ID: <20260613200411.1808021-48-mjt@tls.msk.ru>
+Subject: [Stable-10.2.4 59/61] fpu: Handle all rounding modes in
+ partsN_uncanon_normal
+Date: Sat, 13 Jun 2026 23:03:42 +0300
+Message-ID: <20260613200411.1808021-59-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.2.4-20260613224639@cover.tls.msk.ru>
 References: <qemu-stable-10.2.4-20260613224639@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -71,246 +72,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: "Denis V. Lunev" <den@openvz.org>
+From: Richard Henderson <richard.henderson@linaro.org>
 
-util/envlist had no test coverage. Add tests/unit/test-envlist
-exercising the public envlist API and pinning down the prefix-match
-hazard fixed in the previous commit:
+Missed float_round_nearest_even_max when recomputing round.
 
-  - envlist_unsetenv("FOO") must not remove an entry named "FOOBAR";
-  - envlist_setenv("FOO=...") must not replace an existing "FOOBAR=..."
-    entry placed earlier in the list (envlist_setenv() inserts at the
-    head, so the first prefix match wins under the old strncmp rule).
-
-Also cover the rest of the contract: head-insertion order observed
-through envlist_to_environ(), replacement of an existing variable,
-the count argument of envlist_to_environ(), and the documented EINVAL
-paths (NULL inputs, setenv without '=', unsetenv with '=').
-
-Signed-off-by: Denis V. Lunev <den@openvz.org>
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
-Message-id: 20260520212628.479772-3-den@openvz.org
-Cc: Stefan Hajnoczi <stefanha@redhat.com>
-Cc: Markus Armbruster <armbru@redhat.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>
-Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
-(cherry picked from commit 05221c600a5f3ef657d71aeaea632c5f1bab3a2d)
+CC: qemu-stable@nongnu.org
+Fixes: 72330260cdb ("softfloat: Add float_round_nearest_even_max")
+Reported-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Message-id: 20260608190155.637067-2-richard.henderson@linaro.org
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+(cherry picked from commit a6a1f92d5a2368882e9b6851b6ab8b9a56d71a8c)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/tests/unit/meson.build b/tests/unit/meson.build
-index bd58029060..24851335be 100644
---- a/tests/unit/meson.build
-+++ b/tests/unit/meson.build
-@@ -48,6 +48,7 @@ tests = {
-   'test-qapi-util': [],
-   'test-interval-tree': [],
-   'test-fifo': [],
-+  'test-envlist': [],
- }
- 
- if have_system or have_tools
-diff --git a/tests/unit/test-envlist.c b/tests/unit/test-envlist.c
-new file mode 100644
-index 0000000000..53813dd4de
---- /dev/null
-+++ b/tests/unit/test-envlist.c
-@@ -0,0 +1,196 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+/*
-+ * envlist tests
-+ *
-+ * Copyright 2026 Virtuozzo International GmbH
-+ *
-+ * Authors:
-+ *  Denis V. Lunev <den@openvz.org>
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "qemu/envlist.h"
-+
-+static void free_environ(char **env)
-+{
-+    char **p;
-+
-+    for (p = env; *p != NULL; p++) {
-+        g_free(*p);
-+    }
-+    g_free(env);
-+}
-+
-+static const char *find_env(char **env, const char *name)
-+{
-+    size_t name_len = strlen(name);
-+    char **p;
-+
-+    for (p = env; *p != NULL; p++) {
-+        if (strncmp(*p, name, name_len) == 0 && (*p)[name_len] == '=') {
-+            return *p + name_len + 1;
-+        }
-+    }
-+    return NULL;
-+}
-+
-+static void test_envlist_basic(void)
-+{
-+    envlist_t *el = envlist_create();
-+    char **env;
-+    size_t count;
-+
-+    /* empty list */
-+    env = envlist_to_environ(el, &count);
-+    g_assert_cmpuint(count, ==, 0);
-+    g_assert_null(env[0]);
-+    free_environ(env);
-+
-+    /* add */
-+    g_assert_cmpint(envlist_setenv(el, "A=1"), ==, 0);
-+    g_assert_cmpint(envlist_setenv(el, "B=2"), ==, 0);
-+
-+    env = envlist_to_environ(el, &count);
-+    g_assert_cmpuint(count, ==, 2);
-+    g_assert_cmpstr(find_env(env, "A"), ==, "1");
-+    g_assert_cmpstr(find_env(env, "B"), ==, "2");
-+    free_environ(env);
-+
-+    /* replace */
-+    g_assert_cmpint(envlist_setenv(el, "A=42"), ==, 0);
-+    env = envlist_to_environ(el, &count);
-+    g_assert_cmpuint(count, ==, 2);
-+    g_assert_cmpstr(find_env(env, "A"), ==, "42");
-+    g_assert_cmpstr(find_env(env, "B"), ==, "2");
-+    free_environ(env);
-+
-+    /* unset existing */
-+    g_assert_cmpint(envlist_unsetenv(el, "A"), ==, 0);
-+    env = envlist_to_environ(el, &count);
-+    g_assert_cmpuint(count, ==, 1);
-+    g_assert_null(find_env(env, "A"));
-+    g_assert_cmpstr(find_env(env, "B"), ==, "2");
-+    free_environ(env);
-+
-+    /* unset non-existing is a no-op success */
-+    g_assert_cmpint(envlist_unsetenv(el, "NOPE"), ==, 0);
-+    env = envlist_to_environ(el, &count);
-+    g_assert_cmpuint(count, ==, 1);
-+    free_environ(env);
-+
-+    envlist_free(el);
-+}
-+
-+/*
-+ * envlist_setenv() inserts at the head; envlist_to_environ() walks
-+ * head-to-tail, so the last setenv comes out first.
-+ */
-+static void test_envlist_head_insertion_order(void)
-+{
-+    envlist_t *el = envlist_create();
-+    char **env;
-+    size_t count;
-+
-+    g_assert_cmpint(envlist_setenv(el, "A=1"), ==, 0);
-+    g_assert_cmpint(envlist_setenv(el, "B=2"), ==, 0);
-+    g_assert_cmpint(envlist_setenv(el, "C=3"), ==, 0);
-+
-+    env = envlist_to_environ(el, &count);
-+    g_assert_cmpuint(count, ==, 3);
-+    g_assert_cmpstr(env[0], ==, "C=3");
-+    g_assert_cmpstr(env[1], ==, "B=2");
-+    g_assert_cmpstr(env[2], ==, "A=1");
-+    g_assert_null(env[3]);
-+
-+    free_environ(env);
-+    envlist_free(el);
-+}
-+
-+static void test_envlist_einval(void)
-+{
-+    envlist_t *el = envlist_create();
-+
-+    /* NULL list */
-+    g_assert_cmpint(envlist_setenv(NULL, "A=1"), ==, EINVAL);
-+    g_assert_cmpint(envlist_unsetenv(NULL, "A"), ==, EINVAL);
-+
-+    /* NULL string */
-+    g_assert_cmpint(envlist_setenv(el, NULL), ==, EINVAL);
-+    g_assert_cmpint(envlist_unsetenv(el, NULL), ==, EINVAL);
-+
-+    /* setenv: missing '=' */
-+    g_assert_cmpint(envlist_setenv(el, "NOEQ"), ==, EINVAL);
-+
-+    /* unsetenv: name must not contain '=' */
-+    g_assert_cmpint(envlist_unsetenv(el, "A=B"), ==, EINVAL);
-+
-+    envlist_free(el);
-+}
-+
-+/*
-+ * Regression: envlist_unsetenv("FOO") must not remove an entry named
-+ * "FOOBAR" -- the previous strncmp(entry, name, strlen(name)) lookup
-+ * prefix-matched. To trigger the bug, the longer-named entry has to
-+ * be ahead of the target in the list: envlist_setenv() inserts at
-+ * the head, so we add FOO first and FOOBAR last.
-+ */
-+static void test_envlist_unsetenv_no_prefix_match(void)
-+{
-+    envlist_t *el = envlist_create();
-+    char **env;
-+    size_t count;
-+
-+    g_assert_cmpint(envlist_setenv(el, "FOO=y"), ==, 0);
-+    g_assert_cmpint(envlist_setenv(el, "FOOBAR=x"), ==, 0);
-+
-+    g_assert_cmpint(envlist_unsetenv(el, "FOO"), ==, 0);
-+
-+    env = envlist_to_environ(el, &count);
-+    g_assert_cmpuint(count, ==, 1);
-+    g_assert_cmpstr(find_env(env, "FOOBAR"), ==, "x");
-+    g_assert_null(find_env(env, "FOO"));
-+
-+    free_environ(env);
-+    envlist_free(el);
-+}
-+
-+/*
-+ * envlist_setenv() must not replace a prior FOOBAR=... entry when
-+ * setting FOO=... The pre-fix code happened to be safe here only
-+ * because it included the trailing '=' byte in its strncmp length;
-+ * this test pins down the post-fix contract that the name boundary
-+ * is a property of the entry, not of the encoded form.
-+ */
-+static void test_envlist_setenv_no_prefix_match(void)
-+{
-+    envlist_t *el = envlist_create();
-+    char **env;
-+    size_t count;
-+
-+    g_assert_cmpint(envlist_setenv(el, "FOOBAR=x"), ==, 0);
-+    g_assert_cmpint(envlist_setenv(el, "FOO=y"), ==, 0);
-+
-+    env = envlist_to_environ(el, &count);
-+    g_assert_cmpuint(count, ==, 2);
-+    g_assert_cmpstr(find_env(env, "FOOBAR"), ==, "x");
-+    g_assert_cmpstr(find_env(env, "FOO"), ==, "y");
-+
-+    free_environ(env);
-+    envlist_free(el);
-+}
-+
-+int main(int argc, char *argv[])
-+{
-+    g_test_init(&argc, &argv, NULL);
-+
-+    g_test_add_func("/envlist/basic", test_envlist_basic);
-+    g_test_add_func("/envlist/head_insertion_order",
-+                    test_envlist_head_insertion_order);
-+    g_test_add_func("/envlist/einval", test_envlist_einval);
-+    g_test_add_func("/envlist/unsetenv_no_prefix_match",
-+                    test_envlist_unsetenv_no_prefix_match);
-+    g_test_add_func("/envlist/setenv_no_prefix_match",
-+                    test_envlist_setenv_no_prefix_match);
-+
-+    return g_test_run();
-+}
+diff --git a/fpu/softfloat-parts.c.inc b/fpu/softfloat-parts.c.inc
+index 5e0438fc0b..6bbea3d138 100644
+--- a/fpu/softfloat-parts.c.inc
++++ b/fpu/softfloat-parts.c.inc
+@@ -375,6 +375,7 @@ static void partsN(uncanon_normal)(FloatPartsN *p, float_status *s,
+             /* Need to recompute round-to-even/round-to-odd. */
+             switch (s->float_rounding_mode) {
+             case float_round_nearest_even:
++            case float_round_nearest_even_max:
+                 if (N > 64 && frac_lsb == 0) {
+                     inc = ((p->frac_hi & 1) ||
+                            (p->frac_lo & round_mask) != frac_lsbm1
 -- 
 2.47.3
 
