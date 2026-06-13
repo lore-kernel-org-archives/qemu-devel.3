@@ -4,46 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25A5ECD8CA8
-	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 20:10:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD358CD98CF
+	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 20:10:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wYUfH-0001Wz-Ds; Sat, 13 Jun 2026 16:09:11 -0400
+	id 1wYUd9-0002YI-4J; Sat, 13 Jun 2026 16:06:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYUfF-0001QQ-T1; Sat, 13 Jun 2026 16:09:09 -0400
+ id 1wYUcu-0002Mc-D1; Sat, 13 Jun 2026 16:06:47 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYUfE-0002k0-1S; Sat, 13 Jun 2026 16:09:09 -0400
+ id 1wYUcq-0000qn-Dx; Sat, 13 Jun 2026 16:06:43 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1781381070; bh=/yCG3jEExQpedxSgTR2/aw27BcSv2Xz3e8r7g1a46fI=;
+ t=1781381068; bh=LxFgkd4O1lzKhVHiy8oCGWQNAqbCTIib1cX13DieIS8=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=wEIeufgZZsHODNGgA16tMmv9yppioxxAHLz7mh4g99X8fD9kzvpaxBeUrk2IWxjk4
- tcD6BHaMZYqPhjyur5W2baUOeCMdjQRR5FrZpwafyjGpkkR7tVcURv5sbpp3DSRRGl
- OEH229SIxJ2mpMxoYOHrnOmB7UgyeN/vcpL6F1Fboik6hVpMs2Y6J9AHM420WX8NQ/
- pbtX79J6JFGXxPmMMLfR3ouRoYYV3EYpeqni1CAaadijVL6uIDRqK5OWvXtXgVFUyi
- H1J7bW0wInpxts6RLHpt5M50e3UJ/jyZiLebyGiDpoLLMHI9Zo7GyXZSjM/DtKVIm9
- L/L4a/oWIG9zg==
+ b=uCHbR+OG5bGqOiJDLZl/x9p9aNtmRz8hL3DYzA8LBO4ONgAbECtOdtGt2Y1A4Zsak
+ nQNR9CyypgjJObZwsGmwgWjZc3ro9iq6wl+7GgmDVQCBQsHCB8LmyYwQswZDnm1MAQ
+ xho1WUFkSxEOakx0rvm0SUxyBLSojTSIhbXyY38F46hOv5Xbm7EzB4u1Gu+3fwHjpr
+ pxs0+/VRQ1JGaLL+aKjOwFkE4hBNBqh18yKh/BzybI5TtQsK527pUKStEmT+skTyz/
+ itn2sZiJZqpLsAXnvfVT0nnC9XHLJWAWurs21ObkaoF8yW6jNFqnq+oa9njB2ndEVb
+ BxMuk7LA2r9sw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 3DA521B6EA0;
- Sat, 13 Jun 2026 23:04:30 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 868F71B6E81;
+ Sat, 13 Jun 2026 23:04:28 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 9650E3CE8FB;
- Sat, 13 Jun 2026 23:04:48 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id DFBEC3CE8E3;
+ Sat, 13 Jun 2026 23:04:46 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Alexandra Winter <wintera@linux.ibm.com>,
- Hendrik Brueckner <brueckner@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Gautam Gala <ggala@linux.ibm.com>, Cornelia Huck <cohuck@redhat.com>,
+Cc: qemu-stable@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.4 49/61] target/s390x: Make container ids in SysIB_15x
- 1-based
-Date: Sat, 13 Jun 2026 23:03:32 +0300
-Message-ID: <20260613200411.1808021-49-mjt@tls.msk.ru>
+Subject: [Stable-10.2.4 25/61] block/linux-aio: bound ioq_submit() recursion
+ depth
+Date: Sat, 13 Jun 2026 23:03:08 +0300
+Message-ID: <20260613200411.1808021-25-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.2.4-20260613224639@cover.tls.msk.ru>
 References: <qemu-stable-10.2.4-20260613224639@cover.tls.msk.ru>
@@ -72,73 +71,127 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alexandra Winter <wintera@linux.ibm.com>
+From: "Denis V. Lunev" <den@openvz.org>
 
-The Container Id in a container-type TLE of SysIB_15x is defined as 8-bit
-unsigned nonzero integer. Make stsi fc 15 emulation architecture compliant,
-by starting the container ids at 1 for the lowest numbered container.
+qemu_laio_process_completions() wraps its body in defer_call_begin /
+defer_call_end. Inside the section, completion callbacks wake coroutines
+that queue new aiocbs; laio_do_submit() defers laio_deferred_fn. At the
+bottom of qemu_laio_process_completions() the defer_call_end() fires
+laio_deferred_fn, which calls ioq_submit(), closing the cycle:
 
-The qemu misbehaviour without this patch becomes obvious due to a recently
-proposed kernel fix. Older linux kernels pass the container ids from stsi
-fc15 unchanged to sysfs, i.e. starting at 1 on s390 hardware. This resulted
-in off-by-one values when compared to the values from HMC. A Linux kernel
-fix is being proposed to correct the sysfs topology ids by -1, so they
-start at 0, e.g. when displayed by 'lscpu -ye'. In case a KVM guest with a
-fixed kernel runs on a host with a qemu without this fix, this can result
-in container ids erroneously being shown as 255.
-Example (Fixed guest on unfixed qemu):
-$ lscpu -ye
-CPU NODE DRAWER BOOK SOCKET CORE L1d:L1i:L2 ONLINE CONFIGURED POLARIZATION ADDRESS
-  0    0    255  255    255    0 0:0:0         yes yes        vert-medium  0
-  1    0    255  255      0    1 1:1:1         yes yes        vert-medium  1
-After this fix:
-$ lscpu -ye
-CPU NODE DRAWER BOOK SOCKET CORE L1d:L1i:L2 ONLINE CONFIGURED POLARIZATION ADDRESS
-  0    0      0    0      0    0 0:0:0         yes yes        vert-medium  0
-  1    0      0    0      1    1 1:1:1         yes yes        vert-medium  1
+  ioq_submit
+    -> io_submit(2)                           // some sync completions
+    -> qemu_laio_process_completions          // defer_call_begin
+         -> aio_co_wake                       // resumes coroutine
+              -> laio_do_submit
+                   -> defer_call(laio_deferred_fn, s)   // enqueued
+         -> defer_call_end                    // nesting drops to 0
+              -> laio_deferred_fn
+                   -> ioq_submit              // +1 stack frame, loop
 
-Fixes: f4f54b582f ("target/s390x/cpu topology: handle STSI(15) and build the SYSIB")
-Signed-off-by: Alexandra Winter <wintera@linux.ibm.com>
-Acked-by: Hendrik Brueckner <brueckner@linux.ibm.com>
-Acked-by: Christian Borntraeger <borntraeger@linux.ibm.com>
-Reviewed-by: Gautam Gala <ggala@linux.ibm.com>
-Message-ID: <20260511134909.43802-1-wintera@linux.ibm.com>
-Signed-off-by: Cornelia Huck <cohuck@redhat.com>
-(cherry picked from commit 1f1ccb6f3c48a2cd80e874d66afeef2dc28a65f3)
+When io_submit(2) returns asynchronously (O_DIRECT) the cycle
+terminates in one extra frame: the fresh aiocb is still in flight, no
+completion is drained, no coroutine wakes, no new submission queues.
+When submissions complete synchronously (non-O_DIRECT, or per-descriptor
+drivers such as vmdk) each level enqueues more work for the next
+defer_call_end() to drain, so recursion grows without bound and QEMU
+crashes with SIGSEGV on the thread guard page.
+
+The cycle was closed by two performance commits, each correct in
+isolation:
+
+  076682885d ("block/linux-aio: convert to blk_io_plug_call() API")
+    -- introduced laio_deferred_fn and wired
+       laio_do_submit -> defer_call(laio_deferred_fn, s).
+
+  84d61e5f36 ("virtio: use defer_call() in virtio_irqfd_notify()")
+    -- added defer_call_begin/end around qemu_laio_process_completions
+       so virtio-irqfd notifications batch across a completion pass.
+
+The supported aio=native + cache=none pairing keeps submissions
+asynchronous, so the cycle stays bounded; nothing in the code enforces
+that contract. Observed in production as a SIGSEGV during a backup job
+configured with --cached + aio=native; reproducible on upstream with
+qemu-io against vmdk.
+
+Cap ioq_submit() recursion with a counter on LaioQueue, which is only
+accessed from the AioContext home thread. On overflow, return without
+submitting. The pending work is drained by s->completion_bh, which
+qemu_laio_process_completions() has already scheduled on entry -- no
+work is lost; one event-loop round-trip of latency is paid only when
+the bound is hit, which cannot happen on a supported configuration.
+
+Signed-off-by: Denis V. Lunev <den@openvz.org>
+CC: Kevin Wolf <kwolf@redhat.com>
+CC: Hanna Reitz <hreitz@redhat.com>
+CC: Stefan Hajnoczi <stefanha@redhat.com>
+CC: Paolo Bonzini <pbonzini@redhat.com>
+Message-ID: <20260520142503.251959-2-den@openvz.org>
+Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
+(cherry picked from commit 6864bec553b2e37699739615e604fc3c7bae0e1d)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/s390x/kvm/stsi-topology.c b/target/s390x/kvm/stsi-topology.c
-index c8d6389cd8..af3fd8ad1b 100644
---- a/target/s390x/kvm/stsi-topology.c
-+++ b/target/s390x/kvm/stsi-topology.c
-@@ -90,9 +90,9 @@ static int stsi_topology_fill_sysib(S390TopologyList *topology_list,
-     int last_drawer = -1;
-     int last_book = -1;
-     int last_socket = -1;
--    int drawer_id = 0;
--    int book_id = 0;
--    int socket_id = 0;
-+    int drawer_id = 1;
-+    int book_id = 1;
-+    int socket_id = 1;
-     int n = sizeof(SysIB_151x);
+diff --git a/block/linux-aio.c b/block/linux-aio.c
+index 84397de54c..37de9b564b 100644
+--- a/block/linux-aio.c
++++ b/block/linux-aio.c
+@@ -36,6 +36,19 @@
+ /* Maximum number of requests in a batch. (default value) */
+ #define DEFAULT_MAX_BATCH 32
  
-     QTAILQ_FOREACH(entry, topology_list, next) {
-@@ -103,12 +103,12 @@ static int stsi_topology_fill_sysib(S390TopologyList *topology_list,
-         if (level > 3 && drawer_change) {
-             SYSIB_GUARD(n, sizeof(SYSIBContainerListEntry));
-             p = fill_container(p, 3, drawer_id++);
--            book_id = 0;
-+            book_id = 1;
-         }
-         if (level > 2 && book_change) {
-             SYSIB_GUARD(n, sizeof(SYSIBContainerListEntry));
-             p = fill_container(p, 2, book_id++);
--            socket_id = 0;
-+            socket_id = 1;
-         }
-         if (socket_change) {
-             SYSIB_GUARD(n, sizeof(SYSIBContainerListEntry));
++/*
++ * Bound on how deep ioq_submit() may recurse on a single LaioQueue via the
++ * ioq_submit -> qemu_laio_process_completions -> defer_call_end ->
++ * laio_deferred_fn -> ioq_submit cycle. The cycle terminates naturally
++ * when io_submit(2) returns asynchronously (O_DIRECT), but can grow
++ * without bound when submissions complete synchronously. On overflow
++ * the caller returns without submitting; the outermost
++ * qemu_laio_process_completions() has already scheduled s->completion_bh
++ * (via qemu_bh_schedule() at the top of that function), which resumes
++ * submission from the next event-loop dispatch.
++ */
++#define IOQ_SUBMIT_MAX_DEPTH 8
++
+ struct qemu_laiocb {
+     Coroutine *co;
+     LinuxAioState *ctx;
+@@ -61,6 +74,7 @@ typedef struct {
+     unsigned int in_queue;
+     unsigned int in_flight;
+     bool blocked;
++    unsigned int submit_depth;
+     QSIMPLEQ_HEAD(, qemu_laiocb) pending;
+ } LaioQueue;
+ 
+@@ -331,6 +345,7 @@ static void ioq_init(LaioQueue *io_q)
+     io_q->in_queue = 0;
+     io_q->in_flight = 0;
+     io_q->blocked = false;
++    io_q->submit_depth = 0;
+ }
+ 
+ static void ioq_submit(LinuxAioState *s)
+@@ -340,6 +355,11 @@ static void ioq_submit(LinuxAioState *s)
+     QEMU_UNINITIALIZED struct iocb *iocbs[MAX_EVENTS];
+     QSIMPLEQ_HEAD(, qemu_laiocb) completed;
+ 
++    if (s->io_q.submit_depth >= IOQ_SUBMIT_MAX_DEPTH) {
++        return;
++    }
++    s->io_q.submit_depth++;
++
+     do {
+         if (s->io_q.in_flight >= MAX_EVENTS) {
+             break;
+@@ -385,6 +405,8 @@ static void ioq_submit(LinuxAioState *s)
+          * pended requests will be submitted from there.
+          */
+     }
++
++    s->io_q.submit_depth--;
+ }
+ 
+ static uint64_t laio_max_batch(LinuxAioState *s, uint64_t dev_max_batch)
 -- 
 2.47.3
 
