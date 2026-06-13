@@ -4,44 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4BC58CD98CF
-	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 19:54:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C8D1CD98C5
+	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 19:54:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wYUOc-0000nS-2Y; Sat, 13 Jun 2026 15:51:59 -0400
+	id 1wYUQJ-0003T4-GT; Sat, 13 Jun 2026 15:53:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYUOU-0000ir-7b; Sat, 13 Jun 2026 15:51:50 -0400
+ id 1wYUPX-0001Uw-7D; Sat, 13 Jun 2026 15:52:58 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYUOS-0003Tg-Iw; Sat, 13 Jun 2026 15:51:49 -0400
+ id 1wYUPU-0003oK-7a; Sat, 13 Jun 2026 15:52:54 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1781380258; bh=VI+FTEMQDasixsklhSAas2E/Qe0UoujHhKn+Z3uX80s=;
+ t=1781380259; bh=9cd+qIqqRsoqAEtIChB5CVkGwSasCRBjXO/60eZXsRQ=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=H7saQMvzmYL/WLHska5D2VcfD4Ih4Ll73jm50w2zI91O7pmNuDJyvONxxxy2lFvJO
- YQKBwIs0HZyql/UlPrakTSIn/mAidjuldroWxiP+i5gQgdOfkYuw04UH2fJo7NAgFZ
- UsAnVDvXPleZuVWUtsJqyeGs201f38+cNpLnfBReEBXyQjFlISEt4J1iL1igweWts/
- 8Li1II7uK6VswaWvT06dz4irvTJD0LeDb4notxMgVOArJ79mDAWS5phhP1SyMh1kOx
- VJSWU+JCQU4bgDSKFIjs7JA/EX+T/FUzUIpaRcWE/3HKXCHgWgXBn9e0eqPmdMPnxw
- nfAqSSOoBfeww==
+ b=gI8f/Ph7AEMQGxKIPLr/bJjR3+LRnxoUHtrPjiKA7whu54NHiIU0D+cnzSyALyxYj
+ F+FUg2Gph3qMHOsAinMXaMJ53Z+yh5OSFl8Atv+BSINm4YIte1AD5I3egI3QhEoZIU
+ jGJOCb9qOz7/LmmugDzmJ2+5mGoD/2d08nsj4Jqa7R4J6+Nw0bx5G6HR+udegg/I0h
+ gsr/JFDpU4Wj2I1xLvrsnBkwzNhDBc/cuttKoiXdfu0gGVHPuBiEPTYV0B9BCVAg5+
+ 6MMl7doExxPE1c8WsPV1hgfkgWVMy9r9aRDa/BcPPilLUBZruWDHW5T9kxYExyUUxB
+ FRG3VbsyXdNtg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 54D301B6E16;
- Sat, 13 Jun 2026 22:50:58 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 311BE1B6E23;
+ Sat, 13 Jun 2026 22:50:59 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id AE5E63CE890;
- Sat, 13 Jun 2026 22:51:16 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 89EAA3CE89D;
+ Sat, 13 Jun 2026 22:51:17 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Abhigyan Kumar <314abh@gmail.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.11 07/56] target/riscv: Fix medeleg[11] read-only zero
- bit for M-mode ECALL
-Date: Sat, 13 Jun 2026 22:50:21 +0300
-Message-ID: <20260613195116.1807273-7-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Wei Che Kao <skps96g313.cs10@gmail.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.11 20/56] apic: fix delivery bitmask with modified xAPIC
+ ids
+Date: Sat, 13 Jun 2026 22:50:34 +0300
+Message-ID: <20260613195116.1807273-20-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.11-20260613224446@cover.tls.msk.ru>
 References: <qemu-stable-10.0.11-20260613224446@cover.tls.msk.ru>
@@ -70,42 +69,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Abhigyan Kumar <314abh@gmail.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
 
-RISC-V Privileged Specification 3.1.8 (Machine Trap Delegation Registers
-(medeleg and mideleg)) mentions:
+Self-IPIs (or all-but-self IPIs) in QEMU can cause a out-of-bounds access
+to deliver_bitmask, because the access uses the APIC ID register which
+is writable by the guest.  However, foreach_apic uses the delivery
+bitmask indexes to look up the local_apics[] array, which is indexed
+by *initial* APIC id.  Using the right id fixes both a possible heap
+write overflow if the modified APIC id is too large for max_apic_words,
+and a mis-delivery of both self and all-but-self IPIs.
 
-"For exceptions that cannot occur in less privileged modes, the
-corresponding medeleg bits should be read-only zero. In particular,
-medeleg[11] is read-only zero."
-
-QEMU incorrectly included RISCV_EXCP_M_ECALL in DELEGABLE_EXCPS. It
-allowed the 11th bit to be written and read as set. Fixed by removing it
-from the DELEGABLE_EXCPS mask, adhering to the specification.
-
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3438
-Signed-off-by: Abhigyan Kumar <314abh@gmail.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20260427060849.749179-2-314abh@gmail.com>
-[ Changes by AF:
- - Remove comment
-]
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-(cherry picked from commit a0946caf1d9ec21446ebdcb5eab2400baa4323ae)
+Reported-by: Wei Che Kao <skps96g313.cs10@gmail.com>
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+(cherry picked from commit 153dc2fa7bbe0491290d22c4bbb6807074f24260)
+(Mjt: fixup for 10.0.x)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-index 68036c79e0..f8241ea3f4 100644
---- a/target/riscv/csr.c
-+++ b/target/riscv/csr.c
-@@ -1782,7 +1782,6 @@ static const uint64_t all_ints = M_MODE_INTERRUPTS | S_MODE_INTERRUPTS |
-                          (1ULL << (RISCV_EXCP_U_ECALL)) | \
-                          (1ULL << (RISCV_EXCP_S_ECALL)) | \
-                          (1ULL << (RISCV_EXCP_VS_ECALL)) | \
--                         (1ULL << (RISCV_EXCP_M_ECALL)) | \
-                          (1ULL << (RISCV_EXCP_INST_PAGE_FAULT)) | \
-                          (1ULL << (RISCV_EXCP_LOAD_PAGE_FAULT)) | \
-                          (1ULL << (RISCV_EXCP_STORE_PAGE_FAULT)) | \
+diff --git a/hw/intc/apic.c b/hw/intc/apic.c
+index b2a2b671b0..108fde5d5f 100644
+--- a/hw/intc/apic.c
++++ b/hw/intc/apic.c
+@@ -659,13 +659,6 @@ static void apic_deliver(DeviceState *dev, uint32_t dest, uint8_t dest_mode,
+     APICCommonState *apic_iter;
+     uint32_t deliver_bitmask_size = max_apic_words * sizeof(uint32_t);
+     g_autofree uint32_t *deliver_bitmask = g_new(uint32_t, max_apic_words);
+-    uint32_t current_apic_id;
+-
+-    if (is_x2apic_mode(dev)) {
+-        current_apic_id = s->initial_apic_id;
+-    } else {
+-        current_apic_id = s->id;
+-    }
+ 
+     switch (dest_shorthand) {
+     case 0:
+@@ -673,14 +666,20 @@ static void apic_deliver(DeviceState *dev, uint32_t dest, uint8_t dest_mode,
+         break;
+     case 1:
+         memset(deliver_bitmask, 0x00, deliver_bitmask_size);
+-        apic_set_bit(deliver_bitmask, current_apic_id);
++        /*
++         * The self and all-but-self cases do not use apic_match_dest() and
++         * directly fill in deliver_bitmask; the bitmask's indexes in turn
++         * map to local_apics[] slots which are never changed even if the
++         * xAPIC id is modified.  So use s->initial_apic_id instead of s->id.
++         */
++        apic_set_bit(deliver_bitmask, s->initial_apic_id);
+         break;
+     case 2:
+         memset(deliver_bitmask, 0xff, deliver_bitmask_size);
+         break;
+     case 3:
+         memset(deliver_bitmask, 0xff, deliver_bitmask_size);
+-        apic_reset_bit(deliver_bitmask, current_apic_id);
++        apic_reset_bit(deliver_bitmask, s->initial_apic_id);
+         break;
+     }
+ 
 -- 
 2.47.3
 
