@@ -4,46 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D75D5CD98CF
-	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 20:12:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1842ECD98CF
+	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 20:12:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wYUfK-0001cc-HX; Sat, 13 Jun 2026 16:09:14 -0400
+	id 1wYUf1-0007xT-LS; Sat, 13 Jun 2026 16:08:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYUfH-0001X0-9f; Sat, 13 Jun 2026 16:09:11 -0400
+ id 1wYUek-0005m1-MK; Sat, 13 Jun 2026 16:08:38 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYUfF-0002kH-ME; Sat, 13 Jun 2026 16:09:11 -0400
+ id 1wYUei-0002Zr-E2; Sat, 13 Jun 2026 16:08:38 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1781381070; bh=Rw04CJ7iJKVLfo5V6cQGHcttrvSihQhZJ9mGh5ztY7w=;
+ t=1781381069; bh=cXaYsvnmzHqt768d4b00L4/YFji6YTxatS8VuLdNPGU=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=NsE/DJjjaJPqHU1Px9oXLF1LOr2FKzlQcqxCJeadKZUxB3AGq6iE8O8hJyK+aqVBF
- 3SX3gEo9y1rh2utKPdZX1VlCER1tLVspwWAQSUlQpQlxGMzC6bFbI+knOhuaPhT0ul
- bWBwmoGNnxU4/8JDzqaRspco7RPetxhzEtNU1J9eL23txAyZjt76WkHu+lvV/vnQYA
- pMCXop1XDgDmZcrHPiCLugfhdBO2ZyR9xXG6VvCVqeCHIuTZfWlIaTSn1ya4Pa9Mix
- 4SgikOXdqcUTfIWqvQ4IzLSnV/16cKLbGuLnYziYjjdvJgsMGRmOomT6HZ2S8o6I45
- 8TTzvk7luvIZA==
+ b=AX1g3Atxp+Wcsa4aBuPP/assqRWlYWMjgn2iRuWDQMYXUd0UKn/53JDkTv563mYm2
+ gOJpGPANAGgjeG79I4Se1mPggO20UnQbxbMrczFS6YwpgAfz2LdK7E3IZ/RqnIkMy4
+ ShlwZOqGMCcM38yjNaEs5igmbtbd5dkTU9qTlbOYoq7pRWqhxLHSRFLig2FZ59NKIz
+ bq2Ekjafv8tRwL48LwPdwa7Wl85UvM+wIhbkrp1AP2O2WpKUuRZ06Hl9igMx4Y7X0F
+ s13/Yt/pyzrTDzfESVyPVUjZJNrXdpevBQj4BeoCZ8wf0Ig7AanB/aAzWPNTcHNwz4
+ sUk824tpjLlxQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 5B03F1B6EA1;
- Sat, 13 Jun 2026 23:04:30 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id CC8881B6E96;
+ Sat, 13 Jun 2026 23:04:29 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id AB0F93CE8FC;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 36F0F3CE8F5;
  Sat, 13 Jun 2026 23:04:48 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Farhan Ali <alifm@linux.ibm.com>,
- Niklas Schnelle <schnelle@linux.ibm.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>,
- Omar Elghoul <oelghoul@linux.ibm.com>, Cornelia Huck <cohuck@redhat.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.4 50/61] s390x/pci: Fix interrupt forwarding disable for
- interpreted devices
-Date: Sat, 13 Jun 2026 23:03:33 +0300
-Message-ID: <20260613200411.1808021-50-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Christian Schoenebeck <qemu_oss@crudebyte.com>,
+ Wang Jihe <wangjihe.mail@gmail.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.2.4 43/61] hw/9pfs: let callers of v9fs_path_sprintf() and
+ v9fs_fix_path() handle errors
+Date: Sat, 13 Jun 2026 23:03:26 +0300
+Message-ID: <20260613200411.1808021-43-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.2.4-20260613224639@cover.tls.msk.ru>
 References: <qemu-stable-10.2.4-20260613224639@cover.tls.msk.ru>
@@ -72,39 +69,137 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Farhan Ali <alifm@linux.ibm.com>
+From: Christian Schoenebeck <qemu_oss@crudebyte.com>
 
-Remove the FH_MASK_ENABLE check when disabling interrupt forwarding
-during device reset. This check was broken for the default case in
-the switch statement above, preventing proper cleanup of interrupt
-forwarding.
+This patch mitigates issues with very large absolute paths.
 
-The pbdev->aif check in s390_pci_kvm_aif_disable() already guards
-against double-disabling of interrupt forwarding.
+- Add error handling to all v9fs_path_sprintf() calls in
+  local_name_to_path()
 
-Cc: qemu-stable@nongnu.org
-Reported-by: Niklas Schnelle <schnelle@linux.ibm.com>
-Signed-off-by: Farhan Ali <alifm@linux.ibm.com>
-Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
-Tested-by: Omar Elghoul <oelghoul@linux.ibm.com>
-Message-ID: <20260521182946.1607-1-alifm@linux.ibm.com>
-Signed-off-by: Cornelia Huck <cohuck@redhat.com>
-(cherry picked from commit 442f727b8bebabf20a4f6a7536a4ff2885402030)
+- Update callers of v9fs_fix_path() to check return values.
+
+- When path formatting fails, clunk the affected FIDs to prevent use of
+  invalid paths.
+
+- Use g_autofree for temporary variables to simplify code.
+
+Even though paths are usually limited to PATH_MAX (typically 4k) on guest,
+this limitation can be circumvented by using *at() functions on guest and
+creating very deep directory structures. This was a problem for QEMU 9p
+server, as it currently tracks the absolute path for each FID internally
+that always requires assembly of a (potentially ver large) absolute path.
+
+A true long-term fix would be getting rid of storing an absolute path for
+each FID internally. However that would likely be a massive change with
+uncertain implications.
+
+This patch therefore just mitigates the problem by immediately clunking
+(i.e. closing) all FIDs whose path exceed a limit that we could handle.
+As this only accounts to very unusual large absolute paths not ever been
+reported on (sane) production machines, this is currently considered an
+acceptable mitigation that should only (counter)affect malicious attempts.
+
+Fixes: 2f008a8c97e2 ("hw/9pfs: Use the correct signed type ...")
+Reported-by: Wang Jihe <wangjihe.mail@gmail.com>
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3358
+Link: https://lore.kernel.org/qemu-devel/1d11dcbfc95b811dcdb48c6d7f3894d0ebd073a2.1779126034.git.qemu_oss@crudebyte.com
+Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
+(cherry picked from commit 3802c0e755a53b126e717415b54226a468bf7ddf)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/s390x/s390-pci-bus.c b/hw/s390x/s390-pci-bus.c
-index 52820894fa..4ed4e45cb9 100644
---- a/hw/s390x/s390-pci-bus.c
-+++ b/hw/s390x/s390-pci-bus.c
-@@ -1504,7 +1504,7 @@ static void s390_pci_device_reset(DeviceState *dev)
-         break;
+diff --git a/hw/9pfs/9p-local.c b/hw/9pfs/9p-local.c
+index 31e216227c..d7aeaededc 100644
+--- a/hw/9pfs/9p-local.c
++++ b/hw/9pfs/9p-local.c
+@@ -1256,26 +1256,35 @@ static int local_name_to_path(FsContext *ctx, V9fsPath *dir_path,
+         } else if (!strcmp(name, "..")) {
+             if (!strcmp(dir_path->data, ".")) {
+                 /* ".." relative to the root is "." */
+-                v9fs_path_sprintf(target, ".");
++                if (v9fs_path_sprintf(target, ".") < 0) {
++                    return -1;
++                }
+             } else {
+-                char *tmp = g_path_get_dirname(dir_path->data);
++                g_autofree char *tmp = g_path_get_dirname(dir_path->data);
+                 /* Symbolic links are resolved by the client. We can assume
+                  * that ".." relative to "foo/bar" is equivalent to "foo"
+                  */
+-                v9fs_path_sprintf(target, "%s", tmp);
+-                g_free(tmp);
++                if (v9fs_path_sprintf(target, "%s", tmp) < 0) {
++                    return -1;
++                }
+             }
+         } else {
+             assert(!strchr(name, '/'));
+-            v9fs_path_sprintf(target, "%s/%s", dir_path->data, name);
++            if (v9fs_path_sprintf(target, "%s/%s", dir_path->data, name) < 0) {
++                return -1;
++            }
+         }
+     } else if (!strcmp(name, "/") || !strcmp(name, ".") ||
+                !strcmp(name, "..")) {
+             /* This is the root fid */
+-        v9fs_path_sprintf(target, ".");
++        if (v9fs_path_sprintf(target, ".") < 0) {
++            return -1;
++        }
+     } else {
+         assert(!strchr(name, '/'));
+-        v9fs_path_sprintf(target, "./%s", name);
++        if (v9fs_path_sprintf(target, "./%s", name) < 0) {
++            return -1;
++        }
      }
+     return 0;
+ }
+diff --git a/hw/9pfs/9p.c b/hw/9pfs/9p.c
+index 0800ac12a4..0c162614f8 100644
+--- a/hw/9pfs/9p.c
++++ b/hw/9pfs/9p.c
+@@ -3325,12 +3325,14 @@ static int coroutine_fn v9fs_complete_rename(V9fsPDU *pdu, V9fsFidState *fidp,
+             goto out;
+         }
+     } else {
+-        char *dir_name = g_path_get_dirname(fidp->path.data);
++        g_autofree char *dir_name = g_path_get_dirname(fidp->path.data);
+         V9fsPath dir_path;
  
--    if (pbdev->interp && (pbdev->fh & FH_MASK_ENABLE)) {
-+    if (pbdev->interp) {
-         /* Interpreted devices were using interrupt forwarding */
-         s390_pci_kvm_aif_disable(pbdev);
-     } else if (pbdev->summary_ind) {
+         v9fs_path_init(&dir_path);
+-        v9fs_path_sprintf(&dir_path, "%s", dir_name);
+-        g_free(dir_name);
++        err = v9fs_path_sprintf(&dir_path, "%s", dir_name);
++        if (err < 0) {
++            goto out;
++        }
+ 
+         err = v9fs_co_name_to_path(pdu, &dir_path, name->data, &new_path);
+         v9fs_path_free(&dir_path);
+@@ -3351,7 +3353,10 @@ static int coroutine_fn v9fs_complete_rename(V9fsPDU *pdu, V9fsFidState *fidp,
+     while (g_hash_table_iter_next(&iter, &fid, (gpointer *) &tfidp)) {
+         if (v9fs_path_is_ancestor(&fidp->path, &tfidp->path)) {
+             /* replace the name */
+-            v9fs_fix_path(&tfidp->path, &new_path, strlen(fidp->path.data));
++            if (v9fs_fix_path(&tfidp->path, &new_path,
++                              strlen(fidp->path.data)) < 0) {
++                clunk_fid(s, tfidp->fid);
++            }
+         }
+     }
+ out:
+@@ -3448,7 +3453,10 @@ static int coroutine_fn v9fs_fix_fid_paths(V9fsPDU *pdu, V9fsPath *olddir,
+     while (g_hash_table_iter_next(&iter, &fid, (gpointer *) &tfidp)) {
+         if (v9fs_path_is_ancestor(&oldpath, &tfidp->path)) {
+             /* replace the name */
+-            v9fs_fix_path(&tfidp->path, &newpath, strlen(oldpath.data));
++            if (v9fs_fix_path(&tfidp->path, &newpath,
++                              strlen(oldpath.data)) < 0) {
++                clunk_fid(s, tfidp->fid);
++            }
+         }
+     }
+ out:
 -- 
 2.47.3
 
