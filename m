@@ -4,47 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8FD04CD98CF
-	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 20:39:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72D32CD98CF
+	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 20:39:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wYV7q-0005D5-Sd; Sat, 13 Jun 2026 16:38:43 -0400
+	id 1wYV6i-0003F4-6C; Sat, 13 Jun 2026 16:37:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYV7R-0004XH-7A; Sat, 13 Jun 2026 16:38:21 -0400
+ id 1wYV6b-000377-Qy; Sat, 13 Jun 2026 16:37:26 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYV7P-0003Yn-7I; Sat, 13 Jun 2026 16:38:16 -0400
+ id 1wYV6Z-0003SY-CS; Sat, 13 Jun 2026 16:37:24 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1781382963; bh=JhsN/767JFqhwqO2AGJRt0GzEC5CwLXGBheFiPVcamw=;
+ t=1781382963; bh=5LTbrdiZZKvPaIrNvB8ScBmmfWMVGkV6wGymiQXW1SQ=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=wov8GeXecoFRrsEEejqLIm8UzGgbOiWvhyUZ4wU+ZC8XINyu7cvq4t4KT/Awwsr2Y
- erH3i0gW3N5c2ZcgkF2vsODYXNofaS8ghyOmV7+qfTwL5GgOnNV850Y2KJTJzsBiR2
- IvSQRJb8PXiE+xN2rhnMcVuAhcwkskdWOAbomMjN+GI91Rq+Ao4zye28SdTQx3wFNt
- 2Bbn+gcPLqecXcC3GTZ8nRZiGIPpaIaJf3+iOI44HsDSR/LDgOE0K+NbKe7g4o67kX
- aGmY5KS3E+hpcTlke1Z6nzwT9Vz1kCzbXs66UxiUiVw00QBAqFAPIBEp4Bx3GuXt7c
- q4Co4znA5dAVw==
+ b=mYg5117z4+yfqRm3ebhzhPWzslfU4nLsSaLvcC4Z/5UWqhbb46RX1UKNLMldgQOIS
+ 6evwpO2vPGxmp0TeXc9zkkDuwlx+G+d0I86hrl0rjfPfAezfV4rIKeLQ9y3rW5WVNW
+ pzBfqfYTNaBDoS0aJXsKwgANe+dWyBNA4xrDvISMRANFLu2hM03iwbP24cASOrPiI/
+ tVUPKuCGMp5LThaWAIebCS5alyA+llRYTwK9saZTSNP2Wi8SN1mgzkSgwRjGelxztn
+ YEJLYhB8WReV235ktdv40/pwhx/E1454OSdxswMwiWGIqIwAe6WqKLMI3XffABDdIl
+ /VBjimRe9vg7g==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id B6E481B6EF1;
+ by isrv.corpit.ru (Postfix) with ESMTP id 597941B6EEA;
  Sat, 13 Jun 2026 23:36:03 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 2BCC03CE942;
- Sat, 13 Jun 2026 23:36:22 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id C2A813CE93C;
+ Sat, 13 Jun 2026 23:36:21 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Wei Che Kao <skps96g313.cs10@gmail.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.2 22/72] lsi53c895a: fix use-after-free of cancelled
- request
-Date: Sat, 13 Jun 2026 23:34:48 +0300
-Message-ID: <20260613203542.1809153-22-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Matt Turner <mattst88@gmail.com>,
+ Helge Deller <deller@gmx.de>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.2 16/72] linux-user/mips64: fix mipsn32
+ elf_core_copy_regs entry width
+Date: Sat, 13 Jun 2026 23:34:42 +0300
+Message-ID: <20260613203542.1809153-16-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.2-20260613224644@cover.tls.msk.ru>
 References: <qemu-stable-11.0.2-20260613224644@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -69,82 +70,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Paolo Bonzini <pbonzini@redhat.com>
+From: Matt Turner <mattst88@gmail.com>
 
-When processing the Message Out phase, the lsi53c895a controller
-can cancel a request and the continue by processing more messages.
-When this happens, it is important that a cancelled request is not
-processed further, because scsi_req_cancel can cause the request
-to be freed.
+For mipsn32 (TARGET_ABI32=y, TARGET_LONG_BITS=64):
+  abi_ulong = uint32_t (4 bytes) — for pointers and ABI-sized fields
+  target_ulong = uint64_t (8 bytes) — for general-purpose registers
 
-Right now this is happening in two cases, but not when cancelling
-the entire queue of requests after an ABORT, CLEAR QUEUE or
-BUS DEVICE RESET message.  In that case, a subsequent ABORT TAG
-message can use a dangling current_req.
+linux-user/elfload.c allocates target_elf_prstatus using the
+mips64/target_elf.h definition where target_elf_gregset_t has
+target_ulong reserved[45] (8 bytes each, 360 bytes total).
 
-There are three possible fixes:
+However, in linux-user/mips64/elfload.c, #include "target_elf.h" inside
+the included mips/elfload.c resolves to mips/target_elf.h (compiler
+searches the file's own directory first), where the union uses abi_ulong
+reserved[45].  For mipsn32 this gives 4-byte entries (180 bytes), not
+the 8-byte entries (360 bytes) that elfload.c actually allocated.
 
-- add a missing check inside the loop, clearing current_req
-  if p->req == current_req.  This is obvious but complicates the
-  code inside the foreach loop.
+Writing via r->reserved[34] therefore lands at byte offset 34*4=136
+instead of the correct 34*8=272, silently zeroing the EPC in the core
+file.
 
-- change the conditional prior to the loop from "if (s->current)"
-  to "if (current_req)".  This would work, because s->current != NULL
-  implies current_req != NULL, and would clear current_req correctly.
-  However it is less obvious because the point of the code
-  is to clear the entire queue, which consists of s->current
-  and s->queue; current_req is not special here.
+Fix by casting the pointer to target_ulong * so writes always use 8-byte
+slots and land at the offsets matching the allocated layout.
 
-- delay the retrieval of current_req until an ABORT TAG message
-  is seen.  This is the most correct option, because the SCSI
-  protocol only deals with tags; requests are a QEMU concept
-  that only makes sense for the purpose of calling into the
-  SCSI layer.
+This does not change behavior for mips64 (N64) where abi_ulong already
+equals target_ulong (both 8 bytes).
 
-Reported-by: Wei Che Kao <skps96g313.cs10@gmail.com>
+Signed-off-by: Matt Turner <mattst88@gmail.com>
 Cc: qemu-stable@nongnu.org
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit 5297a0fc65317ba7f79ef44ce7a44e41d15fdb27)
+Signed-off-by: Helge Deller <deller@gmx.de>
+(cherry picked from commit 6033df08e93df313771b6637230de2d66bdc09cb)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/scsi/lsi53c895a.c b/hw/scsi/lsi53c895a.c
-index 54123f7757..0843d325ab 100644
---- a/hw/scsi/lsi53c895a.c
-+++ b/hw/scsi/lsi53c895a.c
-@@ -1000,10 +1000,8 @@ static void lsi_do_msgout(LSIState *s)
- 
-     if (s->current) {
-         current_tag = s->current->tag;
--        current_req = s->current;
-     } else {
-         current_tag = s->select_tag;
--        current_req = lsi_find_by_tag(s, current_tag);
+diff --git a/linux-user/mips64/elfload.c b/linux-user/mips64/elfload.c
+index 9081ae8111..e4d84a7bd6 100644
+--- a/linux-user/mips64/elfload.c
++++ b/linux-user/mips64/elfload.c
+@@ -15,16 +15,31 @@
+  */
+ void elf_core_copy_regs(target_elf_gregset_t *r, const CPUMIPSState *env)
+ {
+-    /* R0 is always 0; r->reserved is zero-initialised by the caller */
++    /*
++     * linux-user/elfload.c allocates target_elf_prstatus using the
++     * definition from mips64/target_elf.h, where target_elf_gregset_t
++     * has target_ulong reserved[45] (8 bytes each = 360 bytes total).
++     *
++     * But in this compilation unit, "#include target_elf.h" resolved to
++     * mips/target_elf.h (wrong directory), so our local target_elf_gregset_t
++     * has abi_ulong reserved[45] which is only 4 bytes each for mipsn32.
++     * Using r->reserved[i] would write to the wrong offsets for mipsn32.
++     *
++     * Cast to target_ulong * to always write 8-byte entries at the correct
++     * positions, matching the layout that elfload.c allocated.
++     */
++    target_ulong *regs = (target_ulong *)r;
++
++    /* R0 is always 0; buffer is zero-initialised by the caller */
+     for (int i = 1; i < 32; i++) {
+-        r->reserved[i] = tswap64(env->active_tc.gpr[i]);
++        regs[i] = tswap64(env->active_tc.gpr[i]);
      }
- 
-     trace_lsi_do_msgout(s->dbc);
-@@ -1058,9 +1056,13 @@ static void lsi_do_msgout(LSIState *s)
-         case 0x0d:
-             /* The ABORT TAG message clears the current I/O process only. */
-             trace_lsi_do_msgout_abort(current_tag);
-+            if (s->current) {
-+                current_req = s->current;
-+            } else {
-+                current_req = lsi_find_by_tag(s, current_tag);
-+            }
-             if (current_req && current_req->req) {
-                 scsi_req_cancel(current_req->req);
--                current_req = NULL;
-             }
-             lsi_disconnect(s);
-             break;
-@@ -1086,7 +1088,6 @@ static void lsi_do_msgout(LSIState *s)
-             /* clear the current I/O process */
-             if (s->current) {
-                 scsi_req_cancel(s->current->req);
--                current_req = NULL;
-             }
- 
-             /* As the current implemented devices scsi_disk and scsi_generic
+-    r->reserved[26] = 0;   /* k0 */
+-    r->reserved[27] = 0;   /* k1 */
+-    r->reserved[32] = tswap64(env->active_tc.LO[0]);
+-    r->reserved[33] = tswap64(env->active_tc.HI[0]);
+-    r->reserved[34] = tswap64(env->active_tc.PC);
+-    r->reserved[35] = tswap64(env->CP0_BadVAddr);
+-    r->reserved[36] = tswap64(env->CP0_Status);
+-    r->reserved[37] = tswap64(env->CP0_Cause);
++    regs[26] = 0;   /* k0 */
++    regs[27] = 0;   /* k1 */
++    regs[32] = tswap64(env->active_tc.LO[0]);
++    regs[33] = tswap64(env->active_tc.HI[0]);
++    regs[34] = tswap64(env->active_tc.PC);
++    regs[35] = tswap64(env->CP0_BadVAddr);
++    regs[36] = tswap64(env->CP0_Status);
++    regs[37] = tswap64(env->CP0_Cause);
+ }
 -- 
 2.47.3
 
