@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11D28CD98D2
-	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 20:09:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7764CD98DC
+	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 20:09:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wYUdg-0003WP-CL; Sat, 13 Jun 2026 16:07:33 -0400
+	id 1wYUem-0005xy-Ab; Sat, 13 Jun 2026 16:08:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYUcw-0002Mk-0j; Sat, 13 Jun 2026 16:06:47 -0400
+ id 1wYUdP-0003Cd-BD; Sat, 13 Jun 2026 16:07:16 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYUct-0000rQ-St; Sat, 13 Jun 2026 16:06:45 -0400
+ id 1wYUdN-0001fV-Ho; Sat, 13 Jun 2026 16:07:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1781381068; bh=Jmqc/U5B7Cs0Vvd3Lcu9kNMKZwNzLHBdFXsN6GmO6Jc=;
+ t=1781381068; bh=01u5170ETxPbIZHUjN6tH/hLORHcyT1482VamT7nDEg=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=oAxQYdDv8MWqQBGVIsIUCv928h5mO81S/Tkii/TIUiXvB+NfHp8VSXvgHurVZ8DYT
- ZAKARSbFA7Agn8m+tyVPBWFWDZsX3bAEepRjV20e3BixvVwnbkiX9vlnWOiSc1uWYW
- pKdjfD5/lIxJwXi61j7mMCmN5V3QfQaCbIln7FzQNE8HMr/oRfnNHSMp5zI/bHZH+C
- 14IVnLa46eUnCt+SaFUNVEze4qQsOtC9cIcr58bSOW+Nf8fojgyanso3Q2DHjju1bb
- KquVlJtc6Kpg5OElPXSNRO/9Oky4WDfndbimZQ8UDUCJnh2r/NmXWGy4Dnmd3Dli5p
- nN6eXAaQCeheA==
+ b=CIOZHXo8GaazIxFPn8pudmrRevnwRbTWKKNqCYUD+8gfcHQ6j0qkjLcWKPjR2/1ho
+ ToDu1XBHAfhsbvmDwxN2q0vhUvGT6jvNxzkOq2rH9Cch85i1CxqHZxHZh4D+lrKtqT
+ SHcV+oXZJYnazigU4E7SwZM0PbfmFPKW+bzwqi2sUmS+MkxOv4dVHBYvQJHyUU3HEM
+ kdUHb57rdpLpZp3d+dl2CngH0EhThk6YAYKgSCX2i69Voz7wRGoJVZd8OzCP1nwNog
+ f7ytn7O1rnNTHRE/S8HVog3XsDk0ppgQeXUq6RGNhlWf1769r7yDbvnKUfl/G+fVJj
+ tkeJn9CdMwFBw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 964181B6E82;
+ by isrv.corpit.ru (Postfix) with ESMTP id F15B01B6E87;
  Sat, 13 Jun 2026 23:04:28 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 001FA3CE8E4;
- Sat, 13 Jun 2026 23:04:46 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 5B04E3CE8E9;
+ Sat, 13 Jun 2026 23:04:47 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.4 26/61] target/arm: SVE2 FMAXP, FMINP must honour AH=1
-Date: Sat, 13 Jun 2026 23:03:09 +0300
-Message-ID: <20260613200411.1808021-26-mjt@tls.msk.ru>
+Subject: [Stable-10.2.4 31/61] target/arm: Don't assert if 64-bit EL2 AT insn
+ sees a Domain fault
+Date: Sat, 13 Jun 2026 23:03:14 +0300
+Message-ID: <20260613200411.1808021-31-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.2.4-20260613224639@cover.tls.msk.ru>
 References: <qemu-stable-10.2.4-20260613224639@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -72,80 +72,52 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Peter Maydell <peter.maydell@linaro.org>
 
-The behaviour of floating-point maximum and minimum insns has
-some odd special cases when FPCR.AH=1. We get this right in most
-places (for instance, the ASIMD FMAXP, FMINP) but forgot about
-it for the SVE2 versions of FMAXP and FMINP.
+The Domain fault type can only happen for 32-bit short-format
+descriptors.  This means that it almost never needs to be encoded in
+a long-format fault status code.  However, there is one corner case
+where we do need to report it as a long-format FSC: if a 64-bit EL2
+does an AT insn on an AArch32 EL1&0 translation regime that is using
+short-descriptors and that translation operation hits a Domain fault,
+then this is reported in the PAR_EL1 in long-format.
+
+The PAR_EL1 register description defines that this should be reported
+as 0b111101 for a level 1 Domain fault or 0b111110 for a level 2
+Domain fault.
+
+The Arm ARM pseudocode special cases this in the function
+AArch64_PARFaultStatus() (because no other "fault to LFSC" code path
+can be a Domain fault).  For QEMU, implement it in arm_fi_to_lfsc().
 
 Cc: qemu-stable@nongnu.org
-Fixes: 384433e70983 ("target/arm: Implement FPCR.AH semantics for FMINP and FMAXP")
+Fixes: 1fa498fe0de97 ("target/arm: Provide fault type enum and FSR conversion functions")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3512
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
-Message-id: 20260521122913.1565011-2-peter.maydell@linaro.org
-(cherry picked from commit 446050c4dfe4566ae3fcba9c6588c89a66ed4b33)
-(Mjt: fixup for lack of v10.2.0-1344-g895d4367d6
- "target/arm/tcg: Use "or SME" feature checks where needed")
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20260526174155.2491217-1-peter.maydell@linaro.org
+(cherry picked from commit bb957530471c792a9a51e822a6c2fa8398cc48f6)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/arm/tcg/helper-sve.h b/target/arm/tcg/helper-sve.h
-index c3541a8ca8..cd05dd0fb4 100644
---- a/target/arm/tcg/helper-sve.h
-+++ b/target/arm/tcg/helper-sve.h
-@@ -2914,6 +2914,20 @@ DEF_HELPER_FLAGS_6(sve2_fminp_zpzz_s, TCG_CALL_NO_RWG,
- DEF_HELPER_FLAGS_6(sve2_fminp_zpzz_d, TCG_CALL_NO_RWG,
-                    void, ptr, ptr, ptr, ptr, fpst, i32)
- 
-+DEF_HELPER_FLAGS_6(sve2_ah_fmaxp_zpzz_h, TCG_CALL_NO_RWG,
-+                   void, ptr, ptr, ptr, ptr, fpst, i32)
-+DEF_HELPER_FLAGS_6(sve2_ah_fmaxp_zpzz_s, TCG_CALL_NO_RWG,
-+                   void, ptr, ptr, ptr, ptr, fpst, i32)
-+DEF_HELPER_FLAGS_6(sve2_ah_fmaxp_zpzz_d, TCG_CALL_NO_RWG,
-+                   void, ptr, ptr, ptr, ptr, fpst, i32)
-+
-+DEF_HELPER_FLAGS_6(sve2_ah_fminp_zpzz_h, TCG_CALL_NO_RWG,
-+                   void, ptr, ptr, ptr, ptr, fpst, i32)
-+DEF_HELPER_FLAGS_6(sve2_ah_fminp_zpzz_s, TCG_CALL_NO_RWG,
-+                   void, ptr, ptr, ptr, ptr, fpst, i32)
-+DEF_HELPER_FLAGS_6(sve2_ah_fminp_zpzz_d, TCG_CALL_NO_RWG,
-+                   void, ptr, ptr, ptr, ptr, fpst, i32)
-+
- DEF_HELPER_FLAGS_5(sve2_eor3, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, ptr, i32)
- DEF_HELPER_FLAGS_5(sve2_bcax, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, ptr, i32)
- DEF_HELPER_FLAGS_5(sve2_bsl1n, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, ptr, i32)
-diff --git a/target/arm/tcg/sve_helper.c b/target/arm/tcg/sve_helper.c
-index c442fcb540..7e547a7795 100644
---- a/target/arm/tcg/sve_helper.c
-+++ b/target/arm/tcg/sve_helper.c
-@@ -774,6 +774,14 @@ DO_ZPZZ_PAIR_FP(sve2_fminp_zpzz_h, float16, H1_2, float16_min)
- DO_ZPZZ_PAIR_FP(sve2_fminp_zpzz_s, float32, H1_4, float32_min)
- DO_ZPZZ_PAIR_FP(sve2_fminp_zpzz_d, float64, H1_8, float64_min)
- 
-+DO_ZPZZ_PAIR_FP(sve2_ah_fmaxp_zpzz_h, float16, H1_2, helper_vfp_ah_maxh)
-+DO_ZPZZ_PAIR_FP(sve2_ah_fmaxp_zpzz_s, float32, H1_4, helper_vfp_ah_maxs)
-+DO_ZPZZ_PAIR_FP(sve2_ah_fmaxp_zpzz_d, float64, H1_8, helper_vfp_ah_maxd)
-+
-+DO_ZPZZ_PAIR_FP(sve2_ah_fminp_zpzz_h, float16, H1_2, helper_vfp_ah_minh)
-+DO_ZPZZ_PAIR_FP(sve2_ah_fminp_zpzz_s, float32, H1_4, helper_vfp_ah_mins)
-+DO_ZPZZ_PAIR_FP(sve2_ah_fminp_zpzz_d, float64, H1_8, helper_vfp_ah_mind)
-+
- #undef DO_ZPZZ_PAIR_FP
- 
- /* Three-operand expander, controlled by a predicate, in which the
-diff --git a/target/arm/tcg/translate-sve.c b/target/arm/tcg/translate-sve.c
-index 76e4a6c52c..b9dba6ec31 100644
---- a/target/arm/tcg/translate-sve.c
-+++ b/target/arm/tcg/translate-sve.c
-@@ -7665,8 +7665,8 @@ TRANS_FEAT_NONSTREAMING(HISTSEG, aa64_sve2, gen_gvec_ool_arg_zzz,
- DO_ZPZZ_FP(FADDP, aa64_sve2, sve2_faddp_zpzz)
- DO_ZPZZ_FP(FMAXNMP, aa64_sve2, sve2_fmaxnmp_zpzz)
- DO_ZPZZ_FP(FMINNMP, aa64_sve2, sve2_fminnmp_zpzz)
--DO_ZPZZ_FP(FMAXP, aa64_sve2, sve2_fmaxp_zpzz)
--DO_ZPZZ_FP(FMINP, aa64_sve2, sve2_fminp_zpzz)
-+DO_ZPZZ_AH_FP(FMAXP, aa64_sve2, sve2_fmaxp_zpzz, sve2_ah_fmaxp_zpzz)
-+DO_ZPZZ_AH_FP(FMINP, aa64_sve2, sve2_fminp_zpzz, sve2_ah_fminp_zpzz)
- 
- static bool do_fmmla(DisasContext *s, arg_rrrr_esz *a,
-                      gen_helper_gvec_4_ptr *fn)
+diff --git a/target/arm/internals.h b/target/arm/internals.h
+index 6434331ef2..7dc71776e7 100644
+--- a/target/arm/internals.h
++++ b/target/arm/internals.h
+@@ -871,6 +871,16 @@ static inline uint32_t arm_fi_to_lfsc(ARMMMUFaultInfo *fi)
+         assert(fi->level >= 0 && fi->level <= 3);
+         fsc = 0b001100 | fi->level;
+         break;
++    case ARMFault_Domain:
++        /*
++         * This can only happen when doing an AT insn at EL2 for an AArch32
++         * stage 1 EL1&0 translation regime using short-descriptors, and
++         * the translation hits a Domain fault. This needs to be reported in
++         * the long-format PAR. Compare pseudocode AArch64_PARFaultStatus().
++         */
++        assert(fi->level == 1 || fi->level == 2);
++        fsc = 0b111100 | fi->level;
++        break;
+     case ARMFault_Translation:
+         assert(fi->level >= -1 && fi->level <= 3);
+         if (fi->level < 0) {
 -- 
 2.47.3
 
