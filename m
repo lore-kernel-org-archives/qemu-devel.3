@@ -4,45 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2A8ECD8CA8
-	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 20:43:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7759CD98CF
+	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 20:44:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wYVBA-0005jB-9A; Sat, 13 Jun 2026 16:42:10 -0400
+	id 1wYV7a-0004eZ-6T; Sat, 13 Jun 2026 16:38:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYVB1-0005ei-43; Sat, 13 Jun 2026 16:42:00 -0400
+ id 1wYV73-0004GP-La; Sat, 13 Jun 2026 16:37:55 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYVAy-0005K2-IO; Sat, 13 Jun 2026 16:41:58 -0400
+ id 1wYV70-0003XG-Ar; Sat, 13 Jun 2026 16:37:52 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1781382966; bh=tJ4gE78HIFs63Hs5+QVQwFGrGNIdLjjoMVKTIA667Hs=;
+ t=1781382963; bh=DJZuAd6uoTybgvHP17Px/QZ+fzo7XTUkf9sXHlZo+24=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=MYWLkvnV8FMfElM+o9CB/d9m3UHzybv2vGd91cKx9LRJStwmn767Sbb7manMGLq+E
- 9qKf7Oj0O+6m4HPa1f/5f7YTQjBqFg/dXVdCeurdIseQKw8/2cgabk5H+7nBkr+8Fv
- pa3YAQzqRUOIMjJfsB6nPO7QCr3VabBwjBaBqmjyt8ZBHcvG/CyVHw/6JBXgtq6Sf4
- aec2ZSGh6rFG/c+Q6LqNcsUFHPTjSPiV//7Eu8KUBXppNXQBMfKs3kxQqgGrVtlcwn
- +6VNUHqf4LfGIHoUMNC/S9YaFLzb2GZiNsw3UOuJDCy+kJ8zkfkuPmqrXDDvmcjtHK
- A3/bzczOajY3w==
+ b=cEDPit4UFCUGJ7ffIA6cUEYbDcjI/nzcn4feFeukykriqNCgFukzm4qzEFUZiyb7W
+ 4eZGkt2A+DKmI84isUskaqs9V0QEAaDdF6OVDF7qL8Nk+0m1brBEC9EO4JOojDUt9+
+ Tu74heTNBaAJzH07CA34gv86PNHj6R9qMd0HhN4Jh4/q4X3E2+8VlZ0c17WH7TNidS
+ KuAzx72zkE+oymGxbh3IvY6fY91eHTi3sgecv4UVGNOd/ZrGaOz+ynKySfu0nSraPe
+ R2Xzfhy+2Jzk0HGf1kQEx84bGEEamr47PW6saaqjyppmJ8HTdkL333xiWgWodMdnDA
+ /CTySI7PNPUog==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 2F5861B6F1C;
- Sat, 13 Jun 2026 23:36:06 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id A8C7F1B6EEF;
+ Sat, 13 Jun 2026 23:36:03 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 9637B3CE966;
- Sat, 13 Jun 2026 23:36:24 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 1AB783CE941;
+ Sat, 13 Jun 2026 23:36:22 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Jithu Joseph <jithu.joseph@oss.qualcomm.com>,
- Jamin Lin <jamin_lin@aspeedtech.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+Cc: qemu-stable@nongnu.org, Heechan Kang <gganji11@naver.com>,
+ Feifan Qian <bea1e@proton.me>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.2 58/72] hw/i3c: fix CMD/data FIFO depth reset values to
- match real silicon
-Date: Sat, 13 Jun 2026 23:35:24 +0300
-Message-ID: <20260613203542.1809153-58-mjt@tls.msk.ru>
+Subject: [Stable-11.0.2 21/72] ui: fix validation of VNC extended clipboard
+ data length
+Date: Sat, 13 Jun 2026 23:34:47 +0300
+Message-ID: <20260613203542.1809153-21-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.2-20260613224644@cover.tls.msk.ru>
 References: <qemu-stable-11.0.2-20260613224644@cover.tls.msk.ru>
@@ -72,83 +73,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jithu Joseph <jithu.joseph@oss.qualcomm.com>
+From: Heechan Kang <gganji11@naver.com>
 
-The Linux DW-I3C master driver infers controller queue depths at probe
-by reading two status registers that report free queue slots, which at
-probe (queues empty) equals the full depth.  It then uses those values
-to gate every I3C transfer -- any batch whose word count exceeds the
-advertised depth is rejected with -EOPNOTSUPP.
+QEMU's VNC extended clipboard handler inflates a client-controlled
+compressed clipboard payload. The code checks the declared text size
+against the total inflated buffer size:
 
-  QUEUE_STATUS_LEVEL        (0x4c) [7:0] -> cmdfifodepth  (cmd slots)
-  DATA_BUFFER_STATUS_LEVEL  (0x50) [7:0] -> datafifodepth (32-bit words)
+    if (tsize < size)
 
-Per the AST2600 datasheet the reset values are 0x10 and 0x40 (16 cmd
-slots, 64 words = 256 B).  QEMU was advertising 0x02 and 0x10, making
-the kernel believe the controller can only do 64-byte transfers.  The
-visible symptom was -EOPNOTSUPP on any I3C transfer whose payload
-exceeded 64 B (datafifodepth = 0x10 = 16 words = 64 B).
+but then copies from:
 
-The underlying FIFOs in QEMU were already allocated at the right size
-(fifo32_create takes word counts; the existing defaults give 16 cmd
-slots and 64 data words).  Only the advertised reset values were wrong.
+    tbuf = buf + 4;
+    qemu_clipboard_set_data(..., tsize, tbuf, true);
 
-Correct the reset values in dw_i3c_resets[], and additionally drive the
-advertised depths from the queue-capacity configs in the reset handlers
-(as is already done for the device/char table pointers), so a configured
-override is reflected in what the guest reads instead of being silently
-ignored.  The advertised fields are 8-bit, so the depth saturates at 255
-regardless of the wider capacity configs.
+The correct bound is the remaining data length after the 4-byte length
+field, not the total inflated buffer length.
 
-With this fix the guest sees datafifodepth=64 words and accepts
-transfers up to 256 B.
+As a result, a VNC client can make QEMU copy up to 3 bytes past the end
+of the inflated heap buffer. With a second VNC client, those copied
+bytes are observable through the normal VNC extended clipboard PROVIDE
+path.
 
-Fixes: e974c6957576 ("hw/i3c/dw-i3c: Add more reset values")
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Jithu Joseph <jithu.joseph@oss.qualcomm.com>
-Reviewed-by: Jamin Lin <jamin_lin@aspeedtech.com>
-Link: https://lore.kernel.org/qemu-devel/20260604142207.2118098-2-jithu.joseph@oss.qualcomm.com
-Signed-off-by: Cédric Le Goater <clg@redhat.com>
-(cherry picked from commit 2d3dc20d9d716729e06093311f678dc739affe5b)
+Fixes: CVE-2026-8343
+Reported-by: Heechan Kang <gganji11@naver.com>
+Reported-by: Feifan Qian <bea1e@proton.me>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Signed-off-by: Heechan Kang <gganji11@naver.com>
+[DB: added #include and 'return' statements]
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Message-ID: <20260512095543.459949-1-berrange@redhat.com>
+(cherry picked from commit e56b4bbff1df260487b80abe1f967f687fa115d3)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/i3c/dw-i3c.c b/hw/i3c/dw-i3c.c
-index d87d42be89..402c8f1922 100644
---- a/hw/i3c/dw-i3c.c
-+++ b/hw/i3c/dw-i3c.c
-@@ -282,8 +282,8 @@ static const uint32_t dw_i3c_resets[DW_I3C_NR_REGS] = {
-     [R_QUEUE_THLD_CTRL]             = 0x01000101,
-     [R_DATA_BUFFER_THLD_CTRL]       = 0x01010100,
-     [R_SLV_EVENT_CTRL]              = 0x0000000b,
--    [R_QUEUE_STATUS_LEVEL]          = 0x00000002,
--    [R_DATA_BUFFER_STATUS_LEVEL]    = 0x00000010,
-+    [R_QUEUE_STATUS_LEVEL]          = 0x00000010,
-+    [R_DATA_BUFFER_STATUS_LEVEL]    = 0x00000040,
-     [R_PRESENT_STATE]               = 0x00000003,
-     [R_I3C_VER_ID]                  = 0x3130302a,
-     [R_I3C_VER_TYPE]                = 0x6c633033,
-@@ -947,6 +947,10 @@ static void dw_i3c_reset(DeviceState *dev)
-                      s->cfg.dev_char_table_pointer);
-     ARRAY_FIELD_DP32(s->regs, DEV_CHAR_TABLE_POINTER, DEV_CHAR_TABLE_DEPTH,
-                      s->cfg.dev_char_table_depth);
-+    ARRAY_FIELD_DP32(s->regs, QUEUE_STATUS_LEVEL, CMD_QUEUE_EMPTY_LOC,
-+                     s->cfg.cmd_resp_queue_capacity_bytes);
-+    ARRAY_FIELD_DP32(s->regs, DATA_BUFFER_STATUS_LEVEL, TX_BUF_EMPTY_LOC,
-+                     s->cfg.tx_rx_queue_capacity_bytes);
+diff --git a/ui/vnc-clipboard.c b/ui/vnc-clipboard.c
+index 124b6fbd9c..fa05d86f42 100644
+--- a/ui/vnc-clipboard.c
++++ b/ui/vnc-clipboard.c
+@@ -23,6 +23,7 @@
+  */
  
-     dw_i3c_cmd_queue_reset(s);
-     dw_i3c_resp_queue_reset(s);
-@@ -1795,6 +1799,10 @@ static void dw_i3c_reset_enter(Object *obj, ResetType type)
-                      s->cfg.dev_char_table_pointer);
-     ARRAY_FIELD_DP32(s->regs, DEV_CHAR_TABLE_POINTER, DEV_CHAR_TABLE_DEPTH,
-                      s->cfg.dev_char_table_depth);
-+    ARRAY_FIELD_DP32(s->regs, QUEUE_STATUS_LEVEL, CMD_QUEUE_EMPTY_LOC,
-+                     s->cfg.cmd_resp_queue_capacity_bytes);
-+    ARRAY_FIELD_DP32(s->regs, DATA_BUFFER_STATUS_LEVEL, TX_BUF_EMPTY_LOC,
-+                     s->cfg.tx_rx_queue_capacity_bytes);
- }
+ #include "qemu/osdep.h"
++#include "qemu/error-report.h"
+ #include "vnc.h"
+ #include "vnc-jobs.h"
  
- static void dw_i3c_realize(DeviceState *dev, Error **errp)
+@@ -282,10 +283,16 @@ void vnc_client_cut_text_ext(VncState *vs, int32_t len, uint32_t flags, uint8_t
+             buf && size >= 4) {
+             uint32_t tsize = read_u32(buf, 0);
+             uint8_t *tbuf = buf + 4;
+-            if (tsize < size) {
++            if (tsize <= size - 4) {
+                 qemu_clipboard_set_data(&vs->cbpeer, vs->cbinfo,
+                                         QEMU_CLIPBOARD_TYPE_TEXT,
+                                         tsize, tbuf, true);
++            } else {
++                error_report("vnc: malformed extended clipboard payload "
++                             "with text length %u exceeding available %u",
++                             tsize, size - 4);
++                vnc_client_error(vs);
++                return;
+             }
+         }
+     }
 -- 
 2.47.3
 
