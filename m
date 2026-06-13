@@ -4,124 +4,142 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B289FCD98C5
-	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 17:12:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9E01CD98D8
+	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 17:34:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wYRu2-0003kh-G1; Sat, 13 Jun 2026 13:12:14 -0400
+	id 1wYSF8-0007S6-LP; Sat, 13 Jun 2026 13:34:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1wYRtv-0003k7-Td
- for qemu-devel@nongnu.org; Sat, 13 Jun 2026 13:12:08 -0400
-Received: from smtpout3.mo539.mail-out.ovh.net ([51.210.91.42])
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wYSF4-0007Rf-Sb
+ for qemu-devel@nongnu.org; Sat, 13 Jun 2026 13:33:59 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1wYRtt-0004vG-Q7
- for qemu-devel@nongnu.org; Sat, 13 Jun 2026 13:12:07 -0400
-Received: from director5.derp.mail-out.ovh.net
- (director5.derp.mail-out.ovh.net [57.128.106.70])
- by mo539.mail-out.ovh.net (Postfix) with ESMTPS id 4gd2xC3BTcz3wgc;
- Sat, 13 Jun 2026 17:11:59 +0000 (UTC)
-Received: from director5.derp.mail-out.ovh.net
- (director5.derp.mail-out.ovh.net. [127.0.0.1])
- by director5.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
- for <alexander.hansen@9elements.com>; Sat, 13 Jun 2026 17:11:59 +0000 (UTC)
-Received: from mta6.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.110.118.15])
- by director5.derp.mail-out.ovh.net (Postfix) with ESMTPS id
- 4gd2xC09wYz7xq5; Sat, 13 Jun 2026 17:11:59 +0000 (UTC)
-Received: from kaod.org (unknown [10.1.6.2])
- (Authenticated sender: clg@kaod.org)
- by mta6.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id ABF521B43C5B;
- Sat, 13 Jun 2026 17:11:56 +0000 (UTC)
-Authentication-Results: garm.ovh; auth=pass
- (GARM-105G0061c81e408-9072-480b-b3dc-788c0c79fd1b,
- E2CD3F290BDA47254B2896B828795FC85CEB7E2E) smtp.auth=clg@kaod.org
-X-OVh-ClientIp: 82.64.250.170
-Message-ID: <edd061c5-0477-4c18-8b96-f647081648ab@kaod.org>
-Date: Sat, 13 Jun 2026 19:11:56 +0200
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wYSF3-00070T-21
+ for qemu-devel@nongnu.org; Sat, 13 Jun 2026 13:33:58 -0400
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 65DF8oQl2687826
+ for <qemu-devel@nongnu.org>; Sat, 13 Jun 2026 17:33:54 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:message-id
+ :mime-version:subject:to; s=qcppdkim1; bh=dTpnQ41zGsuue20sXorMPK
+ ROEDQ2CTmJnNgFVzF40CI=; b=HZRqzF8fdyXU7Vc/OFRtDcBxSITWTyi0qexpOI
+ tIKUntUTtQA65J8j3AoI4X+J/L4Vgqw1kG0Mf/E0KW2oOoBUpBh5OxlavPVGcKek
+ 56O84s3R0ZcAYynrgFiQfI7VV2ag61Z6bKfWD0jXxdntui9aNfNtiiykV26kjn5H
+ yYP+aTADcZHJa3f89DermddP3yRgI48jIxiJyYxxwcg5dn2Z9YG2N81MGgQAWdiU
+ KXoV7QJ83MKsJvaKl1VdOTofjilBHPRAsKAcMPg2GAYx1xBium/e7HVl7h/tIFk7
+ hWMYeCKmlxqcBhH4dNoIU8yRHzPNL7h2fTYWE0Ef2dxDZ3dg==
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
+ [209.85.222.197])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4eryybsjx6-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Sat, 13 Jun 2026 17:33:54 +0000 (GMT)
+Received: by mail-qk1-f197.google.com with SMTP id
+ af79cd13be357-91931144870so39088385a.1
+ for <qemu-devel@nongnu.org>; Sat, 13 Jun 2026 10:33:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1781372034; x=1781976834; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=dTpnQ41zGsuue20sXorMPKROEDQ2CTmJnNgFVzF40CI=;
+ b=Kl49UOn0+W9gnBjCHSFazDqP9VkiYqXdzbuh/Z8j/S7ZpW08ULoQF56v1cRqQ9ycGQ
+ 5zvnvaD7IQXGN6FW2oJfLvIgx1JNcJfSN3YlQWkeA1WxI7DAIL2vv2ga++lQ/b7b6enq
+ /joXzRbONb3UvExkoSvlB18it5LKIRDv7WcBs5sg8B/cfuSFitfjmcWlWqcgZXHFMlsd
+ PjbigOItxj5PvtYiulYDzmm5lCMoB7ZRpon88ZFiIOqs6PiNzm6SUWXzJ6tAXqSKGxLv
+ fSjEzhX7PP4GcZk8BorZeM8KHBkJI4xoa8HO2K1toIwMt2HhxkTVmkPBRrNRKMcqPUPG
+ ywuA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1781372034; x=1781976834;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=dTpnQ41zGsuue20sXorMPKROEDQ2CTmJnNgFVzF40CI=;
+ b=q9NcNcp6r3zi2fiTjC7jLeFOE0R66HLl68XIAEfWjCiOUv4uc+xidaETAoRHP8kcYo
+ ApC2SbLOTk6kV1IvkyL98dyeP4NfqRYGezprRlNkf0KbrZPmt6WTlFLXIdyFa31ulugg
+ AnFldQMBDAPVfiOXilmmuMWYxn2fTxPw6S/kIIFAIBxOojRNMVgZZy/xWBQ7bIH8aylc
+ 6MjaFUP2XkyCW4qQzOpxytbTbsGi/EsWbSrV6Pz+pyDw/6uPrNI5UE96BjI/pLarBNEo
+ uzQWmGwHCZk8ZBLbWRCZiobPQZpk/w0Kwc6OKD1wh2zvXRhq8vcOlU9cr94ZodSQQWgt
+ +c7w==
+X-Gm-Message-State: AOJu0Yxl0Fd7/4xB23WmanjiKC8VLTnp8RthSUahGiFIdQjpzoWXsw+f
+ pNmPK/ju4mtQxen39lgJWUgyUCG3H2PBXyRA5iLmEV962p6Uk1cW+5keNKODcmq3N/cynyUS3Av
+ Y53WmBE1FfPXaGf/MsvVxHE7E5Fugf/9IeoWAKHk7j7Qv+Dm2DEoNTMlDdtqWIbhS1g==
+X-Gm-Gg: Acq92OGMUrl0h8hAhtHOwUYIaVgzypkzZZIrvD0OwaXYapAR1RZ0AtO4dP3rmBN8IW4
+ cKVL4h3YYwuInNrG6z7+RELNyHiMk5zASkM4LmwAtyThSqpn1u9OzS6BORmOnQ7ij4VCvHdHvE9
+ 1S7BKNjN4Gnz+H58uRcEbdUhjGLAquBbVBFJgZO6kMbIs+zU+RfLugq2MUDMhHzIzkEq/RzU3dV
+ qHC3Me2H/MflqJJJeU/eZztDFTVwzMHXo3DJ8/R0ffYp6HevRHqVR96C2W7iC24S1XU2E8MQtev
+ K65EHMMSFI5UMTLfD82vcMIN2bXu8SCLYhsc75EXZGXx5x4akv+LE67uvaEIZ+74hfayJCaPl2e
+ vAJMwuOMlKgMQRv17pUxXZSWbmu8gJqfAXAS456qQ8lIRubYh64SquY8kADIcChkyxltTLyi3ha
+ jarpRtVZAQ
+X-Received: by 2002:a05:620a:1981:b0:915:b9f6:71ab with SMTP id
+ af79cd13be357-9161bd40722mr1208956685a.44.1781372033567; 
+ Sat, 13 Jun 2026 10:33:53 -0700 (PDT)
+X-Received: by 2002:a05:620a:1981:b0:915:b9f6:71ab with SMTP id
+ af79cd13be357-9161bd40722mr1208951885a.44.1781372032991; 
+ Sat, 13 Jun 2026 10:33:52 -0700 (PDT)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-492203c0801sm82080245e9.10.2026.06.13.10.33.51
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Sat, 13 Jun 2026 10:33:52 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+To: qemu-devel@nongnu.org
+Cc: Cornelia Huck <cohuck@redhat.com>, Eric Farman <farman@linux.ibm.com>,
+ Halil Pasic <pasic@linux.ibm.com>, Matthew Rosato <mjrosato@linux.ibm.com>,
+ Jared Rossi <jrossi@linux.ibm.com>, qemu-s390x@nongnu.org,
+ David Hildenbrand <david@kernel.org>, Ilya Leoshkevich <iii@linux.ibm.com>,
+ Jason Herne <jjherne@linux.ibm.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Zhuoying Cai <zycai@linux.ibm.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+Subject: [PATCH] hw/s390x/ipl: Remove TCG dependency in handle_diag_308()
+Date: Sat, 13 Jun 2026 19:33:50 +0200
+Message-ID: <20260613173350.99843-1-philmd@oss.qualcomm.com>
+X-Mailer: git-send-email 2.53.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/4] hw/arm: anacapa: add ADC128D818 devices
-To: Emmanuel Blot <eblot@meta.com>, qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Jamin Lin <jamin_lin@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
- Alexander Hansen <alexander.hansen@9elements.com>,
- William de Abreu Pinho <williampinho@meta.com>, qemu-arm@nongnu.org
-References: <20260612-i2c-adc128d818-anacapa-v1-0-9e4640cd164b@meta.com>
- <20260612-i2c-adc128d818-anacapa-v1-3-9e4640cd164b@meta.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Autocrypt: addr=clg@kaod.org; keydata=
- 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
-In-Reply-To: <20260612-i2c-adc128d818-anacapa-v1-3-9e4640cd164b@meta.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-x-ovh-tracer-id: 10330976071811705901
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTGSmKmxdwSRWuZ5s6iujUbnhOdyDtj4OTqh8pyfspxqou0l89+0GjMdlgBfQbiuU24cQaBXs38OVfiudxFXIuoXdXOpR1rFxnywXxYzZ6ImLNfnbBj+w5rAp7+hwikQkiZrRjXWMr/javrm4wmYHS3XDdlIu3wt7XEqrtjCePYYgsskAzfpeLFhIVgLckUK0CwKwyOtXuHMAFOM6TK2Mqz8OCJstpt/7VnePjADUXr+7VWdxVNSuXouokfB0Ezj6nEeSXvg1avZIOIkLfWVc51EDyMRKpGs/EbVZy4Qk5CT1khcAM+4lf0Qfzs6HE77KJCR1iaq96uZkjldtEplCpXybo9cNGIcdMjYyz2Vbv1OSY08iv/wH+WnxGLROqNHw6y7JrMlwHDDZas+d34uDhsqY4ukr8/stgASzMO2ko5xCK5KlVINWiV81NZ6RC5KuRYUTcQ0toc+5C0K5lm13CHYomk3eUFz+qFDRdYqpDI/w8PehHQboiF33BHwOs0xGHbvwPJO/qNYe56yucVXk0LDF6yjPvQZOa6+LOWek8OwK5IVa84ig5/BazE7Sawn1cVdotxxNc5I6AsSvhfGJLix0ziRCgpIHWYI4U+dLRlythwb5UkJkj34UmnWanngfoPzko/KrKgm5L7FlTy13rFhVkZjnRCo4aB5wjKxhLHGqA
-DKIM-Signature: a=rsa-sha256; bh=gKYFEx3b1ewlXvJ+geDFIgU4rkAAWp4hC0oSetjt4BQ=; 
- c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1781370721; v=1;
- b=M4r6JeOcun9n+O5Ek/6Fnh9u7IXevdzDKEnYNGE2YKE1Inq79iUMDv6Opb1hu5ZTdAIVTfy/
- B1Oeif8HtSgFc6RqC9kgGDFsNJFc5L0onfNX9bQ6mh+MjiSvpmfp7yTWSun3SJdIUQb+r0pTx1q
- ILcx7zESrf4ITIrTy+fZ1VhkRIIM4ufDLxudOiWKqp7ub4fSyhZa8qhrBKGnv4bppy9wTEVwMZB
- RsIf5vw9amd3LRgBv1YB+yZ2d5N6p2/FOSbnoO7WNL/SLvZQpCP9ulLjeBeTIhPTypcZoFNsryK
- uMMjvuvoknROB0TjCMQTm/8YO9hvenJ4KhuX9Js+LAr1A==
-Received-SPF: pass client-ip=51.210.91.42; envelope-from=clg@kaod.org;
- helo=smtpout3.mo539.mail-out.ovh.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Proofpoint-GUID: ACZob4miYwZS-EXxz0812ude_wyEYaJa
+X-Proofpoint-ORIG-GUID: ACZob4miYwZS-EXxz0812ude_wyEYaJa
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjEzMDE4MyBTYWx0ZWRfX3ENtE085brj3
+ 1M5CS8Ca6z8lBN5kagsvGZsgTDU//cEW3x8gNBHKLZnjUoByAC+HJOgcAgufeLCTbwWz/0Ivd+K
+ nZDcT+Wb/hy7mCNvdmZYOpueW6tL0g8=
+X-Authority-Analysis: v=2.4 cv=JLYLdcKb c=1 sm=1 tr=0 ts=6a2d9482 cx=c_pps
+ a=50t2pK5VMbmlHzFWWp8p/g==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+ a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22
+ a=EUspDBNiAAAA:8 a=O4nC0eKGiR0KFeLeyJoA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=IoWCM6iH3mJn3m4BftBB:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjEzMDE4MyBTYWx0ZWRfX/a1CD7ob0m9n
+ hAczIvvRFJBD9n8VHj7yTo0FNZ9lMcRqmXaSFkusHxeMvv6UODJWs+tWmfJYYXRCTBp0dv2NADn
+ rWuLH/rlQ0u5NBdbXi8+UQGEqCb3G/NCCu4PUYDOGg1v/G2LF47akUN76jBRaPtXSs78XYaGfZ4
+ FIs9tKtCeoQeOgoupsqTzzSWeoOAcHfAhTIilInTkuGFnOroojapOeTjzQiCnIWyvqQsTlCXL9T
+ +b9Dhnvgk8fYKVfudMRscUw94vouMUIw2lLEi1zcvn/tuyiyiSUsyjN1duzBnlCzMe9+o2FG9na
+ fbbG2U6Lk77LYiDschtsn9dzcU5HY+9pfCgx8tRjsUF83rLDiqgaiJgNMeRZnEYkM64ENUBQUlB
+ v48Vj2h/qp0yh4xY24o/+9tEYbE2zAZsC1gpyw5L2+t/19NJrCs8AR9BjmNKYlnPTyKFsCZ098s
+ 0XNeLVobwyotaUp1Qzg==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-13_03,2026-06-12_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 spamscore=0 impostorscore=0 bulkscore=0 adultscore=0
+ malwarescore=0 phishscore=0 suspectscore=0 priorityscore=1501
+ lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606040000
+ definitions=main-2606130183
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -137,112 +155,179 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/12/26 18:47, Emmanuel Blot wrote:
-> Wire up the two ADC128D818 instances that appear in the Anacapa DTS:
-> one on i2c8 mux channel 0 and one on i2c13 mux channel 3.
-> 
-> Signed-off-by: Emmanuel Blot <eblot@meta.com>
-> ---
->   hw/arm/Kconfig                  |  1 +
->   hw/arm/aspeed_ast2600_anacapa.c | 19 +++++++++++++++++--
->   2 files changed, 18 insertions(+), 2 deletions(-)
-> 
-> diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
-> index fb798ccbee..04ecf5d473 100644
-> --- a/hw/arm/Kconfig
-> +++ b/hw/arm/Kconfig
-> @@ -553,6 +553,7 @@ config ASPEED_SOC
->       select LED
->       select PMBUS
->       select MAX31785
-> +    select ADC128D818
->       select FSI_APB2OPB_ASPEED
->       select AT24C
->       select PCI_EXPRESS
-> diff --git a/hw/arm/aspeed_ast2600_anacapa.c b/hw/arm/aspeed_ast2600_anacapa.c
-> index a1c8111a93..7dc566d7fe 100644
-> --- a/hw/arm/aspeed_ast2600_anacapa.c
-> +++ b/hw/arm/aspeed_ast2600_anacapa.c
-> @@ -8,6 +8,7 @@
->   
->   #include "qemu/osdep.h"
->   #include "qapi/error.h"
-> +#include "hw/sensor/adc128d818.h"
->   #include "hw/arm/machines-qom.h"
->   #include "hw/arm/aspeed.h"
->   #include "hw/arm/aspeed_soc.h"
-> @@ -16,9 +17,11 @@
->   #include "hw/nvram/eeprom_at24c.h"
->   
->   /* Anacapa hardware value */
-> +/* clang-format off */
+Rather than calling a TCG specific method in s390_ipl_reset_request(),
+have handle_diag_308() return whether a vCPU reset is pending, and use
+that in the TCG DIAG helper to return to the main loop.
 
-Doesn't seem useful.
+Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+---
+ target/s390x/s390x-internal.h  |  3 ++-
+ hw/s390x/ipl.c                 |  5 -----
+ target/s390x/diag.c            | 28 ++++++++++++++++++----------
+ target/s390x/tcg/misc_helper.c |  5 ++++-
+ 4 files changed, 24 insertions(+), 17 deletions(-)
 
->   #define ANACAPA_BMC_HW_STRAP1 0x00002002
->   #define ANACAPA_BMC_HW_STRAP2 0x00000000
->   #define ANACAPA_BMC_RAM_SIZE ASPEED_RAM_SIZE(2 * GiB)
-> +/* clang-format on */
->   
->   /*
->    * "Anacapa HPM (MB)" FRU data. Generated with frugen.
-> @@ -221,6 +224,14 @@ static const uint8_t hpm_brd_id_eeprom[] = {
->   };
->   static const size_t hpm_brd_id_eeprom_len = sizeof(hpm_brd_id_eeprom);
->   
-> +static void anacapa_add_adc128d818(I2CBus *bus, uint8_t addr,
-> +                                   const char *description)
-> +{
-> +    DeviceState *dev = DEVICE(i2c_slave_new(TYPE_ADC128D818, addr));
-> +    qdev_prop_set_string(dev, "description", description);
-> +    i2c_slave_realize_and_unref(I2C_SLAVE(dev), bus, &error_fatal);
-> +}
-> +
->   static void anacapa_bmc_i2c_init(AspeedMachineState *bmc)
->   {
->       /* Reference: aspeed-bmc-facebook-anacapa.dts */
-> @@ -259,7 +270,8 @@ static void anacapa_bmc_i2c_init(AspeedMachineState *bmc)
->       i2c_mux = i2c_slave_create_simple(i2c[8], TYPE_PCA9546, 0x72);
->   
->       /* i2c8mux ch0 */
-> -    /* adc128d818@1f — no model */
-> +    /* adc128d818@1f — R-PDB ADC (mode 1: 8 voltage channels) */
-> +    anacapa_add_adc128d818(pca954x_i2c_get_bus(i2c_mux, 0), 0x1f, "i2c8:0:1f");
->       /* pca9555@22 */
->       i2c_slave_create_simple(pca954x_i2c_get_bus(i2c_mux, 0),
->                               TYPE_PCA9552, 0x22);
-> @@ -320,7 +332,8 @@ static void anacapa_bmc_i2c_init(AspeedMachineState *bmc)
->       i2c_mux = i2c_slave_create_simple(i2c[13], TYPE_PCA9548, 0x70);
->   
->       /* i2c13mux ch3 */
-> -    /* adc128d818@1f - no model */
-> +    /* adc128d818@1f — MB ADC (mode 1: 8 voltage channels) */
-> +    anacapa_add_adc128d818(pca954x_i2c_get_bus(i2c_mux, 3), 0x1f, "i2c13:3:1f");
->   
->       /* i2c13mux ch4 */
->       /* eeprom@51 */
-> @@ -350,6 +363,7 @@ static void aspeed_machine_anacapa_class_init(ObjectClass *oc,
->       aspeed_machine_class_init_cpus_defaults(mc);
->   }
->   
-> +/* clang-format off */
->   static const TypeInfo aspeed_ast2600_anacapa_types[] = {
->       {
->           .name          = MACHINE_TYPE_NAME("anacapa-bmc"),
-> @@ -358,5 +372,6 @@ static const TypeInfo aspeed_ast2600_anacapa_types[] = {
->           .interfaces    = arm_machine_interfaces,
->       }
->   };
-> +/* clang-format on */
->   
->   DEFINE_TYPES(aspeed_ast2600_anacapa_types)
-> 
-
-
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
-
-Thanks,
-
-C.
+diff --git a/target/s390x/s390x-internal.h b/target/s390x/s390x-internal.h
+index e7e4f2b45d4..35d1e34ef4d 100644
+--- a/target/s390x/s390x-internal.h
++++ b/target/s390x/s390x-internal.h
+@@ -385,7 +385,8 @@ int mmu_translate_real(CPUS390XState *env, hwaddr raddr, int rw,
+ 
+ /* misc_helper.c */
+ int handle_diag_288(CPUS390XState *env, uint64_t r1, uint64_t r3);
+-void handle_diag_308(CPUS390XState *env, uint64_t r1, uint64_t r3,
++/* Return whether a CPU reset is pending */
++bool handle_diag_308(CPUS390XState *env, uint64_t r1, uint64_t r3,
+                      uintptr_t ra);
+ 
+ 
+diff --git a/hw/s390x/ipl.c b/hw/s390x/ipl.c
+index fa50749a7d3..4cca21c6217 100644
+--- a/hw/s390x/ipl.c
++++ b/hw/s390x/ipl.c
+@@ -18,7 +18,6 @@
+ #include "system/physmem.h"
+ #include "system/reset.h"
+ #include "system/runstate.h"
+-#include "system/tcg.h"
+ #include "elf.h"
+ #include "hw/core/loader.h"
+ #include "hw/core/qdev-properties.h"
+@@ -690,10 +689,6 @@ void s390_ipl_reset_request(CPUState *cs, enum s390_reset reset_type)
+     } else {
+         qemu_system_reset_request(SHUTDOWN_CAUSE_GUEST_RESET);
+     }
+-    /* as this is triggered by a CPU, make sure to exit the loop */
+-    if (tcg_enabled()) {
+-        cpu_loop_exit(cs);
+-    }
+ }
+ 
+ void s390_ipl_get_reset_request(CPUState **cs, enum s390_reset *reset_type)
+diff --git a/target/s390x/diag.c b/target/s390x/diag.c
+index 01cc802eaed..714ff88e0d0 100644
+--- a/target/s390x/diag.c
++++ b/target/s390x/diag.c
+@@ -95,44 +95,49 @@ static void s390_ipl_write(CPUS390XState *env, uint64_t addr,
+     }
+ }
+ 
+-void handle_diag_308(CPUS390XState *env, uint64_t r1, uint64_t r3, uintptr_t ra)
++bool handle_diag_308(CPUS390XState *env, uint64_t r1, uint64_t r3, uintptr_t ra)
+ {
+     bool valid;
+     CPUState *cs = env_cpu(env);
+     uint64_t addr =  env->regs[r1];
+     uint64_t subcode = env->regs[r3];
+     IplParameterBlock *iplb;
++    bool reset_requested;
+ 
+     if (env->psw.mask & PSW_MASK_PSTATE) {
+         s390_program_interrupt(env, PGM_PRIVILEGED, ra);
+-        return;
++        return false;
+     }
+ 
+     if (subcode & ~0x0ffffULL) {
+         s390_program_interrupt(env, PGM_SPECIFICATION, ra);
+-        return;
++        return false;
+     }
+ 
+     if (subcode >= DIAG308_PV_SET && !s390_has_feat(S390_FEAT_UNPACK)) {
+         s390_program_interrupt(env, PGM_SPECIFICATION, ra);
+-        return;
++        return false;
+     }
+ 
++    reset_requested = false;
+     switch (subcode) {
+     case DIAG308_RESET_MOD_CLR:
+         s390_ipl_reset_request(cs, S390_RESET_MODIFIED_CLEAR);
++        reset_requested = true;
+         break;
+     case DIAG308_RESET_LOAD_NORM:
+         s390_ipl_reset_request(cs, S390_RESET_LOAD_NORMAL);
++        reset_requested = true;
+         break;
+     case DIAG308_LOAD_CLEAR:
+         /* Well we still lack the clearing bit... */
+         s390_ipl_reset_request(cs, S390_RESET_REIPL);
++        reset_requested = true;
+         break;
+     case DIAG308_SET:
+     case DIAG308_PV_SET:
+         if (diag308_parm_check(env, r1, addr, ra, false)) {
+-            return;
++            break;
+         }
+         iplb = g_new0(IplParameterBlock, 1);
+         s390_ipl_read(env, addr, iplb, sizeof(iplb->len));
+@@ -159,11 +164,11 @@ void handle_diag_308(CPUS390XState *env, uint64_t r1, uint64_t r3, uintptr_t ra)
+         env->regs[r1 + 1] = DIAG_308_RC_OK;
+ out:
+         g_free(iplb);
+-        return;
++        break;
+     case DIAG308_STORE:
+     case DIAG308_PV_STORE:
+         if (diag308_parm_check(env, r1, addr, ra, true)) {
+-            return;
++            break;
+         }
+         if (subcode == DIAG308_PV_STORE) {
+             iplb = s390_ipl_get_iplb_pv();
+@@ -172,17 +177,17 @@ out:
+         }
+         if (!iplb) {
+             env->regs[r1 + 1] = DIAG_308_RC_NO_CONF;
+-            return;
++            break;
+         }
+ 
+         s390_ipl_write(env, addr, iplb, be32_to_cpu(iplb->len));
+         env->regs[r1 + 1] = DIAG_308_RC_OK;
+-        return;
++        break;
+     case DIAG308_PV_START:
+         iplb = s390_ipl_get_iplb_pv();
+         if (!iplb) {
+             env->regs[r1 + 1] = DIAG_308_RC_NO_PV_CONF;
+-            return;
++            break;
+         }
+ 
+         if (kvm_enabled() && kvm_s390_get_hpage_1m()) {
+@@ -193,9 +198,12 @@ out:
+         }
+ 
+         s390_ipl_reset_request(cs, S390_RESET_PV);
++        reset_requested = true;
+         break;
+     default:
+         s390_program_interrupt(env, PGM_SPECIFICATION, ra);
+         break;
+     }
++
++    return reset_requested;
+ }
+diff --git a/target/s390x/tcg/misc_helper.c b/target/s390x/tcg/misc_helper.c
+index 3d13c8bd8ea..036be93fb32 100644
+--- a/target/s390x/tcg/misc_helper.c
++++ b/target/s390x/tcg/misc_helper.c
+@@ -135,7 +135,10 @@ void HELPER(diag)(CPUS390XState *env, uint32_t r1, uint32_t r3, uint32_t num)
+     case 0x308:
+         /* ipl */
+         bql_lock();
+-        handle_diag_308(env, r1, r3, GETPC());
++        if (handle_diag_308(env, r1, r3, GETPC())) {
++            /* As reset is triggered by the CPU, make sure to exit the loop */
++            cpu_loop_exit(CPU(env_archcpu(env)));
++        }
+         bql_unlock();
+         r = 0;
+         break;
+-- 
+2.53.0
 
 
