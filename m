@@ -4,44 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 142FFCD98CF
-	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 20:36:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94737CD98CF
+	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 20:37:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wYV5q-0001Tj-G2; Sat, 13 Jun 2026 16:36:38 -0400
+	id 1wYV67-0001hj-Oe; Sat, 13 Jun 2026 16:36:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYV5l-0001OU-P3; Sat, 13 Jun 2026 16:36:35 -0400
+ id 1wYV5y-0001ZD-51; Sat, 13 Jun 2026 16:36:46 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYV5h-00039B-DZ; Sat, 13 Jun 2026 16:36:30 -0400
+ id 1wYV5w-0003EG-HU; Sat, 13 Jun 2026 16:36:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1781382962; bh=ruH2hkT0kSahVJDVkJVWgjKgRpyoHENjlyJWh/U7KsQ=;
+ t=1781382962; bh=x8Obbye/RcP9958V3Ik52SIuaNnuyPM0y+vpzi01500=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=FesZH91FsLWovD1yWFxoKFyqz1GMlmq+2dLSlrQJEQxe2AhHl0qLsh9tH2Sg09HWI
- Cp4S8MnZL39vbHyVzBPI+HeG5r51FrOGaE+QWzG1co8ieemdJZq+0gdzX4DYyZB8XL
- UVc0pcXA9GCh3z1Mkq672TS+IWpX2lToXsBImHhHm2Wi5hpJ5hBdcz0NdgZz6zvPTJ
- PHFOQb35AAIH7hOs8ifTe2DYXUOFYESMb2S+6+yChW8/Y8PPq9p+exfRMVE9lwrl2C
- D39KMsbEfb6FwGC1I/9x9t5rlNfllZt0RTO3uLwAtMETOIWRjUcBbOdcKPypbe+/SS
- 1jKAbunAEq0Yg==
+ b=wDYJxDKnLO1greEOexlb7aofV+2nFEtCWO7GGfBJV8xQynHW+4t3Gz0Z3IzGR7X2r
+ bY0wfJlkIhpBAVnjrXCHV4iCh3+kv7imF71Cs94k9/vKhb1t9TmrMosvZffI0mR5pf
+ aC/wfUy3GN7Yx3O9ObLchr07zzd0iN2kRsGR5RmhjBqyoRORw2sx/i1WIp6+R7/K+C
+ swwUyJJbCzzE9IhGxFJp1wY5nXkVBhqbKgctKU21zBeTHOY8pLMLnU1wC6RchkWSKQ
+ 3KDyEe3XK294iyH9ODmRVmIw2WZsmpUxEWWkm+O9sqDMWJeFXfTJcKvPBHbTyKPdy4
+ Agx/KL7ccz4Kw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 712AC1B6EDC;
+ by isrv.corpit.ru (Postfix) with ESMTP id DD9261B6EE2;
  Sat, 13 Jun 2026 23:36:02 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id D6D803CE92E;
- Sat, 13 Jun 2026 23:36:20 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 50F613CE934;
+ Sat, 13 Jun 2026 23:36:21 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Frank Chang <frank.chang@sifive.com>,
- Max Chou <max.chou@sifive.com>,
+Cc: qemu-stable@nongnu.org, Abhigyan Kumar <314abh@gmail.com>,
  Alistair Francis <alistair.francis@wdc.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.2 02/72] target/riscv: Update MISA.C for Zc* extensions
-Date: Sat, 13 Jun 2026 23:34:28 +0300
-Message-ID: <20260613203542.1809153-2-mjt@tls.msk.ru>
+Subject: [Stable-11.0.2 08/72] target/riscv: Fix medeleg[11] read-only zero
+ bit for M-mode ECALL
+Date: Sat, 13 Jun 2026 23:34:34 +0300
+Message-ID: <20260613203542.1809153-8-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.2-20260613224644@cover.tls.msk.ru>
 References: <qemu-stable-11.0.2-20260613224644@cover.tls.msk.ru>
@@ -70,84 +70,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Frank Chang <frank.chang@sifive.com>
+From: Abhigyan Kumar <314abh@gmail.com>
 
-MISA.C is set if the following extensions are selected:
-  * Zca and not F.
-  * Zca, Zcf and F (but not D) is specified (RV32 only).
-  * Zca, Zcf and Zcd if D is specified (RV32 only).
-  * Zca, Zcd if D is specified (RV64 only).
+RISC-V Privileged Specification 3.1.8 (Machine Trap Delegation Registers
+(medeleg and mideleg)) mentions:
 
-Therefore, MISA.C must be set according to the Zc* extension rules.
+"For exceptions that cannot occur in less privileged modes, the
+corresponding medeleg bits should be read-only zero. In particular,
+medeleg[11] is read-only zero."
 
-Warn the user if RVC is explicitly disabled but MISA.C is required by
-the rules above.
+QEMU incorrectly included RISCV_EXCP_M_ECALL in DELEGABLE_EXCPS. It
+allowed the 11th bit to be written and read as set. Fixed by removing it
+from the DELEGABLE_EXCPS mask, adhering to the specification.
 
-Signed-off-by: Frank Chang <frank.chang@sifive.com>
-Reviewed-by: Max Chou <max.chou@sifive.com>
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3438
+Signed-off-by: Abhigyan Kumar <314abh@gmail.com>
 Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20260424050509.3935180-2-frank.chang@sifive.com>
+Message-ID: <20260427060849.749179-2-314abh@gmail.com>
+[ Changes by AF:
+ - Remove comment
+]
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-(cherry picked from commit f0433a8bc4ac5626499ff09ba5d165dbf7a4a980)
+(cherry picked from commit a0946caf1d9ec21446ebdcb5eab2400baa4323ae)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
-index 988b2d905f..800b7dce5d 100644
---- a/target/riscv/tcg/tcg-cpu.c
-+++ b/target/riscv/tcg/tcg-cpu.c
-@@ -1150,6 +1150,44 @@ static void riscv_cpu_enable_implied_rules(RISCVCPU *cpu)
-     }
- }
- 
-+/*
-+ * MISA.C is set if the following extensions are selected:
-+ *   - Zca and not F.
-+ *   - Zca, Zcf and F (but not D) is specified on RV32.
-+ *   - Zca, Zcf and Zcd if D is specified on RV32.
-+ *   - Zca, Zcd if D is specified on RV64.
-+ */
-+static void riscv_cpu_update_misa_c(RISCVCPU *cpu)
-+{
-+    CPURISCVState *env = &cpu->env;
-+    bool set_misa_c = false;
-+
-+    if (riscv_has_ext(env, RVC)) {
-+        return;
-+    }
-+
-+    if (cpu->cfg.ext_zca && !riscv_has_ext(env, RVF)) {
-+        set_misa_c = true;
-+    } else if (riscv_cpu_mxl(env) == MXL_RV32 &&
-+               cpu->cfg.ext_zca && cpu->cfg.ext_zcf &&
-+               (riscv_has_ext(env, RVD) ? cpu->cfg.ext_zcd :
-+                                          riscv_has_ext(env, RVF))) {
-+        set_misa_c = true;
-+    } else if (riscv_cpu_mxl(env) == MXL_RV64 &&
-+               cpu->cfg.ext_zca && cpu->cfg.ext_zcd) {
-+        set_misa_c = true;
-+    }
-+
-+    if (set_misa_c) {
-+        if (cpu_misa_ext_is_user_set(RVC)) {
-+            warn_report("RVC mandated by Zca/Zcf/Zcd extensions");
-+            return;
-+        }
-+
-+        riscv_cpu_set_misa_ext(env, env->misa_ext | RVC);
-+    }
-+}
-+
- void riscv_tcg_cpu_finalize_features(RISCVCPU *cpu, Error **errp)
- {
-     CPURISCVState *env = &cpu->env;
-@@ -1157,6 +1195,7 @@ void riscv_tcg_cpu_finalize_features(RISCVCPU *cpu, Error **errp)
- 
-     riscv_cpu_init_implied_exts_rules();
-     riscv_cpu_enable_implied_rules(cpu);
-+    riscv_cpu_update_misa_c(cpu);
- 
-     riscv_cpu_validate_misa_priv(env, &local_err);
-     if (local_err != NULL) {
+diff --git a/target/riscv/csr.c b/target/riscv/csr.c
+index 51e668b46d..35e98df420 100644
+--- a/target/riscv/csr.c
++++ b/target/riscv/csr.c
+@@ -1789,7 +1789,6 @@ static const uint64_t all_ints = M_MODE_INTERRUPTS | S_MODE_INTERRUPTS |
+                          (1ULL << (RISCV_EXCP_U_ECALL)) | \
+                          (1ULL << (RISCV_EXCP_S_ECALL)) | \
+                          (1ULL << (RISCV_EXCP_VS_ECALL)) | \
+-                         (1ULL << (RISCV_EXCP_M_ECALL)) | \
+                          (1ULL << (RISCV_EXCP_INST_PAGE_FAULT)) | \
+                          (1ULL << (RISCV_EXCP_LOAD_PAGE_FAULT)) | \
+                          (1ULL << (RISCV_EXCP_STORE_PAGE_FAULT)) | \
 -- 
 2.47.3
 
