@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1842ECD98CF
-	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 20:12:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6BE76CD98CF
+	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 20:12:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wYUf1-0007xT-LS; Sat, 13 Jun 2026 16:08:55 -0400
+	id 1wYUf3-0008Fa-5C; Sat, 13 Jun 2026 16:08:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYUek-0005m1-MK; Sat, 13 Jun 2026 16:08:38 -0400
+ id 1wYUem-00062S-C2; Sat, 13 Jun 2026 16:08:40 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYUei-0002Zr-E2; Sat, 13 Jun 2026 16:08:38 -0400
+ id 1wYUek-0002dM-A9; Sat, 13 Jun 2026 16:08:39 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1781381069; bh=cXaYsvnmzHqt768d4b00L4/YFji6YTxatS8VuLdNPGU=;
+ t=1781381069; bh=y7G/QIRnRsuPk7/oRZJGZMI9BKG1yQA33e2zndC2EKs=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=AX1g3Atxp+Wcsa4aBuPP/assqRWlYWMjgn2iRuWDQMYXUd0UKn/53JDkTv563mYm2
- gOJpGPANAGgjeG79I4Se1mPggO20UnQbxbMrczFS6YwpgAfz2LdK7E3IZ/RqnIkMy4
- ShlwZOqGMCcM38yjNaEs5igmbtbd5dkTU9qTlbOYoq7pRWqhxLHSRFLig2FZ59NKIz
- bq2Ekjafv8tRwL48LwPdwa7Wl85UvM+wIhbkrp1AP2O2WpKUuRZ06Hl9igMx4Y7X0F
- s13/Yt/pyzrTDzfESVyPVUjZJNrXdpevBQj4BeoCZ8wf0Ig7AanB/aAzWPNTcHNwz4
- sUk824tpjLlxQ==
+ b=j+uPUeeIo8DKB05x5n/I5ztAX0/EIpvaAipRgQOar9ybeQa4IvTM4kfDqqoSRGk/y
+ rsH2ha+36xFkt81vywvSVth4TssLrWreg5ETwOQg5QIwamyW+T7nzJ95nzDIpoJll+
+ B16wackGtKVh++njpmTuMrWqXrTn2AYma9leHrDV/tks46knZZ9Q/deO1GLP47EFBW
+ AAO3O9CwKupz4epF5pyvbuEYETo4xLSxexpHV3OzQu0QCjtXzSwtfVzBBx5gzU+dKj
+ szcnm8cpOGKTSprZd0EXeAbCLoZfvCnJsQCrIA43NxNq2SMFq1R6/ICekLjgr2u5dL
+ SBhxSUTRdavdQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id CC8881B6E96;
+ by isrv.corpit.ru (Postfix) with ESMTP id DBF6C1B6E98;
  Sat, 13 Jun 2026 23:04:29 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 36F0F3CE8F5;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 454743CE8F6;
  Sat, 13 Jun 2026 23:04:48 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org, Christian Schoenebeck <qemu_oss@crudebyte.com>,
- Wang Jihe <wangjihe.mail@gmail.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.4 43/61] hw/9pfs: let callers of v9fs_path_sprintf() and
- v9fs_fix_path() handle errors
-Date: Sat, 13 Jun 2026 23:03:26 +0300
-Message-ID: <20260613200411.1808021-43-mjt@tls.msk.ru>
+ Fabiano Rosas <farosas@suse.de>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.2.4 44/61] tests/qtest/libqos: add qvirtqueue_reset_pool()
+ for descriptor pool reset
+Date: Sat, 13 Jun 2026 23:03:27 +0300
+Message-ID: <20260613200411.1808021-44-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.2.4-20260613224639@cover.tls.msk.ru>
 References: <qemu-stable-10.2.4-20260613224639@cover.tls.msk.ru>
@@ -71,135 +71,68 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Christian Schoenebeck <qemu_oss@crudebyte.com>
 
-This patch mitigates issues with very large absolute paths.
+Add a function to reset the virtqueue descriptor pool state without
+reinitializing the device. This is useful for tests that issue a high
+number of requests and are limited by the simplified virtio test
+driver's descriptor tracking, which decrements num_free but never
+increments it back.
 
-- Add error handling to all v9fs_path_sprintf() calls in
-  local_name_to_path()
+The function is safe for synchronous test code where requests are
+sent and completed before the next request is issued.
 
-- Update callers of v9fs_fix_path() to check return values.
-
-- When path formatting fails, clunk the affected FIDs to prevent use of
-  invalid paths.
-
-- Use g_autofree for temporary variables to simplify code.
-
-Even though paths are usually limited to PATH_MAX (typically 4k) on guest,
-this limitation can be circumvented by using *at() functions on guest and
-creating very deep directory structures. This was a problem for QEMU 9p
-server, as it currently tracks the absolute path for each FID internally
-that always requires assembly of a (potentially ver large) absolute path.
-
-A true long-term fix would be getting rid of storing an absolute path for
-each FID internally. However that would likely be a massive change with
-uncertain implications.
-
-This patch therefore just mitigates the problem by immediately clunking
-(i.e. closing) all FIDs whose path exceed a limit that we could handle.
-As this only accounts to very unusual large absolute paths not ever been
-reported on (sane) production machines, this is currently considered an
-acceptable mitigation that should only (counter)affect malicious attempts.
-
-Fixes: 2f008a8c97e2 ("hw/9pfs: Use the correct signed type ...")
-Reported-by: Wang Jihe <wangjihe.mail@gmail.com>
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3358
-Link: https://lore.kernel.org/qemu-devel/1d11dcbfc95b811dcdb48c6d7f3894d0ebd073a2.1779126034.git.qemu_oss@crudebyte.com
+Acked-by: Fabiano Rosas <farosas@suse.de>
+Link: https://lore.kernel.org/qemu-devel/96cf23eea1204b34443218fe76bd4a5eaf9163e8.1779126034.git.qemu_oss@crudebyte.com
 Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
-(cherry picked from commit 3802c0e755a53b126e717415b54226a468bf7ddf)
+(cherry picked from commit be33c56898f8b18617cff91525f0b68abee8de07)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/9pfs/9p-local.c b/hw/9pfs/9p-local.c
-index 31e216227c..d7aeaededc 100644
---- a/hw/9pfs/9p-local.c
-+++ b/hw/9pfs/9p-local.c
-@@ -1256,26 +1256,35 @@ static int local_name_to_path(FsContext *ctx, V9fsPath *dir_path,
-         } else if (!strcmp(name, "..")) {
-             if (!strcmp(dir_path->data, ".")) {
-                 /* ".." relative to the root is "." */
--                v9fs_path_sprintf(target, ".");
-+                if (v9fs_path_sprintf(target, ".") < 0) {
-+                    return -1;
-+                }
-             } else {
--                char *tmp = g_path_get_dirname(dir_path->data);
-+                g_autofree char *tmp = g_path_get_dirname(dir_path->data);
-                 /* Symbolic links are resolved by the client. We can assume
-                  * that ".." relative to "foo/bar" is equivalent to "foo"
-                  */
--                v9fs_path_sprintf(target, "%s", tmp);
--                g_free(tmp);
-+                if (v9fs_path_sprintf(target, "%s", tmp) < 0) {
-+                    return -1;
-+                }
-             }
-         } else {
-             assert(!strchr(name, '/'));
--            v9fs_path_sprintf(target, "%s/%s", dir_path->data, name);
-+            if (v9fs_path_sprintf(target, "%s/%s", dir_path->data, name) < 0) {
-+                return -1;
-+            }
-         }
-     } else if (!strcmp(name, "/") || !strcmp(name, ".") ||
-                !strcmp(name, "..")) {
-             /* This is the root fid */
--        v9fs_path_sprintf(target, ".");
-+        if (v9fs_path_sprintf(target, ".") < 0) {
-+            return -1;
-+        }
-     } else {
-         assert(!strchr(name, '/'));
--        v9fs_path_sprintf(target, "./%s", name);
-+        if (v9fs_path_sprintf(target, "./%s", name) < 0) {
-+            return -1;
-+        }
-     }
-     return 0;
+diff --git a/tests/qtest/libqos/virtio.c b/tests/qtest/libqos/virtio.c
+index 010ff40834..ccbb325222 100644
+--- a/tests/qtest/libqos/virtio.c
++++ b/tests/qtest/libqos/virtio.c
+@@ -464,6 +464,29 @@ bool qvirtqueue_get_buf(QTestState *qts, QVirtQueue *vq, uint32_t *desc_idx,
+     return true;
  }
-diff --git a/hw/9pfs/9p.c b/hw/9pfs/9p.c
-index 0800ac12a4..0c162614f8 100644
---- a/hw/9pfs/9p.c
-+++ b/hw/9pfs/9p.c
-@@ -3325,12 +3325,14 @@ static int coroutine_fn v9fs_complete_rename(V9fsPDU *pdu, V9fsFidState *fidp,
-             goto out;
-         }
-     } else {
--        char *dir_name = g_path_get_dirname(fidp->path.data);
-+        g_autofree char *dir_name = g_path_get_dirname(fidp->path.data);
-         V9fsPath dir_path;
  
-         v9fs_path_init(&dir_path);
--        v9fs_path_sprintf(&dir_path, "%s", dir_name);
--        g_free(dir_name);
-+        err = v9fs_path_sprintf(&dir_path, "%s", dir_name);
-+        if (err < 0) {
-+            goto out;
-+        }
++/*
++ * qvirtqueue_reset_pool:
++ * @vq: The virtqueue to reset
++ *
++ * Reset the descriptor pool state without reinitializing the device.
++ * This is useful for tests that issue a high number of requests and
++ * are limited by the simplified virtio test driver's descriptor tracking,
++ * which decrements num_free but never increments it back.
++ *
++ * This is only safe for synchronous test code where requests are
++ * sent and completed before the next request is issued. Do not use
++ * with asynchronous code where multiple requests may be in-flight.
++ *
++ * Note: This only resets the available descriptor pool (free_head,
++ * num_free). The used ring position (last_used_idx) is NOT reset
++ * and should continue to track consumed responses across iterations.
++ */
++void qvirtqueue_reset_pool(QVirtQueue *vq)
++{
++    vq->free_head = 0;
++    vq->num_free = vq->size;
++}
++
+ void qvirtqueue_set_used_event(QTestState *qts, QVirtQueue *vq, uint16_t idx)
+ {
+     g_assert(vq->event);
+diff --git a/tests/qtest/libqos/virtio.h b/tests/qtest/libqos/virtio.h
+index e238f1726f..f17be0b9b6 100644
+--- a/tests/qtest/libqos/virtio.h
++++ b/tests/qtest/libqos/virtio.h
+@@ -150,6 +150,8 @@ void qvirtqueue_kick(QTestState *qts, QVirtioDevice *d, QVirtQueue *vq,
+ bool qvirtqueue_get_buf(QTestState *qts, QVirtQueue *vq, uint32_t *desc_idx,
+                         uint32_t *len);
  
-         err = v9fs_co_name_to_path(pdu, &dir_path, name->data, &new_path);
-         v9fs_path_free(&dir_path);
-@@ -3351,7 +3353,10 @@ static int coroutine_fn v9fs_complete_rename(V9fsPDU *pdu, V9fsFidState *fidp,
-     while (g_hash_table_iter_next(&iter, &fid, (gpointer *) &tfidp)) {
-         if (v9fs_path_is_ancestor(&fidp->path, &tfidp->path)) {
-             /* replace the name */
--            v9fs_fix_path(&tfidp->path, &new_path, strlen(fidp->path.data));
-+            if (v9fs_fix_path(&tfidp->path, &new_path,
-+                              strlen(fidp->path.data)) < 0) {
-+                clunk_fid(s, tfidp->fid);
-+            }
-         }
-     }
- out:
-@@ -3448,7 +3453,10 @@ static int coroutine_fn v9fs_fix_fid_paths(V9fsPDU *pdu, V9fsPath *olddir,
-     while (g_hash_table_iter_next(&iter, &fid, (gpointer *) &tfidp)) {
-         if (v9fs_path_is_ancestor(&oldpath, &tfidp->path)) {
-             /* replace the name */
--            v9fs_fix_path(&tfidp->path, &newpath, strlen(oldpath.data));
-+            if (v9fs_fix_path(&tfidp->path, &newpath,
-+                              strlen(oldpath.data)) < 0) {
-+                clunk_fid(s, tfidp->fid);
-+            }
-         }
-     }
- out:
++void qvirtqueue_reset_pool(QVirtQueue *vq);
++
+ void qvirtqueue_set_used_event(QTestState *qts, QVirtQueue *vq, uint16_t idx);
+ 
+ void qvirtio_start_device(QVirtioDevice *vdev);
 -- 
 2.47.3
 
