@@ -4,46 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F53ECD8CA8
-	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 20:44:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89F03CD98CF
+	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 20:45:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wYVAf-0004uJ-2n; Sat, 13 Jun 2026 16:41:37 -0400
+	id 1wYVBn-00076i-Uq; Sat, 13 Jun 2026 16:42:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYVAd-0004nH-3J; Sat, 13 Jun 2026 16:41:35 -0400
+ id 1wYVBa-0006Tx-US; Sat, 13 Jun 2026 16:42:36 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYVAb-0005JR-CV; Sat, 13 Jun 2026 16:41:34 -0400
+ id 1wYVBX-0005Yg-TI; Sat, 13 Jun 2026 16:42:33 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1781382966; bh=/yCG3jEExQpedxSgTR2/aw27BcSv2Xz3e8r7g1a46fI=;
+ t=1781382966; bh=sDVad7yR6XfEtdjJL/uZdWVwB7wdrZAt4MA6KLhxk0o=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=nmcUeUPhwgZfgLnqqQp58fnvLLf8Pk5Zgn0S0OGRoJRvaI1IgfvK91uyX/fn7R730
- rJ0X/bqEtcHHlrwFWssK5VjrG53aSpSsutwpffeCQXM9lQP1oFRou5Rmk165DJiSEl
- l4CsLi4Rg5G0hkIczar5GPM8+ekMsrl3zEAqwbnB0dWagmr5dPq8tj3ez3TyI1GclK
- QXUsJtw8HDBmWe6N8ZlA+/IGopc7sFMX6fICmwCFeFs2D2DghghzhpmdWLwa6/aNwa
- CIIK35ovMy7//4kHBhotp+BUwpBv/99LuZnS998pURP0kK7qb6vO0no3GAqsXpHMso
- qM/asjKiw4kDg==
+ b=If0ohev5Lu0Qn2sDL18eAk5zO6wtk+Qz9vqn/DlbocglcWkxSr1jv+IUuSv4U9Ype
+ SZWW1ADRCYafxcg9mKIKjwc/CJpbCNKeP4hREChw6nn3JpdxmvhAfkfav4lnsSFhrc
+ 51K6jo4p1F1K/Q1CiXP9jWp0LFHGvPr2gg4Ul690Wg/rIFsGbTv1qO5fHoxO0knoAO
+ 9dR68GXfs2ckpA2Vk3pJiPzQoaSF/v94Xo3FXRQ6gTNBBdKCn6JhHVZNIyE2xnfjm6
+ W/J9/KspOL+PJGcO2QqkmJHp5bg3f6d5+pUYjtZYLLN73UCk7xwH17wBfdYyBwlFUf
+ 11dUsyx6ezOow==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 013EA1B6F1A;
+ by isrv.corpit.ru (Postfix) with ESMTP id 9E4381B6F24;
  Sat, 13 Jun 2026 23:36:06 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 65DB73CE964;
- Sat, 13 Jun 2026 23:36:24 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 13D393CE96D;
+ Sat, 13 Jun 2026 23:36:25 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Alexandra Winter <wintera@linux.ibm.com>,
- Hendrik Brueckner <brueckner@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Gautam Gala <ggala@linux.ibm.com>, Cornelia Huck <cohuck@redhat.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.2 56/72] target/s390x: Make container ids in SysIB_15x
- 1-based
-Date: Sat, 13 Jun 2026 23:35:22 +0300
-Message-ID: <20260613203542.1809153-56-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Fiona Ebner <f.ebner@proxmox.com>,
+ Kevin Wolf <kwolf@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.2 65/72] block/export/fuse: use struct fuse_init_in
+Date: Sat, 13 Jun 2026 23:35:31 +0300
+Message-ID: <20260613203542.1809153-65-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.2-20260613224644@cover.tls.msk.ru>
 References: <qemu-stable-11.0.2-20260613224644@cover.tls.msk.ru>
@@ -72,73 +68,125 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alexandra Winter <wintera@linux.ibm.com>
+From: Fiona Ebner <f.ebner@proxmox.com>
 
-The Container Id in a container-type TLE of SysIB_15x is defined as 8-bit
-unsigned nonzero integer. Make stsi fc 15 emulation architecture compliant,
-by starting the container ids at 1 for the lowest numbered container.
+The code is switched to use the current 'struct fuse_init_in' in
+preparation to use the FUSE_DIRECT_IO_ALLOW_MMAP feature, which is
+part of the flags2 member that got added in protocol version 5.36.
 
-The qemu misbehaviour without this patch becomes obvious due to a recently
-proposed kernel fix. Older linux kernels pass the container ids from stsi
-fc15 unchanged to sysfs, i.e. starting at 1 on s390 hardware. This resulted
-in off-by-one values when compared to the values from HMC. A Linux kernel
-fix is being proposed to correct the sysfs topology ids by -1, so they
-start at 0, e.g. when displayed by 'lscpu -ye'. In case a KVM guest with a
-fixed kernel runs on a host with a qemu without this fix, this can result
-in container ids erroneously being shown as 255.
-Example (Fixed guest on unfixed qemu):
-$ lscpu -ye
-CPU NODE DRAWER BOOK SOCKET CORE L1d:L1i:L2 ONLINE CONFIGURED POLARIZATION ADDRESS
-  0    0    255  255    255    0 0:0:0         yes yes        vert-medium  0
-  1    0    255  255      0    1 1:1:1         yes yes        vert-medium  1
-After this fix:
-$ lscpu -ye
-CPU NODE DRAWER BOOK SOCKET CORE L1d:L1i:L2 ONLINE CONFIGURED POLARIZATION ADDRESS
-  0    0      0    0      0    0 0:0:0         yes yes        vert-medium  0
-  1    0      0    0      1    1 1:1:1         yes yes        vert-medium  1
+To not break compatibility with older kernels, the check for whether
+the full header of an operation was read in co_read_from_fuse_fd()
+needs to be adapted. In particular, for a FUSE_INIT operation, the
+protocol version must be considered, because the length of the header
+changed with protocol version 7.36. Always using the length of the
+old, shorter struct was inaccurate, since for newer protocol versions
+this might mean accepting a truncated read for FUSE_INIT.
 
-Fixes: f4f54b582f ("target/s390x/cpu topology: handle STSI(15) and build the SYSIB")
-Signed-off-by: Alexandra Winter <wintera@linux.ibm.com>
-Acked-by: Hendrik Brueckner <brueckner@linux.ibm.com>
-Acked-by: Christian Borntraeger <borntraeger@linux.ibm.com>
-Reviewed-by: Gautam Gala <ggala@linux.ibm.com>
-Message-ID: <20260511134909.43802-1-wintera@linux.ibm.com>
-Signed-off-by: Cornelia Huck <cohuck@redhat.com>
-(cherry picked from commit 1f1ccb6f3c48a2cd80e874d66afeef2dc28a65f3)
+Users of the init header that want to use parts of the extended
+structure must check with the using_old_fuse_init_in() helper function
+if they may do so.
+
+Cc: qemu-stable@nongnu.org
+Fixes: a94a1d7699 ("fuse: Manually process requests (without libfuse)")
+Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
+Message-ID: <20260506145424.10249-2-f.ebner@proxmox.com>
+Reviewed-by: Kevin Wolf <kwolf@redhat.com>
+Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+(cherry picked from commit 817cc2d045d25c980f20c2377d4a301f68d3e3e2)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/s390x/kvm/stsi-topology.c b/target/s390x/kvm/stsi-topology.c
-index c8d6389cd8..af3fd8ad1b 100644
---- a/target/s390x/kvm/stsi-topology.c
-+++ b/target/s390x/kvm/stsi-topology.c
-@@ -90,9 +90,9 @@ static int stsi_topology_fill_sysib(S390TopologyList *topology_list,
-     int last_drawer = -1;
-     int last_book = -1;
-     int last_socket = -1;
--    int drawer_id = 0;
--    int book_id = 0;
--    int socket_id = 0;
-+    int drawer_id = 1;
-+    int book_id = 1;
-+    int socket_id = 1;
-     int n = sizeof(SysIB_151x);
+diff --git a/block/export/fuse.c b/block/export/fuse.c
+index a2a478d293..35218e3197 100644
+--- a/block/export/fuse.c
++++ b/block/export/fuse.c
+@@ -51,23 +51,16 @@
+ #define FUSE_MAX_READ_BYTES (MIN(BDRV_REQUEST_MAX_BYTES, 1 * 1024 * 1024))
+ #define FUSE_MAX_WRITE_BYTES (64 * 1024)
  
-     QTAILQ_FOREACH(entry, topology_list, next) {
-@@ -103,12 +103,12 @@ static int stsi_topology_fill_sysib(S390TopologyList *topology_list,
-         if (level > 3 && drawer_change) {
-             SYSIB_GUARD(n, sizeof(SYSIBContainerListEntry));
-             p = fill_container(p, 3, drawer_id++);
--            book_id = 0;
-+            book_id = 1;
-         }
-         if (level > 2 && book_change) {
-             SYSIB_GUARD(n, sizeof(SYSIBContainerListEntry));
-             p = fill_container(p, 2, book_id++);
--            socket_id = 0;
-+            socket_id = 1;
-         }
-         if (socket_change) {
-             SYSIB_GUARD(n, sizeof(SYSIBContainerListEntry));
+-/*
+- * fuse_init_in structure before 7.36.  We don't need the flags2 field added
+- * there, so we can work with the smaller older structure to stay compatible
+- * with older kernels.
+- */
+-struct fuse_init_in_compat {
+-    uint32_t major;
+-    uint32_t minor;
+-    uint32_t max_readahead;
+-    uint32_t flags;
+-};
+-
+ typedef struct FuseRequestInHeader {
+     struct fuse_in_header common;
+     /* All supported requests */
+     union {
+-        struct fuse_init_in_compat init;
++        /*
++         * When using_old_fuse_init_in() is true, then the smaller older struct
++         * is used by the kernel. The flags2 member and other new members must
++         * be treated as absent then.
++         */
++        struct fuse_init_in init;
+         struct fuse_open_in open;
+         struct fuse_setattr_in setattr;
+         struct fuse_read_in read;
+@@ -629,6 +622,16 @@ static int clone_fuse_fd(int fd, Error **errp)
+     return new_fd;
+ }
+ 
++/**
++ * Check whether the smaller older fuse_init_in structure from before protocol
++ * version 7.36 is used. The flags2 member and other new members must be treated
++ * as absent then.
++ */
++static bool using_old_fuse_init_in(const struct fuse_init_in *in)
++{
++    return in->major < 7 || (in->major == 7 && in->minor < 36);
++}
++
+ /**
+  * Try to read a single request from the FUSE FD.
+  * Takes a FuseQueue pointer in `opaque`.
+@@ -693,6 +696,31 @@ static void coroutine_fn co_read_from_fuse_fd(void *opaque)
+         goto no_request;
+     }
+ 
++    /*
++     * If the request is of type FUSE_INIT, need to check the version to
++     * actually determine the length of the fuse_init_in structure used by the
++     * kernel. In protocol version 7.36, the structure was extended.
++     */
++    if (in_hdr->common.opcode == FUSE_INIT) {
++        /* Length of the fuse_init_in structure before 7.36. */
++        size_t old_init_hdr_len = 16;
++
++        /*
++         * Expect at least the size of the smaller older structure to ensure the
++         * version can be checked.
++         */
++        if (unlikely(ret < sizeof(in_hdr->common) + old_init_hdr_len)) {
++            error_report("FUSE_INIT request truncated, read only %zi bytes",
++                         ret);
++            fuse_write_err(fuse_fd, &in_hdr->common, -EINVAL);
++            goto no_request;
++        }
++
++        if (using_old_fuse_init_in(&in_hdr->init)) {
++            op_hdr_len = old_init_hdr_len;
++        }
++    }
++
+     if (unlikely(ret < sizeof(in_hdr->common) + op_hdr_len)) {
+         error_report("FUSE request truncated, expected %zu bytes, read %zi "
+                      "bytes",
+@@ -826,7 +854,7 @@ static bool is_regular_file(const char *path, Error **errp)
+  */
+ static ssize_t coroutine_fn GRAPH_RDLOCK
+ fuse_co_init(FuseExport *exp, struct fuse_init_out *out,
+-             const struct fuse_init_in_compat *in)
++             const struct fuse_init_in *in)
+ {
+     const uint32_t supported_flags = FUSE_ASYNC_READ | FUSE_ASYNC_DIO;
+ 
 -- 
 2.47.3
 
