@@ -4,51 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2DF6ECD8CA8
-	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 20:07:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB132CD8CA8
+	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 20:08:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wYUcW-0001mx-DA; Sat, 13 Jun 2026 16:06:21 -0400
+	id 1wYUdv-00040X-V7; Sat, 13 Jun 2026 16:07:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYUcM-0001fI-Vb; Sat, 13 Jun 2026 16:06:12 -0400
+ id 1wYUcQ-0001jQ-Lc; Sat, 13 Jun 2026 16:06:14 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYUcI-0000PP-O1; Sat, 13 Jun 2026 16:06:09 -0400
+ id 1wYUcO-0000cD-Ov; Sat, 13 Jun 2026 16:06:14 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1781381068; bh=GHZKx0C+59rQloebIY9bHopdX5r5N+kVkzRe3ZrhLE4=;
+ t=1781381068; bh=o9fMaY0Ohs0C5BXwCWIik/svQPKJb9uyHH09GMXT8Z0=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=vE8ZEeadVm0wtwyO5W5ptj8eON6re5yBVJ1GN25X7EmGzPzc2spRQ3y6ibJNPphSk
- lUBN/3z37m3/5hP3xu2RAF8KlZHJ2dWCLim9oYmROi3YjXPSH8yXILJ1VNskWCYsRK
- Z0AsR2Tcns2UFCX82AnFw8mYlpB3HzHXs7g/ONtiNgV9axsCvaRL/3pKDDMveIWBR4
- yiR4jz9ffj9TuZZnKARoANeAFXRlzx07LSkqsQBhxhj5w5xWCzuS1B0jpM/BjFABRX
- +rm2nduqoMA1jcddAFFQ4GqwZHX1/x4KAXf+tQGx5daElxKMB6u6FKHPki299eyY9S
- Jn8Tn8s5FxKgg==
+ b=Q6uT7LNpHQkjYihtWfL45scXki+qhp9M5pKAK5NIH5w2XIztit4j+mGfTFWnEVw7z
+ SCoKYtz76AQ+MlDUiR2T0VaAQIy5sphEspPJajgltvk5kBfM+GlOJ0itbzK9B3+p1S
+ TYiPGFkMaxNCM64usPdVj9rAQOCO2ILjA5Woj0K8PEFivjv1P/yjWhRfoIU0wa/1EC
+ BhHpGe6wviL9CwSaAcVXrgiAnu8qIfIjE+Gr+3S3C6p/0LCUe38SJx/dslkVXCn4WZ
+ j/AoO202mCOWM2Pt47NXFHLoIvJkaXdf5ruiw9OgbeztzjC/d6LbukcDpjtsqXyUh8
+ IqwOu21GIxJMw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 22E8D1B6E7A;
+ by isrv.corpit.ru (Postfix) with ESMTP id 457221B6E7D;
  Sat, 13 Jun 2026 23:04:28 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 7F5B53CE8DD;
+ by tsrv.corpit.ru (Postfix) with ESMTP id A35303CE8DF;
  Sat, 13 Jun 2026 23:04:46 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- boy juju <agx1657748706@gmail.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.4 19/61] ui/vnc: fix OOB read updating VNC update
- frequency stats
-Date: Sat, 13 Jun 2026 23:03:02 +0300
-Message-ID: <20260613200411.1808021-19-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Wei Che Kao <skps96g313.cs10@gmail.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.2.4 21/61] lsi53c895a: fix use-after-free of cancelled
+ request
+Date: Sat, 13 Jun 2026 23:03:04 +0300
+Message-ID: <20260613200411.1808021-21-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.2.4-20260613224639@cover.tls.msk.ru>
 References: <qemu-stable-10.2.4-20260613224639@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -73,45 +69,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel P. Berrangé <berrange@redhat.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
 
-Incorrect loop bounds in vnc_update_freq result in iterating past the
-last row and past the last column in the VNC stats array. With suitably
-chosen dimensions this could be a OOB read that accesses memory beyond
-the VncDisplay struct that the stats array is embedded in.
+When processing the Message Out phase, the lsi53c895a controller
+can cancel a request and the continue by processing more messages.
+When this happens, it is important that a cancelled request is not
+processed further, because scsi_req_cancel can cause the request
+to be freed.
 
-Should this hit a guard page, it could trigger a guest crash. If it
-does not, then the VNC frequency stats will be updated with garbage.
+Right now this is happening in two cases, but not when cancelling
+the entire queue of requests after an ABORT, CLEAR QUEUE or
+BUS DEVICE RESET message.  In that case, a subsequent ABORT TAG
+message can use a dangling current_req.
 
-Fixes: CVE-2026-48003
-Reported-by: boy juju <agx1657748706@gmail.com>
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-Message-ID: <20260521103353.1645561-5-berrange@redhat.com>
-(cherry picked from commit d0c7b82d3a89dd9c863f8aa69b07360c648ca9fb)
+There are three possible fixes:
+
+- add a missing check inside the loop, clearing current_req
+  if p->req == current_req.  This is obvious but complicates the
+  code inside the foreach loop.
+
+- change the conditional prior to the loop from "if (s->current)"
+  to "if (current_req)".  This would work, because s->current != NULL
+  implies current_req != NULL, and would clear current_req correctly.
+  However it is less obvious because the point of the code
+  is to clear the entire queue, which consists of s->current
+  and s->queue; current_req is not special here.
+
+- delay the retrieval of current_req until an ABORT TAG message
+  is seen.  This is the most correct option, because the SCSI
+  protocol only deals with tags; requests are a QEMU concept
+  that only makes sense for the purpose of calling into the
+  SCSI layer.
+
+Reported-by: Wei Che Kao <skps96g313.cs10@gmail.com>
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+(cherry picked from commit 5297a0fc65317ba7f79ef44ce7a44e41d15fdb27)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/ui/vnc.c b/ui/vnc.c
-index b61d3d4b4e..848a335803 100644
---- a/ui/vnc.c
-+++ b/ui/vnc.c
-@@ -3120,12 +3120,14 @@ double vnc_update_freq(VncState *vs, int x, int y, int w, int h)
-     int i, j;
-     double total = 0;
-     int num = 0;
-+    int x_end = x + w;
-+    int y_end = y + h;
+diff --git a/hw/scsi/lsi53c895a.c b/hw/scsi/lsi53c895a.c
+index 0b1f68a40a..28a10aad19 100644
+--- a/hw/scsi/lsi53c895a.c
++++ b/hw/scsi/lsi53c895a.c
+@@ -1000,10 +1000,8 @@ static void lsi_do_msgout(LSIState *s)
  
-     x =  QEMU_ALIGN_DOWN(x, VNC_STAT_RECT);
-     y =  QEMU_ALIGN_DOWN(y, VNC_STAT_RECT);
+     if (s->current) {
+         current_tag = s->current->tag;
+-        current_req = s->current;
+     } else {
+         current_tag = s->select_tag;
+-        current_req = lsi_find_by_tag(s, current_tag);
+     }
  
--    for (j = y; j <= y + h; j += VNC_STAT_RECT) {
--        for (i = x; i <= x + w; i += VNC_STAT_RECT) {
-+    for (j = y; j < y_end; j += VNC_STAT_RECT) {
-+        for (i = x; i < x_end; i += VNC_STAT_RECT) {
-             total += vnc_stat_rect(vs->vd, i, j)->freq;
-             num++;
-         }
+     trace_lsi_do_msgout(s->dbc);
+@@ -1058,9 +1056,13 @@ static void lsi_do_msgout(LSIState *s)
+         case 0x0d:
+             /* The ABORT TAG message clears the current I/O process only. */
+             trace_lsi_do_msgout_abort(current_tag);
++            if (s->current) {
++                current_req = s->current;
++            } else {
++                current_req = lsi_find_by_tag(s, current_tag);
++            }
+             if (current_req && current_req->req) {
+                 scsi_req_cancel(current_req->req);
+-                current_req = NULL;
+             }
+             lsi_disconnect(s);
+             break;
+@@ -1086,7 +1088,6 @@ static void lsi_do_msgout(LSIState *s)
+             /* clear the current I/O process */
+             if (s->current) {
+                 scsi_req_cancel(s->current->req);
+-                current_req = NULL;
+             }
+ 
+             /* As the current implemented devices scsi_disk and scsi_generic
 -- 
 2.47.3
 
