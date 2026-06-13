@@ -4,47 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62A0FCD98C5
-	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 15:32:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2798CD98C5
+	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 15:32:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wYQJR-0007z7-Jv; Sat, 13 Jun 2026 11:30:21 -0400
+	id 1wYQJe-00084V-Vh; Sat, 13 Jun 2026 11:30:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
- (envelope-from <d53f0337eb7f8525a14e394599d809ecf6805e5e@kylie.crudebyte.com>)
- id 1wYQJL-0007u4-D5; Sat, 13 Jun 2026 11:30:15 -0400
+ (envelope-from <357c20fc244c04dcbd36b13aa20a5c9b2034e9f0@kylie.crudebyte.com>)
+ id 1wYQJd-00083m-0g; Sat, 13 Jun 2026 11:30:33 -0400
 Received: from kylie.crudebyte.com ([5.189.157.229])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
- (envelope-from <d53f0337eb7f8525a14e394599d809ecf6805e5e@kylie.crudebyte.com>)
- id 1wYQJJ-0005EM-Pb; Sat, 13 Jun 2026 11:30:15 -0400
+ (envelope-from <357c20fc244c04dcbd36b13aa20a5c9b2034e9f0@kylie.crudebyte.com>)
+ id 1wYQJb-0005Qy-KG; Sat, 13 Jun 2026 11:30:32 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=crudebyte.com; s=kylie; h=Cc:To:Subject:Date:From:References:In-Reply-To:
  Message-ID:Content-Type:Content-Transfer-Encoding:MIME-Version:Content-ID:
- Content-Description; bh=8z6iKW8YNi1KKFTG5t1wGDQ446H2qhx33nkQX+TXy8E=; b=jacz8
- DEnZq/0+rpG+WlmzOMtn46ds2rcnW56AlXdzB2uLxvVTvHdAO6yCWfdRp2KpCx8xeHthDjnGbF9IO
- 5/J4LqGQs3BuSyrXg5O9VSAptBsGuv4kVRqTeLdZg6pBOp5kPOS3z64iuIIaOOF/f6PIfhLNOpqXD
- HiMmaPpjRq87aFQKaT2k5uguwAB96kUOSV7C0z4DpVct8hy7mPDKIPkwH28FtWCJ2z2nUrh2N/p21
- o9/oM0Ion7QqUaB0l9Bjg8Yq2TrETEndpv72uMWTlIa9UozjgYoSoQ1n2NVu+Ns/B7Wypoovvq2Jy
- ZMUXNlfmx+obx8WDjd40jcZElWF4U058VFNcusATb7UvuRQyigw8mBpQsJLjLNncJ3RfLuvBv5YQp
- hWDwOwEa+/+oNAuVXPvyNcvHWGTkptSuLHJ5QCs+0gmjaV8NT6CAkVxddXxuOi2e5mbNoDyy6VFjJ
- 2dmcts1FJowzm2n0tYlQRFaKUhEyBG4dQOi4HNLyRrKdJ7EevhQfdfNE7wVLhwSGBKuMCdl4+VlfC
- wV2gs/PNEMlnh6sq42C0UwlekI/Gl5KVRx1/349gYJsJLat9wV40wagBmyIkm/fhKt/Jz5edlDO4t
- y9c/JLGU5K3ZaUkFceVGN3qxPW+BDttn398c/6j9QotM8F9M1dbukogWTJRSeQ=;
-Message-ID: <d53f0337eb7f8525a14e394599d809ecf6805e5e.1781361555.git.qemu_oss@crudebyte.com>
+ Content-Description; bh=CJCZqEwpDo0kNpINRxGPflnSQ7lBBvvEzLU2Ny1xHJQ=; b=bz3uJ
+ 4oIpJm06elFs0Ct33WN+Oh9TU2PoK+/gQgsX4Wx4ePflfak16er0WqACffmpNjXau5j6O+Tt56qgl
+ bFHwCwF4gLXJ0wpDyCv55xWaJpsSaYOhNCzIa1KYBCDvD1km42LCRP3ZoORO0/FK6txEj1Wj7bpn5
+ ZPhXrK216s4DoDzVTtFOcYTsV4DIjIJ0MFmof/6Qd1As0LAloAxPDpU6exsYQE5Liy33UpWwJGxRS
+ PArcst/HyAIQjXRVrnNSXqDBB/CaZ+9ya0XPrMLAd1Ftl+scaBNYviMnOMygne0zLKq0MhwRGUSbN
+ z6jDFQEc8X2z4a0cs9yVYhCP9ahvaHRmBl0kMJTXJeNvZp1Ro4m7JmFl6oLXELXJOC60bakaQkOW2
+ MqqHiPhgIv9CZwK3wd3DIbq31FNPCfZQgsZ9DxlArZ7YYdOkE2HExB+rDPJmSdlKc3mInbVQjz8vd
+ Zu1BKZVzzeUqIo4agnYeTkENK+IW5Czng+fptO/5bomoAF3DTjnxm2xinkyPbMY0Xui9QL79kx2RK
+ lCZBk3yFalNI6/+AsRFZTRI+e0fWJXIoug9SdEPpnwqrfnahmtHmdSHnNcNa7uwTMrTNzKpKdlbXK
+ OZvLKRzgIZ3YHpfk8LMhGB/t3poJ8jqdyy0toKN74uKAN8nr1V+ltKQT47GAL0=;
+Message-ID: <357c20fc244c04dcbd36b13aa20a5c9b2034e9f0.1781361555.git.qemu_oss@crudebyte.com>
 In-Reply-To: <cover.1781361555.git.qemu_oss@crudebyte.com>
 References: <cover.1781361555.git.qemu_oss@crudebyte.com>
 From: Christian Schoenebeck <qemu_oss@crudebyte.com>
 Date: Sat, 13 Jun 2026 16:55:49 +0200
-Subject: [PATCH v3 05/12] tests/9p: add Tclunk / Rclunk test client functions
+Subject: [PATCH v3 08/12] hw/9pfs: add xattr count query interface to fs synth
+ driver
 To: qemu-devel@nongnu.org,
     qemu-stable@nongnu.org
 Cc: Greg Kurz <groug@kaod.org>,
     Feifan Qian <bea1e@proton.me>
 Received-SPF: pass client-ip=5.189.157.229;
- envelope-from=d53f0337eb7f8525a14e394599d809ecf6805e5e@kylie.crudebyte.com;
+ envelope-from=357c20fc244c04dcbd36b13aa20a5c9b2034e9f0@kylie.crudebyte.com;
  helo=kylie.crudebyte.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -67,116 +68,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add v9fs_tclunk() and v9fs_rclunk() functions to the 9P test client
-for closing file handles (or "FIDs") in test cases.
+Add a synthetic "/stat/xattr_count" file path that, if being read
+by 9p client, returns the 9p server internal xattr FID counter to
+client.
+
+This allows to test and verify that the xattr FID limit is being
+enforced correctly.
 
 Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
 ---
- tests/qtest/libqos/virtio-9p-client.c | 34 +++++++++++++++++++++++++++
- tests/qtest/libqos/virtio-9p-client.h | 22 +++++++++++++++++
- tests/qtest/virtio-9p-test.c          |  1 +
- 3 files changed, 57 insertions(+)
+ hw/9pfs/9p-synth.c | 26 ++++++++++++++++++++++++++
+ 1 file changed, 26 insertions(+)
 
-diff --git a/tests/qtest/libqos/virtio-9p-client.c b/tests/qtest/libqos/virtio-9p-client.c
-index b9785ef8cb..83af6dab5d 100644
---- a/tests/qtest/libqos/virtio-9p-client.c
-+++ b/tests/qtest/libqos/virtio-9p-client.c
-@@ -242,6 +242,7 @@ static const char *rmessage_name(uint8_t id)
-         id == P9_RFLUSH ? "RFLUSH" :
-         id == P9_RREADDIR ? "RREADDIR" :
-         id == P9_RREAD ? "RREAD" :
-+        id == P9_RCLUNK ? "RCLUNK" :
-         "<unknown>";
+diff --git a/hw/9pfs/9p-synth.c b/hw/9pfs/9p-synth.c
+index 4b0732e093..3b3654b282 100644
+--- a/hw/9pfs/9p-synth.c
++++ b/hw/9pfs/9p-synth.c
+@@ -565,6 +565,19 @@ static ssize_t v9fs_synth_qtest_flush_write(void *buf, int len, off_t offset,
+     return 1;
  }
  
-@@ -1148,3 +1149,36 @@ void v9fs_rread(P9Req *req, uint32_t *count, void *data)
-     }
-     v9fs_req_free(req);
- }
-+
-+/* size[4] Tclunk tag[2] fid[4] */
-+TClunkRes v9fs_tclunk(TClunkOpt opt)
++/* transmits internal xattr counter to client */
++static ssize_t v9fs_synth_read_xattr_count(void *buf, int len, off_t offset,
++                                           void *arg)
 +{
-+    P9Req *req;
-+    uint32_t err;
-+
-+    g_assert(opt.client);
-+
-+    req = v9fs_req_init(opt.client, 4, P9_TCLUNK, opt.tag);
-+    v9fs_uint32_write(req, opt.fid);
-+    v9fs_req_send(req);
-+
-+    if (!opt.requestOnly) {
-+        v9fs_req_wait_for_reply(req, NULL);
-+        if (opt.expectErr) {
-+            v9fs_rlerror(req, &err);
-+            g_assert_cmpint(err, ==, opt.expectErr);
-+        } else {
-+            v9fs_rclunk(req);
-+        }
-+        req = NULL; /* request was freed */
++    FsContext *ctx = arg;
++    size_t local_count = ctx->xattr_fid_count;
++    if (len < (int)sizeof(size_t)) {
++        return -ENOSPC;
 +    }
-+
-+    return (TClunkRes) { .req = req };
++    memcpy(buf, &local_count, sizeof(size_t));
++    return sizeof(size_t);
 +}
 +
-+/* size[4] Rclunk tag[2] */
-+void v9fs_rclunk(P9Req *req)
-+{
-+    v9fs_req_recv(req, P9_RCLUNK);
-+    v9fs_req_free(req);
-+}
-diff --git a/tests/qtest/libqos/virtio-9p-client.h b/tests/qtest/libqos/virtio-9p-client.h
-index 37f2517cff..f7ef7f0067 100644
---- a/tests/qtest/libqos/virtio-9p-client.h
-+++ b/tests/qtest/libqos/virtio-9p-client.h
-@@ -504,6 +504,26 @@ typedef struct TReadRes {
-     uint32_t count;
- } TReadRes;
- 
-+/* options for 'Tclunk' 9p request */
-+typedef struct TClunkOpt {
-+    /* 9P client being used (mandatory) */
-+    QVirtio9P *client;
-+    /* user supplied tag number being returned with response (optional) */
-+    uint16_t tag;
-+    /* file ID to clunk (required) */
-+    uint32_t fid;
-+    /* only send Tclunk request but not wait for a reply? (optional) */
-+    bool requestOnly;
-+    /* do we expect an Rlerror response, if yes which error code? (optional) */
-+    uint32_t expectErr;
-+} TClunkOpt;
-+
-+/* result of 'Tclunk' 9p request */
-+typedef struct TClunkRes {
-+    /* if requestOnly was set: request object for further processing */
-+    P9Req *req;
-+} TClunkRes;
-+
- void v9fs_set_allocator(QGuestAllocator *t_alloc);
- void v9fs_memwrite(P9Req *req, const void *addr, size_t len);
- void v9fs_memskip(P9Req *req, size_t len);
-@@ -557,5 +577,7 @@ TunlinkatRes v9fs_tunlinkat(TunlinkatOpt);
- void v9fs_runlinkat(P9Req *req);
- TReadRes v9fs_tread(TReadOpt opt);
- void v9fs_rread(P9Req *req, uint32_t *count, void *data);
-+TClunkRes v9fs_tclunk(TClunkOpt opt);
-+void v9fs_rclunk(P9Req *req);
- 
- #endif
-diff --git a/tests/qtest/virtio-9p-test.c b/tests/qtest/virtio-9p-test.c
-index 8ccec77e70..099c5e0ca0 100644
---- a/tests/qtest/virtio-9p-test.c
-+++ b/tests/qtest/virtio-9p-test.c
-@@ -32,6 +32,7 @@
- #define tlink(...) v9fs_tlink((TlinkOpt) __VA_ARGS__)
- #define tunlinkat(...) v9fs_tunlinkat((TunlinkatOpt) __VA_ARGS__)
- #define tread(...) v9fs_tread((TReadOpt) __VA_ARGS__)
-+#define tclunk(...) v9fs_tclunk((TClunkOpt) __VA_ARGS__)
- 
- static void pci_config(void *obj, void *data, QGuestAllocator *t_alloc)
+ static int synth_init(FsContext *ctx, Error **errp)
  {
+     QLIST_INIT(&synth_root.child);
+@@ -626,6 +639,19 @@ static int synth_init(FsContext *ctx, Error **errp)
+                 g_free(name);
+             }
+         }
++
++        /* Directory for internal statistic queries */
++        {
++            V9fsSynthNode *stat_dir = NULL;
++            ret = qemu_v9fs_synth_mkdir(NULL, 0755, "stat", &stat_dir);
++            assert(!ret);
++
++            /* File for internal xattr count query */
++            ret = qemu_v9fs_synth_add_file(stat_dir, 0444, "xattr_count",
++                                           v9fs_synth_read_xattr_count,
++                                           NULL, ctx);
++            assert(!ret);
++        }
+     }
+ 
+     return 0;
 -- 
 2.47.3
 
