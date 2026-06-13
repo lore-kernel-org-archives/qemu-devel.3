@@ -4,49 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E271CD8CA8
-	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 20:08:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1235CD8CA8
+	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 20:08:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wYUei-0005II-Ne; Sat, 13 Jun 2026 16:08:36 -0400
+	id 1wYUep-0006Vi-UN; Sat, 13 Jun 2026 16:08:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYUcy-0002NP-14; Sat, 13 Jun 2026 16:06:49 -0400
+ id 1wYUdm-0003oG-O3; Sat, 13 Jun 2026 16:07:38 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYUcw-0000ty-6i; Sat, 13 Jun 2026 16:06:47 -0400
+ id 1wYUdl-0001qP-0K; Sat, 13 Jun 2026 16:07:38 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1781381068; bh=1u4cWwjncfEDAZbvdKDFHxkIX4fuYmM1cM6NpQu0xQ8=;
+ t=1781381069; bh=fDOrCK2N6Pl6NIhKkdpC1+NkBaVzNlosKwWDNcpyHwA=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=QxFKZARfEG8oOVegV0COfNoRDBINFyK4q3Lw2apTXlH+TJ4Vyly9K+i9tO4rH1YhQ
- 06t+2MHqTIq+0FJj3jCPdjJhqCf/fpPyN3Hq7BMgTNTARAnbzMqgIRkJFdZUIWJn9p
- ecssJvoZVAnfBlWeEHI9KOmocpuSxQDuLbkFGN0t+oVNiih/tXwBfSBD6ObA1Xpjnm
- 4o9NRh+TDGJsiXSM1QtokBNpzCk71s/8USLbDfjIbuAYnNhTGy+Go0N4q9X3z/1vC8
- PsdoiCTwsb6K5WvuW+4OYnCgx/jCXpe+uW813/JAvpysLrVGMTOYbQxGWMq4qgTieJ
- PlZk1SwfT9O7w==
+ b=JuWNck3W6v8Kqc+2cTdH8KQfYG4ggmEmOqV2Odrmg5ITXynBhua8J9qM3p5V5hxcL
+ Z8Yt8wjgOBIVcCXutZBPiQwmOfKBeWgBZwiDxk+JGkY4QOGLix3r2LkoyM6eec4kVw
+ jgzAxmYREI+y8Kx2nRt//hO4a2ZzmMxUx9lQFurF7dmH/5NEG2Dj5tUIslTUdq+lR4
+ U++b99+826p/9W/8F1MUHTgYnU3U2nmzXWJIZU0zQC9ibZeZQ5xvCwWPh/LlIvYrK7
+ 8Clf5QUlkGt4GDNURJMrUZe7CzZrVWm0MA+2g2qCOM/2g323aQK6Egtb7khF5pLAF3
+ 9+/D1K4Jl+C4A==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id A728F1B6E83;
- Sat, 13 Jun 2026 23:04:28 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 1C79B1B6E89;
+ Sat, 13 Jun 2026 23:04:29 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 0F8183CE8E5;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 7A41D3CE8EB;
  Sat, 13 Jun 2026 23:04:47 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.4 27/61] target/arm: Use FPST_A64_F16 for SVE FCVTLT_hs
-Date: Sat, 13 Jun 2026 23:03:10 +0300
-Message-ID: <20260613200411.1808021-27-mjt@tls.msk.ru>
+ Jason Wang <jasowang@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.2.4 33/61] hw/net/rocker_of_dpa: Check group ID pointers
+ are not NULL
+Date: Sat, 13 Jun 2026 23:03:16 +0300
+Message-ID: <20260613200411.1808021-33-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.2.4-20260613224639@cover.tls.msk.ru>
 References: <qemu-stable-10.2.4-20260613224639@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -73,41 +71,53 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Peter Maydell <peter.maydell@linaro.org>
 
-We should be using the F16-specific float_status for conversions from
-half-precision, because halfprec inputs never set Input Denormal.  If
-we use the FPST_A64 fpstatus then we will incorrectly set FPCR.IDC
-for input-denormals when FPCR.AH=1.
+In of_dpa_cmd_add_l2_flood(), we use rocker_tlv_parse_nested()
+to fill in a tlvs[] array. If the guest command is valid then
+the entries should be pointers to TLV data items with group IDs.
+However, if the guest gives us bogus data then rocker_tlv_parse_nested()
+indicates this by leaving the tlvs[] entries NULL. In the other
+places that use this function, we check for this before using
+the value, but here we forgot, and the result is that QEMU can
+crash:
 
-In commit e07b48995aaa we updated most of the halfprec-to-other
-conversion insns to use FPST_A64_F16 as part of implementing
-FEAT_AHP.  However we missed the SVE FCVTLT instruction, which has a
-halfprec-to-single encoding.
+#0  __memcpy_avx_unaligned_erms () at ../sysdeps/x86_64/multiarch/memmove-vec-unaligned-erms.S:331
+#1  0x00005555574f7137 in __asan_memcpy ()
+#2  0x0000555558106792 in ldl_he_p (ptr=0x8) at /home/pm215/qemu/include/qemu/bswap.h:278
+#3  0x0000555558106755 in ldl_le_p (ptr=0x8) at /home/pm215/qemu/include/qemu/bswap.h:311
+#4  0x00005555580f85ed in rocker_tlv_get_le32 (tlv=0x0) at ../../hw/net/rocker/rocker_tlv.h:114
+#5  0x000055555810a8ad in of_dpa_cmd_add_l2_flood (of_dpa=0x506000082e38, group=0x503000b4e440, group_tlvs=0x7fff68702c20)
+    at ../../hw/net/rocker/rocker_of_dpa.c:2032
+#6  0x0000555558108a74 in of_dpa_cmd_group_do (of_dpa=0x506000082e38, group_id=1073741824, group=0x503000b4e440, group_tlvs=0x7fff68702c20)
+    at ../../hw/net/rocker/rocker_of_dpa.c:2115
+#7  0x0000555558108730 in of_dpa_cmd_group_add (of_dpa=0x506000082e38, group_id=1073741824, group_tlvs=0x7fff68702c20)
+    at ../../hw/net/rocker/rocker_of_dpa.c:2135
+#8  0x00005555580f66ec in of_dpa_group_cmd
+    (of_dpa=0x506000082e38, info=0x514000072e40, buf=0x5070002356c0 "\001", cmd=7, group_tlvs=0x7fff68702c20)
+    at ../../hw/net/rocker/rocker_of_dpa.c:2194
 
-Correct the FPST we use for the hs variant of FCVTLT.
+Check for NULL values and return an error.
 
 Cc: qemu-stable@nongnu.org
-Fixes: e07b48995aaa ("target/arm: Use FPST_A64_F16 for halfprec-to-other conversions")a
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/1851
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20260521122913.1565011-3-peter.maydell@linaro.org
-(cherry picked from commit aa42300f86d172d7252f0cb95c2efd7570ad6b8f)
-(Mjt: context fixup across v10.2.0-1344-g895d4367d6
-     "target/arm/tcg: Use "or SME" feature checks where needed")
+Signed-off-by: Jason Wang <jasowang@redhat.com>
+(cherry picked from commit 8526b7d6b67beda0c83e4a8aec1449475fe5dd65)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/arm/tcg/translate-sve.c b/target/arm/tcg/translate-sve.c
-index b9dba6ec31..a537d28c9f 100644
---- a/target/arm/tcg/translate-sve.c
-+++ b/target/arm/tcg/translate-sve.c
-@@ -7825,7 +7825,7 @@ TRANS_FEAT(BFCVTNT, aa64_sve_bf16, gen_gvec_fpst_arg_zpz,
-            s->fpcr_ah ? FPST_AH : FPST_A64)
+diff --git a/hw/net/rocker/rocker_of_dpa.c b/hw/net/rocker/rocker_of_dpa.c
+index 262ceb35f6..005a29e6c1 100644
+--- a/hw/net/rocker/rocker_of_dpa.c
++++ b/hw/net/rocker/rocker_of_dpa.c
+@@ -2024,6 +2024,10 @@ static int of_dpa_cmd_add_l2_flood(OfDpa *of_dpa, OfDpaGroup *group,
+                             group_tlvs[ROCKER_TLV_OF_DPA_GROUP_IDS]);
  
- TRANS_FEAT(FCVTLT_hs, aa64_sve2, gen_gvec_fpst_arg_zpz,
--           gen_helper_sve2_fcvtlt_hs, a, 0, FPST_A64)
-+           gen_helper_sve2_fcvtlt_hs, a, 0, FPST_A64_F16)
- TRANS_FEAT(FCVTLT_sd, aa64_sve2, gen_gvec_fpst_arg_zpz,
-            gen_helper_sve2_fcvtlt_sd, a, 0, FPST_A64)
+     for (i = 0; i < group->l2_flood.group_count; i++) {
++        if (!tlvs[i + 1]) {
++            err = -ROCKER_EINVAL;
++            goto err_out;
++        }
+         group->l2_flood.group_ids[i] = rocker_tlv_get_le32(tlvs[i + 1]);
+     }
  
 -- 
 2.47.3
