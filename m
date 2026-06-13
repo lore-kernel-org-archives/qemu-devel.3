@@ -4,44 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8205BCD98DC
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 820ABCD98E0
 	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 20:09:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wYUf6-0000Mv-LS; Sat, 13 Jun 2026 16:09:00 -0400
+	id 1wYUbO-0008A8-5i; Sat, 13 Jun 2026 16:05:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYUeq-0006aY-3m; Sat, 13 Jun 2026 16:08:44 -0400
+ id 1wYUbJ-00087O-Pi; Sat, 13 Jun 2026 16:05:05 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYUeo-0002ei-2L; Sat, 13 Jun 2026 16:08:43 -0400
+ id 1wYUbH-0008MA-QZ; Sat, 13 Jun 2026 16:05:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1781381070; bh=ubdO+zpxQThsSC68lkwISaMv3bI5tKubzpj/X8KopDg=;
+ t=1781381067; bh=6ihxfYXP3fuUJ0eR2tjhR/1P86781N2QdMQNSeeBnjI=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=GPOlGnl82gQUKRVcxdGUJuM3RB712979N+yEd/UACA67ufPO9Vc0wAyQ9vkgjzcrS
- KmaoZsrqmN/UQpyc60lMtSzS4R7EsA9DZkihBX1WwRg73f8W1mL1/uhRjI/dVM4i3P
- D8h5QTNHqXMv1DQWKTpvQSZR1vrf9BM3F4c6R0gSFj/2Bl4YDSsj6+4E2FAASyTGcy
- KxZ2/dVkhET/dZDN0hK+K5CiwsgEgBSz4DuXHnVIuGC3blMbQJB9hP5SJrFe+etUnh
- usRbtgBKdqrwlXu05vj/k70Sgcuxl7+b7hUX9uk53zINTCuOgS6r2Gi+ngeDhtyzAA
- ClwXzGTxleL2w==
+ b=WVGtfCQ64q1QmpE5IiaK8ulO4EoSaUfLbEOrdhwx+LnB+pONz4lPCb0bXpcNYFRkZ
+ byKtbiGGUeiofA0hj+kW2myHXcxLbAy1DeomaeDaZemlXuMzcC5lVPWgvsUBVeeMHj
+ Qat32OFJlehS9jap+Nm5DzKfzvcl+78XWZKqZUVZyZ7XqMPm4ysYlLsLVToQsAK7sU
+ Wnr6KioyaHbD4xMApo/iyS2LkXyXtaZq0CLwuhZAmqtGxCwWlY0p0XCkwhvo2HmeEH
+ fJ4+NdREprD/oFGEM4kas2ex7fF59ggPIOVF1gpG+8b8ebMPgZ/K7JUo4x4aZcBqGu
+ phnWzo0Je3O6A==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 033161B6E9C;
- Sat, 13 Jun 2026 23:04:30 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 88CAB1B6E71;
+ Sat, 13 Jun 2026 23:04:27 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 617F53CE8F8;
- Sat, 13 Jun 2026 23:04:48 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id E4ADC3CE8D4;
+ Sat, 13 Jun 2026 23:04:45 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, sin99xx <sin99xx@proton.me>,
- Christian Schoenebeck <qemu_oss@crudebyte.com>,
+Cc: qemu-stable@nongnu.org, Zishun Yi <vulab@iscas.ac.cn>,
+ Alistair Francis <alistair.francis@wdc.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.4 46/61] 9pfs: fix missing rename lock in
- v9fs_co_readdir_many (CVE-2026-48004)
-Date: Sat, 13 Jun 2026 23:03:29 +0300
-Message-ID: <20260613200411.1808021-46-mjt@tls.msk.ru>
+Subject: [Stable-10.2.4 10/61] target/riscv: Add mseccfg to VMStateDescription
+Date: Sat, 13 Jun 2026 23:02:53 +0300
+Message-ID: <20260613200411.1808021-10-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.2.4-20260613224639@cover.tls.msk.ru>
 References: <qemu-stable-10.2.4-20260613224639@cover.tls.msk.ru>
@@ -70,53 +69,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: sin99xx <sin99xx@proton.me>
+From: Zishun Yi <vulab@iscas.ac.cn>
 
-v9fs_co_readdir_many() dispatches do_readdir_many() to a worker thread
-that reads V9fsFidState's path.data without holding a rename lock.
+Currently, the Machine Security Configuration Register (mseccfg) was
+missing from the live migration state. This omission causes the register
+to be reset to zero on the destination host after migration.
 
-A concurrent rename request, e.g. of its parent dir, causes the FID's
-absolute path to be altered by freeing the old path string and
-assigning a new one. This causes a heap-use-after-free race condition
-while do_readdir_many() is still accessing the old object.
+Fixed by adding vmstate_mseccfg subsection
 
-This allows a DoS by an unprivileged guest user.
+This vulnerability was discovered and reported by SpecHunter, an
+AI-driven architecture specification analysis tool.
 
-Fix this by wrapping the worker thread dispatch block within a pair of
-v9fs_path_read_lock() and v9fs_path_unlock() calls, like it's done at
-other places.
-
-Fixes: 2149675b195f ("9pfs: add new function v9fs_co_readdir_many()")
-Fixes: CVE-2026-48004
-Reported-by: sin99xx <sin99xx@proton.me>
-Signed-off-by: sin99xx <sin99xx@proton.me>
-[Christian Schoenebeck: add commit log message]
-Link: https://lore.kernel.org/qemu-devel/E1wPkYi-000adH-4E@kylie.crudebyte.com
-Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
-(cherry picked from commit 5a8da7e979f1f56b1cab82c2354833f309f1a78f)
+Link: https://github.com/yizishun/rv-isa-sec/blob/a22e4459cd026ae970791dfbd9cfe5d110fbd46b/output/riscv-isa-manual/pr-1879/qemu.txt#L121
+Signed-off-by: Zishun Yi <vulab@iscas.ac.cn>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Message-ID: <20260511124828.3210477-1-vulab@iscas.ac.cn>
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+(cherry picked from commit eccb1d6940256668109dc6dc42450ced9f324134)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/9pfs/codir.c b/hw/9pfs/codir.c
-index bce7dd96e9..5568399343 100644
---- a/hw/9pfs/codir.c
-+++ b/hw/9pfs/codir.c
-@@ -220,13 +220,16 @@ int coroutine_fn v9fs_co_readdir_many(V9fsPDU *pdu, V9fsFidState *fidp,
-                                       bool dostat)
- {
-     int err = 0;
-+    V9fsState *s = pdu->s;
- 
-     if (v9fs_request_cancelled(pdu)) {
-         return -EINTR;
+diff --git a/target/riscv/machine.c b/target/riscv/machine.c
+index 18d790af0d..72d0668622 100644
+--- a/target/riscv/machine.c
++++ b/target/riscv/machine.c
+@@ -425,6 +425,25 @@ static const VMStateDescription vmstate_sstc = {
      }
-+    v9fs_path_read_lock(s);
-     v9fs_co_run_in_worker({
-         err = do_readdir_many(pdu, fidp, entries, offset, maxsize, dostat);
-     });
-+    v9fs_path_unlock(s);
-     return err;
- }
+ };
  
++static bool mseccfg_needed(void *opaque)
++{
++    RISCVCPU *cpu = opaque;
++
++    return cpu->cfg.ext_smepmp || cpu->cfg.ext_zkr
++        || cpu->cfg.ext_smmpm || cpu->cfg.ext_zicfilp;
++}
++
++static const VMStateDescription vmstate_mseccfg = {
++    .name = "cpu/mseccfg",
++    .version_id = 1,
++    .minimum_version_id = 1,
++    .needed = mseccfg_needed,
++    .fields = (const VMStateField[]) {
++        VMSTATE_UINTTL(env.mseccfg, RISCVCPU),
++        VMSTATE_END_OF_LIST()
++    }
++};
++
+ const VMStateDescription vmstate_riscv_cpu = {
+     .name = "cpu",
+     .version_id = 10,
+@@ -502,6 +521,7 @@ const VMStateDescription vmstate_riscv_cpu = {
+         &vmstate_ssp,
+         &vmstate_ctr,
+         &vmstate_sstc,
++        &vmstate_mseccfg,
+         NULL
+     }
+ };
 -- 
 2.47.3
 
