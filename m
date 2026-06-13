@@ -4,45 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84DFBCD8CA8
-	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 20:09:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DCBDDCD98CF
+	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 20:09:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wYUbr-0000rg-EQ; Sat, 13 Jun 2026 16:05:39 -0400
+	id 1wYUew-0007LE-5d; Sat, 13 Jun 2026 16:08:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYUbm-0000mo-Cj; Sat, 13 Jun 2026 16:05:35 -0400
+ id 1wYUeH-0004op-TY; Sat, 13 Jun 2026 16:08:10 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYUbk-0000DE-AD; Sat, 13 Jun 2026 16:05:34 -0400
+ id 1wYUeG-0002XF-5e; Sat, 13 Jun 2026 16:08:09 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1781381067; bh=ip2pqWDKYOwxi3LwiZS0HA5t1/dp131pu1KfGKKzz+4=;
+ t=1781381069; bh=KvFtXIX1HFBGkwW0GZ3bAtgD4Ty2bNFPvJplYQFqrN4=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=NIVNb1ViKjKtpjuIIgg04XzVPUqadOdXgCtTOAUBu9Qy/1df1n0dqDJK8XDcttGV3
- ztHvhtVth1i9YNYo8oy6RaRFXB4SFy9Nlf6NvXTMNlmshbH8mwHGzIE6iV2n/5AhyP
- t1h3QRk0VyO0XJJLkDfzt3exsewY5WpU8ZWjiGInIWeeK7ENVwwB/oMoQgLGHjbpeA
- vTrTO5AYrHkwSCxLY3/OiUIvFH3q3akT5Gw0GIYU07NnOFZdJ3lnTjgimgXrsIEsID
- KhgotmUzjce6IMpDiSka4f9iAlSWcJYV0OM0THQlm9bH+39+l7tUsanwh7PSOe7ofX
- heZes8gWxK/dQ==
+ b=j149CcLj79tJCZjNoYQpTV1IP1S/JYbPV7ZsIYcGXXDcWrackcbI/8AiE9yMUQY68
+ R/OPwYxJrAWiS/kBg41YWqgRubSPj0Tt5NuYn3/kkhf77gsO5BHXYbj56lBWGsfYhE
+ MYeu59V7A8RU1OYuM2relVsMlamnGyM2e1q0JHYD8Ja4411lHegQn1qt2tQ2kP96+O
+ vYsaE9WPK/8oem6LdcM6Aautg/s+cT54z5SrLNWwv1cJ131j1CyXKVrtTnRLpyr1NW
+ LZXB79MrNqiYIo/hC4QcjlsIxTQUVlSuQJUsONlNilw47uS+HnGZOifOr++4aqGesd
+ 1kPgoShLhS/KQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id B5B8B1B6E74;
- Sat, 13 Jun 2026 23:04:27 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 7F07D1B6E8F;
+ Sat, 13 Jun 2026 23:04:29 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 1F7273CE8D7;
- Sat, 13 Jun 2026 23:04:46 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id DD0483CE8F1;
+ Sat, 13 Jun 2026 23:04:47 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.4 13/61] target/riscv/csr.c: fix read of pmpaddr(0-63)
- CSRs
-Date: Sat, 13 Jun 2026 23:02:56 +0300
-Message-ID: <20260613200411.1808021-13-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Matt Turner <mattst88@gmail.com>,
+ Helge Deller <deller@gmx.de>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.2.4 39/61] linux-user/s390x: restore fpu_status rounding
+ mode from FPC on sigreturn
+Date: Sat, 13 Jun 2026 23:03:22 +0300
+Message-ID: <20260613200411.1808021-39-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.2.4-20260613224639@cover.tls.msk.ru>
 References: <qemu-stable-10.2.4-20260613224639@cover.tls.msk.ru>
@@ -71,60 +69,109 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+From: Matt Turner <mattst88@gmail.com>
 
-The priv spec defines, for RV64, that the upper 10 bits of
-pmpaddr0-pmpaddr63 are WARL and are supposed to be cleared.
+QEMU keeps the s390x floating-point control register (FPC) in env->fpc.
+The rounding mode bits [2:0] of FPC are reflected into the derived
+env->fpu_status via set_float_rounding_mode(); every architectural
+write to FPC goes through HELPER(sfpc) which keeps the two in sync.
 
-After this patch, using the bug reproducer in [1], writing
-ffffffffffffffff in pmpaddr0 and reading it back now results in
-003fffffffffffff.  Here's the 'diff -cp' dump before and after
-this change:
+restore_sigregs() restored FPC with a direct assignment:
 
-*************** IN:
-*** 5272,5278 ****
-   pmpcfg10 0000000000000000
-   pmpcfg12 0000000000000000
-   pmpcfg14 0000000000000000
-!  pmpaddr0 ffffffffffffffff
-   pmpaddr1 0000000000000000
-   pmpaddr2 0000000000000000
-   pmpaddr3 0000000000000000
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20260514123342.2139464-1-daniel.barboza@oss.qualcomm.com>
+    __get_user(env->fpc, &sc->fpregs.fpc);
 
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-(cherry picked from commit 53cc9747ed7c9b95ba084d614976dd48c9a57a97)
+This wrote env->fpc correctly but never updated env->fpu_status, so on
+sigreturn the interrupted code resumed with whatever rounding mode the
+signal handler last installed in fpu_status.
+
+Factor the two-step "write fpc + sync fpu_status" logic out of
+HELPER(sfpc) into cpu_s390x_load_fpc(), declare it in cpu.h, and call
+it from restore_sigregs() in place of the direct assignment.
+
+cpu_s390x_load_fpc() partially reuses the sanity check from
+HELPER(sfpc): if the FPC value has an invalid rounding mode or reserved
+bits set, it falls back to 0, matching the kernel's fpu_lfpc_safe()
+behavior where a corrupt signal frame value causes a specification
+exception and 0 is used instead.
+
+HELPER(sfpc) now calls cpu_s390x_load_fpc() after its full
+specification-exception check, including the FEAT_FLOATING_POINT_EXT
+test that is not needed for the signal restore path.
+
+Fixes: 2941e0fa05 ("linux-user/s390x: Save/restore fpc when handling a signal")
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Matt Turner <mattst88@gmail.com>
+Signed-off-by: Helge Deller <deller@gmx.de>
+(cherry picked from commit 2762cd51ee033dccb3167110376dd125244cc819)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-index c360f77c92..9f81cd3960 100644
---- a/target/riscv/csr.c
-+++ b/target/riscv/csr.c
-@@ -5328,6 +5328,23 @@ static RISCVException read_pmpaddr(CPURISCVState *env, int csrno,
-                                    target_ulong *val)
- {
-     *val = pmpaddr_csr_read(env, csrno - CSR_PMPADDR0);
-+
-+    /*
-+     * For RV64, bits 54-63 of the address registers
-+     * PMPAADDR(0-63) is a WARL zero field (priv spec,
-+     * section "Physical Memory Protection CSRs").
-+     *
-+     * We'll have to add an annoying TARGET_RISCV64 gate
-+     * here to avoid complaints about masking bits 0-53
-+     * of a potential 32 bit target_ulong '*var'.
-+     */
-+#ifdef TARGET_RISCV64
-+    if (env->misa_mxl == MXL_RV64
-+        && csrno >= CSR_PMPADDR0 && csrno <= CSR_PMPADDR63) {
-+        target_ulong read_mask = MAKE_64BIT_MASK(0, 54);
-+        *val &= read_mask;
+diff --git a/linux-user/s390x/signal.c b/linux-user/s390x/signal.c
+index 96d1c8d11c..28ad80bde4 100644
+--- a/linux-user/s390x/signal.c
++++ b/linux-user/s390x/signal.c
+@@ -332,7 +332,11 @@ static void restore_sigregs(CPUS390XState *env, target_sigregs *sc)
+     for (i = 0; i < 16; i++) {
+         __get_user(env->aregs[i], &sc->regs.acrs[i]);
+     }
+-    __get_user(env->fpc, &sc->fpregs.fpc);
++    {
++        uint32_t fpc;
++        __get_user(fpc, &sc->fpregs.fpc);
++        cpu_s390x_load_fpc(env, fpc);
 +    }
-+#endif
-     return RISCV_EXCP_NONE;
+     for (i = 0; i < 16; i++) {
+         __get_user(*get_freg(env, i), &sc->fpregs.fprs[i]);
+     }
+diff --git a/target/s390x/cpu.h b/target/s390x/cpu.h
+index aa931cb674..af488cda17 100644
+--- a/target/s390x/cpu.h
++++ b/target/s390x/cpu.h
+@@ -924,6 +924,7 @@ void s390_init_sigp(void);
+ /* helper.c */
+ void s390_cpu_set_psw(CPUS390XState *env, uint64_t mask, uint64_t addr);
+ uint64_t s390_cpu_get_psw_mask(CPUS390XState *env);
++void cpu_s390x_load_fpc(CPUS390XState *env, uint32_t fpc);
+ 
+ /* outside of target/s390x/ */
+ S390CPU *s390_cpu_addr2state(uint16_t cpu_addr);
+diff --git a/target/s390x/tcg/fpu_helper.c b/target/s390x/tcg/fpu_helper.c
+index 1ba43715ac..83aa88a754 100644
+--- a/target/s390x/tcg/fpu_helper.c
++++ b/target/s390x/tcg/fpu_helper.c
+@@ -896,6 +896,19 @@ static const int fpc_to_rnd[8] = {
+     float_round_to_odd,
+ };
+ 
++void cpu_s390x_load_fpc(CPUS390XState *env, uint32_t fpc)
++{
++    /*
++     * Mimic kernel fpu_lfpc_safe(): a corrupt signal frame value that would
++     * trigger a specification exception instead results in FPC being set to 0.
++     */
++    if (fpc_to_rnd[fpc & 0x7] == -1 || fpc & 0x03030088u) {
++        fpc = 0;
++    }
++    env->fpc = fpc;
++    set_float_rounding_mode(fpc_to_rnd[fpc & 0x7], &env->fpu_status);
++}
++
+ /* set fpc */
+ void HELPER(sfpc)(CPUS390XState *env, uint64_t fpc)
+ {
+@@ -903,12 +916,7 @@ void HELPER(sfpc)(CPUS390XState *env, uint64_t fpc)
+         (!s390_has_feat(S390_FEAT_FLOATING_POINT_EXT) && fpc & 0x4)) {
+         tcg_s390_program_interrupt(env, PGM_SPECIFICATION, GETPC());
+     }
+-
+-    /* Install everything in the main FPC.  */
+-    env->fpc = fpc;
+-
+-    /* Install the rounding mode in the shadow fpu_status.  */
+-    set_float_rounding_mode(fpc_to_rnd[fpc & 0x7], &env->fpu_status);
++    cpu_s390x_load_fpc(env, fpc);
  }
  
+ /* set fpc and signal */
 -- 
 2.47.3
 
