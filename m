@@ -4,46 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4030FCD8CA8
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E13A1CD98D2
 	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 19:57:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wYUS7-00007o-E7; Sat, 13 Jun 2026 15:55:37 -0400
+	id 1wYURo-0008Ie-Op; Sat, 13 Jun 2026 15:55:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYURt-0008Tv-IW; Sat, 13 Jun 2026 15:55:23 -0400
+ id 1wYURm-00085d-3M; Sat, 13 Jun 2026 15:55:14 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYURr-0004go-PZ; Sat, 13 Jun 2026 15:55:21 -0400
+ id 1wYURj-0004Me-On; Sat, 13 Jun 2026 15:55:13 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1781380260; bh=/yCG3jEExQpedxSgTR2/aw27BcSv2Xz3e8r7g1a46fI=;
+ t=1781380260; bh=zIjMO7cYvxNr5VKrgmQojc0T7AyXklUFu4iF5bq3erg=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=nsIMFkMXBOnEYeLl4IPNGnPdw3desYd7sJ89cMkYPKxbUjlpDO5445paGG+1Rj4kc
- h/b2Ve5FtLHih1Q7a6ztlp5yuZeN/eY3a6D+hC5/GfUbthLbCKYtXnB3h40XcWLUnQ
- w2Hz6QZsj0Y9HlCxjP9wt1syfCrcND1M2BCnZJvwt+fHdt/S33ydqCOWB9jjJorAx5
- oEewSuQB2W8WYQf+u3aEcjpOZIvU5w8bbpldzsHgHBn0VkgaN1X4sS6nnbLx8L2f47
- wLY5CKEzuszkxHVz7EY/7Fnap8FTQR9MGImyOYXeFvjtlogUFmUt4OaiEtz4xgH24x
- kZw13fYsk3i4A==
+ b=kVorTBVfxC4PIEPzIUQC1Yw9V8oCfHD66QGlBDs4sYeKZ7BHQqn/OBjmyKgYERva0
+ 0I8tU7JMYVLqxag+9vF6t9AGr8zZo0yf/+3SqyDx96tYXc64iAm3abUSTbLZTvHi4q
+ AaWbGRRrZuEfupmYZUhP94X1XLC0I5Ldbs/zqb74R7Y0xC003DHn/wDf3r6Pzy4fqz
+ GnvgQENCZBCQ2Cj9Uk0sr1hCiv0OeIpe2RvQ9g1veMzTZMssVkDb6lvqZml2tYo83R
+ 5QCoxx6h1BOWAS9FvccIJO+qEc67oflSUbFKy3Fp0Y+AZw1wVLNmTzuFWWcVg1KDtW
+ HtTsv0fXZ/9ZQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id DA7951B6E3B;
+ by isrv.corpit.ru (Postfix) with ESMTP id 9438D1B6E37;
  Sat, 13 Jun 2026 22:51:00 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 3A5D53CE8B5;
- Sat, 13 Jun 2026 22:51:19 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id EEBB83CE8B1;
+ Sat, 13 Jun 2026 22:51:18 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Alexandra Winter <wintera@linux.ibm.com>,
- Hendrik Brueckner <brueckner@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Gautam Gala <ggala@linux.ibm.com>, Cornelia Huck <cohuck@redhat.com>,
+Cc: qemu-stable@nongnu.org, Christian Schoenebeck <qemu_oss@crudebyte.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.11 44/56] target/s390x: Make container ids in SysIB_15x
- 1-based
-Date: Sat, 13 Jun 2026 22:50:58 +0300
-Message-ID: <20260613195116.1807273-44-mjt@tls.msk.ru>
+Subject: [Stable-10.0.11 40/56] tests/9pfs: add deep absolute path test
+Date: Sat, 13 Jun 2026 22:50:54 +0300
+Message-ID: <20260613195116.1807273-40-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.11-20260613224446@cover.tls.msk.ru>
 References: <qemu-stable-10.0.11-20260613224446@cover.tls.msk.ru>
@@ -72,73 +68,117 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alexandra Winter <wintera@linux.ibm.com>
+From: Christian Schoenebeck <qemu_oss@crudebyte.com>
 
-The Container Id in a container-type TLE of SysIB_15x is defined as 8-bit
-unsigned nonzero integer. Make stsi fc 15 emulation architecture compliant,
-by starting the container ids at 1 for the lowest numbered container.
+Add fs_deep_absolute_path test that creates a deep directory
+structure with an absolute path length exceeding 16-bit range
+(i.e. >65536) to verify the previous buffer overflow fix.
 
-The qemu misbehaviour without this patch becomes obvious due to a recently
-proposed kernel fix. Older linux kernels pass the container ids from stsi
-fc15 unchanged to sysfs, i.e. starting at 1 on s390 hardware. This resulted
-in off-by-one values when compared to the values from HMC. A Linux kernel
-fix is being proposed to correct the sysfs topology ids by -1, so they
-start at 0, e.g. when displayed by 'lscpu -ye'. In case a KVM guest with a
-fixed kernel runs on a host with a qemu without this fix, this can result
-in container ids erroneously being shown as 255.
-Example (Fixed guest on unfixed qemu):
-$ lscpu -ye
-CPU NODE DRAWER BOOK SOCKET CORE L1d:L1i:L2 ONLINE CONFIGURED POLARIZATION ADDRESS
-  0    0    255  255    255    0 0:0:0         yes yes        vert-medium  0
-  1    0    255  255      0    1 1:1:1         yes yes        vert-medium  1
-After this fix:
-$ lscpu -ye
-CPU NODE DRAWER BOOK SOCKET CORE L1d:L1i:L2 ONLINE CONFIGURED POLARIZATION ADDRESS
-  0    0      0    0      0    0 0:0:0         yes yes        vert-medium  0
-  1    0      0    0      1    1 1:1:1         yes yes        vert-medium  1
+This is a slow test (may take several seconds) and therefore
+registered as "slow" test and not running by default.
 
-Fixes: f4f54b582f ("target/s390x/cpu topology: handle STSI(15) and build the SYSIB")
-Signed-off-by: Alexandra Winter <wintera@linux.ibm.com>
-Acked-by: Hendrik Brueckner <brueckner@linux.ibm.com>
-Acked-by: Christian Borntraeger <borntraeger@linux.ibm.com>
-Reviewed-by: Gautam Gala <ggala@linux.ibm.com>
-Message-ID: <20260511134909.43802-1-wintera@linux.ibm.com>
-Signed-off-by: Cornelia Huck <cohuck@redhat.com>
-(cherry picked from commit 1f1ccb6f3c48a2cd80e874d66afeef2dc28a65f3)
+Use -m slow to run this test.
+
+Link: https://gitlab.com/qemu-project/qemu/-/issues/3358
+Link: https://lore.kernel.org/qemu-devel/933552b2cfc2c442fac7f4e68c777dce20ee8d7e.1779126034.git.qemu_oss@crudebyte.com
+Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
+(cherry picked from commit 198627807a6b94e2aab157cf345f98edb1ac1a7a)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/s390x/kvm/stsi-topology.c b/target/s390x/kvm/stsi-topology.c
-index c8d6389cd8..af3fd8ad1b 100644
---- a/target/s390x/kvm/stsi-topology.c
-+++ b/target/s390x/kvm/stsi-topology.c
-@@ -90,9 +90,9 @@ static int stsi_topology_fill_sysib(S390TopologyList *topology_list,
-     int last_drawer = -1;
-     int last_book = -1;
-     int last_socket = -1;
--    int drawer_id = 0;
--    int book_id = 0;
--    int socket_id = 0;
-+    int drawer_id = 1;
-+    int book_id = 1;
-+    int socket_id = 1;
-     int n = sizeof(SysIB_151x);
+diff --git a/tests/qtest/virtio-9p-test.c b/tests/qtest/virtio-9p-test.c
+index ab3a12c816..1af02e9c7b 100644
+--- a/tests/qtest/virtio-9p-test.c
++++ b/tests/qtest/virtio-9p-test.c
+@@ -14,6 +14,7 @@
  
-     QTAILQ_FOREACH(entry, topology_list, next) {
-@@ -103,12 +103,12 @@ static int stsi_topology_fill_sysib(S390TopologyList *topology_list,
-         if (level > 3 && drawer_change) {
-             SYSIB_GUARD(n, sizeof(SYSIBContainerListEntry));
-             p = fill_container(p, 3, drawer_id++);
--            book_id = 0;
-+            book_id = 1;
-         }
-         if (level > 2 && book_change) {
-             SYSIB_GUARD(n, sizeof(SYSIBContainerListEntry));
-             p = fill_container(p, 2, book_id++);
--            socket_id = 0;
-+            socket_id = 1;
-         }
-         if (socket_change) {
-             SYSIB_GUARD(n, sizeof(SYSIBContainerListEntry));
+ #include "qemu/osdep.h"
+ #include "qemu/module.h"
++#include "libqos/virtio.h"
+ #include "libqos/virtio-9p-client.h"
+ 
+ #define twalk(...) v9fs_twalk((TWalkOpt) __VA_ARGS__)
+@@ -737,6 +738,72 @@ static void fs_use_after_unlink(void *obj, void *data,
+     g_assert_cmpint(count, ==, write_count);
+ }
+ 
++/* https://gitlab.com/qemu-project/qemu/-/issues/3358 */
++static void fs_deep_absolute_path(void *obj, void *data,
++                                  QGuestAllocator *t_alloc)
++{
++    QVirtio9P *v9p = obj;
++    v9fs_set_allocator(t_alloc);
++
++    if (!g_test_slow()) {
++        g_test_skip("This is a slow test, run with -m slow");
++        return;
++    }
++
++    GString *path = g_string_new("/");
++    char name[256];
++    uint32_t current_fid = 0;
++
++    tattach({ .client = v9p });
++
++    /* Create deep directory structure until absolute path length
++     * exceeds 16-bit range.
++     */
++    while (path->len <= 65536) {
++        /* use 255-byte name (NAME_MAX) to reduce iterations to ~257 */
++        memset(name, 'A', 255);
++        name[255] = '\0';
++
++        /* create the directory relative to current FID */
++        tmkdir({
++            .client = v9p,
++            .dfid = current_fid,
++            .name = name
++        });
++
++        /* just for locally tracking the current path length */
++        g_string_append(path, name);
++        g_string_append(path, "/");
++
++        /* acquire new FID for the newly created directory */
++        char *wnames[] = { name };
++        current_fid = twalk({
++            .client = v9p,
++            .fid = current_fid,
++            .nwname = 1,
++            .wnames = wnames
++        }).newfid;
++
++        /* Reset descriptor pool to avoid exhaustion. The simplified
++         * virtio test driver does never free descriptors back to the pool
++         * after use, so we must manually reset it for the required high
++         * amount of 9p requests here.
++         */
++        qvirtqueue_reset_pool(v9p->vq);
++    }
++
++    /* check if the deepest directory is accessible */
++    v9fs_attr attr = {};
++    tgetattr({
++        .client = v9p,
++        .fid = current_fid,
++        .request_mask = P9_GETATTR_BASIC,
++        .rgetattr.attr = &attr
++    });
++
++    g_string_free(path, TRUE);
++}
++
+ static void cleanup_9p_local_driver(void *data)
+ {
+     /* remove previously created test dir when test is completed */
+@@ -804,6 +871,8 @@ static void register_virtio_9p_test(void)
+                  &opts);
+     qos_add_test("local/use_after_unlink", "virtio-9p", fs_use_after_unlink,
+                  &opts);
++    qos_add_test("local/deep_absolute_path", "virtio-9p",
++                 fs_deep_absolute_path, &opts);
+ }
+ 
+ libqos_init(register_virtio_9p_test);
 -- 
 2.47.3
 
