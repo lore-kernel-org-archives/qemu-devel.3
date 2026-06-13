@@ -4,46 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF2A5CD98C5
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3150CD98CF
 	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 19:52:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wYUOX-0000lb-Lf; Sat, 13 Jun 2026 15:51:53 -0400
+	id 1wYUOj-0000oI-A1; Sat, 13 Jun 2026 15:52:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYUOJ-0000g1-K0; Sat, 13 Jun 2026 15:51:40 -0400
+ id 1wYUON-0000ge-CJ; Sat, 13 Jun 2026 15:51:46 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYUOH-0003O7-Jb; Sat, 13 Jun 2026 15:51:38 -0400
+ id 1wYUOL-0003Rr-Lx; Sat, 13 Jun 2026 15:51:43 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1781380258; bh=81kcofdFtNM2TMccI+ICeuSK1mwUKspB7GVZ1HeC8CY=;
+ t=1781380258; bh=GJ8nDPknSaLTHenVPepcwqgkeXQtz0uFvdNGQXaODmA=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=XYRllLSKaFtFz29T5u1va9dIg4Dmha783BkPYDZioiknj/mJj9u0t84QR5Pa6gtds
- mQMKO+DxC+Lpx1Zoh1zGg8thyovafpoeduun/z2Mhs/01TUNafcoPkPcOg1Gt4G+fJ
- GQhdlHW/5+st8HW5wkmwEBHsEyx5I7OcestDGxbTWPPxrvcU8ePT6knYqOBMshx/9c
- NpCW3YBcEnJZCCjMVMLat70kERqNrdu1pr2DGpbbzyCn9GpwgP1dLVJ/zhcF6l2jOi
- hGYxsNvkztMqAGb26yVbc90YEqWxPiV2/O9RSwVVu5it7o4b4wlmBB+Mi8C0Wlb/h4
- rhoH9V/jsrPrw==
+ b=fQUpPYgTKwWG2nih6X3NnfOdbVQBAJuw2P6putVD9WVRSHTN++s4NaB85nFJr+hum
+ iCpgF7wv1x6+5bn09uVhd0yd2kJrFEk7bPRYkjGw1mITBHqjUrDoHqpHcxWAtghb3/
+ l85bqM9i8uiSGY6rHnNdLQgWuYrmKHUYmjVgNRZx6b8K456KS1mlC1GhUvmkYtClp6
+ B24dJ+UzlsYovtcW+K2K1ipFxsG2amQhuNZW2J0jEuGOMf66czGbwW37KTpDqjNiGH
+ SSXXlQdkyRHFKQkS+dlbqM+cndLcc6VPkO55Xxggy1R17D92r9HMYwGUVu9PGmFED+
+ uioNbs0nljTTg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 021E11B6E11;
+ by isrv.corpit.ru (Postfix) with ESMTP id 362AD1B6E14;
  Sat, 13 Jun 2026 22:50:58 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 588CA3CE88B;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 901B53CE88E;
  Sat, 13 Jun 2026 22:51:16 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Frank Chang <frank.chang@sifive.com>,
- Max Chou <max.chou@sifive.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+Cc: qemu-stable@nongnu.org, Florian Lugou <florian.lugou@provenrun.com>,
  Alistair Francis <alistair.francis@wdc.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.11 02/56] target/riscv: Update MISA.X for non-standard
- extensions
-Date: Sat, 13 Jun 2026 22:50:16 +0300
-Message-ID: <20260613195116.1807273-2-mjt@tls.msk.ru>
+Subject: [Stable-10.0.11 05/56] hw/char: sifive_uart: Avoid infinite delay of
+ async xmit function
+Date: Sat, 13 Jun 2026 22:50:19 +0300
+Message-ID: <20260613195116.1807273-5-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.11-20260613224446@cover.tls.msk.ru>
 References: <qemu-stable-10.0.11-20260613224446@cover.tls.msk.ru>
@@ -72,65 +70,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Frank Chang <frank.chang@sifive.com>
+From: Florian Lugou <florian.lugou@provenrun.com>
 
-MISA.X is set if there are any non-standard extensions.
-We should set MISA.X when any of the vendor extensions is enabled.
+The current handler for TXFIFO writes schedules an async callback to
+pop characters from the queue. When software writes to TXFIFO faster
+than the async callback delay (100ns), the timer may be pushed back
+while the previous character has not be dequeued yet. This happens in
+particular when using -icount with small shift values. This is
+especially worrysome when software repetitively issues amoor.w
+instructions (as suggested by SiFive specification) and the FIFO is
+full, leading to the callback being infinitly pushed back.
 
-Signed-off-by: Frank Chang <frank.chang@sifive.com>
-Reviewed-by: Max Chou <max.chou@sifive.com>
-Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+This commit fixes the issue by never pushing back the timer, only
+updating it if it is not already active.
+
+Signed-off-by: Florian Lugou <florian.lugou@provenrun.com>
 Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20260424050509.3935180-3-frank.chang@sifive.com>
+Message-ID: <20250605101255.797162-1-florian.lugou@provenrun.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-(cherry picked from commit 613bb1949fffc4aeb9e554e35fecc7d6f7ddd27b)
+(cherry picked from commit 61240e3a06dc622d249b530557d5ce03c5854592)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-index 71141f4ea6..6a89f00c49 100644
---- a/target/riscv/cpu.h
-+++ b/target/riscv/cpu.h
-@@ -73,6 +73,7 @@ typedef struct CPUArchState CPURISCVState;
- #define RVH RV('H')
- #define RVG RV('G')
- #define RVB RV('B')
-+#define RVX RV('X')
- 
- extern const uint32_t misa_bits[];
- const char *riscv_get_misa_ext_name(uint32_t bit);
-diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
-index d8d82e69dc..533c511698 100644
---- a/target/riscv/tcg/tcg-cpu.c
-+++ b/target/riscv/tcg/tcg-cpu.c
-@@ -1010,6 +1010,20 @@ static void riscv_cpu_update_misa_c(RISCVCPU *cpu)
+diff --git a/hw/char/sifive_uart.c b/hw/char/sifive_uart.c
+index 6da3401aa3..c4258c2ebf 100644
+--- a/hw/char/sifive_uart.c
++++ b/hw/char/sifive_uart.c
+@@ -128,8 +128,10 @@ static void sifive_uart_write_tx_fifo(SiFiveUARTState *s, const uint8_t *buf,
+         s->txfifo |= SIFIVE_UART_TXFIFO_FULL;
      }
+ 
+-    timer_mod(s->fifo_trigger_handle, current_time +
+-                  TX_INTERRUPT_TRIGGER_DELAY_NS);
++    if (!timer_pending(s->fifo_trigger_handle)) {
++        timer_mod(s->fifo_trigger_handle, current_time +
++                      TX_INTERRUPT_TRIGGER_DELAY_NS);
++    }
  }
  
-+/* MISA.X is set when any of the non-standard extensions is enabled. */
-+static void riscv_cpu_update_misa_x(RISCVCPU *cpu)
-+{
-+    CPURISCVState *env = &cpu->env;
-+    const RISCVCPUMultiExtConfig *arr = riscv_cpu_vendor_exts;
-+
-+    for (int i = 0; arr[i].name != NULL; i++) {
-+        if (isa_ext_is_enabled(cpu, arr[i].offset)) {
-+            riscv_cpu_set_misa_ext(env, env->misa_ext | RVX);
-+            break;
-+        }
-+    }
-+}
-+
- void riscv_tcg_cpu_finalize_features(RISCVCPU *cpu, Error **errp)
- {
-     CPURISCVState *env = &cpu->env;
-@@ -1018,6 +1032,7 @@ void riscv_tcg_cpu_finalize_features(RISCVCPU *cpu, Error **errp)
-     riscv_cpu_init_implied_exts_rules();
-     riscv_cpu_enable_implied_rules(cpu);
-     riscv_cpu_update_misa_c(cpu);
-+    riscv_cpu_update_misa_x(cpu);
- 
-     riscv_cpu_validate_misa_priv(env, &local_err);
-     if (local_err != NULL) {
+ static uint64_t
 -- 
 2.47.3
 
