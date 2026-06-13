@@ -4,45 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52614CD98CF
-	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 19:57:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E83ECD98DE
+	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 19:57:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wYUSK-0000W5-Eb; Sat, 13 Jun 2026 15:55:48 -0400
+	id 1wYUQR-0003so-Kb; Sat, 13 Jun 2026 15:53:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYURr-0008Tp-Dn; Sat, 13 Jun 2026 15:55:22 -0400
+ id 1wYUQQ-0003j8-1c; Sat, 13 Jun 2026 15:53:50 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYURo-0004fg-Li; Sat, 13 Jun 2026 15:55:19 -0400
+ id 1wYUQO-00042R-7H; Sat, 13 Jun 2026 15:53:49 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1781380260; bh=rpvjZq/2pzh5O9kB+yE4Ip4VINuiyEDjuByKZP0xWxM=;
+ t=1781380259; bh=W3NmWaZak4in+cLzAVIEJXDGO+x/8//dUqJPqZV7Euo=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=VbEas/il91NBintHdq7rBhIt/kU0fG5zKXVshDYOfuoBhctz8bKaM8/kc2SBfjpWq
- BoQDYMdOBuvrJdrjYvgLC4COntv5uHoFvJg1Wl/EWc9khey/3fJVQr/Fde+Uq4GWtY
- a8N3y2U1kIWPrWlxqh/c6iaPkzptrVXh5rqyWBN72xNOFPJAt5CBZjoHFQtUZ0fm3I
- fjKwULiXO1EY8tiSCvwUbq1y5odSB2x0zszH8rSkLtjMVJALDv0q/wjQe0ZIP2miaf
- PUqurelTDmC7O9pADiJ0KiQdyvk6OJs1TDhrLPU90eIu+F6C4Uy/jdAG8JV9tKhSjf
- Mk4MacLSS13tA==
+ b=i0mk9N5s9M05vBpQQReBQX7gvTTPUXYEuu2N6qGmlUl0Qr+PmmJyFTmsgGSSTDaHZ
+ fgH7A0l1StbDWxDop+38/gUXw34S2fx94BzQbf0xnppcifFgFDqEQOSQT0dIEUT9NS
+ tDR6+hLexyZTaEO6dz0Aalqhvel5Kjkbj4SUg0vGp6WxJhjSMEZNCVgYhb3oRLArBc
+ wouB0tqNH7EmAHcNELtmpu4BrIV8poMi6CcQIOBk/HTld/9r0D8YvgbRK44vmOx/Vd
+ w6zDGnDQ1O1tBX4cBnZAArN2EcHLBvveEINmikszrFjBJMDJMQJOx+3idOkjYhEdnm
+ GEXSo+/d15EZQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id C61601B6E3A;
- Sat, 13 Jun 2026 22:51:00 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id B63381B6E2B;
+ Sat, 13 Jun 2026 22:50:59 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 297DE3CE8B4;
- Sat, 13 Jun 2026 22:51:19 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 1BB2A3CE8A5;
+ Sat, 13 Jun 2026 22:51:18 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
- Stefan Hajnoczi <stefanha@redhat.com>,
- Markus Armbruster <armbru@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.11 43/56] tests/unit: add test-envlist covering
- setenv/unsetenv name matching
-Date: Sat, 13 Jun 2026 22:50:57 +0300
-Message-ID: <20260613195116.1807273-43-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ Jason Wang <jasowang@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.11 28/56] hw/net/rocker_of_dpa: Avoid unaligned accesses
+ in _of_dpa_flow_match()
+Date: Sat, 13 Jun 2026 22:50:42 +0300
+Message-ID: <20260613195116.1807273-28-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.11-20260613224446@cover.tls.msk.ru>
 References: <qemu-stable-10.0.11-20260613224446@cover.tls.msk.ru>
@@ -71,246 +69,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: "Denis V. Lunev" <den@openvz.org>
+From: Peter Maydell <peter.maydell@linaro.org>
 
-util/envlist had no test coverage. Add tests/unit/test-envlist
-exercising the public envlist API and pinning down the prefix-match
-hazard fixed in the previous commit:
+_of_dpa_flow_match() tries to do masked comparisons of OfDpaFlowkey
+structs by casting pointers to them to uint64_t* and then doing the
+memory accesses as 64-bit. This is undefined behaviour because the
+pointers might not be 64-bit aligned, and the UB sanitizer spots this:
 
-  - envlist_unsetenv("FOO") must not remove an entry named "FOOBAR";
-  - envlist_setenv("FOO=...") must not replace an existing "FOOBAR=..."
-    entry placed earlier in the list (envlist_setenv() inserts at the
-    head, so the first prefix match wins under the old strncmp rule).
+../../hw/net/rocker/rocker_of_dpa.c:321:20: runtime error: load of misaligned address 0x512000164044 for type 'uint64_t' (aka 'unsigned long'), which requires 8 byte alignment
+0x512000164044: note: pointer points here
+  02 00 00 00 00 00 ff ff  00 00 00 00 ff ff ff ff  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00
+              ^
 
-Also cover the rest of the contract: head-insertion order observed
-through envlist_to_environ(), replacement of an existing variable,
-the count argument of envlist_to_environ(), and the documented EINVAL
-paths (NULL inputs, setenv without '=', unsetenv with '=').
+We do know that OfDpaFlowKey structs must be at least aligned enough
+for uint32_t accesses, because that's the type of the first field.
+Switch to using uint32_t accesses in the loop.
 
-Signed-off-by: Denis V. Lunev <den@openvz.org>
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
-Message-id: 20260520212628.479772-3-den@openvz.org
-Cc: Stefan Hajnoczi <stefanha@redhat.com>
-Cc: Markus Armbruster <armbru@redhat.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>
-Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
-(cherry picked from commit 05221c600a5f3ef657d71aeaea632c5f1bab3a2d)
+Because the "width" field is always set via the FLOW_KEY_WIDTH macro
+and not exposed to the guest, we can adjust the macro to store the
+number of uint32_t to be checked rather than needing to change the
+loop boundary in the match function.
+
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Jason Wang <jasowang@redhat.com>
+(cherry picked from commit 71d027cfee8553e2ec28efa1ddd7fd0ecbadcc86)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/tests/unit/meson.build b/tests/unit/meson.build
-index d5248ae51d..1a85f85d18 100644
---- a/tests/unit/meson.build
-+++ b/tests/unit/meson.build
-@@ -48,6 +48,7 @@ tests = {
-   'test-qapi-util': [],
-   'test-interval-tree': [],
-   'test-fifo': [],
-+  'test-envlist': [],
- }
+diff --git a/hw/net/rocker/rocker_of_dpa.c b/hw/net/rocker/rocker_of_dpa.c
+index 6f10212521..74d00aef1c 100644
+--- a/hw/net/rocker/rocker_of_dpa.c
++++ b/hw/net/rocker/rocker_of_dpa.c
+@@ -99,13 +99,13 @@ typedef struct of_dpa_flow_key {
+             } nd;
+         } ipv6;
+     };
+-    int width;                       /* how many uint64_t's in key? */
++    int width;                       /* how many uint32_t's in key? */
+ } OfDpaFlowKey;
  
- if have_system or have_tools
-diff --git a/tests/unit/test-envlist.c b/tests/unit/test-envlist.c
-new file mode 100644
-index 0000000000..53813dd4de
---- /dev/null
-+++ b/tests/unit/test-envlist.c
-@@ -0,0 +1,196 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+/*
-+ * envlist tests
-+ *
-+ * Copyright 2026 Virtuozzo International GmbH
-+ *
-+ * Authors:
-+ *  Denis V. Lunev <den@openvz.org>
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "qemu/envlist.h"
-+
-+static void free_environ(char **env)
-+{
-+    char **p;
-+
-+    for (p = env; *p != NULL; p++) {
-+        g_free(*p);
-+    }
-+    g_free(env);
-+}
-+
-+static const char *find_env(char **env, const char *name)
-+{
-+    size_t name_len = strlen(name);
-+    char **p;
-+
-+    for (p = env; *p != NULL; p++) {
-+        if (strncmp(*p, name, name_len) == 0 && (*p)[name_len] == '=') {
-+            return *p + name_len + 1;
-+        }
-+    }
-+    return NULL;
-+}
-+
-+static void test_envlist_basic(void)
-+{
-+    envlist_t *el = envlist_create();
-+    char **env;
-+    size_t count;
-+
-+    /* empty list */
-+    env = envlist_to_environ(el, &count);
-+    g_assert_cmpuint(count, ==, 0);
-+    g_assert_null(env[0]);
-+    free_environ(env);
-+
-+    /* add */
-+    g_assert_cmpint(envlist_setenv(el, "A=1"), ==, 0);
-+    g_assert_cmpint(envlist_setenv(el, "B=2"), ==, 0);
-+
-+    env = envlist_to_environ(el, &count);
-+    g_assert_cmpuint(count, ==, 2);
-+    g_assert_cmpstr(find_env(env, "A"), ==, "1");
-+    g_assert_cmpstr(find_env(env, "B"), ==, "2");
-+    free_environ(env);
-+
-+    /* replace */
-+    g_assert_cmpint(envlist_setenv(el, "A=42"), ==, 0);
-+    env = envlist_to_environ(el, &count);
-+    g_assert_cmpuint(count, ==, 2);
-+    g_assert_cmpstr(find_env(env, "A"), ==, "42");
-+    g_assert_cmpstr(find_env(env, "B"), ==, "2");
-+    free_environ(env);
-+
-+    /* unset existing */
-+    g_assert_cmpint(envlist_unsetenv(el, "A"), ==, 0);
-+    env = envlist_to_environ(el, &count);
-+    g_assert_cmpuint(count, ==, 1);
-+    g_assert_null(find_env(env, "A"));
-+    g_assert_cmpstr(find_env(env, "B"), ==, "2");
-+    free_environ(env);
-+
-+    /* unset non-existing is a no-op success */
-+    g_assert_cmpint(envlist_unsetenv(el, "NOPE"), ==, 0);
-+    env = envlist_to_environ(el, &count);
-+    g_assert_cmpuint(count, ==, 1);
-+    free_environ(env);
-+
-+    envlist_free(el);
-+}
-+
-+/*
-+ * envlist_setenv() inserts at the head; envlist_to_environ() walks
-+ * head-to-tail, so the last setenv comes out first.
-+ */
-+static void test_envlist_head_insertion_order(void)
-+{
-+    envlist_t *el = envlist_create();
-+    char **env;
-+    size_t count;
-+
-+    g_assert_cmpint(envlist_setenv(el, "A=1"), ==, 0);
-+    g_assert_cmpint(envlist_setenv(el, "B=2"), ==, 0);
-+    g_assert_cmpint(envlist_setenv(el, "C=3"), ==, 0);
-+
-+    env = envlist_to_environ(el, &count);
-+    g_assert_cmpuint(count, ==, 3);
-+    g_assert_cmpstr(env[0], ==, "C=3");
-+    g_assert_cmpstr(env[1], ==, "B=2");
-+    g_assert_cmpstr(env[2], ==, "A=1");
-+    g_assert_null(env[3]);
-+
-+    free_environ(env);
-+    envlist_free(el);
-+}
-+
-+static void test_envlist_einval(void)
-+{
-+    envlist_t *el = envlist_create();
-+
-+    /* NULL list */
-+    g_assert_cmpint(envlist_setenv(NULL, "A=1"), ==, EINVAL);
-+    g_assert_cmpint(envlist_unsetenv(NULL, "A"), ==, EINVAL);
-+
-+    /* NULL string */
-+    g_assert_cmpint(envlist_setenv(el, NULL), ==, EINVAL);
-+    g_assert_cmpint(envlist_unsetenv(el, NULL), ==, EINVAL);
-+
-+    /* setenv: missing '=' */
-+    g_assert_cmpint(envlist_setenv(el, "NOEQ"), ==, EINVAL);
-+
-+    /* unsetenv: name must not contain '=' */
-+    g_assert_cmpint(envlist_unsetenv(el, "A=B"), ==, EINVAL);
-+
-+    envlist_free(el);
-+}
-+
-+/*
-+ * Regression: envlist_unsetenv("FOO") must not remove an entry named
-+ * "FOOBAR" -- the previous strncmp(entry, name, strlen(name)) lookup
-+ * prefix-matched. To trigger the bug, the longer-named entry has to
-+ * be ahead of the target in the list: envlist_setenv() inserts at
-+ * the head, so we add FOO first and FOOBAR last.
-+ */
-+static void test_envlist_unsetenv_no_prefix_match(void)
-+{
-+    envlist_t *el = envlist_create();
-+    char **env;
-+    size_t count;
-+
-+    g_assert_cmpint(envlist_setenv(el, "FOO=y"), ==, 0);
-+    g_assert_cmpint(envlist_setenv(el, "FOOBAR=x"), ==, 0);
-+
-+    g_assert_cmpint(envlist_unsetenv(el, "FOO"), ==, 0);
-+
-+    env = envlist_to_environ(el, &count);
-+    g_assert_cmpuint(count, ==, 1);
-+    g_assert_cmpstr(find_env(env, "FOOBAR"), ==, "x");
-+    g_assert_null(find_env(env, "FOO"));
-+
-+    free_environ(env);
-+    envlist_free(el);
-+}
-+
-+/*
-+ * envlist_setenv() must not replace a prior FOOBAR=... entry when
-+ * setting FOO=... The pre-fix code happened to be safe here only
-+ * because it included the trailing '=' byte in its strncmp length;
-+ * this test pins down the post-fix contract that the name boundary
-+ * is a property of the entry, not of the encoded form.
-+ */
-+static void test_envlist_setenv_no_prefix_match(void)
-+{
-+    envlist_t *el = envlist_create();
-+    char **env;
-+    size_t count;
-+
-+    g_assert_cmpint(envlist_setenv(el, "FOOBAR=x"), ==, 0);
-+    g_assert_cmpint(envlist_setenv(el, "FOO=y"), ==, 0);
-+
-+    env = envlist_to_environ(el, &count);
-+    g_assert_cmpuint(count, ==, 2);
-+    g_assert_cmpstr(find_env(env, "FOOBAR"), ==, "x");
-+    g_assert_cmpstr(find_env(env, "FOO"), ==, "y");
-+
-+    free_environ(env);
-+    envlist_free(el);
-+}
-+
-+int main(int argc, char *argv[])
-+{
-+    g_test_init(&argc, &argv, NULL);
-+
-+    g_test_add_func("/envlist/basic", test_envlist_basic);
-+    g_test_add_func("/envlist/head_insertion_order",
-+                    test_envlist_head_insertion_order);
-+    g_test_add_func("/envlist/einval", test_envlist_einval);
-+    g_test_add_func("/envlist/unsetenv_no_prefix_match",
-+                    test_envlist_unsetenv_no_prefix_match);
-+    g_test_add_func("/envlist/setenv_no_prefix_match",
-+                    test_envlist_setenv_no_prefix_match);
-+
-+    return g_test_run();
-+}
+-/* Width of key which includes field 'f' in u64s, rounded up */
++/* Width of key which includes field 'f' in u32s, rounded up */
+ #define FLOW_KEY_WIDTH(f) \
+     DIV_ROUND_UP(offsetof(OfDpaFlowKey, f) + sizeof_field(OfDpaFlowKey, f), \
+-    sizeof(uint64_t))
++    sizeof(uint32_t))
+ 
+ typedef struct of_dpa_flow_action {
+     uint32_t goto_tbl;
+@@ -308,9 +308,9 @@ static void _of_dpa_flow_match(void *key, void *value, void *user_data)
+ {
+     OfDpaFlow *flow = value;
+     OfDpaFlowMatch *match = user_data;
+-    uint64_t *k = (uint64_t *)&flow->key;
+-    uint64_t *m = (uint64_t *)&flow->mask;
+-    uint64_t *v = (uint64_t *)&match->value;
++    uint32_t *k = (uint32_t *)&flow->key;
++    uint32_t *m = (uint32_t *)&flow->mask;
++    uint32_t *v = (uint32_t *)&match->value;
+     int i;
+ 
+     if (flow->key.tbl_id == match->value.tbl_id) {
 -- 
 2.47.3
 
