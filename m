@@ -4,49 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 050BDCD8CA8
-	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 20:10:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C836CD8CA8
+	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 20:10:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wYUbH-000861-BA; Sat, 13 Jun 2026 16:05:03 -0400
+	id 1wYUe8-0004IZ-9G; Sat, 13 Jun 2026 16:08:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYUbF-00083l-Dc; Sat, 13 Jun 2026 16:05:01 -0400
+ id 1wYUdL-00036A-Pl; Sat, 13 Jun 2026 16:07:12 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYUbD-0008HA-IN; Sat, 13 Jun 2026 16:05:00 -0400
+ id 1wYUdJ-0000y6-Vo; Sat, 13 Jun 2026 16:07:11 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1781381067; bh=4z7s1KUPov547AFUB0/0VKwnCG1xS0fdowh1v+qwB3k=;
+ t=1781381068; bh=gTlxImFIhPbtXt9KMaAuMt3QHywOF5A0bgeUzttkpX8=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=h0y4WT4w9U82G39S9QDAzIdc9H72djADtJjeTSyxC0QtaVYwjmiCROCzAIEaSAZtj
- 4dxAk/AZ/lbIwy/Z9ylQoS9n1WAkZy1G1ZOg6AzzHhdMF8v2zUjONU6lF0ryDFC9MM
- sxtGdCzIhtWyjQaqNxUD8Ohe8FZD1chiaf6RFKL0GEl5P2VBsPMNGWpdmYG4G/haFa
- wmH5Rs5Iz2IMJxBqSqMw3X48zxfEKP1TRkgd+n6ZYXi5sDGTeCEyNHA3mKoH/CcK2G
- y/41yWhLH0UYDg4NBwHYgJhGq11PAi01mk6kGu43x+IU/h+djStNkJ7Y7xTPOaRNLF
- UNBDPFcRkr9JQ==
+ b=Uy9Pq7cm05ElTdUM5OoVQFVj6G0YFnX9IRRROMzrbiFJibAx8WkpFNiQpIbe7dB4w
+ bMUYF41qPfHy7xT/RWLV4VES1HS2H6j7apGerAQ9CksqqCYqsofigBnS2FXWqk46nw
+ 3yBbmd67Lnioltd5vlO+pzJlIjMyDxp6UlmT+cIuIJ9/5omPOtDUsXnwKNiphtwLah
+ SGw9PDDVKsxyI6G026Jy98bzgOuyGwANYA5/9LkaZgGxPcUZHeHvQr0KqLsRHeALC5
+ tRMDMMPaa7X36pYyeB+cqC9wczcSKyHlH0VOHSDXQcqifUCuPcAMtNFdfDaLQPcEY4
+ 3FCTOIMGAuBMA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 52F3C1B6E6E;
- Sat, 13 Jun 2026 23:04:27 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id C94881B6E85;
+ Sat, 13 Jun 2026 23:04:28 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id AE10B3CE8D1;
- Sat, 13 Jun 2026 23:04:45 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 310C53CE8E7;
+ Sat, 13 Jun 2026 23:04:47 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Frank Chang <frank.chang@sifive.com>,
- Chao Liu <chao.liu.zevorn@gmail.com>, Jim Shu <jim.shu@sifive.com>,
- Alistair Francis <alistair.francis@wdc.com>,
+Cc: qemu-stable@nongnu.org, Chenyi Qiang <chenyi.qiang@intel.com>,
+ Farrah Chen <farrah.chen@intel.com>,
+ Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.4 07/61] hw/char: Check interrupt after txctrl register
- is written
-Date: Sat, 13 Jun 2026 23:02:50 +0300
-Message-ID: <20260613200411.1808021-7-mjt@tls.msk.ru>
+Subject: [Stable-10.2.4 29/61] vfio/container: Restrict dma_map_file() to
+ shared RAM or RAM devices
+Date: Sat, 13 Jun 2026 23:03:12 +0300
+Message-ID: <20260613200411.1808021-29-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.2.4-20260613224639@cover.tls.msk.ru>
 References: <qemu-stable-10.2.4-20260613224639@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -71,37 +73,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Frank Chang <frank.chang@sifive.com>
+From: Chenyi Qiang <chenyi.qiang@intel.com>
 
-It's possible that the transmit watermark level (txctrl.txcnt) is
-updated when the user writes to txctrl register, which may decrease the
-transmit watermark level to less than the number of entries in the
-transmit FIFO. In such a case, the interrupt should be raised so we need to
-call sifive_uart_update_irq() to check and update interrupt when txctrl
-register is written. Otherwise, the interrupt will have to be delayed
-until next TX FIFO transmission is processed.
+vfio_container_dma_map() uses dma_map_file() whenever a RAMBlock has an
+fd and the VFIO IOMMU backend supports file-based DMA mapping. That is
+not correct for private file-backed guest RAM.
 
-Suggested-by: Chao Liu <chao.liu.zevorn@gmail.com>
-Signed-off-by: Frank Chang <frank.chang@sifive.com>
-Reviewed-by: Jim Shu <jim.shu@sifive.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20260513030503.3665414-1-frank.chang@sifive.com>
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-(cherry picked from commit e07077a766071418e76d1c7db7e51e344776eaf2)
+dma_map_file() resolves PFNs from the backing file, but private guest
+RAM mappings (MAP_PRIVATE) can run on different PFNs than the file
+because they are subject to copy-on-write (COW) anomalies. As a result,
+using dma_map_file() on a privately mapped RAMBlock can program DMA
+against pages that do not back QEMU's actual guest memory.
+
+Fix this by using dma_map_file() only for shared mapped RAMBlocks
+(MAP_SHARED) or RAM device regions.
+
+Fixes: fb32965b6dd8 ("vfio/iommufd: use IOMMU_IOAS_MAP_FILE")
+Reported-by: Farrah Chen <farrah.chen@intel.com>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=220776
+Reviewed-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+Suggested-by: Cédric Le Goater <clg@redhat.com>
+Signed-off-by: Chenyi Qiang <chenyi.qiang@intel.com>
+Link: https://lore.kernel.org/qemu-devel/20260527101109.71781-1-chenyi.qiang@intel.com
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Signed-off-by: Cédric Le Goater <clg@redhat.com>
+(cherry picked from commit e6c47bebdf8628e635e1ba970919ca96d572dbbe)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/char/sifive_uart.c b/hw/char/sifive_uart.c
-index 4a54dd52a1..b76213e157 100644
---- a/hw/char/sifive_uart.c
-+++ b/hw/char/sifive_uart.c
-@@ -197,6 +197,7 @@ sifive_uart_write(void *opaque, hwaddr addr,
-         if (SIFIVE_UART_TXEN(s->txctrl) && !fifo8_is_empty(&s->tx_fifo)) {
-             sifive_uart_trigger_tx_fifo(s);
-         }
-+        sifive_uart_update_irq(s);
-         return;
-     case SIFIVE_UART_RXCTRL:
-         s->rxctrl = val64;
+diff --git a/hw/vfio/container.c b/hw/vfio/container.c
+index 013a691bc5..6efec07e2d 100644
+--- a/hw/vfio/container.c
++++ b/hw/vfio/container.c
+@@ -74,15 +74,43 @@ void vfio_address_space_insert(VFIOAddressSpace *space,
+     bcontainer->space = space;
+ }
+ 
++static bool vfio_container_can_dma_map_file(VFIOContainer *bcontainer,
++                                            MemoryRegion *mr, int *fd)
++{
++    VFIOIOMMUClass *vioc = VFIO_IOMMU_GET_CLASS(bcontainer);
++    RAMBlock *rb = mr->ram_block;
++
++    if (!vioc->dma_map_file || !rb) {
++        return false;
++    }
++
++    *fd = qemu_ram_get_fd(rb);
++    if (*fd < 0) {
++        return false;
++    }
++
++    /*
++     * We can use IOMMU DMA mapping (IOMMU_IOAS_MAP_FILE) for :
++     *
++     * 1) Guest RAM blocks explicitly configured as shared (MAP_SHARED)
++     * 2) RAM device sub-regions (MMIO BARs)
++     *
++     * Private RAM mappings (MAP_PRIVATE) are strictly excluded. Because
++     * they are subject to copy-on-write (COW) anomalies, their underlying
++     * PFNs can permanently diverge from the backing file
++     */
++    return qemu_ram_is_shared(rb) || memory_region_is_ram_device(mr);
++}
++
+ int vfio_container_dma_map(VFIOContainer *bcontainer,
+                            hwaddr iova, uint64_t size,
+                            void *vaddr, bool readonly, MemoryRegion *mr)
+ {
+     VFIOIOMMUClass *vioc = VFIO_IOMMU_GET_CLASS(bcontainer);
+-    RAMBlock *rb = mr->ram_block;
+-    int mfd = rb ? qemu_ram_get_fd(rb) : -1;
++    int mfd;
+ 
+-    if (mfd >= 0 && vioc->dma_map_file) {
++    if (vfio_container_can_dma_map_file(bcontainer, mr, &mfd)) {
++        RAMBlock *rb = mr->ram_block;
+         unsigned long start = vaddr - qemu_ram_get_host_addr(rb);
+         unsigned long offset = qemu_ram_get_fd_offset(rb);
+ 
 -- 
 2.47.3
 
