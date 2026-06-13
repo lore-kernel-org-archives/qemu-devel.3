@@ -4,46 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 989C5CD98CF
-	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 20:06:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 820D7CD8CA8
+	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 20:06:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wYUb7-0007yx-PH; Sat, 13 Jun 2026 16:04:54 -0400
+	id 1wYUbk-0000kx-9K; Sat, 13 Jun 2026 16:05:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYUb2-0007tY-St; Sat, 13 Jun 2026 16:04:48 -0400
+ id 1wYUbi-0000jX-M2; Sat, 13 Jun 2026 16:05:30 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYUb1-0008AN-5c; Sat, 13 Jun 2026 16:04:48 -0400
+ id 1wYUbg-00008J-PK; Sat, 13 Jun 2026 16:05:30 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1781381066; bh=rnQOGaMB0TvAzkIsOXg/THAk5Avc62ywt9gBn5zGPjM=;
+ t=1781381067; bh=/8ifPBxZlwCsqlqjCb5a62kMT5TB9JBejzqETOq+3lk=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=O+wZGwgsvjKUTMJ295Y2pUYRQkNYfzsw6ZY1fyqroAg1NpFuVzOyNnN039F70+Xj9
- f8VpA9YOBRSX8UycSt3TnflnpC0+hftmsn1vurLLpQ+U4LysKEWQnRXkE2Tw78WKOy
- kQsaOO8rarIpMhxbjwk1qaGUCUgM+wFyYWsaikXoRIS0LeWG7HOp3MNDyDAHyGV9Ug
- nFbI1zDPxKS8CMacKAbpaaxy7OHOxYcT6yLrVzak1DSpb44UadHUqAm82JqtTOF6ls
- YhbaP/DfAx87s4URlUAmL7PPh7NuucyEDTAkNb8ee3Wf15FpNjP2O+Q3K47bcoqRMt
- n+upO2kq8Q89g==
+ b=ijyLG9DNEZn8mxujey/tkl7G2giEZb4O0selkaDH8MI+nKABgxWrx6ZYf79+0IZeA
+ PtNwOT6lX2rwkgJXbwGngTrdUCqIqaEHt/Djle7HItEXRYxGssBIF/bYHBfkedtv81
+ h8V+mk+obKZB4OFXDba93ppxTNh7Yh+Un+wCionx5Kgo8YjxwZbLsS1FXvr3kj6N4J
+ o11FJ9F+5YS/ircB1PvHxNkt9cGE1RqQn/fo1IM1BJMW+qHVrvh10tSlOMD4xsR8cQ
+ TEFwcSwGLo9y+yF9lJFaQzUQjH5MTRsim6bDsfgaIqKc/VI31xNtRRx+2thF6tpPjb
+ Ih63ORi0j+gPQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id EEB151B6E69;
- Sat, 13 Jun 2026 23:04:26 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 96CD41B6E72;
+ Sat, 13 Jun 2026 23:04:27 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 550A73CE8CC;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 0103F3CE8D5;
  Sat, 13 Jun 2026 23:04:45 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Frank Chang <frank.chang@sifive.com>,
- Max Chou <max.chou@sifive.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Alistair Francis <alistair.francis@wdc.com>,
+Cc: qemu-stable@nongnu.org, Alistair Francis <alistair.francis@wdc.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.4 02/61] target/riscv: Update MISA.X for non-standard
- extensions
-Date: Sat, 13 Jun 2026 23:02:45 +0300
-Message-ID: <20260613200411.1808021-2-mjt@tls.msk.ru>
+Subject: [Stable-10.2.4 11/61] target/riscv: Update the local interrupt mask
+Date: Sat, 13 Jun 2026 23:02:54 +0300
+Message-ID: <20260613200411.1808021-11-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.2.4-20260613224639@cover.tls.msk.ru>
 References: <qemu-stable-10.2.4-20260613224639@cover.tls.msk.ru>
@@ -72,65 +69,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Frank Chang <frank.chang@sifive.com>
+From: Alistair Francis <alistair.francis@wdc.com>
 
-MISA.X is set if there are any non-standard extensions.
-We should set MISA.X when any of the vendor extensions is enabled.
+The RISC-V spec describes bits 0-15 as standard fixed interrupts. The
+AIA spec on the other hand describes bits 0-12 as standard fixed
+interrupts. This conflict causes issues for us as we don't dynamically
+determine if AIA is enabled when setting the *delegable_ints consts.
 
-Signed-off-by: Frank Chang <frank.chang@sifive.com>
-Reviewed-by: Max Chou <max.chou@sifive.com>
-Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20260424050509.3935180-3-frank.chang@sifive.com>
+This means currently we incorrectly treat the LCOFIP bit as delegable,
+even if AIA is disabled, which is incorrect (see the issues mentioned
+below).
+
+The AIA spec indicates that implementations can determine which bits of
+13-63 in mvien are writable, so let's just make it bits 15-63 to match
+the main spec.
+
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3133
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3134
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3135
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3138
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3140
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-(cherry picked from commit 613bb1949fffc4aeb9e554e35fecc7d6f7ddd27b)
+Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Message-ID: <20260513051841.1671987-1-alistair.francis@wdc.com>
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+(cherry picked from commit 27f9566dcd98bdde045ef5ae7b8199456c8a51c1)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-index 36e7f10037..ee93558668 100644
---- a/target/riscv/cpu.h
-+++ b/target/riscv/cpu.h
-@@ -69,6 +69,7 @@ typedef struct CPUArchState CPURISCVState;
- #define RVH RV('H')
- #define RVG RV('G')
- #define RVB RV('B')
-+#define RVX RV('X')
+diff --git a/target/riscv/csr.c b/target/riscv/csr.c
+index c4d2ab0858..c360f77c92 100644
+--- a/target/riscv/csr.c
++++ b/target/riscv/csr.c
+@@ -1765,13 +1765,13 @@ static RISCVException write_stimecmph(CPURISCVState *env, int csrno,
+ #define VSTOPI_NUM_SRCS 5
  
- extern const uint32_t misa_bits[];
- const char *riscv_get_misa_ext_name(uint32_t bit);
-diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
-index 6a094c921e..22ced1ed1b 100644
---- a/target/riscv/tcg/tcg-cpu.c
-+++ b/target/riscv/tcg/tcg-cpu.c
-@@ -1158,6 +1158,20 @@ static void riscv_cpu_update_misa_c(RISCVCPU *cpu)
-     }
- }
+ /*
+- * All core local interrupts except the fixed ones 0:12. This macro is for
++ * All core local interrupts except the fixed ones 0:15. This macro is for
+  * virtual interrupts logic so please don't change this to avoid messing up
+  * the whole support, For reference see AIA spec: `5.3 Interrupt filtering and
+  * virtual interrupts for supervisor level` and `6.3.2 Virtual interrupts for
+  * VS level`.
+  */
+-#define LOCAL_INTERRUPTS   (~0x1FFFULL)
++#define LOCAL_INTERRUPTS   (~0xFFFFULL)
  
-+/* MISA.X is set when any of the non-standard extensions is enabled. */
-+static void riscv_cpu_update_misa_x(RISCVCPU *cpu)
-+{
-+    CPURISCVState *env = &cpu->env;
-+    const RISCVCPUMultiExtConfig *arr = riscv_cpu_vendor_exts;
-+
-+    for (int i = 0; arr[i].name != NULL; i++) {
-+        if (isa_ext_is_enabled(cpu, arr[i].offset)) {
-+            riscv_cpu_set_misa_ext(env, env->misa_ext | RVX);
-+            break;
-+        }
-+    }
-+}
-+
- void riscv_tcg_cpu_finalize_features(RISCVCPU *cpu, Error **errp)
- {
-     CPURISCVState *env = &cpu->env;
-@@ -1166,6 +1180,7 @@ void riscv_tcg_cpu_finalize_features(RISCVCPU *cpu, Error **errp)
-     riscv_cpu_init_implied_exts_rules();
-     riscv_cpu_enable_implied_rules(cpu);
-     riscv_cpu_update_misa_c(cpu);
-+    riscv_cpu_update_misa_x(cpu);
- 
-     riscv_cpu_validate_misa_priv(env, &local_err);
-     if (local_err != NULL) {
+ static const uint64_t delegable_ints =
+     S_MODE_INTERRUPTS | VS_MODE_INTERRUPTS | MIP_LCOFIP;
 -- 
 2.47.3
 
