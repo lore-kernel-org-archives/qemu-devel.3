@@ -4,56 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C283ACD98CF
-	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 22:36:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E071CD98D6
+	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 22:36:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wYWwo-0003dd-Rm; Sat, 13 Jun 2026 18:35:26 -0400
+	id 1wYWwq-0003eC-SY; Sat, 13 Jun 2026 18:35:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kdutta@redhat.com>) id 1wYWwm-0003dV-T8
- for qemu-devel@nongnu.org; Sat, 13 Jun 2026 18:35:24 -0400
+ (Exim 4.90_1) (envelope-from <kdutta@redhat.com>) id 1wYWwo-0003dj-UE
+ for qemu-devel@nongnu.org; Sat, 13 Jun 2026 18:35:26 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kdutta@redhat.com>) id 1wYWwl-0001CD-HE
- for qemu-devel@nongnu.org; Sat, 13 Jun 2026 18:35:24 -0400
+ (Exim 4.90_1) (envelope-from <kdutta@redhat.com>) id 1wYWwn-0001GI-7t
+ for qemu-devel@nongnu.org; Sat, 13 Jun 2026 18:35:26 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781390121;
+ s=mimecast20190719; t=1781390124;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=h4UmoEXprqod5wRJ81LtxfPrkXtS+tFLeg6uQRRz318=;
- b=GnWCinfuGP4kCnEdv5S/HC0vtqxHVpBv9LdwANIQJjJiRTg2U6vYpFXgwXKv557skg1BVg
- 9g6hhR6RF/FK/8zWsc9iPX6Dd0u9c4CJ1LrIerVNVwlTszzwyRix5tJAnIr6peLCzSkA84
- bfR/lStXyyOylmg8DcIJTN9829M/B58=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=bOmDtT3Mr9ISOC1mGVQ9xbshhTvrX0+CeB3rP9gccXM=;
+ b=Ysi6a82kXmB5Zulvh7pIZdVuhPw2ccEZgQ00OVSR4GKMvQzFff/zTtw65NYEKgIdx49KnP
+ spFG4mJU4BHeqhYoGHZ3xnAWJGInSU0L/9KbG44HiEPivNJl7vkXKUlGrZyF2PBLy3ba4M
+ r4RHsLUK9g6zaOHAf4Z5FqdnpceU32Q=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-412-KH6-S1lnPhmAK4ZURfOePA-1; Sat,
- 13 Jun 2026 18:35:19 -0400
-X-MC-Unique: KH6-S1lnPhmAK4ZURfOePA-1
-X-Mimecast-MFC-AGG-ID: KH6-S1lnPhmAK4ZURfOePA_1781390119
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-472-TjyKNLGNOVSEc2CCkgPA8Q-1; Sat,
+ 13 Jun 2026 18:35:23 -0400
+X-MC-Unique: TjyKNLGNOVSEc2CCkgPA8Q-1
+X-Mimecast-MFC-AGG-ID: TjyKNLGNOVSEc2CCkgPA8Q_1781390122
 Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id ADBEE1800345
- for <qemu-devel@nongnu.org>; Sat, 13 Jun 2026 22:35:18 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 46683180034C
+ for <qemu-devel@nongnu.org>; Sat, 13 Jun 2026 22:35:22 +0000 (UTC)
 Received: from kdutta-thinkpadp1gen7.bengluru.csb (unknown [10.74.64.7])
  by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id EB8D3765; Sat, 13 Jun 2026 22:35:15 +0000 (UTC)
+ id 9450F765; Sat, 13 Jun 2026 22:35:19 +0000 (UTC)
 From: Koushik Dutta <kdutta@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Jason Wang <jasowang@redhat.com>, Stefano Garzarella <sgarzare@redhat.com>,
  "Michael S. Tsirkin" <mst@redhat.com>,
  =?UTF-8?q?Eugenio=20P=C3=A9rez?= <eperezma@redhat.com>
-Subject: [PATCH v8 0/2] *** virtio-net: Add notification coalescing support
-Date: Sun, 14 Jun 2026 04:05:11 +0530
-Message-ID: <20260613223513.865744-1-kdutta@redhat.com>
-Content-Type: text/plain; charset="utf-8"
+Subject: [PATCH v8 1/2] [PATCH 1/2] Introduce virtio_net_handle_tx_dispatch()
+ to unify TX path handling. This dispatcher dynamically selects between
+ timer-based and BH-based TX processing based on configuration.
+Date: Sun, 14 Jun 2026 04:05:12 +0530
+Message-ID: <20260613223513.865744-2-kdutta@redhat.com>
+In-Reply-To: <20260613223513.865744-1-kdutta@redhat.com>
+References: <20260613223513.865744-1-kdutta@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
@@ -81,32 +85,114 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This series adds support for virtio network notification
-coalescing (VIRTIO_NET_F_NOFT_COAL) in virtio-net.
+Previously, the tx=timer selected between two completely separate
+code paths at queue creation time. This refactoring introduces a
+runtime dispatch mechanism while maintaining identical behavior.
 
-Patch 1: Introduces a Tx dispatch helper to unify tx path
-handling.
+This is a preparatory patch with no functional changes, making it
+easier to add dynamic TX notification coalescing in a subsequent patch.
 
-Patch 2: Implements notification coalescing support and feature
-negotiation for virtio-net.
+Signed-off-by: Koushik Dutta <kdutta@redhat.com>
+---
+ hw/net/virtio-net.c            | 44 ++++++++++++++++++++++------------
+ include/hw/virtio/virtio-net.h |  1 +
+ 2 files changed, 30 insertions(+), 15 deletions(-)
 
-Koushik Dutta (2):
-  Introduce virtio_net_handle_tx_dispatch() to unify TX path handling.
-    This dispatcher dynamically selects between timer-based and BH-based
-    TX processing based on configuration.
-  Implement VirtIO Network Notification Coalescing
-    (VIRTIO_NET_F_NOTF_COAL). This allows guests to reduce interrupt
-    overhead by configuring coalescing parameters via ethtool -C for
-    both RX and TX paths.
-
- hw/net/virtio-net.c            | 188 ++++++++++++++++++++++++++++++---
- include/hw/virtio/virtio-net.h |   8 ++
- net/passt.c                    |   1 +
- net/tap.c                      |   1 +
- net/vhost-user.c               |   1 +
- net/vhost-vdpa.c               |   1 +
- 6 files changed, 184 insertions(+), 16 deletions(-)
-
+diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
+index 2a5d642a64..319842cf28 100644
+--- a/hw/net/virtio-net.c
++++ b/hw/net/virtio-net.c
+@@ -1002,6 +1002,8 @@ static void virtio_net_set_features(VirtIODevice *vdev,
+     }
+ }
+ 
++static void virtio_net_tx_timer(void *opaque);
++
+ static int virtio_net_handle_rx_mode(VirtIONet *n, uint8_t cmd,
+                                      struct iovec *iov, unsigned int iov_cnt)
+ {
+@@ -2817,7 +2819,6 @@ detach:
+     return -EINVAL;
+ }
+ 
+-static void virtio_net_tx_timer(void *opaque);
+ 
+ static void virtio_net_handle_tx_timer(VirtIODevice *vdev, VirtQueue *vq)
+ {
+@@ -2973,6 +2974,22 @@ static void virtio_net_tx_bh(void *opaque)
+     }
+ }
+ 
++static void virtio_net_handle_tx_dispatch(VirtIODevice *vdev, VirtQueue *vq)
++{
++    VirtIONet *n = VIRTIO_NET(vdev);
++    VirtIONetQueue *q = &n->vqs[vq2q(virtio_get_queue_index(vq))];
++
++    if (n->tx_timer_activate) {
++        if (q->tx_timer == NULL) {
++            q->tx_timer = timer_new_ns(QEMU_CLOCK_VIRTUAL,
++                                       virtio_net_tx_timer, q);
++        }
++        virtio_net_handle_tx_timer(vdev, vq);
++    } else {
++        virtio_net_handle_tx_bh(vdev, vq);
++    }
++}
++
+ static void virtio_net_add_queue(VirtIONet *n, int index)
+ {
+     VirtIODevice *vdev = VIRTIO_DEVICE(n);
+@@ -2980,20 +2997,13 @@ static void virtio_net_add_queue(VirtIONet *n, int index)
+     n->vqs[index].rx_vq = virtio_add_queue(vdev, n->net_conf.rx_queue_size,
+                                            virtio_net_handle_rx);
+ 
+-    if (n->net_conf.tx && !strcmp(n->net_conf.tx, "timer")) {
+-        n->vqs[index].tx_vq =
+-            virtio_add_queue(vdev, n->net_conf.tx_queue_size,
+-                             virtio_net_handle_tx_timer);
+-        n->vqs[index].tx_timer = timer_new_ns(QEMU_CLOCK_VIRTUAL,
+-                                              virtio_net_tx_timer,
+-                                              &n->vqs[index]);
+-    } else {
+-        n->vqs[index].tx_vq =
+-            virtio_add_queue(vdev, n->net_conf.tx_queue_size,
+-                             virtio_net_handle_tx_bh);
+-        n->vqs[index].tx_bh = qemu_bh_new_guarded(virtio_net_tx_bh, &n->vqs[index],
+-                                                  &DEVICE(vdev)->mem_reentrancy_guard);
+-    }
++    n->vqs[index].tx_vq =
++        virtio_add_queue(vdev, n->net_conf.tx_queue_size,
++                         virtio_net_handle_tx_dispatch);
++
++    n->vqs[index].tx_bh =
++        qemu_bh_new_guarded(virtio_net_tx_bh, &n->vqs[index],
++                            &DEVICE(vdev)->mem_reentrancy_guard);
+ 
+     n->vqs[index].tx_waiting = 0;
+     n->vqs[index].n = n;
+@@ -3970,6 +3980,10 @@ static void virtio_net_device_realize(DeviceState *dev, Error **errp)
+         error_printf("Defaulting to \"bh\"");
+     }
+ 
++    if (n->net_conf.tx && strcmp(n->net_conf.tx, "timer") == 0) {
++        n->tx_timer_activate = true;
++    }
++
+     n->net_conf.tx_queue_size = MIN(virtio_net_max_tx_queue_size(n),
+                                     n->net_conf.tx_queue_size);
+ 
+diff --git a/include/hw/virtio/virtio-net.h b/include/hw/virtio/virtio-net.h
+index 371e376428..a4eb3f407e 100644
+--- a/include/hw/virtio/virtio-net.h
++++ b/include/hw/virtio/virtio-net.h
+@@ -230,6 +230,7 @@ struct VirtIONet {
+     struct EBPFRSSContext ebpf_rss;
+     uint32_t nr_ebpf_rss_fds;
+     char **ebpf_rss_fds;
++    bool tx_timer_activate;
+ };
+ 
+ size_t virtio_net_handle_ctrl_iov(VirtIODevice *vdev,
 -- 
 2.53.0
 
