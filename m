@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C8D1CD98C5
-	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 19:54:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 818BACD98CF
+	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 19:55:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wYUQJ-0003T4-GT; Sat, 13 Jun 2026 15:53:43 -0400
+	id 1wYUR4-0005Ww-25; Sat, 13 Jun 2026 15:54:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYUPX-0001Uw-7D; Sat, 13 Jun 2026 15:52:58 -0400
+ id 1wYUQu-0005Ng-Dz; Sat, 13 Jun 2026 15:54:21 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYUPU-0003oK-7a; Sat, 13 Jun 2026 15:52:54 -0400
+ id 1wYUQs-0004D1-9F; Sat, 13 Jun 2026 15:54:19 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1781380259; bh=9cd+qIqqRsoqAEtIChB5CVkGwSasCRBjXO/60eZXsRQ=;
+ t=1781380260; bh=jzTERscFogQIAubT8OAwUrpBgRPGf1ywHEbZJuQg5x0=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=gI8f/Ph7AEMQGxKIPLr/bJjR3+LRnxoUHtrPjiKA7whu54NHiIU0D+cnzSyALyxYj
- F+FUg2Gph3qMHOsAinMXaMJ53Z+yh5OSFl8Atv+BSINm4YIte1AD5I3egI3QhEoZIU
- jGJOCb9qOz7/LmmugDzmJ2+5mGoD/2d08nsj4Jqa7R4J6+Nw0bx5G6HR+udegg/I0h
- gsr/JFDpU4Wj2I1xLvrsnBkwzNhDBc/cuttKoiXdfu0gGVHPuBiEPTYV0B9BCVAg5+
- 6MMl7doExxPE1c8WsPV1hgfkgWVMy9r9aRDa/BcPPilLUBZruWDHW5T9kxYExyUUxB
- FRG3VbsyXdNtg==
+ b=SZPheyTtWfhPmdMc6GHgOBIbqd9jT7RuJ9ii7lp4xV56xuk4jj1E0fUVjdEkfreyq
+ 9TKwDi6gppqf9i0D2eGA6SCFn0Z9Ae/Tq9+M3sXCKxpvkL9fkeRkqfvA3trihCFLOH
+ KtEYHR4aeM8cEpgSmNIKSV9pufzYOZc8HpkeHnN+UQn/Q5RArXMOiDCpmYENQLNZf6
+ Zj/zCCh5GlL36enSeH/EOB0WJ/yAhH/ZvOvGnRGTWbrMObFQ8S7eq9Ma6h24scuYom
+ J71SCRqFEz7udW7oy1MmHS/VINsxQ7h357KQKzrrml3/HLpBnkNEa3VZnaR7icq9gY
+ xDYKvQXKuslfA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 311BE1B6E23;
- Sat, 13 Jun 2026 22:50:59 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 16E3F1B6E30;
+ Sat, 13 Jun 2026 22:51:00 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 89EAA3CE89D;
- Sat, 13 Jun 2026 22:51:17 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 70F5F3CE8AA;
+ Sat, 13 Jun 2026 22:51:18 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Wei Che Kao <skps96g313.cs10@gmail.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.11 20/56] apic: fix delivery bitmask with modified xAPIC
- ids
-Date: Sat, 13 Jun 2026 22:50:34 +0300
-Message-ID: <20260613195116.1807273-20-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Matt Turner <mattst88@gmail.com>,
+ Helge Deller <deller@gmx.de>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.11 33/56] linux-user/s390x: restore fpu_status rounding
+ mode from FPC on sigreturn
+Date: Sat, 13 Jun 2026 22:50:47 +0300
+Message-ID: <20260613195116.1807273-33-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.11-20260613224446@cover.tls.msk.ru>
 References: <qemu-stable-10.0.11-20260613224446@cover.tls.msk.ru>
@@ -69,64 +69,109 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Paolo Bonzini <pbonzini@redhat.com>
+From: Matt Turner <mattst88@gmail.com>
 
-Self-IPIs (or all-but-self IPIs) in QEMU can cause a out-of-bounds access
-to deliver_bitmask, because the access uses the APIC ID register which
-is writable by the guest.  However, foreach_apic uses the delivery
-bitmask indexes to look up the local_apics[] array, which is indexed
-by *initial* APIC id.  Using the right id fixes both a possible heap
-write overflow if the modified APIC id is too large for max_apic_words,
-and a mis-delivery of both self and all-but-self IPIs.
+QEMU keeps the s390x floating-point control register (FPC) in env->fpc.
+The rounding mode bits [2:0] of FPC are reflected into the derived
+env->fpu_status via set_float_rounding_mode(); every architectural
+write to FPC goes through HELPER(sfpc) which keeps the two in sync.
 
-Reported-by: Wei Che Kao <skps96g313.cs10@gmail.com>
+restore_sigregs() restored FPC with a direct assignment:
+
+    __get_user(env->fpc, &sc->fpregs.fpc);
+
+This wrote env->fpc correctly but never updated env->fpu_status, so on
+sigreturn the interrupted code resumed with whatever rounding mode the
+signal handler last installed in fpu_status.
+
+Factor the two-step "write fpc + sync fpu_status" logic out of
+HELPER(sfpc) into cpu_s390x_load_fpc(), declare it in cpu.h, and call
+it from restore_sigregs() in place of the direct assignment.
+
+cpu_s390x_load_fpc() partially reuses the sanity check from
+HELPER(sfpc): if the FPC value has an invalid rounding mode or reserved
+bits set, it falls back to 0, matching the kernel's fpu_lfpc_safe()
+behavior where a corrupt signal frame value causes a specification
+exception and 0 is used instead.
+
+HELPER(sfpc) now calls cpu_s390x_load_fpc() after its full
+specification-exception check, including the FEAT_FLOATING_POINT_EXT
+test that is not needed for the signal restore path.
+
+Fixes: 2941e0fa05 ("linux-user/s390x: Save/restore fpc when handling a signal")
 Cc: qemu-stable@nongnu.org
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit 153dc2fa7bbe0491290d22c4bbb6807074f24260)
-(Mjt: fixup for 10.0.x)
+Signed-off-by: Matt Turner <mattst88@gmail.com>
+Signed-off-by: Helge Deller <deller@gmx.de>
+(cherry picked from commit 2762cd51ee033dccb3167110376dd125244cc819)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/intc/apic.c b/hw/intc/apic.c
-index b2a2b671b0..108fde5d5f 100644
---- a/hw/intc/apic.c
-+++ b/hw/intc/apic.c
-@@ -659,13 +659,6 @@ static void apic_deliver(DeviceState *dev, uint32_t dest, uint8_t dest_mode,
-     APICCommonState *apic_iter;
-     uint32_t deliver_bitmask_size = max_apic_words * sizeof(uint32_t);
-     g_autofree uint32_t *deliver_bitmask = g_new(uint32_t, max_apic_words);
--    uint32_t current_apic_id;
--
--    if (is_x2apic_mode(dev)) {
--        current_apic_id = s->initial_apic_id;
--    } else {
--        current_apic_id = s->id;
--    }
- 
-     switch (dest_shorthand) {
-     case 0:
-@@ -673,14 +666,20 @@ static void apic_deliver(DeviceState *dev, uint32_t dest, uint8_t dest_mode,
-         break;
-     case 1:
-         memset(deliver_bitmask, 0x00, deliver_bitmask_size);
--        apic_set_bit(deliver_bitmask, current_apic_id);
-+        /*
-+         * The self and all-but-self cases do not use apic_match_dest() and
-+         * directly fill in deliver_bitmask; the bitmask's indexes in turn
-+         * map to local_apics[] slots which are never changed even if the
-+         * xAPIC id is modified.  So use s->initial_apic_id instead of s->id.
-+         */
-+        apic_set_bit(deliver_bitmask, s->initial_apic_id);
-         break;
-     case 2:
-         memset(deliver_bitmask, 0xff, deliver_bitmask_size);
-         break;
-     case 3:
-         memset(deliver_bitmask, 0xff, deliver_bitmask_size);
--        apic_reset_bit(deliver_bitmask, current_apic_id);
-+        apic_reset_bit(deliver_bitmask, s->initial_apic_id);
-         break;
+diff --git a/linux-user/s390x/signal.c b/linux-user/s390x/signal.c
+index df49c24708..40455b6deb 100644
+--- a/linux-user/s390x/signal.c
++++ b/linux-user/s390x/signal.c
+@@ -331,7 +331,11 @@ static void restore_sigregs(CPUS390XState *env, target_sigregs *sc)
+     for (i = 0; i < 16; i++) {
+         __get_user(env->aregs[i], &sc->regs.acrs[i]);
      }
+-    __get_user(env->fpc, &sc->fpregs.fpc);
++    {
++        uint32_t fpc;
++        __get_user(fpc, &sc->fpregs.fpc);
++        cpu_s390x_load_fpc(env, fpc);
++    }
+     for (i = 0; i < 16; i++) {
+         __get_user(*get_freg(env, i), &sc->fpregs.fprs[i]);
+     }
+diff --git a/target/s390x/cpu.h b/target/s390x/cpu.h
+index 5b7992deda..afd0d28bad 100644
+--- a/target/s390x/cpu.h
++++ b/target/s390x/cpu.h
+@@ -942,6 +942,7 @@ void s390_init_sigp(void);
+ /* helper.c */
+ void s390_cpu_set_psw(CPUS390XState *env, uint64_t mask, uint64_t addr);
+ uint64_t s390_cpu_get_psw_mask(CPUS390XState *env);
++void cpu_s390x_load_fpc(CPUS390XState *env, uint32_t fpc);
  
+ /* outside of target/s390x/ */
+ S390CPU *s390_cpu_addr2state(uint16_t cpu_addr);
+diff --git a/target/s390x/tcg/fpu_helper.c b/target/s390x/tcg/fpu_helper.c
+index 5041c13962..6216e0accd 100644
+--- a/target/s390x/tcg/fpu_helper.c
++++ b/target/s390x/tcg/fpu_helper.c
+@@ -897,6 +897,19 @@ static const int fpc_to_rnd[8] = {
+     float_round_to_odd,
+ };
+ 
++void cpu_s390x_load_fpc(CPUS390XState *env, uint32_t fpc)
++{
++    /*
++     * Mimic kernel fpu_lfpc_safe(): a corrupt signal frame value that would
++     * trigger a specification exception instead results in FPC being set to 0.
++     */
++    if (fpc_to_rnd[fpc & 0x7] == -1 || fpc & 0x03030088u) {
++        fpc = 0;
++    }
++    env->fpc = fpc;
++    set_float_rounding_mode(fpc_to_rnd[fpc & 0x7], &env->fpu_status);
++}
++
+ /* set fpc */
+ void HELPER(sfpc)(CPUS390XState *env, uint64_t fpc)
+ {
+@@ -904,12 +917,7 @@ void HELPER(sfpc)(CPUS390XState *env, uint64_t fpc)
+         (!s390_has_feat(S390_FEAT_FLOATING_POINT_EXT) && fpc & 0x4)) {
+         tcg_s390_program_interrupt(env, PGM_SPECIFICATION, GETPC());
+     }
+-
+-    /* Install everything in the main FPC.  */
+-    env->fpc = fpc;
+-
+-    /* Install the rounding mode in the shadow fpu_status.  */
+-    set_float_rounding_mode(fpc_to_rnd[fpc & 0x7], &env->fpu_status);
++    cpu_s390x_load_fpc(env, fpc);
+ }
+ 
+ /* set fpc and signal */
 -- 
 2.47.3
 
