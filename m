@@ -4,43 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F46FCD8CA8
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6267ECD98D6
 	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 20:41:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wYV68-0001oz-BK; Sat, 13 Jun 2026 16:36:56 -0400
+	id 1wYV66-0001fp-8H; Sat, 13 Jun 2026 16:36:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYV62-0001aA-BT; Sat, 13 Jun 2026 16:36:50 -0400
+ id 1wYV5w-0001Ya-I5; Sat, 13 Jun 2026 16:36:44 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYV5z-0003FR-LO; Sat, 13 Jun 2026 16:36:49 -0400
+ id 1wYV5u-0003Dy-Vg; Sat, 13 Jun 2026 16:36:44 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1781382963; bh=UHMqgPHGlj8+eniKPa2ZlWyJsrrz5RAQJ32gOb+/r4w=;
+ t=1781382962; bh=LTAxSberyWeoDcQ5ZuEoxEhrXnHV2K4/3Fs3fFdtb8o=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=CC4ZwXco5tLHRiXr7JubdWcnmKleyzcdFMajfdkKEHZSTi5FSRq6YmlElXPH36ojr
- kWNDvrhfDqRaBcGKVD1JUh1EcYgfVGqy7LjQs6VGo6QzOf9x/kpIKDuCj4D+KrDRF7
- N5Jlv8pDYkjB5DCWRQip+yGXHQLrtu1tt0lU5BtbD4Er/BMn/LaDuS7hCJj/twaacH
- hjXo/m6HhhLYnUNY0eh3IQkNaCUcIcg1NxryaaVsoAicVRHTX25Rz7kWNb2Q3VfsDl
- YXrXsUllYmJHSmu470fcvrEqpSVvCvOavqYIkR10gRXdCJwvd/HqdIxH/NKMTR8LIr
- QVB4DG6QBNryw==
+ b=fXeercP4Jpedw94EZwL5YZSA+WtEeEdvN38LyyQz08ZJ9Gy8hnTr/hJC3r18Re5NL
+ XfWMeQnPlIR7EN3+jJQNWAbyW/XHV3cKH0dd1xCIkM2neJX6pypwqgTBXV/wQpvYwK
+ 1h16JTDo3W8XIzqi+QMuE9noMZuuOJULI7LdUxZ0Efs5eJWjt7J5/ihkEFp94BWvZJ
+ t9zA2HG+cq0zrltn+W6er9SpWTqplZWZMqzHrAfLnQHK2do/eJKSXEpUqEEQ1WJufk
+ /kWh/yFF9NQOi9ZaIhiHuE3TUNUqNffLxF9gh3lzFg5vcWG+PGHGcfQWO9mgFXwkuh
+ nY9NN4FcMG5ig==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 05A111B6EE4;
- Sat, 13 Jun 2026 23:36:03 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id CD6801B6EE1;
+ Sat, 13 Jun 2026 23:36:02 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 6FE313CE936;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 3F04F3CE933;
  Sat, 13 Jun 2026 23:36:21 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Zishun Yi <vulab@iscas.ac.cn>,
+Cc: qemu-stable@nongnu.org, Frank Chang <frank.chang@sifive.com>,
+ Chao Liu <chao.liu.zevorn@gmail.com>, Jim Shu <jim.shu@sifive.com>,
  Alistair Francis <alistair.francis@wdc.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.2 10/72] target/riscv: Add mseccfg to VMStateDescription
-Date: Sat, 13 Jun 2026 23:34:36 +0300
-Message-ID: <20260613203542.1809153-10-mjt@tls.msk.ru>
+Subject: [Stable-11.0.2 07/72] hw/char: Check interrupt after txctrl register
+ is written
+Date: Sat, 13 Jun 2026 23:34:33 +0300
+Message-ID: <20260613203542.1809153-7-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.2-20260613224644@cover.tls.msk.ru>
 References: <qemu-stable-11.0.2-20260613224644@cover.tls.msk.ru>
@@ -69,63 +71,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Zishun Yi <vulab@iscas.ac.cn>
+From: Frank Chang <frank.chang@sifive.com>
 
-Currently, the Machine Security Configuration Register (mseccfg) was
-missing from the live migration state. This omission causes the register
-to be reset to zero on the destination host after migration.
+It's possible that the transmit watermark level (txctrl.txcnt) is
+updated when the user writes to txctrl register, which may decrease the
+transmit watermark level to less than the number of entries in the
+transmit FIFO. In such a case, the interrupt should be raised so we need to
+call sifive_uart_update_irq() to check and update interrupt when txctrl
+register is written. Otherwise, the interrupt will have to be delayed
+until next TX FIFO transmission is processed.
 
-Fixed by adding vmstate_mseccfg subsection
-
-This vulnerability was discovered and reported by SpecHunter, an
-AI-driven architecture specification analysis tool.
-
-Link: https://github.com/yizishun/rv-isa-sec/blob/a22e4459cd026ae970791dfbd9cfe5d110fbd46b/output/riscv-isa-manual/pr-1879/qemu.txt#L121
-Signed-off-by: Zishun Yi <vulab@iscas.ac.cn>
+Suggested-by: Chao Liu <chao.liu.zevorn@gmail.com>
+Signed-off-by: Frank Chang <frank.chang@sifive.com>
+Reviewed-by: Jim Shu <jim.shu@sifive.com>
 Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20260511124828.3210477-1-vulab@iscas.ac.cn>
+Message-ID: <20260513030503.3665414-1-frank.chang@sifive.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-(cherry picked from commit eccb1d6940256668109dc6dc42450ced9f324134)
+(cherry picked from commit e07077a766071418e76d1c7db7e51e344776eaf2)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/riscv/machine.c b/target/riscv/machine.c
-index 09c032a879..6776e7bf5a 100644
---- a/target/riscv/machine.c
-+++ b/target/riscv/machine.c
-@@ -423,6 +423,25 @@ static const VMStateDescription vmstate_sstc = {
-     }
- };
- 
-+static bool mseccfg_needed(void *opaque)
-+{
-+    RISCVCPU *cpu = opaque;
-+
-+    return cpu->cfg.ext_smepmp || cpu->cfg.ext_zkr
-+        || cpu->cfg.ext_smmpm || cpu->cfg.ext_zicfilp;
-+}
-+
-+static const VMStateDescription vmstate_mseccfg = {
-+    .name = "cpu/mseccfg",
-+    .version_id = 1,
-+    .minimum_version_id = 1,
-+    .needed = mseccfg_needed,
-+    .fields = (const VMStateField[]) {
-+        VMSTATE_UINTTL(env.mseccfg, RISCVCPU),
-+        VMSTATE_END_OF_LIST()
-+    }
-+};
-+
- const VMStateDescription vmstate_riscv_cpu = {
-     .name = "cpu",
-     .version_id = 11,
-@@ -499,6 +518,7 @@ const VMStateDescription vmstate_riscv_cpu = {
-         &vmstate_ssp,
-         &vmstate_ctr,
-         &vmstate_sstc,
-+        &vmstate_mseccfg,
-         NULL
-     }
- };
+diff --git a/hw/char/sifive_uart.c b/hw/char/sifive_uart.c
+index b4de662d61..b9bbaaef59 100644
+--- a/hw/char/sifive_uart.c
++++ b/hw/char/sifive_uart.c
+@@ -213,6 +213,7 @@ sifive_uart_write(void *opaque, hwaddr addr,
+         if (SIFIVE_UART_TXEN(s->txctrl) && !fifo8_is_empty(&s->tx_fifo)) {
+             sifive_uart_trigger_tx_fifo(s);
+         }
++        sifive_uart_update_irq(s);
+         return;
+     case SIFIVE_UART_RXCTRL:
+         s->rxctrl = val64;
 -- 
 2.47.3
 
