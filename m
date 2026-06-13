@@ -4,44 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 042E7CD8CA8
-	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 19:57:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41B7BCD8CA8
+	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 19:57:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wYUQU-00041w-2m; Sat, 13 Jun 2026 15:53:54 -0400
+	id 1wYUQv-0005L9-U9; Sat, 13 Jun 2026 15:54:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYUQS-0003wx-3i; Sat, 13 Jun 2026 15:53:52 -0400
+ id 1wYUQp-00051P-Rw; Sat, 13 Jun 2026 15:54:15 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYUQQ-00043C-9w; Sat, 13 Jun 2026 15:53:51 -0400
+ id 1wYUQn-000448-U9; Sat, 13 Jun 2026 15:54:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1781380259; bh=LlFJ5MNrrFqn2jreYasQuWyv+SrH/nQ9Zgl3Dd/fIBM=;
+ t=1781380259; bh=Wqggm+YI9CGOXrC37tB98c0M6KNUDE9ZIppSxjX+MCI=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=Rz0928hAUh5jkcqtmz/QJnQIqtBSqkbe2msMMawW9ywbwOnI53wHsd5UKVU2xIQPb
- jxy7G38JZZ6g6BQTzoVzJyDwJwgJXmwqJhWv0VubJLFZcgabx9q9flnAxDBi3ksOTA
- X+/0OHV9r2VyQ11hYxw16ryJbV2VNDhdyV3tscEvN5+FoLmGIZGSsP6qA8XPmn/00J
- 35Tp55BnFJuDkH+3MzbQzFqed1UAGnoRTo9X2Tb5LJayQT+U+YNoktZnCx0moxoee+
- NqhwBVRp8RabdDr6nkLymSz+6h0tC2puUrekmLzOlpfmFlpjqSTYYT/e6/VNgYsZkB
- 6XwmJiaB3LG4w==
+ b=rYB69xuLgW1OFh8fDOPQBvbQcbkBSCOyah2ieWY9t95q1SE9EUawi+9B2fPBJ+AX+
+ IGgzxJhAcY7qebuDs7a44LPpzuPeDmiq9NwelGQnWqzH2bXHNY6po5N99yxLGYdtN5
+ 02YWXcLrDIOCRPgtyEVgBESPXAphvnF/WmzJCvgIEJMC2y83oPwG75oFd/j9//E010
+ eChbERPcuZdGCWLrCaFlEGdNZyEXE5fYtQU5S9RdKJ8hLG0DJijmYwY2ljy3w617Gb
+ jzkmkwYUQAvaTFLOTqkMQnJnm3KQre/+URXMlW5cfQyhxRlX4AM+VEswetfEKxZUsj
+ yN7i01bDPzkzg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id C71A61B6E2C;
+ by isrv.corpit.ru (Postfix) with ESMTP id E89421B6E2E;
  Sat, 13 Jun 2026 22:50:59 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 2B0DB3CE8A6;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 4BA593CE8A8;
  Sat, 13 Jun 2026 22:51:18 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org, Matt Turner <mattst88@gmail.com>,
+ Yoshinori Sato <yoshinori.sato@nifty.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  Helge Deller <deller@gmx.de>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.11 29/56] linux-user/ppc: restore fp_status from FPSCR
- on sigreturn
-Date: Sat, 13 Jun 2026 22:50:43 +0300
-Message-ID: <20260613195116.1807273-29-mjt@tls.msk.ru>
+Subject: [Stable-10.0.11 31/56] linux-user/sh4: preserve T/M/Q bits across
+ signal delivery
+Date: Sat, 13 Jun 2026 22:50:45 +0300
+Message-ID: <20260613195116.1807273-31-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.11-20260613224446@cover.tls.msk.ru>
 References: <qemu-stable-10.0.11-20260613224446@cover.tls.msk.ru>
@@ -72,46 +73,95 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Matt Turner <mattst88@gmail.com>
 
-restore_user_regs() restores the PPC FPSCR with a direct assignment:
+QEMU keeps the SH4 T, M and Q status-register bits outside env->sr, in
+the dedicated env->sr_t, env->sr_m and env->sr_q fields; cpu_read_sr()
+folds them back into the architectural SR value and cpu_write_sr()
+splits them back out.
 
-    env->fpscr = (uint32_t) fpscr;
+setup_sigcontext() saved the bare env->sr (so the T/M/Q bits were always
+zero in the signal frame) and restore_sigcontext() wrote the value
+straight back into env->sr without updating sr_t/sr_m/sr_q. As a result
+the T bit was never preserved across signal delivery: on sigreturn the
+interrupted code resumed with whatever T value the signal handler last
+left behind. Any conditional branch (or addc/subc/rotcl/div1, etc.)
+immediately following the interrupted instruction could then take the
+wrong path.
 
-ppc_store_fpscr() exists precisely to write FPSCR and keep the derived
-env->fp_status in sync: it calls fpscr_set_rounding_mode() to update
-the softfloat rounding mode, and set_float_rebias_overflow/underflow()
-to reflect the FP_OE/FP_UE enable bits.  The direct assignment bypasses
-all of this.
+This is the cause of the long-standing intermittent failures of the
+tests/tcg/multiarch/signals.c test on sh4, which was marked BROKEN. With
+a SIGRTMIN timer firing every millisecond across many threads, the race
+was hit a few percent of the time and corrupted the guest heap, surfacing
+as a SIGSEGV in memset, a malloc assertion, or an rseq registration abort.
 
-On sigreturn, interrupted code resumes with whatever rounding mode and
-overflow/underflow-rebias state the signal handler last installed in
-fp_status, rather than the state that was saved at signal delivery.
+Traced on a deterministic rr recording: a cmp/hi set T=0, the timer
+signal interrupted the very next instruction (a bf), the handler left
+T=1, and the resumed bf took glibc calloc's MORECORE_CLEARS branch,
+using the old top-chunk size as the clear length for a freshly split
+small chunk and running memset off the end of the heap.
 
-Replace the direct assign with ppc_store_fpscr().  The FPSCR_MTFS_MASK
-applied inside ppc_store_fpscr() only excludes the computed FP_FEX and
-FP_VX bits, which it re-derives correctly from the exception and enable
-bits in the restored value.
+Fix setup_sigcontext()/restore_sigcontext() to use cpu_read_sr() and
+cpu_write_sr() so the T, M and Q bits round-trip correctly, and drop the
+BROKEN annotation on the sh4 signals test.
 
-Fixes: bcd4933a23 ("linux-user: ppc signal handling")
+Fixes: c3b5bc8ab3 ("SH4: Signal handling for the user space emulator, by Magnus Damm.")
 Cc: qemu-stable@nongnu.org
+Reviewed-by: Yoshinori Sato <yoshinori.sato@nifty.com>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Matt Turner <mattst88@gmail.com>
 Signed-off-by: Helge Deller <deller@gmx.de>
-(cherry picked from commit 3f50dd46664bdf94f10aca8b76dc4dcb9182a5ae)
+(cherry picked from commit 6bf4c0295cccf74f3c5c0b674328b97d6fd1505c)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/linux-user/ppc/signal.c b/linux-user/ppc/signal.c
-index a9c10e0987..ab1afea30a 100644
---- a/linux-user/ppc/signal.c
-+++ b/linux-user/ppc/signal.c
-@@ -420,7 +420,7 @@ static void restore_user_regs(CPUPPCState *env,
-             __get_user(*fpr, &frame->mc_fregs[i]);
-         }
-         __get_user(fpscr, &frame->mc_fregs[32]);
--        env->fpscr = (uint32_t) fpscr;
-+        ppc_store_fpscr(env, (uint32_t) fpscr);
-     }
+diff --git a/linux-user/sh4/signal.c b/linux-user/sh4/signal.c
+index d70be24c38..cc36425c49 100644
+--- a/linux-user/sh4/signal.c
++++ b/linux-user/sh4/signal.c
+@@ -131,8 +131,10 @@ static void setup_sigcontext(struct target_sigcontext *sc,
+     COPY(gregs[14]); COPY(gregs[15]);
+     COPY(gbr); COPY(mach);
+     COPY(macl); COPY(pr);
+-    COPY(sr); COPY(pc);
++    COPY(pc);
+ #undef COPY
++    /* The T, M and Q bits live outside env->sr; fold them back in. */
++    __put_user(cpu_read_sr(regs), &sc->sc_sr);
  
- #if !defined(TARGET_PPC64)
+     for (i=0; i<16; i++) {
+         __put_user(regs->fregs[i], &sc->sc_fpregs[i]);
+@@ -159,8 +161,14 @@ static void restore_sigcontext(CPUSH4State *regs, struct target_sigcontext *sc)
+     COPY(gregs[14]); COPY(gregs[15]);
+     COPY(gbr); COPY(mach);
+     COPY(macl); COPY(pr);
+-    COPY(sr); COPY(pc);
++    COPY(pc);
+ #undef COPY
++    /* The T, M and Q bits live outside env->sr; unfold them. */
++    {
++        uint32_t sr;
++        __get_user(sr, &sc->sc_sr);
++        cpu_write_sr(regs, sr);
++    }
+ 
+     for (i=0; i<16; i++) {
+         __get_user(regs->fregs[i], &sc->sc_fpregs[i]);
+diff --git a/tests/tcg/sh4/Makefile.target b/tests/tcg/sh4/Makefile.target
+index 7852fa62d8..b7a8737be0 100644
+--- a/tests/tcg/sh4/Makefile.target
++++ b/tests/tcg/sh4/Makefile.target
+@@ -3,13 +3,6 @@
+ # SuperH specific tweaks
+ #
+ 
+-# This triggers failures for sh4-linux about 10% of the time.
+-# Random SIGSEGV at unpredictable guest address, cause unknown.
+-run-signals: signals
+-	$(call skip-test, $<, "BROKEN")
+-run-plugin-signals-with-%:
+-	$(call skip-test, $<, "BROKEN")
+-
+ VPATH += $(SRC_PATH)/tests/tcg/sh4
+ 
+ test-macl: CFLAGS += -O -g
 -- 
 2.47.3
 
