@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E379CD98C5
-	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 06:02:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30F4BCD98C5
+	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 06:02:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wYHRf-0001Kw-AP; Sat, 13 Jun 2026 02:02:15 -0400
+	id 1wYHSF-0002Wv-4n; Sat, 13 Jun 2026 02:02:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <nutty.liu@hotmail.com>)
- id 1wYHRd-0001Ju-6D; Sat, 13 Jun 2026 02:02:13 -0400
+ id 1wYHSC-0002W3-P1; Sat, 13 Jun 2026 02:02:48 -0400
 Received: from mail-japaneastazolkn190120002.outbound.protection.outlook.com
  ([2a01:111:f403:d405::2] helo=TYPPR03CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <nutty.liu@hotmail.com>)
- id 1wYHRY-0004EU-TN; Sat, 13 Jun 2026 02:02:12 -0400
+ id 1wYHSA-0004qc-AH; Sat, 13 Jun 2026 02:02:48 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=gRt9nmtqT1BU0mVW9ZzYGmveKeFvUvcQOFWytEmOlq5AGvfvS7g+xn4hLi3/JqRSFduBeBXP0TKeaB1iJXSLN+uv9yVmaWKxNv1TYdRkEKXk48XCIaw6oCSGOdqqqeAzayl9P81R/aL+MvA4xK09Gdi2GBo2VHOXNMoYjimiMOJr6Rk5ES2H7V0LHjJhNzfA9vCqUDgypCL6r1W+azuX1AfqpV3h06YfgN7i3poKHnhuHx/3Kr9RwE1QG/3NiM5m5nbU/FMzpLl9MiM8vwwIzf3eehjzaFynm9vg8eMsvuo3QDdZO9fYWCca6LQaVKmHBgxkGiF6RAe8zNgrGuib6g==
+ b=SV/4a56Mb/egZS4pJlV8P8h5O6DAQqC+y/Aqvann/fPzSJwChsnzkhBoLvqLN8xlvNUKc4cjr2vA/CjMqacxfP9VJ26GFFHQSBQQd1thIqxlFXAM/URGyIP0VTtcYltHi9ZLjuYiIU6VbBJGBsxQsPhZcbreOwxZ26Gt3oZ5pCvbq9RrQxDyYMScbInbBdm28ysOgZw8619/M/lAWcYN1UadUTTvRQMFdtKGXuYvI1B4XHmoMPXtgJf8rXwLWCzbA9bVdGo735E+ZyU3fTNIV3MxFosMQvyJeFUdyrb83HIWFYhysvCu68lsEftfW3Y6hzdbPMXoF2pO/UXj/dOk3Q==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=tGHPYix2mY3QRBSpePFHeenWJ/PBKAKqLj1z6zKJC54=;
- b=vANBRZag3GGfj3FprMn3cdRMs5caKVATr5QtOZyjlvSoxTJGtaEldvmXWhRb0PfO170k80r8s3wj/u9JVIy2CEmuYvROG73ahbOwC40kACIzAidXe9rHq2ODLECKmBBpFK6oDpbE9MYfNUeD5NKhT6kIrD6L8Xcjrr7+vh5Xty8WowbtxwqHGRsOqFllsTxEhx1a/FfVsSYDDiWt//q0cXGTWxbanVUk0+4S/3EipAadjz4RqE3ZWGYh2WNpErl0MMr5gm4PbqhbPCovomV9ApnSxLbb/cwmvNaP4QeB/NzxXB4zp5Dyz7AKw1Uk9vt7TZ7nC65zN0lG69qbXKhGCQ==
+ bh=lXoEdTb3jh60VLUTpITDBuX26RRLPavsdA7WTnS47Ec=;
+ b=Up6272eRAKScejL2mpjT8TKvCchCtU0uN8kPqc9bU2MGIwO4RmZ4W2jrhe52zt5tlC9EHt6Xs4Avlv43KV5lmthEbZ+zJalHoKHnrSBc2hAfmMQ46vtRs1M4je6U3ldrWjx4zsQcepvANwBUYHKZmyUPp5V0JRLcAwjZVii+9ac5qMd2upd4k1VNeBKLhAkAMmiGd2xv4jWaAIm5k/essHSCP8GH7FDwSz6ancp3hBcx8PL6f/Mcn8qoJxVaUw7qLAw7T/MukeGAc5GYUX3uqn2fei9E7huybPkCtz7iXZOep4Q7iPDo0bHCK0QsLyHU21N78P6i5psXDgyDIxckvw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
  dkim=none; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hotmail.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=tGHPYix2mY3QRBSpePFHeenWJ/PBKAKqLj1z6zKJC54=;
- b=aAnq6hnQRxeAPzLtoEoTl9ERxEn1TcKYFbAUuidqa3YkiynL/WRn8EIYsewoKcdCZH4g1bivLC9O3NgsfZMNAoqeIQYhshzSnj6wDhYtCUYPhz+X+oSl1whfhqv39zimnLRvLypNPb+JNbeUoPvmh4uWxgA5khGsxciA/97PZY6usj+T4CzM7nxHD9e9mENMXeI6LmgFLN6Bg2WkQkzT8NbqbLqyRKe7kLPE/dEkGvZepRleevwXXnkPsXOjkJi89zO1bGm1YhjvyVNrNeDzJZw09o3yyC6n3CvsvgHQaUAmmwHS5369tAu7t2FWeB+UxqUnkeOmfBOsp5QVnMlGPw==
+ bh=lXoEdTb3jh60VLUTpITDBuX26RRLPavsdA7WTnS47Ec=;
+ b=CtXoNN80+P6zPCYg0VGX3Kw0gzR3JSLm1z/M5s1TXMuLktK328kddGyW2BiEVwze4d2mhluwZv85Y2+F3CxK38fZGPj8TlU+m16BBbcBppfoIq6upraCjCJ+2OzMYo4m5sIo1pHp6fcFBkTmlFuQ54zwo4vhPfQiHsMTvSIXY0eAdAtY3KmhsGCQMj1bCXvcTiVx4ZtoaG+/slqRgZbnbGeD30OaSOtcT6Zsxgs4FVuKTb+DPaqPWJDwfx2kC4+vBwkrrGIAwmdk8EmWCsbSwXRR7rwpM9quVyY5g30Xv1fJhV1UFR8DLwgKaWBzSQZJeIgU7qFennpVobrKbUAvcw==
 Received: from SE3PR04MB8922.apcprd04.prod.outlook.com (2603:1096:101:2e9::7)
  by OSNPR04MB9742.apcprd04.prod.outlook.com (2603:1096:604:484::20)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.113.15; Sat, 13 Jun
- 2026 06:02:02 +0000
+ 2026 06:02:40 +0000
 Received: from SE3PR04MB8922.apcprd04.prod.outlook.com
  ([fe80::3450:f139:5238:8f58]) by SE3PR04MB8922.apcprd04.prod.outlook.com
  ([fe80::3450:f139:5238:8f58%6]) with mapi id 15.21.0113.014; Sat, 13 Jun 2026
- 06:02:02 +0000
-Message-ID: <SE3PR04MB892278B9584F4FF0E2145C89F3192@SE3PR04MB8922.apcprd04.prod.outlook.com>
-Date: Sat, 13 Jun 2026 14:01:54 +0800
+ 06:02:40 +0000
+Message-ID: <SE3PR04MB8922CDBD04EC47A6B3B1DD1BF3192@SE3PR04MB8922.apcprd04.prod.outlook.com>
+Date: Sat, 13 Jun 2026 14:02:32 +0800
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v8 3/5] hw/watchdog: add k230 watchdog initial support
+Subject: Re: [PATCH v8 4/5] tests/qtest: add test for K230 watchdog
 To: Chao Liu <chao.liu@processmission.com>,
  Alistair Francis <alistair.francis@wdc.com>
 Cc: Chao Liu <chao.liu.zevorn@gmail.com>,
@@ -60,86 +60,86 @@ Cc: Chao Liu <chao.liu.zevorn@gmail.com>,
  Mig Yang <temashking@foxmail.com>,
  Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 References: <cover.1781246408.git.chao.liu@processmission.com>
- <805a04d9467556ee6a5f4742c9eb4bbb6fc7898c.1781246408.git.chao.liu@processmission.com>
+ <791beb1d8db07e4d1011cbeb4a8ac3add5b24f09.1781246408.git.chao.liu@processmission.com>
 Content-Language: en-US
 From: "Nutty.Liu" <nutty.liu@hotmail.com>
-In-Reply-To: <805a04d9467556ee6a5f4742c9eb4bbb6fc7898c.1781246408.git.chao.liu@processmission.com>
+In-Reply-To: <791beb1d8db07e4d1011cbeb4a8ac3add5b24f09.1781246408.git.chao.liu@processmission.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: SI2PR02CA0031.apcprd02.prod.outlook.com
- (2603:1096:4:195::16) To SE3PR04MB8922.apcprd04.prod.outlook.com
+X-ClientProxiedBy: SI2PR02CA0030.apcprd02.prod.outlook.com
+ (2603:1096:4:195::17) To SE3PR04MB8922.apcprd04.prod.outlook.com
  (2603:1096:101:2e9::7)
-X-Microsoft-Original-Message-ID: <5e5eb251-653e-401d-9dd3-662fd45301e1@hotmail.com>
+X-Microsoft-Original-Message-ID: <c6456089-e90d-4348-a7df-a08b4e8ac3b1@hotmail.com>
 MIME-Version: 1.0
 X-MS-Exchange-MessageSentRepresentingType: 1
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: SE3PR04MB8922:EE_|OSNPR04MB9742:EE_
-X-MS-Office365-Filtering-Correlation-Id: f026693a-623a-46ab-c0aa-08dec91149d5
+X-MS-Office365-Filtering-Correlation-Id: b2646dcd-97c7-416c-4aa9-08dec9116011
 X-Microsoft-Antispam: BCL:0;
  ARA:14566002|23021999003|19101099003|41001999006|19110799012|12121999013|6090799003|15080799012|5072599009|8060799015|51005399006|10035399007|3412199025|4302099013|440099028|40105399003|1602099012;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?M2dyMnBWZnBlU0MzMUY4Vk8wQXlGcTZJMFdPZDhEekhiV3hRN1FjVnVjbTlx?=
- =?utf-8?B?aFJSdkl1M2JtdWdMQ0l0ZnNRU2VwQ2NsbXZQOVNnWVpNRmc4K1A3K29GZGVP?=
- =?utf-8?B?dGUvczhOY1owOTNWREkvaTU4N0JSSHo1MjdCNGFHVmJJQWVKRzhaZ1o3d28w?=
- =?utf-8?B?VlhvbWJPVGVlT01YUmw3emZKeVNySDREVVZwRmZXbGNrRVBiY2gvbi8zTU1H?=
- =?utf-8?B?OW5UQy9vWVJIb1ZFd2NlTDNqZjFEZXVHZk84YmQ2Q3FjY0oxRXR5ang4Y1Fa?=
- =?utf-8?B?VVVhOCt4RytTOEo3czgycnpwNXBrTmx0eTNzZWVscXlFbGg3WVJod1NIMjhU?=
- =?utf-8?B?eGFaSWhubTRyaGZpdEVxQjUxdGNTeGk2U1lIdk10YUE3bHFhZnVPUUs5amJz?=
- =?utf-8?B?V1h0R0xTYVZhUEJTWjdIUVNTbndkR0xjTVBZRFM4aXlaSE8vNHBpNGFicklS?=
- =?utf-8?B?aUVYZVVYY0lDVFJDazJmck43TGFJcmhWOU5uUlJYSWpFTFd0OXpYWDV3RjV3?=
- =?utf-8?B?bldLWmxZdmZHeEgrUnhGS1dYKytXVmZveVZzZ3lTalR5NHoxc3JUdHRZUHM4?=
- =?utf-8?B?d2VoOE9vWlFxVUhPczlwVGdKY05SV294cXd2QnJESE9TZWJTMEw2eEIzOXU2?=
- =?utf-8?B?WXhBUVMzZUFXdkhnRU5tL2dtOVMvbmVtek8vM3hzMFd3STNzbWVJSWpraWU4?=
- =?utf-8?B?a3lId0p1YXluK0RlRnJicnIzNVRqTFRiTGd6bDN2T3lKZHFGbEMva1BjN3ow?=
- =?utf-8?B?bTVpZlYyMzhxQ1kvZmxJOGw0NVJjbkVCdkdDV29NcXVJQk5qa0hCc3hXdHNt?=
- =?utf-8?B?NWJOenNJY1hUZjFOOHV4NnBNditLTUtVby9NU0JpaVhyWUpSaGVEZjRJOUE0?=
- =?utf-8?B?Rm9qTjNzWXVmNkJHcjErcUlzSmNMMWtuYktlZ0w2NmVnemRnS09VcnZ6UXZu?=
- =?utf-8?B?ejhxcGhGdThaczBvRm5DdTh6c0d2V0pUYjJNZmxuZEMvaGlibEdMaUhQcEZX?=
- =?utf-8?B?cXRpVVMvcEh6UVVUR3pNZjUvK2JqbFpEZDhvejh0azZVajh0Rll3TmNCb2xF?=
- =?utf-8?B?YzdRdDFsbXZNZzNacUtOV0hHUGpBNENadTFVV1J6cXdXYldCNnFaSm4wN2VY?=
- =?utf-8?B?OWFTMkM4K3BLTHVjWXN2RWgySkw5SXZqajZnbmpGV1J4K0Rka2N0RWNwRkJa?=
- =?utf-8?B?d2lobldZcnF6U0x3QWIzWEJMOHQzKzNhYXREMG9vV3czdE5GK2hKOU96U2NK?=
- =?utf-8?B?S0hHWlRHZHZkYkxuVkZCenFqdEQ1dklpSk1hQTA4R05QQUhjd2cyL1FCVFd3?=
- =?utf-8?B?ZXpuSDFRNU00MktCVEU0WGJUaHNGY2lHK0hIZVcvaGovQ1FENDl3dThzcGpQ?=
- =?utf-8?B?MkJmcjY0N1l3czdaODM3MWo5MmxGSWljMmdzUFcxbW4wNjhOWGlKNFhUd3gr?=
- =?utf-8?Q?wf74bni7?=
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?SDJoZEwvQU5TZHN5aTdSOVoxU215UWRLaTFRYnhLNld1NEpPbHpLWC91bkxi?=
+ =?utf-8?B?b005eEF1U1BsUExQeXhqZ01pVkpxa1Y1c240YVdCQmNRM1AxZHJybEMzbXdX?=
+ =?utf-8?B?RmcwdWMybUJEUkVCUUNmRkkvUGNBYWRuaGRkTW9EWGpGNXVDN2lBSWJGZFFs?=
+ =?utf-8?B?M1dNa1FaM3JOMDNkb0tuUkg4K3pBdWxRWHlhY3RsdGRPeXlkUHlTOE5CZlJx?=
+ =?utf-8?B?MzhTM3RPSGZIajVDc3NGb2VPTmlwZ0ZOYk1xVFFVWDNaaGlJRmpuTVYrQTVh?=
+ =?utf-8?B?N25TZXhqWS9ERDNyMVFaVWx4dG1DZ0duMURKZzh6VDErOGlVb1ZwdmlQK2g1?=
+ =?utf-8?B?ekppVnltL3ZOK29xSzR1MnZKY1IrS1VLT0R4a1luR0RFM0I1Ymt6cXZTV0Yw?=
+ =?utf-8?B?TlNSbVZHY2hmQ2oycFJzTVVDaGR3VE9GMFJQUjBTZlUrb1FkL0hpbk9KY3Fq?=
+ =?utf-8?B?OTNLcTlHVkpYQy9ISjBRL2lDVHcreDUrTjY4RjBXSzRrODM5VWIzSDZmMXhV?=
+ =?utf-8?B?WjFPcDh6V2dTNVJLTjBidW9yZUF5WUxHTjlQYXhRVnhKakdteEZtcExobXJj?=
+ =?utf-8?B?aVdCU3dXRFlZejl1Z25JUzYzS1VlYjFnblNMOGF6b28yUHZTd3E2Um12cWhW?=
+ =?utf-8?B?cW5JbVFxMjloRHQ2Ty9HTW1GWng1cm1zalM2SWVFcWtGVklFSDg1ZzhKbWFi?=
+ =?utf-8?B?ZHFFYWR0WFArcms1c2hMS2VMSSswYXdPV1dJbHlhRm51cjdPT1dNT29Icy9J?=
+ =?utf-8?B?ckE2dXM5OEVLTGt6dDZNRDJuVjQzcTVmNHgrdWg3MHNOV2pjOHpwa1BrUTND?=
+ =?utf-8?B?ZkZackV3ekFKSnhMQkNCSkI1WE1tTFE0dHJwMGFqRWtBemVCL0ZNeGV5NzRX?=
+ =?utf-8?B?N1ZJMGdHa1RxN2hLRjhURzA0RWpnYVYxbGNxMWJDd0R5VW1acWhyU2Rmdldt?=
+ =?utf-8?B?QXdraCtPRW95K3g0dEVYZ3UyVExHVmNocndKQmR0VHBHY0RwT3N5aWgzcWRV?=
+ =?utf-8?B?bTFMZWx1dnZFdTduM3JneHpsckJuR3AzclZKYzMvUkJwZmsxQ0t5eUFrckkz?=
+ =?utf-8?B?TXp4TVVIYkZzQ21pZVFvQ2t6eU4vWUFBR3pUdGd3Kzlsa2VXblNxb2ZHU00y?=
+ =?utf-8?B?UGM2WmRmUitYMGYyQkdjaUxqODJaK0QvSWxNM0xWeWRQeGhtcGFlN2s3VWFz?=
+ =?utf-8?B?ZVB1TzZaaGJjS2RDc0YwdzdDRTNPNVFtbThLWkowaEpVVnVXOHltNk1ZZFdL?=
+ =?utf-8?B?R0RxTFFjSGhZWEJ3YVJtNndhM2crK0dEWFVYRjI2b1VycndPQ0ErRERxaGNa?=
+ =?utf-8?B?VHRTNXZxd0VXRkFYTldodzJZd0tXUWI1OWJJQnlvWVl6RmZSQkx2bXhjYk9O?=
+ =?utf-8?B?RXUrN0thT21NQzhNbDNFdE11UStzSWVGaDVXUS9UVm5XMFZhM0FBZXFMckw2?=
+ =?utf-8?Q?+nA853ZO?=
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?N2l5MzlBUnNoZWhaRnZlSnFqd3o2RldPQVhWOGVzS2FyK0lYY2R0dkZLK1Ft?=
- =?utf-8?B?NXd5NlBVN3U2Q0UreThNQ1pDOGt4aHdRNzFpODhDV3hNMUJlK2kzSjE2S0sv?=
- =?utf-8?B?bllxRlUzdGVXUS92bS9RU2w1M1haazFKYzluUTJLME9GOVAvV1pxRTNQcTVV?=
- =?utf-8?B?MzhFbEJmVGg4cURnb2hYNDF4ZGlERTNQN3RWZVA2RytIZVlxRkRORDlBT3hQ?=
- =?utf-8?B?eS9SUzA0ZmtnMkVzVUhHTkRIakoyQzQ4OHRLWmlhVmdhZll3N1Q5SXlBUkxL?=
- =?utf-8?B?OVBpZE5GNktJQ0xWQ0JrcDlwb01nSE5oaGVwOEtza1loNUJ1WEdTUTR6VlA1?=
- =?utf-8?B?WTBUaEU3Y1BySEZ4RzY4ZkpoN2JtS09DR1grbUFzUUluK3FNQnF2ZHNmajlO?=
- =?utf-8?B?d0xHYzAzbEhRUEhucTFZU3NCZ0t0V0lYaTcrRXAyWUR5QkhlZWlpVCtuOENB?=
- =?utf-8?B?d1FhZ3BqMld1WFk2RU5ySE1NanJrNTdOYTJLbTE4VEtPbW9ZNUlVTzl4Mlkr?=
- =?utf-8?B?YzJYTjhWY1FJeWdCOVZ4VTd3RG9Dai9UY3Rkc2ZZT2pJMnRTL3lQQWJLcHRD?=
- =?utf-8?B?ZDQxUDlITVlXa2Jvd3k5eVl0WnJEcFlzSWNZV3RFSlA3d1lMRE9rVHl1QzNv?=
- =?utf-8?B?VWZOajBSQnBTQ29ZTnFidEV5UG1YNk5BR1B3Rytub3Z4S2c3TmIvdmlrMzZF?=
- =?utf-8?B?eWloYm15bURlbXVyVWRheU9tQURKdnFucjJ3VmdtQ3YyZktpVkFmN0Y4Qjkw?=
- =?utf-8?B?KzBlK2NlRFVwK1VoUndzdTZtdURmUDdjZSt1TWdpZ3ROY3oxYy9TV09yY1hz?=
- =?utf-8?B?cTl5SE5YMXRCUkpURjE2dGg2UzAxSVFITjJObDVHRVZXNllSRUd2OFNFMFE4?=
- =?utf-8?B?bSt5SlFwWkFmaHNXeFBXZDN3c2ptT3N5RHZueGc1a2hkZFVZTTRHaXdzMlAr?=
- =?utf-8?B?UllDSUZESlExdG13Q2twaGlMbGtKeis4d1NWR1VVNVpUYmtKV0ZLZi9iMGhD?=
- =?utf-8?B?dkpmYkFtQ25vV0hpYitQdDRlV283U21takk2bmhPYTdrTEVYUll5Rll2UnZy?=
- =?utf-8?B?Nkl5WW93b2QxRWxnYVJXWHR3M09FcTVhSkJ1VlpuMG5PRExNRE5RcjhIQ0ls?=
- =?utf-8?B?YkF6VFI4MGkyOHNBSjh0V0JuWGtrdXluTXZMc0dhdzB4NytEeXQ5QkRSbndn?=
- =?utf-8?B?MERhS2JGMDY5UzgwcjVBUllVT0NVVUViWDlKNk1SS1laNEc0eDErR0VLa2RG?=
- =?utf-8?B?bzNMSUVCR21tMWFJdHcxY2s5c3V4NWx3Z1ZhditRa3RtSllwRmdwY0grcXoy?=
- =?utf-8?B?RVMxcGg3ZFdnWXZqMVk4M2U0Tllra0cwVFF3TnZHcWRsMGRwUlljL05rRVZT?=
- =?utf-8?B?bjducG1uTUFXU1RQV2ZoVmZMcXlrektnZGVLTUxMelU2WVVYc2lPcmxvalRT?=
- =?utf-8?B?UGlzOGE2WG9nSk5xYVMrbkhpU3JGVjJ2S2tFb1V1TzEvU2tCb1ppRk9VemFy?=
- =?utf-8?B?OUx5dlJsR1ZoVHdBTXdobHNUd1ltU3N3a2JhZjgwTFJaR2F6Tkp6cmNiKzRI?=
- =?utf-8?B?SVNlK3VmMCt0UGtYK3d1SUg1SS84T0NtaGczWUt3VlpTRDdZWnYzVEQrOHp6?=
- =?utf-8?B?dm5mUUhqZFFObFFKZ3UzTjlpQWI4UU4xeGZjdWl6UjdNOUY1WXd0SzdmWC9U?=
- =?utf-8?B?MWJOTC9iQUJGd0R6OFdyT1JDTzJVKy82T3B1c29rR2VaNCtKaDFITU0zV2Vv?=
- =?utf-8?B?QUF0emtWUXo0WGJHd0RjMWRtR1lXTDhLUXd5cG1xSkFFdEpPL0xCNnNWVnVJ?=
- =?utf-8?B?czJ2dTVIaksvSFV2Z0loYjRNY1QwMXQ3MU5DeVhsNXVZVHRWcjJzaWNScGlH?=
- =?utf-8?Q?exffjn8lm4HGl?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?ZG8zSk0xUUt2RXJXZVhjMUZiVlZsS3U0Y0FmdWU2dlQ1Z2kzQ2V2MTM2TGlS?=
+ =?utf-8?B?MlZwYXZBdzhzVnlFcE1mWWowKytRckRIVnFGY29LMTlFcGxlOWRlZTVSdk4w?=
+ =?utf-8?B?cVhiTjhweWpWRkVJWVBCcXdJMzZIME9TUVo5VUh5WU8vYnpIZ0VqTjNvMEo4?=
+ =?utf-8?B?V0dRTXh3aUI5Wmk0VDlZbi91OE5tellsb2VDK2JWdFEvdXhWMmtXQk1DV1Ja?=
+ =?utf-8?B?WHpmSUJGVVpPQ0g1d1RkRk5vK09mcWQ0QThaQU9ESmI4WXdqYVlYdHk0OC9E?=
+ =?utf-8?B?Uk81S3V4cmRpbVRuMkIrUWF0bUJhRTlpMDNPM0g1Vng2ME0vVVIzcjRRRzhQ?=
+ =?utf-8?B?ZWJMalUrRVRBVDkwRlNRWk9YU0tVSjNBcTBiaGNIR0pxV1d4U2FDcVVjMDZS?=
+ =?utf-8?B?bnRoR3R4SWN1d1RFTkZxa0ZyaHhmQUhGUHI0akM1d3NmWUVzNmxyV05lRTZP?=
+ =?utf-8?B?VU52WmVIcDhEOFFzUW5UZUpQaDg1YXZUZ2RPVi9MSkJYOUpsU1JLUlFaNjlv?=
+ =?utf-8?B?dVowa0dEU3hIeVdiWlNXWHRZbk1KaGd1c2tIQVkvTEx4Nkg1dzFYYWwxRHJa?=
+ =?utf-8?B?TXREd294YUZWWS85b05NUElJRFN6OVNvcmRmM3lKZFlKWVFha3dKdzd4Mklr?=
+ =?utf-8?B?ZVUvV0hxRXVwRGsyeWg0TmdHYllJeTBoSjFZNnFTaHE4TE1VZW1zeFNPTytu?=
+ =?utf-8?B?a2RnajZZazFlaFZ5Mlp4YzB2Y3h2amFmTUt1M21QRnIzemVxMkNQM2ZiSHBw?=
+ =?utf-8?B?TDRjSGZLNzZ0cGRzeGt4ank1SnhlcE5uSG9UZTdqYlRjRVRxRDc5MDFZTk9R?=
+ =?utf-8?B?cXNHaDNjL2dnOUxUNXNRUkN6S296K1Y1TDlqM0ovUUk2R2hXSGxKZVp0OGhP?=
+ =?utf-8?B?dExaTVlNS1dFNXNKNlZWdEZXRC9DbWVBUnQwcjBLazkraXJ5ZmRrYUx5R2xv?=
+ =?utf-8?B?QWVzNEdRSVF4Q1Q3UmdKSkRTODdoY3ppeUo3YzlRS041S3huTHQrTkM5NkZD?=
+ =?utf-8?B?RnZEWXhQcmtSWFZkL05yVVVIUjJiNkx3V2hTSHFxbk9ibVFuVEtrRUhRS1lp?=
+ =?utf-8?B?RGJJOHFMRXBRbzRJc3poMlhhWXMyb3ZGSElpamhpTmRhL2hBcTNwUnlVUnZW?=
+ =?utf-8?B?VVBYRU5ERU91ZHB1c294c3hBVUFqWSt4aVowaGJZRWhwYVlGOGxsVFJiM0o5?=
+ =?utf-8?B?bkR0UmhTd0JoSW9LNXpua0drVFh6U2RaR0lWQ3oxcjY3ZC9sYWxILzR5WFMr?=
+ =?utf-8?B?WlhydU9xekpkMU1oZHVTa25jWGoxTnpySmpNWXhwalBGNTBzMUkrMEJFZ2pT?=
+ =?utf-8?B?UXBFblN2NWxMVUROMy8vdkw5M090M2VQakZKL1ZKeXIxVUtZK3FldzJRQmxr?=
+ =?utf-8?B?ZE5wZS9PdUoxOUtyb2FZUWw5WUlGS243TFMzT0FHMVhRcFc3R2ZWTUJ3Nmtk?=
+ =?utf-8?B?d2tmM1l5dzVnaXJSSC9mNS9VNzN0SzdhdkZhTGZrT2VNOEo1aWdRbmdXZFlr?=
+ =?utf-8?B?NEgvS0RYdEg2YjJ6MWtsdXVNaDRGdDQvWkJ2QzF0UkEwK2t5SGt4T0tGQ0Vx?=
+ =?utf-8?B?Wjc1RElldnVtc1ljUnJMelNqV3pOSHJqRmNBK1EvNGxjRDM4WVhCZTY1UmZY?=
+ =?utf-8?B?bFA0ZG10dzhHeEFkS1JvdHppSW94STc3NVFDdjR3QWlnRzFHcVBzU1hvVWV5?=
+ =?utf-8?B?aGlQTTltaTJNckI0d2w2TG1SVXJZTnZjUUdWKytlbnVaUkJMQW56K1pmT2RQ?=
+ =?utf-8?B?QUZNc2dOT2FXbER0S1FPS0h3K3loYXI5R0N4akQ1ZXFUV0VXbWFiSGNNK3F1?=
+ =?utf-8?B?UjdGWm5tRDNBZVlqRkl0V3JGRmFvM1RuTUJEZW9FWlJrQWtZYnJXK25uelll?=
+ =?utf-8?Q?SN52oow2V3CP9?=
 X-OriginatorOrg: sct-15-20-9412-4-msonline-outlook-c3e7a.templateTenant
-X-MS-Exchange-CrossTenant-Network-Message-Id: f026693a-623a-46ab-c0aa-08dec91149d5
+X-MS-Exchange-CrossTenant-Network-Message-Id: b2646dcd-97c7-416c-4aa9-08dec9116011
 X-MS-Exchange-CrossTenant-AuthSource: SE3PR04MB8922.apcprd04.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Jun 2026 06:02:02.6940 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Jun 2026 06:02:39.9733 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
 X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
@@ -172,114 +172,48 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On 6/12/2026 3:04 PM, Chao Liu wrote:
 > From: Chao Liu <chao.liu@zevorn.cn>
 >
-> Add programmable Watchdog Timer (WDT) peripheral for K230 machine.
+> Testing the Basic Functions of K230 WDT:
+> 1. Reset Function
+> 2. Timeout Check
+> 3. Interrupt Function
 >
 > Signed-off-by: Mig Yang <temashking@foxmail.com>
-> Signed-off-by: Chao Liu <chao.liu.zevorn@gmail.com>
 > Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+> Acked-by: Fabiano Rosas <farosas@suse.de>
+> Signed-off-by: Chao Liu <chao.liu.zevorn@gmail.com>
 Reviewed-by: Nutty Liu <nutty.liu@hotmail.com>
 
 Thanks,
 Nutty
 > ---
->   MAINTAINERS                    |   2 +
->   hw/riscv/Kconfig               |   1 +
->   hw/riscv/k230.c                |  18 ++
->   hw/watchdog/Kconfig            |   4 +
->   hw/watchdog/k230_wdt.c         | 296 +++++++++++++++++++++++++++++++++
->   hw/watchdog/meson.build        |   1 +
->   hw/watchdog/trace-events       |   9 +
->   include/hw/riscv/k230.h        |   4 +
->   include/hw/watchdog/k230_wdt.h | 121 ++++++++++++++
->   9 files changed, 456 insertions(+)
->   create mode 100644 hw/watchdog/k230_wdt.c
->   create mode 100644 include/hw/watchdog/k230_wdt.h
+>   MAINTAINERS                 |   1 +
+>   tests/qtest/k230-wdt-test.c | 189 ++++++++++++++++++++++++++++++++++++
+>   tests/qtest/meson.build     |   3 +-
+>   3 files changed, 192 insertions(+), 1 deletion(-)
+>   create mode 100644 tests/qtest/k230-wdt-test.c
 >
 > diff --git a/MAINTAINERS b/MAINTAINERS
-> index a21796ac6f..06db33a107 100644
+> index 06db33a107..44654b5798 100644
 > --- a/MAINTAINERS
 > +++ b/MAINTAINERS
-> @@ -1791,7 +1791,9 @@ M: Chao Liu <chao.liu.zevorn@gmail.com>
->   L: qemu-riscv@nongnu.org
->   S: Maintained
->   F: hw/riscv/k230.c
-> +F: hw/watchdog/k230_wdt.c
+> @@ -1794,6 +1794,7 @@ F: hw/riscv/k230.c
+>   F: hw/watchdog/k230_wdt.c
 >   F: include/hw/riscv/k230.h
-> +F: include/hw/watchdog/k230_wdt.h
+>   F: include/hw/watchdog/k230_wdt.h
+> +F: tests/qtest/k230-wdt-test.c
 >   
 >   RX Machines
 >   -----------
-> diff --git a/hw/riscv/Kconfig b/hw/riscv/Kconfig
-> index f512ed65ac..54e41a6afc 100644
-> --- a/hw/riscv/Kconfig
-> +++ b/hw/riscv/Kconfig
-> @@ -148,3 +148,4 @@ config K230
->       select RISCV_IMSIC
->       select SERIAL_MM
->       select UNIMP
-> +    select K230_WDT
-> diff --git a/hw/riscv/k230.c b/hw/riscv/k230.c
-> index 26d1e20c99..502281c52c 100644
-> --- a/hw/riscv/k230.c
-> +++ b/hw/riscv/k230.c
-> @@ -108,6 +108,9 @@ static void k230_soc_init(Object *obj)
->       RISCVHartArrayState *cpu0 = &s->c908_cpu;
->   
->       object_initialize_child(obj, "c908-cpu", cpu0, TYPE_RISCV_HART_ARRAY);
-> +    object_initialize_child(obj, "k230-wdt0", &s->wdt[0], TYPE_K230_WDT);
-> +    object_initialize_child(obj, "k230-wdt1", &s->wdt[1], TYPE_K230_WDT);
-> +
->       qdev_prop_set_uint32(DEVICE(cpu0), "hartid-base", 0);
->       qdev_prop_set_string(DEVICE(cpu0), "cpu-type", TYPE_RISCV_CPU_THEAD_C908);
->       qdev_prop_set_uint64(DEVICE(cpu0), "resetvec",
-> @@ -188,6 +191,21 @@ static void k230_soc_realize(DeviceState *dev, Error **errp)
->           k230_create_uart(sys_mem, DEVICE(s->c908_plic), i);
->       }
->   
-> +    /* Watchdog */
-> +    for (int i = 0; i < 2; i++) {
-> +        if (!sysbus_realize(SYS_BUS_DEVICE(&s->wdt[i]), errp)) {
-> +            return;
-> +        }
-> +    }
-> +
-> +    sysbus_mmio_map(SYS_BUS_DEVICE(&s->wdt[0]), 0, memmap[K230_DEV_WDT0].base);
-> +    sysbus_connect_irq(SYS_BUS_DEVICE(&s->wdt[0]), 0,
-> +                       qdev_get_gpio_in(DEVICE(s->c908_plic), K230_WDT0_IRQ));
-> +
-> +    sysbus_mmio_map(SYS_BUS_DEVICE(&s->wdt[1]), 0, memmap[K230_DEV_WDT1].base);
-> +    sysbus_connect_irq(SYS_BUS_DEVICE(&s->wdt[1]), 0,
-> +                       qdev_get_gpio_in(DEVICE(s->c908_plic), K230_WDT1_IRQ));
-> +
->       /* unimplemented devices */
->       create_unimplemented_device("kpu.l2-cache",
->                                   memmap[K230_DEV_KPU_L2_CACHE].base,
-> diff --git a/hw/watchdog/Kconfig b/hw/watchdog/Kconfig
-> index 861fd00334..55f77c5c84 100644
-> --- a/hw/watchdog/Kconfig
-> +++ b/hw/watchdog/Kconfig
-> @@ -18,6 +18,10 @@ config WDT_DIAG288
->   config WDT_IMX2
->       bool
->   
-> +config K230_WDT
-> +    bool
-> +    select PTIMER
-> +
->   config WDT_SBSA
->       bool
->   
-> diff --git a/hw/watchdog/k230_wdt.c b/hw/watchdog/k230_wdt.c
+> diff --git a/tests/qtest/k230-wdt-test.c b/tests/qtest/k230-wdt-test.c
 > new file mode 100644
-> index 0000000000..1f83b499e8
+> index 0000000000..c8eaeaf1ae
 > --- /dev/null
-> +++ b/hw/watchdog/k230_wdt.c
-> @@ -0,0 +1,296 @@
+> +++ b/tests/qtest/k230-wdt-test.c
+> @@ -0,0 +1,189 @@
 > +/*
-> + * K230 Watchdog Compatible with kendryte K230 SDK
+> + * QTest testcase for K230 Watchdog
 > + *
 > + * Copyright (c) 2025 Mig Yang <temashking@foxmail.com>
-> + * Copyright (c) 2025 Chao Liu <chao.liu.zevorn@gmail.com>
 > + *
 > + * SPDX-License-Identifier: GPL-2.0-or-later
 > + *
@@ -290,469 +224,193 @@ Nutty
 > + *
 > + * For more information, see <https://www.kendryte.com/en/proDetail/230>
 > + */
+> +
 > +#include "qemu/osdep.h"
+> +#include "qemu/timer.h"
 > +#include "qemu/bitops.h"
-> +#include "qemu/module.h"
-> +#include "system/watchdog.h"
-> +#include "migration/vmstate.h"
-> +#include "hw/core/qdev-properties.h"
+> +#include "libqtest.h"
 > +#include "hw/watchdog/k230_wdt.h"
-> +#include "trace.h"
 > +
-> +static void k230_wdt_timeout(void *opaque)
+> +/* K230 WDT0 base address */
+> +#define K230_WDT0_BASE 0x91106000
+> +#define K230_WDT1_BASE 0x91106800
+> +
+> +/* Test WDT0 by default */
+> +#define WDT_BASE K230_WDT0_BASE
+> +
+> +static void test_register_read_write(void)
 > +{
-> +    K230WdtState *s = K230_WDT(opaque);
+> +    QTestState *qts = qtest_init("-machine k230");
 > +
-> +    trace_k230_wdt_timeout();
+> +    /* Test Control Register (CR) read/write */
+> +    qtest_writel(qts, WDT_BASE + K230_WDT_CR, 0xFFFFFFFF);
+> +    g_assert_cmphex(qtest_readl(qts, WDT_BASE + K230_WDT_CR), ==,
+> +                    (K230_WDT_CR_RPL_MASK << K230_WDT_CR_RPL_SHIFT) |
+> +                    K230_WDT_CR_RMOD | K230_WDT_CR_WDT_EN);
 > +
-> +    /* Set interrupt status if in interrupt mode */
-> +    if (s->cr & K230_WDT_CR_RMOD) {
-> +        s->stat |= K230_WDT_STAT_INT;
-> +        s->interrupt_pending = true;
-> +        qemu_set_irq(s->irq, 1);
-> +        trace_k230_wdt_interrupt();
-> +    } else {
-> +        /* Direct reset mode */
-> +        trace_k230_wdt_reset();
-> +        watchdog_perform_action();
+> +    /* Test Timeout Range Register (TORR) read/write */
+> +    qtest_writel(qts, WDT_BASE + K230_WDT_TORR, 0xFFFFFFFF);
+> +    g_assert_cmphex(qtest_readl(qts, WDT_BASE + K230_WDT_TORR), ==,
+> +                    K230_WDT_TORR_TOP_MASK);
+> +
+> +    /* Test Protection Level Register read/write */
+> +    qtest_writel(qts, WDT_BASE + K230_WDT_PROT_LEVEL, 0xFFFFFFFF);
+> +    g_assert_cmphex(qtest_readl(qts, WDT_BASE + K230_WDT_PROT_LEVEL), ==, 0x7);
+> +
+> +    qtest_quit(qts);
+> +}
+> +
+> +static void test_counter_restart(void)
+> +{
+> +    QTestState *qts = qtest_init("-machine k230");
+> +
+> +    /* Enable watchdog and set timeout */
+> +    qtest_writel(qts, WDT_BASE + K230_WDT_CR, K230_WDT_CR_WDT_EN);
+> +    qtest_writel(qts, WDT_BASE + K230_WDT_TORR, 0x5); /* TOP = 5 */
+> +
+> +    /* Read current counter value */
+> +    uint32_t initial_count = qtest_readl(qts, WDT_BASE + K230_WDT_CCVR);
+> +    g_assert_cmpuint(initial_count, >, 0);
+> +
+> +    /* Restart counter with magic value */
+> +    qtest_writel(qts, WDT_BASE + K230_WDT_CRR, K230_WDT_CRR_RESTART);
+> +
+> +    /* Wait for time */
+> +    qtest_clock_step(qts, NANOSECONDS_PER_SECOND * 2);
+> +
+> +    /* Counter should be reset to timeout value */
+> +    uint32_t new_count = qtest_readl(qts, WDT_BASE + K230_WDT_CCVR);
+> +    g_assert_cmpuint(new_count, >, 0);
+> +    g_assert_cmpuint(new_count, !=, initial_count);
+> +
+> +    qtest_quit(qts);
+> +}
+> +
+> +static void test_interrupt_mode(void)
+> +{
+> +    QTestState *qts = qtest_init("-machine k230 --trace k230_*,file=k230.log");
+> +
+> +    /* Set interrupt mode and enable watchdog */
+> +    qtest_writel(qts, WDT_BASE + K230_WDT_CR,
+> +                 K230_WDT_CR_RMOD | K230_WDT_CR_WDT_EN);
+> +    qtest_writel(qts, WDT_BASE + K230_WDT_TORR, 0x1); /* Short timeout */
+> +
+> +    /* Wait for timeout to trigger interrupt */
+> +    qtest_clock_step(qts, NANOSECONDS_PER_SECOND * 10);
+> +
+> +    /* Check interrupt status */
+> +    uint32_t stat = qtest_readl(qts, WDT_BASE + K230_WDT_STAT);
+> +    g_assert_cmphex(stat & K230_WDT_STAT_INT, ==, K230_WDT_STAT_INT);
+> +
+> +    /* Clear interrupt */
+> +    qtest_writel(qts, WDT_BASE + K230_WDT_EOI, 0x1);
+> +    stat = qtest_readl(qts, WDT_BASE + K230_WDT_STAT);
+> +    g_assert_cmphex(stat & K230_WDT_STAT_INT, ==, 0);
+> +
+> +    qtest_quit(qts);
+> +}
+> +
+> +static void test_reset_mode(void)
+> +{
+> +    QTestState *qts = qtest_init("-machine k230 -no-reboot");
+> +
+> +    /* Set reset mode and enable watchdog */
+> +    qtest_writel(qts, WDT_BASE + K230_WDT_CR, K230_WDT_CR_WDT_EN);
+> +    qtest_writel(qts, WDT_BASE + K230_WDT_TORR, 0x1); /* Short timeout */
+> +
+> +    /* Wait for timeout to trigger reset */
+> +    qtest_clock_step(qts, NANOSECONDS_PER_SECOND * 2);
+> +
+> +    /* In reset mode, the system should reset */
+> +    /* This test verifies that reset mode is properly configured */
+> +
+> +    qtest_quit(qts);
+> +}
+> +
+> +static void test_timeout_calculation(void)
+> +{
+> +    QTestState *qts = qtest_init("-machine k230");
+> +
+> +    /* Test different timeout values */
+> +    for (uint32_t top = 0; top <= 15; top++) {
+> +        qtest_writel(qts, WDT_BASE + K230_WDT_TORR, top);
+> +        qtest_writel(qts, WDT_BASE + K230_WDT_CR, K230_WDT_CR_WDT_EN);
+> +
+> +        /* Read current counter value */
+> +        uint32_t count = qtest_readl(qts, WDT_BASE + K230_WDT_CCVR);
+> +        g_assert_cmpuint(count, >, 0);
+> +
+> +        /* Disable watchdog for next iteration */
+> +        qtest_writel(qts, WDT_BASE + K230_WDT_CR, 0);
 > +    }
 > +
-> +    /* Restart counter */
-> +    s->current_count = s->timeout_value;
-> +    ptimer_set_count(s->timer, s->current_count);
-> +    ptimer_run(s->timer, 1);
+> +    qtest_quit(qts);
 > +}
 > +
-> +static void k230_wdt_reset(DeviceState *dev)
+> +static void test_wdt1_registers(void)
 > +{
-> +    K230WdtState *s = K230_WDT(dev);
+> +    QTestState *qts = qtest_init("-machine k230");
 > +
-> +    trace_k230_wdt_reset_device();
+> +    /* Test WDT1 registers (second watchdog) */
+> +    qtest_writel(qts, K230_WDT1_BASE + K230_WDT_CR, 0xFFFFFFFF);
+> +    g_assert_cmphex(qtest_readl(qts, K230_WDT1_BASE + K230_WDT_CR), ==,
+> +                    (K230_WDT_CR_RPL_MASK << K230_WDT_CR_RPL_SHIFT) |
+> +                    K230_WDT_CR_RMOD | K230_WDT_CR_WDT_EN);
 > +
-> +    ptimer_transaction_begin(s->timer);
-> +    ptimer_stop(s->timer);
-> +    ptimer_transaction_commit(s->timer);
+> +    qtest_writel(qts, K230_WDT1_BASE + K230_WDT_TORR, 0xFFFFFFFF);
+> +    g_assert_cmphex(qtest_readl(qts, K230_WDT1_BASE + K230_WDT_TORR), ==,
+> +                    K230_WDT_TORR_TOP_MASK);
 > +
-> +    /* Reset registers to default values */
-> +    s->cr = 0;
-> +    s->torr = 0;
-> +    s->ccvr = 0xFFFFFFFF;
-> +    s->stat = 0;
-> +    s->prot_level = 0x2;
-> +
-> +    s->interrupt_pending = false;
-> +    s->enabled = false;
-> +    s->timeout_value = 0;
-> +    s->current_count = 0xFFFFFFFF;
+> +    qtest_quit(qts);
 > +}
 > +
-> +static uint64_t k230_wdt_read(void *opaque, hwaddr addr, unsigned int size)
+> +static void test_enable_disable(void)
 > +{
-> +    K230WdtState *s = K230_WDT(opaque);
-> +    uint32_t value = 0;
+> +    QTestState *qts = qtest_init("-machine k230");
 > +
-> +    switch (addr) {
-> +    case K230_WDT_CR:
-> +        value = s->cr;
-> +        break;
-> +    case K230_WDT_TORR:
-> +        value = s->torr;
-> +        break;
-> +    case K230_WDT_CCVR:
-> +        if (s->enabled) {
-> +            value = ptimer_get_count(s->timer);
-> +        } else {
-> +            value = s->current_count;
-> +        }
-> +        break;
-> +    case K230_WDT_STAT:
-> +        value = s->stat;
-> +        break;
-> +    case K230_WDT_PROT_LEVEL:
-> +        value = s->prot_level;
-> +        break;
-> +    case K230_WDT_COMP_PARAM_5:
-> +        value = 0; /* Upper limit of Timeout Period parameters */
-> +        break;
-> +    case K230_WDT_COMP_PARAM_4:
-> +        value = 0; /* Upper limit of Initial Timeout Period parameters */
-> +        break;
-> +    case K230_WDT_COMP_PARAM_3:
-> +        value = 0; /* Derived from WDT_TOP_RST parameter */
-> +        break;
-> +    case K230_WDT_COMP_PARAM_2:
-> +        value = 0xFFFFFFFF; /* Derived from WDT_RST_CNT parameter */
-> +        break;
-> +    case K230_WDT_COMP_PARAM_1:
-> +        /* Component parameters */
-> +        value = (32 << K230_WDT_CNT_WIDTH_SHIFT) |  /* 32-bit counter */
-> +                (0 << K230_WDT_DFLT_TOP_INIT_SHIFT) |
-> +                (0 << K230_WDT_DFLT_TOP_SHIFT) |
-> +                (K230_WDT_RPL_16_CYCLES << K230_WDT_DFLT_RPL_SHIFT) |
-> +                (2 << K230_WDT_APB_DATA_WIDTH_SHIFT) | /* 32-bit APB */
-> +                K230_WDT_USE_FIX_TOP; /* Use fixed timeout values */
-> +        break;
-> +    case K230_WDT_COMP_VERSION:
-> +        value = K230_WDT_COMP_VERSION_VAL;
-> +        break;
-> +    case K230_WDT_COMP_TYPE:
-> +        value = K230_WDT_COMP_TYPE_VAL;
-> +        break;
-> +    default:
-> +        /* Other registers return 0 */
-> +        break;
-> +    }
+> +    /* Initially disabled */
+> +    uint32_t cr = qtest_readl(qts, WDT_BASE + K230_WDT_CR);
+> +    g_assert_cmphex(cr & K230_WDT_CR_WDT_EN, ==, 0);
 > +
-> +    trace_k230_wdt_read(addr, value);
-> +    return value;
+> +    /* Enable watchdog */
+> +    qtest_writel(qts, WDT_BASE + K230_WDT_CR, K230_WDT_CR_WDT_EN);
+> +    cr = qtest_readl(qts, WDT_BASE + K230_WDT_CR);
+> +    g_assert_cmphex(cr & K230_WDT_CR_WDT_EN, ==, K230_WDT_CR_WDT_EN);
+> +
+> +    /* Disable watchdog */
+> +    qtest_writel(qts, WDT_BASE + K230_WDT_CR, 0);
+> +    cr = qtest_readl(qts, WDT_BASE + K230_WDT_CR);
+> +    g_assert_cmphex(cr & K230_WDT_CR_WDT_EN, ==, 0);
+> +
+> +    qtest_quit(qts);
 > +}
 > +
-> +static void k230_wdt_update_timer(K230WdtState *s)
+> +int main(int argc, char *argv[])
 > +{
-> +    ptimer_transaction_begin(s->timer);
+> +    g_test_init(&argc, &argv, NULL);
 > +
-> +    if (s->enabled && s->timeout_value > 0) {
-> +        ptimer_set_count(s->timer, s->current_count);
-> +        ptimer_run(s->timer, 1);
-> +    } else {
-> +        ptimer_stop(s->timer);
-> +    }
+> +    qtest_add_func("/k230-wdt/register_read_write", test_register_read_write);
+> +    qtest_add_func("/k230-wdt/counter_restart", test_counter_restart);
+> +    qtest_add_func("/k230-wdt/interrupt_mode", test_interrupt_mode);
+> +    qtest_add_func("/k230-wdt/reset_mode", test_reset_mode);
+> +    qtest_add_func("/k230-wdt/timeout_calculation", test_timeout_calculation);
+> +    qtest_add_func("/k230-wdt/wdt1_registers", test_wdt1_registers);
+> +    qtest_add_func("/k230-wdt/enable_disable", test_enable_disable);
 > +
-> +    ptimer_transaction_commit(s->timer);
+> +    return g_test_run();
 > +}
-> +
-> +static uint32_t k230_wdt_calculate_timeout(uint32_t top_value)
-> +{
-> +    /* Calculate timeout based on TOP value */
-> +    /* For fixed timeout mode: 2^(16 + top_value) */
-> +    if (top_value <= 15) {
-> +        return 1 << (16 + top_value);
-> +    }
-> +    return 1 << 31; /* Maximum value for 32-bit counter */
-> +}
-> +
-> +static void k230_wdt_write(void *opaque, hwaddr addr,
-> +                           uint64_t value, unsigned int size)
-> +{
-> +    K230WdtState *s = K230_WDT(opaque);
-> +
-> +    trace_k230_wdt_write(addr, value);
-> +
-> +    switch (addr) {
-> +    case K230_WDT_CR:
-> +        s->cr = value & (K230_WDT_CR_RPL_MASK << K230_WDT_CR_RPL_SHIFT |
-> +                         K230_WDT_CR_RMOD | K230_WDT_CR_WDT_EN);
-> +
-> +        /* Update enabled state */
-> +        s->enabled = (s->cr & K230_WDT_CR_WDT_EN) != 0;
-> +
-> +        /* Update timer */
-> +        k230_wdt_update_timer(s);
-> +        break;
-> +
-> +    case K230_WDT_TORR:
-> +        s->torr = value & K230_WDT_TORR_TOP_MASK;
-> +
-> +        /* Calculate new timeout value */
-> +        s->timeout_value = k230_wdt_calculate_timeout(s->torr);
-> +        s->current_count = s->timeout_value;
-> +
-> +        /* Update timer if enabled */
-> +        if (s->enabled) {
-> +            k230_wdt_update_timer(s);
-> +        }
-> +        break;
-> +
-> +    case K230_WDT_CRR:
-> +        /* Restart counter with magic value 0x76 */
-> +        if ((value & 0xFF) == K230_WDT_CRR_RESTART) {
-> +            trace_k230_wdt_restart();
-> +            s->current_count = s->timeout_value;
-> +
-> +            /* Clear interrupt if pending */
-> +            if (s->interrupt_pending) {
-> +                s->stat &= ~K230_WDT_STAT_INT;
-> +                s->interrupt_pending = false;
-> +                qemu_set_irq(s->irq, 0);
-> +            }
-> +
-> +            /* Update timer */
-> +            k230_wdt_update_timer(s);
-> +        }
-> +        break;
-> +
-> +    case K230_WDT_EOI:
-> +        /* Clear interrupt */
-> +        s->stat &= ~K230_WDT_STAT_INT;
-> +        s->interrupt_pending = false;
-> +        qemu_set_irq(s->irq, 0);
-> +        break;
-> +
-> +    case K230_WDT_PROT_LEVEL:
-> +        s->prot_level = value & 0x7;
-> +        break;
-> +
-> +    default:
-> +        /* Read-only registers, ignore writes */
-> +        break;
-> +    }
-> +}
-> +
-> +static const MemoryRegionOps k230_wdt_ops = {
-> +    .read  = k230_wdt_read,
-> +    .write = k230_wdt_write,
-> +    .endianness = DEVICE_LITTLE_ENDIAN,
-> +    .impl = {
-> +        .min_access_size = 4,
-> +        .max_access_size = 4,
-> +        .unaligned = false,
-> +    },
-> +};
-> +
-> +static const VMStateDescription vmstate_k230_wdt = {
-> +    .name = "k230.wdt",
-> +    .fields = (const VMStateField[]) {
-> +        VMSTATE_PTIMER(timer, K230WdtState),
-> +        VMSTATE_UINT32(cr, K230WdtState),
-> +        VMSTATE_UINT32(torr, K230WdtState),
-> +        VMSTATE_UINT32(ccvr, K230WdtState),
-> +        VMSTATE_UINT32(stat, K230WdtState),
-> +        VMSTATE_UINT32(prot_level, K230WdtState),
-> +        VMSTATE_BOOL(interrupt_pending, K230WdtState),
-> +        VMSTATE_BOOL(enabled, K230WdtState),
-> +        VMSTATE_UINT32(timeout_value, K230WdtState),
-> +        VMSTATE_UINT32(current_count, K230WdtState),
-> +        VMSTATE_END_OF_LIST()
-> +    }
-> +};
-> +
-> +static void k230_wdt_realize(DeviceState *dev, Error **errp)
-> +{
-> +    K230WdtState *s = K230_WDT(dev);
-> +    SysBusDevice *sbd = SYS_BUS_DEVICE(dev);
-> +
-> +    memory_region_init_io(&s->mmio, OBJECT(dev),
-> +                          &k230_wdt_ops, s,
-> +                          TYPE_K230_WDT,
-> +                          K230_WDT_MMIO_SIZE);
-> +    sysbus_init_mmio(sbd, &s->mmio);
-> +    sysbus_init_irq(sbd, &s->irq);
-> +
-> +    s->timer = ptimer_init(k230_wdt_timeout, s,
-> +                           PTIMER_POLICY_NO_IMMEDIATE_TRIGGER |
-> +                           PTIMER_POLICY_NO_IMMEDIATE_RELOAD |
-> +                           PTIMER_POLICY_NO_COUNTER_ROUND_DOWN);
-> +
-> +    ptimer_transaction_begin(s->timer);
-> +    ptimer_set_freq(s->timer, K230_WDT_DEFAULT_FREQ);
-> +    ptimer_transaction_commit(s->timer);
-> +}
-> +
-> +static void k230_wdt_class_init(ObjectClass *klass, const void *data)
-> +{
-> +    DeviceClass *dc = DEVICE_CLASS(klass);
-> +
-> +    dc->realize = k230_wdt_realize;
-> +    device_class_set_legacy_reset(dc, k230_wdt_reset);
-> +    dc->vmsd = &vmstate_k230_wdt;
-> +    dc->desc = "K230 watchdog timer";
-> +    set_bit(DEVICE_CATEGORY_WATCHDOG, dc->categories);
-> +}
-> +
-> +static const TypeInfo k230_wdt_info = {
-> +    .name          = TYPE_K230_WDT,
-> +    .parent        = TYPE_SYS_BUS_DEVICE,
-> +    .instance_size = sizeof(K230WdtState),
-> +    .class_init    = k230_wdt_class_init,
-> +};
-> +
-> +static void k230_wdt_register_type(void)
-> +{
-> +    type_register_static(&k230_wdt_info);
-> +}
-> +type_init(k230_wdt_register_type)
-> diff --git a/hw/watchdog/meson.build b/hw/watchdog/meson.build
-> index 15370565bd..5edae65a36 100644
-> --- a/hw/watchdog/meson.build
-> +++ b/hw/watchdog/meson.build
-> @@ -6,5 +6,6 @@ system_ss.add(when: 'CONFIG_WDT_IB700', if_true: files('wdt_ib700.c'))
->   system_ss.add(when: 'CONFIG_WDT_DIAG288', if_true: files('wdt_diag288.c'))
->   system_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files('wdt_aspeed.c'))
->   system_ss.add(when: 'CONFIG_WDT_IMX2', if_true: files('wdt_imx2.c'))
-> +system_ss.add(when: 'CONFIG_K230_WDT', if_true: files('k230_wdt.c'))
->   system_ss.add(when: 'CONFIG_WDT_SBSA', if_true: files('sbsa_gwdt.c'))
->   specific_ss.add(when: 'CONFIG_PSERIES', if_true: files('spapr_watchdog.c'))
-> diff --git a/hw/watchdog/trace-events b/hw/watchdog/trace-events
-> index ad3be1e9bd..d85b3ca769 100644
-> --- a/hw/watchdog/trace-events
-> +++ b/hw/watchdog/trace-events
-> @@ -33,3 +33,12 @@ spapr_watchdog_expired(uint64_t num, unsigned action) "num=%" PRIu64 " action=%u
->   # watchdog.c
->   watchdog_perform_action(unsigned int action) "action=%u"
->   watchdog_set_action(unsigned int action) "action=%u"
-> +
-> +# k230_wdt.c
-> +k230_wdt_read(uint64_t addr, uint32_t data) "K230 WDT read: [0x%" PRIx64 "] -> 0x%" PRIx32
-> +k230_wdt_write(uint64_t addr, uint64_t data) "K230 WDT write: [0x%" PRIx64 "] <- 0x%" PRIx64
-> +k230_wdt_timeout(void) "K230 WDT timeout"
-> +k230_wdt_interrupt(void) "K230 WDT interrupt"
-> +k230_wdt_reset(void) "K230 WDT system reset"
-> +k230_wdt_restart(void) "K230 WDT restart"
-> +k230_wdt_reset_device(void) "K230 WDT device reset"
-> diff --git a/include/hw/riscv/k230.h b/include/hw/riscv/k230.h
-> index dcfde39096..592e1c26bf 100644
-> --- a/include/hw/riscv/k230.h
-> +++ b/include/hw/riscv/k230.h
-> @@ -17,6 +17,7 @@
+> diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
+> index 45ea497fa5..37ca38f9e7 100644
+> --- a/tests/qtest/meson.build
+> +++ b/tests/qtest/meson.build
+> @@ -291,7 +291,8 @@ qtests_riscv64 = ['riscv-csr-test'] + \
+>     (unpack_edk2_blobs ? ['bios-tables-test'] : []) + \
+>     (config_all_devices.has_key('CONFIG_IOMMU_TESTDEV') and
+>      config_all_devices.has_key('CONFIG_RISCV_IOMMU') ?
+> -   ['iommu-riscv-test'] : [])
+> +   ['iommu-riscv-test'] : []) + \
+> +  (config_all_devices.has_key('CONFIG_K230') ? ['k230-wdt-test'] : [])
 >   
->   #include "hw/core/boards.h"
->   #include "hw/riscv/riscv_hart.h"
-> +#include "hw/watchdog/k230_wdt.h"
->   
->   #define C908_CPU_HARTID   (0)
->   
-> @@ -31,6 +32,7 @@ typedef struct K230SoCState {
->       /*< public >*/
->       RISCVHartArrayState c908_cpu; /* Small core */
->   
-> +    K230WdtState wdt[2];
->       MemoryRegion sram;
->       MemoryRegion bootrom;
->   
-> @@ -125,6 +127,8 @@ enum {
->       K230_UART2_IRQ  = 18,
->       K230_UART3_IRQ  = 19,
->       K230_UART4_IRQ  = 20,
-> +    K230_WDT0_IRQ   = 107,
-> +    K230_WDT1_IRQ   = 108,
->   };
->   
->   #define K230_UART_COUNT 5
-> diff --git a/include/hw/watchdog/k230_wdt.h b/include/hw/watchdog/k230_wdt.h
-> new file mode 100644
-> index 0000000000..ba194abebe
-> --- /dev/null
-> +++ b/include/hw/watchdog/k230_wdt.h
-> @@ -0,0 +1,121 @@
-> +/*
-> + * K230 Watchdog Timer
-> + *
-> + * K230 Technical Reference Manual V0.3.1 (2024-11-18):
-> + * https://github.com/revyos/external-docs/blob/master/K230/en-us/K230_Technical_Reference_Manual_V0.3.1_20241118.pdf
-> + *
-> + * Copyright (c) 2025 Mig Yang <temashking@foxmail.com>
-> + * Copyright (c) 2025 Chao Liu <chao.liu.zevorn@gmail.com>
-> + *
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + */
-> +
-> +#ifndef K230_WDT_H
-> +#define K230_WDT_H
-> +
-> +#include "qemu/bitops.h"
-> +#include "hw/core/sysbus.h"
-> +#include "hw/core/irq.h"
-> +#include "hw/core/ptimer.h"
-> +#include "qom/object.h"
-> +
-> +#define TYPE_K230_WDT "riscv.k230.wdt"
-> +OBJECT_DECLARE_SIMPLE_TYPE(K230WdtState, K230_WDT)
-> +
-> +#define K230_WDT_DEFAULT_FREQ (32768)
-> +
-> +/* K230 Watchdog Register Map */
-> +enum K230WdtRegisters {
-> +    K230_WDT_CR      = 0x00,  /* Control Register */
-> +    K230_WDT_TORR    = 0x04,  /* Timeout Range Register */
-> +    K230_WDT_CCVR    = 0x08,  /* Current Counter Value Register */
-> +    K230_WDT_CRR     = 0x0c,  /* Counter Restart Register */
-> +    K230_WDT_STAT    = 0x10,  /* Interrupt Status Register */
-> +    K230_WDT_EOI     = 0x14,  /* Interrupt Clear Register */
-> +    K230_WDT_PROT_LEVEL = 0x1c, /* Protection Level Register */
-> +    K230_WDT_COMP_PARAM_5 = 0xe4, /* Component Parameters Register 5 */
-> +    K230_WDT_COMP_PARAM_4 = 0xe8, /* Component Parameters Register 4 */
-> +    K230_WDT_COMP_PARAM_3 = 0xec, /* Component Parameters Register 3 */
-> +    K230_WDT_COMP_PARAM_2 = 0xf0, /* Component Parameters Register 2 */
-> +    K230_WDT_COMP_PARAM_1 = 0xf4, /* Component Parameters Register 1 */
-> +    K230_WDT_COMP_VERSION = 0xf8, /* Component Version Register */
-> +    K230_WDT_COMP_TYPE = 0xfc, /* Component Type Register */
-> +};
-> +
-> +#define K230_WDT_MMIO_SIZE 0x100
-> +
-> +/* Control Register (WDT_CR) definitions */
-> +#define K230_WDT_CR_RPL_MASK    0x7        /* Reset Pulse Length */
-> +#define K230_WDT_CR_RPL_SHIFT   2
-> +#define K230_WDT_CR_RMOD        BIT(1)     /* Response Mode */
-> +#define K230_WDT_CR_WDT_EN      BIT(0)     /* Watchdog Enable */
-> +
-> +/* Reset Pulse Length values */
-> +#define K230_WDT_RPL_2_CYCLES   0x0
-> +#define K230_WDT_RPL_4_CYCLES   0x1
-> +#define K230_WDT_RPL_8_CYCLES   0x2
-> +#define K230_WDT_RPL_16_CYCLES  0x3
-> +#define K230_WDT_RPL_32_CYCLES  0x4
-> +#define K230_WDT_RPL_64_CYCLES  0x5
-> +#define K230_WDT_RPL_128_CYCLES 0x6
-> +#define K230_WDT_RPL_256_CYCLES 0x7
-> +
-> +/* Timeout Range Register (WDT_TORR) definitions */
-> +#define K230_WDT_TORR_TOP_MASK  0xf        /* Timeout Period */
-> +
-> +/* Interrupt Status Register (WDT_STAT) definitions */
-> +#define K230_WDT_STAT_INT       BIT(0)     /* Interrupt Status */
-> +
-> +/* Counter Restart Register (WDT_CRR) magic value */
-> +#define K230_WDT_CRR_RESTART    0x76       /* Restart command */
-> +
-> +/* Component Parameters Register 1 (WDT_COMP_PARAM_1) definitions */
-> +#define K230_WDT_CNT_WIDTH_MASK 0x1f000000 /* Counter Width */
-> +#define K230_WDT_CNT_WIDTH_SHIFT 24
-> +#define K230_WDT_DFLT_TOP_INIT_MASK 0xf00000 /* Default Initial Timeout */
-> +#define K230_WDT_DFLT_TOP_INIT_SHIFT 20
-> +#define K230_WDT_DFLT_TOP_MASK  0xf0000    /* Default Timeout */
-> +#define K230_WDT_DFLT_TOP_SHIFT 16
-> +#define K230_WDT_DFLT_RPL_MASK  0x7        /* Default Reset Pulse Length */
-> +#define K230_WDT_DFLT_RPL_SHIFT 10
-> +#define K230_WDT_APB_DATA_WIDTH_MASK 0x3   /* APB Data Width */
-> +#define K230_WDT_APB_DATA_WIDTH_SHIFT 8
-> +#define K230_WDT_USE_FIX_TOP    BIT(6)     /* Use Fixed Timeout Values */
-> +#define K230_WDT_HC_TOP         BIT(5)     /* Hard-coded Timeout */
-> +#define K230_WDT_HC_RPL         BIT(4)     /* Hard-coded Reset Pulse Length */
-> +#define K230_WDT_HC_RMOD        BIT(3)     /* Hard-coded Response Mode */
-> +#define K230_WDT_DUAL_TOP       BIT(2)     /* Dual Timeout Period */
-> +#define K230_WDT_DFLT_RMOD      BIT(1)     /* Default Response Mode */
-> +#define K230_WDT_ALWAYS_EN      BIT(0)     /* Always Enabled */
-> +
-> +/* Component Type Register value */
-> +#define K230_WDT_COMP_TYPE_VAL  0x44570120
-> +
-> +/* Component Version Register value */
-> +#define K230_WDT_COMP_VERSION_VAL 0x3131302a  /* "110*" */
-> +
-> +struct K230WdtState {
-> +    /* <private> */
-> +    SysBusDevice parent_obj;
-> +
-> +    /*< public >*/
-> +    MemoryRegion mmio;
-> +    qemu_irq irq;
-> +
-> +    struct ptimer_state *timer;
-> +
-> +    /* Register state */
-> +    uint32_t cr;           /* Control Register */
-> +    uint32_t torr;         /* Timeout Range Register */
-> +    uint32_t ccvr;         /* Current Counter Value Register */
-> +    uint32_t stat;         /* Interrupt Status Register */
-> +    uint32_t prot_level;   /* Protection Level Register */
-> +
-> +    /* Internal state */
-> +    bool interrupt_pending;
-> +    bool enabled;
-> +    uint32_t timeout_value;
-> +    uint32_t current_count;
-> +};
-> +
-> +#endif /* K230_WDT_H */
+>   qos_test_ss = ss.source_set()
+>   qos_test_ss.add(
 
