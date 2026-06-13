@@ -4,47 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5BB0FCD98DC
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3AEDCD98DF
 	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 19:57:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wYURL-0007Fz-7Z; Sat, 13 Jun 2026 15:54:47 -0400
+	id 1wYUQ3-0002AY-7h; Sat, 13 Jun 2026 15:53:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYURJ-0007Cs-T8; Sat, 13 Jun 2026 15:54:45 -0400
+ id 1wYUP2-0000zu-VD; Sat, 13 Jun 2026 15:52:26 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYURI-0004EP-5r; Sat, 13 Jun 2026 15:54:45 -0400
+ id 1wYUP1-0003eg-Cj; Sat, 13 Jun 2026 15:52:24 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1781380260; bh=vMsRVCuwCDrEku/uByBfWnq0mU9pQrQJkKAYYpa+2IM=;
+ t=1781380258; bh=P+ldOx6p71KK0pnrGMTU1XVvbDZ3R2F3PIPmQhI+G20=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=TICenNfoSMigDhEiggvRgxFRRpC3XjUdv9pdz9rLC/JkHy3CmFx1CVR8feczAY2z4
- Ocr0pqO8u0jTz2DkYpLIwM76dqrVyd5rQUVTkV0WE+uQFV/EMw6TfJMjB33XY3ckHa
- oigF3gk8Pt+ZEzJMQugS78x4ysqtyU3/FKRnI3tEZDUzIQoe+Pqce7gE6ugPekxgq3
- qbVeT4kt8VpZoGdneyAOcDZWZHQrgdZzregp+H6tRrcQIv9fS0wODgPkuaecYHRUA+
- eSycpP+3XstrWZqOftGELSERo5Hr7E1n5n1qe+qAsbMb9ZWzpCqBcyV+0B5wvMw9Y/
- C7QbxCT5FAlHg==
+ b=K/Pkjj9ImJb9FEtW2hWYxnS1A5MeTu1bn6hdNKSaMXYnc8orVEj6aqdolFcQNAHKS
+ L0JFNG6U+dYbryv/BGheJM/zFf/DRAheR06/uxOyJJR+T0cF1sE7BnnVPv+aFLxqPT
+ ejwZLV2cc/krczwJSW9oHAEQU4I1uH4rEL3eIboLFf8V69zutLQr2GErrw6Q7WOOT8
+ Jr46wyIm4CzmdU4zCc5HHDEQwnKoEg8Wh21RRKtRDyJYgma/XJcW/HG3CXrBSG0piY
+ 9I//hYXf+UuAlgooft1Tloxbjon1SUZuIL7ZfNpZ4YIEHFpoGk9tCVZC6vfqxHudIJ
+ qFC+0oUQBfCzg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 4E5DD1B6E33;
- Sat, 13 Jun 2026 22:51:00 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id D28DA1B6E1E;
+ Sat, 13 Jun 2026 22:50:58 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id A8E703CE8AD;
- Sat, 13 Jun 2026 22:51:18 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 37BAC3CE898;
+ Sat, 13 Jun 2026 22:51:17 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Christian Schoenebeck <qemu_oss@crudebyte.com>,
+Cc: qemu-stable@nongnu.org,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.11 36/56] hw/9pfs: change V9fsPath.size to size_t and
- v9fs_path_sprintf() return type
-Date: Sat, 13 Jun 2026 22:50:50 +0300
-Message-ID: <20260613195116.1807273-36-mjt@tls.msk.ru>
+Subject: [Stable-10.0.11 15/56] ui/vnc: fix OOB write in lossy rect worker code
+Date: Sat, 13 Jun 2026 22:50:29 +0300
+Message-ID: <20260613195116.1807273-15-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.11-20260613224446@cover.tls.msk.ru>
 References: <qemu-stable-10.0.11-20260613224446@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -69,79 +71,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Christian Schoenebeck <qemu_oss@crudebyte.com>
+From: Daniel P. Berrangé <berrange@redhat.com>
 
-- Change V9fsPath.size from uint16_t to size_t to support paths larger
-  than 65536 bytes.
+Incorrect calculation of the boundary condition when tracking lossy
+rectangles in the worker thread will result in an OOB write which
+can corrupt further worker state, and/or trigger any guard pages
+that may lie beyond the VncWorker struct. This can be triggered
+through careful choice of the display resolution in the guest
+OS by an unprivileged user.
 
-- Change v9fs_path_sprintf() return type from void to int to allow error
-  reporting.
-
-Link: https://lore.kernel.org/qemu-devel/2d2348d94ff43fbe4cc0aea24fb312c5c15ee809.1779126034.git.qemu_oss@crudebyte.com
-Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
-(cherry picked from commit dbaf84e148b0c8b66dcb47788a6bb13806e401e4)
+Fixes: CVE-2026-48002
+Reported-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+Message-ID: <20260521103353.1645561-4-berrange@redhat.com>
+[Marc-André - added assert() suggest by philmd@linaro.org]
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+(cherry picked from commit 46ee49034d26d04d95ba8f3183d4fbfa9d2b89b4)
+(Mjt: context fixup for 10.0.x)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/fsdev/file-op-9p.h b/fsdev/file-op-9p.h
-index 4997677460..c453b6494b 100644
---- a/fsdev/file-op-9p.h
-+++ b/fsdev/file-op-9p.h
-@@ -110,7 +110,7 @@ struct FsContext {
- };
- 
- struct V9fsPath {
--    uint16_t size;
-+    size_t size;
-     char *data;
- };
- P9ARRAY_DECLARE_TYPE(V9fsPath);
-diff --git a/hw/9pfs/9p.c b/hw/9pfs/9p.c
-index 018402c1a1..c439fecf5c 100644
---- a/hw/9pfs/9p.c
-+++ b/hw/9pfs/9p.c
-@@ -201,16 +201,24 @@ void v9fs_path_free(V9fsPath *path)
- }
- 
- 
--void v9fs_path_sprintf(V9fsPath *path, const char *fmt, ...)
-+int v9fs_path_sprintf(V9fsPath *path, const char *fmt, ...)
+diff --git a/ui/vnc.c b/ui/vnc.c
+index ff683ba196..faff26454b 100644
+--- a/ui/vnc.c
++++ b/ui/vnc.c
+@@ -2968,13 +2968,15 @@ void vnc_sent_lossy_rect(VncState *vs, int x, int y, int w, int h)
  {
-     va_list ap;
-+    int ret;
+     int i, j;
  
-     v9fs_path_free(path);
+-    w = (x + w) / VNC_STAT_RECT;
+-    h = (y + h) / VNC_STAT_RECT;
++    w = DIV_ROUND_UP((x + w), VNC_STAT_RECT);
++    h = DIV_ROUND_UP((y + h), VNC_STAT_RECT);
++    assert(h <= VNC_STAT_ROWS);
++    assert(w <= VNC_STAT_COLS);
+     x /= VNC_STAT_RECT;
+     y /= VNC_STAT_RECT;
  
-     va_start(ap, fmt);
--    /* Bump the size for including terminating NULL */
--    path->size = g_vasprintf(&path->data, fmt, ap) + 1;
-+    ret = g_vasprintf(&path->data, fmt, ap);
-     va_end(ap);
-+    if (ret < 0) {
-+        error_report_once("9pfs: unusual path formatting failure; "
-+                         "invalidating associated FID");
-+        return -1;
-+    }
-+    /* Bump the size for including terminating NULL */
-+    path->size = ret + 1;
-+    return 0;
- }
- 
- void v9fs_path_copy(V9fsPath *dst, const V9fsPath *src)
-diff --git a/hw/9pfs/9p.h b/hw/9pfs/9p.h
-index 65cc45e344..b2df659b0e 100644
---- a/hw/9pfs/9p.h
-+++ b/hw/9pfs/9p.h
-@@ -456,8 +456,8 @@ static inline uint8_t v9fs_request_cancelled(V9fsPDU *pdu)
- void coroutine_fn v9fs_reclaim_fd(V9fsPDU *pdu);
- void v9fs_path_init(V9fsPath *path);
- void v9fs_path_free(V9fsPath *path);
--void G_GNUC_PRINTF(2, 3) v9fs_path_sprintf(V9fsPath *path, const char *fmt,
--                                           ...);
-+int G_GNUC_PRINTF(2, 3) v9fs_path_sprintf(V9fsPath *path, const char *fmt,
-+                                          ...);
- void v9fs_path_copy(V9fsPath *dst, const V9fsPath *src);
- size_t v9fs_readdir_response_size(V9fsString *name);
- int v9fs_name_to_path(V9fsState *s, V9fsPath *dirpath,
+-    for (j = y; j <= h; j++) {
+-        for (i = x; i <= w; i++) {
++    for (j = y; j < h; j++) {
++        for (i = x; i < w; i++) {
+             vs->lossy_rect[j][i] = 1;
+         }
+     }
 -- 
 2.47.3
 
