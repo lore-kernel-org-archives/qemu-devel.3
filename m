@@ -4,46 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98BB4CD98CF
-	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 19:57:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4030FCD8CA8
+	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 19:57:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wYUSL-0000hP-Iq; Sat, 13 Jun 2026 15:55:49 -0400
+	id 1wYUS7-00007o-E7; Sat, 13 Jun 2026 15:55:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYUSG-0000NG-62; Sat, 13 Jun 2026 15:55:45 -0400
+ id 1wYURt-0008Tv-IW; Sat, 13 Jun 2026 15:55:23 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYUSD-0004h8-5m; Sat, 13 Jun 2026 15:55:42 -0400
+ id 1wYURr-0004go-PZ; Sat, 13 Jun 2026 15:55:21 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1781380261; bh=5/rsleK4VKiBqumnsjYhUN9Uc6/t1nX/VfUewIfRMcc=;
+ t=1781380260; bh=/yCG3jEExQpedxSgTR2/aw27BcSv2Xz3e8r7g1a46fI=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=RcDCt4CGlMKVb46QqVCU0g0v9OQBaKLu0CjsSsZM1SJe6Baqz1rrz4C6/jJjGLoKt
- FL+vs8xOaAu1hYKA1hlavsDhsqPG0KaHW0IzymTh/0GS40bP+NMRLxvdT8MIgdSQ2V
- 8nY68SvJtT6AAXyNhC5HICvVImmxcPMv10WIZjL8+7GnbWMKdsLlXhzWnDy1ZlUqff
- 3guAh1ScuC+qMgZgkXzF00wUwFmQLN1r1uLdBoRxfYSKK48qqaTcNrDgS1ZvsX0gCw
- gm42nDCwNOyCvluTh/gnf1uOWNNsQEn94h3mh40OwASgezuPu99sUSZ5WL7QhR9za/
- TPF9uz6IKIXew==
+ b=nsIMFkMXBOnEYeLl4IPNGnPdw3desYd7sJ89cMkYPKxbUjlpDO5445paGG+1Rj4kc
+ h/b2Ve5FtLHih1Q7a6ztlp5yuZeN/eY3a6D+hC5/GfUbthLbCKYtXnB3h40XcWLUnQ
+ w2Hz6QZsj0Y9HlCxjP9wt1syfCrcND1M2BCnZJvwt+fHdt/S33ydqCOWB9jjJorAx5
+ oEewSuQB2W8WYQf+u3aEcjpOZIvU5w8bbpldzsHgHBn0VkgaN1X4sS6nnbLx8L2f47
+ wLY5CKEzuszkxHVz7EY/7Fnap8FTQR9MGImyOYXeFvjtlogUFmUt4OaiEtz4xgH24x
+ kZw13fYsk3i4A==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 03A0A1B6E3C;
- Sat, 13 Jun 2026 22:51:01 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id DA7951B6E3B;
+ Sat, 13 Jun 2026 22:51:00 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 4E3423CE8B6;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 3A5D53CE8B5;
  Sat, 13 Jun 2026 22:51:19 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Farhan Ali <alifm@linux.ibm.com>,
- Niklas Schnelle <schnelle@linux.ibm.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>,
- Omar Elghoul <oelghoul@linux.ibm.com>, Cornelia Huck <cohuck@redhat.com>,
+Cc: qemu-stable@nongnu.org, Alexandra Winter <wintera@linux.ibm.com>,
+ Hendrik Brueckner <brueckner@linux.ibm.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Gautam Gala <ggala@linux.ibm.com>, Cornelia Huck <cohuck@redhat.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.11 45/56] s390x/pci: Fix interrupt forwarding disable
- for interpreted devices
-Date: Sat, 13 Jun 2026 22:50:59 +0300
-Message-ID: <20260613195116.1807273-45-mjt@tls.msk.ru>
+Subject: [Stable-10.0.11 44/56] target/s390x: Make container ids in SysIB_15x
+ 1-based
+Date: Sat, 13 Jun 2026 22:50:58 +0300
+Message-ID: <20260613195116.1807273-44-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.11-20260613224446@cover.tls.msk.ru>
 References: <qemu-stable-10.0.11-20260613224446@cover.tls.msk.ru>
@@ -72,39 +72,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Farhan Ali <alifm@linux.ibm.com>
+From: Alexandra Winter <wintera@linux.ibm.com>
 
-Remove the FH_MASK_ENABLE check when disabling interrupt forwarding
-during device reset. This check was broken for the default case in
-the switch statement above, preventing proper cleanup of interrupt
-forwarding.
+The Container Id in a container-type TLE of SysIB_15x is defined as 8-bit
+unsigned nonzero integer. Make stsi fc 15 emulation architecture compliant,
+by starting the container ids at 1 for the lowest numbered container.
 
-The pbdev->aif check in s390_pci_kvm_aif_disable() already guards
-against double-disabling of interrupt forwarding.
+The qemu misbehaviour without this patch becomes obvious due to a recently
+proposed kernel fix. Older linux kernels pass the container ids from stsi
+fc15 unchanged to sysfs, i.e. starting at 1 on s390 hardware. This resulted
+in off-by-one values when compared to the values from HMC. A Linux kernel
+fix is being proposed to correct the sysfs topology ids by -1, so they
+start at 0, e.g. when displayed by 'lscpu -ye'. In case a KVM guest with a
+fixed kernel runs on a host with a qemu without this fix, this can result
+in container ids erroneously being shown as 255.
+Example (Fixed guest on unfixed qemu):
+$ lscpu -ye
+CPU NODE DRAWER BOOK SOCKET CORE L1d:L1i:L2 ONLINE CONFIGURED POLARIZATION ADDRESS
+  0    0    255  255    255    0 0:0:0         yes yes        vert-medium  0
+  1    0    255  255      0    1 1:1:1         yes yes        vert-medium  1
+After this fix:
+$ lscpu -ye
+CPU NODE DRAWER BOOK SOCKET CORE L1d:L1i:L2 ONLINE CONFIGURED POLARIZATION ADDRESS
+  0    0      0    0      0    0 0:0:0         yes yes        vert-medium  0
+  1    0      0    0      1    1 1:1:1         yes yes        vert-medium  1
 
-Cc: qemu-stable@nongnu.org
-Reported-by: Niklas Schnelle <schnelle@linux.ibm.com>
-Signed-off-by: Farhan Ali <alifm@linux.ibm.com>
-Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
-Tested-by: Omar Elghoul <oelghoul@linux.ibm.com>
-Message-ID: <20260521182946.1607-1-alifm@linux.ibm.com>
+Fixes: f4f54b582f ("target/s390x/cpu topology: handle STSI(15) and build the SYSIB")
+Signed-off-by: Alexandra Winter <wintera@linux.ibm.com>
+Acked-by: Hendrik Brueckner <brueckner@linux.ibm.com>
+Acked-by: Christian Borntraeger <borntraeger@linux.ibm.com>
+Reviewed-by: Gautam Gala <ggala@linux.ibm.com>
+Message-ID: <20260511134909.43802-1-wintera@linux.ibm.com>
 Signed-off-by: Cornelia Huck <cohuck@redhat.com>
-(cherry picked from commit 442f727b8bebabf20a4f6a7536a4ff2885402030)
+(cherry picked from commit 1f1ccb6f3c48a2cd80e874d66afeef2dc28a65f3)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/s390x/s390-pci-bus.c b/hw/s390x/s390-pci-bus.c
-index 2591ee49c1..8b63156c30 100644
---- a/hw/s390x/s390-pci-bus.c
-+++ b/hw/s390x/s390-pci-bus.c
-@@ -1492,7 +1492,7 @@ static void s390_pci_device_reset(DeviceState *dev)
-         break;
-     }
+diff --git a/target/s390x/kvm/stsi-topology.c b/target/s390x/kvm/stsi-topology.c
+index c8d6389cd8..af3fd8ad1b 100644
+--- a/target/s390x/kvm/stsi-topology.c
++++ b/target/s390x/kvm/stsi-topology.c
+@@ -90,9 +90,9 @@ static int stsi_topology_fill_sysib(S390TopologyList *topology_list,
+     int last_drawer = -1;
+     int last_book = -1;
+     int last_socket = -1;
+-    int drawer_id = 0;
+-    int book_id = 0;
+-    int socket_id = 0;
++    int drawer_id = 1;
++    int book_id = 1;
++    int socket_id = 1;
+     int n = sizeof(SysIB_151x);
  
--    if (pbdev->interp && (pbdev->fh & FH_MASK_ENABLE)) {
-+    if (pbdev->interp) {
-         /* Interpreted devices were using interrupt forwarding */
-         s390_pci_kvm_aif_disable(pbdev);
-     } else if (pbdev->summary_ind) {
+     QTAILQ_FOREACH(entry, topology_list, next) {
+@@ -103,12 +103,12 @@ static int stsi_topology_fill_sysib(S390TopologyList *topology_list,
+         if (level > 3 && drawer_change) {
+             SYSIB_GUARD(n, sizeof(SYSIBContainerListEntry));
+             p = fill_container(p, 3, drawer_id++);
+-            book_id = 0;
++            book_id = 1;
+         }
+         if (level > 2 && book_change) {
+             SYSIB_GUARD(n, sizeof(SYSIBContainerListEntry));
+             p = fill_container(p, 2, book_id++);
+-            socket_id = 0;
++            socket_id = 1;
+         }
+         if (socket_change) {
+             SYSIB_GUARD(n, sizeof(SYSIBContainerListEntry));
 -- 
 2.47.3
 
