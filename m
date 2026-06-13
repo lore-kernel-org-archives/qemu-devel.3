@@ -4,47 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C51ACD98CF
-	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 20:41:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C6D0CD98DC
+	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 20:42:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wYV9K-0000t2-WF; Sat, 13 Jun 2026 16:40:15 -0400
+	id 1wYV8K-0007ht-O7; Sat, 13 Jun 2026 16:39:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYV9H-0000bX-A9; Sat, 13 Jun 2026 16:40:11 -0400
+ id 1wYV8I-0007Zq-Al; Sat, 13 Jun 2026 16:39:10 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYV9F-0004TR-C1; Sat, 13 Jun 2026 16:40:10 -0400
+ id 1wYV8G-0003uM-Ob; Sat, 13 Jun 2026 16:39:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1781382965; bh=lRK4NhiR2fBV89rabH41NE98LJMgN+fdDW4JciwJ5Yk=;
+ t=1781382964; bh=wW//6R9DcVQincR5nU8HAvA6a7TrUpycElpGLnaC2BU=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=JSBnMafgnCFyDo4xz3HxzhLHTBPIicfTnmoyTQBlImFCPG/bkq9riI4bBfygjKWlP
- E8wkiGuAyMjACOQhTl2TGvByyW8cIzQ0xpMdhtSheBByMgiOq4R3GtnsTXs1tXdMA1
- MwdGuM2VUquw1AQU4os2ZXCjKqDnmAWXJWPkAedgPSQrGjFQRI+WcFLKoczoO0TzfF
- qK8Dp/QmV5Q9hbn3ZRSO9MqKvb3V2kmtT6whOB5PNvZJVbL+Ek5N++xyLY80W7esmz
- h7OhWEJPYjKX1MVg0veLdFob/9jRFkIz36fUiCdv7p5GQeB4ntE0Owl1Rgvcbdj1TW
- IRDYsDmZXSFOQ==
+ b=MSHSfYMQWQ9LL3SCtWKbQ1SWHZ05DOzrMuTbjLwxdiP++sIptDzaKGppytn7x7Ohs
+ H7ICkLYVyDZduq4MHWgHxboEveuXbd22sVGDHFZBgY1fs9nIGRc89oIjg0erY4qfJg
+ WK6Rp5sAvt6UkVEG6bM/SkRLcwRblSm/QIH44MjQbmG7v656O3CrGWZpnd5+jRHUJD
+ LUr0mNH5e8SxBTBqK6sTvIU2fYws/boaPRxXpTaohwNXwwJT6ObTYDF3+GJMFLz48I
+ OrSqECbgfzNjNzJbRlUqBLH2IsYaUStX45CEk65BUFXIcJkqpDibf3jHOwd190ux9H
+ QGUY1Ab0BV4sg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 20CAD1B6F06;
- Sat, 13 Jun 2026 23:36:05 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 493ED1B6EFA;
+ Sat, 13 Jun 2026 23:36:04 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 802943CE957;
- Sat, 13 Jun 2026 23:36:23 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id B2BC33CE94B;
+ Sat, 13 Jun 2026 23:36:22 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Christian Schoenebeck <qemu_oss@crudebyte.com>,
+Cc: qemu-stable@nongnu.org, GuoHan Zhao <zhaoguohan@kylinos.cn>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.2 43/72] hw/9pfs: add NULL check in
- v9fs_path_is_ancestor()
-Date: Sat, 13 Jun 2026 23:35:09 +0300
-Message-ID: <20260613203542.1809153-43-mjt@tls.msk.ru>
+Subject: [Stable-11.0.2 31/72] vfio-user: reject zero migration page size
+ capability
+Date: Sat, 13 Jun 2026 23:34:57 +0300
+Message-ID: <20260613203542.1809153-31-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.2-20260613224644@cover.tls.msk.ru>
 References: <qemu-stable-11.0.2-20260613224644@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -69,34 +71,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Christian Schoenebeck <qemu_oss@crudebyte.com>
+From: GuoHan Zhao <zhaoguohan@kylinos.cn>
 
-Add NULL check for s1->data and s2->data before using them in
-string operations. This prevents potential crashes when dealing
-with uninitialized paths.
+check_migr_pgsize() validates that no page-size bits smaller than
+VFIO_USER_DEF_PGSIZE are set, but it still accepts pgsize=0. This can replace
+the default migration page size with an unusable value.
 
-This is just a defensive measure. We are currently never passing
-NULL to this function.
+Reject a zero migration page size during version capability parsing, matching
+the lower-bound check used for the DMA page-size capability.
 
-Link: https://lore.kernel.org/qemu-devel/3348c4d683f061c23083bd45994d527be4fb7cbc.1779126034.git.qemu_oss@crudebyte.com
-Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
-(cherry picked from commit abb0cc02fb56e2432837e34b80fe68768f95e774)
+Fixes: 36227628d824 (vfio-user: implement message send infrastructure)
+Signed-off-by: GuoHan Zhao <zhaoguohan@kylinos.cn>
+Link: https://lore.kernel.org/qemu-devel/20260522081306.4186242-2-zhaoguohan@kylinos.cn
+Signed-off-by: Cédric Le Goater <clg@redhat.com>
+(cherry picked from commit 497b5c5b05ac2be00ae16c723e2445ebbc486cb2)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/9pfs/9p.c b/hw/9pfs/9p.c
-index e2713b9eee..e590c414ab 100644
---- a/hw/9pfs/9p.c
-+++ b/hw/9pfs/9p.c
-@@ -241,6 +241,9 @@ int v9fs_name_to_path(V9fsState *s, V9fsPath *dirpath,
-  */
- static int v9fs_path_is_ancestor(V9fsPath *s1, V9fsPath *s2)
- {
-+    if (!s1->data || !s2->data) {
-+        return 0;
-+    }
-     if (!strncmp(s1->data, s2->data, s1->size - 1)) {
-         if (s2->data[s1->size - 1] == '\0' || s2->data[s1->size - 1] == '/') {
-             return 1;
+diff --git a/hw/vfio-user/proxy.c b/hw/vfio-user/proxy.c
+index 3fe5b0138b..3167d27b03 100644
+--- a/hw/vfio-user/proxy.c
++++ b/hw/vfio-user/proxy.c
+@@ -1081,9 +1081,11 @@ static bool check_migr_pgsize(VFIOUserProxy *proxy, QObject *qobj, Error **errp)
+         return false;
+     }
+ 
+-    /* must be larger than default */
+-    if (pgsize & (VFIO_USER_DEF_PGSIZE - 1)) {
+-        error_setg(errp, "pgsize 0x%"PRIx64" too small", pgsize);
++    /* must not be zero or smaller than default */
++    if (pgsize < VFIO_USER_DEF_PGSIZE ||
++        (pgsize & (VFIO_USER_DEF_PGSIZE - 1))) {
++        error_setg(errp, "%s 0x%"PRIx64" too small",
++                   VFIO_USER_CAP_PGSIZE, pgsize);
+         return false;
+     }
+ 
 -- 
 2.47.3
 
