@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6267ECD98D6
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77EEECD98DC
 	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 20:41:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wYV66-0001fp-8H; Sat, 13 Jun 2026 16:36:54 -0400
+	id 1wYV9J-0000ks-5w; Sat, 13 Jun 2026 16:40:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYV5w-0001Ya-I5; Sat, 13 Jun 2026 16:36:44 -0400
+ id 1wYV9D-0000Ti-R5; Sat, 13 Jun 2026 16:40:08 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYV5u-0003Dy-Vg; Sat, 13 Jun 2026 16:36:44 -0400
+ id 1wYV9C-0004F6-1n; Sat, 13 Jun 2026 16:40:07 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1781382962; bh=LTAxSberyWeoDcQ5ZuEoxEhrXnHV2K4/3Fs3fFdtb8o=;
+ t=1781382964; bh=LnNZu/aRjpZZFrq6QaE6GVF8IP/wzZvL7ML5ZltIi0U=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=fXeercP4Jpedw94EZwL5YZSA+WtEeEdvN38LyyQz08ZJ9Gy8hnTr/hJC3r18Re5NL
- XfWMeQnPlIR7EN3+jJQNWAbyW/XHV3cKH0dd1xCIkM2neJX6pypwqgTBXV/wQpvYwK
- 1h16JTDo3W8XIzqi+QMuE9noMZuuOJULI7LdUxZ0Efs5eJWjt7J5/ihkEFp94BWvZJ
- t9zA2HG+cq0zrltn+W6er9SpWTqplZWZMqzHrAfLnQHK2do/eJKSXEpUqEEQ1WJufk
- /kWh/yFF9NQOi9ZaIhiHuE3TUNUqNffLxF9gh3lzFg5vcWG+PGHGcfQWO9mgFXwkuh
- nY9NN4FcMG5ig==
+ b=ggZIgV8+K5VzhSm118twoWAoZcP+4V1PEoFS8K+tGRlqu6/jHjKnesYW5GU8GU0fg
+ 2LoXOgVB3AhUarFIRbBBQdGW/pVyg9LnwRhVBe0ZmpbdEnLCH5/4aospuzay03vjyk
+ JHDhMYK8HVnUH8+CsQHPjAELTdQ7LflONrB+KNx36TwLFLA4sVn7sdwTwukXaSi2f9
+ VkYTHI/UuXu8mNiyG0csDf5BZamaBdT/jf+pM1VL1Uys21Z5QqaZAzEs3YVMBVySpm
+ LW6eftZvdjtcAK6zsPVTgtgG3jOH26AcvxtRDphjEkOdNS6eiRBQq06RdCGMh04xKD
+ ZOybZPyC0T3pQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id CD6801B6EE1;
- Sat, 13 Jun 2026 23:36:02 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id EDB231B6F04;
+ Sat, 13 Jun 2026 23:36:04 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 3F04F3CE933;
- Sat, 13 Jun 2026 23:36:21 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 5FB073CE955;
+ Sat, 13 Jun 2026 23:36:23 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Frank Chang <frank.chang@sifive.com>,
- Chao Liu <chao.liu.zevorn@gmail.com>, Jim Shu <jim.shu@sifive.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.2 07/72] hw/char: Check interrupt after txctrl register
- is written
-Date: Sat, 13 Jun 2026 23:34:33 +0300
-Message-ID: <20260613203542.1809153-7-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Matt Turner <mattst88@gmail.com>,
+ Yoshinori Sato <yoshinori.sato@nifty.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Helge Deller <deller@gmx.de>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.2 41/72] linux-user/sh4: restore FP rounding mode on
+ sigreturn
+Date: Sat, 13 Jun 2026 23:35:07 +0300
+Message-ID: <20260613203542.1809153-41-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.2-20260613224644@cover.tls.msk.ru>
 References: <qemu-stable-11.0.2-20260613224644@cover.tls.msk.ru>
@@ -71,37 +71,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Frank Chang <frank.chang@sifive.com>
+From: Matt Turner <mattst88@gmail.com>
 
-It's possible that the transmit watermark level (txctrl.txcnt) is
-updated when the user writes to txctrl register, which may decrease the
-transmit watermark level to less than the number of entries in the
-transmit FIFO. In such a case, the interrupt should be raised so we need to
-call sifive_uart_update_irq() to check and update interrupt when txctrl
-register is written. Otherwise, the interrupt will have to be delayed
-until next TX FIFO transmission is processed.
+The SH4 FPSCR rounding-mode (RM) and denormal (DN) bits are not held
+only in env->fpscr: they are also reflected into the derived
+env->fp_status via set_float_rounding_mode()/set_flush_to_zero(). The
+guest keeps the two in sync by routing every write to FPSCR through
+helper_ld_fpscr().
 
-Suggested-by: Chao Liu <chao.liu.zevorn@gmail.com>
-Signed-off-by: Frank Chang <frank.chang@sifive.com>
-Reviewed-by: Jim Shu <jim.shu@sifive.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20260513030503.3665414-1-frank.chang@sifive.com>
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-(cherry picked from commit e07077a766071418e76d1c7db7e51e344776eaf2)
+restore_sigcontext() wrote the saved value straight into env->fpscr and
+never touched env->fp_status, so on sigreturn the interrupted code
+resumed with whatever FP rounding mode and flush-to-zero setting the
+signal handler last installed. (regs->flags = 0 forces the FR/SZ/PR TB
+flags to be recomputed, but fp_status is runtime float state, not a TB
+flag, so it was left stale.) This is the FP analogue of the T/M/Q bit
+problem just fixed for the integer status register.
+
+Factor the FPSCR -> fp_status synchronisation out of helper_ld_fpscr()
+into cpu_load_fpscr() and use it from restore_sigcontext() so the
+rounding mode round-trips correctly across signal delivery.
+
+Fixes: c3b5bc8ab3 ("SH4: Signal handling for the user space emulator, by Magnus Damm.")
+Cc: qemu-stable@nongnu.org
+Reviewed-by: Yoshinori Sato <yoshinori.sato@nifty.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Matt Turner <mattst88@gmail.com>
+Signed-off-by: Helge Deller <deller@gmx.de>
+(cherry picked from commit a740f17ed0fbc5cd38e3cb12136c58d38aba098d)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/char/sifive_uart.c b/hw/char/sifive_uart.c
-index b4de662d61..b9bbaaef59 100644
---- a/hw/char/sifive_uart.c
-+++ b/hw/char/sifive_uart.c
-@@ -213,6 +213,7 @@ sifive_uart_write(void *opaque, hwaddr addr,
-         if (SIFIVE_UART_TXEN(s->txctrl) && !fifo8_is_empty(&s->tx_fifo)) {
-             sifive_uart_trigger_tx_fifo(s);
-         }
-+        sifive_uart_update_irq(s);
-         return;
-     case SIFIVE_UART_RXCTRL:
-         s->rxctrl = val64;
+diff --git a/linux-user/sh4/signal.c b/linux-user/sh4/signal.c
+index cc36425c49..00290d6e40 100644
+--- a/linux-user/sh4/signal.c
++++ b/linux-user/sh4/signal.c
+@@ -173,7 +173,12 @@ static void restore_sigcontext(CPUSH4State *regs, struct target_sigcontext *sc)
+     for (i=0; i<16; i++) {
+         __get_user(regs->fregs[i], &sc->sc_fpregs[i]);
+     }
+-    __get_user(regs->fpscr, &sc->sc_fpscr);
++    /* Resync the derived float_status state, not just env->fpscr. */
++    {
++        uint32_t fpscr;
++        __get_user(fpscr, &sc->sc_fpscr);
++        cpu_load_fpscr(regs, fpscr);
++    }
+     __get_user(regs->fpul, &sc->sc_fpul);
+ 
+     regs->tra = -1;         /* disable syscall checks */
+diff --git a/target/sh4/cpu.h b/target/sh4/cpu.h
+index b0759010c4..fbecde13a9 100644
+--- a/target/sh4/cpu.h
++++ b/target/sh4/cpu.h
+@@ -380,4 +380,7 @@ static inline void cpu_write_sr(CPUSH4State *env, uint32_t sr)
+     env->sr = sr & ~((1u << SR_M) | (1u << SR_Q) | (1u << SR_T));
+ }
+ 
++/* Set FPSCR and the derived float_status rounding/flush-to-zero state. */
++void cpu_load_fpscr(CPUSH4State *env, uint32_t val);
++
+ #endif /* SH4_CPU_H */
+diff --git a/target/sh4/op_helper.c b/target/sh4/op_helper.c
+index 669bc84cb6..cf0f80e4a5 100644
+--- a/target/sh4/op_helper.c
++++ b/target/sh4/op_helper.c
+@@ -204,7 +204,7 @@ void helper_macw(CPUSH4State *env, int32_t arg0, int32_t arg1)
+     }
+ }
+ 
+-void helper_ld_fpscr(CPUSH4State *env, uint32_t val)
++void cpu_load_fpscr(CPUSH4State *env, uint32_t val)
+ {
+     env->fpscr = val & FPSCR_MASK;
+     if ((val & FPSCR_RM_MASK) == FPSCR_RM_ZERO) {
+@@ -215,6 +215,11 @@ void helper_ld_fpscr(CPUSH4State *env, uint32_t val)
+     set_flush_to_zero((val & FPSCR_DN) != 0, &env->fp_status);
+ }
+ 
++void helper_ld_fpscr(CPUSH4State *env, uint32_t val)
++{
++    cpu_load_fpscr(env, val);
++}
++
+ static void update_fpscr(CPUSH4State *env, uintptr_t retaddr)
+ {
+     int xcpt, cause, enable;
 -- 
 2.47.3
 
