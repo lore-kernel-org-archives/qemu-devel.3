@@ -4,50 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CFEF6CD8CA8
-	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 20:38:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 309BACD8CA8
+	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 20:38:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wYV5t-0001W6-2j; Sat, 13 Jun 2026 16:36:41 -0400
+	id 1wYV5w-0001YP-JQ; Sat, 13 Jun 2026 16:36:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYV5l-0001Og-Pl; Sat, 13 Jun 2026 16:36:35 -0400
+ id 1wYV5p-0001SZ-2H; Sat, 13 Jun 2026 16:36:37 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYV5h-000398-FA; Sat, 13 Jun 2026 16:36:32 -0400
+ id 1wYV5n-0003B2-6i; Sat, 13 Jun 2026 16:36:36 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1781382962; bh=sIl/tdh7IsN9ArdeDKreQuQNxHNbY82eRu4BG+AwbgQ=;
+ t=1781382962; bh=qLusf94cp14bL3s613kWiuKwXIw/4+Fsc+S5U4dxtmA=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=kJhtb8M6HZIPj3GHvrxFptpkUTGhgMbKeqPSo92/YGMsgcSXFSfWarQSWm1a8p0gC
- Y5yoJeChv5bvv1r6n/uOjdvQckLbKEyAc8ewu8jYORp+JkMlPSSxbNbBtpWTBFY4IG
- CK8Lejzq2j+tQuAVoOXpbMFfGgr4tBAUkybLJdY9feVfgIXo466b1MotIN56r2pfFk
- Am+04UMG2fHQ41kf06qEexbmdZ74tO4xmkzq3gJ+9MT1484b+QMhipHKqRF3vLwpEK
- BhiUIng83bJLH4dSm+iDpd4WXzpoGh4e/LWABR+nkoabNNI6UuYY6SILea4lee5W9M
- 1UzSMAQ//wRxg==
+ b=HNxwjqYDNKgQf1TEqqz4qL/39QZqGFnqaD0FjPQYmlCv2U2M6HsWAf0+Lbg7R5k8/
+ ogUBPOeO95HjvtN7D5fHZaLvkXS3eGV9NMR0EOl43NsyCZkq4F7U6iLZ+szWVpFtVm
+ ZF+tMKJmisKW0TpONPJ1Lu+pQMrdzAhPIkPhn5yvgXcI6crMMoButl8ak9HaMkqDAo
+ 6IX3hXeO/mHjqCoVAmjOnd9SImoXbqqQemplDCRNLiU/r7ceLdi2zojHUDqd72hQvZ
+ 9acJdCIyvacFZ0ZyPUQ29GFY8gnA9BgalLEPROUQFANdcYlst5iuqCMIFJS2n5y3g6
+ a/llRPycvakzA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 5F12D1B6EDB;
+ by isrv.corpit.ru (Postfix) with ESMTP id 9907C1B6EDE;
  Sat, 13 Jun 2026 23:36:02 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id C59A53CE92D;
- Sat, 13 Jun 2026 23:36:20 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 07DBD3CE930;
+ Sat, 13 Jun 2026 23:36:21 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>,
+Cc: qemu-stable@nongnu.org, Andrew Jones <andrew.jones@oss.qualcomm.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Nutty Liu <nutty.liu@hotmail.com>, Tomasz Jeznach <tjeznach@rivosinc.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.2 01/72] crypto: fix client side anonymous TLS
- credentials
-Date: Sat, 13 Jun 2026 23:34:27 +0300
-Message-ID: <20260613203542.1809153-1-mjt@tls.msk.ru>
+Subject: [Stable-11.0.2 04/72] hw/riscv/riscv-iommu: Fix Svnapot 64KB pages
+Date: Sat, 13 Jun 2026 23:34:30 +0300
+Message-ID: <20260613203542.1809153-4-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.2-20260613224644@cover.tls.msk.ru>
 References: <qemu-stable-11.0.2-20260613224644@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -72,177 +71,109 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel P. Berrangé <berrange@redhat.com>
+From: Andrew Jones <andrew.jones@oss.qualcomm.com>
 
-The previous refactoring of credential creation failed to allocate
-storage fo the anonymous TLS credentials on the client endpoint.
+The Svnapot extension encodes a 64KB leaf PTE by setting PTE_N and
+storing bits [3:0] of the PPN as a NAPOT size indicator. The IOMMU
+model wasn't checking PTE_N and therefore was using the raw (NAPOT-
+encoded) PPN directly in the physical address, yielding an address
+32 KB above the correct base.
 
-Fixes: 70f9fd8dbf7233bee497055a9b7825e3729ce853
-Reported-by: Maciej S. Szmigiero <mail@maciej.szmigiero.name>
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-(cherry picked from commit 27b127d7348a922ef91ce607776407407f9c2a3e)
+Fix both riscv_iommu_spa_fetch() and pdt_memory_read() by mirroring
+the Svnapot handling already present in target/riscv/cpu_helper.c:
+
+  napot_bits  = ctz64(ppn) + 1          /* 4 for 64KB */
+  napot_mask  = (1 << napot_bits) - 1   /* 0xF */
+  phys_base   = PPN_PHYS(ppn & ~napot_mask)
+  page_offset = addr & (PPN_PHYS(napot_mask) | (TARGET_PAGE_SIZE - 1))
+
+The spec only defines napot_bits == 4 (64KB); any other value is
+treated as a reserved encoding.
+
+This is a fix, rather than new feature support, because the spec
+says "IOMMU implementations must support the Svnapot standard
+extension for NAPOT Translation Contiguity."
+
+Fixes: 0c54acb8243d ("hw/riscv: add RISC-V IOMMU base emulation")
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Andrew Jones <andrew.jones@oss.qualcomm.com>
+Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Reviewed-by: Nutty Liu <nutty.liu@hotmail.com>
+Reviewed-by: Tomasz Jeznach <tjeznach@rivosinc.com>
+Message-ID: <20260508205129.377032-1-andrew.jones@oss.qualcomm.com>
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+(cherry picked from commit fcbd93e96be2ed0e5139542f54be31efa6d2b1dc)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/crypto/tlscredsanon.c b/crypto/tlscredsanon.c
-index 1551382e1f..190c9833a7 100644
---- a/crypto/tlscredsanon.c
-+++ b/crypto/tlscredsanon.c
-@@ -73,6 +73,8 @@ qcrypto_tls_creds_anon_load(QCryptoTLSCredsAnon *creds,
-                                              box->dh_params);
-         }
-     } else {
-+        box = qcrypto_tls_creds_box_new_client(GNUTLS_CRD_ANON);
-+
-         ret = gnutls_anon_allocate_client_credentials(&box->data.anonclient);
-         if (ret < 0) {
-             error_setg(errp, "Cannot allocate credentials: %s",
-diff --git a/tests/unit/test-crypto-tlssession.c b/tests/unit/test-crypto-tlssession.c
-index 0d06a6892e..dc7a01bb06 100644
---- a/tests/unit/test-crypto-tlssession.c
-+++ b/tests/unit/test-crypto-tlssession.c
-@@ -24,6 +24,7 @@
- #include "crypto-tls-psk-helpers.h"
- #include "crypto/tlscredsx509.h"
- #include "crypto/tlscredspsk.h"
-+#include "crypto/tlscredsanon.h"
- #include "crypto/tlssession.h"
- #include "qom/object_interfaces.h"
- #include "qapi/error.h"
-@@ -190,6 +191,121 @@ static void test_crypto_tls_session_psk(void)
+diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
+index c3c9ed6469..917a969081 100644
+--- a/hw/riscv/riscv-iommu.c
++++ b/hw/riscv/riscv-iommu.c
+@@ -237,6 +237,25 @@ static bool riscv_iommu_msi_check(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
+     return true;
  }
  
- 
-+static QCryptoTLSCreds *test_tls_creds_anon_create(
-+    QCryptoTLSCredsEndpoint endpoint)
++/* Returns the NAPOT page mask, or 0 for reserved encodings. */
++static hwaddr riscv_iommu_napot_page_mask(hwaddr ppn, hwaddr addr, hwaddr *out)
 +{
-+    Object *parent = object_get_objects_root();
-+    Object *creds = object_new_with_props(
-+        TYPE_QCRYPTO_TLS_CREDS_ANON,
-+        parent,
-+        (endpoint == QCRYPTO_TLS_CREDS_ENDPOINT_SERVER ?
-+         "testtlscredsserver" : "testtlscredsclient"),
-+        &error_abort,
-+        "endpoint", (endpoint == QCRYPTO_TLS_CREDS_ENDPOINT_SERVER ?
-+                     "server" : "client"),
-+        "priority", "NORMAL",
-+        NULL
-+        );
-+    return QCRYPTO_TLS_CREDS(creds);
++    int napot_bits = ctz64(ppn) + 1;
++    hwaddr napot_mask, page_mask;
++
++    /* The spec only defines 64KB (napot_bits == 4) */
++    if (napot_bits != 4) {
++        return 0;
++    }
++
++    napot_mask = (1ULL << napot_bits) - 1;
++    page_mask = PPN_PHYS(napot_mask) | (TARGET_PAGE_SIZE - 1);
++
++    *out = PPN_PHYS(ppn & ~napot_mask) | (addr & page_mask);
++
++    return page_mask;
 +}
 +
+ /*
+  * RISCV IOMMU Address Translation Lookup - Page Table Walk
+  *
+@@ -458,9 +477,20 @@ static int riscv_iommu_spa_fetch(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
+         } else {
+             /* Leaf PTE, translation completed. */
+             sc[pass].step = sc[pass].levels;
+-            base = PPN_PHYS(ppn) | (addr & ((1ULL << va_skip) - 1));
+-            /* Update address mask based on smallest translation granularity */
+-            iotlb->addr_mask &= (1ULL << va_skip) - 1;
 +
-+static void test_crypto_tls_session_anon(void)
-+{
-+    QCryptoTLSCreds *clientCreds;
-+    QCryptoTLSCreds *serverCreds;
-+    QCryptoTLSSession *clientSess = NULL;
-+    QCryptoTLSSession *serverSess = NULL;
-+    int channel[2];
-+    bool clientShake = false;
-+    bool serverShake = false;
-+    int ret;
++            if (pte & PTE_N) {
++                hwaddr mask = riscv_iommu_napot_page_mask(ppn, addr, &base);
 +
-+    /* We'll use this for our fake client-server connection */
-+    ret = qemu_socketpair(AF_UNIX, SOCK_STREAM, 0, channel);
-+    g_assert(ret == 0);
-+
-+    /*
-+     * We have an evil loop to do the handshake in a single
-+     * thread, so we need these non-blocking to avoid deadlock
-+     * of ourselves
-+     */
-+    qemu_set_blocking(channel[0], false, &error_abort);
-+    qemu_set_blocking(channel[1], false, &error_abort);
-+
-+    clientCreds = test_tls_creds_anon_create(
-+        QCRYPTO_TLS_CREDS_ENDPOINT_CLIENT);
-+    g_assert(clientCreds != NULL);
-+
-+    serverCreds = test_tls_creds_anon_create(
-+        QCRYPTO_TLS_CREDS_ENDPOINT_SERVER);
-+    g_assert(serverCreds != NULL);
-+
-+    /* Now the real part of the test, setup the sessions */
-+    clientSess = qcrypto_tls_session_new(
-+        clientCreds, NULL, NULL,
-+        QCRYPTO_TLS_CREDS_ENDPOINT_CLIENT, &error_abort);
-+    g_assert(clientSess != NULL);
-+
-+    serverSess = qcrypto_tls_session_new(
-+        serverCreds, NULL, NULL,
-+        QCRYPTO_TLS_CREDS_ENDPOINT_SERVER, &error_abort);
-+    g_assert(serverSess != NULL);
-+
-+    /* For handshake to work, we need to set the I/O callbacks
-+     * to read/write over the socketpair
-+     */
-+    qcrypto_tls_session_set_callbacks(serverSess,
-+                                      testWrite, testRead,
-+                                      &channel[0]);
-+    qcrypto_tls_session_set_callbacks(clientSess,
-+                                      testWrite, testRead,
-+                                      &channel[1]);
-+
-+    /*
-+     * Finally we loop around & around doing handshake on each
-+     * session until we get an error, or the handshake completes.
-+     * This relies on the socketpair being nonblocking to avoid
-+     * deadlocking ourselves upon handshake
-+     */
-+    do {
-+        int rv;
-+        if (!serverShake) {
-+            rv = qcrypto_tls_session_handshake(serverSess,
-+                                               &error_abort);
-+            g_assert(rv >= 0);
-+            if (rv == QCRYPTO_TLS_HANDSHAKE_COMPLETE) {
-+                serverShake = true;
++                if (!mask) {
++                    break;
++                }
++                iotlb->addr_mask &= mask;
++            } else {
++                base = PPN_PHYS(ppn) | (addr & ((1ULL << va_skip) - 1));
++                /* Update address mask based on smallest translation granularity */
++                iotlb->addr_mask &= (1ULL << va_skip) - 1;
 +            }
-+        }
-+        if (!clientShake) {
-+            rv = qcrypto_tls_session_handshake(clientSess,
-+                                               &error_abort);
-+            g_assert(rv >= 0);
-+            if (rv == QCRYPTO_TLS_HANDSHAKE_COMPLETE) {
-+                clientShake = true;
++
+             /* Continue with S-Stage translation? */
+             if (pass && sc[0].step != sc[0].levels) {
+                 pass = S_STAGE;
+@@ -997,7 +1027,13 @@ static MemTxResult pdt_memory_read(RISCVIOMMUState *s,
+             return MEMTX_ACCESS_ERROR; /* Misaligned PPN */
+         } else {
+             /* Leaf PTE, translation completed. */
+-            base = PPN_PHYS(ppn) | (addr & ((1ULL << va_skip) - 1));
++            if (pte & PTE_N) {
++                if (!riscv_iommu_napot_page_mask(ppn, addr, &base)) {
++                    return MEMTX_ACCESS_ERROR;
++                }
++            } else {
++                base = PPN_PHYS(ppn) | (addr & ((1ULL << va_skip) - 1));
 +            }
-+        }
-+    } while (!clientShake || !serverShake);
-+
-+
-+    /* Finally make sure the server & client validation is successful. */
-+    g_assert(qcrypto_tls_session_check_credentials(serverSess,
-+                                                   &error_abort) == 0);
-+    g_assert(qcrypto_tls_session_check_credentials(clientSess,
-+                                                   &error_abort) == 0);
-+
-+    object_unparent(OBJECT(serverCreds));
-+    object_unparent(OBJECT(clientCreds));
-+
-+    qcrypto_tls_session_free(serverSess);
-+    qcrypto_tls_session_free(clientSess);
-+
-+    close(channel[0]);
-+    close(channel[1]);
-+}
-+
-+
- struct QCryptoTLSSessionTestData {
-     const char *servercacrt;
-     const char *clientcacrt;
-@@ -421,9 +537,11 @@ int main(int argc, char **argv)
-     test_tls_init(KEYFILE);
-     test_tls_psk_init(PSKFILE);
+             break;
+         }
  
--    /* Simple initial test using Pre-Shared Keys. */
-+    /* Simple initial tests using Pre-Shared Keys & anon creds */
-     g_test_add_func("/qcrypto/tlssession/psk",
-                     test_crypto_tls_session_psk);
-+    g_test_add_func("/qcrypto/tlssession/anon",
-+                    test_crypto_tls_session_anon);
- 
-     /* More complex tests using X.509 certificates. */
- # define TEST_SESS_REG(name, caCrt,                                     \
 -- 
 2.47.3
 
