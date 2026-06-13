@@ -4,106 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6BA4FCD98CF
-	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 00:35:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13F56CD98CF
+	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 04:45:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wYCKj-0007Xg-Ln; Fri, 12 Jun 2026 20:34:45 -0400
+	id 1wYGEY-00007S-6O; Sat, 13 Jun 2026 00:44:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <misanjum@linux.ibm.com>)
- id 1wYCKh-0007XD-2D; Fri, 12 Jun 2026 20:34:43 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1)
+ (envelope-from <frederic.petrot@univ-grenoble-alpes.fr>)
+ id 1wYGEW-00006t-3X
+ for qemu-devel@nongnu.org; Sat, 13 Jun 2026 00:44:36 -0400
+Received: from zm-mta-out-3.u-ga.fr ([152.77.200.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <misanjum@linux.ibm.com>)
- id 1wYCKe-0006ns-Vt; Fri, 12 Jun 2026 20:34:42 -0400
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65CNLMAj3113361; Sat, 13 Jun 2026 00:34:29 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=2m6DPr+AuQQQSCNQl
- PMiXGlvYGuLdakrZ+nFlps0/iQ=; b=kJ9ED9y4oPAprMISSllkoZoBX3O0+fs3V
- INdi7JxYEUK9fW2efaJJ8tmHKOwcOniz1bdA0+AlbFmywC4eCXlq5XjazKGTm5wH
- 7y0gSAuoMgr0BTTB2DtKr3Z5D5tdRpP7xilO+zhV78BZs9TU/dzhk/MqLD18QbLH
- wQ/vFDhks46kLl7wMINMGEUjWkDN+dE6jsu5SZxA6Ox24HEHhBfw19hDYviScnvd
- iinaxDHcBwBZdVzOOPQ4fqjyDnWwSVNy3Bzc9KHP3eVK9cj3bRfICnZtDrdDggZC
- QhUko0wc5kesAJ9fvuqF44M+bWaGqwP+gdEsO7NCn4mltxpVnxYSQ==
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4eqe8aty58-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Sat, 13 Jun 2026 00:34:28 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 65D0JdD8017722;
- Sat, 13 Jun 2026 00:34:27 GMT
-Received: from smtprelay07.dal12v.mail.ibm.com ([172.16.1.9])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4eqe09t890-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Sat, 13 Jun 2026 00:34:27 +0000 (GMT)
-Received: from smtpav01.wdc07v.mail.ibm.com (smtpav01.wdc07v.mail.ibm.com
- [10.39.53.228])
- by smtprelay07.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 65D0YQS03408522
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Sat, 13 Jun 2026 00:34:26 GMT
-Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 6D4475807A;
- Sat, 13 Jun 2026 00:34:26 +0000 (GMT)
-Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 03FB058071;
- Sat, 13 Jun 2026 00:34:24 +0000 (GMT)
-Received: from localhost.localdomain (unknown [9.61.241.131])
- by smtpav01.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Sat, 13 Jun 2026 00:34:23 +0000 (GMT)
-From: Misbah Anjum N <misanjum@linux.ibm.com>
-To: deller@kernel.org, harshpb@linux.ibm.com
-Cc: deller@gmx.de, qemu-devel@nongnu.org, qemu-ppc@nongnu.org,
- Misbah Anjum N <misanjum@linux.ibm.com>
-Subject: Re: [PATCH] linux-user: Implement /proc/cpuinfo for ppc cpus
-Date: Sat, 13 Jun 2026 06:04:14 +0530
-Message-Id: <20260613003414.23336-1-misanjum@linux.ibm.com>
-X-Mailer: git-send-email 2.39.5 (Apple Git-154)
-In-Reply-To: <20260609220929.83951-1-deller@kernel.org>
-References: <20260609220929.83951-1-deller@kernel.org>
+ (Exim 4.90_1)
+ (envelope-from <frederic.petrot@univ-grenoble-alpes.fr>)
+ id 1wYGEU-0004MP-Au
+ for qemu-devel@nongnu.org; Sat, 13 Jun 2026 00:44:35 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=univ-grenoble-alpes.fr; s=2020; t=1781325871;
+ bh=yeY/Z5Hf0K7qrNmXTbL3WvAycSf4j9vidKHEOgSHOfk=;
+ h=Date:Subject:To:References:From:In-Reply-To:From;
+ b=kSojg68R1aXk/JnW5TJS+yyr5uVYAwsMKQQck3rBsx3V6sINf7WWuHp6sO2VZ0sRc
+ jOZ+YQwdxuJzW7BySUgVd/qNK+7ilmfL8714g2X7hdQuMcXAHu6XZ8sTxDkawNcBMG
+ VYiI1pZwyt9Xv6vXj8+Ge2uOaFlXlhUaluiJxAoba3sVgByaGGsWBQ7DgmaBfmLwI+
+ Stt/QxFTsznhnOSHZMEt0gHkU37dk0I/ZAWYWwZLOT68PZLD5/7V7ghC4XbEqUvSZR
+ PfqkPxJa01zERgclqZvjBsBq9m65A8K8w7R0YGbV2lHLeH0kuY6VxV9yGum1L5jxVO
+ vXXDqDOLKwd3w==
+Received: from mailhub-1.u-ga.fr (mailhub-1.u-ga.fr [129.88.178.98])
+ by zm-mta-out-3.u-ga.fr (Postfix) with ESMTP id 507E040295;
+ Sat, 13 Jun 2026 06:44:31 +0200 (CEST)
+Received: from smtps.univ-grenoble-alpes.fr (smtps3.u-ga.fr [195.83.24.62])
+ by mailhub-1.u-ga.fr (Postfix) with ESMTP id 4CD1AFF852;
+ Sat, 13 Jun 2026 06:44:31 +0200 (CEST)
+Received: from [192.168.0.190] (226.168.185.81.rev.sfr.net [81.185.168.226])
+ (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ (Authenticated sender: petrotf@univ-grenoble-alpes.fr)
+ by smtps.univ-grenoble-alpes.fr (Postfix) with ESMTPSA id CCF29400F3;
+ Sat, 13 Jun 2026 06:44:30 +0200 (CEST)
+Message-ID: <6b252347-3ee3-40bf-b071-0b28a3c1146d@univ-grenoble-alpes.fr>
+Date: Sat, 13 Jun 2026 06:44:30 +0200
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/2] include/qemu/bswap.h: Add support for Int128 byte
+ swaps
+To: Richard Henderson <richard.henderson@linaro.org>, philmd@mailo.com,
+ pierrick.bouvier@oss.qualcomm.com, mst@redhat.com, qemu-devel@nongnu.org
+References: <20260612180346.890429-1-frederic.petrot@univ-grenoble-alpes.fr>
+ <7e681b2e-48fb-48c3-b143-cb9c15c76747@linaro.org>
+Content-Language: en-US, fr
+From: =?UTF-8?B?RnLDqWTDqXJpYyBQw6l0cm90?=
+ <frederic.petrot@univ-grenoble-alpes.fr>
+In-Reply-To: <7e681b2e-48fb-48c3-b143-cb9c15c76747@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-ORIG-GUID: -7HrXVDzbu2WigHve8pSsom_WMkNMjZD
-X-Authority-Analysis: v=2.4 cv=TdKmcxQh c=1 sm=1 tr=0 ts=6a2ca594 cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
- a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=RzCfie-kr_QcCd8fBx8p:22 a=VnNF1IyMAAAA:8 a=GtmRUcFNR2mHwVtkHvcA:9
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjEyMDIzMCBTYWx0ZWRfX+qGla0OK6Is1
- jEu4yLyuDh8sRpRbTlMz2KPjGGcCHbRLHz5xCRg8Xc8qlKirw5zIwUHwGbT5fXUxsBVYTonWo4h
- hgJFCv5uFBuk+GfhUC33GUsusLuw99RYrSCUvgOjtoF5S9NfwHIWkwJXwmzN7lQHdhPjX9nB5Af
- AiDEJmXEf6NglZvo572maHvy0D1YvVAJwS11EdL/q+Rmkq+/k0Ljcz0kXoNqmyBxaWhpSwRIDvy
- Uj5gyVD6OI7zScOwQfuW8QpcUGTbdu4OiBN1HQsc7zk0cPTXLcjO4pZSe/v8ZJm0c5G26FrN8rs
- uYZJNIHGsZDJCzRRftwn1D01u44AT5eqClH1zCrlFtqJQ3V1dUj77/88QH7yzWWWlDr0PtCzvwl
- nzjCSIRjI1wubRpCHFNi54EQeHqgr3l3G2IBTzPu9VLBjqkhko3XdOl+rUKkAbvc+Da+/2r1Wdb
- RWNCKeFmw2rAs0GTLFA==
-X-Proofpoint-GUID: Z7FlYoIF6IqEnJIHnObkwJat4Wfplw52
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjEyMDIzMCBTYWx0ZWRfXz2x3a+2W6Ers
- f8GLsIZwOEi+K1UyZjKE+FkPszhoecM7hGG72n/Y5nwk9tV1JDhV4p53vcFmNbKGwyH7qWDtQRL
- cAZ79Y0MFkJHmB3L/7KqIeiuUXmWgpI=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-12_03,2026-06-12_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 malwarescore=0 clxscore=1011 impostorscore=0 adultscore=0
- bulkscore=0 priorityscore=1501 lowpriorityscore=0 spamscore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606040000 definitions=main-2606120230
-Received-SPF: pass client-ip=148.163.158.5;
- envelope-from=misanjum@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Greylist: Whitelist-UGA SMTP Authentifie (petrotf@univ-grenoble-alpes.fr)
+ via submission-587 ACL (41)
+Received-SPF: pass client-ip=152.77.200.56;
+ envelope-from=frederic.petrot@univ-grenoble-alpes.fr;
+ helo=zm-mta-out-3.u-ga.fr
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -120,65 +88,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Built and tested qemu-ppc64le on ppc64le host
+On 6/12/26 20:27, Richard Henderson wrote:
+> On 6/12/26 11:03, Frédéric Pétrot wrote:
+>> The recent introduction of endianness support is providing
+>> a clean framework for the standard integer data types.
+>> This patch adds support for the non-standard Int128 type QEMU provides.
+>> Note that the ldn and sdn functions still keep an uint64_t as argument
+>> and return value to avoid performance overhead.
+>>
+>> Signed-off-by: Frédéric Pétrot<frederic.petrot@univ-grenoble-alpes.fr>
+>> ---
+>>   include/qemu/bswap.h | 63 +++++++++++++++++++++++++++++++++++++++++---
+>>   1 file changed, 59 insertions(+), 4 deletions(-)
+> 
+> Who is going to use this?  I won't add this for no reason...
 
-Test environment:
-- Host: ppc64le Linux (POWER10)
-- QEMU version: v11.0.50 (v11.0.0-1849-g193963218a-dirty) - upstream qemu with patch applied
-- Target: ppc64le-linux-user
+   It is probably a bit artificial but the idea is to use that in
+   gdb_get_reg128. It currently uses two uint64_t arguments, while
+   the Int128 seems meant for that.
 
-Manual tests performed:
-- Verified /proc/cpuinfo is readable by PPC binaries under qemu-user
-- Verified qemu-ppc64le -cpu POWER10 /bin/cat /proc/cpuinfo returns the expected PPC-specific cpuinfo output
-- Tested POWER8, POWER9, and POWER10 CPU models
-- Confirmed different PVR values for different CPU types
-- Verified all required fields present (processor, cpu, clock, revision, timebase, platform, model, machine)
-- CPU count correctly reported (48 online CPUs)
-- Tested with both custom test program and system binaries (/bin/cat)
+   Frédéric
 
-Test Logs:
-1. POWER9 CPU model test:
-$ qemu-ppc64le -cpu POWER9 /tmp/test-cpuinfo | head -10
-=== /proc/cpuinfo via qemu-user ===
-processor:	: 0
-cpu:		: POWER9, altivec supported
-clock		: 3425.000000MHz
-revision	: 2.2 (pvr 004e 1202)
-
-processor:	: 1
-cpu:		: POWER9, altivec supported
-clock		: 3425.000000MHz
-revision	: 2.2 (pvr 004e 1202)
-
-2. POWER10 CPU model test:
-$ qemu-ppc64le -cpu POWER10 /tmp/test-cpuinfo | head -10
-=== /proc/cpuinfo via qemu-user ===
-processor:	: 0
-cpu:		: POWER10, altivec supported
-clock		: 3425.000000MHz
-revision	: 2.0 (pvr 0080 0200)
-
-processor:	: 1
-cpu:		: POWER10, altivec supported
-clock		: 3425.000000MHz
-revision	: 2.0 (pvr 0080 0200)
-
-3. System binary test:
-$ qemu-ppc64le -cpu POWER9 /bin/cat /proc/cpuinfo | tail -5
-timebase	: 512000000
-platform	: pSeries
-model		: IBM pSeries (QEMU user v11.0.50)
-machine		: CHRP IBM pSeries
-
-Qemu Unit tests:
-make check: 118/118 tests PASSED
-Ok:                118
-Fail:              0
-
-All tests passed. The patch correctly implements /proc/cpuinfo for PPC user-mode emulation without breaking existing functionality. Output format is consistent and provides accurate CPU information.
-
-Tested-by: Misbah Anjum N <misanjum@linux.ibm.com>
-
-Thanks,
-Misbah Anjum N
+> 
+> 
+> r~
+> 
+> 
+> 
 
