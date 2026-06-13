@@ -4,42 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60AF7CD98D6
-	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 20:45:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F967CD98CF
+	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 20:45:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wYVBj-0006eu-Sc; Sat, 13 Jun 2026 16:42:44 -0400
+	id 1wYV9M-00010b-En; Sat, 13 Jun 2026 16:40:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYVBe-0006XJ-V6; Sat, 13 Jun 2026 16:42:40 -0400
+ id 1wYV9H-0000aY-CD; Sat, 13 Jun 2026 16:40:11 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYVBd-0005af-0s; Sat, 13 Jun 2026 16:42:38 -0400
+ id 1wYV9F-0004TJ-6e; Sat, 13 Jun 2026 16:40:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1781382966; bh=DvcG+/emGldtmPeJDW0d3whJBKyCeFHS8szQ3LhN0e0=;
+ t=1781382965; bh=Ghl0ZtyIs4gKQ1+JEGboppp/jddtSue3ilOs0f6SYAE=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=EqsNVy4BavVn3aMvoNi01X7ddB4D1807tIIv9LSOT0XqRE1OpdNt4YWB1ortG+fqn
- vW+YloId7FPDDrn5kR/HSqK/tVjMPyU8cBCLE8fCHDusBvkR0IKQpzt7kUTQbdSI9j
- 1KnOZ2cfVO0H3/phpnY2gNdQ7aLekZ1fC1El9ZijPl8nPKXNtnb9xiwlY6wLRcc6s+
- owQ4Pc30HOfnWYbymIHf2mIab7qDeJ/MWytdREGEeP+WrR2pz1RejVwowCreTpsBTW
- k8uwCyPkiOMcdPmXqrt8LY12OgukOJNKA8343nKSu8BOPz6m1puzTxl0fBvXb511zL
- eHXkdzPHJUDXA==
+ b=EQ+I4tRRn+o61kPH38flIq0SYENNpkEnMUJfo91Qiy/tWCAZXQb2nr2lvOFNp83Cq
+ WgUmstwV8CzSKUgt6EI/OcArFZ5SK8vTrXomAov6mSyXtn/4rWwSCC70aLenIFokZJ
+ M5S7Y5e+6v4TasubGJO3GggYjFx+xfim/1SB2jvml16bumi5B9expT+b01wiDVjGQc
+ RqREW9KXxvJ4M1BjSXe+56o8QKHFaenqvZhjd77mAIzocdF3mHhCcr10Wo6Y2fIK/m
+ r1rCFjUkwXZh2Ydp6suIIknfGVQgDibPEPEii+XBy24AJMnuCfj0I6/yUsjkzKHxEN
+ l+/Us2miZoo3Q==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id BAE5E1B6F26;
- Sat, 13 Jun 2026 23:36:06 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 088F01B6F05;
+ Sat, 13 Jun 2026 23:36:05 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 304573CE96F;
- Sat, 13 Jun 2026 23:36:25 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 717443CE956;
+ Sat, 13 Jun 2026 23:36:23 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Fiona Ebner <f.ebner@proxmox.com>,
- Kevin Wolf <kwolf@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.2 67/72] iotests: test shared mmap for fuse export
-Date: Sat, 13 Jun 2026 23:35:33 +0300
-Message-ID: <20260613203542.1809153-67-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Matt Turner <mattst88@gmail.com>,
+ Helge Deller <deller@gmx.de>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.2 42/72] linux-user/s390x: restore fpu_status rounding
+ mode from FPC on sigreturn
+Date: Sat, 13 Jun 2026 23:35:08 +0300
+Message-ID: <20260613203542.1809153-42-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.2-20260613224644@cover.tls.msk.ru>
 References: <qemu-stable-11.0.2-20260613224644@cover.tls.msk.ru>
@@ -68,142 +69,109 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Fiona Ebner <f.ebner@proxmox.com>
+From: Matt Turner <mattst88@gmail.com>
 
-This test would have worked before commit 8599559580 ("fuse: Set
-direct_io and parallel_direct_writes") and is working again since
-commit HEAD~1 ("block/export/fuse: set FUSE_DIRECT_IO_ALLOW_MMAP flag
-to fix regression").
+QEMU keeps the s390x floating-point control register (FPC) in env->fpc.
+The rounding mode bits [2:0] of FPC are reflected into the derived
+env->fpu_status via set_float_rounding_mode(); every architectural
+write to FPC goes through HELPER(sfpc) which keeps the two in sync.
 
-Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
-Message-ID: <20260506145424.10249-4-f.ebner@proxmox.com>
-Reviewed-by: Kevin Wolf <kwolf@redhat.com>
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-(cherry picked from commit ba20257d9b45c28f23a66b3f79bebffd6322ff76)
+restore_sigregs() restored FPC with a direct assignment:
+
+    __get_user(env->fpc, &sc->fpregs.fpc);
+
+This wrote env->fpc correctly but never updated env->fpu_status, so on
+sigreturn the interrupted code resumed with whatever rounding mode the
+signal handler last installed in fpu_status.
+
+Factor the two-step "write fpc + sync fpu_status" logic out of
+HELPER(sfpc) into cpu_s390x_load_fpc(), declare it in cpu.h, and call
+it from restore_sigregs() in place of the direct assignment.
+
+cpu_s390x_load_fpc() partially reuses the sanity check from
+HELPER(sfpc): if the FPC value has an invalid rounding mode or reserved
+bits set, it falls back to 0, matching the kernel's fpu_lfpc_safe()
+behavior where a corrupt signal frame value causes a specification
+exception and 0 is used instead.
+
+HELPER(sfpc) now calls cpu_s390x_load_fpc() after its full
+specification-exception check, including the FEAT_FLOATING_POINT_EXT
+test that is not needed for the signal restore path.
+
+Fixes: 2941e0fa05 ("linux-user/s390x: Save/restore fpc when handling a signal")
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Matt Turner <mattst88@gmail.com>
+Signed-off-by: Helge Deller <deller@gmx.de>
+(cherry picked from commit 2762cd51ee033dccb3167110376dd125244cc819)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/tests/qemu-iotests/tests/fuse-mmap-shared b/tests/qemu-iotests/tests/fuse-mmap-shared
-new file mode 100755
-index 0000000000..52941a3bb6
---- /dev/null
-+++ b/tests/qemu-iotests/tests/fuse-mmap-shared
-@@ -0,0 +1,105 @@
-+#!/usr/bin/env python3
-+# group: rw
-+#
-+# Test that a FUSE export can be mmap()-ed with MAP_SHARED
-+#
-+# Copyright (C) 2026 Proxmox Server Solutions GmbH
-+#
-+# SPDX-License-Identifier: GPL-2.0-or-later
+diff --git a/linux-user/s390x/signal.c b/linux-user/s390x/signal.c
+index 96d1c8d11c..28ad80bde4 100644
+--- a/linux-user/s390x/signal.c
++++ b/linux-user/s390x/signal.c
+@@ -332,7 +332,11 @@ static void restore_sigregs(CPUS390XState *env, target_sigregs *sc)
+     for (i = 0; i < 16; i++) {
+         __get_user(env->aregs[i], &sc->regs.acrs[i]);
+     }
+-    __get_user(env->fpc, &sc->fpregs.fpc);
++    {
++        uint32_t fpc;
++        __get_user(fpc, &sc->fpregs.fpc);
++        cpu_s390x_load_fpc(env, fpc);
++    }
+     for (i = 0; i < 16; i++) {
+         __get_user(*get_freg(env, i), &sc->fpregs.fprs[i]);
+     }
+diff --git a/target/s390x/cpu.h b/target/s390x/cpu.h
+index 40bc1f0741..6826cda1c0 100644
+--- a/target/s390x/cpu.h
++++ b/target/s390x/cpu.h
+@@ -896,6 +896,7 @@ void s390_init_sigp(void);
+ /* helper.c */
+ void s390_cpu_set_psw(CPUS390XState *env, uint64_t mask, uint64_t addr);
+ uint64_t s390_cpu_get_psw_mask(CPUS390XState *env);
++void cpu_s390x_load_fpc(CPUS390XState *env, uint32_t fpc);
+ 
+ /* outside of target/s390x/ */
+ S390CPU *s390_cpu_addr2state(uint16_t cpu_addr);
+diff --git a/target/s390x/tcg/fpu_helper.c b/target/s390x/tcg/fpu_helper.c
+index 122994960a..6152d14aa9 100644
+--- a/target/s390x/tcg/fpu_helper.c
++++ b/target/s390x/tcg/fpu_helper.c
+@@ -952,6 +952,19 @@ static const int fpc_to_rnd[8] = {
+     float_round_to_odd,
+ };
+ 
++void cpu_s390x_load_fpc(CPUS390XState *env, uint32_t fpc)
++{
++    /*
++     * Mimic kernel fpu_lfpc_safe(): a corrupt signal frame value that would
++     * trigger a specification exception instead results in FPC being set to 0.
++     */
++    if (fpc_to_rnd[fpc & 0x7] == -1 || fpc & 0x03030088u) {
++        fpc = 0;
++    }
++    env->fpc = fpc;
++    set_float_rounding_mode(fpc_to_rnd[fpc & 0x7], &env->fpu_status);
++}
 +
-+import os
-+import itertools
-+import mmap
-+from mmap import MAP_SHARED
-+from pathlib import Path
-+
-+import iotests
-+from iotests import qemu_img, qemu_io, QemuStorageDaemon
-+
-+def test_fuse_support(mount_point):
-+    test_qsd = QemuStorageDaemon('--blockdev', 'null-co,node-name=node0',
-+                                 qmp=True)
-+    res = test_qsd.qmp('block-export-add', {
-+        'id': 'exp0',
-+        'type': 'fuse',
-+        'node-name': 'node0',
-+        'mountpoint': mount_point,
-+        'allow-other': 'off'
-+    })
-+    test_qsd.stop()
-+    if 'error' in res:
-+        assert (res['error']['desc'] ==
-+                "Parameter 'type' does not accept value 'fuse'")
-+        iotests.notrun('No FUSE support')
-+
-+# Shared mmap when using direct IO is only supported for Linux kernels >= 6.6
-+# with commit e78662e818f94 ("fuse: add a new fuse init flag to relax
-+# estrictions in no cache mode").
-+def test_linux_kernel_support():
-+    [major, minor] = map(int, os.uname().release.split('.')[:2])
-+    if major < 6 or (major == 6 and minor < 6):
-+        iotests.notrun('No kernel support for shared mmap with direct IO')
-+
-+image_size = 1 * 1024 * 1024
-+image = os.path.join(iotests.test_dir, 'image.' + iotests.imgfmt)
-+fuse_mount_point = os.path.join(iotests.test_dir, 'export.fuse')
-+Path(fuse_mount_point).touch()
-+
-+test_fuse_support(fuse_mount_point)
-+test_linux_kernel_support()
-+
-+class TestMmapShared(iotests.QMPTestCase):
-+
-+    def setUp(self):
-+        qemu_img('create', '-f', iotests.imgfmt, image, str(image_size))
-+        qemu_io(image, '-c', f'write -P 23 0 {image_size}')
-+
-+        self.qsd = QemuStorageDaemon(qmp=True)
-+
-+        self.qsd.cmd('blockdev-add', {
-+            'node-name': 'node0',
-+            'driver': iotests.imgfmt,
-+            'file': {
-+                'driver': 'file',
-+                'filename': image
-+            }
-+        })
-+
-+        self.qsd.cmd('block-export-add', {
-+            'id': 'exp0',
-+            'type': 'fuse',
-+            'node-name': 'node0',
-+            'mountpoint': fuse_mount_point,
-+            'writable': True,
-+            'allow-other': 'off'
-+        })
-+
-+    def tearDown(self):
-+        self.stop_qsd()
-+        os.remove(image)
-+        os.remove(fuse_mount_point)
-+
-+    def stop_qsd(self):
-+        if self.qsd:
-+            self.qsd.stop()
-+            self.qsd = None
-+
-+    def test_mmap_shared(self):
-+        with open(fuse_mount_point, 'r+b') as file:
-+            with mmap.mmap(file.fileno(), image_size, flags=MAP_SHARED) as mm:
-+                buf = bytearray(image_size)
-+                buf[:] = itertools.repeat(23, image_size)
-+                assert mm.read(image_size) == buf
-+                buf[:] = itertools.repeat(42, image_size)
-+                mm.seek(0)
-+                mm.write(buf)
-+                mm.flush()
-+        self.stop_qsd()
-+        qemu_io(image, '-c', f'read -P 42 0 {image_size}')
-+
-+if __name__ == '__main__':
-+    # LUKS would require key-secret in blockdev-add
-+    iotests.main(supported_fmts=['generic'],
-+                 unsupported_fmts=['luks'],
-+                 supported_protocols=['file'],
-+                 supported_platforms=['linux'])
-diff --git a/tests/qemu-iotests/tests/fuse-mmap-shared.out b/tests/qemu-iotests/tests/fuse-mmap-shared.out
-new file mode 100644
-index 0000000000..ae1213e6f8
---- /dev/null
-+++ b/tests/qemu-iotests/tests/fuse-mmap-shared.out
-@@ -0,0 +1,5 @@
-+.
-+----------------------------------------------------------------------
-+Ran 1 tests
-+
-+OK
+ /* set fpc */
+ void HELPER(sfpc)(CPUS390XState *env, uint64_t fpc)
+ {
+@@ -959,12 +972,7 @@ void HELPER(sfpc)(CPUS390XState *env, uint64_t fpc)
+         (!s390_has_feat(S390_FEAT_FLOATING_POINT_EXT) && fpc & 0x4)) {
+         tcg_s390_program_interrupt(env, PGM_SPECIFICATION, GETPC());
+     }
+-
+-    /* Install everything in the main FPC.  */
+-    env->fpc = fpc;
+-
+-    /* Install the rounding mode in the shadow fpu_status.  */
+-    set_float_rounding_mode(fpc_to_rnd[fpc & 0x7], &env->fpu_status);
++    cpu_s390x_load_fpc(env, fpc);
+ }
+ 
+ /* set fpc and signal */
 -- 
 2.47.3
 
