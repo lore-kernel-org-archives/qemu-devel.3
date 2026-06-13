@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BFB54CD98CF
-	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 19:59:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D36DCD98CF
+	for <qemu-devel@archiver.kernel.org>; Sat, 13 Jun 2026 20:00:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wYUQI-0003GF-9l; Sat, 13 Jun 2026 15:53:42 -0400
+	id 1wYURQ-0007Mx-16; Sat, 13 Jun 2026 15:54:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYUPV-0001QS-R3; Sat, 13 Jun 2026 15:52:54 -0400
+ id 1wYURN-0007Le-VC; Sat, 13 Jun 2026 15:54:49 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wYUPT-0003o9-QF; Sat, 13 Jun 2026 15:52:53 -0400
+ id 1wYURM-0004JD-1Y; Sat, 13 Jun 2026 15:54:49 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1781380259; bh=bNS+nLKNNLdtQaRNwsaiylm8WhpGpZ6VoY+X4/dTKI8=;
+ t=1781380260; bh=Bm7Wys1D0tjjtNRwoqgFNMii+XlEExctWDXCQ/8d92A=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=saHZdreXvValSMLbCSnPQyr07KOId4bf+PhdyVhHG7RbdszpKk2hXGOKPL6Lssjlf
- 2PhvPCC/SzXUGqOGT/K7w9we9PB0ivBmJmVa3BLy6Fd4dWxXcFrXK1aknF3OILAnU6
- lomKlixSPo1t5qTeHnRU4tuQnIKlkLA07kSnqNyCw41VSkxu52czogZhbXzJIFIrP9
- 8IdFn1iG21kRytY6l94bDDXkeg6dxiilK4kcsTvyokYBfMZ52lUoys+84qDzgctU/z
- yaFSsm2ADUIaQZhg03V3YXf8HGlGQXh6DvWUNqv/7anfno4CsvImXlhK4Bc+7NSj4A
- oqn4eB1TPP/zw==
+ b=FBOXm6mMCli8UiSgtTH5a9kicBMeteuGl2fnyaq4xd3VIjsd/HG5TI7ejP7Y0UsNO
+ BdMLPg6zibqAhqlmXw6korSmChoqojCSZy70E3f7256oalsH/PrCbthzpiV6Y0Xi7O
+ LYoXZoNJczujpjEDOqiZU936j1+Y2QwZSadJ1U0AUg0PanIYsK1C0QybQVnkSMpVHI
+ t4schfQzwyonFjz624xUb/VDAmwmeOamkKwi8oEk1IcmLFurzdPcyi595w3RWtZBR1
+ lqp7yOv8FBcmQFuD89JW31g2kxHKqPV48vBc78tDSUkD/OfoamJ6g5/huwcFVArCUC
+ AIoQL1jmWRC+w==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 2176E1B6E22;
- Sat, 13 Jun 2026 22:50:59 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 768BC1B6E35;
+ Sat, 13 Jun 2026 22:51:00 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 7C3413CE89C;
- Sat, 13 Jun 2026 22:51:17 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id CFFAC3CE8AF;
+ Sat, 13 Jun 2026 22:51:18 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.11 19/56] lsi53c895a: clear tag byte when processing
- messages
-Date: Sat, 13 Jun 2026 22:50:33 +0300
-Message-ID: <20260613195116.1807273-19-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Christian Schoenebeck <qemu_oss@crudebyte.com>,
+ Wang Jihe <wangjihe.mail@gmail.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.11 38/56] hw/9pfs: let callers of v9fs_path_sprintf()
+ and v9fs_fix_path() handle errors
+Date: Sat, 13 Jun 2026 22:50:52 +0300
+Message-ID: <20260613195116.1807273-38-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.11-20260613224446@cover.tls.msk.ru>
 References: <qemu-stable-10.0.11-20260613224446@cover.tls.msk.ru>
@@ -69,40 +69,137 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Paolo Bonzini <pbonzini@redhat.com>
+From: Christian Schoenebeck <qemu_oss@crudebyte.com>
 
-Instead of simply ORing the message byte, clear what
-was there before.
+This patch mitigates issues with very large absolute paths.
 
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit 4494dec8c2bfd8a5d9b1eabe4a26ab850a4f6700)
+- Add error handling to all v9fs_path_sprintf() calls in
+  local_name_to_path()
+
+- Update callers of v9fs_fix_path() to check return values.
+
+- When path formatting fails, clunk the affected FIDs to prevent use of
+  invalid paths.
+
+- Use g_autofree for temporary variables to simplify code.
+
+Even though paths are usually limited to PATH_MAX (typically 4k) on guest,
+this limitation can be circumvented by using *at() functions on guest and
+creating very deep directory structures. This was a problem for QEMU 9p
+server, as it currently tracks the absolute path for each FID internally
+that always requires assembly of a (potentially ver large) absolute path.
+
+A true long-term fix would be getting rid of storing an absolute path for
+each FID internally. However that would likely be a massive change with
+uncertain implications.
+
+This patch therefore just mitigates the problem by immediately clunking
+(i.e. closing) all FIDs whose path exceed a limit that we could handle.
+As this only accounts to very unusual large absolute paths not ever been
+reported on (sane) production machines, this is currently considered an
+acceptable mitigation that should only (counter)affect malicious attempts.
+
+Fixes: 2f008a8c97e2 ("hw/9pfs: Use the correct signed type ...")
+Reported-by: Wang Jihe <wangjihe.mail@gmail.com>
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3358
+Link: https://lore.kernel.org/qemu-devel/1d11dcbfc95b811dcdb48c6d7f3894d0ebd073a2.1779126034.git.qemu_oss@crudebyte.com
+Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
+(cherry picked from commit 3802c0e755a53b126e717415b54226a468bf7ddf)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/scsi/lsi53c895a.c b/hw/scsi/lsi53c895a.c
-index 25fe437af1..58042140c4 100644
---- a/hw/scsi/lsi53c895a.c
-+++ b/hw/scsi/lsi53c895a.c
-@@ -1041,16 +1041,19 @@ static void lsi_do_msgout(LSIState *s)
+diff --git a/hw/9pfs/9p-local.c b/hw/9pfs/9p-local.c
+index 928523afcc..5167c43609 100644
+--- a/hw/9pfs/9p-local.c
++++ b/hw/9pfs/9p-local.c
+@@ -1243,26 +1243,35 @@ static int local_name_to_path(FsContext *ctx, V9fsPath *dir_path,
+         } else if (!strcmp(name, "..")) {
+             if (!strcmp(dir_path->data, ".")) {
+                 /* ".." relative to the root is "." */
+-                v9fs_path_sprintf(target, ".");
++                if (v9fs_path_sprintf(target, ".") < 0) {
++                    return -1;
++                }
+             } else {
+-                char *tmp = g_path_get_dirname(dir_path->data);
++                g_autofree char *tmp = g_path_get_dirname(dir_path->data);
+                 /* Symbolic links are resolved by the client. We can assume
+                  * that ".." relative to "foo/bar" is equivalent to "foo"
+                  */
+-                v9fs_path_sprintf(target, "%s", tmp);
+-                g_free(tmp);
++                if (v9fs_path_sprintf(target, "%s", tmp) < 0) {
++                    return -1;
++                }
              }
-             break;
-         case 0x20: /* SIMPLE queue */
-+            s->select_tag &= ~0xff;
-             s->select_tag |= lsi_get_msgbyte(s) | LSI_TAG_VALID;
-             trace_lsi_do_msgout_simplequeue(s->select_tag & 0xff);
-             break;
-         case 0x21: /* HEAD of queue */
-             qemu_log_mask(LOG_UNIMP, "lsi_scsi: HEAD queue not implemented\n");
-+            s->select_tag &= ~0xff;
-             s->select_tag |= lsi_get_msgbyte(s) | LSI_TAG_VALID;
-             break;
-         case 0x22: /* ORDERED queue */
-             qemu_log_mask(LOG_UNIMP,
-                           "lsi_scsi: ORDERED queue not implemented\n");
-+            s->select_tag &= ~0xff;
-             s->select_tag |= lsi_get_msgbyte(s) | LSI_TAG_VALID;
-             break;
-         case 0x0d:
+         } else {
+             assert(!strchr(name, '/'));
+-            v9fs_path_sprintf(target, "%s/%s", dir_path->data, name);
++            if (v9fs_path_sprintf(target, "%s/%s", dir_path->data, name) < 0) {
++                return -1;
++            }
+         }
+     } else if (!strcmp(name, "/") || !strcmp(name, ".") ||
+                !strcmp(name, "..")) {
+             /* This is the root fid */
+-        v9fs_path_sprintf(target, ".");
++        if (v9fs_path_sprintf(target, ".") < 0) {
++            return -1;
++        }
+     } else {
+         assert(!strchr(name, '/'));
+-        v9fs_path_sprintf(target, "./%s", name);
++        if (v9fs_path_sprintf(target, "./%s", name) < 0) {
++            return -1;
++        }
+     }
+     return 0;
+ }
+diff --git a/hw/9pfs/9p.c b/hw/9pfs/9p.c
+index a4ebbce5d6..7d53f070cc 100644
+--- a/hw/9pfs/9p.c
++++ b/hw/9pfs/9p.c
+@@ -3304,12 +3304,14 @@ static int coroutine_fn v9fs_complete_rename(V9fsPDU *pdu, V9fsFidState *fidp,
+             goto out;
+         }
+     } else {
+-        char *dir_name = g_path_get_dirname(fidp->path.data);
++        g_autofree char *dir_name = g_path_get_dirname(fidp->path.data);
+         V9fsPath dir_path;
+ 
+         v9fs_path_init(&dir_path);
+-        v9fs_path_sprintf(&dir_path, "%s", dir_name);
+-        g_free(dir_name);
++        err = v9fs_path_sprintf(&dir_path, "%s", dir_name);
++        if (err < 0) {
++            goto out;
++        }
+ 
+         err = v9fs_co_name_to_path(pdu, &dir_path, name->data, &new_path);
+         v9fs_path_free(&dir_path);
+@@ -3330,7 +3332,10 @@ static int coroutine_fn v9fs_complete_rename(V9fsPDU *pdu, V9fsFidState *fidp,
+     while (g_hash_table_iter_next(&iter, &fid, (gpointer *) &tfidp)) {
+         if (v9fs_path_is_ancestor(&fidp->path, &tfidp->path)) {
+             /* replace the name */
+-            v9fs_fix_path(&tfidp->path, &new_path, strlen(fidp->path.data));
++            if (v9fs_fix_path(&tfidp->path, &new_path,
++                              strlen(fidp->path.data)) < 0) {
++                clunk_fid(s, tfidp->fid);
++            }
+         }
+     }
+ out:
+@@ -3427,7 +3432,10 @@ static int coroutine_fn v9fs_fix_fid_paths(V9fsPDU *pdu, V9fsPath *olddir,
+     while (g_hash_table_iter_next(&iter, &fid, (gpointer *) &tfidp)) {
+         if (v9fs_path_is_ancestor(&oldpath, &tfidp->path)) {
+             /* replace the name */
+-            v9fs_fix_path(&tfidp->path, &newpath, strlen(oldpath.data));
++            if (v9fs_fix_path(&tfidp->path, &newpath,
++                              strlen(oldpath.data)) < 0) {
++                clunk_fid(s, tfidp->fid);
++            }
+         }
+     }
+ out:
 -- 
 2.47.3
 
