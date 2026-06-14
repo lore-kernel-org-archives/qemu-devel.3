@@ -4,92 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F635CD98C5
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC6D5CD98D6
 	for <qemu-devel@archiver.kernel.org>; Sun, 14 Jun 2026 19:10:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wYqDV-0000cg-SE; Sun, 14 Jun 2026 15:09:57 -0400
+	id 1wYqCP-0006qo-Ej; Sun, 14 Jun 2026 15:08:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wYqDQ-0000HQ-Hz
- for qemu-devel@nongnu.org; Sun, 14 Jun 2026 15:09:52 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wYqCO-0006lt-5B
+ for qemu-devel@nongnu.org; Sun, 14 Jun 2026 15:08:48 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wYqDO-0002kp-Jb
- for qemu-devel@nongnu.org; Sun, 14 Jun 2026 15:09:52 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wYqCM-0002KR-Ar
+ for qemu-devel@nongnu.org; Sun, 14 Jun 2026 15:08:47 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781464190;
+ s=mimecast20190719; t=1781464125;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=uYbQ6vGTUylKqc37+T6WR2Ax60xzKMG8Kdty/wQ3y5s=;
- b=iIs8vJON4Z9hdJlLgLS+5p4BAZ+Nspu7ZYrIpMq3ufTGhwwWe35kyuHhpa0In2ZefW4AJ7
- +milPYPbZIMOz6ikpm0q8aMKeEeyOeitKS1UQydVEKEB8QzRDX7raA939vhyohEViqqbhR
- u7IQ5b4wqhk6fpcHUTWvWIGtLWZfL+s=
+ bh=Sh5em8AlVrr5g6Oxe+hgEPBbAlPW7zFJt8787kbMrrY=;
+ b=dl66ma256pf7frH44ei+YqmWQjK/+P50nUAtjQT5hAvrl7At9isHC6sd2aWsF8wp/c15QC
+ B4zgwDtiC3et55J6R0PiuF24mA9Oj4RmfuHEJs0WLXZpTcfgTRiBaoNKT3Zjs1b0Qjrz3u
+ XU3JEUhnl4ZrrIuML329/Xa7AEiCBKY=
 Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
  [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-398-QhY8w5C_PKyq0fh4VBQVVg-1; Sun, 14 Jun 2026 15:09:48 -0400
-X-MC-Unique: QhY8w5C_PKyq0fh4VBQVVg-1
-X-Mimecast-MFC-AGG-ID: QhY8w5C_PKyq0fh4VBQVVg_1781464187
+ us-mta-113-eaWnCby7O6aqfhCG-ZmWmQ-1; Sun, 14 Jun 2026 15:08:44 -0400
+X-MC-Unique: eaWnCby7O6aqfhCG-ZmWmQ-1
+X-Mimecast-MFC-AGG-ID: eaWnCby7O6aqfhCG-ZmWmQ_1781464123
 Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-490c4f61a34so17535615e9.2
- for <qemu-devel@nongnu.org>; Sun, 14 Jun 2026 12:09:48 -0700 (PDT)
+ 5b1f17b1804b1-490b79e6b94so22237295e9.2
+ for <qemu-devel@nongnu.org>; Sun, 14 Jun 2026 12:08:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1781464187; x=1782068987; darn=nongnu.org;
+ d=redhat.com; s=google; t=1781464123; x=1782068923; darn=nongnu.org;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=uYbQ6vGTUylKqc37+T6WR2Ax60xzKMG8Kdty/wQ3y5s=;
- b=pVEPtbJ88uPqpv+8CqA0Zr3gXTHmsTiILwi/XwDzwG3WQtEbjy55iPU5umuJgkWXnx
- TiA4/2olWMbfY9Umlxxs0pJDuvIt2e0DwqoFc2kvjK/ZvtMHl57iwH+VgW5H1uAnDfLp
- cSb6jvzw9/70in48grCMI9RlHNmxQnieGiJ02bsjOQ/QNJvoeMkCJQ5oqFKWxDr6oiTH
- bO1R63EiI/i6uS/rvkknGUqcqGPBIvHAg4rvsW2CldxwyosbWipk0rWr1LbPBMZ/MkF+
- IJZufZ2IgRSXH75oBwdNfLQlaJyX76u+wyIVokqAWnPHrmvcUxL0zM+B/83uoLxaW4FU
- YJ+w==
+ bh=Sh5em8AlVrr5g6Oxe+hgEPBbAlPW7zFJt8787kbMrrY=;
+ b=bnEcXKYSKnp1eOa5Tal3cs5H83XI1Tl9eMCWrvwqnixXPqj8qCcZTGd739H7utjM3+
+ qWHmzj15plLnxZJydmpjTp7/u6OnvSvyx1kKh3llsrxJ0BmFi/nCshg2H22txmK7WizY
+ gXbeVNUbJVBHEJ5UH0bLNDuBTrOO1xM6bLQsOZYIOi2Rd/a56gVQe1i8nd7Y3/7MEO+k
+ DpEu40ZEPGQ8RPePZt+B+ZMLo0PZTbNRzYyaE1WqZ+J5olTo4OIVijGv5oVX8YgiGEuH
+ n/Kcx6Bcf5HMjmytuw0mYMrjPL1ihE6IOeAhJec1vqGnmpdgmmxKlVPW1czsZ9D07qYr
+ xMGw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781464187; x=1782068987;
+ d=1e100.net; s=20251104; t=1781464123; x=1782068923;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=uYbQ6vGTUylKqc37+T6WR2Ax60xzKMG8Kdty/wQ3y5s=;
- b=F+4kcHH3JJAfYqU5nZsXDJ+ZaSNGi/YwyG/I2TY2znEsUFyTWHEewbS4kXKvm60QjN
- L+jPjL4HaCJJ3BIFQQ1aOxGSMwro1JlDACknkNCArseNZ+WxUOegSjCDAeDPd4pjP0dr
- Fx4MT3dBGZEGuqIc0TXGwvgPJX1715FFoNK2Hvw00PkY/SGdh+7TuWTQ2UsJJ8d2dn0C
- SmSrwsY9QRg9G4lKtWeBnXy5qcJmaiGLNPRB1ze5S4Q3f8oO6mx2V6ejZPhzG4Trsg38
- kHa+83IlxUI40Sn/s+9tFDEnkaq9ZdQylTHMFlsZVdjNErb71AegYpes1XmjY1Jjdrt9
- 715w==
-X-Gm-Message-State: AOJu0Yx8Q7YTNYqNbgJxnkcN8ppYTJcEDjDbWPz6v5XdoF1acACt0SCP
- hxtyS+eYj6yibT9kxA4ZwHpU9e531M1gz16sW6mJfXila/tTHKIZGwWmGb7Veg5F/8P2x6bSneD
- l5W3qbffehwv2LlXmsaK1NsPFc2MNkgoACRV8b3ZVHaXyeCykKG/VRzUnj5id7rs4zM1Rtalgge
- L96I6mNcfBKlYyeKUt/SYXeyVHRDdsYuRb6Q==
-X-Gm-Gg: Acq92OFsCbyolwTRGeT02TUGdKAPNps+qiViDGjcopZTRlTbUSfLTvvZv4yGfE0A2ye
- sRHYJKcz640/rumRRkG8WuEUmOxj0PTKR6gnLDeiDoy3NyQsIhvjR95s2cLSO2UpIaqGKipzqGv
- 9O3t6+YQLchI0FY8ZPmEAgubobViMHWcJfc63RH0Pi/Sv76+BzxirzSu40hZ26GOJxsO19TLv/y
- 7CXwMNl7HMl336LbEMBq/HetYhnx11mUdvyD0SeL6RxlOvkrfMJXPOFjzLUbk/Zui4zMIBhONSg
- FuFoBhaPS+6z/qvMQO91UDZk9DGD6LN51/AF5cltkcGZxHBuCuCtVRqTjyAljWpFiJx1chlDaV1
- 9S1jdj2+0lHo2jg0Z9D8mcc35Fzg9qc4FqmBdAsaE/wk=
-X-Received: by 2002:a05:600c:820c:b0:490:c2a3:3302 with SMTP id
- 5b1f17b1804b1-490ec526f4fmr143548945e9.35.1781464187206; 
- Sun, 14 Jun 2026 12:09:47 -0700 (PDT)
-X-Received: by 2002:a05:600c:820c:b0:490:c2a3:3302 with SMTP id
- 5b1f17b1804b1-490ec526f4fmr143548635e9.35.1781464186641; 
- Sun, 14 Jun 2026 12:09:46 -0700 (PDT)
+ bh=Sh5em8AlVrr5g6Oxe+hgEPBbAlPW7zFJt8787kbMrrY=;
+ b=jArCypRaAwzJpvhrZTGoOAk0+eXj2eVuczgYbXg6hEYA0V0Ppe6Kkw5A5tapj3lrko
+ zCK+/boyXGQ8JFs/4d2/l355PzWWJ88+hZowFTKIA+D7zfF13/E0gPjnjdZtvr5mDjDx
+ t32KQ6oOWKGtLmNy6Q+Cj+3+CaAtMwSD+YBdASS/Xz1Hgo2UzoLAEMvrcwi+1iZ2/9jL
+ lOJRAlDmKFyq50HW/7//FVMsri+PZO0ikwtLjKSHvxFiIr00CRlIZQB9Djib5Yt180QW
+ 1lUpkk8laqjXySjayThvtSA6oBYoDDyMwIFuS7IkFZcFjScc8F4irwo4lrqXWoK2JCDh
+ 69lA==
+X-Gm-Message-State: AOJu0Yxm1ll8TTiou8c6iFcsE9q5XMNX+bU7VuxConeYV2eIhVQrj1Ww
+ d6Nh1Uc4YqOmRa59Mc3O8xaHZ1b4YuPOdvdhHcKPsNyec1M5ht4vnAizZMTKNkDKS/o5cVB+xVW
+ Nsx0ByfQtCwr/Qtui8GsSv72vFK5/uif9FbirY+KoWMNaJFj1+n0XUpRzdU3co+nNeSjShYISrO
+ +d+QnsI+uA6vtAxe3RxnYZ8VHlwR9r7S9/JA==
+X-Gm-Gg: Acq92OGZqwTmTFXTcYU8cqhilv1e8H1EiHMSnNyzJw5hLMpMx4L7C2fpquezOLp/FD7
+ y4jiriG62Wl9tT8p+A02dqkMaeYgG436tG3nJ5VoqAWUODZd4D6Hv7bVa0GVbhgIqorJzYuiAz6
+ O3t/Ubq26gT+ftMlNwlWS4uXIYj7zWKLFkZMAkJLl/3RWGuJtBoTybNPfOpBYjf1oeIDVfG/Mvl
+ rbKe5BzKdscLE6JjzLrrlkNaGI/7eghhpLO5dSeHQG+wHGy1+jg9Tv2kgBl8LZ3SZ7kP25hPhF/
+ ZjPn99IMUwDsNSHB0xVFjyd+VsKIDw9XzxKrtzU4jHwFajw9OuzkTZzBPMrM6uWZF3wq807yfvz
+ nwjh+MhcN4gvXsYlVJcl2htb2w+Vdp99E1mqfIa5oM/s=
+X-Received: by 2002:a05:600c:3548:b0:490:ea8a:32d0 with SMTP id
+ 5b1f17b1804b1-490ec501917mr155241245e9.20.1781464122978; 
+ Sun, 14 Jun 2026 12:08:42 -0700 (PDT)
+X-Received: by 2002:a05:600c:3548:b0:490:ea8a:32d0 with SMTP id
+ 5b1f17b1804b1-490ec501917mr155240785e9.20.1781464122343; 
+ Sun, 14 Jun 2026 12:08:42 -0700 (PDT)
 Received: from redhat.com (IGLD-80-230-85-71.inter.net.il. [80.230.85.71])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-492203dd0b9sm181971825e9.15.2026.06.14.12.09.45
+ 5b1f17b1804b1-4922037ba81sm178130015e9.15.2026.06.14.12.08.40
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 14 Jun 2026 12:09:46 -0700 (PDT)
-Date: Sun, 14 Jun 2026 15:09:44 -0400
+ Sun, 14 Jun 2026 12:08:41 -0700 (PDT)
+Date: Sun, 14 Jun 2026 15:08:39 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Albert Esteve <aesteve@redhat.com>,
+ Kuan-Wei Chiu <visitorckw@gmail.com>,
  Stefano Garzarella <sgarzare@redhat.com>,
+ Raphael Norwitz <rnorwitz@nvidia.com>,
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Stefan Hajnoczi <stefanha@redhat.com>,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PULL 097/106] vhost-user-device: Add shared memory BAR
-Message-ID: <6608dca74ecfc3e59cdf876cb5490750f37d3706.1781463125.git.mst@redhat.com>
+ Milan Zamazal <mzamazal@redhat.com>, qemu-block@nongnu.org,
+ virtio-fs@lists.linux.dev
+Subject: [PULL 069/106] vhost-user: Fix stale error logs and return values in
+ teardown paths
+Message-ID: <eef8552c474f9ed3a82cf37cf2c5b227521a5f4b.1781463125.git.mst@redhat.com>
 References: <cover.1781463125.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -97,15 +103,15 @@ Content-Disposition: inline
 In-Reply-To: <cover.1781463125.git.mst@redhat.com>
 X-Mailer: git-send-email 2.51.2.2891.g4157995a80.dirty
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,189 +127,210 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Albert Esteve <aesteve@redhat.com>
+From: Kuan-Wei Chiu <visitorckw@gmail.com>
 
-Add shared memory BAR support to vhost-user-device-pci
-to enable direct file mapping for VIRTIO Shared
-Memory Regions.
+Commit bc85aae42045 ("vhost-user: return failure if backend crash when
+live migration") refactored the set_guest_notifiers error handling but
+introduced two regressions across multiple vhost devices.
 
-The implementation creates a consolidated shared
-memory BAR that contains all VIRTIO Shared
-Memory Regions as subregions. Each region is
-configured with its proper shmid, size, and
-offset within the BAR. The number and size of
-regions are retrieved via VHOST_USER_GET_SHMEM_CONFIG
-message sent by vhost-user-base during realization
-after virtio_init().
+By moving the function call directly into the if condition, the
+subsequent error_report prints the stale ret variable instead of the
+actual error code. Additionally, the refactoring hardcoded a return
+value of -1 rather than propagating the true error status to the
+caller.
 
-Specifically, it uses BAR 4 to avoid conflicts, as
-it is currently unused.
+Fix these issues by storing the set_guest_notifiers result in a local
+err variable.
 
-The shared memory BAR is only created when the
-backend supports VHOST_USER_PROTOCOL_F_SHMEM and
-has configured shared memory regions. This maintains
-backward compatibility with backends that do not
-support shared memory functionality.
-
-Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
-Signed-off-by: Albert Esteve <aesteve@redhat.com>
+Fixes: bc85aae42045 ("vhost-user: return failure if backend crash when live migration")
+Signed-off-by: Kuan-Wei Chiu <visitorckw@gmail.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-Id: <20260304165223.2166175-8-aesteve@redhat.com>
+Message-Id: <20260315231047.310029-1-visitorckw@gmail.com>
 ---
- hw/virtio/vhost-user-base.c            | 46 ++++++++++++++++++++++++--
- hw/virtio/vhost-user-test-device-pci.c | 42 +++++++++++++++++++++--
- 2 files changed, 83 insertions(+), 5 deletions(-)
+ backends/vhost-user.c          | 8 ++++----
+ hw/block/vhost-user-blk.c      | 9 +++++----
+ hw/scsi/vhost-scsi-common.c    | 2 +-
+ hw/virtio/vhost-user-base.c    | 9 +++++----
+ hw/virtio/vhost-user-fs.c      | 9 +++++----
+ hw/virtio/vhost-user-scmi.c    | 9 +++++----
+ hw/virtio/vhost-vsock-common.c | 9 +++++----
+ 7 files changed, 30 insertions(+), 25 deletions(-)
 
-diff --git a/hw/virtio/vhost-user-base.c b/hw/virtio/vhost-user-base.c
-index 8b62c6c36e..39b5e637fc 100644
---- a/hw/virtio/vhost-user-base.c
-+++ b/hw/virtio/vhost-user-base.c
-@@ -16,6 +16,7 @@
- #include "hw/virtio/virtio-bus.h"
- #include "hw/virtio/vhost-user-base.h"
- #include "qemu/error-report.h"
-+#include "migration/blocker.h"
- 
- static void vub_start(VirtIODevice *vdev)
+diff --git a/backends/vhost-user.c b/backends/vhost-user.c
+index 42845329e7..380d825023 100644
+--- a/backends/vhost-user.c
++++ b/backends/vhost-user.c
+@@ -102,7 +102,7 @@ vhost_user_backend_stop(VhostUserBackend *b)
  {
-@@ -281,7 +282,8 @@ static void vub_device_realize(DeviceState *dev, Error **errp)
- {
-     VirtIODevice *vdev = VIRTIO_DEVICE(dev);
-     VHostUserBase *vub = VHOST_USER_BASE(dev);
+     BusState *qbus = BUS(qdev_get_parent_bus(DEVICE(b->vdev)));
+     VirtioBusClass *k = VIRTIO_BUS_GET_CLASS(qbus);
 -    int ret;
-+    uint64_t memory_sizes[VIRTIO_MAX_SHMEM_REGIONS];
-+    int i, ret, nregions, regions_processed = 0;
++    int ret, err;
  
-     if (!vub->chardev.chr) {
-         error_setg(errp, "vhost-user-base: missing chardev");
-@@ -324,7 +326,7 @@ static void vub_device_realize(DeviceState *dev, Error **errp)
+     if (!b->started) {
+         return 0;
+@@ -111,9 +111,9 @@ vhost_user_backend_stop(VhostUserBackend *b)
+     ret = vhost_dev_stop(&b->dev, b->vdev, true);
  
-     /* Allocate queues */
-     vub->vqs = g_ptr_array_sized_new(vub->num_vqs);
--    for (int i = 0; i < vub->num_vqs; i++) {
-+    for (i = 0; i < vub->num_vqs; i++) {
-         g_ptr_array_add(vub->vqs,
-                         virtio_add_queue(vdev, vub->vq_size,
-                                          vub_handle_output));
-@@ -338,11 +340,49 @@ static void vub_device_realize(DeviceState *dev, Error **errp)
-                          VHOST_BACKEND_TYPE_USER, 0, errp);
- 
-     if (ret < 0) {
--        do_vhost_user_cleanup(vdev, vub);
-+        goto err;
-+    }
-+
-+    ret = vub->vhost_dev.vhost_ops->vhost_get_shmem_config(&vub->vhost_dev,
-+                                                           &nregions,
-+                                                           memory_sizes,
-+                                                           errp);
-+
-+    if (ret < 0) {
-+        goto err;
-+    }
-+
-+    for (i = 0; i < VIRTIO_MAX_SHMEM_REGIONS && regions_processed < nregions; i++) {
-+        if (memory_sizes[i]) {
-+            regions_processed++;
-+            if (vub->vhost_dev.migration_blocker == NULL) {
-+                error_setg(&vub->vhost_dev.migration_blocker,
-+                       "Migration disabled: devices with VIRTIO Shared Memory "
-+                       "Regions do not support migration yet.");
-+                ret = migrate_add_blocker_normal(
-+                    &vub->vhost_dev.migration_blocker,
-+                    errp);
-+
-+                if (ret < 0) {
-+                    goto err;
-+                }
-+            }
-+
-+            if (memory_sizes[i] % qemu_real_host_page_size() != 0) {
-+                error_setg(errp, "Shared memory %d size must be a multiple of "
-+                                 "the host page size", i);
-+                goto err;
-+            }
-+
-+            virtio_new_shmem_region(vdev, i, memory_sizes[i]);
-+        }
+     if (k->set_guest_notifiers &&
+-        k->set_guest_notifiers(qbus->parent, b->dev.nvqs, false) < 0) {
+-        error_report("vhost guest notifier cleanup failed: %d", ret);
+-        return -1;
++        (err = k->set_guest_notifiers(qbus->parent, b->dev.nvqs, false)) < 0) {
++        error_report("vhost guest notifier cleanup failed: %d", err);
++        return err;
      }
  
-     qemu_chr_fe_set_handlers(&vub->chardev, NULL, NULL, vub_event, NULL,
-                              dev, NULL, true);
-+    return;
-+err:
-+    do_vhost_user_cleanup(vdev, vub);
- }
+     vhost_dev_disable_notifiers(&b->dev, b->vdev);
+diff --git a/hw/block/vhost-user-blk.c b/hw/block/vhost-user-blk.c
+index 5c73a58ee0..b2e46eb3f9 100644
+--- a/hw/block/vhost-user-blk.c
++++ b/hw/block/vhost-user-blk.c
+@@ -214,7 +214,7 @@ static int vhost_user_blk_stop(VirtIODevice *vdev)
+     VHostUserBlk *s = VHOST_USER_BLK(vdev);
+     BusState *qbus = BUS(qdev_get_parent_bus(DEVICE(vdev)));
+     VirtioBusClass *k = VIRTIO_BUS_GET_CLASS(qbus);
+-    int ret;
++    int ret, err;
+     bool force_stop = false;
  
- static void vub_device_unrealize(DeviceState *dev)
-diff --git a/hw/virtio/vhost-user-test-device-pci.c b/hw/virtio/vhost-user-test-device-pci.c
-index 7f6d751690..2106557ed8 100644
---- a/hw/virtio/vhost-user-test-device-pci.c
-+++ b/hw/virtio/vhost-user-test-device-pci.c
-@@ -12,10 +12,13 @@
- #include "hw/virtio/vhost-user-base.h"
- #include "hw/virtio/virtio-pci.h"
+     trace_vhost_user_blk_stop_in(vdev);
+@@ -234,9 +234,10 @@ static int vhost_user_blk_stop(VirtIODevice *vdev)
+     ret = force_stop ? vhost_dev_force_stop(&s->dev, vdev, true) :
+                        vhost_dev_stop(&s->dev, vdev, true);
  
-+#define VIRTIO_DEVICE_PCI_SHMEM_BAR 4
-+
- struct VHostUserDevicePCI {
-     VirtIOPCIProxy parent_obj;
+-    if (k->set_guest_notifiers(qbus->parent, s->dev.nvqs, false) < 0) {
+-        error_report("vhost guest notifier cleanup failed: %d", ret);
+-        return -1;
++    err = k->set_guest_notifiers(qbus->parent, s->dev.nvqs, false);
++    if (err < 0) {
++        error_report("vhost guest notifier cleanup failed: %d", err);
++        return err;
+     }
  
-     VHostUserBase vub;
-+    MemoryRegion shmembar;
- };
+     vhost_dev_disable_notifiers(&s->dev, vdev);
+diff --git a/hw/scsi/vhost-scsi-common.c b/hw/scsi/vhost-scsi-common.c
+index 0bb4305de6..e19800a0bc 100644
+--- a/hw/scsi/vhost-scsi-common.c
++++ b/hw/scsi/vhost-scsi-common.c
+@@ -113,7 +113,7 @@ int vhost_scsi_common_stop(VHostSCSICommon *vsc)
+     if (k->set_guest_notifiers) {
+         int r = k->set_guest_notifiers(qbus->parent, vsc->dev.nvqs, false);
+         if (r < 0) {
+-            error_report("vhost guest notifier cleanup failed: %d", ret);
++            error_report("vhost guest notifier cleanup failed: %d", r);
+             return r;
+         }
+     }
+diff --git a/hw/virtio/vhost-user-base.c b/hw/virtio/vhost-user-base.c
+index 5bbf4a7367..8b62c6c36e 100644
+--- a/hw/virtio/vhost-user-base.c
++++ b/hw/virtio/vhost-user-base.c
+@@ -71,7 +71,7 @@ static int vub_stop(VirtIODevice *vdev)
+     VHostUserBase *vub = VHOST_USER_BASE(vdev);
+     BusState *qbus = BUS(qdev_get_parent_bus(DEVICE(vdev)));
+     VirtioBusClass *k = VIRTIO_BUS_GET_CLASS(qbus);
+-    int ret;
++    int ret, err;
  
- #define TYPE_VHOST_USER_TEST_DEVICE_PCI "vhost-user-test-device-pci-base"
-@@ -25,10 +28,45 @@ OBJECT_DECLARE_SIMPLE_TYPE(VHostUserDevicePCI, VHOST_USER_TEST_DEVICE_PCI)
- static void vhost_user_device_pci_realize(VirtIOPCIProxy *vpci_dev, Error **errp)
- {
-     VHostUserDevicePCI *dev = VHOST_USER_TEST_DEVICE_PCI(vpci_dev);
--    DeviceState *vdev = DEVICE(&dev->vub);
-+    DeviceState *dev_state = DEVICE(&dev->vub);
-+    VirtIODevice *vdev = VIRTIO_DEVICE(dev_state);
-+    VirtioSharedMemory *shmem;
-+    uint64_t offset = 0, shmem_size = 0;
+     if (!k->set_guest_notifiers) {
+         return 0;
+@@ -79,9 +79,10 @@ static int vub_stop(VirtIODevice *vdev)
  
-+    /* Keep modern 64-bit BARs (2 slots) away from the shared memory BAR. */
-+    vpci_dev->modern_mem_bar_idx = 2;
-     vpci_dev->nvectors = 1;
--    qdev_realize(vdev, BUS(&vpci_dev->bus), errp);
-+    if (!qdev_realize(dev_state, BUS(&vpci_dev->bus), errp)) {
-+        return;
-+    }
-+
-+    QSIMPLEQ_FOREACH(shmem, &vdev->shmem_list, entry) {
-+        if (memory_region_size(&shmem->mr) > UINT64_MAX - shmem_size) {
-+            error_setg(errp, "Total shared memory required overflow");
-+            return;
-+        }
-+        shmem_size = shmem_size + memory_region_size(&shmem->mr);
-+    }
-+    if (shmem_size) {
-+        if (vpci_dev->flags & VIRTIO_PCI_FLAG_MODERN_PIO_NOTIFY) {
-+            error_setg(errp, "modern-pio-notify is not supported due to PCI BAR layout limitations");
-+            return;
-+        }
-+        memory_region_init(&dev->shmembar, OBJECT(vpci_dev),
-+                           "vhost-device-pci-shmembar", shmem_size);
-+        QSIMPLEQ_FOREACH(shmem, &vdev->shmem_list, entry) {
-+            memory_region_add_subregion(&dev->shmembar, offset, &shmem->mr);
-+            virtio_pci_add_shm_cap(vpci_dev, VIRTIO_DEVICE_PCI_SHMEM_BAR,
-+                                   offset, memory_region_size(&shmem->mr),
-+                                   shmem->shmid);
-+            offset = offset + memory_region_size(&shmem->mr);
-+        }
-+        pci_register_bar(&vpci_dev->pci_dev, VIRTIO_DEVICE_PCI_SHMEM_BAR,
-+                        PCI_BASE_ADDRESS_SPACE_MEMORY |
-+                        PCI_BASE_ADDRESS_MEM_PREFETCH |
-+                        PCI_BASE_ADDRESS_MEM_TYPE_64,
-+                        &dev->shmembar);
-+    }
- }
+     ret = vhost_dev_stop(&vub->vhost_dev, vdev, true);
  
- static void vhost_user_device_pci_class_init(ObjectClass *klass,
+-    if (k->set_guest_notifiers(qbus->parent, vub->vhost_dev.nvqs, false) < 0) {
+-        error_report("vhost guest notifier cleanup failed: %d", ret);
+-        return -1;
++    err = k->set_guest_notifiers(qbus->parent, vub->vhost_dev.nvqs, false);
++    if (err < 0) {
++        error_report("vhost guest notifier cleanup failed: %d", err);
++        return err;
+     }
+ 
+     vhost_dev_disable_notifiers(&vub->vhost_dev, vdev);
+diff --git a/hw/virtio/vhost-user-fs.c b/hw/virtio/vhost-user-fs.c
+index ad6fcacf06..209993918a 100644
+--- a/hw/virtio/vhost-user-fs.c
++++ b/hw/virtio/vhost-user-fs.c
+@@ -105,7 +105,7 @@ static int vuf_stop(VirtIODevice *vdev)
+     VHostUserFS *fs = VHOST_USER_FS(vdev);
+     BusState *qbus = BUS(qdev_get_parent_bus(DEVICE(vdev)));
+     VirtioBusClass *k = VIRTIO_BUS_GET_CLASS(qbus);
+-    int ret;
++    int ret, err;
+ 
+     if (!k->set_guest_notifiers) {
+         return 0;
+@@ -113,9 +113,10 @@ static int vuf_stop(VirtIODevice *vdev)
+ 
+     ret = vhost_dev_stop(&fs->vhost_dev, vdev, true);
+ 
+-    if (k->set_guest_notifiers(qbus->parent, fs->vhost_dev.nvqs, false) < 0) {
+-        error_report("vhost guest notifier cleanup failed: %d", ret);
+-        return -1;
++    err = k->set_guest_notifiers(qbus->parent, fs->vhost_dev.nvqs, false);
++    if (err < 0) {
++        error_report("vhost guest notifier cleanup failed: %d", err);
++        return err;
+     }
+ 
+     vhost_dev_disable_notifiers(&fs->vhost_dev, vdev);
+diff --git a/hw/virtio/vhost-user-scmi.c b/hw/virtio/vhost-user-scmi.c
+index f9264c4374..9470f68c1f 100644
+--- a/hw/virtio/vhost-user-scmi.c
++++ b/hw/virtio/vhost-user-scmi.c
+@@ -89,7 +89,7 @@ static int vu_scmi_stop(VirtIODevice *vdev)
+     BusState *qbus = BUS(qdev_get_parent_bus(DEVICE(vdev)));
+     VirtioBusClass *k = VIRTIO_BUS_GET_CLASS(qbus);
+     struct vhost_dev *vhost_dev = &scmi->vhost_dev;
+-    int ret;
++    int ret, err;
+ 
+     /* vhost_dev_is_started() check in the callers is not fully reliable. */
+     if (!scmi->started_vu) {
+@@ -103,9 +103,10 @@ static int vu_scmi_stop(VirtIODevice *vdev)
+ 
+     ret = vhost_dev_stop(vhost_dev, vdev, true);
+ 
+-    if (k->set_guest_notifiers(qbus->parent, vhost_dev->nvqs, false) < 0) {
+-        error_report("vhost guest notifier cleanup failed: %d", ret);
+-        return -1;
++    err = k->set_guest_notifiers(qbus->parent, vhost_dev->nvqs, false);
++    if (err < 0) {
++        error_report("vhost guest notifier cleanup failed: %d", err);
++        return err;
+     }
+     vhost_dev_disable_notifiers(vhost_dev, vdev);
+     return ret;
+diff --git a/hw/virtio/vhost-vsock-common.c b/hw/virtio/vhost-vsock-common.c
+index b33def900a..b79f4c9ce6 100644
+--- a/hw/virtio/vhost-vsock-common.c
++++ b/hw/virtio/vhost-vsock-common.c
+@@ -100,7 +100,7 @@ int vhost_vsock_common_stop(VirtIODevice *vdev)
+     VHostVSockCommon *vvc = VHOST_VSOCK_COMMON(vdev);
+     BusState *qbus = BUS(qdev_get_parent_bus(DEVICE(vdev)));
+     VirtioBusClass *k = VIRTIO_BUS_GET_CLASS(qbus);
+-    int ret;
++    int ret, err;
+ 
+     if (!k->set_guest_notifiers) {
+         return 0;
+@@ -108,9 +108,10 @@ int vhost_vsock_common_stop(VirtIODevice *vdev)
+ 
+     ret = vhost_dev_stop(&vvc->vhost_dev, vdev, true);
+ 
+-    if (k->set_guest_notifiers(qbus->parent, vvc->vhost_dev.nvqs, false) < 0) {
+-        error_report("vhost guest notifier cleanup failed: %d", ret);
+-        return -1;
++    err = k->set_guest_notifiers(qbus->parent, vvc->vhost_dev.nvqs, false);
++    if (err < 0) {
++        error_report("vhost guest notifier cleanup failed: %d", err);
++        return err;
+     }
+ 
+     vhost_dev_disable_notifiers(&vvc->vhost_dev, vdev);
 -- 
 MST
 
