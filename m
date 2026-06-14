@@ -4,94 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C117FCD98C5
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0FACACD98D6
 	for <qemu-devel@archiver.kernel.org>; Sun, 14 Jun 2026 19:11:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wYqAh-0000Al-AO; Sun, 14 Jun 2026 15:07:03 -0400
+	id 1wYqCN-0006kC-Nj; Sun, 14 Jun 2026 15:08:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wYqAd-0008Na-W3
- for qemu-devel@nongnu.org; Sun, 14 Jun 2026 15:07:00 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wYqCL-0006bq-Gn
+ for qemu-devel@nongnu.org; Sun, 14 Jun 2026 15:08:45 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wYqAc-0001po-6o
- for qemu-devel@nongnu.org; Sun, 14 Jun 2026 15:06:59 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wYqCJ-0002Js-BN
+ for qemu-devel@nongnu.org; Sun, 14 Jun 2026 15:08:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781464017;
+ s=mimecast20190719; t=1781464122;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=UIGef6JbwrI6g4S4pS+Dx1r4bKu5n50rC/TnxegWTg8=;
- b=S/NqiQiyDcQWr7kDX+fnespjqWAEDqf4fo+KahSVYm3nVdxG2IDcIWFg0ukkF+Gvm2FTmH
- BpuEJFbrePV4o8iZsYaD4jCQbiWQhNCqPRMN71+rR9B5Wc/SwRJ2ZKt06V4A/v3bt6SRvF
- 9zpuROjz0qE2j5nSYI87sGmlsWxbJLQ=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=6jMLBQCNfZ81UJ62zLcECx5FcUb5TVLKmM166QliHoU=;
+ b=BBR0//+I+EJZ09LWaj4tKKnpbTtqC1iEQThp38YVTr/aqSNfxMMuQbt3GiUkZllpYdx8BX
+ iLF3oxump7zJ/cdgcxtZ/rrz4D/fvPGcc0XD1Mf5QWtftg7GxORiCzAoaxy1kIvW/8gbCh
+ ACB249ddftPFfZQLHLLh5Ak00ndRmAw=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-459-uPASGT2TNnSF1aoEiW0dKg-1; Sun, 14 Jun 2026 15:06:55 -0400
-X-MC-Unique: uPASGT2TNnSF1aoEiW0dKg-1
-X-Mimecast-MFC-AGG-ID: uPASGT2TNnSF1aoEiW0dKg_1781464014
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-490cc1ae292so15155575e9.1
- for <qemu-devel@nongnu.org>; Sun, 14 Jun 2026 12:06:55 -0700 (PDT)
+ us-mta-497-aotkIBLTPdOhHpujYrzWBg-1; Sun, 14 Jun 2026 15:08:41 -0400
+X-MC-Unique: aotkIBLTPdOhHpujYrzWBg-1
+X-Mimecast-MFC-AGG-ID: aotkIBLTPdOhHpujYrzWBg_1781464120
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-46016bedbaaso1800218f8f.1
+ for <qemu-devel@nongnu.org>; Sun, 14 Jun 2026 12:08:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1781464014; x=1782068814; darn=nongnu.org;
+ d=redhat.com; s=google; t=1781464120; x=1782068920; darn=nongnu.org;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=UIGef6JbwrI6g4S4pS+Dx1r4bKu5n50rC/TnxegWTg8=;
- b=cotPMi3JQoAyDIKTrHPszPAD8VnNs3fYAcis1lApbpll+qjby2P0JCvvoL6aWJ3Fq8
- jBCqfW9BcR/H2Ydkc1o2HZ8nrPD7f7QlBfo6jmCfDSy2ScpRqRUsYALtriWxGzNUEk+P
- M4/SBY+9Ug0KJVgzomeRaLLsOD1d1DgSZPsOYp6KR3ccpJU9BEhpIlZDd8eNs/qDflRD
- hZRK7ko4dt4SCnUpa3nMwc9naQLVDwTHzMtQJ2qnpBKTGcviQ4dY+6XsWzroV8utRRdz
- 1lyzDxI1lg/O0djM824kAkIq80OOnRS/xnHxgNNxk1asWmv9aV2tXYB+2ZyQd3TJlV7s
- n5Tg==
+ bh=6jMLBQCNfZ81UJ62zLcECx5FcUb5TVLKmM166QliHoU=;
+ b=DX38u0fCxqrKrfAMXjd2318vJ54xxCUT5iUhLiclNyobBJHdKYmQcwn4DFDc6vEuR8
+ u25bkum+komz+jETipbxLV0NH9MSy7kNZv5JersKIEuZCiat+iFeLQ30+0K2ibpkS4Hh
+ LQyFAk99+loiI5/slLsUs9JZBpTjDluRK2XBZz9YDJbs86srTnSfkm6U3mAfBIquiESN
+ avacLgRNuc9OL8imm2cd9TCdU6JdX+S7EU4niFqN9soYhQKSU5VYpefG3ZSOMoEjY/q3
+ LYti+ZdNMyp0AbYGDiFmz7qboZBYdaGJvz1yfKCVIBVBjSD//55xOwLL9Fwc+BjrOHqz
+ wpZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781464014; x=1782068814;
+ d=1e100.net; s=20251104; t=1781464120; x=1782068920;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=UIGef6JbwrI6g4S4pS+Dx1r4bKu5n50rC/TnxegWTg8=;
- b=P6gOGk2iu+ua21GCG9Fx+FvXwp3ZAAx+SWh5vONTlwHQMb5QfK5OVoaIVkVX8G5YeQ
- +ZW5VCXSr0TRSMt67ViVBTrudAj8jpWK2H36cAbuZeg0iR1/hahqB4rjqAqaUCpUt8m8
- E20YmV+E+3DWAmszO9sNdGRaVl3GNdZKYOvjQ7wPdN4qOoTftaU3H3buDdcbndXUL9qU
- d+jyoa/7B/6HN0niqLyxjclPnTESTLtat2DIwiJSxpH4RcE1wWzPd6qyMv2+0wYH2rGa
- QGCv9nI8zcvBfUocXNfp6UTs7UdPqPRhcYFiPHAsvtE7HthdNWkf/rTkecYMN+TsZ/ZE
- yVlA==
-X-Gm-Message-State: AOJu0Yydtg5/KUYwYc7mNY1eD6wibjg+spNGpXHPAgU118THRg5Euryl
- l4j1eVWpt0EStE/SitWKmCOIBPYmLU7ebc+Gl2Bw/o/lZGxdFr29pYWQgQ4j6aozmgQluUOhPbH
- GdpJB/Aapk2FGLiMBn8dDjCTruXU17V8cZkbcAfH1nzFHVOUMMuvCq0XbTYgIlhDxdnek6xnqNk
- fkqIH8bhIhXBI2lCkO192J5rJKmElTLVyY+A==
-X-Gm-Gg: Acq92OHynpMXm7CRnbGy6bDz8UOxpNuy6NIOKFK0olnpJYeEY1yY/9WrUJftrfvvFCv
- 2G8Dg3U9xgn9djEff/F6sSB21oNgY6ZvKJIKasoQSS4HyRChEtV2MDtpQhQWvOuO9/6rQSi8WnJ
- cRtzwJskR7RCifjIq+oWAaMiho/HgFYvujA+Dvst5OLy5dVCoVHM2Rf3G6eqnlgqdSAXACzIOWE
- rF/APFFZxxhY8pcXfG/859CYA6ywzsaes/7MuiEojPoj4ZD2abXx5ijUlA5dzaSnnsCbkbydYxR
- j4z99dxOw9LMgTAvAAB1QzIQUpiV2Q+euWqrAU5VMf2v6OMsvccOyb8ipRwrVc1aawFSeHqdDD/
- Fo4s9vyatLRrATm4BZpQROGUHz5ST4u7EyrMKc3fJrqw=
-X-Received: by 2002:a05:600c:3542:b0:490:b4a8:e031 with SMTP id
- 5b1f17b1804b1-490ec480e65mr121591635e9.4.1781464013911; 
- Sun, 14 Jun 2026 12:06:53 -0700 (PDT)
-X-Received: by 2002:a05:600c:3542:b0:490:b4a8:e031 with SMTP id
- 5b1f17b1804b1-490ec480e65mr121591275e9.4.1781464013340; 
- Sun, 14 Jun 2026 12:06:53 -0700 (PDT)
+ bh=6jMLBQCNfZ81UJ62zLcECx5FcUb5TVLKmM166QliHoU=;
+ b=W/p1aAHoyCzNEwyLoJueSIZycgzzgEX2KjRpVKLtZ+x1l1bWphLhwUulZMgMgOWJhE
+ tdmTh1SYCydZJyj9hdmRZcyMKBrISRUQEUIV4tYIwcEh83u/3L22Tp9zofoZQYIdbsMp
+ 5XYN/37bWGLF3ByBYs99hUPeEHw+3ByNkw4/6FggWD37TNC2hVExXDEQFaxu576xevGs
+ QR83RxWe5I0HtXwkcsF2EX7QDKgAR0y2zRPp+H5qT11/s/O+OW0tpiNCkuadoDehAY6J
+ T9y9+ao4L3Xye2KyVJ6n38MlxBkzQBiZ5fvg4VLwg34H0cOY6szU72hjzOVhbZ7t9qco
+ ZWjg==
+X-Gm-Message-State: AOJu0YyeY+7x2ONxDCFCvjmDVClmT/YxAZej2LLWMRMzhOCjvdh00AD1
+ RXbhJak09fjHhD+91lH5evqr6wQ0R3ixiK8s50rNFirNnRU2hEPCtBFKl5JWf3YNtZo4wyv7Fg/
+ dESYobOQsMadhyhHLBitAZHn2HXe/yTv61xSaGc4sSjIMOAzh17qYT05ndbi7rSdoKnMwSpVidF
+ PgO7OyFb1ABfw9J8cPT7wQteFtPipUzl9puw==
+X-Gm-Gg: Acq92OGDqi9+JWSVH5gigW5YBhkQktPqMmSvpL37hFUQRdr1+9CSb6UnsoH8QvSIkiE
+ 8ged5XgHOh8TD0bxu88yC1u4BbHDnBOG8QybLMZpTF3Wfpqiebmcaz/GIsKpLrrVbb14rc/wMZa
+ rRNRuid1VCoT+fYASDtq674Ax5qMrHlHbYcVkr3fhtzczsXw4H5w8XdyqHnN8PC8wfiXlRMxIFP
+ DR0m6vLY2EPzh1fP45sdm/tLLhcFFGeSAfjvobLixytBcpmLRxMdNmpV5B88ElBoRPEO2j/8sFB
+ dJOVvZCXUPVnsfPYoW2MG2Wegbui7ye5h5wz1tfHBbUaIv2baJPe2mSZwbpBfNVJVvISbsvrKJO
+ fgwXmeB6kGpVBaTP6bDkKwI2D/RqRCc6n2cFVdmCRJxs=
+X-Received: by 2002:a5d:5d02:0:b0:45e:ea46:ce11 with SMTP id
+ ffacd0b85a97d-4606da6307fmr16342257f8f.14.1781464120006; 
+ Sun, 14 Jun 2026 12:08:40 -0700 (PDT)
+X-Received: by 2002:a5d:5d02:0:b0:45e:ea46:ce11 with SMTP id
+ ffacd0b85a97d-4606da6307fmr16342222f8f.14.1781464119418; 
+ Sun, 14 Jun 2026 12:08:39 -0700 (PDT)
 Received: from redhat.com (IGLD-80-230-85-71.inter.net.il. [80.230.85.71])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4922035b4absm184569895e9.11.2026.06.14.12.06.51
+ ffacd0b85a97d-4606f2d933esm25634000f8f.33.2026.06.14.12.08.38
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 14 Jun 2026 12:06:52 -0700 (PDT)
-Date: Sun, 14 Jun 2026 15:06:51 -0400
+ Sun, 14 Jun 2026 12:08:39 -0700 (PDT)
+Date: Sun, 14 Jun 2026 15:08:37 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- Daniil Tatianin <d-tatianin@yandex-team.ru>,
- Raphael Norwitz <raphael.s.norwitz@gmail.com>,
- Lei Yang <leiyang@redhat.com>, Stefano Garzarella <sgarzare@redhat.com>,
- "Gonglei (Arei)" <arei.gonglei@huawei.com>,
- zhenwei pi <zhenwei.pi@linux.dev>, Jason Wang <jasowang@redhat.com>
-Subject: [PULL 027/106] vhost-user: rework enabling vrings
-Message-ID: <44c8f42d5824ab652ddeedb79851fa72d2af7be1.1781463125.git.mst@redhat.com>
+ Aditya Gupta <adityag@linux.ibm.com>, Zexiang Zhang <chan9yan9@gmail.com>
+Subject: [PULL 068/106] hw/pci: Replace assert with bounds check and return
+Message-ID: <c7209c56718107fefd5deae140a450954d31ff2b.1781463125.git.mst@redhat.com>
 References: <cover.1781463125.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -123,163 +118,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+From: Aditya Gupta <adityag@linux.ibm.com>
 
-We call the handler almost the same way in three places:
+As reported in https://gitlab.com/qemu-project/qemu/-/work_items/3334,
+callers of 'pci_host_config_{read,write}_common' can pass length as 8,
+causing an assert failure
 
- - cryptodev-vhost.c
- - vhost_net.c
- - vhost.c
+The original issue with pnv_phb3 triggering the assert was fixed in a
+previous commit
 
-The only difference, is that in vhost.c we don't try to call the handler
-for old vhost-user (when VHOST_USER_F_PROTOCOL_FEATURES is not supported).
+Instead of asserting on invalid length, check if the length is valid
+(<=4), otherwise return (with the failure error code in read)
 
-cryptodev-vhost and vhost_net code will just fail in this case. Probably
-they were developed only for newer vhost-user. Anyway, it doesn't seem
-correct to rely on this error path, if these devices want to check,
-that they don't communicate to old vhost-user protocol, they should
-do that earlier.
-
-Let's create the common helper, to call .vhost_set_vring_enable and
-use in all three places. For vhost-user let's just always skip
-enable/disable if it's unsupported.
-
-Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Reviewed-by: Daniil Tatianin <d-tatianin@yandex-team.ru>
-Reviewed-by: Raphael Norwitz <raphael.s.norwitz@gmail.com>
+Reported-by: Zexiang Zhang <chan9yan9@gmail.com>
+Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Tested-by: Lei Yang <leiyang@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-Id: <20260420200339.708640-2-vsementsov@yandex-team.ru>
+Message-Id: <20260326190438.734239-3-adityag@linux.ibm.com>
 ---
- backends/cryptodev-vhost.c |  8 +-------
- hw/net/vhost_net.c         |  7 +------
- hw/virtio/vhost-user.c     |  7 ++++++-
- hw/virtio/vhost.c          | 21 ---------------------
- include/hw/virtio/vhost.h  |  9 +++++++++
- 5 files changed, 17 insertions(+), 35 deletions(-)
+ hw/pci/pci_host.c | 14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
 
-diff --git a/backends/cryptodev-vhost.c b/backends/cryptodev-vhost.c
-index 943680a23a..abdfce33af 100644
---- a/backends/cryptodev-vhost.c
-+++ b/backends/cryptodev-vhost.c
-@@ -152,7 +152,6 @@ vhost_set_vring_enable(CryptoDevBackendClient *cc,
- {
-     CryptoDevBackendVhost *crypto =
-                        cryptodev_get_vhost(cc, b, queue);
--    const VhostOps *vhost_ops;
- 
-     cc->vring_enable = enable;
- 
-@@ -160,12 +159,7 @@ vhost_set_vring_enable(CryptoDevBackendClient *cc,
-         return 0;
+diff --git a/hw/pci/pci_host.c b/hw/pci/pci_host.c
+index 91e3885c7f..2a7fdfa563 100644
+--- a/hw/pci/pci_host.c
++++ b/hw/pci/pci_host.c
+@@ -81,7 +81,12 @@ void pci_host_config_write_common(PCIDevice *pci_dev, uint32_t addr,
+         return;
      }
  
--    vhost_ops = crypto->dev.vhost_ops;
--    if (vhost_ops->vhost_set_vring_enable) {
--        return vhost_ops->vhost_set_vring_enable(&crypto->dev, enable);
--    }
--
--    return 0;
-+    return vhost_dev_set_vring_enable(&crypto->dev, enable);
- }
- 
- int cryptodev_vhost_start(VirtIODevice *dev, int total_queues)
-diff --git a/hw/net/vhost_net.c b/hw/net/vhost_net.c
-index a8ee18a912..25e9f1fd24 100644
---- a/hw/net/vhost_net.c
-+++ b/hw/net/vhost_net.c
-@@ -587,7 +587,6 @@ VHostNetState *get_vhost_net(NetClientState *nc)
- int vhost_net_set_vring_enable(NetClientState *nc, int enable)
- {
-     VHostNetState *net = get_vhost_net(nc);
--    const VhostOps *vhost_ops = net->dev.vhost_ops;
- 
-     /*
-      * vhost-vdpa network devices need to enable dataplane virtqueues after
-@@ -601,11 +600,7 @@ int vhost_net_set_vring_enable(NetClientState *nc, int enable)
- 
-     nc->vring_enable = enable;
- 
--    if (vhost_ops && vhost_ops->vhost_set_vring_enable) {
--        return vhost_ops->vhost_set_vring_enable(&net->dev, enable);
--    }
--
--    return 0;
-+    return vhost_dev_set_vring_enable(&net->dev, enable);
- }
- 
- int vhost_net_set_mtu(struct vhost_net *net, uint16_t mtu)
-diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
-index a8907cca74..13c73e7b17 100644
---- a/hw/virtio/vhost-user.c
-+++ b/hw/virtio/vhost-user.c
-@@ -1230,7 +1230,12 @@ static int vhost_user_set_vring_enable(struct vhost_dev *dev, int enable)
-     int i;
- 
-     if (!virtio_has_feature(dev->features, VHOST_USER_F_PROTOCOL_FEATURES)) {
--        return -EINVAL;
-+        /*
-+         * For vhost-user devices, if VHOST_USER_F_PROTOCOL_FEATURES has not
-+         * been negotiated, the rings start directly in the enabled state,
-+         * and can't be disabled.
-+         */
-+        return 0;
-     }
- 
-     for (i = 0; i < dev->nvqs; ++i) {
-diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
-index b9dc4ed13b..b89797df95 100644
---- a/hw/virtio/vhost.c
-+++ b/hw/virtio/vhost.c
-@@ -2078,27 +2078,6 @@ int vhost_dev_get_inflight(struct vhost_dev *dev, uint16_t queue_size,
-     return 0;
- }
- 
--static int vhost_dev_set_vring_enable(struct vhost_dev *hdev, int enable)
--{
--    if (!hdev->vhost_ops->vhost_set_vring_enable) {
--        return 0;
--    }
--
--    /*
--     * For vhost-user devices, if VHOST_USER_F_PROTOCOL_FEATURES has not
--     * been negotiated, the rings start directly in the enabled state, and
--     * .vhost_set_vring_enable callback will fail since
--     * VHOST_USER_SET_VRING_ENABLE is not supported.
--     */
--    if (hdev->vhost_ops->backend_type == VHOST_BACKEND_TYPE_USER &&
--        !virtio_has_feature(hdev->backend_features,
--                            VHOST_USER_F_PROTOCOL_FEATURES)) {
--        return 0;
--    }
--
--    return hdev->vhost_ops->vhost_set_vring_enable(hdev, enable);
--}
--
- /*
-  * Host notifiers must be enabled at this point.
-  *
-diff --git a/include/hw/virtio/vhost.h b/include/hw/virtio/vhost.h
-index 89817bd848..3dfec5e15c 100644
---- a/include/hw/virtio/vhost.h
-+++ b/include/hw/virtio/vhost.h
-@@ -215,6 +215,15 @@ static inline bool vhost_dev_is_started(struct vhost_dev *hdev)
-     return hdev->started;
- }
- 
-+static inline int vhost_dev_set_vring_enable(struct vhost_dev *hdev, int enable)
-+{
-+    if (!hdev->vhost_ops->vhost_set_vring_enable) {
-+        return 0;
+-    assert(len <= 4);
++    if (len > 4) {
++        PCI_DPRINTF("%s: invalid length access: addr " HWADDR_FMT_plx " \
++            len %d val %"PRIx32"\n", __func__, addr, len, val);
++        return;
 +    }
 +
-+    return hdev->vhost_ops->vhost_set_vring_enable(hdev, enable);
-+}
+     /* non-zero functions are only exposed when function 0 is present,
+      * allowing direct removal of unexposed functions.
+      */
+@@ -106,7 +111,12 @@ uint32_t pci_host_config_read_common(PCIDevice *pci_dev, uint32_t addr,
+         return ~0x0;
+     }
+ 
+-    assert(len <= 4);
++    if (len > 4) {
++        PCI_DPRINTF("%s: invalid length access: addr " HWADDR_FMT_plx " \
++            len %d val %"PRIx32"\n", __func__, addr, len, val);
++        return ~0x0;
++    }
 +
- /**
-  * vhost_dev_start() - start the vhost device
-  * @hdev: common vhost_dev structure
+     /* non-zero functions are only exposed when function 0 is present,
+      * allowing direct removal of unexposed functions.
+      */
 -- 
 MST
 
