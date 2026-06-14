@@ -4,98 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F255CD98D2
-	for <qemu-devel@archiver.kernel.org>; Sun, 14 Jun 2026 19:08:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F0F9CD98C5
+	for <qemu-devel@archiver.kernel.org>; Sun, 14 Jun 2026 19:08:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wYqAj-0000Ws-OQ; Sun, 14 Jun 2026 15:07:05 -0400
+	id 1wYqBf-0003rW-L6; Sun, 14 Jun 2026 15:08:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wYqAh-0000GD-Jl
- for qemu-devel@nongnu.org; Sun, 14 Jun 2026 15:07:03 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wYqBd-0003gG-BA
+ for qemu-devel@nongnu.org; Sun, 14 Jun 2026 15:08:01 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wYqAf-0001rQ-Dg
- for qemu-devel@nongnu.org; Sun, 14 Jun 2026 15:07:03 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wYqBb-00023c-3v
+ for qemu-devel@nongnu.org; Sun, 14 Jun 2026 15:08:01 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781464020;
+ s=mimecast20190719; t=1781464078;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=oN7X2D8NM/XDxALEaF70VOsTMgEaeaWJ0gRnytmbEO4=;
- b=aIJeXdY2N0PzxEpudnCA5k2Abfu2lf+CAIDgLZqbzory3GHBGkcJ9S1iKwv3HDxG1PmFnn
- QkrXt+TPNXQ702GuZbyolTm1MsbUzws3ghVcDDytQcm7X6pLmf2oc4lIb4lbtwugxGaOJU
- 1Y7rL+QpbRHyt9NXPTfDkzkZUuiJbiw=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=+GuTh5V0GuOw0obJKJe9L/Do0KN5TpKDxtGQn1t1Hdw=;
+ b=NLmLaukxhUJW75MFb5bRVzk0XU3hpqSIvsib/G7vR60SyIRF+aECp6FBN4efvvjFL9qC73
+ XbjxK3thZEqklJtJFKsHnx4jk1TTNAg+VZ42eepkkEaRAGtTtImR2uN7hmNHbNJQioHztR
+ bf2QcmWJUUULIZufcBNMfc3PBmU4YZc=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-630-tdFi0nIVPGailSct3_ttzg-1; Sun, 14 Jun 2026 15:06:59 -0400
-X-MC-Unique: tdFi0nIVPGailSct3_ttzg-1
-X-Mimecast-MFC-AGG-ID: tdFi0nIVPGailSct3_ttzg_1781464018
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-490b93debc8so25298815e9.1
- for <qemu-devel@nongnu.org>; Sun, 14 Jun 2026 12:06:58 -0700 (PDT)
+ us-mta-507-26ruouRpPvS7b80zeFc_og-1; Sun, 14 Jun 2026 15:07:56 -0400
+X-MC-Unique: 26ruouRpPvS7b80zeFc_og-1
+X-Mimecast-MFC-AGG-ID: 26ruouRpPvS7b80zeFc_og_1781464076
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-490b37e1f48so17506915e9.0
+ for <qemu-devel@nongnu.org>; Sun, 14 Jun 2026 12:07:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1781464018; x=1782068818; darn=nongnu.org;
+ d=redhat.com; s=google; t=1781464075; x=1782068875; darn=nongnu.org;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=oN7X2D8NM/XDxALEaF70VOsTMgEaeaWJ0gRnytmbEO4=;
- b=Ae9z2dwi3LLxIdXla8UVGvOtTgX0AfiK7PaQXld4Vo/CfCQxvuqZEgOJQ580yBy7lU
- 7ip/Db73FPCJiTCq/PtF+rOizWS5qHdDR/SNyBUKOlv7fzXbwm6tHSZRAy+eXYTGqK91
- MfkDQrkIH1HKl4L8Li9ctlKPqPrG7vQNbSL9xaV54A/b5CpRBFkLv9Iqxp4JTWQ4ewnI
- OpJJLQdrT4oBuvECjO43zbbpKBUloXHv6Ybu2lXDYcS0s22HdxpKAJV/K+vjAqxxmGci
- /DX3iNJ5uiRp5rslNGyfA0TJsz3J8QpfIb8JJU5D5J53kjGyf75I/MC/EoOx4XisYA1C
- 1KCw==
+ bh=+GuTh5V0GuOw0obJKJe9L/Do0KN5TpKDxtGQn1t1Hdw=;
+ b=VR+ShwY5GsgBYbS1PVvRl78pDVAeSQJ74DUAaPhsj4xdssRUKSJLRxbW8bhF+2LRYm
+ r6DWEGriT9gofb21shf92VwNKKfVTJDZ+MszG5SgPRPsRnjo6rUV2GmihoyjZdlHWlQ/
+ 35ERFrGKe4kZDYYLBs0DPVaZ7GOhthR+mal3xKR4VCgEQ+ix/LpkzGlGDzLh7Evskbyc
+ tzWwJGZJwzVx8H4ddzba2frCLVSNdIOmTryOFhK+C7F1q6uFfz3ZsWYw5THTxYomk/GI
+ OX4GMCi4E3c/lJxWUX5p0UHxnMgXK4S6exycSQ24pgb4ty4zbeU24lquDx4NUoqgq8+D
+ 9lUw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781464018; x=1782068818;
+ d=1e100.net; s=20251104; t=1781464075; x=1782068875;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=oN7X2D8NM/XDxALEaF70VOsTMgEaeaWJ0gRnytmbEO4=;
- b=VF4VPGNh8FllKg/U7c2yHEM2ekKrHtLVSMzXZo5805DO/lZimgWKxkfeUQ2zOETc0m
- ZGUgQCG7ZVEqZxldMIDnSssepQKpAYqLk+flEjwu/o9btVz+z9YbDNWrTJWDR0Z3wLSO
- WG4jHe6s0MWNBSUbkZ5XH6QHm3SRbRmy3/xOQo4kXwgIc093gWpQFx/q3yloIdxV7w0U
- 4+DHK8r0JwB3lTvKm7OHX0TMXu8x1V0LDNwg+4F3Q5TGFD4gaJpScWBrMf2PC0cNBwF9
- gCbvyz/1I4y2kr1oxKEMhYCSPZz361o7gUIuSpX+hwgPxA3ygg0yMFFInclMcA+EzF/V
- WFfw==
-X-Gm-Message-State: AOJu0YzpTTrxylGExmg+xIe1rJ9PNG3dVJHXkTFebU+XQYgA4f6A2jtu
- g0kzB2MPcNQk2MRkYSqBeijt/x5XsWQAeH0XL83G0n55zKy3YuHeSZLGkHeES5gJI41A/EaKEEM
- 20e/YcMpBkHCWu45MwO0DPaw5UIcZp6eAA357u1sMEYchCDyLyKpVTZUG5hE8q4mzV5IQTvmqD7
- Rmp/tnfWzJIeo2XHumhTkQirdcJFC8c+txDw==
-X-Gm-Gg: Acq92OFYC81WN4tRdYDrLb/U8F/4VPJ0FzjOK4X4N9ALNEtrsJiNiOheJ7xo8emkTGE
- ie4yvuoKKZLR0j8dE4RdBAh7jsrCj85YGYGdXCnYPJ//oXInhGLRBNycg9IHBbT1hXnaABrdaKh
- 0MiU54sWafkjM8cDquQJ5qC/tg88vQiO3K5XunWR2LlP9kGufhV+5+IkY+PsLYluuDC7YYg0ESE
- UeRwjtdku+YrPE5/dYe0GJ7fMDJDtGHHIymyjEuxcPywJUQaPQjkt3SmJoV//grA0DD63n1QNmu
- eLD3sVJLNgFUBQGIgvroxD9RDN1KkGCVNx2p/D4w1SbpnQVIcQVPRMnECmXRg5ZB2yd+SNfOLSt
- MTK2lCPH/9R76ZZAeRkYX0//us446ggXRgyzvZ6MyYjg=
-X-Received: by 2002:a05:600c:2d47:b0:490:c2a2:b1d4 with SMTP id
- 5b1f17b1804b1-4922011d635mr57204205e9.35.1781464017768; 
- Sun, 14 Jun 2026 12:06:57 -0700 (PDT)
-X-Received: by 2002:a05:600c:2d47:b0:490:c2a2:b1d4 with SMTP id
- 5b1f17b1804b1-4922011d635mr57203885e9.35.1781464017213; 
- Sun, 14 Jun 2026 12:06:57 -0700 (PDT)
+ bh=+GuTh5V0GuOw0obJKJe9L/Do0KN5TpKDxtGQn1t1Hdw=;
+ b=E/lKdtcKkGN1ADkGYraMOHh9R3ndaMHAbwNkuwJS1hYSWcq3HEtvphLJ9yBRmMp3GZ
+ FNTHYo2G/pbLd3o4fPemR/7JSDHyLikAK6widvMYyk92X1KVaraiQ8wOumqdolj8EzSB
+ SPkeLpgV7K45RqSWdN3Z3MpexuanG6wZW2/nF8x+VPIj7F5rzuVKxdu/Fav7fuWpvS+M
+ y+749HqS3igAr+ayIJvV+1tAp6enZzCfYYJg3F8E6pPW6jf5iG7nT6NlftmQvXczfVnO
+ cxHo8FfTJsAUboiNZt0qUvDJtJeuO7989uORRWBwqSm2FqWNJ5i3kK5UyIh0//Yjd78L
+ xBjw==
+X-Gm-Message-State: AOJu0YxOdLgnF7fz+k5HdaXc/rphiScQiF2GH0EFsE+fBtTas9OqFV7G
+ eQigdIeCyHcRTfIOszLKePbckgsr1rBvQZxCKztkOBO8Kzw0H2iCpp+E2YJ3KAwyhv91741jN7S
+ uABnVNK/n+//VoLd1xoeeIy0Un8bVBRCChY2pgxp7B8uCu2gGvb2Q2f+XfV7E5Vn+K2aJHF8gf2
+ taW0fPYG7ysgMcND8Br2JJp3pV+sob/F7QoQ==
+X-Gm-Gg: Acq92OH6LTJtXGU+90brEZIq/Ek8TwcbKC2Zaxk5FgR+SSrN6Q0lxLo1Leiy7VyrW1C
+ OaOUIaPEPMsG7aTttY/7afXVOi5cfXIEcSg+Oswb9H7hPhgjyoXxcr8Wb7rRWwbeMgul+h1Zvss
+ gb09Ovl+21d4QfOdSLM/oHEBtwOmKXBK6Sh/4cb4qZEHrr/bqME36u0aanhh0vGfWFwBb86r3+u
+ 70ZiMTDfvLuQoFiMf6+o2UcD64pANBcgjiht+9UhIiXbzKHcels9CBER8lfMLnCwqVE99eHtlDq
+ h5Qavqh39zE2TQs07UqAyTorKO4S4z7jKDgnrM0srb7UPl3C0E6iY3ft5BJcI6W66TQSkJOEl4f
+ uqksh2UPGV9V6bXl6A41BRcdteryFo2owv9xFXzKz5Ek=
+X-Received: by 2002:a05:600c:6542:b0:48a:93f8:dd02 with SMTP id
+ 5b1f17b1804b1-4922006283cmr65638135e9.14.1781464075379; 
+ Sun, 14 Jun 2026 12:07:55 -0700 (PDT)
+X-Received: by 2002:a05:600c:6542:b0:48a:93f8:dd02 with SMTP id
+ 5b1f17b1804b1-4922006283cmr65637745e9.14.1781464074772; 
+ Sun, 14 Jun 2026 12:07:54 -0700 (PDT)
 Received: from redhat.com (IGLD-80-230-85-71.inter.net.il. [80.230.85.71])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-492203dd0b9sm181808925e9.15.2026.06.14.12.06.54
+ 5b1f17b1804b1-4922034c1cbsm151846345e9.10.2026.06.14.12.07.53
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 14 Jun 2026 12:06:56 -0700 (PDT)
-Date: Sun, 14 Jun 2026 15:06:53 -0400
+ Sun, 14 Jun 2026 12:07:54 -0700 (PDT)
+Date: Sun, 14 Jun 2026 15:07:52 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
  Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- devel@lists.libvirt.org, Markus Armbruster <armbru@redhat.com>,
- Daniil Tatianin <d-tatianin@yandex-team.ru>,
- Raphael Norwitz <raphael.s.norwitz@gmail.com>,
- Lei Yang <leiyang@redhat.com>, Raphael Norwitz <rnorwitz@nvidia.com>,
- Stefano Garzarella <sgarzare@redhat.com>,
- Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- Jason Wang <jasowang@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>,
- Eric Blake <eblake@redhat.com>, qemu-block@nongnu.org
-Subject: [PULL 028/106] vhost: drop backend_features field
-Message-ID: <1ee0bc0c9bf006a1ea9afeae67b6b7a0b57a4783.1781463125.git.mst@redhat.com>
+ Stefano Garzarella <sgarzare@redhat.com>
+Subject: [PULL 049/106] vhost: move IOTLB functions from vhost-backend.c to
+ vhost.c
+Message-ID: <e86a41c24adb0391b6d3de8d3f58d9fc044ff9b7.1781463125.git.mst@redhat.com>
 References: <cover.1781463125.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -103,15 +96,15 @@ Content-Disposition: inline
 In-Reply-To: <cover.1781463125.git.mst@redhat.com>
 X-Mailer: git-send-email 2.51.2.2891.g4157995a80.dirty
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -129,254 +122,288 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 
-This field is mostly unused and sometimes confusing. We even have
-a TODO-like comment to drop it, the comment is removed in this commit.
+Move and rename vhost_backend_update_device_iotlb(),
+vhost_backend_invalidate_device_iotlb(), and
+vhost_backend_handle_iotlb_msg() from vhost-backend.c to vhost.c.
+vhost-backend.c is actually about vhost-kernel backend. But these
+functions are shared with vhost-user, so let's move them into
+generic place. Moreover, two of three functions becomes static as
+they are used only in vhost.c.
 
-The field is used to held VHOST_USER_F_PROTOCOL_FEATURES for vhost-user
-and/or VHOST_NET_F_VIRTIO_NET_HDR for vhost-net (which may be
-vhost-user-net). But we can simply recalculate these two flags in place
-from hdev->features, and from net-client for VHOST_NET_F_VIRTIO_NET_HDR.
-
-Note: removing field from x-query-virtio-status result is incompatible
-change. We can do it because the command is unstable.
-
-Cc: devel@lists.libvirt.org
 Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Acked-by: Markus Armbruster <armbru@redhat.com>
-Reviewed-by: Daniil Tatianin <d-tatianin@yandex-team.ru>
-Acked-by: Raphael Norwitz <raphael.s.norwitz@gmail.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Tested-by: Lei Yang <leiyang@redhat.com>
+Based-on: <20260206095258.894504-1-vsementsov@yandex-team.ru>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-Id: <20260420200339.708640-3-vsementsov@yandex-team.ru>
+Message-Id: <20260420202032.714884-2-vsementsov@yandex-team.ru>
 ---
- hw/block/vhost-user-blk.c   |  1 -
- hw/net/vhost_net.c          | 26 ++++++++++++++------------
- hw/scsi/vhost-scsi.c        |  1 -
- hw/scsi/vhost-user-scsi.c   |  1 -
- hw/virtio/vdpa-dev.c        |  1 -
- hw/virtio/vhost-user.c      | 17 ++++++++---------
- hw/virtio/virtio-hmp-cmds.c |  2 --
- hw/virtio/virtio-qmp.c      |  4 ----
- include/hw/virtio/vhost.h   |  7 -------
- qapi/virtio.json            |  3 ---
- 10 files changed, 22 insertions(+), 41 deletions(-)
+ hw/virtio/vhost-backend.c         | 82 +----------------------------
+ hw/virtio/vhost-user.c            |  2 +-
+ hw/virtio/vhost.c                 | 85 +++++++++++++++++++++++++++++--
+ include/hw/virtio/vhost-backend.h | 11 ----
+ include/hw/virtio/vhost.h         |  2 +
+ 5 files changed, 86 insertions(+), 96 deletions(-)
 
-diff --git a/hw/block/vhost-user-blk.c b/hw/block/vhost-user-blk.c
-index c151e83677..dc99de0263 100644
---- a/hw/block/vhost-user-blk.c
-+++ b/hw/block/vhost-user-blk.c
-@@ -348,7 +348,6 @@ static int vhost_user_blk_connect(DeviceState *dev, Error **errp)
-     s->dev.nvqs = s->num_queues;
-     s->dev.vqs = s->vhost_vqs;
-     s->dev.vq_index = 0;
--    s->dev.backend_features = 0;
+diff --git a/hw/virtio/vhost-backend.c b/hw/virtio/vhost-backend.c
+index 4367db0d95..fea88afc39 100644
+--- a/hw/virtio/vhost-backend.c
++++ b/hw/virtio/vhost-backend.c
+@@ -298,7 +298,7 @@ static void vhost_kernel_iotlb_read(void *opaque)
+                 break;
+             }
  
-     vhost_dev_set_config_notifier(&s->dev, &blk_ops);
- 
-diff --git a/hw/net/vhost_net.c b/hw/net/vhost_net.c
-index 25e9f1fd24..fda90e231e 100644
---- a/hw/net/vhost_net.c
-+++ b/hw/net/vhost_net.c
-@@ -52,8 +52,14 @@ int vhost_net_set_config(struct vhost_net *net, const uint8_t *data,
- 
- void vhost_net_ack_features_ex(struct vhost_net *net, const uint64_t *features)
- {
--    virtio_features_copy(net->dev.acked_features_ex,
--                         net->dev.backend_features_ex);
-+    virtio_features_clear(net->dev.acked_features_ex);
-+    if (net->backend == -1) {
-+        net->dev.acked_features =
-+           net->dev.features & (1ULL << VHOST_USER_F_PROTOCOL_FEATURES);
-+    } else if (!qemu_has_vnet_hdr(net->nc)) {
-+        net->dev.acked_features = 1ULL << VHOST_NET_F_VIRTIO_NET_HDR;
-+    }
-+
-     vhost_ack_features_ex(&net->dev, net->feature_bits, features);
- }
- 
-@@ -258,12 +264,9 @@ struct vhost_net *vhost_net_init(VhostNetOptions *options)
-         if (r < 0) {
-             goto fail;
+-            vhost_backend_handle_iotlb_msg(dev, &msg.iotlb);
++            vhost_handle_iotlb_msg(dev, &msg.iotlb);
          }
--        net->dev.backend_features = qemu_has_vnet_hdr(options->net_backend)
--            ? 0 : (1ULL << VHOST_NET_F_VIRTIO_NET_HDR);
-         net->backend = r;
-         net->dev.protocol_features = 0;
      } else {
--        virtio_features_clear(net->dev.backend_features_ex);
-         net->dev.protocol_features = 0;
-         net->backend = -1;
+         struct vhost_msg msg;
+@@ -313,7 +313,7 @@ static void vhost_kernel_iotlb_read(void *opaque)
+                 break;
+             }
  
-@@ -284,13 +287,12 @@ struct vhost_net *vhost_net_init(VhostNetOptions *options)
-             net->dev.features &= ~(1ULL << VIRTIO_NET_F_MRG_RXBUF);
+-            vhost_backend_handle_iotlb_msg(dev, &msg.iotlb);
++            vhost_handle_iotlb_msg(dev, &msg.iotlb);
          }
- 
--        if (virtio_features_andnot(missing_features,
--                                   net->dev.backend_features_ex,
--                                   net->dev.features_ex)) {
--            fprintf(stderr, "vhost lacks feature mask 0x" VIRTIO_FEATURES_FMT
--                   " for backend\n", VIRTIO_FEATURES_PR(missing_features));
--            goto fail;
--        }
-+        if (!qemu_has_vnet_hdr(options->net_backend) &&
-+            (~net->dev.features & (1ULL << VHOST_NET_F_VIRTIO_NET_HDR))) {
-+            fprintf(stderr, "vhost lacks feature mask 0x%llx for backend\n",
-+                    ~net->dev.features & (1ULL << VHOST_NET_F_VIRTIO_NET_HDR));
-+             goto fail;
-+         }
      }
- 
-     /* Set sane init value. Override when guest acks. */
-diff --git a/hw/scsi/vhost-scsi.c b/hw/scsi/vhost-scsi.c
-index 699863cc10..859888fdba 100644
---- a/hw/scsi/vhost-scsi.c
-+++ b/hw/scsi/vhost-scsi.c
-@@ -275,7 +275,6 @@ static void vhost_scsi_realize(DeviceState *dev, Error **errp)
-     vqs = g_new0(struct vhost_virtqueue, vsc->dev.nvqs);
-     vsc->dev.vqs = vqs;
-     vsc->dev.vq_index = 0;
--    vsc->dev.backend_features = 0;
- 
-     ret = vhost_dev_init(&vsc->dev, (void *)(uintptr_t)vhostfd,
-                          VHOST_BACKEND_TYPE_KERNEL, 0, errp);
-diff --git a/hw/scsi/vhost-user-scsi.c b/hw/scsi/vhost-user-scsi.c
-index 3612897d4b..5070178dc2 100644
---- a/hw/scsi/vhost-user-scsi.c
-+++ b/hw/scsi/vhost-user-scsi.c
-@@ -159,7 +159,6 @@ static int vhost_user_scsi_connect(DeviceState *dev, Error **errp)
-     vsc->dev.nvqs = VIRTIO_SCSI_VQ_NUM_FIXED + vs->conf.num_queues;
-     vsc->dev.vqs = s->vhost_vqs;
-     vsc->dev.vq_index = 0;
--    vsc->dev.backend_features = 0;
- 
-     ret = vhost_dev_init(&vsc->dev, &s->vhost_user, VHOST_BACKEND_TYPE_USER, 0,
-                          errp);
-diff --git a/hw/virtio/vdpa-dev.c b/hw/virtio/vdpa-dev.c
-index 4532d63653..06179e402e 100644
---- a/hw/virtio/vdpa-dev.c
-+++ b/hw/virtio/vdpa-dev.c
-@@ -104,7 +104,6 @@ static void vhost_vdpa_device_realize(DeviceState *dev, Error **errp)
-     v->dev.vqs = vqs;
-     v->dev.vq_index = 0;
-     v->dev.vq_index_end = v->dev.nvqs;
--    v->dev.backend_features = 0;
-     v->started = false;
- 
-     ret = vhost_vdpa_get_iova_range(v->vhostfd, &iova_range);
+ }
+@@ -392,81 +392,3 @@ const VhostOps kernel_ops = {
+         .vhost_send_device_iotlb_msg = vhost_kernel_send_device_iotlb_msg,
+ };
+ #endif
+-
+-int vhost_backend_update_device_iotlb(struct vhost_dev *dev,
+-                                             uint64_t iova, uint64_t uaddr,
+-                                             uint64_t len,
+-                                             IOMMUAccessFlags perm)
+-{
+-    struct vhost_iotlb_msg imsg;
+-
+-    imsg.iova =  iova;
+-    imsg.uaddr = uaddr;
+-    imsg.size = len;
+-    imsg.type = VHOST_IOTLB_UPDATE;
+-
+-    switch (perm) {
+-    case IOMMU_RO:
+-        imsg.perm = VHOST_ACCESS_RO;
+-        break;
+-    case IOMMU_WO:
+-        imsg.perm = VHOST_ACCESS_WO;
+-        break;
+-    case IOMMU_RW:
+-        imsg.perm = VHOST_ACCESS_RW;
+-        break;
+-    default:
+-        return -EINVAL;
+-    }
+-
+-    if (dev->vhost_ops && dev->vhost_ops->vhost_send_device_iotlb_msg)
+-        return dev->vhost_ops->vhost_send_device_iotlb_msg(dev, &imsg);
+-
+-    return -ENODEV;
+-}
+-
+-int vhost_backend_invalidate_device_iotlb(struct vhost_dev *dev,
+-                                                 uint64_t iova, uint64_t len)
+-{
+-    struct vhost_iotlb_msg imsg;
+-
+-    imsg.iova = iova;
+-    imsg.size = len;
+-    imsg.type = VHOST_IOTLB_INVALIDATE;
+-
+-    if (dev->vhost_ops && dev->vhost_ops->vhost_send_device_iotlb_msg)
+-        return dev->vhost_ops->vhost_send_device_iotlb_msg(dev, &imsg);
+-
+-    return -ENODEV;
+-}
+-
+-int vhost_backend_handle_iotlb_msg(struct vhost_dev *dev,
+-                                          struct vhost_iotlb_msg *imsg)
+-{
+-    int ret = 0;
+-
+-    if (unlikely(!dev->vdev)) {
+-        error_report("Unexpected IOTLB message when virtio device is stopped");
+-        return -EINVAL;
+-    }
+-
+-    switch (imsg->type) {
+-    case VHOST_IOTLB_MISS:
+-        ret = vhost_device_iotlb_miss(dev, imsg->iova,
+-                                      imsg->perm != VHOST_ACCESS_RO);
+-        break;
+-    case VHOST_IOTLB_ACCESS_FAIL:
+-        /* FIXME: report device iotlb error */
+-        error_report("Access failure IOTLB message type not supported");
+-        ret = -ENOTSUP;
+-        break;
+-    case VHOST_IOTLB_UPDATE:
+-    case VHOST_IOTLB_INVALIDATE:
+-    default:
+-        error_report("Unexpected IOTLB message type");
+-        ret = -EINVAL;
+-        break;
+-    }
+-
+-    return ret;
+-}
 diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
-index 13c73e7b17..7ce17c5b2d 100644
+index 4fb136b7b3..6978d8ee94 100644
 --- a/hw/virtio/vhost-user.c
 +++ b/hw/virtio/vhost-user.c
-@@ -1465,14 +1465,15 @@ static int vhost_user_set_features(struct vhost_dev *dev,
-     int ret;
+@@ -1901,7 +1901,7 @@ static gboolean backend_read(QIOChannel *ioc, GIOCondition condition,
  
-     /*
--     * We need to include any extra backend only feature bits that
--     * might be needed by our device. Currently this includes the
--     * VHOST_USER_F_PROTOCOL_FEATURES bit for enabling protocol
--     * features.
-+     * Don't lose VHOST_USER_F_PROTOCOL_FEATURES, which is vhost-user
-+     * specific.
-      */
--    ret = vhost_user_set_u64(dev, VHOST_USER_SET_FEATURES,
--                              features | dev->backend_features,
--                              log_enabled);
-+    if (virtio_has_feature(dev->features, VHOST_USER_F_PROTOCOL_FEATURES)) {
-+        features |= 1ULL << VHOST_USER_F_PROTOCOL_FEATURES;
+     switch (hdr.request) {
+     case VHOST_USER_BACKEND_IOTLB_MSG:
+-        ret = vhost_backend_handle_iotlb_msg(dev, &payload.iotlb);
++        ret = vhost_handle_iotlb_msg(dev, &payload.iotlb);
+         break;
+     case VHOST_USER_BACKEND_CONFIG_CHANGE_MSG:
+         ret = vhost_user_backend_handle_config_change(dev);
+diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
+index c610007e81..4d42f8bda4 100644
+--- a/hw/virtio/vhost.c
++++ b/hw/virtio/vhost.c
+@@ -916,14 +916,92 @@ static void vhost_region_addnop(MemoryListener *listener,
+     vhost_region_add_section(dev, section);
+ }
+ 
++static int vhost_update_device_iotlb(struct vhost_dev *dev,
++                                     uint64_t iova, uint64_t uaddr,
++                                     uint64_t len,
++                                     IOMMUAccessFlags perm)
++{
++    struct vhost_iotlb_msg imsg;
++
++    imsg.iova =  iova;
++    imsg.uaddr = uaddr;
++    imsg.size = len;
++    imsg.type = VHOST_IOTLB_UPDATE;
++
++    switch (perm) {
++    case IOMMU_RO:
++        imsg.perm = VHOST_ACCESS_RO;
++        break;
++    case IOMMU_WO:
++        imsg.perm = VHOST_ACCESS_WO;
++        break;
++    case IOMMU_RW:
++        imsg.perm = VHOST_ACCESS_RW;
++        break;
++    default:
++        return -EINVAL;
 +    }
 +
-+    ret = vhost_user_set_u64(dev, VHOST_USER_SET_FEATURES, features,
-+                             log_enabled);
++    if (dev->vhost_ops && dev->vhost_ops->vhost_send_device_iotlb_msg) {
++        return dev->vhost_ops->vhost_send_device_iotlb_msg(dev, &imsg);
++    }
++
++    return -ENODEV;
++}
++
++static int vhost_invalidate_device_iotlb(struct vhost_dev *dev,
++                                         uint64_t iova, uint64_t len)
++{
++    struct vhost_iotlb_msg imsg;
++
++    imsg.iova = iova;
++    imsg.size = len;
++    imsg.type = VHOST_IOTLB_INVALIDATE;
++
++    if (dev->vhost_ops && dev->vhost_ops->vhost_send_device_iotlb_msg) {
++        return dev->vhost_ops->vhost_send_device_iotlb_msg(dev, &imsg);
++    }
++
++    return -ENODEV;
++}
++
++int vhost_handle_iotlb_msg(struct vhost_dev *dev, struct vhost_iotlb_msg *imsg)
++{
++    int ret = 0;
++
++    if (unlikely(!dev->vdev)) {
++        error_report("Unexpected IOTLB message when virtio device is stopped");
++        return -EINVAL;
++    }
++
++    switch (imsg->type) {
++    case VHOST_IOTLB_MISS:
++        ret = vhost_device_iotlb_miss(dev, imsg->iova,
++                                      imsg->perm != VHOST_ACCESS_RO);
++        break;
++    case VHOST_IOTLB_ACCESS_FAIL:
++        /* FIXME: report device iotlb error */
++        error_report("Access failure IOTLB message type not supported");
++        ret = -ENOTSUP;
++        break;
++    case VHOST_IOTLB_UPDATE:
++    case VHOST_IOTLB_INVALIDATE:
++    default:
++        error_report("Unexpected IOTLB message type");
++        ret = -EINVAL;
++        break;
++    }
++
++    return ret;
++}
++
+ static void vhost_iommu_unmap_notify(IOMMUNotifier *n, IOMMUTLBEntry *iotlb)
+ {
+     struct vhost_iommu *iommu = container_of(n, struct vhost_iommu, n);
+     struct vhost_dev *hdev = iommu->hdev;
+     hwaddr iova = iotlb->iova + iommu->iommu_offset;
  
-     if (virtio_has_feature(dev->protocol_features,
-                            VHOST_USER_PROTOCOL_F_STATUS)) {
-@@ -2192,8 +2193,6 @@ static int vhost_user_backend_init(struct vhost_dev *dev, void *opaque,
-             (dev->config_ops && dev->config_ops->vhost_dev_config_notifier);
-         uint64_t protocol_features;
- 
--        dev->backend_features |= 1ULL << VHOST_USER_F_PROTOCOL_FEATURES;
--
-         err = vhost_user_get_u64(dev, VHOST_USER_GET_PROTOCOL_FEATURES,
-                                  &protocol_features);
-         if (err < 0) {
-diff --git a/hw/virtio/virtio-hmp-cmds.c b/hw/virtio/virtio-hmp-cmds.c
-index 1daae482d3..4bf9a3109d 100644
---- a/hw/virtio/virtio-hmp-cmds.c
-+++ b/hw/virtio/virtio-hmp-cmds.c
-@@ -176,8 +176,6 @@ void hmp_virtio_status(Monitor *mon, const QDict *qdict)
-         hmp_virtio_dump_features(mon, s->vhost_dev->features);
-         monitor_printf(mon, "    Acked features:\n");
-         hmp_virtio_dump_features(mon, s->vhost_dev->acked_features);
--        monitor_printf(mon, "    Backend features:\n");
--        hmp_virtio_dump_features(mon, s->vhost_dev->backend_features);
-         monitor_printf(mon, "    Protocol features:\n");
-         hmp_virtio_dump_protocols(mon, s->vhost_dev->protocol_features);
+-    if (vhost_backend_invalidate_device_iotlb(hdev, iova,
+-                                              iotlb->addr_mask + 1)) {
++    if (vhost_invalidate_device_iotlb(hdev, iova, iotlb->addr_mask + 1)) {
+         error_report("Fail to invalidate device iotlb");
      }
-diff --git a/hw/virtio/virtio-qmp.c b/hw/virtio/virtio-qmp.c
-index f9cdca50d9..71717c56a4 100644
---- a/hw/virtio/virtio-qmp.c
-+++ b/hw/virtio/virtio-qmp.c
-@@ -710,8 +710,6 @@ VirtioStatus *qmp_x_query_virtio_status(const char *path, Error **errp)
-                                                  vdev->guest_features_ex);
-     status->host_features = qmp_decode_features(vdev->device_id,
-                                                 vdev->host_features_ex);
--    status->backend_features = qmp_decode_features(vdev->device_id,
--                                                 vdev->backend_features_ex);
+ }
+@@ -1304,8 +1382,7 @@ int vhost_device_iotlb_miss(struct vhost_dev *dev, uint64_t iova, int write)
+         len = MIN(iotlb.addr_mask + 1, len);
+         iova = iova & ~iotlb.addr_mask;
  
-     switch (vdev->device_endian) {
-     case VIRTIO_DEVICE_ENDIAN_LITTLE:
-@@ -752,8 +750,6 @@ VirtioStatus *qmp_x_query_virtio_status(const char *path, Error **errp)
-             qmp_decode_features(vdev->device_id, hdev->features_ex);
-         status->vhost_dev->acked_features =
-             qmp_decode_features(vdev->device_id, hdev->acked_features_ex);
--        status->vhost_dev->backend_features =
--            qmp_decode_features(vdev->device_id, hdev->backend_features_ex);
+-        ret = vhost_backend_update_device_iotlb(dev, iova, uaddr,
+-                                                len, iotlb.perm);
++        ret = vhost_update_device_iotlb(dev, iova, uaddr, len, iotlb.perm);
+         if (ret) {
+             trace_vhost_iotlb_miss(dev, 4);
+             error_report("Fail to update device iotlb");
+diff --git a/include/hw/virtio/vhost-backend.h b/include/hw/virtio/vhost-backend.h
+index ff94fa1734..57497e197a 100644
+--- a/include/hw/virtio/vhost-backend.h
++++ b/include/hw/virtio/vhost-backend.h
+@@ -222,17 +222,6 @@ typedef struct VhostOps {
+     vhost_check_device_state_op vhost_check_device_state;
+ } VhostOps;
  
-         status->vhost_dev->protocol_features =
-             qmp_decode_protocols(hdev->protocol_features);
+-int vhost_backend_update_device_iotlb(struct vhost_dev *dev,
+-                                             uint64_t iova, uint64_t uaddr,
+-                                             uint64_t len,
+-                                             IOMMUAccessFlags perm);
+-
+-int vhost_backend_invalidate_device_iotlb(struct vhost_dev *dev,
+-                                                 uint64_t iova, uint64_t len);
+-
+-int vhost_backend_handle_iotlb_msg(struct vhost_dev *dev,
+-                                          struct vhost_iotlb_msg *imsg);
+-
+ int vhost_user_gpu_set_socket(struct vhost_dev *dev, int fd);
+ 
+ int vhost_user_get_shared_object(struct vhost_dev *dev, unsigned char *uuid,
 diff --git a/include/hw/virtio/vhost.h b/include/hw/virtio/vhost.h
-index 3dfec5e15c..e139e05985 100644
+index 54862f9b44..b292e9f0fe 100644
 --- a/include/hw/virtio/vhost.h
 +++ b/include/hw/virtio/vhost.h
-@@ -100,16 +100,9 @@ struct vhost_dev {
-      *
-      * @features: available features provided by the backend
-      * @acked_features: final negotiated features with front-end driver
--     *
--     * @backend_features: this is used in a couple of places to either
--     * store VHOST_USER_F_PROTOCOL_FEATURES to apply to
--     * VHOST_USER_SET_FEATURES or VHOST_NET_F_VIRTIO_NET_HDR. Its
--     * future use should be discouraged and the variable retired as
--     * its easy to confuse with the VirtIO backend_features.
-      */
-     VIRTIO_DECLARE_FEATURES(features);
-     VIRTIO_DECLARE_FEATURES(acked_features);
--    VIRTIO_DECLARE_FEATURES(backend_features);
+@@ -403,6 +403,8 @@ int vhost_dev_set_inflight(struct vhost_dev *dev,
+ int vhost_dev_get_inflight(struct vhost_dev *dev, uint16_t queue_size,
+                            struct vhost_inflight *inflight);
+ bool vhost_dev_has_iommu(struct vhost_dev *dev);
++int vhost_handle_iotlb_msg(struct vhost_dev *dev, struct vhost_iotlb_msg *imsg);
++
  
-     /**
-      * @protocol_features: is the vhost-user only feature set by
-diff --git a/qapi/virtio.json b/qapi/virtio.json
-index 09dd0e6d05..671f1ad793 100644
---- a/qapi/virtio.json
-+++ b/qapi/virtio.json
-@@ -85,8 +85,6 @@
- #
- # @acked-features: vhost_dev acked_features
- #
--# @backend-features: vhost_dev backend_features
--#
- # @protocol-features: vhost_dev protocol_features
- #
- # @max-queues: vhost_dev max_queues
-@@ -106,7 +104,6 @@
-             'vq-index': 'int',
-             'features': 'VirtioDeviceFeatures',
-             'acked-features': 'VirtioDeviceFeatures',
--            'backend-features': 'VirtioDeviceFeatures',
-             'protocol-features': 'VhostDeviceProtocols',
-             'max-queues': 'uint64',
-             'backend-cap': 'uint64',
+ static inline bool vhost_dev_has_feature(struct vhost_dev *dev,
+                                          uint64_t feature)
 -- 
 MST
 
