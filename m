@@ -4,93 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6265DCD98D2
-	for <qemu-devel@archiver.kernel.org>; Sun, 14 Jun 2026 19:14:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DAEACCD98D2
+	for <qemu-devel@archiver.kernel.org>; Sun, 14 Jun 2026 19:14:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wYqCK-0006Xx-Or; Sun, 14 Jun 2026 15:08:44 -0400
+	id 1wYqDP-00009n-Jq; Sun, 14 Jun 2026 15:09:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wYqCG-0006Mf-Dn
- for qemu-devel@nongnu.org; Sun, 14 Jun 2026 15:08:40 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wYqDI-0007mJ-Kl
+ for qemu-devel@nongnu.org; Sun, 14 Jun 2026 15:09:46 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wYqCE-0002Iy-Sy
- for qemu-devel@nongnu.org; Sun, 14 Jun 2026 15:08:40 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wYqDF-0002iE-V0
+ for qemu-devel@nongnu.org; Sun, 14 Jun 2026 15:09:43 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781464118;
+ s=mimecast20190719; t=1781464181;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=hgZCAxYFmsfw6kD1fGPLDLIDbzOgcLGMPPIQ9rhuoMw=;
- b=ZQa7FiazSFuFMlUWi/qEk9JgAMtIOS6afZUAq4tMJFF0usAI2wTeG7XnFghvIxCaejz1du
- xweSOUnm5QeboCWaoZ+ckQOamQiAwQ5M+yKHzvw70KLlN0D1jOAOIkLPs0p24U10jyeSoZ
- J2IUm6NKcrM3fRkQnihO+7f1HaxdLjM=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=dxQiufrlju7WrdEUkSc4WpPk6ds42ZX5EDbbuJfT9OE=;
+ b=H65Pu3kpbib9/GfBbDEwM7Xb1b5JmGafx1ckEUWyknys35jMzxWR+pnhU5Lv4oi8VsA8d1
+ BtkP2c8PJo1JcDy3FqUiFu0dOGnTyms9D4+bEzbrDN+PIdII2JeNuUFBU7GV29nZbHmcK2
+ xNFGkCXl53KBBm1qd/Tk4UIqO9vgb9w=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-426-fvTsw8dtNZ26P-otDYkr_g-1; Sun, 14 Jun 2026 15:08:36 -0400
-X-MC-Unique: fvTsw8dtNZ26P-otDYkr_g-1
-X-Mimecast-MFC-AGG-ID: fvTsw8dtNZ26P-otDYkr_g_1781464116
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-45ef5e38a18so1174864f8f.1
- for <qemu-devel@nongnu.org>; Sun, 14 Jun 2026 12:08:36 -0700 (PDT)
+ us-mta-213-sgII0XexNkOi90w00nGBtQ-1; Sun, 14 Jun 2026 15:09:40 -0400
+X-MC-Unique: sgII0XexNkOi90w00nGBtQ-1
+X-Mimecast-MFC-AGG-ID: sgII0XexNkOi90w00nGBtQ_1781464179
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-490cc1ae292so15158465e9.1
+ for <qemu-devel@nongnu.org>; Sun, 14 Jun 2026 12:09:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1781464115; x=1782068915; darn=nongnu.org;
+ d=redhat.com; s=google; t=1781464179; x=1782068979; darn=nongnu.org;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=hgZCAxYFmsfw6kD1fGPLDLIDbzOgcLGMPPIQ9rhuoMw=;
- b=FmBF2BXqzzd/aO4Ub6aqZPZr5M28Y9jIAgp3gcZFbHo9mrjNQjuuHGmPtrOpfW8kvQ
- ey+Rq/+g5zMgCc5VTPOMwEhr9GNXY3Qc+DOFF2Sw4RWL/I0ZEvg6DoyKhRmm+tkhVfQy
- 9Jmeuuz8eolV1MZifJUO/yiTrHVTZsMME3+SIyATwpD3MB01yb+txhWPT2J9mfBynvap
- RL/KiejlrwKeZETEcRP9C9OXrnvScf8rrPJ1Fvy5QesMtM9LuHJcYobHHYMM74QHgJjd
- yjosgtNn9OQmDgFJo/Vfxjtai2hpl78ArlahQlRZWegL6lFgI2Ams946a/H6ieS+yG+E
- Z0pg==
+ bh=dxQiufrlju7WrdEUkSc4WpPk6ds42ZX5EDbbuJfT9OE=;
+ b=heKcja27/R6kWyBK2Lmn6baokQulB/hBmTop6nS0ULMWOxdZ0/ng07OWiLYuBWzvs3
+ 6V8xax1Gq+5RfaluVmJ0vZ9dWhktaa5re2cqPF0wL0MYKNE9v0XGdK0dY5Yygy20dNGx
+ 8pESDStl5cfL6TuTcbt71B0tGI0ckAoRZ+Ap1Ogn4GVupNO8BrF8tzvHEk+NwuLT1Ndh
+ YJpZuSl7McSSFVhEx58g5HS8ec1hwbJeTgMima/IHaEqlH/SW7jtdkGzgHEeHk8gGKVR
+ B5lT+0fo2FBjxarIBRDzFqPJXZ/qnajmWeHpGOrVrPsbOe39FiDAExTl0uOm4S0iPB9s
+ O2Gw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781464115; x=1782068915;
+ d=1e100.net; s=20251104; t=1781464179; x=1782068979;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=hgZCAxYFmsfw6kD1fGPLDLIDbzOgcLGMPPIQ9rhuoMw=;
- b=qZ+m8P4Kco+lW3PQt9RJDTYWxvBJTJ0+/AqrEz6hjWqMYN1VXN0o4W4DE/VeLWdRWB
- taQUgNl1GORGqw9j/nbjq0v7kjp3ZXW0tZTnx370r1HQTVxc5V5I21ivSZfcqQsFmHSh
- tPvLpLr0bhO89kz55Vmj7V+XVV7wPuIXH/lh+EUU9tAi+DvK3i4kf6RR1n7eNUhKqB/O
- yCjac/jqZMjkbz4Vj6zKJ9x7nR9vmKmkjOl8gRKn0EViCbWHyUzBa2hGYj5nEnioir1B
- WW3zWthOTSx87B8zWh/+pPJ27wmat0kFFbhd6IwbD3wGoRuPRKuRHHknKxocHP5u/kMc
- T30w==
-X-Gm-Message-State: AOJu0YwxR07QvttqrMU5tLbfkV15B50MQrJ0DlU56skYdiuxMzRB5AEo
- lpWrW4OIwGbTCAETb10YDnKwyRRbgz2MB07ZA7ntT7ntEAlVBAeaOfUTFm8SSQGHx7jMj1BoU07
- RIIIuPHMpfcOWJwc+VXKuk67yyB0J3j6csi9F6TqQZqFRcX9VHk47Xhws7ktpll3ZKzpNUeDsss
- YuEEgITigClr1auEJ9GP0l3IY4J2S94KjzMA==
-X-Gm-Gg: Acq92OG4ds3k7ww5yC7KJ0PTDT5raf3sczOI5hJjsjMbqs0jHRpj4xR8H8xnfPkgnJV
- j9gXn7w2nQz7ki8cvlcVo9dGQolvTH+ipWpvA8f3+sNbJKD3NWoLr33Ax59+u62ojqLaE9RT9dE
- nI4lfWgpoT0LLxtjSW9GzjSkZtG286FK9Fps9u+FBFF1MWBxh9cylzTmA0rctPgvFoV7v4CIICY
- dimDyLjRYy7ahdVIz8qYTerXrg2eHeA03mE4jcV6AvDcqLvE3k0BrNLWklkW/xwwSJcXdwnFwow
- r3sOb2d4Wma59N6DinZtf8VOjlGHN7FVQhO5Ao94YtAO32MgHMMefQ8Voui5JgBcYnka0hDLMsi
- OUEvb0QijoFmm4bJKf0lJv6hRzyUmUlu1cwXrfcrY8/4=
-X-Received: by 2002:a05:600c:6214:b0:490:8fd1:72a with SMTP id
- 5b1f17b1804b1-49220086792mr86911155e9.3.1781464115415; 
- Sun, 14 Jun 2026 12:08:35 -0700 (PDT)
-X-Received: by 2002:a05:600c:6214:b0:490:8fd1:72a with SMTP id
- 5b1f17b1804b1-49220086792mr86910895e9.3.1781464114889; 
- Sun, 14 Jun 2026 12:08:34 -0700 (PDT)
+ bh=dxQiufrlju7WrdEUkSc4WpPk6ds42ZX5EDbbuJfT9OE=;
+ b=bvy1FPoeVVNsY/nJiOhGIgQRrMwXzxBpcxWZn9G46lGRCaligWUMoawAE8T8NGzmUl
+ jhTTufDPnBrPSsC433IogniD2I3/fFhJdx7AoBg/iZjZITxBsc/yiXvQsWSDHyNdOQuP
+ RZLxJQ1HwkX7nWo4dMqkxLkvsHCRIoYe8s03kd/uYhdtouf/l2gEwjmf1JBqTQV0kIrt
+ ZZUJSwlhhndHpc5DiIPp75Miyq4KRUbF/+CWF+jaPOcEymcmS2F6/+T8QVn1fCRLVb+G
+ UdAAdeROu4lT9mnE4XIk5mlnbnaEVupn1bgMD5TAsyO4NGosoQ9Lk8d1E3ExCyyLDPjC
+ Sv5g==
+X-Gm-Message-State: AOJu0YyLLRleOZ+5x11LvcuhTQ517rsC+qXz1kFHlL49N/fFtmkXkoOY
+ K1G4OYWBRYo5/5MOBbbL+WRXKeUpU80EaOFtuEE8LE0yCTpUC/nRu3uMBe2yE61hnB4gL+tdIHU
+ MU6CtSMMTbFmX+jpBRZh2m7enEqQ/v1pK018aTcDm86Cz18WJEVmJx0zGEQezjREsnVlvjd9KDi
+ kwmzG4u26QuW16eXn/1oDx7lzO37Pwg3PFqQ==
+X-Gm-Gg: Acq92OGwT7p6g8kCMI9qwI500ZUoY69PrCd7vzA4Hq97rKdDeGlRaId4ZDiVQ89mFsw
+ 5K3wXQlDc5e3uVpkrvQoOgfCz4qY8ImnS3eLt5DvZm3atkHVVjNNbr08rrdV19g9lHE7dz+1TPI
+ PxSzBYSqBf7DYTM6N9LFZl8vuNdbNqj+XZlYxq5EHvjJnhsZEnrP78Za/JvZsbq8faaOJQkULZd
+ Ly5ovTyUcZX8uccXL9VbSRHm6avUg/aTGguQYLoZHpxtjOvSeVc6oCRCnZ2VfQELEda7ICzWvH1
+ hOLek4nEK+W9kL404ppSEWWo08LAOaKPs268qA9hS9yrgwtIbmCVZJiMkJ/grRu6BECnBmR53Nk
+ 60ulM7J/wwHG+Xc/Tcptm7KxcSNolMLiMO7ZmUpXqBCY=
+X-Received: by 2002:a05:600c:3542:b0:490:b4a8:e031 with SMTP id
+ 5b1f17b1804b1-490ec480e65mr121660405e9.4.1781464178703; 
+ Sun, 14 Jun 2026 12:09:38 -0700 (PDT)
+X-Received: by 2002:a05:600c:3542:b0:490:b4a8:e031 with SMTP id
+ 5b1f17b1804b1-490ec480e65mr121660105e9.4.1781464178158; 
+ Sun, 14 Jun 2026 12:09:38 -0700 (PDT)
 Received: from redhat.com (IGLD-80-230-85-71.inter.net.il. [80.230.85.71])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-492202edf89sm197256955e9.1.2026.06.14.12.08.33
+ 5b1f17b1804b1-4922035b4absm184726005e9.11.2026.06.14.12.09.36
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 14 Jun 2026 12:08:34 -0700 (PDT)
-Date: Sun, 14 Jun 2026 15:08:32 -0400
+ Sun, 14 Jun 2026 12:09:37 -0700 (PDT)
+Date: Sun, 14 Jun 2026 15:09:36 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Max Makarov <maxpain177@gmail.com>, Max Makarov <maxpain@linux.com>,
- Raphael Norwitz <rnorwitz@nvidia.com>,
+ Albert Esteve <aesteve@redhat.com>,
  Stefano Garzarella <sgarzare@redhat.com>,
- Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- qemu-block@nongnu.org
-Subject: [PULL 066/106] vhost-user-blk: do not force VIRTIO_BLK_F_SIZE_MAX
-Message-ID: <639dcd58707951cb88a0dddcb5027780c53d49dd.1781463125.git.mst@redhat.com>
+ Alyssa Ross <hi@alyssa.is>, Stefan Hajnoczi <stefanha@redhat.com>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Subject: [PULL 093/106] vhost_user.rst: Add SHMEM_MAP/_UNMAP to spec
+Message-ID: <588acb45c29f8c30f98b5cbafb9fd09cb932bd88.1781463125.git.mst@redhat.com>
 References: <cover.1781463125.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -98,14 +98,14 @@ Content-Disposition: inline
 In-Reply-To: <cover.1781463125.git.mst@redhat.com>
 X-Mailer: git-send-email 2.51.2.2891.g4157995a80.dirty
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -122,49 +122,119 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Max Makarov <maxpain177@gmail.com>
+From: Albert Esteve <aesteve@redhat.com>
 
-vhost_user_blk_get_features() unconditionally advertises
-VIRTIO_BLK_F_SIZE_MAX regardless of what the backend reports in
-its config. The built-in QSD vhost-user-blk backend sets
-size_max=0, creating a contradictory state where the feature bit
-tells the guest that size_max is valid but the value is zero.
+Add SHMEM_MAP/_UNMAP request to the vhost-user
+spec documentation.
 
-The in-process virtio-blk device does not advertise
-VIRTIO_BLK_F_SIZE_MAX (it also sets size_max=0 in config), so
-guests never see this contradiction with native virtio-blk.
-
-Linux tolerates size_max=0 because blk_validate_limits() silently
-corrects max_segment_size=0 to BLK_MAX_SEGMENT_SIZE (65536).
-Windows viostor, however, trusts the feature bit and uses the raw
-size_max=0 in its scatter-gather calculations, producing
-zero-length segments that hang I/O. The disk appears empty to
-Windows (no GPT, no partitions), causing INACCESSIBLE_BOOT_DEVICE.
-
-Stop force-adding VIRTIO_BLK_F_SIZE_MAX in the frontend. The
-feature remains in user_feature_bits[], so backends that properly
-advertise it with a valid config value will still work.
-
-Signed-off-by: Max Makarov <maxpain@linux.com>
+Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
+Reviewed-by: Alyssa Ross <hi@alyssa.is>
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Signed-off-by: Albert Esteve <aesteve@redhat.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-Id: <20260331134721.96047-1-maxpain@linux.com>
+Message-Id: <20260304165223.2166175-4-aesteve@redhat.com>
 ---
- hw/block/vhost-user-blk.c | 1 -
- 1 file changed, 1 deletion(-)
+ docs/interop/vhost-user.rst | 64 +++++++++++++++++++++++++++++++++++++
+ 1 file changed, 64 insertions(+)
 
-diff --git a/hw/block/vhost-user-blk.c b/hw/block/vhost-user-blk.c
-index 530f44ab52..5c73a58ee0 100644
---- a/hw/block/vhost-user-blk.c
-+++ b/hw/block/vhost-user-blk.c
-@@ -283,7 +283,6 @@ static uint64_t vhost_user_blk_get_features(VirtIODevice *vdev,
-     VHostUserBlk *s = VHOST_USER_BLK(vdev);
+diff --git a/docs/interop/vhost-user.rst b/docs/interop/vhost-user.rst
+index 883b1e90a2..4182d721ca 100644
+--- a/docs/interop/vhost-user.rst
++++ b/docs/interop/vhost-user.rst
+@@ -362,6 +362,28 @@ Device state transfer parameters
+   In the future, additional phases might be added e.g. to allow
+   iterative migration while the device is running.
  
-     /* Turn on pre-defined features */
--    virtio_add_feature(&features, VIRTIO_BLK_F_SIZE_MAX);
-     virtio_add_feature(&features, VIRTIO_BLK_F_SEG_MAX);
-     virtio_add_feature(&features, VIRTIO_BLK_F_GEOMETRY);
-     virtio_add_feature(&features, VIRTIO_BLK_F_TOPOLOGY);
++MMAP request
++^^^^^^^^^^^^
++
+++-------+---------+-----------+------------+-----+-------+
++| shmid | padding | fd_offset | shm_offset | len | flags |
+++-------+---------+-----------+------------+-----+-------+
++
++:shmid: a 8-bit shared memory region identifier
++
++:fd_offset: a 64-bit offset of this area from the start
++            of the supplied file descriptor
++
++:shm_offset: a 64-bit offset from the start of the
++             pointed shared memory region
++
++:len: a 64-bit size of the memory to map
++
++:flags: a 64-bit value:
++
++  - 0: Pages are mapped read-only
++  - 1: Pages are mapped read-write
++
+ C structure
+ -----------
+ 
+@@ -387,6 +409,7 @@ In QEMU the vhost-user message is implemented with the following struct:
+           VhostUserInflight inflight;
+           VhostUserShared object;
+           VhostUserTransferDeviceState transfer_state;
++          VhostUserMMap mmap;
+       };
+   } QEMU_PACKED VhostUserMsg;
+ 
+@@ -1083,6 +1106,7 @@ Protocol features
+   #define VHOST_USER_PROTOCOL_F_DEVICE_STATE            19
+   #define VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFLIGHT 20
+   #define VHOST_USER_PROTOCOL_F_GPA_ADDRESSES           21
++  #define VHOST_USER_PROTOCOL_F_SHMEM_MAP               22
+ 
+ Front-end message types
+ -----------------------
+@@ -1904,6 +1928,46 @@ is sent by the front-end.
+   when the operation is successful, or non-zero otherwise. Note that if the
+   operation fails, no fd is sent to the backend.
+ 
++``VHOST_USER_BACKEND_SHMEM_MAP``
++  :id: 9
++  :equivalent ioctl: N/A
++  :request payload: fd and ``struct VhostUserMMap``
++  :reply payload: N/A
++
++  When the ``VHOST_USER_PROTOCOL_F_SHMEM`` protocol feature has been
++  successfully negotiated, this message can be submitted by the backends to
++  advertise a new mapping to be made in a given VIRTIO Shared Memory Region.
++  Upon receiving the message, the front-end will mmap the given fd into the
++  VIRTIO Shared Memory Region with the requested ``shmid``.
++
++  If ``VHOST_USER_PROTOCOL_F_REPLY_ACK`` is negotiated, and
++  back-end set the ``VHOST_USER_NEED_REPLY`` flag, the front-end
++  must respond with zero when operation is successfully completed,
++  or non-zero otherwise.
++
++  Mapping over an already existing map is not allowed and requests shall fail.
++  Therefore, the memory range in the request must correspond with a valid,
++  free region of the VIRTIO Shared Memory Region. Also, note that mappings
++  consume resources and that the request can fail when there are no resources
++  available. Lastly, mappings are automatically unmapped by the front-end
++  across device reset operation.
++
++``VHOST_USER_BACKEND_SHMEM_UNMAP``
++  :id: 10
++  :equivalent ioctl: N/A
++  :request payload: ``struct VhostUserMMap``
++  :reply payload: N/A
++
++  When the ``VHOST_USER_PROTOCOL_F_SHMEM`` protocol feature has been
++  successfully negotiated, this message can be submitted by the backends so
++  that the front-end un-mmaps a given range (``shm_offset``, ``len``) in the
++  VIRTIO Shared Memory Region with the requested ``shmid``. Note that the
++  given range shall correspond to the entirety of a valid mapped region.
++
++  If ``VHOST_USER_PROTOCOL_F_REPLY_ACK`` is negotiated, and the back-end
++  sets the ``VHOST_USER_NEED_REPLY`` flag, the front-end must respond with
++  zero when operation is successfully completed, or non-zero otherwise.
++
+ .. _reply_ack:
+ 
+ VHOST_USER_PROTOCOL_F_REPLY_ACK
 -- 
 MST
 
