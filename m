@@ -4,90 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6803BCD98D2
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74D9CCD98C5
 	for <qemu-devel@archiver.kernel.org>; Sun, 14 Jun 2026 19:12:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wYqDO-0008MQ-1J; Sun, 14 Jun 2026 15:09:50 -0400
+	id 1wYq9w-0007R1-Qi; Sun, 14 Jun 2026 15:06:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wYqD8-0007ZP-AZ
- for qemu-devel@nongnu.org; Sun, 14 Jun 2026 15:09:38 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wYq9v-0007Qj-LH
+ for qemu-devel@nongnu.org; Sun, 14 Jun 2026 15:06:15 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wYqD7-0002f2-0F
- for qemu-devel@nongnu.org; Sun, 14 Jun 2026 15:09:34 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wYq9u-0001ew-5N
+ for qemu-devel@nongnu.org; Sun, 14 Jun 2026 15:06:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781464172;
+ s=mimecast20190719; t=1781463973;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=Rpal2W86mAE9e6bf+ImoOSz7GYFAC1OuHewPuBp7b9c=;
- b=StDnWNXToVY2eJNFmbRNkQnifTHB3qe0SDaHVOwlyYv1cwdkrFQgfAuHniTIHMPOZehfUQ
- BYA7WvfTWpAzhxJJS6AU6O35ronHsg9UoPox8yt41tMMvhZEEV0OMSJYQaQohRyEujZ0gI
- dgswNy1MxWAP2ahp7vcvaaD9e1grEzs=
+ bh=xAhzQJ1J7Y0DMrpDuFRRLukdxYxQFBbtnkS/vGZ9KXY=;
+ b=OSzMLwYpmDnzzeB9nY+K3JhTO57Rh6ScJPIUuVT3QnMajOW+vPGfluTl0G+8T3uLbnrTm1
+ lBnE3JJ/eY5P3li8hqc9QlBO/YUBvoOrkFJEIf8S2i5UlANL0YLjqayfpikH0rOfe7pUMq
+ sD5LyoTcE3xw+sSH9/ZgX3ZaRY9kGCs=
 Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
  [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-441-My1Pl6sNMQGxWNH1smbSkA-1; Sun, 14 Jun 2026 15:09:30 -0400
-X-MC-Unique: My1Pl6sNMQGxWNH1smbSkA-1
-X-Mimecast-MFC-AGG-ID: My1Pl6sNMQGxWNH1smbSkA_1781464170
+ us-mta-346-RL17JjA_NR-IYTn5-GWw4g-1; Sun, 14 Jun 2026 15:06:09 -0400
+X-MC-Unique: RL17JjA_NR-IYTn5-GWw4g-1
+X-Mimecast-MFC-AGG-ID: RL17JjA_NR-IYTn5-GWw4g_1781463968
 Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-490aadb1386so18042355e9.0
- for <qemu-devel@nongnu.org>; Sun, 14 Jun 2026 12:09:30 -0700 (PDT)
+ 5b1f17b1804b1-490a060eb84so19270865e9.0
+ for <qemu-devel@nongnu.org>; Sun, 14 Jun 2026 12:06:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1781464170; x=1782068970; darn=nongnu.org;
+ d=redhat.com; s=google; t=1781463968; x=1782068768; darn=nongnu.org;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=Rpal2W86mAE9e6bf+ImoOSz7GYFAC1OuHewPuBp7b9c=;
- b=Zp5ptGCEp2SnpESo4S3JQ0/hlXECZ1QoNdeUs7hu54fl8OI/alma9x+Hhdav7+QOIu
- kuSRm93gqHbx1D2BMevfuH7DJGU4vF5Y9VpRWxirzltZ9qP+gnuo77Y4GpGjn+801g49
- ADgF6isjLuvlJs5q7nhzqsg8RFz9DsKvcCvP0EY5XBcjYC8p2Lmku4uzYHRKEZAuB0Jf
- r9a0F8dnmmXzHYIfcfEfU21ZlV0raWBhjLY2BWhcX9pqVp7DRHGQ+RmBcnJf3J8wO+2L
- j/myhzNV5pSdGj3/PC5qmAahutrM/+Tf8mvsmk8h/MqQI5EtkxG+l1q3vPV6BkTYir4U
- l+SA==
+ bh=xAhzQJ1J7Y0DMrpDuFRRLukdxYxQFBbtnkS/vGZ9KXY=;
+ b=BktpXsSHaHS7KFwwscj0yeGABJAMDoUa77ofi50PrpDb7rbpCE/lXNoLEXHxnT/Gc9
+ f3div471RcUCTKDA/d47qmdRvUvAbIejYQ8EyIsptcSdS9j9B9TPnzqCE+1WUrmqI11g
+ ebLanGOWZRpk/sDlCRyvHenUW4rKu4w4qkjARJXF7qz4xol0UtpVZkQcmxWAxUnI+ytl
+ OY6kPmzwBqvyoZDfZ7sDpLi0ZNgokPlbtaSF1SdmNC56aK42K8FLyixDoVxBBsAHJHuu
+ G6Hh4a8+iCoBs1bafeLbuMgw5GvvdGgO0Z5N5fneL//K0PC0Yymx6GhvQPW9fSwSzK5y
+ xDwg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781464170; x=1782068970;
+ d=1e100.net; s=20251104; t=1781463968; x=1782068768;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Rpal2W86mAE9e6bf+ImoOSz7GYFAC1OuHewPuBp7b9c=;
- b=JhMX9+iD4iyyUTmYKXgAu47TWZZT2V1BlHCCry10UK46184RLfONE3steaiYoGfmwr
- 3i+lTzMLlkArfzz66torJ4yaLAmvaoPuRmsOvNKZSFFpIzfSCm5B7YONi6rvkI1OuZi9
- Zi7trcRKNNoWppAbjt1Ag9B0FL/S0TGoas3hZ1JCRpgfO+0m0rYrk0/osvjvLzwbGN41
- ZmeksGp3SNWNwCi6ul4h62u7XDHz1VH56ydU39qpZnRbOiKDgasyOxDL8xo/jjukAnjF
- zKwG5hbkUYGha9DnzdX9mUn4n5II/UvrLVh+3H/7bdfR2lUP6M8P8SnNTJfJBAhS9RR7
- oc0w==
-X-Gm-Message-State: AOJu0Yzaf156y22ieFUZ3B8crFAbuW2FSTsWgtrRu/45FXePc+hMTkfU
- uhDpCwIG2rzDA55S/skxTOxcqz+9GphxEBLRONg/j8jQ9YTMLGndy12VV0vfVeNma8BzD2I1oRG
- 5NTyJtztzg/ypjlCaWUO5YJzqDaCVZBiKNsBpjcc4Se4HdORk7ufVuUZICFqUGyYCvv7Iu8fqYS
- UFrnLF6DFXKPWFOYtqUWkgHJPtJLrfFH/yew==
-X-Gm-Gg: Acq92OE9TvUP2Yvdv943dXs95/0Yrs7Blgdrv7ICQcU73sskD+cfHEOz+xS799UMX5a
- lxP3rtvfkpZ+/3M447DZnVzNdjRE83xasisw+3I4S+rprUP+6qYLjTDIEV7yUiMtFRW9uIU8jzD
- cs2Jb6h3AfIIJ87OyxgiRYOKITMdcCc/I7lZVoRxjOlfcVn37YyD4gLD/FENM6rPxDDexOcqEnx
- 8bEHgS+s2JUEToWRBluqiUpVohBue7pEumyLJFLixD79qeSDpedMKtktKin2+sj2pEDKmlUdm+G
- qkOngXNK9DTGLdhVL+nT3pV7/NeMMhLCSNIqQ0e68QKi/6YLRSM0HWG8PPmvhBhNW3Uw0nd5TO8
- NbCOWeZrb4vJnWrDkkX6rF3Av/2SLiyRMTsxqE9kDdVY=
-X-Received: by 2002:a05:600c:c171:b0:48a:53cb:8604 with SMTP id
- 5b1f17b1804b1-490ec4dfb03mr109813265e9.14.1781464169573; 
- Sun, 14 Jun 2026 12:09:29 -0700 (PDT)
-X-Received: by 2002:a05:600c:c171:b0:48a:53cb:8604 with SMTP id
- 5b1f17b1804b1-490ec4dfb03mr109813025e9.14.1781464169031; 
- Sun, 14 Jun 2026 12:09:29 -0700 (PDT)
+ bh=xAhzQJ1J7Y0DMrpDuFRRLukdxYxQFBbtnkS/vGZ9KXY=;
+ b=mEZFjqgSIeIRM/aG+dQz1JqzjZXYgzNEOWikmG9cgNx2iYFls2xYSB6uKVOOb9XISA
+ Xjt6EH7LOqVZ2uOA8QZt+ErtzPrUzonyigTVkYDbc2fFuMV0WD/mH3jAPFXe7Oix31oV
+ oPFR26geYlCmbimAVs/El5lr9tRHqx9TaN5Hs3yThPODb5oUF13UzP98V61xubwXwMHt
+ 7NkKQZk47XnrMlo9DAxyrrWyZv5TzPzrvEDv9d2lbX1pk99RBJj5iLQc3tmLWTYvE/1e
+ zai/TCifZkFoeimawXMQuVPVfQHrW04A6FoFi9zhykCsb7cVfQbnPpQywWLgQ7WF1H/S
+ Pegg==
+X-Gm-Message-State: AOJu0YyQj3FXCUi62cZoqflXI8RxNji9Ymb6yTEYCNzYLHLr2C0eReGo
+ I00drr9qaMxT5pge/8/S+MVpZR8Px3XKLbKNA8+ZXw7MAH7p+pA5pkELpXulN10HBASkvEve8WW
+ 5G9OveNrgfjFpUDOcT2RVEDuB8os35PDy1yDrDroGnyZoQDqQMD28sWHL3/DEhmRS0zTKKGyqcR
+ e1tLt9EjmTRgWt4nmgnnnh1JEl4v3lN4XEag==
+X-Gm-Gg: Acq92OHT8BlUymaHEev8xvH25tgGffCSkFjsO9A6YUSZJUpAcsOF6tCzTQ2VsFyElQ9
+ fEK8OPTSmnN0VPRyvHRTJdEQ+6GU0XVz7W8aCP3IV30gfoWsITcygt6zrTQ/QjtVtjBocylyTvO
+ fcP7Jqe+HWtdbD6+xwkIyYlB7eu9hkZOnobFb0WXSd7/5E7cMqVoNGSS6yJPAerDYAQ8QNMbxhU
+ 9G8jE36QoEK6ylteR5G2rSeLEPCIMyvyN/IPwNk8uAJzuCeqCdNye17JRsUOnrJ6JqUzoahvzR1
+ qieP1He2UXUwY0l+j1vnZ9jBpFJW4fnrRzK1MCk5BMa9Cs7O9h4vFcPGzrryvXqyvNH2KuDtaZd
+ valE+BkKL+lExUlrGXFeqzcmu39PxsPBcHdu5PiJ7jRc=
+X-Received: by 2002:a05:600c:e556:20b0:490:b9c3:6c58 with SMTP id
+ 5b1f17b1804b1-490ec4fe879mr102011885e9.16.1781463967618; 
+ Sun, 14 Jun 2026 12:06:07 -0700 (PDT)
+X-Received: by 2002:a05:600c:e556:20b0:490:b9c3:6c58 with SMTP id
+ 5b1f17b1804b1-490ec4fe879mr102011545e9.16.1781463967109; 
+ Sun, 14 Jun 2026 12:06:07 -0700 (PDT)
 Received: from redhat.com (IGLD-80-230-85-71.inter.net.il. [80.230.85.71])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49220372ed0sm164096875e9.14.2026.06.14.12.09.27
+ ffacd0b85a97d-4606f26f3basm25831576f8f.12.2026.06.14.12.06.05
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 14 Jun 2026 12:09:28 -0700 (PDT)
-Date: Sun, 14 Jun 2026 15:09:26 -0400
+ Sun, 14 Jun 2026 12:06:06 -0700 (PDT)
+Date: Sun, 14 Jun 2026 15:06:04 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Igor Mammedov <imammedo@redhat.com>,
- Ani Sinha <anisinha@redhat.com>, Zhao Liu <zhao1.liu@intel.com>
-Subject: [PULL 089/106] tests: acpi: x86/q35: add WDAT table test case
-Message-ID: <d7d7c6902362f4f9b1d597abb75e54d27677f08b.1781463125.git.mst@redhat.com>
+ Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ Clement Mathieu--Drif <clement.mathieu--drif@bull.com>,
+ Yi Liu <yi.l.liu@intel.com>, Xudong Hao <xudong.hao@intel.com>,
+ Jason Wang <jasowang@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [PULL 009/106] intel_iommu: Create the nested hwpt with
+ IOMMU_HWPT_ALLOC_PASID flag
+Message-ID: <76330797b0eab06ebe2cbf5c8a21953da71ba4ba.1781463125.git.mst@redhat.com>
 References: <cover.1781463125.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -95,14 +99,14 @@ Content-Disposition: inline
 In-Reply-To: <cover.1781463125.git.mst@redhat.com>
 X-Mailer: git-send-email 2.51.2.2891.g4157995a80.dirty
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -119,49 +123,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Igor Mammedov <imammedo@redhat.com>
+From: Zhenzhong Duan <zhenzhong.duan@intel.com>
 
-Signed-off-by: Igor Mammedov <imammedo@redhat.com>
-Reviewed-by: Ani Sinha <anisinha@redhat.com>
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+When pasid is enabled, any hwpt attached to non-PASID or PASID should be
+IOMMU_HWPT_ALLOC_PASID flagged, or else attachment fails.
+
+Change vtd_destroy_old_fs_hwpt() to pass in 'VTDHostIOMMUDevice *' for
+naming consistency.
+
+Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+Reviewed-by: Clement Mathieu--Drif <clement.mathieu--drif@bull.com>
+Reviewed-by: Yi Liu <yi.l.liu@intel.com>
+Tested-by: Xudong Hao <xudong.hao@intel.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-Id: <20260303092532.2410177-6-imammedo@redhat.com>
+Message-Id: <20260527054658.1021096-5-zhenzhong.duan@intel.com>
 ---
- tests/qtest/bios-tables-test.c | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ hw/i386/intel_iommu_accel.c | 19 ++++++++++++-------
+ 1 file changed, 12 insertions(+), 7 deletions(-)
 
-diff --git a/tests/qtest/bios-tables-test.c b/tests/qtest/bios-tables-test.c
-index 510751799e..af6d9b5136 100644
---- a/tests/qtest/bios-tables-test.c
-+++ b/tests/qtest/bios-tables-test.c
-@@ -2534,6 +2534,18 @@ static void test_acpi_isapc_smbios_legacy(void)
-     free_test_data(&data);
+diff --git a/hw/i386/intel_iommu_accel.c b/hw/i386/intel_iommu_accel.c
+index 3beadab035..6a12cdac10 100644
+--- a/hw/i386/intel_iommu_accel.c
++++ b/hw/i386/intel_iommu_accel.c
+@@ -69,11 +69,13 @@ VTDHostIOMMUDevice *vtd_find_hiod_iommufd(VTDAddressSpace *as)
+     return NULL;
  }
  
-+static void test_acpi_q35_wdat(void)
-+{
-+    test_data data = {
-+        .machine = MACHINE_Q35,
-+        .arch    = "x86",
-+        .variant = ".wdat",
-+    };
-+
-+    test_acpi_one("-machine wdat=on", &data);
-+    free_test_data(&data);
-+}
-+
- static void test_oem_fields(test_data *data)
+-static bool vtd_create_fs_hwpt(HostIOMMUDeviceIOMMUFD *hiodi,
++static bool vtd_create_fs_hwpt(VTDHostIOMMUDevice *vtd_hiod,
+                                VTDPASIDEntry *pe, uint32_t *fs_hwpt_id,
+                                Error **errp)
  {
-     int i;
-@@ -2828,6 +2840,7 @@ int main(int argc, char *argv[])
-             qtest_add_func("acpi/q35/cxl", test_acpi_q35_cxl);
- #endif
-             qtest_add_func("acpi/q35/slic", test_acpi_q35_slic);
-+            qtest_add_func("acpi/q35/wdat", test_acpi_q35_wdat);
++    HostIOMMUDeviceIOMMUFD *hiodi = HOST_IOMMU_DEVICE_IOMMUFD(vtd_hiod->hiod);
+     struct iommu_hwpt_vtd_s1 vtd = {};
++    uint32_t flags = vtd_hiod->iommu_state->pasid ? IOMMU_HWPT_ALLOC_PASID : 0;
+ 
+     vtd.flags = (VTD_SM_PASID_ENTRY_SRE(pe) ? IOMMU_VTD_S1_SRE : 0) |
+                 (VTD_SM_PASID_ENTRY_WPE(pe) ? IOMMU_VTD_S1_WPE : 0) |
+@@ -82,13 +84,16 @@ static bool vtd_create_fs_hwpt(HostIOMMUDeviceIOMMUFD *hiodi,
+     vtd.pgtbl_addr = (uint64_t)vtd_pe_get_fspt_base(pe);
+ 
+     return iommufd_backend_alloc_hwpt(hiodi->iommufd, hiodi->devid,
+-                                      hiodi->hwpt_id, 0, IOMMU_HWPT_DATA_VTD_S1,
+-                                      sizeof(vtd), &vtd, fs_hwpt_id, errp);
++                                      hiodi->hwpt_id, flags,
++                                      IOMMU_HWPT_DATA_VTD_S1, sizeof(vtd), &vtd,
++                                      fs_hwpt_id, errp);
+ }
+ 
+-static void vtd_destroy_old_fs_hwpt(HostIOMMUDeviceIOMMUFD *hiodi,
++static void vtd_destroy_old_fs_hwpt(VTDHostIOMMUDevice *vtd_hiod,
+                                     VTDAddressSpace *vtd_as)
+ {
++    HostIOMMUDeviceIOMMUFD *hiodi = HOST_IOMMU_DEVICE_IOMMUFD(vtd_hiod->hiod);
++
+     if (!vtd_as->fs_hwpt_id) {
+         return;
+     }
+@@ -116,7 +121,7 @@ static bool vtd_device_attach_iommufd(VTDHostIOMMUDevice *vtd_hiod,
+     }
+ 
+     if (vtd_pe_pgtt_is_fst(pe)) {
+-        if (!vtd_create_fs_hwpt(hiodi, pe, &hwpt_id, errp)) {
++        if (!vtd_create_fs_hwpt(vtd_hiod, pe, &hwpt_id, errp)) {
+             return false;
          }
-         if (qtest_has_machine("microvm")) {
-             qtest_add_func("acpi/microvm", test_acpi_microvm_tcg);
+     }
+@@ -126,7 +131,7 @@ static bool vtd_device_attach_iommufd(VTDHostIOMMUDevice *vtd_hiod,
+     trace_vtd_device_attach_hwpt(hiodi->devid, IOMMU_NO_PASID, hwpt_id, ret);
+     if (ret) {
+         /* Destroy old fs_hwpt if it's a replacement */
+-        vtd_destroy_old_fs_hwpt(hiodi, vtd_as);
++        vtd_destroy_old_fs_hwpt(vtd_hiod, vtd_as);
+         if (vtd_pe_pgtt_is_fst(pe)) {
+             vtd_as->fs_hwpt_id = hwpt_id;
+         }
+@@ -161,7 +166,7 @@ static bool vtd_device_detach_iommufd(VTDHostIOMMUDevice *vtd_hiod,
+     }
+ 
+     if (ret) {
+-        vtd_destroy_old_fs_hwpt(hiodi, vtd_as);
++        vtd_destroy_old_fs_hwpt(vtd_hiod, vtd_as);
+     }
+ 
+     return ret;
 -- 
 MST
 
