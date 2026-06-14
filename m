@@ -4,91 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D72A4CD98D2
-	for <qemu-devel@archiver.kernel.org>; Sun, 14 Jun 2026 19:11:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D3BDCD98D6
+	for <qemu-devel@archiver.kernel.org>; Sun, 14 Jun 2026 19:11:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wYqBb-0003Op-Ew; Sun, 14 Jun 2026 15:07:59 -0400
+	id 1wYqBN-0002qj-3m; Sun, 14 Jun 2026 15:07:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wYqBU-0003Hu-H8
- for qemu-devel@nongnu.org; Sun, 14 Jun 2026 15:07:52 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wYqB7-0002Lb-Kr
+ for qemu-devel@nongnu.org; Sun, 14 Jun 2026 15:07:33 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wYqBS-00022t-QO
- for qemu-devel@nongnu.org; Sun, 14 Jun 2026 15:07:52 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wYqB5-0001xX-RQ
+ for qemu-devel@nongnu.org; Sun, 14 Jun 2026 15:07:29 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781464070;
+ s=mimecast20190719; t=1781464047;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=NzyuGiME89aqDLR5LZsqNNgqW2rfSpG7SYs6XXdhRBU=;
- b=M+RFX/McxSHI1oVU4WjXBNVisBnmYVlmL91zinUXFTU6DtDaRdrQSxWQgILjmuYBjD1uce
- 4wtk7d3JmqvQiKngQya2PqAa9Ksnag9srgYB6AcJgPKUDw4gAg+WHsxBW+9L8xN8rKI9w+
- KiKoW6nHtmXiOiaivT3gxu9n+Ko3Kak=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=viOnv7vns4x2QuQDCUIYzKJ96reRINzzZuhUSEBRK4k=;
+ b=CSEvArDgBNoUVGH5Nk9WWXZL6XWOEKleVvo1b7bpAUqRuOzsVa5xRGJkuOBk5gGcxpa2Ff
+ ZR28OM8uYhypUZXrzUHrhS28UsZaRkPUEr+6Yw7uGq1S00R79H7FSwjFvdm1KHSdw6gX+d
+ +uuulWWQAGAhXMuzCFo6Bj4HtmSwAHU=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-540-I11cKia-MFOWb6OuYibddA-1; Sun, 14 Jun 2026 15:07:49 -0400
-X-MC-Unique: I11cKia-MFOWb6OuYibddA-1
-X-Mimecast-MFC-AGG-ID: I11cKia-MFOWb6OuYibddA_1781464068
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-45efa7755faso1005513f8f.1
- for <qemu-devel@nongnu.org>; Sun, 14 Jun 2026 12:07:48 -0700 (PDT)
+ us-mta-348-qaycHxEMNQuaBkROYsHt9Q-1; Sun, 14 Jun 2026 15:07:26 -0400
+X-MC-Unique: qaycHxEMNQuaBkROYsHt9Q-1
+X-Mimecast-MFC-AGG-ID: qaycHxEMNQuaBkROYsHt9Q_1781464045
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-490b93debc8so25300625e9.1
+ for <qemu-devel@nongnu.org>; Sun, 14 Jun 2026 12:07:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1781464068; x=1782068868; darn=nongnu.org;
+ d=redhat.com; s=google; t=1781464045; x=1782068845; darn=nongnu.org;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=NzyuGiME89aqDLR5LZsqNNgqW2rfSpG7SYs6XXdhRBU=;
- b=t18S1PegH8VVtV3Pd86QpRse95O67Sx1zKt0xxRttWmHMC6Tktiwbs2t9v6J65BBhu
- 2N4w7nxOe6ytfeUY0apQyBHEqobxHtGwTfeCYSOa9WQWF8AfrGMPYXPu6IEh+oOU8I+6
- +7v3RlmbuN9A7UPmzpFuxsp+aQEcZFftw/NPFtonVZpyypz8TsofPDdTnsA7NUEKPcQK
- U+6FeDx4PXjtMEO9Qb6WvxKldr16PUG0a/C3f2oAz1oiiaJ5QAe4D8QuLwepGJIC/cfj
- xNMtW2xtQAcNkWFCml6yT6fBE5aglPHIK1Cd29zIunz304pqHIo0E6BrfYzvCCxQ2yUy
- Gi/Q==
+ bh=viOnv7vns4x2QuQDCUIYzKJ96reRINzzZuhUSEBRK4k=;
+ b=C68mF01HykChhH3yKYKxTMhptyEpCv7uorLKnMaePsxHkjeM9cfzAYZ2LtdD2cZZVp
+ p1DRwQtkkU42tD/5UiRLplx8VibiUOaVwJpdYYXgs+HatTAyrWKBak19VT6/tIfvuADX
+ 5msyZ2Fy2a2UPzdxHsO2lAioNgHHDoZ0fVQ72ZkoS49KJEvNg1+RiP8D4UlvfMeUzHpr
+ v9qhQXplvrj0E6nc921GG2+DdJE8efMMj15uVMj8ewxifbKbreOIWakHUr2BjCUAh+kA
+ +B53epTbSlQ0iAT1JWX4vpH42YQwhAxhLWJ4SiC6NBJ61lULzDneD3yL0FsI3/ojtKR7
+ JD5w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781464068; x=1782068868;
+ d=1e100.net; s=20251104; t=1781464045; x=1782068845;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=NzyuGiME89aqDLR5LZsqNNgqW2rfSpG7SYs6XXdhRBU=;
- b=UB3qYlWgAsMk59vkGfMI0Wd8yd2KO82sYZMtXIFR9DV7FRLIPEwF5zwu1R7hp/Ynoi
- XGsi8CoUQMkdzj2SVE9VlqD9KljoPHEnTiU0nVVFskZjBdOBqZ/8NLEBct4BmjAbndqY
- rFaZAocajV3dWChy5DxllvfdEPrliih6JFOTrx5mefjgbdh9W9c48CqQlyDtUc5dKfz3
- XdFQFmVTIRlvI2/6/X2SXQLWs9h+r5/eB1qWJzM3CiYdxaCKOe8h2J+IQb316L6LGOFz
- GTXNcgbZp005NkbeImdRf+Hl7QO8yzOqySMtiR1hOI2BRu8uiyH7zFuqPdiJJfcTmkCh
- WRzw==
-X-Gm-Message-State: AOJu0Yys2jl2XDpquwFvctJmACHU01iY7Typz+wMAS2kl2/noJi0RYaf
- kAwlbSjbDqzv0INfgNv1bv3tsdjMkNkmSypa+kTzVHOFIXlDlra6uDaGm3MoYfoJQFW18J8X1RP
- M8bp55/3TLFKrtxsaQ+llUgKPtubpNjq8sKBMmQP8SElsm1jjXXB3naQKLp14fwlpH4TfV3KM3U
- 40rgbr/sw+PyrKxB3X3D0E8c/kVVoORyUYzw==
-X-Gm-Gg: Acq92OEYR8E3z1FKrS8xWC9liOcYMvAhXA6cgofIlOdPUduUO3z/wuykwlrPQGr38md
- DLErcixcOx05k0dmtaZIUUIldDS4FulMJvZjM8Rsrqbdcvm7q4BxM9LS7e0qiDMraMPJ3mrEXyB
- uI21DWK8+QS99NU7qvXqILC9aI9qpNCG229FRlN1QONNHoWr07tfMMwlEoUG7i3wViBcekKcCS1
- g5tnckOF4OYj8HVj0XWVdV83d+ZGD6FSFZTWTD0DnPp1muSJ294FT7bpOeYWYvMfkEhtoOiuCCY
- bv7UW9t2NcxbKAZWgcNcvdGxxFHsGd4dMnwFjytlyRR45GW35r270Z8e/p5oOblmz0KlyHa+MNW
- qc3p+zSzD4txG3JBkyu2xmGF7dp6l/5jahOGz4Lj6fn8=
-X-Received: by 2002:a05:6000:2082:b0:460:3234:77d4 with SMTP id
- ffacd0b85a97d-46074b8effdmr9861242f8f.42.1781464067704; 
- Sun, 14 Jun 2026 12:07:47 -0700 (PDT)
-X-Received: by 2002:a05:6000:2082:b0:460:3234:77d4 with SMTP id
- ffacd0b85a97d-46074b8effdmr9861206f8f.42.1781464067174; 
- Sun, 14 Jun 2026 12:07:47 -0700 (PDT)
+ bh=viOnv7vns4x2QuQDCUIYzKJ96reRINzzZuhUSEBRK4k=;
+ b=cUt8leL/XofkRjSq9agZaQSNHEXIx/IyeNaTpcUge2k0j8fUz2raqoWSXmOLA+cUof
+ wQTq21m1Svd2VUzUWKxvCjYdBa+QpmPWOmrYtPBg0MhBgI63vKp9W0DXRc25ZMaQkNnA
+ y1X4lLA2b0547oOuBkn1Fw70HJCC1oK1sYP7zewqeJHO+6D8fm4II4ekoJiuwPs3zNCQ
+ bJdjrmjYLN0bXpkfXWSWydvSGt1ONfLmrmISSPUeGAInOWyE8jCa8rZHh0SmUJLIvQTM
+ nUNWVZTNp9G9w4W+XnpEX22rPrjz/Mf199dlC6Ke47kaxr6PD1PespZqugHj/yLw6F3Q
+ uBsg==
+X-Gm-Message-State: AOJu0YyEeHQsUGkfHLndZ9rIrsdrDfb/v8sUrUKPuZnqKiyu0CEWmlCL
+ zyBY0pnhnvMGhz9F3ML7lTwuZVyejWqaM097mP0ROmTSkyDla23/kOwKmOgWL7HUDVCI5aOwJHx
+ zDDokF1x8oyK0mmh7TNOgG9dRucinPEwWgw2NxkBgnDzdnCsBo1Zv3qhFeLQOO8jzV5F5Is30LD
+ kYorj/IrcfQ1zDG7PJNZpZ55drqrDpWHHBhQ==
+X-Gm-Gg: Acq92OG3vG51UBCtsrH0voAE9MJYHnaQXV2BeMVdDuvZMiuj5mds4lc2p0flYtptIAJ
+ 0cW4Msqqkrwt03hv+agLr5NshYbmh0+ghoyfilAP3ejSvnY2/Kg8AVkS2Hr6gGY5YrtN1zaq/wk
+ 0pmm6UkRDVvvjlpXrYUZuSOxDOB23wgPSAt9nLhlCwMi2YefV82W0LPatWcPG0Yv4dc5lZZtNtZ
+ dsFI5iPfF8G/j/CTUWE7/U+Va3nqL80eqvUD99Mmo0LtiyyQooK6boIlMO5/6NlLkowoYPis2rZ
+ mTFavMyJQBVWzZtUeEUYtWfVGFlFEhVGcqlUCF6DtH7eJS3FJvrEpg11yTEMnSOu22p2AFaaiqU
+ H3l3mDlyBGOBlKipCYidckR6W6ycZ1JFqErcSzRZa6Tg=
+X-Received: by 2002:a05:600c:47d1:b0:490:e170:b7ee with SMTP id
+ 5b1f17b1804b1-492200c04c0mr59651985e9.17.1781464044643; 
+ Sun, 14 Jun 2026 12:07:24 -0700 (PDT)
+X-Received: by 2002:a05:600c:47d1:b0:490:e170:b7ee with SMTP id
+ 5b1f17b1804b1-492200c04c0mr59651785e9.17.1781464044067; 
+ Sun, 14 Jun 2026 12:07:24 -0700 (PDT)
 Received: from redhat.com (IGLD-80-230-85-71.inter.net.il. [80.230.85.71])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4606f26f450sm29269901f8f.10.2026.06.14.12.07.46
+ 5b1f17b1804b1-490ea9563b8sm174731045e9.2.2026.06.14.12.07.22
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 14 Jun 2026 12:07:46 -0700 (PDT)
-Date: Sun, 14 Jun 2026 15:07:45 -0400
+ Sun, 14 Jun 2026 12:07:22 -0700 (PDT)
+Date: Sun, 14 Jun 2026 15:07:21 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
  Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ Daniil Tatianin <d-tatianin@yandex-team.ru>,
  Raphael Norwitz <raphael.s.norwitz@gmail.com>,
  Stefano Garzarella <sgarzare@redhat.com>
-Subject: [PULL 046/106] vhost-user: make trace events more readable
-Message-ID: <6fdb2219f46e39df9f4182e53e0f7f3e277e92f1.1781463125.git.mst@redhat.com>
+Subject: [PULL 037/106] vhost: make vhost_memory_unmap() null-safe
+Message-ID: <558084367e9059dbe9f851699cc90be3499ed0fa.1781463125.git.mst@redhat.com>
 References: <cover.1781463125.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -122,118 +123,130 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 
+This helps to simplify failure paths of vhost_virtqueue_start()
+a lot. We also need to zero-out pointers on unmap, to not try
+to unmap invalid pointers.
+
 Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Reviewed-by: Daniil Tatianin <d-tatianin@yandex-team.ru>
 Reviewed-by: Raphael Norwitz <raphael.s.norwitz@gmail.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-Id: <20260420200339.708640-21-vsementsov@yandex-team.ru>
+Message-Id: <20260420200339.708640-12-vsementsov@yandex-team.ru>
 ---
- hw/virtio/trace-events |  4 +--
- hw/virtio/vhost-user.c | 63 ++++++++++++++++++++++++++++++++++++++++--
- 2 files changed, 63 insertions(+), 4 deletions(-)
+ hw/virtio/vhost.c | 41 +++++++++++++++++++++--------------------
+ 1 file changed, 21 insertions(+), 20 deletions(-)
 
-diff --git a/hw/virtio/trace-events b/hw/virtio/trace-events
-index 658cc365e7..aa1ffa5e94 100644
---- a/hw/virtio/trace-events
-+++ b/hw/virtio/trace-events
-@@ -25,8 +25,8 @@ vhost_user_set_mem_table_withfd(int index, const char *name, uint64_t memory_siz
- vhost_user_postcopy_waker(const char *rb, uint64_t rb_offset) "%s + 0x%"PRIx64
- vhost_user_postcopy_waker_found(uint64_t client_addr) "0x%"PRIx64
- vhost_user_postcopy_waker_nomatch(const char *rb, uint64_t rb_offset) "%s + 0x%"PRIx64
--vhost_user_read(uint32_t req, uint32_t flags) "req:%d flags:0x%"PRIx32""
--vhost_user_write(uint32_t req, uint32_t flags) "req:%d flags:0x%"PRIx32""
-+vhost_user_read(uint32_t req, const char *req_name, uint32_t flags) "req:%d (%s) flags:0x%"PRIx32""
-+vhost_user_write(uint32_t req, const char *req_name, uint32_t flags) "req:%d (%s) flags:0x%"PRIx32""
- vhost_user_create_notifier(int idx, void *n) "idx:%d n:%p"
- 
- # vhost-vdpa.c
-diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
-index 31eaf65430..4fb136b7b3 100644
---- a/hw/virtio/vhost-user.c
-+++ b/hw/virtio/vhost-user.c
-@@ -114,6 +114,63 @@ typedef enum VhostUserBackendRequest {
-     VHOST_USER_BACKEND_MAX
- }  VhostUserBackendRequest;
- 
-+#define VHOST_USER_CASE(name) \
-+    case VHOST_USER_##name: \
-+        return #name;
-+
-+static const char *vhost_req_name(VhostUserRequest req)
-+{
-+    switch (req) {
-+    VHOST_USER_CASE(NONE)
-+    VHOST_USER_CASE(GET_FEATURES)
-+    VHOST_USER_CASE(SET_FEATURES)
-+    VHOST_USER_CASE(SET_OWNER)
-+    VHOST_USER_CASE(RESET_OWNER)
-+    VHOST_USER_CASE(SET_MEM_TABLE)
-+    VHOST_USER_CASE(SET_LOG_BASE)
-+    VHOST_USER_CASE(SET_LOG_FD)
-+    VHOST_USER_CASE(SET_VRING_NUM)
-+    VHOST_USER_CASE(SET_VRING_ADDR)
-+    VHOST_USER_CASE(SET_VRING_BASE)
-+    VHOST_USER_CASE(GET_VRING_BASE)
-+    VHOST_USER_CASE(SET_VRING_KICK)
-+    VHOST_USER_CASE(SET_VRING_CALL)
-+    VHOST_USER_CASE(SET_VRING_ERR)
-+    VHOST_USER_CASE(GET_PROTOCOL_FEATURES)
-+    VHOST_USER_CASE(SET_PROTOCOL_FEATURES)
-+    VHOST_USER_CASE(GET_QUEUE_NUM)
-+    VHOST_USER_CASE(SET_VRING_ENABLE)
-+    VHOST_USER_CASE(SEND_RARP)
-+    VHOST_USER_CASE(NET_SET_MTU)
-+    VHOST_USER_CASE(SET_BACKEND_REQ_FD)
-+    VHOST_USER_CASE(IOTLB_MSG)
-+    VHOST_USER_CASE(SET_VRING_ENDIAN)
-+    VHOST_USER_CASE(GET_CONFIG)
-+    VHOST_USER_CASE(SET_CONFIG)
-+    VHOST_USER_CASE(CREATE_CRYPTO_SESSION)
-+    VHOST_USER_CASE(CLOSE_CRYPTO_SESSION)
-+    VHOST_USER_CASE(POSTCOPY_ADVISE)
-+    VHOST_USER_CASE(POSTCOPY_LISTEN)
-+    VHOST_USER_CASE(POSTCOPY_END)
-+    VHOST_USER_CASE(GET_INFLIGHT_FD)
-+    VHOST_USER_CASE(SET_INFLIGHT_FD)
-+    VHOST_USER_CASE(GPU_SET_SOCKET)
-+    VHOST_USER_CASE(RESET_DEVICE)
-+    VHOST_USER_CASE(GET_MAX_MEM_SLOTS)
-+    VHOST_USER_CASE(ADD_MEM_REG)
-+    VHOST_USER_CASE(REM_MEM_REG)
-+    VHOST_USER_CASE(SET_STATUS)
-+    VHOST_USER_CASE(GET_STATUS)
-+    VHOST_USER_CASE(GET_SHARED_OBJECT)
-+    VHOST_USER_CASE(SET_DEVICE_STATE_FD)
-+    VHOST_USER_CASE(CHECK_DEVICE_STATE)
-+    default:
-+        return "<unknown>";
-+    }
-+}
-+
-+#undef VHOST_USER_CASE
-+
- typedef struct VhostUserMemoryRegion {
-     uint64_t guest_phys_addr;
-     uint64_t memory_size;
-@@ -308,7 +365,8 @@ static int vhost_user_read_header(struct vhost_dev *dev, VhostUserMsg *msg)
-         return -EPROTO;
+diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
+index 131a2fbf87..b9b7a984e3 100644
+--- a/hw/virtio/vhost.c
++++ b/hw/virtio/vhost.c
+@@ -473,14 +473,20 @@ static void *vhost_memory_map(struct vhost_dev *dev, hwaddr addr,
      }
- 
--    trace_vhost_user_read(msg->hdr.request, msg->hdr.flags);
-+    trace_vhost_user_read(msg->hdr.request,
-+                          vhost_req_name(msg->hdr.request), msg->hdr.flags);
- 
-     return 0;
  }
-@@ -428,7 +486,8 @@ static int vhost_user_write(struct vhost_dev *dev, VhostUserMsg *msg,
-         return ret < 0 ? -saved_errno : -EIO;
+ 
+-static void vhost_memory_unmap(struct vhost_dev *dev, void *buffer,
++static void vhost_memory_unmap(struct vhost_dev *dev, void **buffer,
+                                hwaddr len, int is_write,
+                                hwaddr access_len)
+ {
++    if (!*buffer) {
++        return;
++    }
++
+     if (!vhost_dev_has_iommu(dev)) {
+-        address_space_unmap(dev->vdev->dma_as, buffer, len, is_write,
++        address_space_unmap(dev->vdev->dma_as, *buffer, len, is_write,
+                             access_len);
+     }
++
++    *buffer = NULL;
+ }
+ 
+ static int vhost_verify_ring_part_mapping(void *ring_hva,
+@@ -1324,33 +1330,33 @@ int vhost_virtqueue_start(struct vhost_dev *dev,
+     vq->desc = vhost_memory_map(dev, vq->desc_phys, l, false);
+     if (!vq->desc) {
+         r = -ENOMEM;
+-        goto fail_alloc_desc;
++        goto fail;
      }
  
--    trace_vhost_user_write(msg->hdr.request, msg->hdr.flags);
-+    trace_vhost_user_write(msg->hdr.request, vhost_req_name(msg->hdr.request),
-+                           msg->hdr.flags);
+     l = vq->avail_size;
+     vq->avail = vhost_memory_map(dev, vq->avail_phys, l, false);
+     if (!vq->avail) {
+         r = -ENOMEM;
+-        goto fail_alloc_avail;
++        goto fail;
+     }
+ 
+     l = vq->used_size;
+     vq->used = vhost_memory_map(dev, vq->used_phys, l, true);
+     if (!vq->used) {
+         r = -ENOMEM;
+-        goto fail_alloc_used;
++        goto fail;
+     }
+ 
+     r = vhost_virtqueue_set_addr(dev, vq, vhost_vq_index, dev->log_enabled);
+     if (r < 0) {
+-        goto fail_alloc;
++        goto fail;
+     }
+ 
+     file.fd = event_notifier_get_fd(virtio_queue_get_host_notifier(vvq));
+     r = dev->vhost_ops->vhost_set_vring_kick(dev, &file);
+     if (r) {
+         VHOST_OPS_DEBUG(r, "vhost_set_vring_kick failed");
+-        goto fail_kick;
++        goto fail;
+     }
+ 
+     /* Clear and discard previous events if any. */
+@@ -1370,24 +1376,19 @@ int vhost_virtqueue_start(struct vhost_dev *dev,
+         file.fd = -1;
+         r = dev->vhost_ops->vhost_set_vring_call(dev, &file);
+         if (r) {
+-            goto fail_vector;
++            goto fail;
+         }
+     }
  
      return 0;
+ 
+-fail_vector:
+-fail_kick:
+-fail_alloc:
+-    vhost_memory_unmap(dev, vq->used, virtio_queue_get_used_size(vdev, idx),
++fail:
++    vhost_memory_unmap(dev, &vq->used, virtio_queue_get_used_size(vdev, idx),
+                        0, 0);
+-fail_alloc_used:
+-    vhost_memory_unmap(dev, vq->avail, virtio_queue_get_avail_size(vdev, idx),
++    vhost_memory_unmap(dev, &vq->avail, virtio_queue_get_avail_size(vdev, idx),
+                        0, 0);
+-fail_alloc_avail:
+-    vhost_memory_unmap(dev, vq->desc, virtio_queue_get_desc_size(vdev, idx),
++    vhost_memory_unmap(dev, &vq->desc, virtio_queue_get_desc_size(vdev, idx),
+                        0, 0);
+-fail_alloc_desc:
+     return r;
+ }
+ 
+@@ -1434,11 +1435,11 @@ static int do_vhost_virtqueue_stop(struct vhost_dev *dev,
+                                                 vhost_vq_index);
+     }
+ 
+-    vhost_memory_unmap(dev, vq->used, virtio_queue_get_used_size(vdev, idx),
++    vhost_memory_unmap(dev, &vq->used, virtio_queue_get_used_size(vdev, idx),
+                        1, virtio_queue_get_used_size(vdev, idx));
+-    vhost_memory_unmap(dev, vq->avail, virtio_queue_get_avail_size(vdev, idx),
++    vhost_memory_unmap(dev, &vq->avail, virtio_queue_get_avail_size(vdev, idx),
+                        0, virtio_queue_get_avail_size(vdev, idx));
+-    vhost_memory_unmap(dev, vq->desc, virtio_queue_get_desc_size(vdev, idx),
++    vhost_memory_unmap(dev, &vq->desc, virtio_queue_get_desc_size(vdev, idx),
+                        0, virtio_queue_get_desc_size(vdev, idx));
+     return r;
  }
 -- 
 MST
