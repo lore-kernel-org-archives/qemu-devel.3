@@ -4,108 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD88CCD98C5
-	for <qemu-devel@archiver.kernel.org>; Sun, 14 Jun 2026 19:14:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18020CD98D2
+	for <qemu-devel@archiver.kernel.org>; Sun, 14 Jun 2026 19:14:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wYqCp-0007LF-Im; Sun, 14 Jun 2026 15:09:15 -0400
+	id 1wYqDK-0007rw-UK; Sun, 14 Jun 2026 15:09:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wYqCb-00077Z-Pc
- for qemu-devel@nongnu.org; Sun, 14 Jun 2026 15:09:05 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wYqCk-0007EF-Jn
+ for qemu-devel@nongnu.org; Sun, 14 Jun 2026 15:09:11 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wYqCa-0002Nc-5J
- for qemu-devel@nongnu.org; Sun, 14 Jun 2026 15:09:01 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wYqCi-0002Oy-SS
+ for qemu-devel@nongnu.org; Sun, 14 Jun 2026 15:09:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781464139;
+ s=mimecast20190719; t=1781464148;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ok0lvba2stfaZNgrdWga/lmddPgOemeWMEkvpGK7Gy8=;
- b=S050wSoLqGNRGN4Vi+80BtqDzP86RhgfyKJKgEsBlHzhRnL9b0rXLTrzQB+7mVqBOoKuxw
- gqim1X2XkDlohSHm+h+3iX8/KEAyUPpipglk65CRQPcMTJxQyL/lyv8VsFtOQt7GYHB8K5
- GHKkZm6XuCO3vMsH7P8NKksgVpzYlGk=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=FczVbIScfdeHNZS44E/9RwCeDdg9P6d3ILixOOMivMk=;
+ b=ZaYgNzcxbqTfTKEQf+kXVSeVkJOzDixTLzGuPAydkfu2mJYbD3/YVQc/VPWT6ELPH60x/q
+ M6EEm1zm4eHhrNblPr6VtY8O3I1fh72AuVpvUitZKpeamsltJH9pZUKBneXlDLQWo8Nhiq
+ T1aSNL96dGD4mCROUUSMpO2m2epAgBg=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-622-BsJLz5WjMz69G7P9ioc4hw-1; Sun, 14 Jun 2026 15:08:58 -0400
-X-MC-Unique: BsJLz5WjMz69G7P9ioc4hw-1
-X-Mimecast-MFC-AGG-ID: BsJLz5WjMz69G7P9ioc4hw_1781464137
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-460129ef947so1596509f8f.1
- for <qemu-devel@nongnu.org>; Sun, 14 Jun 2026 12:08:58 -0700 (PDT)
+ us-mta-595-dectmnEZMB2ocKuTyTA63A-1; Sun, 14 Jun 2026 15:09:06 -0400
+X-MC-Unique: dectmnEZMB2ocKuTyTA63A-1
+X-Mimecast-MFC-AGG-ID: dectmnEZMB2ocKuTyTA63A_1781464146
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-46011aa5000so1115200f8f.3
+ for <qemu-devel@nongnu.org>; Sun, 14 Jun 2026 12:09:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1781464137; x=1782068937; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:from:to
- :cc:subject:date:message-id:reply-to;
- bh=ok0lvba2stfaZNgrdWga/lmddPgOemeWMEkvpGK7Gy8=;
- b=N/In6g4XO91uj9oBKQ3YdREolimVnBNk6ZkI00X1q8O6znwPKQsURaUkXtdDh7ZVcv
- sLeGFhHhgRqVU9c9gyzAJjlFAGkJiu830e2TGreeykmygZmhJ/jyMLbvceqlZK8yy419
- 5KslXocnCiVR3H4jRaH+NHEBYWWQ5S7WMUgpQVY7pHwBQUH1hD55cRrGBqB9fRRBEDxb
- 9g54BdmjCCFJLrILSSFRW/BLW9tgQ4e6/ElbrKY3epLonHpeekeazZIr6ykB5Er0Wd4d
- jO8igQ3aZJNvdBSGmW8y3k6CZ1lW+NAD58hAnM8LljMpioiRMJH/BJTVsdzjIQrzGQ7T
- ma1w==
+ d=redhat.com; s=google; t=1781464146; x=1782068946; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=FczVbIScfdeHNZS44E/9RwCeDdg9P6d3ILixOOMivMk=;
+ b=SyKhsYYexLTsujGAeEXpxh4Dy7ULVi8d54GWg4yC9KBRBqpYQ6/o7CHU9DhRumVCni
+ bnIkU03uIKwlAeMlYw9qhVk1yzFXGUe2oq394Cxdvje3aZPQ64p62IRVeJhTX363XJ7j
+ 36GOjdp0BCNWdN/MdchXCNNKrXZe1q0XIU6gvN8rckfJBUROLJ2XLgpQSdh2i0aYPxZG
+ 1PXed+UE4LKRwEYjJnxsvl+nsi4KTQtofUobTZyReiPkEIRHmsnIo4e6hufc7jwRr4q/
+ 2jaVzrF4delEfkBj3ly18zxzjVeXVMzdE81ywP5er9ujPZh+bCyIYqDclYltYfIM/Q1U
+ LndA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781464137; x=1782068937;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=ok0lvba2stfaZNgrdWga/lmddPgOemeWMEkvpGK7Gy8=;
- b=Cbe6nQyHoxA7alM6J0BTs5PqPL9rXiB0JuhjI1q9NgQs0EATUQaI7rUjUsAO72+Wvr
- uQLPAaAcmHXHofqO3D8r7J0Zk3wMqzWODOwlWR4myeSPBX877a6zxGKPZe3UVkbTW6uc
- vP4fIaZclJyq2cRSKu2Vz/Q5BI0qmosFnhlwoUn8nLtSTdU84USEsJ3LyPU3mk/AEWZV
- eNPshWZo5taI7jezrKUQW2hBzSVQhAw1cgirXw6f3yeH4fuaRy+LU2GBqgB1+L6vbm35
- oxKWiimjklYfMFaArSXf1gMmhDRRLQqvY1b3zwaFE4hi3aLcFB6PemTLscSAAvT+5/A3
- U2vw==
-X-Gm-Message-State: AOJu0Yzzsd6BdhCy+t9LkfemAeKRYBEPxxE2f1h7eXoyxrVPA3xMJ39h
- I6kKSpBskuQ2HorYMHum7YYCcLH8P2v3JTOycZQjJUbYVe9GU1pkz8smeCckaBvsv8WRuGglsoW
- w6S3E4vCwV6wgkK3e6loHBoqIXYAIaVIENSnFvI89J5TMhOqiyw+wQ0vAH3nXaNYPaSm/T5s2O7
- Ytvddw53L1nlys0jfBKJQS143t0q3jHEksiw==
-X-Gm-Gg: Acq92OELt5ARqAyzX+MheM4P6eifR7w7BHakWm3f4pbw3AoYBcKlBFUNTXqGX4yD1ZF
- 4jKcqSVvS7YP62T2+pZbwVXIPcYUqn003QFRo2rBzbzeAZ7oGmOuIY/CTd3X26xsPcLQNjoZGun
- U1BSAjQUOCeXS71f3VUzE80BJH6+KS1XDKxEC+8NeuOmRCEKFdyCmsAHREZtEhgVlAiaRhbP4c6
- tzsR9209JEvNLe1DfQpZDr7Pc59ctDUGBZCXMl6kp2CzH/pDgE+8tSeUc+sfscp0njBfflNvtga
- CwSIXCMK1kdYUXUyrebMR7slJBNuaTYazcPKCKKB4JUOy+StByhBDLryquXIy3WtNnN940ge5Iq
- /v4f1T5Jt55bOj6LJd6tGeaGPZHuEWVR7DamImrnnJmc=
-X-Received: by 2002:a05:600c:46c4:b0:490:b355:9c8c with SMTP id
- 5b1f17b1804b1-490ec4fbcb7mr152436305e9.23.1781464136820; 
- Sun, 14 Jun 2026 12:08:56 -0700 (PDT)
-X-Received: by 2002:a05:600c:46c4:b0:490:b355:9c8c with SMTP id
- 5b1f17b1804b1-490ec4fbcb7mr152436045e9.23.1781464136320; 
- Sun, 14 Jun 2026 12:08:56 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1781464146; x=1782068946;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=FczVbIScfdeHNZS44E/9RwCeDdg9P6d3ILixOOMivMk=;
+ b=jUvFz4e7OScgIzfuuOUALcHX2whubn+Ny/EENvbD3cBGJGiWa6xDxI3I53AOhlKA5P
+ xfnVfYFqkS6WqIl0H3aMHdmRu37vXuFBRVLzHK5+L3npEEQsm+iaIMUA6BiMKazkXQfX
+ 4opFTexBOhJowFg7JAJPpu4ZxbhoVsnkr3ILv+koWu9KCCwAnjNXtVesS9d4VIORaD64
+ ldbS7Kk0m4g7o8NOJa4BUNnyOiTmhJK7ZVj4qFVNim04ESrNG7bfMnAOeZZ/NcC1yuXE
+ vL4MH/MtyRqucU9/t4RxslfT3zoF5wHx4NS98iRWRo3QX85pGqiZD8WQmP6e1qah1E3e
+ S1uw==
+X-Gm-Message-State: AOJu0YyozNFbYM6Y1YGv7I+DZwQz//e/vhpicOy+mp5H6PGA6XJL9aJI
+ dLZFKHm+m98DxRr84alpStFHWXGe2ym9OPW2/da8u0H/6qcZRXwKN1LtWpirJ4piFugJYNxiNjE
+ op99fucyuzJVoPuxYgSMbcUWwJQ3cmQy/B9rVO/WHgE4bsQcwB8Qx73TWZIfe07v1s/Q9tceLkq
+ u63T6kYt7qNzpRxrH5wIWT3vQV8uAS/7Tpzw==
+X-Gm-Gg: Acq92OEtT1xZOhrWWzfp6pxfk71HSPO3m2spYQiosOywTxS547vTZYAIce8eqN3TMk2
+ /X4X0r6RPF5F2JiLCrfNANcNNUQfnTResiDbY+V04+/yeLBh5uSBvwm8zbcD2xQTTmtk4Y9eCrg
+ SAxH/wY2pqpGB8RLAMU3LSk5966+MLP7FpGjQ/N3hzBQ+d/InVzInxTOcvMNrmXNhF1hO1OyZGD
+ Ve9QZqiJRUAEyh81+Irueptl6Dj0WpiMN7ZWgyFzsQAu21VTQUXMIrRhzsSQS4cXIOVT0i4YYB2
+ JDSIgkfHJi9k8tH95rp+ddZI18yoOaoD7QD9Y4eIWBBOjU4KlfKSxRzNKhq++20MRc1x55QczvW
+ +FJF//xKha7sry3QbxCciZGGt/tPRa5uHeXNXaJOTZQQ=
+X-Received: by 2002:a05:6000:184b:b0:43d:77a8:3baf with SMTP id
+ ffacd0b85a97d-46074b84e9emr10021081f8f.32.1781464145599; 
+ Sun, 14 Jun 2026 12:09:05 -0700 (PDT)
+X-Received: by 2002:a05:6000:184b:b0:43d:77a8:3baf with SMTP id
+ ffacd0b85a97d-46074b84e9emr10021031f8f.32.1781464144999; 
+ Sun, 14 Jun 2026 12:09:04 -0700 (PDT)
 Received: from redhat.com (IGLD-80-230-85-71.inter.net.il. [80.230.85.71])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4606f2b0d4fsm28698969f8f.24.2026.06.14.12.08.55
+ ffacd0b85a97d-4606f2c4240sm25273555f8f.27.2026.06.14.12.09.03
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 14 Jun 2026 12:08:56 -0700 (PDT)
-Date: Sun, 14 Jun 2026 15:08:54 -0400
+ Sun, 14 Jun 2026 12:09:04 -0700 (PDT)
+Date: Sun, 14 Jun 2026 15:09:02 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Eugenio =?utf-8?B?UMOpcmV6?= <eperezma@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>
-Subject: [PULL 075/106] vhost: factor out the get of last used desc in SVQ
-Message-ID: <90369a1165c4ffc5a22c9e0fb1743bc0ff896861.1781463125.git.mst@redhat.com>
+ Sairaj Kodilkar <sarunkod@amd.com>, Vasant Hegde <vasant.hegde@amd.com>,
+ Alejandro Jimenez <alejandro.j.jimenez@oracle.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [PULL 079/106] amd_iommu: Use switch case to determine mmio register
+ name
+Message-ID: <25e92816c8d1e4c4f35a1c076d9d5f3a90e17a93.1781463125.git.mst@redhat.com>
 References: <cover.1781463125.git.mst@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1781463125.git.mst@redhat.com>
 X-Mailer: git-send-email 2.51.2.2891.g4157995a80.dirty
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -122,102 +122,145 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Eugenio Pérez <eperezma@redhat.com>
+From: Sairaj Kodilkar <sarunkod@amd.com>
 
-This code path is modified to handle in order devices.  Abstract here so
-we can generalize on the caller.
+This makes it easier to add new MMIO registers for tracing and removes
+the unnecessary complexity introduced by amdvi_mmio_(low/high) array.
 
-Signed-off-by: Eugenio Pérez <eperezma@redhat.com>
+Signed-off-by: Sairaj Kodilkar <sarunkod@amd.com>
+Reviewed-by: Vasant Hegde <vasant.hegde@amd.com>
+Reviewed-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-Id: <20260304173535.2702587-5-eperezma@redhat.com>
+Message-Id: <20260302115130.5903-2-sarunkod@amd.com>
 ---
- hw/virtio/vhost-shadow-virtqueue.c | 45 +++++++++++++++++++-----------
- 1 file changed, 29 insertions(+), 16 deletions(-)
+ hw/i386/amd_iommu.c | 74 ++++++++++++++++-----------------------------
+ hw/i386/amd_iommu.h |  4 ---
+ 2 files changed, 26 insertions(+), 52 deletions(-)
 
-diff --git a/hw/virtio/vhost-shadow-virtqueue.c b/hw/virtio/vhost-shadow-virtqueue.c
-index 7adacd4f54..e7e3c9155c 100644
---- a/hw/virtio/vhost-shadow-virtqueue.c
-+++ b/hw/virtio/vhost-shadow-virtqueue.c
-@@ -444,6 +444,25 @@ static void vhost_svq_disable_notification(VhostShadowVirtqueue *svq)
+diff --git a/hw/i386/amd_iommu.c b/hw/i386/amd_iommu.c
+index 99b05b2ab6..1c44848aa9 100644
+--- a/hw/i386/amd_iommu.c
++++ b/hw/i386/amd_iommu.c
+@@ -35,29 +35,6 @@
+ #include "kvm/kvm_i386.h"
+ #include "qemu/iova-tree.h"
+ 
+-/* used AMD-Vi MMIO registers */
+-const char *amdvi_mmio_low[] = {
+-    "AMDVI_MMIO_DEVTAB_BASE",
+-    "AMDVI_MMIO_CMDBUF_BASE",
+-    "AMDVI_MMIO_EVTLOG_BASE",
+-    "AMDVI_MMIO_CONTROL",
+-    "AMDVI_MMIO_EXCL_BASE",
+-    "AMDVI_MMIO_EXCL_LIMIT",
+-    "AMDVI_MMIO_EXT_FEATURES",
+-    "AMDVI_MMIO_PPR_BASE",
+-    "UNHANDLED"
+-};
+-const char *amdvi_mmio_high[] = {
+-    "AMDVI_MMIO_COMMAND_HEAD",
+-    "AMDVI_MMIO_COMMAND_TAIL",
+-    "AMDVI_MMIO_EVTLOG_HEAD",
+-    "AMDVI_MMIO_EVTLOG_TAIL",
+-    "AMDVI_MMIO_STATUS",
+-    "AMDVI_MMIO_PPR_HEAD",
+-    "AMDVI_MMIO_PPR_TAIL",
+-    "UNHANDLED"
+-};
+-
+ struct AMDVIAddressSpace {
+     PCIBus *bus;                /* PCIBus (for bus number)              */
+     uint8_t devfn;              /* device function                      */
+@@ -1540,31 +1517,31 @@ static void amdvi_cmdbuf_run(AMDVIState *s)
      }
  }
  
-+/*
-+ * Gets the next buffer id and moves forward the used idx, so the next time
-+ * SVQ calls this function will get the next one.
-+ *
-+ * @svq: Shadow VirtQueue
-+ * @len: Consumed length by the device.
-+ *
-+ * Return the next descriptor consumed by the device.
-+ */
-+static uint16_t vhost_svq_get_last_used_split(VhostShadowVirtqueue *svq,
-+                                              uint32_t *len)
-+{
-+    const vring_used_t *used = svq->vring.used;
-+    uint16_t last_used = svq->last_used_idx++ & (svq->vring.num - 1);
-+
-+    *len = le32_to_cpu(used->ring[last_used].len);
-+    return le32_to_cpu(used->ring[last_used].id);
-+}
-+
- static uint16_t vhost_svq_last_desc_of_chain(const VhostShadowVirtqueue *svq,
-                                              uint16_t num, uint16_t i)
+-static inline uint8_t amdvi_mmio_get_index(hwaddr addr)
++static inline
++const char *amdvi_mmio_get_name(hwaddr addr)
  {
-@@ -458,8 +477,6 @@ G_GNUC_WARN_UNUSED_RESULT
- static VirtQueueElement *vhost_svq_get_buf(VhostShadowVirtqueue *svq,
-                                            uint32_t *len)
- {
--    const vring_used_t *used = svq->vring.used;
--    vring_used_elem_t used_elem;
-     uint16_t last_used, last_used_chain, num;
- 
-     if (!vhost_svq_more_used(svq)) {
-@@ -468,33 +485,29 @@ static VirtQueueElement *vhost_svq_get_buf(VhostShadowVirtqueue *svq,
- 
-     /* Only get used array entries after they have been exposed by dev */
-     smp_rmb();
--    last_used = svq->last_used_idx & (svq->vring.num - 1);
--    used_elem.id = le32_to_cpu(used->ring[last_used].id);
--    used_elem.len = le32_to_cpu(used->ring[last_used].len);
-+    last_used = vhost_svq_get_last_used_split(svq, len);
- 
--    svq->last_used_idx++;
--    if (unlikely(used_elem.id >= svq->vring.num)) {
-+    if (unlikely(last_used >= svq->vring.num)) {
-         qemu_log_mask(LOG_GUEST_ERROR, "Device %s says index %u is used",
--                      svq->vdev->name, used_elem.id);
-+                      svq->vdev->name, last_used);
-         return NULL;
+-    uint8_t index = (addr & ~0x2000) / 8;
+-
+-    if ((addr & 0x2000)) {
+-        /* high table */
+-        index = index >= AMDVI_MMIO_REGS_HIGH ? AMDVI_MMIO_REGS_HIGH : index;
+-    } else {
+-        index = index >= AMDVI_MMIO_REGS_LOW ? AMDVI_MMIO_REGS_LOW : index;
++    /* Return MMIO names as string literals */
++    switch (addr) {
++#define MMIO_REG_TO_STRING(mmio_reg) case mmio_reg: return #mmio_reg
++    MMIO_REG_TO_STRING(AMDVI_MMIO_DEVICE_TABLE);
++    MMIO_REG_TO_STRING(AMDVI_MMIO_COMMAND_BASE);
++    MMIO_REG_TO_STRING(AMDVI_MMIO_EVENT_BASE);
++    MMIO_REG_TO_STRING(AMDVI_MMIO_CONTROL);
++    MMIO_REG_TO_STRING(AMDVI_MMIO_EXCL_BASE);
++    MMIO_REG_TO_STRING(AMDVI_MMIO_EXCL_LIMIT);
++    MMIO_REG_TO_STRING(AMDVI_MMIO_EXT_FEATURES);
++    MMIO_REG_TO_STRING(AMDVI_MMIO_COMMAND_HEAD);
++    MMIO_REG_TO_STRING(AMDVI_MMIO_COMMAND_TAIL);
++    MMIO_REG_TO_STRING(AMDVI_MMIO_EVENT_HEAD);
++    MMIO_REG_TO_STRING(AMDVI_MMIO_EVENT_TAIL);
++    MMIO_REG_TO_STRING(AMDVI_MMIO_STATUS);
++    MMIO_REG_TO_STRING(AMDVI_MMIO_PPR_BASE);
++    MMIO_REG_TO_STRING(AMDVI_MMIO_PPR_HEAD);
++    MMIO_REG_TO_STRING(AMDVI_MMIO_PPR_TAIL);
++#undef MMIO_REG_TO_STRING
++    default:
++        return "UNHANDLED";
      }
- 
--    if (unlikely(!svq->desc_state[used_elem.id].ndescs)) {
-+    if (unlikely(!svq->desc_state[last_used].ndescs)) {
-         qemu_log_mask(LOG_GUEST_ERROR,
-             "Device %s says index %u is used, but it was not available",
--            svq->vdev->name, used_elem.id);
-+            svq->vdev->name, last_used);
-         return NULL;
-     }
- 
--    num = svq->desc_state[used_elem.id].ndescs;
--    svq->desc_state[used_elem.id].ndescs = 0;
--    last_used_chain = vhost_svq_last_desc_of_chain(svq, num, used_elem.id);
-+    num = svq->desc_state[last_used].ndescs;
-+    svq->desc_state[last_used].ndescs = 0;
-+    last_used_chain = vhost_svq_last_desc_of_chain(svq, num, last_used);
-     svq->desc_state[last_used_chain].next = svq->free_head;
--    svq->free_head = used_elem.id;
-+    svq->free_head = last_used;
-     svq->num_free += num;
- 
--    *len = used_elem.len;
--    return g_steal_pointer(&svq->desc_state[used_elem.id].elem);
-+    return g_steal_pointer(&svq->desc_state[last_used].elem);
+-
+-    return index;
+-}
+-
+-static void amdvi_mmio_trace_read(hwaddr addr, unsigned size)
+-{
+-    uint8_t index = amdvi_mmio_get_index(addr);
+-    trace_amdvi_mmio_read(amdvi_mmio_low[index], addr, size, addr & ~0x07);
+-}
+-
+-static void amdvi_mmio_trace_write(hwaddr addr, unsigned size, uint64_t val)
+-{
+-    uint8_t index = amdvi_mmio_get_index(addr);
+-    trace_amdvi_mmio_write(amdvi_mmio_low[index], addr, size, val,
+-                           addr & ~0x07);
  }
  
- /**
+ static uint64_t amdvi_mmio_read(void *opaque, hwaddr addr, unsigned size)
+@@ -1584,7 +1561,7 @@ static uint64_t amdvi_mmio_read(void *opaque, hwaddr addr, unsigned size)
+     } else if (size == 8) {
+         val = amdvi_readq(s, addr);
+     }
+-    amdvi_mmio_trace_read(addr, size);
++    trace_amdvi_mmio_read(amdvi_mmio_get_name(addr), addr, size, addr & ~0x07);
+ 
+     return val;
+ }
+@@ -1742,7 +1719,8 @@ static void amdvi_mmio_write(void *opaque, hwaddr addr, uint64_t val,
+         return;
+     }
+ 
+-    amdvi_mmio_trace_write(addr, size, val);
++    trace_amdvi_mmio_write(amdvi_mmio_get_name(addr), addr, size, val, offset);
++
+     switch (addr & ~0x07) {
+     case AMDVI_MMIO_CONTROL:
+         amdvi_mmio_reg_write(s, size, val, addr);
+diff --git a/hw/i386/amd_iommu.h b/hw/i386/amd_iommu.h
+index 7af3c742b7..17b7ba899f 100644
+--- a/hw/i386/amd_iommu.h
++++ b/hw/i386/amd_iommu.h
+@@ -45,10 +45,6 @@
+ #define AMDVI_CAPAB_FLAG_IOTLBSUP     (1 << 24)
+ #define AMDVI_CAPAB_INIT_TYPE         (3 << 16)
+ 
+-/* No. of used MMIO registers */
+-#define AMDVI_MMIO_REGS_HIGH  7
+-#define AMDVI_MMIO_REGS_LOW   8
+-
+ /* MMIO registers */
+ #define AMDVI_MMIO_DEVICE_TABLE       0x0000
+ #define AMDVI_MMIO_COMMAND_BASE       0x0008
 -- 
 MST
 
