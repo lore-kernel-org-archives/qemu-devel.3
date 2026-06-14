@@ -4,98 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E711CD98D2
-	for <qemu-devel@archiver.kernel.org>; Sun, 14 Jun 2026 19:12:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3919DCD98DE
+	for <qemu-devel@archiver.kernel.org>; Sun, 14 Jun 2026 19:12:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wYqDM-0008CL-Tk; Sun, 14 Jun 2026 15:09:49 -0400
+	id 1wYqDS-0000No-OC; Sun, 14 Jun 2026 15:09:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wYqCy-0007Yb-9O
- for qemu-devel@nongnu.org; Sun, 14 Jun 2026 15:09:30 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wYqDB-0007ZV-QD
+ for qemu-devel@nongnu.org; Sun, 14 Jun 2026 15:09:38 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wYqCw-0002Zl-D0
- for qemu-devel@nongnu.org; Sun, 14 Jun 2026 15:09:24 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wYqD8-0002fT-W7
+ for qemu-devel@nongnu.org; Sun, 14 Jun 2026 15:09:36 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781464161;
+ s=mimecast20190719; t=1781464174;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=hMSjzoHh5eLV9v+BiMfQgZHJ14Xa1/fuSL+UsKHzc9Y=;
- b=il5VeGm/WYOsL2EpgvOLPVixM6PQA5/yvEkEB36unkS1LsjZFF1OHH8T7ve3kO8dlVVtiO
- nZ4zVDZDeICCsicdcNmT/pDw0EOcxfhAYh39KsEH8uNKc0XoKu8fJtLdFCWg8OL4crZhWa
- vqGT/k4HSHmZmrychiqy+ySSDe9eqxQ=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=6dOn/8eHkNMQ82sgE1aT+KD7v5OPI6ZiP0ExOB9U4bQ=;
+ b=AVwAnP86K0bjV+UdicbFHBDANXfcLrxfSuHIetWTvrDLCCgi4TcdCewCLbx1EGlxjSrTs3
+ WM7fFlRntU9FvicA1BnbeOkQxCVRcwA9KxnJoFlgRPBEusOHRIITE7jlrfxhk8tPeQNn0B
+ cPIk9o7Je/H4K03zO2KX6b7CvWBOcAg=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-635-ZaU4qouUNmixCiociC3mHg-1; Sun, 14 Jun 2026 15:09:20 -0400
-X-MC-Unique: ZaU4qouUNmixCiociC3mHg-1
-X-Mimecast-MFC-AGG-ID: ZaU4qouUNmixCiociC3mHg_1781464159
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-490b79e6b94so22238985e9.2
- for <qemu-devel@nongnu.org>; Sun, 14 Jun 2026 12:09:20 -0700 (PDT)
+ us-mta-499-ApdcwSRJOSim9WcfoaeznQ-1; Sun, 14 Jun 2026 15:09:33 -0400
+X-MC-Unique: ApdcwSRJOSim9WcfoaeznQ-1
+X-Mimecast-MFC-AGG-ID: ApdcwSRJOSim9WcfoaeznQ_1781464172
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-490ab3f6e55so14549375e9.0
+ for <qemu-devel@nongnu.org>; Sun, 14 Jun 2026 12:09:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1781464159; x=1782068959; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:from:to
- :cc:subject:date:message-id:reply-to;
- bh=hMSjzoHh5eLV9v+BiMfQgZHJ14Xa1/fuSL+UsKHzc9Y=;
- b=dMVaQoNO++B6JsynkfLuzwIXo/F9P8w75+K8laEGxE3qgdlRt0CqAQjsYTjsRAGdTv
- aVRH8UYaCAhe4AWfcrcc9khAMi171ja/UYJXP1F+FNj1aKKrVes0svXXD/gHWAQHEKeI
- t8Tr16lpG50DQnwwYL/923tbUMeOJ+HSrHuDw6UVIA3xXVILV0i9QeNAp3tz0Rx7/DzS
- nYLAjXssotTm/ucbRdAkJZVcliUW3RJXdNFRFot33KRYo1UtyWAGw/lc82uePont50mn
- hD1lIo4L+uHgIQMhtWz4vvCyf3FJylQOrv2PkTedu5uTRKNNB1/dhu8mhnO/K9+iYc5F
- bwUQ==
+ d=redhat.com; s=google; t=1781464172; x=1782068972; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=6dOn/8eHkNMQ82sgE1aT+KD7v5OPI6ZiP0ExOB9U4bQ=;
+ b=Yd+NY15O/81W2UmusfstHRTG2fFwqxl/MkwElFGk/uVoXLN+ME2R2AgE1ple/kLpPw
+ d8YcdfrNvhfsj1nI7c9ZpjUk84i9RxQJZPbiJxwwOabHm/w/aDJAFFZDj9LEp7MPdPey
+ sfUooYwKF3cJA509t0+t0bVlLdQeh05UB9WVOauUtmzgKCQUWpaPtb+EfqYw+7yvcRGg
+ xWJ7+c7VHffXL+1htOpgIybgDcXgLgSvwsysXCoAa+0S7S5oKR0KyQHiiOjdDzzEdgP0
+ 1p3nRQfHkROgqDg150WyrxGMZ04NPKfZvi/70x+nL+QN0lNMCY76X4/nJZ4+dIkeIGaT
+ SdcQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781464159; x=1782068959;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=hMSjzoHh5eLV9v+BiMfQgZHJ14Xa1/fuSL+UsKHzc9Y=;
- b=XQzlk5MCa7+vx0VeNnsDdb8msrMccC+A4BQs1EbsGsZ60VsDSxvQOSUllq9v8nQ809
- 9K38dQKyY2mwX9t9FS5uNJDKKGb/Qa71x5Rl8skFLHpnO3dqVJIH0xO2GJOK8CuJOwUy
- jnG5Z8f8/0HYuSU61Xl03hDYjlAu5jn/kGUP3NO46PHJ+BgXzP2FWem9FRuPxMZcb9n9
- jHiPiKZsUuzciCDsg6Rd8aHg2BSj5JWBclhLZ3TQLRJwm0WEpdFQWUYgbxkN5bQ4X+5b
- TC3k9F0nt9gRtwexVH4TJXdfOMGwz7uBN+olhoRrMaY37EGYxg0TRYzyp+K+miw2WUGd
- 2ZDw==
-X-Gm-Message-State: AOJu0YxcpgeWU5bbWDv36hnDYn2WttCMATAzLdE9XxJ1sPV0zumf7jWl
- H+HYeHJnzaVX3Ha1A0F2vWbfYkPLk2emwEFC6I53+9jVIi57LSPexSL5BQ0y9z/yerpem5H6MPA
- JKa8rqMHlOi2swhWlh+MMOXXqw3hhrApTtGJ2+lFq1B3zieBf3w5b/BmlpCRYyFI+R86OUpIyRy
- AIiEgrK0GlJ9yZ/ri52LtiH3Zcp4r3kZJq3g==
-X-Gm-Gg: Acq92OFR3Op7Lga2AEEpckV08rUC8oQBp+6r0y8QgZkSlQCA7neC7SnNWRg2AFVU0yg
- W+oi1wOZ/I/PFo9L6Gzk0CadAAeTZKKj4akyOXHW6v9oLaqdAJlI1LtnbK8AJpdBf/Bft9yL/69
- hj6o5CZuHKAVZ4SXP3NzehB0CO/m/T2vXy0qGKLaA2O1sxurLUgYFZaRtTc+A0z8Lg20tRBg26L
- eOEgfOtYeaBrAto0o/cu4C+oPuKQseMeuSXOqxarHscj16X3+OMZq65ymXKoMOTFbLTsLZVRtfF
- fwdbf1U4Fq2x/uw1gJrMBd+AHrsBShRNLIf5k7MTjHy3/hJndsZd/9sT72F5OG2EIAh6Jz6v3M9
- PWmUcJ+rOgUqhIGUj5DMkm670jQJCvt8MQ9fIQlAaq6E=
-X-Received: by 2002:a05:600c:314a:b0:490:e1a6:261 with SMTP id
- 5b1f17b1804b1-490ec5092c8mr137640835e9.26.1781464159186; 
- Sun, 14 Jun 2026 12:09:19 -0700 (PDT)
-X-Received: by 2002:a05:600c:314a:b0:490:e1a6:261 with SMTP id
- 5b1f17b1804b1-490ec5092c8mr137640545e9.26.1781464158570; 
- Sun, 14 Jun 2026 12:09:18 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1781464172; x=1782068972;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=6dOn/8eHkNMQ82sgE1aT+KD7v5OPI6ZiP0ExOB9U4bQ=;
+ b=GMZjbtNnrul6ycvClTlnyFP9Ii57cZTcphQd0PKzT7ysjpwz0Yty2gaV/S0r49anGH
+ naAOP24+/J+1qzciK6lQZGONOc7c4q6SaruFMs6l3WcPU31iP/kuv5vfzqmaFDKnrLJW
+ RI4DQEee5GL/fbj8Jyb2xeIAobwxKh/IZzefqby2J2x6d8jCA9/e6WW4ywEpMJhzPA72
+ Cg2iOv4jbMLjmcNr5PU8IrweSXiCutnj4G9jfKZBtitC7KKEWHLkSEJCLx9vb+tbj0Gf
+ IXvRhylUAmz5klczbGfx5Z4AqfwZ6f5JLCespP2tMWktc7ZUlv4qM49MSK1w9JzsSQmI
+ zZIA==
+X-Gm-Message-State: AOJu0YwkwdYaBWFQnBJwe1ilIIchYMi8KUBnj2AjYy+81jOas7TvvFRO
+ wlNfEA92j6wt8e2aShzm49CD7FUUtj3GjCPF8i3qzRoSajd5rZGpinbotbP566GRF8gDV4oRWkC
+ rxNLx9KXDi8h6VRhsgZzxY38UgQ87fSd931APoc5ur4W3Yt1XpT2f2yXf8Akh/WXtcbW/A/PK64
+ j8AyU4bpHm53AjXzJbXfnW2IX9+6Sv0e2nEQ==
+X-Gm-Gg: Acq92OEopnQDPE/rUxmyWHPJ0aqeZa6nyVCaO/5h5WLudYJePGH796TYnTFmgNupysE
+ 9F+MxCVPc2xhx5lot47nuAR6Q26PfS7r8aR5QE7B5EUlQkOF5pEpg64SkG3EKHXMKXPufpBhtTs
+ PzsxTcBGUcqfZQ0wV3Jo0Mt5kkHOUyEazJSxGqAesmDkwg9y0w0Nw3tw1NU3uEKsYlHQKQJMUBM
+ oSnjpqFkKBSQRwpB2LoENeHS5Xy/K2x8vLqnI/n0uhtkJMcAB+Rb4MQ9cimPsEvG4pGJ39itrrY
+ t1QS+DEesRY7ewHqtj1ywbRvltq81MgP6FZh4CjSouzuFb3ClMflQeD0VMcc1yZziBPTSq/1z5b
+ Ftb1dV+jCwg7UYy2ojV/7htukNtFeH42L584u/jpAyfw=
+X-Received: by 2002:a05:600c:314a:b0:490:da12:f1fa with SMTP id
+ 5b1f17b1804b1-490ec503f0cmr127745895e9.31.1781464171719; 
+ Sun, 14 Jun 2026 12:09:31 -0700 (PDT)
+X-Received: by 2002:a05:600c:314a:b0:490:da12:f1fa with SMTP id
+ 5b1f17b1804b1-490ec503f0cmr127745585e9.31.1781464171116; 
+ Sun, 14 Jun 2026 12:09:31 -0700 (PDT)
 Received: from redhat.com (IGLD-80-230-85-71.inter.net.il. [80.230.85.71])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4922031b7d2sm197621255e9.5.2026.06.14.12.09.16
+ 5b1f17b1804b1-492202e5d61sm170358795e9.1.2026.06.14.12.09.30
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 14 Jun 2026 12:09:18 -0700 (PDT)
-Date: Sun, 14 Jun 2026 15:09:15 -0400
+ Sun, 14 Jun 2026 12:09:30 -0700 (PDT)
+Date: Sun, 14 Jun 2026 15:09:29 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
  Igor Mammedov <imammedo@redhat.com>,
- Ani Sinha <anisinha@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
- Eric Auger <eric.auger@redhat.com>
-Subject: [PULL 085/106] acpi: add API to build WDAT instructions
-Message-ID: <f793df3dcabab71e794639a794bba1ae1380943c.1781463125.git.mst@redhat.com>
+ Ani Sinha <anisinha@redhat.com>, Zhao Liu <zhao1.liu@intel.com>
+Subject: [PULL 090/106] tests: acpi: x86/q35: update expected WDAT blob
+Message-ID: <cbb13f70170e66870fa37a195e6c8a3049b8869f.1781463125.git.mst@redhat.com>
 References: <cover.1781463125.git.mst@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1781463125.git.mst@redhat.com>
 X-Mailer: git-send-email 2.51.2.2891.g4157995a80.dirty
 X-Mutt-Fcc: =sent
@@ -125,179 +121,202 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Igor Mammedov <imammedo@redhat.com>
 
-Add definitions for WDAT[1] actions/instructions
-and build_append_wdat_ins() API to build table entries.
+replace blank table with a new one:
 
-1)
-"Hardware Watchdog Timers Design Specification"
-  https://uefi.org/acpi 'Watchdog Action Table (WDAT)'
+  +[000h 0000   4]                    Signature : "WDAT"    [Watchdog Action Table]
+  +[004h 0004   4]                 Table Length : 00000134
+  +[008h 0008   1]                     Revision : 01
+  +[009h 0009   1]                     Checksum : 31
+  +[00Ah 0010   6]                       Oem ID : "BOCHS "
+  +[010h 0016   8]                 Oem Table ID : "BXPC    "
+  +[018h 0024   4]                 Oem Revision : 00000001
+  +[01Ch 0028   4]              Asl Compiler ID : "BXPC"
+  +[020h 0032   4]        Asl Compiler Revision : 00000001
+  +
+  +[024h 0036   4]                Header Length : 00000020
+  +[028h 0040   2]                  PCI Segment : 00FF
+  +[02Ah 0042   1]                      PCI Bus : FF
+  +[02Bh 0043   1]                   PCI Device : FF
+  +[02Ch 0044   1]                 PCI Function : FF
+  +[02Dh 0045   3]                     Reserved : 000000
+  +[030h 0048   4]                 Timer Period : 00000258
+  +[034h 0052   4]                    Max Count : 000003FF
+  +[038h 0056   4]                    Min Count : 00000004
+  +[03Ch 0060   1]        Flags (decoded below) : 81
+  +                                     Enabled : 1
+  +                         Stopped When Asleep : 1
+  +[03Dh 0061   3]                     Reserved : 000000
+  +[040h 0064   4]         Watchdog Entry Count : 0000000A
+  +
+  +[044h 0068   1]              Watchdog Action : 01
+  +[045h 0069   1]                  Instruction : 02
+  +[046h 0070   2]                     Reserved : 0000
+  +
+  +[048h 0072  12]              Register Region : [Generic Address Structure]
+  +[048h 0072   1]                     Space ID : 01 [SystemIO]
+  +[049h 0073   1]                    Bit Width : 10
+  +[04Ah 0074   1]                   Bit Offset : 00
+  +[04Bh 0075   1]         Encoded Access Width : 02 [Word Access:16]
+  +[04Ch 0076   8]                      Address : 0000000000000660
+  +
+  +[054h 0084   4]                        Value : 00000001
+  +[058h 0088   4]                Register Mask : 000001FF
+  +
+  +[05Ch 0092   1]              Watchdog Action : 08
+  +[05Dh 0093   1]                  Instruction : 00
+  +[05Eh 0094   2]                     Reserved : 0000
+  +
+  +[060h 0096  12]              Register Region : [Generic Address Structure]
+  +[060h 0096   1]                     Space ID : 01 [SystemIO]
+  +[061h 0097   1]                    Bit Width : 10
+  +[062h 0098   1]                   Bit Offset : 00
+  +[063h 0099   1]         Encoded Access Width : 02 [Word Access:16]
+  +[064h 0100   8]                      Address : 0000000000000668
+  +
+  +[06Ch 0108   4]                        Value : 00000000
+  +[070h 0112   4]                Register Mask : 00000800
+  +
+  +[074h 0116   1]              Watchdog Action : 09
+  +[075h 0117   1]                  Instruction : 82
+  +[076h 0118   2]                     Reserved : 0000
+  +
+  +[078h 0120  12]              Register Region : [Generic Address Structure]
+  +[078h 0120   1]                     Space ID : 01 [SystemIO]
+  +[079h 0121   1]                    Bit Width : 10
+  +[07Ah 0122   1]                   Bit Offset : 00
+  +[07Bh 0123   1]         Encoded Access Width : 02 [Word Access:16]
+  +[07Ch 0124   8]                      Address : 0000000000000668
+  +
+  +[084h 0132   4]                        Value : 00000000
+  +[088h 0136   4]                Register Mask : 00000800
+  +
+  +[08Ch 0140   1]              Watchdog Action : 0A
+  +[08Dh 0141   1]                  Instruction : 00
+  +[08Eh 0142   2]                     Reserved : 0000
+  +
+  +[090h 0144  12]              Register Region : [Generic Address Structure]
+  +[090h 0144   1]                     Space ID : 01 [SystemIO]
+  +[091h 0145   1]                    Bit Width : 10
+  +[092h 0146   1]                   Bit Offset : 00
+  +[093h 0147   1]         Encoded Access Width : 02 [Word Access:16]
+  +[094h 0148   8]                      Address : 0000000000000668
+  +
+  +[09Ch 0156   4]                        Value : 00000800
+  +[0A0h 0160   4]                Register Mask : 00000800
+  +
+  +[0A4h 0164   1]              Watchdog Action : 0B
+  +[0A5h 0165   1]                  Instruction : 82
+  +[0A6h 0166   2]                     Reserved : 0000
+  +
+  +[0A8h 0168  12]              Register Region : [Generic Address Structure]
+  +[0A8h 0168   1]                     Space ID : 01 [SystemIO]
+  +[0A9h 0169   1]                    Bit Width : 10
+  +[0AAh 0170   1]                   Bit Offset : 00
+  +[0ABh 0171   1]         Encoded Access Width : 02 [Word Access:16]
+  +[0ACh 0172   8]                      Address : 0000000000000668
+  +
+  +[0B4h 0180   4]                        Value : 00000800
+  +[0B8h 0184   4]                Register Mask : 00000800
+  +
+  +[0BCh 0188   1]              Watchdog Action : 06
+  +[0BDh 0189   1]                  Instruction : 03
+  +[0BEh 0190   2]                     Reserved : 0000
+  +
+  +[0C0h 0192  12]              Register Region : [Generic Address Structure]
+  +[0C0h 0192   1]                     Space ID : 01 [SystemIO]
+  +[0C1h 0193   1]                    Bit Width : 10
+  +[0C2h 0194   1]                   Bit Offset : 00
+  +[0C3h 0195   1]         Encoded Access Width : 02 [Word Access:16]
+  +[0C4h 0196   8]                      Address : 0000000000000672
+  +
+  +[0CCh 0204   4]                        Value : 00000000
+  +[0D0h 0208   4]                Register Mask : 000003FF
+  +
+  +[0D4h 0212   1]              Watchdog Action : 05
+  +[0D5h 0213   1]                  Instruction : 01
+  +[0D6h 0214   2]                     Reserved : 0000
+  +
+  +[0D8h 0216  12]              Register Region : [Generic Address Structure]
+  +[0D8h 0216   1]                     Space ID : 01 [SystemIO]
+  +[0D9h 0217   1]                    Bit Width : 10
+  +[0DAh 0218   1]                   Bit Offset : 00
+  +[0DBh 0219   1]         Encoded Access Width : 02 [Word Access:16]
+  +[0DCh 0220   8]                      Address : 0000000000000672
+  +
+  +[0E4h 0228   4]                        Value : 00000000
+  +[0E8h 0232   4]                Register Mask : 000003FF
+  +
+  +[0ECh 0236   1]              Watchdog Action : 20
+  +[0EDh 0237   1]                  Instruction : 00
+  +[0EEh 0238   2]                     Reserved : 0000
+  +
+  +[0F0h 0240  12]              Register Region : [Generic Address Structure]
+  +[0F0h 0240   1]                     Space ID : 01 [SystemIO]
+  +[0F1h 0241   1]                    Bit Width : 10
+  +[0F2h 0242   1]                   Bit Offset : 00
+  +[0F3h 0243   1]         Encoded Access Width : 02 [Word Access:16]
+  +[0F4h 0244   8]                      Address : 0000000000000666
+  +
+  +[0FCh 0252   4]                        Value : 00000002
+  +[100h 0256   4]                Register Mask : 00000002
+  +
+  +[104h 0260   1]              Watchdog Action : 21
+  +[105h 0261   1]                  Instruction : 82
+  +[106h 0262   2]                     Reserved : 0000
+  +
+  +[108h 0264  12]              Register Region : [Generic Address Structure]
+  +[108h 0264   1]                     Space ID : 01 [SystemIO]
+  +[109h 0265   1]                    Bit Width : 10
+  +[10Ah 0266   1]                   Bit Offset : 00
+  +[10Bh 0267   1]         Encoded Access Width : 02 [Word Access:16]
+  +[10Ch 0268   8]                      Address : 0000000000000666
+  +
+  +[114h 0276   4]                        Value : 00000002
+  +[118h 0280   4]                Register Mask : 00000002
+  +
+  +[11Ch 0284   1]              Watchdog Action : 21
+  +[11Dh 0285   1]                  Instruction : 82
+  +[11Eh 0286   2]                     Reserved : 0000
+  +
+  +[120h 0288  12]              Register Region : [Generic Address Structure]
+  +[120h 0288   1]                     Space ID : 01 [SystemIO]
+  +[121h 0289   1]                    Bit Width : 10
+  +[122h 0290   1]                   Bit Offset : 00
+  +[123h 0291   1]         Encoded Access Width : 02 [Word Access:16]
+  +[124h 0292   8]                      Address : 0000000000000666
+  +
+  +[12Ch 0300   4]                        Value : 00000004
+  +[130h 0304   4]                Register Mask : 00000004
 
 Signed-off-by: Igor Mammedov <imammedo@redhat.com>
-Reviewed-by: Ani Sinha <anisinha@redhat.com>
+Acked-by: Ani Sinha <anisinha@redhat.com>
 Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Message-Id: <20260303092532.2410177-2-imammedo@redhat.com>
-Reviewed-by: Eric Auger <eric.auger@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Message-Id: <20260303092532.2410177-7-imammedo@redhat.com>
 ---
- hw/acpi/aml-build.c    |  14 +++++
- include/hw/acpi/wdat.h | 118 +++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 132 insertions(+)
- create mode 100644 include/hw/acpi/wdat.h
+ tests/data/acpi/x86/q35/WDAT.wdat           | Bin 0 -> 308 bytes
+ tests/qtest/bios-tables-test-allowed-diff.h |   1 -
+ 2 files changed, 1 deletion(-)
 
-diff --git a/hw/acpi/aml-build.c b/hw/acpi/aml-build.c
-index 413d9b6240..9b3cdd3781 100644
---- a/hw/acpi/aml-build.c
-+++ b/hw/acpi/aml-build.c
-@@ -35,6 +35,7 @@
- #include "hw/acpi/acpi_aml_interface.h"
- #include "qemu/cutils.h"
- #include "hw/core/cpu.h"
-+#include "hw/acpi/wdat.h"
- 
- static GArray *build_alloc_array(void)
- {
-@@ -2872,3 +2873,16 @@ void qbus_build_aml(BusState *bus, Aml *scope)
-         call_dev_aml_func(DEVICE(kid->child), scope);
-     }
- }
-+
-+void build_append_wdat_ins(GArray *table_data,
-+                           WDATAction action, uint8_t flags,
-+                           struct AcpiGenericAddress as,
-+                           uint32_t val, uint32_t mask)
-+{
-+    build_append_int_noprefix(table_data, action, 1);    /* Watchdog Action */
-+    build_append_int_noprefix(table_data, flags, 1);     /* Instruction Flags */
-+    build_append_int_noprefix(table_data, 0, 2);         /* Reserved */
-+    build_append_gas_from_struct(table_data, &as);       /* Register Region */
-+    build_append_int_noprefix(table_data, val, 4);       /* Value */
-+    build_append_int_noprefix(table_data, mask, 4);      /* Mask */
-+}
-diff --git a/include/hw/acpi/wdat.h b/include/hw/acpi/wdat.h
-new file mode 100644
-index 0000000000..89803eef4b
---- /dev/null
-+++ b/include/hw/acpi/wdat.h
-@@ -0,0 +1,118 @@
-+/*
-+ * Watchdog Action Table (WDAT) definitions
-+ *
-+ * Copyright Red Hat, Inc. 2026
-+ * Author(s): Igor Mammedov <imammedo@redhat.com>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+#ifndef QEMU_HW_ACPI_WDAT_H
-+#define QEMU_HW_ACPI_WDAT_H
-+
-+#include "hw/acpi/acpi-defs.h"
-+
-+/*
-+ * Watchdog actions as described in
-+ *  "Hardware Watchdog Timers Design Specification"
-+ * for link to spec see https://uefi.org/acpi
-+ *     'Watchdog Action Table (WDAT)'
-+ */
-+typedef enum {
-+    /*
-+     * Restarts the watchdog timer's countdown. This action is
-+     * required.
-+     */
-+    WDAT_ACTION_RESET = 0x1,
-+    /*
-+     * Returns the current countdown value of the watchdog hardware
-+     * (in count intervals).
-+     */
-+    WDAT_ACTION_QUERY_CURRENT_COUNTDOWN_PERIOD = 0x4,
-+    /*
-+     * Returns the countdown value the watchdog hardware is
-+     * configured to use when reset (in count intervals).
-+     */
-+    WDAT_ACTION_QUERY_COUNTDOWN_PERIOD = 0x5,
-+    /*
-+     * Sets the countdown value (in count intervals) to be used when
-+     * the watchdog timer is reset. This action is required if
-+     * WDAT_ACTION_RESET does not explicitly write a new
-+     * countdown value to a register during a reset. Otherwise, this
-+     * action is optional.
-+     */
-+    WDAT_ACTION_SET_COUNTDOWN_PERIOD = 0x6,
-+    /*
-+     * Determines if the watchdog hardware is currently in enabled/
-+     * running state. The same result must occur when performed from
-+     * both from enabled/stopped state and enabled/running state. If
-+     * the watchdog hardware is disabled, results are indeterminate.
-+     * This action is required.
-+     */
-+    WDAT_ACTION_QUERY_RUNNING_STATE = 0x8,
-+    /*
-+     * Starts the watchdog, if not already in running state. If the
-+     * watchdog hardware is disabled, results are indeterminate.
-+     * This action is required.
-+     */
-+    WDAT_ACTION_SET_RUNNING_STATE = 0x9,
-+    /*
-+     * Determines if the watchdog hardware is currently in enabled/
-+     * stopped state. The same result must occur when performed from
-+     * both the enabled/stopped state and enabled/running state. If
-+     * the watchdog hardware is disabled, results are indeterminate.
-+     * This action is required.
-+     */
-+    WDAT_ACTION_QUERY_STOPPED_STATE = 0xA,
-+    /*
-+     * Stops the watchdog, if not already in stopped state. If the
-+     * watchdog hardware is disabled, results are indeterminate.
-+     * This action is required.
-+     */
-+    WDAT_ACTION_SET_STOPPED_STATE = 0xB,
-+    /*
-+     * Determines if the watchdog hardware is configured to perform a
-+     * reboot when the watchdog is fired.
-+     */
-+    WDAT_ACTION_QUERY_REBOOT = 0x10,
-+    /*
-+     * Configures the watchdog hardware to perform a reboot when it
-+     * is fired.
-+     */
-+    WDAT_ACTION_SET_REBOOT = 0x11,
-+    /*
-+     * Determines if the watchdog hardware is configured to perform a
-+     * system shutdown when fired.
-+     */
-+    WDAT_ACTION_QUERY_SHUTDOWN = 0x12,
-+    /*
-+     * Configures the watchdog hardware to perform a system shutdown
-+     * when fired.
-+     */
-+    WDAT_ACTION_SET_SHUTDOWN = 0x13,
-+    /*
-+     * Determines if the current boot was caused by the watchdog
-+     * firing. The boot status is required to be set if the watchdog
-+     * fired and caused a reboot. It is recommended that the
-+     * Watchdog Status be set if the watchdog fired and caused a
-+     * shutdown. This action is required.
-+     */
-+    WDAT_ACTION_QUERY_WATCHDOG_STATUS = 0x20,
-+    /*
-+     * Sets the watchdog's boot status to the default value. This
-+     * action is required.
-+     */
-+    WDAT_ACTION_SET_WATCHDOG_STATUS = 0x21,
-+} WDATAction;
-+
-+#define WDAT_INS_READ_VALUE 0x0
-+#define WDAT_INS_READ_COUNTDOWN 0x1
-+#define WDAT_INS_WRITE_VALUE 0x2
-+#define WDAT_INS_WRITE_COUNTDOWN 0x3
-+#define WDAT_INS_PRESERVE_REGISTER 0x80
-+
-+void build_append_wdat_ins(GArray *table_data,
-+                           WDATAction action, uint8_t flags,
-+                           struct AcpiGenericAddress as,
-+                           uint32_t val, uint32_t mask);
-+
-+#endif /* QEMU_HW_ACPI_WDAT_H */
+diff --git a/tests/data/acpi/x86/q35/WDAT.wdat b/tests/data/acpi/x86/q35/WDAT.wdat
+index e69de29bb2d1d6434b8b29ae775ad8c2e48c5391..e1e056b390e51c49f11f7b0d35e4e7c55d8067b1 100644
+GIT binary patch
+literal 308
+zcmaivF$w}f3`JkEx{TV)5#kX9FW|0)oq~c}T8Xtc(2GYhPO+$9AY^#?`OH6WH>b6L
+zth#-_J6bm!dNVTt;vLff$K8QJ!5f$W4`2?6f@Jj4QYvm-AjK}Dx5`T;m_2{<;x*QX
+lL4w7nzVfzt``kzV@waK@$$at15&T;93Z<9T{~wRc(JwJ97XbhO
+
+literal 0
+HcmV?d00001
+
+diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
+index 14b680debe..dfb8523c8b 100644
+--- a/tests/qtest/bios-tables-test-allowed-diff.h
++++ b/tests/qtest/bios-tables-test-allowed-diff.h
+@@ -1,2 +1 @@
+ /* List of comma-separated changed AML files to ignore */
+-"tests/data/acpi/x86/q35/WDAT.wdat",
 -- 
 MST
 
