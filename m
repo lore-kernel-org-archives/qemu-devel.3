@@ -4,96 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3FD22CD98D6
-	for <qemu-devel@archiver.kernel.org>; Sun, 14 Jun 2026 19:07:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90192CD98D2
+	for <qemu-devel@archiver.kernel.org>; Sun, 14 Jun 2026 19:07:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wYq9k-0007OG-0s; Sun, 14 Jun 2026 15:06:04 -0400
+	id 1wYqB3-00028w-HO; Sun, 14 Jun 2026 15:07:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wYq9i-0007O4-7f
- for qemu-devel@nongnu.org; Sun, 14 Jun 2026 15:06:02 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wYqAz-0001sf-6x
+ for qemu-devel@nongnu.org; Sun, 14 Jun 2026 15:07:21 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wYq9g-0001de-Fk
- for qemu-devel@nongnu.org; Sun, 14 Jun 2026 15:06:01 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wYqAx-0001w6-6F
+ for qemu-devel@nongnu.org; Sun, 14 Jun 2026 15:07:20 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781463959;
+ s=mimecast20190719; t=1781464038;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=IQsQD+5yZGlWsX1wL6CZL0yYjKsTMwNhTxRL1382bdw=;
- b=fJqJ7yhmemaN1M/3ySXN/qqDBjKSwy1MJvxfVvVJh2E1Hw1i1EZ5g7dl79c8hMeBeumg8F
- 8Q7zu0NeimrIFLjUlfu4nkWcLxAFvt01D1uRRReNFNYpYtScS2KgIZuy3xjWYxNrHEi+KL
- qK4x5iFP6n/3CO6a7FXUxpZTi1uvsaY=
+ bh=hKLuNmAUmeYJWAvkQ8zFnwwkwbgZSbPam78U8U7/FoM=;
+ b=PpyLeajJUTjwMh4tTj5kQFOzixS8RBhnPbbABKJs39RR/ENVV7MZ4v9ybdAkphF27cQJtK
+ 2kEKSUdUQ3yIxqI1WOtt0XVdNp1bAFxyLNWtVAChnDc+TCvxQ1ZnTAd4l+UbApvacD9RnA
+ /y5RjQL5CBgs2q1kj32BJUZ48X+zUiw=
 Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
  [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-465-3K1LuEaaPGy6FWpDYz3z2Q-1; Sun, 14 Jun 2026 15:05:57 -0400
-X-MC-Unique: 3K1LuEaaPGy6FWpDYz3z2Q-1
-X-Mimecast-MFC-AGG-ID: 3K1LuEaaPGy6FWpDYz3z2Q_1781463957
+ us-mta-456-UWh036ZSNQGNV4B4M8PnXg-1; Sun, 14 Jun 2026 15:07:17 -0400
+X-MC-Unique: UWh036ZSNQGNV4B4M8PnXg-1
+X-Mimecast-MFC-AGG-ID: UWh036ZSNQGNV4B4M8PnXg_1781464036
 Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-490d3f03883so22024675e9.1
- for <qemu-devel@nongnu.org>; Sun, 14 Jun 2026 12:05:57 -0700 (PDT)
+ 5b1f17b1804b1-490a060eb84so19273885e9.0
+ for <qemu-devel@nongnu.org>; Sun, 14 Jun 2026 12:07:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1781463957; x=1782068757; darn=nongnu.org;
+ d=redhat.com; s=google; t=1781464036; x=1782068836; darn=nongnu.org;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=IQsQD+5yZGlWsX1wL6CZL0yYjKsTMwNhTxRL1382bdw=;
- b=BJLJHHarLx757qOjELp3OnG/NuucMtLztqw/IF43jOkOlSek2Cz00zWgFA5w1TXkZ0
- t8pADswTLwmO4lc99T0paajRe1aXkYFlOT1GUDPezTUCPCFNv5aIIeS6dYbSXaazjJpb
- 5lI+O7hLRIzvszR4Ch7c8u0cbJNkF0SMJ2wpeF/0mcdTsWB+ym35A3E9rwYEPLnMHpSf
- vo8Yv+O4tuVdVgWNBcW1pWk50U6UuojIdKJ8cygfrR3+3gDktuGVMTg5pBQy8qDOFFiy
- QeMMI5INkUhr0elz4xg+q67Cun8SFQrvjm+U1F6r9E45Cpb9eG4ROixhf6lIyKNZSLqm
- mXYA==
+ bh=hKLuNmAUmeYJWAvkQ8zFnwwkwbgZSbPam78U8U7/FoM=;
+ b=PBTlNis7nVKm0mVJ+qR+RUPcUjZdYCj0q/2BG9ucW24vxqF+9gFEYCryfBv8H6OuY4
+ awsfGx8VCfgU48fdndfmhc2plNBUR0bvR0BbzxXUyQK9lRHfz2Ucx52Eizd7KYlrWhZO
+ MQT5wkxA14Clyj2gRF2rKBvt2WlqGEzzvLPjCqXCs97Fim1yDAPOvkAXTm2wz9D9OPqd
+ L7c+v+8fd5KLwf6MQSnoaOucMGmvA2/4lfSemnRmRkhNIW7QgUC2PgDAeevOlMRO3DBP
+ 67SZJfhMlKQaxCk1B+IDhYv/PgREuf6ciPHI6NZQpnsGb0kUyPx1UCAbB+9O4uUBvttg
+ Z2rg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781463957; x=1782068757;
+ d=1e100.net; s=20251104; t=1781464036; x=1782068836;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=IQsQD+5yZGlWsX1wL6CZL0yYjKsTMwNhTxRL1382bdw=;
- b=EauseccxEb95ctKH3A/3avBRa3PZW4aaKio3gwJgbSO0R++lrB9euTgszaboV4YOmZ
- 2rAH/j/6iD7sKj4RYjaz3flHiiuWzGwy+qrobcYNpViiT171ry+P70jqUMqRARmdGj96
- nUyNbRnRxUOu36UOann34YG1vOkXquswfwtDpCVaT0mwLFN6CewuRNXdoIfdTHF1D0ss
- 5qX0ZsB9zrwDxil9Ng7xlKAMyPOBOewshJgQTzrArbiNmlX71x872sRj1XqaZ5mDy6xY
- FH5aqomkzqSU9i8v91wbdtY4LM/pI5ZheodVpwjyWl6e9JB91mTYHTVwNvFRyvx9ybyq
- DlZA==
-X-Gm-Message-State: AOJu0Yx2tdrKlKYRohrv8CpJ7R6ghfz3mgEx7bL/FRhQ3sdzxFKL8wYu
- ef+CSiFe06CzFVb3pDxOD/vOsQ4aXzFClJ1zNP7K9YkhO2esJMHp6Nzr2ElcP7e0MFZR/LG/cw8
- 4Px484fo9S7/7GxnwY1k3DmD4EYkdRiyLQ/rqxZ1S75gZy2fbPQusgoqbRdeCkbPsRdQctoVqsv
- FiGDVB7yRhRLV8CbktCTrRfgH+HbCSjDy0Rg==
-X-Gm-Gg: Acq92OGOrziaNrt0ve8BH9FFN5MVF6TGO6SAae+wFOA5uZ/OIuog1NX71CeUuEFqHRm
- xJ65EEh4wXe9aiTI+ukWWO0UXxLMmblL47j8Mq5/OEWelnzbbf4cHmyyjH2X21EjDK+uYiYVMXE
- 57FQR3NT3xDtc/DxRSIxrGzHANG5NkDHdAs3ZjqKgGXp5Pi8QVHMmhMwvvUOHim/oCvRLyG4hoe
- uRo024yEgmjpeyHyzVdfbho+/UDoEgAzgavofvF2vKYZ03TfX/kPyEOVZ0/1c6Kk2IK69VUu9rZ
- 04v04YuFakCPfCN/I2qeuUzlIfYswXccXhOmJlw6z+Nfpzx6pPm36Il7uEhR1i0S4r2C4Si3fCE
- /Pe5v92ofCf45XEQAo8yXmZDa4JPmXPDNa4eNNYGW3ss=
-X-Received: by 2002:a05:600c:314a:b0:490:da12:f1fa with SMTP id
- 5b1f17b1804b1-490ec503f0cmr127637705e9.31.1781463956603; 
- Sun, 14 Jun 2026 12:05:56 -0700 (PDT)
-X-Received: by 2002:a05:600c:314a:b0:490:da12:f1fa with SMTP id
- 5b1f17b1804b1-490ec503f0cmr127637225e9.31.1781463956000; 
- Sun, 14 Jun 2026 12:05:56 -0700 (PDT)
+ bh=hKLuNmAUmeYJWAvkQ8zFnwwkwbgZSbPam78U8U7/FoM=;
+ b=W0FtvGPT6bvWIzWrEMg/nHrQbFgLxSvYiYrMhGlk1GnHqA95qNc5+t4RDJ76thS6OJ
+ 3D1KYuhGctYssZLMtuH+uEWN4TiK4ni4xH5FCTS+ua8BWoBysWWwf/SFP3jsI+Ol5tNt
+ c5upMCqR5npY07cIjyylANsHo+mQ8NUESoRQGBQZxEp7m+Tnd++jyj97g1ZZywqikLLs
+ NUs/7VbGyILAjPtDV8oPSj4KYjZOHgncjc/7+E5LbwThqUVO02HfEh0G+c5QP1fW1TE+
+ oHEpLERcAv265w3OQZ7p/kIYPBp6GVsGEtYlS0aAG9P3zW3FiLZLYF+siGBngYTYr7uv
+ zjRQ==
+X-Gm-Message-State: AOJu0YxNeBZ06tMFnP1DyZp2lc3IHh4eZBRAf7xOkDw9vT09p8wCSM8B
+ YwD0nBSS+I6C2fpIF8Lq3hSYyDmBRs5alYqjHjy0cy6sjf6H7wLdw3QA3WT1gr27YE++onIwHO7
+ nDbzH2CHMLSHZnyPaxlmRfgk7wAVGRdAdF7pzWS74dQUf13nPZlBC+g9ElBc1PQf3qULgZ29jvt
+ mVrvJTVuwIq9gNhIDhlntfQmTpQe+54Neo9A==
+X-Gm-Gg: Acq92OHVeeB63skip9xHSWVwXq6jMPdUeZhZ/xSY53Qvf4pOUc2/0AXd9WVq9LEO2ia
+ QYGmSFeqAelhn9exPDG/MjoEUXgO6lzXzH0bpA39ICPzF2ARCYpR6lrvyNvNMWCSwqtHq6zRLsW
+ zkuJ0aohjD1YXOsuD5rG7qFo/t8tGEx4eRH93pf016YPo0+FOtnICsH24HT2633nruGZFaV/QTI
+ LVrxlbT7l5bI4A1VlYmPw+L9EOSWvDS8H1yUu+35YXKi2n/cOKkdJnbpD4ZixtntuoVjCUTeQJ2
+ zKB0dlcx5VZEQGzk6jsds3UEhR23Yjdi8yky34UaH+1/gvxrKeF6r1ZAICTVELN2ooucaYlyRmK
+ zow3Zg6dk0QiNJ1vLtMwBjBl3mtqOnIMk3Quc+/4GYpE=
+X-Received: by 2002:a05:600c:190b:b0:490:bcf6:469f with SMTP id
+ 5b1f17b1804b1-490ec33898fmr140709175e9.0.1781464035502; 
+ Sun, 14 Jun 2026 12:07:15 -0700 (PDT)
+X-Received: by 2002:a05:600c:190b:b0:490:bcf6:469f with SMTP id
+ 5b1f17b1804b1-490ec33898fmr140708895e9.0.1781464034946; 
+ Sun, 14 Jun 2026 12:07:14 -0700 (PDT)
 Received: from redhat.com (IGLD-80-230-85-71.inter.net.il. [80.230.85.71])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4922031b21dsm176749485e9.6.2026.06.14.12.05.53
+ 5b1f17b1804b1-4922034c1cbsm151813485e9.10.2026.06.14.12.07.13
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 14 Jun 2026 12:05:54 -0700 (PDT)
-Date: Sun, 14 Jun 2026 15:05:52 -0400
+ Sun, 14 Jun 2026 12:07:14 -0700 (PDT)
+Date: Sun, 14 Jun 2026 15:07:13 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Zhenzhong Duan <zhenzhong.duan@intel.com>,
- Yi Liu <yi.l.liu@intel.com>, Eric Auger <eric.auger@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Jason Wang <jasowang@redhat.com>,
- =?utf-8?Q?Cl=C3=A9ment?= Mathieu--Drif <clement.mathieu--drif@bull.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>
-Subject: [PULL 005/106] intel_iommu: Change 'flts' property naming to 'fsts'
-Message-ID: <c068e00cff16a7560d974c957f1f1bde158573af.1781463125.git.mst@redhat.com>
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ Daniil Tatianin <d-tatianin@yandex-team.ru>
+Subject: [PULL 034/106] virtio: drop *_set_guest_notifier_fd_handler() helpers
+Message-ID: <a443f8a671ed7ac8441d3739c42ca7b74433d843.1781463125.git.mst@redhat.com>
 References: <cover.1781463125.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -101,14 +95,14 @@ Content-Disposition: inline
 In-Reply-To: <cover.1781463125.git.mst@redhat.com>
 X-Mailer: git-send-email 2.51.2.2891.g4157995a80.dirty
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -125,159 +119,115 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Zhenzhong Duan <zhenzhong.duan@intel.com>
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 
-Previous patch Removed 'x-' prefix from 'x-flts' property.
-Opportunistically, this patch does s/flts/fsts for property name
-in order to better align with newer spec since revision 3.4 which
-changed terminology from "First-level" to "First-stage".
+Now they don't make code more readable. Let's better put the whole
+logic into virtio_queue_set_guest_notifier().
 
-Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Reviewed-by: Daniil Tatianin <d-tatianin@yandex-team.ru>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-Id: <20260513064227.2304854-3-zhenzhong.duan@intel.com>
+Message-Id: <20260420200339.708640-9-vsementsov@yandex-team.ru>
 ---
- docs/devel/vfio-iommufd.rst    |  8 ++++----
- hw/i386/intel_iommu.c          | 10 +++++-----
- hw/i386/intel_iommu_accel.c    |  6 +++---
- tests/qtest/intel-iommu-test.c |  2 +-
- tests/qtest/iommu-intel-test.c |  2 +-
- 5 files changed, 14 insertions(+), 14 deletions(-)
+ hw/virtio/virtio.c | 75 +++++++++++-----------------------------------
+ 1 file changed, 17 insertions(+), 58 deletions(-)
 
-diff --git a/docs/devel/vfio-iommufd.rst b/docs/devel/vfio-iommufd.rst
-index 5755532443..d5538461ba 100644
---- a/docs/devel/vfio-iommufd.rst
-+++ b/docs/devel/vfio-iommufd.rst
-@@ -153,22 +153,22 @@ RAM discarding for mdev.
- ``vfio-ap`` and ``vfio-ccw`` devices don't have same issue as their backend
- devices are always mdev and RAM discarding is force enabled.
- 
--Usage with intel_iommu featuring flts=on
-+Usage with intel_iommu featuring fsts=on
- ------------------------------------------
- 
- Only IOMMUFD backed VFIO device is supported when intel_iommu is configured
--with flts=on, for legacy container backed VFIO device, below error shows:
-+with fsts=on, for legacy container backed VFIO device, below error shows:
- 
- .. code-block:: none
- 
--    qemu-system-x86_64: -device vfio-pci,host=0000:02:00.0: vfio 0000:02:00.0: Failed to set vIOMMU: Need IOMMUFD backend when flts=on
-+    qemu-system-x86_64: -device vfio-pci,host=0000:02:00.0: vfio 0000:02:00.0: Failed to set vIOMMU: Need IOMMUFD backend when fsts=on
- 
- VFIO device under PCI bridge is unsupported, use PCIE bridge if necessary,
- otherwise below error shows:
- 
- .. code-block:: none
- 
--    qemu-system-x86_64: -device vfio-pci,host=0000:02:00.0,bus=bridge1,iommufd=iommufd0: vfio 0000:02:00.0: Failed to set vIOMMU: Host device downstream to a PCI bridge is unsupported when flts=on
-+    qemu-system-x86_64: -device vfio-pci,host=0000:02:00.0,bus=bridge1,iommufd=iommufd0: vfio 0000:02:00.0: Failed to set vIOMMU: Host device downstream to a PCI bridge is unsupported when fsts=on
- 
- If host IOMMU has ERRATA_772415_SPR17, running guest with "intel_iommu=on,sm_off"
- is unsupported, kexec or reboot guest from "intel_iommu=on,sm_on" to
-diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
-index f09a87b50b..4f8302d200 100644
---- a/hw/i386/intel_iommu.c
-+++ b/hw/i386/intel_iommu.c
-@@ -4201,7 +4201,7 @@ static const Property vtd_properties[] = {
-                       VTD_HOST_ADDRESS_WIDTH),
-     DEFINE_PROP_BOOL("caching-mode", IntelIOMMUState, caching_mode, FALSE),
-     DEFINE_PROP_BOOL("scalable-mode", IntelIOMMUState, scalable_mode, FALSE),
--    DEFINE_PROP_BOOL("flts", IntelIOMMUState, fsts, FALSE),
-+    DEFINE_PROP_BOOL("fsts", IntelIOMMUState, fsts, FALSE),
-     DEFINE_PROP_BOOL("snoop-control", IntelIOMMUState, snoop_control, false),
-     DEFINE_PROP_BOOL("x-pasid-mode", IntelIOMMUState, pasid, false),
-     DEFINE_PROP_BOOL("svm", IntelIOMMUState, svm, false),
-@@ -5563,20 +5563,20 @@ static bool vtd_decide_config(IntelIOMMUState *s, Error **errp)
+diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
+index 3780e86039..fb7f7f0f06 100644
+--- a/hw/virtio/virtio.c
++++ b/hw/virtio/virtio.c
+@@ -3836,73 +3836,32 @@ static void virtio_config_guest_notifier_read(EventNotifier *n)
      }
+ }
  
-     if (!s->scalable_mode && s->fsts) {
--        error_setg(errp, "flts is only available in scalable mode");
-+        error_setg(errp, "fsts is only available in scalable mode");
-         return false;
-     }
- 
-     if (!s->fsts && s->aw_bits != VTD_HOST_AW_39BIT &&
-         s->aw_bits != VTD_HOST_AW_48BIT) {
-         error_setg(errp, "%s: supported values for aw-bits are: %d, %d",
--                   s->scalable_mode ? "Scalable mode(flts=off)" : "Legacy mode",
-+                   s->scalable_mode ? "Scalable mode(fsts=off)" : "Legacy mode",
-                    VTD_HOST_AW_39BIT, VTD_HOST_AW_48BIT);
-         return false;
-     }
- 
-     if (s->fsts && s->aw_bits != VTD_HOST_AW_48BIT) {
--        error_setg(errp, "Scalable mode(flts=on): supported value for "
-+        error_setg(errp, "Scalable mode(fsts=on): supported value for "
-                    "aw-bits is: %d", VTD_HOST_AW_48BIT);
-         return false;
-     }
-@@ -5593,7 +5593,7 @@ static bool vtd_decide_config(IntelIOMMUState *s, Error **errp)
-         }
- 
-         if (!s->fsts) {
--            error_setg(errp, "Need to set flts for svm");
-+            error_setg(errp, "Need to set fsts for svm");
-             return false;
-         }
- 
-diff --git a/hw/i386/intel_iommu_accel.c b/hw/i386/intel_iommu_accel.c
-index 36dc5ac020..18ca5a801a 100644
---- a/hw/i386/intel_iommu_accel.c
-+++ b/hw/i386/intel_iommu_accel.c
-@@ -26,7 +26,7 @@ bool vtd_check_hiod_accel(IntelIOMMUState *s, VTDHostIOMMUDevice *vtd_hiod,
-     PCIDevice *pdev = bus->devices[vtd_hiod->devfn];
- 
-     if (!object_dynamic_cast(OBJECT(hiod), TYPE_HOST_IOMMU_DEVICE_IOMMUFD)) {
--        error_setg(errp, "Need IOMMUFD backend when flts=on");
-+        error_setg(errp, "Need IOMMUFD backend when fsts=on");
-         return false;
-     }
- 
-@@ -44,7 +44,7 @@ bool vtd_check_hiod_accel(IntelIOMMUState *s, VTDHostIOMMUDevice *vtd_hiod,
- 
-     if (pci_device_get_iommu_bus_devfn(pdev, &bus, NULL, NULL)) {
-         error_setg(errp, "Host device downstream to a PCI bridge is "
--                   "unsupported when flts=on");
-+                   "unsupported when fsts=on");
-         return false;
-     }
- 
-@@ -105,7 +105,7 @@ static bool vtd_device_attach_iommufd(VTDHostIOMMUDevice *vtd_hiod,
-     bool ret;
- 
-     /*
--     * We can get here only if flts=on, the supported PGTT is FST or PT.
-+     * We can get here only if fsts=on, the supported PGTT is FST or PT.
-      * Catch invalid PGTT when processing invalidation request to avoid
-      * attaching to wrong hwpt.
-      */
-diff --git a/tests/qtest/intel-iommu-test.c b/tests/qtest/intel-iommu-test.c
-index 4f12c56260..30ee6524df 100644
---- a/tests/qtest/intel-iommu-test.c
-+++ b/tests/qtest/intel-iommu-test.c
-@@ -29,7 +29,7 @@ static void test_intel_iommu_stage_1(void)
-     uint64_t cap, ecap, tmp;
-     QTestState *s;
- 
--    s = qtest_init("-M q35 -device intel-iommu,scalable-mode=on,flts=on");
-+    s = qtest_init("-M q35 -device intel-iommu,scalable-mode=on,fsts=on");
- 
-     cap = vtd_reg_readq(s, DMAR_CAP_REG);
-     g_assert((cap & CAP_STAGE_1_FIXED1) == CAP_STAGE_1_FIXED1);
-diff --git a/tests/qtest/iommu-intel-test.c b/tests/qtest/iommu-intel-test.c
-index 8125be9e28..703bbfef73 100644
---- a/tests/qtest/iommu-intel-test.c
-+++ b/tests/qtest/iommu-intel-test.c
-@@ -54,7 +54,7 @@ static const char *qvtd_iommu_args(QVTDTransMode mode)
+-static void virtio_queue_set_guest_notifier_fd_handler(VirtQueue *vq,
+-                                                       bool assign,
+-                                                       bool with_irqfd)
+-{
+-    if (assign && !with_irqfd) {
+-        event_notifier_set_handler(&vq->guest_notifier,
+-                                   virtio_queue_guest_notifier_read);
+-    } else {
+-        event_notifier_set_handler(&vq->guest_notifier, NULL);
+-    }
+-    if (!assign) {
+-        /* Test and clear notifier before closing it,
+-         * in case poll callback didn't have time to run. */
+-        virtio_queue_guest_notifier_read(&vq->guest_notifier);
+-    }
+-}
+-
+-static void virtio_config_set_guest_notifier_fd_handler(VirtIODevice *vdev,
+-                                                 bool assign, bool with_irqfd)
+-{
+-    EventNotifier *n;
+-    n = &vdev->config_notifier;
+-    if (assign && !with_irqfd) {
+-        event_notifier_set_handler(n, virtio_config_guest_notifier_read);
+-    } else {
+-        event_notifier_set_handler(n, NULL);
+-    }
+-    if (!assign) {
+-        /* Test and clear notifier before closing it,*/
+-        /* in case poll callback didn't have time to run. */
+-        virtio_config_guest_notifier_read(n);
+-    }
+-}
+-
+-static void virtio_set_guest_notifier_fd_handler(VirtIODevice *vdev,
+-                                                 VirtQueue *vq,
+-                                                 int n, bool assign,
+-                                                 bool with_irqfd)
+-{
+-    if (n == VIRTIO_CONFIG_IRQ_IDX) {
+-        virtio_config_set_guest_notifier_fd_handler(vdev, assign, with_irqfd);
+-    } else {
+-        virtio_queue_set_guest_notifier_fd_handler(vq, assign, with_irqfd);
+-    }
+-}
+-
+ int virtio_set_guest_notifier(VirtIODevice *vdev, int n, bool assign,
+                               bool with_irqfd)
  {
-     switch (mode) {
-     case QVTD_TM_SCALABLE_FLT:
--        return "-device intel-iommu,scalable-mode=on,flts=on ";
-+        return "-device intel-iommu,scalable-mode=on,fsts=on ";
-     case QVTD_TM_SCALABLE_PT:
-     case QVTD_TM_SCALABLE_SLT:
-         return "-device intel-iommu,scalable-mode=on ";
+-    VirtQueue *vq = NULL;
+-    EventNotifier *notifier = NULL;
+-
+-    if (n == VIRTIO_CONFIG_IRQ_IDX) {
+-        notifier = virtio_config_get_guest_notifier(vdev);
+-    } else {
+-        vq = virtio_get_queue(vdev, n);
+-        notifier = virtio_queue_get_guest_notifier(vq);
+-    }
++    bool is_config = n == VIRTIO_CONFIG_IRQ_IDX;
++    VirtQueue *vq = is_config ? NULL : virtio_get_queue(vdev, n);
++    EventNotifier *notifier = is_config ?
++        virtio_config_get_guest_notifier(vdev) :
++        virtio_queue_get_guest_notifier(vq);
++    EventNotifierHandler *read_fn = is_config ?
++        virtio_config_guest_notifier_read :
++        virtio_queue_guest_notifier_read;
+ 
+     if (assign) {
+         int r = event_notifier_init(notifier, 0);
+         if (r < 0) {
+             return r;
+         }
+-        virtio_set_guest_notifier_fd_handler(vdev, vq, n, true, with_irqfd);
+-    } else {
+-        virtio_set_guest_notifier_fd_handler(vdev, vq, n, false, with_irqfd);
++    }
++
++    event_notifier_set_handler(notifier,
++                               (assign && !with_irqfd) ? read_fn : NULL);
++
++    if (!assign) {
++        /* Test and clear notifier before closing it,*/
++        /* in case poll callback didn't have time to run. */
++        read_fn(notifier);
+         event_notifier_cleanup(notifier);
+     }
+ 
 -- 
 MST
 
