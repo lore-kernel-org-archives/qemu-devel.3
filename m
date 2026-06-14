@@ -4,97 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7579CCD98D6
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6DE96CD98C5
 	for <qemu-devel@archiver.kernel.org>; Sun, 14 Jun 2026 19:11:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wYq9a-0007LW-Bp; Sun, 14 Jun 2026 15:05:54 -0400
+	id 1wYqDO-0008Tr-QC; Sun, 14 Jun 2026 15:09:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wYq9X-0007L0-EA
- for qemu-devel@nongnu.org; Sun, 14 Jun 2026 15:05:51 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wYqCp-0007LK-Ho
+ for qemu-devel@nongnu.org; Sun, 14 Jun 2026 15:09:15 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wYq9V-0001Z3-Uk
- for qemu-devel@nongnu.org; Sun, 14 Jun 2026 15:05:51 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wYqCn-0002TR-Kh
+ for qemu-devel@nongnu.org; Sun, 14 Jun 2026 15:09:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781463948;
+ s=mimecast20190719; t=1781464153;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=MvHYgh1Rq601uyfNPLm9pilUaa8bf7wu2aIADqP6I+A=;
- b=gAGbyKaF0xpn85K9IJxBXoRPRqzi8p0pshCv6L7jt9XwK+rkOLHdLrxcZKrAn95rjZAtcn
- c7XS4iaw3q5azXiL0gE9eSBI/apZspTeavnqVDCAqLeTNxpHxXdLZACR/kGo8Y0dGTMU3J
- WR4AHnGv8L6jwAKqaTCplPHaMHJD+58=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=a46sKVH32bCRMvIBLUmf7FNMvT7dbG+TFR4oxcl+h58=;
+ b=EwKh7aKKn8Zs0h3PANIhEqmFTMnOgm8XWk1kVECBAgVXeqM8xvzZuAP6uVh8IT71HRyBIV
+ eKyV8cZpp0XwbJyzkrGzW4R7KVpwJETZL+sSzrD1n1utiD7nxU9OlVtXw2VSt7Y0Rw7H6Y
+ 6sAAw6yGbn5kKFU7FlI/+OR476pwokQ=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-650-qQ20AIJoNNOCqTRkgMG7rg-1; Sun, 14 Jun 2026 15:05:46 -0400
-X-MC-Unique: qQ20AIJoNNOCqTRkgMG7rg-1
-X-Mimecast-MFC-AGG-ID: qQ20AIJoNNOCqTRkgMG7rg_1781463945
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-4600c8cb13aso1820158f8f.1
- for <qemu-devel@nongnu.org>; Sun, 14 Jun 2026 12:05:46 -0700 (PDT)
+ us-mta-144-v3dYr8BqOCy_v_Ujp0NRJw-1; Sun, 14 Jun 2026 15:09:11 -0400
+X-MC-Unique: v3dYr8BqOCy_v_Ujp0NRJw-1
+X-Mimecast-MFC-AGG-ID: v3dYr8BqOCy_v_Ujp0NRJw_1781464150
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-4601102c30dso1475037f8f.2
+ for <qemu-devel@nongnu.org>; Sun, 14 Jun 2026 12:09:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1781463945; x=1782068745; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=MvHYgh1Rq601uyfNPLm9pilUaa8bf7wu2aIADqP6I+A=;
- b=s3Kj9udLOC4dM84KpBGHWUN7zkHuD4Y/h9UaWLeHL1sRSyEoYgDaxJNSqQ7gClEpFm
- 2HVl0eSLF0sFJoVvwHl9HU6l1Lg+jsAZYnivnUzNjBsXxdoHRiEQl/jfQc4sMxos/vMO
- qkJEQRy+qB4icvMUnRyqonYMCRPNTP4vCgF5gEpEYXl5syXQzJUacbj0NfzkMX6+GvMI
- +Sre4+PqQddx3pCg4o0QcOty+sae+HDYeoF154RbdPaYxN2YOcMNT9UJpOMANBUuc2UR
- eBC+zfwOVS3R4wuVSrkZ3QazaQOUOrcggYTnU1HQKMub3kpQeBEkiH5sLECUJAyaUbjG
- C5ZQ==
+ d=redhat.com; s=google; t=1781464150; x=1782068950; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=a46sKVH32bCRMvIBLUmf7FNMvT7dbG+TFR4oxcl+h58=;
+ b=CQkiu1kMwSICm40fe97iMkPL1Yh8uG75ihKZsp+7LaNtYY5ltkwL8W9FoF5kxGZ5ec
+ lBJzZgOIuSoLaU+QXpo7oXy7hsOXXG+oeB5KQ9gADQc3drN9C3w48cv1HFMNvcTKqCKx
+ GYF01ZaUlsR35byjfJYTowSGqU4NXIz0EldcZNoQW1UaZEPeRLOGJ1c0flap2w90Z+Ux
+ pxxEKoSXcioX6M20W6ziBq6bOjU139hd3c+wRNKX8lLydRTx0iLJ7ICvoDbDVIKI9Olh
+ WipRnNyuowS+Q0DRbUTahd4kDeRtk7Fo66ZfCc/KOgHNgM2B8AKsI9YqIYLfRbcbjkvF
+ xWmQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781463945; x=1782068745;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=MvHYgh1Rq601uyfNPLm9pilUaa8bf7wu2aIADqP6I+A=;
- b=IMCUKeq1Oe6jT2KAt/mvpxVq86uaG7y3k7bHH/Fsy28B0VGoXh223QIh0v2nbIIKLJ
- R9NFS6aaI0BH1aKRl+KFLry6csuluzIYIlPdbpjOHlBXlvqYDA1nSItIPjB0iN+yJ4lY
- 3CHbioHujOrMyMMzOvHD8VOzW6DoY7yXENFnPrWNvqyYW0Mmcmh5f9SdsobMRgenMEQM
- XOEEIUz8u6h9vuLGyiy+Xm7cUM274LVedtotyjmIzSnV/FzXfKCfO5OUarsW6chtOMql
- 1CHDH0b0Oc/L0wOtOl516pzCWlyXmuYINOmaOTjLq/etcQ1ohe1N0oFccjo4AKstExZP
- OwHw==
-X-Gm-Message-State: AOJu0YzE4twpxwd2BzsfPK3zKjNK0Put6B4Ja0kq7AXZ4n3g4A6/AaF8
- xP2jBVZhpWhHLyDsZTA28T29XtbnYC0hBe8yI9UUqFIf8oqAjV1PA5LLfTRfi6iy2lhNhnJx5wq
- 3MNDUpZHYAIlOeByJVdshQe1Ax7VG8bK89ZhgZL92tPT4PN31BtP2MWYhUUT0nE9gJVeIxd+IJg
- Nfg3JW2aJAaGZg5MvQj3O/u7FxeGZIcWsXKQ==
-X-Gm-Gg: Acq92OH6VLVluApZVROpFNyZTVBfom3ntzemb0OtagUaMaC6AbeqYm6dSRL2hQoUuqd
- x3GWgvapjQEh8Tv5mlctbxcX3pKpAueL2EVn8/sGt29/qCxjx1cL7KDs4eLdwsMXFwq/fHphna3
- x/HpYcELu8V4qYT3wTMWsu1AoCGGtmyYl+VU7jRp7LNWeReHe96Lycn550A2tWYdBxqC3DN5Xbs
- u47pS5AhoExRCtUsEuGO/xVrqTtE+5Pib4sm3FhVtivFslhe6YCnOGU/Uf3XlIOmi6P1Nq+rRM1
- vC8pZCQ1w3FmR2gZcGBYX0NxbnWG8pw5lrXogJZg5dz+Xh1n2xH4C2VjPt/DmmH89J2HpY7Yxl3
- 5P9C2IvXGeBsJiCUT6iEjQb0Q4XNYCcWwflvH7wPUWps=
-X-Received: by 2002:a05:6000:4a1c:b0:461:9459:874c with SMTP id
- ffacd0b85a97d-46194598a0amr6248570f8f.19.1781463945206; 
- Sun, 14 Jun 2026 12:05:45 -0700 (PDT)
-X-Received: by 2002:a05:6000:4a1c:b0:461:9459:874c with SMTP id
- ffacd0b85a97d-46194598a0amr6248528f8f.19.1781463944554; 
- Sun, 14 Jun 2026 12:05:44 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1781464150; x=1782068950;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=a46sKVH32bCRMvIBLUmf7FNMvT7dbG+TFR4oxcl+h58=;
+ b=NwPrVRq4JvTIpeKT8ibhhoEnozLhaqVEkXwhrz8X/dqAm+2D8vCRfIwXt6FO6iJHbg
+ kD5rRgGyVOKfbFDbaBqhefsOq8ct0PuDqg7kzZ1DRds1IDwxNRjJacKGYerA2xhhufR2
+ KA3w9sVYURqVpc6m95eAC7IZaX9IP83XjWmVzjVkS/zoZm7wdEDXS809gOYAi6PZasmG
+ J/hUk5TD8TDQePDPOGEOu7OlNKPwQ/ZCa16JLTi3+Rr9fuATURaoSyyQjAfPJR4DOKSJ
+ QI2ToIFkDzUBQgzhKu5biCD8HxzKgv62PjOYII+30timRhF0jcgFGrb11MqYi8DgDXyj
+ tspw==
+X-Gm-Message-State: AOJu0YwY3QgASh5kn1UMnwPx5e+UlJ7pOxvt2b/slz3VmdMC7bUVWJDV
+ v/SLXvuCfk2cy6dKt45jJUHRSmMtTDBxVSmAzScYsg49dtK47F53gR+Ht7iN77yol8m+ht8/qlc
+ HzkBXGzU9eY5tfMLpzDHJvL8CjoJiPijkLI1Lay9QA9PXM6tjOnDhK3PkTxafNO3k2hQEr8ZDZj
+ 9JXE/gKRTwfNu8KYzSHH4tCkiGDOB99lcMgA==
+X-Gm-Gg: Acq92OET5i7fEOlYlO4PXXCDXWPXJvR9EvHCjSFRFbs591As+E8duK+4n4PDz0BpWMu
+ FiKsCgeGd2Y1gsaoRSrcUjzjHKQB5BIXG06+vcq+TF/fA7acbotKYOUexOqEUbtiQM6uLKKglJG
+ XtLG7+/O/rBlnFEXnxFh70e3k9MdVDRdNhpUjRohPGhkgaEi/JDT2smhUnKOr+PqRleX4Qjs81r
+ admr/RCjOI9f8zicVenEtWxKsLSW7kIl0kki6Gu/mc+wCMmsZVUJLwYpXcWe7pYbfkL8JU1sV7Q
+ hI303QVbJ3+bCs4DCNxq6HFkNhraYQ22HPiqEAJT3VNPz4e/X5So507zgGDQzO21I1V+Uqk1tJs
+ xbI/XQBoGkyqMJ2io5js52p6VE7W3NtCZFKDgtl9IxC8=
+X-Received: by 2002:a05:6000:188e:b0:45e:f271:5019 with SMTP id
+ ffacd0b85a97d-4606db8c6fbmr15479974f8f.14.1781464150041; 
+ Sun, 14 Jun 2026 12:09:10 -0700 (PDT)
+X-Received: by 2002:a05:6000:188e:b0:45e:f271:5019 with SMTP id
+ ffacd0b85a97d-4606db8c6fbmr15479934f8f.14.1781464149535; 
+ Sun, 14 Jun 2026 12:09:09 -0700 (PDT)
 Received: from redhat.com (IGLD-80-230-85-71.inter.net.il. [80.230.85.71])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4606f2c473bsm30384132f8f.28.2026.06.14.12.05.43
+ ffacd0b85a97d-4606f2cf5d9sm23855994f8f.32.2026.06.14.12.09.08
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 14 Jun 2026 12:05:44 -0700 (PDT)
-Date: Sun, 14 Jun 2026 15:05:42 -0400
+ Sun, 14 Jun 2026 12:09:09 -0700 (PDT)
+Date: Sun, 14 Jun 2026 15:09:07 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Yunhe Wang <yunhewwww@163.com>,
- qemu-stable@nongnu.org, Alejandro Jimenez <alejandro.j.jimenez@oracle.com>,
- Sairaj Kodilkar <sarunkod@amd.com>,
+ Sairaj Kodilkar <sarunkod@amd.com>, Vasant Hegde <vasant.hegde@amd.com>,
+ Alejandro Jimenez <alejandro.j.jimenez@oracle.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 001/106] amd_iommu: restrict command buffer head/tail ranges
- to ring size
-Message-ID: <3097d54016ea9f8f0436f0b20e1b4d78a02b6aeb.1781463125.git.mst@redhat.com>
+Subject: [PULL 081/106] amd_iommu: Generate XT interrupts when xt support is
+ enabled
+Message-ID: <cf0210df65aa4f582e444b910c950e2b4a80b194.1781463125.git.mst@redhat.com>
 References: <cover.1781463125.git.mst@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1781463125.git.mst@redhat.com>
 X-Mailer: git-send-email 2.51.2.2891.g4157995a80.dirty
 X-Mutt-Fcc: =sent
@@ -106,7 +109,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -122,57 +125,195 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Paolo Bonzini <pbonzini@redhat.com>
+From: Sairaj Kodilkar <sarunkod@amd.com>
 
-The AMD IOMMU command buffer is a ring buffer of cmdbuf_len (a power
-of two) entries.  Each entry is 16 bytes and the head pointer cycles
-through the set:
+When MMIO 0x18[IntCapXTEn]=1, interrupts originating from the IOMMU itself are
+sent based on the programming in XT IOMMU Interrupt Control Registers in MMIO
+0x170-0x180 instead of the programming in the IOMMU's MSI capability registers.
+The guest programs these registers with appropriate vector and destination
+ID instead of writing to PCI MSI capability.
 
-  [0, 16, 32, ..., (cmdbuf_len - 1) * AMDVI_COMMAND_SIZE]
+Current AMD vIOMMU is capable of generating interrupts only through PCI
+MSI capability and does not care about xt mode. Because of this AMD
+vIOMMU cannot generate event log interrupts when the guest has enabled
+xt mode.
 
-The tail pointer is written by the guest through the COMMAND_TAIL MMIO
-register (offset 0x2008); the while loop in amdvi_cmdbuf_run() only
-terminates when head == tail.  If tail is set to a value higher than
-cmdbuf_len * 16, head will cycle through all the elements of the ring
-buffer indefinitely, without ever matching tail.  Fix this by further
-masking tail (and head, for consistency) against the size of the
-ring buffer.
+Introduce a new flag "intcapxten" which is set when guest writes control
+register [IntCapXTEn] (bit 51) and use vector and destination field in
+the XT MMIO register (0x170) to support XT mode.
 
-Reported-by: Yunhe Wang <yunhewwww@163.com>
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Signed-off-by: Sairaj Kodilkar <sarunkod@amd.com>
+Reviewed-by: Vasant Hegde <vasant.hegde@amd.com>
 Reviewed-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Message-Id: <20260511113923.2478812-1-pbonzini@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Message-Id: <20260302115130.5903-4-sarunkod@amd.com>
 ---
- hw/i386/amd_iommu.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ hw/i386/amd_iommu.c  | 47 ++++++++++++++++++++++++++++++++++++++------
+ hw/i386/amd_iommu.h  | 17 ++++++++++++++++
+ hw/i386/trace-events |  1 +
+ 3 files changed, 59 insertions(+), 6 deletions(-)
 
 diff --git a/hw/i386/amd_iommu.c b/hw/i386/amd_iommu.c
-index 789e09d6f2..197e452e3c 100644
+index 5947d3aecf..79216fb305 100644
 --- a/hw/i386/amd_iommu.c
 +++ b/hw/i386/amd_iommu.c
-@@ -1578,7 +1578,8 @@ static inline void amdvi_handle_devtab_write(AMDVIState *s)
- static inline void amdvi_handle_cmdhead_write(AMDVIState *s)
- {
-     s->cmdbuf_head = amdvi_readq(s, AMDVI_MMIO_COMMAND_HEAD)
--                     & AMDVI_MMIO_CMDBUF_HEAD_MASK;
-+                     & AMDVI_MMIO_CMDBUF_HEAD_MASK
-+                     & (s->cmdbuf_len * AMDVI_COMMAND_SIZE - 1);
-     amdvi_cmdbuf_run(s);
+@@ -192,18 +192,38 @@ static void amdvi_assign_andq(AMDVIState *s, hwaddr addr, uint64_t val)
+    amdvi_writeq_raw(s, addr, amdvi_readq(s, addr) & val);
  }
  
-@@ -1594,7 +1595,8 @@ static inline void amdvi_handle_cmdbase_write(AMDVIState *s)
- static inline void amdvi_handle_cmdtail_write(AMDVIState *s)
++static void amdvi_build_xt_msi_msg(AMDVIState *s, MSIMessage *msg)
++{
++    union mmio_xt_intr xt_reg;
++    struct X86IOMMUIrq irq;
++
++    xt_reg.val = amdvi_readq(s, AMDVI_MMIO_XT_GEN_INTR);
++
++    irq.vector = xt_reg.vector;
++    irq.delivery_mode = xt_reg.delivery_mode;
++    irq.dest_mode = xt_reg.destination_mode;
++    irq.dest = (xt_reg.destination_hi << 24) | xt_reg.destination_lo;
++    irq.trigger_mode = 0;
++    irq.redir_hint = 0;
++
++    x86_iommu_irq_to_msi_message(&irq, msg);
++}
++
+ static void amdvi_generate_msi_interrupt(AMDVIState *s)
  {
-     s->cmdbuf_tail = amdvi_readq(s, AMDVI_MMIO_COMMAND_TAIL)
--                     & AMDVI_MMIO_CMDBUF_TAIL_MASK;
-+                     & AMDVI_MMIO_CMDBUF_TAIL_MASK
-+                     & (s->cmdbuf_len * AMDVI_COMMAND_SIZE - 1);
-     amdvi_cmdbuf_run(s);
+     MSIMessage msg = {};
+-    MemTxAttrs attrs = {
+-        .requester_id = pci_requester_id(&s->pci->dev)
+-    };
+ 
+-    if (msi_enabled(&s->pci->dev)) {
++    if (s->intcapxten) {
++        trace_amdvi_generate_msi_interrupt("XT GEN");
++        amdvi_build_xt_msi_msg(s, &msg);
++    } else if (msi_enabled(&s->pci->dev)) {
++        trace_amdvi_generate_msi_interrupt("MSI");
+         msg = msi_get_message(&s->pci->dev, 0);
+-        address_space_stl_le(&address_space_memory, msg.address, msg.data,
+-                             attrs, NULL);
++    } else {
++        trace_amdvi_generate_msi_interrupt("NO MSI");
++        return;
+     }
++    apic_get_class(NULL)->send_msi(&msg);
  }
  
+ static uint32_t get_next_eventlog_entry(AMDVIState *s)
+@@ -1538,6 +1558,7 @@ const char *amdvi_mmio_get_name(hwaddr addr)
+     MMIO_REG_TO_STRING(AMDVI_MMIO_PPR_BASE);
+     MMIO_REG_TO_STRING(AMDVI_MMIO_PPR_HEAD);
+     MMIO_REG_TO_STRING(AMDVI_MMIO_PPR_TAIL);
++    MMIO_REG_TO_STRING(AMDVI_MMIO_XT_GEN_INTR);
+ #undef MMIO_REG_TO_STRING
+     default:
+         return "UNHANDLED";
+@@ -1581,6 +1602,15 @@ static void amdvi_handle_control_write(AMDVIState *s)
+     s->ga_enabled = !!(control & AMDVI_MMIO_CONTROL_GAEN);
+     s->xten = !!(control & AMDVI_MMIO_CONTROL_XTEN) && s->xtsup &&
+               s->ga_enabled;
++    /*
++     * IntCapXTEn controls whether IOMMU-originated interrupts are sent based
++     * on the information in XT IOMMU Interrupt Control Registers rather than
++     * the IOMMU’s MSI capability registers. Therefore it requires IOMMU
++     * x2APIC support capabilities (i.e. XTSup=1), but it is independent of
++     * whether a driver chooses to enable x2APIC mode for interrupt remapping
++     * (i.e. XTEn=1).
++     */
++    s->intcapxten = !!(control & AMDVI_MMIO_CONTROL_INTCAPXTEN) && s->xtsup;
+ 
+     /* update the flags depending on the control register */
+     if (s->cmdbuf_enabled) {
+@@ -1790,6 +1820,9 @@ static void amdvi_mmio_write(void *opaque, hwaddr addr, uint64_t val,
+     case AMDVI_MMIO_STATUS:
+         amdvi_mmio_reg_write(s, size, val, addr);
+         break;
++    case AMDVI_MMIO_XT_GEN_INTR:
++        amdvi_mmio_reg_write(s, size, val, addr);
++        break;
+     }
+ }
+ 
+@@ -2440,6 +2473,7 @@ static void amdvi_init(AMDVIState *s)
+     s->enabled = false;
+     s->cmdbuf_enabled = false;
+     s->xten = false;
++    s->intcapxten = false;
+ 
+     /* reset MMIO */
+     memset(s->mmior, 0, AMDVI_MMIO_SIZE);
+@@ -2510,6 +2544,7 @@ static const VMStateDescription vmstate_xt = {
+        .minimum_version_id = 1,
+        .fields = (VMStateField[]) {
+            VMSTATE_BOOL(xten, AMDVIState),
++           VMSTATE_BOOL(intcapxten, AMDVIState),
+            VMSTATE_END_OF_LIST()
+        }
+ };
+diff --git a/hw/i386/amd_iommu.h b/hw/i386/amd_iommu.h
+index 300d91b34d..3cab04a6d4 100644
+--- a/hw/i386/amd_iommu.h
++++ b/hw/i386/amd_iommu.h
+@@ -53,6 +53,7 @@
+ #define AMDVI_MMIO_EXCL_BASE          0x0020
+ #define AMDVI_MMIO_EXCL_LIMIT         0x0028
+ #define AMDVI_MMIO_EXT_FEATURES       0x0030
++#define AMDVI_MMIO_XT_GEN_INTR        0x0170
+ #define AMDVI_MMIO_COMMAND_HEAD       0x2000
+ #define AMDVI_MMIO_COMMAND_TAIL       0x2008
+ #define AMDVI_MMIO_EVENT_HEAD         0x2010
+@@ -103,6 +104,7 @@
+ #define AMDVI_MMIO_CONTROL_CMDBUFLEN      (1ULL << 12)
+ #define AMDVI_MMIO_CONTROL_GAEN           (1ULL << 17)
+ #define AMDVI_MMIO_CONTROL_XTEN           (1ULL << 50)
++#define AMDVI_MMIO_CONTROL_INTCAPXTEN     (1ULL << 51)
+ 
+ /* MMIO status register bits */
+ #define AMDVI_MMIO_STATUS_CMDBUF_RUN  (1 << 4)
+@@ -338,6 +340,20 @@ struct irte_ga {
+   union irte_ga_hi hi;
+ };
+ 
++union mmio_xt_intr {
++    uint64_t val;
++    struct {
++        uint64_t rsvd_1:2,
++                 destination_mode:1,
++                 rsvd_2:5,
++                 destination_lo:24,
++                 vector:8,
++                 delivery_mode:1,
++                 rsvd_3:15,
++                 destination_hi:8;
++    };
++};
++
+ #define TYPE_AMD_IOMMU_DEVICE "amd-iommu"
+ OBJECT_DECLARE_SIMPLE_TYPE(AMDVIState, AMD_IOMMU_DEVICE)
+ 
+@@ -416,6 +432,7 @@ struct AMDVIState {
+     bool ga_enabled;
+     bool xtsup;     /* xtsup=on command line */
+     bool xten;      /* guest controlled, x2apic mode enabled */
++    bool intcapxten; /* guest controlled, IOMMU x2apic interrupts enabled */
+ 
+     /* DMA address translation */
+     bool dma_remap;
+diff --git a/hw/i386/trace-events b/hw/i386/trace-events
+index 5fa5e93b68..a1dfade20f 100644
+--- a/hw/i386/trace-events
++++ b/hw/i386/trace-events
+@@ -118,6 +118,7 @@ amdvi_ir_intctl(uint8_t val) "int_ctl 0x%"PRIx8
+ amdvi_ir_target_abort(const char *str) "%s"
+ amdvi_ir_delivery_mode(const char *str) "%s"
+ amdvi_ir_irte_ga_val(uint64_t hi, uint64_t lo) "hi 0x%"PRIx64" lo 0x%"PRIx64
++amdvi_generate_msi_interrupt(const char *str) "Mode: %s"
+ 
+ # vmport.c
+ vmport_register(unsigned char command, void *func, void *opaque) "command: 0x%02x func: %p opaque: %p"
 -- 
 MST
 
