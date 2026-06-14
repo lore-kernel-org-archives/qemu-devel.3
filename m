@@ -4,108 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DAEACCD98D2
-	for <qemu-devel@archiver.kernel.org>; Sun, 14 Jun 2026 19:14:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD88CCD98C5
+	for <qemu-devel@archiver.kernel.org>; Sun, 14 Jun 2026 19:14:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wYqDP-00009n-Jq; Sun, 14 Jun 2026 15:09:51 -0400
+	id 1wYqCp-0007LF-Im; Sun, 14 Jun 2026 15:09:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wYqDI-0007mJ-Kl
- for qemu-devel@nongnu.org; Sun, 14 Jun 2026 15:09:46 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wYqCb-00077Z-Pc
+ for qemu-devel@nongnu.org; Sun, 14 Jun 2026 15:09:05 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wYqDF-0002iE-V0
- for qemu-devel@nongnu.org; Sun, 14 Jun 2026 15:09:43 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wYqCa-0002Nc-5J
+ for qemu-devel@nongnu.org; Sun, 14 Jun 2026 15:09:01 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781464181;
+ s=mimecast20190719; t=1781464139;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=dxQiufrlju7WrdEUkSc4WpPk6ds42ZX5EDbbuJfT9OE=;
- b=H65Pu3kpbib9/GfBbDEwM7Xb1b5JmGafx1ckEUWyknys35jMzxWR+pnhU5Lv4oi8VsA8d1
- BtkP2c8PJo1JcDy3FqUiFu0dOGnTyms9D4+bEzbrDN+PIdII2JeNuUFBU7GV29nZbHmcK2
- xNFGkCXl53KBBm1qd/Tk4UIqO9vgb9w=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=ok0lvba2stfaZNgrdWga/lmddPgOemeWMEkvpGK7Gy8=;
+ b=S050wSoLqGNRGN4Vi+80BtqDzP86RhgfyKJKgEsBlHzhRnL9b0rXLTrzQB+7mVqBOoKuxw
+ gqim1X2XkDlohSHm+h+3iX8/KEAyUPpipglk65CRQPcMTJxQyL/lyv8VsFtOQt7GYHB8K5
+ GHKkZm6XuCO3vMsH7P8NKksgVpzYlGk=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-213-sgII0XexNkOi90w00nGBtQ-1; Sun, 14 Jun 2026 15:09:40 -0400
-X-MC-Unique: sgII0XexNkOi90w00nGBtQ-1
-X-Mimecast-MFC-AGG-ID: sgII0XexNkOi90w00nGBtQ_1781464179
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-490cc1ae292so15158465e9.1
- for <qemu-devel@nongnu.org>; Sun, 14 Jun 2026 12:09:39 -0700 (PDT)
+ us-mta-622-BsJLz5WjMz69G7P9ioc4hw-1; Sun, 14 Jun 2026 15:08:58 -0400
+X-MC-Unique: BsJLz5WjMz69G7P9ioc4hw-1
+X-Mimecast-MFC-AGG-ID: BsJLz5WjMz69G7P9ioc4hw_1781464137
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-460129ef947so1596509f8f.1
+ for <qemu-devel@nongnu.org>; Sun, 14 Jun 2026 12:08:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1781464179; x=1782068979; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=dxQiufrlju7WrdEUkSc4WpPk6ds42ZX5EDbbuJfT9OE=;
- b=heKcja27/R6kWyBK2Lmn6baokQulB/hBmTop6nS0ULMWOxdZ0/ng07OWiLYuBWzvs3
- 6V8xax1Gq+5RfaluVmJ0vZ9dWhktaa5re2cqPF0wL0MYKNE9v0XGdK0dY5Yygy20dNGx
- 8pESDStl5cfL6TuTcbt71B0tGI0ckAoRZ+Ap1Ogn4GVupNO8BrF8tzvHEk+NwuLT1Ndh
- YJpZuSl7McSSFVhEx58g5HS8ec1hwbJeTgMima/IHaEqlH/SW7jtdkGzgHEeHk8gGKVR
- B5lT+0fo2FBjxarIBRDzFqPJXZ/qnajmWeHpGOrVrPsbOe39FiDAExTl0uOm4S0iPB9s
- O2Gw==
+ d=redhat.com; s=google; t=1781464137; x=1782068937; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=ok0lvba2stfaZNgrdWga/lmddPgOemeWMEkvpGK7Gy8=;
+ b=N/In6g4XO91uj9oBKQ3YdREolimVnBNk6ZkI00X1q8O6znwPKQsURaUkXtdDh7ZVcv
+ sLeGFhHhgRqVU9c9gyzAJjlFAGkJiu830e2TGreeykmygZmhJ/jyMLbvceqlZK8yy419
+ 5KslXocnCiVR3H4jRaH+NHEBYWWQ5S7WMUgpQVY7pHwBQUH1hD55cRrGBqB9fRRBEDxb
+ 9g54BdmjCCFJLrILSSFRW/BLW9tgQ4e6/ElbrKY3epLonHpeekeazZIr6ykB5Er0Wd4d
+ jO8igQ3aZJNvdBSGmW8y3k6CZ1lW+NAD58hAnM8LljMpioiRMJH/BJTVsdzjIQrzGQ7T
+ ma1w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781464179; x=1782068979;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=dxQiufrlju7WrdEUkSc4WpPk6ds42ZX5EDbbuJfT9OE=;
- b=bvy1FPoeVVNsY/nJiOhGIgQRrMwXzxBpcxWZn9G46lGRCaligWUMoawAE8T8NGzmUl
- jhTTufDPnBrPSsC433IogniD2I3/fFhJdx7AoBg/iZjZITxBsc/yiXvQsWSDHyNdOQuP
- RZLxJQ1HwkX7nWo4dMqkxLkvsHCRIoYe8s03kd/uYhdtouf/l2gEwjmf1JBqTQV0kIrt
- ZZUJSwlhhndHpc5DiIPp75Miyq4KRUbF/+CWF+jaPOcEymcmS2F6/+T8QVn1fCRLVb+G
- UdAAdeROu4lT9mnE4XIk5mlnbnaEVupn1bgMD5TAsyO4NGosoQ9Lk8d1E3ExCyyLDPjC
- Sv5g==
-X-Gm-Message-State: AOJu0YyLLRleOZ+5x11LvcuhTQ517rsC+qXz1kFHlL49N/fFtmkXkoOY
- K1G4OYWBRYo5/5MOBbbL+WRXKeUpU80EaOFtuEE8LE0yCTpUC/nRu3uMBe2yE61hnB4gL+tdIHU
- MU6CtSMMTbFmX+jpBRZh2m7enEqQ/v1pK018aTcDm86Cz18WJEVmJx0zGEQezjREsnVlvjd9KDi
- kwmzG4u26QuW16eXn/1oDx7lzO37Pwg3PFqQ==
-X-Gm-Gg: Acq92OGwT7p6g8kCMI9qwI500ZUoY69PrCd7vzA4Hq97rKdDeGlRaId4ZDiVQ89mFsw
- 5K3wXQlDc5e3uVpkrvQoOgfCz4qY8ImnS3eLt5DvZm3atkHVVjNNbr08rrdV19g9lHE7dz+1TPI
- PxSzBYSqBf7DYTM6N9LFZl8vuNdbNqj+XZlYxq5EHvjJnhsZEnrP78Za/JvZsbq8faaOJQkULZd
- Ly5ovTyUcZX8uccXL9VbSRHm6avUg/aTGguQYLoZHpxtjOvSeVc6oCRCnZ2VfQELEda7ICzWvH1
- hOLek4nEK+W9kL404ppSEWWo08LAOaKPs268qA9hS9yrgwtIbmCVZJiMkJ/grRu6BECnBmR53Nk
- 60ulM7J/wwHG+Xc/Tcptm7KxcSNolMLiMO7ZmUpXqBCY=
-X-Received: by 2002:a05:600c:3542:b0:490:b4a8:e031 with SMTP id
- 5b1f17b1804b1-490ec480e65mr121660405e9.4.1781464178703; 
- Sun, 14 Jun 2026 12:09:38 -0700 (PDT)
-X-Received: by 2002:a05:600c:3542:b0:490:b4a8:e031 with SMTP id
- 5b1f17b1804b1-490ec480e65mr121660105e9.4.1781464178158; 
- Sun, 14 Jun 2026 12:09:38 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1781464137; x=1782068937;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=ok0lvba2stfaZNgrdWga/lmddPgOemeWMEkvpGK7Gy8=;
+ b=Cbe6nQyHoxA7alM6J0BTs5PqPL9rXiB0JuhjI1q9NgQs0EATUQaI7rUjUsAO72+Wvr
+ uQLPAaAcmHXHofqO3D8r7J0Zk3wMqzWODOwlWR4myeSPBX877a6zxGKPZe3UVkbTW6uc
+ vP4fIaZclJyq2cRSKu2Vz/Q5BI0qmosFnhlwoUn8nLtSTdU84USEsJ3LyPU3mk/AEWZV
+ eNPshWZo5taI7jezrKUQW2hBzSVQhAw1cgirXw6f3yeH4fuaRy+LU2GBqgB1+L6vbm35
+ oxKWiimjklYfMFaArSXf1gMmhDRRLQqvY1b3zwaFE4hi3aLcFB6PemTLscSAAvT+5/A3
+ U2vw==
+X-Gm-Message-State: AOJu0Yzzsd6BdhCy+t9LkfemAeKRYBEPxxE2f1h7eXoyxrVPA3xMJ39h
+ I6kKSpBskuQ2HorYMHum7YYCcLH8P2v3JTOycZQjJUbYVe9GU1pkz8smeCckaBvsv8WRuGglsoW
+ w6S3E4vCwV6wgkK3e6loHBoqIXYAIaVIENSnFvI89J5TMhOqiyw+wQ0vAH3nXaNYPaSm/T5s2O7
+ Ytvddw53L1nlys0jfBKJQS143t0q3jHEksiw==
+X-Gm-Gg: Acq92OELt5ARqAyzX+MheM4P6eifR7w7BHakWm3f4pbw3AoYBcKlBFUNTXqGX4yD1ZF
+ 4jKcqSVvS7YP62T2+pZbwVXIPcYUqn003QFRo2rBzbzeAZ7oGmOuIY/CTd3X26xsPcLQNjoZGun
+ U1BSAjQUOCeXS71f3VUzE80BJH6+KS1XDKxEC+8NeuOmRCEKFdyCmsAHREZtEhgVlAiaRhbP4c6
+ tzsR9209JEvNLe1DfQpZDr7Pc59ctDUGBZCXMl6kp2CzH/pDgE+8tSeUc+sfscp0njBfflNvtga
+ CwSIXCMK1kdYUXUyrebMR7slJBNuaTYazcPKCKKB4JUOy+StByhBDLryquXIy3WtNnN940ge5Iq
+ /v4f1T5Jt55bOj6LJd6tGeaGPZHuEWVR7DamImrnnJmc=
+X-Received: by 2002:a05:600c:46c4:b0:490:b355:9c8c with SMTP id
+ 5b1f17b1804b1-490ec4fbcb7mr152436305e9.23.1781464136820; 
+ Sun, 14 Jun 2026 12:08:56 -0700 (PDT)
+X-Received: by 2002:a05:600c:46c4:b0:490:b355:9c8c with SMTP id
+ 5b1f17b1804b1-490ec4fbcb7mr152436045e9.23.1781464136320; 
+ Sun, 14 Jun 2026 12:08:56 -0700 (PDT)
 Received: from redhat.com (IGLD-80-230-85-71.inter.net.il. [80.230.85.71])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4922035b4absm184726005e9.11.2026.06.14.12.09.36
+ ffacd0b85a97d-4606f2b0d4fsm28698969f8f.24.2026.06.14.12.08.55
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 14 Jun 2026 12:09:37 -0700 (PDT)
-Date: Sun, 14 Jun 2026 15:09:36 -0400
+ Sun, 14 Jun 2026 12:08:56 -0700 (PDT)
+Date: Sun, 14 Jun 2026 15:08:54 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Albert Esteve <aesteve@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>,
- Alyssa Ross <hi@alyssa.is>, Stefan Hajnoczi <stefanha@redhat.com>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Subject: [PULL 093/106] vhost_user.rst: Add SHMEM_MAP/_UNMAP to spec
-Message-ID: <588acb45c29f8c30f98b5cbafb9fd09cb932bd88.1781463125.git.mst@redhat.com>
+ Eugenio =?utf-8?B?UMOpcmV6?= <eperezma@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>
+Subject: [PULL 075/106] vhost: factor out the get of last used desc in SVQ
+Message-ID: <90369a1165c4ffc5a22c9e0fb1743bc0ff896861.1781463125.git.mst@redhat.com>
 References: <cover.1781463125.git.mst@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1781463125.git.mst@redhat.com>
 X-Mailer: git-send-email 2.51.2.2891.g4157995a80.dirty
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -122,119 +122,102 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Albert Esteve <aesteve@redhat.com>
+From: Eugenio Pérez <eperezma@redhat.com>
 
-Add SHMEM_MAP/_UNMAP request to the vhost-user
-spec documentation.
+This code path is modified to handle in order devices.  Abstract here so
+we can generalize on the caller.
 
-Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
-Reviewed-by: Alyssa Ross <hi@alyssa.is>
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
-Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Signed-off-by: Albert Esteve <aesteve@redhat.com>
+Signed-off-by: Eugenio Pérez <eperezma@redhat.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-Id: <20260304165223.2166175-4-aesteve@redhat.com>
+Message-Id: <20260304173535.2702587-5-eperezma@redhat.com>
 ---
- docs/interop/vhost-user.rst | 64 +++++++++++++++++++++++++++++++++++++
- 1 file changed, 64 insertions(+)
+ hw/virtio/vhost-shadow-virtqueue.c | 45 +++++++++++++++++++-----------
+ 1 file changed, 29 insertions(+), 16 deletions(-)
 
-diff --git a/docs/interop/vhost-user.rst b/docs/interop/vhost-user.rst
-index 883b1e90a2..4182d721ca 100644
---- a/docs/interop/vhost-user.rst
-+++ b/docs/interop/vhost-user.rst
-@@ -362,6 +362,28 @@ Device state transfer parameters
-   In the future, additional phases might be added e.g. to allow
-   iterative migration while the device is running.
+diff --git a/hw/virtio/vhost-shadow-virtqueue.c b/hw/virtio/vhost-shadow-virtqueue.c
+index 7adacd4f54..e7e3c9155c 100644
+--- a/hw/virtio/vhost-shadow-virtqueue.c
++++ b/hw/virtio/vhost-shadow-virtqueue.c
+@@ -444,6 +444,25 @@ static void vhost_svq_disable_notification(VhostShadowVirtqueue *svq)
+     }
+ }
  
-+MMAP request
-+^^^^^^^^^^^^
++/*
++ * Gets the next buffer id and moves forward the used idx, so the next time
++ * SVQ calls this function will get the next one.
++ *
++ * @svq: Shadow VirtQueue
++ * @len: Consumed length by the device.
++ *
++ * Return the next descriptor consumed by the device.
++ */
++static uint16_t vhost_svq_get_last_used_split(VhostShadowVirtqueue *svq,
++                                              uint32_t *len)
++{
++    const vring_used_t *used = svq->vring.used;
++    uint16_t last_used = svq->last_used_idx++ & (svq->vring.num - 1);
 +
-++-------+---------+-----------+------------+-----+-------+
-+| shmid | padding | fd_offset | shm_offset | len | flags |
-++-------+---------+-----------+------------+-----+-------+
++    *len = le32_to_cpu(used->ring[last_used].len);
++    return le32_to_cpu(used->ring[last_used].id);
++}
 +
-+:shmid: a 8-bit shared memory region identifier
-+
-+:fd_offset: a 64-bit offset of this area from the start
-+            of the supplied file descriptor
-+
-+:shm_offset: a 64-bit offset from the start of the
-+             pointed shared memory region
-+
-+:len: a 64-bit size of the memory to map
-+
-+:flags: a 64-bit value:
-+
-+  - 0: Pages are mapped read-only
-+  - 1: Pages are mapped read-write
-+
- C structure
- -----------
+ static uint16_t vhost_svq_last_desc_of_chain(const VhostShadowVirtqueue *svq,
+                                              uint16_t num, uint16_t i)
+ {
+@@ -458,8 +477,6 @@ G_GNUC_WARN_UNUSED_RESULT
+ static VirtQueueElement *vhost_svq_get_buf(VhostShadowVirtqueue *svq,
+                                            uint32_t *len)
+ {
+-    const vring_used_t *used = svq->vring.used;
+-    vring_used_elem_t used_elem;
+     uint16_t last_used, last_used_chain, num;
  
-@@ -387,6 +409,7 @@ In QEMU the vhost-user message is implemented with the following struct:
-           VhostUserInflight inflight;
-           VhostUserShared object;
-           VhostUserTransferDeviceState transfer_state;
-+          VhostUserMMap mmap;
-       };
-   } QEMU_PACKED VhostUserMsg;
+     if (!vhost_svq_more_used(svq)) {
+@@ -468,33 +485,29 @@ static VirtQueueElement *vhost_svq_get_buf(VhostShadowVirtqueue *svq,
  
-@@ -1083,6 +1106,7 @@ Protocol features
-   #define VHOST_USER_PROTOCOL_F_DEVICE_STATE            19
-   #define VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFLIGHT 20
-   #define VHOST_USER_PROTOCOL_F_GPA_ADDRESSES           21
-+  #define VHOST_USER_PROTOCOL_F_SHMEM_MAP               22
+     /* Only get used array entries after they have been exposed by dev */
+     smp_rmb();
+-    last_used = svq->last_used_idx & (svq->vring.num - 1);
+-    used_elem.id = le32_to_cpu(used->ring[last_used].id);
+-    used_elem.len = le32_to_cpu(used->ring[last_used].len);
++    last_used = vhost_svq_get_last_used_split(svq, len);
  
- Front-end message types
- -----------------------
-@@ -1904,6 +1928,46 @@ is sent by the front-end.
-   when the operation is successful, or non-zero otherwise. Note that if the
-   operation fails, no fd is sent to the backend.
+-    svq->last_used_idx++;
+-    if (unlikely(used_elem.id >= svq->vring.num)) {
++    if (unlikely(last_used >= svq->vring.num)) {
+         qemu_log_mask(LOG_GUEST_ERROR, "Device %s says index %u is used",
+-                      svq->vdev->name, used_elem.id);
++                      svq->vdev->name, last_used);
+         return NULL;
+     }
  
-+``VHOST_USER_BACKEND_SHMEM_MAP``
-+  :id: 9
-+  :equivalent ioctl: N/A
-+  :request payload: fd and ``struct VhostUserMMap``
-+  :reply payload: N/A
-+
-+  When the ``VHOST_USER_PROTOCOL_F_SHMEM`` protocol feature has been
-+  successfully negotiated, this message can be submitted by the backends to
-+  advertise a new mapping to be made in a given VIRTIO Shared Memory Region.
-+  Upon receiving the message, the front-end will mmap the given fd into the
-+  VIRTIO Shared Memory Region with the requested ``shmid``.
-+
-+  If ``VHOST_USER_PROTOCOL_F_REPLY_ACK`` is negotiated, and
-+  back-end set the ``VHOST_USER_NEED_REPLY`` flag, the front-end
-+  must respond with zero when operation is successfully completed,
-+  or non-zero otherwise.
-+
-+  Mapping over an already existing map is not allowed and requests shall fail.
-+  Therefore, the memory range in the request must correspond with a valid,
-+  free region of the VIRTIO Shared Memory Region. Also, note that mappings
-+  consume resources and that the request can fail when there are no resources
-+  available. Lastly, mappings are automatically unmapped by the front-end
-+  across device reset operation.
-+
-+``VHOST_USER_BACKEND_SHMEM_UNMAP``
-+  :id: 10
-+  :equivalent ioctl: N/A
-+  :request payload: ``struct VhostUserMMap``
-+  :reply payload: N/A
-+
-+  When the ``VHOST_USER_PROTOCOL_F_SHMEM`` protocol feature has been
-+  successfully negotiated, this message can be submitted by the backends so
-+  that the front-end un-mmaps a given range (``shm_offset``, ``len``) in the
-+  VIRTIO Shared Memory Region with the requested ``shmid``. Note that the
-+  given range shall correspond to the entirety of a valid mapped region.
-+
-+  If ``VHOST_USER_PROTOCOL_F_REPLY_ACK`` is negotiated, and the back-end
-+  sets the ``VHOST_USER_NEED_REPLY`` flag, the front-end must respond with
-+  zero when operation is successfully completed, or non-zero otherwise.
-+
- .. _reply_ack:
+-    if (unlikely(!svq->desc_state[used_elem.id].ndescs)) {
++    if (unlikely(!svq->desc_state[last_used].ndescs)) {
+         qemu_log_mask(LOG_GUEST_ERROR,
+             "Device %s says index %u is used, but it was not available",
+-            svq->vdev->name, used_elem.id);
++            svq->vdev->name, last_used);
+         return NULL;
+     }
  
- VHOST_USER_PROTOCOL_F_REPLY_ACK
+-    num = svq->desc_state[used_elem.id].ndescs;
+-    svq->desc_state[used_elem.id].ndescs = 0;
+-    last_used_chain = vhost_svq_last_desc_of_chain(svq, num, used_elem.id);
++    num = svq->desc_state[last_used].ndescs;
++    svq->desc_state[last_used].ndescs = 0;
++    last_used_chain = vhost_svq_last_desc_of_chain(svq, num, last_used);
+     svq->desc_state[last_used_chain].next = svq->free_head;
+-    svq->free_head = used_elem.id;
++    svq->free_head = last_used;
+     svq->num_free += num;
+ 
+-    *len = used_elem.len;
+-    return g_steal_pointer(&svq->desc_state[used_elem.id].elem);
++    return g_steal_pointer(&svq->desc_state[last_used].elem);
+ }
+ 
+ /**
 -- 
 MST
 
