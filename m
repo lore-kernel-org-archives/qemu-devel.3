@@ -4,109 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 105FDCD8CA8
-	for <qemu-devel@archiver.kernel.org>; Sun, 14 Jun 2026 19:16:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7FECCD98C5
+	for <qemu-devel@archiver.kernel.org>; Sun, 14 Jun 2026 22:22:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wYqBL-0002fK-AC; Sun, 14 Jun 2026 15:07:43 -0400
+	id 1wYtDB-0005rO-3z; Sun, 14 Jun 2026 18:21:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wYqBH-0002Vj-IH
- for qemu-devel@nongnu.org; Sun, 14 Jun 2026 15:07:41 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wYqBC-0001yc-GY
- for qemu-devel@nongnu.org; Sun, 14 Jun 2026 15:07:37 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781464053;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=rwaEuPK7+O7yDymvQWRrZNfcvXvxTXlnEXU6uD1afn0=;
- b=ZNMFVX2c099LWb0unnYQKiHPVqv/OQNqeFjot1vbSojtNw3q5gw16pe2yfRIOzKNtX/Nd0
- NnbJTllEgd5KXrZVY5B1ZWS6bkzdIsMnGy9iWTtNKhDgqjZu1f5VU9x80c35ZMpsBnVFyD
- uvN2pfq2npjE82WKQL9v4GETMoUN6UI=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-643-A8MO2NcmPpCQhm6uD-LUjw-1; Sun, 14 Jun 2026 15:07:31 -0400
-X-MC-Unique: A8MO2NcmPpCQhm6uD-LUjw-1
-X-Mimecast-MFC-AGG-ID: A8MO2NcmPpCQhm6uD-LUjw_1781464050
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-490c840efe6so31077805e9.1
- for <qemu-devel@nongnu.org>; Sun, 14 Jun 2026 12:07:31 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <imaginos32@gmail.com>)
+ id 1wYtD9-0005qp-8F
+ for qemu-devel@nongnu.org; Sun, 14 Jun 2026 18:21:47 -0400
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <imaginos32@gmail.com>)
+ id 1wYtD7-0006jd-GK
+ for qemu-devel@nongnu.org; Sun, 14 Jun 2026 18:21:47 -0400
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-490ae94a89eso23391665e9.1
+ for <qemu-devel@nongnu.org>; Sun, 14 Jun 2026 15:21:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1781464050; x=1782068850; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=rwaEuPK7+O7yDymvQWRrZNfcvXvxTXlnEXU6uD1afn0=;
- b=OtWDQm3aA5ucEGEeyf1j7kYN6qB4lsdxYGOPoUunPaM+HfEtSlWTz2yw6nN98k7uYs
- tYICtF2UDUrs1uuGxx9iRP8VpILzTu4EccjGNT9s5XQk4cMGSDIsi9DiQViWaBGW2MRI
- BkHh539z3ffKHegU0QN64kAJSZoMlIE5rm/8HSRvml/9Co9+FQ2RhQHAWk7lPH3QwcuN
- Xw+SDTEi0ivQ8yjl2SmKit04Bjgml98BrFgVd9JEeS271S1M9+i8aC1ew8SGBwlIsnmr
- YeTOYlr5VPGE505V2m/O2WiIunyBfIxH8bi7gyScn2urygbQsqOvn2ZIoDr8DDV1pUgp
- u50A==
+ d=gmail.com; s=20251104; t=1781475704; x=1782080504; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=6CG/WgbatJUkWqqEVEYulvnsdB1l2zxTLovXt1zwR6Y=;
+ b=fausyVPeelKBGUg3EIxm5rFDhusWjSKl3F1Hrg1WCBlkAcJ8zizPs4D20CfgS44oe8
+ NKW5OhnLv6ffrbWks5h5zsgTV0WbvoaVXSLnlFXMPirXuI5+01LMhowOp5fzFz6472jd
+ s9UiGJSdQ1solF9Yf1SBdnn8/B00q8gTcinKcQIe6fJ7xSZ7AtlJBV8dg318iGNWmpJC
+ qGXpy1qyIjdsDGaxrPMLYTT9QNq/5/L01Cr2PzwMPFkgCbik6vMnetU774hxOej+Ryfv
+ pd3jrZa9aulNQIre9ocOsyJSsfyUpGK2aN/Bm8iaJUEgeORG1SxufUQzf0bjGtKRsWx5
+ iGIQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781464050; x=1782068850;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=rwaEuPK7+O7yDymvQWRrZNfcvXvxTXlnEXU6uD1afn0=;
- b=akcl5Y6DUvtd3y8elirdKGBAcRRCdY3GFpoK5vXDninTQTbtzydCkXD1hfSqcvWnaG
- Kb6ZNESuB/fML3SkZYVcdKCtT//9wXnuhaR1AvFLF3m++FkPDA7duqgKsVcHdAv1Df2F
- phTceNiOu1LZPz+T98XNJi5pkoeKg4OVCsrLgU1znfVgU1Yx27CHAuGyOuGPdlJlJtvw
- lYwtIhcCo48KDQwONUtohFWhbUw536A+vyaKG9VBNLBWHzBtEO7k0Zq3JjHvo4wsjMCo
- PGhTZofHJMOAFdIE+zRTtNVcdIrRPfTQQWB29A6ZR+Sftq++StP9A5WQZfVHhh+Hlfhz
- duGQ==
-X-Gm-Message-State: AOJu0Yz2f7lId7PMoJZpdqbgafPC4J7Vut08m31Z6Le2fPT6gePj2vTB
- Kke37A5zeGEUHYHJUOpY96cPnk5q0bn3KH1qyKWpimz7+9FT15HKy/bsIPywNIN9J22TWScPUwO
- SdkotOxDb8Wd7QzE6sFf5vsInxsdstgKsOCx/zF7F3lJNxCBY9AQ6rd6ekWRAj4UF0N2/w9sDTd
- suru+cSJH832L7KeXfTFshlX+yOIvFTMNfXg==
-X-Gm-Gg: Acq92OFFEqwHI/W8JJ4EQineKPtnj9I7CyGAtAua5fIXAp+vRWMCvro7a/4CQjnGd8L
- ucB0x4fCZ+hLjAG7LVJhEXnXwojBF4DIOZyKp50H3rQYYvyANxTGUrYjgIB/lMx/StpPCOjeU85
- WdthIo9TE3awq9Zr+pdFquXg5G/i1Oj9/8v/wGdwiZQ7UwGNn9Bwu6KuH8WWFDvPO2xvA9JQGIc
- XZHMZO82R2Z5+4iXy3EoxjT2lAyz80qRqC5oIOKQSDEaij59aQsOz7UwHP2iS4sm6YFYwxuqJiM
- D2ACeK/7UC3D3mEDOo/zfMChXJhdplIwLEpu6JtSwCRcYI1MRnNl+ZY28Z2nlvN0ZUt9hXrbPjo
- 2MBYndhWtGiOcQ9CXks2I6br30WJHAmp9g3/opk0kdOs=
-X-Received: by 2002:a05:600c:8b2a:b0:490:4b89:5372 with SMTP id
- 5b1f17b1804b1-490ec50a338mr131341825e9.11.1781464050244; 
- Sun, 14 Jun 2026 12:07:30 -0700 (PDT)
-X-Received: by 2002:a05:600c:8b2a:b0:490:4b89:5372 with SMTP id
- 5b1f17b1804b1-490ec50a338mr131341435e9.11.1781464049672; 
- Sun, 14 Jun 2026 12:07:29 -0700 (PDT)
-Received: from redhat.com (IGLD-80-230-85-71.inter.net.il. [80.230.85.71])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-490ea963cf8sm163404525e9.2.2026.06.14.12.07.28
+ d=1e100.net; s=20251104; t=1781475704; x=1782080504;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=6CG/WgbatJUkWqqEVEYulvnsdB1l2zxTLovXt1zwR6Y=;
+ b=dPqkx21nSTt9Iu8WghBx94cJImMcPoDFV49WUCbPx15CbVlTQz+Ahc81yKsBdzEiDu
+ YDJoRwkfnAfaInovD4XvUehuZU0dwNQakSYv48XZvaFxMPUx996OhOfdESAYOo1n0aGQ
+ dR+cYehOd9dv1sZpQuARwzbrmQ7ReJadE9JGMPEsTWlY2eRWOUKyt0y2gqyQD9FR2gm/
+ Cf4TOJ4nwAY+MtWmqjiVwITKISJCN7nlzcrM4FhwBXg8SN6hf3Oe4uyPB8leLnM5V4F+
+ KzdRHRFaJWSRyWsec+gvcfgbIptaAPsr6o1MHQAc6ToWeYYljF7Wrs6Z/TqxcUXMEz9v
+ n0jg==
+X-Gm-Message-State: AOJu0YwmzsRmEQQk2q7++oskAI5/ZhCQyWC3BLXqNXbyXkwoCNiw/MHB
+ m9tC/umd55vtSEtyn5rH1U8eMvIy/Sw3tIi2Vgl0FbqJHlCcyV/XSbVyuxpCfhPp
+X-Gm-Gg: Acq92OGsys0fHBtV9Ky6CehA1YE0DwRZ8zX2NLL/moJ9c8c/F/W8JUc3Rh2cEiVcr6d
+ M6kFQPc99YXuLyairdL66RlY4oRv1WV7f0fAMaTn2PlvFtl1FRa2miPHrUYWckt+xqIjwEl44Fl
+ Vfve30IoIQJwQV6JMKjXXcQfE0Z9gDqPhb6syXzCzN24zO8LhuMpbbMQpd+Da3FtLElTzZueeMR
+ LlGUG5xqIX23PtLbRRX/45k0D4wikecuc5dyCs0aNcniMYTpYE4bemt6X2Rr5fMXKCMrezvbpsZ
+ qQ30nFkofthhmJShKsvM2Uummpqr02rs/3hUzryDdgfp6IEKpFSoB9oAEQjTA0GVpKmTFkoDgpM
+ 3aDimGEO3ql/Z712sYP9/aCD8SGoYL8Q0JK/M37V/xo5M2jKvDnEjBcnqtZKQz7QAqL1m044dG5
+ T6vXDPaxLMtjJ6ccPVbrD3/fnsmOt5snwlmCxnPyvJdNv0yIvGQ9HXI7mZXumOJl9TxwcRFLE8k
+ YY8EGk=
+X-Received: by 2002:a05:600c:4b13:b0:490:aef9:aa3b with SMTP id
+ 5b1f17b1804b1-49220104edbmr61113685e9.32.1781475703801; 
+ Sun, 14 Jun 2026 15:21:43 -0700 (PDT)
+Received: from user-Legion-Pro-5-16ARX8.. (cable-89-216-220-81.dynamic.sbb.rs.
+ [89.216.220.81]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-4606f2b1056sm28423476f8f.18.2026.06.14.15.21.41
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 14 Jun 2026 12:07:29 -0700 (PDT)
-Date: Sun, 14 Jun 2026 15:07:27 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
+ Sun, 14 Jun 2026 15:21:43 -0700 (PDT)
+From: imaginos <imaginos32@gmail.com>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- Raphael Norwitz <raphael.s.norwitz@gmail.com>,
- Daniil Tatianin <d-tatianin@yandex-team.ru>,
- Stefano Garzarella <sgarzare@redhat.com>
-Subject: [PULL 039/106] vhost: move vrings mapping to the top of
- vhost_virtqueue_start()
-Message-ID: <60abdf60d505748a729b05de2864813f20f4b8f4.1781463125.git.mst@redhat.com>
-References: <cover.1781463125.git.mst@redhat.com>
+Cc: Titus Rwantare <titusr@google.com>, Tyrone Ting <kfting@nuvoton.com>,
+ Hao Wu <wuhaotsh@google.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
+ qemu-arm@nongnu.org, imaginos <imaginos32@gmail.com>
+Subject: [PATCH] hw/i2c: pmbus: NUL-terminate strings received via block write
+Date: Mon, 15 Jun 2026 00:21:31 +0200
+Message-ID: <20260614222131.5795-1-imaginos32@gmail.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <cover.1781463125.git.mst@redhat.com>
-X-Mailer: git-send-email 2.51.2.2891.g4157995a80.dirty
-X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=imaginos32@gmail.com; helo=mail-wm1-x332.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -122,85 +101,98 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+The PMBus string registers (e.g. MFR_MODEL on the ADM1266) are writable
+by the guest. pmbus_receive_block() can fill the destination field
+completely, leaving no NUL terminator. When the value is later read back,
+pmbus_send_string() calls strlen() on it, which reads past the end of the
+array and returns a length that trips
 
-This simplifies further refactoring and final introduction
-of vhost backend live migration.
+    g_assert(len + pmdev->out_buf_len < SMBUS_DATA_MAX_LEN);
 
-Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Reviewed-by: Raphael Norwitz <raphael.s.norwitz@gmail.com>
-Reviewed-by: Daniil Tatianin <d-tatianin@yandex-team.ru>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-Id: <20260420200339.708640-14-vsementsov@yandex-team.ru>
+aborting QEMU. This is guest-triggerable.
+
+Add pmbus_receive_string(), the write-side mirror of pmbus_send_string(),
+which reserves the last byte of the destination so the stored value is
+always NUL-terminated, and use it for the ADM1266 MFR string registers.
+
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3388
+Signed-off-by: imaginos <imaginos32@gmail.com>
 ---
- hw/virtio/vhost.c | 45 ++++++++++++++++++++++-----------------------
- 1 file changed, 22 insertions(+), 23 deletions(-)
+ hw/i2c/pmbus_device.c         | 13 +++++++++++++
+ hw/sensor/adm1266.c           |  7 +++----
+ include/hw/i2c/pmbus_device.h | 10 ++++++++++
+ 3 files changed, 26 insertions(+), 4 deletions(-)
 
-diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
-index f43e563f0d..d5bafbcc4b 100644
---- a/hw/virtio/vhost.c
-+++ b/hw/virtio/vhost.c
-@@ -1303,29 +1303,6 @@ int vhost_virtqueue_start(struct vhost_dev *dev,
-         return 0;
-     }
+diff --git a/hw/i2c/pmbus_device.c b/hw/i2c/pmbus_device.c
+index b1f9843f52..7c65d8c8b5 100644
+--- a/hw/i2c/pmbus_device.c
++++ b/hw/i2c/pmbus_device.c
+@@ -142,6 +142,19 @@ uint8_t pmbus_receive_block(PMBusDevice *pmdev, uint8_t *dest, size_t len)
+     return len;
+ }
  
--    vq->num = state.num = virtio_queue_get_num(vdev, idx);
--    r = dev->vhost_ops->vhost_set_vring_num(dev, &state);
--    if (r) {
--        VHOST_OPS_DEBUG(r, "vhost_set_vring_num failed");
--        return r;
--    }
--
--    state.num = virtio_queue_get_last_avail_idx(vdev, idx);
--    r = dev->vhost_ops->vhost_set_vring_base(dev, &state);
--    if (r) {
--        VHOST_OPS_DEBUG(r, "vhost_set_vring_base failed");
--        return r;
--    }
--
--    if (vhost_needs_vring_endian(vdev)) {
--        r = vhost_virtqueue_set_vring_endian_legacy(dev,
--                                                    virtio_vdev_is_big_endian(vdev),
--                                                    vhost_vq_index);
--        if (r) {
--            return r;
--        }
--    }
--
-     l = vq->desc_size;
-     vq->desc = vhost_memory_map(dev, vq->desc_phys, l, false);
-     if (!vq->desc) {
-@@ -1347,6 +1324,28 @@ int vhost_virtqueue_start(struct vhost_dev *dev,
-         goto fail;
-     }
++uint8_t pmbus_receive_string(PMBusDevice *pmdev, char *dest, size_t len)
++{
++    uint8_t rv;
++
++    if (len == 0) {
++        return 0;
++    }
++
++    rv = pmbus_receive_block(pmdev, (uint8_t *)dest, len - 1);
++    dest[len - 1] = '\0';
++    return rv;
++}
++
  
-+    vq->num = state.num = virtio_queue_get_num(vdev, idx);
-+    r = dev->vhost_ops->vhost_set_vring_num(dev, &state);
-+    if (r) {
-+        VHOST_OPS_DEBUG(r, "vhost_set_vring_num failed");
-+        goto fail;
-+    }
+ static uint64_t pmbus_receive_uint(PMBusDevice *pmdev)
+ {
+diff --git a/hw/sensor/adm1266.c b/hw/sensor/adm1266.c
+index 37d1cffd57..81545385a5 100644
+--- a/hw/sensor/adm1266.c
++++ b/hw/sensor/adm1266.c
+@@ -142,16 +142,15 @@ static int adm1266_write_data(PMBusDevice *pmdev, const uint8_t *buf,
+ 
+     switch (pmdev->code) {
+     case PMBUS_MFR_ID:                    /* R/W block */
+-        pmbus_receive_block(pmdev, (uint8_t *)s->mfr_id, sizeof(s->mfr_id));
++        pmbus_receive_string(pmdev, s->mfr_id, sizeof(s->mfr_id));
+         break;
+ 
+     case PMBUS_MFR_MODEL:                 /* R/W block */
+-        pmbus_receive_block(pmdev, (uint8_t *)s->mfr_model,
+-                            sizeof(s->mfr_model));
++        pmbus_receive_string(pmdev, s->mfr_model, sizeof(s->mfr_model));
+         break;
+ 
+     case PMBUS_MFR_REVISION:               /* R/W block*/
+-        pmbus_receive_block(pmdev, (uint8_t *)s->mfr_rev, sizeof(s->mfr_rev));
++        pmbus_receive_string(pmdev, s->mfr_rev, sizeof(s->mfr_rev));
+         break;
+ 
+     case ADM1266_SET_RTC:   /* do nothing */
+diff --git a/include/hw/i2c/pmbus_device.h b/include/hw/i2c/pmbus_device.h
+index f195c11384..4c4d3e5ae2 100644
+--- a/include/hw/i2c/pmbus_device.h
++++ b/include/hw/i2c/pmbus_device.h
+@@ -518,6 +518,16 @@ void pmbus_send_string(PMBusDevice *state, const char *data);
+  */
+ uint8_t pmbus_receive_block(PMBusDevice *pmdev, uint8_t *dest, size_t len);
+ 
++/**
++ * @brief Receive a Block Write and store it as a NUL-terminated string.
++ * Write-side mirror of pmbus_send_string(): guarantees dest is always a valid
++ * C string so later reads cannot run past the field. Use for string registers
++ * (e.g. MFR_ID, MFR_MODEL); use pmbus_receive_block() for binary blocks.
++ * @param dest - string buffer with enough capacity to receive the write
++ * @param len - the capacity of dest (the last byte is reserved for the NUL)
++ */
++uint8_t pmbus_receive_string(PMBusDevice *pmdev, char *dest, size_t len);
 +
-+    state.num = virtio_queue_get_last_avail_idx(vdev, idx);
-+    r = dev->vhost_ops->vhost_set_vring_base(dev, &state);
-+    if (r) {
-+        VHOST_OPS_DEBUG(r, "vhost_set_vring_base failed");
-+        goto fail;
-+    }
-+
-+    if (vhost_needs_vring_endian(vdev)) {
-+        r = vhost_virtqueue_set_vring_endian_legacy(
-+            dev, virtio_vdev_is_big_endian(vdev), vhost_vq_index);
-+        if (r) {
-+            goto fail;
-+        }
-+    }
-+
-     r = vhost_virtqueue_set_addr(dev, vq, vhost_vq_index, dev->log_enabled);
-     if (r < 0) {
-         goto fail;
+ /**
+  * @brief Receive data over PMBus
+  * These methods help track how much data is being received over PMBus
 -- 
-MST
+2.43.0
 
 
