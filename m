@@ -4,91 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76859CD98D2
-	for <qemu-devel@archiver.kernel.org>; Sun, 14 Jun 2026 19:09:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F29B8CD98C5
+	for <qemu-devel@archiver.kernel.org>; Sun, 14 Jun 2026 19:09:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wYqBs-00055k-Fr; Sun, 14 Jun 2026 15:08:16 -0400
+	id 1wYqAG-0007Y3-7D; Sun, 14 Jun 2026 15:06:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wYqBq-0004oZ-Cd
- for qemu-devel@nongnu.org; Sun, 14 Jun 2026 15:08:14 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wYqAE-0007XQ-LV
+ for qemu-devel@nongnu.org; Sun, 14 Jun 2026 15:06:34 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wYqBo-000291-IB
- for qemu-devel@nongnu.org; Sun, 14 Jun 2026 15:08:14 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wYqAC-0001jD-EG
+ for qemu-devel@nongnu.org; Sun, 14 Jun 2026 15:06:33 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781464091;
+ s=mimecast20190719; t=1781463991;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=tzSDXCMizU4TOWSVQ4fgeunoJ6amd5xM77Merhp11X8=;
- b=hhCLIHglBqDbUE4xecAlYdaBkNO8zTGV8noWX8qs7VQwSvls7CXaSDsTBh7PgtDYExu5gX
- MbTmHu2i5OQ1cAnb5HFoi5TKW0AOtgZ9prANjoLHssuI/l67t2qIoxLPo+YseC2G7Wilqq
- H+JujOZWSGd3OU5rWwfGuPFJ0Jx5J4s=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=Fy9wZhglxIMjpKMCGO1yq1BTn0dcp39QWhOcas9r+Qs=;
+ b=hxw7Ad1Ygu2IKk/ESTonIzNh+rN6ChV5SZgRONuRGcvW3tTq/7c9jF210tS4J3GG7issjm
+ 84hW6CR/CWTUs58bYigU5JLTDmvw/itbuRtb0TQomGd+FtgZ82tiqrGxgge5rK/3xjqDEb
+ FRLIVg+CIgJP9J8YoMP4KSLEL/pwy8k=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-567-yeiHGq5UOBO3-0zVlTq9TQ-1; Sun, 14 Jun 2026 15:08:09 -0400
-X-MC-Unique: yeiHGq5UOBO3-0zVlTq9TQ-1
-X-Mimecast-MFC-AGG-ID: yeiHGq5UOBO3-0zVlTq9TQ_1781464089
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-46067b07571so1600278f8f.1
- for <qemu-devel@nongnu.org>; Sun, 14 Jun 2026 12:08:09 -0700 (PDT)
+ us-mta-99-NsW3a6U8Ot6VJSFE4cm96Q-1; Sun, 14 Jun 2026 15:06:30 -0400
+X-MC-Unique: NsW3a6U8Ot6VJSFE4cm96Q-1
+X-Mimecast-MFC-AGG-ID: NsW3a6U8Ot6VJSFE4cm96Q_1781463989
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-46067b07571so1599888f8f.1
+ for <qemu-devel@nongnu.org>; Sun, 14 Jun 2026 12:06:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1781464088; x=1782068888; darn=nongnu.org;
+ d=redhat.com; s=google; t=1781463989; x=1782068789; darn=nongnu.org;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=tzSDXCMizU4TOWSVQ4fgeunoJ6amd5xM77Merhp11X8=;
- b=c35O//bVLnMux1rzAiKo9mi8eOaL8Ns1vZyxZVKXI6ILWDG3/iAeRbbVjR5FXsJVw9
- lfu41o/XGWadV4+bOOn3WX1UW5qdIUB8jyldsWf+uu35nXlB4JlMuOqhUOHG4PV0RlEU
- vjRwpeBzExFly9z4hxsDJwm4GlLVpoVE52KcJtIC4srUSyd/16piyQzrkiZkx5xNttB4
- /IQXUS3mO2NPmfBtpuIX4Xju+K3qkY5yx4+vD9duTPpD6zIdMmYbNwGkPTmucg27t2Nl
- 2I1Mm3ixolfyal6P3OrrLzrhz7Y4MpggzywfiyFJDYz6uQzZc1EGtfqm+d9/tohysxel
- YtUQ==
+ bh=Fy9wZhglxIMjpKMCGO1yq1BTn0dcp39QWhOcas9r+Qs=;
+ b=sS5aNh8NF8LpN37si8mNwZh9D1yqWcc3oOXJAHFGNkM+5KXeKwjLVg8iEw32o6wr+j
+ XbiyOXYV3qW7/hEEYuAnw7KR5QQ6NUnoDn72TdHsgctxzSXan8se4/bp9Q01WoFD5f8i
+ oajQQbrzSsMVxSXdrNR+5uUxgt8tuddvInAdqhMzEQDoV/rG0r5ekE5T/z148L7+F5qE
+ YBisrSOdz+gAu4CgltDKS6doSH5U2GySNWq4jgFjOYpfJGIjCNYuBU8XkCPiCGIcnp9k
+ H7zhzSymnKpZl97ZGGBpeGLPEP/Zi0Met3NzJG7Y0LG2kFGOCXGjnX7stLTZn/1KTaNd
+ d5oA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781464088; x=1782068888;
+ d=1e100.net; s=20251104; t=1781463989; x=1782068789;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=tzSDXCMizU4TOWSVQ4fgeunoJ6amd5xM77Merhp11X8=;
- b=GVLXQOQOmV4GudlWr76nfb4T0/uivp9FESBqJzJxTLAdzIrumf/D/K2n88tRAUw9iP
- le2fOngAG9dTmWkUqECzCtOE7BjtUJ2pU92YWxNztRT+jQkQzLwIkuEEp4N7MzDpMtQ1
- EJp8t7KfVWotQ59UUxrKZepv5RtONoKm+qPcNndXRnOHRT+Y53t3JmtRFPjxyQcigID1
- z9fiPqA7QpqATt6VnUNKmVgiZL0pv9feF1TiIGTT6StrUJYZ/7LZ6420Hgg3njCw1Lw8
- L2OFZSh++QrPlBnKmg/+Hh9smB1nJFpADN3g3mbt4WnLrZ4fut4k/ATI1+WwG7kuXK1I
- RzFw==
-X-Gm-Message-State: AOJu0YxuhVg70Dd64Rk/i/z7di6SpxT6ty385f+1oERs7kEz7v++RobW
- Zr5epLPpNokCD9B+B9Rx01t5qF42rwqNr66o+FXV4LIAQfw9L0UFZHUKJa+TErLZiV9JslVNO5Q
- x5l9JDaO0S8YpfVnodSshogPz7Ua14M4iKvjEqoOejKyBblNm+orkHE/rgTKurAZv57BCzNR3M4
- S08Uec7YD1c3ok+81//Zfl9chDbrpqyzXxMg==
-X-Gm-Gg: Acq92OGvHyK0bn+i5JzTzrtqsMqwmGAX/yCZg0QNotnJC5r2jfrKtSPHQuOI2jWRgKc
- P93ZMIVjR0pJdjuhfV5Mqg/ye/95PZ0TH1xSv07b7kpUYal9BwTidJY9LKO61/pOLvboU+tpL7E
- 6yrrBKUAKCOkCPpwgS9/JPOulPSV3Skowfe0wnH3xhGF8spEguVnMNDReUJ/e6zxqaGDEmOJV4X
- qaMTLKekOwTDTvGqijzi89jA5SgWOSjlUJhvJ7LGWVSSzyCq3PJSqjNieGoM7fsgeb0oSeMXVJz
- YFvaojacij+3DLAAV9aE8C4Q0Lk0q/HH4bH8z0MOM0533xLXKAxB+bOld36yghWlTjr3th+dxlB
- rRAxhbwKkFIZxdirmyIsp0k9HNiwaFfsSSUuhwu5sU60=
-X-Received: by 2002:a05:6000:41e5:b0:45e:8edc:dacc with SMTP id
- ffacd0b85a97d-4606d03bf34mr13770230f8f.27.1781464088514; 
- Sun, 14 Jun 2026 12:08:08 -0700 (PDT)
-X-Received: by 2002:a05:6000:41e5:b0:45e:8edc:dacc with SMTP id
- ffacd0b85a97d-4606d03bf34mr13770199f8f.27.1781464087891; 
- Sun, 14 Jun 2026 12:08:07 -0700 (PDT)
+ bh=Fy9wZhglxIMjpKMCGO1yq1BTn0dcp39QWhOcas9r+Qs=;
+ b=F5yZsVicOP7wScnMckPXHhG0u9jFg8ekcd7M0S2zks+B4DRCzEtnD/Bezeul5PbNDM
+ D7Pog4Vg511AISOlXtyAS5E9F7G3ciydzajJ4LVI+TMBmNTqDPCPO7ygLthTntTqkLzH
+ aFscvcrJG+Em19V/OeU5edye+Uoc2TDwTMbtTZjt/M++Hc8UWNevqWqTti0A7UupgnfA
+ iF5cfAuq3DrP/eAFkp5r/+BuRG3eJbjdZUD/auAsVMrT4KdzPs+RFjjw5JM0ZqRAgJmk
+ GaRGdidcUaCUoLsdmJ4ts41K5z91pE1XVXqAtdR8ZTYq1yv7wm/nx0DPkTXmTabBKXvL
+ Rqtg==
+X-Gm-Message-State: AOJu0YwBB+jNZRZs7ycsVLm77ofgxbJs0QxTWJq1Tf7OpGeMnV8tYO5J
+ 0ILkwesW53H8os+hWNO/4G2leZHJHHwRjv+DuKnXhAPDZ5jkCqbKgijoE1JI6m4Zx3SrXczcRMU
+ bDTi1nCOKyuTL9V2EJV45vj6vFCNWwaDFRkLhBniFEbdIGZjhxsrsaZhS0jqkQbsJQ/ouKFv1kg
+ WtMqCTrla2x99yjsdO3RDNrUh1Cq/9A+qSeg==
+X-Gm-Gg: Acq92OEu9LBkFWjEyfJkyy7pJ2pbA2kxgv1dVQMrZSHSV/0GMN2sxO6/2weur7VB4vd
+ myLZh5F7CgR4LcslaT56b90jEr18FcnSvgwkvc9OjBFsQJi3Xzzlt2jM3j1HkDyLuGiBVUClfqs
+ o+saTLJi8cH48AJyeGdmws7XyfQVpRPxMlySXmdbKnecjECL5dLQRa4oy4UUMGgjJ7vSexFLK88
+ c/uFIh+4L9/PvFvkzBsbXQ8iiFum2WCr7q7TrAHFs3FtYTViujVAIyYWMIcrHg2b4fauQJUe5W3
+ dIwBRqOFvMrRat60Ttbkq3ZJLpwBI2qKxi+amAFCh5dbPhDymYuqN3Ax9F6nrQSOROl4QZnMcNC
+ 4RmLIWAHOf6FoVCKxWE5cOoCNoFiFwZpsiBM6VCa0M6Q=
+X-Received: by 2002:a05:6000:184e:b0:460:d18:865c with SMTP id
+ ffacd0b85a97d-4606cb2160dmr13945644f8f.1.1781463989130; 
+ Sun, 14 Jun 2026 12:06:29 -0700 (PDT)
+X-Received: by 2002:a05:6000:184e:b0:460:d18:865c with SMTP id
+ ffacd0b85a97d-4606cb2160dmr13945594f8f.1.1781463988635; 
+ Sun, 14 Jun 2026 12:06:28 -0700 (PDT)
 Received: from redhat.com (IGLD-80-230-85-71.inter.net.il. [80.230.85.71])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4606f2d9becsm25989044f8f.34.2026.06.14.12.08.06
+ ffacd0b85a97d-4606f2d9becsm25980565f8f.34.2026.06.14.12.06.27
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 14 Jun 2026 12:08:07 -0700 (PDT)
-Date: Sun, 14 Jun 2026 15:08:05 -0400
+ Sun, 14 Jun 2026 12:06:28 -0700 (PDT)
+Date: Sun, 14 Jun 2026 15:06:26 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- Stefano Garzarella <sgarzare@redhat.com>
-Subject: [PULL 055/106] vhost: stop reusing vq->desc (and friends) to store
- physical address
-Message-ID: <15bbdc0a7bc96933fbe2a913346ab03dbd4584e1.1781463125.git.mst@redhat.com>
+ Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ Yi Liu <yi.l.liu@intel.com>, Xudong Hao <xudong.hao@intel.com>,
+ Jason Wang <jasowang@redhat.com>,
+ =?utf-8?Q?Cl=C3=A9ment?= Mathieu--Drif <clement.mathieu--drif@bull.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [PULL 018/106] intel_iommu_accel: Bypass PASID entry addition for
+ just deleted entry
+Message-ID: <6afd98cef5f040754ff20fb512fcf92068d114cf.1781463125.git.mst@redhat.com>
 References: <cover.1781463125.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -120,44 +124,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+From: Zhenzhong Duan <zhenzhong.duan@intel.com>
 
-Remove the hack of storing physical addresses in vq->desc/avail/used
-pointers when IOMMU is present. Instead, handle this case directly in
-vhost_virtqueue_set_addr() by checking for IOMMU presence.
+For VTD_INV_DESC_PASIDC_G_PASID_SI typed pc_inv_dsc invalidation, if an
+pasid entry is just removed, it can never be a new entry to add. So
+calling vtd_replay_pasid_bind_for_dev() is unnecessary.
 
-Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Introduce a new field accel_pce_deleted in VTDPASIDCacheInfo to mark
+this case and to do the bypassing.
+
+Suggested-by: Yi Liu <yi.l.liu@intel.com>
+Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+Reviewed-by: Yi Liu <yi.l.liu@intel.com>
+Tested-by: Xudong Hao <xudong.hao@intel.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Based-on: <20260206095258.894504-1-vsementsov@yandex-team.ru>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-Id: <20260420202032.714884-8-vsementsov@yandex-team.ru>
+Message-Id: <20260527054658.1021096-14-zhenzhong.duan@intel.com>
 ---
- hw/virtio/vhost.c | 5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ hw/i386/intel_iommu_accel.c    | 16 +++++++++++++---
+ hw/i386/intel_iommu_internal.h |  1 +
+ 2 files changed, 14 insertions(+), 3 deletions(-)
 
-diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
-index cc083572f4..6bb6b07e19 100644
---- a/hw/virtio/vhost.c
-+++ b/hw/virtio/vhost.c
-@@ -518,9 +518,6 @@ static int vhost_vrings_map(struct vhost_dev *dev,
+diff --git a/hw/i386/intel_iommu_accel.c b/hw/i386/intel_iommu_accel.c
+index ed0d6bda7e..b823c405a1 100644
+--- a/hw/i386/intel_iommu_accel.c
++++ b/hw/i386/intel_iommu_accel.c
+@@ -280,10 +280,15 @@ static void vtd_accel_fill_pc(VTDHostIOMMUDevice *vtd_hiod, uint32_t pasid,
+     QLIST_INSERT_HEAD(&vtd_hiod->pasid_cache_list, vtd_pce, next);
+ }
+ 
+-static void vtd_accel_delete_pc(VTDAccelPASIDCacheEntry *vtd_pce)
++static void vtd_accel_delete_pc(VTDAccelPASIDCacheEntry *vtd_pce,
++                                VTDPASIDCacheInfo *pc_info)
+ {
+     QLIST_REMOVE(vtd_pce, next);
+     g_free(vtd_pce);
++
++    if (pc_info->type == VTD_INV_DESC_PASIDC_G_PASID_SI) {
++        pc_info->accel_pce_deleted = true;
++    }
+ }
+ 
+ static void
+@@ -319,7 +324,7 @@ vtd_accel_pasid_cache_invalidate_one(VTDAccelPASIDCacheEntry *vtd_pce,
+          * to be either all-zero or non-present. Either case means existing
+          * pasid cache should be invalidated.
+          */
+-        vtd_accel_delete_pc(vtd_pce);
++        vtd_accel_delete_pc(vtd_pce, pc_info);
      }
+ }
  
-     if (vhost_dev_has_iommu(dev)) {
--        vq->desc = (void *)(uintptr_t)vq->desc_phys;
--        vq->avail = (void *)(uintptr_t)vq->avail_phys;
--        vq->used = (void *)(uintptr_t)vq->used_phys;
-         return 1;
+@@ -472,7 +477,12 @@ void vtd_accel_pasid_cache_sync(IntelIOMMUState *s, VTDPASIDCacheInfo *pc_info)
+          * removals before additions to optimize the replay process.
+          */
+         vtd_accel_pasid_cache_invalidate(vtd_hiod, pc_info);
+-        vtd_accel_replay_pasid_bind_for_dev(vtd_hiod, start, end, pc_info);
++
++        if (pc_info->accel_pce_deleted) {
++            pc_info->accel_pce_deleted = false;
++        } else {
++            vtd_accel_replay_pasid_bind_for_dev(vtd_hiod, start, end, pc_info);
++        }
      }
+ }
  
-@@ -1104,7 +1101,7 @@ static int vhost_virtqueue_set_addr(struct vhost_dev *dev,
-     int r;
-     memset(&addr, 0, sizeof(struct vhost_vring_addr));
+diff --git a/hw/i386/intel_iommu_internal.h b/hw/i386/intel_iommu_internal.h
+index 9307825017..64a38afa85 100644
+--- a/hw/i386/intel_iommu_internal.h
++++ b/hw/i386/intel_iommu_internal.h
+@@ -630,6 +630,7 @@ typedef struct VTDPASIDCacheInfo {
+     uint8_t type;
+     uint16_t did;
+     uint32_t pasid;
++    bool accel_pce_deleted;
+ } VTDPASIDCacheInfo;
  
--    if (phys) {
-+    if (phys || vhost_dev_has_iommu(dev)) {
-         addr.desc_user_addr = (uint64_t)(unsigned long)vq->desc_phys;
-         addr.avail_user_addr = (uint64_t)(unsigned long)vq->avail_phys;
-         addr.used_user_addr = (uint64_t)(unsigned long)vq->used_phys;
+ typedef struct VTDPIOTLBInvInfo {
 -- 
 MST
 
