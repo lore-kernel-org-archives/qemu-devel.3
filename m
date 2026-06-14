@@ -4,90 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A69FCD98D2
-	for <qemu-devel@archiver.kernel.org>; Sun, 14 Jun 2026 19:08:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 411EECD98D2
+	for <qemu-devel@archiver.kernel.org>; Sun, 14 Jun 2026 19:08:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wYqBi-0004GD-SG; Sun, 14 Jun 2026 15:08:06 -0400
+	id 1wYqAS-0007gA-93; Sun, 14 Jun 2026 15:06:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wYqBg-00041W-Pu
- for qemu-devel@nongnu.org; Sun, 14 Jun 2026 15:08:04 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wYqAP-0007cS-2D
+ for qemu-devel@nongnu.org; Sun, 14 Jun 2026 15:06:45 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wYqBf-00025O-4C
- for qemu-devel@nongnu.org; Sun, 14 Jun 2026 15:08:04 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wYqAN-0001ld-Iz
+ for qemu-devel@nongnu.org; Sun, 14 Jun 2026 15:06:44 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781464082;
+ s=mimecast20190719; t=1781464002;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=V6hUAUjTOLpx6Ar8t3YIETcJ6oUZLH3lFxtItrYg4n8=;
- b=JXfx57Ha1yayniLJbebUbhtyJWcBOkl22zypCF9xvYhYekUwmg5IhZs/hZ2XTHj4GiKxPk
- CV8n8KCXyOXNRBFnezv47LUy7xqMVhT4qWtchDl6Muv2dOwUV+3CBNrxheJAP7/TSG6x1s
- zUgeC+MfbNorcviGOhmiLHYjh2KiWXg=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=g1F4+IF5etRgwNV0vS9HbRXkwL6EBjEu8mYuHWvbVi0=;
+ b=Hp254rLM2twkyQYr83J6dJiVzJjjcyTVwQKqbXf9tceJqFQmhq3Kp1QDW4yF2XFWJdR0gl
+ 1RmCwotUYtN+gzEtfQ+yJUxpgAIXTdxKhcJ6vZ7cKE0XIxoMXKQmYSUkgyXiFcvOn53eg4
+ 0TR7rObO1Y4mYer6z+V1TSfqzfpNMmM=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-557-1V2wm3RhNVW0aJY5FJ_l-A-1; Sun, 14 Jun 2026 15:08:01 -0400
-X-MC-Unique: 1V2wm3RhNVW0aJY5FJ_l-A-1
-X-Mimecast-MFC-AGG-ID: 1V2wm3RhNVW0aJY5FJ_l-A_1781464080
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-490aadb1386so18039865e9.0
- for <qemu-devel@nongnu.org>; Sun, 14 Jun 2026 12:08:00 -0700 (PDT)
+ us-mta-355-pDfqzd4hNmqkDuFJz6OPww-1; Sun, 14 Jun 2026 15:06:41 -0400
+X-MC-Unique: pDfqzd4hNmqkDuFJz6OPww-1
+X-Mimecast-MFC-AGG-ID: pDfqzd4hNmqkDuFJz6OPww_1781464000
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-490a767b782so15954845e9.2
+ for <qemu-devel@nongnu.org>; Sun, 14 Jun 2026 12:06:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1781464080; x=1782068880; darn=nongnu.org;
+ d=redhat.com; s=google; t=1781464000; x=1782068800; darn=nongnu.org;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=V6hUAUjTOLpx6Ar8t3YIETcJ6oUZLH3lFxtItrYg4n8=;
- b=kPFG/bNJui9z+6arh2yvvAJOAhY+jPPVoJpD5k4+TTZtxLpsOcV13hCYnqivpTzIGp
- eL6M3VkuHTrdC2S91u9ZKLbf2RPkLV7lS9B20nPYJdMdkA2BIbsexQ9HoU78A1K1p0qt
- B4BbOiJLBhIIB8meEgL0RLdHUprY1mjvX9kN/OJsSLgZmYPM5q8hRlbjgmU3ER9bgHKD
- kaL3ceDhKjImW5Clsxxo6f7ZDs1Bkh5iGk7ys6D6eUB9+fSH8vPwT0UFCKxdjIr9Bo84
- 4m0tmIt93unTUKh2WZ5xdI6JH850dAcoSzfHmscHRzPAmyyHlkCOhc5zYLyL+RKD93Yb
- aE/g==
+ bh=g1F4+IF5etRgwNV0vS9HbRXkwL6EBjEu8mYuHWvbVi0=;
+ b=I+qLEFQSRorQAiUItuZbtnWhSBfdVJHMTSrZDLwsyMvfm/BR7whSc52tgHA1bUvWQm
+ anxZcWDZ0Vm1MOCO+j8AT+U0kvqQH0efWsiMEwqALPiq2CZrjvVvFdEqQXYDJdzBnuP/
+ 5DgSg3pL40EpUq5jE7NN9ROIg1kf+jedxujYrrOAiXqlTPZvE620MTl2C71+qg/03rcl
+ qrwmInm5lxKOmcmdUY5AcDUaw3JDAxrECsSQGPLxHpaF+Nnd6A5ZXi3KnbetV31Zjlk/
+ DeydfJBM9dy95x4+B05KFHCA7H3sl3QwCb6M2Ut0I+f7c4HKFlhAGOh8HoiP57Pn+KQt
+ d+nA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781464080; x=1782068880;
+ d=1e100.net; s=20251104; t=1781464000; x=1782068800;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=V6hUAUjTOLpx6Ar8t3YIETcJ6oUZLH3lFxtItrYg4n8=;
- b=lSQaM+uG3uF3a+0Rv5IlN4BR+nwnnrE+USgQBjqmDnREYT1goPhKwBU81NnFCRP3C6
- STOJ8BWj67BF2khWdFOdNk2RJOlQ/5+kJ4A6zUuM+MubWtAw46HoJouowXZPFv8yXx2j
- wUj+ZSzRyk6DpP5W8uaKnfit+dPngIVZPBIBJ8GYHXphX1zRfCju0qeIYYbqtcdClD9k
- vbJgTRsmYRw54Gi8XnnBo8CNVAa4t8Wr8iJEAqWc1uKaZN5vITDxLFhA8xAw2QnoKx1s
- W8sKJIOPSGyF/114VZox2Xqz8H3G6T9xo4OqNKhsOEYlFoh7Wn8ejh/tCF8sqDy8pPNz
- MuVw==
-X-Gm-Message-State: AOJu0YwjIMHlk+fdn5dW04brQFwC2KdKd6fF4Jt3RNJ1A2wcJIffse7e
- xPjTrhiz25OW69XL8vdqtThA6x0Z/LDnGEylG7DAl3fu1HcnxAIr1I9WV5tdkfe6vvqvZRtR3pb
- PI7kRC+NfIatgUcT8+CiGI3/yRs3y9dXHEwN+dB1g63+ske3UQEwGDDYxEnqVh/KJBiFNV3HUw5
- LuSwrPUR02sUg5EcRwLC9Ly4x/NoBIV6lg9w==
-X-Gm-Gg: Acq92OFnpCRUVDAo9uU8A+ykhbDl1CecS+OdMIeUTOUpIj1i3ecoNVgmzDXH8IAKw87
- Ne+8W/WAwpElTDmxwxzAmovEkPxIz4BGJ5pJSM5Fr7XujVTS3admrP5D6nPW8OiiOARz4V3tN8Z
- BGTcHVCqPVp02aC1vJNAzZkUDXZ+iMSbSReUK0kCCISpoiGnYlGLs4YtKrNJR6ydGO7bbv6PSI6
- GXriQG50bPceaDmnS5SiuAG2FQ4H6ztGKA1liEIfHzPmR/+s+P9SDXX17o7kax8Dp1e4cPukjXk
- DnozRU8/uFeC+LGV4FKsxo+0IKbRKgWDpDsRRP7cPx147L1PRnDeQqJzhs8k/sbDeM9zUbgDVpT
- qBo0Zmn2McRX8FoJNmdH7GWfkfiNd16yMWX8lN8+8k24=
-X-Received: by 2002:a05:600c:1912:b0:490:bbc1:c9be with SMTP id
- 5b1f17b1804b1-490ec30f6aamr110711965e9.0.1781464079896; 
- Sun, 14 Jun 2026 12:07:59 -0700 (PDT)
-X-Received: by 2002:a05:600c:1912:b0:490:bbc1:c9be with SMTP id
- 5b1f17b1804b1-490ec30f6aamr110711765e9.0.1781464079394; 
- Sun, 14 Jun 2026 12:07:59 -0700 (PDT)
+ bh=g1F4+IF5etRgwNV0vS9HbRXkwL6EBjEu8mYuHWvbVi0=;
+ b=mXnZDusfs5/sjTZR44lwEmTR0LytXLBcTp3Y7OaYA8BCg2WGdUU7FrerhNI9ZWLmrP
+ EQggvnFrvzrbP12k+TiGQY7oXZYUju8sKLsMM0+ZFfVkXZ08+ovsP7kLSmGUM2Voof90
+ QwFVywWJ7QPEiYGmZ1R6Xg+FJzhC7Lb27XkSy0P+bB9q9DNeKbE+ccbgGmZ7AcP7XDMi
+ x30Zn+Sscyy7vflucquGOK7uLUP4soSA76RKmevcNIGSFhHvy9f42zavHhkeL1tTz6Je
+ MLFF4R446d3Ca5nW2brXa6kTDuLB2BwgK0DPZ1h1FB2bn2eO5fO8DUsat5tdW+KRXUUJ
+ TNcg==
+X-Gm-Message-State: AOJu0YwUwH6BhBX0mbVUm2qtD+mB6bvlR2ZQGlk2QfzCo97CAqUZw3p8
+ 3RqWLps2e5yv9E0e/xZFviOOEkFsYgkNuUpq2Rpv0/uoi719jzKBx9i0euUWdKUR82PRcuzLqM6
+ ZnD7yIGxjcH8md/wwaHvcjGfoIfMWGGYPGnbD96g3yed7Xo6i3SAT67sJW9uuQzSWcLMm55OXNQ
+ TLoZzF+z7RdnPXvU6T7ycQu7eSEzqLgAmfsQ==
+X-Gm-Gg: Acq92OHYSu0i7BeSLxRZzT0Sv4w3SxFIEs8YIp3G7x+GEGR4u31FW/PzQY7IBItuXJA
+ 5EIKhGu+UaheZdl/kSDkvwgctjEOhSSUO3j7GzR9T8IiSoJIja9K9QQQ/OinnFgU1ds4SoJV5kt
+ ZamqmhtPm5ST73Veksso6Nx8lwg2BWO9YIIcJspsaJoV7IOTdPVO/DAlSUVlFcHJJzrJtlK5Y54
+ LGb+S65Pkfec3aVPSXycDKRuZcPjFRQ0QQC3VaN6Wl+2mrnCdqP7zVly++MuxhZTuKpqyUm3HSi
+ 1pogv+ruc05D4lbYCLnDQDpBvKD8Rrj6JXuVOZav2o8S8poTW07wJOR8AG05AksI2PH2QN+z4D/
+ Bz4Dl42GpEr7DrhXv4CO9J8UWeEbXFYmG4pgBH7Sii6c=
+X-Received: by 2002:a05:600c:214b:b0:490:bd1d:472a with SMTP id
+ 5b1f17b1804b1-490ec4d7879mr102497195e9.15.1781464000167; 
+ Sun, 14 Jun 2026 12:06:40 -0700 (PDT)
+X-Received: by 2002:a05:600c:214b:b0:490:bd1d:472a with SMTP id
+ 5b1f17b1804b1-490ec4d7879mr102496835e9.15.1781463999627; 
+ Sun, 14 Jun 2026 12:06:39 -0700 (PDT)
 Received: from redhat.com (IGLD-80-230-85-71.inter.net.il. [80.230.85.71])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-492203d08bcsm184205355e9.13.2026.06.14.12.07.58
+ 5b1f17b1804b1-4922033156csm173860615e9.7.2026.06.14.12.06.38
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 14 Jun 2026 12:07:59 -0700 (PDT)
-Date: Sun, 14 Jun 2026 15:07:57 -0400
+ Sun, 14 Jun 2026 12:06:39 -0700 (PDT)
+Date: Sun, 14 Jun 2026 15:06:37 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- Stefano Garzarella <sgarzare@redhat.com>
-Subject: [PULL 051/106] vhost: rename vhost-backend.c to vhost-kernel.c
-Message-ID: <78bdeadfe60b051871f1ca3fffbce9ce1304bd4f.1781463125.git.mst@redhat.com>
+ Zhenzhong Duan <zhenzhong.duan@intel.com>, Yi Liu <yi.l.liu@intel.com>,
+ Clement Mathieu--Drif <clement.mathieu--drif@bull.com>,
+ Xudong Hao <xudong.hao@intel.com>, Jason Wang <jasowang@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [PULL 022/106] intel_iommu: Expose flag VIOMMU_FLAG_PASID_SUPPORTED
+ and VIOMMU_FLAG_WANT_PASID_ATTACH
+Message-ID: <2b0d91ed44e5e0dc77d151cbdc0dba40c6101490.1781463125.git.mst@redhat.com>
 References: <cover.1781463125.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -119,48 +123,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+From: Zhenzhong Duan <zhenzhong.duan@intel.com>
 
-This file is totally about vhost-kernel implementation, not generic
-code. Let's finally give it corresponding name.
+VFIO device will check flag VIOMMU_FLAG_PASID_SUPPORTED and expose PASID
+capability, also check VIOMMU_FLAG_WANT_PASID_ATTACH to enable pasid
+attachment, without those guest could not enable PASID of this device even
+if vIOMMU's pasid is configured.
 
-Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+We don't expose the two flags when fist stage translation is not configured
+as we don't support shadow page table on a PASID.
+
+This is the final knob to enable PASID.
+
+Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+Reviewed-by: Yi Liu <yi.l.liu@intel.com>
+Reviewed-by: Clement Mathieu--Drif <clement.mathieu--drif@bull.com>
+Tested-by: Xudong Hao <xudong.hao@intel.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-Id: <20260420202032.714884-4-vsementsov@yandex-team.ru>
+Message-Id: <20260527054658.1021096-18-zhenzhong.duan@intel.com>
 ---
- hw/virtio/meson.build                         | 2 +-
- hw/virtio/{vhost-backend.c => vhost-kernel.c} | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
- rename hw/virtio/{vhost-backend.c => vhost-kernel.c} (99%)
+ hw/i386/intel_iommu.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/hw/virtio/meson.build b/hw/virtio/meson.build
-index 0ea89d8af4..3943e0d006 100644
---- a/hw/virtio/meson.build
-+++ b/hw/virtio/meson.build
-@@ -14,7 +14,7 @@ system_virtio_ss.add(files('virtio-qmp.c'))
+diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
+index 31addb98e4..8bb2a1e339 100644
+--- a/hw/i386/intel_iommu.c
++++ b/hw/i386/intel_iommu.c
+@@ -4788,6 +4788,11 @@ static uint64_t vtd_get_viommu_flags(void *opaque)
+     if (s->fsts) {
+         flags = VIOMMU_FLAG_WANT_NESTING_PARENT |
+                 VIOMMU_FLAG_WANT_NESTING_DIRTY_TRACKING;
++
++        if (s->pasid) {
++            flags |= VIOMMU_FLAG_PASID_SUPPORTED |
++                     VIOMMU_FLAG_WANT_PASID_ATTACH;
++        }
+     }
  
- if have_vhost
-   system_virtio_ss.add(files('vhost.c'))
--  system_virtio_ss.add(files('vhost-backend.c', 'vhost-iova-tree.c'))
-+  system_virtio_ss.add(files('vhost-kernel.c', 'vhost-iova-tree.c'))
-   if have_vhost_user
-     system_virtio_ss.add(files('vhost-user.c'))
-     system_virtio_ss.add(files('vhost-user-base.c'))
-diff --git a/hw/virtio/vhost-backend.c b/hw/virtio/vhost-kernel.c
-similarity index 99%
-rename from hw/virtio/vhost-backend.c
-rename to hw/virtio/vhost-kernel.c
-index caeadd069b..3390b48c6f 100644
---- a/hw/virtio/vhost-backend.c
-+++ b/hw/virtio/vhost-kernel.c
-@@ -1,5 +1,5 @@
- /*
-- * vhost-backend
-+ * vhost-kernel
-  *
-  * Copyright (c) 2013 Virtual Open Systems Sarl.
-  *
+     return flags;
 -- 
 MST
 
