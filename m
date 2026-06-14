@@ -4,100 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6DE96CD98C5
-	for <qemu-devel@archiver.kernel.org>; Sun, 14 Jun 2026 19:11:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D72A4CD98D2
+	for <qemu-devel@archiver.kernel.org>; Sun, 14 Jun 2026 19:11:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wYqDO-0008Tr-QC; Sun, 14 Jun 2026 15:09:50 -0400
+	id 1wYqBb-0003Op-Ew; Sun, 14 Jun 2026 15:07:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wYqCp-0007LK-Ho
- for qemu-devel@nongnu.org; Sun, 14 Jun 2026 15:09:15 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wYqBU-0003Hu-H8
+ for qemu-devel@nongnu.org; Sun, 14 Jun 2026 15:07:52 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wYqCn-0002TR-Kh
- for qemu-devel@nongnu.org; Sun, 14 Jun 2026 15:09:15 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wYqBS-00022t-QO
+ for qemu-devel@nongnu.org; Sun, 14 Jun 2026 15:07:52 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781464153;
+ s=mimecast20190719; t=1781464070;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=a46sKVH32bCRMvIBLUmf7FNMvT7dbG+TFR4oxcl+h58=;
- b=EwKh7aKKn8Zs0h3PANIhEqmFTMnOgm8XWk1kVECBAgVXeqM8xvzZuAP6uVh8IT71HRyBIV
- eKyV8cZpp0XwbJyzkrGzW4R7KVpwJETZL+sSzrD1n1utiD7nxU9OlVtXw2VSt7Y0Rw7H6Y
- 6sAAw6yGbn5kKFU7FlI/+OR476pwokQ=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=NzyuGiME89aqDLR5LZsqNNgqW2rfSpG7SYs6XXdhRBU=;
+ b=M+RFX/McxSHI1oVU4WjXBNVisBnmYVlmL91zinUXFTU6DtDaRdrQSxWQgILjmuYBjD1uce
+ 4wtk7d3JmqvQiKngQya2PqAa9Ksnag9srgYB6AcJgPKUDw4gAg+WHsxBW+9L8xN8rKI9w+
+ KiKoW6nHtmXiOiaivT3gxu9n+Ko3Kak=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-144-v3dYr8BqOCy_v_Ujp0NRJw-1; Sun, 14 Jun 2026 15:09:11 -0400
-X-MC-Unique: v3dYr8BqOCy_v_Ujp0NRJw-1
-X-Mimecast-MFC-AGG-ID: v3dYr8BqOCy_v_Ujp0NRJw_1781464150
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-4601102c30dso1475037f8f.2
- for <qemu-devel@nongnu.org>; Sun, 14 Jun 2026 12:09:11 -0700 (PDT)
+ us-mta-540-I11cKia-MFOWb6OuYibddA-1; Sun, 14 Jun 2026 15:07:49 -0400
+X-MC-Unique: I11cKia-MFOWb6OuYibddA-1
+X-Mimecast-MFC-AGG-ID: I11cKia-MFOWb6OuYibddA_1781464068
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-45efa7755faso1005513f8f.1
+ for <qemu-devel@nongnu.org>; Sun, 14 Jun 2026 12:07:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1781464150; x=1782068950; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:from:to
- :cc:subject:date:message-id:reply-to;
- bh=a46sKVH32bCRMvIBLUmf7FNMvT7dbG+TFR4oxcl+h58=;
- b=CQkiu1kMwSICm40fe97iMkPL1Yh8uG75ihKZsp+7LaNtYY5ltkwL8W9FoF5kxGZ5ec
- lBJzZgOIuSoLaU+QXpo7oXy7hsOXXG+oeB5KQ9gADQc3drN9C3w48cv1HFMNvcTKqCKx
- GYF01ZaUlsR35byjfJYTowSGqU4NXIz0EldcZNoQW1UaZEPeRLOGJ1c0flap2w90Z+Ux
- pxxEKoSXcioX6M20W6ziBq6bOjU139hd3c+wRNKX8lLydRTx0iLJ7ICvoDbDVIKI9Olh
- WipRnNyuowS+Q0DRbUTahd4kDeRtk7Fo66ZfCc/KOgHNgM2B8AKsI9YqIYLfRbcbjkvF
- xWmQ==
+ d=redhat.com; s=google; t=1781464068; x=1782068868; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=NzyuGiME89aqDLR5LZsqNNgqW2rfSpG7SYs6XXdhRBU=;
+ b=t18S1PegH8VVtV3Pd86QpRse95O67Sx1zKt0xxRttWmHMC6Tktiwbs2t9v6J65BBhu
+ 2N4w7nxOe6ytfeUY0apQyBHEqobxHtGwTfeCYSOa9WQWF8AfrGMPYXPu6IEh+oOU8I+6
+ +7v3RlmbuN9A7UPmzpFuxsp+aQEcZFftw/NPFtonVZpyypz8TsofPDdTnsA7NUEKPcQK
+ U+6FeDx4PXjtMEO9Qb6WvxKldr16PUG0a/C3f2oAz1oiiaJ5QAe4D8QuLwepGJIC/cfj
+ xNMtW2xtQAcNkWFCml6yT6fBE5aglPHIK1Cd29zIunz304pqHIo0E6BrfYzvCCxQ2yUy
+ Gi/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781464150; x=1782068950;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=a46sKVH32bCRMvIBLUmf7FNMvT7dbG+TFR4oxcl+h58=;
- b=NwPrVRq4JvTIpeKT8ibhhoEnozLhaqVEkXwhrz8X/dqAm+2D8vCRfIwXt6FO6iJHbg
- kD5rRgGyVOKfbFDbaBqhefsOq8ct0PuDqg7kzZ1DRds1IDwxNRjJacKGYerA2xhhufR2
- KA3w9sVYURqVpc6m95eAC7IZaX9IP83XjWmVzjVkS/zoZm7wdEDXS809gOYAi6PZasmG
- J/hUk5TD8TDQePDPOGEOu7OlNKPwQ/ZCa16JLTi3+Rr9fuATURaoSyyQjAfPJR4DOKSJ
- QI2ToIFkDzUBQgzhKu5biCD8HxzKgv62PjOYII+30timRhF0jcgFGrb11MqYi8DgDXyj
- tspw==
-X-Gm-Message-State: AOJu0YwY3QgASh5kn1UMnwPx5e+UlJ7pOxvt2b/slz3VmdMC7bUVWJDV
- v/SLXvuCfk2cy6dKt45jJUHRSmMtTDBxVSmAzScYsg49dtK47F53gR+Ht7iN77yol8m+ht8/qlc
- HzkBXGzU9eY5tfMLpzDHJvL8CjoJiPijkLI1Lay9QA9PXM6tjOnDhK3PkTxafNO3k2hQEr8ZDZj
- 9JXE/gKRTwfNu8KYzSHH4tCkiGDOB99lcMgA==
-X-Gm-Gg: Acq92OET5i7fEOlYlO4PXXCDXWPXJvR9EvHCjSFRFbs591As+E8duK+4n4PDz0BpWMu
- FiKsCgeGd2Y1gsaoRSrcUjzjHKQB5BIXG06+vcq+TF/fA7acbotKYOUexOqEUbtiQM6uLKKglJG
- XtLG7+/O/rBlnFEXnxFh70e3k9MdVDRdNhpUjRohPGhkgaEi/JDT2smhUnKOr+PqRleX4Qjs81r
- admr/RCjOI9f8zicVenEtWxKsLSW7kIl0kki6Gu/mc+wCMmsZVUJLwYpXcWe7pYbfkL8JU1sV7Q
- hI303QVbJ3+bCs4DCNxq6HFkNhraYQ22HPiqEAJT3VNPz4e/X5So507zgGDQzO21I1V+Uqk1tJs
- xbI/XQBoGkyqMJ2io5js52p6VE7W3NtCZFKDgtl9IxC8=
-X-Received: by 2002:a05:6000:188e:b0:45e:f271:5019 with SMTP id
- ffacd0b85a97d-4606db8c6fbmr15479974f8f.14.1781464150041; 
- Sun, 14 Jun 2026 12:09:10 -0700 (PDT)
-X-Received: by 2002:a05:6000:188e:b0:45e:f271:5019 with SMTP id
- ffacd0b85a97d-4606db8c6fbmr15479934f8f.14.1781464149535; 
- Sun, 14 Jun 2026 12:09:09 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1781464068; x=1782068868;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=NzyuGiME89aqDLR5LZsqNNgqW2rfSpG7SYs6XXdhRBU=;
+ b=UB3qYlWgAsMk59vkGfMI0Wd8yd2KO82sYZMtXIFR9DV7FRLIPEwF5zwu1R7hp/Ynoi
+ XGsi8CoUQMkdzj2SVE9VlqD9KljoPHEnTiU0nVVFskZjBdOBqZ/8NLEBct4BmjAbndqY
+ rFaZAocajV3dWChy5DxllvfdEPrliih6JFOTrx5mefjgbdh9W9c48CqQlyDtUc5dKfz3
+ XdFQFmVTIRlvI2/6/X2SXQLWs9h+r5/eB1qWJzM3CiYdxaCKOe8h2J+IQb316L6LGOFz
+ GTXNcgbZp005NkbeImdRf+Hl7QO8yzOqySMtiR1hOI2BRu8uiyH7zFuqPdiJJfcTmkCh
+ WRzw==
+X-Gm-Message-State: AOJu0Yys2jl2XDpquwFvctJmACHU01iY7Typz+wMAS2kl2/noJi0RYaf
+ kAwlbSjbDqzv0INfgNv1bv3tsdjMkNkmSypa+kTzVHOFIXlDlra6uDaGm3MoYfoJQFW18J8X1RP
+ M8bp55/3TLFKrtxsaQ+llUgKPtubpNjq8sKBMmQP8SElsm1jjXXB3naQKLp14fwlpH4TfV3KM3U
+ 40rgbr/sw+PyrKxB3X3D0E8c/kVVoORyUYzw==
+X-Gm-Gg: Acq92OEYR8E3z1FKrS8xWC9liOcYMvAhXA6cgofIlOdPUduUO3z/wuykwlrPQGr38md
+ DLErcixcOx05k0dmtaZIUUIldDS4FulMJvZjM8Rsrqbdcvm7q4BxM9LS7e0qiDMraMPJ3mrEXyB
+ uI21DWK8+QS99NU7qvXqILC9aI9qpNCG229FRlN1QONNHoWr07tfMMwlEoUG7i3wViBcekKcCS1
+ g5tnckOF4OYj8HVj0XWVdV83d+ZGD6FSFZTWTD0DnPp1muSJ294FT7bpOeYWYvMfkEhtoOiuCCY
+ bv7UW9t2NcxbKAZWgcNcvdGxxFHsGd4dMnwFjytlyRR45GW35r270Z8e/p5oOblmz0KlyHa+MNW
+ qc3p+zSzD4txG3JBkyu2xmGF7dp6l/5jahOGz4Lj6fn8=
+X-Received: by 2002:a05:6000:2082:b0:460:3234:77d4 with SMTP id
+ ffacd0b85a97d-46074b8effdmr9861242f8f.42.1781464067704; 
+ Sun, 14 Jun 2026 12:07:47 -0700 (PDT)
+X-Received: by 2002:a05:6000:2082:b0:460:3234:77d4 with SMTP id
+ ffacd0b85a97d-46074b8effdmr9861206f8f.42.1781464067174; 
+ Sun, 14 Jun 2026 12:07:47 -0700 (PDT)
 Received: from redhat.com (IGLD-80-230-85-71.inter.net.il. [80.230.85.71])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4606f2cf5d9sm23855994f8f.32.2026.06.14.12.09.08
+ ffacd0b85a97d-4606f26f450sm29269901f8f.10.2026.06.14.12.07.46
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 14 Jun 2026 12:09:09 -0700 (PDT)
-Date: Sun, 14 Jun 2026 15:09:07 -0400
+ Sun, 14 Jun 2026 12:07:46 -0700 (PDT)
+Date: Sun, 14 Jun 2026 15:07:45 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Sairaj Kodilkar <sarunkod@amd.com>, Vasant Hegde <vasant.hegde@amd.com>,
- Alejandro Jimenez <alejandro.j.jimenez@oracle.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 081/106] amd_iommu: Generate XT interrupts when xt support is
- enabled
-Message-ID: <cf0210df65aa4f582e444b910c950e2b4a80b194.1781463125.git.mst@redhat.com>
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ Raphael Norwitz <raphael.s.norwitz@gmail.com>,
+ Stefano Garzarella <sgarzare@redhat.com>
+Subject: [PULL 046/106] vhost-user: make trace events more readable
+Message-ID: <6fdb2219f46e39df9f4182e53e0f7f3e277e92f1.1781463125.git.mst@redhat.com>
 References: <cover.1781463125.git.mst@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1781463125.git.mst@redhat.com>
 X-Mailer: git-send-email 2.51.2.2891.g4157995a80.dirty
 X-Mutt-Fcc: =sent
@@ -125,195 +120,121 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Sairaj Kodilkar <sarunkod@amd.com>
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 
-When MMIO 0x18[IntCapXTEn]=1, interrupts originating from the IOMMU itself are
-sent based on the programming in XT IOMMU Interrupt Control Registers in MMIO
-0x170-0x180 instead of the programming in the IOMMU's MSI capability registers.
-The guest programs these registers with appropriate vector and destination
-ID instead of writing to PCI MSI capability.
-
-Current AMD vIOMMU is capable of generating interrupts only through PCI
-MSI capability and does not care about xt mode. Because of this AMD
-vIOMMU cannot generate event log interrupts when the guest has enabled
-xt mode.
-
-Introduce a new flag "intcapxten" which is set when guest writes control
-register [IntCapXTEn] (bit 51) and use vector and destination field in
-the XT MMIO register (0x170) to support XT mode.
-
-Signed-off-by: Sairaj Kodilkar <sarunkod@amd.com>
-Reviewed-by: Vasant Hegde <vasant.hegde@amd.com>
-Reviewed-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
+Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Reviewed-by: Raphael Norwitz <raphael.s.norwitz@gmail.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-Id: <20260302115130.5903-4-sarunkod@amd.com>
+Message-Id: <20260420200339.708640-21-vsementsov@yandex-team.ru>
 ---
- hw/i386/amd_iommu.c  | 47 ++++++++++++++++++++++++++++++++++++++------
- hw/i386/amd_iommu.h  | 17 ++++++++++++++++
- hw/i386/trace-events |  1 +
- 3 files changed, 59 insertions(+), 6 deletions(-)
+ hw/virtio/trace-events |  4 +--
+ hw/virtio/vhost-user.c | 63 ++++++++++++++++++++++++++++++++++++++++--
+ 2 files changed, 63 insertions(+), 4 deletions(-)
 
-diff --git a/hw/i386/amd_iommu.c b/hw/i386/amd_iommu.c
-index 5947d3aecf..79216fb305 100644
---- a/hw/i386/amd_iommu.c
-+++ b/hw/i386/amd_iommu.c
-@@ -192,18 +192,38 @@ static void amdvi_assign_andq(AMDVIState *s, hwaddr addr, uint64_t val)
-    amdvi_writeq_raw(s, addr, amdvi_readq(s, addr) & val);
- }
+diff --git a/hw/virtio/trace-events b/hw/virtio/trace-events
+index 658cc365e7..aa1ffa5e94 100644
+--- a/hw/virtio/trace-events
++++ b/hw/virtio/trace-events
+@@ -25,8 +25,8 @@ vhost_user_set_mem_table_withfd(int index, const char *name, uint64_t memory_siz
+ vhost_user_postcopy_waker(const char *rb, uint64_t rb_offset) "%s + 0x%"PRIx64
+ vhost_user_postcopy_waker_found(uint64_t client_addr) "0x%"PRIx64
+ vhost_user_postcopy_waker_nomatch(const char *rb, uint64_t rb_offset) "%s + 0x%"PRIx64
+-vhost_user_read(uint32_t req, uint32_t flags) "req:%d flags:0x%"PRIx32""
+-vhost_user_write(uint32_t req, uint32_t flags) "req:%d flags:0x%"PRIx32""
++vhost_user_read(uint32_t req, const char *req_name, uint32_t flags) "req:%d (%s) flags:0x%"PRIx32""
++vhost_user_write(uint32_t req, const char *req_name, uint32_t flags) "req:%d (%s) flags:0x%"PRIx32""
+ vhost_user_create_notifier(int idx, void *n) "idx:%d n:%p"
  
-+static void amdvi_build_xt_msi_msg(AMDVIState *s, MSIMessage *msg)
+ # vhost-vdpa.c
+diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
+index 31eaf65430..4fb136b7b3 100644
+--- a/hw/virtio/vhost-user.c
++++ b/hw/virtio/vhost-user.c
+@@ -114,6 +114,63 @@ typedef enum VhostUserBackendRequest {
+     VHOST_USER_BACKEND_MAX
+ }  VhostUserBackendRequest;
+ 
++#define VHOST_USER_CASE(name) \
++    case VHOST_USER_##name: \
++        return #name;
++
++static const char *vhost_req_name(VhostUserRequest req)
 +{
-+    union mmio_xt_intr xt_reg;
-+    struct X86IOMMUIrq irq;
-+
-+    xt_reg.val = amdvi_readq(s, AMDVI_MMIO_XT_GEN_INTR);
-+
-+    irq.vector = xt_reg.vector;
-+    irq.delivery_mode = xt_reg.delivery_mode;
-+    irq.dest_mode = xt_reg.destination_mode;
-+    irq.dest = (xt_reg.destination_hi << 24) | xt_reg.destination_lo;
-+    irq.trigger_mode = 0;
-+    irq.redir_hint = 0;
-+
-+    x86_iommu_irq_to_msi_message(&irq, msg);
++    switch (req) {
++    VHOST_USER_CASE(NONE)
++    VHOST_USER_CASE(GET_FEATURES)
++    VHOST_USER_CASE(SET_FEATURES)
++    VHOST_USER_CASE(SET_OWNER)
++    VHOST_USER_CASE(RESET_OWNER)
++    VHOST_USER_CASE(SET_MEM_TABLE)
++    VHOST_USER_CASE(SET_LOG_BASE)
++    VHOST_USER_CASE(SET_LOG_FD)
++    VHOST_USER_CASE(SET_VRING_NUM)
++    VHOST_USER_CASE(SET_VRING_ADDR)
++    VHOST_USER_CASE(SET_VRING_BASE)
++    VHOST_USER_CASE(GET_VRING_BASE)
++    VHOST_USER_CASE(SET_VRING_KICK)
++    VHOST_USER_CASE(SET_VRING_CALL)
++    VHOST_USER_CASE(SET_VRING_ERR)
++    VHOST_USER_CASE(GET_PROTOCOL_FEATURES)
++    VHOST_USER_CASE(SET_PROTOCOL_FEATURES)
++    VHOST_USER_CASE(GET_QUEUE_NUM)
++    VHOST_USER_CASE(SET_VRING_ENABLE)
++    VHOST_USER_CASE(SEND_RARP)
++    VHOST_USER_CASE(NET_SET_MTU)
++    VHOST_USER_CASE(SET_BACKEND_REQ_FD)
++    VHOST_USER_CASE(IOTLB_MSG)
++    VHOST_USER_CASE(SET_VRING_ENDIAN)
++    VHOST_USER_CASE(GET_CONFIG)
++    VHOST_USER_CASE(SET_CONFIG)
++    VHOST_USER_CASE(CREATE_CRYPTO_SESSION)
++    VHOST_USER_CASE(CLOSE_CRYPTO_SESSION)
++    VHOST_USER_CASE(POSTCOPY_ADVISE)
++    VHOST_USER_CASE(POSTCOPY_LISTEN)
++    VHOST_USER_CASE(POSTCOPY_END)
++    VHOST_USER_CASE(GET_INFLIGHT_FD)
++    VHOST_USER_CASE(SET_INFLIGHT_FD)
++    VHOST_USER_CASE(GPU_SET_SOCKET)
++    VHOST_USER_CASE(RESET_DEVICE)
++    VHOST_USER_CASE(GET_MAX_MEM_SLOTS)
++    VHOST_USER_CASE(ADD_MEM_REG)
++    VHOST_USER_CASE(REM_MEM_REG)
++    VHOST_USER_CASE(SET_STATUS)
++    VHOST_USER_CASE(GET_STATUS)
++    VHOST_USER_CASE(GET_SHARED_OBJECT)
++    VHOST_USER_CASE(SET_DEVICE_STATE_FD)
++    VHOST_USER_CASE(CHECK_DEVICE_STATE)
++    default:
++        return "<unknown>";
++    }
 +}
 +
- static void amdvi_generate_msi_interrupt(AMDVIState *s)
- {
-     MSIMessage msg = {};
--    MemTxAttrs attrs = {
--        .requester_id = pci_requester_id(&s->pci->dev)
--    };
- 
--    if (msi_enabled(&s->pci->dev)) {
-+    if (s->intcapxten) {
-+        trace_amdvi_generate_msi_interrupt("XT GEN");
-+        amdvi_build_xt_msi_msg(s, &msg);
-+    } else if (msi_enabled(&s->pci->dev)) {
-+        trace_amdvi_generate_msi_interrupt("MSI");
-         msg = msi_get_message(&s->pci->dev, 0);
--        address_space_stl_le(&address_space_memory, msg.address, msg.data,
--                             attrs, NULL);
-+    } else {
-+        trace_amdvi_generate_msi_interrupt("NO MSI");
-+        return;
-     }
-+    apic_get_class(NULL)->send_msi(&msg);
- }
- 
- static uint32_t get_next_eventlog_entry(AMDVIState *s)
-@@ -1538,6 +1558,7 @@ const char *amdvi_mmio_get_name(hwaddr addr)
-     MMIO_REG_TO_STRING(AMDVI_MMIO_PPR_BASE);
-     MMIO_REG_TO_STRING(AMDVI_MMIO_PPR_HEAD);
-     MMIO_REG_TO_STRING(AMDVI_MMIO_PPR_TAIL);
-+    MMIO_REG_TO_STRING(AMDVI_MMIO_XT_GEN_INTR);
- #undef MMIO_REG_TO_STRING
-     default:
-         return "UNHANDLED";
-@@ -1581,6 +1602,15 @@ static void amdvi_handle_control_write(AMDVIState *s)
-     s->ga_enabled = !!(control & AMDVI_MMIO_CONTROL_GAEN);
-     s->xten = !!(control & AMDVI_MMIO_CONTROL_XTEN) && s->xtsup &&
-               s->ga_enabled;
-+    /*
-+     * IntCapXTEn controls whether IOMMU-originated interrupts are sent based
-+     * on the information in XT IOMMU Interrupt Control Registers rather than
-+     * the IOMMU’s MSI capability registers. Therefore it requires IOMMU
-+     * x2APIC support capabilities (i.e. XTSup=1), but it is independent of
-+     * whether a driver chooses to enable x2APIC mode for interrupt remapping
-+     * (i.e. XTEn=1).
-+     */
-+    s->intcapxten = !!(control & AMDVI_MMIO_CONTROL_INTCAPXTEN) && s->xtsup;
- 
-     /* update the flags depending on the control register */
-     if (s->cmdbuf_enabled) {
-@@ -1790,6 +1820,9 @@ static void amdvi_mmio_write(void *opaque, hwaddr addr, uint64_t val,
-     case AMDVI_MMIO_STATUS:
-         amdvi_mmio_reg_write(s, size, val, addr);
-         break;
-+    case AMDVI_MMIO_XT_GEN_INTR:
-+        amdvi_mmio_reg_write(s, size, val, addr);
-+        break;
-     }
- }
- 
-@@ -2440,6 +2473,7 @@ static void amdvi_init(AMDVIState *s)
-     s->enabled = false;
-     s->cmdbuf_enabled = false;
-     s->xten = false;
-+    s->intcapxten = false;
- 
-     /* reset MMIO */
-     memset(s->mmior, 0, AMDVI_MMIO_SIZE);
-@@ -2510,6 +2544,7 @@ static const VMStateDescription vmstate_xt = {
-        .minimum_version_id = 1,
-        .fields = (VMStateField[]) {
-            VMSTATE_BOOL(xten, AMDVIState),
-+           VMSTATE_BOOL(intcapxten, AMDVIState),
-            VMSTATE_END_OF_LIST()
-        }
- };
-diff --git a/hw/i386/amd_iommu.h b/hw/i386/amd_iommu.h
-index 300d91b34d..3cab04a6d4 100644
---- a/hw/i386/amd_iommu.h
-+++ b/hw/i386/amd_iommu.h
-@@ -53,6 +53,7 @@
- #define AMDVI_MMIO_EXCL_BASE          0x0020
- #define AMDVI_MMIO_EXCL_LIMIT         0x0028
- #define AMDVI_MMIO_EXT_FEATURES       0x0030
-+#define AMDVI_MMIO_XT_GEN_INTR        0x0170
- #define AMDVI_MMIO_COMMAND_HEAD       0x2000
- #define AMDVI_MMIO_COMMAND_TAIL       0x2008
- #define AMDVI_MMIO_EVENT_HEAD         0x2010
-@@ -103,6 +104,7 @@
- #define AMDVI_MMIO_CONTROL_CMDBUFLEN      (1ULL << 12)
- #define AMDVI_MMIO_CONTROL_GAEN           (1ULL << 17)
- #define AMDVI_MMIO_CONTROL_XTEN           (1ULL << 50)
-+#define AMDVI_MMIO_CONTROL_INTCAPXTEN     (1ULL << 51)
- 
- /* MMIO status register bits */
- #define AMDVI_MMIO_STATUS_CMDBUF_RUN  (1 << 4)
-@@ -338,6 +340,20 @@ struct irte_ga {
-   union irte_ga_hi hi;
- };
- 
-+union mmio_xt_intr {
-+    uint64_t val;
-+    struct {
-+        uint64_t rsvd_1:2,
-+                 destination_mode:1,
-+                 rsvd_2:5,
-+                 destination_lo:24,
-+                 vector:8,
-+                 delivery_mode:1,
-+                 rsvd_3:15,
-+                 destination_hi:8;
-+    };
-+};
++#undef VHOST_USER_CASE
 +
- #define TYPE_AMD_IOMMU_DEVICE "amd-iommu"
- OBJECT_DECLARE_SIMPLE_TYPE(AMDVIState, AMD_IOMMU_DEVICE)
+ typedef struct VhostUserMemoryRegion {
+     uint64_t guest_phys_addr;
+     uint64_t memory_size;
+@@ -308,7 +365,8 @@ static int vhost_user_read_header(struct vhost_dev *dev, VhostUserMsg *msg)
+         return -EPROTO;
+     }
  
-@@ -416,6 +432,7 @@ struct AMDVIState {
-     bool ga_enabled;
-     bool xtsup;     /* xtsup=on command line */
-     bool xten;      /* guest controlled, x2apic mode enabled */
-+    bool intcapxten; /* guest controlled, IOMMU x2apic interrupts enabled */
+-    trace_vhost_user_read(msg->hdr.request, msg->hdr.flags);
++    trace_vhost_user_read(msg->hdr.request,
++                          vhost_req_name(msg->hdr.request), msg->hdr.flags);
  
-     /* DMA address translation */
-     bool dma_remap;
-diff --git a/hw/i386/trace-events b/hw/i386/trace-events
-index 5fa5e93b68..a1dfade20f 100644
---- a/hw/i386/trace-events
-+++ b/hw/i386/trace-events
-@@ -118,6 +118,7 @@ amdvi_ir_intctl(uint8_t val) "int_ctl 0x%"PRIx8
- amdvi_ir_target_abort(const char *str) "%s"
- amdvi_ir_delivery_mode(const char *str) "%s"
- amdvi_ir_irte_ga_val(uint64_t hi, uint64_t lo) "hi 0x%"PRIx64" lo 0x%"PRIx64
-+amdvi_generate_msi_interrupt(const char *str) "Mode: %s"
+     return 0;
+ }
+@@ -428,7 +486,8 @@ static int vhost_user_write(struct vhost_dev *dev, VhostUserMsg *msg,
+         return ret < 0 ? -saved_errno : -EIO;
+     }
  
- # vmport.c
- vmport_register(unsigned char command, void *func, void *opaque) "command: 0x%02x func: %p opaque: %p"
+-    trace_vhost_user_write(msg->hdr.request, msg->hdr.flags);
++    trace_vhost_user_write(msg->hdr.request, vhost_req_name(msg->hdr.request),
++                           msg->hdr.flags);
+ 
+     return 0;
+ }
 -- 
 MST
 
