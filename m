@@ -4,97 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 045FECD98D2
-	for <qemu-devel@archiver.kernel.org>; Sun, 14 Jun 2026 19:14:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35306CD98D6
+	for <qemu-devel@archiver.kernel.org>; Sun, 14 Jun 2026 19:14:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wYqCl-0007Fe-DE; Sun, 14 Jun 2026 15:09:11 -0400
+	id 1wYqDQ-0000Ev-5j; Sun, 14 Jun 2026 15:09:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wYqCa-00077J-6h
- for qemu-devel@nongnu.org; Sun, 14 Jun 2026 15:09:05 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wYqDJ-0007mM-Su
+ for qemu-devel@nongnu.org; Sun, 14 Jun 2026 15:09:46 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wYqCX-0002NE-TJ
- for qemu-devel@nongnu.org; Sun, 14 Jun 2026 15:08:59 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wYqDI-0002iV-69
+ for qemu-devel@nongnu.org; Sun, 14 Jun 2026 15:09:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781464137;
+ s=mimecast20190719; t=1781464183;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=I/ys6ZssApw29Zt0fL+bJEbJHwULzWoQ7y5saFW1/Yw=;
- b=Xy5GilMNFnmGFvRq35iFVBo26chMkeogA+QSGH8khxEpdQHxphAKu7Wjpq8dEuo2X+Fhc+
- gGZ6S8FWCOil0ToyJMCqxwk2miCtVNn8x4Eg5bBUyC0qp+UPHtgmiohX54W67RZ5eWUsQe
- 1BeFkTwQFS/q30K3mp9e27ri5XdIE/8=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=LeQdwvlxUcXinBqYKDGXgIIF+pdKo0MXbEyWkBYMIlM=;
+ b=g9uToUj56+6+mwTarffOM97D5qTQhM8fgqUrwwXSNoCu4TFQBhjVnrxU0Kc8+Vlq8oHOl7
+ XrvH7qrJHKrAcGpyvYevzdJkUOaRksDOmXyE8hH4dozWdlnh9Og8fn+a7gJ3QZM4wYUW/h
+ SfSQFLDVdxtfbEIIqSM2XbnTpjoFzfs=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-198-euSA0pIINPau7FrON-f-Gg-1; Sun, 14 Jun 2026 15:08:56 -0400
-X-MC-Unique: euSA0pIINPau7FrON-f-Gg-1
-X-Mimecast-MFC-AGG-ID: euSA0pIINPau7FrON-f-Gg_1781464135
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-45ef63d1214so1614963f8f.3
- for <qemu-devel@nongnu.org>; Sun, 14 Jun 2026 12:08:55 -0700 (PDT)
+ us-mta-288-JejFclSBNV-IaX8K98kwbg-1; Sun, 14 Jun 2026 15:09:42 -0400
+X-MC-Unique: JejFclSBNV-IaX8K98kwbg-1
+X-Mimecast-MFC-AGG-ID: JejFclSBNV-IaX8K98kwbg_1781464181
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-490e547f3cfso24344405e9.3
+ for <qemu-devel@nongnu.org>; Sun, 14 Jun 2026 12:09:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1781464135; x=1782068935; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:from:to
- :cc:subject:date:message-id:reply-to;
- bh=I/ys6ZssApw29Zt0fL+bJEbJHwULzWoQ7y5saFW1/Yw=;
- b=AvhHpQiSD8/kky/fiPgby8ksgpgJI1heWw3ll2NPmpN0AsoiMWlI5y/lw0ieGcLDGk
- B1/pqd5LNI8VohPKuZFxoh9LzT/bMg4aWHvTkzBI6vWF78fv+I2nPNaZJtmJ7sYkrmQ/
- 66h3DL/bXDlAgn6Z59S2u3NdtoX/4X27jSrPbXD8S839Uy8jRMKWgJ+kdDgLDoO3hFQF
- o2TUYkta8q2eTQYBpru29zQ4E+XzWLZaund4SWx1ZlSX02lYTh0h6EDFxFQS12YigbTH
- HvfpeE0I/FmizwH6/6rU4EAn5swERSCnEoSTtUYFfRTzB8fGOr6tnSkndENNU9bTjaF+
- S+xQ==
+ d=redhat.com; s=google; t=1781464181; x=1782068981; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=LeQdwvlxUcXinBqYKDGXgIIF+pdKo0MXbEyWkBYMIlM=;
+ b=HMmQKvjtaFNsiFyMnFMOsyhD+kUBwDiMjUEEp6vw5kJXTdhtlghvhGczSZ4O0JqMeP
+ gaogAqWb7bXrb4JJzaPkLLlOGoZ+C2f5R/g5Zvj81GedGg3BCWiGqbTsGLIDjFd8XXXH
+ rjar9bycIpZay9l9n43QB5BSZ+HQvq8Hm+r1uIMDFs1AhzDW8mNvOAxa/F20p1ry2FAD
+ eK///twBLbmrm3T0+7NFIx0iGY4nDracbi8iTypv4e3Q3oqhmxovxKdfXmyJz1HRRjw9
+ SC39OA0Ht8DRnPc/3KDMJkvQAH/KOtx4pRy0pU+NhBHsvEZrxhGtqtB4K1wgh6OAH0Za
+ nB8w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781464135; x=1782068935;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=I/ys6ZssApw29Zt0fL+bJEbJHwULzWoQ7y5saFW1/Yw=;
- b=R2LtnN4SrxRGqFhvpKlM4L8bH8xeg+YzCg5m4txLNfCVZqohI4EU5sJl2zswQJyTjV
- 4rx9HTX5VQoHubioBXg7EMxZCltiIT15uVHsl5dC0yk+7pl7wjdx738WP3Y5OvtryNWH
- CwIQ1Bus0lESUJ3OBEffjr1hnxsRKcFKzSb0Db4xwwiN4beSplj46WTHxYQF9kPIj9zn
- M6lD+WsX4PL0RVu9EEVYpwyeJwkUI5odyh0/GnhAr8luNFm1whF/VPmBEivxjG3RitoD
- bPq7ifHVfrHiZO7zOx8cKr7GOstLzZzzOHwIftss0SstK4/aL/NXFXvuaNpdz32MqPCq
- 3X9g==
-X-Gm-Message-State: AOJu0YzWQJ6T39gM4fO0j4rPycARbLYm/dqtoEhnv7aKxqhNxvXi9bge
- zwSQLgby623ZFeLTGb9HGWtyoatOox4f4QBLFGHzDD7LV0val3i1gZiIy7Zk9xcR6X85utm4tA/
- szwKwVa831wLjN0W+hduQQ1mBs/Gv6TQRIlAxNFdNYcZIVdN3TpdYEAwlpHBKLxRmtTjHfqV/1v
- AjfHDMECDiCHTY6KVwbUAd2SWuCKQDu47fGQ==
-X-Gm-Gg: Acq92OEsdsObFC7eiGNEutphMJTF9epdn6nl59/GRDrib3MIv0/AoJl8i+G3VFIzZ2V
- qt9G01OI7LhhkR+nKioleryZ6AVzVfqgzWSjtXSPCVB5oNa4eJtypyaPOysNFhFM3z1rCJxp23R
- 0SKeQw7ki4AN0UJeml+4KyVny3IzW42MlyI7BvZLsbRvTz4nVf+unNMY/Iu2+kkKNB0dDzUk47i
- 9ld0Po1DSov5WWcEjTXCKL6oM3S2M1WiEFXrjgbSKWuYse57lNJa9qEjj32ljeawqyNR1h7m248
- FEZLwb1TxIwT3unICTL+sfYCmQ44CBTrVKJqcsUTADy3PygXyDJbPbaYzZy/F3BpBTgMQkVG7JQ
- D1KV7xwk11Gmd61yi6HKcwbPE8QJyfDPk7opYx9G2jVU=
-X-Received: by 2002:a05:6000:288f:b0:460:3234:4472 with SMTP id
- ffacd0b85a97d-4606dbe5c41mr14333606f8f.40.1781464134726; 
- Sun, 14 Jun 2026 12:08:54 -0700 (PDT)
-X-Received: by 2002:a05:6000:288f:b0:460:3234:4472 with SMTP id
- ffacd0b85a97d-4606dbe5c41mr14333578f8f.40.1781464134248; 
- Sun, 14 Jun 2026 12:08:54 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1781464181; x=1782068981;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=LeQdwvlxUcXinBqYKDGXgIIF+pdKo0MXbEyWkBYMIlM=;
+ b=oBxXaoG9cfUhCpOXGfg0NOPCDhNyARaUAaO9p1UXLJuBnYwjebpvkZj9Gt/HOKk9R0
+ 246Wl6KuBekU01A47oo2Awv912GOftEAuK9LLOTMk3Hj6iPITRsA9P3bomDA58+fTrv5
+ SIye7TjguWgqxUJ3dLDZTl8aF7z1E0YzzqqaD9BgWPrSkPsZN3zuJtSJerLjHgNusjnV
+ 2O1IV1cJAwe97QdEZEzUy6N0g+GtSvzNgIqtfd0D0SHX3zMTZsqWKqrIg70cciKIz0Zl
+ 45gwVSyT2Z01hRk/qVAtzY/6ct+kye+CBq8KCbnqq1+5cliaLo2i4h8mzZXs5pxNMLKW
+ Yzdw==
+X-Gm-Message-State: AOJu0YxoDrDBnAFCL2YUJLyflut2iygyGUTGOANDcXhjAYbEhyX4w0jd
+ coJwApOohF22OdFdPdAewt93mbELBmzUXJPozqNlZLzDrzRXjrPvFQl6hZzsu5G9ATqeAEp1aUS
+ O91EKLrsnbY1F/dSG8aTNAFL0yTuJUGWBbMexgCh6kUWJ+5OXmGGYbVoVzvqvhO2ZvjLXvWMU67
+ RrScaCem3Yo/nLxyYzPdhZUcaRQI7weCGXlw==
+X-Gm-Gg: Acq92OH57d0SKxiqbz8dBn41KcEkVcLI2saTWwynKSL24CDq2gJQdrtCfWynAhgbR0t
+ RJj/nPWa7gopRiJ+m5DJ9jnVVW1yRgPA2483CeK+b4thtfU8ZtVtpo2GzqJvDQXCrjBef2+eXPL
+ TyX7Uc4JnDmq0YPv1Ap2s2lK4NEbv3NQx6bSHqqr8v3c2H86XnEJaADuS4vv4FQp2AhEKI34VmA
+ kaU/XaYNS857uRRtkWFtATgVuUM/uHA0SDIbtc++NdlQ54zYHwcTxwfxFP4CUjKrpxLdOHrgifd
+ xyAWAL1hnCEvK+UnRImRJBA8+ALzXlenSD8Kb8r2aNTZPKSXFG0hNsJutqIx4z5Zempo6TIoIF2
+ mCa4XnwKaEhJ64K9wUqqdnray5eDgIeEYEem+Prm6IIg=
+X-Received: by 2002:a05:600c:820c:b0:490:5cd8:d213 with SMTP id
+ 5b1f17b1804b1-490ec4d3407mr144348825e9.15.1781464180834; 
+ Sun, 14 Jun 2026 12:09:40 -0700 (PDT)
+X-Received: by 2002:a05:600c:820c:b0:490:5cd8:d213 with SMTP id
+ 5b1f17b1804b1-490ec4d3407mr144348475e9.15.1781464180291; 
+ Sun, 14 Jun 2026 12:09:40 -0700 (PDT)
 Received: from redhat.com (IGLD-80-230-85-71.inter.net.il. [80.230.85.71])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4606f2cf5d9sm23854470f8f.32.2026.06.14.12.08.52
+ 5b1f17b1804b1-49220310a58sm210690175e9.4.2026.06.14.12.09.39
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 14 Jun 2026 12:08:53 -0700 (PDT)
-Date: Sun, 14 Jun 2026 15:08:52 -0400
+ Sun, 14 Jun 2026 12:09:39 -0700 (PDT)
+Date: Sun, 14 Jun 2026 15:09:38 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Eugenio =?utf-8?B?UMOpcmV6?= <eperezma@redhat.com>,
- Jason Wang <jasowang@redhat.com>, Stefano Garzarella <sgarzare@redhat.com>
-Subject: [PULL 074/106] vhost: factor out the descriptor next fetching
-Message-ID: <00373aa05e683e4d4f72f534a8b9179cd4065149.1781463125.git.mst@redhat.com>
+ Albert Esteve <aesteve@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>
+Subject: [PULL 094/106] vhost_user: Add frontend get_shmem_config command
+Message-ID: <458f80f661e51d09936efb53eaba7c0d81ba323c.1781463125.git.mst@redhat.com>
 References: <cover.1781463125.git.mst@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1781463125.git.mst@redhat.com>
 X-Mailer: git-send-email 2.51.2.2891.g4157995a80.dirty
 X-Mutt-Fcc: =sent
@@ -122,79 +120,98 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Eugenio Pérez <eperezma@redhat.com>
+From: Albert Esteve <aesteve@redhat.com>
 
-The next field will not be used if IN_ORDER is enabled.
+The frontend can use this command to retrieve
+VirtIO Shared Memory Regions configuration from
+the backend. The response contains the number of
+shared memory regions, their size, and shmid.
 
-Signed-off-by: Eugenio Pérez <eperezma@redhat.com>
-Acked-by: Jason Wang <jasowang@redhat.com>
+This is useful when the frontend is unaware of
+specific backend type and configuration,
+for example, in the `vhost-user-device` case.
+
+Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+Signed-off-by: Albert Esteve <aesteve@redhat.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-Id: <20260304173535.2702587-4-eperezma@redhat.com>
+Message-Id: <20260304165223.2166175-5-aesteve@redhat.com>
 ---
- hw/virtio/vhost-shadow-virtqueue.c | 24 ++++++++++++++++++++----
- 1 file changed, 20 insertions(+), 4 deletions(-)
+ include/hw/virtio/vhost-backend.h         | 10 ++++++++++
+ include/hw/virtio/vhost-user.h            |  1 +
+ include/hw/virtio/virtio.h                |  2 ++
+ subprojects/libvhost-user/libvhost-user.h |  4 +++-
+ 4 files changed, 16 insertions(+), 1 deletion(-)
 
-diff --git a/hw/virtio/vhost-shadow-virtqueue.c b/hw/virtio/vhost-shadow-virtqueue.c
-index 901253d06e..7adacd4f54 100644
---- a/hw/virtio/vhost-shadow-virtqueue.c
-+++ b/hw/virtio/vhost-shadow-virtqueue.c
-@@ -139,6 +139,20 @@ static bool vhost_svq_translate_addr(const VhostShadowVirtqueue *svq,
-     return true;
- }
- 
-+/**
-+ * Get the next descriptor in the chain in SVQ vring from a descriptor id
-+ *
-+ * @svq Shadow Virtqueue
-+ * @id ID of the descriptor
-+ *
-+ * Return the id of the next descriptor.
+diff --git a/include/hw/virtio/vhost-backend.h b/include/hw/virtio/vhost-backend.h
+index 00881a0bd4..d878d7b733 100644
+--- a/include/hw/virtio/vhost-backend.h
++++ b/include/hw/virtio/vhost-backend.h
+@@ -162,6 +162,15 @@ typedef int (*vhost_set_device_state_fd_op)(struct vhost_dev *dev,
+                                             int *reply_fd,
+                                             Error **errp);
+ typedef int (*vhost_check_device_state_op)(struct vhost_dev *dev, Error **errp);
++/*
++ * Max regions is VIRTIO_MAX_SHMEM_REGIONS, so that is the maximum
++ * number of memory_sizes that will be accepted.
 + */
-+static uint16_t vhost_svq_next_desc(const VhostShadowVirtqueue *svq,
-+                                    uint16_t id)
-+{
-+    return svq->desc_state[id].next;
-+}
++typedef int (*vhost_get_shmem_config_op)(struct vhost_dev *dev,
++                                         int *nregions,
++                                         uint64_t *memory_sizes,
++                                         Error **errp);
 +
- /**
-  * Write descriptors to SVQ vring
-  *
-@@ -173,9 +187,11 @@ static bool vhost_svq_vring_write_descs(VhostShadowVirtqueue *svq, hwaddr *sg,
-     }
  
-     for (n = 0; n < num; n++) {
-+        uint16_t next = vhost_svq_next_desc(svq, i);
+ typedef struct VhostOps {
+     VhostBackendType backend_type;
+@@ -220,6 +229,7 @@ typedef struct VhostOps {
+     vhost_supports_device_state_op vhost_supports_device_state;
+     vhost_set_device_state_fd_op vhost_set_device_state_fd;
+     vhost_check_device_state_op vhost_check_device_state;
++    vhost_get_shmem_config_op vhost_get_shmem_config;
+ } VhostOps;
+ 
+ int vhost_user_gpu_set_socket(struct vhost_dev *dev, int fd);
+diff --git a/include/hw/virtio/vhost-user.h b/include/hw/virtio/vhost-user.h
+index 5ab70dab7e..06c360af18 100644
+--- a/include/hw/virtio/vhost-user.h
++++ b/include/hw/virtio/vhost-user.h
+@@ -35,6 +35,7 @@ enum VhostUserProtocolFeature {
+     VHOST_USER_PROTOCOL_F_DEVICE_STATE = 19,
+     VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFLIGHT = 20,
+     VHOST_USER_PROTOCOL_F_GPA_ADDRESSES = 21,
++    VHOST_USER_PROTOCOL_F_SHMEM = 22,
+     VHOST_USER_PROTOCOL_F_MAX
+ };
+ 
+diff --git a/include/hw/virtio/virtio.h b/include/hw/virtio/virtio.h
+index 3f745e3b67..c99cb19d88 100644
+--- a/include/hw/virtio/virtio.h
++++ b/include/hw/virtio/virtio.h
+@@ -82,6 +82,8 @@ typedef struct VirtQueueElement
+ 
+ #define VIRTIO_NO_VECTOR 0xffff
+ 
++#define VIRTIO_MAX_SHMEM_REGIONS 256
 +
-         if (more_descs || (n + 1 < num)) {
-             descs[i].flags = flags | cpu_to_le16(VRING_DESC_F_NEXT);
--            descs[i].next = cpu_to_le16(svq->desc_state[i].next);
-+            descs[i].next = cpu_to_le16(next);
-         } else {
-             descs[i].flags = flags;
-         }
-@@ -183,10 +199,10 @@ static bool vhost_svq_vring_write_descs(VhostShadowVirtqueue *svq, hwaddr *sg,
-         descs[i].len = cpu_to_le32(iovec[n].iov_len);
+ /* special index value used internally for config irqs */
+ #define VIRTIO_CONFIG_IRQ_IDX -1
  
-         last = i;
--        i = svq->desc_state[i].next;
-+        i = next;
-     }
+diff --git a/subprojects/libvhost-user/libvhost-user.h b/subprojects/libvhost-user/libvhost-user.h
+index 6a2d0f9fae..a534d70771 100644
+--- a/subprojects/libvhost-user/libvhost-user.h
++++ b/subprojects/libvhost-user/libvhost-user.h
+@@ -70,7 +70,9 @@ enum VhostUserProtocolFeature {
+     /* Feature 17 reserved for VHOST_USER_PROTOCOL_F_XEN_MMAP. */
+     VHOST_USER_PROTOCOL_F_SHARED_OBJECT = 18,
+     /* Feature 19 is reserved for VHOST_USER_PROTOCOL_F_DEVICE_STATE */
+-    VHOST_USER_PROTOCOL_F_SHMEM = 20,
++    /* Feature 20 is reserved for VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFLIGHT */
++    /* Feature 21 is reserved for VHOST_USER_PROTOCOL_F_GPA_ADDRESSES */
++    VHOST_USER_PROTOCOL_F_SHMEM = 22,
+     VHOST_USER_PROTOCOL_F_MAX
+ };
  
--    svq->free_head = svq->desc_state[last].next;
-+    svq->free_head = vhost_svq_next_desc(svq, last);
-     return true;
- }
- 
-@@ -432,7 +448,7 @@ static uint16_t vhost_svq_last_desc_of_chain(const VhostShadowVirtqueue *svq,
-                                              uint16_t num, uint16_t i)
- {
-     for (uint16_t j = 0; j < (num - 1); ++j) {
--        i = svq->desc_state[i].next;
-+        i = vhost_svq_next_desc(svq, i);
-     }
- 
-     return i;
 -- 
 MST
 
