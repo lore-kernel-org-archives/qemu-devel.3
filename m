@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B6C7CD98D2
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D98E4CD98C5
 	for <qemu-devel@archiver.kernel.org>; Sun, 14 Jun 2026 10:09:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wYhmB-0002VJ-V2; Sun, 14 Jun 2026 06:09:11 -0400
+	id 1wYhmC-0002WD-Mo; Sun, 14 Jun 2026 06:09:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wYhm8-0002Ut-Jh
+ id 1wYhm8-0002Uu-KK
  for qemu-devel@nongnu.org; Sun, 14 Jun 2026 06:09:08 -0400
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wYhm7-0005cD-5D
+ id 1wYhm6-0005cB-VS
  for qemu-devel@nongnu.org; Sun, 14 Jun 2026 06:09:08 -0400
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-490ac357c55so21919335e9.1
+Received: by mail-wr1-x436.google.com with SMTP id
+ ffacd0b85a97d-45ef1198766so1212751f8f.0
  for <qemu-devel@nongnu.org>; Sun, 14 Jun 2026 03:09:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=linaro.org; s=google; t=1781431745; x=1782036545; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=thcwyP2EZxvPKCOKXUWJouAC+M8HXFANTt4YeT6lY+g=;
- b=VgLSgxaPR4nA8GNpX18XzUkyD1rv6aBhQ7YYuUL6giO0iHow0zDh3SlxpQM9QZOU+u
- 9JGzMcda7OzMk7at5tYcYHqgpfeNU5zP+Ts2Ikiinn4FPiFvpfx0qTvshe0HlK0YD2gD
- l9CtidXo2lF3etmy75MihkzXC60UvsP7dGAAYvnAWDUqa1RQpKEuoNVkTUAWUqjCCZJa
- T5G4HJyI2ZZ+GDpgIj48jYsDynKu0IAdXK8o7CHQScsa1A38kUW0hAVCMGmI1j5Q4HGk
- u7n37kmKUkboMBmf3FsiEUSFBlLxk4n5aLi+IXuGg0bfyVomAJSoC3GWVd7OR6wsPCl0
- VteA==
+ bh=XmgzCfVVVkblYVceCs+S/fgmwHRncvIcrxSqKC/ybkk=;
+ b=t5GzaauruU0xxM51Ohjat1HCrk3n4Oi8OJjcTWHNj7gQcBFKKzMJIig7t33rnYScR9
+ jl4nr514q6KmwpYqWpJyqxe3NFw40H+OQo/A73iQ1tLJW1mjEjQYbQAueQMkt5ibf2vl
+ gWH1E3IfL9f8OwuzlBBFbkVTFxYB7l1dMYxreg2WWUmJvD/+TVqCClJw7agbvrefTUA6
+ 3+C2RFEBqwTLrOF5XZxXyQRNn2DLQxOUJ6sPNcjSgJlwRAs9z5/YHlSFOb7HcWtIP/vu
+ e3SsRzOyxBBOweOwdcg1INO11SgsMLqiXYYn6pkfPwM0MaMXwsME7PMl4eyGiEJInMRG
+ qptw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20251104; t=1781431745; x=1782036545;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=thcwyP2EZxvPKCOKXUWJouAC+M8HXFANTt4YeT6lY+g=;
- b=UK1XF1Oat66uvtgnQ2ztdTEhjH6vvCAoRxDYB+gqvmojYYqRWnVx3Y8K5XDpao5z1A
- JWKrkpc0ZQgGYS1fC9LUwTjz37fc3+M12j3itbaglEXR16Ni3vGWxLgMpzf3awAY74zU
- 36SQhaR2VS+DJnVVCUUwBzyhx+K7WiltlVsrKUd2Nzb6k32vRMScL0wP9QgiRlgBpXbi
- fSwuuHfdp0gNjNj71scnchwLjX/4pObB+RKUU56QkuOmIP+OBTf7KlhEomHbDoACRfjO
- +goXuHoE+qjfqae/E1yToZagXB6d5h8PHZqIoxmaWFZ7YNWMEqwvCdeZeTsdJZDwYPhN
- 5XpQ==
-X-Gm-Message-State: AOJu0YyvBgjFU43svyPzDzLKY66+1D6gsiCczhMtlDzZPDH1U745Uu8L
- BKzrMOCw+w68pjqDQ/pwLx1Xfk+WSkdizVRPy0zHFwoIKZ7JHc0R7IgpRtYR9y0A/9Y=
-X-Gm-Gg: Acq92OGquaAvr3T8TdRC6u+eWT1HTTTtVdBibQyGfx1SqzdOM4OBYuVxe2k3U6G8GR3
- 6TRma2jUfg3FcKx/6ini8Bn+twTPwDUN8YnzlYKfBSUcjroEW+k3mI8uYADTF1CuDFiHHIOpvuw
- L0vYIjAsyQJaCDAkrlqpLyVR8B8/IM+KoDsW2e+t6sPSOm3N6uHB30j9mjFHrz9ADEWsPMSA5S8
- hdZSKeklgb73FlcCwtWTOUa+zYDIClr1KTOcumiB/gsv0TG2Jh29nqVOI1uDW3HHUtsl5SsH63G
- 0YZeqlbTL3RCOdhG/z81+tgmFdbo//qbEmCWcKrdLTANdCFmpHUJRB0CxQUvtwXRA1V56/JV3Y1
- zvPUeTVKjfjv6bIIA5vhob+cB6DM2AamgO6Q9ZYfvLBF9B/SFMaEnOME4jxxG5IO1V7aFG57Lcb
- eu6hct5+q5UN7pkuf1aOb9N6A=
-X-Received: by 2002:a05:600c:64c8:b0:492:1e36:552b with SMTP id
- 5b1f17b1804b1-4921e36557dmr91169585e9.36.1781431745600; 
- Sun, 14 Jun 2026 03:09:05 -0700 (PDT)
+ bh=XmgzCfVVVkblYVceCs+S/fgmwHRncvIcrxSqKC/ybkk=;
+ b=BLKxX9MsoUZDM22fo1+zPKNMMxMowv6U4/6QtGH6Jy6qHzxLh96sFgqymU04uhtg21
+ T0oOawyAmChxPerYh54X0CZoIIqfM00Txxb00v+/zuFW1ruzHvF1UFOwdWwk+xEj7BvF
+ qOSNQ1whXweOjg54uTyiwbOKK0e2vAKiTDUvxXTym9DSPjgBemseMlMTPtR6KWxX0Gew
+ cfAZRK7ecs7Dz56YRRyXzVjkdwn71DFqLS8lWsmzg9TmLa8w6nZ3n44zZE71h7rzKP2x
+ xCuGuJbxOIpeARuIEyN5wk5/J5SRLYSiKKRw8zswRKs7Yiwj5DeQn8fNAgFAga4oehxJ
+ yANg==
+X-Gm-Message-State: AOJu0Yx0kb7X95q8rdZE0MP5WUqduTHi28Nb5vtzRHoxqrdAkua03MyK
+ wOTjS1irmLMUYcfUQGxuydDUUHABMHd+Zf+F3PdClMZybub3vJRuqIvV6Yfs+xSRh5o=
+X-Gm-Gg: Acq92OFyN6NWulwK6zwQ4jIOh/Lvj3Qrm28K7okETNUNzqhZyItTJ6qtvLJ2JGC+EAU
+ FS4ZkL8PVNXenOYy5Qb2O7npXikGvHVuVsvyFsbLp1waiV2+1yOKirGEqBaRlji0PhqAHC+TPeh
+ Zey3aRvjHulOVhNzQPrV85qtLV8q7zCj3G4zmbZt9uKGpW4fvmJWI9sUN5QVkQbMCXR6f+JEw+g
+ qvkK81nb0QQXhBNLb+We1vBbrciqK97zTd9/fQr5Pykp3dpT6HAI5tCMHr16t8H58EtvRB1BdQf
+ lSjNMvxYlSkx7P2KZ87zfsQNngK1nS15HILfFjewt7brwPTJIlfSYByW6ubKgPA9sXlrHKW2pPh
+ +Z+qRLgb/YbnZ1xQ/m3+OcxZ0cHbTF9Y1we6H0ab0l7XQ0hk2pgFV5Pulj2ZCmq/Sbs2P58P2x3
+ ddBcE8DGwaKwjhDncQI/UE2Xb8BYafLu7Fig==
+X-Received: by 2002:a5d:64e7:0:b0:460:3210:950d with SMTP id
+ ffacd0b85a97d-4606f25dd82mr11948620f8f.21.1781431744610; 
+ Sun, 14 Jun 2026 03:09:04 -0700 (PDT)
 Received: from draig.lan ([185.124.0.195]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4922037ba81sm151547325e9.15.2026.06.14.03.09.03
+ ffacd0b85a97d-4606f2b0d70sm23866561f8f.19.2026.06.14.03.09.03
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
  Sun, 14 Jun 2026 03:09:03 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 31FBD5FADF;
+ by draig.lan (Postfix) with ESMTP id 1BC575FA43;
  Sun, 14 Jun 2026 11:09:03 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
@@ -73,17 +73,18 @@ Cc: Cleber Rosa <crosa@redhat.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  John Snow <jsnow@redhat.com>, Thomas Huth <th.huth+qemu@posteo.eu>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PATCH 4/4] tests/functional: tell pylint not to check c-modules
-Date: Sun, 14 Jun 2026 11:09:02 +0100
-Message-ID: <20260614100902.885698-5-alex.bennee@linaro.org>
+Subject: [PATCH 3/4] python/qemu: dump a developer friendly version of cmdline
+ to logs
+Date: Sun, 14 Jun 2026 11:09:01 +0100
+Message-ID: <20260614100902.885698-4-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260614100902.885698-1-alex.bennee@linaro.org>
 References: <20260614100902.885698-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::436;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,33 +107,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-To fix:
+Now we have the arguments nicely split up we can make _console_args a
+function call and present a slightly different version to the logs to
+save developers manually hacking the command line up.
 
-  qemu-test.test_pylint "/home/alex/lsrc/qemu.git/tests/functional/arm/test_integratorcp.py:83: I1101: Module 'cv2' has no 'imread' member, but source is unavailable. Consider adding this module to extension-pkg-allow-list if you want to perform analysis based on run-time introspection of living objects. (c-extension-no-member)"
-
-Manually running python3 showed I could indeed import cv2 and call
-those functions. Rather than allowing pylint to introspect lets just
-tell it to skip c modules.
-
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Message-ID: <20260612140531.3530387-1-alex.bennee@linaro.org>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 ---
- tests/functional/pylintrc | 1 +
- 1 file changed, 1 insertion(+)
+ python/qemu/machine/machine.py | 16 ++++++++++++----
+ 1 file changed, 12 insertions(+), 4 deletions(-)
 
-diff --git a/tests/functional/pylintrc b/tests/functional/pylintrc
-index 049c3e76f12..949bea611fe 100644
---- a/tests/functional/pylintrc
-+++ b/tests/functional/pylintrc
-@@ -58,6 +58,7 @@ confidence=HIGH,
- # no Warning level messages displayed, use "--disable=all --enable=classes
- # --disable=W".
- disable=bad-inline-option,
-+        c-extension-no-member,
-         consider-using-f-string,
-         file-ignored,
-         fixme,
+diff --git a/python/qemu/machine/machine.py b/python/qemu/machine/machine.py
+index 18ee5ec0147..26a7bf5948f 100644
+--- a/python/qemu/machine/machine.py
++++ b/python/qemu/machine/machine.py
+@@ -308,12 +308,15 @@ def _harness_args(self) -> List[str]:
+                          'chardev=mon,mode=control'])
+         return args
+ 
+-    @property
+-    def _console_args(self) -> List[str]:
++    def _console_args(self, interactive=False) -> List[str]:
+         args: List[str] = []
++        # redirect pre_console_index serials to null
+         for _ in range(self._console_index):
+             args.extend(['-serial', 'null'])
+-        if self._console_set:
++
++        if interactive:
++            args.extend(['-serial', 'mon:stdio'])
++        elif self._console_set:
+             assert self._cons_sock_pair is not None
+             fd = self._cons_sock_pair[0].fileno()
+             chardev = f"socket,id=console,fd={fd}"
+@@ -376,7 +379,7 @@ def _pre_launch(self) -> None:
+             self._wrapper,
+             [self._binary],
+             self._harness_args,
+-            self._console_args,
++            self._console_args(),
+             self._base_args,
+             self._args
+         ))
+@@ -485,6 +488,11 @@ def _launch(self) -> None:
+         """
+         self._pre_launch()
+         LOG.debug('VM launch command: %r', ' '.join(self._qemu_full_args))
++        # Log a simplified, developer-runnable command:
++        # Exclude harness-managed infrastructure args (harness_args)
++        # and wrapper.
++        debug_cmd = [self._binary] + self._console_args(interactive=True) + self._base_args + self._args
++        LOG.debug('Developer-runnable command: %r', ' '.join(debug_cmd))
+ 
+         # Cleaning up of this subprocess is guaranteed by _do_shutdown.
+         # pylint: disable=consider-using-with
 -- 
 2.47.3
 
