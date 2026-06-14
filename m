@@ -4,90 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 487F9CD98D2
-	for <qemu-devel@archiver.kernel.org>; Sun, 14 Jun 2026 19:12:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D880CD98D6
+	for <qemu-devel@archiver.kernel.org>; Sun, 14 Jun 2026 19:12:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wYqDO-0008UC-QV; Sun, 14 Jun 2026 15:09:50 -0400
+	id 1wYqBP-00035p-IN; Sun, 14 Jun 2026 15:07:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wYqD5-0007Z4-Av
- for qemu-devel@nongnu.org; Sun, 14 Jun 2026 15:09:37 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wYqBH-0002Vi-IH
+ for qemu-devel@nongnu.org; Sun, 14 Jun 2026 15:07:41 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wYqD3-0002eO-Mt
- for qemu-devel@nongnu.org; Sun, 14 Jun 2026 15:09:31 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wYqBE-000206-IY
+ for qemu-devel@nongnu.org; Sun, 14 Jun 2026 15:07:38 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781464169;
+ s=mimecast20190719; t=1781464054;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=SWeGTj7EwdyIVL6K3gXCRmAsQCPB78CchrdftE53rGY=;
- b=MAqmJGGr69M09ZHoXqx1qTEkVpDxGPGUUeeVpTY2VZKgbVPVuf4ietOU9fEZXQpofLpFYW
- /2HAIVrpQqVnFEKZOdsDEIw4FNtvH86a5uZIJl1d+343Mcd9ayQXLSsrXEnUDae7ulDNz2
- U5KKL74YKXqgUuBGSmOVpRTMhWQYmno=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=mVuCWbga5LSxIklMA4eDSA2aVqOGc2j1p74x6rlVsK4=;
+ b=AaaD4YE+KfKiZ1YQhLLeBYb3S5TSo+2dXJxC04PlYye767/J8DGpzWrjUb14yphdwmVh9P
+ Wok1IHssgIkA/vVwpUr1pVMltZl6pfpzYesDqdTGKPPqRyjb0WnTMeL1dPvfI1G5C7rbiG
+ m8MVkbPJN2Rc3K4mAjaKy9VdHo8k2ac=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-468-hfsI3Q6lPt-P6tJTSCSBuw-1; Sun, 14 Jun 2026 15:09:27 -0400
-X-MC-Unique: hfsI3Q6lPt-P6tJTSCSBuw-1
-X-Mimecast-MFC-AGG-ID: hfsI3Q6lPt-P6tJTSCSBuw_1781464167
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-46010bc0f1eso1417683f8f.3
- for <qemu-devel@nongnu.org>; Sun, 14 Jun 2026 12:09:27 -0700 (PDT)
+ us-mta-608--g8UuaOHNnO9uEd95FjYbQ-1; Sun, 14 Jun 2026 15:07:33 -0400
+X-MC-Unique: -g8UuaOHNnO9uEd95FjYbQ-1
+X-Mimecast-MFC-AGG-ID: -g8UuaOHNnO9uEd95FjYbQ_1781464052
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-490c840efe6so31077915e9.1
+ for <qemu-devel@nongnu.org>; Sun, 14 Jun 2026 12:07:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1781464166; x=1782068966; darn=nongnu.org;
+ d=redhat.com; s=google; t=1781464052; x=1782068852; darn=nongnu.org;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=SWeGTj7EwdyIVL6K3gXCRmAsQCPB78CchrdftE53rGY=;
- b=VGnzilQMxSWL3+P2I5XHRq+tihf0Ljiiy9zFOCj1iLKL3OjSOGi6SF8podeaJnRyaS
- tofQUYL47LmJfOHb6ZgpEesRqDKmzW3Ll5wJ1TjI9Jh8KNxOuY0/z9Iovf7J3ouzd8ke
- rtWnYfuj11lValcPnELsXqsglIrjVl9kcsEHLTAovKZ522VUyawNVFnvBnZgNyrp5okX
- OnTKPcNLRJGvRAo/lkF6qTquX0ou9t8vGuQn5Wc0cSyHtFXavh00NMxa3v/lpRX2EGG2
- 5vgMt8Vtdaep04PJ2mcFQTeNHhLRyeUHwpa5osXEqxcDXB3jWhvSWXspdgjxD02qud5o
- FImw==
+ bh=mVuCWbga5LSxIklMA4eDSA2aVqOGc2j1p74x6rlVsK4=;
+ b=UAJDEMDyEoCFv51MWai8ya+9guw+qlELQl0iIYe7sg7g5X893qQeg65QiZdQsHyutL
+ xXNo2+/fCaohXNlTPvPHqhUPCZl8KLM1XPC4/mtvRJYNNMh/3gYpdt7BJgTXn7GYpyai
+ DmD+baNQ0KacPvhYJp5TS3qRkH0/8iT0bxc2HQeoiNYytYnb0NuxqMpZFPl2lf6Rxy6m
+ U8K3IEC+RZRsrSfIiuN0uoZovfgXbxRlR9tYPX327T99/IN/1VRC2H9PXb8id0bGxiFe
+ fN60fMql/Bn4KIngSL1DTAuF8qAvyfqtn8YlAC72SN0sP0TNOHJv6j6N0f/UvuYXaUr3
+ j2Sg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781464166; x=1782068966;
+ d=1e100.net; s=20251104; t=1781464052; x=1782068852;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=SWeGTj7EwdyIVL6K3gXCRmAsQCPB78CchrdftE53rGY=;
- b=U4ItS2iRJbbNbsMoBiNKwy/KskmLk2BonmMVl4MrFg+fypMEvCoV2raK6KDT2IohU7
- OrLyaRe6jwhgG3CSw/z+gOBn0aM5FN50wSGi+3kW32QDycUX9+ZPF/10itIrMRIDiZ8I
- aYo4LHOCu7h0QRkV3gjYSP6V2xsuuFY6YuJLc/A8yvua1yClFiDdgpb25UdFhMrl6wXD
- dIiMFwmHqbrK6vsESUlpaAomSmnzdiCA1fsOPLuikFPQBadDrZ6Ueng8ZBtrj7CHy+Qf
- AQS02OKv5Vn3dT/Rycz+kC9gR1cIBvJzZGi9Ci2PcbuQ3x/GSuGSGjiHgoJ+d4PYzVj+
- zxhw==
-X-Gm-Message-State: AOJu0YyJLWSRarwteKC8od0a9cvoMk/c1vc8LEn+dd9bLN6W5bqKhmZt
- oghFWCS2jzv+y6RSvQknJ/iUxLkApdbpj/nFQ5nUmJ1ZhJd4jI8En/H3FcIzCDUhpK2DVQxv/t4
- DFszcjY5C6iOtwoM3OhoToWB0yQGrZkBSksvtUU9/GTBE8zAU3MuY9ult26DVzTRkt861kvLQ7K
- 4U9t8hbRcmdojC/Wgqaa2nWpOsyMdrwReVXg==
-X-Gm-Gg: Acq92OEwLXbm2unxIkWTSSd8v4Lk0ktdrC74FbDnilIepLJ9P4LO9fLG0HKcGERcDyt
- pEQPCPnrgcLEE6//xA/l8mHaisHRqeZCaVzgSTdv4pzT25S1qG99UVvKZHGyejUypAchHqJsq9u
- LBM3P+og/Cf/Qm3ZpCZpZ+ZGEUiNBE2VLHs/I/9dxaqXNvYOy9YaPNIH6ZEZuarRDV1hWJsqnJ9
- 65ioOz7H4KhLySq1QG7oWzu3cAhLpopzq95PWnHz0Ay0vt73Xv5b9ANwZa1FeShA/gsrt5VNlYx
- vlhGW19HwOMZY+6P+pZG33FgWUduS+nWwPeYR7o46rSfFBGgl4Oft7ZO6rblbKx/u6IcQ1aX+Bg
- HfKbtQ9jOC1Qb5cIaYC78gJGvs4ouUdSLeDbyweGDp9g=
-X-Received: by 2002:a05:6000:400c:b0:45e:9115:2982 with SMTP id
- ffacd0b85a97d-4606dba784bmr15552793f8f.34.1781464166444; 
- Sun, 14 Jun 2026 12:09:26 -0700 (PDT)
-X-Received: by 2002:a05:6000:400c:b0:45e:9115:2982 with SMTP id
- ffacd0b85a97d-4606dba784bmr15552757f8f.34.1781464165923; 
- Sun, 14 Jun 2026 12:09:25 -0700 (PDT)
+ bh=mVuCWbga5LSxIklMA4eDSA2aVqOGc2j1p74x6rlVsK4=;
+ b=YCLatsgaAjSDxsaOT0GHSSEgTkIGmBNhyRl7J2ulf42ZTeyyV+ZRNdxqAckHLjoirK
+ M2BbHSx8xGVBxAnArtLZLkztywfgrw2ET73U/Kh3XIwdJctd55yDkzbw9gHZqhkR4Nk3
+ hz7byzbA2U8vsWJUyK2ia5M1DevZQxxQo6Z0cIOPfrPGgIqnbwGyUEwoXSjXijKj7ax+
+ +W6Tpm5npIcmCjydgE6t7gXhXZTWBqf3d4vwa4tChjHaMALxULOuJqX6fQQ9Q+3aV1vR
+ yGjlbKrcxCjnHKf+pC05suq8dpO7rSvGQiQCsHp7vF37SWtCO/fbEhGrsOOUxP/FYGDI
+ hcaQ==
+X-Gm-Message-State: AOJu0Yz43vdOLplehyoC72COGohUlPk+QVxtQi+fxzfMNw7ETeN6tOKt
+ 1Pp8Y2tY41FIj15Ou6v07Xrk4pfMFUyQ/pvswLdSGh1oc23aqEbcTOvuzdXYOSg+BIblit6glM5
+ tiaedniVXw7JBB3tT2qNVslsQhO6RTWkxSWXtjxES83njeY2zpbZaiVP8MxZUI6Yrm49JFgaPxS
+ +D7aM0Hkl5QoTAmZE+3GFT1srxgDO3UXuflg==
+X-Gm-Gg: Acq92OFu5/3M7H7cF8cZaEa/KM+TXcjp3tMogd+Mgp1rV35tZUAyaJal4roeIooKE3+
+ YqVQOknIfoPhoBStfLy+6MIhL29iNZV9jaPRJ67t/DTPKco/4YhKQulNbSw762FwkxAEaB0dqMB
+ 6wimEfFp5RsrfttB/+GdrEE3HbNq3ThUav93o3JNkkFEIaMyXVI5L3TTQlf60FvrWe7zsoOQoKk
+ GSEyiChmciJqEoi68H8D7e5kmBvqEX3GOUZ1SY2JmCXeA4aHXQkvpJ5W2Da/RcyaBtiee4KixNc
+ sUDQaXu2Iuv9h7xAL+oCbUUxvZSSqNwEf6AnAr+Jv6kQFekkVgfgltKV/IjwlRtXkpkUegyPfg6
+ WJdj6WE4WOtS4cwB1kpEOfEHCb9g9QzKR1/FQVLE5XYY=
+X-Received: by 2002:a05:600c:1912:b0:490:bbc1:c9be with SMTP id
+ 5b1f17b1804b1-490ec30f6aamr110702605e9.0.1781464052266; 
+ Sun, 14 Jun 2026 12:07:32 -0700 (PDT)
+X-Received: by 2002:a05:600c:1912:b0:490:bbc1:c9be with SMTP id
+ 5b1f17b1804b1-490ec30f6aamr110702395e9.0.1781464051768; 
+ Sun, 14 Jun 2026 12:07:31 -0700 (PDT)
 Received: from redhat.com (IGLD-80-230-85-71.inter.net.il. [80.230.85.71])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4606f2e6a8fsm27253629f8f.37.2026.06.14.12.09.24
+ 5b1f17b1804b1-4922031b21dsm176850365e9.6.2026.06.14.12.07.30
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 14 Jun 2026 12:09:25 -0700 (PDT)
-Date: Sun, 14 Jun 2026 15:09:23 -0400
+ Sun, 14 Jun 2026 12:07:31 -0700 (PDT)
+Date: Sun, 14 Jun 2026 15:07:29 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Igor Mammedov <imammedo@redhat.com>,
- Ani Sinha <anisinha@redhat.com>, Zhao Liu <zhao1.liu@intel.com>
-Subject: [PULL 088/106] tests: acpi: x86/q35: whitelist new WDAT table
-Message-ID: <c42b3b6ed699148b5b245f23408d2c6277d8941e.1781463125.git.mst@redhat.com>
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ Raphael Norwitz <raphael.s.norwitz@gmail.com>,
+ Stefano Garzarella <sgarzare@redhat.com>
+Subject: [PULL 040/106] vhost: vhost_virtqueue_start(): drop extra local
+ variables
+Message-ID: <4801e50cf1af17ffdd80b4b01b3f57581c9b91cc.1781463125.git.mst@redhat.com>
 References: <cover.1781463125.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -119,30 +121,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Igor Mammedov <imammedo@redhat.com>
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 
-Signed-off-by: Igor Mammedov <imammedo@redhat.com>
-Acked-by: Ani Sinha <anisinha@redhat.com>
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+One letter named variables doesn't really help to read the code,
+and they simply duplicate structure fields.
+
+Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Reviewed-by: Raphael Norwitz <raphael.s.norwitz@gmail.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-Id: <20260303092532.2410177-5-imammedo@redhat.com>
+Message-Id: <20260420200339.708640-15-vsementsov@yandex-team.ru>
 ---
- tests/data/acpi/x86/q35/WDAT.wdat           | 0
- tests/qtest/bios-tables-test-allowed-diff.h | 1 +
- 2 files changed, 1 insertion(+)
- create mode 100644 tests/data/acpi/x86/q35/WDAT.wdat
+ hw/virtio/vhost.c | 13 +++----------
+ 1 file changed, 3 insertions(+), 10 deletions(-)
 
-diff --git a/tests/data/acpi/x86/q35/WDAT.wdat b/tests/data/acpi/x86/q35/WDAT.wdat
-new file mode 100644
-index 0000000000..e69de29bb2
-diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
-index dfb8523c8b..14b680debe 100644
---- a/tests/qtest/bios-tables-test-allowed-diff.h
-+++ b/tests/qtest/bios-tables-test-allowed-diff.h
-@@ -1 +1,2 @@
- /* List of comma-separated changed AML files to ignore */
-+"tests/data/acpi/x86/q35/WDAT.wdat",
+diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
+index d5bafbcc4b..a3bf7e5a9b 100644
+--- a/hw/virtio/vhost.c
++++ b/hw/virtio/vhost.c
+@@ -1277,7 +1277,6 @@ int vhost_virtqueue_start(struct vhost_dev *dev,
+     BusState *qbus = BUS(qdev_get_parent_bus(DEVICE(vdev)));
+     VirtioBusState *vbus = VIRTIO_BUS(qbus);
+     VirtioBusClass *k = VIRTIO_BUS_GET_CLASS(vbus);
+-    hwaddr l;
+     int r;
+     int vhost_vq_index = dev->vhost_ops->vhost_get_vq_index(dev, idx);
+     struct vhost_vring_file file = {
+@@ -1302,23 +1301,17 @@ int vhost_virtqueue_start(struct vhost_dev *dev,
+         /* Queue might not be ready for start */
+         return 0;
+     }
+-
+-    l = vq->desc_size;
+-    vq->desc = vhost_memory_map(dev, vq->desc_phys, l, false);
++    vq->desc = vhost_memory_map(dev, vq->desc_phys, vq->desc_size, false);
+     if (!vq->desc) {
+         r = -ENOMEM;
+         goto fail;
+     }
+-
+-    l = vq->avail_size;
+-    vq->avail = vhost_memory_map(dev, vq->avail_phys, l, false);
++    vq->avail = vhost_memory_map(dev, vq->avail_phys, vq->avail_size, false);
+     if (!vq->avail) {
+         r = -ENOMEM;
+         goto fail;
+     }
+-
+-    l = vq->used_size;
+-    vq->used = vhost_memory_map(dev, vq->used_phys, l, true);
++    vq->used = vhost_memory_map(dev, vq->used_phys, vq->used_size, true);
+     if (!vq->used) {
+         r = -ENOMEM;
+         goto fail;
 -- 
 MST
 
