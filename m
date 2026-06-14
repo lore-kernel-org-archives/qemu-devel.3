@@ -4,91 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E209CD98D2
-	for <qemu-devel@archiver.kernel.org>; Sun, 14 Jun 2026 19:11:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7579CCD98D6
+	for <qemu-devel@archiver.kernel.org>; Sun, 14 Jun 2026 19:11:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wYqBo-0004dW-J9; Sun, 14 Jun 2026 15:08:12 -0400
+	id 1wYq9a-0007LW-Bp; Sun, 14 Jun 2026 15:05:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wYqBn-0004d5-G2
- for qemu-devel@nongnu.org; Sun, 14 Jun 2026 15:08:11 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wYq9X-0007L0-EA
+ for qemu-devel@nongnu.org; Sun, 14 Jun 2026 15:05:51 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wYqBl-00026b-L0
- for qemu-devel@nongnu.org; Sun, 14 Jun 2026 15:08:11 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wYq9V-0001Z3-Uk
+ for qemu-devel@nongnu.org; Sun, 14 Jun 2026 15:05:51 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781464088;
+ s=mimecast20190719; t=1781463948;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=OaUZT96fAwiJONpo6DOLyRAzoALjcbufa5FttKGfo4g=;
- b=XAlVzuLxvlOZ4GWgUe0onhmRBvZ4kRvWv8V/wpwaCgGHrJNJaoJzM4iEF7zlt/MwMFfG5J
- 3DXQ2I722cIgd69Yv9n2JqAbIkXCQ/vobwXpcaRnNALS2naDRX0S2OX1Qu1wWA5rG9DU/q
- 0swzKInrLu9dOH46wiN72eap88kfWr8=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=MvHYgh1Rq601uyfNPLm9pilUaa8bf7wu2aIADqP6I+A=;
+ b=gAGbyKaF0xpn85K9IJxBXoRPRqzi8p0pshCv6L7jt9XwK+rkOLHdLrxcZKrAn95rjZAtcn
+ c7XS4iaw3q5azXiL0gE9eSBI/apZspTeavnqVDCAqLeTNxpHxXdLZACR/kGo8Y0dGTMU3J
+ WR4AHnGv8L6jwAKqaTCplPHaMHJD+58=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-515-Yj4oPXSPNjaAAcO6YY6S8Q-1; Sun, 14 Jun 2026 15:08:07 -0400
-X-MC-Unique: Yj4oPXSPNjaAAcO6YY6S8Q-1
-X-Mimecast-MFC-AGG-ID: Yj4oPXSPNjaAAcO6YY6S8Q_1781464086
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-45efa2f7009so1710068f8f.3
- for <qemu-devel@nongnu.org>; Sun, 14 Jun 2026 12:08:07 -0700 (PDT)
+ us-mta-650-qQ20AIJoNNOCqTRkgMG7rg-1; Sun, 14 Jun 2026 15:05:46 -0400
+X-MC-Unique: qQ20AIJoNNOCqTRkgMG7rg-1
+X-Mimecast-MFC-AGG-ID: qQ20AIJoNNOCqTRkgMG7rg_1781463945
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-4600c8cb13aso1820158f8f.1
+ for <qemu-devel@nongnu.org>; Sun, 14 Jun 2026 12:05:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1781464086; x=1782068886; darn=nongnu.org;
+ d=redhat.com; s=google; t=1781463945; x=1782068745; darn=nongnu.org;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=OaUZT96fAwiJONpo6DOLyRAzoALjcbufa5FttKGfo4g=;
- b=KbDGhzCtOILcuY3cEISiyD0MpuStv/JBydnq0CNKqgYiqAv/vUUVHjVEtzFeePbAg6
- HzyVSVqu3SLXwA2uJ302f+CS96nUs4wutwB45Acz6ehn2qjE4HjplG/1qv7WCv3jaMSi
- Q0Asg6z4ZescLFz4ycWp3gBNoAO7c0meqoJ8CHLAeWaIipOtaWyjZNzckcgZY07xd6OT
- SOwfKfKVFTHpKRkNi9ZE8tIVOQcE8Uxugn01uTy/TqHshNIl/77LbZC0de9v3X4kM3VI
- eE4N1pognnurASqn90u+B/0funA3WomTtGv7sxZ/0Fid9V+wMfTOR4zehUnU0T6aTWse
- 4jhg==
+ bh=MvHYgh1Rq601uyfNPLm9pilUaa8bf7wu2aIADqP6I+A=;
+ b=s3Kj9udLOC4dM84KpBGHWUN7zkHuD4Y/h9UaWLeHL1sRSyEoYgDaxJNSqQ7gClEpFm
+ 2HVl0eSLF0sFJoVvwHl9HU6l1Lg+jsAZYnivnUzNjBsXxdoHRiEQl/jfQc4sMxos/vMO
+ qkJEQRy+qB4icvMUnRyqonYMCRPNTP4vCgF5gEpEYXl5syXQzJUacbj0NfzkMX6+GvMI
+ +Sre4+PqQddx3pCg4o0QcOty+sae+HDYeoF154RbdPaYxN2YOcMNT9UJpOMANBUuc2UR
+ eBC+zfwOVS3R4wuVSrkZ3QazaQOUOrcggYTnU1HQKMub3kpQeBEkiH5sLECUJAyaUbjG
+ C5ZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781464086; x=1782068886;
+ d=1e100.net; s=20251104; t=1781463945; x=1782068745;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=OaUZT96fAwiJONpo6DOLyRAzoALjcbufa5FttKGfo4g=;
- b=GLHzQhQPh5/g+TGGTt2SiJbKsNdnyi7gQIapyVBD9suSv7RrDHK262F/2MoEpuj2NW
- zkhBVMUO4jYsaYD3IPaaZOI4T9d3WK3wvat62ELx+hx85jThdiR12xgYEHiMZHXBsYW4
- wM5gAS9/TILbTSB4+7XafwNHX8BZ++YIcTHhZkHSbP/hYlgJFnKSMYkDX6jJiEZo2mA+
- koSsllZ1N6dX+jkOuoqriyBFpr7YxXj704MeG5Dh56aW//avwAsE8j6FsjCKDp1iC5k5
- Z4OVbt0uL5POchh7JuAQXYDnWYGFd5ND75YtbP5fvHqENuMZWiSMDR6kbd73GXYogsAe
- 0F9g==
-X-Gm-Message-State: AOJu0YxvFOSsGpfA1w0k5DPBSEVDNfFenXGOGI2VKlsxaPv/K358Ue70
- BbNIyaTUrbL2f1ff1Yfj117Amf/xgHBsEqaDm+GvRDFOH2Ob2TNAcew1fore1wUJXDxlRHWhYSH
- c65NlYzEP3M4rjw9prNBNx20gdZIxl3q5ClQBoqBZYCJjlQ6Cv76k+zPf9O3Kw0M/bhgKvlUnfk
- i395ihvmXr/oh7LCLftMKRheCKNT3R/Xz2KA==
-X-Gm-Gg: Acq92OEeiIvvLUg1ACJRFstIcJ+2f68Gf76cc08aGwDmzaOrcOE7n8ggu9eJJ3CMIV+
- dedUI4KxjFfMBeXxgclmCWl1YquCIip5rhmf8URxRYxofkfIuLhyEyo5ITkcBNwdQtCkW9M0sro
- 1HnUaow3ZUe5XS6x5cqm54J9ploSKVSZG60DbNqyd9YH+muaxX/x1JBezdNY0SXyisX11hZRCpI
- QelkOBm4DF7OhJ2SJxoSidp53r+R7FZVlzkXXH1i8u/i7PpYdDwjdAvt8zygFJJtzdLv3bJ3MMY
- ExJJESiIed34c6yGoD7fn/FGW2gOra5YWJAqJQSYIIzMY3rL8yJHqVqdcONp57KwksrDrc4NGAA
- wZltlTc1pZtStcwCLV1Rw84e2CvfXBuMuPER1VtpGUkQ=
-X-Received: by 2002:a05:600c:81c5:b0:490:ea88:9d4c with SMTP id
- 5b1f17b1804b1-4922016094fmr73990125e9.32.1781464086301; 
- Sun, 14 Jun 2026 12:08:06 -0700 (PDT)
-X-Received: by 2002:a05:600c:81c5:b0:490:ea88:9d4c with SMTP id
- 5b1f17b1804b1-4922016094fmr73989765e9.32.1781464085681; 
- Sun, 14 Jun 2026 12:08:05 -0700 (PDT)
+ bh=MvHYgh1Rq601uyfNPLm9pilUaa8bf7wu2aIADqP6I+A=;
+ b=IMCUKeq1Oe6jT2KAt/mvpxVq86uaG7y3k7bHH/Fsy28B0VGoXh223QIh0v2nbIIKLJ
+ R9NFS6aaI0BH1aKRl+KFLry6csuluzIYIlPdbpjOHlBXlvqYDA1nSItIPjB0iN+yJ4lY
+ 3CHbioHujOrMyMMzOvHD8VOzW6DoY7yXENFnPrWNvqyYW0Mmcmh5f9SdsobMRgenMEQM
+ XOEEIUz8u6h9vuLGyiy+Xm7cUM274LVedtotyjmIzSnV/FzXfKCfO5OUarsW6chtOMql
+ 1CHDH0b0Oc/L0wOtOl516pzCWlyXmuYINOmaOTjLq/etcQ1ohe1N0oFccjo4AKstExZP
+ OwHw==
+X-Gm-Message-State: AOJu0YzE4twpxwd2BzsfPK3zKjNK0Put6B4Ja0kq7AXZ4n3g4A6/AaF8
+ xP2jBVZhpWhHLyDsZTA28T29XtbnYC0hBe8yI9UUqFIf8oqAjV1PA5LLfTRfi6iy2lhNhnJx5wq
+ 3MNDUpZHYAIlOeByJVdshQe1Ax7VG8bK89ZhgZL92tPT4PN31BtP2MWYhUUT0nE9gJVeIxd+IJg
+ Nfg3JW2aJAaGZg5MvQj3O/u7FxeGZIcWsXKQ==
+X-Gm-Gg: Acq92OH6VLVluApZVROpFNyZTVBfom3ntzemb0OtagUaMaC6AbeqYm6dSRL2hQoUuqd
+ x3GWgvapjQEh8Tv5mlctbxcX3pKpAueL2EVn8/sGt29/qCxjx1cL7KDs4eLdwsMXFwq/fHphna3
+ x/HpYcELu8V4qYT3wTMWsu1AoCGGtmyYl+VU7jRp7LNWeReHe96Lycn550A2tWYdBxqC3DN5Xbs
+ u47pS5AhoExRCtUsEuGO/xVrqTtE+5Pib4sm3FhVtivFslhe6YCnOGU/Uf3XlIOmi6P1Nq+rRM1
+ vC8pZCQ1w3FmR2gZcGBYX0NxbnWG8pw5lrXogJZg5dz+Xh1n2xH4C2VjPt/DmmH89J2HpY7Yxl3
+ 5P9C2IvXGeBsJiCUT6iEjQb0Q4XNYCcWwflvH7wPUWps=
+X-Received: by 2002:a05:6000:4a1c:b0:461:9459:874c with SMTP id
+ ffacd0b85a97d-46194598a0amr6248570f8f.19.1781463945206; 
+ Sun, 14 Jun 2026 12:05:45 -0700 (PDT)
+X-Received: by 2002:a05:6000:4a1c:b0:461:9459:874c with SMTP id
+ ffacd0b85a97d-46194598a0amr6248528f8f.19.1781463944554; 
+ Sun, 14 Jun 2026 12:05:44 -0700 (PDT)
 Received: from redhat.com (IGLD-80-230-85-71.inter.net.il. [80.230.85.71])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-492203bfb27sm210094875e9.11.2026.06.14.12.08.04
+ ffacd0b85a97d-4606f2c473bsm30384132f8f.28.2026.06.14.12.05.43
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 14 Jun 2026 12:08:05 -0700 (PDT)
-Date: Sun, 14 Jun 2026 15:08:03 -0400
+ Sun, 14 Jun 2026 12:05:44 -0700 (PDT)
+Date: Sun, 14 Jun 2026 15:05:42 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- Markus Armbruster <armbru@redhat.com>, Eric Blake <eblake@redhat.com>
-Subject: [PULL 054/106] qapi: remove user addresses from
- x-query-virtio-vhost-queue-status
-Message-ID: <ad865ad765feb322a3f414c480dc57efaf78a529.1781463125.git.mst@redhat.com>
+ Paolo Bonzini <pbonzini@redhat.com>, Yunhe Wang <yunhewwww@163.com>,
+ qemu-stable@nongnu.org, Alejandro Jimenez <alejandro.j.jimenez@oracle.com>,
+ Sairaj Kodilkar <sarunkod@amd.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [PULL 001/106] amd_iommu: restrict command buffer head/tail ranges
+ to ring size
+Message-ID: <3097d54016ea9f8f0436f0b20e1b4d78a02b6aeb.1781463125.git.mst@redhat.com>
 References: <cover.1781463125.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -96,15 +98,15 @@ Content-Disposition: inline
 In-Reply-To: <cover.1781463125.git.mst@redhat.com>
 X-Mailer: git-send-email 2.51.2.2891.g4157995a80.dirty
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,114 +122,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+From: Paolo Bonzini <pbonzini@redhat.com>
 
-Semantics of these (actually, internal) fields is not simple, they may
-contain either virtual or physical addresses. We are going to change
-this to simplify the logic. Keeping this logic only for unstable
-info command seems too much. Changing semantics of info fields doesn't
-seem to make real sense too. So, let's just drop them. We can dot it,
-as command is experimental.
+The AMD IOMMU command buffer is a ring buffer of cmdbuf_len (a power
+of two) entries.  Each entry is 16 bytes and the head pointer cycles
+through the set:
 
-Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Acked-by: Markus Armbruster <armbru@redhat.com>
+  [0, 16, 32, ..., (cmdbuf_len - 1) * AMDVI_COMMAND_SIZE]
+
+The tail pointer is written by the guest through the COMMAND_TAIL MMIO
+register (offset 0x2008); the while loop in amdvi_cmdbuf_run() only
+terminates when head == tail.  If tail is set to a value higher than
+cmdbuf_len * 16, head will cycle through all the elements of the ring
+buffer indefinitely, without ever matching tail.  Fix this by further
+masking tail (and head, for consistency) against the size of the
+ring buffer.
+
+Reported-by: Yunhe Wang <yunhewwww@163.com>
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Reviewed-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Based-on: <20260206095258.894504-1-vsementsov@yandex-team.ru>
+Message-Id: <20260511113923.2478812-1-pbonzini@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-Id: <20260420202032.714884-7-vsementsov@yandex-team.ru>
 ---
- hw/virtio/virtio-hmp-cmds.c |  3 ---
- hw/virtio/virtio-qmp.c      |  3 ---
- qapi/virtio.json            | 15 ---------------
- 3 files changed, 21 deletions(-)
+ hw/i386/amd_iommu.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/hw/virtio/virtio-hmp-cmds.c b/hw/virtio/virtio-hmp-cmds.c
-index 4bf9a3109d..a91bb7dbed 100644
---- a/hw/virtio/virtio-hmp-cmds.c
-+++ b/hw/virtio/virtio-hmp-cmds.c
-@@ -203,15 +203,12 @@ void hmp_vhost_queue_status(Monitor *mon, const QDict *qdict)
-     monitor_printf(mon, "  call:                 %"PRId64"\n", s->call);
-     monitor_printf(mon, "  VRing:\n");
-     monitor_printf(mon, "    num:         %"PRId64"\n", s->num);
--    monitor_printf(mon, "    desc:        0x%016"PRIx64"\n", s->desc);
-     monitor_printf(mon, "    desc_phys:   0x%016"PRIx64"\n",
-                    s->desc_phys);
-     monitor_printf(mon, "    desc_size:   %"PRId32"\n", s->desc_size);
--    monitor_printf(mon, "    avail:       0x%016"PRIx64"\n", s->avail);
-     monitor_printf(mon, "    avail_phys:  0x%016"PRIx64"\n",
-                    s->avail_phys);
-     monitor_printf(mon, "    avail_size:  %"PRId32"\n", s->avail_size);
--    monitor_printf(mon, "    used:        0x%016"PRIx64"\n", s->used);
-     monitor_printf(mon, "    used_phys:   0x%016"PRIx64"\n",
-                    s->used_phys);
-     monitor_printf(mon, "    used_size:   %"PRId32"\n", s->used_size);
-diff --git a/hw/virtio/virtio-qmp.c b/hw/virtio/virtio-qmp.c
-index 51e3a42c4c..ae9be0a00f 100644
---- a/hw/virtio/virtio-qmp.c
-+++ b/hw/virtio/virtio-qmp.c
-@@ -794,9 +794,6 @@ VirtVhostQueueStatus *qmp_x_query_virtio_vhost_queue_status(const char *path,
-     status->name = g_strdup(vdev->name);
-     status->kick = hdev->vqs[queue].kick;
-     status->call = hdev->vqs[queue].call;
--    status->desc = (uintptr_t)hdev->vqs[queue].desc;
--    status->avail = (uintptr_t)hdev->vqs[queue].avail;
--    status->used = (uintptr_t)hdev->vqs[queue].used;
-     status->num = hdev->vqs[queue].num;
-     status->desc_phys = hdev->vqs[queue].desc_phys;
-     status->desc_size = hdev->vqs[queue].desc_size;
-diff --git a/qapi/virtio.json b/qapi/virtio.json
-index 671f1ad793..1fc4e38a44 100644
---- a/qapi/virtio.json
-+++ b/qapi/virtio.json
-@@ -650,12 +650,6 @@
- #
- # @call: vhost_virtqueue call
- #
--# @desc: vhost_virtqueue desc
--#
--# @avail: vhost_virtqueue avail
--#
--# @used: vhost_virtqueue used
--#
- # @num: vhost_virtqueue num
- #
- # @desc-phys: vhost_virtqueue desc_phys (descriptor area physical
-@@ -678,9 +672,6 @@
-   'data': { 'name': 'str',
-             'kick': 'int',
-             'call': 'int',
--            'desc': 'uint64',
--            'avail': 'uint64',
--            'used': 'uint64',
-             'num': 'int',
-             'desc-phys': 'uint64',
-             'desc-size': 'uint32',
-@@ -720,12 +711,9 @@
- #              "avail-size": 2054,
- #              "desc-size": 16384,
- #              "used-size": 8198,
--#              "desc": 140141447430144,
- #              "num": 1024,
- #              "call": 0,
--#              "avail": 140141447446528,
- #              "desc-phys": 5216108544,
--#              "used": 140141447448640,
- #              "kick": 0
- #          }
- #        }
-@@ -744,12 +732,9 @@
- #              "avail-size": 262,
- #              "desc-size": 2048,
- #              "used-size": 1030,
--#              "desc": 140141413580800,
- #              "num": 128,
- #              "call": 0,
--#              "avail": 140141413582848,
- #              "desc-phys": 5182259200,
--#              "used": 140141413583168,
- #              "kick": 0
- #          }
- #        }
+diff --git a/hw/i386/amd_iommu.c b/hw/i386/amd_iommu.c
+index 789e09d6f2..197e452e3c 100644
+--- a/hw/i386/amd_iommu.c
++++ b/hw/i386/amd_iommu.c
+@@ -1578,7 +1578,8 @@ static inline void amdvi_handle_devtab_write(AMDVIState *s)
+ static inline void amdvi_handle_cmdhead_write(AMDVIState *s)
+ {
+     s->cmdbuf_head = amdvi_readq(s, AMDVI_MMIO_COMMAND_HEAD)
+-                     & AMDVI_MMIO_CMDBUF_HEAD_MASK;
++                     & AMDVI_MMIO_CMDBUF_HEAD_MASK
++                     & (s->cmdbuf_len * AMDVI_COMMAND_SIZE - 1);
+     amdvi_cmdbuf_run(s);
+ }
+ 
+@@ -1594,7 +1595,8 @@ static inline void amdvi_handle_cmdbase_write(AMDVIState *s)
+ static inline void amdvi_handle_cmdtail_write(AMDVIState *s)
+ {
+     s->cmdbuf_tail = amdvi_readq(s, AMDVI_MMIO_COMMAND_TAIL)
+-                     & AMDVI_MMIO_CMDBUF_TAIL_MASK;
++                     & AMDVI_MMIO_CMDBUF_TAIL_MASK
++                     & (s->cmdbuf_len * AMDVI_COMMAND_SIZE - 1);
+     amdvi_cmdbuf_run(s);
+ }
+ 
 -- 
 MST
 
