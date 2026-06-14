@@ -4,110 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8587CD98C5
-	for <qemu-devel@archiver.kernel.org>; Sun, 14 Jun 2026 19:11:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8FC09CD98D2
+	for <qemu-devel@archiver.kernel.org>; Sun, 14 Jun 2026 19:11:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wYqAE-0007Wi-1e; Sun, 14 Jun 2026 15:06:34 -0400
+	id 1wYqCC-00065g-4P; Sun, 14 Jun 2026 15:08:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wYqAB-0007Vz-5v
- for qemu-devel@nongnu.org; Sun, 14 Jun 2026 15:06:31 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wYqC1-0005zs-52
+ for qemu-devel@nongnu.org; Sun, 14 Jun 2026 15:08:26 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wYqA8-0001iT-JZ
- for qemu-devel@nongnu.org; Sun, 14 Jun 2026 15:06:30 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wYqBz-0002Ah-Lq
+ for qemu-devel@nongnu.org; Sun, 14 Jun 2026 15:08:24 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781463987;
+ s=mimecast20190719; t=1781464103;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=NG9quG3Y658i2mi88rtVLcLBN8uSecldu1LwBLoJdEA=;
- b=BDiaZXrn15W8M9yb8gsL1azdi7yNvXxNwwtjlmNLAFEypWXZ0Q9UnDuJxotnd+C6yNTsCS
- NShT/FmnJbwPKlYpI8zxVMPgYxfMYCwdRVDu8ELskhNupbRKe+pslY299KDtEFFDQ+Y9wo
- JNqufNEKcTNBdQstyk2I3kVw5uwxp+w=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=VDfoHXS7iEWo5M0RdHNJpei5+MJB/QTX3LEyVD1aqFQ=;
+ b=KyPuG5cZ+UUPlgwPyKHTktdWL/23hT3l18BxZAUiI65wkaencqfXEzI58mJk26ULL9rSoE
+ +AAhnqXru6dTuNHFjlvM5S4pJ3oR+rJU/qthbEpME5Lpvqgl3Zx0GWd3pSIC8f0nVEgOcy
+ 8rq9uMAw9Yxwoowr9EZBuRYPUXjt66Y=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-685-Nog-KKdZNXimMYNNky-fJA-1; Sun, 14 Jun 2026 15:06:26 -0400
-X-MC-Unique: Nog-KKdZNXimMYNNky-fJA-1
-X-Mimecast-MFC-AGG-ID: Nog-KKdZNXimMYNNky-fJA_1781463985
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-46011aa5000so1114792f8f.3
- for <qemu-devel@nongnu.org>; Sun, 14 Jun 2026 12:06:25 -0700 (PDT)
+ us-mta-496-9QED1-ayMQmMjfvWJCVizQ-1; Sun, 14 Jun 2026 15:08:21 -0400
+X-MC-Unique: 9QED1-ayMQmMjfvWJCVizQ-1
+X-Mimecast-MFC-AGG-ID: 9QED1-ayMQmMjfvWJCVizQ_1781464101
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-4601daf4c65so1528708f8f.2
+ for <qemu-devel@nongnu.org>; Sun, 14 Jun 2026 12:08:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1781463985; x=1782068785; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=NG9quG3Y658i2mi88rtVLcLBN8uSecldu1LwBLoJdEA=;
- b=Zz59lsmxLGVrHdggANCloeAI3wotCFBbBaQLCeIq70jgvoG/NmjSnew6BR8rbraaws
- 4sl0efrTmtHwQePxpCf2xK+6S0OOuA6lhPL6K6n9Xvuiu8nT7fTfOrYhQKR4zOOaHchW
- Wd4INgz5GyKXzGA4I+1qtHqSdk84wZb04vt1tzxu3gW55yUmsvCxCzKUstjEN0IXeK5J
- +mXcUmikiCiZ8uhezjSeDi/oXktB4jwyRN47NExH0O+pzpJpmpvKlqVgXDxabsIzyPOC
- DxbWINqyvIsy7GD+IrpfW4pcxHaOlALU08TT8lRvj6ujGhRB9R7osvCk3LcLEIlgZR+N
- pqeg==
+ d=redhat.com; s=google; t=1781464100; x=1782068900; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=VDfoHXS7iEWo5M0RdHNJpei5+MJB/QTX3LEyVD1aqFQ=;
+ b=eekJ/DgvnTu8MtPs86/k9CRAmghMfAlMbEEq+YY02WjHmmyccnQd69Y/ZGH49dAwEQ
+ 2+toascwf2ylYYcaE/ja70wbdzqBk5hegtlUgg49ryj556e7iLUco1N5JLPt/FrOhjMk
+ 45cD9Ro9wMMU8RMCtgsIlbyqKPyddblCuMxyIcc+VC+9ZXk4ZgJALEx2P+5pdC8O8zvv
+ jxIMugxvZPg3VY6UR+BTm85Bz53pHeJgoLlnJUTqL0M2DH5YXMhCUU6v/coN/miRiU9y
+ PahLtNKzJ3azFkaM+WvbdIRpvumz2n5FRa/4UIblUJHDIe9lyBM/hWY4CMdnc3kbhHiw
+ HrZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781463985; x=1782068785;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=NG9quG3Y658i2mi88rtVLcLBN8uSecldu1LwBLoJdEA=;
- b=lPMFOF6YCH/SMN+ApxRdBf86DPUXXn2lDWK1Pp947BNHX+suf9YrPrtlin0r3WJFFy
- Tf9smTAxNI4djuS9U+XMWNsAlMUCZqdMFvfAp48VoAmaUP2T0GuKOpRf78fZaQbkjrXc
- p8Rsbf7zHTkOBxCXo7YexrUKiJu6L3UtZxnX6neeUAjRsVQXhHFRRJ0HjNkyLBtBMPfi
- 90rjJMESm1LCAmrJK3gMJW/dqOHXoBPpWHkFFErcvVjUR76Ykumq9N47yFHGiUqmw3L9
- zHknhWgmrTsL4AIYBa4QCBuqPMThCvmfjp59FohOu/E2H62uMqEvdT/dZg6okxQgu1lc
- KRSA==
-X-Gm-Message-State: AOJu0Yy4cBLEWPVXgEvvFxzp2KmLp+bcdS/6L0kCY7JZZvQI6EfShb6+
- BR3CeIg1hNotouNOx2zf3ZiqidCPsEZg4vPuO1Bg+bY7Xn7Sbm+opJL/OOOXi3koYOHZbeGKvg8
- UE9woFWB9pkoze/a/13loHKW1aGC2O4TRbcrRIb5+jq2fWrsmx5JWm0lHgDnwcVBRCHtpXJShFp
- PGPGi3xTJmHBsTI8Y+o8ap4IUd+8m3U62Z/Q==
-X-Gm-Gg: Acq92OFAts5N19+DnH2IFrWVTugZQ+NsHJttHIN1+WYLFUMH+ooI7Q62pYDR/95dehT
- qPgy50suuFOQ7A8HZVT750xnH+EGJ8KkLYjkBtR96eevlbBGz42AA7NVAKYzYT1GhjddF5VERl1
- AqfDxSoQ6MHIOiqgmldYwDmwLAbVaYmSlCpcyyM/w8GsOXUGzDLw7FKNumiWXT5bNqtZMcvhK+b
- Q6BFkrztWJOoaDoQJ71J/YE1yJfdsObYmnTNsZ3CuvHxI25Xt+6YfnavShAzMBrZWSoKD3vmWbI
- ThZ89qw4AZdb6ffBCV+m2oyWgGtC9uNlLScGB4pOv+TxJB/lIGZtLGW6vr4KmaGQrqZpVanR58n
- wvHMsWi5NFsC7Kx+nOsnqe+Qad46ZuIxTfUds8nWZP0Q=
-X-Received: by 2002:a05:6000:25fa:b0:45e:f5b6:7bf9 with SMTP id
- ffacd0b85a97d-46074b84e56mr8779308f8f.31.1781463984723; 
- Sun, 14 Jun 2026 12:06:24 -0700 (PDT)
-X-Received: by 2002:a05:6000:25fa:b0:45e:f5b6:7bf9 with SMTP id
- ffacd0b85a97d-46074b84e56mr8779274f8f.31.1781463984112; 
- Sun, 14 Jun 2026 12:06:24 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1781464100; x=1782068900;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=VDfoHXS7iEWo5M0RdHNJpei5+MJB/QTX3LEyVD1aqFQ=;
+ b=cFQx/HFYLRutaaRRWDz2N3zDEPmNDR5HlnxksMzv8zqwRW8XjY0miJY9v3JihZikkY
+ dnQftVAqUNcAzWA4Mi46RZFIXGlrDSYlOPDAvIV0EQBqmit3BCgSAedlzQ5ozKfIPz6W
+ 9J4hYRZFyS1r8JttIwrIchDsaTw0ubK8Z9CJCOETTpGNgiHxRuPAJGTq9qNiZwqhmF7K
+ SX4McwwvCODKkb1JT+++IqotK6ay0Iqd1aBBW3TqR07uT8YhW2/GfRol8mLhWDh2NGox
+ ZrhH3NZ7FLRtzqQwWNP7p+SqbhyeVUInRKIOrDBI+LYuT5C7mSyLxRCOvkvGmVF9cvPx
+ LvvQ==
+X-Gm-Message-State: AOJu0Yz2o6jIQq9Gfvnwf+byFI3MBD5SCtFuwH3WcyTrGTzvOUALudxF
+ XohsFv/+0i1dXT2aHGjk7Fg7Nx+/x+nDB+Ac1KxYI5vuTMjXJ6/4299fgcPC26m+axHMeKFHOWw
+ 1egcuTEiirr/fkz9zaD9tH5tCqXBWalQaI7hm8XQN/P10yywQiNCOMbWsgkyx+h75pxXBc7N6ZZ
+ JUxV1aUcd6l6N60Rj69XSPfpcEMI/1gLz0gg==
+X-Gm-Gg: Acq92OEIypgRzFHB5a2mTaRZHvSEmvsZqx3XAdZaifZzwz0mjjqPZd0ROmfw8z2kpSL
+ /ZzG2RdWpvu0/zYZH8W9oFtOjPM4gMbNBj9j/vv8wgjgIG1FLZ15reW93iN2KSJdcj/F3SJjqZT
+ 8p11jrtGey155kln36RiuMJSusi8/5aIPVy/WXzAWl3uxI6dOoMQoSZ378Wd0akq1jjXkkmm+Nv
+ LU3plR7LX1Wku0BypxiOhOj5lW16McQsiSpSF/Bec9nTnj7LhhFzsa8rl+og58MDlmVXpdvLABe
+ ffg1h11inVcwaVHbnVTSM5XeBwiJTav79Ora7g7NNZ/WkqMS8yxCMhIizDmulmQ+laUdeNMUBwX
+ UicWBj/BEFuGNozTpHZwI1C6WpjAfwTHQ6LF8058Q+F8=
+X-Received: by 2002:adf:e013:0:20b0:45e:ef4a:8192 with SMTP id
+ ffacd0b85a97d-4606dbad311mr10499427f8f.38.1781464100468; 
+ Sun, 14 Jun 2026 12:08:20 -0700 (PDT)
+X-Received: by 2002:adf:e013:0:20b0:45e:ef4a:8192 with SMTP id
+ ffacd0b85a97d-4606dbad311mr10499402f8f.38.1781464099984; 
+ Sun, 14 Jun 2026 12:08:19 -0700 (PDT)
 Received: from redhat.com (IGLD-80-230-85-71.inter.net.il. [80.230.85.71])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4606f26392esm26626507f8f.3.2026.06.14.12.06.22
+ ffacd0b85a97d-4606f2e6a8fsm27246463f8f.37.2026.06.14.12.08.18
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 14 Jun 2026 12:06:23 -0700 (PDT)
-Date: Sun, 14 Jun 2026 15:06:21 -0400
+ Sun, 14 Jun 2026 12:08:19 -0700 (PDT)
+Date: Sun, 14 Jun 2026 15:08:18 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Zhenzhong Duan <zhenzhong.duan@intel.com>,
- Yi Liu <yi.l.liu@intel.com>, Xudong Hao <xudong.hao@intel.com>,
- Jason Wang <jasowang@redhat.com>,
- =?utf-8?Q?Cl=C3=A9ment?= Mathieu--Drif <clement.mathieu--drif@bull.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 016/106] intel_iommu_accel: Handle PASID entry addition for
- pc_inv_dsc request
-Message-ID: <c93b82e7dde2e9c26ab743e80d19050bde988fdf.1781463125.git.mst@redhat.com>
+ Stefano Garzarella <sgarzare@redhat.com>, qemu-stable@nongnu.org,
+ DARKNAVY <vr@darknavy.com>,
+ Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
+ Xie Yongji <xieyongji@bytedance.com>
+Subject: [PULL 060/106] libvduse: fix buffer overflow in
+ vduse_queue_read_indirect_desc()
+Message-ID: <9f1b6d013d42b112680b435af9a9dff331b3fbaf.1781463125.git.mst@redhat.com>
 References: <cover.1781463125.git.mst@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1781463125.git.mst@redhat.com>
 X-Mailer: git-send-email 2.51.2.2891.g4157995a80.dirty
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -124,316 +125,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Zhenzhong Duan <zhenzhong.duan@intel.com>
+From: Stefano Garzarella <sgarzare@redhat.com>
 
-Structure VTDAddressSpace includes some elements suitable for emulated
-device and passthrough device without PASID, e.g., address space,
-different memory regions, etc, it is also protected by vtd iommu lock,
-all these are useless and become a burden for passthrough device with
-PASID.
+vduse_queue_read_indirect_desc() copies an indirect descriptor table
+into a buffer in chunks when the table crosses a memory region
+boundary. The destination is a struct vring_desc pointer but is
+advanced by a byte count, so each increment moves the pointer by
+read_len elements instead of read_len bytes, writing beyond the
+buffer.
 
-When there are lots of PASIDs used in one device, the AS and MRs are
-all registered to memory core and impact the whole system performance.
+Use a char pointer for the destination so that the arithmetic
+advances correctly.
 
-So instead of using VTDAddressSpace to cache pasid entry for each pasid
-of a passthrough device, we define a light weight structure
-VTDAccelPASIDCacheEntry with only necessary elements for each pasid. We
-will use this struct as a parameter to conduct binding/unbinding to
-nested hwpt and to record the current bound nested hwpt. It's also
-designed to support IOMMU_NO_PASID.
+While at it, change the source from a struct vring_desc pointer
+to a void pointer: when the table is split across regions,
+iova_to_va() can return a pointer into the middle of a descriptor,
+so casting it to a struct vring_desc pointer is wrong. The pointer is
+only used as a memcpy() source, so a void pointer is fine.
 
-VTDAccelPASIDCacheEntry is designed to only be used in intel_iommu_accel.c,
-similarly VTDPASIDCacheEntry should only be used in hw/i386/intel_iommu.c
-
-When guest creates new PASID entries, QEMU will capture the pc_inv_dsc
-(pasid cache invalidation) request, walk through each pasid in each
-passthrough device for valid pasid entries, create a new
-VTDAccelPASIDCacheEntry if not existing yet.
-
-IOMMU_NO_PASID of passthrough device still need to register MRs in case
-guest does not operate in scalable mode. So for IOMMU_NO_PASID, we have
-both VTDPASIDCacheEntry and VTDAccelPASIDCacheEntry.
-
-Co-developed-by: Yi Liu <yi.l.liu@intel.com>
-Signed-off-by: Yi Liu <yi.l.liu@intel.com>
-Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
-Tested-by: Xudong Hao <xudong.hao@intel.com>
+Fixes: CVE-2026-6425
+Fixes: a6caeee811 ("libvduse: Add VDUSE (vDPA Device in Userspace) library")
+Cc: qemu-stable@nongnu.org
+Reported-by: DARKNAVY <vr@darknavy.com>
+Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-Id: <20260527054658.1021096-12-zhenzhong.duan@intel.com>
+Message-Id: <20260417132645.121192-3-sgarzare@redhat.com>
 ---
- hw/i386/intel_iommu.c          |   3 +
- hw/i386/intel_iommu_accel.c    | 156 +++++++++++++++++++++++++++++++++
- hw/i386/intel_iommu_accel.h    |  13 +++
- hw/i386/intel_iommu_internal.h |   8 ++
- 4 files changed, 180 insertions(+)
+ subprojects/libvduse/libvduse.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
-index 88e0c58c08..8e034efdfc 100644
---- a/hw/i386/intel_iommu.c
-+++ b/hw/i386/intel_iommu.c
-@@ -3181,6 +3181,8 @@ static void vtd_pasid_cache_sync(IntelIOMMUState *s, VTDPASIDCacheInfo *pc_info)
-     g_hash_table_foreach(s->vtd_address_spaces, vtd_pasid_cache_sync_locked,
-                          pc_info);
-     vtd_iommu_unlock(s);
-+
-+    vtd_accel_pasid_cache_sync(s, pc_info);
- }
- 
- static void vtd_replay_pasid_bindings_all(IntelIOMMUState *s)
-@@ -4751,6 +4753,7 @@ static bool vtd_dev_set_iommu_device(PCIBus *bus, void *opaque, int devfn,
-     vtd_hiod->devfn = (uint8_t)devfn;
-     vtd_hiod->iommu_state = s;
-     vtd_hiod->hiod = hiod;
-+    QLIST_INIT(&vtd_hiod->pasid_cache_list);
- 
-     if (!vtd_check_hiod(s, vtd_hiod, errp)) {
-         g_free(vtd_hiod);
-diff --git a/hw/i386/intel_iommu_accel.c b/hw/i386/intel_iommu_accel.c
-index 05b927f303..d2653f22ee 100644
---- a/hw/i386/intel_iommu_accel.c
-+++ b/hw/i386/intel_iommu_accel.c
-@@ -259,6 +259,162 @@ void vtd_flush_host_piotlb_all_locked(IntelIOMMUState *s, uint16_t domain_id,
-                          vtd_flush_host_piotlb_locked, &piotlb_info);
- }
- 
-+static void vtd_accel_fill_pc(VTDHostIOMMUDevice *vtd_hiod, uint32_t pasid,
-+                              VTDPASIDEntry *pe)
-+{
-+    VTDAccelPASIDCacheEntry *vtd_pce;
-+
-+    QLIST_FOREACH(vtd_pce, &vtd_hiod->pasid_cache_list, next) {
-+        if (vtd_pce->pasid == pasid) {
-+            if (vtd_pasid_entry_compare(pe, &vtd_pce->pasid_entry)) {
-+                vtd_pce->pasid_entry = *pe;
-+            }
-+            return;
-+        }
-+    }
-+
-+    vtd_pce = g_malloc0(sizeof(VTDAccelPASIDCacheEntry));
-+    vtd_pce->vtd_hiod = vtd_hiod;
-+    vtd_pce->pasid = pasid;
-+    vtd_pce->pasid_entry = *pe;
-+    QLIST_INSERT_HEAD(&vtd_hiod->pasid_cache_list, vtd_pce, next);
-+}
-+
-+/*
-+ * This function walks over PASID range within [start, end) in a single
-+ * PASID table for entries matching @info type/did, then create
-+ * VTDAccelPASIDCacheEntry if not exist yet.
-+ */
-+static void vtd_sm_pasid_table_walk_one(VTDHostIOMMUDevice *vtd_hiod,
-+                                        dma_addr_t pt_base, int start, int end,
-+                                        VTDPASIDCacheInfo *info)
-+{
-+    IntelIOMMUState *s = vtd_hiod->iommu_state;
-+    VTDPASIDEntry pe;
-+    int pasid;
-+
-+    for (pasid = start; pasid < end; pasid++) {
-+        if (vtd_get_pe_in_pasid_leaf_table(s, pasid, pt_base, &pe) ||
-+            !vtd_pe_present(&pe)) {
-+            continue;
-+        }
-+
-+        if ((info->type == VTD_INV_DESC_PASIDC_G_DSI ||
-+             info->type == VTD_INV_DESC_PASIDC_G_PASID_SI) &&
-+            (info->did != VTD_SM_PASID_ENTRY_DID(&pe))) {
-+            /*
-+             * VTD_PASID_CACHE_DOMSI and VTD_PASID_CACHE_PASIDSI
-+             * requires domain id check. If domain id check fail,
-+             * go to next pasid.
-+             */
-+            continue;
-+        }
-+
-+        vtd_accel_fill_pc(vtd_hiod, pasid, &pe);
-+    }
-+}
-+
-+/*
-+ * In VT-d scalable mode translation, PASID dir + PASID table is used.
-+ * This function aims at looping over a range of PASIDs in the given
-+ * two level table to identify the pasid config in guest.
-+ */
-+static void vtd_sm_pasid_table_walk(VTDHostIOMMUDevice *vtd_hiod,
-+                                    dma_addr_t pdt_base, int start, int end,
-+                                    VTDPASIDCacheInfo *info)
-+{
-+    VTDPASIDDirEntry pdire;
-+    int pasid = start;
-+    int pasid_next;
-+    dma_addr_t pt_base;
-+
-+    while (pasid < end) {
-+        pasid_next = (pasid + VTD_PASID_TABLE_ENTRY_NUM) &
-+                     ~(VTD_PASID_TABLE_ENTRY_NUM - 1);
-+        pasid_next = pasid_next < end ? pasid_next : end;
-+
-+        if (!vtd_get_pdire_from_pdir_table(pdt_base, pasid, &pdire)
-+            && vtd_pdire_present(&pdire)) {
-+            pt_base = pdire.val & VTD_PASID_TABLE_BASE_ADDR_MASK;
-+            vtd_sm_pasid_table_walk_one(vtd_hiod, pt_base, pasid, pasid_next,
-+                                        info);
-+        }
-+        pasid = pasid_next;
-+    }
-+}
-+
-+static void vtd_accel_replay_pasid_bind_for_dev(VTDHostIOMMUDevice *vtd_hiod,
-+                                                int start, int end,
-+                                                VTDPASIDCacheInfo *pc_info)
-+{
-+    IntelIOMMUState *s = vtd_hiod->iommu_state;
-+    VTDContextEntry ce;
-+    int dev_max_pasid = 1 << vtd_hiod->hiod->caps.max_pasid_log2;
-+
-+    if (!vtd_dev_to_context_entry(s, pci_bus_num(vtd_hiod->bus),
-+                                  vtd_hiod->devfn, &ce)) {
-+        VTDPASIDCacheInfo walk_info = *pc_info;
-+        uint32_t ce_max_pasid = vtd_sm_ce_get_pdt_entry_num(&ce) *
-+                                VTD_PASID_TABLE_ENTRY_NUM;
-+
-+        end = MIN(end, MIN(dev_max_pasid, ce_max_pasid));
-+
-+        vtd_sm_pasid_table_walk(vtd_hiod, VTD_CE_GET_PASID_DIR_TABLE(&ce),
-+                                start, end, &walk_info);
-+    }
-+}
-+
-+/*
-+ * This function replays the guest pasid bindings by walking the two level
-+ * guest PASID table. For each valid pasid entry, it creates an entry
-+ * VTDAccelPASIDCacheEntry dynamically if not exist yet. This entry holds
-+ * info specific to a pasid
-+ */
-+void vtd_accel_pasid_cache_sync(IntelIOMMUState *s, VTDPASIDCacheInfo *pc_info)
-+{
-+    int start = IOMMU_NO_PASID, end = 1 << s->pasid;
-+    VTDHostIOMMUDevice *vtd_hiod;
-+    GHashTableIter hiod_it;
-+
-+    if (!s->fsts) {
-+        return;
-+    }
-+
-+    switch (pc_info->type) {
-+    case VTD_INV_DESC_PASIDC_G_PASID_SI:
-+        start = pc_info->pasid;
-+        end = pc_info->pasid + 1;
-+        /* fall through */
-+    case VTD_INV_DESC_PASIDC_G_DSI:
-+        /*
-+         * loop all assigned devices, do domain id check in
-+         * vtd_sm_pasid_table_walk_one() after get pasid entry.
-+         */
-+        break;
-+    case VTD_INV_DESC_PASIDC_G_GLOBAL:
-+        /* loop all assigned devices */
-+        break;
-+    default:
-+        g_assert_not_reached();
-+    }
-+
-+    /*
-+     * Loop all the vtd_hiod instances to sync the "pasid cache" per the
-+     * guest pasid configuration.
-+     *
-+     * VTD translation callback never accesses vtd_hiod and its corresponding
-+     * cached pasid entry, so no iommu lock needed here.
-+     */
-+    g_hash_table_iter_init(&hiod_it, s->vtd_host_iommu_dev);
-+    while (g_hash_table_iter_next(&hiod_it, NULL, (void **)&vtd_hiod)) {
-+        if (!object_dynamic_cast(OBJECT(vtd_hiod->hiod),
-+                                 TYPE_HOST_IOMMU_DEVICE_IOMMUFD)) {
-+            continue;
-+        }
-+        vtd_accel_replay_pasid_bind_for_dev(vtd_hiod, start, end, pc_info);
-+    }
-+}
-+
- static uint64_t vtd_get_host_iommu_quirks(uint32_t type,
-                                           void *caps, uint32_t size)
+diff --git a/subprojects/libvduse/libvduse.c b/subprojects/libvduse/libvduse.c
+index 21ffbb5b8d..df9ca5e56f 100644
+--- a/subprojects/libvduse/libvduse.c
++++ b/subprojects/libvduse/libvduse.c
+@@ -465,8 +465,9 @@ static int
+ vduse_queue_read_indirect_desc(VduseDev *dev, struct vring_desc *desc,
+                                uint64_t addr, size_t len)
  {
-diff --git a/hw/i386/intel_iommu_accel.h b/hw/i386/intel_iommu_accel.h
-index e5f0b077b4..c9b1823745 100644
---- a/hw/i386/intel_iommu_accel.h
-+++ b/hw/i386/intel_iommu_accel.h
-@@ -12,6 +12,13 @@
- #define HW_I386_INTEL_IOMMU_ACCEL_H
- #include CONFIG_DEVICES
+-    struct vring_desc *ori_desc;
++    char *dst_desc = (char *)desc;
+     uint64_t read_len;
++    void *ori_desc;
  
-+typedef struct VTDAccelPASIDCacheEntry {
-+    VTDHostIOMMUDevice *vtd_hiod;
-+    VTDPASIDEntry pasid_entry;
-+    uint32_t pasid;
-+    QLIST_ENTRY(VTDAccelPASIDCacheEntry) next;
-+} VTDAccelPASIDCacheEntry;
-+
- #ifdef CONFIG_VTD_ACCEL
- bool vtd_check_hiod_accel(IntelIOMMUState *s, VTDHostIOMMUDevice *vtd_hiod,
-                           Error **errp);
-@@ -20,6 +27,7 @@ bool vtd_propagate_guest_pasid(VTDAddressSpace *vtd_as, Error **errp);
- void vtd_flush_host_piotlb_all_locked(IntelIOMMUState *s, uint16_t domain_id,
-                                       uint32_t pasid, hwaddr addr,
-                                       uint64_t npages, bool ih);
-+void vtd_accel_pasid_cache_sync(IntelIOMMUState *s, VTDPASIDCacheInfo *pc_info);
- void vtd_iommu_ops_update_accel(PCIIOMMUOps *ops);
- #else
- static inline bool vtd_check_hiod_accel(IntelIOMMUState *s,
-@@ -49,6 +57,11 @@ static inline void vtd_flush_host_piotlb_all_locked(IntelIOMMUState *s,
- {
- }
+     if (len > (VIRTQUEUE_MAX_SIZE * sizeof(struct vring_desc))) {
+         return -1;
+@@ -483,10 +484,10 @@ vduse_queue_read_indirect_desc(VduseDev *dev, struct vring_desc *desc,
+             return -1;
+         }
  
-+static inline void vtd_accel_pasid_cache_sync(IntelIOMMUState *s,
-+                                              VTDPASIDCacheInfo *pc_info)
-+{
-+}
-+
- static inline void vtd_iommu_ops_update_accel(PCIIOMMUOps *ops)
- {
- }
-diff --git a/hw/i386/intel_iommu_internal.h b/hw/i386/intel_iommu_internal.h
-index ee59df09f8..9307825017 100644
---- a/hw/i386/intel_iommu_internal.h
-+++ b/hw/i386/intel_iommu_internal.h
-@@ -615,6 +615,7 @@ typedef struct VTDRootEntry VTDRootEntry;
- #define VTD_CTX_ENTRY_LEGACY_SIZE     16
- #define VTD_CTX_ENTRY_SCALABLE_SIZE   32
+-        memcpy(desc, ori_desc, read_len);
++        memcpy(dst_desc, ori_desc, read_len);
+         len -= read_len;
+         addr += read_len;
+-        desc += read_len;
++        dst_desc += read_len;
+     }
  
-+#define VTD_SM_CONTEXT_ENTRY_PDTS(x)        extract64((x)->val[0], 9, 3)
- #define VTD_SM_CONTEXT_ENTRY_RSVD_VAL0(aw)  (0x1e0ULL | ~VTD_HAW_MASK(aw))
- #define VTD_SM_CONTEXT_ENTRY_RSVD_VAL1      0xffffffffffe00000ULL
- #define VTD_SM_CONTEXT_ENTRY_PRE            0x10ULL
-@@ -645,6 +646,7 @@ typedef struct VTDPIOTLBInvInfo {
- #define VTD_PASID_DIR_BITS_MASK       (0x3fffULL)
- #define VTD_PASID_DIR_INDEX(pasid)    (((pasid) >> 6) & VTD_PASID_DIR_BITS_MASK)
- #define VTD_PASID_DIR_FPD             (1ULL << 1) /* Fault Processing Disable */
-+#define VTD_PASID_TABLE_ENTRY_NUM     (1ULL << 6)
- #define VTD_PASID_TABLE_BITS_MASK     (0x3fULL)
- #define VTD_PASID_TABLE_INDEX(pasid)  ((pasid) & VTD_PASID_TABLE_BITS_MASK)
- #define VTD_PASID_ENTRY_FPD           (1ULL << 1) /* Fault Processing Disable */
-@@ -710,6 +712,7 @@ typedef struct VTDHostIOMMUDevice {
-     PCIBus *bus;
-     uint8_t devfn;
-     HostIOMMUDevice *hiod;
-+    QLIST_HEAD(, VTDAccelPASIDCacheEntry) pasid_cache_list;
- } VTDHostIOMMUDevice;
- 
- /*
-@@ -767,6 +770,11 @@ static inline int vtd_pasid_entry_compare(VTDPASIDEntry *p1, VTDPASIDEntry *p2)
-     return memcmp(p1, p2, sizeof(*p1));
- }
- 
-+static inline uint32_t vtd_sm_ce_get_pdt_entry_num(VTDContextEntry *ce)
-+{
-+    return 1U << (VTD_SM_CONTEXT_ENTRY_PDTS(ce) + 7);
-+}
-+
- int vtd_get_pdire_from_pdir_table(dma_addr_t pasid_dir_base, uint32_t pasid,
-                                   VTDPASIDDirEntry *pdire);
- int vtd_get_pe_in_pasid_leaf_table(IntelIOMMUState *s, uint32_t pasid,
+     return 0;
 -- 
 MST
 
