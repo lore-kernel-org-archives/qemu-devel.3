@@ -4,90 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11383CD98C5
-	for <qemu-devel@archiver.kernel.org>; Sun, 14 Jun 2026 19:11:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0283ACD98D2
+	for <qemu-devel@archiver.kernel.org>; Sun, 14 Jun 2026 19:11:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wYqDS-0000NF-0V; Sun, 14 Jun 2026 15:09:54 -0400
+	id 1wYqCf-00075n-5m; Sun, 14 Jun 2026 15:09:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wYqCr-0007PB-PP
- for qemu-devel@nongnu.org; Sun, 14 Jun 2026 15:09:21 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wYqCQ-0006uS-LB
+ for qemu-devel@nongnu.org; Sun, 14 Jun 2026 15:08:50 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wYqCp-0002Tm-I8
- for qemu-devel@nongnu.org; Sun, 14 Jun 2026 15:09:17 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wYqCP-0002MU-3s
+ for qemu-devel@nongnu.org; Sun, 14 Jun 2026 15:08:50 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781464154;
+ s=mimecast20190719; t=1781464128;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=QZNUnahvC+4HEfCF2Lnl65IlITe2u76Ii/lnMqZAtNU=;
- b=Ay5u/Md9YkSFRxT7gtihn47BnNWJrNz4/aFdvczdiTPyTjQlzOKf/NOxZVRHyaWAw/c2tI
- NblTeveqmmrWi3eUnzj1e8VsyWk3ix2um5IAYiUlwZK8DoUqq74Jo86d9O+Q4l7idkbrKN
- 90XguSGxXDwhPr2gu0EvWjL8RJF6hRU=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=0j2TuSt5CDZksYraqgWgna1GGvtBvBsvP1dgCKoiTPU=;
+ b=QH+JUuJ8s2vRJVmYQahO8voTl6fPF32+P7K1OEr4EPZ04m4JNrpoaMefzuHJ55GnncBkV8
+ EEIvnKA3XblVloImrnj01auHyXdM0BISL6Sm928nmHSTe0yeSz/cMINpg+lcMM91FSnP0M
+ ZdaXQpBJQukw35jm/zVDZ5nLelZH3uc=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-631-f0R_O-6AMwKZxDzzCYuPxA-1; Sun, 14 Jun 2026 15:09:13 -0400
-X-MC-Unique: f0R_O-6AMwKZxDzzCYuPxA-1
-X-Mimecast-MFC-AGG-ID: f0R_O-6AMwKZxDzzCYuPxA_1781464152
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-490b9318944so16621035e9.1
- for <qemu-devel@nongnu.org>; Sun, 14 Jun 2026 12:09:13 -0700 (PDT)
+ us-mta-583-2vNtkS8gPqWaCWkSpjEdZg-1; Sun, 14 Jun 2026 15:08:47 -0400
+X-MC-Unique: 2vNtkS8gPqWaCWkSpjEdZg-1
+X-Mimecast-MFC-AGG-ID: 2vNtkS8gPqWaCWkSpjEdZg_1781464126
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-490b3ec3f7fso15547455e9.1
+ for <qemu-devel@nongnu.org>; Sun, 14 Jun 2026 12:08:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1781464152; x=1782068952; darn=nongnu.org;
+ d=redhat.com; s=google; t=1781464126; x=1782068926; darn=nongnu.org;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=QZNUnahvC+4HEfCF2Lnl65IlITe2u76Ii/lnMqZAtNU=;
- b=XQf/f8lz9mnaXkUsGtfqg+AnHgGVpI+5a1zA5u3S4u0oAW1jWHKrtp4jhlhH/kvbxL
- MZlyi6M9BqGPiRjqkq/HwVCrJsHojfN9/IkSxsRLy2c3aIUiKsOHYOr7kleCctpylpKn
- F6FzMhlQC3sWi5m/eJ6+PDPtoE93i4OAj7dB/z/CaJt+eul9yAzOVRt+vjMkYQcAexPZ
- bqJKTzqXmcCcYC+4Z1FQjJlv1EhGX02FhupRG3G/E+gUsx18X2/YKdgQ7G0uYVkn5HMh
- yOoXLXoa2PsOxVzRlaKzObUc4m33WADkK4u0dzkOlURLpvwuuy+dY+kf5ZITTZkpLHJi
- LrhA==
+ bh=0j2TuSt5CDZksYraqgWgna1GGvtBvBsvP1dgCKoiTPU=;
+ b=VhMjbdPhGLP07j3OsA9Jbfa/Y1pkMBURI6QW5VXbIkD2EJnA9bGUjREytEUfQgAqcM
+ oV+LhiMMzaCsxefguZu02fIC1RI469TZz4EYzFohBT27lsbcPB7toBgqiR1S7w0bVBqK
+ vx16RnPXuYAVOq0KB3iT5DWhQGMgluz/jBYK0wn57ViqUVtoMstSThnN/achHZwwfjPh
+ pWan/AOCZiAHTYldSqVWC28+zLoV3fSAwPzt80/P0i5+vd4m4Ha1mUyVqhTmSI70sNBx
+ qbWozFdubk9TWeTYfUB3ro7LUM1w95PbrsKdzymuLOjGiCp/I4jpJD1TRTecOLSIGLev
+ xrEw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781464152; x=1782068952;
+ d=1e100.net; s=20251104; t=1781464126; x=1782068926;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=QZNUnahvC+4HEfCF2Lnl65IlITe2u76Ii/lnMqZAtNU=;
- b=ZUWksvTfZYLIDmT42c3Dm7T4TmIimB9irF8t8VhhEYYUP8uNUJJzybvmgcLEUGa+ia
- 1+HNwlgPGiGk3n3dpQ6JewZwcMGRov7bs7lXc7GVjHR5cJ1kI9+L9SDgPoLTp7d9hLTN
- 2MLlhZcSN0hIDyhf15IIJ5pGROQ/fjgRZGvYWxlRe0qpjwgjSiRVnAkAoj7nJCkgvGzI
- UwhVVOB8q3r0lOpvplIt9Ur6/tMG489UIllyQuuHTOebkTUTiGfvGGPt8KfvLBTRVQ+O
- oIlHwRxDesOniSiJTjih5fzcZNkZUmQoAZYjBnM3XsdR0Amnv4cU0wO04cwj4AAsDHVF
- wnMg==
-X-Gm-Message-State: AOJu0YwtrItAL3fL8kRlInw57O/8Hr4MGiC3X8GqEzJATo7lw6CGB9ma
- 5/YZtjmuzngOzhfiwOspQIjiYr/AoCcruNIUDZtwRFojOk1qGTdPX12PT76vfsiN9fuComNFrNL
- nrds1yMCj3NdVKnMMsDMGXH2X6CzoFXrtQHuHFZyjPTQRCi3X70YZCnT4bgGthdi3AwBLrMi466
- +i/dpjgbw7dAH+GMIBn7eHCk+IQzzPM7pOAw==
-X-Gm-Gg: Acq92OEgXVi1ba2xJLZDb1SZg1Z2Z0mlEFSY4Vm5h1gTIW0tfBF0XnbHlMQZAin+UYK
- jmFRMLZ/+TH29J/zTJUeYlGPJH14uwNG190MAiuwcdwVyn/ezKGq7I1CHRCiFxyu1m69Y+d3hZI
- V6tywxkQ+M3Dc7Yoc2uIvNXUvKAN1hgiiqNE5p8r/I1YAoDgjwy+aqALmFSx39tCEN/qO7WCv5G
- on7mV9soSe36kn8/yY83GTtOaNcW/0dSY62tHltEX2sa/RaF2JFr7HssrQ/QjgJNceW5ZsxkuI+
- E1Vyrvn78MNghNmfNZYw3g3MjxzHKNPQxeOcdg53uWib3+6Pt0yvzsyiLDfUKZfHq0jbQoVrS1h
- QsZkb9lFgAQdrKAXX7T+8K+wH75IivOqu8NPCsQIIquA=
-X-Received: by 2002:a05:600c:4685:b0:490:9bc2:bf8b with SMTP id
- 5b1f17b1804b1-490ec4cd13amr166634435e9.5.1781464152270; 
- Sun, 14 Jun 2026 12:09:12 -0700 (PDT)
-X-Received: by 2002:a05:600c:4685:b0:490:9bc2:bf8b with SMTP id
- 5b1f17b1804b1-490ec4cd13amr166634045e9.5.1781464151707; 
- Sun, 14 Jun 2026 12:09:11 -0700 (PDT)
+ bh=0j2TuSt5CDZksYraqgWgna1GGvtBvBsvP1dgCKoiTPU=;
+ b=ekifoZ3JhJopy8qGAJxq9eFlDwfFkhDhgkWZEyYBFRTKhgKpO98hAC/v+a32FLjV62
+ JqMYDdPrAOaC6TNoc3xp3v3tUKRwdfxGGZIlC32jYB3YNhsT6/jtwsLkPcXjsM4lUN7q
+ cmW8sKXJHEdV1sx3jjxhDIwIAj6bKf6AsX7rA2lmK4Deli/0eeh8dX/sI7DTpnDelaAF
+ LGa1MaX+2lOHwfv6NvHmLTNIL00NBIL7zD+T8SYxOSKOqPrNGXcFMjemel97TUz+rjZl
+ iK4CBt9OmWeuoRWoR/4KcebGG33aRBVbq8ujB1S83T2MpN2Ny56sAo8w/H8izRAlmzKI
+ tW3A==
+X-Gm-Message-State: AOJu0YxzsNtkN2TJpJjenjjK3+ae3++YFdiT5F5uvZ+KMGBhROd6RXH0
+ GZu/MJmLsy26QtyMugoHE//DEcK5ymm/WW3Phjb0RR+2X4mBEt6iZk9VUg/czPt4gSB9RDtx7CX
+ GkU6l7MfRaXy5sNQo2DdinkdK8AQfos88TvSg44Gg2TUM+UEaWaOd5boBLy85rC2lyiI2RtfXXu
+ VPHtN+J7WMFY1gF19H3NIFzxllbY/Yfnm3IA==
+X-Gm-Gg: Acq92OFOf4lZrDHQ6fhV3g9WUcTjXVKsYIZsPoubeRSyqzLwAqZY89kvo5CfYUWs/5+
+ 2YcViReD1G8Pz7nyIdv7l99RKA9KEQDHEvGwKb++CwY44MWD5UE2rTJGz584AS6MV3EhF7YF+lN
+ iPnHiG/gjpj+8c+R5+yrSSGjSOG6vn+Fsx69mOAGA2cxLbrI6wQ1nn8brHfI7hNDjfUxsp/g9uD
+ VxfiMq4R80ZJtwxwbzLGxcRrn+/45n5i41z6AnOWnmEeEqPPSMGzMLg4BfZyK43oED5IOCsDkwr
+ J5/5Sd4ema9+BQTl++WLgg8xZ0sbWIc/3MdqdUkyTOcJ3L75pehb4CCKfNsrG1vhpZmxxNnbhXM
+ ttA1/o2KI3EODfVjeZ9840Ab8Tc832RSQHbcxABIDqow=
+X-Received: by 2002:a05:600c:c4ab:b0:48f:f64c:c2fe with SMTP id
+ 5b1f17b1804b1-490ec4f8090mr159115655e9.22.1781464125907; 
+ Sun, 14 Jun 2026 12:08:45 -0700 (PDT)
+X-Received: by 2002:a05:600c:c4ab:b0:48f:f64c:c2fe with SMTP id
+ 5b1f17b1804b1-490ec4f8090mr159115255e9.22.1781464125313; 
+ Sun, 14 Jun 2026 12:08:45 -0700 (PDT)
 Received: from redhat.com (IGLD-80-230-85-71.inter.net.il. [80.230.85.71])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4922033156csm174007305e9.7.2026.06.14.12.09.10
+ 5b1f17b1804b1-490ea4a399fsm186564165e9.0.2026.06.14.12.08.43
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 14 Jun 2026 12:09:11 -0700 (PDT)
-Date: Sun, 14 Jun 2026 15:09:09 -0400
+ Sun, 14 Jun 2026 12:08:44 -0700 (PDT)
+Date: Sun, 14 Jun 2026 15:08:42 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Kuan-Wei Chiu <visitorckw@gmail.com>, Cornelia Huck <cohuck@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PULL 082/106] standard-headers: Add virtio_rtc.h from Linux 7.0-rc1
-Message-ID: <5341284a7cbadb19fa61dadb643475d3aef2f5a3.1781463125.git.mst@redhat.com>
+ Alexey Gerasimenko <x1917x@gmail.com>,
+ Thierry Escande <thierry.escande@vates.tech>
+Subject: [PULL 070/106] q35: Fix incorrect values for PCIEXBAR masks
+Message-ID: <412c48d054b484a0f88d858dc554c24e07e94358.1781463125.git.mst@redhat.com>
 References: <cover.1781463125.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -119,268 +119,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Kuan-Wei Chiu <visitorckw@gmail.com>
+From: Alexey Gerasimenko <x1917x@gmail.com>
 
-Add virtio_rtc.h from the upstream Linux kernel using
-scripts/update-linux-headers.sh.
+There are two small issues in PCIEXBAR address mask handling:
+- wrong bit positions for address mask bits (see PCIEXBAR description
+  in Q35 datasheet)
+- incorrect usage of 64ADR_MASK
 
-Source:
-- Linux commit 6de23f81a5e08be8fbf5e8d7e9febc72a5b5f27f (v7.0-rc1)
-- Author: Linus Torvalds <torvalds@linux-foundation.org>
-- Date:   Sun Feb 22 13:18:59 2026 -0800
+Due to this, attempting to write a valid PCIEXBAR address may cause it
+to shift to another address, causing memory layout corruption where
+emulated MMIO regions may overlap real (passed through) MMIO ranges. Fix
+this by providing correct values.
 
-Signed-off-by: Kuan-Wei Chiu <visitorckw@gmail.com>
+Fixes: df2d8b3ed4 ("q35: Introduce q35 pc based chipset emulator")
+Signed-off-by: Alexey Gerasimenko <x1917x@gmail.com>
+Signed-off-by: Thierry Escande <thierry.escande@vates.tech>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Message-Id: <20260313164649.794591-4-thierry.escande@vates.tech>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-Id: <20260228182246.700714-2-visitorckw@gmail.com>
 ---
- include/standard-headers/linux/virtio_rtc.h | 237 ++++++++++++++++++++
- 1 file changed, 237 insertions(+)
- create mode 100644 include/standard-headers/linux/virtio_rtc.h
+ hw/pci-host/q35.c         | 6 +++---
+ include/hw/pci-host/q35.h | 4 ++--
+ 2 files changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/include/standard-headers/linux/virtio_rtc.h b/include/standard-headers/linux/virtio_rtc.h
-new file mode 100644
-index 0000000000..7e2c21ebff
---- /dev/null
-+++ b/include/standard-headers/linux/virtio_rtc.h
-@@ -0,0 +1,237 @@
-+/* SPDX-License-Identifier: ((GPL-2.0+ WITH Linux-syscall-note) OR BSD-3-Clause) */
-+/*
-+ * Copyright (C) 2022-2024 OpenSynergy GmbH
-+ * Copyright (c) 2024 Qualcomm Innovation Center, Inc. All rights reserved.
-+ */
-+
-+#ifndef _LINUX_VIRTIO_RTC_H
-+#define _LINUX_VIRTIO_RTC_H
-+
-+#include "standard-headers/linux/types.h"
-+
-+/* alarm feature */
-+#define VIRTIO_RTC_F_ALARM	0
-+
-+/* read request message types */
-+
-+#define VIRTIO_RTC_REQ_READ			0x0001
-+#define VIRTIO_RTC_REQ_READ_CROSS		0x0002
-+
-+/* control request message types */
-+
-+#define VIRTIO_RTC_REQ_CFG			0x1000
-+#define VIRTIO_RTC_REQ_CLOCK_CAP		0x1001
-+#define VIRTIO_RTC_REQ_CROSS_CAP		0x1002
-+#define VIRTIO_RTC_REQ_READ_ALARM		0x1003
-+#define VIRTIO_RTC_REQ_SET_ALARM		0x1004
-+#define VIRTIO_RTC_REQ_SET_ALARM_ENABLED	0x1005
-+
-+/* alarmq message types */
-+
-+#define VIRTIO_RTC_NOTIF_ALARM			0x2000
-+
-+/* Message headers */
-+
-+/** common request header */
-+struct virtio_rtc_req_head {
-+	uint16_t msg_type;
-+	uint8_t reserved[6];
-+};
-+
-+/** common response header */
-+struct virtio_rtc_resp_head {
-+#define VIRTIO_RTC_S_OK			0
-+#define VIRTIO_RTC_S_EOPNOTSUPP		2
-+#define VIRTIO_RTC_S_ENODEV		3
-+#define VIRTIO_RTC_S_EINVAL		4
-+#define VIRTIO_RTC_S_EIO		5
-+	uint8_t status;
-+	uint8_t reserved[7];
-+};
-+
-+/** common notification header */
-+struct virtio_rtc_notif_head {
-+	uint16_t msg_type;
-+	uint8_t reserved[6];
-+};
-+
-+/* read requests */
-+
-+/* VIRTIO_RTC_REQ_READ message */
-+
-+struct virtio_rtc_req_read {
-+	struct virtio_rtc_req_head head;
-+	uint16_t clock_id;
-+	uint8_t reserved[6];
-+};
-+
-+struct virtio_rtc_resp_read {
-+	struct virtio_rtc_resp_head head;
-+	uint64_t clock_reading;
-+};
-+
-+/* VIRTIO_RTC_REQ_READ_CROSS message */
-+
-+struct virtio_rtc_req_read_cross {
-+	struct virtio_rtc_req_head head;
-+	uint16_t clock_id;
-+/* Arm Generic Timer Counter-timer Virtual Count Register (CNTVCT_EL0) */
-+#define VIRTIO_RTC_COUNTER_ARM_VCT	0
-+/* x86 Time-Stamp Counter */
-+#define VIRTIO_RTC_COUNTER_X86_TSC	1
-+/* Invalid */
-+#define VIRTIO_RTC_COUNTER_INVALID	0xFF
-+	uint8_t hw_counter;
-+	uint8_t reserved[5];
-+};
-+
-+struct virtio_rtc_resp_read_cross {
-+	struct virtio_rtc_resp_head head;
-+	uint64_t clock_reading;
-+	uint64_t counter_cycles;
-+};
-+
-+/* control requests */
-+
-+/* VIRTIO_RTC_REQ_CFG message */
-+
-+struct virtio_rtc_req_cfg {
-+	struct virtio_rtc_req_head head;
-+	/* no request params */
-+};
-+
-+struct virtio_rtc_resp_cfg {
-+	struct virtio_rtc_resp_head head;
-+	/** # of clocks -> clock ids < num_clocks are valid */
-+	uint16_t num_clocks;
-+	uint8_t reserved[6];
-+};
-+
-+/* VIRTIO_RTC_REQ_CLOCK_CAP message */
-+
-+struct virtio_rtc_req_clock_cap {
-+	struct virtio_rtc_req_head head;
-+	uint16_t clock_id;
-+	uint8_t reserved[6];
-+};
-+
-+struct virtio_rtc_resp_clock_cap {
-+	struct virtio_rtc_resp_head head;
-+#define VIRTIO_RTC_CLOCK_UTC			0
-+#define VIRTIO_RTC_CLOCK_TAI			1
-+#define VIRTIO_RTC_CLOCK_MONOTONIC		2
-+#define VIRTIO_RTC_CLOCK_UTC_SMEARED		3
-+#define VIRTIO_RTC_CLOCK_UTC_MAYBE_SMEARED	4
-+	uint8_t type;
-+#define VIRTIO_RTC_SMEAR_UNSPECIFIED	0
-+#define VIRTIO_RTC_SMEAR_NOON_LINEAR	1
-+#define VIRTIO_RTC_SMEAR_UTC_SLS	2
-+	uint8_t leap_second_smearing;
-+#define VIRTIO_RTC_FLAG_ALARM_CAP		(1 << 0)
-+	uint8_t flags;
-+	uint8_t reserved[5];
-+};
-+
-+/* VIRTIO_RTC_REQ_CROSS_CAP message */
-+
-+struct virtio_rtc_req_cross_cap {
-+	struct virtio_rtc_req_head head;
-+	uint16_t clock_id;
-+	uint8_t hw_counter;
-+	uint8_t reserved[5];
-+};
-+
-+struct virtio_rtc_resp_cross_cap {
-+	struct virtio_rtc_resp_head head;
-+#define VIRTIO_RTC_FLAG_CROSS_CAP	(1 << 0)
-+	uint8_t flags;
-+	uint8_t reserved[7];
-+};
-+
-+/* VIRTIO_RTC_REQ_READ_ALARM message */
-+
-+struct virtio_rtc_req_read_alarm {
-+	struct virtio_rtc_req_head head;
-+	uint16_t clock_id;
-+	uint8_t reserved[6];
-+};
-+
-+struct virtio_rtc_resp_read_alarm {
-+	struct virtio_rtc_resp_head head;
-+	uint64_t alarm_time;
-+#define VIRTIO_RTC_FLAG_ALARM_ENABLED	(1 << 0)
-+	uint8_t flags;
-+	uint8_t reserved[7];
-+};
-+
-+/* VIRTIO_RTC_REQ_SET_ALARM message */
-+
-+struct virtio_rtc_req_set_alarm {
-+	struct virtio_rtc_req_head head;
-+	uint64_t alarm_time;
-+	uint16_t clock_id;
-+	/* flag VIRTIO_RTC_FLAG_ALARM_ENABLED */
-+	uint8_t flags;
-+	uint8_t reserved[5];
-+};
-+
-+struct virtio_rtc_resp_set_alarm {
-+	struct virtio_rtc_resp_head head;
-+	/* no response params */
-+};
-+
-+/* VIRTIO_RTC_REQ_SET_ALARM_ENABLED message */
-+
-+struct virtio_rtc_req_set_alarm_enabled {
-+	struct virtio_rtc_req_head head;
-+	uint16_t clock_id;
-+	/* flag VIRTIO_RTC_ALARM_ENABLED */
-+	uint8_t flags;
-+	uint8_t reserved[5];
-+};
-+
-+struct virtio_rtc_resp_set_alarm_enabled {
-+	struct virtio_rtc_resp_head head;
-+	/* no response params */
-+};
-+
-+/** Union of request types for requestq */
-+union virtio_rtc_req_requestq {
-+	struct virtio_rtc_req_read read;
-+	struct virtio_rtc_req_read_cross read_cross;
-+	struct virtio_rtc_req_cfg cfg;
-+	struct virtio_rtc_req_clock_cap clock_cap;
-+	struct virtio_rtc_req_cross_cap cross_cap;
-+	struct virtio_rtc_req_read_alarm read_alarm;
-+	struct virtio_rtc_req_set_alarm set_alarm;
-+	struct virtio_rtc_req_set_alarm_enabled set_alarm_enabled;
-+};
-+
-+/** Union of response types for requestq */
-+union virtio_rtc_resp_requestq {
-+	struct virtio_rtc_resp_read read;
-+	struct virtio_rtc_resp_read_cross read_cross;
-+	struct virtio_rtc_resp_cfg cfg;
-+	struct virtio_rtc_resp_clock_cap clock_cap;
-+	struct virtio_rtc_resp_cross_cap cross_cap;
-+	struct virtio_rtc_resp_read_alarm read_alarm;
-+	struct virtio_rtc_resp_set_alarm set_alarm;
-+	struct virtio_rtc_resp_set_alarm_enabled set_alarm_enabled;
-+};
-+
-+/* alarmq notifications */
-+
-+/* VIRTIO_RTC_NOTIF_ALARM notification */
-+
-+struct virtio_rtc_notif_alarm {
-+	struct virtio_rtc_notif_head head;
-+	uint16_t clock_id;
-+	uint8_t reserved[6];
-+};
-+
-+/** Union of notification types for alarmq */
-+union virtio_rtc_notif_alarmq {
-+	struct virtio_rtc_notif_alarm alarm;
-+};
-+
-+#endif /* _LINUX_VIRTIO_RTC_H */
+diff --git a/hw/pci-host/q35.c b/hw/pci-host/q35.c
+index e85e4227b3..7368e3c598 100644
+--- a/hw/pci-host/q35.c
++++ b/hw/pci-host/q35.c
+@@ -306,12 +306,12 @@ static void mch_update_pciexbar(MCHPCIState *mch)
+         break;
+     case MCH_HOST_BRIDGE_PCIEXBAR_LENGTH_128M:
+         length = 128 * 1024 * 1024;
+-        addr_mask |= MCH_HOST_BRIDGE_PCIEXBAR_128ADMSK |
+-            MCH_HOST_BRIDGE_PCIEXBAR_64ADMSK;
++        addr_mask |= MCH_HOST_BRIDGE_PCIEXBAR_128ADMSK;
+         break;
+     case MCH_HOST_BRIDGE_PCIEXBAR_LENGTH_64M:
+         length = 64 * 1024 * 1024;
+-        addr_mask |= MCH_HOST_BRIDGE_PCIEXBAR_64ADMSK;
++        addr_mask |= MCH_HOST_BRIDGE_PCIEXBAR_64ADMSK |
++            MCH_HOST_BRIDGE_PCIEXBAR_128ADMSK;
+         break;
+     case MCH_HOST_BRIDGE_PCIEXBAR_LENGTH_RVD:
+         qemu_log_mask(LOG_GUEST_ERROR, "Q35: Reserved PCIEXBAR LENGTH\n");
+diff --git a/include/hw/pci-host/q35.h b/include/hw/pci-host/q35.h
+index ddafc3f2e3..f31a71010b 100644
+--- a/include/hw/pci-host/q35.h
++++ b/include/hw/pci-host/q35.h
+@@ -100,8 +100,8 @@ struct Q35PCIHost {
+ #define MCH_HOST_BRIDGE_PCIEXBAR_DEFAULT       0xb0000000
+ #define MCH_HOST_BRIDGE_PCIEXBAR_MAX           (0x10000000) /* 256M */
+ #define MCH_HOST_BRIDGE_PCIEXBAR_ADMSK         Q35_MASK(64, 35, 28)
+-#define MCH_HOST_BRIDGE_PCIEXBAR_128ADMSK      ((uint64_t)(1 << 26))
+-#define MCH_HOST_BRIDGE_PCIEXBAR_64ADMSK       ((uint64_t)(1 << 25))
++#define MCH_HOST_BRIDGE_PCIEXBAR_128ADMSK      ((uint64_t)(1 << 27))
++#define MCH_HOST_BRIDGE_PCIEXBAR_64ADMSK       ((uint64_t)(1 << 26))
+ #define MCH_HOST_BRIDGE_PCIEXBAR_LENGTH_MASK   ((uint64_t)(0x3 << 1))
+ #define MCH_HOST_BRIDGE_PCIEXBAR_LENGTH_256M   ((uint64_t)(0x0 << 1))
+ #define MCH_HOST_BRIDGE_PCIEXBAR_LENGTH_128M   ((uint64_t)(0x1 << 1))
 -- 
 MST
 
