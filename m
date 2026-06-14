@@ -4,94 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8517CD98D2
-	for <qemu-devel@archiver.kernel.org>; Sun, 14 Jun 2026 19:10:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F635CD98C5
+	for <qemu-devel@archiver.kernel.org>; Sun, 14 Jun 2026 19:10:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wYqAr-000138-6X; Sun, 14 Jun 2026 15:07:13 -0400
+	id 1wYqDV-0000cg-SE; Sun, 14 Jun 2026 15:09:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wYqAn-0000tr-M8
- for qemu-devel@nongnu.org; Sun, 14 Jun 2026 15:07:09 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wYqDQ-0000HQ-Hz
+ for qemu-devel@nongnu.org; Sun, 14 Jun 2026 15:09:52 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wYqAl-0001uW-KD
- for qemu-devel@nongnu.org; Sun, 14 Jun 2026 15:07:09 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wYqDO-0002kp-Jb
+ for qemu-devel@nongnu.org; Sun, 14 Jun 2026 15:09:52 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781464026;
+ s=mimecast20190719; t=1781464190;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=OTRrNFoGzxxR5M/VZ/bnXQ71PiEMWMbPEG5ObNe6UPQ=;
- b=RLo9eZaLkYGXQyTSZuxu0yehOJOWfDDg0QKUCwPvYyCOWuapGGbWntPo7ieetXj/MWgptO
- VuXbzsZf0wvkg/QZOkKxuE/vw+ZUDCCCV3vyj+43Wgq9q1Eu79fSWKipfHN60vdxivKM1R
- 3PW6jDb91tASQOJSH9ik0Dojrz010wk=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=uYbQ6vGTUylKqc37+T6WR2Ax60xzKMG8Kdty/wQ3y5s=;
+ b=iIs8vJON4Z9hdJlLgLS+5p4BAZ+Nspu7ZYrIpMq3ufTGhwwWe35kyuHhpa0In2ZefW4AJ7
+ +milPYPbZIMOz6ikpm0q8aMKeEeyOeitKS1UQydVEKEB8QzRDX7raA939vhyohEViqqbhR
+ u7IQ5b4wqhk6fpcHUTWvWIGtLWZfL+s=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-557-s2DhADtEPhaXDMF9whCzhQ-1; Sun, 14 Jun 2026 15:07:05 -0400
-X-MC-Unique: s2DhADtEPhaXDMF9whCzhQ-1
-X-Mimecast-MFC-AGG-ID: s2DhADtEPhaXDMF9whCzhQ_1781464025
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-49221de4ed4so7703165e9.0
- for <qemu-devel@nongnu.org>; Sun, 14 Jun 2026 12:07:05 -0700 (PDT)
+ us-mta-398-QhY8w5C_PKyq0fh4VBQVVg-1; Sun, 14 Jun 2026 15:09:48 -0400
+X-MC-Unique: QhY8w5C_PKyq0fh4VBQVVg-1
+X-Mimecast-MFC-AGG-ID: QhY8w5C_PKyq0fh4VBQVVg_1781464187
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-490c4f61a34so17535615e9.2
+ for <qemu-devel@nongnu.org>; Sun, 14 Jun 2026 12:09:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1781464024; x=1782068824; darn=nongnu.org;
+ d=redhat.com; s=google; t=1781464187; x=1782068987; darn=nongnu.org;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=OTRrNFoGzxxR5M/VZ/bnXQ71PiEMWMbPEG5ObNe6UPQ=;
- b=abUxcSKpdV/RriXm++fAK/IiwkYfVDw1p5tSqrW8tCR2FW3B7/TnDieJNOA8jHcVU3
- dwSHK4JZ22O9/ZD/2tlbUmr+mY/y/i4sqzWVrfBCaL3dkpSMraCDoa8ApLz1bLXwJE7n
- qtcF10xtFHhhHiw/8l27SZzzOvGQMuMsftWftXP5DQQdqpSHUfnxbbN6wBtd+TwHCEy8
- uO8GCOqw5A+7at06SJ9b8z+3rFn8QuA/d4d/mmTUxi5Pq5ha/++mXJ2yeu2CvDeTu1ri
- 1dXbyjP/XFqbTOQBjgBCRjPZ0YhyTO0fINu3FlRMsyBVXz0qQJYVhoR4Jx6Ii6CK5KVz
- EaBg==
+ bh=uYbQ6vGTUylKqc37+T6WR2Ax60xzKMG8Kdty/wQ3y5s=;
+ b=pVEPtbJ88uPqpv+8CqA0Zr3gXTHmsTiILwi/XwDzwG3WQtEbjy55iPU5umuJgkWXnx
+ TiA4/2olWMbfY9Umlxxs0pJDuvIt2e0DwqoFc2kvjK/ZvtMHl57iwH+VgW5H1uAnDfLp
+ cSb6jvzw9/70in48grCMI9RlHNmxQnieGiJ02bsjOQ/QNJvoeMkCJQ5oqFKWxDr6oiTH
+ bO1R63EiI/i6uS/rvkknGUqcqGPBIvHAg4rvsW2CldxwyosbWipk0rWr1LbPBMZ/MkF+
+ IJZufZ2IgRSXH75oBwdNfLQlaJyX76u+wyIVokqAWnPHrmvcUxL0zM+B/83uoLxaW4FU
+ YJ+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781464024; x=1782068824;
+ d=1e100.net; s=20251104; t=1781464187; x=1782068987;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=OTRrNFoGzxxR5M/VZ/bnXQ71PiEMWMbPEG5ObNe6UPQ=;
- b=dG5pzwiQOINEIbd+C9axHk6/qLo2Yad6O5v/clgCVmSjg1nBvX1bVIan0EY3UyFLof
- r07Ju9VPUgjov5q5b6ht7wJWWh7vxCG/FqMNmkVj0VXUlS5EGw1vab6g8D7Eo4lNqL5/
- Tyq6B7lUIdBtC3A8TGEGEkcPcVANCNBITsrh/8v69Oo9zz8pTwfksM0CaK47br/CQEdw
- kfpFIXnaOlwydxfLdOsP7MDvYva5MtWFNjFjchQJNfeaAIlofDLtee9Kw14n5oewoS1E
- eMzUp0iMelHBc+QMXQ66VGKJ4EOQDL5frqrEeTOOfAwQ6VyD/Ee17/LrJvQsBKKyRkxT
- Bh3g==
-X-Gm-Message-State: AOJu0YzqdlLlSLc0i/REydqbkKq1nGvTFrkeVyBNB/PmHw0quNSH2vTQ
- eDYKU7+YBCm1tY7iMw3H0tBlDlHzf2PUUbnSkIK6kuB6Wgt1cZsohvSUS1uEaFlwJeLZIlFiqFa
- 4vn9yC3pmtXhxkWQ/sqTwys10YHsHLZT/Bk+gWqoDF/oWDblafi9znBZKoK7EB51wzEoWuCMi4f
- ilEIGfBpif9xEFTukaj6i2oDkSxBajX/Gj3g==
-X-Gm-Gg: Acq92OE+3iuf1EabKwAqO3zeh3ESmXUq4DmPYFwQVktd4F9OHBuwWq116FgzdI4BmWk
- Or9hj5gkCJ7Z+XiYfygMITyT96buV/sQDHTEyWBgxuMQiEjpfwf1VWFoqSMKggcBdY6XaLFnxu5
- +TsDQAOp5skfzILQQR6YnweMDeAuz3tZsn990UfhmkturmYYzggyJEtLRsPNVuFT9IixCJ25WSE
- o4fsJjHQ2Eh6aHOT2Rjf4WIIiyoJTC43Es+3tPke50K96XSsLjBKbwz/Y6oZi0gzOePjIkUnEX8
- 7bQ5In2xbcP7LhLQa6gYV+bRPiU9Tf3fbDLfSJnP/uwb97WwQVAQZZ4Br5B/touh7XYgLhSLrKu
- bexYU4Feri/BiS1hlBHsmDE5OJBzAyp/XjExjG0RTRkw=
-X-Received: by 2002:a05:600c:4595:b0:48f:d5b8:5b07 with SMTP id
- 5b1f17b1804b1-490ec4fb683mr146217615e9.20.1781464024415; 
- Sun, 14 Jun 2026 12:07:04 -0700 (PDT)
-X-Received: by 2002:a05:600c:4595:b0:48f:d5b8:5b07 with SMTP id
- 5b1f17b1804b1-490ec4fb683mr146217125e9.20.1781464023783; 
- Sun, 14 Jun 2026 12:07:03 -0700 (PDT)
+ bh=uYbQ6vGTUylKqc37+T6WR2Ax60xzKMG8Kdty/wQ3y5s=;
+ b=F+4kcHH3JJAfYqU5nZsXDJ+ZaSNGi/YwyG/I2TY2znEsUFyTWHEewbS4kXKvm60QjN
+ L+jPjL4HaCJJ3BIFQQ1aOxGSMwro1JlDACknkNCArseNZ+WxUOegSjCDAeDPd4pjP0dr
+ Fx4MT3dBGZEGuqIc0TXGwvgPJX1715FFoNK2Hvw00PkY/SGdh+7TuWTQ2UsJJ8d2dn0C
+ SmSrwsY9QRg9G4lKtWeBnXy5qcJmaiGLNPRB1ze5S4Q3f8oO6mx2V6ejZPhzG4Trsg38
+ kHa+83IlxUI40Sn/s+9tFDEnkaq9ZdQylTHMFlsZVdjNErb71AegYpes1XmjY1Jjdrt9
+ 715w==
+X-Gm-Message-State: AOJu0Yx8Q7YTNYqNbgJxnkcN8ppYTJcEDjDbWPz6v5XdoF1acACt0SCP
+ hxtyS+eYj6yibT9kxA4ZwHpU9e531M1gz16sW6mJfXila/tTHKIZGwWmGb7Veg5F/8P2x6bSneD
+ l5W3qbffehwv2LlXmsaK1NsPFc2MNkgoACRV8b3ZVHaXyeCykKG/VRzUnj5id7rs4zM1Rtalgge
+ L96I6mNcfBKlYyeKUt/SYXeyVHRDdsYuRb6Q==
+X-Gm-Gg: Acq92OFsCbyolwTRGeT02TUGdKAPNps+qiViDGjcopZTRlTbUSfLTvvZv4yGfE0A2ye
+ sRHYJKcz640/rumRRkG8WuEUmOxj0PTKR6gnLDeiDoy3NyQsIhvjR95s2cLSO2UpIaqGKipzqGv
+ 9O3t6+YQLchI0FY8ZPmEAgubobViMHWcJfc63RH0Pi/Sv76+BzxirzSu40hZ26GOJxsO19TLv/y
+ 7CXwMNl7HMl336LbEMBq/HetYhnx11mUdvyD0SeL6RxlOvkrfMJXPOFjzLUbk/Zui4zMIBhONSg
+ FuFoBhaPS+6z/qvMQO91UDZk9DGD6LN51/AF5cltkcGZxHBuCuCtVRqTjyAljWpFiJx1chlDaV1
+ 9S1jdj2+0lHo2jg0Z9D8mcc35Fzg9qc4FqmBdAsaE/wk=
+X-Received: by 2002:a05:600c:820c:b0:490:c2a3:3302 with SMTP id
+ 5b1f17b1804b1-490ec526f4fmr143548945e9.35.1781464187206; 
+ Sun, 14 Jun 2026 12:09:47 -0700 (PDT)
+X-Received: by 2002:a05:600c:820c:b0:490:c2a3:3302 with SMTP id
+ 5b1f17b1804b1-490ec526f4fmr143548635e9.35.1781464186641; 
+ Sun, 14 Jun 2026 12:09:46 -0700 (PDT)
 Received: from redhat.com (IGLD-80-230-85-71.inter.net.il. [80.230.85.71])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-490ea94f5b0sm187757855e9.1.2026.06.14.12.07.01
+ 5b1f17b1804b1-492203dd0b9sm181971825e9.15.2026.06.14.12.09.45
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 14 Jun 2026 12:07:02 -0700 (PDT)
-Date: Sun, 14 Jun 2026 15:07:00 -0400
+ Sun, 14 Jun 2026 12:09:46 -0700 (PDT)
+Date: Sun, 14 Jun 2026 15:09:44 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ Albert Esteve <aesteve@redhat.com>,
  Stefano Garzarella <sgarzare@redhat.com>,
- "Gonglei (Arei)" <arei.gonglei@huawei.com>,
- zhenwei pi <zhenwei.pi@linux.dev>, Raphael Norwitz <rnorwitz@nvidia.com>,
- Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- Jason Wang <jasowang@redhat.com>, qemu-block@nongnu.org
-Subject: [PULL 030/106] vhost: move protocol_features to vhost_user
-Message-ID: <f9a8f5812607b6076c0412439f1d569391131e33.1781463125.git.mst@redhat.com>
+ Stefan Hajnoczi <stefanha@redhat.com>,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>
+Subject: [PULL 097/106] vhost-user-device: Add shared memory BAR
+Message-ID: <6608dca74ecfc3e59cdf876cb5490750f37d3706.1781463125.git.mst@redhat.com>
 References: <cover.1781463125.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -99,14 +97,14 @@ Content-Disposition: inline
 In-Reply-To: <cover.1781463125.git.mst@redhat.com>
 X-Mailer: git-send-email 2.51.2.2891.g4157995a80.dirty
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -123,238 +121,189 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+From: Albert Esteve <aesteve@redhat.com>
 
-As comment says: it's only for vhost-user. So, let's move it
-to corresponding vhost backend realization.
+Add shared memory BAR support to vhost-user-device-pci
+to enable direct file mapping for VIRTIO Shared
+Memory Regions.
 
-Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+The implementation creates a consolidated shared
+memory BAR that contains all VIRTIO Shared
+Memory Regions as subregions. Each region is
+configured with its proper shmid, size, and
+offset within the BAR. The number and size of
+regions are retrieved via VHOST_USER_GET_SHMEM_CONFIG
+message sent by vhost-user-base during realization
+after virtio_init().
+
+Specifically, it uses BAR 4 to avoid conflicts, as
+it is currently unused.
+
+The shared memory BAR is only created when the
+backend supports VHOST_USER_PROTOCOL_F_SHMEM and
+has configured shared memory regions. This maintains
+backward compatibility with backends that do not
+support shared memory functionality.
+
+Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+Signed-off-by: Albert Esteve <aesteve@redhat.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-Id: <20260420200339.708640-5-vsementsov@yandex-team.ru>
+Message-Id: <20260304165223.2166175-8-aesteve@redhat.com>
 ---
- backends/cryptodev-vhost.c     |  1 -
- hw/block/vhost-user-blk.c      |  6 ++----
- hw/net/vhost_net.c             |  2 --
- hw/virtio/meson.build          |  1 +
- hw/virtio/vhost-user-stub.c    |  6 ++++++
- hw/virtio/vhost-user.c         | 36 +++++++++++++++++++++++++++-------
- hw/virtio/virtio-qmp.c         |  6 ++++--
- include/hw/virtio/vhost-user.h |  4 ++++
- include/hw/virtio/vhost.h      |  8 --------
- 9 files changed, 46 insertions(+), 24 deletions(-)
- create mode 100644 hw/virtio/vhost-user-stub.c
+ hw/virtio/vhost-user-base.c            | 46 ++++++++++++++++++++++++--
+ hw/virtio/vhost-user-test-device-pci.c | 42 +++++++++++++++++++++--
+ 2 files changed, 83 insertions(+), 5 deletions(-)
 
-diff --git a/backends/cryptodev-vhost.c b/backends/cryptodev-vhost.c
-index abdfce33af..c6069f4e5b 100644
---- a/backends/cryptodev-vhost.c
-+++ b/backends/cryptodev-vhost.c
-@@ -60,7 +60,6 @@ cryptodev_vhost_init(
+diff --git a/hw/virtio/vhost-user-base.c b/hw/virtio/vhost-user-base.c
+index 8b62c6c36e..39b5e637fc 100644
+--- a/hw/virtio/vhost-user-base.c
++++ b/hw/virtio/vhost-user-base.c
+@@ -16,6 +16,7 @@
+ #include "hw/virtio/virtio-bus.h"
+ #include "hw/virtio/vhost-user-base.h"
+ #include "qemu/error-report.h"
++#include "migration/blocker.h"
  
-     crypto->cc = options->cc;
- 
--    crypto->dev.protocol_features = 0;
-     crypto->backend = -1;
- 
-     /* vhost-user needs vq_index to initiate a specific queue pair */
-diff --git a/hw/block/vhost-user-blk.c b/hw/block/vhost-user-blk.c
-index dc99de0263..2831f3c053 100644
---- a/hw/block/vhost-user-blk.c
-+++ b/hw/block/vhost-user-blk.c
-@@ -572,10 +572,8 @@ static bool vhost_user_blk_inflight_needed(void *opaque)
+ static void vub_start(VirtIODevice *vdev)
  {
-     struct VHostUserBlk *s = opaque;
- 
--    bool inflight_migration = virtio_has_feature(s->dev.protocol_features,
--                               VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFLIGHT);
--
--    return inflight_migration;
-+    return vhost_user_has_protocol_feature(
-+        &s->dev, VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFLIGHT);
- }
- 
- static const VMStateDescription vmstate_vhost_user_blk_inflight = {
-diff --git a/hw/net/vhost_net.c b/hw/net/vhost_net.c
-index fda90e231e..ca19983126 100644
---- a/hw/net/vhost_net.c
-+++ b/hw/net/vhost_net.c
-@@ -265,9 +265,7 @@ struct vhost_net *vhost_net_init(VhostNetOptions *options)
-             goto fail;
-         }
-         net->backend = r;
--        net->dev.protocol_features = 0;
-     } else {
--        net->dev.protocol_features = 0;
-         net->backend = -1;
- 
-         /* vhost-user needs vq_index to initiate a specific queue pair */
-diff --git a/hw/virtio/meson.build b/hw/virtio/meson.build
-index e0566a60de..0ea89d8af4 100644
---- a/hw/virtio/meson.build
-+++ b/hw/virtio/meson.build
-@@ -94,6 +94,7 @@ system_virtio_ss.add_all(when: 'CONFIG_VIRTIO_PCI', if_true: virtio_pci_ss)
- 
- system_ss.add_all(when: 'CONFIG_VIRTIO', if_true: system_virtio_ss)
- stub_ss.add(files('vhost-stub.c'))
-+stub_ss.add(files('vhost-user-stub.c'))
- stub_ss.add(files('virtio-stub.c'))
- stub_ss.add(files('virtio-md-stubs.c'))
- 
-diff --git a/hw/virtio/vhost-user-stub.c b/hw/virtio/vhost-user-stub.c
-new file mode 100644
-index 0000000000..45559788dd
---- /dev/null
-+++ b/hw/virtio/vhost-user-stub.c
-@@ -0,0 +1,6 @@
-+#include "qemu/osdep.h"
-+#include "hw/virtio/vhost-user.h"
-+
-+void vhost_user_qmp_status(struct vhost_dev *dev, VirtioStatus *status)
-+{
-+}
-diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
-index 72aeed26ca..fc2ed1f17e 100644
---- a/hw/virtio/vhost-user.c
-+++ b/hw/virtio/vhost-user.c
-@@ -11,6 +11,7 @@
- #include "qemu/osdep.h"
- #include "qapi/error.h"
- #include "hw/virtio/virtio-dmabuf.h"
-+#include "hw/virtio/virtio-qmp.h"
- #include "hw/virtio/vhost.h"
- #include "hw/virtio/virtio-crypto.h"
- #include "hw/virtio/vhost-user.h"
-@@ -259,6 +260,14 @@ struct vhost_user {
-     /* Our current regions */
-     int num_shadow_regions;
-     struct vhost_memory_region shadow_regions[VHOST_USER_MAX_RAM_SLOTS];
-+
-+    /**
-+     * @protocol_features: the vhost-user protocol feature set by
-+     * VHOST_USER_SET_PROTOCOL_FEATURES. Protocol features are only
-+     * negotiated if VHOST_USER_F_PROTOCOL_FEATURES has been offered
-+     * by the backend (see @features).
-+     */
-+    uint64_t protocol_features;
- };
- 
- struct scrub_regions {
-@@ -267,10 +276,13 @@ struct scrub_regions {
-     int fd_idx;
- };
- 
--static bool vhost_user_has_protocol_feature(struct vhost_dev *dev,
--                                            uint64_t feature)
-+bool vhost_user_has_protocol_feature(struct vhost_dev *dev, uint64_t feature)
+@@ -281,7 +282,8 @@ static void vub_device_realize(DeviceState *dev, Error **errp)
  {
--    return virtio_has_feature(dev->protocol_features, feature);
-+    struct vhost_user *u = dev->opaque;
-+
-+    assert(dev->vhost_ops->backend_type == VHOST_BACKEND_TYPE_USER);
-+
-+    return virtio_has_feature(u->protocol_features, feature);
- }
+     VirtIODevice *vdev = VIRTIO_DEVICE(dev);
+     VHostUserBase *vub = VHOST_USER_BASE(dev);
+-    int ret;
++    uint64_t memory_sizes[VIRTIO_MAX_SHMEM_REGIONS];
++    int i, ret, nregions, regions_processed = 0;
  
- static int vhost_user_read_header(struct vhost_dev *dev, VhostUserMsg *msg)
-@@ -1338,8 +1350,8 @@ static int vhost_set_vring_file(struct vhost_dev *dev,
-     int ret;
-     int fds[VHOST_USER_MAX_RAM_SLOTS];
-     size_t fd_num = 0;
--    bool reply_supported = virtio_has_feature(dev->protocol_features,
--                                              VHOST_USER_PROTOCOL_F_REPLY_ACK);
-+    bool reply_supported =
-+        vhost_user_has_protocol_feature(dev, VHOST_USER_PROTOCOL_F_REPLY_ACK);
-     VhostUserMsg msg = {
-         .hdr.request = request,
-         .hdr.flags = VHOST_USER_VERSION,
-@@ -2239,8 +2251,8 @@ static int vhost_user_backend_init(struct vhost_dev *dev, void *opaque,
-         }
+     if (!vub->chardev.chr) {
+         error_setg(errp, "vhost-user-base: missing chardev");
+@@ -324,7 +326,7 @@ static void vub_device_realize(DeviceState *dev, Error **errp)
  
-         /* final set of protocol features */
--        dev->protocol_features = protocol_features;
--        err = vhost_user_set_protocol_features(dev, dev->protocol_features);
-+        u->protocol_features = protocol_features;
-+        err = vhost_user_set_protocol_features(dev, u->protocol_features);
-         if (err < 0) {
-             error_setg_errno(errp, EPROTO, "vhost_backend_init failed");
-             return -EPROTO;
-@@ -3033,6 +3045,16 @@ static int vhost_user_check_device_state(struct vhost_dev *dev, Error **errp)
-     return 0;
- }
+     /* Allocate queues */
+     vub->vqs = g_ptr_array_sized_new(vub->num_vqs);
+-    for (int i = 0; i < vub->num_vqs; i++) {
++    for (i = 0; i < vub->num_vqs; i++) {
+         g_ptr_array_add(vub->vqs,
+                         virtio_add_queue(vdev, vub->vq_size,
+                                          vub_handle_output));
+@@ -338,11 +340,49 @@ static void vub_device_realize(DeviceState *dev, Error **errp)
+                          VHOST_BACKEND_TYPE_USER, 0, errp);
  
-+void vhost_user_qmp_status(struct vhost_dev *dev, VirtioStatus *status)
-+{
-+    struct vhost_user *u = dev->opaque;
+     if (ret < 0) {
+-        do_vhost_user_cleanup(vdev, vub);
++        goto err;
++    }
 +
-+    assert(dev->vhost_ops->backend_type == VHOST_BACKEND_TYPE_USER);
++    ret = vub->vhost_dev.vhost_ops->vhost_get_shmem_config(&vub->vhost_dev,
++                                                           &nregions,
++                                                           memory_sizes,
++                                                           errp);
 +
-+    status->vhost_dev->protocol_features =
-+        qmp_decode_protocols(u->protocol_features);
-+}
++    if (ret < 0) {
++        goto err;
++    }
 +
- const VhostOps user_ops = {
-         .backend_type = VHOST_BACKEND_TYPE_USER,
-         .vhost_backend_init = vhost_user_backend_init,
-diff --git a/hw/virtio/virtio-qmp.c b/hw/virtio/virtio-qmp.c
-index 71717c56a4..c8bf702d38 100644
---- a/hw/virtio/virtio-qmp.c
-+++ b/hw/virtio/virtio-qmp.c
-@@ -751,12 +751,14 @@ VirtioStatus *qmp_x_query_virtio_status(const char *path, Error **errp)
-         status->vhost_dev->acked_features =
-             qmp_decode_features(vdev->device_id, hdev->acked_features_ex);
- 
--        status->vhost_dev->protocol_features =
--            qmp_decode_protocols(hdev->protocol_features);
-         status->vhost_dev->max_queues = hdev->max_queues;
-         status->vhost_dev->backend_cap = hdev->backend_cap;
-         status->vhost_dev->log_enabled = hdev->log_enabled;
-         status->vhost_dev->log_size = hdev->log_size;
++    for (i = 0; i < VIRTIO_MAX_SHMEM_REGIONS && regions_processed < nregions; i++) {
++        if (memory_sizes[i]) {
++            regions_processed++;
++            if (vub->vhost_dev.migration_blocker == NULL) {
++                error_setg(&vub->vhost_dev.migration_blocker,
++                       "Migration disabled: devices with VIRTIO Shared Memory "
++                       "Regions do not support migration yet.");
++                ret = migrate_add_blocker_normal(
++                    &vub->vhost_dev.migration_blocker,
++                    errp);
 +
-+        if (hdev->vhost_ops->backend_type == VHOST_BACKEND_TYPE_USER) {
-+            vhost_user_qmp_status(hdev, status);
++                if (ret < 0) {
++                    goto err;
++                }
++            }
++
++            if (memory_sizes[i] % qemu_real_host_page_size() != 0) {
++                error_setg(errp, "Shared memory %d size must be a multiple of "
++                                 "the host page size", i);
++                goto err;
++            }
++
++            virtio_new_shmem_region(vdev, i, memory_sizes[i]);
 +        }
      }
  
-     return status;
-diff --git a/include/hw/virtio/vhost-user.h b/include/hw/virtio/vhost-user.h
-index 53fe996686..0e576fc538 100644
---- a/include/hw/virtio/vhost-user.h
-+++ b/include/hw/virtio/vhost-user.h
-@@ -10,6 +10,7 @@
+     qemu_chr_fe_set_handlers(&vub->chardev, NULL, NULL, vub_event, NULL,
+                              dev, NULL, true);
++    return;
++err:
++    do_vhost_user_cleanup(vdev, vub);
+ }
  
- #include "chardev/char-fe.h"
- #include "hw/virtio/virtio.h"
-+#include "qapi/qapi-types-virtio.h"
+ static void vub_device_unrealize(DeviceState *dev)
+diff --git a/hw/virtio/vhost-user-test-device-pci.c b/hw/virtio/vhost-user-test-device-pci.c
+index 7f6d751690..2106557ed8 100644
+--- a/hw/virtio/vhost-user-test-device-pci.c
++++ b/hw/virtio/vhost-user-test-device-pci.c
+@@ -12,10 +12,13 @@
+ #include "hw/virtio/vhost-user-base.h"
+ #include "hw/virtio/virtio-pci.h"
  
- enum VhostUserProtocolFeature {
-     VHOST_USER_PROTOCOL_F_MQ = 0,
-@@ -113,4 +114,7 @@ void vhost_user_async_close(DeviceState *d,
-                             CharFrontend *chardev, struct vhost_dev *vhost,
-                             vu_async_close_fn cb);
- 
-+void vhost_user_qmp_status(struct vhost_dev *dev, VirtioStatus *status);
-+bool vhost_user_has_protocol_feature(struct vhost_dev *dev, uint64_t feature);
++#define VIRTIO_DEVICE_PCI_SHMEM_BAR 4
 +
- #endif
-diff --git a/include/hw/virtio/vhost.h b/include/hw/virtio/vhost.h
-index e139e05985..4a9bd3effe 100644
---- a/include/hw/virtio/vhost.h
-+++ b/include/hw/virtio/vhost.h
-@@ -104,14 +104,6 @@ struct vhost_dev {
-     VIRTIO_DECLARE_FEATURES(features);
-     VIRTIO_DECLARE_FEATURES(acked_features);
+ struct VHostUserDevicePCI {
+     VirtIOPCIProxy parent_obj;
  
--    /**
--     * @protocol_features: is the vhost-user only feature set by
--     * VHOST_USER_SET_PROTOCOL_FEATURES. Protocol features are only
--     * negotiated if VHOST_USER_F_PROTOCOL_FEATURES has been offered
--     * by the backend (see @features).
--     */
--    uint64_t protocol_features;
--
-     uint64_t max_queues;
-     uint64_t backend_cap;
-     /* @started: is the vhost device started? */
+     VHostUserBase vub;
++    MemoryRegion shmembar;
+ };
+ 
+ #define TYPE_VHOST_USER_TEST_DEVICE_PCI "vhost-user-test-device-pci-base"
+@@ -25,10 +28,45 @@ OBJECT_DECLARE_SIMPLE_TYPE(VHostUserDevicePCI, VHOST_USER_TEST_DEVICE_PCI)
+ static void vhost_user_device_pci_realize(VirtIOPCIProxy *vpci_dev, Error **errp)
+ {
+     VHostUserDevicePCI *dev = VHOST_USER_TEST_DEVICE_PCI(vpci_dev);
+-    DeviceState *vdev = DEVICE(&dev->vub);
++    DeviceState *dev_state = DEVICE(&dev->vub);
++    VirtIODevice *vdev = VIRTIO_DEVICE(dev_state);
++    VirtioSharedMemory *shmem;
++    uint64_t offset = 0, shmem_size = 0;
+ 
++    /* Keep modern 64-bit BARs (2 slots) away from the shared memory BAR. */
++    vpci_dev->modern_mem_bar_idx = 2;
+     vpci_dev->nvectors = 1;
+-    qdev_realize(vdev, BUS(&vpci_dev->bus), errp);
++    if (!qdev_realize(dev_state, BUS(&vpci_dev->bus), errp)) {
++        return;
++    }
++
++    QSIMPLEQ_FOREACH(shmem, &vdev->shmem_list, entry) {
++        if (memory_region_size(&shmem->mr) > UINT64_MAX - shmem_size) {
++            error_setg(errp, "Total shared memory required overflow");
++            return;
++        }
++        shmem_size = shmem_size + memory_region_size(&shmem->mr);
++    }
++    if (shmem_size) {
++        if (vpci_dev->flags & VIRTIO_PCI_FLAG_MODERN_PIO_NOTIFY) {
++            error_setg(errp, "modern-pio-notify is not supported due to PCI BAR layout limitations");
++            return;
++        }
++        memory_region_init(&dev->shmembar, OBJECT(vpci_dev),
++                           "vhost-device-pci-shmembar", shmem_size);
++        QSIMPLEQ_FOREACH(shmem, &vdev->shmem_list, entry) {
++            memory_region_add_subregion(&dev->shmembar, offset, &shmem->mr);
++            virtio_pci_add_shm_cap(vpci_dev, VIRTIO_DEVICE_PCI_SHMEM_BAR,
++                                   offset, memory_region_size(&shmem->mr),
++                                   shmem->shmid);
++            offset = offset + memory_region_size(&shmem->mr);
++        }
++        pci_register_bar(&vpci_dev->pci_dev, VIRTIO_DEVICE_PCI_SHMEM_BAR,
++                        PCI_BASE_ADDRESS_SPACE_MEMORY |
++                        PCI_BASE_ADDRESS_MEM_PREFETCH |
++                        PCI_BASE_ADDRESS_MEM_TYPE_64,
++                        &dev->shmembar);
++    }
+ }
+ 
+ static void vhost_user_device_pci_class_init(ObjectClass *klass,
 -- 
 MST
 
