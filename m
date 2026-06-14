@@ -4,90 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3919DCD98DE
-	for <qemu-devel@archiver.kernel.org>; Sun, 14 Jun 2026 19:12:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 793F5CD98C5
+	for <qemu-devel@archiver.kernel.org>; Sun, 14 Jun 2026 19:12:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wYqDS-0000No-OC; Sun, 14 Jun 2026 15:09:54 -0400
+	id 1wYqBN-0002vK-G2; Sun, 14 Jun 2026 15:07:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wYqDB-0007ZV-QD
- for qemu-devel@nongnu.org; Sun, 14 Jun 2026 15:09:38 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wYqBM-0002nO-Go
+ for qemu-devel@nongnu.org; Sun, 14 Jun 2026 15:07:44 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wYqD8-0002fT-W7
- for qemu-devel@nongnu.org; Sun, 14 Jun 2026 15:09:36 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wYqBK-00021u-M5
+ for qemu-devel@nongnu.org; Sun, 14 Jun 2026 15:07:44 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781464174;
+ s=mimecast20190719; t=1781464061;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=6dOn/8eHkNMQ82sgE1aT+KD7v5OPI6ZiP0ExOB9U4bQ=;
- b=AVwAnP86K0bjV+UdicbFHBDANXfcLrxfSuHIetWTvrDLCCgi4TcdCewCLbx1EGlxjSrTs3
- WM7fFlRntU9FvicA1BnbeOkQxCVRcwA9KxnJoFlgRPBEusOHRIITE7jlrfxhk8tPeQNn0B
- cPIk9o7Je/H4K03zO2KX6b7CvWBOcAg=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=Wven1IZ1pJBmkOs/LOXOpmRVZifqPAgbVO1O49C6M1A=;
+ b=AMB+Hf68SvWsoDq/HC6jX+ZbwftSASKdmnGZ0s044TbXjIXmcptCOpDZI8AEqp1OchfE5P
+ Ldb0SwdiuWQLUOF6Mw6S2DfF2uVdt16R2AT/AUIBygZkjdJOXNudsZeNc7YZ+jWluTd/Z6
+ 3dPXGay1ODMANp1Pvg1A0/b7vshRILI=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-499-ApdcwSRJOSim9WcfoaeznQ-1; Sun, 14 Jun 2026 15:09:33 -0400
-X-MC-Unique: ApdcwSRJOSim9WcfoaeznQ-1
-X-Mimecast-MFC-AGG-ID: ApdcwSRJOSim9WcfoaeznQ_1781464172
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-490ab3f6e55so14549375e9.0
- for <qemu-devel@nongnu.org>; Sun, 14 Jun 2026 12:09:32 -0700 (PDT)
+ us-mta-180-YFnj7G9cMqeAfka6dL9wxQ-1; Sun, 14 Jun 2026 15:07:40 -0400
+X-MC-Unique: YFnj7G9cMqeAfka6dL9wxQ-1
+X-Mimecast-MFC-AGG-ID: YFnj7G9cMqeAfka6dL9wxQ_1781464059
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-490b93debc8so25301895e9.1
+ for <qemu-devel@nongnu.org>; Sun, 14 Jun 2026 12:07:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1781464172; x=1782068972; darn=nongnu.org;
+ d=redhat.com; s=google; t=1781464059; x=1782068859; darn=nongnu.org;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=6dOn/8eHkNMQ82sgE1aT+KD7v5OPI6ZiP0ExOB9U4bQ=;
- b=Yd+NY15O/81W2UmusfstHRTG2fFwqxl/MkwElFGk/uVoXLN+ME2R2AgE1ple/kLpPw
- d8YcdfrNvhfsj1nI7c9ZpjUk84i9RxQJZPbiJxwwOabHm/w/aDJAFFZDj9LEp7MPdPey
- sfUooYwKF3cJA509t0+t0bVlLdQeh05UB9WVOauUtmzgKCQUWpaPtb+EfqYw+7yvcRGg
- xWJ7+c7VHffXL+1htOpgIybgDcXgLgSvwsysXCoAa+0S7S5oKR0KyQHiiOjdDzzEdgP0
- 1p3nRQfHkROgqDg150WyrxGMZ04NPKfZvi/70x+nL+QN0lNMCY76X4/nJZ4+dIkeIGaT
- SdcQ==
+ bh=Wven1IZ1pJBmkOs/LOXOpmRVZifqPAgbVO1O49C6M1A=;
+ b=ZtZAN1Z1qLx9WoixIpmVlMfU0bz2OYTb8TdYAWGE3WYvh3JKLN7gmAt6PHebyJay/2
+ yf+Hmd0Mhkcv5aw/7v1QrV89wCGE2XZhk8LUeYx41pInABxfvCPIBwolE2kCiBVz5DT9
+ s6zETgiwtCyhy50QlBdjzXZBRcOySi04j05DJkacTjA2BMxFGohM8FubNEMKNgcVUGKz
+ ZGNXZ/PixJI6vkoC/0zUNkg3dMWLdO3s68xSxSZjhkli/Vn0GV7SbH0V18S7wyzDGrmg
+ lwPX2K2a6D2Fb3IEWuqpyrVumUjPasC7LDe4Ro1GLg653W9BmfQfts411SC9cT7/xlXF
+ NPaQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781464172; x=1782068972;
+ d=1e100.net; s=20251104; t=1781464059; x=1782068859;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=6dOn/8eHkNMQ82sgE1aT+KD7v5OPI6ZiP0ExOB9U4bQ=;
- b=GMZjbtNnrul6ycvClTlnyFP9Ii57cZTcphQd0PKzT7ysjpwz0Yty2gaV/S0r49anGH
- naAOP24+/J+1qzciK6lQZGONOc7c4q6SaruFMs6l3WcPU31iP/kuv5vfzqmaFDKnrLJW
- RI4DQEee5GL/fbj8Jyb2xeIAobwxKh/IZzefqby2J2x6d8jCA9/e6WW4ywEpMJhzPA72
- Cg2iOv4jbMLjmcNr5PU8IrweSXiCutnj4G9jfKZBtitC7KKEWHLkSEJCLx9vb+tbj0Gf
- IXvRhylUAmz5klczbGfx5Z4AqfwZ6f5JLCespP2tMWktc7ZUlv4qM49MSK1w9JzsSQmI
- zZIA==
-X-Gm-Message-State: AOJu0YwkwdYaBWFQnBJwe1ilIIchYMi8KUBnj2AjYy+81jOas7TvvFRO
- wlNfEA92j6wt8e2aShzm49CD7FUUtj3GjCPF8i3qzRoSajd5rZGpinbotbP566GRF8gDV4oRWkC
- rxNLx9KXDi8h6VRhsgZzxY38UgQ87fSd931APoc5ur4W3Yt1XpT2f2yXf8Akh/WXtcbW/A/PK64
- j8AyU4bpHm53AjXzJbXfnW2IX9+6Sv0e2nEQ==
-X-Gm-Gg: Acq92OEopnQDPE/rUxmyWHPJ0aqeZa6nyVCaO/5h5WLudYJePGH796TYnTFmgNupysE
- 9F+MxCVPc2xhx5lot47nuAR6Q26PfS7r8aR5QE7B5EUlQkOF5pEpg64SkG3EKHXMKXPufpBhtTs
- PzsxTcBGUcqfZQ0wV3Jo0Mt5kkHOUyEazJSxGqAesmDkwg9y0w0Nw3tw1NU3uEKsYlHQKQJMUBM
- oSnjpqFkKBSQRwpB2LoENeHS5Xy/K2x8vLqnI/n0uhtkJMcAB+Rb4MQ9cimPsEvG4pGJ39itrrY
- t1QS+DEesRY7ewHqtj1ywbRvltq81MgP6FZh4CjSouzuFb3ClMflQeD0VMcc1yZziBPTSq/1z5b
- Ftb1dV+jCwg7UYy2ojV/7htukNtFeH42L584u/jpAyfw=
-X-Received: by 2002:a05:600c:314a:b0:490:da12:f1fa with SMTP id
- 5b1f17b1804b1-490ec503f0cmr127745895e9.31.1781464171719; 
- Sun, 14 Jun 2026 12:09:31 -0700 (PDT)
-X-Received: by 2002:a05:600c:314a:b0:490:da12:f1fa with SMTP id
- 5b1f17b1804b1-490ec503f0cmr127745585e9.31.1781464171116; 
- Sun, 14 Jun 2026 12:09:31 -0700 (PDT)
+ bh=Wven1IZ1pJBmkOs/LOXOpmRVZifqPAgbVO1O49C6M1A=;
+ b=l36nWg0QcSsv9vy01f+ngJhc69F+vPlpnrgpnBdPhp3S/O+we+oRP+N4YXWw8PSkvM
+ cYpL6fQ9wXpCvByWMwcFHMe1wVQ5pT5DQuojE4VG3I6OG39q6aJslw1WWUg5lmvmDXPk
+ Qk39iPNOf8q8HK0hsa6VaITPsKHcQq1jgIcU/VnaFwQ9sQZY9WSfbFcJZlClX0kd7D4B
+ +GnGE4+T8QW4ILTmfmh0fKupA1jcDEoYWwwIO2aTeN+L4+LFy9d0UHba/BBEsZrQvOiq
+ DWrhN35mcNWHTgaMf0p+iqVMUiAHM2p4IQZv+TMvKwTwYeymbrpWVydxqvCGozSY8qX4
+ QewQ==
+X-Gm-Message-State: AOJu0YzC1D34XoyG6ip+i+KeDDinyaZN0TkLWh+2sWAWQo+idZlM2bZe
+ 2uYq/biz7U58h3oiz3pUGiXHCyetj+HSRUPfsEA3EdpvDCE1cxARllJPlfCNe6alccYCCVIV/jc
+ lz2hlGkxLA0/lKWdGfDxTJPt/qHTy6qbxEHZi44I0wZpX9SAPm/I3/SThrCWnUQ4/FG5jPc0rls
+ y3SlRt3zbvE9S+W4cMVwJ2DzECNZQHa0vGFQ==
+X-Gm-Gg: Acq92OH1v3oEooYSBdTn/52DcZECy8IydoCTkVCVfhdkuWwyAGZBTYUGTj3QAP7/Jii
+ 5SWo4cEQBvLeNqEjJWjrck4mGB0El+02100lJ4dHFGpvwrJUQOXNRHtvedMxH2GEFr+Pe2hyeAT
+ I2WnORpuBoitbbz67xid1neEF1t6IXM+ac2Dv7MZG8YcUW7o7F8KeFRQeCeZpunkHnVSCQlI2Ln
+ ezycvlEklgmvZRScgvq1GZcj+1nh/i/8kdWfdeMKWmOVB6a2J/lBlwoH9GrLggsQGkoKeWfuFmf
+ ZEovEZQ9mAnkgSUG9Qagv/l2gmL6/dFgnMdsFmbzr9E85f2yZkQkLD0gNIEW+0EToA0MwpUPNdF
+ h2NWFZGgGyOQfnWIqKYfQJ5lv6qN2ngaBjwyfRNi/TV4=
+X-Received: by 2002:a05:600c:1d99:b0:490:e5c1:b8bf with SMTP id
+ 5b1f17b1804b1-49220061e5bmr92733675e9.13.1781464058758; 
+ Sun, 14 Jun 2026 12:07:38 -0700 (PDT)
+X-Received: by 2002:a05:600c:1d99:b0:490:e5c1:b8bf with SMTP id
+ 5b1f17b1804b1-49220061e5bmr92733305e9.13.1781464058161; 
+ Sun, 14 Jun 2026 12:07:38 -0700 (PDT)
 Received: from redhat.com (IGLD-80-230-85-71.inter.net.il. [80.230.85.71])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-492202e5d61sm170358795e9.1.2026.06.14.12.09.30
+ 5b1f17b1804b1-492203d2449sm168720315e9.14.2026.06.14.12.07.35
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 14 Jun 2026 12:09:30 -0700 (PDT)
-Date: Sun, 14 Jun 2026 15:09:29 -0400
+ Sun, 14 Jun 2026 12:07:37 -0700 (PDT)
+Date: Sun, 14 Jun 2026 15:07:34 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Igor Mammedov <imammedo@redhat.com>,
- Ani Sinha <anisinha@redhat.com>, Zhao Liu <zhao1.liu@intel.com>
-Subject: [PULL 090/106] tests: acpi: x86/q35: update expected WDAT blob
-Message-ID: <cbb13f70170e66870fa37a195e6c8a3049b8869f.1781463125.git.mst@redhat.com>
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ Raphael Norwitz <raphael.s.norwitz@gmail.com>,
+ Daniil Tatianin <d-tatianin@yandex-team.ru>, Lei Yang <leiyang@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>
+Subject: [PULL 042/106] vhost: simplify vhost_dev_init() error-path
+Message-ID: <ef817ddfd90f158b9769baaadbdb9fb2a52d3018.1781463125.git.mst@redhat.com>
 References: <cover.1781463125.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -95,14 +97,14 @@ Content-Disposition: inline
 In-Reply-To: <cover.1781463125.git.mst@redhat.com>
 X-Mailer: git-send-email 2.51.2.2891.g4157995a80.dirty
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -119,204 +121,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Igor Mammedov <imammedo@redhat.com>
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 
-replace blank table with a new one:
+No reason to rollback setting up busyloop timeout on failure.
+We don't do such rollback for other things we setup in backend.
+Also, look at vhost_net_init() in hw/net/vhost_net.c: we may fail
+after successfully called vhost_dev_init(), and in this case we'll
+just call vhost_dev_cleanup(), which doesn't rollback busyloop
+timeout.
 
-  +[000h 0000   4]                    Signature : "WDAT"    [Watchdog Action Table]
-  +[004h 0004   4]                 Table Length : 00000134
-  +[008h 0008   1]                     Revision : 01
-  +[009h 0009   1]                     Checksum : 31
-  +[00Ah 0010   6]                       Oem ID : "BOCHS "
-  +[010h 0016   8]                 Oem Table ID : "BXPC    "
-  +[018h 0024   4]                 Oem Revision : 00000001
-  +[01Ch 0028   4]              Asl Compiler ID : "BXPC"
-  +[020h 0032   4]        Asl Compiler Revision : 00000001
-  +
-  +[024h 0036   4]                Header Length : 00000020
-  +[028h 0040   2]                  PCI Segment : 00FF
-  +[02Ah 0042   1]                      PCI Bus : FF
-  +[02Bh 0043   1]                   PCI Device : FF
-  +[02Ch 0044   1]                 PCI Function : FF
-  +[02Dh 0045   3]                     Reserved : 000000
-  +[030h 0048   4]                 Timer Period : 00000258
-  +[034h 0052   4]                    Max Count : 000003FF
-  +[038h 0056   4]                    Min Count : 00000004
-  +[03Ch 0060   1]        Flags (decoded below) : 81
-  +                                     Enabled : 1
-  +                         Stopped When Asleep : 1
-  +[03Dh 0061   3]                     Reserved : 000000
-  +[040h 0064   4]         Watchdog Entry Count : 0000000A
-  +
-  +[044h 0068   1]              Watchdog Action : 01
-  +[045h 0069   1]                  Instruction : 02
-  +[046h 0070   2]                     Reserved : 0000
-  +
-  +[048h 0072  12]              Register Region : [Generic Address Structure]
-  +[048h 0072   1]                     Space ID : 01 [SystemIO]
-  +[049h 0073   1]                    Bit Width : 10
-  +[04Ah 0074   1]                   Bit Offset : 00
-  +[04Bh 0075   1]         Encoded Access Width : 02 [Word Access:16]
-  +[04Ch 0076   8]                      Address : 0000000000000660
-  +
-  +[054h 0084   4]                        Value : 00000001
-  +[058h 0088   4]                Register Mask : 000001FF
-  +
-  +[05Ch 0092   1]              Watchdog Action : 08
-  +[05Dh 0093   1]                  Instruction : 00
-  +[05Eh 0094   2]                     Reserved : 0000
-  +
-  +[060h 0096  12]              Register Region : [Generic Address Structure]
-  +[060h 0096   1]                     Space ID : 01 [SystemIO]
-  +[061h 0097   1]                    Bit Width : 10
-  +[062h 0098   1]                   Bit Offset : 00
-  +[063h 0099   1]         Encoded Access Width : 02 [Word Access:16]
-  +[064h 0100   8]                      Address : 0000000000000668
-  +
-  +[06Ch 0108   4]                        Value : 00000000
-  +[070h 0112   4]                Register Mask : 00000800
-  +
-  +[074h 0116   1]              Watchdog Action : 09
-  +[075h 0117   1]                  Instruction : 82
-  +[076h 0118   2]                     Reserved : 0000
-  +
-  +[078h 0120  12]              Register Region : [Generic Address Structure]
-  +[078h 0120   1]                     Space ID : 01 [SystemIO]
-  +[079h 0121   1]                    Bit Width : 10
-  +[07Ah 0122   1]                   Bit Offset : 00
-  +[07Bh 0123   1]         Encoded Access Width : 02 [Word Access:16]
-  +[07Ch 0124   8]                      Address : 0000000000000668
-  +
-  +[084h 0132   4]                        Value : 00000000
-  +[088h 0136   4]                Register Mask : 00000800
-  +
-  +[08Ch 0140   1]              Watchdog Action : 0A
-  +[08Dh 0141   1]                  Instruction : 00
-  +[08Eh 0142   2]                     Reserved : 0000
-  +
-  +[090h 0144  12]              Register Region : [Generic Address Structure]
-  +[090h 0144   1]                     Space ID : 01 [SystemIO]
-  +[091h 0145   1]                    Bit Width : 10
-  +[092h 0146   1]                   Bit Offset : 00
-  +[093h 0147   1]         Encoded Access Width : 02 [Word Access:16]
-  +[094h 0148   8]                      Address : 0000000000000668
-  +
-  +[09Ch 0156   4]                        Value : 00000800
-  +[0A0h 0160   4]                Register Mask : 00000800
-  +
-  +[0A4h 0164   1]              Watchdog Action : 0B
-  +[0A5h 0165   1]                  Instruction : 82
-  +[0A6h 0166   2]                     Reserved : 0000
-  +
-  +[0A8h 0168  12]              Register Region : [Generic Address Structure]
-  +[0A8h 0168   1]                     Space ID : 01 [SystemIO]
-  +[0A9h 0169   1]                    Bit Width : 10
-  +[0AAh 0170   1]                   Bit Offset : 00
-  +[0ABh 0171   1]         Encoded Access Width : 02 [Word Access:16]
-  +[0ACh 0172   8]                      Address : 0000000000000668
-  +
-  +[0B4h 0180   4]                        Value : 00000800
-  +[0B8h 0184   4]                Register Mask : 00000800
-  +
-  +[0BCh 0188   1]              Watchdog Action : 06
-  +[0BDh 0189   1]                  Instruction : 03
-  +[0BEh 0190   2]                     Reserved : 0000
-  +
-  +[0C0h 0192  12]              Register Region : [Generic Address Structure]
-  +[0C0h 0192   1]                     Space ID : 01 [SystemIO]
-  +[0C1h 0193   1]                    Bit Width : 10
-  +[0C2h 0194   1]                   Bit Offset : 00
-  +[0C3h 0195   1]         Encoded Access Width : 02 [Word Access:16]
-  +[0C4h 0196   8]                      Address : 0000000000000672
-  +
-  +[0CCh 0204   4]                        Value : 00000000
-  +[0D0h 0208   4]                Register Mask : 000003FF
-  +
-  +[0D4h 0212   1]              Watchdog Action : 05
-  +[0D5h 0213   1]                  Instruction : 01
-  +[0D6h 0214   2]                     Reserved : 0000
-  +
-  +[0D8h 0216  12]              Register Region : [Generic Address Structure]
-  +[0D8h 0216   1]                     Space ID : 01 [SystemIO]
-  +[0D9h 0217   1]                    Bit Width : 10
-  +[0DAh 0218   1]                   Bit Offset : 00
-  +[0DBh 0219   1]         Encoded Access Width : 02 [Word Access:16]
-  +[0DCh 0220   8]                      Address : 0000000000000672
-  +
-  +[0E4h 0228   4]                        Value : 00000000
-  +[0E8h 0232   4]                Register Mask : 000003FF
-  +
-  +[0ECh 0236   1]              Watchdog Action : 20
-  +[0EDh 0237   1]                  Instruction : 00
-  +[0EEh 0238   2]                     Reserved : 0000
-  +
-  +[0F0h 0240  12]              Register Region : [Generic Address Structure]
-  +[0F0h 0240   1]                     Space ID : 01 [SystemIO]
-  +[0F1h 0241   1]                    Bit Width : 10
-  +[0F2h 0242   1]                   Bit Offset : 00
-  +[0F3h 0243   1]         Encoded Access Width : 02 [Word Access:16]
-  +[0F4h 0244   8]                      Address : 0000000000000666
-  +
-  +[0FCh 0252   4]                        Value : 00000002
-  +[100h 0256   4]                Register Mask : 00000002
-  +
-  +[104h 0260   1]              Watchdog Action : 21
-  +[105h 0261   1]                  Instruction : 82
-  +[106h 0262   2]                     Reserved : 0000
-  +
-  +[108h 0264  12]              Register Region : [Generic Address Structure]
-  +[108h 0264   1]                     Space ID : 01 [SystemIO]
-  +[109h 0265   1]                    Bit Width : 10
-  +[10Ah 0266   1]                   Bit Offset : 00
-  +[10Bh 0267   1]         Encoded Access Width : 02 [Word Access:16]
-  +[10Ch 0268   8]                      Address : 0000000000000666
-  +
-  +[114h 0276   4]                        Value : 00000002
-  +[118h 0280   4]                Register Mask : 00000002
-  +
-  +[11Ch 0284   1]              Watchdog Action : 21
-  +[11Dh 0285   1]                  Instruction : 82
-  +[11Eh 0286   2]                     Reserved : 0000
-  +
-  +[120h 0288  12]              Register Region : [Generic Address Structure]
-  +[120h 0288   1]                     Space ID : 01 [SystemIO]
-  +[121h 0289   1]                    Bit Width : 10
-  +[122h 0290   1]                   Bit Offset : 00
-  +[123h 0291   1]         Encoded Access Width : 02 [Word Access:16]
-  +[124h 0292   8]                      Address : 0000000000000666
-  +
-  +[12Ch 0300   4]                        Value : 00000004
-  +[130h 0304   4]                Register Mask : 00000004
+So, let's keep it simple.
 
-Signed-off-by: Igor Mammedov <imammedo@redhat.com>
-Acked-by: Ani Sinha <anisinha@redhat.com>
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Acked-by: Raphael Norwitz <raphael.s.norwitz@gmail.com>
+Reviewed-by: Daniil Tatianin <d-tatianin@yandex-team.ru>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Tested-by: Lei Yang <leiyang@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-Id: <20260303092532.2410177-7-imammedo@redhat.com>
+Message-Id: <20260420200339.708640-17-vsementsov@yandex-team.ru>
 ---
- tests/data/acpi/x86/q35/WDAT.wdat           | Bin 0 -> 308 bytes
- tests/qtest/bios-tables-test-allowed-diff.h |   1 -
- 2 files changed, 1 deletion(-)
+ hw/virtio/vhost.c | 12 +++---------
+ 1 file changed, 3 insertions(+), 9 deletions(-)
 
-diff --git a/tests/data/acpi/x86/q35/WDAT.wdat b/tests/data/acpi/x86/q35/WDAT.wdat
-index e69de29bb2d1d6434b8b29ae775ad8c2e48c5391..e1e056b390e51c49f11f7b0d35e4e7c55d8067b1 100644
-GIT binary patch
-literal 308
-zcmaivF$w}f3`JkEx{TV)5#kX9FW|0)oq~c}T8Xtc(2GYhPO+$9AY^#?`OH6WH>b6L
-zth#-_J6bm!dNVTt;vLff$K8QJ!5f$W4`2?6f@Jj4QYvm-AjK}Dx5`T;m_2{<;x*QX
-lL4w7nzVfzt``kzV@waK@$$at15&T;93Z<9T{~wRc(JwJ97XbhO
-
-literal 0
-HcmV?d00001
-
-diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
-index 14b680debe..dfb8523c8b 100644
---- a/tests/qtest/bios-tables-test-allowed-diff.h
-+++ b/tests/qtest/bios-tables-test-allowed-diff.h
-@@ -1,2 +1 @@
- /* List of comma-separated changed AML files to ignore */
--"tests/data/acpi/x86/q35/WDAT.wdat",
+diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
+index c71b18cfc8..7f370f393e 100644
+--- a/hw/virtio/vhost.c
++++ b/hw/virtio/vhost.c
+@@ -1624,7 +1624,7 @@ int vhost_dev_init(struct vhost_dev *hdev, void *opaque,
+                                                      busyloop_timeout);
+             if (r < 0) {
+                 error_setg_errno(errp, -r, "Failed to set busyloop timeout");
+-                goto fail_busyloop;
++                goto fail;
+             }
+         }
+     }
+@@ -1664,7 +1664,7 @@ int vhost_dev_init(struct vhost_dev *hdev, void *opaque,
+     if (hdev->migration_blocker != NULL) {
+         r = migrate_add_blocker_normal(&hdev->migration_blocker, errp);
+         if (r < 0) {
+-            goto fail_busyloop;
++            goto fail;
+         }
+     }
+ 
+@@ -1696,17 +1696,11 @@ int vhost_dev_init(struct vhost_dev *hdev, void *opaque,
+                    " than current number of used (%d) and reserved (%d)"
+                    " memory slots for memory devices.", limit, used, reserved);
+         r = -EINVAL;
+-        goto fail_busyloop;
++        goto fail;
+     }
+ 
+     return 0;
+ 
+-fail_busyloop:
+-    if (busyloop_timeout) {
+-        while (--i >= 0) {
+-            vhost_virtqueue_set_busyloop_timeout(hdev, hdev->vq_index + i, 0);
+-        }
+-    }
+ fail:
+     hdev->nvqs = n_initialized_vqs;
+     vhost_dev_cleanup(hdev);
 -- 
 MST
 
