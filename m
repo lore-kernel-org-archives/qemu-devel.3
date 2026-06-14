@@ -4,99 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A33B1CD98C5
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ACF3ECD98D2
 	for <qemu-devel@archiver.kernel.org>; Sun, 14 Jun 2026 19:14:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wYqCE-00069q-Hh; Sun, 14 Jun 2026 15:08:38 -0400
+	id 1wYqDl-0001s0-2B; Sun, 14 Jun 2026 15:10:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wYqC2-00061Z-1e
- for qemu-devel@nongnu.org; Sun, 14 Jun 2026 15:08:26 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wYqDi-0001eU-Pf
+ for qemu-devel@nongnu.org; Sun, 14 Jun 2026 15:10:10 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wYqC0-0002Am-Jq
- for qemu-devel@nongnu.org; Sun, 14 Jun 2026 15:08:25 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wYqDg-0002ya-LS
+ for qemu-devel@nongnu.org; Sun, 14 Jun 2026 15:10:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781464103;
+ s=mimecast20190719; t=1781464207;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=JfJdqs5MKd0CqLIkn3rh1rMCUwFP6s1/sPPGLqw8n/M=;
- b=CsIxeMuFzrM4Rq7vDlHXGe9moMU9A72blX5SZfr6OVtjhFp865i5H4biPFKJtLeGUfswsW
- udvGVeIu18y91z+UF5DZcZlrLYhdj1fESG4nvTeq9VABLAKy2Nmw1ko2hIYho+bC9Z+MZp
- 2cdkkBJ9bPRx1/3W30tjOEfjEMwKH34=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=0FKrtKD3UbgNzo28PGrqkfe8bMWq9NWlfrneEsbjarY=;
+ b=IEQ/yHKeMD4NJUlZbNFeoXDvATRz+4bzNRpZ3U1grLWaeZXcdfG/S41K96pSixDeK0CjCf
+ 5je4Bl+7hETczM+kReLdePJ0aEjVU1r88v6RinCYIxqeBmsPmWVDCw5NswxJD+SWCKhwW0
+ Jp65M9sYg7UN6aAva9sPffOXDtVuX00=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-615-Tu80dsN-M_-6kWGKSbK-Gg-1; Sun, 14 Jun 2026 15:08:19 -0400
-X-MC-Unique: Tu80dsN-M_-6kWGKSbK-Gg-1
-X-Mimecast-MFC-AGG-ID: Tu80dsN-M_-6kWGKSbK-Gg_1781464098
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-490ae461f8dso19277665e9.1
- for <qemu-devel@nongnu.org>; Sun, 14 Jun 2026 12:08:19 -0700 (PDT)
+ us-mta-81-qY3n3hK3P8GfRmUgI6-QRw-1; Sun, 14 Jun 2026 15:10:04 -0400
+X-MC-Unique: qY3n3hK3P8GfRmUgI6-QRw-1
+X-Mimecast-MFC-AGG-ID: qY3n3hK3P8GfRmUgI6-QRw_1781464203
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-490a767b782so15958345e9.2
+ for <qemu-devel@nongnu.org>; Sun, 14 Jun 2026 12:10:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1781464098; x=1782068898; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:from:to
- :cc:subject:date:message-id:reply-to;
- bh=JfJdqs5MKd0CqLIkn3rh1rMCUwFP6s1/sPPGLqw8n/M=;
- b=hSAnX5nkkFNeS3Q9R61jwbT/ola9P5M4XGq7pKadMsTAKntPdkigvACysbMd4rC9Uk
- tLKYaDJ8uP760IW4lI6dZ0Ejvxcts9F2Fp4rpv01HkFQEm6OSjG+bYnGmqqodKYRHIPu
- Xqc61K/DTJw/OVRheqC4DruuXHC+RTQeTWbOYhtrhn2zCrDMQ7tUptzwZP77umJoIc1y
- t/3ctQp5VBD5wuJc1VnH0AuHsNA4ZkOkXYuyZkz9VUHBhP8qI9U5MneIqfLhC2yIc8pt
- Tuo63LCBHBfugTts2SCiDjc7fzSyxAUa+qn6KS9jeXk/wzVb68J6V1irOYl7FeIM6KyP
- gdRQ==
+ d=redhat.com; s=google; t=1781464203; x=1782069003; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=0FKrtKD3UbgNzo28PGrqkfe8bMWq9NWlfrneEsbjarY=;
+ b=n3RrJnGhaJFEOETt0VK/Gh3CrkTLfJf6TOCvoOxCtwYcSsLrOT3NAs/o09sQaT2Maw
+ LeoYZwXKIfsuEeCo528UJ8HJuzvLo+0tXrRJdc7pgO9uFMnsSciSh6QkAADbMbl5KqhL
+ 7uQO/VxLUA4gUGWmH493zjkCG4ueAqFslu34ftOSJkBe/1ZEMF3QOpcf3dCkcuyXdwUK
+ EfQxJ0m9M7jLUtZIKqmHFO89eq+icKeVHwetLFYGZtMh636rl6ffVVvrz5Irpi0zf1RO
+ dX5SA60+k3mH4wrz3X85dT78ZzOYNVVqEn2XoEYhnIXhkK+XqCodqSf8uoRqgwU6noNO
+ mYyQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781464098; x=1782068898;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=JfJdqs5MKd0CqLIkn3rh1rMCUwFP6s1/sPPGLqw8n/M=;
- b=Zq+tZVCdeLmT2VyLEJ5T3XPreLSrUX9+pAl4P4GD4yxYt2XOxGYWhD59Z4qmbH7RUU
- Edc/2YiBZYrUVBZw32KIRZPlzyNh9vmuB9cTmH4yOM0QhwpqtSs9tRkQeRik2Km1r8du
- 0GSQgBciUgOz5pk3iS9RxZ54WytPmVBsx886sNAEGGTFni4Z1fJvV0W03q0gNr+ZcEQ1
- SjtmbhrCuHAO2+7m6qm+Q8io9vMWbicq6GRPGQ4aCD5c8EZEhUj/xZFKmr7XQOo0ZcUR
- oKSvcj6GQ2VA5tVaigtL0iBkZW+2xqIX4f3Itlck8yjoFus/1QJL+Q3ICHdLgWi2AIzr
- 3o4g==
-X-Gm-Message-State: AOJu0Yzd+Zw73QtqX6PDV8yYhwg0HrYkS3IcCgwS//Q25eje8rpWrwcm
- gREG5hzd6uh3ig5iG72t0k/RdvmeisC0GRXYpRI0U8EUgtXZRTBGBQinV/9UWyZKTUQRwEvR55j
- ur+EbOSOQm8LZhpm2vIjpCZN9Z+S/EqVDfU/Wo72xCWfTV5aQJcpTFIYNGb+yoC1xizVzcKVlrV
- tdxztbxbUV1GaiD/W70DuN/95b4MrWSYdyaA==
-X-Gm-Gg: Acq92OGV6kpdAZ07Zl5tTbXlJ03h1AJ9xnGQitSugnVVJW5yd7KYOO/nWrB0g+DVCHt
- J4CtCpuEYtxjCrczaDw1ULSm64k9F7pSt4JqxAQKfbYxJqDK8i7cODYHeohsmgef8Gj2Xp0QxPo
- MJFCppTIoLOh7qr7pSjhe9RjqweRCBOx3+Zw/sRNvneb7kK2AXXdWELAHCnufg+XGv5AdlEAjlS
- Tcl/LfsAvib/5PFy9Nnz0ra1O246sVbZDegaY9vAGvxjljuowu2nAf8Efj15Y0+bOOmPCASmQrF
- P022vr8DFqpWVO/urtiBngS2cWZ2GAZ3gIM+Tk+Vfup30Y69tNu7Td7k+fKqD/wEMKzvJErWzs5
- +ggh4Jg1sPHC1nZzBJ4ti/ANSAGiF3qNHN1ghfqMbmec=
-X-Received: by 2002:a05:600c:c04d:b0:492:1eed:3e67 with SMTP id
- 5b1f17b1804b1-492201439a1mr58945125e9.26.1781464098296; 
- Sun, 14 Jun 2026 12:08:18 -0700 (PDT)
-X-Received: by 2002:a05:600c:c04d:b0:492:1eed:3e67 with SMTP id
- 5b1f17b1804b1-492201439a1mr58944875e9.26.1781464097717; 
- Sun, 14 Jun 2026 12:08:17 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1781464203; x=1782069003;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=0FKrtKD3UbgNzo28PGrqkfe8bMWq9NWlfrneEsbjarY=;
+ b=QB71C0dRZRmRClJqdqsYaUlBIncYUgBLPYjJeRy8pnV05xlNyxQLmo83NJM84OSARA
+ Iyit+739izKsE5+cyIf7NLHjt3i5eb99W06lOT3OajzLLyP2/8Bf7abgkXqg+h0RyZke
+ KqypxlUfC6GodWF35ytdJNoHE3AYISX6m0TUE3RM/rUK+7AABVOOYeo8LI9/Q3Pjlct1
+ gr/WJjC0yOxPzy99bzjPPWOKwewJzM3BVGlewsOMa0RULVWPYA/ad+/MM9YekNBw0sbJ
+ bAsBXkxGB4LrP5qTJA/l+EWWNU4S3uqrLZ+ZJISRYJyMRIBu2XyroIvocGmVhdf4MMTS
+ OYGQ==
+X-Gm-Message-State: AOJu0Ywg6nABcZTVL1QbIanVxPxlayK4sypuOeNZh9nmQUvt06LmZ4BS
+ eh01Xd3CL3Rcu+La+tw2KoTfYVQ2H4ebTDmY53lLJLsKzfi7y3gpTv4VyeN3GtXgSSWgY1q3ySp
+ dO/rb/5pwsfWkbaABtWSUprdwjY5DPOOEUhOLaX5Lsye8vkrCxWSaz2HmeZA+h91vI0RPgMdZw6
+ Yvbv8YSI+woFRf7xzsJjaB8cAfUJq26oabBA==
+X-Gm-Gg: Acq92OE8MDXQe2nHrbtFqV32Zd26V1VPunKVBuq+L9/1268FCXMDZXPoBgpdSjWTBpu
+ smPmaHNQDBiZrDQnYhYm+akGOMd9aXWBdplyuXazIoApG4Lut1j/zTJv0Utpiac2kSm2fyQlMou
+ RPqWkAoo70RCDtSxLoY0NKyz6faq6wJMaAM6SuG+IjaE9PruLNkARo3s8Frfl8Po3LAy4KL2Ypm
+ rLLQ3r3AUpTGVFgxkvpk4RRQHkhX+V0SiIAUakgqL2NjGXeHkkM1hjXIiSvXILT4367qLO5Iakb
+ xvH4coKqVawROAq3n+wgqs5v/ptjgAgApDrH+RXm8iBnkpKjm2WdfbEWIB7yU1daFsGR68FNZvw
+ 0jnBAkxI7UfKE6guHr5OrCPLBW7J6vdE+I+fTG052NZU=
+X-Received: by 2002:a05:600c:6214:b0:492:1e36:1fe8 with SMTP id
+ 5b1f17b1804b1-4921e36204dmr101204795e9.36.1781464203192; 
+ Sun, 14 Jun 2026 12:10:03 -0700 (PDT)
+X-Received: by 2002:a05:600c:6214:b0:492:1e36:1fe8 with SMTP id
+ 5b1f17b1804b1-4921e36204dmr101204465e9.36.1781464202594; 
+ Sun, 14 Jun 2026 12:10:02 -0700 (PDT)
 Received: from redhat.com (IGLD-80-230-85-71.inter.net.il. [80.230.85.71])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-492202e5d6csm196030455e9.3.2026.06.14.12.08.16
+ 5b1f17b1804b1-490ea95b274sm272829555e9.1.2026.06.14.12.10.01
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 14 Jun 2026 12:08:17 -0700 (PDT)
-Date: Sun, 14 Jun 2026 15:08:15 -0400
+ Sun, 14 Jun 2026 12:10:02 -0700 (PDT)
+Date: Sun, 14 Jun 2026 15:10:00 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Stefano Garzarella <sgarzare@redhat.com>, qemu-stable@nongnu.org,
- DARKNAVY <vr@darknavy.com>,
- Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-Subject: [PULL 059/106] libvhost-user: fix buffer overflow in
- virtqueue_read_indirect_desc()
-Message-ID: <85805ee887be4adddb1f1a34f526968adc95e582.1781463125.git.mst@redhat.com>
+ Junjie Cao <junjie.cao@intel.com>,
+ Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ Yi Liu <yi.l.liu@intel.com>, Jason Wang <jasowang@redhat.com>,
+ =?utf-8?Q?Cl=C3=A9ment?= Mathieu--Drif <clement.mathieu--drif@bull.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [PULL 104/106] intel_iommu: fix guest-triggerable abort on oversized
+ MMIO access
+Message-ID: <1d741b375300ad14066c74f7f2d3430114a5cf7f.1781463125.git.mst@redhat.com>
 References: <cover.1781463125.git.mst@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1781463125.git.mst@redhat.com>
 X-Mailer: git-send-email 2.51.2.2891.g4157995a80.dirty
 X-Mutt-Fcc: =sent
@@ -108,7 +108,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -124,65 +124,273 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Stefano Garzarella <sgarzare@redhat.com>
+From: Junjie Cao <junjie.cao@intel.com>
 
-virtqueue_read_indirect_desc() copies an indirect descriptor table
-into a buffer in chunks when the table crosses a memory region
-boundary. The destination is a struct vring_desc pointer but is
-advanced by a byte count, so each increment moves the pointer by
-read_len elements instead of read_len bytes, writing beyond the
-buffer.
+An 8-byte guest access to a 32-bit-only VT-d register hit
+assert(size == 4) and aborted QEMU.  Remove all 25 asserts.
 
-Use a char pointer for the destination so that the arithmetic
-advances correctly.
+All 3 read-side and 18 of 22 write-side asserts are at
+non-8-aligned offsets (unreachable, rejected by
+memory_region_access_valid()) -- simply deleted.
 
-While at it, change the source from a struct vring_desc pointer
-to a void pointer: when the table is split across regions,
-vu_gpa_to_va() can return a pointer into the middle of a descriptor,
-so casting it to a struct vring_desc pointer is wrong. The pointer is
-only used as a memcpy() source, so a void pointer is fine.
+The remaining 4, all writes at 8-aligned offsets, are
+reachable: FECTL 0x38, IECTL 0xa0, IEADDR 0xa8, PECTL 0xe0.
+Truncating the high half via vtd_set_long() matches prior
+behavior; log under -d guest_errors since the VT-d spec is
+silent on oversized accesses to 32-bit registers, and add a
+comment so future maintainers don't delete the check as
+"harmless".  min_access_size stays 4, so all size-based
+branches on 64-bit register pairs are preserved.
 
-Fixes: CVE-2026-6425
-Fixes: 293084a719 ("libvhost-user: Support across-memory-boundary access")
-Cc: qemu-stable@nongnu.org
-Reported-by: DARKNAVY <vr@darknavy.com>
-Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Found by generic-fuzz (24 distinct crash seeds, all fixed).
+
+Suggested-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+Signed-off-by: Junjie Cao <junjie.cao@intel.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Reviewed-by: Yi Liu <yi.l.liu@intel.com>
+Reviewed-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-Id: <20260417132645.121192-2-sgarzare@redhat.com>
+Message-Id: <20260514180703.85686-2-junjie.cao@intel.com>
 ---
- subprojects/libvhost-user/libvhost-user.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ hw/i386/intel_iommu.c | 74 ++++++++++++++++++++++++++++---------------
+ 1 file changed, 49 insertions(+), 25 deletions(-)
 
-diff --git a/subprojects/libvhost-user/libvhost-user.c b/subprojects/libvhost-user/libvhost-user.c
-index 9c630c2170..014d210748 100644
---- a/subprojects/libvhost-user/libvhost-user.c
-+++ b/subprojects/libvhost-user/libvhost-user.c
-@@ -2391,8 +2391,9 @@ static int
- virtqueue_read_indirect_desc(VuDev *dev, struct vring_desc *desc,
-                              uint64_t addr, size_t len)
- {
--    struct vring_desc *ori_desc;
-+    char *dst_desc = (char *)desc;
-     uint64_t read_len;
-+    void *ori_desc;
+diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
+index 8bb2a1e339..744cdfd2e6 100644
+--- a/hw/i386/intel_iommu.c
++++ b/hw/i386/intel_iommu.c
+@@ -21,6 +21,7 @@
  
-     if (len > (VIRTQUEUE_MAX_SIZE * sizeof(struct vring_desc))) {
-         return -1;
-@@ -2409,10 +2410,10 @@ virtqueue_read_indirect_desc(VuDev *dev, struct vring_desc *desc,
-             return -1;
-         }
+ #include "qemu/osdep.h"
+ #include "qemu/error-report.h"
++#include "qemu/log.h"
+ #include "qemu/main-loop.h"
+ #include "qapi/error.h"
+ #include "hw/core/sysbus.h"
+@@ -3659,7 +3660,6 @@ static uint64_t vtd_mem_read(void *opaque, hwaddr addr, unsigned size)
+         break;
  
--        memcpy(desc, ori_desc, read_len);
-+        memcpy(dst_desc, ori_desc, read_len);
-         len -= read_len;
-         addr += read_len;
--        desc += read_len;
-+        dst_desc += read_len;
-     }
+     case DMAR_RTADDR_REG_HI:
+-        assert(size == 4);
+         val = vtd_get_quad_raw(s, DMAR_RTADDR_REG) >> 32;
+         break;
  
-     return 0;
+@@ -3674,12 +3674,10 @@ static uint64_t vtd_mem_read(void *opaque, hwaddr addr, unsigned size)
+         break;
+ 
+     case DMAR_IQA_REG_HI:
+-        assert(size == 4);
+         val = s->iq >> 32;
+         break;
+ 
+     case DMAR_PEUADDR_REG:
+-        assert(size == 4);
+         val = vtd_get_long_raw(s, DMAR_PEUADDR_REG);
+         break;
+ 
+@@ -3725,7 +3723,6 @@ static void vtd_mem_write(void *opaque, hwaddr addr,
+         break;
+ 
+     case DMAR_CCMD_REG_HI:
+-        assert(size == 4);
+         vtd_set_long(s, addr, val);
+         vtd_handle_ccmd_write(s);
+         break;
+@@ -3741,13 +3738,11 @@ static void vtd_mem_write(void *opaque, hwaddr addr,
+         break;
+ 
+     case DMAR_IOTLB_REG_HI:
+-        assert(size == 4);
+         vtd_set_long(s, addr, val);
+         vtd_handle_iotlb_write(s);
+         break;
+ 
+     case DMAR_PEUADDR_REG:
+-        assert(size == 4);
+         vtd_set_long(s, addr, val);
+         break;
+ 
+@@ -3761,27 +3756,35 @@ static void vtd_mem_write(void *opaque, hwaddr addr,
+         break;
+ 
+     case DMAR_IVA_REG_HI:
+-        assert(size == 4);
+         vtd_set_long(s, addr, val);
+         break;
+ 
+     /* Fault Status Register, 32-bit */
+     case DMAR_FSTS_REG:
+-        assert(size == 4);
+         vtd_set_long(s, addr, val);
+         vtd_handle_fsts_write(s);
+         break;
+ 
+     /* Fault Event Control Register, 32-bit */
+     case DMAR_FECTL_REG:
+-        assert(size == 4);
++        /*
++         * 32-bit register at an 8-byte-aligned offset: a well-formed
++         * 8-byte guest access reaches this handler.  vtd_set_long()
++         * takes uint32_t and truncates the high half -- undefined per
++         * the VT-d spec but harmless here.  Flag it under
++         * -d guest_errors so the guest-side bug surfaces.
++         */
++        if (size != 4) {
++            qemu_log_mask(LOG_GUEST_ERROR,
++                          "%s: invalid %u-byte access to 32-bit reg "
++                          "addr=0x%" PRIx64 "\n", __func__, size, addr);
++        }
+         vtd_set_long(s, addr, val);
+         vtd_handle_fectl_write(s);
+         break;
+ 
+     /* Fault Event Data Register, 32-bit */
+     case DMAR_FEDATA_REG:
+-        assert(size == 4);
+         vtd_set_long(s, addr, val);
+         break;
+ 
+@@ -3800,13 +3803,11 @@ static void vtd_mem_write(void *opaque, hwaddr addr,
+ 
+     /* Fault Event Upper Address Register, 32-bit */
+     case DMAR_FEUADDR_REG:
+-        assert(size == 4);
+         vtd_set_long(s, addr, val);
+         break;
+ 
+     /* Protected Memory Enable Register, 32-bit */
+     case DMAR_PMEN_REG:
+-        assert(size == 4);
+         vtd_set_long(s, addr, val);
+         break;
+ 
+@@ -3820,7 +3821,6 @@ static void vtd_mem_write(void *opaque, hwaddr addr,
+         break;
+ 
+     case DMAR_RTADDR_REG_HI:
+-        assert(size == 4);
+         vtd_set_long(s, addr, val);
+         break;
+ 
+@@ -3835,7 +3835,6 @@ static void vtd_mem_write(void *opaque, hwaddr addr,
+         break;
+ 
+     case DMAR_IQT_REG_HI:
+-        assert(size == 4);
+         vtd_set_long(s, addr, val);
+         /* 19:63 of IQT_REG is RsvdZ, do nothing here */
+         break;
+@@ -3851,39 +3850,57 @@ static void vtd_mem_write(void *opaque, hwaddr addr,
+         break;
+ 
+     case DMAR_IQA_REG_HI:
+-        assert(size == 4);
+         vtd_set_long(s, addr, val);
+         break;
+ 
+     /* Invalidation Completion Status Register, 32-bit */
+     case DMAR_ICS_REG:
+-        assert(size == 4);
+         vtd_set_long(s, addr, val);
+         vtd_handle_ics_write(s);
+         break;
+ 
+     /* Invalidation Event Control Register, 32-bit */
+     case DMAR_IECTL_REG:
+-        assert(size == 4);
++        /*
++         * 32-bit register at an 8-byte-aligned offset: a well-formed
++         * 8-byte guest access reaches this handler.  vtd_set_long()
++         * takes uint32_t and truncates the high half -- undefined per
++         * the VT-d spec but harmless here.  Flag it under
++         * -d guest_errors so the guest-side bug surfaces.
++         */
++        if (size != 4) {
++            qemu_log_mask(LOG_GUEST_ERROR,
++                          "%s: invalid %u-byte access to 32-bit reg "
++                          "addr=0x%" PRIx64 "\n", __func__, size, addr);
++        }
+         vtd_set_long(s, addr, val);
+         vtd_handle_iectl_write(s);
+         break;
+ 
+     /* Invalidation Event Data Register, 32-bit */
+     case DMAR_IEDATA_REG:
+-        assert(size == 4);
+         vtd_set_long(s, addr, val);
+         break;
+ 
+     /* Invalidation Event Address Register, 32-bit */
+     case DMAR_IEADDR_REG:
+-        assert(size == 4);
++        /*
++         * 32-bit register at an 8-byte-aligned offset: a well-formed
++         * 8-byte guest access reaches this handler.  vtd_set_long()
++         * takes uint32_t and truncates the high half -- undefined per
++         * the VT-d spec but harmless here.  Flag it under
++         * -d guest_errors so the guest-side bug surfaces.
++         */
++        if (size != 4) {
++            qemu_log_mask(LOG_GUEST_ERROR,
++                          "%s: invalid %u-byte access to 32-bit reg "
++                          "addr=0x%" PRIx64 "\n", __func__, size, addr);
++        }
+         vtd_set_long(s, addr, val);
+         break;
+ 
+     /* Invalidation Event Upper Address Register, 32-bit */
+     case DMAR_IEUADDR_REG:
+-        assert(size == 4);
+         vtd_set_long(s, addr, val);
+         break;
+ 
+@@ -3897,7 +3914,6 @@ static void vtd_mem_write(void *opaque, hwaddr addr,
+         break;
+ 
+     case DMAR_FRCD_REG_0_1:
+-        assert(size == 4);
+         vtd_set_long(s, addr, val);
+         break;
+ 
+@@ -3912,7 +3928,6 @@ static void vtd_mem_write(void *opaque, hwaddr addr,
+         break;
+ 
+     case DMAR_FRCD_REG_0_3:
+-        assert(size == 4);
+         vtd_set_long(s, addr, val);
+         /* May clear bit 127 (Fault), update PPF */
+         vtd_update_fsts_ppf(s);
+@@ -3927,18 +3942,27 @@ static void vtd_mem_write(void *opaque, hwaddr addr,
+         break;
+ 
+     case DMAR_IRTA_REG_HI:
+-        assert(size == 4);
+         vtd_set_long(s, addr, val);
+         break;
+ 
+     case DMAR_PRS_REG:
+-        assert(size == 4);
+         vtd_set_long(s, addr, val);
+         vtd_handle_prs_write(s);
+         break;
+ 
+     case DMAR_PECTL_REG:
+-        assert(size == 4);
++        /*
++         * 32-bit register at an 8-byte-aligned offset: a well-formed
++         * 8-byte guest access reaches this handler.  vtd_set_long()
++         * takes uint32_t and truncates the high half -- undefined per
++         * the VT-d spec but harmless here.  Flag it under
++         * -d guest_errors so the guest-side bug surfaces.
++         */
++        if (size != 4) {
++            qemu_log_mask(LOG_GUEST_ERROR,
++                          "%s: invalid %u-byte access to 32-bit reg "
++                          "addr=0x%" PRIx64 "\n", __func__, size, addr);
++        }
+         vtd_set_long(s, addr, val);
+         vtd_handle_pectl_write(s);
+         break;
 -- 
 MST
 
