@@ -4,91 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6567BCD98C5
-	for <qemu-devel@archiver.kernel.org>; Sun, 14 Jun 2026 19:10:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64438CD98D2
+	for <qemu-devel@archiver.kernel.org>; Sun, 14 Jun 2026 19:10:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wYqBy-0005pQ-4r; Sun, 14 Jun 2026 15:08:22 -0400
+	id 1wYqCG-0006Oh-VX; Sun, 14 Jun 2026 15:08:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wYqBx-0005iU-6Y
- for qemu-devel@nongnu.org; Sun, 14 Jun 2026 15:08:21 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wYqCF-0006EN-5O
+ for qemu-devel@nongnu.org; Sun, 14 Jun 2026 15:08:39 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wYqBv-0002A1-90
- for qemu-devel@nongnu.org; Sun, 14 Jun 2026 15:08:20 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wYqCD-0002Ie-1p
+ for qemu-devel@nongnu.org; Sun, 14 Jun 2026 15:08:38 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781464098;
+ s=mimecast20190719; t=1781464115;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=O5nKD/4fkDkbf90rlckX3ZpTPGbqwwxuPCnIOHWj7n0=;
- b=Zoc4MNJ2dbCO8e1P1PW6PAEjvBd0Ej7ER7xOwrhUH0H0r9CK9GYxgmi20gJmOGOHayxSch
- pyfq/xTULrm/MxCwqlfcLt9sgGvFVlUJvYkzLR/TXosx85M8yQ3Z4QUQDridxuRDeXisZA
- lvmP2fwBa9ZKsGYqqni+xyeMeLPCTPg=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=Bz0Hzu3fLL2IW1bug82AU7111y2zS870mTq6ckWmhqw=;
+ b=ZOrHFkcVRTkHv5ZRXoGI4IR8ZWnqcNowPJLlcMtcyHjUcy3xhkLrMBkA8w0/FXW4QCTGNI
+ Levnmbbhf5NxlDiWWNRvxnDHzd9eDnHQrMma2dcnP9qHWeFfKfT9O2E52/wctXTo76dD+l
+ av2fSV9+aLYkZgPa70Q+q/zZkTS5d1A=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-342-EFjpZo8WMHqbcWE18byiLA-1; Sun, 14 Jun 2026 15:08:17 -0400
-X-MC-Unique: EFjpZo8WMHqbcWE18byiLA-1
-X-Mimecast-MFC-AGG-ID: EFjpZo8WMHqbcWE18byiLA_1781464096
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-490ae016853so16990335e9.2
- for <qemu-devel@nongnu.org>; Sun, 14 Jun 2026 12:08:17 -0700 (PDT)
+ us-mta-380-j_IcqRYbMai8SiKGzRQrBQ-1; Sun, 14 Jun 2026 15:08:34 -0400
+X-MC-Unique: j_IcqRYbMai8SiKGzRQrBQ-1
+X-Mimecast-MFC-AGG-ID: j_IcqRYbMai8SiKGzRQrBQ_1781464113
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-4600c8cb13aso1820945f8f.1
+ for <qemu-devel@nongnu.org>; Sun, 14 Jun 2026 12:08:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1781464096; x=1782068896; darn=nongnu.org;
+ d=redhat.com; s=google; t=1781464113; x=1782068913; darn=nongnu.org;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=O5nKD/4fkDkbf90rlckX3ZpTPGbqwwxuPCnIOHWj7n0=;
- b=LNnIaXf+mnYzGXei9I7deiqr1kDqSItWIm/+z9mSAttff9wd11e912dSOFkTbL0T3/
- GCehpuyw7lPEWIcKNCrOhTWr3KdfLTP1aHen3Ktp8VlQHL6Eegw0KnDZqgsKkte+abcE
- 6mNnpXZ2U/KZaieQQrK18q9/PM6JwAht0P5Qj5zhLkeped4PZSdZYXgoMXX1mZNcSXlB
- SSCScePvWezYpArX7A3pikOjfxoZG6apzwG0HSXVa5OuTAByNXoaHT01IEJzEjYF9d5h
- EFnz+br1A4svj8pUjAGhe6bW/zMr/3hTUBaIpqF+vdrYqGWrHf/34cR7rOidgrUCr6Xw
- /mEw==
+ bh=Bz0Hzu3fLL2IW1bug82AU7111y2zS870mTq6ckWmhqw=;
+ b=rQ1mKKaHQp0A6fNR65oT2WImhUDDg6snaK2BFn7a+/1G8o3JPFNjE2qGzNZdAFfh5R
+ Ra5PC+pgjIWXslfaiU2jtAt5YIAJud/ApF9gPxQwTCp3AonwvJRe/TOOc2zBKf3hIGWk
+ NMlGdvtIMEM0c4A4S7Y/pbNQwLXxaVwN9NfeU3dS7uhZODnO7pT07EosJvdA7ET5/jch
+ 3e88oMzODP2NVvqbwMs7AmzwXe6Viv/hnAFnaxUO4U33kvei7miLLKNDdNg5wrNgwUy2
+ hVQhooc7hZqtTyMNqBVEb4FjjBowxfToFKMG91JTRWXc/XgcGUwYY3XjaeFsmMcb/o7x
+ cILg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781464096; x=1782068896;
+ d=1e100.net; s=20251104; t=1781464113; x=1782068913;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=O5nKD/4fkDkbf90rlckX3ZpTPGbqwwxuPCnIOHWj7n0=;
- b=B2A03umubap6E8IFExtLpU2SOCXzMyE/ATWMCS+mv5slfubbiD6coQjrUOGbr6DWHr
- z87FIyXJT9N3Y6k4l+vhj1x7KJ5YV8tjAN5gSudLUa4UV8SYW178GjhqD7e0Yd3eAxaf
- PdfPV/qvrOa4HQ8g3JVFBhUXeyudBOWcYwHfxNwvk2nvK3ZVCBx/RnwK7VSX3vU5uL0J
- i+29tURk6vFm62S0L5Yq5VKZPn/YxFKHkVVZQExZ5QVH+dDHd7XkQ3HIrAkpne5WH2sX
- Iovi21Ub2LKqv3PNf+tduWykzl2RkcbcgOCw5GJZQvgDqJdqEoDyIMpBe6XX3ijivHD5
- nnbw==
-X-Gm-Message-State: AOJu0YwM/7iVUOF7oRpUlQVVsf8m8ErFBoell3vPhUxvyhtRh4BfWLiP
- /y/T50Rw48Yhz13C3mCaNgidSSWeGjGDv8CbmhLBRT7j4RXCt6jyr6c+9QsdoLOg+f7sWTgRMpE
- J+VkXuNCGD4xPjro+SHy4hJ+EJC1P0mZQG363Kn9rkmB/DxZdXd8TTISgT6poBr1crHSDfz1bT0
- UAk5VsKduwQIacNO64FjwNmd/eKKmbILp1uQ==
-X-Gm-Gg: Acq92OFS5jlz5ugdJfbrzHpXqegWpt7YqK8oNsjyvn1K8y10J4Bjw0i5FVY0AEEQ+SF
- leHXmzaP12VzR3l0+PRBSa//86skAvFNwR67kLFbPMQfV4B9ND0yZ9K72fZIixKQLboGlO87fKD
- woQ7O53mrQu0QUrpwoloC/EkMOEh0HWVLbamJTOyrnzFqy4yJtuJb2DsQ85y6roC7zlcVkSExm7
- ZNbaqgprNb71jnTeJqSWjD+t67Wh/QdjRY5m+mLGie0BDxfrcQdlomZMXG8NlGuDbZXATkuCMUY
- ijVjWQFxJqSh8zVJMoWN82THH8Gv9Slp/09DQNgzeLJqKz/0UQf9ZX2+ikvGX7Q4cPYEF+VbfGw
- 08pfJf2ZcUKZ8YzUtBZC6ddalrGQhq0iBbyAKMHTd7IU=
-X-Received: by 2002:a7b:c7d2:0:b0:490:c2a2:e91c with SMTP id
- 5b1f17b1804b1-490ec521e1cmr104464225e9.34.1781464096080; 
- Sun, 14 Jun 2026 12:08:16 -0700 (PDT)
-X-Received: by 2002:a7b:c7d2:0:b0:490:c2a2:e91c with SMTP id
- 5b1f17b1804b1-490ec521e1cmr104463945e9.34.1781464095350; 
- Sun, 14 Jun 2026 12:08:15 -0700 (PDT)
+ bh=Bz0Hzu3fLL2IW1bug82AU7111y2zS870mTq6ckWmhqw=;
+ b=A0gbJsL49i81WrUAf/9y+0T0S5bdTsOcXxKd0wuJcLfQr5cx8GouTXYs9XloRzxcNj
+ HsxEkZ5ib1yEb/HCXiZRsetOWPuhG7QqBRBRXuhUlcC2U8zszKTZ/cXRS78NUqp9/J7j
+ ttzy2ySP9X6Ewna2dyaHoyeOlqxDPebLvGQmpyTuMR8jz2jQp+kNYt97gjZ97AJIuxyQ
+ ZamjkueoV/5AhllLJVHcr1BB5y6JzOPO3ROtMV6k4PzBhAlKS3qVsA2MAt3BZX+jTGAi
+ bmeHN/KM/4fLoVj5hIBOViSjzhykNqJTIHpV9dbXjEuVg/DQYDbFNnCHVw9spGwjpl/e
+ Wk+w==
+X-Gm-Message-State: AOJu0YxOyJgY+sVuFvul2ejuUNuPp1pT3xwzJ6nTduCal2FA1wYZjVU3
+ ZlANqfMDkSJ2aJZw4RA8oRiLn1AMjC3ixY43FZwbLczeYSZSSSmjj9bISVJMcVoy/03uX44vjf+
+ GN+hyF9snfuYVZS81iAIO6ojY5UX2EBJbUaS6dtCG7lfnCe2hfijI2cwkStyeQag2bDqRHHm/+5
+ OOJjsJyFg622vHWldiwlT9nQUSU4jznuNVqw==
+X-Gm-Gg: Acq92OEURk2woOz/aqy1w0M0I3jZAr7MumYuYsSA8j2kfluvPHfm4ralNmMKIs+C+72
+ j35InSRnEKw2dLxuxajY6IYjCIATPDWcQDmpteDrCxRrJVnAIAMJ7FQwQtpvLpIPNQK5dXQBmVN
+ ALMDEdPR6ojkThw/vtbELeXZqdq4CwtxtT7FjON+OoDY3BgMn+pxzCBKFBz0OUy8FIaoilKdaj6
+ hM1vP4o7LIZbAQswQ7jNhxUD340dJKDeMYGHsLPG1CH/DlkNpVy78+LCTFcw6tHA261O+Zj6bm8
+ pwNkpJkKb62WhAZS5fy12VYoHl6VlW9ofp5C/fRLe1lzV9JzV5iWR8Ascz70gCy1ZlOmLNI296o
+ HziXmUPwQgOgo1D43A7Y11r4Eyn7U6cKFadLsn9GOB2M=
+X-Received: by 2002:a05:6000:43d6:10b0:44b:5398:4e85 with SMTP id
+ ffacd0b85a97d-4606db9839emr11411837f8f.22.1781464112871; 
+ Sun, 14 Jun 2026 12:08:32 -0700 (PDT)
+X-Received: by 2002:a05:6000:43d6:10b0:44b:5398:4e85 with SMTP id
+ ffacd0b85a97d-4606db9839emr11411809f8f.22.1781464112382; 
+ Sun, 14 Jun 2026 12:08:32 -0700 (PDT)
 Received: from redhat.com (IGLD-80-230-85-71.inter.net.il. [80.230.85.71])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-492203d2449sm168759905e9.14.2026.06.14.12.08.13
+ ffacd0b85a97d-4606f2b0d28sm27643353f8f.20.2026.06.14.12.08.31
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 14 Jun 2026 12:08:15 -0700 (PDT)
-Date: Sun, 14 Jun 2026 15:08:12 -0400
+ Sun, 14 Jun 2026 12:08:32 -0700 (PDT)
+Date: Sun, 14 Jun 2026 15:08:30 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ Max Makarov <maxpain177@gmail.com>, Max Makarov <maxpain@linux.com>,
  Stefano Garzarella <sgarzare@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Subject: [PULL 058/106] vhost-user: add VHOST_USER_PROTOCOL_F_GPA_ADDRESSES
-Message-ID: <be51b7177c9c7c6f1e2ff1b4cd250649e1d6dcaf.1781463125.git.mst@redhat.com>
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ qemu-block@nongnu.org
+Subject: [PULL 065/106] vhost-user-blk-server: do not advertise
+ VIRTIO_BLK_F_SIZE_MAX with size_max=0
+Message-ID: <e777ba135f2a1a171cdcd468cfb29e89f1b27fd5.1781463125.git.mst@redhat.com>
 References: <cover.1781463125.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -120,172 +122,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+From: Max Makarov <maxpain177@gmail.com>
 
-Unlike the kernel, vhost-user backend knows nothing about QEMU's
-userspace addresses. We can pass GPA instead and nothing changes.
-Generally, vhost-user servers need these addresses only to calculate
-offsets inside memory regions. Still, some servers (QEMU's internal
-is one example) may do checks for passed addresses to be "userspace
-addresses", for example check for non-zero. That's why we need
-additional negotiation for the feature.
+The QSD vhost-user-blk backend advertises VIRTIO_BLK_F_SIZE_MAX but
+sets size_max=0 in config, creating a contradictory state. The feature
+bit tells the guest that size_max is valid, but the value is zero.
 
-The benefit: this opens the doors for further implementation of
-local migration (live-update) with passing open vhost-related FDs
-through UNIX domain socket. This way the connection with backend is
-kept live and untouched.
+Windows viostor trusts the feature bit, reads size_max=0, and uses it
+in scatter-gather calculations producing zero-length segments that hang
+I/O. The disk appears empty (no GPT, no partitions), causing
+INACCESSIBLE_BOOT_DEVICE BSOD. Linux tolerates this because
+blk_validate_limits() silently corrects max_segment_size=0 to
+BLK_MAX_SEGMENT_SIZE (65536).
 
-Without this change, we would have to communicate with backend to
-inform it about UVA address changes, but it's better to simply use
-more stable GPA numbers, which don't change after migration.
+This affects any VMM using QSD as a vhost-user-blk backend (QEMU,
+Cloud Hypervisor, etc.), since both pass through SIZE_MAX from the
+backend to the guest via feature intersection.
 
-Additionally, the current implementation exposes QEMU's process
-address space by passing UVA, which breaks ASLR. New protocol
-feature avoids that.
+Remove VIRTIO_BLK_F_SIZE_MAX from the backend feature bits. The
+size_max config field remains zero but is now ignored by guests since
+the feature is not negotiated.
 
-Note, that we do nothing with backend messages and replies.
-Frontends have to work with backends userspace addresses anyway,
-because they come from userfaultfd.
-
-Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Signed-off-by: Max Makarov <maxpain@linux.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Based-on: <20260206095258.894504-1-vsementsov@yandex-team.ru>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-Id: <20260420202032.714884-11-vsementsov@yandex-team.ru>
+Message-Id: <20260331152856.1802-1-maxpain@linux.com>
 ---
- docs/interop/vhost-user.rst    | 21 +++++++++++++++++----
- hw/virtio/vhost-user.c         | 22 +++++++++++++++++-----
- include/hw/virtio/vhost-user.h |  1 +
- 3 files changed, 35 insertions(+), 9 deletions(-)
+ block/export/vhost-user-blk-server.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/docs/interop/vhost-user.rst b/docs/interop/vhost-user.rst
-index 137c9f3669..8dcb030c53 100644
---- a/docs/interop/vhost-user.rst
-+++ b/docs/interop/vhost-user.rst
-@@ -164,8 +164,16 @@ A vring address description
- 
- :log: a 64-bit guest address for logging
- 
--Note that a ring address is an IOVA if ``VIRTIO_F_IOMMU_PLATFORM`` has
--been negotiated. Otherwise it is a user address.
-+.. Note::
-+   When ``VIRTIO_F_IOMMU_PLATFORM`` is negotiated, ring addresses are IOVAs.
-+
-+   Otherwise, when ``VHOST_USER_PROTOCOL_F_GPA_ADDRESSES`` is negotiated, the
-+   ring addresses are guest physical addresses for frontend messages. That
-+   does not apply to backend replies.
-+
-+   Finally, when neither ``VIRTIO_F_IOMMU_PLATFORM`` nor
-+   ``VHOST_USER_PROTOCOL_F_GPA_ADDRESSES`` features are negotiated, ring
-+   addresses are user virtual addresses.
- 
- .. _memory_region_description:
- 
-@@ -180,7 +188,9 @@ Memory region description
- 
- :size: a 64-bit size
- 
--:user address: a 64-bit user address
-+:user address: a 64-bit user address. When ``VHOST_USER_PROTOCOL_F_GPA_ADDRESSES``
-+  is negotiated, this field contain guest physical address instead and must
-+  duplicate ``guest address`` field.
- 
- :mmap offset: a 64-bit offset where region starts in the mapped memory
- 
-@@ -252,7 +262,9 @@ An IOTLB message
- 
- :size: a 64-bit size
- 
--:user address: a 64-bit user address
-+:user address: a 64-bit user address. When ``VHOST_USER_PROTOCOL_F_GPA_ADDRESSES``
-+  is negotiated, this field contain guest physical address instead, except for
-+  ``VHOST_USER_BACKEND_IOTLB_MSG``, where it's user address anyway.
- 
- :permissions flags: an 8-bit value:
-   - 0: No access
-@@ -1063,6 +1075,7 @@ Protocol features
-   #define VHOST_USER_PROTOCOL_F_SHARED_OBJECT           18
-   #define VHOST_USER_PROTOCOL_F_DEVICE_STATE            19
-   #define VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFLIGHT 20
-+  #define VHOST_USER_PROTOCOL_F_GPA_ADDRESSES           21
- 
- Front-end message types
- -----------------------
-diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
-index 78ffb25d6b..15042c0f3c 100644
---- a/hw/virtio/vhost-user.c
-+++ b/hw/virtio/vhost-user.c
-@@ -563,12 +563,22 @@ static MemoryRegion *vhost_user_get_mr_data(uint64_t addr, ram_addr_t *offset,
-     return mr;
- }
- 
--static void vhost_user_fill_msg_region(VhostUserMemoryRegion *dst,
-+static bool vhost_user_gpa_addresses(struct vhost_dev *dev)
-+{
-+    return vhost_user_has_protocol_feature(
-+        dev, VHOST_USER_PROTOCOL_F_GPA_ADDRESSES);
-+}
-+
-+static void vhost_user_fill_msg_region(struct vhost_dev *dev,
-+                                       VhostUserMemoryRegion *dst,
-                                        struct vhost_memory_region *src,
-                                        uint64_t mmap_offset)
- {
-+    bool use_phys = vhost_user_gpa_addresses(dev);
-+
-     assert(src != NULL && dst != NULL);
--    dst->userspace_addr = src->userspace_addr;
-+
-+    dst->userspace_addr = use_phys ? src->guest_phys_addr : src->userspace_addr;
-     dst->memory_size = src->memory_size;
-     dst->guest_phys_addr = src->guest_phys_addr;
-     dst->mmap_offset = mmap_offset;
-@@ -606,7 +616,7 @@ static int vhost_user_fill_set_mem_table_msg(struct vhost_user *u,
-                 error_report("Failed preparing vhost-user memory table msg");
-                 return -ENOBUFS;
-             }
--            vhost_user_fill_msg_region(&region_buffer, reg, offset);
-+            vhost_user_fill_msg_region(dev, &region_buffer, reg, offset);
-             msg->payload.memory.regions[*fd_num] = region_buffer;
-             fds[(*fd_num)++] = fd;
-         } else if (track_ramblocks) {
-@@ -752,7 +762,7 @@ static int send_remove_regions(struct vhost_dev *dev,
- 
-         if (fd > 0) {
-             msg->hdr.request = VHOST_USER_REM_MEM_REG;
--            vhost_user_fill_msg_region(&region_buffer, shadow_reg, 0);
-+            vhost_user_fill_msg_region(dev, &region_buffer, shadow_reg, 0);
-             msg->payload.mem_reg.region = region_buffer;
- 
-             ret = vhost_user_write(dev, msg, NULL, 0);
-@@ -813,7 +823,7 @@ static int send_add_regions(struct vhost_dev *dev,
-                 u->region_rb[reg_idx] = mr->ram_block;
-             }
-             msg->hdr.request = VHOST_USER_ADD_MEM_REG;
--            vhost_user_fill_msg_region(&region_buffer, reg, offset);
-+            vhost_user_fill_msg_region(dev, &region_buffer, reg, offset);
-             msg->payload.mem_reg.region = region_buffer;
- 
-             ret = vhost_user_write(dev, msg, &fd, 1);
-@@ -3151,4 +3161,6 @@ const VhostOps user_ops = {
-         .vhost_supports_device_state = vhost_user_supports_device_state,
-         .vhost_set_device_state_fd = vhost_user_set_device_state_fd,
-         .vhost_check_device_state = vhost_user_check_device_state,
-+        .vhost_phys_vring_addr = vhost_user_gpa_addresses,
-+        .vhost_phys_iotlb_msg = vhost_user_gpa_addresses,
- };
-diff --git a/include/hw/virtio/vhost-user.h b/include/hw/virtio/vhost-user.h
-index 0e576fc538..5ab70dab7e 100644
---- a/include/hw/virtio/vhost-user.h
-+++ b/include/hw/virtio/vhost-user.h
-@@ -34,6 +34,7 @@ enum VhostUserProtocolFeature {
-     VHOST_USER_PROTOCOL_F_SHARED_OBJECT = 18,
-     VHOST_USER_PROTOCOL_F_DEVICE_STATE = 19,
-     VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFLIGHT = 20,
-+    VHOST_USER_PROTOCOL_F_GPA_ADDRESSES = 21,
-     VHOST_USER_PROTOCOL_F_MAX
- };
- 
+diff --git a/block/export/vhost-user-blk-server.c b/block/export/vhost-user-blk-server.c
+index 67912a3e17..46c0d303df 100644
+--- a/block/export/vhost-user-blk-server.c
++++ b/block/export/vhost-user-blk-server.c
+@@ -119,7 +119,7 @@ static uint64_t vu_blk_get_features(VuDev *dev)
+     uint64_t features;
+     VuServer *server = container_of(dev, VuServer, vu_dev);
+     VuBlkExport *vexp = container_of(server, VuBlkExport, vu_server);
+-    features = 1ull << VIRTIO_BLK_F_SIZE_MAX |
++    features =
+                1ull << VIRTIO_BLK_F_SEG_MAX |
+                1ull << VIRTIO_BLK_F_TOPOLOGY |
+                1ull << VIRTIO_BLK_F_BLK_SIZE |
 -- 
 MST
 
