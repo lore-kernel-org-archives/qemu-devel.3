@@ -4,95 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C7AECD98D2
-	for <qemu-devel@archiver.kernel.org>; Sun, 14 Jun 2026 19:16:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE53ACD98C5
+	for <qemu-devel@archiver.kernel.org>; Sun, 14 Jun 2026 19:16:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wYqBv-0005Uj-Ey; Sun, 14 Jun 2026 15:08:19 -0400
+	id 1wYqDm-0001wJ-36; Sun, 14 Jun 2026 15:10:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wYqBt-0005DX-56
- for qemu-devel@nongnu.org; Sun, 14 Jun 2026 15:08:17 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wYqDi-0001em-R3
+ for qemu-devel@nongnu.org; Sun, 14 Jun 2026 15:10:10 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wYqBq-00029G-Gs
- for qemu-devel@nongnu.org; Sun, 14 Jun 2026 15:08:16 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wYqDh-0002yf-3D
+ for qemu-devel@nongnu.org; Sun, 14 Jun 2026 15:10:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781464093;
+ s=mimecast20190719; t=1781464208;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=xchnRDkuMDmqYE0l4bXozaE3u6jXG7uZukZrRqShITs=;
- b=Q75JWVrye/IH3QhY8Q4KgnLNDxoC6cB5lgr6Gl6gB/cO7YahhF7RSIngid0rl69Be45rQO
- wfKrp3QKOWgExnsuHXHCXPlPNIRHKdKrlFdjrkrIxJPjgu+piX8q9FeXIkzCRKfO8TGn4A
- jIxz6jSyIdiaWYvHoGso4vNOvuPAxEo=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=OVFR5ZMMA9tW5EcU89K6NhXfWseK/D10CzlcrHs1uUE=;
+ b=XF3cMjwvY92h3hg85p4Rzl1lkMCcg0GgM3F5kOotbUv1MwVi0VZqRPgZgdYAt4G+gqCC05
+ 9yXcyFdul2OixmStS2fBWZnhCgpdnT3j1MOQ9otX99kQ48vTm2PriAeAOHVtCfE4j9jcGC
+ eTNzeqCoNIcEogNUWf7JbSJKNsgiN30=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-631-_y5p0wo1O1CJC2IDb8sZ9w-1; Sun, 14 Jun 2026 15:08:12 -0400
-X-MC-Unique: _y5p0wo1O1CJC2IDb8sZ9w-1
-X-Mimecast-MFC-AGG-ID: _y5p0wo1O1CJC2IDb8sZ9w_1781464091
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-490b93debc8so25304325e9.1
- for <qemu-devel@nongnu.org>; Sun, 14 Jun 2026 12:08:12 -0700 (PDT)
+ us-mta-49-UpyOhAsUNISVl0V8LN_wSQ-1; Sun, 14 Jun 2026 15:10:07 -0400
+X-MC-Unique: UpyOhAsUNISVl0V8LN_wSQ-1
+X-Mimecast-MFC-AGG-ID: UpyOhAsUNISVl0V8LN_wSQ_1781464206
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-490b7959b9fso25363255e9.2
+ for <qemu-devel@nongnu.org>; Sun, 14 Jun 2026 12:10:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1781464091; x=1782068891; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=xchnRDkuMDmqYE0l4bXozaE3u6jXG7uZukZrRqShITs=;
- b=i8kjYaVb9C9byOq5KkulgQDJ+x/G43WNhe83tVPRIpFrQoUbf3nLC+kUWQ2GFdpiFW
- Kp6mYLgPFrixeHCvq5t59iNLMYcDI8OYWZF/XZ99c9uVGTqD9ezH+UOjDJ91j4q6zZYF
- W5EiUqNMbYAsK5wVR1UwrYwfX+eu+JjCeIBOFw9qJEcu8uKalQ6hBLaKfc0mdrFDPEqA
- StjKfHLsviWvGVqSsTHvgR8FvDCib6gbMaqmyCBL3jPbGD+Pi0Ycx2wWD2iu0Iz7FvBP
- dHj33PdC/06B0FFzJN+xHRVqreK2/CgmhCyTVQYvhXpoYbtuyZ+4tP4Fo72zv6xK/wps
- 9jPg==
+ d=redhat.com; s=google; t=1781464206; x=1782069006; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=OVFR5ZMMA9tW5EcU89K6NhXfWseK/D10CzlcrHs1uUE=;
+ b=R26UMC29TN/RNoaGxRcDQmmF6QHsGH8wrWbrn8BKZ9p3P/pIiq+bSpsc8vA5AnKGq9
+ LayDQCpF5NQIe7TIjI5vAwn/Sb0bR0cVqS8v6TJIEiD1l325lnSEu23G4DpSGh+u+y5q
+ E0OkPHp+5gvSi32TPa9rW8p+7HhOBa6utscA8293ubO+Onerja3KX5na7TRA6Yy6qPbZ
+ gOWrUyVJqqSv7XA8qSZVOz9xj2ZUgPNkfI7iPT5N89B78LGEo8Gj6EwIA7//m5pjOoMa
+ wGQZOeuo6mzFpuydg9y2pMs5sc10uaQ8seQhyEPM2HfX+MF+WT27HclqX8+k+4Pzl1jS
+ TwyQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781464091; x=1782068891;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=xchnRDkuMDmqYE0l4bXozaE3u6jXG7uZukZrRqShITs=;
- b=lftz8vUSrVuLL6NBd8xO6PZna5za+VmEgQKPKPHesaffcSjxljWME4zAX47fRZxLdb
- aZSCjVcl+GMlL8Rcn57pXm28pef+byeVzIQVkzR4DpPKmSo+qDdDcywYoOkRjHjhcCrB
- YMqvvkZxNwhzQMt3JX4dGShrEtN7T2NqHRn5UOdna48cTGvm0zIK8cnWo6wap8SHa4cM
- 81eeCVbPKWEEQmKtH/jaYlJMfqe/JpudxRUmake/iJZgo8izqiuMJ8EcPM+XolGWQzmc
- tNWW5TjBGMFceTr7poW4Ghquw8gpnKvHo96b4A6MBvj+LwV+YDveM1I1e60BrTzs+Sg9
- zfMg==
-X-Gm-Message-State: AOJu0YzYRKM8WkMl6/HdfWJP09yXJeMQe4v3k5+wyPTi3uj50L9HDfD1
- CNF5EswreZLr1f+Kx5ki2xCs+5Z1ZERiyigwwPyeIcPLp6fI1db7Em+KfKdEVZofV4h1tRQ6foW
- UN6siqeNPtTjEjy6CPLpToU0I7R6sUUE2xqywSGXdXPn9nCyKOULb8vbJMbyrduwpxWpXuGPH0t
- OphFnZ5q001cJZdV7ueudG0yJfsaYkuKE4Gw==
-X-Gm-Gg: Acq92OHKKSHfnCCPVXACOMdxjj0AhymKI8ZJrWljEmGOykkfIvxQV43qRetFH2KQhvY
- bp+rXHrYvXFI6eznyFYNt+c5R90biQMWflYEbXIANOkB0ErQB5/f8nG5jhfeC5rSutV5aBE/CdM
- yJiT/Fzt4snFJPQmqK2gJJVJpyKyCTH9ZdcH/Bfk5g7yn0P9KMQVf06RBivB/rxojlpeQIi6Qkv
- 9fV5L37DMJoferYeXb7xxSY55/4x23zl8kP23JAKE95drl19rMymCL944LbivZAngHyIu+H+BP9
- kw7/xFS8lkHp9vPfP6CoTS8mDQJ0iyJK2lDWWIvWoe9z42fNMwQm1J4KGi9hv+7dq5QsvZ/8ch2
- qRjU4clFkhUAz4h/B9pPobE/3eGzgWu0k6b0skBlKA8M=
-X-Received: by 2002:a05:600c:6542:b0:48a:93f8:dd02 with SMTP id
- 5b1f17b1804b1-4922006283cmr65644785e9.14.1781464091011; 
- Sun, 14 Jun 2026 12:08:11 -0700 (PDT)
-X-Received: by 2002:a05:600c:6542:b0:48a:93f8:dd02 with SMTP id
- 5b1f17b1804b1-4922006283cmr65644435e9.14.1781464090368; 
- Sun, 14 Jun 2026 12:08:10 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1781464206; x=1782069006;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=OVFR5ZMMA9tW5EcU89K6NhXfWseK/D10CzlcrHs1uUE=;
+ b=kJvzpvdvSvX2/7+gzA0yMZFF8rMOj1PWYWg8FxEnDHlyAvXRAeZGl2ZMMZfa1B3QVG
+ KTFPI1SeSG7SbIc1VIauMseHqxv0VOSFEAvpZ8dri9ylMZ+UsXr+yFA9qHyMmV0Mn26E
+ S4MheYIqvO1VJ+91vhzaULW9Av2YHWuQ1CgueFgjs/HyaSsCEUWjZvk/yYT1LMtlAlmR
+ Fm+mFnhuU5j6rf98u1BM1PZqWFPGxMsBTOsfso7G6e6ctsYUh7NpXh3NmaItBMVOnoMF
+ UbgpUF/CriOEzyaTPBkJixnIpNA1hP+xwNbLMS0g+L4ou9F/YE3IKY2BJHOgt4HspYJp
+ g+9Q==
+X-Gm-Message-State: AOJu0YxgPwSQASN5EnUdJsaHFsq6VJ3CIsejo+8Lv8fHWmvrTAVhq4/V
+ GDouh8KflVbPfv4N2gOFR5pjHNR1K+HcrxbvBmxP8gRLViW1fHchw5lpvPrGoVLDzEbVBhioWdG
+ g8vQ1bi/KmQXwgHlUFEGnXVgcV6Xl4q9Gp8VEBHYIz4U5Vi0L4Zwj/oEYLo9rjkC4LxRKxQSpbF
+ IFIE++STnR7fpsNcFylBz6amROdmEH2hy/oA==
+X-Gm-Gg: Acq92OG6+I5tPV3pO4taA2YUslgwEKgMfVydCIeW1YIRJJeVm9eGZ51xjcjgHDqWEJF
+ n0vFq5uAg6ys7i3w34jeHwntVE+h+mgfC6gdTjYs2s/+75p6lnTQyzWmwwA7AVAnsKqSFW8Xjg0
+ lgJm+QoSCQYTCKYXS8FrsAq2VJPVS1OeXJpGPaDQ0AD2G+YOoUwatwvarjscM78tuFb2PGPCMFO
+ 2ujupDOt/ehmCd5minpNrZ0VUkuGTIM0DQY+GxjhoF5H6Y6tEhJ0cwuCKEUbmzSlt7XaXEpGY9X
+ zczwpAvpXu6cE+yWxT5R8vx1cX8qqO/2GEif+Dr49QAlzJ3IixLXL9FVlzJwTLIQUFOjk6GJP+R
+ yH9xxfN+m5Wu76/J5I0Eg1cprMDGHPELLm/4dGnBGj5w=
+X-Received: by 2002:a05:600c:a310:b0:490:e19b:bd99 with SMTP id
+ 5b1f17b1804b1-490ec5021c2mr143426275e9.30.1781464205633; 
+ Sun, 14 Jun 2026 12:10:05 -0700 (PDT)
+X-Received: by 2002:a05:600c:a310:b0:490:e19b:bd99 with SMTP id
+ 5b1f17b1804b1-490ec5021c2mr143425735e9.30.1781464205042; 
+ Sun, 14 Jun 2026 12:10:05 -0700 (PDT)
 Received: from redhat.com (IGLD-80-230-85-71.inter.net.il. [80.230.85.71])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4606f2c5266sm29983246f8f.29.2026.06.14.12.08.08
+ 5b1f17b1804b1-492203d08bcsm184331835e9.13.2026.06.14.12.10.03
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 14 Jun 2026 12:08:09 -0700 (PDT)
-Date: Sun, 14 Jun 2026 15:08:08 -0400
+ Sun, 14 Jun 2026 12:10:04 -0700 (PDT)
+Date: Sun, 14 Jun 2026 15:10:02 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- Stefano Garzarella <sgarzare@redhat.com>
-Subject: [PULL 056/106] vhost: rename vring pointer fields to reflect user
- addresses
-Message-ID: <3fbef0689a3cde55efce72a3f6333031a3149f69.1781463125.git.mst@redhat.com>
+ Junjie Cao <junjie.cao@intel.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Yi Liu <yi.l.liu@intel.com>, Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ Jason Wang <jasowang@redhat.com>,
+ =?utf-8?Q?Cl=C3=A9ment?= Mathieu--Drif <clement.mathieu--drif@bull.com>,
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PULL 105/106] tests/qtest: add 8-byte MMIO access sweep for
+ intel-iommu
+Message-ID: <ddc0a856d2955677bfda5358ce216ea34e115495.1781463125.git.mst@redhat.com>
 References: <cover.1781463125.git.mst@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1781463125.git.mst@redhat.com>
 X-Mailer: git-send-email 2.51.2.2891.g4157995a80.dirty
 X-Mutt-Fcc: =sent
@@ -120,139 +128,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+From: Junjie Cao <junjie.cao@intel.com>
 
-Rename vq->desc/avail/used to vq->desc_user/avail_user/used_user to
-clearly indicate these fields contain user space addresses, not
-physical addresses.
+Sweep every 4-byte-aligned offset in the VT-d MMIO register space
+with 8-byte reads and writes to verify that no register handler
+aborts on an oversized access.
 
-Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Junjie Cao <junjie.cao@intel.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Based-on: <20260206095258.894504-1-vsementsov@yandex-team.ru>
+Reviewed-by: Yi Liu <yi.l.liu@intel.com>
+Reviewed-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-Id: <20260420202032.714884-9-vsementsov@yandex-team.ru>
+Message-Id: <20260514180703.85686-3-junjie.cao@intel.com>
 ---
- hw/virtio/vhost.c         | 37 +++++++++++++++++++------------------
- include/hw/virtio/vhost.h |  6 +++---
- 2 files changed, 22 insertions(+), 21 deletions(-)
+ tests/qtest/intel-iommu-test.c | 30 ++++++++++++++++++++++++++++++
+ 1 file changed, 30 insertions(+)
 
-diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
-index 6bb6b07e19..e3d452a763 100644
---- a/hw/virtio/vhost.c
-+++ b/hw/virtio/vhost.c
-@@ -489,11 +489,11 @@ static void vhost_vrings_unmap(struct vhost_dev *dev,
-         return;
-     }
+diff --git a/tests/qtest/intel-iommu-test.c b/tests/qtest/intel-iommu-test.c
+index 30ee6524df..ef6e6eb8b6 100644
+--- a/tests/qtest/intel-iommu-test.c
++++ b/tests/qtest/intel-iommu-test.c
+@@ -17,11 +17,39 @@
+ #define ECAP_STAGE_1_FIXED1   (VTD_ECAP_QI |  VTD_ECAP_IR | VTD_ECAP_IRO | \
+                               VTD_ECAP_MHMV | VTD_ECAP_SMTS | VTD_ECAP_FSTS)
  
--    vhost_memory_unmap(dev, &vq->used, vq->used_size, touched,
-+    vhost_memory_unmap(dev, &vq->used_user, vq->used_size, touched,
-                        touched ? vq->used_size : 0);
--    vhost_memory_unmap(dev, &vq->avail, vq->avail_size, 0,
-+    vhost_memory_unmap(dev, &vq->avail_user, vq->avail_size, 0,
-                        touched ? vq->avail_size : 0);
--    vhost_memory_unmap(dev, &vq->desc, vq->desc_size, 0,
-+    vhost_memory_unmap(dev, &vq->desc_user, vq->desc_size, 0,
-                        touched ? vq->desc_size : 0);
++static inline uint32_t vtd_reg_readl(QTestState *s, uint64_t offset)
++{
++    return qtest_readl(s, Q35_HOST_BRIDGE_IOMMU_ADDR + offset);
++}
++
+ static inline uint64_t vtd_reg_readq(QTestState *s, uint64_t offset)
+ {
+     return qtest_readq(s, Q35_HOST_BRIDGE_IOMMU_ADDR + offset);
  }
  
-@@ -504,13 +504,13 @@ static int vhost_vrings_map(struct vhost_dev *dev,
++static inline void vtd_reg_writeq(QTestState *s, uint64_t offset,
++                                  uint64_t value)
++{
++    qtest_writeq(s, Q35_HOST_BRIDGE_IOMMU_ADDR + offset, value);
++}
++
++static void test_intel_iommu_8byte_access(void)
++{
++    QTestState *s;
++    uint64_t off;
++
++    s = qtest_init("-M q35 -device intel-iommu");
++
++    for (off = 0; off < DMAR_REG_SIZE; off += 4) {
++        vtd_reg_readq(s, off);
++        vtd_reg_writeq(s, off, 0);
++    }
++
++    g_assert_cmpuint(vtd_reg_readl(s, DMAR_VER_REG), !=, 0);
++
++    qtest_quit(s);
++}
++
+ static void test_intel_iommu_stage_1(void)
  {
-     vq->desc_size = virtio_queue_get_desc_size(vdev, idx);
-     vq->desc_phys = virtio_queue_get_desc_addr(vdev, idx);
--    vq->desc = NULL;
-+    vq->desc_user = NULL;
-     vq->avail_size = virtio_queue_get_avail_size(vdev, idx);
-     vq->avail_phys = virtio_queue_get_avail_addr(vdev, idx);
--    vq->avail = NULL;
-+    vq->avail_user = NULL;
-     vq->used_size = virtio_queue_get_used_size(vdev, idx);
-     vq->used_phys = virtio_queue_get_used_addr(vdev, idx);
--    vq->used = NULL;
-+    vq->used_user = NULL;
+     uint8_t init_csr[DMAR_REG_SIZE];     /* register values */
+@@ -58,6 +86,8 @@ static void test_intel_iommu_stage_1(void)
+ int main(int argc, char **argv)
+ {
+     g_test_init(&argc, &argv, NULL);
++    qtest_add_func("/q35/intel-iommu/8byte-access",
++                   test_intel_iommu_8byte_access);
+     qtest_add_func("/q35/intel-iommu/stage-1", test_intel_iommu_stage_1);
  
-     if (vq->desc_phys == 0) {
-         /* Queue might not be ready for start */
-@@ -521,16 +521,17 @@ static int vhost_vrings_map(struct vhost_dev *dev,
-         return 1;
-     }
- 
--    vq->desc = vhost_memory_map(dev, vq->desc_phys, vq->desc_size, false);
--    if (!vq->desc) {
-+    vq->desc_user = vhost_memory_map(dev, vq->desc_phys, vq->desc_size, false);
-+    if (!vq->desc_user) {
-         goto fail;
-     }
--    vq->avail = vhost_memory_map(dev, vq->avail_phys, vq->avail_size, false);
--    if (!vq->avail) {
-+    vq->avail_user = vhost_memory_map(dev, vq->avail_phys, vq->avail_size,
-+                                      false);
-+    if (!vq->avail_user) {
-         goto fail;
-     }
--    vq->used = vhost_memory_map(dev, vq->used_phys, vq->used_size, true);
--    if (!vq->used) {
-+    vq->used_user = vhost_memory_map(dev, vq->used_phys, vq->used_size, true);
-+    if (!vq->used_user) {
-         goto fail;
-     }
- 
-@@ -594,7 +595,7 @@ static int vhost_verify_ring_mappings(struct vhost_dev *dev,
- 
-         j = 0;
-         r = vhost_verify_ring_part_mapping(
--                vq->desc, vq->desc_phys, vq->desc_size,
-+                vq->desc_user, vq->desc_phys, vq->desc_size,
-                 reg_hva, reg_gpa, reg_size);
-         if (r) {
-             break;
-@@ -602,7 +603,7 @@ static int vhost_verify_ring_mappings(struct vhost_dev *dev,
- 
-         j++;
-         r = vhost_verify_ring_part_mapping(
--                vq->avail, vq->avail_phys, vq->avail_size,
-+                vq->avail_user, vq->avail_phys, vq->avail_size,
-                 reg_hva, reg_gpa, reg_size);
-         if (r) {
-             break;
-@@ -610,7 +611,7 @@ static int vhost_verify_ring_mappings(struct vhost_dev *dev,
- 
-         j++;
-         r = vhost_verify_ring_part_mapping(
--                vq->used, vq->used_phys, vq->used_size,
-+                vq->used_user, vq->used_phys, vq->used_size,
-                 reg_hva, reg_gpa, reg_size);
-         if (r) {
-             break;
-@@ -1106,9 +1107,9 @@ static int vhost_virtqueue_set_addr(struct vhost_dev *dev,
-         addr.avail_user_addr = (uint64_t)(unsigned long)vq->avail_phys;
-         addr.used_user_addr = (uint64_t)(unsigned long)vq->used_phys;
-     } else {
--        addr.desc_user_addr = (uint64_t)(unsigned long)vq->desc;
--        addr.avail_user_addr = (uint64_t)(unsigned long)vq->avail;
--        addr.used_user_addr = (uint64_t)(unsigned long)vq->used;
-+        addr.desc_user_addr = (uint64_t)(unsigned long)vq->desc_user;
-+        addr.avail_user_addr = (uint64_t)(unsigned long)vq->avail_user;
-+        addr.used_user_addr = (uint64_t)(unsigned long)vq->used_user;
-     }
-     addr.index = idx;
-     addr.log_guest_addr = vq->used_phys;
-diff --git a/include/hw/virtio/vhost.h b/include/hw/virtio/vhost.h
-index b292e9f0fe..684bafcaad 100644
---- a/include/hw/virtio/vhost.h
-+++ b/include/hw/virtio/vhost.h
-@@ -24,9 +24,9 @@ struct vhost_inflight {
- struct vhost_virtqueue {
-     int kick;
-     int call;
--    void *desc;
--    void *avail;
--    void *used;
-+    void *desc_user;
-+    void *avail_user;
-+    void *used_user;
-     int num;
-     unsigned long long desc_phys;
-     unsigned desc_size;
+     return g_test_run();
 -- 
 MST
 
