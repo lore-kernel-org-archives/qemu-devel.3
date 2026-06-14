@@ -4,110 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25596CD98C5
-	for <qemu-devel@archiver.kernel.org>; Sun, 14 Jun 2026 19:10:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55714CD98C5
+	for <qemu-devel@archiver.kernel.org>; Sun, 14 Jun 2026 19:10:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wYqAP-0007d0-OR; Sun, 14 Jun 2026 15:06:45 -0400
+	id 1wYqDs-0002Js-5u; Sun, 14 Jun 2026 15:10:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wYqAL-0007Z2-VC
- for qemu-devel@nongnu.org; Sun, 14 Jun 2026 15:06:42 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wYqDq-0002Hn-Ek
+ for qemu-devel@nongnu.org; Sun, 14 Jun 2026 15:10:18 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wYqAI-0001lC-M9
- for qemu-devel@nongnu.org; Sun, 14 Jun 2026 15:06:40 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wYqDn-00032Z-JG
+ for qemu-devel@nongnu.org; Sun, 14 Jun 2026 15:10:18 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781463998;
+ s=mimecast20190719; t=1781464214;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=t42E1gvfXHbcdWrJGb73splz5VVQusgkDd/EZry/Ttg=;
- b=A99TvxXsjl/t0z81FvQmuDzdT5nNI/H/Ms0yqaMes58JtZl3SsgtzfI88XQBD6CoCO37mn
- l1KhlEVYKCnoPxCF6c6Y2oZk4Ctpqu1DQn1gExlHcw6HuuZUfyMVUSnli6cckcXC3YjxlL
- WTaO4NDE0/+j0jwztU7KUQvpdVIYnoc=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ content-transfer-encoding:content-transfer-encoding;
+ bh=LnNxzP9XAq69P0B3GbSiMUnuv2x3axi6ZVMhkxfIDZI=;
+ b=bOtJujeWDSKP2OcMb2o6gLz2Mqq3FtsZlUq+qjgEZ06oAYyy1PFSf+tg4p8mk97KeIaXgk
+ MSkpoQIlZwLr/SL/68ICNDw5LN+VYe1vS0No2t2Y6QuasuhmAz1PPC776bbjhPGksh7uGs
+ AkYYJZAcPmRF82OyQ6VwMYe5K4qMwz4=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-550-Le1UZl6xOrqDlA6OaaGhNA-1; Sun, 14 Jun 2026 15:06:36 -0400
-X-MC-Unique: Le1UZl6xOrqDlA6OaaGhNA-1
-X-Mimecast-MFC-AGG-ID: Le1UZl6xOrqDlA6OaaGhNA_1781463995
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-45ef4931de5so2131874f8f.1
- for <qemu-devel@nongnu.org>; Sun, 14 Jun 2026 12:06:36 -0700 (PDT)
+ us-mta-35-fnAQycRdPNid_07Ffk0Big-1; Sun, 14 Jun 2026 15:10:11 -0400
+X-MC-Unique: fnAQycRdPNid_07Ffk0Big-1
+X-Mimecast-MFC-AGG-ID: fnAQycRdPNid_07Ffk0Big_1781464210
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-490a767c7dcso16789305e9.2
+ for <qemu-devel@nongnu.org>; Sun, 14 Jun 2026 12:10:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1781463995; x=1782068795; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=t42E1gvfXHbcdWrJGb73splz5VVQusgkDd/EZry/Ttg=;
- b=E5Uo42Tq8pj+3BikIeCRfJf5YgLRSYQyClK4NMhJFPOOlnKFj1oDmWtmAzkb/3i/nn
- +WDprWzWkgiKp4bSnmV6jpA2w6f5dekI+pps2AHWHTsFbz7ci159HGPQxoenxVCMpGah
- otIUNfBqkm85ZO+NyzcMZVGLscL+9eUD3Il1Ox8v0RdRpVyHka0HVRzKf+UlR0TUr8VI
- CtEr8A2hhxldT0cK0O0Wdbed5QtZz40NDWUPzkv3NZvtXyQvUl6M/qPU3iFPPy0JjTWT
- YBFZ+KxKMbcibuY4Bx2UIovs+0TjJP/YT4tSozF+t2uvCUT+umZ0kBV15Z5059AGEPF1
- 7Psg==
+ d=redhat.com; s=google; t=1781464210; x=1782069010; darn=nongnu.org;
+ h=content-transfer-encoding:content-disposition:mime-version
+ :message-id:subject:cc:to:from:date:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=LnNxzP9XAq69P0B3GbSiMUnuv2x3axi6ZVMhkxfIDZI=;
+ b=d95mFkuXH/RN8tJFZ+jMLMMbpxJjdrNSbp5/xhOH7bnExA8t8YYCYUepfT9+cGyc3m
+ 8bIoztAv56p8HvLgnwGNyhe9lLpSIvfJFJJrwMKTh3+Acv7zT94W9E+Cb1vEKYv62SHy
+ 54IZfRhGWT0C89RdUTYnBI5XsQeYwJsvh6R420XfhfJfVhCDfdYXHaKhj54+mL4lZ73h
+ u+L3lJXE5Cem4YeHko0AJKmZRxwLDz3lXohq9ilWuDP0KKWr2Vsqt8CMjfWpM7aFqs/I
+ ELvM2j6Qj1jixcWM3rfc7iYrGgg763bRl3BeWokWYOyEZjtTtpKalAVCJcDi59H8qhku
+ mCpg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781463995; x=1782068795;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=t42E1gvfXHbcdWrJGb73splz5VVQusgkDd/EZry/Ttg=;
- b=r/kDODG7t3/zzvIHi3jVaLYUTKnEuAomwj2Lb92WL3orrGlTVfiFCMxYQ95DT6IEic
- /bv2YwA4wrYWuPRXKswa5uxEHcCDlWyCGcmC3x1Ehsc3VbhrUlAtBGUja92uuWhuXmo+
- 5ztFX067EM6QjxrejW6W1i+XmoBeSfASFJHdQlhLOxKtaCaN55hLPFE5ddU4B9Sk+m9p
- NLMjlsDgDEKJeAxMtMapodsEXd1JMEYaK7dypWu5rEHF8MkLUmPq8lhyg3Mx14Y+kWPq
- h2C+6wkqH1ZuL1OPmCMyMt7Z2iY9n1cl3e01YP4Bp2Yri+N5bgbbnT+gGr3+AxX8iCUP
- 9VNQ==
-X-Gm-Message-State: AOJu0YyjozT/mALkrWyTIzzUIPTOmyMwPCxlbxx34jvdNQuMvOE7YGH/
- iN5aIuU2yagwJUxSThbnhUQvemaoxcezlt2rEsXlPZQweZjDIyhf7ZHLW3DKwZNqqEWaoxKFWTI
- wKpM8WEzpNTq5XYSaBdIOlu7zA45sUzGT86ZCpJmygewcGC4wJm03KgeM5tfirAbAhhibu8czmT
- aPg8BNM+lb0pv3RkYovSUHtmljEldEcFytsw==
-X-Gm-Gg: Acq92OFk4ar4wha/emdRk5sZEKmp1r79Lcbb++mtii3XIZSUCZNrVJSxsCYqg/dErf6
- NzaEhXzptFhft9wJuzboZaP+3/fCEBMbO0S83x3YIpB3mcyOQDpXpIfu74E2TGtUxvBufV84EdG
- pA2ZLS8KXmzgIqeFJ0W1qNVtGS1HQlEuimYykoXumSZNHSr/Hl5QIoNpHy/FRQfopwkbLiDLaAg
- dvFACAkr85pbAKeYN/GbxeOx2QdOtJqNXFEmZKjscuR7qcMzldt5ktAzljpPEOoAOVtoeLPKf11
- 2PTFeDqmMm42pflPzFZDxBoWmXZweRL06Il8NThkVt6bmdki7WxpKUuy4K9EExRmvuJYyc7Aazj
- gzjimjkv3/CZu5iK/KNzZPWvBQgGaHSIqjEDmpC7YmvE=
-X-Received: by 2002:a05:6000:2287:b0:45e:e936:5e30 with SMTP id
- ffacd0b85a97d-4606f21804dmr13761442f8f.6.1781463995258; 
- Sun, 14 Jun 2026 12:06:35 -0700 (PDT)
-X-Received: by 2002:a05:6000:2287:b0:45e:e936:5e30 with SMTP id
- ffacd0b85a97d-4606f21804dmr13761393f8f.6.1781463994631; 
- Sun, 14 Jun 2026 12:06:34 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1781464210; x=1782069010;
+ h=content-transfer-encoding:content-disposition:mime-version
+ :message-id:subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=LnNxzP9XAq69P0B3GbSiMUnuv2x3axi6ZVMhkxfIDZI=;
+ b=D9j/nB2tF0upwrLwmXN6XaRdjru7r8BBuzo9CTkPdKqZVl9UeryDvuSVr51lXf/djB
+ z51XHB/Wdo8UMmP2be8ciHEsuX2nkLNy2N+cn2gxtJ9k9x43OYBMaU9A+mSKJecJ9lvN
+ ZesuNt8PpuPte1Q2lcsmoM1g4Q/HJirVEfNx7psMyb60eoCR72WWa76ol9u5L1joSk6K
+ cIcgnpPpYbVgixF5Er9w4eqqCdSxtQU3Va16Ip10x3/4eTNakb1n3dVGl0Vqt5+JjRDn
+ rVaArjjrl/Sab+abjtHK5BlS8onw2LF+jzmRaz0q/9OUGgSLYHKxay/C+QuUDDHMj7OG
+ YnTA==
+X-Gm-Message-State: AOJu0YwAZWc84h7PpArf0WPwcjVY8k/5eO19rlU4mIGuURB1D/6ipqza
+ uL5LaaKDz+h7tFY03nNqXNDtKIkLigPgIJ65+RLo9VuZdEbtfJMFZZzvLvXR18hmL9WOJqvZE0F
+ rN/mY6heJros3cq1sU3S7GEd/js+LOyjKpZxhxtZlJH7lzZY5qeBh7w9oq7rd6TLXlZCoc6amkc
+ fzIKeYo0FSpzOH+2Eyvb6p0gHIx98LNuq20w==
+X-Gm-Gg: Acq92OFS1Z/mXlP7hqMDaxljzASCgCI72vlEMyQoJoLtRYztPLqnqzgSbmDjNit7+lm
+ CQdMrAVsPWCXj9uOcT0WYyhIyEA0nYCZBa3ELL+u38bV6CUkt0s5dHo4IQOXFgIXiuQhFJUusOX
+ oN5MfrsEG2IhNQzNYLl+3Cn6Dh6PX3PjSmi+VGWYwXRVUqdqLrstOgTq8kdO6Ol5S2uHmbrnqTe
+ 79DAE2ycCkUl43U9MMftvcuJrelV/ZtQBa3bSRh/62BukzeOyRFm9GZ/M6JjlRcZKwa0UAZvT0g
+ vI7oUIV0LxtxYxzGZSdntRCFo3fz5MTI+UH31p0LgUcvWjkD3De1InuZjj9NBunuWD0ZfnXidY4
+ aMZDy1K3QZRzga2dkA5z2iV1E1JEqhZldOhnDh0mIvJs=
+X-Received: by 2002:a05:600c:4f91:b0:490:c2a3:23d3 with SMTP id
+ 5b1f17b1804b1-4922017a410mr93617965e9.35.1781464209798; 
+ Sun, 14 Jun 2026 12:10:09 -0700 (PDT)
+X-Received: by 2002:a05:600c:4f91:b0:490:c2a3:23d3 with SMTP id
+ 5b1f17b1804b1-4922017a410mr93617705e9.35.1781464209191; 
+ Sun, 14 Jun 2026 12:10:09 -0700 (PDT)
 Received: from redhat.com (IGLD-80-230-85-71.inter.net.il. [80.230.85.71])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4606f2e6a8fsm27235280f8f.37.2026.06.14.12.06.33
+ 5b1f17b1804b1-490ea95b274sm272838265e9.1.2026.06.14.12.10.08
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 14 Jun 2026 12:06:34 -0700 (PDT)
-Date: Sun, 14 Jun 2026 15:06:32 -0400
+ Sun, 14 Jun 2026 12:10:08 -0700 (PDT)
+Date: Sun, 14 Jun 2026 15:10:07 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Zhenzhong Duan <zhenzhong.duan@intel.com>,
- Yi Liu <yi.l.liu@intel.com>, Xudong Hao <xudong.hao@intel.com>,
- Jason Wang <jasowang@redhat.com>,
- =?utf-8?Q?Cl=C3=A9ment?= Mathieu--Drif <clement.mathieu--drif@bull.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 020/106] intel_iommu_accel: Switch to VTDAccelPASIDCacheEntry
- for PASID bind/unbind and PIOTLB invalidation
-Message-ID: <4101df1201fa60eb3a0932485881453661a2edbf.1781463125.git.mst@redhat.com>
-References: <cover.1781463125.git.mst@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>
+Subject: [PULL 000/106] pci, vhost, virtio, iommu: features, fixes, cleanups
+Message-ID: <cover.1781463125.git.mst@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <cover.1781463125.git.mst@redhat.com>
+Content-Transfer-Encoding: 8bit
 X-Mailer: git-send-email 2.51.2.2891.g4157995a80.dirty
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -124,362 +117,359 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Zhenzhong Duan <zhenzhong.duan@intel.com>
+Resolved a bunch of conflicts.
+If you see anything wrong here, pls holler.
 
-This patch switches from VTDAddressSpace to VTDAccelPASIDCacheEntry for
-handling PASID bind/unbind operations and PIOTLB invalidations in
-passthrough scenarios. VTDAccelPASIDCacheEntry was introduced to cache
-PASID entries for passthrough devices and is now ready to propagate
-PASID bind/unbind operations and PIOTLB invalidations to the host.
 
-Unlike the previous approach, VTDAccelPASIDCacheEntry supports both
-IOMMU_NO_PASID (rid_pasid) and other valid PASIDs, so this switch drops
-IOMMU_NO_PASID limitations that existed in the prior PASID bind/unbind
-and PIOTLB invalidation path. For IOMMU_NO_PASID of passthrough devices,
-VTDAddressSpace continues to handle shadow page modifications to the
-host, but no longer manages PASID bind/unbind operations or PIOTLB
-invalidations for passthrough scenarios.
+The following changes since commit f5a2438405d4ae8b62de7c9b39fac0b2155ee544:
 
-Co-developed-by: Yi Liu <yi.l.liu@intel.com>
-Signed-off-by: Yi Liu <yi.l.liu@intel.com>
-Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
-Tested-by: Xudong Hao <xudong.hao@intel.com>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+  Merge tag 'pull-qapi-2026-05-21' of https://repo.or.cz/qemu/armbru into staging (2026-05-21 09:00:22 -0400)
+
+are available in the Git repository at:
+
+  https://git.kernel.org/pub/scm/virt/kvm/mst/qemu.git tags/for_upstream
+
+for you to fetch changes up to 31dbba011d0f3a21432d0629fae0b4885f2eed25:
+
+  hw/scsi/vhost-scsi: fix build with older kernel headers (2026-06-03 08:36:42 -0400)
+
+----------------------------------------------------------------
+pci, vhost, virtio, iommu: features, fixes, cleanups
+
+intel_iommu:
+    PASID support for passthrough
+    some properties renamed
+virtio-rtc:
+    new device
+acpi:
+    watchdog (x86 q35)
+    COM irqs are now shared
+vhost-user:
+    vhost-user passes GPA not HVA now
+    vhost SHMEM_MAP/UNMAP support
+vhost-vdpa:
+    svq IN_ORDER support
+amd_iommu:
+    IOMMU XT interrupt support
+    command buffer fixes
+cxl:
+    PPR support
+    performant path for non-interleaved cases
+vhost-scsi:
+    build fix for older kernel headers
+fixes, cleanups all over the place
+
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-Id: <20260527054658.1021096-16-zhenzhong.duan@intel.com>
----
- hw/i386/intel_iommu.c         |  17 +----
- hw/i386/intel_iommu_accel.c   | 131 +++++++++++++++++-----------------
- hw/i386/intel_iommu_accel.h   |   2 +-
- include/hw/i386/intel_iommu.h |   2 -
- 4 files changed, 68 insertions(+), 84 deletions(-)
 
-diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
-index 0b341f741e..31addb98e4 100644
---- a/hw/i386/intel_iommu.c
-+++ b/hw/i386/intel_iommu.c
-@@ -86,8 +86,6 @@ static void vtd_pasid_cache_reset_locked(IntelIOMMUState *s)
-         VTDPASIDCacheEntry *pc_entry = &vtd_as->pasid_cache_entry;
-         if (pc_entry->valid) {
-             pc_entry->valid = false;
--            /* It's fatal to get failure during reset */
--            vtd_propagate_guest_pasid(vtd_as, &error_fatal);
-         }
-     }
- }
-@@ -3104,8 +3102,6 @@ static void vtd_pasid_cache_sync_locked(gpointer key, gpointer value,
-     VTDPASIDEntry pe;
-     IOMMUNotifier *n;
-     uint16_t did;
--    const char *err_prefix = "Attaching to HWPT failed: ";
--    Error *local_err = NULL;
- 
-     if (vtd_dev_get_pe_from_pasid(vtd_as->iommu_state, vtd_as->bus,
-                                   vtd_as->devfn, vtd_as->pasid, &pe)) {
-@@ -3127,9 +3123,6 @@ static void vtd_pasid_cache_sync_locked(gpointer key, gpointer value,
-             vtd_address_space_unmap(vtd_as, n);
-         }
-         vtd_switch_address_space(vtd_as);
--
--        err_prefix = "Detaching from HWPT failed: ";
--        goto do_bind_unbind;
-     }
- 
-     /*
-@@ -3157,20 +3150,12 @@ static void vtd_pasid_cache_sync_locked(gpointer key, gpointer value,
-     if (!pc_entry->valid) {
-         pc_entry->pasid_entry = pe;
-         pc_entry->valid = true;
--    } else if (vtd_pasid_entry_compare(&pe, &pc_entry->pasid_entry)) {
--        err_prefix = "Replacing HWPT attachment failed: ";
--    } else {
-+    } else if (!vtd_pasid_entry_compare(&pe, &pc_entry->pasid_entry)) {
-         return;
-     }
- 
-     vtd_switch_address_space(vtd_as);
-     vtd_address_space_sync(vtd_as);
--
--do_bind_unbind:
--    /* TODO: Fault event injection into guest, report error to QEMU for now */
--    if (!vtd_propagate_guest_pasid(vtd_as, &local_err)) {
--        error_reportf_err(local_err, "%s", err_prefix);
--    }
- }
- 
- static void vtd_pasid_cache_sync(IntelIOMMUState *s, VTDPASIDCacheInfo *pc_info)
-diff --git a/hw/i386/intel_iommu_accel.c b/hw/i386/intel_iommu_accel.c
-index 8308eb00cb..97991fc0d9 100644
---- a/hw/i386/intel_iommu_accel.c
-+++ b/hw/i386/intel_iommu_accel.c
-@@ -89,24 +89,25 @@ static bool vtd_create_fs_hwpt(VTDHostIOMMUDevice *vtd_hiod,
-                                       fs_hwpt_id, errp);
- }
- 
--static void vtd_destroy_old_fs_hwpt(VTDHostIOMMUDevice *vtd_hiod,
--                                    VTDAddressSpace *vtd_as)
-+static void vtd_destroy_old_fs_hwpt(VTDAccelPASIDCacheEntry *vtd_pce)
- {
--    HostIOMMUDeviceIOMMUFD *hiodi = HOST_IOMMU_DEVICE_IOMMUFD(vtd_hiod->hiod);
-+    HostIOMMUDeviceIOMMUFD *hiodi =
-+        HOST_IOMMU_DEVICE_IOMMUFD(vtd_pce->vtd_hiod->hiod);
- 
--    if (!vtd_as->fs_hwpt_id) {
-+    if (!vtd_pce->fs_hwpt_id) {
-         return;
-     }
--    iommufd_backend_free_id(hiodi->iommufd, vtd_as->fs_hwpt_id);
--    vtd_as->fs_hwpt_id = 0;
-+    iommufd_backend_free_id(hiodi->iommufd, vtd_pce->fs_hwpt_id);
-+    vtd_pce->fs_hwpt_id = 0;
- }
- 
--static bool vtd_device_attach_iommufd(VTDHostIOMMUDevice *vtd_hiod,
--                                      VTDAddressSpace *vtd_as, Error **errp)
-+static bool vtd_device_attach_iommufd(VTDAccelPASIDCacheEntry *vtd_pce,
-+                                      Error **errp)
- {
-+    VTDHostIOMMUDevice *vtd_hiod = vtd_pce->vtd_hiod;
-     HostIOMMUDeviceIOMMUFD *hiodi = HOST_IOMMU_DEVICE_IOMMUFD(vtd_hiod->hiod);
--    VTDPASIDEntry *pe = &vtd_as->pasid_cache_entry.pasid_entry;
--    uint32_t hwpt_id = hiodi->hwpt_id;
-+    VTDPASIDEntry *pe = &vtd_pce->pasid_entry;
-+    uint32_t hwpt_id = hiodi->hwpt_id, pasid = vtd_pce->pasid;
-     bool ret;
- 
-     /*
-@@ -126,14 +127,13 @@ static bool vtd_device_attach_iommufd(VTDHostIOMMUDevice *vtd_hiod,
-         }
-     }
- 
--    ret = host_iommu_device_iommufd_attach_hwpt(hiodi, IOMMU_NO_PASID, hwpt_id,
--                                                errp);
--    trace_vtd_device_attach_hwpt(hiodi->devid, IOMMU_NO_PASID, hwpt_id, ret);
-+    ret = host_iommu_device_iommufd_attach_hwpt(hiodi, pasid, hwpt_id, errp);
-+    trace_vtd_device_attach_hwpt(hiodi->devid, pasid, hwpt_id, ret);
-     if (ret) {
-         /* Destroy old fs_hwpt if it's a replacement */
--        vtd_destroy_old_fs_hwpt(vtd_hiod, vtd_as);
-+        vtd_destroy_old_fs_hwpt(vtd_pce);
-         if (vtd_pe_pgtt_is_fst(pe)) {
--            vtd_as->fs_hwpt_id = hwpt_id;
-+            vtd_pce->fs_hwpt_id = hwpt_id;
-         }
-     } else if (vtd_pe_pgtt_is_fst(pe)) {
-         iommufd_backend_free_id(hiodi->iommufd, hwpt_id);
-@@ -142,17 +142,19 @@ static bool vtd_device_attach_iommufd(VTDHostIOMMUDevice *vtd_hiod,
-     return ret;
- }
- 
--static bool vtd_device_detach_iommufd(VTDHostIOMMUDevice *vtd_hiod,
--                                      VTDAddressSpace *vtd_as, Error **errp)
-+static bool vtd_device_detach_iommufd(VTDAccelPASIDCacheEntry *vtd_pce,
-+                                      Error **errp)
- {
-+    VTDHostIOMMUDevice *vtd_hiod = vtd_pce->vtd_hiod;
-     HostIOMMUDeviceIOMMUFD *hiodi = HOST_IOMMU_DEVICE_IOMMUFD(vtd_hiod->hiod);
--    IntelIOMMUState *s = vtd_as->iommu_state;
-+
-+    IntelIOMMUState *s = vtd_hiod->iommu_state;
-+    uint32_t pasid = vtd_pce->pasid;
-     bool ret;
- 
--    if (s->dmar_enabled && s->root_scalable) {
--        ret = host_iommu_device_iommufd_detach_hwpt(hiodi, IOMMU_NO_PASID,
--                                                    errp);
--        trace_vtd_device_detach_hwpt(hiodi->devid, IOMMU_NO_PASID, ret);
-+    if (pasid != IOMMU_NO_PASID || (s->dmar_enabled && s->root_scalable)) {
-+        ret = host_iommu_device_iommufd_detach_hwpt(hiodi, pasid, errp);
-+        trace_vtd_device_detach_hwpt(hiodi->devid, pasid, ret);
-     } else {
-         /*
-          * If DMAR remapping is disabled or guest switches to legacy mode,
-@@ -166,58 +168,32 @@ static bool vtd_device_detach_iommufd(VTDHostIOMMUDevice *vtd_hiod,
-     }
- 
-     if (ret) {
--        vtd_destroy_old_fs_hwpt(vtd_hiod, vtd_as);
-+        vtd_destroy_old_fs_hwpt(vtd_pce);
-     }
- 
-     return ret;
- }
- 
--bool vtd_propagate_guest_pasid(VTDAddressSpace *vtd_as, Error **errp)
--{
--    VTDPASIDCacheEntry *pc_entry = &vtd_as->pasid_cache_entry;
--    VTDHostIOMMUDevice *vtd_hiod = vtd_find_hiod_iommufd(vtd_as);
--
--    /* Ignore emulated device or legacy VFIO backed device */
--    if (!vtd_as->iommu_state->fsts || !vtd_hiod) {
--        return true;
--    }
--
--    if (pc_entry->valid) {
--        return vtd_device_attach_iommufd(vtd_hiod, vtd_as, errp);
--    }
--
--    return vtd_device_detach_iommufd(vtd_hiod, vtd_as, errp);
--}
--
- /*
-- * This function is a loop function for the s->vtd_address_spaces
-- * list with VTDPIOTLBInvInfo as execution filter. It propagates
-- * the piotlb invalidation to host.
-+ * This function is a loop function for the s->vtd_host_iommu_dev
-+ * and vtd_hiod->pasid_cache_list lists with VTDPIOTLBInvInfo as
-+ * execution filter. It propagates the piotlb invalidation to host.
-  */
--static void vtd_flush_host_piotlb_locked(gpointer key, gpointer value,
--                                         gpointer user_data)
-+static void vtd_flush_host_piotlb_locked(VTDAccelPASIDCacheEntry *vtd_pce,
-+                                         VTDPIOTLBInvInfo *piotlb_info)
- {
--    VTDPIOTLBInvInfo *piotlb_info = user_data;
--    VTDAddressSpace *vtd_as = value;
--    VTDHostIOMMUDevice *vtd_hiod = vtd_find_hiod_iommufd(vtd_as);
--    VTDPASIDCacheEntry *pc_entry = &vtd_as->pasid_cache_entry;
-+    VTDHostIOMMUDevice *vtd_hiod = vtd_pce->vtd_hiod;
-+    VTDPASIDEntry *pe = &vtd_pce->pasid_entry;
-     uint16_t did;
- 
--    if (!vtd_hiod) {
--        return;
--    }
--
--    assert(vtd_as->pasid == IOMMU_NO_PASID);
--
-     /* Nothing to do if there is no first stage HWPT attached */
--    if (!pc_entry->valid ||
--        !vtd_pe_pgtt_is_fst(&pc_entry->pasid_entry)) {
-+    if (!vtd_pe_pgtt_is_fst(pe)) {
-         return;
-     }
- 
--    did = VTD_SM_PASID_ENTRY_DID(&pc_entry->pasid_entry);
-+    did = VTD_SM_PASID_ENTRY_DID(pe);
- 
--    if (piotlb_info->domain_id == did && piotlb_info->pasid == IOMMU_NO_PASID) {
-+    if (piotlb_info->domain_id == did && piotlb_info->pasid == vtd_pce->pasid) {
-         HostIOMMUDeviceIOMMUFD *hiodi =
-             HOST_IOMMU_DEVICE_IOMMUFD(vtd_hiod->hiod);
-         uint32_t entry_num = 1; /* Only implement one request for simplicity */
-@@ -225,7 +201,7 @@ static void vtd_flush_host_piotlb_locked(gpointer key, gpointer value,
-         struct iommu_hwpt_vtd_s1_invalidate *cache = piotlb_info->inv_data;
- 
-         if (!iommufd_backend_invalidate_cache(hiodi->iommufd,
--                                              vtd_as->fs_hwpt_id,
-+                                              vtd_pce->fs_hwpt_id,
-                                               IOMMU_HWPT_INVALIDATE_DATA_VTD_S1,
-                                               sizeof(*cache), &entry_num, cache,
-                                               &local_err)) {
-@@ -241,6 +217,8 @@ void vtd_flush_host_piotlb_all_locked(IntelIOMMUState *s, uint16_t domain_id,
- {
-     struct iommu_hwpt_vtd_s1_invalidate cache_info = { 0 };
-     VTDPIOTLBInvInfo piotlb_info;
-+    VTDHostIOMMUDevice *vtd_hiod;
-+    GHashTableIter hiod_it;
- 
-     cache_info.addr = addr;
-     cache_info.npages = npages;
-@@ -251,23 +229,36 @@ void vtd_flush_host_piotlb_all_locked(IntelIOMMUState *s, uint16_t domain_id,
-     piotlb_info.inv_data = &cache_info;
- 
-     /*
--     * Go through each vtd_as instance in s->vtd_address_spaces, find out
--     * affected host devices which need host piotlb invalidation. Piotlb
--     * invalidation should check pasid cache per architecture point of view.
-+     * Go through each vtd_pce in vtd_hiod->pasid_cache_list for each host
-+     * device, find out affected host device pasid which need host piotlb
-+     * invalidation. Piotlb invalidation should check pasid cache per
-+     * architecture point of view.
-      */
--    g_hash_table_foreach(s->vtd_address_spaces,
--                         vtd_flush_host_piotlb_locked, &piotlb_info);
-+    g_hash_table_iter_init(&hiod_it, s->vtd_host_iommu_dev);
-+    while (g_hash_table_iter_next(&hiod_it, NULL, (void **)&vtd_hiod)) {
-+        VTDAccelPASIDCacheEntry *vtd_pce;
-+
-+        QLIST_FOREACH(vtd_pce, &vtd_hiod->pasid_cache_list, next) {
-+            vtd_flush_host_piotlb_locked(vtd_pce, &piotlb_info);
-+        }
-+    }
- }
- 
- static void vtd_accel_fill_pc(VTDHostIOMMUDevice *vtd_hiod, uint32_t pasid,
-                               VTDPASIDEntry *pe)
- {
-     VTDAccelPASIDCacheEntry *vtd_pce;
-+    Error *local_err = NULL;
- 
-     QLIST_FOREACH(vtd_pce, &vtd_hiod->pasid_cache_list, next) {
-         if (vtd_pce->pasid == pasid) {
-             if (vtd_pasid_entry_compare(pe, &vtd_pce->pasid_entry)) {
-                 vtd_pce->pasid_entry = *pe;
-+
-+                if (!vtd_device_attach_iommufd(vtd_pce, &local_err)) {
-+                    error_reportf_err(local_err, "%s",
-+                                      "Replacing HWPT attachment failed: ");
-+                }
-             }
-             return;
-         }
-@@ -278,11 +269,21 @@ static void vtd_accel_fill_pc(VTDHostIOMMUDevice *vtd_hiod, uint32_t pasid,
-     vtd_pce->pasid = pasid;
-     vtd_pce->pasid_entry = *pe;
-     QLIST_INSERT_HEAD(&vtd_hiod->pasid_cache_list, vtd_pce, next);
-+
-+    if (!vtd_device_attach_iommufd(vtd_pce, &local_err)) {
-+        error_reportf_err(local_err, "%s", "Attaching to HWPT failed: ");
-+    }
- }
- 
- static void vtd_accel_delete_pc(VTDAccelPASIDCacheEntry *vtd_pce,
-                                 VTDPASIDCacheInfo *pc_info)
- {
-+    Error *local_err = NULL;
-+
-+    if (!vtd_device_detach_iommufd(vtd_pce, &local_err)) {
-+        error_reportf_err(local_err, "%s", "Detaching from HWPT failed: ");
-+    }
-+
-     QLIST_REMOVE(vtd_pce, next);
-     g_free(vtd_pce);
- 
-diff --git a/hw/i386/intel_iommu_accel.h b/hw/i386/intel_iommu_accel.h
-index a2226b28b6..4a9003c92d 100644
---- a/hw/i386/intel_iommu_accel.h
-+++ b/hw/i386/intel_iommu_accel.h
-@@ -16,6 +16,7 @@ typedef struct VTDAccelPASIDCacheEntry {
-     VTDHostIOMMUDevice *vtd_hiod;
-     VTDPASIDEntry pasid_entry;
-     uint32_t pasid;
-+    uint32_t fs_hwpt_id;
-     QLIST_ENTRY(VTDAccelPASIDCacheEntry) next;
- } VTDAccelPASIDCacheEntry;
- 
-@@ -23,7 +24,6 @@ typedef struct VTDAccelPASIDCacheEntry {
- bool vtd_check_hiod_accel(IntelIOMMUState *s, VTDHostIOMMUDevice *vtd_hiod,
-                           Error **errp);
- VTDHostIOMMUDevice *vtd_find_hiod_iommufd(VTDAddressSpace *as);
--bool vtd_propagate_guest_pasid(VTDAddressSpace *vtd_as, Error **errp);
- void vtd_flush_host_piotlb_all_locked(IntelIOMMUState *s, uint16_t domain_id,
-                                       uint32_t pasid, hwaddr addr,
-                                       uint64_t npages, bool ih);
-diff --git a/include/hw/i386/intel_iommu.h b/include/hw/i386/intel_iommu.h
-index 95c76015e4..1842ba5840 100644
---- a/include/hw/i386/intel_iommu.h
-+++ b/include/hw/i386/intel_iommu.h
-@@ -154,8 +154,6 @@ struct VTDAddressSpace {
-      * with the guest IOMMU pgtables for a device.
-      */
-     IOVATree *iova_tree;
--
--    uint32_t fs_hwpt_id;
- };
- 
- struct VTDIOTLBEntry {
--- 
-MST
+----------------------------------------------------------------
+Aditya Gupta (2):
+      ppc/pnv_phb3: Error out on invalid config access
+      hw/pci: Replace assert with bounds check and return
+
+Albert Esteve (7):
+      vhost-user: Add VirtIO Shared Memory map request
+      vhost_user.rst: Align VhostUserMsg excerpt members
+      vhost_user.rst: Add SHMEM_MAP/_UNMAP to spec
+      vhost_user: Add frontend get_shmem_config command
+      vhost_user.rst: Add GET_SHMEM_CONFIG message
+      qmp: add shmem feature map
+      vhost-user-device: Add shared memory BAR
+
+Alejandro Jimenez (3):
+      amd_iommu: Update command buffer head ptr in MMIO region after wraparound
+      amd_iommu: Follow root pointer before page walk and use 1-based levels
+      amd_iommu: Reject non-decreasing NextLevel in fetch_pte()
+
+Alexandr Moshkov (1):
+      vhost-user.rst: fix typo
+
+Alexey Gerasimenko (1):
+      q35: Fix incorrect values for PCIEXBAR masks
+
+Alireza Sanaee via qemu development (2):
+      hw/cxl: Allow cxl_cfmws_find_device() to filter on whether interleaved paths are accepted
+      hw/cxl: Add a performant (and correct) path for the non interleaved cases
+
+Costas Argyris (1):
+      tests/qtest: Add amd-iommu command buffer head wrap test
+
+Eugenio Pérez (8):
+      net/vhost-vdpa: enable vqs before DRIVER_OK if no cvq
+      virtio: Allow to fill a whole virtqueue in order
+      vhost: move svq next desc array to descs state struct
+      vhost: factor out the descriptor next fetching
+      vhost: factor out the get of last used desc in SVQ
+      vhost: factor out the detach buf logic in SVQ
+      vhost: add in_order feature to shadow virtqueue
+      vhost: accept in order feature flag
+
+Igor Mammedov (6):
+      acpi: add API to build WDAT instructions
+      x86: q35: add 'wdat' property
+      x86: q35: generate WDAT ACPI table
+      tests: acpi: x86/q35: whitelist new WDAT table
+      tests: acpi: x86/q35: add WDAT table test case
+      tests: acpi: x86/q35: update expected WDAT blob
+
+Jonathan Cameron (1):
+      MAINTAINERS: Update CXL maintainers entry including adding linux-cxl list
+
+Jorge E. Moreira (1):
+      vhost-user.rst: Explicitly allow front-end to write to kick FDs
+
+Junjie Cao (2):
+      intel_iommu: fix guest-triggerable abort on oversized MMIO access
+      tests/qtest: add 8-byte MMIO access sweep for intel-iommu
+
+Kuan-Wei Chiu (3):
+      vhost-user: Fix stale error logs and return values in teardown paths
+      standard-headers: Add virtio_rtc.h from Linux 7.0-rc1
+      virtio-rtc: Add basic virtio-rtc support
+
+Mark Cave-Ayland (4):
+      hw/acpi/aml-build.c: add aml_irq() representing the 3-byte IRQ descriptor
+      tests/acpi: allow DSDT acpi table changes
+      hw/char/serial-isa.c: declare IRQ as shared in ACPI IRQ descriptor
+      tests: data: update x86 ACPI tables
+
+Max Makarov (2):
+      vhost-user-blk-server: do not advertise VIRTIO_BLK_F_SIZE_MAX with size_max=0
+      vhost-user-blk: do not force VIRTIO_BLK_F_SIZE_MAX
+
+Paolo Bonzini (1):
+      amd_iommu: restrict command buffer head/tail ranges to ring size
+
+Quan Sun (1):
+      hw/scsi/vhost-scsi: fix build with older kernel headers
+
+Sairaj Kodilkar (3):
+      amd_iommu: Use switch case to determine mmio register name
+      amd_iommu: Turn on XT support only when guest has enabled it
+      amd_iommu: Generate XT interrupts when xt support is enabled
+
+Shiju Jose (3):
+      hw/cxl: Fix handling of component ID to not assume it is a string
+      hw/cxl: Add fixes in Post Package Repair (PPR)
+      hw/cxl/events: Fix handling of component ID in event records generation to not assume it is a string
+
+Stefano Garzarella (2):
+      libvhost-user: fix buffer overflow in virtqueue_read_indirect_desc()
+      libvduse: fix buffer overflow in vduse_queue_read_indirect_desc()
+
+Thomas Huth (1):
+      hw/i386/pc: Add a proper owner for the ioport memory regions
+
+Vladimir Sementsov-Ogievskiy (32):
+      vhost-user: rework enabling vrings
+      vhost: drop backend_features field
+      vhost-user: introduce vhost_user_has_protocol_feature() helper
+      vhost: move protocol_features to vhost_user
+      vhost-user-gpu: drop code duplication
+      vhost: make vhost_dev.features private
+      virtio: move common part of _set_guest_notifier to generic code
+      virtio: drop *_set_guest_notifier_fd_handler() helpers
+      vhost-user: keep QIOChannelSocket for backend channel
+      vhost: vhost_virtqueue_start(): fix failure path
+      vhost: make vhost_memory_unmap() null-safe
+      vhost: simplify calls to vhost_memory_unmap()
+      vhost: move vrings mapping to the top of vhost_virtqueue_start()
+      vhost: vhost_virtqueue_start(): drop extra local variables
+      vhost: final refactoring of vhost vrings map/unmap
+      vhost: simplify vhost_dev_init() error-path
+      vhost: move busyloop timeout initialization to vhost_virtqueue_init()
+      vhost: vhost_dev_init(): simplify features initialization
+      hw/virtio/virtio-bus: refactor virtio_bus_set_host_notifier()
+      vhost-user: make trace events more readable
+      vhost-user-blk: add some useful trace-points
+      vhost: add some useful trace-points
+      vhost: move IOTLB functions from vhost-backend.c to vhost.c
+      vhost: use consistent naming for backend handlers
+      vhost: rename vhost-backend.c to vhost-kernel.c
+      vhost: replace .vhost_vq_get_addr() with .vhost_phys_vring_addr()
+      vhost: simplify vhost_memory_map() and vhost_memory_unmap()
+      qapi: remove user addresses from x-query-virtio-vhost-queue-status
+      vhost: stop reusing vq->desc (and friends) to store physical address
+      vhost: rename vring pointer fields to reflect user addresses
+      vhost: add .vhost_phys_iotlb_msg() handler
+      vhost-user: add VHOST_USER_PROTOCOL_F_GPA_ADDRESSES
+
+Zhenzhong Duan (19):
+      intel_iommu: Remove 'x-' prefix from 'x-scalable-mode' and 'x-flts' properties
+      intel_iommu: Change 'flts' property naming to 'fsts'
+      vfio/iommufd: Extend attach/detach_hwpt callback implementations with pasid
+      iommufd: Extend attach/detach_hwpt callbacks to support pasid
+      vfio/iommufd: Create nesting parent hwpt with IOMMU_HWPT_ALLOC_PASID flag
+      intel_iommu: Create the nested hwpt with IOMMU_HWPT_ALLOC_PASID flag
+      intel_iommu: Rename pasid property to "pasid-bits" and define it as type uint8
+      intel_iommu: make vtd_dev_get_pe_from_pasid() more generic
+      intel_iommu: Export some functions
+      intel_iommu: Fix PASID validity check in fault reporting
+      intel_iommu: Use IOMMU_NO_PASID and delete PASID_0
+      intel_iommu: Refactor PASID processing to use IOMMU_NO_PASID internally
+      intel_iommu_accel: Handle PASID entry addition for pc_inv_dsc request
+      intel_iommu_accel: Handle PASID entry removal for pc_inv_dsc request
+      intel_iommu_accel: Bypass PASID entry addition for just deleted entry
+      intel_iommu_accel: Handle PASID entry removal for system reset
+      intel_iommu_accel: Switch to VTDAccelPASIDCacheEntry for PASID bind/unbind and PIOTLB invalidation
+      intel_iommu_accel: Add pasid bits size check
+      intel_iommu: Expose flag VIOMMU_FLAG_PASID_SUPPORTED and VIOMMU_FLAG_WANT_PASID_ATTACH
+
+ MAINTAINERS                                       |  12 +-
+ backends/cryptodev-vhost.c                        |   9 +-
+ backends/iommufd.c                                |  23 +-
+ backends/vhost-user.c                             |   8 +-
+ block/export/vhost-user-blk-server.c              |   2 +-
+ docs/devel/vfio-iommufd.rst                       |  10 +-
+ docs/interop/vhost-user.rst                       | 135 +++++-
+ hw/acpi/aml-build-stub.c                          |   6 +
+ hw/acpi/aml-build.c                               |  41 ++
+ hw/acpi/meson.build                               |   3 +-
+ hw/acpi/wdat-ich9-stub.c                          |  15 +
+ hw/acpi/wdat-ich9.c                               |  90 ++++
+ hw/arm/smmuv3-accel.c                             |  12 +-
+ hw/block/trace-events                             |  10 +
+ hw/block/vhost-user-blk.c                         |  36 +-
+ hw/char/serial-isa.c                              |   3 +-
+ hw/cxl/cxl-component-utils.c                      |   6 +
+ hw/cxl/cxl-host.c                                 | 234 ++++++++-
+ hw/cxl/cxl-mailbox-utils.c                        |   6 +-
+ hw/display/vhost-user-gpu.c                       |  11 +-
+ hw/i386/acpi-build.c                              |  12 +
+ hw/i386/amd_iommu.c                               | 288 +++++++----
+ hw/i386/amd_iommu.h                               |  36 +-
+ hw/i386/intel_iommu.c                             | 352 +++++++-------
+ hw/i386/intel_iommu_accel.c                       | 401 ++++++++++++---
+ hw/i386/intel_iommu_accel.h                       |  20 +-
+ hw/i386/intel_iommu_internal.h                    |  44 +-
+ hw/i386/pc.c                                      |   6 +-
+ hw/i386/pc_q35.c                                  |  18 +
+ hw/i386/trace-events                              |   1 +
+ hw/mem/cxl_type3.c                                |  17 +-
+ hw/net/vhost_net.c                                |  35 +-
+ hw/pci-host/pnv_phb3.c                            |  10 +
+ hw/pci-host/q35.c                                 |   6 +-
+ hw/pci/pci_host.c                                 |  14 +-
+ hw/s390x/virtio-ccw.c                             |  35 +-
+ hw/scsi/vhost-scsi-common.c                       |   2 +-
+ hw/scsi/vhost-scsi.c                              |   2 +-
+ hw/scsi/vhost-user-scsi.c                         |   1 -
+ hw/vfio/device.c                                  |  11 +
+ hw/vfio/iommufd.c                                 |  68 ++-
+ hw/vfio/trace-events                              |   4 +-
+ hw/virtio/Kconfig                                 |   5 +
+ hw/virtio/meson.build                             |   5 +-
+ hw/virtio/trace-events                            |  16 +-
+ hw/virtio/vdpa-dev.c                              |   3 +-
+ hw/virtio/{vhost-backend.c => vhost-kernel.c}     |  90 +---
+ hw/virtio/vhost-shadow-virtqueue.c                | 215 ++++++--
+ hw/virtio/vhost-shadow-virtqueue.h                |  38 +-
+ hw/virtio/vhost-user-base.c                       |  63 ++-
+ hw/virtio/vhost-user-fs.c                         |   9 +-
+ hw/virtio/vhost-user-scmi.c                       |   9 +-
+ hw/virtio/vhost-user-stub.c                       |   6 +
+ hw/virtio/vhost-user-test-device-pci.c            |  42 +-
+ hw/virtio/vhost-user.c                            | 566 ++++++++++++++++++----
+ hw/virtio/vhost-vdpa.c                            |  19 +-
+ hw/virtio/vhost-vsock-common.c                    |   9 +-
+ hw/virtio/vhost.c                                 | 384 +++++++++------
+ hw/virtio/virtio-bus.c                            |  18 +-
+ hw/virtio/virtio-hmp-cmds.c                       |   5 -
+ hw/virtio/virtio-mmio.c                           |  41 +-
+ hw/virtio/virtio-pci.c                            |  34 +-
+ hw/virtio/virtio-qmp.c                            |  18 +-
+ hw/virtio/virtio-rtc-pci.c                        |  65 +++
+ hw/virtio/virtio-rtc.c                            | 190 ++++++++
+ hw/virtio/virtio.c                                | 251 +++++++++-
+ include/hw/acpi/aml-build.h                       |   2 +
+ include/hw/acpi/wdat-ich9.h                       |  15 +
+ include/hw/acpi/wdat.h                            | 118 +++++
+ include/hw/core/iommu.h                           |  14 +
+ include/hw/cxl/cxl.h                              |   1 +
+ include/hw/cxl/cxl_device.h                       |   4 +
+ include/hw/i386/intel_iommu.h                     |   4 +-
+ include/hw/i386/pc.h                              |   1 +
+ include/hw/pci-host/q35.h                         |   4 +-
+ include/hw/vfio/vfio-device.h                     |   1 +
+ include/hw/virtio/vhost-backend.h                 |  47 +-
+ include/hw/virtio/vhost-user.h                    |   6 +
+ include/hw/virtio/vhost.h                         |  71 ++-
+ include/hw/virtio/virtio-pci.h                    |   3 -
+ include/hw/virtio/virtio-rtc.h                    |  22 +
+ include/hw/virtio/virtio.h                        | 151 +++++-
+ include/standard-headers/linux/virtio_rtc.h       | 237 +++++++++
+ include/system/iommufd.h                          |  18 +-
+ include/system/memory.h                           |   4 +-
+ net/vhost-vdpa.c                                  |  37 +-
+ qapi/virtio.json                                  |  18 -
+ subprojects/libvduse/libvduse.c                   |   7 +-
+ subprojects/libvhost-user/libvhost-user.c         |  77 ++-
+ subprojects/libvhost-user/libvhost-user.h         |  56 +++
+ system/memory.c                                   |  14 +
+ tests/data/acpi/x86/microvm/DSDT                  | Bin 365 -> 366 bytes
+ tests/data/acpi/x86/microvm/DSDT.ioapic2          | Bin 365 -> 366 bytes
+ tests/data/acpi/x86/microvm/DSDT.pcie             | Bin 2985 -> 2986 bytes
+ tests/data/acpi/x86/microvm/DSDT.rtc              | Bin 404 -> 405 bytes
+ tests/data/acpi/x86/microvm/DSDT.usb              | Bin 414 -> 415 bytes
+ tests/data/acpi/x86/pc/DSDT                       | Bin 8598 -> 8599 bytes
+ tests/data/acpi/x86/pc/DSDT.acpierst              | Bin 8509 -> 8510 bytes
+ tests/data/acpi/x86/pc/DSDT.acpihmat              | Bin 9923 -> 9924 bytes
+ tests/data/acpi/x86/pc/DSDT.bridge                | Bin 15469 -> 15470 bytes
+ tests/data/acpi/x86/pc/DSDT.cphp                  | Bin 9062 -> 9063 bytes
+ tests/data/acpi/x86/pc/DSDT.dimmpxm               | Bin 10252 -> 10253 bytes
+ tests/data/acpi/x86/pc/DSDT.hpbridge              | Bin 8549 -> 8550 bytes
+ tests/data/acpi/x86/pc/DSDT.hpbrroot              | Bin 5087 -> 5088 bytes
+ tests/data/acpi/x86/pc/DSDT.ipmikcs               | Bin 8670 -> 8671 bytes
+ tests/data/acpi/x86/pc/DSDT.memhp                 | Bin 9957 -> 9958 bytes
+ tests/data/acpi/x86/pc/DSDT.nohpet                | Bin 8456 -> 8457 bytes
+ tests/data/acpi/x86/pc/DSDT.numamem               | Bin 8604 -> 8605 bytes
+ tests/data/acpi/x86/pc/DSDT.roothp                | Bin 12391 -> 12392 bytes
+ tests/data/acpi/x86/q35/DSDT                      | Bin 8427 -> 8428 bytes
+ tests/data/acpi/x86/q35/DSDT.acpierst             | Bin 8444 -> 8445 bytes
+ tests/data/acpi/x86/q35/DSDT.acpihmat             | Bin 9752 -> 9753 bytes
+ tests/data/acpi/x86/q35/DSDT.acpihmat-generic-x   | Bin 12637 -> 12638 bytes
+ tests/data/acpi/x86/q35/DSDT.acpihmat-noinitiator | Bin 8706 -> 8707 bytes
+ tests/data/acpi/x86/q35/DSDT.applesmc             | Bin 8473 -> 8474 bytes
+ tests/data/acpi/x86/q35/DSDT.bridge               | Bin 12040 -> 12041 bytes
+ tests/data/acpi/x86/q35/DSDT.core-count           | Bin 12985 -> 12986 bytes
+ tests/data/acpi/x86/q35/DSDT.core-count2          | Bin 33842 -> 33843 bytes
+ tests/data/acpi/x86/q35/DSDT.cphp                 | Bin 8891 -> 8892 bytes
+ tests/data/acpi/x86/q35/DSDT.cxl                  | Bin 13218 -> 13219 bytes
+ tests/data/acpi/x86/q35/DSDT.dimmpxm              | Bin 10081 -> 10082 bytes
+ tests/data/acpi/x86/q35/DSDT.ipmibt               | Bin 8502 -> 8503 bytes
+ tests/data/acpi/x86/q35/DSDT.ipmismbus            | Bin 8515 -> 8516 bytes
+ tests/data/acpi/x86/q35/DSDT.ivrs                 | Bin 8444 -> 8445 bytes
+ tests/data/acpi/x86/q35/DSDT.memhp                | Bin 9786 -> 9787 bytes
+ tests/data/acpi/x86/q35/DSDT.mmio64               | Bin 9557 -> 9558 bytes
+ tests/data/acpi/x86/q35/DSDT.multi-bridge         | Bin 13280 -> 13281 bytes
+ tests/data/acpi/x86/q35/DSDT.noacpihp             | Bin 8289 -> 8290 bytes
+ tests/data/acpi/x86/q35/DSDT.nohpet               | Bin 8285 -> 8286 bytes
+ tests/data/acpi/x86/q35/DSDT.numamem              | Bin 8433 -> 8434 bytes
+ tests/data/acpi/x86/q35/DSDT.pvpanic-isa          | Bin 8528 -> 8529 bytes
+ tests/data/acpi/x86/q35/DSDT.thread-count         | Bin 12985 -> 12986 bytes
+ tests/data/acpi/x86/q35/DSDT.thread-count2        | Bin 33842 -> 33843 bytes
+ tests/data/acpi/x86/q35/DSDT.tis.tpm12            | Bin 9033 -> 9034 bytes
+ tests/data/acpi/x86/q35/DSDT.tis.tpm2             | Bin 9059 -> 9060 bytes
+ tests/data/acpi/x86/q35/DSDT.type4-count          | Bin 18661 -> 18662 bytes
+ tests/data/acpi/x86/q35/DSDT.viot                 | Bin 14684 -> 14685 bytes
+ tests/data/acpi/x86/q35/DSDT.xapic                | Bin 35790 -> 35791 bytes
+ tests/data/acpi/x86/q35/WDAT.wdat                 | Bin 0 -> 308 bytes
+ tests/qtest/amd-iommu-test.c                      |  76 +++
+ tests/qtest/bios-tables-test.c                    |  13 +
+ tests/qtest/intel-iommu-test.c                    |  32 +-
+ tests/qtest/iommu-intel-test.c                    |   4 +-
+ tests/qtest/meson.build                           |   1 +
+ 144 files changed, 4056 insertions(+), 1158 deletions(-)
+ create mode 100644 hw/acpi/wdat-ich9-stub.c
+ create mode 100644 hw/acpi/wdat-ich9.c
+ rename hw/virtio/{vhost-backend.c => vhost-kernel.c} (83%)
+ create mode 100644 hw/virtio/vhost-user-stub.c
+ create mode 100644 hw/virtio/virtio-rtc-pci.c
+ create mode 100644 hw/virtio/virtio-rtc.c
+ create mode 100644 include/hw/acpi/wdat-ich9.h
+ create mode 100644 include/hw/acpi/wdat.h
+ create mode 100644 include/hw/virtio/virtio-rtc.h
+ create mode 100644 include/standard-headers/linux/virtio_rtc.h
+ create mode 100644 tests/data/acpi/x86/q35/WDAT.wdat
+ create mode 100644 tests/qtest/amd-iommu-test.c
 
 
