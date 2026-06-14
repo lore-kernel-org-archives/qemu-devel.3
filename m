@@ -4,105 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9B1BCD98C5
-	for <qemu-devel@archiver.kernel.org>; Sun, 14 Jun 2026 19:11:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1312FCD98D2
+	for <qemu-devel@archiver.kernel.org>; Sun, 14 Jun 2026 19:11:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wYqC0-0005xf-BC; Sun, 14 Jun 2026 15:08:24 -0400
+	id 1wYqDG-0007cv-BD; Sun, 14 Jun 2026 15:09:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wYqBu-0005MJ-6i
- for qemu-devel@nongnu.org; Sun, 14 Jun 2026 15:08:18 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wYqCV-00075d-G7
+ for qemu-devel@nongnu.org; Sun, 14 Jun 2026 15:08:57 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wYqBs-00029j-GK
- for qemu-devel@nongnu.org; Sun, 14 Jun 2026 15:08:17 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wYqCU-0002Mk-5Q
+ for qemu-devel@nongnu.org; Sun, 14 Jun 2026 15:08:55 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781464095;
+ s=mimecast20190719; t=1781464133;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=FchcoYqetxRLX+8KPnVCCEBTRzg70wUN0lFDoJ7PCfE=;
- b=QeCBW58ZYGnpmNRBPYe4oIEbfDKKF/izJusv9isr/P66786XZCC0azZLHuOjqLu5jyGowN
- WPoGnbv27baIYmodQwmBx0Bl9mcSws5s4hySaVjX1v1VY2CLOy8FtUlIrPUvSsXp6a3SRm
- pPEL8Dg3T6cmHVA14w34xLSRJ3RL7pM=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=+5IDvjHpbpqRVslTo52DM6RFiRL2u3ldzUfX7cVrHQM=;
+ b=RRdsm1v2B0SnCXczhMo2fMiUHm4KkJLxa7Q5rbEyV56cZn0XxsfDwF0sXjX7j6FGh7ebFH
+ A/NFVosz228/8aiTjEFBTAtum6r+kE7cnvL8RG9SoktlNWXHFDW7ePFSP9mmPHEWE8B6ob
+ 1zXeFGQAFIWaVkKPAnPC3/SeDXY2T0c=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-655-EacYfflgNv-lsyChcqYLFg-1; Sun, 14 Jun 2026 15:08:14 -0400
-X-MC-Unique: EacYfflgNv-lsyChcqYLFg-1
-X-Mimecast-MFC-AGG-ID: EacYfflgNv-lsyChcqYLFg_1781464093
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-46010392f89so2479994f8f.2
- for <qemu-devel@nongnu.org>; Sun, 14 Jun 2026 12:08:14 -0700 (PDT)
+ us-mta-658-RVkU-ZjtP52rV1XSGfQjtA-1; Sun, 14 Jun 2026 15:08:51 -0400
+X-MC-Unique: RVkU-ZjtP52rV1XSGfQjtA-1
+X-Mimecast-MFC-AGG-ID: RVkU-ZjtP52rV1XSGfQjtA_1781464130
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-45efa2f7009so1710306f8f.3
+ for <qemu-devel@nongnu.org>; Sun, 14 Jun 2026 12:08:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1781464093; x=1782068893; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=FchcoYqetxRLX+8KPnVCCEBTRzg70wUN0lFDoJ7PCfE=;
- b=ShAG38+/epL8TVxlYg1KGxBGvVT5sRbmItWWb8J+UGFhhpmrk9mStrLmxsUWe+AQhh
- f8EGhxWQkahMHnxqq2rQpBiblz8ADd/cfa3s/bAafQSln5pKDor0v6x+1D0lpGWhsKXz
- QFpNKhMkIOQurk7Tp5ypZNF/7Og4vBzlZIWqjpUxqd+BsDI9AoxGoc1s4r7sFxI8X5JY
- aQ4lxkRZZ9h644MrA6AsSiTWU5XnlOMviaooNrNx+UxVnY4OdNFytpSIdTBAKK9JyfVp
- AwZeSXxI52KYV+Auacw1dmSbbdrsho/EYwyQ+r8zLSoIxJwgD8H/hQvfM7StJGdisdZ4
- WFag==
+ d=redhat.com; s=google; t=1781464130; x=1782068930; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=+5IDvjHpbpqRVslTo52DM6RFiRL2u3ldzUfX7cVrHQM=;
+ b=DFBBH+NCskbBl8EXciOpXX5buQgqBwcqBiews3gBpKuxna1TvqGANVIuPfReaGFab5
+ ZTn4pOXcxXH4aWySm/KoM1qqeWFvpZw6+oWLA/Lge+7q2xYPSlho2Ika6eF5G4qKhwGj
+ gd7ipmFshZOwurMoazo7shNQdR81m0DB1ip+1/tdoxmcm4UOAB0DQ8RnV5WVt5kYN13A
+ giSPkaZkCYrnRI4iaBjsRq0XzoKGtck3NSonm/Jy9J59EAGr4i8sT9mOL2SNrGz0Vsxh
+ ugrGB7XLudYSf3yvyujtt45IAR/jml/Kq8IMg/FGgohpGcDAtR2phUOuwCSHN84M1aWr
+ DNMw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781464093; x=1782068893;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=FchcoYqetxRLX+8KPnVCCEBTRzg70wUN0lFDoJ7PCfE=;
- b=Afmo/bdhdU/sZ3uac+BGbaQ1EJomOq7fANXuXUbdJfotiuqnBgUtw+vWmkYPG5qC+m
- TvbgD3rdJ4rv1znn6p3lhGHdxKgNyTr0HW7xDXgrJiolOy4MUXLBfsspZsQSt+IH29lM
- iphW6cbYWK81jG4RzbWH1ok/AogHtlL3XlGk7p06vxKNFmeGJ17WHTzyMJFYWepYNxue
- 1RXl8qt4eBTK0bq1XaGdA8oBBXTqU/4zsLjebJQgarnA4HF5gz2YV5tollxI4s177+Hq
- FnGZN+unHoUK144ysA6gp57ioSvbNjCUGhvccSjJSCSIWPpXYfm3DPmu8jGahV4H3WBW
- RFsA==
-X-Gm-Message-State: AOJu0YxI3FeBlNyR18+L8AwZ5IhqUdAkB+PJYVqwXwmKKx4AAmWQOa4g
- JGha8px8IN9KRWPMCILvyFZqcgbl51ebvj/SU/FyO8w8amdQnLXVHNjSHODT0izu9xQTN3iAwAo
- tsApkM9W0ejLCuTcIU2JtrVFrS6EsfU9QpEfZ/UkVJfumn0vvw4kxxUVmAP7wGl6/oILlQ7oyKe
- /tOoX4Kby7Fqn6vaKB58mglbDusC5s+H68Dg==
-X-Gm-Gg: Acq92OGRToSNGwTJSewysCkQmxTNnjeDmPO/hF4bbV7mknBcIsmYF0U0Pco2BpiIaVw
- vB58c/myB7AYmC5uyRPi/sVLpULHwzBLkimOZkB7MbUXklM7M6jsvAVD4EjrJNujwb7IibnJOiV
- UlZ4a19wTQmPJjMItoT3UuB9lrTmGMU4mifMaPgMzqSuUkEHZTEHXxSbvIa9LXDV5EwynOA91pN
- wgh7qkZpZcwP/jTfo2iwVjab7a4FqYdBevGahUPOyC4EZruRlnpKLe8LFr5c//KOzkqW8ZZiOJL
- aUpKQoXkrf8uIPmtlqROfcxwCEl+JIoDgSDG+/T5W3gVEKcwzXuRTbM/qMc74cS0sZ7KYDj4+X9
- iRh+zGeYaJkafbjo7Qf+7qcJfiwD7W5GfQhWp442cJUM=
-X-Received: by 2002:a05:6000:428a:b0:45e:edcc:f6dc with SMTP id
- ffacd0b85a97d-4606db9667amr15561807f8f.6.1781464093184; 
- Sun, 14 Jun 2026 12:08:13 -0700 (PDT)
-X-Received: by 2002:a05:6000:428a:b0:45e:edcc:f6dc with SMTP id
- ffacd0b85a97d-4606db9667amr15561767f8f.6.1781464092571; 
- Sun, 14 Jun 2026 12:08:12 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1781464130; x=1782068930;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=+5IDvjHpbpqRVslTo52DM6RFiRL2u3ldzUfX7cVrHQM=;
+ b=LqK2HTG3VLqSP3/tCSMtXiIgJxRy55cReHlgTQRF8fvzM1gP46TETdCBBVAayZ5R28
+ +OsRs28BjajB69LOQRdFOpYLXlP1VQAINU0Xw4VI/tHrB+8wvKXqr8IyXH3v8PZpqN/9
+ ZV7faWr3l5fVzwL9B6Jqn8WHmz/d7N/Gn3vPoFB41CkFTCd1ilgJprFbGJMmUnd4H5Cl
+ NThUXY++HCXjuN5O6bJpj90cQPoB0g5EdRmVkM0tWyrfAh9HdMrl6LmcyOiR0e7PT6xj
+ 3UfdCu1eP33pyzf83qIYljYS/f1OglYM3eihUSPteu1pWKLIkgXWkg65baSG6qPrt3hi
+ Qy6w==
+X-Gm-Message-State: AOJu0Yx+nSiVMJvA/s17t7E4ZNE1QjRxXkYpnPVFq9h2d4iwA2sfVYpw
+ suawoyUln/ckrYbMQFnO01pUvEzsht7UhpiZMLC1v/hxfhLXJ0lao578M3raNyBWhaMy+AJtSeD
+ abwlAwCoRV+rriBZnuhVI8m9QN+WtLXSiuPnZ/vsmjc+jf/RATaJ0vynf8Ml416ttR4/tb2EYKv
+ 7DuCerh9UnQ72qXjNVv5zG/Qj2t+RP03Pxkg==
+X-Gm-Gg: Acq92OHEx6qimlcPRHhDG9NCDI/7VujC5b5MLXMkyWwbDgu4BjqlTq5CGKLJ42wvFgz
+ vqkH9PYtvNOBvINa09FwYVn1Q1UidsyNKkOGTGm3kcguqITJOeb1CscqJMwN801iJlnQVicciIk
+ +pfVkyTVnGvMva81uyBBan8TftyJelyre0MosDnyZdom6QlH97e1F9VU1L1kXFIlShFaX5owais
+ 2vSk9ZxiV/cl6HK3cLLIRLKzYXoB8+Gii6+4K4M+2R3NH853+1DTuHbwIsL8RsOuCP5A7N+b7EL
+ mhcdzDIUihNPsx2IlhFm8kv6r0u6LS6lHn4TxLV5GHQm1nbxbHvoJw2O4On+WazhB3U1xkiOTbJ
+ 1xtLKhVrmPxrMZ4UVI9cUIF7wYlJ2JlP3e/nbjov+fs8=
+X-Received: by 2002:a05:600c:1790:b0:48a:8b02:ae91 with SMTP id
+ 5b1f17b1804b1-49220092ec4mr53592005e9.11.1781464130351; 
+ Sun, 14 Jun 2026 12:08:50 -0700 (PDT)
+X-Received: by 2002:a05:600c:1790:b0:48a:8b02:ae91 with SMTP id
+ 5b1f17b1804b1-49220092ec4mr53591845e9.11.1781464129863; 
+ Sun, 14 Jun 2026 12:08:49 -0700 (PDT)
 Received: from redhat.com (IGLD-80-230-85-71.inter.net.il. [80.230.85.71])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4606f2c473bsm30398162f8f.28.2026.06.14.12.08.11
+ 5b1f17b1804b1-49220368ef4sm181995035e9.12.2026.06.14.12.08.48
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 14 Jun 2026 12:08:12 -0700 (PDT)
-Date: Sun, 14 Jun 2026 15:08:10 -0400
+ Sun, 14 Jun 2026 12:08:49 -0700 (PDT)
+Date: Sun, 14 Jun 2026 15:08:47 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- Stefano Garzarella <sgarzare@redhat.com>
-Subject: [PULL 057/106] vhost: add .vhost_phys_iotlb_msg() handler
-Message-ID: <04f0d0a69eb93c3da135068afd081871ab4f6bd5.1781463125.git.mst@redhat.com>
+ Eugenio =?utf-8?B?UMOpcmV6?= <eperezma@redhat.com>
+Subject: [PULL 072/106] virtio: Allow to fill a whole virtqueue in order
+Message-ID: <eceff0982f97cc79a26883b93f8eac05cd126dd8.1781463125.git.mst@redhat.com>
 References: <cover.1781463125.git.mst@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1781463125.git.mst@redhat.com>
 X-Mailer: git-send-email 2.51.2.2891.g4157995a80.dirty
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -119,77 +121,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+From: Eugenio Pérez <eperezma@redhat.com>
 
-Allow backends to chose, which addr to put into vhost_iotlb_msg:
-user or physical. To be used in further commit.
+As the while steps < max_steps is already one less than the vq size, the
+right maximum max_steps variable is queue length, not the maximum
+possible remainder of % vq->vring.num.
 
-Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Fixes: b44135daa37 ("virtio: virtqueue_ordered_fill - VIRTIO_F_IN_ORDER support")
+Signed-off-by: Eugenio Pérez <eperezma@redhat.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Based-on: <20260206095258.894504-1-vsementsov@yandex-team.ru>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-Id: <20260420202032.714884-10-vsementsov@yandex-team.ru>
+Message-Id: <20260304173535.2702587-2-eperezma@redhat.com>
 ---
- hw/virtio/vhost.c                 | 11 ++++++++---
- include/hw/virtio/vhost-backend.h |  3 +++
- 2 files changed, 11 insertions(+), 3 deletions(-)
+ hw/virtio/virtio.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
-index e3d452a763..af41841b52 100644
---- a/hw/virtio/vhost.c
-+++ b/hw/virtio/vhost.c
-@@ -920,14 +920,18 @@ static void vhost_region_addnop(MemoryListener *listener,
- }
+diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
+index fb7f7f0f06..ed58c1af9f 100644
+--- a/hw/virtio/virtio.c
++++ b/hw/virtio/virtio.c
+@@ -986,7 +986,7 @@ static void virtqueue_ordered_fill(VirtQueue *vq, const VirtQueueElement *elem,
+      * We shouldn't need to increase 'i' by more than or equal to
+      * the distance between used_idx and last_avail_idx (max_steps).
+      */
+-    max_steps = (vq->last_avail_idx - vq->used_idx) % vq->vring.num;
++    max_steps = MIN(vq->last_avail_idx - vq->used_idx, vq->vring.num);
  
- static int vhost_update_device_iotlb(struct vhost_dev *dev,
--                                     uint64_t iova, uint64_t uaddr,
-+                                     uint64_t iova,
-+                                     uint64_t paddr,
-+                                     uint64_t uaddr,
-                                      uint64_t len,
-                                      IOMMUAccessFlags perm)
- {
-+    bool phys = dev->vhost_ops->vhost_phys_iotlb_msg &&
-+        dev->vhost_ops->vhost_phys_iotlb_msg(dev);
-     struct vhost_iotlb_msg imsg;
- 
-     imsg.iova =  iova;
--    imsg.uaddr = uaddr;
-+    imsg.uaddr = phys ? paddr : uaddr;
-     imsg.size = len;
-     imsg.type = VHOST_IOTLB_UPDATE;
- 
-@@ -1385,7 +1389,8 @@ int vhost_device_iotlb_miss(struct vhost_dev *dev, uint64_t iova, int write)
-         len = MIN(iotlb.addr_mask + 1, len);
-         iova = iova & ~iotlb.addr_mask;
- 
--        ret = vhost_update_device_iotlb(dev, iova, uaddr, len, iotlb.perm);
-+        ret = vhost_update_device_iotlb(dev, iova, iotlb.translated_addr, uaddr,
-+                                        len, iotlb.perm);
-         if (ret) {
-             trace_vhost_iotlb_miss(dev, 4);
-             error_report("Fail to update device iotlb");
-diff --git a/include/hw/virtio/vhost-backend.h b/include/hw/virtio/vhost-backend.h
-index 7cc3bb5441..00881a0bd4 100644
---- a/include/hw/virtio/vhost-backend.h
-+++ b/include/hw/virtio/vhost-backend.h
-@@ -143,6 +143,8 @@ typedef int (*vhost_dev_start_op)(struct vhost_dev *dev, bool started);
- 
- typedef bool (*vhost_phys_vring_addr_op)(struct vhost_dev *dev);
- 
-+typedef bool (*vhost_phys_iotlb_msg_op)(struct vhost_dev *dev);
-+
- typedef int (*vhost_get_device_id_op)(struct vhost_dev *dev, uint32_t *dev_id);
- 
- typedef bool (*vhost_force_iommu_op)(struct vhost_dev *dev);
-@@ -210,6 +212,7 @@ typedef struct VhostOps {
-     vhost_set_inflight_fd_op vhost_set_inflight_fd;
-     vhost_dev_start_op vhost_dev_start;
-     vhost_phys_vring_addr_op vhost_phys_vring_addr;
-+    vhost_phys_iotlb_msg_op vhost_phys_iotlb_msg;
-     vhost_get_device_id_op vhost_get_device_id;
-     vhost_force_iommu_op vhost_force_iommu;
-     vhost_set_config_call_op vhost_set_config_call;
+     /* Search for element in vq->used_elems */
+     while (steps < max_steps) {
 -- 
 MST
 
