@@ -4,91 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35306CD98D6
-	for <qemu-devel@archiver.kernel.org>; Sun, 14 Jun 2026 19:14:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6265DCD98D2
+	for <qemu-devel@archiver.kernel.org>; Sun, 14 Jun 2026 19:14:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wYqDQ-0000Ev-5j; Sun, 14 Jun 2026 15:09:52 -0400
+	id 1wYqCK-0006Xx-Or; Sun, 14 Jun 2026 15:08:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wYqDJ-0007mM-Su
- for qemu-devel@nongnu.org; Sun, 14 Jun 2026 15:09:46 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wYqCG-0006Mf-Dn
+ for qemu-devel@nongnu.org; Sun, 14 Jun 2026 15:08:40 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wYqDI-0002iV-69
- for qemu-devel@nongnu.org; Sun, 14 Jun 2026 15:09:45 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wYqCE-0002Iy-Sy
+ for qemu-devel@nongnu.org; Sun, 14 Jun 2026 15:08:40 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781464183;
+ s=mimecast20190719; t=1781464118;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=LeQdwvlxUcXinBqYKDGXgIIF+pdKo0MXbEyWkBYMIlM=;
- b=g9uToUj56+6+mwTarffOM97D5qTQhM8fgqUrwwXSNoCu4TFQBhjVnrxU0Kc8+Vlq8oHOl7
- XrvH7qrJHKrAcGpyvYevzdJkUOaRksDOmXyE8hH4dozWdlnh9Og8fn+a7gJ3QZM4wYUW/h
- SfSQFLDVdxtfbEIIqSM2XbnTpjoFzfs=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=hgZCAxYFmsfw6kD1fGPLDLIDbzOgcLGMPPIQ9rhuoMw=;
+ b=ZQa7FiazSFuFMlUWi/qEk9JgAMtIOS6afZUAq4tMJFF0usAI2wTeG7XnFghvIxCaejz1du
+ xweSOUnm5QeboCWaoZ+ckQOamQiAwQ5M+yKHzvw70KLlN0D1jOAOIkLPs0p24U10jyeSoZ
+ J2IUm6NKcrM3fRkQnihO+7f1HaxdLjM=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-288-JejFclSBNV-IaX8K98kwbg-1; Sun, 14 Jun 2026 15:09:42 -0400
-X-MC-Unique: JejFclSBNV-IaX8K98kwbg-1
-X-Mimecast-MFC-AGG-ID: JejFclSBNV-IaX8K98kwbg_1781464181
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-490e547f3cfso24344405e9.3
- for <qemu-devel@nongnu.org>; Sun, 14 Jun 2026 12:09:42 -0700 (PDT)
+ us-mta-426-fvTsw8dtNZ26P-otDYkr_g-1; Sun, 14 Jun 2026 15:08:36 -0400
+X-MC-Unique: fvTsw8dtNZ26P-otDYkr_g-1
+X-Mimecast-MFC-AGG-ID: fvTsw8dtNZ26P-otDYkr_g_1781464116
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-45ef5e38a18so1174864f8f.1
+ for <qemu-devel@nongnu.org>; Sun, 14 Jun 2026 12:08:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1781464181; x=1782068981; darn=nongnu.org;
+ d=redhat.com; s=google; t=1781464115; x=1782068915; darn=nongnu.org;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=LeQdwvlxUcXinBqYKDGXgIIF+pdKo0MXbEyWkBYMIlM=;
- b=HMmQKvjtaFNsiFyMnFMOsyhD+kUBwDiMjUEEp6vw5kJXTdhtlghvhGczSZ4O0JqMeP
- gaogAqWb7bXrb4JJzaPkLLlOGoZ+C2f5R/g5Zvj81GedGg3BCWiGqbTsGLIDjFd8XXXH
- rjar9bycIpZay9l9n43QB5BSZ+HQvq8Hm+r1uIMDFs1AhzDW8mNvOAxa/F20p1ry2FAD
- eK///twBLbmrm3T0+7NFIx0iGY4nDracbi8iTypv4e3Q3oqhmxovxKdfXmyJz1HRRjw9
- SC39OA0Ht8DRnPc/3KDMJkvQAH/KOtx4pRy0pU+NhBHsvEZrxhGtqtB4K1wgh6OAH0Za
- nB8w==
+ bh=hgZCAxYFmsfw6kD1fGPLDLIDbzOgcLGMPPIQ9rhuoMw=;
+ b=FmBF2BXqzzd/aO4Ub6aqZPZr5M28Y9jIAgp3gcZFbHo9mrjNQjuuHGmPtrOpfW8kvQ
+ ey+Rq/+g5zMgCc5VTPOMwEhr9GNXY3Qc+DOFF2Sw4RWL/I0ZEvg6DoyKhRmm+tkhVfQy
+ 9Jmeuuz8eolV1MZifJUO/yiTrHVTZsMME3+SIyATwpD3MB01yb+txhWPT2J9mfBynvap
+ RL/KiejlrwKeZETEcRP9C9OXrnvScf8rrPJ1Fvy5QesMtM9LuHJcYobHHYMM74QHgJjd
+ yjosgtNn9OQmDgFJo/Vfxjtai2hpl78ArlahQlRZWegL6lFgI2Ams946a/H6ieS+yG+E
+ Z0pg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781464181; x=1782068981;
+ d=1e100.net; s=20251104; t=1781464115; x=1782068915;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=LeQdwvlxUcXinBqYKDGXgIIF+pdKo0MXbEyWkBYMIlM=;
- b=oBxXaoG9cfUhCpOXGfg0NOPCDhNyARaUAaO9p1UXLJuBnYwjebpvkZj9Gt/HOKk9R0
- 246Wl6KuBekU01A47oo2Awv912GOftEAuK9LLOTMk3Hj6iPITRsA9P3bomDA58+fTrv5
- SIye7TjguWgqxUJ3dLDZTl8aF7z1E0YzzqqaD9BgWPrSkPsZN3zuJtSJerLjHgNusjnV
- 2O1IV1cJAwe97QdEZEzUy6N0g+GtSvzNgIqtfd0D0SHX3zMTZsqWKqrIg70cciKIz0Zl
- 45gwVSyT2Z01hRk/qVAtzY/6ct+kye+CBq8KCbnqq1+5cliaLo2i4h8mzZXs5pxNMLKW
- Yzdw==
-X-Gm-Message-State: AOJu0YxoDrDBnAFCL2YUJLyflut2iygyGUTGOANDcXhjAYbEhyX4w0jd
- coJwApOohF22OdFdPdAewt93mbELBmzUXJPozqNlZLzDrzRXjrPvFQl6hZzsu5G9ATqeAEp1aUS
- O91EKLrsnbY1F/dSG8aTNAFL0yTuJUGWBbMexgCh6kUWJ+5OXmGGYbVoVzvqvhO2ZvjLXvWMU67
- RrScaCem3Yo/nLxyYzPdhZUcaRQI7weCGXlw==
-X-Gm-Gg: Acq92OH57d0SKxiqbz8dBn41KcEkVcLI2saTWwynKSL24CDq2gJQdrtCfWynAhgbR0t
- RJj/nPWa7gopRiJ+m5DJ9jnVVW1yRgPA2483CeK+b4thtfU8ZtVtpo2GzqJvDQXCrjBef2+eXPL
- TyX7Uc4JnDmq0YPv1Ap2s2lK4NEbv3NQx6bSHqqr8v3c2H86XnEJaADuS4vv4FQp2AhEKI34VmA
- kaU/XaYNS857uRRtkWFtATgVuUM/uHA0SDIbtc++NdlQ54zYHwcTxwfxFP4CUjKrpxLdOHrgifd
- xyAWAL1hnCEvK+UnRImRJBA8+ALzXlenSD8Kb8r2aNTZPKSXFG0hNsJutqIx4z5Zempo6TIoIF2
- mCa4XnwKaEhJ64K9wUqqdnray5eDgIeEYEem+Prm6IIg=
-X-Received: by 2002:a05:600c:820c:b0:490:5cd8:d213 with SMTP id
- 5b1f17b1804b1-490ec4d3407mr144348825e9.15.1781464180834; 
- Sun, 14 Jun 2026 12:09:40 -0700 (PDT)
-X-Received: by 2002:a05:600c:820c:b0:490:5cd8:d213 with SMTP id
- 5b1f17b1804b1-490ec4d3407mr144348475e9.15.1781464180291; 
- Sun, 14 Jun 2026 12:09:40 -0700 (PDT)
+ bh=hgZCAxYFmsfw6kD1fGPLDLIDbzOgcLGMPPIQ9rhuoMw=;
+ b=qZ+m8P4Kco+lW3PQt9RJDTYWxvBJTJ0+/AqrEz6hjWqMYN1VXN0o4W4DE/VeLWdRWB
+ taQUgNl1GORGqw9j/nbjq0v7kjp3ZXW0tZTnx370r1HQTVxc5V5I21ivSZfcqQsFmHSh
+ tPvLpLr0bhO89kz55Vmj7V+XVV7wPuIXH/lh+EUU9tAi+DvK3i4kf6RR1n7eNUhKqB/O
+ yCjac/jqZMjkbz4Vj6zKJ9x7nR9vmKmkjOl8gRKn0EViCbWHyUzBa2hGYj5nEnioir1B
+ WW3zWthOTSx87B8zWh/+pPJ27wmat0kFFbhd6IwbD3wGoRuPRKuRHHknKxocHP5u/kMc
+ T30w==
+X-Gm-Message-State: AOJu0YwxR07QvttqrMU5tLbfkV15B50MQrJ0DlU56skYdiuxMzRB5AEo
+ lpWrW4OIwGbTCAETb10YDnKwyRRbgz2MB07ZA7ntT7ntEAlVBAeaOfUTFm8SSQGHx7jMj1BoU07
+ RIIIuPHMpfcOWJwc+VXKuk67yyB0J3j6csi9F6TqQZqFRcX9VHk47Xhws7ktpll3ZKzpNUeDsss
+ YuEEgITigClr1auEJ9GP0l3IY4J2S94KjzMA==
+X-Gm-Gg: Acq92OG4ds3k7ww5yC7KJ0PTDT5raf3sczOI5hJjsjMbqs0jHRpj4xR8H8xnfPkgnJV
+ j9gXn7w2nQz7ki8cvlcVo9dGQolvTH+ipWpvA8f3+sNbJKD3NWoLr33Ax59+u62ojqLaE9RT9dE
+ nI4lfWgpoT0LLxtjSW9GzjSkZtG286FK9Fps9u+FBFF1MWBxh9cylzTmA0rctPgvFoV7v4CIICY
+ dimDyLjRYy7ahdVIz8qYTerXrg2eHeA03mE4jcV6AvDcqLvE3k0BrNLWklkW/xwwSJcXdwnFwow
+ r3sOb2d4Wma59N6DinZtf8VOjlGHN7FVQhO5Ao94YtAO32MgHMMefQ8Voui5JgBcYnka0hDLMsi
+ OUEvb0QijoFmm4bJKf0lJv6hRzyUmUlu1cwXrfcrY8/4=
+X-Received: by 2002:a05:600c:6214:b0:490:8fd1:72a with SMTP id
+ 5b1f17b1804b1-49220086792mr86911155e9.3.1781464115415; 
+ Sun, 14 Jun 2026 12:08:35 -0700 (PDT)
+X-Received: by 2002:a05:600c:6214:b0:490:8fd1:72a with SMTP id
+ 5b1f17b1804b1-49220086792mr86910895e9.3.1781464114889; 
+ Sun, 14 Jun 2026 12:08:34 -0700 (PDT)
 Received: from redhat.com (IGLD-80-230-85-71.inter.net.il. [80.230.85.71])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49220310a58sm210690175e9.4.2026.06.14.12.09.39
+ 5b1f17b1804b1-492202edf89sm197256955e9.1.2026.06.14.12.08.33
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 14 Jun 2026 12:09:39 -0700 (PDT)
-Date: Sun, 14 Jun 2026 15:09:38 -0400
+ Sun, 14 Jun 2026 12:08:34 -0700 (PDT)
+Date: Sun, 14 Jun 2026 15:08:32 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Albert Esteve <aesteve@redhat.com>,
+ Max Makarov <maxpain177@gmail.com>, Max Makarov <maxpain@linux.com>,
+ Raphael Norwitz <rnorwitz@nvidia.com>,
  Stefano Garzarella <sgarzare@redhat.com>,
- Stefan Hajnoczi <stefanha@redhat.com>
-Subject: [PULL 094/106] vhost_user: Add frontend get_shmem_config command
-Message-ID: <458f80f661e51d09936efb53eaba7c0d81ba323c.1781463125.git.mst@redhat.com>
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ qemu-block@nongnu.org
+Subject: [PULL 066/106] vhost-user-blk: do not force VIRTIO_BLK_F_SIZE_MAX
+Message-ID: <639dcd58707951cb88a0dddcb5027780c53d49dd.1781463125.git.mst@redhat.com>
 References: <cover.1781463125.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -120,98 +122,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Albert Esteve <aesteve@redhat.com>
+From: Max Makarov <maxpain177@gmail.com>
 
-The frontend can use this command to retrieve
-VirtIO Shared Memory Regions configuration from
-the backend. The response contains the number of
-shared memory regions, their size, and shmid.
+vhost_user_blk_get_features() unconditionally advertises
+VIRTIO_BLK_F_SIZE_MAX regardless of what the backend reports in
+its config. The built-in QSD vhost-user-blk backend sets
+size_max=0, creating a contradictory state where the feature bit
+tells the guest that size_max is valid but the value is zero.
 
-This is useful when the frontend is unaware of
-specific backend type and configuration,
-for example, in the `vhost-user-device` case.
+The in-process virtio-blk device does not advertise
+VIRTIO_BLK_F_SIZE_MAX (it also sets size_max=0 in config), so
+guests never see this contradiction with native virtio-blk.
 
-Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
-Signed-off-by: Albert Esteve <aesteve@redhat.com>
+Linux tolerates size_max=0 because blk_validate_limits() silently
+corrects max_segment_size=0 to BLK_MAX_SEGMENT_SIZE (65536).
+Windows viostor, however, trusts the feature bit and uses the raw
+size_max=0 in its scatter-gather calculations, producing
+zero-length segments that hang I/O. The disk appears empty to
+Windows (no GPT, no partitions), causing INACCESSIBLE_BOOT_DEVICE.
+
+Stop force-adding VIRTIO_BLK_F_SIZE_MAX in the frontend. The
+feature remains in user_feature_bits[], so backends that properly
+advertise it with a valid config value will still work.
+
+Signed-off-by: Max Makarov <maxpain@linux.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-Id: <20260304165223.2166175-5-aesteve@redhat.com>
+Message-Id: <20260331134721.96047-1-maxpain@linux.com>
 ---
- include/hw/virtio/vhost-backend.h         | 10 ++++++++++
- include/hw/virtio/vhost-user.h            |  1 +
- include/hw/virtio/virtio.h                |  2 ++
- subprojects/libvhost-user/libvhost-user.h |  4 +++-
- 4 files changed, 16 insertions(+), 1 deletion(-)
+ hw/block/vhost-user-blk.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/include/hw/virtio/vhost-backend.h b/include/hw/virtio/vhost-backend.h
-index 00881a0bd4..d878d7b733 100644
---- a/include/hw/virtio/vhost-backend.h
-+++ b/include/hw/virtio/vhost-backend.h
-@@ -162,6 +162,15 @@ typedef int (*vhost_set_device_state_fd_op)(struct vhost_dev *dev,
-                                             int *reply_fd,
-                                             Error **errp);
- typedef int (*vhost_check_device_state_op)(struct vhost_dev *dev, Error **errp);
-+/*
-+ * Max regions is VIRTIO_MAX_SHMEM_REGIONS, so that is the maximum
-+ * number of memory_sizes that will be accepted.
-+ */
-+typedef int (*vhost_get_shmem_config_op)(struct vhost_dev *dev,
-+                                         int *nregions,
-+                                         uint64_t *memory_sizes,
-+                                         Error **errp);
-+
+diff --git a/hw/block/vhost-user-blk.c b/hw/block/vhost-user-blk.c
+index 530f44ab52..5c73a58ee0 100644
+--- a/hw/block/vhost-user-blk.c
++++ b/hw/block/vhost-user-blk.c
+@@ -283,7 +283,6 @@ static uint64_t vhost_user_blk_get_features(VirtIODevice *vdev,
+     VHostUserBlk *s = VHOST_USER_BLK(vdev);
  
- typedef struct VhostOps {
-     VhostBackendType backend_type;
-@@ -220,6 +229,7 @@ typedef struct VhostOps {
-     vhost_supports_device_state_op vhost_supports_device_state;
-     vhost_set_device_state_fd_op vhost_set_device_state_fd;
-     vhost_check_device_state_op vhost_check_device_state;
-+    vhost_get_shmem_config_op vhost_get_shmem_config;
- } VhostOps;
- 
- int vhost_user_gpu_set_socket(struct vhost_dev *dev, int fd);
-diff --git a/include/hw/virtio/vhost-user.h b/include/hw/virtio/vhost-user.h
-index 5ab70dab7e..06c360af18 100644
---- a/include/hw/virtio/vhost-user.h
-+++ b/include/hw/virtio/vhost-user.h
-@@ -35,6 +35,7 @@ enum VhostUserProtocolFeature {
-     VHOST_USER_PROTOCOL_F_DEVICE_STATE = 19,
-     VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFLIGHT = 20,
-     VHOST_USER_PROTOCOL_F_GPA_ADDRESSES = 21,
-+    VHOST_USER_PROTOCOL_F_SHMEM = 22,
-     VHOST_USER_PROTOCOL_F_MAX
- };
- 
-diff --git a/include/hw/virtio/virtio.h b/include/hw/virtio/virtio.h
-index 3f745e3b67..c99cb19d88 100644
---- a/include/hw/virtio/virtio.h
-+++ b/include/hw/virtio/virtio.h
-@@ -82,6 +82,8 @@ typedef struct VirtQueueElement
- 
- #define VIRTIO_NO_VECTOR 0xffff
- 
-+#define VIRTIO_MAX_SHMEM_REGIONS 256
-+
- /* special index value used internally for config irqs */
- #define VIRTIO_CONFIG_IRQ_IDX -1
- 
-diff --git a/subprojects/libvhost-user/libvhost-user.h b/subprojects/libvhost-user/libvhost-user.h
-index 6a2d0f9fae..a534d70771 100644
---- a/subprojects/libvhost-user/libvhost-user.h
-+++ b/subprojects/libvhost-user/libvhost-user.h
-@@ -70,7 +70,9 @@ enum VhostUserProtocolFeature {
-     /* Feature 17 reserved for VHOST_USER_PROTOCOL_F_XEN_MMAP. */
-     VHOST_USER_PROTOCOL_F_SHARED_OBJECT = 18,
-     /* Feature 19 is reserved for VHOST_USER_PROTOCOL_F_DEVICE_STATE */
--    VHOST_USER_PROTOCOL_F_SHMEM = 20,
-+    /* Feature 20 is reserved for VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFLIGHT */
-+    /* Feature 21 is reserved for VHOST_USER_PROTOCOL_F_GPA_ADDRESSES */
-+    VHOST_USER_PROTOCOL_F_SHMEM = 22,
-     VHOST_USER_PROTOCOL_F_MAX
- };
- 
+     /* Turn on pre-defined features */
+-    virtio_add_feature(&features, VIRTIO_BLK_F_SIZE_MAX);
+     virtio_add_feature(&features, VIRTIO_BLK_F_SEG_MAX);
+     virtio_add_feature(&features, VIRTIO_BLK_F_GEOMETRY);
+     virtio_add_feature(&features, VIRTIO_BLK_F_TOPOLOGY);
 -- 
 MST
 
