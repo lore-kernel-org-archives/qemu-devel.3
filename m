@@ -4,94 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9F26CD98C5
-	for <qemu-devel@archiver.kernel.org>; Sun, 14 Jun 2026 19:12:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E711CD98D2
+	for <qemu-devel@archiver.kernel.org>; Sun, 14 Jun 2026 19:12:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wYqBh-00042i-5U; Sun, 14 Jun 2026 15:08:05 -0400
+	id 1wYqDM-0008CL-Tk; Sun, 14 Jun 2026 15:09:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wYqBf-0003rn-N5
- for qemu-devel@nongnu.org; Sun, 14 Jun 2026 15:08:03 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wYqCy-0007Yb-9O
+ for qemu-devel@nongnu.org; Sun, 14 Jun 2026 15:09:30 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wYqBd-00024U-Jx
- for qemu-devel@nongnu.org; Sun, 14 Jun 2026 15:08:03 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wYqCw-0002Zl-D0
+ for qemu-devel@nongnu.org; Sun, 14 Jun 2026 15:09:24 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781464080;
+ s=mimecast20190719; t=1781464161;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=pt0EyeSxg4/HAYXjOQeT2VvKcIzpOhnnRGb8xdH0H7c=;
- b=Yuc5IEBxySOYFbZN5R1DmGPP1AM907WwOOHQPKX6+X/mOYMisg2++VisFoDtERdIu57BSb
- YzTxqnC51PaCqjl8rYU2rZ9LIPEROirbbdH7zjQMVJnvtO1D8rSwTRecU/yuUUlkqwwTK6
- fI/IUnq85l2dFHbo7oBynb1eAuX0yFw=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=hMSjzoHh5eLV9v+BiMfQgZHJ14Xa1/fuSL+UsKHzc9Y=;
+ b=il5VeGm/WYOsL2EpgvOLPVixM6PQA5/yvEkEB36unkS1LsjZFF1OHH8T7ve3kO8dlVVtiO
+ nZ4zVDZDeICCsicdcNmT/pDw0EOcxfhAYh39KsEH8uNKc0XoKu8fJtLdFCWg8OL4crZhWa
+ vqGT/k4HSHmZmrychiqy+ySSDe9eqxQ=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-331-fuzp1SePOp6ffkH4yLtNbw-1; Sun, 14 Jun 2026 15:07:59 -0400
-X-MC-Unique: fuzp1SePOp6ffkH4yLtNbw-1
-X-Mimecast-MFC-AGG-ID: fuzp1SePOp6ffkH4yLtNbw_1781464078
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-490a060eb84so19275395e9.0
- for <qemu-devel@nongnu.org>; Sun, 14 Jun 2026 12:07:59 -0700 (PDT)
+ us-mta-635-ZaU4qouUNmixCiociC3mHg-1; Sun, 14 Jun 2026 15:09:20 -0400
+X-MC-Unique: ZaU4qouUNmixCiociC3mHg-1
+X-Mimecast-MFC-AGG-ID: ZaU4qouUNmixCiociC3mHg_1781464159
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-490b79e6b94so22238985e9.2
+ for <qemu-devel@nongnu.org>; Sun, 14 Jun 2026 12:09:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1781464078; x=1782068878; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=pt0EyeSxg4/HAYXjOQeT2VvKcIzpOhnnRGb8xdH0H7c=;
- b=nvlVU7jCSlJh103s08DH2j2XyzYsMH5bXu9WwepXIwgbVl40VNTvxGzhnybUbJvuJX
- eKqlqqW284WG6T1Bc6CCYg0qhDp9N46Qfj6vnkN3yTSU7T4VSKilvxid4HBU6MbGP8L+
- tUcjX+fnJr2VcdfSnj+wm0S46FrAya5Ag9WCTLZ1BFFw/QAQSWuPPxnlFKmLF5dcYwQV
- I0DFfTvY+AHfCLZmsDlzoSx7BaxDGg1cJ7UPZUQvmkZZ+hlvft5aXZqtO9nv3o2DvcIF
- OuoRp/xkmj/7T+il1/TMnRysGBXlWFmQQA8Nfp5J26b8iq6cfeAhC8BAZz8eFLfxpuui
- 1HXw==
+ d=redhat.com; s=google; t=1781464159; x=1782068959; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=hMSjzoHh5eLV9v+BiMfQgZHJ14Xa1/fuSL+UsKHzc9Y=;
+ b=dMVaQoNO++B6JsynkfLuzwIXo/F9P8w75+K8laEGxE3qgdlRt0CqAQjsYTjsRAGdTv
+ aVRH8UYaCAhe4AWfcrcc9khAMi171ja/UYJXP1F+FNj1aKKrVes0svXXD/gHWAQHEKeI
+ t8Tr16lpG50DQnwwYL/923tbUMeOJ+HSrHuDw6UVIA3xXVILV0i9QeNAp3tz0Rx7/DzS
+ nYLAjXssotTm/ucbRdAkJZVcliUW3RJXdNFRFot33KRYo1UtyWAGw/lc82uePont50mn
+ hD1lIo4L+uHgIQMhtWz4vvCyf3FJylQOrv2PkTedu5uTRKNNB1/dhu8mhnO/K9+iYc5F
+ bwUQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781464078; x=1782068878;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=pt0EyeSxg4/HAYXjOQeT2VvKcIzpOhnnRGb8xdH0H7c=;
- b=T5xMSsVdr48FlS3Gyfg7kkL0MYvFtVEuvCkZ2T/POV0HaHbzsygJdvXCmpH+VNtf0R
- 7AzA45pD29R/V4uwihB2KfWCUgWWU7rgyw9kVJ9cNQrqktX6v4HgsncDpj0SVJSOsw+o
- QseK1Fj3EQuNKV8L+Q9cvSPWaLIF/l5CBN7Px6YKvy/xJhHTDPMSvGgI4xsFQgQTuKry
- O2yRoOyDYzDEKshe0TQzyWKFsA5O8/TdYEDWea27KPK0Dazlcc3jXS/gyS3QA4flMeRg
- zRywM2fZhrAvjsOBbceblRRMTPzs7A9EfQtBK95aJhrjvX8E5Q8EPA2p5Jp0behgk2Sn
- aWXg==
-X-Gm-Message-State: AOJu0Yxe1+Y0yGoxqPymeteLWo8thtujZ5ej1H+W2IEgI+F14xb/pFZt
- tknh5lmIXpUaPrtoMHhVfJ38fU84Ut64NQMXNZRlndGNowYMRloIIGWbZsisvB9QkbzvgG0N17H
- 8PmxoU5mQvuy0ed7LWX+Y2aujH/YPVF0U56oW3imDge2teBcWjtyKB0+56a3uL/NU+Usu6STc9C
- lfg8Bii2VVl3aubVIKiJ0du2AB6MtrHG/z6A==
-X-Gm-Gg: Acq92OFe5Cb+Z7FpWDg1SrcCSjlOIHB/ETlU0z9OPjRDmiaudyLeslRawTmOlGaGUQy
- VsfWyDZKFNPwLUVq3JHSxTCCEa4frx5c22wYRx4bLwa3Z5OZ3YWZnXOGGPT3QfVne3su6dt5UPf
- WLWtw7Lhhkz7v19zXdFzhrU7FbClb6c3xZ8sPyTxPE2BMYuqi2lReD+7ALj2g6wbNncMgQyxdFp
- Bhu11XoIjUAIAxgiKpM/gscaJ4S/Nzx2jbqTklqmN1oX/CaVdJGldxxi0vnb5vwwX5FeuNuoXbg
- W2c2EUOur96+ThkegqUNebaq6XcwloYBRbEAW6m10B4m76ftegpIDMePmn8A8jhHAcuPw8mUpj9
- gxQRNIxjnu9SFSRxXvGC8XK/kIfhNQRS/4RFc1Ql8TgQ=
-X-Received: by 2002:a05:600c:a210:b0:490:e60b:5fcd with SMTP id
- 5b1f17b1804b1-490ec521002mr87983895e9.32.1781464078154; 
- Sun, 14 Jun 2026 12:07:58 -0700 (PDT)
-X-Received: by 2002:a05:600c:a210:b0:490:e60b:5fcd with SMTP id
- 5b1f17b1804b1-490ec521002mr87983605e9.32.1781464077509; 
- Sun, 14 Jun 2026 12:07:57 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1781464159; x=1782068959;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=hMSjzoHh5eLV9v+BiMfQgZHJ14Xa1/fuSL+UsKHzc9Y=;
+ b=XQzlk5MCa7+vx0VeNnsDdb8msrMccC+A4BQs1EbsGsZ60VsDSxvQOSUllq9v8nQ809
+ 9K38dQKyY2mwX9t9FS5uNJDKKGb/Qa71x5Rl8skFLHpnO3dqVJIH0xO2GJOK8CuJOwUy
+ jnG5Z8f8/0HYuSU61Xl03hDYjlAu5jn/kGUP3NO46PHJ+BgXzP2FWem9FRuPxMZcb9n9
+ jHiPiKZsUuzciCDsg6Rd8aHg2BSj5JWBclhLZ3TQLRJwm0WEpdFQWUYgbxkN5bQ4X+5b
+ TC3k9F0nt9gRtwexVH4TJXdfOMGwz7uBN+olhoRrMaY37EGYxg0TRYzyp+K+miw2WUGd
+ 2ZDw==
+X-Gm-Message-State: AOJu0YxcpgeWU5bbWDv36hnDYn2WttCMATAzLdE9XxJ1sPV0zumf7jWl
+ H+HYeHJnzaVX3Ha1A0F2vWbfYkPLk2emwEFC6I53+9jVIi57LSPexSL5BQ0y9z/yerpem5H6MPA
+ JKa8rqMHlOi2swhWlh+MMOXXqw3hhrApTtGJ2+lFq1B3zieBf3w5b/BmlpCRYyFI+R86OUpIyRy
+ AIiEgrK0GlJ9yZ/ri52LtiH3Zcp4r3kZJq3g==
+X-Gm-Gg: Acq92OFR3Op7Lga2AEEpckV08rUC8oQBp+6r0y8QgZkSlQCA7neC7SnNWRg2AFVU0yg
+ W+oi1wOZ/I/PFo9L6Gzk0CadAAeTZKKj4akyOXHW6v9oLaqdAJlI1LtnbK8AJpdBf/Bft9yL/69
+ hj6o5CZuHKAVZ4SXP3NzehB0CO/m/T2vXy0qGKLaA2O1sxurLUgYFZaRtTc+A0z8Lg20tRBg26L
+ eOEgfOtYeaBrAto0o/cu4C+oPuKQseMeuSXOqxarHscj16X3+OMZq65ymXKoMOTFbLTsLZVRtfF
+ fwdbf1U4Fq2x/uw1gJrMBd+AHrsBShRNLIf5k7MTjHy3/hJndsZd/9sT72F5OG2EIAh6Jz6v3M9
+ PWmUcJ+rOgUqhIGUj5DMkm670jQJCvt8MQ9fIQlAaq6E=
+X-Received: by 2002:a05:600c:314a:b0:490:e1a6:261 with SMTP id
+ 5b1f17b1804b1-490ec5092c8mr137640835e9.26.1781464159186; 
+ Sun, 14 Jun 2026 12:09:19 -0700 (PDT)
+X-Received: by 2002:a05:600c:314a:b0:490:e1a6:261 with SMTP id
+ 5b1f17b1804b1-490ec5092c8mr137640545e9.26.1781464158570; 
+ Sun, 14 Jun 2026 12:09:18 -0700 (PDT)
 Received: from redhat.com (IGLD-80-230-85-71.inter.net.il. [80.230.85.71])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4922037055csm191172275e9.13.2026.06.14.12.07.55
+ 5b1f17b1804b1-4922031b7d2sm197621255e9.5.2026.06.14.12.09.16
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 14 Jun 2026 12:07:57 -0700 (PDT)
-Date: Sun, 14 Jun 2026 15:07:55 -0400
+ Sun, 14 Jun 2026 12:09:18 -0700 (PDT)
+Date: Sun, 14 Jun 2026 15:09:15 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- Stefano Garzarella <sgarzare@redhat.com>
-Subject: [PULL 050/106] vhost: use consistent naming for backend handlers
-Message-ID: <83a2e2ecc108b44e2a49ec44d2ff0150dac984a2.1781463125.git.mst@redhat.com>
+ Igor Mammedov <imammedo@redhat.com>,
+ Ani Sinha <anisinha@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Eric Auger <eric.auger@redhat.com>
+Subject: [PULL 085/106] acpi: add API to build WDAT instructions
+Message-ID: <f793df3dcabab71e794639a794bba1ae1380943c.1781463125.git.mst@redhat.com>
 References: <cover.1781463125.git.mst@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1781463125.git.mst@redhat.com>
 X-Mailer: git-send-email 2.51.2.2891.g4157995a80.dirty
 X-Mutt-Fcc: =sent
@@ -119,187 +123,181 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+From: Igor Mammedov <imammedo@redhat.com>
 
-Most of handlers start from simply .vhost_, except for these
-four, starting from .vhost_backend_. Let's rename them to be
-consistent.
+Add definitions for WDAT[1] actions/instructions
+and build_append_wdat_ins() API to build table entries.
 
-Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+1)
+"Hardware Watchdog Timers Design Specification"
+  https://uefi.org/acpi 'Watchdog Action Table (WDAT)'
+
+Signed-off-by: Igor Mammedov <imammedo@redhat.com>
+Reviewed-by: Ani Sinha <anisinha@redhat.com>
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Based-on: <20260206095258.894504-1-vsementsov@yandex-team.ru>
+Message-Id: <20260303092532.2410177-2-imammedo@redhat.com>
+Reviewed-by: Eric Auger <eric.auger@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-Id: <20260420202032.714884-3-vsementsov@yandex-team.ru>
 ---
- hw/virtio/vhost-backend.c         |  6 +++---
- hw/virtio/vhost-user.c            |  8 ++++----
- hw/virtio/vhost-vdpa.c            |  6 +++---
- hw/virtio/vhost.c                 | 14 +++++++-------
- include/hw/virtio/vhost-backend.h | 17 ++++++++---------
- 5 files changed, 25 insertions(+), 26 deletions(-)
+ hw/acpi/aml-build.c    |  14 +++++
+ include/hw/acpi/wdat.h | 118 +++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 132 insertions(+)
+ create mode 100644 include/hw/acpi/wdat.h
 
-diff --git a/hw/virtio/vhost-backend.c b/hw/virtio/vhost-backend.c
-index fea88afc39..caeadd069b 100644
---- a/hw/virtio/vhost-backend.c
-+++ b/hw/virtio/vhost-backend.c
-@@ -358,9 +358,9 @@ static void vhost_kernel_set_iotlb_callback(struct vhost_dev *dev,
+diff --git a/hw/acpi/aml-build.c b/hw/acpi/aml-build.c
+index 413d9b6240..9b3cdd3781 100644
+--- a/hw/acpi/aml-build.c
++++ b/hw/acpi/aml-build.c
+@@ -35,6 +35,7 @@
+ #include "hw/acpi/acpi_aml_interface.h"
+ #include "qemu/cutils.h"
+ #include "hw/core/cpu.h"
++#include "hw/acpi/wdat.h"
  
- const VhostOps kernel_ops = {
-         .backend_type = VHOST_BACKEND_TYPE_KERNEL,
--        .vhost_backend_init = vhost_kernel_init,
--        .vhost_backend_cleanup = vhost_kernel_cleanup,
--        .vhost_backend_memslots_limit = vhost_kernel_memslots_limit,
-+        .vhost_init = vhost_kernel_init,
-+        .vhost_cleanup = vhost_kernel_cleanup,
-+        .vhost_memslots_limit = vhost_kernel_memslots_limit,
-         .vhost_net_set_backend = vhost_kernel_net_set_backend,
-         .vhost_scsi_set_endpoint = vhost_kernel_scsi_set_endpoint,
-         .vhost_scsi_clear_endpoint = vhost_kernel_scsi_clear_endpoint,
-diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
-index 6978d8ee94..78ffb25d6b 100644
---- a/hw/virtio/vhost-user.c
-+++ b/hw/virtio/vhost-user.c
-@@ -3115,10 +3115,10 @@ void vhost_user_qmp_status(struct vhost_dev *dev, VirtioStatus *status)
- 
- const VhostOps user_ops = {
-         .backend_type = VHOST_BACKEND_TYPE_USER,
--        .vhost_backend_init = vhost_user_backend_init,
--        .vhost_backend_cleanup = vhost_user_backend_cleanup,
--        .vhost_backend_memslots_limit = vhost_user_memslots_limit,
--        .vhost_backend_no_private_memslots = vhost_user_no_private_memslots,
-+        .vhost_init = vhost_user_backend_init,
-+        .vhost_cleanup = vhost_user_backend_cleanup,
-+        .vhost_memslots_limit = vhost_user_memslots_limit,
-+        .vhost_no_private_memslots = vhost_user_no_private_memslots,
-         .vhost_set_log_base = vhost_user_set_log_base,
-         .vhost_set_mem_table = vhost_user_set_mem_table,
-         .vhost_set_vring_addr = vhost_user_set_vring_addr,
-diff --git a/hw/virtio/vhost-vdpa.c b/hw/virtio/vhost-vdpa.c
-index 9c7634e243..9347462489 100644
---- a/hw/virtio/vhost-vdpa.c
-+++ b/hw/virtio/vhost-vdpa.c
-@@ -1590,8 +1590,8 @@ static bool  vhost_vdpa_force_iommu(struct vhost_dev *dev)
- 
- const VhostOps vdpa_ops = {
-         .backend_type = VHOST_BACKEND_TYPE_VDPA,
--        .vhost_backend_init = vhost_vdpa_init,
--        .vhost_backend_cleanup = vhost_vdpa_cleanup,
-+        .vhost_init = vhost_vdpa_init,
-+        .vhost_cleanup = vhost_vdpa_cleanup,
-         .vhost_set_log_base = vhost_vdpa_set_log_base,
-         .vhost_set_vring_addr = vhost_vdpa_set_vring_addr,
-         .vhost_set_vring_num = vhost_vdpa_set_vring_num,
-@@ -1602,7 +1602,7 @@ const VhostOps vdpa_ops = {
-         .vhost_get_features = vhost_vdpa_get_features,
-         .vhost_set_owner = vhost_vdpa_set_owner,
-         .vhost_set_vring_endian = NULL,
--        .vhost_backend_memslots_limit = vhost_vdpa_memslots_limit,
-+        .vhost_memslots_limit = vhost_vdpa_memslots_limit,
-         .vhost_set_mem_table = vhost_vdpa_set_mem_table,
-         .vhost_set_features = vhost_vdpa_set_features,
-         .vhost_reset_device = vhost_vdpa_reset_device,
-diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
-index 4d42f8bda4..ffd7d404cc 100644
---- a/hw/virtio/vhost.c
-+++ b/hw/virtio/vhost.c
-@@ -58,7 +58,7 @@ unsigned int vhost_get_max_memslots(void)
-     struct vhost_dev *hdev;
- 
-     QLIST_FOREACH(hdev, &vhost_devices, entry) {
--        max = MIN(max, hdev->vhost_ops->vhost_backend_memslots_limit(hdev));
-+        max = MIN(max, hdev->vhost_ops->vhost_memslots_limit(hdev));
+ static GArray *build_alloc_array(void)
+ {
+@@ -2872,3 +2873,16 @@ void qbus_build_aml(BusState *bus, Aml *scope)
+         call_dev_aml_func(DEVICE(kid->child), scope);
      }
-     return max;
  }
-@@ -69,7 +69,7 @@ unsigned int vhost_get_free_memslots(void)
-     struct vhost_dev *hdev;
- 
-     QLIST_FOREACH(hdev, &vhost_devices, entry) {
--        unsigned int r = hdev->vhost_ops->vhost_backend_memslots_limit(hdev);
-+        unsigned int r = hdev->vhost_ops->vhost_memslots_limit(hdev);
-         unsigned int cur_free = r - hdev->mem->nregions;
- 
-         if (unlikely(r < hdev->mem->nregions)) {
-@@ -664,8 +664,8 @@ static bool vhost_section(struct vhost_dev *dev, MemoryRegionSection *section)
-          */
-         if ((memory_region_get_fd(section->mr) < 0 ||
-             !qemu_ram_is_shared(section->mr->ram_block)) &&
--            dev->vhost_ops->vhost_backend_no_private_memslots &&
--            dev->vhost_ops->vhost_backend_no_private_memslots(dev)) {
-+            dev->vhost_ops->vhost_no_private_memslots &&
-+            dev->vhost_ops->vhost_no_private_memslots(dev)) {
-             trace_vhost_reject_section(mr->name, 2);
-             return false;
-         }
-@@ -1674,7 +1674,7 @@ int vhost_dev_init(struct vhost_dev *hdev, void *opaque,
-     r = vhost_set_backend_type(hdev, backend_type);
-     assert(r >= 0);
- 
--    r = hdev->vhost_ops->vhost_backend_init(hdev, opaque, errp);
-+    r = hdev->vhost_ops->vhost_init(hdev, opaque, errp);
-     if (r < 0) {
-         goto fail;
-     }
-@@ -1691,7 +1691,7 @@ int vhost_dev_init(struct vhost_dev *hdev, void *opaque,
-         goto fail;
-     }
- 
--    limit = hdev->vhost_ops->vhost_backend_memslots_limit(hdev);
-+    limit = hdev->vhost_ops->vhost_memslots_limit(hdev);
-     if (limit < MEMORY_DEVICES_SAFE_MAX_MEMSLOTS &&
-         memory_devices_memslot_auto_decision_active()) {
-         error_setg(errp, "some memory device (like virtio-mem)"
-@@ -1809,7 +1809,7 @@ void vhost_dev_cleanup(struct vhost_dev *hdev)
-     g_free(hdev->mem);
-     g_free(hdev->mem_sections);
-     if (hdev->vhost_ops) {
--        hdev->vhost_ops->vhost_backend_cleanup(hdev);
-+        hdev->vhost_ops->vhost_cleanup(hdev);
-     }
-     assert(!hdev->log);
- 
-diff --git a/include/hw/virtio/vhost-backend.h b/include/hw/virtio/vhost-backend.h
-index 57497e197a..aab6bf3ef7 100644
---- a/include/hw/virtio/vhost-backend.h
-+++ b/include/hw/virtio/vhost-backend.h
-@@ -51,10 +51,9 @@ struct vhost_scsi_target;
- struct vhost_iotlb_msg;
- struct vhost_virtqueue;
- 
--typedef int (*vhost_backend_init)(struct vhost_dev *dev, void *opaque,
--                                  Error **errp);
--typedef int (*vhost_backend_cleanup)(struct vhost_dev *dev);
--typedef int (*vhost_backend_memslots_limit)(struct vhost_dev *dev);
-+typedef int (*vhost_init)(struct vhost_dev *dev, void *opaque, Error **errp);
-+typedef int (*vhost_cleanup)(struct vhost_dev *dev);
-+typedef int (*vhost_memslots_limit)(struct vhost_dev *dev);
- 
- typedef int (*vhost_net_set_backend_op)(struct vhost_dev *dev,
-                                 struct vhost_vring_file *file);
-@@ -131,7 +130,7 @@ typedef int (*vhost_crypto_create_session_op)(struct vhost_dev *dev,
- typedef int (*vhost_crypto_close_session_op)(struct vhost_dev *dev,
-                                              uint64_t session_id);
- 
--typedef bool (*vhost_backend_no_private_memslots_op)(struct vhost_dev *dev);
-+typedef bool (*vhost_no_private_memslots_op)(struct vhost_dev *dev);
- 
- typedef int (*vhost_get_inflight_fd_op)(struct vhost_dev *dev,
-                                         uint16_t queue_size,
-@@ -166,10 +165,10 @@ typedef int (*vhost_check_device_state_op)(struct vhost_dev *dev, Error **errp);
- 
- typedef struct VhostOps {
-     VhostBackendType backend_type;
--    vhost_backend_init vhost_backend_init;
--    vhost_backend_cleanup vhost_backend_cleanup;
--    vhost_backend_memslots_limit vhost_backend_memslots_limit;
--    vhost_backend_no_private_memslots_op vhost_backend_no_private_memslots;
-+    vhost_init vhost_init;
-+    vhost_cleanup vhost_cleanup;
-+    vhost_memslots_limit vhost_memslots_limit;
-+    vhost_no_private_memslots_op vhost_no_private_memslots;
-     vhost_net_set_backend_op vhost_net_set_backend;
-     vhost_net_set_mtu_op vhost_net_set_mtu;
-     vhost_scsi_set_endpoint_op vhost_scsi_set_endpoint;
++
++void build_append_wdat_ins(GArray *table_data,
++                           WDATAction action, uint8_t flags,
++                           struct AcpiGenericAddress as,
++                           uint32_t val, uint32_t mask)
++{
++    build_append_int_noprefix(table_data, action, 1);    /* Watchdog Action */
++    build_append_int_noprefix(table_data, flags, 1);     /* Instruction Flags */
++    build_append_int_noprefix(table_data, 0, 2);         /* Reserved */
++    build_append_gas_from_struct(table_data, &as);       /* Register Region */
++    build_append_int_noprefix(table_data, val, 4);       /* Value */
++    build_append_int_noprefix(table_data, mask, 4);      /* Mask */
++}
+diff --git a/include/hw/acpi/wdat.h b/include/hw/acpi/wdat.h
+new file mode 100644
+index 0000000000..89803eef4b
+--- /dev/null
++++ b/include/hw/acpi/wdat.h
+@@ -0,0 +1,118 @@
++/*
++ * Watchdog Action Table (WDAT) definitions
++ *
++ * Copyright Red Hat, Inc. 2026
++ * Author(s): Igor Mammedov <imammedo@redhat.com>
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++#ifndef QEMU_HW_ACPI_WDAT_H
++#define QEMU_HW_ACPI_WDAT_H
++
++#include "hw/acpi/acpi-defs.h"
++
++/*
++ * Watchdog actions as described in
++ *  "Hardware Watchdog Timers Design Specification"
++ * for link to spec see https://uefi.org/acpi
++ *     'Watchdog Action Table (WDAT)'
++ */
++typedef enum {
++    /*
++     * Restarts the watchdog timer's countdown. This action is
++     * required.
++     */
++    WDAT_ACTION_RESET = 0x1,
++    /*
++     * Returns the current countdown value of the watchdog hardware
++     * (in count intervals).
++     */
++    WDAT_ACTION_QUERY_CURRENT_COUNTDOWN_PERIOD = 0x4,
++    /*
++     * Returns the countdown value the watchdog hardware is
++     * configured to use when reset (in count intervals).
++     */
++    WDAT_ACTION_QUERY_COUNTDOWN_PERIOD = 0x5,
++    /*
++     * Sets the countdown value (in count intervals) to be used when
++     * the watchdog timer is reset. This action is required if
++     * WDAT_ACTION_RESET does not explicitly write a new
++     * countdown value to a register during a reset. Otherwise, this
++     * action is optional.
++     */
++    WDAT_ACTION_SET_COUNTDOWN_PERIOD = 0x6,
++    /*
++     * Determines if the watchdog hardware is currently in enabled/
++     * running state. The same result must occur when performed from
++     * both from enabled/stopped state and enabled/running state. If
++     * the watchdog hardware is disabled, results are indeterminate.
++     * This action is required.
++     */
++    WDAT_ACTION_QUERY_RUNNING_STATE = 0x8,
++    /*
++     * Starts the watchdog, if not already in running state. If the
++     * watchdog hardware is disabled, results are indeterminate.
++     * This action is required.
++     */
++    WDAT_ACTION_SET_RUNNING_STATE = 0x9,
++    /*
++     * Determines if the watchdog hardware is currently in enabled/
++     * stopped state. The same result must occur when performed from
++     * both the enabled/stopped state and enabled/running state. If
++     * the watchdog hardware is disabled, results are indeterminate.
++     * This action is required.
++     */
++    WDAT_ACTION_QUERY_STOPPED_STATE = 0xA,
++    /*
++     * Stops the watchdog, if not already in stopped state. If the
++     * watchdog hardware is disabled, results are indeterminate.
++     * This action is required.
++     */
++    WDAT_ACTION_SET_STOPPED_STATE = 0xB,
++    /*
++     * Determines if the watchdog hardware is configured to perform a
++     * reboot when the watchdog is fired.
++     */
++    WDAT_ACTION_QUERY_REBOOT = 0x10,
++    /*
++     * Configures the watchdog hardware to perform a reboot when it
++     * is fired.
++     */
++    WDAT_ACTION_SET_REBOOT = 0x11,
++    /*
++     * Determines if the watchdog hardware is configured to perform a
++     * system shutdown when fired.
++     */
++    WDAT_ACTION_QUERY_SHUTDOWN = 0x12,
++    /*
++     * Configures the watchdog hardware to perform a system shutdown
++     * when fired.
++     */
++    WDAT_ACTION_SET_SHUTDOWN = 0x13,
++    /*
++     * Determines if the current boot was caused by the watchdog
++     * firing. The boot status is required to be set if the watchdog
++     * fired and caused a reboot. It is recommended that the
++     * Watchdog Status be set if the watchdog fired and caused a
++     * shutdown. This action is required.
++     */
++    WDAT_ACTION_QUERY_WATCHDOG_STATUS = 0x20,
++    /*
++     * Sets the watchdog's boot status to the default value. This
++     * action is required.
++     */
++    WDAT_ACTION_SET_WATCHDOG_STATUS = 0x21,
++} WDATAction;
++
++#define WDAT_INS_READ_VALUE 0x0
++#define WDAT_INS_READ_COUNTDOWN 0x1
++#define WDAT_INS_WRITE_VALUE 0x2
++#define WDAT_INS_WRITE_COUNTDOWN 0x3
++#define WDAT_INS_PRESERVE_REGISTER 0x80
++
++void build_append_wdat_ins(GArray *table_data,
++                           WDATAction action, uint8_t flags,
++                           struct AcpiGenericAddress as,
++                           uint32_t val, uint32_t mask);
++
++#endif /* QEMU_HW_ACPI_WDAT_H */
 -- 
 MST
 
