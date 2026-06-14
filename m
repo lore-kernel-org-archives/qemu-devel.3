@@ -4,93 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6BFDCCD98D2
-	for <qemu-devel@archiver.kernel.org>; Sun, 14 Jun 2026 10:09:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E17D0CD98D2
+	for <qemu-devel@archiver.kernel.org>; Sun, 14 Jun 2026 14:14:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wYhmF-0002X7-CJ; Sun, 14 Jun 2026 06:09:15 -0400
+	id 1wYlb4-0001JJ-M9; Sun, 14 Jun 2026 10:13:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wYhm9-0002VI-Pk
- for qemu-devel@nongnu.org; Sun, 14 Jun 2026 06:09:11 -0400
-Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
+ (Exim 4.90_1) (envelope-from <imaginos32@gmail.com>)
+ id 1wYlb2-0001Iu-4k
+ for qemu-devel@nongnu.org; Sun, 14 Jun 2026 10:13:56 -0400
+Received: from mail-wm1-x343.google.com ([2a00:1450:4864:20::343])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wYhm7-0005cG-7s
- for qemu-devel@nongnu.org; Sun, 14 Jun 2026 06:09:09 -0400
-Received: by mail-wr1-x42d.google.com with SMTP id
- ffacd0b85a97d-45eeea039ebso1256510f8f.1
- for <qemu-devel@nongnu.org>; Sun, 14 Jun 2026 03:09:06 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <imaginos32@gmail.com>)
+ id 1wYlb0-0003rh-KL
+ for qemu-devel@nongnu.org; Sun, 14 Jun 2026 10:13:55 -0400
+Received: by mail-wm1-x343.google.com with SMTP id
+ 5b1f17b1804b1-490ac10e337so16349915e9.3
+ for <qemu-devel@nongnu.org>; Sun, 14 Jun 2026 07:13:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1781431746; x=1782036546; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1781446432; x=1782051232; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=sERDsKFrSOMR+YY8GENahrksk2j3CicdmJMSq7fCAVw=;
- b=ZnVe3iFZ7aiYL5GYAqXvS+3/EkMLtEXfPZhVX96vfGifyVI6sBEudkQIVc4awt7oaP
- ixeIT8cSMRT51/G5bsxoSvQtmuYRPNILRwJxnyr9BHXVLGx8Df2MGr8EPHWX7nL/EW8w
- FMz9rBe+LO9fgcZG6M1tWjuwFiwQNe5GyZEZysHE7EU+xqzT4yMclOIeq4idfJ12+Qry
- r17tW4QEM/VGxiGc4m/PGuc5Dv0X6WQksuNZJz4RnaCqyoRbifVzkhVG0whXHLDemjWV
- kILXN6f9v83bWuIgeWR3rsxdJb7zg+MJFWuRBfoBaPgi4IrpulksiEuN3neRo7Fk7Pw4
- Y0oQ==
+ bh=gHUYLuZwuzMi7F4ecz5j9hrjNh+yhJRwg5RXiaHYtqQ=;
+ b=p2IQiEf1U0LCsfo5tXM8HAOQmwuxoJC19j3rliJ5EgbYxN1yIPPKMAmgfWFqW2sx69
+ eiWFBuWEIPL1LUETEQgLkjlpG+s1GTfKKjKwEKPRjPyNac8vHgp9ftwRbZIwEHNDA+Z+
+ Vvi5bwgVWCyOEywp3aMCDPjjeg6E5t3oYrlowWZVETS6Omo3DNbHAgflNdbBiujsLXVf
+ EVUN6TRIKMl1kwcDAKijXqwWVR83ceSIxij1N5uvD/F+OZN/VewPBX6SfdvF4D/ojPxz
+ nimnx5RweTi9cc/72sfHBIv8NlzgFrp4YHI8m4jKO0GgTWSdu6mS/y/1jupFA3htLXYq
+ QOEQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781431746; x=1782036546;
+ d=1e100.net; s=20251104; t=1781446432; x=1782051232;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=sERDsKFrSOMR+YY8GENahrksk2j3CicdmJMSq7fCAVw=;
- b=qaLT3hVQjTHZmEiCxCdxIDCkRBuNYaVIipYz6cvMQ/96r9LxP35h3A7bZS5LWiCFAw
- RIdQYH5zv6m0sEf1JGcXkGAgzRVFV4foHpjfPHHrXN8ob0ROIdiq20zczJJpcxXKSdNI
- MZZRZW0S9gNsGhvmZkPKdKrhlEeGDMGJjzYqobf17ue0REjOGpYxdmNY3z58a+8VgONf
- WwyZVGI/GRE762S3ZfwGQBpO2erWBnvg0VdCXG/IAufxMxbQUATBPHXlD0C9+zMg0ElF
- aonfgSZfCru4uqwCqO9s0owYmaNfhJtCermnmMED8KpYjCu8oandE5mvK1Evspv8cOHj
- T+pQ==
-X-Gm-Message-State: AOJu0YyU7CMMbRzjQSlNZ6Or+bEQVyIrSI23EUo237ypG21AWEM5nvEr
- kMSpdZxtNipihqbM60hjKVJvUtJ0W3Mmhb4WNHUDyNvmT4pXRJqTbtH3VGz0YNXxZmM=
-X-Gm-Gg: Acq92OG0z0+iGKrofLNmshNkh4jfsVohmFUBye1vxS60V/W1I0qQLbyV1OSZMBg3V06
- 0OiFdVkSrks6gAB1nTPcjjY1jASG6gt4BhsDfW2w6oRShhAFTZ7v7IjbVX0Mn0uZMBl3w4kIDGE
- xUpkv1nGE6jGTRPR5Dbvh1nCsE4RgTWFjUNfbGNB5rQnXIBXZkW45jtCLhqT/iVsFS+gM8NIrqL
- k4AuSUEDx4sv38Zx6BAixkciRzRCdCq8Xk7l4a7T/5dzvcbJTATvf+iQknK+WJ4okfuWW71xeAn
- fMSCo+VCfD2pz/p/NOg8+iNzhyIOtxRHLdf6pX57+P+TrOXo3MNxlb0frtKrPcu7kp0t6KbcnUC
- 18+tb0xYGSGDHY57hDUFmgQC/5+20aX6bZq9nr4F9mT4ZHrr077u7aYz92UC21nji5Z7pv5GCVm
- iWNIfGLulRKGRoOixPDAWER00=
-X-Received: by 2002:a05:6000:2584:b0:460:1967:abed with SMTP id
- ffacd0b85a97d-4607eaf7cfemr6589812f8f.39.1781431745210; 
- Sun, 14 Jun 2026 03:09:05 -0700 (PDT)
-Received: from draig.lan ([185.124.0.195]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4606f2d933esm22055593f8f.33.2026.06.14.03.09.03
+ bh=gHUYLuZwuzMi7F4ecz5j9hrjNh+yhJRwg5RXiaHYtqQ=;
+ b=oqHf6H8E5OoYWBLvkqkgmCTpivIW3aLdvjfm2vRl8gjWlroWUrUMuvZcrRpHPgnwJw
+ 3fbAK4kMyKUjuHDdKN5b9ntpYcVcO1NsJLOjcmHeIaLx1ocxej+mLzDC9C6v9NjL2bLD
+ 5XGstvvTimdgJL0mZ5ezPON3HaobOsZUJbugJP5tlKHeQB1Be87mGBoMfxaydXVFCXxY
+ 46mlE1JSS9ze/1rImmEcgIdAUQM73an61CesWyaZNkE0+ZRixp52j9Sir9xqXErHYMiO
+ TVhD8eLi2N8qLzWbxe4wNhKryvKQR4Ap+LAb0fxuFPSung1odbQ5bJ9dWGX7yreNxKov
+ Jb2Q==
+X-Gm-Message-State: AOJu0Yxm4QB5EDWqIMxUcBxbxv+PQk0T7b7kR+OGQPQqCP7LT1hwZUWW
+ jUt8AfH7bKALhCbE/5rUFpKlNzTJWEhcBF0UREtb3DDZCDhZiKsUUOorl0SdnzGABgI=
+X-Gm-Gg: Acq92OHwIpd3mXXA0pwvidFHozHoU6Bza97+c0ddtmjGVnuryvUbFWsPeCjbQ45TcxD
+ b+78Q+VU6RqeYuvNAX6s41MhW9CCEVH7/RABMTmUFfKgN3ocFCaQX+GLV8Q5xEsmak3/KjT7M9l
+ zfCVBxv1j4ekkDM0NpGpGGh0xatKUa4iT2G5H/cxB/RIEQ2WhjkPq8mXyFwU/WVMTErgdpSBDV1
+ 8VjMvY+5icH5uUVPZsuRIG4GVCWHXoF95bb20W+o1TbL9Pk/AoWgDnylHjZ8hlW3pkI9/heZBqh
+ amEMRiDXxmQi/viDoih3+Umb8dq0njhcD3rbOFm7xBi8iXAWiJ6JXWJdEtmxCZkYQ31Wz73zmnD
+ W9mhEvAnTRcqxOBt30ml6ZEO/04FrcKvcO6GdU2QckXFLF1hckdtXYEk7Nd3aowuVuPOU8Q4Bjs
+ YPjc10Jw4U9dUddvOY1ixwZOu8G4xCe00srYX90vj7PDh+ba7r985U2Z0N1082vH3exM1zP33Sw
+ qX5brc=
+X-Received: by 2002:a05:600c:55c2:b0:490:b1b8:95f5 with SMTP id
+ 5b1f17b1804b1-4922006282bmr62664325e9.15.1781446432172; 
+ Sun, 14 Jun 2026 07:13:52 -0700 (PDT)
+Received: from user-Legion-Pro-5-16ARX8.. (cable-89-216-220-81.dynamic.sbb.rs.
+ [89.216.220.81]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-492202edf89sm177523435e9.1.2026.06.14.07.13.50
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 14 Jun 2026 03:09:03 -0700 (PDT)
-Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 06DC95FA2F;
- Sun, 14 Jun 2026 11:09:03 +0100 (BST)
-From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+ Sun, 14 Jun 2026 07:13:51 -0700 (PDT)
+From: imaginos <imaginos32@gmail.com>
 To: qemu-devel@nongnu.org
-Cc: Cleber Rosa <crosa@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- John Snow <jsnow@redhat.com>, Thomas Huth <th.huth+qemu@posteo.eu>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PATCH 2/4] python/qemu: split console from harness args
-Date: Sun, 14 Jun 2026 11:09:00 +0100
-Message-ID: <20260614100902.885698-3-alex.bennee@linaro.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260614100902.885698-1-alex.bennee@linaro.org>
-References: <20260614100902.885698-1-alex.bennee@linaro.org>
+Cc: qemu-riscv@nongnu.org, Alistair Francis <Alistair.Francis@wdc.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ imaginos <imaginos32@gmail.com>
+Subject: [PATCH v2] disas/riscv: enable `mnret` disassembly
+Date: Sun, 14 Jun 2026 16:12:24 +0200
+Message-ID: <20260614141315.17320-1-imaginos32@gmail.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260606145520.34152-1-imaginos32@gmail.com>
+References: <20260606145520.34152-1-imaginos32@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x42d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Received-SPF: pass client-ip=2a00:1450:4864:20::343;
+ envelope-from=imaginos32@gmail.com; helo=mail-wm1-x343.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,39 +104,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Before we mess with the console output lets create a new helper just
-for that.
+The translator has supported mnret since commit 3157a553ec6b9a
+("target/riscv: Add Smrnmi mnret instruction"), but the
+disassembler still renders it as illegal. Add it unguarded,
+since the encoding does not overlap any other extension.
 
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+Signed-off-by: imaginos <imaginos32@gmail.com>
 ---
- python/qemu/machine/machine.py | 5 +++++
- 1 file changed, 5 insertions(+)
+v2: rebase on riscv-to-apply.next
 
-diff --git a/python/qemu/machine/machine.py b/python/qemu/machine/machine.py
-index e8973a87394..18ee5ec0147 100644
---- a/python/qemu/machine/machine.py
-+++ b/python/qemu/machine/machine.py
-@@ -306,7 +306,11 @@ def _harness_args(self) -> List[str]:
-                 moncdev = f"socket,id=mon,path={self._monitor_address}"
-             args.extend(['-chardev', moncdev, '-mon',
-                          'chardev=mon,mode=control'])
-+        return args
+ disas/riscv.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
+
+diff --git a/disas/riscv.c b/disas/riscv.c
+index b8ec546883..7f1b262773 100644
+--- a/disas/riscv.c
++++ b/disas/riscv.c
+@@ -989,6 +989,7 @@ typedef enum {
+     rv_op_cbo_clean = 957,
+     rv_op_cbo_flush = 958,
+     rv_op_cbo_zero = 959,
++    rv_op_mnret = 960,
+ } rv_op;
  
-+    @property
-+    def _console_args(self) -> List[str]:
-+        args: List[str] = []
-         for _ in range(self._console_index):
-             args.extend(['-serial', 'null'])
-         if self._console_set:
-@@ -372,6 +376,7 @@ def _pre_launch(self) -> None:
-             self._wrapper,
-             [self._binary],
-             self._harness_args,
-+            self._console_args,
-             self._base_args,
-             self._args
-         ))
+ /* register names */
+@@ -2263,6 +2264,7 @@ const rv_opcode_data rvi_opcode_data[] = {
+    { "cbo.clean", rv_codec_r, rv_fmt_rs1, NULL, 0, 0, 0 },
+    { "cbo.flush", rv_codec_r, rv_fmt_rs1, NULL, 0, 0, 0 },
+    { "cbo.zero", rv_codec_r, rv_fmt_rs1, NULL, 0, 0, 0 },
++   { "mnret", rv_codec_none, rv_fmt_none, NULL, 0, 0, 0 },
+ };
+ 
+ /* CSR names */
+@@ -4077,6 +4079,11 @@ static void decode_inst_opcode(rv_decode *dec, rv_isa isa)
+                     case 64: op = rv_op_mret; break;
+                     }
+                     break;
++                case 1792:
++                    switch ((inst >> 15) & 0b1111111111) {
++                    case 64: op = rv_op_mnret; break;
++                    }
++                    break;
+                 case 1952:
+                     switch ((inst >> 15) & 0b1111111111) {
+                     case 576: op = rv_op_dret; break;
 -- 
-2.47.3
+2.43.0
 
 
