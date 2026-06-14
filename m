@@ -4,95 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5604CD8CA8
-	for <qemu-devel@archiver.kernel.org>; Sun, 14 Jun 2026 19:15:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED54CCD98C5
+	for <qemu-devel@archiver.kernel.org>; Sun, 14 Jun 2026 19:15:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wYqDR-0000KW-8B; Sun, 14 Jun 2026 15:09:53 -0400
+	id 1wYqBT-0003H4-Md; Sun, 14 Jun 2026 15:07:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wYqDO-0008PT-Aq
- for qemu-devel@nongnu.org; Sun, 14 Jun 2026 15:09:50 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wYqBS-0003DZ-4A
+ for qemu-devel@nongnu.org; Sun, 14 Jun 2026 15:07:50 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wYqDM-0002kg-KW
- for qemu-devel@nongnu.org; Sun, 14 Jun 2026 15:09:50 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wYqBQ-00022i-Jt
+ for qemu-devel@nongnu.org; Sun, 14 Jun 2026 15:07:49 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781464187;
+ s=mimecast20190719; t=1781464067;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=bGcYn11R2LgZ0N8Eq0gBNse4cv0sy4gULFVLSiEvbYk=;
- b=Fs99KkAgw2J/4YhVjWnsMQgTT+FTg+GvW0cxaX1FjgwpWua5gvaAcjiZ0TuxwckMOY1tiu
- Dm7ZtxIbCnDUxf2UTpgKd3Yd+wtWBGnJaJFg/2tHUAeYYaLJHqa0NWYul8YfVKJT7ctJHE
- fpj7ji/NzcNZEHkC2NPOKN5Bgv6zitM=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=TMJ+Jpgo2ce7J8yDlqHmRVXp1DveBeVU3H/kU+6+esk=;
+ b=eEROd/n5SMxpwtpnQ5TH0Q4a1/D0j73zuig1q5/8MVOLevvCyudBswOwPDD+pySYBQyVD2
+ ARZTTKNgqkLSl7uvP9l6A4oICVPmPywdV9x+AwxARYU5ry/ZcyOO6+fqbgZXMgGxFViRFB
+ SiA1eCxQDS0q8MZu79frE5YCMWmtBRI=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-327-bM7uY3HINim4RnTrWwV46w-1; Sun, 14 Jun 2026 15:09:46 -0400
-X-MC-Unique: bM7uY3HINim4RnTrWwV46w-1
-X-Mimecast-MFC-AGG-ID: bM7uY3HINim4RnTrWwV46w_1781464185
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-490addd42bbso13714125e9.3
- for <qemu-devel@nongnu.org>; Sun, 14 Jun 2026 12:09:46 -0700 (PDT)
+ us-mta-77-p-NfuPUoOl-xVVwNk9WCBw-1; Sun, 14 Jun 2026 15:07:46 -0400
+X-MC-Unique: p-NfuPUoOl-xVVwNk9WCBw-1
+X-Mimecast-MFC-AGG-ID: p-NfuPUoOl-xVVwNk9WCBw_1781464065
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-45eef10d5ebso1357939f8f.0
+ for <qemu-devel@nongnu.org>; Sun, 14 Jun 2026 12:07:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1781464185; x=1782068985; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=bGcYn11R2LgZ0N8Eq0gBNse4cv0sy4gULFVLSiEvbYk=;
- b=CNm5ONx/G0u5MOtMz8yQp84ZF89iObxDd+oP3H5EzcxuOkw0uILn4W0r7g0UYAoDRj
- Q4y8YGoS+ZmZaDRq3eQTrMcClg1ABQ9lptwIC/qaUvt3Z6wwny4wgjhKKvJj2D/8k5aB
- vynkQCu5cicggHaEkvMSsKcjh1vBOMx8aQiHIf1iGzxgoD7o89HS2Bx3a0PIKrVCPKoR
- qDz5TRaurbTv9k4uV9BPmKgGOelcZ3VBqxEcR6Rt6nm3g8zXeffs3ZXBmVIFbr+ALYTd
- CwylmQqnYU2kqjCT12SWWJRznnzL9dkORnoUAFFtVh8P0ba4Ls3ARnirwjaEh/UXfKAG
- BKdw==
+ d=redhat.com; s=google; t=1781464065; x=1782068865; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=TMJ+Jpgo2ce7J8yDlqHmRVXp1DveBeVU3H/kU+6+esk=;
+ b=C4pcvBM4nlQXknItbrliDwRCItmQcvfJ8RloF+tpghl+ChuDR9kzrDomsn9SsqvOVw
+ NjAHTo1wKbPRWm4Uow0KhE30JrR8Fd7VzrFTUQMHnCuVkUHPHIQHzMVQwSdEJTyWrvBK
+ Zh6+2v1ScDNl/bXmVbtH/Wv84nyO/2+TvRlD3DI0ZJfMy5MCYLTBAKDerRdT5MrGe/G9
+ LNTlms7BQE3tvULCsmEmh67kkAYfTN8xhfN5Dh4VPLb6pzDV7d4CAjAqQPwlLVvgKz9p
+ LrNwyTON4IwlsUMuL7Nji9dIHVwlu1C921wSJQpgzxj+QXxZG0eQJ55G/wPDvMzZGYpz
+ 9ZPA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781464185; x=1782068985;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=bGcYn11R2LgZ0N8Eq0gBNse4cv0sy4gULFVLSiEvbYk=;
- b=G56j7ZgEuF0ByCCQFO6sPYCkFQR6DpmtxjEu9Ujtwk+vCBawr+vZWBsh7KsMmpwhWB
- FEC2Y69cZoUl0FzUj+meyDGosP6fHiE++H+IpwU/ZyVZA5vCM4P5xPZXMyo6kwr+BOX2
- LaGVur1e203kJmKpO0ch+NXYVP3UHDIYscoVH/B17nehgNbvuLgbWhxq28udHyiyMCAs
- 4rzM1djwyUxbc8S7kfQoCcjvSRIxBZucLZP0ED7P9DPlFjsU049A3ZKhVkw2Cea6hRgT
- UkT/gGvdBKNkK/aNXRd0HkKYQ0ht/WDRbLFf8LmHnwqovmWbX5TJ4T5Pc+XXdPZhscuZ
- dWWQ==
-X-Gm-Message-State: AOJu0Ywg4mjP72gfQIW4cmXWLfDpkIOrDy84+CeIBuf4HLCo2dpAEheh
- fWOw/iTOlPm/vNoHGeFmdlHzRBWKcFeA9sStgXJXWo+bCPu2GEvXy+6F5/SKuAqH4Q3Omn5S359
- tNh3VBF6BPmO7aamUFK12OAYUUQtD62G0IyH+MBXcuNuBMqEEgNUkqbmXm1B0kYmC+wlPVE8GKM
- 2+yr89kh44vnNfhSopsAeA9ptD5CJ+OT8uRw==
-X-Gm-Gg: Acq92OG3HZs1Jn7wnwuxmAFUdLjDXSMNM9TsQjl+TkpNXezTcJzUMs5IJiOCJP+6CEK
- jdEAw2jChjO9qu/R7JFE2KufpxjKzHk4ffa+mdrLV124e3Um1x6PNFvDkeO3U/PWB3r3rtpOYNA
- 4o448gQNXJIVbdPOMGwaJbjjLAHzxkpFUVIs+hLtqOSrONWPokH/YC+EorWhocNtj7YRAQ7Evsk
- d4wWhYEqw2BDLjuBpNxV460gi7oV6ZKcetAoXWA3Kjlyg8OubTD9jlAsEJHdzQlowgrzXGLCaM3
- N/vXK4RZZU2MEnI5mtQTsFZcKR176j331RMj4V2XA4jKQGbL2sKr+V/dly612tZBgAWv7bbn9Z2
- vt4PfHVdaX+94O/MNHZUnrH1VMjkYU/2Y/PkIIwdzdBA=
-X-Received: by 2002:a05:600c:3512:b0:491:9969:739d with SMTP id
- 5b1f17b1804b1-4922011393fmr99586765e9.29.1781464185152; 
- Sun, 14 Jun 2026 12:09:45 -0700 (PDT)
-X-Received: by 2002:a05:600c:3512:b0:491:9969:739d with SMTP id
- 5b1f17b1804b1-4922011393fmr99586505e9.29.1781464184493; 
- Sun, 14 Jun 2026 12:09:44 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1781464065; x=1782068865;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=TMJ+Jpgo2ce7J8yDlqHmRVXp1DveBeVU3H/kU+6+esk=;
+ b=FvKi67/vBUcAnYFT1kM+Ixw+YPlh/UAfjEO5Fh2RhmWw6+E/o8AXKBpJksIfl9hH75
+ AOFdgifcJ5+HIJfRnm5q9Obl0rseQyDX44Q9gBYRWNmJo2gdwkHyzZCrYKLOw+mQ+5pg
+ uffJyBGvf57pFMIp74BIvGlZYzOfqxJEQLWgnOWjI2sjeBXSJ53h1tYA73g69o/gemGs
+ 8lg7fGfjSsVTqwuIjDWVd9LFj1kHZU9hnEzapRFou5JPvLK2X3vqQ++cXWwxiWk6hGjc
+ 1MABCE+G+GctJZpLDKdQ5NnfTmTcGF1yahwpnBUa3k8urwaB8dSyvvwj8T+sfcXZVPkf
+ MCdA==
+X-Gm-Message-State: AOJu0YwQa3/I/IkFrVyf2T5GmycJEIOZx3FvChsfKNutOHv1qas7n4+H
+ 92GNQsm7mYckYfGspbgvnB6hx4XaftjB3BZDo4duUTPKlawdfFeu6qBVfbjuhEVjOWxbcTJxWvQ
+ /ytuWD9dE7lEaj/gUw5xpD4K+tNALB8p2XO2SwSzLSWLApqdFHqct36Zc7RRc7Vwm8Ky9Eq/Ba7
+ MNj5aUsPlQhOy4ppR+9Exs8nKWJH8KdmSTZA==
+X-Gm-Gg: Acq92OG1+Vj+As5sXgP1Y76jqCG+QhgOBkmj7ZVxNy4feP18hQ2Ww77Y40Q9EnKWXC7
+ 2Y/y43dR0bvW0C1HgVX0uRZzc1AKaacphcGBcPIYf/aH9ouK+/PIWuQms+5mt750INWyAuYLALL
+ Uufpv3nU059goH030+a9KRII0J60Ud5ydKPWjrqKt749bRLWpo1zxdmkpcVfYsl7/iRQqjA0Nu5
+ idnQxBTEc8VA9I2oJL8GkZfYYBRuL189ZfuQqFQ+V40y8xBPuAC9y/vzh5rnjgJPPW6D3oQvwI8
+ Dje6QvGu5ApdPLaqohC4EbQFagkUsOtZ9tfmzi+TAXekst4NMFPPvSP2bAbKXlqiSwTNOo/C0WD
+ i5m/e9f/C9IEnWeGTQOTu4nptifMtfcyI3Zsh4E7RZ1M=
+X-Received: by 2002:a05:6000:1889:b0:460:70ff:fe14 with SMTP id
+ ffacd0b85a97d-4607ebf6dd0mr9601141f8f.42.1781464065476; 
+ Sun, 14 Jun 2026 12:07:45 -0700 (PDT)
+X-Received: by 2002:a05:6000:1889:b0:460:70ff:fe14 with SMTP id
+ ffacd0b85a97d-4607ebf6dd0mr9601101f8f.42.1781464064965; 
+ Sun, 14 Jun 2026 12:07:44 -0700 (PDT)
 Received: from redhat.com (IGLD-80-230-85-71.inter.net.il. [80.230.85.71])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4922037055csm191285985e9.13.2026.06.14.12.09.43
+ ffacd0b85a97d-4606f26393asm28062983f8f.5.2026.06.14.12.07.43
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 14 Jun 2026 12:09:44 -0700 (PDT)
-Date: Sun, 14 Jun 2026 15:09:42 -0400
+ Sun, 14 Jun 2026 12:07:44 -0700 (PDT)
+Date: Sun, 14 Jun 2026 15:07:43 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Albert Esteve <aesteve@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>,
- Stefan Hajnoczi <stefanha@redhat.com>
-Subject: [PULL 096/106] qmp: add shmem feature map
-Message-ID: <0578926e3a6ddaf011f00e41ee7e490b446518eb.1781463125.git.mst@redhat.com>
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Raphael Norwitz <raphael.s.norwitz@gmail.com>,
+ Daniil Tatianin <d-tatianin@yandex-team.ru>, Lei Yang <leiyang@redhat.com>
+Subject: [PULL 045/106] hw/virtio/virtio-bus: refactor
+ virtio_bus_set_host_notifier()
+Message-ID: <658660c838935836cb904d6c29f15767d952b256.1781463125.git.mst@redhat.com>
 References: <cover.1781463125.git.mst@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1781463125.git.mst@redhat.com>
 X-Mailer: git-send-email 2.51.2.2891.g4157995a80.dirty
 X-Mutt-Fcc: =sent
@@ -120,36 +125,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Albert Esteve <aesteve@redhat.com>
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 
-Add new vhost-user protocol
-VHOST_USER_PROTOCOL_F_SHMEM feature to
-feature map.
+The logic kept as is. Refactor to simplify further changes.
 
-Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
-Signed-off-by: Albert Esteve <aesteve@redhat.com>
+Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Raphael Norwitz <raphael.s.norwitz@gmail.com>
+Reviewed-by: Daniil Tatianin <d-tatianin@yandex-team.ru>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Tested-by: Lei Yang <leiyang@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-Id: <20260304165223.2166175-7-aesteve@redhat.com>
+Message-Id: <20260420200339.708640-20-vsementsov@yandex-team.ru>
 ---
- hw/virtio/virtio-qmp.c | 3 +++
- 1 file changed, 3 insertions(+)
+ hw/virtio/virtio-bus.c | 18 ++++++++----------
+ 1 file changed, 8 insertions(+), 10 deletions(-)
 
-diff --git a/hw/virtio/virtio-qmp.c b/hw/virtio/virtio-qmp.c
-index ae9be0a00f..57cc03828c 100644
---- a/hw/virtio/virtio-qmp.c
-+++ b/hw/virtio/virtio-qmp.c
-@@ -123,6 +123,9 @@ static const qmp_virtio_feature_map_t vhost_user_protocol_map[] = {
-     FEATURE_ENTRY(VHOST_USER_PROTOCOL_F_DEVICE_STATE, \
-             "VHOST_USER_PROTOCOL_F_DEVICE_STATE: Backend device state transfer "
-             "supported"),
-+    FEATURE_ENTRY(VHOST_USER_PROTOCOL_F_SHMEM, \
-+                "VHOST_USER_PROTOCOL_F_SHMEM: Backend shared memory mapping "
-+                "supported"),
-     { -1, "" }
- };
+diff --git a/hw/virtio/virtio-bus.c b/hw/virtio/virtio-bus.c
+index cef944e015..9b545acda3 100644
+--- a/hw/virtio/virtio-bus.c
++++ b/hw/virtio/virtio-bus.c
+@@ -298,20 +298,18 @@ int virtio_bus_set_host_notifier(VirtioBusState *bus, int n, bool assign)
+                          __func__, strerror(-r), r);
+             return r;
+         }
+-        r = k->ioeventfd_assign(proxy, notifier, n, true);
+-        if (r < 0) {
+-            error_report("%s: unable to assign ioeventfd: %d", __func__, r);
+-            virtio_bus_cleanup_host_notifier(bus, n);
+-        }
+-    } else {
+-        k->ioeventfd_assign(proxy, notifier, n, false);
+     }
  
+-    if (r == 0) {
+-        virtio_queue_set_host_notifier_enabled(vq, assign);
++    r = k->ioeventfd_assign(proxy, notifier, n, assign);
++    if (r < 0 && assign) {
++        error_report("%s: unable to assign ioeventfd: %d", __func__, r);
++        virtio_bus_cleanup_host_notifier(bus, n);
++        return r;
+     }
+ 
+-    return r;
++    virtio_queue_set_host_notifier_enabled(vq, assign);
++
++    return 0;
+ }
+ 
+ void virtio_bus_cleanup_host_notifier(VirtioBusState *bus, int n)
 -- 
 MST
 
