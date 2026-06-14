@@ -4,92 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 656DECD98D6
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 616F7CD98C5
 	for <qemu-devel@archiver.kernel.org>; Sun, 14 Jun 2026 19:12:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wYqDS-0000NH-4X; Sun, 14 Jun 2026 15:09:54 -0400
+	id 1wYqDN-0008LI-TJ; Sun, 14 Jun 2026 15:09:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wYqDL-00083k-Om
- for qemu-devel@nongnu.org; Sun, 14 Jun 2026 15:09:47 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wYqD0-0007Yi-M3
+ for qemu-devel@nongnu.org; Sun, 14 Jun 2026 15:09:31 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wYqDJ-0002in-TS
- for qemu-devel@nongnu.org; Sun, 14 Jun 2026 15:09:47 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wYqCz-0002df-4n
+ for qemu-devel@nongnu.org; Sun, 14 Jun 2026 15:09:26 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781464185;
+ s=mimecast20190719; t=1781464164;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=nFGMyc+0ZCdk1q8E2z0hqTjCrgd8ApTKlIJGppaxQvE=;
- b=d3C8V1X9dsKiaAIEIj169aq+42AnI4zmgcT6Xfjp1C5Vgu1KrIjZjQxrqvKUIUX7WHJ1g1
- rwAa/soakPQ63fCctXC6DJrq7ol70p0tp3KGIe7A0nlGHK1hzoVJajzjb7rUHWdMX1RU3n
- 5IH4xIE0ryi2r724T1Hu2ueSr+98iQE=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=VFYJL+moHp7Nhp/WdZk9yxo8Dl31jRMqPIYW7M964RY=;
+ b=MU7J8ELTXLXrhwHnAHJedw94mlbWuvfS8VtcNRwnyJuGKLGRL6kTf6V7sDX79WGMX9gY3z
+ ULnuteE2RWvwKMMf0vCpZ3T7kQnBBZctK4q01RDnTTpFOFuORwhU8whZgsxq6kyEL3yMIv
+ hiLxE/Mc8PZuHP2aVhFzUXToD+valKI=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-230-dqBqso0hMIiXdFXNkweXZg-1; Sun, 14 Jun 2026 15:09:44 -0400
-X-MC-Unique: dqBqso0hMIiXdFXNkweXZg-1
-X-Mimecast-MFC-AGG-ID: dqBqso0hMIiXdFXNkweXZg_1781464183
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-45eecec7667so1758809f8f.3
- for <qemu-devel@nongnu.org>; Sun, 14 Jun 2026 12:09:44 -0700 (PDT)
+ us-mta-452-0wqHOVdEMtGY94OfLQqH5A-1; Sun, 14 Jun 2026 15:09:23 -0400
+X-MC-Unique: 0wqHOVdEMtGY94OfLQqH5A-1
+X-Mimecast-MFC-AGG-ID: 0wqHOVdEMtGY94OfLQqH5A_1781464162
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-490ae0167ceso12787565e9.1
+ for <qemu-devel@nongnu.org>; Sun, 14 Jun 2026 12:09:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1781464183; x=1782068983; darn=nongnu.org;
+ d=redhat.com; s=google; t=1781464162; x=1782068962; darn=nongnu.org;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=nFGMyc+0ZCdk1q8E2z0hqTjCrgd8ApTKlIJGppaxQvE=;
- b=YVXXLfMcVctkpIuwSzrANTvhSgdBcnBH06qQ5TR7WK6K+QoHCbKefQFQwayZdyNPlu
- Ze9axDNie0wQj6c2E1MF28QLiv3BXT0IQqEVGgSamtKREeeBjDY6Nxq/s7Lc0PBAqL4q
- 9qn+S50xuepqM3VuaY/xU8p/BjHXAc9qcvk5kad8e1jRrkHhtsi71T4l6MuQofCGnTKI
- bOgnBIfQckUzmEul0AEkXFo2nHlYjTnkr6hmXZWnbTurFvyWCftUwylTwpb1f2ABUVZA
- 1fIU9DFSV7FigwUf7Nd45EnuR94D6pvFgu7CHV4YiGe98hCWht505YEq5dqmMQA/r+1X
- hraA==
+ bh=VFYJL+moHp7Nhp/WdZk9yxo8Dl31jRMqPIYW7M964RY=;
+ b=l01DoVt5AarucxeIcxq/4PpMi06wE+ZrDqOfhvkJkkAV+QjrWTfIKiubcleeGGlF0l
+ aR1ZYD7kcdI29cB6MvDoc6BTq2B3Ou2UoJDH3DJryOhkiJYZbzYRk7Ip5lN1fIFyiseV
+ TwWx8WwC4A+mS2yITIe9GGRu3Lt+HK1M1o+yvGBsi3QsvrsAKuZgWvcps+IhMO+1Zp0P
+ qC9P4f1RaDr0rEVgI0ZTd2H8zAm4py89rjb6tcO4Zdp1El1zRouNBd4GzUKhiDC1t8U5
+ 24FODgyDQr6wSppr+0Ce46zTUqEctWa0NLCTB5zBIkKQjm5T7WvOq9LYinJ+zxRIQkVi
+ 2ulg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781464183; x=1782068983;
+ d=1e100.net; s=20251104; t=1781464162; x=1782068962;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=nFGMyc+0ZCdk1q8E2z0hqTjCrgd8ApTKlIJGppaxQvE=;
- b=Pje3VUlM6/t6udoSoQ4OOWQjG7prVNlGT2kt299+7hH6CZWZivdVco2Q0kQoX6de0E
- KblUtV3d+AVtoDscG+LDYMd9MvISEc1GbeYskvq2dza8xc2TSAPqbON8W2bkxy0Qi3gi
- uKt7uo+dbftiC97UIkuAOjfcRD/Wp9qUq2zoitOa39IBQCSgVC+oKE/i6HLjhGYPpTAt
- fjFAMuLI8LduFJsMa+GeJPN8iSCD3/z/uO500t2+bLMcig6BM0sGvUXNxN6Q0OS3a/eb
- V5ujgIYqODUCoKJb7T3FFKagWv0tlJMSUafyF0F69TP3G4BQ6Z/z1wKsYTNqJB/c7FON
- XGig==
-X-Gm-Message-State: AOJu0Yy4Y5LzUQ76hud8E0XR2grkgQbKmIPzI+b1kbII/u5DqEntZx7K
- +F4YpkgWBWlxWDuslN6Q8aj5eE1OCBPqS7Oe5DOPPeRRd2EDbCEaCSXKzDc0FOHqAXbW6yM9V6P
- POb607aJzb86DOb+3dGY4GJ0HIb3PGetNserCJt9v6qwJcwpodeliEl/xnf4fyAS8NOO0zK38xe
- SlT+tbwnCF6o6wBPC9TtEZvberF+OuJageRg==
-X-Gm-Gg: Acq92OGz2y0RFlbj618uJp6wiLhuKGRkEZOLw4Gn1b54I533g98jclFohv6MuXdqIho
- +q30YW0jyRCis09qos6svDDW4ksWtI2WakD3igfjoX+njAidkJsYl7dwj0golhQsU1/sDG57Rnz
- 5MWQKMaTdiLR6gSMwI9n4FRLZt2Di+ig33YA+qxSr9PCmmzfJl0MZydPQCzUXXw6pEnJUaZjtCT
- vGORNd3zwM3n4+OdGlRkaGt1CYCIRWnmku+fB3cWtvr4QjgB4MnfavoSO2geF4foQdCq7LZEq0m
- YE9uYeKylAKjIqBeHUraAFDdCtPJ6TGHONK2WnymQP+QuZDJYGP7FdnW1+WpK9HFXwMKLwyQWjp
- 3YCbbMoX3j5cUdw9CTqL7PbHgSnDJCT/+U5aWMnKGAMM=
-X-Received: by 2002:a05:6000:220d:b0:45e:ec47:aa10 with SMTP id
- ffacd0b85a97d-4606dbba154mr14980880f8f.32.1781464182867; 
- Sun, 14 Jun 2026 12:09:42 -0700 (PDT)
-X-Received: by 2002:a05:6000:220d:b0:45e:ec47:aa10 with SMTP id
- ffacd0b85a97d-4606dbba154mr14980853f8f.32.1781464182348; 
- Sun, 14 Jun 2026 12:09:42 -0700 (PDT)
+ bh=VFYJL+moHp7Nhp/WdZk9yxo8Dl31jRMqPIYW7M964RY=;
+ b=E1TwM3UTqlz9+fpaSe+nzgRpqmEWyxge2AWT8IUYsXH2T4TGvrnBZfDZi/CQu7uEk3
+ eN+CMFWQAmLSqz+8BnmrFmuR5rLQtceSVdfTk9eKmeFIHo2oztUFNWpcHO7AnZxoW1Ei
+ kwnPmBtzLvRIqF54HQgbcTdL+PkdwLCPHHeC8OjE468Sn8l0shIM1WPOZ+faOWDOhHVA
+ sNSV0FfwiJD6+g2ujKE3Wl0rcGv4c2ALtE3QoqwqJIuyiDcb9+CwZGwcdpowaSCopMX5
+ NDoImAwapUYXfMpgNzYyivf1junJ8ZG3CDDW+rU4W85EsEZ+eqhpfv5lxCmzHtJsgYj3
+ LnOA==
+X-Gm-Message-State: AOJu0YyDd0xikl8D5ipzqBCUjqxYTy/u+K2Ycr48g1zie4FSgZOeLRMI
+ sVWsXq3il5vDWFyJgviw0BgzbNmfk+wlLWclYS+/0zVAikwNJ5lLpFvWcfnwpf2O3zy2+y+v2TP
+ MD2OAUFz4XDIpAweHr2E9lfZ05mD5elHr4WcgrrKpmDefRyxZiG8Zs3/vy+frPYDHWAHB6X8KbD
+ wf3h6MOkh8hi8sh3nF/JRsw25Pb4K9W02Tng==
+X-Gm-Gg: Acq92OGGIVQEoq5XugjzyLjrj/nVqYIC4249ulO3sHm2vBunxEe9VobWSqDMrD6pMYe
+ h5aVZFWK8ft+K+kVWPH8HscfP+NEK5FP45I4fKaey3OwMxfr+Izt5a+zBog7V7GLW2gw7zKKfEW
+ Zxfiiu7tCkxadAGcGfwiI/TsK21t+7FbuylVImRSV0r4J4bwSfyFIw5bNjeELxMd7u+LKFQ0Wrl
+ I9eoK36tA4eNyGMaCntFeE2i9EnZJrlzofJjI+U9nABB6vXzwFIC0IYuDTVXuUULChuKP/TPnEl
+ PIZXzPpZyTAhf5r8CbOkvU2EWMcSXYCK9/yYKJxWcKa3xcz31VN7XXMa6tXJqa3RwFZ/HYRLkWi
+ wGTcF2BKsSG6mmfOYpcH4/ik7A/R85Ovmx0Z9aHBgFE4=
+X-Received: by 2002:a05:600c:c8a:b0:490:e0e3:9587 with SMTP id
+ 5b1f17b1804b1-490ec51f748mr138865105e9.31.1781464162103; 
+ Sun, 14 Jun 2026 12:09:22 -0700 (PDT)
+X-Received: by 2002:a05:600c:c8a:b0:490:e0e3:9587 with SMTP id
+ 5b1f17b1804b1-490ec51f748mr138864805e9.31.1781464161476; 
+ Sun, 14 Jun 2026 12:09:21 -0700 (PDT)
 Received: from redhat.com (IGLD-80-230-85-71.inter.net.il. [80.230.85.71])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4606f2b0d4fsm28704170f8f.24.2026.06.14.12.09.41
+ 5b1f17b1804b1-4922037ba81sm178164595e9.15.2026.06.14.12.09.19
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 14 Jun 2026 12:09:42 -0700 (PDT)
-Date: Sun, 14 Jun 2026 15:09:40 -0400
+ Sun, 14 Jun 2026 12:09:20 -0700 (PDT)
+Date: Sun, 14 Jun 2026 15:09:18 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Albert Esteve <aesteve@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>,
- Alyssa Ross <hi@alyssa.is>, Stefan Hajnoczi <stefanha@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Subject: [PULL 095/106] vhost_user.rst: Add GET_SHMEM_CONFIG message
-Message-ID: <060ed6a4bb4d50e3de257a29137e84843f069312.1781463125.git.mst@redhat.com>
+ Igor Mammedov <imammedo@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Ani Sinha <anisinha@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [PULL 086/106] x86: q35: add 'wdat' property
+Message-ID: <d30189cce17038ecaeaaacbfee9ab2c1a07c80fa.1781463125.git.mst@redhat.com>
 References: <cover.1781463125.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -121,86 +120,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Albert Esteve <aesteve@redhat.com>
+From: Igor Mammedov <imammedo@redhat.com>
 
-Add GET_SHMEM_CONFIG vhost-user frontend
-message to the spec documentation.
+Used for enabling WDAT based watchdog for builtin iTCO watchdog.
+Usage:
+    -M q35,wdat={on|off}
+By default it is disabled.
 
-Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
-Reviewed-by: Alyssa Ross <hi@alyssa.is>
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
-Signed-off-by: Albert Esteve <aesteve@redhat.com>
+Signed-off-by: Igor Mammedov <imammedo@redhat.com>
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+Reviewed-by: Ani Sinha <anisinha@redhat.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-Id: <20260304165223.2166175-6-aesteve@redhat.com>
+Message-Id: <20260303092532.2410177-3-imammedo@redhat.com>
 ---
- docs/interop/vhost-user.rst | 39 +++++++++++++++++++++++++++++++++++++
- 1 file changed, 39 insertions(+)
+ hw/i386/pc_q35.c     | 18 ++++++++++++++++++
+ include/hw/i386/pc.h |  1 +
+ 2 files changed, 19 insertions(+)
 
-diff --git a/docs/interop/vhost-user.rst b/docs/interop/vhost-user.rst
-index 4182d721ca..c0ae4cba98 100644
---- a/docs/interop/vhost-user.rst
-+++ b/docs/interop/vhost-user.rst
-@@ -384,6 +384,22 @@ MMAP request
-   - 0: Pages are mapped read-only
-   - 1: Pages are mapped read-write
+diff --git a/hw/i386/pc_q35.c b/hw/i386/pc_q35.c
+index d8fed698c7..6c1e4eff5f 100644
+--- a/hw/i386/pc_q35.c
++++ b/hw/i386/pc_q35.c
+@@ -331,6 +331,18 @@ static void pc_q35_init(MachineState *machine)
+     }
+ }
  
-+VIRTIO Shared Memory Region configuration
-+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
++static bool pc_q35_machine_get_wdat(Object *o, Error **errp)
++{
++    PCMachineState *pcms = PC_MACHINE(o);
++    return pcms->wdat_enabled;
++}
 +
-++-------------+---------+------------+----+--------------+
-+| num regions | padding | mem size 0 | .. | mem size 255 |
-++-------------+---------+------------+----+--------------+
++static void pc_q35_machine_set_wdat(Object *o, bool value, Error **errp)
++{
++    PCMachineState *pcms = PC_MACHINE(o);
++    pcms->wdat_enabled = value;
++}
 +
-+:num regions: a 32-bit number of regions
-+
-+:padding: 32-bit
-+
-+:mem size: an array of 256 64-bit fields representing the size of each
-+           VIRTIO Shared Memory Region. ``num regions`` specifies the
-+           number of valid regions (non-zero size). The array index
-+           corresponds to the shared memory ID (shmid).
-+
- C structure
- -----------
+ #define DEFINE_Q35_MACHINE(major, minor) \
+     DEFINE_PC_VER_MACHINE(pc_q35, "pc-q35", pc_q35_init, false, NULL, major, minor);
  
-@@ -410,6 +426,7 @@ In QEMU the vhost-user message is implemented with the following struct:
-           VhostUserShared object;
-           VhostUserTransferDeviceState transfer_state;
-           VhostUserMMap mmap;
-+          VhostUserShMemConfig shmem;
-       };
-   } QEMU_PACKED VhostUserMsg;
+@@ -343,6 +355,7 @@ static void pc_q35_init(MachineState *machine)
+ static void pc_q35_machine_options(MachineClass *m)
+ {
+     PCMachineClass *pcmc = PC_MACHINE_CLASS(m);
++    ObjectClass *oc = OBJECT_CLASS(m);
+     pcmc->pci_root_uid = 0;
+     pcmc->default_cpu_version = 1;
  
-@@ -1794,6 +1811,28 @@ Front-end message types
-   Using this function requires prior negotiation of the
-   ``VHOST_USER_PROTOCOL_F_DEVICE_STATE`` feature.
+@@ -361,6 +374,11 @@ static void pc_q35_machine_options(MachineClass *m)
+     machine_class_allow_dynamic_sysbus_dev(m, TYPE_RAMFB_DEVICE);
+     machine_class_allow_dynamic_sysbus_dev(m, TYPE_VMBUS_BRIDGE);
+     machine_class_allow_dynamic_sysbus_dev(m, TYPE_UEFI_VARS_X64);
++    object_class_property_add_bool(oc, "wdat",
++        pc_q35_machine_get_wdat, pc_q35_machine_set_wdat);
++    object_class_property_set_description(oc, "wdat",
++        "Enable WDAT watchdog support. Default: off");
++
+     compat_props_add(m->compat_props,
+                      pc_q35_compat_defaults, pc_q35_compat_defaults_len);
+ }
+diff --git a/include/hw/i386/pc.h b/include/hw/i386/pc.h
+index 85a74363b5..d4b6d3ed57 100644
+--- a/include/hw/i386/pc.h
++++ b/include/hw/i386/pc.h
+@@ -45,6 +45,7 @@ typedef struct PCMachineState {
+     const char *south_bridge;
  
-+``VHOST_USER_GET_SHMEM_CONFIG``
-+  :id: 44
-+  :equivalent ioctl: N/A
-+  :request payload: N/A
-+  :reply payload: ``struct VhostUserShMemConfig``
-+
-+  When the ``VHOST_USER_PROTOCOL_F_SHMEM`` protocol feature has been
-+  successfully negotiated, this message can be submitted by the front-end
-+  to gather the VIRTIO Shared Memory Region configuration. The back-end will
-+  respond with the number of VIRTIO Shared Memory Regions it requires, and
-+  each shared memory region size in an array. The shared memory IDs are
-+  represented by the array index. The information returned shall comply
-+  with the following rules:
-+
-+  * The shared information will remain valid and unchanged for the entire
-+    lifetime of the connection.
-+
-+  * The Shared Memory Region size must be a multiple of the page size
-+    supported by mmap(2).
-+
-+  * The size may be 0 if the region is unused.
-+
- Back-end message types
- ----------------------
- 
+     bool acpi_build_enabled;
++    bool wdat_enabled;
+     bool smbus_enabled;
+     bool sata_enabled;
+     bool hpet_enabled;
 -- 
 MST
 
