@@ -4,93 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C922CD98D2
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6AAFCCD98C5
 	for <qemu-devel@archiver.kernel.org>; Sun, 14 Jun 2026 19:06:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wYqA9-0007V0-Sg; Sun, 14 Jun 2026 15:06:30 -0400
+	id 1wYq9h-0007NI-Ky; Sun, 14 Jun 2026 15:06:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wYqA6-0007T2-Ka
- for qemu-devel@nongnu.org; Sun, 14 Jun 2026 15:06:26 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wYq9d-0007MY-N4
+ for qemu-devel@nongnu.org; Sun, 14 Jun 2026 15:05:57 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wYqA4-0001ha-Mo
- for qemu-devel@nongnu.org; Sun, 14 Jun 2026 15:06:26 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wYq9b-0001aL-VZ
+ for qemu-devel@nongnu.org; Sun, 14 Jun 2026 15:05:57 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781463984;
+ s=mimecast20190719; t=1781463955;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=AahjjTLQOyTNWb1UvcaPKOl496wgFN55dOSBC6NQswI=;
- b=eoYFEqsj6NpPKfEu9fNA4D1Nkewjn3s4Q+z0z5Gr6E1hcnqPQxNEnfffSyAsPrKrb/dXR2
- BA1Q2NiYDiHOuxs/XrjH16ZgPWI5fexpf1wkSI/Of/JovK+njC2n5OVh2Q6oq4DlDVtpyg
- xV8Xt4OfAcFU1dCcBpxxSDTQbnNUqpE=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=EZa+Y4tLnxbfbTOlUtEtEC3z+5byRpb5C84fD6RI59Q=;
+ b=E9NkZV73mEPtWsB94i/FtGu5EerHmd5wCRZtNwvF+5xt0BYf4aVTj9sCrHrIbp4zBfYZZn
+ iHfjNeboh7P4WkVCmySjCRcFmXoERB7h9zupuCQN7wWwA19ktZE5hlz7/QoX0JK4rkezRn
+ JNspPPl/Hl4Krx/AZSbTa3BXjf/RC9Y=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-639-jmbeTpTpPGqh-UQ04r1CcQ-1; Sun, 14 Jun 2026 15:06:20 -0400
-X-MC-Unique: jmbeTpTpPGqh-UQ04r1CcQ-1
-X-Mimecast-MFC-AGG-ID: jmbeTpTpPGqh-UQ04r1CcQ_1781463980
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-490b8adf8b8so22501015e9.0
- for <qemu-devel@nongnu.org>; Sun, 14 Jun 2026 12:06:20 -0700 (PDT)
+ us-mta-118-r0TSFemNNp6cNnblH0Vscg-1; Sun, 14 Jun 2026 15:05:54 -0400
+X-MC-Unique: r0TSFemNNp6cNnblH0Vscg-1
+X-Mimecast-MFC-AGG-ID: r0TSFemNNp6cNnblH0Vscg_1781463953
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-490b79e6b94so22229535e9.2
+ for <qemu-devel@nongnu.org>; Sun, 14 Jun 2026 12:05:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1781463979; x=1782068779; darn=nongnu.org;
+ d=redhat.com; s=google; t=1781463953; x=1782068753; darn=nongnu.org;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=AahjjTLQOyTNWb1UvcaPKOl496wgFN55dOSBC6NQswI=;
- b=TnWV2DAygcH8i0uTXrdSZjNpgNtTKw4ncpLXYt+wW0nSCVq1b3PqE1b8Ht/DkFSrp6
- ZhWeILOFTpNOfqiwo/zGqn0wr3eMa5c5wBFzMOAFU2ME1yhLu5fHVl8ujLZ/xdtifQs5
- OPL+UyZWtQ3zpuQla1Co7AB4EzcyLLUp6RdsoCqbNgQnyInkvXnyVFWn6qVueedNjI6n
- 2YW+QIuF6Qs0vsOZ+hn9qVcl6kMfgsFg91p7qAtNgMlk6ivTGwgH0ywswKqO1stCNF9k
- 6xpE8thh6lRa8ZDNfnLKeZJPJuuNpiDPu+1SO2M0ZESchpXuS8gYiBoR34JxoHMjzrcI
- GW7A==
+ bh=EZa+Y4tLnxbfbTOlUtEtEC3z+5byRpb5C84fD6RI59Q=;
+ b=FbsfrgfoA086vum93QfScpoFBoajADt+/Hf2FxldD9VkKacXNq3s3wpREbvzVPBgjl
+ XN83nCe+PywfTDcggwQ89GN5CtDsoZjO3tuOU3PoqsGxjFaj/TIgK27df/dtmvRO6hP0
+ bufAf3GxAD1S0W8iJZ7ZN4VW/PYOGYkGsdLblkZCsBfjxFwwdCJatpX9j7VkkeAIqmN9
+ TREPvcjd+MEWT3F+VfYlMMo1tElr2WWnf1dZNLYnlGTSd5yEqhYZCy5nDhZbob2ohzjP
+ JCWectMZWfSIT3467lQdUfvM0DYkC/CYIGKX+PU0rDaOodEc8M86bas9gSXbUXbHjNg7
+ WAqw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781463979; x=1782068779;
+ d=1e100.net; s=20251104; t=1781463953; x=1782068753;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=AahjjTLQOyTNWb1UvcaPKOl496wgFN55dOSBC6NQswI=;
- b=nHe3cQgB4M9ygjT30oY6WON9f6gfyyVTCTJZOuJEzFby0TU2WGssi/8sguY1KM+8A4
- 8UrN0nc2D0rsLuwwF3wwbd4td+lL7euKQezihKLevcxjDIyYx0guxxRg99bj9+fObs8X
- taM3qF04Vi7d9xX1qA4B++ngi4b6zb4NhJbT+12LVGsVX9JGZhHQd1kOUAezxru/C2NO
- 5UqLOZacUFzr+UJ1UrVCF8+4i5CjuxpF6GkOfRN/WTTN8REEAhkS9AqO/XTP9xdPrTTC
- jN9NvmSxdlARCsPGUPMfWxFNkbndKtT67NFlLmIgHa9K5wwAyJ5tLy4Cj4ZKmfl6Iyro
- b6Rg==
-X-Gm-Message-State: AOJu0Yz2E5nSZzHE06BboWHkDMFiD8leUVKSWue4i20GiqKJl/a8+ZLc
- tIxWd6Vik8nqSgGNsnwmlFUEF/7jkKDfEVMHCkVcRAL3ClKuZxVv+BYR0lYwG0Rz1CIv7MQR/0w
- fsfEzc7PuFN34z6ahuTIeBu5RElZNNpBDuSP8WdKrUZ7JpihRYzykwY0ovIzZT7VbpF1NkXdUE0
- YCx3lH771CubqJPpzIOkGaM+JakWGc1SEJQw==
-X-Gm-Gg: Acq92OF3Hr28DDgKzDIUs8t8wmg+OgqfpwDdO6pZiheTZEA5+2OL7pIQJ9488jcUiya
- dE6dJKtsVyZH+MIUG+ntOl6VaQQ1EGVKEUGHzq7qxtXjMDITWlwunAq5oUDlEKYhhlenjIqH6hB
- +JxXiUB1Uv09P7fIuZ4DS8p7c81GLNQirYiWkT4Z6VM0QyR3xa2iWwxVvEwHfW5+b43cZaqnfek
- 0vvt/Moz4XuEMl2XTyKnW6QjhmJ8ShbFrQo6dpthzS6I28QAMYCeIUkGz0WnyxCmVlXG3g5Fb7C
- gM+8Z1AgY8CnUJ8rU8JXFnau6qOTZcbO/r7nDp6SZCA48DyqHA9Btgri9v7KdkB8yoJ1nffQBsC
- k9lpGHMCBe1MxBJ7GDK/HvNHpdMzHm6ftVROz6ucua1Y=
-X-Received: by 2002:a05:600c:468d:b0:490:9588:bdae with SMTP id
- 5b1f17b1804b1-490ec4ee664mr165207535e9.18.1781463979547; 
- Sun, 14 Jun 2026 12:06:19 -0700 (PDT)
-X-Received: by 2002:a05:600c:468d:b0:490:9588:bdae with SMTP id
- 5b1f17b1804b1-490ec4ee664mr165207045e9.18.1781463978993; 
- Sun, 14 Jun 2026 12:06:18 -0700 (PDT)
+ bh=EZa+Y4tLnxbfbTOlUtEtEC3z+5byRpb5C84fD6RI59Q=;
+ b=EvNPkvcu4fY1qchHKJ+TmxU6YjQRQt5d8+TKQw+NKd3odM9/6mqSbxP5ZZpFDtJ6h9
+ tyltqwntQGTK8q/9xvDHWj3GSUPeJ05PVh+gRcuyGxk9xmnEpMHFZCYnKWZGRZxKgB1j
+ xPQliMa+eikhPK1Tv3UzsKLmfGAWEFbQMH8Ab5F4oti6S/jJGgEMfg8mcY++H+Lq0ilc
+ gx7UqczM9Lldsh0+FLBaTCiFZXF4WdYVHgLD9M2qaz/AIiv/6uNowoaCbN2lsfI3Lmct
+ oxT/cvRA8Mz0J9hTZ5WLjky1F7lnoLCUibkBq0h/YGiTTo6xQ8fM4Y59Cz7t3qGhtUxE
+ V6Xg==
+X-Gm-Message-State: AOJu0YxC4HPjN4AZq39Gc8ADBvrX8xQJ/AtIRJjIsBAkSiVyOnGLkQRQ
+ fZF1uecca83aKPz4Mhnou0iUcBzNp5vTe/pdMXpKhCTnIe9xzoZoePxgoFS9xHxkzy9RHZg7gL+
+ EcfkyNzqGfaZfZ8Da6wrBsRdXc5H+k0TKF8rqVbSKUcVoheKGdqBQkJ90hAfapEQ/STh6vI3xIO
+ f6kjhEhb8uPufVK83oWLwtu02VSnFlx+qo6w==
+X-Gm-Gg: Acq92OEV9Muu2EU1TJ+NKPG7a1HiiX4/4y1mN4/iBypUHUoVTNQf/o/PTWfLtp9HAHA
+ XnJb+7ndRoVYbQEub6ja4bEZDiTlYcOQzFbFeQ/yuGn23HEER4zOwt3FGI0jx6pWiUay1l+P8wA
+ 91VXWcM1p2+plqEH6g2ibnP3nnexKgN/rMNUvd3uyrCjmvfzSFkU/5xvqVLHqVuQsiDmeEDx03B
+ /0/oYG64Hfx1CHAy3jZ44qs2Le5b89AF18Viw2dbqhhu684iNED0ojVgGYlopa5ItNqgntyjyux
+ 0B964ztSjtrCx+rMxHsV/xAqBnJfG3hqMKONHTuTNZBtr5IwCPDH3ZhepICt4nc38Omxa+WLbq/
+ ZdDdJTxsml102p3nDpvKuYQ65oqecIreaV7E43Avo68w=
+X-Received: by 2002:a05:600c:4712:b0:490:b55c:cec3 with SMTP id
+ 5b1f17b1804b1-490ec4dc8d8mr152467945e9.12.1781463952704; 
+ Sun, 14 Jun 2026 12:05:52 -0700 (PDT)
+X-Received: by 2002:a05:600c:4712:b0:490:b55c:cec3 with SMTP id
+ 5b1f17b1804b1-490ec4dc8d8mr152467365e9.12.1781463952034; 
+ Sun, 14 Jun 2026 12:05:52 -0700 (PDT)
 Received: from redhat.com (IGLD-80-230-85-71.inter.net.il. [80.230.85.71])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49220304180sm179880865e9.4.2026.06.14.12.06.17
+ 5b1f17b1804b1-492202edf89sm197084935e9.1.2026.06.14.12.05.50
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 14 Jun 2026 12:06:18 -0700 (PDT)
-Date: Sun, 14 Jun 2026 15:06:16 -0400
+ Sun, 14 Jun 2026 12:05:51 -0700 (PDT)
+Date: Sun, 14 Jun 2026 15:05:49 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Zhenzhong Duan <zhenzhong.duan@intel.com>, Yi Liu <yi.l.liu@intel.com>,
- Clement Mathieu--Drif <clement.mathieu--drif@bull.com>,
- Xudong Hao <xudong.hao@intel.com>, Jason Wang <jasowang@redhat.com>,
+ Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ Yi Liu <yi.l.liu@intel.com>, Eric Auger <eric.auger@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Jason Wang <jasowang@redhat.com>,
+ =?utf-8?Q?Cl=C3=A9ment?= Mathieu--Drif <clement.mathieu--drif@bull.com>,
  Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 014/106] intel_iommu: Use IOMMU_NO_PASID and delete PASID_0
-Message-ID: <6c4467745c27676e8bda6d9eb0bb2a70d2a7bca6.1781463125.git.mst@redhat.com>
+ Richard Henderson <richard.henderson@linaro.org>,
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>
+Subject: [PULL 004/106] intel_iommu: Remove 'x-' prefix from
+ 'x-scalable-mode' and 'x-flts' properties
+Message-ID: <08dc347e523005cf1e365c3c350a1721b36516e9.1781463125.git.mst@redhat.com>
 References: <cover.1781463125.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -98,14 +102,14 @@ Content-Disposition: inline
 In-Reply-To: <cover.1781463125.git.mst@redhat.com>
 X-Mailer: git-send-email 2.51.2.2891.g4157995a80.dirty
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -124,143 +128,146 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Zhenzhong Duan <zhenzhong.duan@intel.com>
 
-In previous patch we introduced a global macro IOMMU_NO_PASID(0) for
-the RID attachment, this makes the local macro PASID_0 redundant.
-Delete it and use IOMMU_NO_PASID instead.
+We had 'x-scalable-mode' for more than 5 years and 'x-flts' for more than 1
+year, it's fine to remove 'x-' now.
 
-No functional changes intended.
+This is a prerequisite to enable intel_iommu's scalable mode and first stage
+translation support in libvirt.
 
-Suggested-by: Yi Liu <yi.l.liu@intel.com>
 Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
-Reviewed-by: Yi Liu <yi.l.liu@intel.com>
-Reviewed-by: Clement Mathieu--Drif <clement.mathieu--drif@bull.com>
-Tested-by: Xudong Hao <xudong.hao@intel.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-Id: <20260527054658.1021096-10-zhenzhong.duan@intel.com>
+Message-Id: <20260513064227.2304854-2-zhenzhong.duan@intel.com>
 ---
- hw/i386/intel_iommu.c          | 22 +++++++++++-----------
- hw/i386/intel_iommu_accel.c    |  2 +-
- hw/i386/intel_iommu_internal.h |  1 -
- 3 files changed, 12 insertions(+), 13 deletions(-)
+ docs/devel/vfio-iommufd.rst    | 10 +++++-----
+ hw/i386/intel_iommu.c          |  8 ++++----
+ hw/i386/intel_iommu_accel.c    |  4 ++--
+ tests/qtest/intel-iommu-test.c |  2 +-
+ tests/qtest/iommu-intel-test.c |  4 ++--
+ 5 files changed, 14 insertions(+), 14 deletions(-)
 
+diff --git a/docs/devel/vfio-iommufd.rst b/docs/devel/vfio-iommufd.rst
+index 78bcdffac7..5755532443 100644
+--- a/docs/devel/vfio-iommufd.rst
++++ b/docs/devel/vfio-iommufd.rst
+@@ -153,22 +153,22 @@ RAM discarding for mdev.
+ ``vfio-ap`` and ``vfio-ccw`` devices don't have same issue as their backend
+ devices are always mdev and RAM discarding is force enabled.
+ 
+-Usage with intel_iommu featuring x-flts=on
++Usage with intel_iommu featuring flts=on
+ ------------------------------------------
+ 
+ Only IOMMUFD backed VFIO device is supported when intel_iommu is configured
+-with x-flts=on, for legacy container backed VFIO device, below error shows:
++with flts=on, for legacy container backed VFIO device, below error shows:
+ 
+ .. code-block:: none
+ 
+-    qemu-system-x86_64: -device vfio-pci,host=0000:02:00.0: vfio 0000:02:00.0: Failed to set vIOMMU: Need IOMMUFD backend when x-flts=on
++    qemu-system-x86_64: -device vfio-pci,host=0000:02:00.0: vfio 0000:02:00.0: Failed to set vIOMMU: Need IOMMUFD backend when flts=on
+ 
+ VFIO device under PCI bridge is unsupported, use PCIE bridge if necessary,
+ otherwise below error shows:
+ 
+ .. code-block:: none
+ 
+-    qemu-system-x86_64: -device vfio-pci,host=0000:02:00.0,bus=bridge1,iommufd=iommufd0: vfio 0000:02:00.0: Failed to set vIOMMU: Host device downstream to a PCI bridge is unsupported when x-flts=on
++    qemu-system-x86_64: -device vfio-pci,host=0000:02:00.0,bus=bridge1,iommufd=iommufd0: vfio 0000:02:00.0: Failed to set vIOMMU: Host device downstream to a PCI bridge is unsupported when flts=on
+ 
+ If host IOMMU has ERRATA_772415_SPR17, running guest with "intel_iommu=on,sm_off"
+ is unsupported, kexec or reboot guest from "intel_iommu=on,sm_on" to
+@@ -177,4 +177,4 @@ below if it's not needed by guest:
+ 
+ .. code-block:: bash
+ 
+-    -device intel-iommu,x-scalable-mode=off
++    -device intel-iommu,scalable-mode=off
 diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
-index 539e8f5763..3784910ce0 100644
+index b784c5f10a..f09a87b50b 100644
 --- a/hw/i386/intel_iommu.c
 +++ b/hw/i386/intel_iommu.c
-@@ -941,7 +941,7 @@ static int vtd_ce_get_pasid_entry(IntelIOMMUState *s, VTDContextEntry *ce,
-     dma_addr_t pasid_dir_base;
- 
-     if (pasid == PCI_NO_PASID) {
--        pasid = PASID_0;
-+        pasid = IOMMU_NO_PASID;
-     }
-     pasid_dir_base = VTD_CE_GET_PASID_DIR_TABLE(ce);
-     return vtd_get_pe_from_pasid_table(s, pasid_dir_base, pasid, pe);
-@@ -958,7 +958,7 @@ static int vtd_ce_get_pasid_fpd(IntelIOMMUState *s,
-     VTDPASIDEntry pe;
- 
-     if (pasid == PCI_NO_PASID) {
--        pasid = PASID_0;
-+        pasid = IOMMU_NO_PASID;
-     }
-     pasid_dir_base = VTD_CE_GET_PASID_DIR_TABLE(ce);
- 
-@@ -1501,9 +1501,9 @@ static int vtd_ce_pasid_0_check(IntelIOMMUState *s, VTDContextEntry *ce)
- 
-     /*
-      * Make sure in Scalable Mode, a present context entry
--     * has valid pasid entry setting at PASID_0.
-+     * has valid pasid entry setting at IOMMU_NO_PASID.
-      */
--    return vtd_ce_get_pasid_entry(s, ce, &pe, PASID_0);
-+    return vtd_ce_get_pasid_entry(s, ce, &pe, IOMMU_NO_PASID);
- }
- 
- /* Map a device to its corresponding domain (context-entry) */
-@@ -1564,7 +1564,7 @@ int vtd_dev_to_context_entry(IntelIOMMUState *s, uint8_t bus_num,
-         }
-     } else {
-         /*
--         * Check if the programming of pasid setting of PASID_0
-+         * Check if the programming of pasid setting of IOMMU_NO_PASID
-          * is valid, and thus avoids to check pasid entry fetching
-          * result in future helper function calling.
-          */
-@@ -2123,7 +2123,7 @@ static bool vtd_do_iommu_translate(VTDAddressSpace *vtd_as, PCIBus *bus,
-     vtd_iommu_lock(s);
- 
-     if (pasid == PCI_NO_PASID && s->root_scalable) {
--        pasid = PASID_0;
-+        pasid = IOMMU_NO_PASID;
+@@ -4200,8 +4200,8 @@ static const Property vtd_properties[] = {
+     DEFINE_PROP_UINT8("aw-bits", IntelIOMMUState, aw_bits,
+                       VTD_HOST_ADDRESS_WIDTH),
+     DEFINE_PROP_BOOL("caching-mode", IntelIOMMUState, caching_mode, FALSE),
+-    DEFINE_PROP_BOOL("x-scalable-mode", IntelIOMMUState, scalable_mode, FALSE),
+-    DEFINE_PROP_BOOL("x-flts", IntelIOMMUState, fsts, FALSE),
++    DEFINE_PROP_BOOL("scalable-mode", IntelIOMMUState, scalable_mode, FALSE),
++    DEFINE_PROP_BOOL("flts", IntelIOMMUState, fsts, FALSE),
+     DEFINE_PROP_BOOL("snoop-control", IntelIOMMUState, snoop_control, false),
+     DEFINE_PROP_BOOL("x-pasid-mode", IntelIOMMUState, pasid, false),
+     DEFINE_PROP_BOOL("svm", IntelIOMMUState, svm, false),
+@@ -5563,7 +5563,7 @@ static bool vtd_decide_config(IntelIOMMUState *s, Error **errp)
      }
  
-     /* Try to fetch pte from IOTLB */
-@@ -2488,7 +2488,7 @@ static void vtd_iotlb_domain_invalidate(IntelIOMMUState *s, uint16_t domain_id)
- }
+     if (!s->scalable_mode && s->fsts) {
+-        error_setg(errp, "x-flts is only available in scalable mode");
++        error_setg(errp, "flts is only available in scalable mode");
+         return false;
+     }
  
- /*
-- * There is no pasid field in iotlb invalidation descriptor, so PCI_NO_PASID
-+ * There is no pasid field in iotlb invalidation descriptor, so IOMMU_NO_PASID
-  * is passed as parameter. Piotlb invalidation supports pasid, pasid in its
-  * descriptor is passed which should not be PCI_NO_PASID.
-  */
-@@ -2509,10 +2509,10 @@ static void vtd_iotlb_page_invalidate_notify(IntelIOMMUState *s,
-              * In legacy mode, vtd_as->pasid == pasid is always true.
-              * In scalable mode, for vtd address space backing a PCI
-              * device without pasid, needs to compare pasid with
--             * PASID_0 of this device.
-+             * IOMMU_NO_PASID of this device.
-              */
-             if (!(vtd_as->pasid == pasid ||
--                  (vtd_as->pasid == PCI_NO_PASID && pasid == PASID_0))) {
-+                  (vtd_as->pasid == PCI_NO_PASID && pasid == IOMMU_NO_PASID))) {
-                 continue;
-             }
+@@ -5576,7 +5576,7 @@ static bool vtd_decide_config(IntelIOMMUState *s, Error **errp)
+     }
  
-@@ -2564,7 +2564,7 @@ static void vtd_iotlb_page_invalidate(IntelIOMMUState *s, uint16_t domain_id,
-     vtd_iommu_lock(s);
-     g_hash_table_foreach_remove(s->iotlb, vtd_hash_remove_by_page, &info);
-     vtd_iommu_unlock(s);
--    vtd_iotlb_page_invalidate_notify(s, domain_id, addr, am, PCI_NO_PASID);
-+    vtd_iotlb_page_invalidate_notify(s, domain_id, addr, am, IOMMU_NO_PASID);
- }
- 
- /* Flush IOTLB
-@@ -3023,7 +3023,7 @@ static void vtd_piotlb_pasid_invalidate(IntelIOMMUState *s,
-         if (!vtd_dev_to_context_entry(s, pci_bus_num(vtd_as->bus),
-                                       vtd_as->devfn, &ce) &&
-             domain_id == vtd_get_domain_id(s, &ce, vtd_as->pasid)) {
--            if ((vtd_as->pasid != PCI_NO_PASID || pasid != PASID_0) &&
-+            if ((vtd_as->pasid != PCI_NO_PASID || pasid != IOMMU_NO_PASID) &&
-                 vtd_as->pasid != pasid) {
-                 continue;
-             }
+     if (s->fsts && s->aw_bits != VTD_HOST_AW_48BIT) {
+-        error_setg(errp, "Scalable mode(x-flts=on): supported value for "
++        error_setg(errp, "Scalable mode(flts=on): supported value for "
+                    "aw-bits is: %d", VTD_HOST_AW_48BIT);
+         return false;
+     }
 diff --git a/hw/i386/intel_iommu_accel.c b/hw/i386/intel_iommu_accel.c
-index 6a12cdac10..14180f61cd 100644
+index ed3793602b..36dc5ac020 100644
 --- a/hw/i386/intel_iommu_accel.c
 +++ b/hw/i386/intel_iommu_accel.c
-@@ -217,7 +217,7 @@ static void vtd_flush_host_piotlb_locked(gpointer key, gpointer value,
+@@ -26,7 +26,7 @@ bool vtd_check_hiod_accel(IntelIOMMUState *s, VTDHostIOMMUDevice *vtd_hiod,
+     PCIDevice *pdev = bus->devices[vtd_hiod->devfn];
  
-     did = VTD_SM_PASID_ENTRY_DID(&pc_entry->pasid_entry);
+     if (!object_dynamic_cast(OBJECT(hiod), TYPE_HOST_IOMMU_DEVICE_IOMMUFD)) {
+-        error_setg(errp, "Need IOMMUFD backend when x-flts=on");
++        error_setg(errp, "Need IOMMUFD backend when flts=on");
+         return false;
+     }
  
--    if (piotlb_info->domain_id == did && piotlb_info->pasid == PASID_0) {
-+    if (piotlb_info->domain_id == did && piotlb_info->pasid == IOMMU_NO_PASID) {
-         HostIOMMUDeviceIOMMUFD *hiodi =
-             HOST_IOMMU_DEVICE_IOMMUFD(vtd_hiod->hiod);
-         uint32_t entry_num = 1; /* Only implement one request for simplicity */
-diff --git a/hw/i386/intel_iommu_internal.h b/hw/i386/intel_iommu_internal.h
-index d738ef1803..ee59df09f8 100644
---- a/hw/i386/intel_iommu_internal.h
-+++ b/hw/i386/intel_iommu_internal.h
-@@ -615,7 +615,6 @@ typedef struct VTDRootEntry VTDRootEntry;
- #define VTD_CTX_ENTRY_LEGACY_SIZE     16
- #define VTD_CTX_ENTRY_SCALABLE_SIZE   32
+@@ -44,7 +44,7 @@ bool vtd_check_hiod_accel(IntelIOMMUState *s, VTDHostIOMMUDevice *vtd_hiod,
  
--#define PASID_0                             0
- #define VTD_SM_CONTEXT_ENTRY_RSVD_VAL0(aw)  (0x1e0ULL | ~VTD_HAW_MASK(aw))
- #define VTD_SM_CONTEXT_ENTRY_RSVD_VAL1      0xffffffffffe00000ULL
- #define VTD_SM_CONTEXT_ENTRY_PRE            0x10ULL
+     if (pci_device_get_iommu_bus_devfn(pdev, &bus, NULL, NULL)) {
+         error_setg(errp, "Host device downstream to a PCI bridge is "
+-                   "unsupported when x-flts=on");
++                   "unsupported when flts=on");
+         return false;
+     }
+ 
+diff --git a/tests/qtest/intel-iommu-test.c b/tests/qtest/intel-iommu-test.c
+index e5cc6acaf0..4f12c56260 100644
+--- a/tests/qtest/intel-iommu-test.c
++++ b/tests/qtest/intel-iommu-test.c
+@@ -29,7 +29,7 @@ static void test_intel_iommu_stage_1(void)
+     uint64_t cap, ecap, tmp;
+     QTestState *s;
+ 
+-    s = qtest_init("-M q35 -device intel-iommu,x-scalable-mode=on,x-flts=on");
++    s = qtest_init("-M q35 -device intel-iommu,scalable-mode=on,flts=on");
+ 
+     cap = vtd_reg_readq(s, DMAR_CAP_REG);
+     g_assert((cap & CAP_STAGE_1_FIXED1) == CAP_STAGE_1_FIXED1);
+diff --git a/tests/qtest/iommu-intel-test.c b/tests/qtest/iommu-intel-test.c
+index a52c45e298..8125be9e28 100644
+--- a/tests/qtest/iommu-intel-test.c
++++ b/tests/qtest/iommu-intel-test.c
+@@ -54,10 +54,10 @@ static const char *qvtd_iommu_args(QVTDTransMode mode)
+ {
+     switch (mode) {
+     case QVTD_TM_SCALABLE_FLT:
+-        return "-device intel-iommu,x-scalable-mode=on,x-flts=on ";
++        return "-device intel-iommu,scalable-mode=on,flts=on ";
+     case QVTD_TM_SCALABLE_PT:
+     case QVTD_TM_SCALABLE_SLT:
+-        return "-device intel-iommu,x-scalable-mode=on ";
++        return "-device intel-iommu,scalable-mode=on ";
+     default:
+         return "-device intel-iommu ";
+     }
 -- 
 MST
 
