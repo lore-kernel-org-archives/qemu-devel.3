@@ -4,65 +4,121 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99C1BCD98C5
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jun 2026 08:51:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CCA55CD98E1
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jun 2026 08:56:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZ32E-0006K4-Vb; Mon, 15 Jun 2026 04:51:11 -0400
+	id 1wZ36a-00074u-OV; Mon, 15 Jun 2026 04:55:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wZ31n-0006Io-MF; Mon, 15 Jun 2026 04:50:45 -0400
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ (Exim 4.90_1) (envelope-from <FangSheng.Huang@amd.com>)
+ id 1wZ36S-00074V-Ep
+ for qemu-devel@nongnu.org; Mon, 15 Jun 2026 04:55:35 -0400
+Received: from mail-westcentralusazon11013000.outbound.protection.outlook.com
+ ([40.93.201.0] helo=CY3PR05CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wZ31j-00057b-RM; Mon, 15 Jun 2026 04:50:43 -0400
-Received: from [133.11.54.183] (h183.csg.ci.i.u-tokyo.ac.jp [133.11.54.183])
- (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 65F8oHsB088520
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Mon, 15 Jun 2026 17:50:17 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=/8VapYLl3ShbkfOj4G7hbG3IsazqXHuxJye2UONJEPs=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=From:Message-ID:To:Subject:Date;
- s=rs20250326; t=1781513418; v=1;
- b=igxDuBvqoa1ym+n39fp27ca4/ruULn5DBvq7XsZLppw6JPKpjLq5dIGnNt7gmTDT
- VN6dCXx4b8Xwzkl7fYsdtsN2tq14CuFBCA1z3l5exu8di+N0byMya8uVIuvR8MF5
- 2YFZ7LYm6LthR8OFJbaESh1T//iz2LeSu7q5c2ycfHd94C7UMj7YYBpIdhsDioQS
- owJJT+qfitNP7ROAGE6dMGBHTsr90RRe9fV0EXjiDLmomjUDmWPOAnG/g0ti9w4s
- RHU/+aQJMWluQ719R2DFW8p8AAE5cKPMjcW7K8NXYYJEYBLkhJqJwFdEo4N8iKUh
- GwjuxUZI0mv5m95iq112HA==
-Message-ID: <23953462-9a8f-4532-93cb-500abcf36d33@rsg.ci.i.u-tokyo.ac.jp>
-Date: Mon, 15 Jun 2026 17:50:17 +0900
+ (Exim 4.90_1) (envelope-from <FangSheng.Huang@amd.com>)
+ id 1wZ36J-0005sp-Qw
+ for qemu-devel@nongnu.org; Mon, 15 Jun 2026 04:55:29 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=hT2vS/bspKbFSJmu0o1Q6gDShuWrNPmcaTb8RC5j7P4s3fclREJUE8nD6DeQmQXXbLVC5me2vStKQ0yXg2zHHI5Z6khcV8rpKlLK9SOwsVNk83LKuRmRt0z34Q4Q75zdrI1TW/qaJRy5QioDDB5bu/dRK8WbK4SG88n4Pur6z3RwVQ/diPjQfLwpG86rBOgSzvmaMoEC5SvdXdZxoGe2QUps29Qsk79eJXYY0nKf5xQwkWiSyhFGc7qWcdizqF8q2VLGwROGNskoyHzf3IJXOX/sc/jbUbUqVcfYgFwiO2eYdB2P8OwQ27zK37+i1Kd/DwCYNWLF8xDRM29wD2v9HQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=npaVYxS92gCJmb4Y7CCXeE5SyuS+YZ4kkzATMlK6R/M=;
+ b=I9QJCYBBQYFyHsyo6Rw3eZq4KvkcTzF/hsQX+VPREdIVIIzg0JZ0tvs71TOFZ8yDOUEn51Fmq9tRdiwuJVlkdPp7NE+Q/saboFmrx/pO1PTSKPbWh3EYLqlzhrDvpKUTa2XZOoLwAT6gXVAsWIhdd0PEM3MO7cTaBx9Arzq7O7MDukWe8M7H2PoTi5QjnR7ezooGyHV2Kfk2GBpiYSOtrb80nkjxsfySB7WV8QUS5oGB/DztfZiUuAY6f7bRs9i/RJuVr3mLx5Yq4aSH9HPqMhJXi5Y0C1ZxV+OIA60ZGnCLJeYM6gfDJNMW3nHXwOYZPrbzAQWnEO9HvxGOhvQP0Q==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=oss.qualcomm.com smtp.mailfrom=amd.com;
+ dmarc=pass (p=quarantine sp=quarantine pct=100) action=none
+ header.from=amd.com; dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=npaVYxS92gCJmb4Y7CCXeE5SyuS+YZ4kkzATMlK6R/M=;
+ b=gLQhZRhYN0Vi+AOS6ZeDLAt6xw3WCnkSGfDO5GPZfPWn7a26yzc13ZmcMMKOy72mTgveWsSRBreb8r6D+w0JLEvGpyO8UE2iPTGoSQoP0j521obS85d+/fxChx8V35wgA9rEtgM71x2wSJyU6xG5MkdVKJg/wICR1hZz6dOJDfc=
+Received: from MN0P220CA0013.NAMP220.PROD.OUTLOOK.COM (2603:10b6:208:52e::28)
+ by SA1PR12MB7037.namprd12.prod.outlook.com (2603:10b6:806:24c::21)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.113.18; Mon, 15 Jun
+ 2026 08:50:11 +0000
+Received: from BL02EPF0002992C.namprd02.prod.outlook.com
+ (2603:10b6:208:52e:cafe::84) by MN0P220CA0013.outlook.office365.com
+ (2603:10b6:208:52e::28) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.113.18 via Frontend Transport; Mon,
+ 15 Jun 2026 08:50:11 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
+Received: from satlexmb07.amd.com (165.204.84.17) by
+ BL02EPF0002992C.mail.protection.outlook.com (10.167.249.57) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.21.139.8 via Frontend Transport; Mon, 15 Jun 2026 08:50:11 +0000
+Received: from satlexmb10.amd.com (10.181.42.219) by satlexmb07.amd.com
+ (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.41; Mon, 15 Jun
+ 2026 03:50:10 -0500
+Received: from satlexmb08.amd.com (10.181.42.217) by satlexmb10.amd.com
+ (10.181.42.219) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.41; Mon, 15 Jun
+ 2026 03:50:10 -0500
+Received: from [10.65.99.90] (10.180.168.240) by satlexmb08.amd.com
+ (10.181.42.217) with Microsoft SMTP Server id 15.2.2562.41 via Frontend
+ Transport; Mon, 15 Jun 2026 03:50:09 -0500
+Message-ID: <cfc176a2-3f73-4279-8093-eeeeba033b54@amd.com>
+Date: Mon, 15 Jun 2026 16:50:03 +0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] qom: Reject temporary object resurrection
-To: Kevin Wolf <kwolf@redhat.com>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- qemu-rust@nongnu.org, Peter Xu <peterx@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- Alberto Garcia <berto@igalia.com>, Hanna Reitz <hreitz@redhat.com>,
- qemu-block@nongnu.org
-References: <20260615-embedded-v1-0-bb0c65bf126c@rsg.ci.i.u-tokyo.ac.jp>
- <20260615-embedded-v1-1-bb0c65bf126c@rsg.ci.i.u-tokyo.ac.jp>
- <ai-4-0UkH0uCZwYS@redhat.com>
-Content-Language: en-US
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <ai-4-0UkH0uCZwYS@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Subject: Re: [PATCH v11 1/4] hw/mem: add sp-mem device for Specific Purpose
+ Memory
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ <qemu-devel@nongnu.org>, <david@kernel.org>, <imammedo@redhat.com>,
+ <gourry@gourry.net>
+CC: <Zhigang.Luo@amd.com>, <Lianjie.Shi@amd.com>
+References: <20260611100637.2460507-1-FangSheng.Huang@amd.com>
+ <20260611100637.2460507-2-FangSheng.Huang@amd.com>
+ <9b3384bd-bf7f-433e-8427-7b278bb7ff8d@oss.qualcomm.com>
+From: "Huang, FangSheng (Jerry)" <FangSheng.Huang@amd.com>
+In-Reply-To: <9b3384bd-bf7f-433e-8427-7b278bb7ff8d@oss.qualcomm.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BL02EPF0002992C:EE_|SA1PR12MB7037:EE_
+X-MS-Office365-Filtering-Correlation-Id: 00aa3f71-637d-4f2e-2cda-08decabb1c13
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|1800799024|36860700016|23010399003|376014|82310400026|4143699003|18002099003|56012099006|11063799006|13003099007|22082099003;
+X-Microsoft-Antispam-Message-Info: rRvGqidoP3P0EwZwtwszN/Lo8B+xDraxjwn6BILm7cg2DGNKCHfrUtYnINK11IeA6x1Oj4Q75mKXca05YbMn84VB+lGLbr/bEujv4xGTPcKjKqv9Ty8srx4qBuRejgkquz4UVI6rjzRkHG8ICdX6fdPjR61WDlmpHgim1Tj72EIix+H7sKx/y3dKD64sOC4dFn+BkBEZ2wuoTrejeJonTxNP7vVGd6r2dU3fIuFIMkBUB17LFNqvda62UJBr/9jzocMF/Frc6Th0wfsy5x3N3XIPe5AJ2+qvrEGYhw8TJ/n6jSPzTkSIp6LaiVcMO/najGhSNyxeeRo5PhViDKJYhqg0IpeCKVQBoWn5EZSeMwEdo7I3J9EbGp1+ZFgOQ9lClQdFhlinMeZ0Nj/TKTo6AJdZsY2tcmV47rJxZEKHgcq74L/xbfaISPOo7Lk6lDnc6NEUFci/rOGkzQKU5TAG4s30G5k+elsCuu31N0kDUleauI7kkhSkWD8VWXTv4+tntIMIrwTLlZxSNb6rgwIQG+2RZJavCw5w84QXA0zV44PnR+vSsTeJ2ZTJ8USMPW0K+fSUhfiL5Fx9eaUBvwOFL/GOkVk1h6K/6fHNYx0GipSO896FW/P5i5XW96REwZ4RpGcsVb1RY7UaLSPgug2XoNALTcSZOpgDwxkoR7PU3uE84JaSGjEi52OzXkW0E9RU0joyAI1rBJQoaKnhdJo/q3MDIQyQBOUNy/pv3ebXAm0=
+X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:satlexmb07.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(13230040)(1800799024)(36860700016)(23010399003)(376014)(82310400026)(4143699003)(18002099003)(56012099006)(11063799006)(13003099007)(22082099003);
+ DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: xWcSeam39QYrc0CjfTUo0GmJxkEL46r2oKwI2CupigGpud226ijch/E376FpfzWvcSGgb+Bz1F0Fd8t14B/fLf5j1ZcGR1XXwDPM4znEWDvRANAHZJyzy8spZHPhpWJddIa549yadkdNhRBfns669BMY6pbYyW78CKU9lzPHAf1VsQBZD+aCgOqmklxPS7h6SLM15KEmVQOqEETA4VPfSsOIQBFqFSNG/V6yZJzQg2X27jyfDIbZFMhQF36gsfsO52gcyizrAUqjJwXjmX3B7pbaVgImr5da7P7cMW2uIN4xbnY4gbbRpHdKe94T5DEKT2mMDyuXeeCaEm0uInNf2Yc5T94PiGGRkVofuoVEd4h5TCz3UM/sQmOeG/ETz4r2lmVguUGkpsLRTfK0om9aPfPWhTBMlFG+dDIBgzcGTCXruYrBBkqVM8WI4cFwMPck
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 15 Jun 2026 08:50:11.1535 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 00aa3f71-637d-4f2e-2cda-08decabb1c13
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
+ Helo=[satlexmb07.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource: BL02EPF0002992C.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA1PR12MB7037
+Received-SPF: permerror client-ip=40.93.201.0;
+ envelope-from=FangSheng.Huang@amd.com;
+ helo=CY3PR05CU001.outbound.protection.outlook.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -78,62 +134,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026/06/15 17:34, Kevin Wolf wrote:
-> Am 15.06.2026 um 06:11 hat Akihiko Odaki geschrieben:
->> If object_ref() is called during finalization, it will temporarily
->> "resurrect" the object. Although object_finalize() asserts that no
->> resurrecting reference remains before freeing the object, the assertion
->> cannot catch the case where the resurrecting reference is dropped before
->> freeing the object.
-> 
-> Ok, and why is that a problem?
-> 
-> In the cover letter, you referred to an earlier patch you had posted:
-> 
->      The temporary object resurrection patch originated from:
->      https://lore.kernel.org/qemu-devel/20250906-mr-v2-1-2820f5a3d282@rsg.ci.i.u-tokyo.ac.jp/
->      ("[PATCH v2 1/3] qom: Do not finalize twice")
-> 
->  From that patch, it's clear that one problem is that .finalize() can be
-> called multiple times, which you probably don't want. But what is the
-> reason for switching from just ignoring the second .finalize() like in
-> the old patch to completely forbidding a temporary refcount increase?
 
-None. I thought merely skipping finalization is not a well-defined 
-semantics (e.g., breaking Rust safety guarantee), but, reconsidering 
-now, I think that's fine.
 
+On 6/12/2026 2:38 AM, Philippe Mathieu-Daudé wrote:
+> [You don't often get email from philmd@oss.qualcomm.com. Learn why this 
+> is important at https://aka.ms/LearnAboutSenderIdentification ]
 > 
->> One way to catch this would be to add a check in object_ref() to reject
->> resurrecting references before they are created. However, object_ref()
->> is frequently called so it is better to minimize the overhead.
+> Hi,
 > 
-> We're talking about a single comparison with zero here. So if that's the
-> worse alternative, the other one can't have any drawbacks.
-
-True.
-
+> On 11/6/26 12:06, fanhuang wrote:
+>> +#include "hw/mem/memory-device.h"
 > 
->> To avoid adding the overhead, change how the reference count is
->> represented and let an existing assertion detect resurrection. More
->> concretely, obj->ref now stores the current reference count minus 1. The
->> stored count is therefore 0 after object_initialize(), and the final
->> object_unref() decrements it from 0 to UINT32_MAX and starts
->> finalization. A resurrecting object_ref() will then trip the existing
->> obj->ref < INT_MAX assertion.
+> Not needed AFAICT.
 > 
-> A refcount field where 0 means that a last reference is still remaining
-> is highly confusing. If we do want to forbid taking a temporary new
-> reference in .finalize() for some reason, the explicit check in
-> object_ref() sounds much better to me.
+>> +#include "hw/core/qdev.h"
+>> +#include "qom/object.h"
+>> +#include "system/hostmem.h"
+> 
+> Not needed (HostMemoryBackend is forward declared in "qemu/typedefs.h").
+>
 
-The rationale here is that the field is mostly contained in qom/object.c 
-so the awkward semantics won't have a wide impact. But it's just 
-"mostly" and there are two exceptions: block/throttle-groups.c and 
-tests/unit/check-qom-proplist.c.
+Confirmed, dropping both.
+>> +    if (!spm->hostmem) {
+>> +        error_setg(errp, "'memdev' property must be set");
+> 
+> Already checked in Realize? Or is this for the introspection test?
+> If so, use SP_MEM_MEMDEV_PROP like in Realize.
+>
 
-I withdraw this patch for the drawbacks discussed above.
+Will switch to SP_MEM_MEMDEV_PROP for consistency.
 
-Regards,
-Akihiko Odaki
+>> +/* boot-time only; no plug/unplug state to migrate */
+> 
+> Please move that comment ...
+>
+
+Will move it inside the struct.
+
+>> +static const VMStateDescription vmstate_sp_mem = {
+>> +    .name = TYPE_SP_MEM,
+> 
+> ... here.
+> 
+>> +    .unmigratable = 1,
+>> +};
+> Only minor comments, patch LGTM otherwise!
+
+Thanks for the review, Philippe -- all addressed in the next respin.
+
+Best regards,
+FangSheng Huang (Jerry)
 
