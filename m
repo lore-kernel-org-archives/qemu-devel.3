@@ -4,44 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2FCDACD98CE
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jun 2026 22:17:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F37E3CD98DE
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jun 2026 22:18:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZFcE-00020x-Co; Mon, 15 Jun 2026 18:17:10 -0400
+	id 1wZFcB-0001z2-7W; Mon, 15 Jun 2026 18:17:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1wZFcC-000207-TG
- for qemu-devel@nongnu.org; Mon, 15 Jun 2026 18:17:09 -0400
-Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
+ id 1wZFc9-0001xv-6K
+ for qemu-devel@nongnu.org; Mon, 15 Jun 2026 18:17:05 -0400
+Received: from zero.eik.bme.hu ([152.66.115.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1wZFcB-0007r9-Av
- for qemu-devel@nongnu.org; Mon, 15 Jun 2026 18:17:08 -0400
+ id 1wZFc6-0007pm-Du
+ for qemu-devel@nongnu.org; Mon, 15 Jun 2026 18:17:04 -0400
 Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 65D7B5969B1;
- Tue, 16 Jun 2026 00:17:05 +0200 (CEST)
+ by zero.eik.bme.hu (Postfix) with ESMTP id 2CDA85969B6;
+ Tue, 16 Jun 2026 00:17:01 +0200 (CEST)
 X-Virus-Scanned: amavis at eik.bme.hu
 Received: from zero.eik.bme.hu ([127.0.0.1])
  by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id CgLJDHzPsPVt; Tue, 16 Jun 2026 00:17:03 +0200 (CEST)
+ id 4tYUSqcPZvWT; Tue, 16 Jun 2026 00:16:59 +0200 (CEST)
 Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 57EB15969B8; Tue, 16 Jun 2026 00:17:03 +0200 (CEST)
-Message-ID: <915bd1a9345fe7cf12ef98f78ee9caffe2b70d66.1781561370.git.balaton@eik.bme.hu>
+ id 271115969B1; Tue, 16 Jun 2026 00:16:59 +0200 (CEST)
+Message-ID: <9323b54712f157a83f861c300c7df237201b7ae2.1781561370.git.balaton@eik.bme.hu>
 In-Reply-To: <cover.1781561370.git.balaton@eik.bme.hu>
 References: <cover.1781561370.git.balaton@eik.bme.hu>
 From: BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PATCH v6 7/7] hw/xtensa/xtfpga: Fix leaking memory region
+Subject: [PATCH v6 3/7] memory: Update documentation for memory_region_new*()
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
  Paolo Bonzini <pbonzini@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>, berrange@redhat.com,
  philmd@mailo.com
-Date: Tue, 16 Jun 2026 00:17:03 +0200 (CEST)
-Received-SPF: pass client-ip=2001:738:2001:2001::2001;
- envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
+Date: Tue, 16 Jun 2026 00:16:59 +0200 (CEST)
+Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
+ helo=zero.eik.bme.hu
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -62,29 +62,241 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Use memory_region_new_ram to avoid leaking memory region.
+Clarify the difference between memory_region_new() and
+memory_region_init() with regard to region lifecycle.
 
 Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
 ---
- hw/xtensa/xtfpga.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ docs/devel/memory.rst   | 21 ++++-----
+ include/system/memory.h | 98 +++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 109 insertions(+), 10 deletions(-)
 
-diff --git a/hw/xtensa/xtfpga.c b/hw/xtensa/xtfpga.c
-index 33a2d9485c..c826f6a308 100644
---- a/hw/xtensa/xtfpga.c
-+++ b/hw/xtensa/xtfpga.c
-@@ -161,9 +161,8 @@ static void xtfpga_net_init(MemoryRegion *address_space,
-     memory_region_add_subregion(address_space, descriptors,
-             sysbus_mmio_get_region(s, 1));
+diff --git a/docs/devel/memory.rst b/docs/devel/memory.rst
+index 9083b18f08..988380c632 100644
+--- a/docs/devel/memory.rst
++++ b/docs/devel/memory.rst
+@@ -138,7 +138,8 @@ stability.
+ Region lifecycle
+ ----------------
  
--    ram = g_malloc(sizeof(*ram));
--    memory_region_init_ram(ram, OBJECT(s), "open_eth.ram", 16 * KiB,
--                           &error_fatal);
-+    ram = memory_region_new_ram(OBJECT(s), "open_eth.ram", 16 * KiB,
-+                                &error_fatal);
-     memory_region_add_subregion(address_space, buffers, ram);
- }
+-A region is created by one of the memory_region_init*() functions and
++A region is allocated by one of the memory_region_new*() functions or
++pre-allocated and initialized by memory_region_init*() functions and
+ attached to an object, which acts as its owner or parent.  QEMU ensures
+ that the owner object remains alive as long as the region is visible to
+ the guest, or as long as the region is in use by a virtual CPU or another
+@@ -154,16 +155,16 @@ ioeventfd) can be changed during the region lifecycle.  They take effect
+ as soon as the region is made visible.  This can be immediately, later,
+ or never.
  
+-Destruction of a memory region happens automatically when the owner object
+-dies.  When there are multiple memory regions under the same owner object,
+-the memory API will guarantee all memory regions will be properly detached
+-and finalized one by one.  The order in which memory regions will be
+-finalized is not guaranteed.
++Destruction of a memory region allocated with memory_region_new*() functions
++happens automatically when the owner object dies.  When there are multiple
++memory regions under the same owner object, the memory API will guarantee all
++memory regions will be properly detached and finalized one by one.  The order
++in which memory regions will be finalized is not guaranteed.
+ 
+-If however the memory region is part of a dynamically allocated data
+-structure, you should free the memory region in the instance_finalize
+-callback.  For an example see VFIOMSIXInfo and VFIOQuirk in
+-hw/vfio/pci.c.
++If however the memory region is part of a separately allocated data structure
++and initialized with one of the memory_region_init*() functions, you may have
++to free the memory region e.g. in an instance_finalize callback.  For an
++example see VFIOMSIXInfo and VFIOQuirk in hw/vfio/pci.c.
+ 
+ You must not destroy a memory region as long as it may be in use by a
+ device or CPU.  In order to do this, as a general rule do not create or
+diff --git a/include/system/memory.h b/include/system/memory.h
+index 109300b773..4b690b38f2 100644
+--- a/include/system/memory.h
++++ b/include/system/memory.h
+@@ -1314,6 +1314,13 @@ void memory_region_init(MemoryRegion *mr,
+                         const char *name,
+                         uint64_t size);
+ 
++/**
++ * memory_region_new: Allocate and initialize a memory region
++ *
++ * Like memory_region_init() but @mr is allocated and managed by QOM.
++ *
++ * Return: Pointer to allocated #MemoryRegion.
++ */
+ MemoryRegion *memory_region_new(Object *owner,
+                                 const char *name,
+                                 uint64_t size);
+@@ -1368,6 +1375,13 @@ void memory_region_init_io(MemoryRegion *mr,
+                            const char *name,
+                            uint64_t size);
+ 
++/**
++ * memory_region_new_io: Allocate and initialize an I/O memory region.
++ *
++ * Like memory_region_init_io() but @mr is allocated and managed by QOM.
++ *
++ * Return: Pointer to allocated #MemoryRegion.
++ */
+ MemoryRegion *memory_region_new_io(Object *owner,
+                                    const MemoryRegionOps *ops,
+                                    void *opaque,
+@@ -1400,6 +1414,15 @@ bool memory_region_init_ram_flags_nomigrate(MemoryRegion *mr,
+                                             uint32_t ram_flags,
+                                             Error **errp);
+ 
++/**
++ * memory_region_new_ram_flags_nomigrate:  Allocate and initialize RAM memory
++ *                                         region with flags.
++ *
++ * Like memory_region_init_ram_flags_nomigrate() but @mr is allocated and
++ * managed by QOM.
++ *
++ * Return: Pointer to allocated #MemoryRegion.
++ */
+ MemoryRegion *memory_region_new_ram_flags_nomigrate(Object *owner,
+                                                     const char *name,
+                                                     uint64_t size,
+@@ -1439,6 +1462,15 @@ bool memory_region_init_resizeable_ram(MemoryRegion *mr,
+                                                        void *host),
+                                        Error **errp);
+ 
++/**
++ * memory_region_new_resizeable_ram:  Allocate and initialize memory region
++ *                                    with resizable RAM.
++ *
++ * Like memory_region_init_resizeable_ram() but @mr is allocated and managed
++ * by QOM.
++ *
++ * Return: Pointer to allocated #MemoryRegion.
++ */
+ MemoryRegion *memory_region_new_resizeable_ram(Object *owner,
+                                                const char *name,
+                                                uint64_t size,
+@@ -1483,6 +1515,15 @@ bool memory_region_init_ram_from_file(MemoryRegion *mr,
+                                       ram_addr_t offset,
+                                       Error **errp);
+ 
++/**
++ * memory_region_new_ram_from_file:  Allocate and initialize RAM memory region
++ *                                   with a mmap-ed backend.
++ *
++ * Like memory_region_init_ram_from_file() but @mr is allocated and managed
++ * by QOM.
++ *
++ * Return: Pointer to allocated #MemoryRegion.
++ */
+ MemoryRegion *memory_region_new_ram_from_file(Object *owner,
+                                               const char *name,
+                                               uint64_t size,
+@@ -1521,6 +1562,15 @@ bool memory_region_init_ram_from_fd(MemoryRegion *mr,
+                                     ram_addr_t offset,
+                                     Error **errp);
+ 
++/**
++ * memory_region_new_ram_from_fd:  Allocate and initialize RAM memory region
++ *                                 with a mmap-ed backend.
++ *
++ * Like memory_region_init_ram_from_fd() but @mr is allocated and managed
++ * by QOM.
++ *
++ * Return: Pointer to allocated #MemoryRegion.
++ */
+ MemoryRegion *memory_region_new_ram_from_fd(Object *owner,
+                                             const char *name,
+                                             uint64_t size,
+@@ -1552,6 +1602,14 @@ void memory_region_init_ram_ptr(MemoryRegion *mr,
+                                 uint64_t size,
+                                 void *ptr);
+ 
++/**
++ * memory_region_new_ram_ptr:  Allocate and initialize RAM memory region from a
++ *                             user-provided pointer.
++ *
++ * Like memory_region_init_ram_ptr() but @mr is allocated and managed by QOM.
++ *
++ * Return: Pointer to allocated #MemoryRegion.
++ */
+ MemoryRegion *memory_region_new_ram_ptr(Object *owner,
+                                         const char *name,
+                                         uint64_t size,
+@@ -1585,6 +1643,15 @@ void memory_region_init_ram_device_ptr(MemoryRegion *mr,
+                                        uint64_t size,
+                                        void *ptr);
+ 
++/**
++ * memory_region_new_ram_device_ptr:  Allocate and initialize RAM device memory
++ *                                    region from a user-provided pointer.
++ *
++ * Like memory_region_init_ram_device_ptr() but @mr is allocated and managed
++ * by QOM.
++ *
++ * Return: Pointer to allocated #MemoryRegion.
++ */
+ MemoryRegion *memory_region_new_ram_device_ptr(Object *owner,
+                                                const char *name,
+                                                uint64_t size,
+@@ -1609,6 +1676,14 @@ void memory_region_init_alias(MemoryRegion *mr,
+                               hwaddr offset,
+                               uint64_t size);
+ 
++/**
++ * memory_region_new_alias: Allocate and initialize a memory region that
++ *                          aliases all or a part of another memory region.
++ *
++ * Like memory_region_init_alias() but @mr is allocated and managed by QOM.
++ *
++ * Return: Pointer to allocated #MemoryRegion.
++ */
+ MemoryRegion *memory_region_new_alias(Object *owner,
+                                       const char *name,
+                                       MemoryRegion *orig,
+@@ -1680,6 +1755,13 @@ bool memory_region_init_ram_guest_memfd(MemoryRegion *mr,
+                                         uint64_t size,
+                                         Error **errp);
+ 
++/**
++ * memory_region_new_ram: Allocate and initialize a RAM memory region.
++ *
++ * Like memory_region_init_ram() but @mr is allocated and managed by QOM.
++ *
++ * Return: Pointer to allocated #MemoryRegion.
++ */
+ MemoryRegion *memory_region_new_ram(Object *owner,
+                                     const char *name,
+                                     uint64_t size,
+@@ -1719,6 +1801,13 @@ bool memory_region_init_rom(MemoryRegion *mr,
+                             uint64_t size,
+                             Error **errp);
+ 
++/**
++ * memory_region_new_rom: Allocate and initialize a ROM memory region.
++ *
++ * Like memory_region_init_rom() but @mr is allocated and managed by QOM.
++ *
++ * Return: Pointer to allocated #MemoryRegion.
++ */
+ MemoryRegion *memory_region_new_rom(Object *owner,
+                                     const char *name,
+                                     uint64_t size,
+@@ -1759,6 +1848,15 @@ bool memory_region_init_rom_device(MemoryRegion *mr,
+                                    uint64_t size,
+                                    Error **errp);
+ 
++/**
++ * memory_region_new_rom_device:  Allocate and initialize a ROM memory region.
++ *                                Writes are handled via callbacks.
++ *
++ * Like memory_region_init_rom_device() but @mr is allocated and managed
++ * by QOM.
++ *
++ * Return: Pointer to allocated #MemoryRegion.
++ */
+ MemoryRegion *memory_region_new_rom_device(Object *owner,
+                                            const MemoryRegionOps *ops,
+                                            void *opaque,
 -- 
 2.41.3
 
