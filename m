@@ -4,88 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5940CD98CF
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jun 2026 18:38:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15D1ECD98CF
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jun 2026 18:40:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZCCP-0002TG-ND; Mon, 15 Jun 2026 14:38:17 -0400
+	id 1wZCE8-00039B-HA; Mon, 15 Jun 2026 14:40:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wZCCK-0002SP-Sn
- for qemu-devel@nongnu.org; Mon, 15 Jun 2026 14:38:13 -0400
-Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
+ id 1wZCE6-00038Y-KU
+ for qemu-devel@nongnu.org; Mon, 15 Jun 2026 14:40:02 -0400
+Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wZCCI-0002GH-1n
- for qemu-devel@nongnu.org; Mon, 15 Jun 2026 14:38:12 -0400
-Received: by mail-pl1-x62d.google.com with SMTP id
- d9443c01a7336-2c0c1e0d00bso33274755ad.0
- for <qemu-devel@nongnu.org>; Mon, 15 Jun 2026 11:37:59 -0700 (PDT)
+ id 1wZCE2-0002eQ-Lc
+ for qemu-devel@nongnu.org; Mon, 15 Jun 2026 14:40:01 -0400
+Received: by mail-pf1-x434.google.com with SMTP id
+ d2e1a72fcca58-8419ab3a297so1620674b3a.2
+ for <qemu-devel@nongnu.org>; Mon, 15 Jun 2026 11:39:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1781548678; x=1782153478; darn=nongnu.org;
+ d=linaro.org; s=google; t=1781548797; x=1782153597; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=97lbOVoF62W2GPJk2Zeas0aDOI7h5cihE+O+dpW+WWU=;
- b=rk8sWiBCetnsVcpUZNNpXsW/IcYPpNXYu0MhCdEwo7NzWHgIIC/kHQfz6GSv3dxHTS
- 2GoGdc4TyV4s5gSnnYS+WQXMOA+z0VWZ5+jAR+N28S8+Q76pTaSE3VKhmMlAXQPBkOKu
- EoekKEDURt4+xp7wEJC+G5SS4N68WFjMagZkr3slRsNMUybTY5EQYeMhYMiRbuGKWb97
- 5vsZMMupk5O2/TI6wQvdlm+mqVK9Hphkz0whLjGIELfex0A8qCrJcNqRbI+jtUEeApR5
- TUdCNUZbPmmVnW/ejYDg4ZdgmRWW+HpheBr0TPMP+OJaBavNgrdK3O93ldjipbaVUd3I
- Uq1g==
+ bh=4uSeaseIUvaR8noinvpUmzwNlCw3sL9mi20faAx6qy4=;
+ b=x47/w4N8a7Ocw/ISN9ASJMaMm6esRDkB2aahkzycmW699rDEThia2rKJry3oLX9ROe
+ CZ3HygX9C9qZZybCOmdpYdIFH1d08/4ziPMAqasEFFop8V3XLQwwi/v8IwSvBrsT4YvI
+ xip0DKbQ3Sn0gEO2s0HtdX9n+MqRJLlhkgpKOw3BgA/eQ3TVZbv9rK4Z5scLlD8+Y5uM
+ rxTUlMLOGg1W7SaKp9OaoWQdsLkm2bqhd6iV6lncmdSY0w/e3hH7SN5HN+LkpCd3i954
+ h4UIeykZJTe1vxa7jGH4w5d6WkVD9p7WTz8V5HuBfwf2wf/UpEi4milLODHrx7bB2sYh
+ GWrw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781548678; x=1782153478;
+ d=1e100.net; s=20251104; t=1781548797; x=1782153597;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=97lbOVoF62W2GPJk2Zeas0aDOI7h5cihE+O+dpW+WWU=;
- b=TBzYcHVM2lAyE8+5b7GfqKGCt2ybaupQ6VXsDQvoIpaaFRLzH/odD9iPoO64jf3DZt
- 03Ft7zC6mPiHO+hiUQtZF9o0YHwjY+tC5ea1s5m70IEdR1iRA4om6jcZeyRG5ytb2grc
- EeBeci1sQpq0OwKf+FSbAA5SYjN/2b+4Xmd+F8pkY5IBHoBDwFm/bUylPw1BdA8/si4Y
- eZe3MNHmqQjS/3IHUPAd1wMOzvi0LhAkWBaiiMK5uDe8nthQLy1gnRgaeAzTquwmtP9v
- c0m0WpMYM2yFbUp03o2ivDlOWYK8qYXSQPailj1QACrmypywIuQcKpC6Mg09tfnljq7H
- F26g==
+ bh=4uSeaseIUvaR8noinvpUmzwNlCw3sL9mi20faAx6qy4=;
+ b=icLXCKvZUcHq88xsYZzQci0rWIQ1jf3KXx1cOva8VX90ii5AP539DMcXM59M+k7IuJ
+ W+5Ubw6cPjK2kOsPge+l93tpKWCdN8Fqi8sJhS9UQmUH2KoIJUTkQsCrr55OSQTLJj7R
+ kaR2nxOtugDBc4xG9uBrUjKjczYuuTwXsFLSIn09UGY3tXH9Cj0Q1B6xtATOOnn8W5AD
+ nd7W0a5z2td072ChGHZtXsp95fHQwbk/+FUU2r2FlLFk2RL3Bbo7sbAOBZ1UiIxhsWJg
+ Cb4izIzlrLgPFtJItADKw718ZufaPeDmzzkCcjvf3yZeSDMqXVbsHrEp21nhyGscOheA
+ FsCw==
 X-Forwarded-Encrypted: i=1;
- AFNElJ+g0ty2Em4KDsy7xGSz9lRDenErGDoOwWhmx8BO+77ye8z6GHodgB+LedUwAExLIfY/rRuQugjJKGD4@nongnu.org
-X-Gm-Message-State: AOJu0YxbRM9WNisOtuWJx75a3zfnbJc5ZRqLT5p0fGh/IF0zy0JObmAQ
- yKKNX0OW/r/cLstj2Ois7ywfD+lA7kuVGI+UCswSfD4g+FjcNT8pOm3+qAcn0IC0Ixs=
-X-Gm-Gg: Acq92OHqogcm4o0DB4t7Ps5MYCv/vzoF9dxiI5NfATy6c/x6ok7YpIDF7uNF6kHx2nF
- vJ/dl+1OLm7h/BzaPmO24kba46pT2Ap9BB2maQ3p8ZxIOAIEzBJOfkYnr7+ZCIx0dVELinuv4C0
- 58XzqbVMwcFsQjQutRMhbw53o8x8WOVSjs2sbyZZS5UIfO98rQD9mF1r8IMaZc8c6d+4duD5XTn
- VK9vb9OhUdaVQyxfQuD1mMumgLFiuKC1DEcGV1L4o9cnz7nmWDFjJVVoVdeea7910kkYwqHeI7/
- 6TQ0DuL7Q18Me4Q8wa2qIIgL9r8/OhFnqq6PyrD6Sc2c7sNz1X2kUt4fKk+T3Q92fiLQBDqY7mn
- YleJtc98fgctl/RzsqUhSjeNVzjr9zEFBSsVRBCsFcx2lR+9z+bo5bvHlLL8TtBQUVgzARvEfRW
- /6GT5Ofofvk6yPIJevQmMlyqPhKNB/dDgWC4Bvt0QLNcq6oSQx/+I50ckp9FHRj0nv22gEpTwFt
- jcA+x8=
-X-Received: by 2002:a17:903:238b:b0:2c1:77cd:fb0b with SMTP id
- d9443c01a7336-2c412f17bcfmr166432335ad.37.1781548677861; 
- Mon, 15 Jun 2026 11:37:57 -0700 (PDT)
+ AFNElJ8+f+cpdC7GOnFNi2mG6F7jePZ7InMk8NP5YcK0rg4KSUmc3n7iJ4WfrlJSj+UrJDJSm6uRAVs2hNUc@nongnu.org
+X-Gm-Message-State: AOJu0YxTvQbQqo/ipyYbU/wlBr2eSwjlrLrrKFi2SfBjzn/7SUcDBVG5
+ ppOCbHFEMTXtlIOFHkq70mGVWntRA0s7aXNzCHOBlGlyxZuQxbyAOub4pPZj8x8MMG8=
+X-Gm-Gg: Acq92OFYtF19oNGta3sN3bFS/csgPoReFN+BN2eFh+G57loATGi+xn+p/O0K8E5CC8L
+ uEyEdLnmqwshKAzzGdSmKTy3429LEZOmr/HNIc3e7TZV9F0OMniaB8ADU3/TmFgmY1W2jumwk4f
+ e83OHBAzMuim5T4aclzofN4XvQYYO23bfsQ6nV5BrtLY1IgqXGh9COZEcalV2TQ0MBdt8rQ57M4
+ bITnxwenvdxRuqwxYoDRJfdZYsRPz1FHc5TZ7AWTvymiV+KroXScb9IjesAXScQBotks9lRouAq
+ MjwixssMV2MyQqNNhcCJJr+eWg8HUF/Rthh73eyLRwA17nAAub5v9ORRFr2GZQYVw7swKvhWyl/
+ zdfb7l6oUAxtHRMBrn8HnHtHyzP/IICdJYxGo2oJwTKmu3LYG2Tz+tgV62DfDV6k2ko2iT4YQyN
+ 0pk6sBa8psBUfleZJU2PvOdc/UEsRBzyFy8vjZvrY3DFiroq9PnVyLEnjb6GzVoDw7EHAApqEEk
+ wk3fQY=
+X-Received: by 2002:a05:6a00:32c3:b0:842:4bb9:5fe8 with SMTP id
+ d2e1a72fcca58-8451539cbb8mr161555b3a.3.1781548796510; 
+ Mon, 15 Jun 2026 11:39:56 -0700 (PDT)
 Received: from [192.168.0.4] (174-21-129-215.tukw.qwest.net. [174.21.129.215])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2c432d8a039sm110189025ad.62.2026.06.15.11.37.57
+ d2e1a72fcca58-8434b0226acsm10776215b3a.48.2026.06.15.11.39.55
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 15 Jun 2026 11:37:57 -0700 (PDT)
-Message-ID: <65a1034a-d71a-41f8-b148-7120934d3761@linaro.org>
-Date: Mon, 15 Jun 2026 11:37:50 -0700
+ Mon, 15 Jun 2026 11:39:56 -0700 (PDT)
+Message-ID: <803df8f4-8b24-48e2-b3ff-3e30be677d5e@linaro.org>
+Date: Mon, 15 Jun 2026 11:39:54 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/6] system: Document cpu_physical_memory_*() declarations
+Subject: Re: [PATCH 2/6] accel/kvm: Replace legacy cpu_physical_memory_write()
+ call
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>, Peter Xu <peterx@redhat.com>
 References: <20260611180320.30320-1-philmd@oss.qualcomm.com>
- <20260611180320.30320-2-philmd@oss.qualcomm.com>
+ <20260611180320.30320-3-philmd@oss.qualcomm.com>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260611180320.30320-2-philmd@oss.qualcomm.com>
+In-Reply-To: <20260611180320.30320-3-philmd@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x434.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -109,17 +110,50 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 6/11/26 11:03, Philippe Mathieu-Daudé wrote:
-> +/**
-> + * cpu_physical_memory_map: Map guest physical memory region into host virtual
-> + *                          address.
-> + *
-> + * Map a memory region into the legacy global #address_space_memory address
+> cpu_physical_memory_write() is legacy (see commit b7ecba0f6f6),
+> replace it by address_space_write(). Both if() ladders only
+> differ in the address space argument: rework to have a single
+> address_space_write() call. No logical change intended.
+> 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+> ---
+> Cc: kvm@vger.kernel.org
+> ---
+>   accel/kvm/kvm-all.c | 12 ++++--------
+>   1 file changed, 4 insertions(+), 8 deletions(-)
+> 
+> diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
+> index 96f90ebb240..f4f0e64fbd0 100644
+> --- a/accel/kvm/kvm-all.c
+> +++ b/accel/kvm/kvm-all.c
+> @@ -3178,16 +3178,12 @@ void kvm_flush_coalesced_mmio_buffer(void)
+>           struct kvm_coalesced_mmio_ring *ring = s->coalesced_mmio_ring;
+>           while (ring->first != ring->last) {
+>               struct kvm_coalesced_mmio *ent;
+> +            const AddressSpace *as;
 
-s/into/from/ ?
 
-Otherwise
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Really const?  This doesn't look like it should compile, since address_space_write doesn't 
+use const.
 
 
 r~
+
+>   
+>               ent = &ring->coalesced_mmio[ring->first];
+> -
+> -            if (ent->pio == 1) {
+> -                address_space_write(&address_space_io, ent->phys_addr,
+> -                                    MEMTXATTRS_UNSPECIFIED, ent->data,
+> -                                    ent->len);
+> -            } else {
+> -                cpu_physical_memory_write(ent->phys_addr, ent->data, ent->len);
+> -            }
+> +            as = ent->pio == 1 ? &address_space_io : &address_space_memory;
+> +            address_space_write(as, ent->phys_addr, MEMTXATTRS_UNSPECIFIED,
+> +                                ent->data, ent->len);
+>               smp_wmb();
+>               ring->first = (ring->first + 1) % KVM_COALESCED_MMIO_MAX;
+>           }
+
 
