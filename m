@@ -4,114 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A395CD98C5
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jun 2026 09:29:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D842CD98DA
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jun 2026 10:03:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZ3cr-0004f1-7z; Mon, 15 Jun 2026 05:29:01 -0400
+	id 1wZ4AD-0000Gv-79; Mon, 15 Jun 2026 06:03:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wZ3cm-0004eA-98
- for qemu-devel@nongnu.org; Mon, 15 Jun 2026 05:28:56 -0400
-Received: from mail-yx1-xb12e.google.com ([2607:f8b0:4864:20::b12e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wZ3cj-0002cP-Fe
- for qemu-devel@nongnu.org; Mon, 15 Jun 2026 05:28:56 -0400
-Received: by mail-yx1-xb12e.google.com with SMTP id
- 956f58d0204a3-6605c3453f2so3257750d50.1
- for <qemu-devel@nongnu.org>; Mon, 15 Jun 2026 02:28:53 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1781515732; cv=none;
- d=google.com; s=arc-20240605;
- b=XcuE2h+uJYhLTPSLg8xUuF8HCNPPpKR6Rl707yLxZcvAr4DcIWbWJuGOf82SC5SbJb
- CbDp18S4RR820nVKzpNvB/uDrcMieQiFRuqTfGTePrC9sTe6GE+ZWKdF3VkVS0cWKKz0
- XkrpHbCZQJI6QgPETGbdov7jwj1Lc0pk33njNf0A1vKtb+sF6ApoX3NMzpEs593pRorT
- +TCD+EWWV12K0tNx+8AyOFUEsKBA1Thp6PTE0GYVx7a+CRBMwjtvhbFt/OI83hVVSqOE
- DZOrt5XZWKOVrZVN+TeXA5lJl63403x2eEbzXSn5YNklOoE8vqWHThQD4fqfQqpobp0O
- P46w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=4h7z8wlbabOPsROrERBqjgdjxedmv9sWmTQBMTR5gyk=;
- fh=LyQa8shZvNYklF8aX21nwzMsd8+upEAtdbQoW1W+gVA=;
- b=Hw6wP/UdaR1lfkSBTV8cxVAk4Y+V6LSrFQ21gDsPZA2b/aeBB8XpsZ2Heu1Ww0h74Y
- O9EzkNBs7jqm4Em94SuD2C4H404oR2zcyW59UKfAu70Xnx7ANym90aIoSJ8b3GPRzyYO
- /f/rW0+wAW+QNnCkPali/eOYaLDAw//aKdCQULzEyHctJw2UV/qip7QId/7U1Gl7MLd7
- 7HggK5tx2i2kIAX6cre1IbvKtXj6r3iLQC0CyWBcBpYfeCjuS2Xr0IOznBeWnZrapHlF
- h1tvxoYX/mA4UocPjunDFzWfaHARNHe1bWKVelA6whNw7fRCHs0KKP5B9vbOuiAwc2dc
- VkHw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1781515732; x=1782120532; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=4h7z8wlbabOPsROrERBqjgdjxedmv9sWmTQBMTR5gyk=;
- b=T9rJWt/6Nccx64mv9ugHg60E7DTUfUc+ikir4/1s69/7U8pBoznbbjEx5jXF+cHsrI
- GT4kTKp72TZbVu2HSbIgSXdsWmRuXoqaUwcBb1WAK7aESmULe5+ySwuMiLpeqOcWAUmO
- lTdZmU4MuTLQRphgohsdOlgsCyxMq7YeU0HETVXLJ8vNX44a5zBLXlne0jp6WIDPM9Nf
- CQa0f/bv1/CyhaABpnyQu1wcJ9MYdIW33i347xutH/WrcV6vCu2gu0xZ8kxs3NYNBPCM
- OqVh3sm2TYXT3z+7UzT3GEIX8bOh3tTQgVJpfQYovQwzMqMB/ejR9of9rqMP4FEfISCp
- qnfA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781515732; x=1782120532;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=4h7z8wlbabOPsROrERBqjgdjxedmv9sWmTQBMTR5gyk=;
- b=JUbgPwk1kVWMBivygvbfhEP69ex5/e3ur6PmKC26PmF4ZHG4uxZ6KpXFMsSqCZsJaY
- qR3kouWlmZrtvarMAbvp2y98JFBiYcojnDeXj0yi1Ldl3+6gcITK1IuUgOijwb6NXujy
- y7+Ut1RO0h05iJbBkVGVc4Enl4pcXEYKJfdEjWNYWdKIkn4pZ8ac0vNOZ1ZYBuNu3siR
- rBgbzC+daOeBKzql8sCPuPdVlLcLFe8OdHN7jqocsXEV/6Wr4u0oGFEvlbnoX857yfhN
- HBWiWNUR9gAKE8hHNgPasAQf/1G5619+vcXtB5AU635yhfxGqiK/mslD+nP1Dswkd41b
- VvoA==
-X-Forwarded-Encrypted: i=1;
- AFNElJ+WqtaKn7S2V9W25+9kJxARmgxdiABASifRuFzA1FU/Dr4fcm/2U3J+z5phZigEe4x0NNCipy1lzrkQ@nongnu.org
-X-Gm-Message-State: AOJu0YwnXsYoR+GcuuPlRpGDKikdwfYKt/Z20TvHUMg9TlJpDVz6DoW6
- u7FogDWiw9ud8YjdOP7SdRKaGiozY6PJy1FRRGHl/qPVX5+Lt3N/kkrO5F4ITs8LYjthoLrAvJD
- BEgHrJyVp4FNlIkCNdNCDEp777NTsTTj0rSAjB7tKIA==
-X-Gm-Gg: Acq92OHU1Jobj3rWRLZyRevkLDEByz2ox++FP+B4P+mLso49dMP8UJQqLwQJTEBnRHy
- Fs5uD8Rbv41i2u1FVXHPMkUlZ0oA1o82ed+8qm7v/RDsLf1C1UgAerSlE/aYnrb1BdGM97a4I1G
- znijIpEqphjInazwK43A3jFfI6hdoQVVzV1SJTUkvrO4Pc7hFZZJdodMeRkcJ/5OLZ0J1EBWFaX
- NIYmFmsVWwNEn7tmL01fPyzSoKaFunZ19Whqas2qc0BFMBDob94coAwvvQmVePGxqHnzVrru+EZ
- Nra6MQMvfqGQQPBETZ53LETEtS4Px16Pkg48Fkq5IJbN1wK/Rh/h0L5TSVaulDuP2Tc=
-X-Received: by 2002:a53:c146:0:b0:660:60a9:2b33 with SMTP id
- 956f58d0204a3-6628500a341mr6854412d50.53.1781515732085; Mon, 15 Jun 2026
- 02:28:52 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1wZ4AB-0000GX-P1
+ for qemu-devel@nongnu.org; Mon, 15 Jun 2026 06:03:27 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1wZ4A9-0000AC-SM
+ for qemu-devel@nongnu.org; Mon, 15 Jun 2026 06:03:27 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1781517805;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=2NewIdIPrMLwUps+7LWKz8VBHoxGyGBFdr1NdZYqt4E=;
+ b=LwwJ1LwwlJA3l7Ln724wtLCNGyl36/0Oka50sfowgR+RWpF6vT1KQnd+HITUpXOiimHUxU
+ xEtjSGupd5syhTuimbZrdYaZaGiDwsuMVJgdT7LmvgOoYsQEU1gTzljNfJltkRIXLmOuMs
+ ESZ4vZYxF+cDQnYHx/jJJ1xsANJKFOw=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-67-ShJNzY8KND68XgNvKr7zfg-1; Mon,
+ 15 Jun 2026 06:03:21 -0400
+X-MC-Unique: ShJNzY8KND68XgNvKr7zfg-1
+X-Mimecast-MFC-AGG-ID: ShJNzY8KND68XgNvKr7zfg_1781517800
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 8401C1800350; Mon, 15 Jun 2026 10:03:19 +0000 (UTC)
+Received: from gshan-thinkpadx1nanogen2.rmtau.csb (unknown [10.64.136.2])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 905F61955BCE; Mon, 15 Jun 2026 10:03:11 +0000 (UTC)
+From: Gavin Shan <gshan@redhat.com>
+To: qemu-arm@nongnu.org
+Cc: qemu-devel@nongnu.org, mst@redhat.com, peterx@redhat.com, alex@shazbot.org,
+ richard.henderson@linaro.org, peter.maydell@linaro.org,
+ berrange@redhat.com, philmd@oss.qualcomm.com, philmd@mailo.com,
+ david@kernel.org, clg@redhat.com, pbonzini@redhat.com, phrdina@redhat.com,
+ jugraham@redhat.com, liugang24219@sangfor.com.cn, dinghui@sangfor.com.cn,
+ shan.gavin@gmail.com
+Subject: [PATCH v2 2/2] system/memory: Make ram device region directly
+ accessible
+Date: Mon, 15 Jun 2026 20:01:59 +1000
+Message-ID: <20260615100200.266968-3-gshan@redhat.com>
+In-Reply-To: <20260615100200.266968-1-gshan@redhat.com>
+References: <20260615100200.266968-1-gshan@redhat.com>
 MIME-Version: 1.0
-References: <20260615-embedded-v1-0-bb0c65bf126c@rsg.ci.i.u-tokyo.ac.jp>
- <20260615-embedded-v1-2-bb0c65bf126c@rsg.ci.i.u-tokyo.ac.jp>
- <ai-z14dMCK33_pis@redhat.com>
- <CAFEAcA_nFiQyXyCuvwUrJ+-0fhmGoMfswK-+KsZbxahAGatTXw@mail.gmail.com>
- <ai-5M6FF7CoJc_re@redhat.com>
-In-Reply-To: <ai-5M6FF7CoJc_re@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 15 Jun 2026 10:28:40 +0100
-X-Gm-Features: AVVi8CdPDOOgY6peJmpRd_1gRW_mhJwrpEF89DFQaVrdM0fasteTMnuqucjkq8E
-Message-ID: <CAFEAcA_52oFGv7cC11jbpj9pwBq-x2O-R_aOGkYzaRWW7t-K2g@mail.gmail.com>
-Subject: Re: [PATCH 2/2] qom: Manage references to embedded child objects
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, qemu-devel@nongnu.org, 
- Paolo Bonzini <pbonzini@redhat.com>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, 
- qemu-rust@nongnu.org, Peter Xu <peterx@redhat.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@mailo.com>, 
- Alberto Garcia <berto@igalia.com>, Kevin Wolf <kwolf@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>, qemu-block@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12e;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=gshan@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -127,55 +87,120 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 15 Jun 2026 at 09:35, Daniel P. Berrang=C3=A9 <berrange@redhat.com>=
- wrote:
->
-> On Mon, Jun 15, 2026 at 09:31:36AM +0100, Peter Maydell wrote:
-> > On Mon, 15 Jun 2026 at 09:13, Daniel P. Berrang=C3=A9 <berrange@redhat.=
-com> wrote:
-> > > Do we know how many examples we have of embedding objects inside
-> > > another ?
-> >
-> > It is an extremely common pattern for device and SoC model
-> > implementations; we've been recommending it for years.
-> >
-> > > I would much prefer if we forbid the embedding of objects. It is
-> > > horrible design practice to have some QOM objects which can be
-> > > freed via reference count and some which cannot.
-> >
-> > That would be a very large amount of code to rewrite to the
-> > new paradigm. I don't object inherently ("you have pointers to
-> > your child objects" works better when they might be implemented
-> > in Rust and might play better with being able to create
-> > machines and wire them up on the command line); I'm just
-> > noting how much work it would be if you wanted to make
-> > embedding forbidden.
->
-> Would it be a more tractable problem to "fix" object structure only
-> incrementally as they gain a need to be managed/reference from
-> Rust code, or does the Rust usage already implicitly extend too
-> broadly
+This basically reverts 4a2e242bbb30 ("memory: Don't use memcpy for
+ram_device regions") to make ram device region directly accessible
+again. With this, the bounce buffer is bypassed in address_space_map()
+when a ram device region is involved, potentially avoid to overrun
+the (small) bounce buffer.
 
-At the moment we have exactly 2 Rust devices. You can see the
-workaround we ended up with for the PL011 in commits 5b87a07e768
-and cc3d262aa93a4, where we pad out the C device struct and
-assert on the Rust side that its version isn't any bigger.
+Reported-by: Julia Graham <jugraham@redhat.com>
+Suggested-by: Michael S. Tsirkin <mst@redhat.com>
+Suggested-by: Peter Xu <peterx@redhat.com>
+Suggested-by: Richard Henderson <richard.henderson@linaro.org>
+Suggested-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Gavin Shan <gshan@redhat.com>
+---
+ include/system/memory.h | 11 ++---------
+ system/memory.c         | 41 +----------------------------------------
+ system/trace-events     |  2 --
+ 3 files changed, 3 insertions(+), 51 deletions(-)
 
-For that particular problem we could say "you need to refactor
-all users of device X to not embed it before creating the Rust
-version". There is I think only one embedded use of the PL011
-(I was actually expecting more). This does have the awkward
-effect that anybody wanting to do a "rewrite device in rust"
-is now forced into "do a big refactor of some old C code they
-don't care about". We would also need to actually document and
-provide some good examples of "this is how we think we should
-be writing device models that have child objects now".
+diff --git a/include/system/memory.h b/include/system/memory.h
+index 5878727d09..7d6ef9b32e 100644
+--- a/include/system/memory.h
++++ b/include/system/memory.h
+@@ -2916,15 +2916,8 @@ static inline bool memory_region_supports_direct_access(const MemoryRegion *mr)
+     if (memory_region_is_romd(mr)) {
+         return true;
+     }
+-    if (!memory_region_is_ram(mr)) {
+-        return false;
+-    }
+-    /*
+-     * RAM DEVICE regions can be accessed directly using memcpy, but it might
+-     * be MMIO and access using mempy can be wrong (e.g., using instructions not
+-     * intended for MMIO access). So we treat this as IO.
+-     */
+-    return !memory_region_is_ram_device(mr);
++
++    return memory_region_is_ram(mr);
+ }
+ 
+ static inline bool memory_access_is_direct(const MemoryRegion *mr,
+diff --git a/system/memory.c b/system/memory.c
+index 739ba11da6..9549dd1a94 100644
+--- a/system/memory.c
++++ b/system/memory.c
+@@ -1362,43 +1362,6 @@ const MemoryRegionOps unassigned_mem_ops = {
+     .endianness = DEVICE_NATIVE_ENDIAN,
+ };
+ 
+-static uint64_t memory_region_ram_device_read(void *opaque,
+-                                              hwaddr addr, unsigned size)
+-{
+-    MemoryRegion *mr = opaque;
+-    uint64_t data = ldn_he_p(mr->ram_block->host + addr, size);
+-
+-    trace_memory_region_ram_device_read(get_cpu_index(), mr, addr, data, size);
+-
+-    return data;
+-}
+-
+-static void memory_region_ram_device_write(void *opaque, hwaddr addr,
+-                                           uint64_t data, unsigned size)
+-{
+-    MemoryRegion *mr = opaque;
+-
+-    trace_memory_region_ram_device_write(get_cpu_index(), mr, addr, data, size);
+-
+-    stn_he_p(mr->ram_block->host + addr, size, data);
+-}
+-
+-static const MemoryRegionOps ram_device_mem_ops = {
+-    .read = memory_region_ram_device_read,
+-    .write = memory_region_ram_device_write,
+-    .endianness = HOST_BIG_ENDIAN ? DEVICE_BIG_ENDIAN : DEVICE_LITTLE_ENDIAN,
+-    .valid = {
+-        .min_access_size = 1,
+-        .max_access_size = 8,
+-        .unaligned = true,
+-    },
+-    .impl = {
+-        .min_access_size = 1,
+-        .max_access_size = 8,
+-        .unaligned = true,
+-    },
+-};
+-
+ bool memory_region_access_valid(MemoryRegion *mr,
+                                 hwaddr addr,
+                                 unsigned size,
+@@ -1676,10 +1639,8 @@ void memory_region_init_ram_device_ptr(MemoryRegion *mr, Object *owner,
+                                        const char *name, uint64_t size,
+                                        void *ptr)
+ {
+-    memory_region_init_io(mr, owner, &ram_device_mem_ops, mr, name, size);
+-    mr->ram = true;
++    memory_region_init_ram_ptr(mr, owner, name, size, ptr);
+     mr->ram_device = true;
+-    memory_region_set_ram_ptr(mr, size, ptr);
+ }
+ 
+ void memory_region_init_alias(MemoryRegion *mr, Object *owner,
+diff --git a/system/trace-events b/system/trace-events
+index e6e1b61279..34af0a3a1e 100644
+--- a/system/trace-events
++++ b/system/trace-events
+@@ -20,8 +20,6 @@ memory_region_ops_read(int cpu_index, void *mr, uint64_t addr, uint64_t value, u
+ memory_region_ops_write(int cpu_index, void *mr, uint64_t addr, uint64_t value, unsigned size, const char *name) "cpu %d mr %p addr 0x%"PRIx64" value 0x%"PRIx64" size %u name '%s'"
+ memory_region_subpage_read(int cpu_index, void *mr, uint64_t offset, uint64_t value, unsigned size) "cpu %d mr %p offset 0x%"PRIx64" value 0x%"PRIx64" size %u"
+ memory_region_subpage_write(int cpu_index, void *mr, uint64_t offset, uint64_t value, unsigned size) "cpu %d mr %p offset 0x%"PRIx64" value 0x%"PRIx64" size %u"
+-memory_region_ram_device_read(int cpu_index, void *mr, uint64_t addr, uint64_t value, unsigned size) "cpu %d mr %p addr 0x%"PRIx64" value 0x%"PRIx64" size %u"
+-memory_region_ram_device_write(int cpu_index, void *mr, uint64_t addr, uint64_t value, unsigned size) "cpu %d mr %p addr 0x%"PRIx64" value 0x%"PRIx64" size %u"
+ memory_region_sync_dirty(const char *mr, const char *listener, int global) "mr '%s' listener '%s' synced (global=%d)"
+ flatview_new(void *view, void *root) "%p (root %p)"
+ flatview_destroy(void *view, void *root) "%p (root %p)"
+-- 
+2.54.0
 
-But embedded MemoryRegions are enormously common, and devices
-that embed other devices that embed MemoryRegions are also
-pretty common. So I don't know how much of a gradual approach
-you could take for the issue descibed in this patch.
-
-thanks
--- PMM
 
