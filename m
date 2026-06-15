@@ -4,90 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2CAFCD98C5
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jun 2026 16:49:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97225CD98C5
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jun 2026 17:02:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZAUs-0001dJ-4q; Mon, 15 Jun 2026 12:49:14 -0400
+	id 1wZAgq-0003o9-N5; Mon, 15 Jun 2026 13:01:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wZAUr-0001d5-AR
- for qemu-devel@nongnu.org; Mon, 15 Jun 2026 12:49:13 -0400
-Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wZAUp-0006AF-VS
- for qemu-devel@nongnu.org; Mon, 15 Jun 2026 12:49:13 -0400
-Received: by mail-pl1-x630.google.com with SMTP id
- d9443c01a7336-2c0c35980fdso37269535ad.2
- for <qemu-devel@nongnu.org>; Mon, 15 Jun 2026 09:49:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1781542150; x=1782146950; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=pQJk4wOKZKhR3Q4aiKFWd7btZM4Qvq4ib2JXf0pnZUQ=;
- b=QyIboV9TB192qUPCClN39zrlGUjgoW4WBgtzpmz3PyX1j98b+pKMKJWIxdlfUD+BUd
- iQRxGlofbBBj3QIUr5y6pNzWXR6kIUOPqiloFO9na3nbVdxoo9HZapnzZlVSsLRi06Dr
- Dx1V+kBWi6p+7VBM9r0h462OyOA6oXxszUUqC5GaPXAKYybwTK4pn4V5KPaNmsqIWM/x
- 4AmtywpFr+Leci7gEu2AVv00FP/zyFI37nrrmea2luvOPSFoJtZx4+R8Qc14oPGfJKfo
- GF1Jim5oJkK17vCbXiHsX2LhLPttT5qV8O5xWbu3+y3AUXGpytx4LnsNK7RB58wic8qZ
- F3CQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781542150; x=1782146950;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=pQJk4wOKZKhR3Q4aiKFWd7btZM4Qvq4ib2JXf0pnZUQ=;
- b=Eg84EIta/bgVX+xvZSTjmpL/UtifSRZnfxYM+6dYVX0iEFA5u+u5GJOPDqUKogjnts
- T0W4F1Bi/GMyacRtNM8QVtdv3aq/wEpgN6xJecAl75sklTs9f9c+rTI7K1v6Uh1Fr0ng
- OZ00iAyiw+sRXw7dxnxv/orNYGlNG6nJlIE6dNfbRiW+IGDkjKWYuUxe3Sq3TP5IcnMM
- E/wi4Zub8Dr3gD2LxdTm6kFcjApuoC3a2/8ISHI+LbJwG0zAqJHhkXwLEZkpHdRztsv/
- I4AuVg//hGSdXArnAC9yKPLTNVYuZ96tRsQdULz29uMPTezv5fMBwpoZDlarrrrjDPF/
- sHwg==
-X-Gm-Message-State: AOJu0Yy/AlNB+xnL4s/CUKsOFwnszLp3vq9fjbjTe437gYymcqqLG9QB
- xSO+FcYZrDeOvjeY7Gjx6TjKgCYEXhxYogpg6FnOkPotOna9qyPXiur+j4yoZ2SaYghXBaqBUQx
- zBuZ1
-X-Gm-Gg: Acq92OFgERWZFUbD2cqSCVi9nsL181JlQstO6W6R8WCbolli5HyU/9NeuRI8lhj1//x
- qF8evekWZ+kFLvKUuaISrxEGImFqZoT636QBLX8QviCSOnb0Cb9dvd3J8eVLTQsAAUtobiw4IoV
- C2KuCKtCfEJ78whNosxYpgLnFxC5zOxN0//BocYjeZ7oUZksaapr7OHOIkZ30HDIARTBBUmU0Lx
- JsdapVW0KIhhDkhiZ21hmICLoWyXYg216nMfuc5wAsqTJ2E1tmNkAn18BFsngHNUimRjkV9E74I
- hZ4mMEW+LVl34mzfkzJ9g+L1kU+KBhFdS//KY84c2euo1pMFi31ycHxIx6R5yt9IWtmZRDuNTB7
- DwF2oSBWTTM4UhnWRAopETGlr7WHPnPjv07OxbwQL4eOkgqrwHK+rnFl6wv94sfMsdy9Lbzm6hh
- VzOWSztLxqSxgf4xzOlHSZthNOPj4XP3q+1kS/CfpOogdwyCQ=
-X-Received: by 2002:a17:903:2b0f:b0:2c2:d910:db05 with SMTP id
- d9443c01a7336-2c69a1b06d7mr219215ad.29.1781542149849; 
- Mon, 15 Jun 2026 09:49:09 -0700 (PDT)
-Received: from [192.168.0.4] ([71.212.142.33])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2c42f7c91b2sm108463795ad.28.2026.06.15.09.49.09
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 15 Jun 2026 09:49:09 -0700 (PDT)
-Message-ID: <bc7ca271-9a50-44a3-a40d-ea48377c4809@linaro.org>
-Date: Mon, 15 Jun 2026 09:49:07 -0700
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wZAgZ-0003lJ-Br
+ for qemu-devel@nongnu.org; Mon, 15 Jun 2026 13:01:20 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wZAgV-0001cu-F5
+ for qemu-devel@nongnu.org; Mon, 15 Jun 2026 13:01:17 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1781542873;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=HGf6wlQUiA5ELrY+JNxTs40xNKf//fHtsG5GQJK1x60=;
+ b=CHqnjdT3JV6QH/cKLvtq43U7A82D6RmmFglkbXMSGw8s8a0lUmcdXDW8JSfUSfhPfqlNOe
+ r06Sd4v5hBfjf8BvgoeWmrDgb82Li38my6gSpabv+kAa+FbW7oUprim1z9NdCWb2E1GI4F
+ ZLFbsRgkd0ERDsFAWqwSM/8wJbiFXfY=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-2-q5HGxkbsM7acNINBVC6BIA-1; Mon,
+ 15 Jun 2026 13:01:10 -0400
+X-MC-Unique: q5HGxkbsM7acNINBVC6BIA-1
+X-Mimecast-MFC-AGG-ID: q5HGxkbsM7acNINBVC6BIA_1781542870
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E5DA319560B7
+ for <qemu-devel@nongnu.org>; Mon, 15 Jun 2026 17:01:09 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.44.22.4])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 936D619541B2
+ for <qemu-devel@nongnu.org>; Mon, 15 Jun 2026 17:01:09 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 1388B21E6A01; Mon, 15 Jun 2026 19:01:07 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org
+Subject: Re: [PATCH v3 0/7] qobject: switch JSON parser to push
+In-Reply-To: <20260525150503.393743-1-pbonzini@redhat.com> (Paolo Bonzini's
+ message of "Mon, 25 May 2026 17:04:56 +0200")
+References: <20260525150503.393743-1-pbonzini@redhat.com>
+Date: Mon, 15 Jun 2026 19:01:07 +0200
+Message-ID: <87y0gfviuk.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/5] arm: GICv5: minor fixes
-To: qemu-devel@nongnu.org
-References: <20260615105029.2898872-1-peter.maydell@linaro.org>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20260615105029.2898872-1-peter.maydell@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x630.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 8
+X-Spam_score: 0.8
+X-Spam_bar: /
+X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,18 +86,8 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/15/26 03:50, Peter Maydell wrote:
-> Peter Maydell (5):
->    arm/gicv5: Add URL to GICv5 specification
->    target/arm: GICv5 cpuif: Recalculate IRQ/FIQ on ICC_PCR_EL1 write
->    target/arm: GICv5 cpuif: Tag ICC_PPI_PRIORITYR<n> regs as
->      ARM_CP_NO_RAW
->    target/arm: GICv5 cpuif: Remove ICC_HAPR_EL1
->    hw/intc/gicv5: Define and use GICV5_PENDING_IRQ_NONE
+Looks pretty good.  One more respin should get us there.
 
+Thank you!
 
-
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-
-r~
 
