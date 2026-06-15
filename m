@@ -4,118 +4,144 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9112CD98DA
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jun 2026 19:25:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 738C5CD98E0
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jun 2026 19:36:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZCvI-0006p8-PS; Mon, 15 Jun 2026 15:24:42 -0400
+	id 1wZD66-0002QN-2Q; Mon, 15 Jun 2026 15:35:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1wZCvG-0006oq-JU
- for qemu-devel@nongnu.org; Mon, 15 Jun 2026 15:24:38 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wZD60-0002NM-Gj
+ for qemu-devel@nongnu.org; Mon, 15 Jun 2026 15:35:45 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1wZCvC-0006Tg-JD
- for qemu-devel@nongnu.org; Mon, 15 Jun 2026 15:24:38 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781551470;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=AZzpTXpiVODTokgT66ACZhUP75ufDlkECia3bOTZQeI=;
- b=I/Z8gdETwXVpk1fWJh90uKweEqc+WwCtpInbKAYu790R/XSuyEEMiJ7KHpOFI2WW7cdiEc
- WpNJzZXnIT6o+hFGPY7XKGkR69mhps4graJZb0ASlW6fnbbz2pKvf57nTzDDsD0r0eMi26
- 6pQDsS3+qLmuIITdtxynH2SxWMf6y0g=
-Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com
- [209.85.216.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-640-B10phi03ODyfx2EiVd2LGA-1; Mon, 15 Jun 2026 15:24:26 -0400
-X-MC-Unique: B10phi03ODyfx2EiVd2LGA-1
-X-Mimecast-MFC-AGG-ID: B10phi03ODyfx2EiVd2LGA_1781551466
-Received: by mail-pj1-f71.google.com with SMTP id
- 98e67ed59e1d1-36bbcd40642so2831743a91.0
- for <qemu-devel@nongnu.org>; Mon, 15 Jun 2026 12:24:26 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wZD5u-00017x-My
+ for qemu-devel@nongnu.org; Mon, 15 Jun 2026 15:35:42 -0400
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 65FJ1Hb41393707
+ for <qemu-devel@nongnu.org>; Mon, 15 Jun 2026 19:35:32 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=qcppdkim1; bh=/Xy+DxpLUxJ
+ Oai0mGUPw8MSLTlKawJ4baeII5y6IQeo=; b=XdZ0XrNi0Z1QBJEeuNrkeheyi1Z
+ 2V1jVH5+PPr9v8K2SPccFFI4/onM+O46IKKHpxKQXxx5Eh2Mvio0RwCKs1V+iXip
+ 0XjNsrh2cQ7O749QI3ZGdKIjFeHMM18Qx3GhSiRq5bsaTHuNbe4lraDfIhWx1yP7
+ dPpqIpR0KqK6ptRrQ42EOk+5Ig2XeemQQu5b4JPHe7nbwREHG8Ac8EevWHq6CkRX
+ Ad2EHuMS0sgFMGSZ5gjz2n88nz/zCfM2r09sLDBhU8mCed2TfY+EbQwwG6XN5B5c
+ G3DMPNaATnpKfztJVxfGrgTFlluhA6Z30E+LJf5xQx3JH1RgwrjHd23VYDA==
+Received: from mail-dl1-f69.google.com (mail-dl1-f69.google.com [74.125.82.69])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4eter22n80-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Mon, 15 Jun 2026 19:35:32 +0000 (GMT)
+Received: by mail-dl1-f69.google.com with SMTP id
+ a92af1059eb24-139553dd8acso3745165c88.0
+ for <qemu-devel@nongnu.org>; Mon, 15 Jun 2026 12:35:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1781551466; x=1782156266; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=AZzpTXpiVODTokgT66ACZhUP75ufDlkECia3bOTZQeI=;
- b=GdG4gB09VrJiQsAmSIWnzZ4ymQyMEtXH6/mOQ3LUIpGZ9FHr31t0/mm0dfXKf3CHjb
- 4WW33Z0P/iNq217qH55+tQd6C/tPH6J1GCgVNxnebSj+X8t9njZw2OQ5nB0kaqIWsW3k
- CSlQLDa+G+7AlKnbeTlutzAHg+cn8R78ybvYGWXC9V3DWar1EMOSy0UAI/eUTfOndTOj
- 9Z0wlQqo9jWUrvDwam9T6/Igb+2spwF9orDFRoOIpFshwD3CxNSvp+BbmYfLFcRJLZkK
- C5yYUkfJEZyvInHuUESZu3/mMN+/APS3nLdvsukal3NQztJNKPiKz+JOAk3kegj59d7K
- zYFg==
+ d=oss.qualcomm.com; s=google; t=1781552132; x=1782156932; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=/Xy+DxpLUxJOai0mGUPw8MSLTlKawJ4baeII5y6IQeo=;
+ b=EYDj/SEWgNihFGxuGPKoZ/lAwQKT2X5fIN+3BtDXIwTokYlad7S4dOFKjogR9MhOD0
+ KV+8BenwC8+5uq3iG94ZlQiqh4GvHD3MNXxKLdjH6E2qX57V8E74Bo9wYu9KARiUUV5C
+ 9eZ2BGeqoUOdzJoCP3RgMvv9eGIX3DKES4UTmTNalbkoTEp2XJD4+yUQhZvV0SEd7Ygf
+ 7jKkIFQgUg/IAeU7C98Dt5RW2pQYvEJ3Q1onxOiGwKpiiFJ3JCr8e/0PBzzaY5TKr6Im
+ jTUk7me0mJigqEL4bXA/L4gqLghpMKgmH7nHbuGCRMjWwlbsPdNPZGjJZDR5ZcwTDyRk
+ tJ8A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781551466; x=1782156266;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=AZzpTXpiVODTokgT66ACZhUP75ufDlkECia3bOTZQeI=;
- b=YBfsJIJwiVSzxhoxQItgl7jQ2Ob6TcSYb5rmowLpPfhWD7deRtoUol1JY3YTtNt8uy
- sDCA3YEjrsA0DcYV6AyuPEGIudFa6FOfMeAIrzyaJhHS3bom+5s0akuJd5BFqtJdl2t9
- 0zwQsh7tSt8esmptkiPJGAXdj4pLa4JSLfs56PUtCKxWf2EEZITgQFEwWfE+5OCsZ69v
- niK14WR536dfFtsqv8taHBxlT0MpkEc45xbqWUvO4+Vm07luS3+mYY6VPY4QAMhh0sgc
- jRQBgrOq0x8eQW8nAblvcyb646HWoPLcHUWgODxOd5Norskl3dNFvfNu0h91RmJO/FVc
- E5KA==
-X-Forwarded-Encrypted: i=1;
- AFNElJ9oo6yRrEJGKGyTEge4yOxhhu4ZURLTpsK76dHx+fIYZ57MmezT0CE+zs/BAuLAIwXODwcUNc7h45+T@nongnu.org
-X-Gm-Message-State: AOJu0YzenqMM7k1+TfYEbyRwOIqOyBsTzyAOzvpPgfhfKrcnj9HXsEZx
- g5ft/5UqGwKC4csZIUzSchjj1aOx8Kf5cQ6dCyx210Kj/auNCtgqJp3KzYwPiAqWiRX+3p6cVCQ
- dNGLrnReunOy2Sk4dFrjYcLlXXMTNBH+aCM5T3KYgQU/PZSpFMSDmNY3M
-X-Gm-Gg: Acq92OFLECeVH8l/Q5mibfZ0c15V9FH4VAK9WLUfB+XmzeCqSnnEI6ZfVNyzTS2vjxZ
- zqOvvNEvzbQ/MZjqpD6PWK4r/YxIxaiGED8dtG8BgnFrnGeUb4j6C1bp5BJKsQxeFEcn+40fcbf
- xRbnZVbbJPHxcNnsKM/E0dDHUR3pGqELyNPBUm26y4C1vkxTsFk6pdTEK9IWofJce8SByvRZkkn
- rDoSIOzLvrYQJdGGyI+Q6w9O/Q0kYeJL2RQHx8kGftTmD8RYOPmZoyG4y0Q2lci7XooUY1lA2NV
- 8L0g87i1uQj4VOJ2gyp88uwjjeL9t1CfizsKtb+hc/9IK4A5Xb8unLgKBfpuHH3S4Fo2aAVCtI1
- vFwaa+sH9pGBiUIMfBNUDaX5r2lP11Is9XtGbwZh374yY9KsWADXUfizdhD2ogmt9
-X-Received: by 2002:a17:90b:134c:b0:369:e4d4:79c6 with SMTP id
- 98e67ed59e1d1-37c5291649cmr595501a91.20.1781551465645; 
- Mon, 15 Jun 2026 12:24:25 -0700 (PDT)
-X-Received: by 2002:a17:90b:134c:b0:369:e4d4:79c6 with SMTP id
- 98e67ed59e1d1-37c5291649cmr595474a91.20.1781551465154; 
- Mon, 15 Jun 2026 12:24:25 -0700 (PDT)
-Received: from [192.168.68.51] (n175-34-8-244.mrk21.qld.optusnet.com.au.
- [175.34.8.244]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-37c5228eb67sm382824a91.9.2026.06.15.12.24.18
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 15 Jun 2026 12:24:24 -0700 (PDT)
-Message-ID: <e399ceb9-bc4a-4ba6-8efd-ed2742d0853b@redhat.com>
-Date: Tue, 16 Jun 2026 05:24:15 +1000
+ d=1e100.net; s=20251104; t=1781552132; x=1782156932;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=/Xy+DxpLUxJOai0mGUPw8MSLTlKawJ4baeII5y6IQeo=;
+ b=E+virK7q5iYjUZeilAQNZE9kHVGbh5iwoUxbJl4F0SSE748IK1ZBd0cwRkYM/ahSu1
+ Qf0nv1Jgueu0LOja8Hms1Jc6iicITxamPADKKrPHp/wMGJiZ5GJsVxbFix7EKVrFxQ0B
+ Akp63elwurJuPtsMGEkgQ+fTiPvntpxhg32TJ7hSvI+BFdu4ueY3L/ScRnLubl8bHy5A
+ HeP5Rf2u4Qdrh3iMWZaV9h7ls3Vy52EA75eTwolWZ4cyRUu5wGxfFVQKQ977uXUT1MIP
+ LUHqMub+nNGMQ7aE9r3fPkyVZYiRM7BNZFe51Q4HxDanS+GLSI3KOIF/23AIYUeUAiLP
+ Gstg==
+X-Gm-Message-State: AOJu0YzFJKefDkCxwOKQhRm5KAhO0980AxXzoA89VYlt3fDwCRcn262Y
+ tzleNZTGKuFlCb0u+YzTsK0/n8Fn8lwU0bCDAG3P9GaCZ1mwl4AdyO5c48N5EMorAxD+uoayFdB
+ BiBwNIGE8yhAPG+TRODKAGzh2Hu3tClSOL4j3K0vGtlHak1WCbXXCPJ9P3i06+8+fpc28
+X-Gm-Gg: Acq92OF/nkhARWvDRKtjEI4pjAKYrOOT8FYtnK7BjtLKXEdZOq69xHlVazCyUWew3oa
+ hpOeVmQ+caOvV/FqY5tA1twqs68eENH4T0UJ3xopjTgiQeWno0XMR0jnwDlyeBPGhM3DA9PAFT0
+ OTxBy1lNhxkEU+0dbPgd1vje9mXAx5PxynRXeoOQikIhVhOoquQycQe0TetRCj7EriCejLxCBUJ
+ IwHLayiF3fu2h+3lAchNlM9J4bhL+clg4E+8fB5hJTEdtstAGg+cKtKISWWS7MMpp8oJ6inyz8w
+ 1n92cWo3+77HVNzChVYdGj14ZlRrRxa9lsAS6PbktnPI3pkh4n2F8RLozPpXrNqSl1Rw6S/6xSo
+ ivLkuidzR1/nFlpm/AqI5OaGClRUQozxoH83ScZ3bLYxoCn/6B4GMJuiraSI8HGbQRg0igve3cs
+ Ptl6otAw==
+X-Received: by 2002:a05:7022:f94:b0:135:d749:5761 with SMTP id
+ a92af1059eb24-13985e95689mr248241c88.8.1781552131544; 
+ Mon, 15 Jun 2026 12:35:31 -0700 (PDT)
+X-Received: by 2002:a05:7022:f94:b0:135:d749:5761 with SMTP id
+ a92af1059eb24-13985e95689mr248220c88.8.1781552130982; 
+ Mon, 15 Jun 2026 12:35:30 -0700 (PDT)
+Received: from hu-pbouvier-lv.qualcomm.com (Global_NAT1.qualcomm.com.
+ [129.46.96.20]) by smtp.gmail.com with ESMTPSA id
+ a92af1059eb24-1384b97bf09sm11498007c88.14.2026.06.15.12.35.30
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 15 Jun 2026 12:35:30 -0700 (PDT)
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+To: qemu-devel@nongnu.org
+Cc: Chao Liu <chao.liu.zevorn@gmail.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Brian Cain <brian.cain@oss.qualcomm.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Alexandre Iooss <erdnaxe@crans.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Subject: [PATCH v2 02/26] plugins: add userdata for qemu_plugin_{uninstall,
+ reset}
+Date: Mon, 15 Jun 2026 12:35:01 -0700
+Message-ID: <20260615193526.2883349-3-pierrick.bouvier@oss.qualcomm.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260615193526.2883349-1-pierrick.bouvier@oss.qualcomm.com>
+References: <20260615193526.2883349-1-pierrick.bouvier@oss.qualcomm.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/2] system/memory: Use qemu_ram_{copy, move}() in ram
- device region accessors
-To: Peter Maydell <peter.maydell@linaro.org>,
- "Michael S. Tsirkin" <mst@redhat.com>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, peterx@redhat.com,
- alex@shazbot.org, richard.henderson@linaro.org, berrange@redhat.com,
- philmd@oss.qualcomm.com, philmd@mailo.com, david@kernel.org, clg@redhat.com,
- pbonzini@redhat.com, phrdina@redhat.com, jugraham@redhat.com,
- liugang24219@sangfor.com.cn, dinghui@sangfor.com.cn, shan.gavin@gmail.com
-References: <20260615100200.266968-1-gshan@redhat.com>
- <20260615100200.266968-2-gshan@redhat.com>
- <CAFEAcA9CT6E8dhEV7Ek6ruT_o2dKUf==2V+U-1WFDOLtYbgeeQ@mail.gmail.com>
- <20260615105556-mutt-send-email-mst@kernel.org>
- <CAFEAcA9Gi43qNZoZcGtq8ioffGwOc_XuhoFAjGx7-bt4U8qfxw@mail.gmail.com>
-Content-Language: en-US
-From: Gavin Shan <gshan@redhat.com>
-In-Reply-To: <CAFEAcA9Gi43qNZoZcGtq8ioffGwOc_XuhoFAjGx7-bt4U8qfxw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=gshan@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjE1MDIwNyBTYWx0ZWRfXxJJs6XwjNqES
+ 5ZnOmARvcS3kmAqZ4agIl4jD4P8iKvZuXB1yRHFx1VduFAXWXWnOgezPCUyRMjN2FFaF6cdM3oI
+ QgENeRz4t0oX5my9x3uAkgvtsdqsY3k=
+X-Proofpoint-GUID: _EVQ56GrpqO6_UWN-mxFYmAlYzcnihgN
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjE1MDIwNyBTYWx0ZWRfX0Zo6xaqQaQFj
+ Jwl+8/BUJ+SqD/DCbvba2ZMPtfAtXmLwGfXs7X52jf17ctIlYIRjMiVjfFK5IBHijR6y7LqCThD
+ NNBrR6r0YpuQFdyf7l9i4SND8OBF1+VSMDBbjFAt3r+5YSlFZT/wfx7SI15Dksjcs6GRI3PHnHG
+ VrgGqniQlbLo9C2Tnz2R2sCuFHgQZBoLa25BSTu4wZEBETexfGyxsD7edv9aCr4JCfAlSVpeoTq
+ an+4h+r87ZLGIb3iHARHDuMkiO1DQ6KlM+Mf6Ei0q51vT8dOKGNhB06C4dR6MCT2IfThjAWqPBl
+ aKsUgA5mtHwE2Z217IG+iFIDgojYfgDGaH6Z8HrAN6SEklZyDgp/gvPmPTM9i/rlvRMlG/xXrW+
+ 5o1OJKmYOFKzqViC4fpjrSIRhgWCzmWoTnPS+5kwzIrbngeF4AgZumpTczVstQFKoumRd2RgKG5
+ UsKYFzBFPAuL0GF3Z/w==
+X-Authority-Analysis: v=2.4 cv=F4tnsKhN c=1 sm=1 tr=0 ts=6a305404 cx=c_pps
+ a=kVLUcbK0zfr7ocalXnG1qA==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22 a=KKAkSRfTAAAA:8
+ a=EUspDBNiAAAA:8 a=_u34yJfUH-Co13bc16MA:9 a=O8hF6Hzn-FEA:10
+ a=vr4QvYf-bLy2KjpDp97w:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-ORIG-GUID: _EVQ56GrpqO6_UWN-mxFYmAlYzcnihgN
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-15_05,2026-06-15_04,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 bulkscore=0 clxscore=1015 impostorscore=0 spamscore=0
+ adultscore=0 lowpriorityscore=0 priorityscore=1501 suspectscore=0
+ malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606040000
+ definitions=main-2606150207
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=pierrick.bouvier@oss.qualcomm.com;
+ helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -131,114 +157,246 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Peter and Michael,
+We do both at the same time because they internally use the same
+implementation.
 
-On 6/16/26 1:12 AM, Peter Maydell wrote:
-> On Mon, 15 Jun 2026 at 15:56, Michael S. Tsirkin <mst@redhat.com> wrote:
->>
->> On Mon, Jun 15, 2026 at 11:57:09AM +0100, Peter Maydell wrote:
->>> On Mon, 15 Jun 2026 at 11:03, Gavin Shan <gshan@redhat.com> wrote:
->>>>
->>>> All ram device regions were turned to be indirectly accessible by commit
->>>> 4a2e242bbb ("memory: Don't use memcpy for ram_device regions"). This leads
->>>> to guest hang on attempt to build 'cuda-samples' as reported by Julia. The
->>>> guest is started by the following command lines, with GH100 GPU card passed
->>>> from the host.
->>>
->>>> diff --git a/include/system/memory.h b/include/system/memory.h
->>>> index 1417132f6d..5878727d09 100644
->>>> --- a/include/system/memory.h
->>>> +++ b/include/system/memory.h
->>>> @@ -2897,6 +2897,8 @@ void address_space_register_map_client(AddressSpace *as, QEMUBH *bh);
->>>>   void address_space_unregister_map_client(AddressSpace *as, QEMUBH *bh);
->>>>
->>>>   /* Internal functions, part of the implementation of address_space_read.  */
->>>> +void qemu_ram_copy(void *dest, const void *src, size_t n);
->>>> +void qemu_ram_move(void *dest, const void *src, size_t n);
->>>
->>> New function prototypes in include headers need documentation comments.
->>>
->>> In particular for these, it's really important that we clearly say
->>> what semantics we are attempting to provide with them, so that
->>> (a) when we're reviewing or later updating the implementation we
->>> know what we are trying to provide
->>> (b) when we're looking at the callsites we know what the function
->>> is guaranteeing to us and what it is not, and thus whether it's
->>> OK to use it or we need something els.
->>>
->>>> +#if defined(__i386__) || defined(__x86_64__)
->>>> +#define HOST_UNALIGNED_MMIO_OK 1
->>>> +#else
->>>> +#define HOST_UNALIGNED_MMIO_OK 0
->>>> +#endif
->>>
->>> We need to do something better than this. We can't
->>> just say "oh, we trust that on x86 this works": it is
->>> neither actually true that the compiler guarantees it
->>
->> sorry guarantee what?
-> 
-> Well, that's part of my point about "we need a doc comment":
-> what exactly are we trying to guarantee ? But whatever it is,
-> "hardcoded ifdef that privileges x86" is definitely the wrong
-> answer.
-> 
+Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+---
+ contrib/plugins/lockstep.c    | 10 +++++-----
+ include/plugins/qemu-plugin.h |  8 ++++++--
+ plugins/api.c                 | 10 ++++++----
+ plugins/loader.c              | 13 ++++++++-----
+ plugins/plugin.h              |  3 ++-
+ tests/tcg/plugins/reset.c     |  8 ++++----
+ 6 files changed, 31 insertions(+), 21 deletions(-)
 
-Could you please check the following comments (documentation context) for the
-added functions look good to you? Please let me know if there are anything
-can be improved.
-
-+
-+/**
-+ * qemu_ram_copy: copy data to a RAMBlock
-+ *
-+ * @dest: destination where the data is copied to. It's the pointer returned
-+ *        by ramblock_ptr() and its variants.
-+ * @src: source where the data is copied from. It can be a regular memory block
-+ *       or a pointer returned by ramblock_ptr() and its variants.
-+ * @n: length of data to be copied
-+ *
-+ * The destination is always a pointer to data area of a RAMBlock which can
-+ * be for a regular memory block or a MMIO region. The source can be a pointer
-+ * to a regular memory block or a MMIO region. Atomicity isn't guranteed by
-+ * memcpy() to copy data between those MMIO regions as we do in this function.
-+ * Besides, unaligned accesses are well handled on all architectures except
-+ * i386 and x86_64 where the unaligned accesses are supported by the CPUs.
-+ *
-+ * The ensured atomicity and alignment consideration, which aren't needed
-+ * by data copy between two regular memory blocks. So performance penalty
-+ * is introduced by this function in such circumstance.
-+ */
-+void qemu_ram_copy(void *dest, const void *src, size_t n);
-+
-+/**
-+ * qemu_ram_move: move data to a RAMBlock
-+ *
-+ * @dest: destination where the data is moved to. It's the pointer returned
-+ *        by ramblock_ptr() and its variants.
-+ * @src: source where the data is moved from. It can be a regular memory block
-+ *       or a pointer returned by ramblock_ptr() and its variants.
-+ * @n: length of data to be moved
-+ *
-+ * The destination is always a pointer to data area of a RAMBlock which can
-+ * be for a regular memory block or a MMIO region. The source can be a pointer
-+ * to a regular memory block or a MMIO region. Atomicity isn't guranteed by
-+ * memmove() to move data from or to those MMIO regions as we do in this
-+ * function. Besides, unaligned accesses are well handled on all architectures
-+ * except i386 and x86_64 where the unaligned accesses are supported by the
-+ * CPUs.
-+ *
-+ * The ensured atomicity and alignment consideration, which aren't needed
-+ * by data movement between two regular memory blocks. So performance penalty
-+ * is introduced by this function in such circumstance.
-+ */
-+void qemu_ram_move(void *dest, const void *src, size_t n);
-+
-
-> -- PMM
-> 
-
-Thanks,
-Gavin
+diff --git a/contrib/plugins/lockstep.c b/contrib/plugins/lockstep.c
+index 62981d4e098..36b003ead2d 100644
+--- a/contrib/plugins/lockstep.c
++++ b/contrib/plugins/lockstep.c
+@@ -77,7 +77,7 @@ static char *path_to_unlink;
+ 
+ static bool verbose;
+ 
+-static void plugin_cleanup(qemu_plugin_id_t id)
++static void plugin_cleanup(qemu_plugin_id_t id, void *userdata)
+ {
+     /* Free our block data */
+     g_slist_free_full(blocks, &g_free);
+@@ -98,7 +98,7 @@ static void plugin_exit(qemu_plugin_id_t id, void *p)
+     g_string_append_printf(out, "Executed ~%ld instructions\n", insn_count);
+     qemu_plugin_outs(out->str);
+ 
+-    plugin_cleanup(id);
++    plugin_cleanup(id, NULL);
+ }
+ 
+ /*
+@@ -189,7 +189,7 @@ static void report_divergance(ExecState *us, ExecState *them)
+         }
+         qemu_plugin_outs(out->str);
+         qemu_plugin_outs("giving up\n");
+-        qemu_plugin_uninstall(our_id, plugin_cleanup);
++        qemu_plugin_uninstall(our_id, plugin_cleanup, NULL);
+     }
+ }
+ 
+@@ -212,7 +212,7 @@ static void vcpu_tb_exec(unsigned int cpu_index, void *udata)
+         qemu_plugin_outs(bytes < 0 ?
+                          "problem writing to socket" :
+                          "wrote less than expected to socket");
+-        qemu_plugin_uninstall(our_id, plugin_cleanup);
++        qemu_plugin_uninstall(our_id, plugin_cleanup, NULL);
+         return;
+     }
+ 
+@@ -225,7 +225,7 @@ static void vcpu_tb_exec(unsigned int cpu_index, void *udata)
+         qemu_plugin_outs(bytes < 0 ?
+                          "problem reading from socket" :
+                          "read less than expected");
+-        qemu_plugin_uninstall(our_id, plugin_cleanup);
++        qemu_plugin_uninstall(our_id, plugin_cleanup, NULL);
+         return;
+     }
+ 
+diff --git a/include/plugins/qemu-plugin.h b/include/plugins/qemu-plugin.h
+index 435a14f5a00..11213c2ca3f 100644
+--- a/include/plugins/qemu-plugin.h
++++ b/include/plugins/qemu-plugin.h
+@@ -221,6 +221,7 @@ typedef void (*qemu_plugin_vcpu_discon_cb_t)(qemu_plugin_id_t id,
+  * qemu_plugin_uninstall() - Uninstall a plugin
+  * @id: this plugin's opaque ID
+  * @cb: callback to be called once the plugin has been removed
++ * @userdata: any plugin data to pass to the @cb
+  *
+  * Do NOT assume that the plugin has been uninstalled once this function
+  * returns. Plugins are uninstalled asynchronously, and therefore the given
+@@ -229,12 +230,14 @@ typedef void (*qemu_plugin_vcpu_discon_cb_t)(qemu_plugin_id_t id,
+  * Note: Calling this function from qemu_plugin_install() is a bug.
+  */
+ QEMU_PLUGIN_API
+-void qemu_plugin_uninstall(qemu_plugin_id_t id, qemu_plugin_simple_cb_t cb);
++void qemu_plugin_uninstall(qemu_plugin_id_t id, qemu_plugin_udata_cb_t cb,
++                           void *userdata);
+ 
+ /**
+  * qemu_plugin_reset() - Reset a plugin
+  * @id: this plugin's opaque ID
+  * @cb: callback to be called once the plugin has been reset
++ * @userdata: any plugin data to pass to the @cb
+  *
+  * Unregisters all callbacks for the plugin given by @id.
+  *
+@@ -243,7 +246,8 @@ void qemu_plugin_uninstall(qemu_plugin_id_t id, qemu_plugin_simple_cb_t cb);
+  * callbacks until @cb is called.
+  */
+ QEMU_PLUGIN_API
+-void qemu_plugin_reset(qemu_plugin_id_t id, qemu_plugin_simple_cb_t cb);
++void qemu_plugin_reset(qemu_plugin_id_t id, qemu_plugin_udata_cb_t cb,
++                       void *userdata);
+ 
+ /**
+  * qemu_plugin_register_vcpu_init_cb() - register a vCPU initialization callback
+diff --git a/plugins/api.c b/plugins/api.c
+index 2d5fe9327f7..91c9a24a6b2 100644
+--- a/plugins/api.c
++++ b/plugins/api.c
+@@ -51,14 +51,16 @@
+ 
+ /* Uninstall and Reset handlers */
+ 
+-void qemu_plugin_uninstall(qemu_plugin_id_t id, qemu_plugin_simple_cb_t cb)
++void qemu_plugin_uninstall(qemu_plugin_id_t id, qemu_plugin_udata_cb_t cb,
++                           void *userdata)
+ {
+-    plugin_reset_uninstall(id, cb, false);
++    plugin_reset_uninstall(id, cb, userdata, false);
+ }
+ 
+-void qemu_plugin_reset(qemu_plugin_id_t id, qemu_plugin_simple_cb_t cb)
++void qemu_plugin_reset(qemu_plugin_id_t id, qemu_plugin_udata_cb_t cb,
++                       void *userdata)
+ {
+-    plugin_reset_uninstall(id, cb, true);
++    plugin_reset_uninstall(id, cb, userdata, true);
+ }
+ 
+ /*
+diff --git a/plugins/loader.c b/plugins/loader.c
+index 0dbe7bea263..0d587c344c4 100644
+--- a/plugins/loader.c
++++ b/plugins/loader.c
+@@ -253,7 +253,7 @@ static int plugin_load(struct qemu_plugin_desc *desc, const qemu_info_t *info, E
+          * call a full uninstall if the plugin did not yet call it.
+          */
+         if (!ctx->uninstalling) {
+-            plugin_reset_uninstall(ctx->id, NULL, false);
++            plugin_reset_uninstall(ctx->id, NULL, NULL, false);
+         }
+     }
+ 
+@@ -314,7 +314,8 @@ int qemu_plugin_load_list(QemuPluginList *head, Error **errp)
+ 
+ struct qemu_plugin_reset_data {
+     struct qemu_plugin_ctx *ctx;
+-    qemu_plugin_simple_cb_t cb;
++    qemu_plugin_udata_cb_t cb;
++    void *userdata;
+     bool reset;
+ };
+ 
+@@ -338,7 +339,7 @@ static void plugin_reset_destroy__locked(struct qemu_plugin_reset_data *data)
+     if (data->reset) {
+         g_assert(ctx->resetting);
+         if (data->cb) {
+-            data->cb(ctx->id);
++            data->cb(ctx->id, data->userdata);
+         }
+         ctx->resetting = false;
+         g_free(data);
+@@ -357,7 +358,7 @@ static void plugin_reset_destroy__locked(struct qemu_plugin_reset_data *data)
+     g_assert(success);
+     QTAILQ_REMOVE(&plugin.ctxs, ctx, entry);
+     if (data->cb) {
+-        data->cb(ctx->id);
++        data->cb(ctx->id, data->userdata);
+     }
+     if (!g_module_close(ctx->handle)) {
+         warn_report("%s: %s", __func__, g_module_error());
+@@ -383,7 +384,8 @@ static void plugin_flush_destroy(CPUState *cpu, run_on_cpu_data arg)
+ }
+ 
+ void plugin_reset_uninstall(qemu_plugin_id_t id,
+-                            qemu_plugin_simple_cb_t cb,
++                            qemu_plugin_udata_cb_t cb,
++                            void *userdata,
+                             bool reset)
+ {
+     struct qemu_plugin_reset_data *data;
+@@ -401,6 +403,7 @@ void plugin_reset_uninstall(qemu_plugin_id_t id,
+     data = g_new(struct qemu_plugin_reset_data, 1);
+     data->ctx = ctx;
+     data->cb = cb;
++    data->userdata = userdata;
+     data->reset = reset;
+     /*
+      * Only flush the code cache if the vCPUs have been created. If so,
+diff --git a/plugins/plugin.h b/plugins/plugin.h
+index 9179da43851..c901016b8c1 100644
+--- a/plugins/plugin.h
++++ b/plugins/plugin.h
+@@ -76,7 +76,8 @@ void plugin_register_inline_op_on_entry(GArray **arr,
+                                         uint64_t imm);
+ 
+ void plugin_reset_uninstall(qemu_plugin_id_t id,
+-                            qemu_plugin_simple_cb_t cb,
++                            qemu_plugin_udata_cb_t cb,
++                            void *userdata,
+                             bool reset);
+ 
+ void plugin_register_cb(qemu_plugin_id_t id, enum qemu_plugin_event ev,
+diff --git a/tests/tcg/plugins/reset.c b/tests/tcg/plugins/reset.c
+index 1be8be2a4b2..6ea675b8095 100644
+--- a/tests/tcg/plugins/reset.c
++++ b/tests/tcg/plugins/reset.c
+@@ -14,7 +14,7 @@ static qemu_plugin_id_t plugin_id;
+ static bool was_reset;
+ static bool was_uninstalled;
+ 
+-static void after_uninstall(qemu_plugin_id_t id)
++static void after_uninstall(qemu_plugin_id_t id, void *userdata)
+ {
+     g_assert(was_reset && !was_uninstalled);
+     qemu_plugin_outs("uninstall done\n");
+@@ -24,7 +24,7 @@ static void after_uninstall(qemu_plugin_id_t id)
+ static void tb_exec_after_reset(unsigned int vcpu_index, void *userdata)
+ {
+     g_assert(was_reset && !was_uninstalled);
+-    qemu_plugin_uninstall(plugin_id, after_uninstall);
++    qemu_plugin_uninstall(plugin_id, after_uninstall, NULL);
+ }
+ 
+ static void tb_trans_after_reset(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
+@@ -34,7 +34,7 @@ static void tb_trans_after_reset(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
+                                          QEMU_PLUGIN_CB_NO_REGS, NULL);
+ }
+ 
+-static void after_reset(qemu_plugin_id_t id)
++static void after_reset(qemu_plugin_id_t id, void *userdata)
+ {
+     g_assert(!was_reset && !was_uninstalled);
+     qemu_plugin_outs("reset done\n");
+@@ -45,7 +45,7 @@ static void after_reset(qemu_plugin_id_t id)
+ static void tb_exec_before_reset(unsigned int vcpu_index, void *userdata)
+ {
+     g_assert(!was_reset && !was_uninstalled);
+-    qemu_plugin_reset(plugin_id, after_reset);
++    qemu_plugin_reset(plugin_id, after_reset, NULL);
+ }
+ 
+ static void tb_trans_before_reset(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
+-- 
+2.43.0
 
 
