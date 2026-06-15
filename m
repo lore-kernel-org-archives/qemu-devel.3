@@ -4,96 +4,136 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E934CD98CE
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jun 2026 20:41:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 582B1CD98CE
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jun 2026 20:41:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZE7h-0005Md-AI; Mon, 15 Jun 2026 16:41:33 -0400
+	id 1wZE4b-00032o-MN; Mon, 15 Jun 2026 16:38:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wZE7f-0005FK-Na
- for qemu-devel@nongnu.org; Mon, 15 Jun 2026 16:41:31 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
+ id 1wZE4Z-00031N-Mj
+ for qemu-devel@nongnu.org; Mon, 15 Jun 2026 16:38:19 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wZE7e-00039u-4m
- for qemu-devel@nongnu.org; Mon, 15 Jun 2026 16:41:31 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781556089;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=uWdGXwIyNbTrVNJtaN8PpZgAfNP2DgFTH5IaS3ncjZ4=;
- b=Dlicx1RKlzh/xWJ+8igxgPonaBVM7qrpBjgV1kkU7buRE99KsTtORJShm0+sJFEoujP8kX
- Mf6XgD/23kGV8kwj1wqL1DHJ0QW4SIwrgjueGS0pkBIdXGwMivQCGJQFMO4TCddHYZ4bLZ
- YGr3sH/BaPgjn8a1LCNrn056i1zOVG8=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-217-Ozp0K4XxO1SsyjOdz_H7bg-1; Mon,
- 15 Jun 2026 16:41:26 -0400
-X-MC-Unique: Ozp0K4XxO1SsyjOdz_H7bg-1
-X-Mimecast-MFC-AGG-ID: Ozp0K4XxO1SsyjOdz_H7bg_1781556085
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 0D0C519540C8; Mon, 15 Jun 2026 20:41:25 +0000 (UTC)
-Received: from localhost (unknown [10.44.22.9])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 1D05A1800347; Mon, 15 Jun 2026 20:41:23 +0000 (UTC)
-From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Tue, 16 Jun 2026 00:38:08 +0400
-Subject: [PATCH v2 42/53] qdev: add qapi_type field to PropertyInfo with
- fallback registration
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20260616-qom-qapi-v2-42-cc9396b9c18c@redhat.com>
-References: <20260616-qom-qapi-v2-0-cc9396b9c18c@redhat.com>
-In-Reply-To: <20260616-qom-qapi-v2-0-cc9396b9c18c@redhat.com>
+ (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
+ id 1wZE4X-0002Ce-6s
+ for qemu-devel@nongnu.org; Mon, 15 Jun 2026 16:38:19 -0400
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 65FIxCBA882049
+ for <qemu-devel@nongnu.org>; Mon, 15 Jun 2026 20:38:05 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=qcppdkim1; bh=SjSPCEvpZmT
+ ojOhMzFStU6RbZUdT0o496sebX2y2biU=; b=d3PRRk5ccA0q9DsY0tI+a6PBg/w
+ RwRaRYesF/s6TSo+aG+d7C1rb6PcFNDStEwU+Ufnnkjd9+kHK7UGE3CWEnGFDrBI
+ TGJkx2efGdK4MCPBGViG/aAGnhWEwQrGOlSyW+vPoPsNp9+ci9lyqp0NEdXt7duO
+ /XMZsTSDxTdI8kKubxuQB1gFh6fP7NyuFXy19Rv+VMkwhQYyN1CB724BKnFp2l/C
+ s2KiHrpgr0CWfs2ZWApTZfZ+QHhCaOUvPIS8bKFjeZ/UAWOfKSKh2z6FPL+EmHn2
+ dUQWuUvyhXVHe437EHwZ89DpoM4vqMbfrlcttEc+/4mun+aPNcbPR+sgezQ==
+Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
+ [209.85.219.69])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4etew0jx34-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Mon, 15 Jun 2026 20:38:04 +0000 (GMT)
+Received: by mail-qv1-f69.google.com with SMTP id
+ 6a1803df08f44-8ccf3d72081so63552536d6.3
+ for <qemu-devel@nongnu.org>; Mon, 15 Jun 2026 13:38:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1781555884; x=1782160684; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=SjSPCEvpZmTojOhMzFStU6RbZUdT0o496sebX2y2biU=;
+ b=RMY6t/GJra3ijcJ+wAlFGkfnpMbk0QtaDHQLpcJZQUIZ6+Wi6jK7O6STNu5CBWtnFN
+ Mq4ymX2lJTornecBoTeoyWO5MplLWKr+ZLESD7NRsw1XfpIL/JhkEtI5/+A/tXIup0yx
+ 5ias/HSbKmueK7Tj6poJ8fUS99AUexqEhIcZgm5fiYJZUazUaw/BfYR8s49A6jiUQsdv
+ IH71UQx0qAyjCyzb0JVe01dmULKm5K85lRzoDtiEeqSnJzv9FuCeb6W3uoplrq7VuqNh
+ COTm95jox+KKhJpSwBwkVAv+oXdOSirs+IbP/oZO4zBpzLk1oJAs1qfLW7FkuSX4C+kL
+ pRmw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1781555884; x=1782160684;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=SjSPCEvpZmTojOhMzFStU6RbZUdT0o496sebX2y2biU=;
+ b=BFQSd0C1S/hrr2T837zgDpwbOgGLMhrDVdXaFgIKqIz9VJNdlZKc317VK08rhlLI+r
+ KB5oN0g5o4jHHTUYEQlALUTH3D2KoAIgQ0VqDNVKSWN61fHwjG1Slo+B7Uw8UqnrIO9K
+ Km/R0uILNFaIcSFhu/3H9foiubuZdTEZSv6gq62H9q2+9wc+z0SpsmiFKm5DGSA+lgvq
+ L5QDpjjuaOGqRFZvrVXUe+npf7wboN5SaovdBcy6uXM1danj1FrmdKiNE94gZr9b0Peo
+ nHclNQ+avlDzdIzugcsT+fhiLS9qtGLMaDLV9diixRcMGfmQb8ZbAXVrWJraXDCfU9uK
+ 3FbQ==
+X-Gm-Message-State: AOJu0YzcB/QG0x8iRZt1aw8t2O11VEWEkcbkzBvQHVx/FPF540bHqllc
+ JjbKsAWXI/d+/9UGuisCz2WqZWYNq1ls/ovK6WOnSualQK0Dvi0nn/2qhkZTNwSSKUoOW9wQSUf
+ 6TB39d3HkqlMW5JKN2QW7dM/f6PfdeSNuB2TXwkWqyOMV21NdrsIDuRKfke/YE6qTHQ==
+X-Gm-Gg: Acq92OHlwPfoCX15rdM6pOQo7fHyIj1uCV/jIwQHkzJ4XqMWdOJ/TWN6sM1RSwoSbwL
+ 98NkjnJ3g4dds6HgK3pCFOYUttq5m1yfSweJD0gb3VO/FICfzh2E8ctjH3xW1UFIccrTc2Dj/BJ
+ ZJj9Uhve9IJ24m+8tl7TdyO1K+aVAjIKx4df2BMmgKTKpDeuY78hGsqesCWChJD0TjsI9rm6J7p
+ OvIbSykRGS2VfO5JAAbULcox8q/wnXAUIfb2ndwx1krDHqbDnGO7EWPuuiaZpnYU7PXt9YTJYSt
+ 1WsMen9iJ/OTrbZO0usXMo45scI6TgYur7TxSVarw9WBxIGBVh/O3AybYWrlSMiiCOk7AYfesYp
+ EN+lZzIVwAu2PDzgYsn7/RH1F8GVi0IOjp2HRaZl05Ddh68W4KAuOmvU4ebM=
+X-Received: by 2002:ad4:5d4e:0:b0:8ca:ee3:6ea9 with SMTP id
+ 6a1803df08f44-8d32df2177fmr284743026d6.20.1781555883682; 
+ Mon, 15 Jun 2026 13:38:03 -0700 (PDT)
+X-Received: by 2002:ad4:5d4e:0:b0:8ca:ee3:6ea9 with SMTP id
+ 6a1803df08f44-8d32df2177fmr284742546d6.20.1781555883142; 
+ Mon, 15 Jun 2026 13:38:03 -0700 (PDT)
+Received: from QCOM-UWl2o8bcGT.qualcomm.com ([177.170.117.62])
+ by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-8d9f4740fbasm9749906d6.29.2026.06.15.13.38.01
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 15 Jun 2026 13:38:02 -0700 (PDT)
+From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
-Cc: Markus Armbruster <armbru@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, 
- =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
- Michael Roth <michael.roth@amd.com>, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
- =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=7075;
- i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=ihOMSGfmerocP/uWGqL/8cFJcxxgdAYw+vXojYuEHLo=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqMGKPYvSeUENp4pcBvMJtX6TffmHl45cOCbaCG
- ZyApxgdOcKJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCajBijwAKCRDa6OEJdZac
- 5R5iD/47Tz5fuoxPrJQDBW955QGQs6V6dNKtcAsPbdZ9XLoFlxirTTbdYtcWhcO37Smm+xKEAVy
- Trb01Jklpu50UGqFjl+ptVZGUKbD1IOJnrcHhn6oraJOmcxjB1O99TcNg3El3cy4DOqMn2thGHq
- aF12Z3PQSn6cK1lSJ/nTtIkTPKvleiCY8FIwMsNFG/6ZvzhLPkZPCQRp2pEhzTqSNWnjAWwVhWF
- NsZ0Kh6i6ONZf90tEIUL5iCdWPHIdQhJaAcJms5kEsAGyTpB2uogaVkvg5KowKBgELrQleAyFy3
- garCY6SsILXw0oCI0sRWQZ4XDOzf6yGXkj1oKSopVjRn9UqqRksl3jAS1/sSp05WxUWQ8qYEzUQ
- +OzyUbhlMiox7R24Y2ssBT3WKF187kBiPvo+yfnaJ9LiuDJwqKJueO8taZje2vvmHM/H70FCJSS
- 2CzUTVB811DZPpCGNmJB+xABWPC24bIUjbWgCvpDctXesjf5y0OlH+rmryB7MzCOs/W9HOIdrra
- ohzbgrME6sUpsGsPJHZTG0MEbrwGJEhuf85f15sDdYLtixRUnbzwzFwy+WbEVBXtr/uEhPGzS6v
- SlxuIuSUtHoBlcl2lc7O8JfRHFhb3Lo136iO6lD7JzAvKsTkmaRx7UjGeNmPL31UCELkmhuIm0k
- TKNHj8bB0Yp65kQ==
-X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
- fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=marcandre.lureau@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 8
-X-Spam_score: 0.8
-X-Spam_bar: /
-X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, liwei1518@gmail.com,
+ zhiwei_liu@linux.alibaba.com, chao.liu.zevorn@gmail.com,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>
+Subject: [PATCH 10/13] hw/riscv: add create_fdt_socket_cpus()
+Date: Mon, 15 Jun 2026 17:37:30 -0300
+Message-ID: <20260615203734.954428-11-daniel.barboza@oss.qualcomm.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260615203734.954428-1-daniel.barboza@oss.qualcomm.com>
+References: <20260615203734.954428-1-daniel.barboza@oss.qualcomm.com>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjE1MDIxOSBTYWx0ZWRfX9xWgJCrSMyol
+ wh5lRZZ9FJd6mbtABGqXdW2GxLrRzQbBjdK41HXcTGFXctBxZuLamw1pqy48yuVEmB1e1JN4Edv
+ P7txGECCgriOfQrhStI0sGGQ59Cqkl4=
+X-Authority-Analysis: v=2.4 cv=QLlYgALL c=1 sm=1 tr=0 ts=6a3062ac cx=c_pps
+ a=wEM5vcRIz55oU/E2lInRtA==:117 a=gdiugJE53z4H+vvYeRBHqw==:17
+ a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22 a=EUspDBNiAAAA:8
+ a=mtC7jfOSo_ovbUFMjeEA:9 a=OIgjcC2v60KrkQgK7BGD:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjE1MDIxOSBTYWx0ZWRfX1uVZgBZYl9mW
+ OST3nj9g8SC/qmSBb+QLAg6fi5KAsbuvXysD/eO6dQA54v8QblGJj0ZJN1iPLJfO7/kguZMj2Fx
+ JS21D1hFMM3ZnMrNf/U1UoBaCWELLowUIlt7aVe2hw0hwOWWqYlJkb/VQTDgGbzzmJn396FILYL
+ Y6kAhrK/rSPI/q0oDWS/0FYYV7p6ztyw+B2+dxGksQoQgy/IZqx176zfz/xK6f8zW0jOsQG/wvX
+ 24Le7xH4EdjaOw28lML+Jo8rFJtfZDIF67dchedG1PyP8KnUbs17I4kjnlZIy/svb433ddgVHvh
+ HLQLRnCJLQfM1+8LueMqcseqRvcVaWAYofZF7YcRPYo8p5H11Q+eVsGpnOt3+9FqkMk5YypEhl/
+ GYnSC9optFwjwJ2a9SFEMlLxf9QOitMJ1MTeShqCNvdRRsevafxxGb8uUtT5xTO3DC47RZ4p2/j
+ +5H6cKIqzuIEZ7doDFA==
+X-Proofpoint-GUID: luFDoykjoJnvQ_XqY27-3qfmHMyFCZ06
+X-Proofpoint-ORIG-GUID: luFDoykjoJnvQ_XqY27-3qfmHMyFCZ06
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-15_05,2026-06-15_04,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 clxscore=1015 priorityscore=1501 adultscore=0 spamscore=0
+ bulkscore=0 suspectscore=0 impostorscore=0 phishscore=0 lowpriorityscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606040000 definitions=main-2606150219
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,169 +149,239 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a qapi_type field to PropertyInfo to prepare for the transition
-from string-based type metadata to QAPI type-info.
+Consolidate the creation of CPUs socket FDT in a helper that can be
+shared across all boards.
 
-Add a qdev_prop_qapi_type() helper that resolves the QAPI type for a
-property from .qapi_type. It will be later extended to cope with array
-types.
+The code was basically moved from the function with the same name from
+'virt.c', with additional bits to create the cluster subnode beforehand.
 
-Update qdev_property_add_static() and qdev_class_add_property() to
-prefer object_property_add_qapi() when a QAPI type is available, falling
-back to the old object_property_add() for unconverted properties.
-
-Update the shared enum accessor functions to prefer .qapi_type->lookup
-over .enum_table via a new qdev_propinfo_enum_lookup() helper.
-
-No PropertyInfo definitions are changed, all .qapi_type fields
-default to NULL, so the fallback paths are always taken. This patch
-is no-op for now.
-
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 ---
- include/hw/core/qdev-properties.h |  1 +
- hw/core/qdev-properties.c         | 67 +++++++++++++++++++++++++++++----------
- 2 files changed, 52 insertions(+), 16 deletions(-)
+ hw/riscv/fdt-common.c         | 74 +++++++++++++++++++++++++++++++
+ hw/riscv/virt.c               | 83 +++--------------------------------
+ include/hw/riscv/fdt-common.h |  7 +++
+ 3 files changed, 87 insertions(+), 77 deletions(-)
 
-diff --git a/include/hw/core/qdev-properties.h b/include/hw/core/qdev-properties.h
-index eba5436e53b..1ea2ba66bb3 100644
---- a/include/hw/core/qdev-properties.h
-+++ b/include/hw/core/qdev-properties.h
-@@ -34,6 +34,7 @@ struct PropertyInfo {
-     const char *type;
-     const char *description;
-     const QEnumLookup *enum_table;
-+    const QAPITypeInfo *qapi_type;
-     bool realized_set_allowed; /* allow setting property on realized device */
-     char *(*print)(Object *obj, const Property *prop);
-     void (*set_default_value)(ObjectProperty *op, const Property *prop);
-diff --git a/hw/core/qdev-properties.c b/hw/core/qdev-properties.c
-index 34d7b26a730..b3d5abd5053 100644
---- a/hw/core/qdev-properties.c
-+++ b/hw/core/qdev-properties.c
-@@ -99,13 +99,22 @@ static ObjectPropertyAccessor *field_prop_setter(const PropertyInfo *info)
-     return info->set ? field_prop_set : NULL;
+diff --git a/hw/riscv/fdt-common.c b/hw/riscv/fdt-common.c
+index 02ac9ddcd8..6c795409a4 100644
+--- a/hw/riscv/fdt-common.c
++++ b/hw/riscv/fdt-common.c
+@@ -93,3 +93,77 @@ void fdt_create_cpu_socket_subnode(void *fdt, uint64_t timebase_frequency)
+     qemu_fdt_setprop_cell(fdt, "/cpus", "#address-cells", 0x1);
+     qemu_fdt_add_subnode(fdt, "/cpus/cpu-map");
  }
- 
-+static const QEnumLookup *qdev_propinfo_enum_lookup(const PropertyInfo *info)
++
++void create_fdt_socket_cpus(void *fdt, RISCVCPU *socket_harts,
++                            int socket_id, int num_harts_socket,
++                            int socket_hartid_base, uint32_t *phandle,
++                            uint32_t *intc_phandles, bool numa_enabled,
++                            bool is_32_bit)
 +{
-+    if (info->qapi_type) {
-+        assert(info->qapi_type->lookup);
-+        return info->qapi_type->lookup;
-+    }
-+    return info->enum_table;
-+}
++    g_autofree char *clust_name = NULL;
++    uint32_t cpu_phandle;
 +
- void qdev_propinfo_get_enum(Object *obj, Visitor *v, const char *name,
-                             void *opaque, Error **errp)
- {
-     const Property *prop = opaque;
-     int *ptr = object_field_prop_ptr(obj, prop);
- 
--    visit_type_enum(v, name, ptr, prop->info->enum_table, errp);
-+    visit_type_enum(v, name, ptr, qdev_propinfo_enum_lookup(prop->info), errp);
- }
- 
- void qdev_propinfo_set_enum(Object *obj, Visitor *v, const char *name,
-@@ -114,14 +123,14 @@ void qdev_propinfo_set_enum(Object *obj, Visitor *v, const char *name,
-     const Property *prop = opaque;
-     int *ptr = object_field_prop_ptr(obj, prop);
- 
--    visit_type_enum(v, name, ptr, prop->info->enum_table, errp);
-+    visit_type_enum(v, name, ptr, qdev_propinfo_enum_lookup(prop->info), errp);
- }
- 
- void qdev_propinfo_set_default_value_enum(ObjectProperty *op,
-                                           const Property *prop)
- {
-     object_property_set_default_str(op,
--        qapi_enum_lookup(prop->info->enum_table, prop->defval.i));
-+        qapi_enum_lookup(qdev_propinfo_enum_lookup(prop->info), prop->defval.i));
- }
- 
- /* Bit */
-@@ -941,8 +950,8 @@ void qdev_prop_set_enum(DeviceState *dev, const char *name, int value)
- 
-     prop = qdev_prop_find(dev, name);
-     object_property_set_str(OBJECT(dev), name,
--                            qapi_enum_lookup(prop->info->enum_table, value),
--                            &error_abort);
-+        qapi_enum_lookup(qdev_propinfo_enum_lookup(prop->info), value),
-+        &error_abort);
- }
- 
- void qdev_prop_set_array(DeviceState *dev, const char *name, QList *values)
-@@ -1143,18 +1152,33 @@ const PropertyInfo qdev_prop_link = {
-     .set = set_link,
- };
- 
-+static const QAPITypeInfo *qdev_prop_qapi_type(const Property *prop)
-+{
-+    /* this will be later extended to cope with QAPI array properties */
-+    return prop->info->qapi_type;
-+}
++    clust_name = g_strdup_printf("/cpus/cpu-map/cluster%d", socket_id);
++    qemu_fdt_add_subnode(fdt, clust_name);
 +
- void qdev_property_add_static(DeviceState *dev, const Property *prop)
- {
-     Object *obj = OBJECT(dev);
-     ObjectProperty *op;
-+    const QAPITypeInfo *qapi_type = qdev_prop_qapi_type(prop);
- 
-     assert(!prop->info->create);
- 
--    op = object_property_add(obj, prop->name, prop->info->type,
--                             field_prop_getter(prop->info),
--                             field_prop_setter(prop->info),
--                             prop->info->release,
--                             (Property *)prop);
-+    if (qapi_type) {
-+        op = object_property_add_qapi(obj, prop->name, qapi_type,
-+                                      field_prop_getter(prop->info),
-+                                      field_prop_setter(prop->info),
-+                                      prop->info->release,
-+                                      (Property *)prop);
-+    } else {
-+        op = object_property_add(obj, prop->name, prop->info->type,
-+                                 field_prop_getter(prop->info),
-+                                 field_prop_setter(prop->info),
-+                                 prop->info->release,
-+                                 (Property *)prop);
-+    }
- 
-     object_property_set_description(obj, prop->name,
-                                     prop->info->description);
-@@ -1176,12 +1200,23 @@ static void qdev_class_add_property(DeviceClass *klass, const char *name,
-     if (prop->info->create) {
-         op = prop->info->create(oc, name, prop);
-     } else {
--        op = object_class_property_add(oc,
--                                       name, prop->info->type,
--                                       field_prop_getter(prop->info),
--                                       field_prop_setter(prop->info),
--                                       prop->info->release,
--                                       (Property *)prop);
-+        const QAPITypeInfo *qapi_type = qdev_prop_qapi_type(prop);
++    for (int cpu = num_harts_socket - 1; cpu >= 0; cpu--) {
++        RISCVCPU *cpu_ptr = &socket_harts[cpu];
++        int8_t satp_mode_max = cpu_ptr->cfg.max_satp_mode;
++        g_autofree char *cpu_name = NULL;
++        g_autofree char *core_name = NULL;
++        g_autofree char *intc_name = NULL;
 +
-+        if (qapi_type) {
-+            op = object_class_property_add_qapi(oc,
-+                                               name, qapi_type,
-+                                               field_prop_getter(prop->info),
-+                                               field_prop_setter(prop->info),
-+                                               prop->info->release,
-+                                               (Property *)prop);
-+        } else {
-+            op = object_class_property_add(oc,
-+                                           name, prop->info->type,
-+                                           field_prop_getter(prop->info),
-+                                           field_prop_setter(prop->info),
-+                                           prop->info->release,
-+                                           (Property *)prop);
++        cpu_phandle = (*phandle)++;
++
++        cpu_name = g_strdup_printf("/cpus/cpu@%d", socket_hartid_base + cpu);
++        qemu_fdt_add_subnode(fdt, cpu_name);
++
++        if (satp_mode_max != -1) {
++            g_autofree char *sv_name = NULL;
++            sv_name = g_strdup_printf("riscv,%s",
++                                      satp_mode_str(satp_mode_max, is_32_bit));
++            qemu_fdt_setprop_string(fdt, cpu_name, "mmu-type", sv_name);
 +        }
-     }
-     if (prop->set_default) {
-         prop->info->set_default_value(op, prop);
-
++        riscv_isa_write_fdt(cpu_ptr, fdt, cpu_name);
++
++        if (cpu_ptr->cfg.ext_zicbom) {
++            qemu_fdt_setprop_cell(fdt, cpu_name, "riscv,cbom-block-size",
++                                  cpu_ptr->cfg.cbom_blocksize);
++        }
++
++        if (cpu_ptr->cfg.ext_zicboz) {
++            qemu_fdt_setprop_cell(fdt, cpu_name, "riscv,cboz-block-size",
++                                  cpu_ptr->cfg.cboz_blocksize);
++        }
++
++        if (cpu_ptr->cfg.ext_zicbop) {
++            qemu_fdt_setprop_cell(fdt, cpu_name, "riscv,cbop-block-size",
++                                  cpu_ptr->cfg.cbop_blocksize);
++        }
++
++        qemu_fdt_setprop_string(fdt, cpu_name, "compatible", "riscv");
++        qemu_fdt_setprop_string(fdt, cpu_name, "status", "okay");
++        qemu_fdt_setprop_cell(fdt, cpu_name, "reg",
++                              socket_hartid_base + cpu);
++        qemu_fdt_setprop_string(fdt, cpu_name, "device_type", "cpu");
++        if (numa_enabled) {
++            qemu_fdt_setprop_cell(fdt, cpu_name, "numa-node-id", socket_id);
++        }
++        qemu_fdt_setprop_cell(fdt, cpu_name, "phandle", cpu_phandle);
++
++        intc_phandles[cpu] = (*phandle)++;
++
++        intc_name = g_strdup_printf("%s/interrupt-controller", cpu_name);
++        qemu_fdt_add_subnode(fdt, intc_name);
++        qemu_fdt_setprop_cell(fdt, intc_name, "phandle",
++                              intc_phandles[cpu]);
++        qemu_fdt_setprop_string(fdt, intc_name, "compatible",
++                                "riscv,cpu-intc");
++        qemu_fdt_setprop(fdt, intc_name, "interrupt-controller", NULL, 0);
++        qemu_fdt_setprop_cell(fdt, intc_name, "#interrupt-cells", 1);
++
++        core_name = g_strdup_printf("%s/core%d", clust_name, cpu);
++        qemu_fdt_add_subnode(fdt, core_name);
++        qemu_fdt_setprop_cell(fdt, core_name, "cpu", cpu_phandle);
++    }
++}
+diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
+index 6641b60131..33775a61fd 100644
+--- a/hw/riscv/virt.c
++++ b/hw/riscv/virt.c
+@@ -231,77 +231,6 @@ static void create_pcie_irq_map(RISCVVirtState *s, void *fdt, char *nodename,
+                            0x1800, 0, 0, 0x7);
+ }
+ 
+-static void create_fdt_socket_cpus(RISCVVirtState *s, int socket,
+-                                   char *clust_name, uint32_t *phandle,
+-                                   uint32_t *intc_phandles)
+-{
+-    int cpu;
+-    uint32_t cpu_phandle;
+-    MachineState *ms = MACHINE(s);
+-    bool is_32_bit = riscv_is_32bit(&s->soc[0]);
+-
+-    for (cpu = s->soc[socket].num_harts - 1; cpu >= 0; cpu--) {
+-        RISCVCPU *cpu_ptr = &s->soc[socket].harts[cpu];
+-        int8_t satp_mode_max = cpu_ptr->cfg.max_satp_mode;
+-        g_autofree char *cpu_name = NULL;
+-        g_autofree char *core_name = NULL;
+-        g_autofree char *intc_name = NULL;
+-        g_autofree char *sv_name = NULL;
+-
+-        cpu_phandle = (*phandle)++;
+-
+-        cpu_name = g_strdup_printf("/cpus/cpu@%d",
+-            s->soc[socket].hartid_base + cpu);
+-        qemu_fdt_add_subnode(ms->fdt, cpu_name);
+-
+-        if (satp_mode_max != -1) {
+-            sv_name = g_strdup_printf("riscv,%s",
+-                                      satp_mode_str(satp_mode_max, is_32_bit));
+-            qemu_fdt_setprop_string(ms->fdt, cpu_name, "mmu-type", sv_name);
+-        }
+-
+-        riscv_isa_write_fdt(cpu_ptr, ms->fdt, cpu_name);
+-
+-        if (cpu_ptr->cfg.ext_zicbom) {
+-            qemu_fdt_setprop_cell(ms->fdt, cpu_name, "riscv,cbom-block-size",
+-                                  cpu_ptr->cfg.cbom_blocksize);
+-        }
+-
+-        if (cpu_ptr->cfg.ext_zicboz) {
+-            qemu_fdt_setprop_cell(ms->fdt, cpu_name, "riscv,cboz-block-size",
+-                                  cpu_ptr->cfg.cboz_blocksize);
+-        }
+-
+-        if (cpu_ptr->cfg.ext_zicbop) {
+-            qemu_fdt_setprop_cell(ms->fdt, cpu_name, "riscv,cbop-block-size",
+-                                  cpu_ptr->cfg.cbop_blocksize);
+-        }
+-
+-        qemu_fdt_setprop_string(ms->fdt, cpu_name, "compatible", "riscv");
+-        qemu_fdt_setprop_string(ms->fdt, cpu_name, "status", "okay");
+-        qemu_fdt_setprop_cell(ms->fdt, cpu_name, "reg",
+-            s->soc[socket].hartid_base + cpu);
+-        qemu_fdt_setprop_string(ms->fdt, cpu_name, "device_type", "cpu");
+-        riscv_socket_fdt_write_id(ms, cpu_name, socket);
+-        qemu_fdt_setprop_cell(ms->fdt, cpu_name, "phandle", cpu_phandle);
+-
+-        intc_phandles[cpu] = (*phandle)++;
+-
+-        intc_name = g_strdup_printf("%s/interrupt-controller", cpu_name);
+-        qemu_fdt_add_subnode(ms->fdt, intc_name);
+-        qemu_fdt_setprop_cell(ms->fdt, intc_name, "phandle",
+-            intc_phandles[cpu]);
+-        qemu_fdt_setprop_string(ms->fdt, intc_name, "compatible",
+-            "riscv,cpu-intc");
+-        qemu_fdt_setprop(ms->fdt, intc_name, "interrupt-controller", NULL, 0);
+-        qemu_fdt_setprop_cell(ms->fdt, intc_name, "#interrupt-cells", 1);
+-
+-        core_name = g_strdup_printf("%s/core%d", clust_name, cpu);
+-        qemu_fdt_add_subnode(ms->fdt, core_name);
+-        qemu_fdt_setprop_cell(ms->fdt, core_name, "cpu", cpu_phandle);
+-    }
+-}
+-
+ static void create_fdt_socket_aclint(RISCVVirtState *s,
+                                      int socket,
+                                      uint32_t *intc_phandles)
+@@ -693,6 +622,7 @@ static void create_fdt_sockets(RISCVVirtState *s,
+     g_autofree uint32_t *intc_phandles = NULL;
+     int socket_count = riscv_socket_count(ms);
+     bool numa_enabled = riscv_numa_enabled(ms);
++    bool is_32_bit = riscv_is_32bit(&s->soc[0]);
+ 
+     fdt_create_cpu_socket_subnode(ms->fdt,
+         kvm_enabled() ? kvm_riscv_get_timebase_frequency(&s->soc->harts[0]) :
+@@ -702,18 +632,17 @@ static void create_fdt_sockets(RISCVVirtState *s,
+ 
+     phandle_pos = ms->smp.cpus;
+     for (socket = (socket_count - 1); socket >= 0; socket--) {
+-        g_autofree char *clust_name = NULL;
+         hwaddr memaddr = s->memmap[VIRT_DRAM].base +
+                          riscv_socket_mem_offset(ms, socket);
+         uint64_t memsize = riscv_socket_mem_size(ms, socket);
+ 
+         phandle_pos -= s->soc[socket].num_harts;
+ 
+-        clust_name = g_strdup_printf("/cpus/cpu-map/cluster%d", socket);
+-        qemu_fdt_add_subnode(ms->fdt, clust_name);
+-
+-        create_fdt_socket_cpus(s, socket, clust_name, phandle,
+-                               &intc_phandles[phandle_pos]);
++        create_fdt_socket_cpus(ms->fdt, (&s->soc[socket])->harts, socket,
++                               s->soc[socket].num_harts,
++                               s->soc[socket].hartid_base,
++                               phandle, &intc_phandles[phandle_pos],
++                               numa_enabled, is_32_bit);
+ 
+         create_fdt_socket_memory(ms->fdt, memaddr, memsize,
+                                  socket, riscv_numa_enabled(ms));
+diff --git a/include/hw/riscv/fdt-common.h b/include/hw/riscv/fdt-common.h
+index 27020e69c6..3af9d5c3fd 100644
+--- a/include/hw/riscv/fdt-common.h
++++ b/include/hw/riscv/fdt-common.h
+@@ -9,6 +9,8 @@
+ #ifndef RISCV_VIRT_FDT_H
+ #define RISCV_VIRT_FDT_H
+ 
++#include "target/riscv/cpu.h"
++
+ void *create_board_device_tree(const char *model, const char *compatible,
+                                int *fdt_size);
+ void create_fdt_socket_memory(void *fdt, hwaddr addr, uint64_t size,
+@@ -19,4 +21,9 @@ void create_fdt_socket_clint(void *fdt, hwaddr addr, uint64_t size,
+                              int socket_id, uint32_t *intc_phandles,
+                              int num_harts, bool numa_enabled);
+ void fdt_create_cpu_socket_subnode(void *fdt, uint64_t timebase_frequency);
++void create_fdt_socket_cpus(void *fdt, RISCVCPU *socket_harts,
++                            int socket_id, int num_harts_socket,
++                            int socket_hartid_base, uint32_t *phandle,
++                            uint32_t *intc_phandles, bool numa_enabled,
++                            bool is_32_bit);
+ #endif
 -- 
-2.54.0
+2.43.0
 
 
