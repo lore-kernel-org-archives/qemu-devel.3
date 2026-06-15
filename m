@@ -4,93 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97FEACD98CF
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jun 2026 18:34:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5940CD98CF
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jun 2026 18:38:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZC7h-00014k-UW; Mon, 15 Jun 2026 14:33:27 -0400
+	id 1wZCCP-0002TG-ND; Mon, 15 Jun 2026 14:38:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wZC7c-00014Y-Lm
- for qemu-devel@nongnu.org; Mon, 15 Jun 2026 14:33:22 -0400
-Received: from mail-pj1-x102c.google.com ([2607:f8b0:4864:20::102c])
+ id 1wZCCK-0002SP-Sn
+ for qemu-devel@nongnu.org; Mon, 15 Jun 2026 14:38:13 -0400
+Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wZC7Z-0001B6-Bp
- for qemu-devel@nongnu.org; Mon, 15 Jun 2026 14:33:18 -0400
-Received: by mail-pj1-x102c.google.com with SMTP id
- 98e67ed59e1d1-36b900f350fso3365841a91.0
- for <qemu-devel@nongnu.org>; Mon, 15 Jun 2026 11:33:16 -0700 (PDT)
+ id 1wZCCI-0002GH-1n
+ for qemu-devel@nongnu.org; Mon, 15 Jun 2026 14:38:12 -0400
+Received: by mail-pl1-x62d.google.com with SMTP id
+ d9443c01a7336-2c0c1e0d00bso33274755ad.0
+ for <qemu-devel@nongnu.org>; Mon, 15 Jun 2026 11:37:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1781548396; x=1782153196; darn=nongnu.org;
+ d=linaro.org; s=google; t=1781548678; x=1782153478; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=PA/2tGdrns4nOu24xttae4aE1Nq5sxLr6EQnlFU0fv8=;
- b=ZTHYUbLnY3USIY3m/RtzaZBBOEAtga/cnP5yeK+yD5v4O7uf3aKfqEeaaMiDCHPjQM
- O3hIIcRGCWGoZx7eSChzpmunueZJbpgjyN3A6FC3ds5HnXr0pM3DI4pM6X+zkztFkffv
- TXg26lwphgful8WTtX/ywu/60si0QWmsgjJ+UfQ/ZLJ29D0+kxruAdgRrXJOPuMphpJ7
- KF7N2Xbxd9KwEMxnzlnipmZYI1qIiTY94c0S6ToJQmbvygSm4GY+S8AaQ63smQ1rOiKO
- +1UcABpZEiOqFv7TOaIqCtsddB4MLWlZwrbz4BwVphQmo8EpqRBunoctJb0SzHGn+mnQ
- WL8A==
+ bh=97lbOVoF62W2GPJk2Zeas0aDOI7h5cihE+O+dpW+WWU=;
+ b=rk8sWiBCetnsVcpUZNNpXsW/IcYPpNXYu0MhCdEwo7NzWHgIIC/kHQfz6GSv3dxHTS
+ 2GoGdc4TyV4s5gSnnYS+WQXMOA+z0VWZ5+jAR+N28S8+Q76pTaSE3VKhmMlAXQPBkOKu
+ EoekKEDURt4+xp7wEJC+G5SS4N68WFjMagZkr3slRsNMUybTY5EQYeMhYMiRbuGKWb97
+ 5vsZMMupk5O2/TI6wQvdlm+mqVK9Hphkz0whLjGIELfex0A8qCrJcNqRbI+jtUEeApR5
+ TUdCNUZbPmmVnW/ejYDg4ZdgmRWW+HpheBr0TPMP+OJaBavNgrdK3O93ldjipbaVUd3I
+ Uq1g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781548396; x=1782153196;
+ d=1e100.net; s=20251104; t=1781548678; x=1782153478;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=PA/2tGdrns4nOu24xttae4aE1Nq5sxLr6EQnlFU0fv8=;
- b=gvf+PpcUBU58BH/LINjzxcDZw1+m9xOt+PrHfUXKv1S2Yl0NqZqfzrtzfHmyS+etSV
- 3NDarbqQTv0ZuE0ZXtg6CbIiGCjgOd4xoveCDS6YFwi50Ck39h7D46efeq7TGChcolh+
- EuCtz1Ve2NtYSC1Rp4Ns5vOA3k92a/OB+RN0yjorEoIFcDIn/8hyxHB4Umv47IZecx6p
- R1JiJ1GfpwOKW/bMlvKHevo1q45S0eCnMkRfUeDuNYDjlTqtoAy776RUkXaKvABBy+IN
- Mv8d/lehSpym4MCAlPq+/1t1PvfOI0zACH1blAoqGCHr7CiACknxgcH9vwAu3x8dBjQu
- yTPQ==
-X-Gm-Message-State: AOJu0Yy4UXLAhy5+jslq6uRBIUuvgm/ZMO7eGaGaRPZEkBYKfQNu4fgs
- uzHskB5N3YKXXk3HY/tLyJueiQo6VWYjPoO1K0lZoo6dehxohWvq1fIvQYOJz7SFBRI=
-X-Gm-Gg: Acq92OHE9Xf1E7KlleZ+3fQDKcbazUKJTn3NFKmjvvP2g//dX2GNFlYd/6/SL/AquI1
- XToKDWCWcR74qFFa1jaEW0hhaboU+scR2+73wtIzdtve4idXUTP85mlQt5iWjyD8FYS1dnbj/QR
- WFPbgk3J6RHPkCJtTwRpgctelQ9ZP1kOAiL3muiROSwOpMSAr0/x4PPedQLHLEwcUYoaXO8iZ6V
- rJrBQ0C0p4wWzUy/jUNkDQ99/Hn6FPVwn8CcfvL28g2INIvqlLoHi/qrYedTKesaWOjtnOuXMOO
- tRTabwU+u0KXdArSHiE4tdgliBce6TUUMTAe7KwKKHB/Jzq3jtldXOaVRatWTnl8p4R1xfxudxr
- WGKIxyjHbiFuLcI9xJOjayv9zNh/NEx5OnGzRyZhz9nHmxYHOS6cBDiHdCHC9BCbmP59wLJtu56
- WTp1wHsyhzV6szLaY2JNpbZmxy/4TQSQaSu5fxfb3weK9y7A2XZv/5JUZe78uLcgEX6WH4m1hgB
- FIhU4Q=
-X-Received: by 2002:a17:90b:4c86:b0:35c:30a8:330 with SMTP id
- 98e67ed59e1d1-37c2bb41db4mr12330939a91.0.1781548395684; 
- Mon, 15 Jun 2026 11:33:15 -0700 (PDT)
+ bh=97lbOVoF62W2GPJk2Zeas0aDOI7h5cihE+O+dpW+WWU=;
+ b=TBzYcHVM2lAyE8+5b7GfqKGCt2ybaupQ6VXsDQvoIpaaFRLzH/odD9iPoO64jf3DZt
+ 03Ft7zC6mPiHO+hiUQtZF9o0YHwjY+tC5ea1s5m70IEdR1iRA4om6jcZeyRG5ytb2grc
+ EeBeci1sQpq0OwKf+FSbAA5SYjN/2b+4Xmd+F8pkY5IBHoBDwFm/bUylPw1BdA8/si4Y
+ eZe3MNHmqQjS/3IHUPAd1wMOzvi0LhAkWBaiiMK5uDe8nthQLy1gnRgaeAzTquwmtP9v
+ c0m0WpMYM2yFbUp03o2ivDlOWYK8qYXSQPailj1QACrmypywIuQcKpC6Mg09tfnljq7H
+ F26g==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ+g0ty2Em4KDsy7xGSz9lRDenErGDoOwWhmx8BO+77ye8z6GHodgB+LedUwAExLIfY/rRuQugjJKGD4@nongnu.org
+X-Gm-Message-State: AOJu0YxbRM9WNisOtuWJx75a3zfnbJc5ZRqLT5p0fGh/IF0zy0JObmAQ
+ yKKNX0OW/r/cLstj2Ois7ywfD+lA7kuVGI+UCswSfD4g+FjcNT8pOm3+qAcn0IC0Ixs=
+X-Gm-Gg: Acq92OHqogcm4o0DB4t7Ps5MYCv/vzoF9dxiI5NfATy6c/x6ok7YpIDF7uNF6kHx2nF
+ vJ/dl+1OLm7h/BzaPmO24kba46pT2Ap9BB2maQ3p8ZxIOAIEzBJOfkYnr7+ZCIx0dVELinuv4C0
+ 58XzqbVMwcFsQjQutRMhbw53o8x8WOVSjs2sbyZZS5UIfO98rQD9mF1r8IMaZc8c6d+4duD5XTn
+ VK9vb9OhUdaVQyxfQuD1mMumgLFiuKC1DEcGV1L4o9cnz7nmWDFjJVVoVdeea7910kkYwqHeI7/
+ 6TQ0DuL7Q18Me4Q8wa2qIIgL9r8/OhFnqq6PyrD6Sc2c7sNz1X2kUt4fKk+T3Q92fiLQBDqY7mn
+ YleJtc98fgctl/RzsqUhSjeNVzjr9zEFBSsVRBCsFcx2lR+9z+bo5bvHlLL8TtBQUVgzARvEfRW
+ /6GT5Ofofvk6yPIJevQmMlyqPhKNB/dDgWC4Bvt0QLNcq6oSQx/+I50ckp9FHRj0nv22gEpTwFt
+ jcA+x8=
+X-Received: by 2002:a17:903:238b:b0:2c1:77cd:fb0b with SMTP id
+ d9443c01a7336-2c412f17bcfmr166432335ad.37.1781548677861; 
+ Mon, 15 Jun 2026 11:37:57 -0700 (PDT)
 Received: from [192.168.0.4] (174-21-129-215.tukw.qwest.net. [174.21.129.215])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-37c522a251dsm289131a91.16.2026.06.15.11.33.14
+ d9443c01a7336-2c432d8a039sm110189025ad.62.2026.06.15.11.37.57
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 15 Jun 2026 11:33:15 -0700 (PDT)
-Message-ID: <53ef3e8f-c421-4744-bd8f-c67390f31639@linaro.org>
-Date: Mon, 15 Jun 2026 11:33:12 -0700
+ Mon, 15 Jun 2026 11:37:57 -0700 (PDT)
+Message-ID: <65a1034a-d71a-41f8-b148-7120934d3761@linaro.org>
+Date: Mon, 15 Jun 2026 11:37:50 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/2] system/memory: Use qemu_ram_{copy, move}() in ram
- device region accessors
-To: Gavin Shan <gshan@redhat.com>, qemu-arm@nongnu.org
-Cc: qemu-devel@nongnu.org, mst@redhat.com, peterx@redhat.com,
- alex@shazbot.org, peter.maydell@linaro.org, berrange@redhat.com,
- philmd@oss.qualcomm.com, philmd@mailo.com, david@kernel.org, clg@redhat.com,
- pbonzini@redhat.com, phrdina@redhat.com, jugraham@redhat.com,
- liugang24219@sangfor.com.cn, dinghui@sangfor.com.cn, shan.gavin@gmail.com
-References: <20260615100200.266968-1-gshan@redhat.com>
- <20260615100200.266968-2-gshan@redhat.com>
- <93fb3b41-1543-4e3b-922b-043b774f57bf@linaro.org>
- <d0d18a5b-1178-416d-81aa-d6d5f56ae3a7@redhat.com>
- <fc1213f4-1500-4282-8c98-8ddf10d4955a@linaro.org>
- <32c4a353-1cbc-4d3e-b05c-a4324e985426@redhat.com>
+Subject: Re: [PATCH 1/6] system: Document cpu_physical_memory_*() declarations
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Peter Xu <peterx@redhat.com>
+References: <20260611180320.30320-1-philmd@oss.qualcomm.com>
+ <20260611180320.30320-2-philmd@oss.qualcomm.com>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <32c4a353-1cbc-4d3e-b05c-a4324e985426@redhat.com>
+In-Reply-To: <20260611180320.30320-2-philmd@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102c;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -113,34 +108,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/15/26 11:09, Gavin Shan wrote:
->> I guess it's also worth asking if this copy is also used for copying *from* device 
->> memory.  The commit that added memmove (4a73aee8814) suggests that dma from the device 
->> uses these paths.  In which case you'll either want a separate function for that, or 
->> both source and destination must be aligned.
->>
-> 
-> I think it's a valid case. Lets handle this by limiting the 'step' based on
-> src/dest/n, something like below. atomic_read() instead of ldxxx_he_p() is
-> used for loads. Please take a look if there are anything we can improve
-> further.
-> 
-> // Not compiled and tested yet
-> static void qemu_ram_copy_unaligned(void *dest, const void *src, size_t n)
-> {
->      uintptr_t test, step;
-> 
->      while (n != 0) {
->          test = (uintptr_t)src | n;       /* alignment enforced by source */
->          step = test & -test;
->          test = (uintptr_t)dest | n;      /* alignment enforced by destination */
->          step = MIN(step, test & -test);
+On 6/11/26 11:03, Philippe Mathieu-Daudé wrote:
+> +/**
+> + * cpu_physical_memory_map: Map guest physical memory region into host virtual
+> + *                          address.
+> + *
+> + * Map a memory region into the legacy global #address_space_memory address
 
-     while (n) {
-         uintptr_t test = (uintptr_t)src | (uintptr_t)dst | n;
-         uintptr_t step = test & -test;
+s/into/from/ ?
 
-Otherwise it looks good.
+Otherwise
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
 
 r~
