@@ -4,56 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7222CD98DA
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jun 2026 20:41:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10FE7CD98CE
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jun 2026 20:42:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZE4d-00033K-0F; Mon, 15 Jun 2026 16:38:23 -0400
+	id 1wZE7k-0005l2-MI; Mon, 15 Jun 2026 16:41:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wZE4c-00032x-5e
- for qemu-devel@nongnu.org; Mon, 15 Jun 2026 16:38:22 -0400
+ id 1wZE7i-0005YU-Us
+ for qemu-devel@nongnu.org; Mon, 15 Jun 2026 16:41:34 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wZE4a-0002GO-N3
- for qemu-devel@nongnu.org; Mon, 15 Jun 2026 16:38:21 -0400
+ id 1wZE7h-0003A7-1N
+ for qemu-devel@nongnu.org; Mon, 15 Jun 2026 16:41:34 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781555900;
+ s=mimecast20190719; t=1781556092;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=hvHRxFe3/9M3A6EjGylUHZk1jWRUsW9eQVfc9KOscS0=;
- b=haqI7wyK28I2Yu27OswLAE7tkbLb1crP2Fd8Az3yhuqYG21FDUjPIG49g6DPzRmo/qaAtQ
- D9TQt+ZbtjZu6pvoaJJVlcWZSP9GynG+Fw5JoPyyhii3Jbr1Mia9R4E7fhHkuLEc//l/pT
- OPqgj7H+109soiMgtxYvxAVWDR7Zi/4=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=cHW1IJ+eoU0mx1TK3LSTmgoix624p+QtD/GS7m9+4P4=;
+ b=jVgnYqyzWrJpYFWbDxH6owZu+Ml6RbHvDn3EB+2PA8WqLXNaWxLKthxG/znfcUEzk8Hfz2
+ v7K1Z//bAYpxnDHXoCFv59H9obewsTEcr8yeLBrfWk6LTMtGwRAGS2AD2LypF7v5yWGqOW
+ SpPhVbEibmPWt9f3oi6Hr/Eao+ysnHc=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-380-LX-IQhroM7uun9Kor_yr_A-1; Mon,
- 15 Jun 2026 16:38:16 -0400
-X-MC-Unique: LX-IQhroM7uun9Kor_yr_A-1
-X-Mimecast-MFC-AGG-ID: LX-IQhroM7uun9Kor_yr_A_1781555895
-Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-496-eb6nSNU2N_6833mhheS0sg-1; Mon,
+ 15 Jun 2026 16:41:31 -0400
+X-MC-Unique: eb6nSNU2N_6833mhheS0sg-1
+X-Mimecast-MFC-AGG-ID: eb6nSNU2N_6833mhheS0sg_1781556090
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A43701955D71; Mon, 15 Jun 2026 20:38:15 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2D1FF18002FB; Mon, 15 Jun 2026 20:41:30 +0000 (UTC)
 Received: from localhost (unknown [10.44.22.9])
- by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 98A6030A8; Mon, 15 Jun 2026 20:38:14 +0000 (UTC)
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id EE0B419560B2; Mon, 15 Jun 2026 20:41:28 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Tue, 16 Jun 2026 00:37:32 +0400
-Subject: [PATCH v2 06/53] meson: add qapi-type-infos-*.c/h to build
+Date: Tue, 16 Jun 2026 00:38:09 +0400
+Subject: [PATCH v2 43/53] qdev: convert core PropertyInfo definitions to
+ use qapi_type
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260616-qom-qapi-v2-6-cc9396b9c18c@redhat.com>
+Message-Id: <20260616-qom-qapi-v2-43-cc9396b9c18c@redhat.com>
 References: <20260616-qom-qapi-v2-0-cc9396b9c18c@redhat.com>
 In-Reply-To: <20260616-qom-qapi-v2-0-cc9396b9c18c@redhat.com>
 To: qemu-devel@nongnu.org
@@ -64,35 +65,34 @@ Cc: Markus Armbruster <armbru@redhat.com>,
  Michael Roth <michael.roth@amd.com>, 
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3553;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=6885;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=cS7ulu1ICbMh1wDUayERuLbRYYPk58SNz3mbLGycoZU=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqMGKNU/tOECvlixGbrSwe7WcE4rh5j0LgvMUK0
- esd+jyslSCJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCajBijQAKCRDa6OEJdZac
- 5UGBD/99xNBurF/5VshodU2JJAtIp02GK/btP3837Db070LTFPg/fDLj3DVRlAzmr2l1LLb0JZx
- eX8+GGMj3lUPPodab2TqsKZpynPSbnTJ2V9UO86TfYM4luLPIRPNbcDNWa6ihfof9ylfdTz9IOQ
- IEdbdXSIOGHJoPW/3M5ZdW7n+UGVj575dvXBMaJ7tfeIVGz9CPvMxAddy951jqFUQYr5rZ/cnRV
- rvF7XxFp8ZD/L/LCFpJxYWUL98CXSBA2elzJTzMq1tvVBX9ZTAPG+590umRNs1Xrv9djhQhwfE9
- FVY2w8Q8HLzLzcsLXyEOMW7tn5F+92bVkDCPJzE6PYYEzVDZyaBY2TLU85tvmRSaZoI6Jmo75lD
- h5Pjf/OP5LQKoAVV2geq4A/iFCmMV8zqGNIASES6c/ls1jMxX/VkjQsUGZRi6e0TMSsr7b5kgg+
- rGvo3vlqXLSA3QHjcF2Ip4AGlN/D6s9bHEorPj5uofi7TWwiPizslrGK/jY/yvxukzh/m8Oauiv
- FAP2HuD7OpGdEPPVqbqeiF4Xpq7wne9+uDkb7TqWkzA1DEC6oCn9iajc152ZVhYz8H1rCkFbYxZ
- b84aLt+t3mUmvH0ha1wSfOCZNbyy3LQWeOLcs75nR3c0a2sSIfuKbgYG1BmuglhYV2ZT5xlMHbD
- eMX43t8+SH0IEcw==
+ bh=tHhcM1FVEXcDcG4TGrZLROFbMeeibNZs1O1Pz0IKt74=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqMGKQtTa+STywJQpkrdhuyTsKGENAhMFHPf6mL
+ 9TRzMTdeEaJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCajBikAAKCRDa6OEJdZac
+ 5Q+kD/47zXmT9RjRvNURw2TIn9VoTnWlxP0ETFjJPv5kYrNwXJ7L0lOvfmjoUuBiVPrV+aANqet
+ rj4Do1a/5AJX2Y5oa2LQ49S8ScPtO0hJwPg9vIVN4zeKMWX4k5RWl9lv+KjNkBsWw7AtinA0zhh
+ T5mtZuC1gQiI2yvBKIsi1unDCfpd3ucbegUC4e358Nrgzt1HczZmH52ldqC7H2ghUuF6AaruCvP
+ t86dq6Fm1OFklMWCBPgTJmOy7zW7/3lT620aVP+NLKHOHcZU+vDEoefMIGGFMbr0sS0mY9+mT8S
+ OQ1IRrtr/8gVXfRu46Q3jjdYfOnmB8isSAdLs/vjCZ7pZ/P0uZoEw5lWGJin2BMP5VoXyhJ+sJC
+ KuF74Z8AA0LzJhpfTaBRjNccXeVLC+/SOlmyKH5GUz+v91hFR1/NhSSlCHp5XuZrdDX5+U8/gK2
+ Ucmw8ORoM4GEz/YTjM8D2hAQdpTFjh86TqpyM8oaz4Bhm81YpB63j2xXMhZpS4ixuJizAaKkB56
+ epEE0a7mGurz7ZehpXVKoGjcEmaRRylyNbef2CH2AyxNFUmfcSC6E5YoKDmlGcs7toW8YGyGcks
+ EhdaG273PL2dIwFiLDr3cPp8+RTfzon3HBifpNKVF5FqFHFrX80gK2oZYUiqPIWox8gPv4Sh8jJ
+ 4fLRwPv8O/Var9A==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
 Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 8
-X-Spam_score: 0.8
-X-Spam_bar: /
-X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,96 +108,200 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Register the new per-module type-infos output files so they are
-generated during the QAPI code generation step and compiled into
-the build.
+Replace .type string with .qapi_type pointer on all core PropertyInfo
+definitions in qdev-properties.c. Remove .enum_table from enum
+definitions, since the lookup is now accessed through .qapi_type->lookup
+via the qdev_propinfo_enum_lookup() fallback helper.
+
+Note that qdev_prop_usize now reports "uint32" or "uint64" depending on
+the host. If usize is worth preserving, it should be added as a QAPI
+builtin type. Or perhaps we should simply use "size" everywhere (u64)?
+
+It's also strange to use type "size" for both u32 (prop_size32) and u64
+(prop_size).
+
+Link property are actually strings. The "full type name" is set when
+the property is added, as "link<TYPE>".
+
+Array property will be refactored in a subsequent patch.
 
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- qapi/meson.build              | 4 ++++
- tests/include/meson.build     | 2 ++
- tests/meson.build             | 6 ++++++
- tests/qapi-schema/meson.build | 1 +
- 4 files changed, 13 insertions(+)
+ hw/core/qdev-properties.c | 42 +++++++++++++++++++++++-------------------
+ 1 file changed, 23 insertions(+), 19 deletions(-)
 
-diff --git a/qapi/meson.build b/qapi/meson.build
-index a46269b5a0c..7ae3843de6e 100644
---- a/qapi/meson.build
-+++ b/qapi/meson.build
-@@ -80,6 +80,7 @@ endif
- qapi_nonmodule_outputs = [
-   'qapi-introspect.c', 'qapi-introspect.h',
-   'qapi-types.c', 'qapi-types.h',
-+  'qapi-type-infos.c', 'qapi-type-infos.h',
-   'qapi-visit.h', 'qapi-visit.c',
-   'qapi-commands.h', 'qapi-commands.c',
-   'qapi-init-commands.h', 'qapi-init-commands.c',
-@@ -90,6 +91,7 @@ qapi_nonmodule_outputs = [
- qapi_outputs = qapi_nonmodule_outputs + [
-   'qapi-builtin-types.c', 'qapi-builtin-visit.c',
-   'qapi-builtin-types.h', 'qapi-builtin-visit.h',
-+  'qapi-builtin-type-infos.c', 'qapi-builtin-type-infos.h',
- ]
+diff --git a/hw/core/qdev-properties.c b/hw/core/qdev-properties.c
+index b3d5abd5053..e924b040687 100644
+--- a/hw/core/qdev-properties.c
++++ b/hw/core/qdev-properties.c
+@@ -12,6 +12,8 @@
+ #include "qdev-prop-internal.h"
+ #include "qom/compat-properties.h"
+ #include "qom/qom-qobject.h"
++#include "qapi/qapi-builtin-type-infos.h"
++#include "qapi/qapi-type-infos-common.h"
  
- qapi_inputs = []
-@@ -100,6 +102,8 @@ foreach module : qapi_all_modules
-     'qapi-types-@0@.h'.format(module),
-     'qapi-visit-@0@.c'.format(module),
-     'qapi-visit-@0@.h'.format(module),
-+    'qapi-type-infos-@0@.c'.format(module),
-+    'qapi-type-infos-@0@.h'.format(module),
-   ]
-   if have_system or have_tools
-     qapi_module_outputs += [
-diff --git a/tests/include/meson.build b/tests/include/meson.build
-index 8e8d1ec4e69..026480d9685 100644
---- a/tests/include/meson.build
-+++ b/tests/include/meson.build
-@@ -4,6 +4,8 @@ test_qapi_outputs_extra = [
-   'test-qapi-commands-sub-module.h',
-   'test-qapi-events-sub-module.c',
-   'test-qapi-events-sub-module.h',
-+  'test-qapi-type-infos-sub-module.c',
-+  'test-qapi-type-infos-sub-module.h',
-   'test-qapi-types-sub-module.c',
-   'test-qapi-types-sub-module.h',
-   'test-qapi-visit-sub-module.c',
-diff --git a/tests/meson.build b/tests/meson.build
-index 9ba04bbedd3..71dc4ac8bf9 100644
---- a/tests/meson.build
-+++ b/tests/meson.build
-@@ -2,6 +2,8 @@ subdir('bench')
- subdir('qemu-iotests')
+ void qdev_prop_set_after_realize(DeviceState *dev, const char *name,
+                                   Error **errp)
+@@ -180,7 +182,7 @@ static void set_default_value_bool(ObjectProperty *op, const Property *prop)
+ }
  
- test_qapi_outputs = [
-+  'qapi-builtin-type-infos.c',
-+  'qapi-builtin-type-infos.h',
-   'qapi-builtin-types.c',
-   'qapi-builtin-types.h',
-   'qapi-builtin-visit.c',
-@@ -22,6 +24,10 @@ test_qapi_outputs = [
-   'test-qapi-init-commands.h',
-   'test-qapi-introspect.c',
-   'test-qapi-introspect.h',
-+  'test-qapi-type-infos-sub-sub-module.c',
-+  'test-qapi-type-infos-sub-sub-module.h',
-+  'test-qapi-type-infos.c',
-+  'test-qapi-type-infos.h',
-   'test-qapi-types-sub-sub-module.c',
-   'test-qapi-types-sub-sub-module.h',
-   'test-qapi-types.c',
-diff --git a/tests/qapi-schema/meson.build b/tests/qapi-schema/meson.build
-index debff633ac1..b10f081554d 100644
---- a/tests/qapi-schema/meson.build
-+++ b/tests/qapi-schema/meson.build
-@@ -232,6 +232,7 @@ custom_target('QAPI doc',
-                        'doc-good-qapi-init-commands.c', 'doc-good-qapi-init-commands.h',
-                        'doc-good-qapi-introspect.c', 'doc-good-qapi-introspect.h',
-                        'doc-good-qapi-types.c', 'doc-good-qapi-types.h',
-+                       'doc-good-qapi-type-infos.c', 'doc-good-qapi-type-infos.h',
-                        'doc-good-qapi-visit.c', 'doc-good-qapi-visit.h' ],
-               input: files('doc-good.json'),
-               command: [ qapi_gen, '-o', meson.current_build_dir(),
+ const PropertyInfo qdev_prop_bit = {
+-    .type  = "bool",
++    .qapi_type = &bool_type_info,
+     .description = "on/off",
+     .get   = prop_get_bit,
+     .set   = prop_set_bit,
+@@ -230,7 +232,7 @@ static void prop_set_bit64(Object *obj, Visitor *v, const char *name,
+ }
+ 
+ const PropertyInfo qdev_prop_bit64 = {
+-    .type  = "bool",
++    .qapi_type = &bool_type_info,
+     .description = "on/off",
+     .get   = prop_get_bit64,
+     .set   = prop_set_bit64,
+@@ -292,9 +294,8 @@ static void prop_set_on_off_auto_bit64(Object *obj, Visitor *v,
+ }
+ 
+ const PropertyInfo qdev_prop_on_off_auto_bit64 = {
+-    .type = "OnOffAuto",
++    .qapi_type = &OnOffAuto_type_info,
+     .description = "on/off/auto",
+-    .enum_table = &OnOffAuto_lookup,
+     .get = prop_get_on_off_auto_bit64,
+     .set = prop_set_on_off_auto_bit64,
+     .set_default_value = qdev_propinfo_set_default_value_enum,
+@@ -321,7 +322,7 @@ static void set_bool(Object *obj, Visitor *v, const char *name, void *opaque,
+ }
+ 
+ const PropertyInfo qdev_prop_bool = {
+-    .type  = "bool",
++    .qapi_type = &bool_type_info,
+     .description = "on/off",
+     .get   = get_bool,
+     .set   = set_bool,
+@@ -361,7 +362,7 @@ void qdev_propinfo_set_default_value_uint(ObjectProperty *op,
+ }
+ 
+ const PropertyInfo qdev_prop_uint8 = {
+-    .type  = "uint8",
++    .qapi_type = &uint8_type_info,
+     .get   = get_uint8,
+     .set   = set_uint8,
+     .set_default_value = qdev_propinfo_set_default_value_uint,
+@@ -388,7 +389,7 @@ static void set_uint16(Object *obj, Visitor *v, const char *name,
+ }
+ 
+ const PropertyInfo qdev_prop_uint16 = {
+-    .type  = "uint16",
++    .qapi_type = &uint16_type_info,
+     .get   = get_uint16,
+     .set   = set_uint16,
+     .set_default_value = qdev_propinfo_set_default_value_uint,
+@@ -433,14 +434,14 @@ static void set_int32(Object *obj, Visitor *v, const char *name, void *opaque,
+ }
+ 
+ const PropertyInfo qdev_prop_uint32 = {
+-    .type  = "uint32",
++    .qapi_type = &uint32_type_info,
+     .get   = get_uint32,
+     .set   = set_uint32,
+     .set_default_value = qdev_propinfo_set_default_value_uint,
+ };
+ 
+ const PropertyInfo qdev_prop_int32 = {
+-    .type  = "int32",
++    .qapi_type = &int32_type_info,
+     .get   = qdev_propinfo_get_int32,
+     .set   = set_int32,
+     .set_default_value = qdev_propinfo_set_default_value_int,
+@@ -485,14 +486,14 @@ static void set_int64(Object *obj, Visitor *v, const char *name,
+ }
+ 
+ const PropertyInfo qdev_prop_uint64 = {
+-    .type  = "uint64",
++    .qapi_type = &uint64_type_info,
+     .get   = get_uint64,
+     .set   = set_uint64,
+     .set_default_value = qdev_propinfo_set_default_value_uint,
+ };
+ 
+ const PropertyInfo qdev_prop_int64 = {
+-    .type  = "int64",
++    .qapi_type = &int64_type_info,
+     .get   = get_int64,
+     .set   = set_int64,
+     .set_default_value = qdev_propinfo_set_default_value_int,
+@@ -514,7 +515,7 @@ static void set_uint64_checkmask(Object *obj, Visitor *v, const char *name,
+ }
+ 
+ const PropertyInfo qdev_prop_uint64_checkmask = {
+-    .type  = "uint64",
++    .qapi_type = &uint64_type_info,
+     .get   = get_uint64,
+     .set   = set_uint64_checkmask,
+ };
+@@ -550,7 +551,11 @@ static void set_usize(Object *obj, Visitor *v, const char *name, void *opaque,
+ }
+ 
+ const PropertyInfo qdev_prop_usize = {
+-    .type  = "usize",
++#if HOST_LONG_BITS == 32
++    .qapi_type = &uint32_type_info,
++#else
++    .qapi_type = &uint64_type_info,
++#endif
+     .get   = get_usize,
+     .set   = set_usize,
+     .set_default_value = qdev_propinfo_set_default_value_uint,
+@@ -594,7 +599,7 @@ static void set_string(Object *obj, Visitor *v, const char *name,
+ }
+ 
+ const PropertyInfo qdev_prop_string = {
+-    .type  = "str",
++    .qapi_type = &str_type_info,
+     .release = release_string,
+     .get   = get_string,
+     .set   = set_string,
+@@ -603,9 +608,8 @@ const PropertyInfo qdev_prop_string = {
+ /* --- on/off/auto --- */
+ 
+ const PropertyInfo qdev_prop_on_off_auto = {
+-    .type = "OnOffAuto",
++    .qapi_type = &OnOffAuto_type_info,
+     .description = "on/off/auto",
+-    .enum_table = &OnOffAuto_lookup,
+     .get = qdev_propinfo_get_enum,
+     .set = qdev_propinfo_set_enum,
+     .set_default_value = qdev_propinfo_set_default_value_enum,
+@@ -646,7 +650,7 @@ static void set_size32(Object *obj, Visitor *v, const char *name, void *opaque,
+ }
+ 
+ const PropertyInfo qdev_prop_size32 = {
+-    .type  = "size",
++    .qapi_type = &size_type_info,
+     .get = qdev_propinfo_get_size32,
+     .set = set_size32,
+     .set_default_value = qdev_propinfo_set_default_value_uint,
+@@ -1059,7 +1063,7 @@ static void set_size(Object *obj, Visitor *v, const char *name, void *opaque,
+ }
+ 
+ const PropertyInfo qdev_prop_size = {
+-    .type  = "size",
++    .qapi_type = &size_type_info,
+     .get = get_size,
+     .set = set_size,
+     .set_default_value = qdev_propinfo_set_default_value_uint,
+@@ -1141,7 +1145,7 @@ static void set_link(Object *obj, Visitor *v, const char *name, void *opaque,
+ }
+ 
+ const PropertyInfo qdev_prop_link = {
+-    .type = "link",
++    .qapi_type = &str_type_info,
+     .create = create_link_property,
+     /*
+      * Since we have a create method, the get and set are used
 
 -- 
 2.54.0
