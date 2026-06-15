@@ -4,123 +4,144 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E504ECD98C5
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jun 2026 10:10:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27A74CD98DE
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jun 2026 10:37:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZ4Ge-0002CN-Mm; Mon, 15 Jun 2026 06:10:08 -0400
+	id 1wZ4h1-0006Uf-GL; Mon, 15 Jun 2026 06:37:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1wZ4Gd-0002C0-H7
- for qemu-devel@nongnu.org; Mon, 15 Jun 2026 06:10:07 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wZ4gr-0006To-ID
+ for qemu-devel@nongnu.org; Mon, 15 Jun 2026 06:37:16 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1wZ4Ga-0001p4-68
- for qemu-devel@nongnu.org; Mon, 15 Jun 2026 06:10:07 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781518202;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=4M1I8RGpIwaaxXIH54iyHEod1yhkQwEymkDVwIP9iD0=;
- b=Ed1BCuS0TMT6/Ovap4iaVz9T+zECr30IfLKsdfvnlmZQpXIF/v7boz3NK6g2GBDcC4C+JN
- cEhbJHBy7BwkhmeBpSuMp0sposb984kGOTNBb8hDMyXbdaidbMoI5esVeUpBZnsnGBPMFM
- 6V03vEVwsohnBqomVZ+nR4qoWXeCHEg=
-Received: from mail-dy1-f197.google.com (mail-dy1-f197.google.com
- [74.125.82.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-275-bcpg7zanOmq5U9uZQPHJpw-1; Mon, 15 Jun 2026 06:10:01 -0400
-X-MC-Unique: bcpg7zanOmq5U9uZQPHJpw-1
-X-Mimecast-MFC-AGG-ID: bcpg7zanOmq5U9uZQPHJpw_1781518200
-Received: by mail-dy1-f197.google.com with SMTP id
- 5a478bee46e88-304b8d0ee63so5042444eec.0
- for <qemu-devel@nongnu.org>; Mon, 15 Jun 2026 03:10:00 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wZ4gp-0007To-Cz
+ for qemu-devel@nongnu.org; Mon, 15 Jun 2026 06:37:12 -0400
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 65FAKlR1291130
+ for <qemu-devel@nongnu.org>; Mon, 15 Jun 2026 10:37:10 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ EYI5yEaJ3vAkiNTAsNMT38iNKhfm7T4GhZchTSfkFUg=; b=gXLtbENwP+nGMct2
+ Z+GR/o3WjmbhaXMuL7OZg0KDcRhoTTrtjYmB6hdUqNfb0M4fhvKvKtYfhNpvguOh
+ +nGJpWhdf6Q6SpIMd3n3DnTRgMyy7SkaOgz9EbBALD8liEulyBnP+HdpGXnESOvZ
+ h1rfs83OPSjVBedqf+2Hn/wd424v7F/ILeIM25Noxv0FQB+Xwqdj++HT246MUYxf
+ nIUaQSsW6a1GuYhR/sloC468hbqlfj6XdzxmfCBdwtujF9eW2TRNnS1epafB+VDk
+ /FrYh0EdkQKKailRFqMUGt3HQVUHH67VJyGXRpSdMiTlLz8KHS+hLiPm8pOUxHur
+ wynKhg==
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
+ [209.85.222.197])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4etd2c8rjn-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Mon, 15 Jun 2026 10:37:09 +0000 (GMT)
+Received: by mail-qk1-f197.google.com with SMTP id
+ af79cd13be357-915f6ff639aso939574985a.1
+ for <qemu-devel@nongnu.org>; Mon, 15 Jun 2026 03:37:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1781518200; x=1782123000; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=oss.qualcomm.com; s=google; t=1781519829; x=1782124629; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=4M1I8RGpIwaaxXIH54iyHEod1yhkQwEymkDVwIP9iD0=;
- b=Vpg6c4c69fAtGWrAYkZ/Lk7ECCtZnooKQ6FrprcUMm1j31tE9WazzFdQJK5gsuh/Wf
- LqbDn2er6AimmmUHejkI8+zV+5SSy08XmRSQRQEtQ9dPN4K84AQUf4JSOLW2tfALqDER
- Ul8UCGrFF9lvfyRSwvKTSgzxHRHZj/Xg9GQa7sDCgViQ3Th7AO2shu1MpB2St0O1LfGa
- oxIiRn0rWiwJU6Xk8AxKUuL14NO0/OLoTkaStiSPPSBcryUwJ0YyDc5HgxG3H5NqG3Ki
- H+RzpASZ2s0SFNRZ+fri0/i+VOHXK4o0cI0Ddn8D7giJlH80MR/XUtXleRQ+mjdC/BAO
- LVnQ==
+ bh=EYI5yEaJ3vAkiNTAsNMT38iNKhfm7T4GhZchTSfkFUg=;
+ b=kTywtTOxRKOdMo62NpnAlQ1UUOJErflLS4XcyYp10u3y857eYq2oVGxQHyGsNKrICW
+ i2lV8h0FLgTLWOh48KG9QZ9JpualhGBMfqkTw92Vf1EopMbWFNIXBDGAZpKKaM2vC2GM
+ 2U0NJywqyaQoYXStMD6xTqw6To0s9neGZhGRdkuYGfKhu1ueqscuXGrBQjuqEeb0nkK8
+ MFzNssIfH+UPyMsZ3Knpzs6JxsrVH/BnFQprsdQSlMdFsUN2KLZzRIKZJ0hHwlEGyAk7
+ aB64rgxBmnwy9Ntx4Ua1FghckXgw5bMP0AUUBlFyTTlqdwOBWAEqkhLgNS+bkcPIkL8x
+ G4iA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781518200; x=1782123000;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20251104; t=1781519829; x=1782124629;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=4M1I8RGpIwaaxXIH54iyHEod1yhkQwEymkDVwIP9iD0=;
- b=Url6bWudwddBwMNkBIqRRxTx2CBy7EEl46DYjB0DuCBdedvJjR8vq6qc+An3cf3GVf
- NwOWXTxwZpG0i2U9S3g8e/I6uVwqWkzlEe/7jicjlaIQvtobwwWVVvl9XF+pM0CImg2g
- XlKKfu51rMneQnfyMqJM6/lml7xuzsFH3pCpJE3LNPbnsGFXjrwl1tfHjT+4Ouo9GxCg
- 1DdSnClsA/1Jgq6RXyforqWRQBatKNa5xV8i84P8hjrx/BiqbzTYUywdM9/8QPQ9ugLn
- UI4E/RAcfO4sBk1dKLSR3vbp9U1HIaVY92vwpK+XbZO7V3pAhRIKucGSWfT1NOeiO5Z2
- qiYw==
+ bh=EYI5yEaJ3vAkiNTAsNMT38iNKhfm7T4GhZchTSfkFUg=;
+ b=PusHPnYTi4aGlBNPBhi/gwXXb/YjLYAKifq0ZOTpzVnxzg3uKnRT/Ubplnuz+Zen4T
+ mM9q+NqwMMMalaPjgOzRkejlcjMp0Py6LwEus8wj4xvb4KADmyn7oxoXiGB57k+yacPN
+ va2EQ/N2dJm7cbC92DIVVPis5jKANf2vFobuzuQ9qWbLRaodIrjA/yTuskeBw3NMI5lQ
+ XH03pmxzK94oHv+k9g05iiTMFIpsBajqW0fh/TgghOJv9IrAKZFuvfL03wt90gmZjea/
+ jijwEe0XK4RsFtSXzJuGc51yRhueCaSjVWBvVrgVQeayaiDsNJeoN1wBfHNiSxATqL3/
+ 53Bw==
 X-Forwarded-Encrypted: i=1;
- AFNElJ9KShwr+xfD74eiN6YovPg0YIr2D6F5GbXHX74AkbYX+3V9YswjkoaFBMcdDWAe7cd0mDWDy2Tkuxw9@nongnu.org
-X-Gm-Message-State: AOJu0YzAPFLFzJNTCaFejsR5LbbiFisW8WDtlQ42ZMmmNRnfJf7ZrF7G
- BU6CQsGnR+2U96XKjv6Ynb64zD1oInOlD+o583CkHfmBcESjdowfsLvglLRJgEsyOczyd6aMpuF
- 8IqKYFbuiwhYBhC/PZLlEKPQL/JQxZJ+Zn+L7tWCsSa9MgOoBBCdLKYSj
-X-Gm-Gg: Acq92OHOyPsL2nSl6/0Lisvd+QezeBwBGAcToCLY58PMG8icQJsiQHLtDB7Hc9WA0KD
- sPSPKwKnZJJuDLrHsUfI5K5uvQiiSdz2bDb82Wfetgp+i1u2SbeKGXLPNJ9Nt0uyjdqxZWSDXlY
- U0ObhVgjgphbYvGBfNRa7hZ8TiGLhqFbxc2PEkT53DOGbJvY9JyDeg1f8bOBy1ufM/L8qiYy0ie
- GISImr3qAHswDsDtOcUrTxqPaQZKKJe1FFQ4pSyUgMeTgNrExmClzo+1MIFBB5lqkWiDO7iSgXf
- 0dspR9lNjmyNxnjYSBYP7WKUlozmXj0TYWUmg8RkBdNbj2DXISZHLwD0SP3Ty/lHMUoPJurcbrb
- 1zJDHgAIhQ7MKOfnhh7W9Qkb/pKioP94Kp/Uhy03haDm8ecnqMN42dYQINS6B/bVD
-X-Received: by 2002:a05:7300:4355:b0:2ed:e14:42e9 with SMTP id
- 5a478bee46e88-30940357f24mr6231710eec.34.1781518199799; 
- Mon, 15 Jun 2026 03:09:59 -0700 (PDT)
-X-Received: by 2002:a05:7300:4355:b0:2ed:e14:42e9 with SMTP id
- 5a478bee46e88-30940357f24mr6231675eec.34.1781518199173; 
- Mon, 15 Jun 2026 03:09:59 -0700 (PDT)
-Received: from [192.168.68.51] (n175-34-8-244.mrk21.qld.optusnet.com.au.
- [175.34.8.244]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-3081ea43bc7sm13986211eec.22.2026.06.15.03.08.30
+ AFNElJ/HgSiyD1toDiIEEJrkN38kuNNY7FVk54DtEktKeWtON8wPna+RNpH/TvXn9op3w3jCnLTbdq9klIKk@nongnu.org
+X-Gm-Message-State: AOJu0Yz5TfyvuJ3zqTnOiVGVx5PxiEGgARdu2oWRKzIjUdD6oSu+XQH4
+ oqAMUTB8VBwA2wDwEu9f62lbw99DMBf/cNQZYJBstnvFcgf/aNWD4MvNkWwRznnXLmnF3NrLNGI
+ DNhwgeth1TjagywQDxMUMxwDsTwFsp0e53TzhAZlNMJ9SpOnjSsGL5ETtPA==
+X-Gm-Gg: Acq92OH7xOyrqimoNk+fFTLglJf2mpuDp7BlcK6cbPLDoQ7ZnhosrhnuLG/SJsVBoHv
+ KO5zH0y+oCRgwz9LFKOMZ2pZQR20nlY2oPDJyqpDB9DfrfYPcgRkZSNL790iIgCbr9Kwt8Q/uXK
+ azxtF9i4oywfKMiw/eb9YPaEN/ypLe/38gEKKOKhTY3gGYD/s+kA+8XeM20IqCdTDTgRRszh5mA
+ f+iGfmfymRqdb/wafL3bWW0pxohl3YeuiEHeQeev21ItJyfeA8yoZ3q64q+EHVGJcjLzUAGPzQU
+ iUZRbRTf/2+7maUpIGUo70i85TCcC6+6gHcw4Jezw+O5G2XBMIDzIG+NyfiZ1JADQcTgaLqziKS
+ 2NxzGrWAXTAG/JinSydvtgmf7Ztde/8WsEHTqr3wsdtdFT40/agHnR5Vz+u3T2ZUs1JLCkotm
+X-Received: by 2002:a05:620a:6606:b0:915:eec4:1ec5 with SMTP id
+ af79cd13be357-917f243e101mr1584124485a.51.1781519829361; 
+ Mon, 15 Jun 2026 03:37:09 -0700 (PDT)
+X-Received: by 2002:a05:620a:6606:b0:915:eec4:1ec5 with SMTP id
+ af79cd13be357-917f243e101mr1584119985a.51.1781519828876; 
+ Mon, 15 Jun 2026 03:37:08 -0700 (PDT)
+Received: from [192.168.69.214] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-bfe5116f409sm405186166b.23.2026.06.15.03.37.07
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 15 Jun 2026 03:08:35 -0700 (PDT)
-Message-ID: <1845165e-5ab8-49ae-ac23-fabbe723f718@redhat.com>
-Date: Mon, 15 Jun 2026 20:08:28 +1000
+ Mon, 15 Jun 2026 03:37:08 -0700 (PDT)
+Message-ID: <7373aec7-4638-4b45-8ac3-7e68a940c7f2@oss.qualcomm.com>
+Date: Mon, 15 Jun 2026 12:37:07 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] system/memory: Use __builtin_mem{cpy, move} in
- accessors of ram device region
-To: "Michael S. Tsirkin" <mst@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>
-Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org, peterx@redhat.com, berrange@redhat.com,
- david@kernel.org, alex@shazbot.org, clg@redhat.com, pbonzini@redhat.com,
- philmd@mailo.com, phrdina@redhat.com, jugraham@redhat.com,
- shan.gavin@gmail.com
-References: <20260612110307.1264798-1-gshan@redhat.com>
- <20260612110307.1264798-2-gshan@redhat.com>
- <223f5f94-b9b7-46b0-8466-5be655203a0e@linaro.org>
- <CAFEAcA-TgP_BM0WQo3rysZmvhNN17Gc_nrSYB6pXn-mvs5w13g@mail.gmail.com>
- <123d9e80-d731-42c7-81cc-71de47bb13d3@linaro.org>
- <20260614084004-mutt-send-email-mst@kernel.org>
- <02d809b0-6396-40dd-a2c5-866028b7cc4d@linaro.org>
- <20260614131704-mutt-send-email-mst@kernel.org>
- <52c2af6c-f494-4e30-bac6-bde2aaf48931@linaro.org>
- <20260615032545-mutt-send-email-mst@kernel.org>
+Subject: Re: [PATCH 2/4] python/qemu: split console from harness args
 Content-Language: en-US
-From: Gavin Shan <gshan@redhat.com>
-In-Reply-To: <20260615032545-mutt-send-email-mst@kernel.org>
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Cleber Rosa <crosa@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>,
+ John Snow <jsnow@redhat.com>, Thomas Huth <th.huth+qemu@posteo.eu>
+References: <20260614100902.885698-1-alex.bennee@linaro.org>
+ <20260614100902.885698-3-alex.bennee@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+In-Reply-To: <20260614100902.885698-3-alex.bennee@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=gshan@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjE1MDExMSBTYWx0ZWRfXyZDtKiIcWQQo
+ OcIDyuKOUhx9wWBjSKo6pfAdNAjLeNVk+ygZvIDhUxlrs++uHnKXzooiL0CZ1gfsVJqosi+nxbf
+ fKrOuI1iVZF+XIJXFMUrZ8uYnbWUnYiyqjNhGeRR6blknQ4ntjAxC0X6lwA3SaVs90Ln6LMVjnO
+ m4GH0N8crK/gIzKHTuPl7DbA106rRL7L6622oUR+UkuY1ALjk6+fW81RPOhHyit9F1pkKUxrl3N
+ 3ItfcH0QeUY05HkJyYtr1LqmjuBdNiojAx/Vz2+OO/hiU+05FKwas4z3RgIqM2qckDqJWVPRshk
+ han2XTWDGtCJ/FmeCiq2243ds0uKF/WHZ6LeWJZDDH7O92XK1QlFZ6lZJ3v+Z+cSZTCFHIefuRL
+ 9S06yhs16fxEu5IJ/KhVvxA2o3bbN3VL2hNQdckyP8ASuUVQ4A4tdO3hAHdsOOwJg11cB0uVGsF
+ y1/TKm0yTj9MLBJRY9g==
+X-Proofpoint-ORIG-GUID: 9BsjOIeAtZl2CUpX-a8yIfB99CYJ-N-A
+X-Proofpoint-GUID: 9BsjOIeAtZl2CUpX-a8yIfB99CYJ-N-A
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjE1MDExMSBTYWx0ZWRfX5mUbKgHueKXn
+ pMfWpAoEWEGpjSuz0Xxjwn5gMvxtXcvDgvAmGYYk7TiWcipXMLG3CVg2jy7lpdS0NKBn5RtazbQ
+ PpGj8mdPpz+FU07QaOJ5A20ilS9XVZY=
+X-Authority-Analysis: v=2.4 cv=MsRiLWae c=1 sm=1 tr=0 ts=6a2fd5d6 cx=c_pps
+ a=50t2pK5VMbmlHzFWWp8p/g==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+ a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
+ a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=1tSEMpTH9XP_W59IOagA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=IoWCM6iH3mJn3m4BftBB:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-15_02,2026-06-15_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 suspectscore=0 phishscore=0 lowpriorityscore=0 bulkscore=0
+ clxscore=1015 adultscore=0 priorityscore=1501 impostorscore=0 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606040000 definitions=main-2606150111
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -136,73 +157,14 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/15/26 5:58 PM, Michael S. Tsirkin wrote:
-> On Sun, Jun 14, 2026 at 06:41:57PM -0700, Richard Henderson wrote:
->> On 6/14/26 10:22, Michael S. Tsirkin wrote:
->>> On Sun, Jun 14, 2026 at 09:45:51AM -0700, Richard Henderson wrote:
->>>> On 6/14/26 08:13, Michael S. Tsirkin wrote:
->>>>> Yes, I think it does work because we use -fno-strict-aliasing.
->>>>> For bigger sizes we'll need packed because the addresses
->>>>> could be unaligned.
->>>> ...
->>>>> For most host/guest pairs things simply work even for unaligned.
->>>>>
->>>>> And yes, guest drivers do do this.
->>>>>
->>>>> On classical pci, there are no transactions as such and
->>>>> an unaligned access will be split anyway.
->>>>
->>>> I'm saying, if you're talking about pass-through to real devices, that won't
->>>> work. For instance, AArch64 will trap unaligned accesses to Device memory.
->>>
->>> Presumably, AArch64 drivers don't do unaligned at all then?
->>
->> Yes.
->>
->>>> You need to actually handle unaligned.  Perhaps something like
->>>>
->>>>       /* Find unit to fit size and alignment of dst */
->>>>       uintptr_t test = (uintptr_t)dst | size;
->>>>       uintptr_t lsb = test & -test;
->>>>
->>>>       switch (lsb) {
->>>>       case 1:   // loop over uint8_t
->>>>       case 2:   // loop over uint16_t
->>>>       case 4:   // loop over uint32_t
->>>>       default:  // loop over uint64_t
->>>>       }
->>>>
->>>> with the expectation that normally we'll have aligned addresses and size
->>>> such that the loop will iterate once.
->>>>
->>>>
->>>> r~
->>>
->>> And ifdef for arches without unaligned support?
->>
->> No ifdef.  All accesses produced by the above are aligned.
->>
->>
->> r~
+On 14/6/26 12:09, Alex BennÃ©e wrote:
+> Before we mess with the console output lets create a new helper just
+> for that.
 > 
-> So something like:
-> 
-> #if defined(__i386__) || defined(__x86_64__)
-> #define HOST_UNALIGNED_MMIO_OK  1
-> #else
-> #define HOST_UNALIGNED_MMIO_OK  0
-> #endif
-> 
-> 
-> and then we can check that.
-> 
+> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+> ---
+>   python/qemu/machine/machine.py | 5 +++++
+>   1 file changed, 5 insertions(+)
 
-Thanks for all the comments. A new revision (v2) has been sent for further
-comments, thanks.
-
-https://lore.kernel.org/qemu-arm/20260615100200.266968-1-gshan@redhat.com/
-
-Thanks,
-Gavin
-
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 
