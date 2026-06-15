@@ -4,120 +4,141 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CCA55CD98E1
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jun 2026 08:56:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 970E6CD98C7
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jun 2026 09:01:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZ36a-00074u-OV; Mon, 15 Jun 2026 04:55:40 -0400
+	id 1wZ3BZ-0007pr-KI; Mon, 15 Jun 2026 05:00:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <FangSheng.Huang@amd.com>)
- id 1wZ36S-00074V-Ep
- for qemu-devel@nongnu.org; Mon, 15 Jun 2026 04:55:35 -0400
-Received: from mail-westcentralusazon11013000.outbound.protection.outlook.com
- ([40.93.201.0] helo=CY3PR05CU001.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wZ3BV-0007pW-UA
+ for qemu-devel@nongnu.org; Mon, 15 Jun 2026 05:00:45 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <FangSheng.Huang@amd.com>)
- id 1wZ36J-0005sp-Qw
- for qemu-devel@nongnu.org; Mon, 15 Jun 2026 04:55:29 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=hT2vS/bspKbFSJmu0o1Q6gDShuWrNPmcaTb8RC5j7P4s3fclREJUE8nD6DeQmQXXbLVC5me2vStKQ0yXg2zHHI5Z6khcV8rpKlLK9SOwsVNk83LKuRmRt0z34Q4Q75zdrI1TW/qaJRy5QioDDB5bu/dRK8WbK4SG88n4Pur6z3RwVQ/diPjQfLwpG86rBOgSzvmaMoEC5SvdXdZxoGe2QUps29Qsk79eJXYY0nKf5xQwkWiSyhFGc7qWcdizqF8q2VLGwROGNskoyHzf3IJXOX/sc/jbUbUqVcfYgFwiO2eYdB2P8OwQ27zK37+i1Kd/DwCYNWLF8xDRM29wD2v9HQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=npaVYxS92gCJmb4Y7CCXeE5SyuS+YZ4kkzATMlK6R/M=;
- b=I9QJCYBBQYFyHsyo6Rw3eZq4KvkcTzF/hsQX+VPREdIVIIzg0JZ0tvs71TOFZ8yDOUEn51Fmq9tRdiwuJVlkdPp7NE+Q/saboFmrx/pO1PTSKPbWh3EYLqlzhrDvpKUTa2XZOoLwAT6gXVAsWIhdd0PEM3MO7cTaBx9Arzq7O7MDukWe8M7H2PoTi5QjnR7ezooGyHV2Kfk2GBpiYSOtrb80nkjxsfySB7WV8QUS5oGB/DztfZiUuAY6f7bRs9i/RJuVr3mLx5Yq4aSH9HPqMhJXi5Y0C1ZxV+OIA60ZGnCLJeYM6gfDJNMW3nHXwOYZPrbzAQWnEO9HvxGOhvQP0Q==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 165.204.84.17) smtp.rcpttodomain=oss.qualcomm.com smtp.mailfrom=amd.com;
- dmarc=pass (p=quarantine sp=quarantine pct=100) action=none
- header.from=amd.com; dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=npaVYxS92gCJmb4Y7CCXeE5SyuS+YZ4kkzATMlK6R/M=;
- b=gLQhZRhYN0Vi+AOS6ZeDLAt6xw3WCnkSGfDO5GPZfPWn7a26yzc13ZmcMMKOy72mTgveWsSRBreb8r6D+w0JLEvGpyO8UE2iPTGoSQoP0j521obS85d+/fxChx8V35wgA9rEtgM71x2wSJyU6xG5MkdVKJg/wICR1hZz6dOJDfc=
-Received: from MN0P220CA0013.NAMP220.PROD.OUTLOOK.COM (2603:10b6:208:52e::28)
- by SA1PR12MB7037.namprd12.prod.outlook.com (2603:10b6:806:24c::21)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.113.18; Mon, 15 Jun
- 2026 08:50:11 +0000
-Received: from BL02EPF0002992C.namprd02.prod.outlook.com
- (2603:10b6:208:52e:cafe::84) by MN0P220CA0013.outlook.office365.com
- (2603:10b6:208:52e::28) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.21.113.18 via Frontend Transport; Mon,
- 15 Jun 2026 08:50:11 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
- smtp.mailfrom=amd.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=amd.com;
-Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
- 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
- client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
-Received: from satlexmb07.amd.com (165.204.84.17) by
- BL02EPF0002992C.mail.protection.outlook.com (10.167.249.57) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.21.139.8 via Frontend Transport; Mon, 15 Jun 2026 08:50:11 +0000
-Received: from satlexmb10.amd.com (10.181.42.219) by satlexmb07.amd.com
- (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.41; Mon, 15 Jun
- 2026 03:50:10 -0500
-Received: from satlexmb08.amd.com (10.181.42.217) by satlexmb10.amd.com
- (10.181.42.219) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.41; Mon, 15 Jun
- 2026 03:50:10 -0500
-Received: from [10.65.99.90] (10.180.168.240) by satlexmb08.amd.com
- (10.181.42.217) with Microsoft SMTP Server id 15.2.2562.41 via Frontend
- Transport; Mon, 15 Jun 2026 03:50:09 -0500
-Message-ID: <cfc176a2-3f73-4279-8093-eeeeba033b54@amd.com>
-Date: Mon, 15 Jun 2026 16:50:03 +0800
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wZ3BU-0006oA-Es
+ for qemu-devel@nongnu.org; Mon, 15 Jun 2026 05:00:45 -0400
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 65F7UCkG4091933
+ for <qemu-devel@nongnu.org>; Mon, 15 Jun 2026 09:00:42 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ FYfdZLMq8LqjR71Z/DWsbC4FByyrAC0oSL4BAoI60Fs=; b=VE9+SYFb85Sg3LGv
+ GAg1GSbGbLAH0/NEYUw5BBBlpsN3+EAlgnVPrXKgkPqfULygzYXzfVxSYHiHigqp
+ bBdwHapbOWutS0Jko0g+PoRpWcahJVObInHo3dFA5jLBS613qLZEqjVnkkSk/7LM
+ BFdDc87s5pCF4MmgGf1n9y4uz32VGvnvwnWtg7eVtwivj1EsUAcMDTPBw/BLWn83
+ LlcT1xZA+HrqJjzbhYACp/pramhExxvfi/RyDKjnXnG4YcFCJw8JJ/bFuKW4EPXy
+ bz1fZ8J1Xf2GbVw5DvHPt4xckc8SpERks6xP8SygFItKVnkTdprE8NahMBtQnvFy
+ mHpCUg==
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
+ [209.85.222.199])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4etd2c8c0p-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Mon, 15 Jun 2026 09:00:42 +0000 (GMT)
+Received: by mail-qk1-f199.google.com with SMTP id
+ af79cd13be357-91565f8c589so560192685a.0
+ for <qemu-devel@nongnu.org>; Mon, 15 Jun 2026 02:00:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1781514041; x=1782118841; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=FYfdZLMq8LqjR71Z/DWsbC4FByyrAC0oSL4BAoI60Fs=;
+ b=PDx+USmA1Geu7EZef7lnNmaQvpqs87RY+KaiLkddA6wB4cInPLF6Z69nRhy9NOJQL6
+ EHDzVXq9NnDIY0r2LQ/DbfreWAr55ugjmA9G3wIysvOnNNTysTS2ZCbawiniBJxMH8fR
+ klkFxeujCw6trOMlvkKh7WCtW4TDPWeb0e4uZDatY+VPbQdIfKEyfw7In+n7jT4BIjPQ
+ ttxMXzVEadmr8i7aMv34mxHjd3zIXGnVQyTK1LebfZeN7Qwp68vV4ZzQapyRQBTvwsVP
+ SHLs7QlJ1CG/tB8c91/JLuO6n9+PVcRs0u22FNCQuWOjRo1Pzea8QcEElRNDcyr6Aa11
+ Rmlg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1781514041; x=1782118841;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=FYfdZLMq8LqjR71Z/DWsbC4FByyrAC0oSL4BAoI60Fs=;
+ b=Q+0bmK5eNDvl4TV4DornbImAjpRrAzqp+UQQFTI/+5F47ARoJPqgGCRwIOckc9KNc3
+ T2aNLWNdPHuA5b/XEcn2XK4gYgNQOGl1Q1kYsGsk+KIazsujMCEyXGN81TpDiyplThYG
+ Nm2MP1XvD2XbH0NrRHJexLzIIYWQ51ihXj3BvxeCO/cYcph+BCTDe4D3eO/GzBFSAoGX
+ GLKYm2N1YwVH3s/hIE0wSh88Wxa324uvOtUUkiiC6qj0WIX99yJf53IQZm7HdzPu95iy
+ 9S2CVeMCyDlt+mHhCvpr2qTY4wGon2qRLliOgJZ+EDczgmCv/UFb/lrQmrogQkD1sXVh
+ FTcg==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ/Kx9kZhcykvS8THNW1HGU0M9cRc5KL7I5WyXBglw1QZ1zYQl3xrns/DLywTOeid4Sb1yH8KD7/SPKO@nongnu.org
+X-Gm-Message-State: AOJu0YwdG8EGuly4ZvBODEZPEmPh8usyL6LR/xWVRgHVrmiXOSCzEaxu
+ teXFIcXv7+mBaKRrpACrxK/MQD6pT2J1UVu9pSqllMgaH4DHO3fLuCuO3anbqoxfasD5WEa3zxJ
+ uz40ICBEWiA6NRpaoRPPCX8JY0k3Kic/6fdJ/P5oqKXB6RndylHKKxi1jqA==
+X-Gm-Gg: Acq92OG5g1kUaBeh96Zdvcbw/TUPWh2VoekpvV9NcnGbIUUD2Y/0M5enQEk1aiZjzS1
+ tvZFGaqe4X2sb5uNugL1SDb5VPXx786Z3Bo1AsCO65/wj46szT0tJRQxHHtXbYx0uGJxvGKdx98
+ M/GibmOC9+H8flOEn8JvKcqWTmTD9vd/B3uPqjIwhFYYNySk0gBDDgzLe+kfraa38KKYnQFv2hu
+ v92LXH0P+HFQF2TJ/o/2c2jr7TD4rYftWcpNDB14kk73fb86MmVLz+E1rYEV96sia9jT1XOBI+q
+ ABhcg5qwRV6wf0EhgoqIU2kjTyGfym4evQqAB5Cfp1a9zvdNu/7FI+AVFEVb14Ra/NWj2DCwHYw
+ mYehzUVrSoVL1MW2D1/NO3NVdukwpfuDvJ4ITWD4DNc2WFx6Gs3MXNcVFhdqRdUtuWz+5O8cu
+X-Received: by 2002:a05:620a:a191:20b0:915:9b90:332f with SMTP id
+ af79cd13be357-91619dfb8e7mr1232350685a.11.1781514041414; 
+ Mon, 15 Jun 2026 02:00:41 -0700 (PDT)
+X-Received: by 2002:a05:620a:a191:20b0:915:9b90:332f with SMTP id
+ af79cd13be357-91619dfb8e7mr1232344685a.11.1781514040826; 
+ Mon, 15 Jun 2026 02:00:40 -0700 (PDT)
+Received: from [192.168.69.214] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-bfdb7b6dbbcsm432827266b.32.2026.06.15.02.00.39
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 15 Jun 2026 02:00:39 -0700 (PDT)
+Message-ID: <6920a6ce-8bad-43d4-8f24-fce4f78f5753@oss.qualcomm.com>
+Date: Mon, 15 Jun 2026 11:00:38 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v11 1/4] hw/mem: add sp-mem device for Specific Purpose
- Memory
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- <qemu-devel@nongnu.org>, <david@kernel.org>, <imammedo@redhat.com>,
- <gourry@gourry.net>
-CC: <Zhigang.Luo@amd.com>, <Lianjie.Shi@amd.com>
-References: <20260611100637.2460507-1-FangSheng.Huang@amd.com>
- <20260611100637.2460507-2-FangSheng.Huang@amd.com>
- <9b3384bd-bf7f-433e-8427-7b278bb7ff8d@oss.qualcomm.com>
-From: "Huang, FangSheng (Jerry)" <FangSheng.Huang@amd.com>
-In-Reply-To: <9b3384bd-bf7f-433e-8427-7b278bb7ff8d@oss.qualcomm.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+Subject: Re: [PATCH] configure: honor --extra-ldflags when forced to use
+ objc_LINKER
+To: Matt Jacobson <mhjacobson@me.com>, qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>
+References: <20260615045547.23422-1-mhjacobson@me.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <20260615045547.23422-1-mhjacobson@me.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BL02EPF0002992C:EE_|SA1PR12MB7037:EE_
-X-MS-Office365-Filtering-Correlation-Id: 00aa3f71-637d-4f2e-2cda-08decabb1c13
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|1800799024|36860700016|23010399003|376014|82310400026|4143699003|18002099003|56012099006|11063799006|13003099007|22082099003;
-X-Microsoft-Antispam-Message-Info: rRvGqidoP3P0EwZwtwszN/Lo8B+xDraxjwn6BILm7cg2DGNKCHfrUtYnINK11IeA6x1Oj4Q75mKXca05YbMn84VB+lGLbr/bEujv4xGTPcKjKqv9Ty8srx4qBuRejgkquz4UVI6rjzRkHG8ICdX6fdPjR61WDlmpHgim1Tj72EIix+H7sKx/y3dKD64sOC4dFn+BkBEZ2wuoTrejeJonTxNP7vVGd6r2dU3fIuFIMkBUB17LFNqvda62UJBr/9jzocMF/Frc6Th0wfsy5x3N3XIPe5AJ2+qvrEGYhw8TJ/n6jSPzTkSIp6LaiVcMO/najGhSNyxeeRo5PhViDKJYhqg0IpeCKVQBoWn5EZSeMwEdo7I3J9EbGp1+ZFgOQ9lClQdFhlinMeZ0Nj/TKTo6AJdZsY2tcmV47rJxZEKHgcq74L/xbfaISPOo7Lk6lDnc6NEUFci/rOGkzQKU5TAG4s30G5k+elsCuu31N0kDUleauI7kkhSkWD8VWXTv4+tntIMIrwTLlZxSNb6rgwIQG+2RZJavCw5w84QXA0zV44PnR+vSsTeJ2ZTJ8USMPW0K+fSUhfiL5Fx9eaUBvwOFL/GOkVk1h6K/6fHNYx0GipSO896FW/P5i5XW96REwZ4RpGcsVb1RY7UaLSPgug2XoNALTcSZOpgDwxkoR7PU3uE84JaSGjEi52OzXkW0E9RU0joyAI1rBJQoaKnhdJo/q3MDIQyQBOUNy/pv3ebXAm0=
-X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:satlexmb07.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230040)(1800799024)(36860700016)(23010399003)(376014)(82310400026)(4143699003)(18002099003)(56012099006)(11063799006)(13003099007)(22082099003);
- DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: xWcSeam39QYrc0CjfTUo0GmJxkEL46r2oKwI2CupigGpud226ijch/E376FpfzWvcSGgb+Bz1F0Fd8t14B/fLf5j1ZcGR1XXwDPM4znEWDvRANAHZJyzy8spZHPhpWJddIa549yadkdNhRBfns669BMY6pbYyW78CKU9lzPHAf1VsQBZD+aCgOqmklxPS7h6SLM15KEmVQOqEETA4VPfSsOIQBFqFSNG/V6yZJzQg2X27jyfDIbZFMhQF36gsfsO52gcyizrAUqjJwXjmX3B7pbaVgImr5da7P7cMW2uIN4xbnY4gbbRpHdKe94T5DEKT2mMDyuXeeCaEm0uInNf2Yc5T94PiGGRkVofuoVEd4h5TCz3UM/sQmOeG/ETz4r2lmVguUGkpsLRTfK0om9aPfPWhTBMlFG+dDIBgzcGTCXruYrBBkqVM8WI4cFwMPck
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 15 Jun 2026 08:50:11.1535 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 00aa3f71-637d-4f2e-2cda-08decabb1c13
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
- Helo=[satlexmb07.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: BL02EPF0002992C.namprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA1PR12MB7037
-Received-SPF: permerror client-ip=40.93.201.0;
- envelope-from=FangSheng.Huang@amd.com;
- helo=CY3PR05CU001.outbound.protection.outlook.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjE1MDA5NCBTYWx0ZWRfX7ItAAqYtuHsV
+ jFHe2lTb8gZ/YclUaAI6TxKbDmad199Hud8kJON1P0/idqoqVC9pBDinDVRFvWjWvngzatPGKH0
+ zMxLpjd4P8W27t6q73atSqdone0W1x8wQJZmqphM7hmV/9jupljzL1+hVRiCC2YZYRrDst6npFP
+ qHzYq5zKGoQ3dpEXSF8RdK5e7YyOwF31hBSseGmkPFr1IGORZfsFsr8rGLOTBMXYvV2padQDldh
+ Be2x+ok82mB81Zu31dModobKCsHJX6Knsua9CBbqtgPemUWhBRCjROIcSxMIs83D/CEQZYLb3OJ
+ NO7GdbLYMog5HY84reeuBkTe8CAlqFWHwQ8ijmBYCrUbJfMeHZASjbtHWgFn++M7gpiqsZ9TI6F
+ 8LAwDTDPL5NeiIdqaWRKv4fRlhpwc45/irnwOahce10WeeSmj047xliXRW5hD7WSpGU6mQdzJgV
+ uyjeXZ+y+VA8TdkXduQ==
+X-Proofpoint-ORIG-GUID: d8tTjmdq_w6m4KoobqLeKIpJq9e88AGN
+X-Proofpoint-GUID: d8tTjmdq_w6m4KoobqLeKIpJq9e88AGN
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjE1MDA5NCBTYWx0ZWRfX5jTf27r5LLiW
+ GqU/DBQMCBLwsPSvITisLfzwNyi8/KzwgSgg3VhfZTtrxK4QLx6gufINHSu29RUCOASAcWvKq1U
+ Gd8b+/GYRFgwcqgefEs3K6D6MwnVKG0=
+X-Authority-Analysis: v=2.4 cv=MsRiLWae c=1 sm=1 tr=0 ts=6a2fbf3a cx=c_pps
+ a=HLyN3IcIa5EE8TELMZ618Q==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+ a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
+ a=HHGDD-5mAAAA:8 a=EUspDBNiAAAA:8 a=KQvYhro-uxQUiASCdf8A:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=bTQJ7kPSJx9SKPbeHEYW:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-15_02,2026-06-12_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 suspectscore=0 phishscore=0 lowpriorityscore=0 bulkscore=0
+ clxscore=1015 adultscore=0 priorityscore=1501 impostorscore=0 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606040000 definitions=main-2606150094
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -134,54 +155,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 6/12/2026 2:38 AM, Philippe Mathieu-Daudé wrote:
-> [You don't often get email from philmd@oss.qualcomm.com. Learn why this 
-> is important at https://aka.ms/LearnAboutSenderIdentification ]
+On 15/6/26 06:55, Matt Jacobson wrote:
+> 3220b38a8d had the side effect of making the individual target link steps
+> use objc_LINKER on macOS, because `coreaudio.m` became visible to Meson as
+> a source file.  (The preexisting presence of `cocoa.m` is masked by the
+> fact that it gets built into libsystem and then extracted back out as an
+> object file.)
 > 
-> Hi,
+> `configure` correctly passes `$EXTRA_LDFLAGS` to the "C linker" and "C++
+> linker", but it neglected to do so for the "Objective-C linker".  Fix that.
 > 
-> On 11/6/26 12:06, fanhuang wrote:
->> +#include "hw/mem/memory-device.h"
-> 
-> Not needed AFAICT.
-> 
->> +#include "hw/core/qdev.h"
->> +#include "qom/object.h"
->> +#include "system/hostmem.h"
-> 
-> Not needed (HostMemoryBackend is forward declared in "qemu/typedefs.h").
->
+> Signed-off-by: Matt Jacobson <mhjacobson@me.com>
+> ---
+>   configure | 1 +
+>   1 file changed, 1 insertion(+)
 
-Confirmed, dropping both.
->> +    if (!spm->hostmem) {
->> +        error_setg(errp, "'memdev' property must be set");
-> 
-> Already checked in Realize? Or is this for the introspection test?
-> If so, use SP_MEM_MEMDEV_PROP like in Realize.
->
-
-Will switch to SP_MEM_MEMDEV_PROP for consistency.
-
->> +/* boot-time only; no plug/unplug state to migrate */
-> 
-> Please move that comment ...
->
-
-Will move it inside the struct.
-
->> +static const VMStateDescription vmstate_sp_mem = {
->> +    .name = TYPE_SP_MEM,
-> 
-> ... here.
-> 
->> +    .unmigratable = 1,
->> +};
-> Only minor comments, patch LGTM otherwise!
-
-Thanks for the review, Philippe -- all addressed in the next respin.
-
-Best regards,
-FangSheng Huang (Jerry)
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 
