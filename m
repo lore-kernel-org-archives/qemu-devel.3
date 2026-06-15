@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 191CACD98CE
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jun 2026 22:20:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D035CD98DE
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jun 2026 22:20:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZFeO-0004x5-9Z; Mon, 15 Jun 2026 18:19:24 -0400
+	id 1wZFeS-00050B-2c; Mon, 15 Jun 2026 18:19:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
- <3WXowagcKCmgPXNORQKMUUMRK.IUSWKSa-JKbKRTUTMTa.UXM@flex--jrhilke.bounces.google.com>)
- id 1wZFeJ-0004vM-6F
- for qemu-devel@nongnu.org; Mon, 15 Jun 2026 18:19:20 -0400
-Received: from mail-pg1-x54a.google.com ([2607:f8b0:4864:20::54a])
+ <3XXowagcKCmwTbRSVUOQYYQVO.MYWaOWe-NOfOVXYXQXe.YbQ@flex--jrhilke.bounces.google.com>)
+ id 1wZFeK-0004vr-GM
+ for qemu-devel@nongnu.org; Mon, 15 Jun 2026 18:19:22 -0400
+Received: from mail-pl1-x649.google.com ([2607:f8b0:4864:20::649])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from
- <3WXowagcKCmgPXNORQKMUUMRK.IUSWKSa-JKbKRTUTMTa.UXM@flex--jrhilke.bounces.google.com>)
- id 1wZFeE-0008ME-CW
- for qemu-devel@nongnu.org; Mon, 15 Jun 2026 18:19:18 -0400
-Received: by mail-pg1-x54a.google.com with SMTP id
- 41be03b00d2f7-c85dc345ac8so2140102a12.1
- for <qemu-devel@nongnu.org>; Mon, 15 Jun 2026 15:19:07 -0700 (PDT)
+ <3XXowagcKCmwTbRSVUOQYYQVO.MYWaOWe-NOfOVXYXQXe.YbQ@flex--jrhilke.bounces.google.com>)
+ id 1wZFeI-0008Mp-9d
+ for qemu-devel@nongnu.org; Mon, 15 Jun 2026 18:19:20 -0400
+Received: by mail-pl1-x649.google.com with SMTP id
+ d9443c01a7336-2c0b1bb53a8so24154195ad.0
+ for <qemu-devel@nongnu.org>; Mon, 15 Jun 2026 15:19:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20251104; t=1781561946; x=1782166746; darn=nongnu.org;
+ d=google.com; s=20251104; t=1781561950; x=1782166750; darn=nongnu.org;
  h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
  :date:from:to:cc:subject:date:message-id:reply-to;
- bh=yhfF4jlqwv2iVer4SiDpKpg+RBMlVSrisJluQj4yrtw=;
- b=pc7kAGVlhnrDkNLeSPnj+qAat334gnM8ru4QrDDKGJTvcj3FekZus3J1HPuHST6KIW
- t3j9YQifur+j1uczD80n5O/+xU/xJtJj7AVsUNR/uLBhLQ1Va1Npk1hbsKOtyr2F236r
- 9+EZdbUX9JDApn2ll2ulp4cJSSwZ3t9bQyyjgQAHZN5H6TYyIi5gLNAmMypsOJT1c3G5
- 5nrJa5wLgIknC9kv6T167RMT7lj01nYCu2FX2zeR8GmNZsa2J63srhsOBEnBsp77ZKiG
- lpzQfKrZZQOgapD8il+tnhXP33r1WBiRTqeaxJSgYVXtdnUd8e3ZO+MlMnJ/nHSF2u9w
- EYDg==
+ bh=c+Ut7VXMVVKOm7Ds5xHh28zb95dDYWMajWTQ/Qfkv1w=;
+ b=jmtqNu8nHIxhTVUgHFSqErS5WjuJ2mupUYMBIkbvH4lbmi0qUDnODaRIHrjaSvd5jS
+ dqN9bitckhZRNsbwZWQNQznRjdW/s7/9U8+cLLv0rqOleHKo1fnU9AdNoktmDlRzb7oY
+ 6hOQR17HO1Pe/tqPgJ/RJ3wfsNbpyyrmzCEy4XKVCclGqxD4DS4O9U5Zl6qZmlJeTSg4
+ sqkCDidA5KyVQXIdzu9OOdLX8Gtq5D1LQ5A8/CwYNtpOQ8ZkC1h/1k13I7NOzF0eUsAL
+ PSQodzldOw+jzyC/gQfzCAGWMuPBGQ3LjBFFxEIlDUt90GT+IkQ/cD4ejfyjJIeGqV1I
+ /CSg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781561946; x=1782166746;
+ d=1e100.net; s=20251104; t=1781561950; x=1782166750;
  h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
  :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=yhfF4jlqwv2iVer4SiDpKpg+RBMlVSrisJluQj4yrtw=;
- b=illnonz6NI8MzgIyfugnKZ8cDse3RC6JECaprpcV2frOZlplwGAdhbyfYgOVQ7Yd3/
- GJ4KDjUG+goJvx5bMEQML9xjYzjkgkn+XsPP93A7t8s3e6yy3nCfRrSSuJMRGQ1mV2Na
- ZBby21RyfT9OTMyh4vUiGrDBtB07Js8VH5UJH82WXgG9ecavU7IgEBYMLLh6mUlSjq6W
- 3pWXvn8DCbRuQiOinuN1uW2Bq19ehYc6OTQFb4rokRa5LxCpDh0A6qc1pzvY3eQAj050
- S+2ssRiW82JHM6VENHPbkcnscsO4XN4LMvzE76b2uXhKxVL2uxUDdKNYiL/H5We3jJ/T
- glJQ==
+ bh=c+Ut7VXMVVKOm7Ds5xHh28zb95dDYWMajWTQ/Qfkv1w=;
+ b=AyRbYR+CaoBm3hNh6pjRMvHRZx4vwOtRslStMC8cm6F8+p/dWqTYJBVojFYhoqMe9s
+ wGdRAH7RsekRpYJ/6yZXK/SwZl8C4RoGcR0pMDB503UEbeMwbF39451Zcm4ZnBknHPPt
+ CwI26ND1RMiPgmAATkfvVeRWsUnBLOEHkimW4ePltOP9PLmCiYe8RYAyoaaKTSlQQ9WL
+ XJvr2oPmDCLMco12ZoIp+melFnHXuZ6xwZRkouQCqg9KT9i8A5W/e8ptyaYFXeLYa+/r
+ HkfYxQpjfNr4plGPKEbxT+IbB4bOqXqmE+ZQFn2S/pANSGaZd2+MtlH2s/pXDAl88qln
+ S6kw==
 X-Forwarded-Encrypted: i=1;
- AFNElJ9/2SgEW+AzLSD4WSVDl0MdSecYVvZBmmaXgX2mwaJq+KHSEZwkibji2/v0q548Xa4jjQBjBhMOVa2U@nongnu.org
-X-Gm-Message-State: AOJu0Yxac8fzClNWRhwEkqq+92WIGDSmdSpK1FgdUS9dQsgaLTGgNL66
- +P0ylynF3mFVhW8Tz8LYdtNjLO2gecuUA9nrG3q7AGC8a/V/6CFSwQBWNU1zRxnzELPvSJMix5r
- jjZ65o81E
-X-Received: from pgam22.prod.google.com ([2002:a05:6a02:2b56:b0:c82:7761:9941])
+ AFNElJ81fnC7r6ErDw6kdSjwp52xKzvKTIX5li79UwZRnhVmefNIwP28AU3uY63GWCTbbDDdZcpcp8uQp+Ae@nongnu.org
+X-Gm-Message-State: AOJu0Yys4pHz8hXaglN+2mo7r4lak5HQETGt6Y6gRuWj20kaYz/2Nrbm
+ BUiGze7ofLz6h/qUqjY/oIlsbp9RaNcLhA2ApdUd5FP0ViA0fHHH6yE6zIKn/aRn6PX3uh/+y3H
+ CmSHtXoWr
+X-Received: from plbkk6.prod.google.com ([2002:a17:903:706:b0:2b0:46bd:4fe5])
  (user=jrhilke job=prod-delivery.src-stubby-dispatcher) by
- 2002:a05:6a21:8cca:b0:39b:d937:8020
- with SMTP id adf61e73a8af0-3b796445a27mr14534692637.42.1781561945942; Mon, 15
- Jun 2026 15:19:05 -0700 (PDT)
-Date: Mon, 15 Jun 2026 22:18:03 +0000
+ 2002:a17:903:3885:b0:2bd:9b0e:b43a
+ with SMTP id d9443c01a7336-2c699a91247mr10884615ad.7.1781561949482; Mon, 15
+ Jun 2026 15:19:09 -0700 (PDT)
+Date: Mon, 15 Jun 2026 22:18:05 +0000
 In-Reply-To: <20260615-igb-trl-v4-0-cf5739bf529f@google.com>
 Mime-Version: 1.0
 References: <20260615-igb-trl-v4-0-cf5739bf529f@google.com>
 X-Mailer: b4 0.14.3
-Message-ID: <20260615-igb-trl-v4-1-cf5739bf529f@google.com>
-Subject: [PATCH v4 1/7] igb: Define TRL registers and core state
+Message-ID: <20260615-igb-trl-v4-3-cf5739bf529f@google.com>
+Subject: [PATCH v4 3/7] igb: Implement TRL register write and configuration
 From: Josh Hilke <jrhilke@google.com>
 To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, qemu-devel@nongnu.org
 Cc: Josh Hilke <jrhilke@google.com>,
@@ -73,9 +73,9 @@ Cc: Josh Hilke <jrhilke@google.com>,
  David Matlack <dmatlack@google.com>,
  Alex Williamson <alex.williamson@nvidia.com>
 Content-Type: text/plain; charset="utf-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::54a;
- envelope-from=3WXowagcKCmgPXNORQKMUUMRK.IUSWKSa-JKbKRTUTMTa.UXM@flex--jrhilke.bounces.google.com;
- helo=mail-pg1-x54a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::649;
+ envelope-from=3XXowagcKCmwTbRSVUOQYYQVO.MYWaOWe-NOfOVXYXQXe.YbQ@flex--jrhilke.bounces.google.com;
+ helo=mail-pl1-x649.google.com
 X-Spam_score_int: -95
 X-Spam_score: -9.6
 X-Spam_bar: ---------
@@ -98,181 +98,111 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Introduce register offsets and bitmask constants for the Transmit Rate
-Limiter (TRL). Add the IGBTrlQueue structure and corresponding fields to
-IGBCore to track TRL state (timers, throttling status, and target rates)
-per queue. Initialize and free these timers during the device
-realize/uninit lifecycle, and reset them on device reset.
+Implement write handlers for TLDQSEL and TRLRC registers to allow the
+guest to configure Transmit Rate Limiting. Translate the register Rate
+Factor into a physical target rate (bytes/sec) per queue.  Disable TRL
+and clear timers when the link status changes or when TRL is disabled by
+the guest.
 
 Signed-off-by: Josh Hilke <jrhilke@google.com>
 ---
- hw/net/igb_common.h |  1 +
- hw/net/igb_core.c   | 59 +++++++++++++++++++++++++++++++++++++++++++++++++++++
- hw/net/igb_core.h   | 13 ++++++++++++
- hw/net/igb_regs.h   |  6 ++++++
- 4 files changed, 79 insertions(+)
+ hw/net/igb_core.c | 57 ++++++++++++++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 56 insertions(+), 1 deletion(-)
 
-diff --git a/hw/net/igb_common.h b/hw/net/igb_common.h
-index b316a5b..8c0a0cf 100644
---- a/hw/net/igb_common.h
-+++ b/hw/net/igb_common.h
-@@ -148,6 +148,7 @@ enum {
-     defreg(MTA_A),
- 
-     defreg(VTIVAR), defreg(VTIVAR_MISC),
-+    defreg(TRLDQSEL), defreg(TRLRC),
- };
- 
- uint64_t igb_mmio_read(void *opaque, hwaddr addr, unsigned size);
 diff --git a/hw/net/igb_core.c b/hw/net/igb_core.c
-index 45d8fd7..c94e8d3 100644
+index c94e8d3..dea8136 100644
 --- a/hw/net/igb_core.c
 +++ b/hw/net/igb_core.c
-@@ -96,6 +96,7 @@ igb_receive_internal(IGBCore *core, const struct iovec *iov, int iovcnt,
- 
- static void igb_raise_interrupts(IGBCore *core, size_t index, uint32_t causes);
- static void igb_reset(IGBCore *core, bool sw);
-+static uint32_t igb_trl_get_scaled_rate_factor(uint32_t trlrc);
- 
- static inline void
- igb_raise_legacy_irq(IGBCore *core)
-@@ -4282,6 +4283,53 @@ igb_autoneg_resume(IGBCore *core)
+@@ -2137,11 +2137,27 @@ igb_set_phy_ctrl(IGBCore *core, uint16_t val)
      }
  }
  
-+static uint32_t igb_trl_get_scaled_rate_factor(uint32_t trlrc)
++static void igb_trl_disable_queue(IGBCore *core, int qidx)
 +{
-+    /*
-+     * The TRLRC register stores the Rate Factor in 10.14 fixed-point format:
-+     * - Bits 13:0: Fractional part
-+     * - Bits 23:14: Integer part
-+     *
-+     * Combined, the lower 24 bits of the register (23:0) represent the
-+     * concatenated 24-bit scaled Rate Factor directly.
-+     */
-+    return trlrc & 0xFFFFFF;
++    core->trl[qidx].trlrc = 0;
++
++    timer_del(core->trl[qidx].timer);
 +}
 +
-+bool igb_trl_enabled(uint32_t trlrc)
++static void igb_trl_disable(IGBCore *core)
 +{
-+    return trlrc & E1000_TRLRC_RS_ENA;
++    for (int i = 0; i < IGB_NUM_QUEUES; i++) {
++        igb_trl_disable_queue(core, i);
++    }
 +}
 +
-+uint64_t igb_trl_get_target_rate(const IGBTrlQueue *q)
-+{
-+    const uint64_t rf_scaled = igb_trl_get_scaled_rate_factor(q->trlrc);
+ void igb_core_set_link_status(IGBCore *core)
+ {
+     NetClientState *nc = qemu_get_queue(core->owner_nic);
+     uint32_t old_status = core->mac[STATUS];
+ 
++    igb_trl_disable(core);
 +
-+    if (!igb_trl_enabled(q->trlrc)) {
-+        return 0;
+     trace_e1000e_link_status_changed(nc->link_down ? false : true);
+ 
+     if (nc->link_down) {
+@@ -2624,6 +2640,42 @@ static void igb_set_vtivar(IGBCore *core, int index, uint32_t val)
+      */
+ }
+ 
++static uint32_t igb_get_trlrc(IGBCore *core, int index)
++{
++    int qidx = core->mac[TRLDQSEL];
++
++    return core->trl[qidx].trlrc;
++}
++
++static void igb_set_trldqsel(IGBCore *core, int index, uint32_t val)
++{
++    core->mac[index] = val & 0xF;
++}
++
++static void igb_set_trlrc(IGBCore *core, int index, uint32_t val)
++{
++    uint64_t rf_scaled;
++    int qidx;
++
++    qidx = core->mac[TRLDQSEL];
++    core->trl[qidx].trlrc = val;
++
++    if (!igb_trl_enabled(val)) {
++        goto disable;
 +    }
 +
++    rf_scaled = igb_trl_get_scaled_rate_factor(val);
++
++    /* Zero is not a valid rate factor, treat as disabled */
 +    if (rf_scaled == 0) {
-+        return 0;
++        goto disable;
 +    }
++    return;
 +
-+    /*
-+     * The rate factor is a fixed-point number with a 14-bit fractional part:
-+     * Rate Factor = rf_scaled / 2^14
-+     *
-+     * The target rate is:
-+     * Target Rate = Link Rate / Rate Factor
-+     *             = Link Rate / (rf_scaled / 2^14)
-+     *             = (Link Rate * 2^14) / rf_scaled
-+     */
-+    return (E1000_LINK_RATE_1GBPS << 14) / rf_scaled;
++disable:
++    igb_trl_disable_queue(core, qidx);
 +}
 +
-+static void igb_trl_timer_cb(void *opaque)
-+{
-+    /* Stub */
-+}
-+
- void
- igb_core_pci_realize(IGBCore        *core,
-                      const uint16_t *eeprom_templ,
-@@ -4296,6 +4344,11 @@ igb_core_pci_realize(IGBCore        *core,
- 
-     for (i = 0; i < IGB_NUM_QUEUES; i++) {
-         net_tx_pkt_init(&core->tx[i].tx_pkt, E1000E_MAX_TX_FRAGS);
-+        core->trl[i].timer =
-+            timer_new_ns(QEMU_CLOCK_VIRTUAL, igb_trl_timer_cb,
-+                         &core->trl[i]);
-+        core->trl[i].core = core;
-+        core->trl[i].queue_idx = i;
-     }
- 
-     net_rx_pkt_init(&core->rx_pkt);
-@@ -4319,6 +4372,7 @@ igb_core_pci_uninit(IGBCore *core)
- 
-     for (i = 0; i < IGB_NUM_QUEUES; i++) {
-         net_tx_pkt_uninit(core->tx[i].tx_pkt);
-+        timer_free(core->trl[i].timer);
-     }
- 
-     net_rx_pkt_uninit(core->rx_pkt);
-@@ -4469,6 +4523,11 @@ static void igb_reset(IGBCore *core, bool sw)
- 
-     igb_intrmgr_reset(core);
- 
-+    for (i = 0; i < IGB_NUM_QUEUES; i++) {
-+        timer_del(core->trl[i].timer);
-+        core->trl[i].trlrc = 0;
-+    }
-+
-     memset(core->phy, 0, sizeof core->phy);
-     memcpy(core->phy, igb_phy_reg_init, sizeof igb_phy_reg_init);
- 
-diff --git a/hw/net/igb_core.h b/hw/net/igb_core.h
-index d70b54e..f3d50bc 100644
---- a/hw/net/igb_core.h
-+++ b/hw/net/igb_core.h
-@@ -63,6 +63,13 @@ typedef struct IGBIntrDelayTimer_st {
-     IGBCore *core;
- } IGBIntrDelayTimer;
- 
-+typedef struct IGBTrlQueue_st {
-+    QEMUTimer *timer;
-+    IGBCore *core;
-+    int queue_idx;
-+    uint32_t trlrc;
-+} IGBTrlQueue;
-+
- struct IGBCore {
-     uint32_t mac[E1000E_MAC_SIZE];
-     uint16_t phy[MAX_PHY_REG_ADDRESS + 1];
-@@ -99,6 +106,9 @@ struct IGBCore {
-     void (*owner_start_recv)(PCIDevice *d);
- 
-     int64_t timadj;
-+
-+    /* Transmit Rate Limiting */
-+    IGBTrlQueue trl[IGB_NUM_QUEUES];
+ static inline void
+ igb_autoneg_timer(void *opaque)
+ {
+@@ -3679,6 +3731,7 @@ static const readops igb_macreg_readops[] = {
+     [RQDPC15] = igb_mac_read_clr4,
+     [VTIVAR ... VTIVAR + 7] = igb_mac_readreg,
+     [VTIVAR_MISC ... VTIVAR_MISC + 7] = igb_mac_readreg,
++    [TRLRC] = igb_get_trlrc,
  };
+ enum { IGB_NREADOPS = ARRAY_SIZE(igb_macreg_readops) };
  
- void
-@@ -143,4 +153,7 @@ igb_receive_iov(IGBCore *core, const struct iovec *iov, int iovcnt);
- void
- igb_start_recv(IGBCore *core);
+@@ -4127,7 +4180,9 @@ static const writeops igb_macreg_writeops[] = {
+     [PVTEICR6] = igb_set_vteicr,
+     [PVTEICR7] = igb_set_vteicr,
+     [VTIVAR ... VTIVAR + 7] = igb_set_vtivar,
+-    [VTIVAR_MISC ... VTIVAR_MISC + 7] = igb_mac_writereg
++    [VTIVAR_MISC ... VTIVAR_MISC + 7] = igb_mac_writereg,
++    [TRLDQSEL] = igb_set_trldqsel,
++    [TRLRC]    = igb_set_trlrc
+ };
+ enum { IGB_NWRITEOPS = ARRAY_SIZE(igb_macreg_writeops) };
  
-+bool igb_trl_enabled(uint32_t trlrc);
-+uint64_t igb_trl_get_target_rate(const IGBTrlQueue *q);
-+
- #endif
-diff --git a/hw/net/igb_regs.h b/hw/net/igb_regs.h
-index 4dc4c31..9ef628b 100644
---- a/hw/net/igb_regs.h
-+++ b/hw/net/igb_regs.h
-@@ -718,4 +718,10 @@ static inline uint8_t igb_ivar_entry_tx(uint8_t i)
-     return i < 8 ? i * 4 + 1 : (i - 8) * 4 + 3;
- }
- 
-+/* Transmit Rate Limiting */
-+#define E1000_TRLDQSEL 0x03604
-+#define E1000_TRLRC 0x036B0
-+#define E1000_TRLRC_RS_ENA BIT(31)
-+#define E1000_LINK_RATE_1GBPS (1000000000ULL / BITS_PER_BYTE)
-+
- #endif
 
 -- 
 2.54.0.1136.gdb2ca164c4-goog
