@@ -4,137 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23AA5CD98DA
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ADEF9CD98CE
 	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jun 2026 20:40:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZE4e-00033r-E1; Mon, 15 Jun 2026 16:38:24 -0400
+	id 1wZE4T-0002uJ-4q; Mon, 15 Jun 2026 16:38:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1wZE4d-00033Q-H3
- for qemu-devel@nongnu.org; Mon, 15 Jun 2026 16:38:23 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1wZE4P-0002sc-AQ
+ for qemu-devel@nongnu.org; Mon, 15 Jun 2026 16:38:09 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1wZE4b-0002Dz-PX
- for qemu-devel@nongnu.org; Mon, 15 Jun 2026 16:38:23 -0400
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65FIx6cP3578156
- for <qemu-devel@nongnu.org>; Mon, 15 Jun 2026 20:38:10 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=qcppdkim1; bh=wKEor47NbLS
- cwX/g4lVMu6L2DhfHhbRrWJeN0erWBWw=; b=M5azKEfAAebU62hU6qgJTHyEfGh
- m0SXGZIWgMYjQlbMhYcFQ9OZRAxeHyjeJM7YcGbqe8NM279Tft3y06o1EqhheGYd
- H6aQwcAUuMJKZZaASQPieRkTvEEkKkE/Q8UfwHQISnp9HEbYiaf0Z7KTS7DPvCtC
- /g9muR9quDtndbJMFsG0ZvYV0iVOu3pzQvXX/gXDKmwQX4MOomjNjc56yb/ezZfF
- feJdoI0vKA3W1kDtBpDkEmaE79+7NYdolJsqzH7c8LOeRZQapkWYiF7MVS6yvKAo
- +ACjMbN8Uc1VSm8TgPr2KkZKg6zGVW8YReei0CyXQFr3lrfRi61U1d/c8RA==
-Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
- [209.85.160.199])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ete9832ax-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 15 Jun 2026 20:38:09 +0000 (GMT)
-Received: by mail-qt1-f199.google.com with SMTP id
- d75a77b69052e-5175a1e32e3so100050241cf.0
- for <qemu-devel@nongnu.org>; Mon, 15 Jun 2026 13:38:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1781555889; x=1782160689; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=wKEor47NbLScwX/g4lVMu6L2DhfHhbRrWJeN0erWBWw=;
- b=UhTLVUEIbEs5/4Zb5rjVVqt+AgVBdV7lfPvRSAaTpeuN9BLX5lIfeQ+fqVfSP8Yi25
- bc/yZ0YdnqbryWJVJgd6gqdx5eXH9SNG6NUZuy3vuv0geirlCA2xEp4wW1WGhOlaZqGE
- SDeZgajgZcvvhN00k5M4xuAA2x3iYhFz5RRtPKUKRNNpNnEuCMFdHglRHJbQz5wsbk7R
- JXM6lAJ7WM9NbJSnI31RkxscJl0/xsw8wSygezC2B02m4FINC37Ei9FUoG1ZudqmXG4B
- Xr/hfJI+GMhnqK9F7kovUvU8OkBm2PB+Ka6CQkd7DcmJzSMci+K5gAl5x30VnscVTeNM
- qwhw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781555889; x=1782160689;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=wKEor47NbLScwX/g4lVMu6L2DhfHhbRrWJeN0erWBWw=;
- b=pEx1vPA2LC9LNPTpjdTSfSkz1Kn0fxt817uxx2LNnIAWOnZohXqXU79+oZ77qVp32s
- oxKnmK+KHHnD7rTFVVSe21TszYq+LVYvGGe6SJaoWFeI2R8fx//Hn5Y1H2sOLMci5Gii
- 2a7tHnhhGyUd8NhkawEhzy1vcleTdGNgImBWTdvggeJArQw0uguViQ5JVuZWBFWIJzEI
- XiCBlikm+UkdEMckQzqjztuqO3mXvNjYc9Nydr/l05CiJQUkmp8kk96UwXyIvHEkfwei
- HiUm5PtkpSXxFwI0VsSeCu6G/exciWEFjtSjYVDH+wEGY2XgrdVVrbJsAKpdhpDoXcoY
- hcrQ==
-X-Gm-Message-State: AOJu0YxbRdUhMNhM6C34XUMuQ4Ejydi/e6ZQN2CcW3R/4tTlibO0Dp5b
- xxanA1TFHLBOxBwks/BAVf47vkTnpjQZtS5IJnbvy8nR/UOhGqXGDdTFXWR5vUhxgA3rAKg1ITZ
- qi24LdwsAvlGf5fuzuYDumM7/OPPuTzUrROEL3QMYHTEr+A5GRWrLUtDyPGS1oQU8Iw==
-X-Gm-Gg: Acq92OFUnA123G816iXnOwoEQdCHNemp3bhSPuWwBu9MJmFi3aY0rWGQoDRJ5Ze5/7q
- xmljvNYN1wcSe10heVgf9acEOty5TgjfcCrcCvJVAfWweMGeQnd2w0xC8cOlT9ys3KGHlagc+mS
- zGPgRBlAiQsp8HAiGd/BpLnxSBntwPHY2/KEWtkDa8hnPNQsWOOILyazS+/g0a4+Uqm5E/xhJpk
- EOJH2VC9/uyOTzgFPs85TsLwV8W4MxotRpSuu6PMAmA1Cyka1jUVg9MWFCdly+VIQPweA7A97V7
- kWklw2WonRIcrF6WY6dmgbhbGxXBmM8rMJagTJ18fYyxzxOYkVfWVRGAH0iQpVc3JQqLiu45JEH
- /D57r2s0WHNIDQcf1lY4nuT5/2ZyLJiC+NXnYUW7LXn3kG4tRmWaO1AHK7eE=
-X-Received: by 2002:a05:622a:4fc8:b0:517:7971:a234 with SMTP id
- d75a77b69052e-51953360166mr145911071cf.4.1781555888736; 
- Mon, 15 Jun 2026 13:38:08 -0700 (PDT)
-X-Received: by 2002:a05:622a:4fc8:b0:517:7971:a234 with SMTP id
- d75a77b69052e-51953360166mr145910721cf.4.1781555888337; 
- Mon, 15 Jun 2026 13:38:08 -0700 (PDT)
-Received: from QCOM-UWl2o8bcGT.qualcomm.com ([177.170.117.62])
- by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-8d9f4740fbasm9749906d6.29.2026.06.15.13.38.06
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 15 Jun 2026 13:38:07 -0700 (PDT)
-From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, liwei1518@gmail.com,
- zhiwei_liu@linux.alibaba.com, chao.liu.zevorn@gmail.com,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Palmer Dabbelt <palmer@dabbelt.com>
-Subject: [PATCH 12/13] hw/riscv/fdt_common.c: create
- create_fdt_socket_cpu_internal()
-Date: Mon, 15 Jun 2026 17:37:32 -0300
-Message-ID: <20260615203734.954428-13-daniel.barboza@oss.qualcomm.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260615203734.954428-1-daniel.barboza@oss.qualcomm.com>
-References: <20260615203734.954428-1-daniel.barboza@oss.qualcomm.com>
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1wZE4N-0002Cm-53
+ for qemu-devel@nongnu.org; Mon, 15 Jun 2026 16:38:08 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1781555885;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=tqGifrq1a1GHXpAFx7De+5GdUyzhFTm4nCqxznZjdhE=;
+ b=B9XzO0oS8elA3013i/YAxhe79VCMcTDsCJjHGD/8gY8iDn0rNk3IFrPXcX8qxjbupOPYR9
+ 1BNSIRHtzX7qXLa+INJzc345OmMy/Rn9CNc2VgpncPofnHkjKoijFhKgnhfUib1V/f8aev
+ 6Fkzl2GNGVM63vJU2UUlwEqn9mMEzKs=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-642-p22b8Dj1NnS4NYzDAUhIEQ-1; Mon,
+ 15 Jun 2026 16:38:01 -0400
+X-MC-Unique: p22b8Dj1NnS4NYzDAUhIEQ-1
+X-Mimecast-MFC-AGG-ID: p22b8Dj1NnS4NYzDAUhIEQ_1781555880
+Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 955DB195609E; Mon, 15 Jun 2026 20:38:00 +0000 (UTC)
+Received: from localhost (unknown [10.44.22.9])
+ by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 6613A414; Mon, 15 Jun 2026 20:37:58 +0000 (UTC)
+From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
+Date: Tue, 16 Jun 2026 00:37:29 +0400
+Subject: [PATCH v2 03/53] qapi: add type-infos generator
 MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=V5tNF+ni c=1 sm=1 tr=0 ts=6a3062b1 cx=c_pps
- a=WeENfcodrlLV9YRTxbY/uA==:117 a=gdiugJE53z4H+vvYeRBHqw==:17
- a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22 a=EUspDBNiAAAA:8
- a=uOZKRBi9aaBGZPAeGrsA:9 a=kacYvNCVWA4VmyqE58fU:22
-X-Proofpoint-GUID: Faks9pys6zRduTGL-BZZ6Xg8Ct-BwtNC
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjE1MDIxOSBTYWx0ZWRfX4rrPO2+d0Ude
- CkRzDaKQVWUP1EhrXNqU/y0MMdX8mBFuqRvTYTRIK2MFo4BoCjmoYQAFnEJoV8gWtx3A3h7dC6C
- SHlvAoYIlnLLnOhseqCKgQPavrlERRU=
-X-Proofpoint-ORIG-GUID: Faks9pys6zRduTGL-BZZ6Xg8Ct-BwtNC
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjE1MDIxOSBTYWx0ZWRfX69KY9CtphXW3
- +wLM3ocVqW1XkomBT3nICnuzGsl7X5AOxM1aEO1+OwrVSmwDfdKHYafheD7SSOcX6T6jpyWPmxl
- XxMB4cAWq9jtbYr+CtKsDjUppWh7EBc6ONMSIOtjwiatp02H5ABIlq6VMHzan495fhQ0gMYiYZs
- S9KHpc81fe0ZElQ25/1FDW4dJ8caw5F9H3dTcSnXymgBDNkiTe7+8kp8boM/1DanCUHAF+NZ+YM
- tjvYqetD0AcyaG+WCPVd2Ktzkei2yIJGut4tmofzj9EPVryPFasXcOiZNFzR1kFAcoIoq9OOfqx
- bQu9h8sKRO3UycE1900QD0PnOgasw6/sNrLYwNVOSIMskJ8qdvChoDR65/1aS3u4kTtGaNkJdtu
- ZGj8FLYfTdSv6TCCtDk5HRXvmEiMhRJkHBkiRPMpSun+PJIiLGbyujrvOOcF2t5CS68Gie+GlNW
- ZLK3BvquVQaaw5gVkIw==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-15_05,2026-06-15_04,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 impostorscore=0 phishscore=0 malwarescore=0 priorityscore=1501
- adultscore=0 lowpriorityscore=0 clxscore=1015 bulkscore=0 spamscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606040000 definitions=main-2606150219
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Message-Id: <20260616-qom-qapi-v2-3-cc9396b9c18c@redhat.com>
+References: <20260616-qom-qapi-v2-0-cc9396b9c18c@redhat.com>
+In-Reply-To: <20260616-qom-qapi-v2-0-cc9396b9c18c@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Markus Armbruster <armbru@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, 
+ =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
+ Michael Roth <michael.roth@amd.com>, 
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=11421;
+ i=marcandre.lureau@redhat.com; h=from:subject:message-id;
+ bh=ces1+L5lSePCQpib/l8nz+v9wX+7eQ0C239vWF7ZXg4=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqMGKNPJhde+2XMNRUQew6RfLO2/0YV97GysnaU
+ JTr5SC0kraJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCajBijQAKCRDa6OEJdZac
+ 5a1AD/9R9pSeVcs3en9bnSAPJE9LkhPdCuzFQF20ak7IwqY11VIJF+2IpQIRICbsUfTTrt9s5FH
+ xacCH+UDyPsWGieL6gDAEJ0vmVyf18KUUtThG4NgIA1f8mhBQhzxbyv/KwwBmKHlC9n6OReFNPp
+ r7mJwdN/GA3sGudsZJRmkca7Cyuf37TPi2wa73kFkwB9ACGBspTwFxPMIbhmFsXBB8sMaDsJrfF
+ 9lcrJlj/0XYxFINTtjZ/1ks36ZDn0lGroTKzOf78MzQ9ycuFUhw7kxEo/XrwTLeckVuBmclTZtF
+ BilP1TJrNP41hYuSl8L81oJwHJrLmFo0Tq2xVlEjA054GPnRCU5SoVU0je6ZFajgn6qKrSmR+9q
+ Pg5MqF0+vHqLq6nPQma/UVF/DLfr/7QrpDiWxcWvHRsEeXuc6bEa/l9YHPvX9DiBPx5S89wWHCT
+ TNRP552SIkB3BLzLZXIZDGACQIPD2NrD88e9FWEn/WVp1mbWXN7uPqA/mseOru2U0vhjQmLfThY
+ 2CZXcoX6BA5yk055Ow/KnVGWJJnk5XsC0CyCPeLljs2oTTIU8LNJmpL5JopJPSTdqTwdN51xydo
+ N0CZXrAvGgdq6ctCeShaI5LCJKlO7XhPpfAy2nCWkavMLA6UrW1uDtRboWXCKd5ncatGVto926t
+ 7kWv3ESCzxBPfdg==
+X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
+ fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
+X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=marcandre.lureau@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 8
+X-Spam_score: 0.8
+X-Spam_bar: /
+X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -150,153 +108,317 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The sifive_u board does not share the same CPU socket FDT bits from the
-other boards.  In particular the riscv,isa creation is done using either
-CPU0 from soc.e_cpus.harts, and for all other CPUs soc.u_cups.harts is
-used.
+New QAPISchemaGenTypeInfoVisitor produces per-module
+qapi-type-infos-*.h/c files. Each file declares QAPITypeInfo constants
+pairing the QAPI type name with its masked introspection name.
 
-It would be too cumbersome to add all these details in the common code
-so we're going to add a special sifive_u only helper that shares the
-common bits with the common helper used by the other boards.
-
-create_fdt_socket_cpu_internal() contains the common bits shared between
-the sifive_u board and the rest.
-
-Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- hw/riscv/fdt-common.c | 108 +++++++++++++++++++++++++-----------------
- 1 file changed, 65 insertions(+), 43 deletions(-)
+ docs/devel/qapi-code-gen.rst |  90 +++++++++++++++++++++
+ meson.build                  |   1 +
+ scripts/qapi/type_infos.py   | 182 +++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 273 insertions(+)
 
-diff --git a/hw/riscv/fdt-common.c b/hw/riscv/fdt-common.c
-index 6c795409a4..70168ad657 100644
---- a/hw/riscv/fdt-common.c
-+++ b/hw/riscv/fdt-common.c
-@@ -94,28 +94,29 @@ void fdt_create_cpu_socket_subnode(void *fdt, uint64_t timebase_frequency)
-     qemu_fdt_add_subnode(fdt, "/cpus/cpu-map");
- }
+diff --git a/docs/devel/qapi-code-gen.rst b/docs/devel/qapi-code-gen.rst
+index 3a632b4a648..bb2e8d9c675 100644
+--- a/docs/devel/qapi-code-gen.rst
++++ b/docs/devel/qapi-code-gen.rst
+@@ -2103,3 +2103,93 @@ Example::
+     }));
  
--void create_fdt_socket_cpus(void *fdt, RISCVCPU *socket_harts,
--                            int socket_id, int num_harts_socket,
--                            int socket_hartid_base, uint32_t *phandle,
--                            uint32_t *intc_phandles, bool numa_enabled,
--                            bool is_32_bit)
-+static void
-+create_fdt_socket_cpu_internal(void *fdt, char *clust_name, RISCVCPU *cpu_ptr,
-+                               int cpu, int socket_id, int socket_hartid_base,
-+                               uint32_t *phandle, uint32_t *intc_phandles,
-+                               bool numa_enabled, bool is_32_bit)
- {
--    g_autofree char *clust_name = NULL;
--    uint32_t cpu_phandle;
--
--    clust_name = g_strdup_printf("/cpus/cpu-map/cluster%d", socket_id);
--    qemu_fdt_add_subnode(fdt, clust_name);
--
--    for (int cpu = num_harts_socket - 1; cpu >= 0; cpu--) {
--        RISCVCPU *cpu_ptr = &socket_harts[cpu];
-+    g_autofree char *cpu_name = NULL;
-+    g_autofree char *core_name = NULL;
-+    g_autofree char *intc_name = NULL;
-+    uint32_t cpu_phandle = (*phandle)++;
-+    bool is_sifive_u = cpu_ptr == NULL;
+     [Uninteresting stuff omitted...]
 +
-+    cpu_name = g_strdup_printf("/cpus/cpu@%d", socket_hartid_base + cpu);
 +
-+    /*
-+     * The sifive_u board has an exclusive satp and riscv,isa
-+     * schema that can't be shared with other boards, so part
-+     * of the CPU FDT creation (i.e. the /cpus/cpu@N subnode)
-+     * is still being done by the board.
-+     */
-+    if (!is_sifive_u) {
-         int8_t satp_mode_max = cpu_ptr->cfg.max_satp_mode;
--        g_autofree char *cpu_name = NULL;
--        g_autofree char *core_name = NULL;
--        g_autofree char *intc_name = NULL;
--
--        cpu_phandle = (*phandle)++;
- 
--        cpu_name = g_strdup_printf("/cpus/cpu@%d", socket_hartid_base + cpu);
-         qemu_fdt_add_subnode(fdt, cpu_name);
- 
-         if (satp_mode_max != -1) {
-@@ -140,30 +141,51 @@ void create_fdt_socket_cpus(void *fdt, RISCVCPU *socket_harts,
-             qemu_fdt_setprop_cell(fdt, cpu_name, "riscv,cbop-block-size",
-                                   cpu_ptr->cfg.cbop_blocksize);
-         }
-+    }
- 
--        qemu_fdt_setprop_string(fdt, cpu_name, "compatible", "riscv");
--        qemu_fdt_setprop_string(fdt, cpu_name, "status", "okay");
--        qemu_fdt_setprop_cell(fdt, cpu_name, "reg",
--                              socket_hartid_base + cpu);
--        qemu_fdt_setprop_string(fdt, cpu_name, "device_type", "cpu");
--        if (numa_enabled) {
--            qemu_fdt_setprop_cell(fdt, cpu_name, "numa-node-id", socket_id);
--        }
--        qemu_fdt_setprop_cell(fdt, cpu_name, "phandle", cpu_phandle);
--
--        intc_phandles[cpu] = (*phandle)++;
--
--        intc_name = g_strdup_printf("%s/interrupt-controller", cpu_name);
--        qemu_fdt_add_subnode(fdt, intc_name);
--        qemu_fdt_setprop_cell(fdt, intc_name, "phandle",
--                              intc_phandles[cpu]);
--        qemu_fdt_setprop_string(fdt, intc_name, "compatible",
--                                "riscv,cpu-intc");
--        qemu_fdt_setprop(fdt, intc_name, "interrupt-controller", NULL, 0);
--        qemu_fdt_setprop_cell(fdt, intc_name, "#interrupt-cells", 1);
--
--        core_name = g_strdup_printf("%s/core%d", clust_name, cpu);
--        qemu_fdt_add_subnode(fdt, core_name);
--        qemu_fdt_setprop_cell(fdt, core_name, "cpu", cpu_phandle);
-+    qemu_fdt_setprop_string(fdt, cpu_name, "compatible", "riscv");
-+    qemu_fdt_setprop_string(fdt, cpu_name, "status", "okay");
-+    qemu_fdt_setprop_cell(fdt, cpu_name, "reg",
-+                          socket_hartid_base + cpu);
-+    qemu_fdt_setprop_string(fdt, cpu_name, "device_type", "cpu");
-+    if (numa_enabled) {
-+        qemu_fdt_setprop_cell(fdt, cpu_name, "numa-node-id", socket_id);
-+    }
-+    qemu_fdt_setprop_cell(fdt, cpu_name, "phandle", cpu_phandle);
++Code generated for type information
++-----------------------------------
 +
-+    intc_phandles[cpu] = (*phandle)++;
++The following files are created:
 +
-+    intc_name = g_strdup_printf("%s/interrupt-controller", cpu_name);
-+    qemu_fdt_add_subnode(fdt, intc_name);
-+    qemu_fdt_setprop_cell(fdt, intc_name, "phandle",
-+                          intc_phandles[cpu]);
-+    qemu_fdt_setprop_string(fdt, intc_name, "compatible",
-+                            "riscv,cpu-intc");
-+    qemu_fdt_setprop(fdt, intc_name, "interrupt-controller", NULL, 0);
-+    qemu_fdt_setprop_cell(fdt, intc_name, "#interrupt-cells", 1);
++ ``$(prefix)qapi-type-infos.c``
++     A ``QAPITypeInfo`` instance for each schema-defined type, providing
++     a mapping between the C type name and the schema name used by
++     introspection, along with optional enum lookup table and list-element
++     pointers.
 +
-+    core_name = g_strdup_printf("%s/core%d", clust_name, cpu);
-+    qemu_fdt_add_subnode(fdt, core_name);
-+    qemu_fdt_setprop_cell(fdt, core_name, "cpu", cpu_phandle);
-+}
++ ``$(prefix)qapi-type-infos.h``
++     Declarations for the above type info instances
 +
-+void create_fdt_socket_cpus(void *fdt, RISCVCPU *socket_harts,
-+                            int socket_id, int num_harts_socket,
-+                            int socket_hartid_base, uint32_t *phandle,
-+                            uint32_t *intc_phandles, bool numa_enabled,
-+                            bool is_32_bit)
-+{
-+    g_autofree char *clust_name = NULL;
++Each ``QAPITypeInfo`` struct has the following fields:
 +
-+    clust_name = g_strdup_printf("/cpus/cpu-map/cluster%d", socket_id);
-+    qemu_fdt_add_subnode(fdt, clust_name);
++``name``
++    The C identifier of the type (e.g. ``"UserDefOne"``).
 +
-+    for (int cpu = num_harts_socket - 1; cpu >= 0; cpu--) {
-+        RISCVCPU *cpu_ptr = &socket_harts[cpu];
++``schema_name``
++    The masked name used in ``query-qmp-schema`` output, or ``NULL``
++    for built-in types whose schema name equals their C name.  This
++    allows management tools to cross-reference a QOM property's
++    ``qapi-type`` against the introspection schema.
 +
-+        create_fdt_socket_cpu_internal(fdt, clust_name, cpu_ptr, cpu,
-+                                       socket_id, socket_hartid_base,
-+                                       phandle, intc_phandles, numa_enabled,
-+                                       is_32_bit);
-     }
- }
++``lookup``
++    For enum types, a pointer to the corresponding ``QEnumLookup``
++    table.  ``NULL`` for non-enum types.
++
++``list``
++    For types that have an array variant, a pointer to the list type's
++    ``QAPITypeInfo``.  ``NULL`` when no list type exists.
++
++These type info instances are used by QOM property registration
++functions (``object_property_add_qapi()``,
++``object_class_property_add_qapi_enum()``, etc.) to associate each
++property with its QAPI schema type.  The ``qom-list`` and
++``device-list-properties`` QMP commands then expose the ``qapi-type``
++field, giving management tools a formal type reference into the
++introspection schema.
++
++Implicit types (names starting with ``q_``) are skipped.
++
++Example::
++
++    $ cat qapi-generated/example-qapi-type-infos.h
++    [Uninteresting stuff omitted...]
++
++    #ifndef EXAMPLE_QAPI_TYPE_INFOS_H
++    #define EXAMPLE_QAPI_TYPE_INFOS_H
++
++    #include "qapi/qapi-builtin-type-infos.h"
++
++    extern const QAPITypeInfo UserDefOne_type_info;
++
++    extern const QAPITypeInfo UserDefOneList_type_info;
++
++    #endif /* EXAMPLE_QAPI_TYPE_INFOS_H */
++    $ cat qapi-generated/example-qapi-type-infos.c
++    [Uninteresting stuff omitted...]
++
++    const QAPITypeInfo UserDefOne_type_info = {
++        .name = "UserDefOne",
++        .schema_name = "1",
++        .list = &UserDefOneList_type_info,
++    };
++
++    const QAPITypeInfo UserDefOneList_type_info = {
++        .name = "UserDefOneList",
++        .schema_name = "[1]",
++    };
++
++    [Uninteresting stuff omitted...]
++
++For a modular QAPI schema (see section `Include directives`_), code for
++each sub-module SUBDIR/SUBMODULE.json is actually generated into ::
++
++ SUBDIR/$(prefix)qapi-type-infos-SUBMODULE.h
++ SUBDIR/$(prefix)qapi-type-infos-SUBMODULE.c
++
++If qapi-gen.py is run with option --builtins, additional files are
++created:
++
++ ``qapi-builtin-type-infos.h``
++     Type info instances for built-in types
++
++ ``qapi-builtin-type-infos.c``
++     Definitions for the above type info instances
+diff --git a/meson.build b/meson.build
+index 19e123423b5..f135eddad12 100644
+--- a/meson.build
++++ b/meson.build
+@@ -3487,6 +3487,7 @@ qapi_gen_depends = [ meson.current_source_dir() / 'scripts/qapi/__init__.py',
+                      meson.current_source_dir() / 'scripts/qapi/parser.py',
+                      meson.current_source_dir() / 'scripts/qapi/schema.py',
+                      meson.current_source_dir() / 'scripts/qapi/source.py',
++                     meson.current_source_dir() / 'scripts/qapi/type_infos.py',
+                      meson.current_source_dir() / 'scripts/qapi/types.py',
+                      meson.current_source_dir() / 'scripts/qapi/visit.py',
+                      meson.current_source_dir() / 'scripts/qapi-gen.py'
+diff --git a/scripts/qapi/type_infos.py b/scripts/qapi/type_infos.py
+new file mode 100644
+index 00000000000..dc7e2bace9e
+--- /dev/null
++++ b/scripts/qapi/type_infos.py
+@@ -0,0 +1,182 @@
++"""
++QAPI type info generator
++
++SPDX-License-Identifier: GPL-2.0-or-later
++"""
++
++from typing import (
++    Dict,
++    List,
++    Optional,
++    Set,
++)
++
++from .common import c_name, mcgen
++from .gen import QAPISchemaModularCVisitor, ifcontext
++from .schema import (
++    QAPISchema,
++    QAPISchemaAlternatives,
++    QAPISchemaBranches,
++    QAPISchemaEnumMember,
++    QAPISchemaFeature,
++    QAPISchemaIfCond,
++    QAPISchemaObjectType,
++    QAPISchemaObjectTypeMember,
++    QAPISchemaType,
++    QAPISchemaVisitor,
++)
++from .source import QAPISourceInfo
++
++
++class _ArrayTypeCollector(QAPISchemaVisitor):
++    def __init__(self) -> None:
++        self.list_types: Set[str] = set()
++
++    def visit_array_type(self,
++                         name: str,
++                         info: Optional[QAPISourceInfo],
++                         ifcond: QAPISchemaIfCond,
++                         element_type: QAPISchemaType) -> None:
++        self.list_types.add(name)
++
++
++class QAPISchemaGenTypeInfoVisitor(QAPISchemaModularCVisitor):
++
++    def __init__(self, prefix: str, name_map: Dict[str, str],
++                 list_types: Set[str]):
++        super().__init__(
++            prefix, 'qapi-type-infos',
++            ' * Schema-defined QAPI type info',
++            ' * Built-in QAPI type info', __doc__)
++        self._name_map = name_map
++        self._list_types = list_types
++
++    def _begin_builtin_module(self) -> None:
++        self._genc.preamble_add(mcgen('''
++#include "qemu/osdep.h"
++#include "qapi/qapi-builtin-types.h"
++#include "qapi/qapi-builtin-type-infos.h"
++'''))
++        self._genh.preamble_add(mcgen('''
++#include "qapi/qapi-type-info.h"
++'''))
++
++    def _begin_user_module(self, name: str) -> None:
++        type_infos = self._module_basename('qapi-type-infos', name)
++        types = self._module_basename('qapi-types', name)
++        self._genc.preamble_add(mcgen('''
++#include "qemu/osdep.h"
++#include "%(types)s.h"
++#include "%(type_infos)s.h"
++''',
++                                      types=types,
++                                      type_infos=type_infos))
++        self._genh.preamble_add(mcgen('''
++#include "qapi/qapi-builtin-type-infos.h"
++'''))
++
++    def _gen_type_info(self, name: str,
++                       ifcond: Optional[QAPISchemaIfCond] = None,
++                       with_lookup: bool = False,
++                       with_list: bool = False,
++                       schema_name: Optional[str] = None) -> None:
++        c_id = c_name(name + '_type_info')
++        lookup = ''
++        if with_lookup:
++            lookup = mcgen('''
++    .lookup = &%(c_name)s_lookup,
++''',
++                           c_name=c_name(name))
++        list_ref = ''
++        if with_list:
++            list_ref = mcgen('''
++    .list = &%(list_id)s,
++''',
++                             list_id=c_name(name + 'List_type_info'))
++        if schema_name is None:
++            masked = self._name_map.get(name)
++            schema_name = '"%s"' % masked if masked is not None else 'NULL'
++        else:
++            schema_name = '"%s"' % schema_name
++        with ifcontext(ifcond or QAPISchemaIfCond(),
++                       self._genh, self._genc):
++            self._genh.add(mcgen('''
++
++extern const QAPITypeInfo %(c_id)s;
++''',
++                                 c_id=c_id))
++            self._genc.add(mcgen('''
++
++const QAPITypeInfo %(c_id)s = {
++    .name = "%(name)s",
++    .schema_name = %(schema_name)s,
++%(lookup)s%(list_ref)s};
++''',
++                                 c_id=c_id, name=name,
++                                 schema_name=schema_name,
++                                 lookup=lookup,
++                                 list_ref=list_ref))
++
++    def _has_list(self, name: str) -> bool:
++        return name + 'List' in self._list_types
++
++    def visit_builtin_type(self,
++                           name: str,
++                           info: Optional[QAPISourceInfo],
++                           json_type: str) -> None:
++        self._gen_type_info(name, with_list=self._has_list(name))
++
++    def visit_enum_type(self,
++                        name: str,
++                        info: Optional[QAPISourceInfo],
++                        ifcond: QAPISchemaIfCond,
++                        features: List[QAPISchemaFeature],
++                        members: List[QAPISchemaEnumMember],
++                        prefix: Optional[str]) -> None:
++        self._gen_type_info(name, ifcond, with_lookup=True,
++                            with_list=self._has_list(name))
++
++    def visit_object_type(self,
++                          name: str,
++                          info: Optional[QAPISourceInfo],
++                          ifcond: QAPISchemaIfCond,
++                          features: List[QAPISchemaFeature],
++                          base: Optional[QAPISchemaObjectType],
++                          members: List[QAPISchemaObjectTypeMember],
++                          branches: Optional[QAPISchemaBranches]) -> None:
++        if name.startswith('q_'):
++            return
++        self._gen_type_info(name, ifcond,
++                            with_list=self._has_list(name))
++
++    def visit_array_type(self,
++                         name: str,
++                         info: Optional[QAPISourceInfo],
++                         ifcond: QAPISchemaIfCond,
++                         element_type: QAPISchemaType) -> None:
++        elem_schema = self._name_map.get(element_type.name,
++                                         element_type.name)
++        self._gen_type_info(name, ifcond,
++                            schema_name='[' + elem_schema + ']')
++
++    def visit_alternate_type(self,
++                             name: str,
++                             info: Optional[QAPISourceInfo],
++                             ifcond: QAPISchemaIfCond,
++                             features: List[QAPISchemaFeature],
++                             alternatives: QAPISchemaAlternatives) -> None:
++        self._gen_type_info(name, ifcond,
++                            with_list=self._has_list(name))
++
++
++def gen_type_infos(schema: QAPISchema,
++                   output_dir: str,
++                   prefix: str,
++                   opt_builtins: bool,
++                   name_map: Dict[str, str]) -> None:
++    collector = _ArrayTypeCollector()
++    schema.visit(collector)
++    vis = QAPISchemaGenTypeInfoVisitor(prefix, name_map,
++                                       collector.list_types)
++    schema.visit(vis)
++    vis.write(output_dir, opt_builtins)
+
 -- 
-2.43.0
+2.54.0
 
 
