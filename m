@@ -4,74 +4,116 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31DB6CD98C5
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jun 2026 07:56:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 674A7CD98C5
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jun 2026 07:58:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZ2BI-00078W-PW; Mon, 15 Jun 2026 03:56:29 -0400
+	id 1wZ2Cy-0007bk-1l; Mon, 15 Jun 2026 03:58:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wZ2B7-00078B-5Y
- for qemu-devel@nongnu.org; Mon, 15 Jun 2026 03:56:18 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wZ2Cv-0007bB-S3
+ for qemu-devel@nongnu.org; Mon, 15 Jun 2026 03:58:09 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wZ2B5-0006yH-FQ
- for qemu-devel@nongnu.org; Mon, 15 Jun 2026 03:56:16 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wZ2Cu-0007Ct-7j
+ for qemu-devel@nongnu.org; Mon, 15 Jun 2026 03:58:09 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781510173;
+ s=mimecast20190719; t=1781510287;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=92J3hjNOrtyDukETXToigRW3VGgdjmEMgo32Tq7vO8w=;
- b=ZTnH6DmYA3cvPTjJkVOgZoFL/iL0c2E1GO9GkPt726WQLwB7EA4LvR0POI+rQWjNFgCo1U
- 9+TWklWbaZ9r/JCGZ0xxaGVHPoANdDuC5SsXAMUC39lf37eWcaaoO29QUmx8iPTHQtLEpw
- GJ74cGvw2j9Ei+YZ+R0tiJ1dy1U3iyY=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-124-giQoQRvHPI2OJ--kb15ElA-1; Mon,
- 15 Jun 2026 03:56:11 -0400
-X-MC-Unique: giQoQRvHPI2OJ--kb15ElA-1
-X-Mimecast-MFC-AGG-ID: giQoQRvHPI2OJ--kb15ElA_1781510170
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 770731956058
- for <qemu-devel@nongnu.org>; Mon, 15 Jun 2026 07:56:10 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.44.22.4])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 352F51800367
- for <qemu-devel@nongnu.org>; Mon, 15 Jun 2026 07:56:10 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id AD2B021E6A01; Mon, 15 Jun 2026 09:56:07 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org
-Subject: Re: [PATCH v3 3/7] json-streamer: reuse parser
-In-Reply-To: <20260525150503.393743-4-pbonzini@redhat.com> (Paolo Bonzini's
- message of "Mon, 25 May 2026 17:04:59 +0200")
-References: <20260525150503.393743-1-pbonzini@redhat.com>
- <20260525150503.393743-4-pbonzini@redhat.com>
-Date: Mon, 15 Jun 2026 09:56:07 +0200
-Message-ID: <87fr2os0dk.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ bh=46pzWLSO5Psz//DzR2GWC2FzttIaD53VEUgfhhKiAmU=;
+ b=TMHZ/wvg8CEMdP3UaOi5hyTcXY/fwU+2E8w92M06MNvi7WJ7N3AEvBA14y/Z+mIKSnG9Ie
+ rUJe++j6hNGxi+qjL46BATxGIA/nnzZalAk71/PxScERF5ax3bHnCtuK9NCkpofVLB1deE
+ RvLewDN9GeQc3dbjmA6XEKrYcX1kLkw=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-113-OsCCQd7fOPu8-JP45UAt7Q-1; Mon, 15 Jun 2026 03:58:05 -0400
+X-MC-Unique: OsCCQd7fOPu8-JP45UAt7Q-1
+X-Mimecast-MFC-AGG-ID: OsCCQd7fOPu8-JP45UAt7Q_1781510285
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-490b37e1f47so21564515e9.0
+ for <qemu-devel@nongnu.org>; Mon, 15 Jun 2026 00:58:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1781510284; x=1782115084; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=46pzWLSO5Psz//DzR2GWC2FzttIaD53VEUgfhhKiAmU=;
+ b=o/HWYAooOqc8czYeNv0jVXY3+mQqUfUAo/Q5znJPrJnxA5e+DJC1N4OJazjz9AsCJh
+ 74/0v3aV/VJS5+qcqBFojCJCg94J9+sKTSAtfZWA5oEojgX9D7W2Eylfxf+nJJWK2tay
+ 2PHkjWbcbDF75KwznBK1Fcrk6gN8uCAIr3a7uxwg88asVIyM+m82/UUKtD8a9CxDo2Ek
+ kNpiIPu0m54z9Ub0ARuKW4ibviWQyzPYmTrQfxLhCbdoNqSAqJMOI/7P1BcWeSK/KcOY
+ gv2bn07yY35Tjx5dnlCPhGbUZKqBO6GGn8su3dTVCG3d2mGxZZrJVMPqn4r1vRyAWnHn
+ 0LCA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1781510284; x=1782115084;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=46pzWLSO5Psz//DzR2GWC2FzttIaD53VEUgfhhKiAmU=;
+ b=Q9/1iRlWu5vHT0M60RJ9J57mvN5mXajM8d2PcwbfXNaN8uKH9Q9wF0EGvn/QS2wDWJ
+ FRm6v0O4cO/v7hsn6B8yQcncNhqrQtCfM4PAKLsRSQTFRejWMkRsxDnntvn9PnxXZa01
+ c5oVvZxRjS/uiJopJjUNkHBCsaz+kGRSASsbW8Ba/MnrjbvTSFrg/+ylh0Q4K/6sJMp/
+ w1rYMLxR+8xt0nq2erpJvJbZmeMsXHX/zW4Eyb3xGRU+3h/fMb63ZnSd6ozEMa3uoY48
+ Z3VECPHNSWy2V0i35IqG33onm2a/gYu3w1AfPaRgkcH29vm93QSnFRKyj2hwIRyrpTMG
+ FMtA==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ+uPclAe4R9MlNMnDHCK1+THk/UlniVj38xkEtFZnq1bjC+3qR6j+uJkJZUKefI+wynwGYhz5mNORn7@nongnu.org
+X-Gm-Message-State: AOJu0YyB6afB95lW7fXf0Og5mhBmUZgOTBF4S/Pt6BGYAu9uVwQpfHGb
+ xQF6fCzBrTioJwAi/jct7L72B27To9ZwVoqt12tSpdeIshRfCuvA99l8TUQGycEXSUCgxysfFP1
+ kmFbP0hLriS3nAV7qE+Q/wzXvHkGk3dv1btqd3ih0FSY3eXQg9+xLKuiu
+X-Gm-Gg: Acq92OGxojis4Ne1mJZhsSjwauDTuhDa/GycB2vOe/AjJbJoKd2/dW/moouZJKv3pgq
+ fA2++dHhp5XnlWkBmrS0Q/gVy6p7a3wQDvdYLcOaAMqKOhchcez8XSrBhbxoGtldam1ieNgG1qu
+ ugmsZSPfXzk4slOIPnQsXrBOe3IHN6F44OjvZCIoMSy9uFrbdgPxObsD+cC2RaKhu77gZHw+20L
+ omdWt2+kVkOr+w6Y0f4fP5P02kPm5bt9jt1gw2aaJuQsexq9+PHAt6b7+DSsj5senxLbkS2jYAx
+ JGaVUxEluR/NxFcNRi6rLScKDD6YzrH7248zBsLzoGEBFAsFa8o4m8athk+a/27mVzRTk8r29YW
+ sIOag+T4wAJREKMPWGNApoydOINAD8hAXVPgosnNq+l4=
+X-Received: by 2002:a05:600c:8b16:b0:490:9804:afdc with SMTP id
+ 5b1f17b1804b1-4922011dfccmr118580615e9.23.1781510284410; 
+ Mon, 15 Jun 2026 00:58:04 -0700 (PDT)
+X-Received: by 2002:a05:600c:8b16:b0:490:9804:afdc with SMTP id
+ 5b1f17b1804b1-4922011dfccmr118579985e9.23.1781510283823; 
+ Mon, 15 Jun 2026 00:58:03 -0700 (PDT)
+Received: from redhat.com (IGLD-80-230-85-71.inter.net.il. [80.230.85.71])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4922031b21dsm222512285e9.6.2026.06.15.00.58.01
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 15 Jun 2026 00:58:03 -0700 (PDT)
+Date: Mon, 15 Jun 2026 03:58:00 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: Peter Maydell <peter.maydell@linaro.org>, Gavin Shan <gshan@redhat.com>,
+ qemu-arm@nongnu.org, qemu-devel@nongnu.org, peterx@redhat.com,
+ berrange@redhat.com, david@kernel.org, alex@shazbot.org,
+ clg@redhat.com, pbonzini@redhat.com, philmd@mailo.com,
+ phrdina@redhat.com, jugraham@redhat.com, shan.gavin@gmail.com
+Subject: Re: [PATCH 1/2] system/memory: Use __builtin_mem{cpy, move} in
+ accessors of ram device region
+Message-ID: <20260615032545-mutt-send-email-mst@kernel.org>
+References: <20260612110307.1264798-1-gshan@redhat.com>
+ <20260612110307.1264798-2-gshan@redhat.com>
+ <223f5f94-b9b7-46b0-8466-5be655203a0e@linaro.org>
+ <CAFEAcA-TgP_BM0WQo3rysZmvhNN17Gc_nrSYB6pXn-mvs5w13g@mail.gmail.com>
+ <123d9e80-d731-42c7-81cc-71de47bb13d3@linaro.org>
+ <20260614084004-mutt-send-email-mst@kernel.org>
+ <02d809b0-6396-40dd-a2c5-866028b7cc4d@linaro.org>
+ <20260614131704-mutt-send-email-mst@kernel.org>
+ <52c2af6c-f494-4e30-bac6-bde2aaf48931@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <52c2af6c-f494-4e30-bac6-bde2aaf48931@linaro.org>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 8
-X-Spam_score: 0.8
-X-Spam_bar: /
-X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,104 +129,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Paolo Bonzini <pbonzini@redhat.com> writes:
+On Sun, Jun 14, 2026 at 06:41:57PM -0700, Richard Henderson wrote:
+> On 6/14/26 10:22, Michael S. Tsirkin wrote:
+> > On Sun, Jun 14, 2026 at 09:45:51AM -0700, Richard Henderson wrote:
+> > > On 6/14/26 08:13, Michael S. Tsirkin wrote:
+> > > > Yes, I think it does work because we use -fno-strict-aliasing.
+> > > > For bigger sizes we'll need packed because the addresses
+> > > > could be unaligned.
+> > > ...
+> > > > For most host/guest pairs things simply work even for unaligned.
+> > > > 
+> > > > And yes, guest drivers do do this.
+> > > > 
+> > > > On classical pci, there are no transactions as such and
+> > > > an unaligned access will be split anyway.
+> > > 
+> > > I'm saying, if you're talking about pass-through to real devices, that won't
+> > > work. For instance, AArch64 will trap unaligned accesses to Device memory.
+> > 
+> > Presumably, AArch64 drivers don't do unaligned at all then?
+> 
+> Yes.
+> 
+> > > You need to actually handle unaligned.  Perhaps something like
+> > > 
+> > >      /* Find unit to fit size and alignment of dst */
+> > >      uintptr_t test = (uintptr_t)dst | size;
+> > >      uintptr_t lsb = test & -test;
+> > > 
+> > >      switch (lsb) {
+> > >      case 1:   // loop over uint8_t
+> > >      case 2:   // loop over uint16_t
+> > >      case 4:   // loop over uint32_t
+> > >      default:  // loop over uint64_t
+> > >      }
+> > > 
+> > > with the expectation that normally we'll have aligned addresses and size
+> > > such that the loop will iterate once.
+> > > 
+> > > 
+> > > r~
+> > 
+> > And ifdef for arches without unaligned support?
+> 
+> No ifdef.  All accesses produced by the above are aligned.
+> 
+> 
+> r~
 
-> The push parser can be reset, so reuse it when the json-streamer
-> detects a completed toplevel object.
->
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-> ---
->  include/qobject/json-parser.h |  2 +-
->  qobject/json-streamer.c       | 11 ++++-------
->  2 files changed, 5 insertions(+), 8 deletions(-)
->
-> diff --git a/include/qobject/json-parser.h b/include/qobject/json-parser.h
-> index 05346fa816b..4c3d89f751f 100644
-> --- a/include/qobject/json-parser.h
-> +++ b/include/qobject/json-parser.h
-> @@ -29,8 +29,8 @@ typedef struct JSONParserContext {
->  typedef struct JSONMessageParser {
->      void (*emit)(void *opaque, QObject *json, Error *err);
->      void *opaque;
-> -    va_list *ap;
->      JSONLexer lexer;
-> +    JSONParserContext parser;
->      int brace_count;
->      int bracket_count;
->      GQueue tokens;
-> diff --git a/qobject/json-streamer.c b/qobject/json-streamer.c
-> index 6c93e6fd78d..f3dfdcaea12 100644
-> --- a/qobject/json-streamer.c
-> +++ b/qobject/json-streamer.c
-> @@ -32,7 +32,6 @@ void json_message_process_token(JSONLexer *lexer, GString *input,
->                                  JSONTokenType type, int x, int y)
->  {
->      JSONMessageParser *parser = container_of(lexer, JSONMessageParser, lexer);
-> -    JSONParserContext ctxt;
->      QObject *json = NULL;
->      Error *err = NULL;
->      JSONToken *token;
-> @@ -90,26 +89,23 @@ void json_message_process_token(JSONLexer *lexer, GString *input,
->          return;
->      }
->  
-> -    json_parser_init(&ctxt, parser->ap);
-> -
->      /* Process all tokens in the queue */
->      while (!g_queue_is_empty(&parser->tokens)) {
->          token = g_queue_pop_head(&parser->tokens);
-> -        json = json_parser_feed(&ctxt, token, &err);
-> +        json = json_parser_feed(&parser->parser, token, &err);
->          g_free(token);
->          if (json || err) {
->              break;
->          }
->      }
->  
-> -    json_parser_destroy(&ctxt);
-> -
->  out_emit:
->      parser->brace_count = 0;
->      parser->bracket_count = 0;
->      json_message_free_tokens(parser);
->      parser->token_size = 0;
->      parser->emit(parser->opaque, json, err);
-> +    json_parser_reset(&parser->parser);
->  }
+So something like:
 
-This made me stop and think.
+#if defined(__i386__) || defined(__x86_64__)
+#define HOST_UNALIGNED_MMIO_OK  1
+#else
+#define HOST_UNALIGNED_MMIO_OK  0
+#endif
 
-I figure the more obvious *delta* would be to json_parser_reset() right
-where json_parser_destroy() was.
 
-But putting it here makes the code more obviously correct, I think.
+and then we can check that.
 
-No objection.  A hint in the commit message could've saved me a minute
-or two.
-
->  
->  void json_message_parser_init(JSONMessageParser *parser,
-> @@ -119,12 +115,12 @@ void json_message_parser_init(JSONMessageParser *parser,
->  {
->      parser->emit = emit;
->      parser->opaque = opaque;
-> -    parser->ap = ap;
->      parser->brace_count = 0;
->      parser->bracket_count = 0;
->      g_queue_init(&parser->tokens);
->      parser->token_size = 0;
->  
-> +    json_parser_init(&parser->parser, ap);
->      json_lexer_init(&parser->lexer, !!ap);
->  }
->  
-> @@ -144,4 +140,5 @@ void json_message_parser_destroy(JSONMessageParser *parser)
->  {
->      json_lexer_destroy(&parser->lexer);
->      json_message_free_tokens(parser);
-> +    json_parser_destroy(&parser->parser);
->  }
-
-Reviewed-by: Markus Armbruster <armbru@redhat.com>
+-- 
+MST
 
 
