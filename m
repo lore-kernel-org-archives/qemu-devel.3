@@ -4,56 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8519DCD98E0
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jun 2026 20:41:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55132CD98DA
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jun 2026 20:41:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZE4o-0003CV-Hq; Mon, 15 Jun 2026 16:38:34 -0400
+	id 1wZE7R-0004Sx-80; Mon, 15 Jun 2026 16:41:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wZE4m-0003BM-Aq
- for qemu-devel@nongnu.org; Mon, 15 Jun 2026 16:38:32 -0400
+ id 1wZE7P-0004QD-D1
+ for qemu-devel@nongnu.org; Mon, 15 Jun 2026 16:41:15 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wZE4k-0002HO-Tp
- for qemu-devel@nongnu.org; Mon, 15 Jun 2026 16:38:32 -0400
+ id 1wZE7O-000328-4y
+ for qemu-devel@nongnu.org; Mon, 15 Jun 2026 16:41:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781555910;
+ s=mimecast20190719; t=1781556073;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=CcXfLzNY8fSZYo9PLVA3EmHZ0GPkDr4koAHbu3BXWIg=;
- b=fhJvc4o23amNpDtlnYTudOGSliyFHcU3S/0vPxJohAnfnA/gRsqmiLU4Z7JAuKQADiv+W3
- KOISp+GlFJqyIp+Bmg+d4s9mmf1Stk9d/sM2i/zVTN4Te/2Gd+MQCyVDuUMr/w18XLfcEb
- UgMwv7UN9ykyTAvMKT+hQ2Vlklu6ZAQ=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=fblFAfWvPjTcuTdOqmHwe2ln7ZdoKOzUMwULX0TawoE=;
+ b=cy9iHhsKLbDmQdQ1ZsW1JBxmbkz7yDcCNYiJHsXl4Yb4ricLI9HB9anbJ2naIkcCS47MDU
+ jXRPgUZuTCHLjCVJ9lmyT3mZgtiTzo2xGC1bg7e89IVZyxhza0tdRVDa2GWVGK/WIWxm9m
+ eKRL+BmCIICFtk1HHBeba6fx3Bl7bnc=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-538-Jk1EO7zmODCYpvhLP684Ag-1; Mon,
- 15 Jun 2026 16:38:26 -0400
-X-MC-Unique: Jk1EO7zmODCYpvhLP684Ag-1
-X-Mimecast-MFC-AGG-ID: Jk1EO7zmODCYpvhLP684Ag_1781555905
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-294-Fft2Kzg6P7eiqot1M-F3OQ-1; Mon,
+ 15 Jun 2026 16:41:10 -0400
+X-MC-Unique: Fft2Kzg6P7eiqot1M-F3OQ-1
+X-Mimecast-MFC-AGG-ID: Fft2Kzg6P7eiqot1M-F3OQ_1781556069
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C511619560B3; Mon, 15 Jun 2026 20:38:25 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5EC651955F56; Mon, 15 Jun 2026 20:41:09 +0000 (UTC)
 Received: from localhost (unknown [10.44.22.9])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id D86F7180049F; Mon, 15 Jun 2026 20:38:24 +0000 (UTC)
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 679621800347; Mon, 15 Jun 2026 20:41:07 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Tue, 16 Jun 2026 00:37:34 +0400
-Subject: [PATCH v2 08/53] qapi/qom: add qapi-type field to ObjectPropertyInfo
+Date: Tue, 16 Jun 2026 00:38:05 +0400
+Subject: [PATCH v2 39/53] hw/ppc/spapr_drc: convert fdt property to
+ QAPI-aware registration
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260616-qom-qapi-v2-8-cc9396b9c18c@redhat.com>
+Message-Id: <20260616-qom-qapi-v2-39-cc9396b9c18c@redhat.com>
 References: <20260616-qom-qapi-v2-0-cc9396b9c18c@redhat.com>
 In-Reply-To: <20260616-qom-qapi-v2-0-cc9396b9c18c@redhat.com>
 To: qemu-devel@nongnu.org
@@ -64,24 +65,24 @@ Cc: Markus Armbruster <armbru@redhat.com>,
  Michael Roth <michael.roth@amd.com>, 
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1867;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=998;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=l98NcHIYxcIgRoI9lT+AEGU4cey8Hr4xwKBBC+to5GQ=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqMGKOyYTrKyfEqmrLB+Sb79rEj4qlPmzcKI4UQ
- 1Nt7FhFMQ2JAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCajBijgAKCRDa6OEJdZac
- 5cq4EACWWySCz529dhE1qlmg69na1t7nQbHVSijr8LZagzISuMD6q9tfFop2yf5/gEddTXt0TBb
- P6xtekVDcFtFaf2V8SJgYowR8bsRRwx3cvvZ/WzQnNR4xFeTSzfI+pWUHSd1B1cwfIeSMB/OKeM
- x879AeCKBRg+TjpZ0ERExtFjLLB8IUYMR6kqa0QcJaV4pwGg9se7mK9tK49tAAg/KjQwHJRvXJi
- GTom+X2Qg1cHAUjfeylOi8we0I27QBWb3SWVEoAhPeFdepcxYzluOZHJ7/Si2c24h4ySnjyvRDA
- AHK448MbRO1FpV1zZSQqkfT24U7kxfBjUDGZrj5i2u4T9AjITDaBit6tykSp3MKLgaDSBpIXEG6
- p5Pg9qwwgxmK6WIUDgkzW8UsHdsahb8GMfb+JTxS4gtDgVCL1dRhq56odnD3NLnLnSOiAQT0SDB
- wwV6EqNRItQFtd0SZcokbL4fHQL1FD9ZHuy3QIkO5BHDdNNtg7IdKoKhWtp6UgeUAC5VbnS6v3m
- e9AtWj8Vhj3ARQasJ3TWGh25tBNHdW6A9EVUnD/n9+G0Oi8826Df4ggvPE+fnQy695tHVHWEPwg
- xlMpwGJhCLRhgFu/jB/XgsKtmyp8sXJ+DNALgeM91sfoUvP40AKJalAB5U1d269TE0+lz+tgMPq
- MZ9+OCmRuzU/2aw==
+ bh=oNnnydeZ+Z/4woqlL+ZtQDVgVy8svDVrLv4Ho4BK3Dc=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqMGKPLUUzLYyhdg548zPry+0u+0kN0Le3M8Sdi
+ cxQix+SONWJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCajBijwAKCRDa6OEJdZac
+ 5SV8D/9sl2cPw4Z0pXKEb7jejdoHdIimdegvEMFFb2Yyk9X/MR3BZC+6GP0EfivszZ0C1JDaeG2
+ VdMnNBZ+76am+m5Xon1Sg5ZV9VFYMfOpBUMD1RpBeMm0hoN0nLYELw0gXXKeoZN/ctsL4xOTm5T
+ 1e0qaDs9fdUPa2sCccd6khrHWmPXw9EnS1E0mVFLnh7+TTRgnZf/Ae72qz4Yjixc20dmWZbYkJV
+ jhohw5o7Iguz/Y+S9pRoiVIiiXBWzJlHitAfStOtQeBpLp0aFybfr6ISFWaL+gKcAaUf5+/bD2n
+ 52pWf4Y3nXMZwp6XmicY3tkVbBizeCKdhrkYCKEg7MCODwhnLNvCHUgtqcwLdAl2iyrTyMTNutG
+ YYdLD6HNaF+fl0orEuY/qsoF95YepTQAlF9GUbk67jv2+yplRPyGgPq7clCQWD8QtGhiBpA8L1W
+ QmfFoh5K/1ax5wt5+opt0hJPSrpHlph1kjArsPytT0NNfta5an46SPkgXyGsxKnFAKAEFIGDNYo
+ 6UNnaJMhAYTP+FOK1d5f+P8bzwb0FsYMo5cKHJwquAx9DkWpsSsohh3BtoFN1F8/e133UV7/orC
+ JToLGhxvRg70SotXOkzd3nPpedDo0S/avhWREvBJdZerVGWCcZiguV/hq2un6mbtyo6ZejeD9vo
+ cPijSQFNbshzplA==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
 Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -108,60 +109,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add an optional 'qapi-type' field to ObjectPropertyInfo and
-ObjectPropertyValue. When present, it contains the masked type name that
-can be looked up in query-qmp-schema output. Absent for properties
-without a QAPI type association.
+Use object_property_add_qapi() with any_type_info for the "fdt"
+property, since the FDT structure is dynamically shaped at runtime and
+cannot be represented as a static QAPI type.
 
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- qapi/qom.json | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ hw/ppc/spapr_drc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/qapi/qom.json b/qapi/qom.json
-index dd45ac1087c..a655be0beaa 100644
---- a/qapi/qom.json
-+++ b/qapi/qom.json
-@@ -35,6 +35,11 @@
- #        qdev device type name.  Link properties form the device model
- #        graph.
- #
-+# @qapi-type: if the property was registered with a QAPI type
-+#     association, the type name as it appears in the output of
-+#     ``query-qmp-schema``.  Absent for properties without a QAPI
-+#     type association.  (since 11.1)
-+#
- # @description: if specified, the description of the property.
- #
- # @default-value: the default value, if any (since 5.0)
-@@ -44,6 +49,7 @@
- { 'struct': 'ObjectPropertyInfo',
-   'data': { 'name': 'str',
-             'type': 'str',
-+            '*qapi-type': 'str',
-             '*description': 'str',
-             '*default-value': 'any' } }
- 
-@@ -55,6 +61,11 @@
- # @type: the type of the property, as described in
- #     `ObjectPropertyInfo`.
- #
-+# @qapi-type: if the property was registered with a QAPI type
-+#     association, the type name as it appears in the output of
-+#     ``query-qmp-schema``.  Absent for properties without a QAPI
-+#     type association.  (since 11.1)
-+#
- # @value: the value of the property.  Absent when the property cannot
- #     be read.
- #
-@@ -63,6 +74,7 @@
- { 'struct': 'ObjectPropertyValue',
-   'data': { 'name': 'str',
-             'type': 'str',
-+            '*qapi-type': 'str',
-             '*value': 'any' } }
- 
- ##
+diff --git a/hw/ppc/spapr_drc.c b/hw/ppc/spapr_drc.c
+index 62baf38a00e..fcafdef7dff 100644
+--- a/hw/ppc/spapr_drc.c
++++ b/hw/ppc/spapr_drc.c
+@@ -586,7 +586,7 @@ static void spapr_dr_connector_instance_init(Object *obj)
+     object_property_add_uint32_ptr(obj, "id", &drc->id, OBJ_PROP_FLAG_READ);
+     object_property_add_qapi(obj, "index", &uint32_type_info, prop_get_index,
+                         NULL, NULL, NULL);
+-    object_property_add(obj, "fdt", "struct", prop_get_fdt,
++    object_property_add_qapi(obj, "fdt", &any_type_info, prop_get_fdt,
+                         NULL, NULL, NULL);
+     drc->state = drck->empty_state;
+ }
 
 -- 
 2.54.0
