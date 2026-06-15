@@ -4,140 +4,130 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE7E9CD98DA
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jun 2026 20:21:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25CC3CD98E0
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jun 2026 20:38:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZDoU-0007RZ-KC; Mon, 15 Jun 2026 16:21:42 -0400
+	id 1wZE4F-0002nd-9U; Mon, 15 Jun 2026 16:37:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wZDoQ-0007R5-W3
- for qemu-devel@nongnu.org; Mon, 15 Jun 2026 16:21:40 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
+ id 1wZE4D-0002nG-Vt
+ for qemu-devel@nongnu.org; Mon, 15 Jun 2026 16:37:58 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wZDoO-0006Qq-Hi
- for qemu-devel@nongnu.org; Mon, 15 Jun 2026 16:21:38 -0400
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+ (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
+ id 1wZE4C-0002AW-BZ
+ for qemu-devel@nongnu.org; Mon, 15 Jun 2026 16:37:57 -0400
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65FIxJCU882196
- for <qemu-devel@nongnu.org>; Mon, 15 Jun 2026 20:21:31 GMT
+ 65FJ1OES1220552
+ for <qemu-devel@nongnu.org>; Mon, 15 Jun 2026 20:37:54 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- HxQuhUwvcYZqIvAfAhYdlE6TCtyoRpG7OBTHQHx9TjE=; b=ByBzQOb7CIW4aFIr
- uubAmnyBwa1oRYhT4/2r/zhRPn5Wu9bAQLXMshR0KiD5fI9VPnnP1cV/CeDh28cG
- vETnAm2kQzaKbGQ6cpfiNn3xI5eIawJGcAZgEkKMm0BNkgiJNjnhar+K3qWdCX7/
- zoXHttO1rsxI9ft7I3c1bhkDLWZ/NKDY5PWJ6qX5tvnIEX5Qcpt2VyyDaJmaz3FO
- CGBK9eItH5MQUd8Gc7Tm0MgrLBSzonqKCXtj32DezY1jcQCuU7TUxnqrAqQIlQqY
- j6PG7l9Ge8vV2iBUnOaP5KdMuvuncFKXSssb/Sys6AgRw2AKvmfbhLGRapBJ7ViD
- HuWszw==
-Received: from mail-dy1-f198.google.com (mail-dy1-f198.google.com
- [74.125.82.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4etew0juud-1
+ cc:content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=qcppdkim1; bh=8cQ4K6easLD
+ l+OCBep4+ArBp6QbXZq6Ve0vs+5+bdD0=; b=k7AQWJT0i1yyRVbsO3uidWTAI1X
+ dKKYxyj0x6cxy4GcZ9bexObWsmucp1LttexxOmrtGOyzQnLDDshHkyFfAxJRNXz6
+ IAMo7zkC2sX5MiWVcoIP1j034nm4tcPN1TkNUPB9rt/faRHr7Tct243hgUUAfybB
+ /lYXA8Q9b8fNrgmmETHV8ohHEInJD0Ii8RUTm6ux0OTHuYZwIsgmL/exLkr9fMhq
+ 9WbUG3RINxq5t5EW8EP9IBRbWYzvTqbuOvDgXlOUT7H4xfUYe6Guf+R+fhpNBWpC
+ 4IUIFf2dcZXlY7cjc6LmD/vb2TvklmQbE3PstUTqbjh9PQ/dOFpFAlZGEWQ==
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
+ [209.85.160.198])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4etevx2vbj-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 15 Jun 2026 20:21:30 +0000 (GMT)
-Received: by mail-dy1-f198.google.com with SMTP id
- 5a478bee46e88-3080bb0267dso429029eec.1
- for <qemu-devel@nongnu.org>; Mon, 15 Jun 2026 13:21:30 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Mon, 15 Jun 2026 20:37:54 +0000 (GMT)
+Received: by mail-qt1-f198.google.com with SMTP id
+ d75a77b69052e-5177f07ea82so77610291cf.3
+ for <qemu-devel@nongnu.org>; Mon, 15 Jun 2026 13:37:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1781554890; x=1782159690; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=HxQuhUwvcYZqIvAfAhYdlE6TCtyoRpG7OBTHQHx9TjE=;
- b=P/X+hH3dcRs246prbVpc6z7ocSOdGTQbM33PbaFf6SBts5pinJhulXnv+EFllVNbgL
- 9BIe0wNj70+UUGqLcQKYXzoc55Tsqn0gfQJLcH5i4TRI2MEVIwqBUgkw9v3xGB3SQTk0
- K1ggrwD+2h0eqyNycr1IrMkHESjuXcuS9xpPrYMF3e93wavA64YSSPEtN7ncfS6pivLk
- pku3Hnmmmot+acPFc9XW6JXT/U8WcsPGXqTaxb7GHCX9xPt5SmE1yiUGiw9aUSMRhfmf
- w67i36B4yjHLnUsczqzyY17PUs2bZlJ1hCVzaKJegkr+PfmHQxeEtduDvexKvnJiMx3+
- qg5A==
+ d=oss.qualcomm.com; s=google; t=1781555874; x=1782160674; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=8cQ4K6easLDl+OCBep4+ArBp6QbXZq6Ve0vs+5+bdD0=;
+ b=Ewiq1ROM69geQxWRpMDfCEXUKZi91HraljrcFhkjVxpxgkgJOZjMcqXVRZ2pZQSgTt
+ g/pmG1FqTTEsIGgNkMv0/hVNZ/ZIaYczAZw2ky9aGIU+VIl2KsLjNBte+ss69Xs1TN4n
+ 2wzZFioNrOIcdqJMf5axjGamvFkU0m9wnEE6NhfsPyrtG+xcIiPZWmxS34qLWCBgd/f9
+ rVsPiHDSav8q//5nuAcKro147GXUczBxPMr3qLE1MTEdopMsBNGPjko6A4z+v0xQQ89X
+ YOyCnQHB2d7+9v/OHzDZkPVP60tG7A9BTCFXk0udf7+3J5inlG18IUxrpuS6kjfUpMCV
+ Q7JQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781554890; x=1782159690;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=HxQuhUwvcYZqIvAfAhYdlE6TCtyoRpG7OBTHQHx9TjE=;
- b=IYuP+tAteLtY60M/xYWgkKSNK8lEPU8fPyHj/BvNsl1gOb/gCnKgatp2Gkr9mOPLvr
- kbwCiUMwPhciTwNmUtmOJsI2W5JG5+OwoGeGZPXj+ne+q4vayvl9FX6eun9YzbB9VNrv
- +JwetbjVNFVY9oa8+ciXORfF8Is96i7RZtu68cKlDAB1oF9URvw0CDjIa8lFqEcsBuua
- FCXI711ohsEs0yWvcVW3UkwvITxOX0tFuFbCj5HJxZYqb4vyqINWxUeB6p6Q93DaIkbj
- YJmQIye6yclXobwoMXh7jjVjoY/iE3D29T7KwRrPWQKUZN+Ft+/TTNXWlzeDTSb6Kcyk
- sSUA==
-X-Gm-Message-State: AOJu0YzEDThN+A/3UNtxowH8rW4Xw3ZteT00IHhqvU9MhgTUxWV0R/bw
- t7SuEi+TVgI4QrLYhhYJheQEjd+Z7aDmVcRKUf0jU7yXo3D+RgZAnjNkubgmic9LCVmzOlJHtjy
- Jlj5gLhey6NYoKyIQovFB9EHGOK8ws6q1Z9PTMUovww8COl1O/9dnVegICBdfMlFUPOyx
-X-Gm-Gg: Acq92OH9jjxSTGGymwA00wPfVhMR7YWZ8OmdzrtQ0ouqubB7wL96KGEws1PQr2b2P77
- BekPYmvnsx004uuf/kM2wbWP3S/jjYer6+khGqzRl4QHqdTNmZ4fypxFaBCFNcFbKNyUq7JfnXp
- YWxJlBV+VQoQrdTPP1yngY60E/jQnT4vDjpTKIJLcGwSln6PgGElpts+uwI49N7T/Kktc1sX/ev
- g3ku5kI+7WyKGxLoGSeJwFp768vk1gBrWje9wCW/WvAm5BroizBtm7ffA9WPko3mZEVc4SMDlwN
- L/5XH70iHQ50H0tmcFUywugX4ktouWHDpMCnHoX24gygrzVVb4Ac5D0QrYUf/7L8l41oof5Mxm0
- zglEwPulnHE4H9j05pF2kohRyI63G3z20nzMwmuM7KcpfrrXzNkicedQcQMWP1vlNQoP11o/tZB
- LaA2p4NUqhfI+uvQ==
-X-Received: by 2002:a05:7300:641c:b0:307:42fc:584d with SMTP id
- 5a478bee46e88-3093be13b99mr7111875eec.17.1781554890000; 
- Mon, 15 Jun 2026 13:21:30 -0700 (PDT)
-X-Received: by 2002:a05:7300:641c:b0:307:42fc:584d with SMTP id
- 5a478bee46e88-3093be13b99mr7111857eec.17.1781554889485; 
- Mon, 15 Jun 2026 13:21:29 -0700 (PDT)
-Received: from [192.168.1.170] (216-71-219-44.dyn.novuscom.net.
- [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-3081e91f88bsm16243459eec.16.2026.06.15.13.21.28
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 15 Jun 2026 13:21:29 -0700 (PDT)
-Message-ID: <0f2bee4a-21c5-4930-ae49-d6265053cbb2@oss.qualcomm.com>
-Date: Mon, 15 Jun 2026 13:21:28 -0700
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] meson.build: check MAINTAINERS file is consistent
- with source tree
+ d=1e100.net; s=20251104; t=1781555874; x=1782160674;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=8cQ4K6easLDl+OCBep4+ArBp6QbXZq6Ve0vs+5+bdD0=;
+ b=OOxV7H+yeWrGnIdtNKjOgqDg6lBTFlxBfGGUCiLK0LlKW7H56Z1KItrZ7FxbNd6+rY
+ zDbQjOYW9LzRT1FJTCaShjc2qoZNUHVqOq7KpBfk3zfUr6vD2m2a6C4v57y/FcsrRQ0I
+ dI9ojuuJi6Hjb7eEOV7giYqPoboTOhr6TjX8ELvBIB/niToBLsxSXboyRLEwmS4ZKqsR
+ PFq47DZDp+WMrs47UCeVdw1jJCMwrqneyJmVSdNjgSpI7eRs7IiRy3MNcTyepjuiPzLN
+ 9o6x1719eTUvgR46F43N4DteLum8vDkN+PKNdbYRrRrEW3k9imU/WipfFm0uZaNB9w3M
+ 0Zvg==
+X-Gm-Message-State: AOJu0YzGG06n+HkesOpVdHk/STCY2il8F2s4tJ+vUtW8LT+IBJ4A8gZU
+ L5ZiyDYaDtKhRhJ2nW+LBfdMuFfZUoW5DkFwgiZ4lbREvhotQbSAFIAHNv2Ed9+wUxauMHPdj5i
+ 0vmwAED49yxdOTAfJxhbWa9jkCFkbWIYRQp9YYfwK8x6Ky4DjpM92ybvNHeRKxFH8gQ==
+X-Gm-Gg: Acq92OFgQBUuYA87KSIBk5oj74rA5qPR7HzykEPlZRahc47PluuNwYSbNuYAaABjSml
+ y4rRHVnOI5I4QgLfxqR1npRk4+RGilxQoxlBvBkjyEEy1wkRs/g/v3ZeBI1SqfvHKt7KLp41uBb
+ JFig+hixmqRBWPUmAGYKfw/9Gk5NyXJ6mnlF0PdMbMoeSnGfLi16PVJhIbc0jiF9/NERkRsflnh
+ 5glqsLsrq2HI4nMy8HONOUkUNSuyUrkI/X7wAcWzJjY/ytZ0T0Qbob7CAR7rd2hh8xDYwHnWZnb
+ f3mXOiUOSg2/2fEfvwb/3TQh/FQAZ70XWXY08Ih+TujilI4ZdBvrwogQ7/Mmfzn+fWSmy95Jlw9
+ x0GtGB0meQOVoVvq3wqAllfLDOBYuHyiCZngXDhMigPb7xa98wdgk9Q9eWmM=
+X-Received: by 2002:ac8:6f15:0:b0:517:9095:c329 with SMTP id
+ d75a77b69052e-517fe52e9ccmr246870211cf.45.1781555874002; 
+ Mon, 15 Jun 2026 13:37:54 -0700 (PDT)
+X-Received: by 2002:ac8:6f15:0:b0:517:9095:c329 with SMTP id
+ d75a77b69052e-517fe52e9ccmr246869601cf.45.1781555873417; 
+ Mon, 15 Jun 2026 13:37:53 -0700 (PDT)
+Received: from QCOM-UWl2o8bcGT.qualcomm.com ([177.170.117.62])
+ by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-8d9f4740fbasm9749906d6.29.2026.06.15.13.37.51
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 15 Jun 2026 13:37:52 -0700 (PDT)
+From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- John Snow <jsnow@redhat.com>, Cleber Rosa <crosa@redhat.com>,
- philmd@oss.qualcomm.com, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, armbru@redhat.com,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>
-References: <20260615201723.2959015-1-pierrick.bouvier@oss.qualcomm.com>
- <20260615201723.2959015-3-pierrick.bouvier@oss.qualcomm.com>
-From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <20260615201723.2959015-3-pierrick.bouvier@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjE1MDIxNSBTYWx0ZWRfX/NsTAAfIT13P
- 2pjBJ0vsR/Gc+b1TYmQvUVNqbdpt3sfAhPqsx8rFvskfv+mjGbpn0LldC2d6uS36SyW3uNUm2gO
- v3rblJTMVQw+7lPV0Q1TnrZFm39nV/I=
-X-Authority-Analysis: v=2.4 cv=QLlYgALL c=1 sm=1 tr=0 ts=6a305eca cx=c_pps
- a=wEP8DlPgTf/vqF+yE6f9lg==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
- a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22
- a=EUspDBNiAAAA:8 a=Ds2MHxTp7O98hlkQ-QsA:9 a=QEXdDO2ut3YA:10
- a=bBxd6f-gb0O0v-kibOvt:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjE1MDIxNSBTYWx0ZWRfX2dB7R/PpRcSU
- N+NTl6Izhxu3xB0+vxn9eGOvsL6MZOa11Bl+YMdEi9Bq239zpj6WUkC26w4ACAk/sqBJOlhYbks
- VuCMdJi7kbcapBgt46n/3eHetn7an/GoMpfffq61yQzXO1qUzFkgrtjVtcGq5ZQ7PpLhl/D8JWo
- mo9yeP2oy2MAPuRO3f93UFL3xpUvY1tU7naFABhTOoxLWGzF9EQZ0dNTVa0phdeRAslu69W2Jwu
- AfdVtBgpca/MvIVek8OiTIUlmez5npEQBV6r2ReOeC6MdMYo1R23P/uwaamV8eXvNfsJWD3AhSd
- ILAbjAYBcXOkPKngSgRps19N7F02doAkjXPG4YhoERAEc6NsklN/rs81vTOUy6+eJGFui4Su2qX
- /oguXok74HaBkvhWx+tYpJBzbxRQIy/7n6cyvVmjDsj/ql2YYj/+9FWr4ls97u/OZGg2pm4Gqhk
- aGvDMiJbE4Y5zm76Agw==
-X-Proofpoint-GUID: k0cJaPs_dFaAdic6CVHXX-ro0fSbEPmK
-X-Proofpoint-ORIG-GUID: k0cJaPs_dFaAdic6CVHXX-ro0fSbEPmK
+Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, liwei1518@gmail.com,
+ zhiwei_liu@linux.alibaba.com, chao.liu.zevorn@gmail.com,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>
+Subject: [PATCH 06/13] hw/riscv/spike.c: add intc_phandles array
+Date: Mon, 15 Jun 2026 17:37:26 -0300
+Message-ID: <20260615203734.954428-7-daniel.barboza@oss.qualcomm.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260615203734.954428-1-daniel.barboza@oss.qualcomm.com>
+References: <20260615203734.954428-1-daniel.barboza@oss.qualcomm.com>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-ORIG-GUID: 22ZyjEd2g8w_CO6Mg0Lt7vmnLeufekNb
+X-Proofpoint-GUID: 22ZyjEd2g8w_CO6Mg0Lt7vmnLeufekNb
+X-Authority-Analysis: v=2.4 cv=f8t4wuyM c=1 sm=1 tr=0 ts=6a3062a2 cx=c_pps
+ a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=gdiugJE53z4H+vvYeRBHqw==:17
+ a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22 a=EUspDBNiAAAA:8
+ a=VOZx6rqXNF7FRthzuzwA:9 a=dawVfQjAaf238kedN5IG:22
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjE1MDIxOCBTYWx0ZWRfX9xKMyqHF/LB4
+ C4flkvsHvEO0Vwuvdz4OsXzqc+F3Q/oGAqIMW6TBVG6GNI7Iyby+24Ek2eOrIPrFuSSsMw/2Axo
+ VDNLJfwR0BfHOaps6dBbJG+Mh0iVQyw=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjE1MDIxOCBTYWx0ZWRfX1LnVeOCilLIM
+ ZrYBIBrkMD5LQVG79+iJbgofuxQKFhvJ9loOn2KTnRdrKXrnUlPHzjPF11e7Lf6uS5p0dX1DXMY
+ zjwZDH2H63H4eM39jqBu3XnJMmQy+3UtAxmeh+OCVkdXChEVhrv/PCajEdVBvG9VFWguB9agbbs
+ Bxp04ZVnPmOCN9V+DheJxbZ78M/29C/auYcuPeqoaKzYYJ8rMDcy3gSqqSe33ErsAEY7zyWgvtL
+ bxw6qtZEO+6uBqTri+Q0ip0HRUvkp+GYTpGZ9P/Ggb/mZuedEf1wYoppWwLB9bt93a786B1JP7F
+ YMJ/mjxWZixYHxOc29Ryl/VSwAr/0Ty0NPZQpu55X9Xm78QsC+dLi4780DFOzoR0vY73L9dCzkS
+ mCGfylnWb5JrIeGQRv8uZXsZf/6DHP2My+Rt6d2t/O0XmiLCkC3Y4xUqGgAVvZTzCXMv8tj1iti
+ WvVNjg95cTiJfCE0OJQ==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-06-15_05,2026-06-15_04,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 clxscore=1015 priorityscore=1501 adultscore=0 spamscore=0
- bulkscore=0 suspectscore=0 impostorscore=0 phishscore=0 lowpriorityscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606040000 definitions=main-2606150215
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0a-0031df01.pphosted.com
+ impostorscore=0 priorityscore=1501 bulkscore=0 lowpriorityscore=0
+ phishscore=0 adultscore=0 clxscore=1015 spamscore=0 suspectscore=0
+ malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606040000
+ definitions=main-2606150218
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -160,103 +150,95 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/15/2026 1:17 PM, Pierrick Bouvier wrote:
-> We add a new script: scripts/check-maintainers-file.py, that will run at
-> configuration time (and not at build time), to not hurt build time.
-> This script runs in 0.2s on my dev VM, which has an old cpu.
-> 
-> We can expect things to be mostly in sync since adding or removing a
-> source or test file will trigger a configure step.
-> For the rest, like docs, tcg tests, or remaining files, GitLab CI will
-> build things from scratch and always run the configure step.
-> 
-> With this, it should be impossible by design to have an upstream
-> MAINTAINERS file with non existing file entries.
-> 
-> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-> ---
->  meson.build                       |  5 +++
->  scripts/check-maintainers-file.py | 53 +++++++++++++++++++++++++++++++
->  2 files changed, 58 insertions(+)
->  create mode 100755 scripts/check-maintainers-file.py
-> 
-> diff --git a/meson.build b/meson.build
-> index 19e123423b5..57e9c9de42b 100644
-> --- a/meson.build
-> +++ b/meson.build
-> @@ -17,6 +17,11 @@ add_test_setup('thorough',
->  
->  meson.add_postconf_script(find_program('scripts/symlink-install-tree.py'))
->  
-> +# check our MAINTAINERS file is consistent
-> +check_maintainers = find_program('scripts/check-maintainers-file.py')
-> +maintainers_file = files('MAINTAINERS')
-> +run_command([check_maintainers, maintainers_file], check: true)
-> +
->  ####################
->  # Global variables #
->  ####################
-> diff --git a/scripts/check-maintainers-file.py b/scripts/check-maintainers-file.py
-> new file mode 100755
-> index 00000000000..b001816a401
-> --- /dev/null
-> +++ b/scripts/check-maintainers-file.py
-> @@ -0,0 +1,53 @@
-> +#! /usr/bin/env python3
-> +
-> +# Check incorrect file entries in MAINTAINERS
-> +#
-> +# Author: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-> +#
-> +# SPDX-License-Identifier: GPL-2.0-or-later
-> +
-> +import argparse
-> +import glob
-> +import sys
-> +
-> +
-> +def check_one_entry(line) -> bool:
-> +    return True
-> +
+The clint FDT generation uses a cells array (clint_cells) that are
+populated in the middle of the loop that creates the CPU socket FDT.
+This is completely fine but it differs from the other boards that
+creates the clint cells array right before creating the clint FDT.
+'virt' and 'sifive_u' store the intc phandles in a intc_phandles array
+during FDT CPU socket creation, and this array is used to create the
+clint FDT cells.
 
-This function is dead code, I'll remove it.
+Standardize the clint FDT creation for spike doing the same here,
+allowing us to move everything to a common helper later.
 
-> +
-> +def main() -> None:
-> +    parser = argparse.ArgumentParser(description="Check MAINTAINERS file")
-> +    parser.add_argument("maintainers", help="Path to MAINTAINERS file")
-> +    args = parser.parse_args()
-> +
-> +    found_file_entry = False
-> +    found_incorrect_entries = False
-> +    line_counter = 0
-> +
-> +    with open(args.maintainers) as file:
-> +        for entry in file:
-> +            line_counter += 1
-> +
-> +            if not entry.startswith("F:"):
-> +                continue
-> +            entry = entry[2:].strip()
-> +            found_file_entry = True
-> +
-> +            file_exists = len(glob.glob(entry, recursive=True)) > 0
-> +            if file_exists:
-> +                continue
-> +
-> +            found_incorrect_entries = True
-> +            print(
-> +                f"No matching files for {args.maintainers} +{line_counter}: {entry}",
-> +                file=sys.stderr,
-> +            )
-> +
-> +    if not found_file_entry:
-> +        raise Exception("no file entry found - is MAINTAINERS path correct?")
-> +    if found_incorrect_entries:
-> +        raise Exception(f"incorrect entries found in {args.maintainers}")
-> +
-> +
-> +if __name__ == "__main__":
-> +    main()
+Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+---
+ hw/riscv/spike.c | 26 ++++++++++++++++----------
+ 1 file changed, 16 insertions(+), 10 deletions(-)
+
+diff --git a/hw/riscv/spike.c b/hw/riscv/spike.c
+index 92facba29d..82005ec163 100644
+--- a/hw/riscv/spike.c
++++ b/hw/riscv/spike.c
+@@ -59,7 +59,7 @@ static void create_fdt(SpikeState *s, const MemMapEntry *memmap,
+     int cpu, socket;
+     MachineState *ms = MACHINE(s);
+     uint32_t *clint_cells;
+-    uint32_t cpu_phandle, intc_phandle, phandle = 1;
++    uint32_t cpu_phandle, phandle = 1;
+     char *clint_name, *clust_name;
+     char *core_name, *cpu_name, *intc_name;
+     static const char * const clint_compat[2] = {
+@@ -84,6 +84,8 @@ static void create_fdt(SpikeState *s, const MemMapEntry *memmap,
+     qemu_fdt_add_subnode(fdt, "/cpus/cpu-map");
+ 
+     for (socket = (riscv_socket_count(ms) - 1); socket >= 0; socket--) {
++        g_autofree uint32_t *intc_phandles = g_new0(uint32_t,
++                                                    s->soc[socket].num_harts);
+         hwaddr memaddr = memmap[SPIKE_DRAM].base +
+                          riscv_socket_mem_offset(ms, socket);
+         uint64_t memsize =  riscv_socket_mem_size(ms, socket);
+@@ -91,8 +93,6 @@ static void create_fdt(SpikeState *s, const MemMapEntry *memmap,
+         clust_name = g_strdup_printf("/cpus/cpu-map/cluster%d", socket);
+         qemu_fdt_add_subnode(fdt, clust_name);
+ 
+-        clint_cells =  g_new0(uint32_t, s->soc[socket].num_harts * 4);
+-
+         for (cpu = s->soc[socket].num_harts - 1; cpu >= 0; cpu--) {
+             cpu_phandle = phandle++;
+ 
+@@ -113,20 +113,17 @@ static void create_fdt(SpikeState *s, const MemMapEntry *memmap,
+             riscv_socket_fdt_write_id(ms, cpu_name, socket);
+             qemu_fdt_setprop_cell(fdt, cpu_name, "phandle", cpu_phandle);
+ 
++            intc_phandles[cpu] = phandle++;
++
+             intc_name = g_strdup_printf("%s/interrupt-controller", cpu_name);
+             qemu_fdt_add_subnode(fdt, intc_name);
+-            intc_phandle = phandle++;
+-            qemu_fdt_setprop_cell(fdt, intc_name, "phandle", intc_phandle);
++            qemu_fdt_setprop_cell(fdt, intc_name, "phandle",
++                                  intc_phandles[cpu]);
+             qemu_fdt_setprop_string(fdt, intc_name, "compatible",
+                 "riscv,cpu-intc");
+             qemu_fdt_setprop(fdt, intc_name, "interrupt-controller", NULL, 0);
+             qemu_fdt_setprop_cell(fdt, intc_name, "#interrupt-cells", 1);
+ 
+-            clint_cells[cpu * 4 + 0] = cpu_to_be32(intc_phandle);
+-            clint_cells[cpu * 4 + 1] = cpu_to_be32(IRQ_M_SOFT);
+-            clint_cells[cpu * 4 + 2] = cpu_to_be32(intc_phandle);
+-            clint_cells[cpu * 4 + 3] = cpu_to_be32(IRQ_M_TIMER);
+-
+             core_name = g_strdup_printf("%s/core%d", clust_name, cpu);
+             qemu_fdt_add_subnode(fdt, core_name);
+             qemu_fdt_setprop_cell(fdt, core_name, "cpu", cpu_phandle);
+@@ -139,6 +136,15 @@ static void create_fdt(SpikeState *s, const MemMapEntry *memmap,
+         create_fdt_socket_memory(fdt, memaddr, memsize, socket,
+                                  riscv_numa_enabled(ms));
+ 
++        clint_cells =  g_new0(uint32_t, s->soc[socket].num_harts * 4);
++
++        for (cpu = 0; cpu < s->soc[socket].num_harts; cpu++) {
++            clint_cells[cpu * 4 + 0] = cpu_to_be32(intc_phandles[cpu]);
++            clint_cells[cpu * 4 + 1] = cpu_to_be32(IRQ_M_SOFT);
++            clint_cells[cpu * 4 + 2] = cpu_to_be32(intc_phandles[cpu]);
++            clint_cells[cpu * 4 + 3] = cpu_to_be32(IRQ_M_TIMER);
++        }
++
+         clint_addr = memmap[SPIKE_CLINT].base +
+             (memmap[SPIKE_CLINT].size * socket);
+         clint_name = g_strdup_printf("/soc/clint@%lx", clint_addr);
+-- 
+2.43.0
 
 
