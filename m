@@ -4,150 +4,118 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68DE8CD98CF
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jun 2026 19:18:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9112CD98DA
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jun 2026 19:25:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZCog-0005UX-Ow; Mon, 15 Jun 2026 15:17:50 -0400
+	id 1wZCvI-0006p8-PS; Mon, 15 Jun 2026 15:24:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wZCoc-0005Tv-19
- for qemu-devel@nongnu.org; Mon, 15 Jun 2026 15:17:47 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1wZCvG-0006oq-JU
+ for qemu-devel@nongnu.org; Mon, 15 Jun 2026 15:24:38 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wZCoa-0004U0-9h
- for qemu-devel@nongnu.org; Mon, 15 Jun 2026 15:17:45 -0400
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65FIxOlL781835
- for <qemu-devel@nongnu.org>; Mon, 15 Jun 2026 19:17:40 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- h2QZCy6L2cj1MB52Y5T0MDhByTi2yLhWGTJtNrhGWIk=; b=P2tGS/mWTbm9wK7l
- ldQdKM2/c81QRKul0Oxz2STLcGNqD0MJoqJ7zfSGHDZGSO+yNtPHTab3sdQ+f64G
- By+98UudRv8Ze6qZBmNVCcUhlDjqHqH7t8JvMhjxVOn3EA03Yk/se1RC99QWFnHM
- /dAEzBIOsK5XwH9nKnl1lfjCKo2ccxSd2foIS8qI0Lz/CuWuoynzxukGWHqWjhEZ
- 1Tes20hfaFz8LinD4bc1f4XJSCzuEwPJIJbzzVMghDdvHNrFE3In9m5tP+o3EtGx
- vOavEaIS2hdt9pQMycg/moWdkbRKkzBLgznbsRXQUmcA0hwlGAQLKCWTSb/UAS9E
- wzYPgg==
-Received: from mail-dy1-f197.google.com (mail-dy1-f197.google.com
- [74.125.82.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4etetjtkc3-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 15 Jun 2026 19:17:40 +0000 (GMT)
-Received: by mail-dy1-f197.google.com with SMTP id
- 5a478bee46e88-304f1820babso5646358eec.1
- for <qemu-devel@nongnu.org>; Mon, 15 Jun 2026 12:17:40 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1wZCvC-0006Tg-JD
+ for qemu-devel@nongnu.org; Mon, 15 Jun 2026 15:24:38 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1781551470;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=AZzpTXpiVODTokgT66ACZhUP75ufDlkECia3bOTZQeI=;
+ b=I/Z8gdETwXVpk1fWJh90uKweEqc+WwCtpInbKAYu790R/XSuyEEMiJ7KHpOFI2WW7cdiEc
+ WpNJzZXnIT6o+hFGPY7XKGkR69mhps4graJZb0ASlW6fnbbz2pKvf57nTzDDsD0r0eMi26
+ 6pQDsS3+qLmuIITdtxynH2SxWMf6y0g=
+Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com
+ [209.85.216.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-640-B10phi03ODyfx2EiVd2LGA-1; Mon, 15 Jun 2026 15:24:26 -0400
+X-MC-Unique: B10phi03ODyfx2EiVd2LGA-1
+X-Mimecast-MFC-AGG-ID: B10phi03ODyfx2EiVd2LGA_1781551466
+Received: by mail-pj1-f71.google.com with SMTP id
+ 98e67ed59e1d1-36bbcd40642so2831743a91.0
+ for <qemu-devel@nongnu.org>; Mon, 15 Jun 2026 12:24:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1781551060; x=1782155860; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
+ d=redhat.com; s=google; t=1781551466; x=1782156266; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=h2QZCy6L2cj1MB52Y5T0MDhByTi2yLhWGTJtNrhGWIk=;
- b=KKk5XNXmMQFn2es/fiiss08goKgnDKeujGetMhrTZBpZdRUH5yd8iGs+SfaF+Ycfdp
- S/cGNJaQx4rVnWdsZbYadKqTeyah6oFxdqyHRc7vgAVjUQyU0A9A0sdDI/y0A9XIRv0Y
- 5othKK2xnPRs7gYplv8uMpB5W4nIMYTHTAe1y07OVsYWxBwmlPvTcZ+inOVZebeZjNo0
- JFrsgSCCTs1a4o32ald5XXnmxfpuqfsdOiybLCt2+uNNIuKBFO36Bi//WU6JU0mC61HA
- hQLZ4TEao/8bA3xa7ZjeDrl6SWufr8Aaih6+B+t7bAho88FJZYag6YvUC/Wex//g5taJ
- YX7w==
+ bh=AZzpTXpiVODTokgT66ACZhUP75ufDlkECia3bOTZQeI=;
+ b=GdG4gB09VrJiQsAmSIWnzZ4ymQyMEtXH6/mOQ3LUIpGZ9FHr31t0/mm0dfXKf3CHjb
+ 4WW33Z0P/iNq217qH55+tQd6C/tPH6J1GCgVNxnebSj+X8t9njZw2OQ5nB0kaqIWsW3k
+ CSlQLDa+G+7AlKnbeTlutzAHg+cn8R78ybvYGWXC9V3DWar1EMOSy0UAI/eUTfOndTOj
+ 9Z0wlQqo9jWUrvDwam9T6/Igb+2spwF9orDFRoOIpFshwD3CxNSvp+BbmYfLFcRJLZkK
+ C5yYUkfJEZyvInHuUESZu3/mMN+/APS3nLdvsukal3NQztJNKPiKz+JOAk3kegj59d7K
+ zYFg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781551060; x=1782155860;
- h=content-transfer-encoding:in-reply-to:content-language:from
+ d=1e100.net; s=20251104; t=1781551466; x=1782156266;
+ h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=h2QZCy6L2cj1MB52Y5T0MDhByTi2yLhWGTJtNrhGWIk=;
- b=tTJeC3X+x4q86r9Fhw2viiins6lzCSigIj3d7WEdp9t5qSBHddByr9EIzJz2lUh4Dm
- KoS9vZvIuUkELWU+8zRt1Kv/uoMbjWwmH1NcJSmY1EMy5L2PSIbkVNy4Ls2M5zcLg9oT
- w7pNWdRq8iKYFVfGMoLJ2hMGsV/tTKdz9Rz573uAViRJ53Jy9m6ntKENFAfYudyv/Om0
- hyeMePKPr4hl/oyTIR9sUj2boFt1WqXkx6QCVluVrlt+0QhEL8M1u3ToHH+wDB99PqIE
- LcmeEHqquCVoarpwftobdhQsp5Z2n56iV6u9eBVxBNqcVwraM4Yr857H9kxDmfb9pkqd
- TXXw==
+ bh=AZzpTXpiVODTokgT66ACZhUP75ufDlkECia3bOTZQeI=;
+ b=YBfsJIJwiVSzxhoxQItgl7jQ2Ob6TcSYb5rmowLpPfhWD7deRtoUol1JY3YTtNt8uy
+ sDCA3YEjrsA0DcYV6AyuPEGIudFa6FOfMeAIrzyaJhHS3bom+5s0akuJd5BFqtJdl2t9
+ 0zwQsh7tSt8esmptkiPJGAXdj4pLa4JSLfs56PUtCKxWf2EEZITgQFEwWfE+5OCsZ69v
+ niK14WR536dfFtsqv8taHBxlT0MpkEc45xbqWUvO4+Vm07luS3+mYY6VPY4QAMhh0sgc
+ jRQBgrOq0x8eQW8nAblvcyb646HWoPLcHUWgODxOd5Norskl3dNFvfNu0h91RmJO/FVc
+ E5KA==
 X-Forwarded-Encrypted: i=1;
- AFNElJ/o6oq/69f8z+KtI5Es69uYPDjTXSRHWwB4felodkHscyRfv5WCRShErvvfg2AL+3nlUQ32qW/odE/j@nongnu.org
-X-Gm-Message-State: AOJu0Yzq+W3LDqC3vwN3Q5N0gcukTafmedNznw2w4W0sQordFWK0+Dzx
- QuSC8J+DwIXUbjlguC3mS8rV1HXz8FDIs0IJ+wQBfXvp97u3IqbJSgGySqQsq3o8fK3oIPmQNaS
- I7v/aZk2ezqBrCKieILHgdOYY0S+AwppKKZ0CU0hMrED5LTpSs50JJ93OEg==
-X-Gm-Gg: Acq92OEVIdD1wQwzb8Q/0jnd1grsvDMVbLVgfgkEwcOgOkZELsDXJ/A2sO0TPDtMs0B
- hA1IRpkJ50KAekcvLa9FJifXmG3RaA91FJDre/XQserpDGhh0Va9934wunaaNZVCPcKYyM5Tked
- H+lm6tJ73Xmy2S6TNleBAe+BEB8shIQBMG9UwXfUQJhte0sn+09SkKu0eWPdVZDe1ghHRXV6cOE
- f7zAoct3J8+DAegwogb4j/3M2T9YawQigxJqm/7gkOyiIyP7eALaLBPh8xQbxB1RZ0j2GRP868l
- FDJYsWwMTwLLbEYmPE9r7nfGj2mF3X1IMntfApK2mONkpb+TvMr+V5bb6BYCJLtATxbwtiEhpRu
- rhyOIs7c//ZLxS5Px8hm4iGa4tAgGtg84yR48ur6wuCzLh6c238HxZvz5l+g69rMivX0cm/GKYk
- xVJ2HMf7YyVBLSKQ==
-X-Received: by 2002:a05:7301:1f17:b0:30a:e530:ebc6 with SMTP id
- 5a478bee46e88-30ba59fe62cmr348508eec.12.1781551059620; 
- Mon, 15 Jun 2026 12:17:39 -0700 (PDT)
-X-Received: by 2002:a05:7301:1f17:b0:30a:e530:ebc6 with SMTP id
- 5a478bee46e88-30ba59fe62cmr348483eec.12.1781551059021; 
- Mon, 15 Jun 2026 12:17:39 -0700 (PDT)
-Received: from [192.168.1.170] (216-71-219-44.dyn.novuscom.net.
- [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-3081ea4f7a0sm14535523eec.24.2026.06.15.12.17.37
+ AFNElJ9oo6yRrEJGKGyTEge4yOxhhu4ZURLTpsK76dHx+fIYZ57MmezT0CE+zs/BAuLAIwXODwcUNc7h45+T@nongnu.org
+X-Gm-Message-State: AOJu0YzenqMM7k1+TfYEbyRwOIqOyBsTzyAOzvpPgfhfKrcnj9HXsEZx
+ g5ft/5UqGwKC4csZIUzSchjj1aOx8Kf5cQ6dCyx210Kj/auNCtgqJp3KzYwPiAqWiRX+3p6cVCQ
+ dNGLrnReunOy2Sk4dFrjYcLlXXMTNBH+aCM5T3KYgQU/PZSpFMSDmNY3M
+X-Gm-Gg: Acq92OFLECeVH8l/Q5mibfZ0c15V9FH4VAK9WLUfB+XmzeCqSnnEI6ZfVNyzTS2vjxZ
+ zqOvvNEvzbQ/MZjqpD6PWK4r/YxIxaiGED8dtG8BgnFrnGeUb4j6C1bp5BJKsQxeFEcn+40fcbf
+ xRbnZVbbJPHxcNnsKM/E0dDHUR3pGqELyNPBUm26y4C1vkxTsFk6pdTEK9IWofJce8SByvRZkkn
+ rDoSIOzLvrYQJdGGyI+Q6w9O/Q0kYeJL2RQHx8kGftTmD8RYOPmZoyG4y0Q2lci7XooUY1lA2NV
+ 8L0g87i1uQj4VOJ2gyp88uwjjeL9t1CfizsKtb+hc/9IK4A5Xb8unLgKBfpuHH3S4Fo2aAVCtI1
+ vFwaa+sH9pGBiUIMfBNUDaX5r2lP11Is9XtGbwZh374yY9KsWADXUfizdhD2ogmt9
+X-Received: by 2002:a17:90b:134c:b0:369:e4d4:79c6 with SMTP id
+ 98e67ed59e1d1-37c5291649cmr595501a91.20.1781551465645; 
+ Mon, 15 Jun 2026 12:24:25 -0700 (PDT)
+X-Received: by 2002:a17:90b:134c:b0:369:e4d4:79c6 with SMTP id
+ 98e67ed59e1d1-37c5291649cmr595474a91.20.1781551465154; 
+ Mon, 15 Jun 2026 12:24:25 -0700 (PDT)
+Received: from [192.168.68.51] (n175-34-8-244.mrk21.qld.optusnet.com.au.
+ [175.34.8.244]) by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-37c5228eb67sm382824a91.9.2026.06.15.12.24.18
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 15 Jun 2026 12:17:38 -0700 (PDT)
-Message-ID: <41b0c228-0c28-4e6f-9ac0-c94c415671f8@oss.qualcomm.com>
-Date: Mon, 15 Jun 2026 12:17:37 -0700
+ Mon, 15 Jun 2026 12:24:24 -0700 (PDT)
+Message-ID: <e399ceb9-bc4a-4ba6-8efd-ed2742d0853b@redhat.com>
+Date: Tue, 16 Jun 2026 05:24:15 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 24/25] scripts/checkpatch: remove check on forbidden space
- before '[' in C++
-To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, qemu-devel@nongnu.org
-Cc: Chao Liu <chao.liu.zevorn@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Brian Cain <brian.cain@oss.qualcomm.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud_=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?Q?Alex_Benn_=C3=A9_e?= <alex.bennee@linaro.org>,
- Alexandre Iooss <erdnaxe@crans.org>
-References: <20260603205152.1440291-1-pierrick.bouvier@oss.qualcomm.com>
- <20260603205152.1440291-25-pierrick.bouvier@oss.qualcomm.com>
- <tggedi.3834rhzuw09kn@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Subject: Re: [PATCH v2 1/2] system/memory: Use qemu_ram_{copy, move}() in ram
+ device region accessors
+To: Peter Maydell <peter.maydell@linaro.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, peterx@redhat.com,
+ alex@shazbot.org, richard.henderson@linaro.org, berrange@redhat.com,
+ philmd@oss.qualcomm.com, philmd@mailo.com, david@kernel.org, clg@redhat.com,
+ pbonzini@redhat.com, phrdina@redhat.com, jugraham@redhat.com,
+ liugang24219@sangfor.com.cn, dinghui@sangfor.com.cn, shan.gavin@gmail.com
+References: <20260615100200.266968-1-gshan@redhat.com>
+ <20260615100200.266968-2-gshan@redhat.com>
+ <CAFEAcA9CT6E8dhEV7Ek6ruT_o2dKUf==2V+U-1WFDOLtYbgeeQ@mail.gmail.com>
+ <20260615105556-mutt-send-email-mst@kernel.org>
+ <CAFEAcA9Gi43qNZoZcGtq8ioffGwOc_XuhoFAjGx7-bt4U8qfxw@mail.gmail.com>
 Content-Language: en-US
-In-Reply-To: <tggedi.3834rhzuw09kn@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjE1MDIwMyBTYWx0ZWRfX9iI7o+XUFlLr
- ubYigzVOD+ts0QVExe4Pke91/BbFFyu89JFcse5rmwx5laupGDWCQeqws6pzTIP77O56W1F0aeQ
- YmRDD53LqxO0QNL7A6sRo+phDHWrYtUPrYkOflaOdzJ/sr+5D5F6ukBn8imhmULpf/7d1yT0vqn
- pE9Og52DdLHyUuOoZ5qs1+PCxLu0yLui0f0lKl3VdLnNVvLzVV60r/i2jtBp6c5euTnJCnEiE5g
- 1KuzSxwkn9Vs14duYzISjqIv4RuoM8q1XQi2XAy4CcAY61bPUbvBSXmaEHIdPzvfYvw2apyvLno
- Hj2mATm1vR/BFL+K30egXEwSeK8lWu8cOTMe8PwmoiBOTN2mT76LKEos4YXCh/KwkELH2GDog6g
- N1ovZzMedhtHcpHcSquwb5vTXZnT90HdeihWXqCmntknqimR/ggDW5LdiP8QtKvslrI7TB7fO75
- 7bfYg/MtIi0m591rPGQ==
-X-Proofpoint-ORIG-GUID: avQFxATzyjVEXOuQqgxz3J4SNpgDPvwp
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjE1MDIwMyBTYWx0ZWRfX5B/MVQi8aPHz
- YdMF3QnhjeLtv9B2LmSkEnLTyYL1k3ImEWESUR1cvVkdfq4q7TtZ5dgwTqvsSBU8cRUHInqHCrX
- JbpvNWFtcAjfkm0WxIuZ5arvbnGKVI4=
-X-Authority-Analysis: v=2.4 cv=HttG3UTS c=1 sm=1 tr=0 ts=6a304fd4 cx=c_pps
- a=Uww141gWH0fZj/3QKPojxA==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
- a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22
- a=EUspDBNiAAAA:8 a=KKAkSRfTAAAA:8 a=WigQF9hC4yk2IfyIaP4A:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=PxkB5W3o20Ba91AHUih5:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-GUID: avQFxATzyjVEXOuQqgxz3J4SNpgDPvwp
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-15_05,2026-06-15_04,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 spamscore=0 suspectscore=0 clxscore=1015 impostorscore=0
- malwarescore=0 bulkscore=0 priorityscore=1501 lowpriorityscore=0 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606040000 definitions=main-2606150203
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+From: Gavin Shan <gshan@redhat.com>
+In-Reply-To: <CAFEAcA9Gi43qNZoZcGtq8ioffGwOc_XuhoFAjGx7-bt4U8qfxw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=gshan@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -163,51 +131,114 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/10/2026 11:07 PM, Manos Pitsidianakis wrote:
-> On Wed, 03 Jun 2026 23:51, Pierrick Bouvier
-> <pierrick.bouvier@oss.qualcomm.com> wrote:
->> Lambdas are very confusing for checkpatch, so just relax this check.
+Hi Peter and Michael,
+
+On 6/16/26 1:12 AM, Peter Maydell wrote:
+> On Mon, 15 Jun 2026 at 15:56, Michael S. Tsirkin <mst@redhat.com> wrote:
 >>
->> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
->> ---
+>> On Mon, Jun 15, 2026 at 11:57:09AM +0100, Peter Maydell wrote:
+>>> On Mon, 15 Jun 2026 at 11:03, Gavin Shan <gshan@redhat.com> wrote:
+>>>>
+>>>> All ram device regions were turned to be indirectly accessible by commit
+>>>> 4a2e242bbb ("memory: Don't use memcpy for ram_device regions"). This leads
+>>>> to guest hang on attempt to build 'cuda-samples' as reported by Julia. The
+>>>> guest is started by the following command lines, with GH100 GPU card passed
+>>>> from the host.
+>>>
+>>>> diff --git a/include/system/memory.h b/include/system/memory.h
+>>>> index 1417132f6d..5878727d09 100644
+>>>> --- a/include/system/memory.h
+>>>> +++ b/include/system/memory.h
+>>>> @@ -2897,6 +2897,8 @@ void address_space_register_map_client(AddressSpace *as, QEMUBH *bh);
+>>>>   void address_space_unregister_map_client(AddressSpace *as, QEMUBH *bh);
+>>>>
+>>>>   /* Internal functions, part of the implementation of address_space_read.  */
+>>>> +void qemu_ram_copy(void *dest, const void *src, size_t n);
+>>>> +void qemu_ram_move(void *dest, const void *src, size_t n);
+>>>
+>>> New function prototypes in include headers need documentation comments.
+>>>
+>>> In particular for these, it's really important that we clearly say
+>>> what semantics we are attempting to provide with them, so that
+>>> (a) when we're reviewing or later updating the implementation we
+>>> know what we are trying to provide
+>>> (b) when we're looking at the callsites we know what the function
+>>> is guaranteeing to us and what it is not, and thus whether it's
+>>> OK to use it or we need something els.
+>>>
+>>>> +#if defined(__i386__) || defined(__x86_64__)
+>>>> +#define HOST_UNALIGNED_MMIO_OK 1
+>>>> +#else
+>>>> +#define HOST_UNALIGNED_MMIO_OK 0
+>>>> +#endif
+>>>
+>>> We need to do something better than this. We can't
+>>> just say "oh, we trust that on x86 this works": it is
+>>> neither actually true that the compiler guarantees it
+>>
+>> sorry guarantee what?
 > 
-> cpp lambdas are confusing for a lot of people I guess
->
-
-The concept are pretty close from what you'll see in Rust to be honest.
-A data accessed by lambda can be either captured by:
-- [&] or [&var] reference (hidden pointer to it)
-- [=] or [var] copied
-- [var=std::move(var)] moved in (similar to move)
-- [] no capture, and address of lambda can be taken
-You can also add a return type(`[]() -> T {`), but most of usages rely
-on type deduction.
-
-Of course, to the opposite of Rust, you're on your own to deal with
-lifetime issues.
-
-> Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+> Well, that's part of my point about "we need a doc comment":
+> what exactly are we trying to guarantee ? But whatever it is,
+> "hardcoded ifdef that privileges x86" is definitely the wrong
+> answer.
 > 
->> scripts/checkpatch.pl | 3 ++-
->> 1 file changed, 2 insertions(+), 1 deletion(-)
->>
->> diff --git a/scripts/checkpatch.pl b/scripts/checkpatch.pl
->> index c74ec070c53..d90aca6fcbf 100755
->> --- a/scripts/checkpatch.pl
->> +++ b/scripts/checkpatch.pl
->> @@ -2423,7 +2423,8 @@ sub process {
->> #  3. inside a curly brace -- = { [0...10] = 5 }
->> #  4. after a comma -- [1] = 5, [2] = 6
->> #  5. in a macro definition -- #define abc(x) [x] = y
->> -        while ($line =~ /(.*?\s)\[/g) {
->> +        my $cpp = $realfile =~ /(\.cpp)$/;
->> +        while (!$cpp && $line =~ /(.*?\s)\[/g) {
->>             my ($where, $prefix) = ($-[1], $1);
->>             if ($prefix !~ /$Type\s+$/ &&
->>                 ($where != 0 || $prefix !~ /^.\s+$/) &&
->> -- 
->> 2.43.0
->>
->>
+
+Could you please check the following comments (documentation context) for the
+added functions look good to you? Please let me know if there are anything
+can be improved.
+
++
++/**
++ * qemu_ram_copy: copy data to a RAMBlock
++ *
++ * @dest: destination where the data is copied to. It's the pointer returned
++ *        by ramblock_ptr() and its variants.
++ * @src: source where the data is copied from. It can be a regular memory block
++ *       or a pointer returned by ramblock_ptr() and its variants.
++ * @n: length of data to be copied
++ *
++ * The destination is always a pointer to data area of a RAMBlock which can
++ * be for a regular memory block or a MMIO region. The source can be a pointer
++ * to a regular memory block or a MMIO region. Atomicity isn't guranteed by
++ * memcpy() to copy data between those MMIO regions as we do in this function.
++ * Besides, unaligned accesses are well handled on all architectures except
++ * i386 and x86_64 where the unaligned accesses are supported by the CPUs.
++ *
++ * The ensured atomicity and alignment consideration, which aren't needed
++ * by data copy between two regular memory blocks. So performance penalty
++ * is introduced by this function in such circumstance.
++ */
++void qemu_ram_copy(void *dest, const void *src, size_t n);
++
++/**
++ * qemu_ram_move: move data to a RAMBlock
++ *
++ * @dest: destination where the data is moved to. It's the pointer returned
++ *        by ramblock_ptr() and its variants.
++ * @src: source where the data is moved from. It can be a regular memory block
++ *       or a pointer returned by ramblock_ptr() and its variants.
++ * @n: length of data to be moved
++ *
++ * The destination is always a pointer to data area of a RAMBlock which can
++ * be for a regular memory block or a MMIO region. The source can be a pointer
++ * to a regular memory block or a MMIO region. Atomicity isn't guranteed by
++ * memmove() to move data from or to those MMIO regions as we do in this
++ * function. Besides, unaligned accesses are well handled on all architectures
++ * except i386 and x86_64 where the unaligned accesses are supported by the
++ * CPUs.
++ *
++ * The ensured atomicity and alignment consideration, which aren't needed
++ * by data movement between two regular memory blocks. So performance penalty
++ * is introduced by this function in such circumstance.
++ */
++void qemu_ram_move(void *dest, const void *src, size_t n);
++
+
+> -- PMM
+> 
+
+Thanks,
+Gavin
 
 
