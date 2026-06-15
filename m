@@ -4,115 +4,135 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39275CD98CF
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jun 2026 19:42:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D93ACD98DA
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jun 2026 19:45:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZDCT-0005dm-QR; Mon, 15 Jun 2026 15:42:25 -0400
+	id 1wZDFQ-0006Wr-0S; Mon, 15 Jun 2026 15:45:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wZDCM-0005d7-MX
- for qemu-devel@nongnu.org; Mon, 15 Jun 2026 15:42:20 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wZDFO-0006W2-0U
+ for qemu-devel@nongnu.org; Mon, 15 Jun 2026 15:45:26 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wZDCI-0003Sq-P3
- for qemu-devel@nongnu.org; Mon, 15 Jun 2026 15:42:17 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wZDFL-0004WL-GB
+ for qemu-devel@nongnu.org; Mon, 15 Jun 2026 15:45:25 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781552531;
+ s=mimecast20190719; t=1781552722;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Qi3yLOX+GX7yFtlr/F7eOJTa/nSf4uKiVPbZwlIlxc0=;
- b=F/YnNRb/i9z+M0RE4QO7ft7TLTuLKIM+FW4geTZsPo1ihBC2N8lDLWBMShxNA4kQ+fZZJk
- 9+pYzO1xvlJNFIz29FkZCwl4Jcle5eaOk6s7vx0lmBYN71S9chcJ1CFPbwTYF6QxqRYwod
- w0zMxASmRcp0Be0z4VvwvOhdvNXUWnA=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=e9WP1c2EpAEG3hSuiAV0GYoU8NlzhyFLVwlwiKZyD8Q=;
+ b=Y3a8N2r4OTLnGyiFJX7ZR1BR8FfW5wyh26Nn3vMvnRwkbWkDjywJR+MSnevLxmY4QoIpey
+ rS2hlJQrgJufH1f7F/LV1mfHx6qc9QRyvQbxvkV4H4jT8dY0onksZSph4ESTI+IKpP1hQ8
+ 2dvmASj1jEURD912PhkhJIZj2u40YiY=
+Received: from mail-yx1-f72.google.com (mail-yx1-f72.google.com
+ [74.125.224.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-692-OFx_puyNOMaw4WJCq0fDFA-1; Mon, 15 Jun 2026 15:42:10 -0400
-X-MC-Unique: OFx_puyNOMaw4WJCq0fDFA-1
-X-Mimecast-MFC-AGG-ID: OFx_puyNOMaw4WJCq0fDFA_1781552529
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-4601102c30dso2236651f8f.2
- for <qemu-devel@nongnu.org>; Mon, 15 Jun 2026 12:42:10 -0700 (PDT)
+ us-mta-477-RBihdHe9OsmHBcY6Xe2dcw-1; Mon, 15 Jun 2026 15:45:19 -0400
+X-MC-Unique: RBihdHe9OsmHBcY6Xe2dcw-1
+X-Mimecast-MFC-AGG-ID: RBihdHe9OsmHBcY6Xe2dcw_1781552719
+Received: by mail-yx1-f72.google.com with SMTP id
+ 956f58d0204a3-66063190853so5813115d50.0
+ for <qemu-devel@nongnu.org>; Mon, 15 Jun 2026 12:45:19 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1781552719; cv=none;
+ d=google.com; s=arc-20240605;
+ b=ZDhadwYOOIGykOkjcGvxTiu1eMintUgvsGPcvA8p83uGTB0Gl7omx1mVAqHvJmQdEF
+ WEJh1lovANQowhX2CGmXkOcVFgVgBXRT+JwWQNnF+UmnRpRG9JhK/PtPqM5fb/NKgfZ3
+ 5APh5UG5Fp4Q4f4l199VWvgbsjHRRFqHY4BIXRY6q4XMgCjM/ExNx/ccAo4oHQvCJX7Q
+ FdORaK7iPzXNQ45mKkVOwMrOG4YbOLiLva9MXuj/xXv1PsbkzP0Yuy7xyvjihBYFFbdi
+ d0fvTClUe6w+Qs3OPCB0PppfAS+/HLRp9X5uxh91eXKmBgF0VCW+fc9USyGIlHLDOfAH
+ InLw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=e9WP1c2EpAEG3hSuiAV0GYoU8NlzhyFLVwlwiKZyD8Q=;
+ fh=Ohhlf+kwivs7jyQv9LUTHNY6pEAdnCK0uS2X5z9ZBdU=;
+ b=JJCy9qcxTY3P189JQ5gCdyxPmb7xC85hdRidKzaLnUZIlf7CmYmgZ9sBp0DqmN2eKm
+ fOYraPd0Z/iHkBBN9BITqzeQGyEIyuT+qZj387lHIZGjNtJzQkFYKZuBRsUdB8wW31n/
+ i5vo20oJlSpdnuFR6x6p6M2YxxN+9aRYGxWqy3p41luIe4OrX82PbcwPL/0rSoVR80Go
+ Ry6NYCo637HU8YTTcYFuyjBc1cSH80nWwR2sh8bJT5Sol1dQ52lA+7kzOkhsOyX+6r/U
+ +QFpy2N+BuzP/v4xm/VYg/JB7jWVPJQP20evXilIfidk+eQnx+9QdPyGqYS4rTVa5GiO
+ 2Ykw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1781552529; x=1782157329; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=Qi3yLOX+GX7yFtlr/F7eOJTa/nSf4uKiVPbZwlIlxc0=;
- b=O+sfrhDk5gOau1vi89bim1ySHb9CE43TByx4iiFITxdlB3mLzHNkXO6bP+El5qzSyk
- 5YhoqvUTQpe+PeeNdORONf1Kx0UCLDT/ByYqBi9NEYCFO78N13a3MWDVsvE2456hTn+Y
- J3/0JjdqVOrYJNTEUBSU8PyFj1TtuS1EWCyxmKnZqbsC3z2ZudQdNVQrswO+O89s+PJJ
- bR7c256Iye1bYTI63M5PO9NaRs+68HRh8ADh3oahX1mzUHYstVNluy/hydxIUKx+nPNN
- 74YJTDSfZrv+IYviHdbzMb8rShv8H51C8EYHRMQGQcXrG7pqWTFyozVSFKo7aRs6fmqu
- hwqQ==
+ d=redhat.com; s=google; t=1781552719; x=1782157519; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=e9WP1c2EpAEG3hSuiAV0GYoU8NlzhyFLVwlwiKZyD8Q=;
+ b=QvOi9GcAejsqCIf2XWOBW6ZhLCbLltATpZeL5rIBq52I9n/VL7SGBcuMHWXKn8Na5F
+ YCxMHnWyA33SyT21XJBjy5MiAxkHNYWDAS16pE1vUaZVFkNEj0GNseAislj/UHx1ey+K
+ ZXvVkOVyd0lRDyjjkqIFdz0ogdaWwURRdpLEw7t18/eUsBO34ARapx2C5g7Upwb5hJwP
+ AAXiGsccSiRv3Oktmp9nVu4quFZrCUCzF6zYSigZKHdiGifY3IUHlBv2wsKKU44f4eE7
+ aJIXss6tovGQzJKxWknlPb8jZjPF2rN9F1UcWKUzVO1gOlp/EBp0RizRfBhISwDpOcgb
+ a/Vw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781552529; x=1782157329;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=Qi3yLOX+GX7yFtlr/F7eOJTa/nSf4uKiVPbZwlIlxc0=;
- b=L5TLR76bLgiH7YTF05wBs6Aa72ju3oC/eSRnVZsZtEn8lnbwXQEr07ktK7Cw50Yrgt
- l1zlv5R9NugKiqEDRdhIFURBvcEIfN9rPwtvetEvUrVX/51x7Aief32xz8s1cOkj928h
- HlxEwTGym+w42qFziUpVufaDgEa/7NogqgKYcQfnCH6Hk0qzeG2XriyKAdFot59s/tS/
- cIyx2csxIKxZDD/Pr/43t0EFngXsIYB9Nk2TUbbebonc9ttL/Wq88ALUY8bCWwm6NV0n
- xQuMiFySozZNxIXv3tzNzUFrGUgiWZwj54/55vEymqR/IouuuwdAwf/UNezYthbSqVJJ
- D3FA==
-X-Forwarded-Encrypted: i=1;
- AFNElJ/XYsivCGXXDkGOR2TtyetRvG574cIdH+nZ7h/FzlnLGL/xkFhr8qHyqPpaFe9DHok35XzrM0tiFte3@nongnu.org
-X-Gm-Message-State: AOJu0Yzlt0g3k2ZcepUV9eq/vtfAhRDs7CoS0lpLWJgmocebW6MwcH8R
- RUHQM2NOZ5o+zUXJjEh4P/oJtHnpWnToIXQr6fodEuCzbBbTyQhgRT1oG1Lsp7xN0irlqzwUFgh
- CoM9l7itLtbdUchuUlie8ZchPQZIscqE4tusfVj/MuokZDyIUGturPxbWCp7AfcuM
-X-Gm-Gg: Acq92OGzjtxRV+JN4nH4EvGBRDl5uQqqt29yfrRz2jsMgftzTntsKJ/VxMDwbriKe2Z
- rMXrKY3MwT3dZisMt0R2RAl+pI9GUu6QOwqgduscUc160WIyuqjBYPoRfhQnZSWHwtfK3k883Gd
- G/NaGMpaGyB5SD+WVxbN3XWNYHXzwhADHAr3OIBbef+FP8z4Pi1Qk+25EF15Hh4O8g1ThbwoC19
- nYE5sb55mdheJN/fXJ21+0amVtXlxBaOp6s3A6tzMhNa1CTroFh0gaYLt/GXFLqeHfq0zfzQoeB
- MGSgjTy4q+1NTjldyxoQeSaxNmae0Jjwb5tFCI7rLtThETk4EWxKV1N0KvfTFnEgE84h4QgC9sH
- aWEkAuOylwU/NTEGYqHSXV9t7JPHHq/yU/UEsdjU8UqY=
-X-Received: by 2002:a05:6000:1863:b0:461:946f:9bb4 with SMTP id
- ffacd0b85a97d-4619f3abb97mr1148881f8f.23.1781552529001; 
- Mon, 15 Jun 2026 12:42:09 -0700 (PDT)
-X-Received: by 2002:a05:6000:1863:b0:461:946f:9bb4 with SMTP id
- ffacd0b85a97d-4619f3abb97mr1148850f8f.23.1781552528528; 
- Mon, 15 Jun 2026 12:42:08 -0700 (PDT)
-Received: from redhat.com (IGLD-80-230-85-71.inter.net.il. [80.230.85.71])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4606f2cd6c2sm37181798f8f.30.2026.06.15.12.42.05
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 15 Jun 2026 12:42:07 -0700 (PDT)
-Date: Mon, 15 Jun 2026 15:42:04 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Gavin Shan <gshan@redhat.com>
-Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org, peterx@redhat.com, alex@shazbot.org,
- richard.henderson@linaro.org, berrange@redhat.com,
- philmd@oss.qualcomm.com, philmd@mailo.com, david@kernel.org,
- clg@redhat.com, pbonzini@redhat.com, phrdina@redhat.com,
- jugraham@redhat.com, liugang24219@sangfor.com.cn,
- dinghui@sangfor.com.cn, shan.gavin@gmail.com
-Subject: Re: [PATCH v2 1/2] system/memory: Use qemu_ram_{copy, move}() in ram
- device region accessors
-Message-ID: <20260615154054-mutt-send-email-mst@kernel.org>
-References: <20260615100200.266968-1-gshan@redhat.com>
- <20260615100200.266968-2-gshan@redhat.com>
- <CAFEAcA9CT6E8dhEV7Ek6ruT_o2dKUf==2V+U-1WFDOLtYbgeeQ@mail.gmail.com>
- <20260615105556-mutt-send-email-mst@kernel.org>
- <CAFEAcA9Gi43qNZoZcGtq8ioffGwOc_XuhoFAjGx7-bt4U8qfxw@mail.gmail.com>
- <e399ceb9-bc4a-4ba6-8efd-ed2742d0853b@redhat.com>
+ d=1e100.net; s=20251104; t=1781552719; x=1782157519;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=e9WP1c2EpAEG3hSuiAV0GYoU8NlzhyFLVwlwiKZyD8Q=;
+ b=VEidA6MLJIB0SWGyOB4nwKSWTO2ssZupSzT/4l+BS6dT/u+drM26YaTn5a0LvMLm9s
+ azUDNAVDH6hLdkuHBXly9w6fwUZraSJ78sNz/I4zUQyhzZXkO6deDvzhuc38zyL1eSWq
+ A9q9+BTCBpMcN6eHkYZpMHsmAxjCk5yXLCW0rflVAtJNcJg4ws1b/6z7NR28R/2+Yjcx
+ tXJhv8uYoHZji2J0auiAKS5TlLQcfH033Wn98bKAOlBnXYACpgDe/mCz8CDQFxcgAwiP
+ InwWQuL42MRgCqnfeVnlER28o5N8TGTMUA3vR3oi5WjnYLWP8NQx25vqAukCKfcvxrZn
+ rUtg==
+X-Gm-Message-State: AOJu0Yw69bGAZ+1MNnxg+TbfSoiZI4EIrb2Mw02wMakaF/cIetewk3rV
+ Cvvvcud9BFcdjQ5XdJ//cDPzcZUAA3WpuiC82I9Do22j4DgqGZLV25Vnx+IXRdekxxC4YCde0iM
+ 6LYSfdxshCEyutD63K7VTJitA0YQ2O3tIxZV7ajPvplyfgFH3QXoFtGsbuqVrILKGMKjCF1+5Hu
+ 1pW1OZFdCsswYilQT7KENIwtaW7t33ozo=
+X-Gm-Gg: Acq92OHdqu70UnQ88oPEmbE6P34S9LJygn84mH/2JEWtggm8omRbODuTs/RBFSKrf7n
+ fgkkXilkbqxRFn+biO2TE4CfLkwCS4mfxmMrw3xPlJCJFNbh5gYgVnxlwfOdNT4pDbZ+Lw4XvTo
+ O6/DVZU7QQT0Kd3JU8RYctEUA8Yj6UV78X12FQiX/tyGsw+Zahw0Wx0dCs+wylJT20IO4Z62qKo
+ xZOsdCBBy9thizrAifjugTEV6WQvmpm2c+tRg==
+X-Received: by 2002:a05:690e:d01:b0:651:9286:57a0 with SMTP id
+ 956f58d0204a3-66284bc938cmr10940886d50.0.1781552718978; 
+ Mon, 15 Jun 2026 12:45:18 -0700 (PDT)
+X-Received: by 2002:a05:690e:d01:b0:651:9286:57a0 with SMTP id
+ 956f58d0204a3-66284bc938cmr10940850d50.0.1781552718494; Mon, 15 Jun 2026
+ 12:45:18 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <e399ceb9-bc4a-4ba6-8efd-ed2742d0853b@redhat.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+References: <20260603032201.993015-1-jsnow@redhat.com>
+ <20260603032201.993015-4-jsnow@redhat.com>
+ <87pl1rx5br.fsf@pond.sub.org>
+In-Reply-To: <87pl1rx5br.fsf@pond.sub.org>
+From: John Snow <jsnow@redhat.com>
+Date: Mon, 15 Jun 2026 15:45:07 -0400
+X-Gm-Features: AVVi8CfYYa6y_Wv6I7VYLEBYe4vU-IY7KhPE8sCkcxXPLrX6wdSfrlP6ESa3Pqs
+Message-ID: <CAFn=p-b1xj_+QeZkOLK+zpptm8vPPfNh-HFm6ihRUw4AUWSCTg@mail.gmail.com>
+Subject: Re: [PATCH v3 03/16] qapi/docs: remove unused QAPIDoc subsection
+ members
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, Ani Sinha <anisinha@redhat.com>, 
+ Michael Roth <michael.roth@amd.com>, Igor Mammedov <imammedo@redhat.com>, 
+ Peter Maydell <peter.maydell@linaro.org>, Eric Blake <eblake@redhat.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@mailo.com>, 
+ Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>, 
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
+ Richard Henderson <richard.henderson@linaro.org>,
+ Gerd Hoffmann <kraxel@redhat.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ linux-edac@vger.kernel.org, Cleber Rosa <crosa@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+X-Spam_score_int: -11
+X-Spam_score: -1.2
+X-Spam_bar: -
+X-Spam_report: (-1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_BL_SPAMCOP_NET=1.347, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -128,120 +148,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jun 16, 2026 at 05:24:15AM +1000, Gavin Shan wrote:
-> Hi Peter and Michael,
-> 
-> On 6/16/26 1:12 AM, Peter Maydell wrote:
-> > On Mon, 15 Jun 2026 at 15:56, Michael S. Tsirkin <mst@redhat.com> wrote:
-> > > 
-> > > On Mon, Jun 15, 2026 at 11:57:09AM +0100, Peter Maydell wrote:
-> > > > On Mon, 15 Jun 2026 at 11:03, Gavin Shan <gshan@redhat.com> wrote:
-> > > > > 
-> > > > > All ram device regions were turned to be indirectly accessible by commit
-> > > > > 4a2e242bbb ("memory: Don't use memcpy for ram_device regions"). This leads
-> > > > > to guest hang on attempt to build 'cuda-samples' as reported by Julia. The
-> > > > > guest is started by the following command lines, with GH100 GPU card passed
-> > > > > from the host.
-> > > > 
-> > > > > diff --git a/include/system/memory.h b/include/system/memory.h
-> > > > > index 1417132f6d..5878727d09 100644
-> > > > > --- a/include/system/memory.h
-> > > > > +++ b/include/system/memory.h
-> > > > > @@ -2897,6 +2897,8 @@ void address_space_register_map_client(AddressSpace *as, QEMUBH *bh);
-> > > > >   void address_space_unregister_map_client(AddressSpace *as, QEMUBH *bh);
-> > > > > 
-> > > > >   /* Internal functions, part of the implementation of address_space_read.  */
-> > > > > +void qemu_ram_copy(void *dest, const void *src, size_t n);
-> > > > > +void qemu_ram_move(void *dest, const void *src, size_t n);
-> > > > 
-> > > > New function prototypes in include headers need documentation comments.
-> > > > 
-> > > > In particular for these, it's really important that we clearly say
-> > > > what semantics we are attempting to provide with them, so that
-> > > > (a) when we're reviewing or later updating the implementation we
-> > > > know what we are trying to provide
-> > > > (b) when we're looking at the callsites we know what the function
-> > > > is guaranteeing to us and what it is not, and thus whether it's
-> > > > OK to use it or we need something els.
-> > > > 
-> > > > > +#if defined(__i386__) || defined(__x86_64__)
-> > > > > +#define HOST_UNALIGNED_MMIO_OK 1
-> > > > > +#else
-> > > > > +#define HOST_UNALIGNED_MMIO_OK 0
-> > > > > +#endif
-> > > > 
-> > > > We need to do something better than this. We can't
-> > > > just say "oh, we trust that on x86 this works": it is
-> > > > neither actually true that the compiler guarantees it
-> > > 
-> > > sorry guarantee what?
-> > 
-> > Well, that's part of my point about "we need a doc comment":
-> > what exactly are we trying to guarantee ? But whatever it is,
-> > "hardcoded ifdef that privileges x86" is definitely the wrong
-> > answer.
-> > 
-> 
-> Could you please check the following comments (documentation context) for the
-> added functions look good to you? Please let me know if there are anything
-> can be improved.
-> 
-> +
-> +/**
-> + * qemu_ram_copy: copy data to a RAMBlock
-> + *
-> + * @dest: destination where the data is copied to. It's the pointer returned
-> + *        by ramblock_ptr() and its variants.
-> + * @src: source where the data is copied from. It can be a regular memory block
-> + *       or a pointer returned by ramblock_ptr() and its variants.
-> + * @n: length of data to be copied
-> + *
-> + * The destination is always a pointer to data area of a RAMBlock which can
-> + * be for a regular memory block or a MMIO region. The source can be a pointer
-> + * to a regular memory block or a MMIO region. Atomicity isn't guranteed by
-> + * memcpy() to copy data between those MMIO regions as we do in this function.
-> + * Besides, unaligned accesses are well handled on all architectures except
-> + * i386 and x86_64 where the unaligned accesses are supported by the CPUs.
-> + *
-> + * The ensured atomicity and alignment consideration, which aren't needed
-> + * by data copy between two regular memory blocks. So performance penalty
-> + * is introduced by this function in such circumstance.
-> + */
-> +void qemu_ram_copy(void *dest, const void *src, size_t n);
-> +
-> +/**
-> + * qemu_ram_move: move data to a RAMBlock
-> + *
-> + * @dest: destination where the data is moved to. It's the pointer returned
-> + *        by ramblock_ptr() and its variants.
-> + * @src: source where the data is moved from. It can be a regular memory block
-> + *       or a pointer returned by ramblock_ptr() and its variants.
-> + * @n: length of data to be moved
-> + *
-> + * The destination is always a pointer to data area of a RAMBlock which can
-> + * be for a regular memory block or a MMIO region. The source can be a pointer
-> + * to a regular memory block or a MMIO region. Atomicity isn't guranteed by
-> + * memmove() to move data from or to those MMIO regions as we do in this
-> + * function. Besides, unaligned accesses are well handled on all architectures
-> + * except i386 and x86_64 where the unaligned accesses are supported by the
-> + * CPUs.
-> + *
-> + * The ensured atomicity and alignment consideration, which aren't needed
-> + * by data movement between two regular memory blocks. So performance penalty
-> + * is introduced by this function in such circumstance.
-> + */
-> +void qemu_ram_move(void *dest, const void *src, size_t n);
-> +
+On Mon, Jun 15, 2026 at 10:10=E2=80=AFAM Markus Armbruster <armbru@redhat.c=
+om> wrote:
+>
+> Uh, "qapi/docs:"?  Shouldn't this be "qapi/parser:"?
+>
 
+Uh, sure. It's the parser of docs ... forgive me
 
-I apologize, I don't understand what these comments are saying, at all.
-
-
-
-> > -- PMM
-> > 
-> 
-> Thanks,
-> Gavin
+> John Snow <jsnow@redhat.com> writes:
+>
+> > All users of the QAPIDoc object should be iterating over all_sections
+> > and not grabbing arbitrary subsections, if possible. Remove the 'body'
+> > and 'sections' members, as they are no longer used.
+> >
+> > Signed-off-by: John Snow <jsnow@redhat.com>
+> > Reviewed-by: Markus Armbruster <armbru@redhat.com>
+> > ---
+> >  scripts/qapi/parser.py | 6 ------
+> >  1 file changed, 6 deletions(-)
+> >
+> > diff --git a/scripts/qapi/parser.py b/scripts/qapi/parser.py
+> > index c3cf33904ef..b33edbba74f 100644
+> > --- a/scripts/qapi/parser.py
+> > +++ b/scripts/qapi/parser.py
+> > @@ -732,8 +732,6 @@ def __init__(self, info: QAPISourceInfo, symbol: Op=
+tional[str] =3D None):
+> >          self.all_sections: List[QAPIDoc.Section] =3D [
+> >              QAPIDoc.Section(info, QAPIDoc.Kind.PLAIN)
+> >          ]
+> > -        # the body section
+> > -        self.body: Optional[QAPIDoc.Section] =3D self.all_sections[0]
+> >          # dicts mapping parameter/feature names to their description
+> >          self.args: Dict[str, QAPIDoc.ArgSection] =3D {}
+> >          self.features: Dict[str, QAPIDoc.ArgSection] =3D {}
+> > @@ -742,8 +740,6 @@ def __init__(self, info: QAPISourceInfo, symbol: Op=
+tional[str] =3D None):
+> >          self.errors: Optional[QAPIDoc.Section] =3D None
+> >          # "Since" section
+> >          self.since: Optional[QAPIDoc.Section] =3D None
+> > -        # sections other than .body, .args, .features
+> > -        self.sections: List[QAPIDoc.Section] =3D []
+> >
+> >      def end(self) -> None:
+> >          for section in self.all_sections:
+> > @@ -766,7 +762,6 @@ def ensure_untagged_section(self, info: QAPISourceI=
+nfo) -> None:
+> >
+> >          # start new section
+> >          section =3D self.Section(info, kind)
+> > -        self.sections.append(section)
+> >          self.all_sections.append(section)
+> >
+> >      def new_tagged_section(
+> > @@ -790,7 +785,6 @@ def new_tagged_section(
+> >                  raise QAPISemError(
+> >                      info, "duplicated '%s' section" % kind)
+> >              self.since =3D section
+> > -        self.sections.append(section)
+> >          self.all_sections.append(section)
+> >
+> >      def _new_description(
+>
 
 
