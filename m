@@ -4,88 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF5EFCD98DA
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jun 2026 19:39:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1932ECD98E0
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jun 2026 19:39:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZD7u-0004rY-KP; Mon, 15 Jun 2026 15:37:42 -0400
+	id 1wZD7u-0004tW-RK; Mon, 15 Jun 2026 15:37:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wZD6Q-0002X5-NK
- for qemu-devel@nongnu.org; Mon, 15 Jun 2026 15:36:12 -0400
+ id 1wZD6K-0002Vo-2h
+ for qemu-devel@nongnu.org; Mon, 15 Jun 2026 15:36:11 -0400
 Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wZD6N-0001XQ-UE
- for qemu-devel@nongnu.org; Mon, 15 Jun 2026 15:36:09 -0400
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+ id 1wZD6G-0001V4-0M
+ for qemu-devel@nongnu.org; Mon, 15 Jun 2026 15:36:02 -0400
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65FIx0083577885
- for <qemu-devel@nongnu.org>; Mon, 15 Jun 2026 19:36:05 GMT
+ 65FIxEW1861120
+ for <qemu-devel@nongnu.org>; Mon, 15 Jun 2026 19:35:58 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=qcppdkim1; bh=e0U0jPdf9DP
- 07XEh4hlQkA0/lzjvbReCNzHoQnZaOE0=; b=a7zSyvvwav6BvjVkQqb2MnQ77rp
- P/kJXMPBI9KPbd6FxZT/TSZ+quu/xLAO7njUQ1aVcGayGGZmJofyPlntP+q9RHZy
- KkplDEOfPA/g8xqfkMCveEo7nXRX1SFUsMBe3ZNPixaoFUrus+K6DzaXlQCSW62w
- lm4ra8HecfDgxDyTpDM6ffbKTxuh68b3J8G8M4JjDusYj6Lv8ZRJbJoWtQ9kMF6w
- 3u/PxQu9jG23AxhWTmET8PvVtgJn6U0YdNKUpv1b1XyFkmILjTi7yV2RY6snQNym
- ofwcvM/UM6KbMElGYJ74Zz+XszjFE2mAx2WFPFbLywN9WU5WWQ4OLrzFefQ==
-Received: from mail-dy1-f197.google.com (mail-dy1-f197.google.com
- [74.125.82.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ete982s8v-1
+ :mime-version:references:subject:to; s=qcppdkim1; bh=zV11NEESNBc
+ Y64WP+EP89WXElGJavXvFC1NakUQ955c=; b=FZj33wGslpVyVXqKML7hi6Z1LiC
+ N7Dzoq74fcYYXbA7q+mbCxXBucn4R5tGf0wuuAEg+FCZsR7y18uRoBOX7BVmRpbu
+ bdFZWW2tyVIynF5/mufBpJTDapp8G6PRHe4/NMKmBe/8XTyWusNZrN9JEg7Ejy7f
+ vDsbKEJ3LxixkVewVXIrdKXfG2k7vRIDVR52mM8A3rS19ka9YTTkNs99hUrzwvpg
+ 70wcXOha+lIN+wiCtTAI47IvhWoSYyd7hMBThW7uWLgmXKv142asK4oVIhCgRRUT
+ b1EzzsNeZ3CJTcD5KGUmTKGj/lVhOSgUwTFxUNOmkWSZfBiY8H58YJRzdpw==
+Received: from mail-dl1-f72.google.com (mail-dl1-f72.google.com [74.125.82.72])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4eteydam1h-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 15 Jun 2026 19:36:05 +0000 (GMT)
-Received: by mail-dy1-f197.google.com with SMTP id
- 5a478bee46e88-304b8d0ee63so5979790eec.0
- for <qemu-devel@nongnu.org>; Mon, 15 Jun 2026 12:36:05 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Mon, 15 Jun 2026 19:35:58 +0000 (GMT)
+Received: by mail-dl1-f72.google.com with SMTP id
+ a92af1059eb24-1382674ba2eso3369420c88.0
+ for <qemu-devel@nongnu.org>; Mon, 15 Jun 2026 12:35:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1781552165; x=1782156965; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1781552158; x=1782156958; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=e0U0jPdf9DP07XEh4hlQkA0/lzjvbReCNzHoQnZaOE0=;
- b=bYBF/7MrGg96E03ZqZPjp//8R4ahohodFLqtgrQGrSPeP38cXplWESF93VllMninSj
- TnJ4X0lA5AaHuGicOZbolxCrFmt85TVwMUN9FN774TeeFwDj7QdRffcf5O5xueKn5ecH
- szYL5t/F3RsxDTtD5n6ClxKbxz0Of2xzAFiSflEyV2sQPI5V9vjtFf6s4N68dFNCJZvZ
- tt4T0ICa9AiTi5ji5o9KN+C99gKe/pKzzIR556+9nsk3qeZCypukWENqXKTuNHFjdCi2
- Ui8IIx9bTVblu3EENJMi9mZh7gOW4YyxxSb97EJgREg1YjSP1PinRr1J/8x2WmPioFOf
- 6XYw==
+ bh=zV11NEESNBcY64WP+EP89WXElGJavXvFC1NakUQ955c=;
+ b=TJYtRMxzs/LG2e/RQOE9x8qqmPzW1XHlUUwMM5HFsldvgqxp/vaRmomunzjjzlaWpT
+ 8WxOHHxgP0O12p5MSllMJXyMJaEDafX9+Na7PWzNqh0ffCxuKu2nU3y828YnGt4trxH/
+ qi/8YbSpWVw9RPRo8ARzPhmll7Nl0wfxDLXTDaEev/VBmb/B4V3Vcc3wtoPnDmOvNSS4
+ K5QOWSSUgeB5ZFycX7jANjcfqpe4rQMua0eBb5oF1R9eVpzQ0uR454TqkogiqIL+Un30
+ T85OZ7N2bTErnZWoz8ia8mru+SsLFgaehA4++Qd/95Tn2KiGTbVvw+jfK//0BRqVcurR
+ lcGQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781552165; x=1782156965;
+ d=1e100.net; s=20251104; t=1781552158; x=1782156958;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=e0U0jPdf9DP07XEh4hlQkA0/lzjvbReCNzHoQnZaOE0=;
- b=WsryOrWYduBY1F5ChXQayG40VHMEG0+oRQxgyCCdyzFv8n8YmedJNstXtpv6Adm616
- zIUlwjzdZOOb2g8dRmUib3cZYs1rmIMa2HcGnS50A8oxvVe6BzT9QGmA1KNHm9rkWJ2x
- dJi1NIpme6/VllDFZxHF2vz2snGDMKn6PYXgMaTMePcA418VvEXuR8m4RJ4iHgeGV1WA
- j+rjt6dAN0bfGhTMZQcOsIoRfIc2b9ogIN+kb/u3xyJ4e0rwWRPbxpN4f3miwjF79vZh
- XYc3RsoSBQbaofykSfbLACU4pJGgvnURa7LoLSthj7/iVv0BY/BU2iochgjN4DpEUMBT
- TaUg==
-X-Gm-Message-State: AOJu0Yypv4wkLW1qEkpo7fIF9JN2WcAeHvKn8XavZ8oapAoL79Ko7ifj
- SmUXpAnhKR6GwMKeSmyjpfVs7CtjklvOW4/pJJx0RT9KwMA6QU5YuCjaR13NuOkKhOlRx561G0g
- Yn2T7SsHyRMXsN8OgTfGZJHN73tk0QmQ+m1TT1QPfwWkMQsyOl5UonUFoFYk/8U5N0W9a
-X-Gm-Gg: Acq92OGKw4MJ1afw2SojGcwB1TaoCGDIIqz5kcwtXJz1jIZs3N1qepqYutJsck2Xxuo
- tz/a4geHF6jVzjxE0/Oy2KkqgVC/Mp24Ed/zupQRj2uqht4B9FU+QJSpeNs7Pmo62PO4eiWj6iG
- ZBQkiJkO1Lwvdsl7rYdlwxsmccLpJFyrZPm4UoKyW4kn9nHw0JFXcqTdAR/2TKEgit7Z419GHiN
- lQw5oZny5pU91+/pHWkbvbzPTWEpP7aQmoUiMSD7GdQocyhf8a+1FryPu0hXnZTFakIDJ6QwxBh
- WpNWIuAjd3iubqMDxtxOg8Giwnijc9qipJPr3zGdqgksDuBqhGrFmTSlqcfdOqCEDxujblTYpzH
- PLv8fvweVvPD/1JpqU+dFr3B2sf4Ykp+4+OEE6EMdvN3htC6ygGxnDVNCLfd5RVahcS9dEJn3s6
- ZCKldfeg==
-X-Received: by 2002:a05:7022:6082:b0:137:ecef:c935 with SMTP id
- a92af1059eb24-1386f24a584mr5108425c88.5.1781552164518; 
- Mon, 15 Jun 2026 12:36:04 -0700 (PDT)
-X-Received: by 2002:a05:7022:6082:b0:137:ecef:c935 with SMTP id
- a92af1059eb24-1386f24a584mr5108411c88.5.1781552163997; 
- Mon, 15 Jun 2026 12:36:03 -0700 (PDT)
+ bh=zV11NEESNBcY64WP+EP89WXElGJavXvFC1NakUQ955c=;
+ b=mjkWUaUj+NxBhUca2aH4ReBXS4I2I/S41SzFsbWH7OeZpEdNW/ZnmI1FkiLe3obJl+
+ a3R2tr1xFsrmfoPbEsFb0QLSGs2fwGwYYwmJGlRuC99D7yO6fYrWVgEo9w8LKaIzUKLt
+ BaMH7ItA2/4p58SdUEAQcRo4FqhWG/xlARlFOCawE5t7Gx+sqzYE3HS8Jgc255iwaPLO
+ U2FnVblzkNKubezdrfXJN5uZqHjTiPvhJpGfbfXE33PVu+gqA+yvqR5+8IoZBsi8pVnE
+ f3qXoJZ1P8h0EJiUBsf35hcgwgzclBkBRmsIOa7I1bFceqdxlealenMk11k3J7T4PTay
+ 2vLQ==
+X-Gm-Message-State: AOJu0YyLI5F5Wzhf6+JkHTJM7p0/WMh8ktjlZfj/Uw7vOKuPNp/hMYtx
+ RIK6iQmx1Cv1lYpjVgfAHSqT0nQu+//JMoYp3FgDTRu3OTydicdI+rqudaikQ9Qpx4HMtLDq6pd
+ 6b3ucew+1eZBRcICFhlc3Dbrf+pMACXnxc+DfFxk8ebmN8VbNZpyy/TpOx11K6HyhEwOu
+X-Gm-Gg: Acq92OFMocCk6LSiqCFwNfcwSSqE/Hg2/6b1DGd7tY62UxTOj68adCUFdNN+K8X86Nh
+ ql7+cMFWqzFj5QdHVdnnXZUlRIzoUXhaJf+KaL3jG9UEHiTGm86IzsvJPK8OmByskE9EassFToV
+ TFM3vS3yaxXhHGN0PJl59X8cNHtucw/hhAtPicsisfxoKHzkhcTYUye14cVKj+iy9C8B/Nth81F
+ 0hJywNI7mXMmO5JFei0OtuZKfqI8nktblUbD5aNcjDymqdU3zEZEuIP0QXB/ZGsin8b0jzljq2p
+ vE5V16RtPqpx2vAK0HUCxru5G7AnwxvJf4eB9srRXxL8o/Lv9GWaULGfKk+e8WvlJXzUMKtbmxG
+ u/tWHQuWB3Ncj3RZpfm+5KhWEaJQzGg7X6HmIrw3D7xW0my5R8Hxpjz8Bfs0mlsK0tHuLe567uZ
+ QT31FLfA==
+X-Received: by 2002:a05:7022:6b82:b0:138:49ea:f468 with SMTP id
+ a92af1059eb24-1384baef0eamr7703773c88.2.1781552157545; 
+ Mon, 15 Jun 2026 12:35:57 -0700 (PDT)
+X-Received: by 2002:a05:7022:6b82:b0:138:49ea:f468 with SMTP id
+ a92af1059eb24-1384baef0eamr7703748c88.2.1781552157038; 
+ Mon, 15 Jun 2026 12:35:57 -0700 (PDT)
 Received: from hu-pbouvier-lv.qualcomm.com (Global_NAT1.qualcomm.com.
  [129.46.96.20]) by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-1384b97bf09sm11498007c88.14.2026.06.15.12.36.03
+ a92af1059eb24-1384b97bf09sm11498007c88.14.2026.06.15.12.35.55
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 15 Jun 2026 12:36:03 -0700 (PDT)
+ Mon, 15 Jun 2026 12:35:56 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
 Cc: Chao Liu <chao.liu.zevorn@gmail.com>,
@@ -94,42 +93,45 @@ Cc: Chao Liu <chao.liu.zevorn@gmail.com>,
  Brian Cain <brian.cain@oss.qualcomm.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  Alexandre Iooss <erdnaxe@crans.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v2 26/26] plugins/cpp: register callbacks using captureless
- lambda
-Date: Mon, 15 Jun 2026 12:35:25 -0700
-Message-ID: <20260615193526.2883349-27-pierrick.bouvier@oss.qualcomm.com>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Subject: [PATCH v2 21/26] plugins: remove qemu_plugin_id from
+ qemu_plugin_vcpu_syscall_ret_cb_t
+Date: Mon, 15 Jun 2026 12:35:20 -0700
+Message-ID: <20260615193526.2883349-22-pierrick.bouvier@oss.qualcomm.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260615193526.2883349-1-pierrick.bouvier@oss.qualcomm.com>
 References: <20260615193526.2883349-1-pierrick.bouvier@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=V5tNF+ni c=1 sm=1 tr=0 ts=6a305425 cx=c_pps
- a=Uww141gWH0fZj/3QKPojxA==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+X-Proofpoint-GUID: HsVAvOjuL6Kw-q85gd8EQPYB3xOUSUQ5
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjE1MDIwNyBTYWx0ZWRfXwUY+10anNSfv
+ nQMDDiSCKE/dRdmzxlEnQ2bqXIkV/2Kv9gu6yo+OK8YrcTTr/wgqFK7yue6D0BWIr8pLF+Arj8C
+ /OKnQkf7VkGZIQG66j/YpVD1wdbvKtM=
+X-Authority-Analysis: v=2.4 cv=QrJuG1yd c=1 sm=1 tr=0 ts=6a30541e cx=c_pps
+ a=bS7HVuBVfinNPG3f6cIo3Q==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
  a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22 a=EUspDBNiAAAA:8
- a=D90kLAkOAllNM0JH3EsA:9 a=O8hF6Hzn-FEA:10 a=PxkB5W3o20Ba91AHUih5:22
-X-Proofpoint-GUID: epkSJmks2faW8vA3ISSSPSRFjuv6aydl
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjE1MDIwNyBTYWx0ZWRfX3OtYO1BaJD6m
- FdIO8pHB3icHcK6QFfbSSRa+d1mneJo3nv1FpdN0oAjULcg6jK6dhdGs8KOLIpn5YB9q+mqjQp3
- 1aFLfEc1vCQE76eov1jwfYOGDrLH7Gs=
-X-Proofpoint-ORIG-GUID: epkSJmks2faW8vA3ISSSPSRFjuv6aydl
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjE1MDIwNyBTYWx0ZWRfX0+nsCLjClhvo
- fW01a3vd90slP6IwssvMMPFuiPtE3vSx+i22kBnkvOHfzu4pF7E5zEz4UO2ok2Ei7nIwFopLxqk
- E2MevCwMJV5Wo1WPgHotPHnBfu7PMuDqaCkLlzww0OgyAOFpdxT+MACfPu8igSJdDvj+ljyp9KF
- JifHfIF4QpkhqGPHNv8BEL1Ped8Nc6LubHUkH+D1HMGjEOLy6wp7AifzvLy61xwqDejRaD4id52
- Li9WCLBbrmp1f9x/5W3JnEQ4aQ2bwiXX1MpQ4sm7CNENLZ6RPKWal+SDx6CL+c07DtGDvL88AYM
- +yaEnFm77+U2q6om8EMjEVK68cb3Z2w6XA98t02UGQw037Xu+No6h1o6rnyZmnSFhrYR27gyMmt
- OVRsiUW2rkSodbuTPmKWRtAYGdXpSzAMSskydtYsWjK02YtcTH+u1bexwXCKDnNUTRIcmWTu7XW
- yXowVXxe/J7UbzueVaw==
+ a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22 a=KKAkSRfTAAAA:8
+ a=EUspDBNiAAAA:8 a=wqG2-qjEQvTc715uQEMA:9 a=vBUdepa8ALXHeOFLBtFW:22
+ a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-ORIG-GUID: HsVAvOjuL6Kw-q85gd8EQPYB3xOUSUQ5
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjE1MDIwNyBTYWx0ZWRfXxg3PEPX3w9C4
+ 3KwZtZHkyr8z1kWRFFQ8zGfje0/l8qRBA28gTjEMjVcXqRHCk1Eu3AGhz+uLa6pxlZrzA8rz8J9
+ 6imkCOlWuGm/EMQHu5EjgLAxJv3sRydZjwr7JKoXZogF1Q38BmXWb5KrDRMhO4tNooJxkpHhDaZ
+ C00NQKoLP8D/CuLM+KtyRPWJ32IZmkEgHAft7sJ16Rmu0+DOTfwil27J82maDxtdyWp7TuLFWO/
+ kasg6mdLo4d9Vtm/2VeafCuV5yR/51zF9nHNe1S1h0keUZ4Q0YgCzvJI5+hYzfPWovpo2Vw9gqc
+ oD1tFkuWc2XlO0YXET+HWfeLm/DY62SSzyyOMv640fBfBUleK1GG4r/asAWXgG2B1xL4EBSu29f
+ 0CDZ5n29ecUCTVDRn2sjDE2zPy2Vsv4AgSqVr9gCWBa0O1RFUm7bJXPh2VKPQgybfFcxUph4XPr
+ LskfX8We4NRLPVy/yAQ==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-06-15_05,2026-06-15_04,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 impostorscore=0 phishscore=0 malwarescore=0 priorityscore=1501
- adultscore=0 lowpriorityscore=0 clxscore=1015 bulkscore=0 spamscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606040000 definitions=main-2606150207
+ clxscore=1015 priorityscore=1501 lowpriorityscore=0 suspectscore=0
+ phishscore=0 spamscore=0 impostorscore=0 malwarescore=0 adultscore=0
+ bulkscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.22.0-2606040000
+ definitions=main-2606150207
 Received-SPF: pass client-ip=205.220.168.131;
  envelope-from=pierrick.bouvier@oss.qualcomm.com;
  helo=mx0a-0031df01.pphosted.com
@@ -155,127 +157,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We can now demonstrate what previous changes allow us to do. Since all
-callbacks have a userdata pointer, we can use that mechanism to move an
-object through all of them.
-
-In other words, we can now have stateful plugins without resorting to
-any global variable.
-
-As an example, we implement tb counting plugin with our cpp plugin. It
-produces an output similar to hotblocks, with same performance.
-
+Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 ---
- contrib/plugins/cpp.cpp | 90 +++++++++++++++++++++++++++++++++++++++--
- 1 file changed, 87 insertions(+), 3 deletions(-)
+ include/plugins/qemu-plugin.h | 4 +---
+ plugins/core.c                | 2 +-
+ tests/tcg/plugins/syscall.c   | 2 +-
+ 3 files changed, 3 insertions(+), 5 deletions(-)
 
-diff --git a/contrib/plugins/cpp.cpp b/contrib/plugins/cpp.cpp
-index a0bb261fbe8..006fa6de243 100644
---- a/contrib/plugins/cpp.cpp
-+++ b/contrib/plugins/cpp.cpp
-@@ -363,14 +363,98 @@
+diff --git a/include/plugins/qemu-plugin.h b/include/plugins/qemu-plugin.h
+index 33d6f8e0b7d..4f0c73c7b33 100644
+--- a/include/plugins/qemu-plugin.h
++++ b/include/plugins/qemu-plugin.h
+@@ -879,14 +879,12 @@ typedef bool
+ /**
+  * typedef qemu_plugin_vcpu_syscall_ret_cb_t - vCPU syscall return callback
+  * function type
+- * @id: plugin id
+  * @vcpu_index: the executing vCPU
+  * @num: the syscall number
+  * @ret: the syscall return value
+  */
+ typedef void
+-(*qemu_plugin_vcpu_syscall_ret_cb_t)(qemu_plugin_id_t id,
+-                                     unsigned int vcpu_index,
++(*qemu_plugin_vcpu_syscall_ret_cb_t)(unsigned int vcpu_index,
+                                      int64_t num, int64_t ret);
  
- QEMU_PLUGIN_EXPORT int qemu_plugin_version = QEMU_PLUGIN_VERSION;
+ /**
+diff --git a/plugins/core.c b/plugins/core.c
+index 49fe1b582b5..0a18910f873 100644
+--- a/plugins/core.c
++++ b/plugins/core.c
+@@ -558,7 +558,7 @@ void qemu_plugin_vcpu_syscall_ret(CPUState *cpu, int64_t num, int64_t ret)
+         qemu_plugin_vcpu_syscall_ret_cb_t func = cb->f.vcpu_syscall_ret;
  
--static void vcpu_tb_trans(struct qemu_plugin_tb *tb, void *userdata)
-+class Plugin
- {
--}
-+    public:
-+    void tb_exec(std::atomic<uint64_t> &count)
-+    {
-+        count++;
-+    }
-+
-+    void tb_trans(struct qemu_plugin_tb *tb)
-+    {
-+        auto vaddr = qemu_plugin_tb_vaddr(tb);
-+
-+        TbData *data = [&]() {
-+            std::lock_guard l(tb_trans_lock);
-+            auto [it, is_new] = tb_data.try_emplace(vaddr);
-+            TbData &in = it->second;
-+            if (is_new) {
-+                in.first = 0;
-+                in.second = this;
-+            }
-+            return &in;
-+        } ();
-+
-+        qemu_plugin_register_vcpu_tb_exec_cb(
-+            tb,
-+            [](unsigned int cpu_index, void *udata) {
-+                auto &[counter, p] = *static_cast<TbData*>(udata);
-+                p->tb_exec(counter);
-+            },
-+            QEMU_PLUGIN_CB_NO_REGS,
-+            data);
-+    }
-+
-+    void at_exit()
-+    {
-+        std::vector<std::pair<Vaddr, uint64_t>> v;
-+        for (auto &[vaddr, data] : tb_data) {
-+            uint64_t count = data.first;
-+            v.push_back({vaddr, count});
-+        }
-+        std::sort(v.begin(), v.end(),
-+                  [](const auto &a, const auto &b) {
-+                    return a.second > b.second;
-+                  });
-+        std::stringstream ss;
-+        ss << "Top 10 executed TB are:\n";
-+        size_t idx = 0;
-+        for (auto &tb : v) {
-+            if (idx >= 10) {
-+                break;
-+            }
-+            ss << std::hex << "0x" << tb.first << std::dec << ": "
-+               << tb.second << '\n';
-+            ++idx;
-+        }
-+        qemu_plugin_outs(ss.str().c_str());
-+    }
-+
-+    private:
-+    using Vaddr = uint64_t;
-+    using Counter = std::atomic<uint64_t>;
-+    using TbData = std::pair<Counter, Plugin*>;
-+    std::unordered_map<Vaddr, TbData> tb_data;
-+    std::mutex tb_trans_lock;
-+};
- 
- QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
-                                            const qemu_info_t *info,
-                                            int argc, char **argv)
- {
--    qemu_plugin_register_vcpu_tb_trans_cb(id, vcpu_tb_trans, NULL);
-+    Plugin *plugin = new Plugin;
-+
-+    /*
-+     * We can register a cb with any function, which may be a free
-+     * function, a static class function, or a captureless lambda.
-+     */
-+    qemu_plugin_register_vcpu_tb_trans_cb(
-+        id,
-+        [](struct qemu_plugin_tb *tb, void *userdata) {
-+            Plugin *p = static_cast<Plugin*>(userdata);
-+            p->tb_trans(tb);
-+        },
-+        plugin);
-+
-+    qemu_plugin_register_atexit_cb(
-+        id,
-+        [](void *userdata) {
-+            Plugin *p = static_cast<Plugin*>(userdata);
-+            p->at_exit();
-+            delete p;
-+        },
-+        plugin);
-+
-     return 0;
+         qemu_plugin_set_cb_flags(cpu, QEMU_PLUGIN_CB_RW_REGS_PC);
+-        func(cb->ctx->id, cpu->cpu_index, num, ret);
++        func(cpu->cpu_index, num, ret);
+         qemu_plugin_set_cb_flags(cpu, QEMU_PLUGIN_CB_NO_REGS);
+     }
  }
+diff --git a/tests/tcg/plugins/syscall.c b/tests/tcg/plugins/syscall.c
+index 410fe617804..1bc737824ce 100644
+--- a/tests/tcg/plugins/syscall.c
++++ b/tests/tcg/plugins/syscall.c
+@@ -151,7 +151,7 @@ static void vcpu_syscall(unsigned int vcpu_index,
+     }
+ }
+ 
+-static void vcpu_syscall_ret(qemu_plugin_id_t id, unsigned int vcpu_idx,
++static void vcpu_syscall_ret(unsigned int vcpu_idx,
+                              int64_t num, int64_t ret)
+ {
+     if (statistics) {
 -- 
 2.43.0
 
