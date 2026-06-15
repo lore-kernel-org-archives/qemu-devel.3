@@ -4,83 +4,188 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2100CD98C5
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jun 2026 15:55:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6423CCD98C5
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jun 2026 16:06:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZ9do-0003vP-MJ; Mon, 15 Jun 2026 11:54:24 -0400
+	id 1wZ9pI-0008N0-RY; Mon, 15 Jun 2026 12:06:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1wZ9dn-0003v5-DV
- for qemu-devel@nongnu.org; Mon, 15 Jun 2026 11:54:23 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1wZ9pF-0008MB-RE
+ for qemu-devel@nongnu.org; Mon, 15 Jun 2026 12:06:13 -0400
+Received: from mout.gmx.net ([212.227.15.15])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1wZ9dl-0006sm-Lb
- for qemu-devel@nongnu.org; Mon, 15 Jun 2026 11:54:23 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781538860;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=hu+5g/RchjMDQ29VQgzhHz85j/NwwIT6mmPIMKMJgpQ=;
- b=Tv2T99gqlGWpoi8tDYAmfNqYpKGVpfnCv6NNisFCPQU3wRwIszYHir6ESq6WKid5B3jRn1
- 33qWf/rYHDQRH4HqBEr0Z5aGXWVGLodk2wkNYyMvv6fM8x5+JJz8Ubl/x6AcxP+V0iw1mg
- hf5ZTiMo7n2lrZLt34aQo/YtKkS7Rk8=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-552-NzETjdikM9q0PNt8LeniWg-1; Mon,
- 15 Jun 2026 11:54:16 -0400
-X-MC-Unique: NzETjdikM9q0PNt8LeniWg-1
-X-Mimecast-MFC-AGG-ID: NzETjdikM9q0PNt8LeniWg_1781538855
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id DE84819560B2; Mon, 15 Jun 2026 15:54:14 +0000 (UTC)
-Received: from localhost (unknown [10.2.16.187])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id DCA053008B38; Mon, 15 Jun 2026 15:54:13 +0000 (UTC)
-Date: Mon, 15 Jun 2026 11:54:11 -0400
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: Peter Maydell <peter.maydell@linaro.org>, Gavin Shan <gshan@redhat.com>,
- qemu-devel@nongnu.org, qemu-arm@nongnu.org, jugraham@redhat.com,
- shan.gavin@gmail.com, qemu-block@nongnu.org
-Subject: Re: [PATCH RFCv1] virtio: Inherit max bounce buffer size from bus
- parent if possible
-Message-ID: <20260615155411.GA450713@fedora>
-References: <20260608001821.850921-1-gshan@redhat.com>
- <20260610041036-mutt-send-email-mst@kernel.org>
- <20260610183046.GB121666@fedora>
- <20260610165710-mutt-send-email-mst@kernel.org>
- <20260611142022.GA202155@fedora>
- <20260611103513-mutt-send-email-mst@kernel.org>
- <CAFEAcA8RAsmrAArKz0X7NU6sCnKTC-e413TgwLp1gt2vJGLgPw@mail.gmail.com>
- <20260611110543-mutt-send-email-mst@kernel.org>
- <20260611183708.GA222320@fedora>
- <20260611165238-mutt-send-email-mst@kernel.org>
+ (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1wZ9pD-0002Oi-Ck
+ for qemu-devel@nongnu.org; Mon, 15 Jun 2026 12:06:13 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
+ s=s31663417; t=1781539564; x=1782144364; i=deller@gmx.de;
+ bh=F2ZenJKocQ0EXWYjHcQVvLA/3v7djlnMU1QrPQqHBks=;
+ h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
+ References:From:In-Reply-To:Content-Type:
+ Content-Transfer-Encoding:cc:content-transfer-encoding:
+ content-type:date:from:message-id:mime-version:reply-to:subject:
+ to;
+ b=W+IDGEHrivtDzjmrnxz/rNqkmRm7n5LgIYP+ry4nXlyTzUXOK5zyM9GPA7C+jiRt
+ 9p9abIYJsUHVbCl2tlLDRChC+ZC8VUlVWUjpJMakjn4uEiyqlWWZbWq2qYDR93FBl
+ mWN5tf2eqL2szFu3OVWnW+G1cgS57BRkc480rlOu6RAeJhfa3bRFHWTVFA4oyygUO
+ ARxfbrroUFFyAzMwb9JWYiRkZ6gciJG9KIXYLP4oakbmWSG1ZqPBkXHLZftJMjSza
+ as80nzclOf8hO2nrunUJJBdHP50Ig1W6WKXyrO9B7Cz2cMAzifQmQG0w/KFsKVA/j
+ Bf/+N8Nfyl+qpwgKVw==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from client.hidden.invalid by mail.gmx.net (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MXGrE-1whT893OHO-00VZ02; Mon, 15
+ Jun 2026 18:06:03 +0200
+Message-ID: <7d65e071-ca12-4d48-88df-9ff08c70fa75@gmx.de>
+Date: Mon, 15 Jun 2026 18:06:02 +0200
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="OJbP8W+pbUCDdIMd"
-Content-Disposition: inline
-In-Reply-To: <20260611165238-mutt-send-email-mst@kernel.org>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 8
-X-Spam_score: 0.8
-X-Spam_bar: /
-X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] linux-user: Fix AT_PHDR when program headers are
+ relocated into their own segment
+To: valium007 <valium7171@gmail.com>, qemu-devel@nongnu.org
+Cc: laurent@vivier.eu, pierrick.bouvier@oss.qualcomm.com
+References: <20260613152156.41147-1-valium7171@gmail.com>
+Content-Language: en-US
+From: Helge Deller <deller@gmx.de>
+Autocrypt: addr=deller@gmx.de; keydata=
+ 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
+In-Reply-To: <20260613152156.41147-1-valium7171@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:GgX119WQxenJuO+k0DOPzmbyg0bzD5hyzbvwk3kfB40q+k4thDl
+ UzI8Qf+Qw2SoNoPVkS9SNxTJ5H56L3v66Pn0AHpmSoXbhuy+Uv2Z2m7A5LkOJtXQXLKpq5w
+ k+NastfkXBW/w/WV0+/bspoaQqsibZKnpE8a6pMsxKZtuyL5XSdS+oIOyyREMjDIAWqtK2l
+ 1NSeuWOxqeKzBPvbUGOSw==
+UI-OutboundReport: notjunk:1;M01:P0:OuNP2eM6Qtc=;FUWNZzBTPsXWEj9a6UxnXy0p+Nn
+ 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
+Received-SPF: pass client-ip=212.227.15.15; envelope-from=deller@gmx.de;
+ helo=mout.gmx.net
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,125 +201,118 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 6/13/26 17:21, valium007 wrote:
+> When a binary is patched or relocated such that the program header table=
+ is
+> moved into a separate PT_LOAD segment=20
 
---OJbP8W+pbUCDdIMd
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+How relevant is this? How/why does it happen?
 
-On Thu, Jun 11, 2026 at 04:54:36PM -0400, Michael S. Tsirkin wrote:
-> On Thu, Jun 11, 2026 at 02:37:08PM -0400, Stefan Hajnoczi wrote:
-> > On Thu, Jun 11, 2026 at 11:09:35AM -0400, Michael S. Tsirkin wrote:
-> > > On Thu, Jun 11, 2026 at 04:04:20PM +0100, Peter Maydell wrote:
-> > > > On Thu, 11 Jun 2026 at 15:46, Michael S. Tsirkin <mst@redhat.com> w=
-rote:
-> > > > >
-> > > > > On Thu, Jun 11, 2026 at 10:20:22AM -0400, Stefan Hajnoczi wrote:
-> > > > > > Gavin posted the lspci output:
-> > > > > >
-> > > > > >   Region 0: Memory at 661ffd000000 (64-bit, prefetchable) [size=
-=3D16M]
-> > > > > >   Region 2: Memory at 662000000000 (64-bit, prefetchable) [size=
-=3D128G]
-> > > > > >   Region 4: Memory at 661ffe000000 (64-bit, prefetchable) [size=
-=3D32M]
-> > > > > >
-> > > > > > These are prefetchable memory BARs, so I would expect them to be
-> > > > > > mmappable. Why does QEMU have no way of knowing upfront whether=
- they can
-> > > > > > be mmapped?
-> > > > >
-> > > > >
-> > > > > They can be mmapped.  The issue is just that after mmap flatview =
-uses
-> > > > > memcpy/memmove on them, and that might not match what guest drive=
-r is
-> > > > > expecting specifically for 1/2/4/8 byte accesses.
-> > > >=20
-> > > > Huh? The guest driver has nothing to do with it, surely.
-> > >=20
-> > > My answer is I don't know.
-> > >=20
-> > > But the commit that introduced the regression says:
-> > >=20
-> > > 	 The assumption here is that accesses initiated by the VM are
-> > > 	    driven by a device specific driver, which knows the device
-> > > 	    capabilities.=20
-> > >=20
-> > > > The
-> > > > problem is that for some PCI devices (like the network card
-> > > > mentioned in 4a2e242bbb30's commit message) the BAR is *not*
-> > > > safe for arbitrary access (because the actual real host hardware
-> > > > inside it is not RAM).
-> > >=20
-> > > But we don't do arbitrary access. Why would we?
-> > >=20
-> > > > That commit disabled direct access
-> > > > for all vfio MRs, which is safe but overcautious. Would
-> > > > "direct access is OK if this is a prefetchable memory BAR" be OK?
-> > > > Or do some prefetchable memory BARs still have restrictions
-> > > > beyond those of real RAM?
-> >=20
-> > I wonder the same thing.
+> (rather than sitting at the start of the
+> first loadable segment), QEMU's AT_PHDR auxv entry becomes incorrect. Th=
+e
+> loader was computing AT_PHDR as load_addr + e_phoff, which assumes the h=
+eaders
+> are mapped 1:1 from file offset 0. This breaks when the headers are else=
+where.
 >=20
-> pci spec mostly made prefetcheable the default, and made
-> it a very weak signal.
+> The Linux kernel instead locates the PT_LOAD segment that contains e_pho=
+ff,
+> then computes the in-memory address as p_vaddr + (e_phoff - p_offset). T=
+his
+> correctly handles relocated headers.
+
+Ok, I need to check on this.
+ =20
+> Fix by:
+> 1. Add phdr_addr field to image_info to cache the resolved address.
+> 2. Initialize to load_addr + e_phoff (fallback for headers outside any P=
+T_LOAD).
+> 3. In the PT_LOAD mapping loop, detect if the segment contains e_phoff a=
+nd
+>     override with the segment-relative address.
+> 4. Use info->phdr_addr for AT_PHDR instead of the incorrect formula.
 >=20
-> but really, direct access is just always ok. bounce buffers
-> just do not have the bug of memory core besides that
-> they buy us nothing.
+> Signed-off-by: valium007 <valium7171@gmail.com>
 
-What is the next step here?
+Can you sign with a real name?
 
-Stefan
+Helge
 
-> > > >=20
-> > > > > Removing mmap is one solution, this is what vfio does now.
-> > > > > Fixing flatview is another.
-> > > >=20
-> > > > No, you can't fix this in flatview. If a BAR is not safe for
-> > > > direct access then it is not safe for direct access.
-> > > >=20
-> > > > -- PMM
-> > >=20
-> > > There's no such thing as "not safe for direct access" in PCI.
-> > > All operations are memory operations.
-> > > What can be unsafe is accesses of specific width and length.
-> > >=20
-> > > So we should not use variable length memcpy/memmove which
-> > > do that. Fixes length memcpy/memmove exactly mimic what
-> > > guest does, so they are safe.
-> >=20
-> > The bounce buffer approach doesn't seem like a solution to me: if the
-> > device has alignment and size restrictions on accesses, then the bounce
-> > buffer won't get them right because it doesn't know where the registers
-> > live within the BAR.
-> >=20
-> > Also, the guest initiated I/O to a VIRTIO device pointing to a buffer in
-> > another PCI device's BAR. In this case any failure to handle BAR
-> > accesses would be the guest's problem. It cannot assume that the VIRTIO
-> > device follows a specific DMA transfer pattern with respect to
-> > alignment/size.
-> >=20
-> > Stefan
+> ---
+>   linux-user/elfload.c | 21 ++++++++++++++++++++-
+>   linux-user/qemu.h    |  1 +
+>   2 files changed, 21 insertions(+), 1 deletion(-)
 >=20
->=20
-
---OJbP8W+pbUCDdIMd
-Content-Type: application/pgp-signature; name=signature.asc
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmowICMACgkQnKSrs4Gr
-c8iqkAgAvUrTCeHS/l689fHJOqLMHeup6qbzsej6cmkpzqWV6ATNn4xG5+PpDv4l
-5uj6vzo8W4TRW7X5kc1FndlbDWL3+eDK8ARx/M8X1n8sYruIM1FpeBwBWDJXjv+b
-yWWbfQySFCiFYgGT9mTl+bh7TBwwbvmAnpKrMzHRs0jsyWCFQTDKNVXczDVO0fao
-KBkdQ3T4mrSLg/L6g0hjeuyXZNXnMxLZOUiZpkYVdpxmt16ugbHU7qmFQwgwJubf
-n5V8P+KmVuM1ytAUXLGRBmtwF2rva8Sc95JBxCWkpUVT5AftDvQ2kcDhco0a2ru2
-F2sChd//6CItxLYirSZENpM0fE7aMw==
-=eiPe
------END PGP SIGNATURE-----
-
---OJbP8W+pbUCDdIMd--
+> diff --git a/linux-user/elfload.c b/linux-user/elfload.c
+> index b05b8b0..8049c8a 100644
+> --- a/linux-user/elfload.c
+> +++ b/linux-user/elfload.c
+> @@ -699,7 +699,7 @@ static abi_ulong create_elf_tables(abi_ulong p, int =
+argc, int envc,
+>       /* There must be exactly DLINFO_ITEMS entries here, or the assert
+>        * on info->auxv_len will trigger.
+>        */
+> -    NEW_AUX_ENT(AT_PHDR, (abi_ulong)(info->load_addr + exec->e_phoff));
+> +    NEW_AUX_ENT(AT_PHDR, (abi_ulong)(info->phdr_addr));
+>       NEW_AUX_ENT(AT_PHENT, (abi_ulong)(sizeof (struct elf_phdr)));
+>       NEW_AUX_ENT(AT_PHNUM, (abi_ulong)(exec->e_phnum));
+>       NEW_AUX_ENT(AT_PAGESZ, (abi_ulong)(TARGET_PAGE_SIZE));
+> @@ -1469,6 +1469,12 @@ static void load_elf_image(const char *image_name=
+, const ImageSource *src,
+>       info->data_offset =3D load_bias;
+>       info->load_addr =3D load_addr;
+>       info->entry =3D ehdr->e_entry + load_bias;
+> +    /*
+> +     * Fallback for AT_PHDR if the program headers do not fall within
+> +     * any PT_LOAD segment (see the loop below, which overrides this wi=
+th
+> +     * the correct in-memory address when a containing segment is found=
+).
+> +     */
+> +    info->phdr_addr =3D load_addr + ehdr->e_phoff;
+>       info->start_code =3D -1;
+>       info->end_code =3D 0;
+>       info->start_data =3D -1;
+> @@ -1523,6 +1529,19 @@ static void load_elf_image(const char *image_name=
+, const ImageSource *src,
+>               vaddr_ef =3D vaddr + eppnt->p_filesz;
+>               vaddr_em =3D vaddr + eppnt->p_memsz;
+>  =20
+> +            /*
+> +             * If this segment contains the program headers, record the=
+ir
+> +             * in-memory address for AT_PHDR. This matches the kernel, =
+which
+> +             * locates the headers via the containing PT_LOAD rather th=
+an
+> +             * assuming load_addr + e_phoff (false when the phdrs are n=
+ot
+> +             * mapped 1:1 from file offset 0, e.g. relocated into their=
+ own
+> +             * segment by a binary patcher).
+> +             */
+> +            if (eppnt->p_offset <=3D ehdr->e_phoff &&
+> +                ehdr->e_phoff < eppnt->p_offset + eppnt->p_filesz) {
+> +                info->phdr_addr =3D vaddr + (ehdr->e_phoff - eppnt->p_o=
+ffset);
+> +            }
+> +
+>               /*
+>                * Some segments may be completely empty, with a non-zero =
+p_memsz
+>                * but no backing file segment.
+> diff --git a/linux-user/qemu.h b/linux-user/qemu.h
+> index 07fe801..2268493 100644
+> --- a/linux-user/qemu.h
+> +++ b/linux-user/qemu.h
+> @@ -26,6 +26,7 @@
+>   struct image_info {
+>           abi_ulong       load_bias;
+>           abi_ulong       load_addr;
+> +        abi_ulong       phdr_addr;
+>           abi_ulong       start_code;
+>           abi_ulong       end_code;
+>           abi_ulong       start_data;
 
 
