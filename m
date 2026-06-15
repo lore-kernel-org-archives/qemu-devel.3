@@ -4,188 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6423CCD98C5
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jun 2026 16:06:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 329BDCD98E1
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jun 2026 16:07:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZ9pI-0008N0-RY; Mon, 15 Jun 2026 12:06:16 -0400
+	id 1wZ9qF-0000Fy-KY; Mon, 15 Jun 2026 12:07:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1wZ9pF-0008MB-RE
- for qemu-devel@nongnu.org; Mon, 15 Jun 2026 12:06:13 -0400
-Received: from mout.gmx.net ([212.227.15.15])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1wZ9pD-0002Oi-Ck
- for qemu-devel@nongnu.org; Mon, 15 Jun 2026 12:06:13 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
- s=s31663417; t=1781539564; x=1782144364; i=deller@gmx.de;
- bh=F2ZenJKocQ0EXWYjHcQVvLA/3v7djlnMU1QrPQqHBks=;
- h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
- References:From:In-Reply-To:Content-Type:
- Content-Transfer-Encoding:cc:content-transfer-encoding:
- content-type:date:from:message-id:mime-version:reply-to:subject:
- to;
- b=W+IDGEHrivtDzjmrnxz/rNqkmRm7n5LgIYP+ry4nXlyTzUXOK5zyM9GPA7C+jiRt
- 9p9abIYJsUHVbCl2tlLDRChC+ZC8VUlVWUjpJMakjn4uEiyqlWWZbWq2qYDR93FBl
- mWN5tf2eqL2szFu3OVWnW+G1cgS57BRkc480rlOu6RAeJhfa3bRFHWTVFA4oyygUO
- ARxfbrroUFFyAzMwb9JWYiRkZ6gciJG9KIXYLP4oakbmWSG1ZqPBkXHLZftJMjSza
- as80nzclOf8hO2nrunUJJBdHP50Ig1W6WKXyrO9B7Cz2cMAzifQmQG0w/KFsKVA/j
- Bf/+N8Nfyl+qpwgKVw==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from client.hidden.invalid by mail.gmx.net (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MXGrE-1whT893OHO-00VZ02; Mon, 15
- Jun 2026 18:06:03 +0200
-Message-ID: <7d65e071-ca12-4d48-88df-9ff08c70fa75@gmx.de>
-Date: Mon, 15 Jun 2026 18:06:02 +0200
+ (Exim 4.90_1) (envelope-from <alexander.hansen@9elements.com>)
+ id 1wZ9qC-0000Ex-PT
+ for qemu-devel@nongnu.org; Mon, 15 Jun 2026 12:07:12 -0400
+Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alexander.hansen@9elements.com>)
+ id 1wZ9q7-0002YE-D0
+ for qemu-devel@nongnu.org; Mon, 15 Jun 2026 12:07:11 -0400
+Received: by mail-ed1-x529.google.com with SMTP id
+ 4fb4d7f45d1cf-6870ad8072eso7958545a12.0
+ for <qemu-devel@nongnu.org>; Mon, 15 Jun 2026 09:07:00 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1781539619; cv=none;
+ d=google.com; s=arc-20240605;
+ b=LGep/j1KWrEiI+CNBBd8IsEvfq27AAi7S+KaRIdnPcN2WIWqiie4DCQaGQRlc3JH5Q
+ fq9DVHLf1NHgbCdus3t545+4MIsY5ns1Gctl0nPkjCTbHwgiiAPbnpUKZCsNq9Bx+fwl
+ 5RL6rIGGdybUC9/CZaX8jcCmFEA6fiGf+3hmlhTbiLbAIj24NLil9tdp4tQgx9iemmLg
+ kfAxzxdYPwj+afRcbMI1pXsr4fXgeg2Uc4m7YJZ2WJoebYgFde9cC2esKDYFoqjQ9XKn
+ 5SA1Kc1KfQ3S5ubi8+aretNSpOsP3z9ioCHFHuZ3iSmHg86XwSkSPjJbHdXQqoWZ43Jt
+ 0TlQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=v/aLiSpOIgRbsoG4t+R1WSLW/n+T/PPMj19sdMGx/BY=;
+ fh=Jr5qT5fLwiTx6tDLfoxx9YDj4IeDmj6dU0L+U8gGdKw=;
+ b=RMLRjv/j99/DAXSqYVc/Xy6mLLlPYL4h+Y5V47de0McmcfdLsgeOOnTXFzjQtucvof
+ 6ToE0OTYiFuaYpmAezBizwWqljvT6Z63/PP2bl8edc9mziRVyiZa1Iylh9shd9N3XpKk
+ m/wAH0WMjN7xBqYs5qGbT2JHGTiLWCAd5MN3UY/gdxYMQUguv6S/z/qJSyJvkQLNoASy
+ k4RbxdX50K6vfVVcsboDtVsuhGEjMjH1XgRhczbkR1EWNNOy0OA5gYRBiH1IXr0ltJCb
+ XQGRf+SPK1Wx2UcBGwDOcSqbyAQpx1f3F/kvQV+U2QfxTKgHhRq1Qn8SupryZoYakGX9
+ OUeQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=9elements.com; s=google; t=1781539619; x=1782144419; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=v/aLiSpOIgRbsoG4t+R1WSLW/n+T/PPMj19sdMGx/BY=;
+ b=LrctmDzEsUD4whiHSVyQXW9LEPrAyWwTeZhH83O2w/AJctNAC3pMx05K5/TgqDqBnc
+ PvBT6z6wz56q9u4bNx5RvfY3dwJu1ZWk0Qinwc7F19OfWfQUHFPPCk0uTnPR6W9OWKvn
+ YdaqrXl14rq8zw53Q/CASajwslZFFltwjg5oPohExfL0MEd+6B8nVvWf4hSekqw8aWiH
+ Kq1JO1TN1pNLMLwASivIWCaXnZEYmpM9gB0budGLl0Xw/OWRGfBS8JWxMrZXo6FktHYW
+ Ci/HfknNsHswQgHwLeRMwiZGL62TN8AV77zM7Zjz4wyoKeOslbISjoPYUKYCjkRCG6j0
+ hE8A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1781539619; x=1782144419;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=v/aLiSpOIgRbsoG4t+R1WSLW/n+T/PPMj19sdMGx/BY=;
+ b=BddSAfL+9MVG3u7s7XUsLKbV840jFB7dersZ6tjQFdbPeljW7MmN2s2ejabNnkbvH+
+ 0BmKwy14FRWM+o/npY9Utd3DrrKi+UVGYAT7gZpeOT5ykuASNCVAVdvUhAz73HijeXxQ
+ ug7i4+chgoxkVvhFmwIwZvobq8rTzRNFlW/fv0rFsDQgyVAK3eLTYOjLqgr/sUdhmgND
+ mlXEegjDn/ZuwNR8z7jM6Jtj0cMfM/rvPwcwXuoBKXo0fdFQSEz+Y/aJYKZWyQu5UgWJ
+ cltKsqL9AEzm6HGlBxZNmHt1FVHFtEG+ZO7Sk7TrOu0rkDYnZ8177OONJSz6uMUnMpPS
+ 0HWg==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ9uNrydyK++KnHu4loM1O9hUZAjHe63TMFsJxHLHeIQntyl9nTy8nULTn0eHcxGi9S9fkAMWBEzX/V6@nongnu.org
+X-Gm-Message-State: AOJu0Yyrv4ZWCHPoZt7VbizpUVDs+Z4HXAT6D0ORLlzRla5oxwWhzWg9
+ Jv7oNuJwBYiEctfH4RKgZsdiKkm5v2Qx/xMePa8y+0dMYN62Za8s7jiQtJQqQv3uQuCwbcJXec+
+ TWuxbnvqtMv6hcH0lN0PpVHOuw+QdXcYlKkasSwZzzA==
+X-Gm-Gg: Acq92OHahl6DHSk+S8Rleidwea7uLPTlnGXHbjiy3IuRg/gI3v3scW7uUBjI4qMuI3V
+ 8oH++tLtMFDo/20Qj+rfLN+LKu/Vc6Dizzlk1KM84xeLFEAWODPrqDqNUfYFJiZCbs4eSkJCask
+ PpeM1VX31bu6bYYyXwOAYOtcIdS22sgtZyHEGDzSRe81voIVvPK28eTD4BouyprULgZsDtmCmLc
+ DETC1h64/Rs0niYSKcAFdgUtGrLvqu6X0andGgi02Wu4csyN3u1IDyvdo1MBcJ4IpEg0F/KjIQw
+ VFtSRK+mvv6P2hPQxg==
+X-Received: by 2002:aa7:c6d6:0:b0:67b:7e7a:45ed with SMTP id
+ 4fb4d7f45d1cf-695081b7dc1mr56819a12.6.1781539618710; Mon, 15 Jun 2026
+ 09:06:58 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] linux-user: Fix AT_PHDR when program headers are
- relocated into their own segment
-To: valium007 <valium7171@gmail.com>, qemu-devel@nongnu.org
-Cc: laurent@vivier.eu, pierrick.bouvier@oss.qualcomm.com
-References: <20260613152156.41147-1-valium7171@gmail.com>
-Content-Language: en-US
-From: Helge Deller <deller@gmx.de>
-Autocrypt: addr=deller@gmx.de; keydata=
- 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
-In-Reply-To: <20260613152156.41147-1-valium7171@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:GgX119WQxenJuO+k0DOPzmbyg0bzD5hyzbvwk3kfB40q+k4thDl
- UzI8Qf+Qw2SoNoPVkS9SNxTJ5H56L3v66Pn0AHpmSoXbhuy+Uv2Z2m7A5LkOJtXQXLKpq5w
- k+NastfkXBW/w/WV0+/bspoaQqsibZKnpE8a6pMsxKZtuyL5XSdS+oIOyyREMjDIAWqtK2l
- 1NSeuWOxqeKzBPvbUGOSw==
-UI-OutboundReport: notjunk:1;M01:P0:OuNP2eM6Qtc=;FUWNZzBTPsXWEj9a6UxnXy0p+Nn
- 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
-Received-SPF: pass client-ip=212.227.15.15; envelope-from=deller@gmx.de;
- helo=mout.gmx.net
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+References: <20260612-i2c-adc128d818-anacapa-v1-0-9e4640cd164b@meta.com>
+ <cce4022e-70dc-4da4-9a9f-b234f1cc0484@kaod.org>
+In-Reply-To: <cce4022e-70dc-4da4-9a9f-b234f1cc0484@kaod.org>
+From: Alexander Hansen <alexander.hansen@9elements.com>
+Date: Mon, 15 Jun 2026 18:06:46 +0200
+X-Gm-Features: AVVi8CeeWJRaDvhNgeK21meEGMYj3RquxyhsNWBCqHDd2NclPeMAL9oTsFJLNOw
+Message-ID: <CAEr1sMs=D=5navFJbMzhd9Av5OZ9qtBTy1b=jcRzS=-r777K4g@mail.gmail.com>
+Subject: Re: [PATCH 0/4] hw/sensor: Add new device emulation for TI ADC128D818
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Cc: Emmanuel Blot <eblot@meta.com>, qemu-devel@nongnu.org, 
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@mailo.com>, 
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>, 
+ Peter Maydell <peter.maydell@linaro.org>,
+ Steven Lee <steven_lee@aspeedtech.com>, 
+ Troy Lee <leetroy@gmail.com>, Jamin Lin <jamin_lin@aspeedtech.com>, 
+ Kane Chen <kane_chen@aspeedtech.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, 
+ Joel Stanley <joel@jms.id.au>, William de Abreu Pinho <williampinho@meta.com>,
+ qemu-arm@nongnu.org
+Content-Type: multipart/alternative; boundary="000000000000207b0f06544d0426"
+Received-SPF: pass client-ip=2a00:1450:4864:20::529;
+ envelope-from=alexander.hansen@9elements.com; helo=mail-ed1-x529.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -201,118 +126,184 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/13/26 17:21, valium007 wrote:
-> When a binary is patched or relocated such that the program header table=
- is
-> moved into a separate PT_LOAD segment=20
+--000000000000207b0f06544d0426
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-How relevant is this? How/why does it happen?
+Hi Cedric,
 
-> (rather than sitting at the start of the
-> first loadable segment), QEMU's AT_PHDR auxv entry becomes incorrect. Th=
-e
-> loader was computing AT_PHDR as load_addr + e_phoff, which assumes the h=
-eaders
-> are mapped 1:1 from file offset 0. This breaks when the headers are else=
-where.
->=20
-> The Linux kernel instead locates the PT_LOAD segment that contains e_pho=
-ff,
-> then computes the in-memory address as p_vaddr + (e_phoff - p_offset). T=
-his
-> correctly handles relocated headers.
+I would agree that Emmanuel has the better version for ADC128D818 and we
+should go ahead with that one.
+Will not push my version anymore so it should not appear in the next
+patchset..
 
-Ok, I need to check on this.
- =20
-> Fix by:
-> 1. Add phdr_addr field to image_info to cache the resolved address.
-> 2. Initialize to load_addr + e_phoff (fallback for headers outside any P=
-T_LOAD).
-> 3. In the PT_LOAD mapping loop, detect if the segment contains e_phoff a=
-nd
->     override with the segment-relative address.
-> 4. Use info->phdr_addr for AT_PHDR instead of the incorrect formula.
->=20
-> Signed-off-by: valium007 <valium7171@gmail.com>
+I did find some time to test his version on anacapa qemu today and also
+tested it from the hmp side to modify the properties.
+Overall I could not find any functional gaps and the tests are looking
+quite good too.
 
-Can you sign with a real name?
+Alexander
 
-Helge
+Am Sa., 13. Juni 2026 um 19:07 Uhr schrieb C=C3=A9dric Le Goater <clg@kaod.=
+org>:
 
-> ---
->   linux-user/elfload.c | 21 ++++++++++++++++++++-
->   linux-user/qemu.h    |  1 +
->   2 files changed, 21 insertions(+), 1 deletion(-)
->=20
-> diff --git a/linux-user/elfload.c b/linux-user/elfload.c
-> index b05b8b0..8049c8a 100644
-> --- a/linux-user/elfload.c
-> +++ b/linux-user/elfload.c
-> @@ -699,7 +699,7 @@ static abi_ulong create_elf_tables(abi_ulong p, int =
-argc, int envc,
->       /* There must be exactly DLINFO_ITEMS entries here, or the assert
->        * on info->auxv_len will trigger.
->        */
-> -    NEW_AUX_ENT(AT_PHDR, (abi_ulong)(info->load_addr + exec->e_phoff));
-> +    NEW_AUX_ENT(AT_PHDR, (abi_ulong)(info->phdr_addr));
->       NEW_AUX_ENT(AT_PHENT, (abi_ulong)(sizeof (struct elf_phdr)));
->       NEW_AUX_ENT(AT_PHNUM, (abi_ulong)(exec->e_phnum));
->       NEW_AUX_ENT(AT_PAGESZ, (abi_ulong)(TARGET_PAGE_SIZE));
-> @@ -1469,6 +1469,12 @@ static void load_elf_image(const char *image_name=
-, const ImageSource *src,
->       info->data_offset =3D load_bias;
->       info->load_addr =3D load_addr;
->       info->entry =3D ehdr->e_entry + load_bias;
-> +    /*
-> +     * Fallback for AT_PHDR if the program headers do not fall within
-> +     * any PT_LOAD segment (see the loop below, which overrides this wi=
-th
-> +     * the correct in-memory address when a containing segment is found=
-).
-> +     */
-> +    info->phdr_addr =3D load_addr + ehdr->e_phoff;
->       info->start_code =3D -1;
->       info->end_code =3D 0;
->       info->start_data =3D -1;
-> @@ -1523,6 +1529,19 @@ static void load_elf_image(const char *image_name=
-, const ImageSource *src,
->               vaddr_ef =3D vaddr + eppnt->p_filesz;
->               vaddr_em =3D vaddr + eppnt->p_memsz;
->  =20
-> +            /*
-> +             * If this segment contains the program headers, record the=
-ir
-> +             * in-memory address for AT_PHDR. This matches the kernel, =
-which
-> +             * locates the headers via the containing PT_LOAD rather th=
-an
-> +             * assuming load_addr + e_phoff (false when the phdrs are n=
-ot
-> +             * mapped 1:1 from file offset 0, e.g. relocated into their=
- own
-> +             * segment by a binary patcher).
-> +             */
-> +            if (eppnt->p_offset <=3D ehdr->e_phoff &&
-> +                ehdr->e_phoff < eppnt->p_offset + eppnt->p_filesz) {
-> +                info->phdr_addr =3D vaddr + (ehdr->e_phoff - eppnt->p_o=
-ffset);
-> +            }
-> +
->               /*
->                * Some segments may be completely empty, with a non-zero =
-p_memsz
->                * but no backing file segment.
-> diff --git a/linux-user/qemu.h b/linux-user/qemu.h
-> index 07fe801..2268493 100644
-> --- a/linux-user/qemu.h
-> +++ b/linux-user/qemu.h
-> @@ -26,6 +26,7 @@
->   struct image_info {
->           abi_ulong       load_bias;
->           abi_ulong       load_addr;
-> +        abi_ulong       phdr_addr;
->           abi_ulong       start_code;
->           abi_ulong       end_code;
->           abi_ulong       start_data;
+> On 6/12/26 18:46, Emmanuel Blot wrote:
+> > This is a 12-bit, 8-channel ADC I2C device, which is used on several
+> > OpenBMC platforms.
+> >
+> > QOM properties can be used to change input ADC values and external VREF
+> at
+> > run time.
+> >
+> > Add it to AST2600-based Anacapa machine, along with some functional tes=
+ts
+> > that use QOM properties to inject voltage values into analog inputs.
+> >
+> > Datasheet: https://www.ti.com/lit/gpn/ADC128D818
+> >
+> > Signed-off-by: Emmanuel Blot <eblot@meta.com>
+> > ---
+> > Emmanuel Blot (4):
+> >        hw/sensor: adc128d818: add 12-bit 8-channel ADC device
+> >        tests/qtest: adc128d818: add test suite
+> >        hw/arm: anacapa: add ADC128D818 devices
+> >        test/functional: anacapa: test ADC128D818
+> >
+> >   hw/arm/Kconfig                              |   1 +
+> >   hw/arm/aspeed_ast2600_anacapa.c             |  19 +-
+> >   hw/sensor/Kconfig                           |   4 +
+> >   hw/sensor/adc128d818.c                      | 703
+> +++++++++++++++++++++++
+> >   hw/sensor/meson.build                       |   1 +
+> >   hw/sensor/trace-events                      |   8 +
+> >   include/hw/sensor/adc128d818.h              |  12 +
+> >   tests/functional/arm/test_aspeed_anacapa.py |  92 ++-
+> >   tests/qtest/adc128d818-test.c               | 855
+> ++++++++++++++++++++++++++++
+> >   tests/qtest/meson.build                     |   1 +
+> >   10 files changed, 1688 insertions(+), 8 deletions(-)
+> > ---
+> > base-commit: 193963218accbcf65f28ab1efa773ac6d1cc634c
+> > change-id: 20260612-i2c-adc128d818-anacapa-13c63e97fbd0
+> >
+> > Best regards,
+> > --
+> > Emmanuel Blot <eblot@meta.com>
+> Alexander,
+>
+> This proposal offers significant advantages over your v6.
+>
+>   - instead of adc128d818_init_with_values, it uses QOM properties for
+>     run time values.
+>   - reset is better
+>   - unit tests
+>
+> This implementation seems a better foundation. If you agree, could
+> you please take some time to review it ? Given your expertise, you
+> seem to be the best person for it.
+>
+>
+> Thanks,
+>
+> C.
+>
+>
 
+--000000000000207b0f06544d0426
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div><div><div><div><div>Hi Cedric,<br><br></div>I would a=
+gree that Emmanuel has the better version for ADC128D818 and we should go a=
+head=C2=A0with that one.<br></div>Will not push my version anymore so it sh=
+ould not appear in the next patchset..<br><br></div>I did find some time to=
+ test his version on anacapa qemu today and also tested it from the hmp sid=
+e to modify the properties.<br></div>Overall I could not find any functiona=
+l gaps and the tests are looking quite good too.<br><br></div>Alexander</di=
+v><br><div class=3D"gmail_quote gmail_quote_container"><div dir=3D"ltr" cla=
+ss=3D"gmail_attr">Am Sa., 13. Juni 2026 um 19:07=C2=A0Uhr schrieb C=C3=A9dr=
+ic Le Goater &lt;<a href=3D"mailto:clg@kaod.org">clg@kaod.org</a>&gt;:<br><=
+/div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;bo=
+rder-left:1px solid rgb(204,204,204);padding-left:1ex">On 6/12/26 18:46, Em=
+manuel Blot wrote:<br>
+&gt; This is a 12-bit, 8-channel ADC I2C device, which is used on several<b=
+r>
+&gt; OpenBMC platforms.<br>
+&gt; <br>
+&gt; QOM properties can be used to change input ADC values and external VRE=
+F at<br>
+&gt; run time.<br>
+&gt; <br>
+&gt; Add it to AST2600-based Anacapa machine, along with some functional te=
+sts<br>
+&gt; that use QOM properties to inject voltage values into analog inputs.<b=
+r>
+&gt; <br>
+&gt; Datasheet: <a href=3D"https://www.ti.com/lit/gpn/ADC128D818" rel=3D"no=
+referrer" target=3D"_blank">https://www.ti.com/lit/gpn/ADC128D818</a><br>
+&gt; <br>
+&gt; Signed-off-by: Emmanuel Blot &lt;<a href=3D"mailto:eblot@meta.com" tar=
+get=3D"_blank">eblot@meta.com</a>&gt;<br>
+&gt; ---<br>
+&gt; Emmanuel Blot (4):<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 hw/sensor: adc128d818: add 12-bit 8-channel=
+ ADC device<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 tests/qtest: adc128d818: add test suite<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 hw/arm: anacapa: add ADC128D818 devices<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 test/functional: anacapa: test ADC128D818<b=
+r>
+&gt; <br>
+&gt;=C2=A0 =C2=A0hw/arm/Kconfig=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 |=C2=A0 =C2=
+=A01 +<br>
+&gt;=C2=A0 =C2=A0hw/arm/aspeed_ast2600_anacapa.c=C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0|=C2=A0 19 +-<br>
+&gt;=C2=A0 =C2=A0hw/sensor/Kconfig=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0|=C2=A0 =C2=A04 +<b=
+r>
+&gt;=C2=A0 =C2=A0hw/sensor/adc128d818.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 | 703 +++++++++++++++++++++++<br>
+&gt;=C2=A0 =C2=A0hw/sensor/meson.build=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0|=C2=A0 =C2=A01 +<br>
+&gt;=C2=A0 =C2=A0hw/sensor/trace-events=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 |=C2=A0 =C2=A08 +<br>
+&gt;=C2=A0 =C2=A0include/hw/sensor/adc128d818.h=C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 |=C2=A0 12 +<br>
+&gt;=C2=A0 =C2=A0tests/functional/arm/test_aspeed_anacapa.py |=C2=A0 92 ++-=
+<br>
+&gt;=C2=A0 =C2=A0tests/qtest/adc128d818-test.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0| 855 ++++++++++++++++++++++++++++<br>
+&gt;=C2=A0 =C2=A0tests/qtest/meson.build=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0|=C2=A0 =C2=A01 +<br>
+&gt;=C2=A0 =C2=A010 files changed, 1688 insertions(+), 8 deletions(-)<br>
+&gt; ---<br>
+&gt; base-commit: 193963218accbcf65f28ab1efa773ac6d1cc634c<br>
+&gt; change-id: 20260612-i2c-adc128d818-anacapa-13c63e97fbd0<br>
+&gt; <br>
+&gt; Best regards,<br>
+&gt; --<br>
+&gt; Emmanuel Blot &lt;<a href=3D"mailto:eblot@meta.com" target=3D"_blank">=
+eblot@meta.com</a>&gt;<br>
+Alexander,<br>
+<br>
+This proposal offers significant advantages over your v6.<br>
+<br>
+=C2=A0 - instead of adc128d818_init_with_values, it uses QOM properties for=
+<br>
+=C2=A0 =C2=A0 run time values.<br>
+=C2=A0 - reset is better<br>
+=C2=A0 - unit tests<br>
+<br>
+This implementation seems a better foundation. If you agree, could<br>
+you please take some time to review it ? Given your expertise, you<br>
+seem to be the best person for it.<br>
+<br>
+<br>
+Thanks,<br>
+<br>
+C.<br>
+<br>
+</blockquote></div>
+
+--000000000000207b0f06544d0426--
 
