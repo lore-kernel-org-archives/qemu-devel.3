@@ -4,115 +4,142 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 321E7CD98DA
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jun 2026 11:54:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B30FCD98DE
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jun 2026 11:54:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZ5st-0007AO-Uf; Mon, 15 Jun 2026 07:53:43 -0400
+	id 1wZ5th-0007tf-7c; Mon, 15 Jun 2026 07:54:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wZ5ss-0007A4-C7
- for qemu-devel@nongnu.org; Mon, 15 Jun 2026 07:53:42 -0400
-Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wZ5sq-000792-MP
- for qemu-devel@nongnu.org; Mon, 15 Jun 2026 07:53:42 -0400
-Received: by mail-ed1-x529.google.com with SMTP id
- 4fb4d7f45d1cf-6914a658115so4040685a12.0
- for <qemu-devel@nongnu.org>; Mon, 15 Jun 2026 04:53:40 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1781524419; cv=none;
- d=google.com; s=arc-20240605;
- b=AatRTiDoVNj95gMegGmG+Iur81ZIrVNROHs+vJt8qebIxWIOeyUGMV+mQAF8hSfSjR
- Lba/MfrH5NdqTJVbngBQ7olTyXoF7QINDUei0RI+ZAu1OBi5GiMnI/gcb/XhR7QyMlkw
- WdsaS5nMzMGKN3Fln1JIdIxrWL9Ru0U8zGgKokafugENHNsFUe9NPVjb7JXyYMQxj2OI
- x17ZopYXJP5COGhdsfxycyUydn8f/nTIhdXS8LzevcVONr2ww3G6kkpuHARCROftERlb
- thzWURT0/2IA4dnTd3BfYeQGNh5DYj45B5jm6h0nggJL30vqf+lszVhl4vDxZYgXZqUT
- 07Dw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=irQGXNvX1c+hVsVW90WSq0r6lTfshMZUx1ief8C4dz4=;
- fh=61SNLsXYOrBTMV8dKwA6hBgiAC84ZSEM9nJxSq5B2yw=;
- b=h8AgpuSr4DaoO2fyF3VvYgUUDa76ErhpxVNjkMilqIStPIe4lg1JpTIHHyPR2tnjwX
- G5crh33nvyROboqR2Prgu5m2gOSmOoaJxXwO43Ir/rmOAviratN05e+IJRAhckvot/tq
- g1Q1JvfOYcKqyoRb6RjZpyYN8sKWzdF5FAYuxrX/A/IsSshXRPVi6ukN3OQfUYphra6V
- 45yzC/+KNyEghD70q5JtbfwNC2rN5/ZIL8/Mx/oI+uuO27Amg/xRMdLzE9K4krCTUrhM
- XK+tJ9h+25IXaylE3woxknrhnJtNNjbPHnRjCXYe0O6rsblFOZmpNUqZPQHqqFa7mhN4
- QpOQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wZ5tf-0007oW-K5
+ for qemu-devel@nongnu.org; Mon, 15 Jun 2026 07:54:31 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wZ5td-0007K2-Tm
+ for qemu-devel@nongnu.org; Mon, 15 Jun 2026 07:54:31 -0400
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 65FAoWgk3986660
+ for <qemu-devel@nongnu.org>; Mon, 15 Jun 2026 11:54:28 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ VQvB5kFtqmEaOkyki9927Tea8lRdNOqyDVILnkA59XY=; b=B133J0VOf2R4Dr09
+ GmZBsXjAjHPv/HMUz6S62yGR9L+2JgQD0C8ghwsqHljb48nrWpQnp8D6/+R/+jcq
+ DHRH7XxB/6mTlHQ6wfsf1UsvasJysPvURqmqQd1iL7pe3QMTXCLr0ZgFg12yExzt
+ b92uoH+ydHUZPTp1Xk3BIFoZWmqGcrKvwWVCxjmoH8PvSMw96Ip1phc1+j+40G4P
+ NANpOHl0gBiYHe874nu5uxRCyIlSBIuTa+R4cuUvTFlU7Rhm5eBmfDcANpoOIl8d
+ Lj0HwXTgynrnK3Jio3m0gXT2KgPPa09W1ZAd6sWEmUvxJmtrBN7seMe1vfWbOlwl
+ bH3Ajg==
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
+ [209.85.222.200])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4etew0ggfy-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Mon, 15 Jun 2026 11:54:27 +0000 (GMT)
+Received: by mail-qk1-f200.google.com with SMTP id
+ af79cd13be357-915b3587972so302302185a.2
+ for <qemu-devel@nongnu.org>; Mon, 15 Jun 2026 04:54:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1781524419; x=1782129219; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=irQGXNvX1c+hVsVW90WSq0r6lTfshMZUx1ief8C4dz4=;
- b=D1AghSwNaOaKneE4KqQ0LN/hNDY5c9VZiO+FHD26ENZ3x0Can2S6iuTSa80PtWHpUP
- Xru1vm5rdkXqPkgYpKbTH48C2qqYYboZGMOrzoazRhUFlsaNdJAMzYwX6RSx9p3iWJKm
- Vie6CzffiHCGrAxjDma1sw68BuUg0+tg+YwoRjYpV9txUzcro4dDUb3rJJ+HHgeuNZck
- FliIQXs+rQZ4Z0HfM/vfOe4ciSdFC8Nki6QExyiXjlPxBjRtk5KEVGKiE704thCQFHuM
- lmpm+Et4SU4v5KYF6j8KrTkf8AKVhegSyi0r747nJbymZkBd6gHXUH1j2LMavJB98Ncl
- v99A==
+ d=oss.qualcomm.com; s=google; t=1781524467; x=1782129267; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=VQvB5kFtqmEaOkyki9927Tea8lRdNOqyDVILnkA59XY=;
+ b=W26WVLnp6W4N7iHsD4kkmZf6cAKG/K+YKs++Jgj4joWvt6hCbBsA42o7u6zdY3v6Cd
+ dPJrFB0iV+9R2a2B7hPT4HJ0CvJtzW5zktB7cjIHIInembgt5Vk7gSwgnIfudC6HzkXc
+ U2NGreQ52cuzDsBc7BFWhz/LKLxrDcW4r1jd3nK225V3JTGEQmYQfyJSBV48MfQoX90/
+ ujOM3+Jg9Qsj3E6Zk6ocX2pGdIwbH4dNnde/jOq0xDIAkjj4Ct0bMOGLdeG5Il6lLosn
+ wifckP0ce68iGX43vkEpnj30FIkL1e2w2FJEKTkPp5tJYV11UQrMU+rNaZE7HVBmtwWM
+ 3eTg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781524419; x=1782129219;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=irQGXNvX1c+hVsVW90WSq0r6lTfshMZUx1ief8C4dz4=;
- b=lgCmZoJ7iUkF2qe/ZXSwgiighwXX2NBt+LfMq05kYgASQKMJZ88JkmAZEywtrRgb0K
- JIzmN42vsMcrbDzERlTKn3mUVhrgF/2zEeP9ftSW/T6Sy0ectTWTkecwh4FwIs00TfPZ
- EHz6N3cnqYTE0wpegHTTe6Gwum3V/CXqJJVgiGnut1bTqGgJIzyccJh8U1uh5LiDNs+T
- 6h1D2PC36h+LlOm73Nt1srizezhNuzHi5k3H7dlDIOhgB8AlI7r6WInT247LZzUjHDZc
- r0Cdz2oiALdvHDy3fTz4HyNpDb6qbxdBsIvRt08cCKoFRQhCTbeKc47ifMYurD6T+/Ul
- eSOQ==
+ d=1e100.net; s=20251104; t=1781524467; x=1782129267;
+ h=content-transfer-encoding:in-reply-to:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=VQvB5kFtqmEaOkyki9927Tea8lRdNOqyDVILnkA59XY=;
+ b=Sxq0wTcAA15uklBVJ69YsFNwh1p0d7Km8XXV3ZrwyCwPRnDD66QZQJesr2SkpzI46K
+ 6l2OcZ2K5kBTe9cm+UeNT2t8mD7W2DuCOHHDOZEx9/qJV1LSk7kMIZVtdVVtNCiXNpcZ
+ kjuYKP19qHeJi0pglI6TkFXVoWfPVoo1PlxlXn8ITzFKf/vRWdcKgD4J8/dhEx8wJbBC
+ 4IkzLmfr4Q6crfkU3Rss7VSZ4ULFa+fiayZJqOvmcQIu6xh8X9ATM8J7ORwSEznWUF3h
+ 1W0oT5avFlqa8pPThmGbfjuu+hiBm5hafO7As0+3h6Z5dWxXzY3hVtA9+FKa2jyBl/XL
+ 3DWQ==
 X-Forwarded-Encrypted: i=1;
- AFNElJ85dbw5f7elHzKinFde9wHBhmGKpvVAQpdFu3gs7EedXFPf0HXsboVw6dWP4HMMjuXDtR4EJCHMBmSE@nongnu.org
-X-Gm-Message-State: AOJu0YzgtKUkipyU/m2wOhqyAhbZs2ZgXnYNEDtjnajY8qFmCHfMupEM
- 60rLUrRrbEz54owMdsB40CQizvPG6SOUb4cP4KGURNJcb/9Vk0jD3Tp0NLGx59ze+NnAH9KMFPw
- v396BZpr5dr2hdc6dYHmqUHWeIxFBQmw=
-X-Gm-Gg: Acq92OF9VS+jolWYC+eSBR/rm7L0xH8OTuDr4hw0flRoPylJNwdIhzmYcYjJb1eqKBg
- wH0MWZBuXeUh7GUDPfjSDxXkHrF7PPmjSMPNfA4YPJa6jIfLbVQ33Zie/A0f4jnuiyuboKsjCca
- 34GtIIWJubDYS89eB+OwDqu7DSCoh2ZLhvDJhZFcBehFOB5WT5Ssc4s9Kat1Etn56/6CGK7DbkJ
- 8IcHTbAGMjiqindGFUZi8dwinNTsPuY8eaLuw7FJq1CAP7c9MMPgmBGOJNI5LrqD1DZSZEFsjOd
- u/6xu/mB
-X-Received: by 2002:a05:6402:26d1:b0:67c:a6d1:c48b with SMTP id
- 4fb4d7f45d1cf-693784f79a5mr6316417a12.11.1781524418788; Mon, 15 Jun 2026
- 04:53:38 -0700 (PDT)
+ AFNElJ8Vn/NHrY6wj7UQ+Dfg43q1bel9QAEiZ7uviQ2rMFJZcDmYDi4Vtc527eAb0ESh7pI1fr3ET4xPIG/E@nongnu.org
+X-Gm-Message-State: AOJu0Yw8WMCMOYkvDMGfULnEndoNtIDZ14m3IhDey8KgIV3EXT6ZQjUu
+ u7478/fe/6nhCxdH9NMpttEyLbcVqBB+wYcKCG1BaxtOqJJMfvSFqGAJ3WEGiYnecM495oLazWi
+ jtPtCHTKhwLkenJRUOkttfU6dLJbl/+tdRVP9IrI8Oio/XWiom44jgNYN9g==
+X-Gm-Gg: Acq92OFtgBh3kL8KjKPM/2/kR1ZMcBw9LWLGzPFFibQREdl0HwYWmw6pghKCiGX4q8c
+ rKtU/hQqxw2h1AQ6unAzK9iChqxdYVBTDFZloRLPjXhgYqgFy7jjfRo6PA335DdRfxflmZhgm6h
+ 4rAUCOi2DkBdWpvwV940V4qRK9rPDXgin6k+daOcYArXwQxzno5Ltya4HIVAQ+fRMvGYyWmHfDG
+ n5fIr518Toic+gUpu54R4Dt6ij9yD3D0Hezf+CAYJUraG8o5aytbcsJNgr5TwWojXdNlYFPHH2u
+ DKlmcFv7fg5/3WtjPpBUL+Mj745J0Jdq6Z8iFtgY7ha/CN0vbTsokkX4elli4/5tgudJBzMQTLf
+ b0O5GX1bq4Egm4Eud9oOkt7YpmFypGjWstHmZibTOPqCz6nvKQQMxQPxh3O/Djl10WHRfogCK
+X-Received: by 2002:a05:620a:3198:b0:90e:2f56:2f0b with SMTP id
+ af79cd13be357-9161bac7a1bmr2262417785a.7.1781524466753; 
+ Mon, 15 Jun 2026 04:54:26 -0700 (PDT)
+X-Received: by 2002:a05:620a:3198:b0:90e:2f56:2f0b with SMTP id
+ af79cd13be357-9161bac7a1bmr2262413685a.7.1781524466299; 
+ Mon, 15 Jun 2026 04:54:26 -0700 (PDT)
+Received: from [192.168.69.214] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-bfdb44209f0sm459053666b.6.2026.06.15.04.54.25
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 15 Jun 2026 04:54:25 -0700 (PDT)
+Message-ID: <53d0e9d2-71ab-461e-9936-86a3f6202dde@oss.qualcomm.com>
+Date: Mon, 15 Jun 2026 13:54:24 +0200
 MIME-Version: 1.0
-References: <20260603065859.592063-1-joel@jms.id.au>
- <20260603065859.592063-13-joel@jms.id.au>
-In-Reply-To: <20260603065859.592063-13-joel@jms.id.au>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Mon, 15 Jun 2026 21:53:12 +1000
-X-Gm-Features: AVVi8Cf2KJ7rXoWCtc7Q__CCytATdOJt-YFA8v5cFn1PAS99aEtx51k0FHONeaw
-Message-ID: <CAKmqyKOYeG24747aN-OyOCFi-Knb3vc5E0FV2PM-FstCmf3Xgg@mail.gmail.com>
-Subject: Re: [PATCH v8 12/12] hw/riscv/atlantis: Add some i2c peripherals
-To: Joel Stanley <joel@jms.id.au>
-Cc: Alistair Francis <alistair.francis@wdc.com>,
- Nicholas Piggin <npiggin@gmail.com>, 
- Andrew Jones <andrew.jones@oss.qualcomm.com>, 
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Chao Liu <chao.liu.zevorn@gmail.com>, 
- Michael Ellerman <mpe@kernel.org>, Joel Stanley <jms@oss.tenstorrent.com>, 
- Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>, 
- Portia Stephens <portias@oss.tenstorrent.com>, qemu-riscv@nongnu.org,
- qemu-devel@nongnu.org, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::529;
- envelope-from=alistair23@gmail.com; helo=mail-ed1-x529.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 5/5] hw/intc/gicv5: Define and use GICV5_PENDING_IRQ_NONE
+Content-Language: en-US
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org
+References: <20260615105029.2898872-1-peter.maydell@linaro.org>
+ <20260615105029.2898872-6-peter.maydell@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+In-Reply-To: <20260615105029.2898872-6-peter.maydell@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjE1MDEyNiBTYWx0ZWRfXxWc5ZiLfuRkM
+ reF1z3sidpMS5JKtgSVRGO2Gm+Zq/gDUhj8YjtwqAXXTHmok8Awrmn1N0m4Ws0NO0n9T5XpW+/j
+ F5ltyhbnlvaU0T34HEaEnJrj6tAuXjw=
+X-Authority-Analysis: v=2.4 cv=QLlYgALL c=1 sm=1 tr=0 ts=6a2fe7f3 cx=c_pps
+ a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+ a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22
+ a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=1tSEMpTH9XP_W59IOagA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=zZCYzV9kfG8A:10 a=PEH46H7Ffwr30OY-TuGO:22
+ a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjE1MDEyNiBTYWx0ZWRfX2BOMC+PwGSO5
+ p1Yl/2ZigeBmR+gYmoIRHoRa98VVdE9mol72pDFBhHKi9WNeacxMF/LaNHuwISGKMIWsIy31uhs
+ ESZrqF6fYafQGd1OpINJ+qnLvpsdhvOerUjXbEkrhaL1eh9bxe9QRc3w9RFjBKcFpu4ClaO49ey
+ oj7fhUECwBknfNbshbQQ0FGbKvnq+xpZj84VvHK2kb8p9cRpwY0TJWMdJeRcFkpIw7MLyixKzit
+ EMKzCny6Vc04jijY+AorQGnGRfj/n2iyXLKuMvpSYLjg+3NVUcICop+Ul0XUKT5z2BiiTBt0Odb
+ a/eGI0hybXWF7gWgMw8ofswKb4pf0zkrUp49LD8nYuA+uWslnA79enH/evV93cvU8lhOFmSTYQs
+ PezZphPd43GLZr+wZLd5AqpBSuwAyM5bm7x5ROEU68JsPF5tKd6dSPvYYMOyM0SerRYserKsKxo
+ yrNyDNBSuTKqtpXSGSA==
+X-Proofpoint-GUID: MlfHzl7b4rPkvfiJUA8hBj0wQeLgum9Z
+X-Proofpoint-ORIG-GUID: MlfHzl7b4rPkvfiJUA8hBj0wQeLgum9Z
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-15_03,2026-06-15_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 clxscore=1015 priorityscore=1501 adultscore=0 spamscore=0
+ bulkscore=0 suspectscore=0 impostorscore=0 phishscore=0 lowpriorityscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606040000 definitions=main-2606150126
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -128,109 +155,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jun 3, 2026 at 5:03=E2=80=AFPM Joel Stanley <joel@jms.id.au> wrote:
->
-> Add an I2C RTC device and a temperature sensor. These are not present
-> on the board but help for testing.
-
-It might be best to leave this out, if these aren't on the board
-should they really go upstream?
-
-Alistair
-
->
-> The tmp105 is a lm75 compatible temperature sensor used by the
-> SENSORS_LM75 Linux kernel driver.
->
-> The ds1338 is a RTC device that is used by the RTC_DRV_DS1307 Linux
-> kernel driver.
->
-> Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
-> Signed-off-by: Joel Stanley <joel@jms.id.au>
+On 15/6/26 12:50, Peter Maydell wrote:
+> The GICv5PendingIrq struct representation of "there is no pending
+> interrupt" sets the prio field to PRIO_IDLE, and generally to avoid
+> confusion we also set the intid to 0.  We want to return this value
+> or initialize some variable to it in several places in the GICv5
+> implementation, and the support for the virtual interrupt domain
+> introduces more.
+> 
+> Define a convenience macro for this special-case struct value, and
+> use it instead of opencoding either the structure initializer or
+> explicit assignment to the two fields.
+> 
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 > ---
->  hw/riscv/tt_atlantis.c | 27 +++++++++++++++++++++++++++
->  hw/riscv/Kconfig       |  2 ++
->  2 files changed, 29 insertions(+)
->
-> diff --git a/hw/riscv/tt_atlantis.c b/hw/riscv/tt_atlantis.c
-> index b1ff0cbe2f61..5434650dd41e 100644
-> --- a/hw/riscv/tt_atlantis.c
-> +++ b/hw/riscv/tt_atlantis.c
-> @@ -63,6 +63,13 @@ static const MemMapEntry tt_atlantis_memmap[] =3D {
->      [TT_ATL_DDR_HI] =3D          { 0x100000000,  0x1000000000 },
->  };
->
-> +static I2CBus *i2c_get_bus(TTAtlantisState *s, unsigned busnr)
-> +{
-> +    assert(busnr < TT_ATL_NUM_I2C);
-> +
-> +    return s->i2c[busnr].bus;
-> +}
-> +
->  static uint32_t next_phandle(void)
->  {
->      static uint32_t phandle =3D 1;
-> @@ -367,6 +374,19 @@ static void create_fdt_i2c(void *fdt, const MemMapEn=
-try *mem, uint32_t irq,
->      qemu_fdt_setprop_cell(fdt, name, "#size-cells", 0);
->  }
->
-> +static void create_fdt_i2c_device(TTAtlantisState *s, int bus,
-> +                                  const char *compat, int addr)
-> +{
-> +    void *fdt =3D MACHINE(s)->fdt;
-> +    hwaddr base =3D s->memmap[TT_ATL_I2C0 + bus].base;
-> +    g_autofree char *name =3D g_strdup_printf("/soc/i2c@%"HWADDR_PRIX"/s=
-ensor@%x",
-> +                                            base, addr);
-> +
-> +    qemu_fdt_add_subnode(fdt, name);
-> +    qemu_fdt_setprop_string(fdt, name, "compatible", compat);
-> +    qemu_fdt_setprop_cell(fdt, name, "reg", addr);
-> +}
-> +
->  static void finalize_fdt(TTAtlantisState *s)
->  {
->      uint32_t aplic_s_phandle =3D next_phandle();
-> @@ -394,6 +414,9 @@ static void finalize_fdt(TTAtlantisState *s)
->                         TT_ATL_I2C0_IRQ + i,
->                         aplic_s_phandle, periph_clk_phandle);
->      }
-> +
-> +    create_fdt_i2c_device(s, 0, "dallas,ds1338", 0x6f);
-> +    create_fdt_i2c_device(s, 4, "ti,tmp105", 0x48);
->  }
->
->  static void create_fdt(TTAtlantisState *s)
-> @@ -640,6 +663,10 @@ static void tt_atlantis_machine_init(MachineState *m=
-achine)
->                             qdev_get_gpio_in(s->irqchip, TT_ATL_I2C0_IRQ =
-+ i));
->      }
->
-> +    /* I2C peripherals: qemu specific */
-> +    i2c_slave_create_simple(i2c_get_bus(s, 0), "ds1338", 0x6f);
-> +    i2c_slave_create_simple(i2c_get_bus(s, 4), "tmp105", 0x48);
-> +
->      /* Load or create device tree */
->      if (machine->dtb) {
->          load_fdt(s);
-> diff --git a/hw/riscv/Kconfig b/hw/riscv/Kconfig
-> index 38180a903fbf..ff2d250ee439 100644
-> --- a/hw/riscv/Kconfig
-> +++ b/hw/riscv/Kconfig
-> @@ -130,6 +130,8 @@ config TENSTORRENT
->      select SERIAL_MM
->      select DEVICE_TREE
->      select DESIGNWARE_I2C
-> +    select DS1338
-> +    select TMP105
->
->  config XIANGSHAN_KUNMINGHU
->      bool
-> --
-> 2.47.3
->
->
+>   hw/intc/arm_gicv5.c               | 6 ++----
+>   include/hw/intc/arm_gicv5_types.h | 4 ++++
+>   target/arm/tcg/gicv5-cpuif.c      | 7 +++----
+>   3 files changed, 9 insertions(+), 8 deletions(-)
+
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 
