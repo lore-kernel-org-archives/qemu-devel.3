@@ -4,77 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F7FBCD98C5
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jun 2026 08:15:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3042ACD98DE
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jun 2026 08:32:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZ2T6-00016k-TL; Mon, 15 Jun 2026 04:14:52 -0400
+	id 1wZ2jf-00039m-Fj; Mon, 15 Jun 2026 04:31:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wZ2T4-0000wy-WB
- for qemu-devel@nongnu.org; Mon, 15 Jun 2026 04:14:51 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wZ2T3-0002WT-1b
- for qemu-devel@nongnu.org; Mon, 15 Jun 2026 04:14:50 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781511288;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=nMcZv8TGBkIPp76V2vATEU3ePD1PG46ZBygmPNsZNGI=;
- b=f9QEw/ZcB4TH5jptP6WD8radLv/bfDWA1uJN/yPdaDzWxU2hdZLmysEKEX47fPiVzt1wFi
- 8QQQ1hsSIUE/B9n8veCX5xoAH3JLeUbI9fVcJXNDllEVurHcW6jeZTWa/8nXrywzGIYT/P
- PjuFuaD2OqD2U2njF5Q2fz/TY9WouDw=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-360-Om2IQ_ZrMaSP0YXwbhxwqg-1; Mon,
- 15 Jun 2026 04:14:44 -0400
-X-MC-Unique: Om2IQ_ZrMaSP0YXwbhxwqg-1
-X-Mimecast-MFC-AGG-ID: Om2IQ_ZrMaSP0YXwbhxwqg_1781511283
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 95B381956065; Mon, 15 Jun 2026 08:14:42 +0000 (UTC)
-Received: from redhat.com (unknown [10.44.49.222])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 930C1180034F; Mon, 15 Jun 2026 08:14:37 +0000 (UTC)
-Date: Mon, 15 Jun 2026 09:14:34 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- qemu-rust@nongnu.org, Peter Xu <peterx@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wZ2jd-000397-Ek
+ for qemu-devel@nongnu.org; Mon, 15 Jun 2026 04:31:57 -0400
+Received: from mail-yx1-xb134.google.com ([2607:f8b0:4864:20::b134])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wZ2jX-0007ah-IG
+ for qemu-devel@nongnu.org; Mon, 15 Jun 2026 04:31:57 -0400
+Received: by mail-yx1-xb134.google.com with SMTP id
+ 956f58d0204a3-660e9ea23cbso1451125d50.2
+ for <qemu-devel@nongnu.org>; Mon, 15 Jun 2026 01:31:50 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1781512310; cv=none;
+ d=google.com; s=arc-20240605;
+ b=ecxV6wNoKJgHOaWWybRQP1oJRooQCrizC6BQxQXWn76aKgayraKlfW1Id2rBqHH9GS
+ rPUYrvVBb6BluCVBl75K+EoSJXaO2pWpo6LK85ySUg26Rv65yJk5hXek0ewZK9FDQrdn
+ ik5yBxkJ1wjB43AGz/GXzdlYPq9rZpLQA9YNdESqeeovkPV4uWcWmYPktjP1TqyQdd4g
+ pxyoFs6xoJGGT7g3ToHrNojFuy0n8Su0awX5d5Py0yM13oirrJwV8SNvy19ceC/34Rlc
+ qnsVydad5HDHf/XuqIQ9EDcN154HfHs3YtpunZVrFdabim+nY3DjBPnfjjDt6IdvbRcE
+ Fg+A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=XvG3exdGiJGNjD45j3sqsnKPQTVp+Y7bsmGB6J34xnw=;
+ fh=68mqwDFpODVwdiMusuH4A+K4xHWzgiUbQ04lc3CN9gI=;
+ b=DfOCr1aUzRhIqsigRXbbF+P26zdM4SOzUGi5qlrDhJq+x4P6kSiDCClKcy9tNpsI0I
+ YPFfWcDl1Urms4FGXK/N8feXh9jlWyY4PXZLhJzmU0ArJMBP6dKf8JRwKCuZh8x69/4p
+ KUubQFQV8e6d4RJoIsvEQnmGX6CHx1DMp2i2RkXBsbvA38Q4/+sN/tqOdwjzW6xVTZFg
+ B4b01b5DRtLFZcOkhr3uudcgyVkUmp2KL9bPl2XK8cv1eim/Lej3LIDdM6AFlT2oev67
+ zIEojq8tpEwEt9UetjdSjVXn1MZneBKFNteN3DW54pmdD1CYjzvUZgsL2ImO/024SnSC
+ ag9w==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1781512310; x=1782117110; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=XvG3exdGiJGNjD45j3sqsnKPQTVp+Y7bsmGB6J34xnw=;
+ b=Vhu4aC2TQEKO5bgxQiX3yV1TJA46VV2bPjOlGrEUEBZy4WH5qvW7Sq+5l20zvWeSOH
+ NK9vhwuxYwLGHLY33v9wJcWBNb5poujGQJgEYn2GG4YIGmqDDiTPC5PF3UFC0u1e8C/s
+ 3izpFUH8Hga90a45lv0aVbjdArGgB0aOCimbTkhSIo1c8slzOQFuqVC+1WW9iS36FSkJ
+ 276+OsjQ0AghrBglJI9ddcZhJrdgk24YIZQYxfw4bfKELa0E5RDU4HV+VHsKewalT/Fs
+ ApztY8ACZe4xIV8aMe5QsV3vPKsORV+Vw824oQ2Cbr+/kjT18iHDqe3LoIuF7hmWQEeG
+ YG0A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1781512310; x=1782117110;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=XvG3exdGiJGNjD45j3sqsnKPQTVp+Y7bsmGB6J34xnw=;
+ b=GKQbGYg5Pwu5HCzq6uw6GHckmq47YnfeO3ab8VpQ20+hXJGiCIkgXP+FDwOrgO2ANu
+ AqCLq55Qn0yaxnFrrBF1q2+jWGXOcyQx/TQkftX3roqtoo3zVbUXDsm47CLCgnJhVNNu
+ oNhrUkrxCRPw8cEU1mTkGqTE+/3BeU0jBrHWRZrCrvFW6EvYFP/3AKmMZ27Z105brQBV
+ ubW/WU6TDbTau8NLShMhhws5DFxG4Jl7CEFhqggsRYUkpyTvKK7mGnXt41Hb/XGR/B6L
+ i6FjgEzKmsQkjH373juhdMjMD9F8UNdJk8T1wX5fU6Al0t90irZMNthAFakauDU5vxlt
+ XONQ==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ+WE/WIoj6FZANaq3cGicxx0l6MAATGvFryvwsPjuaTP0SioEHIPnv4Zz1HuKYF36AsEIrF6gVu75Ap@nongnu.org
+X-Gm-Message-State: AOJu0Yyj6G+sT4sjXOKGyHCddaGFyQN3HKOVfuU+z7PNW+OZkngb98uF
+ 4db99PzaROyfHMIusSWDs3IHmmiY2LI3PV4wmbdlHGvoXxrYSTbt2jwOoNsGOQh1PqjiKTHRkNb
+ BObAs4sLpWIAgnC2BglzAVKF5Hj2/1uaU1CgKlTHtRg==
+X-Gm-Gg: Acq92OHeYc7IfwSv3fUpS1/ad3IIAWdHh7b9RcVhd7fW/J6m1/YMMSbd7C1a+oVDYm6
+ Naq41srzQ5V39pxTUw34Q9ag2y9m0CjxVCfPyQ2X27iP12pSv7aQf98xJDSPXO/R++5lLGGTVpp
+ FQUafJkUlrn8HAp7QCJWhrzCQErky3NwZc02Lv3J8moCgm2chG+M/w2a9671J4R9+Q3LZcOXTsb
+ Oa/R84KJnFS3JCJHKwxTH4FxFUkN42QegmMgsBo2jnCsf0+xmwHCqT1ihD7bDXiiqQlPj1r/CEC
+ 4syvLoymxBZEcMIPP3PgCVxGJPB1FXpEuKxiyAnm/C1Rtn/nZAuiqeVNGhjIFfyiGIM=
+X-Received: by 2002:a05:690e:190c:b0:661:1be:161b with SMTP id
+ 956f58d0204a3-6627837c3bbmr10865707d50.56.1781512309811; Mon, 15 Jun 2026
+ 01:31:49 -0700 (PDT)
+MIME-Version: 1.0
+References: <20260615-embedded-v1-0-bb0c65bf126c@rsg.ci.i.u-tokyo.ac.jp>
+ <20260615-embedded-v1-2-bb0c65bf126c@rsg.ci.i.u-tokyo.ac.jp>
+ <ai-z14dMCK33_pis@redhat.com>
+In-Reply-To: <ai-z14dMCK33_pis@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 15 Jun 2026 09:31:36 +0100
+X-Gm-Features: AVVi8Cc4gi7a_SUgEXm8D-PR5l4cbaN47lQ8aHYhgFhq9Vs4k4PQZLPga7J-chk
+Message-ID: <CAFEAcA_nFiQyXyCuvwUrJ+-0fhmGoMfswK-+KsZbxahAGatTXw@mail.gmail.com>
+Subject: Re: [PATCH 2/2] qom: Manage references to embedded child objects
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, qemu-devel@nongnu.org, 
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, 
+ qemu-rust@nongnu.org, Peter Xu <peterx@redhat.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@mailo.com>, 
  Alberto Garcia <berto@igalia.com>, Kevin Wolf <kwolf@redhat.com>,
  Hanna Reitz <hreitz@redhat.com>, qemu-block@nongnu.org
-Subject: Re: [PATCH 1/2] qom: Reject temporary object resurrection
-Message-ID: <ai-0akg3wd6TRSgD@redhat.com>
-References: <20260615-embedded-v1-0-bb0c65bf126c@rsg.ci.i.u-tokyo.ac.jp>
- <20260615-embedded-v1-1-bb0c65bf126c@rsg.ci.i.u-tokyo.ac.jp>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260615-embedded-v1-1-bb0c65bf126c@rsg.ci.i.u-tokyo.ac.jp>
-User-Agent: Mutt/2.3.2 (2026-04-26)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 8
-X-Spam_score: 0.8
-X-Spam_bar: /
-X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b134;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb134.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,177 +122,29 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jun 15, 2026 at 01:11:06PM +0900, Akihiko Odaki wrote:
-> If object_ref() is called during finalization, it will temporarily
-> "resurrect" the object. Although object_finalize() asserts that no
-> resurrecting reference remains before freeing the object, the assertion
-> cannot catch the case where the resurrecting reference is dropped before
-> freeing the object.
+On Mon, 15 Jun 2026 at 09:13, Daniel P. Berrang=C3=A9 <berrange@redhat.com>=
+ wrote:
+> Do we know how many examples we have of embedding objects inside
+> another ?
 
-What's the real world problem here ? 
+It is an extremely common pattern for device and SoC model
+implementations; we've been recommending it for years.
 
-> 
-> One way to catch this would be to add a check in object_ref() to reject
-> resurrecting references before they are created. However, object_ref()
-> is frequently called so it is better to minimize the overhead.
-> 
-> To avoid adding the overhead, change how the reference count is
-> represented and let an existing assertion detect resurrection. More
-> concretely, obj->ref now stores the current reference count minus 1. The
-> stored count is therefore 0 after object_initialize(), and the final
-> object_unref() decrements it from 0 to UINT32_MAX and starts
-> finalization. A resurrecting object_ref() will then trip the existing
-> obj->ref < INT_MAX assertion.
+> I would much prefer if we forbid the embedding of objects. It is
+> horrible design practice to have some QOM objects which can be
+> freed via reference count and some which cannot.
 
-Please no, this is horribly surprising semantics.
+That would be a very large amount of code to rewrite to the
+new paradigm. I don't object inherently ("you have pointers to
+your child objects" works better when they might be implemented
+in Rust and might play better with being able to create
+machines and wire them up on the command line); I'm just
+noting how much work it would be if you wanted to make
+embedding forbidden.
 
-> 
-> Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-> ---
->  include/qom/object.h            |  4 ++--
->  block/throttle-groups.c         |  2 +-
->  qom/object.c                    | 15 ++++++---------
->  tests/unit/check-qom-proplist.c |  8 ++++----
->  4 files changed, 13 insertions(+), 16 deletions(-)
-> 
-> diff --git a/include/qom/object.h b/include/qom/object.h
-> index 11f55613fcd0..c4dcf65dcf7f 100644
-> --- a/include/qom/object.h
-> +++ b/include/qom/object.h
-> @@ -1121,7 +1121,7 @@ GSList *object_class_get_list_sorted(const char *implements_type,
->   * @obj: the object
->   *
->   * Increase the reference count of a object.  A object cannot be freed as long
-> - * as its reference count is greater than zero.
-> + * as a reference remains.
->   * Returns: @obj
->   */
->  Object *object_ref(void *obj);
-> @@ -1131,7 +1131,7 @@ Object *object_ref(void *obj);
->   * @obj: the object
->   *
->   * Decrease the reference count of a object.  A object cannot be freed as long
-> - * as its reference count is greater than zero.
-> + * as a reference remains.
->   */
->  void object_unref(void *obj);
->  
-> diff --git a/block/throttle-groups.c b/block/throttle-groups.c
-> index 4b1b1944c20a..3b2a89f5849d 100644
-> --- a/block/throttle-groups.c
-> +++ b/block/throttle-groups.c
-> @@ -962,7 +962,7 @@ static void throttle_group_get_limits(Object *obj, Visitor *v,
->  
->  static bool throttle_group_can_be_deleted(UserCreatable *uc)
->  {
-> -    return OBJECT(uc)->ref == 1;
-> +    return OBJECT(uc)->ref == 0;
->  }
->  
->  static void throttle_group_obj_class_init(ObjectClass *klass,
-> diff --git a/qom/object.c b/qom/object.c
-> index 0ac201de4c15..761eff1337e6 100644
-> --- a/qom/object.c
-> +++ b/qom/object.c
-> @@ -497,7 +497,6 @@ static void object_initialize_with_type(Object *obj, size_t size, TypeImpl *type
->  
->      memset(obj, 0, type->instance_size);
->      obj->class = type->class;
-> -    object_ref(obj);
->      object_class_property_init_all(obj);
->      obj->properties = g_hash_table_new_full(g_str_hash, g_str_equal,
->                                              NULL, object_property_free);
-> @@ -560,11 +559,10 @@ bool object_initialize_child_with_propsv(Object *parentobj,
->  
->  out:
->      /*
-> -     * We want @obj's reference to be 1 on success, 0 on failure.
-> -     * On success, it's 2: one taken by object_initialize(), and one
-> -     * by object_property_add_child().
-> -     * On failure in object_initialize() or earlier, it's 1.
-> -     * On failure afterwards, it's also 1: object_unparent() releases
-> +     * We want @obj's reference to be 0 on success, UINT32_MAX on failure.
-> +     * On success, it's 1: one taken by object_property_add_child().
-> +     * On failure in object_initialize() or earlier, it's 0.
-> +     * On failure afterwards, it's also 0: object_unparent() releases
->       * the reference taken by object_property_add_child().
->       */
->      object_unref(obj);
-> @@ -668,7 +666,6 @@ static void object_finalize(void *data)
->      object_property_del_all(obj);
->      object_deinit(obj, ti);
->  
-> -    g_assert(obj->ref == 0);
->      g_assert(obj->parent == NULL);
->      if (obj->free) {
->          obj->free(obj);
-> @@ -1329,10 +1326,10 @@ void object_unref(void *objptr)
->      if (!obj) {
->          return;
->      }
-> -    g_assert(obj->ref > 0);
-> +    g_assert(obj->ref < INT_MAX);
->  
->      /* parent always holds a reference to its children */
-> -    if (qatomic_fetch_dec(&obj->ref) == 1) {
-> +    if (qatomic_fetch_dec(&obj->ref) == 0) {
->          object_finalize(obj);
->      }
->  }
-> diff --git a/tests/unit/check-qom-proplist.c b/tests/unit/check-qom-proplist.c
-> index 89de92b7d91f..b5527dd52afd 100644
-> --- a/tests/unit/check-qom-proplist.c
-> +++ b/tests/unit/check-qom-proplist.c
-> @@ -351,7 +351,7 @@ static void test_dummy_createv_tree(void)
->                                NULL));
->  
->      g_assert(err == NULL);
-> -    g_assert_cmpint(dobj->parent_obj.ref, ==, 1);
-> +    g_assert_cmpint(dobj->parent_obj.ref, ==, 0);
->      g_assert_cmpstr(dobj->sv, ==, "Hiss hiss hiss");
->      g_assert(dobj->bv == true);
->      g_assert(dobj->av == DUMMY_PLATYPUS);
-> @@ -375,7 +375,7 @@ static void test_dummy_createv_parentless(void)
->                                           NULL));
->  
->      g_assert(err == NULL);
-> -    g_assert_cmpint(dobj->parent_obj.ref, ==, 1);
-> +    g_assert_cmpint(dobj->parent_obj.ref, ==, 0);
->      g_assert_cmpstr(dobj->sv, ==, "Hiss hiss hiss");
->      g_assert(dobj->bv == true);
->      g_assert(dobj->av == DUMMY_PLATYPUS);
-> @@ -414,7 +414,7 @@ static void test_dummy_createlist_tree(void)
->                          NULL));
->  
->      g_assert(err == NULL);
-> -    g_assert_cmpint(dobj->parent_obj.ref, ==, 1);
-> +    g_assert_cmpint(dobj->parent_obj.ref, ==, 0);
->      g_assert_cmpstr(dobj->sv, ==, "Hiss hiss hiss");
->      g_assert(dobj->bv == true);
->      g_assert(dobj->av == DUMMY_PLATYPUS);
-> @@ -450,7 +450,7 @@ static void test_dummy_createlist_parentless(void)
->                                NULL));
->  
->      g_assert(err == NULL);
-> -    g_assert_cmpint(dobj->parent_obj.ref, ==, 1);
-> +    g_assert_cmpint(dobj->parent_obj.ref, ==, 0);
->      g_assert_cmpstr(dobj->sv, ==, "Hiss hiss hiss");
->      g_assert(dobj->bv == true);
->      g_assert(dobj->av == DUMMY_PLATYPUS);
-> 
-> -- 
-> 2.54.0
-> 
-
-With regards,
-Daniel
--- 
-|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-|: https://libvirt.org          ~~          https://entangle-photo.org :|
-|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
-
+thanks
+-- PMM
 
