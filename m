@@ -4,109 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 770E6CD98C7
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jun 2026 10:57:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B470CD98DA
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jun 2026 10:59:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZ50R-0004Yn-QX; Mon, 15 Jun 2026 06:57:27 -0400
+	id 1wZ51j-00052K-Fp; Mon, 15 Jun 2026 06:58:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wZ50P-0004WN-JM
- for qemu-devel@nongnu.org; Mon, 15 Jun 2026 06:57:25 -0400
-Received: from mail-yx1-xb135.google.com ([2607:f8b0:4864:20::b135])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wZ50O-0003ik-2v
- for qemu-devel@nongnu.org; Mon, 15 Jun 2026 06:57:25 -0400
-Received: by mail-yx1-xb135.google.com with SMTP id
- 956f58d0204a3-66061993294so3025832d50.3
- for <qemu-devel@nongnu.org>; Mon, 15 Jun 2026 03:57:23 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1781521043; cv=none;
- d=google.com; s=arc-20240605;
- b=eMLvlM70VCtosu/7ep+Eqsr2veTdUlLVfkxJC5S4ZAFy1q7mKLABVCSJs375oREqZM
- caMnRkPHrWeVw6nW3FlxyaCP9D9an76qG38Pi6GYPY7hP/jmehSJyuWKavvnyLXzQvxb
- oB6QycdGRZaSiuyxZKXLZ2eUv3tuCxwGYffKtF+l+i2jc9nN8+okl65IEi20Dcz/kQ2a
- RQ+JfVzDboWucSZBMOR2Oxh8f/+HHo7UyQOg8UpCwMqwTQNMNAPtRuLOsb1TSNhMt3sB
- RQYUWtRNKhNLgan/V+9ESVgUUQInvIU5xNRBI9FjO9gL9vdt6aYe0Ix6UAaY1X1NopcO
- IDQA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=S/wz8lKERvbYqf5bVZv2UL7q03dzo45KKXIRywWSaCY=;
- fh=XkoIWOC0cp1wgjcb6+uy/PC2e0l2maR55LRl7oHJsTY=;
- b=isa/8IueDD6GE2uEjaILsBXFxzPqAQ5VI7n+EGPFC+z9H0oeUmfKdGacwnOjaLF27A
- ljBaaAThWKif2g1QkaORC5RjJ+NestqIqJ/812LnOchyUvEGV8VbKRW4yhVRR9odWwnu
- RePaHIi5Luh/98aZeBsYXZkShtYbWiAz9ngfs0pgU8YcddyyRr6zXtmnbqNRbzL48blO
- tCI9MzzQEg9nV9oF46jtV8luFCHC4u3hXEE9EyFWvSbjFIbAg03ZIUXIBo+2nW/nmjWB
- AHNaiyHtA60eYwzp1tqSiL+0drSQ3Zn7EsRsz/X9wlCAInboA23fk4SvCtLIfWAcvCUn
- ynSg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1781521043; x=1782125843; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=S/wz8lKERvbYqf5bVZv2UL7q03dzo45KKXIRywWSaCY=;
- b=EgsGvmDWM4N4lLNx5cF9bPkeVmS59Mp59Lzbg4T7lHpiV7x0ynq7iEsJdtlAe1SDfb
- 3b656I3TMnW8X02NEb1Q8LwxV4REPvue6Wg4D7Lyvw2PiTfFd/CY/dBKqnV/AVRyONLE
- 4up6lDwZ7H0cUjdYImQEN+FlFcnY8SqYRbTFV80AzQofl5b09kqRvd/Fm2XfohYI6JY0
- tEq4/a5Sq3KNcUK5Z13DtTQmSVFvSjcRrWOIHGkuAJ/bySJTlw72DzHYCYC1ZHweZrMI
- z5ksdH228nvVqAHFFYBrGHlsooX3+9Hn0OXnAcmgOcXPDrvY32tkNw8qN9gBk5qvgf9H
- 8VLg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781521043; x=1782125843;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=S/wz8lKERvbYqf5bVZv2UL7q03dzo45KKXIRywWSaCY=;
- b=AWzNFwfODjm89tZcxCdqAKnkzoN3KwgUH6GKtl6aXkKJmI8iW5MSOt2RHSnKjvZchb
- Jic4TfUcDESEtKRFu5FeZ7wj0bwLXUMcC8wO4OwQ0EfYe3qEHFSIwVgpmZAtwVr/R1/p
- EAr6p6dSoyJmWcw0sdkBDZfgx7opdNDpFsYLLU/YP6K107j+6dBu0Nya/E6SFUQv5mvm
- qx04NZ+QYnsZevsP3wj+gQj73M+5B8X3ti4W0RjHOPDsSDTiWfP3mj4EZjYUL0m7Dvcp
- JpHOtcZnRg/yK9vLRjk4On2QGh70nC0WWZJyaFydvqZF1dPolnmu6IW8WdO9QE51wQM4
- 2x6g==
-X-Forwarded-Encrypted: i=1;
- AFNElJ8b9mGsxd/LBDra1RVbstN6EgL6PwHurIjyIh7d/GOI7ilt37uC1v96KOCgSSRkllezxuiQEZSBbNZi@nongnu.org
-X-Gm-Message-State: AOJu0Yz9MfoBSSrRkFOJAoFkOsa6urEWdjHOA17FecynCVdQYiHycLQL
- MiEPm/vdz27afj7zUQUltvRf3BN3y58bP+xIy3xIeu4bgQvExrVqYkqa7hEwUbD3B2SPPNuuKUn
- euZPvu3s8C04w3ZhKcjY6rm/Q58co4927UaWHFVYhyg==
-X-Gm-Gg: Acq92OEXtzTb+GEhxDBPiXKgAk2VBogDBTavgPQTHldYK8mZL2jfGK2CMz7bnYn/4FG
- V/mrUm/4SwtlFJ7aNJ0/DVtKkZr7xe97sYYa9CPKEy1lXbm/ADqzQtja6EotR++art9YVoBuUE/
- 9E8YGqnd1Hqf+1jucAg6sbb9QWoMQUrhHeEhca/bCpR1A0sheoiHkjNYyuRTw4W+DbnmTwtgTVa
- yPI421tBJWhU2afnKK7orj6JbkWNI5jnuxGnA1L3jFdvOmpkT8bm5boAcFhtyE6UiP//TNT/w3p
- DjZOIhcHXbF8hCFfMfW4k3SBF0n7B7Dy0hx9NRyW3MWJFzY7VgYV4w8oR3QRfg9snzk=
-X-Received: by 2002:a05:690e:124a:b0:660:460e:2563 with SMTP id
- 956f58d0204a3-66278315b87mr12295166d50.33.1781521042754; Mon, 15 Jun 2026
- 03:57:22 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wZ51i-000523-Cp
+ for qemu-devel@nongnu.org; Mon, 15 Jun 2026 06:58:46 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wZ51g-00044Y-9P
+ for qemu-devel@nongnu.org; Mon, 15 Jun 2026 06:58:46 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1781521122;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=+htNBxiryUkLHAXUKy8m97qzrP0aQPEkEVManGL9AJg=;
+ b=Cijc6sS5T61zVzVHFuskNKUZvuOjNb3EzuFChwFUn8Hqhh3m168WnbBf+nnlzj3iUzVYIl
+ aYn0OwWPD45gaWY20ckOixcccNLrPwVN4/hxZAuYdF7VXoOiVplTzI7QUiQfWfjpMekMnI
+ TQ3EN9CFAPIGoPV8KXNdt2Nss6OpHpc=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-593-7nGL_um5OiqaYQGk929P9A-1; Mon,
+ 15 Jun 2026 06:58:41 -0400
+X-MC-Unique: 7nGL_um5OiqaYQGk929P9A-1
+X-Mimecast-MFC-AGG-ID: 7nGL_um5OiqaYQGk929P9A_1781521120
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 323E21955EA0
+ for <qemu-devel@nongnu.org>; Mon, 15 Jun 2026 10:58:40 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.44.22.4])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A2FAE1954105
+ for <qemu-devel@nongnu.org>; Mon, 15 Jun 2026 10:58:39 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 0D89321E6A01; Mon, 15 Jun 2026 12:58:37 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org
+Subject: Re: [PATCH v3 5/7] json-streamer: remove token queue
+In-Reply-To: <20260525150503.393743-6-pbonzini@redhat.com> (Paolo Bonzini's
+ message of "Mon, 25 May 2026 17:05:01 +0200")
+References: <20260525150503.393743-1-pbonzini@redhat.com>
+ <20260525150503.393743-6-pbonzini@redhat.com>
+Date: Mon, 15 Jun 2026 12:58:37 +0200
+Message-ID: <87y0ggqdcy.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-References: <20260615100200.266968-1-gshan@redhat.com>
- <20260615100200.266968-2-gshan@redhat.com>
-In-Reply-To: <20260615100200.266968-2-gshan@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 15 Jun 2026 11:57:09 +0100
-X-Gm-Features: AVVi8CcK9114rxVcfcgzUre6M_pMgbMdzMc0d-r31hNGHyPhIEI2Ir4K7Kfrb2s
-Message-ID: <CAFEAcA9CT6E8dhEV7Ek6ruT_o2dKUf==2V+U-1WFDOLtYbgeeQ@mail.gmail.com>
-Subject: Re: [PATCH v2 1/2] system/memory: Use qemu_ram_{copy, move}() in ram
- device region accessors
-To: Gavin Shan <gshan@redhat.com>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, mst@redhat.com, 
- peterx@redhat.com, alex@shazbot.org, richard.henderson@linaro.org, 
- berrange@redhat.com, philmd@oss.qualcomm.com, philmd@mailo.com, 
- david@kernel.org, clg@redhat.com, pbonzini@redhat.com, phrdina@redhat.com, 
- jugraham@redhat.com, liugang24219@sangfor.com.cn, dinghui@sangfor.com.cn, 
- shan.gavin@gmail.com
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b135;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb135.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 8
+X-Spam_score: 0.8
+X-Spam_bar: /
+X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -122,47 +87,263 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 15 Jun 2026 at 11:03, Gavin Shan <gshan@redhat.com> wrote:
+Paolo Bonzini <pbonzini@redhat.com> writes:
+
+> Now fully exploit the push parser, feeding it one token at a time
+> without having to wait until braces and brackets are balanced.
 >
-> All ram device regions were turned to be indirectly accessible by commit
-> 4a2e242bbb ("memory: Don't use memcpy for ram_device regions"). This leads
-> to guest hang on attempt to build 'cuda-samples' as reported by Julia. The
-> guest is started by the following command lines, with GH100 GPU card passed
-> from the host.
-
-> diff --git a/include/system/memory.h b/include/system/memory.h
-> index 1417132f6d..5878727d09 100644
-> --- a/include/system/memory.h
-> +++ b/include/system/memory.h
-> @@ -2897,6 +2897,8 @@ void address_space_register_map_client(AddressSpace *as, QEMUBH *bh);
->  void address_space_unregister_map_client(AddressSpace *as, QEMUBH *bh);
+> While the nesting counts are retained for error recovery purposes,
+> the system can now report the first parsing error without waiting
+> for parentheses to be balanced.  This also means that JSON_ERROR
+> can be handled in json-parser.c, not json-streamer.c.
 >
->  /* Internal functions, part of the implementation of address_space_read.  */
-> +void qemu_ram_copy(void *dest, const void *src, size_t n);
-> +void qemu_ram_move(void *dest, const void *src, size_t n);
+> After reporting the error, json-streamer.c then enters an error recovery
+> mode where subsequent errors are suppressed.  This mimics the previous
+> error reporting behavior, but it provides prompt feedback on parsing
+> errors.  As an example, here is an example interaction with qemu-ga.
+>
+> BEFORE (error reported only once braces are balanced):
+>
+>    >> {"execute":foo
+>    >> }
+>    << {"error": {"class": "GenericError", "desc": "JSON parse error, invalid keyword 'foo'"}}
+>    >> {"execute":"somecommand"}
+>    << {"error": {"class": "CommandNotFound", "desc": "The command somecommand has not been found"}}
+>
+> AFTER (error reported immediately, but similar error recovery as before):
+>
+>    >> {"execute":foo
+>    << {"error": {"class": "GenericError", "desc": "JSON parse error, invalid keyword 'foo'"}}
+>    >> }
+>    >> {"execute":"somecommand"}
+>    << {"error": {"class": "CommandNotFound", "desc": "The command somecommand has not been found"}}
 
-New function prototypes in include headers need documentation comments.
+Welcome quality of life improvement for human use of QMP, such as manual
+testing.  The experience is still sub-par when you miss closing
+parenthesis: you still get the silent treatment.  However, the confused
+input a confused user is likely to send then is now more likely to
+produce an error, and thus a parser reset.
 
-In particular for these, it's really important that we clearly say
-what semantics we are attempting to provide with them, so that
-(a) when we're reviewing or later updating the implementation we
-know what we are trying to provide
-(b) when we're looking at the callsites we know what the function
-is guaranteeing to us and what it is not, and thus whether it's
-OK to use it or we need something els.
+>
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> ---
+>  include/qobject/json-parser.h |   3 +-
+>  qobject/json-parser.c         |   4 ++
+>  qobject/json-streamer.c       | 100 ++++++++++++++--------------------
+>  3 files changed, 46 insertions(+), 61 deletions(-)
+>
+> diff --git a/include/qobject/json-parser.h b/include/qobject/json-parser.h
+> index 0cf6932ecdc..3479e637588 100644
+> --- a/include/qobject/json-parser.h
+> +++ b/include/qobject/json-parser.h
+> @@ -33,7 +33,8 @@ typedef struct JSONMessageParser {
+>      JSONParserContext parser;
+>      unsigned int brace_count;
+>      unsigned int bracket_count;
+> -    GQueue tokens;
+> +    unsigned int token_count;
+> +    bool error;
+>      uint64_t token_size;
+>  } JSONMessageParser;
+>  
+> diff --git a/qobject/json-parser.c b/qobject/json-parser.c
+> index 3b5edc5bae4..b77baab585f 100644
+> --- a/qobject/json-parser.c
+> +++ b/qobject/json-parser.c
+> @@ -659,6 +659,10 @@ QObject *json_parser_feed(JSONParserContext *ctxt, const JSONToken *token,
+>  
+>      assert(!ctxt->err);
+>      switch (token->type) {
+> +    case JSON_ERROR:
+> +        parse_error(ctxt, token, "JSON parse error, stray '%s'", token->str);
+> +        break;
+> +
+>      case JSON_END_OF_INPUT:
+>          /* Check for premature end of input */
+>          if (!g_queue_is_empty(ctxt->stack)) {
+> diff --git a/qobject/json-streamer.c b/qobject/json-streamer.c
+> index b0bf2083ca6..82d2bbc9426 100644
+> --- a/qobject/json-streamer.c
+> +++ b/qobject/json-streamer.c
+> @@ -1,5 +1,5 @@
+>  /*
+> - * JSON streaming support
+> + * JSON parser - callback interface and error recovery
 
-> +#if defined(__i386__) || defined(__x86_64__)
-> +#define HOST_UNALIGNED_MMIO_OK 1
-> +#else
-> +#define HOST_UNALIGNED_MMIO_OK 0
-> +#endif
+The file name is now a bit of a misnomer.  I don't care.
 
-We need to do something better than this. We can't
-just say "oh, we trust that on x86 this works": it is
-neither actually true that the compiler guarantees it even
-on x86, nor is it the case that only x86 can do unaligned
-accesses to normal RAM.
+>   *
+>   * Copyright IBM, Corp. 2009
+>   *
+> @@ -19,23 +19,16 @@
+>  #define MAX_TOKEN_COUNT (2ULL << 20)
+>  #define MAX_NESTING (1 << 10)
+>  
+> -static void json_message_free_tokens(JSONMessageParser *parser)
+> -{
+> -    JSONToken *token;
+> -
+> -    while ((token = g_queue_pop_head(&parser->tokens))) {
+> -        g_free(token);
+> -    }
+> -}
+> -
+>  void json_message_process_token(JSONLexer *lexer, GString *input,
+>                                  JSONTokenType type, int x, int y)
+>  {
+>      JSONMessageParser *parser = container_of(lexer, JSONMessageParser, lexer);
+> -    QObject *json = NULL;
+>      Error *err = NULL;
+> -    JSONToken *token;
+>  
+> +    parser->token_size += input->len;
+> +    parser->token_count++;
 
-thanks
--- PMM
+Note for later: @token_size and @token_count are incremented early
+rather than late.
+
+> +
+> +    /* Detect message boundaries for error recovery purposes.  */
+>      switch (type) {
+>      case JSON_LCURLY:
+>          parser->brace_count++;
+> @@ -56,12 +49,6 @@ void json_message_process_token(JSONLexer *lexer, GString *input,
+>          parser->bracket_count--;
+>          break;
+>      case JSON_ERROR:
+> -        error_setg(&err, "JSON parse error, stray '%s'", input->str);
+> -        goto out_emit;
+> -    case JSON_END_OF_INPUT:
+> -        if (g_queue_is_empty(&parser->tokens)) {
+> -            return;
+> -        }
+>      end_error_recovery:
+>          /*
+>           * Cause error recovery to end immediately.
+> @@ -76,49 +63,43 @@ void json_message_process_token(JSONLexer *lexer, GString *input,
+>          break;
+>      }
+>  
+> -    /*
+> -     * Security consideration, we limit total memory allocated per object
+> -     * and the maximum recursion depth that a message can force.
+> -     */
+> -    if (parser->token_size + input->len + 1 > MAX_TOKEN_SIZE) {
+
+Left operand of > is unincremented token_size plus increment plus 1.
+
+> -        error_setg(&err, "JSON token size limit exceeded");
+> -        goto out_emit;
+> -    }
+> -    if (g_queue_get_length(&parser->tokens) + 1 > MAX_TOKEN_COUNT) {
+> -        error_setg(&err, "JSON token count limit exceeded");
+> -        goto out_emit;
+> -    }
+> -    if (parser->bracket_count + parser->brace_count > MAX_NESTING) {
+> -        error_setg(&err, "JSON nesting depth limit exceeded");
+> -        goto out_emit;
+> -    }
+> +    if (parser->error) {
+> +        /* error recovery, eat tokens until parentheses balance */
+> +    } else {
+> +        /*
+> +         * Safety consideration, we limit total memory allocated per object
+> +         * and the maximum nesting depth that a message can force.
+> +         */
+> +        if (parser->token_size > MAX_TOKEN_SIZE) {
+
+Left operand of > is incremented token size.
+
+Isn't this one less than before the patch?
+
+> +            error_setg(&err, "JSON token size limit exceeded");
+> +        } else if (parser->token_count > MAX_TOKEN_COUNT) {
+
+Likewise.
+
+> +            error_setg(&err, "JSON token count limit exceeded");
+> +        } else if (parser->bracket_count + parser->brace_count > MAX_NESTING) {
+> +            error_setg(&err, "JSON nesting depth limit exceeded");
+> +        } else {
+> +            g_autofree JSONToken *token = json_token(type, x, y, input);
+> +            QObject *json = json_parser_feed(&parser->parser, token, &err);
+> +            if (json) {
+> +                parser->emit(parser->opaque, json, NULL);
+> +            }
+> +        }
+>  
+> -    token = json_token(type, x, y, input);
+> -    parser->token_size += input->len;
+> -
+> -    g_queue_push_tail(&parser->tokens, token);
+> -
+> -    if (parser->brace_count > 0 || parser->bracket_count > 0) {
+> -        return;
+> -    }
+> -
+> -    /* Process all tokens in the queue */
+> -    while (!g_queue_is_empty(&parser->tokens)) {
+> -        token = g_queue_pop_head(&parser->tokens);
+> -        json = json_parser_feed(&parser->parser, token, &err);
+> -        g_free(token);
+> -        if (json || err) {
+> -            break;
+> +        if (err) {
+> +            parser->emit(parser->opaque, NULL, err);
+> +            /* start recovery */
+> +            parser->error = true;
+>          }
+>      }
+>  
+> -out_emit:
+> -    parser->brace_count = 0;
+> -    parser->bracket_count = 0;
+> -    json_message_free_tokens(parser);
+> -    parser->token_size = 0;
+> -    parser->emit(parser->opaque, json, err);
+> -    json_parser_reset(&parser->parser);
+> +    if ((parser->brace_count == 0 && parser->bracket_count == 0)
+> +        || type == JSON_END_OF_INPUT) {
+
+We need to check for JSON_END_OF_INPUT, because this is the one error
+that cannot go through normal error recovery "eat tokens until curlies
+and squares balance or we ate JSON_END_OF_INPUT".  Took me a few minutes
+to figure out.
+
+> +        parser->error = false;
+> +        parser->brace_count = 0;
+> +        parser->bracket_count = 0;
+> +        parser->token_count = 0;
+> +        parser->token_size = 0;
+> +        json_parser_reset(&parser->parser);
+> +    }
+>  }
+>  
+>  void json_message_parser_init(JSONMessageParser *parser,
+> @@ -128,9 +109,10 @@ void json_message_parser_init(JSONMessageParser *parser,
+>  {
+>      parser->emit = emit;
+>      parser->opaque = opaque;
+> +    parser->error = false;
+>      parser->brace_count = 0;
+>      parser->bracket_count = 0;
+> -    g_queue_init(&parser->tokens);
+> +    parser->token_count = 0;
+>      parser->token_size = 0;
+>  
+>      json_parser_init(&parser->parser, ap);
+> @@ -146,12 +128,10 @@ void json_message_parser_feed(JSONMessageParser *parser,
+>  void json_message_parser_flush(JSONMessageParser *parser)
+>  {
+>      json_lexer_flush(&parser->lexer);
+> -    assert(g_queue_is_empty(&parser->tokens));
+>  }
+>  
+>  void json_message_parser_destroy(JSONMessageParser *parser)
+>  {
+>      json_lexer_destroy(&parser->lexer);
+> -    json_message_free_tokens(parser);
+>      json_parser_destroy(&parser->parser);
+>  }
+
 
