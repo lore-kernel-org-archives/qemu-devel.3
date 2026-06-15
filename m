@@ -4,73 +4,115 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 367CECD98DA
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jun 2026 11:36:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D063CD98C7
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jun 2026 11:45:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZ5bX-0003IZ-7x; Mon, 15 Jun 2026 07:35:47 -0400
+	id 1wZ5kK-0004Lm-8m; Mon, 15 Jun 2026 07:44:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wZ5bW-0003IR-Dy
- for qemu-devel@nongnu.org; Mon, 15 Jun 2026 07:35:46 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wZ5bU-0004D8-KU
- for qemu-devel@nongnu.org; Mon, 15 Jun 2026 07:35:46 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781523342;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=n+cp09LRmP/dKibHz5SYtyCHhsz4aHp8tdSrIyAyY3U=;
- b=fsK5wyAUdEyH0Ug4ucg0i3IqTpVXNhrX/VDAw1oIbWAC/FnQzC72nhSelNy4e1HFPdgL0o
- EVlcbtijwF7qQ/v48Yd2Slq812TwNiw+0WtAxUV1xtrK/qsPpsr4f72oYlonoHIacttZBT
- vZAqZOnSd2Qj7J90TDdeU1/UJ8zxKgc=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-502-axJGjKPCP3qEoRyJ6asyww-1; Mon,
- 15 Jun 2026 07:35:40 -0400
-X-MC-Unique: axJGjKPCP3qEoRyJ6asyww-1
-X-Mimecast-MFC-AGG-ID: axJGjKPCP3qEoRyJ6asyww_1781523340
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E85241805A05
- for <qemu-devel@nongnu.org>; Mon, 15 Jun 2026 11:35:39 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.44.22.4])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 66CA01800351
- for <qemu-devel@nongnu.org>; Mon, 15 Jun 2026 11:35:39 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id CEC4321E6A01; Mon, 15 Jun 2026 13:35:36 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org
-Subject: Re: [PATCH v3 7/7] json-parser: add location to JSON parsing errors
-In-Reply-To: <20260525150503.393743-8-pbonzini@redhat.com> (Paolo Bonzini's
- message of "Mon, 25 May 2026 17:05:03 +0200")
-References: <20260525150503.393743-1-pbonzini@redhat.com>
- <20260525150503.393743-8-pbonzini@redhat.com>
-Date: Mon, 15 Jun 2026 13:35:36 +0200
-Message-ID: <8733yoqbnb.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1wZ5kH-0004LV-1c
+ for qemu-devel@nongnu.org; Mon, 15 Jun 2026 07:44:49 -0400
+Received: from mail-ej1-x62c.google.com ([2a00:1450:4864:20::62c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1wZ5kE-0005Px-Td
+ for qemu-devel@nongnu.org; Mon, 15 Jun 2026 07:44:48 -0400
+Received: by mail-ej1-x62c.google.com with SMTP id
+ a640c23a62f3a-bebac79fff8so394385466b.0
+ for <qemu-devel@nongnu.org>; Mon, 15 Jun 2026 04:44:45 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1781523885; cv=none;
+ d=google.com; s=arc-20240605;
+ b=kp2dXdeAR5suo6rxIIfoUFsdLKfH5ThEfbIVfgxmHN8SDOkZhXbY6Jt1tV7z0kwkC4
+ oIK0ReWyGk6+Vtyi0c26EL3bPBmVMPMBvCudqOyYtZr9952in3p74aXL4oqgFldQFPwE
+ UCYccYgzwO8dKg0pWCYJdZeNtFijQmC6hm6bUHOE8JkhUn27zYXIpFeJUo0laaQgkA+a
+ X3Zj3yNKLJauYVH2IVh2ghIGetdVS+x3g3leiZuDG/zIc1f+OSBsGQElDHvxJttkNVBS
+ gHHx7BmTRo6FOtw0VFhDJCA8SeAlfVj5FEmCtKrQLzZ4oPb8yo+A8SiUfmmhG3A6ZBWQ
+ bR0g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=+T+44FihAnSRM9I9TPNNZpwPuQOAxcZISWQWYChdOlM=;
+ fh=UxcirIdfO8UamGJ2cf8nbjTCliwId+xJScvylhv0zRw=;
+ b=MOw0qoWxLKC8Mx7sjAtq7LpxWK5lUJkU+KzY5phbzZQwbaAo8J3EFInCc8kmxcmGZ9
+ gX/7bK211XtsXlAwXEiLBkVUtfFrTiPpBtBbEsrN/bRuZYVnEyfRPneRF06bykRA+E02
+ dW0TA6JnqYnEgu59uWu6nwhuOVznA0HJYuHfMaBzqF24fiDDEg9sPNuR0MiIFK+GPy9X
+ gkFVULyp2vnyjkJfIWuY0sg6QLqna62VqDnynlsTTKsaa5uAiYGDgNVaPfXF9kA3uNj5
+ VtGJBMqXsX81ykR3RfPmoNasRwH5QwRMZ9RNSRfZ13MWSzzi/m6HgACv0oMti4uqYIKt
+ 40Gg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1781523885; x=1782128685; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=+T+44FihAnSRM9I9TPNNZpwPuQOAxcZISWQWYChdOlM=;
+ b=PO6A1QqjVVEEFlbrTDExN7J0C3PyDuOXkFfUbKmLnz3YcqxPITnXp1wJMShvRETR2Q
+ SNWS7wu+TzrX5mU0Pa3W6KUga/XoH5h8EohNAQw8EEai7dcfSMze9cn/jyoAewmas3WB
+ ANPJ77XrMq3wyYMh1xnBye/U8xzAJxrMp/Z/nmKfI02QT41cLQYNmLakBxP1mHJrDRL+
+ gRdp7rJniGynTZgOt4b+sG0+VHp/rYWzZAF71m/XsgUORtvAZ1IxR4riJ3ajOefXRwD1
+ APpi3FqSX/wFL1ICwGefYvA13tpYCVn7+fXBkjoTRu8IC/NBmM6DBGjLy22PH6JnLsts
+ /4nQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1781523885; x=1782128685;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=+T+44FihAnSRM9I9TPNNZpwPuQOAxcZISWQWYChdOlM=;
+ b=hVBP9JI/v1qCazw12bC9e6c+cnRTRnao40vOb2KVNgXuM7wcWnGf7SySPX+78Pe3F8
+ vz7WbDYDBz5NX6iZpI5UZ4giOTDuYqMHNiEwoE2pRJizE84NsXoQ6RsFONL8cMzrvdGR
+ izPDhyCYO5xj1323OL0iRwd0YbkK0NqTqBpYg6x/PntWcR/SIMmBlg8ZCmmivnLWEmES
+ r9Llsx9IJEwAZMIpkxfNY6CKugnYOKp5c34KlUVoj9063zxdRHmqT4LE5Y4jeiwaejEv
+ mpMp5/RB3kIdxNy2lrMstL/mD87Uyj+3LAf6XSWBlyC5RzYbtp9JLN0xKcBhaNJ1++OU
+ i4wg==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ+0aj8EEDm2Bj6Ymd3wwkyTi8SRLHgdONu3OiKyfe9CLBhIa4phfmR7R4UDkDN8qcI3yxsvMwu/gM/p@nongnu.org
+X-Gm-Message-State: AOJu0YxChcGmHM9cXmbvC7tJgSaJyUns5AcL/Xss1bcjR7AsIpCTCJub
+ 1zG7CiD9/Vf0JADy0jdeEI/u3EdZ8vwLmbsREj5fhWC4gQr5Toa98rXfJUCWwIwMXHfSe7l74p2
+ GcjI3Kqz6Y/10FTGc6+Khk5A+M4ZAwcE=
+X-Gm-Gg: Acq92OEMGAVZAowpgMrxztd1NX9ktVHmabxN/vbdYEyv90OYy4n6zr1VGHjcnqArWLY
+ NzLED0MsLs4ePA2b5WkxncbSToBHG2BlK+k58cvFpp0K7qLWn5mTHOqGZIWmet10AgnOLjdYbfz
+ iTXUmvYdusC5ig1n2IHhrSJuirtpPtqhPidzWSvol5b4QlgQuuVwk8SGZXvRyJzNh+0btLSFoT3
+ vzz7PazWBp1TTuuNixe/BeZWiQD57Ey0/mAATVS76Y4Y9UUuUd4IsMZrfH8YcyX87p6Pd7U+qhV
+ VoSZ1Iom
+X-Received: by 2002:a17:907:3f87:b0:bd5:151d:2d31 with SMTP id
+ a640c23a62f3a-bfe28907f3emr639160266b.13.1781523884457; Mon, 15 Jun 2026
+ 04:44:44 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20260603065859.592063-1-joel@jms.id.au>
+ <20260603065859.592063-10-joel@jms.id.au>
+In-Reply-To: <20260603065859.592063-10-joel@jms.id.au>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Mon, 15 Jun 2026 21:44:17 +1000
+X-Gm-Features: AVVi8Cd69KX0w5BynUEE-YMynpUya7K1kGM-tpm8xfg4FYoXGgRb2SfOvMep3qE
+Message-ID: <CAKmqyKNcs3pupVFnveJM-exqGhFGAVo-jsTGW3Gr5UffHrP-4Q@mail.gmail.com>
+Subject: Re: [PATCH v8 09/12] tests/functional/riscv64: Add tt-atlantis tests
+To: Joel Stanley <joel@jms.id.au>
+Cc: Alistair Francis <alistair.francis@wdc.com>,
+ Nicholas Piggin <npiggin@gmail.com>, 
+ Andrew Jones <andrew.jones@oss.qualcomm.com>, 
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Chao Liu <chao.liu.zevorn@gmail.com>, 
+ Michael Ellerman <mpe@kernel.org>, Joel Stanley <jms@oss.tenstorrent.com>, 
+ Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>, 
+ Portia Stephens <portias@oss.tenstorrent.com>, qemu-riscv@nongnu.org,
+ qemu-devel@nongnu.org, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::62c;
+ envelope-from=alistair23@gmail.com; helo=mail-ej1-x62c.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,140 +128,142 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Paolo Bonzini <pbonzini@redhat.com> writes:
-
-> Now that all calls to parse_error have a token, add the line and column
-> to the message.  As far as I can see the two important TODOs (better
-> errors and better EOI handling) are done, and the others (token range
-> information and "parsed size"?) do not really matter or are handled
-> better by json-streamer.c.  So remove the list, which had sat unchanged
-> since 2009.
+On Wed, Jun 3, 2026 at 5:02=E2=80=AFPM Joel Stanley <joel@jms.id.au> wrote:
 >
-> This needs some adjustments to provide a good x and y for error messages.
-> First of all, they switch from zero-based to one-based, which is safe
-> because they were both sitting unused.  Second, right now the x and y
-> are those of the *last* character in the token.  Modify json-lexer.c to
-> freeze tok->x and tok->y at the first character added to the GString.
+> From: Nicholas Piggin <npiggin@gmail.com>
 >
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> Add OpenSBI and Linux boot tests for the tt-atlantis machine. Based on
+> tests/functional/riscv64/test_sifive_u.py.
+>
+> Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+> Signed-off-by: Joel Stanley <joel@jms.id.au>
 
-QMP errors become obviously better, e.g.
+Acked-by: Alistair Francis <alistair.francis@wdc.com>
 
-    -> {"execute": "qmp_capabilities", "arguments": {"enable": ["oob"]}}
-    <- {"return": {}}
-    -> {"execute": "query-commands"]
-    <- {"error": {"class": "GenericError", "desc": "JSON parse error, expected ',' or '}'"}}
-
-improves to
-
-    <- {"error": {"class": "GenericError", "desc": "JSON parse error at line 2, column 29, expected ',' or '}'"}}
-
-The change to CLI errors is a mixed bag, e.g.
-
-    $ qemu-system-x86_64 -S -blockdev '{"driver": "host_cdrom", "node-name": "blk0", "filename": "/dev/sr0"'
-    qemu-system-x86_64: -blockdev {"driver": "host_cdrom", "node-name": "blk0", "filename": "/dev/sr0": JSON parse error, premature end of input
-
-becomes
-
-    qemu-system-x86_64: -blockdev {"driver": "host_cdrom", "node-name": "blk0", "filename": "/dev/sr0": JSON parse error at line 1, column 69, premature end of input
-
-I fear this is confusing.  If you understand what's happening here, the
-"column 69" part has value.  The "line 1" part is mostly noise.
-
-Might be less of an issue with more compact location information.  See
-below.
+Alistair
 
 > ---
->  include/qobject/json-parser.h |  1 +
->  qobject/json-lexer.c          | 11 +++++++----
->  qobject/json-parser.c         | 12 ++----------
->  3 files changed, 10 insertions(+), 14 deletions(-)
+>  MAINTAINERS                                  |  1 +
+>  tests/functional/riscv64/meson.build         |  1 +
+>  tests/functional/riscv64/test_opensbi.py     |  4 ++
+>  tests/functional/riscv64/test_tt_atlantis.py | 57 ++++++++++++++++++++
+>  4 files changed, 63 insertions(+)
+>  create mode 100755 tests/functional/riscv64/test_tt_atlantis.py
 >
-> diff --git a/include/qobject/json-parser.h b/include/qobject/json-parser.h
-> index 3479e637588..e078b36b2d5 100644
-> --- a/include/qobject/json-parser.h
-> +++ b/include/qobject/json-parser.h
-> @@ -17,6 +17,7 @@
->  typedef struct JSONLexer {
->      int start_state, state;
->      GString *token;
-> +    int cur_x, cur_y;
->      int x, y;
->  } JSONLexer;
->  
-> diff --git a/qobject/json-lexer.c b/qobject/json-lexer.c
-> index 51341d96e49..7753ba6c092 100644
-> --- a/qobject/json-lexer.c
-> +++ b/qobject/json-lexer.c
-> @@ -277,7 +277,8 @@ void json_lexer_init(JSONLexer *lexer, bool enable_interpolation)
->      lexer->start_state = lexer->state = enable_interpolation
->          ? IN_START_INTERP : IN_START;
->      lexer->token = g_string_sized_new(3);
-> -    lexer->x = lexer->y = 0;
-> +    lexer->cur_x = lexer->cur_y = 1;
-> +    lexer->x = lexer->y = 1;
->  }
->  
->  static void json_lexer_feed_char(JSONLexer *lexer, char ch, bool flush)
-> @@ -285,10 +286,10 @@ static void json_lexer_feed_char(JSONLexer *lexer, char ch, bool flush)
->      int new_state;
->      bool char_consumed = false;
->  
-> -    lexer->x++;
-> +    lexer->cur_x++;
->      if (ch == '\n') {
-> -        lexer->x = 0;
-> -        lexer->y++;
-> +        lexer->cur_x = 1;
-> +        lexer->cur_y++;
->      }
->  
->      while (flush ? lexer->state != lexer->start_state : !char_consumed) {
-> @@ -316,6 +317,8 @@ static void json_lexer_feed_char(JSONLexer *lexer, char ch, bool flush)
->          case IN_START:
->              g_string_truncate(lexer->token, 0);
->              new_state = lexer->start_state;
-> +            lexer->x = lexer->cur_x;
-> +            lexer->y = lexer->cur_y;
->              break;
->          case JSON_ERROR:
->              json_message_process_token(lexer, lexer->token, JSON_ERROR,
-> diff --git a/qobject/json-parser.c b/qobject/json-parser.c
-> index faf3a9142bd..8c58ae0349a 100644
-> --- a/qobject/json-parser.c
-> +++ b/qobject/json-parser.c
-> @@ -126,15 +126,6 @@ typedef struct JSONParserStackEntry {
->  
->  #define BUG_ON(cond) assert(!(cond))
->  
-> -/**
-> - * TODO
-> - *
-> - * 0) make errors meaningful again
-> - * 1) add geometry information to tokens
-> - * 3) should we return a parsed size?
-> - * 4) deal with premature EOI
-> - */
-> -
->  static inline JSONParserStackEntry *current_entry(JSONParserContext *ctxt)
->  {
->      return g_queue_peek_tail(ctxt->stack);
-> @@ -172,7 +163,8 @@ static void G_GNUC_PRINTF(3, 4) parse_error(JSONParserContext *ctxt,
->      va_start(ap, msg);
->      vsnprintf(message, sizeof(message), msg, ap);
->      va_end(ap);
-> -    error_setg(&ctxt->err, "JSON parse error, %s", message);
-> +    error_setg(&ctxt->err, "JSON parse error at line %d, column %d, %s",
-
-The usual format used by code parsing tools such as compilers is like
-
-   "%d:%d: JSON parse error: %s, token->x, token->y, message
-
-Should we use it?
-
-> +               token->y, token->x, message);
->  }
->  
->  static int cvt4hex(const char *s)
-
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index e52aa769c9ae..f4b7e7fd43a6 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -1793,6 +1793,7 @@ S: Supported
+>  F: docs/system/riscv/tt_*.rst
+>  F: hw/riscv/tt_*.c
+>  F: include/hw/riscv/tt_*.h
+> +F: tests/functional/riscv64/test_tt_*.py
+>
+>  AMD Microblaze-V Generic Board
+>  M: Sai Pavan Boddu <sai.pavan.boddu@amd.com>
+> diff --git a/tests/functional/riscv64/meson.build b/tests/functional/risc=
+v64/meson.build
+> index b996c89d7df9..c4456fabd757 100644
+> --- a/tests/functional/riscv64/meson.build
+> +++ b/tests/functional/riscv64/meson.build
+> @@ -13,5 +13,6 @@ tests_riscv64_system_quick =3D [
+>  tests_riscv64_system_thorough =3D [
+>    'boston',
+>    'sifive_u',
+> +  'tt_atlantis',
+>    'tuxrun',
+>  ]
+> diff --git a/tests/functional/riscv64/test_opensbi.py b/tests/functional/=
+riscv64/test_opensbi.py
+> index d077e40f4278..0f8beb7e7a8c 100755
+> --- a/tests/functional/riscv64/test_opensbi.py
+> +++ b/tests/functional/riscv64/test_opensbi.py
+> @@ -28,6 +28,10 @@ def test_riscv_sifive_u(self):
+>          self.set_machine('sifive_u')
+>          self.boot_opensbi()
+>
+> +    def test_riscv_tt_atlantis(self):
+> +        self.set_machine('tt-atlantis')
+> +        self.boot_opensbi()
+> +
+>      def test_riscv_virt(self):
+>          self.set_machine('virt')
+>          self.boot_opensbi()
+> diff --git a/tests/functional/riscv64/test_tt_atlantis.py b/tests/functio=
+nal/riscv64/test_tt_atlantis.py
+> new file mode 100755
+> index 000000000000..48abd5cd27c2
+> --- /dev/null
+> +++ b/tests/functional/riscv64/test_tt_atlantis.py
+> @@ -0,0 +1,57 @@
+> +#!/usr/bin/env python3
+> +#
+> +# Functional test that boots a Linux kernel on a Tenstorrent Atlantis ma=
+chine
+> +# and checks the console
+> +#
+> +# Copyright (c) Linaro Ltd.
+> +# Copyright 2026 Tenstorrent
+> +#
+> +# SPDX-License-Identifier: GPL-2.0-or-later
+> +
+> +from qemu_test import Asset, LinuxKernelTest
+> +
+> +
+> +class TTAtlantis(LinuxKernelTest):
+> +
+> +    ASSET_KERNEL =3D Asset(
+> +        'https://storage.tuxboot.com/kernels/6.11.9/riscv64/Image',
+> +        '174f8bb87f08961e54fa3fcd954a8e31f4645f6d6af4dd43983d5e9841490fb=
+0')
+> +    ASSET_ROOTFS =3D Asset(
+> +        ('https://github.com/groeck/linux-build-test/raw/'
+> +         '9819da19e6eef291686fdd7b029ea00e764dc62f/rootfs/riscv64/'
+> +         'rootfs.ext2.gz'),
+> +        'b6ed95610310b7956f9bf20c4c9c0c05fea647900df441da9dfe767d24e8b28=
+b')
+> +
+> +    def do_test_riscv64_tt_atlantis(self, connect_disk):
+> +        self.set_machine('tt-atlantis')
+> +        kernel_path =3D self.ASSET_KERNEL.fetch()
+> +        rootfs_path =3D self.uncompress(self.ASSET_ROOTFS)
+> +
+> +        self.vm.set_console()
+> +        kernel_command_line =3D self.KERNEL_COMMON_COMMAND_LINE + 'early=
+con=3Dsbi '
+> +
+> +        if connect_disk:
+> +            kernel_command_line +=3D 'root=3D/dev/vda panic=3D-1 noreboo=
+t rootwait '
+> +            self.vm.add_args('-device',
+> +                             'virtio-blk,drive=3Ddrive0,serial=3D0x1234,=
+bus=3Dpcie.0')
+> +            self.vm.add_args('-drive',
+> +                             f'file=3D{rootfs_path},if=3Dnone,id=3Ddrive=
+0,format=3Draw')
+> +            pattern =3D 'Boot successful.'
+> +        else:
+> +            kernel_command_line +=3D 'panic=3D0 noreboot '
+> +            pattern =3D 'Cannot open root device'
+> +
+> +        self.vm.add_args('-kernel', kernel_path,
+> +                         '-append', kernel_command_line,
+> +                         '-no-reboot')
+> +
+> +        self.vm.launch()
+> +        self.wait_for_console_pattern(pattern)
+> +
+> +    def test_riscv64_tt_atlantis(self):
+> +        # tt-atlantis machine has no PCI host yet, so no disk
+> +        self.do_test_riscv64_tt_atlantis(False)
+> +
+> +
+> +if __name__ =3D=3D '__main__':
+> +    LinuxKernelTest.main()
+> --
+> 2.47.3
+>
+>
 
