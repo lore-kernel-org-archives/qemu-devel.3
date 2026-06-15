@@ -4,95 +4,137 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9F79CD98E0
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jun 2026 20:42:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5CC2CD98DA
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jun 2026 20:42:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZE87-0007qj-Sm; Mon, 15 Jun 2026 16:41:59 -0400
+	id 1wZE43-0002Mv-VO; Mon, 15 Jun 2026 16:37:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wZE86-0007hm-0R
- for qemu-devel@nongnu.org; Mon, 15 Jun 2026 16:41:58 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
+ id 1wZE42-0002MD-NT
+ for qemu-devel@nongnu.org; Mon, 15 Jun 2026 16:37:46 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wZE84-0003Di-BH
- for qemu-devel@nongnu.org; Mon, 15 Jun 2026 16:41:57 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781556115;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=d/kcsoy8xvLl2yTq/W4Pjs4gVgv8DwhZDAf1GbAxzZE=;
- b=TlfaE9AstUE0Vy2TscD0tciqXRXqCxxx/uL5Y8qQWSLxkUD8nXFli0halTsUNJ6BCNExHB
- 4vPXdTJ6Pz1jRUG+FCsQuZKViwpk5QZ476Z+5U7fGlW1KRYedsuaWhufJrldAOgR6EK8nQ
- oH2DNDA3xvtJBPfxslwIvFqEmAGgpqM=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-341-7oJh80VINfmv0ImtiV3KDA-1; Mon,
- 15 Jun 2026 16:41:52 -0400
-X-MC-Unique: 7oJh80VINfmv0ImtiV3KDA-1
-X-Mimecast-MFC-AGG-ID: 7oJh80VINfmv0ImtiV3KDA_1781556111
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 79E0D18002C2; Mon, 15 Jun 2026 20:41:51 +0000 (UTC)
-Received: from localhost (unknown [10.44.22.9])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 604021955BCE; Mon, 15 Jun 2026 20:41:49 +0000 (UTC)
-From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Tue, 16 Jun 2026 00:38:13 +0400
-Subject: [PATCH v2 47/53] target/riscv: convert PropertyInfo definitions to
- use qapi_type
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20260616-qom-qapi-v2-47-cc9396b9c18c@redhat.com>
-References: <20260616-qom-qapi-v2-0-cc9396b9c18c@redhat.com>
-In-Reply-To: <20260616-qom-qapi-v2-0-cc9396b9c18c@redhat.com>
+ (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
+ id 1wZE40-00026p-Vv
+ for qemu-devel@nongnu.org; Mon, 15 Jun 2026 16:37:46 -0400
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 65FIwxsg881740
+ for <qemu-devel@nongnu.org>; Mon, 15 Jun 2026 20:37:43 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=qcppdkim1; bh=04I9RWgZccE
+ RuEgf2h0Q8DCPFbbYni8O78bwBXOtlT0=; b=dKwLEA9whl1Qtedge5oIkhKSZuN
+ 1Cr+9pqRnG6jcHLg8a5GqaVUoRax/YlvF9IsyBTkP5zJfYuvod92Jd2s41Xp/V60
+ lE7vM4PynZQ9U9EcKlEa/mLgadKQxZ6wK3gk4H4IfYYbs/GGm8FGQ2QZebzeBWMS
+ Kfi+aIiIet4SEpEm2cACEuVfrXsspYKjAsyghTogMSzqz0Yh0xOTnE+TeeSt96oq
+ NJFgZZ6eszS1BSwqcHzhAT3X/xF7tzJYJcKLu/ZwisBMXoEVcFp6KV9PkT8Y/cKo
+ fk1E/FlI1p6rye7Guwk4w0RUj5lfKEygD6OdEDgY2WxL4xJsTsm6lLkqrAg==
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
+ [209.85.222.198])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4etew0jx1m-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Mon, 15 Jun 2026 20:37:43 +0000 (GMT)
+Received: by mail-qk1-f198.google.com with SMTP id
+ af79cd13be357-91931144870so411160685a.1
+ for <qemu-devel@nongnu.org>; Mon, 15 Jun 2026 13:37:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1781555862; x=1782160662; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=04I9RWgZccERuEgf2h0Q8DCPFbbYni8O78bwBXOtlT0=;
+ b=BdF8d2eNhmvHB0ooUZWP+Z6IRhNBPZap6/4Tf8BURWyOmwEqFBUR7ZG7xE/qhI13qh
+ PZesC6vPcYWfkj1FJVXOPfc11UKn+LepLUJOo0dp3JvihPaZUJW+vCsLKX6jES4DWCk7
+ MbYGdvh6M05432nOnBm3ZU48jSrGy+Izknl6c8gj5sgGckxuaaMfeHKsBTBEF5vh8UjE
+ NJxnlC7HNrMQjMFUgLSfsCqHhSQw1jxT3ZXFNSJOLI9Vbl17Y1IMVkWSjAdduvrkHPSz
+ XPEe/vpUsH2sAL6QNPkXMxkthZq3NK/Dg/UA2ieZm+qLRFn4bmHuoPsvDa57bFWr5Vvq
+ M+FA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1781555862; x=1782160662;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=04I9RWgZccERuEgf2h0Q8DCPFbbYni8O78bwBXOtlT0=;
+ b=P0+ScxDPAW+WWF8OJY/Zo5morsPZ6pbZ/R1rE4zo44pG55BF7YyFaIbPTXexuRpriP
+ A608qfHYS5Y2QU3SBVcEzUS9qnxsSnkNJsPi/yMXniufPFtxSphm6E2O+CAmNPoCuQVP
+ 4wULaqVM8cMKgkbJjgZtgd0x4i0Ul6CflSTIjZNtwcxG8IQh65Bv7NU1hB65MRFTASca
+ 01MXc3pJz3JQ4r+LbIxSSOgu2G3P6i3IQ5vGeLVttQlQTjMapu3l+m489HCdCiF94Cfd
+ TACCeQbLdvmHhCB+S9xpjFeTatc81MOz1zeVEPCs23GNCi8I+9fPtCd9g+EVRjJ3jDjd
+ D4zw==
+X-Gm-Message-State: AOJu0YzjG0X6enacA1LRQu4xL5w772v62Mjn+FokbcQH7blhkyDI+/jH
+ JwD97hA+S8cqqGHYwlbk3J7+Qtwd9NYjaxYxApjylHQ77bwxLtgt9hk13tPNg1eOcFcFQFmgYCc
+ Z/xx7pwkV0ExJqoFG5ZYqWSOKXE09vnoFf9U8Yv4njgbwJ7XPDNtNFQnE3QMg/MSMhg==
+X-Gm-Gg: Acq92OENpWj28Ti/PDJj/sk1bSm5sEcy49Epuco2BKiDHeti/uMWlq5MVcEm3L7NDdZ
+ vAGTTdkGNJwJGuYwrzHwPaJuXSKgceSGDpIoB0KToQcVPUbdGpeRaB0uNcsbndZt73PwLvSfksH
+ B3DXZ19wLUZukByZ3xrfoFAJ1kDb8Lyn4NGVLX+Nr1PHWAC9eA0ZGf5a1qqdelbSjvHJBrreDIO
+ LBoX5RQJDGW85YyYs/aNrCrJXS0pXEal9DYYBoFR/KkHxOrBRi7khALHdfuXbe7v15Ln+ofz1pE
+ APQnzqySWgupGWXPJ3kKReenyiAUrFFs82Gn0yYpYCh9NtmOHeaxVnEdxMopBJyBEoXmMBfcuhe
+ iYUESsrl77Y1MNaAq2DPqFfpcME4M67GP4cfFqHCXm+Rkpik2Ko0zS4dvcwI=
+X-Received: by 2002:a05:620a:27d2:b0:915:d443:e6db with SMTP id
+ af79cd13be357-9161bc2337fmr2313822685a.20.1781555862040; 
+ Mon, 15 Jun 2026 13:37:42 -0700 (PDT)
+X-Received: by 2002:a05:620a:27d2:b0:915:d443:e6db with SMTP id
+ af79cd13be357-9161bc2337fmr2313818585a.20.1781555861564; 
+ Mon, 15 Jun 2026 13:37:41 -0700 (PDT)
+Received: from QCOM-UWl2o8bcGT.qualcomm.com ([177.170.117.62])
+ by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-8d9f4740fbasm9749906d6.29.2026.06.15.13.37.39
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 15 Jun 2026 13:37:41 -0700 (PDT)
+From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
-Cc: Markus Armbruster <armbru@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, 
- =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
- Michael Roth <michael.roth@amd.com>, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
- =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=5356;
- i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=vFYjRBJkELU7QsiVEKFdbWqa1O19eePNiBTYHdrRF8g=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqMGKQ1nXO21sXNAPcBMvQ/baxOq1Ohk4UkHjd9
- w6IOkTb5kyJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCajBikAAKCRDa6OEJdZac
- 5X/TEAC4pXFRfn/Cvybwj8Bws8FqIN/IFhDUuAr8cKh69cQiUwc57tgY7TPqfueDkxA8wa5Zhzu
- xG/Ly2TmtqCljzGyrkshG9BU0nI/PyPTAdlUV5fayEtaPVwpiQ6vqfugQl+7sR1zif2nEaLDp6x
- VoS/g1x2Qkg5roct4UyE4E41kuoBKua6HVU65txh3Oy3HfT+8olrsxij5XGcLaZgx3t2Ug9E6u+
- 4xDtzLpi83EQK97a/KutGNyt//zrB6N/UCB1001+uhZe73kSdFUpj8U6gDZzNy7WJnGryTDIHY+
- NLt9gFq5JohobQpjlrZWUStOKiMYpz+Tfjwof1nMuM7dfV4kYGu7dpRntQAO4RUijqmF45jWEEL
- UhVuTyF23BmZEeNqNpqdigSXOkTdy8ec/PcisAy3lwyE+mRnTQLAwS/6GFl01vj2xX46M26kfon
- 49PEiB+SQFvV81nSLQ/yfqUhXsubWYiYziZVpDGl2YfQftsIAhnDGMMT9EYExeM6FVQzYWO+lXg
- s3TruiiY6xXvhQcacfYHS7jt19VYxU2CFnMDg5QhWlAAhziPiwjrw4amRbQKyISqOdM3x6WNE3Q
- QYWiiMsbGDHKnOTBf6DcRtyykDnZhQ3jkwCMaGlawyXgUts+ilmYh7y6WwfxHnDrWfhtdX9VDJz
- /qYgmgfhSxTX02Q==
-X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
- fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=marcandre.lureau@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, liwei1518@gmail.com,
+ zhiwei_liu@linux.alibaba.com, chao.liu.zevorn@gmail.com,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Alistair Francis <Alistair.Francis@wdc.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>
+Subject: [PATCH 01/13] hw/riscv/sifive_u.c: add a FDT phandle to cpu-intc
+Date: Mon, 15 Jun 2026 17:37:21 -0300
+Message-ID: <20260615203734.954428-2-daniel.barboza@oss.qualcomm.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260615203734.954428-1-daniel.barboza@oss.qualcomm.com>
+References: <20260615203734.954428-1-daniel.barboza@oss.qualcomm.com>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjE1MDIxOCBTYWx0ZWRfX8a/wLl9Owknb
+ 7GnnYBfL/zG06/57o4/xusr0yZszaCDKz/Nc3Ks9LcNWR7sxus+L27gfGrIWPPSx2rfInHpn0H3
+ sdyz721ghzKyv1QF/dPUTwRYjSgYAh4=
+X-Authority-Analysis: v=2.4 cv=QLlYgALL c=1 sm=1 tr=0 ts=6a306297 cx=c_pps
+ a=qKBjSQ1v91RyAK45QCPf5w==:117 a=gdiugJE53z4H+vvYeRBHqw==:17
+ a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22 a=EUspDBNiAAAA:8
+ a=G410GlaaS0drJ4fCzjAA:9 a=NFOGd7dJGGMPyQGDc5-O:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjE1MDIxOCBTYWx0ZWRfX4DGimnS8mmqM
+ Fl9pXMrJm3xse2GbQvnqDRJNRRwYpX65tdwffRIZdC2cVSx+jVIGHlGVX8OGlzkjSMPwJA9XgdY
+ hJysIalPrP7SbFweaUIxMsa/e96ejoa9xsaUgh8rJjB73NZ4bcX5AjV04N/JcHWfJhn+BeFJiLl
+ mRE1qIpfCzw5VXkmtHj4P9bElA4bGzkNVBNimMPJfuCKCUXrMPx3QbIbFklknTf/tXC+OB9swSp
+ ekxnZ97DxD09HPteFTOU2/vZv6R7twmnLkwabY1Uq/MT9E5Fbc9Rna7BHBg5XQ5/ayIy2m9t8Hu
+ CSGI3j4UUpmzc1NGXEmC6QdKBEHhDn1tPsinSLXp/PSI2eb527kYQ+wMtMy7oJn9HxGa5A7UMBB
+ w6NLtItCHTN+SoXNdmyuAtssNtE+5krPUjS2yRY8iySWXnPdkB7ZzgHg9CkXYo5TmXvF9Cpxdt/
+ cMxBjZQM8Nk85fRpPGQ==
+X-Proofpoint-GUID: UU-KHSa_oT84V2Pl9ld3nPxC6IDQO6Sy
+X-Proofpoint-ORIG-GUID: UU-KHSa_oT84V2Pl9ld3nPxC6IDQO6Sy
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-15_05,2026-06-15_04,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 clxscore=1015 priorityscore=1501 adultscore=0 spamscore=0
+ bulkscore=0 suspectscore=0 impostorscore=0 phishscore=0 lowpriorityscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606040000 definitions=main-2606150218
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,164 +150,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Mechanical conversion of all local PropertyInfo definitions in
-target/riscv/cpu.c
+We're assigning a 'cpu_phandle' phandle to the cpu-intc phandle field.
+Make it more in line with the other boards by assigning both a
+cpu_phandle and a intc phandle.
 
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 ---
- target/riscv/cpu.c | 32 ++++++++++++++++----------------
- 1 file changed, 16 insertions(+), 16 deletions(-)
+ hw/riscv/sifive_u.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index 98c9ebd791c..31fad255660 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -1302,7 +1302,7 @@ static void prop_pmu_num_get(Object *obj, Visitor *v, const char *name,
- }
- 
- static const PropertyInfo prop_pmu_num = {
--    .type = "uint8",
-+    .qapi_type = &uint8_type_info,
-     .description = "pmu-num",
-     .get = prop_pmu_num_get,
-     .set = prop_pmu_num_set,
-@@ -1344,7 +1344,7 @@ static void prop_pmu_mask_get(Object *obj, Visitor *v, const char *name,
- }
- 
- static const PropertyInfo prop_pmu_mask = {
--    .type = "uint32",
-+    .qapi_type = &uint32_type_info,
-     .description = "pmu-mask",
-     .get = prop_pmu_mask_get,
-     .set = prop_pmu_mask_set,
-@@ -1376,7 +1376,7 @@ static void prop_mmu_get(Object *obj, Visitor *v, const char *name,
- }
- 
- static const PropertyInfo prop_mmu = {
--    .type = "bool",
-+    .qapi_type = &bool_type_info,
-     .description = "mmu",
-     .get = prop_mmu_get,
-     .set = prop_mmu_set,
-@@ -1408,7 +1408,7 @@ static void prop_pmp_get(Object *obj, Visitor *v, const char *name,
- }
- 
- static const PropertyInfo prop_pmp = {
--    .type = "bool",
-+    .qapi_type = &bool_type_info,
-     .description = "pmp",
-     .get = prop_pmp_get,
-     .set = prop_pmp_set,
-@@ -1448,7 +1448,7 @@ static void prop_num_pmp_regions_get(Object *obj, Visitor *v, const char *name,
- }
- 
- static const PropertyInfo prop_num_pmp_regions = {
--    .type = "uint8",
-+    .qapi_type = &uint8_type_info,
-     .description = "num-pmp-regions",
-     .get = prop_num_pmp_regions_get,
-     .set = prop_num_pmp_regions_set,
-@@ -1486,7 +1486,7 @@ static void prop_pmp_granularity_get(Object *obj, Visitor *v, const char *name,
- }
- 
- static const PropertyInfo prop_pmp_granularity = {
--    .type = "uint32",
-+    .qapi_type = &uint32_type_info,
-     .description = "pmp-granularity",
-     .get = prop_pmp_granularity_get,
-     .set = prop_pmp_granularity_set,
-@@ -1561,7 +1561,7 @@ static void prop_priv_spec_get(Object *obj, Visitor *v, const char *name,
- }
- 
- static const PropertyInfo prop_priv_spec = {
--    .type = "str",
-+    .qapi_type = &str_type_info,
-     .description = "priv_spec",
-     /* FIXME enum? */
-     .get = prop_priv_spec_get,
-@@ -1594,7 +1594,7 @@ static void prop_vext_spec_get(Object *obj, Visitor *v, const char *name,
- }
- 
- static const PropertyInfo prop_vext_spec = {
--    .type = "str",
-+    .qapi_type = &str_type_info,
-     .description = "vext_spec",
-     /* FIXME enum? */
-     .get = prop_vext_spec_get,
-@@ -1637,7 +1637,7 @@ static void prop_vlen_get(Object *obj, Visitor *v, const char *name,
- }
- 
- static const PropertyInfo prop_vlen = {
--    .type = "uint16",
-+    .qapi_type = &uint16_type_info,
-     .description = "vlen",
-     .get = prop_vlen_get,
-     .set = prop_vlen_set,
-@@ -1678,7 +1678,7 @@ static void prop_elen_get(Object *obj, Visitor *v, const char *name,
- }
- 
- static const PropertyInfo prop_elen = {
--    .type = "uint16",
-+    .qapi_type = &uint16_type_info,
-     .description = "elen",
-     .get = prop_elen_get,
-     .set = prop_elen_set,
-@@ -1714,7 +1714,7 @@ static void prop_cbom_blksize_get(Object *obj, Visitor *v, const char *name,
- }
- 
- static const PropertyInfo prop_cbom_blksize = {
--    .type = "uint16",
-+    .qapi_type = &uint16_type_info,
-     .description = "cbom_blocksize",
-     .get = prop_cbom_blksize_get,
-     .set = prop_cbom_blksize_set,
-@@ -1750,7 +1750,7 @@ static void prop_cbop_blksize_get(Object *obj, Visitor *v, const char *name,
- }
- 
- static const PropertyInfo prop_cbop_blksize = {
--    .type = "uint16",
-+    .qapi_type = &uint16_type_info,
-     .description = "cbop_blocksize",
-     .get = prop_cbop_blksize_get,
-     .set = prop_cbop_blksize_set,
-@@ -1786,7 +1786,7 @@ static void prop_cboz_blksize_get(Object *obj, Visitor *v, const char *name,
- }
- 
- static const PropertyInfo prop_cboz_blksize = {
--    .type = "uint16",
-+    .qapi_type = &uint16_type_info,
-     .description = "cboz_blocksize",
-     .get = prop_cboz_blksize_get,
-     .set = prop_cboz_blksize_set,
-@@ -1822,7 +1822,7 @@ static void prop_mvendorid_get(Object *obj, Visitor *v, const char *name,
- }
- 
- static const PropertyInfo prop_mvendorid = {
--    .type = "uint32",
-+    .qapi_type = &uint32_type_info,
-     .description = "mvendorid",
-     .get = prop_mvendorid_get,
-     .set = prop_mvendorid_set,
-@@ -1858,7 +1858,7 @@ static void prop_mimpid_get(Object *obj, Visitor *v, const char *name,
- }
- 
- static const PropertyInfo prop_mimpid = {
--    .type = "uint64",
-+    .qapi_type = &uint64_type_info,
-     .description = "mimpid",
-     .get = prop_mimpid_get,
-     .set = prop_mimpid_set,
-@@ -1915,7 +1915,7 @@ static void prop_marchid_get(Object *obj, Visitor *v, const char *name,
- }
- 
- static const PropertyInfo prop_marchid = {
--    .type = "uint64",
-+    .qapi_type = &uint64_type_info,
-     .description = "marchid",
-     .get = prop_marchid_get,
-     .set = prop_marchid_set,
-
+diff --git a/hw/riscv/sifive_u.c b/hw/riscv/sifive_u.c
+index 6a637e3b86..3abbd6c823 100644
+--- a/hw/riscv/sifive_u.c
++++ b/hw/riscv/sifive_u.c
+@@ -187,8 +187,10 @@ static void create_fdt(SiFiveUState *s, const MemMapEntry *memmap,
+         qemu_fdt_setprop_string(fdt, nodename, "status", "okay");
+         qemu_fdt_setprop_cell(fdt, nodename, "reg", cpu);
+         qemu_fdt_setprop_string(fdt, nodename, "device_type", "cpu");
++        qemu_fdt_setprop_cell(fdt, nodename, "phandle", cpu_phandle);
++
+         qemu_fdt_add_subnode(fdt, intc);
+-        qemu_fdt_setprop_cell(fdt, intc, "phandle", cpu_phandle);
++        qemu_fdt_setprop_cell(fdt, intc, "phandle", phandle++);
+         qemu_fdt_setprop_string(fdt, intc, "compatible", "riscv,cpu-intc");
+         qemu_fdt_setprop(fdt, intc, "interrupt-controller", NULL, 0);
+         qemu_fdt_setprop_cell(fdt, intc, "#interrupt-cells", 1);
 -- 
-2.54.0
+2.43.0
 
 
