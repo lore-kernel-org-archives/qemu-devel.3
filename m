@@ -4,85 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15D1ECD98CF
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jun 2026 18:40:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68C1ECD98DA
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jun 2026 18:43:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZCE8-00039B-HA; Mon, 15 Jun 2026 14:40:04 -0400
+	id 1wZCGv-0003xF-6U; Mon, 15 Jun 2026 14:42:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wZCE6-00038Y-KU
- for qemu-devel@nongnu.org; Mon, 15 Jun 2026 14:40:02 -0400
+ id 1wZCGt-0003x4-MI
+ for qemu-devel@nongnu.org; Mon, 15 Jun 2026 14:42:55 -0400
 Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wZCE2-0002eQ-Lc
- for qemu-devel@nongnu.org; Mon, 15 Jun 2026 14:40:01 -0400
+ id 1wZCGs-0003OT-8P
+ for qemu-devel@nongnu.org; Mon, 15 Jun 2026 14:42:55 -0400
 Received: by mail-pf1-x434.google.com with SMTP id
- d2e1a72fcca58-8419ab3a297so1620674b3a.2
- for <qemu-devel@nongnu.org>; Mon, 15 Jun 2026 11:39:57 -0700 (PDT)
+ d2e1a72fcca58-8423f236418so2026676b3a.1
+ for <qemu-devel@nongnu.org>; Mon, 15 Jun 2026 11:42:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1781548797; x=1782153597; darn=nongnu.org;
+ d=linaro.org; s=google; t=1781548973; x=1782153773; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=4uSeaseIUvaR8noinvpUmzwNlCw3sL9mi20faAx6qy4=;
- b=x47/w4N8a7Ocw/ISN9ASJMaMm6esRDkB2aahkzycmW699rDEThia2rKJry3oLX9ROe
- CZ3HygX9C9qZZybCOmdpYdIFH1d08/4ziPMAqasEFFop8V3XLQwwi/v8IwSvBrsT4YvI
- xip0DKbQ3Sn0gEO2s0HtdX9n+MqRJLlhkgpKOw3BgA/eQ3TVZbv9rK4Z5scLlD8+Y5uM
- rxTUlMLOGg1W7SaKp9OaoWQdsLkm2bqhd6iV6lncmdSY0w/e3hH7SN5HN+LkpCd3i954
- h4UIeykZJTe1vxa7jGH4w5d6WkVD9p7WTz8V5HuBfwf2wf/UpEi4milLODHrx7bB2sYh
- GWrw==
+ bh=3aqCd9ztd0y0RyLa6Oh+4nuizkD2/OOvsZNFoiENeew=;
+ b=Fse7V1UTz3pp0LQ/r/o5Olrf3eHf+A135QTApjO5WejTLZ1zySeUuO8R9zCpv/N1jC
+ b/p12bwZJtRgRgERnu0wUxEwjN0miYFo6WR5zBVXxE3jCJdCM+uMKT6odr7hJywVS58P
+ fr555S2q5CtbxWCZOHUId6PAc8QS/gHyfyiMoiFbMt37B5kVCVc2hA3ooNhRBJim9iCL
+ kEcFG5n4JhT7XsF/OHDTRH2zhjm0uhBLsBX4ToaOt15yG1LMuXvS8V4C3w2z+fbM6gL0
+ ovT+jBIcoCFqgXtQxwwYRfJGtPJgkn/PQ8oFyQhGILNHta+9M+bBNIEHcGycDYWokDuf
+ 7XrA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781548797; x=1782153597;
+ d=1e100.net; s=20251104; t=1781548973; x=1782153773;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=4uSeaseIUvaR8noinvpUmzwNlCw3sL9mi20faAx6qy4=;
- b=icLXCKvZUcHq88xsYZzQci0rWIQ1jf3KXx1cOva8VX90ii5AP539DMcXM59M+k7IuJ
- W+5Ubw6cPjK2kOsPge+l93tpKWCdN8Fqi8sJhS9UQmUH2KoIJUTkQsCrr55OSQTLJj7R
- kaR2nxOtugDBc4xG9uBrUjKjczYuuTwXsFLSIn09UGY3tXH9Cj0Q1B6xtATOOnn8W5AD
- nd7W0a5z2td072ChGHZtXsp95fHQwbk/+FUU2r2FlLFk2RL3Bbo7sbAOBZ1UiIxhsWJg
- Cb4izIzlrLgPFtJItADKw718ZufaPeDmzzkCcjvf3yZeSDMqXVbsHrEp21nhyGscOheA
- FsCw==
+ bh=3aqCd9ztd0y0RyLa6Oh+4nuizkD2/OOvsZNFoiENeew=;
+ b=R6DRuV8njfDT+xo2fVskcP4MVWy7fc930JUNtnhSFBhOG7e2a4HBSsaEBXHjg//w31
+ 7sHQ5Gr7cLmfldNbygrI+W0no49ppLFCEKc2EJJ0uYvtYrkfOIrmqQbCjJhFaKGByWVN
+ vJJQh5bTU7ycpFN86dJNNglxr3J5g87qBgc6rDCnw/3hfO+PxxOixcXT9D6Q2slK2sUE
+ i0r1P0NpXB+A3GLekZcyHZkF4kZfFYMCku2tifIYx/PFDjbcMk7Y74zLAomOEWiH+YtR
+ KyXfXQ8CbgcKnot7TyyPyRKNMWrpsqKfI3P53dj/pyKle8oOvW02t1e3g71ymfCVnGwF
+ xr3w==
 X-Forwarded-Encrypted: i=1;
- AFNElJ8+f+cpdC7GOnFNi2mG6F7jePZ7InMk8NP5YcK0rg4KSUmc3n7iJ4WfrlJSj+UrJDJSm6uRAVs2hNUc@nongnu.org
-X-Gm-Message-State: AOJu0YxTvQbQqo/ipyYbU/wlBr2eSwjlrLrrKFi2SfBjzn/7SUcDBVG5
- ppOCbHFEMTXtlIOFHkq70mGVWntRA0s7aXNzCHOBlGlyxZuQxbyAOub4pPZj8x8MMG8=
-X-Gm-Gg: Acq92OFYtF19oNGta3sN3bFS/csgPoReFN+BN2eFh+G57loATGi+xn+p/O0K8E5CC8L
- uEyEdLnmqwshKAzzGdSmKTy3429LEZOmr/HNIc3e7TZV9F0OMniaB8ADU3/TmFgmY1W2jumwk4f
- e83OHBAzMuim5T4aclzofN4XvQYYO23bfsQ6nV5BrtLY1IgqXGh9COZEcalV2TQ0MBdt8rQ57M4
- bITnxwenvdxRuqwxYoDRJfdZYsRPz1FHc5TZ7AWTvymiV+KroXScb9IjesAXScQBotks9lRouAq
- MjwixssMV2MyQqNNhcCJJr+eWg8HUF/Rthh73eyLRwA17nAAub5v9ORRFr2GZQYVw7swKvhWyl/
- zdfb7l6oUAxtHRMBrn8HnHtHyzP/IICdJYxGo2oJwTKmu3LYG2Tz+tgV62DfDV6k2ko2iT4YQyN
- 0pk6sBa8psBUfleZJU2PvOdc/UEsRBzyFy8vjZvrY3DFiroq9PnVyLEnjb6GzVoDw7EHAApqEEk
- wk3fQY=
-X-Received: by 2002:a05:6a00:32c3:b0:842:4bb9:5fe8 with SMTP id
- d2e1a72fcca58-8451539cbb8mr161555b3a.3.1781548796510; 
- Mon, 15 Jun 2026 11:39:56 -0700 (PDT)
+ AFNElJ/z8dMjFyMEYwLMyvJVpeSe8B/8JMgGDM3XPKzlm/Rj7A5HQnbf/entSh3eOSoKEqP1QekhMn19dISo@nongnu.org
+X-Gm-Message-State: AOJu0YwnCMg073Rxv9caXZQqcarWM+GnIDHlBpFySoxws9t68oyTDo4U
+ dlhcVrz/MrWFXybSdpD5KqIoaPIkIuMdJWN0c5b5mJUAqxoBBkyZkdbQUhqtaLrHmKU=
+X-Gm-Gg: Acq92OEW9opJlufPjQLMi/cIqg8ik2Czlb832IwBDSZbJiSdihEXXABs7BAqaxNCWyJ
+ O57pMKVAvIT8naMOAmBGuGd3JabJ1XQk/fOMErXoayowXlDEo8sdHpQNIJa1fWa6h2GZCGt+Zks
+ bpsJRQToE4QQg82xRRNsEI9SX2IM4etL3pDE5FG+dBfRYke9rRcDAOKuIlg56zdMoS1KcnzEHjH
+ kTaQWuXty3YyrVKr9e23qLP/HJzN4JPW2RSyNgonaF4LUFT5sUpL0C/0+x041nvXA75Hhki9kIO
+ Ws5QcwzAWPFtaU9m5I5jL9RNtay/wpnSlznz/dK00I3eLZMS8Aqci+0RFr20er1qbyhyoo0BccO
+ pvYSedEOI1KHgYkaktgL/EccrLJfR8hyC87dNuEWWaTTKsIkLxJtc8XR72go82acEZ4gn6oAbIk
+ V/ma6T8NIvop2rDSL2/aKB63Z2Z9sLrMwHQAkz2yoRTKqP6OXf8Ttksg2a9rsYi5pjQUHuAvjHR
+ 7fGXdo=
+X-Received: by 2002:a05:6a00:2da7:b0:842:5bf3:c53c with SMTP id
+ d2e1a72fcca58-845152ae344mr147445b3a.2.1781548972680; 
+ Mon, 15 Jun 2026 11:42:52 -0700 (PDT)
 Received: from [192.168.0.4] (174-21-129-215.tukw.qwest.net. [174.21.129.215])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-8434b0226acsm10776215b3a.48.2026.06.15.11.39.55
+ d2e1a72fcca58-8434ac9cfebsm9866332b3a.9.2026.06.15.11.42.51
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 15 Jun 2026 11:39:56 -0700 (PDT)
-Message-ID: <803df8f4-8b24-48e2-b3ff-3e30be677d5e@linaro.org>
-Date: Mon, 15 Jun 2026 11:39:54 -0700
+ Mon, 15 Jun 2026 11:42:52 -0700 (PDT)
+Message-ID: <60d01c8b-bc07-4c09-bbf1-b1b0c77083a2@linaro.org>
+Date: Mon, 15 Jun 2026 11:42:50 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/6] accel/kvm: Replace legacy cpu_physical_memory_write()
- call
+Subject: Re: [PATCH 3/6] gdbstub/system: Replace legacy
+ cpu_physical_memory_read/write() calls
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>, Peter Xu <peterx@redhat.com>
 References: <20260611180320.30320-1-philmd@oss.qualcomm.com>
- <20260611180320.30320-3-philmd@oss.qualcomm.com>
+ <20260611180320.30320-4-philmd@oss.qualcomm.com>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260611180320.30320-3-philmd@oss.qualcomm.com>
+In-Reply-To: <20260611180320.30320-4-philmd@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
@@ -110,50 +110,21 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 6/11/26 11:03, Philippe Mathieu-Daudé wrote:
-> cpu_physical_memory_write() is legacy (see commit b7ecba0f6f6),
-> replace it by address_space_write(). Both if() ladders only
-> differ in the address space argument: rework to have a single
-> address_space_write() call. No logical change intended.
+> cpu_physical_memory_read() and cpu_physical_memory_write() are
+> legacy (see commit b7ecba0f6f6), replace the two calls by a single
+> one to address_space_rw(). So far there is no logical change, but
+> stop ignoring these functions returned value and propagate it,
+> respecting the *memory_rw_debug() family error path. Thus this is
+> effectively a logical change.
 > 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+> Signed-off-by: Philippe Mathieu-Daudé<philmd@oss.qualcomm.com>
 > ---
-> Cc: kvm@vger.kernel.org
+> Cc: "Alex Bennée"<alex.bennee@linaro.org>
 > ---
->   accel/kvm/kvm-all.c | 12 ++++--------
->   1 file changed, 4 insertions(+), 8 deletions(-)
-> 
-> diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
-> index 96f90ebb240..f4f0e64fbd0 100644
-> --- a/accel/kvm/kvm-all.c
-> +++ b/accel/kvm/kvm-all.c
-> @@ -3178,16 +3178,12 @@ void kvm_flush_coalesced_mmio_buffer(void)
->           struct kvm_coalesced_mmio_ring *ring = s->coalesced_mmio_ring;
->           while (ring->first != ring->last) {
->               struct kvm_coalesced_mmio *ent;
-> +            const AddressSpace *as;
+>   gdbstub/system.c | 11 +++++------
+>   1 file changed, 5 insertions(+), 6 deletions(-)
 
-
-Really const?  This doesn't look like it should compile, since address_space_write doesn't 
-use const.
-
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
 r~
-
->   
->               ent = &ring->coalesced_mmio[ring->first];
-> -
-> -            if (ent->pio == 1) {
-> -                address_space_write(&address_space_io, ent->phys_addr,
-> -                                    MEMTXATTRS_UNSPECIFIED, ent->data,
-> -                                    ent->len);
-> -            } else {
-> -                cpu_physical_memory_write(ent->phys_addr, ent->data, ent->len);
-> -            }
-> +            as = ent->pio == 1 ? &address_space_io : &address_space_memory;
-> +            address_space_write(as, ent->phys_addr, MEMTXATTRS_UNSPECIFIED,
-> +                                ent->data, ent->len);
->               smp_wmb();
->               ring->first = (ring->first + 1) % KVM_COALESCED_MMIO_MAX;
->           }
-
 
