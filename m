@@ -4,148 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6187DCD98C7
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jun 2026 10:44:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49D61CD98C7
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jun 2026 10:52:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZ4nK-0007y7-IO; Mon, 15 Jun 2026 06:43:54 -0400
+	id 1wZ4uL-0000T7-HE; Mon, 15 Jun 2026 06:51:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wZ4nB-0007wi-Pk
- for qemu-devel@nongnu.org; Mon, 15 Jun 2026 06:43:50 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wZ4n8-0000Dn-Lq
- for qemu-devel@nongnu.org; Mon, 15 Jun 2026 06:43:45 -0400
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65FAImuQ2410432
- for <qemu-devel@nongnu.org>; Mon, 15 Jun 2026 10:43:40 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- CNhQ9AGMnN8F1cIqsszspMDnBvZnFuEHeLILN6wlbYo=; b=OBccwb78zWsklsgb
- BSJYR/JPb8SQUpX0kiX7usGzGzCPhfe614wUSqOOR3Tg+OCSCDeuc/OvjvUblcj7
- l5Ulojo+aYGlCQSyHbhbqtL0PeoEC/eZctftaF9cJbV1gTa6gcrISRA3JUTEbPpd
- 7Ao2VIQRQabB0/FVQCzy1nBgy8NzleoDOseima9mAe/CnV+4V5OOT9LUQ0niINM1
- na5DdhXf8tA3O+HKQr+sK64DZF1NlIc2Rdv87ds0HEXUxWKsMHmuzttebkny4kQk
- 1zeovAXundxfcmPnzSOZIoW2fS+8r5xjqUi58nMDdD7F72tfbA3oQH8hR7J2PzJd
- X2fZ1g==
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
- [209.85.222.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ete980f47-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 15 Jun 2026 10:43:40 +0000 (GMT)
-Received: by mail-qk1-f198.google.com with SMTP id
- af79cd13be357-915ba226a9bso824871285a.2
- for <qemu-devel@nongnu.org>; Mon, 15 Jun 2026 03:43:40 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wZ4to-0000QT-RZ
+ for qemu-devel@nongnu.org; Mon, 15 Jun 2026 06:50:44 -0400
+Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wZ4tl-0001SM-Pc
+ for qemu-devel@nongnu.org; Mon, 15 Jun 2026 06:50:35 -0400
+Received: by mail-wr1-x42b.google.com with SMTP id
+ ffacd0b85a97d-45f3cf907ceso1617056f8f.2
+ for <qemu-devel@nongnu.org>; Mon, 15 Jun 2026 03:50:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1781520219; x=1782125019; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=CNhQ9AGMnN8F1cIqsszspMDnBvZnFuEHeLILN6wlbYo=;
- b=H0TIMZdQZroUHfsN3vwXfvHNh6QBSEgRiQHsGJ5WeO2Z6xF/XslDJY3D3RJqg8VKcC
- VfDlIDC6uAXVyyZtW2XZ6vLmhz6HLlC24sWaeM4eVoqocOA/7RlZ/GRyEbq7WRWEyT7a
- XNKG80mV1SI4UUHJYLE7TyrlJ301U7ueiWQwo4eU0wLIn+8sUsENUFSLQ6ZmGqIMtxdT
- lLrOrkoiLMqJaSaBfoVJ2xomsOovYgGgi6f7IAoWK62zaNGrsvxlFgKeovjRVUf81DIU
- vVzwb/t2OLln9/ycGfJX8NeH9kuzseBlIOmupFrSzrzhiCaujd/BeHU2tjjX8Vrk1F1x
- CMog==
+ d=linaro.org; s=google; t=1781520632; x=1782125432; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=2fxx0HT57BvR4zKgzbdI8CQgvLW39zgONazI3L1iFlw=;
+ b=EDemrtzmZ38UvEtKfvtWE56HXO78QCU6WYpPmXtWG3GCbBQPTBRXZhKYr2OWGQcRW1
+ JT7HW2uigVL2b7pwMOyU1ntukNkfExlB2EzrMxrDRyOjfmUYOnLmvHxqRdLQx78SvMCb
+ ORfWsY1i9fDovJlntQHJIoNyKDEV4IYURsIqqwMPgBgcRnr68Sb7l26q0J1mlFQnHPM4
+ /xs/aN8FGPN6l5rO7GcIl4AcKQpZ8bMvADsqYUlnjRiEkWxgsoTNwory8z2j3WfxroHS
+ tj48hJxchLklaYeOIgRsfd/yxAN5CJF+pRhBJ3PawPVKnBG3anBxXCVp3gwfbyhxxtqP
+ WCXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781520219; x=1782125019;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=CNhQ9AGMnN8F1cIqsszspMDnBvZnFuEHeLILN6wlbYo=;
- b=bR63JS//syc2ady5ub2cWuGUJXrRw25K6jhtDQo/9qO0svEx1QnxWP4PSSp5S/OtQl
- FohwvVRXWQ084FFy1xoKKrIZ78F5s7gGwq6h29XvirM10+Ja1nkfX5BmIxOqpJ5nCusW
- A1oR5sgdnl8QJ51U0wAV/Vw59T+2T1o3/4IIxEdx+Bzm2OiZlCqrL6r4CI3lAGAq2yjN
- Bj8zfRprNm8oWE4Hrr8Gm6naAbXgN4F3koqb93I16nZN0BmEYoZkEkPaUXF1M1DiMjEL
- LypISlwqs4/x7TRDEkEfx/J8JkatmBKDWMuX62AE08xOA4BIC3Z1v00iQDguesbwCjzg
- AY+g==
+ d=1e100.net; s=20251104; t=1781520632; x=1782125432;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=2fxx0HT57BvR4zKgzbdI8CQgvLW39zgONazI3L1iFlw=;
+ b=PeF3Rly0vOJcurzcC8h+FxXdtPhXHdtBVx4trp8+Iir0lC8LGSiJsIn/Bk8GQPq+E8
+ fgtpcPGiSb5izfg7bCeikGTrIqiY1nKvPUjbBpLbp93Ks0kdzsIRHxHpaw//3fVZ+Ken
+ YxcG2OEZuzQbPBG8rG4rLv1GUMZvODDFM6/n3s9gb3qHOv96XOcWhomHYLZX+mk2e5Y7
+ O0p7RdpClQQsElULYTCoFC+eO1tnR1CYzGk50vfoPxlA4FyTNyYAR5jnw7lKoV2Kf+uT
+ 5ho+CthmCbwCdzUAkMt8WJixXob1SKzxz0ekNOd/7wh6AmKeQETvPAGAsqU/wsD4Cyqp
+ hucA==
 X-Forwarded-Encrypted: i=1;
- AFNElJ+IeYl209ZFWxtlTvXdPYVUIfLEK7bDLJ4cHnSkZ3T2mKOVkxa72lNoOD/83yzcj948tD8lOe+SuvxB@nongnu.org
-X-Gm-Message-State: AOJu0Yw7IPUkeI1B6Kvln6xUucSkXWjeg17tQc4r6vYQv4CudAOkDDKE
- 6X1pbCQdntqqixGeOpNx83BXF6JBEtU4NMGvWf5DTBmvtEb+vO57WqMSQwk8ZenDDMrnfcMRvPV
- Xn4G7FAM+mCxnojHhjI5V6SdLHpxKumR74byqF5alDBuDsRDwO+4KB5fjaw==
-X-Gm-Gg: Acq92OH703Rk5gHJooaiAS6y7l1RlYrNWiTIbpXVyBmePQtfkHRJhinLguf6vV0hZeM
- CzQzTxiYN3m3KSsSBJrHEumXxE+wAy1SJ1krMQe279qX0faj3aMyONr+dgelWHWKZJWfEdABI/2
- ZGYRQu2ZXGwJYhHWD6TE0jBY4L7ulAAWpk8joNGGrMspwo5PAzq/7otEBAWmx3Q7zXS/UwBVhfv
- 62iqoR4FgiHn8+U4XdXhzwHSS3ZIVXqiOaVA+E0A59FH1CTp/bIRk6W0xtz7WnWO2hlHWUfEva4
- K0EAMBxR0XYsTQmlDpyh4TQfzv4/a/syuNQc7AcbxjWm/KEWNhunm3MLWUuS2Cx9jRNByZEBFxF
- o49+fGg6IahT3dIONsTa5nAfhR+gMQ7HTTRD/bD/dn7/4ymnQjyWN4nOz3qFh80w+J2ECUjkz
-X-Received: by 2002:a05:620a:1a12:b0:915:9e84:85df with SMTP id
- af79cd13be357-917efcb2401mr1633174485a.17.1781520219316; 
- Mon, 15 Jun 2026 03:43:39 -0700 (PDT)
-X-Received: by 2002:a05:620a:1a12:b0:915:9e84:85df with SMTP id
- af79cd13be357-917efcb2401mr1633169885a.17.1781520218765; 
- Mon, 15 Jun 2026 03:43:38 -0700 (PDT)
-Received: from [192.168.69.214] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-c01ee8286c9sm156208566b.5.2026.06.15.03.43.37
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 15 Jun 2026 03:43:38 -0700 (PDT)
-Message-ID: <58ab4c3f-887a-459c-9853-766d899ff78c@oss.qualcomm.com>
-Date: Mon, 15 Jun 2026 12:43:36 +0200
+ AFNElJ92pPOAjqvx6a2TRLfp8RYOj3GLTwxTTNbBUpNxiANaDz7W0Kg7/dAP817KC1zLaJzEdij+t+bQXvhB@nongnu.org
+X-Gm-Message-State: AOJu0Yy6HPpH3bcVfxpoju2XcoDP9FdLh7g6985H8eyKdmLVC0eZkBMt
+ FiayjuUiIhvciblBT8iBW+tglcRqgGdSnHH1X5zCA7cYWw8jR7ZgdKxmZ7DbjAUS8gk=
+X-Gm-Gg: Acq92OEMnE6ePwoewJwPkVXk7Vzddb6VQIczb9qaltvxq1YizahV8nH7rvzAxQhkY5L
+ 6p7PgZVHjsCdzkycosPe3pXp3r1+N5qL9C9/7B7hVp909Xk2X0vUVsD+NA+a2oyV4ni4C7Rl06q
+ w7LDriEcxGXVXSoIHx3/tTavqeqHBwweXhzyS9nWw+q8gsLmb0bqHufheDvcG36AEIfN4x7aoTQ
+ CzzahZm+EEZXT1AMeSwtHkuTsUfdvjzFmlfVXhEtKI7DJLgrzs76XZYZTZ8m/vOqz5Agme9jnws
+ tkyi7Lpr0PXxWuTlsqqFjWUnEP/ujaSnsxqHOhkIYg2xuz6Ehj5TXmwi1RPsh/8iTWgc8GbGWcB
+ cMB9Kr3TysKvpVxfOmEXaAJxVzt/W3Yg71da75QiOA/jq6U8QlR4ihyX6fBBiWLH3ulY5IKa39F
+ sx7n9w9G+VEUFVd1ZrUtepVLkwbYecXmel5+WDbiLhBc0tVD7Q1c7uOI0nIyMEjslNxqwuMqn0R
+ ImjfuW/KQrixMb6Yc5QXj4oe2WLfGFbY2OstIlsnSE=
+X-Received: by 2002:a05:6000:400b:b0:460:660a:3647 with SMTP id
+ ffacd0b85a97d-46074a89e32mr14757375f8f.25.1781520631912; 
+ Mon, 15 Jun 2026 03:50:31 -0700 (PDT)
+Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-4606f263945sm33863674f8f.8.2026.06.15.03.50.31
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 15 Jun 2026 03:50:31 -0700 (PDT)
+From: Peter Maydell <peter.maydell@linaro.org>
+To: qemu-arm@nongnu.org,
+	qemu-devel@nongnu.org
+Subject: [PATCH 1/5] arm/gicv5: Add URL to GICv5 specification
+Date: Mon, 15 Jun 2026 11:50:25 +0100
+Message-ID: <20260615105029.2898872-2-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260615105029.2898872-1-peter.maydell@linaro.org>
+References: <20260615105029.2898872-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/s390x/ipl: Remove TCG dependency in handle_diag_308()
-Content-Language: en-US
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- qemu-devel@nongnu.org
-Cc: Cornelia Huck <cohuck@redhat.com>, Eric Farman <farman@linux.ibm.com>,
- Halil Pasic <pasic@linux.ibm.com>, Matthew Rosato <mjrosato@linux.ibm.com>,
- Jared Rossi <jrossi@linux.ibm.com>, qemu-s390x@nongnu.org,
- David Hildenbrand <david@kernel.org>, Ilya Leoshkevich <iii@linux.ibm.com>,
- Jason Herne <jjherne@linux.ibm.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Zhuoying Cai <zycai@linux.ibm.com>
-References: <20260613173350.99843-1-philmd@oss.qualcomm.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <20260613173350.99843-1-philmd@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=V5tNF+ni c=1 sm=1 tr=0 ts=6a2fd75c cx=c_pps
- a=qKBjSQ1v91RyAK45QCPf5w==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
- a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
- a=EUspDBNiAAAA:8 a=yeggUV0Jphf8bAPO87MA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=NFOGd7dJGGMPyQGDc5-O:22
-X-Proofpoint-GUID: riI1SSWtefAWgPiFVPseoGqku4g65JcA
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjE1MDExMyBTYWx0ZWRfX2xRZYzlrIU50
- htlSqJN2fhNIXMiEhn0Th4EBf+pm4X4QpbHlYk6FLI204VpSPIFdo3ENrFIUAdxvf18nJhMmnxE
- cmX/z7V89mVJSBtoemdXFblwkojtfu4=
-X-Proofpoint-ORIG-GUID: riI1SSWtefAWgPiFVPseoGqku4g65JcA
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjE1MDExMyBTYWx0ZWRfX30+SAKMp3gKE
- 2IA+xoRE7GnlLk7EfS1wr+LLNItYzP8RG6SjdBiarW/GKbU7C6ejBR0cyquXfkwuJbUoGbC8QAN
- hd1JW2A52w5jAitQ+Ec2sp5Vzk2E19gRegE5aEh9WDUdyp7yknZmGKwj0GteuRXtCXbJVcv//sV
- dpH/oVX2PCOQI0R0+zaWX5OGcs465utYAxMK7lHop7w9WsKh5zgy51SHCkuNgj9bx4LCRJc6ZNA
- ISdxzTvVnzL6vbD96aGfnQuIkQRISrX4PXBGwnpzJEI/hnikvaHDb8cJ0HWPPTfdMU1JVmW8bNs
- x+jNBPdWccs3CaGQsQo0J7XferTJGKukM6IFiaYQr6YlaGdS0ueIQZc1GGcSZrh53fwsWnOMJ3O
- 5cdedxN6PXxFRwxWoRKHo6p7yKF7McL59OyUdqqiYy3mdjygXAInRkjMSluVkZj4S1rcemtVhoO
- Nxq5rQn3TQE0w8DMyDw==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-15_02,2026-06-15_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 impostorscore=0 phishscore=0 malwarescore=0 priorityscore=1501
- adultscore=0 lowpriorityscore=0 clxscore=1015 bulkscore=0 spamscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606040000 definitions=main-2606150113
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -161,139 +101,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 13/6/26 19:33, Philippe Mathieu-DaudÃ© wrote:
-> Rather than calling a TCG specific method in s390_ipl_reset_request(),
-> have handle_diag_308() return whether a vCPU reset is pending, and use
-> that in the TCG DIAG helper to return to the main loop.
-> 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-> ---
->   target/s390x/s390x-internal.h  |  3 ++-
->   hw/s390x/ipl.c                 |  5 -----
->   target/s390x/diag.c            | 28 ++++++++++++++++++----------
->   target/s390x/tcg/misc_helper.c |  5 ++++-
->   4 files changed, 24 insertions(+), 17 deletions(-)
+The GICv5 specification has now been assigned its final document ID
+for a rev A.a spec version.  This seems like a good point to add a
+pointer to the spec to the main source files.
 
-
-> diff --git a/target/s390x/diag.c b/target/s390x/diag.c
-> index 01cc802eaed..714ff88e0d0 100644
-> --- a/target/s390x/diag.c
-> +++ b/target/s390x/diag.c
-> @@ -95,44 +95,49 @@ static void s390_ipl_write(CPUS390XState *env, uint64_t addr,
->       }
->   }
->   
-> -void handle_diag_308(CPUS390XState *env, uint64_t r1, uint64_t r3, uintptr_t ra)
-> +bool handle_diag_308(CPUS390XState *env, uint64_t r1, uint64_t r3, uintptr_t ra)
->   {
->       bool valid;
->       CPUState *cs = env_cpu(env);
->       uint64_t addr =  env->regs[r1];
->       uint64_t subcode = env->regs[r3];
->       IplParameterBlock *iplb;
-> +    bool reset_requested;
->   
->       if (env->psw.mask & PSW_MASK_PSTATE) {
->           s390_program_interrupt(env, PGM_PRIVILEGED, ra);
-> -        return;
-> +        return false;
->       }
->   
->       if (subcode & ~0x0ffffULL) {
->           s390_program_interrupt(env, PGM_SPECIFICATION, ra);
-> -        return;
-> +        return false;
->       }
->   
->       if (subcode >= DIAG308_PV_SET && !s390_has_feat(S390_FEAT_UNPACK)) {
->           s390_program_interrupt(env, PGM_SPECIFICATION, ra);
-> -        return;
-> +        return false;
->       }
->   
-> +    reset_requested = false;
->       switch (subcode) {
->       case DIAG308_RESET_MOD_CLR:
->           s390_ipl_reset_request(cs, S390_RESET_MODIFIED_CLEAR);
-> +        reset_requested = true;
->           break;
->       case DIAG308_RESET_LOAD_NORM:
->           s390_ipl_reset_request(cs, S390_RESET_LOAD_NORMAL);
-> +        reset_requested = true;
->           break;
->       case DIAG308_LOAD_CLEAR:
->           /* Well we still lack the clearing bit... */
->           s390_ipl_reset_request(cs, S390_RESET_REIPL);
-> +        reset_requested = true;
->           break;
->       case DIAG308_SET:
->       case DIAG308_PV_SET:
->           if (diag308_parm_check(env, r1, addr, ra, false)) {
-> -            return;
-> +            break;
->           }
->           iplb = g_new0(IplParameterBlock, 1);
->           s390_ipl_read(env, addr, iplb, sizeof(iplb->len));
-> @@ -159,11 +164,11 @@ void handle_diag_308(CPUS390XState *env, uint64_t r1, uint64_t r3, uintptr_t ra)
->           env->regs[r1 + 1] = DIAG_308_RC_OK;
->   out:
->           g_free(iplb);
-> -        return;
-> +        break;
->       case DIAG308_STORE:
->       case DIAG308_PV_STORE:
->           if (diag308_parm_check(env, r1, addr, ra, true)) {
-> -            return;
-> +            break;
->           }
->           if (subcode == DIAG308_PV_STORE) {
->               iplb = s390_ipl_get_iplb_pv();
-> @@ -172,17 +177,17 @@ out:
->           }
->           if (!iplb) {
->               env->regs[r1 + 1] = DIAG_308_RC_NO_CONF;
-> -            return;
-> +            break;
->           }
->   
->           s390_ipl_write(env, addr, iplb, be32_to_cpu(iplb->len));
->           env->regs[r1 + 1] = DIAG_308_RC_OK;
-> -        return;
-> +        break;
->       case DIAG308_PV_START:
->           iplb = s390_ipl_get_iplb_pv();
->           if (!iplb) {
->               env->regs[r1 + 1] = DIAG_308_RC_NO_PV_CONF;
-> -            return;
-> +            break;
->           }
->   
->           if (kvm_enabled() && kvm_s390_get_hpage_1m()) {
-> @@ -193,9 +198,12 @@ out:
-
-Oops, missing:
-
--- >8 --
---- a/target/s390x/diag.c
-+++ b/target/s390x/diag.c
-@@ -196,3 +196,3 @@ out:
-              env->regs[r1 + 1] = DIAG_308_RC_INVAL_FOR_PV;
--            return;
-+            return false;
-          }
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
+ hw/intc/arm_gicv5.c          | 5 +++++
+ target/arm/tcg/gicv5-cpuif.c | 5 +++++
+ 2 files changed, 10 insertions(+)
 
->           }
->   
->           s390_ipl_reset_request(cs, S390_RESET_PV);
-> +        reset_requested = true;
->           break;
->       default:
->           s390_program_interrupt(env, PGM_SPECIFICATION, ra);
->           break;
->       }
-> +
-> +    return reset_requested;
->   }
+diff --git a/hw/intc/arm_gicv5.c b/hw/intc/arm_gicv5.c
+index 6b1dd04991..0fa3d6b601 100644
+--- a/hw/intc/arm_gicv5.c
++++ b/hw/intc/arm_gicv5.c
+@@ -4,6 +4,11 @@
+  * Copyright (c) 2025 Linaro Limited
+  *
+  * SPDX-License-Identifier: GPL-2.0-or-later
++ *
++ * The IRS is defined in IHI 111701
++ * (ARM Generic Interrupt Controller Architecture Specification,
++ * GIC architecture version 5):
++ * https://developer.arm.com/documentation/111701/latest
+  */
+ 
+ #include "qemu/osdep.h"
+diff --git a/target/arm/tcg/gicv5-cpuif.c b/target/arm/tcg/gicv5-cpuif.c
+index dd2f696511..891cb2d3b7 100644
+--- a/target/arm/tcg/gicv5-cpuif.c
++++ b/target/arm/tcg/gicv5-cpuif.c
+@@ -4,6 +4,11 @@
+  * Copyright (c) 2025 Linaro Limited
+  *
+  * SPDX-License-Identifier: GPL-2.0-or-later
++ *
++ * The cpu interface is defined in IHI 111701
++ * (ARM Generic Interrupt Controller Architecture Specification,
++ * GIC architecture version 5):
++ * https://developer.arm.com/documentation/111701/latest
+  */
+ 
+ #include "qemu/osdep.h"
+-- 
+2.43.0
 
 
