@@ -4,57 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14941CD98DA
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jun 2026 12:05:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AAFB3CD98C7
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jun 2026 12:16:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZ63a-0005EZ-2P; Mon, 15 Jun 2026 08:04:46 -0400
+	id 1wZ6EJ-0008M8-Q2; Mon, 15 Jun 2026 08:15:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cui.tao@linux.dev>) id 1wZ33u-0006n5-7Z
- for qemu-devel@nongnu.org; Mon, 15 Jun 2026 04:52:54 -0400
-Received: from out-181.mta0.migadu.com ([91.218.175.181])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cui.tao@linux.dev>) id 1wZ33s-0005Rd-AJ
- for qemu-devel@nongnu.org; Mon, 15 Jun 2026 04:52:53 -0400
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and
- include these headers.
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
- t=1781513569;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=zmGJOFjPLK/OVWREwAr5PuAPfPwrzXxVlFOvZAt5ZpA=;
- b=hBw5UvjIZGbg0tBdizXfLTe82aPBJscjJqgC8ZW/lBL6mPgp32PXsYEgwHRmE27KHcdbtv
- LjczFf+mNyIOWf4cFvsiFKUSb1hn9fqsD3o/p03Mqwdbv97HJSTIWEjezUEWawpTCfTFa1
- MyajRfmFF6yZPPHO813nzVuiLD9a71E=
-From: Tao Cui <cui.tao@linux.dev>
-To: qemu-devel@nongnu.org
-Cc: Song Gao <gaosong@loongson.cn>, Paolo Bonzini <pbonzini@redhat.com>,
- "Michael S . Tsirkin" <mst@redhat.com>, Cornelia Huck <cohuck@redhat.com>,
- kvm@vger.kernel.org, Tao Cui <cuitao@kylinos.cn>
-Subject: [PATCH 2/2] target/loongarch: Enable PV TLB flush advertisement to
- the guest
-Date: Mon, 15 Jun 2026 16:52:14 +0800
-Message-ID: <20260615085214.44526-3-cui.tao@linux.dev>
-In-Reply-To: <20260615085214.44526-1-cui.tao@linux.dev>
-References: <20260615085214.44526-1-cui.tao@linux.dev>
+ (Exim 4.90_1) (envelope-from <matyas.bobek@gmail.com>)
+ id 1wZ6EI-0008M0-5y
+ for qemu-devel@nongnu.org; Mon, 15 Jun 2026 08:15:50 -0400
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <matyas.bobek@gmail.com>)
+ id 1wZ6EG-0003Sy-BF
+ for qemu-devel@nongnu.org; Mon, 15 Jun 2026 08:15:49 -0400
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-4921e4dd62dso17533685e9.0
+ for <qemu-devel@nongnu.org>; Mon, 15 Jun 2026 05:15:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1781525746; x=1782130546; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=avWpqqLXhoPVsAmO/pwtPf7BlT9OOPa6h8N6xRx0cFs=;
+ b=eTdB+xc6xTng3qW+oRGVm+bNvzG/iNNOzKRtete8WaK6ODc3K623veQWDDQtmCNQQk
+ FEyn29kY3OI4xB2a3nZUNFAClGmA8IEVmBj9G0VPkAT5/oD98uLFs0INul5mcYpk56H4
+ /UyV7eAUhdFSPV4psuB3sTQGUMBPSCgYMTaHwF6fNRLSjsQFDDIc6F35qEUDahNYw6dt
+ gqb2swFu4n0C9XMs1qE0cEK5JWcunMDmalUuVV/HgOVHsa20hFWH4ngld106RDZJXG1J
+ 1Jdw4vuCGJekjabvN0Fx3v9qZqq3//JCuEC7r96a2bz6IkQ0ROJASYofiXTcm2aZXQbh
+ TsSg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1781525746; x=1782130546;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=avWpqqLXhoPVsAmO/pwtPf7BlT9OOPa6h8N6xRx0cFs=;
+ b=XG2n80qhUuxvarodeOvF8G4TJcsU3aFGh6nk7q3Eg7hEg5/Ty2eo4hWklqI7jfdxe1
+ UPAkJLJ92QqSclOvCySrk0/aR8TVtu5+PIvKPRNarLNNiOdB+yk60fystr9xVEDvfeeX
+ 6bzH3waAkxqJ7zKKmG+19nuRCbVRcKF+qq1132iAoLmqVUR8jSrqlge0BdgQAhSIzFS+
+ 9xYHkDujG34imuHmdmh9KwtYHSZJVzQjUv/ExWEEuq+QXcvgKoMlzQmFnCRZ7VTq6jlT
+ 016hsKBbHwxVHATpXIH2wAx683hoBLLefTcIjPQXnN4G3vfTzI8jc4XAxq/n8iWeesWf
+ t06Q==
+X-Gm-Message-State: AOJu0YweFX9Ass6WtzOlWpeMyopAxzmqEMJtj0KkzoJ66pTG+arHFn3w
+ PXIqvaXrVcerllLkiOx4vmJmwXv6pfX+iRBW5j6sY4PlmmIpxSHeoAwX7Emtk3bu
+X-Gm-Gg: Acq92OGKaBt/Tw4Pmajqvo8PPbk/pVnBl/uPquiyXRGlGhgntZDAHobWhwfhDfMppz/
+ Q3r82oNeLGEMhZ9ZnfjCDL+AoCjqfh7yKHwxxs5ZSyO4T9M9LYZStYAcAwWmV+NLd/cL2J6EdO3
+ h3FxYMyTwA+aHNloc4yP6tt6r+bCE2Ul1R/siURODNldUZZT6yNM/M+QlvPhaUiXeQkEckosVnA
+ P6UUPOGzDAcSxzjtgQtSWaC7rTY8O/NDZSVCy+ygepMTQhZ7OSjq3VeEQRQhwFCfv+rQisb9Rz4
+ gl4b6XcZSsAkqLd8FyYZofPOEEEKQ5wD/QkrDQ2p1LU+E47bREMyYeGULoLKSpPLX9Vvym0DIaS
+ x2t0RppjUMX8Zek1XmYulEl9cJjIOy4hZ8vNxI97Kh/LW093woGWXCnQsRhCyJ6RwiPKKICrCpR
+ MPeHacJ+pDiinRKRBcKt4jTfN6dp8vTuOQxl04FJVjx9rJ2QkFebL6r5IEVRKI+jxt
+X-Received: by 2002:a05:600c:a203:b0:490:af63:2cb1 with SMTP id
+ 5b1f17b1804b1-490ec49a025mr90442705e9.7.1781525741870; 
+ Mon, 15 Jun 2026 05:15:41 -0700 (PDT)
+Received: from acidburn.pod.cvut.cz (acidburn.pod.cvut.cz. [147.32.90.2])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-490ea4a128csm338491345e9.0.2026.06.15.05.15.40
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 15 Jun 2026 05:15:41 -0700 (PDT)
+From: =?UTF-8?q?Maty=C3=A1=C5=A1=20Bobek?= <matyas.bobek@gmail.com>
+To: qemu-devel@nongnu.org, Matyas Bobek <bobekmat@fel.cvut.cz>,
+ Pavel Pisa <pisa@fel.cvut.cz>, Bernhard Beschow <shentey@gmail.com>
+Cc: qemu-arm@nongnu.org, Marc Kleine-Budde <mkl@pengutronix.de>,
+ Oliver Hartkopp <socketcan@hartkopp.net>,
+ Nikita Ostrenkov <n.ostrenkov@gmail.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Andrey Volkov <andrey@volkov.fr>,
+ =?UTF-8?q?Maty=C3=A1=C5=A1=20Bobek?= <matyas.bobek@gmail.com>
+Subject: [PATCH v5 0/7] hw/arm/sabrelite: Add FlexCAN support
+Date: Mon, 15 Jun 2026 14:15:00 +0200
+Message-ID: <cover.1781111270.git.matyas.bobek@gmail.com>
+X-Mailer: git-send-email 2.54.0
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Migadu-Flow: FLOW_OUT
-Received-SPF: pass client-ip=91.218.175.181; envelope-from=cui.tao@linux.dev;
- helo=out-181.mta0.migadu.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=matyas.bobek@gmail.com; helo=mail-wm1-x32a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Mon, 15 Jun 2026 08:04:32 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -69,133 +102,94 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Tao Cui <cuitao@kylinos.cn>
+This series adds emulation of the FlexCAN CAN controller, version 2,
+found in NXP i.MX6 series SoCs. The controller is integrated into
+fsl-imx6 and the Sabrelite ARM board.
 
-Probe the KVM_LOONGARCH_VM_FEAT_PV_TLB_FLUSH VM-level capability and, when
-the host supports it, advertise KVM_FEATURE_PV_TLB_FLUSH to the guest by
-including it in the CPUCFG_KVM_FEATURE feature mask handed to the kernel.
+The chip has two FlexCAN controllers, but the Linux Sabrelite
+device tree enables only one by default. Linux kernel with both
+controllers enabled has been tested to work properly (using a custom
+device tree).
+See docs/system/devices/can.rst for an example of QEMU command line
+invocation.
 
-This mirrors the existing PV IPI / steal-time enablement.  A new
-kvm-pv-tlb-flush CPU property (on/off/auto, default auto) lets users
-disable the feature, e.g. when migrating to a host that lacks it.
+More information about the implementation can be found in my bachelor
+thesis [1].
 
-The feature is only advertised when the host actually supports it, so a
-guest never observes KVM_FEATURE_PV_TLB_FLUSH on a host that cannot
-service PV TLB flush requests (which would otherwise lead to stale TLBs).
+Changes from v4:
+- renamed can in fsl-imx6 to flexcan
+- corrected attribution for definitions borrowed from the Linux kernel
+- rebased onto latest master
+- Link to v4: https://lore.kernel.org/qemu-devel/cover.1779986496.git.matyas.bobek@gmail.com/
 
-Signed-off-by: Tao Cui <cuitao@kylinos.cn>
----
- target/loongarch/cpu.h                |  2 ++
- target/loongarch/kvm/kvm.c            | 38 +++++++++++++++++++++++++++
- target/loongarch/loongarch-qmp-cmds.c |  4 +--
- 3 files changed, 42 insertions(+), 2 deletions(-)
+Changes from v3 to v4:
+- corrected attribution for definitions borrowed from the Linux kernel
+- rebased onto latest master
+- Link to v3: https://lore.kernel.org/qemu-devel/cover.1777571962.git.matyas.bobek@gmail.com/
 
-diff --git a/target/loongarch/cpu.h b/target/loongarch/cpu.h
-index ad30c73167..94e8f176f4 100644
---- a/target/loongarch/cpu.h
-+++ b/target/loongarch/cpu.h
-@@ -300,6 +300,7 @@ enum loongarch_features {
-     LOONGARCH_FEATURE_PMU,
-     LOONGARCH_FEATURE_PV_IPI,
-     LOONGARCH_FEATURE_STEALTIME,
-+    LOONGARCH_FEATURE_PV_TLB_FLUSH,
-     LOONGARCH_FEATURE_PTW,
- };
- 
-@@ -447,6 +448,7 @@ struct ArchCPU {
-     OnOffAuto msgint;
-     OnOffAuto kvm_pv_ipi;
-     OnOffAuto kvm_steal_time;
-+    OnOffAuto kvm_pv_tlb_flush;
-     int32_t socket_id;  /* socket-id of this CPU */
-     int32_t core_id;    /* core-id of this CPU */
-     int32_t thread_id;  /* thread-id of this CPU */
-diff --git a/target/loongarch/kvm/kvm.c b/target/loongarch/kvm/kvm.c
-index d6539c12ac..f91c388bf3 100644
---- a/target/loongarch/kvm/kvm.c
-+++ b/target/loongarch/kvm/kvm.c
-@@ -981,6 +981,12 @@ static bool kvm_feature_supported(CPUState *cs, enum loongarch_features feature)
-         ret = kvm_vm_ioctl(kvm_state, KVM_HAS_DEVICE_ATTR, &attr);
-         return (ret == 0);
- 
-+    case LOONGARCH_FEATURE_PV_TLB_FLUSH:
-+        attr.group = KVM_LOONGARCH_VM_FEAT_CTRL;
-+        attr.attr = KVM_LOONGARCH_VM_FEAT_PV_TLB_FLUSH;
-+        ret = kvm_vm_ioctl(kvm_state, KVM_HAS_DEVICE_ATTR, &attr);
-+        return (ret == 0);
-+
-     case LOONGARCH_FEATURE_PTW:
-         attr.group = KVM_LOONGARCH_VM_FEAT_CTRL;
-         attr.attr = KVM_LOONGARCH_VM_FEAT_PTW;
-@@ -1150,6 +1156,20 @@ static int kvm_cpu_check_pv_features(CPUState *cs, Error **errp)
-         env->pv_features |= BIT(KVM_FEATURE_STEAL_TIME);
-     }
- 
-+    kvm_supported = kvm_feature_supported(cs, LOONGARCH_FEATURE_PV_TLB_FLUSH);
-+    if (cpu->kvm_pv_tlb_flush == ON_OFF_AUTO_ON) {
-+        if (!kvm_supported) {
-+            error_setg(errp, "'pv_tlb_flush' not supported by KVM host");
-+            return -ENOTSUP;
-+        }
-+    } else if (cpu->kvm_pv_tlb_flush != ON_OFF_AUTO_AUTO) {
-+        kvm_supported = false;
-+    }
-+
-+    if (kvm_supported) {
-+        env->pv_features |= BIT(KVM_FEATURE_PV_TLB_FLUSH);
-+    }
-+
-     if (object_dynamic_cast(OBJECT(ms), TYPE_LOONGARCH_VIRT_MACHINE)) {
-         LoongArchVirtMachineState *lvms = LOONGARCH_VIRT_MACHINE(ms);
- 
-@@ -1266,6 +1286,18 @@ static void kvm_steal_time_set(Object *obj, bool value, Error **errp)
-     cpu->kvm_steal_time = value ? ON_OFF_AUTO_ON : ON_OFF_AUTO_OFF;
- }
- 
-+static bool kvm_pv_tlb_flush_get(Object *obj, Error **errp)
-+{
-+    return LOONGARCH_CPU(obj)->kvm_pv_tlb_flush != ON_OFF_AUTO_OFF;
-+}
-+
-+static void kvm_pv_tlb_flush_set(Object *obj, bool value, Error **errp)
-+{
-+    LoongArchCPU *cpu = LOONGARCH_CPU(obj);
-+
-+    cpu->kvm_pv_tlb_flush = value ? ON_OFF_AUTO_ON : ON_OFF_AUTO_OFF;
-+}
-+
- void kvm_loongarch_cpu_post_init(LoongArchCPU *cpu)
- {
-     cpu->lbt = ON_OFF_AUTO_AUTO;
-@@ -1291,6 +1323,12 @@ void kvm_loongarch_cpu_post_init(LoongArchCPU *cpu)
-                              kvm_steal_time_set);
-     object_property_set_description(OBJECT(cpu), "kvm-steal-time",
-                                     "Set off to disable KVM steal time.");
-+
-+    cpu->kvm_pv_tlb_flush = ON_OFF_AUTO_AUTO;
-+    object_property_add_bool(OBJECT(cpu), "kvm-pv-tlb-flush",
-+                             kvm_pv_tlb_flush_get, kvm_pv_tlb_flush_set);
-+    object_property_set_description(OBJECT(cpu), "kvm-pv-tlb-flush",
-+                                    "Set off to disable KVM PV TLB flush.");
- }
- 
- int kvm_arch_destroy_vcpu(CPUState *cs)
-diff --git a/target/loongarch/loongarch-qmp-cmds.c b/target/loongarch/loongarch-qmp-cmds.c
-index f053f22bb8..5f372d85a9 100644
---- a/target/loongarch/loongarch-qmp-cmds.c
-+++ b/target/loongarch/loongarch-qmp-cmds.c
-@@ -41,8 +41,8 @@ CpuDefinitionInfoList *qmp_query_cpu_definitions(Error **errp)
- }
- 
- static const char *cpu_model_advertised_features[] = {
--    "lsx", "lasx", "lbt", "pmu", "kvm-pv-ipi", "kvm-steal-time", "msgint",
--    "ptw", NULL
-+    "lsx", "lasx", "lbt", "pmu", "kvm-pv-ipi", "kvm-steal-time",
-+    "kvm-pv-tlb-flush", "msgint", "ptw", NULL
- };
- 
- CpuModelExpansionInfo *qmp_query_cpu_model_expansion(CpuModelExpansionType type,
+Changes from v2 to v3:
+- moved variable declarations to the top-of-the-block
+- cleanup
+- removed redundant license boilerplate
+- rebased onto latest master
+- Link to v2: https://lore.kernel.org/qemu-devel/cover.1773866323.git.matyas.bobek@gmail.com/
+
+Changes from v1 to v2:
+- removed DPRINTF (turned into traces or guest errors)
+- removed gotos and unnecessary continues
+- register memory region shortened to actual length w/o padding
+- make flexcan_* fns private
+- used DEVICE(s)->canonical_path instead of allocating new strings
+- changed DEVICE_NATIVE_ENDIAN to DEVICE_LITTLE_ENDIAN
+- removed ugly USE macro
+- used enums instead of define sequences in flexcan.c
+- fixed FlexCAN KConfig conf (fixes build on non-arm-softmmu)
+- fixed style and other issues from Bernhard's review
+- better wording in docs
+- rebased onto latest master
+- Link to v1: https://lore.kernel.org/qemu-devel/cover.1765826753.git.matyas.bobek@gmail.com
+
+Thanks Bernhard Beschow for the review and his patience.
+I borrowed some fixes from his flexcan branch at [2].
+
+[1] http://dspace.cvut.cz/bitstream/handle/10467/122654/F3-BP-2025-Bobek-Matyas-BP_Bobek_FlexCAN_final_4.pdf
+[2] https://github.com/shentok/qemu/tree/flexcan
+
+Matyáš Bobek (7):
+  hw/arm/sabrelite: Open code DEFINE_MACHINE_ARM
+  hw/arm/sabrelite: Introduce class SabreliteMachineState
+  hw/misc/imx6_ccm: Add PLL3 and CAN clock
+  hw/net/can/flexcan: NXP FlexCAN core emulation
+  hw/arm: Plug FlexCAN into FSL_IMX6 and Sabrelite
+  tests: Add qtests for FlexCAN
+  docs/arm/sabrelite: Mention FlexCAN support
+
+ MAINTAINERS                   |    9 +
+ docs/system/arm/sabrelite.rst |    1 +
+ docs/system/devices/can.rst   |   24 +
+ hw/arm/Kconfig                |    1 +
+ hw/arm/fsl-imx6.c             |   29 +
+ hw/arm/sabrelite.c            |   68 +-
+ hw/misc/imx6_ccm.c            |   24 +
+ hw/misc/trace-events          |    2 +
+ hw/net/Kconfig                |    5 +
+ hw/net/can/flexcan.c          | 1395 +++++++++++++++++++++++++++++++++
+ hw/net/can/flexcan_regs.h     |  197 +++++
+ hw/net/can/meson.build        |    1 +
+ hw/net/can/trace-events       |   18 +
+ include/hw/arm/fsl-imx6.h     |    6 +
+ include/hw/misc/imx6_ccm.h    |    4 +
+ include/hw/misc/imx_ccm.h     |    1 +
+ include/hw/net/flexcan.h      |  145 ++++
+ tests/qtest/flexcan-test.c    |  421 ++++++++++
+ tests/qtest/meson.build       |    1 +
+ 19 files changed, 2342 insertions(+), 10 deletions(-)
+ create mode 100644 hw/net/can/flexcan.c
+ create mode 100644 hw/net/can/flexcan_regs.h
+ create mode 100644 include/hw/net/flexcan.h
+ create mode 100644 tests/qtest/flexcan-test.c
+
 -- 
-2.43.0
+2.54.0
 
 
