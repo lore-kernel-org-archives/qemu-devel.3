@@ -4,44 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD5B7CD98CE
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 903A3CD98DE
 	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jun 2026 22:17:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZFcF-00021E-2A; Mon, 15 Jun 2026 18:17:11 -0400
+	id 1wZFc9-0001yA-LR; Mon, 15 Jun 2026 18:17:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1wZFcC-000208-TR
- for qemu-devel@nongnu.org; Mon, 15 Jun 2026 18:17:09 -0400
-Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
+ id 1wZFc6-0001x3-IM
+ for qemu-devel@nongnu.org; Mon, 15 Jun 2026 18:17:02 -0400
+Received: from zero.eik.bme.hu ([152.66.115.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1wZFcB-0007qe-BV
- for qemu-devel@nongnu.org; Mon, 15 Jun 2026 18:17:08 -0400
+ id 1wZFc4-0007pR-PC
+ for qemu-devel@nongnu.org; Mon, 15 Jun 2026 18:17:02 -0400
 Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 520635969B7;
- Tue, 16 Jun 2026 00:17:04 +0200 (CEST)
+ by zero.eik.bme.hu (Postfix) with ESMTP id F395C596949;
+ Tue, 16 Jun 2026 00:16:57 +0200 (CEST)
 X-Virus-Scanned: amavis at eik.bme.hu
 Received: from zero.eik.bme.hu ([127.0.0.1])
  by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id 96kzBuT4df4d; Tue, 16 Jun 2026 00:17:02 +0200 (CEST)
+ id Ei-c8EfLHvjh; Tue, 16 Jun 2026 00:16:55 +0200 (CEST)
 Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 48DC85969B5; Tue, 16 Jun 2026 00:17:02 +0200 (CEST)
-Message-ID: <af586779a75b1a25191f5c471130f66a5696e341.1781561370.git.balaton@eik.bme.hu>
-In-Reply-To: <cover.1781561370.git.balaton@eik.bme.hu>
-References: <cover.1781561370.git.balaton@eik.bme.hu>
+ id EA9D45968DE; Tue, 16 Jun 2026 00:16:55 +0200 (CEST)
+Message-ID: <cover.1781561370.git.balaton@eik.bme.hu>
 From: BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PATCH v6 6/7] hw/pci-host/articia: Add variable for common type cast
+Subject: [PATCH v6 0/7] Implement memory_region_new_* functions
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
  Paolo Bonzini <pbonzini@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>, berrange@redhat.com,
  philmd@mailo.com
-Date: Tue, 16 Jun 2026 00:17:02 +0200 (CEST)
-Received-SPF: pass client-ip=2001:738:2001:2001::2001;
- envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
+Date: Tue, 16 Jun 2026 00:16:55 +0200 (CEST)
+Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
+ helo=zero.eik.bme.hu
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -62,51 +63,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We need the device casted to OBJECT often enough in realize to store
-it in a local variable that also makes function calls more readable.
+Allow creating memory regions that are managed by QOM and freed with
+their owner as it is already documented and implemented but there was
+no way to use it.
 
-Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
----
- hw/pci-host/articia.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+v6:
+- rebase on master
+- do not export memory_region_set_ops in patch 1 (will try different
+way in ati-vga for this)
 
-diff --git a/hw/pci-host/articia.c b/hw/pci-host/articia.c
-index 203e0646df..d7676a166f 100644
---- a/hw/pci-host/articia.c
-+++ b/hw/pci-host/articia.c
-@@ -174,24 +174,24 @@ static void articia_realize(DeviceState *dev, Error **errp)
- {
-     ArticiaState *s = ARTICIA(dev);
-     PCIHostState *h = PCI_HOST_BRIDGE(dev);
-+    Object *o = OBJECT(dev);
-     MemoryRegion *mr;
-     PCIDevice *pdev;
- 
-     bitbang_i2c_init(&s->smbus, i2c_init_bus(dev, "smbus"));
--    memory_region_init_io(&s->gpio_reg, OBJECT(s), &articia_gpio_ops, s,
-+    memory_region_init_io(&s->gpio_reg, o, &articia_gpio_ops, s,
-                           TYPE_ARTICIA, 4);
- 
--    memory_region_init(&s->mem, OBJECT(dev), "pci-mem", UINT64_MAX);
--    memory_region_init(&s->io, OBJECT(dev), "pci-io", 0xc00000);
--    memory_region_init_io(&s->reg, OBJECT(s), &articia_reg_ops, s,
-+    memory_region_init(&s->mem, o, "pci-mem", UINT64_MAX);
-+    memory_region_init(&s->io, o, "pci-io", 0xc00000);
-+    memory_region_init_io(&s->reg, o, &articia_reg_ops, s,
-                           TYPE_ARTICIA, 0x1000000);
-     memory_region_add_subregion_overlap(&s->reg, 0, &s->io, 1);
- 
--    mr = memory_region_new_alias(OBJECT(dev), "pci-mem-low", &s->mem, 0,
--                                 PCI_LOW_SIZE);
-+    mr = memory_region_new_alias(o, "pci-mem-low", &s->mem, 0, PCI_LOW_SIZE);
-     memory_region_add_subregion(get_system_memory(), PCI_LOW_ADDR, mr);
--    mr = memory_region_new_alias(OBJECT(dev), "pci-mem-high", &s->mem,
--                                 PCI_HIGH_ADDR, PCI_HIGH_SIZE);
-+    mr = memory_region_new_alias(o, "pci-mem-high", &s->mem, PCI_HIGH_ADDR,
-+                                 PCI_HIGH_SIZE);
-     memory_region_add_subregion(get_system_memory(), PCI_HIGH_ADDR, mr);
- 
-     /* devfn_min is 8 that matches first PCI slot in AmigaOne */
+v5:
+- rebase on master
+- add patch to export memory_region_set_ops (needed for ati-vga endian
+switch)
+
+v4:
+- rebase on latest version of clean up series:
+Based-on: cover.1772924151.git.balaton@eik.bme.hu
+
+v3:
+- based on split off clean up series
+- convert xtfpga from nomigrate as this has no migration compatibility
+issue
+
+v2:
+- rebase on master
+- update documentation
+- use these function to fix some leaks (there may be more, e.g. in
+hw/pci-host/bonito but I leave that for later and/or others)
+
+BALATON Zoltan (7):
+  Move assert to memory_region_set_ops()
+  memory: Add memory_region_new* functions
+  memory: Update documentation for memory_region_new*()
+  hw/ide/sii3112: Use memory_region_new to avoid leaking regions
+  hw/pci-host/articia: Map PCI memory windows in realize
+  hw/pci-host/articia: Add variable for common type cast
+  hw/xtensa/xtfpga: Fix leaking memory region
+
+ docs/devel/memory.rst   |  21 ++---
+ hw/ide/sii3112.c        |  30 +++----
+ hw/pci-host/articia.c   |  22 +++--
+ hw/ppc/amigaone.c       |  28 ++-----
+ hw/ppc/pegasos.c        |  13 ---
+ hw/xtensa/xtfpga.c      |   5 +-
+ include/system/memory.h | 179 +++++++++++++++++++++++++++++++++++++++
+ system/memory.c         | 181 +++++++++++++++++++++++++++++++++++++++-
+ 8 files changed, 406 insertions(+), 73 deletions(-)
+
 -- 
 2.41.3
 
