@@ -4,57 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9722BCD98CE
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jun 2026 20:42:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44C2FCD98E2
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jun 2026 20:42:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZE6I-0001qC-9Y; Mon, 15 Jun 2026 16:40:06 -0400
+	id 1wZE81-0007R5-VL; Mon, 15 Jun 2026 16:41:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wZE6G-0001jA-VD
- for qemu-devel@nongnu.org; Mon, 15 Jun 2026 16:40:05 -0400
+ id 1wZE80-0007Gn-G7
+ for qemu-devel@nongnu.org; Mon, 15 Jun 2026 16:41:52 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wZE6F-0002hp-6w
- for qemu-devel@nongnu.org; Mon, 15 Jun 2026 16:40:04 -0400
+ id 1wZE7z-0003DK-1o
+ for qemu-devel@nongnu.org; Mon, 15 Jun 2026 16:41:52 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781556002;
+ s=mimecast20190719; t=1781556110;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=8Frjwggwt5fYfOz4q7epWBVwQpwOtLLEeEkSKyTYSEg=;
- b=ehKwSW3qD8NpvVNfN4JKver30ZHVFjtP8Nz7Ns0s6InRLEFAPleZMe6vyrOJWndfu+iXRU
- 430dGKDVPEATl8mHz1kpUNBv3xJtTXAPBErGLRBhA1PTIO9SAfMyt0ZnAX80bDHZuoGQJW
- azZs6/iH26qhhTWxmHt6uLSuUgjdwkc=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=JDnRIYDmCQzkNAdvHZNUWhsspIQuDKZRpI03XIdLc70=;
+ b=YDRLE/ooXUFkZhMZNfUQ35CUvsC/rbN05BLs3kvS/qhcmxRco6Larz0fly15MqpFZu8RDj
+ BDSK21jK3JXectk8oXcTvmv+DUL9L7W2Mpc7khVdGyXzjcQa3N0f7mAJksG8ylzYnv+jlb
+ TcMBHNDZBcgNUh+vuQ7ULfvCCk4iNKk=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-166-1SEF028jOFCHg0rgSW_UPw-1; Mon,
- 15 Jun 2026 16:40:01 -0400
-X-MC-Unique: 1SEF028jOFCHg0rgSW_UPw-1
-X-Mimecast-MFC-AGG-ID: 1SEF028jOFCHg0rgSW_UPw_1781556000
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-572-WicGFW68NG-3WqQVDSEEwQ-1; Mon,
+ 15 Jun 2026 16:41:47 -0400
+X-MC-Unique: WicGFW68NG-3WqQVDSEEwQ-1
+X-Mimecast-MFC-AGG-ID: WicGFW68NG-3WqQVDSEEwQ_1781556106
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 0D6CD19560BE; Mon, 15 Jun 2026 20:40:00 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 52A4218009E6; Mon, 15 Jun 2026 20:41:46 +0000 (UTC)
 Received: from localhost (unknown [10.44.22.9])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 0620F1800361; Mon, 15 Jun 2026 20:39:58 +0000 (UTC)
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 21B5B3008B37; Mon, 15 Jun 2026 20:41:44 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Tue, 16 Jun 2026 00:37:52 +0400
-Subject: [PATCH v2 26/53] accel/kvm: convert OnOffSplit property to
- QAPI-aware registration
+Date: Tue, 16 Jun 2026 00:38:12 +0400
+Subject: [PATCH v2 46/53] target/riscv: fix incorrect QAPI types and u8 casting
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260616-qom-qapi-v2-26-cc9396b9c18c@redhat.com>
+Message-Id: <20260616-qom-qapi-v2-46-cc9396b9c18c@redhat.com>
 References: <20260616-qom-qapi-v2-0-cc9396b9c18c@redhat.com>
 In-Reply-To: <20260616-qom-qapi-v2-0-cc9396b9c18c@redhat.com>
 To: qemu-devel@nongnu.org
@@ -65,35 +64,34 @@ Cc: Markus Armbruster <armbru@redhat.com>,
  Michael Roth <michael.roth@amd.com>, 
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2731;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1618;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=/3IO55xELM6+dKrmQ2yiMLnkAVUOYThh9YVCdhUxcvA=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqMGKP/qiCQpT4lFkDrqgqcQx9qpNoySiT6z6LK
- YFayqjS8VWJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCajBijwAKCRDa6OEJdZac
- 5fJID/9MI4dFxl/Mf/gSlkhuuhYLjZBziDfXkEyA92+amcLFmLMJjTvAgJxFyaJMoFNLIGhBPYL
- VdJBxPvme8xWQtRhReIUZPBIUMh9yVZtCPgBr8CdSS1pF621nTVlxsvOecY8xph0CZCeLhZK0GZ
- A12mpZJWeZN8pYM5DDdBjyPhTBBs7oxhRboPqENUJnGjJJQwABo67SOPJfNuvAHC4TAPggBONlu
- oCFlO+ccD+Fy4qBYEW34eh7OPTu4TERwxXx0oHWba32nuLj/Q6RCuLcGfEnmetlcsBJogsS+tqV
- Ho6ffBKj5NGzYlChXeE0itf5Jm16PeLUhv+u6HDGyNXi6YcmCsYmx9XXRs7uESO0cERa1uKre5N
- COq+PTLZAuvqU1LZt2OqY5X/8LRnWSjuBZ+x/Bq01pE5R+KmsiAJFG7ambr+Q/RR3hQmitMiUBA
- 4auFDkVQtKe8xOEGb/9DAQLCMmXsxUk7efGCRj2hPuUUhrshqQskTJz3M5s4k4oYxMJ74ZBNEfC
- IE5hnfvL8nfoW6mLH2Ek6cL0meXrE9OU/7Z6HmqR0My+xBRahbImxMNmFHPKsyqjgn0pml3WWYg
- Wo0vDDE1n+5A5Vb0Ddc/apV92SITVYN8DdQ2ncP182lc38e26wDrfxNSbltwk5gQrYn7y64YBEv
- pKp3Pbpin8mZoKQ==
+ bh=WMsLOFqLBsKEif+Q77QREwp32vagjtu8h/lM/vi0C2Q=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqMGKQSKVzq0Clv4uxKspWrjxT+/4YGlV/2v+x8
+ p7cfCAywsSJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCajBikAAKCRDa6OEJdZac
+ 5RWkD/9cdR+P3XKSEx+vTX5/8SGfSLDFRnkzfcmaopxqG+O5HXKXeIIm6urjHIaWytaBjVVPJju
+ Gcyr6ToNF6DRJtE3xbYKsl6HjQPYMKxP9Rwk6wrZ4hCqQXEJujYganNI76Rr+cl4AMYwqlVlUCt
+ 0Vue+nWPTAdB3wWnaXOl/ANTGDu8zCRgtp+uUvjmU+P9kJ9+d6IIGBC24vw7/XXBDmhXVPKjXLm
+ ApCOxU9Tzxi2lv8E79Vb4yeaMilQDpl2OHziAVIKlPS5rb8V2E8doYaR9Gj1xz8VfKwbp9bCCyM
+ PScdN2mzzCt29Yob2tvChiELO2cfC/K/nRJs0xbeNeqfeu29YV2Cf3994n6ZxFK1P5KVvtf94YK
+ rd7BFQRdm/YHlFUwalmmj8k7hG1gCCmsGHYeZM07TqwxmU6YsxQpL9sUVTbAP693r36c7bkFgjo
+ UDNb5WDGmA5GsMbA3rY000xLsSneQd3J6bfs6TS2yazn01rmElQISr4B+KQRBT2/klbjMgw1+J6
+ EwAAM3zRhIxQ6S4Eu4Uf7GQB2T20pd1Sktv8zeFsBU8cdV4kTmipLPAfxPRcXGwbkvnUDOgtFj6
+ ahnhE4Qnp7NtxbkdJl4IOyySauaBsXFcTL8tQTRBUvZrYOOgSIwD2uLYs/bSaFZd2e/Ji73a5hs
+ EEjhHI21YXINW7g==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
 Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 8
-X-Spam_score: 0.8
-X-Spam_bar: /
-X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,81 +107,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Convert the OnOffSplit property from manual visitor-based
-callbacks to property_add_qapi_enum().
+"pmu_num" is u8, "pmu_mask" is u32, so is "pmp-granularity"
 
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- accel/kvm/kvm-all.c | 26 ++++++++++----------------
- 1 file changed, 10 insertions(+), 16 deletions(-)
+ target/riscv/cpu.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
-index 96f90ebb240..14e3c7fcc80 100644
---- a/accel/kvm/kvm-all.c
-+++ b/accel/kvm/kvm-all.c
-@@ -46,6 +46,7 @@
- #include "qapi/visitor.h"
- #include "qapi/qapi-types-common.h"
- #include "qapi/qapi-visit-common.h"
-+#include "qapi/qapi-type-infos-common.h"
- #include "system/reset.h"
- #include "qemu/guest-random.h"
- #include "system/hw_accel.h"
-@@ -4142,22 +4143,17 @@ static void kvm_set_kvm_shadow_mem(Object *obj, Visitor *v,
-     s->kvm_shadow_mem = value;
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index a63961bb713..98c9ebd791c 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -1302,7 +1302,7 @@ static void prop_pmu_num_get(Object *obj, Visitor *v, const char *name,
  }
  
--static void kvm_set_kernel_irqchip(Object *obj, Visitor *v,
--                                   const char *name, void *opaque,
-+static void kvm_set_kernel_irqchip(Object *obj, int value,
-                                    Error **errp)
+ static const PropertyInfo prop_pmu_num = {
+-    .type = "int8",
++    .type = "uint8",
+     .description = "pmu-num",
+     .get = prop_pmu_num_get,
+     .set = prop_pmu_num_set,
+@@ -1338,13 +1338,13 @@ static void prop_pmu_mask_set(Object *obj, Visitor *v, const char *name,
+ static void prop_pmu_mask_get(Object *obj, Visitor *v, const char *name,
+                              void *opaque, Error **errp)
  {
-     KVMState *s = KVM_STATE(obj);
--    OnOffSplit mode;
+-    uint8_t pmu_mask = RISCV_CPU(obj)->cfg.pmu_mask;
++    uint32_t pmu_mask = RISCV_CPU(obj)->cfg.pmu_mask;
  
-     if (s->fd != -1) {
-         error_setg(errp, "Cannot set properties after the accelerator has been initialized");
-         return;
-     }
- 
--    if (!visit_type_OnOffSplit(v, name, &mode, errp)) {
--        return;
--    }
--    switch (mode) {
-+    switch (value) {
-     case ON_OFF_SPLIT_ON:
-         s->kernel_irqchip_allowed = true;
-         s->kernel_irqchip_required = true;
-@@ -4174,10 +4170,7 @@ static void kvm_set_kernel_irqchip(Object *obj, Visitor *v,
-         s->kernel_irqchip_split = ON_OFF_AUTO_ON;
-         break;
-     default:
--        /* The value was checked in visit_type_OnOffSplit() above. If
--         * we get here, then something is wrong in QEMU.
--         */
--        abort();
-+        g_assert_not_reached();
-     }
+-    visit_type_uint8(v, name, &pmu_mask, errp);
++    visit_type_uint32(v, name, &pmu_mask, errp);
  }
  
-@@ -4306,11 +4299,12 @@ static void kvm_accel_class_init(ObjectClass *oc, const void *data)
-     ac->allowed = &kvm_allowed;
-     ac->gdbstub_supported_sstep_flags = kvm_gdbstub_sstep_flags;
+ static const PropertyInfo prop_pmu_mask = {
+-    .type = "int8",
++    .type = "uint32",
+     .description = "pmu-mask",
+     .get = prop_pmu_mask_get,
+     .set = prop_pmu_mask_set,
+@@ -1486,6 +1486,7 @@ static void prop_pmp_granularity_get(Object *obj, Visitor *v, const char *name,
+ }
  
--    object_class_property_add(oc, "kernel-irqchip", "on|off|split",
--        NULL, kvm_set_kernel_irqchip,
--        NULL, NULL);
--    object_class_property_set_description(oc, "kernel-irqchip",
--        "Configure KVM in-kernel irqchip");
-+    object_class_property_add_qapi_enum(oc, QAPI_ENUM_PROP(
-+        .name = "kernel-irqchip",
-+        .qapi_type = &OnOffSplit_type_info,
-+        .set = kvm_set_kernel_irqchip,
-+        .description = "Configure KVM in-kernel irqchip",
-+    ));
- 
-     object_class_property_add(oc, "kvm-shadow-mem", "int",
-         kvm_get_kvm_shadow_mem, kvm_set_kvm_shadow_mem,
+ static const PropertyInfo prop_pmp_granularity = {
++    .type = "uint32",
+     .description = "pmp-granularity",
+     .get = prop_pmp_granularity_get,
+     .set = prop_pmp_granularity_set,
 
 -- 
 2.54.0
