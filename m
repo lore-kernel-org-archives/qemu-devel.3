@@ -4,83 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57F32CD98C5
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jun 2026 14:11:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9FCFCD98C5
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jun 2026 14:12:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZ81K-0007wo-Ty; Mon, 15 Jun 2026 10:10:34 -0400
+	id 1wZ83C-0008Ru-Co; Mon, 15 Jun 2026 10:12:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wZ81I-0007wS-JL
- for qemu-devel@nongnu.org; Mon, 15 Jun 2026 10:10:32 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wZ81F-0004zt-4a
- for qemu-devel@nongnu.org; Mon, 15 Jun 2026 10:10:31 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781532626;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=mrc6jxfXu0JVMA1XB7QC9Y7mwSTtUHRcwNNASjO+bCA=;
- b=QioRW5HL6NQt60XLAszISMc89A4NAKBbIXdZDHh5H4CtHVwIEzF3buFUOdL0W5YHYVKeAL
- 1zkBibW0TCpri7sBd3YH8jz2WM9E2FhOmHPaR7T1fmnEdQUuwAC6ft1LQ3h7Xb9nTT27R2
- qIxBTUBx4GuzqQfj2yeK+PB4Fd5sXFY=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-674-Be3Lvz_fOvOBe61wxVLBXA-1; Mon,
- 15 Jun 2026 10:10:22 -0400
-X-MC-Unique: Be3Lvz_fOvOBe61wxVLBXA-1
-X-Mimecast-MFC-AGG-ID: Be3Lvz_fOvOBe61wxVLBXA_1781532620
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id CF8F218003FC; Mon, 15 Jun 2026 14:10:19 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.44.22.4])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id EEF7118005AE; Mon, 15 Jun 2026 14:10:18 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 81EF521E6A01; Mon, 15 Jun 2026 16:10:16 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: John Snow <jsnow@redhat.com>
-Cc: qemu-devel@nongnu.org,  Ani Sinha <anisinha@redhat.com>,  Michael Roth
- <michael.roth@amd.com>,  Igor Mammedov <imammedo@redhat.com>,  Peter
- Maydell <peter.maydell@linaro.org>,  Eric Blake <eblake@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@mailo.com>,  Mauro
- Carvalho Chehab
- <mchehab+huawei@kernel.org>,  "Michael S. Tsirkin" <mst@redhat.com>,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,  Paolo
- Bonzini <pbonzini@redhat.com>,  Pierrick Bouvier
- <pierrick.bouvier@oss.qualcomm.com>,  Richard Henderson
- <richard.henderson@linaro.org>,  Gerd Hoffmann <kraxel@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- linux-edac@vger.kernel.org, Cleber Rosa <crosa@redhat.com>
-Subject: Re: [PATCH v3 03/16] qapi/docs: remove unused QAPIDoc subsection
- members
-In-Reply-To: <20260603032201.993015-4-jsnow@redhat.com> (John Snow's message
- of "Tue, 2 Jun 2026 23:21:48 -0400")
-References: <20260603032201.993015-1-jsnow@redhat.com>
- <20260603032201.993015-4-jsnow@redhat.com>
-Date: Mon, 15 Jun 2026 16:10:16 +0200
-Message-ID: <87pl1rx5br.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <alexander@mihalicyn.com>)
+ id 1wZ834-0008QR-Sy
+ for qemu-devel@nongnu.org; Mon, 15 Jun 2026 10:12:23 -0400
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alexander@mihalicyn.com>)
+ id 1wZ833-0005FI-3m
+ for qemu-devel@nongnu.org; Mon, 15 Jun 2026 10:12:22 -0400
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-4903d730b1fso44359295e9.2
+ for <qemu-devel@nongnu.org>; Mon, 15 Jun 2026 07:12:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=mihalicyn.com; s=mihalicyn; t=1781532739; x=1782137539; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=SwI26bAPD++fDBpapjaelr4YYzGf4tn+w+2LSRNSEKk=;
+ b=CbEPFWbOB/eM+tWKsvY+2fmxg8OqjHgYsR5URAbZ2PL9DqgttgzZXyU6j3H7+B5UmP
+ DoaVVr1oQo+Px0XggsMYlWnQN/R1d0FVhbEV1SFXiRR7qGER/drxq4bUB0iwovHgMsDh
+ o1XCobC0zUAuBGvaim8S/n+qi3ZWbeksTJWDA=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1781532739; x=1782137539;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=SwI26bAPD++fDBpapjaelr4YYzGf4tn+w+2LSRNSEKk=;
+ b=aOBo/ZEQZnGiAYuukrYFcBBfCZSrlBjGqfbupFhASPTjWWd6UuS2DVZknK1Rqq9W2K
+ mDyaAvf9eNRd+ZAyuttWGAxi3BOXBMw6ufuB+PwGmqZdwq+XnJ+hNA56G4nAHkE4TbTC
+ uO/Mv1Nx+mOnCZX7iMyRhSwjI1qIFHgovJ4mfnXf+MaKQlEM/as2GmUb2b1keezt2OZa
+ 0hXJLq8fgJPrxDusX91hjqYw+U0bTinbl0WchXoy7Sz5k7tCWo4WiNhFucA5qlakbYSG
+ hie/Mh/IjtafIiuLfsKVIu1MU+grYX0Q0PcwUxmMWAxQ07SD963DtWpVjbiBp3XThIoG
+ 7qpA==
+X-Gm-Message-State: AOJu0Yx4IP+5lhwbRnTucQdH4Qv34fNGbdvBamzy2X4mySRl0rgnebmd
+ rUOGuHZrg3jdkpDoqdCe7hO1HjtHHfa+gJ1llxtlGq8iApsule6DnoJT6SdOv21VqpWk05QADHs
+ hrxhSf3w=
+X-Gm-Gg: Acq92OFKY5YAaLRoIAaYmYDO88nOtaMATcpfyNXN9uvut6J7YMVk754TdOgttJpS66s
+ J803Lq0TSHbHf4oWFZy1Zb0UyfziX/nZibozbpMQuvuZZWh5dKeXL3q0VGaKOEa4OrCVgOASbp2
+ KaFPas2GP0be75svtBVP1LgMBiJ+vnK5KjyctgFJbZQ2tW2Md1oFwqWk8MUv1JmJD91zgm16hYy
+ wcDi39ZlpjoUfzKde0DgQrV8aHHYep35JdhZwhLGkxEJtFR1L3gXDzXUfEC+VdkBBKIYkOfYvid
+ PRSVLN32Wxt2PyA+ksV1QZbWRg5vqbctyWHZ2WLK2WKEjxVWrhED4t+4n+ZgHqU8ZD2j2CA9dS7
+ Gf6q/yNUNGslB23cGyvtAB78kH21xji3H2NYBHtvM/JlflhsXGdrwehwBgZhpGCwm18LqU1tlFn
+ 8+SLxP7pD21nFA1KDKQIGSnVMEUIcyRycZXZuk7Sl5yFq1AJkeA5uqveR8cNpC+rXb+uKAbdtvJ
+ SI=
+X-Received: by 2002:a05:600c:1f8c:b0:488:d6eb:e63c with SMTP id
+ 5b1f17b1804b1-492200768abmr151599685e9.15.1781532739263; 
+ Mon, 15 Jun 2026 07:12:19 -0700 (PDT)
+Received: from alex-laptop.lan
+ (p200300cf574a720000000000000009a8.dip0.t-ipconnect.de.
+ [2003:cf:574a:7200::9a8]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-490ea4b39e9sm213758215e9.0.2026.06.15.07.12.18
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 15 Jun 2026 07:12:18 -0700 (PDT)
+From: Alexander Mikhalitsyn <alexander@mihalicyn.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-block@nongnu.org, Alexander Mikhalitsyn <alexander@mihalicyn.com>,
+ Klaus Jensen <its@irrelevant.dk>,
+ =?UTF-8?q?St=C3=A9phane=20Graber?= <stgraber@stgraber.org>,
+ Jesper Devantier <foss@defmacro.it>, Keith Busch <kbusch@kernel.org>,
+ Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
+Subject: [PATCH v2 1/2] hw/nvme: initialize ns->subsys for n->namespace
+Date: Mon, 15 Jun 2026 16:12:15 +0200
+Message-ID: <20260615141216.162388-2-alexander@mihalicyn.com>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260615141216.162388-1-alexander@mihalicyn.com>
+References: <20260615141216.162388-1-alexander@mihalicyn.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=alexander@mihalicyn.com; helo=mail-wm1-x335.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,57 +103,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Uh, "qapi/docs:"?  Shouldn't this be "qapi/parser:"?
+From: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
 
-John Snow <jsnow@redhat.com> writes:
+We must properly initialize n->namespace.subsys too.
 
-> All users of the QAPIDoc object should be iterating over all_sections
-> and not grabbing arbitrary subsections, if possible. Remove the 'body'
-> and 'sections' members, as they are no longer used.
->
-> Signed-off-by: John Snow <jsnow@redhat.com>
-> Reviewed-by: Markus Armbruster <armbru@redhat.com>
-> ---
->  scripts/qapi/parser.py | 6 ------
->  1 file changed, 6 deletions(-)
->
-> diff --git a/scripts/qapi/parser.py b/scripts/qapi/parser.py
-> index c3cf33904ef..b33edbba74f 100644
-> --- a/scripts/qapi/parser.py
-> +++ b/scripts/qapi/parser.py
-> @@ -732,8 +732,6 @@ def __init__(self, info: QAPISourceInfo, symbol: Optional[str] = None):
->          self.all_sections: List[QAPIDoc.Section] = [
->              QAPIDoc.Section(info, QAPIDoc.Kind.PLAIN)
->          ]
-> -        # the body section
-> -        self.body: Optional[QAPIDoc.Section] = self.all_sections[0]
->          # dicts mapping parameter/feature names to their description
->          self.args: Dict[str, QAPIDoc.ArgSection] = {}
->          self.features: Dict[str, QAPIDoc.ArgSection] = {}
-> @@ -742,8 +740,6 @@ def __init__(self, info: QAPISourceInfo, symbol: Optional[str] = None):
->          self.errors: Optional[QAPIDoc.Section] = None
->          # "Since" section
->          self.since: Optional[QAPIDoc.Section] = None
-> -        # sections other than .body, .args, .features
-> -        self.sections: List[QAPIDoc.Section] = []
->  
->      def end(self) -> None:
->          for section in self.all_sections:
-> @@ -766,7 +762,6 @@ def ensure_untagged_section(self, info: QAPISourceInfo) -> None:
->  
->          # start new section
->          section = self.Section(info, kind)
-> -        self.sections.append(section)
->          self.all_sections.append(section)
->  
->      def new_tagged_section(
-> @@ -790,7 +785,6 @@ def new_tagged_section(
->                  raise QAPISemError(
->                      info, "duplicated '%s' section" % kind)
->              self.since = section
-> -        self.sections.append(section)
->          self.all_sections.append(section)
->  
->      def _new_description(
+Will be important in the following patches.
+
+Signed-off-by: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
+---
+ hw/nvme/ctrl.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
+index 815f39173c8..391f8260fc2 100644
+--- a/hw/nvme/ctrl.c
++++ b/hw/nvme/ctrl.c
+@@ -9331,6 +9331,7 @@ static void nvme_realize(PCIDevice *pci_dev, Error **errp)
+         ns = &n->namespace;
+         ns->params.nsid = 1;
+         ns->ctrl = n;
++        ns->subsys = n->subsys;
+ 
+         if (nvme_ns_setup(ns, errp)) {
+             return;
+-- 
+2.47.3
 
 
