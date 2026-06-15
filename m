@@ -4,87 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F73DCD98CF
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jun 2026 19:37:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D4C2CD98DA
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jun 2026 19:37:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZD69-0002Re-GW; Mon, 15 Jun 2026 15:35:53 -0400
+	id 1wZD6x-0002xh-Iw; Mon, 15 Jun 2026 15:36:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wZD63-0002P2-JX
- for qemu-devel@nongnu.org; Mon, 15 Jun 2026 15:35:48 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ id 1wZD6M-0002Vt-AU
+ for qemu-devel@nongnu.org; Mon, 15 Jun 2026 15:36:12 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wZD60-00017d-5q
- for qemu-devel@nongnu.org; Mon, 15 Jun 2026 15:35:46 -0400
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+ id 1wZD6J-0001Wo-PV
+ for qemu-devel@nongnu.org; Mon, 15 Jun 2026 15:36:05 -0400
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65FJ0H9R1389717
- for <qemu-devel@nongnu.org>; Mon, 15 Jun 2026 19:35:31 GMT
+ 65FIxJ2h781727
+ for <qemu-devel@nongnu.org>; Mon, 15 Jun 2026 19:36:02 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:message-id
- :mime-version:subject:to; s=qcppdkim1; bh=/s+Ye+gqV9Qw9CJl0kDgXP
- 8big/HURC5SMwc3kZkQ6k=; b=iNrvGyXFDbBOtNkGXy05rcAOfzOo2fPIFmFstn
- L0DY4f72vroBJdntH2DlV/TCXDF6Tvq0DVI78vOJrMneVT7GK8yF6cifZDvR20hC
- C1vJ4ULpbCALMm1jctu31NQR5jaJ0LvCls4ZUwctBoszPDon7MPPA1BfHHmu2qIs
- +k36GMzDrhWLEvbfOz2Cer3Hs95lA0jOZHcWTzEQ/hC2EDjz5ydrlQrsgdgxOUze
- xAJUHeWezNkCibkaq6tw/eT7vySfrdmir6q0j4CU8DSvU0IeQ7JTwHIUJwUwJM7g
- L7XNww0hzgkNnnC8Wy0m8lXM1RxZvTC72WSBTAIW4iorRzLg==
-Received: from mail-dy1-f198.google.com (mail-dy1-f198.google.com
- [74.125.82.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4eter22n7t-1
+ cc:content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=qcppdkim1; bh=YdjsSgcz8u6
+ /17LgYDQLIzSOZFP9QSSqnKDDH4KO6TI=; b=noEVO42u1nyqnv27KHC3a+R+4j2
+ e9VW4MNC0hnqvphM40YT1VhfKf9QWvh8MmE0PiuHyaCldJvDr7JH3rJ4sDhRBS7K
+ s9MbqBjNcA0VGtnm+xTY/dHhgTd1HclqNV6WENfj7JYyNT3xraDpvgbmHQwI5ix9
+ 6UewJ285PS8fKN7Rv5fBwDqTId3AZ0XXSVLEowD5hUTRY1QwQoNDlVDl58Dml/yq
+ 3NCkrLjEAfUzRHJDGMM+XSfhA45nfx076KrJx1Ah2RhjROv1l9wye94YXXieUENU
+ 7Ar111EdOCbcTNfoWn/QwM8CFHjZ6kRW44BC1sraLXmyH3yATTpQrCGU58A==
+Received: from mail-dy1-f197.google.com (mail-dy1-f197.google.com
+ [74.125.82.197])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4etetjtnt8-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 15 Jun 2026 19:35:30 +0000 (GMT)
-Received: by mail-dy1-f198.google.com with SMTP id
- 5a478bee46e88-304f1820babso5672058eec.1
- for <qemu-devel@nongnu.org>; Mon, 15 Jun 2026 12:35:30 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Mon, 15 Jun 2026 19:36:01 +0000 (GMT)
+Received: by mail-dy1-f197.google.com with SMTP id
+ 5a478bee46e88-3080bb0267dso351492eec.1
+ for <qemu-devel@nongnu.org>; Mon, 15 Jun 2026 12:36:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1781552130; x=1782156930; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=/s+Ye+gqV9Qw9CJl0kDgXP8big/HURC5SMwc3kZkQ6k=;
- b=iqQiWh133pU/lTtCNFxmsaDwKYL9U++aB0EaqvVA10129cQCMmsl0CZzzDlDw/JStE
- qjz+BhNaK8iPFumvjNJnjdXZtD065CbMWJIxBtZlGSe4t1CoUorijjfV8tZuV1RGot2h
- RBL22vvkk4fz7dvpYbJeVoXblfRCP60I/CZubMmMXjKyTO04wZLPleCPkkymb3Ay7tEF
- uYrdNbLlz2IZ2TP5dM1PjPy4hXEF76MWNiGtTyDkrhCxXUa4s/6WCAKUnVyPLnO3sbfD
- 5CQGmTEdASNvFSqeQVEX9m4k4foegHGv1Pp/4By8HtpXlt+B5pcih0n//HcfoIixWlqh
- +M7Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781552130; x=1782156930;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=oss.qualcomm.com; s=google; t=1781552161; x=1782156961; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=/s+Ye+gqV9Qw9CJl0kDgXP8big/HURC5SMwc3kZkQ6k=;
- b=AeE4mEMDqC8LP6RYdFNqjL4AKWIF3SkekaZfR7I49ud21gpYkBunJ0KmdGWij2At7r
- XCJEn/O2e3Kjm0uqfba7i8eCgIl4a2Khga1VvqP4FGMuL7UEJVbVHS1VGKDZ3N5wBuDq
- ocXcxM5dLBuk12oMR/6+ZADHw2OEWutfdWhoPr24swvbro3uWv7R32x0KlGx3XRl50fQ
- Dosh+VYiXmlmX+gD/8uu614KtLjATqyRwKRo5FOgwNhuIqb66f59TUQu+pkeCPhaJp9C
- 4nMiU3qaHqejrvXwKbUAGwI1GJ2+vfQEuBdRTrmVb1img/MBdbR1hJExqYb6tzWt2yBD
- 8NeQ==
-X-Gm-Message-State: AOJu0Yyo9qMHgfLITC6qoNC8t/skGP88HVw+gAd6ko8Z5cp2luuhPl+J
- TIuxSj6s4g/17OqL47b8ka/ndwJD4ItZD0O7BD6eB0pbyqWQESRA4Y5qAkKfHN4DkY52gx7Uzaf
- cxIgKgJqouXO3UvL9d4wN2Qslvs4fMhqz/giLao7E1z0lrHvdERNvVSDDBxP2RPNCBcuN
-X-Gm-Gg: Acq92OHtk014ng017BmMs/8+B+IwGqQgO0l4uVrc/Jpk0GTONnMozazE5gbTVPAWyNB
- 0nkzqg42k+TVEtxi6vqTdd9VqrGTeK7bfBwgNY8YwkGSPts2BNwTsBvqxRQiDExSpkZczyIt0qw
- EdRjfqjOjLzF4OzY2MHfxOrb5EK/BO4VEQOTUSk3ptNjtlSG+FVeaQ7Go2rGZtBp1sAhenLzwzQ
- ZlwTbkzldJNWh0up9wPUN+thhh1QYh9cYvdrFKp1MqW/oEyvT4qBMrymisEdy7yszU3KKQJa544
- npAwyL1FqcTDsaXqya2PVH7LamlooRJNJ2KYyOLPOAMrFc1iMRPUsT/PCLVgperpfroMaLEMveo
- /PIjmyzbDmS0m5NHkdjZ79qyrL4dMHcjKrEpx7AtNhYUaDDsUUkMIbhvXSxsPEAfUCN/LtLpoIT
- IsHyv2JQ==
-X-Received: by 2002:a05:7023:b06:b0:138:1360:5bc9 with SMTP id
- a92af1059eb24-13985ebcba4mr228265c88.16.1781552129862; 
- Mon, 15 Jun 2026 12:35:29 -0700 (PDT)
-X-Received: by 2002:a05:7023:b06:b0:138:1360:5bc9 with SMTP id
- a92af1059eb24-13985ebcba4mr228243c88.16.1781552129305; 
- Mon, 15 Jun 2026 12:35:29 -0700 (PDT)
+ bh=YdjsSgcz8u6/17LgYDQLIzSOZFP9QSSqnKDDH4KO6TI=;
+ b=bQ+wSi3Auh45+LvaXw83VNw3NhGcYGjSBp/zUcJGvKbHq376T/zDgFK7CaZQQcpOWw
+ 5s5HC5WXoZ7T8zvYNifJSILtj/cg8G2aWlHW4cfGQpHzixrKy0fEB6+tvE+qlYj6W47Y
+ OdkxruQ6onMRe0Ai5hOeD7Rs4EaGmnO7Sm08nvH4MvQSvBHUl5V4dn3HtGYBaJ2W4H1N
+ LXlXWdMjo9uxDGShF5YhUb80wKWCWJ4KsQQBCStcsqS2jYJLB5RyrskxcarRrmny8o/Y
+ X+DPXbbhv5UDd/JAKbmOqEiGQPgUz+giI2Lbs54Zmapo98JKzvluwwUUwdDbkuLir4x3
+ RckQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1781552161; x=1782156961;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=YdjsSgcz8u6/17LgYDQLIzSOZFP9QSSqnKDDH4KO6TI=;
+ b=d0HpZfNkgnZlxb0HfqWG9IFV4med6qVx0puoq+BUg3FPvIwc6rkS5kGELOuXuZx/GJ
+ xOCjJ2Ny/QXZ6Zctj8n9tD8lOglfBapK8dBqtU91U7KEwk6Cng0yK175bbzf8l+9WYs7
+ UxyxKm8EmBYjkRlaHojrsexcsOR/ykhUdLfeiQwxCi7CrtF1QWFE33rU9lMUiOI7BXuQ
+ K2FWjDf5asjT3aTSX3m7eaBKpv9andwpzzAii8L0+RzS2RgSHlyfJtlX2AafLcbB2dAq
+ jW19zwBjz0gVsix0yz02x+Cib74mOMcsnrCFSRz7pdwgO69n0iHxjAEhmEjZuWYk4Es9
+ pmWg==
+X-Gm-Message-State: AOJu0Yy2PUUpP6DQlVQQwoauqltQV4AuQhbATA746HHOaZp9o3kVXV+P
+ X8mCptxNwDZc9vNXhzqV2LRsBVpAfB/ysQQ72/R0T5Acl+eF4Zf9Cezdnv6YBMWqiwk5FDNmtWu
+ nkC8veMo0TOLX7BkdRDYRQRtr5XgX+zmY02nxL1YkrLMYMQGSggh4s0D6jC9VKG8n4Xy0
+X-Gm-Gg: Acq92OEHmyDY+BjRXxm5vbwE3NsgWIyfS8sTYgls8i2+bLAC4Qffk6tuaHyk4EpnZU1
+ yUaUG3IldB4lXqpwMl071LqT09S2NAdxiVdRq+a+gP08Mil+oYan1KoVwehRDKEHpkli6SAKgi8
+ zgUrMUMs+A6JwUrCyOT5Umk8Zm7tj3lNUoT/+8HIhRoM4ZJHu9vn09lkQ/xtli2RVijsNLZJXcs
+ YCH1YWHjngJHiEQYje/UDPAPESuaWkIFo1DXicBAB6GR0y3C04ws1jpr+0kzGd/h+CALaRXf2te
+ njEZawGaWnuPrmL8UvIA7xd8CbAFCq2ApSi/Yo5d1ErYnTpQZUz+NJHfo832yPQAEQU643czIIM
+ VNxc0CPpgnws5e/XDmUmMoL9uun0TUqSi1iVz2Sak5zbCtDBlUiqy4zsznw8ZbBFLtOdSjKMhZw
+ /pF7BzDw==
+X-Received: by 2002:a05:7022:689a:b0:137:fac1:c062 with SMTP id
+ a92af1059eb24-1386f2403fdmr5743152c88.7.1781552160909; 
+ Mon, 15 Jun 2026 12:36:00 -0700 (PDT)
+X-Received: by 2002:a05:7022:689a:b0:137:fac1:c062 with SMTP id
+ a92af1059eb24-1386f2403fdmr5743122c88.7.1781552160029; 
+ Mon, 15 Jun 2026 12:36:00 -0700 (PDT)
 Received: from hu-pbouvier-lv.qualcomm.com (Global_NAT1.qualcomm.com.
  [129.46.96.20]) by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-1384b97bf09sm11498007c88.14.2026.06.15.12.35.28
+ a92af1059eb24-1384b97bf09sm11498007c88.14.2026.06.15.12.35.58
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 15 Jun 2026 12:35:28 -0700 (PDT)
+ Mon, 15 Jun 2026 12:35:59 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
 Cc: Chao Liu <chao.liu.zevorn@gmail.com>,
@@ -94,44 +95,44 @@ Cc: Chao Liu <chao.liu.zevorn@gmail.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  Alexandre Iooss <erdnaxe@crans.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v2 00/26] plugins: refactor API to maintain state through
- callbacks chain
-Date: Mon, 15 Jun 2026 12:34:59 -0700
-Message-ID: <20260615193526.2883349-1-pierrick.bouvier@oss.qualcomm.com>
+Subject: [PATCH v2 23/26] plugins: use consistent parameter documentation for
+ userdata
+Date: Mon, 15 Jun 2026 12:35:22 -0700
+Message-ID: <20260615193526.2883349-24-pierrick.bouvier@oss.qualcomm.com>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260615193526.2883349-1-pierrick.bouvier@oss.qualcomm.com>
+References: <20260615193526.2883349-1-pierrick.bouvier@oss.qualcomm.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjE1MDIwNyBTYWx0ZWRfX70hsun/RlsXm
- +lcLrh1/ejquNzDnU/WFXtucDoeDvdY9sGJaQhWLAJePauSBaO4GkMOhFh7TY5vewlRbj8doWkN
- KDhJqM6vS1/Do3TjrU8t7oPPk1UfYJ4=
-X-Proofpoint-GUID: uyK-NoiHXOY4n3cMcKsBIq3jOkcCf86Q
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjE1MDIwNyBTYWx0ZWRfXwWjz2Y/EE7HG
- b3zBkOLTfd+6SK17/f6BL8sF4V9krNCe/3t9bTRnYCEP6OVpTBAbcksFTOc+J8GIrnlPklT1weP
- Mgt8NRBFEpt21ZbVeo+YRxAvsiWIQXf/MqfN/yhfPAMwpfG/czBKjqHREa3WP8WuG51SBvEFEoe
- rQycwQrBfeSihR8xZpmTXKUAYe22Gshab3DnZtdeYqdbTPxBbYdjHj2aujrHdqr03gjJPGXM5Dh
- lUtoo8qdUBVLXYiaqVVlqUCotmajrWQjr4xngy11Ord4DClKj9YtN7ACCIUngWCySysDCtXwPQE
- RaMGjVL5qSx4LkurnXbyXImzUTGL9tC1aPw/78flITsyWrCF4Xt1PIbKqTdvkHLhigK5hy+fh6x
- V7AB9v+4Ohc/oR4h0cgXskr1xeBXFiel26g3HtEZXOJhWUAMnY/DVwmFGdFK/CawlPmXWTjZMMr
- y1kqzlOFFBpzuA5z1aA==
-X-Authority-Analysis: v=2.4 cv=F4tnsKhN c=1 sm=1 tr=0 ts=6a305402 cx=c_pps
- a=wEP8DlPgTf/vqF+yE6f9lg==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22
- a=NoHjUO1RaDQpt3zLnNsA:9 a=QEXdDO2ut3YA:10 a=bBxd6f-gb0O0v-kibOvt:22
-X-Proofpoint-ORIG-GUID: uyK-NoiHXOY4n3cMcKsBIq3jOkcCf86Q
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjE1MDIwNyBTYWx0ZWRfX5p+d48WtgjEw
+ aoNCzDkOSoddVwWwov1j/mni9nTJcIwRVIjwjKhk5rSl9EmPuVnfTmNkGh94xpvnc93cKrtuQVR
+ IG2ymOroksv3f0Qr021m08+FEz/4glGCe1B/dhYG2omsK8Wzc30edA2m/DGXHrylaIejpj2au46
+ m3Zvwiws0QMIVSjHCCJAocasSAd+shzRu4ag8iE1jhR7gW0O8gBYzqTNeDeMvFeeYUwuSkeNuWm
+ VnegBWM5vnxVromdauJP4YkB/DANHgT7JaDDyyPk1jE1a7FQx3oi1jJDO+wOszdR1BA5qKEhci6
+ uJE1coF+We6DTeR1j5ISWiyAqbZXIwLb8waya/5Sw3mmazmuMEu2pqBHp5VHzjlVnbCBMsD2wqB
+ TjZoPl9mszgiSzGeblZYeiapYWV+Gmfru0VdlbNp9o4DZcdmexrHjQYlCdQhiepYZpdpVrMXXQd
+ SHEfNV1tod1kx6qYMYw==
+X-Proofpoint-ORIG-GUID: 3F3e1QLaRJrzRO7SKVIneUh2UDqlT9Lz
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjE1MDIwNyBTYWx0ZWRfXwr6IqJYmxRn8
+ W+Y/oHC6jkpi7d3IREEu6AXiBOpu81I4YJW28r7UZ8mjoO0M774dhbgrSz9h2Y5U5tTdPU0kR3/
+ wE3ZgcsGoEzYpJHiE11rTHDnpdVpiso=
+X-Authority-Analysis: v=2.4 cv=HttG3UTS c=1 sm=1 tr=0 ts=6a305421 cx=c_pps
+ a=Uww141gWH0fZj/3QKPojxA==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22 a=EUspDBNiAAAA:8
+ a=n1GYMWs_v2V8MhWbidwA:9 a=PxkB5W3o20Ba91AHUih5:22
+X-Proofpoint-GUID: 3F3e1QLaRJrzRO7SKVIneUh2UDqlT9Lz
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-06-15_05,2026-06-15_04,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 bulkscore=0 clxscore=1015 impostorscore=0 spamscore=0
- adultscore=0 lowpriorityscore=0 priorityscore=1501 suspectscore=0
- malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606040000
- definitions=main-2606150207
-Received-SPF: pass client-ip=205.220.180.131;
+ adultscore=0 spamscore=0 suspectscore=0 clxscore=1015 impostorscore=0
+ malwarescore=0 bulkscore=0 priorityscore=1501 lowpriorityscore=0 phishscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606040000 definitions=main-2606150207
+Received-SPF: pass client-ip=205.220.168.131;
  envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0b-0031df01.pphosted.com
+ helo=mx0a-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -154,100 +155,169 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-A coworker recently wrote a C++ plugin, and noticed interesting limitations of
-current API. Basically, the biggest issue is that the only way to maintain state
-in a plugin is by using global variables. The root cause is that some
-callback types can't transfer user data.
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+---
+ include/plugins/qemu-plugin.h | 36 +++++++++++++++++------------------
+ 1 file changed, 17 insertions(+), 19 deletions(-)
 
-Also, he asked why some callbacks have a qemu_plugin_id_t, and some other don't.
-This excellent question exposed that we don't need this most of the time. And if
-needed, we can rely on user data instead.
-
-For functional programmers here, it allows to have something similar to
-continuation-passing style, with all callbacks carrying data to next one.
-
-This series modifies our callback types to make sure they all have a userdata,
-and none have a qemu_plugin_id. Existing C plugins don't need to change, and
-global variables can still exist.
-
-After all those changes, we can finally implement a C++ plugin without any
-static variable (well, out of qemu_plugin_version), using an object and
-lambdas. This act as a demonstration of how we could write future plugins, and
-also, how we are finally on the edge to offer a proper native interface
-in Rust using closures.
-
-v2
---
-- fix wrong space line removal in patch 7
-- add patch to have consistent documentation for userdata parameter
-- style patch for C++: better commit description and add comments
-  about which constructions trigger a false positive
-
-Pierrick Bouvier (26):
-  plugins: bump version
-  plugins: add userdata for qemu_plugin_{uninstall, reset}
-  plugins: add userdata to qemu_plugin_register_flush_cb
-  plugins: remove type qemu_plugin_simple_cb_t
-  plugins: remove qemu_plugin_id_t from qemu_plugin_udata_cb_t
-  plugins: remove qemu_plugin_id_t from qemu_plugin_vcpu_simple_cb_t
-  plugins: add userdata to qemu_plugin_register_vcpu_init_cb
-  plugins: add userdata to qemu_plugin_register_vcpu_exit_cb
-  plugins: add userdata to qemu_plugin_register_vcpu_idle_cb
-  plugins: add userdata to qemu_plugin_register_vcpu_resume_cb
-  plugins: add userdata to qemu_plugin_vcpu_for_each
-  plugins: remove type qemu_plugin_vcpu_simple_cb_t
-  plugins: add userdata to qemu_plugin_register_vcpu_discon_cb
-  plugins: remove qemu_plugin_id from qemu_plugin_vcpu_discon_cb_t
-  plugins: remove qemu_plugin_id from qemu_plugin_vcpu_tb_trans_cb_t
-  plugins: add userdata to qemu_plugin_vcpu_tb_trans_cb_t
-  plugins: remove qemu_plugin_id from qemu_plugin_vcpu_syscall_cb_t
-  plugins: add userdata to qemu_plugin_register_vcpu_syscall_cb
-  plugins: remove qemu_plugin_id from
-    qemu_plugin_vcpu_syscall_filter_cb_t
-  plugins: add userdata to qemu_plugin_register_vcpu_syscall_filter_cb
-  plugins: remove qemu_plugin_id from qemu_plugin_vcpu_syscall_ret_cb_t
-  plugins: add userdata to qemu_plugin_register_vcpu_syscall_ret_cb
-  plugins: use consistent parameter documentation for userdata
-  scripts/checkpatch: ignore spaces required around some operators in
-    C++
-  scripts/checkpatch: remove check on forbidden space before '[' in C++
-  plugins/cpp: register callbacks using captureless lambda
-
- contrib/plugins/bbv.c         |  10 +--
- contrib/plugins/cache.c       |   6 +-
- contrib/plugins/cflow.c       |   6 +-
- contrib/plugins/cpp.cpp       |  90 ++++++++++++++++++++++-
- contrib/plugins/drcov.c       |   6 +-
- contrib/plugins/execlog.c     |  10 +--
- contrib/plugins/hotblocks.c   |   6 +-
- contrib/plugins/hotpages.c    |   6 +-
- contrib/plugins/howvec.c      |   6 +-
- contrib/plugins/hwprofile.c   |   6 +-
- contrib/plugins/ips.c         |  14 ++--
- contrib/plugins/lockstep.c    |  18 ++---
- contrib/plugins/stoptrigger.c |   6 +-
- contrib/plugins/traps.c       |   9 +--
- contrib/plugins/uftrace.c     |  10 +--
- include/plugins/qemu-plugin.h | 132 ++++++++++++++++++----------------
- include/qemu/plugin.h         |   2 -
- plugins/api.c                 |  40 ++++++-----
- plugins/core.c                |  93 ++++++++++--------------
- plugins/loader.c              |  13 ++--
- plugins/plugin.h              |   5 +-
- scripts/checkpatch.pl         |  28 +++++++-
- tests/tcg/plugins/bb.c        |  10 +--
- tests/tcg/plugins/discons.c   |  10 +--
- tests/tcg/plugins/empty.c     |   4 +-
- tests/tcg/plugins/inline.c    |   6 +-
- tests/tcg/plugins/insn.c      |  10 +--
- tests/tcg/plugins/mem.c       |   6 +-
- tests/tcg/plugins/patch.c     |   4 +-
- tests/tcg/plugins/registers.c |   4 +-
- tests/tcg/plugins/reset.c     |  17 ++---
- tests/tcg/plugins/setpc.c     |  10 +--
- tests/tcg/plugins/syscall.c   |  22 +++---
- 33 files changed, 371 insertions(+), 254 deletions(-)
-
+diff --git a/include/plugins/qemu-plugin.h b/include/plugins/qemu-plugin.h
+index 50a39e51d46..d8d4b373842 100644
+--- a/include/plugins/qemu-plugin.h
++++ b/include/plugins/qemu-plugin.h
+@@ -142,16 +142,14 @@ QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
+ 
+ /**
+  * typedef qemu_plugin_udata_cb_t - callback with user data
+- * @userdata: a pointer to some user data supplied when the callback
+- * was registered.
++ * @userdata: user data for callback
+  */
+ typedef void (*qemu_plugin_udata_cb_t)(void *userdata);
+ 
+ /**
+  * typedef qemu_plugin_vcpu_udata_cb_t - vcpu callback
+  * @vcpu_index: the current vcpu context
+- * @userdata: a pointer to some user data supplied when the callback
+- * was registered.
++ * @userdata: user data for callback
+  */
+ typedef void (*qemu_plugin_vcpu_udata_cb_t)(unsigned int vcpu_index,
+                                             void *userdata);
+@@ -185,7 +183,7 @@ enum qemu_plugin_discon_type {
+  * @from_pc: the source of the discontinuity, e.g. the PC before the
+  *           transition
+  * @to_pc: the PC pointing to the next instruction to be executed
+- * @userdata: any plugin data to pass to the @cb
++ * @userdata: user data for callback
+  *
+  * The exact semantics of @from_pc depends on the @type of discontinuity. For
+  * interrupts, @from_pc will point to the next instruction which would have
+@@ -204,7 +202,7 @@ typedef void (*qemu_plugin_vcpu_discon_cb_t)(unsigned int vcpu_index,
+  * qemu_plugin_uninstall() - Uninstall a plugin
+  * @id: this plugin's opaque ID
+  * @cb: callback to be called once the plugin has been removed
+- * @userdata: any plugin data to pass to the @cb
++ * @userdata: user data for callback
+  *
+  * Do NOT assume that the plugin has been uninstalled once this function
+  * returns. Plugins are uninstalled asynchronously, and therefore the given
+@@ -220,7 +218,7 @@ void qemu_plugin_uninstall(qemu_plugin_id_t id, qemu_plugin_udata_cb_t cb,
+  * qemu_plugin_reset() - Reset a plugin
+  * @id: this plugin's opaque ID
+  * @cb: callback to be called once the plugin has been reset
+- * @userdata: any plugin data to pass to the @cb
++ * @userdata: user data for callback
+  *
+  * Unregisters all callbacks for the plugin given by @id.
+  *
+@@ -236,7 +234,7 @@ void qemu_plugin_reset(qemu_plugin_id_t id, qemu_plugin_udata_cb_t cb,
+  * qemu_plugin_register_vcpu_init_cb() - register a vCPU initialization callback
+  * @id: plugin ID
+  * @cb: callback function
+- * @userdata: any plugin data to pass to the @cb
++ * @userdata: user data for callback
+  *
+  * The @cb function is called every time a vCPU is initialized.
+  *
+@@ -251,7 +249,7 @@ void qemu_plugin_register_vcpu_init_cb(qemu_plugin_id_t id,
+  * qemu_plugin_register_vcpu_exit_cb() - register a vCPU exit callback
+  * @id: plugin ID
+  * @cb: callback function
+- * @userdata: any plugin data to pass to the @cb
++ * @userdata: user data for callback
+  *
+  * The @cb function is called every time a vCPU exits.
+  *
+@@ -266,7 +264,7 @@ void qemu_plugin_register_vcpu_exit_cb(qemu_plugin_id_t id,
+  * qemu_plugin_register_vcpu_idle_cb() - register a vCPU idle callback
+  * @id: plugin ID
+  * @cb: callback function
+- * @userdata: any plugin data to pass to the @cb
++ * @userdata: user data for callback
+  *
+  * The @cb function is called every time a vCPU idles.
+  */
+@@ -279,7 +277,7 @@ void qemu_plugin_register_vcpu_idle_cb(qemu_plugin_id_t id,
+  * qemu_plugin_register_vcpu_resume_cb() - register a vCPU resume callback
+  * @id: plugin ID
+  * @cb: callback function
+- * @userdata: any plugin data to pass to the @cb
++ * @userdata: user data for callback
+  *
+  * The @cb function is called every time a vCPU resumes execution.
+  */
+@@ -293,7 +291,7 @@ void qemu_plugin_register_vcpu_resume_cb(qemu_plugin_id_t id,
+  * @id: plugin ID
+  * @type: types of discontinuities for which to call the callback
+  * @cb: callback function
+- * @userdata: any plugin data to pass to the @cb
++ * @userdata: user data for callback
+  *
+  * The @cb function is called every time a vCPU receives a discontinuity event
+  * of the specified type(s), after the vCPU was prepared to handle the event.
+@@ -427,7 +425,7 @@ typedef void (*qemu_plugin_vcpu_tb_trans_cb_t)(struct qemu_plugin_tb *tb,
+  * qemu_plugin_register_vcpu_tb_trans_cb() - register a translate cb
+  * @id: plugin ID
+  * @cb: callback function
+- * @userdata: any plugin data to pass to the @cb
++ * @userdata: user data for callback
+  *
+  * The @cb function is called every time a translation occurs. The @cb
+  * function is passed an opaque qemu_plugin_type which it can query
+@@ -446,7 +444,7 @@ void qemu_plugin_register_vcpu_tb_trans_cb(qemu_plugin_id_t id,
+  * @tb: the opaque qemu_plugin_tb handle for the translation
+  * @cb: callback function
+  * @flags: does the plugin read or write the CPU's registers?
+- * @userdata: any plugin data to pass to the @cb?
++ * @userdata: user data for callback
+  *
+  * The @cb function is called every time a translated unit executes.
+  */
+@@ -464,7 +462,7 @@ void qemu_plugin_register_vcpu_tb_exec_cb(struct qemu_plugin_tb *tb,
+  * @entry: first operand for condition
+  * @imm: second operand for condition
+  * @flags: does the plugin read or write the CPU's registers?
+- * @userdata: any plugin data to pass to the @cb?
++ * @userdata: user data for callback
+  *
+  * The @cb function is called when a translated unit executes if
+  * entry @cond imm is true.
+@@ -514,7 +512,7 @@ void qemu_plugin_register_vcpu_tb_exec_inline_per_vcpu(
+  * @insn: the opaque qemu_plugin_insn handle for an instruction
+  * @cb: callback function
+  * @flags: does the plugin read or write the CPU's registers?
+- * @userdata: any plugin data to pass to the @cb?
++ * @userdata: user data for callback
+  *
+  * The @cb function is called every time an instruction is executed
+  */
+@@ -532,7 +530,7 @@ void qemu_plugin_register_vcpu_insn_exec_cb(struct qemu_plugin_insn *insn,
+  * @cond: condition to enable callback
+  * @entry: first operand for condition
+  * @imm: second operand for condition
+- * @userdata: any plugin data to pass to the @cb?
++ * @userdata: user data for callback
+  *
+  * The @cb function is called when an instruction executes if
+  * entry @cond imm is true.
+@@ -748,7 +746,7 @@ const char *qemu_plugin_hwaddr_device_name(const struct qemu_plugin_hwaddr *h);
+  * @vcpu_index: the executing vCPU
+  * @info: an opaque handle for further queries about the memory
+  * @vaddr: the virtual address of the transaction
+- * @userdata: any user data attached to the callback
++ * @userdata: user data for callback
+  */
+ typedef void (*qemu_plugin_vcpu_mem_cb_t) (unsigned int vcpu_index,
+                                            qemu_plugin_meminfo_t info,
+@@ -761,7 +759,7 @@ typedef void (*qemu_plugin_vcpu_mem_cb_t) (unsigned int vcpu_index,
+  * @cb: callback of type qemu_plugin_vcpu_mem_cb_t
+  * @flags: (currently unused) callback flags
+  * @rw: monitor reads, writes or both
+- * @userdata: opaque pointer for userdata
++ * @userdata: user data for callback
+  *
+  * This registers a full callback for every memory access generated by
+  * an instruction. If the instruction doesn't access memory no
 -- 
 2.43.0
 
