@@ -4,108 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8EABCD98C7
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jun 2026 11:02:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4682CD98DE
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jun 2026 11:06:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZ552-0006HX-V3; Mon, 15 Jun 2026 07:02:12 -0400
+	id 1wZ598-0007cc-FK; Mon, 15 Jun 2026 07:06:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wZ551-0006H2-Du
- for qemu-devel@nongnu.org; Mon, 15 Jun 2026 07:02:11 -0400
-Received: from mail-yw1-x112a.google.com ([2607:f8b0:4864:20::112a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wZ54z-0006hk-SZ
- for qemu-devel@nongnu.org; Mon, 15 Jun 2026 07:02:11 -0400
-Received: by mail-yw1-x112a.google.com with SMTP id
- 00721157ae682-7e8833c99fcso32971967b3.3
- for <qemu-devel@nongnu.org>; Mon, 15 Jun 2026 04:02:09 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1781521328; cv=none;
- d=google.com; s=arc-20240605;
- b=g3iz4fBvpxzgZeJso+4d0LaCi9CYEt4omVENgpdlz1YKhloiy+ouxhIO2SOOJ+ZoVu
- 4ElxgOEv77cw0bYNmOHA6RP3jnDrs2BLFsT+pYlHBT9UgkrxKmm+MBF9m0lV1rqyG6zb
- fbGY5zq8UEJswASrUVpd/7HP/tPIM9O/5Bh5l6P287r7hVNDscp6GCum23ihp6M2O6Lx
- /GqJQJ73mZrm8YpXpXtZoz1myhhOpq5loZ/mY8phpboW0jnIj3x/1YK0QRobehXGnhdJ
- cL7JMT3OJeXkRQ75+tq35LCLVwuI+wblef9cK5qNAd1Zg10uXUl4+m7IXHDX0xut+UxP
- B/jA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=jNfQreTErrv2hEpql/5UQFkOkdcHpUgBEKbRJ+ec8rc=;
- fh=0rHSq3ueJB9m76HtRwk2RJEWDps4JZB4/EJOcuFp00U=;
- b=hgsMMRA0HXB7HqqdhDRHd8nIYRsMfNvroLiJFQ0CVGjrO5M2bEg8M5+AuSEI+5qM08
- EBgk6/rLvCU4j0WwF6qYHqYTv89B0YjpKhjcKcdIth4AND+s8M0D6z3woQ5xMol76MTj
- O7MHl+/o0cn2r2n2e6SVRyHFEOYv+3MIn63fsJBfMZWzJfueGTaKy6xZ/nAsVLqxk+Y/
- sWAbfO/OngV4cCil2CbBBVE6ipsmuzjEvLHklcpLEcSIw7sWIxb8kL0Ti+/5nkLeyhr1
- dLfPcd2S7FT49XUf7mO7nmII13AcGcnH7tnf72HRD1OMiMmYCdpqzbLP92kfI4sXbtT0
- Vcug==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1781521328; x=1782126128; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=jNfQreTErrv2hEpql/5UQFkOkdcHpUgBEKbRJ+ec8rc=;
- b=CNVHqE+OgP6OOSpVoueszODsVOpNFe/PQqRtPdkpiZ1BDUFofbmYyk3Yp+L6/KK/G1
- t7Z1dHT67kt78Eu7KsaplaeoaEjfSq4HmVhDMaobM7Y/I9v7K4JHBB2au8cQT9wsANWA
- SL05DA1krCJPO6t0Xc42Wur9FjqIMhyJM6IgmJjbciIvTvtBrNf77hLeiG0Ryl8Lh55y
- ihSaKj1BaBfT470D+skkA3XUefTO3mqvUjuJY3tC6z2CsmQjwnKwui1SaOf10w8CHy2s
- 35a5GtKFIEfmFf0/YcUNNP1BmNmnmCOTuKWD8k8bCyXrBL+sK2N46Nz2xqP3gofhhjnN
- 5FDQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781521328; x=1782126128;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=jNfQreTErrv2hEpql/5UQFkOkdcHpUgBEKbRJ+ec8rc=;
- b=l271N62I/IQDZSKEcUlMytle60RIg6x8jgCONXqduI3sKT/dXvGWU8Yh1HK/xi3OkV
- vmxcgdjpeE+Balulj3BcM2ljlZiTzmUm0LaLIetR2MxSJccZTFffn6LhtNKF8NGmZaSK
- iGK1QNQPZdp542+d03dbsYfa2BoppFCT8+hEjqyL4PaGHx4svrh3IPWpnwxVyNIEgr+6
- +MqVvPecOdcHRqeKjkBsNTg4ghgYVGFyQSEaNXRtfWl3imk/xVHEGQ87fisHiYfuv9VJ
- bk8uAW/wLi37zRvIiYer9BeTa3cvCroZovKiJwZmieZSDCn0ztyfjsWdLUCIAgmaiX6V
- u3UA==
-X-Gm-Message-State: AOJu0Yz5JMxI0YE6QSHWKwAf1UOej+7JMi8+pdbPc24luHqD2cEfmRBA
- 1uUapo4evu+dp0XJOoYxhPThMvxc8Ca4kO5c5aBQf4XCmgIv148rMSd+56I3nmZ1nVj7RW0lhYi
- 6XpsTRL6U39WNh6uWsLmDYDVESMGSHLKTN1dReUHAgA==
-X-Gm-Gg: Acq92OH7+u6SMR9oiPCb4L0b6ExP9RdvrA8cfSnmMf8XFqyZ71A3ttSAm07FQg/sgBx
- Se+1WMdUGqW6RpwaAyOr7kr5ZsJDIg2eeqJPSgIdd22SBOnIigcbYvAX5lp6Yo79sQGaex32fBm
- 9sW0VszWZ7IZFbzzJOaN4Ui4ABxTZ9X948nuhSGEHgfN7vqxkgkhakbuzhoRvBvlPaHrkLw6U01
- QFTMkGq8NXzdvUhkh/hJtY7wz251GLEaSROCPq6YAh7XJdzySo0RIH4XanWmakTMVbqFJ7I10wI
- MgVf1UyAngqsFiQCgakF0eqiQL1gUW8zVx8Asgs49b0WD0FEDQFsHKwBFEvpqvgOqYo=
-X-Received: by 2002:a05:690e:1c20:b0:660:5df1:f23f with SMTP id
- 956f58d0204a3-6627834a0dfmr11152146d50.57.1781521328563; Mon, 15 Jun 2026
- 04:02:08 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wZ595-0007cE-UB
+ for qemu-devel@nongnu.org; Mon, 15 Jun 2026 07:06:23 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wZ594-0007Yz-AV
+ for qemu-devel@nongnu.org; Mon, 15 Jun 2026 07:06:23 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1781521580;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=6zhaWiUk+thqYJxqHq/cB9HkoUiv7mVfKeNUIdcQihA=;
+ b=DQYoUoHr9zbfJs1CSMwJ+B/Ut1Gu3KS3F9PofuiX21opMZQ0U6ufjJG2KeRlk/eFO+dRdh
+ LnQPSb/lMvGtq4t40hRikITQiK5ROD6ZMIXr/wXP/8pKtUWi1dqz/udwRSWIUB4jVLzTDD
+ MM6P/R9xO/GVrgwbM1VOQzlhOewBF4I=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-194-jKPKAnuBMFmgz1SKEMSdqw-1; Mon,
+ 15 Jun 2026 07:06:19 -0400
+X-MC-Unique: jKPKAnuBMFmgz1SKEMSdqw-1
+X-Mimecast-MFC-AGG-ID: jKPKAnuBMFmgz1SKEMSdqw_1781521578
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 98C7B1956063
+ for <qemu-devel@nongnu.org>; Mon, 15 Jun 2026 11:06:18 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.44.22.4])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 41A34180049F
+ for <qemu-devel@nongnu.org>; Mon, 15 Jun 2026 11:06:18 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id CEB3F21E6A01; Mon, 15 Jun 2026 13:06:15 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org
+Subject: Re: [PATCH v3 2/7] json-parser: replace with a push parser
+In-Reply-To: <20260525150503.393743-3-pbonzini@redhat.com> (Paolo Bonzini's
+ message of "Mon, 25 May 2026 17:04:58 +0200")
+References: <20260525150503.393743-1-pbonzini@redhat.com>
+ <20260525150503.393743-3-pbonzini@redhat.com>
+Date: Mon, 15 Jun 2026 13:06:15 +0200
+Message-ID: <878q8gqd08.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-References: <20260529082948.363931-1-alex.bennee@linaro.org>
- <20260529082948.363931-8-alex.bennee@linaro.org>
- <CAFEAcA8719Q=VCwOm790V6FPA8FyaFZEux=N-7PmOGaaq=O_sw@mail.gmail.com>
- <878q8gjcms.fsf@draig.linaro.org>
-In-Reply-To: <878q8gjcms.fsf@draig.linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 15 Jun 2026 12:01:56 +0100
-X-Gm-Features: AVVi8CetPPb2pY0cel9IN6dR-6aJAbVnjHAtVmBC5Df3VBbHh0Upbt0eeYxUK3I
-Message-ID: <CAFEAcA86_a3GfXCDOo2G-R6v3ALwUwNFRkspyTCR0umGiAB2Hw@mail.gmail.com>
-Subject: Re: [PATCH v7 7/8] target/arm: handle the WFE trap case
-To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
- Alexander Graf <agraf@csgraf.de>, Mohamed Mediouni <mohamed@unpredictable.fr>, 
- Pedro Barbuda <pbarbuda@microsoft.com>, qemu-arm@nongnu.org,
- kvm@vger.kernel.org, Richard Henderson <richard.henderson@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112a;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 8
+X-Spam_score: 0.8
+X-Spam_bar: /
+X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,37 +87,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 15 Jun 2026 at 11:56, Alex Benn=C3=A9e <alex.bennee@linaro.org> wro=
-te:
+Paolo Bonzini <pbonzini@redhat.com> writes:
+
+> In order to avoid stashing all the tokens corresponding to a JSON value,
+> embed the parsing stack and state machine in JSONParser.  This is more
+> efficient and allows for more prompt error recovery; it also does not
+> make the code substantially larger than the current recursive descent
+> parser, though the state machine is probably a bit harder to follow.
 >
-> Peter Maydell <peter.maydell@linaro.org> writes:
+> The stack consists of QLists and QDicts corresponding to open
+> brackets and braces, plus optionally a QString with the current
+> key on top of each QDict.
 >
-> > On Fri, 29 May 2026 at 09:29, Alex Benn=C3=A9e <alex.bennee@linaro.org>=
- wrote:
-> >>
-> >> Now WFE can actually suspend on A-profile we also need to handle when
-> >> its trapped. To do this we need to pass the instruction size so we can
-> >> deal with the is_16bit syndrome encoding.
-> >>
-> >> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-> >> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
-> >
-> > Doesn't this need to go earlier in the patchset? Otherwise there's
-> > a point where WFE can go to sleep but doesn't honour the trap bit.
+> After each value is parsed, it is added to the top array or dictionary
+> or, if the stack is empty, json_parser_feed returns the complete
+> QObject.
 >
-> Hmm - the way I read the description was we would only trap if we were
-> going to sleep. Pre 6/8 we never sleep so we can't trap.
+> For now, json-streamer.c keeps tracking the tokens up until braces
+> and brackets are balanced, and then shoves the whole queue of tokens
+> into the push parser.  The only logic change is that JSON_END_OF_INPUT
+> always triggers the emptying of the queue; the parser takes notice and
+> checks that there is nothing on the stack.  Not using brace_count
+> and bracket_count for this is the first step towards improved separation
+> of concerns between json-parser.c and json-streamer.c.
+>
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 
-Yes, that's the point. The guarantee we have to uphold with
-the trap bits is "if the WFE would actually go to sleep, then
-we need to take the trap".
+[...]
 
-- before this patchset: we never sleep, so never need to trap
-- after patch 6: we can sleep, but we incorrectly won't trap
-- after this patch: we can sleep and will trap
+> diff --git a/qobject/json-parser-int.h b/qobject/json-parser-int.h
+> index 8c01f236276..1f435cb8eb2 100644
+> --- a/qobject/json-parser-int.h
+> +++ b/qobject/json-parser-int.h
+> @@ -49,6 +49,9 @@ void json_message_process_token(JSONLexer *lexer, GString *input,
+>  
+>  /* json-parser.c */
+>  JSONToken *json_token(JSONTokenType type, int x, int y, GString *tokstr);
+> -QObject *json_parser_parse(GQueue *tokens, va_list *ap, Error **errp);
+> +void json_parser_init(JSONParserContext *ctxt, va_list *ap);
+> +void json_parser_reset(JSONParserContext *ctxt);
+> +QObject *json_parser_feed(JSONParserContext *ctxt, const JSONToken *token, Error **errp);
 
-So there's a window in this patchseries (after 6 but before 7)
-where we don't do the right thing.
+checkpatch WARNING: line over 80 characters.  It's just a warning, but
+the line is *really* easy to break.
 
--- PMM
+> +void json_parser_destroy(JSONParserContext *ctxt);
+>  
+>  #endif
+
+[...]
+
 
