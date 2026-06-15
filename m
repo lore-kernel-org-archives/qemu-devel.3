@@ -4,57 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 949D6CD98CE
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jun 2026 20:42:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73F84CD98CE
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jun 2026 20:42:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZE76-000410-79; Mon, 15 Jun 2026 16:40:56 -0400
+	id 1wZE6H-0001hU-2r; Mon, 15 Jun 2026 16:40:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wZE75-00040d-8z
- for qemu-devel@nongnu.org; Mon, 15 Jun 2026 16:40:55 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1wZE6E-0001SY-CO
+ for qemu-devel@nongnu.org; Mon, 15 Jun 2026 16:40:02 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wZE73-000304-9z
- for qemu-devel@nongnu.org; Mon, 15 Jun 2026 16:40:55 -0400
+ id 1wZE6C-0002fw-Bl
+ for qemu-devel@nongnu.org; Mon, 15 Jun 2026 16:40:02 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781556052;
+ s=mimecast20190719; t=1781555999;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=hOR5Fz4I8fH5dZge/t0gwMnAmkObJtYhqnACaNL668s=;
- b=E7AsSsetThPklIfo9/q5SaBejVBsmIngq+mnk38MpLkLEC1X5259tXZJU+lyrbJsEOPF19
- Xn7rkI56XzD6hDeOWOonjJ0XxgCU43yWZ0f2ig6pUVQA606arzHWgXkkDA2EH1CAheu247
- BFma1Pl4F6c7LH+67Mg7pAHF73+2z08=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=HE0K4FWAFLU/nTUXlylWqdn6JEHOpkgSeYBgtcj3Ews=;
+ b=ebAdL0Lb2xJAe4U8KuV9kO4QRaZke2NFX/vCWKHCrzQr402t3lYxfJ5WMtHbA35ABUpDG9
+ YbLSvdgAFkrg3Kc5gDtJFIYv9MfritXoRffXlqH9dzlSp4J8MZdb4K8m4y21nEPprIaDm5
+ Ox5p0jW6VsIVoNzqAblJoWSGi0+/p6g=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-558-inQYq1bTMJ2fpN__Qhc1Nw-1; Mon,
- 15 Jun 2026 16:40:49 -0400
-X-MC-Unique: inQYq1bTMJ2fpN__Qhc1Nw-1
-X-Mimecast-MFC-AGG-ID: inQYq1bTMJ2fpN__Qhc1Nw_1781556048
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-359-5VT564HwNPStkg-BO2n0UA-1; Mon,
+ 15 Jun 2026 16:39:56 -0400
+X-MC-Unique: 5VT564HwNPStkg-BO2n0UA-1
+X-Mimecast-MFC-AGG-ID: 5VT564HwNPStkg-BO2n0UA_1781555994
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A20D91800345; Mon, 15 Jun 2026 20:40:48 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D625419560AA; Mon, 15 Jun 2026 20:39:54 +0000 (UTC)
 Received: from localhost (unknown [10.44.22.9])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 7160719560B2; Mon, 15 Jun 2026 20:40:46 +0000 (UTC)
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id A5CE63008B37; Mon, 15 Jun 2026 20:39:53 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Tue, 16 Jun 2026 00:38:01 +0400
-Subject: [PATCH v2 35/53] virtio-balloon: convert guest-stats property to
- QAPI type
+Date: Tue, 16 Jun 2026 00:37:51 +0400
+Subject: [PATCH v2 25/53] whpx: convert OnOffAuto arch properties to
+ QAPI-aware registration
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260616-qom-qapi-v2-35-cc9396b9c18c@redhat.com>
+Message-Id: <20260616-qom-qapi-v2-25-cc9396b9c18c@redhat.com>
 References: <20260616-qom-qapi-v2-0-cc9396b9c18c@redhat.com>
 In-Reply-To: <20260616-qom-qapi-v2-0-cc9396b9c18c@redhat.com>
 To: qemu-devel@nongnu.org
@@ -65,34 +65,35 @@ Cc: Markus Armbruster <armbru@redhat.com>,
  Michael Roth <michael.roth@amd.com>, 
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=10057;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=6655;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=XCk/M4Otn8oLL/1a9v9H08MZ1uICAg0OSwJBeYuC2LI=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqMGKPt/eOowbKeYty/ipPETkYX6tMK5d2yTCmk
- 1o9EzvIpC6JAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCajBijwAKCRDa6OEJdZac
- 5a87D/0aONkurI0Istem1lRgIKaiFnHFN12tNFuSf1vTqYNpaAjFZqmjuGaPCPQjshun9Dngmab
- 0NOUupnhDySe1KbHMLIKdiA4sTkud6TRbp4uEkmUICxbcrEZu7uhb2qY/meuutgtwpbYafv7Ijs
- tFs10HGk/Wty3ekImgWjyasSedp3D+8W+KHn5yMjOcp8oRToxMqMt1uuXponV7NX2vnwec9Od8J
- s/9Q4annZs9Vk2l74EgExiYxb7coWGK0XQ5cLJkia+EsF526ISRFDzmplDcAvCiE4TMzr9dxLD7
- Hty4Rme2sYS4LFVZxq55775I0ExA9VIdj4on0BSndJr/DMhbKZCBnE4jCdQUC4ROf3qhuy3Phiy
- Fnc41x3RiPfJJzDEKxY5jeZBAe9CkWCvholdffar/yLnKKae8o5ly/oZ3Q2hwlHun5Q9E1EW9iu
- BiFBXqwd0+RIfM7L8c1hHxq7lrOO9jKO+7f0dh9hEX5BCKugr9kocVovpIh/hL3ffmm8gY4x8I7
- mANrKlpIheQ6s7tNJast6tQl3WZQXD9eHg1Zs6AQ7vxNxbmsZf6eObopOH/ZHxOHhwOPcbbAeAJ
- mx1yO7g/kyFqqPBaWLs1vYUTrzyq+BY1kMgY0+ffbZcj5W26N5RRcIlllqQiMYjLIVkyKf1rsRE
- riR3yh3l649dWrg==
+ bh=BzBiTMpuo1MafDbjkgRY9tNBSnfuxdeq+gbfJzPWWY4=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqMGKPWYmBQeOQsxPaOTWeMCBKW5JdCUPjtvrs1
+ 9BLIxYWkxGJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCajBijwAKCRDa6OEJdZac
+ 5S5OEACSLs8P6AOzqCdPFNl+QBOoS0xaEq+I4lxjFxJOr2AR5fqL2/xVGYESSE0iaFxILJ4FByD
+ eXjVmCmZ4Q+UKCm8UMILHZ4aJxBKC/ruN7UL/oNjsNmz17SXYBS1s3Xo8vbI6CRth3WaY+b9BnT
+ jcGDESCvtqGFPtDjuNlBuACLOkLAWmf4mYkX99BXLMLKcBZuA9td/cSYNiSHuztjJfwvYVf3GYE
+ dBBScaPbsR5AlINBpxCsZpPrzMbgJM/8+49GOACKGyscrSSS3F/RlYl+pAqWrbibvEF6dzGs11q
+ P+xIo/Ea063uctSe5IuZUo9r5NCvflTeQQUpZgYt+mgAfBoZsY2WF8Amf+t8+g3TPfYEC8ER0gv
+ G5l/KewTWL6whh9lwknoDYoLgnIsEa/r+Oe+pOunAkaWERA4b4pIgkESolippQb7psM2e9Es0aS
+ OE9QBiW+u81f4o3bmHBSKaTPBAGSyCd6Uk8gJTY9/QsBL90eSb4adt+zYzwsX8wWCV0G3TLUlJq
+ c4pqbtPJC3zxsxK6gw8XU7cgTJI3rmKbdmcB853r5WhUuF6rxOL9hjMe7IV/Utm2sZjwTCtwO2A
+ vaDMJivAgyBQMzD4+rrTz0u98fnluIkBE/cNxn94++q5ZySwqFk6x9f6zfz1N8w7xqokIij8LJk
+ XBUo+CIE7Rrdusg==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+X-Spam_score_int: 8
+X-Spam_score: 0.8
+X-Spam_bar: /
+X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,274 +109,214 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Define VirtioBalloonStats and VirtioBalloonGuestStats QAPI struct types
-in the schema, replacing the hand-rolled visitor in balloon_stats_get_all()
-with a generated visit_type_VirtioBalloonGuestStats() call.
-
-The wire format is preserved: the JSON output from qom-get is identical
-to the previous hand-rolled visitor output.
+Convert the ignore-unknown-msr, intercept-msr-gp, and ssd OnOffAuto
+properties from manual visitor-based callbacks to
+property_add_qapi_enum().
 
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- docs/interop/virtio-balloon-stats.rst | 22 +--------
- qapi/machine.json                     | 92 +++++++++++++++++++++++++++++++++++
- hw/virtio/virtio-balloon.c            | 86 ++++++++++++--------------------
- 3 files changed, 124 insertions(+), 76 deletions(-)
+ target/i386/whpx/whpx-all.c | 102 +++++++++++++++-----------------------------
+ 1 file changed, 34 insertions(+), 68 deletions(-)
 
-diff --git a/docs/interop/virtio-balloon-stats.rst b/docs/interop/virtio-balloon-stats.rst
-index b9a6a6edb22..88d3271bbb0 100644
---- a/docs/interop/virtio-balloon-stats.rst
-+++ b/docs/interop/virtio-balloon-stats.rst
-@@ -22,27 +22,7 @@ polling the guest's balloon driver for new stats in the specified time
- interval.
- 
- To retrieve those stats, clients have to query the guest-stats property,
--which will return a dictionary containing:
--
--  * A key named 'stats', containing all available stats. If the guest
--    doesn't support a particular stat, or if it couldn't be retrieved,
--    its value will be -1. Currently, the following stats are supported:
--
--      - stat-swap-in
--      - stat-swap-out
--      - stat-major-faults
--      - stat-minor-faults
--      - stat-free-memory
--      - stat-total-memory
--      - stat-available-memory
--      - stat-disk-caches
--      - stat-htlb-pgalloc
--      - stat-htlb-pgfail
--
--  * A key named last-update, which contains the last stats update
--    timestamp in seconds. Since this timestamp is generated by the host,
--    a buggy guest can't influence its value. The value is 0 if the guest
--    has not updated the stats (yet).
-+which will return a VirtioBalloonGuestStats (see QAPI documentation).
- 
- It's also important to note the following:
- 
-diff --git a/qapi/machine.json b/qapi/machine.json
-index 685e4e29b87..3327f985be2 100644
---- a/qapi/machine.json
-+++ b/qapi/machine.json
-@@ -1131,6 +1131,98 @@
- ##
- { 'struct': 'BalloonInfo', 'data': {'actual': 'int' } }
- 
-+##
-+# @VirtioBalloonStats:
-+#
-+# VirtIO balloon device guest memory statistics.
-+#
-+# If the guest doesn't support a particular stat, or if it couldn't
-+# be retrieved, its value will be -1.
-+#
-+# @stat-swap-in: The amount of memory that has been
-+#     swapped in (in bytes).
-+#
-+# @stat-swap-out: The amount of memory that has been
-+#     swapped out to disk (in bytes).
-+#
-+# @stat-major-faults: The number of major page faults
-+#     that have occurred.
-+#
-+# @stat-minor-faults: The number of minor page faults
-+#     that have occurred.
-+#
-+# @stat-free-memory: The amount of memory not being used
-+#     for any purpose (in bytes).
-+#
-+# @stat-total-memory: The total amount of memory available
-+#     (in bytes).
-+#
-+# @stat-available-memory: An estimate of how much memory is available
-+#     (in bytes) for starting new applications, without pushing the
-+#     system to swap.
-+#
-+# @stat-disk-caches: The amount of memory, in bytes, that can be
-+#     quickly reclaimed without additional I/O.  Typically these pages
-+#     are used for caching files from disk.
-+#
-+# @stat-htlb-pgalloc: The number of successful hugetlb page
-+#     allocations
-+#
-+# @stat-htlb-pgfail: The number of failed hugetlb page
-+#     allocations
-+#
-+# @stat-oom-kills: The number of OOM killer invocations
-+#
-+# @stat-alloc-stalls: The number of memory allocation stalls
-+#
-+# @stat-async-scans: The number of memory scanned asynchronously
-+#
-+# @stat-direct-scans: The number of memory scanned directly
-+#
-+# @stat-async-reclaims: The number of memory reclaimed asynchronously
-+#
-+# @stat-direct-reclaims: The number of memory reclaimed directly
-+#
-+# Since: 11.1
-+##
-+{ 'struct': 'VirtioBalloonStats',
-+  'data': {
-+    'stat-swap-in': 'uint64',
-+    'stat-swap-out': 'uint64',
-+    'stat-major-faults': 'uint64',
-+    'stat-minor-faults': 'uint64',
-+    'stat-free-memory': 'uint64',
-+    'stat-total-memory': 'uint64',
-+    'stat-available-memory': 'uint64',
-+    'stat-disk-caches': 'uint64',
-+    'stat-htlb-pgalloc': 'uint64',
-+    'stat-htlb-pgfail': 'uint64',
-+    'stat-oom-kills': 'uint64',
-+    'stat-alloc-stalls': 'uint64',
-+    'stat-async-scans': 'uint64',
-+    'stat-direct-scans': 'uint64',
-+    'stat-async-reclaims': 'uint64',
-+    'stat-direct-reclaims': 'uint64' } }
-+
-+##
-+# @VirtioBalloonGuestStats:
-+#
-+# Guest statistics from the VirtIO balloon device.
-+#
-+# @last-update: timestamp in seconds of the last stats
-+#     update from the guest (since this timestamp is generated
-+#     by the host, a buggy guest can't influence its value),
-+#     or 0 if no update has been received yet.
-+#
-+# @stats: balloon memory statistics
-+#
-+# Since: 11.1
-+##
-+{ 'struct': 'VirtioBalloonGuestStats',
-+  'data': {
-+    'last-update': 'int',
-+    'stats': 'VirtioBalloonStats' } }
-+
- ##
- # @query-balloon:
- #
-diff --git a/hw/virtio/virtio-balloon.c b/hw/virtio/virtio-balloon.c
-index 9e43948128f..c9873f8cf0c 100644
---- a/hw/virtio/virtio-balloon.c
-+++ b/hw/virtio/virtio-balloon.c
-@@ -29,6 +29,8 @@
- #include "qapi/error.h"
- #include "qapi/qapi-builtin-type-infos.h"
- #include "qapi/qapi-events-machine.h"
-+#include "qapi/qapi-type-infos-machine.h"
-+#include "qapi/qapi-visit-machine.h"
- #include "qapi/visitor.h"
- #include "trace.h"
+diff --git a/target/i386/whpx/whpx-all.c b/target/i386/whpx/whpx-all.c
+index e626acef2f0..08714248b1f 100644
+--- a/target/i386/whpx/whpx-all.c
++++ b/target/i386/whpx/whpx-all.c
+@@ -30,7 +30,7 @@
  #include "qemu/error-report.h"
-@@ -169,33 +171,8 @@ static void balloon_deflate_page(VirtIOBalloon *balloon,
+ #include "qapi/error.h"
+ #include "qapi/qapi-types-common.h"
+-#include "qapi/qapi-visit-common.h"
++#include "qapi/qapi-type-infos-common.h"
+ #include "migration/blocker.h"
+ #include "host-cpu.h"
+ #include "accel/accel-cpu-target.h"
+@@ -1853,7 +1853,7 @@ void whpx_apply_breakpoints(
      }
  }
  
--/*
-- * All stats upto VIRTIO_BALLOON_S_NR /must/ have a
-- * non-NULL name declared here, since these are used
-- * as keys for populating the QDict with stats
-- */
--static const char *balloon_stat_names[] = {
--   [VIRTIO_BALLOON_S_SWAP_IN] = "stat-swap-in",
--   [VIRTIO_BALLOON_S_SWAP_OUT] = "stat-swap-out",
--   [VIRTIO_BALLOON_S_MAJFLT] = "stat-major-faults",
--   [VIRTIO_BALLOON_S_MINFLT] = "stat-minor-faults",
--   [VIRTIO_BALLOON_S_MEMFREE] = "stat-free-memory",
--
--   [VIRTIO_BALLOON_S_MEMTOT] = "stat-total-memory",
--   [VIRTIO_BALLOON_S_AVAIL] = "stat-available-memory",
--   [VIRTIO_BALLOON_S_CACHES] = "stat-disk-caches",
--   [VIRTIO_BALLOON_S_HTLB_PGALLOC] = "stat-htlb-pgalloc",
--   [VIRTIO_BALLOON_S_HTLB_PGFAIL] = "stat-htlb-pgfail",
--
--   [VIRTIO_BALLOON_S_OOM_KILL] = "stat-oom-kills",
--   [VIRTIO_BALLOON_S_ALLOC_STALL] = "stat-alloc-stalls",
--   [VIRTIO_BALLOON_S_ASYNC_SCAN] = "stat-async-scans",
--   [VIRTIO_BALLOON_S_DIRECT_SCAN] = "stat-direct-scans",
--   [VIRTIO_BALLOON_S_ASYNC_RECLAIM] = "stat-async-reclaims",
--
--   [VIRTIO_BALLOON_S_DIRECT_RECLAIM] = "stat-direct-reclaims",
--};
--G_STATIC_ASSERT(G_N_ELEMENTS(balloon_stat_names) == VIRTIO_BALLOON_S_NR);
-+/* Update VirtioBalloonStats QAPI type when new stats are added */
-+G_STATIC_ASSERT(VIRTIO_BALLOON_S_NR == 16);
- 
- /*
-  * reset_stats - Mark all items in the stats array as unset
-@@ -257,33 +234,31 @@ static void balloon_stats_get_all(Object *obj, Visitor *v, const char *name,
-                                   void *opaque, Error **errp)
+-bool whpx_arch_supports_guest_debug(void) 
++bool whpx_arch_supports_guest_debug(void)
  {
-     VirtIOBalloon *s = VIRTIO_BALLOON(obj);
--    bool ok = false;
--    int i;
--
--    if (!visit_start_struct(v, name, NULL, 0, errp)) {
--        return;
--    }
--    if (!visit_type_int(v, "last-update", &s->stats_last_update, errp)) {
--        goto out_end;
--    }
--
--    if (!visit_start_struct(v, "stats", NULL, 0, errp)) {
--        goto out_end;
--    }
--    for (i = 0; i < VIRTIO_BALLOON_S_NR; i++) {
--        if (!visit_type_uint64(v, balloon_stat_names[i], &s->stats[i], errp)) {
--            goto out_nested;
--        }
--    }
--    ok = visit_check_struct(v, errp);
--out_nested:
--    visit_end_struct(v, NULL);
--
--    if (ok) {
--        visit_check_struct(v, errp);
--    }
--out_end:
--    visit_end_struct(v, NULL);
-+    VirtioBalloonStats stats = {
-+        .stat_swap_in = s->stats[VIRTIO_BALLOON_S_SWAP_IN],
-+        .stat_swap_out = s->stats[VIRTIO_BALLOON_S_SWAP_OUT],
-+        .stat_major_faults = s->stats[VIRTIO_BALLOON_S_MAJFLT],
-+        .stat_minor_faults = s->stats[VIRTIO_BALLOON_S_MINFLT],
-+        .stat_free_memory = s->stats[VIRTIO_BALLOON_S_MEMFREE],
-+        .stat_total_memory = s->stats[VIRTIO_BALLOON_S_MEMTOT],
-+        .stat_available_memory = s->stats[VIRTIO_BALLOON_S_AVAIL],
-+        .stat_disk_caches = s->stats[VIRTIO_BALLOON_S_CACHES],
-+        .stat_htlb_pgalloc = s->stats[VIRTIO_BALLOON_S_HTLB_PGALLOC],
-+        .stat_htlb_pgfail = s->stats[VIRTIO_BALLOON_S_HTLB_PGFAIL],
-+        .stat_oom_kills = s->stats[VIRTIO_BALLOON_S_OOM_KILL],
-+        .stat_alloc_stalls = s->stats[VIRTIO_BALLOON_S_ALLOC_STALL],
-+        .stat_async_scans = s->stats[VIRTIO_BALLOON_S_ASYNC_SCAN],
-+        .stat_direct_scans = s->stats[VIRTIO_BALLOON_S_DIRECT_SCAN],
-+        .stat_async_reclaims = s->stats[VIRTIO_BALLOON_S_ASYNC_RECLAIM],
-+        .stat_direct_reclaims = s->stats[VIRTIO_BALLOON_S_DIRECT_RECLAIM],
-+    };
-+    VirtioBalloonGuestStats guest_stats = {
-+        .last_update = s->stats_last_update,
-+        .stats = &stats,
-+    };
-+    VirtioBalloonGuestStats *argp = &guest_stats;
-+
-+    visit_type_VirtioBalloonGuestStats(v, name, &argp, errp);
+     return true;
+ }
+@@ -1938,7 +1938,7 @@ static int whpx_handle_hyperv_guestidle(CPUState *cpu)
+     return whpx_handle_halt(cpu);
  }
  
- static void balloon_stats_get_poll_interval(Object *obj, Visitor *v,
-@@ -1020,7 +995,8 @@ static void virtio_balloon_instance_init(Object *obj)
-     s->free_page_hint_cmd_id = VIRTIO_BALLOON_FREE_PAGE_HINT_CMD_ID_MIN;
-     s->free_page_hint_notify.notify = virtio_balloon_free_page_hint_notify;
+-static void whpx_vcpu_kick_out_of_hlt(CPUState *cpu) 
++static void whpx_vcpu_kick_out_of_hlt(CPUState *cpu)
+ {
+     WHV_REGISTER_VALUE reg;
+     whpx_get_reg(cpu, WHvRegisterInternalActivityState, &reg);
+@@ -2042,7 +2042,7 @@ static void whpx_vcpu_pre_run(CPUState *cpu)
+                 .Vector = irq,
+             };
+             reg_count += 1;
+-            /* 
++            /*
+              * When the Hyper-V APIC is enabled, to get out of HLT we
+              * either have to request an interrupt or manually get it away
+              * from HLT.
+@@ -2342,7 +2342,7 @@ int whpx_vcpu_run(CPUState *cpu)
+             WHV_REGISTER_VALUE reg_values[3] = {0};
+             WHV_REGISTER_NAME reg_names[3];
+             UINT32 reg_count;
+-            bool is_known_msr = 0; 
++            bool is_known_msr = 0;
+             bool raises_gpf = false;
+             uint64_t val;
  
--    object_property_add(obj, "guest-stats", "guest statistics",
-+    object_property_add_qapi(obj, "guest-stats",
-+                        &VirtioBalloonGuestStats_type_info,
-                         balloon_stats_get_all, NULL, NULL, NULL);
+@@ -2898,120 +2898,86 @@ void whpx_cpu_instance_init(CPUState *cs)
+  * Partition support
+  */
  
-     object_property_add_qapi(obj, "guest-stats-polling-interval", &int_type_info,
+-static void whpx_set_unknown_msr(Object *obj, Visitor *v,
+-                                   const char *name, void *opaque,
+-                                   Error **errp)
++static void whpx_set_unknown_msr(Object *obj, int value, Error **errp)
+ {
+     struct whpx_state *whpx = &whpx_global;
+-    OnOffAuto mode;
+-
+-    if (!visit_type_OnOffAuto(v, name, &mode, errp)) {
+-        return;
+-    }
+ 
+-    switch (mode) {
++    switch (value) {
+     case ON_OFF_AUTO_ON:
+         whpx->ignore_unknown_msr = true;
+         break;
+-
+     case ON_OFF_AUTO_OFF:
+         whpx->ignore_unknown_msr = false;
+         break;
+-
+     case ON_OFF_AUTO_AUTO:
+         whpx->ignore_unknown_msr = true;
+         break;
+     default:
+-        /*
+-         * The value was checked in visit_type_OnOffAuto() above. If
+-         * we get here, then something is wrong in QEMU.
+-         */
+-        abort();
++        g_assert_not_reached();
+     }
+ }
+ 
+-static void whpx_set_intercept_msr_gp(Object *obj, Visitor *v,
+-                                   const char *name, void *opaque,
+-                                   Error **errp)
++static void whpx_set_intercept_msr_gp(Object *obj, int value, Error **errp)
+ {
+     struct whpx_state *whpx = &whpx_global;
+-    OnOffAuto mode;
+-
+-    if (!visit_type_OnOffAuto(v, name, &mode, errp)) {
+-        return;
+-    }
+ 
+-    switch (mode) {
++    switch (value) {
+     case ON_OFF_AUTO_ON:
+         whpx->intercept_msr_gp = true;
+         break;
+-
+     case ON_OFF_AUTO_OFF:
+         whpx->intercept_msr_gp = false;
+         break;
+-
+     case ON_OFF_AUTO_AUTO:
+         whpx->intercept_msr_gp = false;
+         break;
+     default:
+-        /*
+-         * The value was checked in visit_type_OnOffAuto() above. If
+-         * we get here, then something is wrong in QEMU.
+-         */
+-        abort();
++        g_assert_not_reached();
+     }
+ }
+ 
+-static void whpx_set_ssd(Object *obj, Visitor *v,
+-                                   const char *name, void *opaque,
+-                                   Error **errp)
++static void whpx_set_ssd(Object *obj, int value, Error **errp)
+ {
+     struct whpx_state *whpx = &whpx_global;
+-    OnOffAuto mode;
+-
+-    if (!visit_type_OnOffAuto(v, name, &mode, errp)) {
+-        return;
+-    }
+ 
+-    switch (mode) {
++    switch (value) {
+     case ON_OFF_AUTO_ON:
+         whpx->separate_security_domain = true;
+         break;
+-
+     case ON_OFF_AUTO_OFF:
+         whpx->separate_security_domain = false;
+         break;
+-
+     case ON_OFF_AUTO_AUTO:
+         whpx->separate_security_domain = true;
+         break;
+     default:
+-        /*
+-         * The value was checked in visit_type_OnOffAuto() above. If
+-         * we get here, then something is wrong in QEMU.
+-         */
+-        abort();
++        g_assert_not_reached();
+     }
+ }
+ 
+ 
+ void whpx_arch_accel_class_init(ObjectClass *oc)
+ {
+-    object_class_property_add(oc, "ignore-unknown-msr", "OnOffAuto",
+-        NULL, whpx_set_unknown_msr,
+-        NULL, NULL);
+-    object_class_property_set_description(oc, "ignore-unknown-msr",
+-        "Configure unknown MSR behavior");
+-    object_class_property_add(oc, "intercept-msr-gp", "OnOffAuto",
+-        NULL, whpx_set_intercept_msr_gp,
+-        NULL, NULL);
+-    object_class_property_set_description(oc, "intercept-msr-gp",
+-        "Intercept #GP to log erroring MSR accesses.");
+-    object_class_property_add(oc, "ssd", "OnOffAuto",
+-        NULL, whpx_set_ssd,
+-        NULL, NULL);
+-    object_class_property_set_description(oc, "ssd",
+-        "Separate security domain");
++    object_class_property_add_qapi_enum(oc, QAPI_ENUM_PROP(
++        .name = "ignore-unknown-msr",
++        .description = "Configure unknown MSR behavior",
++        .qapi_type = &OnOffAuto_type_info,
++        .set = whpx_set_unknown_msr,
++    ));
++
++    object_class_property_add_qapi_enum(oc, QAPI_ENUM_PROP(
++        .name = "intercept-msr-gp",
++        .description = "Intercept #GP to log erroring MSR accesses.",
++        .qapi_type = &OnOffAuto_type_info,
++        .set = whpx_set_intercept_msr_gp,
++    ));
++
++    object_class_property_add_qapi_enum(oc, QAPI_ENUM_PROP(
++        .name = "ssd",
++        .description = "Separate security domain",
++        .qapi_type = &OnOffAuto_type_info,
++        .set = whpx_set_ssd,
++    ));
+ }
+ 
+ int whpx_accel_init(AccelState *as, MachineState *ms)
 
 -- 
 2.54.0
