@@ -4,90 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 790FACD98CF
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jun 2026 14:50:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ABA7FCD98CF
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jun 2026 14:57:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZ8ce-0007uU-Au; Mon, 15 Jun 2026 10:49:08 -0400
+	id 1wZ8k5-0003PH-Qe; Mon, 15 Jun 2026 10:56:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wZ8cZ-0007rc-8k
- for qemu-devel@nongnu.org; Mon, 15 Jun 2026 10:49:04 -0400
-Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wZ8cN-0005fn-D3
- for qemu-devel@nongnu.org; Mon, 15 Jun 2026 10:48:54 -0400
-Received: by mail-pl1-x636.google.com with SMTP id
- d9443c01a7336-2c31212104cso14212955ad.2
- for <qemu-devel@nongnu.org>; Mon, 15 Jun 2026 07:48:47 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wZ8jo-0003NE-15
+ for qemu-devel@nongnu.org; Mon, 15 Jun 2026 10:56:33 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wZ8jl-00083Z-0F
+ for qemu-devel@nongnu.org; Mon, 15 Jun 2026 10:56:31 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1781535384;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=ztWkk3Xpe+kM9d9WYrvzWIt2WX06LB0jeIufZc3Qy1Q=;
+ b=GovBKd8b22FVH5EHwnyZdf/x3BIm5Y9wntiO1csGQjMr08izwcWw5t6NPctHmf6G/121lR
+ wsmeq36DJ39ysZ5sTNJSioQsmRAFXjRUbyx60ebmjbv9824V2uYXlo/EK4LQQMDDRPb65y
+ hDy7ldy/zNem+rOsxHhFC9JY6kplwuQ=
+Received: from mail-ed1-f69.google.com (mail-ed1-f69.google.com
+ [209.85.208.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-515-B7s80o19Njmv3Y6zi_CWsw-1; Mon, 15 Jun 2026 10:56:23 -0400
+X-MC-Unique: B7s80o19Njmv3Y6zi_CWsw-1
+X-Mimecast-MFC-AGG-ID: B7s80o19Njmv3Y6zi_CWsw_1781535382
+Received: by mail-ed1-f69.google.com with SMTP id
+ 4fb4d7f45d1cf-68bc68bc910so4238627a12.0
+ for <qemu-devel@nongnu.org>; Mon, 15 Jun 2026 07:56:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1781534926; x=1782139726; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=t8+mV9HiTD3Eu7FTUBwiGKuLUXtotABZr0FR4aRLwYE=;
- b=rQP9IwWjrkhV9kIKgCe5MclfQ39L15CR39xnqXntLWsFdVMvPQ0u2oQu9gsYHhZz2v
- mQRkIRW6catsKhU92FQzSfzkRw14aaFV+oHNMcd6mtFzb9dOKQ2yWQMhsWLN04NlTpF8
- U2VEgOrTc+7j7Keug3mgBRXmkF3mHKh25lHi1SDjdQmzVTUu8HnhmH4j2eK2E4Rns1m6
- v3U4/WcgxGAJDfiHCHWy7Q2bl7C9kHtpnKxbCqZ5AoGkqZ0E3Eno7QN4XCqpT/QwuFMl
- ByqdvOGCaTVQl//JEYSqOsCIQT/wsaZcoSXMSjm9LETz5t3myNVhiHdkIK3xaweFTr6Q
- ULdQ==
+ d=redhat.com; s=google; t=1781535382; x=1782140182; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=ztWkk3Xpe+kM9d9WYrvzWIt2WX06LB0jeIufZc3Qy1Q=;
+ b=evvQwq8lcz5UMuu/3kdtpHwscYIPy8d5DB+hCjR37eN0FyIAKgrEE8zD7xOQmEiUR/
+ hIakEh+RghsA47wcDNoHVi90YJEPQgkj7On0PgBa8DUWqx1ixd9P8w2n3SuXdEyE0WrE
+ +bNiZvFMiQYrYmO0ZR4YHE63SThnyeLrP7fGFnpXOru6QIR0J4lXbbrbh1et/kN5fT6/
+ 3T/lhY9Jy59Rz4Vu9pDLcmflfk9RHhPtIIaQdkqZWCpSdj1dAmlD+8GaAdMCnFtIX8F/
+ 7sh9VNd9PwWHp8Xjtusradkm49aELz++5ItpZY4s2NLNHKX7XznCz7vOHH1kQSHv8cvE
+ 3GSQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781534926; x=1782139726;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=t8+mV9HiTD3Eu7FTUBwiGKuLUXtotABZr0FR4aRLwYE=;
- b=XMRuNytRSR2Zxpz/pVlVUToTO3AxXPpbftOa9NSzP2LqfH1VFFFLpoDfwwKguiyZit
- ZyXGtVk9CfFwI0o/TAgAHYlguzKUPKlSdsB1ts0jBasJWlMwKNXeRniNvGKpbBc03K/Z
- UdiMd6Vh2253R5EMdvBKFRhl1qbNxx3uwbUEcfNMarqS4fa+DUaLh45PBDN3yvItamEc
- wovoy6e2eu2+C0cZPw8ABE/sr8P7dmStnCKyWelNh6D4lwXOZcxYwufNS0Xr1Jffw2/I
- 69v/131BleuTBKD0ChpQ71uhPwI2ALCrg4tg9ZHEfpLz4A6NAdTMS4tqYYdZh1Ig5kNn
- OfeQ==
-X-Gm-Message-State: AOJu0YyA2ADe5f6edWpiUTvy9QcJh/vFfRDFEvzRP2rk2fUfTpelObSa
- EPUCcsMllEkAA709AJUMGemz2EgKnlH/2sR6Jq03yYmjsnE9pwnHRGncUmQvFhV0c8iCi+BXbNT
- Mfa9U
-X-Gm-Gg: Acq92OESCPTpVvvQFwQDEqUV6Tz0Uze5PMuU67xaAwSYVW3oVIAJIV5Vkg5v6X8WLjR
- bO08utzPlmX0qh5BoGbtV46Ye35SwcPRAoakv9Y3rCK1vnGYChtuZ04F+g0/71WN8d9CqyYM8ct
- xz4rZrLucF0GjcoL4nGwsBu5dlatkV2U0NeW5sLFOamLJ/vuZWPThRVeyETe/cyP3Ujyxg20RQ1
- HQasJfSnpWh51AO/aNvPdcGH67UlG+lu2Y4LspXSTf2u2EBZ3tMnSjF/4RwmxAym0VO2kudetHS
- Zg9gcV/jyXiPguwyDXUzFk0yCbPMyfHGpscvP/WCcVeBl+KD/CUJVanKrE3ZdYVRjpr2HJXPNRk
- Uj70/bDnkLxPCLgL+wcwmMkurTb1OgMRMSdCy04ALhpCzzFF2SkioC59cF12HFotIOvVJ3YaWXa
- OFCj9ejN3Djs3AuWOKp+AlBAQa9ZB/ZDBStf+T
-X-Received: by 2002:a17:903:41c4:b0:2c0:aef8:23eb with SMTP id
- d9443c01a7336-2c66429085emr118076725ad.25.1781534926206; 
- Mon, 15 Jun 2026 07:48:46 -0700 (PDT)
-Received: from [192.168.0.4] ([71.212.142.33])
+ d=1e100.net; s=20251104; t=1781535382; x=1782140182;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=ztWkk3Xpe+kM9d9WYrvzWIt2WX06LB0jeIufZc3Qy1Q=;
+ b=UqY6muGrHt1JDVh65/h4xDk8JlkUmywf7CgjE83YABPVG9i5An4zurC02hYqqb6uxg
+ dSDHD8eztSPGve8XTmtW0ln/ganReHGZrxEGdAQ/IpfMaimy2ZA4JHB508foxSBv/dV0
+ IVI+NqzWcnxgqfKEoebulYUFDb606G3ssClos5ZOf0LWXWLNU10XMCnXmi5HEIoZZ67p
+ BNWqRUaCIpT0FY0LnXMcRiZaNjhiruLchvaSL5bEl+xksIb5MYyvsrQJdHDJ/wlnCQpu
+ +hf8MBJVUcOUaqs5JhgpuybiAWZNcUiu1Iq6mYOe5Vt5ockrx+NjC4H594GWFoKLa1f9
+ x/HA==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ/eHPhaiE/7c/rFOSmbjdXXIAbqIr5ln4JbF8ICZhSfRv59Emmg2NftxL+VZhsIrNfAFOdQQTvp2szb@nongnu.org
+X-Gm-Message-State: AOJu0YzjgXUae1zKd5VCsfIQYG1N99hl3pU9afcDlOTmfgEAVj/0fXaG
+ RUFGwMev6GUE/BAHhnZRL5FZaJYn/10f1hw2xai0FqRzZ+7Mh2vUwkuW79drJwWWinKPPQ80Tzw
+ TDIO6WjgFAFW2ZfPTWk1HZoWC9WODW38p1GUqyn6189/RwhTu/CjC0dq3
+X-Gm-Gg: Acq92OGj/ivY7BN8LEtKcdU2qrp0Fpv6SbjLpLoSFhGmUpWiTW5zjyd5ud79iUWwwZy
+ X91yGk9Hoplqu0RqEq8L7B/hmWg20tuJ9jj8NLtJdGndM9uTlIKLxGuCEvzbPbHLOhp/i22FcvB
+ 3NY5TB9Q3QNL1uYv8LVOSjs1OBS2VCcW/1FNYVFE655UOJyrPKl5xozkRW38YP9EhJUIHMGRUaX
+ qYMaY2SoZrXCPdRoJB2ah0xOPy+k1K1iyaSvcTuQecMJq5v/DvFsie/Mm/Wk+TgLKpACEWBB4LB
+ vbx+MzEaLnpYzo7ip4sXcqBY6dgmDKCGErhwEM6astpaOgjQvvh8h0nSoxSwufvjUqP74r7GQlH
+ TtraV20utv/+ou7F5AfDZunh9KYOgu1oEkCvntKN8GvU=
+X-Received: by 2002:a05:6402:44d7:b0:671:9dec:ba3 with SMTP id
+ 4fb4d7f45d1cf-69369d7b16emr5140872a12.13.1781535382117; 
+ Mon, 15 Jun 2026 07:56:22 -0700 (PDT)
+X-Received: by 2002:a05:6402:44d7:b0:671:9dec:ba3 with SMTP id
+ 4fb4d7f45d1cf-69369d7b16emr5140850a12.13.1781535381579; 
+ Mon, 15 Jun 2026 07:56:21 -0700 (PDT)
+Received: from redhat.com (IGLD-80-230-85-71.inter.net.il. [80.230.85.71])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2c432f77479sm106698745ad.63.2026.06.15.07.48.45
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 15 Jun 2026 07:48:45 -0700 (PDT)
-Message-ID: <a133b6c1-46c1-43cb-9e7d-b206f0bddd43@linaro.org>
-Date: Mon, 15 Jun 2026 07:48:44 -0700
+ 4fb4d7f45d1cf-693791de4a6sm3546295a12.9.2026.06.15.07.56.19
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 15 Jun 2026 07:56:21 -0700 (PDT)
+Date: Mon, 15 Jun 2026 10:56:17 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: Gavin Shan <gshan@redhat.com>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org, peterx@redhat.com, alex@shazbot.org,
+ richard.henderson@linaro.org, berrange@redhat.com,
+ philmd@oss.qualcomm.com, philmd@mailo.com, david@kernel.org,
+ clg@redhat.com, pbonzini@redhat.com, phrdina@redhat.com,
+ jugraham@redhat.com, liugang24219@sangfor.com.cn,
+ dinghui@sangfor.com.cn, shan.gavin@gmail.com
+Subject: Re: [PATCH v2 1/2] system/memory: Use qemu_ram_{copy, move}() in ram
+ device region accessors
+Message-ID: <20260615105556-mutt-send-email-mst@kernel.org>
+References: <20260615100200.266968-1-gshan@redhat.com>
+ <20260615100200.266968-2-gshan@redhat.com>
+ <CAFEAcA9CT6E8dhEV7Ek6ruT_o2dKUf==2V+U-1WFDOLtYbgeeQ@mail.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/2] misc: Remove pre-C99/C11 checks
-To: qemu-devel@nongnu.org
-References: <20260615091308.4458-1-philmd@oss.qualcomm.com>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20260615091308.4458-1-philmd@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x636.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAFEAcA9CT6E8dhEV7Ek6ruT_o2dKUf==2V+U-1WFDOLtYbgeeQ@mail.gmail.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,26 +125,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/15/26 02:13, Philippe Mathieu-Daudé wrote:
-> We uses C11 since 5 years now, time to
-> remove few obsolete __STDC_VERSION__ checks.
+On Mon, Jun 15, 2026 at 11:57:09AM +0100, Peter Maydell wrote:
+> On Mon, 15 Jun 2026 at 11:03, Gavin Shan <gshan@redhat.com> wrote:
+> >
+> > All ram device regions were turned to be indirectly accessible by commit
+> > 4a2e242bbb ("memory: Don't use memcpy for ram_device regions"). This leads
+> > to guest hang on attempt to build 'cuda-samples' as reported by Julia. The
+> > guest is started by the following command lines, with GH100 GPU card passed
+> > from the host.
 > 
-> v2:
-> - Correctly use flexible array member (Bastian)
+> > diff --git a/include/system/memory.h b/include/system/memory.h
+> > index 1417132f6d..5878727d09 100644
+> > --- a/include/system/memory.h
+> > +++ b/include/system/memory.h
+> > @@ -2897,6 +2897,8 @@ void address_space_register_map_client(AddressSpace *as, QEMUBH *bh);
+> >  void address_space_unregister_map_client(AddressSpace *as, QEMUBH *bh);
+> >
+> >  /* Internal functions, part of the implementation of address_space_read.  */
+> > +void qemu_ram_copy(void *dest, const void *src, size_t n);
+> > +void qemu_ram_move(void *dest, const void *src, size_t n);
 > 
-> Philippe Mathieu-Daudé (2):
->    hw/xen/interface: Remove pre-C99 checks
->    qom/object: Remove pre-C11 check
+> New function prototypes in include headers need documentation comments.
 > 
->   include/hw/xen/interface/physdev.h    |  2 +-
->   include/hw/xen/interface/version.h    |  5 ++---
->   include/hw/xen/interface/xen-compat.h |  2 --
->   include/hw/xen/interface/xen.h        | 14 --------------
->   qom/object.c                          | 14 +-------------
->   5 files changed, 4 insertions(+), 33 deletions(-)
+> In particular for these, it's really important that we clearly say
+> what semantics we are attempting to provide with them, so that
+> (a) when we're reviewing or later updating the implementation we
+> know what we are trying to provide
+> (b) when we're looking at the callsites we know what the function
+> is guaranteeing to us and what it is not, and thus whether it's
+> OK to use it or we need something els.
 > 
+> > +#if defined(__i386__) || defined(__x86_64__)
+> > +#define HOST_UNALIGNED_MMIO_OK 1
+> > +#else
+> > +#define HOST_UNALIGNED_MMIO_OK 0
+> > +#endif
+> 
+> We need to do something better than this. We can't
+> just say "oh, we trust that on x86 this works": it is
+> neither actually true that the compiler guarantees it
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+sorry guarantee what?
 
-r~
+> even
+> on x86, nor is it the case that only x86 can do unaligned
+> accesses to normal RAM.
+> 
+> thanks
+> -- PMM
+
 
