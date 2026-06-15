@@ -4,57 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 091C0CD98DA
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jun 2026 20:42:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F27CCD98E0
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jun 2026 20:42:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZE5W-0005Vs-2W; Mon, 15 Jun 2026 16:39:18 -0400
+	id 1wZE7H-0004Et-RQ; Mon, 15 Jun 2026 16:41:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wZE5T-0005B3-Ob
- for qemu-devel@nongnu.org; Mon, 15 Jun 2026 16:39:15 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1wZE7G-000482-H3
+ for qemu-devel@nongnu.org; Mon, 15 Jun 2026 16:41:06 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wZE5P-0002UF-HN
- for qemu-devel@nongnu.org; Mon, 15 Jun 2026 16:39:14 -0400
+ id 1wZE7F-000313-1B
+ for qemu-devel@nongnu.org; Mon, 15 Jun 2026 16:41:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781555949;
+ s=mimecast20190719; t=1781556064;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ZAvsi/ypZkY9bYTYXMYdE8m2fARyesQx7GcFiTarqNA=;
- b=XxShItWue2wbeRwHkfEVEfmwufgWMEtSefZsBZ3smsgG4WY0hd+DjDyuAM6OxQ90/NAXcn
- vqcQBvRizTAXsrBk6s7iTHSPJC829zQPMoTj4MwS8XGfmE6TzogIuHUMICwypA6jLPwT9a
- IcA7XbcrRW84rgors2xRwnQYvmgVvm8=
+ bh=iK6p34NeRCxzvFd3/PxdfEqrfFR+rupWElGG0xvLF+M=;
+ b=RQ78+68nreHBizpA4WLyc6J+/VdqF47WqMPTyVRCLamFWtIY9L1U9PUmRKTITOnEjyix97
+ 5+0wYAb2WhhTI9BZIveOhy6sWQQlK8Juckg3e3aHMg+ejUSUMnF+3WuTtg0pTUG5Nkl4gG
+ tcroJPdFr7ZsOpdmt08EnjoT4ITArTU=
 Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-638-JBfSN67hNjeGkI0b95f1GA-1; Mon,
- 15 Jun 2026 16:39:08 -0400
-X-MC-Unique: JBfSN67hNjeGkI0b95f1GA-1
-X-Mimecast-MFC-AGG-ID: JBfSN67hNjeGkI0b95f1GA_1781555947
-Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-371-c_2yxKOgOKKx18auCeWlPA-1; Mon,
+ 15 Jun 2026 16:41:00 -0400
+X-MC-Unique: c_2yxKOgOKKx18auCeWlPA-1
+X-Mimecast-MFC-AGG-ID: c_2yxKOgOKKx18auCeWlPA_1781556059
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A71EC1800BD4; Mon, 15 Jun 2026 20:39:07 +0000 (UTC)
+ id ECA351800350; Mon, 15 Jun 2026 20:40:58 +0000 (UTC)
 Received: from localhost (unknown [10.44.22.9])
- by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 6ADB7175F; Mon, 15 Jun 2026 20:39:05 +0000 (UTC)
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id BCC321800347; Mon, 15 Jun 2026 20:40:57 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Tue, 16 Jun 2026 00:37:42 +0400
-Subject: [PATCH v2 16/53] x86: convert OnOffAuto properties to QAPI-aware
+Date: Tue, 16 Jun 2026 00:38:03 +0400
+Subject: [PATCH v2 37/53] hw/nvdimm: convert UUID property to QAPI-aware
  registration
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260616-qom-qapi-v2-16-cc9396b9c18c@redhat.com>
+Message-Id: <20260616-qom-qapi-v2-37-cc9396b9c18c@redhat.com>
 References: <20260616-qom-qapi-v2-0-cc9396b9c18c@redhat.com>
 In-Reply-To: <20260616-qom-qapi-v2-0-cc9396b9c18c@redhat.com>
 To: qemu-devel@nongnu.org
@@ -65,25 +65,25 @@ Cc: Markus Armbruster <armbru@redhat.com>,
  Michael Roth <michael.roth@amd.com>, 
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=6517;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2291;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=MImBeImgefjPchPWxiBRSQZBA7NyEy4h07IQTQ8DlSo=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqMGKOyrOWScdv2qWk4mNlKRWkBHdQlYcFmiL7H
- m60RMf5hD+JAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCajBijgAKCRDa6OEJdZac
- 5VK0EACF3YmwkmiHWe8191gB5cJXjaGtT7wWFmTkLh9eNrK1cbV2vV7xZMA1ksJiNF93Meb1b5x
- a0a3QPb3QOImfLzS1e0hTnkN7mEkLYA2kQ/81pY1cSWWROsnzKQx6B+USc/oEj24Js4qkZAOxl7
- CzxFtrt02bamSSf4lko3Cp7COj5rMgdUgkqcdMP/6TJxNUP/EWI6U0IEbh9jTkGhAJJASkyZmJQ
- Erb7kmcsSM5jfUw/7BJgKvg80q6Xaw8G1MOAT7SkSn0Fwvt0+EPqPJ2pIZV3zGrbZUkibisHQvJ
- mCJ7FUt82Wpm4WeGOVSJdpzDblmRsseYMbKfpQH2TvAEl1hhwFTKJCPBMu0g09xV500WU9+YU8P
- y2xBnYgouEQ0AIZAhBICtw1pklanCaF+aEFMLk2BkwDVCap42dpC4kXm2ekOa+2kJ2IIZCGVj7g
- MbbteUVTEuRcrUoz7c1HBoyBD8GG1cSAMeVNhHvcox0AMaKUfAR2c+Fg+OmGqCfUMtGPtTgNYkX
- qd45DazxOsQ2b9FHIf41E+hUjKlv4QkPE4DBorOR9o9p0igvVcmbElQ6tH5iMpYgf+pC7jsgV8b
- Wj10jEEXU7MLRbChoYPJfCQYexEO7Nn8MINoGDl1dFlrUqY7V1pHDUtY/4+GGz5UhW55i49enas
- ZpiBLhAO+POs+XA==
+ bh=fjqQ6W0fz1f2OTCsCzNtLVDoI46ZtMBL144FqIZ8uxQ=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqMGKPFLDMxrAkxtSWda8csDteRsEai2Gr6mM+0
+ bn0BGHRQ/6JAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCajBijwAKCRDa6OEJdZac
+ 5VewD/0cfnXBQdr2gidDt2F1WRZZdT1YsbNayWFJK1NDAFYl8LxZvQs60M8TXdE4pRrPBmGxVKM
+ axn1HCB9Ikyk8a8W/Tst2HoEiNmGuha0cpmkJtsWJ6Wva2vWRIatxPjPXDje72Nhu9xr1tFVYvx
+ 1bf6J/3NqyNWXD4IJVfmocH1QRFdkISjkXynfUTkb8V54+sV7RSqrSd+pMI1I2QG0Dcua/rkCwu
+ mJlclqaUPpgXT+84ZCOdxeoIivH5TSdWLuBY6KphY35a74D44hdlGgaS1cYXmdIoyL3OgOo7+zo
+ PLYOlTqnh7pbuUN8QyUDjMDryYL5rlBOp3V1Wp2m02JIqLZCVRm1tU8EuWgVWNvQrs8oe2Ag0lU
+ /IZPdq5bXEODpK+7fwrEm+8mvtHgXCFw7drnkgRQ3IOadkgpaLB1ghVGE0XfTZ9lC2KIsyk4Egs
+ 7K123xXhpq6LEDq49SMO84zcTZQjQq1Mv7HnYS4CEeE0bwMEHx62hOQK05MJCOIqNG833ca55MO
+ XO6xxDSdtUYwTK04vvB3jbA06P0+QQgmlQQHVjaC+L7S2ZL5Ex7a4+DaP2Ue4UJTjF1fhgBoxOy
+ q3ywutEt+39OaVuQHtDZEqsW8yEMHiwHAn/2aXAQmkC3vu+YfSkGGG55NL9YjPItHq5JbOlqKbb
+ EK6HSKx1H9tL2SQ==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
-Received-SPF: pass client-ip=170.10.133.124;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
@@ -91,7 +91,7 @@ X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -108,184 +108,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Convert the smm, acpi, pit, and pic OnOffAuto properties from
-manual visitor-based callbacks to property_add_qapi_enum().
+Add a QemuUUID_type_info and use object_property_add_qapi() instead of
+object_property_add() for the nvdimm UUID property.
+
+The type info is defined manually in uuid.c rather than generated,
+since QAPI does not yet support string typedefs. An alternative would
+be to extend the QAPI schema language with a 'typedef' construct
+(e.g. { 'typedef': 'UUID', 'data': 'str' }), which would let the
+generator produce the type info, C typedef, and introspection entry
+automatically.
+
+Alternatively, the exposed type being a string, we could change the
+property to be str_type_info.
 
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- hw/i386/x86.c | 110 +++++++++++++++++++++++++---------------------------------
- 1 file changed, 48 insertions(+), 62 deletions(-)
+ include/qemu/uuid.h | 4 ++++
+ hw/mem/nvdimm.c     | 4 ++--
+ util/uuid.c         | 4 ++++
+ 3 files changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/hw/i386/x86.c b/hw/i386/x86.c
-index dc7f0d56b01..155763b1c98 100644
---- a/hw/i386/x86.c
-+++ b/hw/i386/x86.c
-@@ -24,7 +24,7 @@
- #include "qemu/error-report.h"
- #include "qemu/units.h"
- #include "qapi/error.h"
--#include "qapi/qapi-visit-common.h"
-+#include "qapi/qapi-type-infos-common.h"
- #include "qapi/qapi-visit-machine.h"
- #include "qapi/visitor.h"
- #include "system/qtest.h"
-@@ -188,21 +188,16 @@ bool x86_machine_is_smm_enabled(const X86MachineState *x86ms)
-     return false;
- }
+diff --git a/include/qemu/uuid.h b/include/qemu/uuid.h
+index 869f84af09d..ed0c62327d4 100644
+--- a/include/qemu/uuid.h
++++ b/include/qemu/uuid.h
+@@ -16,6 +16,8 @@
+ #ifndef QEMU_UUID_H
+ #define QEMU_UUID_H
  
--static void x86_machine_get_smm(Object *obj, Visitor *v, const char *name,
--                               void *opaque, Error **errp)
-+static int x86_machine_get_smm(Object *obj, Error **errp)
- {
-     X86MachineState *x86ms = X86_MACHINE(obj);
--    OnOffAuto smm = x86ms->smm;
--
--    visit_type_OnOffAuto(v, name, &smm, errp);
-+    return x86ms->smm;
- }
- 
--static void x86_machine_set_smm(Object *obj, Visitor *v, const char *name,
--                               void *opaque, Error **errp)
-+static void x86_machine_set_smm(Object *obj, int value, Error **errp)
- {
-     X86MachineState *x86ms = X86_MACHINE(obj);
--
--    visit_type_OnOffAuto(v, name, &x86ms->smm, errp);
-+    x86ms->smm = value;
- }
- 
- bool x86_machine_is_acpi_enabled(const X86MachineState *x86ms)
-@@ -213,55 +208,40 @@ bool x86_machine_is_acpi_enabled(const X86MachineState *x86ms)
-     return true;
- }
- 
--static void x86_machine_get_acpi(Object *obj, Visitor *v, const char *name,
--                                 void *opaque, Error **errp)
-+static int x86_machine_get_acpi(Object *obj, Error **errp)
- {
-     X86MachineState *x86ms = X86_MACHINE(obj);
--    OnOffAuto acpi = x86ms->acpi;
--
--    visit_type_OnOffAuto(v, name, &acpi, errp);
-+    return x86ms->acpi;
- }
- 
--static void x86_machine_set_acpi(Object *obj, Visitor *v, const char *name,
--                                 void *opaque, Error **errp)
-+static void x86_machine_set_acpi(Object *obj, int value, Error **errp)
- {
-     X86MachineState *x86ms = X86_MACHINE(obj);
--
--    visit_type_OnOffAuto(v, name, &x86ms->acpi, errp);
-+    x86ms->acpi = value;
- }
- 
--static void x86_machine_get_pit(Object *obj, Visitor *v, const char *name,
--                                    void *opaque, Error **errp)
-+static int x86_machine_get_pit(Object *obj, Error **errp)
- {
-     X86MachineState *x86ms = X86_MACHINE(obj);
--    OnOffAuto pit = x86ms->pit;
--
--    visit_type_OnOffAuto(v, name, &pit, errp);
-+    return x86ms->pit;
- }
- 
--static void x86_machine_set_pit(Object *obj, Visitor *v, const char *name,
--                                    void *opaque, Error **errp)
-+static void x86_machine_set_pit(Object *obj, int value, Error **errp)
- {
-     X86MachineState *x86ms = X86_MACHINE(obj);
--
--    visit_type_OnOffAuto(v, name, &x86ms->pit, errp);
-+    x86ms->pit = value;
- }
- 
--static void x86_machine_get_pic(Object *obj, Visitor *v, const char *name,
--                                void *opaque, Error **errp)
-+static int x86_machine_get_pic(Object *obj, Error **errp)
- {
-     X86MachineState *x86ms = X86_MACHINE(obj);
--    OnOffAuto pic = x86ms->pic;
--
--    visit_type_OnOffAuto(v, name, &pic, errp);
-+    return x86ms->pic;
- }
- 
--static void x86_machine_set_pic(Object *obj, Visitor *v, const char *name,
--                                void *opaque, Error **errp)
-+static void x86_machine_set_pic(Object *obj, int value, Error **errp)
- {
-     X86MachineState *x86ms = X86_MACHINE(obj);
--
--    visit_type_OnOffAuto(v, name, &x86ms->pic, errp);
-+    x86ms->pic = value;
- }
- 
- static char *x86_machine_get_oem_id(Object *obj, Error **errp)
-@@ -391,31 +371,37 @@ static void x86_machine_class_init(ObjectClass *oc, const void *data)
-     mc->kvm_type = x86_kvm_type;
-     nc->nmi_monitor_handler = x86_nmi;
- 
--    object_class_property_add(oc, X86_MACHINE_SMM, "OnOffAuto",
--        x86_machine_get_smm, x86_machine_set_smm,
--        NULL, NULL);
--    object_class_property_set_description(oc, X86_MACHINE_SMM,
--        "Enable SMM");
--
--    object_class_property_add(oc, X86_MACHINE_ACPI, "OnOffAuto",
--        x86_machine_get_acpi, x86_machine_set_acpi,
--        NULL, NULL);
--    object_class_property_set_description(oc, X86_MACHINE_ACPI,
--        "Enable ACPI");
--
--    object_class_property_add(oc, X86_MACHINE_PIT, "OnOffAuto",
--                              x86_machine_get_pit,
--                              x86_machine_set_pit,
--                              NULL, NULL);
--    object_class_property_set_description(oc, X86_MACHINE_PIT,
--        "Enable i8254 PIT");
--
--    object_class_property_add(oc, X86_MACHINE_PIC, "OnOffAuto",
--                              x86_machine_get_pic,
--                              x86_machine_set_pic,
--                              NULL, NULL);
--    object_class_property_set_description(oc, X86_MACHINE_PIC,
--        "Enable i8259 PIC");
-+    object_class_property_add_qapi_enum(oc, QAPI_ENUM_PROP(
-+        .name = X86_MACHINE_SMM,
-+        .description = "Enable SMM",
-+        .qapi_type = &OnOffAuto_type_info,
-+        .get = x86_machine_get_smm,
-+        .set = x86_machine_set_smm,
-+    ));
++#include "qapi/qapi-type-info.h"
 +
-+    object_class_property_add_qapi_enum(oc, QAPI_ENUM_PROP(
-+        .name = X86_MACHINE_ACPI,
-+        .description = "Enable ACPI",
-+        .qapi_type = &OnOffAuto_type_info,
-+        .get = x86_machine_get_acpi,
-+        .set = x86_machine_set_acpi,
-+    ));
-+
-+    object_class_property_add_qapi_enum(oc, QAPI_ENUM_PROP(
-+        .name = X86_MACHINE_PIT,
-+        .description = "Enable i8254 PIT",
-+        .qapi_type = &OnOffAuto_type_info,
-+        .get = x86_machine_get_pit,
-+        .set = x86_machine_set_pit,
-+    ));
-+
-+    object_class_property_add_qapi_enum(oc, QAPI_ENUM_PROP(
-+        .name = X86_MACHINE_PIC,
-+        .description = "Enable i8259 PIC",
-+        .qapi_type = &OnOffAuto_type_info,
-+        .get = x86_machine_get_pic,
-+        .set = x86_machine_set_pic,
-+    ));
  
-     object_class_property_add_str(oc, X86_MACHINE_OEM_ID,
-                                   x86_machine_get_oem_id,
+ /* Version 4 UUID (pseudo random numbers), RFC4122 4.4. */
+ 
+@@ -99,4 +101,6 @@ QemuUUID qemu_uuid_bswap(QemuUUID uuid);
+ 
+ uint32_t qemu_uuid_hash(const void *uuid);
+ 
++extern const QAPITypeInfo QemuUUID_type_info;
++
+ #endif
+diff --git a/hw/mem/nvdimm.c b/hw/mem/nvdimm.c
+index 123ddc93854..b7ccb5c9367 100644
+--- a/hw/mem/nvdimm.c
++++ b/hw/mem/nvdimm.c
+@@ -104,8 +104,8 @@ static void nvdimm_init(Object *obj)
+                              nvdimm_get_label_size, nvdimm_set_label_size, NULL,
+                              NULL);
+ 
+-    object_property_add(obj, NVDIMM_UUID_PROP, "QemuUUID", nvdimm_get_uuid,
+-                        nvdimm_set_uuid, NULL, NULL);
++    object_property_add_qapi(obj, NVDIMM_UUID_PROP, &QemuUUID_type_info,
++                             nvdimm_get_uuid, nvdimm_set_uuid, NULL, NULL);
+ }
+ 
+ static void nvdimm_finalize(Object *obj)
+diff --git a/util/uuid.c b/util/uuid.c
+index 234619dd5e6..4468520c414 100644
+--- a/util/uuid.c
++++ b/util/uuid.c
+@@ -17,6 +17,10 @@
+ #include "qemu/uuid.h"
+ #include "qemu/bswap.h"
+ 
++const QAPITypeInfo QemuUUID_type_info = {
++    .name = "QemuUUID",
++};
++
+ void qemu_uuid_generate(QemuUUID *uuid)
+ {
+     int i;
 
 -- 
 2.54.0
