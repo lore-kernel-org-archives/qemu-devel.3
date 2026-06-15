@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA166CD98C7
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jun 2026 10:52:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE8F1CD98DA
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jun 2026 10:53:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZ4un-0000Xb-3E; Mon, 15 Jun 2026 06:51:41 -0400
+	id 1wZ4v5-0000eY-3i; Mon, 15 Jun 2026 06:51:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wZ4tv-0000R9-Jc
- for qemu-devel@nongnu.org; Mon, 15 Jun 2026 06:50:48 -0400
-Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
+ id 1wZ4u2-0000S4-At
+ for qemu-devel@nongnu.org; Mon, 15 Jun 2026 06:50:57 -0400
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wZ4tn-0001SV-0S
- for qemu-devel@nongnu.org; Mon, 15 Jun 2026 06:50:36 -0400
-Received: by mail-wr1-x42e.google.com with SMTP id
- ffacd0b85a97d-45ef1629ff4so1963234f8f.0
- for <qemu-devel@nongnu.org>; Mon, 15 Jun 2026 03:50:34 -0700 (PDT)
+ id 1wZ4tv-0001T1-Bf
+ for qemu-devel@nongnu.org; Mon, 15 Jun 2026 06:50:47 -0400
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-490be03d47bso33222615e9.0
+ for <qemu-devel@nongnu.org>; Mon, 15 Jun 2026 03:50:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1781520633; x=1782125433; darn=nongnu.org;
+ d=linaro.org; s=google; t=1781520636; x=1782125436; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=2VrJ5ZgsRdlINMUw7+Y3JTp3T0wQXEu4pb+cZQs4R6k=;
- b=CfFLU6ATwQdxFFk2Y8yD7irFfX+B7D/hZDdsVVb6Nf61vgKf+VmSgYT04/VsTS1cvM
- RZWRmXGFWD81wzzkFBSVlaYlQP6gADCinIo2gBRUGvO6JVmc6R+7Go9+xdEHN+MDZM+k
- VBz9dIKLy63SptjGYnoT79CYpdEY73lM4byajWU4jylBbwpFtpVso3Rc92C9eKlXrQGZ
- 82LCaZRtZxZ2FxkLPF20ZSQmOfb3nE6sU3IenEQpzl/BghXUism1Bz4rkljWv+RSEhCu
- bhSzRCVzAVJQhBos6YcvrWpJE7vIsKq2xacXauxm0XEZjeRyxr2VH45rWN5RCDVWjcZn
- yBRQ==
+ :reply-to; bh=VF/90mu1QzOsJ+7ZowfFihlzaRYu0ah8ryr9I5YseZI=;
+ b=g73xlwBm/vIprogLc4h4oDNUkrv9ThDrePagF+Mnz7u7TCDQU9/5CyMZChK8Kt6RIU
+ x02tPyUIOwAnD4ukQtQEtTQZwBH0wiC4HvkIZLnHRwHip5OiyKCfPH1dH6dmiWVBYxfj
+ wdgzS6ajxoPsSjP78xAbw5RzCCn9fhidufjXWCTuwo4KVabhJluBdFqRO382QkgjpbAH
+ dKQCTmnxPtC5yopKv/vgrqBS5gn69nCm8JtlQpe6bGR9+Zc87OMJ8tu3baf5c5d486yY
+ 8obk3unpMO7FqZtRdEIVfX8DtVxKWupPTsEgJRMupeTc+xavC0GaW2yhpH34FQr8QWSc
+ IfEA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781520633; x=1782125433;
+ d=1e100.net; s=20251104; t=1781520636; x=1782125436;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=2VrJ5ZgsRdlINMUw7+Y3JTp3T0wQXEu4pb+cZQs4R6k=;
- b=RaaYxuDjbgrALeMbGbiHbTOclUxqIPWKIXCyOjiDFccPgPbV+A+UHJgNypb9qUcG8v
- +9Sc3FV66gO/cd4XsymAy4jAtsEG+nHDI8eYMeI+0gtE5NanMNXrD8p/kRYoVMhYM7oD
- dzVkeIn/5B8ppBih4crYRj/pcLhWjAkXM23u45G67dR0Yprl0WAp9+TvWQ3DNW2+zHk5
- JsUXIRGU8QYCM9fiA5Ja7FGtAh/+VkcusFMJtYiZV8m2rJi4I/S2ZcYqpHP8fKv93DL3
- dE9yRKjFnYuHglDTN947q3HBRag/k+6mEjudImkuyd0koRDIiKjD5fJdazPXLmoqkgH+
- XJuw==
+ bh=VF/90mu1QzOsJ+7ZowfFihlzaRYu0ah8ryr9I5YseZI=;
+ b=psO/poCodd1NmQyGaMfrdWSH0vAxA8gwdxKS3s+RP6cL3OaJ/S8tPEm4xew5FoKzSw
+ XZjZXUCj5IWHsvaMLr71K9UHBlcPAbJHYW4555cKZGeq1gYmZ/KlbnYX+2rLQJsHFHny
+ cd7YQ1n+KCK4TanXEAlNvBnDZUJ1f0+Vn7QBbiLBdKulwauZRImib8vUYKL+l4dv+8hB
+ E3CkY/tWxX6a/RVxcpLE75wD1vCyz9D2qBeXHphQL0Pl7e334+EOsAeOs4+YusBU0Tdk
+ Vg689oj65Wq+Y+qOBCM4OYPpidsGcZLg/VanAnMPOBPxVbsbTftbw1x/VR5GCMx4Evsy
+ KLjw==
 X-Forwarded-Encrypted: i=1;
- AFNElJ+/9ILbA9OZ2reaWBOdKqR3jJBKMr+mbnbJ9XgEzS4NyFmyBPkOlZd9M+DjRdsyZ4Ht9abr9wuzsjvb@nongnu.org
-X-Gm-Message-State: AOJu0YyrIbKFN4q0DMVyPG9jZl+Dep9oVrugeYTSMYCPBTnDV9NwSPUE
- 6CE6YCnPwRlYY0cL2c14zc/+xHwt2kAx6rYHEllr4LtUxYYz+/uuqd7OnimetiTwwLk=
-X-Gm-Gg: Acq92OGUpQ3T+JlhxM0JpT75LoZKXWRx8eEQRIJgQP3kplZMchu3jUQGXPwk+/fFFkN
- jUMk2w1UekkT5zxd9/t6dLx6cdXQYlbqGRHJFe4raascVPH1JIwBwflFqUFquGKkCQq7UMIpSOn
- rEBZMmgvxAWHIpUf2AsSdGi6+2fsSQygx6CYmTXy+Qu4eoVL5uFwVi3AndEIZOyAF3RhecmGFXt
- wHkBZWXAVba/75BcnOY8ySRVl7Htmv5IU7m1ZIQWPHQBsd3IKUhI8YTfG2eIoQUBcmVlsKMw7sG
- 8WPKON9YdhT+WeMVm8NKHTTWUE9WLwWpDoUogTkdeP/ihGdkRij6tyZ6YK98RvJwQsCWe5cS2xa
- sXy32sIBE0ReK4OvIcRKXO2Z6aHcEvFgqHYmg5APIorui049wEtPPOWyua7P0DunA2FUWjmSo+S
- RGbR+b5QGxBQbHmg3fVKz42guEyP2std2f5ODb2J9fmj1NywWUJ9HHPID/s5B8hf8tumrwxei3x
- 7FtxTr6KcRNlVQe+LsyoiwiMyDx8HsQ
-X-Received: by 2002:a05:6000:2210:b0:460:efd:c682 with SMTP id
- ffacd0b85a97d-46074a8a01cmr14314126f8f.24.1781520632905; 
- Mon, 15 Jun 2026 03:50:32 -0700 (PDT)
+ AFNElJ9DAXDA7DpNOcm2Of8rvZio1828qEEnkX+wnlScHaKXHiQO/8lh/UkfEqFMei+x86XqVCKsSazIuUoE@nongnu.org
+X-Gm-Message-State: AOJu0YzWRwXW+OCXn38TJgWm+BJEzgcYN+A2He/49FPs9so6MMRXpEwF
+ 4NESiOQwSRm7JLn5ZKri4xkYJ1YyAUqYV5gu4u7b3zlRtk+f1bd0cp3+Qc2bMy4ebBqN2zonhtj
+ urRp4
+X-Gm-Gg: Acq92OHSvvEq6inY006txEdmEF44FfvrZ4I1BpivdPaLc89xEykOui7KLwmUvvd9nb+
+ phXaW+SNY55i4VsjwSX3j5A4q1WMX9aXuyAVgz7Lm1cLINC9pAIsazlaWhEMDhCfvElfeunPuW+
+ ylYitYFZC6YsAxc3uv1qeQUWhmxvEjwhjC98mStlzX5NR2ABkdNsEgHJsQr69KxBR4ee0TwlLu0
+ tR0Kv6D3PcGwXgvs3IKWIRip/aPfuhT5uka2N9oytA6XZZlJKBYkVSkleJxDCc7+JZguL/741IJ
+ 3pZFN9XEu47QzZdHBa9kf0Kn2pT1LhDquQ/gHir7qnE0McXMHemrKprqVNoO+HBBbKx3nHeCWsb
+ oxgjg7beq3BV5BXjdMqbMZ3qvhDMiFnCjXixfWa29OsToBriOFSlsu3ThtnLYWtFcMKMcf9S1gQ
+ l0V3koevcZOH+iDzlqQhqrK2hnMx9Y8T4gMSCIFNqNU57T5jnGB35g7GWHQFBUuyPCB2ajjgf4H
+ 7DI77Vs+4tofzaw0ayZNS/y8fazm0i5
+X-Received: by 2002:a05:600d:844e:10b0:490:bfda:7d7e with SMTP id
+ 5b1f17b1804b1-490ec4bfe57mr126374635e9.3.1781520635744; 
+ Mon, 15 Jun 2026 03:50:35 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4606f263945sm33863674f8f.8.2026.06.15.03.50.32
+ ffacd0b85a97d-4606f263945sm33863674f8f.8.2026.06.15.03.50.34
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 15 Jun 2026 03:50:32 -0700 (PDT)
+ Mon, 15 Jun 2026 03:50:35 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
-Subject: [PATCH 2/5] target/arm: GICv5 cpuif: Recalculate IRQ/FIQ on
- ICC_PCR_EL1 write
-Date: Mon, 15 Jun 2026 11:50:26 +0100
-Message-ID: <20260615105029.2898872-3-peter.maydell@linaro.org>
+Subject: [PATCH 5/5] hw/intc/gicv5: Define and use GICV5_PENDING_IRQ_NONE
+Date: Mon, 15 Jun 2026 11:50:29 +0100
+Message-ID: <20260615105029.2898872-6-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260615105029.2898872-1-peter.maydell@linaro.org>
 References: <20260615105029.2898872-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,29 +102,95 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When the guest writes ICC_PCR_EL1 we should recheck whether we should
-be signalling IRQ or FIQ, because we use this priority mask value in
-determining whether the highest priority interrupt should be
-signalled or not.
+The GICv5PendingIrq struct representation of "there is no pending
+interrupt" sets the prio field to PRIO_IDLE, and generally to avoid
+confusion we also set the intid to 0.  We want to return this value
+or initialize some variable to it in several places in the GICv5
+implementation, and the support for the virtual interrupt domain
+introduces more.
 
-Fixes: 9bd90bddb79b ("target/arm: GICv5 cpuif: Signal IRQ or FIQ")
+Define a convenience macro for this special-case struct value, and
+use it instead of opencoding either the structure initializer or
+explicit assignment to the two fields.
+
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/arm/tcg/gicv5-cpuif.c | 1 +
- 1 file changed, 1 insertion(+)
+ hw/intc/arm_gicv5.c               | 6 ++----
+ include/hw/intc/arm_gicv5_types.h | 4 ++++
+ target/arm/tcg/gicv5-cpuif.c      | 7 +++----
+ 3 files changed, 9 insertions(+), 8 deletions(-)
 
+diff --git a/hw/intc/arm_gicv5.c b/hw/intc/arm_gicv5.c
+index 0fa3d6b601..08878193df 100644
+--- a/hw/intc/arm_gicv5.c
++++ b/hw/intc/arm_gicv5.c
+@@ -429,8 +429,7 @@ static void irs_recalc_hppi(GICv5 *s, GICv5Domain domain, uint32_t iaffid)
+     ARMCPU *cpu = cpuidx >= 0 ? cs->cpus[cpuidx] : NULL;
+     GICv5PendingIrq best;
+ 
+-    best.intid = 0;
+-    best.prio = PRIO_IDLE;
++    best = GICV5_PENDING_IRQ_NONE;
+ 
+     if (!cpu) {
+         /* Nothing happens for iaffids targeting nonexistent CPUs */
+@@ -526,8 +525,7 @@ static void irs_recall_hppis(GICv5 *s, GICv5Domain domain)
+     GICv5Common *cs = ARM_GICV5_COMMON(s);
+ 
+     for (int i = 0; i < cs->num_cpus; i++) {
+-        s->hppi[domain][i].intid = 0;
+-        s->hppi[domain][i].prio = PRIO_IDLE;
++        s->hppi[domain][i] = GICV5_PENDING_IRQ_NONE;
+         gicv5_forward_interrupt(cs->cpus[i], domain);
+     }
+ }
+diff --git a/include/hw/intc/arm_gicv5_types.h b/include/hw/intc/arm_gicv5_types.h
+index de4f78a149..851286b1b5 100644
+--- a/include/hw/intc/arm_gicv5_types.h
++++ b/include/hw/intc/arm_gicv5_types.h
+@@ -105,6 +105,10 @@ typedef struct GICv5PendingIrq {
+     uint8_t prio;
+ } GICv5PendingIrq;
+ 
++/* A GICv5PendingIrq struct initializer for "no pending interrupt" */
++#define GICV5_PENDING_IRQ_NONE \
++    ((GICv5PendingIrq) { .intid = 0, .prio = PRIO_IDLE })
++
+ /* Fields in a generic 32-bit INTID, per R_TJPHS */
+ FIELD(INTID, ID, 0, 24)
+ FIELD(INTID, TYPE, 29, 3)
 diff --git a/target/arm/tcg/gicv5-cpuif.c b/target/arm/tcg/gicv5-cpuif.c
-index 891cb2d3b7..09c3fdda61 100644
+index a868adca66..1cdd4103d0 100644
 --- a/target/arm/tcg/gicv5-cpuif.c
 +++ b/target/arm/tcg/gicv5-cpuif.c
-@@ -565,6 +565,7 @@ static void gic_icc_pcr_el1_write(CPUARMState *env, const ARMCPRegInfo *ri,
+@@ -144,7 +144,7 @@ static GICv5PendingIrq gic_hppi(CPUARMState *env, GICv5Domain domain)
  
-     value &= R_ICC_PCR_PRIORITY_MASK;
-     env->gicv5_cpuif.icc_pcr[domain] = value;
-+    gicv5_update_irq_fiq(env);
+     if (!(env->gicv5_cpuif.icc_cr0[domain] & R_ICC_CR0_EN_MASK)) {
+         /* If cpuif is disabled there is no HPPI */
+-        return (GICv5PendingIrq) { .intid = 0, .prio = PRIO_IDLE };
++        return GICV5_PENDING_IRQ_NONE;
+     }
+ 
+     irs_hppi = gicv5_get_hppi(gic, domain, env->gicv5_iaffid);
+@@ -168,7 +168,7 @@ static GICv5PendingIrq gic_hppi(CPUARMState *env, GICv5Domain domain)
+     if (best.prio == PRIO_IDLE ||
+         best.prio > env->gicv5_cpuif.icc_pcr[domain] ||
+         best.prio >= gic_running_prio(env, domain)) {
+-        return (GICv5PendingIrq) { .intid = 0, .prio = PRIO_IDLE };
++        return GICV5_PENDING_IRQ_NONE;
+     }
+     return best;
  }
+@@ -258,8 +258,7 @@ static void gic_recalc_ppi_hppi(CPUARMState *env)
+      * enabled, pending and not active.
+      */
+     for (int i = 0; i < ARRAY_SIZE(env->gicv5_cpuif.ppi_hppi); i++) {
+-        env->gicv5_cpuif.ppi_hppi[i].intid = 0;
+-        env->gicv5_cpuif.ppi_hppi[i].prio = PRIO_IDLE;
++        env->gicv5_cpuif.ppi_hppi[i] = GICV5_PENDING_IRQ_NONE;
+     };
  
- static void gic_icc_pcr_el1_reset(CPUARMState *env, const ARMCPRegInfo *ri)
+     for (int i = 0; i < ARRAY_SIZE(env->gicv5_cpuif.ppi_active); i++) {
 -- 
 2.43.0
 
