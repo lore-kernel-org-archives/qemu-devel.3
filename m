@@ -4,111 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22165CD98CF
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jun 2026 13:22:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C0F8CD98C5
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jun 2026 13:23:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZ7Gv-0004Gu-Um; Mon, 15 Jun 2026 09:22:37 -0400
+	id 1wZ7HJ-0004pH-De; Mon, 15 Jun 2026 09:23:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wZ7Gm-0004FI-JV
- for qemu-devel@nongnu.org; Mon, 15 Jun 2026 09:22:30 -0400
+ id 1wZ7HH-0004hg-PC
+ for qemu-devel@nongnu.org; Mon, 15 Jun 2026 09:22:59 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wZ7Gk-0004Ww-Nh
- for qemu-devel@nongnu.org; Mon, 15 Jun 2026 09:22:28 -0400
+ id 1wZ7HG-00055V-DT
+ for qemu-devel@nongnu.org; Mon, 15 Jun 2026 09:22:59 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781529744;
+ s=mimecast20190719; t=1781529777;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=9xFhKIiX5yvF0sBClo6vGsnDhbuleDc5LvJDqkHMOiY=;
- b=SHV1BzLqQtq69Gr/gF/aroYBTis2rqQ0+LJyi6ez6Akvj3AIxe0m4iUhdsCb6sk9uLQLpp
- f4Tre1SpVeXccbutnKC5RKgt2EmSYBc9RNa2xCWeaHxYy94GFxNHYtyV0/PtCmwYc6AO1R
- zpX+HGigFyuLRGXPOb9/3WSYHHiYDT4=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=5HCUq7G6Zv1bfGrgHwsKLi6f2azWG7jYOkJTxh2yLVw=;
+ b=JmSLKttot4ClU0da+1xQrA8OhTXxLHHFWFJFxFCIpZ1m/1sFfeFMYQPuqwmuKGyDvV7phy
+ iYN8LkwRGo/gawaF4K3GwClfx81xDcEOrV4Wwwb0QW8SF134fHJMPM6uSNM6XOQbGWMAkw
+ V0ah7vKJKp8CLYP33B18vrHY+hlw8oU=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-425-Uq-3yKDJN7qxnvjKut5l7w-1; Mon, 15 Jun 2026 09:22:22 -0400
-X-MC-Unique: Uq-3yKDJN7qxnvjKut5l7w-1
-X-Mimecast-MFC-AGG-ID: Uq-3yKDJN7qxnvjKut5l7w_1781529741
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-490b5d2e394so22534845e9.3
- for <qemu-devel@nongnu.org>; Mon, 15 Jun 2026 06:22:22 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1781529741; cv=none;
+ us-mta-711-zRTM64KsOqq8fu-la1F-Kg-1; Mon, 15 Jun 2026 09:22:56 -0400
+X-MC-Unique: zRTM64KsOqq8fu-la1F-Kg-1
+X-Mimecast-MFC-AGG-ID: zRTM64KsOqq8fu-la1F-Kg_1781529775
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-460153ce644so2424778f8f.0
+ for <qemu-devel@nongnu.org>; Mon, 15 Jun 2026 06:22:56 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1781529775; cv=none;
  d=google.com; s=arc-20240605;
- b=Lg0tIaAC7Jg1OrsyaFSJqm73qXPYroQG0+KjZFpgRL0zonD2g3AUPcwKOFsLM49n6P
- beG+j5QxGW+WGyuiNk8zet6Z9UIhHDYKXEYuimBouQfrgaNJthi/cbcxFWAr7z+Vc6bA
- 5+6BC1wGyZwbvFyuI19X/X9E0gYjwvHTdaQ6wW7kUFRYqUtZU3N1biiykxHP0KgiqxKV
- mgg0WAk18bT0rEfI2GtaJ5sO/g2MW/D9pS+tfWtKIPiUw37RarevwCSmjLZ0HEXtBldP
- 2O+LhbsAoYkHnG/xkoIrKTyw0Gb9iXU4+dwOZZnNo7GdN4VF/QVKkphQVIHdbvEzCcxL
- qGkA==
+ b=K0Lw4dxKtFvhqAchbjk/9HnLZY869xZwagZ8BzbLD1hFamArLHh3fB20aYkwImDS/G
+ dTJO1hFr/lErsIXIhzb6xlBIt4bonimjvlGcIusJ9Ru48LMRk7m9ZzbJAeu+9XsY53E7
+ JelUBMQ019NULqlrKut+gDU8EDPnyYIMotikD6cHSihATagwCR0tB2IMW/yrUUuHFHPz
+ FJ3cehEYKco+mAWwJlBEm+iIsa4tuwvuLKlPzk2rtrckhr0nB9McuuRIgX60NBNG0i00
+ S2+aPLvUMizpadH9uVFB0RcNZ+j36SQpEKWWKCs0iYdWd5wBLjproh/0tzYH+O9opRUP
+ hUuw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=9xFhKIiX5yvF0sBClo6vGsnDhbuleDc5LvJDqkHMOiY=;
+ bh=5HCUq7G6Zv1bfGrgHwsKLi6f2azWG7jYOkJTxh2yLVw=;
  fh=8aBEJY+feA7d7ThUvpzyIH9FOGeOtT6IdrliqPJEqPM=;
- b=bUbVejN4nPs88DO0vuG8JpqCiqCzNKs+uw2x2TClWvT/KJVXalHhx1xhZ82ZqZEWgs
- fmYC3Se8+kX4D7iESshde/yTimbNvmsGPoflC+t/HmuoSIYG30Zw72uS21GJn56YqnPM
- ShnufB16wYZLKX+I1NEhxD8DSQADL6kJ7aYowjV6v/eBKrQYw8o2bnQzyIb4pKnvkVA3
- ZI8/2X/U6s1Unb+L4HQRaVJv2NVA467CGga6vagUGCQBZekvVMscho/jcFQtbox1xFf8
- Y6aYIfijRwnwZrIhx2xlUspZ/66YD8mhjRCIRadHXbFZhTGbLfMjV/C0Tk+xayJ+rVrH
- 6pQA==; darn=nongnu.org
+ b=fWYzUo391nmXTICQ7u0Al3d3evJzIy/OeMglmJaBZZq7J3saIYuvVZZTBwZ0GNjX5d
+ WWJxe8cr+OpYIGj5vBsw05IpnI46Mv3bzSZ/HnTjJHK/N56gB82fATGkEvug/GCBmAyO
+ dxxQ4BRGzFzx0wa5qNOsmiUiDvV+5TQ3clpXRvLsmPLB9q7rVrtX/KycYZUFpblRFJsV
+ 2qaTNdnJSxBP3HAihE51kBGpRj9lLkzfEYOP87JHA98IOejbtIKADX3b1scbeJ9V/dY9
+ 1ayIl7oxS7hw9iJuk95tP8EBIwWqx7JvR3XcPSnZY/P1IJKOz8/u7+J3BVPUhYWYsnao
+ xkoQ==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1781529741; x=1782134541; darn=nongnu.org;
+ d=redhat.com; s=google; t=1781529775; x=1782134575; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=9xFhKIiX5yvF0sBClo6vGsnDhbuleDc5LvJDqkHMOiY=;
- b=qqtAtRaY4oOTKjHc8iNqFcuwMuq7vKav70HAVlIYEUpNRnz0egTwnvYNBmtamZdJm4
- qXDXKTQjn0qhZJ3Fk+CdOBeqqLAfk9UOxtR3p5DNYwJskU49BHB6U6dQkhWgX1FPgpXt
- O+24//FypzLCcQ4N5iLrt8V1BQQUOs/lT14r/IoVv+XnDb5966PZN8bCu79K11hYDx1h
- uqcblP9x4SYE+DTskOQWCANRq4kK4i1tfed+UUWzHJ4Bs4M4Dt8FkhfwEPBEgPiuGQK/
- lT/Qcxzs0PX9hCm/ZT8vI5NFrBtRuILN3yFk98L8vlqMHFJtg5YXZbxV9sAohx83fLR3
- sOOg==
+ bh=5HCUq7G6Zv1bfGrgHwsKLi6f2azWG7jYOkJTxh2yLVw=;
+ b=CknrlLRns0rRVjch5G5k5pWFxINjZK25TXexiJPKAXv2dD9Bry6uUVTabam/S6owER
+ Ysbiueq0aWlnapHVz9rrqB+7wN2bkgUkSIUjjf9H/VDNNqs7qmU9Fr5zmLrH6x2Nf128
+ RXZt+Yt4juAnJNRQ1+eVTBzGYVcTxW5IeiCEBmAky5zkmTF7HJlda1D9Q5G3MhV4Lbb2
+ DHpDZwLgs98rCW3gt8Bl6QAUpj+6iKtxNO7wjuht6PAa3nn246u3X9dFHo75HJvNS3xk
+ nLPs7x5m71T5m77Umx202w/HL1HzzSNCVnh3BSDdV6tZdxCyx6wocdmHeGZj31R3fPWI
+ KdFw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781529741; x=1782134541;
+ d=1e100.net; s=20251104; t=1781529775; x=1782134575;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=9xFhKIiX5yvF0sBClo6vGsnDhbuleDc5LvJDqkHMOiY=;
- b=YQR40JB2RaNT0fg1MWljzRggM5Z8owV+z39TLfNqKQO5b0QRCZKK42JIFyqMqHlY2i
- 4TjuFyy6FJA3TIlEfnCrA0VNzjM5A25cgfRvskNRIP4CTeiIkX2yDPFiO1dNT8nMd9OY
- aymn7Nxn+6MoIK9bicAD7SohWrUqUrUlFu+ZwKc/fhEGTa1jQVhQpraXIlIfWqvhibkW
- JxpiYILS+M9W7LKmD0yvd5/HuBEgZEWfxc75qhXt+JE10als82pES0J+ZRRPoChRPgkq
- LoN6UOCH6FbCKc0R5T3iMapWYC8fDicLp/u6GRzRBv2ahL/Asln9j9dj9MFQTvBYE9iE
- kzuA==
-X-Gm-Message-State: AOJu0YwANl3gMsIGKLAmQlCGlJtfgI3qzdjPCKaqhmABhGt82AuBYvyg
- EmJhGUJVgCuqdGyFAHCAc+5SOf+5Ew06RpT9XdOVclirzd0m/zlkkUS930XZRW6gjuVD86SLgH3
- O0nfQSc1pcFcYdkOtxyek27htO89l314vj8vVGTWHoZRdSxz5uvWscHzSKFUwPnF9WZBXIiLi4Q
- xoDJe+17Ibr0pzZLH5fLMp22Id4IPY1gk=
-X-Gm-Gg: Acq92OFH7p3BGXn5aL4xOgWfFn+T2k4zrNO9NJ2Vye2iAeWNJ3EhRWrXiZIrhSN4wco
- DdGcWysCdYOjuEz4nfXkZwfKDNYgFOpMSwJAI3FNbTMxvc92PMc7F77uBM7NQqDaqJHv1fsFLD2
- 5wpKAuZwNy3m0LV9BDb8PhZ6rIfqHDuJfOllg0MscAFt0Uz/tyUCI3meKmL06SCqcC5Yqffx3U7
- jloq/BYopu+9xbp74j9w0hagBg9eQHP9CNTjCxrve7c/ZJNl3I9OONo9gmybQxYgLMTsn/LyO0m
- D5t9JOw=
-X-Received: by 2002:a05:600c:4b89:b0:490:3d62:f5e1 with SMTP id
- 5b1f17b1804b1-490ec4fed56mr111581675e9.22.1781529741282; 
- Mon, 15 Jun 2026 06:22:21 -0700 (PDT)
-X-Received: by 2002:a05:600c:4b89:b0:490:3d62:f5e1 with SMTP id
- 5b1f17b1804b1-490ec4fed56mr111581365e9.22.1781529740893; Mon, 15 Jun 2026
- 06:22:20 -0700 (PDT)
+ bh=5HCUq7G6Zv1bfGrgHwsKLi6f2azWG7jYOkJTxh2yLVw=;
+ b=UeqfzPzutGSN8Zi6zjUydHLbw2TLKwYdDB7hJe91wW8VQGoAMsE/CEofGfiCmOs3Jc
+ VYxPf6QXTc3ietpYB1038hb39d0pOboYU7K0J/tbEF7vNptFdyHm6XsTi2jXAba7YxhQ
+ OzpS015d+pQbBd35JaYBzLW4TAg8mne/4Ca/HyAj9Xm+/+3eOoizBGBQseWe6Rl6ThhX
+ qsywz6hpQeZf+lSzFHCUSVKXAP3VBC+EJhtuugOxHz5iZNAF0yVlSikTWj9ajlHWyQ7e
+ ebgILjXgjAOy8ImmMWksiYBLls8REcf7xZzMx0gvTr24nDrl+SVFgfrm9TTHVbtFCTNH
+ 8FFA==
+X-Gm-Message-State: AOJu0YwH+GYj5zoLjlitaZTgj11g0OUCCQnFuW7bb7gTXP/RSnez7wu+
+ AM6KHvH0goag4ugyv8kg+wlPukHagUvSlTSla9xjW3FrHJ/oUeG3QIXIdPI0DyerZ8mr/HqjaNe
+ ru9iEZvjc/aKJPrf2gT9tacC+WpX/AclTzCds1rKPZxfBeIWUDEkoUu41Vk6Ps8bFqdeAoc0Gk9
+ sispEwxHS0Dib2XvPol+Mcud2q3fyrP/bst8KA/5k=
+X-Gm-Gg: Acq92OGFgTMA+PhFDVGLUL7tPSjvxdtjL8pgA+qHhRQWEdWGMb0dahRLDvfCvqIHmhk
+ 4o2Lf2d1em47gHpe8LfCWPw7M0cAoNzZZlWeuzToKpkeq+mdJ/w9rTCWmiPgivpm/k1UA+/UTUo
+ CwxpPIBF2UgD1HUASKSL1qju6ZTCjPW85n25/MOzXcIBmZvJ0Rk9AqpTHnuaOGkyzI1BLV09JAH
+ oY5ViAR+EYeFdMGwCPIkggTVzGOAjs3AOa1G8wCJ5qEtBxW7T4AvC1zYZMOtUiPRPn1ZuZ5K0Ek
+ rgBfKzA=
+X-Received: by 2002:a05:6000:2601:b0:45e:fb69:f02b with SMTP id
+ ffacd0b85a97d-4606da5a6edmr20458660f8f.1.1781529775144; 
+ Mon, 15 Jun 2026 06:22:55 -0700 (PDT)
+X-Received: by 2002:a05:6000:2601:b0:45e:fb69:f02b with SMTP id
+ ffacd0b85a97d-4606da5a6edmr20458536f8f.1.1781529774118; Mon, 15 Jun 2026
+ 06:22:54 -0700 (PDT)
 MIME-Version: 1.0
 References: <20260525150503.393743-1-pbonzini@redhat.com>
- <20260525150503.393743-8-pbonzini@redhat.com>
- <8733yoqbnb.fsf@pond.sub.org>
-In-Reply-To: <8733yoqbnb.fsf@pond.sub.org>
+ <20260525150503.393743-6-pbonzini@redhat.com>
+ <87qzm8oule.fsf@pond.sub.org>
+In-Reply-To: <87qzm8oule.fsf@pond.sub.org>
 From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Mon, 15 Jun 2026 15:22:08 +0200
-X-Gm-Features: AVVi8CdzFq82xtQzCX9APVT8CB5M_8SqoKD7aOCF-0mLpMN27-d63bt29yl7b10
-Message-ID: <CABgObfbA=W0KB_8-3qTA1S3Wf-8K=2yQkb+NVabGdTZvujVN9A@mail.gmail.com>
-Subject: Re: [PATCH v3 7/7] json-parser: add location to JSON parsing errors
+Date: Mon, 15 Jun 2026 15:22:42 +0200
+X-Gm-Features: AVVi8CcdxaidWppamZsyPDT0ucQ-50j1-mzDnOOhsVw9DEewu-2je6xQWd3rccU
+Message-ID: <CABgObfaEm0GW5cXyDW5++bwb0N05cFUvGVaq8zExyrLqz9ixHQ@mail.gmail.com>
+Subject: Re: [PATCH v3 5/7] json-streamer: remove token queue
 To: Markus Armbruster <armbru@redhat.com>
 Cc: qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
@@ -137,19 +137,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jun 15, 2026 at 1:35=E2=80=AFPM Markus Armbruster <armbru@redhat.co=
+On Mon, Jun 15, 2026 at 2:30=E2=80=AFPM Markus Armbruster <armbru@redhat.co=
 m> wrote:
-> > -    error_setg(&ctxt->err, "JSON parse error, %s", message);
-> > +    error_setg(&ctxt->err, "JSON parse error at line %d, column %d, %s=
-",
 >
-> The usual format used by code parsing tools such as compilers is like
+> Lexical errors change from
 >
->    "%d:%d: JSON parse error: %s, token->x, token->y, message
+>     JSON parse error, stray '@'
 >
-> Should we use it?
+> to
+>
+>     JSON parse error, JSON parse error, stray '@'
 
-Sure, why not.
+Oops...
 
 Paolo
 
