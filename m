@@ -4,88 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6570CD98DA
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jun 2026 19:39:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48C40CD98DA
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jun 2026 19:39:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZD7m-000407-Hy; Mon, 15 Jun 2026 15:37:35 -0400
+	id 1wZD7t-0004cU-6a; Mon, 15 Jun 2026 15:37:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wZD63-0002P1-HF
- for qemu-devel@nongnu.org; Mon, 15 Jun 2026 15:35:48 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ id 1wZD6O-0002W1-7J
+ for qemu-devel@nongnu.org; Mon, 15 Jun 2026 15:36:12 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wZD60-00017o-6b
- for qemu-devel@nongnu.org; Mon, 15 Jun 2026 15:35:46 -0400
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+ id 1wZD6L-0001Wu-2o
+ for qemu-devel@nongnu.org; Mon, 15 Jun 2026 15:36:06 -0400
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65FJ0q0p1453759
- for <qemu-devel@nongnu.org>; Mon, 15 Jun 2026 19:35:31 GMT
+ 65FIxEKU861125
+ for <qemu-devel@nongnu.org>; Mon, 15 Jun 2026 19:36:03 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=qcppdkim1; bh=a+wGGRZCsFu
- Dn55cNs+nSPMT4EkvcI/GYRZyjpLftws=; b=NMXDmRROs1ZjtC+K+IPLKp6U6DC
- S0+8OD0VrNev7HKBIUKVCOtqgN8MtiIxYOTmOKOuXRfpa/3RhNWsvEBZMcKj0I/q
- CPq9m23ngLmQYzRgnjXNPm01k3TRjHf2T7Z4+wJ1fkN/tmfSkt/X5nAZa/thgJoW
- qky7mS1tLNDAmHr+S/44phIYPR+aDygxA9PDIVFp4VCjNBVQLQb+FY7+RzNIi4gq
- 0rc3MTChgMfkTyxWTIip6Ts8pdXCn0XvGbAs5ofrqODXS7q9bl2/TMMOh0jWePZ1
- 6+PkCsWDDajcr6raECRv34OG5WO2JcxsxcWvdQxzXZHjy8s3wzffcpSb81Q==
-Received: from mail-dy1-f200.google.com (mail-dy1-f200.google.com
- [74.125.82.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4etd2cb4be-1
+ :mime-version:references:subject:to; s=qcppdkim1; bh=r75MAyRnptz
+ wlKMRhw+iLcm+hN2cLebwsJwt/8PzSTU=; b=AQj4lrw85CBX/iKfprtOOjuPEFM
+ KGvfoZuz93RC4U3WMf6Err1a17SQ8TcJlyWV30Ae4mNszklbpJ/kke6em0qB9n2v
+ oUIRj4RcWFxkM7q4jktZf46yWSLxpAzUIFNu6H+pVG+grqHcTCVb+9spE5I9e84J
+ WiYlX13uaSI4BYqpMRM8FETeE2sHIOWE0jwDCsxrCyOdtzSmxkQ8ock9+OhflsWE
+ OG9Qr3LxWPvQLP7IdBu0mA2a+DS3O6V++9GZ0T8b9MF5nnjpTBhbxZK95skFBVUD
+ mF6b5U1nLQLTG/MHoUvv5HIZUgz6KzMmNq1BRBWrmsWbb6kq7mdModNvO8w==
+Received: from mail-dl1-f69.google.com (mail-dl1-f69.google.com [74.125.82.69])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4eteydam1y-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 15 Jun 2026 19:35:31 +0000 (GMT)
-Received: by mail-dy1-f200.google.com with SMTP id
- 5a478bee46e88-304df51ff3eso7915016eec.0
- for <qemu-devel@nongnu.org>; Mon, 15 Jun 2026 12:35:31 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Mon, 15 Jun 2026 19:36:03 +0000 (GMT)
+Received: by mail-dl1-f69.google.com with SMTP id
+ a92af1059eb24-1370417c0bfso2581816c88.0
+ for <qemu-devel@nongnu.org>; Mon, 15 Jun 2026 12:36:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1781552131; x=1782156931; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1781552162; x=1782156962; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=a+wGGRZCsFuDn55cNs+nSPMT4EkvcI/GYRZyjpLftws=;
- b=GlN/25PPSbiYAQEZPPIHICpU0vLfx6guHYFFyppFSpLespv9jyXe6mPQ94vmvb1pZP
- 9ZNhd24aE7kotnjxYyWlO2KB5YmE+3fEr/nSRtOWrPTMHriLZKQMD/+g7d2wABAL9sBf
- +xWDd3XYAtIQaiJrkxugmCVg1cqxscZQQjLKYkM06fKHbHANUphQMDQ8/Ilsr2sOUF+x
- TpB5OhJ/Kquz6eEVAfQ2PG8tvi7BAqX5uMiu85vAvYcB/FiTMRuo199wIouCyVhrfo4R
- WOO1aJ4BGNQZLN/jd/hXxSEL3s01be+K0IurEdj7uUItxPMnijN7dsITQlKSAW3apK0v
- MRNA==
+ bh=r75MAyRnptzwlKMRhw+iLcm+hN2cLebwsJwt/8PzSTU=;
+ b=Dm2fdGLYMfXJegMFJHrJTl+V2XAMfcwy+47Duc+3DqKOSxRiU1tjHymVnGyATTg7jf
+ q52y5R0vodjrQwlOY+D9OEATTUZB7CnuiPdKRAvoH4FEqeVb+gd11GP0N+BmlA3qMeYh
+ m5YftZE9e8YcDx69ZfDA0NRiu9HtYuTWSmG0qk7CJnbfiEveDR4a0GBq66kbq9ysao3V
+ /qtCze9slJPHadapDVJmUuVUPwZFaLjzPwE3c5UhenM5H9efFlIj8LDXNM7HvUDsIUiY
+ 0JNitB/v2O6wV9fElbnjml+hAVu0DhKY+hHaySlaZSb2RTLF63xZAUGsZheOr0oGrKnw
+ pFag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781552131; x=1782156931;
+ d=1e100.net; s=20251104; t=1781552162; x=1782156962;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=a+wGGRZCsFuDn55cNs+nSPMT4EkvcI/GYRZyjpLftws=;
- b=mcHAccq76ZYF2D1YGjEx06xG3TZIhky7/78fKqXdbilxMzrKmHQ3tNOg/1+MGq4So0
- 1WoXBtxBqCfdpXzwThKoSIFCf1XYTiiAPHjWar0VO1XNTnIGalG5NND1VYzWmtiKFnMT
- G47QyLwkcAYIaIJT+zTirhW97PfKV6Q3mgPIAPAEt/kiceu3i29SaQZbMqRVuE+NfYYn
- MMidMwmQpX2FMCX61dndeld8+Q6u5+Wci6M0K7mz8cB4Uw2Akg3FV0KL29tW+f5vqlhh
- 0F77xlWpC0p6XssUQrc++Zfg8TpU+wDSijqkGhCU40z8eYGwDBDRgo7LGZlsm107D942
- 4FqQ==
-X-Gm-Message-State: AOJu0YxP3fb42bBhminRO0edYJIvkj8cnIHXzKXfKoN4A2hhIgx4OpLg
- 4M86H8P0OZSU0SLdzbAnsjKL2pwZgoP7lAe0rz5uBMtw54MZ675MNfTt4MBJUvHQloUgW+Rt0+a
- QbFmzFI7htt3zEX/M9X3Gv1B42I0uSE3Z5FBRD2d8Grw3Z7P/mYA95CNJ7HPw5PiWrd6L
-X-Gm-Gg: Acq92OGz2pW40Lx9eTEkfYo0gsnF7OusVaG+ON+1PHT/Ks1rF4CbIEZwlxbhA0NwBlH
- obL8RN6/uFKWEsYc6lBdYEXCoiR8EMaJCUJAErIdXpBdR+LheMKWstnctuMd+zzmcG1K1aXovy/
- M5BdSoR+56EMaQxslD0wTMiD17nVJrugGRze8/Lbc6ZSdGTfsbxLUOzjY8oxwR5oOjZ/bFgvbLN
- yElEEo2Fo0Je9BGnIEvjoTtYcFSypXB726FXQUGCgDXy/YKeD216KaRvt1ppOEJ+nlX99cC6Rk2
- glnSSyqq6UWDRfQAiOh8vZBC1LB8kXdp2+xiryO27FxiX3v898Afwo1xW3zZBW7A50QAr/ziOCw
- IkuLJq+nMn0p3boK86MM/efsLdxYuOVp5cq5tAkY5qe4n+FdMjoK5o8aBYSRdhyYvPYwWkrus6g
- TEkV6GCg==
-X-Received: by 2002:a05:7023:b16:b0:138:2c88:b3d6 with SMTP id
- a92af1059eb24-1384bb69a3emr6280662c88.18.1781552130673; 
- Mon, 15 Jun 2026 12:35:30 -0700 (PDT)
-X-Received: by 2002:a05:7023:b16:b0:138:2c88:b3d6 with SMTP id
- a92af1059eb24-1384bb69a3emr6280646c88.18.1781552130101; 
- Mon, 15 Jun 2026 12:35:30 -0700 (PDT)
+ bh=r75MAyRnptzwlKMRhw+iLcm+hN2cLebwsJwt/8PzSTU=;
+ b=Co+hmknXjeVTSTL3VEJAZs3AhBd3CXxFck/8el7ypJb36Z3ib+XTI1rG+CLpbJTRsb
+ ESFqNuEjdG3GziuSoyaEoIMm48M5birmSj4Zj0ixeNH7VDHamO4BNuK06di5V3NnZ9ak
+ mP7TvWe7k3wl9dw9qaCOFIk/miAxlkps8S4A9R4b+wElUI1hxuf3my1LqgQmGZPD3QHa
+ lI67fueIiT7nMpQ8vXT6XoeRuUBLo1iQ6qh8eegB6I8OcYVt9YoXTm+RFfl1vBP1TMbg
+ LILxq3KtE/p55n0+loEz/jb06hwDfR2EYZYN2BANYghdzPRi4P6zFWhpD6yhhTFnqUox
+ Jm9g==
+X-Gm-Message-State: AOJu0YzL+tV/L276Tc8aB0kDrTSrUpn2DpVCvzZlgzJ5Y0FGo2XSfje+
+ x/1Yr1j89Le4sUgWWm4sswNBh1oEaNs//eswkI89W5fAbNTaKnmwrHE7mccrinzx4Cupz5OkjqR
+ KGkJx279H+MoEqv2x2KueQRr3oAYZPU7t2PMxPwJkLccUXZDXLdj3S39HJgoJn0xabE50
+X-Gm-Gg: Acq92OEMDdmKhbeyjUpv7TVWbDYd2mkY6Xzau1NPjyvh4GAJsOCife4nnhBt/vQ017r
+ vEyslObvs5NEXHalUvB0TC2C+r7hYUS/yPEr1R2lEvzuPxaUgxO3bKNe5tJ2atiZrEA4yx5DcX6
+ 05PqhPTfAcJys0uFWiiNDEwBH65cQf1rSbB+spny7pRBabIHjkKysWkWZg65gjy70yCFGlHVDUj
+ kgQhIHPxXis7yoYGTRNEfstu3mqIBmUUXh06Ar8wA3CmIfpnCC7EI6cZd8a/LttPl39wPEcSjwU
+ e9JDxKpjVWO7M+RXcBS20NlOsLT7ZWn5u1+ieXMXeeR1EcRN4b3tI08cXcu1L5xIMYaia0bejf3
+ 9sESiWV0MO0lTkkWnOiRfC6rbAawPTwwJmi15AJXacj8Es4KUfCaRwjOBsggjZHOBK25qo7lHGi
+ DCe0bYwQ==
+X-Received: by 2002:a05:7022:48f:b0:128:d396:f2ea with SMTP id
+ a92af1059eb24-139857bc219mr440107c88.11.1781552162033; 
+ Mon, 15 Jun 2026 12:36:02 -0700 (PDT)
+X-Received: by 2002:a05:7022:48f:b0:128:d396:f2ea with SMTP id
+ a92af1059eb24-139857bc219mr440090c88.11.1781552161515; 
+ Mon, 15 Jun 2026 12:36:01 -0700 (PDT)
 Received: from hu-pbouvier-lv.qualcomm.com (Global_NAT1.qualcomm.com.
  [129.46.96.20]) by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-1384b97bf09sm11498007c88.14.2026.06.15.12.35.29
+ a92af1059eb24-1384b97bf09sm11498007c88.14.2026.06.15.12.36.00
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 15 Jun 2026 12:35:29 -0700 (PDT)
+ Mon, 15 Jun 2026 12:36:00 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
 Cc: Chao Liu <chao.liu.zevorn@gmail.com>,
@@ -94,46 +93,46 @@ Cc: Chao Liu <chao.liu.zevorn@gmail.com>,
  Brian Cain <brian.cain@oss.qualcomm.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  Alexandre Iooss <erdnaxe@crans.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Subject: [PATCH v2 01/26] plugins: bump version
-Date: Mon, 15 Jun 2026 12:35:00 -0700
-Message-ID: <20260615193526.2883349-2-pierrick.bouvier@oss.qualcomm.com>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH v2 24/26] scripts/checkpatch: ignore spaces required around
+ some operators in C++
+Date: Mon, 15 Jun 2026 12:35:23 -0700
+Message-ID: <20260615193526.2883349-25-pierrick.bouvier@oss.qualcomm.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260615193526.2883349-1-pierrick.bouvier@oss.qualcomm.com>
 References: <20260615193526.2883349-1-pierrick.bouvier@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjE1MDIwNyBTYWx0ZWRfX2Q9FdqB9qkdm
- omdJ0F6bINj1PwYkQh3sV21qM+SFLO7wQAu/843qulih0muhjXD0NI5quUw0wPHQupkq9pMaJHd
- 12GH/JqjDQagVqcGCUt9y5hHXigdx8hE0zurAGRNPBBjjg2HMR1IOZoQ5KN0S4UA4oiFU23oZYJ
- KSQJheXRFm817iIZEdEwrQacCOstBRxPQTSRb7NLVtPkppuqFyvpG4dqGmkNWMxERDn1EaHXq3L
- yGjIKGY+C5nt0BN+FFIZ0sH66OaXbtJkvHrgCqklLYNNTVmvPwoGeWrab+0UG8EYvYNlCFKdhFi
- VfhQJ4DHC+2e0sX1P8Ax2BS5rWshKrIxbmHN9VJxG7Y5h7SmzsZSkcej6IOwsRdv6xmh7V9rCd4
- St6mLfCbCyoy7vaeNEXO3QHTY1dzfOtFWs/oVscaONzUAGoMhiW2O72NnhgXnkf2ShSE9lYz8GQ
- j11t29sxXelskdDkM6A==
-X-Proofpoint-ORIG-GUID: 9wpuMvhaqecdCIWaLEXgzAtHoVvXxpST
-X-Proofpoint-GUID: 9wpuMvhaqecdCIWaLEXgzAtHoVvXxpST
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjE1MDIwNyBTYWx0ZWRfXwkVsZc7w7zDs
- d2GzBk7R518uoYtK3ekFyBoFAwyOVVkS3jHHGl2PAUUBiLm+vE/hO77PE1Y7bHa7IJTIbHSujkP
- GoiRcbph2w8cFOLY2qEtk2pQCq55kNA=
-X-Authority-Analysis: v=2.4 cv=MsRiLWae c=1 sm=1 tr=0 ts=6a305403 cx=c_pps
- a=PfFC4Oe2JQzmKTvty2cRDw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+X-Proofpoint-GUID: LDhEAjtQn2gNczyy-mqNfMump9IJ8ZC2
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjE1MDIwNyBTYWx0ZWRfX0wMv02cfz6+k
+ Lr0Q6+/XXer5ILldgjGWkJ9VO6pMEW6avrLwB5bu1Q7RGImfL9KDox4lXnGWKrCXkVstU5Lst/y
+ sp4z9ij+5bYB3iukn4wUC+Nyb7mudsk=
+X-Authority-Analysis: v=2.4 cv=QrJuG1yd c=1 sm=1 tr=0 ts=6a305423 cx=c_pps
+ a=kVLUcbK0zfr7ocalXnG1qA==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
  a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22 a=KKAkSRfTAAAA:8
- a=EUspDBNiAAAA:8 a=A7FZhrvmqJkW37y3txMA:9 a=6Ab_bkdmUrQuMsNx7PHu:22
- a=cvBusfyB2V15izCimMoJ:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22 a=EUspDBNiAAAA:8
+ a=nUVG7euvARLiU1CHTZIA:9 a=vr4QvYf-bLy2KjpDp97w:22
+X-Proofpoint-ORIG-GUID: LDhEAjtQn2gNczyy-mqNfMump9IJ8ZC2
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjE1MDIwNyBTYWx0ZWRfXwuFDesLfPby7
+ 6NPRw92O4xrirtPTguyGfoTHHnfSxoBuMYCGQAXsRGU++dNhJKQG31T8+z+O/ufL4pgHiwWlCtV
+ 38+4PVsZdK2e0111qshYhs0GcEH6laifms5OitnY8qjwQMOEzr5QEm5GjsSA5BUE3nXWWZRlNzK
+ EnY4PsEjnLwH+VrI72Cn4tnEPQrYNFQjTkfIFmi+dB+hVMKWCUqAGLKGZkeyNlv/1Goj3cchhS1
+ W2Ymqt0PSNgKHELEeidQBS1vBQVhWJHCZ38zvE+PNL+RvJYO4rRu+gVm3zl0iKNIZlhT9fF/u8K
+ vV9DMq7NjBTTgbIqLiS1KezIE9PZRiUdux7+LAqn74yKW9MAVdP8pP/8yaqmxcUL+hi38xSE5mw
+ 4g/BvhgDbrg/WYhfJrbidvqqJTN7E+49yzOm4MlxnNIy8y9gZ3wWc5hXBUBa4HDJCC5Vxs+SOfg
+ WNjyjQVM34ybw/1v1VA==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-06-15_05,2026-06-15_04,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 suspectscore=0 phishscore=0 lowpriorityscore=0 bulkscore=0
- clxscore=1015 adultscore=0 priorityscore=1501 impostorscore=0 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606040000 definitions=main-2606150207
-Received-SPF: pass client-ip=205.220.180.131;
+ clxscore=1015 priorityscore=1501 lowpriorityscore=0 suspectscore=0
+ phishscore=0 spamscore=0 impostorscore=0 malwarescore=0 adultscore=0
+ bulkscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.22.0-2606040000
+ definitions=main-2606150207
+Received-SPF: pass client-ip=205.220.168.131;
  envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0b-0031df01.pphosted.com
+ helo=mx0a-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -156,50 +155,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Next commits will be breaking changes, so bump min version and version
-accordingly.
+C++ has a different style when it comes to space around references,
+dereferences, so don't report it.
+Also, closing templates with >> gets wrongly confused with >> operator,
+so just relax this check.
 
-Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Some examples:
+ERROR: spaces required around that '&' (ctx:WxV)
++                auto &[counter, p] = *static_cast<TbData*>(udata);
+                      ^
+
+ERROR: spaces required around that '*' (ctx:VxO)
++                auto &[counter, p] = *static_cast<TbData*>(udata);
+                                                         ^
+
+ERROR: spaces required around that '>>' (ctx:VxW)
++        std::vector<std::pair<Vaddr, uint64_t>> v;                                              ^
+
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 ---
- include/plugins/qemu-plugin.h | 6 +++++-
- plugins/plugin.h              | 2 +-
- 2 files changed, 6 insertions(+), 2 deletions(-)
+ scripts/checkpatch.pl | 25 +++++++++++++++++++++++++
+ 1 file changed, 25 insertions(+)
 
-diff --git a/include/plugins/qemu-plugin.h b/include/plugins/qemu-plugin.h
-index 4eb1d2cd85c..435a14f5a00 100644
---- a/include/plugins/qemu-plugin.h
-+++ b/include/plugins/qemu-plugin.h
-@@ -80,11 +80,15 @@ typedef uint64_t qemu_plugin_id_t;
-  * - added disconinuity callback API (for interrupts, exceptions, host calls)
-  * - added syscall filter callback API, which allows skipping syscalls and
-  *   setting custom syscall return values
-+ *
-+ * version 7:
-+ * - add userdata to all plugin callbacks, allowing maintenance of state
-+ *   externally, and easing interfacing with other languages.
-  */
+diff --git a/scripts/checkpatch.pl b/scripts/checkpatch.pl
+index 2189db19f54..538e059e265 100755
+--- a/scripts/checkpatch.pl
++++ b/scripts/checkpatch.pl
+@@ -2621,6 +2621,31 @@ sub process {
+ 						if ($op eq '::') {
+ 							$ok = 1;
+ 						}
++
++						# Ignore * in C++: templates and
++						# pointer types are incorrectly
++						# flagged. Example:
++						# static_cast<T*>
++						if ($op eq '*') {
++							$ok = 1;
++						}
++
++						# Ignore & in C++: & means a
++						# reference, and this create
++						# issues with some constructions.
++						# Example:
++						# auto &[first, second] = pair;
++						if ($op eq '&') {
++							$ok = 1;
++						}
++
++						# Ignore >> in C++
++						# checkpatch is confused by
++						# >> closing templates. Example:
++						# vector<pair<A, B>>
++						if ($op eq '>>') {
++							$ok = 1;
++						}
+ 					}
  
- extern QEMU_PLUGIN_EXPORT int qemu_plugin_version;
- 
--#define QEMU_PLUGIN_VERSION 6
-+#define QEMU_PLUGIN_VERSION 7
- 
- /**
-  * struct qemu_info_t - system information for plugins
-diff --git a/plugins/plugin.h b/plugins/plugin.h
-index 6fbc443b96c..9179da43851 100644
---- a/plugins/plugin.h
-+++ b/plugins/plugin.h
-@@ -16,7 +16,7 @@
- #include "qemu/queue.h"
- #include "qemu/qht.h"
- 
--#define QEMU_PLUGIN_MIN_VERSION 2
-+#define QEMU_PLUGIN_MIN_VERSION 7
- 
- /* global state */
- struct qemu_plugin_state {
+ 					# Ignore email addresses <foo@bar>
 -- 
 2.43.0
 
