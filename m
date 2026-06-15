@@ -4,64 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D82CCD98DE
-	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jun 2026 12:17:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D223ECD98DA
+	for <qemu-devel@archiver.kernel.org>; Mon, 15 Jun 2026 12:17:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZ6EU-0008PF-UV; Mon, 15 Jun 2026 08:16:02 -0400
+	id 1wZ6EY-0008QK-GO; Mon, 15 Jun 2026 08:16:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <matyas.bobek@gmail.com>)
- id 1wZ6EP-0008NA-VW
+ id 1wZ6EP-0008N6-4l
  for qemu-devel@nongnu.org; Mon, 15 Jun 2026 08:15:58 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <matyas.bobek@gmail.com>)
- id 1wZ6EO-0003UD-AF
- for qemu-devel@nongnu.org; Mon, 15 Jun 2026 08:15:57 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-490b613a17bso29239065e9.3
+ id 1wZ6EN-0003U7-CU
+ for qemu-devel@nongnu.org; Mon, 15 Jun 2026 08:15:56 -0400
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-4921eed3fa2so19051215e9.0
  for <qemu-devel@nongnu.org>; Mon, 15 Jun 2026 05:15:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1781525755; x=1782130555; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1781525754; x=1782130554; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=v7B7MPlm8lxhhWU0KcQHkTsOfZGkRsES1ICXN/vP+BI=;
- b=kEuwHikMiFw0dYD/98yZK560aGfBULoWjVrDK6+FGfmc6rz2NKZ1iIzWm8ZSi14Sy2
- uSLiSxzDZRY3gmpBpHxrDLgB2yzLNQZyDZo4a+GVFwgNnvN0XFh1taFUnttSgrvUJLeh
- 3i8L11mgEKWCrgVaK558TknqoOuFGl2wTvpEyuKymjWeaNyhESfPPYh0y5a/4GhlKhev
- MzVZWqV0toSmlHkw/MrQrrjZgqGKkGVB/VY7/kU1miic27Hi6vgCVfj4ptG3rkuEG92e
- o+OrDV4ns96k6hiHkFlG9b8u1pF6EN8qkFM7kJAH7uvTDFid7FagbByOP3l/3o9Aa1Vy
- i3dg==
+ bh=naAjGDZPbJ67GvzkWP49qsFsJVwJRVlvC8LloXp3eNQ=;
+ b=eJwA8VCgjwSs3qGUbsJMCjQcCS6upg2bu1m6+aoZO2X1JA2c+D5YR5itPwtyN4G3lt
+ u7s6t89apcreqSPfbyrlNVHKOSA+5D9pLF2ZVDUHHTfc6FiPy70eC60IRgNqivo4RC4H
+ Van31AtaSlIo/7mKfxNooOvsTjA3NVgxLq3NmlyhKgz80W9t1td4iwYDjA9Va7B0UsIH
+ hnnC8G3J0a2JMnHOI5b3dBI0TzZjn2NV+DDxUHNHBue8wc9AoXxLzcr22JUhaYxc9uQG
+ dPJMsCvz48eGAaKSe4fp0D2kwzldXnuBXk8E9NLPiAcercuw0oDcluB+MxB/Y/q63fRi
+ xPiw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781525755; x=1782130555;
+ d=1e100.net; s=20251104; t=1781525754; x=1782130554;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=v7B7MPlm8lxhhWU0KcQHkTsOfZGkRsES1ICXN/vP+BI=;
- b=DGh5zy3ebt8IgKh8/EmRtMEVbQcITIwgxRVS72thclh/kUOggFCjq1ODt9V4mCGrKU
- YUhluMa5uOTdeIOpyANLZuS1JtKFsGAfWTGSSYwz8hHKnBQErXQBssjL3n2XXZOE9b4i
- wqB86ugUUkk15rjJHW6/rosUHTLWN+iFPG7P6mYCdgY0uw1etKyqjOS7Lbr3r/IIF4xq
- 35EubhSDq8Qmq4TSi1pH5eSuRwTflbl3iC6aAtyC6BHnfxh8Dy6VFk9T9q4PP0w2MCu0
- OiBPBK+rxB/x9QYh4j0RNryUHK54gCi6q8hlTa78Lzr2bw5qgQ8s0NholM29rbsBGjG3
- hdVw==
-X-Gm-Message-State: AOJu0YzcsXCWN4D7RD1u07NoWCS2QQbT5yj7LG8ND0nIOw1iFdKhwmcG
- BoVUXkWw/epUjs/pihDBQ0sCfG6b+kCHzfr5v7IixAFlGK4wjcqko/0+QOlCGW9Q
-X-Gm-Gg: Acq92OHOw2YChb4AtBcIW6Gh+J3nWYAwyqKfdb6KLLvO6JGQJD1mnXPUDZpZCUOvp6T
- d2PUSS8dpbTpFY0WaFrsaGB1eDQ3BoaE1rmBR8haTG438yUn+mGHl7/QwPKpHd2P/DfE9ztFpzt
- YKD2uMJNBqZTDnr/RqTGef2LAJ2DxF9xOtMWQx42Zi5AnvXD3e9l3R9PYbBdEC6ttZsMTwfa4GG
- O5H6Tcq04W1o5kqjSSbbKDy2ht4hk+yDxCBTjcY8TwIctLqsaO6nTYzta0GIkWf3l8iSoL9etRm
- SBc0HbXKR9ZaEWJSZj1NBm2eRUe3TdQFTUiTnmHHUuBD58bzVTZqXKQ1O4OMXdqNNgpu332BkoX
- ykrSjE72nWnD59gwhjhRHUd6xveEeI2lrenoH5qO2wwRvZjVwFL1QGHVbRBIe/H7wj7APvyjohI
- tKJC+ATfuz652EYA6W9iWrq2diaBP2nGQI/98rdolfRP3z7zio/WMEew==
-X-Received: by 2002:a7b:c351:0:b0:492:1e36:8c72 with SMTP id
- 5b1f17b1804b1-4921e368c9fmr112270615e9.37.1781525754405; 
- Mon, 15 Jun 2026 05:15:54 -0700 (PDT)
+ bh=naAjGDZPbJ67GvzkWP49qsFsJVwJRVlvC8LloXp3eNQ=;
+ b=KKgjaTG+OvYW/2h7f+Gof+j1ZLWv9LKcmGTszAnAjSRW2cHcHX5Ndn6qBasdAdoeNH
+ 1nGHqP6k5OwXaEqnWA4o+1Kx4uAPAJes4HsG5MHgbPiBRmZnDb2mKYE5s9bH/16pvny/
+ BIMKVTrUxzm+Vwraj82AWE3ZN2btW58qwNkq7YMtGIi1QB7Y5S0Liy5XoE8Ky5SkIvy4
+ e7SHBarlPIspduN1Xs6ebAQqaZIKbxsSxvoj2bSBwp8URE5zF5HIIkSc7p1qsvBdGeQ7
+ AyRMCuuAH1AfRfViROnvl5OdG6MRv6aMxdlUk5JWTBDiGXyCXXkAGCSNAExlaiWUkgK5
+ l7Mw==
+X-Gm-Message-State: AOJu0YwjTSCh4e8F4VVkrlUcexYHbyc1sDoJCW4NVPyqcMxAmU41wprJ
+ 4+4XCqjnC4FyyNqb3bAAX3Ntc7oN0QCDI9J/Ai5YpBcednLFcP0gJUeDOSPVLCfn
+X-Gm-Gg: Acq92OE3IQsUSo4Qph8BSWbEm+pCmfbzUSo0GgzSt9eUG3pR4V5jv8PCZmB9UM29Qoc
+ efRwumZZJjZnPHOCsN5rmATkGI7kCtth/HrwR3uVoLziGDsIoqWHZOm0OBWQTJlgsVnJBaWWLJx
+ Tr/LGcmkjIzB+tztAs/A+5zVczIxE6r7WbMgDY0jAyT3rcrojfvtjwA8mw2mQq1EabRYAue21rI
+ 0t2Wj0JqO0etR29o+5oi8Wz6jysTnnzoN826N5fdO3kSiAB7bEQhlvK67WXqUHd73U1DtritOE1
+ YBTSkIu6S1CevrhSduB7LJu5GqRZ6wqIhkV9IIUCDjgnP4lJ/KTDCk10VAk9NgzONwQpKHnkMLM
+ lSGpiB7dGy4Q2tsazxTVIR+DndVV8jg44lBTDOuaBtNYmjWgjTMT1USGMm1pvQdK6N7NVewZJ18
+ TdLNzDcUsNPSgDW2SJRm1Obw/8laTOsXz8XYegX/BQcklfsS71RA3gIA==
+X-Received: by 2002:a05:600c:e556:20b0:490:b9c3:6c58 with SMTP id
+ 5b1f17b1804b1-490ec4fe879mr130198795e9.16.1781525753445; 
+ Mon, 15 Jun 2026 05:15:53 -0700 (PDT)
 Received: from acidburn.pod.cvut.cz (acidburn.pod.cvut.cz. [147.32.90.2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-490ea4a128csm338491345e9.0.2026.06.15.05.15.53
+ 5b1f17b1804b1-490ea4a128csm338491345e9.0.2026.06.15.05.15.52
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
  Mon, 15 Jun 2026 05:15:53 -0700 (PDT)
 From: =?UTF-8?q?Maty=C3=A1=C5=A1=20Bobek?= <matyas.bobek@gmail.com>
@@ -72,24 +72,24 @@ Cc: qemu-arm@nongnu.org, Marc Kleine-Budde <mkl@pengutronix.de>,
  Nikita Ostrenkov <n.ostrenkov@gmail.com>,
  Peter Maydell <peter.maydell@linaro.org>, Andrey Volkov <andrey@volkov.fr>,
  =?UTF-8?q?Maty=C3=A1=C5=A1=20Bobek?= <matyas.bobek@gmail.com>
-Subject: [PATCH v5 3/7] hw/misc/imx6_ccm: Add PLL3 and CAN clock
-Date: Mon, 15 Jun 2026 14:15:03 +0200
-Message-ID: <f91287d28f597d168bb7d5057a6009a3a9dae729.1781111270.git.matyas.bobek@gmail.com>
+Subject: [PATCH v5 2/7] hw/arm/sabrelite: Introduce class SabreliteMachineState
+Date: Mon, 15 Jun 2026 14:15:02 +0200
+Message-ID: <d0b3ff0ccd9018e1df67497bf8af0b44552b6aa5.1781111270.git.matyas.bobek@gmail.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <cover.1781111270.git.matyas.bobek@gmail.com>
 References: <cover.1781111270.git.matyas.bobek@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=matyas.bobek@gmail.com; helo=mail-wm1-x32b.google.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FORGED_GMAIL_RCVD=1,
- FREEMAIL_FROM=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=matyas.bobek@gmail.com; helo=mail-wm1-x329.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,12 +105,13 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add fixed frequency (480 MHz) PLL3, of which the FlexCAN
-clock is derived, and compute FlexCAN frequency based on
-the divider configuration (CCM_CSCMR2).
+Create full class SabreliteMachineState extending MachineState.
 
-The clock frequency will be used for computing timestamps
-in FlexCAN emulator.
+Previously, Sabrelite board MachineState was declared indirectly by the
+DEFINE_MACHINE_ARM macro. FslIMX6State was only instantiated in the
+sabrelite_init function. For FlexCAN device, machine properties
+will be used to select QEMU CAN buses. A custom class is therefore
+required, so the CanBusState "connections" can then be added as fields.
 
 Signed-off-by: Matyáš Bobek <matyas.bobek@gmail.com>
 Signed-off-by: Pavel Pisa <pisa@fel.cvut.cz>
@@ -118,106 +119,95 @@ Tested-by: Pavel Pisa <pisa@fel.cvut.cz>
 Reviewed-by: Bernhard Beschow <shentey@gmail.com>
 Reviewed-by: Pavel Pisa <pisa@fel.cvut.cz>
 ---
- hw/misc/imx6_ccm.c         | 24 ++++++++++++++++++++++++
- hw/misc/trace-events       |  2 ++
- include/hw/misc/imx6_ccm.h |  4 ++++
- include/hw/misc/imx_ccm.h  |  1 +
- 4 files changed, 31 insertions(+)
+ hw/arm/sabrelite.c | 28 ++++++++++++++++++----------
+ 1 file changed, 18 insertions(+), 10 deletions(-)
 
-diff --git a/hw/misc/imx6_ccm.c b/hw/misc/imx6_ccm.c
-index a10b67d396..45fdd0d5a8 100644
---- a/hw/misc/imx6_ccm.c
-+++ b/hw/misc/imx6_ccm.c
-@@ -257,6 +257,15 @@ static uint64_t imx6_analog_get_pll2_clk(IMX6CCMState *dev)
-     return freq;
+diff --git a/hw/arm/sabrelite.c b/hw/arm/sabrelite.c
+index 04484aaa14..7e036e6388 100644
+--- a/hw/arm/sabrelite.c
++++ b/hw/arm/sabrelite.c
+@@ -20,6 +20,15 @@
+ #include "qemu/error-report.h"
+ #include "system/qtest.h"
+ 
++struct SabreliteMachineState {
++    MachineState parent_obj;
++
++    FslIMX6State soc;
++};
++
++#define TYPE_SABRELITE_MACHINE MACHINE_TYPE_NAME("sabrelite")
++OBJECT_DECLARE_SIMPLE_TYPE(SabreliteMachineState, SABRELITE_MACHINE)
++
+ static struct arm_boot_info sabrelite_binfo = {
+     /* DDR memory start */
+     .loader_start = FSL_IMX6_MMDC_ADDR,
+@@ -41,7 +50,7 @@ static void sabrelite_reset_secondary(ARMCPU *cpu,
+ 
+ static void sabrelite_init(MachineState *machine)
+ {
+-    FslIMX6State *s;
++    SabreliteMachineState *s = SABRELITE_MACHINE(machine);
+ 
+     /* Check the amount of memory is compatible with the SOC */
+     if (machine->ram_size > FSL_IMX6_MMDC_SIZE) {
+@@ -50,13 +59,12 @@ static void sabrelite_init(MachineState *machine)
+         exit(1);
+     }
+ 
+-    s = FSL_IMX6(object_new(TYPE_FSL_IMX6));
+-    object_property_add_child(OBJECT(machine), "soc", OBJECT(s));
++    object_initialize_child(OBJECT(machine), "soc", &s->soc, TYPE_FSL_IMX6);
+ 
+     /* Ethernet PHY address is 6 */
+-    object_property_set_int(OBJECT(s), "fec-phy-num", 6, &error_fatal);
++    object_property_set_int(OBJECT(&s->soc), "fec-phy-num", 6, &error_fatal);
+ 
+-    qdev_realize(DEVICE(s), NULL, &error_fatal);
++    qdev_realize(DEVICE(&s->soc), NULL, &error_fatal);
+ 
+     memory_region_add_subregion(get_system_memory(), FSL_IMX6_MMDC_ADDR,
+                                 machine->ram);
+@@ -70,7 +78,7 @@ static void sabrelite_init(MachineState *machine)
+         /* Add the sst25vf016b NOR FLASH memory to first SPI */
+         Object *spi_dev;
+ 
+-        spi_dev = object_resolve_path_component(OBJECT(s), "spi1");
++        spi_dev = object_resolve_path_component(OBJECT(&s->soc), "spi1");
+         if (spi_dev) {
+             SSIBus *spi_bus;
+ 
+@@ -89,7 +97,7 @@ static void sabrelite_init(MachineState *machine)
+                 qdev_realize_and_unref(flash_dev, BUS(spi_bus), &error_fatal);
+ 
+                 cs_line = qdev_get_gpio_in_named(flash_dev, SSI_GPIO_CS, 0);
+-                qdev_connect_gpio_out(DEVICE(&s->gpio[2]), 19, cs_line);
++                qdev_connect_gpio_out(DEVICE(&s->soc.gpio[2]), 19, cs_line);
+             }
+         }
+     }
+@@ -100,7 +108,7 @@ static void sabrelite_init(MachineState *machine)
+     sabrelite_binfo.secondary_cpu_reset_hook = sabrelite_reset_secondary;
+ 
+     if (!qtest_enabled()) {
+-        arm_load_kernel(&s->cpu[0], machine, &sabrelite_binfo);
++        arm_load_kernel(&s->soc.cpu[0], machine, &sabrelite_binfo);
+     }
  }
  
-+static uint64_t imx6_analog_get_pll3_clk(IMX6CCMState *dev)
-+{
-+    uint64_t freq = 480000000;
-+
-+    trace_imx6_analog_get_pll3_clk(freq);
-+
-+    return freq;
-+}
-+
- static uint64_t imx6_analog_get_pll2_pfd0_clk(IMX6CCMState *dev)
- {
-     uint64_t freq = 0;
-@@ -344,6 +353,18 @@ static uint64_t imx6_ccm_get_per_clk(IMX6CCMState *dev)
-     return freq;
+@@ -117,10 +125,10 @@ static void sabrelite_machine_class_init(ObjectClass *oc, const void *data)
  }
  
-+static uint64_t imx6_ccm_get_can_clk(IMX6CCMState *dev)
-+{
-+    uint64_t freq = 0;
-+
-+    freq = imx6_analog_get_pll3_clk(dev) / 8;
-+    freq /= (1 + EXTRACT(dev->ccm[CCM_CSCMR2], CAN_CLK_PODF));
-+
-+    trace_imx6_ccm_get_can_clk(freq);
-+
-+    return freq;
-+}
-+
- static uint32_t imx6_ccm_get_clock_frequency(IMXCCMState *dev, IMXClk clock)
- {
-     uint32_t freq = 0;
-@@ -358,6 +379,9 @@ static uint32_t imx6_ccm_get_clock_frequency(IMXCCMState *dev, IMXClk clock)
-     case CLK_IPG_HIGH:
-         freq = imx6_ccm_get_per_clk(s);
-         break;
-+    case CLK_CAN:
-+        freq = imx6_ccm_get_can_clk(s);
-+        break;
-     case CLK_32k:
-         freq = CKIL_FREQ;
-         break;
-diff --git a/hw/misc/trace-events b/hw/misc/trace-events
-index b88accc437..99910fc068 100644
---- a/hw/misc/trace-events
-+++ b/hw/misc/trace-events
-@@ -242,11 +242,13 @@ imx6_analog_get_periph_clk(uint32_t freq) "freq = %u Hz"
- imx6_analog_get_pll2_clk(uint32_t freq) "freq = %u Hz"
- imx6_analog_get_pll2_pfd0_clk(uint32_t freq) "freq = %u Hz"
- imx6_analog_get_pll2_pfd2_clk(uint32_t freq) "freq = %u Hz"
-+imx6_analog_get_pll3_clk(uint32_t freq) "freq = %u Hz"
- imx6_analog_read(const char *reg, uint32_t value) "reg[%s] => 0x%" PRIx32
- imx6_analog_write(const char *reg, uint32_t value) "reg[%s] <= 0x%" PRIx32
- imx6_ccm_get_ahb_clk(uint32_t freq) "freq = %u Hz"
- imx6_ccm_get_ipg_clk(uint32_t freq) "freq = %u Hz"
- imx6_ccm_get_per_clk(uint32_t freq) "freq = %u Hz"
-+imx6_ccm_get_can_clk(uint32_t freq) "freq = %u Hz"
- imx6_ccm_get_clock_frequency(unsigned clock, uint32_t freq) "(Clock = %d) = %u"
- imx6_ccm_read(const char *reg, uint32_t value) "reg[%s] => 0x%" PRIx32
- imx6_ccm_reset(void) ""
-diff --git a/include/hw/misc/imx6_ccm.h b/include/hw/misc/imx6_ccm.h
-index ccf46d7353..a54b940686 100644
---- a/include/hw/misc/imx6_ccm.h
-+++ b/include/hw/misc/imx6_ccm.h
-@@ -164,6 +164,10 @@
- #define PERCLK_PODF_SHIFT        (0)
- #define PERCLK_PODF_LENGTH       (6)
- 
-+/* CCM_CSCMR2 */
-+#define CAN_CLK_PODF_SHIFT       (2)
-+#define CAN_CLK_PODF_LENGTH      (6)
-+
- /* CCM_ANALOG_PFD_528 */
- #define PFD0_FRAC_SHIFT          (0)
- #define PFD0_FRAC_LENGTH         (6)
-diff --git a/include/hw/misc/imx_ccm.h b/include/hw/misc/imx_ccm.h
-index c4212d04ea..6839716ea3 100644
---- a/include/hw/misc/imx_ccm.h
-+++ b/include/hw/misc/imx_ccm.h
-@@ -46,6 +46,7 @@ typedef enum  {
-     CLK_EXT,
-     CLK_HIGH_DIV,
-     CLK_HIGH,
-+    CLK_CAN,
- } IMXClk;
- 
- struct IMXCCMClass {
+ static const TypeInfo sabrelite_machine_init_typeinfo = {
+-    .name          = MACHINE_TYPE_NAME("sabrelite"),
++    .name          = TYPE_SABRELITE_MACHINE,
+     .parent        = TYPE_MACHINE,
+     .class_init    = sabrelite_machine_class_init,
+-    .instance_size = sizeof(MachineState),
++    .instance_size = sizeof(SabreliteMachineState),
+     .abstract      = false,
+     .interfaces    = arm_machine_interfaces,
+ };
 -- 
 2.54.0
 
