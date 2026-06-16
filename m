@@ -4,80 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4FE6ECD98E1
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 19:09:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B56ACD98EE
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 19:09:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZZ9F-0005AG-Hq; Tue, 16 Jun 2026 15:08:35 -0400
+	id 1wZZAJ-0005yS-Ey; Tue, 16 Jun 2026 15:09:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wZZ7e-0004U5-DS
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 15:07:15 -0400
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ id 1wZZ80-0004V7-1R
+ for qemu-devel@nongnu.org; Tue, 16 Jun 2026 15:07:28 -0400
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wZZ7b-0000tc-5r
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 15:06:53 -0400
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-490b7866869so50203145e9.2
- for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 12:06:50 -0700 (PDT)
+ id 1wZZ7u-0000wy-JE
+ for qemu-devel@nongnu.org; Tue, 16 Jun 2026 15:07:13 -0400
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-4923139e940so6403245e9.3
+ for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 12:06:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1781636809; x=1782241609; darn=nongnu.org;
+ d=linaro.org; s=google; t=1781636818; x=1782241618; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=+7Eo4SU78o6Ns7AfCRCkuFEyF7iTIz+MbUN5Y5O64T0=;
- b=lDTLZoAGVf+tcd960jsnBQXHKOeLsZH5x/w19H/HGsfqelmnqhFQr5i0o3eZZ/pxpB
- 0T2qaD9Io6J6dVwoME3aLfW9PHTAjAls6HrFjCnI1Pl/Gb+5mBahl1/miBkWvuCeMGCK
- EC45nhm4w697GbLuKHH6h9hxgsHT056LcLBB4sOinSY4qBf8/kQoYcifcv09Ft+JdXIa
- aFG86R/eAkOg5xT556mKvnnxJwpBPLkZswVeuBllO1XT1XwBM52kI40JrVbEFjZcs5sQ
- P8ZmYi7n8aiGDZY+F6Tj3Pw6Mav3qRZ2uejDe63FsyLjIb1b7TMESv5nK4v8EOTavkc+
- izpw==
+ :reply-to; bh=HvDKsaFNygtdm+lex5RPr5AUTu5fxx81lRj/cLRW5Mo=;
+ b=Eq8eEJ5x7yrb6v2uLlGXOkzwNTXb59+Dafq88p6zI7bgADlX/3Z7xXqeJWhLh+/7+X
+ 1oOYLymjRNCF9bXfdskVvRXaiG6egBGakxIT7FInHJ1GWYICvFsU1ZdJFoIjxQEmwa2B
+ 4yIDNFK5ctSRrx9+c5r9eMMS3mREesmHj09KleNyJbaLLOyB94APLJYtOkpmTevrOyFr
+ 5H7GNliNKlW9/ZRPa4lqo7KbdDoymyPE68D+DCAz6BDBUxM0zbXGioZSBcH4FqXKrQV1
+ AEV4LIjhTSDLF5iXoEDv9BcZu1dfWJXMYa1dEN0KpoCZZZutLLsVcWsdEEGST1Ldk2nH
+ DU4g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781636809; x=1782241609;
+ d=1e100.net; s=20251104; t=1781636818; x=1782241618;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=+7Eo4SU78o6Ns7AfCRCkuFEyF7iTIz+MbUN5Y5O64T0=;
- b=sSZP9nGzOpWz0ywL3o0S0FlT+UHsoWyPp/Q1GEGQmKNIXEw0+Zqb8+uaFAS1NY35DO
- 6jHiWT6867pt6VAvGahX7bNfYXE6eGfbrlfE6YSI4ZWKaoOhbRvU35smGqUi4HF2LRI/
- ntrezJqVhHda0TbdgPDJ5UT+5pdSSUubRA2F5xxwESf/P54NBUpEhu3NGd39t8KraEMP
- NK3VCxxM+BP/oShY8IabAazrMQ8LwYAhXhVPgOIYu+pGgTGNZZBCcZn3GVz8ml41q6pz
- lJoWASP5ncUGMe6Eel7Izgy+VojeyghJ9xE1jVUnFdRN4xJGVW9xZ9GJ3Wquid0PEC/9
- etTw==
-X-Gm-Message-State: AOJu0YxBP32Q8HziQEdsrWL3cAbTebYeSZj5xWWLvp7WSh8tdxgWsFOE
- n/gOeQ4FdinhogngXFGA7VH7+J25qnt5/Snsz6kuEjOR2H8Avp5kgZUk8MDM+S7jfuDhEOg/ry5
- GjhfD
-X-Gm-Gg: Acq92OEMn9zaEDpW1oanC1ck8eTUA3b9ibzDzOCq72WLlX0qUxv6fZmfxctETY6H4bi
- XXPdoEuU6CVO3ooG1YfMivqeRs3yfYK0z3rXC8gXC5a94HE9Aou91QP5tEHLuWBt4Gdb75m158R
- JKQc2jlSgEqSHZ+nbYLQiw2YN6tkJwSCE6XMla+u2sCGNvFoN8sMvDAUc0PlG64kMCgu3OdhlPY
- boSivTRj5QAudVWRD+yZCoNCSIL6DyiyA0Zlx4bsi7SCaiO5KKnV25dD/QU/vmpIqTQrD7fiEMw
- 0LbKXImY6xWoccL8+TJmgIobZmI8X49yNGWv0cs6AixNQ4oJe6/PUei0kSVi24rzT4rKoQjhHS0
- Pi0ydgFUT8ooN9xBZ+zsetssopcL+qAx/qGKgEPSr0wXqhRqkIf+F8XwpCXrwMV2iDKdpmBNioA
- UWjEVcBlcx9YSGCLjPk+ibLN916ZS0D9gqBsrKNdhf3SeNs9se1WCi1p4LAXQEDeIZtui86Vu3l
- KpIhHVXnGl30UVuyZMvzug8rbM+HUYb
-X-Received: by 2002:a05:600c:8184:b0:490:625e:bb68 with SMTP id
- 5b1f17b1804b1-4923339f885mr14992975e9.3.1781636809250; 
- Tue, 16 Jun 2026 12:06:49 -0700 (PDT)
+ bh=HvDKsaFNygtdm+lex5RPr5AUTu5fxx81lRj/cLRW5Mo=;
+ b=IHyyxPp4XLtOhI1xIettXT9GF7gIZkn/cyxgm9Ma0sLZEUlDeg/QUAEK32FpAhEau2
+ w00/kyvUIe7R5zKrgUzKOwR2BqSX9zYS11lWyXPM6BP2I0yc/q2MWe/I8r9YvMItSuVv
+ /22qsU8nwgIjUzgj/7kqykQDIXOM8L4fJbsZD4crF9V0qDvS+x9lujhg5rArnFphU9XP
+ PUZnExfvf/tT+/073n91oI0aeghvIS+auJPrjJKTsQ11FyaCDcuVTAk4w6WzRiXPXisv
+ 1NOHiiOtqnnqWNwHVc/2UAN0RUTlZWVGmfBHnXAAeZhR9ygLm26KEFJeKEyfwx/fkgx5
+ KTlQ==
+X-Gm-Message-State: AOJu0YyFhYUkVJzoP28uC5GJQ3Mp/3V8odFQgu9HLRJQ/sCBfsU81CCm
+ qTU3BxdAEnHpk8WTIIPtva4zt9pO4/ptQ9vL1w/D4b8lHV/7CqlqIpjFNR8DfseKhkobhI8sHv3
+ PozlY
+X-Gm-Gg: Acq92OEwvIp22Cv/dgjg7bzDKOJkxV7DHH9kyLkblf9DC3+dEFrocYFA+0cWXEYAJQf
+ wxMbb4iFR4RXeI1xh8IwMB6od3gP2t87KI1FObjC9yb9vZLljbrjCJLU/uvUhOMB2/ijajlHmXI
+ GqDkBnLKG/VebRqxDcv6UaEJolPkiKsFNeOsUIsX2pJujjCemEkgSV4GG2fej2wewlJhnVtK7mY
+ 2Rj8AbaXAOSkkRw9alTC+RYs75+SiXm4D+t6VdF7Viymmy3+M9v62Xw/Eg9iOEzXWAs3+8qpD6W
+ xjl8jCxC3pq8bsHCvDNPk9v0YlVqBlyxBSxc9h6idBZhuQN7i506akLfPHr/vWMn5Zrv6t5j7N/
+ lFg7azVb4FfgAl5LTjkpRPfKNUV9wJmyotlaalxoRBLlPTh9/0foDB7FU1At+FlJIKQ7dE3vjrc
+ 2rlUfezF0YNWQ1dho/9Zn/r639Ij8oPVEQAypRrKF3TY6vhwHRhS0DKQySinoINT2RjNRH4xKnU
+ TwDshHJRIdZV5ThicukBrvjVH1pL/Gs1QHFogKBkJY=
+X-Received: by 2002:a05:600c:6090:b0:492:30f2:963a with SMTP id
+ 5b1f17b1804b1-492340c9cecmr260145e9.0.1781636817577; 
+ Tue, 16 Jun 2026 12:06:57 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4606f2d9becsm45078765f8f.34.2026.06.16.12.06.47
+ ffacd0b85a97d-4606f2d9becsm45078765f8f.34.2026.06.16.12.06.56
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 16 Jun 2026 12:06:47 -0700 (PDT)
+ Tue, 16 Jun 2026 12:06:56 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 07/61] hw/arm/smmuv3-accel: Implement "auto" value for "oas"
-Date: Tue, 16 Jun 2026 20:05:44 +0100
-Message-ID: <20260616190639.3462006-8-peter.maydell@linaro.org>
+Subject: [PULL 13/61] backends/iommufd: Introduce
+ iommufd_backend_alloc_hw_queue
+Date: Tue, 16 Jun 2026 20:05:50 +0100
+Message-ID: <20260616190639.3462006-14-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260616190639.3462006-1-peter.maydell@linaro.org>
 References: <20260616190639.3462006-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x332.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,96 +101,109 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Nathan Chen <nathanc@nvidia.com>
+From: Nicolin Chen <nicolinc@nvidia.com>
 
-Allow accelerated SMMUv3 OAS property to be derived from host IOMMU
-capabilities. Derive host values using IOMMU_GET_HW_INFO, retrieving
-OAS from IDR5.
+Add a helper to allocate an iommufd backed HW queue for a vIOMMU.
 
-This keeps the OAS value advertised by the virtual SMMU compatible with
-the capabilities of the host SMMUv3, so that the intermediate physical
-addresses (IPA) consumed by host SMMU for stage-2 translation do not
-exceed the host's max supported IPA size.
+While at it, define a struct IOMMUFDHWqueue for use by vendor
+implementations.
 
+Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
 Reviewed-by: Eric Auger <eric.auger@redhat.com>
-Reviewed-by: Shameer Kolothum <skolothumtho@nvidia.com>
-Signed-off-by: Nathan Chen <nathanc@nvidia.com>
+Tested-by: Nicolin Chen <nicolinc@nvidia.com>
+Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
 Tested-by: Eric Auger <eric.auger@redhat.com>
-Message-id: 20260608174900.2227340-8-nathanc@nvidia.com
+Message-id: 20260609112552.378999-4-skolothumtho@nvidia.com
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- hw/arm/smmuv3-accel.c |  8 +++++++-
- hw/arm/smmuv3.c       | 17 ++++++++++-------
- 2 files changed, 17 insertions(+), 8 deletions(-)
+ backends/iommufd.c       | 31 +++++++++++++++++++++++++++++++
+ backends/trace-events    |  1 +
+ include/system/iommufd.h | 11 +++++++++++
+ 3 files changed, 43 insertions(+)
 
-diff --git a/hw/arm/smmuv3-accel.c b/hw/arm/smmuv3-accel.c
-index 3f141991eb..06dadf9cc7 100644
---- a/hw/arm/smmuv3-accel.c
-+++ b/hw/arm/smmuv3-accel.c
-@@ -68,6 +68,11 @@ static void smmuv3_accel_auto_finalise(SMMUv3State *s,
-                                FIELD_EX32(info->idr[1], IDR1, SSIDSIZE));
-     }
- 
-+    if (s->oas == OAS_MODE_AUTO) {
-+        s->idr[5] = FIELD_DP32(s->idr[5], IDR5, OAS,
-+                               FIELD_EX32(info->idr[5], IDR5, OAS));
-+    }
-+
-     accel->auto_finalised = true;
+diff --git a/backends/iommufd.c b/backends/iommufd.c
+index c745dbd2b1..8eaaf456e8 100644
+--- a/backends/iommufd.c
++++ b/backends/iommufd.c
+@@ -549,6 +549,37 @@ bool iommufd_backend_alloc_veventq(IOMMUFDBackend *be, uint32_t viommu_id,
+     return true;
  }
  
-@@ -985,7 +990,8 @@ bool smmuv3_accel_init(SMMUv3State *s, Error **errp)
- 
-     if (s->ats == ON_OFF_AUTO_AUTO ||
-         s->ril == ON_OFF_AUTO_AUTO ||
--        s->ssidsize == SSID_SIZE_MODE_AUTO) {
-+        s->ssidsize == SSID_SIZE_MODE_AUTO ||
-+        s->oas == OAS_MODE_AUTO) {
-         s->s_accel->auto_mode = true;
-     }
- 
-diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
-index d59931d1a7..89289ab6d2 100644
---- a/hw/arm/smmuv3.c
-+++ b/hw/arm/smmuv3.c
-@@ -1968,9 +1968,11 @@ static void smmu_reset_exit(Object *obj, ResetType type)
- 
- static bool smmu_validate_property(SMMUv3State *s, Error **errp)
++bool iommufd_backend_alloc_hw_queue(IOMMUFDBackend *be, uint32_t viommu_id,
++                                    uint32_t queue_type, uint32_t index,
++                                    uint64_t addr, uint64_t length,
++                                    uint32_t *out_hw_queue_id, Error **errp)
++{
++    int ret;
++    struct iommu_hw_queue_alloc alloc_hw_queue = {
++        .size = sizeof(alloc_hw_queue),
++        .flags = 0,
++        .viommu_id = viommu_id,
++        .type = queue_type,
++        .index = index,
++        .nesting_parent_iova = addr,
++        .length = length,
++    };
++
++    ret = ioctl(be->fd, IOMMU_HW_QUEUE_ALLOC, &alloc_hw_queue);
++
++    trace_iommufd_backend_alloc_hw_queue(be->fd, viommu_id, queue_type,
++                                         index, addr, length,
++                                         alloc_hw_queue.out_hw_queue_id, ret);
++    if (ret) {
++        error_setg_errno(errp, errno, "IOMMU_HW_QUEUE_ALLOC failed");
++        return false;
++    }
++
++    g_assert(out_hw_queue_id);
++    *out_hw_queue_id = alloc_hw_queue.out_hw_queue_id;
++    return true;
++}
++
+ bool host_iommu_device_iommufd_attach_hwpt(HostIOMMUDeviceIOMMUFD *hiodi,
+                                            uint32_t hwpt_id, Error **errp)
  {
--    if (s->oas != OAS_MODE_44 && s->oas != OAS_MODE_48) {
--        error_setg(errp, "QEMU SMMUv3 model only implements 44 and 48 bit"
--                   "OAS; other OasMode values are not supported");
-+    if (s->oas != OAS_MODE_44 && s->oas != OAS_MODE_48 &&
-+        s->oas != OAS_MODE_AUTO) {
-+        error_setg(errp, "QEMU SMMUv3 model only implements auto, "
-+                   "44 bit, or 48 bit OAS. Other OasMode values are "
-+                   "not supported.");
-         return false;
-     }
+diff --git a/backends/trace-events b/backends/trace-events
+index 3ba0c3503c..c5c1d95aad 100644
+--- a/backends/trace-events
++++ b/backends/trace-events
+@@ -24,6 +24,7 @@ iommufd_backend_invalidate_cache(int iommufd, uint32_t id, uint32_t data_type, u
+ iommufd_backend_alloc_viommu(int iommufd, uint32_t dev_id, uint32_t type, uint32_t hwpt_id, uint64_t data_ptr, uint32_t data_len, uint32_t viommu_id, int ret) " iommufd=%d type=%u dev_id=%u hwpt_id=%u data_ptr=0x%"PRIx64" data_len=0x%x viommu_id=%u (%d)"
+ iommufd_backend_alloc_vdev(int iommufd, uint32_t dev_id, uint32_t viommu_id, uint64_t virt_id, uint32_t vdev_id, int ret) " iommufd=%d dev_id=%u viommu_id=%u virt_id=0x%"PRIx64" vdev_id=%u (%d)"
+ iommufd_viommu_alloc_eventq(int iommufd, uint32_t viommu_id, uint32_t type, uint32_t veventq_id, uint32_t veventq_fd, int ret) " iommufd=%d viommu_id=%u type=%u veventq_id=%u veventq_fd=%u (%d)"
++iommufd_backend_alloc_hw_queue(int iommufd, uint32_t viommu_id, uint32_t queue_type, uint32_t index, uint64_t addr, uint64_t size, uint32_t queue_id, int ret) " iommufd=%d viommu_id=%u queue_type=%u index=%u addr=0x%"PRIx64" size=0x%"PRIx64" queue_id=%u (%d)"
  
-@@ -1984,7 +1986,7 @@ static bool smmu_validate_property(SMMUv3State *s, Error **errp)
-             return false;
-         }
-         if (s->oas > OAS_MODE_44) {
--            error_setg(errp, "OAS must be 44 bits when accel=off");
-+            error_setg(errp, "oas must be 44 bits when accel=off");
-             return false;
-         }
-         if (s->ssidsize > SSID_SIZE_MODE_0) {
-@@ -2171,9 +2173,10 @@ static void smmuv3_class_init(ObjectClass *klass, const void *data)
-         "Please ensure host platform supports ATS before setting it "
-         "to on.");
-     object_class_property_set_description(klass, "oas",
--        "Specify Output Address Size (for accel=on). Supported values "
--        "are 44 or 48 bits. Defaults to 44 bits. oas=auto is not "
--        "supported.");
-+        "Set Output Address Size in bits (for accel=on). "
-+        "Valid values are 44, 48, and auto. Defaults to 44 bits."
-+        "Please ensure the value does not exceed the maximum "
-+        "Output Address Size supported by the host platform.");
-     object_class_property_set_description(klass, "ssidsize",
-         "Set number of bits used to represent SubstreamIDs (SSIDs). "
-         "Valid values are 0-20 and auto. Defaults to 0. "
+ # igvm-cfg.c
+ igvm_reset_enter(int type) "type=%u"
+diff --git a/include/system/iommufd.h b/include/system/iommufd.h
+index 1b0266f660..c6f2e87a7e 100644
+--- a/include/system/iommufd.h
++++ b/include/system/iommufd.h
+@@ -65,6 +65,12 @@ typedef struct IOMMUFDVeventq {
+     bool event_start; /* True after first valid event; cleared on overflow */
+ } IOMMUFDVeventq;
+ 
++/* HW queue object for a vIOMMU-specific HW-accelerated queue */
++typedef struct IOMMUFDHWqueue {
++    IOMMUFDViommu *viommu;
++    uint32_t hw_queue_id;
++} IOMMUFDHWqueue;
++
+ bool iommufd_backend_connect(IOMMUFDBackend *be, Error **errp);
+ void iommufd_backend_disconnect(IOMMUFDBackend *be);
+ 
+@@ -101,6 +107,11 @@ bool iommufd_backend_alloc_veventq(IOMMUFDBackend *be, uint32_t viommu_id,
+                                    uint32_t *out_veventq_id,
+                                    uint32_t *out_veventq_fd, Error **errp);
+ 
++bool iommufd_backend_alloc_hw_queue(IOMMUFDBackend *be, uint32_t viommu_id,
++                                    uint32_t queue_type, uint32_t index,
++                                    uint64_t addr, uint64_t length,
++                                    uint32_t *out_hw_queue_id, Error **errp);
++
+ bool iommufd_backend_set_dirty_tracking(IOMMUFDBackend *be, uint32_t hwpt_id,
+                                         bool start, Error **errp);
+ bool iommufd_backend_get_dirty_bitmap(IOMMUFDBackend *be, uint32_t hwpt_id,
 -- 
 2.43.0
 
