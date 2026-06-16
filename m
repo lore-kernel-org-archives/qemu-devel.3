@@ -4,86 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9AAFACD98ED
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 10:09:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C46CCD98E6
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 10:09:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZQik-0005sx-55; Tue, 16 Jun 2026 06:08:38 -0400
+	id 1wZQhK-0000BQ-9o; Tue, 16 Jun 2026 06:07:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wZQii-0005rG-Fs
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 06:08:36 -0400
-Received: from mail-pj1-x102d.google.com ([2607:f8b0:4864:20::102d])
+ id 1wZQhI-0008P5-K4
+ for qemu-devel@nongnu.org; Tue, 16 Jun 2026 06:07:08 -0400
+Received: from mail-pg1-x52b.google.com ([2607:f8b0:4864:20::52b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wZQig-0003fx-Px
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 06:08:36 -0400
-Received: by mail-pj1-x102d.google.com with SMTP id
- 98e67ed59e1d1-36bb3551f6eso3412752a91.1
- for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 03:08:34 -0700 (PDT)
+ id 1wZQhG-0003MZ-4J
+ for qemu-devel@nongnu.org; Tue, 16 Jun 2026 06:07:08 -0400
+Received: by mail-pg1-x52b.google.com with SMTP id
+ 41be03b00d2f7-c85a2c012e5so1466637a12.1
+ for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 03:07:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1781604513; x=1782209313; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1781604425; x=1782209225; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=VyznDJY0L2Bq22y7heSsow547LinZLhsCPsjjbdM4sU=;
- b=Q2bsISYt5Z0PL3wDIq/+Xbj7O8lR/xOhNbKoEBRMk85yHmPRdrkoB0DxP+AypxpI5J
- ruN1qDq5Becj2Gejow26x9qxlrbiYhBigyTS0fNzW1wxrlV6WuUV31IiHtD7nz/Bt7gc
- duvP/jRmdb2lE6jMPiOh9nIWO4g98ueeiM6zZqREaWQ5te1pZlxkXxlEgJjXNKssC3y1
- TNMLK1lGU9kFSLH9WFq57eigo7H3QgEl91p90xBWLAqc68Gy0LvAj/rl2AyTKutyEfXz
- 4yIeOhxyZ2eUAIaZnv16Zc34wqcRRaeY+MbnUDoovxFSFv91vYsp6IVMjIk4p1yQH5l9
- 8zpA==
+ bh=QcMnKyII8r/lV77qN3Eve6DZ7u06AOKMdhC9UZhkf9M=;
+ b=QvnT7iFG+h/NocYYSwu+QrjZFK8p8Z0LCV7GLp7bv2G+l99I8E/51dtuYpJlnPYsiC
+ mke+Sje7okzjaVaT25FgDyQ0cBZuXj1UlutJXoYtkr4HzwyVOGWHfFDyhS3Nz7jHMhi5
+ qG5TBHVKg11N6EhiDzudkcn0O41toM70I/G3+J2msPVyuufz3MYrrhhDqlB+p1JDJUFV
+ 9zlEADr9tlCP1k2gd3R4VVOkjF8tEfCzYsoml2HgyfHu3p/fk6DhjqD64OMs4hLHL4AD
+ 1B+FRtRptvip7S5W6G4xPKDh2DdNDkImQFX6U73piah7MHvu+1Cay1M7Gjn9BiqowPUi
+ bF9A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781604513; x=1782209313;
+ d=1e100.net; s=20251104; t=1781604425; x=1782209225;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=VyznDJY0L2Bq22y7heSsow547LinZLhsCPsjjbdM4sU=;
- b=ooZNqCGrDbqCvpVmscWLS9Ye/Ke7Rg/7IA0yszMkk51H4UfWJCF+nB0NwIG+nJ4amm
- gorqD1554Cmw3Ffk54zMDZZzywSvt8N1/+aGTPPSPasd3Kpw+e1l0oMhUL6GRGr8j8Zx
- dbs7YqSk4x+MUFwIy2gA2lm2/jTsoUqjWpHdxCopTeB8pwNGg13sJFWrKki9Xyr9ZsDm
- VkVKZ0BiGJ0vmn1dttwWrjuQ1hI0eY+HlWMt88fUCmIbdLO/QMJtA+EF4DqbTBrmZ3F8
- 9ahGdX7/ezpZOJyIlMjVhtj+57O/Gt9Iop15WTKrN7hUXeTKvKtvqYWibDAOExPnBN4s
- bUhw==
-X-Gm-Message-State: AOJu0YwnPpUof42FT2N6VRu+ShBH+T7wu1ePHZoDEd4BE/rVM2HzWDiL
- V6aKvrMAB2TdBqzp9bvt/8TSVnPSzir6djnRcGKSPzWhnqbfF4TugWjgYmH9UvVo
-X-Gm-Gg: Acq92OHZP8TqpkABMlGiSvGApeayapVrn4DN/ZIFRa82NwmL959lrgZeHqXxLCQCGz7
- 9LMH/TBcnWw487YNFyJBw4gpXzh3i/qZ7Y7kimjfj2nIBbQVBUEzv/fJjBfG1xsAQS9G0RXQ+BI
- DROrf7awPJS9PM5VXcipijvHGZvLukUdrfRQFg2N2nrx+xvaTwOshDLgCqZT9jekzJE9+lojTTz
- mMF6mYTNnW3vv4d82ULnKdRPUUPTsMgLmd1Tg7ITcwI38aMbCrX3GWQPkfDJS8I9oTJ7GQsSkWk
- 67mvazqgAwP1ObB9McXBm3U5EFSS7SHr2XMHacCG+FHaOhyQ8X1LGKZpm2Pldol6ezWugQhURK6
- 0a1Gc8jBIWCFD/s5PQ2+KgNugI85Xxv7kqjinrZt/una9pMAM1A56khgSCr7uI7zv9LsYQ4JDDR
- WxyyLeHXuQ2Yh4r9wjAZdkGM8HhS9KtbFf1DrNsad1
-X-Received: by 2002:a17:90b:2dca:b0:366:10f1:3d86 with SMTP id
- 98e67ed59e1d1-37c2bd75872mr14951022a91.22.1781604513468; 
- Tue, 16 Jun 2026 03:08:33 -0700 (PDT)
+ bh=QcMnKyII8r/lV77qN3Eve6DZ7u06AOKMdhC9UZhkf9M=;
+ b=n1l1i0sNUk6+ThRiEvzmrEwGV0xsB2u7O83R1t3VA0oHDepfLAk2Bqxt+ay3+CEI2/
+ z+mUSY3AwKDUzwBvUqKBgjSNt5BPI9BOCzWSrOG8U/1pbU7+QLA9RaDidBc0qpSUDpN2
+ b/5WJpPE20rMhlVc/xy/JP7otwrnwFUAKOeWjO9xj3cHc48AZ8FCrQVV9+e4hAhjKoYf
+ g9Rkzf0LEtHnd4ekE+8NvvvGM/epWRqwrF+VNsLk9yvvlqxHXG4ZqlKGLM1f25F0RFfw
+ 9AKe3MpTtnRoW8W89uGJE3U9zRfZVKfDEe0H6HKkfoSQlUeQMVuKEaXBmdweRWVcrkU1
+ pBxA==
+X-Gm-Message-State: AOJu0YynUiEcCA4kWm58MRrW9PkiKLZC1zBgBvXBLz01wJCFdcQnmVNs
+ cpPLsCuZ3vrvFQTjPhB/X2v8kecHNuRG98J3CQ/uXozNpCYXKWbU2qiZxFP7APLQ
+X-Gm-Gg: Acq92OFv+F9PSPp3BV5UDKzynj8RnZEMpadHCErNsSil7ohCgspUxaZCMO9ueVgELX4
+ gGAYQzaNLbHv3AtZgGp9DfqW7SutpMyQwNs0spYOI1qlS0WXDtACHqIOqfnlKH+2HQMAMmmY0TZ
+ pQ/jWDrj883RE9I9+Tgo2dRTxmHpclC5LzwfBqRLj2a3yWQaGNHMi+GKJL6qeVs/ooJEDhleaBA
+ 6urJ3+iHIqNK07BJCK6qS+x58/ckyWq5//8ar8Kac5pcyX9bsBEXH1pUSqCUd/lQRQufu0Ml3Mm
+ dTDBvsQfucGrb/aEsgeGSziEud8s+9O+gsmbEjfiEqc3aR8dqxzGve1JsdruNFdWJw8OuQis69D
+ +PyjNtJz06T/tBlGVag4WjibPbFncQteGltGugJoXDk8V3iZCyh+vHjrHDv3F0P8wkdImqNxpCR
+ MaE0VQKYWcH3rgMuYkWw0hf5t4NmsKBCsbPacCLVxA
+X-Received: by 2002:a05:6a21:1405:b0:39c:787:f197 with SMTP id
+ adf61e73a8af0-3b7e49d08b1mr3068188637.36.1781604424805; 
+ Tue, 16 Jun 2026 03:07:04 -0700 (PDT)
 Received: from toolbx.alistair23.me ([2403:581e:fdf9:0:13b2:851f:d9cb:44c5])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-c866519f0a6sm10916735a12.22.2026.06.16.03.08.30
+ 41be03b00d2f7-c866519f0a6sm10916735a12.22.2026.06.16.03.07.02
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 16 Jun 2026 03:08:32 -0700 (PDT)
+ Tue, 16 Jun 2026 03:07:04 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com, Djordje Todorovic <Djordje.Todorovic@htecgroup.com>,
- Djordje Todorovic <djordje.todorovic@htecgroup.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Alistair Francis <alistair.francis@wdc.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Subject: [PULL 51/83] target/riscv: Expose and document the CPU 'big-endian'
- property
-Date: Tue, 16 Jun 2026 20:04:54 +1000
-Message-ID: <20260616100527.1939565-52-alistair.francis@wdc.com>
+Cc: alistair23@gmail.com, Anton Johansson <anjo@rev.ng>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Alistair Francis <alistair.francis@wdc.com>
+Subject: [PULL 26/83] target/riscv: Fix arguments to board IMSIC emulation
+ callbacks
+Date: Tue, 16 Jun 2026 20:04:29 +1000
+Message-ID: <20260616100527.1939565-27-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616100527.1939565-1-alistair.francis@wdc.com>
 References: <20260616100527.1939565-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102d;
- envelope-from=alistair23@gmail.com; helo=mail-pj1-x102d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52b;
+ envelope-from=alistair23@gmail.com; helo=mail-pg1-x52b.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -107,82 +104,297 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Djordje Todorovic <Djordje.Todorovic@htecgroup.com>
+From: Anton Johansson <anjo@rev.ng>
 
-Now that the full big-endian data path is in place (runtime MSTATUS
-bits, boot code, and page-table walks), expose the "big-endian"
-property to users via DEFINE_PROP_BOOL and document it in
-docs/system/target-riscv.rst.
+In hw/ the relevant RISCVIMSICState fields
+eidelivery, eithreshold, eistate are uint32_t.
 
-Document that the property models fixed-endian hardware: it selects
-harts whose MBE/SBE/UBE fields are fixed to 1, and it does not model
-a mixed-endian implementation where software can toggle those bits at
-runtime.
-
-The property can be enabled from the command line, e.g.:
-
-    -cpu <cpu>,big-endian=on
-
-Signed-off-by: Djordje Todorovic <djordje.todorovic@htecgroup.com>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Message-ID: <20260527201348.29511-12-philmd@linaro.org>
+Signed-off-by: Anton Johansson <anjo@rev.ng>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Acked-by: Alistair Francis <alistair.francis@wdc.com>
+Message-ID: <20260520125406.28693-16-anjo@rev.ng>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- docs/system/target-riscv.rst | 29 +++++++++++++++++++++++++++++
- target/riscv/cpu.c           |  1 +
- 2 files changed, 30 insertions(+)
+ target/riscv/cpu.h        | 42 ++++++++++++++++++++-------------------
+ hw/intc/riscv_imsic.c     | 34 +++++++++++++++----------------
+ target/riscv/cpu_helper.c | 12 ++++-------
+ target/riscv/csr.c        | 24 ++++++++++++----------
+ 4 files changed, 57 insertions(+), 55 deletions(-)
 
-diff --git a/docs/system/target-riscv.rst b/docs/system/target-riscv.rst
-index 3ad5d1ddaf..afd86ca2ba 100644
---- a/docs/system/target-riscv.rst
-+++ b/docs/system/target-riscv.rst
-@@ -95,3 +95,32 @@ the images they need.
- * ``-bios <file>``
+diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+index c338df1598..380749f9a8 100644
+--- a/target/riscv/cpu.h
++++ b/target/riscv/cpu.h
+@@ -201,6 +201,24 @@ FIELD(VTYPE, VMA, 7, 1)
+ FIELD(VTYPE, ALTFMT, 8, 1)
+ FIELD(VTYPE, RESERVED, 9, sizeof(uint64_t) * 8 - 10)
  
- Tells QEMU to load the specified file as the firmware.
++#ifndef CONFIG_USER_ONLY
++/* machine specific AIA ireg read-modify-write callback */
++#define AIA_MAKE_IREG(__isel, __priv, __virt, __vgein, __xlen)                 \
++    ((uint32_t)((((__xlen) & 0xff) << 24) |                                    \
++                (((__vgein) & 0x3f) << 20) |                                   \
++                (((__virt) & 0x1) << 18) |                                     \
++                (((__priv) & 0x3) << 16) |                                     \
++                  (__isel & 0xffff)))
++#define AIA_IREG_ISEL(__ireg) ((__ireg) & 0xffff)
++#define AIA_IREG_PRIV(__ireg) (((__ireg) >> 16) & 0x3)
++#define AIA_IREG_VIRT(__ireg) (((__ireg) >> 18) & 0x1)
++#define AIA_IREG_VGEIN(__ireg) (((__ireg) >> 20) & 0x3f)
++#define AIA_IREG_XLEN(__ireg) (((__ireg) >> 24) & 0xff)
 +
-+RISC-V CPU endianness
-+---------------------
++typedef int (*aia_ireg_rmw_fn)(void *arg, uint32_t reg, uint64_t *val,
++                               uint64_t new_val, uint64_t write_mask);
++#endif
 +
-+The RISC-V ISA specifies that instruction fetches are always little-endian,
-+while data accesses can be either little-endian or big-endian under control
-+of the MSTATUS ``MBE``/``SBE``/``UBE`` bits (see section 3.1.6.5, "Memory
-+Endianness", in the RISC-V Privileged Specification).
-+
-+QEMU implements the full data-endianness behaviour described by those bits.
-+In addition, the RISC-V CPU object exposes a ``big-endian`` boolean property
-+which models a big-endian-only hardware implementation, where the
-+``MBE``/``SBE``/``UBE`` bits are hardwired to 1. When the property is set,
-+the CPU is reset with all three bits initialised to 1, so the guest starts
-+executing in big-endian data mode from the reset vector. The property is a
-+static, per-CPU hardware configuration option and is not meant to be toggled
-+at runtime.
-+
-+The property does not model a mixed-endian implementation where software can
-+toggle ``MBE``/``SBE``/``UBE`` at runtime. QEMU's RISC-V CPUs treat these
-+fields as fixed by the CPU configuration: they are reset to 0 by default and
-+to 1 when ``big-endian`` is enabled.
-+
-+The property can be enabled from the command line, for example::
-+
-+    -cpu <cpu>,big-endian=on
-+
-+No upstream CPU model currently defaults to big-endian; the property is
-+provided so that big-endian-only RISC-V CPU variants can be modelled.
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index cc793aef18..5a3560308f 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -2525,6 +2525,7 @@ RISCVCPUImpliedExtsRule *riscv_multi_ext_implied_rules[] = {
+ typedef struct PMUCTRState {
+     /* Current value of a counter */
+     uint64_t mhpmcounter_val;
+@@ -466,20 +484,8 @@ struct CPUArchState {
+     void *rdtime_fn_arg;
  
- static const Property riscv_cpu_properties[] = {
-     DEFINE_PROP_BOOL("debug", RISCVCPU, cfg.debug, true),
-+    DEFINE_PROP_BOOL("big-endian", RISCVCPU, cfg.big_endian, false),
+     /* machine specific AIA ireg read-modify-write callback */
+-#define AIA_MAKE_IREG(__isel, __priv, __virt, __vgein, __xlen) \
+-    ((((__xlen) & 0xff) << 24) | \
+-     (((__vgein) & 0x3f) << 20) | \
+-     (((__virt) & 0x1) << 18) | \
+-     (((__priv) & 0x3) << 16) | \
+-     (__isel & 0xffff))
+-#define AIA_IREG_ISEL(__ireg)                  ((__ireg) & 0xffff)
+-#define AIA_IREG_PRIV(__ireg)                  (((__ireg) >> 16) & 0x3)
+-#define AIA_IREG_VIRT(__ireg)                  (((__ireg) >> 18) & 0x1)
+-#define AIA_IREG_VGEIN(__ireg)                 (((__ireg) >> 20) & 0x3f)
+-#define AIA_IREG_XLEN(__ireg)                  (((__ireg) >> 24) & 0xff)
+-    int (*aia_ireg_rmw_fn[4])(void *arg, target_ulong reg,
+-        target_ulong *val, target_ulong new_val, target_ulong write_mask);
+-    void *aia_ireg_rmw_fn_arg[4];
++    aia_ireg_rmw_fn aia_ireg_rmw_cb[4];
++    void *aia_ireg_rmw_cb_arg[4];
  
-     {.name = "pmu-mask", .info = &prop_pmu_mask},
-     {.name = "pmu-num", .info = &prop_pmu_num}, /* Deprecated */
+     /* True if in debugger mode.  */
+     bool debugger;
+@@ -648,12 +654,8 @@ void riscv_cpu_interrupt(CPURISCVState *env);
+ #define BOOL_TO_MASK(x) (-!!(x)) /* helper for riscv_cpu_update_mip value */
+ void riscv_cpu_set_rdtime_fn(CPURISCVState *env, uint64_t (*fn)(void *),
+                              void *arg);
+-void riscv_cpu_set_aia_ireg_rmw_fn(CPURISCVState *env, privilege_mode_t priv,
+-                                   int (*rmw_fn)(void *arg,
+-                                                 target_ulong reg,
+-                                                 target_ulong *val,
+-                                                 target_ulong new_val,
+-                                                 target_ulong write_mask),
++void riscv_cpu_set_aia_ireg_rmw_cb(CPURISCVState *env, privilege_mode_t priv,
++                                   aia_ireg_rmw_fn rmw_fn,
+                                    void *rmw_fn_arg);
+ 
+ RISCVException smstateen_acc_ok(CPURISCVState *env, int index, uint64_t bit);
+diff --git a/hw/intc/riscv_imsic.c b/hw/intc/riscv_imsic.c
+index ac59496c22..1c86ecdb2c 100644
+--- a/hw/intc/riscv_imsic.c
++++ b/hw/intc/riscv_imsic.c
+@@ -88,11 +88,11 @@ static void riscv_imsic_update(RISCVIMSICState *imsic, uint32_t page)
+ }
+ 
+ static int riscv_imsic_eidelivery_rmw(RISCVIMSICState *imsic, uint32_t page,
+-                                      target_ulong *val,
+-                                      target_ulong new_val,
+-                                      target_ulong wr_mask)
++                                      uint64_t *val,
++                                      uint64_t new_val,
++                                      uint64_t wr_mask)
+ {
+-    target_ulong old_val = imsic->eidelivery[page];
++    uint32_t old_val = imsic->eidelivery[page];
+ 
+     if (val) {
+         *val = old_val;
+@@ -106,11 +106,11 @@ static int riscv_imsic_eidelivery_rmw(RISCVIMSICState *imsic, uint32_t page,
+ }
+ 
+ static int riscv_imsic_eithreshold_rmw(RISCVIMSICState *imsic, uint32_t page,
+-                                      target_ulong *val,
+-                                      target_ulong new_val,
+-                                      target_ulong wr_mask)
++                                      uint64_t *val,
++                                      uint64_t new_val,
++                                      uint64_t wr_mask)
+ {
+-    target_ulong old_val = imsic->eithreshold[page];
++    uint32_t old_val = imsic->eithreshold[page];
+ 
+     if (val) {
+         *val = old_val;
+@@ -124,8 +124,8 @@ static int riscv_imsic_eithreshold_rmw(RISCVIMSICState *imsic, uint32_t page,
+ }
+ 
+ static int riscv_imsic_topei_rmw(RISCVIMSICState *imsic, uint32_t page,
+-                                 target_ulong *val, target_ulong new_val,
+-                                 target_ulong wr_mask)
++                                 uint64_t *val, uint64_t new_val,
++                                 uint64_t wr_mask)
+ {
+     uint32_t base, topei = riscv_imsic_topei(imsic, page);
+ 
+@@ -149,11 +149,11 @@ static int riscv_imsic_topei_rmw(RISCVIMSICState *imsic, uint32_t page,
+ 
+ static int riscv_imsic_eix_rmw(RISCVIMSICState *imsic,
+                                uint32_t xlen, uint32_t page,
+-                               uint32_t num, bool pend, target_ulong *val,
+-                               target_ulong new_val, target_ulong wr_mask)
++                               uint32_t num, bool pend, uint64_t *val,
++                               uint64_t new_val, uint64_t wr_mask)
+ {
+     uint32_t i, base, prev;
+-    target_ulong mask;
++    uint64_t mask;
+     uint32_t state = (pend) ? IMSIC_EISTATE_PENDING : IMSIC_EISTATE_ENABLED;
+ 
+     if (xlen != 32) {
+@@ -178,7 +178,7 @@ static int riscv_imsic_eix_rmw(RISCVIMSICState *imsic,
+             continue;
+         }
+ 
+-        mask = (target_ulong)1 << i;
++        mask = 1ull << i;
+         if (wr_mask & mask) {
+             if (new_val & mask) {
+                 prev = qatomic_fetch_or(&imsic->eistate[base + i], state);
+@@ -197,8 +197,8 @@ static int riscv_imsic_eix_rmw(RISCVIMSICState *imsic,
+     return 0;
+ }
+ 
+-static int riscv_imsic_rmw(void *arg, target_ulong reg, target_ulong *val,
+-                           target_ulong new_val, target_ulong wr_mask)
++static int riscv_imsic_rmw(void *arg, uint32_t reg, uint64_t *val,
++                           uint64_t new_val, uint64_t wr_mask)
+ {
+     RISCVIMSICState *imsic = arg;
+     uint32_t isel, priv, virt, vgein, xlen, page;
+@@ -400,7 +400,7 @@ static void riscv_imsic_realize(DeviceState *dev, Error **errp)
+         }
+ 
+         if (!kvm_irqchip_in_kernel()) {
+-            riscv_cpu_set_aia_ireg_rmw_fn(env, (imsic->mmode) ? PRV_M : PRV_S,
++            riscv_cpu_set_aia_ireg_rmw_cb(env, (imsic->mmode) ? PRV_M : PRV_S,
+                                           riscv_imsic_rmw, imsic);
+         }
+     }
+diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
+index 4529341696..ae0490a086 100644
+--- a/target/riscv/cpu_helper.c
++++ b/target/riscv/cpu_helper.c
+@@ -816,17 +816,13 @@ void riscv_cpu_set_rdtime_fn(CPURISCVState *env, uint64_t (*fn)(void *),
+     env->rdtime_fn_arg = arg;
+ }
+ 
+-void riscv_cpu_set_aia_ireg_rmw_fn(CPURISCVState *env, privilege_mode_t priv,
+-                                   int (*rmw_fn)(void *arg,
+-                                                 target_ulong reg,
+-                                                 target_ulong *val,
+-                                                 target_ulong new_val,
+-                                                 target_ulong write_mask),
++void riscv_cpu_set_aia_ireg_rmw_cb(CPURISCVState *env, privilege_mode_t priv,
++                                   aia_ireg_rmw_fn rmw_fn,
+                                    void *rmw_fn_arg)
+ {
+     if (priv <= PRV_M) {
+-        env->aia_ireg_rmw_fn[priv] = rmw_fn;
+-        env->aia_ireg_rmw_fn_arg[priv] = rmw_fn_arg;
++        env->aia_ireg_rmw_cb[priv] = rmw_fn;
++        env->aia_ireg_rmw_cb_arg[priv] = rmw_fn_arg;
+     }
+ }
+ 
+diff --git a/target/riscv/csr.c b/target/riscv/csr.c
+index 29db646589..4dd6c93e51 100644
+--- a/target/riscv/csr.c
++++ b/target/riscv/csr.c
+@@ -2673,6 +2673,7 @@ static RISCVException rmw_xireg_aia(CPURISCVState *env, int csrno,
+     uint8_t *iprio;
+     privilege_mode_t priv;
+     uint32_t vgein;
++    uint64_t wide_val;
+ 
+     /* VS-mode CSR number passed in has already been translated */
+     switch (csrno) {
+@@ -2717,16 +2718,17 @@ static RISCVException rmw_xireg_aia(CPURISCVState *env, int csrno,
+         }
+     } else if (ISELECT_IMSIC_FIRST <= isel && isel <= ISELECT_IMSIC_LAST) {
+         /* IMSIC registers only available when machine implements it. */
+-        if (env->aia_ireg_rmw_fn[priv]) {
++        if (env->aia_ireg_rmw_cb[priv]) {
+             /* Selected guest interrupt file should not be zero */
+             if (virt && (!vgein || env->geilen < vgein)) {
+                 goto done;
+             }
+             /* Call machine specific IMSIC register emulation */
+-            ret = env->aia_ireg_rmw_fn[priv](env->aia_ireg_rmw_fn_arg[priv],
++            ret = env->aia_ireg_rmw_cb[priv](env->aia_ireg_rmw_cb_arg[priv],
+                                     AIA_MAKE_IREG(isel, priv, virt, vgein,
+                                                   riscv_cpu_mxl_bits(env)),
+-                                    val, new_val, wr_mask);
++                                    &wide_val, new_val, wr_mask);
++            *val = wide_val;
+         }
+     } else {
+         isel_reserved = true;
+@@ -2959,6 +2961,7 @@ static RISCVException rmw_xtopei(CPURISCVState *env, int csrno,
+     int ret = -EINVAL;
+     privilege_mode_t priv;
+     uint32_t vgein;
++    uint64_t wide_val;
+ 
+     /* Translate CSR number for VS-mode */
+     csrno = aia_xlate_vs_csrno(env, csrno);
+@@ -2984,7 +2987,7 @@ static RISCVException rmw_xtopei(CPURISCVState *env, int csrno,
+     };
+ 
+     /* IMSIC CSRs only available when machine implements IMSIC. */
+-    if (!env->aia_ireg_rmw_fn[priv]) {
++    if (!env->aia_ireg_rmw_cb[priv]) {
+         goto done;
+     }
+ 
+@@ -2997,10 +3000,11 @@ static RISCVException rmw_xtopei(CPURISCVState *env, int csrno,
+     }
+ 
+     /* Call machine specific IMSIC register emulation for TOPEI */
+-    ret = env->aia_ireg_rmw_fn[priv](env->aia_ireg_rmw_fn_arg[priv],
++    ret = env->aia_ireg_rmw_cb[priv](env->aia_ireg_rmw_cb_arg[priv],
+                     AIA_MAKE_IREG(ISELECT_IMSIC_TOPEI, priv, virt, vgein,
+                                   riscv_cpu_mxl_bits(env)),
+-                    val, new_val, wr_mask);
++                    &wide_val, new_val, wr_mask);
++    *val = wide_val;
+ 
+ done:
+     if (ret) {
+@@ -4504,7 +4508,7 @@ static RISCVException read_vstopi(CPURISCVState *env, int csrno,
+                                   target_ulong *val)
+ {
+     int irq, ret;
+-    target_ulong topei;
++    uint64_t topei = 0;
+     uint64_t vseip, vsgein;
+     uint32_t iid, iprio, hviid, hviprio, gein;
+     uint32_t s, scount = 0, siid[VSTOPI_NUM_SRCS], siprio[VSTOPI_NUM_SRCS];
+@@ -4519,13 +4523,13 @@ static RISCVException read_vstopi(CPURISCVState *env, int csrno,
+         if (gein <= env->geilen && vseip) {
+             siid[scount] = IRQ_S_EXT;
+             siprio[scount] = IPRIO_MMAXIPRIO + 1;
+-            if (env->aia_ireg_rmw_fn[PRV_S]) {
++            if (env->aia_ireg_rmw_cb[PRV_S]) {
+                 /*
+                  * Call machine specific IMSIC register emulation for
+                  * reading TOPEI.
+                  */
+-                ret = env->aia_ireg_rmw_fn[PRV_S](
+-                        env->aia_ireg_rmw_fn_arg[PRV_S],
++                ret = env->aia_ireg_rmw_cb[PRV_S](
++                        env->aia_ireg_rmw_cb_arg[PRV_S],
+                         AIA_MAKE_IREG(ISELECT_IMSIC_TOPEI, PRV_S, true, gein,
+                                       riscv_cpu_mxl_bits(env)),
+                         &topei, 0, 0);
 -- 
 2.54.0
 
