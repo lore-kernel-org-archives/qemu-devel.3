@@ -4,91 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64F0ECD98E3
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 15:33:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F840CD98E1
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 15:34:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZVmk-0008E8-9N; Tue, 16 Jun 2026 11:33:06 -0400
+	id 1wZVnf-0000e5-F4; Tue, 16 Jun 2026 11:34:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wZVmi-00087Z-2S
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 11:33:04 -0400
-Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wZVmg-0004Es-HU
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 11:33:03 -0400
-Received: by mail-pl1-x631.google.com with SMTP id
- d9443c01a7336-2bf125989f2so35157315ad.3
- for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 08:33:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1781623981; x=1782228781; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=H2YyalrwFNEv7D034cKZG4YMW/b3G6Bqmn7fAphQxDs=;
- b=GP0NA2lMQ+Q90q5Pku6nVh2h/TIdlJFh+5x49fJRVQk30pWPYvMDo7mPsCz/225eYq
- 4T8FRm5s3Ny6jtkuMefW4XDRxt2eG/tF3ffDT46LaGpks79tkXjflyWxsqKNu9+sV2JZ
- 3Vd0Eks9HBIEAe8mhMIJxSJRBfqE61qRj5P5pRLfBFYH2GAw8hG6yTOHmLkf2xTI1LqV
- NrwDcK+IoQiD8NXVUVdMoPXrA/IAtoogA/71Dye9SfgV5kQZqRJskC7nnSg2AfmABjSS
- GvF0H894MfB6CUuKT2pERCKp7PWHAEVJ9xItexAsXEEeyJvkjzA+NUfNzWs7EoUYGEY+
- wX9A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781623981; x=1782228781;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=H2YyalrwFNEv7D034cKZG4YMW/b3G6Bqmn7fAphQxDs=;
- b=Te9/ZIImYylAQG/eTxDq8INKB7Bs+gYfU+s0gEdsbdJF19pEBGPFLuZVvsPRsSGUm2
- KjmxDau1nuOAShRzaLrB4cHKQ8KcAuSaHznt+6quZ5LwXWQRR9fgKkzGCaB5/5t2m3JZ
- i5Y68HHGdG9RjpsUtpsYvI8JU9291/wbBRckdVtwJu/L4E2Ls1pSGBeux4rwKQ+gqnXP
- iKB4gjl+rIqMA3jZ3oxV3MYIjQmx5PnjV9X6yTUk6sg/9pVt6NlWKBVxcLOTTTZUVkVq
- Sw89mLQ8MYMgqUohBmF4FmYFwAktwUbVOKEVtXEGRFnzMuB5UfLv4cKvR6i+qqvNDet0
- jINg==
-X-Gm-Message-State: AOJu0YxMqPSWd5hz4tfd1tIi7Mk0lYy9GjNptAQPD0tw/V9Paa/RlfPK
- E1tV9QMC/S/+7KO34Y2q/a8ilpRt1PCjXaupjubjTqMpyQeATNwcJ2NA0jHH/9wpvZM=
-X-Gm-Gg: Acq92OFJ/J0OoidBCFQiK84KLLbamXB38RpbS20FruWHH0lZBup1ppUgPTtyenoOu0q
- pflYJF36r0jGVi6SXNo3mbSKEOWrvj1+WjF38dfjOuRtJyR5TEGTBiPLT87WmT7/2KAlwNh3g5w
- ViEr236gUfWitIo9CF0OeBF7H471tUaZzSlPr/LZaoAB+WLF1qOWQ0cIpTttxJw/7U0cIJJSEwq
- vlDyF2UmdVxBvhEGBTCnSXb1u4w8eGkSW6kpJQSFdmGgw3KgDxYpWaVgkRqUs6crlNwQXFFasfA
- bIZ5CfrefEWB2mtyQCD8UhmfoWQz9Q0Buvi3u3EG58xlN3MUmsxPzDT7USfpl0vm5QGZjvG4mH9
- L/PyF/c7Q7UFbAoVF1RmUbWt+RqohFuoUNiJItpG5xnDGrAs9TJydQeSK7g2NRjRTIVLXXkCn7t
- 6f3pRGmPVO6LUZMZe4qyvrIhMvIhg6VAqY/Q6Gd9sS3p/WnHleLd7AyzYdOLerFqnqNzez
-X-Received: by 2002:a17:902:ea07:b0:2be:22cc:e227 with SMTP id
- d9443c01a7336-2c69a0d455fmr38792325ad.4.1781623980779; 
- Tue, 16 Jun 2026 08:33:00 -0700 (PDT)
-Received: from [192.168.0.4] (174-21-129-215.tukw.qwest.net. [174.21.129.215])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2c4332694fdsm127026365ad.69.2026.06.16.08.33.00
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 16 Jun 2026 08:33:00 -0700 (PDT)
-Message-ID: <cea5b694-3f2a-432b-81c8-e44ad6fec70c@linaro.org>
-Date: Tue, 16 Jun 2026 08:32:58 -0700
+ (Exim 4.90_1) (envelope-from <qinzhengxiang@foxmail.com>)
+ id 1wZVnd-0000dY-3P; Tue, 16 Jun 2026 11:34:01 -0400
+Received: from out162-62-57-64.mail.qq.com ([162.62.57.64])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <qinzhengxiang@foxmail.com>)
+ id 1wZVnY-0004Pw-SR; Tue, 16 Jun 2026 11:34:00 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=foxmail.com;
+ s=s201512; t=1781624021;
+ bh=zix0yq62GHbXus38oGkGj/93owtFspKq1rppq5/yiqU=;
+ h=From:To:Cc:Subject:Date;
+ b=ekjM3VSIGlNsMDcae2V2j8xtjEilenhi+hptW1hj+fIwHMjZeDrKF8vUNe5NXAz4E
+ 0kAwFJ5Q/8Z4FqbAyI3HNpkgPWpbMWLM7lOswGeUwWdqH7L6A17AhmDzrzEN6jXgN3
+ GFsMCcJHgV76E2LksdjoJU9JLoi4NDHHRnMROBiQ=
+Received: from GavinQin-Ubuntu24.. ([117.147.33.130])
+ by newxmesmtplogicsvrszc56-0.qq.com (NewEsmtp) with SMTP
+ id 85D252E7; Tue, 16 Jun 2026 23:33:29 +0800
+X-QQ-mid: xmsmtpt1781624009t6vmnb7pl
+Message-ID: <tencent_AFB2247001B0C72775E3DE202C43F5126107@qq.com>
+X-QQ-XMAILINFO: NHCc2xbemT0jhcIPUh2SvQWAFtJQa58kmPQGsKW0TkAnxdyk592zPY+kTS6Aye
+ i2d4aJDhU3fGFflyVausd12aMnQiDc30/vmK8hOSeSA5tTDSVbAWGRF+1fFuzNiiP2Vhk9viv6oI
+ IQEZpLEmCqrrylzuVk4hzWrAmgkcFGf97dfIS1PYxHKPjc+N1VbHJCAOY2nioP6KKOztr05jFnqY
+ q4J50M+yie//VshmP9BoM40qK1wCDg4uL1LgvvhzqLCLjrdRhMSS3zp2zfOHiPh4RimRxYHQwP3f
+ l0nnaIra8nCe+39MP5FUcB/N3yawTvuu8epTgbHBE7AIadVuFM8ElNwldO8gOcxt/ziaUICLOSdu
+ gNkhAQYv09RS8c9seMGgGHWoE53R2jmDkfOi1CBu+txxnFF122nDZXEW+H1TFAQzrOG1JQVb+NFJ
+ KDdqYOlL3WtHPkgoyHFfXyoIxCW0vAMFDTsWTVpY/mEex15AsrsBGI2Wzg2iYeKCJjpcDzM7K3MX
+ dh3GiuidkJCIuyFhlZ6XnqwahU8mRvrXaBaag+nKt2a89xTw62wgtfap75biSlned/VyOL0nZ5pp
+ HaHI7YiqdegiUqS/J7m9MbGW7zxKwDt+J8z0uesY3tAiPH40i1okHzVxCecEQuxYD9GVNpFqBliy
+ E6XkKGPXB73D2U8Oz+A5S6eiHusEsjWpmws9GX13SNKlomq4LdoyNlg7l4naPsmuwoVM4tTpa0Mu
+ AK7/nGN1w5vGKy+GAOj9gjl5E1xoqzOCXp8vDSU08H6xdxvxlr6FjMaGK0UueJ6QRc+cJoODxsrm
+ L7LTbJ3w1+ra/khluPtU9HwbsxtkHGBfrx2PgJooIXeVPGMap5gBvsA1Qbu4tbWLh4qnxgcLxe2e
+ ybuysfzQv4QT09+yDV75WTm4iEnXX5hQ1X9Dx8nTI2Hoetq1hElLY7koP5AnTptHiWGEYGSHdRYm
+ kQqqMFAgcqcX8EwcINfRZng5YcfUAihJxrgxPNghlwCZsXVkn+pbKzZDbVS6PrEArbDNUKpvqws/
+ cNRD7ZBZHR2VOfCJ9otGC/fpRxUwrs6EPRIMyEYg1lM3ONxyfgk30Vp69nvehhelbGG712P286C0
+ uaqOi6qZtrslu4on88V3v6S+HsHf0JFp+XuoSEqxWY/kKQcojIyBsXkBgf0K6DO/W91Fcb7wLP8n
+ 1Sy8c=
+X-QQ-XMRINFO: NyFYKkN4Ny6FuXrnB5Ye7Aabb3ujjtK+gg==
+From: ZhengXiang Qin <qinzhengxiang@foxmail.com>
+To: qemu-devel@nongnu.org
+Cc: ZhengXiang Qin <qinzhengxiang@foxmail.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Chao Liu <chao.liu.zevorn@gmail.com>,
+ qemu-riscv@nongnu.org (open list:RISC-V TCG CPUs)
+Subject: [PATCH] target/riscv: raise access fault for Zicbom MMIO-like accesses
+Date: Tue, 16 Jun 2026 23:33:26 +0800
+X-OQ-MSGID: <20260616153326.31362-1-qinzhengxiang@foxmail.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 23/25] target/arm: Enable FEAT_SVE2p2 for -cpu max
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
-References: <20260604234852.573178-1-richard.henderson@linaro.org>
- <20260604234852.573178-24-richard.henderson@linaro.org>
- <CAFEAcA9zRtLb_judmNjvXSq_ZgASNyQZJMGmhcgaQ+p2RkcKKw@mail.gmail.com>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <CAFEAcA9zRtLb_judmNjvXSq_ZgASNyQZJMGmhcgaQ+p2RkcKKw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x631.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=162.62.57.64;
+ envelope-from=qinzhengxiang@foxmail.com; helo=out162-62-57-64.mail.qq.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ HELO_STATIC_HOST=-0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,31 +88,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/16/26 06:43, Peter Maydell wrote:
-> On Fri, 5 Jun 2026 at 00:52, Richard Henderson
-> <richard.henderson@linaro.org> wrote:
->>
->> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
->> ---
->>   linux-user/aarch64/elfload.c  | 1 +
->>   target/arm/tcg/cpu64.c        | 2 +-
->>   docs/system/arm/emulation.rst | 1 +
->>   3 files changed, 3 insertions(+), 1 deletion(-)
-> 
-> This is fine as a patch, so
-> Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-> 
-> but maybe we should hold off on enabling SVE2p2 for "max"
-> until we have SME2p2 ? Architecturally if you have SVE2p2
-> and SME then you're supposed to also have SME2p2.
-> I know we usually don't worry about that kind of "feature X
-> implies feature Y" when adding a new feature, trusting the
-> guest to check separately for X and Y being present, but
-> I feel like SVE/SME versions are particularly likely to be
-> something guest software might make assumptions about here.
+check_zicbom_access() probes the cache block with MMU_DATA_LOAD and
+returns early for any result other than TLB_INVALID_MASK.  This treats
+TLB_MMIO as a successful load access.
 
-Fair enough.  I wondered about that myself.
+For Zicbom, a TLB_MMIO result does not provide a RAM host pointer for the
+cache block operation and should not be treated as a successful access.
+Raise a store/AMO access fault instead of silently completing the CBO
+instruction.
 
+This fixes sv39_zicbom_exceptions_Smode.S, where cbo.clean/cbo.flush and
+cbo.inval access a block mapped to a physical address without PMA
+permissions.  Before this change, the CBO instruction completed and the
+following addi was executed.
 
-r~
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3501
+Signed-off-by: ZhengXiang Qin <qinzhengxiang@foxmail.com>
+---
+ target/riscv/op_helper.c | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/target/riscv/op_helper.c b/target/riscv/op_helper.c
+index 81873014cb..6c9bd5c102 100644
+--- a/target/riscv/op_helper.c
++++ b/target/riscv/op_helper.c
+@@ -218,6 +218,7 @@ static void check_zicbom_access(CPURISCVState *env,
+     void *phost;
+     int ret;
+ 
++    target_ulong fault_addr = address;
+     /* Mask off low-bits to align-down to the cache-block. */
+     address &= ~(cbomlen - 1);
+ 
+@@ -235,6 +236,10 @@ static void check_zicbom_access(CPURISCVState *env,
+      */
+     ret = probe_access_flags(env, address, cbomlen, MMU_DATA_LOAD,
+                              mmu_idx, true, &phost, ra);
++    if (ret == TLB_MMIO) {
++        env->badaddr = fault_addr;
++        riscv_raise_exception(env, RISCV_EXCP_STORE_AMO_ACCESS_FAULT, ra);
++    }
+     if (ret != TLB_INVALID_MASK) {
+         /* Success: readable */
+         return;
+-- 
+2.43.0
+
 
