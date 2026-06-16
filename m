@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD1D5CD98EF
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 19:09:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B7DBCD98E4
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 19:09:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZZAR-0006Ud-B1; Tue, 16 Jun 2026 15:09:47 -0400
+	id 1wZZ9w-0005sV-1f; Tue, 16 Jun 2026 15:09:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wZZ8B-0004Ys-Fm
+ id 1wZZ8E-0004ZX-Nc
  for qemu-devel@nongnu.org; Tue, 16 Jun 2026 15:07:37 -0400
-Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wZZ85-0000yS-UT
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 15:07:24 -0400
-Received: by mail-wr1-x436.google.com with SMTP id
- ffacd0b85a97d-45ee5cdbd28so111972f8f.1
- for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 12:07:06 -0700 (PDT)
+ id 1wZZ87-0000x2-Q6
+ for qemu-devel@nongnu.org; Tue, 16 Jun 2026 15:07:27 -0400
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-4903d730b1fso61626695e9.2
+ for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 12:06:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1781636825; x=1782241625; darn=nongnu.org;
+ d=linaro.org; s=google; t=1781636818; x=1782241618; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=U36QTOj3+WS8UfS+I/MVEAMSNS5LcHohAWyCMHmrQIo=;
- b=uKGPzVvlagJ6Q5lPLIRUIqFGsBC0odeRQMMVWbWM8OTWnSlwS9U/exBOqQaRdAuTCr
- 96KoIO5vYN11HdA3t4O5bHnPmoIO8JUsqSBWVRmSwZECVCjGQ4kunTPBsNE2yKvZhwqB
- DbQjtcKmiviDqNQJ+uWJIHb+KRLGNru1Byo8lqlUCbC/d56FNimMVlnCnSs6U8OhReCp
- hacHCGi9iWK2Gd6y+SBv+oHSn9XTdhObS5pL+sU8OUjJYtVbaxgbJdUIeObTb0jwv6Xk
- jfx7aBmQFJUmgbmmX6EGsg0uXy2UKu+PTLtoCjsXBn6Z0aoeyWKxx4utMg77hBvBx4eN
- LnBA==
+ :reply-to; bh=7LbqHsqIIDkdHZnHJlOZ0cciJwmdrPLtN8RdYZYIqwc=;
+ b=IW3NSkrVx6ozoEdTxh/35Et/iKLnD3r+zoianzJo5CpzsmJRC4f5+DzpM+la/B35Ml
+ hPD5x4yidH8XvyzwaFrDVC7YR4xv6gIMPDIq6MMCjKjFjYBo4m3QCOChonZ8aD6XCngf
+ 65zqVfgqvSuQLgsazizGKcd8MnOw7RLugQCOE0T2km+TzA9JtbUsZRNbBNdyWt8/49SG
+ 9xThvz+03WXN7XjgdnsgwI+19zxSamOTTdF9MGLhqaxUbrXjd+IJOiE0rKkIXN6OV1ye
+ 9SklgUunEwV2A3z2y0MZ+/ZRuzdPpLY1fI6LgGkSnWKGoJgrRGgm3XUYr3wJtL0PkveR
+ derg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781636825; x=1782241625;
+ d=1e100.net; s=20251104; t=1781636818; x=1782241618;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=U36QTOj3+WS8UfS+I/MVEAMSNS5LcHohAWyCMHmrQIo=;
- b=RFMVAn1Tqy4WewGN+4TSCeszXB0w4/d9y0LbWBcnS2/zQixz520yI2ctCuhgXeFVmD
- XSQY48cCmzSBunmdEmwppr4buQbpQj5XQ8i8caSbSJ2HuaBZNjGQ6FcKQcN9VFp/01w/
- 6LYmkdnP/0neMl5sNrkTyAMzy+eym4eK/1NQAMoYcdXbpUdnYtM/g+NUvi1ftPLvRjo6
- FoMqQTa4QD6g3OnkVOCMfBmzuutwnL1dwoT/zcQ+UVvEdpxwzLqZYdyKGh2GwIIybPhj
- kLlp6BoCiet3/qCZ903VaLPbBK3xAl6kPVBqq4M4xxWg4wx8XSl1HsZjookFmeyMFFyx
- z/ug==
-X-Gm-Message-State: AOJu0Yx7d6qAtz5elRHmghVtL4EwPSiLXA58iGIh2mfQ3Vc+XxINyQ1M
- a8IJOLu7nd8SLfALKzpKBbw9ibXYcW5V1GtpmigDB8W+54WyZ/IkUxYaimRBC/CjvwxJiKOrJ1s
- LRCKx
-X-Gm-Gg: AfdE7ckyqfhyBw94qaHK/3SENPgOrihSvZZLnLh7gtUcLPSWEsae1OW7SEOu252TmBj
- QQyEOtk0FPg4T0cXnDj9gdlbVf+ab0zxv23sH+bjMPbzziztvicO3DBNsikNQfdVvIfdEdb84OO
- 2O4NXu7qDVGfr8tItZFpoM+Cz2h8Ci37WYpspZ7fpSAKGvp0AbrOkVVXn2408GSsqFWFxc20fza
- JwNHnnpyG0cTqIRP08K9EsXtJeUNzt19/az8maa6m2wITXKt94OgamnljqOV39Fm5wgrNfWjIM8
- N8E+cTgTc3HsQUTuqkh8gZB6yl3X7q169brWgxCXav/9dp/Xn94krU34hykKrsUGBgrf8oqGzqy
- I1gUWTMcTuZUdDxXyfgwCbZCS4Uxb9g0552kZOa3uOll9pBhGm6jLlmf43Y5S/i4DvB8m+diNAz
- 4Hdgn900ayRcDDIeLZLEYckVJ0hIhMzL6z0k8rhZsvjzp6LRMxyKPvUgC1cZ0P/efmueiwgRXvc
- gzwUR5YNV/juhH8VQhoO34Qb0CZx3Kq
-X-Received: by 2002:a5d:5d05:0:b0:45e:e936:5e30 with SMTP id
- ffacd0b85a97d-462692f8590mr43249f8f.6.1781636825069; 
- Tue, 16 Jun 2026 12:07:05 -0700 (PDT)
+ bh=7LbqHsqIIDkdHZnHJlOZ0cciJwmdrPLtN8RdYZYIqwc=;
+ b=Xazq5bfSMudIDZ5GCeJrVTo4PcLlrpRjJF67ysA9b/KFDz+TmUYONFEQ0JJaq74fG3
+ Pr120GNb/KVjymOO24Nx7nDQKIGZw/m48XFnoUJLYUekG6McTmfNB0i9PlSN48rhrTIR
+ ifL9+g1wZxS8L1tsPUyCqwefFywOG7RYptF9OLSiSMiFo4qxMmKnQj8dQz/k529fctUJ
+ 5Pubh/eYe+V5LQfg5H3F1NjE1RoygloK4F4OWBAximdTspzp/v1ycmkzH0uaNucGZhEP
+ pYOVB6JaKUfZGL1/6cKB5Qb4wnQQLPSnBSkmiAKTDaevBvyesvHXnOmHRnWHYqoClSkv
+ iReQ==
+X-Gm-Message-State: AOJu0YzE8QMvMk4P6dgxrHWPVs5alULSJIbn/k8ftHGKfSCILJO5hK+l
+ c30CIx3oCwaOPCHsuuhrt8fVGltgXAihFyuFY+1HrmQ6IWid2VrpjQ+zl/MWoUyjsFXdKsZrpGj
+ tHXlH
+X-Gm-Gg: Acq92OFbnecL0nOcfFiMYkpxtTHDqwggYZZ/xKyx56Aa/s3VRKksr5b4SkI5A9uWRwD
+ UfeTTYuWRYAJe5kzIzUOyENs5+ScMEsKUSCBg/1yMCjDvrlV01iAGVssB/2+kyuAZlhO9BZniRn
+ xfRuE1Qm5cEwQINGl8k6Vwpw84sEDCrnDoXT7j8gA6nMXoZFGL0lI25MEFM5gd/6CfJGu8DBaSC
+ e9Bp64wGxGJBTK+jP390ligPvkbZwpvy3dP2efqvNw8jmLlKLMjXVP4ONwNcJkmIZOKtosjy21C
+ KLMIqrJEorPHr87BGho1jYAuDQtggMoidaB8epWojLxVVpEzr4DbDfeNS9FOPITmeTRWVM6+Jzd
+ hCAKHQ3uYWJCewW0Z6EoQoNfJxCBEH6xaC8Ytk4aRK8xjbuAkJ1597M2e/6m+6x85bFvAFSsnjY
+ 9z3flyYnmEf1VoYfiaZ+nSPcfpjuBt7WzF4N4Vg/DngTM9FB0Q4WbDHyKZuaftFquwclyloyTp8
+ 0cbyxN18E8tTeeTjPyPJLafnAULtFVK
+X-Received: by 2002:a05:600c:a305:b0:490:b629:286c with SMTP id
+ 5b1f17b1804b1-492333aa59bmr10568175e9.12.1781636818497; 
+ Tue, 16 Jun 2026 12:06:58 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4606f2d9becsm45078765f8f.34.2026.06.16.12.07.04
+ ffacd0b85a97d-4606f2d9becsm45078765f8f.34.2026.06.16.12.06.57
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 16 Jun 2026 12:07:04 -0700 (PDT)
+ Tue, 16 Jun 2026 12:06:57 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 20/61] hw/arm/tegra241-cmdqv: Probe host Tegra241 CMDQV support
-Date: Tue, 16 Jun 2026 20:05:57 +0100
-Message-ID: <20260616190639.3462006-21-peter.maydell@linaro.org>
+Subject: [PULL 14/61] backends/iommufd: Introduce iommufd_backend_viommu_mmap
+Date: Tue, 16 Jun 2026 20:05:51 +0100
+Message-ID: <20260616190639.3462006-15-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260616190639.3462006-1-peter.maydell@linaro.org>
 References: <20260616190639.3462006-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::436;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x436.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,88 +100,87 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Shameer Kolothum <skolothumtho@nvidia.com>
+From: Nicolin Chen <nicolinc@nvidia.com>
 
-Use IOMMU_GET_HW_INFO to query host support for Tegra241 CMDQV.
+Add a backend helper to mmap hardware MMIO regions exposed via iommufd for
+a vIOMMU instance. This allows user space to access HW-accelerated MMIO
+pages provided by the vIOMMU.
 
-Validate the returned data type, version, and minimum number of vCMDQs and
-SIDs per Tegra241 CMDQ Virtual Interface(VI). Fail the probe if the host
-does not meet these requirements.
+The caller is responsible for unmapping the returned region.
 
-The QEMU model supports one Virtual Interface(VI) per VM with 2 vCMDQs and
-16 SIDs per VI, so the probe ensures the host implementation is compatible
-with these limits.
-
+Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
 Reviewed-by: Eric Auger <eric.auger@redhat.com>
-Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
 Tested-by: Nicolin Chen <nicolinc@nvidia.com>
 Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
 Tested-by: Eric Auger <eric.auger@redhat.com>
-Message-id: 20260609112552.378999-11-skolothumtho@nvidia.com
+Message-id: 20260609112552.378999-5-skolothumtho@nvidia.com
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- hw/arm/tegra241-cmdqv.c | 32 ++++++++++++++++++++++++++++++--
- hw/arm/tegra241-cmdqv.h |  4 ++++
- 2 files changed, 34 insertions(+), 2 deletions(-)
+ backends/iommufd.c       | 22 ++++++++++++++++++++++
+ backends/trace-events    |  1 +
+ include/system/iommufd.h |  4 ++++
+ 3 files changed, 27 insertions(+)
 
-diff --git a/hw/arm/tegra241-cmdqv.c b/hw/arm/tegra241-cmdqv.c
-index ad5a0d4611..3a19a1af56 100644
---- a/hw/arm/tegra241-cmdqv.c
-+++ b/hw/arm/tegra241-cmdqv.c
-@@ -38,8 +38,36 @@ static bool tegra241_cmdqv_init(SMMUv3State *s, Error **errp)
- static bool tegra241_cmdqv_probe(SMMUv3State *s, HostIOMMUDeviceIOMMUFD *idev,
-                                  Error **errp)
- {
--    error_setg(errp, "NVIDIA Tegra241 CMDQV is unsupported");
--    return false;
-+    uint32_t data_type = IOMMU_HW_INFO_TYPE_TEGRA241_CMDQV;
-+    struct iommu_hw_info_tegra241_cmdqv cmdqv_info;
-+    uint64_t caps;
-+
-+    if (!iommufd_backend_get_device_info(idev->iommufd, idev->devid, &data_type,
-+                                         &cmdqv_info, sizeof(cmdqv_info), &caps,
-+                                         NULL, errp)) {
-+        return false;
-+    }
-+    if (data_type != IOMMU_HW_INFO_TYPE_TEGRA241_CMDQV) {
-+        error_setg(errp, "Host CMDQV: unexpected data type %u (expected %u)",
-+                   data_type, IOMMU_HW_INFO_TYPE_TEGRA241_CMDQV);
-+        return false;
-+    }
-+    if (cmdqv_info.version != CMDQV_VER) {
-+        error_setg(errp, "Host CMDQV: unsupported version %u (expected %u)",
-+                   cmdqv_info.version, CMDQV_VER);
-+        return false;
-+    }
-+    if (cmdqv_info.log2vcmdqs < CMDQV_NUM_CMDQ_LOG2) {
-+        error_setg(errp, "Host CMDQV: insufficient vCMDQs log2=%u (need >= %u)",
-+                   cmdqv_info.log2vcmdqs, CMDQV_NUM_CMDQ_LOG2);
-+        return false;
-+    }
-+    if (cmdqv_info.log2vsids < CMDQV_NUM_SID_PER_VI_LOG2) {
-+        error_setg(errp, "Host CMDQV: insufficient SIDs log2=%u (need >= %u)",
-+                   cmdqv_info.log2vsids, CMDQV_NUM_SID_PER_VI_LOG2);
-+        return false;
-+    }
-+    return true;
+diff --git a/backends/iommufd.c b/backends/iommufd.c
+index 8eaaf456e8..440c1b82bc 100644
+--- a/backends/iommufd.c
++++ b/backends/iommufd.c
+@@ -580,6 +580,28 @@ bool iommufd_backend_alloc_hw_queue(IOMMUFDBackend *be, uint32_t viommu_id,
+     return true;
  }
  
- static const SMMUv3AccelCmdqvOps tegra241_cmdqv_ops = {
-diff --git a/hw/arm/tegra241-cmdqv.h b/hw/arm/tegra241-cmdqv.h
-index 74a6954017..38c8b27b4d 100644
---- a/hw/arm/tegra241-cmdqv.h
-+++ b/hw/arm/tegra241-cmdqv.h
-@@ -10,6 +10,10 @@
- #ifndef HW_ARM_TEGRA241_CMDQV_H
- #define HW_ARM_TEGRA241_CMDQV_H
- 
-+#define CMDQV_VER                 1
-+#define CMDQV_NUM_CMDQ_LOG2       1
-+#define CMDQV_NUM_SID_PER_VI_LOG2 4
++/*
++ * Helper to mmap HW MMIO regions exposed via iommufd for a vIOMMU instance.
++ * The caller is responsible for unmapping the mapped region.
++ */
++bool iommufd_backend_viommu_mmap(IOMMUFDBackend *be, uint32_t viommu_id,
++                                 uint64_t size, off_t offset, void **out_ptr,
++                                 Error **errp)
++{
++    g_assert(viommu_id);
++    g_assert(out_ptr);
 +
- const SMMUv3AccelCmdqvOps *tegra241_cmdqv_get_ops(void);
++    *out_ptr = mmap(NULL, size, PROT_READ | PROT_WRITE, MAP_SHARED, be->fd,
++                   offset);
++    trace_iommufd_backend_viommu_mmap(be->fd, viommu_id, size, offset);
++    if (*out_ptr == MAP_FAILED) {
++        error_setg_errno(errp, errno, "IOMMUFD vIOMMU mmap failed");
++        return false;
++    }
++
++    return true;
++}
++
+ bool host_iommu_device_iommufd_attach_hwpt(HostIOMMUDeviceIOMMUFD *hiodi,
+                                            uint32_t hwpt_id, Error **errp)
+ {
+diff --git a/backends/trace-events b/backends/trace-events
+index c5c1d95aad..b63420b73e 100644
+--- a/backends/trace-events
++++ b/backends/trace-events
+@@ -25,6 +25,7 @@ iommufd_backend_alloc_viommu(int iommufd, uint32_t dev_id, uint32_t type, uint32
+ iommufd_backend_alloc_vdev(int iommufd, uint32_t dev_id, uint32_t viommu_id, uint64_t virt_id, uint32_t vdev_id, int ret) " iommufd=%d dev_id=%u viommu_id=%u virt_id=0x%"PRIx64" vdev_id=%u (%d)"
+ iommufd_viommu_alloc_eventq(int iommufd, uint32_t viommu_id, uint32_t type, uint32_t veventq_id, uint32_t veventq_fd, int ret) " iommufd=%d viommu_id=%u type=%u veventq_id=%u veventq_fd=%u (%d)"
+ iommufd_backend_alloc_hw_queue(int iommufd, uint32_t viommu_id, uint32_t queue_type, uint32_t index, uint64_t addr, uint64_t size, uint32_t queue_id, int ret) " iommufd=%d viommu_id=%u queue_type=%u index=%u addr=0x%"PRIx64" size=0x%"PRIx64" queue_id=%u (%d)"
++iommufd_backend_viommu_mmap(int iommufd, uint32_t viommu_id, uint64_t size, uint64_t offset) " iommufd=%d viommu_id=%u size=0x%"PRIx64" offset=0x%"PRIx64
  
- #endif /* HW_ARM_TEGRA241_CMDQV_H */
+ # igvm-cfg.c
+ igvm_reset_enter(int type) "type=%u"
+diff --git a/include/system/iommufd.h b/include/system/iommufd.h
+index c6f2e87a7e..bb8d5081d7 100644
+--- a/include/system/iommufd.h
++++ b/include/system/iommufd.h
+@@ -112,6 +112,10 @@ bool iommufd_backend_alloc_hw_queue(IOMMUFDBackend *be, uint32_t viommu_id,
+                                     uint64_t addr, uint64_t length,
+                                     uint32_t *out_hw_queue_id, Error **errp);
+ 
++bool iommufd_backend_viommu_mmap(IOMMUFDBackend *be, uint32_t viommu_id,
++                                 uint64_t size, off_t offset, void **out_ptr,
++                                 Error **errp);
++
+ bool iommufd_backend_set_dirty_tracking(IOMMUFDBackend *be, uint32_t hwpt_id,
+                                         bool start, Error **errp);
+ bool iommufd_backend_get_dirty_bitmap(IOMMUFDBackend *be, uint32_t hwpt_id,
 -- 
 2.43.0
 
