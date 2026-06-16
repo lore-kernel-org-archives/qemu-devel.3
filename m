@@ -4,113 +4,136 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E5D7CD98E4
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 14:29:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89A72CD98E1
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 14:39:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZUlv-0008Ct-KK; Tue, 16 Jun 2026 10:28:11 -0400
+	id 1wZUvv-0001gw-4P; Tue, 16 Jun 2026 10:38:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1wZUlt-0008CO-Qh
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 10:28:09 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
+ id 1wZUvs-0001fz-Nn
+ for qemu-devel@nongnu.org; Tue, 16 Jun 2026 10:38:28 -0400
+Received: from mail-northcentralusazon11012032.outbound.protection.outlook.com
+ ([40.107.200.32] helo=CH5PR02CU005.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1wZUlr-0007h5-05
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 10:28:09 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781620084;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=C8wtfGwFv/JDFtyBXHUbG1L/079VXo9GdmvPXNgTwL8=;
- b=QS57EsGUQY7OvApinmjkXFgP6+RgA4M8jE/l0pi3f3pB+jjtVFxKuuqTOIbUQoX0N1ZEv1
- MBVago++cvYAmr/hlPzweK9CkQoNtS9tnpRCkfQpS4oUbGvO1EYmUZ2RN70W9XsNsDR9kR
- vmf/zcMGEXlNVzgODdh6vyQWQLfeML4=
-Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
- [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-632-1K0-QTShMxy4r5c8mf7Ziw-1; Tue, 16 Jun 2026 10:28:02 -0400
-X-MC-Unique: 1K0-QTShMxy4r5c8mf7Ziw-1
-X-Mimecast-MFC-AGG-ID: 1K0-QTShMxy4r5c8mf7Ziw_1781620081
-Received: by mail-ej1-f69.google.com with SMTP id
- a640c23a62f3a-bee055582b7so356523166b.3
- for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 07:28:02 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781620081; x=1782224881;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=C8wtfGwFv/JDFtyBXHUbG1L/079VXo9GdmvPXNgTwL8=;
- b=s92Ea/bWQEaPK6j22qxvVQ21dYY7wH7jOs9fjHzj4fCQ5r8YyuBSWfOoXBaTkqLCxl
- 2tPnP+dHkNHhGbjnS7XlegeR06nPecly7KQH4OUqD3dor1sdeHVOj4qEbMQ61ktYd8op
- fG20Ef6XRQ4RUM3sacounUf3bQcrvZCsvVCY3XDEUc6PUtr0yAa9cjkUDx5a2vBfoM8O
- dn4PuYOiHLlthYfCHBZIXM7PT+TL40ZFjgQ+OAU31ynP2Vgj6IDpjb2X8U0DmrbLFBf0
- G96C1P5wln0aJ5O02dTmkLv/k5FQThPmAWRQ58UUZI2TsK4LSuEyBcMVJD0Yr0rRV25y
- 6r8w==
-X-Forwarded-Encrypted: i=1;
- AFNElJ+zqnBW7AQiy6AU2UWWu/LROEgw02GFGp69BHzlsBK1cUn22s1l8CWPOIZ7d9ExV00EBayKDpP0ou/3@nongnu.org
-X-Gm-Message-State: AOJu0YwrN3PB6wbS1GGa1UI2H+gQn4TCTcGaAbWUz87I1xKRgdnsiwZC
- lUrL0WgFVDQaLYDef45o6t4JBX15GoJxtxY6xwDowghxyctF/G4rJ49qaRJIQCKE3eN9+rNRY4c
- c1ZpAYkfZGc4BChka8bDBI2RsOL5t+ShzZiqiNO7HDDEYTgBtcFK0J4YF
-X-Gm-Gg: Acq92OGKAdNc2G9jZpdNc7w2FuR9MsL14lGOxKtIgYrnksXmcKisady2EKXfGPnZej5
- Mm1pRP0BnWPE8M/HaxGxe4FoQpbCJ6qMQ8W6GjIfxmf4caXAHKlhkVaBKFfXMtV9bmOn+6KuWge
- DMYGDu9cZ1kPFpOIALrk1J48c5Qe0e/U5ZRo2I6+wcUjsSHaZ2qWgeoEifYojx4JXPdjSvLdq+/
- gC2oeWdeLAWXvAvq4bNYFGsvnFJlD21/OlR7KPD/IMmGdeq87p0hiWBq4bmz2PyXQ7uD/32UP34
- HVCwLNgS3abCHHHakyGTPwAF+ShKdb/QFdfuTOP5Z5brueDIm3SByLjdSLm5UqLnCVuTpweYArd
- Z3UuXiNoSv7CbJz39DS8P90vULK13WSvdBGPNeViJsMCWXZhrAhOp3LFQ9kMjHtXBnHqwPQ==
-X-Received: by 2002:a17:907:762a:b0:beb:9be6:f249 with SMTP id
- a640c23a62f3a-c043fcd74b4mr157362266b.47.1781620080485; 
- Tue, 16 Jun 2026 07:28:00 -0700 (PDT)
-X-Received: by 2002:a17:907:762a:b0:beb:9be6:f249 with SMTP id
- a640c23a62f3a-c043fcd74b4mr157358566b.47.1781620079786; 
- Tue, 16 Jun 2026 07:27:59 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
- ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-bfdb910f89bsm672722966b.61.2026.06.16.07.27.58
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 16 Jun 2026 07:27:59 -0700 (PDT)
-Message-ID: <ce1730eb-7076-4ab5-8ef4-fea3fba00bd5@redhat.com>
-Date: Tue, 16 Jun 2026 16:27:57 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC] arm: property and value naming summary between named CPU
- models vs customizable host model
+ (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
+ id 1wZUvr-0002M6-CB
+ for qemu-devel@nongnu.org; Tue, 16 Jun 2026 10:38:28 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=qGh6h5tv9J3LI759V5+GxNOf/FbfvYZLpSNQsh5qUnj6tkioLtBj4lcGiMuwDdqDU5oVo4CZ5R3XaLTYvVVAnWn2+cpRbZ9Tay/WIopHtJ26ZDs0Gp04KfQN8SWJbdFGLQCKo4T9bhSnrvD8+ZvtoW+r062nQOVE1ptHJD3h3iOhAJpv4n+BYBLMQ04AJmcAeMUl0od2SZ1ZLXIL2cnTBw+b4hjFtGPOt9FaIzifDrvxymREjl2PGqJ77lV+VZ0O+v6aU0f4TcRw5EInU5QwqX4F0L+X9LRp3iXPR5YIP7Pa4nUKiHkpkNOUr+7et7cSVZrazDxdJRRhzdelJgVEQQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=VrEgdxgS4K9+xS7INiL5YcqKv78l5oPm5SuqNhYB5wU=;
+ b=KLB8zohK4UG1bPCisO8ehAz/253Q9amZXjnVEHqqi2A1og/Gc89tvFv97CLP6BHmIoS/ZQZw4xDipHt5c/K/Kuw8BnnaAGB30Bh1XCKxHNH7qQiIz9T2IojaMiHRPzaiIdxKIProQIk+R0Abo31lKoWRyLcykHk7maJ/dOITcGM7R008rMtvFw3qTcxJpsf2GKbRD4AIrYh9yr45EOdQdCdgWiJJvBjB7UQNJUbaqJ6rKuAjM1oJlx/XpBHAHLgqxy2w5iHIPTD/dpMitER+URyH1sW052QpEBJfMjWZYGUFNMDoERmCTbbz2MsGk3b3uvVccw7KrTUqYv+B4TASCA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=VrEgdxgS4K9+xS7INiL5YcqKv78l5oPm5SuqNhYB5wU=;
+ b=OC3+TS/Hv5DcjUiBe2ZLCs0W9FY1KT2WvD1pkuN+CklLGndEbaDgT4LNgRBBpknb7cDGz2tiwAvlHoTikQwH9AIQ48dK45NeDTUi9d2V6SXBBBw3HQe716Uk7icxd/Q0OfTdm/2XJl7uk5xdQ75SN1+z4UHiyeYgj1WnsubIySw2vmtZETBeeKrBBJPPyjSiYWo0smoDzg9F7HPsK4+/BBq/nk7OCMl2FTKxJzPloAoCsasPf6X6DzKXoUiuJI86ntT0DPMA2UQFBW4cuSfrKHnXvMAI+wY2oo4dYdk6yT4ATRiTlfjeo6V7QwOZYcX89tSb7ugJzVN8hzxGNQrAJg==
+Received: from SJ0PR12MB8614.namprd12.prod.outlook.com (2603:10b6:a03:47d::17)
+ by CH3PR12MB9251.namprd12.prod.outlook.com (2603:10b6:610:1bd::19)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.113.18; Tue, 16 Jun
+ 2026 14:33:12 +0000
+Received: from SJ0PR12MB8614.namprd12.prod.outlook.com
+ ([fe80::fe0a:6e6a:fe60:a43b]) by SJ0PR12MB8614.namprd12.prod.outlook.com
+ ([fe80::fe0a:6e6a:fe60:a43b%3]) with mapi id 15.21.0113.015; Tue, 16 Jun 2026
+ 14:33:11 +0000
+From: Shameer Kolothum Thodi <skolothumtho@nvidia.com>
+To: Nathan Chen <nathanc@nvidia.com>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>
+CC: Yi Liu <yi.l.liu@intel.com>, Eric Auger <eric.auger@redhat.com>, Zhenzhong
+ Duan <zhenzhong.duan@intel.com>, =?iso-8859-1?Q?Philippe_Mathieu-Daud=E9?=
+ <philmd@mailo.com>, Zhao Liu <zhao1.liu@intel.com>, Alex Williamson
+ <alex@shazbot.org>, =?iso-8859-1?Q?C=E9dric_Le_Goater?= <clg@redhat.com>,
+ Matt Ochs <mochs@nvidia.com>, Nicolin Chen <nicolinc@nvidia.com>
+Subject: RE: [PATCH v2 1/3] iommufd: Introduce handler for device ATS support
+Thread-Topic: [PATCH v2 1/3] iommufd: Introduce handler for device ATS support
+Thread-Index: AQHc/QhmWzcTYDWsLUGwiteoIhPaHLZBP/Ow
+Date: Tue, 16 Jun 2026 14:33:11 +0000
+Message-ID: <SJ0PR12MB861438044D82715784E35DEBABE52@SJ0PR12MB8614.namprd12.prod.outlook.com>
+References: <20260615204849.3659647-1-nathanc@nvidia.com>
+ <20260615204849.3659647-2-nathanc@nvidia.com>
+In-Reply-To: <20260615204849.3659647-2-nathanc@nvidia.com>
+Accept-Language: en-US, en-GB
 Content-Language: en-US
-To: Khushit Shah <khushit.shah@nutanix.com>
-Cc: "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "peter.maydell@linaro.org" <peter.maydell@linaro.org>,
- Shaju Abraham <shaju.abraham@nutanix.com>,
- Mark Cave-Ayland <mark.caveayland@nutanix.com>,
- "cohuck@redhat.com" <cohuck@redhat.com>,
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Shameer Kolothum <skolothumtho@nvidia.com>,
- Jinqian Yang <yangjinqian1@huawei.com>, Marc Zyngier <maz@kernel.org>,
- Sebastian Ott <sebott@redhat.com>,
- "kvmarm@lists.linux.dev" <kvmarm@lists.linux.dev>
-References: <B820643E-3F14-4CDA-BA6B-09C632F17B9E@nutanix.com>
- <528ce8c1-dcec-45bd-9a50-c4c21529f812@redhat.com>
- <DACACA26-96A0-4F1D-B13E-701C453860D1@nutanix.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <DACACA26-96A0-4F1D-B13E-701C453860D1@nutanix.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: SJ0PR12MB8614:EE_|CH3PR12MB9251:EE_
+x-ms-office365-filtering-correlation-id: 2b7ac6b6-9cdd-4d62-8617-08decbb43165
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|366016|376014|23010399003|1800799024|56012099006|4143699003|11063799006|22082099003|18002099003|38070700021;
+x-microsoft-antispam-message-info: IaMR8RG/HWXP0h3W1y9U/tHxv2nit9fwVtVXKdVWFrV6jZQZEjqz9g3tvqeYNtZrg9SwrPafgElfxs2gP2VixtOMztn+ZHQYvwj3rfLC74xDfevxGqfve/PO3yYo2eZpJ+70I/NqLUHdJhnkk07FZ4op7M8ENigbupgwCbbNIrfaKc6NEWAxhaeHc7e8IFtvfsPaYBP54/XtssKvKmHCDp/pjd7L3oXYNaMi2aq4VbkrolZguKqlVnEZvDVpIFh8O2SjyH0TMuFeF8gbQowUdSI0S3HhPiT1ScDrmQcEOcXpX7S6f/PBsHo20AEHfBrO5PUDKw7+iGyJfVhRpfAuF5IdqZeU0qLZSWAqd6Uo3xX4zf7qJJiMq98ackJCLnE0AO1ZgKVCAROlacE+Q1gE4MD8IFa97Jbs9b7czwBAWADdGt3KxPPo30HoE8mm60zYuBG/KPdCsEdHd+EHVKvAF8DT2yH5RbFbNHiBaW0TVlFaLmemhwnY8OR7JMogk+XlCzVYAZG+BEXGQ9bhqgXi8kru5FtauMbFPp494EWwx/yFBGXH68+2VlKacrN/yTFqgQ3/i1FbYabqiykqvui2HRFQzpuFGgHVdkxrnZEktWodrO3qjg+Cgaf7j/muJ8SALKpGLd4jQhhFDiF17C9EPqQHb9yYgOWceky1mqW++fxqMG7GJz2orUJxuggV5qWiEnMDKGQ6N4ucvSZkaTAYhipTjPoCvzbPCj3tRW20TIErFWDktMtwXCEAnRasOWPl
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:SJ0PR12MB8614.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(366016)(376014)(23010399003)(1800799024)(56012099006)(4143699003)(11063799006)(22082099003)(18002099003)(38070700021);
+ DIR:OUT; SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?A6vzYucP6KOZcAnBeK+Z6Cio2VfPloFaSCl0ggpUJCr5/P5XX5aHFmpWb1?=
+ =?iso-8859-1?Q?ms8qa6j4lC72G6nxaGEdwJR4g7VjQfD86NbhPIRgJUBg5G9qpXizhzxCvU?=
+ =?iso-8859-1?Q?J5Ru8x0SQbO1sl39ZEM9NSvvB1OEfSk605H7SInkGjHtoFb3L3Kromnk2M?=
+ =?iso-8859-1?Q?Hiqh0noVqDX0kqMvl9Vq9TK2YTgaO0D/EpjAKaBU5tH4J3C9fY0VnYgNFK?=
+ =?iso-8859-1?Q?jBgnde7m0eofFMT875v1cNCu9YyP3VFC/Xr+gdrEw9/7OQfBIdTUu8F62Q?=
+ =?iso-8859-1?Q?/irE6Kx/zLgch0mqJoRF0G97IgaRDaCZ72BjPdfX7Ln6HF9DB1a6LPcYEC?=
+ =?iso-8859-1?Q?XivZIQxsGcvmdjjQTML+AABBMbZ5uAiYVlGLj3Uo/WMaPtzFcr8RCNsc3m?=
+ =?iso-8859-1?Q?Z/TxkxDNCsJ6rkOwwLeCwxz4lB9LQtb3V8APu27X8SH14yY4dICWVRnEKU?=
+ =?iso-8859-1?Q?Wonl/g/H3PKKy5EvVf0tvPPojAnPtvY7g6srirX3hSkdBDbEBehX8418hS?=
+ =?iso-8859-1?Q?JoLs5dQciuzznzcB8S9mOaLbd6jyZi9eZ4kDKfY5KGHEB7KKClqiT/y/VW?=
+ =?iso-8859-1?Q?DlDkw0YVYN1DrESvXjKaKDSJm9KhAFZ5qq5Pjjl4d+P3LqvHKDnRFB4ndr?=
+ =?iso-8859-1?Q?3T8uwv2N38WtR4sDgY56b/C0s76efKQ0nojY/vgmXwhUJFlP75NXibvm2c?=
+ =?iso-8859-1?Q?TL1qQsvL0qs3Nc2zXq0Pfr5xdG9RxMqI2PCSHe4TxCIuFdYYMpMXVcvPaf?=
+ =?iso-8859-1?Q?XM8jEwD1cuMLvO4nEMy+seWGJcpSsovxxjNPg+0S3FZ2l7vKg7MdNisEt+?=
+ =?iso-8859-1?Q?Mvllx0WPdeyHNAtchd/5vxoyATZdKOxK0HxiikYk4VJgzMb6mEpxo8bvcp?=
+ =?iso-8859-1?Q?tBY5Il8QvUwJRo1Mh4tmkFNdEVQ6KAdmRJPWpAy1e9zg8fqOXKf19m4TX5?=
+ =?iso-8859-1?Q?pJ3rrc8eoWo4pHYUtjS8HBSjBPDdHdm07zs4HNVBEhNOZmJaqooc16Nbln?=
+ =?iso-8859-1?Q?rtAo1/WqCXCBJAawv9zt42En176nwTiLl0uNM0Xj1sTum5kcmrs7xJ+/Rh?=
+ =?iso-8859-1?Q?4NMQu0gSQJBpsUVoVL9M5SsQtK3RXDYkTmcbgnDxZLl4lqqvh7i0Kr3kwm?=
+ =?iso-8859-1?Q?z1lILJZqg1VFgjBkiWT5kAI3NsjtNjGAEr8P14kLM+yG1u6Um4gLI73IRw?=
+ =?iso-8859-1?Q?ioMT7u1L/i4b0UIlWsSgbZcVzZmCQTc6Gu3Gc2TCZukzZU/2gwW1macgbw?=
+ =?iso-8859-1?Q?lbt8H+5K8H36PznnySZQKSzeWz9gdRDSymMt5iETOI6HV/KjfaDnNMwM5e?=
+ =?iso-8859-1?Q?JtTRcJ7zS4M3GsvH0+HBdIWKFwqo4tnS8nNW3avDzbbnHVVJMnbp3/bJsG?=
+ =?iso-8859-1?Q?aLDP5k/6Gr5s36rN3Q6Dm0FB63kIeE6lnIJ5Lzmn7QNB8Gc5k945y0Ra23?=
+ =?iso-8859-1?Q?e5TB1QUSe9Bh0A5VZ90yGnZSL8W/M75AYkBDn5sfQIU8I6ovDjN5D9vFU2?=
+ =?iso-8859-1?Q?GeygIVUi6nKUGNGz9RiYxqKbes38sdPq4cXHwzi2bpznqn9S2G9+sxwskX?=
+ =?iso-8859-1?Q?D0t9NtgJEdwo3uWr90fk88ngSU2V2uKBiwRM6R2Nk96MSK9SOz+/NylBpx?=
+ =?iso-8859-1?Q?h8TU5B9gYK5rTI4gyNbNPdgKO7/GO4taDWBBR3JMzguZAIQ0z09MJmGKL2?=
+ =?iso-8859-1?Q?ySdzeRfFDCE1YMmjWP9LQi2gZWGH7tSc0JRhiJRu3UItoUQgAvEwQP0FyH?=
+ =?iso-8859-1?Q?65y8N/5tOPbRw6z46MpXUz5sDgtriGp40D1kKpS2ZgB7shoeqKpuDuHir/?=
+ =?iso-8859-1?Q?UIeergLRcw=3D=3D?=
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: SJ0PR12MB8614.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 2b7ac6b6-9cdd-4d62-8617-08decbb43165
+X-MS-Exchange-CrossTenant-originalarrivaltime: 16 Jun 2026 14:33:11.6067 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: y6ig75ChwVfpitco3t1LuD9zBiDS5DNYp+IDR/Esd2B9AX56UIhYNKWHb9BEgre3DtUJvvSks4FQGx+uAsMPdA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH3PR12MB9251
+Received-SPF: permerror client-ip=40.107.200.32;
+ envelope-from=skolothumtho@nvidia.com;
+ helo=CH5PR02CU005.outbound.protection.outlook.com
+X-Spam_score_int: -14
+X-Spam_score: -1.5
+X-Spam_bar: -
+X-Spam_report: (-1.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ FORGED_SPF_HELO=1, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+ SPF_NONE=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,390 +146,37 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Khushit,
 
-On 6/15/26 7:22 AM, Khushit Shah wrote:
->
->> On 11 Jun 2026, at 11:39 PM, Eric Auger <eric.auger@redhat.com> wrote:
->>
->> !-------------------------------------------------------------------|
->>  CAUTION: External Email
->>
->> |-------------------------------------------------------------------!
->>
->> Hi Khushit,
->>
->> On 6/10/26 2:31 PM, Khushit Shah wrote:
->>> Hi everyone,
->>>
->>> Posting the summary of the differences in property/value names and types used
->>> in named CPU model RFCs [1] and in the customizable host model series [2].
->> thank you very much for the synthesis.
->>> [1]: (v1) https://urldefense.proofpoint.com/v2/url?u=https-3A__lore.kernel.org_qemu-2Darm_20260513163356.3033159-2D1-2Dshaju.abraham-40nutanix.com_&d=DwIDaQ&c=s883GpUCOChKOHiocYtGcg&r=PGWMyignA0NiDmTlyP7vOTHozBws_VN86yrVmSMkBp0&m=WMtMYzC1MWeNKP-tmrbn6sokY_jAe_ZAbKRNTr67I7R2YK27TuJiP6vS1AaHhXO4&s=rMkbrJl6O2LoQIKdTl3Mbgp4vHoyjEkfh4ZWIsRwz14&e=  
->>> [1]: (v2) https://urldefense.proofpoint.com/v2/url?u=https-3A__lore.kernel.org_qemu-2Darm_20260605083358.1320563-2D1-2Dkhushit.shah-40nutanix.com_&d=DwIDaQ&c=s883GpUCOChKOHiocYtGcg&r=PGWMyignA0NiDmTlyP7vOTHozBws_VN86yrVmSMkBp0&m=WMtMYzC1MWeNKP-tmrbn6sokY_jAe_ZAbKRNTr67I7R2YK27TuJiP6vS1AaHhXO4&s=XXWQ5323Nn5TGbbMJjqJfE_7ioyokd081viyRfz__AA&e=
->>> [2]: (v6)  https://urldefense.proofpoint.com/v2/url?u=https-3A__lore.kernel.org_qemu-2Ddevel_20260519132905.145643-2D1-2Deric.auger-40redhat.com_&d=DwIDaQ&c=s883GpUCOChKOHiocYtGcg&r=PGWMyignA0NiDmTlyP7vOTHozBws_VN86yrVmSMkBp0&m=WMtMYzC1MWeNKP-tmrbn6sokY_jAe_ZAbKRNTr67I7R2YK27TuJiP6vS1AaHhXO4&s=YnEAPGlUj6nQbg3quRKvEaFkqT_5Og5Mz82RAZyM0wg&e=
->>>
->>> [2] defines all ID register field level properties, [1] also defines the 
->>> same field-level properties with some extra sugar.
->>>
->>> Approach for CPU Properties in [2]:
->>>
->>> Notably, [2] is simpler: a property name follows this convention:
->>> SYSREG_<ID_REGISTER_NAME>_<FIELD_NAME> and the property values are of type
->>> u64. A property for a field is added to the CPU object only if the field is
->>> writable. This means no extra work on the QEMU side when KVM starts
->>> exposing a new field as writable.
->>>
->>> So, say you want to set AES capability for the guest, then you say:
->>> -cpu host,SYSREG_ID_AA64ISAR0_AES=0/1/2
->>>
->>> Approach for CPU Properties in [1]:
->>> [1] also works on field-based properties. But uses a different convention
->>> for property names:
->>>    - for a field that maps 1:1 with ARM ARM FEAT_Xs, define the property
->>>      name as feat_<FieldName>, for example, ID_AA64ISAR0.AES maps cleanly
->>>      with FEAT_AES and FEAT_PMULL. Property names for ID_AA64ISAR0.AES,
->>>      will be feat_AES.
->> don't you want to also expose feat_PMULL too? In that case ARM ARM
->> specifies 2 features which are advertised by the same ID reg field. Why
->> would you advertise one FEAT and not the other? 
-> Also exposing feat_PMULL makes it much harder to manage properties, like
-> set of user configurations explodes that decides a ID reg field value. We will
-> need to handle cases like feat_PMULL=on, feat_AES=off. What does even
-spec says "If FEAT_PMULL is implemented, then FEAT_AES is implemented."
-> feat_PMULL=off should do? Does it set ISAR0.AES=0 or 1?
-the spec does not seem to document that imply relationship
->
-> Hence, I feel field level properties is the way to go.
-Nevertheless I agree this brings extra implementation complexify.
 
-But since your prop are named FEAT_* it is not obvious it does not
-exactly match an actual FEAT but rather matches an id reg field.
-Controlling FEAT_PMULL with FEAT_EAS does not sound logical to me, as
-the spec refers to separate features.
->
->> In that case the spec says/:
->>
->> 0b0000 No AES instructions implemented.
->> 0b0001 AESE, AESD, AESMC, and AESIMC instructions implemented.
->> 0b0010 As for 0b0001, plus PMULL and PMULL2 instructions operating on
->> 64-bit source elements.
->>
->> FEAT_AES implements the functionality identified by the value 0b0001.
->> FEAT_PMULL implements the functionality identified by the value 0b0010
->>
->>
->>>    - for a field that does not cleanly map 1:1 with any ARM ARM FEATs,
->>>      define the property name as hw_prop_<FieldName>, for example 
->>>      ID_AA64MMFR0.TGRAN16, CTR_EL0.L1IP, etc., are named like
->>>      hw_prop_TGRAN16, hw_prop_L1IP, etc.
->> you may add that the feature mapping is inspired of the kernel
->> arch/arm64/kvm/kernel/cpufeature.c arm64_ftr_regs[]
->> You used it to easily identify which fields correspond to feature and
->> also to extract some other data which are not dealt with in the summary
->> (safe rule and safe value)
-> Yes.
->
->>> [1] does not generate properties automatically; each property we want to
->>> add must be added manually.
->>>
->>> Property value types in [1]:
->>> - string properties: for fields which have arch-defined values.
->>>
->>>  String values are derived from the kernel's sysreg file, for example,
->>>  for the field ID_AA64ISAR1.LS64, the sysreg file has
->>>        UnsignedEnum    63:60   LS64
->>>                0b0000  NI
->>>                0b0001  LS64
->>>                0b0010  LS64_V
->>>                0b0011  LS64_ACCDATA
->>>                0b0100  LS64WB
->>>        EndEnum
->>>
->>> In QEMU, the value names are "off", "ls64", "ls64_v”, “ls64_accdata"
->>> and "ls64wb". Which also closely match the manual:
->> you may add that those string values are not specified in ARM ARM. This
->> is the result of some human processing with possible distortion:
-> Yes, the exact string values are not derived from ARM ARM, I am not sure
-> if that is also the case for x86.
-It seems x86 also use names which deviate from the formal HW spec.
-If I understood correctly this sticks as much as possible to data in
-/proc/cpuinfo though
+> -----Original Message-----
+> From: Nathan Chen <nathanc@nvidia.com>
+> Sent: 15 June 2026 21:49
+> To: qemu-devel@nongnu.org
+> Cc: Yi Liu <yi.l.liu@intel.com>; Eric Auger <eric.auger@redhat.com>;
+> Zhenzhong Duan <zhenzhong.duan@intel.com>; Philippe Mathieu-Daud=E9
+> <philmd@mailo.com>; Zhao Liu <zhao1.liu@intel.com>; Alex Williamson
+> <alex@shazbot.org>; C=E9dric Le Goater <clg@redhat.com>; Matt Ochs
+> <mochs@nvidia.com>; Nicolin Chen <nicolinc@nvidia.com>; Shameer
+> Kolothum Thodi <skolothumtho@nvidia.com>; Nathan Chen
+> <nathanc@nvidia.com>
+> Subject: [PATCH v2 1/3] iommufd: Introduce handler for device ATS support
+>=20
+> From: Nathan Chen <nathanc@nvidia.com>
+>=20
+> Introduce a support_ats() handler that returns whether ATS is supported
+> for a device associated with a host IOMMU device, checking if the
+> IOMMU_HW_CAP_PCI_ATS_NOT_SUPPORTED capability bit is set.
+>=20
+> Implement this handler in a new function for iommufd.
+>=20
+> Suggested-by: Shameer Kolothum <skolothumtho@nvidia.com>
+> Signed-off-by: Nathan Chen <nathanc@nvidia.com>
 
-looking at some random /proc/cpuinfo we have for instance:
-Features    : fp asimd evtstrm aes pmull sha1 sha2 crc32 atomics fphp
-asimdhp cpuid asimdrdm jscvt fcma lrcpc dcpop sha3 sm3 sm4 asimddp
-sha512 sve asimdfhm dit uscat ilrcpc flagm sb paca pacg dcpodp sve2
-sveaes svepmull svebitperm svesha3 svesm4 flagm2 frint svei8mm svebf16
-i8mm bf16 dgh bti
+Reviewed-by: Shameer Kolothum <skolothumtho@nvidia.com>
 
-Couldn't we create a prop layer above the SYSREG layer that builds those
-features exposed through /proc/cpuinfo. All the other writable fields
-that do not match any of those would remain with the low SYSREG prop.
-This was the original idea we had with Connie.
-
-I will spend more time studying what was done for x86 and especially
-target/i386/cpu.c ...
->
->> In that case spec says:
->>
->> 0b0000 No LD64B or ST64B instructions are supported.
->> 0b0001 The LD64B and ST64B instructions are supported.
->> 0b0010 As 0b0001, and adds the ST64BV instruction and traps.
->> 0b0011 As 0b0010, and adds the ST64BV0 instruction, ACCDATA_EL1
->> register, and traps.
->> 0b0100 As 0b0011, and adds support for atomic accesses to Write-back
->> Cacheable, Shareable memory using one of the following:
->>      • LD64B and ST64B instructions. • SIMD&FP instructions that load or
->> store a pair of 128-bit registers by generating 32-byte single-copy
->> atomic accesses.
->>
->> Documentation/arch/arm64/cpu-feature-registers.rst documents the ABI for
->> exporting CPU/ID/feature regs. Those values are not defined there. Is
->> there any place where those values are documented besides sysreg?
-> Sadly, no. Can we not document the values in QEMU’s documentation?
-for x86 they have:
-docs/system/cpu-models-x86.rst.inc
-
->
->>>        FEAT_LS64 implements the functionality identified by 0b0001.
->>>        FEAT_LS64_V implements the functionality identified by 0b0010.
->>>        FEAT_LS64_ACCDATA implements the functionality identified by 0b0011.
->>>        FEAT_LS64WB implements the functionality identified by 0b0100.
->>>
->>> In most of the cases, as seen in the Appendix, this works very well.
->>>
->>> - u64 properties: for fields which have no arch-defined values, like cache
->>>   size, debug registers, CPU revision, etc...
->>> - bool properties: for single-bit fields.
->>> - Fractional(string) properties: for fields like CSV2 and CSV2_FRAC that
->>>   collectively decide on a feature version. This helps in preventing invalid
->>>   configuration like CSV2=0 while CSV2_FRAC=1.
->>>
->>> The property and value names for [1] are still open to bikeshedding. I have
->>> left composites out of this comparison as they are a convenience, and only
->>> defined for named models.
->>>
->>> I have tried to keep the comparison above neutral, but Eric/Cornelia can
->>> add more. I see real merit in [2]'s simplicity and generalization. But
->>> for [1], I love a command line that looks like:
->>> -cpu host,feat_DP=off,feat_AES=off,feat_RAS=0.0,...
->>>
->>> instead of:
->>> -cpu host \
->>>     SYSREG_ID_AA64ISAR0_DP=0,\
->>>     SYSREG_ID_AA64ISAR0_AES=0,\
->>>     SYSREG_ID_AA64PFR0_RAS=0,\
->>>     SYSREG_ID_AA64PFR1_RAS_FRAC=0 
->>>
->>> I have no strong preference on this topic. The named CPU model layer is
->>> independent of whichever convention we choose here, so I'd like the
->>> community to decide which direction makes the most sense :)
->>>
->>> The Appendix below lists all currently defined properties in [1] and their
->>> named values.
->> I would like to add that in [2] we generate all the data from AARCHMRS
->> registers.json (machine readable spec from ARM). In earlier versions we
->> also used kernel sysreg as source of truth and we got the feedback from
->> Marc to try using the MRS instead. The introduction of string values for
->> some of the props break that attempt because as I explained earlier
->> those string values are not defined in the spec and therefore cannot be
->> extracted from the MRS.
->>
->> Maybe we shall further look at what can be extracted from AARCHMRS
->> Features.json. 
->>> Warm Regards,
->>> Khushit
->>>
->>> Appendix:
->>> ==================
->>> all currently defined properties in [1]:
->>>
->>> feat_AES (ID_AA64ISAR0.AES): off, aes, pmull
->>> feat_AFP (ID_AA64MMFR1.AFP): off, on
->>> feat_AMU (ID_AA64PFR0.AMU): off, on, v1p1
->>> feat_AT (ID_AA64MMFR2.AT): off, on
->>> feat_ATOMIC (ID_AA64ISAR0.ATOMIC): off, on, LSE128
->>> feat_AdvSIMD (ID_AA64PFR0.ADVSIMD): on, fp16, off
->>> feat_BBM (ID_AA64MMFR2.BBM): 0, 1, 2
->>> feat_BC (ID_AA64ISAR2.BC): off, on
->>> feat_BF16 (ID_AA64ISAR1.BF16): off, on, ebf16
->>> feat_BIGEND (ID_AA64MMFR0.BIGEND): off, on
->>> feat_BIGENDEL0 (ID_AA64MMFR0.BIGENDEL0): off, on
->>> feat_BT (ID_AA64PFR1.BT): off, on
->>> feat_CLRBHB (ID_AA64ISAR2.CLRBHB): off, on
->>> feat_CNP (ID_AA64MMFR2.CNP): off, on
->>> feat_CRC32 (ID_AA64ISAR0.CRC32): off, on
->>> feat_CSSC (ID_AA64ISAR2.CSSC): off, on, cmpbr
->>> feat_CSV3 (ID_AA64PFR0.CSV3): off, on
->>> feat_DBG (ID_AA64DFR0.DEBUGVER): on, vhe, v8p2, v8p4, v8p8, v8p9
->>> feat_DF2 (ID_AA64PFR1.DF2): off, on
->>> feat_DGH (ID_AA64ISAR1.DGH): off, on
->>> feat_DIT (ID_AA64PFR0.DIT): off, on
->>> feat_DP (ID_AA64ISAR0.DP): off, on
->>> feat_DPB (ID_AA64ISAR1.DPB): off, on, dpb2
->>> feat_DoubleLock (ID_AA64DFR0.DOUBLELOCK): on, off
->>> feat_E0PD (ID_AA64MMFR2.E0PD): off, on
->>> feat_E2H0 (ID_AA64MMFR4.E2H0): on, ni_nv1, off
->>> feat_ECBHB (ID_AA64MMFR1.ECBHB): off, on
->>> feat_ECV (ID_AA64MMFR0.ECV): off, on, cntpoff
->>> feat_ETS (ID_AA64MMFR1.ETS): off, on, ets2, ets3
->>> feat_EVT (ID_AA64MMFR2.EVT): off, on, ttlbxs
->>> feat_EXS (ID_AA64MMFR0.EXS): off, on
->>> feat_F8CVT (ID_AA64FPFR0.F8CVT): off, on
->>> feat_F8DP2 (ID_AA64FPFR0.F8DP2): off, on
->>> feat_F8DP4 (ID_AA64FPFR0.F8DP4): off, on
->>> feat_F8E4M3 (ID_AA64FPFR0.F8E4M3): off, on
->>> feat_F8E5M2 (ID_AA64FPFR0.F8E5M2): off, on
->>> feat_F8FMA (ID_AA64FPFR0.F8FMA): off, on
->>> feat_F8MM4 (ID_AA64FPFR0.F8MM4): off, on
->>> feat_F8MM8 (ID_AA64FPFR0.F8MM8): off, on
->>> feat_FAMINMAX (ID_AA64ISAR3.FAMINMAX): off, on
->>> feat_FCMA (ID_AA64ISAR1.FCMA): off, on
->>> feat_FGT (ID_AA64MMFR0.FGT): off, on, fgt2
->>> feat_FHM (ID_AA64ISAR0.FHM): off, on
->>> feat_FP (ID_AA64PFR0.FP): on, fp16, off
->>> feat_FPMR (ID_AA64PFR2.FPMR): off, on
->>> feat_FPRCVT (ID_AA64ISAR3.FPRCVT): off, on
->>> feat_FRINTTS (ID_AA64ISAR1.FRINTTS): off, on
->>> feat_GCS (ID_AA64PFR1.GCS): off, on
->>> feat_HAFDBS (ID_AA64MMFR1.HAFDBS): off, af, dbm, haft, hdbss
->>> feat_HCX (ID_AA64MMFR1.HCX): off, on
->>> feat_HPDS (ID_AA64MMFR1.HPDS): off, on, hpds2
->>> feat_I8MM (ID_AA64ISAR1.I8MM): off, on
->>> feat_IESB (ID_AA64MMFR2.IESB): off, on
->>> feat_JSCVT (ID_AA64ISAR1.JSCVT): off, on
->>> feat_LO (ID_AA64MMFR1.LO): off, on
->>> feat_LRCPC (ID_AA64ISAR1.LRCPC): off, on, lrcpc2, lrcpc3
->>> feat_LS64 (ID_AA64ISAR1.LS64): off, ls64, ls64_v, ls64_accdata, ls64wb
->>> feat_LSFE (ID_AA64ISAR3.LSFE): off, on
->>> feat_LSM (ID_AA64MMFR2.LSM): off, on
->>> feat_LUT (ID_AA64ISAR2.LUT): off, on
->>> feat_MOPS (ID_AA64ISAR2.MOPS): off, on
->>> feat_MTE (ID_AA64PFR1.MTE): off, on, mte2, mte3
->>> feat_MTEFAR (ID_AA64PFR2.MTEFAR): off, on
->>> feat_MTESTOREONLY (ID_AA64PFR2.MTESTOREONLY): off, on
->>> feat_MTE_FRAC (ID_AA64PFR1.MTE_FRAC): async, off
->>> feat_NMI (ID_AA64PFR1.NMI): off, on
->>> feat_PAN (ID_AA64MMFR1.PAN): off, on, pan2, pan3
->>> feat_PMU (ID_AA64DFR0.PMUVER): off, on, v3p1, v3p4, v3p5, v3p7, v3p8, v3p9, imp_def
->>> feat_RDM (ID_AA64ISAR0.RDM): off, on
->>> feat_RNDR (ID_AA64ISAR0.RNDR): off, on
->>> feat_RPRES (ID_AA64ISAR2.RPRES): off, on
->>> feat_RPRFM (ID_AA64ISAR2.RPRFM): off, on
->>> feat_S1PIE (ID_AA64MMFR3.S1PIE): off, on
->>> feat_S1POE (ID_AA64MMFR3.S1POE): off, on
->>> feat_SB (ID_AA64ISAR1.SB): off, on
->>> feat_SCTLRX (ID_AA64MMFR3.SCTLRX): off, on
->>> feat_SEL2 (ID_AA64PFR0.SEL2): off, on
->>> feat_SHA1 (ID_AA64ISAR0.SHA1): off, on
->>> feat_SHA2 (ID_AA64ISAR0.SHA2): off, sha256, sha512
->>> feat_SHA3 (ID_AA64ISAR0.SHA3): off, on
->>> feat_SM3 (ID_AA64ISAR0.SM3): off, on
->>> feat_SM4 (ID_AA64ISAR0.SM4): off, on
->>> feat_SNSMEM (ID_AA64MMFR0.SNSMEM): off, on
->>> feat_SPECRES (ID_AA64ISAR1.SPECRES): off, on, cosp_rctx
->>> feat_SSBS (ID_AA64PFR1.SSBS): off, on, ssbs2
->>> feat_SVE (ID_AA64PFR0.SVE): off, on
->>> feat_SVE_AES (ID_AA64ZFR0.AES): off, on, pmull128, aes2
->>> feat_SVE_B16B16 (ID_AA64ZFR0.B16B16): off, on, bfscale
->>> feat_SVE_BFLOAT16 (ID_AA64ZFR0.BFLOAT16): off, on, ebf16
->>> feat_SVE_BITPERM (ID_AA64ZFR0.BITPERM): off, on
->>> feat_SVE_ELTPERM (ID_AA64ZFR0.ELTPERM): off, on
->>> feat_SVE_F16MM (ID_AA64ZFR0.F16MM): off, on
->>> feat_SVE_F32MM (ID_AA64ZFR0.F32MM): off, on
->>> feat_SVE_F64MM (ID_AA64ZFR0.F64MM): off, on
->>> feat_SVE_I8MM (ID_AA64ZFR0.I8MM): off, on
->>> feat_SVE_SHA3 (ID_AA64ZFR0.SHA3): off, on
->>> feat_SVE_SM4 (ID_AA64ZFR0.SM4): off, on
->>> feat_SpecSEI (ID_AA64MMFR1.SPECSEI): off, on
->>> feat_TCRX (ID_AA64MMFR3.TCRX): off, on
->>> feat_TIDCP1 (ID_AA64MMFR1.TIDCP1): off, on
->>> feat_TLB (ID_AA64ISAR0.TLB): off, os, range
->>> feat_TS (ID_AA64ISAR0.TS): off, flagm, flagm2
->>> feat_TTL (ID_AA64MMFR2.TTL): off, on
->>> feat_TWED (ID_AA64MMFR1.TWED): off, on
->>> feat_UAO (ID_AA64MMFR2.UAO): off, on
->>> feat_VH (ID_AA64MMFR1.VH): off, on
->>> feat_WFXT (ID_AA64ISAR2.WFXT): off, on
->>> feat_XNX (ID_AA64MMFR1.XNX): off, on
->>> feat_XS (ID_AA64ISAR1.XS): off, on
->> in [1] you have properties for fields which are not writable in the
->> kernel whereas [2] exposes a reduced set of props, only for writable
->> fields. 
-> Yes, but also immediately makes a field property if it is writable. Shouldn’t
-> there be intent before exposing a property?
->
->>> Exceptions, because feat_ELx seemed wrong:
->>> el0_mode (ID_AA64PFR0.EL0): aarch64, aarch32
->>> el1_mode (ID_AA64PFR0.EL1): aarch64, aarch32
->>> el2_mode (ID_AA64PFR0.EL2): off, aarch64, aarch32
->>> el3_mode (ID_AA64PFR0.EL3): off, aarch64, aarch32
->>>
->>> CPU identification props:
->>> cpu_aidr (AIDR.VAL): u64
->>> cpu_architecture (MIDR.ARCHITECTURE): u64
->>> cpu_implementer (MIDR.IMPLEMENTER): u64
->>> cpu_partnum (MIDR.PARTNUM): u64
->>> cpu_revidr (REVIDR.VAL): u64
->>> cpu_revision (MIDR.REVISION): u64
->>> cpu_variant (MIDR.VARIANT): u64
->>>
->>> Fractional:
->>> feat_RAS (Fractional ID_AA64PFR0.RAS, ID_AA64PFR1.RAS_FRAC):
->>>    0.0, 1.0, 1.1, 1.1_base, 2.0
->>> feat_CSV2 (Fractional ID_AA64PFR0.CSV2, ID_AA64PFR1.CSV2_FRAC):
->>>    0.0, 1.0, 1.1, 1.2, 2.0, 3.0
->>> feat_MPAM (Fractional ID_AA64PFR0.MPAM, ID_AA64PFR1.MPAM_FRAC):
->>>    0.0, 0.1, 1.0, 1.1
->>> feat_NV (Fractional ID_AA64MMFR2.NV, ID_AA64MMFR4.NV_FRAC):
->>>    0.0, nv2_only, 1.0, 2.0, 2.0_only, 2.1
->>>
->>> Properties for fields not cleanly mapping 1:1 to any ARM FEAT_x:
->>> hw_prop_APA (ID_AA64ISAR1.APA): off, pauth, epac, pauth2, fpac, fpaccombine, pauth_lr
->>> hw_prop_APA3 (ID_AA64ISAR2.APA3): off, pauth, epac, pauth2, fpac, fpaccombine, pauth_lr
->>> hw_prop_API (ID_AA64ISAR1.API): off, pauth, epac, pauth2, fpac, fpaccombine, pauth_lr
->>> hw_prop_CCIDX (ID_AA64MMFR2.CCIDX): 32, 64
->>> hw_prop_FWB (ID_AA64MMFR2.FWB): off, on
->>> hw_prop_GPA (ID_AA64ISAR1.GPA): off, on
->>> hw_prop_GPA3 (ID_AA64ISAR2.GPA3): off, on
->>> hw_prop_GPI (ID_AA64ISAR1.GPI): off, on
->>> hw_prop_IDS (ID_AA64MMFR2.IDS): 0x0, 0x18
->>> hw_prop_L1IP (CTR_EL0.L1IP): reserved_vpipt, reserved_aivivt, vipt, pipt
->>> hw_prop_PARANGE (ID_AA64MMFR0.PARANGE): 32, 36, 40, 42, 44, 48, 52, 56
->>> hw_prop_PMSVer (ID_AA64DFR0.PMSVER): off, on, v1p1, v1p2, v1p3, v1p4, v1p5
->>> hw_prop_ST (ID_AA64MMFR2.ST): 39, 48_47
->>> hw_prop_SVEVer (ID_AA64ZFR0.SVEVER): on, sve2, sve2p1, sve2p2
->>> hw_prop_TGRAN16 (ID_AA64MMFR0.TGRAN16): off, on, 52_bit
->>> hw_prop_TGRAN16_2 (ID_AA64MMFR0.TGRAN16_2): tgran16, off, on, 52_bit
->>> hw_prop_TGRAN4 (ID_AA64MMFR0.TGRAN4): on, 52_bit, off
->>> hw_prop_TGRAN4_2 (ID_AA64MMFR0.TGRAN4_2): tgran4, off, on, 52_bit
->>> hw_prop_TGRAN64 (ID_AA64MMFR0.TGRAN64): on, off
->>> hw_prop_TGRAN64_2 (ID_AA64MMFR0.TGRAN64_2): tgran64, off, on
->>> hw_prop_VARANGE (ID_AA64MMFR2.VARANGE): 48, 52
->>> hw_prop_VMIDBITS (ID_AA64MMFR1.VMIDBITS): 8, 16
->>>
->>> hw_prop_WRPs (ID_AA64DFR0.WRPS): u64
->>> hw_prop_IMInline (CTR_EL0.IMINLINE): u64
->>> hw_prop_IDC (CTR_EL0.IDC): u64
->>> hw_prop_DMInline (CTR_EL0.DMINLINE): u64
->>> hw_prop_DZP (DCZID_EL0.DZP): u64
->>> hw_prop_ERG (CTR_EL0.ERG): u64
->>> hw_prop_CTX_CMPs (ID_AA64DFR0.CTX_CMPS): u64
->>> hw_prop_CWG (CTR_EL0.CWG): u64
->>> hw_prop_DIC (CTR_EL0.DIC): u64
->>> hw_prop_ASIDBITS (ID_AA64MMFR0.ASIDBITS): 8, 16
->>> hw_prop_BRPS (ID_AA64DFR0.BRPS): u64
->>> hw_prop_BS (DCZID_EL0.BS): u64
->> Thanks
->>
->> Eric
-> Warm Regards,
-> Khushit
->
-
+Thanks,
+Shameer
 
