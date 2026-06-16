@@ -4,85 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01CB8CD98E1
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 15:26:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3CC7FCD98E1
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 15:27:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZVfj-00063e-Ib; Tue, 16 Jun 2026 11:25:51 -0400
+	id 1wZVhK-0006YU-H6; Tue, 16 Jun 2026 11:27:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wZVfh-00062u-JF
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 11:25:49 -0400
-Received: from mail-pj1-x102f.google.com ([2607:f8b0:4864:20::102f])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wZVhJ-0006YD-EE
+ for qemu-devel@nongnu.org; Tue, 16 Jun 2026 11:27:29 -0400
+Received: from mail-yx1-xb135.google.com ([2607:f8b0:4864:20::b135])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wZVff-0001sw-VN
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 11:25:49 -0400
-Received: by mail-pj1-x102f.google.com with SMTP id
- 98e67ed59e1d1-36b9d265355so2357924a91.2
- for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 08:25:47 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wZVhH-0002dI-TW
+ for qemu-devel@nongnu.org; Tue, 16 Jun 2026 11:27:29 -0400
+Received: by mail-yx1-xb135.google.com with SMTP id
+ 956f58d0204a3-66077e888b2so4255493d50.3
+ for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 08:27:27 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1781623647; cv=none;
+ d=google.com; s=arc-20240605;
+ b=EID/3AECWUI00sVNf9NkcLK03UYNRRwvp8fA2G9S0bJIo9lkgKmfw7DzVM+CNEuXTg
+ EXe2FwWcOmBTFcVk9z9RK3RX10WhCngU4EP376XLc6+RFP1s4igNoEthX6GoMN52fywk
+ Saoca+pEsCMXJr84pFQSdQNOpYxZko+hp+dw5tKI1YYiwx1bBOAOWd89Qg9Npwkus6OC
+ 5H7o8rYpoSiwzai0+9SEngFscKGbqX4DQF5l7keU1yCO6fcW+su6LgtqYzP9f70dvNkU
+ kj8IEkn3/dahKSoqTIFU8+U0Sq6yVS7Z0wjsubQelU3oepNKz0nZGxZ07W4SRoRB/n+2
+ wEZA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=LRcWexWvCq49tDGQm28QFblr5Loyse8ziE19iwFcn3Q=;
+ fh=/ftcwOPYeEIhzseC7WF42kR+xVR/IJiWpLC1+A7SOWQ=;
+ b=We62ypD03BtZxrlJSMnXXqIePuNDj+J9t0PIIH/unB2+560a0C+v9Ylk/LdxvrSqjm
+ BGW23ynXxy6EfIIzCVsXP1eR7mawXlSZkC5JmtKrLewewzCJA2oZP6pkflNjx/aEh/BA
+ qSUKp8W8T4zqllCK7xu4aP8eMkTxNwQIoTbE6RJK3dqsuPmebPYD9T8cl/7oEis6ij59
+ VjFLK8QqkQAimwwhj7raeL5N7uYYKb77ukcpNLPzxf5w8CvvC0Y+7bCtnwG+R9gFbpFF
+ yUXtu8B1ePBhAK22TLCkz3yZjvqJYNrK21xbgbqXMRo76Fhv3UTFxZlZUFcBKSHmjjfS
+ 4gWg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1781623546; x=1782228346; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=Paz6w9KHJRAC2epf/+EpUnskrCLkWvVxbOEvjRWFcVU=;
- b=HBWmdH7miO/fO9RgzEyYQSOlnyl3JSmRKQGsiTe8Ccx5/1tm4C2rC8ZMBddh39jGDD
- r04gZ2KsP2NL8eZSEN94dExHSYvqz6dQeLHC3/6KS/GFnbujd0LAzy1TSNL7iiYF/XYR
- AyOS4c8WG+eIpnc2K0k5owmp+91FQhB8vnMAYGQ//My0dxXu3wmY9/rwLjBgD6/rnj6/
- NW2dyDRKLF7X83VYr5kO3vL8FTffG930qKDmxg5Tb8C59hNJM7kVerkIKzNvucj4XncP
- hPQpm6huhJ/Ry/1W2l8JtPzbbJ5e9caTOjusCAgEMeQBRLx91LOCk+tsvvoiezVskBy0
- Q2aQ==
+ d=linaro.org; s=google; t=1781623647; x=1782228447; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=LRcWexWvCq49tDGQm28QFblr5Loyse8ziE19iwFcn3Q=;
+ b=cyAdvvc/fWaAWTcNjtSJatdGJT5fwfiVw4cuj6H0ECSCYCMkFmfgIbCn5Cvfva2Ar/
+ jfY03S1EQ677tQg0c/OD5LPa3H2a+VUU8QsxkAZQlo4f/sscN+pCA9SuhfWO7m+mJfR8
+ UXxDoOfkhuZTKO9KB7O4ku6I793gSgvpXh4+jKeTWgiOkIP0b27Ckbo8SckO5KJO17Z0
+ Z8hxWUajWhi+LuUnev+XqT/lPms2ZAhqx64IjANPW1Kn63xGdXPDgYRreVr/Noo7pkBY
+ b8sCquH0VG1pWqi4AeIUzGDr8EbugaO3Ru1pK7Jk+acSZUX2k/9/HlObcKmOUAflOvxS
+ 00pQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781623546; x=1782228346;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=Paz6w9KHJRAC2epf/+EpUnskrCLkWvVxbOEvjRWFcVU=;
- b=LidfGI0Zz5R7QIra9H1lKk+pzgYfBubXHBgZ45NVP2Ajk62vcu9LEYo/XSoAXtYaop
- PrQ2kMqvS4GU9s863Y1Xv9f2P71jZVwXy1UdpPi+rQ+FuJnY2P4mcw+TpITtsuEGa49a
- J0nzw1sD6J/AlthNKkcEgiDb/IMMWhFfyESivJDeGYNGx9FJKgLT/RMU9s/04KdbQfDw
- OnS1fUmxolC7XAQ4Ost9b5RoULHYmWMesQnBrOyifCg0bdZizO1Q+a9BPAG4YT6zc0Lx
- 6wlZJHFPcyaw1Ky6wcRT9jmVAMUTpgF6elZDMCx6xeEm3wcO34WuuDaSM4obLorx7YBJ
- aidA==
-X-Gm-Message-State: AOJu0YySdfcKq9RHmVTVdHoFV6fXRipSw8oDeFtb6ymGoTGNjqReNuIV
- bdM+SJguyaXqJfzkou48rMcp+wCX422iRUja3HBETViMPzUZym/r2fXxEx5s94nDHW1GGWEhIE9
- D5beZ
-X-Gm-Gg: Acq92OG1d9akr7k4JdNmJxQjA8XF+0y1piU8Y15yIXszuoqbEIpq4x01XrJ3p9vI79Y
- enLv+4ZdIx/HfFP3WBjtzV1z0qXaEy7NbVQDztdGNjqikBl2xvslPgBSUInXz7qDMb0+qOQDo4c
- JV8HBjLVwrleUwzDplqH15YCYLcsiQvVkwQ68JKSt6Jsn674UODNej0hEn2u2VW/lg8bEv1EKNP
- cWB7SCtdLyidFkaM6qYGTOY3WohcOVQ9vwW9ACiZPOlH1dgFl9op1HXdki1kI3Xi84Q5kalFBGs
- QjxMNHZc4/8mjmXgVxdHgU0zGEOo7LxGgHm2MRiARTWUako8RDY4yt8ZkRTGnIzou/xqaAENWSo
- wp8OF+p9UJcf//ad5R7iooFKes1P0p+pove2WTKwdlPE/sWB4qEWF+ySSbgMspENygx3fVANq+d
- 6wiakiB3rAqyy4OpH5Vus85r5vOJqrffv3Y/kJRcuQPSqAiRx1pZPKfLgXgHCctaprUsyn
-X-Received: by 2002:a17:90b:3a85:b0:36b:944b:fd81 with SMTP id
- 98e67ed59e1d1-37c5280307cmr4634880a91.4.1781623545829; 
- Tue, 16 Jun 2026 08:25:45 -0700 (PDT)
-Received: from [192.168.0.4] (174-21-129-215.tukw.qwest.net. [174.21.129.215])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-379e7e217c0sm10723414a91.2.2026.06.16.08.25.45
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 16 Jun 2026 08:25:45 -0700 (PDT)
-Message-ID: <dbfdc77f-8435-4e9e-90d4-f93a5b8cfa78@linaro.org>
-Date: Tue, 16 Jun 2026 08:25:42 -0700
+ d=1e100.net; s=20251104; t=1781623647; x=1782228447;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=LRcWexWvCq49tDGQm28QFblr5Loyse8ziE19iwFcn3Q=;
+ b=jFraOnOwEAuNI1SDJ2FJnuvFQBtlZazPuz5U4XGUpDu1LXJFjYqu7OW2EXbBK8/7jk
+ aMszfmx60H7KkUGWsU8O9n2HNw7axdWlMkENy624q1DhpLKXXX5hJdVg7YerQyavOu1S
+ AcrwveFZAusAdYoNznyri9ufHSB6uveD+zuixfRF8t3BVgvW8WtsVqgZR+dHwOrHqFeQ
+ TJkVgM6ubwGQMHjGVasnY3O5mXIvQoDMRVEUDiTlzXt9JjRDVUp1cOIi0irWESnhRCI4
+ ZqM01Cq3jg1bavVe7uE2cfJB55PqGnIPX9CIq/NxQVd3WnWu9FOeSNuBkqngoR8K8SO+
+ 8Brg==
+X-Gm-Message-State: AOJu0YxEyLVuUEeaw580BqO60iotMS2T42VXiSl+rupiC6SSLQcRT6+u
+ u7hUahJaz4flLDdG9ZHfsr3jvIzfJUpHYSvRKznJjyWKXtGQM8m2Ox0uYYlblP8Wpvok/XEw5BX
+ +6QncN9A/Cvo/LTj0jPJVX8sdmfShnhsGeofNRcQevw==
+X-Gm-Gg: Acq92OEgFUvcpif4P7Jk+cxx26k5MccdzFqieCRQoPAZgSlTj/MffuwXARdDKOagN1y
+ txwFt66WicS0F2m70AxvWQlm4tXAssUlyhrUNqyjU3J/H0B5b68MabCXVc4H648S1qTMv4O7I0W
+ q8/8SHYlbZbjg+cnjmxKkpQIaLgQkVcOPJpkR1zuxMPIWZCJVHu8Z+YrMd659Vo36JuToP7x0s4
+ 8jkqNaC1H9kj5kqAFgvnUN6+dXTg3QuN1rfrVQjzXMETefJvwTBdYpev+4RIAKlpypmwiidtpQs
+ 1VEtiaFT6DtevxJVPKRMByl7d7Oa/NLVbqTdqGkptx2v9Du7R0UWMSRJ8Zw3NY+axWI=
+X-Received: by 2002:a05:690e:4810:b0:653:f51:90b1 with SMTP id
+ 956f58d0204a3-66277f7dc8emr11755109d50.24.1781623646655; Tue, 16 Jun 2026
+ 08:27:26 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 20/25] target/arm: Generalize sve_compact_[sd]
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
 References: <20260604234852.573178-1-richard.henderson@linaro.org>
- <20260604234852.573178-21-richard.henderson@linaro.org>
- <CAFEAcA8Vnncc0dfz8D8DRe0npH9FSRPsNWg+_-PDFdiqyWHSdA@mail.gmail.com>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <CAFEAcA8Vnncc0dfz8D8DRe0npH9FSRPsNWg+_-PDFdiqyWHSdA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102f;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102f.google.com
+ <20260604234852.573178-23-richard.henderson@linaro.org>
+In-Reply-To: <20260604234852.573178-23-richard.henderson@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 16 Jun 2026 16:27:14 +0100
+X-Gm-Features: AVVi8CeOfLUvCvJL1ESWV0Fh97fxx7QZ9ayojxTG215XY2Cpra3EsHyIRv5zh9g
+Message-ID: <CAFEAcA-HfpZcg6Lqsu+GO=h8i8wOYRB-0A37jdkfSgmbiXCfng@mail.gmail.com>
+Subject: Re: [PATCH 22/25] target/arm: Implement FIRSTP, LASTP
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b135;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb135.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,70 +114,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/16/26 06:35, Peter Maydell wrote:
-> On Fri, 5 Jun 2026 at 00:52, Richard Henderson
-> <richard.henderson@linaro.org> wrote:
->>
->> Implement with a DO_COMPACT macro and general purpose
->> predicate handling.
->>
->> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
->> ---
->>   target/arm/tcg/sve_helper.c | 51 +++++++++++++++----------------------
->>   1 file changed, 21 insertions(+), 30 deletions(-)
->>
->> diff --git a/target/arm/tcg/sve_helper.c b/target/arm/tcg/sve_helper.c
->> index a13ccf4b85..40cf567b0d 100644
->> --- a/target/arm/tcg/sve_helper.c
->> +++ b/target/arm/tcg/sve_helper.c
->> @@ -3637,39 +3637,30 @@ DO_TRN(sve2_trn_q, Int128, )
->>   #undef DO_UZP
->>   #undef DO_TRN
->>
->> -void HELPER(sve_compact_s)(void *vd, void *vn, void *vg, uint32_t desc)
->> -{
->> -    intptr_t i, j, opr_sz = simd_oprsz(desc) / 4;
->> -    uint32_t *d = vd, *n = vn;
->> -    uint8_t *pg = vg;
->> -
->> -    for (i = j = 0; i < opr_sz; i++) {
->> -        if (pg[H1(i / 2)] & (i & 1 ? 0x10 : 0x01)) {
->> -            d[H4(j)] = n[H4(i)];
->> -            j++;
->> -        }
->> -    }
->> -    for (; j < opr_sz; j++) {
->> -        d[H4(j)] = 0;
->> -    }
->> +#define DO_COMPACT(NAME, TYPE, H)                                     \
->> +void HELPER(NAME)(void *vd, void *vn, void *vg, uint32_t desc)        \
->> +{                                                                     \
->> +    intptr_t i = 0, j = 0, oprsz = simd_oprsz(desc);                  \
->> +    do {                                                              \
->> +        uint16_t pg = *(uint16_t *)(vg + H1_2(i >> 3));               \
->> +        do {                                                          \
->> +            if (pg & 1) {                                             \
->> +                *(TYPE *)(vd + H(j)) = *(TYPE *)(vn + H(i));          \
->> +                j += sizeof(TYPE);                                    \
->> +            }                                                         \
->> +            i += sizeof(TYPE);                                        \
->> +            pg >>= sizeof(TYPE);                                      \
->> +        } while (i & 15);                                             \
->> +    } while (i < oprsz);                                              \
->> +    for (; j < oprsz; j += sizeof(TYPE)) {                            \
->> +        *(TYPE *)(vd + H(j)) = 0;                                     \
->> +    }                                                                 \
->>   }
-> 
-> Why do we have special versions of the predicated loop for 64-bit operands
-> elsewhere (eg DO_ZPZ vs DO_ZPZ_D, DO_ZPZZ vs DO_ZPZZ_D, etc) but we don't
-> need to do that for compact ?
+On Fri, 5 Jun 2026 at 00:51, Richard Henderson
+<richard.henderson@linaro.org> wrote:
+>
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>  target/arm/tcg/helper-sve-defs.h |  3 ++
+>  target/arm/tcg/sve_helper.c      | 30 +++++++++++++++++
+>  target/arm/tcg/translate-sve.c   | 56 ++++++++++++++++++++++++++++++++
+>  target/arm/tcg/sve.decode        |  3 ++
+>  4 files changed, 92 insertions(+)
+>
+> diff --git a/target/arm/tcg/helper-sve-defs.h b/target/arm/tcg/helper-sve-defs.h
+> index 11342e1e59..440a868cea 100644
+> --- a/target/arm/tcg/helper-sve-defs.h
+> +++ b/target/arm/tcg/helper-sve-defs.h
+> @@ -961,6 +961,9 @@ DEF_HELPER_FLAGS_4(sve_brkns, TCG_CALL_NO_RWG, i32, ptr, ptr, ptr, i32)
+>  DEF_HELPER_FLAGS_3(sve_cntp, TCG_CALL_NO_RWG, i64, ptr, ptr, i32)
+>  DEF_HELPER_FLAGS_2(sve2p1_cntp_c, TCG_CALL_NO_RWG_SE, i64, i32, i32)
+>
+> +DEF_HELPER_FLAGS_3(sve2p2_firstp, TCG_CALL_NO_RWG_SE, i64, ptr, ptr, i32)
+> +DEF_HELPER_FLAGS_3(sve2p2_lastp, TCG_CALL_NO_RWG_SE, i64, ptr, ptr, i32)
+> +
+>  DEF_HELPER_FLAGS_3(sve_whilel, TCG_CALL_NO_RWG, i32, ptr, i32, i32)
+>  DEF_HELPER_FLAGS_3(sve_whileg, TCG_CALL_NO_RWG, i32, ptr, i32, i32)
+>
+> diff --git a/target/arm/tcg/sve_helper.c b/target/arm/tcg/sve_helper.c
+> index 3f99a362c3..57c7823feb 100644
+> --- a/target/arm/tcg/sve_helper.c
+> +++ b/target/arm/tcg/sve_helper.c
+> @@ -4302,6 +4302,36 @@ uint64_t HELPER(sve2p1_cntp_c)(uint32_t png, uint32_t desc)
+>      return count >> p.lg2_stride;
+>  }
+>
+> +uint64_t HELPER(sve2p2_firstp)(void *vn, void *vg, uint32_t pred_desc)
+> +{
+> +    intptr_t words = DIV_ROUND_UP(FIELD_EX32(pred_desc, PREDDESC, OPRSZ), 8);
+> +    intptr_t esz = FIELD_EX32(pred_desc, PREDDESC, ESZ);
+> +    uint64_t *n = vn, *g = vg, mask = pred_esz_masks[esz];
+> +
+> +    for (intptr_t i = 0; i < words; ++i) {
+> +        uint64_t t = n[i] & g[i] & mask;
+> +        if (t) {
+> +            return (ctz64(t) + i * 64) >> esz;
+> +        }
+> +    }
+> +    return -1;
+> +}
+> +
+> +uint64_t HELPER(sve2p2_lastp)(void *vn, void *vg, uint32_t pred_desc)
+> +{
+> +    intptr_t words = DIV_ROUND_UP(FIELD_EX32(pred_desc, PREDDESC, OPRSZ), 8);
+> +    intptr_t esz = FIELD_EX32(pred_desc, PREDDESC, ESZ);
+> +    uint64_t *n = vn, *g = vg, mask = pred_esz_masks[esz];
+> +
+> +    for (intptr_t i = words - 1; i >= 0; --i) {
+> +        uint64_t t = n[i] & g[i] & mask;
+> +        if (t) {
+> +            return ((clz64(t) ^ 63) + i * 64) >> esz;
 
-Efficiency vs laziness.  64-bit elements are special in that we can write things such that 
-we don't need a double-loop, by examining just the lsb each byte of the predicate.  But 
-such specialization is not required.  Here the inner loop will iterate twice for 64-bit 
-elements.
+Why XOR? Shouldn't this be the same kind of expression as
+we use in last_active_element():
 
+            return i * 64 + (63 - clz64(this_g));
 
-r~
+> +        }
+> +    }
+> +    return -1;
+> +}
+
+> +            if (firstp) {
+> +                tcg_gen_ctzi_i64(v, v, -1);
+> +            } else {
+> +                tcg_gen_clzi_i64(v, v, 64);
+> +                tcg_gen_subfi_i64(v, 63, v);
+
+...and we use 63 - clz64(...) here.
+
+thanks
+-- PMM
 
