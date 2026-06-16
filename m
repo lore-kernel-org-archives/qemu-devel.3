@@ -4,86 +4,137 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F08F9CD98E4
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 19:18:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8875ACD98EE
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 19:18:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZZBy-0001m5-KX; Tue, 16 Jun 2026 15:11:24 -0400
+	id 1wZZII-0000j1-3A; Tue, 16 Jun 2026 15:17:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wZZ8E-0004ZP-LT
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 15:07:37 -0400
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wZZ87-0000yI-Nq
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 15:07:27 -0400
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-4921eed3fa2so32653555e9.0
- for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 12:07:05 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wZZIE-0000OP-IA
+ for qemu-devel@nongnu.org; Tue, 16 Jun 2026 15:17:50 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wZZIC-0004iX-Ny
+ for qemu-devel@nongnu.org; Tue, 16 Jun 2026 15:17:50 -0400
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 65GIOohF303511
+ for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 19:17:47 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ /FrGaTt6kayuLx9k3LRHujapTadzTFWbY4tka7scFnA=; b=fQyZYZ3+FIujdDw2
+ iImY6PYo5xefJ5s3Abuez93/n8oeJiQGhbDep2vzQq2kay3nj3sWk4qMfmTjkhlB
+ SPuKElUZXKrGIRzp4ZdL7E8Zvlp7SWMT61D1qSCk5TXz9/Bi6Nlu5LPypmrfFwfy
+ phSKmVceW5cZDKSfs3rcVQtcurUj+MTqEEaXTsTeVrEJ8mR2epN3UGiScbVJi9GK
+ rPOCvLmXv7fcaBjFIbK2bd65Oyei7X1pxsqqbHEjHLnXtS2PTLyOCsLhiO7eKAsn
+ 8SsOFj+HZNyGj+B/yr1CY1gbw98ZqaQh24lUakII1mnmKTfNQbXfpy4XIvuxoznU
+ B9d7mw==
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
+ [209.85.222.198])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4eu1epbdc4-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 19:17:47 +0000 (GMT)
+Received: by mail-qk1-f198.google.com with SMTP id
+ af79cd13be357-915c8347cd5so970957985a.0
+ for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 12:17:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1781636823; x=1782241623; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1781637467; x=1782242267; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=G5wNENUz9ZKPTgkYLTujeqWRD9EO2XYzjjtZrcgsT3o=;
- b=bcbgvn0SjfagWDTyBuo/cesNT2rmP/KyiQvwmCfJh8XMEKJ8nvgP7HAdvFFBkZCjAZ
- NwKCYdvSi+bL1d8WbZ5FRRfLoIDtyKtWBsNxfe5R6uCbw2kjp/tVZkiyA5KeVwjvkOWi
- 5Z2fh+iEOLDfl8vW5tWUrNrdX6Uh3hJ+DTyva6ebRAGHZoosY4o6wXe+/dK97DzdyoKh
- YSs0BxJIFHd0gA/If1ZwOyInYbr/WVY5E53IyH8cqqb3djGC6+GxYzb9ww8/1V1fYkMe
- adVTr2gfPR5qTBPNT9PQitOm5HccJYbWYkufN+k+5pA12CF89nQCth/8eiZqI8lpDfat
- N8dQ==
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=/FrGaTt6kayuLx9k3LRHujapTadzTFWbY4tka7scFnA=;
+ b=F3DlzJj1q94SjXf52C/HSWQ1davhPUK04EmmX/qYEh9dt1Q3V3MY6Oa5UWv7Ifz5bj
+ f03d3o+oJ5zb1I/z6A5MVWOM+v35O1mNo7rAZrjeUrR/pgaq3CunUT2piVOgqH/u6iP9
+ Xlbc3HwLhbdUJNwFUltqrFu1MQqr1yReUyUC02QwKfs5/tM12n9JY0AnRdtcjpVz2gp7
+ u3Ts+QRnbsVjs9A/imXr5ycIkwXezpUhcaqF8trWd08Pr3raItQjF6lNewlvySQP0AM2
+ 6Y+OmQzduLzxvuBPWXYMPNIpndSPDrqzTT79pXExDUT/VuTTSXwk6S7478faKf9e4iFu
+ lfZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781636823; x=1782241623;
+ d=1e100.net; s=20251104; t=1781637467; x=1782242267;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=G5wNENUz9ZKPTgkYLTujeqWRD9EO2XYzjjtZrcgsT3o=;
- b=T47DPjWQW8dz5wsODA0qMWjMQKpbkEyYsW3fgQBBIcW7j1Yuj7cxT0TSd5bXKBRO5G
- ep+zmklJ+I9XSUFCb7VpOZph36e8MM+u7My13lXjIvsWm4fcrTg6i7Cc3Ojqqku7LyzC
- Pfn83gkWvjkRxs+Pi6/vR4OknT8JaC4c2HDeYirmwDbxH+esxKFuuDJQ1fPHa9A3KOTD
- SniOCLkMYjdRmONgteBI6t6wB2QeHQWaDqyMS9bO88MnKjwnLLUMLgsDFAWytWHlWR4+
- b6r/xrAIscCjxkDJanmT43c4vZ81q4LZ+AXB7omJTehFa6mWxHDko6cij3Br0vrZ5W9V
- tEeQ==
-X-Gm-Message-State: AOJu0Yy8nlrM64w49Pa24BPduWA7yFwJUqVIA8pU/vPQBdQ+WVw1gGl9
- MVgroGIVHDy/a+zA8py+pQfgDOWCjfrNbnFCqS8TqRDunEi5XJ6cliYQcqKb8zGDMnLw6QPu2qq
- 6OTys
-X-Gm-Gg: Acq92OHKw74/rgKC6EHdOrfL3N3QJ7IPICQPhVDUhFoVsFcr0Ob7tKG68PZLEqqLG05
- VRs+dApEhX+Y8OJ0Mnw2BB/VjK2PjXRUnfylwZ5lsFkcNpWv00CyRyV92ui/JXLLfrdT49bOD2i
- wwwfIuXcFPoqjKe8PA1wK4yF602Z+E6bQMoy0vV7duPSPeg2xcHEdZtegtinmcpXCalaquoQGLM
- FqcWVUDgG1yqHNPjNA3Oju/vKvau9Njw4Qic2w34j5egEo3ipMiHJD7bB3L/oxLGepCORNUAzgz
- ODJIPWs+82x9n6vzcgy8CpesCjPArz43WnXa6y3IvhsbqNbV9jNlig0rLIbzSSj2gDygR9kW6Ig
- M0QPahK/6l+dwHVqrpCZxQO3XlSRg6rUVJZJiJuYiGDaVj4TVP9eYr7gWJ8Jb1SS4i6DkyxOXr7
- yZwWb6q4Ey0sxTAO9S7rjCT1sWIjpuFX5dlhTgVGfWMGBIhZLmpSw2tK6YawRlJgz/dV6AIzFL1
- q4MSXjk6fvDkmi/nQeaX1zKeSpw1vF7
-X-Received: by 2002:a05:600c:19cb:b0:490:d354:d151 with SMTP id
- 5b1f17b1804b1-492333c8e6dmr12107195e9.18.1781636823122; 
- Tue, 16 Jun 2026 12:07:03 -0700 (PDT)
-Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4606f2d9becsm45078765f8f.34.2026.06.16.12.07.02
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 16 Jun 2026 12:07:02 -0700 (PDT)
-From: Peter Maydell <peter.maydell@linaro.org>
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=/FrGaTt6kayuLx9k3LRHujapTadzTFWbY4tka7scFnA=;
+ b=ZsfMopgi4OE5FdyUaOOHi1te58NN66mK7KJQETMfIe6obkeG1uIjGKy1V7LVHdOFVX
+ CDUhjIPU0fRkWly6vVufPmX+/jorIRNKRkyhbN6omIMmbqOf9zCPehaJ0jq154MEWKUg
+ MYDEgEWRVmbERVTfg+V7R1z6n22EYTeorCj5CG6aw1WC0lxjJSF5BqrVW3kEcGmLNIWd
+ TeSS+vamnMJQ7+3536t5VtGowXFJjh5Cytj/OfezrOJmoMP/jWzBmO4V83OWQx0e0PYM
+ IP3Q35/XaAkHeBvD636PRfvMsJqtKG2+/vQpOuCfLiUHm1XIR+JXF1zQbH1T8YQxjX6s
+ Db5g==
+X-Gm-Message-State: AOJu0YxTYNoq4DUxPDZKjlaaWkaEqOFlaLwcLFTHUu4wfF/LsACq/sfG
+ O4Ow5Xu2L9bu8d3J7WBFz4UoryNgAH3EMNtpvshFTM2Wfnt2rc9Jp8L1AqX08o5VFcyZhAjlYGR
+ eS4ampLSfW1jAJGCphBIpIczmpEaLFIJ9Cr8tXEIteSMpQfoT3qnBlqkT3JZvFjl2Qg==
+X-Gm-Gg: Acq92OGLRkw2/bVN6zXPpRpClhX55kGJTUgARybFnOTj6c6kpz0JZxT2DIPnkygz4dA
+ 4/G6tXbNB8KZKMtLD+3b79E6gaU1W6ItGxvT8q8jAM+oFN+LJIMpahQdEn0Ie1Mz9J2VPLJ7gzQ
+ mzns7Se/fqsUxB3ROKGWIzQjIAtGr/50rwvmIIwKzT4dn3jFpNyjFGqiT11pRLHUi8N/u2IgHBf
+ tQ1QVFi1atOOFZqtBAVVAF5xU3yhQiBwtA3aj5PGaZxGefkeLZgbGJeppLLo8U5wOP1ib0wfgqS
+ sN26xEWxdChbdo2m8rO/S6nRqDcVQTPQ9F19eJUKA/edG8JsYYrmQSa6bF5e98DyOcrtfsT/8e/
+ Q6Tr7kBGD0bePIJ58zP5tCSSZafHbfxDcFfcTWdqVz266IX/Gk4hKAS+1IdyfCBgEtDykFu3MA/
+ /Us1g=
+X-Received: by 2002:a05:620a:29d5:b0:915:bf79:3e0a with SMTP id
+ af79cd13be357-91d8ccb259dmr177018185a.26.1781637466886; 
+ Tue, 16 Jun 2026 12:17:46 -0700 (PDT)
+X-Received: by 2002:a05:620a:29d5:b0:915:bf79:3e0a with SMTP id
+ af79cd13be357-91d8ccb259dmr177011785a.26.1781637466429; 
+ Tue, 16 Jun 2026 12:17:46 -0700 (PDT)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4922fa97a07sm167857455e9.14.2026.06.16.12.17.45
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Tue, 16 Jun 2026 12:17:45 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL 18/61] hw/arm/smmuv3-accel: Wire CMDQV ops into accel lifecycle
-Date: Tue, 16 Jun 2026 20:05:55 +0100
-Message-ID: <20260616190639.3462006-19-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260616190639.3462006-1-peter.maydell@linaro.org>
-References: <20260616190639.3462006-1-peter.maydell@linaro.org>
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [PATCH 04/10] accel/tcg: Move cpu_exec() out of 'exec/cpu-common.h'
+Date: Tue, 16 Jun 2026 21:17:10 +0200
+Message-ID: <20260616191716.12932-5-philmd@oss.qualcomm.com>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260616191716.12932-1-philmd@oss.qualcomm.com>
+References: <20260616191716.12932-1-philmd@oss.qualcomm.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Authority-Analysis: v=2.4 cv=I/ZVgtgg c=1 sm=1 tr=0 ts=6a31a15b cx=c_pps
+ a=qKBjSQ1v91RyAK45QCPf5w==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+ a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
+ a=EUspDBNiAAAA:8 a=JBFRhVxWIrjttJGYeT4A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=O8hF6Hzn-FEA:10 a=NFOGd7dJGGMPyQGDc5-O:22
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjE2MDE5NiBTYWx0ZWRfX5vzGZeBifLuy
+ FHp6mPEzcni+49sxcjBFopRGHhpbt9j2cFtnxQ9Az5jl+JSikRGh4qEhUg8wAUmfKox4rlElgPX
+ aKqjZCvlCi/J9JhWhQKOHUv10H9y5sg=
+X-Proofpoint-ORIG-GUID: J_br4pYj2yfKsc9bUOugA_8DZkCni29T
+X-Proofpoint-GUID: J_br4pYj2yfKsc9bUOugA_8DZkCni29T
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjE2MDE5NiBTYWx0ZWRfX1rR1uYVvXMVv
+ w+wKDQqQZ2ceDNc9fc+gT0471TfBYJwAQ5Mbio9Rs6bbLBOFnuvPXtbrKD7TyrHhb90pD4IuBb3
+ wTgUq2z1euPlYpun2H/L4uRW2J4vgMyZYQRQ2V3XJnCQLD9xRyxlXZ+RqnBUrSbXph4ngPHKT1g
+ KBmaN0CI9WJDXUUtdXuyQ9gun3mGZf2NtoDXfxRXL3so0orXHzsbYlNGvC6BRbtEBvTSym+7fbV
+ ywDJO+SlrSe/7FDyRLqP5EmZyhYjN4eD90eQRuisZhDfP0h7q3d0NXlFC6ZJ+umX4qdpM7+nHyq
+ o2AT8ck4Qa18nzMABELK3QUQb2/eyGtXXwpwimxfD6GvUXUNuAZWrc+sXS2TMp9/ZqQDuZ3bHb/
+ YU2O2vy8owU8783/Bf15OnjsYeGnAWUuVc/71ivfWN52NU0izxk7klqb1SgLxiAMYwQxcAJKmLx
+ VFXkHmwOhEwHq55FyqA==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-16_05,2026-06-16_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 priorityscore=1501 lowpriorityscore=0 phishscore=0 adultscore=0
+ malwarescore=0 spamscore=0 clxscore=1015 suspectscore=0 impostorscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606040000 definitions=main-2606160196
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -100,203 +151,123 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Shameer Kolothum <skolothumtho@nvidia.com>
+In order to keep TCG-specific functions under a TCG
+API namespace, add the "accel/tcg/cpu-loop.h" header
+and move cpu_exec() declaration to it. Add a bit of
+documentation.
 
-Add support for selecting and initializing a CMDQV backend based on the
-cmdqv OnOffAuto property.
+Include "accel/tcg/cpu-loop.h" where appropriate.
 
-If set to OFF, CMDQV is not used and the default IOMMUFD-backed allocation
-path is taken.
-
-If set to AUTO, QEMU attempts to probe a CMDQV backend during device setup.
-If probing succeeds, the selected ops are stored in the accelerated SMMUv3
-state and used. If probing fails, QEMU silently falls back to the default
-path.
-
-If set to ON, QEMU requires CMDQV support. Probing is performed during
-setup and failure results in an error.
-
-When a CMDQV backend is active, its callbacks are used for vIOMMU
-allocation, free, and reset handling. Otherwise, the base implementation
-is used.
-
-The current implementation wires up the Tegra241 CMDQV backend through the
-generic ops interface. Functional CMDQV behaviour is added in subsequent
-patches.
-
-No functional change.
-
-Reviewed-by: Eric Auger <eric.auger@redhat.com>
-Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
-Tested-by: Nicolin Chen <nicolinc@nvidia.com>
-Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
-Tested-by: Eric Auger <eric.auger@redhat.com>
-Message-id: 20260609112552.378999-9-skolothumtho@nvidia.com
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 ---
- hw/arm/smmuv3-accel.c   | 94 ++++++++++++++++++++++++++++++++++++++---
- include/hw/arm/smmuv3.h |  2 +
- 2 files changed, 89 insertions(+), 7 deletions(-)
+ bsd-user/freebsd/os-proc.h   |  1 +
+ include/accel/tcg/cpu-loop.h | 16 ++++++++++++++++
+ include/exec/cpu-common.h    |  3 ---
+ include/user/cpu_loop.h      |  2 +-
+ accel/tcg/cpu-exec.c         |  1 +
+ accel/tcg/tcg-accel-ops.c    |  1 +
+ bsd-user/main.c              |  1 +
+ 7 files changed, 21 insertions(+), 4 deletions(-)
+ create mode 100644 include/accel/tcg/cpu-loop.h
 
-diff --git a/hw/arm/smmuv3-accel.c b/hw/arm/smmuv3-accel.c
-index 70b2581c17..3ceca56a67 100644
---- a/hw/arm/smmuv3-accel.c
-+++ b/hw/arm/smmuv3-accel.c
-@@ -19,6 +19,7 @@
- #include "smmuv3-internal.h"
- #include "smmuv3-accel.h"
- #include "system/system.h"
-+#include "tegra241-cmdqv.h"
+diff --git a/bsd-user/freebsd/os-proc.h b/bsd-user/freebsd/os-proc.h
+index 72ccf23e17e..1cf3c43de34 100644
+--- a/bsd-user/freebsd/os-proc.h
++++ b/bsd-user/freebsd/os-proc.h
+@@ -14,6 +14,7 @@
+ #include <sys/procdesc.h>
+ #include <sys/wait.h>
  
- /*
-  * The root region aliases the global system memory, and shared_as_sysmem
-@@ -570,6 +571,7 @@ smmuv3_accel_alloc_viommu(SMMUv3State *s, HostIOMMUDeviceIOMMUFD *hiodi,
-                           Error **errp)
- {
-     SMMUv3AccelState *accel = s->s_accel;
-+    const SMMUv3AccelCmdqvOps *cmdqv_ops = accel->cmdqv_ops;
-     struct iommu_hwpt_arm_smmuv3 bypass_data = {
-         .ste = { SMMU_STE_CFG_BYPASS | SMMU_STE_VALID, 0x0ULL },
-     };
-@@ -580,10 +582,17 @@ smmuv3_accel_alloc_viommu(SMMUv3State *s, HostIOMMUDeviceIOMMUFD *hiodi,
-     uint32_t viommu_id, hwpt_id;
-     IOMMUFDViommu *viommu;
++#include "accel/tcg/cpu-loop.h"
+ #include "target_arch_cpu.h"
  
--    if (!iommufd_backend_alloc_viommu(hiodi->iommufd, hiodi->devid,
--                                      IOMMU_VIOMMU_TYPE_ARM_SMMUV3, s2_hwpt_id,
--                                      NULL, 0, &viommu_id, errp)) {
--        return false;
-+    if (cmdqv_ops) {
-+        if (!cmdqv_ops->alloc_viommu(s, hiodi, &viommu_id, errp)) {
-+            return false;
-+        }
-+    } else {
-+        if (!iommufd_backend_alloc_viommu(hiodi->iommufd, hiodi->devid,
-+                                          IOMMU_VIOMMU_TYPE_ARM_SMMUV3,
-+                                          s2_hwpt_id, NULL, 0, &viommu_id,
-+                                          errp)) {
-+            return false;
-+        }
-     }
+ pid_t safe_wait4(pid_t wpid, int *status, int options, struct rusage *rusage);
+diff --git a/include/accel/tcg/cpu-loop.h b/include/accel/tcg/cpu-loop.h
+new file mode 100644
+index 00000000000..528adb5588c
+--- /dev/null
++++ b/include/accel/tcg/cpu-loop.h
+@@ -0,0 +1,16 @@
++#ifndef ACCEL_TCG_CPU_LOOP_COMMON_H
++#define ACCEL_TCG_CPU_LOOP_COMMON_H
++
++#ifndef CONFIG_TCG
++#error Can only include this header with TCG
++#endif
++
++/**
++ * cpu_exec:
++ * @cpu: the cpu context
++ *
++ * Returns one of the EXCP_* definitions (see "exec/cpu-common.h").
++ */
++int cpu_exec(CPUState *cpu);
++
++#endif
+diff --git a/include/exec/cpu-common.h b/include/exec/cpu-common.h
+index 883389b0abf..ac3ab0e1cdf 100644
+--- a/include/exec/cpu-common.h
++++ b/include/exec/cpu-common.h
+@@ -114,9 +114,6 @@ G_NORETURN void cpu_loop_exit_restore(CPUState *cpu, uintptr_t pc);
+ #endif /* CONFIG_TCG */
+ G_NORETURN void cpu_loop_exit(CPUState *cpu);
  
-     viommu = g_new0(IOMMUFDViommu, 1);
-@@ -629,12 +638,70 @@ free_bypass_hwpt:
- free_abort_hwpt:
-     iommufd_backend_free_id(hiodi->iommufd, accel->abort_hwpt_id);
- free_viommu:
--    iommufd_backend_free_id(hiodi->iommufd, viommu->viommu_id);
-+    if (cmdqv_ops && cmdqv_ops->free_viommu) {
-+        cmdqv_ops->free_viommu(s);
-+    } else {
-+        iommufd_backend_free_id(hiodi->iommufd, viommu->viommu_id);
-+    }
-     g_free(viommu);
-     accel->viommu = NULL;
-     return false;
- }
+-/* accel/tcg/cpu-exec.c */
+-int cpu_exec(CPUState *cpu);
+-
+ /**
+  * env_archcpu(env)
+  * @env: The architecture environment
+diff --git a/include/user/cpu_loop.h b/include/user/cpu_loop.h
+index 346e37ede8b..c9d49398f01 100644
+--- a/include/user/cpu_loop.h
++++ b/include/user/cpu_loop.h
+@@ -22,7 +22,7 @@
  
-+static const SMMUv3AccelCmdqvOps *
-+smmuv3_accel_probe_cmdqv(SMMUv3State *s, HostIOMMUDeviceIOMMUFD *idev,
-+                         Error **errp)
-+{
-+    const SMMUv3AccelCmdqvOps *ops = tegra241_cmdqv_get_ops();
-+
-+    if (!ops) {
-+        error_setg(errp, "No CMDQV ops found");
-+        return NULL;
-+    }
-+    g_assert(ops->probe);
-+    g_assert(ops->alloc_viommu);
-+
-+    if (!ops->probe(s, idev, errp)) {
-+        return NULL;
-+    }
-+    return ops;
-+}
-+
-+static bool
-+smmuv3_accel_select_cmdqv(SMMUv3State *s, HostIOMMUDeviceIOMMUFD *idev,
-+                          Error **errp)
-+{
-+    const SMMUv3AccelCmdqvOps *ops = NULL;
-+
-+    if (s->s_accel->cmdqv_ops) {
-+        return true;
-+    }
-+
-+    switch (s->cmdqv) {
-+    case ON_OFF_AUTO_OFF:
-+        s->s_accel->cmdqv_ops = NULL;
-+        return true;
-+    case ON_OFF_AUTO_AUTO:
-+        ops = smmuv3_accel_probe_cmdqv(s, idev, NULL);
-+        break;
-+    case ON_OFF_AUTO_ON:
-+        ops = smmuv3_accel_probe_cmdqv(s, idev, errp);
-+        if (!ops) {
-+            error_append_hint(errp, "CMDQV requested but not supported");
-+            return false;
-+        }
-+        break;
-+    default:
-+        g_assert_not_reached();
-+    }
-+
-+    if (ops && ops->init && !ops->init(s, errp)) {
-+        return false;
-+    }
-+    s->s_accel->cmdqv_ops = ops;
-+    return true;
-+}
-+
- static bool smmuv3_accel_set_iommu_device(PCIBus *bus, void *opaque, int devfn,
-                                           HostIOMMUDevice *hiod, Error **errp)
- {
-@@ -669,6 +736,10 @@ static bool smmuv3_accel_set_iommu_device(PCIBus *bus, void *opaque, int devfn,
-         goto done;
-     }
+ #include "exec/vaddr.h"
+ #include "exec/mmu-access-type.h"
+-
++#include "accel/tcg/cpu-loop.h"
  
-+    if (!smmuv3_accel_select_cmdqv(s, hiodi, errp)) {
-+        return false;
-+    }
-+
-     if (!smmuv3_accel_alloc_viommu(s, hiodi, errp)) {
-         error_append_hint(errp, "Unable to alloc vIOMMU: hiodi devid 0x%x: ",
-                           hiodi->devid);
-@@ -946,8 +1017,17 @@ bool smmuv3_accel_attach_gbpa_hwpt(SMMUv3State *s, Error **errp)
- 
- void smmuv3_accel_reset(SMMUv3State *s)
- {
--     /* Attach a HWPT based on GBPA reset value */
--     smmuv3_accel_attach_gbpa_hwpt(s, NULL);
-+    SMMUv3AccelState *accel = s->s_accel;
-+
-+    if (!accel) {
-+        return;
-+    }
-+    /* Attach a HWPT based on GBPA reset value */
-+    smmuv3_accel_attach_gbpa_hwpt(s, NULL);
-+
-+    if (accel->cmdqv_ops && accel->cmdqv_ops->reset) {
-+        accel->cmdqv_ops->reset(s);
-+    }
- }
- 
- static void smmuv3_accel_as_init(SMMUv3State *s)
-diff --git a/include/hw/arm/smmuv3.h b/include/hw/arm/smmuv3.h
-index 85be3d7467..34d0f65eaa 100644
---- a/include/hw/arm/smmuv3.h
-+++ b/include/hw/arm/smmuv3.h
-@@ -75,6 +75,8 @@ struct SMMUv3State {
-     OnOffAuto ats;
-     OasMode oas;
-     SsidSizeMode ssidsize;
-+    /* SMMU CMDQV extension */
-+    OnOffAuto cmdqv;
- 
-     Notifier machine_done;
- };
+ /**
+  * adjust_signal_pc:
+diff --git a/accel/tcg/cpu-exec.c b/accel/tcg/cpu-exec.c
+index 7292ff15060..9c754b03656 100644
+--- a/accel/tcg/cpu-exec.c
++++ b/accel/tcg/cpu-exec.c
+@@ -22,6 +22,7 @@
+ #include "qapi/error.h"
+ #include "qapi/type-helpers.h"
+ #include "hw/core/cpu.h"
++#include "accel/tcg/cpu-loop.h"
+ #include "accel/tcg/cpu-ops.h"
+ #include "accel/tcg/helper-retaddr.h"
+ #include "trace.h"
+diff --git a/accel/tcg/tcg-accel-ops.c b/accel/tcg/tcg-accel-ops.c
+index 3bd98005042..c179cd4adeb 100644
+--- a/accel/tcg/tcg-accel-ops.c
++++ b/accel/tcg/tcg-accel-ops.c
+@@ -28,6 +28,7 @@
+ #include "qemu/osdep.h"
+ #include "accel/accel-ops.h"
+ #include "accel/accel-cpu-ops.h"
++#include "accel/tcg/cpu-loop.h"
+ #include "system/tcg.h"
+ #include "system/replay.h"
+ #include "exec/icount.h"
+diff --git a/bsd-user/main.c b/bsd-user/main.c
+index 73aae8c3274..4f1544342eb 100644
+--- a/bsd-user/main.c
++++ b/bsd-user/main.c
+@@ -39,6 +39,7 @@
+ #include "user/guest-base.h"
+ #include "user/page-protection.h"
+ #include "accel/accel-ops.h"
++#include "accel/tcg/cpu-loop.h"
+ #include "tcg/startup.h"
+ #include "qemu/timer.h"
+ #include "qemu/envlist.h"
 -- 
-2.43.0
+2.53.0
 
 
