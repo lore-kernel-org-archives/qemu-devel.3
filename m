@@ -4,145 +4,138 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 923A5CD98E4
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 18:22:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E37DCD98E4
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 18:33:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZYQH-00070x-QV; Tue, 16 Jun 2026 14:22:06 -0400
+	id 1wZYaQ-00024p-8h; Tue, 16 Jun 2026 14:32:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wZYQB-0006zq-S6
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 14:21:59 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ id 1wZYaK-00023r-Rw
+ for qemu-devel@nongnu.org; Tue, 16 Jun 2026 14:32:29 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wZYQ9-0002db-F8
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 14:21:59 -0400
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+ id 1wZYaI-00060S-Ck
+ for qemu-devel@nongnu.org; Tue, 16 Jun 2026 14:32:28 -0400
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65GH8tps3746552
- for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 18:21:55 GMT
+ 65GIOYRq331236
+ for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 18:32:24 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- B/FkfZH8K8mQmfftvfn27lXE5SV4xn7RJ7SIMiwnYmI=; b=oexnOk2jFxYJYOCv
- V0UH5VEI6isw9nFPLCCvgBS902t25LB+qVNSn5lINRh0mzy8UixqSkX7wls5MZaz
- F1u3s3aNtOTAHm9rnbUSslvOrWUqVq0Ld7Ckwtv1WqyHK8D+rOZSN0YHiqeAMci7
- ouAV2GTZQXbL2DkFrNkqQZA0KKOwtuNb3catBNlj+IEpsRCU3KXX065pmLmrpinw
- XxxvIFeBNiw/5jIN7YncYDQfltXb6RM4rAK9nZPBnzZG+CVpO4L42NjyTcZDdi3s
- V31s/qG+Sc+aBMayesuuYx4womuFbvJaK92zfbBI7jopV61G/6N6JoeNYsPrHbG/
- I+gEbQ==
-Received: from mail-dl1-f71.google.com (mail-dl1-f71.google.com [74.125.82.71])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4eu0a7ugct-1
+ 2I54DYQOHkuEFYPbLbZRZfiUbmNK70LJOEQyteb7Lcg=; b=alL3fjRkCWzjndEN
+ gL1T/h/AsBc/TbZlnx4nDHI+V0ucAvae9kP4nHpR+pzTuRoXDf94edgkf7xiMuc7
+ 6v/0KuCwB6v9FCYGyvLV/1jgokho2DalkD+D9XL5yqDW4Z02RHs8OZ4MypWpOQsb
+ 4VoB1kGpKC4H1R9pO7HvV6qnmj270x3rVHEIY/ywkiIk81QWhdjojnETudsmJ3vF
+ sDN9qYsd8TVws2MmWkhT1otsG24hYBa4EMGc3/3GZK+xMEkW2VQGIwuM7AVRkBMJ
+ NJMG57Xnvb27Ewmbc1iQ04bhlgs03TiZnGzcVv9wVW9tHdwcrfwTeyHwwtuPmDOk
+ 5XHTRA==
+Received: from mail-dl1-f72.google.com (mail-dl1-f72.google.com [74.125.82.72])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4eu09gbj3f-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 18:21:55 +0000 (GMT)
-Received: by mail-dl1-f71.google.com with SMTP id
- a92af1059eb24-139871a52c2so1435196c88.1
- for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 11:21:55 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 18:32:24 +0000 (GMT)
+Received: by mail-dl1-f72.google.com with SMTP id
+ a92af1059eb24-13980b6561dso4160594c88.1
+ for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 11:32:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1781634114; x=1782238914; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1781634743; x=1782239543; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=B/FkfZH8K8mQmfftvfn27lXE5SV4xn7RJ7SIMiwnYmI=;
- b=Dq1Xc/X+1JBGskzlq2Aheozr4qhMEYZMufF4mx5evzubAhHMLLLsczgf1p44T8Sx/3
- J9S+VYAchwGDL5Xvc2XC17H8pY/3BDexw89mJEL7QoWlJ2HAXJZ1WjGG5NrRWe8vOq96
- itPYI72BTkUaV1ZtL0krLrLi/iFRDppRfcBV+dPn+WuR6XKoAZOagFM9BoYdwW1hdiPw
- rPMhZz+1Pf2yfTtSx0B6H/o9ZYj53hz8VMTCTcaWudGbopyAol6mQ9o8lh+WOROQCDle
- gGeA+vhtMXrLuQE6NJFyv2yNlClzL1ETLbeh191kZW6fiIaEGJ8Bgic9XFiIhpOy/RSv
- 7uaQ==
+ bh=2I54DYQOHkuEFYPbLbZRZfiUbmNK70LJOEQyteb7Lcg=;
+ b=Db5nkNrwef+cpeUaY9PUnQSvlRKWagZnz9khL+z5bPoUbP2XQl4jKNVTzpdshnRO9b
+ m8cHHbHOomSyIVi2pIBRsFpP9Ks7gQ7taqHJtKcwv/kuHVI3o2gtRAFySqUhzs3mItXx
+ 5V+EquFYyPsZeoSAoSuPLq0bGRNcOajQcFQKzsfB34N7Y2YJZe6QItvUWLTvXHIgq/rH
+ /gaGvG85v6l5FGfQp4hO9gGlDjhl+FaNpOKtDX7CKBv+RNSKw+8CktBUJ6kirhaI4sCU
+ mJjFtCSWY4zh7YxfPeeHpC1dHaHSnAIMoGdkQ8FBxt5B+KgXelAoruayN/+tH/OZBEko
+ OTIA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781634114; x=1782238914;
+ d=1e100.net; s=20251104; t=1781634743; x=1782239543;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=B/FkfZH8K8mQmfftvfn27lXE5SV4xn7RJ7SIMiwnYmI=;
- b=CYmL8om9EOC6ln4/6bpUQyvJUGP1A4PHcQsiZ8RahWpQtSLdZhN+JrZcufxEs4FTEJ
- GsuLNfFXMDdbis1fJggL59T3ng9u1WZO02MYYGz0Z8WYc5cXx10BlXrCTzTgQDH4oXyH
- OOdxDX16+AUES8qPIAMop/YHPV6nX+zt4OKsi8pdXpb5edYAegA5ZGTNrG7KgAS7e1Tb
- TemlZZcKbWM8etIqS4i7mHMq7G8wbSC0WvYhcorXrNl+Nku2yXLVNCANkHZJ+PCdfJKF
- Bk79B7Q1tlkCn1RwSQcPrvi2x8w5zr+SJJ9gfM8+QbkxkSKyqgkU4MWIDyM0CF4QtSmK
- 425A==
-X-Gm-Message-State: AOJu0YwG+CKwdJ4Kom3rF0yaF8HTnqBJilZSjfsG2brx/fTvNWRmkDjQ
- bzlu43+qYFSalgmqSy7u0qmq1LafQ3NQrgR1ehRSKq6zeqgeao+oJYOF+k4iO2t+vB4OiGhsPsQ
- CjOG2OIPbbEw382Ykc1VFKGzUWFrAckEkgtJt6fkcMYxzhllyhMyqEQh6yw==
-X-Gm-Gg: Acq92OEHGADT4QRrVlgeJLKlYCPWemWZsZtqcLJub67j0WwpUukAHF5cL/4q8l1lOnV
- HHvPctLcKCS1XWyTK450GeQcr0d6wvgUpYdZuYYKodJQz4HmMvcEhOlVIuPE/WzGrxofwXuhmB9
- J6aqUIQiqqddHupWQTHWls6GQMqIrMHIHf8ATGECRGKE5HrVVtw/sTHsZd7KWV5b2+A/tmnSKx/
- MScTAYBHEfTeMHe6Y6INVROYe5Qz61jkP1UDWkhXnx3QYr36anufnxicYGA4TVvOjA6/Sai4Okj
- QUbzf6z2xq1Wpve36n9wdvB6kq0vWSrHhlLiJFVtEX7FiL+gJrNiOY/3KxRPrBYVBQCno7mRYzZ
- iD630f0BSgH8gD/G02m1rueyQs3o6V25pLf6n/woXYsMidwQw3f5OHTv5D2RbaOq2hckNPF6vsa
- 6PplCEVE4+U2Dmlw==
-X-Received: by 2002:a05:7022:e98a:b0:137:e6a9:b998 with SMTP id
- a92af1059eb24-1398f6de9e3mr30022c88.31.1781634114468; 
- Tue, 16 Jun 2026 11:21:54 -0700 (PDT)
-X-Received: by 2002:a05:7022:e98a:b0:137:e6a9:b998 with SMTP id
- a92af1059eb24-1398f6de9e3mr29999c88.31.1781634113906; 
- Tue, 16 Jun 2026 11:21:53 -0700 (PDT)
+ bh=2I54DYQOHkuEFYPbLbZRZfiUbmNK70LJOEQyteb7Lcg=;
+ b=Te3IqWZCu0BNnDO6ZSFGiQ2kL8Evs2P4DUp+JKV9wUOcoZ6gjtwdYv7txE1zldON05
+ QWKRfe4z8L0RWkp6WEZZnADPZpo2aU/ESBf87c0FxHXLQNWDui+fPUBpcLq7NAa7p0oK
+ gQltn9t916P6EMlQ7I73B2BaV9GZAymR9F7ERXuRNRTAgrLhgCuk1lvaAhPkAZzzkG+k
+ yiIt7Z+QxC+1AIVf98amt2GSIPTnsNueT6aNkJaCHX+hIq8ivGgpkHU6I+as5MVZ+Fzf
+ YK+k0s8yyaMqwLRj0hA4b/WrfRdZmvcQ5M9pIEEfiW871ETE7u6m0wP69muL6VhW4s+2
+ vKaA==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ+TofWrmZYMzmyyFJVCrQcIPJbjOHCh/ea63yi2ySPTcIHdKXmeUWGuspORug+Xtvjk0uePjYy8p3Zw@nongnu.org
+X-Gm-Message-State: AOJu0Yx8mShPoz72enjH8kpusDHCGDkqkUSAXgvN6TSWz69XZYRmp7dc
+ ZCaoB5h0+H/rtEfANQzYceOi99vyfSQF7s7sV7qAznbPDUvW50X5ZMXsA0uW/tki2xhij9QBYva
+ XDawMkAMpiEzfl8uO3vvuRaWkUH8Patw4pQos1L82P9QqkvBtyzDSbrlhnQ==
+X-Gm-Gg: Acq92OGgOOBlssYEobseALn2WxZK40XfEHVc5ho85eZoDTOQ4+4CjQKhg2CBKC9agwv
+ NC9AdMLAuzO1mgX8jLaPuQfkJtgzQPrbxaI9TS5eW1WzYcAFSmhv6TPJylJKan3p3PRWQ0wv7r5
+ tffXwDu1tSgB7BKtBdpyUZqS9ZsV7Dfb6p8jzMnXXzLYKEta5qohcFoZFJ7gkM9lNtGy9tsvXyE
+ qnTDdZSwgtSdUUXlwdupX1OyluYtVcHXqPpvsyVgF1eI8XSh1x0stKWdRtRJ2cDZiPDaZDmGKeZ
+ WzRx8Tu72Hojz2tOIIEBtkq5x/L6al6xVanPOYiTPakAWPgTqMJarQYjt5CNN9ZEgk5j9dskcn0
+ G3wA5MqSdB76HmOFOekI/2utHK9bWC4ZhSaMt/ejotOxZDgO/AS2HZBW67fMutEkdc1MCtcT3l9
+ GH9hlsYyMszDmPgg==
+X-Received: by 2002:a05:7022:ef13:b0:135:608a:2864 with SMTP id
+ a92af1059eb24-1398f6fb088mr43330c88.33.1781634742846; 
+ Tue, 16 Jun 2026 11:32:22 -0700 (PDT)
+X-Received: by 2002:a05:7022:ef13:b0:135:608a:2864 with SMTP id
+ a92af1059eb24-1398f6fb088mr43313c88.33.1781634742071; 
+ Tue, 16 Jun 2026 11:32:22 -0700 (PDT)
 Received: from [192.168.1.170] (216-71-219-44.dyn.novuscom.net.
  [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-1384b8fbde7sm14150889c88.2.2026.06.16.11.21.52
+ a92af1059eb24-1386f20ad25sm12714118c88.0.2026.06.16.11.32.21
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 16 Jun 2026 11:21:53 -0700 (PDT)
-Message-ID: <848e1ecb-cced-4c6c-a4c5-3daf3ed0edc2@oss.qualcomm.com>
-Date: Tue, 16 Jun 2026 11:21:52 -0700
+ Tue, 16 Jun 2026 11:32:21 -0700 (PDT)
+Message-ID: <15686e53-4cab-4739-8b32-334ae567cf47@oss.qualcomm.com>
+Date: Tue, 16 Jun 2026 11:32:20 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/1] plugins: use int64_t for the syscall filter return
- value
-To: Ziyang Zhang <functioner@sjtu.edu.cn>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-Cc: qemu-devel <qemu-devel@nongnu.org>, Riku Voipio <riku.voipio@iki.fi>,
- Laurent Vivier <laurent@vivier.eu>, Alexandre Iooss <erdnaxe@crans.org>,
- Mahmoud Mandour <ma.mandourr@gmail.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Zhengwei Qi <qizhwei@sjtu.edu.cn>, Yun Wang <yunwang94@sjtu.edu.cn>,
- Mingyuan Xia <xiamy@ultrarisc.com>, Kailiang Xu <xukl2019@sjtu.edu.cn>
-References: <20260612055642.589337-1-functioner@sjtu.edu.cn>
- <20260612055642.589337-2-functioner@sjtu.edu.cn>
- <87se6sdonm.fsf@draig.linaro.org>
- <bd162496-6325-4f96-8ad7-72fbfb3e89f8@sjtu.edu.cn>
- <102068b3-f181-49f4-addc-4444afbc03a9@oss.qualcomm.com>
- <ec256e96-5519-40ac-a0cd-b16acb6e8e04@sjtu.edu.cn>
+Subject: Re: [PATCH 1/2] plugins/execlog: fix segfault/race-cond on per-vCPU
+ structures
+To: Harry van Haaren | OPENCHIP <harry.vanhaaren@openchip.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Cc: "alex.bennee@linaro.org" <alex.bennee@linaro.org>,
+ "erdnaxe@crans.org" <erdnaxe@crans.org>
+References: <20260616161242.267315-1-harry.vanhaaren@openchip.com>
 From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 Content-Language: en-US
-In-Reply-To: <ec256e96-5519-40ac-a0cd-b16acb6e8e04@sjtu.edu.cn>
+In-Reply-To: <20260616161242.267315-1-harry.vanhaaren@openchip.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjE2MDE4NyBTYWx0ZWRfXwEfoWsn1N1H2
- oG9UaJ01lzFRdUTEtccioxK6Vckj0Jouaq3gCWqK5cUdlaLKVNUaOFp/oBk/P3S4IZeecw7YSnY
- 3KS14kzj0sXUpT1/928JiHD3xa/+KOBU1w3LwlH4q86QD6rC9uw7wqDeFMAS8TBOe5YdG/2PBy7
- 7AK/Wdcg2q+g1rL/1hkzuYq4h0P+T0v2WMQCQH6Iejx++AL8hZYgO9zeL8S+Hu19u9sXnxf2rzQ
- LyM5RO9ujPsweKVvLAFgO6cKNTGz88ISUB2upHRcfu/0jY60CEJV5dffQMG8VXyaMwd3qJz+zjv
- ORzzlccocvfbtPUsknwsdSChxv1DwBqheWfShjbH6yCu0egpvEhPoF7Zmhq0sRoA+APk+hPxmqT
- b4NmcJbEAr8ogPUmPhE5hjcedg4xpSq8EaLvSjhbh/2ZCRvFHrbtqsXklDpznsrNx1uXrAOAV46
- pQO04OeqQkHDJZAfQxQ==
-X-Authority-Analysis: v=2.4 cv=JKALdcKb c=1 sm=1 tr=0 ts=6a319443 cx=c_pps
- a=JYo30EpNSr/tUYqK9jHPoA==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjE2MDE4OSBTYWx0ZWRfX9jy9IVYi6ZMc
+ uFJDSUFh/5OCB4fF2EuyAqyNxtnKi1lyPjRrpKu9bY9cyfZRlgEtZnpB9xvz5cqQg3eVbsM/2oF
+ rrZQndMZa2VcTtKdcy8SPNGI5gCx0sQylyyqBYboOV8qfI+9xzG7910svLmBFz+lACGVHz4mDoF
+ L8rOeOGbO+ESNXM/8ZXfQsCFpwTduuhbB44o7IGthRRCiNuvzOKV2j5Hr5ePL/vgvKPEdE4F3kV
+ lOdyTqFDnuysty+N7731r7A+56UYay3aIZ2Xu4DPAqOQHYHGvXZNrreKdf6NrSlK/weNVKinodv
+ 97e9CDiiLh5JN/GtK6YhmHfeA7B8Z4/w/UvJdz7C2yImyxPb18AMv/3sFZCFuOfRdKOPJVG1oIL
+ Mcy6tTZDKmbt3+H9VE4GNS2U28fQp+O7Gnpdtkb2MeVNUpnS39mxADm6Qx+G9cAJ1Tgq3faChL3
+ wuGspq74kD9xyqKrzVg==
+X-Proofpoint-ORIG-GUID: aWr7KjIWtJaCmhfxBmBdMNOk_txcv9sh
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjE2MDE4OSBTYWx0ZWRfXwsjYcY5Xc8wV
+ SABe3iYjQPIOO7vopBchVp3oW+RWSH4WxavU+EuXfYyuIZQRQBEU8HjIP8pST/82OdiNNALKQOW
+ gFHRrtXoOVm0nQOonwtj82AAaD8odVk=
+X-Authority-Analysis: v=2.4 cv=DLa/JSNb c=1 sm=1 tr=0 ts=6a3196b8 cx=c_pps
+ a=bS7HVuBVfinNPG3f6cIo3Q==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
  a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22
- a=p0WdMEafAAAA:8 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=7HyEAREXFvCRYPt9zDUA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=Fk4IpSoW4aLDllm1B1p-:22
-X-Proofpoint-ORIG-GUID: -B05UdI7auq6lNRYkRqzcVkZ8Pv4TbnB
-X-Proofpoint-GUID: -B05UdI7auq6lNRYkRqzcVkZ8Pv4TbnB
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjE2MDE4NyBTYWx0ZWRfX1PuAifk83ZSj
- 946PfX1tfsnBdOs5ZYHKUJR+3m2hzgP5A3wf6FhHnRkM1K2kVQlJ2rLmmOfy4v0GoPAiqmriTJT
- jNaWtJNwwhgzQVD8uDcstvdexRTpamk=
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22
+ a=NEAV23lmAAAA:8 a=OZcmDFxvAAAA:8 a=rRzZAERBmC2rzSdszuIA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=O8hF6Hzn-FEA:10 a=vBUdepa8ALXHeOFLBtFW:22
+ a=liPxxeoTYnb3ClP5OJlV:22
+X-Proofpoint-GUID: aWr7KjIWtJaCmhfxBmBdMNOk_txcv9sh
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-16_05,2026-06-16_01,2025-10-01_01
+ definitions=2026-06-16_05,2026-06-16_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 lowpriorityscore=0 bulkscore=0 impostorscore=0 spamscore=0
- priorityscore=1501 adultscore=0 clxscore=1015 suspectscore=0 malwarescore=0
+ impostorscore=0 lowpriorityscore=0 clxscore=1015 spamscore=0 malwarescore=0
+ priorityscore=1501 phishscore=0 suspectscore=0 bulkscore=0 adultscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606040000 definitions=main-2606160187
-Received-SPF: pass client-ip=205.220.168.131;
+ reason=mlx scancount=1 engine=8.22.0-2606040000 definitions=main-2606160189
+Received-SPF: pass client-ip=205.220.180.131;
  envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0a-0031df01.pphosted.com
+ helo=mx0b-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -165,68 +158,227 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/15/2026 9:10 PM, Ziyang Zhang wrote:
-> Hi Pierrick,
+Hi Harry,
+
+On 6/16/2026 9:12 AM, Harry van Haaren | OPENCHIP wrote:
+> From: Harry van Haaren <harry.vanhaaren@openchip.com>
 > 
-> On Mon, 15 Jun 2026 10:46:16 -0700, Pierrick Bouvier wrote:
->> We can't expose target dependent types, so having unsigned types for
->> args and ret was the correct thing to do. This way, a plugin can decide
->> to use any bit pattern, and upper part is discarded if needed.
->>
->> For args, we explicitly clamp values depending on target:
->> https://gitlab.com/qemu-project/qemu/-/blob/master/plugins/core.c?
->> ref_type=heads#L554
->>
->> For ret, the type conversion is handled by writing ret to a temporary
->> variable, before sending it back:
->> https://gitlab.com/qemu-project/qemu/-/blob/master/linux-user/
->> syscall.c?ref_type=heads#L14622
->>
->> Indeed, there is an inconsistency between syscall_ret and syscall_filter
->> on that. However, they do different things:
->> - syscall_ret will read the value, so having a signed is mandatory.
->> `if ret < 0` needs to work.
->> - syscall_filter will only set it, so having a signed in not mandatory.
->> `*ret = -1` still does what is expected.
->>
->>  From that, I'm not sure any change is needed, but feel free to point a
->> use case I missed where this matter for syscall filter.
->>
->> Regards,
->> Pierrick
+> The existing code in execlog was never upgraded to the Scoreboard
+> API, resulting in a bespoke implementation of per-vCPU datastructure
+> handling. This had some race-conditions, and causes segfaults with
+> a simple multi-threaded program and two instances of execlog running.
 > 
-> You're right, and thanks for the detailed explanation. There is no
-> correctness issue here: the filter only sets sysret, and *sysret = -1
-> behaves the same whether the pointer is signed or unsigned, so nothing
-> is functionally broken.
+> The patch here refactors the custom GArray and GRWLock code away, and
+> uses the scoreboard APIs like the other plugins. This solves the
+> "printing while expanding" race-condition of two plugins with multiple
+> threads in the guest, and hence fixes a segfault.
 > 
-> My concern is purely about consistency. The syscall return value appears
-> in both callbacks: qemu_plugin_vcpu_syscall_filter_cb_t passes it as a
-> writable sysret and qemu_plugin_vcpu_syscall_ret_cb_t passes it as a
-> readable value, but in both it is the same kind of thing, a syscall
-> return value, whose semantics are inherently signed (the negative range
-> encodes errno). Having the write side use uint64_t while the read side
-> uses int64_t looks surprising to a plugin user, since it is the same
-> signed quantity in both places. Keeping the two consistent makes the
-> intent clearer, and as a bonus lets a filter write *sysret = -EINVAL
-> without an implicit signed to unsigned conversion.
+> Signed-off-by: Harry van Haaren <harry.vanhaaren@openchip.com>
 > 
-> As you say this is not mandatory, so I am happy to drop it if you would
-> rather leave it as is. It just seemed like a small readability
-> improvement given the two callbacks describe the same value.
+> ---
+> 
+> Hi Qemu-Devel!
+> 
+> This is my first contribution to QEMU itself, but I have worked on
+> DPDK, OVS, and QEMU-RS a bit in the past. I have experience with
+> mailing lists for patches and some QEMU internals. I've read the
+> 'submitting a patch' guide, and ran checkpatch... so basics should
+> be OK I hope!
 >
 
-That's convincing enough for me, and yes, consistency matters :).
-I'll pull today this other series:
-https://lore.kernel.org/qemu-devel/20260615193526.2883349-1-pierrick.bouvier@oss.qualcomm.com/
+Welcome, and thanks for taking the time to contribute this!
 
-Would that be ok for you to wait for it to come down (hopefully before
-end of the week), and then publish a new version of yours rebased on
-top? I can ping you once it's merged if you want.
+It seems like there is no cover letter for your series, which is where
+this paragraph should go ideally. Also, I think its presence is kind of
+mandatory for tools manipulating it when having more than one patch, but
+not 100% sure.
 
-> Regards,
-> Ziyang Zhang
+I recommend you to use git-publish
+(https://github.com/stefanha/git-publish) which does the right thing out
+of the box and make sure your series looks like any other. Yet another
+tool, sorry, but at least it's one of the "standard" here.
+
+For the rest, I'll comment inline on the patches.
+
+> Please note that LLMs were used to investigate and fix this bug,
+> but all code in this patch has been reviewed by me, and I believe
+> it to be a good solution.
+> ---
+>  contrib/plugins/execlog.c | 65 +++++++++++++++------------------------
+>  1 file changed, 25 insertions(+), 40 deletions(-)
 > 
+> diff --git a/contrib/plugins/execlog.c b/contrib/plugins/execlog.c
+> index d00d9c4ff3..e51af9f2df 100644
+> --- a/contrib/plugins/execlog.c
+> +++ b/contrib/plugins/execlog.c
+> @@ -31,33 +31,28 @@ typedef struct CPU {
+> 
+>  QEMU_PLUGIN_EXPORT int qemu_plugin_version = QEMU_PLUGIN_VERSION;
+> 
+> -static GArray *cpus;
+> -static GRWLock expand_array_lock;
+> +/*
+> + * Per-vCPU state stored in a qemu_plugin_scoreboard. The scoreboard manages
+> + * per-vCPU storage automatically, eliminating the need for manual array
+> + * growth, locks, or pointer-stability workarounds.
+> + */
+> +static struct qemu_plugin_scoreboard *cpus;
+> 
+>  static GPtrArray *imatches;
+>  static GArray *amatches;
+>  static GPtrArray *rmatches;
+>  static bool disas_assist;
+>  static GMutex add_reg_name_lock;
+> +static GMutex execlog_output_mutex;
+>  static GPtrArray *all_reg_names;
+> 
+> -static CPU *get_cpu(int vcpu_index)
+> -{
+> -    CPU *c;
+> -    g_rw_lock_reader_lock(&expand_array_lock);
+> -    c = &g_array_index(cpus, CPU, vcpu_index);
+> -    g_rw_lock_reader_unlock(&expand_array_lock);
+> -
+> -    return c;
+> -}
+> -
+>  /**
+>   * Add memory read or write information to current instruction log
+>   */
+>  static void vcpu_mem(unsigned int cpu_index, qemu_plugin_meminfo_t info,
+>                       uint64_t vaddr, void *udata)
+>  {
+> -    CPU *c = get_cpu(cpu_index);
+> +    CPU *c = qemu_plugin_scoreboard_find(cpus, cpu_index);
+>      GString *s = c->last_exec;
+> 
+>      /* Find vCPU in array */
+> @@ -117,7 +112,7 @@ static void insn_check_regs(CPU *cpu)
+>  /* Log last instruction while checking registers */
+>  static void vcpu_insn_exec_with_regs(unsigned int cpu_index, void *udata)
+>  {
+> -    CPU *cpu = get_cpu(cpu_index);
+> +    CPU *cpu = qemu_plugin_scoreboard_find(cpus, cpu_index);
+> 
+>      /* Print previous instruction in cache */
+>      if (cpu->last_exec->len) {
+> @@ -125,8 +120,10 @@ static void vcpu_insn_exec_with_regs(unsigned int cpu_index, void *udata)
+>              insn_check_regs(cpu);
+>          }
+> 
+> +        g_mutex_lock(&execlog_output_mutex);
+>          qemu_plugin_outs(cpu->last_exec->str);
+>          qemu_plugin_outs("\n");
+> +        g_mutex_unlock(&execlog_output_mutex);
+>      }
+> 
+>      /* Store new instruction in cache */
+> @@ -138,7 +135,7 @@ static void vcpu_insn_exec_with_regs(unsigned int cpu_index, void *udata)
+>  /* Log last instruction while checking registers, ignore next */
+>  static void vcpu_insn_exec_only_regs(unsigned int cpu_index, void *udata)
+>  {
+> -    CPU *cpu = get_cpu(cpu_index);
+> +    CPU *cpu = qemu_plugin_scoreboard_find(cpus, cpu_index);
+> 
+>      /* Print previous instruction in cache */
+>      if (cpu->last_exec->len) {
+> @@ -146,8 +143,10 @@ static void vcpu_insn_exec_only_regs(unsigned int cpu_index, void *udata)
+>              insn_check_regs(cpu);
+>          }
+> 
+> +        g_mutex_lock(&execlog_output_mutex);
+>          qemu_plugin_outs(cpu->last_exec->str);
+>          qemu_plugin_outs("\n");
+> +        g_mutex_unlock(&execlog_output_mutex);
+>      }
+> 
+>      /* reset */
+> @@ -157,12 +156,14 @@ static void vcpu_insn_exec_only_regs(unsigned int cpu_index, void *udata)
+>  /* Log last instruction without checking regs, setup next */
+>  static void vcpu_insn_exec(unsigned int cpu_index, void *udata)
+>  {
+> -    CPU *cpu = get_cpu(cpu_index);
+> +    CPU *cpu = qemu_plugin_scoreboard_find(cpus, cpu_index);
+> 
+>      /* Print previous instruction in cache */
+>      if (cpu->last_exec->len) {
+> +        g_mutex_lock(&execlog_output_mutex);
+>          qemu_plugin_outs(cpu->last_exec->str);
+>          qemu_plugin_outs("\n");
+> +        g_mutex_unlock(&execlog_output_mutex);
+>      }
+> 
+>      /* Store new instruction in cache */
+> @@ -378,21 +379,10 @@ static GPtrArray *registers_init(int vcpu_index)
+>   *   - last_exec tracking data
+>   *   - list of tracked registers
+>   *   - initial value of registers
+> - *
+> - * As we could have multiple threads trying to do this we need to
+> - * serialise the expansion under a lock.
+>   */
+>  static void vcpu_init(qemu_plugin_id_t id, unsigned int vcpu_index)
+>  {
+> -    CPU *c;
+> -
+> -    g_rw_lock_writer_lock(&expand_array_lock);
+> -    if (vcpu_index >= cpus->len) {
+> -        g_array_set_size(cpus, vcpu_index + 1);
+> -    }
+> -    g_rw_lock_writer_unlock(&expand_array_lock);
+> -
+> -    c = get_cpu(vcpu_index);
+> +    CPU *c = qemu_plugin_scoreboard_find(cpus, vcpu_index);
+>      c->last_exec = g_string_new(NULL);
+>      c->registers = registers_init(vcpu_index);
+>  }
+> @@ -402,16 +392,15 @@ static void vcpu_init(qemu_plugin_id_t id, unsigned int vcpu_index)
+>   */
+>  static void plugin_exit(qemu_plugin_id_t id, void *p)
+>  {
+> -    guint i;
+> -    g_rw_lock_reader_lock(&expand_array_lock);
+> -    for (i = 0; i < cpus->len; i++) {
+> -        CPU *c = get_cpu(i);
+> -        if (c->last_exec && c->last_exec->str) {
+> +    int n = qemu_plugin_num_vcpus();
+> +    for (int i = 0; i < n; i++) {
+> +        CPU *c = qemu_plugin_scoreboard_find(cpus, i);
+> +        if (c->last_exec && c->last_exec->len) {
+>              qemu_plugin_outs(c->last_exec->str);
+>              qemu_plugin_outs("\n");
+>          }
+>      }
+> -    g_rw_lock_reader_unlock(&expand_array_lock);
+> +    qemu_plugin_scoreboard_free(cpus);
+>  }
+> 
+>  /* Add a match to the array of matches */
+> @@ -452,12 +441,8 @@ QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
+>                                             const qemu_info_t *info, int argc,
+>                                             char **argv)
+>  {
+> -    /*
+> -     * Initialize dynamic array to cache vCPU instruction. In user mode
+> -     * we don't know the size before emulation.
+> -     */
+> -    cpus = g_array_sized_new(true, true, sizeof(CPU),
+> -                             info->system_emulation ? info->system.max_vcpus : 1);
+> +    /* Initialize scoreboard to cache per-vCPU instruction state. */
+> +    cpus = qemu_plugin_scoreboard_new(sizeof(CPU));
+> 
+>      for (int i = 0; i < argc; i++) {
+>          char *opt = argv[i];
+> --
+> 2.54.0
+> 
+> 
+> 
+> The content, data, and any attached documents to this email are addressed exclusively to the addressee and are confidential and/or may be subject to a non-disclosure agreement. Any use, forwarding, disclosure, and/or copying, in whole or in part, without authorization is prohibited. If you have received this email in error, we apologize and, please notify the sender or Openchip immediately, and delete it from your system.
+> 
+> El contenido, los datos y cualquier documento adjunto a este correo electrónico están dirigidos exclusivamente al destinatario y son confidenciales y/o pueden estar sujetas a un acuerdo de no revelación. Está prohibido cualquier uso, reenvío, divulgación o copia, total o parcial, sin autorización. Si has recibido este correo por error, te pedimos disculpas y agradecemos que lo notifiques de inmediato al remitente o a Openchip, y lo elimines de tu sistema.
+> 
+> El contingut, les dades i qualsevol document adjunt a aquest correu electrònic estan dirigits exclusivament al destinatari i són confidencials i/o poden estar subjectes a un acord de no revelació. Està prohibit qualsevol ús, reenviament, divulgació o còpia, total o parcial, sense autorització. Si has rebut aquest correu per error, et demanem disculpes i agraïm que ho notifiquis d'immediat al remitent o a Openchip, i l'eliminis del teu sistema
 
 Regards,
 Pierrick
