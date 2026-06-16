@@ -4,136 +4,136 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64BDBCD98E1
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 18:40:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43406CD98E4
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 18:40:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZYhR-0003OT-Q5; Tue, 16 Jun 2026 14:39:49 -0400
+	id 1wZYiN-0003jl-NM; Tue, 16 Jun 2026 14:40:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wZYhM-0003O3-Ks
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 14:39:44 -0400
+ id 1wZYiJ-0003hZ-Dl
+ for qemu-devel@nongnu.org; Tue, 16 Jun 2026 14:40:43 -0400
 Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wZYhE-00081F-Ce
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 14:39:41 -0400
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+ id 1wZYiH-0008Sr-GP
+ for qemu-devel@nongnu.org; Tue, 16 Jun 2026 14:40:43 -0400
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65GIOdVK2544013
- for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 18:39:30 GMT
+ 65GIOPbg3965411
+ for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 18:40:39 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- o86u1uhZthcQzAC2kG+dfGxVuI/fvL3x4jETWidNciY=; b=N68bp4MxKqt4OHOh
- PaPLvzHjPDxtBJcn5j7qb2V6Xospw38aACVWBOPTESoPFoAhrR046SOBNq0qLrvc
- Kc6epRAPM+T3KvmFKr2+k9ER3myBxySNyPai71FjTe6cjKqdzWtIaXfiFtcP43C2
- vqMWFJmbsnoP3WsSzKITC5FSrYo5yrSOnHO4FvoR6D9A+XrPhSItxASMRAj0iAWL
- fZ+cybecyFKPwusTm7d37Mi9cfZXjfc57qhFboMOiXXIkyDwKFEi/qpZvEfullee
- oNUyRh6mN6EWYU6IE9kuQgKDaK7nLMriYNYEEb7PocJ6IoUZxPA1xJSGy0YSFjBE
- Xyzwhw==
-Received: from mail-dy1-f200.google.com (mail-dy1-f200.google.com
- [74.125.82.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4eu3ct2ppf-1
+ DYtGAnGIQPqbWhSHLt7X5H6WkbhRXUGspy+zSf7Vb+Y=; b=p71iE0hX3EOANbOl
+ x98w0LnMOKj6CzlQkRJWIX31oC/4vlDCjTLJL5NAiZtx8gw4AjNT6uUO3mcVKzGX
+ 3nITfCrGSitd8zTMG+JTD6/TpRpkCdaIXEequPnfoNLLcC1iwoEJT80VIB5JVYQV
+ /BDTzhScJIqSiQaiJnGTYZDQQTK0em1DPpFjsljO+VDo5udnY4bFzThKO709TH2N
+ SF7xmK+auPv0cbMIT/lOUPf9KSZv9n5mJLCB2YUmpfUOXa7mYo3RM/M4CiS9GYw6
+ ln1r6ZOGCxQFNXB8MS2pc6bZ2O+7Vy2QKCEGMFcxYlwTFG3siDHnXS1Y2WKITWjN
+ O7OoOQ==
+Received: from mail-dy1-f198.google.com (mail-dy1-f198.google.com
+ [74.125.82.198])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4etx8kc7m3-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 18:39:30 +0000 (GMT)
-Received: by mail-dy1-f200.google.com with SMTP id
- 5a478bee46e88-30bc5f826f2so582376eec.1
- for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 11:39:30 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 18:40:39 +0000 (GMT)
+Received: by mail-dy1-f198.google.com with SMTP id
+ 5a478bee46e88-304f1820babso7152544eec.1
+ for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 11:40:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1781635170; x=1782239970; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1781635239; x=1782240039; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=o86u1uhZthcQzAC2kG+dfGxVuI/fvL3x4jETWidNciY=;
- b=GiWmFvzPMbhkq/wOOP7VDH4DSpSROxtutohFS9lkDLB51CRHL7YcqoWxbI3MUMnXhf
- FcewwzM1XhUVQxjfLloz5X34hZ65EPkS3bMV9kfOizv6725oaxm0OTmSLqPzLVWTm0UZ
- QwYlQPPCnn3OkApJrcpibdhyPcl3uBoPa0vciS7HjMVtQVAlWWPOMANqMd2yTxMh7U7x
- 3ILqDAZTuQSdsmaa1XcDhNtGAsHxXpICBEvnRAN/2uwlvJjm5H7ov4Q54TU9VCLA6IjR
- Vccd8EE+o+D75zApON4krlOpg0/WEcMEfUmzZuhrbFpAU9izhrC4T6wRijZ7izLh08b+
- 93zA==
+ bh=DYtGAnGIQPqbWhSHLt7X5H6WkbhRXUGspy+zSf7Vb+Y=;
+ b=MnOBYCry5EwiLdZxfNP4Zes6PhcgL4+hFm00dZ8uT8iAnKAIgiRdxlbXDk+/8guuBJ
+ yHF1Pai1imcKZDBlx/VgMkHvLwtxbTxuX8TppiLFFZ7Yg1WKexlIr6S62rJXJOvyUJwi
+ Y+BzBkS/1ZM7JQKSi40kPUmISeq1WVj0ydNc3MQZTVZcxQU2/W9WgFG8Z0dj+httBJek
+ VoOkxde4vUUTuWz3F9c//AHlE0UB17MiEUIOiVTtMEF0aEKa1X8d0mEj2l/u7uHyYkcc
+ QaXnWW9HJqCJXLdK4tb3MR85D4q0IHwZHgs+J4+7EH9ioxWIN2G8PnrZtvCsqDrU+3d+
+ QitQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781635170; x=1782239970;
+ d=1e100.net; s=20251104; t=1781635239; x=1782240039;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=o86u1uhZthcQzAC2kG+dfGxVuI/fvL3x4jETWidNciY=;
- b=Z/0XLlZYt+OwDqmoAmKWfp7OGZp/P6JVARTK6tccXL87l8aC8rcOnP+soGicWxSoRa
- lcnYB0mg8DZlp3e3RwY7m2bXSXqBlhlOt5osNznBRXqK+2g5xlscSAJCfrHF4tvIzlpU
- w3DF3JLTFr2RyRCAm5pTa7lek1swcZpQJjZnrPWihnDDjpBruDLRDrShWXrKRJUmb1CD
- HojXQQPsXq0qjj60+gADeAW+3TRcCor7hzzrwmHtcwc682UBJjxHBJFABNX7Traxc8um
- 84x0uvlFMVdIUAgJ9CkIsI1Ir7IUcThakmythWisuvCl1wdjhomLm+AdostsEPbA8DPX
- a/qw==
+ bh=DYtGAnGIQPqbWhSHLt7X5H6WkbhRXUGspy+zSf7Vb+Y=;
+ b=kfLoURzqOzDAnwcjq2J9bZAt4fk8+XvZK6zS9CANWo8wCrYIhvNaf2y/794DQ7ZrGh
+ HeiLnoPm0KrWCEWrahNS6tkpBqk2WvOmiS3qR5kXY8yaxdq7xQeXm9idDCwbe47ojOFu
+ mrfGDvhZvXJ2s5/vyYLh30x0ZMA9BiCIAMLnWe9cziWg25/CKywt+ZPWMSbOXWIeohoJ
+ YVMyWZLvpg8ynAQVwxH5gKIz8v/WwzaCgL09Ko+itE3wdkViUB4jSbGMb7bugKPqYrid
+ cURJredSZQmaeXiqJaA1PaI829eINJS2RL2Foww1fVSwW0MuQOo1fU7R5av0uqUXY73p
+ 61PQ==
 X-Forwarded-Encrypted: i=1;
- AFNElJ/oKA6hCNp6pqrrfnb3N7TaOwSgnBsQEr0KXjR2IwqSxw32uG8OzVhYPZ/oHukH8ro/AwpgPh5TAjIW@nongnu.org
-X-Gm-Message-State: AOJu0YzXNkykc3bfu+ZpN2PF30+MfRHWn5FBKTsktrgDggeepk/g+k7F
- Rxuz6F4dG6aQPUdE6cBud2uXU3CMrNHqrJlyqPDyw6DYlTJs7bNJqof1x+BAL69hDcqegU73r4c
- hVxMFzpTzw8nvYgP4QgEpk2YTgjUgasbW6gxK4CZVQyEPxFpFmFacJcYx2g==
-X-Gm-Gg: Acq92OHAmO8ZvfSL4TZJHLUDg3KY87UbwB5N9nCGeODK9jCJ4qk5gfWBKhzz5ryqqD2
- Y41nwYSTlgYyMt1LYJOE0krgCqo5aahmuceyETI7IfWiKsaR0V9N+NQWnChOG/d0BwuB9EV9zOG
- gDICfuDH1Levg4j6aSuuBaEhvaDvZvshu3MsbosZQwdQEDkRhZpMjoMYaprRm4OP4tEKmlGvb9R
- CtcfRSSg/Li0NcV34KdDeBgcSz5b3KMRlY90Ytkdtw9V8inVXUBr+bBFE26LRH6xyVg9/u/vkMO
- +Hv6oYuHr1RMbkCEXnbuYDob3OTHd6AmU25JszhNvIHzesqlFUqdebec4NuHlLMKTH1HWiTYNOw
- OGWwF6mv+g3aK+buiU3vlItcAx0/eDH43oBWFPJ2U9TUYEf9FOdCdcyJw90v+GGzvKNaJX+2oWV
- 1Rfchoc+RBqeN8Tg==
-X-Received: by 2002:a05:7300:5b9f:b0:30b:b316:c685 with SMTP id
- 5a478bee46e88-30bcae07504mr273050eec.22.1781635169741; 
- Tue, 16 Jun 2026 11:39:29 -0700 (PDT)
-X-Received: by 2002:a05:7300:5b9f:b0:30b:b316:c685 with SMTP id
- 5a478bee46e88-30bcae07504mr273025eec.22.1781635169171; 
- Tue, 16 Jun 2026 11:39:29 -0700 (PDT)
+ AFNElJ8isuD3jyidtsWx4Y97+NsWuVOLUW3zIW+EQRwNvrk6xLU+QFrNk8TivtLYC2eXn5VkbzOrNVo/nj9f@nongnu.org
+X-Gm-Message-State: AOJu0Yy2FDRf0fYBFeFB2emnqmJ/fcFscRpwUtueVKc/ab1JLKPZqncw
+ DRBnYvlcwUwAz4LEvCmJIgvDeie0WKrgGTyqZMZ0aDXDSvqOtganeS5UGPcWMSQkK3v3Eu9vW/J
+ cRnN2BqYLFhTYEE12T5MT3iC2k+d5RMN8q5UjIF1A/oRId/b8bHnc20x7Gg==
+X-Gm-Gg: Acq92OGf4cPmNtnmJpJ51VSxGIlzIt1sXBxzDZbtjluDW++cp43163+irA0LhVYVcKO
+ VWtYbN59WPjpJGLW17Pf9wqGlmvPiW12W6XgA0RWuFc8WL6rexVF/q7tEvyiTzcoteVNVh99KSJ
+ U47OwGpq1BKlXuEfLFRzsMAG0Lp45epZXWhfjFhSGoDff1ORwRfek9kN90zd/dvuZg887ECd2x6
+ tp7Qca9t0lzTtnTiTZbskzVUDY5yHKK6W1T0blRIaaShKQcPALNNLD1p8K/rVWKzqmlhuPFuybi
+ U5dZFWjent5nJnRnRE0Mt8X014p0qxBF7zwt22woLqWvXCKtKB6wH1HtcyZd6kAtpqX4FUoRN1d
+ iHUGKJW6msrYGflxZbB45oNXGzMUp+ubl1AWRdj4kFpFoka1cbeuMz2oAcXlOSCmc8nh4TdeB8F
+ TVVU9TFslmloVSvQ==
+X-Received: by 2002:a05:7301:7c0e:b0:303:f295:4db2 with SMTP id
+ 5a478bee46e88-30bc91d96d0mr352592eec.0.1781635238857; 
+ Tue, 16 Jun 2026 11:40:38 -0700 (PDT)
+X-Received: by 2002:a05:7301:7c0e:b0:303:f295:4db2 with SMTP id
+ 5a478bee46e88-30bc91d96d0mr352568eec.0.1781635238326; 
+ Tue, 16 Jun 2026 11:40:38 -0700 (PDT)
 Received: from [192.168.1.170] (216-71-219-44.dyn.novuscom.net.
  [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-30bbcb11310sm2113793eec.14.2026.06.16.11.39.28
+ 5a478bee46e88-3081eb95342sm20497568eec.29.2026.06.16.11.40.37
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 16 Jun 2026 11:39:28 -0700 (PDT)
-Message-ID: <ab967bbb-7961-4450-bdb9-06b9db905d2d@oss.qualcomm.com>
-Date: Tue, 16 Jun 2026 11:39:28 -0700
+ Tue, 16 Jun 2026 11:40:37 -0700 (PDT)
+Message-ID: <e7edbf3f-55e1-42a4-8101-0a1c273c7587@oss.qualcomm.com>
+Date: Tue, 16 Jun 2026 11:40:37 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] plugins/execlog: fix segfault/race-cond on per-vCPU
- structures
+Subject: Re: [PATCH 2/2] plugins/execlog: fix execlog vcpu_exit execution
+ print loss
 To: Harry van Haaren | OPENCHIP <harry.vanhaaren@openchip.com>,
  "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
 Cc: "alex.bennee@linaro.org" <alex.bennee@linaro.org>,
  "erdnaxe@crans.org" <erdnaxe@crans.org>
 References: <20260616161242.267315-1-harry.vanhaaren@openchip.com>
+ <20260616161242.267315-2-harry.vanhaaren@openchip.com>
 From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 Content-Language: en-US
-In-Reply-To: <20260616161242.267315-1-harry.vanhaaren@openchip.com>
+In-Reply-To: <20260616161242.267315-2-harry.vanhaaren@openchip.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=SoCgLvO0 c=1 sm=1 tr=0 ts=6a319862 cx=c_pps
- a=PfFC4Oe2JQzmKTvty2cRDw==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjE2MDE5MCBTYWx0ZWRfX03ayFKpyY6uF
+ bPi+G2i35QNGi3XobnknecU/w3ngrEKjArwzxp+UTZkZivO9i9laiVcJmH+gZOhk0zxc1jb9gfD
+ fuuGFo3egUA0N4+ztC4t+zmW63aM5M+h5EyHAOiZvnYI5EUK6GwhmfM8xvZv0XYYEwKT/FeczQd
+ 0JNzLDxtrFK0NIGnPlxNOe/14OWQX9FYiGbwQbZdpqHEN3PowKA8mE8zPW11zhjNSKTdNKrovZg
+ F001kncJzvQ1l+iFkgNsmyZOd+S+6RAtoen5vp9xsXvYhGLKjhigFVMfxrP8Sapo87b4gZtrLDM
+ OvwxcFJKcwf6MVX5ife1fVUJEqpkQMqJDnZK3vNLulAaHxd8OfT0q/uypvzw+9ASxvTSlbrK8i5
+ UQ2ENlHkXSGBqCKJjLIJBhHh2pyOLhV9nqT5nbvQaTDhY+boTlnTG+YEibXKf8+BdzmPwsoj2PY
+ AUigFsUqJKvtWhQu+gw==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjE2MDE5MCBTYWx0ZWRfX1BUxPxjHvk99
+ gEQqBCoXHf7S+9rCjH3zrFtH+HQWGvW9OSKvUiadDRC0CNdYcOiHT3Tl8KKtjYScff+WhOJQpWW
+ JmcrEjGZKbUoJu1r602Af3ezfIXw49A=
+X-Proofpoint-ORIG-GUID: x61RuoFpNdvdqnALJeX_KRJ6MU61oonQ
+X-Authority-Analysis: v=2.4 cv=dZawG3Xe c=1 sm=1 tr=0 ts=6a3198a7 cx=c_pps
+ a=wEP8DlPgTf/vqF+yE6f9lg==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
  a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
- a=OZcmDFxvAAAA:8 a=rRzZAERBmC2rzSdszuIA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=O8hF6Hzn-FEA:10 a=6Ab_bkdmUrQuMsNx7PHu:22 a=liPxxeoTYnb3ClP5OJlV:22
-X-Proofpoint-GUID: zNaw82FR6T6j_Bf9iaYj66ixRYjZ6r_T
-X-Proofpoint-ORIG-GUID: zNaw82FR6T6j_Bf9iaYj66ixRYjZ6r_T
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjE2MDE5MCBTYWx0ZWRfX4CtqHPJbW3IY
- KR5Ok2rxE95RPo45OgLv+1mksKuv3yqZPrK10NYAUhvHkfVyHfGpPZesTm3r4I3+RcXS49Vj2rd
- vOkUsr5jUdjYPwzfg9n6hCp0xJMp6RjoNmkU8aToZv4MSIU39tSTvNu7P9eJY8S19SEXzgarenm
- KRna/k+Bo2EyO/huN2tJnzLxNaEggWySwRJLzS3W8BSYtAqK1ZrZ8OJvrX94Frwsef04H8BvZLO
- kTaYb5+FAqs36Ad2108IdQZjLFOAZeY3pkNqGrN5dESxgd1UepmFQ5ft4RhV4TXwS3AmVwI5c72
- dsnl5Z7ivXA6moKts6+cxeY4lJDUYKDgqxQz55LKAzavgSgp9Am3rlBM34uPt3hvDcsgIDOVvFo
- iNG0Ml2hVgIq9XDfPU8FSvuNPODcmk59T1Tjpycr58vzbz5EgFwH5Hd79hrn2dvLrS0HzeiJRM+
- +pVOyoatkCiCWJXeGEQ==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjE2MDE5MCBTYWx0ZWRfX1+Px7OwpzVkt
- RjzbPNChBVy6w7YjBUWhxzBI/Aymb0hwsmSSdyJmYinGs+kwv1XkQDUmq13u33iToZQ4ZacdLel
- okC6E0BfjoEfQarH+ZUmlwOYWeAPZ2o=
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22
+ a=OZcmDFxvAAAA:8 a=jFOjwzSzJdwwPpuLhkgA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=bBxd6f-gb0O0v-kibOvt:22 a=liPxxeoTYnb3ClP5OJlV:22
+X-Proofpoint-GUID: x61RuoFpNdvdqnALJeX_KRJ6MU61oonQ
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-06-16_05,2026-06-16_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 adultscore=0 clxscore=1015 spamscore=0 phishscore=0
- suspectscore=0 lowpriorityscore=0 impostorscore=0 malwarescore=0
- priorityscore=1501 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606040000
- definitions=main-2606160190
+ spamscore=0 lowpriorityscore=0 clxscore=1015 impostorscore=0 suspectscore=0
+ phishscore=0 priorityscore=1501 malwarescore=0 bulkscore=0 adultscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606040000 definitions=main-2606160190
 Received-SPF: pass client-ip=205.220.168.131;
  envelope-from=pierrick.bouvier@oss.qualcomm.com;
  helo=mx0a-0031df01.pphosted.com
@@ -159,216 +159,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/16/2026 9:12 AM, Harry van Haaren | OPENCHIP wrote:
+On 6/16/2026 9:13 AM, Harry van Haaren | OPENCHIP wrote:
 > From: Harry van Haaren <harry.vanhaaren@openchip.com>
->
-
-No needed for this From: tag since you are already the sender and have a
-signed-off-by.
-
-> The existing code in execlog was never upgraded to the Scoreboard
-> API, resulting in a bespoke implementation of per-vCPU datastructure
-> handling. This had some race-conditions, and causes segfaults with
-> a simple multi-threaded program and two instances of execlog running.
 > 
-> The patch here refactors the custom GArray and GRWLock code away, and
-> uses the scoreboard APIs like the other plugins. This solves the
-> "printing while expanding" race-condition of two plugins with multiple
-> threads in the guest, and hence fixes a segfault.
->
-
-Great!
-
+> Executed instructions are cached in string format inside the
+> execlog plugin. These strings are flushed on exit of a TB, improving
+> performance. This causes executed instructions to be lost when an
+> 'ecall' (riscv system call) occurs that causes the thread to terminate.
+> 
+> The fix in this patch registers an 'on_exit()' callback, and flushes
+> any content in the c->last_exec buffer, to ensure all instructions are
+> present in the final instruction log.
+> 
+> A mutex lock/unlock is added around the plugin exit, to ensure the
+> lines are not corrupted.
+> 
 > Signed-off-by: Harry van Haaren <harry.vanhaaren@openchip.com>
 > 
 > ---
-> 
-> Hi Qemu-Devel!
-> 
-> This is my first contribution to QEMU itself, but I have worked on
-> DPDK, OVS, and QEMU-RS a bit in the past. I have experience with
-> mailing lists for patches and some QEMU internals. I've read the
-> 'submitting a patch' guide, and ran checkpatch... so basics should
-> be OK I hope!
 > 
 > Please note that LLMs were used to investigate and fix this bug,
 > but all code in this patch has been reviewed by me, and I believe
 > it to be a good solution.
 > ---
->  contrib/plugins/execlog.c | 65 +++++++++++++++------------------------
->  1 file changed, 25 insertions(+), 40 deletions(-)
+>  contrib/plugins/execlog.c | 26 +++++++++++++++++++++++++-
+>  1 file changed, 25 insertions(+), 1 deletion(-)
 > 
 > diff --git a/contrib/plugins/execlog.c b/contrib/plugins/execlog.c
-> index d00d9c4ff3..e51af9f2df 100644
+> index e51af9f2df..f362b38268 100644
 > --- a/contrib/plugins/execlog.c
 > +++ b/contrib/plugins/execlog.c
-> @@ -31,33 +31,28 @@ typedef struct CPU {
-> 
->  QEMU_PLUGIN_EXPORT int qemu_plugin_version = QEMU_PLUGIN_VERSION;
-> 
-> -static GArray *cpus;
-> -static GRWLock expand_array_lock;
-> +/*
-> + * Per-vCPU state stored in a qemu_plugin_scoreboard. The scoreboard manages
-> + * per-vCPU storage automatically, eliminating the need for manual array
-> + * growth, locks, or pointer-stability workarounds.
-> + */
-> +static struct qemu_plugin_scoreboard *cpus;
-> 
->  static GPtrArray *imatches;
->  static GArray *amatches;
->  static GPtrArray *rmatches;
->  static bool disas_assist;
->  static GMutex add_reg_name_lock;
-> +static GMutex execlog_output_mutex;
-
-QEMU log already has some locking mechanism, you just need to make sure
-you output everything in a single call at a time if you want atomicity.
-To help with string manipulation, you can use a GString to build a
-message. (see other plugins, it's a common pattern).
-
-So you can remove this mutex and code associated, and make sure you have
-a single call to qemu_plugin_outs in every function.
-
->  static GPtrArray *all_reg_names;
-> 
-> -static CPU *get_cpu(int vcpu_index)
-> -{
-> -    CPU *c;
-> -    g_rw_lock_reader_lock(&expand_array_lock);
-> -    c = &g_array_index(cpus, CPU, vcpu_index);
-> -    g_rw_lock_reader_unlock(&expand_array_lock);
-> -
-> -    return c;
-> -}
-> -
->  /**
->   * Add memory read or write information to current instruction log
->   */
->  static void vcpu_mem(unsigned int cpu_index, qemu_plugin_meminfo_t info,
->                       uint64_t vaddr, void *udata)
->  {
-> -    CPU *c = get_cpu(cpu_index);
-> +    CPU *c = qemu_plugin_scoreboard_find(cpus, cpu_index);
->      GString *s = c->last_exec;
-> 
->      /* Find vCPU in array */
-> @@ -117,7 +112,7 @@ static void insn_check_regs(CPU *cpu)
->  /* Log last instruction while checking registers */
->  static void vcpu_insn_exec_with_regs(unsigned int cpu_index, void *udata)
->  {
-> -    CPU *cpu = get_cpu(cpu_index);
-> +    CPU *cpu = qemu_plugin_scoreboard_find(cpus, cpu_index);
-> 
->      /* Print previous instruction in cache */
->      if (cpu->last_exec->len) {
-> @@ -125,8 +120,10 @@ static void vcpu_insn_exec_with_regs(unsigned int cpu_index, void *udata)
->              insn_check_regs(cpu);
->          }
-> 
-> +        g_mutex_lock(&execlog_output_mutex);
->          qemu_plugin_outs(cpu->last_exec->str);
->          qemu_plugin_outs("\n");
-> +        g_mutex_unlock(&execlog_output_mutex);
->      }
-> 
->      /* Store new instruction in cache */
-> @@ -138,7 +135,7 @@ static void vcpu_insn_exec_with_regs(unsigned int cpu_index, void *udata)
->  /* Log last instruction while checking registers, ignore next */
->  static void vcpu_insn_exec_only_regs(unsigned int cpu_index, void *udata)
->  {
-> -    CPU *cpu = get_cpu(cpu_index);
-> +    CPU *cpu = qemu_plugin_scoreboard_find(cpus, cpu_index);
-> 
->      /* Print previous instruction in cache */
->      if (cpu->last_exec->len) {
-> @@ -146,8 +143,10 @@ static void vcpu_insn_exec_only_regs(unsigned int cpu_index, void *udata)
->              insn_check_regs(cpu);
->          }
-> 
-> +        g_mutex_lock(&execlog_output_mutex);
->          qemu_plugin_outs(cpu->last_exec->str);
->          qemu_plugin_outs("\n");
-> +        g_mutex_unlock(&execlog_output_mutex);
->      }
-> 
->      /* reset */
-> @@ -157,12 +156,14 @@ static void vcpu_insn_exec_only_regs(unsigned int cpu_index, void *udata)
->  /* Log last instruction without checking regs, setup next */
->  static void vcpu_insn_exec(unsigned int cpu_index, void *udata)
->  {
-> -    CPU *cpu = get_cpu(cpu_index);
-> +    CPU *cpu = qemu_plugin_scoreboard_find(cpus, cpu_index);
-> 
->      /* Print previous instruction in cache */
->      if (cpu->last_exec->len) {
-> +        g_mutex_lock(&execlog_output_mutex);
->          qemu_plugin_outs(cpu->last_exec->str);
->          qemu_plugin_outs("\n");
-> +        g_mutex_unlock(&execlog_output_mutex);
->      }
-> 
->      /* Store new instruction in cache */
-> @@ -378,21 +379,10 @@ static GPtrArray *registers_init(int vcpu_index)
->   *   - last_exec tracking data
->   *   - list of tracked registers
->   *   - initial value of registers
-> - *
-> - * As we could have multiple threads trying to do this we need to
-> - * serialise the expansion under a lock.
->   */
->  static void vcpu_init(qemu_plugin_id_t id, unsigned int vcpu_index)
->  {
-> -    CPU *c;
-> -
-> -    g_rw_lock_writer_lock(&expand_array_lock);
-> -    if (vcpu_index >= cpus->len) {
-> -        g_array_set_size(cpus, vcpu_index + 1);
-> -    }
-> -    g_rw_lock_writer_unlock(&expand_array_lock);
-> -
-> -    c = get_cpu(vcpu_index);
-> +    CPU *c = qemu_plugin_scoreboard_find(cpus, vcpu_index);
->      c->last_exec = g_string_new(NULL);
->      c->registers = registers_init(vcpu_index);
+> @@ -388,7 +388,28 @@ static void vcpu_init(qemu_plugin_id_t id, unsigned int vcpu_index)
 >  }
-> @@ -402,16 +392,15 @@ static void vcpu_init(qemu_plugin_id_t id, unsigned int vcpu_index)
+> 
+>  /**
+> - * On plugin exit, print last instruction in cache
+> + * On vCPU exit, flush the last cached instruction for this vCPU.
+> + *
+> + * The one-instruction-delay pattern stores each instruction in last_exec and
+> + * only prints it when the *next* callback fires. When a thread exits via
+> + * syscall (e.g. ecall/exit), no subsequent callback fires for that vCPU and
+> + * the final instruction is silently dropped. Flushing here guarantees it is
+> + * written before the vCPU is torn down.
+> + */
+> +static void vcpu_exit(qemu_plugin_id_t id, unsigned int vcpu_index)
+> +{
+> +    CPU *c = qemu_plugin_scoreboard_find(cpus, vcpu_index);
+> +    if (c->last_exec && c->last_exec->len) {
+> +        g_mutex_lock(&execlog_output_mutex);
+> +        qemu_plugin_outs(c->last_exec->str);
+> +        qemu_plugin_outs("\n");
+> +        g_mutex_unlock(&execlog_output_mutex);
+> +        g_string_truncate(c->last_exec, 0);
+> +    }
+> +}
+> +
+> +/**
+> + * On plugin exit, flush any remaining cached instructions and free state.
 >   */
 >  static void plugin_exit(qemu_plugin_id_t id, void *p)
 >  {
-> -    guint i;
-> -    g_rw_lock_reader_lock(&expand_array_lock);
-> -    for (i = 0; i < cpus->len; i++) {
-> -        CPU *c = get_cpu(i);
-> -        if (c->last_exec && c->last_exec->str) {
-> +    int n = qemu_plugin_num_vcpus();
-> +    for (int i = 0; i < n; i++) {
-> +        CPU *c = qemu_plugin_scoreboard_find(cpus, i);
-> +        if (c->last_exec && c->last_exec->len) {
+> @@ -396,8 +417,10 @@ static void plugin_exit(qemu_plugin_id_t id, void *p)
+>      for (int i = 0; i < n; i++) {
+>          CPU *c = qemu_plugin_scoreboard_find(cpus, i);
+>          if (c->last_exec && c->last_exec->len) {
+> +            g_mutex_lock(&execlog_output_mutex);
 >              qemu_plugin_outs(c->last_exec->str);
 >              qemu_plugin_outs("\n");
+> +            g_mutex_unlock(&execlog_output_mutex);
 >          }
 >      }
-> -    g_rw_lock_reader_unlock(&expand_array_lock);
-> +    qemu_plugin_scoreboard_free(cpus);
->  }
+>      qemu_plugin_scoreboard_free(cpus);
+> @@ -467,6 +490,7 @@ QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
 > 
->  /* Add a match to the array of matches */
-> @@ -452,12 +441,8 @@ QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
->                                             const qemu_info_t *info, int argc,
->                                             char **argv)
->  {
-> -    /*
-> -     * Initialize dynamic array to cache vCPU instruction. In user mode
-> -     * we don't know the size before emulation.
-> -     */
-> -    cpus = g_array_sized_new(true, true, sizeof(CPU),
-> -                             info->system_emulation ? info->system.max_vcpus : 1);
-> +    /* Initialize scoreboard to cache per-vCPU instruction state. */
-> +    cpus = qemu_plugin_scoreboard_new(sizeof(CPU));
-> 
->      for (int i = 0; i < argc; i++) {
->          char *opt = argv[i];
+>      /* Register init, translation block and exit callbacks */
+>      qemu_plugin_register_vcpu_init_cb(id, vcpu_init);
+> +    qemu_plugin_register_vcpu_exit_cb(id, vcpu_exit);
+>      qemu_plugin_register_vcpu_tb_trans_cb(id, vcpu_tb_trans);
+>      qemu_plugin_register_atexit_cb(id, plugin_exit, NULL);
+>
+
+Why not simply make this flush in atexit callback?
+
 > --
 > 2.54.0
 > 
@@ -380,6 +252,4 @@ a single call to qemu_plugin_outs in every function.
 > 
 > El contingut, les dades i qualsevol document adjunt a aquest correu electrònic estan dirigits exclusivament al destinatari i són confidencials i/o poden estar subjectes a un acord de no revelació. Està prohibit qualsevol ús, reenviament, divulgació o còpia, total o parcial, sense autorització. Si has rebut aquest correu per error, et demanem disculpes i agraïm que ho notifiquis d'immediat al remitent o a Openchip, i l'eliminis del teu sistema
 
-Regards,
-Pierrick
 
