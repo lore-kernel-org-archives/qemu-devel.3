@@ -4,98 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2ED2CD98E3
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 08:48:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30581CD98DA
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 08:49:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZPSt-0007O8-7Q; Tue, 16 Jun 2026 04:48:11 -0400
+	id 1wZPTR-0007bE-8V; Tue, 16 Jun 2026 04:48:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wZPSr-0007NQ-Cv
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 04:48:09 -0400
-Received: from mail-yx1-xb12f.google.com ([2607:f8b0:4864:20::b12f])
+ id 1wZPTL-0007T3-Bm
+ for qemu-devel@nongnu.org; Tue, 16 Jun 2026 04:48:40 -0400
+Received: from mail-yx1-xb135.google.com ([2607:f8b0:4864:20::b135])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wZPSp-0008Ie-Vx
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 04:48:09 -0400
-Received: by mail-yx1-xb12f.google.com with SMTP id
- 956f58d0204a3-660323f7b27so4060116d50.3
- for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 01:48:07 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1781599687; cv=none;
+ id 1wZPTJ-0008Lp-Qn
+ for qemu-devel@nongnu.org; Tue, 16 Jun 2026 04:48:39 -0400
+Received: by mail-yx1-xb135.google.com with SMTP id
+ 956f58d0204a3-662c360aa73so25656d50.3
+ for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 01:48:36 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1781599716; cv=none;
  d=google.com; s=arc-20240605;
- b=M32ohu5whx2vLV+ymrogjS3UvO9rlSI1vNJnBOiPmvsVHU7bNTHpQ56fVjeRcxAyzO
- ORy0tbuYzqjpV4vyj7KKM3H9zaEA45bpCzequvyP1gQsoM8Dd2mdnNfvSnuA+WzE32EJ
- Ylq2bT2UJRmdZdJDRwIFfgvW/aHkV+mWIdgN4+DZ5CKEMadSfnPSSD4haaXPM4BLf0LC
- 51HZRqgK6PSKyd6lZjRcYx5qH1kecUKlXzprVoRhiY7bu4sF0lEFK17qZBcqo76cqiiF
- ScHvQNDGkNF2nQusiEFawwV6KMJ6+AC7JCyCp1LXaQO6zaz0jQ6felJLQHGKHX6xi3wd
- pRtg==
+ b=UwJ24CZfXPGEanV2XH3rsipXNezSQgCP6Zgc00rRe+H9l7AJpfsI/VQ+6M8Bp2B91N
+ iYwxUeuylHqxOFbrCS0nMpulDE/5LLAPS7r+nPWLtPw1Qj+a0cAnpLKPkN2fGFwexL7s
+ nstyQKrBOVRQgCi/UpVQO8ztrYNHyQH9MTVgRGUxJhgsdQWo04OnLH7dq2dmbpe8iCVy
+ EVuiEQB2bQBKAN3r6Yf/OKLvPIHOL64y367ChLeiQiMNfiEYDvYVZglPJ7IXNw+T+Q4j
+ f/9PJNfCVjCeKfaD4sPm28uNWiaOjGPGedQ7tdbgZSqi071vyZBZMiOpfH1jVJrJ0gn3
+ eJJQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:dkim-signature;
- bh=5r+APlV05BIlIwZRvP7h6ZusidgbpKZ5kC/OOQAO04k=;
- fh=oRJLpn0ZPkt84mVHZYJYzsQzX3CdO9ybC0IiPAD4E08=;
- b=A0eUSYluRoQc5cXLpJWv2Ez9zo/yuvFib2nQmCh47H7JhCq6VOeea2I7T9hDDa1geD
- W/KJ5YmugmuwrSizlJrWDB/RoRA8p4ZDzFPcP7yaCrqOfDAi9v9t3ZO7pe4k2h4FzBs7
- V2S1ui+vWI50kw4NFP7A81Vh7qib7N+qndh44qb2bONEO1aOCQths1RMfUbzRfi0ECiG
- w/8iSOhsOvGVh+VglplxOJGku5sPy1FSXKx5ChVmosYtm6IzSSzOrau3UsJQH83SfTig
- 0mp8T2fFl1FGlfihARXHDlQxFA4JaSFd0TgLku1tIzMA+GLnQDp/2Q+XBgCfbqzV5uVz
- cCiA==; darn=nongnu.org
+ bh=XvkHOIzaUam1/lYBeJ7E97rTLbuNkdxLaj6A96hVIgs=;
+ fh=yJjJslpQ/kQiLmB0saqwszjwyG+xful5qmOT+xNol2g=;
+ b=ChrbeOLunSP4z7KVCKolt5p1N1sn8g2t2tipQ1JHnIXq+twa6wI/gxmgDXXaeuQnLM
+ +7czo0vlQHWSFxe5GOz5pw7QUosy6tgQxkv151RCGcxYzg+TCEuAb7Q77JruoaLUV1tD
+ zM67Y2ECeVgAGWLwBB+7x4QRJuFdc+1DZk1Jixi4DnRjgMJ1diN4xJ0UjD9AMbVO/s6f
+ 7Ds0ngStrGqzKz/d7fI0v+p00nUccpeTqjPZjtm/wv0qdTI2035WY32+Hq5KrkcVMnQu
+ Jl748sWx8hgPRqdUFoNysbH6WPfhS6frfEB0ReEKPY1ANHQ2SN9mrUzooc5hFH4TTl8+
+ H6mw==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1781599687; x=1782204487; darn=nongnu.org;
+ d=linaro.org; s=google; t=1781599716; x=1782204516; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=5r+APlV05BIlIwZRvP7h6ZusidgbpKZ5kC/OOQAO04k=;
- b=eDZtWLf5UCjpYNA0fBVKK09seXZmt7cWzNEapoarSsjGKLKYhLbjvRhkSz8+52G+lt
- ArZzSpRBxOI+Bd5cOTfmQXoPJAsAAKd20e1dxDSw7qO+vf1tfalqS/H7bQAReMDra2rI
- hLZhIc8yMhG9bmrGribcJaNXV1513Sv0pT0t7/ftZXiiowMIXmFzXzfMSRLx2fztMHyu
- kAiRaeYoU55AHHocxg4ixjl2Bfg8laUbNBcQzj0aQ1xslU3BidktnodRO4UoY2leYF+U
- aOMBWx0FSN1uhLk5QpxvogzLpOiomM0ovGGLtPToFvZPV2AeY7OrxcD5/WC2/Q8TZdax
- ptFg==
+ bh=XvkHOIzaUam1/lYBeJ7E97rTLbuNkdxLaj6A96hVIgs=;
+ b=HmoR+jBIqdYqFJGchbSVSPYXXXv+OAltR/DGHiAKOrkCYVEKgV4F9tItcOIsyKs73C
+ QcI4YybeLx9JMYOCPcWkawROArztl2ZDOnKAKuiAM4+Ah+HDS0is0SmPalKE5HOSuM8P
+ 55ANx0yIp+4l9IgUAt/m3C4+RQVCnbhhXQaJIjTEDHgg2iA1luOpMNqAg+CRHG8FblYo
+ kutGt5yYlq2ULOi6JTMw22n1RgZ48UDVXSyyZRd3mczIF+pcDWNKiNA/vmIZyQqt7tev
+ sEdN/Izd2v9pQ1nXQM22861cAkey4ZWqbNhmZ3lo2yBdKq0AbRclybp1/SfrETWobyEF
+ YWyg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781599687; x=1782204487;
+ d=1e100.net; s=20251104; t=1781599716; x=1782204516;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=5r+APlV05BIlIwZRvP7h6ZusidgbpKZ5kC/OOQAO04k=;
- b=IZXSk4s02JThrt9nQrw0pqG+yOoU2zdByebffBSZxlPJ7R4euWnL4qUGxS9eouWkqm
- P+gqzWdZRWkwkXzxy2E8FnSRaTuUGK2FjqYSBsgjyratoU138BiMDPHjxNyeTTKvDM5H
- YmmB+t2BEkIfAiuicl+nh7QDWaPaDzJwVRWQttfjG4LnFY6RpnPgxg7fQuhYI0FyZJQ9
- fz2bZiCwjGSaYuWn7f3q4dc+uaECnUN+H5BHGLRz51BvfrJsD+Ntf+IZCyKg5POcIBtM
- xJT6oeYy+2aRtMFjBImOClbEw8iEkGxzbxXVdhhw3qufjMww8Ukj9mKRce1E77TuTudf
- kLyw==
+ bh=XvkHOIzaUam1/lYBeJ7E97rTLbuNkdxLaj6A96hVIgs=;
+ b=UjpjTTYNHFGvjX7KXg01mh0fMjFPCMMRKyIed9o3qHQI02ngg3wBe1TNh/34xe4JoK
+ TdBHW5gbi/ne6zdejY4jcgCKsunYwH6ZhB1Qiwk0ygx8A0BHSv5XLHbK8Qv/4xCtvbMH
+ YgFn5AEE8LUyRlSSb5veIX+rMdkZAyFZrLh9lJCSKx34zCjpgciiKwSc8fvy3JhBEKTc
+ x4/YdHBG0Bx3Z9AOmPf1oD3bYLyImJ7ghsuG41y5yi9JqeIngEnaNfK1ZF2WouJ/D8N6
+ yxsUGP+L0aDBp9/a7RMSnaTrMmSacm5b6Qwx+y6bEYeVyR4CTVvK2B4hTfAHH2lksodG
+ SApw==
 X-Forwarded-Encrypted: i=1;
- AFNElJ/SZ5bBWlj9ATTjdOB6+JFouU36LVQnSwCQ635VkQ26t4QyyZ4raxJgS6b6LOaStyv5eSG5JMT3NXqm@nongnu.org
-X-Gm-Message-State: AOJu0YyAatGK/CwXsgDbJarJPfHspjXzupmjjC5JY4jqDflAf/Np9oy/
- 9G21/RzCjIF0JZoT8GbWT9I0Bj5OpvAAYesgb5dO0f5x42VR2MqKWQpPyo7/59+J44TDj8vLXMK
- XBIkZFYKFzva531AdhdFUDyOkLyBTTNs4SxaKmxRr7A==
-X-Gm-Gg: Acq92OGE73O3e6aW7qYJZzGJ8piAryeOG9PTEV1iBme7YODJh1wEGEQ4E7397sX6n4Q
- wn8w86BcfT4XZ7gL3l4Qw6tJBx8fLcB2c2IU1a6IYQWcWZfg79VV9qfk13rZyG0F3T9FjKah17W
- 2bh+3yKFHFPW6VFetS7M85nVNiF4qlKguKIE8jLbeXZKcQI84kG01W9fgIzDb+m4dgknyA/1AJH
- ReqOZiE8pZE8rT/VhBA61ufhbLe8rxKvYYivr6qgQ04nfGQT/kc1c+93pIxgAKKNlFNbJmvpIWl
- eaE0+6xA5B0rxrQRLKY/dp9/WHxIv2dckYTvCNJWUDMpAVJ7tOry0u/jbgvB/+IbN9o=
-X-Received: by 2002:a05:690e:11c2:b0:660:580f:694 with SMTP id
- 956f58d0204a3-66285054f45mr12676095d50.44.1781599686755; Tue, 16 Jun 2026
- 01:48:06 -0700 (PDT)
+ AFNElJ9bk+zxjxc8/HnghJC7k4JyYfSoMY/57Sjy2AjoMPVGHdSoIKnGATnhsnrwuf5wGVz93yY8DCzvLxQ6@nongnu.org
+X-Gm-Message-State: AOJu0Yw6DIaslMiU/k8GeKA7vb8AE+YPUf26jnZlkE1/Zn5i9eGl/2c8
+ v5+dIfCTOe+3MccnzrVbtO6tNDk5kESisnQ1XV9Ce8xJ4hveDWBjPq3DzQ2PNoF2GS7PbEixv5n
+ TGcQFKuAU0rrOIcLpl4TtJr7nOmn3vNdN/Nvu0+PHhA==
+X-Gm-Gg: Acq92OEBmqam8WedozXIw0HRcQmLoSaTPHiMH9EdqMZKTq2nqdGl98HPzSR/lgLAiYC
+ R7zMJ2NRb0JblLqQuXK7DvDU7MpPz+qj14lvI7RbNgiaFgRbx5VPBp6Et1h7ZORpCdLGZsJTje7
+ bATsidMGkhWDWWVkNHOVXgZ7bPOCrTkw5H6HUw6H/5xsgrCH9Y/L4k6Rhiv6m2njQbit3xKxRyk
+ edio+Ob4oFWtXg/gldW14Wob2E1h+0WQqWJ6GLNHM5TlT+O7++KHMwddaqH5HlHVAAgay3CGU0w
+ cwLSZ9Lae14ZoKigHEaUtYO6CwbjQeHFRP2/xxh1bsuIdEGeQJcmA49lP2LXIwXyAwI=
+X-Received: by 2002:a05:690e:151b:b0:662:89c8:4a63 with SMTP id
+ 956f58d0204a3-662b601df10mr1932779d50.18.1781599715661; Tue, 16 Jun 2026
+ 01:48:35 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260603124415.1120808-1-eric.auger@redhat.com>
-In-Reply-To: <20260603124415.1120808-1-eric.auger@redhat.com>
+References: <20260608174900.2227340-1-nathanc@nvidia.com>
+ <20c8948f-1933-4410-96fc-10a2d53cb40a@redhat.com>
+In-Reply-To: <20c8948f-1933-4410-96fc-10a2d53cb40a@redhat.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 16 Jun 2026 09:47:55 +0100
-X-Gm-Features: AVVi8CdEmmahopLC05cpDoFPfOC-yIO_sFj3eYajVZVVWvPG76Dco_nZDjDdT0g
-Message-ID: <CAFEAcA8djCh2kL71Sa_6tRikiGT7PU=12yqJwrRuWFESSx+Xbw@mail.gmail.com>
-Subject: Re: [PATCH v2] hw/pci/pci: Enforce pci_setup_iommu_per_bus() is
- called only once per bus
-To: Eric Auger <eric.auger@redhat.com>
-Cc: eric.auger.pro@gmail.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org, 
- mst@redhat.com, skolothumtho@nvidia.com, nicolinc@nvidia.com, 
- nathanc@nvidia.com
+Date: Tue, 16 Jun 2026 09:48:22 +0100
+X-Gm-Features: AVVi8CdxCl049mvW1EAeYb3g3IBo_qAbujdubuwkskOTdw9SqAB365ERWsrG9EI
+Message-ID: <CAFEAcA-Mq4jd6Y5xOJDtLiu5BXMkz_5t8YCQEeUgYmyK5rb_wg@mail.gmail.com>
+Subject: Re: [PATCH v6 0/9] hw/arm/smmuv3-accel: Resolve AUTO properties
+To: eric.auger@redhat.com
+Cc: Nathan Chen <nathanc@nvidia.com>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@mailo.com>, 
+ Zhao Liu <zhao1.liu@intel.com>, Matt Ochs <mochs@nvidia.com>, 
+ Nicolin Chen <nicolinc@nvidia.com>, Shameer Kolothum <skolothumtho@nvidia.com>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12f;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b135;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb135.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -118,27 +120,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 3 Jun 2026 at 13:44, Eric Auger <eric.auger@redhat.com> wrote:
+On Tue, 9 Jun 2026 at 08:49, Eric Auger <eric.auger@redhat.com> wrote:
 >
-> Currently it is possible to attach several arm-smmuv3 devices to the
-> same bus although it is a wrong setup.
+> Hi Nathan, Peter,
 >
-> Change the prototype of pci_setup_iommu_per_bus to pass an error
-> handle. This latter is set when iommu_per_bus is already set and
-> used by the single caller (smmu_base_realize) to report a useful
-> error to the end-user.
+> On 6/8/26 7:48 PM, Nathan Chen wrote:
+> > Hi,
+> >
+> > This is a follow-up to the series [0] that introduces support for
+> > resolving 'auto' for arm-smmuv3 accelerated mode's ATS, RIL, SSIDSIZE,
+> > and OAS feature properties based on host IOMMU capabilities. This is
+> > dependent on the series [1] for changing these property types to accept
+> > 'auto' values.
+> >
+> > Accelerated SMMUv3 Address Translation Services support is derived from
+> > IDR0, Range Invalidation support is derived from IDR3, Substream ID
+> > size is derived from IDR1, and output address space is derived from
+> > IDR5.
+> >
+> > The default values are set to 'auto' for all properties. If accel=off
+> > and the values are set to 'auto' or are omitted and resolve to 'auto',
+> > the default property values defined in smmuv3_init_id_regs() for OAS
+> > and RIL will remain unchanged, while SSIDSIZE and ATS values will
+> > remain initialized at 0.
+> >
+> > A complete branch can be found here:
+> > https://github.com/NathanChenNVIDIA/qemu/tree/smmuv3-accel-auto-resolve-v6
+> >
+> > Please take a look and let me know your feedback.
 >
-> While at it document pci_setup_iommu_per_bus callback in the header.
+> The series looks good to me and I tested it with Grace-Hopper GPU
+> passthrough
+> with explicit option settings and auto settings. It collected R-bs for
+> all the patches. Feel free to collect my T-b:
 >
-> Fixes: 66d2f665e163 ("hw/arm/virt: Allow user-creatable SMMUv3 dev instantiation")
-> Signed-off-by: Eric Auger <eric.auger@redhat.com>
-> Tested-by: Nathan Chen <nathanc@nvidia.com>
-> Reviewed-by: Shameer Kolothum <skolothumtho@nvidia.com>
-> Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
+> Tested-by: Eric Auger <eric.auger@redhat.com>
+>
+> Peter, please could you consider pulling it if it suits you.
 
-I'll take this into target-arm.next as it's a fix for a function
-that's only used by the arm SMMU.
+Thanks for taking on the testing and review for this -- I've
+applied it to target-arm.next.
 
-thanks
 -- PMM
 
