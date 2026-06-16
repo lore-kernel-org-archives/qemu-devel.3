@@ -4,81 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62B20CD98E4
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 19:14:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64689CD98E1
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 19:14:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZZCJ-0002SU-Vf; Tue, 16 Jun 2026 15:11:44 -0400
+	id 1wZZC7-00028W-9p; Tue, 16 Jun 2026 15:11:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wZZ8W-0004jS-S9
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 15:07:51 -0400
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ id 1wZZ8E-0004ZR-MD
+ for qemu-devel@nongnu.org; Tue, 16 Jun 2026 15:07:37 -0400
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wZZ8T-0001Bm-Mg
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 15:07:48 -0400
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-490cdae130cso24688915e9.0
- for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 12:07:38 -0700 (PDT)
+ id 1wZZ87-0000zB-Rr
+ for qemu-devel@nongnu.org; Tue, 16 Jun 2026 15:07:28 -0400
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-49230a567a9so6467395e9.0
+ for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 12:07:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1781636857; x=1782241657; darn=nongnu.org;
+ d=linaro.org; s=google; t=1781636828; x=1782241628; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=gdadH/7yzWF4YFsnZKXvCn1rp8rkx7uY4acc5Pbtdfs=;
- b=JBR4ahYvi+HHQQIpwM4rt2qk+qpY5npnqUbgy03pwC2mvFUJGjDwc2AQwMzhn7gGZo
- D8rW4nbmpl+l+c8yQr96Ps6M9gvNY/sRSAmqYJm3YdQUeqbZWqSXhgR9PUUfx9ZqXtH3
- i56ATiZ7Drf8ikKQ1r5c5V1Tauj17ljhfK2g9ArCuVB9VKMeVauxEYGiGKnfggSlumG7
- 7tk4bH5Q9tCFYi+zNuBNoflRmbALRkwjS5dOFUt70JGWuKunfFlyJt/wn94Nf23fuizt
- bc1RjcifqfJN5Rst6N6+5t/SuoM7ceu/PfJyUpvgNumrrzIU5UO5eXiHn0PMCu5GSHA1
- wENg==
+ :reply-to; bh=ZfK0y90nu3Ld/r6Gi/P+At5Q9uLEC4IcCIzFZn+LBq8=;
+ b=fvyVbCbdYcPWSMI1mFeafchv+WiTpBcOTVDQzhI+Cb/uCf+Y9crB75N6Xh04GSCTiE
+ fSD4oqRhdEVfUw/ZurAc5Pq1yoPgL7U3VmBK3m4gxNIlHMN38bzJeRK0bC6avXBuUf6G
+ 4Q3zGRL7VKO07eO2rH5G3lJ5LxEl2BnFq1BL3mgvRWRZnm/GioVXpNZfEyZ0zcU+sDKy
+ yOFKfj4vtrPSMFAZW3HAaJLgCY2+8fHa7+PzyrL4aNLpHMGATviSi2KhjFo+h8iNwlqw
+ 93eWIEXrucsMcrEZtnnpzIPq1yaXlKMCDK5x+xjZhQtnb/Fnf46DipPKs+brE43dA5cM
+ QKbg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781636857; x=1782241657;
+ d=1e100.net; s=20251104; t=1781636828; x=1782241628;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=gdadH/7yzWF4YFsnZKXvCn1rp8rkx7uY4acc5Pbtdfs=;
- b=LYStPcYjj93HJ4aLq3aKdj/6FLZ1hVU4/Ib6XznLNzHxsZTFw0dN9jjEz0uGvT1m3q
- 6vz8WksJrKpYYqCPRSfVoA8Rfws4y7fnCFJcPlC4DGS6QTHLAOQGZEFG6IfBvtEABJfi
- 2NcCh4RB48MPxDwiMEulgSYXDpkonHB2u5TtrHSiKqO7MputdtvB1z86/JJPKqrWKDCw
- xyE9HrhBQ5zqA+n8mv1s+Bd8UPAHSY4lnhEpToNqLFcBVSs/4qwzKMmsEsU2VDo9d931
- e2v2lWecqFzW7YeXWmOyzfFFTo4tl44XjNXg/0uacuFmvF/p26xr4T/VpG1d93UTLkkP
- z7IQ==
-X-Gm-Message-State: AOJu0YzZZRtGX1g4LN8EY9Y74u4cccukjDYE7ivzqQk8YzUtLzm98mr4
- KuUYyGNm1PCoNIjRxiNVcRTO3JbwEceOpuh7LlGSX26VOru9HHeEanSc+Qo3hA4ehtSHugeiA4F
- tV99A
-X-Gm-Gg: Acq92OEdhAvbGip6JwaKIgLnVBpMvsaSN9Gt74g6bYzu3fBtPaqW+cImlj8o3KQdJxc
- F9F0QPjOFyrrGccQ10TKehQ720fvtOgiUTG8zym6cyT3V1EskDL3sUyQfqeBMdyG+MkGzc4YPkI
- HrREvhAeu80sS4/vyniiWPIqw5emixF92MfDY6kIbMfXDzsuOvtNUw24XFVpEukA8IxzMHvjsbM
- itzjST8IR9TdkYhMR+yz4ma7NHiQX1n1eki9PCNKpDhsg+nWPeJXEaEUwNtwLIIJVATPv02kqGb
- VS9LbU3Zp3/Aji5fltkb21F7BO/CrXBylXrziI8F6keFIrqB9dd9ELK6P/KkXbOJj3FXCbtAESE
- ONjEdn3KHv03d9bj/g1PH9/OQmW/zR6rI+BqF5KwNBPNjmDJ3NG5f0NnyMJG5Pc4symFZ53cSxt
- qpSZ24PdN7R3kCZkkH5zS2rCZzICOSLi06J9WjFXFJ0fy9IsURz8fq4FjW1TPaQiVBIe7ZcrQ7/
- 7oWrljO27Zt27p6M8SfrCyjXx+t/EpDSe1AJsLaJ6Y=
-X-Received: by 2002:a05:600c:e557:20b0:490:e5c1:b8bf with SMTP id
- 5b1f17b1804b1-492333bfa01mr10036535e9.13.1781636857166; 
- Tue, 16 Jun 2026 12:07:37 -0700 (PDT)
+ bh=ZfK0y90nu3Ld/r6Gi/P+At5Q9uLEC4IcCIzFZn+LBq8=;
+ b=GOc9euyICKA1OQExAErkiNUvYjiyxdNqHmTqKurfaLdVeU2pG94JwJsZGOuw/cMC8X
+ C9XpnhKV+yp5mpv6xqwcvQo5OgxB3iPRDWNqddoSkt1L+MoBIzNg/qwY0f7OsifeSsdX
+ ufWerVgiUtfHg94gLmLCYpT9KBoWN3IYxPLTS4vwMMOXsqDyjBQujEFFJ+0tX2+cd4ti
+ k1fM9bGH3Mgfs42bY7oy/qLWYAZF4HA54qaOam6TmyPRZLHuoWkON4dreaAc6qv05ZbM
+ OKnyC1iL7DSDOHr2nfRuIU0FDducjDTkWqtHUDmwpo+/Huqu6odu7eBj4iv/juKcS/5U
+ x0fw==
+X-Gm-Message-State: AOJu0YyfEb0Sr2P5cAL3bFPRSfoGthxIv0lFMdJ+UJDFI0WNlYnBRbQO
+ KmDRGdZh9JzEG6rEwi4xjFf4rbownk5Bp6okSrsWAZfGpQgcqgEXJIgfZ6/k0NqoFYqVU9fz2Tq
+ c5enT
+X-Gm-Gg: Acq92OGeLhiKRYx+WYyAyCktgotFA0Dscug1GRJvgBX1mJWkg9+rkvbYn80K6u88sI8
+ 74cdUGKON+lCiIy+SiCMPeK/3N1IBtsGt5U9qWOe03ttSry+ls6IIXTD0gjMrSAcMqdJ5OKQND7
+ nv3iXZm1QEYYzGyEStAJLFBRYNeGeG75ok2S0MgvsOnBoaczcrbhRLLQx1R4io0FBZvKepctKJe
+ sBKQItALhK4u2eOwBDyAWUeDWeqYVE+b9JEqrCX3BQ+xhRardoD7w6iEZWOTiiq+M/O+VP1IvG6
+ G33hxmV0iQk8u3qByQO1rmBxBhvVCTObNtQV/Aurl0MW0vtw8n29JTUkobDJSH11r3NMABXazjZ
+ RE+wIt96VlSAUNbkL8UvLo1TrT2/9S4hUG0flDxWAhTMHr1RaH7WyEqyNlJMZiv2Xy2ouRrBKUy
+ CnTdAve3xPy0jnUZsDsAK62FS0vpM8D+VpM2Qy85xq2rlG4xrN4dUkJIL6G0+2LFWcGI0qZ43+y
+ Q6NW62dlMaDVMN1rrqCoyBrL55iAxb3TFzhlkd4QuA=
+X-Received: by 2002:a05:600c:c096:b0:490:be9e:fd03 with SMTP id
+ 5b1f17b1804b1-492333e8f1emr10480435e9.7.1781636828502; 
+ Tue, 16 Jun 2026 12:07:08 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4606f2d9becsm45078765f8f.34.2026.06.16.12.07.36
+ ffacd0b85a97d-4606f2d9becsm45078765f8f.34.2026.06.16.12.07.07
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 16 Jun 2026 12:07:36 -0700 (PDT)
+ Tue, 16 Jun 2026 12:07:07 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 50/61] target/arm: Implement SVE reverse within elements
- (zeroing)
-Date: Tue, 16 Jun 2026 20:06:27 +0100
-Message-ID: <20260616190639.3462006-51-peter.maydell@linaro.org>
+Subject: [PULL 23/61] hw/arm/tegra241-cmdqv: Implement CMDQV vIOMMU alloc/free
+Date: Tue, 16 Jun 2026 20:06:00 +0100
+Message-ID: <20260616190639.3462006-24-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260616190639.3462006-1-peter.maydell@linaro.org>
 References: <20260616190639.3462006-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x330.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,69 +100,115 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+From: Nicolin Chen <nicolinc@nvidia.com>
 
-This includes REVB, REVH, REVW, RBIT.
+Replace the stub implementation with real vIOMMU allocation for
+Tegra241 CMDQV.
 
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Message-id: 20260604234852.573178-8-richard.henderson@linaro.org
+Allocate a matching vEVENTQ together with the vIOMMU, since it is
+specific to the Tegra241 CMDQV vIOMMU and used to receive CMDQV
+events.
+
+Free both objects on teardown.
+
+Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
+Reviewed-by: Eric Auger <eric.auger@redhat.com>
+Tested-by: Nicolin Chen <nicolinc@nvidia.com>
+Tested-by: Eric Auger <eric.auger@redhat.com>
+Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
+Message-id: 20260609112552.378999-14-skolothumtho@nvidia.com
+Co-developed-by: Shameer Kolothum <skolothumtho@nvidia.com>
+Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/arm/tcg/sve.decode      | 5 +++++
- target/arm/tcg/translate-sve.c | 7 +++++++
- 2 files changed, 12 insertions(+)
+ hw/arm/tegra241-cmdqv.c | 48 ++++++++++++++++++++++++++++++++++++++++-
+ hw/arm/tegra241-cmdqv.h |  1 +
+ 2 files changed, 48 insertions(+), 1 deletion(-)
 
-diff --git a/target/arm/tcg/sve.decode b/target/arm/tcg/sve.decode
-index e79b5e84c1..867ae2916e 100644
---- a/target/arm/tcg/sve.decode
-+++ b/target/arm/tcg/sve.decode
-@@ -730,6 +730,11 @@ REVW_m          00000101 .. 1001 10 100 ... ..... .....         @rd_pg_rn
- RBIT_m          00000101 .. 1001 11 100 ... ..... .....         @rd_pg_rn
- REVD_m          00000101 00 1011 10 100 ... ..... .....         @rd_pg_rn_e0
+diff --git a/hw/arm/tegra241-cmdqv.c b/hw/arm/tegra241-cmdqv.c
+index 2875affc8d..c1351c8519 100644
+--- a/hw/arm/tegra241-cmdqv.c
++++ b/hw/arm/tegra241-cmdqv.c
+@@ -10,6 +10,7 @@
+ #include "qemu/osdep.h"
  
-+REVB_z          00000101 .. 1001 00 101 ... ..... .....         @rd_pg_rn
-+REVH_z          00000101 .. 1001 01 101 ... ..... .....         @rd_pg_rn
-+REVW_z          00000101 .. 1001 10 101 ... ..... .....         @rd_pg_rn
-+RBIT_z          00000101 .. 1001 11 101 ... ..... .....         @rd_pg_rn
+ #include "hw/arm/smmuv3.h"
++#include "hw/arm/smmuv3-common.h"
+ #include "smmuv3-accel.h"
+ #include "tegra241-cmdqv.h"
+ 
+@@ -26,13 +27,58 @@ static void tegra241_cmdqv_write_mmio(void *opaque, hwaddr offset,
+ 
+ static void tegra241_cmdqv_free_viommu(SMMUv3State *s)
+ {
++    SMMUv3AccelState *accel = s->s_accel;
++    IOMMUFDViommu *viommu = accel->viommu;
++    Tegra241CMDQV *cmdqv = accel->cmdqv;
++    IOMMUFDVeventq *veventq = cmdqv->veventq;
 +
- # SVE vector splice (predicated, destructive)
- SPLICE          00000101 .. 101 100 100 ... ..... .....         @rdn_pg_rm
++    if (!viommu) {
++        return;
++    }
++    if (veventq) {
++        close(veventq->veventq_fd);
++        iommufd_backend_free_id(viommu->iommufd, veventq->veventq_id);
++        g_free(veventq);
++        cmdqv->veventq = NULL;
++    }
++    iommufd_backend_free_id(viommu->iommufd, viommu->viommu_id);
+ }
  
-diff --git a/target/arm/tcg/translate-sve.c b/target/arm/tcg/translate-sve.c
-index d6a1683719..cd1e0e744d 100644
---- a/target/arm/tcg/translate-sve.c
-+++ b/target/arm/tcg/translate-sve.c
-@@ -836,6 +836,7 @@ static gen_helper_gvec_3 * const sve_rbit_fns[4] = {
-     gen_helper_sve_rbit_s, gen_helper_sve_rbit_d,
- };
- TRANS_FEAT(RBIT_m, aa64_sme_or_sve, gen_gvec_ool_arg_zpz, sve_rbit_fns[a->esz], a, 0)
-+TRANS_FEAT(RBIT_z, aa64_sme2p2_or_sve2p2, gen_gvec_ool_arg_zpz, sve_rbit_fns[a->esz], a, 1)
+ static bool
+ tegra241_cmdqv_alloc_viommu(SMMUv3State *s, HostIOMMUDeviceIOMMUFD *idev,
+                             uint32_t *out_viommu_id, Error **errp)
+ {
+-    error_setg(errp, "NVIDIA Tegra241 CMDQV is unsupported");
++    Tegra241CMDQV *cmdqv = s->s_accel->cmdqv;
++    uint32_t viommu_id, veventq_id, veventq_fd;
++    IOMMUFDVeventq *veventq;
++
++    if (!iommufd_backend_alloc_viommu(idev->iommufd, idev->devid,
++                                      IOMMU_VIOMMU_TYPE_TEGRA241_CMDQV,
++                                      idev->hwpt_id, cmdqv->cmdqv_data,
++                                      sizeof(*cmdqv->cmdqv_data), &viommu_id,
++                                      errp)) {
++        return false;
++    }
++
++    if (!iommufd_backend_alloc_veventq(idev->iommufd, viommu_id,
++                                       IOMMU_VEVENTQ_TYPE_TEGRA241_CMDQV,
++                                       1 << SMMU_EVENTQS, &veventq_id,
++                                       &veventq_fd,
++                                       errp)) {
++        error_append_hint(errp, "Tegra241 CMDQV: failed to alloc veventq");
++        goto free_viommu;
++    }
++
++    veventq = g_new(IOMMUFDVeventq, 1);
++    veventq->veventq_id = veventq_id;
++    veventq->veventq_fd = veventq_fd;
++    cmdqv->veventq = veventq;
++
++    *out_viommu_id = viommu_id;
++    return true;
++
++free_viommu:
++    iommufd_backend_free_id(idev->iommufd, viommu_id);
+     return false;
+ }
  
- static gen_helper_gvec_3 * const sve2p1_orqv_fns[4] = {
-     gen_helper_sve2p1_orqv_b, gen_helper_sve2p1_orqv_h,
-@@ -3070,15 +3071,21 @@ static gen_helper_gvec_3 * const revb_fns[4] = {
- };
- TRANS_FEAT(REVB_m, aa64_sme_or_sve, gen_gvec_ool_arg_zpz,
-            revb_fns[a->esz], a, 0)
-+TRANS_FEAT(REVB_z, aa64_sme2p2_or_sve2p2, gen_gvec_ool_arg_zpz,
-+           revb_fns[a->esz], a, 1)
+diff --git a/hw/arm/tegra241-cmdqv.h b/hw/arm/tegra241-cmdqv.h
+index a5f65a8991..9fc720e96c 100644
+--- a/hw/arm/tegra241-cmdqv.h
++++ b/hw/arm/tegra241-cmdqv.h
+@@ -32,6 +32,7 @@ typedef struct Tegra241CMDQV {
+     SMMUv3AccelState *s_accel;
+     MemoryRegion mmio_cmdqv;
+     qemu_irq irq;
++    IOMMUFDVeventq *veventq;
+ } Tegra241CMDQV;
  
- static gen_helper_gvec_3 * const revh_fns[4] = {
-     NULL, NULL, gen_helper_sve_revh_s, gen_helper_sve_revh_d,
- };
- TRANS_FEAT(REVH_m, aa64_sme_or_sve, gen_gvec_ool_arg_zpz,
-            revh_fns[a->esz], a, 0)
-+TRANS_FEAT(REVH_z, aa64_sme2p2_or_sve2p2, gen_gvec_ool_arg_zpz,
-+           revh_fns[a->esz], a, 1)
- 
- TRANS_FEAT(REVW_m, aa64_sme_or_sve, gen_gvec_ool_arg_zpz,
-            a->esz == 3 ? gen_helper_sve_revw_d : NULL, a, 0)
-+TRANS_FEAT(REVW_z, aa64_sme2p2_or_sve2p2, gen_gvec_ool_arg_zpz,
-+           a->esz == 3 ? gen_helper_sve_revw_d : NULL, a, 1)
- 
- TRANS_FEAT(REVD_m, aa64_sme_or_sve2p1, gen_gvec_ool_arg_zpz,
-            gen_helper_sme_revd_q, a, 0)
+ const SMMUv3AccelCmdqvOps *tegra241_cmdqv_get_ops(void);
 -- 
 2.43.0
 
