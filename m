@@ -4,86 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1BD98CD98E1
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 14:00:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3691ECD98DA
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 14:10:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZUKM-00056Z-Mh; Tue, 16 Jun 2026 09:59:43 -0400
+	id 1wZUUG-0000Hp-Co; Tue, 16 Jun 2026 10:09:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xpahos@gmail.com>) id 1wZUKH-000555-3y
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 09:59:38 -0400
-Received: from mail-lf1-x130.google.com ([2a00:1450:4864:20::130])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <xpahos@gmail.com>) id 1wZUKF-0007M5-Gi
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 09:59:36 -0400
-Received: by mail-lf1-x130.google.com with SMTP id
- 2adb3069b0e04-5aa68dbd44fso4536519e87.2
- for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 06:59:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1781618374; x=1782223174; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=1843k24ZTU4wUi+EnwW19oLLlgWrWeA2MiXCiM3L90o=;
- b=Yr7+kIb4MJ6WRFjfKSlSbjaFX2cHewz25DYi7XDFuxynTuso2D4dCWqNpFrwKRqsbd
- OrPfVgIBmJKoQ/BwNl+EopEasZ/BVClFGNMKwMO3Mm5G4gBIIauGs/wSHGTst+xxeX/Y
- UEhvUYW7lCYVWbfCTJt/DXu2j9jCBNfwHYwnh7P5ghfhQ3ocPHIuk1SqyD0Mlm8CO+3X
- KkMyLYy0C8Lmt/QHkOPput4H4mRAZFgYHugKshne8lldfTziKuVyof9c1Fn4fOx237pU
- b6kZe9koskCAkxGFrZg0TkLybw+dvNRX2ESxocbnia4KOpN3kt/vYr6X+CtAeEDRAdBF
- EHGw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781618374; x=1782223174;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=1843k24ZTU4wUi+EnwW19oLLlgWrWeA2MiXCiM3L90o=;
- b=WTeMJUQCzvc3vKLRrNR3vlcQ6JPAAWpBUfPJpx5FWzDH6HqNJfWT39NN8sQFUGHy9b
- h3aL1Ca27X4uu9CBUK2s2SQwFAAZjF5VnbpryFfTftpMcBAFdQsVTTGtf5UuHRQWyrxj
- CBz85sUKcKFCa/62DSFNOcInE4qBwTITc4hQpMkVFxW+vJGK5ONN8wkDl21JWK/7YfeN
- vm2mlh8p7nX3zFkgk9k9P5zSoWmD3eB7d6Q8PiyQhFpHahV6KyvZuv7kQ23lZfLyDIW1
- RDLsn0O/CVGYVWTzMaagZVwhx8eM9rnG/MhW+qjdkZkEqnPIFM1DLu+5dPgWg7lomioC
- j4DA==
-X-Gm-Message-State: AOJu0YybnG1w04y5cnhNFMbSLcS6yvQBhdRxVCFR/cnIajGgIq1B2woT
- 9pglP67lx//BepYl47+rWybmy4ETnhRGRIEemdrQOkwEdRfG6a++Oqdvtqlzcb6KF/k=
-X-Gm-Gg: Acq92OGCFmL5Y839sS7HjOq65UqnkpTivx5c0sGuHRk7lkWCLTjShfQu4YHYvk6TE2n
- aJw6wnIJbrdDZZxMngYB04xogPIYQ79X5oSX5JMTVgwRUYG5wrE907sOwxk7Q/61FYEtEbGvIQh
- 46YqH7mMrh2IjP36eN7p45w7TofX+le8imiYRY4HXpxrLw8HKZ9qlLaKKrSsb2yFzHIfoMIVxl3
- 7en8/fOCa/M3FMnILCbhUGd1B8fEPqLk0ZlyLIm2m2/XkPNwI0JqxFh0urdDL8b9QhhCm6qciOy
- 6171R0iZ/CMsAWPx2YZpn3cI60T/qzAAmuLU6Vb4+F5yMzcr4vFdU5AK5k/M8Rw1E/jyb/RPZe/
- h4A59W9rJGYe972i2JoNKo5n+6YrZr7ya1NlpKHvMy/oCxMTOgjbN0fJFKbKLT8x7cDx654H2EX
- w+y/RxedckO0hUCNtl0SnDaK/lof+G8JOFHVQv/VZGwM6RKneH
-X-Received: by 2002:a05:6512:1253:b0:5ad:3a70:a8cf with SMTP id
- 2adb3069b0e04-5ad3a70aa46mr2694319e87.25.1781618373567; 
- Tue, 16 Jun 2026 06:59:33 -0700 (PDT)
-Received: from xpahos-osx.yandex.net ([2a02:6bf:8011:f00:689d:b3a0:c7eb:5526])
- by smtp.gmail.com with ESMTPSA id
- 2adb3069b0e04-5ad2e161f1esm3634677e87.2.2026.06.16.06.59.32
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 16 Jun 2026 06:59:33 -0700 (PDT)
-From: Alexander Gryanko <xpahos@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: imammedo@redhat.com, mst@redhat.com, philmd@linaro.org,
- anisinha@redhat.com, pbonzini@redhat.com, richard.henderson@linaro.org,
- zhao1.liu@intel.com, Alexander Gryanko <xpahos@gmail.com>
-Subject: [PATCH v2 2/3] hw/smbios: Add dedicated handle range for Type 8 tables
-Date: Tue, 16 Jun 2026 16:59:03 +0300
-Message-Id: <20260616135904.44930-3-xpahos@gmail.com>
-X-Mailer: git-send-email 2.39.5 (Apple Git-154)
-In-Reply-To: <20260616135904.44930-1-xpahos@gmail.com>
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wZUUC-0000HY-5w
+ for qemu-devel@nongnu.org; Tue, 16 Jun 2026 10:09:52 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wZUUA-0001dl-Bc
+ for qemu-devel@nongnu.org; Tue, 16 Jun 2026 10:09:51 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1781618987;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=rjqMW9jV/8yfhxu2R8LuZ7K+b0pKmnIUvNVcEn3qZ+E=;
+ b=RNwrYx1Z5urSvE/jO/Q7TpHq68WmX/F23ytapvLbzg4xNn/wRyb5ltT00ALHYsCw3xmyf9
+ AqavbYv+g8KS94JP2ssRlmLC180VYHzxxV5/gzXLOUjuwufFlolYWycZhC3IbTXVX8nJVT
+ lyVc21YmOvR8GauLVntfKf9XX9lBu24=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-355-AP7jvXMBOfG4S5gWRwCeiQ-1; Tue,
+ 16 Jun 2026 10:09:44 -0400
+X-MC-Unique: AP7jvXMBOfG4S5gWRwCeiQ-1
+X-Mimecast-MFC-AGG-ID: AP7jvXMBOfG4S5gWRwCeiQ_1781618983
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id DAAB71805C23; Tue, 16 Jun 2026 14:09:42 +0000 (UTC)
+Received: from redhat.com (unknown [10.44.49.111])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 20D6B1800594; Tue, 16 Jun 2026 14:09:38 +0000 (UTC)
+Date: Tue, 16 Jun 2026 15:09:35 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Alexander Gryanko <xpahos@gmail.com>
+Cc: qemu-devel@nongnu.org, imammedo@redhat.com, mst@redhat.com,
+ philmd@linaro.org, anisinha@redhat.com, pbonzini@redhat.com,
+ richard.henderson@linaro.org, zhao1.liu@intel.com
+Subject: Re: [PATCH v2 1/3] hw/i386/pc: Introduce 11.2 machine type for
+ SMBIOS type 8 base migration
+Message-ID: <ajFZHxYkETZk6SON@redhat.com>
 References: <20260616135904.44930-1-xpahos@gmail.com>
+ <20260616135904.44930-2-xpahos@gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::130;
- envelope-from=xpahos@gmail.com; helo=mail-lf1-x130.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260616135904.44930-2-xpahos@gmail.com>
+User-Agent: Mutt/2.3.2 (2026-04-26)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,92 +84,190 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-SMBIOS Type 8 (Port Connector) tables currently use T0_BASE (0x0) for
-handle allocation. This can lead to handle collisions with other table
-types that also start at T0_BASE. Types 2, 3, 4, 9, and 11 already
-have dedicated handle ranges (T2_BASE=0x200, T3_BASE=0x300, T4_BASE=0x400,
-T9_BASE=0x900, T11_BASE=0xe00), but Type 8 was missed.
-Add T8_BASE (0x800) to fill the gap in the handle range allocation.
-Introduce a static flag and smbios_set_type8_handle_t8_base() setter
-to allow machine types to opt in to the new range. When the flag is
-false (the default), the old T0_BASE behavior is preserved.
+On Tue, Jun 16, 2026 at 04:59:02PM +0300, Alexander Gryanko wrote:
+> SMBIOS Type 8 (Port Connector) tables have been using T0_BASE (0x0) for
+> handle allocation, which can collide with handles assigned to other
+> SMBIOS types. Types 2, 3, 4, 9, and 11 already use dedicated ranges
+> (T2_BASE=0x200, T3_BASE=0x300, etc.).
+> Introduce pc-q35-11.2 and pc-i440fx-11.2 with smbios_type8_handle_t8_base
+> enabled, so Type 8 handles start at 0x800. The 11.1 machine types retain
+> T0_BASE for migration compatibility.
 
-Signed-off-by: Alexander Gryanko <xpahos@gmail.com>
----
- hw/i386/fw_cfg.c             |  1 +
- hw/smbios/smbios.c           | 10 +++++++++-
- include/hw/firmware/smbios.h |  1 +
- 3 files changed, 11 insertions(+), 1 deletion(-)
+This should not be adding a new 11.2 machine type, as we have
+not even released 11.1 yet.
 
-diff --git a/hw/i386/fw_cfg.c b/hw/i386/fw_cfg.c
-index 2876490f06..0b3a14cdb1 100644
---- a/hw/i386/fw_cfg.c
-+++ b/hw/i386/fw_cfg.c
-@@ -77,6 +77,7 @@ void fw_cfg_build_smbios(PCMachineState *pcms, FWCfgState *fw_cfg,
-         /* These values are guest ABI, do not change */
-         smbios_set_defaults("QEMU", mc->desc, mc->name);
-     }
-+    smbios_set_type8_handle_t8_base(pcmc->smbios_type8_handle_t8_base);
- 
-     /* tell smbios about cpuid version and features */
-     smbios_set_cpuid(cpu->env.cpuid_version, cpu->env.features[FEAT_1_EDX]);
-diff --git a/hw/smbios/smbios.c b/hw/smbios/smbios.c
-index 7d7141851b..0e0200600e 100644
---- a/hw/smbios/smbios.c
-+++ b/hw/smbios/smbios.c
-@@ -49,6 +49,7 @@ static SmbiosEntryPoint ep;
- static int smbios_type4_count = 0;
- static bool smbios_have_defaults;
- static uint32_t smbios_cpuid_version, smbios_cpuid_features;
-+static bool smbios_type8_t8_base;
- 
- DECLARE_BITMAP(smbios_have_binfile_bitmap, SMBIOS_MAX_TYPE + 1);
- DECLARE_BITMAP(smbios_have_fields_bitmap, SMBIOS_MAX_TYPE + 1);
-@@ -553,6 +554,7 @@ bool smbios_skip_table(uint8_t type, bool required_table)
- #define T2_BASE 0x200
- #define T3_BASE 0x300
- #define T4_BASE 0x400
-+#define T8_BASE 0x800
- #define T9_BASE 0x900
- #define T11_BASE 0xe00
- 
-@@ -742,13 +744,19 @@ static void smbios_build_type_4_table(MachineState *ms, unsigned instance,
-     smbios_type4_count++;
- }
- 
-+void smbios_set_type8_handle_t8_base(bool t8_base)
-+{
-+    smbios_type8_t8_base = t8_base;
-+}
-+
- static void smbios_build_type_8_table(void)
- {
-     unsigned instance = 0;
-     struct type8_instance *t8;
-+    uint16_t base = smbios_type8_t8_base ? T8_BASE : T0_BASE;
- 
-     QTAILQ_FOREACH(t8, &type8, next) {
--        SMBIOS_BUILD_TABLE_PRE(8, T0_BASE + instance, true);
-+        SMBIOS_BUILD_TABLE_PRE(8, base + instance, true);
- 
-         SMBIOS_TABLE_SET_STR(8, internal_reference_str, t8->internal_reference);
-         SMBIOS_TABLE_SET_STR(8, external_reference_str, t8->external_reference);
-diff --git a/include/hw/firmware/smbios.h b/include/hw/firmware/smbios.h
-index 3ea732f4e6..62e728b69c 100644
---- a/include/hw/firmware/smbios.h
-+++ b/include/hw/firmware/smbios.h
-@@ -333,6 +333,7 @@ void smbios_set_cpuid(uint32_t version, uint32_t features);
- void smbios_set_defaults(const char *manufacturer, const char *product,
-                          const char *version);
- void smbios_set_default_processor_family(uint16_t processor_family);
-+void smbios_set_type8_handle_t8_base(bool t8_base);
- uint8_t *smbios_get_table_legacy(size_t *length, Error **errp);
- void smbios_get_tables(MachineState *ms,
-                        SmbiosEntryPointType ep_type,
+Machine types are added as standalone commits immediately after
+each release, so no other commits should be adding machine
+types.
+
+Changes should be going into current 11.1 machines.
+
+> Other platforms (ARM, LoongArch, RISC-V) are not changed by this patch.
+> 
+> Signed-off-by: Alexander Gryanko <xpahos@gmail.com>
+> ---
+>  hw/core/machine.c        |  3 +++
+>  hw/i386/pc.c             |  3 +++
+>  hw/i386/pc_piix.c        | 16 ++++++++++++++--
+>  hw/i386/pc_q35.c         | 16 ++++++++++++++--
+>  include/hw/core/boards.h |  3 +++
+>  include/hw/i386/pc.h     |  4 ++++
+>  6 files changed, 41 insertions(+), 4 deletions(-)
+> 
+> diff --git a/hw/core/machine.c b/hw/core/machine.c
+> index 63baff859f..96de2d20f0 100644
+> --- a/hw/core/machine.c
+> +++ b/hw/core/machine.c
+> @@ -39,6 +39,9 @@
+>  #include "hw/acpi/generic_event_device.h"
+>  #include "qemu/audio.h"
+>  
+> +GlobalProperty hw_compat_11_1[] = {};
+> +const size_t hw_compat_11_1_len = G_N_ELEMENTS(hw_compat_11_1);
+> +
+>  GlobalProperty hw_compat_11_0[] = {
+>      { "chardev-vc", "encoding", "cp437" },
+>  };
+> diff --git a/hw/i386/pc.c b/hw/i386/pc.c
+> index 2ecad3c503..17ad8b6489 100644
+> --- a/hw/i386/pc.c
+> +++ b/hw/i386/pc.c
+> @@ -73,6 +73,9 @@
+>  #include "hw/xen/xen-bus.h"
+>  #endif
+>  
+> +GlobalProperty pc_compat_11_1[] = {};
+> +const size_t pc_compat_11_1_len = G_N_ELEMENTS(pc_compat_11_1);
+> +
+>  GlobalProperty pc_compat_11_0[] = {};
+>  const size_t pc_compat_11_0_len = G_N_ELEMENTS(pc_compat_11_0);
+>  
+> diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
+> index 82457bdb16..27e1d552f6 100644
+> --- a/hw/i386/pc_piix.c
+> +++ b/hw/i386/pc_piix.c
+> @@ -406,6 +406,7 @@ static void pc_i440fx_machine_options(MachineClass *m)
+>      pcmc->default_south_bridge = TYPE_PIIX3_DEVICE;
+>      pcmc->pci_root_uid = 0;
+>      pcmc->default_cpu_version = 1;
+> +    pcmc->smbios_type8_handle_t8_base = true;
+>  
+>      m->family = "pc_piix";
+>      m->desc = "Standard PC (i440FX + PIIX, 1996)";
+> @@ -428,12 +429,23 @@ static void pc_i440fx_machine_options(MachineClass *m)
+>                       pc_piix_compat_defaults, pc_piix_compat_defaults_len);
+>  }
+>  
+> -static void pc_i440fx_machine_11_1_options(MachineClass *m)
+> +static void pc_i440fx_machine_11_2_options(MachineClass *m)
+>  {
+>      pc_i440fx_machine_options(m);
+>  }
+>  
+> -DEFINE_I440FX_MACHINE_AS_LATEST(11, 1);
+> +DEFINE_I440FX_MACHINE_AS_LATEST(11, 2);
+> +
+> +static void pc_i440fx_machine_11_1_options(MachineClass *m)
+> +{
+> +    PCMachineClass *pcmc = PC_MACHINE_CLASS(m);
+> +    pc_i440fx_machine_11_2_options(m);
+> +    pcmc->smbios_type8_handle_t8_base = false;
+> +    compat_props_add(m->compat_props, hw_compat_11_1, hw_compat_11_1_len);
+> +    compat_props_add(m->compat_props, pc_compat_11_1, pc_compat_11_1_len);
+> +}
+> +
+> +DEFINE_I440FX_MACHINE(11, 1);
+>  
+>  static void pc_i440fx_machine_11_0_options(MachineClass *m)
+>  {
+> diff --git a/hw/i386/pc_q35.c b/hw/i386/pc_q35.c
+> index d8fed698c7..cf1ae9b78b 100644
+> --- a/hw/i386/pc_q35.c
+> +++ b/hw/i386/pc_q35.c
+> @@ -345,6 +345,7 @@ static void pc_q35_machine_options(MachineClass *m)
+>      PCMachineClass *pcmc = PC_MACHINE_CLASS(m);
+>      pcmc->pci_root_uid = 0;
+>      pcmc->default_cpu_version = 1;
+> +    pcmc->smbios_type8_handle_t8_base = true;
+>  
+>      m->family = "pc_q35";
+>      m->desc = "Standard PC (Q35 + ICH9, 2009)";
+> @@ -365,12 +366,23 @@ static void pc_q35_machine_options(MachineClass *m)
+>                       pc_q35_compat_defaults, pc_q35_compat_defaults_len);
+>  }
+>  
+> -static void pc_q35_machine_11_1_options(MachineClass *m)
+> +static void pc_q35_machine_11_2_options(MachineClass *m)
+>  {
+>      pc_q35_machine_options(m);
+>  }
+>  
+> -DEFINE_Q35_MACHINE_AS_LATEST(11, 1);
+> +DEFINE_Q35_MACHINE_AS_LATEST(11, 2);
+> +
+> +static void pc_q35_machine_11_1_options(MachineClass *m)
+> +{
+> +    PCMachineClass *pcmc = PC_MACHINE_CLASS(m);
+> +    pc_q35_machine_11_2_options(m);
+> +    pcmc->smbios_type8_handle_t8_base = false;
+> +    compat_props_add(m->compat_props, hw_compat_11_1, hw_compat_11_1_len);
+> +    compat_props_add(m->compat_props, pc_compat_11_1, pc_compat_11_1_len);
+> +}
+> +
+> +DEFINE_Q35_MACHINE(11, 1);
+>  
+>  static void pc_q35_machine_11_0_options(MachineClass *m)
+>  {
+> diff --git a/include/hw/core/boards.h b/include/hw/core/boards.h
+> index 29c68931d8..a436d48c8e 100644
+> --- a/include/hw/core/boards.h
+> +++ b/include/hw/core/boards.h
+> @@ -815,6 +815,9 @@ compat_props_add(GPtrArray *arr,
+>      }
+>  }
+>  
+> +extern GlobalProperty hw_compat_11_1[];
+> +extern const size_t hw_compat_11_1_len;
+> +
+>  extern GlobalProperty hw_compat_11_0[];
+>  extern const size_t hw_compat_11_0_len;
+>  
+> diff --git a/include/hw/i386/pc.h b/include/hw/i386/pc.h
+> index 85a74363b5..b7d21fb96e 100644
+> --- a/include/hw/i386/pc.h
+> +++ b/include/hw/i386/pc.h
+> @@ -102,6 +102,7 @@ struct PCMachineClass {
+>      /* SMBIOS compat: */
+>      bool smbios_defaults;
+>      bool smbios_legacy_mode;
+> +    bool smbios_type8_handle_t8_base;
+>      SmbiosEntryPointType default_smbios_ep_type;
+>  
+>      /* RAM / address space compat: */
+> @@ -208,6 +209,9 @@ void pc_system_parse_ovmf_flash(uint8_t *flash_ptr, size_t flash_size);
+>  /* sgx.c */
+>  void pc_machine_init_sgx_epc(PCMachineState *pcms);
+>  
+> +extern GlobalProperty pc_compat_11_1[];
+> +extern const size_t pc_compat_11_1_len;
+> +
+>  extern GlobalProperty pc_compat_11_0[];
+>  extern const size_t pc_compat_11_0_len;
+>  
+> -- 
+> 2.39.5 (Apple Git-154)
+> 
+> 
+
+With regards,
+Daniel
 -- 
-2.39.5 (Apple Git-154)
+|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+|: https://libvirt.org          ~~          https://entangle-photo.org :|
+|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
 
 
