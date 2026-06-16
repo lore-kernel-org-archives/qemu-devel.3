@@ -4,145 +4,141 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36FE3CD98E1
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 14:58:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33A89CD98E1
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 15:00:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZVEM-0005f2-I3; Tue, 16 Jun 2026 10:57:34 -0400
+	id 1wZVGM-0006bY-TJ; Tue, 16 Jun 2026 10:59:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wZVEK-0005eN-73
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 10:57:32 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ id 1wZVGJ-0006ae-Q0
+ for qemu-devel@nongnu.org; Tue, 16 Jun 2026 10:59:35 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wZVEI-0008Jx-0l
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 10:57:31 -0400
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+ id 1wZVGG-0000ze-2q
+ for qemu-devel@nongnu.org; Tue, 16 Jun 2026 10:59:35 -0400
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65GE067k3314831
- for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 14:57:25 GMT
+ 65GDxgLv3764443
+ for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 14:59:29 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- B57kRHFoPnP72mhiGRHky+uVRi49jEqigGeiBRZkDpU=; b=G9e73a3wZ9gyM/3a
- 865vUMO3dZpcl33l0S5MSw/ryWHyKXPrAfeV/HLu2NUc5uNfq+yjXET+I2sWVAZ3
- 9Cpo6L8eIUovU9VenDIVpNxkXNvVDS8fijBuqm4WIPoO502I/NEBEQtkkABzV/Q4
- aBcrGI3DoY7er8SOCO80QFEwzKXPseMQyGgqkMEbkt9BzDTt7Sy4tf0MV5kS3Wwg
- yp88ENgwezNDJ12lO+n999uke+DSnr5tzu0jZKitvHewcy+TuixJuL8uY/DEGOgD
- t1a/h+K2fIR8a8gYZFvZgR3Gvon3FAz9cBOyYu033C+xTJPf+8VUagut9YrZDUHH
- MaJuDQ==
-Received: from mail-ua1-f69.google.com (mail-ua1-f69.google.com
- [209.85.222.69])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4eu0a7tg6x-1
+ cJUXQvNAPsOTQ369p2XR/ExFmKzy/Y6bGHq3tSZ79wc=; b=jCQsRXcTm9Snc6me
+ Lk1xySTKTy4UX3n5B77BVrDtkwTRCTicKlEWpTimYaYYKpYA7CW11T/HfdbHiR/l
+ e/r9VCk2ujGdzX2P7aYRjZN/uocxkFr2lziUipU/QGFC00FoHKRPhDT50/p2WFt8
+ wc6hvKOESLb5ESqCwHJ7pVQXO+E/N8UKRJfTLIIAMGGak/Prif4cXfN9ZpFItbVV
+ bBB4hdRpJy9t+Kxz+daAZGCiDzHPYglGIqhS4lv+KhRv5YrNBRKy9nNysg7Qty/r
+ lCdxFnFhS8fjpy38Lr/f833BLKaQAlw9Gb+7In4O/toU7Z8AhzzHfvKB67ulVw2z
+ HKA/mg==
+Received: from mail-ua1-f72.google.com (mail-ua1-f72.google.com
+ [209.85.222.72])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4eu09kae64-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 14:57:25 +0000 (GMT)
-Received: by mail-ua1-f69.google.com with SMTP id
- a1e0cc1a2514c-963a96abbb3so5394728241.0
- for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 07:57:25 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 14:59:28 +0000 (GMT)
+Received: by mail-ua1-f72.google.com with SMTP id
+ a1e0cc1a2514c-966d40aca0eso42325241.1
+ for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 07:59:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1781621844; x=1782226644; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1781621968; x=1782226768; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=B57kRHFoPnP72mhiGRHky+uVRi49jEqigGeiBRZkDpU=;
- b=e8rpBNoi3yfZCbJunk1sDGseODGYtPvIbq7UCYQBYecTqGUy50iKB5bjJrNBRMD0GX
- J2RlbvIbllF+1sfdMlE93NFf6prSELREe07WKlqdLAvDpfr13C1aVMnhqkSyjCYAQC3b
- PkVtXUTLxgU8MY+H9IP+Qw157nQeIdhXMuLBISRP4VcVniGzBWF/Eg11UfM4/130Mn1C
- vuIAamrwYt1x/3GdVWCwBCaSLk73BIcxcbyRnJaR/SnNTXuf7ksgv+DRJuDHtnMBYXFR
- 9pBgeoHydzv5Zx8AJmUqjf5f05+P9oEs2LWOZr2t5OAOf12GAhjNGUEHhz+PpdOW6aGf
- NAYQ==
+ bh=cJUXQvNAPsOTQ369p2XR/ExFmKzy/Y6bGHq3tSZ79wc=;
+ b=KU4EYz1koi80Yn/yDrzGCBSXN+AlIlXhccC4vr0Is//jTLlWoDQ2I3V2eH9Ui/QEyk
+ DGVMeqqzD+UBTKWMg4IQrF+uok3IQ7iOqhzZM9HSQKnWHKnCyBh2peiK1dwqn/bHdrjT
+ 4YGC574a25CHxlvt/iL9LYFs03xy/zVG2QEF14KxXcmPyyN7TVE8m4p/NM2SwamOwRbS
+ M69xosj/+5zFhU9tO2vkH7ICqmIjeZ2YdHWmyaR9P0B/Shxht4RJeoJy/IFU5Cuj7E0o
+ XQonAVbr5PwQbBISIQ7rR5VeP3GE/WKTpp/K82+VjOqVFPlyP4AN1aMjb740GYofIG8s
+ Daag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781621844; x=1782226644;
+ d=1e100.net; s=20251104; t=1781621968; x=1782226768;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=B57kRHFoPnP72mhiGRHky+uVRi49jEqigGeiBRZkDpU=;
- b=p1GZz59rs5GKTkmOgR7uI2ukZ3vpw52u0hYfyu3+DoqvgJt7AyvJzFHOtth1fp4tCo
- R+RWyQKNGdhDNMel/GysK01tHlvKIY6tO58VAa68dUzy5AfCkn5F4PXJuzdIo/HhQPg6
- k8OwZMYFof5wzHRN8xqJN+ISp3QxvsvwcBGYGLRJ7BLFF1ijv7mYFGK2kDX4ZCy2cJ2I
- i6jAqFq5lmJ72PVZHTwm1h4URfB0xIfepvup5phOomqrCq0x4eLd9TKZ6uLEgkBkOpw0
- InJJ7Bt2MQdOSxS20Cnaun+ArZIMYSU9vd2iLgjmBrDoTGgRJ+Fdi5ZdkwITyVTbdCR2
- u9iA==
-X-Forwarded-Encrypted: i=1;
- AFNElJ9IX/sB+x2FVeLExHwxiyZMWYjRf7cY6lvw1YGs4PrvNqrDKOeofQ8mSfm4xNEYcS0JG9OtNtYCyK9u@nongnu.org
-X-Gm-Message-State: AOJu0YxNzk4KL5nP1fStL7b9TP5lKB2g+MW82womgkfKANoMNQ59MVTF
- lYTxcOeQkcDtrSfMHkA8eS5VPyeLhrdV4I0PJ5lOaiGu9u0LwZCCm6g8RqNCyoCtWmIUvC+MflE
- o6hDH/Q322pujp9dL1IQUaydw71NsvPfpBp1ioy5Ad0yV45M4imZmAEcKSg==
-X-Gm-Gg: Acq92OH80OnUhSx9WPH3FT9PQ9mwGJ8shAi1iUZIgkV5EHacZKsEouAjWkeekVCzJvz
- kD8RmCAOwTxjrJsUpoIDyt1Zg0ft3ThJir3QM3e8qV7/iSHcZKIzAiHXGpGF/BW/E8BsSFblr2h
- P8qZ2B3SLDuED7pJdwU6ChdJZqcBLwsQDBYgHHRhRecTkdD5zu1l+97hLtGk5GrbwkiEsY43Ick
- rGj9aVc5v3PfZAjCanbCrchChfAQmR1s+rnfjYD7ZxqiQM4nZDwtpqwAUTr/cl2P6/pVWygns1B
- DVg7Sb3EpC22NVK7d81J3FUbUGJTUK2OFCQgPItRz33j52alW3IS57yfaGQ6zFEmbhuMDIYiYKm
- ES2SnMnXqUOdOiFfZInvAEKKY3Zm2IpFDMFMHnHzzorE/rfjUflCvyxeoyur9B/1Ruo/a6IKF
-X-Received: by 2002:a05:6102:580c:b0:6ef:dc8c:9367 with SMTP id
- ada2fe7eead31-71e88adcb08mr10490298137.5.1781621844297; 
- Tue, 16 Jun 2026 07:57:24 -0700 (PDT)
-X-Received: by 2002:a05:6102:580c:b0:6ef:dc8c:9367 with SMTP id
- ada2fe7eead31-71e88adcb08mr10490282137.5.1781621843875; 
- Tue, 16 Jun 2026 07:57:23 -0700 (PDT)
+ bh=cJUXQvNAPsOTQ369p2XR/ExFmKzy/Y6bGHq3tSZ79wc=;
+ b=Rh6QGDoTYqfetc7ajeu3VypgJpT8AU7c1dPHkM1e1gQUdcznip/6OzTqOuJCybGyjx
+ A+PapBZA8pTgffLHHZGO91jb/Wil9fls1PcCOCb2iCtLrEgnNkBwh4msaUF+oJwW4VqO
+ Y0vtds3W+wf/SfglhCwY0/f1q2Kr59KZF4tdtTvE50Wrzax7U2XJFboWNkvKOzvn7r1A
+ BALOn38+EWezET6hmNo31CyfwBQB7HEkECsY3iGu6RiT0hbP6Kp66H/L1i0oiRHjXWcl
+ daTbjkCHpglbmd4oXMioRRW5fOopvcKS9EubZKAiEUgnX+Ywy/3g4a74A3ez23zto91L
+ 3mlA==
+X-Gm-Message-State: AOJu0Yw5tuiEEarpf/bIfMP4IxdggtMw9dWkK3KVKxkO55ax0TDaiN+j
+ 7x54g1YBS2hZesJ6R/RTXGzOpG560Rwp6A5QwhEqb1copjKWBGbXTdi2V2qohL0HfT7h6mXtm93
+ w/au9f34nwlF18Pf6zfVUlZ6UFnQBBQOrJmoVuVWfrL+ISqNqr4CJIJDUfA==
+X-Gm-Gg: Acq92OFZERaC4CRqRVYXYuFiJC1y5OBjlS+jVLkuQ1SzRLiZp+P6IZh2MOg/SFvqr7i
+ fnotnWKWAeEJrb7EaFRXAvzMsMDVsM4KfrSB+lpNYGLdsmS7RdaDYOtpDtUC2XJ3ix66CAZ16U5
+ AdXPWm8LI4+vViohyu5/OuruYk5t0K4MQ97Vg/0enm64ZxzzqPvhBb2PKi5+iX2ThcLrAzoaufR
+ s2Z/njGY1fxUmiKBtabe3WLtRhSVgQWY8qDadsM+ipm5HM32HuQTTUA3HA5TXD5V4/wFok1Dt/a
+ 7f+NxyXmyUqRE3U8O7rkrReHzPhDXKwnKPMEMOzs37eKUhW/KT1PaU1m+kOEZ+1oQkLN/WiUFHs
+ cgHteM5J1ASKPXjTivz3o2boOYxlI5wx6QfbyuA6maB3cOsNvtljGpuxXIJ4OcjrOTDkGkAXh
+X-Received: by 2002:a05:6102:160a:b0:636:984a:1e5d with SMTP id
+ ada2fe7eead31-71f5eb00fb7mr9387564137.11.1781621968232; 
+ Tue, 16 Jun 2026 07:59:28 -0700 (PDT)
+X-Received: by 2002:a05:6102:160a:b0:636:984a:1e5d with SMTP id
+ ada2fe7eead31-71f5eb00fb7mr9387540137.11.1781621967791; 
+ Tue, 16 Jun 2026 07:59:27 -0700 (PDT)
 Received: from [192.168.69.214] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4606f2b1056sm44842215f8f.18.2026.06.16.07.57.22
+ 5b1f17b1804b1-490ea9520f9sm260532455e9.1.2026.06.16.07.59.26
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 16 Jun 2026 07:57:23 -0700 (PDT)
-Message-ID: <f1bc9dcd-09e5-4277-8266-b95c33223ad0@oss.qualcomm.com>
-Date: Tue, 16 Jun 2026 16:57:22 +0200
+ Tue, 16 Jun 2026 07:59:27 -0700 (PDT)
+Message-ID: <b246751e-da58-46c2-9ddd-dc48b9b1284f@oss.qualcomm.com>
+Date: Tue, 16 Jun 2026 16:59:26 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V2] target/loongarch: clear the registers when cpu is reset
+Subject: Re: [PATCH v2] hw/arm/bcm2838: Route I2C interrupts to GIC
 Content-Language: en-US
-To: lixianglai <lixianglai@loongson.cn>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Bibo Mao <maobibo@loongson.cn>, Song Gao <gaosong@loongson.cn>
-References: <20260616092554.1704380-1-lixianglai@loongson.cn>
- <dac37988-c69e-4915-84cc-2072901a9321@oss.qualcomm.com>
- <059f7cea-c478-c325-860f-b5ff84ff8be7@loongson.cn>
+To: Peter Maydell <peter.maydell@linaro.org>,
+ Nicholas Righi <nicholasrighi@gmail.com>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+References: <20260609024027.22140-1-nicholasrighi@gmail.com>
+ <CAFEAcA-YSacshreh4z0Ld7pYdqjECsGxHmkfBrKgQdVPqHVPXg@mail.gmail.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <059f7cea-c478-c325-860f-b5ff84ff8be7@loongson.cn>
+In-Reply-To: <CAFEAcA-YSacshreh4z0Ld7pYdqjECsGxHmkfBrKgQdVPqHVPXg@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjE2MDE1MiBTYWx0ZWRfXzdxv3mKUoFcJ
- bSD4ZEQW8EEU/kaGCebCnt4ZmJh3ljfdL0asKS8fLCkfIzqZPsktAyQgO+0RqRtKHdWuwDNtMq2
- lGEwAp2VlJd6Yy2SokTnoEYJ3EuDTrsf8haJ/ntgy4Fq8XQb5xPi9ZO0sTE4Snq2zQ1XFBai/9g
- UVYaUn4MuvlB0VMRi7Bcb4ShbGkb1wwwVICNmi+WOg2AY6Z2kn/1izgMDLhCXRHqNE7dBj01Pc6
- YYs1+gZYnza/RaqmUa8xy8TPMBOz1JW2g4BmIw4SeJIBG245pFqFPJZQlTDyIyWshK6ng7OC2TH
- 43d9zoMjVo+kPssyj8HMYIEJ9tCo4eC7qFqHi7BVqU2HPpEGvyuDF8begFRyS/3Z1XbPcCAkbPZ
- jMMELzYdGHvcowoMYcvAYXciPX/9cv8X/0GcM+fKH7U/LyGmQhKBUSyITe5vQ9gy5WmsN6tpa2V
- S0bCtS+oX8AUJbZdJbQ==
-X-Authority-Analysis: v=2.4 cv=JKALdcKb c=1 sm=1 tr=0 ts=6a316455 cx=c_pps
- a=UbhLPJ621ZpgOD2l3yZY1w==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjE2MDE1MyBTYWx0ZWRfX6pGa2KeKbfyb
+ xsmVywRfWoB5nE0Dy2qiWZG7MqBRkws6R5fjBRYeG1+oslIUVQJxbLX4ak11rmEp3NJkJ3jRhNd
+ f8Hhe0zqCH1K6jmGCRKeUxkOXUpQzRY=
+X-Proofpoint-GUID: zltxTM9L0x54ZUqGytXginhLWY6DF-7X
+X-Authority-Analysis: v=2.4 cv=DoZmPm/+ c=1 sm=1 tr=0 ts=6a3164d0 cx=c_pps
+ a=ULNsgckmlI/WJG3HAyAuOQ==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
  a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22
- a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=kqjAFhMmMJbbSOBgd7oA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=TOPH6uDL9cOC6tEoww4z:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-ORIG-GUID: sQEOvsMB-2raJaEvhcBua2lSDpyHSwpG
-X-Proofpoint-GUID: sQEOvsMB-2raJaEvhcBua2lSDpyHSwpG
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjE2MDE1MiBTYWx0ZWRfX1uJ4td98Br5L
- t2Y0LZCb6AI7asChyZeBFkYVhACh5X8VyXmXXMtl/UnOXkOn/xlLqTaKebUIxALyk6fnNl/6qOK
- k2j4uBeSVI9ypukR22pPcRM+tZfjrLI=
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
+ a=pGLkceISAAAA:8 a=EUspDBNiAAAA:8 a=LfsA7Cq2GQzuzbZ-N0YA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=1WsBpfsz9X-RYQiigVTh:22
+X-Proofpoint-ORIG-GUID: zltxTM9L0x54ZUqGytXginhLWY6DF-7X
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjE2MDE1MyBTYWx0ZWRfXzonPhhgX5UGg
+ dsUZXdU2LgKCkuuMsOar3te+lsntQ6E1Bb0Bn3eNQz8R7VeCcfL6oipWDUuQkVTHqBy4BgoTr1m
+ QWVQeavUmRTpwxNRWvtFbX1X3yo19L2i6U9GP/6Cs8S24zinm/xSUXK1jpyMQQllPMUHOldg2d+
+ qpp9p2UEe0Ci7h+Nr8bOlXOlZVorV8Iz8cKtxqDMFbnb4v70dLTRm5Rqxq/Pk0s3/x3b+bA/Pbi
+ 89AEfj+lqWyIVX/AF7jy+sYIwZbtaAQprLew6eNcQ2W9+tLlqoeaX8r4VBv2322yIDsOtUAId/F
+ jVwGILUoXGzWKfeuwxpb36Xz3q1rzWSBIf5KGWnFdPc2p9axFjHscTqzj0N03J0h3+pFnB1aA7K
+ LtMEtcDNWeHhe1jurPcoRKgAYnuU3Pg7eGySmJLBpYWuiQEvLCxcrf8tif/xJQvRaWvW8YD6T3Q
+ wkuNcnoLnBKhAK/BTLg==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-06-16_04,2026-06-15_04,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 lowpriorityscore=0 bulkscore=0 impostorscore=0 spamscore=0
- priorityscore=1501 adultscore=0 clxscore=1015 suspectscore=0 malwarescore=0
+ clxscore=1015 malwarescore=0 phishscore=0 adultscore=0 impostorscore=0
+ suspectscore=0 priorityscore=1501 spamscore=0 bulkscore=0 lowpriorityscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606040000 definitions=main-2606160152
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+ reason=mlx scancount=1 engine=8.22.0-2606040000 definitions=main-2606160153
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -158,134 +154,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 16/6/26 14:20, lixianglai wrote:
-> Hi Philippe Mathieu-Daudé:
->> Hi,
+On 16/6/26 13:10, Peter Maydell wrote:
+> On Tue, 9 Jun 2026 at 03:40, Nicholas Righi <nicholasrighi@gmail.com> wrote:
 >>
->> On 16/6/26 11:25, Xianglai Li wrote:
->>> Use virt-manager to start a virtual machine, and then use the following
->>> command to manually trigger the crash of the virtual machine:
->>> echo c > /proc/sysrq-trigger
->>>
->>> After the VM is abnormal, the ESTAT register has a certain 
->>> probability of
->>> remaining interrupted. Then the VM is forced to restart and the VM is
->>> suspended in the interrupt handling function during startup.
->>>
->>> In order to clear the remaining interrupt information in the ESTAT
->>> register, we carried out the operation and checked the status of other
->>> registers during the reset process:
->>>
->>> Set the CSR_CRMD, CSR_ESTAT, CSR_MSGIS and CSR_PERFCTRL registers to the
->>> reset state when the CPU is reset.
->>>
->>> Signed-off-by: Xianglai Li <lixianglai@loongson.cn>
->>> ---
->>> Cc: Alex Bennée <alex.bennee@linaro.org>
->>> Cc: Bibo Mao <maobibo@loongson.cn>
->>> Cc: Song Gao <gaosong@loongson.cn>
->>>
->>> changelog:
->>> V1->V2:
->>> 1.Add a description of the issues related to this patch
->>> 2.Replace the macro definition MAX_PERF_EVENTS with the variable
->>> perf_event_num as the condition for the for loop.
->>> 3.Rebase against the latest codebase.
->>> 4.Refer to the usage of end_reset_fields on ARM and other architectures,
->>> and modify the current implementation accordingly.
->>>
->>> Signed-off-by: Xianglai Li <lixianglai@loongson.cn>
->>> ---
->>>   target/loongarch/cpu-csr.h |  7 +++++++
->>>   target/loongarch/cpu.c     | 41 +++++++++++++++++---------------------
->>>   target/loongarch/cpu.h     | 22 +++++++++++---------
->>>   3 files changed, 38 insertions(+), 32 deletions(-)
-
-
->>> diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
->>> index fb03424ffa..aa6ecd9da2 100644
->>> --- a/target/loongarch/cpu.c
->>> +++ b/target/loongarch/cpu.c
->>> @@ -623,44 +623,39 @@ static void loongarch_cpu_reset_hold(Object 
->>> *obj, ResetType type)
->>>       env->fcsr0 = 0x0;
->>>         int n;
->>> -    /* Set csr registers value after reset, see the manual 6.4. */
->>> -    sys->CSR_CRMD = FIELD_DP64(sys->CSR_CRMD, CSR_CRMD, PLV, 0);
->>> -    sys->CSR_CRMD = FIELD_DP64(sys->CSR_CRMD, CSR_CRMD, IE, 0);
->>> -    sys->CSR_CRMD = FIELD_DP64(sys->CSR_CRMD, CSR_CRMD, DA, 1);
->>> -    sys->CSR_CRMD = FIELD_DP64(sys->CSR_CRMD, CSR_CRMD, PG, 0);
->>> -    sys->CSR_CRMD = FIELD_DP64(sys->CSR_CRMD, CSR_CRMD, DATF, 0);
->>> -    sys->CSR_CRMD = FIELD_DP64(sys->CSR_CRMD, CSR_CRMD, DATM, 0);
->>>   -    sys->CSR_EUEN = FIELD_DP64(sys->CSR_EUEN, CSR_EUEN, FPE, 0);
->>> -    sys->CSR_EUEN = FIELD_DP64(sys->CSR_EUEN, CSR_EUEN, SXE, 0);
->>> -    sys->CSR_EUEN = FIELD_DP64(sys->CSR_EUEN, CSR_EUEN, ASXE, 0);
->>> -    sys->CSR_EUEN = FIELD_DP64(sys->CSR_EUEN, CSR_EUEN, BTE, 0);
->>> +    memset(sys, 0, offsetof(CPUSysState, end_reset_fields));
->>>   -    sys->CSR_MISC = 0;
->>> -
->>> -    sys->CSR_ECFG = FIELD_DP64(sys->CSR_ECFG, CSR_ECFG, VS, 0);
->>> -    sys->CSR_ECFG = FIELD_DP64(sys->CSR_ECFG, CSR_ECFG, LIE, 0);
->>> +    /* Set csr registers value after reset, see the manual 6.4. */
->>> +    sys->CSR_CRMD = FIELD_DP64(sys->CSR_CRMD, CSR_CRMD, DA, 1);
->>>   -    sys->CSR_ESTAT = sys->CSR_ESTAT & (~MAKE_64BIT_MASK(0, 2));
->>> -    sys->CSR_RVACFG = FIELD_DP64(sys->CSR_RVACFG, CSR_RVACFG, RBITS, 
->>> 0);
->>>       sys->CSR_CPUID = cs->cpu_index;
->>>       sys->CSR_TCFG = FIELD_DP64(sys->CSR_TCFG, CSR_TCFG, EN, 0);
->>>       sys->CSR_LLBCTL = FIELD_DP64(sys->CSR_LLBCTL, CSR_LLBCTL, KLO, 0);
->>>       sys->CSR_TLBRERA = FIELD_DP64(sys->CSR_TLBRERA, CSR_TLBRERA, 
->>> ISTLBR, 0);
->>>       sys->CSR_MERRCTL = FIELD_DP64(sys->CSR_MERRCTL, CSR_MERRCTL, 
->>> ISMERR, 0);
->>>       sys->CSR_TID = cs->cpu_index;
->>> +
->>> +    sys->CSR_DBG = FIELD_DP64(sys->CSR_DBG, CSR_DBG, DST, 0);
->>> +    for (n = 0; n < env->perf_event_num; n++) {
->>> +        sys->CSR_PERFCTRL[n] = FIELD_DP64(sys->CSR_PERFCTRL[n], 
->>> CSR_PERFCTRL,
->>> +                                          PLV0, 0);
->>> +        sys->CSR_PERFCTRL[n] = FIELD_DP64(sys->CSR_PERFCTRL[n], 
->>> CSR_PERFCTRL,
->>> +                                          PLV1, 0);
->>> +        sys->CSR_PERFCTRL[n] = FIELD_DP64(sys->CSR_PERFCTRL[n], 
->>> CSR_PERFCTRL,
->>> +                                          PLV2, 0);
->>> +        sys->CSR_PERFCTRL[n] = FIELD_DP64(sys->CSR_PERFCTRL[n], 
->>> CSR_PERFCTRL,
->>> +                                          PLV3, 0);
->>> +        sys->CSR_PERFCTRL[n] = FIELD_DP64(sys->CSR_PERFCTRL[n], 
->>> CSR_PERFCTRL,
->>> +                                          PMIE, 0);
->>> +    }
->>> +
->>>       /*
->>>        * Workaround for edk2-stable202408, CSR PGD register is set 
->>> only if
->>>        * its value is equal to zero for boot cpu, it causes reboot 
->>> issue.
+>> The I2C interrupts are only routed to the legacy interrupt controller. This means
+>> that for modern device trees that use the GIC, the interrupts don't work. This patch
+>> adds a splitter to route the I2C interrupt to both the legacy interrupt controller and the GIC.
 >>
->> Is this comment still accurate?
+>> Testing
 >>
-> Yes, the comment is outdated. We should move it before memset(sys, 0, 
-> offsetof(CPUSysState, end_reset_fields)), like this:
+>> Add these lines to QEMU invocation
+>>
+>> -drive if=none,id=i2c_storage,format=raw,file=eeprom.bin \
+>> -device at24c-eeprom,bus=i2c-bus.1,address=0x50,drive=i2c_storage,rom-size=4096 \
+>>
+>> note: eeprom.bin is all zeros
+>>
+>> Before this change, running i2c get to read from EEPROM would result in this
+>>
+>> i2cget -y 1 0x50
+>> Error: Read failed
+>>
+>> After this change, running i2c to read from EEPROM results in this
+>>
+>> i2cget -y 1 0x50
+>> 0x00
+>>
+>> The eeprom can now also be enabled in the device tree. Before the
+>> eeprom driver load would fail due to the read failing
+>>
+>> ls -l /sys/bus/i2c/devices/i2c-1/1-0050/ | grep -i eeprom
+>> -rw------- 1 root root 4096 May 17 16:57 eeprom
+>>
+>> Signed-off-by: Nicholas Righi <nicholasrighi@gmail.com>
+>> ---
+>> Changes v1 -> v2:
+>>      - Use a splitter to route the OR gated i2c interrupt to both the
+>>        legacy interrupt controller and the GIC, instead of just replacing
+>>        the legacy routing with the GIC routing
+>> ---
+>>   hw/arm/bcm2835_peripherals.c         | 9 +++++++++
+>>   hw/arm/bcm2838.c                     | 4 ++++
+>>   include/hw/arm/bcm2835_peripherals.h | 2 ++
+>>   include/hw/arm/bcm2838_peripherals.h | 1 +
+>>   4 files changed, 16 insertions(+)
 > 
->        /*
->         * Workaround for edk2-stable202408, CSR PGD register is set only if
->         * its value is equal to zero for boot cpu, it causes reboot issue.
->          */
->         memset(sys, 0, offsetof(CPUSysState, end_reset_fields));
+> 
+> 
+> Applied to target-arm.next, thanks.
 
-OK, then add on v3:
+Too late but still it was in my review queue:
 Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-
-> 
->>>        *
->>>        * Here clear CSR registers relative with TLB.
-> Let's just delete this comment in the next version — the related note is 
-> no longer needed.
-> 
-> Thanks!
-> Xianglai.
 
 
