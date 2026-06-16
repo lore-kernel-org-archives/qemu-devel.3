@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 612E8CD98F0
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 19:15:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04717CD98E4
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 19:15:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZZAf-0008F1-Nv; Tue, 16 Jun 2026 15:10:02 -0400
+	id 1wZZFJ-00067k-0P; Tue, 16 Jun 2026 15:14:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wZZ8T-0004iJ-UV
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 15:07:49 -0400
-Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
+ id 1wZZ8V-0004ij-2w
+ for qemu-devel@nongnu.org; Tue, 16 Jun 2026 15:07:51 -0400
+Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wZZ8P-00013O-5a
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 15:07:45 -0400
-Received: by mail-wr1-x434.google.com with SMTP id
- ffacd0b85a97d-45ee5cdbd28so112099f8f.1
- for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 12:07:25 -0700 (PDT)
+ id 1wZZ8R-0001CV-UJ
+ for qemu-devel@nongnu.org; Tue, 16 Jun 2026 15:07:46 -0400
+Received: by mail-wr1-x436.google.com with SMTP id
+ ffacd0b85a97d-45ef1198766so125261f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 12:07:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1781636844; x=1782241644; darn=nongnu.org;
+ d=linaro.org; s=google; t=1781636860; x=1782241660; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=VDaWMEHLJlGMMFHNhVRPokbxg5QakMSEfI8x6+01vJo=;
- b=gRzkby7Raiskkdykg47Ba0BP9w7FG1keRbEvDeLZFs3cJyQFySVRE95tUtha53vSeS
- 8xubBGFN0DmmBWHKK+XYl/CIoFdUAkLJoyTxlOfSfgP82VzJsEik/gO3wS1F3u6AdXy2
- 4zlIUBp7PRP2r/xlR7osl494I+wVD2h8AePhz6+IiganEkIZLBF1GSSfRi/XBaRszuMJ
- 5U6s7lWt9fnd91NBFL7PQpXxFFXAZbKkIDEKAmNXQoK27BXoJWMgLbY4Fu1gXx7nOeZc
- mDLHVxvUWh7S3C/EfRBtQsEZ17pkeKvSGWYUy3SJdjJGNxeuKEt3BoPcsCxos3+f9CUV
- wJEg==
+ :reply-to; bh=sdhhYYWWcr0IknSn1CgIlq95XqkUC12aNgNn4QU2pX4=;
+ b=XDHokEhPz/Q5KxTjUxIKGZoXOPUDQNeEM3vbVOjs82uUYguMgOXLqP5GUOr1qh0cF8
+ dvWn++hufDVH3IEiTDUh4MvSLyW0gx9MigQDFyZ5LZF1HXVUJmEOMxdFL8u3eyh2AQOi
+ KVlCMeSrzg7jH5WCoW6Kz2PrAMCEwd5zI6UubYRIW63icm44XW4L4iefZZnmDn1aZ+0Z
+ ymDe9SnlxIer4cvPgS8YQnw/ZufAX6SKcQuBl/qHGF6qE2nti6mSXzaCk7IzwBeRZR4h
+ nJYCt0eqBDpADd9YojsH9QwwpoNWORsVkDRVPZAEvD2PmoCwThuX8KOh/3nnzRyEPFVh
+ kQhw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781636844; x=1782241644;
+ d=1e100.net; s=20251104; t=1781636860; x=1782241660;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=VDaWMEHLJlGMMFHNhVRPokbxg5QakMSEfI8x6+01vJo=;
- b=lPSGbeltksSZFTuvXGVRExogZwsXRuDyKXub/94pBLr3urIHS0rCR78bqjOpeIMLk4
- N53cPz+iVyo3MtiDeZ77adKLeVaqzJz6UOa/qiEkDJcnOBZ9SRDYGdycK18f9Hn2zMan
- G33EutEVmDabnI9Gh2TjrqT9i/H4RL23GatUNfAOOJLDSFKWzlDnz6zoeQWOpVNg3tW0
- QoToLeMv66YU9CXPlWGoYpsjiSIQrS+sBHOFTAnsKxrJ/gfexn+DGmVnh/NuM09KuJRj
- gO4OUwSZJyLBESUZr4iGjpg+Bb4TneJqJRtkf4puGMZgJhqAUtgQu/GgvJHQUB5Gzyc1
- NPNg==
-X-Gm-Message-State: AOJu0YxhXL5xH6tGGA4ZptEMMEK28kyzU0q4Tgv3EZi4a8OffiwF1Wql
- dzl0NcUSZVwKk1M2mLOUwc00tOicFAnFxUjom0CE4Ws7eC99gRfnRQe6viqJXXhldRhq+/5v2Ry
- bV1QD
-X-Gm-Gg: AfdE7cmtLiq04uJWZB97iNS3Ezd083X/Qrn+1Q1jXPqS0LsXVyBRGKudt9BLqabufFD
- +Q4nHIZmPM7q5TtnTivIVNH42jaRMj0OznZAXx4wZvpxyteiD4Apq2OTLsZbsnEbZXLTJeqTNiJ
- Omph+dBWkxkw5nYlM4w74DSuMMxeDym0JYEy3TIPoJNviO35beBzpR1FZsM1PlxSSH0oPiZ/g1s
- VY8s+VtttZLdjbLeZmp9/TgnzE05lLQPHeykyyjOwMeIou/IxxQsla8hWqmAVfi489gocJm53fi
- QYSxExFi0aY3NnveCoMxTYvmzMurWf/541cUNsUPtELMidElDrranZGATJbRgjcog5ImygNhVag
- FCGPkNR++SR35YKxQE88fvO7njpHaL/MER9jyBgSlIL44IhA4AiMDDrGzu1JJUy1m9q/uxxm/0T
- naYlryPW9MEc5w4V5mo+doSjDIzZtIhVGYBbULoItkli9SxdTCcHxHjRdTjPYRpgvjSSy4PDVor
- //dY+j36yAlmFs8r0ifOTYFJz7/lKFZ
-X-Received: by 2002:a05:6000:1ac8:b0:45e:dd32:92fa with SMTP id
- ffacd0b85a97d-462699af50fmr28173f8f.12.1781636844271; 
- Tue, 16 Jun 2026 12:07:24 -0700 (PDT)
+ bh=sdhhYYWWcr0IknSn1CgIlq95XqkUC12aNgNn4QU2pX4=;
+ b=Q8/UH3CKuHhlL1Ae9DEiAQs7Ri2m45UPIwg8f/H5eUBO3QAkSlZurpuFBvWL2Z3vaG
+ nz+awyXwuU4uxBm/+Fn/mw4cuuxXfFnLlVlycsVm2KIymAnOZiKqUWnHTnaylR1kSR/A
+ 9N60wyIkTpLF7qVKBU0GRIc1whrlXZVXE6MCVzi1I2vNsLR7qsWFaT+k7/DQGXWfed6C
+ xtj7MaeunEtAzE1P78ndX/4iG6GsAuIbWs06gJFZbw5iifXSEFwZuZw3VUTEq/HZ2n7f
+ 8kl9bi/d0gg8IWawcc56qsXUI6AMf4JXC+rg+HbMMmO2tkrSu6yEN4pLcGSwqZyTKuW4
+ 2cBw==
+X-Gm-Message-State: AOJu0Yw0NGYRXt6Mb7MGJDqGMB1aBbt5w+hLZC2URbRp60dyLW+TPNDk
+ Nk69LBP/A2eFAU1vdO43Y+ObI5YM2vD7FsicZKweuEyjC8Dfour1R4rI7LuvFDBXAWPcplR+b72
+ 1Cq6M
+X-Gm-Gg: Acq92OGAJQ5SC5gjMoDXZ3VmvzQIIDrHp30uWDJvfA8l/Ri8ivwp7JEcN+qUOV0R2vV
+ f6oNqgRFbl/QkoH20m5mWURGEmNyImSPprujnsW2I7F7VdKi/Q3KHv5Pmva0OHhBFMPzSyRc7YI
+ 8fL/qTEBQJq4ny5Ub/TRiNwvh40Hu2LSliC2hWbSawb+h+iwnndol3KBsIuXaocqkeemsGwJlTy
+ M2nLhNGIZkgxKiesRy8H8lR+mOSLtvihDlEsRwKMYrriDYjnEYizFOZCofHGwQn8SYqhI0WQDb7
+ T3hWGpwLOFJr7ECndMNkzhj/8ARgrfYgpBJdOr/rY1bxSJVox7u82SlP6OZfagni5szZ6orYlEf
+ Wlo7tKWxudVCyzFmGnsPXOYDG2V/zI21xFXsStEvtPnLm0HXNen+VnpDUu6ZmZMzUf1UQkp/df+
+ l+5VlIflpGBRCB48ym6usaFOjEK7TsEwG22tlt/GIPrP3tKltFtfJ9HGfyAlzDQPl+G4KWa9scE
+ q3L97AUVT6QSnpTAeLZIphD2ZoK0hKx
+X-Received: by 2002:a5d:59ad:0:b0:45e:9304:a4c3 with SMTP id
+ ffacd0b85a97d-4622d70775amr1651375f8f.19.1781636860154; 
+ Tue, 16 Jun 2026 12:07:40 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4606f2d9becsm45078765f8f.34.2026.06.16.12.07.23
+ ffacd0b85a97d-4606f2d9becsm45078765f8f.34.2026.06.16.12.07.39
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 16 Jun 2026 12:07:23 -0700 (PDT)
+ Tue, 16 Jun 2026 12:07:39 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 38/61] hw/arm/virt-acpi: Advertise Tegra241 CMDQV nodes in DSDT
-Date: Tue, 16 Jun 2026 20:06:15 +0100
-Message-ID: <20260616190639.3462006-39-peter.maydell@linaro.org>
+Subject: [PULL 53/61] target/arm: Add data argument to do_frint_mode
+Date: Tue, 16 Jun 2026 20:06:30 +0100
+Message-ID: <20260616190639.3462006-54-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260616190639.3462006-1-peter.maydell@linaro.org>
 References: <20260616190639.3462006-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::434;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x434.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::436;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,158 +100,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Nicolin Chen <nicolinc@nvidia.com>
+From: Richard Henderson <richard.henderson@linaro.org>
 
-Add ACPI DSDT support for Tegra241 CMDQV when the SMMUv3 instance is
-created with tegra241-cmdqv.
+Prepare for needing a non-zero value.
 
-For each accelerated SMMUv3 instance, add a Tegra241 CMDQV device
-object under the DSDT \_SB namespace, with HID "NVDA200C" and a UID
-that matches the Identifier of the corresponding SMMUv3 IORT node, so
-the guest OS can associate the DSDT device with the right SMMU. The
-_CRS covers the CMDQV MMIO aperture plus its interrupt, and _CCA
-declares I/O cache coherency.
-
-See ACPI Specification 6.5, Section 6 (Device Configuration) for
-_HID/_UID/_CCA/_CRS.
-
-Generated DSDT entry for a CMDQV instance paired with SMMUv3 Identifier=1:
-  ...
-  Device (CV01)
-  {
-      Name (_HID, "NVDA200C")  // _HID: Hardware ID
-      Name (_UID, One)  // _UID: Unique ID
-      Name (_CCA, One)  // _CCA: Cache Coherency Attribute
-      Name (_CRS, ResourceTemplate ()  // _CRS: Current Resource Settings
-      {
-          QWordMemory (ResourceProducer, PosDecode, MinFixed, MaxFixed, Cacheable, ReadWrite,
-              0x0000000000000000, // Granularity
-              0x000000000C080000, // Range Minimum
-              0x000000000C0CFFFF, // Range Maximum
-              0x0000000000000000, // Translation Offset
-              0x0000000000050000, // Length
-              ,, , AddressRangeMemory, TypeStatic)
-          Interrupt (ResourceConsumer, Edge, ActiveHigh, Exclusive, ,, )
-          {
-              0x00000094,
-          }
-      })
-  }
-  ...
-Generated IORT SMMUv3 node (Identifier = 1):
-
-  ...
-  [048h 0072 001h]                        Type : 04
-  [049h 0073 002h]                      Length : 0058
-  [04Bh 0075 001h]                    Revision : 04
-  [04Ch 0076 004h]                  Identifier : 00000001
-  [050h 0080 004h]               Mapping Count : 00000001
-  [054h 0084 004h]              Mapping Offset : 00000044
-  ...
-
-Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
-Reviewed-by: Eric Auger <eric.auger@redhat.com>
-Tested-by: Nicolin Chen <nicolinc@nvidia.com>
-Tested-by: Eric Auger <eric.auger@redhat.com>
-Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
-Message-id: 20260609112552.378999-29-skolothumtho@nvidia.com
-Co-developed-by: Shameer Kolothum <skolothumtho@nvidia.com>
-Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Message-id: 20260604234852.573178-11-richard.henderson@linaro.org
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- hw/arm/trace-events      |  1 +
- hw/arm/virt-acpi-build.c | 52 ++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 53 insertions(+)
+ target/arm/tcg/translate-sve.c | 19 ++++++++++---------
+ 1 file changed, 10 insertions(+), 9 deletions(-)
 
-diff --git a/hw/arm/trace-events b/hw/arm/trace-events
-index 0bd718b1ab..1b16f710fe 100644
---- a/hw/arm/trace-events
-+++ b/hw/arm/trace-events
-@@ -9,6 +9,7 @@ omap1_lpg_led(const char *onoff) "omap1 LPG: LED is %s"
+diff --git a/target/arm/tcg/translate-sve.c b/target/arm/tcg/translate-sve.c
+index fe78e4dda1..ea936669ef 100644
+--- a/target/arm/tcg/translate-sve.c
++++ b/target/arm/tcg/translate-sve.c
+@@ -4656,7 +4656,8 @@ TRANS_FEAT(FRINTX_m, aa64_sme_or_sve, gen_gvec_fpst_arg_zpz,
+            a->esz == MO_16 ? FPST_A64_F16 : FPST_A64);
  
- # virt-acpi-build.c
- virt_acpi_setup(void) "No fw cfg or ACPI disabled. Bailing out."
-+virt_acpi_dsdt_tegra241_cmdqv(int smmu_id, uint64_t base, uint32_t irq) "DSDT: add cmdqv node for (id=%d), base=0x%" PRIx64 ", irq=%d"
+ static bool do_frint_mode(DisasContext *s, arg_rpr_esz *a,
+-                          ARMFPRounding mode, gen_helper_gvec_3_ptr *fn)
++                          ARMFPRounding mode, int data,
++                          gen_helper_gvec_3_ptr *fn)
+ {
+     unsigned vsz;
+     TCGv_i32 tmode;
+@@ -4676,22 +4677,22 @@ static bool do_frint_mode(DisasContext *s, arg_rpr_esz *a,
+     tcg_gen_gvec_3_ptr(vec_full_reg_offset(s, a->rd),
+                        vec_full_reg_offset(s, a->rn),
+                        pred_full_reg_offset(s, a->pg),
+-                       status, vsz, vsz, 0, fn);
++                       status, vsz, vsz, data, fn);
  
- # smmu-common.c
- smmu_add_mr(const char *name) "%s"
-diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
-index 9d05982137..99490aa7b1 100644
---- a/hw/arm/virt-acpi-build.c
-+++ b/hw/arm/virt-acpi-build.c
-@@ -65,6 +65,9 @@
- #include "target/arm/cpu.h"
- #include "target/arm/multiprocessing.h"
- 
-+#include "smmuv3-accel.h"
-+#include "tegra241-cmdqv.h"
-+
- #define ARM_SPI_BASE 32
- 
- #define ACPI_BUILD_TABLE_SIZE             0x20000
-@@ -1121,6 +1124,51 @@ static void build_fadt_rev6(GArray *table_data, BIOSLinker *linker,
-     build_fadt(table_data, linker, &fadt, vms->oem_id, vms->oem_table_id);
+     gen_restore_rmode(tmode, status);
+     return true;
  }
  
-+static void acpi_dsdt_add_tegra241_cmdqv(Aml *scope, VirtMachineState *vms)
-+{
-+    for (int i = 0; i < vms->smmuv3_devices->len; i++) {
-+        Object *obj = OBJECT(g_ptr_array_index(vms->smmuv3_devices, i));
-+        PlatformBusDevice *pbus;
-+        Aml *dev, *crs, *addr;
-+        SysBusDevice *sbdev;
-+        hwaddr base;
-+        uint32_t id;
-+        int irq;
-+
-+        if (smmuv3_accel_cmdqv_type(obj) != SMMUV3_CMDQV_TEGRA241) {
-+            continue;
-+        }
-+        id = object_property_get_uint(obj, "identifier", &error_abort);
-+        pbus = PLATFORM_BUS_DEVICE(vms->platform_bus_dev);
-+        sbdev = SYS_BUS_DEVICE(obj);
-+        base = platform_bus_get_mmio_addr(pbus, sbdev, 1);
-+        base += vms->memmap[VIRT_PLATFORM_BUS].base;
-+        irq = platform_bus_get_irqn(pbus, sbdev, NUM_SMMU_IRQS);
-+        irq += vms->irqmap[VIRT_PLATFORM_BUS];
-+        irq += ARM_SPI_BASE;
-+
-+        dev = aml_device("CV%.02u", id);
-+        aml_append(dev, aml_name_decl("_HID", aml_string("NVDA200C")));
-+        aml_append(dev, aml_name_decl("_UID", aml_int(id)));
-+        aml_append(dev, aml_name_decl("_CCA", aml_int(1)));
-+
-+        crs = aml_resource_template();
-+        addr = aml_qword_memory(AML_POS_DECODE, AML_MIN_FIXED, AML_MAX_FIXED,
-+                                AML_CACHEABLE, AML_READ_WRITE, 0x0, base,
-+                                base + TEGRA241_CMDQV_IO_LEN - 0x1, 0x0,
-+                                TEGRA241_CMDQV_IO_LEN);
-+        aml_append(crs, addr);
-+        aml_append(crs, aml_interrupt(AML_CONSUMER, AML_EDGE,
-+                                      AML_ACTIVE_HIGH, AML_EXCLUSIVE,
-+                                      (uint32_t *)&irq, 1));
-+        aml_append(dev, aml_name_decl("_CRS", crs));
-+
-+        aml_append(scope, dev);
-+
-+        trace_virt_acpi_dsdt_tegra241_cmdqv(id, base, irq);
-+    }
-+}
-+
- /* DSDT */
- static void
- build_dsdt(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
-@@ -1185,6 +1233,10 @@ build_dsdt(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
-     acpi_dsdt_add_tpm(scope, vms);
- #endif
+ TRANS_FEAT(FRINTN_m, aa64_sme_or_sve, do_frint_mode, a,
+-           FPROUNDING_TIEEVEN, frint_fns[a->esz])
++           FPROUNDING_TIEEVEN, 0, frint_fns[a->esz])
+ TRANS_FEAT(FRINTP_m, aa64_sme_or_sve, do_frint_mode, a,
+-           FPROUNDING_POSINF, frint_fns[a->esz])
++           FPROUNDING_POSINF, 0, frint_fns[a->esz])
+ TRANS_FEAT(FRINTM_m, aa64_sme_or_sve, do_frint_mode, a,
+-           FPROUNDING_NEGINF, frint_fns[a->esz])
++           FPROUNDING_NEGINF, 0, frint_fns[a->esz])
+ TRANS_FEAT(FRINTZ_m, aa64_sme_or_sve, do_frint_mode, a,
+-           FPROUNDING_ZERO, frint_fns[a->esz])
++           FPROUNDING_ZERO, 0, frint_fns[a->esz])
+ TRANS_FEAT(FRINTA_m, aa64_sme_or_sve, do_frint_mode, a,
+-           FPROUNDING_TIEAWAY, frint_fns[a->esz])
++           FPROUNDING_TIEAWAY, 0, frint_fns[a->esz])
  
-+    if (!vms->legacy_smmuv3_present) {
-+        acpi_dsdt_add_tegra241_cmdqv(scope, vms);
-+    }
-+
-     aml_append(dsdt, scope);
+ static gen_helper_gvec_3_ptr * const frecpx_fns[] = {
+     NULL,                    gen_helper_sve_frecpx_h,
+@@ -7998,9 +7999,9 @@ TRANS_FEAT(FCVTLT_sd_m, aa64_sme_or_sve2, gen_gvec_fpst_arg_zpz,
+            gen_helper_sve2_fcvtlt_sd, a, 0, FPST_A64)
  
-     pci0_scope = aml_scope("\\_SB.PCI0");
+ TRANS_FEAT(FCVTX_ds_m, aa64_sme_or_sve2, do_frint_mode, a,
+-           FPROUNDING_ODD, gen_helper_sve_fcvt_ds)
++           FPROUNDING_ODD, 0, gen_helper_sve_fcvt_ds)
+ TRANS_FEAT(FCVTXNT_ds_m, aa64_sme_or_sve2, do_frint_mode, a,
+-           FPROUNDING_ODD, gen_helper_sve2_fcvtnt_ds)
++           FPROUNDING_ODD, 0, gen_helper_sve2_fcvtnt_ds)
+ 
+ static gen_helper_gvec_3_ptr * const flogb_fns[] = {
+     NULL,               gen_helper_flogb_h,
 -- 
 2.43.0
 
