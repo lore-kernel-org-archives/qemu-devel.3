@@ -4,105 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86853CD98E1
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 17:47:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C5AFCD98E4
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 17:52:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZXrx-0003yj-3z; Tue, 16 Jun 2026 13:46:37 -0400
+	id 1wZXx3-00057W-U7; Tue, 16 Jun 2026 13:51:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alejandro.j.jimenez@oracle.com>)
- id 1wZXrt-0003tO-Q4
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 13:46:34 -0400
-Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alejandro.j.jimenez@oracle.com>)
- id 1wZXrq-0000Hl-QK
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 13:46:33 -0400
-Received: from pps.filterd (m0333520.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65GFnjK9079531; Tue, 16 Jun 2026 17:46:23 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
- :content-transfer-encoding:date:from:message-id:mime-version
- :subject:to; s=corp-2025-04-25; bh=tVH58gVewWF5ve01BG0806XnPSMiW
- AcFKNGMph/FtOU=; b=sfjau4lBSeSvos69uf5KgQ0AwmIWibkjSFJr/opp7UEmW
- 2Mkjdt778f5/UL9YqjcZEDVCSUkUNvjfJdNSQL5uLHuoJv1kVrI3P7Qf2hvU9SHj
- GpUN1Z9YC7RGh1BYsrTSuoE97q8CDvcnV09ZKadFQLCJlpxL2Q0TNcXKNgUWmdWA
- yrkWYs7m61T5OQ+9Zc3Zc3LH5V0BZrs7TueDNmu4IF52YJ1hluZKEyECeBfWaVG9
- y15hJdz90Kdgm40eV+dEcwF84hAleTbk79Jl6fToAeJYK7E8v098Zcgknw6pH46o
- BUDOqdHKp/DiQ+xYvUxGf60SvgC8zKK5IXd6HsM8Q==
-Received: from phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com
- (phxpaimrmta03.appoci.oracle.com [138.1.37.129])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 4es182d1pu-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 16 Jun 2026 17:46:23 +0000 (GMT)
-Received: from pps.filterd
- (phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.7/8.18.1.7)
- with ESMTP id 65GHcA4v038240; Tue, 16 Jun 2026 17:46:22 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
- by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
- 4erwnd0jac-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 16 Jun 2026 17:46:22 +0000 (GMT)
-Received: from phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com
- (phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.18.1.12/8.18.1.12) with ESMTP id 65GHkLGp025920;
- Tue, 16 Jun 2026 17:46:21 GMT
-Received: from alaljime-e5-test-20240903-1847.osdevelopmeniad.oraclevcn.com
- (alaljime-e5-test-20240903-1847.allregionaliads.osdevelopmeniad.oraclevcn.com
- [100.100.250.206])
- by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTP id
- 4erwnd0j9m-1; Tue, 16 Jun 2026 17:46:21 +0000 (GMT)
-From: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
-To: qemu-devel@nongnu.org
-Cc: qemu@demindiro.com, imammedo@redhat.com, sarunkod@amd.com, mst@redhat.com, 
- pbonzini@redhat.com, richard.henderson@linaro.org,
- alejandro.j.jimenez@oracle.com
-Subject: [PATCH v2] amd_iommu: Fix opcode reported in invalid command handling
-Date: Tue, 16 Jun 2026 17:46:20 +0000
-Message-ID: <20260616174620.438468-1-alejandro.j.jimenez@oracle.com>
-X-Mailer: git-send-email 2.47.3
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wZXx1-000573-D9
+ for qemu-devel@nongnu.org; Tue, 16 Jun 2026 13:51:51 -0400
+Received: from mail-pj1-x1034.google.com ([2607:f8b0:4864:20::1034])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wZXx0-0001mf-1i
+ for qemu-devel@nongnu.org; Tue, 16 Jun 2026 13:51:51 -0400
+Received: by mail-pj1-x1034.google.com with SMTP id
+ 98e67ed59e1d1-37c6cd1ac98so452308a91.0
+ for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 10:51:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1781632308; x=1782237108; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=nXaBPyvnHd1RWGc0B5xQB6nNWkmpNqrNl+vzLSCG9NE=;
+ b=nkty7HaN3DMF6/0it/2MGEUOuW//dSo5MV7I5gjyadt1HstTERbQfq+MGlYpIjS4mM
+ eEG9P27GHUg/0rK3nJ9he46h3Yb0Vmm1yXUww+0fyMx8hwO3LYRjmdzwzPvcFRDnbSRc
+ cjJLHOFauuaMRSEmMh4hP1xXwEUblNhwaM0PBfXYWcNGxxIWkePKKHdnOnmYofDncTco
+ SFzmTOGSXZ1lU7WLu3n6wT86cvQ2EsNo/V69wMzLNJsu9D4Z2nmMDUwWoHoqeHMQu1bK
+ 6e/xssOtZ6SikDimAZ2q98ZVXFJV6bfmOT2Hioqay7z35XM9S+XSj+8DfSsZQ58Y+lfE
+ 0Mhg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1781632308; x=1782237108;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=nXaBPyvnHd1RWGc0B5xQB6nNWkmpNqrNl+vzLSCG9NE=;
+ b=FzSban35nWVAorqjIWudUTe1VFy5tjjeZtbBcJYKVDhSB/cmNtGmI/DSQymFXT/8ZF
+ tE06ObShmN+OcNXthENdHbxGOjmnDDIstZ6Te/2Jm+3PkiuGeMbReRm+vDQYK97Y8UoK
+ GFwU0333aDkVhY3PLTvFcPDLqwZ2whRkTJN58jp87o6OaR+oTiL7j0QKezLX6gt0AAwz
+ bBIcy89xGhOYxFhSk7PVgLYtlxA6NBhzRWgCX5GWPzQvHULYq2lS0uS8ioJ4LBVDbVUz
+ Tzh0oYhIJNmgTjTUrB5Y9GZtIYQfj/0/ZUIeSxSCmGJ3dY7y6u8PxDYIV1zPbQZeZX6b
+ PbIA==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ/tgoMJYMRII4ygUvi9dDGE0hNJma5mJUSDTAK9+gQBkpNkXYNBEfcY19fGHCwzWEaq30ngh0rn9J4F@nongnu.org
+X-Gm-Message-State: AOJu0YzpnDAk9CcSPZ1mBTPD2Ch4Kk9Tal5/kJXeTGv+eit1yB4ASk1F
+ POgDwms0Vi9oNtJB+AriZzixn699kn+zW+NMSfvFq7rAkCMolGdBQ5unUGTfnH+bBbQ=
+X-Gm-Gg: AfdE7cllRM0hG/2aWvTYZ2+rOrPMVT57PLe+jV68dSfPyWr/nyq99G6wUE3hfyeYnkW
+ Sc+ub18KLSVTl93b9RIm4PsMtmTrbmuGc3DBbw9jJfo69KgGlP/g3bOCDvXCrjLClXAhCC8TWBP
+ Ryu1t+JRxa2iF5U2S1q6+nezCg0jh9ZX0/DpPjq3Xdri7XyL2TWfM0Z0F4OnfQPto66tpn0rB2t
+ KCasvdlMdp+RecaU0BNiH6oL2iaK8d/5lDS2f83K+9MenguQapKHT4KhHfVczqiemCvRvTOqaWO
+ /JNEgxktYkpAeF/OiTZzXN7BkjqD5Ci1+zIR/LfwLYXjB+Epd75qutnmaaKTh8owNuXSwAnz2be
+ Bis8PHKZzlGbueUFVEZOi47HVuxXGqog2n7Bt+7rjrm9XLkOKcfDpe04awB7FKCUq8Uy264FuLD
+ 5XrFrtmFup4Ae92UdcoIBJ2eoKjKu/UJm9Uvyl8YfnD4XdrWT9DUwfHKgkSQbrS+Ogif6F
+X-Received: by 2002:a17:90b:3b87:b0:372:94b9:76d8 with SMTP id
+ 98e67ed59e1d1-37c9dbb45d7mr70735a91.6.1781632308242; 
+ Tue, 16 Jun 2026 10:51:48 -0700 (PDT)
+Received: from [192.168.0.4] (174-21-129-215.tukw.qwest.net. [174.21.129.215])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-37c521ae7d1sm3414262a91.3.2026.06.16.10.51.47
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 16 Jun 2026 10:51:47 -0700 (PDT)
+Message-ID: <b6e7d0c2-8d25-4f25-9d50-b0454a0caae2@linaro.org>
+Date: Tue, 16 Jun 2026 10:51:46 -0700
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 3/5] target/ppc: Restrict TCGTBCPUState to TCG
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Nicholas Piggin
+ <npiggin@gmail.com>, Chinmay Rath <rathc@linux.ibm.com>,
+ Glenn Miles <milesg@linux.ibm.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-ppc@nongnu.org
+References: <20260616153432.92939-1-philmd@oss.qualcomm.com>
+ <20260616153432.92939-4-philmd@oss.qualcomm.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20260616153432.92939-4-philmd@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-16_05,2026-06-16_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 malwarescore=0
- mlxlogscore=999 mlxscore=0 phishscore=0 spamscore=0
- adultscore=0
- suspectscore=0 bulkscore=0 lowpriorityscore=0 classifier=spam adjust=0
- reason=mlx scancount=1 engine=8.19.0-2606040000 definitions=main-2606160181
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjE2MDE4MiBTYWx0ZWRfX5kFrVpylfODM
- iUQsLV6mJ4qbhmpHHQJ9BcgWzNKnNbiT4leglKP95CaCcGThYjLuNM9LZxDfCLS+i+6XtHMSvRy
- nqmcOa3mUwXgKt/dHy+c06ljHePHRUiHELLWpWZGufoHgX7ofidE
-X-Proofpoint-GUID: Au7pspUzWAqGpUrUWjIvhNvR93QZsTe5
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjE2MDE4MiBTYWx0ZWRfX5tzMNRmpFkRg
- hDJjOpPpvjEYiqBxbgj3kAAVaMVPeBvImHE0QkXnuwd5jByTpXc1uU0OF8I2IrP0ZAvEA890QFA
- ngN+Sa6iMThLVpWl6dQS6/pjGIS/FhZR1XUtU/tqe97bp9Q1TfGJ1B46vdOErsU+hUCsPmqsugT
- 9yAZMe0QCZd1ucTi8h5N4SlFjelYQ/U+E0X+MAdnAUikiUZm54fKdaKsjCRVyuQCLxvYaJV+4z8
- s1nMGTtGcCvuZCYwEiHpx2IzUPCyqp3fay7YewB2uZ3LA4wMw5dCJfKHZICrFTHmCcuMiFIVEgk
- hg5fK4Ng+dLjlWWtVDbeZTQxcUN8IUTPm6TNuha5SggXsTihKnP1wbOSD561PUOUI5sd7+EI/0N
- cYmt2uB7D96SVzdlop3YADAbFnaiiSqmULcUTCpRZHBMstGojVyhZEV4GXmQeFVbdnZGpPZaohq
- ZXtWFIJURUjJtAEXJiA==
-X-Proofpoint-ORIG-GUID: Au7pspUzWAqGpUrUWjIvhNvR93QZsTe5
-X-Authority-Analysis: v=2.4 cv=Rr/16imK c=1 sm=1 tr=0 ts=6a318bef b=1 cx=c_pps
- a=WeWmnZmh0fydH62SvGsd2A==:117
- a=WeWmnZmh0fydH62SvGsd2A==:17
- a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22 a=jiCTI4zE5U7BLdzWsZGv:22
- a=BqU2WV_vvsyTyxaotp0D:22 a=RWxpEp7VAAAA:8 a=zd2uoN0lAAAA:8 a=20KFwNOVAAAA:8
- a=yPCof4ZbAAAA:8 a=GzNvJYq7lnVrn9pzyLoA:9 a=O8hF6Hzn-FEA:10
- a=3unh6Pbajv6CBnL1DxgC:22
-Received-SPF: pass client-ip=205.220.177.32;
- envelope-from=alejandro.j.jimenez@oracle.com; helo=mx0b-00069f02.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1034;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1034.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,50 +110,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: David Hoppenbrouwers <qemu@demindiro.com>
+On 6/16/26 08:34, Philippe Mathieu-Daudé wrote:
+> TCGTBCPUState is a structure used during TCG translation,
+> therefore not needed when TCG is not available.
+> 
+> Signed-off-by: Philippe Mathieu-Daudé<philmd@oss.qualcomm.com>
+> ---
+>   target/ppc/internal.h    | 5 ++++-
+>   target/ppc/helper_regs.c | 3 ++-
+>   2 files changed, 6 insertions(+), 2 deletions(-)
 
-According to the AMD I/O Virtualization Technology (IOMMU) Specification
-(Rev 3.10), Section 2.4 Commands, the Generic Command Buffer Entry Format
-encodes the opcode in bits [63:60] of the command buffer.
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-When handling illegal opcodes, the traces for unhandled commands and event
-log info extract the opcode from an incorrect offset in the command buffer.
-Fix this issue to avoid potential confusion with mismatched opcodes in
-traces and unlikely errors in guest event processing.
-
-Fixes: d29a09ca68428 ("hw/i386: Introduce AMD IOMMU")
-Signed-off-by: David Hoppenbrouwers <qemu@demindiro.com>
-Reviewed-by: Sairaj Kodilkar <sarunkod@amd.com>
-Acked-by: Igor Mammedov <imammedo@redhat.com>
-Signed-off-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
----
-Sending v2 to the list for visibility before inclusion in 11.1.
-v2 changes:
-- Edit title and commit message with IOMMU spec reference.
-- Add Reviewed-by and Acked-by from v1.
-
- hw/i386/amd_iommu.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/hw/i386/amd_iommu.c b/hw/i386/amd_iommu.c
-index 79216fb305..05b7c638f4 100644
---- a/hw/i386/amd_iommu.c
-+++ b/hw/i386/amd_iommu.c
-@@ -1509,9 +1509,9 @@ static void amdvi_cmdbuf_exec(AMDVIState *s)
-         amdvi_inval_all(s, cmd);
-         break;
-     default:
--        trace_amdvi_unhandled_command(extract64(cmd[1], 60, 4));
-+        trace_amdvi_unhandled_command(extract64(cmd[0], 60, 4));
-         /* log illegal command */
--        amdvi_log_illegalcom_error(s, extract64(cmd[1], 60, 4),
-+        amdvi_log_illegalcom_error(s, extract64(cmd[0], 60, 4),
-                                    s->cmdbuf + s->cmdbuf_head);
-     }
- }
-
-base-commit: 608ad9307d5b4797d2254ee3a4bad2bc8c8bcbae
--- 
-2.47.3
-
+r~
 
