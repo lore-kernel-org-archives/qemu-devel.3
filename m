@@ -4,81 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D301CD98EE
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 612E8CD98F0
 	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 19:15:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZZEa-00057a-MG; Tue, 16 Jun 2026 15:14:06 -0400
+	id 1wZZAf-0008F1-Nv; Tue, 16 Jun 2026 15:10:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wZZ8b-0004n6-0m
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 15:07:55 -0400
-Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
+ id 1wZZ8T-0004iJ-UV
+ for qemu-devel@nongnu.org; Tue, 16 Jun 2026 15:07:49 -0400
+Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wZZ8X-0001H6-IA
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 15:07:52 -0400
-Received: by mail-wr1-x431.google.com with SMTP id
- ffacd0b85a97d-46066e640easo3025347f8f.1
- for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 12:07:48 -0700 (PDT)
+ id 1wZZ8P-00013O-5a
+ for qemu-devel@nongnu.org; Tue, 16 Jun 2026 15:07:45 -0400
+Received: by mail-wr1-x434.google.com with SMTP id
+ ffacd0b85a97d-45ee5cdbd28so112099f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 12:07:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1781636868; x=1782241668; darn=nongnu.org;
+ d=linaro.org; s=google; t=1781636844; x=1782241644; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=pydwboiAW0ie4TrQJ57zGqQSKcjPD0l8ffuTD4pEfpg=;
- b=Gf7We0RpWi0nTEyU4yg8w7za9rWa6WDBN8q3nykvEK0lRx4Eiwnzukxn/XEwzXXvSF
- KNBOv6E2P+/J9UcHOnr+s06J+WxYh8IOVS3KaA/svd/tbzSeicQRpA2N5uF0RWeiOIay
- G1BBcAEVRarKx3iupl7meCM8BTd4X8mjgsyfkpVjgUNds1ekqXMCME7L6RgX/ThJCMWZ
- j6WaQnNKNFu/kFw4Pf/WNKDytPXWXljCwTQ65CTEzMtm5V6+gippdW/qggf4yAj58+aq
- veGA/+NN58e1XJRPbjsbPsARpOTkrYh+m3E1vgzm0B3W9tM96zRwM4PR/uB+1hSIE7wI
- Qnsw==
+ :reply-to; bh=VDaWMEHLJlGMMFHNhVRPokbxg5QakMSEfI8x6+01vJo=;
+ b=gRzkby7Raiskkdykg47Ba0BP9w7FG1keRbEvDeLZFs3cJyQFySVRE95tUtha53vSeS
+ 8xubBGFN0DmmBWHKK+XYl/CIoFdUAkLJoyTxlOfSfgP82VzJsEik/gO3wS1F3u6AdXy2
+ 4zlIUBp7PRP2r/xlR7osl494I+wVD2h8AePhz6+IiganEkIZLBF1GSSfRi/XBaRszuMJ
+ 5U6s7lWt9fnd91NBFL7PQpXxFFXAZbKkIDEKAmNXQoK27BXoJWMgLbY4Fu1gXx7nOeZc
+ mDLHVxvUWh7S3C/EfRBtQsEZ17pkeKvSGWYUy3SJdjJGNxeuKEt3BoPcsCxos3+f9CUV
+ wJEg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781636868; x=1782241668;
+ d=1e100.net; s=20251104; t=1781636844; x=1782241644;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=pydwboiAW0ie4TrQJ57zGqQSKcjPD0l8ffuTD4pEfpg=;
- b=U+MRnA+M+pVLO0hbftpV4hqRYAYCDtb5fBftDwIdkg+Ssma9lZDMxPi6O3K6nDeFgH
- +O0nH767EmjihblGGJ8hZAy4DPhoxHMnxUmTnIRum78vEaX/IY7yuCZOtDCCHGCgRJ0n
- ZjCP5eaQ9D0P1h8L90QdVQj99DlESvGa22FncKzwNOeX9Vmu3shn2ulIxZYspYB29OTI
- 17vG+QA+D8H8U19hpN3lNkXIqncGeGvImoG+Qks+AWLpu47be8tNMKTB0NnMF8tf5A36
- MAX6c6rTGbTuNcU2/LsJtvB9KvZP+1wGc1bXwcIJEtr1jx1SRGxuFPc9gjG51F+vARFP
- bflA==
-X-Gm-Message-State: AOJu0YwpnKjAXzvS7VHSdlODhDCummB9O9fzKz0YonuMeOC/MBxxl1X7
- JXh+3wMrF/5CRP4TkBHpfDHcFiaLcqIj8IPM2sxmSp8rvE/RQN3nTN3ByX/Nh6D5S2UrIdToE0+
- EhWAW
-X-Gm-Gg: Acq92OHn95qACoKjpsbE9YQE4qgUka2aE3fhwwTZW8wYOAamZDR5rQ00b0KP8+8PxCe
- uBVO0OU0U4bJX9SQTl//IuYNI2UkPo++U7F1dvIE3APhwI+FECGWUN3uIv0IuDqGFTrMcZxWFNA
- u0qqoGKpLhZsVDk53h33kg6FkdKqIifN7hHnFgNusx/2ofAUnE4/5fMW3KWkp3RXupnV0u7D2a/
- s87yXm4e9buZldM0Lw+aVwEKwd6304W9hSwy1n306tYpBs4GxSDyDSHd2Z1dI9XS26gJiKpvHRn
- PXGgki68oeLJUsR/7xs45mKDcSVHg8ThFPCfrwRXYBJRg0XOUj1ySHiT7uvsZ9EP4q4/QeuxI75
- FCYux/UJjs2lAEc1nHbB2KTfJtpX7fdR9Xq9Aia4S0aLpRK7c91lhuOxooTlrlNRfhTIDJbNaMx
- KmpB66BaIDXfccKRdF2DA2lMWtfS8iWyqAoZI3Qm4+tDcJx3YIxyXgTMzIZThExD8T84uNkL2f8
- FwP1IYpyv2v6Spk4h+kfvXGLS1HWcpu
-X-Received: by 2002:a05:6000:2204:b0:45e:f381:cd7f with SMTP id
- ffacd0b85a97d-46235e98d57mr1305097f8f.5.1781636867788; 
- Tue, 16 Jun 2026 12:07:47 -0700 (PDT)
+ bh=VDaWMEHLJlGMMFHNhVRPokbxg5QakMSEfI8x6+01vJo=;
+ b=lPSGbeltksSZFTuvXGVRExogZwsXRuDyKXub/94pBLr3urIHS0rCR78bqjOpeIMLk4
+ N53cPz+iVyo3MtiDeZ77adKLeVaqzJz6UOa/qiEkDJcnOBZ9SRDYGdycK18f9Hn2zMan
+ G33EutEVmDabnI9Gh2TjrqT9i/H4RL23GatUNfAOOJLDSFKWzlDnz6zoeQWOpVNg3tW0
+ QoToLeMv66YU9CXPlWGoYpsjiSIQrS+sBHOFTAnsKxrJ/gfexn+DGmVnh/NuM09KuJRj
+ gO4OUwSZJyLBESUZr4iGjpg+Bb4TneJqJRtkf4puGMZgJhqAUtgQu/GgvJHQUB5Gzyc1
+ NPNg==
+X-Gm-Message-State: AOJu0YxhXL5xH6tGGA4ZptEMMEK28kyzU0q4Tgv3EZi4a8OffiwF1Wql
+ dzl0NcUSZVwKk1M2mLOUwc00tOicFAnFxUjom0CE4Ws7eC99gRfnRQe6viqJXXhldRhq+/5v2Ry
+ bV1QD
+X-Gm-Gg: AfdE7cmtLiq04uJWZB97iNS3Ezd083X/Qrn+1Q1jXPqS0LsXVyBRGKudt9BLqabufFD
+ +Q4nHIZmPM7q5TtnTivIVNH42jaRMj0OznZAXx4wZvpxyteiD4Apq2OTLsZbsnEbZXLTJeqTNiJ
+ Omph+dBWkxkw5nYlM4w74DSuMMxeDym0JYEy3TIPoJNviO35beBzpR1FZsM1PlxSSH0oPiZ/g1s
+ VY8s+VtttZLdjbLeZmp9/TgnzE05lLQPHeykyyjOwMeIou/IxxQsla8hWqmAVfi489gocJm53fi
+ QYSxExFi0aY3NnveCoMxTYvmzMurWf/541cUNsUPtELMidElDrranZGATJbRgjcog5ImygNhVag
+ FCGPkNR++SR35YKxQE88fvO7njpHaL/MER9jyBgSlIL44IhA4AiMDDrGzu1JJUy1m9q/uxxm/0T
+ naYlryPW9MEc5w4V5mo+doSjDIzZtIhVGYBbULoItkli9SxdTCcHxHjRdTjPYRpgvjSSy4PDVor
+ //dY+j36yAlmFs8r0ifOTYFJz7/lKFZ
+X-Received: by 2002:a05:6000:1ac8:b0:45e:dd32:92fa with SMTP id
+ ffacd0b85a97d-462699af50fmr28173f8f.12.1781636844271; 
+ Tue, 16 Jun 2026 12:07:24 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4606f2d9becsm45078765f8f.34.2026.06.16.12.07.47
+ ffacd0b85a97d-4606f2d9becsm45078765f8f.34.2026.06.16.12.07.23
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 16 Jun 2026 12:07:47 -0700 (PDT)
+ Tue, 16 Jun 2026 12:07:23 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 60/61] target/arm: Implement SVE floating-point convert (top,
- predicated, zeroing)
-Date: Tue, 16 Jun 2026 20:06:37 +0100
-Message-ID: <20260616190639.3462006-61-peter.maydell@linaro.org>
+Subject: [PULL 38/61] hw/arm/virt-acpi: Advertise Tegra241 CMDQV nodes in DSDT
+Date: Tue, 16 Jun 2026 20:06:15 +0100
+Message-ID: <20260616190639.3462006-39-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260616190639.3462006-1-peter.maydell@linaro.org>
 References: <20260616190639.3462006-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::431;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x431.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::434;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x434.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,79 +100,158 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+From: Nicolin Chen <nicolinc@nvidia.com>
 
-This includes FCVTXNT, BFCVTNT, FCVTNT, FCVTLT.
+Add ACPI DSDT support for Tegra241 CMDQV when the SMMUv3 instance is
+created with tegra241-cmdqv.
 
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Message-id: 20260604234852.573178-18-richard.henderson@linaro.org
+For each accelerated SMMUv3 instance, add a Tegra241 CMDQV device
+object under the DSDT \_SB namespace, with HID "NVDA200C" and a UID
+that matches the Identifier of the corresponding SMMUv3 IORT node, so
+the guest OS can associate the DSDT device with the right SMMU. The
+_CRS covers the CMDQV MMIO aperture plus its interrupt, and _CCA
+declares I/O cache coherency.
+
+See ACPI Specification 6.5, Section 6 (Device Configuration) for
+_HID/_UID/_CCA/_CRS.
+
+Generated DSDT entry for a CMDQV instance paired with SMMUv3 Identifier=1:
+  ...
+  Device (CV01)
+  {
+      Name (_HID, "NVDA200C")  // _HID: Hardware ID
+      Name (_UID, One)  // _UID: Unique ID
+      Name (_CCA, One)  // _CCA: Cache Coherency Attribute
+      Name (_CRS, ResourceTemplate ()  // _CRS: Current Resource Settings
+      {
+          QWordMemory (ResourceProducer, PosDecode, MinFixed, MaxFixed, Cacheable, ReadWrite,
+              0x0000000000000000, // Granularity
+              0x000000000C080000, // Range Minimum
+              0x000000000C0CFFFF, // Range Maximum
+              0x0000000000000000, // Translation Offset
+              0x0000000000050000, // Length
+              ,, , AddressRangeMemory, TypeStatic)
+          Interrupt (ResourceConsumer, Edge, ActiveHigh, Exclusive, ,, )
+          {
+              0x00000094,
+          }
+      })
+  }
+  ...
+Generated IORT SMMUv3 node (Identifier = 1):
+
+  ...
+  [048h 0072 001h]                        Type : 04
+  [049h 0073 002h]                      Length : 0058
+  [04Bh 0075 001h]                    Revision : 04
+  [04Ch 0076 004h]                  Identifier : 00000001
+  [050h 0080 004h]               Mapping Count : 00000001
+  [054h 0084 004h]              Mapping Offset : 00000044
+  ...
+
+Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
+Reviewed-by: Eric Auger <eric.auger@redhat.com>
+Tested-by: Nicolin Chen <nicolinc@nvidia.com>
+Tested-by: Eric Auger <eric.auger@redhat.com>
+Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
+Message-id: 20260609112552.378999-29-skolothumtho@nvidia.com
+Co-developed-by: Shameer Kolothum <skolothumtho@nvidia.com>
+Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/arm/tcg/sve.decode      |  7 +++++++
- target/arm/tcg/translate-sve.c | 13 +++++++++++++
- 2 files changed, 20 insertions(+)
+ hw/arm/trace-events      |  1 +
+ hw/arm/virt-acpi-build.c | 52 ++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 53 insertions(+)
 
-diff --git a/target/arm/tcg/sve.decode b/target/arm/tcg/sve.decode
-index 5c814c7769..673cbaae57 100644
---- a/target/arm/tcg/sve.decode
-+++ b/target/arm/tcg/sve.decode
-@@ -1941,6 +1941,13 @@ FCVTLT_hs_m     01100100 10 0010 01 101 ... ..... .....  @rd_pg_rn_e0
- FCVTNT_ds_m     01100100 11 0010 10 101 ... ..... .....  @rd_pg_rn_e0
- FCVTLT_sd_m     01100100 11 0010 11 101 ... ..... .....  @rd_pg_rn_e0
+diff --git a/hw/arm/trace-events b/hw/arm/trace-events
+index 0bd718b1ab..1b16f710fe 100644
+--- a/hw/arm/trace-events
++++ b/hw/arm/trace-events
+@@ -9,6 +9,7 @@ omap1_lpg_led(const char *onoff) "omap1 LPG: LED is %s"
  
-+FCVTXNT_ds_z    01100100 00 0000 10 101 ... ..... .....  @rd_pg_rn_e0
-+FCVTNT_sh_z     01100100 10 0000 00 101 ... ..... .....  @rd_pg_rn_e0
-+FCVTNT_ds_z     01100100 11 0000 10 101 ... ..... .....  @rd_pg_rn_e0
-+BFCVTNT_z       01100100 10 0000 10 101 ... ..... .....  @rd_pg_rn_e0
-+FCVTLT_hs_z     01100100 10 0000 01 101 ... ..... .....  @rd_pg_rn_e0
-+FCVTLT_sd_z     01100100 11 0000 11 101 ... ..... .....  @rd_pg_rn_e0
+ # virt-acpi-build.c
+ virt_acpi_setup(void) "No fw cfg or ACPI disabled. Bailing out."
++virt_acpi_dsdt_tegra241_cmdqv(int smmu_id, uint64_t base, uint32_t irq) "DSDT: add cmdqv node for (id=%d), base=0x%" PRIx64 ", irq=%d"
+ 
+ # smmu-common.c
+ smmu_add_mr(const char *name) "%s"
+diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
+index 9d05982137..99490aa7b1 100644
+--- a/hw/arm/virt-acpi-build.c
++++ b/hw/arm/virt-acpi-build.c
+@@ -65,6 +65,9 @@
+ #include "target/arm/cpu.h"
+ #include "target/arm/multiprocessing.h"
+ 
++#include "smmuv3-accel.h"
++#include "tegra241-cmdqv.h"
 +
- ### SVE2 floating-point convert to integer
- FLOGB_m         01100101 00 011 esz:2 0101 pg:3 rn:5 rd:5  &rpr_esz
+ #define ARM_SPI_BASE 32
  
-diff --git a/target/arm/tcg/translate-sve.c b/target/arm/tcg/translate-sve.c
-index a8d21dedca..21ee10ee5c 100644
---- a/target/arm/tcg/translate-sve.c
-+++ b/target/arm/tcg/translate-sve.c
-@@ -8097,17 +8097,28 @@ static bool trans_RAX1(DisasContext *s, arg_RAX1 *a)
+ #define ACPI_BUILD_TABLE_SIZE             0x20000
+@@ -1121,6 +1124,51 @@ static void build_fadt_rev6(GArray *table_data, BIOSLinker *linker,
+     build_fadt(table_data, linker, &fadt, vms->oem_id, vms->oem_table_id);
+ }
  
- TRANS_FEAT(FCVTNT_sh_m, aa64_sme_or_sve2, gen_gvec_fpst_arg_zpz,
-            gen_helper_sve2_fcvtnt_sh, a, 0, FPST_A64)
-+TRANS_FEAT(FCVTNT_sh_z, aa64_sme2p2_or_sve2p2, gen_gvec_fpst_arg_zpz,
-+           gen_helper_sve2_fcvtnt_sh, a, 1, FPST_A64)
- TRANS_FEAT(FCVTNT_ds_m, aa64_sme_or_sve2, gen_gvec_fpst_arg_zpz,
-            gen_helper_sve2_fcvtnt_ds, a, 0, FPST_A64)
-+TRANS_FEAT(FCVTNT_ds_z, aa64_sme2p2_or_sve2p2, gen_gvec_fpst_arg_zpz,
-+           gen_helper_sve2_fcvtnt_ds, a, 1, FPST_A64)
++static void acpi_dsdt_add_tegra241_cmdqv(Aml *scope, VirtMachineState *vms)
++{
++    for (int i = 0; i < vms->smmuv3_devices->len; i++) {
++        Object *obj = OBJECT(g_ptr_array_index(vms->smmuv3_devices, i));
++        PlatformBusDevice *pbus;
++        Aml *dev, *crs, *addr;
++        SysBusDevice *sbdev;
++        hwaddr base;
++        uint32_t id;
++        int irq;
++
++        if (smmuv3_accel_cmdqv_type(obj) != SMMUV3_CMDQV_TEGRA241) {
++            continue;
++        }
++        id = object_property_get_uint(obj, "identifier", &error_abort);
++        pbus = PLATFORM_BUS_DEVICE(vms->platform_bus_dev);
++        sbdev = SYS_BUS_DEVICE(obj);
++        base = platform_bus_get_mmio_addr(pbus, sbdev, 1);
++        base += vms->memmap[VIRT_PLATFORM_BUS].base;
++        irq = platform_bus_get_irqn(pbus, sbdev, NUM_SMMU_IRQS);
++        irq += vms->irqmap[VIRT_PLATFORM_BUS];
++        irq += ARM_SPI_BASE;
++
++        dev = aml_device("CV%.02u", id);
++        aml_append(dev, aml_name_decl("_HID", aml_string("NVDA200C")));
++        aml_append(dev, aml_name_decl("_UID", aml_int(id)));
++        aml_append(dev, aml_name_decl("_CCA", aml_int(1)));
++
++        crs = aml_resource_template();
++        addr = aml_qword_memory(AML_POS_DECODE, AML_MIN_FIXED, AML_MAX_FIXED,
++                                AML_CACHEABLE, AML_READ_WRITE, 0x0, base,
++                                base + TEGRA241_CMDQV_IO_LEN - 0x1, 0x0,
++                                TEGRA241_CMDQV_IO_LEN);
++        aml_append(crs, addr);
++        aml_append(crs, aml_interrupt(AML_CONSUMER, AML_EDGE,
++                                      AML_ACTIVE_HIGH, AML_EXCLUSIVE,
++                                      (uint32_t *)&irq, 1));
++        aml_append(dev, aml_name_decl("_CRS", crs));
++
++        aml_append(scope, dev);
++
++        trace_virt_acpi_dsdt_tegra241_cmdqv(id, base, irq);
++    }
++}
++
+ /* DSDT */
+ static void
+ build_dsdt(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
+@@ -1185,6 +1233,10 @@ build_dsdt(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
+     acpi_dsdt_add_tpm(scope, vms);
+ #endif
  
- TRANS_FEAT(BFCVTNT_m, aa64_sme_sve_bf16, gen_gvec_fpst_arg_zpz,
-            gen_helper_sve_bfcvtnt, a, 0,
-            s->fpcr_ah ? FPST_AH : FPST_A64)
-+TRANS_FEAT(BFCVTNT_z, aa64_sme2p2_or_sve2p2, gen_gvec_fpst_arg_zpz,
-+           gen_helper_sve_bfcvtnt, a, 1,
-+           s->fpcr_ah ? FPST_AH : FPST_A64)
++    if (!vms->legacy_smmuv3_present) {
++        acpi_dsdt_add_tegra241_cmdqv(scope, vms);
++    }
++
+     aml_append(dsdt, scope);
  
- TRANS_FEAT(FCVTLT_hs_m, aa64_sme_or_sve2, gen_gvec_fpst_arg_zpz,
-            gen_helper_sve2_fcvtlt_hs, a, 0, FPST_A64_F16)
-+TRANS_FEAT(FCVTLT_hs_z, aa64_sme2p2_or_sve2p2, gen_gvec_fpst_arg_zpz,
-+           gen_helper_sve2_fcvtlt_hs, a, 1, FPST_A64_F16)
- TRANS_FEAT(FCVTLT_sd_m, aa64_sme_or_sve2, gen_gvec_fpst_arg_zpz,
-            gen_helper_sve2_fcvtlt_sd, a, 0, FPST_A64)
-+TRANS_FEAT(FCVTLT_sd_z, aa64_sme2p2_or_sve2p2, gen_gvec_fpst_arg_zpz,
-+           gen_helper_sve2_fcvtlt_sd, a, 1, FPST_A64)
- 
- TRANS_FEAT(FCVTX_ds_m, aa64_sme_or_sve2, do_frint_mode, a,
-            FPROUNDING_ODD, 0, gen_helper_sve_fcvt_ds)
-@@ -8116,6 +8127,8 @@ TRANS_FEAT(FCVTX_ds_z, aa64_sme2p2_or_sve2p2, do_frint_mode, a,
- 
- TRANS_FEAT(FCVTXNT_ds_m, aa64_sme_or_sve2, do_frint_mode, a,
-            FPROUNDING_ODD, 0, gen_helper_sve2_fcvtnt_ds)
-+TRANS_FEAT(FCVTXNT_ds_z, aa64_sme2p2_or_sve2p2, do_frint_mode, a,
-+           FPROUNDING_ODD, 1, gen_helper_sve2_fcvtnt_ds)
- 
- static gen_helper_gvec_3_ptr * const flogb_fns[] = {
-     NULL,               gen_helper_flogb_h,
+     pci0_scope = aml_scope("\\_SB.PCI0");
 -- 
 2.43.0
 
