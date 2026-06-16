@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71415CD98E1
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 19:13:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6B33CD98E1
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 19:13:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZZAW-00079l-NA; Tue, 16 Jun 2026 15:09:52 -0400
+	id 1wZZAa-0007Wr-3l; Tue, 16 Jun 2026 15:09:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wZZ8S-0004iD-NF
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 15:07:49 -0400
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ id 1wZZ8E-0004ZM-Bs
+ for qemu-devel@nongnu.org; Tue, 16 Jun 2026 15:07:37 -0400
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wZZ8L-00012q-49
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 15:07:41 -0400
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-490b7866869so50207435e9.2
- for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 12:07:23 -0700 (PDT)
+ id 1wZZ87-0000yz-P8
+ for qemu-devel@nongnu.org; Tue, 16 Jun 2026 15:07:26 -0400
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-490a76757e5so35888215e9.2
+ for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 12:07:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1781636842; x=1782241642; darn=nongnu.org;
+ d=linaro.org; s=google; t=1781636827; x=1782241627; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=fPpiudd5fPqHqruORX0t6CTsOwaDw0XajqAXoTO5iOk=;
- b=G7eNjsgp53lDwJPVzNLOb0kOJkFh4GeWM5oD5u2QMjRByffWHoX7i0wKPnbk6NUSAL
- jfKEOyQOdAD7IOEyHrVbwlIPh8re9HpMyC7VL46mdbrfobxvOk1lsvVSHjAWvfkW2RkZ
- ZOd6H2fEF3x6iuliAONIN3cinT/S6c27sta4woVHtn4Qldib9WYVRJwso/kdt6hupKxn
- hGCngnetyN+QljW2uAl30If5uJdl3GGXoyoGsKUVAig2M6XPY8QX3n6Ki+2SRlB0U3X1
- 5Fmjlp2pjJMuEDjs28vPHs4xlxCZLIvy6fw2pkVONUSjGiabRyhorcZQillT94boS8WN
- iXGw==
+ :reply-to; bh=dBnz57USTF4klnOD0F5S3F9sAeLT+jv8yGXcqqpiY2U=;
+ b=UNWcdNGXWi559vcK1kduzSlD4DcmH4EwHnh3es6W0e6RzDNUcGLpbpiaebBO354D5R
+ xBhz4/U0KgB/gaCXxBp7A2BYNiQFs2O4PZFrjDkd5QwktvCJbADy2LwAicM1fLO3ASjT
+ T1gqgT8wvAvdiLOXHILZirgS9F86+RHBLv2C5puJPEnSoHIV13iDZgRPx3pfvgPYY+E/
+ X3StTYyfDmyfqwqzZ6yeosBzufw4rcnO+g9XWiwSqNVesamjIkavrdmAekiBHgpHw7e3
+ Jc3ZLHe1Jf4Dh7BnTFVbYnxoRaoElOMj07y6HKxuSpT7X9U+n2fErkT23/HD8o3bslV5
+ Lc/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781636842; x=1782241642;
+ d=1e100.net; s=20251104; t=1781636827; x=1782241627;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=fPpiudd5fPqHqruORX0t6CTsOwaDw0XajqAXoTO5iOk=;
- b=a2EZ38BDk9tExZH0euFRM/dIaexgxU4b+tchN0f5te9A0uzMjGD6xCCCdbBRMthqRr
- EfULj+BqH6KrlTkdtBp6Vja9eCdVzGe1OrGUoNOecd/n9I5g7kGeZqyVCW08z/M7SW+u
- 9vSHWjL1o8zip5r4+pGcBbJRmayeiWbVB3xEvOgfdzW5RLeYjMX/MxpfV3ykfch9WvYE
- agFS5DjShLMzE3iuSvj285T/ifrhu45TCePGbSW0Kcsfdeuxf/qsCIxjytruxVMpdnwj
- 7aY2IipzWE7W/lASivKBu54UkwknexhsXCyirAkvNdEz63XcA0IUMJRN0L/0F1A3GTOh
- sceg==
-X-Gm-Message-State: AOJu0YzmMZ0axTWqCmU/gwSoydsvNEdnUBTrBYZ3Kd5oIypFBiywSrnc
- UswYytUuvg58U4HDJawh5LIHpO7Uwcq/sS7lv1IFd6JZD5pShDveAI/s9hgKaBGOPvqM3vwVthR
- r4lEq
-X-Gm-Gg: Acq92OHSQXWzHt41gezMOIrsQ+kdx4Ooa7hUsny/5ksEm7JKZ0PboCepEmbIqfK1AP2
- iHnhO1zNn3MM5W2CtVR5HfZlIyysuiV/X+IebfCB+N8zZHU1ymUOIAJi8E9vfqLY2joYi3X2cNY
- i6HVm2qrqstE7o95nh7HXftpGufcmSx1rjIPffx8K3+rfXghvYE/Bt5QKdP0LOeOOKFgG6uulTS
- 9Vo1eYFb8jo/f7HhkFIVlPDC6JNtbVE6vpaAx83e3YB5i18CCWBpgBayIsCcGpZv0Pwk8W8ERcv
- sJTRRFSDiPUwUvwBTjJNUZyncSa4KYhD3TwdPYO6FOq/5i92pwWms1zefHvn6L0Q+0CtnqAZCEe
- xejRlLPCYzH39su1l8pEnOnMZtm5vweOlZbpfr9lyQRN8mX3L4vcsWyUrip7q4xvBm87xlHehG1
- svcLGMmdNbpsZui5hVgF97xVxCSFXzuQkD4PbME7Fh8JNngyV+O5KM8Q/UJ6Us9D2ozbSC6IHWc
- ku8Dk1SMUV2+7tJU1XBX6A2G4gaoIOq
-X-Received: by 2002:a05:600c:4747:b0:492:1e36:bafc with SMTP id
- 5b1f17b1804b1-492333df104mr11337985e9.36.1781636842267; 
- Tue, 16 Jun 2026 12:07:22 -0700 (PDT)
+ bh=dBnz57USTF4klnOD0F5S3F9sAeLT+jv8yGXcqqpiY2U=;
+ b=BFOM+Qiil6ZWPPpMoehKVZ4EF1qQznV6BKVqkJDKDUHozxhm7pYrQREm+8GLirTL3E
+ zVgWLbB9C1vK82DVlAjKP+IaXy+gum7Se0G4eBMzr+YyLSYCRX5KU0vnGEw4qc0jBcJi
+ QlWscZIk0SC1DGPTezOVOUrQu4PBM6mP3oWmfQNrPSZEP5SYXjddfzh86lSaxw+ipKdb
+ D/nGem3Qq1Winrkhyq1FICnk+RiCXdXtkPsgyjpH8HR0fmmS0+fh6W72GSe+Sr/Ywhzm
+ QCuUAPhHYSxJYx7Tp1eugIKitZjRY28AVncz2jfqCcmQKQncptB277ITrIUffbx+/og1
+ Ttsg==
+X-Gm-Message-State: AOJu0YwrMYyrbnMyr1NrUTOytOAAyHKqXltV4FtFpTfiKekBbUpAqZkg
+ rdjtpNgtXxqD0h1HOtc0Ftt5/FDRhfG/ChUA49tDm9+GfmWrC6Wx4ROcu9UW56eG6up6dgH/Y22
+ v3aZN
+X-Gm-Gg: Acq92OEJ8rVP9u5R4nJJvpCGmPUkLGJ/kxHtyeGmEoOM2GgaJvl+BbBBxib903SwOyt
+ UJEAVB3CTSdBVkQF24TbNA2Se2HUKuKHFIO5LvVPdOH7YmI+APOTIO5iHnhGIz6CAmaGFk1tRpY
+ rOn/Ijfg7GpRMD4rR5a0B3CfX7etznO6fD4hQDFmur661yWrUOW2fCH8vXzaLaJMXOwbRX6NKsD
+ A1Kqb6Xzkjy0RWVt2HkvtrqKit9ZE9n7jSuEd/L7qETYC/u0jjWEW6k49bEfU5KLNOBLuieh+JU
+ xSIzeb8CLo8kkCefVMWlmSSpBkmxNmS5iY9J6MpmqY40KF23IAA7MKeR4PZw3BspJNMgmkyFyw0
+ nUEOObn0UDcHWcUzCGtTQ7HUGtjocPpF5VxbYS0jHPjs87onNxneydXp6SKORcHCVeUKfLnXwWm
+ FBKIAN8hgkHCerE5RlI72uqQlr0p/IbauTrDNPsna+uaxFJeckiLIewRfTf1GlcuZiyEi2wNihx
+ tnuDjrjHw9pnzzocTrfbKhrg3OhLJZ/OFlEw/VaxU8=
+X-Received: by 2002:a05:600c:19ca:b0:492:1edf:9fbc with SMTP id
+ 5b1f17b1804b1-492333ba2e3mr14447175e9.1.1781636827379; 
+ Tue, 16 Jun 2026 12:07:07 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4606f2d9becsm45078765f8f.34.2026.06.16.12.07.21
+ ffacd0b85a97d-4606f2d9becsm45078765f8f.34.2026.06.16.12.07.06
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 16 Jun 2026 12:07:21 -0700 (PDT)
+ Tue, 16 Jun 2026 12:07:06 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 36/61] hw/arm/smmuv3: Add per-device identifier property
-Date: Tue, 16 Jun 2026 20:06:13 +0100
-Message-ID: <20260616190639.3462006-37-peter.maydell@linaro.org>
+Subject: [PULL 22/61] hw/arm/virt: Link SMMUv3 CMDQV resources to platform bus
+Date: Tue, 16 Jun 2026 20:05:59 +0100
+Message-ID: <20260616190639.3462006-23-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260616190639.3462006-1-peter.maydell@linaro.org>
 References: <20260616190639.3462006-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x334.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,120 +102,67 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Shameer Kolothum <skolothumtho@nvidia.com>
 
-Add an "identifier" property to the SMMUv3 device and use it when
-building the ACPI IORT SMMUv3 node Identifier field.
+SMMUv3 devices with acceleration may enable CMDQV extensions
+after device realize. In that case, additional MMIO regions and
+IRQ lines may be registered but not yet mapped to the platform bus.
 
-This avoids relying on device enumeration order and provides a stable
-per-device identifier. A subsequent patch will use the same identifier
-when generating the DSDT description for Tegra241 CMDQV, ensuring that
-the IORT and DSDT entries refer to the same SMMUv3 instance.
+Ensure SMMUv3 device resources are linked to the platform bus
+during machine_done().
 
-The identifier is assigned at pre-plug time, accounting for the ITS Group
-node that build_iort() places before SMMUv3 nodes in the IORT table, so
-that identifiers are globally unique across all IORT nodes.
-
-No functional change: IORT blob content for bios-tables qtest is identical
-to before.
+This is safe to do unconditionally since the platform bus helpers
+skip resources that are already mapped.
 
 Reviewed-by: Eric Auger <eric.auger@redhat.com>
 Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
 Tested-by: Nicolin Chen <nicolinc@nvidia.com>
 Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
 Tested-by: Eric Auger <eric.auger@redhat.com>
-Message-id: 20260609112552.378999-27-skolothumtho@nvidia.com
+Message-id: 20260609112552.378999-13-skolothumtho@nvidia.com
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- hw/arm/smmuv3.c          |  2 ++
- hw/arm/virt-acpi-build.c |  5 ++++-
- hw/arm/virt.c            | 12 ++++++++++++
- include/hw/arm/smmuv3.h  |  1 +
- 4 files changed, 19 insertions(+), 1 deletion(-)
+ hw/arm/virt.c | 22 ++++++++++++++++++++++
+ 1 file changed, 22 insertions(+)
 
-diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
-index 83fa6468fd..a8fb10e531 100644
---- a/hw/arm/smmuv3.c
-+++ b/hw/arm/smmuv3.c
-@@ -2126,6 +2126,8 @@ static const Property smmuv3_properties[] = {
-      * Defaults to stage 1
-      */
-     DEFINE_PROP_STRING("stage", SMMUv3State, stage),
-+    /* Identifier used for ACPI IORT SMMUv3 (and DSDT for CMDQV) generation */
-+    DEFINE_PROP_UINT8("identifier", SMMUv3State, identifier, 0),
-     DEFINE_PROP_BOOL("accel", SMMUv3State, accel, false),
-     /* GPA of MSI doorbell, for SMMUv3 accel use. */
-     DEFINE_PROP_UINT64("msi-gpa", SMMUv3State, msi_gpa, 0),
-diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
-index b00f3477ca..9d05982137 100644
---- a/hw/arm/virt-acpi-build.c
-+++ b/hw/arm/virt-acpi-build.c
-@@ -349,6 +349,7 @@ static int iort_idmap_compare(gconstpointer a, gconstpointer b)
- typedef struct AcpiIortSMMUv3Dev {
-     int irq;
-     hwaddr base;
-+    uint8_t id;
-     GArray *rc_smmu_idmaps;
-     /* Offset of the SMMUv3 IORT Node relative to the start of the IORT */
-     size_t offset;
-@@ -411,6 +412,7 @@ static int populate_smmuv3_dev(VirtMachineState *vms, GArray *sdev_blob)
-                                                &error_abort));
-         sdev.accel = object_property_get_bool(obj, "accel", &error_abort);
-         sdev.ats = smmuv3_ats_enabled(ARM_SMMUV3(obj));
-+        sdev.id = object_property_get_uint(obj, "identifier", &error_abort);
-         pbus = PLATFORM_BUS_DEVICE(vms->platform_bus_dev);
-         sbdev = SYS_BUS_DEVICE(obj);
-         sdev.base = platform_bus_get_mmio_addr(pbus, sbdev, 0);
-@@ -637,7 +639,8 @@ build_iort(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
-                      (ID_MAPPING_ENTRY_SIZE * smmu_mapping_count);
-         build_append_int_noprefix(table_data, node_size, 2); /* Length */
-         build_append_int_noprefix(table_data, 4, 1); /* Revision */
--        build_append_int_noprefix(table_data, id++, 4); /* Identifier */
-+        build_append_int_noprefix(table_data, sdev->id, 4); /* Identifier */
-+        id++;  /* advance shared counter for RC/RMR node uniqueness */
-         /* Number of ID mappings */
-         build_append_int_noprefix(table_data, smmu_mapping_count, 4);
-         /* Reference to ID Array */
 diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-index 2add7401a1..d8d27f2ef6 100644
+index ac0606fe87..2add7401a1 100644
 --- a/hw/arm/virt.c
 +++ b/hw/arm/virt.c
-@@ -254,6 +254,9 @@ static MemMapEntry extended_memmap[] = {
-     /* Any CXL Fixed memory windows come here */
- };
+@@ -2361,6 +2361,25 @@ static void virt_build_smbios(VirtMachineState *vms)
+     }
+ }
  
-+/* Counts SMMUv3 devices plugged; used to assign stable IORT identifiers */
-+static uint8_t smmuv3_dev_id;
++/*
++ * SMMUv3 devices with acceleration may enable CMDQV extensions
++ * after device realize. In that case, additional MMIO regions and
++ * IRQ lines may be registered but not yet mapped to the platform bus.
++ *
++ * Ensure all resources are linked to the platform bus before final
++ * machine setup.
++ */
 +
- static const int a15irqmap[] = {
-     [VIRT_UART0] = 1,
-     [VIRT_RTC] = 2,
-@@ -3830,6 +3833,15 @@ static void virt_machine_device_pre_plug_cb(HotplugHandler *hotplug_dev,
-                                      OBJECT(vms->sysmem), NULL);
-             object_property_set_link(OBJECT(dev), "secure-memory",
-                                      OBJECT(vms->secure_sysmem), NULL);
-+            /*
-+             * In build_iort(), the ITS node(id=0) precedes SMMUv3 nodes
-+             * when present. Account for it so this SMMUv3's identifier
-+             * is globally unique across all IORT nodes.
-+             */
-+            uint8_t its_offset = (vms->msi_controller == VIRT_MSI_CTRL_ITS)
-+                                  ? 1 : 0;
-+            object_property_set_uint(OBJECT(dev), "identifier",
-+                                     its_offset + smmuv3_dev_id++, NULL);
-         }
-         if (object_property_get_bool(OBJECT(dev), "accel", &error_abort)) {
-             hwaddr db_start = 0;
-diff --git a/include/hw/arm/smmuv3.h b/include/hw/arm/smmuv3.h
-index 34d0f65eaa..d39fe8850b 100644
---- a/include/hw/arm/smmuv3.h
-+++ b/include/hw/arm/smmuv3.h
-@@ -65,6 +65,7 @@ struct SMMUv3State {
-     qemu_irq     irq[4];
-     QemuMutex mutex;
-     char *stage;
-+    uint8_t identifier;
- 
-     /* SMMU has HW accelerator support for nested S1 + s2 */
-     bool accel;
++static void virt_smmuv3_dev_link_cmdqv(VirtMachineState *vms)
++{
++    for (int i = 0; i < vms->smmuv3_devices->len; i++) {
++        DeviceState *dev = g_ptr_array_index(vms->smmuv3_devices, i);
++
++        platform_bus_link_device(PLATFORM_BUS_DEVICE(vms->platform_bus_dev),
++                                 SYS_BUS_DEVICE(dev));
++    }
++}
++
+ static
+ void virt_machine_done(Notifier *notifier, void *data)
+ {
+@@ -2377,6 +2396,9 @@ void virt_machine_done(Notifier *notifier, void *data)
+     if (vms->cxl_devices_state.is_enabled) {
+         cxl_fmws_link_targets(&error_fatal);
+     }
++
++    virt_smmuv3_dev_link_cmdqv(vms);
++
+     /*
+      * If the user provided a dtb, we assume the dynamic sysbus nodes
+      * already are integrated there. This corresponds to a use case where
 -- 
 2.43.0
 
