@@ -4,53 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DAA5ECD98E1
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 13:47:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72E2ACD98E1
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 13:54:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZU80-0002C3-W4; Tue, 16 Jun 2026 09:46:57 -0400
+	id 1wZUE2-0003UH-Cs; Tue, 16 Jun 2026 09:53:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cui.tao@linux.dev>) id 1wZU7v-0002Bd-Mr
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 09:46:51 -0400
-Received: from out-179.mta1.migadu.com ([2001:41d0:203:375::b3])
+ (Exim 4.90_1) (envelope-from <qinzhengxiang@foxmail.com>)
+ id 1wZUDs-0003Tu-QX; Tue, 16 Jun 2026 09:53:00 -0400
+Received: from out203-205-221-235.mail.qq.com ([203.205.221.235])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cui.tao@linux.dev>) id 1wZU7r-0004GA-Mz
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 09:46:50 -0400
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and
- include these headers.
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
- t=1781617601;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=x6A/v0v0NNN7dzQ8Ajqsz3CqsjJ+V8Ilr1nT2Fz9k98=;
- b=nzkZvR3O4+IRB+PkBSME1O0LnnOjS7lBlMq/tc8DtyhSETsUZ1MhlZSrJ29h+FvEIqZh/o
- y35LHMpQVC8omHysufZqAOcONxGgGXPeoQUBfs0EhwQtHtCs8E0LHo7KJC3SN+UOraI1Kt
- zYX0KpxcRIx86qWo/MpwV4CWxJPMth0=
-From: Tao Cui <cui.tao@linux.dev>
-To: gaosong@loongson.cn
-Cc: cohuck@redhat.com, cui.tao@linux.dev, cuitao@kylinos.cn,
- kvm@vger.kernel.org, maobibo@loongson.cn, mst@redhat.com,
- pbonzini@redhat.com, qemu-devel@nongnu.org
-Subject: Re: [PATCH 0/2] target/loongarch: PV TLB flush advertisement
-Date: Tue, 16 Jun 2026 21:46:21 +0800
-Message-ID: <20260616134621.114322-1-cui.tao@linux.dev>
-In-Reply-To: <636afc5b-968a-3027-8683-21df1c14838a@loongson.cn>
-References: <636afc5b-968a-3027-8683-21df1c14838a@loongson.cn>
+ (Exim 4.90_1) (envelope-from <qinzhengxiang@foxmail.com>)
+ id 1wZUDp-0005of-4r; Tue, 16 Jun 2026 09:52:59 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=foxmail.com;
+ s=s201512; t=1781617961;
+ bh=tHU5y87heH/tZ2bc0hPUKWeZlrXjMFafF8vMRqG5/uc=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References;
+ b=xk067gi07t5ndq/2bvLvWmyW/sSVysZQi4LGfBvatlLqudGvW+Qs5ssbtcdmbakcA
+ WPHz64hHns0myWo+gcs9kSKBJIuHGB8uYNDddnDsDsR50XScuxFTpG22tg7SPDzLXW
+ 8zaTPvpt0OgOEtGAMI12nBcoMNDdO6QwjbpBDlkw=
+Received: from GavinQin-Ubuntu24.. ([117.147.33.130])
+ by newxmesmtplogicsvrsza73-0.qq.com (NewEsmtp) with SMTP
+ id D138C0B9; Tue, 16 Jun 2026 21:52:19 +0800
+X-QQ-mid: xmsmtpt1781617939tmj20dn16
+Message-ID: <tencent_2D121E3279F02830A927286382200AC3FE07@qq.com>
+X-QQ-XMAILINFO: NU1WwRH9AHfmoYkaQoj/XBiAQuqQRUZB0idtAxTZ7F7282kgkDzMHEDzIq4dBL
+ DQwUwCNJpxFYlYv1qv37eIiASolM1MxShTkta3h7RBi/2bUPYtYzSQ0y8S5tTa/Uc7SwhA/uWsbS
+ ug3UnOKPscSBTzmbV58O2pvR0sOX3o16EJNC5zGeb3c1FOoePT1dQMOp29u6ml9MagqJJMgvuP6P
+ a0dg7fKBm5PvWunevr8LJeK8vfxTxRA7A89O+1XgSEZhDfPaSqMo/mzFpK1L1gwZyVtlB2nKBcjj
+ QY8DgyDCmyBSXhvL0oluum8EiLve7hj4+55L2aVKwOuUF6nz+m/XZgo9PoR1M9l/9hBVx2r+fRDY
+ Sd72INv3hChA9r12tJ3BrcXuz36o+5U1YEjq/T6x7ap7D8HMevaTo5CWBXfKpSptvx7TFAYicrCI
+ UWTqoYNeU9GNxuyW9+hPOYC9J9HdnHJllZosfizQKcO+9EoeCsLfnpOEMtmZ2DPepQY0Ts+6BsnW
+ p7bA/kh36rZ9rv/yKUo30A0Y29FKN1sCUnQxmLjQsE1fUR5hjhEiPcjAJfyicQa4XKbZegG99y+K
+ arcU1DqVLLCGwX+r880pHqtaxk3vuPDE9l6E+DlWs9rpymStGlb3+mKzn8GZLvGzOmsqhHk6LgCY
+ wXpicBb5CHgfZnKFpDbqmGojSvdTMIVXKFdmKVN4is5ezFSaarQPaKqY9HbqWR8YpiWd/RAiS4f7
+ Ie4RecBZWMVkwE9yKMeTYFjpEZdgoZLLWzcvxRWbGxoZp9ICwT/YxCyij0MKzovrI8iuQ+5K9G3J
+ aWJNWIGEU2cFxogp+cddhh3Y0qP7GHM2rfkFdZ5U+pOIYt6RvtOrRBcbYs4E7tZA/RyxsTtrAa1Z
+ K0/8L0rYYUkuCetBpxz9vfXIM7wdzplk9sNajnbm0vIdxNSeK++p1Omcn/WsLS2oeanWpRb2z1Fw
+ L4jgX6SDTC27hMfurJEguotjHxrdz3wmdGZGqY/6aM/SYcxTXsW2L9QHgu+eDp+0jVPXuWpcldXc
+ D1hqJ1ydJDQME+FlZojxGYSxwT/qEc2Cogem0yZnwjojzKBsoam8qpnmmee1t64pVr7ihCwA==
+X-QQ-XMRINFO: NyFYKkN4Ny6FuXrnB5Ye7Aabb3ujjtK+gg==
+From: ZhengXiang Qin <qinzhengxiang@foxmail.com>
+To: daniel.barboza@oss.qualcomm.com
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, palmer@dabbelt.com,
+ alistair.francis@wdc.com, liwei1518@gmail.com,
+ zhiwei_liu@linux.alibaba.com, chao.liu.zevorn@gmail.com,
+ qinzhengxiang@foxmail.com
+Subject: Re: [PATCH] target/riscv: avoid abort when reading vtype before
+ env->xl is set
+Date: Tue, 16 Jun 2026 21:52:17 +0800
+X-OQ-MSGID: <20260616135217.7587-1-qinzhengxiang@foxmail.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <96088690-464e-478f-9ada-465f44ccfd08@oss.qualcomm.com>
+References: <96088690-464e-478f-9ada-465f44ccfd08@oss.qualcomm.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Migadu-Flow: FLOW_OUT
-Received-SPF: pass client-ip=2001:41d0:203:375::b3;
- envelope-from=cui.tao@linux.dev; helo=out-179.mta1.migadu.com
+Received-SPF: pass client-ip=203.205.221.235;
+ envelope-from=qinzhengxiang@foxmail.com; helo=out203-205-221-235.mail.qq.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ HELO_STATIC_HOST=-0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -67,22 +85,6 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Song,
-
-Thanks for the suggestion.
-
-Bibo has also raised a few comments on the KVM side that require some
-adjustments to the paired kernel series. I'll rework the series
-accordingly and regenerate the linux-headers via
-scripts/update-linux-headers.sh in the next version, along with those
-changes.
-
-Thanks,
---
-Tao
-
-> Hi, you should use scripts/update-linux-headers.sh to update the
-> linux-headers.
->
+Thanks Daniel!
 
 
