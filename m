@@ -4,100 +4,134 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3CC7FCD98E1
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 15:27:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54F29CD98E1
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 15:28:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZVhK-0006YU-H6; Tue, 16 Jun 2026 11:27:30 -0400
+	id 1wZVic-00072Y-T7; Tue, 16 Jun 2026 11:28:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wZVhJ-0006YD-EE
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 11:27:29 -0400
-Received: from mail-yx1-xb135.google.com ([2607:f8b0:4864:20::b135])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wZVhH-0002dI-TW
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 11:27:29 -0400
-Received: by mail-yx1-xb135.google.com with SMTP id
- 956f58d0204a3-66077e888b2so4255493d50.3
- for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 08:27:27 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1781623647; cv=none;
- d=google.com; s=arc-20240605;
- b=EID/3AECWUI00sVNf9NkcLK03UYNRRwvp8fA2G9S0bJIo9lkgKmfw7DzVM+CNEuXTg
- EXe2FwWcOmBTFcVk9z9RK3RX10WhCngU4EP376XLc6+RFP1s4igNoEthX6GoMN52fywk
- Saoca+pEsCMXJr84pFQSdQNOpYxZko+hp+dw5tKI1YYiwx1bBOAOWd89Qg9Npwkus6OC
- 5H7o8rYpoSiwzai0+9SEngFscKGbqX4DQF5l7keU1yCO6fcW+su6LgtqYzP9f70dvNkU
- kj8IEkn3/dahKSoqTIFU8+U0Sq6yVS7Z0wjsubQelU3oepNKz0nZGxZ07W4SRoRB/n+2
- wEZA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=LRcWexWvCq49tDGQm28QFblr5Loyse8ziE19iwFcn3Q=;
- fh=/ftcwOPYeEIhzseC7WF42kR+xVR/IJiWpLC1+A7SOWQ=;
- b=We62ypD03BtZxrlJSMnXXqIePuNDj+J9t0PIIH/unB2+560a0C+v9Ylk/LdxvrSqjm
- BGW23ynXxy6EfIIzCVsXP1eR7mawXlSZkC5JmtKrLewewzCJA2oZP6pkflNjx/aEh/BA
- qSUKp8W8T4zqllCK7xu4aP8eMkTxNwQIoTbE6RJK3dqsuPmebPYD9T8cl/7oEis6ij59
- VjFLK8QqkQAimwwhj7raeL5N7uYYKb77ukcpNLPzxf5w8CvvC0Y+7bCtnwG+R9gFbpFF
- yUXtu8B1ePBhAK22TLCkz3yZjvqJYNrK21xbgbqXMRo76Fhv3UTFxZlZUFcBKSHmjjfS
- 4gWg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wZVia-00072I-SI
+ for qemu-devel@nongnu.org; Tue, 16 Jun 2026 11:28:49 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wZViZ-00030C-Hr
+ for qemu-devel@nongnu.org; Tue, 16 Jun 2026 11:28:48 -0400
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 65GDxYLb3969957
+ for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 15:28:46 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:message-id
+ :mime-version:subject:to; s=qcppdkim1; bh=6sxPUaTNqv0S0KW4mH4UYG
+ cRKg1L5tLqP10Nv8f82s4=; b=pO25UkzJzXEqp5FTwADxX2TmzyjjoigZmBA+NC
+ QJ45N1Xy3JRn2QxdCRjS+ooI7lvIYCKl9rRi8ZZtHFmmD8Sn90UYTZ7md90p0Al5
+ wawKzP9IzS3mPGLFz37unrXBd0S2Fgvpo4mgeH0rIk+crDoLd+olFVaJ8PPsxOJM
+ K++OoUjcE2GqT1hP4/RHM8BgsxzxsXb/nz9SRrRsgiEspruiU2kv/2yxseLddBxE
+ neO9eKi01QYPaiJ/GTwWZ5CCsCj9dOz4mAIJG7OSi5c8Orue5ciOFfXwGSgdIMel
+ SbcsOILk6EMbxNJWkhgy6EUrNf4lAK50M3DfZkUKg9FIaZtg==
+Received: from mail-ua1-f70.google.com (mail-ua1-f70.google.com
+ [209.85.222.70])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4eu4dkhfum-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 15:28:45 +0000 (GMT)
+Received: by mail-ua1-f70.google.com with SMTP id
+ a1e0cc1a2514c-963eeb6f2baso4604887241.0
+ for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 08:28:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1781623647; x=1782228447; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=LRcWexWvCq49tDGQm28QFblr5Loyse8ziE19iwFcn3Q=;
- b=cyAdvvc/fWaAWTcNjtSJatdGJT5fwfiVw4cuj6H0ECSCYCMkFmfgIbCn5Cvfva2Ar/
- jfY03S1EQ677tQg0c/OD5LPa3H2a+VUU8QsxkAZQlo4f/sscN+pCA9SuhfWO7m+mJfR8
- UXxDoOfkhuZTKO9KB7O4ku6I793gSgvpXh4+jKeTWgiOkIP0b27Ckbo8SckO5KJO17Z0
- Z8hxWUajWhi+LuUnev+XqT/lPms2ZAhqx64IjANPW1Kn63xGdXPDgYRreVr/Noo7pkBY
- b8sCquH0VG1pWqi4AeIUzGDr8EbugaO3Ru1pK7Jk+acSZUX2k/9/HlObcKmOUAflOvxS
- 00pQ==
+ d=oss.qualcomm.com; s=google; t=1781623725; x=1782228525; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=6sxPUaTNqv0S0KW4mH4UYGcRKg1L5tLqP10Nv8f82s4=;
+ b=Zz5hLu7tfHsLAVscm1LtTpQf/3Rflatn0Hw7uXGQqPv6zhJSy88iKzgyZjtXRYq8Bm
+ oOaclJocaKXwVQkgXHPLnAymsSwWRb/e6cVNCrQm196ZiaD9NySBwh7L4/x+eSjYmZNr
+ LpvkSzVGWSFleZprrggpwFVB9Jwbd2X6LHW42DHpHDsZMajaWwtKScVvmWwdWKZc/JmQ
+ cctkzzj+fOmiIEgtvzPaQohAwilr9dHYLFa9VBpmCsUJXjnaTASl3YpIgvmnvQMkKahi
+ 05o8me9rEBYz/Iz1diw0Kil7ZFSAgj9A8P8gkn/AO3gdT9t4sC2Oi6RAGRyZUAX4HQMl
+ Q6iA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781623647; x=1782228447;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=1e100.net; s=20251104; t=1781623725; x=1782228525;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=LRcWexWvCq49tDGQm28QFblr5Loyse8ziE19iwFcn3Q=;
- b=jFraOnOwEAuNI1SDJ2FJnuvFQBtlZazPuz5U4XGUpDu1LXJFjYqu7OW2EXbBK8/7jk
- aMszfmx60H7KkUGWsU8O9n2HNw7axdWlMkENy624q1DhpLKXXX5hJdVg7YerQyavOu1S
- AcrwveFZAusAdYoNznyri9ufHSB6uveD+zuixfRF8t3BVgvW8WtsVqgZR+dHwOrHqFeQ
- TJkVgM6ubwGQMHjGVasnY3O5mXIvQoDMRVEUDiTlzXt9JjRDVUp1cOIi0irWESnhRCI4
- ZqM01Cq3jg1bavVe7uE2cfJB55PqGnIPX9CIq/NxQVd3WnWu9FOeSNuBkqngoR8K8SO+
- 8Brg==
-X-Gm-Message-State: AOJu0YxEyLVuUEeaw580BqO60iotMS2T42VXiSl+rupiC6SSLQcRT6+u
- u7hUahJaz4flLDdG9ZHfsr3jvIzfJUpHYSvRKznJjyWKXtGQM8m2Ox0uYYlblP8Wpvok/XEw5BX
- +6QncN9A/Cvo/LTj0jPJVX8sdmfShnhsGeofNRcQevw==
-X-Gm-Gg: Acq92OEgFUvcpif4P7Jk+cxx26k5MccdzFqieCRQoPAZgSlTj/MffuwXARdDKOagN1y
- txwFt66WicS0F2m70AxvWQlm4tXAssUlyhrUNqyjU3J/H0B5b68MabCXVc4H648S1qTMv4O7I0W
- q8/8SHYlbZbjg+cnjmxKkpQIaLgQkVcOPJpkR1zuxMPIWZCJVHu8Z+YrMd659Vo36JuToP7x0s4
- 8jkqNaC1H9kj5kqAFgvnUN6+dXTg3QuN1rfrVQjzXMETefJvwTBdYpev+4RIAKlpypmwiidtpQs
- 1VEtiaFT6DtevxJVPKRMByl7d7Oa/NLVbqTdqGkptx2v9Du7R0UWMSRJ8Zw3NY+axWI=
-X-Received: by 2002:a05:690e:4810:b0:653:f51:90b1 with SMTP id
- 956f58d0204a3-66277f7dc8emr11755109d50.24.1781623646655; Tue, 16 Jun 2026
- 08:27:26 -0700 (PDT)
+ bh=6sxPUaTNqv0S0KW4mH4UYGcRKg1L5tLqP10Nv8f82s4=;
+ b=I2/X4l0wHDFAPIqOzN8rPpZC0wGs+sRZz/1tzyiadYa9ixojUpPm3K4pOvCukJ47VQ
+ OMF0p4S7CjTu7iBiXMY7M887lu6E1snZQucf5jgsycsYQ7yVcguTs8Y32yvppuKkyWHs
+ lVZGZ6SZ6Suo6MI6KnZnrF7T42ew+dmnTESAAOGN0IL2YwH6krXF0M/AUh8AhliAAW+m
+ qdh+xhgVt1TUajf7i6Diuu5zTcH1+YdFtnjRwT/DbRLKl/ahZiO+0R5D1NkVocq6z5yq
+ w4+6eWoxPKLcq9P3YKDvWnBAp8Av9FGtk1l4IUGnebqSSu/j1bsGxmYoSvAmwcUJ7qWP
+ G91w==
+X-Gm-Message-State: AOJu0Yy+a6IZX+BTQZGRLi8Mz/foDMA+q1ipdFdfdbEs5pAZjTvP6mYX
+ HydmZDb8dKMWogs5cl+B67L4IubR7pis+Nta4zBmmRsdsmVT9tcalUqG2UAiBmRnf33UZ16oPE9
+ mr6mXLCfToXKaNe3+7LOab5xvQzvAT00cyh5kkBrS4GlS/WhVUjO/sKBPkLQcJ2k/bg==
+X-Gm-Gg: Acq92OH1EhRRViqQlsEyJ8a2S4ePS6izYcuwGjVC4b0NrueOVYybXKbFZt08zKkaGkB
+ u7lfwo6t9F2Cenbr2LvIF5L6Gnqu0gSJVOfLKUEAF0rsNMt505WMB6mdfWKJkifGPc9I0OlnThP
+ I8LkzUvOck5apsgHjK05VA5LXNPef96Oc5CSBLC5/dAlXqG0tUEbqBuv49hJ7sblxw4cmsHjcYA
+ J4D8mZmWj/VdQjI0je91+/qH0IJLTRK75oyQt7Zb9qPOjY85f/Dz0S4UeCLq3ruXJwkTLAFmlv4
+ 2u3O4DhloWg/32JjBk6IP/0599zjbCQBODJ381fa52eJL6Yj853XHVdeKY0MPs7IuYXriJ/DqNN
+ 1Cw5OJNsXu95dks0vMJtoHLgkL7w/ZuMNAG1axy0JdcmcislcHH1x2iBfMX7S6zXiWDkwVCj4R2
+ kHg2U=
+X-Received: by 2002:a05:6102:3e82:b0:631:3bbb:f25f with SMTP id
+ ada2fe7eead31-722d9d9078fmr2806774137.15.1781623725247; 
+ Tue, 16 Jun 2026 08:28:45 -0700 (PDT)
+X-Received: by 2002:a05:6102:3e82:b0:631:3bbb:f25f with SMTP id
+ ada2fe7eead31-722d9d9078fmr2806760137.15.1781623724856; 
+ Tue, 16 Jun 2026 08:28:44 -0700 (PDT)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-4619a041986sm21346794f8f.23.2026.06.16.08.28.43
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Tue, 16 Jun 2026 08:28:44 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+To: qemu-devel@nongnu.org
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+Subject: [PATCH v2] accel/tcg: Restrict IOMMU declarations
+Date: Tue, 16 Jun 2026 17:28:42 +0200
+Message-ID: <20260616152842.92275-1-philmd@oss.qualcomm.com>
+X-Mailer: git-send-email 2.53.0
 MIME-Version: 1.0
-References: <20260604234852.573178-1-richard.henderson@linaro.org>
- <20260604234852.573178-23-richard.henderson@linaro.org>
-In-Reply-To: <20260604234852.573178-23-richard.henderson@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 16 Jun 2026 16:27:14 +0100
-X-Gm-Features: AVVi8CeOfLUvCvJL1ESWV0Fh97fxx7QZ9ayojxTG215XY2Cpra3EsHyIRv5zh9g
-Message-ID: <CAFEAcA-HfpZcg6Lqsu+GO=h8i8wOYRB-0A37jdkfSgmbiXCfng@mail.gmail.com>
-Subject: Re: [PATCH 22/25] target/arm: Implement FIRSTP, LASTP
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b135;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb135.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-GUID: PtKpURpevtu4cSTlJBFYidqRjFxsXU1q
+X-Proofpoint-ORIG-GUID: PtKpURpevtu4cSTlJBFYidqRjFxsXU1q
+X-Authority-Analysis: v=2.4 cv=Ibi3n2qa c=1 sm=1 tr=0 ts=6a316bad cx=c_pps
+ a=R6oCqFB+Yf/t2GF8e0/dFg==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+ a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22
+ a=EUspDBNiAAAA:8 a=y6NlWC8qergzHZo4iq8A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=TD8TdBvy0hsOASGTdmB-:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjE2MDE1OSBTYWx0ZWRfX0Bdzo1VhxiED
+ q+otO6AmN1P6HBk8zdh2s6JlvRNItElyia1D4XPJI94uacDwDNh63P0+Ns35dur1NjL1Frh9zXF
+ 0S/EfpNus6rqQXkAOra+2mt0iPsSA40CZ+LgBWI9nqPjz42L0BV6meR5/tTWF3nB8Y+oE7vpNMl
+ IXNDr0RfgpCRsKlZXnargOahV+zWvkLrcudO9P4ma8Omc50S5w/ycwPkbgbz5sqsY+UCs5Wy8jj
+ zST0xJZLCzF6T3npwilftnl3ZumebnQ+z5E+XomavEMq9SRdge7t9+xV6BLcCw442VJr9Qjb7pf
+ c1DIDhpw9sk1mNrwpwqdDf1aBLj6r5p49UDUQbsDEqZ2cTnOxlhxQVbRQiyOHybXKCG7Xnfb8UM
+ 1XBYFp85vTcGPDAZ7JWi8O22WLSZT48V7YImkkkdEEoSfdk542UWcSs0t7IERPP1sTB7M0PJy4n
+ 017ys7KCPPbgkRq78bQ==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjE2MDE1OSBTYWx0ZWRfX3h28EIhRz4ad
+ DQ1kpkQam/Sgki30GQCA946TXAUHgGoI4ZWbTgpyiUF+iMJswf3xR76hch4mW9gnCrHHsCV3SaB
+ WNN3Qabh6atO9ATRiDJB+wJH4OcwSDs=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-16_04,2026-06-15_04,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 bulkscore=0 clxscore=1015 priorityscore=1501 suspectscore=0
+ lowpriorityscore=0 impostorscore=0 spamscore=0 malwarescore=0 adultscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606040000 definitions=main-2606160159
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -114,83 +148,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 5 Jun 2026 at 00:51, Richard Henderson
-<richard.henderson@linaro.org> wrote:
->
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->  target/arm/tcg/helper-sve-defs.h |  3 ++
->  target/arm/tcg/sve_helper.c      | 30 +++++++++++++++++
->  target/arm/tcg/translate-sve.c   | 56 ++++++++++++++++++++++++++++++++
->  target/arm/tcg/sve.decode        |  3 ++
->  4 files changed, 92 insertions(+)
->
-> diff --git a/target/arm/tcg/helper-sve-defs.h b/target/arm/tcg/helper-sve-defs.h
-> index 11342e1e59..440a868cea 100644
-> --- a/target/arm/tcg/helper-sve-defs.h
-> +++ b/target/arm/tcg/helper-sve-defs.h
-> @@ -961,6 +961,9 @@ DEF_HELPER_FLAGS_4(sve_brkns, TCG_CALL_NO_RWG, i32, ptr, ptr, ptr, i32)
->  DEF_HELPER_FLAGS_3(sve_cntp, TCG_CALL_NO_RWG, i64, ptr, ptr, i32)
->  DEF_HELPER_FLAGS_2(sve2p1_cntp_c, TCG_CALL_NO_RWG_SE, i64, i32, i32)
->
-> +DEF_HELPER_FLAGS_3(sve2p2_firstp, TCG_CALL_NO_RWG_SE, i64, ptr, ptr, i32)
-> +DEF_HELPER_FLAGS_3(sve2p2_lastp, TCG_CALL_NO_RWG_SE, i64, ptr, ptr, i32)
-> +
->  DEF_HELPER_FLAGS_3(sve_whilel, TCG_CALL_NO_RWG, i32, ptr, i32, i32)
->  DEF_HELPER_FLAGS_3(sve_whileg, TCG_CALL_NO_RWG, i32, ptr, i32, i32)
->
-> diff --git a/target/arm/tcg/sve_helper.c b/target/arm/tcg/sve_helper.c
-> index 3f99a362c3..57c7823feb 100644
-> --- a/target/arm/tcg/sve_helper.c
-> +++ b/target/arm/tcg/sve_helper.c
-> @@ -4302,6 +4302,36 @@ uint64_t HELPER(sve2p1_cntp_c)(uint32_t png, uint32_t desc)
->      return count >> p.lg2_stride;
->  }
->
-> +uint64_t HELPER(sve2p2_firstp)(void *vn, void *vg, uint32_t pred_desc)
-> +{
-> +    intptr_t words = DIV_ROUND_UP(FIELD_EX32(pred_desc, PREDDESC, OPRSZ), 8);
-> +    intptr_t esz = FIELD_EX32(pred_desc, PREDDESC, ESZ);
-> +    uint64_t *n = vn, *g = vg, mask = pred_esz_masks[esz];
-> +
-> +    for (intptr_t i = 0; i < words; ++i) {
-> +        uint64_t t = n[i] & g[i] & mask;
-> +        if (t) {
-> +            return (ctz64(t) + i * 64) >> esz;
-> +        }
-> +    }
-> +    return -1;
-> +}
-> +
-> +uint64_t HELPER(sve2p2_lastp)(void *vn, void *vg, uint32_t pred_desc)
-> +{
-> +    intptr_t words = DIV_ROUND_UP(FIELD_EX32(pred_desc, PREDDESC, OPRSZ), 8);
-> +    intptr_t esz = FIELD_EX32(pred_desc, PREDDESC, ESZ);
-> +    uint64_t *n = vn, *g = vg, mask = pred_esz_masks[esz];
-> +
-> +    for (intptr_t i = words - 1; i >= 0; --i) {
-> +        uint64_t t = n[i] & g[i] & mask;
-> +        if (t) {
-> +            return ((clz64(t) ^ 63) + i * 64) >> esz;
+Move the two TCG-specific IOMMU method declarations from the
+generic "exec/cpu-common.h" header to "accel/tcg/iommu.h".
 
-Why XOR? Shouldn't this be the same kind of expression as
-we use in last_active_element():
+Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+---
+ include/accel/tcg/iommu.h | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-            return i * 64 + (63 - clz64(this_g));
+diff --git a/include/accel/tcg/iommu.h b/include/accel/tcg/iommu.h
+index 2b6d0ff7282..a4032a292e5 100644
+--- a/include/accel/tcg/iommu.h
++++ b/include/accel/tcg/iommu.h
+@@ -7,6 +7,10 @@
+ #ifndef ACCEL_TCG_IOMMU_H
+ #define ACCEL_TCG_IOMMU_H
+ 
++#ifndef CONFIG_TCG
++#error Can only include this header with TCG
++#endif
++
+ #ifdef CONFIG_USER_ONLY
+ #error Cannot include accel/tcg/iommu.h from user emulation
+ #endif
+-- 
+2.53.0
 
-> +        }
-> +    }
-> +    return -1;
-> +}
-
-> +            if (firstp) {
-> +                tcg_gen_ctzi_i64(v, v, -1);
-> +            } else {
-> +                tcg_gen_clzi_i64(v, v, 64);
-> +                tcg_gen_subfi_i64(v, 63, v);
-
-...and we use 63 - clz64(...) here.
-
-thanks
--- PMM
 
