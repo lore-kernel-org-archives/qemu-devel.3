@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B80ACD98D2
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 05:26:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA132CD98CE
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 05:27:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZMJk-0006y5-1f; Tue, 16 Jun 2026 01:26:32 -0400
+	id 1wZMJr-00075L-NJ; Tue, 16 Jun 2026 01:26:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1wZMJi-0006xh-K3
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 01:26:30 -0400
+ (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1wZMJp-00074M-Ug
+ for qemu-devel@nongnu.org; Tue, 16 Jun 2026 01:26:37 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1wZMJg-0002QL-7a
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 01:26:30 -0400
+ (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1wZMJo-0002Ru-9E
+ for qemu-devel@nongnu.org; Tue, 16 Jun 2026 01:26:37 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781587587;
+ s=mimecast20190719; t=1781587595;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=NStWUbsE6Tm5fos2QuYOYWDBvvnYvZHjRArlTMvyoTk=;
- b=fI05ul1SOq53vk3fitE8nnBMQ4GVAWvKbfH0cbYLfcTiQ68el6++WkyqYyfYTtLO/dLGGz
- xSwjoU9zlXD+5bHu/NGyEZvqbsklKAu+axAKT8fam5mADFh6SAT2l+0Cku4WcFa5CSNjcF
- z6KcrsuMZzqEruuEbX8taZEX8RM0fQ8=
+ bh=ZBZ/pfNaeKFaN1Z2Da1JxVMciN0d9deiOJrFxM8lFhY=;
+ b=TWBsVj/RYpQ8rd88EHNX8b1/7GbNCHI2W+U8DKa61O4mpE9nE1n0QXPHjTf/FbDVROnrTo
+ gbjdyNdHx9nsAlu3Qd5o/T6WJS+/m9OK3WPQXbnYdY8pYr/x50VCnUP5XFeLbYmfSHtvHq
+ v+wV50bmPClmRQkTOdTAhttLUTWYvIw=
 Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-562-9R7wwIRkMMSTDOxvvwuQUg-1; Tue,
- 16 Jun 2026 01:26:23 -0400
-X-MC-Unique: 9R7wwIRkMMSTDOxvvwuQUg-1
-X-Mimecast-MFC-AGG-ID: 9R7wwIRkMMSTDOxvvwuQUg_1781587581
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-612-hRqJDn2tM4-3-va8waAWaA-1; Tue,
+ 16 Jun 2026 01:26:32 -0400
+X-MC-Unique: hRqJDn2tM4-3-va8waAWaA-1
+X-Mimecast-MFC-AGG-ID: hRqJDn2tM4-3-va8waAWaA_1781587590
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 106BC195607A; Tue, 16 Jun 2026 05:26:21 +0000 (UTC)
+ id 20DA919560AB; Tue, 16 Jun 2026 05:26:30 +0000 (UTC)
 Received: from gshan-thinkpadx1nanogen2.rmtau.csb (unknown [10.64.136.2])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 91F191800586; Tue, 16 Jun 2026 05:26:12 +0000 (UTC)
+ id CC5761800367; Tue, 16 Jun 2026 05:26:21 +0000 (UTC)
 From: Gavin Shan <gshan@redhat.com>
 To: qemu-arm@nongnu.org
 Cc: qemu-devel@nongnu.org, mst@redhat.com, peterx@redhat.com, alex@shazbot.org,
@@ -53,10 +53,10 @@ Cc: qemu-devel@nongnu.org, mst@redhat.com, peterx@redhat.com, alex@shazbot.org,
  david@kernel.org, clg@redhat.com, pbonzini@redhat.com, phrdina@redhat.com,
  jugraham@redhat.com, liugang24219@sangfor.com.cn, dinghui@sangfor.com.cn,
  shan.gavin@gmail.com
-Subject: [PATCH v3 1/2] system/memory: Use qemu_ram_{copy,
- move}() in ram device region accessors
-Date: Tue, 16 Jun 2026 15:25:51 +1000
-Message-ID: <20260616052552.389021-2-gshan@redhat.com>
+Subject: [PATCH v3 2/2] system/memory: Make ram device region directly
+ accessible
+Date: Tue, 16 Jun 2026 15:25:52 +1000
+Message-ID: <20260616052552.389021-3-gshan@redhat.com>
 In-Reply-To: <20260616052552.389021-1-gshan@redhat.com>
 References: <20260616052552.389021-1-gshan@redhat.com>
 MIME-Version: 1.0
@@ -88,70 +88,11 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-All ram device regions were turned to be indirectly accessible by commit
-4a2e242bbb ("memory: Don't use memcpy for ram_device regions"). This leads
-to guest hang on attempt to build 'cuda-samples' as reported by Julia. The
-guest is started by the following command lines, with GH100 GPU card passed
-from the host.
-
-   host$ lspci | grep GH100
-   0009:01:00.0 3D controller: NVIDIA Corporation GH100 [GH200 120GB / 480GB] (rev a1)
-   host$ /home/sandbox/gavin/qemu.main/build/qemu-system-aarch64            \
-         -machine virt,gic-version=host,ras=on,highmem-mmio-size=4T         \
-         -accel kvm -cpu host -smp cpus=48 -m size=8G                       \
-         -drive file=/home/gavin/sandbox/images/disk.qcow2,if=none,id=d0    \
-         -device virtio-blk-pci,id=vb0,bus=pcie.0,drive=d0,num-queues=4     \
-         -device vfio-pci-nohotplug,host=0009:01:00.0,bus=pcie.1.0
-           :
-   guest$ cd cuda-samples/build
-   guest$ make -j 20 clean
-   guest$ make -j 20
-           :
-   [ 54%] Linking CUDA executable graphMemoryNodes
-   [ 54%] Built target graphMemoryNodes
-   <no more output afterwards, guest becomes frozen here>
-
-   guest$ qemu-system-aarch64: virtio: bogus descriptor or out of resources
-   [  555.814025] virtio_blk virtio0: [vda] new size: 268435456 512-byte logical blocks (137 GB/128 GiB)
-
-When the GPU's driver (NVidia open driver) is loaded on guest bootup,
-the memory blocks residing in the PCI BAR#4 of the GH100 GPU card can
-be presented to the guest through memory hot-add. The page cache can
-then be allocated from the hot added memory blocks when cuda-samples
-is being built. Afterwards, the page cache is sent to QEMU's virtio-blk
-device as part of the DMA request, the bounce buffer has to be used to
-accomodate the request as the corresponding memory region (MemoryRegion)
-is an indirectly accessible ram device region in qemu. However, the max
-bounce bufer size is only 4096 bytes by default and that is exhausted
-quickly, leading to a reset on the virtio-blk device and frozen guest
-eventually.
-
-  QEMU
-  ====
-  virtio_blk_handle_output
-    virtio_blk_handle_vq
-      virtio_blk_get_request
-        virtqueue_pop
-          virtqueue_split_pop
-            virtqueue_map_desc
-              address_space_map
-                memory_access_is_direct         # Return false
-                  memory_region_supports_direct_access
-
-  (qemu) info mtree
-  memory-region: pci_bridge_pci
-    0000000000000000-ffffffffffffffff (prio 0, container): pci_bridge_pci
-      0000042000000000-0000043fffffffff (prio 1, i/o): 0009:01:00.0 base BAR 4
-        0000042000000000-0000043fffffffff (prio 0, i/o): 0009:01:00.0 BAR 4
-          0000042000000000-000004379fffffff (prio 0, ramd): 0009:01:00.0 BAR 4 mmaps[0]
-
-This adds qemu_ram_{copy, move}() and replaces {memcpy, memmove}() with
-them in the ram device memory region accessors, similar to what's done
-in commit 4a2e242bbb so that the issue (MMIO access instructions were
-optimized to SSE instructions) covered by that commit is fixed. This
-makes 'ram_device_mem_ops' redundant, paving the way to revert that
-commit to make ram device region directly accessible again in the next
-patch.
+This basically reverts 4a2e242bbb30 ("memory: Don't use memcpy for
+ram_device regions") to make ram device region directly accessible
+again. With this, the bounce buffer is bypassed in address_space_map()
+when a ram device region is involved, potentially avoid to overrun
+the (small) bounce buffer.
 
 Reported-by: Julia Graham <jugraham@redhat.com>
 Suggested-by: Michael S. Tsirkin <mst@redhat.com>
@@ -160,292 +101,106 @@ Suggested-by: Richard Henderson <richard.henderson@linaro.org>
 Suggested-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Gavin Shan <gshan@redhat.com>
 ---
-v3: Documentation for qemu_ram_{copy, move}           (Peter/Michael)
-    Support qemu_ram_move() for overlapped src/dest   (Richard)
-    Use {memcpy, memmove} if step is 16-bytes or more (Michael)
-    Code improvements                                 (Richard/Michael)
----
- hw/remote/vfio-user-obj.c |   4 +-
- include/system/memory.h   |  32 ++++++-
- system/physmem.c          | 178 +++++++++++++++++++++++++++++++++++++-
- 3 files changed, 207 insertions(+), 7 deletions(-)
+ include/system/memory.h | 11 ++---------
+ system/memory.c         | 41 +----------------------------------------
+ system/trace-events     |  2 --
+ 3 files changed, 3 insertions(+), 51 deletions(-)
 
-diff --git a/hw/remote/vfio-user-obj.c b/hw/remote/vfio-user-obj.c
-index 87fa7b6572..97a6c88780 100644
---- a/hw/remote/vfio-user-obj.c
-+++ b/hw/remote/vfio-user-obj.c
-@@ -375,9 +375,9 @@ static int vfu_object_mr_rw(MemoryRegion *mr, uint8_t *buf, hwaddr offset,
-         ram_ptr = memory_region_get_ram_ptr(mr);
- 
-         if (is_write) {
--            memcpy((ram_ptr + offset), buf, size);
-+            qemu_ram_copy(ram_ptr + offset, buf, size);
-         } else {
--            memcpy(buf, (ram_ptr + offset), size);
-+            qemu_ram_copy(buf, ram_ptr + offset, size);
-         }
- 
-         return 0;
 diff --git a/include/system/memory.h b/include/system/memory.h
-index 1417132f6d..84203c312d 100644
+index 84203c312d..28bfb6f1c9 100644
 --- a/include/system/memory.h
 +++ b/include/system/memory.h
-@@ -2897,6 +2897,36 @@ void address_space_register_map_client(AddressSpace *as, QEMUBH *bh);
- void address_space_unregister_map_client(AddressSpace *as, QEMUBH *bh);
- 
- /* Internal functions, part of the implementation of address_space_read.  */
+@@ -2944,15 +2944,8 @@ static inline bool memory_region_supports_direct_access(const MemoryRegion *mr)
+     if (memory_region_is_romd(mr)) {
+         return true;
+     }
+-    if (!memory_region_is_ram(mr)) {
+-        return false;
+-    }
+-    /*
+-     * RAM DEVICE regions can be accessed directly using memcpy, but it might
+-     * be MMIO and access using mempy can be wrong (e.g., using instructions not
+-     * intended for MMIO access). So we treat this as IO.
+-     */
+-    return !memory_region_is_ram_device(mr);
 +
-+/**
-+ * qemu_ram_copy: copy data to ramblock
-+ *
-+ * @dst: destination where the data is copied to
-+ * @src: source where the data is copied from
-+ * @n: length of data to be copied
-+ *
-+ *
-+ * Copy @n bytes from @src to @dst with the assumption that @src and @dst
-+ * do not overlap. Handles special cases such as uncacheable ramblocks
-+ * correctly. Use this for accessing ramblock in response to DMA/VCPU IO,
-+ * in preference to memcpy().
-+ */
-+void qemu_ram_copy(void *dest, const void *src, size_t n);
-+
-+/**
-+ * qemu_ram_move: move data to ramblock
-+ *
-+ * @dst: destination where the data is moved to
-+ * @src: source where the data is moved from
-+ * @n: length of data to be moved
-+ *
-+ * Move @n bytes from @src to @dst with the assumption that @src and @dst
-+ * can overlap. Handles special cases such as uncacheable ramblocks
-+ * correctly. Use this for accessing ramblock in response to DMA/VCPU IO,
-+ * in preference to memmove().
-+ */
-+void qemu_ram_move(void *dest, const void *src, size_t n);
-+
- MemTxResult address_space_read_full(AddressSpace *as, hwaddr addr,
-                                     MemTxAttrs attrs, void *buf, hwaddr len);
- MemTxResult flatview_read_continue(FlatView *fv, hwaddr addr,
-@@ -2970,7 +3000,7 @@ MemTxResult address_space_read(AddressSpace *as, hwaddr addr,
-             mr = flatview_translate(fv, addr, &addr1, &l, false, attrs);
-             if (len == l && memory_access_is_direct(mr, false, attrs)) {
-                 ptr = qemu_map_ram_ptr(mr->ram_block, addr1);
--                memcpy(buf, ptr, len);
-+                qemu_ram_copy(buf, ptr, len);
-             } else {
-                 result = flatview_read_continue(fv, addr, attrs, buf, len,
-                                                 addr1, l, mr);
-diff --git a/system/physmem.c b/system/physmem.c
-index 7bcbf87573..45a17cd580 100644
---- a/system/physmem.c
-+++ b/system/physmem.c
-@@ -3160,6 +3160,177 @@ void memory_region_flush_rom_device(MemoryRegion *mr, hwaddr addr, hwaddr size)
-     invalidate_and_set_dirty(mr, addr, size);
++    return memory_region_is_ram(mr);
  }
  
-+static void qemu_ram_copy_aligned(void *dst, const void *src, size_t n)
-+{
-+    switch (n) {
-+    case 1:
-+        __builtin_memcpy(dst, src, 1);
-+        break;
-+    case 2:
-+        __builtin_memcpy(dst, src, 2);
-+        break;
-+    case 4:
-+        __builtin_memcpy(dst, src, 4);
-+        break;
-+    case 8:
-+        __builtin_memcpy(dst, src, 8);
-+        break;
-+    default:
-+        memcpy(dst, src, n);
-+    }
-+}
-+
-+static void qemu_ram_move_aligned(void *dst, const void *src, size_t n)
-+{
-+    switch (n) {
-+    case 1:
-+        __builtin_memmove(dst, src, 1);
-+        break;
-+    case 2:
-+        __builtin_memmove(dst, src, 2);
-+        break;
-+    case 4:
-+        __builtin_memmove(dst, src, 4);
-+        break;
-+    case 8:
-+        __builtin_memmove(dst, src, 8);
-+        break;
-+    default:
-+        memmove(dst, src, n);
-+    }
-+}
-+
-+static void qemu_ram_copy_unaligned(void *dst, const void *src,
-+                                    size_t n, size_t max_step)
-+{
-+    uintptr_t test, step;
-+
-+    /* Aligned maximal step */
-+    max_step = pow2floor(max_step);
-+
-+    while (n) {
-+        test = (uintptr_t)src | (uintptr_t)dst | n | max_step;
-+        step = test & -test;
-+
-+        switch (step) {
-+        case 1:
-+            qatomic_set((uint8_t *)dst, qatomic_read((uint8_t *)src));
-+            src += 1;
-+            dst += 1;
-+            n -= 1;
-+            break;
-+        case 2:
-+            qatomic_set((uint16_t *)dst, qatomic_read((uint16_t *)src));
-+            src += 2;
-+            dst += 2;
-+            n -= 2;
-+            break;
-+        case 4:
-+            qatomic_set((uint32_t *)dst, qatomic_read((uint32_t *)src));
-+            src += 4;
-+            dst += 4;
-+            n -= 4;
-+            break;
-+        case 8:
-+            qatomic_set((uint64_t *)dst, qatomic_read((uint64_t *)src));
-+            src += 8;
-+            dst += 8;
-+            n -= 8;
-+            break;
-+        default:
-+            memcpy(dst, src, step);
-+            src += step;
-+            dst += step;
-+            n -= step;
-+        }
-+    }
-+}
-+
-+static void qemu_ram_backwards_copy_unaligned(void *dst, const void *src,
-+                                              size_t n, size_t max_step)
-+{
-+    uintptr_t test, step;
-+
-+    /* Aligned maximal step */
-+    max_step = pow2floor(max_step);
-+
-+    /* End of the blocks */
-+    src += n;
-+    dst += n;
-+
-+    while (n) {
-+        test = (uintptr_t)src | (uintptr_t)dst | n | max_step;
-+        step = test & -test;
-+
-+        switch (step) {
-+        case 1:
-+            src -= 1;
-+            dst -= 1;
-+            n -= 1;
-+            qatomic_set((uint8_t *)dst, qatomic_read((uint8_t *)src));
-+            break;
-+        case 2:
-+            src -= 2;
-+            dst -= 2;
-+            n -= 2;
-+            qatomic_set((uint16_t *)dst, qatomic_read((uint16_t *)src));
-+            break;
-+        case 4:
-+            src -= 4;
-+            dst -= 4;
-+            n -= 4;
-+            qatomic_set((uint32_t *)dst, qatomic_read((uint32_t *)src));
-+            break;
-+        case 8:
-+            src -= 8;
-+            dst -= 8;
-+            n -= 8;
-+            qatomic_set((uint64_t *)dst, qatomic_read((uint64_t *)src));
-+            break;
-+        default:
-+            src -= step;
-+            dst -= step;
-+            n -= step;
-+            memmove(dst, src, step);
-+        }
-+    }
-+}
-+
-+/* x86 should work with __builtin_{memcpy, memmove}() for IO access */
-+#if defined(__i386__) || defined(__x86_64__)
-+#define HOST_UNALIGNED_MMIO_OK 1
-+#else
-+#define HOST_UNALIGNED_MMIO_OK 0
-+#endif
-+
-+void qemu_ram_copy(void *dst, const void *src, size_t n)
-+{
-+    if (dst == src || n == 0) {
-+        return;
-+    }
-+
-+    if (HOST_UNALIGNED_MMIO_OK) {
-+        qemu_ram_copy_aligned(dst, src, n);
-+    } else {
-+        qemu_ram_copy_unaligned(dst, src, n, 8);
-+    }
-+}
-+
-+void qemu_ram_move(void *dst, const void *src, size_t n)
-+{
-+    if (src == dst || n == 0) {
-+        return;
-+    }
-+
-+    if (HOST_UNALIGNED_MMIO_OK) {
-+        qemu_ram_move_aligned(dst, src, n);
-+    } else if (dst < src) {
-+        qemu_ram_copy_unaligned(dst, src, n, src - dst);
-+    } else {
-+        qemu_ram_backwards_copy_unaligned(dst, src, n, dst - src);
-+    }
-+}
-+
- int memory_access_size(MemoryRegion *mr, unsigned l, hwaddr addr)
+ static inline bool memory_access_is_direct(const MemoryRegion *mr,
+diff --git a/system/memory.c b/system/memory.c
+index 739ba11da6..9549dd1a94 100644
+--- a/system/memory.c
++++ b/system/memory.c
+@@ -1362,43 +1362,6 @@ const MemoryRegionOps unassigned_mem_ops = {
+     .endianness = DEVICE_NATIVE_ENDIAN,
+ };
+ 
+-static uint64_t memory_region_ram_device_read(void *opaque,
+-                                              hwaddr addr, unsigned size)
+-{
+-    MemoryRegion *mr = opaque;
+-    uint64_t data = ldn_he_p(mr->ram_block->host + addr, size);
+-
+-    trace_memory_region_ram_device_read(get_cpu_index(), mr, addr, data, size);
+-
+-    return data;
+-}
+-
+-static void memory_region_ram_device_write(void *opaque, hwaddr addr,
+-                                           uint64_t data, unsigned size)
+-{
+-    MemoryRegion *mr = opaque;
+-
+-    trace_memory_region_ram_device_write(get_cpu_index(), mr, addr, data, size);
+-
+-    stn_he_p(mr->ram_block->host + addr, size, data);
+-}
+-
+-static const MemoryRegionOps ram_device_mem_ops = {
+-    .read = memory_region_ram_device_read,
+-    .write = memory_region_ram_device_write,
+-    .endianness = HOST_BIG_ENDIAN ? DEVICE_BIG_ENDIAN : DEVICE_LITTLE_ENDIAN,
+-    .valid = {
+-        .min_access_size = 1,
+-        .max_access_size = 8,
+-        .unaligned = true,
+-    },
+-    .impl = {
+-        .min_access_size = 1,
+-        .max_access_size = 8,
+-        .unaligned = true,
+-    },
+-};
+-
+ bool memory_region_access_valid(MemoryRegion *mr,
+                                 hwaddr addr,
+                                 unsigned size,
+@@ -1676,10 +1639,8 @@ void memory_region_init_ram_device_ptr(MemoryRegion *mr, Object *owner,
+                                        const char *name, uint64_t size,
+                                        void *ptr)
  {
-     unsigned access_size_max = mr->ops->valid.max_access_size;
-@@ -3272,7 +3443,7 @@ static MemTxResult flatview_write_continue_step(MemTxAttrs attrs,
-         uint8_t *ram_ptr = qemu_ram_ptr_length(mr->ram_block, mr_addr, l,
-                                                false, true);
+-    memory_region_init_io(mr, owner, &ram_device_mem_ops, mr, name, size);
+-    mr->ram = true;
++    memory_region_init_ram_ptr(mr, owner, name, size, ptr);
+     mr->ram_device = true;
+-    memory_region_set_ram_ptr(mr, size, ptr);
+ }
  
--        memmove(ram_ptr, buf, *l);
-+        qemu_ram_move(ram_ptr, buf, *l);
-         invalidate_and_set_dirty(mr, mr_addr, *l);
- 
-         return MEMTX_OK;
-@@ -3365,7 +3536,7 @@ static MemTxResult flatview_read_continue_step(MemTxAttrs attrs, uint8_t *buf,
-         uint8_t *ram_ptr = qemu_ram_ptr_length(mr->ram_block, mr_addr, l,
-                                                false, false);
- 
--        memcpy(buf, ram_ptr, *l);
-+        qemu_ram_copy(buf, ram_ptr, *l);
- 
-         return MEMTX_OK;
-     }
-@@ -3503,8 +3674,7 @@ MemTxResult address_space_write_rom(AddressSpace *as, hwaddr addr,
-             l = memory_access_size(mr, l, addr1);
-         } else {
-             /* ROM/RAM case */
--            void *ram_ptr = qemu_map_ram_ptr(mr->ram_block, addr1);
--            memcpy(ram_ptr, buf, l);
-+            qemu_ram_copy(qemu_map_ram_ptr(mr->ram_block, addr1), buf, l);
-             invalidate_and_set_dirty(mr, addr1, l);
-         }
-         len -= l;
+ void memory_region_init_alias(MemoryRegion *mr, Object *owner,
+diff --git a/system/trace-events b/system/trace-events
+index e6e1b61279..34af0a3a1e 100644
+--- a/system/trace-events
++++ b/system/trace-events
+@@ -20,8 +20,6 @@ memory_region_ops_read(int cpu_index, void *mr, uint64_t addr, uint64_t value, u
+ memory_region_ops_write(int cpu_index, void *mr, uint64_t addr, uint64_t value, unsigned size, const char *name) "cpu %d mr %p addr 0x%"PRIx64" value 0x%"PRIx64" size %u name '%s'"
+ memory_region_subpage_read(int cpu_index, void *mr, uint64_t offset, uint64_t value, unsigned size) "cpu %d mr %p offset 0x%"PRIx64" value 0x%"PRIx64" size %u"
+ memory_region_subpage_write(int cpu_index, void *mr, uint64_t offset, uint64_t value, unsigned size) "cpu %d mr %p offset 0x%"PRIx64" value 0x%"PRIx64" size %u"
+-memory_region_ram_device_read(int cpu_index, void *mr, uint64_t addr, uint64_t value, unsigned size) "cpu %d mr %p addr 0x%"PRIx64" value 0x%"PRIx64" size %u"
+-memory_region_ram_device_write(int cpu_index, void *mr, uint64_t addr, uint64_t value, unsigned size) "cpu %d mr %p addr 0x%"PRIx64" value 0x%"PRIx64" size %u"
+ memory_region_sync_dirty(const char *mr, const char *listener, int global) "mr '%s' listener '%s' synced (global=%d)"
+ flatview_new(void *view, void *root) "%p (root %p)"
+ flatview_destroy(void *view, void *root) "%p (root %p)"
 -- 
 2.54.0
 
