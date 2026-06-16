@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E02FFCD98EE
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 19:16:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE24ACD98E4
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 19:16:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZZEB-0004iE-2k; Tue, 16 Jun 2026 15:13:41 -0400
+	id 1wZZC3-000266-1e; Tue, 16 Jun 2026 15:11:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wZZ8S-0004iB-M5
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 15:07:49 -0400
-Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
+ id 1wZZ8E-0004ZU-NU
+ for qemu-devel@nongnu.org; Tue, 16 Jun 2026 15:07:38 -0400
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wZZ8L-0001Ar-3V
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 15:07:41 -0400
-Received: by mail-wr1-x432.google.com with SMTP id
- ffacd0b85a97d-45eee266c6cso4364790f8f.1
- for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 12:07:36 -0700 (PDT)
+ id 1wZZ87-0000wv-OR
+ for qemu-devel@nongnu.org; Tue, 16 Jun 2026 15:07:27 -0400
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-490cf322ed0so34607795e9.1
+ for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 12:06:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1781636855; x=1782241655; darn=nongnu.org;
+ d=linaro.org; s=google; t=1781636817; x=1782241617; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=7tdeWQqQChrKXEqNhu7cV02uqUE7ISdKHK1ikUIyuf0=;
- b=E0TbNX8VUfSdRhygmJW5B47rV3xc/f/acEezlvob1eehNyeKtzPClPZ9aZqLMXTWEh
- dSJ9ZYOFgYRw4XMBjq1b/xICVfu0ESW0XD3EW6bQ98ttMuZ6Epm3NmU4jEZhkW5DH7US
- MPoUMxkXhIWitTxJopa8fJUlgiqryUqRSZELRIXHaUv9ILQiVRyQVdQ87TAWR1GbKBhg
- WqNJFW8/zirJo+rKbAPIy69kzDpM73moBNjx049Nb8/YjMubUs73lZETnxzdLJkJtqUa
- fyzmJlw8mSnTdBjWUj3kdea3yC6/mXEPFLTsTgN+ngM2nGTh6GA8zXvZYu4V97Cc2bOa
- NaQw==
+ :reply-to; bh=cpvEVVFmObCOAVZYrBljFN84sP1hXmtFa5bYh03siP4=;
+ b=Oq923evNeMXZRfLLoeKc5ggHmWibOcv0lhMb5P/ztgzdA+1FLizAEdGLY7/FIcD9o6
+ O/mCily33YNlOqVYPj8yafwjU+t4aoxkSS96m914dnPbzlCBJR4TvfObZQxRGDhJ3Y9A
+ 2gJUZiPmZ2dIZkpQp+wg4JuGjbxUciecqvgICHsNF0UhgjUOmc5FaRIWy7g4rCSqysWn
+ nd2F/j5kK2M7gYZqXxpGFdh87qkpOwFTF+ePj0FpW0mWXV1B34Gb0EFsXQGyBPDh6pYz
+ mGcIS6SHw4WgsfeEig4n099bP+py4hCNV+DFMb1abS21dP9L5pnpl3z96w8M9VTySKJP
+ YAmw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781636855; x=1782241655;
+ d=1e100.net; s=20251104; t=1781636817; x=1782241617;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=7tdeWQqQChrKXEqNhu7cV02uqUE7ISdKHK1ikUIyuf0=;
- b=Jtbb+StHsZthXl+ry//E07y0aVEA2zKYhJxAPxtxswXe4vYSrnSt5/58jUJSKFicc1
- A58zEQrEQ5ZXKPYlYCk3eYftg8vhnCSI3mEP9NAjwJ+mn3v2gIsMIRdA+OuIFh65B6mb
- C7LD3rwlZrd47Z3AmTG8Bz24k06hmN3rCtPGR01ON2cd9iutanypyeVcQupWts202IyQ
- +VkP86j6r7VKGphQSN8e/6rS2Cx1BK0/jiV12uV8jLq2E0241soKVbTzQtQm6Z1BCX59
- Lps5rZfbpZNzkyRg1DaGVcj3Mio/6WuqwfhRJSKjZiBIgwAGCVALIOL5Gnp0WYkJOynI
- aEaA==
-X-Gm-Message-State: AOJu0Yxw67F3dzc6LciFFajBtVwuT59VTp/o3VEJTftVGE5Q38UyPoMd
- ueNLEqf7l7dRATtsWS8bWpVf2EpsIv9zUEg044RhAqsDxglcNIyek5Rcts+pA0clGZRAuFYGIjN
- YZpHG
-X-Gm-Gg: Acq92OHvxxWPbGkgav6YE29BWD7Z2BvsvyjsfaJ/hKNWboqPKoy7AcK7J8g0Z6khYM+
- ZQnSDARxoaFv19YwX+9y/cjQEvrMiMRZAPHinZkH7gFb627hspRwLE0yGBFaFXB3JlTArfxy08l
- iuOl8sTriyex7bPgqC3vJKQ/LsmefICDRK6kQaS8C310R83MKFw6Jwn09YeuafLDldQKEseAe0k
- zisMoEV6CyY6Z8GfuBveSoHYn5XkhVb60Z6CC3GwNbPPgmo7QJm4TbRaSKR0v1YUB3smTsR3CfM
- Ps2T0rkrJjIR8L5BlobfOlYE/qJ6u9TOcs6+cfcZHlqqQwY3zph2QtyMLSyyTk84I6fsAO4Tr+H
- BfVpP8bDET31leLk3uv8nV9AUz/ROHuZRApPfFlNnGpzdMa5TruYSR2kz07cbQpcZV7QRhAiask
- LJqpXffCsWGUmtpC0lcWbPzO17EMCPajy6VRR/creUWjXu7QxMa3yZOyb3nTswUfOcK9JRFFZGj
- +Ml7ZLzNToG8kGo/jrLhKU7SdO0dT/M
-X-Received: by 2002:a05:6000:4619:b0:43f:e934:50ac with SMTP id
- ffacd0b85a97d-4623521c5f7mr1356068f8f.7.1781636855073; 
- Tue, 16 Jun 2026 12:07:35 -0700 (PDT)
+ bh=cpvEVVFmObCOAVZYrBljFN84sP1hXmtFa5bYh03siP4=;
+ b=auuQ5LZJVxRS0PqKzEhLckAdObmFn/2P9bGjsdxMf6aKrgUwynCYnmTPwpWgmqDMmN
+ 6/3zkMTvw0AP+q/SknBkksczCGG/eqIu27LzPU2ralYjU60R0MQZuTskqExoJJxr4u3r
+ 8aJnD9hPE6U0oYLL6uFjIt3TOWggkeA3BjJ/h/gJLdYekWoZBJBu/pAWVHshUpsxinDQ
+ vSsuXJZr+vlF4QzdlVP510rtn2kkNhChdmEylQh+7tpod0iSdMybCtnHp8IcxThPLC2e
+ A7U5LtDXyQlMtKx0X2jA7tqZ6C056P6s2u8BJBPKSqFqlzUQ4dtzeutucj1dovFuFyiD
+ 0Bxw==
+X-Gm-Message-State: AOJu0Yz4c0pPuDAT/pvUz/CHlCVSp/vNOW4XgjUlf7KHdB1DMk0pYNjY
+ ifSxAmzNvVeetemacGBTASgFWeLWTgwbL2SlnT8Et+lx/rfUqsTwHhZD24t5gSnCIDxYi7DCLlP
+ K7YCD
+X-Gm-Gg: Acq92OEBp+WHJQg0yuAckk86OuB2TI1M1hsLuLM8NYvixZhUKCFJYre5gq/s7Yg72aK
+ LxiZuEl+hxKsE7Kr8QaUmd4KlzSsBXjN0NiWk7eK9Og203WOSiWcIjxXDxkqugOOvBD7e64Okjy
+ d5D62unGIg08rgnMk98MLWKJSFfX8eVhLpbwd2sKPu2QNKUFatXwwga1c87dSgD5SG91r3GsGRu
+ MMivQF+T5nt5L/oVdK66nZA2528iEYae6cZ/+TCeTo4MRoew7ka4lh536PJ3RVGsx4eupRQ8gC1
+ 7SwAzX9MsYKCHzsOXMd+zpUY0spNG3Le//0/bY2HdUKe5wvycNCRvZZz4o+KJzY334NCwU+RDLT
+ wG7ANq8emMTP6Bbl3TdOhEsZ7sU0PzdBnT7Eb1Hy3VX9jNQBuV30xz8PXk/fukBoQ82JqxWD4v+
+ F2PejjdA7fQg3sD5dwUinZyDppe+gfT0c4OFNDeBN3jMok1AhfKXzAoPiL892g4dwzQJO+UlKZ0
+ kDOoj7d+OOZnw4RjfI6K81V4/yGFlCO
+X-Received: by 2002:a05:600c:e557:20b0:492:1e36:85dc with SMTP id
+ 5b1f17b1804b1-492333e2b9dmr9219465e9.36.1781636816592; 
+ Tue, 16 Jun 2026 12:06:56 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4606f2d9becsm45078765f8f.34.2026.06.16.12.07.34
+ ffacd0b85a97d-4606f2d9becsm45078765f8f.34.2026.06.16.12.06.55
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 16 Jun 2026 12:07:34 -0700 (PDT)
+ Tue, 16 Jun 2026 12:06:55 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 48/61] target/arm: Implement SVE integer unary operations
- (predicated, zeroing)
-Date: Tue, 16 Jun 2026 20:06:25 +0100
-Message-ID: <20260616190639.3462006-49-peter.maydell@linaro.org>
+Subject: [PULL 12/61] backends/iommufd: Update iommufd_backend_alloc_viommu to
+ allow user ptr
+Date: Tue, 16 Jun 2026 20:05:49 +0100
+Message-ID: <20260616190639.3462006-13-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260616190639.3462006-1-peter.maydell@linaro.org>
 References: <20260616190639.3462006-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::432;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x432.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,102 +101,96 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+From: Nicolin Chen <nicolinc@nvidia.com>
 
-This includes ABS, NEG, SXT{B,H,W}.
+The updated IOMMUFD VIOMMU_ALLOC uAPI allows userspace to provide a data
+buffer when creating a vIOMMU (e.g. for Tegra241 CMDQV). Extend
+iommufd_backend_alloc_viommu() to pass a user pointer and size to the
+kernel.
 
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Message-id: 20260604234852.573178-6-richard.henderson@linaro.org
+Update the caller accordingly.
+
+Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
+Reviewed-by: Eric Auger <eric.auger@redhat.com>
+Tested-by: Nicolin Chen <nicolinc@nvidia.com>
+Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
+Tested-by: Eric Auger <eric.auger@redhat.com>
+Message-id: 20260609112552.378999-3-skolothumtho@nvidia.com
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/arm/tcg/sve.decode      |  9 +++++++++
- target/arm/tcg/translate-sve.c | 15 +++++++++++++++
- 2 files changed, 24 insertions(+)
+ backends/iommufd.c       | 4 ++++
+ backends/trace-events    | 2 +-
+ hw/arm/smmuv3-accel.c    | 4 ++--
+ include/system/iommufd.h | 1 +
+ 4 files changed, 8 insertions(+), 3 deletions(-)
 
-diff --git a/target/arm/tcg/sve.decode b/target/arm/tcg/sve.decode
-index c7e633ec4f..31b65fab1b 100644
---- a/target/arm/tcg/sve.decode
-+++ b/target/arm/tcg/sve.decode
-@@ -411,6 +411,15 @@ UXTH_m          00000100 .. 010 011 101 ... ..... .....         @rd_pg_rn
- SXTW_m          00000100 .. 010 100 101 ... ..... .....         @rd_pg_rn
- UXTW_m          00000100 .. 010 101 101 ... ..... .....         @rd_pg_rn
+diff --git a/backends/iommufd.c b/backends/iommufd.c
+index 8c3a981392..c745dbd2b1 100644
+--- a/backends/iommufd.c
++++ b/backends/iommufd.c
+@@ -463,6 +463,7 @@ bool iommufd_backend_invalidate_cache(IOMMUFDBackend *be, uint32_t id,
  
-+ABS_z           00000100 .. 000 110 101 ... ..... .....         @rd_pg_rn
-+NEG_z           00000100 .. 000 111 101 ... ..... .....         @rd_pg_rn
-+SXTB_z          00000100 .. 000 000 101 ... ..... .....         @rd_pg_rn
-+UXTB_z          00000100 .. 000 001 101 ... ..... .....         @rd_pg_rn
-+SXTH_z          00000100 .. 000 010 101 ... ..... .....         @rd_pg_rn
-+UXTH_z          00000100 .. 000 011 101 ... ..... .....         @rd_pg_rn
-+SXTW_z          00000100 .. 000 100 101 ... ..... .....         @rd_pg_rn
-+UXTW_z          00000100 .. 000 101 101 ... ..... .....         @rd_pg_rn
-+
- ### SVE Floating Point Compare - Vectors Group
+ bool iommufd_backend_alloc_viommu(IOMMUFDBackend *be, uint32_t dev_id,
+                                   uint32_t viommu_type, uint32_t hwpt_id,
++                                  void *data_ptr, uint32_t data_len,
+                                   uint32_t *out_viommu_id, Error **errp)
+ {
+     int ret;
+@@ -471,11 +472,14 @@ bool iommufd_backend_alloc_viommu(IOMMUFDBackend *be, uint32_t dev_id,
+         .type = viommu_type,
+         .dev_id = dev_id,
+         .hwpt_id = hwpt_id,
++        .data_len = data_len,
++        .data_uptr = (uintptr_t)data_ptr,
+     };
  
- # SVE floating-point compare vectors
-diff --git a/target/arm/tcg/translate-sve.c b/target/arm/tcg/translate-sve.c
-index 8ab4526468..afbed77ec3 100644
---- a/target/arm/tcg/translate-sve.c
-+++ b/target/arm/tcg/translate-sve.c
-@@ -811,12 +811,14 @@ static gen_helper_gvec_3 * const sve_abs_fns[4] = {
-     gen_helper_sve_abs_s, gen_helper_sve_abs_d,
- };
- TRANS_FEAT(ABS_m, aa64_sme_or_sve, gen_gvec_ool_arg_zpz, sve_abs_fns[a->esz], a, 0)
-+TRANS_FEAT(ABS_z, aa64_sme2p2_or_sve2p2, gen_gvec_ool_arg_zpz, sve_abs_fns[a->esz], a, 1)
+     ret = ioctl(be->fd, IOMMU_VIOMMU_ALLOC, &alloc_viommu);
  
- static gen_helper_gvec_3 * const sve_neg_fns[4] = {
-     gen_helper_sve_neg_b, gen_helper_sve_neg_h,
-     gen_helper_sve_neg_s, gen_helper_sve_neg_d,
- };
- TRANS_FEAT(NEG_m, aa64_sme_or_sve, gen_gvec_ool_arg_zpz, sve_neg_fns[a->esz], a, 0)
-+TRANS_FEAT(NEG_z, aa64_sme2p2_or_sve2p2, gen_gvec_ool_arg_zpz, sve_neg_fns[a->esz], a, 1)
+     trace_iommufd_backend_alloc_viommu(be->fd, dev_id, viommu_type, hwpt_id,
++                                       (uintptr_t)data_ptr, data_len,
+                                        alloc_viommu.out_viommu_id, ret);
+     if (ret) {
+         error_setg_errno(errp, errno, "IOMMU_VIOMMU_ALLOC failed");
+diff --git a/backends/trace-events b/backends/trace-events
+index b9365113e7..3ba0c3503c 100644
+--- a/backends/trace-events
++++ b/backends/trace-events
+@@ -21,7 +21,7 @@ iommufd_backend_free_id(int iommufd, uint32_t id, int ret) " iommufd=%d id=%d (%
+ iommufd_backend_set_dirty(int iommufd, uint32_t hwpt_id, bool start, int ret) " iommufd=%d hwpt=%u enable=%d (%d)"
+ iommufd_backend_get_dirty_bitmap(int iommufd, uint32_t hwpt_id, uint64_t iova, uint64_t size, uint64_t flags, uint64_t page_size, int ret) " iommufd=%d hwpt=%u iova=0x%"PRIx64" size=0x%"PRIx64" flags=0x%"PRIx64" page_size=0x%"PRIx64" (%d)"
+ iommufd_backend_invalidate_cache(int iommufd, uint32_t id, uint32_t data_type, uint32_t entry_len, uint32_t entry_num, uint32_t done_num, uint64_t data_ptr, int ret) " iommufd=%d id=%u data_type=%u entry_len=%u entry_num=%u done_num=%u data_ptr=0x%"PRIx64" (%d)"
+-iommufd_backend_alloc_viommu(int iommufd, uint32_t dev_id, uint32_t type, uint32_t hwpt_id, uint32_t viommu_id, int ret) " iommufd=%d type=%u dev_id=%u hwpt_id=%u viommu_id=%u (%d)"
++iommufd_backend_alloc_viommu(int iommufd, uint32_t dev_id, uint32_t type, uint32_t hwpt_id, uint64_t data_ptr, uint32_t data_len, uint32_t viommu_id, int ret) " iommufd=%d type=%u dev_id=%u hwpt_id=%u data_ptr=0x%"PRIx64" data_len=0x%x viommu_id=%u (%d)"
+ iommufd_backend_alloc_vdev(int iommufd, uint32_t dev_id, uint32_t viommu_id, uint64_t virt_id, uint32_t vdev_id, int ret) " iommufd=%d dev_id=%u viommu_id=%u virt_id=0x%"PRIx64" vdev_id=%u (%d)"
+ iommufd_viommu_alloc_eventq(int iommufd, uint32_t viommu_id, uint32_t type, uint32_t veventq_id, uint32_t veventq_fd, int ret) " iommufd=%d viommu_id=%u type=%u veventq_id=%u veventq_fd=%u (%d)"
  
- static gen_helper_gvec_3 * const sve_rbit_fns[4] = {
-     gen_helper_sve_rbit_b, gen_helper_sve_rbit_h,
-@@ -873,6 +875,8 @@ static gen_helper_gvec_3 * const sxtb_fns[4] = {
- };
- TRANS_FEAT(SXTB_m, aa64_sme_or_sve, gen_gvec_ool_arg_zpz,
-            sxtb_fns[a->esz], a, 0)
-+TRANS_FEAT(SXTB_z, aa64_sme2p2_or_sve2p2, gen_gvec_ool_arg_zpz,
-+           sxtb_fns[a->esz], a, 1)
+diff --git a/hw/arm/smmuv3-accel.c b/hw/arm/smmuv3-accel.c
+index 163d3e7279..4cef487679 100644
+--- a/hw/arm/smmuv3-accel.c
++++ b/hw/arm/smmuv3-accel.c
+@@ -582,8 +582,8 @@ smmuv3_accel_alloc_viommu(SMMUv3State *s, HostIOMMUDeviceIOMMUFD *hiodi,
+     IOMMUFDViommu *viommu;
  
- static gen_helper_gvec_3 * const uxtb_fns[4] = {
-     NULL,                  gen_helper_sve_uxtb_h,
-@@ -880,23 +884,34 @@ static gen_helper_gvec_3 * const uxtb_fns[4] = {
- };
- TRANS_FEAT(UXTB_m, aa64_sme_or_sve, gen_gvec_ool_arg_zpz,
-            uxtb_fns[a->esz], a, 0)
-+TRANS_FEAT(UXTB_z, aa64_sme2p2_or_sve2p2, gen_gvec_ool_arg_zpz,
-+           uxtb_fns[a->esz], a, 1)
+     if (!iommufd_backend_alloc_viommu(hiodi->iommufd, hiodi->devid,
+-                                      IOMMU_VIOMMU_TYPE_ARM_SMMUV3,
+-                                      s2_hwpt_id, &viommu_id, errp)) {
++                                      IOMMU_VIOMMU_TYPE_ARM_SMMUV3, s2_hwpt_id,
++                                      NULL, 0, &viommu_id, errp)) {
+         return false;
+     }
  
- static gen_helper_gvec_3 * const sxth_fns[4] = {
-     NULL, NULL, gen_helper_sve_sxth_s, gen_helper_sve_sxth_d
- };
- TRANS_FEAT(SXTH_m, aa64_sme_or_sve, gen_gvec_ool_arg_zpz,
-            sxth_fns[a->esz], a, 0)
-+TRANS_FEAT(SXTH_z, aa64_sme2p2_or_sve2p2, gen_gvec_ool_arg_zpz,
-+           sxth_fns[a->esz], a, 1)
+diff --git a/include/system/iommufd.h b/include/system/iommufd.h
+index 2925d116ac..1b0266f660 100644
+--- a/include/system/iommufd.h
++++ b/include/system/iommufd.h
+@@ -89,6 +89,7 @@ bool iommufd_backend_alloc_hwpt(IOMMUFDBackend *be, uint32_t dev_id,
+                                 Error **errp);
+ bool iommufd_backend_alloc_viommu(IOMMUFDBackend *be, uint32_t dev_id,
+                                   uint32_t viommu_type, uint32_t hwpt_id,
++                                  void *data_ptr, uint32_t data_len,
+                                   uint32_t *out_hwpt, Error **errp);
  
- static gen_helper_gvec_3 * const uxth_fns[4] = {
-     NULL, NULL, gen_helper_sve_uxth_s, gen_helper_sve_uxth_d
- };
- TRANS_FEAT(UXTH_m, aa64_sme_or_sve, gen_gvec_ool_arg_zpz,
-            uxth_fns[a->esz], a, 0)
-+TRANS_FEAT(UXTH_z, aa64_sme2p2_or_sve2p2, gen_gvec_ool_arg_zpz,
-+           uxth_fns[a->esz], a, 1)
- 
- TRANS_FEAT(SXTW_m, aa64_sme_or_sve, gen_gvec_ool_arg_zpz,
-            a->esz == 3 ? gen_helper_sve_sxtw_d : NULL, a, 0)
-+TRANS_FEAT(SXTW_z, aa64_sme2p2_or_sve2p2, gen_gvec_ool_arg_zpz,
-+           a->esz == 3 ? gen_helper_sve_sxtw_d : NULL, a, 1)
-+
- TRANS_FEAT(UXTW_m, aa64_sme_or_sve, gen_gvec_ool_arg_zpz,
-            a->esz == 3 ? gen_helper_sve_uxtw_d : NULL, a, 0)
-+TRANS_FEAT(UXTW_z, aa64_sme2p2_or_sve2p2, gen_gvec_ool_arg_zpz,
-+           a->esz == 3 ? gen_helper_sve_uxtw_d : NULL, a, 1)
- 
- static gen_helper_gvec_3 * const addqv_fns[4] = {
-     gen_helper_sve2p1_addqv_b, gen_helper_sve2p1_addqv_h,
+ bool iommufd_backend_alloc_vdev(IOMMUFDBackend *be, uint32_t dev_id,
 -- 
 2.43.0
 
