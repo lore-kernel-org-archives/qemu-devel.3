@@ -4,102 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F546CD98E1
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 13:18:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1BB1CD98DA
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 13:18:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZTg0-000231-W9; Tue, 16 Jun 2026 09:18:01 -0400
+	id 1wZTgl-0002mY-K6; Tue, 16 Jun 2026 09:18:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wZTg0-00022d-5Y
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 09:18:00 -0400
-Received: from mail-yx1-xb136.google.com ([2607:f8b0:4864:20::b136])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wZTfy-0003Je-NC
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 09:17:59 -0400
-Received: by mail-yx1-xb136.google.com with SMTP id
- 956f58d0204a3-662bb8b1f93so566569d50.1
- for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 06:17:58 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1781615877; cv=none;
- d=google.com; s=arc-20240605;
- b=UyQmCPR2vvBcid6imjc298uOtIVJuty+9KqnKmLktVHHxoeAdNHJ4m3XZbkntvFB/w
- 3thDiR9J1ZCCiteoUZKYbO9IzRiEH7NpptJxCl4WsZzZwPwTfdTrx466cjaRutSyvrof
- nEB8i9Ag2nH349vQ4GtTp7ZWlbs7lKrUgsMmIzYMPIS+wOPSEQYaXcUWn3Q6ILrWDayv
- 7idXILf+sAlTHUSMowiscyn05Smjdf9ZTZ1A2jh81a+Z0OlB2sV8ndSM0WB27JoWTOMS
- YvSZ7i7s4dytP5eC5HLdZOJ/mZkT1BRDyBViO3tsBHu0Enhyo4vHmPxLpIhVzS+yPl/r
- CLNA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=Xgln+4eZtdOVW8GLr2c4M7v5K66yf/zJeHmKKqaT2NI=;
- fh=/ftcwOPYeEIhzseC7WF42kR+xVR/IJiWpLC1+A7SOWQ=;
- b=hKvAbOFhasadv6Yf9feGPCkDdaStWvOh0HI8sHSKUc5rrKT7+CVnZNS1Od+tDC+38b
- R47uohTdjIUnPTtErJJcYt4C//Rw1utjEc7Q1qYdZlWO0y18vQHi8S4IkZO4Ydhznv6A
- KiantZnEwKhNtMOeKvDE3nWjZh53Sw9TCsF8yNUI4xeLHbaXFdVbCVjrK0GrpQeRdVhG
- FJ+nlpl6aeofEqwo/HPVsfbChFspkL9XUFtZPZf/q79VNXWFE034UsRYJXrD7Jn6qLmK
- a4PyXPOw1drtHP50gXX4EJjGbIImT0h5lDYszu2W2kcxBwfCxb00lCv+iDZHz7LyRSbH
- SbyA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1781615877; x=1782220677; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=Xgln+4eZtdOVW8GLr2c4M7v5K66yf/zJeHmKKqaT2NI=;
- b=jXda83GBEnAxxlUURM3L0jszcNgBxwJzUo7PZIwvpv7Fa0WT66/d1UMuCtgwSFt1RP
- GwSZXvL3A0IYTLkA5vXc4PPpheHMAwgpRX2wZngUNS4wQuqavHZjFYZhYwbfMVn6muh4
- rCSV/IlYRNjYmJ8MWdDhR+Ca+X4jdsfDiAgKIhAKoMBUYbT260/mbFm1649VR1vdO8T5
- ChMQBvUh2M4ErodAm91I2O8/v2/PiifYDoAkxNwqOskDL0JxYJlVuFr5m9hbqi6i6s6q
- Lurn4ICPgrQGGIqXLed9/QQds1Nw5XUlroHWChHVmurlSeWAinQfB06nn9WMZzn1mlUR
- mMYA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781615877; x=1782220677;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Xgln+4eZtdOVW8GLr2c4M7v5K66yf/zJeHmKKqaT2NI=;
- b=lUeJaUHKbvyVS1SVWr7MC8R8timrSfzfQ1tOQMlJ5q6coW8+dMQdOF7S1SpskhYse8
- PrCs/8DbGXTo/g+b0TGJ2y92zZ5GFnRhh2KhK+LwugHcVL3jkhO0sRFPBZPEccX/YoEv
- eqe5Ff6SbNm7ZkMMgzMOzTEOdGe3jPtRu9018jtf3/kxfDJLCIJWlc20QRGi0/IaayuC
- ksmbJJneDRnf/fAckXSTmFL6KpJ2Kq8DG2b651QkCCWNc48ffBVjlhpOxfVPcpDQ8M/+
- Bn5hhHs042oSgshe3vJhf3OYJgA1ZpBa8l8sa6Y89tLlgoS9lM/rMDV2kpkYBLlT0Kvr
- a/Uw==
-X-Gm-Message-State: AOJu0YwXNrAYpTQM1E5aBu132pyWvDfOEJBt46yp7ZJaVfLs8OvLccAL
- 0a+gR5ckWmVmLmHhvaek74B4mPqn+skRkIZv88WUEI9tTsnmf2n+V6V/i8m4hGBys6sUJVuNT6g
- QScdXtGGpWExRy8WjlQ1uNuOKGkfBjlRNfpw4OP57ig==
-X-Gm-Gg: Acq92OFC63X2eBm4r6j9/gG/mHS1nCJPlUx+lOO0VY0smjrEfbzNJYRv1enx99B+Wqz
- wsdOzwFgIRwBbh8v47fQZ+44jR6oRTjVetJOU2cogN10/EtF+/KvkuSbSumLfGWf/Cx1ulwjp38
- 11HCxyii2UetWpNS5hCh5Qo3MGlJegh+Q7AtPKqV2QbNQOc6e40msChPYNVdx9hjVw9KH2VEtYe
- hvwePDxnanYdJg571J+u1jyRUaB3VQ4Gd6J+cNJdkdffwVejQOBZJy1f/m5rbWXQ752DKS831Bu
- vZKd2OspPB3f1HuJNTrD5riNxEYs+f9+NlgQLApbRwgiztNTH/Q/yCnP2bnaBr76bCA=
-X-Received: by 2002:a05:690e:d09:b0:661:75a5:3b5 with SMTP id
- 956f58d0204a3-66277f19a0emr15892349d50.4.1781615877389; Tue, 16 Jun 2026
- 06:17:57 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <jic23@kernel.org>) id 1wZTgk-0002lG-2V
+ for qemu-devel@nongnu.org; Tue, 16 Jun 2026 09:18:46 -0400
+Received: from sea.source.kernel.org ([172.234.252.31])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jic23@kernel.org>) id 1wZTgh-0003Vr-QI
+ for qemu-devel@nongnu.org; Tue, 16 Jun 2026 09:18:45 -0400
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+ by sea.source.kernel.org (Postfix) with ESMTP id 1A960405E0;
+ Tue, 16 Jun 2026 13:18:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 495391F000E9;
+ Tue, 16 Jun 2026 13:18:38 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+ s=k20260515; t=1781615921;
+ bh=uW9mcMh7/hBtvtP2AdmPP6jmDcbzO/hzpp7mhFNBRx0=;
+ h=Date:From:To:Cc:Subject:In-Reply-To:References;
+ b=lHOrDkLHX2EB/Cg8HC86B/gAlGTFAooFJ+f2BHUW9kgfjBZ9Iwd1imbI1HvU5J9uX
+ c495OSmYvdJVvn/oGShoq87YmAXefgQRP7v9YrnU7THzOqvIqxOHEnbZpDg7gP19I5
+ DzN7dnyb1F7iSvzj/zeltcOnsUVIvvkK5bbZit+uTMxUfq/+e94EnflC8dfvU9kJ5K
+ hxVyd+8jQ+LxnoYoWMFOnQ+OpVcSTNjCPwVP49giEy73SIFu5Qp62wVntXBKsk1i9E
+ FluloenluhZ9/f/ahpLv1WXXprxYVnbPeSe4cmu2U11gT1aG1InZASmN4O/e3sEhI1
+ EW5iZOQm3cJYQ==
+Date: Tue, 16 Jun 2026 14:18:34 +0100
+From: Jonathan Cameron <jic23@kernel.org>
+To: Davidlohr Bueso <dave@stgolabs.net>
+Cc: linux-cxl@vger.kernel.org, qemu-devel@nongnu.org
+Subject: Re: [PATCH 4/4] hw/cxl: Add per-capability CXL Fixed Memory Window
+ restriction flags
+Message-ID: <20260616141834.012ad646@jic23-huawei>
+In-Reply-To: <20260604154259.tq7vnnzuc74jif2m@offworld>
+References: <20260602231806.2469011-1-dave@stgolabs.net>
+ <20260602231806.2469011-5-dave@stgolabs.net>
+ <20260604113426.206c4d39@jic23-huawei>
+ <20260604154259.tq7vnnzuc74jif2m@offworld>
+X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-References: <20260604234852.573178-1-richard.henderson@linaro.org>
- <20260604234852.573178-18-richard.henderson@linaro.org>
-In-Reply-To: <20260604234852.573178-18-richard.henderson@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 16 Jun 2026 14:17:46 +0100
-X-Gm-Features: AVVi8CeT2BeVspAfT1y84eoumA3QpGcNNi6z7V-UNY1ea22-X-1BeC65-18FOsc
-Message-ID: <CAFEAcA8Z6fRx7PdGgZ1rELAFsryQHnVY9TdDZPWAj00EgBjedg@mail.gmail.com>
-Subject: Re: [PATCH 17/25] target/arm: Implement SVE floating-point convert
- (top, predicated, zeroing)
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b136;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb136.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=172.234.252.31; envelope-from=jic23@kernel.org;
+ helo=sea.source.kernel.org
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,16 +72,265 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 5 Jun 2026 at 00:49, Richard Henderson
-<richard.henderson@linaro.org> wrote:
->
-> This includes FCVTXNT, BFCVTNT, FCVTNT, FCVTLT.
->
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
+On Thu, 4 Jun 2026 08:42:59 -0700
+Davidlohr Bueso <dave@stgolabs.net> wrote:
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+> On Thu, 04 Jun 2026, Jonathan Cameron wrote:
+> 
+> >On Tue,  2 Jun 2026 16:18:06 -0700
+> >Davidlohr Bueso <dave@stgolabs.net> wrote:
+> >  
+> >> Expose the CFMWS Window Restrictions as named per-capability machine
+> >> properties (device-coherent, host-only, volatile, persistent,
+> >> fixed-config, back-invalidate), making the advertised restrictions
+> >> configurable per window.
+> >>
+> >> Signed-off-by: Davidlohr Bueso <dave@stgolabs.net>  
+> >Hi Davidlohr, looks good in general.
+> >
+> >Maybe I need more coffee but I don't thing the documented constraints
+> >are exactly the same as the ones in the code.  
+> 
+> Sorry, I'm not sure I follow here.
 
-thanks
--- PMM
+Was (I think) just a reference two what I was seeing as biggest issue called
+out below. Let me carry on discussion down there.
+
+> 
+> >
+> >Thanks again for doing this!  
+> 
+> No problem, thanks for reviewing.
+> 
+> >
+> >Jonathan
+> >  
+> >> ---
+> >>  docs/system/devices/cxl.rst | 13 +++------
+> >>  hw/acpi/cxl.c               |  2 +-
+> >>  hw/cxl/cxl-host.c           | 55 +++++++++++++++++++++++++++++++++++++
+> >>  include/hw/cxl/cxl.h        | 12 ++++++++
+> >>  qapi/machine.json           | 29 +++++++++++++++++++
+> >>  5 files changed, 101 insertions(+), 10 deletions(-)
+> >>
+> >> diff --git a/docs/system/devices/cxl.rst b/docs/system/devices/cxl.rst
+> >> index 9d0771cdfd73..cf3f2c81785c 100644
+> >> --- a/docs/system/devices/cxl.rst
+> >> +++ b/docs/system/devices/cxl.rst
+> >> @@ -384,15 +384,14 @@ An example of 4 devices below a switch suitable for 1, 2 or 4 way interleave::
+> >>    -device cxl-type3,bus=swport3,persistent-memdev=cxl-mem3,lsa=cxl-lsa3,id=cxl-pmem3,sn=0x4 \
+> >>    -M cxl-fmw.0.targets.0=cxl.1,cxl-fmw.0.size=4G,cxl-fmw.0.interleave-granularity=4k
+> >>
+> >> -An example of 4 type3 devices with volatile memory below a switch. Two of the devices
+> >> -use HDM-DB for coherence, which requires operating in Flit mode::
+> >> +An example of 2 type3 devices with volatile memory below a switch. The devices
+> >> +use HDM-DB for coherence, which requires operating in Flit mode and a CXL window
+> >> +configured to permit device-coherent Back-Invalidate model::  
+> >
+> >Thanks for doing this!.  I wonder if the example should gain a second FMW to accommodate
+> >the original mixed device config. I'm fairly sure that should work and good to indicate
+> >that the mixed case is real.  
+> 
+> I can do that.
+> 
+> >  
+> >>
+> >>    qemu-system-x86_64 -M q35,cxl=on -m 4G,maxmem=8G,slots=8 -smp 4 \
+> >>    ...
+> >>    -object memory-backend-ram,id=cxl-mem0,share=on,size=256M \
+> >>    -object memory-backend-ram,id=cxl-mem1,share=on,size=256M \
+> >> -  -object memory-backend-ram,id=cxl-mem2,share=on,size=256M \
+> >> -  -object memory-backend-ram,id=cxl-mem3,share=on,size=256M \
+> >>    -device pxb-cxl,bus_nr=12,bus=pcie.0,id=cxl.1 \
+> >>    -device cxl-rp,port=0,bus=cxl.1,id=root_port0,chassis=0,slot=0 \
+> >>    -device cxl-rp,port=1,bus=cxl.1,id=root_port1,chassis=0,slot=1 \
+> >> @@ -401,11 +400,7 @@ use HDM-DB for coherence, which requires operating in Flit mode::
+> >>    -device cxl-type3,bus=swport0,volatile-memdev=cxl-mem0,id=cxl-mem0,sn=0x1,x-256b-flit=on,hdm-db=on \
+> >>    -device cxl-downstream,port=1,bus=us0,id=swport1,chassis=0,slot=5 \
+> >>    -device cxl-type3,bus=swport1,volatile-memdev=cxl-mem1,id=cxl-mem1,sn=0x2,x-256b-flit=on,hdm-db=on \
+> >> -  -device cxl-downstream,port=2,bus=us0,id=swport2,chassis=0,slot=6 \
+> >> -  -device cxl-type3,bus=swport2,volatile-memdev=cxl-mem2,id=cxl-mem2,sn=0x3 \
+> >> -  -device cxl-downstream,port=3,bus=us0,id=swport3,chassis=0,slot=7 \
+> >> -  -device cxl-type3,bus=swport3,volatile-memdev=cxl-mem3,id=cxl-mem3,sn=0x4 \
+> >> -  -M cxl-fmw.0.targets.0=cxl.1,cxl-fmw.0.size=4G,cxl-fmw.0.interleave-granularity=4k
+> >> +  -M cxl-fmw.0.targets.0=cxl.1,cxl-fmw.0.size=4G,cxl-fmw.0.interleave-granularity=4k,cxl-fmw.0.back-invalidate=on
+> >>
+> >>  A simple arm/virt example featuring a single direct connected CXL Type 3
+> >>  Volatile Memory device::
+> >> diff --git a/hw/acpi/cxl.c b/hw/acpi/cxl.c
+> >> index 5ce5e8e083ba..77c1db6561b4 100644
+> >> --- a/hw/acpi/cxl.c
+> >> +++ b/hw/acpi/cxl.c
+> >> @@ -172,7 +172,7 @@ static void cedt_build_cfmws(CXLFixedWindow *fw, Aml *cedt)
+> >>      build_append_int_noprefix(table_data, fw->enc_int_gran, 4);
+> >>
+> >>      /* Window Restrictions */
+> >> -    build_append_int_noprefix(table_data, 0xe, 2);
+> >> +    build_append_int_noprefix(table_data, fw->restrictions, 2);
+> >>
+> >>      /* QTG ID */
+> >>      build_append_int_noprefix(table_data, 0, 2);
+> >> diff --git a/hw/cxl/cxl-host.c b/hw/cxl/cxl-host.c
+> >> index f3479b19914f..7af431bf1555 100644
+> >> --- a/hw/cxl/cxl-host.c
+> >> +++ b/hw/cxl/cxl-host.c
+> >> @@ -61,6 +61,61 @@ static void cxl_fixed_memory_window_config(CXLFixedMemoryWindowOptions *object,
+> >>          fw->enc_int_gran = 0;
+> >>      }
+> >>
+> >> +    if (object->device_coherent) {
+> >> +        fw->restrictions |= CXL_FMW_DEVICE_COHERENT;
+> >> +    }
+> >> +    if (object->back_invalidate) {
+> >> +        if (object->has_device_coherent && !object->device_coherent) {
+> >> +            error_setg(errp, "CFMW BI requires device-coherent");
+> >> +            return;
+> >> +        }
+> >> +        fw->restrictions |= CXL_FMW_DEVICE_COHERENT | CXL_FMW_BI;
+> >> +    }
+> >> +    if (object->host_only) {
+> >> +        fw->restrictions |= CXL_FMW_HOST_ONLY;
+> >> +    } else if (!object->has_host_only &&
+> >> +               !(fw->restrictions & CXL_FMW_DEVICE_COHERENT)) {
+> >> +        /* host-only coherent is the default when no model is requested. */
+> >> +        fw->restrictions |= CXL_FMW_HOST_ONLY;
+> >> +    }
+> >> +
+> >> +    if (!(fw->restrictions & (CXL_FMW_DEVICE_COHERENT | CXL_FMW_HOST_ONLY))) {
+> >> +        error_setg(errp, "CFMW coherency model required");
+> >> +        return;
+> >> +    }
+> >> +
+> >> +    /*
+> >> +     * Reject the undefined and conflicting coherency combinations,
+> >> +     * per CXL r4.0 9.18.1.3.
+> >> +     */
+> >> +    if ((fw->restrictions & CXL_FMW_HOST_ONLY) &&
+> >> +        (fw->restrictions & CXL_FMW_BI)) {
+> >> +        error_setg(errp, "CFMW host-only coherency + BI is undefined behavior");
+> >> +        return;
+> >> +    }
+> >> +    if ((fw->restrictions & CXL_FMW_DEVICE_COHERENT) &&
+> >> +        (fw->restrictions & CXL_FMW_HOST_ONLY)) {
+> >> +        error_setg(errp,
+> >> +                   "CFMW device and host-only coherency are mutually exclusive");  
+> >
+> >I'm confused. I thought this one was allowed by the spec?  Without a spec
+> >clarification I'm reluctant to prevent it.  
+> 
+> The text is not clear, I agree. However, per Dan's pushback in the kernel series,
+> I took this as bit1 (host only) cannot be combined with anything dev coherent.
+> This is also why I drop the bit0 in the default restrictions. I am fine removing
+> this check here for now, but also have a kernel equivalent which fails the cfmw
+> parsing if any of the above is seen (maybe the failure could be downgraded to
+> a warning).
+
+I'm not in a position to push for spec clarification on this at the moment
+so whilst it remains a 'possibility' let this through here.
+> 
+> >  
+> >> +        return;
+> >> +    }
+> >> +
+> >> +    if (object->fixed_config) {
+> >> +        fw->restrictions |= CXL_FMW_FIXED_CONFIG; /* no-op */
+> >> +    }
+> >> +
+> >> +    /* Volatile and persistent are permitted unless explicitly disabled. */
+> >> +    if (!object->has_q_volatile || object->q_volatile) {
+> >> +        fw->restrictions |= CXL_FMW_VOLATILE;
+> >> +    }
+> >> +    if (!object->has_persistent || object->persistent) {
+> >> +        fw->restrictions |= CXL_FMW_PERSISTENT;
+> >> +    }
+> >> +    if (!(fw->restrictions & (CXL_FMW_VOLATILE | CXL_FMW_PERSISTENT))) {
+> >> +        error_setg(errp, "CFMW volatile and/or persistent memory required");
+> >> +        return;
+> >> +    }
+> >> +
+> >>      fw->targets = g_malloc0_n(fw->num_targets, sizeof(*fw->targets));
+> >>      for (i = 0, target = object->targets; target; i++, target = target->next) {
+> >>          /* This link cannot be resolved yet, so stash the name for now */  
+> >  
+> >> diff --git a/qapi/machine.json b/qapi/machine.json
+> >> index 685e4e29b87d..a5be531403a1 100644
+> >> --- a/qapi/machine.json
+> >> +++ b/qapi/machine.json
+> >> @@ -551,15 +551,44 @@
+
+> >  
+> >> +#
+> >> +# @host-only: Window permits host-only coherent (HDM-H) accesses.
+> >> +#     (since 11.0)
+> >> +#
+> >> +# @volatile: Window permits volatile memory.  (since 11.0)
+> >> +#
+> >> +# @persistent: Window permits persistent memory.  (since 11.0)
+> >> +#
+> >> +# @fixed-config: Window has a fixed device configuration.  Advertised
+> >> +#     in the CEDT only; not otherwise emulated.  (since 11.0)
+> >> +#
+> >> +# @back-invalidate: Window permits Back-Invalidate (HDM-DB).  Implies
+> >> +#     @device-coherent.  (since 11.0)  
+> >If I read the code above right you check for device coherent. So
+> >I'd argue, should say Requires @device_coherent.  
+> 
+> The intent here is to explain that we allow the user not to have to
+> explicitly pass both device-coherent=on and back-invalidate=on options
+> when do BI.
+
+I think I must have read this wrong wrt to it setting it under the hood.
+Maybe the checks above are about not allowing an explicit =off for device-coherent.
+If so perhaps we can call that out.  Implies @device-coherent if not explicitly
+configured otherwise.
+
+
+> 
+> +    if (object->back_invalidate) {
+> +        if (object->has_device_coherent && !object->device_coherent) {
+> +            error_setg(errp, "CFMW BI requires device-coherent");
+> +            return;
+> +        }
+> +        fw->restrictions |= CXL_FMW_DEVICE_COHERENT | CXL_FMW_BI;
+> +    }
+> 
+> >  
+> >> +#
+> >>  # @targets: Target root bridge IDs from -device ...,id=<ID> for each
+> >>  #     root bridge.
+> >>  #
+> >> +# Coherency defaults to host-only coherent; request a device model
+> >> +# with @device-coherent or @back-invalidate instead.  @volatile and  
+> >
+> >@device-coherent and/or @back-invalidate instead.  
+> 
+> Yes.
+> 
+> Thanks,
+> Davidlohr
+> 
+> >  
+> >> +# @persistent are permitted unless set to false, and at least one is
+> >> +# required.  Clearing @host-only with no device model is rejected, as
+> >> +# are host-only coherent + back-invalidate and device-coherent +
+> >> +# host-only coherent.
+> >> +#
+> >>  # Since: 7.1
+> >>  ##
+> >>  { 'struct': 'CXLFixedMemoryWindowOptions',
+> >>    'data': {
+> >>        'size': 'size',
+> >>        '*interleave-granularity': 'size',
+> >> +      '*device-coherent': 'bool',
+> >> +      '*host-only': 'bool',
+> >> +      '*volatile': 'bool',
+> >> +      '*persistent': 'bool',
+> >> +      '*fixed-config': 'bool',
+> >> +      '*back-invalidate': 'bool',
+> >>        'targets': ['str'] }}
+> >>
+> >>  ##  
+> >  
+> 
+
 
