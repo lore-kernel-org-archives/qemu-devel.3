@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6FF51CD98E3
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 15:47:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1B71CD98DA
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 15:48:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZW0X-00078k-VF; Tue, 16 Jun 2026 11:47:21 -0400
+	id 1wZW0Q-00077B-8b; Tue, 16 Jun 2026 11:47:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
- (envelope-from <531f6b81bc1bf1a48c3d4afaa60a65db10511041@kylie.crudebyte.com>)
- id 1wZW0U-00077l-HG; Tue, 16 Jun 2026 11:47:18 -0400
+ (envelope-from <4b33cd1aaa2551efda220a6f651e3660d27f4746@kylie.crudebyte.com>)
+ id 1wZW0O-00076h-QH; Tue, 16 Jun 2026 11:47:12 -0400
 Received: from kylie.crudebyte.com ([5.189.157.229])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
- (envelope-from <531f6b81bc1bf1a48c3d4afaa60a65db10511041@kylie.crudebyte.com>)
- id 1wZW0T-0000DG-81; Tue, 16 Jun 2026 11:47:18 -0400
+ (envelope-from <4b33cd1aaa2551efda220a6f651e3660d27f4746@kylie.crudebyte.com>)
+ id 1wZW0N-0000Cq-Cb; Tue, 16 Jun 2026 11:47:12 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=crudebyte.com; s=kylie; h=Cc:To:Subject:Date:From:References:In-Reply-To:
  Message-ID:Content-Type:Content-Transfer-Encoding:MIME-Version:Content-ID:
- Content-Description; bh=Ike6TkXVNwA63st+thYc7epozG8pldJu6pFRJVDCGsM=; b=Ti9uj
- fnJvdJEO8l11XhpQcA+boR+EuPFK0uaNc0nxRUfquGEb2tDs24V+2oAlNz+9Z71KeXOczLPb3v3+Q
- 5pxiH1rv7B9kx6c8QH1Ox/a8yW0v5Myvi4vAaYZ30Pkd5hk1s+wLW2Zd7dO5k9wONhaOw7pAL70Sz
- aPro3pAWQj98p+edHKlfN1vcj2+PudTEZH6sS2Edbupwj4DUMkVJPXHdQoTpX7pJWxRRrXlcu6MO+
- R2Zcm8Ntr+NSDypGQ/rmjPr7HDq/BPNchR//B6xHMW5HPX3Q0IPdEiShpz5eQ+HcRqLwYvEL3ZGpP
- KP2c/8RoB0tSnZ9gBRa9fqMBh6MkXNCRWhFuAc/pifyglinKW5LjVEQX0ybZt+ZNev2BVXyv1ie00
- sI2WM9+9XFr2nFIeVqsslmohhU5iF2qcW45iiKPyvDlCrCaCStWcwx02ncBcHqQs6l5hpzLYwaNC/
- tU9mlzFUYSziLxSxA8CzbFhxkR3SKF76KVPQCAFKk+dlv3Qigm70Q0y6rb+DJHJRikvgnE3HyOe67
- //NP3R8cEbfb4u213F1B/Ws+dToq1aGXahH0F8E5l1w0zTxZR4ujudjjn2g0lP0V2+UybvXOkMUY7
- 6FwPo4L8y9fF76jyT0pew7zZm1iKA+XsuL6oVbjCW2EgsQ/HUl/yGw5fphUF/E=;
-Message-ID: <531f6b81bc1bf1a48c3d4afaa60a65db10511041.1781621428.git.qemu_oss@crudebyte.com>
+ Content-Description; bh=FJnPQEyZdoiQuQZJb2PXLEBll9rUFdPWbbpBDzmHekw=; b=VyXcY
+ Y12CeyImnPa46AkTEAgKhA1gL/PHafgRa5HDryaRUs2/CAmdJivzA5V27xAcad6IC+6H/e6fcgBz+
+ hmRtzYSUUu5svURVmNF+Al4utajFmKSRI2w6DoK+tPPFzDX5D1HWsdsrQyTlYDoQeETXD60K8MO6M
+ aoRAH4YEQQ7FgiBLHd1CXpsmGqKTxKuy5rXnYt+f6MP+4ZURpI/5tjGA2y1zquu+6GqSi/eF3OV4v
+ dn+akxPK6feLS3I0BVWk4j7aqg4VwfA2JUzo9gJsUI6bkc9ai/+/eVv1nvL3EjsWuvMn4QW5eRLOb
+ KnDkppU9SDS6CeQ85lpN98U4KAd8xtyR9ILFuktFfN+3LeKme+8wBRLDsXXRO9usqzoTquw1yh5JF
+ H4dPXVo+WC/Nq1Xu+DDAGdd7vM9sjcb7l9+4Z5XLQMj9HIk2eHrzjznWQggYj0oljZJATzaOkv6Uh
+ CHd8cjiDvGE8++efvG4IJ0Ps815ANVc8xkZCpcbjJz23jRhf89EEmEodVjVUaRwT1xIbJSb1Hfa4F
+ 9kI38EUDiasihyCcK3qAKR0j3Ul9hPko/UGjg/atiJ0dcPbHz7Ch6FalKzeWpeeSErpbJzH14MqK8
+ cm+VLFE0nMvgWP6hb/qT7PGc7tl3r/D3eVQRXzpkrkVZqfhzI2E0QpVxFHOWd4=;
+Message-ID: <4b33cd1aaa2551efda220a6f651e3660d27f4746.1781621428.git.qemu_oss@crudebyte.com>
 In-Reply-To: <cover.1781621428.git.qemu_oss@crudebyte.com>
 References: <cover.1781621428.git.qemu_oss@crudebyte.com>
 From: Christian Schoenebeck <qemu_oss@crudebyte.com>
 Date: Tue, 16 Jun 2026 17:00:11 +0200
-Subject: [PATCH 3/3] hw/9pfs/local: harden local_fid_fd() on FID types
+Subject: [PATCH 2/3] hw/9pfs: fix invalid union access by v9fs_co_fstat()
 To: qemu-devel@nongnu.org,
     qemu-stable@nongnu.org
 Cc: Greg Kurz <groug@kaod.org>,
     Feifan Qian <bea1e@proton.me>
 Received-SPF: pass client-ip=5.189.157.229;
- envelope-from=531f6b81bc1bf1a48c3d4afaa60a65db10511041@kylie.crudebyte.com;
+ envelope-from=4b33cd1aaa2551efda220a6f651e3660d27f4746@kylie.crudebyte.com;
  helo=kylie.crudebyte.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -67,42 +67,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-local_fid_fd() returns fs->fd for any FID type that is not P9_FID_DIR.
+The individual FID types (P9_FID_NONE, P9_FID_FILE, P9_FID_DIR, P9_FID_XATTR)
+share union V9fsFidOpenState with FID-type specific fields. Accessing any of
+the union fields must comply with the FID-type to avoid undefined behaviour
+or information disclosure.
 
-Since P9_FID_XATTR and P9_FID_NONE share union V9fsFidOpenState, calling
-local_fid_fd() on these types misinterprets xattr state as a file
-descriptor, potentially leading to undefined behaviour or information
-disclosure.
+Fix this in v9fs_lock() and v9fs_getlock() by checking if FID has a valid
+file descriptor before calling v9fs_co_fstat().
 
-Even though we are catching these FID type mismatches on protocol level
-in 9p.c already, previous patches proofed this to be error prone.
-
-So let's add another safety layer in local_fid_fd() that would return -1
-if the FID type would not possess a valid file descriptor, to prevent
-wrong file descriptors from reaching fs backend calls.
-
+Fixes: 10b468bdc533 ("virtio-9p: Implement TXATTRCREATE")
 Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
 ---
- hw/9pfs/9p-local.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ hw/9pfs/9p.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/hw/9pfs/9p-local.c b/hw/9pfs/9p-local.c
-index aa48306b0e..724f57dc3d 100644
---- a/hw/9pfs/9p-local.c
-+++ b/hw/9pfs/9p-local.c
-@@ -775,8 +775,11 @@ static int local_fid_fd(int fid_type, V9fsFidOpenState *fs)
- {
-     if (fid_type == P9_FID_DIR) {
-         return dirfd(fs->dir.stream);
--    } else {
-+    } else if (fid_type == P9_FID_FILE) {
-         return fs->fd;
-+    } else {
-+        errno = EBADF;
-+        return -1;
+diff --git a/hw/9pfs/9p.c b/hw/9pfs/9p.c
+index 6dd6a57e7a..c83df57698 100644
+--- a/hw/9pfs/9p.c
++++ b/hw/9pfs/9p.c
+@@ -3852,6 +3852,10 @@ static void coroutine_fn v9fs_lock(void *opaque)
+         err = -ENOENT;
+         goto out_nofid;
      }
- }
- 
++    if (!fid_has_valid_file_handle(pdu->s, fidp)) {
++        err = -EBADF;
++        goto out;
++    }
+     err = v9fs_co_fstat(pdu, fidp, &stbuf);
+     if (err < 0) {
+         goto out;
+@@ -3897,6 +3901,10 @@ static void coroutine_fn v9fs_getlock(void *opaque)
+         err = -ENOENT;
+         goto out_nofid;
+     }
++    if (!fid_has_valid_file_handle(pdu->s, fidp)) {
++        err = -EBADF;
++        goto out;
++    }
+     err = v9fs_co_fstat(pdu, fidp, &stbuf);
+     if (err < 0) {
+         goto out;
 -- 
 2.47.3
 
