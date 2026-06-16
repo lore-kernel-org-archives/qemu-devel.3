@@ -4,94 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E616CD98DA
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 13:31:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A19C8CD98E1
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 13:36:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZTsQ-0005HU-4g; Tue, 16 Jun 2026 09:30:50 -0400
+	id 1wZTxR-0006M7-Gb; Tue, 16 Jun 2026 09:36:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wZTsO-0005Gw-Bg
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 09:30:48 -0400
-Received: from mail-yx1-xb129.google.com ([2607:f8b0:4864:20::b129])
+ id 1wZTxQ-0006LZ-HH
+ for qemu-devel@nongnu.org; Tue, 16 Jun 2026 09:36:00 -0400
+Received: from mail-yx1-xb12a.google.com ([2607:f8b0:4864:20::b12a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wZTsK-0006xh-Cu
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 09:30:48 -0400
-Received: by mail-yx1-xb129.google.com with SMTP id
- 956f58d0204a3-66077c46c5cso4283595d50.1
- for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 06:30:42 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1781616642; cv=none;
+ id 1wZTxP-00086L-5L
+ for qemu-devel@nongnu.org; Tue, 16 Jun 2026 09:36:00 -0400
+Received: by mail-yx1-xb12a.google.com with SMTP id
+ 956f58d0204a3-6626cd98209so4798448d50.3
+ for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 06:35:58 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1781616958; cv=none;
  d=google.com; s=arc-20240605;
- b=clM17vbFVr2sdmPYpidzVvHMM8MGwQnW7worf22jUf0WKQkRFcjVANOgHKhRrjelaM
- BA39jfBvOc6rLIaRYOH4gODxHuAYXrfpmsGFS2kSzCH3OnZrjL74vvHRSTzJ/S1KeHLR
- qKGyupHV840WYaXAhiqlLNjP2u4XTEwmtCFBuj+7xSI6jIx5gOq2ginVjP6piaf3pVaB
- cq+gReuhD2tGK42y2BaNgaGzbd/DJNVNa7G6YFD/1POhrIoiXU6gRjl51z1CcaMKHBEV
- V13B5QMxnU8cqZx440Bh/Yopac/TeOD99APdVQ1qh6Uh/Ul/V9cPJ6gIVesIZT5lqYmK
- OuBw==
+ b=MnjvCl7IbRahS2X8082l1lTMUZj0cDqTeerCndsgTMN9JwJmAkngbV6vyeu9Dpyepo
+ TVz75CzdsxrvEMENCTe5l1gBzpJKJjTm1F58g2lnV+iPuVFuqFvDeWYt7LhpaFrD0gU+
+ LBn6LdFoWY0p0xrOilwjb4X4VC75n52W8ml45eShWHvxPEO+ciK9e8pshST5GiI15FiY
+ Vo+qpxxoX6fHqaz6coN1/t/zd/DsahdrnWzhoJYdtx3jNwbaLtMbibe2wYVRlyPTcxs+
+ Jp5GNBvb3bvptiRNgjHag0kT/OBJZIpReRSC69dESiE1yhhIQRCadlLmXnMLOm/BLUzm
+ ht5g==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:dkim-signature;
- bh=qz1ZuqyKE8PXmEpkiulGq3MVnyojO7yVlpbsYHHg/Xg=;
+ bh=jVdCM0vm9fG8/nik0JzNJlA9w2tO0XZ4Hh14ixz2hhQ=;
  fh=/ftcwOPYeEIhzseC7WF42kR+xVR/IJiWpLC1+A7SOWQ=;
- b=EdOB0wH0cEI6tY1N36npt4ATyAzH/aAFYbotFnXb8L5uzIeKw2XOT9F7QMyvvA7rFw
- YqcEyEoKDls+iGllineB5RNmH3UR4AoNMT8KBA8UjxdJu/YXfM4pYvKBka7BMweVl0vU
- PyrUV5o0qjaLMzAw1TNV+R94OkaaECXoua6K/xAU2rySzmk2SG20VE5JoiNB5E3i5tPE
- hIq6SiCxKlgoF9CrpEYSu7Wj80jH/kNlT/YKRS5V+rD4b4TokcdXVrgp+s80zF/6MVEL
- hFJDwMD02qHXu7uhGOtPu7ZTykQHmWJRY/CPt3IR+k/kOW+tw1/qz/byuyUVPoI5a4in
- htOQ==; darn=nongnu.org
+ b=c5VSWzquFXRsOLA1fHQDCsPRVl9/VcdRmXTCz2ncViBTcW5t9IUDxv3tVP5vjTxDCD
+ v2Njx+dK7gIe/5B2DzJgDBBvMN8aCUZ5Jh7HlXHQSTv0esTxqcVVqMgWYLV0ao+iYXPr
+ 8012PoQUUXaOG2bC4PtyZ75IvQUowYfY4HST+IL4WgjNUMtjfCChCkcobXgHYc3W1L8h
+ 4Aiudx1Osk07CAodv4d5sUKqNTwNEskZHbq7oIyNDf0NfgpENmojpzgcnO766B+3cBBI
+ cGnjenJJNI3T7fP9nIjCzTV8l5kHHLHuOLBqih5RH3pcPtvyhF1rRofM76CNXcEs67aL
+ 73Rg==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1781616642; x=1782221442; darn=nongnu.org;
+ d=linaro.org; s=google; t=1781616957; x=1782221757; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=qz1ZuqyKE8PXmEpkiulGq3MVnyojO7yVlpbsYHHg/Xg=;
- b=jZ1zLEWfvduTlfku/VL5YjCzKzBt6ysVNKu10Ghdo9PvqZnL5KxWZygu5J+Dq0U8Y3
- URXz8g5z7DBlxUjVbaY7qHVe6KmQ6vlvPLn7cXLePmgf2qJEYr4HNuNwUMAHmFak0DKN
- PHB4BFgVcxwGeXxFNG9aBlP3IOH/OsKxlQT6grTMTFKWVQGjh+pKYDubkOztgQpFKh3W
- C09ILdcpXSl/BPwQGVAtwvF+KkIUGSq9ZWQk61cw2IcVQ852qVac32c7qAkwjR/M+xsM
- lUmzYgLH6kfg3JMbhn/CC3pwJWlpAKtd7LwsORFkb+d/SfF2FyOu0lalkxffsIGSrjAA
- eFYg==
+ bh=jVdCM0vm9fG8/nik0JzNJlA9w2tO0XZ4Hh14ixz2hhQ=;
+ b=rCrSNjrPzNm51cHkiWdMEWeAVmNMO8Zc+48wN0+tJiWZP+S2HQ+36+E2ylUkyWRm8v
+ JIihibgdgBV6FsU7r1OnUu2Iy37sEm6g/FODXGkFKSJx57qh3D5AKWMQBcSTXzJtJKf5
+ oN6jU2GyPeAM84LQESA6E8GxPgn54lBN3XkGRt1N//UAOI5U2piZakJ5wvD3bdLMKqSw
+ GWqN9J+nb9C6N8ogcEIYYvFM566y5zRWYY0tRcUmXJLi3282eK78na5fBz0XrCrZX1sY
+ X0dla1Q4oywIOqbCyMbP9/x0dkA6mxBz5yjz114xP3kixxUOiJDCblBjskpuSFvDfV1s
+ RY1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781616642; x=1782221442;
+ d=1e100.net; s=20251104; t=1781616957; x=1782221757;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=qz1ZuqyKE8PXmEpkiulGq3MVnyojO7yVlpbsYHHg/Xg=;
- b=dGTB6KWz2S5BUrG6m8fIW9ywIxlcYwynvYh2FI3lqHAT8ZcuITGRSWWkgSAeUZBMBr
- Ljx6ZKxng1YarvcEqLVAnYV0eyz2QuoEFR289knQj3/+5Pa33EaVhaNgd4V7Ts9C+GC3
- CnY4YsIrEf4OmuIfz61rwwxCVMKOGxTeunlwI3uTpE0jQs0X9lMOz8YWShIJQgwOiAQr
- Sc17P3laGUltZEMMk2MwGGy6WBPOnR21mhj3r+IB63rfnECpCwyczTuWJWE+zfTZ2YXv
- 9cWn57zI+yUfm9Ts0/V5BlHOFLg5kOvqUZEBcBoM3eneJH3cSJANftt3HMxLBYAqkcit
- sjTg==
-X-Gm-Message-State: AOJu0Ywt/WrJeywe3rZ0UCJqqYFW26gJfTkCL77AbIUMdy5OssvOlgt/
- KHKxdpCL8l77mLhJvMHsRw7J1BUujqcBxnjUBTFDywkZo+i6sKcHMUPa044cTvion+wJYblZdE+
- ieH3g9EFpoUIyjoXtjw7Vj2vjUBhEc38IyxE9xTzwJA==
-X-Gm-Gg: AfdE7ckxTBRVrLWhSoJkibyAKxQI3uui5QjFMg9nWS76Bh5kyFxgoSvgcbVt/NSMGJD
- e7/Hye0aExPMZbwD8jHt5Qp8Fj2IAQ3O6cVTqXjw29GAImlQa/uIzdv38MJ33uD7f4Q32w/dwKy
- gRahnrfaUWypY6HI5z7Z/7goyF5a09ajPO8q0Azu3blaJ2+lWtCLFBXI/JeOJJ/GO9ptoMPcWQ7
- 3ducu0PIxyRqjtgy4zfy9O2ya7QiKdBLai0FkjlXI4aXJw2YgSeMmIg5b8zGRD2Un7UI7uTCVtm
- eWB5kjFbUSTU7vhlh5EVwuOmBSML3z2/F3DfAEhleoPrBWoW/nFYdSxknBjV/D3DanU=
-X-Received: by 2002:a05:690e:480e:b0:65e:3bde:7c14 with SMTP id
- 956f58d0204a3-662b61044fcmr2052623d50.32.1781616641771; Tue, 16 Jun 2026
- 06:30:41 -0700 (PDT)
+ bh=jVdCM0vm9fG8/nik0JzNJlA9w2tO0XZ4Hh14ixz2hhQ=;
+ b=PJMnSuTYB/Ru4Lhez0XE9uwUpo0JITOQTpzukVY2pdzn0LXCr5nIvS2yC/3MkTnhFb
+ EoDAmpt88gycBboO3i0vLq8s06qZXTg8i0ef3TctHhrrcXuLJXu2p5ZHRzgErtzwkRmj
+ REDdjk74EAQx10dr5qzvY3wKu6sLd494EFQBLljOl+pF91/4BbJAGdg7kwTnFOlM1g4t
+ Eg08xmKQtqYyCBuiHKIY/MP8Pf9DOhVv2m6ywnn2tUEtqItfPuatMsQ/JAX7U4BL90HB
+ Sb65lbg9R4e9+tNmSUf0aLhuOJyrhVD6fZglmpj3N31u42KwVW1eHUoOnCBhiTJ+uJOi
+ Sbfw==
+X-Gm-Message-State: AOJu0Yz95+Uw3XMOcrDJJGej/oziS0gV7FrHvQnEJIPr+jF6ghiceEUI
+ wryLtvO2DDi8tC4HV2nwWC6plSep0Gj43SVfNfAOTENGTLcxCgYhzEauKXrANTtd4TlvcacVtPK
+ gtxM70JZz9H9bgPsgSB4oqcdh7vWckFUk7JyuG3Ik9w==
+X-Gm-Gg: AfdE7ckGxl3eSdIg5rgq1Ap106+SzqhEhN61Lg3gBK/KtTjLO36CgEUR8OTDVD4WgzC
+ I+qbADruSfRDPEtvve+HRuKKFDDik9DlwrBONvrAcTGCkL92BJUIv3MF2hyUG4GTRpQRR9WcxQm
+ 731NbselNrEV30WuSWKXHWX0FBumgtPVdoHeoJusBJ4pjhiUoKpNF41EaOe1KKpdWpv9roCfLoy
+ soXDXJkgroAiOjqmp+o4dCHJ0IemY6sr7WaM0j/yHLz3gzdnxvA/XPorCrmw8/WS2Qg+VByaCNp
+ Uv2QhyARugZ/t8VMFRvB6ufG/Y0yRBb3qRktAX4PvOSZnvmqNwUhw2EugkggPSbb/xM=
+X-Received: by 2002:a05:690e:124a:b0:660:6971:db6c with SMTP id
+ 956f58d0204a3-662b6136872mr2697099d50.44.1781616957358; Tue, 16 Jun 2026
+ 06:35:57 -0700 (PDT)
 MIME-Version: 1.0
 References: <20260604234852.573178-1-richard.henderson@linaro.org>
- <20260604234852.573178-20-richard.henderson@linaro.org>
-In-Reply-To: <20260604234852.573178-20-richard.henderson@linaro.org>
+ <20260604234852.573178-21-richard.henderson@linaro.org>
+In-Reply-To: <20260604234852.573178-21-richard.henderson@linaro.org>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 16 Jun 2026 14:30:30 +0100
-X-Gm-Features: AVVi8Cc9__pY-Qm1tkeszQLXhLY7zzPybpXaHOFXukWgQmW8U_XiQ8qdnFhjANI
-Message-ID: <CAFEAcA9JWsJPLx=rH2OiuDMP4f46H5PSzzOBrQaVq=URonSfRQ@mail.gmail.com>
-Subject: Re: [PATCH 19/25] target/arm: Implement EXPAND
+Date: Tue, 16 Jun 2026 14:35:45 +0100
+X-Gm-Features: AVVi8CcycCkRH0RFQNH7U70Z8i_r5BS5KfBphlJLe4QnrTZ1PqY2l2wE96vKVUY
+Message-ID: <CAFEAcA8Vnncc0dfz8D8DRe0npH9FSRPsNWg+_-PDFdiqyWHSdA@mail.gmail.com>
+Subject: Re: [PATCH 20/25] target/arm: Generalize sve_compact_[sd]
 To: Richard Henderson <richard.henderson@linaro.org>
 Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b129;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb129.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12a;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -114,70 +114,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 5 Jun 2026 at 00:51, Richard Henderson
+On Fri, 5 Jun 2026 at 00:52, Richard Henderson
 <richard.henderson@linaro.org> wrote:
+>
+> Implement with a DO_COMPACT macro and general purpose
+> predicate handling.
 >
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->  target/arm/tcg/helper-sve-defs.h |  5 +++++
->  target/arm/tcg/sve_helper.c      | 28 ++++++++++++++++++++++++++++
->  target/arm/tcg/translate-sve.c   |  7 +++++++
->  target/arm/tcg/sve.decode        |  2 ++
->  4 files changed, 42 insertions(+)
+>  target/arm/tcg/sve_helper.c | 51 +++++++++++++++----------------------
+>  1 file changed, 21 insertions(+), 30 deletions(-)
 >
-> diff --git a/target/arm/tcg/helper-sve-defs.h b/target/arm/tcg/helper-sve-defs.h
-> index de2254bb19..75c0fc919d 100644
-> --- a/target/arm/tcg/helper-sve-defs.h
-> +++ b/target/arm/tcg/helper-sve-defs.h
-> @@ -3203,3 +3203,8 @@ DEF_HELPER_FLAGS_6(sve2_famin_s, TCG_CALL_NO_RWG,
->                     void, ptr, ptr, ptr, ptr, fpst, i32)
->  DEF_HELPER_FLAGS_6(sve2_famin_d, TCG_CALL_NO_RWG,
->                     void, ptr, ptr, ptr, ptr, fpst, i32)
-> +
-> +DEF_HELPER_FLAGS_4(sve2p2_expand_b, TCG_CALL_NO_WG, void, ptr, ptr, ptr, i32)
-> +DEF_HELPER_FLAGS_4(sve2p2_expand_h, TCG_CALL_NO_WG, void, ptr, ptr, ptr, i32)
-> +DEF_HELPER_FLAGS_4(sve2p2_expand_s, TCG_CALL_NO_WG, void, ptr, ptr, ptr, i32)
-> +DEF_HELPER_FLAGS_4(sve2p2_expand_d, TCG_CALL_NO_WG, void, ptr, ptr, ptr, i32)
 > diff --git a/target/arm/tcg/sve_helper.c b/target/arm/tcg/sve_helper.c
-> index c2b3162084..a13ccf4b85 100644
+> index a13ccf4b85..40cf567b0d 100644
 > --- a/target/arm/tcg/sve_helper.c
 > +++ b/target/arm/tcg/sve_helper.c
-> @@ -8669,3 +8669,31 @@ void HELPER(pext)(void *vd, uint32_t png, uint32_t desc)
->          do_whilel(vd, mask, MIN(b_count, vl), vl);
->      }
->  }
-> +
-> +#define DO_EXPAND(NAME, TYPE, H)                                      \
+> @@ -3637,39 +3637,30 @@ DO_TRN(sve2_trn_q, Int128, )
+>  #undef DO_UZP
+>  #undef DO_TRN
+>
+> -void HELPER(sve_compact_s)(void *vd, void *vn, void *vg, uint32_t desc)
+> -{
+> -    intptr_t i, j, opr_sz = simd_oprsz(desc) / 4;
+> -    uint32_t *d = vd, *n = vn;
+> -    uint8_t *pg = vg;
+> -
+> -    for (i = j = 0; i < opr_sz; i++) {
+> -        if (pg[H1(i / 2)] & (i & 1 ? 0x10 : 0x01)) {
+> -            d[H4(j)] = n[H4(i)];
+> -            j++;
+> -        }
+> -    }
+> -    for (; j < opr_sz; j++) {
+> -        d[H4(j)] = 0;
+> -    }
+> +#define DO_COMPACT(NAME, TYPE, H)                                     \
 > +void HELPER(NAME)(void *vd, void *vn, void *vg, uint32_t desc)        \
 > +{                                                                     \
-> +    intptr_t oprsz = simd_oprsz(desc);                                \
-> +    ARMVectorReg tn = *(ARMVectorReg *)vn;                            \
-> +    intptr_t i = 0, j = 0;                                            \
+> +    intptr_t i = 0, j = 0, oprsz = simd_oprsz(desc);                  \
 > +    do {                                                              \
 > +        uint16_t pg = *(uint16_t *)(vg + H1_2(i >> 3));               \
 > +        do {                                                          \
-> +            TYPE nn = 0;                                              \
 > +            if (pg & 1) {                                             \
-> +                nn = *(TYPE *)((void *)&tn + H(j));                   \
+> +                *(TYPE *)(vd + H(j)) = *(TYPE *)(vn + H(i));          \
 > +                j += sizeof(TYPE);                                    \
 > +            }                                                         \
-> +            *(TYPE *)(vd + H(i)) = nn;                                \
 > +            i += sizeof(TYPE);                                        \
 > +            pg >>= sizeof(TYPE);                                      \
 > +        } while (i & 15);                                             \
 > +    } while (i < oprsz);                                              \
+> +    for (; j < oprsz; j += sizeof(TYPE)) {                            \
+> +        *(TYPE *)(vd + H(j)) = 0;                                     \
+> +    }                                                                 \
+>  }
 
-It looks like in the other macros where we iterate like this
-(eg DO_ZPZZ, DO_ZPZ) we write the outer loop as
-   for (i = 0; i < opr_sz; ) {
-     ...
-   }
+Why do we have special versions of the predicated loop for 64-bit operands
+elsewhere (eg DO_ZPZ vs DO_ZPZ_D, DO_ZPZZ vs DO_ZPZZ_D, etc) but we don't
+need to do that for compact ?
 
-rather than as a do while(). Is there a reason I'm missing why
-we need the do-while here ?
+Similar query about do-while to the previous patch.
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-
-thanks
 -- PMM
 
