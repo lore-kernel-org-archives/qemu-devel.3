@@ -4,111 +4,195 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B93DCD8CA8
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 06:18:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 132F7CD8CA8
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 06:19:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZN7b-0006O8-WF; Tue, 16 Jun 2026 02:18:04 -0400
+	id 1wZN93-0007U0-A4; Tue, 16 Jun 2026 02:19:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wZN7Z-0006N8-R5
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 02:18:02 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <dongli.zhang@oracle.com>)
+ id 1wZN8z-0007S7-7h
+ for qemu-devel@nongnu.org; Tue, 16 Jun 2026 02:19:29 -0400
+Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wZN7X-0007pK-Dv
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 02:18:01 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781590678;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=9IzRjMQ4xtrBSxUkY4wxI23oGICvXeEXxGt+AWT/QzE=;
- b=WjL9R8ryDUUTMbksbfSkVwVauQBLHmDTbapREO0XiUPsc90D5yEyInPpNatTwq9CFwe/Ny
- 1+e4obOHvAFLz8mwTfGFmdfb/PV0SSKBrFR/j9GvZ4OjNTR/kT02pQVbm0C0Sf7dn2eWZo
- t57Ta1I8u8OnxDKVFIqGyEfGcjd6ofU=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-597-SEbMv_bWMeKwr_Exa0is6w-1; Tue, 16 Jun 2026 02:17:56 -0400
-X-MC-Unique: SEbMv_bWMeKwr_Exa0is6w-1
-X-Mimecast-MFC-AGG-ID: SEbMv_bWMeKwr_Exa0is6w_1781590675
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-490aadb1386so25471555e9.0
- for <qemu-devel@nongnu.org>; Mon, 15 Jun 2026 23:17:56 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <dongli.zhang@oracle.com>)
+ id 1wZN8w-000843-0d
+ for qemu-devel@nongnu.org; Tue, 16 Jun 2026 02:19:28 -0400
+Received: from pps.filterd (m0333520.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 65FLDnZf1392585; Tue, 16 Jun 2026 06:19:22 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=
+ corp-2025-04-25; bh=6elzRQdvaciVTq1lc1GdeXpsK/0uEEeSQg63MdFngFA=; b=
+ Gt9OBn4jZfxU72IJHJBsH0tyNLxVmHqCIqwIfA2cQUohXj2A9T872Kq5E2zFK2pu
+ b5yk0crZKIMZnjkL6ncJJJvXnICnX+tOFm9quak5ORxC4CmvvTe/ihnbu1LaEjN0
+ Q3fU//gm93oF8+N65eGF0m8Mbw3lDJKhwvyMz60mgx9FSDAXGk+1en8ObaPfCDSO
+ nGPAlc+djbqEW/3OoVY0QCXaTgX8+z2vQYHSxArG8lFB1lUpRDBDYwCR9SEktN/9
+ bwnrJCUWMvmJHeSuD25aXV5rYkCwnzdmXSmkLeQJHxFQ1qNGqzor650eeRTfXcCq
+ obYIQH7gjTR9+yVuD1JBgA==
+Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com
+ (phxpaimrmta01.appoci.oracle.com [138.1.114.2])
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 4es182bunm-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 16 Jun 2026 06:19:22 +0000 (GMT)
+Received: from pps.filterd
+ (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
+ by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.7/8.18.1.7)
+ with ESMTP id 65G6DVSS008553; Tue, 16 Jun 2026 06:19:21 GMT
+Received: from co1pr03cu002.outbound.protection.outlook.com
+ (mail-westus2azon11010053.outbound.protection.outlook.com [52.101.46.53])
+ by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
+ 4etq672t35-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 16 Jun 2026 06:19:21 +0000 (GMT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=yJOkmgE0WIvtGFXiCVJgONiE14HXX64cFYuPADDWZPyCG7VWxNy4ofQNG1c2MiAd/2tFEEcNI0Iecz/ex7W57dK1S/Z5O6SI4I/4Ci08F2LgM09it68rNKVzwivoLMx3edwdhh8LC4Y9dTM8EoY2AtqpC8w6614A32UQdGqr1LYDZtM9j5siVXrZ9IEigCnG29ZbWGrhfQeETQ01V2h2Il8Ewhzz4NapqQbMADHybCremABwTF3GD/vDh679YDf1s/bfVZnXhZj6Gpj1NWqmlyMNMBbBQ6fvOqCJfz5IOuJSG8voeYToRq4OI9Ue8kOFj11oUcIl/i55OmVLGswMcw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=6elzRQdvaciVTq1lc1GdeXpsK/0uEEeSQg63MdFngFA=;
+ b=sE9o7R59TT2Zq4+zRZEoaOUrKEFRiX75WzzhGOvAqULWpXBbF2Ok4zPayWrVFfewZKF5cgNlI5ePH3VZ0ftPoFotEguMv0t1SxrTpDn+t8Y/Ik5u6LNMiVAjmFfvMq4U9ypXPm99OYRXgQfU+Jz+R48w13On0Eq2nDinPnh/jFXB6Vrvp4Ypf2NU0MuMQ01vm89RdpwAV6TtSgvS8uaIkqrFOqR1wTxrxAbQWeWtShW8bKdosTI0NJooZYDNQuv2zxcKFKQdRWSKsFZiT85aXgKtfpvHwpNgyn/7Lg3jCtj9FHkbrW7oVqjkySckzLzgWxgxpcbLBYg6KdSEKdhh6A==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
+ dkim=pass header.d=oracle.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1781590675; x=1782195475; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=9IzRjMQ4xtrBSxUkY4wxI23oGICvXeEXxGt+AWT/QzE=;
- b=RfVQenLjuvqRHjsq9FbgHgt9BocCZ2j5A13VN784Fe1YEaZ+FchbyZxtp1bwtLty00
- 6WjBsCCeFvpemAluEKQemMQ6N+IOIIA5CQvistXEanunkBye5Gtpo5TPgk5SB0sztJKo
- zpQp9zJSvMD1bkemYj9i0XQXVrR50smtzFwVznLb650gQc/ffEjCBRAEgQ7bVn3vrjyf
- pOK23gTcpnCUU9YoffZOn1j+F3RKrr0rUjxPCAuirki0rbc+8/NGbfylmSspxTFtLr8Q
- jrWlqk14H0A/92FnlJkq9DCmfmBjQ29/NYEnFD6gJHD8yY7U3RIQy8MUECW/y49f8hcW
- +y+A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781590675; x=1782195475;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=9IzRjMQ4xtrBSxUkY4wxI23oGICvXeEXxGt+AWT/QzE=;
- b=HTHnw4eGL2HLflsCxIn/MHzaAt25jN7h8qIzDt1tVVsknM+7qY+DM3nUNCuxwd5dKD
- Q63NY+dWJMvhfdR8cbkBHchCfwXq4ANrL7fQi+3MTqphZCfM+PT/+0MYIOwsz19Abine
- Tb/YSfbmb3Y1UYF6jBmyt9lnGUpu0tFlBsh0yotDeuHcv1WWoOYXNOdtaTWJBpJ0GHXh
- w2UXVV/SPBfSe97EUSZUtSEUXBIQzDcjl94R8wf/06WXVHUisg6gm9avSBDKh6iEn1da
- cZxcJrprWAAuJhWafMNFXgnMNY2X0Ms4pzQhQEGLTmtDcf66Nnp1lmRs2kLD6NHs8tFy
- 2P5g==
-X-Forwarded-Encrypted: i=1;
- AFNElJ/VvTepxRtY2HTj/F21c/8FRQmEFskhSn8On0XJDXEi+b6R82fdk5mfUIyYJ1O2CdLhO8of5a0ebbUm@nongnu.org
-X-Gm-Message-State: AOJu0YzSDGfXibZlUUL0v1rTv31IO7/X/7Lhq2f7ZFnad2/zouREUK+f
- w5OWnmI/U+LFc505GjHp2f0SZz40yWELR4QH1sOvsUvhcvAjGG+Grgm1jm8zOF8X41pNww3JG6V
- j9zyLPC1gnpho7CraG9+Goxw2H8f4LDWgb117Odu+iv2kDQmvuzyTRVyp
-X-Gm-Gg: Acq92OHLj7YtafoLbFz+C5XFoqugofBezGnpm4HfDsON+M0us9L8Kgq6mTCXutxkySx
- dP0Rehjhvgpr9FZOozvIP9aMppqS/FDFJzm8GLAhkQuLYv38kktOorAIEafmRLeHXcR5dlm0c9z
- 51Z9GAhDCsWsRV9I4cVicpKDhOtERbjUd1EjwP8gFpYhZGHSgy3YzJs8ySayeKSqCeOuF0kqZSj
- HFv30t0/PTX8hoi9xCjsE/S+E2qspXuFMb9E8z9NyAJuaACMFt6BEmIgm52vX+rY7t8+ltaCyi4
- 3vKeKGyXwm25f+gLKz3wqSuRDhUsMk6QBlAA5GEVKL6HxEYg+r4TWX6CmoqrrUzMYiS8zdKjJQ2
- Oqb4i02wYoGR0W7cbBXn9cqY0dgJVnYDHtG7ApLZ6fy4=
-X-Received: by 2002:a05:600c:810b:b0:489:32b:ac0b with SMTP id
- 5b1f17b1804b1-4922fac1214mr33440105e9.6.1781590675263; 
- Mon, 15 Jun 2026 23:17:55 -0700 (PDT)
-X-Received: by 2002:a05:600c:810b:b0:489:32b:ac0b with SMTP id
- 5b1f17b1804b1-4922fac1214mr33439455e9.6.1781590674723; 
- Mon, 15 Jun 2026 23:17:54 -0700 (PDT)
-Received: from redhat.com (IGLD-80-230-85-71.inter.net.il. [80.230.85.71])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49230a8ebe3sm25224545e9.11.2026.06.15.23.17.52
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 15 Jun 2026 23:17:54 -0700 (PDT)
-Date: Tue, 16 Jun 2026 02:17:50 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Gavin Shan <gshan@redhat.com>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, peterx@redhat.com,
- alex@shazbot.org, richard.henderson@linaro.org,
- peter.maydell@linaro.org, berrange@redhat.com,
- philmd@oss.qualcomm.com, philmd@mailo.com, david@kernel.org,
- clg@redhat.com, pbonzini@redhat.com, phrdina@redhat.com,
- jugraham@redhat.com, liugang24219@sangfor.com.cn,
- dinghui@sangfor.com.cn, shan.gavin@gmail.com
-Subject: Re: [PATCH v3 1/2] system/memory: Use qemu_ram_{copy, move}() in ram
- device region accessors
-Message-ID: <20260616021153-mutt-send-email-mst@kernel.org>
-References: <20260616052552.389021-1-gshan@redhat.com>
- <20260616052552.389021-2-gshan@redhat.com>
+ d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=6elzRQdvaciVTq1lc1GdeXpsK/0uEEeSQg63MdFngFA=;
+ b=B7J4DERMtHTfJLLtMkkiRU10I7rGfGnRdAFz6kmeo/ZR0MhVV7LBFOyZKzcj6JQHnJMICWyZWXF7doYBdZ02deeVMg57kPp2Getx8ibHJbeJIqwLgHdElNIt6lAPoLklbJCZcdzV5uNoq2/dtopEDqFIwMAGc8Ikeim8tVxtCPU=
+Received: from BN0PR10MB5109.namprd10.prod.outlook.com (2603:10b6:408:124::23)
+ by DS0PR10MB6773.namprd10.prod.outlook.com (2603:10b6:8:13d::12) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.113.18; Tue, 16 Jun
+ 2026 06:19:16 +0000
+Received: from BN0PR10MB5109.namprd10.prod.outlook.com
+ ([fe80::d9fa:7ad2:804b:bb83]) by BN0PR10MB5109.namprd10.prod.outlook.com
+ ([fe80::d9fa:7ad2:804b:bb83%6]) with mapi id 15.21.0113.015; Tue, 16 Jun 2026
+ 06:19:16 +0000
+Message-ID: <1e0a1d0a-a5d2-4b9c-98a0-9875c6147bd2@oracle.com>
+Date: Mon, 15 Jun 2026 23:19:14 -0700
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/5] migration: stop VM earlier for CPR
+To: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>, qemu-devel@nongnu.org
+Cc: mst@redhat.com, sgarzare@redhat.com, farosas@suse.de, peterx@redhat.com,
+ maciej.szmigiero@oracle.com, bchaney@akamai.com, mark.kanda@oracle.com,
+ den@openvz.org
+References: <20260612165110.431376-1-andrey.drobyshev@virtuozzo.com>
+ <20260612165110.431376-3-andrey.drobyshev@virtuozzo.com>
+Content-Language: en-US
+From: Dongli Zhang <dongli.zhang@oracle.com>
+In-Reply-To: <20260612165110.431376-3-andrey.drobyshev@virtuozzo.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: DS7P221CA0012.NAMP221.PROD.OUTLOOK.COM
+ (2603:10b6:8:25b::12) To BN0PR10MB5109.namprd10.prod.outlook.com
+ (2603:10b6:408:124::23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260616052552.389021-2-gshan@redhat.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BN0PR10MB5109:EE_|DS0PR10MB6773:EE_
+X-MS-Office365-Filtering-Correlation-Id: 1d937d34-c7a1-4c69-2e95-08decb6f317d
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|1800799024|366016|376014|23010399003|4133799003|22082099003|18002099003|4143699003|56012099006;
+X-Microsoft-Antispam-Message-Info: z6ikt1dPIHyQNps3/hypGyW0W6MYsFzjTMwjQz85QLN99BvTET5pHMUXDmrcvj/c3j+o1sc1UXnrh/vw+rwwHN0Jix5jwdCQ4S9IGk3cdeOxkTXSjAzyv1m1pzIMOiSIp2vW+Nh6ZqwpehdYaUy2rNqJpoYet375bS4Cesrm8N0X6OwlZ5Az22IJ4mfbQNOOHhZu5qbacjNEAMNxgPmzBKTj5WFDnv/urNRWyYzSaw8Ris4iR2EOUZabZcPpMwC/qtOcrcvzSbghtIV3Mubl9nGcRMZi435Nu0ZjidPJ+H/7pJAdpm0qRguRXewsjphgbrPCNx85ImqMGQvfywkJa+qjJaEpeZqjOanutiBvrJtlSaIxThftbvpORzyvPiQ6xPrhhhdRnHRoyjc0ZXkM6gy1hIUqUZr8NwRySqxidaX1fv2913BhqD5MkE7coLYI4nwCBZ1rYfsvTwOOqmtLifcd9p2NXz5pT6ws2Es6grvLooYB+k3Lo7F4LCh9c1ZLKRp4VWq4Lxp3DfJNn4XV/VYQ+QaAdK/Ps4qQQXZWj4g1IdEQwvQJPEMEAlJNHu65a1gxTqOzRp2UN+SpSQOFmzixZmnhIc5dtDqyhvFzFv2IA4jWjI8lk5OOVAvxDVyzedvTyvRcqQ0rHt6HpvezDmtc9v1qGkPdqDpmdl2XHQ7wTguOXbU2UVpQSxULtnVYe2rgZr1fY11RtLUJIIav4w==
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:BN0PR10MB5109.namprd10.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(1800799024)(366016)(376014)(23010399003)(4133799003)(22082099003)(18002099003)(4143699003)(56012099006);
+ DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?cGtJTTRSMlYrSFlESmlmL3J0NFRSajg1ZlpFQ0NjbDdCRVdDN29IWmc4WU53?=
+ =?utf-8?B?SG9SVjBQQmpTcEZaUHdMNk14dER1VjBnd2Q5SWl1Z05VYmhjdmIxdXJrUDh0?=
+ =?utf-8?B?S0NlbDZZSWJRemZrdHpQbHZtRU9Od3h5L2hCSXJTZmdUSFlSR1BRNm5jNi9N?=
+ =?utf-8?B?bXgzd2EzNytLa1AxcTAvSytNcG4rekg2aDJJQlk1UEVKbENyMEgwOGFjQXpp?=
+ =?utf-8?B?TXR4OVlVSGRRYkcxc1J2YW5NN0xTTEJSTGUxWjE3ZlpWN1BGTXRzMFNOK1Nn?=
+ =?utf-8?B?dVdmaXBkT1pLNnFGWVJzWFNBM3pob3c2bFlJR0dFaCt0MFR6WHN0dUNMalJH?=
+ =?utf-8?B?QkxqNWNaRXh2M1RhQytEbmtDMlBQOG5XRXkrUnpGU0kwSUxMazllWm96cTZl?=
+ =?utf-8?B?TGlwNmpIRW1sYWMwM1pEbzZyMDdzT0czQnlGcmNKVkhCQjdsNE1vUzQxQ1pa?=
+ =?utf-8?B?VGZTUUFwUVBBc3ljSkRRK2lUVW01SzloRE1ucjB6ZThTdjhzd1RSKy8vTGZP?=
+ =?utf-8?B?QzZMUnB2M0hUY0tvOW9SdHZhd2xxNkZXUUJQUTA3aDBNblgrY2RsUHdsT2FD?=
+ =?utf-8?B?U0M2eFliaDBDeVJ5NDJLK0c1alZSQUdxWWc4ZEVHUWl5bnFUSFhDckpXVXFK?=
+ =?utf-8?B?eWh2bGl6dUU2U2pSY016aUc2ZEZmT2pxLzFETDk0VEZFQ0dqa2tzanptZXZU?=
+ =?utf-8?B?QVI2LzhldlNHejFoamkveklQWVk0ODZKWTR1SXlsZmxqQzVEcHZYaW5lV2VE?=
+ =?utf-8?B?cDB6MnJsQ0t0ZkdDdEZpbkwrMnNEdUxTc2RiK2NsdUVJQzdSZ0E0RlAvNjJ4?=
+ =?utf-8?B?RElZRnhPTVk5ZlNNWEpXZ3NlY09qYnZsVXJOQm5xc2FOcFI0b2hHREc3L1V5?=
+ =?utf-8?B?MDcyVG9HMmdvaXZ1VGVTSXJPRjBkTHV2OUJqN1JjRDVvVWw0aTlrRklYQ2du?=
+ =?utf-8?B?bnRvTHI0dGFQRGR3OGRNc3pZYUdHZUZzd0paN1dFRTJkQ1F4NEZoRDB3Q3VI?=
+ =?utf-8?B?dE51QXRSNk9hVUZhNEF6ZzFZNGJOcTYweDVGZnZoT0ptVFAzNC9kelZ0a1Q2?=
+ =?utf-8?B?TzRZc1JnUHY5ZHhEVHI5R2J0UWliaG1ESVlPdmZ3TGJVcGJHT1Q0VnhqeGNk?=
+ =?utf-8?B?QStCNVBxYzVXTmhNV3hvc2NuclIzMW1uSmRZZlg2L21WWnkzcHRlUnp5OHhm?=
+ =?utf-8?B?bjMwZ1MvUkFaeVJaenBodFNIeWtJbVQzVjh6bzJSNXZxbE0zaEtUb3JsOEc1?=
+ =?utf-8?B?S043b0tKb3V6cWE2NGVTbStkS2gwa2hOWmZsZWhhYVVpUkZXRTM1RTQ2YmtB?=
+ =?utf-8?B?bVlqSnY3UldmTEJLV3RFQkpyekNXc1NnMW9kdDhtS1BjUnpSRkYxWXM0RmMr?=
+ =?utf-8?B?RmNwaFUrUHowdjNBdmpWWGczSkVpejEzSitmQitNWktKYVN3bHJYK2MvSmdV?=
+ =?utf-8?B?QWRZTGNDN3JOOUtmSVNsVHBPVHZ6K0ZNY2xUcVZvZG1malQzN2poam9CY0N3?=
+ =?utf-8?B?M3ZQRkIwQ2N3dWtLOFRnMTRhcjVObEp2aWpOUUYzLzlHSUduZzloZXBVMkd4?=
+ =?utf-8?B?MXJXdTZOWm9RVmYxOVc2VTNQM1IyTUEyUEQ4VFYrOTRqSE8xaWFBQzc2bjRO?=
+ =?utf-8?B?MUhwb1FGVU83amxuSTZaR3hYUk1SbEJqVUdlOFdMRWZwV0VyVy95UlJ1dnhE?=
+ =?utf-8?B?MENVVDJtcFh5STl3bnJpYktITXhsN09DN0YxQmpZVlp0NE5nWDdud3lyL3ho?=
+ =?utf-8?B?dW1WRlYvNlRjRUo4WUw1U3NIWlU1bzZ6RjBKTC9tLzVPa1RSekxzRzZTU1kw?=
+ =?utf-8?B?UzhBcW85blZNaDdReUtwR1hsdlZrVS85cDYzODlmMTc4Qy9FUUsvS3lHZlBq?=
+ =?utf-8?B?NlZnbGNROEdIcytFOG9ackZjSEVDNWpkcCtPT1BrdTd0ZjVmY1FGcjlJVzN3?=
+ =?utf-8?B?YjNwY3U3UVJmWVJpdXoxU1cwaW9OSmxSdXpGQWFjUjMvV1J4eHBoY1pRK1VR?=
+ =?utf-8?B?eGg0SDZ4cnVOWW9nQnN6bXlKQ1hhUmRNMHNHQTlvTS9Kbkh4T2hER2lHZHVB?=
+ =?utf-8?B?d3dSZzFWQTNXbHB0MDRBTThEdUJ5R01lME12ekVLUE9hUHBneUhJUVA5S1E1?=
+ =?utf-8?B?UWlKczBqVTZ1N2JRODZkT0V0czJGSk80VTFhaXhpTWRlQmIwMjBib2ZTSUE5?=
+ =?utf-8?B?N2RYajFuUXNkR1VwTDlUc05oUWRpa2ozUzhFSWdiK083ZVpKUUhSRVpnaGFa?=
+ =?utf-8?B?dmhLeEJxeWNVRklPZWNrcGgzRUtMRjRGODdVUU5jYVA2WWJ3a2NSNkdxanJa?=
+ =?utf-8?B?cUw4b3lidnE5OHFSY0NNNGVsekpWdWpIQi96L21PMTgzTGhaT2VYUT09?=
+X-Exchange-RoutingPolicyChecked: qqLJPDiKp3hhEfO0XJIGpussnTytWwuNp93iWg70AtzLXGUcsHXC5QcX9pQaHi9AXmjYch0sTpdC9F+w18gAODxIsX9QbmEOtQN/m8lCVp9os7lGbgO9r0n6eSWdOZrQeABxgZhJML189KpV/0NfTkIPt2Rb6+QjPTEshUwI8U5AXe0XxWK9YLDbChqCHVbZUQ81AicdKHpMabxYTy09vJFzAQKo1M59carBwk1MikdT5sMNQY0CZVuAgdK/cRf+p66arMv76dnF2UXi29DR/XYCkvPiDP44yaOKGuNr08sy6ro1OOsq7DCvMTIHY2XicHHvl630e7+nldabboYh3Q==
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: T1jtJ3xksFqpXOmkK29i1JXbjoWZrr3+fNMZrVV+Okl+I3PVRxKfLThN9rMO8TDxI18S/lyL1brYmSRqCrwQGcEVcUP8uz98JQZuQGjvJc7BsLaUqUj5tqzoukFwHLy4ROHLMy3sAM2e4UVf1aEDQfjud0z1+qYmTwi1o5TjE15WzQ93kKnlZeBGp+CiFQQHWC4rNm4DjSmYG9RPBKd25qxi2bU93MBT5Quy79DMh1gAnUnp2qtf1LBWaS/crsuD24FovePiEoGe5uY4eiyu3kAI6RdcUoflhaoJmO3rYfEemtw6kr1IIYwinjoHfpL1n6uAA6EzNnohrmQQsGKV2cRXVlphLr9bU4R8aXwqqaGGA5C166cERWd84o9thxMFzE02tsH7Kgfe32x8mzkEYyUyWxclDWXkfbRjzHiHIoP7nnMYhSc9fAWTDCkXzjj+WWfM2B49yqFARnfWC+Wb6WzB0KL8V77XGunTtPHheYx2WiBRwHz35NA4+Ruhi2QlabfN/IH4KAiOjH8R7U4sreRzljiLj1xJ7Me8+APtrHY6DkKD0ChSFAyTpRHHuomGyZno99qSJhH8YNEx3jrg4NMGBi0ltAeECzHnqf4eauM=
+X-OriginatorOrg: oracle.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 1d937d34-c7a1-4c69-2e95-08decb6f317d
+X-MS-Exchange-CrossTenant-AuthSource: BN0PR10MB5109.namprd10.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Jun 2026 06:19:16.6182 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: yYPo2O3XCIEwQUWZEezzsGIWbKQle2mKt5SAYAI1JSqHKF5nQb1w1TDbUtnnc9fLXb8M8x5XkK/B93iFGHwRRQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR10MB6773
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-16_02,2026-06-15_04,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0
+ lowpriorityscore=0 phishscore=0 suspectscore=0 adultscore=0 mlxlogscore=999
+ mlxscore=0 spamscore=0 malwarescore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2606040000 definitions=main-2606160059
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjE2MDA2MCBTYWx0ZWRfX9OjhoXvzSvrY
+ CSXm7fNrwzdmTfEoONiWCpoXBiKWeLbM0zC5Hn4sox7ofLseSuXbrULK9GqKroLpgDBuSIyS81M
+ vdhvIhLv0lWJkODJDKwtpuXXKrACFRBGyyet9SOGHc2dutnAOh6e
+X-Proofpoint-GUID: dYo3WjR8KIpWHnMf2_yS8I_04Cdb9Xfx
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjE2MDA2MCBTYWx0ZWRfX6UG5aiFIirJm
+ WBeCj3ghOMkOTVqO1kqteZ2iAEK/xtWMkgTsDfg+xPvsBdF7WkCdTge621M+2AZTjMVzuOQ5lDn
+ YlbMdCOIIDDc9f5POe+i9/1RrMX5e9nmmPSdSenZNhXgvyrXwhdMGfTn93e+bn+MDmTOJWKr1Pd
+ 2VXXY97Ev/0HtAc/qzMwtgvcqN5NuNwvd+ky/2MEiZLLn7CGBjDqrAU2fHdDaZNDg2IDNGQw6Nu
+ 5NbS7WHpkVfahKjDjdMkEN66hciy0g8DokRR8rZHFUSK4dy7lRr6ZONzhEpwghjBxys8Z4q5MOx
+ dzeWwIfaZMAvg7cfdFDI7/mG+Gp9FXWGnA1tO/aUWCTcqdsaMwkufpu7d/Fx8oizDBdYQOQmFM0
+ XFkQK88wOjfTSQmW7ACCv6YFICNA2LhldAtgv1FKPYffb93d82vPuX8vF8IB24LeVrhtxZBFeqU
+ XhtkXDm+Eszo7qXg2Uw==
+X-Proofpoint-ORIG-GUID: dYo3WjR8KIpWHnMf2_yS8I_04Cdb9Xfx
+X-Authority-Analysis: v=2.4 cv=Rr/16imK c=1 sm=1 tr=0 ts=6a30eaea cx=c_pps
+ a=XiAAW1AwiKB2Y8Wsi+sD2Q==:117 a=XiAAW1AwiKB2Y8Wsi+sD2Q==:17
+ a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19 a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19
+ a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
+ a=FelO9ux0wxsA:10 a=GoEa3M9JfhUA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=jiCTI4zE5U7BLdzWsZGv:22 a=BqU2WV_vvsyTyxaotp0D:22 a=VwQbUJbxAAAA:8
+ a=X7Ea-ya5AAAA:8 a=yPCof4ZbAAAA:8 a=TYBLyS7eAAAA:8 a=NsVI1WquneSrNn1qDy0A:9
+ a=QEXdDO2ut3YA:10 a=zvYvwCWiE4KgVXXeO06c:22
+Received-SPF: pass client-ip=205.220.177.32;
+ envelope-from=dongli.zhang@oracle.com; helo=mx0b-00069f02.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -124,378 +208,172 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jun 16, 2026 at 03:25:51PM +1000, Gavin Shan wrote:
-> All ram device regions were turned to be indirectly accessible by commit
-> 4a2e242bbb ("memory: Don't use memcpy for ram_device regions"). This leads
-> to guest hang on attempt to build 'cuda-samples' as reported by Julia. The
-> guest is started by the following command lines, with GH100 GPU card passed
-> from the host.
+
+
+On 2026-06-12 9:51 AM, Andrey Drobyshev wrote:
+> For CPR-style migration, we need the VM to stop earlier on, before
+> cpr_state_save() fires.  That is to prevent the race between source I/O
+> and target device init, as well as make sure VHOST_RESET_OWNER and
+> VHOST_SET_OWNER are fired in the right order (cpr-transfer case).  Thus,
+> for CPR case migration, let's move the stop to qmp_migrate(), directly
+> before launching cpr_state_save().
 > 
->    host$ lspci | grep GH100
->    0009:01:00.0 3D controller: NVIDIA Corporation GH100 [GH200 120GB / 480GB] (rev a1)
->    host$ /home/sandbox/gavin/qemu.main/build/qemu-system-aarch64            \
->          -machine virt,gic-version=host,ras=on,highmem-mmio-size=4T         \
->          -accel kvm -cpu host -smp cpus=48 -m size=8G                       \
->          -drive file=/home/gavin/sandbox/images/disk.qcow2,if=none,id=d0    \
->          -device virtio-blk-pci,id=vb0,bus=pcie.0,drive=d0,num-queues=4     \
->          -device vfio-pci-nohotplug,host=0009:01:00.0,bus=pcie.1.0
->            :
->    guest$ cd cuda-samples/build
->    guest$ make -j 20 clean
->    guest$ make -j 20
->            :
->    [ 54%] Linking CUDA executable graphMemoryNodes
->    [ 54%] Built target graphMemoryNodes
->    <no more output afterwards, guest becomes frozen here>
+> This patch is a rework of the change originally proposed by Steve and
+> Ben at [0].
 > 
->    guest$ qemu-system-aarch64: virtio: bogus descriptor or out of resources
->    [  555.814025] virtio_blk virtio0: [vda] new size: 268435456 512-byte logical blocks (137 GB/128 GiB)
+> [0] https://urldefense.com/v3/__https://lore.kernel.org/qemu-devel/20260128-cpr-tap-v4-0-48e334d4216b@akamai.com__;!!ACWV5N9M2RV99hQ!McDgSIuX3a-mCdNkiaf0TCITdQB-bEHCppcpig8fe6BPBWlU7qkvjW5FhLN0twb2fq9pC2qDYPH_FQZJYglJy4C71FMad5DMog$ 
 > 
-> When the GPU's driver (NVidia open driver) is loaded on guest bootup,
-> the memory blocks residing in the PCI BAR#4 of the GH100 GPU card can
-> be presented to the guest through memory hot-add. The page cache can
-> then be allocated from the hot added memory blocks when cuda-samples
-> is being built. Afterwards, the page cache is sent to QEMU's virtio-blk
-> device as part of the DMA request, the bounce buffer has to be used to
-> accomodate the request as the corresponding memory region (MemoryRegion)
-> is an indirectly accessible ram device region in qemu. However, the max
-> bounce bufer size is only 4096 bytes by default and that is exhausted
-> quickly, leading to a reset on the virtio-blk device and frozen guest
-> eventually.
-> 
->   QEMU
->   ====
->   virtio_blk_handle_output
->     virtio_blk_handle_vq
->       virtio_blk_get_request
->         virtqueue_pop
->           virtqueue_split_pop
->             virtqueue_map_desc
->               address_space_map
->                 memory_access_is_direct         # Return false
->                   memory_region_supports_direct_access
-> 
->   (qemu) info mtree
->   memory-region: pci_bridge_pci
->     0000000000000000-ffffffffffffffff (prio 0, container): pci_bridge_pci
->       0000042000000000-0000043fffffffff (prio 1, i/o): 0009:01:00.0 base BAR 4
->         0000042000000000-0000043fffffffff (prio 0, i/o): 0009:01:00.0 BAR 4
->           0000042000000000-000004379fffffff (prio 0, ramd): 0009:01:00.0 BAR 4 mmaps[0]
-> 
-> This adds qemu_ram_{copy, move}() and replaces {memcpy, memmove}() with
-> them in the ram device memory region accessors, similar to what's done
-> in commit 4a2e242bbb so that the issue (MMIO access instructions were
-> optimized to SSE instructions) covered by that commit is fixed. This
-> makes 'ram_device_mem_ops' redundant, paving the way to revert that
-> commit to make ram device region directly accessible again in the next
-> patch.
-> 
-> Reported-by: Julia Graham <jugraham@redhat.com>
-> Suggested-by: Michael S. Tsirkin <mst@redhat.com>
-> Suggested-by: Peter Xu <peterx@redhat.com>
-> Suggested-by: Richard Henderson <richard.henderson@linaro.org>
-> Suggested-by: Peter Maydell <peter.maydell@linaro.org>
-> Signed-off-by: Gavin Shan <gshan@redhat.com>
+> Originally-by: Steve Sistare <steven.sistare@oracle.com>
+> Originally-by: Ben Chaney <bchaney@akamai.com>
+> Signed-off-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
 > ---
-> v3: Documentation for qemu_ram_{copy, move}           (Peter/Michael)
->     Support qemu_ram_move() for overlapped src/dest   (Richard)
->     Use {memcpy, memmove} if step is 16-bytes or more (Michael)
->     Code improvements                                 (Richard/Michael)
-> ---
->  hw/remote/vfio-user-obj.c |   4 +-
->  include/system/memory.h   |  32 ++++++-
->  system/physmem.c          | 178 +++++++++++++++++++++++++++++++++++++-
->  3 files changed, 207 insertions(+), 7 deletions(-)
+>  migration/migration.c | 73 +++++++++++++++++++++++++++++++++----------
+>  1 file changed, 56 insertions(+), 17 deletions(-)
 > 
-> diff --git a/hw/remote/vfio-user-obj.c b/hw/remote/vfio-user-obj.c
-> index 87fa7b6572..97a6c88780 100644
-> --- a/hw/remote/vfio-user-obj.c
-> +++ b/hw/remote/vfio-user-obj.c
-> @@ -375,9 +375,9 @@ static int vfu_object_mr_rw(MemoryRegion *mr, uint8_t *buf, hwaddr offset,
->          ram_ptr = memory_region_get_ram_ptr(mr);
+> diff --git a/migration/migration.c b/migration/migration.c
+> index 3c70467d314..c02f1da8b0e 100644
+> --- a/migration/migration.c
+> +++ b/migration/migration.c
+> @@ -1380,10 +1380,13 @@ static void migration_cleanup(MigrationState *s)
 >  
->          if (is_write) {
-> -            memcpy((ram_ptr + offset), buf, size);
-> +            qemu_ram_copy(ram_ptr + offset, buf, size);
->          } else {
-> -            memcpy(buf, (ram_ptr + offset), size);
-> +            qemu_ram_copy(buf, ram_ptr + offset, size);
->          }
->  
->          return 0;
-> diff --git a/include/system/memory.h b/include/system/memory.h
-> index 1417132f6d..84203c312d 100644
-> --- a/include/system/memory.h
-> +++ b/include/system/memory.h
-> @@ -2897,6 +2897,36 @@ void address_space_register_map_client(AddressSpace *as, QEMUBH *bh);
->  void address_space_unregister_map_client(AddressSpace *as, QEMUBH *bh);
->  
->  /* Internal functions, part of the implementation of address_space_read.  */
-> +
-> +/**
-> + * qemu_ram_copy: copy data to ramblock
-> + *
-> + * @dst: destination where the data is copied to
-> + * @src: source where the data is copied from
-> + * @n: length of data to be copied
-> + *
-> + *
-> + * Copy @n bytes from @src to @dst with the assumption that @src and @dst
-> + * do not overlap. Handles special cases such as uncacheable ramblocks
-> + * correctly. Use this for accessing ramblock in response to DMA/VCPU IO,
-> + * in preference to memcpy().
-> + */
-> +void qemu_ram_copy(void *dest, const void *src, size_t n);
-> +
-> +/**
-> + * qemu_ram_move: move data to ramblock
-> + *
-> + * @dst: destination where the data is moved to
-> + * @src: source where the data is moved from
-> + * @n: length of data to be moved
-> + *
-> + * Move @n bytes from @src to @dst with the assumption that @src and @dst
-> + * can overlap. Handles special cases such as uncacheable ramblocks
-> + * correctly. Use this for accessing ramblock in response to DMA/VCPU IO,
-> + * in preference to memmove().
-> + */
-> +void qemu_ram_move(void *dest, const void *src, size_t n);
-> +
->  MemTxResult address_space_read_full(AddressSpace *as, hwaddr addr,
->                                      MemTxAttrs attrs, void *buf, hwaddr len);
->  MemTxResult flatview_read_continue(FlatView *fv, hwaddr addr,
-> @@ -2970,7 +3000,7 @@ MemTxResult address_space_read(AddressSpace *as, hwaddr addr,
->              mr = flatview_translate(fv, addr, &addr1, &l, false, attrs);
->              if (len == l && memory_access_is_direct(mr, false, attrs)) {
->                  ptr = qemu_map_ram_ptr(mr->ram_block, addr1);
-> -                memcpy(buf, ptr, len);
-> +                qemu_ram_copy(buf, ptr, len);
->              } else {
->                  result = flatview_read_continue(fv, addr, attrs, buf, len,
->                                                  addr1, l, mr);
-> diff --git a/system/physmem.c b/system/physmem.c
-> index 7bcbf87573..45a17cd580 100644
-> --- a/system/physmem.c
-> +++ b/system/physmem.c
-> @@ -3160,6 +3160,177 @@ void memory_region_flush_rom_device(MemoryRegion *mr, hwaddr addr, hwaddr size)
->      invalidate_and_set_dirty(mr, addr, size);
->  }
->  
-> +static void qemu_ram_copy_aligned(void *dst, const void *src, size_t n)
-> +{
-> +    switch (n) {
-> +    case 1:
-> +        __builtin_memcpy(dst, src, 1);
-> +        break;
-> +    case 2:
-> +        __builtin_memcpy(dst, src, 2);
-> +        break;
-> +    case 4:
-> +        __builtin_memcpy(dst, src, 4);
-> +        break;
-> +    case 8:
-> +        __builtin_memcpy(dst, src, 8);
-> +        break;
-> +    default:
-> +        memcpy(dst, src, n);
-> +    }
-> +}
-> +
-> +static void qemu_ram_move_aligned(void *dst, const void *src, size_t n)
-> +{
-> +    switch (n) {
-> +    case 1:
-> +        __builtin_memmove(dst, src, 1);
-> +        break;
-> +    case 2:
-> +        __builtin_memmove(dst, src, 2);
-> +        break;
-> +    case 4:
-> +        __builtin_memmove(dst, src, 4);
-> +        break;
-> +    case 8:
-> +        __builtin_memmove(dst, src, 8);
-> +        break;
-> +    default:
-> +        memmove(dst, src, n);
-> +    }
-> +}
+>      /*
+>       * FAILED notification should have already happened.  Notify DONE if
+> -     * migration completed successfully.
+> +     * migration completed successfully.  On a failed/canceled path,
+> +     * resume VM for the CPR case.
+>       */
+>      if (!migration_has_failed(s)) {
+>          migration_call_notifiers(MIG_EVENT_DONE, NULL);
+> +    } else if (migrate_mode_is_cpr()) {
+> +        vm_resume(s->vm_old_state);
 
-A weird name for this. You call it for both aligned and unaligned.
+In migration_iteration_finish(), the VM is resumed only after
+migration_block_activate() succeeds. With this patch, CPR failure handling is
+moved to migration_cleanup(), where vm_resume() is called *unconditionally* for
+failed CPR migrations.
 
-maybe this is _unsafe and the "unaligned" below is _safe ?
-
-
-
-
-> +
-> +static void qemu_ram_copy_unaligned(void *dst, const void *src,
-> +                                    size_t n, size_t max_step)
-> +{
-> +    uintptr_t test, step;
-> +
-> +    /* Aligned maximal step */
-> +    max_step = pow2floor(max_step);
-> +
-> +    while (n) {
-> +        test = (uintptr_t)src | (uintptr_t)dst | n | max_step;
-> +        step = test & -test;
-> +
-> +        switch (step) {
-> +        case 1:
-> +            qatomic_set((uint8_t *)dst, qatomic_read((uint8_t *)src));
-> +            src += 1;
-> +            dst += 1;
-> +            n -= 1;
-> +            break;
-> +        case 2:
-> +            qatomic_set((uint16_t *)dst, qatomic_read((uint16_t *)src));
-> +            src += 2;
-> +            dst += 2;
-> +            n -= 2;
-> +            break;
-> +        case 4:
-> +            qatomic_set((uint32_t *)dst, qatomic_read((uint32_t *)src));
-> +            src += 4;
-> +            dst += 4;
-> +            n -= 4;
-> +            break;
-> +        case 8:
-> +            qatomic_set((uint64_t *)dst, qatomic_read((uint64_t *)src));
-> +            src += 8;
-> +            dst += 8;
-> +            n -= 8;
-> +            break;
-> +        default:
-> +            memcpy(dst, src, step);
-> +            src += step;
-> +            dst += step;
-> +            n -= step;
-> +        }
-> +    }
-> +}
-> +
-> +static void qemu_ram_backwards_copy_unaligned(void *dst, const void *src,
-> +                                              size_t n, size_t max_step)
-> +{
-> +    uintptr_t test, step;
-> +
-> +    /* Aligned maximal step */
-> +    max_step = pow2floor(max_step);
-> +
-> +    /* End of the blocks */
-> +    src += n;
-> +    dst += n;
-> +
-> +    while (n) {
-> +        test = (uintptr_t)src | (uintptr_t)dst | n | max_step;
-> +        step = test & -test;
-> +
-> +        switch (step) {
-> +        case 1:
-> +            src -= 1;
-> +            dst -= 1;
-> +            n -= 1;
-> +            qatomic_set((uint8_t *)dst, qatomic_read((uint8_t *)src));
-> +            break;
-> +        case 2:
-> +            src -= 2;
-> +            dst -= 2;
-> +            n -= 2;
-> +            qatomic_set((uint16_t *)dst, qatomic_read((uint16_t *)src));
-> +            break;
-> +        case 4:
-> +            src -= 4;
-> +            dst -= 4;
-> +            n -= 4;
-> +            qatomic_set((uint32_t *)dst, qatomic_read((uint32_t *)src));
-> +            break;
-> +        case 8:
-> +            src -= 8;
-> +            dst -= 8;
-> +            n -= 8;
-> +            qatomic_set((uint64_t *)dst, qatomic_read((uint64_t *)src));
-> +            break;
-> +        default:
-> +            src -= step;
-> +            dst -= step;
-> +            n -= step;
-> +            memmove(dst, src, step);
-> +        }
-> +    }
-> +}
-> +
-> +/* x86 should work with __builtin_{memcpy, memmove}() for IO access */
-> +#if defined(__i386__) || defined(__x86_64__)
-> +#define HOST_UNALIGNED_MMIO_OK 1
-
-maybe HOST_UNALIGNED_VECTOR_MMIO_OK ? We also care that vector stores
-are safe.
-
-> +#else
-> +#define HOST_UNALIGNED_MMIO_OK 0
-> +#endif
-> +
-> +void qemu_ram_copy(void *dst, const void *src, size_t n)
-> +{
-> +    if (dst == src || n == 0) {
-> +        return;
-> +    }
-> +
-> +    if (HOST_UNALIGNED_MMIO_OK) {
-> +        qemu_ram_copy_aligned(dst, src, n);
-> +    } else {
-> +        qemu_ram_copy_unaligned(dst, src, n, 8);
-> +    }
-> +}
-> +
-> +void qemu_ram_move(void *dst, const void *src, size_t n)
-> +{
-> +    if (src == dst || n == 0) {
-> +        return;
-> +    }
-> +
-> +    if (HOST_UNALIGNED_MMIO_OK) {
-> +        qemu_ram_move_aligned(dst, src, n);
-> +    } else if (dst < src) {
-> +        qemu_ram_copy_unaligned(dst, src, n, src - dst);
-> +    } else {
-> +        qemu_ram_backwards_copy_unaligned(dst, src, n, dst - src);
-> +    }
-> +}
-> +
->  int memory_access_size(MemoryRegion *mr, unsigned l, hwaddr addr)
->  {
->      unsigned access_size_max = mr->ops->valid.max_access_size;
-> @@ -3272,7 +3443,7 @@ static MemTxResult flatview_write_continue_step(MemTxAttrs attrs,
->          uint8_t *ram_ptr = qemu_ram_ptr_length(mr->ram_block, mr_addr, l,
->                                                 false, true);
->  
-> -        memmove(ram_ptr, buf, *l);
-> +        qemu_ram_move(ram_ptr, buf, *l);
->          invalidate_and_set_dirty(mr, mr_addr, *l);
->  
->          return MEMTX_OK;
-> @@ -3365,7 +3536,7 @@ static MemTxResult flatview_read_continue_step(MemTxAttrs attrs, uint8_t *buf,
->          uint8_t *ram_ptr = qemu_ram_ptr_length(mr->ram_block, mr_addr, l,
->                                                 false, false);
->  
-> -        memcpy(buf, ram_ptr, *l);
-> +        qemu_ram_copy(buf, ram_ptr, *l);
->  
->          return MEMTX_OK;
 >      }
-> @@ -3503,8 +3674,7 @@ MemTxResult address_space_write_rom(AddressSpace *as, hwaddr addr,
->              l = memory_access_size(mr, l, addr1);
->          } else {
->              /* ROM/RAM case */
-> -            void *ram_ptr = qemu_map_ram_ptr(mr->ram_block, addr1);
-> -            memcpy(ram_ptr, buf, l);
-> +            qemu_ram_copy(qemu_map_ram_ptr(mr->ram_block, addr1), buf, l);
->              invalidate_and_set_dirty(mr, addr1, l);
+>  
+>      yank_unregister_instance(MIGRATION_YANK_INSTANCE);
+> @@ -2130,6 +2133,45 @@ void qmp_migrate(const char *uri, bool has_channels,
+>       */
+>      Error *local_err = NULL;
+>  
+> +    /*
+> +     * CPR-transfer  ordering:
+> +     *
+> +     *   SOURCE                              TARGET
+> +     *   ------                              ------
+> +     *                                       cpr_state_load() blocks
+> +     *   |                                        |
+> +     *   |  1. migration_stop_vm()                |
+> +     *   |     VM stopped, devices quiesced       |
+> +     *   |                                        | Waiting for
+> +     *   |  2. notifiers (SETUP)                  | FDs from source
+> +     *   |     vhost_reset_owner() releases       |
+> +     *   |     device ownership                   |
+> +     *   |                                        |
+> +     *   |  3. cpr_state_save() ---- FDs -------> |
+> +     *   |                                        |
+> +     *   v                                        v
+> +     *   postmigrate                         Device init begins
+> +     *                                       - cpr_find_fd()
+> +     *                                       - vhost_dev_init()
+> +     *                                       - VHOST_SET_OWNER
+> +     *
+> +     * Step 3 is the synchronization/cut-over point. Target proceeds immediately
+> +     * upon receiving FDs, so steps 1-2 must complete otherwise:
+
+Complete successfully?
+
+> +     * - Target's VHOST_SET_OWNER fails with -EBUSY (source still owns)
+> +     * - Race between source I/O and target device init
+> +     *
+> +     *  We stop the VM early (before FD transfer) to prevent this race.
+
+How about move some of comments to the commit message instead?
+
+When reading this comment in the final code, I found the race description a bit
+confusing.
+
+The vhost_dev_init change is introduced only in the next patch.
+
+With this patch applied, the VM is already stopped at step 1 before SETUP and
+before cpr_state_save(), so a future reader may wonder why there is still a race
+between source I/O and target device init.
+
+The race is the motivation for the change, not the behavior of the code after
+the change.
+
+It may be clearer to keep the comment focused on the required ordering.
+
+Thank you very much!
+
+Dongli Zhang
+
+> +     *  Unlike regular migration, CPR-transfer passes memory via FD (memfd)
+> +     *  rather than copying RAM, so early VM stop should have minimal downtime.
+> +     */
+> +    if (migrate_mode_is_cpr()) {
+> +        int ret = migration_stop_vm(s, RUN_STATE_FINISH_MIGRATE);
+> +        if (ret < 0) {
+> +            error_setg(&local_err, "migration_stop_vm failed, error %d", -ret);
+> +            goto out;
+> +        }
+> +    }
+> +
+>      /* Notify before starting migration thread and before starting CPR */
+>      if (migration_call_notifiers(MIG_EVENT_SETUP, &local_err)) {
+>          goto out;
+> @@ -3482,13 +3524,19 @@ static void migration_iteration_finish(MigrationState *s)
+>           */
+>          migration_call_notifiers(MIG_EVENT_FAILED, NULL);
+>  
+> -        if (runstate_is_live(s->vm_old_state)) {
+> -            if (!runstate_check(RUN_STATE_SHUTDOWN)) {
+> -                vm_start();
+> -            }
+> -        } else {
+> -            if (runstate_check(RUN_STATE_FINISH_MIGRATE)) {
+> -                runstate_set(s->vm_old_state);
+> +        /*
+> +         * For cpr the VM resume on failure is centralized in
+> +         * migration_cleanup(), so don't resume here as well.
+> +         */
+> +        if (!migrate_mode_is_cpr()) {
+> +            if (runstate_is_live(s->vm_old_state)) {
+> +                if (!runstate_check(RUN_STATE_SHUTDOWN)) {
+> +                    vm_start();
+> +                }
+> +            } else {
+> +                if (runstate_check(RUN_STATE_FINISH_MIGRATE)) {
+> +                    runstate_set(s->vm_old_state);
+> +                }
+>              }
 >          }
->          len -= l;
-> -- 
-> 2.54.0
+>          break;
+> @@ -3903,7 +3951,6 @@ void migration_start_outgoing(MigrationState *s)
+>      Error *local_err = NULL;
+>      uint64_t rate_limit;
+>      bool resume = (s->state == MIGRATION_STATUS_POSTCOPY_RECOVER_SETUP);
+> -    int ret;
+>  
+>      if (resume) {
+>          /* This is a resumed migration */
+> @@ -3944,14 +3991,6 @@ void migration_start_outgoing(MigrationState *s)
+>          return;
+>      }
+>  
+> -    if (migrate_mode_is_cpr()) {
+> -        ret = migration_stop_vm(s, RUN_STATE_FINISH_MIGRATE);
+> -        if (ret < 0) {
+> -            error_setg(&local_err, "migration_stop_vm failed, error %d", -ret);
+> -            goto fail;
+> -        }
+> -    }
+> -
+>      /*
+>       * Take a refcount to make sure the migration object won't get freed by
+>       * the main thread already in migration_shutdown().
 
 
