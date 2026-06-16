@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE135CD98DA
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 10:10:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC477CD98E1
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 10:10:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZQhD-0007pB-8x; Tue, 16 Jun 2026 06:07:03 -0400
+	id 1wZQi6-00040R-IP; Tue, 16 Jun 2026 06:07:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wZQhB-0007ga-Ov
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 06:07:01 -0400
-Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
+ id 1wZQi4-0003h0-JU
+ for qemu-devel@nongnu.org; Tue, 16 Jun 2026 06:07:56 -0400
+Received: from mail-pj1-x102e.google.com ([2607:f8b0:4864:20::102e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wZQh9-0003KC-UM
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 06:07:01 -0400
-Received: by mail-pf1-x430.google.com with SMTP id
- d2e1a72fcca58-842cd900ee0so1958677b3a.2
- for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 03:06:59 -0700 (PDT)
+ id 1wZQi2-0003Yx-R9
+ for qemu-devel@nongnu.org; Tue, 16 Jun 2026 06:07:56 -0400
+Received: by mail-pj1-x102e.google.com with SMTP id
+ 98e67ed59e1d1-36bcbd7821fso2169511a91.2
+ for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 03:07:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1781604418; x=1782209218; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1781604473; x=1782209273; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=RQG0yk5z1yC9H4Dw6LKZKYTX7Uw12q4zbc2nNy7e0VA=;
- b=RUKBSbFnw/NS8rpBul9cRGN84KSfhpHHOMPRO1rOL5tiPeMzJVaqVWvsbgrqWRbHV1
- B9BV6BSUlPeVSOymy9JhLQrNUlZHfYK891sAXSfmL47BHqbVMXD+Aq8fy4HLysDLMRxn
- D1TxbvMtoC/+wD6rAPQ7apdXBVx1JNbe762tJEmmN1jq82CmzEzhbafJ/dwt6K5T0f2K
- hVg6l5X6AAVwwxOynLh5jfZO5oAvigQYi0o0lMKwkvpcG6kLid2IBpEoORQCRS14VKhB
- YYYt4G5EZXdpp+EygrsLbZ8EXs+BJDKX9n+6tojySAqV3Jnwuh/LOCIl/BPCVby4uXIt
- 9Tjg==
+ bh=nyHSF2KMbSW86nFqhbQ3pWPtxmeW7imEGewRME7P/WA=;
+ b=BLaquhJabLqlvetGRlZRimvruaSHc7r0msCkdydwiUxdiDvKjlbJfFuqhuw/jhHSyC
+ 2yczRmjBZy5XT2+4Dcc7LT0U3z+rf+8iMGBee5W2huFroxtpF1irqD3+vbg5k0Js4nNM
+ W1riVzmHqbgjkPBe4JoBOqtUai440y3xRDvkdldVeumuE+Up4c9naj+CQFZaPftZ6LKq
+ a39QK2POwv7lxI6ueeaSyIs+ACnIsKz5Dogc900fT7uihVcbL2MwJEIdERK6yflR/6No
+ mk9KdY1CwiC+WMUM1XoJ3OGjgXvGhHXZS1wFF2dLupmvYL43vpt5W9Dl6omZZnVQdKH2
+ SLOA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781604418; x=1782209218;
+ d=1e100.net; s=20251104; t=1781604473; x=1782209273;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=RQG0yk5z1yC9H4Dw6LKZKYTX7Uw12q4zbc2nNy7e0VA=;
- b=c+LJhTEuJ3m4wP1IMqrJCGi8gyNIaseY2dZGKiqgJ+bUUxQPJiqZvoDcdv3bhHysRo
- BgrxIBdl+TzWEQHdUIgG38pPrFsBSBYPlrAiFkOy0sUuAOJ4JQivlQSuLJ4rjoa5iQ6j
- RYaSaxFJnoT8jwiU4tBd5IgYLpMMlt7JkOopG2B4NQB5EFedcP/PzbBFQRy44aH0SLSN
- /bbkIZktUwPJfKoUvPE/AOKRKtcIchS2jYEFqTImWHc7+F8f/+c9PTslOKW4eD1GIClG
- ye9k1RSfgGmi0IccUUDGPyKRbv5OTGgI09IL3XGTtd8z4ZXHY/lpqjfIe9soOV6ma0Wj
- Wp8g==
-X-Gm-Message-State: AOJu0YyAoK7Z89LlWoO2aS57AkAYr5WXOwHwrjGtNbFotLXHh9WkO5Jp
- O9HYj0ZO2gAfmO/MylxtxxYE34zdi/C3OohZ2LkkdJrAryO7qm4N/d5gtr54ghjK
-X-Gm-Gg: Acq92OGB/LiXFf/b9p/XzKj6DR2/jidmZXPISWmKy4J7vXxKU2qNja4eFLOHJ/k1X5/
- 7ri4ZOE92nEXQsHfoH5PsYibzMi0KblSNL6muYxPqN456ywK/3W7B2cQO+IWcxGraVNAoOec8cC
- MPIHB1fl+gZ7Y2/thCfGWTI370AyTtnpDoPTHUPWoBPedtyq966KeJrtXUz8n6jfSCZKENcjuTm
- VSIsT9BVMPcmMcJbZKkfAOu+iyJxdK4xoijzKUarqWYjhvcBbd//goNG6F0xwEBdkB6ssDQrffc
- GTQWTodEImGQlRImCljFS4IcAL85mjHDdLfpeGLp3vflKI4uh/g3i+Efxm1TwvhMt3znM+PasZX
- NXqJU5Tf+4MP0wPXprrN95eOmsg6NwZogZYzAVkgL1pqshW+LpJ9CjVAXhzy0xEGCGWQc2sbbSl
- menandTWM5pguTMM8trFGUIQDkXXdGHuTts+Qk2/eM
-X-Received: by 2002:a05:6a20:9186:b0:39b:8dcb:f36d with SMTP id
- adf61e73a8af0-3b7e49d09f6mr3381494637.35.1781604418401; 
- Tue, 16 Jun 2026 03:06:58 -0700 (PDT)
+ bh=nyHSF2KMbSW86nFqhbQ3pWPtxmeW7imEGewRME7P/WA=;
+ b=X9yBtLLi95Q0EZn0yLD/N4LaIjmLJoYmYtKQQPoikNEHI7jzabxKs32WDyZ1k0f+5w
+ qsnGsf+LimbradrqJhACVQY0KClLe+nIoqsWtpuU0pXBGy21n5wzqf/wWR96xQJcKadF
+ cEPDa3Ya4MTKvkz5MZriDGZMx15CbBUKpzDayso+DlCIyz2sTHy2+hcD+IzHZykltwVy
+ RFPEBlXrN4AaIj4cHcMeEZOKzfj3lBqUOBnKtdgKjgcvY7LJloSEZofPynqe850UMAv1
+ EHEv3Z7OCXHcht8JzATVJM/rb3VoKwZ5v2y+k0xC8g6Ny/v5LEfPjtWu68CwlmFUkhG7
+ 75uA==
+X-Gm-Message-State: AOJu0YzGG5vnHuURSm/m5XSygmR6IchREEgdz6l0kLH9LyTIRePYggMy
+ lwqvYUUKm9A0qIATid/BzVDNnF10f3g5wGW6bWKC67/fsQ1LF6ZJJ6gqJ5w6AKgE
+X-Gm-Gg: Acq92OGqh7hdBJNCcbUN/FkAva3Z+WOqfbazmVzlwhV0rg4IswSRO07Qyte6UF97Jlx
+ KNFiE+5jGnhWvzTC8OXkUsuHm7Tvm2aBCfhyTmdCu2vPD1EpxQp6kHeQBr5quXvkz6r1OxMSAPi
+ UTN4VUx4sF8lAcfvvRGM5kc1fcrLzgvPpQH3YBQu057HFtGH+vwfMmV8BY+iBgO3LQQndHszNjV
+ wiU1JaMicyXxvEw89Z1H4d7xtoIn7Xe51kY+P4N3CNmBqYjDdLDiPw1r73liEgZSzW1Soat/fcD
+ irkjC4vzA2JeVovJb2fIAQ3p8WDpS1UX/tX/FGjNXcs2SJULJpc9yy0LY5Ze0mtgmGJA9wM70LO
+ UbQoMHtrJEexjKwVj+LvMkAu5onTFtZm6kGszywCyFFZNNAmZUZc4hwsW7j4V4dIASR6+VaYpbS
+ W2WSibW2Ws/sl3ml8ZzwrUSVYJi9SMh+w1JDZSoc/J
+X-Received: by 2002:a17:90a:2ecc:b0:37c:63fc:b2fb with SMTP id
+ 98e67ed59e1d1-37c63fcba6fmr463989a91.22.1781604473511; 
+ Tue, 16 Jun 2026 03:07:53 -0700 (PDT)
 Received: from toolbx.alistair23.me ([2403:581e:fdf9:0:13b2:851f:d9cb:44c5])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-c866519f0a6sm10916735a12.22.2026.06.16.03.06.55
+ 41be03b00d2f7-c866519f0a6sm10916735a12.22.2026.06.16.03.07.50
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 16 Jun 2026 03:06:57 -0700 (PDT)
+ Tue, 16 Jun 2026 03:07:53 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com, Anton Johansson <anjo@rev.ng>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+Cc: alistair23@gmail.com,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 24/83] target/riscv: Fix size of gei fields
-Date: Tue, 16 Jun 2026 20:04:27 +1000
-Message-ID: <20260616100527.1939565-25-alistair.francis@wdc.com>
+Subject: [PULL 40/83] target/riscv/tcg: disable svnapot if satp_mode < sv39
+Date: Tue, 16 Jun 2026 20:04:43 +1000
+Message-ID: <20260616100527.1939565-41-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616100527.1939565-1-alistair.francis@wdc.com>
 References: <20260616100527.1939565-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
- envelope-from=alistair23@gmail.com; helo=mail-pf1-x430.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102e;
+ envelope-from=alistair23@gmail.com; helo=mail-pj1-x102e.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -103,137 +103,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Anton Johansson <anjo@rev.ng>
+From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 
-geilen takes the values 31 or 63, fix it to 8 bits. hgeie and hgeip are
-at most 64 bits in size, fix to 64.  Update relevant function arguments
-and uses of hgeie and hgeip.  Note, masking is widened to 64-bit as
-geilen is already verified to be smaller than the target long size, and
-an out-of-bounds shift would be UB anyway.
+We did a recent change to disable svpbmt if satp_mode < sv39 that was
+discovered via a gitlab report.
 
-Signed-off-by: Anton Johansson <anjo@rev.ng>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Acked-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20260520125406.28693-14-anjo@rev.ng>
+This time we don't have an opened bug but the problem is similar: RISC-V
+privileged ISA, chapter '"Svnapot" Extension for NAPOT Translation
+Contiguity, Version 1.0' states:
+
+"The Svnapot extension depends on the Sv39 extension."
+
+Do the same thing with svnapot, including the user warning in case we
+try to enable it without the required satp_mode:
+
+$ ./build/qemu-system-riscv64 -M virt,dumpdtb=fdt.dtb \
+     -cpu max,sv39=off,sv48=off,sv57=off,sv64=off,svnapot=on
+qemu-system-riscv64: warning: svnapot requires at least satp sv39, current satp mode: none
+
+Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Message-ID: <20260527213034.2094103-1-daniel.barboza@oss.qualcomm.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/cpu.h        | 10 +++++-----
- target/riscv/cpu.c        |  4 ++--
- target/riscv/cpu_helper.c |  4 ++--
- target/riscv/csr.c        |  4 ++--
- target/riscv/machine.c    |  4 ++--
- 5 files changed, 13 insertions(+), 13 deletions(-)
+ target/riscv/tcg/tcg-cpu.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-index a57e28f40e..2a4b7378f3 100644
---- a/target/riscv/cpu.h
-+++ b/target/riscv/cpu.h
-@@ -280,7 +280,7 @@ struct CPUArchState {
- #ifndef CONFIG_USER_ONLY
-     /* This contains QEMU specific information about the virt state. */
-     bool virt_enabled;
--    target_ulong geilen;
-+    uint8_t geilen;
-     uint64_t resetvec;
- 
-     uint64_t mhartid;
-@@ -357,8 +357,8 @@ struct CPUArchState {
-     uint64_t htval;
-     uint64_t htinst;
-     uint64_t hgatp;
--    target_ulong hgeie;
--    target_ulong hgeip;
-+    uint64_t hgeie;
-+    uint64_t hgeip;
-     uint64_t htimedelta;
-     uint64_t hvien;
- 
-@@ -611,8 +611,8 @@ int riscv_cpu_mirq_pending(CPURISCVState *env);
- int riscv_cpu_sirq_pending(CPURISCVState *env);
- int riscv_cpu_vsirq_pending(CPURISCVState *env);
- bool riscv_cpu_fp_enabled(CPURISCVState *env);
--target_ulong riscv_cpu_get_geilen(CPURISCVState *env);
--void riscv_cpu_set_geilen(CPURISCVState *env, target_ulong geilen);
-+uint8_t riscv_cpu_get_geilen(CPURISCVState *env);
-+void riscv_cpu_set_geilen(CPURISCVState *env, uint8_t geilen);
- bool riscv_cpu_vector_enabled(CPURISCVState *env);
- void riscv_cpu_set_virt_enabled(CPURISCVState *env, bool enable);
- int riscv_env_mmu_index(CPURISCVState *env, bool ifetch);
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index c0b6218421..c063604298 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -1084,9 +1084,9 @@ static void riscv_cpu_set_irq(void *opaque, int irq, int level)
+diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
+index 21886e5d39..7e964e8f1a 100644
+--- a/target/riscv/tcg/tcg-cpu.c
++++ b/target/riscv/tcg/tcg-cpu.c
+@@ -848,6 +848,16 @@ void riscv_cpu_validate_set_extensions(RISCVCPU *cpu, Error **errp)
+                                      riscv_cpu_is_32bit(cpu)));
          }
- 
-         /* Update HGEIP CSR */
--        env->hgeip &= ~((target_ulong)1 << irq);
-+        env->hgeip &= ~(1ULL << irq);
-         if (level) {
--            env->hgeip |= (target_ulong)1 << irq;
-+            env->hgeip |= 1ULL << irq;
-         }
- 
-         /* Update mip.SGEIP bit */
-diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
-index 9ffcc6fa51..4529341696 100644
---- a/target/riscv/cpu_helper.c
-+++ b/target/riscv/cpu_helper.c
-@@ -712,7 +712,7 @@ void riscv_cpu_swap_hypervisor_regs(CPURISCVState *env)
      }
- }
- 
--target_ulong riscv_cpu_get_geilen(CPURISCVState *env)
-+uint8_t riscv_cpu_get_geilen(CPURISCVState *env)
- {
-     if (!riscv_has_ext(env, RVH)) {
-         return 0;
-@@ -721,7 +721,7 @@ target_ulong riscv_cpu_get_geilen(CPURISCVState *env)
-     return env->geilen;
- }
- 
--void riscv_cpu_set_geilen(CPURISCVState *env, target_ulong geilen)
-+void riscv_cpu_set_geilen(CPURISCVState *env, uint8_t geilen)
- {
-     if (!riscv_has_ext(env, RVH)) {
-         return;
-diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-index f885f5d4f7..0d0b2fca49 100644
---- a/target/riscv/csr.c
-+++ b/target/riscv/csr.c
-@@ -3786,7 +3786,7 @@ static RISCVException rmw_mip64(CPURISCVState *env, int csrno,
- 
-     if (csrno != CSR_HVIP) {
-         gin = get_field(env->hstatus, HSTATUS_VGEIN);
--        old_mip |= (env->hgeip & ((target_ulong)1 << gin)) ? MIP_VSEIP : 0;
-+        old_mip |= (env->hgeip & (1ULL << gin)) ? MIP_VSEIP : 0;
-         old_mip |= env->vstime_irq ? MIP_VSTIP : 0;
-     }
- 
-@@ -4971,7 +4971,7 @@ static RISCVException write_hgeie(CPURISCVState *env, int csrno,
-                                   target_ulong val, uintptr_t ra)
- {
-     /* Only GEILEN:1 bits implemented and BIT0 is never implemented */
--    val &= ((((target_ulong)1) << env->geilen) - 1) << 1;
-+    val &= ((1ULL << env->geilen) - 1) << 1;
-     env->hgeie = val;
-     /* Update mip.SGEIP bit */
-     riscv_cpu_update_mip(env, MIP_SGEIP,
-diff --git a/target/riscv/machine.c b/target/riscv/machine.c
-index 045e830242..eb57ab07dc 100644
---- a/target/riscv/machine.c
-+++ b/target/riscv/machine.c
-@@ -92,8 +92,8 @@ static const VMStateDescription vmstate_hyper = {
-         VMSTATE_UINT64(env.htval, RISCVCPU),
-         VMSTATE_UINT64(env.htinst, RISCVCPU),
-         VMSTATE_UINT64(env.hgatp, RISCVCPU),
--        VMSTATE_UINTTL(env.hgeie, RISCVCPU),
--        VMSTATE_UINTTL(env.hgeip, RISCVCPU),
-+        VMSTATE_UINT64(env.hgeie, RISCVCPU),
-+        VMSTATE_UINT64(env.hgeip, RISCVCPU),
-         VMSTATE_UINT64(env.hvien, RISCVCPU),
-         VMSTATE_UINT64(env.hvip, RISCVCPU),
-         VMSTATE_UINT64(env.htimedelta, RISCVCPU),
++
++    if (cpu->cfg.ext_svnapot && cpu->cfg.max_satp_mode < VM_1_10_SV39) {
++        cpu->cfg.ext_svnapot = false;
++        if (cpu_cfg_ext_is_user_set(CPU_CFG_OFFSET(ext_svnapot))) {
++            warn_report("svnapot requires at least satp sv39, "
++                        "current satp mode: %s",
++                        satp_mode_str(cpu->cfg.max_satp_mode,
++                                      riscv_cpu_is_32bit(cpu)));
++        }
++    }
+ #endif
+     /*
+      * Disable isa extensions based on priv spec after we
 -- 
 2.54.0
 
