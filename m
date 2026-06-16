@@ -4,63 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF909CD98E3
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 06:13:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 726CFCD8CA8
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 06:15:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZN2Q-0002pO-Gs; Tue, 16 Jun 2026 02:12:43 -0400
+	id 1wZN4k-0004Wx-FY; Tue, 16 Jun 2026 02:15:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wZN2O-0002ol-8f
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 02:12:40 -0400
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wZN2L-0006Qs-DH
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 02:12:39 -0400
-Received: from [133.11.54.183] (h183.csg.ci.i.u-tokyo.ac.jp [133.11.54.183])
- (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 65G6CM2F040544
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Tue, 16 Jun 2026 15:12:22 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=kCzWBtRTv/NXVlMSlgwLnjMMqQFc/a7ningIJINP3CY=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=From:Message-ID:To:Subject:Date;
- s=rs20250326; t=1781590342; v=1;
- b=TZHuXtdbYQ63WJoj222AXb0QEqz+Zj0KV1EzvENKoyQubf9RcLImaFZcqBC9eTmk
- z+3PcJWyEfmne/P1DsT+wCOjPJOYSE7/znCJElLNoUTiSrNDFjEBbePdKg96RhzU
- pzuN2R2NDadlG5jRHTyCkoNaWUxG9htUoIG6WfJv+foCjLf8rhmPAgAg8hblVs8h
- rjIyvW48u1ax99FouRk1LZbnPHYxwYYqLkAkRSsf04JlzFew4Mwrmqd5GKlPgUOo
- Ym8aet7SElbvgpPn9+/y2C3xNR3rr8FkQbkUdFEQLeTYQtn9G9LJ6qtD2KPwHOLi
- eHg7v7HnjwKc0Ky3x7HHhQ==
-Message-ID: <eeccac7c-1517-420b-b879-8d26bac54bb1@rsg.ci.i.u-tokyo.ac.jp>
-Date: Tue, 16 Jun 2026 15:12:21 +0900
+ (Exim 4.90_1) (envelope-from <joel.stan@gmail.com>)
+ id 1wZN4b-0004T0-Mi
+ for qemu-devel@nongnu.org; Tue, 16 Jun 2026 02:14:58 -0400
+Received: from mail-yx1-xb130.google.com ([2607:f8b0:4864:20::b130])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <joel.stan@gmail.com>)
+ id 1wZN4Z-0006xj-Fz
+ for qemu-devel@nongnu.org; Tue, 16 Jun 2026 02:14:57 -0400
+Received: by mail-yx1-xb130.google.com with SMTP id
+ 956f58d0204a3-66077f6c438so4066933d50.2
+ for <qemu-devel@nongnu.org>; Mon, 15 Jun 2026 23:14:55 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1781590494; cv=none;
+ d=google.com; s=arc-20240605;
+ b=LUcDJsC5JT6LAEEZ0gGo8gjefrJRlABetjy+KHoSPgBIJQS4wyXUOgJlBoju6hSAxJ
+ LtRQf0XT+aNsjxTO96O8Ys3xQ3tjW8CS3Hz2+C4B8qfNCFsieUFkpwI5kwbgxXPsAylV
+ 5C0sse5RLwtCx0pGg+vCDwUSUElHFZf1IEYrkHHW1O2K53cfBUFPFbKs+R5/YyCcF+un
+ 4zP7JnhIIydpeuwRrQDdnIQmOe1BdLLVhQkRzV0Xvbqf31kVwweTLyLh/8qqAwaZ2By5
+ Hyqq3h0bNeMBm6Q3DTsMqoPKBrvYM/VU7jlZQ/KDpfqsUzmMQRpi+gK3lVMaBMlSGEuZ
+ 44SQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=Ghu/IoeU6SlJcGB5NCMH+LG0EJhSG/y5nN9JRSXPP94=;
+ fh=6qpf/J4MYwj9H3lW+0ghozOZF3ihEMmP9VOdX4hTdDU=;
+ b=RHAUBCiKC130Okm9mpYG7450N7NBH1g5dhLVREUV6SA/nUEeJghruToXBy5RgfzCoY
+ M6lE52PkNKQ4GXnTPKFgwozJTZvBEAMgbHTTL/aixWBQYn75tNb9TWzOLz/J5KRKENw0
+ JdIF0MUAbIQdlTR/iQrJySGDWXiSMiKT0l68BWzWL0pc7dQafT4kHSH5veolk785nYTA
+ 4fYISHrPkHWFhGrUA08lrit1oVcvdMtisP0MiYHzC5FtV+R1uGNTn3PVP/fggDu4sCSy
+ oEH+Xln7jso8p3UFuJywkrQwuRmv8pIxgCZehw5paRFcEx48YfxrbXu6BoHJ5OgGqwUM
+ F7Rg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=jms.id.au; s=google; t=1781590494; x=1782195294; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Ghu/IoeU6SlJcGB5NCMH+LG0EJhSG/y5nN9JRSXPP94=;
+ b=doD+lloqUq7NsjdGExYWR2EDMJtFlYpPqKXZd6j6UReamyPnCxobq663E48c531hP/
+ 1DLxD8U4nv8tMeqP98fWEmt6SomLQ+IS6AKy/3Wtv842DKbSUgic4kXB1oF80NvCQ7qi
+ wHM20paffT88fG0fo6TZN5f2OpfzBhEBpTEQI=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1781590494; x=1782195294;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=Ghu/IoeU6SlJcGB5NCMH+LG0EJhSG/y5nN9JRSXPP94=;
+ b=OwWgDpjKt+/dkKhUV+jZhvcnJG6PJap2RxYTIEm0DVto+An5oft5CjgEHFbvfCOcjf
+ TDKFCQDKWBIx11VMyse8sk/srZ19SZPKfHDtpgvZk59bnyT1Cm+fTfqo85Cq0UsEexeC
+ jVpRmD9hogPzO7YoQ5oLmpCd9QUb0Hsq3UiAM/EsDVa4wKLNk8Qjt+Yn9dpiYHFpqQtD
+ IyuvKHY4jrQMqW0Y7kpWFTjt3xOfAWAhLWwfFHeFqvHQNIDP/XmU+ZEKVxqjRt+oUMH8
+ tojwxNdZP8/uM19DQ29Xa91wnFyMT4qMjILN4klyMEA5Gl5LcnIlaSxPr3LTmTHQq+I3
+ gJKQ==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ81r3iuEv/jRh3HTUA143VsZCulJFglkDljuwvL/HJ6ZkysMU7qw2YobjEfzSFV9ShhH43+0gLTKtDw@nongnu.org
+X-Gm-Message-State: AOJu0YwNbptsZDh9JBZQwb0/K1+JnjtYeealgLsdXjCFPkVZYoWXGk5J
+ hrkiHhrYXOSOet+zzmkNWLxvSFZfp8qCH8BnC/bGdnpGckKi71ZCntIpuoTwbBx5/lWWX1HNTWQ
+ w6yR/fclJZQXBsbbVGpDufk4Pi984F/w=
+X-Gm-Gg: Acq92OHqHRr4yOveb0iVFN4o9XurUL0hzHDyGtb6V43nPamBmrQts2SWaztF2u6SEtU
+ jODBU4jMbjfDhvj/iGzyCKdkDlOVFT/fV5/EmZntXG1EKUEGZynWzLNg5ihliurnc5OsZ8kHcAi
+ kGT2jIlRdKEGeK2nxOM9UUSi0yeQKAxtDKMd+rFgMzFLW5lFhgk6fhGGzfIzaQiaug7SNW0z2gq
+ MaZ7GdF1y3lyOCnveesgxO9Z9jfD2jR7Un19oZzGR4pqPD6Qd/jH2kd0Am3GkigonAUT9H7C9zi
+ rkrPrBiPzNighse21pPwKRPq8y/VquteMV9LS6wyJG789b6bl1hzg6TBODd955T27MZV9+TY7Zs
+ be9B1EizJgIW2w8RlgFW7+hmZ
+X-Received: by 2002:a05:690e:1444:b0:660:5c10:deed with SMTP id
+ 956f58d0204a3-662b616900amr1534701d50.55.1781590494444; Mon, 15 Jun 2026
+ 23:14:54 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 1/7] igb: Define TRL registers and core state
-To: Josh Hilke <jrhilke@google.com>, qemu-devel@nongnu.org
-Cc: Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
- Jason Wang <jasowang@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- David Matlack <dmatlack@google.com>,
- Alex Williamson <alex.williamson@nvidia.com>
-References: <20260615-igb-trl-v4-0-cf5739bf529f@google.com>
- <20260615-igb-trl-v4-1-cf5739bf529f@google.com>
-Content-Language: en-US
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <20260615-igb-trl-v4-1-cf5739bf529f@google.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+References: <20260603065859.592063-1-joel@jms.id.au>
+ <20260603065859.592063-13-joel@jms.id.au>
+ <CAKmqyKOYeG24747aN-OyOCFi-Knb3vc5E0FV2PM-FstCmf3Xgg@mail.gmail.com>
+In-Reply-To: <CAKmqyKOYeG24747aN-OyOCFi-Knb3vc5E0FV2PM-FstCmf3Xgg@mail.gmail.com>
+From: Joel Stanley <joel@jms.id.au>
+Date: Tue, 16 Jun 2026 15:44:43 +0930
+X-Gm-Features: AVVi8CfUnkwXtytYjrmcjeYD2biQsxmAoOt1ge56ktua4LY6enzGXHKCKmdozco
+Message-ID: <CACPK8Xf4LNGg7DbqW+Rkf+jWqE+mgUymTqyqKTiv3=n7wVGw1A@mail.gmail.com>
+Subject: Re: [PATCH v8 12/12] hw/riscv/atlantis: Add some i2c peripherals
+To: Alistair Francis <alistair23@gmail.com>
+Cc: Alistair Francis <alistair.francis@wdc.com>,
+ Nicholas Piggin <npiggin@gmail.com>, 
+ Andrew Jones <andrew.jones@oss.qualcomm.com>, 
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Chao Liu <chao.liu.zevorn@gmail.com>, 
+ Michael Ellerman <mpe@kernel.org>, Joel Stanley <jms@oss.tenstorrent.com>, 
+ Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>, 
+ Portia Stephens <portias@oss.tenstorrent.com>, qemu-riscv@nongnu.org,
+ qemu-devel@nongnu.org, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b130;
+ envelope-from=joel.stan@gmail.com; helo=mail-yx1-xb130.google.com
 X-Spam_score_int: -16
 X-Spam_score: -1.7
 X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, SPF_HELO_NONE=0.001,
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, FREEMAIL_FORGED_FROMDOMAIN=0.001,
+ FREEMAIL_FROM=0.001, HEADER_FROM_DIFFERENT_DOMAINS=0.249,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -77,185 +127,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026/06/16 7:18, Josh Hilke wrote:
-> Introduce register offsets and bitmask constants for the Transmit Rate
-> Limiter (TRL). Add the IGBTrlQueue structure and corresponding fields to
-> IGBCore to track TRL state (timers, throttling status, and target rates)
-> per queue. Initialize and free these timers during the device
-> realize/uninit lifecycle, and reset them on device reset.
-> 
-> Signed-off-by: Josh Hilke <jrhilke@google.com>
-> ---
->   hw/net/igb_common.h |  1 +
->   hw/net/igb_core.c   | 59 +++++++++++++++++++++++++++++++++++++++++++++++++++++
->   hw/net/igb_core.h   | 13 ++++++++++++
->   hw/net/igb_regs.h   |  6 ++++++
->   4 files changed, 79 insertions(+)
-> 
-> diff --git a/hw/net/igb_common.h b/hw/net/igb_common.h
-> index b316a5b..8c0a0cf 100644
-> --- a/hw/net/igb_common.h
-> +++ b/hw/net/igb_common.h
-> @@ -148,6 +148,7 @@ enum {
->       defreg(MTA_A),
->   
->       defreg(VTIVAR), defreg(VTIVAR_MISC),
-> +    defreg(TRLDQSEL), defreg(TRLRC),
->   };
->   
->   uint64_t igb_mmio_read(void *opaque, hwaddr addr, unsigned size);
-> diff --git a/hw/net/igb_core.c b/hw/net/igb_core.c
-> index 45d8fd7..c94e8d3 100644
-> --- a/hw/net/igb_core.c
-> +++ b/hw/net/igb_core.c
-> @@ -96,6 +96,7 @@ igb_receive_internal(IGBCore *core, const struct iovec *iov, int iovcnt,
->   
->   static void igb_raise_interrupts(IGBCore *core, size_t index, uint32_t causes);
->   static void igb_reset(IGBCore *core, bool sw);
-> +static uint32_t igb_trl_get_scaled_rate_factor(uint32_t trlrc);
->   
->   static inline void
->   igb_raise_legacy_irq(IGBCore *core)
-> @@ -4282,6 +4283,53 @@ igb_autoneg_resume(IGBCore *core)
->       }
->   }
->   
-> +static uint32_t igb_trl_get_scaled_rate_factor(uint32_t trlrc)
-> +{
-> +    /*
-> +     * The TRLRC register stores the Rate Factor in 10.14 fixed-point format:
-> +     * - Bits 13:0: Fractional part
-> +     * - Bits 23:14: Integer part
-> +     *
-> +     * Combined, the lower 24 bits of the register (23:0) represent the
-> +     * concatenated 24-bit scaled Rate Factor directly.
-> +     */
-> +    return trlrc & 0xFFFFFF;
-> +}
-> +
-> +bool igb_trl_enabled(uint32_t trlrc)
-> +{
-> +    return trlrc & E1000_TRLRC_RS_ENA;
-> +}
-> +
-> +uint64_t igb_trl_get_target_rate(const IGBTrlQueue *q)
+On Mon, 15 Jun 2026 at 21:23, Alistair Francis <alistair23@gmail.com> wrote=
+:
+>
+> On Wed, Jun 3, 2026 at 5:03=E2=80=AFPM Joel Stanley <joel@jms.id.au> wrot=
+e:
+> >
+> > Add an I2C RTC device and a temperature sensor. These are not present
+> > on the board but help for testing.
+>
+> It might be best to leave this out, if these aren't on the board
+> should they really go upstream?
 
-Please add the static qualifier.
+Without something to stimulate the device we're not testing the
+designware model, nor the integration into the machine. IRQs, memory
+maps, as well as the model's state machine all get some coverage by
+having devices present. The specific devices were chosen as the
+existing test kernels have drivers built in.
 
-> +{
-> +    const uint64_t rf_scaled = igb_trl_get_scaled_rate_factor(q->trlrc);
-> +
-> +    if (!igb_trl_enabled(q->trlrc)) {
-> +        return 0;
-> +    }
-> +
-> +    if (rf_scaled == 0) {
-> +        return 0;
-> +    }
-> +
-> +    /*
-> +     * The rate factor is a fixed-point number with a 14-bit fractional part:
-> +     * Rate Factor = rf_scaled / 2^14
-> +     *
-> +     * The target rate is:
-> +     * Target Rate = Link Rate / Rate Factor
-> +     *             = Link Rate / (rf_scaled / 2^14)
-> +     *             = (Link Rate * 2^14) / rf_scaled
-> +     */
-> +    return (E1000_LINK_RATE_1GBPS << 14) / rf_scaled;
-> +}
-> +
-> +static void igb_trl_timer_cb(void *opaque)
-> +{
-> +    /* Stub */
-> +}
-> +
->   void
->   igb_core_pci_realize(IGBCore        *core,
->                        const uint16_t *eeprom_templ,
-> @@ -4296,6 +4344,11 @@ igb_core_pci_realize(IGBCore        *core,
->   
->       for (i = 0; i < IGB_NUM_QUEUES; i++) {
->           net_tx_pkt_init(&core->tx[i].tx_pkt, E1000E_MAX_TX_FRAGS);
-> +        core->trl[i].timer =
-> +            timer_new_ns(QEMU_CLOCK_VIRTUAL, igb_trl_timer_cb,
-> +                         &core->trl[i]);
-> +        core->trl[i].core = core;
-> +        core->trl[i].queue_idx = i;
->       }
->   
->       net_rx_pkt_init(&core->rx_pkt);
-> @@ -4319,6 +4372,7 @@ igb_core_pci_uninit(IGBCore *core)
->   
->       for (i = 0; i < IGB_NUM_QUEUES; i++) {
->           net_tx_pkt_uninit(core->tx[i].tx_pkt);
-> +        timer_free(core->trl[i].timer);
->       }
->   
->       net_rx_pkt_uninit(core->rx_pkt);
-> @@ -4469,6 +4523,11 @@ static void igb_reset(IGBCore *core, bool sw)
->   
->       igb_intrmgr_reset(core);
->   
-> +    for (i = 0; i < IGB_NUM_QUEUES; i++) {
-> +        timer_del(core->trl[i].timer);
-> +        core->trl[i].trlrc = 0;
-> +    }
-> +
->       memset(core->phy, 0, sizeof core->phy);
->       memcpy(core->phy, igb_phy_reg_init, sizeof igb_phy_reg_init);
->   
-> diff --git a/hw/net/igb_core.h b/hw/net/igb_core.h
-> index d70b54e..f3d50bc 100644
-> --- a/hw/net/igb_core.h
-> +++ b/hw/net/igb_core.h
-> @@ -63,6 +63,13 @@ typedef struct IGBIntrDelayTimer_st {
->       IGBCore *core;
->   } IGBIntrDelayTimer;
->   
-> +typedef struct IGBTrlQueue_st {
-> +    QEMUTimer *timer;
-> +    IGBCore *core;
-> +    int queue_idx;
-> +    uint32_t trlrc;
-> +} IGBTrlQueue;
-> +
->   struct IGBCore {
->       uint32_t mac[E1000E_MAC_SIZE];
->       uint16_t phy[MAX_PHY_REG_ADDRESS + 1];
-> @@ -99,6 +106,9 @@ struct IGBCore {
->       void (*owner_start_recv)(PCIDevice *d);
->   
->       int64_t timadj;
-> +
-> +    /* Transmit Rate Limiting */
-> +    IGBTrlQueue trl[IGB_NUM_QUEUES];
->   };
->   
->   void
-> @@ -143,4 +153,7 @@ igb_receive_iov(IGBCore *core, const struct iovec *iov, int iovcnt);
->   void
->   igb_start_recv(IGBCore *core);
->   
-> +bool igb_trl_enabled(uint32_t trlrc);
-> +uint64_t igb_trl_get_target_rate(const IGBTrlQueue *q);
-> +
->   #endif
-> diff --git a/hw/net/igb_regs.h b/hw/net/igb_regs.h
-> index 4dc4c31..9ef628b 100644
-> --- a/hw/net/igb_regs.h
-> +++ b/hw/net/igb_regs.h
-> @@ -718,4 +718,10 @@ static inline uint8_t igb_ivar_entry_tx(uint8_t i)
->       return i < 8 ? i * 4 + 1 : (i - 8) * 4 + 3;
->   }
->   
-> +/* Transmit Rate Limiting */
-> +#define E1000_TRLDQSEL 0x03604
-> +#define E1000_TRLRC 0x036B0
-> +#define E1000_TRLRC_RS_ENA BIT(31)
-> +#define E1000_LINK_RATE_1GBPS (1000000000ULL / BITS_PER_BYTE)
-> +
->   #endif
-> 
+We did something similar with the aspeed arm machines when adding them to q=
+emu.
 
+Cheers,
+
+Joel
 
