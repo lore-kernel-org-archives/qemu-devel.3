@@ -4,73 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB7C4CD98E1
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 12:13:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6BB10CD98DA
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 12:14:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZSfv-0001ay-Dm; Tue, 16 Jun 2026 08:13:51 -0400
+	id 1wZSg3-0001qV-9Z; Tue, 16 Jun 2026 08:13:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1wZSfj-0001XM-R1
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 08:13:39 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1wZSfh-0007BF-H4
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 08:13:38 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781612015;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=txfFr6yC/zSaR15YKyDsPiWBHnPSiSPU8xjigMFoTAc=;
- b=BTmNWYbpoq2Bkk1/zVuh5JFiH0ix3+UlzITOjcmuR2rjb/7xmSaj4CWnfLI1nLF3abxuxr
- /oP9W0XMOC6kNXVqmBdTWuQXqLBMqomZOsWsr+yvYZcmO0Yp6hP/sdbR5gILwytxeC0Eda
- PzC0mLz4yJY68QdWqNkWAj81mJwVrPQ=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-5-u_T2pKI_MvmO1Kwt4gSwVQ-1; Tue,
- 16 Jun 2026 08:13:32 -0400
-X-MC-Unique: u_T2pKI_MvmO1Kwt4gSwVQ-1
-X-Mimecast-MFC-AGG-ID: u_T2pKI_MvmO1Kwt4gSwVQ_1781612011
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id ED8E619560A2; Tue, 16 Jun 2026 12:13:30 +0000 (UTC)
-Received: from localhost (unknown [10.2.16.92])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 42D4A1955BC1; Tue, 16 Jun 2026 12:13:30 +0000 (UTC)
-Date: Tue, 16 Jun 2026 08:13:29 -0400
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org, peter.maydell@linaro.org,
- richard.henderson@linaro.org, pbonzini@redhat.com,
- stefanha@redhat.com, pierrick.bouvier@oss.qualcomm.com
-Subject: Re: [PULL 0/5] Tests dockerfiles update for 2026-06-15
-Message-ID: <20260616121329.GA527218@fedora>
-References: <20260615175052.2751738-1-pierrick.bouvier@oss.qualcomm.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wZSg1-0001o0-Di
+ for qemu-devel@nongnu.org; Tue, 16 Jun 2026 08:13:57 -0400
+Received: from mail-yx1-xb129.google.com ([2607:f8b0:4864:20::b129])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wZSfz-0007O3-Uz
+ for qemu-devel@nongnu.org; Tue, 16 Jun 2026 08:13:57 -0400
+Received: by mail-yx1-xb129.google.com with SMTP id
+ 956f58d0204a3-660323f7b27so4249326d50.3
+ for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 05:13:55 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1781612034; cv=none;
+ d=google.com; s=arc-20240605;
+ b=kRXcTqDkJFQ+/optOPBfCo4hjIKa1TAtJIa278xCrHKFRYzWAQHTrYJt1kw20hmg/V
+ /G+CHtarlqJHh5Y+YtzlPR1dytiyM33tKF94RGWwQW1XD3DMhoOq6McyTsP4u4sV6GAp
+ U617qD9dWRflQO81vlFfiIzPFkRX4ABAj0WOpiKCXILNifZskXf41KJoJhXtt7tln4YB
+ YyfqQwrC5D51/DX2sC0smBL7G+/k5rtrzSg4F5ojTCxci+11WsoDbMA8Er9vPYRjbIqY
+ zeeKFzOYspPQq3gElSOuEL/8uWibMOTyNz/2WrOrYdo9ijMkrM4gSxnlK57FKNhLkWzD
+ 50/Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=i80NjTv+gOcqKRAtL544hW65gkOooUdnIBR/5KAeDyo=;
+ fh=/ftcwOPYeEIhzseC7WF42kR+xVR/IJiWpLC1+A7SOWQ=;
+ b=WZsTDQaCzTIFUXPqQW/4hALkowaRQGvuNAWiGkgHYifwLmc6XzBSCkjE3Tu4k4ATtZ
+ nOHZLsANAiZODoMs1qR5w8f+gjbegULr8uYlFUbbrZS8miEIui+aKSup5Kx2Zgk8tRle
+ yzbLF7hjZeHPpfmyMmL8lktpuZw3HeOwIWudSM5yFbqNbvokc4Kc8+BwA9yb9J/Jprtg
+ CaL+y/4YDNS9pFhHBhlz/tN/LU00IFYLWb2/ILA4y1DGJqRMBc9FHUBJIar7AV8JJFCJ
+ UXsadp9hB0IQ994Ffh5BFdL/b2Nkeiq/M9aOf7qfV6GM6qjpXxSyCu7I0vMsTVZ0nJX4
+ RIoQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1781612034; x=1782216834; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=i80NjTv+gOcqKRAtL544hW65gkOooUdnIBR/5KAeDyo=;
+ b=LKV4TtudMzuflgUYVMgsnEwQFvAcKcOGVaJuCFZEiXnu44R2kFPOvi1glkU/+j2sBW
+ cJVVp5IFReVsgzbEQFunrsvfigvBzCaa6+3qZa3VbAGpZOo3O4jgPE16/7lYVZ/I3+m0
+ AKoTuqN/XSa1MqBo0OUBrIiwxwoELxphEyxt4cklFY7XT9IdLh+seRPVf+ztdTYbKU2M
+ z9Y+Eky/jPenMWOzLyTsLWthu91s+8F4wQNiAJlRULH2MYA3DaK7d6qt3/OIt/WJwGR0
+ Bx+0Ia8eQVZNzu9jHuk/TApPhakLspzJj2D1+G8q+iSLcB6HYtYHWR/w7QeoNuTsDjdR
+ fPZg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1781612034; x=1782216834;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=i80NjTv+gOcqKRAtL544hW65gkOooUdnIBR/5KAeDyo=;
+ b=DWDxVfLWQwOt0EK/NDuqp6FqBRBvaJp/yrXEKLFhZSZ/kyj774yjcuzuy19oFW87KR
+ T1J783nEBAE//OHPrKrGi2WvYUFEtUI/3kVezBRbcRq5DPu7/nQZdagasLyBjHJQe+cQ
+ 0worTONOw4z1472uEhxPuBhRxMhN8OAANnh0Y5/n+H6k+sae7p/gpsXXp4QtCjnJU404
+ X11PO4K2bqFNf26AsWeolYQfqBsNbSy4zk7QZ/g0fJ2aYqrwarUyERPe87EyvBAKQ8gz
+ gCBj2OTe3X9l+Gp0HfkkkHTD++0JfbNYS5cqmgDtBBWxntAb2K7HEt8UVJOt9qCwGTMB
+ wQ+g==
+X-Gm-Message-State: AOJu0Yyt8yoGw7rT4j4JPPBVg8vFZ/hGIHarFhTp+3Aq9y0gB7pSxK52
+ KMAJwzGYccFaFWPcMCXAVfKtxuG6wW+0FfHdxOJ87Xuxf36b86bzAx3YQkFC5IKiyB69YYu9KjX
+ dSTCLe/kcpBOM8M5RrU1EERilJTeE4gEbwuSBUuUQ0g==
+X-Gm-Gg: Acq92OGp3aqKt+DlOH2fwTEz+tm1JsAWiOByPiPxyOTdmmiNjwRFWmceEExDq2GJS2+
+ Bg9IW0fYWr+UCTaKjQm2Z0fkP+A8C9aUORrmbgurcZ22FxkxKuR73DjPLzM6gDdorMcFMWBt+n3
+ 9Bmvkf/O9yehOITGvVu7LfIBDl7nVMtjBWafv+f1K9tB1E1VecCK6G/y66gTicClT/3jXVdusrm
+ oHD9kLXFKD6O8C9qdHQM6klqEUfm/1lQMVbtbYAIUaYi719UREAI69tx743NF3kqULBCXXKoUYt
+ 7rwXYmcQnzs4eHxN2NqIxp3VwqUGAXeLvn4mTuE3cdrq8TXPdXE4G93wRkcXyTyBcis=
+X-Received: by 2002:a05:690e:4145:b0:660:ec14:ef87 with SMTP id
+ 956f58d0204a3-6628500a306mr12712040d50.34.1781612034578; Tue, 16 Jun 2026
+ 05:13:54 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="dI+0XjAxKaIst8k1"
-Content-Disposition: inline
-In-Reply-To: <20260615175052.2751738-1-pierrick.bouvier@oss.qualcomm.com>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 8
-X-Spam_score: 0.8
-X-Spam_bar: /
-X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+References: <20260604234852.573178-1-richard.henderson@linaro.org>
+ <20260604234852.573178-2-richard.henderson@linaro.org>
+In-Reply-To: <20260604234852.573178-2-richard.henderson@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 16 Jun 2026 13:13:43 +0100
+X-Gm-Features: AVVi8Celhm_5i3htRegQ-w_ztro-X9hId-aOVK1VSHnnGUjNzIjSK4jcc5KSOS4
+Message-ID: <CAFEAcA8_+K-PZh_d31MKh17MWMF9TXkoS6c6EC2pLMqhWQidCw@mail.gmail.com>
+Subject: Re: [PATCH 01/25] target/arm: Add feature predicates for SVE2.2 and
+ SME2.2
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b129;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb129.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,30 +115,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Fri, 5 Jun 2026 at 00:50, Richard Henderson
+<richard.henderson@linaro.org> wrote:
+>
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>  target/arm/cpu-features.h | 17 ++++++++++++++++-
+>  1 file changed, 16 insertions(+), 1 deletion(-)
+>
 
---dI+0XjAxKaIst8k1
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
-Applied, thanks.
-
-Please update the changelog at https://wiki.qemu.org/ChangeLog/11.1 for any user-visible changes.
-
---dI+0XjAxKaIst8k1
-Content-Type: application/pgp-signature; name=signature.asc
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmoxPekACgkQnKSrs4Gr
-c8imLgf/cjMruAscFV+ePJ8oZO/S3Cehe1EPU7EzNBIUpd75ccRfehfm2R7ZBcya
-HxSXEVKnv9L5m6AYQxrH7VtQ7hiYZz2vEmGMAhpSlVjXipsesX4LlNmPDG5ByU3S
-msyVKNG+9sdsWc3DVPG2ZY1t0Vhjwqoe0bwUQpvS9IOfO6AGzQVqNDyObttVugEF
-3O0CoP1ltf5r+vZBBEt26TG9zpVHqMUa9+rODsWB7x+gIhIQdKvKudVcMY0UISeM
-v95ULEKi4nMgy4Edldl91re4RM/Xg8AWC2EJ5R065yq+HeB0BTD3dXut32hfk69w
-5CxSOaqen/WHUfK7rXN+/f18+IxHAQ==
-=r4SI
------END PGP SIGNATURE-----
-
---dI+0XjAxKaIst8k1--
-
+thanks
+-- PMM
 
