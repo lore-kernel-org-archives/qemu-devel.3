@@ -4,84 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9172CD98CF
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 10:07:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C016CD98CF
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 10:07:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZQhm-0001iW-VZ; Tue, 16 Jun 2026 06:07:40 -0400
+	id 1wZQgP-0005DC-5h; Tue, 16 Jun 2026 06:06:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wZQhZ-0001a8-QP
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 06:07:27 -0400
-Received: from mail-pj1-x102d.google.com ([2607:f8b0:4864:20::102d])
+ id 1wZQgL-0005CH-Lr
+ for qemu-devel@nongnu.org; Tue, 16 Jun 2026 06:06:10 -0400
+Received: from mail-pg1-x533.google.com ([2607:f8b0:4864:20::533])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wZQhY-0003Sr-2c
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 06:07:25 -0400
-Received: by mail-pj1-x102d.google.com with SMTP id
- 98e67ed59e1d1-36d98b68d68so2907900a91.2
- for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 03:07:23 -0700 (PDT)
+ id 1wZQgJ-00036L-R0
+ for qemu-devel@nongnu.org; Tue, 16 Jun 2026 06:06:09 -0400
+Received: by mail-pg1-x533.google.com with SMTP id
+ 41be03b00d2f7-c855599a77aso2142096a12.0
+ for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 03:06:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1781604443; x=1782209243; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1781604366; x=1782209166; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=4niY5r5fgwLd4NzvX3v5BZyv3X55J8xjoqPGbl4BPcw=;
- b=OITyXillDWuydd16qwsb7szITdWJrvvvrCBC0OenGVn3mh1OeAomIEW98Pwuoeb489
- ZI8LlL2VJgVeDp9KZdi8rdOFBuD3IgXE4Ttng/k6J7FM+n9sU/riZr4a7216/Cimlkcr
- zVUz8ALLLdZvzkmJwdOi3KP0PEEiUfzAHO9HCGytBDd1lwUJimVTJETfs6e2iJrUi8e6
- jtWSgDjBmFjXtGsiNWdZyuGo9YCv3+c6DRwf7gj6i/X2EBYn6HfxNe1Lk8OrMW9rVdTr
- K247YbasIqsMIT0DfH1mN0ZXiqeaFe62Vbl0biHHSAJbRcRwvehqVmqLjA7OmbfydoQD
- 4Wgg==
+ bh=MSc9axaPT/La+j42KDU1GrRJuTBvMeNI5owh5Ul0ye0=;
+ b=HdiggKge4C4uwgc3wKvm65bHu0oLYOp1v3c4/PQaz83j6H8Zn61DayEeXQgd8K07MC
+ sG/WhK5MZYOfkUibtgR+12cgNy/02ghB/NJJvvSWEDEp0QNl4/zq3XdTnJcILHDO3zli
+ 4B49PZTeqL2LZJNgnuuOmM/4o/UG7gwn0xV29xEIe+r46UE0TGpKj97ObOAiueiOhYeD
+ UPTMYINB/yYRxO/qY0S+bpE8KAyOjguNIQ4Pz6jZ5TQjSLqfMc5c4JJkTo+HKx964SnD
+ tbzKhzuTrXNmKpbiYiRctWTEmbayKr1y9Bb6R+XyI0oEjbrSrJZccLYzapsNqLDImXC3
+ 8RxQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781604443; x=1782209243;
+ d=1e100.net; s=20251104; t=1781604366; x=1782209166;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=4niY5r5fgwLd4NzvX3v5BZyv3X55J8xjoqPGbl4BPcw=;
- b=jsQjIL3IpJf4Sv75CkatQcWmvJ96bp3Y9Y4cOFw1Us/0z9iHBz+BwVqeqHHxn4bFQ4
- mdHoxAD9GhVianO/PqDgIG0KMiDy6TtogdBc0xqfXmmz/Qy7XsiCAk61SaRS7bx916eO
- rS059EIm3ew9kILHttYGnU3VX1OxvxBTqSXMq+NquKPEV2Z1sfwlEs7g1Bv11DanoXxr
- f37/deN90r93eDaV607SQJh7yH28lUkCAOrEBmYgvB5lrIgPBPpCY1VCkDmaBLmmErDc
- rQ5UUW/aEHdYxiTnFGHWCHjaQBSzqOz80oVGbdvJj0g3Fg6Dzwil1/elu30s59F0TNDH
- Mmmw==
-X-Gm-Message-State: AOJu0YyYwt6EY7srb0F14TXsLbRcscuVzMjxyoOwAWeg8I5GyTnunJKe
- kwpYK3DIvjaIg5dfJ24oqzOoIxrLzIRRM6ohvIn9JTtmXXy6ygg+EVn+acgceAQ+
-X-Gm-Gg: Acq92OE6carFDa6COg1eFeGERiWiHXFqoehGPytwXYcomdSGGz6R0sy7DY/xVz9bzGT
- kyzdvBxMp5oIDDXYu0EOgE4ghDFWjGZ+qeqme36E43y0DiisQ2ycMnznbnlgmNJGluTIwICA2yB
- K38i67/BlxM2kVf60tGAZSqnTAjKxMj2IzaMTi2aUt9tFMXBxZxC3s5rmHC2zoocQBnuo3lX/vp
- T4a/0Hn3h0lOrjAChSwM5NRDcL4efAI0x5boq+GKjZmi2gl5jZOKdOjx8k8KFP52zqV7840uMob
- v3Xb9LQWc3JkYqL6sb1DTvPeMVVAs2Y6wNF87qKx9fPKbT0JbX8bNPjZsE7JGld4HaVNQ099PJW
- YS/lJ8nI3cEeWpmYFr/k9f76wHbg4scOpHTrjJwWzYl8XRDrpPgFNCRl9mc+2+5QlL417DIUzf4
- xCI9fQ/LFvgrIMQzA97s8BiAelapsLcKuLEz7tzj08
-X-Received: by 2002:a05:6a20:729a:b0:398:6ea8:21f7 with SMTP id
- adf61e73a8af0-3b79629990emr16135796637.15.1781604442640; 
- Tue, 16 Jun 2026 03:07:22 -0700 (PDT)
+ bh=MSc9axaPT/La+j42KDU1GrRJuTBvMeNI5owh5Ul0ye0=;
+ b=GLsWEZlcuaNNNI3BXckND4EOCEQPtSdIWm5DA/yZjyQdux1t659pC2n6Wrs/f/TKl9
+ ftup/Zk9t9W4pEhwSKvJQj/twNMuLasAPBus7MOJo2vSWCPm9CYL1WK7UGxphCt5bKqO
+ 6EvoXI6Rh9goQxAvP4kv8Gdhl6FDBkJ1bYSRXZ8DgpJDHKxqUD7R1yiDHEvajP6jvCgD
+ 9H+2gJ6GPrKoiyMPeivAlfw7XW60GIaKnSDE2P3ZuMtnR+Qq+GENcR/y0MrGrFRIUXPd
+ Y8F2t/+OxScHekws2ossbSU1wJ6iKptgpQcgNqRjqRuu3AaqYZ2OOB/ljm2uGnROG2Ex
+ 4YDQ==
+X-Gm-Message-State: AOJu0YyIl4qBMb5FkcR1KE7IWkONescdNn8Opbh8Q51XzPguYR9hKROR
+ wtq9/FN+loPhYD862lM6Xz4kjeiO31xfPTzS+I8RP66K1sFSSjWn5tW3M59eWDO2
+X-Gm-Gg: Acq92OGiQmIlzYUE1w7OmeBvPw8HFAWPy5gpm0/N9S2N5mhj14GaZFEpGz8Rm4CueVL
+ gS3aoXUpPQysREfpRj4clNvAU2Fues+GEKViXVyhYgq1dzCOk0se4ESI32/ZyvKih4/KYk17TXQ
+ B/iH/aD2RGzPbj9TjsG39fkdXuzwKcFrOnKzzEkNmGDV15rN14Yyhvb8rOSzBNI7JHJDBVL5jO7
+ 5R2Q6S3uhi9TYTOpD3GwJLasRI79qBJylFZmop/FFm93wkWaYV4CVD0iW5Lyy1gSVP7Sq0dbnu1
+ R6suaHqEWl4MVPHw2wEZUh7HCr4m+NFKc6rgPD43CYTN1j5X9Vh+qipZkWowN4z8SPH/U6Ex5ap
+ AYKv1eMcv+8RBbZLfeUkUR+lQZ5g+DPcX/Y7lY3nVrLjD+raid8mFdDcoqgDBoT+kl/C3xr2Spu
+ BexwksBsBIhSSRXSdS8UZ+Ai8pNJloUzRByyX4fDcR
+X-Received: by 2002:a05:6a20:3c89:b0:3b3:241f:66c6 with SMTP id
+ adf61e73a8af0-3b7e4cf86b3mr3343464637.26.1781604366394; 
+ Tue, 16 Jun 2026 03:06:06 -0700 (PDT)
 Received: from toolbx.alistair23.me ([2403:581e:fdf9:0:13b2:851f:d9cb:44c5])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-c866519f0a6sm10916735a12.22.2026.06.16.03.07.19
+ 41be03b00d2f7-c866519f0a6sm10916735a12.22.2026.06.16.03.06.03
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 16 Jun 2026 03:07:21 -0700 (PDT)
+ Tue, 16 Jun 2026 03:06:05 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com, Anton Johansson <anjo@rev.ng>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+Cc: alistair23@gmail.com,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 31/83] target/riscv: Fix size of trigger data
-Date: Tue, 16 Jun 2026 20:04:34 +1000
-Message-ID: <20260616100527.1939565-32-alistair.francis@wdc.com>
+Subject: [PULL 09/83] target/riscv/insn_trans/trans_rvzicbo.c.inc: save opcode
+ before helpers
+Date: Tue, 16 Jun 2026 20:04:12 +1000
+Message-ID: <20260616100527.1939565-10-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616100527.1939565-1-alistair.francis@wdc.com>
 References: <20260616100527.1939565-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102d;
- envelope-from=alistair23@gmail.com; helo=mail-pj1-x102d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::533;
+ envelope-from=alistair23@gmail.com; helo=mail-pg1-x533.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -105,77 +104,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Anton Johansson <anjo@rev.ng>
+From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 
-mcontext is at most 14 bits in size with the H extension, fix to 16
-bits. trigger_cur indexes into tdata*[RV_MAX_TRIGGERS] which holds 2
-elements, fix to 8 bits.
+All helpers from this file can trigger ILLEGAL_INSN exceptions via
+check_zicbo_envcfg() directly, bypassing the usual exception code from
+translate.c.   If we don't save the opcode before each helper,
+riscv_raise_exception() is triggered and env->bins won't be unwind during
+cpu_loop_exit_restore() (code path cpu_restore_state ->
+cpu_restore_state_from_tb() -> restore_state_to_opc()).
 
-This patch also adds a migration entry for mcontext which is used in
-tandem with other debug data that is already migrated.
+And finally, in riscv_cpu_do_interrupt(), we will set (m)tval = 0 when we can,
+instead, set it to the cbo opcode that generated the exception.
 
-Note, the cpu/debug VMSTATE version is bumped, breaking migration from
-older versions.
-
-Signed-off-by: Anton Johansson <anjo@rev.ng>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Acked-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20260520125406.28693-21-anjo@rev.ng>
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3380
+Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Message-ID: <20260520214704.1943652-1-daniel.barboza@oss.qualcomm.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/cpu.h     | 10 +++++-----
- target/riscv/machine.c | 13 +++++++------
- 2 files changed, 12 insertions(+), 11 deletions(-)
+ target/riscv/insn_trans/trans_rvzicbo.c.inc | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-index 48d5c769f1..45dc0393f9 100644
---- a/target/riscv/cpu.h
-+++ b/target/riscv/cpu.h
-@@ -468,11 +468,11 @@ struct CPUArchState {
-     target_ulong mseccfg;
+diff --git a/target/riscv/insn_trans/trans_rvzicbo.c.inc b/target/riscv/insn_trans/trans_rvzicbo.c.inc
+index 15711c3140..096f7dde27 100644
+--- a/target/riscv/insn_trans/trans_rvzicbo.c.inc
++++ b/target/riscv/insn_trans/trans_rvzicbo.c.inc
+@@ -33,6 +33,8 @@ static bool trans_cbo_clean(DisasContext *ctx, arg_cbo_clean *a)
+     REQUIRE_ZICBOM(ctx);
+     TCGv src = get_address(ctx, a->rs1, 0);
  
-     /* trigger module */
--    target_ulong trigger_cur;
--    target_ulong tdata1[RV_MAX_TRIGGERS];
--    target_ulong tdata2[RV_MAX_TRIGGERS];
--    target_ulong tdata3[RV_MAX_TRIGGERS];
--    target_ulong mcontext;
-+    uint16_t mcontext;
-+    uint8_t trigger_cur;
-+    uint64_t tdata1[RV_MAX_TRIGGERS];
-+    uint64_t tdata2[RV_MAX_TRIGGERS];
-+    uint64_t tdata3[RV_MAX_TRIGGERS];
-     struct CPUBreakpoint *cpu_breakpoint[RV_MAX_TRIGGERS];
-     struct CPUWatchpoint *cpu_watchpoint[RV_MAX_TRIGGERS];
-     QEMUTimer *itrigger_timer[RV_MAX_TRIGGERS];
-diff --git a/target/riscv/machine.c b/target/riscv/machine.c
-index 45fd39994e..78ca607b48 100644
---- a/target/riscv/machine.c
-+++ b/target/riscv/machine.c
-@@ -240,15 +240,16 @@ static int debug_post_load(void *opaque, int version_id)
++    /* The helper may raise ILLEGAL_INSN -- record binv for unwind. */
++    decode_save_opc(ctx, 0);
+     gen_helper_cbo_clean_flush(tcg_env, src);
+     return true;
+ }
+@@ -42,6 +44,8 @@ static bool trans_cbo_flush(DisasContext *ctx, arg_cbo_flush *a)
+     REQUIRE_ZICBOM(ctx);
+     TCGv src = get_address(ctx, a->rs1, 0);
  
- static const VMStateDescription vmstate_debug = {
-     .name = "cpu/debug",
--    .version_id = 2,
--    .minimum_version_id = 2,
-+    .version_id = 3,
-+    .minimum_version_id = 3,
-     .needed = debug_needed,
-     .post_load = debug_post_load,
-     .fields = (const VMStateField[]) {
--        VMSTATE_UINTTL(env.trigger_cur, RISCVCPU),
--        VMSTATE_UINTTL_ARRAY(env.tdata1, RISCVCPU, RV_MAX_TRIGGERS),
--        VMSTATE_UINTTL_ARRAY(env.tdata2, RISCVCPU, RV_MAX_TRIGGERS),
--        VMSTATE_UINTTL_ARRAY(env.tdata3, RISCVCPU, RV_MAX_TRIGGERS),
-+        VMSTATE_UINT16(env.mcontext, RISCVCPU),
-+        VMSTATE_UINT8(env.trigger_cur, RISCVCPU),
-+        VMSTATE_UINT64_ARRAY(env.tdata1, RISCVCPU, RV_MAX_TRIGGERS),
-+        VMSTATE_UINT64_ARRAY(env.tdata2, RISCVCPU, RV_MAX_TRIGGERS),
-+        VMSTATE_UINT64_ARRAY(env.tdata3, RISCVCPU, RV_MAX_TRIGGERS),
-         VMSTATE_END_OF_LIST()
-     }
- };
++    /* The helper may raise ILLEGAL_INSN -- record binv for unwind. */
++    decode_save_opc(ctx, 0);
+     gen_helper_cbo_clean_flush(tcg_env, src);
+     return true;
+ }
+@@ -51,6 +55,8 @@ static bool trans_cbo_inval(DisasContext *ctx, arg_cbo_inval *a)
+     REQUIRE_ZICBOM(ctx);
+     TCGv src = get_address(ctx, a->rs1, 0);
+ 
++    /* The helper may raise ILLEGAL_INSN -- record binv for unwind. */
++    decode_save_opc(ctx, 0);
+     gen_helper_cbo_inval(tcg_env, src);
+     return true;
+ }
+@@ -60,6 +66,8 @@ static bool trans_cbo_zero(DisasContext *ctx, arg_cbo_zero *a)
+     REQUIRE_ZICBOZ(ctx);
+     TCGv src = get_address(ctx, a->rs1, 0);
+ 
++    /* The helper may raise ILLEGAL_INSN -- record binv for unwind. */
++    decode_save_opc(ctx, 0);
+     gen_helper_cbo_zero(tcg_env, src);
+     return true;
+ }
 -- 
 2.54.0
 
