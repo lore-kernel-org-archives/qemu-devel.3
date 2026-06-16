@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 569C3CD98E1
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 10:11:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B49FCD98DA
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 10:11:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZQk7-0001M7-5z; Tue, 16 Jun 2026 06:10:03 -0400
+	id 1wZQjJ-0006Dh-Q5; Tue, 16 Jun 2026 06:09:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wZQk5-00016J-7H
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 06:10:01 -0400
-Received: from mail-pj1-x102f.google.com ([2607:f8b0:4864:20::102f])
+ id 1wZQj9-000636-AD
+ for qemu-devel@nongnu.org; Tue, 16 Jun 2026 06:09:09 -0400
+Received: from mail-pj1-x1030.google.com ([2607:f8b0:4864:20::1030])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wZQk3-0004Bt-HO
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 06:10:00 -0400
-Received: by mail-pj1-x102f.google.com with SMTP id
- 98e67ed59e1d1-36da8439078so3693460a91.2
- for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 03:09:59 -0700 (PDT)
+ id 1wZQj5-0003kL-Bx
+ for qemu-devel@nongnu.org; Tue, 16 Jun 2026 06:09:01 -0400
+Received: by mail-pj1-x1030.google.com with SMTP id
+ 98e67ed59e1d1-36bcf3d2565so3098259a91.3
+ for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 03:08:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1781604598; x=1782209398; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1781604537; x=1782209337; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=hgVeXNJdbBixXrfneznZx6ETuUsk7Hx2xz1yrOHPSrA=;
- b=j/SWzlGbb7go4iG+C88TOhChNdtjmOigx/KOCRLLd2/f6iCrKZneSZbczgTGgAlMno
- KsEleGOMoPw/GxG/eZl/kmpBlM3lDDw4tWV2mOrk7CXgPqkvk8nCFXIyNqYPytcXDVoq
- jDi2P9lX01ar17k8j2akSYbUr9NcIoDPOlHlj1chpUIkE/o/NdCubTulcJmEn9kdS27i
- pI4nG0sXKbmKQit0Rcamn9cDot6IFhK2XHZIQn0JzkyWZGUT1XpX1PqUDiCrV1MBIItz
- ALNan03vjWlIRMltCk3kIJ0h2Bxnt/A4+zv25wsOuicI25Ox2JYph46LKqASst7Iq6Fz
- IBsw==
+ bh=XaxxQ/2rudA9HGll1kBnOyEP3HxdMr2VQrPmX35dXjQ=;
+ b=l/YJaFdXwdgP1Z+AyNkhALyogWGTHl/mbg3trBhjAN4EHi1avmKhkSX+5SdvzFD8m5
+ QmPFUH0fHWfUH7VNSZXK67oz8mAKb2EM9ULnvssQVFR7M8KCsKXPjfBeQVohnAYqjn/6
+ q2pDETlViqXX/bHe0syuN1Ar7hAjYzOLPglRedNQ+w1wpiHckBUocWLfztWLlqvCOcb1
+ ytg+fH/rgSmW4Sd77OIAWej5nuZ/J1bVAlqlp12jpYlvZDuema0aPYgDXRhR4ZskgKcN
+ TxIa/gh7VwZwE+9nuIB+indRNCLU9E6U84sJ7YAfiXSAlHiCyzba9MLh0xkp1CMt2NWS
+ knIg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781604598; x=1782209398;
+ d=1e100.net; s=20251104; t=1781604537; x=1782209337;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=hgVeXNJdbBixXrfneznZx6ETuUsk7Hx2xz1yrOHPSrA=;
- b=YUtwcT7QEannY6UswY7tT+OZDPmuJPiiTDsK/eE7rkYrc/VaILDyUKg0RdKhK2cRZ3
- UsjaSrcuh6GleaUkUlLSnZ8NQWxk3kNuCyU3wgg9nr9ZsyH63IOC9rAyQOp/q7hTJGOC
- P+Cg65ZkRq8B/6llqtURrms+SFUCKE2uOx0W+SN7+ycmfAGRm8HtK4PHb/pV346kc0o3
- 1ADZXLpL7f3f1Bi7b6zsAxL4d/BT9VzHIPd5ZP8zlNeeKyipbmxaIzeN/9n2Bd+5hHwN
- umWt2GAvrlCQHut1vgbrEzxSa5fWNevNWxgbMEOnwhQygIOU7StPeAdUTDbIKEpuc+6a
- //vg==
-X-Gm-Message-State: AOJu0YyBDTWCb5A/wjQ7QUrzfgQtxeFpw0/YTUqaN+1VggXw7qZA+qKJ
- aX7InQYI2VHlN5LR2r3v7RZ0SAQlSKPn8tzo3nRLiJweMsJmlzzo2/uumVrKSfO2
-X-Gm-Gg: Acq92OErJfSF0mNPaJHLEYhHv4170uK8KWGk04ki7eRXfUxIxyvWc3tdoQ7x6whfvpH
- RqIyPhrqncE46eFS2LqacKenlSrFxc4JjMfRXGQlpekkkZm6WLsR5LkWQWout4CRn0XThd32KkY
- gPiNWmmNy7Xdkwe+tsnZjX1bxafEwrBP/WHtdoS09cBWDECaQUrGnje1k1m+MVQwMFgnvqsnCD4
- R7KfqVX8qL8B0vHNXFdcZfRiaUGjl/h2iOOgNUXxP6RfappkpSZgNVIkdx4IfS5czkVYr3nRWFU
- 03Ro/ES5cla1XCSkrOY1MtYhDiAQsaTOvPvEsOkgf2qUkQAo4EB3+6G3p0LSVVEKnWrhx9V1x0V
- Ctgg5uZpdDazUhBxqTRTAnIN625U9ofjPkadGvjaFWBQTMfh+6mlSt4NeuY1gBr6r4QBJRcE74b
- wGqlY9Q6JY7Lv+Fp1HL5wkMz20dFoi6QMNhR8X4cwj
-X-Received: by 2002:a17:90b:538d:b0:36b:a0fa:ff96 with SMTP id
- 98e67ed59e1d1-37c528e0a69mr3013973a91.12.1781604597748; 
- Tue, 16 Jun 2026 03:09:57 -0700 (PDT)
+ bh=XaxxQ/2rudA9HGll1kBnOyEP3HxdMr2VQrPmX35dXjQ=;
+ b=hnmjbFZ2T1paGPtaRnbYTlGJ+sjBMkG1NcaIXT8RrGR/GntZuK7xr0JamGPZqUarcm
+ aUIPIDZkx6JD/hskzwyHAXq3TaUWGnluSmFC3Dps6HU9prNp65TkaDVSdkfMxYH+sb6f
+ MbNO7pWlPW5y0N76xBTo+VI/Zis7S8iUWKiHRyLk4iVEaktOGVQiyZD0VV2dRE4C1zb9
+ nXw9VbH36rdG6x7ksA2DR1FItn7MqJz+JGu1LlGxtWTdGJi/dZCjnUo+B4ERLR9Ibn6Q
+ gSmInDfi7WiS/M1ctEfwtGXuEkVuTnGDTa6eLkBk04cyh0tIz2AIhJv07csLGEUAv+iR
+ Gxxw==
+X-Gm-Message-State: AOJu0Yzeb4YbOvmqraRcP1varqvXz1/EXHDbfGWRUBO9wCKMo28ZWGxe
+ 6tNkcL+l5HuwBww6K1msaBhRThjsI80RQnF75fkw9+gP8ePSLhpNgMwhM1UysBWS
+X-Gm-Gg: Acq92OHb9dYBTY79MD14ucapWG5g/gI+yXnH2rRg456BpHXLZ8Gkt63fVQ/zOaJWvVu
+ Q4vVvJYeDJcPIJYfKXOb38T0aopxQpU3Vushp/06rHnA9Jv+xcpcV6Cu+keTW4g0d9UgQhggnvX
+ 1Gglcr4+i7dm4YdMkqKUx3LIWhlLHqTVVz77nv8z8hedzpi05vfdSi0enkL3TXEQPsTSlZJ5dok
+ TVk2mjVxJ6DJyA38WoTqkBshZ0pdOIsIc4YNATy673bTj6Q8Tz3/WPLlz5riUBu9+pU3Cxmq3kf
+ 3FnnPkm6y8XJKT10R/u3A9C+U6cCCpzIqmCWYYtC9J48bZLOwVe3UAaLXs9xf5cDkL9sKQlZuvx
+ poghgznscF17R5ykiniOl6EzRf8OQh+BIFB042pwl1z20laszq9asmLCchBdFqw7CrMYXwQgKOu
+ mXW8yRBhBwg2zBadKMq7p2Tf6gO9baGxWNUVrGZkC3
+X-Received: by 2002:a17:90a:6502:b0:37c:607b:2cd9 with SMTP id
+ 98e67ed59e1d1-37c607b3288mr535559a91.0.1781604537607; 
+ Tue, 16 Jun 2026 03:08:57 -0700 (PDT)
 Received: from toolbx.alistair23.me ([2403:581e:fdf9:0:13b2:851f:d9cb:44c5])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-c866519f0a6sm10916735a12.22.2026.06.16.03.09.55
+ 41be03b00d2f7-c866519f0a6sm10916735a12.22.2026.06.16.03.08.55
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 16 Jun 2026 03:09:57 -0700 (PDT)
+ Tue, 16 Jun 2026 03:08:57 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+Cc: alistair23@gmail.com, Frank Chang <frank.chang@sifive.com>,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 75/83] hw/riscv/sifive_u.c: add intc_phandles array
-Date: Tue, 16 Jun 2026 20:05:18 +1000
-Message-ID: <20260616100527.1939565-76-alistair.francis@wdc.com>
+Subject: [PULL 58/83] target/riscv: Reorder Smrnmi CPU fields above CPU reset
+ line
+Date: Tue, 16 Jun 2026 20:05:01 +1000
+Message-ID: <20260616100527.1939565-59-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616100527.1939565-1-alistair.francis@wdc.com>
 References: <20260616100527.1939565-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102f;
- envelope-from=alistair23@gmail.com; helo=mail-pj1-x102f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1030;
+ envelope-from=alistair23@gmail.com; helo=mail-pj1-x1030.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -103,61 +103,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+From: Frank Chang <frank.chang@sifive.com>
 
-Store the intc phandles in an 'intc_phandles' array, like the 'virt'
-board does, instead of re-creating the interrupt-controller FDT string
-and using qemu_fdt_get_phandle() to fetch it.
+Smrnmi CPU fields introduced by commit: #5db557f should be reset when
+the CPU resets, so move these fields above the CPU reset line.
 
-Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Fixes: 5db557f82bff ("target/riscv: Add Smrnmi CSRs")
+Signed-off-by: Frank Chang <frank.chang@sifive.com>
 Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20260615203734.954428-6-daniel.barboza@oss.qualcomm.com>
+Message-ID: <20260528060007.717307-1-frank.chang@sifive.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- hw/riscv/sifive_u.c | 13 ++++++-------
- 1 file changed, 6 insertions(+), 7 deletions(-)
+ target/riscv/cpu.h | 18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
-diff --git a/hw/riscv/sifive_u.c b/hw/riscv/sifive_u.c
-index a00cfd08a7..ce86989bc8 100644
---- a/hw/riscv/sifive_u.c
-+++ b/hw/riscv/sifive_u.c
-@@ -111,6 +111,7 @@ static void create_fdt(SiFiveUState *s, const MemMapEntry *memmap,
-     static const char * const plic_compat[2] = {
-         "sifive,plic-1.0.0", "riscv,plic0"
-     };
-+    g_autofree uint32_t *intc_phandles = g_new0(uint32_t, ms->smp.cpus);
- 
-     fdt = ms->fdt = create_board_device_tree("SiFive HiFive Unleashed A00",
-         "sifive,hifive-unleashed-a00", &s->fdt_size);
-@@ -168,8 +169,10 @@ static void create_fdt(SiFiveUState *s, const MemMapEntry *memmap,
-         qemu_fdt_setprop_string(fdt, nodename, "device_type", "cpu");
-         qemu_fdt_setprop_cell(fdt, nodename, "phandle", cpu_phandle);
- 
-+        intc_phandles[cpu] = phandle++;
+diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+index febd905389..eec5acea5f 100644
+--- a/target/riscv/cpu.h
++++ b/target/riscv/cpu.h
+@@ -491,6 +491,15 @@ struct CPUArchState {
+     uint64_t hstateen[SMSTATEEN_MAX_COUNT];
+     uint64_t sstateen[SMSTATEEN_MAX_COUNT];
+     uint64_t henvcfg;
 +
-         qemu_fdt_add_subnode(fdt, intc);
--        qemu_fdt_setprop_cell(fdt, intc, "phandle", phandle++);
-+        qemu_fdt_setprop_cell(fdt, intc, "phandle", intc_phandles[cpu]);
-         qemu_fdt_setprop_string(fdt, intc, "compatible", "riscv,cpu-intc");
-         qemu_fdt_setprop(fdt, intc, "interrupt-controller", NULL, 0);
-         qemu_fdt_setprop_cell(fdt, intc, "#interrupt-cells", 1);
-@@ -179,14 +182,10 @@ static void create_fdt(SiFiveUState *s, const MemMapEntry *memmap,
++    /* RNMI */
++    uint64_t mnscratch;
++    uint64_t mnepc;
++    uint64_t mncause; /* mncause without bit XLEN-1 set to 1 */
++    uint64_t mnstatus;
++    uint64_t rnmip;
++    uint64_t rnmi_irqvec;
++    uint64_t rnmi_excpvec;
+ #endif
  
-     cells =  g_new0(uint32_t, ms->smp.cpus * 4);
-     for (cpu = 0; cpu < ms->smp.cpus; cpu++) {
--        nodename =
--            g_strdup_printf("/cpus/cpu@%d/interrupt-controller", cpu);
--        uint32_t intc_phandle = qemu_fdt_get_phandle(fdt, nodename);
--        cells[cpu * 4 + 0] = cpu_to_be32(intc_phandle);
-+        cells[cpu * 4 + 0] = cpu_to_be32(intc_phandles[cpu]);
-         cells[cpu * 4 + 1] = cpu_to_be32(IRQ_M_SOFT);
--        cells[cpu * 4 + 2] = cpu_to_be32(intc_phandle);
-+        cells[cpu * 4 + 2] = cpu_to_be32(intc_phandles[cpu]);
-         cells[cpu * 4 + 3] = cpu_to_be32(IRQ_M_TIMER);
--        g_free(nodename);
-     }
-     nodename = g_strdup_printf("/soc/clint@%lx",
-         (long)memmap[SIFIVE_U_DEV_CLINT].base);
+     /* Fields from here on are preserved across CPU reset. */
+@@ -509,15 +518,6 @@ struct CPUArchState {
+     uint64_t kvm_timer_state;
+     uint64_t kvm_timer_frequency;
+ #endif /* CONFIG_KVM */
+-
+-    /* RNMI */
+-    uint64_t mnscratch;
+-    uint64_t mnepc;
+-    uint64_t mncause; /* mncause without bit XLEN-1 set to 1 */
+-    uint64_t mnstatus;
+-    uint64_t rnmip;
+-    uint64_t rnmi_irqvec;
+-    uint64_t rnmi_excpvec;
+ };
+ 
+ /*
 -- 
 2.54.0
 
