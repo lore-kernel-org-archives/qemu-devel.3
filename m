@@ -4,51 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 126E1CD98E1
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 16:37:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7213DCD98E4
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 16:41:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZWmJ-0007vE-LN; Tue, 16 Jun 2026 12:36:43 -0400
+	id 1wZWq6-0000Oy-Oj; Tue, 16 Jun 2026 12:40:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wZWmI-0007v0-Bb
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 12:36:42 -0400
+ id 1wZWq5-0000Mq-7Z
+ for qemu-devel@nongnu.org; Tue, 16 Jun 2026 12:40:37 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wZWmG-0008TE-Mu
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 12:36:42 -0400
+ id 1wZWq3-0001IG-By
+ for qemu-devel@nongnu.org; Tue, 16 Jun 2026 12:40:36 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781627799;
+ s=mimecast20190719; t=1781628034;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=NbTIElJsdwWAjs535rka+sJO2BsG6/LN1TVys26usyM=;
- b=gQ0q8/fqx5t17DpUhfpI9L+TjEfdnL6ovq9fNvKZPFJT8ztyFT+WyQnnxQiD28wHs4iFw6
- 5+uhE6MQidgRVmSAg/h/cttrISbdZzQZh7Xx8VCGu+OwVIBLEo4mOTmPyjhKSdyx4cADcq
- rPNzOywHvuJn3ygN5ZwJmiBd+OQwueE=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=NhehaKHU25YaCczEDODnCTMBNlVFzWaOfA9ronio3vw=;
+ b=PDq28qrhnnVhgnnmfMD5pTJzqVPL+an4Vpc3lPYTWX2S9Z19JELQUGWMvyEkzMXVrfsoUH
+ 34zTBSB7si+dhsx7pxYorwzQL6Yy/IGNgKNjdX2IZ70vckWRzc+xbg4s+mBlY3UAEmrU5I
+ ygrfESGOtQbXCfKAoekhLVuHTMRCIfA=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-481-LEx2kp0yPheTdkDu-ZhL3w-1; Tue,
- 16 Jun 2026 12:36:35 -0400
-X-MC-Unique: LEx2kp0yPheTdkDu-ZhL3w-1
-X-Mimecast-MFC-AGG-ID: LEx2kp0yPheTdkDu-ZhL3w_1781627793
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-307-VVKs-v6eP9OeHQKhKAeckQ-1; Tue,
+ 16 Jun 2026 12:40:32 -0400
+X-MC-Unique: VVKs-v6eP9OeHQKhKAeckQ-1
+X-Mimecast-MFC-AGG-ID: VVKs-v6eP9OeHQKhKAeckQ_1781628030
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3DADD19539A0; Tue, 16 Jun 2026 16:36:33 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 16C7519560B5; Tue, 16 Jun 2026 16:40:30 +0000 (UTC)
 Received: from redhat.com (unknown [10.44.49.111])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1646F195419E; Tue, 16 Jun 2026 16:36:26 +0000 (UTC)
-Date: Tue, 16 Jun 2026 17:36:23 +0100
+ id 88A10195410F; Tue, 16 Jun 2026 16:40:24 +0000 (UTC)
+Date: Tue, 16 Jun 2026 17:40:21 +0100
 From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 To: Peter Maydell <peter.maydell@linaro.org>
 Cc: qemu-devel@nongnu.org,
@@ -63,17 +63,15 @@ Cc: qemu-devel@nongnu.org,
  Paolo Bonzini <pbonzini@redhat.com>, BALATON Zoltan <balaton@eik.bme.hu>,
  Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>
-Subject: Re: [RFC 5/7] system: add qemu_irq_new / qemu_irq_new_child /
- qemu_irq_new_array
-Message-ID: <ajF7hxZP4a76yxxg@redhat.com>
+Subject: Re: [RFC 0/7] qom: deprecate embedded objects and instance properties
+Message-ID: <ajF8da2GLWkUZQpb@redhat.com>
 References: <20260616155554.264412-1-berrange@redhat.com>
- <20260616155554.264412-6-berrange@redhat.com>
- <CAFEAcA9QUMgAz894D-jEx-Q8=Esi8fnhivAyKtekqHukEcuibQ@mail.gmail.com>
+ <CAFEAcA-Mmt8=1iPOCbF=XsghFzfNN-=GHyLr70iUNDFFN0OKcg@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAFEAcA9QUMgAz894D-jEx-Q8=Esi8fnhivAyKtekqHukEcuibQ@mail.gmail.com>
+In-Reply-To: <CAFEAcA-Mmt8=1iPOCbF=XsghFzfNN-=GHyLr70iUNDFFN0OKcg@mail.gmail.com>
 User-Agent: Mutt/2.3.2 (2026-04-26)
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
@@ -102,51 +100,65 @@ Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jun 16, 2026 at 05:22:05PM +0100, Peter Maydell wrote:
-> On Tue, 16 Jun 2026 at 16:57, Daniel P. Berrangé <berrange@redhat.com> wrote:
+On Tue, Jun 16, 2026 at 05:12:27PM +0100, Peter Maydell wrote:
+> On Tue, 16 Jun 2026 at 16:56, Daniel P. Berrangé <berrange@redhat.com> wrote:
 > >
-> > Prepare for the move to dynamically allocated IRQ objects by
-> > introducing qemu_irq_new / qemu_irq_new_child / qemu_irq_new_array
-> > functions which call through to object_new instead of object_initialize.
+> > QOM has two rather unusual / surprising features historicall
 > >
-> > Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-> > ---
-> >  hw/core/irq.c         | 35 ++++++++++++++++++++
-> >  include/hw/core/irq.h | 75 ++++++++++++++++++++++++++++++++++++++++---
-> >  2 files changed, 106 insertions(+), 4 deletions(-)
+> >  * The ability to embed a QOM instance's memory inside another
+> >    struct
+> >  * The ability to register properties against the instnce
+> >    instead of struct
 > >
-> > diff --git a/hw/core/irq.c b/hw/core/irq.c
-> > index 106805e241..e943c87b81 100644
-> > --- a/hw/core/irq.c
-> > +++ b/hw/core/irq.c
-> > @@ -49,6 +49,13 @@ void qemu_init_irq(IRQState *irq, qemu_irq_handler handler, void *opaque,
-> >      init_irq_fields(irq, handler, opaque, n);
-> >  }
+> > While they both look convenient on the surface, they also
+> > have significant undesirable side effects (see the commit
+> > message for each patch for details).
 > >
-> > +IRQState *qemu_irq_new(qemu_irq_handler handler, void *opaque, int n)
-> > +{
-> > +    IRQState *irq = IRQ(object_new(TYPE_IRQ));
-> > +    init_irq_fields(irq, handler, opaque, n);
-> > +    return irq;
-> > +}
+> > The premise of this series is that their convenience does
+> > not outweigh their downsides, and we would be better off
+> > long term by eliminating their usage, rather than trying
+> > to add more hacks on top to mitigate their downsides.
 > 
-> Isn't this the same as the existing qemu_allocate_irq() ?
+> The thing I would like to see before we mark object_initialize_child
+> and friends as deprecated is clear documentation of "this is how
+> we would like you to write 'container/SoC' style devices, here is
+> an device written to the approved style you can look at".
 
-Doh, I missed the very surprising naming pattern where "qemu_irq" is a
-typedef of 'struct IRQState *'.
+Do we have any documentation currently that touches on
+this area that we can start from / adapt to best
+practices ?  I can do adaptation, but I'm not an expert
+on Device code, so probably not best placed to write a
+new doc fro mscratch.
 
-> (I have over the past few years occasionally been trying to get rid
-> of existing uses of qemu_allocate_irq() and its cousin
-> qemu_allocate_irqs(), because they are persistent sources of memory
-> leaks. The function returns a pointer that the caller has to deal
-> with and remember to free, whereas using e.g. qdev_init_gpio_*()
-> makes the new irq objects children of the device they belong to,
-> so they're automatically freed when the device is destroyed.
-> qemu_init_irq_child() similarly.)
+> Currently we have in the codebase a pretty wide range of
+> different ways to write devices:
+>  - really ancient, not QOM/qdev at all
+>  - qdev style (lots of Device* pointers)
+>  - embedded-struct style
+> and I'm not sure if this would be adding a fourth style, or
+> rolling back to qdev style.
 
-If we think it is best practice to mandate passing in a parent
-object so that every IRQ  is gauranteed to be owned by the QOM
-tree, that's fine with me.
+Per my commit message in the PIIX patch, I'm not convinced
+we need to store any device pointers in the instance
+structs at all in many (possibly most) cases. The instance
+struct fields are mostly only referenced during creation
+time and then never again, with the QOM 'child' property
+holding the permanent reference.
+
+> I'm not opposed to the idea of making a design decision that this
+> struct-embedding is no longer what we want to do, and defining
+> that something else is our new best practice for how to write devices.
+> But I think we would need to start by reaching a consensus that that
+> *is* what we want to do, and documenting that "best practice" somewhere
+> in docs/devel/. Then we can all be on the same page about the design
+> patterns we want and it will be clearer to reviewers whether new
+> code and new APIs and conversions of old code fit into those
+> patterns or not.
+> 
+> I think we're getting closer on the "consensus" part but
+> the "document the new best practice" part is important I think.
+
+Yep, best practice docs must be a key part of the story.
 
 With regards,
 Daniel
