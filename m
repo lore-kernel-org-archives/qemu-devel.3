@@ -4,60 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE657CD98DA
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 13:27:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D853ECD98E1
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 13:28:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZTpR-00076R-4W; Tue, 16 Jun 2026 09:27:45 -0400
+	id 1wZTov-0005jJ-20; Tue, 16 Jun 2026 09:27:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jic23@kernel.org>) id 1wZTpP-0006xt-8I
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 09:27:43 -0400
-Received: from sea.source.kernel.org ([172.234.252.31])
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1wZTot-0005g0-5n
+ for qemu-devel@nongnu.org; Tue, 16 Jun 2026 09:27:11 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jic23@kernel.org>) id 1wZTpN-0005xp-2h
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 09:27:42 -0400
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by sea.source.kernel.org (Postfix) with ESMTP id 816B1418FE;
- Tue, 16 Jun 2026 13:27:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 738E21F00A3F;
- Tue, 16 Jun 2026 13:27:35 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1781616459;
- bh=0rOX7oqrz4F1I9mioWQ4LncFjgANd9LJdCpcf1wQ7Cw=;
- h=Date:From:To:Cc:Subject:In-Reply-To:References;
- b=C/xEKhr6oWET9seuL8P3ngot9UC7LJZUGuWDq0dOYRoM9Z5oJx0TQT1f9Z4XAWC+h
- mLFLn0K3AAttFwjv2ikkGfc4bK8xkHTevit9ISBT/OF4nc/ZC6f5y5LBGGnXzAwtq7
- hJjZk2GG2rqZtGPxkOM0tSpwwmdWuBhV8IzIZxQwH77B4ynLK4YFB06AFsmdBFA/tT
- 6bQdgwN+1uL+Kb0iIkZ0fKvFK0GWL+kN+OhxZXZwvYosjOiei0ZilTNoLxSttV9J/a
- TZtPxrm87GtI67Ts7LDGVlRZm2Uk8RB3V+hc4QtPl+7w03KSPorKIkAKx8/5wKGWNP
- KfKQ2zdnKge8w==
-Date: Tue, 16 Jun 2026 14:27:30 +0100
-From: Jonathan Cameron <jic23@kernel.org>
-To: Shrihari E S <shrihari.s@samsung.com>
-Cc: linux-cxl@vger.kernel.org, linux-pci@vger.kernel.org,
- qemu-devel@nongnu.org, cpgs@samsung.com, arun.george@samsung.com,
- vikash.k5@samsung.com, s.neeraj@samsung.com, dongjoo.seo1@samsung.com,
- dave@stgolabs.net, gost.dev@samsung.com
-Subject: Re: [RFC 1/8] hw/pci: Refactor flitmode from PCIESlot to PCIEPort.
-Message-ID: <20260616142730.7fb0a465@jic23-huawei>
-In-Reply-To: <20260609105836.3702787-2-shrihari.s@samsung.com>
-References: <20260609105836.3702787-1-shrihari.s@samsung.com>
- <CGME20260609104503epcas5p12628cd89d0ef9210c856d2518dc790cb@epcas5p1.samsung.com>
- <20260609105836.3702787-2-shrihari.s@samsung.com>
-X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-pc-linux-gnu)
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1wZTor-0005s2-8j
+ for qemu-devel@nongnu.org; Tue, 16 Jun 2026 09:27:10 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1781616428;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=DhixsKWT24zFPVpdhrpfzjTHfnfa7NPGnY2SIEHR/6Y=;
+ b=UE7EjAw9uTA5CBU3SOnDt7sJXo11nm74iFVNQy4nk0lQxiiabwibMMwVGI8bREiXpG8H6A
+ Ej91D2AEAz99JFsziha3g/bfYcDxeS1Puqmtk+ODjcnp3+Zl+/jhLbJ9Z50z1MB86adSvq
+ aGwcEPIFbp2ShNs2P8nFzYYLQ8rrhM8=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-659-XlnVw-NVPoaBs9B9tpwVRA-1; Tue,
+ 16 Jun 2026 09:27:06 -0400
+X-MC-Unique: XlnVw-NVPoaBs9B9tpwVRA-1
+X-Mimecast-MFC-AGG-ID: XlnVw-NVPoaBs9B9tpwVRA_1781616424
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E32FE1956053; Tue, 16 Jun 2026 13:27:03 +0000 (UTC)
+Received: from laptop.redhat.com (unknown [10.44.48.30])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id C13363000203; Tue, 16 Jun 2026 13:26:57 +0000 (UTC)
+From: Eric Auger <eric.auger@redhat.com>
+To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
+ qemu-arm@nongnu.org, kvmarm@lists.linux.dev, peter.maydell@linaro.org,
+ shaju.abraham@nutanix.com, khushit.shah@nutanix.com,
+ yangjinqian1@huawei.com, cohuck@redhat.com, richard.henderson@linaro.org,
+ sebott@redhat.com, skolothumtho@nvidia.com, philmd@linaro.org
+Cc: maz@kernel.org, oliver.upton@linux.dev, pbonzini@redhat.com,
+ armbru@redhat.com, berrange@redhat.com, abologna@redhat.com,
+ jdenemar@redhat.com
+Subject: [RFC PATCH v6 04/17] arm/cpu: Add infra to handle generated ID
+ register definitions
+Date: Tue, 16 Jun 2026 15:16:51 +0200
+Message-ID: <20260616132625.1732031-5-eric.auger@redhat.com>
+In-Reply-To: <20260616132625.1732031-1-eric.auger@redhat.com>
+References: <20260616132625.1732031-1-eric.auger@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=172.234.252.31; envelope-from=jic23@kernel.org;
- helo=sea.source.kernel.org
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 8
+X-Spam_score: 0.8
+X-Spam_bar: /
+X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -73,46 +90,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue,  9 Jun 2026 16:28:29 +0530
-Shrihari E S <shrihari.s@samsung.com> wrote:
+Introduce an infrastructure to store the definition of all ID regs:
+This include their name, index and array of named fields.
 
-> Move the 'flitmode' property from PCIESlot to PCIEPort. This change
-> allows all the derived ports (PCIe ports or CXL ports) to use this
-> property.
-> 
-> This is a structural refactor only. There is no functional change in
-> existing behavior.
-> 
-> Note: This property was added from Davidlohr's BI patch series[1].
-> 
-> [1]: https://lore.kernel.org/all/20251103195209.1319917-2-dave@stgolabs.net/
-> 
-> Signed-off-by: Shrihari E S <shrihari.s@samsung.com>
-This seems fine to me other than one small thing below.
+Signed-off-by: Eric Auger <eric.auger@redhat.com>
+Signed-off-by: Cornelia Huck <cohuck@redhat.com>
+Co-authored-by: Khushit Shah <khushit.shah@nutanix.com>
 
-Given the main changes are in PCIe code though it'll need review from
-appropriate maintainers.
+---
 
-> diff --git a/hw/pci-bridge/cxl_root_port.c b/hw/pci-bridge/cxl_root_port.c
-> index 0ee18ef5c3..df69c5200f 100644
-> --- a/hw/pci-bridge/cxl_root_port.c
-> +++ b/hw/pci-bridge/cxl_root_port.c
+v5 -> v6:
+- add ArmIdRegArchVal
+---
+ target/arm/cpu-idregs.h | 41 +++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 41 insertions(+)
+ create mode 100644 target/arm/cpu-idregs.h
 
->  static void cxl_rp_dvsec_write_config(PCIDevice *dev, uint32_t addr,
-> diff --git a/hw/pci/pcie.c b/hw/pci/pcie.c
-> index 1de0b1e4fd..d452199d85 100644
-> --- a/hw/pci/pcie.c
-> +++ b/hw/pci/pcie.c
-> @@ -217,7 +217,7 @@ static void pcie_cap_fill_slot_lnk(PCIDevice *dev)
->          /* the PCI_EXP_LNKSTA_DLLLA will be set in the hotplug function */
->      }
->  
-> -    pcie_cap_fill_lnk(exp_cap, s->width, s->speed, s->flitmode);
-> +    pcie_cap_fill_lnk(exp_cap, s->width, s->speed, s->parent_obj.flitmode);
-
-I think we should use a cast to the parent object type rather than going directly
-into s->parent_obj.  PCIE_PORT(s)->flitmode.
-
->  }
+diff --git a/target/arm/cpu-idregs.h b/target/arm/cpu-idregs.h
+new file mode 100644
+index 0000000000..245f1c8103
+--- /dev/null
++++ b/target/arm/cpu-idregs.h
+@@ -0,0 +1,41 @@
++/*
++ * handle ID registers and their fields
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++#ifndef TARGET_ARM_CPU_IDREGS_H
++#define TARGET_ARM_CPU_IDREGS_H
++
++#include "qemu/osdep.h"
++#include "qemu/error-report.h"
++#include "cpu.h"
++#include "cpu-sysregs.h"
++
++typedef struct ArmIdRegArchVal {
++    uint64_t value;
++    const char *name;
++} ArmIdRegArchVal;
++
++typedef struct ARM64SysRegField {
++    const char *name; /* name of the field, for instance CTR_EL0_IDC */
++    ARMIDRegisterIdx index; /* parent register, e.g. CTR_EL0_IDX */
++    int shift; /* lsb of the field in the register */
++    int length; /* highest bit number */
++    ArmIdRegArchVal *arch_vals;
++    uint32_t arch_vals_count;
++} ARM64SysRegField;
++
++typedef struct ARM64SysReg {
++    const char *name;   /* name of the sysreg, for instance CTR_EL0 */
++    ARMIDRegisterIdx index; /* register index, e.g. CTR_EL0_IDX */
++    struct ARM64SysRegField *fields;
++    uint32_t fields_count;
++    uint64_t writable_mask;
++} ARM64SysReg;
++
++/*
++ * List of exposed ID regs (automatically populated from AARCHMRS Registers.json)
++ */
++extern ARM64SysReg arm64_id_regs[NUM_ID_IDX];
++
++#endif
+-- 
+2.53.0
 
 
