@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7187DCD98E4
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4086DCD98EF
 	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 19:11:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZZBZ-00014U-44; Tue, 16 Jun 2026 15:10:58 -0400
+	id 1wZZAS-0006fO-JY; Tue, 16 Jun 2026 15:09:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wZZ8Z-0004my-Vh
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 15:07:54 -0400
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ id 1wZZ8I-0004Zx-Kb
+ for qemu-devel@nongnu.org; Tue, 16 Jun 2026 15:07:37 -0400
+Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wZZ8V-0001GM-RZ
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 15:07:51 -0400
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-490be29c1c5so53333385e9.2
- for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 12:07:47 -0700 (PDT)
+ id 1wZZ8A-00011M-V4
+ for qemu-devel@nongnu.org; Tue, 16 Jun 2026 15:07:30 -0400
+Received: by mail-wr1-x430.google.com with SMTP id
+ ffacd0b85a97d-460166910e6so2632984f8f.2
+ for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 12:07:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1781636866; x=1782241666; darn=nongnu.org;
+ d=linaro.org; s=google; t=1781636836; x=1782241636; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=It2pF6sViWJlDXaYTTIEvh4jj09OMY/MajD0dUSjtmM=;
- b=LBy0+z3goQMSg1ba0lzzCO9As4cBvNnXNuaBBS0kMCTLeRATpvvdXHh/YWHKGgSChX
- PtDLTNvT0+Jo50xmc6r2RcF46PAJ6x/brmVX9LPIzXrrciar86258Wx/XPwaP+1VlS4C
- IZlHN3kimDfIHcU2gq+hKhwdNkw2kJFyuovsE+McJSyo9UmmF6Fx9Qp+H9flJnUPvrmk
- N2//Cpxk4rsSxaMxDxfJ8DL3OlqxQcCl8laY5K0/KC/CfIbm+9koDAu4UgX2ARzOZmRE
- MFKfwtETW81OlTfZAjhCAkUKjsOEVkU8PdJ9x+ss0FbTgWLtNr27kluw+ut0JLGiMN5e
- 2CUA==
+ :reply-to; bh=TSml+C+o8e5g2HzgYLSNK9fnxCmPI3ITde5GKhyWgGw=;
+ b=PhffYPtyJBLuMMtTqftR8gkA+/EWR7mklMP4jPie6wtJL7dbeOU6iOz3bP/wIR4Y9r
+ aOMTP6XBRMDLaAa8sezzY06VHn0UAXFybxmjQiEZwNz+RdMAOAY071DxKr3/wI9H42nT
+ VZEG32vtC93V1Rfk1pzlfmRssk17lBlKwOfCr2HIa9cJwoyCip6lXKC8KYmcE1qqJRnW
+ KH/iXFXJi8apno/4Y2WOEJ9qdbJxUHGPynFPwQS4Q4GPTakjFxz7H4Eae7zd+UdmoYLs
+ 9tHz8A08Yk+0/VcDt6ZGTunCQajOxB6/HtwFo3LtCO9qGE41y+mo2aeR4pxBajSouDgO
+ FQfg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781636866; x=1782241666;
+ d=1e100.net; s=20251104; t=1781636836; x=1782241636;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=It2pF6sViWJlDXaYTTIEvh4jj09OMY/MajD0dUSjtmM=;
- b=Tn8NiZd2pONEMVwuWsT/9MPoDjJMSTkSie88FWLrh2mHjDFEsXRX3oyBotpG3OdOt3
- 3KnhYojER5IeUmTHYW5qjS0odJE+jooqZqgTIQ43DBiSTYH0m6ZelFqg4Gr/f7wWFjhS
- PrcoPZUPaWJFdURSyt7GScvs/55B4ci/CuDbw0CYkSQBTQat+ESVeduMGmHfy1HMRndX
- 8TnfA+qbJSOZuqNZ4W92De195Oj2iLpXc4PGz2Vov2VEZhB7KBX+TcFWcMLVK10q+x9D
- eCX2ebezQ8dj1PJlb79Oa0XWKFmbRx7iJVUz82XPTFKT/atM7AA9StIXHl0NH9+3IFtB
- SOtA==
-X-Gm-Message-State: AOJu0YyKqnH4fJqu6gb8Ltrt+RFfvR2/8LsuC9j8lQS9+aOjq+EBdYMF
- UcLzZbBokFlnu525vSnDs/etRPpK3Z/DHO1v4iBuEL5/9tRQn1VAnZvqXCnxCw5v4SGS6XtsUy7
- OAuPY
-X-Gm-Gg: Acq92OFixGRln6MCQxhiIMaYRNGNkQ0OUsF/oINu9l5FU4qQXWOgz9hJrFQdXII6NYF
- KLg38SNHOw3WpuJIdwKlmgvZ5yiADwUL2Xlue8HP3kheZXfbUZuJ2fcolAYdKPJCpsYPXP6soql
- /+Ir+XJmFYIWAaoRva+cQzAtsteF+L8S+OmraWB3OzEa3rhDgzrx3RLlVcfrPonadvgWUJ0/AIP
- ZY/8yQNANZQ5PGy1rDosbA/bVPh1goxmwcLS+lB0wnapywACJ0//6WMSWj2mVjkP7avyWytINHt
- 9IDOaNAY8Luu9IcVCVUMyUuVUdl5/QfvodnGjkT5CF9J7AyIhiCFcA/JzeuIIbD9Npsjmk9kQDQ
- 7yWikNrFKrOl1U2hFdNkPim+FhJmKTwdidKcuSiPcDM/1GSSCHdIBYD33iai5VNC8LKejfhFD85
- a/+ixTai323Jmw1cen0N6oXbVv+GQ02nTbRC8g0k7+m0cXQMq0aD5qGOhgEHCidbTVbjfDZ87+q
- 1Z0zpspzI2+KJtXnx6wRbJV/LQD1im8YnHFdlXIQ3c=
-X-Received: by 2002:a05:600c:1e0f:b0:490:e5c1:b88d with SMTP id
- 5b1f17b1804b1-492333babfbmr14323085e9.1.1781636866092; 
- Tue, 16 Jun 2026 12:07:46 -0700 (PDT)
+ bh=TSml+C+o8e5g2HzgYLSNK9fnxCmPI3ITde5GKhyWgGw=;
+ b=aWmckgjAEyYoSWj4cJ8WDNvz2WK6lHopBuA5nh2+jAGLIO3oegKROdrtv+2UCaZCah
+ AgmkgwzgdnmLHXYLKkQXXATD9nolw0gP7ElARDKrplDFPYc7BK3FHoVjBB4hguClbBvq
+ 7sweTTthJIEEWzL6D+brITlaSE87l1w98hkvuLT5sZpI7dDWnLviGiGnIXaxZfqk9/IK
+ QQI1Sq1fmAXwNYwJ0lEx35DR3Xos/5ylrAd75FnwYK2V4jTHocv2jc/DmeqK4O6oC5Bw
+ OfrSkxcGBUBKdAa56RDDvk4k9KdMx4B0mjHv5WaFfGDt1l6Cmwcccir157aDpw47IQV0
+ X9MA==
+X-Gm-Message-State: AOJu0YyWN3TEjc4+38KcVFVNZABt1mT95eaEKjbTO8A6sCGTFPq4MXQu
+ k/hOsyRfKwHVj4CB9IKX2faGW15XUnKu4WtVeHnlW+4it1HmvDtrYrXwvz4ugXrhq2SCPu+G65e
+ c8Rla
+X-Gm-Gg: Acq92OG4hgwxKMnl3acf/z+WqrS81ytsR3xHeirudGwenHkiBUPa2BoM/010CnC9llj
+ fOH7yxUYmzHCGqwBE3VsUc3LlT7fUtn/uSLKzrJZn+dxe2v+cGui09LQZRBQtfT4yNMNYIPys9w
+ OWJOENYuBaEbIPQyJRxBHOGehwmCKwbiB6sCHiNaRBzrb8Vd6H4FJ0stqiOvzbu8iQQZD8LJsZX
+ gbM+NqHIIL85kpbKlNftzb8aLGyW6RaxihocsAWYOlGY6OT7S+BJQoMSV9VA0dEHMxCrYm/0BFx
+ S1unwkcF/Bajpa2ZCvK8RV76pVbgNojbjzyBMDRO1sxuftvv8PUg6yv1qbhFZVtrKm6axEzyE/G
+ Z/elasiebxNEzAnoGnsn45A8o60UFQHCwutheg5xdwuQHOzK5KxWqB9CkIcMT2SksX+/VVDbpG4
+ fzYGAM/WXLyuFdHXEOUiEcUaGYbvjT3AYNqGS9t3oLlFWSpi0U9JrPE5ZHJFpuqQpKnuEIhLseD
+ S9GWebt/oWphmUSu64ndfjOTHjhRL9a
+X-Received: by 2002:a05:6000:2404:b0:45e:6518:3299 with SMTP id
+ ffacd0b85a97d-46236930430mr1298944f8f.5.1781636835767; 
+ Tue, 16 Jun 2026 12:07:15 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4606f2d9becsm45078765f8f.34.2026.06.16.12.07.45
+ ffacd0b85a97d-4606f2d9becsm45078765f8f.34.2026.06.16.12.07.14
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 16 Jun 2026 12:07:45 -0700 (PDT)
+ Tue, 16 Jun 2026 12:07:15 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 58/61] target/arm: Implement FRINT{32,64}{X,Z}
-Date: Tue, 16 Jun 2026 20:06:35 +0100
-Message-ID: <20260616190639.3462006-59-peter.maydell@linaro.org>
+Subject: [PULL 30/61] memory: Allow RAM device regions to skip IOMMU mapping
+Date: Tue, 16 Jun 2026 20:06:07 +0100
+Message-ID: <20260616190639.3462006-31-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260616190639.3462006-1-peter.maydell@linaro.org>
 References: <20260616190639.3462006-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::430;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x430.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,133 +100,125 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+From: Shameer Kolothum <skolothumtho@nvidia.com>
 
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Message-id: 20260604234852.573178-16-richard.henderson@linaro.org
+Some RAM device regions created with memory_region_init_ram_device_ptr()
+are not intended to be P2P DMA targets.
+
+The VFIO listener currently treats all RAM device regions as DMA
+capable and attempts to map them into the IOMMU. For regions without
+dma-buf backing this fails and prints warnings such as:
+
+  IOMMU_IOAS_MAP failed: Bad address, PCI BAR?
+
+Introduce a MemoryRegion flag (ram_device_skip_iommu_map) to mark RAM
+device regions that should not be IOMMU mapped, paired with
+memory_region_skip_iommu_map() / memory_region_set_skip_iommu_map()
+accessors. When the flag is set, the VFIO listener skips DMA mapping
+for that region.
+
+Reviewed-by: Eric Auger <eric.auger@redhat.com>
+Tested-by: Eric Auger <eric.auger@redhat.com>
+Tested-by: Nicolin Chen <nicolinc@nvidia.com>
+Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
+Message-id: 20260609112552.378999-21-skolothumtho@nvidia.com
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/arm/tcg/helper-sve-defs.h |  9 ++++++++
- target/arm/tcg/sve.decode        | 20 ++++++++++++++++++
- target/arm/tcg/sve_helper.c      |  5 +++++
- target/arm/tcg/translate-sve.c   | 36 ++++++++++++++++++++++++++++++++
- 4 files changed, 70 insertions(+)
+ hw/vfio/listener.c      |  6 ++++++
+ hw/vfio/trace-events    |  1 +
+ include/system/memory.h | 21 +++++++++++++++++++++
+ system/memory.c         | 10 ++++++++++
+ 4 files changed, 38 insertions(+)
 
-diff --git a/target/arm/tcg/helper-sve-defs.h b/target/arm/tcg/helper-sve-defs.h
-index f97c31763f..de2254bb19 100644
---- a/target/arm/tcg/helper-sve-defs.h
-+++ b/target/arm/tcg/helper-sve-defs.h
-@@ -1441,6 +1441,15 @@ DEF_HELPER_FLAGS_5(sve_frintx_s, TCG_CALL_NO_RWG,
- DEF_HELPER_FLAGS_5(sve_frintx_d, TCG_CALL_NO_RWG,
-                    void, ptr, ptr, ptr, fpst, i32)
+diff --git a/hw/vfio/listener.c b/hw/vfio/listener.c
+index 0b72a2cf5e..14cca678ae 100644
+--- a/hw/vfio/listener.c
++++ b/hw/vfio/listener.c
+@@ -610,6 +610,12 @@ void vfio_container_region_add(VFIOContainer *bcontainer,
+         }
+     }
  
-+DEF_HELPER_FLAGS_5(sve2p2_frint32_s, TCG_CALL_NO_RWG,
-+                   void, ptr, ptr, ptr, fpst, i32)
-+DEF_HELPER_FLAGS_5(sve2p2_frint64_s, TCG_CALL_NO_RWG,
-+                   void, ptr, ptr, ptr, fpst, i32)
-+DEF_HELPER_FLAGS_5(sve2p2_frint32_d, TCG_CALL_NO_RWG,
-+                   void, ptr, ptr, ptr, fpst, i32)
-+DEF_HELPER_FLAGS_5(sve2p2_frint64_d, TCG_CALL_NO_RWG,
-+                   void, ptr, ptr, ptr, fpst, i32)
++    if (memory_region_skip_iommu_map(section->mr)) {
++        trace_vfio_listener_region_skip_dma_map(memory_region_name(section->mr),
++                                                iova, int128_get64(llsize));
++        return;
++    }
 +
- DEF_HELPER_FLAGS_5(sve_frecpx_h, TCG_CALL_NO_RWG,
-                    void, ptr, ptr, ptr, fpst, i32)
- DEF_HELPER_FLAGS_5(sve_frecpx_s, TCG_CALL_NO_RWG,
-diff --git a/target/arm/tcg/sve.decode b/target/arm/tcg/sve.decode
-index 7460eee4a9..5c814c7769 100644
---- a/target/arm/tcg/sve.decode
-+++ b/target/arm/tcg/sve.decode
-@@ -1259,6 +1259,26 @@ FRINTA_z        01100100 .. 011 001 100 ... ..... .....         @rd_pg_rn
- FRINTX_z        01100100 .. 011 001 110 ... ..... .....         @rd_pg_rn
- FRINTI_z        01100100 .. 011 001 111 ... ..... .....         @rd_pg_rn
+     ret = vfio_container_dma_map(bcontainer, iova, int128_get64(llsize),
+                                  vaddr, section->readonly, section->mr);
+     if (ret) {
+diff --git a/hw/vfio/trace-events b/hw/vfio/trace-events
+index 2049159015..70c5aa1bcc 100644
+--- a/hw/vfio/trace-events
++++ b/hw/vfio/trace-events
+@@ -100,6 +100,7 @@ vfio_listener_region_del_iommu(const char *name) "region_del [iommu] %s"
+ vfio_listener_region_add_ram(uint64_t iova_start, uint64_t iova_end, void *vaddr) "region_add [ram] 0x%"PRIx64" - 0x%"PRIx64" [%p]"
+ vfio_known_safe_misalignment(const char *name, uint64_t iova, uint64_t offset_within_region, uintptr_t page_size) "Region \"%s\" iova=0x%"PRIx64" offset_within_region=0x%"PRIx64" qemu_real_host_page_size=0x%"PRIxPTR
+ vfio_listener_region_add_no_dma_map(const char *name, uint64_t iova, uint64_t size, uint64_t page_size) "Region \"%s\" 0x%"PRIx64" size=0x%"PRIx64" is not aligned to 0x%"PRIx64" and cannot be mapped for DMA"
++vfio_listener_region_skip_dma_map(const char *name, uint64_t iova, uint64_t size) "Region \"%s\" 0x%"PRIx64" size=0x%"PRIx64" marked to skip IOMMU mapping"
+ vfio_listener_region_del(uint64_t start, uint64_t end) "region_del 0x%"PRIx64" - 0x%"PRIx64
+ vfio_device_dirty_tracking_update(uint64_t start, uint64_t end, uint64_t min, uint64_t max) "section 0x%"PRIx64" - 0x%"PRIx64" -> update [0x%"PRIx64" - 0x%"PRIx64"]"
+ vfio_device_dirty_tracking_start(int nr_ranges, uint64_t min32, uint64_t max32, uint64_t min64, uint64_t max64, uint64_t minpci, uint64_t maxpci) "nr_ranges %d 32:[0x%"PRIx64" - 0x%"PRIx64"], 64:[0x%"PRIx64" - 0x%"PRIx64"], pci64:[0x%"PRIx64" - 0x%"PRIx64"]"
+diff --git a/include/system/memory.h b/include/system/memory.h
+index 1417132f6d..4560809013 100644
+--- a/include/system/memory.h
++++ b/include/system/memory.h
+@@ -864,6 +864,8 @@ struct MemoryRegion {
  
-+FRINT32X_s_m    01100101 00 010 001 101 ... ..... .....         @rd_pg_rn_e0
-+FRINT32X_d_m    01100101 00 010 011 101 ... ..... .....         @rd_pg_rn_e0
-+FRINT64X_s_m    01100101 00 010 101 101 ... ..... .....         @rd_pg_rn_e0
-+FRINT64X_d_m    01100101 00 010 111 101 ... ..... .....         @rd_pg_rn_e0
-+
-+FRINT32X_s_z    01100100 00 011 100 101 ... ..... .....         @rd_pg_rn_e0
-+FRINT32X_d_z    01100100 00 011 100 111 ... ..... .....         @rd_pg_rn_e0
-+FRINT64X_s_z    01100100 00 011 101 101 ... ..... .....         @rd_pg_rn_e0
-+FRINT64X_d_z    01100100 00 011 101 111 ... ..... .....         @rd_pg_rn_e0
-+
-+FRINT32Z_s_m    01100101 00 010 000 101 ... ..... .....         @rd_pg_rn_e0
-+FRINT32Z_d_m    01100101 00 010 010 101 ... ..... .....         @rd_pg_rn_e0
-+FRINT64Z_s_m    01100101 00 010 100 101 ... ..... .....         @rd_pg_rn_e0
-+FRINT64Z_d_m    01100101 00 010 110 101 ... ..... .....         @rd_pg_rn_e0
-+
-+FRINT32Z_s_z    01100100 00 011 100 100 ... ..... .....         @rd_pg_rn_e0
-+FRINT32Z_d_z    01100100 00 011 100 110 ... ..... .....         @rd_pg_rn_e0
-+FRINT64Z_s_z    01100100 00 011 101 100 ... ..... .....         @rd_pg_rn_e0
-+FRINT64Z_d_z    01100100 00 011 101 110 ... ..... .....         @rd_pg_rn_e0
-+
- # SVE floating-point unary operations
- FRECPX_m        01100101 .. 001 100 101 ... ..... .....         @rd_pg_rn
- FSQRT_m         01100101 .. 001 101 101 ... ..... .....         @rd_pg_rn
-diff --git a/target/arm/tcg/sve_helper.c b/target/arm/tcg/sve_helper.c
-index 1711444800..f8e62cb11b 100644
---- a/target/arm/tcg/sve_helper.c
-+++ b/target/arm/tcg/sve_helper.c
-@@ -5017,6 +5017,11 @@ DO_ZPZ_FP(sve_frintx_h, uint16_t, H1_2, float16_round_to_int)
- DO_ZPZ_FP(sve_frintx_s, uint32_t, H1_4, float32_round_to_int)
- DO_ZPZ_FP(sve_frintx_d, uint64_t, H1_8, float64_round_to_int)
+     /* For devices designed to perform re-entrant IO into their own IO MRs */
+     bool disable_reentrancy_guard;
++    /* RAM device region that does not require IOMMU mapping for P2P */
++    bool ram_device_skip_iommu_map;
+ };
  
-+DO_ZPZ_FP(sve2p2_frint32_s, uint32_t, H1_4, helper_frint32_s)
-+DO_ZPZ_FP(sve2p2_frint64_s, uint32_t, H1_4, helper_frint64_s)
-+DO_ZPZ_FP(sve2p2_frint32_d, uint64_t, H1_8, helper_frint32_d)
-+DO_ZPZ_FP(sve2p2_frint64_d, uint64_t, H1_8, helper_frint64_d)
-+
- DO_ZPZ_FP(sve_frecpx_h, uint16_t, H1_2, helper_frecpx_f16)
- DO_ZPZ_FP(sve_frecpx_s, uint32_t, H1_4, helper_frecpx_f32)
- DO_ZPZ_FP(sve_frecpx_d, uint64_t, H1_8, helper_frecpx_f64)
-diff --git a/target/arm/tcg/translate-sve.c b/target/arm/tcg/translate-sve.c
-index 4ac59664ae..a8d21dedca 100644
---- a/target/arm/tcg/translate-sve.c
-+++ b/target/arm/tcg/translate-sve.c
-@@ -4730,6 +4730,42 @@ TRANS_FEAT(FRINTZ_z, aa64_sme2p2_or_sve2p2, do_frint_mode, a,
- TRANS_FEAT(FRINTA_z, aa64_sme2p2_or_sve2p2, do_frint_mode, a,
-            FPROUNDING_TIEAWAY, 1, frint_fns[a->esz])
+ struct IOMMUMemoryRegion {
+@@ -1743,6 +1745,25 @@ static inline bool memory_region_is_romd(const MemoryRegion *mr)
+  */
+ bool memory_region_is_protected(const MemoryRegion *mr);
  
-+TRANS_FEAT(FRINT32X_s_m, aa64_sme2p2_or_sve2p2, gen_gvec_fpst_arg_zpz,
-+           gen_helper_sve2p2_frint32_s, a, 0, FPST_A64)
-+TRANS_FEAT(FRINT32X_d_m, aa64_sme2p2_or_sve2p2, gen_gvec_fpst_arg_zpz,
-+           gen_helper_sve2p2_frint32_d, a, 0, FPST_A64)
-+TRANS_FEAT(FRINT64X_s_m, aa64_sme2p2_or_sve2p2, gen_gvec_fpst_arg_zpz,
-+           gen_helper_sve2p2_frint64_s, a, 0, FPST_A64)
-+TRANS_FEAT(FRINT64X_d_m, aa64_sme2p2_or_sve2p2, gen_gvec_fpst_arg_zpz,
-+           gen_helper_sve2p2_frint64_d, a, 0, FPST_A64)
++/**
++ * memory_region_skip_iommu_map: check whether a memory region is excluded
++ *                               from IOMMU mapping
++ *
++ * Returns %true if @mr is a RAM device region marked to skip IOMMU mapping.
++ *
++ * @mr: the memory region being queried
++ */
++bool memory_region_skip_iommu_map(const MemoryRegion *mr);
 +
-+TRANS_FEAT(FRINT32X_s_z, aa64_sme2p2_or_sve2p2, gen_gvec_fpst_arg_zpz,
-+           gen_helper_sve2p2_frint32_s, a, 1, FPST_A64)
-+TRANS_FEAT(FRINT32X_d_z, aa64_sme2p2_or_sve2p2, gen_gvec_fpst_arg_zpz,
-+           gen_helper_sve2p2_frint32_d, a, 1, FPST_A64)
-+TRANS_FEAT(FRINT64X_s_z, aa64_sme2p2_or_sve2p2, gen_gvec_fpst_arg_zpz,
-+           gen_helper_sve2p2_frint64_s, a, 1, FPST_A64)
-+TRANS_FEAT(FRINT64X_d_z, aa64_sme2p2_or_sve2p2, gen_gvec_fpst_arg_zpz,
-+           gen_helper_sve2p2_frint64_d, a, 1, FPST_A64)
++/**
++ * memory_region_set_skip_iommu_map: mark a RAM device region to skip IOMMU
++ *                                   mapping
++ *
++ * @mr: the memory region being modified
++ * @skip: %true to skip IOMMU mapping, %false to allow it
++ */
++void memory_region_set_skip_iommu_map(MemoryRegion *mr, bool skip);
 +
-+TRANS_FEAT(FRINT32Z_s_m, aa64_sme2p2_or_sve2p2, do_frint_mode,
-+           a, FPROUNDING_ZERO, 0, gen_helper_sve2p2_frint32_s)
-+TRANS_FEAT(FRINT32Z_d_m, aa64_sme2p2_or_sve2p2, do_frint_mode,
-+           a, FPROUNDING_ZERO, 0, gen_helper_sve2p2_frint32_d)
-+TRANS_FEAT(FRINT64Z_s_m, aa64_sme2p2_or_sve2p2, do_frint_mode,
-+           a, FPROUNDING_ZERO, 0, gen_helper_sve2p2_frint64_s)
-+TRANS_FEAT(FRINT64Z_d_m, aa64_sme2p2_or_sve2p2, do_frint_mode,
-+           a, FPROUNDING_ZERO, 0, gen_helper_sve2p2_frint64_d)
+ /**
+  * memory_region_has_guest_memfd: check whether a memory region has guest_memfd
+  *     associated
+diff --git a/system/memory.c b/system/memory.c
+index 739ba11da6..48245fd01b 100644
+--- a/system/memory.c
++++ b/system/memory.c
+@@ -1814,6 +1814,16 @@ bool memory_region_is_protected(const MemoryRegion *mr)
+     return mr->ram && (mr->ram_block->flags & RAM_PROTECTED);
+ }
+ 
++bool memory_region_skip_iommu_map(const MemoryRegion *mr)
++{
++    return memory_region_is_ram_device(mr) && mr->ram_device_skip_iommu_map;
++}
 +
-+TRANS_FEAT(FRINT32Z_s_z, aa64_sme2p2_or_sve2p2, do_frint_mode,
-+           a, FPROUNDING_ZERO, 1, gen_helper_sve2p2_frint32_s)
-+TRANS_FEAT(FRINT32Z_d_z, aa64_sme2p2_or_sve2p2, do_frint_mode,
-+           a, FPROUNDING_ZERO, 1, gen_helper_sve2p2_frint32_d)
-+TRANS_FEAT(FRINT64Z_s_z, aa64_sme2p2_or_sve2p2, do_frint_mode,
-+           a, FPROUNDING_ZERO, 1, gen_helper_sve2p2_frint64_s)
-+TRANS_FEAT(FRINT64Z_d_z, aa64_sme2p2_or_sve2p2, do_frint_mode,
-+           a, FPROUNDING_ZERO, 1, gen_helper_sve2p2_frint64_d)
++void memory_region_set_skip_iommu_map(MemoryRegion *mr, bool skip)
++{
++    mr->ram_device_skip_iommu_map = skip;
++}
 +
- static gen_helper_gvec_3_ptr * const frecpx_fns[] = {
-     NULL,                    gen_helper_sve_frecpx_h,
-     gen_helper_sve_frecpx_s, gen_helper_sve_frecpx_d,
+ bool memory_region_has_guest_memfd(const MemoryRegion *mr)
+ {
+     return mr->ram_block && mr->ram_block->guest_memfd >= 0;
 -- 
 2.43.0
 
