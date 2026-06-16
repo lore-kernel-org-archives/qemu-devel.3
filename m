@@ -4,75 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF7AFCD98DA
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 10:12:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 965D2CD98CF
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 10:12:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZQk0-0000As-1x; Tue, 16 Jun 2026 06:09:56 -0400
+	id 1wZQjH-00065R-EW; Tue, 16 Jun 2026 06:09:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wZQjs-0008CO-ER
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 06:09:48 -0400
+ id 1wZQix-0005zr-1v
+ for qemu-devel@nongnu.org; Tue, 16 Jun 2026 06:08:52 -0400
 Received: from mail-pj1-x102c.google.com ([2607:f8b0:4864:20::102c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wZQjq-000491-VT
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 06:09:48 -0400
+ id 1wZQiv-0003jP-Ku
+ for qemu-devel@nongnu.org; Tue, 16 Jun 2026 06:08:50 -0400
 Received: by mail-pj1-x102c.google.com with SMTP id
- 98e67ed59e1d1-36d8b644473so3795131a91.3
- for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 03:09:46 -0700 (PDT)
+ 98e67ed59e1d1-36b9d265355so2126835a91.2
+ for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 03:08:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1781604585; x=1782209385; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1781604528; x=1782209328; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=s6olje7UD96sdnIFEA78G6UfFtJlFCB5r0kXRgWZric=;
- b=XUqoBpxa9LqdFDaIWjEU0XSZbc21AeF+vM/9UoK6SAtDcjtOwSkmHq7r346oKe6fAN
- +O5IfHu78P223mfUH0TpGMYpw7Sbd/bG/TW5Qw51j1r+M+yQPGUhFJK4hHkWLXEBIUho
- ZMnigjoU7GPw62umk08fnf+6xnGUn5cf6g23GR8ZkFfGWQUrOQabj3WUwWjMY8FujDSm
- w+zIZohS+wdmbJxaJLb5noTKMCrz2DxwvMP22EBmCtAkW7G97/xLivnczD8hYkjamy3n
- 5IezHtpD+oU79q1seQ4pwx7RZWKSdiqnUjztre6LY5crrLhOZty3qm33f9bQLShalP+C
- YuWg==
+ bh=aCtqoJPvTEM7pcYWllSHBKBt50VMDfpPmDLSixCvOHY=;
+ b=onMKhC6DEDwQVfr/VGSt60cVffLaAysx8ILUClsSqFpuFJ5AOxOsroXlM5+3LysUEg
+ ivVpHmuPFmpWleurYL7l9DJci8/SZAySHj3wxTbKV8SpzrP3eJnKUwtxzNtdErP+mCvS
+ D2vHvkriZVLWsyo1CzpsE0ITAeYDxS8KwMv7y+PZtt/eb90VhEWVCaeX0SVBif9PXlSr
+ 29fGoIbbokom0blZLkKINZffrJCAsLOUELKDTay/6WQgq1lN4/cVjXdiyP0VjEeW30BF
+ Bt5AcTfQC1Gf49UEaj+6+oSbKJKgxM/istO58LSxpVrx4RpDm29mpEuDbaJQe4MUl8pu
+ PDew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781604585; x=1782209385;
+ d=1e100.net; s=20251104; t=1781604528; x=1782209328;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=s6olje7UD96sdnIFEA78G6UfFtJlFCB5r0kXRgWZric=;
- b=q5WRe2728HXMCrgleJSEHcRBbv7b4qyDGrvZ2mYqU4kGsMXuSPKhP0zgAJZz+m2puY
- 2thKLX1ahXkNpj3I9su14KL8yHZxxpjYcFBeREgWp8d/gQwkco/wCZJ/Wuy0xl79Sejl
- 9wpwtEt9pw3Lu+URUctxWoqIJ9H4xUkZwjeqdfSCUYOTcTA2iO5RwHvY+KiJ5IfM3AcV
- hQ6IIf5IR4ymeSj1lqsayjFaEMj+8OskN1uWCQLoLL78wC2MvHvQplCdsQYH9AobADMQ
- ACXPJ9SzxvPLbz3lkX5Pp0dzRNhV/2ErIJVUpZyH0zlG7i4fznsfNuIxfk7bHI9luBL/
- OfdA==
-X-Gm-Message-State: AOJu0YycyjXawQc3/5ouB0bbCKtx8squxsa5jnihfR6DzUr7BOpEJ9Es
- F7i9fVyzdqyRcw2Uc7nKEmctLdHSbPB80EUCpoQHpXmz05SL7slbOLJUqqFfl4Gp
-X-Gm-Gg: Acq92OH0gs+XmX03RhLawCGfmB+MK5c48+ZAhfuMgAeIrZO2lw4DXnOhoPa2FJk6sit
- hNXfDSsTTmhkA3R0DXT81duVNFiECDZ4OAZZ1yKVJEwl/I/eXMYMOJRbGU3Ne3kLwsh4dyinYHI
- cWBGjhhudXhB3dufaWVL/M8ieSeoSk49eKTDbZw/Zf8fUgJl0DnwQhYhfumaOxzQeHS/JvvY16Y
- pFGv9m7/Eppg0gVA+5WrCYQf8nE6XuOoUhuE9MX6/qONndsXPGMiIX1SKfF4q2iR5ZeHQn9RFTn
- uSyHGCSZy8fTFU1d0qcW+DdoO9HiCzF0hylkbYA2lEuq5o/xnR64utznqrEBRsHYMngqr3MWZST
- VXmveRUpWdU3C1sFM6fHHYPjqok8EC84xroCPyzfTBMrnjpqCalse/hiyhKjXJcN3Qx+wxNZX8o
- sGLsnTqMdeQvdY7R5wAWRsxoVyK3LHUqRF2EGBCU8X
-X-Received: by 2002:a17:90b:4d0b:b0:36d:8e6f:8d9e with SMTP id
- 98e67ed59e1d1-37c52916f59mr3016887a91.20.1781604585465; 
- Tue, 16 Jun 2026 03:09:45 -0700 (PDT)
+ bh=aCtqoJPvTEM7pcYWllSHBKBt50VMDfpPmDLSixCvOHY=;
+ b=PkOvVb2BSQBVc8cm2rO4Km1taf+hDOLo552izgz19TMDW16kPkHyXO+yMJeln+TdKj
+ 2qsV8xiPOeW4N5gI8Qp4SQFco2XQqZK9+u+IZax+Yz8FHN5DS/fQutGjndTxwQN97ALQ
+ 8szGhmWsVTLxCsx11w4yhsaEh5XxYT9SQW2etEUH030D6KxkobOd1woZqmRe4eec7t3b
+ TbJlNL9Q0PlonVV9UCICpXOU9VQ6f+w4ixmzaemThrbWHyq5o+UORJfRUdzTbEKyGIS3
+ VM/amtgXbJwKHj+PYwvvZ9iQ5RZMp+aJX3h9Y+08dedUDa1LbdbzF5nKP0CptqYfmibI
+ FjuA==
+X-Gm-Message-State: AOJu0YxDjJiDZkNUhlvNgRuxJtyq+YhfJnlMIpLUu1D2igLuIBP0k07t
+ 6YH7TJP46IsUJ2V1ZtYDeYKilo8n1WFZLchPAQ5UJwNe01X45Phq/MiiMmv2CS71
+X-Gm-Gg: Acq92OEh0H+bZlVlIcXMgwMpwc9W4NsLx5xB8Jld0MwHta13rPZh+rQ2GZAai/p4Aze
+ PlR2TPZutZQFeYuWCSruR1VmpuDFMJS1xSvxXMXgZ2nHvbbpenyHpXIxAQruHuCZuQlTNJdFc25
+ vjalD0LtMz+LMu4c3q364uJIgJd4Jay3W8uVxOYtKR2e5I9YZAho2RNK9CElwksA7YMhUuKEa3Q
+ ARLU0X3AOCao6aVKNadU4JytguP5CM17f7g0x4Oqu66O5cUo7ofmeun3DVXdgY1/UQHOy1Hrx4J
+ 5haDZRaqLJTLSEQIjQFzgTZTLleVE6ckVJlQRvlUD3ORk1GW0BTzwq4Sc5TOCb0sbasOFmUbsPg
+ yNj5M1vGns1CFlqZTqKG7gqIbVOt/PBQACkdDl8DxLEG8mT+MXZXzu6HHD3z0fuEG8w4+1+xXU7
+ Tup+tB5LIYdvX+gNOWgokHJ0ikK7IBn5vYEQVvN2ze
+X-Received: by 2002:a17:90b:17cb:b0:36d:b818:f848 with SMTP id
+ 98e67ed59e1d1-37c5280311amr3047968a91.5.1781604528026; 
+ Tue, 16 Jun 2026 03:08:48 -0700 (PDT)
 Received: from toolbx.alistair23.me ([2403:581e:fdf9:0:13b2:851f:d9cb:44c5])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-c866519f0a6sm10916735a12.22.2026.06.16.03.09.42
+ 41be03b00d2f7-c866519f0a6sm10916735a12.22.2026.06.16.03.08.45
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 16 Jun 2026 03:09:44 -0700 (PDT)
+ Tue, 16 Jun 2026 03:08:47 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com,
+Cc: alistair23@gmail.com, Anton Blanchard <antonb@tenstorrent.com>,
  Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 71/83] hw/riscv/sifive_u.c: add a FDT phandle to cpu-intc
-Date: Tue, 16 Jun 2026 20:05:14 +1000
-Message-ID: <20260616100527.1939565-72-alistair.francis@wdc.com>
+Subject: [PULL 55/83] target/riscv: Print privilege level and ELP in
+ riscv_cpu_dump_state
+Date: Tue, 16 Jun 2026 20:04:58 +1000
+Message-ID: <20260616100527.1939565-56-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616100527.1939565-1-alistair.francis@wdc.com>
 References: <20260616100527.1939565-1-alistair.francis@wdc.com>
@@ -103,36 +104,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+From: Anton Blanchard <antonb@tenstorrent.com>
 
-We're assigning a 'cpu_phandle' phandle to the cpu-intc phandle field.
-Make it more in line with the other boards by assigning both a
-cpu_phandle and a intc phandle.
+The privilege level and ELP are implicit state (like virt), so print them
+out.
 
-Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Signed-off-by: Anton Blanchard <antonb@tenstorrent.com>
+Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20260615203734.954428-2-daniel.barboza@oss.qualcomm.com>
+Message-ID: <20260529053519.1224019-1-antonb@tenstorrent.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- hw/riscv/sifive_u.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ target/riscv/cpu.c | 22 ++++++++++++++++++++++
+ 1 file changed, 22 insertions(+)
 
-diff --git a/hw/riscv/sifive_u.c b/hw/riscv/sifive_u.c
-index 6a637e3b86..3abbd6c823 100644
---- a/hw/riscv/sifive_u.c
-+++ b/hw/riscv/sifive_u.c
-@@ -187,8 +187,10 @@ static void create_fdt(SiFiveUState *s, const MemMapEntry *memmap,
-         qemu_fdt_setprop_string(fdt, nodename, "status", "okay");
-         qemu_fdt_setprop_cell(fdt, nodename, "reg", cpu);
-         qemu_fdt_setprop_string(fdt, nodename, "device_type", "cpu");
-+        qemu_fdt_setprop_cell(fdt, nodename, "phandle", cpu_phandle);
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index df101b1213..a5b1c2ba62 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -577,6 +577,22 @@ static void riscv_dump_csr(CPURISCVState *env, int csrno, FILE *f)
+     }
+ }
+ 
++#if !defined(CONFIG_USER_ONLY)
++static const char *riscv_priv_str(uint32_t priv)
++{
++    switch (priv) {
++    case PRV_M:
++        return "M";
++    case PRV_S:
++        return "S";
++    case PRV_U:
++        return "U";
++    }
 +
-         qemu_fdt_add_subnode(fdt, intc);
--        qemu_fdt_setprop_cell(fdt, intc, "phandle", cpu_phandle);
-+        qemu_fdt_setprop_cell(fdt, intc, "phandle", phandle++);
-         qemu_fdt_setprop_string(fdt, intc, "compatible", "riscv,cpu-intc");
-         qemu_fdt_setprop(fdt, intc, "interrupt-controller", NULL, 0);
-         qemu_fdt_setprop_cell(fdt, intc, "#interrupt-cells", 1);
++    return "?";
++}
++#endif
++
+ static void riscv_cpu_dump_state(CPUState *cs, FILE *f, int flags)
+ {
+     RISCVCPU *cpu = RISCV_CPU(cs);
+@@ -585,9 +601,15 @@ static void riscv_cpu_dump_state(CPUState *cs, FILE *f, int flags)
+     uint8_t *p;
+ 
+ #if !defined(CONFIG_USER_ONLY)
++    qemu_fprintf(f, " %s %s\n", "priv   =  ", riscv_priv_str(env->priv));
++
+     if (riscv_has_ext(env, RVH)) {
+         qemu_fprintf(f, " %s %d\n", "V      =  ", env->virt_enabled);
+     }
++
++    if (cpu->cfg.ext_zicfilp) {
++        qemu_fprintf(f, " %s %d\n", "elp    =  ", env->elp);
++    }
+ #endif
+     qemu_fprintf(f, " %s %" PRIx64 "\n", "pc      ", env->pc);
+ #ifndef CONFIG_USER_ONLY
 -- 
 2.54.0
 
