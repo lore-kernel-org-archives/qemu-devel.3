@@ -4,119 +4,126 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86B80CD98DA
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89FEFCD98E1
 	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 02:05:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZJ9y-0006g7-IO; Mon, 15 Jun 2026 22:04:14 -0400
+	id 1wZJAL-0006jz-R4; Mon, 15 Jun 2026 22:04:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wZJ9u-0006f2-Sn
- for qemu-devel@nongnu.org; Mon, 15 Jun 2026 22:04:10 -0400
+ id 1wZJAK-0006jb-A3
+ for qemu-devel@nongnu.org; Mon, 15 Jun 2026 22:04:36 -0400
 Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wZJ9p-0007qR-SK
- for qemu-devel@nongnu.org; Mon, 15 Jun 2026 22:04:10 -0400
+ id 1wZJAI-0007zq-OX
+ for qemu-devel@nongnu.org; Mon, 15 Jun 2026 22:04:36 -0400
 Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65G1xmrR1767350
- for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 02:04:02 GMT
+ 65G1xgTL1766990
+ for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 02:04:33 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:message-id
- :mime-version:subject:to; s=qcppdkim1; bh=r24YxL54g6oRE1jeavtlc2
- bfSTV9RDxfKNfsyhHe3wA=; b=FH2JsZYRKuK9TeMHpWkl3glC4n6wPc9y8a2Lzn
- l0+fQ45dXw3rhqwg4Jq98fWEHkCjtfJM+j74DAqtfLjgw8eJ7/cpQk/KejeHmSKM
- Tfdwg3UCSto84gNSBIvUF0oqtvAG02v3aSHU+r+N1RKBcT6zWFD+BSYz9Hd3VIgX
- r1uozJi/bc81ng9XhmgCWPKOtV0pYFN8fIA4nP+liHb7KZLGudelNPsozqAhETzY
- wSx7Bm/gTET30n3JAkmJutJLV5F2CHe4uY9xdpDXFX/geAJGv/tqaI2pWJjzyPM0
- 8ZTOUc8s1xo1E2Oe81DfD7q9LUe+uEXe5R10mGVrO47JG7Vw==
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
- [209.85.222.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4eteydc21g-1
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ VX7NLQYLerFMFCVchnq1CkD+pT2w/NHCxn4QKAYqUcU=; b=i1AIzcB62UiruuRV
+ NnBdN0lDwR6KVtLtW9dAn8oKzl88gkVqAHVbsMcmOT+HlBqCIiIwGkRJzO1jx939
+ RMnUZ1wreSXNHFpUD+iYWzeYZzPa01U/S6p1G7LgtgC840EdNs7ApW8xQNCfeOf3
+ AIQZwOGy8caV4UhtUirSNUliOTQp4pCocvvmFb5ScdRpyfS/ictmw7qR7QB4iURT
+ zNd48KejqrhAT1t2gzRiLNXfKAsZp/Brx4R51OuAOR2jLLDFM7C45FFeprHxYRKV
+ +HZkKYTPTbzrmjFGJgSac8SvXMQ1UxTU8JpN7Z1Cksy6AtpeTtvmeXE0yRPx4reW
+ VUAnRg==
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
+ [209.85.222.198])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4eteydc234-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 02:04:02 +0000 (GMT)
-Received: by mail-qk1-f197.google.com with SMTP id
- af79cd13be357-915767b341eso389922185a.3
- for <qemu-devel@nongnu.org>; Mon, 15 Jun 2026 19:04:02 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 02:04:33 +0000 (GMT)
+Received: by mail-qk1-f198.google.com with SMTP id
+ af79cd13be357-915c8347cd5so819712285a.0
+ for <qemu-devel@nongnu.org>; Mon, 15 Jun 2026 19:04:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1781575441; x=1782180241; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=r24YxL54g6oRE1jeavtlc2bfSTV9RDxfKNfsyhHe3wA=;
- b=TOF7q3TfUPyf0YEOTd3O8DotbO9xzMnYMwq9gmWZpBsJ5MCphAVSuEZGIO99ef60Eo
- GzO4OXSZE/VOk4zP4ow8dydkxnYbd6Lfl/eqAfqmABZyf+Y0Mz8Hqk0Q21eOINU4hLyL
- 3RZVX185gqzus/NF26qyRjLfGv6JVR+Y0vAuI2EokWKX86/2GEszkEGHbnZWLZy9wk8J
- fwLmZoP67AgEC0eVSuzyYarGLoGKCucbil4z6yf9bTtCyEB4ek8Hv82wUVwPTtwQxg7N
- oSUM/fNcvvmlphAggoKs6U/1IByY7lLov5enDSSU4X+uszGYt778l3N/vjw3KnY6kOUQ
- QnUw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781575441; x=1782180241;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=oss.qualcomm.com; s=google; t=1781575472; x=1782180272; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=r24YxL54g6oRE1jeavtlc2bfSTV9RDxfKNfsyhHe3wA=;
- b=ib6jY3xJ1OKdGW2X+46v2UqZD3vpBcqp9FZd7bkRyettVRl1X82GzLFNxHY6oDV3Rq
- eJUR94/Hdvi0ayQBRQ8QJ8xbUD/g2WNl++/SW8ZmZlpeAIgO7l4V5z4JGbCqMA5aXM7c
- yRsiSUZcQkdqhOcG2FcTvbC+UojDdQuYiM/L5oBZTjkK7NS8Q9Nx8UsnlsNlN7jCB/GE
- PKJyyJL5LzmWBvbt1fUxfgfeEHH5HRSmC5zVwmwgxIQps+nr+gAA2RriR80KgHCpHTNp
- vIdRg3+6yotfvDQ6rmF/brADMvC3UfAZiE+gL6mBvNOZZLu1GuBV+wErndGM7x0Z3/AP
- rQCg==
-X-Gm-Message-State: AOJu0YwGianBO1k7hgyVerLQzA3tquRIEZtud7D1p4w/Tsmy3wSfU5uZ
- SN+7wMKvyzpE5fiDQG8fbej/L7vFJZ9jpXurBseh7e6C+PutVGLtwAxfIdQLJRN5HGuoqrfQpja
- xQ5PQ6BfSsxHMWeSvz9jHs2sOqkDB3k7ODuc6pZUxs9Zk4pONF5hE5pr4z3o24UgiMQ==
-X-Gm-Gg: Acq92OHJVIZ7ZgOOdaMeyf+r5fvdNxmliyECSNmdIReiNSYMSKSp+5ns7A31tNuFjv7
- MQzizSmfuwL1K/RvC4QyD+riuluHEwE26UIFdW1L3l/LgsA1IQETAaZO/4klheJvnBBTDqiEas/
- fhlHMd1J9UjXZKwA1BjqrCI0zC5KusmG+i1Qp/D5YyfpQsXD1cutzc4ho7y9i083uSIQVQ5DnN4
- Ofv4Eod+3LKqd4H8C5e37yZ2AeRTYi4yUf247UlnKkJbOFqQT+C6N7xS+LzUiRQvHms4+qcEsn1
- Pqb6WESQXE3N6YS7OnBfHq8XcnxLqlnBKPNUyQYdSt5FhzlmYGRN2P3+7adMSP9KUEax+LdM+Ep
- kv8ybgjctuvM5/BaI09xhAC7UA+zutEJM87nZnRXE9JQMLDjhBBFD/nTs4M4Cug6YEg1a+Sl4nh
- qMFLk=
-X-Received: by 2002:a05:620a:458c:b0:915:d322:c465 with SMTP id
- af79cd13be357-91c4541436bmr271988285a.6.1781575441450; 
- Mon, 15 Jun 2026 19:04:01 -0700 (PDT)
-X-Received: by 2002:a05:620a:458c:b0:915:d322:c465 with SMTP id
- af79cd13be357-91c4541436bmr271985585a.6.1781575441022; 
- Mon, 15 Jun 2026 19:04:01 -0700 (PDT)
+ bh=VX7NLQYLerFMFCVchnq1CkD+pT2w/NHCxn4QKAYqUcU=;
+ b=PxMO1q9p2QykIJ8uzgusDmOsIBjNHizGTX2ERCMhGY+T/XnCCu5h0WmYeMXBmUb/n1
+ Qe/U9M/vb2j5PHCfbNZhEKfIflFzbVWZAkrP+l5WRJB1o5pzfNBONBrSj5mtzz6Khjuh
+ zuqbhIZf1UaBbPHpcsCA1i0w58tsjcZFzNApKIVY6IRZt3Dznt9IKRmXK/59pL+Y61Iw
+ WWNxg0Bxgjc05Vj/aZ5DntDZGRIqZDqq5JpGV6o6HpDKqVEbS3Hdnozq1PCertHPxWCi
+ jA3BEOwL/ZDTsLEzVaezgXuKcy/8XehjXb6ZONP/dVETuXd78tQUFo+RlmCJ3bxPvBqd
+ nKlA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1781575472; x=1782180272;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=VX7NLQYLerFMFCVchnq1CkD+pT2w/NHCxn4QKAYqUcU=;
+ b=NZUyBgrp/B2i3hstaaq7URBAreICMPpx7SzFkO7pyvZe9QIq2ec1KEMTVPljMQlhOe
+ fZ0LGoKYMm7EFiNJgRpGSJOYkOAIVZdq7z7GCok7fdXjj97d8F5MEZmFaVHY6qKQpIBy
+ kGC4JmZcPRoIRHNslTyofENhq0yBgy1CosPvdjRPTliRcjmxYE1TS7+D1DYPenGp8u9i
+ 2VgcZj/iLDBzCktZlhI6gfgP4B+p6dyUUlaYA/DoBcD3JoL7XDTQuOx5oD2NzHu0Hz5Q
+ GdaSWiYs1xImX4EQIE/SfYhIbA6Lj0l8pc4PFlWkfC6hZewJ0hgRvIfHECgQBWzWlJmr
+ +wtw==
+X-Gm-Message-State: AOJu0YziXR3HfYOVUWQ/avRUMRlEwlFd9YtuYws9lzW6JP5J370e1h+J
+ 6uhXCGUqKdP9HcgTeLNJYoOpHsvbAlW5yna/+vr1mbeFPw+Gm2K8ph1Mw5LIxZmFOgW3ahAI7v2
+ IoGSrksiQLDA6qhDqhEX48epd0+5wPR0re2g1m3XjbbtYLPvTqm2fSDA4seb847fjOg==
+X-Gm-Gg: Acq92OF+FvNyQRbNlYNmrHeY4rku9tzuXUGJGi6m/KTiV/jdbG/f5HMAzQzH5R6OA5Y
+ tyGorZVq50hDLQbpWNOFNGPf7/nMugYoQOMtovyTpUY8inq8GEjoHH2+4yBdFtj6Sdm7UohJQ1q
+ eGuxJS8CdTwsN80IAkRiEZfHg59hx9n8hCNpZfhdSQoUUL+/WbQHDmeP6xorVZCH4XmA1fYfRHY
+ C33rGaEChzEviNu5XXFKpfUuS4gRcuyLO2AxH/jjQCV5sTPa6M6mXglLCHEttVFN6A1rI1Md9nD
+ J4uJBc5YEDgXyZvan/EgPsY2jYmY7BawPgDuRvcutTVIf7vuQerQUrGlFRwvG+zEUYQ6sTLXPzs
+ Q//F6aptSaYGfPCgrXkGffIF+/XQZ5qc+ehWnOtuhzORURFAIJnS94+5CW3uCOZHrdcUXuaIsbK
+ lqnEA=
+X-Received: by 2002:a05:620a:25d4:b0:915:ba3c:8c2b with SMTP id
+ af79cd13be357-917efcb331amr2159742485a.19.1781575472431; 
+ Mon, 15 Jun 2026 19:04:32 -0700 (PDT)
+X-Received: by 2002:a05:620a:25d4:b0:915:ba3c:8c2b with SMTP id
+ af79cd13be357-917efcb331amr2159740985a.19.1781575472079; 
+ Mon, 15 Jun 2026 19:04:32 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4606f2c473bsm43616863f8f.28.2026.06.15.19.03.59
+ 5b1f17b1804b1-49230a4601esm17317795e9.1.2026.06.15.19.04.30
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 15 Jun 2026 19:04:00 -0700 (PDT)
+ Mon, 15 Jun 2026 19:04:31 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-Subject: [PATCH v2 0/6] system/memory: Constify various
- AddressSpace/MemoryRegionCache arguments
-Date: Tue, 16 Jun 2026 04:03:52 +0200
-Message-ID: <20260616020359.18627-1-philmd@oss.qualcomm.com>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>
+Subject: [PATCH v2 4/6] system/memory: Constify various AddressSpace arguments
+ (cache)
+Date: Tue, 16 Jun 2026 04:03:56 +0200
+Message-ID: <20260616020359.18627-5-philmd@oss.qualcomm.com>
 X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260616020359.18627-1-philmd@oss.qualcomm.com>
+References: <20260616020359.18627-1-philmd@oss.qualcomm.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: 8wWgPECfGsRTTot5Y7Cy1KyISGHnlnKk
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjE2MDAxNiBTYWx0ZWRfXznxDllp3edd5
- kzUrrIBIUEVqbm7pLEd5jLplJS/0bSWhKp4UPlOqE6wy2/xmIddwjgCsnb2FnTj8Py5UkMro6zx
- OxcCEpQI/XJqEPjWYo8Xj1Oy4q/0WGg=
-X-Authority-Analysis: v=2.4 cv=QrJuG1yd c=1 sm=1 tr=0 ts=6a30af12 cx=c_pps
- a=50t2pK5VMbmlHzFWWp8p/g==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+X-Proofpoint-GUID: IBCyjySzyRVkSrJ-zD0UQTIsf7E3esD5
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjE2MDAxNiBTYWx0ZWRfXwuLS9+NYGAZB
+ 94HjKw3lMx8sGzh6796RSGAfl7EyIe/aDDgOBgXz0LAcascdqleauw2H3HiN8JZsge667C0xDwm
+ 3sOEIIMKy05+Lcjc3BEzpWVm62nA3bY=
+X-Authority-Analysis: v=2.4 cv=QrJuG1yd c=1 sm=1 tr=0 ts=6a30af31 cx=c_pps
+ a=qKBjSQ1v91RyAK45QCPf5w==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
  a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
  a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22
- a=6aqAmV0DK60uwL7E1wgA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=IoWCM6iH3mJn3m4BftBB:22
-X-Proofpoint-ORIG-GUID: 8wWgPECfGsRTTot5Y7Cy1KyISGHnlnKk
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjE2MDAxNiBTYWx0ZWRfX8HHqqo5JJ+1P
- EuG+hHVMnWzX35x3hGsFSr/MDg8HVOrn5sbNCkAL79Q0rl4FNpv/uIytFZPvX+RZ8uH5Ce5P7xO
- 12kzl5SZN2h0Wt+BeRMfa8QaR/pdKmkjeb3lAjSZUxy1MtPnJJ4uEI3o6A1ykiK4RBeudGouOie
- VnyA9pRKvi3CiEKdIhoWeeLxbOwygqACQOVvXoNCV4pja/38BO+5YquhsnalVvstMQz+KBn+7F0
- p2eK3nJWqkKuC2/BSMPUZBHW7XpDwu+TlPrbGGxQzp7paxDgObtp+NSRpY8m8+GgX1RDLAQyXBM
- hYB4C3B4DZQdy6Be6JV+tRUdIlrTDMLvD6acqX3PHw4ctK47i+npqbHOfat16745ByTZqKENTDz
- ON9KmoIFdhyZoisiV0lir3tMBTg5pP/xlxVpD5KXvgA1FOClTyOmbSQuf3+ncVNfbRT1FG4VI/K
- eL11bUqe1QsBNFgVlLA==
+ a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=e-NtlPoBfifz4Kb8xpcA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=NFOGd7dJGGMPyQGDc5-O:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-ORIG-GUID: IBCyjySzyRVkSrJ-zD0UQTIsf7E3esD5
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjE2MDAxNiBTYWx0ZWRfX5oDHOG5qvGkb
+ CCQH4ZQdQ3hgJdwVOn+L2iW8gNVa4h2wOn49G+JBMb3Euao05LgSsZdxk+JZUNWyG8XyNbuwmQ3
+ UVorRPodT2Dz6HXsXgDBPBTNAwaSMa+6anKM64bmcdcmwXXloich3St3LtzV0Ux0G3iHFKALkmb
+ 98/jBybFuiygKMUwGK7W19pd0EeCwmrjcMW93QFhUXdcBHwy6bgyYjpQl5fc8G0noo7ZoIkJqXR
+ 63fFaXsvtiGq889LRo1j3UoSB1JNmYfF8qGrannKb+380MIsQA3K0qLuY1m1Ei9JMal1NDNoo1O
+ 8Q2UJwmp1suaaGH+vc4mkx6SpDN89HqTvkvAYdvuK8gnRreXzfOzNUtASkF7ru9eP6kPRxxM5j4
+ DiD87atm/tkOGxIJwoSs3+Yyl5/IBHspXnuAeXz9z6D71pbzzms8rfQ4yZNlrnxAd7FLwjMdBTW
+ mFS6znmEsZNUMJJPgnw==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-06-16_01,2026-06-15_04,2025-10-01_01
@@ -150,27 +157,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When structures are only accessed read-only, it is safer to mark
-them const to protect against invalid API (ab)uses. This is also
-an useful hint to compilers.
+From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-v2: Remove 'xlat' patch (Peter)
+Mark the AddressSpace structure const when it is only accessed
+read-only.
 
-Philippe Mathieu-Daudé (6):
-  system/memory: Constify various AddressSpace arguments (checks)
-  system/memory: Constify various AddressSpace arguments (flat-range)
-  system/memory: Constify various AddressSpace arguments (notify)
-  system/memory: Constify various AddressSpace arguments (cache)
-  system/memory: Constify various AddressSpace arguments (access)
-  system/memory: Constify various MemoryRegionCache arguments
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+---
+ include/system/memory_cached.h | 2 +-
+ system/physmem.c               | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
- include/system/memory.h                 | 18 +++++++++-------
- include/system/memory_cached.h          | 20 +++++++++---------
- include/system/memory_ldst_cached.h.inc | 15 +++++++------
- system/memory.c                         | 16 +++++++-------
- system/physmem.c                        | 28 +++++++++++++------------
- 5 files changed, 53 insertions(+), 44 deletions(-)
-
+diff --git a/include/system/memory_cached.h b/include/system/memory_cached.h
+index 6eb6179140b..760ecb38c19 100644
+--- a/include/system/memory_cached.h
++++ b/include/system/memory_cached.h
+@@ -117,7 +117,7 @@ void address_space_stb_cached(MemoryRegionCache *cache,
+  * are relative to @addr.
+  */
+ int64_t address_space_cache_init(MemoryRegionCache *cache,
+-                                 AddressSpace *as,
++                                 const AddressSpace *as,
+                                  hwaddr addr,
+                                  hwaddr len,
+                                  bool is_write);
+diff --git a/system/physmem.c b/system/physmem.c
+index e8a2c438c7d..b33aa14ab64 100644
+--- a/system/physmem.c
++++ b/system/physmem.c
+@@ -3829,7 +3829,7 @@ void cpu_physical_memory_unmap(void *buffer, hwaddr len,
+ #include "memory_ldst.c.inc"
+ 
+ int64_t address_space_cache_init(MemoryRegionCache *cache,
+-                                 AddressSpace *as,
++                                 const AddressSpace *as,
+                                  hwaddr addr,
+                                  hwaddr len,
+                                  bool is_write)
 -- 
 2.53.0
 
