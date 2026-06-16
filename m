@@ -4,136 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57A8ECD98EE
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 17:53:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E4F0CD98E1
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 17:54:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZXye-0005nW-L1; Tue, 16 Jun 2026 13:53:32 -0400
+	id 1wZXzG-0006Zj-24; Tue, 16 Jun 2026 13:54:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wZXya-0005kX-DA
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 13:53:28 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wZXyY-0002F3-Nh
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 13:53:28 -0400
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65GH92pQ137683
- for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 17:53:25 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=qcppdkim1; bh=iEzqlGeVG++
- epljayNFPZILpELMZV29NwKJ7aYzHw0A=; b=cQili0wMCByxrfBmR9LdbX1yDxF
- 2UzqlxRg+SkQoDS/toSTKMH9ZV6FK7oPaBdMbbWkAZpc4pBpVVSw5TJVcsk/oXLC
- c23qZnJPyzSopL/hjeTUj/7sL6kDfoM9Hjcl4lCyFFoVM0dDYHImriYU3eycGIas
- aGLHzFZ8iZ7LR3yL0x43yMB52n4yd+CY2Cc/5V/LiK9KJZOmK9mDiIjXOfjQeQQl
- xbugNnE6AEwVE2/9n2zbfZrPW2/OWzp+tzwSaY2btBq9N4TZCBm5J8qpC+ejUr5a
- i1NL9JL6k3qZgAxGNtR08c9QugYfZVhX0Q9glWnv/Eqw5Fw/xTAUuyew+wA==
-Received: from mail-pg1-f200.google.com (mail-pg1-f200.google.com
- [209.85.215.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4eu1epay9v-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 17:53:25 +0000 (GMT)
-Received: by mail-pg1-f200.google.com with SMTP id
- 41be03b00d2f7-c85a298cd62so3303804a12.0
- for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 10:53:24 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wZXz8-0006Wa-Rq
+ for qemu-devel@nongnu.org; Tue, 16 Jun 2026 13:54:02 -0400
+Received: from mail-pg1-x536.google.com ([2607:f8b0:4864:20::536])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wZXz7-0002Ik-7X
+ for qemu-devel@nongnu.org; Tue, 16 Jun 2026 13:54:02 -0400
+Received: by mail-pg1-x536.google.com with SMTP id
+ 41be03b00d2f7-c8584e80d59so1959166a12.2
+ for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 10:54:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1781632404; x=1782237204; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=iEzqlGeVG++epljayNFPZILpELMZV29NwKJ7aYzHw0A=;
- b=TRSV5jP3WAoVJl1Td+X16P3u1IKh/WLnCwKUvQQT0FKuCefxowVrzqFTAxjqsKwhvO
- TF88X7QL4VSkkUnQSqULygF20rMsvdwXvPu1nwzA+UlIsHSdyFCridEJOAs2Ii/L7o4X
- 4jau8Nv+2RNzRGmclGNXi78tCRQ0fpsyD2z02a2ww/L5fC738pMgVBUUDEj6U7FqtEB3
- GnuDmUu55vsE0ZI9uronW7CabYPrD5lOMSi4Cb5xRu5MK4ClpMWm4KoHSIiML2HB/0fN
- nwN3mY9OsbRsWO0V6vnijQlPb9W/dQvlOMpwWoORxQMd0iLq64IbLbz54qRXEIhqqQHh
- CG7w==
+ d=linaro.org; s=google; t=1781632440; x=1782237240; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=Bp065EV9jrFRDViY8AOrKPsHonytwMythX8zzCfZTsU=;
+ b=hn7FsCIQcr3JBUBa7RAsK3cHcjry4uE+/wXqDrXSZDFdWq00HNza4xA0ZRtSfufwW7
+ 5of/wAQmudKyUHkA3KI0WULdhEbEnIWsTxIE5PFECL4p8AvOK3bIN0jtlIGBKNtWxlr/
+ 5cNZN026JpQzH3yy20U8duah5z/hV5kgltGLob5AM5BOZDort5wdz6apT2Jfkk7gloO7
+ qvj/bHdS7P/7FF1eMWsU/UKMWCPGBApbxNKvfQEg0FRuIyHLfF9hN0/61/9Z3JZdQ+YE
+ JpbAt9lUSCAuUYQOmqt1VWevkXMfKRvGXi70H5zxMU2iY8S+lWG6J7yfxNYLGmo/jAT+
+ VtxA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781632404; x=1782237204;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=iEzqlGeVG++epljayNFPZILpELMZV29NwKJ7aYzHw0A=;
- b=hHjOxybwcpbX6lqg/GGJdWkhbdM/0XDzqSI6Pb84TcRfmqZP1ANDElAraUuXXbRTxB
- EgiABNHK3ipuda7/oqB0v5y0uHtu63GkUKNnLzj9Tz3EDDBFKpypoMD8+w3nfQdKr6hx
- 0XnnjGNnfR5Wcgp780YQdYtyQald3BcvsSgnAYq8LtNqwdA0WiRFjgghfT4sHN8A3O2s
- m4dIXtu9V/jAuaD2dq9MyyMp88uxJzcrJRF13jPiPfHZUrCZ+B1ql477EyAzk9yc39Ae
- 6AcJeeHCyUMrZmMimxNtFzECUg+SHNJ4Q3NjEwVuD6tc9W7MVz1ZWIiRJdol8xsG0xtd
- KFmg==
-X-Gm-Message-State: AOJu0Yz6niMG2M6nP/x4z63t2cPtlKRPJi/T7ryrlIRIn5UFdGUBQGag
- +l6GEhFlLvd0a4UwUAZurNDuzMRpNRqmyAUrnZ+tqHWliJN+56Wg9cQmV0hOhM33swrwWNM1it9
- Wm1hcHJiFKe9//TJPRg4QB7XaLCfdvn0Y8g4C5/ASBVNun42MfH1sBYyE+F4YBgUm77H/
-X-Gm-Gg: Acq92OG5keiBktvJ0baex0uIDHAtXIFE+y2qAvpGo6lTMH9RsXvUH5ElbI1+eh+YDQt
- IrWyOBKyc5tAXkcJ1tUC5hNm3RdpqRZUtrU4IyaQ5q3suthywntDMg6vmyGo2sBRt/V9RkW+daq
- qd1VGeUJ+8VXAZMDNnrdgkvDDWU3C/9eXUUmTaxmrMOOs7RQ4ZTyWtSYMqs8XOpXtZxuKtc5hYr
- bXz0lvuO2wXT0eEe7Y6Xra4cBcpyNpfiH707fEf9uzmlQOCYoCj1hXeLOMKzeiFOyinrs9xKOtg
- pfvSpAlN8FoDe5ojBJ1FaQby9Qowztf9/zfwSuUzs3b9/o1tKChE1LEirzMq8+QO2uec6slkwx2
- BngWnqc8Vhx1Lr3sJOPD5vKyehxznyI4t3IfkJHoxjVuIRhUOtLQ3ggPathj1F7K+oONEwYYNZp
- HL6FuUK+k=
-X-Received: by 2002:a05:6a20:734e:b0:398:6ea8:21f7 with SMTP id
- adf61e73a8af0-3b8b624bb73mr472898637.15.1781632404078; 
- Tue, 16 Jun 2026 10:53:24 -0700 (PDT)
-X-Received: by 2002:a05:6a20:734e:b0:398:6ea8:21f7 with SMTP id
- adf61e73a8af0-3b8b624bb73mr472869637.15.1781632403638; 
- Tue, 16 Jun 2026 10:53:23 -0700 (PDT)
-Received: from pc.taild8403c.ts.net (216-71-219-44.dyn.novuscom.net.
- [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-8434b048496sm14537865b3a.54.2026.06.16.10.53.23
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 16 Jun 2026 10:53:23 -0700 (PDT)
-From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-To: qemu-devel@nongnu.org, peter.maydell@linaro.org,
- richard.henderson@linaro.org, pbonzini@redhat.com, stefanha@redhat.com
-Cc: pierrick.bouvier@oss.qualcomm.com
-Subject: [PULL 1/1] add a note on -shim to direct kernel boot docs
-Date: Tue, 16 Jun 2026 10:53:16 -0700
-Message-ID: <20260616175316.264758-2-pierrick.bouvier@oss.qualcomm.com>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260616175316.264758-1-pierrick.bouvier@oss.qualcomm.com>
-References: <20260616175316.264758-1-pierrick.bouvier@oss.qualcomm.com>
+ d=1e100.net; s=20251104; t=1781632440; x=1782237240;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=Bp065EV9jrFRDViY8AOrKPsHonytwMythX8zzCfZTsU=;
+ b=WkeNOveyVBx6OfxaROrg4xyz7kfg1wimEuQ0PEI6VshMYliHBKSSvwgs5B1+Xg0cjF
+ diQrzSgj3Dt9zv+7qhikMGSWkg8IAkMuLHvdiGPobUNvSrL6hh6M+I4kYos39hfLPfut
+ xoCHTTHil2nbjSS575AUNLyqkuL4aDV5dPQ3/DTqLp9uO+/id649kvrSgwCzMrdR/v2t
+ IfLN5gYoYBZrlCwC0o4EDy8Owv3KxvrqU1JiOT+4VEyF5YZ2/sjLvziJghqNX/8J5Nih
+ qIvDljxhzivRWDvFPhpkqNu9/aM2deG+HdB3bI4+0odlaKYlemt2NQ1Nyj8uSD0+ynxr
+ X1jQ==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ/FF1VPvd3RscD2OREP5Kqv1y0RKpZLVN/3s2X/hz6MfT5IxhcV+0vhoqhh6SOlzrr1doFbYpqjDwuQ@nongnu.org
+X-Gm-Message-State: AOJu0YwLbjLWEe5HaJ9iPFtFEmEWv1m8wx2AMqgfoK71DUQnfRPqUVev
+ Jdsp6kie3BSVU7z+n1w0IljIY4GhDNKoBx72BO1uedMWw7BF4fx6mZvTZb6igbCxWWI=
+X-Gm-Gg: Acq92OEoulHzK3ggZqds+ju/n3ttJH4y6ENrAk3dfgsXlLf3R2s4FOrgh5ugAT1Nr9R
+ MkkQywE/mU0YeT7iIlc+Qj/3de3x7pIjDlhpC4Bwy7CHOuva1/3saNvqev5bDxjNw3mEty6DTeR
+ zavFiL8A2dGFEPtOpasFx0AZrfz3ZKBosWgwE+INXpW7aeBR+BgvIRdSGfG4tOaFiWL50qwW8Ss
+ IRWNiAGcY5d5besWDVz7ZvzaWskDECiAq/UvMnYbbttG71Tu3PoieIn2BqnmmA8nWXuaDqaJ77J
+ dNUaMYS2l6UyLdnn4KaDfgfZzwowd8lOjU+VrY8vKiEK0QRcLqEnDWXl5FYqseEqiO+nCCyTS76
+ k83XVoTFfweyll5/vY5DyoDdoYJM/5Ad+3Yv0uEeBTR6hPhXyi94dEU6A8SYL+UH/j06HGdG2ih
+ fXkRCx+C+l4hVYcKYVWyStxBfIhLS3TwVlUO5WTZ8pgN/fZ2MmQzzD+4YZ826/nFR7gd26
+X-Received: by 2002:a05:6a21:3989:b0:3a2:d838:bfca with SMTP id
+ adf61e73a8af0-3b8bc376017mr277907637.3.1781632439566; 
+ Tue, 16 Jun 2026 10:53:59 -0700 (PDT)
+Received: from [192.168.0.4] (174-21-129-215.tukw.qwest.net. [174.21.129.215])
+ by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-c8664586b3csm12124834a12.14.2026.06.16.10.53.57
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 16 Jun 2026 10:53:58 -0700 (PDT)
+Message-ID: <889ac42b-4031-4bcf-a818-48448a98b7dc@linaro.org>
+Date: Tue, 16 Jun 2026 10:53:55 -0700
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 4/5] target/or1k: Have exception_helper.c absorb
+ exception.c
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Stafford Horne <shorne@gmail.com>
+References: <20260616153432.92939-1-philmd@oss.qualcomm.com>
+ <20260616153432.92939-5-philmd@oss.qualcomm.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20260616153432.92939-5-philmd@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=I/ZVgtgg c=1 sm=1 tr=0 ts=6a318d95 cx=c_pps
- a=oF/VQ+ItUULfLr/lQ2/icg==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
- a=wLZQiVpf1cABdgcX:21 a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
- a=VwQbUJbxAAAA:8 a=20KFwNOVAAAA:8 a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8
- a=t5O8Ea2x4ZgTwSGeemQA:9 a=3WC7DwWrALyhR5TkjVHa:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjE2MDE4MyBTYWx0ZWRfX3LRvHECA/sNn
- h4x3xaHiFs1OKheC5ZoSvX++mWtmcNLrY7eReaXi5ZGOlJ+pMfL0PizFOWcmiK84DkiuVd7/b6F
- uiM4tmc/Sw4W1X8FwmJMeKVjWFFO97k=
-X-Proofpoint-ORIG-GUID: eP_Zqn4eSwCs0BKQmxfcExvXbhFj9_Px
-X-Proofpoint-GUID: eP_Zqn4eSwCs0BKQmxfcExvXbhFj9_Px
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjE2MDE4MyBTYWx0ZWRfX5xvgubs16cTP
- ovd44QAZmC71y4EZXhyO4kDKbVKMSn8cVoiS7PMsZheHKE+l2DqrJ8LGzEN8qmzJetQ630ROVgJ
- CnP3sNMk4r8d2u2fA4e704pSSl5z/6VVBYPVPcl/CRp0DyOoQMsd92lEPcI392aXuucUZ8KEHm1
- pugypRxKof2r4rLj5VHibs2x54iZftwB59hu/P1GZN+8AAp9Nn3FwHncZdO66w/rm0UdBDfSpIY
- dKT679ZL/81o00O6WgIRvoZeIDyk97/RrBiUXn4O/qDrMZlt/44MRDAzhSZk8UuzVBz47aQRK5B
- qD2r/MTouaBH80RWYHH6qtYBi917UADf2tYgPXdrsCYYqxTO901E5U4Ar3CJ5AEBGfpkFKGzHXm
- XNoaNgpMOW7ur2P58jIRIQoYUOQMFsXMPx0bDwrNyxBUkY5FqZJtAFDohdGUfDA9HXwm1QrfIDv
- a3uPZ+bStGLeE1P2+6Q==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-16_05,2026-06-16_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 priorityscore=1501 lowpriorityscore=0 phishscore=0 adultscore=0
- malwarescore=0 spamscore=0 clxscore=1015 suspectscore=0 impostorscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606040000 definitions=main-2606160183
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Received-SPF: pass client-ip=2607:f8b0:4864:20::536;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x536.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -150,52 +108,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Gerd Hoffmann <kraxel@redhat.com>
+On 6/16/26 08:34, Philippe Mathieu-Daudé wrote:
+> OpenRISC is only available with TCG. No need to keep
+> raise_exception() in a distinct file unit, merge it
+> with exception_helper.c.
+> 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+> ---
+>   target/or1k/exception.h        |  2 +-
+>   target/or1k/exception.c        | 30 ------------------------------
+>   target/or1k/exception_helper.c | 13 +++++++++++--
+>   target/or1k/meson.build        |  1 -
+>   4 files changed, 12 insertions(+), 34 deletions(-)
+>   delete mode 100644 target/or1k/exception.c
+> 
+> diff --git a/target/or1k/exception.h b/target/or1k/exception.h
+> index f62fc314c1f..654ac9e515d 100644
+> --- a/target/or1k/exception.h
+> +++ b/target/or1k/exception.h
+> @@ -20,7 +20,7 @@
+>   #ifndef TARGET_OPENRISC_EXCEPTION_H
+>   #define TARGET_OPENRISC_EXCEPTION_H
+>   
+> -#include "cpu.h"
+> +#include "target/or1k/cpu-qom.h"
 
-Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Link: https://lore.kernel.org/qemu-devel/20260612161707.158029-1-kraxel@redhat.com
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
----
- docs/system/linuxboot.rst | 19 ++++++++++++++++++-
- 1 file changed, 18 insertions(+), 1 deletion(-)
+Why are you adding full paths here?
 
-diff --git a/docs/system/linuxboot.rst b/docs/system/linuxboot.rst
-index f7573ab80aa..b0fd168bad1 100644
---- a/docs/system/linuxboot.rst
-+++ b/docs/system/linuxboot.rst
-@@ -1,4 +1,4 @@
--.. _direct_005flinux_005fboot:
-+k.. _direct_005flinux_005fboot0
- 
- Direct Linux Boot
- -----------------
-@@ -17,6 +17,23 @@ Use ``-kernel`` to provide the Linux kernel image and ``-append`` to
- give the kernel command line arguments. The ``-initrd`` option can be
- used to provide an INITRD image.
- 
-+The ``-shim`` option specifies the ``shim.efi`` binary.  This is needed
-+when you are booting UEFI firmware and using the ``-kernel`` option to
-+tell UEFI to boot a specific kernel image, and the UEFI firmware you
-+are booting has UEFI secure boot enabled.
-+
-+When this option is specified, the guest UEFI firmware will first
-+load, verify and run the shim binary, which is typically signed by
-+Microsoft so the firmware accepts it.  The shim binary in turn will
-+load and verify the Linux kernel.  The kernel is typically signed by
-+the distro and the certificates needed to verify them are compiled
-+into the shim binary, so shim and kernel must come from the same Linux
-+distribution.
-+
-+Usually you can find shim.efi as ``EFI/BOOT/BOOT{X64,AA64}.EFI`` on
-+distro install media.  You might find a second shim copy in the
-+``EFI/$distro/`` directory.
-+
- If you do not need graphical output, you can disable it and redirect the
- virtual serial port and the QEMU monitor to the console with the
- ``-nographic`` option. The typical command line is:
--- 
-2.47.3
+> +++ b/target/or1k/exception_helper.c
+> @@ -18,9 +18,18 @@
+>    */
+>   
+>   #include "qemu/osdep.h"
+> -#include "cpu.h"
+>   #include "exec/helper-proto.h"
+> -#include "exception.h"
+> +
+> +#include "target/or1k/cpu.h"
+> +#include "target/or1k/exception.h"
 
+And here there seems to be no need of adjusting the includes at all.
+
+
+r~
 
