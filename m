@@ -4,85 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D30ACD98E6
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4ED0CCD98DA
 	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 10:09:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZQhY-0001QV-Ba; Tue, 16 Jun 2026 06:07:24 -0400
+	id 1wZQhH-0008Eb-3R; Tue, 16 Jun 2026 06:07:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wZQhV-0001AL-R9
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 06:07:21 -0400
-Received: from mail-pg1-x532.google.com ([2607:f8b0:4864:20::532])
+ id 1wZQhF-00081D-55
+ for qemu-devel@nongnu.org; Tue, 16 Jun 2026 06:07:05 -0400
+Received: from mail-pg1-x534.google.com ([2607:f8b0:4864:20::534])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wZQhU-0003SV-5O
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 06:07:21 -0400
-Received: by mail-pg1-x532.google.com with SMTP id
- 41be03b00d2f7-c85a2ca7bf7so1608285a12.3
- for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 03:07:19 -0700 (PDT)
+ id 1wZQhD-0003MD-05
+ for qemu-devel@nongnu.org; Tue, 16 Jun 2026 06:07:04 -0400
+Received: by mail-pg1-x534.google.com with SMTP id
+ 41be03b00d2f7-c88831f28f4so417194a12.2
+ for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 03:07:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1781604439; x=1782209239; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1781604422; x=1782209222; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=vtqmoh4dg8khN5cnWu/i5fmQVO199sh9k7HIZoSec9Y=;
- b=UjqE5BY2bqLF0eKU/78Bz3wxLdDyNVLBWthxcaLRfMRFkvP1TIJWgDXigf4t1IwWfp
- rR/AUwHFbULpKBG9CgftrdOI2NDMvT/0h+BLXRegn5SLQxc+gim7aWpLQSrIwQRzSCPc
- OnsWNa/dr+q7ERiYECvbKutnhFd7KHJgcyeNl3pu9ew4KLLzlXleU4Jv4UyJbG3qgQwZ
- bIM5TgA74WjR8JiWBmd+LoHhBJodZKViNY9NM6XhjgI0NLJ41rknhuFwcFdG1yxY1998
- /0EdxJHJoBFuWckP1d+PsbpGWtGL1NLttPeA+yxxILi9aCSpyEVcvGak3zmKVcR9r5e0
- jbGA==
+ bh=3jxiXtNxHQeunKjhZBQ34EwCH1Q6dP1U0lZODDJfL4M=;
+ b=H6cowK3mlbAb+2oHReYo6/L3jGX/wEIXxkP6mui+wKJ5jf+WH09oX3ckEEZlSrICUb
+ Byq8umPGZzILNkwuRqfPFB8W1W9kVdH8DYY7d1n/Sk2aV6bKXwchyjiFLnS71XUniVKq
+ j+MkyI1aQK8We0ow1CCOoicY/IiEa1v8P/BCTc7/FGBClrn4YDj9JeJ3NleUb2Y8v6ux
+ 6ie7Fu5J0aDBeqGZCQod3jAmzkuazwb6WUy9/b2iD9BJX0VFVOUx6J1G8M1CHCQE3D1b
+ hwOS1QHQhMq6ToIWPlgyrLKO1Bh4IleeacZdbrkQW7fQlrYorab7U6rJGKBQ2SfpPiOF
+ OEYg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781604439; x=1782209239;
+ d=1e100.net; s=20251104; t=1781604422; x=1782209222;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=vtqmoh4dg8khN5cnWu/i5fmQVO199sh9k7HIZoSec9Y=;
- b=Y2xxhv6mM99wVa6G+dIaoyRs2jBA5cFzXzJdHUuaGaefnupPa64jYpAPF0c+PRctir
- mvqvYWUn4Ww4zvztpu6St0cQI8Uahsm58nvZYU+GBfDWezU8s3cHRrLSqeAbXZWZiKDq
- jmqy4m6nlpQAP1/UQEX0QLG/RC04UyD/h9CwS22ehPYMKCHgwfH9gAPUGeX8cWb9aJu3
- BhgbAMagkPEvoZkurK2sR0dMEvBFMTzNscqlepOOuAJ695eD69b9m/Z3Vq4chqe3Ywv3
- ZBLX7iQqDowhdWVk1ZNMw8TrsIkWf6WbHyS0oZy6IJ6jybydH8/M+tQGE51tG91nKSI5
- 0sOQ==
-X-Gm-Message-State: AOJu0YyBtrhn0HGfFXmivkqOOooz8CQYmLC8bG0hZn9qGK5eAhQtkSe3
- R01626jRbVachjt9Qhke+jQ758Odkf4oSdwy/OEKAWvBPchhlRJiL3RS40Ehw1Iq
-X-Gm-Gg: Acq92OGFt7TFTgcoL5mJ63IM7kBtNQEYvThuMXOr+taQwEt44b0AAtxPe+uuvGWKdgQ
- qXlY8p3UJlM2udYyt7yerYY0PCe+gHc6MPHDkEAipfbAyQFJnq+0+hwNWwquvUaheSDPINtl35t
- tlGIErpbi8oi4sMxTebNRboHVmujEY0WBTbvloWbVcakhgtsFgsmzEXgpUptEtA+rW6R2IwKnq9
- koKOc8S1s1XdnD9NxTFkL0Jplx7ZCFwZgYhNO9UFMuTZwwQiqbWnX+ursufhF/NIviVnL7Wr5f2
- OuAsOjSp9C+YfdPct5SUaF72Hj70TvumllecqEcnsedPhWtueT6eJP8mOqr5A+sxXy1orwX0VgF
- w0d1It2SU6ucg3xqGAUWWw+hCjtv/XDTvslt7ltiycCc/3nEQI43H3I5SkQWeZFk0RV/ZSYTYwT
- rTfI0wf5U1XM27rho9czS+VqCD5L9bTSaqOc6m9z2n
-X-Received: by 2002:a05:6300:4049:b0:3b4:7236:1b5 with SMTP id
- adf61e73a8af0-3b783f66890mr20953213637.26.1781604438786; 
- Tue, 16 Jun 2026 03:07:18 -0700 (PDT)
+ bh=3jxiXtNxHQeunKjhZBQ34EwCH1Q6dP1U0lZODDJfL4M=;
+ b=KEKBoxgxN5iwZX6G32Lx92kTsyDPURPhoDEE/1F/PX1bQ5DVcVZWrjzxlV1zDRX2nV
+ M5zb32yfgKb6g2Z4+JJw0WEnV9jrdnZxLlucOsTfiuOSsjadRzkGKW5UOU8ti5GSMVJz
+ m5g2y+idKR0Pedf/zJtAKsvRCVgiz2jdtZRdAh6h92bZEPO/u11AwpysxoJFvAmtfniA
+ gmwi0sHDEm22I2KUWqeTgemdIhfkpFD61qosjlOS1/TTdmJx5zyMBl1zZM+Ap2iwaOw8
+ R6Vla3hh8/GNRxJ3WoH5ITY5/6RPgdvlOHEjT5yjklOxYFZw/Buf5qCN3VcG1ZXe4qo/
+ IkEQ==
+X-Gm-Message-State: AOJu0Yxyz3Sru0lSsy8zTNBAaJJsID1BIGzFc9Qj9bmvPEIxhd5oivzI
+ 3tjptVIUt+bmFPQCzi4I2zdGGzw5oZ2Za5xsoWAHW9RIUQNbJaxVuX3LksDik0Qu
+X-Gm-Gg: Acq92OGNa8bkilxyTq/Unb9XnV9CcCzmiSSQPVuNUgnRI5UcQMPOSTL7hMocmVFhEdY
+ +LR1sTF4NWsRNimPmBgYzfM55dYtxBSy7jMYNiM+FRXvjHy0GtgIBmwJwYaNJFHBNfQ6OU7QjSc
+ 2UyyHI7yjwI198xFxrARUD7UcBzk2EvQ6HzzELt9U6PwDxfVYzCSewrsqGYkP4RGc6vScgFPo03
+ bZzFuIyvCd1SN22WLsoLLWgzbPnA4/nFqCozsVRZTW7Gb6KrM/NYmQGOQzX1fg8YEJIQYOI2e0i
+ z02lOUQ6GUXQo8qL5i6vZmDRwmDhCYztGCWZHpFq9Hw2+UPZUG00kTT/3DiBrVvho6Uy7+tymmL
+ eMLB3CjdpTIjHejj9xSgb5udRejxe1/YnIGVWPWBAkrHef8GpPis/gEmLA/rbwnt4bB+uThnwRo
+ EBMb0coAu5ooIrVcItIgn+Af0zcDwi3YLpXXLtYEpS
+X-Received: by 2002:a05:6a20:d70a:b0:39c:5624:ee53 with SMTP id
+ adf61e73a8af0-3b7e4ce6955mr3321483637.24.1781604421609; 
+ Tue, 16 Jun 2026 03:07:01 -0700 (PDT)
 Received: from toolbx.alistair23.me ([2403:581e:fdf9:0:13b2:851f:d9cb:44c5])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-c866519f0a6sm10916735a12.22.2026.06.16.03.07.15
+ 41be03b00d2f7-c866519f0a6sm10916735a12.22.2026.06.16.03.06.58
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 16 Jun 2026 03:07:18 -0700 (PDT)
+ Tue, 16 Jun 2026 03:07:01 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org
 Cc: alistair23@gmail.com, Anton Johansson <anjo@rev.ng>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 30/83] target/riscv: Replace target_ulong in
- riscv_ctr_add_entry()
-Date: Tue, 16 Jun 2026 20:04:33 +1000
-Message-ID: <20260616100527.1939565-31-alistair.francis@wdc.com>
+Subject: [PULL 25/83] target/riscv: Fix size of [m|s|vs]iselect fields
+Date: Tue, 16 Jun 2026 20:04:28 +1000
+Message-ID: <20260616100527.1939565-26-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616100527.1939565-1-alistair.francis@wdc.com>
 References: <20260616100527.1939565-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::532;
- envelope-from=alistair23@gmail.com; helo=mail-pg1-x532.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::534;
+ envelope-from=alistair23@gmail.com; helo=mail-pg1-x534.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -108,53 +105,211 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Anton Johansson <anjo@rev.ng>
 
-Widen to 64 bits in size to hold all relevant values.  Note: src and dst
-arguments change from signed to unsigned but no functional change is
-incurred.
+[m|s|vs]iselect are defined in version 20250508 of the privileged
+specification to be XLEN in size, however QEMU only ever uses at most
+16 bits of these fields, so fix them to 16.  Update relevant function
+arguments.
 
 Signed-off-by: Anton Johansson <anjo@rev.ng>
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Acked-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20260520125406.28693-20-anjo@rev.ng>
+Message-ID: <20260520125406.28693-15-anjo@rev.ng>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/cpu.h        | 5 +++--
- target/riscv/cpu_helper.c | 5 +++--
- 2 files changed, 6 insertions(+), 4 deletions(-)
+ target/riscv/cpu.h     |  8 ++++----
+ target/riscv/csr.c     | 32 ++++++++++++++++----------------
+ target/riscv/machine.c |  6 +++---
+ 3 files changed, 23 insertions(+), 23 deletions(-)
 
 diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-index a92cb249fa..48d5c769f1 100644
+index 2a4b7378f3..c338df1598 100644
 --- a/target/riscv/cpu.h
 +++ b/target/riscv/cpu.h
-@@ -664,8 +664,9 @@ RISCVException smstateen_acc_ok(CPURISCVState *env, int index, uint64_t bit);
- void riscv_cpu_set_mode(CPURISCVState *env, privilege_mode_t newpriv,
-                         bool virt_en);
+@@ -344,8 +344,8 @@ struct CPUArchState {
+     uint8_t siprio[64];
  
--void riscv_ctr_add_entry(CPURISCVState *env, target_long src, target_long dst,
--    enum CTRType type, privilege_mode_t prev_priv, bool prev_virt);
-+void riscv_ctr_add_entry(CPURISCVState *env, uint64_t src, uint64_t dst,
-+                         enum CTRType type, privilege_mode_t prev_priv,
-+                         bool prev_virt);
- void riscv_ctr_clear(CPURISCVState *env);
+     /* AIA CSRs */
+-    target_ulong miselect;
+-    target_ulong siselect;
++    uint16_t miselect;
++    uint16_t siselect;
+     uint64_t mvien;
+     uint64_t mvip;
  
- void riscv_translate_init(void);
-diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
-index ae0490a086..57e6f8217c 100644
---- a/target/riscv/cpu_helper.c
-+++ b/target/riscv/cpu_helper.c
-@@ -977,8 +977,9 @@ static bool riscv_ctr_check_xte(CPURISCVState *env,
-  *    entry = isel - CTR_ENTRIES_FIRST;
-  *    idx = (sctrstatus.WRPTR - entry - 1) & (depth - 1);
-  */
--void riscv_ctr_add_entry(CPURISCVState *env, target_long src, target_long dst,
--    enum CTRType type, privilege_mode_t src_priv, bool src_virt)
-+void riscv_ctr_add_entry(CPURISCVState *env, uint64_t src, uint64_t dst,
-+                         enum CTRType type, privilege_mode_t src_priv,
-+                         bool src_virt)
+@@ -391,7 +391,7 @@ struct CPUArchState {
+     uint64_t vsatp;
+ 
+     /* AIA VS-mode CSRs */
+-    target_ulong vsiselect;
++    uint16_t vsiselect;
+ 
+     uint64_t mtval2;
+     uint64_t mtinst;
+@@ -794,7 +794,7 @@ static inline RISCVMXL cpu_address_xl(CPURISCVState *env)
+ }
+ #endif
+ 
+-static inline int riscv_cpu_xlen(CPURISCVState *env)
++static inline uint16_t riscv_cpu_xlen(CPURISCVState *env)
  {
-     bool tgt_virt = env->virt_enabled;
-     uint64_t src_mask = riscv_ctr_priv_to_mask(src_priv, src_virt);
+     return 16 << env->xl;
+ }
+diff --git a/target/riscv/csr.c b/target/riscv/csr.c
+index 0d0b2fca49..29db646589 100644
+--- a/target/riscv/csr.c
++++ b/target/riscv/csr.c
+@@ -2440,7 +2440,7 @@ static RISCVException rmw_xiselect(CPURISCVState *env, int csrno,
+                                    target_ulong *val, target_ulong new_val,
+                                    target_ulong wr_mask)
+ {
+-    target_ulong *iselect;
++    uint16_t *iselect;
+     int ret;
+ 
+     ret = smstateen_acc_ok(env, 0, SMSTATEEN0_SVSLCT);
+@@ -2483,18 +2483,18 @@ static RISCVException rmw_xiselect(CPURISCVState *env, int csrno,
+     return RISCV_EXCP_NONE;
+ }
+ 
+-static bool xiselect_aia_range(target_ulong isel)
++static bool xiselect_aia_range(uint16_t isel)
+ {
+     return (ISELECT_IPRIO0 <= isel && isel <= ISELECT_IPRIO15) ||
+            (ISELECT_IMSIC_FIRST <= isel && isel <= ISELECT_IMSIC_LAST);
+ }
+ 
+-static bool xiselect_cd_range(target_ulong isel)
++static bool xiselect_cd_range(uint16_t isel)
+ {
+     return (ISELECT_CD_FIRST <= isel && isel <= ISELECT_CD_LAST);
+ }
+ 
+-static bool xiselect_ctr_range(int csrno, target_ulong isel)
++static bool xiselect_ctr_range(int csrno, uint16_t isel)
+ {
+     /* MIREG-MIREG6 for the range 0x200-0x2ff are not used by CTR. */
+     return CTR_ENTRIES_FIRST <= isel && isel <= CTR_ENTRIES_LAST &&
+@@ -2502,7 +2502,7 @@ static bool xiselect_ctr_range(int csrno, target_ulong isel)
+ }
+ 
+ static int rmw_iprio(target_ulong xlen,
+-                     target_ulong iselect, uint8_t *iprio,
++                     uint16_t iselect, uint8_t *iprio,
+                      target_ulong *val, target_ulong new_val,
+                      target_ulong wr_mask, int ext_irq_no)
+ {
+@@ -2546,7 +2546,7 @@ static int rmw_iprio(target_ulong xlen,
+     return 0;
+ }
+ 
+-static int rmw_ctrsource(CPURISCVState *env, int isel, target_ulong *val,
++static int rmw_ctrsource(CPURISCVState *env, uint16_t isel, target_ulong *val,
+                           target_ulong new_val, target_ulong wr_mask)
+ {
+     /*
+@@ -2585,7 +2585,7 @@ static int rmw_ctrsource(CPURISCVState *env, int isel, target_ulong *val,
+     return 0;
+ }
+ 
+-static int rmw_ctrtarget(CPURISCVState *env, int isel, target_ulong *val,
++static int rmw_ctrtarget(CPURISCVState *env, uint16_t isel, target_ulong *val,
+                           target_ulong new_val, target_ulong wr_mask)
+ {
+     /*
+@@ -2624,7 +2624,7 @@ static int rmw_ctrtarget(CPURISCVState *env, int isel, target_ulong *val,
+     return 0;
+ }
+ 
+-static int rmw_ctrdata(CPURISCVState *env, int isel, target_ulong *val,
++static int rmw_ctrdata(CPURISCVState *env, uint16_t isel, target_ulong *val,
+                         target_ulong new_val, target_ulong wr_mask)
+ {
+     /*
+@@ -2665,7 +2665,7 @@ static int rmw_ctrdata(CPURISCVState *env, int isel, target_ulong *val,
+ }
+ 
+ static RISCVException rmw_xireg_aia(CPURISCVState *env, int csrno,
+-                         target_ulong isel, target_ulong *val,
++                         uint16_t isel, target_ulong *val,
+                          target_ulong new_val, target_ulong wr_mask)
+ {
+     bool virt = false, isel_reserved = false;
+@@ -2746,12 +2746,12 @@ done:
+ }
+ 
+ static int rmw_xireg_cd(CPURISCVState *env, int csrno,
+-                        target_ulong isel, target_ulong *val,
++                        uint16_t isel, target_ulong *val,
+                         target_ulong new_val, target_ulong wr_mask)
+ {
+     int ret = -EINVAL;
+-    int ctr_index = isel - ISELECT_CD_FIRST;
+-    int isel_hpm_start = ISELECT_CD_FIRST + 3;
++    uint16_t ctr_index = isel - ISELECT_CD_FIRST;
++    uint16_t isel_hpm_start = ISELECT_CD_FIRST + 3;
+ 
+     if (!riscv_cpu_cfg(env)->ext_smcdeleg || !riscv_cpu_cfg(env)->ext_ssccfg) {
+         ret = RISCV_EXCP_ILLEGAL_INST;
+@@ -2818,7 +2818,7 @@ done:
+ }
+ 
+ static int rmw_xireg_ctr(CPURISCVState *env, int csrno,
+-                        target_ulong isel, target_ulong *val,
++                        uint16_t isel, target_ulong *val,
+                         target_ulong new_val, target_ulong wr_mask)
+ {
+     if (!riscv_cpu_cfg(env)->ext_smctr && !riscv_cpu_cfg(env)->ext_ssctr) {
+@@ -2846,7 +2846,7 @@ static int rmw_xireg_ctr(CPURISCVState *env, int csrno,
+  * extension using csrind should be implemented here.
+  */
+ static int rmw_xireg_csrind(CPURISCVState *env, int csrno,
+-                              target_ulong isel, target_ulong *val,
++                              uint16_t isel, target_ulong *val,
+                               target_ulong new_val, target_ulong wr_mask)
+ {
+     bool virt = csrno == CSR_VSIREG ? true : false;
+@@ -2876,7 +2876,7 @@ static int rmw_xiregi(CPURISCVState *env, int csrno, target_ulong *val,
+                       target_ulong new_val, target_ulong wr_mask)
+ {
+     int ret = -EINVAL;
+-    target_ulong isel;
++    uint16_t isel;
+ 
+     ret = smstateen_acc_ok(env, 0, SMSTATEEN0_SVSLCT);
+     if (ret != RISCV_EXCP_NONE) {
+@@ -2907,7 +2907,7 @@ static RISCVException rmw_xireg(CPURISCVState *env, int csrno,
+                                 target_ulong wr_mask)
+ {
+     int ret = -EINVAL;
+-    target_ulong isel;
++    uint16_t isel;
+ 
+     ret = smstateen_acc_ok(env, 0, SMSTATEEN0_SVSLCT);
+     if (ret != RISCV_EXCP_NONE) {
+diff --git a/target/riscv/machine.c b/target/riscv/machine.c
+index eb57ab07dc..45fd39994e 100644
+--- a/target/riscv/machine.c
++++ b/target/riscv/machine.c
+@@ -109,7 +109,7 @@ static const VMStateDescription vmstate_hyper = {
+         VMSTATE_UINT64(env.vscause, RISCVCPU),
+         VMSTATE_UINT64(env.vstval, RISCVCPU),
+         VMSTATE_UINT64(env.vsatp, RISCVCPU),
+-        VMSTATE_UINTTL(env.vsiselect, RISCVCPU),
++        VMSTATE_UINT16(env.vsiselect, RISCVCPU),
+         VMSTATE_UINT64(env.vsie, RISCVCPU),
+ 
+         VMSTATE_UINT64(env.mtval2, RISCVCPU),
+@@ -487,8 +487,8 @@ const VMStateDescription vmstate_riscv_cpu = {
+         VMSTATE_UINT64(env.mepc, RISCVCPU),
+         VMSTATE_UINT64(env.mcause, RISCVCPU),
+         VMSTATE_UINT64(env.mtval, RISCVCPU),
+-        VMSTATE_UINTTL(env.miselect, RISCVCPU),
+-        VMSTATE_UINTTL(env.siselect, RISCVCPU),
++        VMSTATE_UINT16(env.miselect, RISCVCPU),
++        VMSTATE_UINT16(env.siselect, RISCVCPU),
+         VMSTATE_UINT32(env.scounteren, RISCVCPU),
+         VMSTATE_UINT32(env.mcounteren, RISCVCPU),
+         VMSTATE_UINT32(env.scountinhibit, RISCVCPU),
 -- 
 2.54.0
 
