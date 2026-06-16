@@ -4,80 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30435CD98F1
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 19:15:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AAFC9CD98E1
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 19:15:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZZAU-0006t5-I3; Tue, 16 Jun 2026 15:09:50 -0400
+	id 1wZZFM-0006Dm-L5; Tue, 16 Jun 2026 15:14:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wZZ8S-0004iE-Mz
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 15:07:49 -0400
-Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
+ id 1wZZ8Y-0004l2-88
+ for qemu-devel@nongnu.org; Tue, 16 Jun 2026 15:07:52 -0400
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wZZ8L-00014J-59
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 15:07:41 -0400
-Received: by mail-wr1-x435.google.com with SMTP id
- ffacd0b85a97d-46066e640easo3025122f8f.1
- for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 12:07:28 -0700 (PDT)
+ id 1wZZ8T-00013e-Q4
+ for qemu-devel@nongnu.org; Tue, 16 Jun 2026 15:07:49 -0400
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-490c0c92cffso32558095e9.2
+ for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 12:07:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1781636847; x=1782241647; darn=nongnu.org;
+ d=linaro.org; s=google; t=1781636845; x=1782241645; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=9wCLOkdT45lh5ipdi99zooqwQLCwa4nSMaUr+Wnmkc0=;
- b=E6Gjt4EHh7nBWAJmuvABI0o6XBM6rckFr2Q1OKsKqD7lK4UCSxgxF4YqTu33hUwKmk
- 4bbcTxmmIhzzqLaqLYNijeYp+O39WTzSjtS+Yeq2PXP+Mf2e9/jf+AUJc9/EyNFtcMt6
- QXUMNZWlAwt64Fyi242We86LrKboG32/MQM5aC1dGFdUnId7RBtfqUTqSSkKqKWLiYXM
- UmBlyO5jlaw4k3EAEq/750MdVNW3p0cVWGgszgX/QOS+AjCuOgA+TwXt+P3MtAPHMZd6
- wBACC4ryzHBeK1DeJwnpuVGWSQ6bIDq597PAaVxHUBNvAP4nzbrG2dvmbUOJuP4oEWeG
- t1Pg==
+ :reply-to; bh=DW5PvP0d6kR8ug90l3JDujZwID8eIhrnAyO6bY33H8Q=;
+ b=fYvKZYqPdeZLd7bxXw1I+qsBPYALD/cSQmD9wjut0/ZyLMPzKhZeiBXoSbELFHJE8a
+ PL0xb3PHmPEfZdgO51VC7XxWYHYF/KWousjKrlwXsTdEx+FF65GbNHceHhbOvOFH9nBC
+ RGCjLJ86yQ6E49dB1mYg8IWmlwbgRiBVq7kNh1SmnETjfIrGC/aHqZpWCL4rNe/D7vU8
+ 8KekzIbKtdFWR4sSIHef+oxyRALizZZXvKmq2TiCzX9IIVo1lPTfuj51w6cI0diAyyjr
+ z69S03R1USuFpuNr9ltzBhi8F/c9zQXGa8xdew7fFnd7ZTT1r7F3Rain2W/X2f4L9fnt
+ Ng2Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781636847; x=1782241647;
+ d=1e100.net; s=20251104; t=1781636845; x=1782241645;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=9wCLOkdT45lh5ipdi99zooqwQLCwa4nSMaUr+Wnmkc0=;
- b=LIEl0HNKN2TKKEb96qTx7nOziRGL6PaacDjMlPAk1/3z888dvo51UIDVLMFKW9EmvC
- I7DooBxRrrfW5IC9ZHjncFKNpqm4ADR/eZFLtlSxA7V4Nah43jWiTUdYLXtFXQIU4M08
- OeRYe7MqzOT9QAETqWdi/HPxCXMPtiALE3QoiZsrB4z9jBb1OiY1ToUBhfX7AmV81USM
- EmG84VRZ8Hka71nwLdW3xfm9jRj32Isd52IBsA5l5YNj6/JzzuDqpUim/QjXhlCbYna/
- FkO/rh44IUbu0nzmKyBuoUhHYg1clQ3ngF3aZ7w0LWS0AsOI3dXkGtXDZAy/DTF4PGNn
- jGTg==
-X-Gm-Message-State: AOJu0YxdmLoxCy6lYuNxoLvBUfym9It6YgZdI+T801+kB9XE8zn5APKP
- MlWW58ntQfT6NMemtd5MmCKecgaDm99IMMjBKuxxXwkjr/nkOrXRR46/33iSEJbGaFt+VHIDdUV
- 1Tzdo
-X-Gm-Gg: Acq92OF1uAltI8k65Po6U+jWfQRvGMAxGuoHkhKUDSVdx6n55n5p7YnYfvehO/5OZoD
- 38MNB7VF8+HIQgNsYzbLMQfidrf+SLUT7+KtjGBdNfKuAeo9X9QSNk9uomUFBsXCCgn0OfdSUvD
- UKBvOeOTgtAK7uH4JUZxEpGLDrxCmKfnNcB4cSKhwqvbkkSMUD4eef9EfzhmqOYL9DzB0vuaKqQ
- oiftC9MOaub9xFNKVGD5NNkQwTVl/jbLFdFQYGt1AP2pttf7rBMZUimHbphH+Z27uPRZEOnW0MX
- qGefM+UV6koGPv5C/w6G1+LVwR25U+dUzFSFnQTe0YTyq+zk/EPBf0/CFXJXq9GCLyQQQxaMOOg
- zjQBIW37EQfNVwcSao7aEdJfHs76VA/ipvzW/W91BLwBtGIx8dg7A82ebaQIuWJF0/32o//Y24s
- GMpi2hdFPeFthUNfc/NwIag4WuKctqbq++LB1kxTdZbi+mIOcsEiElW8wPHRlWAgCWDJWk2KyF9
- J5DNiDgxki9LUcSwRM3gnqNWvRa3hlP
-X-Received: by 2002:a05:6000:18a3:b0:45e:f271:5019 with SMTP id
- ffacd0b85a97d-46236276630mr1427244f8f.14.1781636847245; 
- Tue, 16 Jun 2026 12:07:27 -0700 (PDT)
+ bh=DW5PvP0d6kR8ug90l3JDujZwID8eIhrnAyO6bY33H8Q=;
+ b=Iat6QiWXFCFsICGn6QHIdiMtyzJ40iwpH6zld+Xbr6EYlBgns2V4tvIpdzWiVsktVS
+ A9NzP1zq1u2PJTydua/3h0kl7BQFwAp4dOt5P7iHou0rUcPciK7ecVlizf8qoKNTXeRI
+ YeXZGS9loX+J/Nnmqnb3S6oV/vfToPckcf4IVLi5QlmVMXU3OAAvWn6ua985sRAfkNuk
+ ZYTScchTWtB0AawxIL2B0go24BhRcIbFaN1dQ3kNAec6vKCZfYDBM7yiuq5kmDjuZzSt
+ TuDj1KsVmQoeg2Y0EHJ2HYnZGF+LPAnEYZaBw4W7rBEVUQRQ+93m+mILDvp4YD0VyM/t
+ 8yOQ==
+X-Gm-Message-State: AOJu0Yx/qeDyqXAhlfshEUoYVCLKZ7gsN5qIRUdk9KgKTHI5YcQZM/fH
+ BGbE2Lh/M+0qR2pjh1ftdzxiWeYKCdcvxbxpXdEhZoliT85onjbNBweTPP/OUwF/ZAiBX9fuhhe
+ z3wms
+X-Gm-Gg: Acq92OHyLJTR3e8YO7Cwr6QZbh3rPKSlHU80ZFxMxUDCmQvn86Uo/lNsYF48EHoq8E8
+ +g/hOHZP4j7Do8Eqqy7UJB/L80c3wju2Onhi5WHBxsIA0bZNwfcss8oDT3La4jNbppJ5WL41OnX
+ nW8ldov/vTzFDIAXlIKC3FsG/iQZ8mGHhjjT27KnvCMogG0Ii9xfPHl4+wEIoIikap7lw8i0s3/
+ W6TLkamenJl7D5+DWXdMwB8Dq9g/9suxI7k3oUg/GGYvl8tRd7h8SHXuZz+GIkAweuO4ZnI3HeN
+ xDr8Qv77hf/F4leIzEbYwdWBEzhWtBE74b9eblElUGEUl40RlyU7Zdzm/W4uwABMiSIju4yQXYY
+ Bz8SYBR/wmUwjQs8l7nrTbXPca7tVUrfiHH2NIweOroF7Q15VasKseHHS1qiTLdRpcGBkj2FlKt
+ NdL4UgtxEOB0NUI80s+i/Xa2OLWItneZmkDU8QxmtWMgX0G044ogn0OQCvisWRHdkbrNpr46MPb
+ aBKJtB6UskraZhg/BM6bohrb/UbuRtb
+X-Received: by 2002:a7b:cc8e:0:b0:490:bd66:db49 with SMTP id
+ 5b1f17b1804b1-492333f5ff0mr7076835e9.12.1781636845236; 
+ Tue, 16 Jun 2026 12:07:25 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4606f2d9becsm45078765f8f.34.2026.06.16.12.07.26
+ ffacd0b85a97d-4606f2d9becsm45078765f8f.34.2026.06.16.12.07.24
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 16 Jun 2026 12:07:26 -0700 (PDT)
+ Tue, 16 Jun 2026 12:07:24 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 41/61] hw/arm/smmuv3: Add cmdqv property for SMMUv3 device
-Date: Tue, 16 Jun 2026 20:06:18 +0100
-Message-ID: <20260616190639.3462006-42-peter.maydell@linaro.org>
+Subject: [PULL 39/61] hw/arm/smmuv3-accel: Enforce viommu association when
+ CMDQV is active
+Date: Tue, 16 Jun 2026 20:06:16 +0100
+Message-ID: <20260616190639.3462006-40-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260616190639.3462006-1-peter.maydell@linaro.org>
 References: <20260616190639.3462006-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::435;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x435.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,73 +103,81 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Shameer Kolothum <skolothumtho@nvidia.com>
 
-Introduce a "cmdqv" property to enable Tegra241 CMDQV support.
-This is only enabled for accelerated SMMUv3 devices.
+When CMDQV is active, the first cold-plugged VFIO device establishes
+the viommu to host SMMUv3 association, and the guest's boot-time CMDQV
+configuration (VINTFs, VCMDQs) is built on top of that association.
+
+Hot-unplugging that device would release the viommu and tear down all
+CMDQV state. Hot-plugging another device behind a different host
+SMMUv3+CMDQV would then re-bind the same vSMMUv3 to new host hardware,
+while the guest keeps using its boot-time configuration and ends up
+issuing commands to the wrong host. Block hot-unplug of the
+establishing device to avoid this; retaining the binding across unplug
+is non-trivial and not required by any current use case.
+
+Also abort at machine_done if cmdqv=on is requested but no cold-plugged
+VFIO device was present to initialize it.
 
 Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
-Reviewed-by: Eric Auger <eric.auger@redhat.com>
 Tested-by: Nicolin Chen <nicolinc@nvidia.com>
+Reviewed-by: Eric Auger <eric.auger@redhat.com>
 Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
 Tested-by: Eric Auger <eric.auger@redhat.com>
-Message-id: 20260609112552.378999-32-skolothumtho@nvidia.com
+Message-id: 20260609112552.378999-30-skolothumtho@nvidia.com
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- hw/arm/smmuv3.c | 8 ++++++++
- qemu-options.hx | 8 ++++++++
- 2 files changed, 16 insertions(+)
+ hw/arm/smmuv3-accel.c | 18 ++++++++++++++++++
+ hw/arm/smmuv3-accel.h |  1 +
+ 2 files changed, 19 insertions(+)
 
-diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
-index a8fb10e531..5e5a6a960c 100644
---- a/hw/arm/smmuv3.c
-+++ b/hw/arm/smmuv3.c
-@@ -1994,6 +1994,10 @@ static bool smmu_validate_property(SMMUv3State *s, Error **errp)
-                        "bits if accel=on");
-             return false;
-         }
-+        if (s->cmdqv == ON_OFF_AUTO_ON) {
-+            error_setg(errp, "cmdqv can only be enabled if accel=on");
-+            return false;
-+        }
-         return true;
+diff --git a/hw/arm/smmuv3-accel.c b/hw/arm/smmuv3-accel.c
+index 9c3bd4413d..80900c2521 100644
+--- a/hw/arm/smmuv3-accel.c
++++ b/hw/arm/smmuv3-accel.c
+@@ -759,6 +759,18 @@ static bool smmuv3_accel_set_iommu_device(PCIBus *bus, void *opaque, int devfn,
+         return false;
      }
  
-@@ -2144,6 +2148,7 @@ static const Property smmuv3_properties[] = {
-     DEFINE_PROP_OAS_MODE("oas", SMMUv3State, oas, OAS_MODE_AUTO),
-     DEFINE_PROP_SSIDSIZE_MODE("ssidsize", SMMUv3State, ssidsize,
-                               SSID_SIZE_MODE_AUTO),
-+    DEFINE_PROP_ON_OFF_AUTO("cmdqv", SMMUv3State, cmdqv, ON_OFF_AUTO_AUTO),
- };
- 
- static void smmuv3_instance_init(Object *obj)
-@@ -2194,6 +2199,9 @@ static void smmuv3_class_init(ObjectClass *klass, const void *data)
-         "than 0 is required to enable PASID support."
-         "Please ensure the value does not exceed the maximum "
-         "SubstreamID size supported by the host platform.");
-+    object_class_property_set_description(klass, "cmdqv",
-+        "Enable/disable CMDQV support (for accel=on). "
-+        "Valid values are on, off, and auto. Defaults to auto.");
++    /*
++     * CMDQV is active: block hot-unplug of the device that established the
++     * viommu association. Removing it would cause the vIOMMU to host SMMUv3
++     * association be changed via device hot-plug.
++     */
++    if (s->s_accel->cmdqv_ops) {
++        PCIDevice *pdev = pci_find_device(bus, pci_bus_num(bus), devfn);
++        error_setg(&accel_dev->unplug_blocker,
++                   "CMDQV is active: removing the device that established the "
++                   "viommu association would break the guest CMDQV");
++        qdev_add_unplug_blocker(DEVICE(pdev), accel_dev->unplug_blocker);
++    }
+ done:
+     accel_dev->hiodi = hiodi;
+     accel_dev->s_accel = s->s_accel;
+@@ -1082,6 +1094,12 @@ static void smmuv3_accel_machine_done(Notifier *notifier, void *data)
+                      "at least one cold-plugged VFIO device");
+         exit(1);
+     }
++
++    if (s->cmdqv == ON_OFF_AUTO_ON && !accel->cmdqv) {
++        error_report("arm-smmuv3 cmdqv=on requires at least one cold-plugged "
++                     "VFIO device");
++        exit(1);
++    }
  }
  
- static int smmuv3_notify_flag_changed(IOMMUMemoryRegion *iommu,
-diff --git a/qemu-options.hx b/qemu-options.hx
-index a5979d0a5b..c799286153 100644
---- a/qemu-options.hx
-+++ b/qemu-options.hx
-@@ -1329,6 +1329,14 @@ SRST
+ bool smmuv3_accel_init(SMMUv3State *s, Error **errp)
+diff --git a/hw/arm/smmuv3-accel.h b/hw/arm/smmuv3-accel.h
+index 5fc85fb89d..dd755c394d 100644
+--- a/hw/arm/smmuv3-accel.h
++++ b/hw/arm/smmuv3-accel.h
+@@ -84,6 +84,7 @@ typedef struct SMMUv3AccelDevice {
+     IOMMUFDVdev *vdev;
+     QLIST_ENTRY(SMMUv3AccelDevice) next;
+     SMMUv3AccelState *s_accel;
++    Error *unplug_blocker; /* set when CMDQV is active to block hot-unplug */
+ } SMMUv3AccelDevice;
  
-         - With accel=off, auto is resolved to 0.
- 
-+    ``cmdqv=on|off|auto`` (default: auto)
-+        Enable hardware Command Queue Virtualization (CMDQV) for the
-+        SMMUv3 command queue. Currently only the NVIDIA Tegra241 CMDQV
-+        implementation is supported.
-+
-+        - With accel=on, auto means the value is automatically derived from the host SMMU.
-+        - With accel=off, auto is resolved to 'off'.
-+
- ``-device amd-iommu[,option=...]``
-     Enables emulation of an AMD-Vi I/O Memory Management Unit (IOMMU).
-     Only available with ``-machine q35``, it supports the following options:
+ bool smmuv3_accel_init(SMMUv3State *s, Error **errp);
 -- 
 2.43.0
 
