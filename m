@@ -4,84 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C21B1CD98DA
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 10:11:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 693D3CD98CF
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 10:11:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZQi4-0003el-IY; Tue, 16 Jun 2026 06:07:56 -0400
+	id 1wZQkO-0003UT-JF; Tue, 16 Jun 2026 06:10:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wZQi2-0003JD-5Y
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 06:07:54 -0400
-Received: from mail-pj1-x102f.google.com ([2607:f8b0:4864:20::102f])
+ id 1wZQkK-00035V-NK
+ for qemu-devel@nongnu.org; Tue, 16 Jun 2026 06:10:16 -0400
+Received: from mail-pg1-x534.google.com ([2607:f8b0:4864:20::534])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wZQhz-0003YC-Vv
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 06:07:53 -0400
-Received: by mail-pj1-x102f.google.com with SMTP id
- 98e67ed59e1d1-36ba285e98bso4337249a91.2
- for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 03:07:51 -0700 (PDT)
+ id 1wZQkI-0004R8-Cs
+ for qemu-devel@nongnu.org; Tue, 16 Jun 2026 06:10:16 -0400
+Received: by mail-pg1-x534.google.com with SMTP id
+ 41be03b00d2f7-c858b5de728so2760101a12.0
+ for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 03:10:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1781604471; x=1782209271; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1781604613; x=1782209413; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=NZCHWP87J1KCGD/lBAcv42oDW/fhm0BWCAY/URuwlgY=;
- b=mhEuV067Amlq2Op/1hmoqYvuCNw9aUm6vZiZ8dMKtu15KkDSJMg3EZDKZmEb9lwHC3
- QQSN46vkWYFfRrRnCMl2pytxP154RV9SLOUwINFyXPY4JSOAfOT7EBdRqaCdFvd8HR88
- ovde2UA5SJ0/Ez3Jlx1XgJ4UW1u36TIwB/gVygVlTnKx0e6loC8l9nmKLH7XsAGdti0d
- 9QCm4XO0ajv8NavyDyTJMygObujzBT5vutLaWSapFwL+qE1f/UepUj8Wp/ClOGSczYPq
- VFeemnV8Kj0lgu2QCi62lsAWJHLe8NRhnVMB0SBP+UhMSTR1a9Buhm2TY3J4wlw6jWNz
- xksQ==
+ bh=i1xwmUA9TTjHMmivkF2u3G7PEJxmulZlpojz/NCNHBo=;
+ b=aXNmygzRrdEI5sIDHyT8aFWir4XwKD/3srWpY8o/tsbiRlsoUZk/LV3eFV+B/HH3vj
+ iS+GRa2Kbv7rZcE2C1KYtBXaYoBl2hPzh3ZRYaR3j0Sc7W7pFWsbdMOJMhZfV01Fv4n6
+ Lvslsk5PrmucWqCsUXcOk8ueiKrd+rQOGwUz0hB/5LQc8oxK7ctPINwcDjJtmumTX546
+ WDM9wnOkYO+LR+RmvzB1QNjbFmtX9EbpXeJbCHIIZ4bn8RVXR3y/jKqlVkh/KFAsvkqF
+ +5tY0JAUuqELTuM3aCgcESUMPqY5BV8Z1hoXU2IO2lNLbrV0o8GnzdlRO9ktcpGJcfC3
+ faVw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781604471; x=1782209271;
+ d=1e100.net; s=20251104; t=1781604613; x=1782209413;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=NZCHWP87J1KCGD/lBAcv42oDW/fhm0BWCAY/URuwlgY=;
- b=ftGb8OWgxfULxICNCqnNxkpDMx+6FNF+/LRk1OZaTmVAovNqIvoOv0gj9HKNxfFwFH
- lBCQAczf+L7/XJAN0VM4DyrInoXWZzsvDmOZhbFIVORP2nUnfIxi5RRvl7/GctNZps3S
- gdatgBaAtpCoL0Uh4zDXCwwG6KEtldKXi6brpnKD7mRGnuQWqQNHYqU/790aKWNkjFrB
- IR/GgDVwzbG71KSJ6qXv+q5fkXsKCITkZm+VhaB2PxrF61Bg+7LUzbihZQ+QlF6mkuue
- Sl2z5iCDY5docwKLNIZPdBJmRxlJJEJc333CMj1SHhXVutJ+K4aq5dQjbNfOqkzVffNe
- ZnUQ==
-X-Gm-Message-State: AOJu0Yz/dP0NjRld7k2+rIyWTiO+OXS838kMPgCUSH/5jrtPJ+7NqPCB
- vcEybzYRiO4MMwBPeIbshO75g/oySfK9Yo8rN5JDcWoigYSTltlPIPihJrZ2bKb8
-X-Gm-Gg: Acq92OFleOAMjh14BClrWRZZ6b0yUOBH2N+hH9IRT01ICEfVVb+lKxIpE8DsST87Qm/
- eEPfAPyITF9612E5lon5vWrCfgaGYY2XKGqm4aj1GlcSxUmhvpBzkT3By+Z58fgUBg4kUPIVgdW
- 5CEMqt+Mxu7XX+8DvyDYRxjWpusxvWSSyjCzY+Y6e50byAU0rOPqWPRA3CmXETLDH6dnXcnucjF
- Hf99CWNXD8CZLHudoA7hGz3k+y4s6IfsPju8nBkW7ligJgXhh2Wc7m0USyud1b2VnXsxhrDmsO9
- 34sDjyvfzGvnQMpMG1QvHPz+7mPaaWkeGWRGcee2iFZzppuMFVD8ux2ZJWxbJUvenhLx+o5epJP
- DgJafqEqiN5YLEMe72P4pBO9Y5OiV1TeFG5lZuIK5Fh5CmP66PHGWuVxHxk4rTDZx7M7TeAEOOs
- hVCnVGXCClWJQQlgvU00alCXhch7djUZx/fyEJ0xKJ
-X-Received: by 2002:a05:6a20:2443:b0:3b4:b276:a789 with SMTP id
- adf61e73a8af0-3b7841ab01dmr20768275637.36.1781604470534; 
- Tue, 16 Jun 2026 03:07:50 -0700 (PDT)
+ bh=i1xwmUA9TTjHMmivkF2u3G7PEJxmulZlpojz/NCNHBo=;
+ b=oUqZd5Bv2rQv8RTFLOMkI6mev+r8CHPGN9vzc7eeeqL5w3U3g2cRDyGwBBYa073X/r
+ qT2tDnAnNfUN4Gd7xmJ5ECAc1zNP/e5n1GkKJUbk8BNbdIgiz8F1CfW+MSC2RK1NQ/WF
+ ZGxliik/BdJuPtV3roJVCy1mZR08YIK5xR12KMK/MD3IKAnd7k/LT/2dmnIVWvC5/2H9
+ 3dos/2p6iEayNP47C+dSEG8+fGP98LPKWALp1xoZ4DgeDW0umH3QVHHYfCC0NxFmE+J9
+ qhOaBspAsTL0oRm/F9BDrlupReEjDbMmmGLdx6zMbi1J35a/ZhpffqxDHOkX5rejiwDB
+ cpYQ==
+X-Gm-Message-State: AOJu0YwHE52yDU043tZlMNMACnfXupGe557I/pKzmLOO8+82RKPnuSsc
+ iUYRrStCl8fvOXJFPcRv9Dzwo5mboqg8DRDx4WXsrkvqJveGaN2DlhQyDiTph88Q
+X-Gm-Gg: Acq92OGqxe3YUm8TO+kVS91AXIed48TL2udbQ21KJCxdxV3QCaLk+ENzGmlkwGeh8bc
+ TgS5h9pJyqo1umyZyXuogdQvfabq0ayyzHS2fNXzYAF0+ha41a/1muno/ccUZ+btItcNYWomGmx
+ Mpr5INzRMV7Qj7WvN7KdHwzAsR+rP4LahZGHIOnV8BTvJoyH1dCUvspdXDXoJdL1+1Gd5UdYjnR
+ 2tpMsnIHvcNuagPPtDKwTFo/fEQO0ejgPnx8TsMiLR5UbB9wuV48AWncQUbbLejEqBinBy9vnsz
+ IYYYqbednJgwOcjVmQbL0V/JqHJaVy+Qs/ALCU44jg+CNNuypcPN9GseiUWq45o4woSXgLrjWBr
+ Pivof3BK8UuNyhOTO9/m/MIEfY5XBNbpUWo2Nj7JV8RbJxJeQYLqWLXis1OCujlcZlQZNfk0Uow
+ 2pHtWmY22Tg9w4rHnuB0RFqgWv9cgajnU/tO8nfYru
+X-Received: by 2002:a05:6a21:4a98:b0:3a2:dabf:fef9 with SMTP id
+ adf61e73a8af0-3b79636162cmr15790843637.27.1781604612862; 
+ Tue, 16 Jun 2026 03:10:12 -0700 (PDT)
 Received: from toolbx.alistair23.me ([2403:581e:fdf9:0:13b2:851f:d9cb:44c5])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-c866519f0a6sm10916735a12.22.2026.06.16.03.07.47
+ 41be03b00d2f7-c866519f0a6sm10916735a12.22.2026.06.16.03.10.10
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 16 Jun 2026 03:07:50 -0700 (PDT)
+ Tue, 16 Jun 2026 03:10:12 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org
 Cc: alistair23@gmail.com,
  Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Chao Liu <chao.liu.zevorn@gmail.com>
-Subject: [PULL 39/83] target/riscv/cpu_helper.c: add PMA access fault
-Date: Tue, 16 Jun 2026 20:04:42 +1000
-Message-ID: <20260616100527.1939565-40-alistair.francis@wdc.com>
+ Alistair Francis <alistair.francis@wdc.com>
+Subject: [PULL 80/83] hw/riscv: add create_fdt_socket_cpus()
+Date: Tue, 16 Jun 2026 20:05:23 +1000
+Message-ID: <20260616100527.1939565-81-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616100527.1939565-1-alistair.francis@wdc.com>
 References: <20260616100527.1939565-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102f;
- envelope-from=alistair23@gmail.com; helo=mail-pj1-x102f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::534;
+ envelope-from=alistair23@gmail.com; helo=mail-pg1-x534.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -107,153 +105,241 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 
-We're not doing anything special w.r.t PMA (Physical Memory Access)
-related faults, handling them like regular faults that will eventually
-turn to be regular page faults.
+Consolidate the creation of CPUs socket FDT in a helper that can be
+shared across all boards.
 
-Turns out we can't do that.  Priv spec section "Virtual Address
-Translation Process" mentions:
+The code was basically moved from the function with the same name from
+'virt.c', with additional bits to create the cluster subnode beforehand.
 
-"If a store to the PTE at address a+va.vpn[i]×PTESIZE would violate a
-PMA or PMP check, raise an access-fault exception corresponding to the
-original access type."
-
-This means that we should handle PMA violations with access faults, like
-we're already doing with PMP.  One clear code path where we should throw
-a PMA failure, exposed by [1], is the error return from
-address_space_ld* call.
-
-There's a separated issue with the error code being returned by them (it
-always return DECODE_ERROR even with 'rejected' reads) that we're going
-to work around it by assuming that we did a good job with the PTE
-address sanitization beforehand, and interpret that the error here is
-related to PMA.  This is of course not ideal but fixing this QEMU API is
-out of scope for this work.
-
-All this said, we'll set the new pmp_pma_violation flag when we have
-either a PMP or a PMA fault, and everything else shall fall into place.
-
-[1] https://gitlab.com/qemu-project/qemu/-/work_items/3502
-
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3502
 Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
-Message-ID: <20260522172502.320529-1-daniel.barboza@oss.qualcomm.com>
+Message-ID: <20260615203734.954428-11-daniel.barboza@oss.qualcomm.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/cpu.h        |  3 ++-
- target/riscv/cpu_helper.c | 34 +++++++++++++++++++++++++---------
- 2 files changed, 27 insertions(+), 10 deletions(-)
+ include/hw/riscv/fdt-common.h |  7 +++
+ hw/riscv/fdt-common.c         | 74 +++++++++++++++++++++++++++++++
+ hw/riscv/virt.c               | 83 +++--------------------------------
+ 3 files changed, 87 insertions(+), 77 deletions(-)
 
-diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-index 68e1ec37b4..1805aa8dfd 100644
---- a/target/riscv/cpu.h
-+++ b/target/riscv/cpu.h
-@@ -137,7 +137,8 @@ enum {
-     TRANSLATE_SUCCESS,
-     TRANSLATE_FAIL,
-     TRANSLATE_PMP_FAIL,
--    TRANSLATE_G_STAGE_FAIL
-+    TRANSLATE_G_STAGE_FAIL,
-+    TRANSLATE_PMA_FAIL,
- };
+diff --git a/include/hw/riscv/fdt-common.h b/include/hw/riscv/fdt-common.h
+index 27020e69c6..3af9d5c3fd 100644
+--- a/include/hw/riscv/fdt-common.h
++++ b/include/hw/riscv/fdt-common.h
+@@ -9,6 +9,8 @@
+ #ifndef RISCV_VIRT_FDT_H
+ #define RISCV_VIRT_FDT_H
  
- /* Extension context status */
-diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
-index be36dca8f1..dc78fc1192 100644
---- a/target/riscv/cpu_helper.c
-+++ b/target/riscv/cpu_helper.c
-@@ -1424,7 +1424,22 @@ static int get_physical_address(CPURISCVState *env, hwaddr *physical,
-         }
- 
-         if (res != MEMTX_OK) {
--            return TRANSLATE_FAIL;
-+            /*
-+             * The result of address_space_* APIs above does not take into
-+             * consideration reject reads, putting all errors in the same
-+             * cathegory (DECODE_ERROR), although there's a clear
-+             * distinction between a rejected read versus other errors
-+             * (see memory_region_dispatch_read() ->
-+             * memory_region_access_valid()).  This is something that
-+             * we might have to deal with core QEMU logic some other
-+             * day.
-+             *
-+             * For this particular error path, given that we made checks
-+             * w.r.t legal PTE address before calling those APIs, we'll
-+             * assume that anything != MEMTX_OK means a rejected read,
-+             * i.e. a PMA error.
-+             */
-+            return TRANSLATE_PMA_FAIL;
-         }
- 
-         if (riscv_cpu_sxl(env) == MXL_RV32) {
-@@ -1704,7 +1719,8 @@ static int get_physical_address(CPURISCVState *env, hwaddr *physical,
++#include "target/riscv/cpu.h"
++
+ void *create_board_device_tree(const char *model, const char *compatible,
+                                int *fdt_size);
+ void create_fdt_socket_memory(void *fdt, hwaddr addr, uint64_t size,
+@@ -19,4 +21,9 @@ void create_fdt_socket_clint(void *fdt, hwaddr addr, uint64_t size,
+                              int socket_id, uint32_t *intc_phandles,
+                              int num_harts, bool numa_enabled);
+ void fdt_create_cpu_socket_subnode(void *fdt, uint64_t timebase_frequency);
++void create_fdt_socket_cpus(void *fdt, RISCVCPU *socket_harts,
++                            int socket_id, int num_harts_socket,
++                            int socket_hartid_base, uint32_t *phandle,
++                            uint32_t *intc_phandles, bool numa_enabled,
++                            bool is_32_bit);
+ #endif
+diff --git a/hw/riscv/fdt-common.c b/hw/riscv/fdt-common.c
+index 02ac9ddcd8..6c795409a4 100644
+--- a/hw/riscv/fdt-common.c
++++ b/hw/riscv/fdt-common.c
+@@ -93,3 +93,77 @@ void fdt_create_cpu_socket_subnode(void *fdt, uint64_t timebase_frequency)
+     qemu_fdt_setprop_cell(fdt, "/cpus", "#address-cells", 0x1);
+     qemu_fdt_add_subnode(fdt, "/cpus/cpu-map");
+ }
++
++void create_fdt_socket_cpus(void *fdt, RISCVCPU *socket_harts,
++                            int socket_id, int num_harts_socket,
++                            int socket_hartid_base, uint32_t *phandle,
++                            uint32_t *intc_phandles, bool numa_enabled,
++                            bool is_32_bit)
++{
++    g_autofree char *clust_name = NULL;
++    uint32_t cpu_phandle;
++
++    clust_name = g_strdup_printf("/cpus/cpu-map/cluster%d", socket_id);
++    qemu_fdt_add_subnode(fdt, clust_name);
++
++    for (int cpu = num_harts_socket - 1; cpu >= 0; cpu--) {
++        RISCVCPU *cpu_ptr = &socket_harts[cpu];
++        int8_t satp_mode_max = cpu_ptr->cfg.max_satp_mode;
++        g_autofree char *cpu_name = NULL;
++        g_autofree char *core_name = NULL;
++        g_autofree char *intc_name = NULL;
++
++        cpu_phandle = (*phandle)++;
++
++        cpu_name = g_strdup_printf("/cpus/cpu@%d", socket_hartid_base + cpu);
++        qemu_fdt_add_subnode(fdt, cpu_name);
++
++        if (satp_mode_max != -1) {
++            g_autofree char *sv_name = NULL;
++            sv_name = g_strdup_printf("riscv,%s",
++                                      satp_mode_str(satp_mode_max, is_32_bit));
++            qemu_fdt_setprop_string(fdt, cpu_name, "mmu-type", sv_name);
++        }
++        riscv_isa_write_fdt(cpu_ptr, fdt, cpu_name);
++
++        if (cpu_ptr->cfg.ext_zicbom) {
++            qemu_fdt_setprop_cell(fdt, cpu_name, "riscv,cbom-block-size",
++                                  cpu_ptr->cfg.cbom_blocksize);
++        }
++
++        if (cpu_ptr->cfg.ext_zicboz) {
++            qemu_fdt_setprop_cell(fdt, cpu_name, "riscv,cboz-block-size",
++                                  cpu_ptr->cfg.cboz_blocksize);
++        }
++
++        if (cpu_ptr->cfg.ext_zicbop) {
++            qemu_fdt_setprop_cell(fdt, cpu_name, "riscv,cbop-block-size",
++                                  cpu_ptr->cfg.cbop_blocksize);
++        }
++
++        qemu_fdt_setprop_string(fdt, cpu_name, "compatible", "riscv");
++        qemu_fdt_setprop_string(fdt, cpu_name, "status", "okay");
++        qemu_fdt_setprop_cell(fdt, cpu_name, "reg",
++                              socket_hartid_base + cpu);
++        qemu_fdt_setprop_string(fdt, cpu_name, "device_type", "cpu");
++        if (numa_enabled) {
++            qemu_fdt_setprop_cell(fdt, cpu_name, "numa-node-id", socket_id);
++        }
++        qemu_fdt_setprop_cell(fdt, cpu_name, "phandle", cpu_phandle);
++
++        intc_phandles[cpu] = (*phandle)++;
++
++        intc_name = g_strdup_printf("%s/interrupt-controller", cpu_name);
++        qemu_fdt_add_subnode(fdt, intc_name);
++        qemu_fdt_setprop_cell(fdt, intc_name, "phandle",
++                              intc_phandles[cpu]);
++        qemu_fdt_setprop_string(fdt, intc_name, "compatible",
++                                "riscv,cpu-intc");
++        qemu_fdt_setprop(fdt, intc_name, "interrupt-controller", NULL, 0);
++        qemu_fdt_setprop_cell(fdt, intc_name, "#interrupt-cells", 1);
++
++        core_name = g_strdup_printf("%s/core%d", clust_name, cpu);
++        qemu_fdt_add_subnode(fdt, core_name);
++        qemu_fdt_setprop_cell(fdt, core_name, "cpu", cpu_phandle);
++    }
++}
+diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
+index 6641b60131..33775a61fd 100644
+--- a/hw/riscv/virt.c
++++ b/hw/riscv/virt.c
+@@ -231,77 +231,6 @@ static void create_pcie_irq_map(RISCVVirtState *s, void *fdt, char *nodename,
+                            0x1800, 0, 0, 0x7);
  }
  
- static void raise_mmu_exception(CPURISCVState *env, target_ulong address,
--                                MMUAccessType access_type, bool pmp_violation,
-+                                MMUAccessType access_type,
-+                                bool pmp_pma_violation,
-                                 bool first_stage, bool two_stage,
-                                 bool two_stage_indirect)
- {
-@@ -1712,7 +1728,7 @@ static void raise_mmu_exception(CPURISCVState *env, target_ulong address,
+-static void create_fdt_socket_cpus(RISCVVirtState *s, int socket,
+-                                   char *clust_name, uint32_t *phandle,
+-                                   uint32_t *intc_phandles)
+-{
+-    int cpu;
+-    uint32_t cpu_phandle;
+-    MachineState *ms = MACHINE(s);
+-    bool is_32_bit = riscv_is_32bit(&s->soc[0]);
+-
+-    for (cpu = s->soc[socket].num_harts - 1; cpu >= 0; cpu--) {
+-        RISCVCPU *cpu_ptr = &s->soc[socket].harts[cpu];
+-        int8_t satp_mode_max = cpu_ptr->cfg.max_satp_mode;
+-        g_autofree char *cpu_name = NULL;
+-        g_autofree char *core_name = NULL;
+-        g_autofree char *intc_name = NULL;
+-        g_autofree char *sv_name = NULL;
+-
+-        cpu_phandle = (*phandle)++;
+-
+-        cpu_name = g_strdup_printf("/cpus/cpu@%d",
+-            s->soc[socket].hartid_base + cpu);
+-        qemu_fdt_add_subnode(ms->fdt, cpu_name);
+-
+-        if (satp_mode_max != -1) {
+-            sv_name = g_strdup_printf("riscv,%s",
+-                                      satp_mode_str(satp_mode_max, is_32_bit));
+-            qemu_fdt_setprop_string(ms->fdt, cpu_name, "mmu-type", sv_name);
+-        }
+-
+-        riscv_isa_write_fdt(cpu_ptr, ms->fdt, cpu_name);
+-
+-        if (cpu_ptr->cfg.ext_zicbom) {
+-            qemu_fdt_setprop_cell(ms->fdt, cpu_name, "riscv,cbom-block-size",
+-                                  cpu_ptr->cfg.cbom_blocksize);
+-        }
+-
+-        if (cpu_ptr->cfg.ext_zicboz) {
+-            qemu_fdt_setprop_cell(ms->fdt, cpu_name, "riscv,cboz-block-size",
+-                                  cpu_ptr->cfg.cboz_blocksize);
+-        }
+-
+-        if (cpu_ptr->cfg.ext_zicbop) {
+-            qemu_fdt_setprop_cell(ms->fdt, cpu_name, "riscv,cbop-block-size",
+-                                  cpu_ptr->cfg.cbop_blocksize);
+-        }
+-
+-        qemu_fdt_setprop_string(ms->fdt, cpu_name, "compatible", "riscv");
+-        qemu_fdt_setprop_string(ms->fdt, cpu_name, "status", "okay");
+-        qemu_fdt_setprop_cell(ms->fdt, cpu_name, "reg",
+-            s->soc[socket].hartid_base + cpu);
+-        qemu_fdt_setprop_string(ms->fdt, cpu_name, "device_type", "cpu");
+-        riscv_socket_fdt_write_id(ms, cpu_name, socket);
+-        qemu_fdt_setprop_cell(ms->fdt, cpu_name, "phandle", cpu_phandle);
+-
+-        intc_phandles[cpu] = (*phandle)++;
+-
+-        intc_name = g_strdup_printf("%s/interrupt-controller", cpu_name);
+-        qemu_fdt_add_subnode(ms->fdt, intc_name);
+-        qemu_fdt_setprop_cell(ms->fdt, intc_name, "phandle",
+-            intc_phandles[cpu]);
+-        qemu_fdt_setprop_string(ms->fdt, intc_name, "compatible",
+-            "riscv,cpu-intc");
+-        qemu_fdt_setprop(ms->fdt, intc_name, "interrupt-controller", NULL, 0);
+-        qemu_fdt_setprop_cell(ms->fdt, intc_name, "#interrupt-cells", 1);
+-
+-        core_name = g_strdup_printf("%s/core%d", clust_name, cpu);
+-        qemu_fdt_add_subnode(ms->fdt, core_name);
+-        qemu_fdt_setprop_cell(ms->fdt, core_name, "cpu", cpu_phandle);
+-    }
+-}
+-
+ static void create_fdt_socket_aclint(RISCVVirtState *s,
+                                      int socket,
+                                      uint32_t *intc_phandles)
+@@ -693,6 +622,7 @@ static void create_fdt_sockets(RISCVVirtState *s,
+     g_autofree uint32_t *intc_phandles = NULL;
+     int socket_count = riscv_socket_count(ms);
+     bool numa_enabled = riscv_numa_enabled(ms);
++    bool is_32_bit = riscv_is_32bit(&s->soc[0]);
  
-     switch (access_type) {
-     case MMU_INST_FETCH:
--        if (pmp_violation) {
-+        if (pmp_pma_violation) {
-             cs->exception_index = RISCV_EXCP_INST_ACCESS_FAULT;
-         } else if (env->virt_enabled && !first_stage) {
-             cs->exception_index = RISCV_EXCP_INST_GUEST_PAGE_FAULT;
-@@ -1721,7 +1737,7 @@ static void raise_mmu_exception(CPURISCVState *env, target_ulong address,
-         }
-         break;
-     case MMU_DATA_LOAD:
--        if (pmp_violation) {
-+        if (pmp_pma_violation) {
-             cs->exception_index = RISCV_EXCP_LOAD_ACCESS_FAULT;
-         } else if (two_stage && !first_stage) {
-             cs->exception_index = RISCV_EXCP_LOAD_GUEST_ACCESS_FAULT;
-@@ -1730,7 +1746,7 @@ static void raise_mmu_exception(CPURISCVState *env, target_ulong address,
-         }
-         break;
-     case MMU_DATA_STORE:
--        if (pmp_violation) {
-+        if (pmp_pma_violation) {
-             cs->exception_index = RISCV_EXCP_STORE_AMO_ACCESS_FAULT;
-         } else if (two_stage && !first_stage) {
-             cs->exception_index = RISCV_EXCP_STORE_GUEST_AMO_ACCESS_FAULT;
-@@ -1856,7 +1872,7 @@ bool riscv_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
-     vaddr im_address;
-     hwaddr pa = 0;
-     int prot, prot2, prot_pmp;
--    bool pmp_violation = false;
-+    bool pmp_pma_violation = false;
-     bool first_stage_error = true;
-     bool two_stage_lookup = mmuidx_2stage(mmu_idx);
-     bool two_stage_indirect_error = false;
-@@ -1956,8 +1972,8 @@ bool riscv_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
-         }
-     }
+     fdt_create_cpu_socket_subnode(ms->fdt,
+         kvm_enabled() ? kvm_riscv_get_timebase_frequency(&s->soc->harts[0]) :
+@@ -702,18 +632,17 @@ static void create_fdt_sockets(RISCVVirtState *s,
  
--    if (ret == TRANSLATE_PMP_FAIL) {
--        pmp_violation = true;
-+    if (ret == TRANSLATE_PMP_FAIL || ret == TRANSLATE_PMA_FAIL) {
-+        pmp_pma_violation = true;
-     }
+     phandle_pos = ms->smp.cpus;
+     for (socket = (socket_count - 1); socket >= 0; socket--) {
+-        g_autofree char *clust_name = NULL;
+         hwaddr memaddr = s->memmap[VIRT_DRAM].base +
+                          riscv_socket_mem_offset(ms, socket);
+         uint64_t memsize = riscv_socket_mem_size(ms, socket);
  
-     if (ret == TRANSLATE_SUCCESS) {
-@@ -1984,7 +2000,7 @@ bool riscv_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
-         cpu_check_watchpoint(cs, address, size, MEMTXATTRS_UNSPECIFIED,
-                              wp_access, retaddr);
+         phandle_pos -= s->soc[socket].num_harts;
  
--        raise_mmu_exception(env, address, access_type, pmp_violation,
-+        raise_mmu_exception(env, address, access_type, pmp_pma_violation,
-                             first_stage_error, two_stage_lookup,
-                             two_stage_indirect_error);
-         cpu_loop_exit_restore(cs, retaddr);
+-        clust_name = g_strdup_printf("/cpus/cpu-map/cluster%d", socket);
+-        qemu_fdt_add_subnode(ms->fdt, clust_name);
+-
+-        create_fdt_socket_cpus(s, socket, clust_name, phandle,
+-                               &intc_phandles[phandle_pos]);
++        create_fdt_socket_cpus(ms->fdt, (&s->soc[socket])->harts, socket,
++                               s->soc[socket].num_harts,
++                               s->soc[socket].hartid_base,
++                               phandle, &intc_phandles[phandle_pos],
++                               numa_enabled, is_32_bit);
+ 
+         create_fdt_socket_memory(ms->fdt, memaddr, memsize,
+                                  socket, riscv_numa_enabled(ms));
 -- 
 2.54.0
 
