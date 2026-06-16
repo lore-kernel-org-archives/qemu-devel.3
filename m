@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C46CCD98E6
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 10:09:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5BEEACD98DA
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 10:09:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZQhK-0000BQ-9o; Tue, 16 Jun 2026 06:07:10 -0400
+	id 1wZQj0-0005zq-Fm; Tue, 16 Jun 2026 06:08:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wZQhI-0008P5-K4
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 06:07:08 -0400
-Received: from mail-pg1-x52b.google.com ([2607:f8b0:4864:20::52b])
+ id 1wZQit-0005xR-Uv
+ for qemu-devel@nongnu.org; Tue, 16 Jun 2026 06:08:48 -0400
+Received: from mail-pj1-x102f.google.com ([2607:f8b0:4864:20::102f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wZQhG-0003MZ-4J
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 06:07:08 -0400
-Received: by mail-pg1-x52b.google.com with SMTP id
- 41be03b00d2f7-c85a2c012e5so1466637a12.1
- for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 03:07:05 -0700 (PDT)
+ id 1wZQis-0003j5-98
+ for qemu-devel@nongnu.org; Tue, 16 Jun 2026 06:08:47 -0400
+Received: by mail-pj1-x102f.google.com with SMTP id
+ 98e67ed59e1d1-36b95eb4bb4so2741217a91.3
+ for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 03:08:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1781604425; x=1782209225; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1781604525; x=1782209325; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=QcMnKyII8r/lV77qN3Eve6DZ7u06AOKMdhC9UZhkf9M=;
- b=QvnT7iFG+h/NocYYSwu+QrjZFK8p8Z0LCV7GLp7bv2G+l99I8E/51dtuYpJlnPYsiC
- mke+Sje7okzjaVaT25FgDyQ0cBZuXj1UlutJXoYtkr4HzwyVOGWHfFDyhS3Nz7jHMhi5
- qG5TBHVKg11N6EhiDzudkcn0O41toM70I/G3+J2msPVyuufz3MYrrhhDqlB+p1JDJUFV
- 9zlEADr9tlCP1k2gd3R4VVOkjF8tEfCzYsoml2HgyfHu3p/fk6DhjqD64OMs4hLHL4AD
- 1B+FRtRptvip7S5W6G4xPKDh2DdNDkImQFX6U73piah7MHvu+1Cay1M7Gjn9BiqowPUi
- bF9A==
+ bh=3u9rzQOI9J4UTnWjFA47Hld4PgjrsYGswxeHP/aXJpU=;
+ b=cNI4XQLUKwt18hQUHA/ctHpJEZU4FTY3qS9vsTSII0UgnsmHW+bftOtX6Wrmd2+QTo
+ X8c7z7SnGRMJ7SVHEtjLasXG5cZggm/+PuXoN+uYP0naJKJngdQZcYROhFz5J3BBdsAq
+ MK+L5w/S02DHn0EcO/Sh9CIQgxzQ7JQa//6Oh+YDN7eZtX+WKgRXPy6+2+/xVAGFFzbe
+ 8q8ARupx0ZNoMk+3IDYv8XOUMHca1tsqB6NmRgmLSDpl3R94Nk90Bvbgyr2wjxZgZxEv
+ YXqD8rynB51In3OajGS9a9S4llv6V/L8/ApOE/CMrtJyeb/7vzB7580s3Sh1I0LDIqiD
+ /EIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781604425; x=1782209225;
+ d=1e100.net; s=20251104; t=1781604525; x=1782209325;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=QcMnKyII8r/lV77qN3Eve6DZ7u06AOKMdhC9UZhkf9M=;
- b=n1l1i0sNUk6+ThRiEvzmrEwGV0xsB2u7O83R1t3VA0oHDepfLAk2Bqxt+ay3+CEI2/
- z+mUSY3AwKDUzwBvUqKBgjSNt5BPI9BOCzWSrOG8U/1pbU7+QLA9RaDidBc0qpSUDpN2
- b/5WJpPE20rMhlVc/xy/JP7otwrnwFUAKOeWjO9xj3cHc48AZ8FCrQVV9+e4hAhjKoYf
- g9Rkzf0LEtHnd4ekE+8NvvvGM/epWRqwrF+VNsLk9yvvlqxHXG4ZqlKGLM1f25F0RFfw
- 9AKe3MpTtnRoW8W89uGJE3U9zRfZVKfDEe0H6HKkfoSQlUeQMVuKEaXBmdweRWVcrkU1
- pBxA==
-X-Gm-Message-State: AOJu0YynUiEcCA4kWm58MRrW9PkiKLZC1zBgBvXBLz01wJCFdcQnmVNs
- cpPLsCuZ3vrvFQTjPhB/X2v8kecHNuRG98J3CQ/uXozNpCYXKWbU2qiZxFP7APLQ
-X-Gm-Gg: Acq92OFv+F9PSPp3BV5UDKzynj8RnZEMpadHCErNsSil7ohCgspUxaZCMO9ueVgELX4
- gGAYQzaNLbHv3AtZgGp9DfqW7SutpMyQwNs0spYOI1qlS0WXDtACHqIOqfnlKH+2HQMAMmmY0TZ
- pQ/jWDrj883RE9I9+Tgo2dRTxmHpclC5LzwfBqRLj2a3yWQaGNHMi+GKJL6qeVs/ooJEDhleaBA
- 6urJ3+iHIqNK07BJCK6qS+x58/ckyWq5//8ar8Kac5pcyX9bsBEXH1pUSqCUd/lQRQufu0Ml3Mm
- dTDBvsQfucGrb/aEsgeGSziEud8s+9O+gsmbEjfiEqc3aR8dqxzGve1JsdruNFdWJw8OuQis69D
- +PyjNtJz06T/tBlGVag4WjibPbFncQteGltGugJoXDk8V3iZCyh+vHjrHDv3F0P8wkdImqNxpCR
- MaE0VQKYWcH3rgMuYkWw0hf5t4NmsKBCsbPacCLVxA
-X-Received: by 2002:a05:6a21:1405:b0:39c:787:f197 with SMTP id
- adf61e73a8af0-3b7e49d08b1mr3068188637.36.1781604424805; 
- Tue, 16 Jun 2026 03:07:04 -0700 (PDT)
+ bh=3u9rzQOI9J4UTnWjFA47Hld4PgjrsYGswxeHP/aXJpU=;
+ b=kOmMmrKiBgo/LJSq8xT5+IouRwxRcBQilgq2a/KYnBHlME6zI58UffWKx6zM+g07PY
+ DUcYInck4cRmVAKip3dTrKFEPhgb5cDYB17ch5492riUSZkf6/wyxQPh3uWuC5ODEE8/
+ 6J+JGIq8dRl7Scf4SdDc1EFgtMuIy4qtsB/ISedIrc0x4ovyAO2Ybe+zP4pwOW3m63CV
+ bZvVEGkeqiF/3HKu2zYK/XCGsHOR187thOGKN7k6GZ+c4Q8gmT0cSiWEdX1E5xiD6Bbi
+ o8im4lgHwLruX2uyAs1waMGDtJPrP6M5kbpGqvCv7TXon+J1XaIhA4jIJnMIF3kSxbYF
+ Tp7w==
+X-Gm-Message-State: AOJu0Yx6XysBBN6BIT/FUE0hs5wAwsQoIy18zWOWXQA3kQ5khYvX4OvV
+ B6twL7RSw2F3jGAR07+wju1n5LyhhUoK6OA3xuHpQ+wsj5i1NJ8PyIXsEqXJeu3y
+X-Gm-Gg: Acq92OF7LVVRVj/OfXdqc4aiUjjz8RYZ9dtKSVDWnXdxefHkPPE5bRQvkE6kfU6lV9O
+ Z+MxDpT4pMo/nTJHC5wNOZHZHN1Xx0ktCqzMp84njS3XzMmKWvwSeswaz7RjTDPNXtBiYVSBiX5
+ b5aHMpOMw+X1bHfZbbGNVmDF57+8bhMmGqw23jRWxjJAjGYAjCeFYaz4K85JZ2//0Ddwu1rsUxZ
+ Z4cdKO8HrVotAwmxf0V0Ez2FF2il9aCvepxdv9DF48t/g4fA001nGU0JLvFxoioNvyG9lfNHDq9
+ eAD1ffjHohNJGkIa8e8nA9t04Pik/wz4mE5TU5zQ6LTwcyQycofX50+Q48bD80RLb97b28dtUit
+ t+ELCCXawtVL4uuxoMAfXYHgM3mLbPC4N17siKmYJkxoqC8+hYpGfDzhCfqDG/zdAnPtHqdmp5V
+ nPxlYiIWabkGXUWO8UH6MP6EfJqnnNUWzJtg3Z6ALj
+X-Received: by 2002:a17:90a:dfc7:b0:36d:5d1c:c4ad with SMTP id
+ 98e67ed59e1d1-37c5283eb6dmr2787744a91.9.1781604524857; 
+ Tue, 16 Jun 2026 03:08:44 -0700 (PDT)
 Received: from toolbx.alistair23.me ([2403:581e:fdf9:0:13b2:851f:d9cb:44c5])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-c866519f0a6sm10916735a12.22.2026.06.16.03.07.02
+ 41be03b00d2f7-c866519f0a6sm10916735a12.22.2026.06.16.03.08.41
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 16 Jun 2026 03:07:04 -0700 (PDT)
+ Tue, 16 Jun 2026 03:08:44 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com, Anton Johansson <anjo@rev.ng>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 26/83] target/riscv: Fix arguments to board IMSIC emulation
- callbacks
-Date: Tue, 16 Jun 2026 20:04:29 +1000
-Message-ID: <20260616100527.1939565-27-alistair.francis@wdc.com>
+Cc: alistair23@gmail.com, Frank Chang <frank.chang@sifive.com>,
+ Jerry Zhang Jian <jerry.zhangjian@sifive.com>,
+ Jim Shu <jim.shu@sifive.com>, Alistair Francis <alistair.francis@wdc.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Subject: [PULL 54/83] target/riscv: Add standard B extension implied rule
+Date: Tue, 16 Jun 2026 20:04:57 +1000
+Message-ID: <20260616100527.1939565-55-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616100527.1939565-1-alistair.francis@wdc.com>
 References: <20260616100527.1939565-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52b;
- envelope-from=alistair23@gmail.com; helo=mail-pg1-x52b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102f;
+ envelope-from=alistair23@gmail.com; helo=mail-pj1-x102f.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -104,297 +104,96 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Anton Johansson <anjo@rev.ng>
+From: Frank Chang <frank.chang@sifive.com>
 
-In hw/ the relevant RISCVIMSICState fields
-eidelivery, eithreshold, eistate are uint32_t.
+Add the missing implied rule for standard B extension.
+Standard B extension implies Zba, Zbb, Zbs extensions.
+We can also remove the auto-enables in riscv_cpu_validate_b()
+as Zba, Zbb, Zbs extensions can be enabled by the implied rule.
 
-Signed-off-by: Anton Johansson <anjo@rev.ng>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Acked-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20260520125406.28693-16-anjo@rev.ng>
+RISC-V B spec: https://github.com/riscv/riscv-b
+
+Reviewed-by: Jerry Zhang Jian <jerry.zhangjian@sifive.com>
+Reviewed-by: Jim Shu <jim.shu@sifive.com>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Signed-off-by: Frank Chang <frank.chang@sifive.com>
+
+Signed-off-by: Frank Chang <frank.chang@sifive.com>
+Message-ID: <20260528054213.678458-3-frank.chang@sifive.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/cpu.h        | 42 ++++++++++++++++++++-------------------
- hw/intc/riscv_imsic.c     | 34 +++++++++++++++----------------
- target/riscv/cpu_helper.c | 12 ++++-------
- target/riscv/csr.c        | 24 ++++++++++++----------
- 4 files changed, 57 insertions(+), 55 deletions(-)
+ target/riscv/cpu.c         | 14 +++++++++++++-
+ target/riscv/tcg/tcg-cpu.c | 18 +++---------------
+ 2 files changed, 16 insertions(+), 16 deletions(-)
 
-diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-index c338df1598..380749f9a8 100644
---- a/target/riscv/cpu.h
-+++ b/target/riscv/cpu.h
-@@ -201,6 +201,24 @@ FIELD(VTYPE, VMA, 7, 1)
- FIELD(VTYPE, ALTFMT, 8, 1)
- FIELD(VTYPE, RESERVED, 9, sizeof(uint64_t) * 8 - 10)
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index 455d5b3d48..df101b1213 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -2107,6 +2107,17 @@ static RISCVCPUImpliedExtsRule RVG_IMPLIED = {
+     },
+ };
  
-+#ifndef CONFIG_USER_ONLY
-+/* machine specific AIA ireg read-modify-write callback */
-+#define AIA_MAKE_IREG(__isel, __priv, __virt, __vgein, __xlen)                 \
-+    ((uint32_t)((((__xlen) & 0xff) << 24) |                                    \
-+                (((__vgein) & 0x3f) << 20) |                                   \
-+                (((__virt) & 0x1) << 18) |                                     \
-+                (((__priv) & 0x3) << 16) |                                     \
-+                  (__isel & 0xffff)))
-+#define AIA_IREG_ISEL(__ireg) ((__ireg) & 0xffff)
-+#define AIA_IREG_PRIV(__ireg) (((__ireg) >> 16) & 0x3)
-+#define AIA_IREG_VIRT(__ireg) (((__ireg) >> 18) & 0x1)
-+#define AIA_IREG_VGEIN(__ireg) (((__ireg) >> 20) & 0x3f)
-+#define AIA_IREG_XLEN(__ireg) (((__ireg) >> 24) & 0xff)
++static RISCVCPUImpliedExtsRule RVB_IMPLIED = {
++    .is_misa = true,
++    .ext = RVB,
++    .implied_multi_exts = {
++        CPU_CFG_OFFSET(ext_zba), CPU_CFG_OFFSET(ext_zbb),
++        CPU_CFG_OFFSET(ext_zbs),
 +
-+typedef int (*aia_ireg_rmw_fn)(void *arg, uint32_t reg, uint64_t *val,
-+                               uint64_t new_val, uint64_t write_mask);
-+#endif
++        RISCV_IMPLIED_EXTS_RULE_END
++    },
++};
 +
- typedef struct PMUCTRState {
-     /* Current value of a counter */
-     uint64_t mhpmcounter_val;
-@@ -466,20 +484,8 @@ struct CPUArchState {
-     void *rdtime_fn_arg;
+ static RISCVCPUImpliedExtsRule ZCB_IMPLIED = {
+     .ext = CPU_CFG_OFFSET(ext_zcb),
+     .implied_multi_exts = {
+@@ -2514,7 +2525,8 @@ static RISCVCPUImpliedExtsRule ZVFBFA_IMPLIED = {
  
-     /* machine specific AIA ireg read-modify-write callback */
--#define AIA_MAKE_IREG(__isel, __priv, __virt, __vgein, __xlen) \
--    ((((__xlen) & 0xff) << 24) | \
--     (((__vgein) & 0x3f) << 20) | \
--     (((__virt) & 0x1) << 18) | \
--     (((__priv) & 0x3) << 16) | \
--     (__isel & 0xffff))
--#define AIA_IREG_ISEL(__ireg)                  ((__ireg) & 0xffff)
--#define AIA_IREG_PRIV(__ireg)                  (((__ireg) >> 16) & 0x3)
--#define AIA_IREG_VIRT(__ireg)                  (((__ireg) >> 18) & 0x1)
--#define AIA_IREG_VGEIN(__ireg)                 (((__ireg) >> 20) & 0x3f)
--#define AIA_IREG_XLEN(__ireg)                  (((__ireg) >> 24) & 0xff)
--    int (*aia_ireg_rmw_fn[4])(void *arg, target_ulong reg,
--        target_ulong *val, target_ulong new_val, target_ulong write_mask);
--    void *aia_ireg_rmw_fn_arg[4];
-+    aia_ireg_rmw_fn aia_ireg_rmw_cb[4];
-+    void *aia_ireg_rmw_cb_arg[4];
+ RISCVCPUImpliedExtsRule *riscv_misa_ext_implied_rules[] = {
+     &RVA_IMPLIED, &RVD_IMPLIED, &RVF_IMPLIED,
+-    &RVM_IMPLIED, &RVV_IMPLIED, &RVG_IMPLIED, NULL
++    &RVM_IMPLIED, &RVV_IMPLIED, &RVG_IMPLIED,
++    &RVB_IMPLIED, NULL
+ };
  
-     /* True if in debugger mode.  */
-     bool debugger;
-@@ -648,12 +654,8 @@ void riscv_cpu_interrupt(CPURISCVState *env);
- #define BOOL_TO_MASK(x) (-!!(x)) /* helper for riscv_cpu_update_mip value */
- void riscv_cpu_set_rdtime_fn(CPURISCVState *env, uint64_t (*fn)(void *),
-                              void *arg);
--void riscv_cpu_set_aia_ireg_rmw_fn(CPURISCVState *env, privilege_mode_t priv,
--                                   int (*rmw_fn)(void *arg,
--                                                 target_ulong reg,
--                                                 target_ulong *val,
--                                                 target_ulong new_val,
--                                                 target_ulong write_mask),
-+void riscv_cpu_set_aia_ireg_rmw_cb(CPURISCVState *env, privilege_mode_t priv,
-+                                   aia_ireg_rmw_fn rmw_fn,
-                                    void *rmw_fn_arg);
+ RISCVCPUImpliedExtsRule *riscv_multi_ext_implied_rules[] = {
+diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
+index 942c2851e8..b73e3e9dd4 100644
+--- a/target/riscv/tcg/tcg-cpu.c
++++ b/target/riscv/tcg/tcg-cpu.c
+@@ -517,27 +517,15 @@ static void riscv_cpu_validate_b(RISCVCPU *cpu)
+     const char *warn_msg = "RVB mandates disabled extension %s";
  
- RISCVException smstateen_acc_ok(CPURISCVState *env, int index, uint64_t bit);
-diff --git a/hw/intc/riscv_imsic.c b/hw/intc/riscv_imsic.c
-index ac59496c22..1c86ecdb2c 100644
---- a/hw/intc/riscv_imsic.c
-+++ b/hw/intc/riscv_imsic.c
-@@ -88,11 +88,11 @@ static void riscv_imsic_update(RISCVIMSICState *imsic, uint32_t page)
- }
- 
- static int riscv_imsic_eidelivery_rmw(RISCVIMSICState *imsic, uint32_t page,
--                                      target_ulong *val,
--                                      target_ulong new_val,
--                                      target_ulong wr_mask)
-+                                      uint64_t *val,
-+                                      uint64_t new_val,
-+                                      uint64_t wr_mask)
- {
--    target_ulong old_val = imsic->eidelivery[page];
-+    uint32_t old_val = imsic->eidelivery[page];
- 
-     if (val) {
-         *val = old_val;
-@@ -106,11 +106,11 @@ static int riscv_imsic_eidelivery_rmw(RISCVIMSICState *imsic, uint32_t page,
- }
- 
- static int riscv_imsic_eithreshold_rmw(RISCVIMSICState *imsic, uint32_t page,
--                                      target_ulong *val,
--                                      target_ulong new_val,
--                                      target_ulong wr_mask)
-+                                      uint64_t *val,
-+                                      uint64_t new_val,
-+                                      uint64_t wr_mask)
- {
--    target_ulong old_val = imsic->eithreshold[page];
-+    uint32_t old_val = imsic->eithreshold[page];
- 
-     if (val) {
-         *val = old_val;
-@@ -124,8 +124,8 @@ static int riscv_imsic_eithreshold_rmw(RISCVIMSICState *imsic, uint32_t page,
- }
- 
- static int riscv_imsic_topei_rmw(RISCVIMSICState *imsic, uint32_t page,
--                                 target_ulong *val, target_ulong new_val,
--                                 target_ulong wr_mask)
-+                                 uint64_t *val, uint64_t new_val,
-+                                 uint64_t wr_mask)
- {
-     uint32_t base, topei = riscv_imsic_topei(imsic, page);
- 
-@@ -149,11 +149,11 @@ static int riscv_imsic_topei_rmw(RISCVIMSICState *imsic, uint32_t page,
- 
- static int riscv_imsic_eix_rmw(RISCVIMSICState *imsic,
-                                uint32_t xlen, uint32_t page,
--                               uint32_t num, bool pend, target_ulong *val,
--                               target_ulong new_val, target_ulong wr_mask)
-+                               uint32_t num, bool pend, uint64_t *val,
-+                               uint64_t new_val, uint64_t wr_mask)
- {
-     uint32_t i, base, prev;
--    target_ulong mask;
-+    uint64_t mask;
-     uint32_t state = (pend) ? IMSIC_EISTATE_PENDING : IMSIC_EISTATE_ENABLED;
- 
-     if (xlen != 32) {
-@@ -178,7 +178,7 @@ static int riscv_imsic_eix_rmw(RISCVIMSICState *imsic,
-             continue;
-         }
- 
--        mask = (target_ulong)1 << i;
-+        mask = 1ull << i;
-         if (wr_mask & mask) {
-             if (new_val & mask) {
-                 prev = qatomic_fetch_or(&imsic->eistate[base + i], state);
-@@ -197,8 +197,8 @@ static int riscv_imsic_eix_rmw(RISCVIMSICState *imsic,
-     return 0;
- }
- 
--static int riscv_imsic_rmw(void *arg, target_ulong reg, target_ulong *val,
--                           target_ulong new_val, target_ulong wr_mask)
-+static int riscv_imsic_rmw(void *arg, uint32_t reg, uint64_t *val,
-+                           uint64_t new_val, uint64_t wr_mask)
- {
-     RISCVIMSICState *imsic = arg;
-     uint32_t isel, priv, virt, vgein, xlen, page;
-@@ -400,7 +400,7 @@ static void riscv_imsic_realize(DeviceState *dev, Error **errp)
-         }
- 
-         if (!kvm_irqchip_in_kernel()) {
--            riscv_cpu_set_aia_ireg_rmw_fn(env, (imsic->mmode) ? PRV_M : PRV_S,
-+            riscv_cpu_set_aia_ireg_rmw_cb(env, (imsic->mmode) ? PRV_M : PRV_S,
-                                           riscv_imsic_rmw, imsic);
-         }
+     if (!cpu->cfg.ext_zba) {
+-        if (!cpu_cfg_ext_is_user_set(CPU_CFG_OFFSET(ext_zba))) {
+-            cpu->cfg.ext_zba = true;
+-        } else {
+-            warn_report(warn_msg, "zba");
+-        }
++        warn_report(warn_msg, "zba");
      }
-diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
-index 4529341696..ae0490a086 100644
---- a/target/riscv/cpu_helper.c
-+++ b/target/riscv/cpu_helper.c
-@@ -816,17 +816,13 @@ void riscv_cpu_set_rdtime_fn(CPURISCVState *env, uint64_t (*fn)(void *),
-     env->rdtime_fn_arg = arg;
- }
  
--void riscv_cpu_set_aia_ireg_rmw_fn(CPURISCVState *env, privilege_mode_t priv,
--                                   int (*rmw_fn)(void *arg,
--                                                 target_ulong reg,
--                                                 target_ulong *val,
--                                                 target_ulong new_val,
--                                                 target_ulong write_mask),
-+void riscv_cpu_set_aia_ireg_rmw_cb(CPURISCVState *env, privilege_mode_t priv,
-+                                   aia_ireg_rmw_fn rmw_fn,
-                                    void *rmw_fn_arg)
- {
-     if (priv <= PRV_M) {
--        env->aia_ireg_rmw_fn[priv] = rmw_fn;
--        env->aia_ireg_rmw_fn_arg[priv] = rmw_fn_arg;
-+        env->aia_ireg_rmw_cb[priv] = rmw_fn;
-+        env->aia_ireg_rmw_cb_arg[priv] = rmw_fn_arg;
+     if (!cpu->cfg.ext_zbb) {
+-        if (!cpu_cfg_ext_is_user_set(CPU_CFG_OFFSET(ext_zbb))) {
+-            cpu->cfg.ext_zbb = true;
+-        } else {
+-            warn_report(warn_msg, "zbb");
+-        }
++        warn_report(warn_msg, "zbb");
+     }
+ 
+     if (!cpu->cfg.ext_zbs) {
+-        if (!cpu_cfg_ext_is_user_set(CPU_CFG_OFFSET(ext_zbs))) {
+-            cpu->cfg.ext_zbs = true;
+-        } else {
+-            warn_report(warn_msg, "zbs");
+-        }
++        warn_report(warn_msg, "zbs");
      }
  }
  
-diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-index 29db646589..4dd6c93e51 100644
---- a/target/riscv/csr.c
-+++ b/target/riscv/csr.c
-@@ -2673,6 +2673,7 @@ static RISCVException rmw_xireg_aia(CPURISCVState *env, int csrno,
-     uint8_t *iprio;
-     privilege_mode_t priv;
-     uint32_t vgein;
-+    uint64_t wide_val;
- 
-     /* VS-mode CSR number passed in has already been translated */
-     switch (csrno) {
-@@ -2717,16 +2718,17 @@ static RISCVException rmw_xireg_aia(CPURISCVState *env, int csrno,
-         }
-     } else if (ISELECT_IMSIC_FIRST <= isel && isel <= ISELECT_IMSIC_LAST) {
-         /* IMSIC registers only available when machine implements it. */
--        if (env->aia_ireg_rmw_fn[priv]) {
-+        if (env->aia_ireg_rmw_cb[priv]) {
-             /* Selected guest interrupt file should not be zero */
-             if (virt && (!vgein || env->geilen < vgein)) {
-                 goto done;
-             }
-             /* Call machine specific IMSIC register emulation */
--            ret = env->aia_ireg_rmw_fn[priv](env->aia_ireg_rmw_fn_arg[priv],
-+            ret = env->aia_ireg_rmw_cb[priv](env->aia_ireg_rmw_cb_arg[priv],
-                                     AIA_MAKE_IREG(isel, priv, virt, vgein,
-                                                   riscv_cpu_mxl_bits(env)),
--                                    val, new_val, wr_mask);
-+                                    &wide_val, new_val, wr_mask);
-+            *val = wide_val;
-         }
-     } else {
-         isel_reserved = true;
-@@ -2959,6 +2961,7 @@ static RISCVException rmw_xtopei(CPURISCVState *env, int csrno,
-     int ret = -EINVAL;
-     privilege_mode_t priv;
-     uint32_t vgein;
-+    uint64_t wide_val;
- 
-     /* Translate CSR number for VS-mode */
-     csrno = aia_xlate_vs_csrno(env, csrno);
-@@ -2984,7 +2987,7 @@ static RISCVException rmw_xtopei(CPURISCVState *env, int csrno,
-     };
- 
-     /* IMSIC CSRs only available when machine implements IMSIC. */
--    if (!env->aia_ireg_rmw_fn[priv]) {
-+    if (!env->aia_ireg_rmw_cb[priv]) {
-         goto done;
-     }
- 
-@@ -2997,10 +3000,11 @@ static RISCVException rmw_xtopei(CPURISCVState *env, int csrno,
-     }
- 
-     /* Call machine specific IMSIC register emulation for TOPEI */
--    ret = env->aia_ireg_rmw_fn[priv](env->aia_ireg_rmw_fn_arg[priv],
-+    ret = env->aia_ireg_rmw_cb[priv](env->aia_ireg_rmw_cb_arg[priv],
-                     AIA_MAKE_IREG(ISELECT_IMSIC_TOPEI, priv, virt, vgein,
-                                   riscv_cpu_mxl_bits(env)),
--                    val, new_val, wr_mask);
-+                    &wide_val, new_val, wr_mask);
-+    *val = wide_val;
- 
- done:
-     if (ret) {
-@@ -4504,7 +4508,7 @@ static RISCVException read_vstopi(CPURISCVState *env, int csrno,
-                                   target_ulong *val)
- {
-     int irq, ret;
--    target_ulong topei;
-+    uint64_t topei = 0;
-     uint64_t vseip, vsgein;
-     uint32_t iid, iprio, hviid, hviprio, gein;
-     uint32_t s, scount = 0, siid[VSTOPI_NUM_SRCS], siprio[VSTOPI_NUM_SRCS];
-@@ -4519,13 +4523,13 @@ static RISCVException read_vstopi(CPURISCVState *env, int csrno,
-         if (gein <= env->geilen && vseip) {
-             siid[scount] = IRQ_S_EXT;
-             siprio[scount] = IPRIO_MMAXIPRIO + 1;
--            if (env->aia_ireg_rmw_fn[PRV_S]) {
-+            if (env->aia_ireg_rmw_cb[PRV_S]) {
-                 /*
-                  * Call machine specific IMSIC register emulation for
-                  * reading TOPEI.
-                  */
--                ret = env->aia_ireg_rmw_fn[PRV_S](
--                        env->aia_ireg_rmw_fn_arg[PRV_S],
-+                ret = env->aia_ireg_rmw_cb[PRV_S](
-+                        env->aia_ireg_rmw_cb_arg[PRV_S],
-                         AIA_MAKE_IREG(ISELECT_IMSIC_TOPEI, PRV_S, true, gein,
-                                       riscv_cpu_mxl_bits(env)),
-                         &topei, 0, 0);
 -- 
 2.54.0
 
