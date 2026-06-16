@@ -4,81 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3ABA4CD98EE
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 19:08:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4FE6ECD98E1
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 19:09:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZZ9J-0005L2-NX; Tue, 16 Jun 2026 15:08:39 -0400
+	id 1wZZ9F-0005AG-Hq; Tue, 16 Jun 2026 15:08:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wZZ8E-0004ZO-KR
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 15:07:37 -0400
-Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
+ id 1wZZ7e-0004U5-DS
+ for qemu-devel@nongnu.org; Tue, 16 Jun 2026 15:07:15 -0400
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wZZ87-00010z-Pk
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 15:07:27 -0400
-Received: by mail-wr1-x436.google.com with SMTP id
- ffacd0b85a97d-45f3cf907ceso2636686f8f.2
- for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 12:07:15 -0700 (PDT)
+ id 1wZZ7b-0000tc-5r
+ for qemu-devel@nongnu.org; Tue, 16 Jun 2026 15:06:53 -0400
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-490b7866869so50203145e9.2
+ for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 12:06:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1781636835; x=1782241635; darn=nongnu.org;
+ d=linaro.org; s=google; t=1781636809; x=1782241609; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=t/Eu9EnnFiSkjhm7/fYfR3ltbAVADI4vo+xpn1ePMDs=;
- b=oPiQ/H1AX1xNfXN8YQcAOtQb9Sqi2Wl9b5PWuK9y4ut5otSz3GR5syydtBUt21Jc+v
- PVIBAMLS4J9Ky1Y3Vi0QdDVblQcIlW0gKygBZ3x+npdmWaYYyzoVkO4c+FKpIEgV3DmW
- xBSu2r6kC2a7J9vzhIE1lt/HsKr8Ed3uj3o81Vt6DOjbLeUq/8RtrHjkw6+aASuqdXI6
- PDgcQK3CNiSlh80hde/j6gMP1ej+2dO+YKIWzQQB4VZz2dPtljrHOByAOC0oGMCqXG4m
- 81YDGvpumhStfVj86IOkjOvOvV2ulfacPUW7XLRQ81j0a/bg43sgyY6Oc/xMhrtN4AEO
- J8Pg==
+ :reply-to; bh=+7Eo4SU78o6Ns7AfCRCkuFEyF7iTIz+MbUN5Y5O64T0=;
+ b=lDTLZoAGVf+tcd960jsnBQXHKOeLsZH5x/w19H/HGsfqelmnqhFQr5i0o3eZZ/pxpB
+ 0T2qaD9Io6J6dVwoME3aLfW9PHTAjAls6HrFjCnI1Pl/Gb+5mBahl1/miBkWvuCeMGCK
+ EC45nhm4w697GbLuKHH6h9hxgsHT056LcLBB4sOinSY4qBf8/kQoYcifcv09Ft+JdXIa
+ aFG86R/eAkOg5xT556mKvnnxJwpBPLkZswVeuBllO1XT1XwBM52kI40JrVbEFjZcs5sQ
+ P8ZmYi7n8aiGDZY+F6Tj3Pw6Mav3qRZ2uejDe63FsyLjIb1b7TMESv5nK4v8EOTavkc+
+ izpw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781636835; x=1782241635;
+ d=1e100.net; s=20251104; t=1781636809; x=1782241609;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=t/Eu9EnnFiSkjhm7/fYfR3ltbAVADI4vo+xpn1ePMDs=;
- b=sVibGlYBs84EScf73GBMJp380Mf8sC/z1zRObrh4qcyBgbEeVFNqlr8VUq2ULwLCVR
- DzeFyaZPJKU8Gp5GNDZ1JcXnxpJOyH+Bh+HnTJ1WBbO21I+CPSRZPD8/wZxnmpciPA/M
- V2wX7kRAytGN8/V9Rlp4W6QP47g7fMDIe/FgjJhaUXWwSWg1tO3BHUS+N0eXlIy8UE0j
- qywVuOycdWDG9TMb/LoD2gXqD/VINWrQqb/MnZZ0L3npAt5HjqcR6lwlzxI7IgM7kBLV
- +eHSFm/QiGPulquqcxjA4D4/Kcpqijpwj6mhmom80IwUX9kwWkxCgcBsCPJ9BkrI35WD
- 5uKQ==
-X-Gm-Message-State: AOJu0YyL7UWFBYEYtKDXMKUtoN3l6MF4B8oeQDfWryiEnofmBNZn5wt/
- sCjHNz5SSIDXiXQhvSvnNuLZ33an8KrEgv71aVRbRDd0qeNunvBPIa1CPpauf5lwkF7W/9Z5P9E
- 0fOci
-X-Gm-Gg: Acq92OHVX1HmLlVtn2lCaVCwpajiIgyM2QgU9XH1LUzrK1dLZaconJxbxusRB/SrXK3
- xXbu/pdXUF4Z+qlzUdrGbREJwnlJn/LO3pcBDwvpL9zsnVky4tZM5XUwlAv/oyDglJmuZjm/7RH
- DBmTP1vkV4FkEr0al3Y9qZno+yrawzaOpVFK0lzpJ61xLICUbz/URQvoMm/DBDzwciMuHSWvy1n
- yWGc1k65qt640bDCKX0WuuArPnX68PKvtWObo0npu8gprrXMwfXqQ+9hw86pLVz/+Mh5SgQVI/M
- 6meo5fDFDEPwkCQNvig8pVy8MEaEQwWrV5YFAiM1ALB9HSmP+g2oJzyE/PygqyEK7j9YUn1zbii
- ToJgkMeUs0QyTqM7Jcw9LchMXL+NSFqvRmrYBRp5UxyzTnB4eigoU0UYqYi3hjPQvnQrM0amFQI
- eVibMFPm6zXFloMiVIfY4fK7wvd90tloN1/yMG2ncLUUkjmWOBKxFFcgTppbGi3ru6Lm0EQi6o4
- Sn5UAgWtGDSTMAMf3UBEZmB+pEEtr/q
-X-Received: by 2002:a05:6000:a8d:b0:461:a16c:d88d with SMTP id
- ffacd0b85a97d-46237d5b74amr893724f8f.26.1781636834844; 
- Tue, 16 Jun 2026 12:07:14 -0700 (PDT)
+ bh=+7Eo4SU78o6Ns7AfCRCkuFEyF7iTIz+MbUN5Y5O64T0=;
+ b=sSZP9nGzOpWz0ywL3o0S0FlT+UHsoWyPp/Q1GEGQmKNIXEw0+Zqb8+uaFAS1NY35DO
+ 6jHiWT6867pt6VAvGahX7bNfYXE6eGfbrlfE6YSI4ZWKaoOhbRvU35smGqUi4HF2LRI/
+ ntrezJqVhHda0TbdgPDJ5UT+5pdSSUubRA2F5xxwESf/P54NBUpEhu3NGd39t8KraEMP
+ NK3VCxxM+BP/oShY8IabAazrMQ8LwYAhXhVPgOIYu+pGgTGNZZBCcZn3GVz8ml41q6pz
+ lJoWASP5ncUGMe6Eel7Izgy+VojeyghJ9xE1jVUnFdRN4xJGVW9xZ9GJ3Wquid0PEC/9
+ etTw==
+X-Gm-Message-State: AOJu0YxBP32Q8HziQEdsrWL3cAbTebYeSZj5xWWLvp7WSh8tdxgWsFOE
+ n/gOeQ4FdinhogngXFGA7VH7+J25qnt5/Snsz6kuEjOR2H8Avp5kgZUk8MDM+S7jfuDhEOg/ry5
+ GjhfD
+X-Gm-Gg: Acq92OEMn9zaEDpW1oanC1ck8eTUA3b9ibzDzOCq72WLlX0qUxv6fZmfxctETY6H4bi
+ XXPdoEuU6CVO3ooG1YfMivqeRs3yfYK0z3rXC8gXC5a94HE9Aou91QP5tEHLuWBt4Gdb75m158R
+ JKQc2jlSgEqSHZ+nbYLQiw2YN6tkJwSCE6XMla+u2sCGNvFoN8sMvDAUc0PlG64kMCgu3OdhlPY
+ boSivTRj5QAudVWRD+yZCoNCSIL6DyiyA0Zlx4bsi7SCaiO5KKnV25dD/QU/vmpIqTQrD7fiEMw
+ 0LbKXImY6xWoccL8+TJmgIobZmI8X49yNGWv0cs6AixNQ4oJe6/PUei0kSVi24rzT4rKoQjhHS0
+ Pi0ydgFUT8ooN9xBZ+zsetssopcL+qAx/qGKgEPSr0wXqhRqkIf+F8XwpCXrwMV2iDKdpmBNioA
+ UWjEVcBlcx9YSGCLjPk+ibLN916ZS0D9gqBsrKNdhf3SeNs9se1WCi1p4LAXQEDeIZtui86Vu3l
+ KpIhHVXnGl30UVuyZMvzug8rbM+HUYb
+X-Received: by 2002:a05:600c:8184:b0:490:625e:bb68 with SMTP id
+ 5b1f17b1804b1-4923339f885mr14992975e9.3.1781636809250; 
+ Tue, 16 Jun 2026 12:06:49 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4606f2d9becsm45078765f8f.34.2026.06.16.12.07.13
+ ffacd0b85a97d-4606f2d9becsm45078765f8f.34.2026.06.16.12.06.47
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 16 Jun 2026 12:07:14 -0700 (PDT)
+ Tue, 16 Jun 2026 12:06:47 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 29/61] hw/arm/tegra241-cmdqv: Route allocated VCMDQ Page0
- accesses to the mmap'd host VINTF page0
-Date: Tue, 16 Jun 2026 20:06:06 +0100
-Message-ID: <20260616190639.3462006-30-peter.maydell@linaro.org>
+Subject: [PULL 07/61] hw/arm/smmuv3-accel: Implement "auto" value for "oas"
+Date: Tue, 16 Jun 2026 20:05:44 +0100
+Message-ID: <20260616190639.3462006-8-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260616190639.3462006-1-peter.maydell@linaro.org>
 References: <20260616190639.3462006-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::436;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x436.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,229 +100,96 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Shameer Kolothum <skolothumtho@nvidia.com>
+From: Nathan Chen <nathanc@nvidia.com>
 
-Introduce tegra241_cmdqv_vintf_lvcmdq_ptr() to route VCMDQ Page 0
-register accesses through the mmap'd host VINTF Page 0 backing once a
-hardware queue has been allocated for the VCMDQ.
+Allow accelerated SMMUv3 OAS property to be derived from host IOMMU
+capabilities. Derive host values using IOMMU_GET_HW_INFO, retrieving
+OAS from IDR5.
 
-The two QEMU-trapped Page 0 apertures (direct at 0x10000, VINTF at
-0x30000) are hardware aliases of the same underlying registers. A
-subsequent patch installs the VINTF aperture as a RAM-device into
-guest MMIO; in this patch both remain QEMU-trapped.
+This keeps the OAS value advertised by the virtual SMMU compatible with
+the capabilities of the host SMMUv3, so that the intermediate physical
+addresses (IPA) consumed by host SMMU for stage-2 translation do not
+exceed the host's max supported IPA size.
 
-The direct VCMDQ aperture stays QEMU-trapped (rather than aliased
-to the VINTF mmap) so that writes to an unallocated VCMDQ remain
-well-defined. The CMDQV architecture allows software to program a
-VCMDQ through the direct aperture without first allocating it to a
-VINTF; aliasing to the VINTF mmap would route those writes into
-unallocated logical slots where the hardware silently drops them.
-
-A VCMDQ Page 0 access is served from one of two sources:
-
-  - Cache-backed: no hw_queue is allocated for the VCMDQ
-    (HW_QUEUE_ALLOC has not yet succeeded). Both apertures use
-    QEMU's register cache.
-
-  - HW-backed: HW_QUEUE_ALLOC has succeeded. Both apertures access
-    the registers directly through the mmap'd host VINTF Page 0.
-
-tegra241_cmdqv_sync_vcmdq() copies any cached writes (CONS_INDX,
-PROD_INDX, CONFIG, GERRORN) into the mmap'd page on the cache-to-HW
-transition so the guest's earlier register state survives. Freeing a
-VCMDQ clears the cached Page0 registers.
-
-Tested-by: Nicolin Chen <nicolinc@nvidia.com>
-Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
-Tested-by: Eric Auger <eric.auger@redhat.com>
 Reviewed-by: Eric Auger <eric.auger@redhat.com>
-Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
-Message-id: 20260609112552.378999-20-skolothumtho@nvidia.com
+Reviewed-by: Shameer Kolothum <skolothumtho@nvidia.com>
+Signed-off-by: Nathan Chen <nathanc@nvidia.com>
+Tested-by: Eric Auger <eric.auger@redhat.com>
+Message-id: 20260608174900.2227340-8-nathanc@nvidia.com
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- hw/arm/tegra241-cmdqv.c | 89 +++++++++++++++++++++++++++++++++++++++++
- hw/arm/trace-events     |  4 +-
- 2 files changed, 91 insertions(+), 2 deletions(-)
+ hw/arm/smmuv3-accel.c |  8 +++++++-
+ hw/arm/smmuv3.c       | 17 ++++++++++-------
+ 2 files changed, 17 insertions(+), 8 deletions(-)
 
-diff --git a/hw/arm/tegra241-cmdqv.c b/hw/arm/tegra241-cmdqv.c
-index 8cb39e87c4..63fe0ac681 100644
---- a/hw/arm/tegra241-cmdqv.c
-+++ b/hw/arm/tegra241-cmdqv.c
-@@ -16,6 +16,16 @@
- #include "tegra241-cmdqv.h"
- #include "trace.h"
- 
-+static void tegra241_cmdqv_reset_vcmdq_cache(Tegra241CMDQV *cmdqv, int index)
-+{
-+    cmdqv->vcmdq_cons_indx[index] = 0;
-+    cmdqv->vcmdq_prod_indx[index] = 0;
-+    cmdqv->vcmdq_config[index] = 0;
-+    cmdqv->vcmdq_status[index] = 0;
-+    cmdqv->vcmdq_gerror[index] = 0;
-+    cmdqv->vcmdq_gerrorn[index] = 0;
-+}
-+
- static void tegra241_cmdqv_free_vcmdq(Tegra241CMDQV *cmdqv, int index)
- {
-     IOMMUFDViommu *viommu = cmdqv->s_accel->viommu;
-@@ -27,6 +37,7 @@ static void tegra241_cmdqv_free_vcmdq(Tegra241CMDQV *cmdqv, int index)
-     iommufd_backend_free_id(viommu->iommufd, vcmdq->hw_queue_id);
-     g_free(vcmdq);
-     cmdqv->vcmdq[index] = NULL;
-+    tegra241_cmdqv_reset_vcmdq_cache(cmdqv, index);
- }
- 
- /*
-@@ -45,6 +56,47 @@ static bool tegra241_cmdqv_vcmdq_ready_to_alloc(Tegra241CMDQV *cmdqv, int index)
-            tegra241_cmdqv_enabled(cmdqv) && tegra241_vintf_enabled(cmdqv);
- }
- 
-+/*
-+ * Return a pointer into the mmap'd VINTF page0 for the VCMDQ Page 0
-+ * register at @offset0 in VCMDQ slot @index, or NULL when the VCMDQ
-+ * has no hw_queue allocated or the host VINTF page0 is not mmap'd.
-+ */
-+static inline uint32_t *tegra241_cmdqv_vintf_lvcmdq_ptr(Tegra241CMDQV *cmdqv,
-+                                                 int index, hwaddr offset0)
-+{
-+    if (!cmdqv->vcmdq[index] || !cmdqv->vintf_page0) {
-+        return NULL;
-+    }
-+    return (uint32_t *)(cmdqv->vintf_page0 +
-+                        (index * CMDQV_VCMDQ_STRIDE) +
-+                        (offset0 - CMDQV_VCMDQ_PAGE0_BASE));
-+}
-+
-+/*
-+ * Flush cached register writes into the mmap'd host VINTF page0 after a
-+ * successful HW_QUEUE_ALLOC, so the guest's earlier writes survive
-+ * the cache-to-hardware transition.
-+ */
-+static void tegra241_cmdqv_sync_vcmdq(Tegra241CMDQV *cmdqv, int index)
-+{
-+    uint32_t *ptr;
-+
-+    ptr = tegra241_cmdqv_vintf_lvcmdq_ptr(cmdqv, index, A_VCMDQ0_CONS_INDX);
-+    if (!ptr) {
-+        return;
-+    }
-+    *ptr = cmdqv->vcmdq_cons_indx[index];
-+
-+    ptr = tegra241_cmdqv_vintf_lvcmdq_ptr(cmdqv, index, A_VCMDQ0_PROD_INDX);
-+    *ptr = cmdqv->vcmdq_prod_indx[index];
-+
-+    ptr = tegra241_cmdqv_vintf_lvcmdq_ptr(cmdqv, index, A_VCMDQ0_CONFIG);
-+    *ptr = cmdqv->vcmdq_config[index];
-+
-+    ptr = tegra241_cmdqv_vintf_lvcmdq_ptr(cmdqv, index, A_VCMDQ0_GERRORN);
-+    *ptr = cmdqv->vcmdq_gerrorn[index];
-+}
-+
- /*
-  * Allocate a host HW VCMDQ from the current cached BASE / size for @index.
-  * No-op (returns true) until the VCMDQ is ready to be allocated.
-@@ -85,6 +137,9 @@ static bool tegra241_cmdqv_setup_vcmdq(Tegra241CMDQV *cmdqv, int index,
-     cmdqv->vcmdq_gerror[index] &= ~R_VCMDQ0_GERROR_CMDQ_INIT_ERR_MASK;
-     cmdqv->vcmdq_status[index] |= R_VCMDQ0_STATUS_CMDQ_EN_OK_MASK;
- 
-+    /* Push cached writes to HW; freeing resets the cache. */
-+    tegra241_cmdqv_sync_vcmdq(cmdqv, index);
-+
-     return true;
- }
- 
-@@ -111,13 +166,23 @@ static void tegra241_cmdqv_setup_all_vcmdq(Tegra241CMDQV *cmdqv,
-  *
-  * The caller normalizes the MMIO offset such that @offset0 always refers
-  * to a VCMDQ0_* register, while @index selects the VCMDQ instance.
-+ *
-+ * If the VCMDQ is allocated and the host VINTF page0 is mmap'd, read
-+ * directly from the host VINTF page0 backing. Otherwise, fall back to
-+ * the cache.
-  */
- static uint64_t tegra241_cmdqv_read_vcmdq_page0(Tegra241CMDQV *cmdqv,
-                                                 hwaddr offset0, int index,
-                                                 bool direct)
- {
-+    uint32_t *ptr = tegra241_cmdqv_vintf_lvcmdq_ptr(cmdqv, index, offset0);
-     uint64_t val = 0;
- 
-+    if (ptr) {
-+        val = *ptr;
-+        goto out;
-+    }
-+
-     switch (offset0) {
-     case A_VCMDQ0_CONS_INDX:
-         val = cmdqv->vcmdq_cons_indx[index];
-@@ -142,7 +207,9 @@ static uint64_t tegra241_cmdqv_read_vcmdq_page0(Tegra241CMDQV *cmdqv,
-                       "%s unhandled read access at 0x%" PRIx64 "\n",
-                       __func__, offset0);
+diff --git a/hw/arm/smmuv3-accel.c b/hw/arm/smmuv3-accel.c
+index 3f141991eb..06dadf9cc7 100644
+--- a/hw/arm/smmuv3-accel.c
++++ b/hw/arm/smmuv3-accel.c
+@@ -68,6 +68,11 @@ static void smmuv3_accel_auto_finalise(SMMUv3State *s,
+                                FIELD_EX32(info->idr[1], IDR1, SSIDSIZE));
      }
-+out:
-     trace_tegra241_cmdqv_read_vcmdq_page0(index, direct ? "direct" : "vi",
-+                                          ptr ? "hw" : "cache",
-                                           offset0, val);
-     return val;
- }
-@@ -218,11 +285,31 @@ static uint64_t tegra241_cmdqv_config_vintf_read(Tegra241CMDQV *cmdqv,
-  *
-  * Page 0 registers are all 32-bit; this helper is only called for 4-byte
-  * writes.
-+ *
-+ * If the VCMDQ is allocated and the host VINTF page0 is mmap'd, write
-+ * directly to the VINTF page0 backing. Otherwise, update the cache.
-  */
- static void tegra241_cmdqv_write_vcmdq_page0(Tegra241CMDQV *cmdqv,
-                                              hwaddr offset0, int index,
-                                              uint32_t value, bool direct)
- {
-+    uint32_t *ptr = tegra241_cmdqv_vintf_lvcmdq_ptr(cmdqv, index, offset0);
-+    bool hw = false;
-+
-+    if (ptr) {
-+        switch (offset0) {
-+        case A_VCMDQ0_CONS_INDX:
-+        case A_VCMDQ0_PROD_INDX:
-+        case A_VCMDQ0_CONFIG:
-+        case A_VCMDQ0_GERRORN:
-+            *ptr = value;
-+            hw = true;
-+            goto out;
-+        default:
-+            break;
-+        }
+ 
++    if (s->oas == OAS_MODE_AUTO) {
++        s->idr[5] = FIELD_DP32(s->idr[5], IDR5, OAS,
++                               FIELD_EX32(info->idr[5], IDR5, OAS));
 +    }
 +
-     switch (offset0) {
-     case A_VCMDQ0_CONS_INDX:
-         cmdqv->vcmdq_cons_indx[index] = value;
-@@ -253,7 +340,9 @@ static void tegra241_cmdqv_write_vcmdq_page0(Tegra241CMDQV *cmdqv,
-                       "%s unhandled write access at 0x%" PRIx64 "\n",
-                       __func__, offset0);
-     }
-+out:
-     trace_tegra241_cmdqv_write_vcmdq_page0(index, direct ? "direct" : "vi",
-+                                           hw ? "hw" : "cache",
-                                            offset0, value);
+     accel->auto_finalised = true;
  }
  
-diff --git a/hw/arm/trace-events b/hw/arm/trace-events
-index 666967dc5e..a8dcbc82db 100644
---- a/hw/arm/trace-events
-+++ b/hw/arm/trace-events
-@@ -75,9 +75,9 @@ smmuv3_accel_install_ste(uint32_t vsid, const char * type, uint32_t hwpt_id) "vS
- # tegra241-cmdqv
- tegra241_cmdqv_read_mmio(uint64_t offset, uint64_t val, unsigned size) "offset: 0x%"PRIx64" val: 0x%"PRIx64" size: 0x%x"
- tegra241_cmdqv_write_mmio(uint64_t offset, uint64_t val, unsigned size) "offset: 0x%"PRIx64" val: 0x%"PRIx64" size: 0x%x"
--tegra241_cmdqv_read_vcmdq_page0(int index, const char *aperture, uint64_t offset0, uint64_t val) "vcmdq[%d] %s offset0: 0x%"PRIx64" val: 0x%"PRIx64
-+tegra241_cmdqv_read_vcmdq_page0(int index, const char *aperture, const char *backing, uint64_t offset0, uint64_t val) "vcmdq[%d] %s (%s) offset0: 0x%"PRIx64" val: 0x%"PRIx64
- tegra241_cmdqv_read_vcmdq_page1(int index, const char *aperture, uint64_t offset0, uint64_t val) "vcmdq[%d] %s offset0: 0x%"PRIx64" val: 0x%"PRIx64
--tegra241_cmdqv_write_vcmdq_page0(int index, const char *aperture, uint64_t offset0, uint64_t val) "vcmdq[%d] %s offset0: 0x%"PRIx64" val: 0x%"PRIx64
-+tegra241_cmdqv_write_vcmdq_page0(int index, const char *aperture, const char *backing, uint64_t offset0, uint64_t val) "vcmdq[%d] %s (%s) offset0: 0x%"PRIx64" val: 0x%"PRIx64
- tegra241_cmdqv_write_vcmdq_page1(int index, const char *aperture, uint64_t offset0, uint64_t val) "vcmdq[%d] %s offset0: 0x%"PRIx64" val: 0x%"PRIx64
+@@ -985,7 +990,8 @@ bool smmuv3_accel_init(SMMUv3State *s, Error **errp)
  
- # strongarm.c
+     if (s->ats == ON_OFF_AUTO_AUTO ||
+         s->ril == ON_OFF_AUTO_AUTO ||
+-        s->ssidsize == SSID_SIZE_MODE_AUTO) {
++        s->ssidsize == SSID_SIZE_MODE_AUTO ||
++        s->oas == OAS_MODE_AUTO) {
+         s->s_accel->auto_mode = true;
+     }
+ 
+diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
+index d59931d1a7..89289ab6d2 100644
+--- a/hw/arm/smmuv3.c
++++ b/hw/arm/smmuv3.c
+@@ -1968,9 +1968,11 @@ static void smmu_reset_exit(Object *obj, ResetType type)
+ 
+ static bool smmu_validate_property(SMMUv3State *s, Error **errp)
+ {
+-    if (s->oas != OAS_MODE_44 && s->oas != OAS_MODE_48) {
+-        error_setg(errp, "QEMU SMMUv3 model only implements 44 and 48 bit"
+-                   "OAS; other OasMode values are not supported");
++    if (s->oas != OAS_MODE_44 && s->oas != OAS_MODE_48 &&
++        s->oas != OAS_MODE_AUTO) {
++        error_setg(errp, "QEMU SMMUv3 model only implements auto, "
++                   "44 bit, or 48 bit OAS. Other OasMode values are "
++                   "not supported.");
+         return false;
+     }
+ 
+@@ -1984,7 +1986,7 @@ static bool smmu_validate_property(SMMUv3State *s, Error **errp)
+             return false;
+         }
+         if (s->oas > OAS_MODE_44) {
+-            error_setg(errp, "OAS must be 44 bits when accel=off");
++            error_setg(errp, "oas must be 44 bits when accel=off");
+             return false;
+         }
+         if (s->ssidsize > SSID_SIZE_MODE_0) {
+@@ -2171,9 +2173,10 @@ static void smmuv3_class_init(ObjectClass *klass, const void *data)
+         "Please ensure host platform supports ATS before setting it "
+         "to on.");
+     object_class_property_set_description(klass, "oas",
+-        "Specify Output Address Size (for accel=on). Supported values "
+-        "are 44 or 48 bits. Defaults to 44 bits. oas=auto is not "
+-        "supported.");
++        "Set Output Address Size in bits (for accel=on). "
++        "Valid values are 44, 48, and auto. Defaults to 44 bits."
++        "Please ensure the value does not exceed the maximum "
++        "Output Address Size supported by the host platform.");
+     object_class_property_set_description(klass, "ssidsize",
+         "Set number of bits used to represent SubstreamIDs (SSIDs). "
+         "Valid values are 0-20 and auto. Defaults to 0. "
 -- 
 2.43.0
 
