@@ -4,145 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19414CD98DA
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 00:47:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA659CD98DE
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 00:54:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZHxU-0007kI-GN; Mon, 15 Jun 2026 20:47:16 -0400
+	id 1wZI48-0000ca-OO; Mon, 15 Jun 2026 20:54:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wZHxS-0007jv-Cl
- for qemu-devel@nongnu.org; Mon, 15 Jun 2026 20:47:14 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wZHxQ-0007ym-D4
- for qemu-devel@nongnu.org; Mon, 15 Jun 2026 20:47:14 -0400
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65G0O0jm1484211
- for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 00:47:10 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- yEbcZHsahb7ZTbRQJ4xXlmJFLHwT0FerCebdHDlTfjk=; b=aTkK9v01/TYxSpjj
- llGipd1Myxq9/70eRg0S3LQSbBvTB/3XLAFmALVd53T9aWGKti7jF8Qt4AWp3Nj2
- S3vWmwrH0XsjEhOZqgUtAha5eH3lEm1mdckjHkWXrmHn3DIVTDZn9FEsAPr3wfHs
- EOCKI0jOES1StLrjCeBjVL/HdXS5TbW1MEsfrTgFq4HLRi/XdeTqs8cgurMtOT2t
- 5oEFViDocaokHnyAWwzyWC0xqQcYgBhAM/64gGQ//OyLi6rPo+J3pWsq1jAtFQ+D
- DcgiS1YoR/ssqR28p8IRgWtN2PnM3PcVVekcVLNu2Ud4zLTpT2XFFan65D25wzn9
- mjH70A==
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
- [209.85.222.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4etetjuvex-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 00:47:10 +0000 (GMT)
-Received: by mail-qk1-f198.google.com with SMTP id
- af79cd13be357-91598ab3a1aso460543585a.3
- for <qemu-devel@nongnu.org>; Mon, 15 Jun 2026 17:47:09 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1wZI47-0000bs-0Z
+ for qemu-devel@nongnu.org; Mon, 15 Jun 2026 20:54:07 -0400
+Received: from mail-ej1-x636.google.com ([2a00:1450:4864:20::636])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1wZI45-00017t-9Z
+ for qemu-devel@nongnu.org; Mon, 15 Jun 2026 20:54:06 -0400
+Received: by mail-ej1-x636.google.com with SMTP id
+ a640c23a62f3a-bec450b950dso559495166b.2
+ for <qemu-devel@nongnu.org>; Mon, 15 Jun 2026 17:54:04 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1781571243; cv=none;
+ d=google.com; s=arc-20240605;
+ b=SGmMgqwuNuxtTnc4MOUQ545/GbdQNz7l3XZo7Lzx8FHzjPc7YTgyGRo3lWE+Pzahu6
+ Kr3xANw5+Z0t+l3yzOydGffTHb/gje2ypCuFzJYQ0kuihz/9VuA8iLGRQ6JoJmPDLh0t
+ fdu/TsSYIl+G1en+LmuBcgabAZtnrAPeTOEfihqkd/iQb2cody6DxozQk0hiZUPqC0jt
+ Rq6qVHpLsiPLsDLpSnAeeeZwvd9YsJkGTU6Nd2ZiOF9Xd2ccp7mq+StxW6d2U/V2jGge
+ OCO5pNoKCgaBkZD2fA2kFGi2TXN+af7bBTz4P+MSQKlHH0fN+Cm8ga+ui2oWvhmY8+yv
+ fAlQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=frN6oDZDGwh/1St6L1aoSNXbKtPOtK8QsjG0LTW437w=;
+ fh=VWpDDznhhkns+RBYcpzRS+HdjURLRuFdq8+B6bSxo40=;
+ b=FvzuP9/EU2M0u66kJyD/RRGqFpRGTBV4sRDtOF3rYjLEHFNlnK2LvwochJL2CUvqvx
+ J48fyD7ANz6hoLgtHaJL7rPE5OBVsDm9lVKpk4p9OfXOB96LnXfgexxWKQzOCTMbFEqG
+ jacvaGq6H3D75C0tbrd0yuCMoZTHpEIWrqeNyX07UmV2+LwFTVcqaWNlYwurV5F+QFIN
+ 1/dy+eOjRQOLQVn77+sVmxdBeXFH0RrvKp4i4v66R4kgzzasB4EJV3fwV+P1+ImFV6iZ
+ MF5Vy9S8ajyjgYGYfYGyFmyIKEPQvGVrHk6Giyu1jGr8XeeR14D/HQ/PSS5pZ5fhIHkW
+ JGVg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1781570829; x=1782175629; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=yEbcZHsahb7ZTbRQJ4xXlmJFLHwT0FerCebdHDlTfjk=;
- b=gfH+SrFrlVYZ6V0fFRwbwWbKT9pnEl2V9V18vsGwFO8CjD3WUYr+O0My1UelYxUY3T
- jKCVDa0Cru3W5pcyAGyAA3c1idXpT27e6YFPg0xhkPrCH8H/H2ilWbxNnOk/jIq0UZFl
- U//8p7yl+8L8uTTXc46QHNd/0G/4ToBgxHLkd5d+5/62y/RmD13wkaNpnnPM/ihadGhk
- 2l+RaGKf15AK7+ZAQjraGPdmaxpOwg/sj8LgRgmkdMy9pQs1QlGNCDch/gyaJD6K8pEQ
- ipI3srLDcTN6JjkQfrLHbAaTLkBKFRDOe8CGqLIt38gO42NDFYteMtq7ElDCjn+yqSAk
- Na1w==
+ d=gmail.com; s=20251104; t=1781571243; x=1782176043; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=frN6oDZDGwh/1St6L1aoSNXbKtPOtK8QsjG0LTW437w=;
+ b=LiRP4oJb1z5kttTWyZ5ksclJODTi/d0C7aR+Y/x7PDN4wbJTriAStfpKP/z/p/c1Ar
+ vWpPCNjQ7G8nNOirJ2bWVznJnxpYqtsTO4M5Cp3qC/vtna/fmptKPh7bvQk/b3Wd2rvB
+ /oxXtOODaTVcHGe0dLQNOshc8mnGrlENx29BuzkahMegmWe1EFcsZE3/F6S1sYvRaWsn
+ D1uH4Lp+EPEyzJZ0kEPNzrbKB239n3wrBDQkbeisttICrX2dI1w2u+u7qd7hSDDgYma8
+ KJ1ZyANqs4fgYItSQ0FzfK+DeMYRya4Y/D56IL4beUhGbOxTSYmyTto6g+4INZUIPe2O
+ C4Rw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781570829; x=1782175629;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=yEbcZHsahb7ZTbRQJ4xXlmJFLHwT0FerCebdHDlTfjk=;
- b=UdCc1g6nElYboOCxjgWofWvkkWVbTQ26vrlF7uneYTN/cTlvsDKbEB93/kL45hkRh3
- WjdBtkA9WK6QV3JOxHQ+CRYH++e6D+dgb6E4t/MEKiHRoLH7xzb33l8rOGUSPBTs1O4b
- TeMBzluvBWVRPRiPMHjwSwXYfZDLIFgWXLWmDPgtCxthvlTJh191IXlryYtXplroBbWO
- Ry/hlqnBP4LojBrDgD4cepXDIACy3k9DFjNSk++mN6xXqF/giMzmInk6HmK3hh/G5nc7
- o/9iiqqm3AAESwjVFo9uq7sbWnUFyTwq+R0fOnultthxreBWY9Ee8UWrktwBY1xfxp/s
- MLGw==
-X-Forwarded-Encrypted: i=1;
- AFNElJ+vg7KkONsczBk1rRDWa79NVp4Ua090hpct+/WVZdge6GsRiGD1J2PNJOH9LgnljSskBoWCEIH8gH+h@nongnu.org
-X-Gm-Message-State: AOJu0YxaAsaBo28Lo6nWKvks0XT0qMJJoy9o6hfNoe78cWP9dXxWV8dE
- 9Mn1QoIyukT2CCqB0LPSYycFbKXlJIZuiqqnquH5DzisLYf06hSihxbKjRzpS4Ae1IDZlWXxEs7
- WOquP3rNHT5oSuxqHDrFalZ2aXUinEd4OQOu+cdqj/gxTPMoQXyPRSzUxkg==
-X-Gm-Gg: Acq92OHaWRULCp27Y7uHJ/+AI/amcteFKNWTfVECinJeP6K6TFEvOq25MZZE7D3lgLG
- AMKpVrvh1PW97gpGNlHOodJ4nfLXdfh+tBH0dmiwwLFx26SDLD9CATu2t5eAnkDU2stfkVXq9Wp
- 6n+jY036jciLWUjJfQXVqPyPUFRKyWQ2NMmXYr2OpNj9fX7+MCPnoEvczpEAY9bEEMX3/Z0cHE1
- xTDQpPkx2THjDiq5KV6FG61IeiHjCvw2ZLCN8Qlfs/w83FypOUv08d9ioNLUIszXJzuvwJuhhHt
- aIeaAyMltClgL3orKNlTk5JH8kVhw8ZyNaDpFR//fSmaptNANZY6iWdpRMthHGT8XTPA7stZPIT
- J6PCF2mSxq6MKbJPrAmw/FbNv2a97/P3vxnJB5X35MAE2+1076mUVl+IthqD4I61APod8bGfl
-X-Received: by 2002:a05:620a:31a0:b0:915:9f28:6741 with SMTP id
- af79cd13be357-9161bc1ffc3mr2490655685a.11.1781570829027; 
- Mon, 15 Jun 2026 17:47:09 -0700 (PDT)
-X-Received: by 2002:a05:620a:31a0:b0:915:9f28:6741 with SMTP id
- af79cd13be357-9161bc1ffc3mr2490651885a.11.1781570828530; 
- Mon, 15 Jun 2026 17:47:08 -0700 (PDT)
-Received: from [192.168.69.214] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4922fa891acsm34777655e9.9.2026.06.15.17.47.07
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 15 Jun 2026 17:47:07 -0700 (PDT)
-Message-ID: <7072ac41-461a-4c9f-a036-4eaa56e1f2cd@oss.qualcomm.com>
-Date: Tue, 16 Jun 2026 02:47:06 +0200
+ d=1e100.net; s=20251104; t=1781571243; x=1782176043;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=frN6oDZDGwh/1St6L1aoSNXbKtPOtK8QsjG0LTW437w=;
+ b=Fd3k3LIlIk9979/n89gJ2OQ9T3KAXskG4/aHfLolbG0gbPfKNHwd8LcKkMvbjT2ERo
+ la4hU04I/8rxnNl+u6GOV01Fh0BOzfckabckvibzjhd+6pWiIidsQ32i4aF/Kq2hJP60
+ rzKgUD1RlC2yQONkKddO/79EGf+t2g5o8jQC5LnRyots6AsKsG35FkZnuU6+xl3T3gHh
+ KTOjHiw7xR3aaS64U5E7zwgEi7R4u8d+vtXdUCYXoKs8a5bQcrRn0tVSZ5U7uyUbzWLA
+ H+wfS369Or5pel2dlK9aNEo0cjF9NL5hgh9Y3Rvh+3hM3Y/+gmgGcLFS/rby5hqxmyag
+ IXRA==
+X-Gm-Message-State: AOJu0YzyvdVQga+0YY4f5kKXKlN7DKYd67yZD0YlAv9mAKX5i2GAplVS
+ Bfsfk8jHeKwX88b/5+j2yGpBH9Q04iKmOKyJiGI49NU+MMHKhY5bLQvxUrSdmyXRqT/L91hgfPK
+ vzmk3m1aZLcLVcQDmncVj2LU73UnaCF0=
+X-Gm-Gg: Acq92OFa92C+34jxDmH6YDthTFcBj4tnD9cKVjgcEXv3bQaHvXCQwDTxQatZPFXLy52
+ /3r84sVtjHTVsYUv3orvg4S/HvjToT3I2nOPH/qmItDi6ngWVKtapOvZRoMXqxgrLX1ZQELQBVq
+ 6c0S+vh+TtPBz9Q3Ll/xq6Z1KAS+K5tXAL1jhMvUF9FQMhS64NaZCW6gc66VyMl/URttBC7usIf
+ oTCjCfQHC4R/CecB4hng2MRmz/CZhNn44PIdz0FT1YP1ZQW95kfC+suOgrRXlv0Ivy+v0iEmG+a
+ Ht/jw7c/yE/uGHeqPF13bwgKeRwW1eYdKA1BCA==
+X-Received: by 2002:a17:907:98c:b0:c02:d992:a5fa with SMTP id
+ a640c23a62f3a-c02d992ac4emr339158966b.28.1781571243077; Mon, 15 Jun 2026
+ 17:54:03 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 5/7] igb: Implement TRL throttling and timer resumption
-Content-Language: en-US
-To: Josh Hilke <jrhilke@google.com>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, qemu-devel@nongnu.org
-Cc: Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
- Jason Wang <jasowang@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- David Matlack <dmatlack@google.com>,
- Alex Williamson <alex.williamson@nvidia.com>
-References: <20260615-igb-trl-v4-0-cf5739bf529f@google.com>
- <20260615-igb-trl-v4-5-cf5739bf529f@google.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <20260615-igb-trl-v4-5-cf5739bf529f@google.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjE2MDAwNCBTYWx0ZWRfX1ZTWrtlhIOpj
- DA/Bc4t0Jfl/z146XoarKONK/OURYLpFMFLDCMqnIuc8FIfuehjrnfUpc5IO/tNw+JWQm6mBlub
- EI91Jkk/iAOlsBE1HWI7kXk/MYvDEAaLO+TKQSyQx8RDTbgGpsdHtDqo532NbEnPkPUURGpDXkY
- XmosYWX8P+uzcAkxmheKRvnHzyrREIwbZaCC/YwU7B30vrBMPmRhX8tgivAd3EVu6eG/UzSqWu3
- I6n/5w3ICHjmQreu1952CBu6cXx2vNdpfc0SDItddXpUiGLsL2yiieZR11vzliuDJ3L/zL9hgkD
- tOq/MkrNt/pdBx++wz7fpSyDA4OambrD2NtXALQtojZJG/qDqIDftJBNIddGRCn03ifgb4N+dBF
- 3bqx+Q4upIahMvzz4QwEfR0R8l5KmEarwlWYOnPTpFabj3p79rMZqJX77qWWt7n1NG2sp03GjCE
- 6z92l1DdSsPty5VUAoA==
-X-Proofpoint-ORIG-GUID: _Dn55I7B6KE-ZRR3IYskecWGo73vrM-J
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjE2MDAwNCBTYWx0ZWRfX5424ML8Cnm6p
- p3NQSoxdsyrUieo6IQqfSOwHw/7hPMZdPzxqrOVx+e6WW6KUKE6QUzxy1STJ3FTmjBR51r8JFeL
- Lt1DyT4AxoUyrYkTebr16M/AXmbRlVk=
-X-Authority-Analysis: v=2.4 cv=HttG3UTS c=1 sm=1 tr=0 ts=6a309d0e cx=c_pps
- a=qKBjSQ1v91RyAK45QCPf5w==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
- a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22
- a=1XWaLZrsAAAA:8 a=qJzJuyYVcRHQk2norCAA:9 a=QEXdDO2ut3YA:10
- a=NFOGd7dJGGMPyQGDc5-O:22
-X-Proofpoint-GUID: _Dn55I7B6KE-ZRR3IYskecWGo73vrM-J
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-16_01,2026-06-15_04,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 spamscore=0 suspectscore=0 clxscore=1015 impostorscore=0
- malwarescore=0 bulkscore=0 priorityscore=1501 lowpriorityscore=0 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606040000 definitions=main-2606160004
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+References: <20260616-qom-qapi-v2-0-cc9396b9c18c@redhat.com>
+ <20260616-qom-qapi-v2-20-cc9396b9c18c@redhat.com>
+In-Reply-To: <20260616-qom-qapi-v2-20-cc9396b9c18c@redhat.com>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Tue, 16 Jun 2026 10:53:35 +1000
+X-Gm-Features: AVVi8Cd4Q61CKl9MEacghYBfPVQrrmf0iMn0iS_vm-wT9ry9L2x8xkK0ObWqHWY
+Message-ID: <CAKmqyKPV1D4W1BMZAtZ6MfKLN-wEyDJ9iS2mYoPRC80xW10xZw@mail.gmail.com>
+Subject: Re: [PATCH v2 20/53] riscv/virt: convert OnOffAuto properties to
+ QAPI-aware registration
+To: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
+Cc: qemu-devel@nongnu.org, Markus Armbruster <armbru@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Michael Roth <michael.roth@amd.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@mailo.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::636;
+ envelope-from=alistair23@gmail.com; helo=mail-ej1-x636.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -159,38 +123,129 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Josh,
+On Tue, Jun 16, 2026 at 6:40=E2=80=AFAM Marc-Andr=C3=A9 Lureau
+<marcandre.lureau@redhat.com> wrote:
+>
+> Convert the acpi and iommu-sys OnOffAuto properties from manual
+> visitor-based callbacks to property_add_qapi_enum().
+>
+> Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
 
-On 16/6/26 00:18, Josh Hilke wrote:
-> Integrate throttling logic into the transmission path. In
-> `igb_start_xmit`, check if the queue is currently throttled.  Accumulate
-> bytes sent, calculate the transmission delay based on the configured
-> target rate, and if a throttle is triggered, set the virtual timer, mark
-> the queue as throttled, and defer remaining packets.  Implement the
-> timer callback to clear the throttled state and resume transmission when
-> the timer expires.
-> 
-> Signed-off-by: Josh Hilke <jrhilke@google.com>
+Acked-by: Alistair Francis <alistair.francis@wdc.com>
+
+Alistair
+
 > ---
->   hw/net/igb_core.c | 42 +++++++++++++++++++++++++++++++++++++++---
->   1 file changed, 39 insertions(+), 3 deletions(-)
-> 
-> diff --git a/hw/net/igb_core.c b/hw/net/igb_core.c
-> index fac4c44..17eeba4 100644
-> --- a/hw/net/igb_core.c
-> +++ b/hw/net/igb_core.c
-> @@ -876,6 +876,12 @@ igb_tx_enabled(IGBCore *core, const E1000ERingInfo *txi)
->           (core->mac[TXDCTL0 + (qn * 16)] & E1000_TXDCTL_QUEUE_ENABLE);
->   }
->   
-> +static uint64_t igb_trl_calculate_delay(uint64_t target_rate,
-> +                                        size_t bytes_sent)
-> +{
-> +    return (uint64_t)bytes_sent * NANOSECONDS_PER_SECOND / target_rate;
-
-Please use the safer muldiv64() helper. Rest LGTM.
-
-> +}
-
-
+>  hw/riscv/virt.c | 54 ++++++++++++++++++++++++---------------------------=
+---
+>  1 file changed, 24 insertions(+), 30 deletions(-)
+>
+> diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
+> index ce64eaaef7d..65c3e27ec85 100644
+> --- a/hw/riscv/virt.c
+> +++ b/hw/riscv/virt.c
+> @@ -56,7 +56,7 @@
+>  #include "hw/pci-host/gpex.h"
+>  #include "hw/display/ramfb.h"
+>  #include "hw/acpi/aml-build.h"
+> -#include "qapi/qapi-visit-common.h"
+> +#include "qapi/qapi-type-infos-common.h"
+>  #include "hw/virtio/virtio-iommu.h"
+>  #include "hw/uefi/var-service-api.h"
+>
+> @@ -1846,21 +1846,16 @@ bool virt_is_iommu_sys_enabled(RISCVVirtState *s)
+>      return s->iommu_sys =3D=3D ON_OFF_AUTO_ON;
+>  }
+>
+> -static void virt_get_iommu_sys(Object *obj, Visitor *v, const char *name=
+,
+> -                               void *opaque, Error **errp)
+> +static int virt_get_iommu_sys(Object *obj, Error **errp)
+>  {
+>      RISCVVirtState *s =3D RISCV_VIRT_MACHINE(obj);
+> -    OnOffAuto iommu_sys =3D s->iommu_sys;
+> -
+> -    visit_type_OnOffAuto(v, name, &iommu_sys, errp);
+> +    return s->iommu_sys;
+>  }
+>
+> -static void virt_set_iommu_sys(Object *obj, Visitor *v, const char *name=
+,
+> -                               void *opaque, Error **errp)
+> +static void virt_set_iommu_sys(Object *obj, int value, Error **errp)
+>  {
+>      RISCVVirtState *s =3D RISCV_VIRT_MACHINE(obj);
+> -
+> -    visit_type_OnOffAuto(v, name, &s->iommu_sys, errp);
+> +    s->iommu_sys =3D value;
+>  }
+>
+>  bool virt_is_acpi_enabled(RISCVVirtState *s)
+> @@ -1868,21 +1863,16 @@ bool virt_is_acpi_enabled(RISCVVirtState *s)
+>      return s->acpi !=3D ON_OFF_AUTO_OFF;
+>  }
+>
+> -static void virt_get_acpi(Object *obj, Visitor *v, const char *name,
+> -                          void *opaque, Error **errp)
+> +static int virt_get_acpi(Object *obj, Error **errp)
+>  {
+>      RISCVVirtState *s =3D RISCV_VIRT_MACHINE(obj);
+> -    OnOffAuto acpi =3D s->acpi;
+> -
+> -    visit_type_OnOffAuto(v, name, &acpi, errp);
+> +    return s->acpi;
+>  }
+>
+> -static void virt_set_acpi(Object *obj, Visitor *v, const char *name,
+> -                          void *opaque, Error **errp)
+> +static void virt_set_acpi(Object *obj, int value, Error **errp)
+>  {
+>      RISCVVirtState *s =3D RISCV_VIRT_MACHINE(obj);
+> -
+> -    visit_type_OnOffAuto(v, name, &s->acpi, errp);
+> +    s->acpi =3D value;
+>  }
+>
+>  static HotplugHandler *virt_machine_get_hotplug_handler(MachineState *ma=
+chine,
+> @@ -1980,17 +1970,21 @@ static void virt_machine_class_init(ObjectClass *=
+oc, const void *data)
+>          object_class_property_set_description(oc, "aia-guests", str);
+>      }
+>
+> -    object_class_property_add(oc, "acpi", "OnOffAuto",
+> -                              virt_get_acpi, virt_set_acpi,
+> -                              NULL, NULL);
+> -    object_class_property_set_description(oc, "acpi",
+> -                                          "Enable ACPI");
+> -
+> -    object_class_property_add(oc, "iommu-sys", "OnOffAuto",
+> -                              virt_get_iommu_sys, virt_set_iommu_sys,
+> -                              NULL, NULL);
+> -    object_class_property_set_description(oc, "iommu-sys",
+> -                                          "Enable IOMMU platform device"=
+);
+> +    object_class_property_add_qapi_enum(oc, QAPI_ENUM_PROP(
+> +        .name =3D "acpi",
+> +        .description =3D "Enable ACPI",
+> +        .qapi_type =3D &OnOffAuto_type_info,
+> +        .get =3D virt_get_acpi,
+> +        .set =3D virt_set_acpi,
+> +    ));
+> +
+> +    object_class_property_add_qapi_enum(oc, QAPI_ENUM_PROP(
+> +        .name =3D "iommu-sys",
+> +        .description =3D "Enable IOMMU platform device",
+> +        .qapi_type =3D &OnOffAuto_type_info,
+> +        .get =3D virt_get_iommu_sys,
+> +        .set =3D virt_set_iommu_sys,
+> +    ));
+>  }
+>
+>  static const TypeInfo virt_machine_typeinfo =3D {
+>
+> --
+> 2.54.0
+>
+>
 
