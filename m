@@ -4,103 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD488CD98E4
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 19:15:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30435CD98F1
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 19:15:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZZDF-0002ys-EZ; Tue, 16 Jun 2026 15:12:43 -0400
+	id 1wZZAU-0006t5-I3; Tue, 16 Jun 2026 15:09:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wZZAD-00061Y-Ro
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 15:09:37 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wZZA8-0001wh-52
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 15:09:32 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781636966;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=t8BwlPR5zRrIQovDx6UCEVTxPsNKOlfGsm97Z3r4J+w=;
- b=LWgovhsoetuHukqBM/ib7z7P+83W63Wz+/UHh+uonk54on8JUsniGlbpqRSLeq8a+ty9mz
- 4Oeu9bYCspXWZ8zop5951USgEktSOchp3aKa3/97t0Ompm2J511NY7Q72zRX3SGk/RF2P4
- ARqj1pUO0LbEwPMQ13h949VK0ApyLV8=
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
- [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-118-XounOh9rMEupFBnmrRryLA-1; Tue, 16 Jun 2026 15:09:24 -0400
-X-MC-Unique: XounOh9rMEupFBnmrRryLA-1
-X-Mimecast-MFC-AGG-ID: XounOh9rMEupFBnmrRryLA_1781636964
-Received: by mail-qk1-f197.google.com with SMTP id
- af79cd13be357-915767b341eso478240785a.3
- for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 12:09:24 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wZZ8S-0004iE-Mz
+ for qemu-devel@nongnu.org; Tue, 16 Jun 2026 15:07:49 -0400
+Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wZZ8L-00014J-59
+ for qemu-devel@nongnu.org; Tue, 16 Jun 2026 15:07:41 -0400
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-46066e640easo3025122f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 12:07:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1781636964; x=1782241764; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=t8BwlPR5zRrIQovDx6UCEVTxPsNKOlfGsm97Z3r4J+w=;
- b=E9TaXNBoY43z9fAUXI1D1Z4Btbrzuxw6H5NK3DWw6gikqHBQoBydBbi6R8l2DP9NOn
- tHp/aZJ1Kgq5URqWB/vVu+X76Lt3KU1a4FCqfI19nj+TafPUHPpxUm/oTp+g4l2KkxEW
- ZeUOakmxX+OyJR/PB0iEhcJ2/MFe8tJMtlVMFdENJ99t75slpYaw113caMfzZD3Wjnxt
- OYj8IBOExw2dzAMhpKFHKPdLe8BOGCgohf+wXSR+1b5rThgfVgv4OiLQAOGORq5VGMPl
- KnIbnqNPu1dQy+mpQzGbOUkM550LWnXOOiIWiLMPU78iPrQH0rvFXMqYjj7Fz9vYpT+X
- ypgw==
+ d=linaro.org; s=google; t=1781636847; x=1782241647; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=9wCLOkdT45lh5ipdi99zooqwQLCwa4nSMaUr+Wnmkc0=;
+ b=E6Gjt4EHh7nBWAJmuvABI0o6XBM6rckFr2Q1OKsKqD7lK4UCSxgxF4YqTu33hUwKmk
+ 4bbcTxmmIhzzqLaqLYNijeYp+O39WTzSjtS+Yeq2PXP+Mf2e9/jf+AUJc9/EyNFtcMt6
+ QXUMNZWlAwt64Fyi242We86LrKboG32/MQM5aC1dGFdUnId7RBtfqUTqSSkKqKWLiYXM
+ UmBlyO5jlaw4k3EAEq/750MdVNW3p0cVWGgszgX/QOS+AjCuOgA+TwXt+P3MtAPHMZd6
+ wBACC4ryzHBeK1DeJwnpuVGWSQ6bIDq597PAaVxHUBNvAP4nzbrG2dvmbUOJuP4oEWeG
+ t1Pg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781636964; x=1782241764;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=t8BwlPR5zRrIQovDx6UCEVTxPsNKOlfGsm97Z3r4J+w=;
- b=Uu9uZhooMAxU1ue61rKK9eC0eERc07BfElDcgqrbYvau+JwtYpKaMJEgrHuhdljWqM
- FGGjFsuSREvQXydONN9KGO9UHskN0MfwVgNpVJ1yV6fGX8C7onWRnYHVQQYcEK9Td/9A
- tUFsnp8LMN7hmeapib9SSodIPYe/PoUsT5rKw7cS9sNR/A0lT/jrAplmKI3x1JYHtE8Q
- 7FmnKcwB8F0PURiRkDJGtzfwJ45vAzp7zOQsFjr6SxzVL1x/RL6lQgPgMYjRDCleOARL
- VswT2Rkl9nbVO6Z9VYxSu0CBrfEyVSeJ1LGMkcmLBi5dcImIcPWCHTxrMieazxUJafqy
- jptA==
-X-Gm-Message-State: AOJu0YyVGdftIY6YgA/EGF8zv2/BAjMx1s054FE4ckXzfJAYG1tB6AQh
- +NI3qkeOtzefDCLP6BnHCvJN0bT+quxbV2MG2zIKifI3XH723vJbshjhHuert/zAcM+LHhj9Kdo
- YGMaBN5AnntH9CqEE7IZ8M6JnMisfhgOnRZ+wUkkUCIThxS3imnVU+kmw
-X-Gm-Gg: Acq92OFjvkKiWl1njmXB/UWUiKkbSYt9TrdWRZ50w8i+S1PActBnjzm0huLe4K+Klps
- KHWSH1xsPOG02J7YLct4gjvSkvVoQ3pmcE1gmQ8Jt7CmcyiK5qIM7gQvu2sqWwjHxdgPBhaEe0M
- jNyTuH0hGbBJufG4WZPJ76zMrh/jpzU05L2AlcNB2fx9WyFfw+PmNFOZgKeCx2r7DhsVTjv/Wtk
- 2T0n8Y8g5FIznBmS0CYsEzUnlcyvrILNW+Ss/+D11yh8EPADqtxvc9qlL0KVNNjqQ6uwG0vraNH
- zMS0ECqTUj7NXvRskTrmcxC0IKkvzVITYc56SYkjxeu2bPga1FMgdTUdMuZbjW8cl7IFoecIadI
- fymGNsOzDeapxIzA=
-X-Received: by 2002:a05:620a:45a3:b0:915:87ad:d5b1 with SMTP id
- af79cd13be357-91d8b0cc3e1mr181270285a.15.1781636964001; 
- Tue, 16 Jun 2026 12:09:24 -0700 (PDT)
-X-Received: by 2002:a05:620a:45a3:b0:915:87ad:d5b1 with SMTP id
- af79cd13be357-91d8b0cc3e1mr181263385a.15.1781636963343; 
- Tue, 16 Jun 2026 12:09:23 -0700 (PDT)
-Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-91619f05fd1sm1556006485a.11.2026.06.16.12.09.22
+ d=1e100.net; s=20251104; t=1781636847; x=1782241647;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=9wCLOkdT45lh5ipdi99zooqwQLCwa4nSMaUr+Wnmkc0=;
+ b=LIEl0HNKN2TKKEb96qTx7nOziRGL6PaacDjMlPAk1/3z888dvo51UIDVLMFKW9EmvC
+ I7DooBxRrrfW5IC9ZHjncFKNpqm4ADR/eZFLtlSxA7V4Nah43jWiTUdYLXtFXQIU4M08
+ OeRYe7MqzOT9QAETqWdi/HPxCXMPtiALE3QoiZsrB4z9jBb1OiY1ToUBhfX7AmV81USM
+ EmG84VRZ8Hka71nwLdW3xfm9jRj32Isd52IBsA5l5YNj6/JzzuDqpUim/QjXhlCbYna/
+ FkO/rh44IUbu0nzmKyBuoUhHYg1clQ3ngF3aZ7w0LWS0AsOI3dXkGtXDZAy/DTF4PGNn
+ jGTg==
+X-Gm-Message-State: AOJu0YxdmLoxCy6lYuNxoLvBUfym9It6YgZdI+T801+kB9XE8zn5APKP
+ MlWW58ntQfT6NMemtd5MmCKecgaDm99IMMjBKuxxXwkjr/nkOrXRR46/33iSEJbGaFt+VHIDdUV
+ 1Tzdo
+X-Gm-Gg: Acq92OF1uAltI8k65Po6U+jWfQRvGMAxGuoHkhKUDSVdx6n55n5p7YnYfvehO/5OZoD
+ 38MNB7VF8+HIQgNsYzbLMQfidrf+SLUT7+KtjGBdNfKuAeo9X9QSNk9uomUFBsXCCgn0OfdSUvD
+ UKBvOeOTgtAK7uH4JUZxEpGLDrxCmKfnNcB4cSKhwqvbkkSMUD4eef9EfzhmqOYL9DzB0vuaKqQ
+ oiftC9MOaub9xFNKVGD5NNkQwTVl/jbLFdFQYGt1AP2pttf7rBMZUimHbphH+Z27uPRZEOnW0MX
+ qGefM+UV6koGPv5C/w6G1+LVwR25U+dUzFSFnQTe0YTyq+zk/EPBf0/CFXJXq9GCLyQQQxaMOOg
+ zjQBIW37EQfNVwcSao7aEdJfHs76VA/ipvzW/W91BLwBtGIx8dg7A82ebaQIuWJF0/32o//Y24s
+ GMpi2hdFPeFthUNfc/NwIag4WuKctqbq++LB1kxTdZbi+mIOcsEiElW8wPHRlWAgCWDJWk2KyF9
+ J5DNiDgxki9LUcSwRM3gnqNWvRa3hlP
+X-Received: by 2002:a05:6000:18a3:b0:45e:f271:5019 with SMTP id
+ ffacd0b85a97d-46236276630mr1427244f8f.14.1781636847245; 
+ Tue, 16 Jun 2026 12:07:27 -0700 (PDT)
+Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-4606f2d9becsm45078765f8f.34.2026.06.16.12.07.26
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 16 Jun 2026 12:09:22 -0700 (PDT)
-Date: Tue, 16 Jun 2026 15:09:21 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Bin Guo <guobin@linux.alibaba.com>
-Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
- Li Zhijian <lizhijian@fujitsu.com>
-Subject: Re: [PATCH 1/2] migration/rdma: honor blocking mode in
- QIOChannelRDMA readv
-Message-ID: <ajGfYYFrhlEaklig@x1.local>
-References: <20260529070408.92651-1-guobin@linux.alibaba.com>
- <20260529070408.92651-2-guobin@linux.alibaba.com>
+ Tue, 16 Jun 2026 12:07:26 -0700 (PDT)
+From: Peter Maydell <peter.maydell@linaro.org>
+To: qemu-devel@nongnu.org
+Subject: [PULL 41/61] hw/arm/smmuv3: Add cmdqv property for SMMUv3 device
+Date: Tue, 16 Jun 2026 20:06:18 +0100
+Message-ID: <20260616190639.3462006-42-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260616190639.3462006-1-peter.maydell@linaro.org>
+References: <20260616190639.3462006-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260529070408.92651-2-guobin@linux.alibaba.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::435;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x435.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,114 +100,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, May 29, 2026 at 03:04:07PM +0800, Bin Guo wrote:
-> QIOChannelRDMA's readv ignored the blocking flag set via
-> io_set_blocking.  In blocking mode it returned immediately instead
-> of waiting for data, unlike other QIOChannel implementations.
-> 
-> Loop on qemu_rdma_exchange_recv() when the channel is blocking and
-> the receive buffer cannot satisfy the request.  Also remove the
-> stale XXX comments about unimplemented blocking support.
+From: Shameer Kolothum <skolothumtho@nvidia.com>
 
-Zhijian would be the best to comment on this, but based on my limited
-understanding, this patch made it the other way round: the channel didn't
-respect blocking mode because it always blocks, not always non-block.
+Introduce a "cmdqv" property to enable Tegra241 CMDQV support.
+This is only enabled for accelerated SMMUv3 devices.
 
-> 
-> Signed-off-by: Bin Guo <guobin@linux.alibaba.com>
-> ---
->  migration/rdma.c | 46 +++++++++++++++++++++-------------------------
->  1 file changed, 21 insertions(+), 25 deletions(-)
-> 
-> diff --git a/migration/rdma.c b/migration/rdma.c
-> index 3e37a1d440..201cb9eb12 100644
-> --- a/migration/rdma.c
-> +++ b/migration/rdma.c
-> @@ -388,7 +388,7 @@ struct QIOChannelRDMA {
->      QIOChannel parent;
->      RDMAContext *rdmain;
->      RDMAContext *rdmaout;
-> -    bool blocking; /* XXX we don't actually honour this yet */
-> +    bool blocking;
->  };
->  
->  /*
-> @@ -2710,32 +2710,29 @@ static ssize_t qio_channel_rdma_readv(QIOChannel *ioc,
->              break;
->          }
->  
-> -
-> -        /* We've got nothing at all, so lets wait for
-> -         * more to arrive
-> -         */
-> -        ret = qemu_rdma_exchange_recv(rdma, &head, RDMA_CONTROL_QEMU_FILE,
-> -                                      errp);
-> -
-> -        if (ret < 0) {
-> -            rdma->errored = true;
-> -            return -1;
-> -        }
-> -
->          /*
-> -         * SEND was received with new bytes, now try again.
-> +         * We've got nothing at all, so lets wait for
-> +         * more to arrive.
->           */
-> -        len = qemu_rdma_fill(rdma, data, want, 0);
-> -        done += len;
-> -        want -= len;
-> -
-> -        /* Still didn't get enough, so lets just return */
-> -        if (want) {
-> -            if (done == 0) {
-> -                return QIO_CHANNEL_ERR_BLOCK;
-> -            } else {
-> -                break;
-> +        do {
-> +            ret = qemu_rdma_exchange_recv(rdma, &head,
-> +                                          RDMA_CONTROL_QEMU_FILE, errp);
+Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
+Reviewed-by: Eric Auger <eric.auger@redhat.com>
+Tested-by: Nicolin Chen <nicolinc@nvidia.com>
+Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
+Tested-by: Eric Auger <eric.auger@redhat.com>
+Message-id: 20260609112552.378999-32-skolothumtho@nvidia.com
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+---
+ hw/arm/smmuv3.c | 8 ++++++++
+ qemu-options.hx | 8 ++++++++
+ 2 files changed, 16 insertions(+)
 
-IIUC this is the function that always blocks.  If to support non-blocking,
-my understanding is we need to make this return immediately when no data.
-
-Also, this is only the read path; there's also write.
-
-I'm not sure if supporting non-blocking is trivial to RDMA..
-
-Thanks,
-
-> +            if (ret < 0) {
-> +                rdma->errored = true;
-> +                return -1;
->              }
-> +
-> +            /*
-> +             * SEND was received with new bytes, now try again.
-> +             */
-> +            len = qemu_rdma_fill(rdma, data, want, 0);
-> +            done += len;
-> +            want -= len;
-> +            data += len;
-> +        } while (want && rioc->blocking);
-> +
-> +        if (want && done == 0) {
-> +            return QIO_CHANNEL_ERR_BLOCK;
->          }
->      }
->      return done;
-> @@ -2771,7 +2768,6 @@ static int qio_channel_rdma_set_blocking(QIOChannel *ioc,
->                                           Error **errp)
->  {
->      QIOChannelRDMA *rioc = QIO_CHANNEL_RDMA(ioc);
-> -    /* XXX we should make readv/writev actually honour this :-) */
->      rioc->blocking = blocking;
->      return 0;
->  }
-> -- 
-> 2.50.1 (Apple Git-155)
-> 
-
+diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
+index a8fb10e531..5e5a6a960c 100644
+--- a/hw/arm/smmuv3.c
++++ b/hw/arm/smmuv3.c
+@@ -1994,6 +1994,10 @@ static bool smmu_validate_property(SMMUv3State *s, Error **errp)
+                        "bits if accel=on");
+             return false;
+         }
++        if (s->cmdqv == ON_OFF_AUTO_ON) {
++            error_setg(errp, "cmdqv can only be enabled if accel=on");
++            return false;
++        }
+         return true;
+     }
+ 
+@@ -2144,6 +2148,7 @@ static const Property smmuv3_properties[] = {
+     DEFINE_PROP_OAS_MODE("oas", SMMUv3State, oas, OAS_MODE_AUTO),
+     DEFINE_PROP_SSIDSIZE_MODE("ssidsize", SMMUv3State, ssidsize,
+                               SSID_SIZE_MODE_AUTO),
++    DEFINE_PROP_ON_OFF_AUTO("cmdqv", SMMUv3State, cmdqv, ON_OFF_AUTO_AUTO),
+ };
+ 
+ static void smmuv3_instance_init(Object *obj)
+@@ -2194,6 +2199,9 @@ static void smmuv3_class_init(ObjectClass *klass, const void *data)
+         "than 0 is required to enable PASID support."
+         "Please ensure the value does not exceed the maximum "
+         "SubstreamID size supported by the host platform.");
++    object_class_property_set_description(klass, "cmdqv",
++        "Enable/disable CMDQV support (for accel=on). "
++        "Valid values are on, off, and auto. Defaults to auto.");
+ }
+ 
+ static int smmuv3_notify_flag_changed(IOMMUMemoryRegion *iommu,
+diff --git a/qemu-options.hx b/qemu-options.hx
+index a5979d0a5b..c799286153 100644
+--- a/qemu-options.hx
++++ b/qemu-options.hx
+@@ -1329,6 +1329,14 @@ SRST
+ 
+         - With accel=off, auto is resolved to 0.
+ 
++    ``cmdqv=on|off|auto`` (default: auto)
++        Enable hardware Command Queue Virtualization (CMDQV) for the
++        SMMUv3 command queue. Currently only the NVIDIA Tegra241 CMDQV
++        implementation is supported.
++
++        - With accel=on, auto means the value is automatically derived from the host SMMU.
++        - With accel=off, auto is resolved to 'off'.
++
+ ``-device amd-iommu[,option=...]``
+     Enables emulation of an AMD-Vi I/O Memory Management Unit (IOMMU).
+     Only available with ``-machine q35``, it supports the following options:
 -- 
-Peter Xu
+2.43.0
 
 
