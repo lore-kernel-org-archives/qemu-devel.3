@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF867CD8CA8
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF909CD98E3
 	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 06:13:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZN2g-0002wU-RE; Tue, 16 Jun 2026 02:12:58 -0400
+	id 1wZN2Q-0002pO-Gs; Tue, 16 Jun 2026 02:12:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wZN2f-0002vz-K5
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 02:12:57 -0400
+ id 1wZN2O-0002ol-8f
+ for qemu-devel@nongnu.org; Tue, 16 Jun 2026 02:12:40 -0400
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wZN2d-0006Tw-Jo
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 02:12:57 -0400
+ id 1wZN2L-0006Qs-DH
+ for qemu-devel@nongnu.org; Tue, 16 Jun 2026 02:12:39 -0400
 Received: from [133.11.54.183] (h183.csg.ci.i.u-tokyo.ac.jp [133.11.54.183])
  (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 65G6ChWx040680
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 65G6CM2F040544
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Tue, 16 Jun 2026 15:12:43 +0900 (JST)
+ Tue, 16 Jun 2026 15:12:22 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=zGT6vgUwT2paA0eFUcSO5FfAzOcOtpGeD2KQWbHEEd0=; 
+DKIM-Signature: a=rsa-sha256; bh=kCzWBtRTv/NXVlMSlgwLnjMMqQFc/a7ningIJINP3CY=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=From:Message-ID:To:Subject:Date;
- s=rs20250326; t=1781590363; v=1;
- b=Fz+JTGNRuIArPWwdYwS1JqEL7ZWo97xn8fgivZNg+xZ60qFi3ac/B7nNMAprhPef
- LCc8/6C9CcH1dQJXyzEAbFCxjj4OnlsZxbX1zUBvdBLs21LjIkX0msrP2TYVwmHA
- KtgEr4ZHb86o9AzyWsiEyFn+rCemLEAwnB/xnVkZXBMjg+4IllUXpywxKZ9COShC
- +PlWXg43KX1yAGSg00ImB9gUdFOQlozupawYGDFOTrbwcWa0UtMQsTkKz3Mp6LTN
- 8rn5MUndLbp781LyIVN7PHxp1lNjWfhWaQis7bQ9B1jT4CwlhNVhDbNlaePySrP9
- ltLJioTklDMcEsKWtSMXaw==
-Message-ID: <a8bfd3c4-bbae-4c0a-85f9-d7592dda3a53@rsg.ci.i.u-tokyo.ac.jp>
-Date: Tue, 16 Jun 2026 15:12:43 +0900
+ s=rs20250326; t=1781590342; v=1;
+ b=TZHuXtdbYQ63WJoj222AXb0QEqz+Zj0KV1EzvENKoyQubf9RcLImaFZcqBC9eTmk
+ z+3PcJWyEfmne/P1DsT+wCOjPJOYSE7/znCJElLNoUTiSrNDFjEBbePdKg96RhzU
+ pzuN2R2NDadlG5jRHTyCkoNaWUxG9htUoIG6WfJv+foCjLf8rhmPAgAg8hblVs8h
+ rjIyvW48u1ax99FouRk1LZbnPHYxwYYqLkAkRSsf04JlzFew4Mwrmqd5GKlPgUOo
+ Ym8aet7SElbvgpPn9+/y2C3xNR3rr8FkQbkUdFEQLeTYQtn9G9LJ6qtD2KPwHOLi
+ eHg7v7HnjwKc0Ky3x7HHhQ==
+Message-ID: <eeccac7c-1517-420b-b879-8d26bac54bb1@rsg.ci.i.u-tokyo.ac.jp>
+Date: Tue, 16 Jun 2026 15:12:21 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 3/7] igb: Implement TRL register write and configuration
+Subject: Re: [PATCH v4 1/7] igb: Define TRL registers and core state
 To: Josh Hilke <jrhilke@google.com>, qemu-devel@nongnu.org
 Cc: Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
  Jason Wang <jasowang@redhat.com>, Fabiano Rosas <farosas@suse.de>,
@@ -48,10 +48,10 @@ Cc: Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
  David Matlack <dmatlack@google.com>,
  Alex Williamson <alex.williamson@nvidia.com>
 References: <20260615-igb-trl-v4-0-cf5739bf529f@google.com>
- <20260615-igb-trl-v4-3-cf5739bf529f@google.com>
+ <20260615-igb-trl-v4-1-cf5739bf529f@google.com>
 Content-Language: en-US
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <20260615-igb-trl-v4-3-cf5739bf529f@google.com>
+In-Reply-To: <20260615-igb-trl-v4-1-cf5739bf529f@google.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=49.212.243.89;
@@ -78,118 +78,184 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 2026/06/16 7:18, Josh Hilke wrote:
-> Implement write handlers for TLDQSEL and TRLRC registers to allow the
-> guest to configure Transmit Rate Limiting. Translate the register Rate
-> Factor into a physical target rate (bytes/sec) per queue.  Disable TRL
-> and clear timers when the link status changes or when TRL is disabled by
-> the guest.
+> Introduce register offsets and bitmask constants for the Transmit Rate
+> Limiter (TRL). Add the IGBTrlQueue structure and corresponding fields to
+> IGBCore to track TRL state (timers, throttling status, and target rates)
+> per queue. Initialize and free these timers during the device
+> realize/uninit lifecycle, and reset them on device reset.
 > 
 > Signed-off-by: Josh Hilke <jrhilke@google.com>
 > ---
->   hw/net/igb_core.c | 57 ++++++++++++++++++++++++++++++++++++++++++++++++++++++-
->   1 file changed, 56 insertions(+), 1 deletion(-)
+>   hw/net/igb_common.h |  1 +
+>   hw/net/igb_core.c   | 59 +++++++++++++++++++++++++++++++++++++++++++++++++++++
+>   hw/net/igb_core.h   | 13 ++++++++++++
+>   hw/net/igb_regs.h   |  6 ++++++
+>   4 files changed, 79 insertions(+)
 > 
+> diff --git a/hw/net/igb_common.h b/hw/net/igb_common.h
+> index b316a5b..8c0a0cf 100644
+> --- a/hw/net/igb_common.h
+> +++ b/hw/net/igb_common.h
+> @@ -148,6 +148,7 @@ enum {
+>       defreg(MTA_A),
+>   
+>       defreg(VTIVAR), defreg(VTIVAR_MISC),
+> +    defreg(TRLDQSEL), defreg(TRLRC),
+>   };
+>   
+>   uint64_t igb_mmio_read(void *opaque, hwaddr addr, unsigned size);
 > diff --git a/hw/net/igb_core.c b/hw/net/igb_core.c
-> index c94e8d3..dea8136 100644
+> index 45d8fd7..c94e8d3 100644
 > --- a/hw/net/igb_core.c
 > +++ b/hw/net/igb_core.c
-> @@ -2137,11 +2137,27 @@ igb_set_phy_ctrl(IGBCore *core, uint16_t val)
+> @@ -96,6 +96,7 @@ igb_receive_internal(IGBCore *core, const struct iovec *iov, int iovcnt,
+>   
+>   static void igb_raise_interrupts(IGBCore *core, size_t index, uint32_t causes);
+>   static void igb_reset(IGBCore *core, bool sw);
+> +static uint32_t igb_trl_get_scaled_rate_factor(uint32_t trlrc);
+>   
+>   static inline void
+>   igb_raise_legacy_irq(IGBCore *core)
+> @@ -4282,6 +4283,53 @@ igb_autoneg_resume(IGBCore *core)
 >       }
 >   }
 >   
-> +static void igb_trl_disable_queue(IGBCore *core, int qidx)
+> +static uint32_t igb_trl_get_scaled_rate_factor(uint32_t trlrc)
 > +{
-> +    core->trl[qidx].trlrc = 0;
-> +
-> +    timer_del(core->trl[qidx].timer);
+> +    /*
+> +     * The TRLRC register stores the Rate Factor in 10.14 fixed-point format:
+> +     * - Bits 13:0: Fractional part
+> +     * - Bits 23:14: Integer part
+> +     *
+> +     * Combined, the lower 24 bits of the register (23:0) represent the
+> +     * concatenated 24-bit scaled Rate Factor directly.
+> +     */
+> +    return trlrc & 0xFFFFFF;
 > +}
 > +
-> +static void igb_trl_disable(IGBCore *core)
+> +bool igb_trl_enabled(uint32_t trlrc)
 > +{
-> +    for (int i = 0; i < IGB_NUM_QUEUES; i++) {
-> +        igb_trl_disable_queue(core, i);
+> +    return trlrc & E1000_TRLRC_RS_ENA;
+> +}
+> +
+> +uint64_t igb_trl_get_target_rate(const IGBTrlQueue *q)
+
+Please add the static qualifier.
+
+> +{
+> +    const uint64_t rf_scaled = igb_trl_get_scaled_rate_factor(q->trlrc);
+> +
+> +    if (!igb_trl_enabled(q->trlrc)) {
+> +        return 0;
 > +    }
+> +
+> +    if (rf_scaled == 0) {
+> +        return 0;
+> +    }
+> +
+> +    /*
+> +     * The rate factor is a fixed-point number with a 14-bit fractional part:
+> +     * Rate Factor = rf_scaled / 2^14
+> +     *
+> +     * The target rate is:
+> +     * Target Rate = Link Rate / Rate Factor
+> +     *             = Link Rate / (rf_scaled / 2^14)
+> +     *             = (Link Rate * 2^14) / rf_scaled
+> +     */
+> +    return (E1000_LINK_RATE_1GBPS << 14) / rf_scaled;
 > +}
 > +
->   void igb_core_set_link_status(IGBCore *core)
->   {
->       NetClientState *nc = qemu_get_queue(core->owner_nic);
->       uint32_t old_status = core->mac[STATUS];
->   
-> +    igb_trl_disable(core);
+> +static void igb_trl_timer_cb(void *opaque)
+> +{
+> +    /* Stub */
+> +}
 > +
->       trace_e1000e_link_status_changed(nc->link_down ? false : true);
+>   void
+>   igb_core_pci_realize(IGBCore        *core,
+>                        const uint16_t *eeprom_templ,
+> @@ -4296,6 +4344,11 @@ igb_core_pci_realize(IGBCore        *core,
 >   
->       if (nc->link_down) {
-> @@ -2624,6 +2640,42 @@ static void igb_set_vtivar(IGBCore *core, int index, uint32_t val)
->        */
+>       for (i = 0; i < IGB_NUM_QUEUES; i++) {
+>           net_tx_pkt_init(&core->tx[i].tx_pkt, E1000E_MAX_TX_FRAGS);
+> +        core->trl[i].timer =
+> +            timer_new_ns(QEMU_CLOCK_VIRTUAL, igb_trl_timer_cb,
+> +                         &core->trl[i]);
+> +        core->trl[i].core = core;
+> +        core->trl[i].queue_idx = i;
+>       }
+>   
+>       net_rx_pkt_init(&core->rx_pkt);
+> @@ -4319,6 +4372,7 @@ igb_core_pci_uninit(IGBCore *core)
+>   
+>       for (i = 0; i < IGB_NUM_QUEUES; i++) {
+>           net_tx_pkt_uninit(core->tx[i].tx_pkt);
+> +        timer_free(core->trl[i].timer);
+>       }
+>   
+>       net_rx_pkt_uninit(core->rx_pkt);
+> @@ -4469,6 +4523,11 @@ static void igb_reset(IGBCore *core, bool sw)
+>   
+>       igb_intrmgr_reset(core);
+>   
+> +    for (i = 0; i < IGB_NUM_QUEUES; i++) {
+> +        timer_del(core->trl[i].timer);
+> +        core->trl[i].trlrc = 0;
+> +    }
+> +
+>       memset(core->phy, 0, sizeof core->phy);
+>       memcpy(core->phy, igb_phy_reg_init, sizeof igb_phy_reg_init);
+>   
+> diff --git a/hw/net/igb_core.h b/hw/net/igb_core.h
+> index d70b54e..f3d50bc 100644
+> --- a/hw/net/igb_core.h
+> +++ b/hw/net/igb_core.h
+> @@ -63,6 +63,13 @@ typedef struct IGBIntrDelayTimer_st {
+>       IGBCore *core;
+>   } IGBIntrDelayTimer;
+>   
+> +typedef struct IGBTrlQueue_st {
+> +    QEMUTimer *timer;
+> +    IGBCore *core;
+> +    int queue_idx;
+> +    uint32_t trlrc;
+> +} IGBTrlQueue;
+> +
+>   struct IGBCore {
+>       uint32_t mac[E1000E_MAC_SIZE];
+>       uint16_t phy[MAX_PHY_REG_ADDRESS + 1];
+> @@ -99,6 +106,9 @@ struct IGBCore {
+>       void (*owner_start_recv)(PCIDevice *d);
+>   
+>       int64_t timadj;
+> +
+> +    /* Transmit Rate Limiting */
+> +    IGBTrlQueue trl[IGB_NUM_QUEUES];
+>   };
+>   
+>   void
+> @@ -143,4 +153,7 @@ igb_receive_iov(IGBCore *core, const struct iovec *iov, int iovcnt);
+>   void
+>   igb_start_recv(IGBCore *core);
+>   
+> +bool igb_trl_enabled(uint32_t trlrc);
+> +uint64_t igb_trl_get_target_rate(const IGBTrlQueue *q);
+> +
+>   #endif
+> diff --git a/hw/net/igb_regs.h b/hw/net/igb_regs.h
+> index 4dc4c31..9ef628b 100644
+> --- a/hw/net/igb_regs.h
+> +++ b/hw/net/igb_regs.h
+> @@ -718,4 +718,10 @@ static inline uint8_t igb_ivar_entry_tx(uint8_t i)
+>       return i < 8 ? i * 4 + 1 : (i - 8) * 4 + 3;
 >   }
 >   
-> +static uint32_t igb_get_trlrc(IGBCore *core, int index)
-> +{
-> +    int qidx = core->mac[TRLDQSEL];
+> +/* Transmit Rate Limiting */
+> +#define E1000_TRLDQSEL 0x03604
+> +#define E1000_TRLRC 0x036B0
+> +#define E1000_TRLRC_RS_ENA BIT(31)
+> +#define E1000_LINK_RATE_1GBPS (1000000000ULL / BITS_PER_BYTE)
 > +
-> +    return core->trl[qidx].trlrc;
-> +}
-> +
-> +static void igb_set_trldqsel(IGBCore *core, int index, uint32_t val)
-> +{
-> +    core->mac[index] = val & 0xF;
-> +}
-> +
-> +static void igb_set_trlrc(IGBCore *core, int index, uint32_t val)
-> +{
-> +    uint64_t rf_scaled;
-> +    int qidx;
-> +
-> +    qidx = core->mac[TRLDQSEL];
-> +    core->trl[qidx].trlrc = val;
-> +
-> +    if (!igb_trl_enabled(val)) {
-> +        goto disable;
-> +    }
-> +
-> +    rf_scaled = igb_trl_get_scaled_rate_factor(val);
-> +
-> +    /* Zero is not a valid rate factor, treat as disabled */
-> +    if (rf_scaled == 0) {
-> +        goto disable;
-> +    }
-> +    return;
-> +
-> +disable:
-> +    igb_trl_disable_queue(core, qidx);
-
-This behavior of overwriting TRLRC and dropping the pending work is not 
-specified in the datasheet and extraneous.
-
-Regards,
-Akihiko Odaki
-
-> +}
-> +
->   static inline void
->   igb_autoneg_timer(void *opaque)
->   {
-> @@ -3679,6 +3731,7 @@ static const readops igb_macreg_readops[] = {
->       [RQDPC15] = igb_mac_read_clr4,
->       [VTIVAR ... VTIVAR + 7] = igb_mac_readreg,
->       [VTIVAR_MISC ... VTIVAR_MISC + 7] = igb_mac_readreg,
-> +    [TRLRC] = igb_get_trlrc,
->   };
->   enum { IGB_NREADOPS = ARRAY_SIZE(igb_macreg_readops) };
->   
-> @@ -4127,7 +4180,9 @@ static const writeops igb_macreg_writeops[] = {
->       [PVTEICR6] = igb_set_vteicr,
->       [PVTEICR7] = igb_set_vteicr,
->       [VTIVAR ... VTIVAR + 7] = igb_set_vtivar,
-> -    [VTIVAR_MISC ... VTIVAR_MISC + 7] = igb_mac_writereg
-> +    [VTIVAR_MISC ... VTIVAR_MISC + 7] = igb_mac_writereg,
-> +    [TRLDQSEL] = igb_set_trldqsel,
-> +    [TRLRC]    = igb_set_trlrc
->   };
->   enum { IGB_NWRITEOPS = ARRAY_SIZE(igb_macreg_writeops) };
->   
+>   #endif
 > 
 
 
