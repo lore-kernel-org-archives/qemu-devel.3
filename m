@@ -4,80 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6B33CD98E1
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 19:13:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD585CD98E1
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 19:14:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZZAa-0007Wr-3l; Tue, 16 Jun 2026 15:09:56 -0400
+	id 1wZZAf-0008BT-9U; Tue, 16 Jun 2026 15:10:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wZZ8E-0004ZM-Bs
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 15:07:37 -0400
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ id 1wZZ8a-0004n1-VQ
+ for qemu-devel@nongnu.org; Tue, 16 Jun 2026 15:07:55 -0400
+Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wZZ87-0000yz-P8
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 15:07:26 -0400
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-490a76757e5so35888215e9.2
- for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 12:07:08 -0700 (PDT)
+ id 1wZZ8W-0001Gk-N8
+ for qemu-devel@nongnu.org; Tue, 16 Jun 2026 15:07:52 -0400
+Received: by mail-wr1-x42e.google.com with SMTP id
+ ffacd0b85a97d-4624c1409c9so80360f8f.3
+ for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 12:07:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1781636827; x=1782241627; darn=nongnu.org;
+ d=linaro.org; s=google; t=1781636867; x=1782241667; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=dBnz57USTF4klnOD0F5S3F9sAeLT+jv8yGXcqqpiY2U=;
- b=UNWcdNGXWi559vcK1kduzSlD4DcmH4EwHnh3es6W0e6RzDNUcGLpbpiaebBO354D5R
- xBhz4/U0KgB/gaCXxBp7A2BYNiQFs2O4PZFrjDkd5QwktvCJbADy2LwAicM1fLO3ASjT
- T1gqgT8wvAvdiLOXHILZirgS9F86+RHBLv2C5puJPEnSoHIV13iDZgRPx3pfvgPYY+E/
- X3StTYyfDmyfqwqzZ6yeosBzufw4rcnO+g9XWiwSqNVesamjIkavrdmAekiBHgpHw7e3
- Jc3ZLHe1Jf4Dh7BnTFVbYnxoRaoElOMj07y6HKxuSpT7X9U+n2fErkT23/HD8o3bslV5
- Lc/Q==
+ :reply-to; bh=YZz7HH0GB8/vK9KUD+19bLJ7tmE5IW5AABeSFZsxDV0=;
+ b=Wxtk3m4+yxXaRujtwhwFrHofVAysUz45FRTQShrbxPmI8vDk3/3ohrWZpKmwutQVgd
+ 2ChOYhCm4Jwab/P/SZYsobPRxk73a6Wup5ZK70jQ/aIxGiEPkQQeTssz+CUZ1vPpAmgw
+ XIG8Jz7BoXoSQHsPMeTgxs8YFm9XfpYKjGYTFXyAk9aOKLr4YRY3fRZo5QbQVbBeggB5
+ bpTEN9O+AhhwUD3s5aF6YBmtY4j34dx2vINXsOmWm/Jpp5IwMRN7d3RC3yww2QJiPRIS
+ CAimoAQ+sy30Mxw0pdUR2PhRhprGxB3T/lz92HXL7j9JlOgIJWGjVMfd3mNgdYnF0H5O
+ hEjw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781636827; x=1782241627;
+ d=1e100.net; s=20251104; t=1781636867; x=1782241667;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=dBnz57USTF4klnOD0F5S3F9sAeLT+jv8yGXcqqpiY2U=;
- b=BFOM+Qiil6ZWPPpMoehKVZ4EF1qQznV6BKVqkJDKDUHozxhm7pYrQREm+8GLirTL3E
- zVgWLbB9C1vK82DVlAjKP+IaXy+gum7Se0G4eBMzr+YyLSYCRX5KU0vnGEw4qc0jBcJi
- QlWscZIk0SC1DGPTezOVOUrQu4PBM6mP3oWmfQNrPSZEP5SYXjddfzh86lSaxw+ipKdb
- D/nGem3Qq1Winrkhyq1FICnk+RiCXdXtkPsgyjpH8HR0fmmS0+fh6W72GSe+Sr/Ywhzm
- QCuUAPhHYSxJYx7Tp1eugIKitZjRY28AVncz2jfqCcmQKQncptB277ITrIUffbx+/og1
- Ttsg==
-X-Gm-Message-State: AOJu0YwrMYyrbnMyr1NrUTOytOAAyHKqXltV4FtFpTfiKekBbUpAqZkg
- rdjtpNgtXxqD0h1HOtc0Ftt5/FDRhfG/ChUA49tDm9+GfmWrC6Wx4ROcu9UW56eG6up6dgH/Y22
- v3aZN
-X-Gm-Gg: Acq92OEJ8rVP9u5R4nJJvpCGmPUkLGJ/kxHtyeGmEoOM2GgaJvl+BbBBxib903SwOyt
- UJEAVB3CTSdBVkQF24TbNA2Se2HUKuKHFIO5LvVPdOH7YmI+APOTIO5iHnhGIz6CAmaGFk1tRpY
- rOn/Ijfg7GpRMD4rR5a0B3CfX7etznO6fD4hQDFmur661yWrUOW2fCH8vXzaLaJMXOwbRX6NKsD
- A1Kqb6Xzkjy0RWVt2HkvtrqKit9ZE9n7jSuEd/L7qETYC/u0jjWEW6k49bEfU5KLNOBLuieh+JU
- xSIzeb8CLo8kkCefVMWlmSSpBkmxNmS5iY9J6MpmqY40KF23IAA7MKeR4PZw3BspJNMgmkyFyw0
- nUEOObn0UDcHWcUzCGtTQ7HUGtjocPpF5VxbYS0jHPjs87onNxneydXp6SKORcHCVeUKfLnXwWm
- FBKIAN8hgkHCerE5RlI72uqQlr0p/IbauTrDNPsna+uaxFJeckiLIewRfTf1GlcuZiyEi2wNihx
- tnuDjrjHw9pnzzocTrfbKhrg3OhLJZ/OFlEw/VaxU8=
-X-Received: by 2002:a05:600c:19ca:b0:492:1edf:9fbc with SMTP id
- 5b1f17b1804b1-492333ba2e3mr14447175e9.1.1781636827379; 
- Tue, 16 Jun 2026 12:07:07 -0700 (PDT)
+ bh=YZz7HH0GB8/vK9KUD+19bLJ7tmE5IW5AABeSFZsxDV0=;
+ b=hMnIbVE+Otcpx2xPX8w8Mss0DO8EZwTFkR5OSKuty8xu9DebmEEzYzYeq2P7tCm833
+ 8YNCrxFo/sFtcMtQNtiw0rng6tnYAUefG7kHdwObPLSecg7RBvUHeaq9/7kkBA3mQMJW
+ g+DEBNBbqARd/pQbDV9XV9YrQAiXyyDN0YHjijhcZiPfDeROeLGw466AsO4tAuu9NP7B
+ +9O/D5YnrUZz64DYTZnNVEE+ZF3NSUyLRabBUzbdqkHx5WUGn1WASE/6SBFZwLi3z/ev
+ t6teUFu88uLPb2nxrS7zr+bOZ5Soyko1w6zadCRyzzVUm8lJYw8s4JJW44lh5y4k8You
+ 07TA==
+X-Gm-Message-State: AOJu0Yzred7Jrl3nT4w0KvOKOjGUaksxmJQlklPgI6yYbk4v5pWHOTmZ
+ I8xcHBbQveh1DNIrF/IaICA6TV1VRKrZuYSTU0/VrdR3F4oFxjQyNlvYZxvcXWS3sM/rAhSAPvc
+ 7bBYy
+X-Gm-Gg: Acq92OHEEMOTdrrWRiZ2GtRMDems6Ct2TntdWgmSlyt6jRk3Sxss8R7UJd/gQb0trv6
+ rWDCo4kAsvj/sklESCZkUN2nm7PwcfvM85v+ck8wQTs/yoNs8PHNdB8QcnjMTz5SpLx+mMcFDvV
+ 2Ijhh4XtqYl5m+ybWgJb8vpxMDCnM/7tdmbj6Ff7GFZkvkHAj7iNq2W1T3mNdWfJ9A7FvUdyG8M
+ YCsmZ9gAObKDEP7Kiaq6R4QQdrjzh3M5DlSrnvKbf85uuVxxeOkMHSX8jQNZDuhN0pjhwFUiA5l
+ G6Rc/ATbVqGyIpd7wnrdA+TJuEXQb6TRYpW7V5AXybQEA6zKW6GsFBjEtpED3MCgvjlcPFV6TUW
+ JP42Z6kGVsseQLyOdQqCyI7kUkqZmiTulqMffT1cQuKtJ+n+8JW/1dhNMHH48Uz5Pwwi8tKCHGo
+ QACNhYOomTnBvP1OBChLLwmf3JOSbtG2frSHupV5klWtE2kLvXCkA7TZEG74d8AIgNBICvLxyI/
+ a5OoaC0FgNcPr5aOWwaKtPTBJcmUulrUfECMSESD2o=
+X-Received: by 2002:adf:f883:0:b0:45e:ea9b:edf6 with SMTP id
+ ffacd0b85a97d-46238acb28bmr1183462f8f.36.1781636866932; 
+ Tue, 16 Jun 2026 12:07:46 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4606f2d9becsm45078765f8f.34.2026.06.16.12.07.06
+ ffacd0b85a97d-4606f2d9becsm45078765f8f.34.2026.06.16.12.07.46
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 16 Jun 2026 12:07:06 -0700 (PDT)
+ Tue, 16 Jun 2026 12:07:46 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 22/61] hw/arm/virt: Link SMMUv3 CMDQV resources to platform bus
-Date: Tue, 16 Jun 2026 20:05:59 +0100
-Message-ID: <20260616190639.3462006-23-peter.maydell@linaro.org>
+Subject: [PULL 59/61] target/arm: Enable zeroing in DO_FCVT{N,
+ L}T macros in sve_helper.c
+Date: Tue, 16 Jun 2026 20:06:36 +0100
+Message-ID: <20260616190639.3462006-60-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260616190639.3462006-1-peter.maydell@linaro.org>
 References: <20260616190639.3462006-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x333.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,69 +101,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Shameer Kolothum <skolothumtho@nvidia.com>
+From: Richard Henderson <richard.henderson@linaro.org>
 
-SMMUv3 devices with acceleration may enable CMDQV extensions
-after device realize. In that case, additional MMIO regions and
-IRQ lines may be registered but not yet mapped to the platform bus.
+Use the low bit of simd_data to hold a 'zeroing' bit.
+The simd_data field is currently unused and always 0.
 
-Ensure SMMUv3 device resources are linked to the platform bus
-during machine_done().
-
-This is safe to do unconditionally since the platform bus helpers
-skip resources that are already mapped.
-
-Reviewed-by: Eric Auger <eric.auger@redhat.com>
-Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
-Tested-by: Nicolin Chen <nicolinc@nvidia.com>
-Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
-Tested-by: Eric Auger <eric.auger@redhat.com>
-Message-id: 20260609112552.378999-13-skolothumtho@nvidia.com
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Message-id: 20260604234852.573178-17-richard.henderson@linaro.org
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- hw/arm/virt.c | 22 ++++++++++++++++++++++
- 1 file changed, 22 insertions(+)
+ target/arm/tcg/sve_helper.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-index ac0606fe87..2add7401a1 100644
---- a/hw/arm/virt.c
-+++ b/hw/arm/virt.c
-@@ -2361,6 +2361,25 @@ static void virt_build_smbios(VirtMachineState *vms)
-     }
- }
- 
-+/*
-+ * SMMUv3 devices with acceleration may enable CMDQV extensions
-+ * after device realize. In that case, additional MMIO regions and
-+ * IRQ lines may be registered but not yet mapped to the platform bus.
-+ *
-+ * Ensure all resources are linked to the platform bus before final
-+ * machine setup.
-+ */
-+
-+static void virt_smmuv3_dev_link_cmdqv(VirtMachineState *vms)
-+{
-+    for (int i = 0; i < vms->smmuv3_devices->len; i++) {
-+        DeviceState *dev = g_ptr_array_index(vms->smmuv3_devices, i);
-+
-+        platform_bus_link_device(PLATFORM_BUS_DEVICE(vms->platform_bus_dev),
-+                                 SYS_BUS_DEVICE(dev));
-+    }
-+}
-+
- static
- void virt_machine_done(Notifier *notifier, void *data)
- {
-@@ -2377,6 +2396,9 @@ void virt_machine_done(Notifier *notifier, void *data)
-     if (vms->cxl_devices_state.is_enabled) {
-         cxl_fmws_link_targets(&error_fatal);
-     }
-+
-+    virt_smmuv3_dev_link_cmdqv(vms);
-+
-     /*
-      * If the user provided a dtb, we assume the dynamic sysbus nodes
-      * already are integrated there. This corresponds to a use case where
+diff --git a/target/arm/tcg/sve_helper.c b/target/arm/tcg/sve_helper.c
+index f8e62cb11b..a0a189eb1e 100644
+--- a/target/arm/tcg/sve_helper.c
++++ b/target/arm/tcg/sve_helper.c
+@@ -8595,6 +8595,7 @@ void HELPER(NAME)(void *vd, void *vn, void *vg,                               \
+                   float_status *status, uint32_t desc)                        \
+ {                                                                             \
+     intptr_t i = simd_oprsz(desc);                                            \
++    bool zeroing = simd_data(desc) & 1;                                       \
+     uint64_t *g = vg;                                                         \
+     do {                                                                      \
+         uint64_t pg = g[(i - 1) >> 6];                                        \
+@@ -8603,6 +8604,8 @@ void HELPER(NAME)(void *vd, void *vn, void *vg,                               \
+             if (likely((pg >> (i & 63)) & 1)) {                               \
+                 TYPEW nn = *(TYPEW *)(vn + HW(i));                            \
+                 *(TYPEN *)(vd + HN(i + sizeof(TYPEN))) = OP(nn, status);      \
++            } else if (zeroing) {                                             \
++                *(TYPEN *)(vd + HN(i + sizeof(TYPEN))) = 0;                   \
+             }                                                                 \
+         } while (i & 63);                                                     \
+     } while (i != 0);                                                         \
+@@ -8617,6 +8620,7 @@ void HELPER(NAME)(void *vd, void *vn, void *vg,                               \
+                   float_status *status, uint32_t desc)                        \
+ {                                                                             \
+     intptr_t i = simd_oprsz(desc);                                            \
++    bool zeroing = simd_data(desc) & 1;                                       \
+     uint64_t *g = vg;                                                         \
+     do {                                                                      \
+         uint64_t pg = g[(i - 1) >> 6];                                        \
+@@ -8625,6 +8629,8 @@ void HELPER(NAME)(void *vd, void *vn, void *vg,                               \
+             if (likely((pg >> (i & 63)) & 1)) {                               \
+                 TYPEN nn = *(TYPEN *)(vn + HN(i + sizeof(TYPEN)));            \
+                 *(TYPEW *)(vd + HW(i)) = OP(nn, status);                      \
++            } else if (zeroing) {                                             \
++                *(TYPEW *)(vd + HW(i)) = 0;                                   \
+             }                                                                 \
+         } while (i & 63);                                                     \
+     } while (i != 0);                                                         \
 -- 
 2.43.0
 
