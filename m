@@ -4,102 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BFEB4CD98E1
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 12:32:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4793ECD98E6
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 12:33:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZSy5-0003JP-7P; Tue, 16 Jun 2026 08:32:37 -0400
+	id 1wZSyh-0003sB-Pe; Tue, 16 Jun 2026 08:33:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wZSxz-0003F0-E3
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 08:32:32 -0400
-Received: from mail-yx1-xb134.google.com ([2607:f8b0:4864:20::b134])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wZSxx-0006Pc-Hh
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 08:32:30 -0400
-Received: by mail-yx1-xb134.google.com with SMTP id
- 956f58d0204a3-66049669d78so4287574d50.0
- for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 05:32:27 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1781613147; cv=none;
- d=google.com; s=arc-20240605;
- b=FLCH4uUXmBfUm2We3VXdxZ/49YETSo4vU5yh7DtK2N7weDK8rd6QPJk+f8u1JPHcfS
- R3sQnhFfE2hviPxdtfRGKgcatMXAW1M80Kf2M/TA3DVXPQco1Bpc5mZ3+Bz6HA1swJSm
- tgh4VXK/Ncypc7k+wSYMBQYrXNvYeMgDsT02To2aTax76R4W+xj3sUryimheFcy9T51N
- A8yrGULy0rw6Y35ljVBOjgNJWyFMMUqFL+tPcl69v1BXMsPGi4y01tNpwGHEcNQ+zwte
- Awoaa4QPat/JdHIsZDyF1sGJzAhRdJoKYrzSsG3eA1yNpJGKW+tkAkOM7WMnb7wg3YUM
- 2yiQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=z0nWJfQs9yQ/gSJuxzKeyHB5MjQefLgvpKfz/keyWjU=;
- fh=/ftcwOPYeEIhzseC7WF42kR+xVR/IJiWpLC1+A7SOWQ=;
- b=eWG62SZSzdYvtLOZCi64GoVA1F7j8Y35/cozyHLAHhMf/NVH9CbBT9usgRdr7Ofcl+
- 3Q6F7AFgOTmZiOCxwHB+Apju3rRSYxD7n00UawN7n+D8a5afPr5qE9pRIKBecSk5/E4x
- w1jPykQ/eeVaBlzVXtfPSXLzl/vUNvQATR3qHFIdNauTifDJigMk50Q9dEsnik8GRKhP
- StjG+T9m6UAEWJFlcx15KD3VHBFZtZuunoiuy4b7NF1UD9ddVb+EbQ9KO5+m30pn8/PF
- qFr159gUmWnAlD/UrfS6QSErK3Ig7K/RQLiv10L18bV3GU4aDlXHPzaQ7Hv3RVblwyIJ
- Ol6Q==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1781613147; x=1782217947; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=z0nWJfQs9yQ/gSJuxzKeyHB5MjQefLgvpKfz/keyWjU=;
- b=dB/wyhxKYJcOysZGHN98PgmkHoiIH4b5hpopab+nntb5Krcki8c8BLUX81y4KPGFp9
- gSim+H0DwTmjwlLa/RyMavGJMHWlvG4fPjGpztWXCpZqNRNngZ6nKeQC5xMBCWDT66/7
- BOuwKcYZbkNyhYnD7hNCinOZZbG/w6uaTJRfvBZt2BwWseHiEWh+rcFiA89xvXUJzWid
- J0Ucqt6gc2smUCM7C73ZIadjipwCecLM69Psxj5zFjd8YkV6UTYpFVjmD6WnyUzb1vNt
- fAyEfzSIWJ/pGV1ddLIImF8OK2FKS9ic78vNTZ3acndD4Yv0fLLAivufnfEmnLKy11AL
- 7dSA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781613147; x=1782217947;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=z0nWJfQs9yQ/gSJuxzKeyHB5MjQefLgvpKfz/keyWjU=;
- b=pa36lrQhPm3usx38t44hTm4s2z5+p5GW9niXBw9CDpOU/krg7X5UWx8JhabUaEnkWr
- ic4r5c/4fCY1q29rgLv230QPNpxlAD5xYZdyla+Pgq8OisfIURhGfj+m9VBzwhsJ20kO
- NyZ+X7DZ1OxZ+jPR9m8NuDXUK3n22k2I6JaFwmcO8m/2QocNnONVxYKUt9Dz8UyRws+o
- o2f/DyfFsI2KyUeJAv0JpRJKbrNgP8ovIZZ+CVvNNVzHY+UA1rCcwZDOlGNK0NfelQs7
- ZkTdmGir5gwWW4L1uPl1Hgi+dDKjV9HLMVni1Ub1nwpRorfRDh62YA2hF+B91DOxDJqn
- bP8A==
-X-Gm-Message-State: AOJu0Yxt5g6YhYbw1CEgFEdZbzYrjvTih57QyCdFFNWQ2ALIi1X8p3a/
- xIOdv02dR6ml3YZhAzpjhu81duprnxuMKKbRWTabUunCZ+BLC403hu1itqg+nsayUI6EDQxtxl1
- 4OI8rJrrkIZ8zURh0WYRpZiaRXtyuMzyKWQLABbUt7Q==
-X-Gm-Gg: Acq92OHIqljLgxQTaO3GMWKftiBvds5B/nPO5HUpFyoc/qWiqWpDUge6u98lJy9caqj
- /dJUd+Qhgw8GUvXAt2qiYDdUUeftAHxPkrY1iSzp7X8q2hQemlD5U0KVnwLTGdoHT5msEn5y3wG
- 5peQCQXnFM0719DqouRuGkN3w4gw3zqVf1ig4w6rDFW73YXKYeABIN52PKoR8FkOh3MXKLHctR9
- zWWx1wSdnjkpXr8tQcN7E1wlK9XwbFzJqjzg/8rJNVkgaepUKbqQ269fXPuQRJxlYxDjm6zJ2L7
- dwPDtiQN5ivKGgHpS2QqipoGAajSqcZbu3s+q1O4xCCL8Jx+/H25F+jv0HuqJaAuoNs=
-X-Received: by 2002:a05:690e:d46:b0:65e:4b1d:c67d with SMTP id
- 956f58d0204a3-6627833b603mr13437732d50.53.1781613146291; Tue, 16 Jun 2026
- 05:32:26 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <lhestz@163.com>) id 1wZSyf-0003rD-BN
+ for qemu-devel@nongnu.org; Tue, 16 Jun 2026 08:33:13 -0400
+Received: from m16.mail.163.com ([220.197.31.2])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <lhestz@163.com>) id 1wZSyc-0006fy-W9
+ for qemu-devel@nongnu.org; Tue, 16 Jun 2026 08:33:13 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
+ s=s110527; h=From:To:Subject:Date:Message-ID:MIME-Version; bh=G0
+ ytJBKH6ieo2ArfDwfcC6VgasgMg/pQ2KxrNKkOdlY=; b=muCRbzCy8zyG9lnOze
+ Of1KLx957/IWu4jrNPE/RarnAO1+WUr3+ctlt5DEBy47ujuMGm83+ZLIGVn2tFpL
+ qkAgH/iFzrDMaCwT43Tn3g7oMvpX56NxZLiM2uu8zLdH6cp4EobqaZoYvIEr/2vy
+ mo1gc53Y1yaBckcZqPfm45J1k=
+Received: from zinogre.. (unknown [])
+ by gzga-smtp-mtada-g1-3 (Coremail) with SMTP id _____wAX35lzQjFqmGm1DQ--.51S3; 
+ Tue, 16 Jun 2026 20:32:54 +0800 (CST)
+From: helei <lhestz@163.com>
+To: qemu-devel@nongnu.org
+Cc: arei.gonglei@huawei.com, zhenwei.pi@linux.dev, mst@redhat.com,
+ helei <lhestz@163.com>
+Subject: [PATCH v2] hw/virtio-crypto: enforce max akcipher key length
+Date: Tue, 16 Jun 2026 20:32:51 +0800
+Message-ID: <20260616123251.26446-2-lhestz@163.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260616123251.26446-1-lhestz@163.com>
+References: <20260616123251.26446-1-lhestz@163.com>
 MIME-Version: 1.0
-References: <20260604234852.573178-1-richard.henderson@linaro.org>
- <20260604234852.573178-10-richard.henderson@linaro.org>
-In-Reply-To: <20260604234852.573178-10-richard.henderson@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 16 Jun 2026 13:32:14 +0100
-X-Gm-Features: AVVi8CfBofjB6GhJAnzgTG7VvKJ6Gwxem5HhblJvx1DQ56z3wD5wGxx_3RkiW5Y
-Message-ID: <CAFEAcA_x78cRfujrHqhk5s1+Pa8efYoE5oHdfc9i5390bjW56w@mail.gmail.com>
-Subject: Re: [PATCH 09/25] target/arm: Implement SVE2 integer unary operations
- (predicated, zeroing)
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b134;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb134.google.com
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: _____wAX35lzQjFqmGm1DQ--.51S3
+X-Coremail-Antispam: 1Uf129KBjvdXoW7XFWDuw4DZF47KF48Gw4Durg_yoW3urb_A3
+ yku3yxWw4rXF10va1UArWrWr12g3WfAFnF9FZIg3W8A3Wxta1DJF1xJrs5WF47Z3y8JF45
+ GF45Ars0gw13ujkaLaAFLSUrUUUUjb8apTn2vfkv8UJUUUU8Yxn0WfASr-VFAUDa7-sFnT
+ 9fnUUvcSsGvfC2KfnxnUUI43ZEXa7sRyOpRJUUUUU==
+X-Originating-IP: [2409:8a00:18c1:5350:3587:e387:c9c3:2fb]
+X-CM-SenderInfo: pokh23r26rljoofrz/xtbC8xaUv2oxQnYROwAA3L
+Received-SPF: pass client-ip=220.197.31.2; envelope-from=lhestz@163.com;
+ helo=m16.mail.163.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,15 +71,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 5 Jun 2026 at 00:50, Richard Henderson
-<richard.henderson@linaro.org> wrote:
->
-> This includes URECPE, URSQRTE, SQABS, SQNEG.
->
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+enforce the global max_size boundary for akcipher session creation
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: helei <lhestz@163.com>
+---
+ hw/virtio/virtio-crypto.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-thanks
--- PMM
+diff --git a/hw/virtio/virtio-crypto.c b/hw/virtio/virtio-crypto.c
+index 6fceb39681..79e2acb56c 100644
+--- a/hw/virtio/virtio-crypto.c
++++ b/hw/virtio/virtio-crypto.c
+@@ -216,6 +216,12 @@ virtio_crypto_create_asym_session(VirtIOCrypto *vcrypto,
+         return -VIRTIO_CRYPTO_NOTSUPP;
+     }
+ 
++    if (unlikely(keylen > vcrypto->conf.max_size)) {
++        error_report("virtio-crypto length of akcipher key is too large: %u",
++                     keylen);
++        return -VIRTIO_CRYPTO_ERR;
++    }
++
+     if (keylen) {
+         asym_info->key = g_malloc(keylen);
+         if (iov_to_buf(iov, out_num, 0, asym_info->key, keylen) != keylen) {
+-- 
+2.43.0
+
 
