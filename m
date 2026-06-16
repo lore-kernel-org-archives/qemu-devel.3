@@ -4,80 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41FE1CD98E1
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F4E5CD98E4
 	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 19:15:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZZDM-00033k-EG; Tue, 16 Jun 2026 15:12:48 -0400
+	id 1wZZAU-0006tl-MM; Tue, 16 Jun 2026 15:09:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wZZ8Z-0004mn-Ip
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 15:07:53 -0400
-Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
+ id 1wZZ7k-0004UR-Mi
+ for qemu-devel@nongnu.org; Tue, 16 Jun 2026 15:07:24 -0400
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wZZ8V-0001Fk-5B
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 15:07:51 -0400
-Received: by mail-wr1-x431.google.com with SMTP id
- ffacd0b85a97d-46019edc13dso2389778f8f.1
- for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 12:07:46 -0700 (PDT)
+ id 1wZZ7c-0000uu-P0
+ for qemu-devel@nongnu.org; Tue, 16 Jun 2026 15:06:55 -0400
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-49230a567a9so6465995e9.0
+ for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 12:06:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1781636865; x=1782241665; darn=nongnu.org;
+ d=linaro.org; s=google; t=1781636811; x=1782241611; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=i/smW6GL8OKBS/PXid8fym6NYK4D3UNHQvOfP4IehXY=;
- b=OwF6TPWG/uiYSg4XoxZJ0DzoUT9j31LYROi21M0pXIAOFOxVe/GUOv+Ba6/jzRTyRI
- IncQrc4rljYnMuC5xLwmZUh7mkfwX8p8m++yQJ7J1P5MQm0QJdOQJ8SzQ5O6Ts0FxYa2
- QECGNChSIS3+lqmzxxmJMksLNA/EU5g3USG3l3Jd6z6jQCwZp6jAW6d9e8OQ8xsmpaei
- hgwkrbx/6kke6zZ3g36Hi8pWYR5aHq4kBAHjGB0PROaKy5LVo+ke2whd+2SZ2H4aveLh
- DjHIeS3KUAz/jHGxRB/uOaHexkzFB4cFK/9zhOz+JMMMaNgzUwse8GYgo7qnDtSlQau3
- 8pfQ==
+ :reply-to; bh=AIHwlbRuUl3nYtw5K+xyEs99Ce+k47eRk9h4LhKsLb4=;
+ b=JsquobFpjsNmDIHs3k8tocNby6OOTWDrhgbGYVtY9HWZjbIh4DhrGJH7DMBnVL7Vx5
+ j+YFDzPNkyfowPLeiP8ku6WUZN20lZ2PCDozPzdyfIpSK9CfzXR9MGFay+sSXkY6flAB
+ ZEW0D/ew/B6z/81GjxHVw2LUVpLcvSEoFpc6UsaC3VFJQJA24Yg3NCjz3urzmbC5hfOQ
+ Ba6wSs8TLTZlkNTlQEI7PF3yMsTQZUp5y3Dt+3EB0yso/I4F40npCpUvgxa5iXevylsK
+ vVn6uHkt5mvw+YWm6J3qZqZ/2NLyQBsijtFPQ2L3w1GfsNC1P2zNp+liy0plmNGPUmsJ
+ 7XTw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781636865; x=1782241665;
+ d=1e100.net; s=20251104; t=1781636811; x=1782241611;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=i/smW6GL8OKBS/PXid8fym6NYK4D3UNHQvOfP4IehXY=;
- b=O3IxMfEP8hamBzwi2hIXSVS74FTcJDmy0xT2p4NT5vBKCtn6WNbtDP+i8J+gWZFCPs
- yVxIcYyUgG1mi7Le3lNZa9BfykTf1y//4+4680JL2RJU8MN9JWBoJVWzMpZO/TTv45+x
- doh7v0LaG7xwREK2Kjr1tF+fQfmuuY/ngFIAXt59/0Ihp+UOUmLDPalefYecbjh4GlTZ
- yXuqSZ2DCWyYLNCcUJ7kWwaX0b39ZRu+xXW4Tgd2KcWGDHfESZuYMMB0N5Wz6KL9iPu0
- LcCwCYy4r36pj3Fp3XHExPgfbWl+ZL1LXrNtYE+qDtFooaiLNgu5cEmEDcoxpuAyGJQJ
- 2Lwg==
-X-Gm-Message-State: AOJu0YzyJp831lEXwA15KxDGgP2AULiUS3UXPBY6bAAhdpeVH54qUbZZ
- ComD2bNEVxEG5CWz0MAYwmPDEE+JpxK5lO/UskKUFVqOUUSCdVtbvP8tE6yh4pgKp6lTFsb9XAZ
- 9pw1r
-X-Gm-Gg: Acq92OHm1rPwSsN393aLS+JaDWsalRcGpCtUzOqwfyx631tbYFSzMkI7V4Ot5bmSCSg
- n8t+1rZVBijHTp9/38hX/zSGeMxcdvKsEVzpucljLkBb3sN+sBejqYOShSIujMUXrOCkLkScK8A
- DZTl7Evd9U1X+KqWJ7YqtDc1Pi0YkbhbB6WyNhvOnYvZJbVNhhBsm+yxuhuD1rgWTriDlO/P6i4
- gFiypRUkcrUwhHGLU0rpJxNLJPRJQRSmCJYaebgxlyHM7iD9dz5o9mk8WqmbB+x6h75J7EeMP0r
- h1ijZqsw5wOWzZXXbQKcSksWU529Tu7Ve1tY8vLS6WqxTNzWLeiq6JkKH5hYPQP3Sisx+89zT/x
- hI94JVFZkeaFICIDtJD6WDKtJsSmh01bLNV7zzwz5vte0X+2z0LjOpwgGs5l/rLygqh+KoH4VAU
- pr5Ph24AAy46poxSKkwMpkQ2954aW2z8qDLg2iSTaxyLBj1p1qXrkf0OtS/VB6bddrFeWW8FVc6
- K7bpqNrh6Vr3ECUnn76w/jnshovGPil
-X-Received: by 2002:a5d:4ec4:0:b0:461:a15f:66c2 with SMTP id
- ffacd0b85a97d-46240cf967emr686568f8f.22.1781636864961; 
- Tue, 16 Jun 2026 12:07:44 -0700 (PDT)
+ bh=AIHwlbRuUl3nYtw5K+xyEs99Ce+k47eRk9h4LhKsLb4=;
+ b=Ieio1R2Kp0YKOh5hQWc6ZhvfGQkm1qCt6XC3Q3/F04Ilo1+k2ePdJ+JBXrocwnPhqb
+ PE9IC+1lei5Gu6ojF2ISRl6HY550uTd3ofSIrfjOSPVXZpFCRib9+XFryjKIfDe5E7Ur
+ TlPd4QR5ORaZeQ1/1NP5bV3lTbYtzUdAZFqtRh+C4mb9UrlFz/HsCCgL0ZG3+YsfKHDP
+ jqGgrY7rMSny2gAka9d/ZlveJPVFgJUkvrwPJmqjIW6MlNMugfYnm+8dmA2ROyUoUuAe
+ zFoPEKE4nhhfybhYMrzZVsowOitGIFNpelhiyfLNHE81LfXH6+BHV0PoYzjJ2M2ukzg6
+ LTmA==
+X-Gm-Message-State: AOJu0Yyb64uDQoJ/0Km/zQOKai6HU6/WsXnFRJvxknDTifsdVQ58YFiW
+ AEKy7GMcFuuVZhi3nkOEZxXC/DEQW/As0Gj3SRa8cT44U1I2JvPUUfPDB0NJejgFKA6xYIwj1KI
+ jJKQJ
+X-Gm-Gg: Acq92OHZNGmGzCy/EV1/tH5uR0ruHQiKtTqUSNL6rPXwyuVfxpEsHj3GjF4V71GTlal
+ 1YG5lFsLPOvgbjj1DwCT37H7SfXu9GDc6NcfNXjG9O5Sj3Z2uTaqPu3YvJ89ohh+Zq572JZv0gv
+ lQM/o1+/3CSd1ikHh1a1kvUgRRGJaZGrGImUX7jYQ5UGOkxnIdjSEGkOanpOf/OqILCMdFoAL1C
+ Z1vRUmP/GKuzAszicj5gtkNadFr5FZXTlyxlcW2WEZOuyw5kkPotS8gYD0FLlrHLch3DY+vdSby
+ ZLXblVa3JIWQfCAljZJosst3fK490QYpqoO6ytbOrp8fp9WWN3F7XiQ49r2RPVfhn6b7vYphSb5
+ 4Oo5kDbR+Xr/nSpoUXxMFlDSb0ALLhCe78tBgEJ071STpoIBKjppIySTH6TTQdFVhdfLfIgS7im
+ QO2rEiRNXOE3HyV/3IL3bC5A4uMThv3zWCyDiW/lxmdJC64+YHnjpON7LkKzcEPlwinxw30c5/t
+ ll4S4ZH84qaVUNJmAZn6zrAtQpoEQHv
+X-Received: by 2002:a05:600c:19c6:b0:48e:6db3:ff33 with SMTP id
+ 5b1f17b1804b1-492333f9b76mr11316645e9.14.1781636811202; 
+ Tue, 16 Jun 2026 12:06:51 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4606f2d9becsm45078765f8f.34.2026.06.16.12.07.43
+ ffacd0b85a97d-4606f2d9becsm45078765f8f.34.2026.06.16.12.06.49
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 16 Jun 2026 12:07:43 -0700 (PDT)
+ Tue, 16 Jun 2026 12:06:49 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 57/61] target/arm: Implement SCVTF, UCVTF (predicated, zeroing)
-Date: Tue, 16 Jun 2026 20:06:34 +0100
-Message-ID: <20260616190639.3462006-58-peter.maydell@linaro.org>
+Subject: [PULL 08/61] hw/arm/smmuv3: Set default ats, ril, ssidsize,
+ oas to auto
+Date: Tue, 16 Jun 2026 20:05:45 +0100
+Message-ID: <20260616190639.3462006-9-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260616190639.3462006-1-peter.maydell@linaro.org>
 References: <20260616190639.3462006-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::431;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x431.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,89 +101,105 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+From: Nathan Chen <nathanc@nvidia.com>
 
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Message-id: 20260604234852.573178-15-richard.henderson@linaro.org
+Set the default value of ATS, RIL, SSIDSIZE, and OAS to auto, in order
+to match the host IOMMU properties when accel=on.
+
+If accel=off and these property values are set to auto, the default
+property values defined in smmuv3_init_id_regs() for OAS and RIL will
+remain unchanged, while SSIDSIZE and ATS values will remain initialized
+at 0.
+
+Introduce a new compat for the changed defaults.
+
+Reviewed-by: Shameer Kolothum <skolothumtho@nvidia.com>
+Reviewed-by: Eric Auger <eric.auger@redhat.com>
+Signed-off-by: Nathan Chen <nathanc@nvidia.com>
+Tested-by: Eric Auger <eric.auger@redhat.com>
+Message-id: 20260608174900.2227340-9-nathanc@nvidia.com
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/arm/tcg/sve.decode      | 16 ++++++++++++++++
- target/arm/tcg/translate-sve.c | 34 ++++++++++++++++++++++++++++++++++
- 2 files changed, 50 insertions(+)
+ hw/arm/smmuv3.c   | 23 +++++++++++++++--------
+ hw/core/machine.c |  5 +++++
+ 2 files changed, 20 insertions(+), 8 deletions(-)
 
-diff --git a/target/arm/tcg/sve.decode b/target/arm/tcg/sve.decode
-index c39d80360f..7460eee4a9 100644
---- a/target/arm/tcg/sve.decode
-+++ b/target/arm/tcg/sve.decode
-@@ -1283,6 +1283,22 @@ UCVTF_sd_m      01100101 11 010 00 1 101 ... ..... .....        @rd_pg_rn_e0
- UCVTF_ds_m      01100101 11 010 10 1 101 ... ..... .....        @rd_pg_rn_e0
- UCVTF_dd_m      01100101 11 010 11 1 101 ... ..... .....        @rd_pg_rn_e0
+diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
+index 89289ab6d2..83fa6468fd 100644
+--- a/hw/arm/smmuv3.c
++++ b/hw/arm/smmuv3.c
+@@ -2129,12 +2129,19 @@ static const Property smmuv3_properties[] = {
+     DEFINE_PROP_BOOL("accel", SMMUv3State, accel, false),
+     /* GPA of MSI doorbell, for SMMUv3 accel use. */
+     DEFINE_PROP_UINT64("msi-gpa", SMMUv3State, msi_gpa, 0),
++    /*
++     * AUTO values for accel=off will resolve to:
++     * ril: on
++     * ats: off
++     * oas: 44
++     * ssidsize: 0
++     */
+     /* RIL can be turned off for accel cases */
+-    DEFINE_PROP_ON_OFF_AUTO("ril", SMMUv3State, ril, ON_OFF_AUTO_ON),
+-    DEFINE_PROP_ON_OFF_AUTO("ats", SMMUv3State, ats, ON_OFF_AUTO_OFF),
+-    DEFINE_PROP_OAS_MODE("oas", SMMUv3State, oas, OAS_MODE_44),
++    DEFINE_PROP_ON_OFF_AUTO("ril", SMMUv3State, ril, ON_OFF_AUTO_AUTO),
++    DEFINE_PROP_ON_OFF_AUTO("ats", SMMUv3State, ats, ON_OFF_AUTO_AUTO),
++    DEFINE_PROP_OAS_MODE("oas", SMMUv3State, oas, OAS_MODE_AUTO),
+     DEFINE_PROP_SSIDSIZE_MODE("ssidsize", SMMUv3State, ssidsize,
+-                              SSID_SIZE_MODE_0),
++                              SSID_SIZE_MODE_AUTO),
+ };
  
-+SCVTF_hh_z      01100100 01 011 10 0 110 ... ..... .....        @rd_pg_rn_e0
-+SCVTF_sh_z      01100100 01 011 10 1 100 ... ..... .....        @rd_pg_rn_e0
-+SCVTF_ss_z      01100100 10 011 10 1 100 ... ..... .....        @rd_pg_rn_e0
-+SCVTF_sd_z      01100100 11 011 10 0 100 ... ..... .....        @rd_pg_rn_e0
-+SCVTF_dh_z      01100100 01 011 10 1 110 ... ..... .....        @rd_pg_rn_e0
-+SCVTF_ds_z      01100100 11 011 10 1 100 ... ..... .....        @rd_pg_rn_e0
-+SCVTF_dd_z      01100100 11 011 10 1 110 ... ..... .....        @rd_pg_rn_e0
-+
-+UCVTF_hh_z      01100100 01 011 10 0 111 ... ..... .....        @rd_pg_rn_e0
-+UCVTF_sh_z      01100100 01 011 10 1 101 ... ..... .....        @rd_pg_rn_e0
-+UCVTF_ss_z      01100100 10 011 10 1 101 ... ..... .....        @rd_pg_rn_e0
-+UCVTF_sd_z      01100100 11 011 10 0 101 ... ..... .....        @rd_pg_rn_e0
-+UCVTF_dh_z      01100100 01 011 10 1 111 ... ..... .....        @rd_pg_rn_e0
-+UCVTF_ds_z      01100100 11 011 10 1 101 ... ..... .....        @rd_pg_rn_e0
-+UCVTF_dd_z      01100100 11 011 10 1 111 ... ..... .....        @rd_pg_rn_e0
-+
- ### SVE Memory - 32-bit Gather and Unsized Contiguous Group
+ static void smmuv3_instance_init(Object *obj)
+@@ -2164,22 +2171,22 @@ static void smmuv3_class_init(ObjectClass *klass, const void *data)
+         "enabling.");
+     object_class_property_set_description(klass, "ril",
+         "Enable/disable range invalidation support (for accel=on). "
+-        "Valid values are on, off, and auto. Defaults to on. "
++        "Valid values are on, off, and auto. Defaults to auto. "
+         "Any attempt to turn it 'on' while the host does not support "
+         "it would fail.");
+     object_class_property_set_description(klass, "ats",
+         "Enable/disable ATS support (for accel=on). "
+-        "Valid values are on, off, and auto. Defaults to off. "
++        "Valid values are on, off, and auto. Defaults to auto. "
+         "Please ensure host platform supports ATS before setting it "
+         "to on.");
+     object_class_property_set_description(klass, "oas",
+         "Set Output Address Size in bits (for accel=on). "
+-        "Valid values are 44, 48, and auto. Defaults to 44 bits."
++        "Valid values are 44, 48, and auto. Defaults to auto."
+         "Please ensure the value does not exceed the maximum "
+         "Output Address Size supported by the host platform.");
+     object_class_property_set_description(klass, "ssidsize",
+         "Set number of bits used to represent SubstreamIDs (SSIDs). "
+-        "Valid values are 0-20 and auto. Defaults to 0. "
++        "Valid values are 0-20 and auto. Defaults to auto. "
+         "A value of N allows SSIDs in the range [0 .. 2^N - 1]. "
+         "A value of 0 disables SubstreamID support. A value greater "
+         "than 0 is required to enable PASID support."
+diff --git a/hw/core/machine.c b/hw/core/machine.c
+index 4d8b15d99e..9a10e45aab 100644
+--- a/hw/core/machine.c
++++ b/hw/core/machine.c
+@@ -38,11 +38,16 @@
+ #include "hw/virtio/virtio-iommu.h"
+ #include "hw/acpi/generic_event_device.h"
+ #include "qemu/audio.h"
++#include "hw/arm/smmuv3.h"
  
- # SVE load predicate register
-diff --git a/target/arm/tcg/translate-sve.c b/target/arm/tcg/translate-sve.c
-index 1ea9454267..4ac59664ae 100644
---- a/target/arm/tcg/translate-sve.c
-+++ b/target/arm/tcg/translate-sve.c
-@@ -4784,6 +4784,40 @@ TRANS_FEAT(UCVTF_sd_m, aa64_sme_or_sve, gen_gvec_fpst_arg_zpz,
- TRANS_FEAT(UCVTF_dd_m, aa64_sme_or_sve, gen_gvec_fpst_arg_zpz,
-            gen_helper_sve_ucvt_dd, a, 0, FPST_A64)
+ GlobalProperty hw_compat_11_0[] = {
+     { "chardev-vc", "encoding", "cp437" },
+     { "tpm-crb", "cap-chunk", "off" },
+     { "tpm-crb", "x-allow-chunk-migration", "off" },
++    { TYPE_ARM_SMMUV3, "ats", "off" },
++    { TYPE_ARM_SMMUV3, "ril", "on" },
++    { TYPE_ARM_SMMUV3, "ssidsize", "0" },
++    { TYPE_ARM_SMMUV3, "oas", "44" },
+ };
+ const size_t hw_compat_11_0_len = G_N_ELEMENTS(hw_compat_11_0);
  
-+TRANS_FEAT(SCVTF_hh_z, aa64_sme2p2_or_sve2p2, gen_gvec_fpst_arg_zpz,
-+           gen_helper_sve_scvt_hh, a, 1, FPST_A64_F16)
-+TRANS_FEAT(SCVTF_sh_z, aa64_sme2p2_or_sve2p2, gen_gvec_fpst_arg_zpz,
-+           gen_helper_sve_scvt_sh, a, 1, FPST_A64_F16)
-+TRANS_FEAT(SCVTF_dh_z, aa64_sme2p2_or_sve2p2, gen_gvec_fpst_arg_zpz,
-+           gen_helper_sve_scvt_dh, a, 1, FPST_A64_F16)
-+
-+TRANS_FEAT(SCVTF_ss_z, aa64_sme2p2_or_sve2p2, gen_gvec_fpst_arg_zpz,
-+           gen_helper_sve_scvt_ss, a, 1, FPST_A64)
-+TRANS_FEAT(SCVTF_ds_z, aa64_sme2p2_or_sve2p2, gen_gvec_fpst_arg_zpz,
-+           gen_helper_sve_scvt_ds, a, 1, FPST_A64)
-+
-+TRANS_FEAT(SCVTF_sd_z, aa64_sme2p2_or_sve2p2, gen_gvec_fpst_arg_zpz,
-+           gen_helper_sve_scvt_sd, a, 1, FPST_A64)
-+TRANS_FEAT(SCVTF_dd_z, aa64_sme2p2_or_sve2p2, gen_gvec_fpst_arg_zpz,
-+           gen_helper_sve_scvt_dd, a, 1, FPST_A64)
-+
-+TRANS_FEAT(UCVTF_hh_z, aa64_sme2p2_or_sve2p2, gen_gvec_fpst_arg_zpz,
-+           gen_helper_sve_ucvt_hh, a, 1, FPST_A64_F16)
-+TRANS_FEAT(UCVTF_sh_z, aa64_sme2p2_or_sve2p2, gen_gvec_fpst_arg_zpz,
-+           gen_helper_sve_ucvt_sh, a, 1, FPST_A64_F16)
-+TRANS_FEAT(UCVTF_dh_z, aa64_sme2p2_or_sve2p2, gen_gvec_fpst_arg_zpz,
-+           gen_helper_sve_ucvt_dh, a, 1, FPST_A64_F16)
-+
-+TRANS_FEAT(UCVTF_ss_z, aa64_sme2p2_or_sve2p2, gen_gvec_fpst_arg_zpz,
-+           gen_helper_sve_ucvt_ss, a, 1, FPST_A64)
-+TRANS_FEAT(UCVTF_ds_z, aa64_sme2p2_or_sve2p2, gen_gvec_fpst_arg_zpz,
-+           gen_helper_sve_ucvt_ds, a, 1, FPST_A64)
-+TRANS_FEAT(UCVTF_sd_z, aa64_sme2p2_or_sve2p2, gen_gvec_fpst_arg_zpz,
-+           gen_helper_sve_ucvt_sd, a, 1, FPST_A64)
-+
-+TRANS_FEAT(UCVTF_dd_z, aa64_sme2p2_or_sve2p2, gen_gvec_fpst_arg_zpz,
-+           gen_helper_sve_ucvt_dd, a, 1, FPST_A64)
-+
- /*
-  *** SVE Memory - 32-bit Gather and Unsized Contiguous Group
-  */
 -- 
 2.43.0
 
