@@ -4,98 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0CD62CD98D2
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 03:47:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DFC1DCD8CA8
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 03:48:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZKlR-00012D-Fx; Mon, 15 Jun 2026 23:47:01 -0400
+	id 1wZKmJ-0001Ug-Eo; Mon, 15 Jun 2026 23:47:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wZKlL-00011a-KU
- for qemu-devel@nongnu.org; Mon, 15 Jun 2026 23:46:56 -0400
-Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
+ id 1wZKmH-0001U9-Ph
+ for qemu-devel@nongnu.org; Mon, 15 Jun 2026 23:47:53 -0400
+Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wZKlD-0001Qs-Kz
- for qemu-devel@nongnu.org; Mon, 15 Jun 2026 23:46:49 -0400
-Received: by mail-ed1-x532.google.com with SMTP id
- 4fb4d7f45d1cf-6914a658115so5166594a12.0
- for <qemu-devel@nongnu.org>; Mon, 15 Jun 2026 20:46:47 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1781581605; cv=none;
+ id 1wZKmG-0001c3-1f
+ for qemu-devel@nongnu.org; Mon, 15 Jun 2026 23:47:53 -0400
+Received: by mail-ed1-x531.google.com with SMTP id
+ 4fb4d7f45d1cf-68bfcf11050so6920095a12.0
+ for <qemu-devel@nongnu.org>; Mon, 15 Jun 2026 20:47:51 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1781581670; cv=none;
  d=google.com; s=arc-20240605;
- b=aI14PZxlslM453pWlLsbJh9lyPvUbJDI9g8R3BE3NZQqlXbGcIP79LJw3tZvHwKBJ5
- sSBDWdu4dslogkIpQi8MCa409zi+KirKPTY/AZwB4wTKB6VdR3czoO2KuaMbK54rH9qe
- gnlyOG1oFdHp2OeLg3MzraasZVGFNGC2Ounz8jlli9tyzrp/Ju6GGhGkfbI1K8ZWsmNN
- PkIZ5VgxqSAi1/WbPos+HS1HmUUlXz2SuHFbE5ltD1x7lhTkr01DObsR5vzzQJ5rRQUw
- +sE08M0xxjZQW7UU3Cm62vrJVV9ci05A84wXIJrpz48cIsJJdWDZiBBc3da/MVgN+MA9
- 86ug==
+ b=R75bIsF6ZMVmOyLZOwZh4sYK0GERlG4dDMbPTKOIHSURjy2Vv0s50S1CllJSPCiLWJ
+ HCvjZbQfgWfH44Zxsm0ZOZ3p8QPYUdGjlu7ePZM9oJBDRme8QTF0RUY6b6BMGngHNpTP
+ JQkpAFLj4Sw0FbL/CEAGSJns7k6QDZOeoNCKhq6DSqVYBdxFnukvLTh2HT/ZMpXlyhhs
+ K1ESZvT13CznF0l7k7szCK9JwK4otyCx2leijq93hcQ4rZOPoTl6e68qvakIrIjOw5n3
+ mSQgHYTnzBGurRLfVStvgx5W7nc+T7n7miOR7AIff/STN0zItl6zkr+wXxGVR64HMvj0
+ ZPag==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=50TdmGslnRDhSWpr5PWbameAefXpuq2Lq7FlTskW8oA=;
+ bh=yOh4CeSqtj/dXF33YNZ875SwYCJfUmho3ewVKm2kM+M=;
  fh=ss/HGO4RwpwHFtzwgPsbC23QsemYg8f9BjqPHLpkgZI=;
- b=V1n4ZPraEqwzI+HgYOnLZPROFoHmN29yL6LiHoMRsWvsH8zEBtyqgwCum+sBHgHX3g
- 07E3fLqzNkxbttEWfEzkBPMZJ+EJkvc4S4Wmzas57xcjgF99c0deW99xVG3VNbQG+hMR
- DhJlUdBqpZdulo7RMREuerqPxz5TwGtsN4SiL8wrnARUqL9+H9AoNHh3Crq4p5T057hT
- CvezqbTrBmtOEwdqsMTuQZcNT9nIF9qM4jmybsQ1xnVSEWxTlApismGXMnsRZ24bMIRs
- qYru24/QHW8AGvhKXI8DSAbMGTs+QkWQQjKH4Rt1D9JrY+DpwA7i5ZtJZeeMnV8q3i+B
- kS+A==; darn=nongnu.org
+ b=O55i+hByr4XzoRrjG3UnrBX8bhzj4dM9eG9lfvnvbX0OI6hiK1jUCMz4CwN5NzfQMo
+ +PSDw7ER96NmTLc8KpmnQ9mPwFUOkCfXxQlX2POqZSxtgHwJJmeMu+Ee7DGoGwdzpfuy
+ 27WPZfhN/BHvEADk8lPXKE0wAtjC6+nxpJQYtVMzLDJz8pJmDUUhFRJzBnzla3XfTh0Z
+ HK9H6uOiZWqBjaejdbWnI4S3v4ftNTWHCdDmThVJAvLEro7FusHcn8Wczg3GW7qc1OtO
+ s0yO0nxSh3EYGoMoTtq/AQV2uY69Uu8wSGkyzQAEKdnvFjuTrrqJ3Glr1PxXQJG45sz8
+ eaFg==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1781581605; x=1782186405; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1781581670; x=1782186470; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=50TdmGslnRDhSWpr5PWbameAefXpuq2Lq7FlTskW8oA=;
- b=bfrjYQj19KS/5hXSEmld28M5qpLwEwf1DUZzFrP6WTAsEg33zJgRw6OIYGTcAf3AC8
- TjSMal0Q7I7iycFFrU13hQcbWUAmT/ljRoPEhyUfGchKFj49X0rdmqI/s1sIjAU+dmU8
- P3kvvtUkVtxSuasvbkIL+Q67vMSMtnaBk0v1rJDZHb/bHfcJmo8Di6WVwPACgQbxTk2X
- QFvkgaYmmw7fU5SDQKmrlBY7Tb+yWVM3Pfa8r07jrKrDrinQd+WjLKovpM3dCTQ4roWy
- f8Gcw2SZtvREXI0HIfrHA3ekE9gF0GcGbSPadTkyTx198kHy47KhRBtN7WwEmDS4lnot
- RLkw==
+ bh=yOh4CeSqtj/dXF33YNZ875SwYCJfUmho3ewVKm2kM+M=;
+ b=XRIz3iVRWF5IN+QpfZeCW+HqqEkWWKCvLta+xjN1hnLH9PH7ddug1NkM0rL2VXyi3Z
+ v1YW0Q3J1NtlC0KRme2VXzjRDOYY+GSKbJ6TlcH8Y/fVoYT3q6wAlV88UfpAAD6gh7UZ
+ VFBQTMrPy/HeGPg/ILyp7qkOXAmrd1x5Du7DAA72Mdy4nq76sZhcw/CHcgSIXabfURzv
+ eYmwPXa3jmb4Do9B/mFuNegA+iZHtj5dW2vhh0hEgiURVaOYZ9kIV/2MNsnVqEaWBJug
+ sa2EumKUGlj5hyi39jATULWdFkFGpFSWTUzNmeoHzZMjes80A+FKFuZiKUpXPNZ3/RLO
+ RnxA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781581605; x=1782186405;
+ d=1e100.net; s=20251104; t=1781581670; x=1782186470;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=50TdmGslnRDhSWpr5PWbameAefXpuq2Lq7FlTskW8oA=;
- b=U2jgyUhsfwmWjzf7CNIxYoABjXZLQoQ4pSHIdi0fWnDOGdcL0oDF8aMXXlA9YBSGzP
- mqMr6Fbsv2LkQJZAfwumC0Tz6L9oqWL7FC1b1K/RT7Nj7hrwDEdkLvNZv5zSqYm3uPKW
- pYrPjcLqZVjtn5EGgENLpTdAfBqyIluXjyTfqEb1ikEItO2OOYPbPEuvzcJE5cBA8wcW
- KEiKP4TEGOP3ytmAKLjiHWuUBxt+2eQ/2MZRYmIqbI8yaOvg02oxuYK4/HFrrEPnRTIH
- eZhnb3mWaZqSYumVNP2P4xh0kSwpjtEnjjcxDpZ9SrTAJ7/MHrYZvVkAEIgVAkUPNXBW
- q97g==
-X-Gm-Message-State: AOJu0YzaOluYP4UE6Ql+npLGz5dWyyB6r+Wn33RVK+jxMgPc6M5zEA3z
- GycO0oboycTkGvkkZvmFvMn4CzbbS2i19MNaVdR0Ci220h+as45OC/UpvW4X20xyP8RDn6S/O0H
- bh6zfXVpLoWkp+pKrD99ZWkPfa8PI5y0kt1p4gYY=
-X-Gm-Gg: Acq92OGXz0d5gqbYMxnssIbzt1tjU7NP5UEXXBfeRgcNHk8h280MJ8/rm3BlwsAI/Ff
- stZEaH1YZSwQTtWAqci/wJwOWo5Qls+bPyL4sj3WEiDzOGKunJHzFkJAMD2ZQBC1Fp9wx2AEHUW
- YMpkNcjWVwOx+ayxrMoka0N1RziaIOKOJHqIDKKwVFi9vqf0CjyfT1z6+datFa7Vi0CV2g9m44u
- 1iM/ix6JnXf5kDgbVT2ZjmiTffCdf6ST/qFXP9cSAxA9S9AdrXWdtBgKThV9l2D4xhBHSfH0Ihv
- rQqI1g6X7mUdOMVmJ//KvtZbIoEJMlvGwF+sPA==
-X-Received: by 2002:a05:6402:1ec5:b0:691:aeaf:42a7 with SMTP id
- 4fb4d7f45d1cf-695086f24e0mr935488a12.10.1781581605401; Mon, 15 Jun 2026
- 20:46:45 -0700 (PDT)
+ bh=yOh4CeSqtj/dXF33YNZ875SwYCJfUmho3ewVKm2kM+M=;
+ b=WmJCkhaxjOYSracujzeM3q7yQR2o5oZTElPYTYQ1+EiR75u5V6RKNYYk3N4FNPCYYt
+ Bk+19soagrkOWWqljVDvCAKDJh8gWWa6BzacAq9IMO6RkuYnZLAeVUE805AMtEzvWlj3
+ /zPuDrux52fuWwIyjGKDBb4s5tRbAKKEP7DOGZ23oWt/FOdxromPDU/4vPMc9di6Ey2L
+ MLgYlsOznPAv8Iij4Zgb4qrDpVickgdo4fYUXsjoUxpV7L5DAuVJw1/qM+IQorWiL0UT
+ lWbbRx7RKdAB+de7FIBATInU/oahKNER3YtnarDOHUJpVqPFqC0AMBn/Rp9E7jycmDLN
+ Yf3g==
+X-Gm-Message-State: AOJu0YzR7cLuXUkPDAnBLEX1yiJMfD+ZXqhL1rNcsgdF5bKzOhI4J21X
+ HVfRNPKoga/mxybCAucM7je0B1GXIm+C0chzpCKLaeUUzamPAWwtl/Dx5cMZreem5oQrttPD49W
+ 2TeMaCFmffDIes+aL2bwrFl5WDFWK6qM=
+X-Gm-Gg: Acq92OHHMWw8p72vTio7VYwqmqqg1dYofdtDgJGjkYswxTOU29aCd5zXkfO/K1Vy3WF
+ 513l9iOOsz+zFJgEmdToheIl5Ky1ugZnTaACk85HqR+IaD58kDLKh8hRHyEQqSKApeXY2DGLgx8
+ i0mKKIkfQ0uteJHSYEQqEiFOpkQ41bUa5WZpVhxRlpVaakknBN2gkaIcjTK4OP25JmtQyOXBlZo
+ Fd9s9DadkzUFS8veEKSkXUlrJshrFTADUe5udPKrCX5t+0IG1ELW1uoIiAat0fvalOsdKp8C1NU
+ AqIRlTT266DUgrDG7OuCpG9GDJSz6pw3JuAhfA==
+X-Received: by 2002:a05:6402:4282:b0:693:a399:6e10 with SMTP id
+ 4fb4d7f45d1cf-695086ecea0mr863236a12.10.1781581670145; Mon, 15 Jun 2026
+ 20:47:50 -0700 (PDT)
 MIME-Version: 1.0
 References: <20260611123412.2135600-1-daniel.barboza@oss.qualcomm.com>
- <20260611123412.2135600-3-daniel.barboza@oss.qualcomm.com>
-In-Reply-To: <20260611123412.2135600-3-daniel.barboza@oss.qualcomm.com>
+ <20260611123412.2135600-4-daniel.barboza@oss.qualcomm.com>
+In-Reply-To: <20260611123412.2135600-4-daniel.barboza@oss.qualcomm.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Tue, 16 Jun 2026 13:46:19 +1000
-X-Gm-Features: AVVi8CclfttVgfJe659cZHioXj-08Ue6ChTvoKP_YtQwGdjzHEDBHCsmFbhJK2k
-Message-ID: <CAKmqyKOVHsXggvoQxLh7M1shW-rtfLtt_m4uA9HrrOX_Sf2RiA@mail.gmail.com>
-Subject: Re: [PATCH v3 2/3] target/riscv: dynamic alloc of debug trigger arrays
+Date: Tue, 16 Jun 2026 13:47:22 +1000
+X-Gm-Features: AVVi8CdQqIOS6RxXLh17Fk7_sjrw3XkYb6uJGVxknYUl4QHmgrqnwIOatmbNFdM
+Message-ID: <CAKmqyKOewcpiev62v6wpwjmZ9HVUX2eEGRRyeivQp=iGR4wz6w@mail.gmail.com>
+Subject: Re: [PATCH v3 3/3] target/riscv: add 'num-triggers' debug property
 To: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
  liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, chao.liu.zevorn@gmail.com, 
  philmd@oss.qualcomm.com, Palmer Dabbelt <palmer@dabbelt.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::532;
- envelope-from=alistair23@gmail.com; helo=mail-ed1-x532.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::531;
+ envelope-from=alistair23@gmail.com; helo=mail-ed1-x531.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -122,279 +122,159 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On Thu, Jun 11, 2026 at 10:35=E2=80=AFPM Daniel Henrique Barboza
 <daniel.barboza@oss.qualcomm.com> wrote:
 >
-> The debug trigger facility consists of a set of arrays: tdata1-3,
-> cpu_breakpoint, cpu_watchpoint and itrigger_timer.  All of them are
-> static allocated with RV_MAX_TRIGGERS (2).  This means that all RISC-V
-> cpus will have 2 triggers per hart.
+> All CPUs have the same amount of triggers: 2 triggers per hart, set via
+> RV_MAX_TRIGGERS.  This is not enough anymore: we'll have at least one
+> future CPU that will demand more triggers per hart when implementing the
+> RISC-V Server Ref Platform, requiring at least 11 triggers per hart.
 >
-> The RISC-V Server Ref demands at least 11 triggers per hart, and several
-> CPUs in the wild works with 4+ triggers.  We need more flexibility, ergo
-> we need to parametrize the amount of triggers and make it configurable.
+> Parametrize the trigger amount using a new 'num_triggers' property.  The
+> default amount is kept at 2 for backwards compatibility.  The new
+> maximum is bumped to a generous 1024 triggers per hart, which hopefully
+> will be enough for the foreseeable future.
 >
-> Before doing that we need to handle a situation faced in a previous
-> attempt [1].  We were unable to set the tdataN array length in
-> vmstate_debug, meaning that we would always migrate RV_MAX_TRIGGERS
-> regardless of the actual amount of triggers in play. To fix that we need
-> to change the tdata arrays from static to dynamic, allowing us to use
-> VMSTATE_VARRAY_UINT32().  This also means that, in contrast with [1], we
-> have the opportunity to turn all trigger arrays into dynamic allocation
-> and reduce the amount of stuff being carried by CPURISCVState, or in
-> other words, we can carry just what we're using instead of a static max
-> value.
+> The property can be set in two ways:
 >
-> All the forementioned trigger facility arrays are now dynamic.  They are
-> allocated and freed during realize/unrealize, and their size is
-> expressed by env->num_triggers.  All relevant code is changed to use
-> env->num_triggers instead of the RV_MAX_TRIGGERS to loop through each
-> array.
+> - a '.num_triggers' CPU definition flag, allowing CPUs to set a custom
+>   amount inside the CPU def in DEFINE_RISCV_CPU();
+> - a new 'num-triggers' user property.  The user property has a higher
+>   priority than an existing '.num_triggers' CPU def setting.
 >
-> This will make it easier for the next patch to parametrize
-> env->num_triggers.
+> Assuming a hypothetical case where a CPU 'X' is defined with
+> '.num_triggers =3D 8':
 >
-> [1] https://lore.kernel.org/qemu-devel/94c772b0-5231-40e4-9cab-6ac39b9e4d=
-45@oss.qualcomm.com/
+> - -cpu X,num-triggers=3D30 =3D> num_triggers set to 30
+> - -cpu X (...)           =3D> num_triggers set to 8
+>
+> For a CPU that doesn't set '.num_triggers':
+>
+> - -cpu rv64,num-triggers=3D30 =3D> num_triggers set to 30
+> - -cpu rv64 (...)           =3D> num_triggers set to 2
 >
 > Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+> Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@oss.qualcomm.com>
 
 Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 
 Alistair
 
 > ---
->  target/riscv/cpu.c     |  6 ++++++
->  target/riscv/cpu.h     | 18 +++++++++++------
->  target/riscv/csr.c     |  2 +-
->  target/riscv/debug.c   | 46 ++++++++++++++++++++++++++++++++++--------
->  target/riscv/debug.h   |  1 +
->  target/riscv/machine.c | 16 ++++++++++-----
->  6 files changed, 69 insertions(+), 20 deletions(-)
+>  target/riscv/cpu.c   | 11 +++++++++++
+>  target/riscv/cpu.h   | 19 ++++++++++++++++++-
+>  target/riscv/debug.c | 16 ++++++++--------
+>  3 files changed, 37 insertions(+), 9 deletions(-)
 >
 > diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-> index 5b2133d811..b20271a220 100644
+> index b20271a220..6d8f9ad3a6 100644
 > --- a/target/riscv/cpu.c
 > +++ b/target/riscv/cpu.c
-> @@ -1015,7 +1015,13 @@ static void riscv_cpu_realize(DeviceState *dev, Er=
-ror **errp)
->  static void riscv_cpu_unrealize(DeviceState *dev)
->  {
->      RISCVCPUClass *mcc =3D RISCV_CPU_GET_CLASS(dev);
-> +#ifndef CONFIG_USER_ONLY
-> +    RISCVCPU *cpu =3D RISCV_CPU(dev);
->
-> +    if (cpu->cfg.debug) {
-> +        riscv_trigger_unrealize(&cpu->env);
+> @@ -1167,6 +1167,11 @@ static void riscv_cpu_init(Object *obj)
+>                        IRQ_LOCAL_MAX + IRQ_LOCAL_GUEST_MAX);
+>      qdev_init_gpio_in_named(DEVICE(cpu), riscv_cpu_set_nmi,
+>                              "riscv.cpu.rnmi", RNMI_MAX);
+> +
+> +    if (mcc->def->num_triggers) {
+> +        env->num_triggers =3D mcc->def->num_triggers;
 > +    }
-> +#endif
->      mcc->parent_unrealize(dev);
->  }
+> +
+>  #endif /* CONFIG_USER_ONLY */
 >
+>      general_user_opts =3D g_hash_table_new(g_str_hash, g_str_equal);
+> @@ -2619,6 +2624,8 @@ static const Property riscv_cpu_properties[] =3D {
+>                         DEFAULT_RNMI_IRQVEC),
+>      DEFINE_PROP_UINT64("rnmi-exception-vector", RISCVCPU, env.rnmi_excpv=
+ec,
+>                         DEFAULT_RNMI_EXCPVEC),
+> +    DEFINE_PROP_UINT32("num-triggers", RISCVCPU, env.num_triggers,
+> +                       RV_DEFAULT_NUM_TRIGGERS),
+>  #endif
+>
+>      DEFINE_PROP_BOOL("short-isa-string", RISCVCPU, cfg.short_isa_string,=
+ false),
+> @@ -2764,6 +2771,10 @@ static void riscv_cpu_class_base_init(ObjectClass =
+*c, const void *data)
+>                  !valid_vm_1_10_32[mcc->def->cfg.max_satp_mode]) {
+>                  mcc->def->cfg.max_satp_mode =3D VM_1_10_SV32;
+>              }
+> +
+> +            if (def->num_triggers) {
+> +                mcc->def->num_triggers =3D def->num_triggers;
+> +            }
+>  #endif
+>          }
+>          if (def->priv_spec !=3D RISCV_PROFILE_ATTR_UNUSED) {
 > diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-> index 11cd710990..ea92e2c68c 100644
+> index ea92e2c68c..38f02a9dc7 100644
 > --- a/target/riscv/cpu.h
 > +++ b/target/riscv/cpu.h
-> @@ -467,12 +467,18 @@ struct CPUArchState {
->      /* trigger module */
->      uint16_t mcontext;
->      uint8_t trigger_cur;
-> -    uint64_t tdata1[RV_MAX_TRIGGERS];
-> -    uint64_t tdata2[RV_MAX_TRIGGERS];
-> -    uint64_t tdata3[RV_MAX_TRIGGERS];
-> -    struct CPUBreakpoint *cpu_breakpoint[RV_MAX_TRIGGERS];
-> -    struct CPUWatchpoint *cpu_watchpoint[RV_MAX_TRIGGERS];
-> -    QEMUTimer *itrigger_timer[RV_MAX_TRIGGERS];
-> +    /*
-> +     * num_triggers is the length of tdata1, tdata2, tdata3,
-> +     * cpu_breakpoint, cpu_watchpoint and itrigger_timer
-> +     * arrays.
-> +     */
-> +    uint32_t num_triggers;
-> +    uint64_t *tdata1;
-> +    uint64_t *tdata2;
-> +    uint64_t *tdata3;
-> +    struct CPUBreakpoint **cpu_breakpoint;
-> +    struct CPUWatchpoint **cpu_watchpoint;
-> +    QEMUTimer **itrigger_timer;
->      int64_t last_icount;
->      bool itrigger_enabled;
+> @@ -189,7 +189,22 @@ extern RISCVCPUImpliedExtsRule *riscv_multi_ext_impl=
+ied_rules[];
+>  #define RV_VLEN_MAX 1024
+>  #define RV_MAX_MHPMEVENTS 32
+>  #define RV_MAX_MHPMCOUNTERS 32
+> -#define RV_MAX_TRIGGERS 2
+> +
+> +/*
+> + * The Debug 1.0 spec allows a humongous amount of triggers.  Section
+> + * "Enumeration" says: "The above algorithm reads back tselect so that
+> + * implementations which have 2^n triggers only need to implement n
+> + * bits of tselect.".  tselect can have up to XLEN bits, so the max
+> + * theoretical RV_MAX_TRIGGERS value is 2^XLEN.
+> + *
+> + * Allowing 2^XLEN triggers per hart is silly so we'll set a max to a
+> + * modest 1024 triggers, which is way more than what we see current
+> + * hardware use (most chips uses 2-4 triggers per hart, RISC-V Server
+> + * Ref requires at least 11).  With a 1024 max per hart we'll be set
+> + * for a long time ... hopefully.
+> + */
+> +#define RV_MAX_TRIGGERS 1024
+> +#define RV_DEFAULT_NUM_TRIGGERS 2
 >
-> diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-> index ec931a8c3d..82afad82db 100644
-> --- a/target/riscv/csr.c
-> +++ b/target/riscv/csr.c
-> @@ -5436,7 +5436,7 @@ static RISCVException read_tdata(CPURISCVState *env=
-, int csrno,
->                                   target_ulong *val)
->  {
->      /* return 0 in tdata1 to end the trigger enumeration */
-> -    if (env->trigger_cur >=3D RV_MAX_TRIGGERS && csrno =3D=3D CSR_TDATA1=
-) {
-> +    if (env->trigger_cur >=3D env->num_triggers && csrno =3D=3D CSR_TDAT=
-A1) {
->          *val =3D 0;
->          return RISCV_EXCP_NONE;
->      }
+>  FIELD(VTYPE, VLMUL, 0, 3)
+>  FIELD(VTYPE, VSEW, 3, 3)
+> @@ -576,6 +591,8 @@ typedef struct RISCVCPUDef {
+>      RISCVCPUConfig cfg;
+>      bool bare;
+>      const RISCVCSR *custom_csrs;
+> +    /* This is just a setter for env->num_triggers.  */
+> +    uint32_t num_triggers;
+>  } RISCVCPUDef;
+>
+>  /**
 > diff --git a/target/riscv/debug.c b/target/riscv/debug.c
-> index 30d39ee5cd..9a4910c431 100644
+> index 9a4910c431..ba5bc6ae13 100644
 > --- a/target/riscv/debug.c
 > +++ b/target/riscv/debug.c
-> @@ -172,7 +172,7 @@ target_ulong tselect_csr_read(CPURISCVState *env)
->
->  void tselect_csr_write(CPURISCVState *env, target_ulong val)
->  {
-> -    if (val < RV_MAX_TRIGGERS) {
-> +    if (val < env->num_triggers) {
->          env->trigger_cur =3D val;
->      }
->  }
-> @@ -701,7 +701,7 @@ static bool check_itrigger_priv(CPURISCVState *env, i=
-nt index)
->  bool riscv_itrigger_enabled(CPURISCVState *env)
->  {
->      int count;
-> -    for (int i =3D 0; i < RV_MAX_TRIGGERS; i++) {
-> +    for (int i =3D 0; i < env->num_triggers; i++) {
->          if (get_trigger_type(env, i) !=3D TRIGGER_TYPE_INST_CNT) {
->              continue;
->          }
-> @@ -721,7 +721,7 @@ bool riscv_itrigger_enabled(CPURISCVState *env)
->  void helper_itrigger_match(CPURISCVState *env)
->  {
->      int count;
-> -    for (int i =3D 0; i < RV_MAX_TRIGGERS; i++) {
-> +    for (int i =3D 0; i < env->num_triggers; i++) {
->          if (get_trigger_type(env, i) !=3D TRIGGER_TYPE_INST_CNT) {
->              continue;
->          }
-> @@ -750,7 +750,7 @@ static void riscv_itrigger_update_count(CPURISCVState=
- *env)
->      int64_t last_icount =3D env->last_icount, current_icount;
->      current_icount =3D env->last_icount =3D icount_get_raw();
->
-> -    for (int i =3D 0; i < RV_MAX_TRIGGERS; i++) {
-> +    for (int i =3D 0; i < env->num_triggers; i++) {
->          if (get_trigger_type(env, i) !=3D TRIGGER_TYPE_INST_CNT) {
->              continue;
->          }
-> @@ -950,7 +950,7 @@ bool riscv_cpu_debug_check_breakpoint(CPUState *cs)
->      int i;
->
->      QTAILQ_FOREACH(bp, &cs->breakpoints, entry) {
-> -        for (i =3D 0; i < RV_MAX_TRIGGERS; i++) {
-> +        for (i =3D 0; i < env->num_triggers; i++) {
->              trigger_type =3D get_trigger_type(env, i);
->
->              if (!trigger_common_match(env, trigger_type, i)) {
-> @@ -996,7 +996,7 @@ bool riscv_cpu_debug_check_watchpoint(CPUState *cs, C=
-PUWatchpoint *wp)
->      int flags;
->      int i;
->
-> -    for (i =3D 0; i < RV_MAX_TRIGGERS; i++) {
-> +    for (i =3D 0; i < env->num_triggers; i++) {
->          trigger_type =3D get_trigger_type(env, i);
->
->          if (!trigger_common_match(env, trigger_type, i)) {
-> @@ -1049,19 +1049,49 @@ void riscv_trigger_realize(CPURISCVState *env)
+> @@ -26,6 +26,7 @@
+>  #include "qemu/osdep.h"
+>  #include "qemu/log.h"
+>  #include "qapi/error.h"
+> +#include "qemu/error-report.h"
+>  #include "cpu.h"
+>  #include "target/riscv/debug.h"
+>  #include "trace.h"
+> @@ -1049,14 +1050,13 @@ void riscv_trigger_realize(CPURISCVState *env)
 >  {
 >      int i;
 >
-> -    for (i =3D 0; i < RV_MAX_TRIGGERS; i++) {
-> +    /*
-> +     * Alloc env->tdata1/2/3, cpu_breakpoint, cpu_watchpoint and
-> +     * itrigger_timer dynamically.  This is overkill now
-> +     * given that they could be static arrays with RV_MAX_TRIGGERS
-> +     * but we'll parametrize the trigger number later, i.e. the
-> +     * array length won't be static.
-> +     */
-> +    env->num_triggers =3D RV_MAX_TRIGGERS;
-> +    env->tdata1 =3D g_new0(uint64_t, env->num_triggers);
-> +    env->tdata2 =3D g_new0(uint64_t, env->num_triggers);
-> +    env->tdata3 =3D g_new0(uint64_t, env->num_triggers);
-> +    env->cpu_breakpoint =3D g_new0(struct CPUBreakpoint *, env->num_trig=
-gers);
-> +    env->cpu_watchpoint =3D g_new0(struct CPUWatchpoint *, env->num_trig=
-gers);
-> +    env->itrigger_timer =3D g_new0(QEMUTimer *, env->num_triggers);
-> +
-> +    for (i =3D 0; i < env->num_triggers; i++) {
->          env->itrigger_timer[i] =3D timer_new_ns(QEMU_CLOCK_VIRTUAL,
->                                                riscv_itrigger_timer_cb, e=
-nv);
->      }
->  }
->
-> +void riscv_trigger_unrealize(CPURISCVState *env)
-> +{
-> +    g_free(env->tdata1);
-> +    g_free(env->tdata2);
-> +    g_free(env->tdata3);
-> +
-> +    g_free(env->cpu_breakpoint);
-> +    g_free(env->cpu_watchpoint);
-> +
-> +    for (int i =3D 0; i < env->num_triggers; i++) {
-> +        timer_del(env->itrigger_timer[i]);
+> -    /*
+> -     * Alloc env->tdata1/2/3, cpu_breakpoint, cpu_watchpoint and
+> -     * itrigger_timer dynamically.  This is overkill now
+> -     * given that they could be static arrays with RV_MAX_TRIGGERS
+> -     * but we'll parametrize the trigger number later, i.e. the
+> -     * array length won't be static.
+> -     */
+> -    env->num_triggers =3D RV_MAX_TRIGGERS;
+> +    if (env->num_triggers > RV_MAX_TRIGGERS) {
+> +        error_report(
+> +                "Invalid configuration: 'num-triggers' must be less than=
+ %u",
+> +                RV_MAX_TRIGGERS);
+> +        exit(1);
 > +    }
-> +    g_free(env->itrigger_timer);
-> +}
 > +
->  void riscv_trigger_reset_hold(CPURISCVState *env)
->  {
->      target_ulong tdata1 =3D build_tdata1(env, TRIGGER_TYPE_AD_MATCH, 0, =
-0);
->      int i;
->
->      /* init to type 2 triggers */
-> -    for (i =3D 0; i < RV_MAX_TRIGGERS; i++) {
-> +    for (i =3D 0; i < env->num_triggers; i++) {
->          /*
->           * type =3D TRIGGER_TYPE_AD_MATCH
->           * dmode =3D 0 (both debug and M-mode can write tdata)
-> diff --git a/target/riscv/debug.h b/target/riscv/debug.h
-> index 55a3ac72e6..a25d099b37 100644
-> --- a/target/riscv/debug.h
-> +++ b/target/riscv/debug.h
-> @@ -148,6 +148,7 @@ bool riscv_cpu_debug_check_breakpoint(CPUState *cs);
->  bool riscv_cpu_debug_check_watchpoint(CPUState *cs, CPUWatchpoint *wp);
->
->  void riscv_trigger_realize(CPURISCVState *env);
-> +void riscv_trigger_unrealize(CPURISCVState *env);
->  void riscv_trigger_reset_hold(CPURISCVState *env);
->
->  bool riscv_itrigger_enabled(CPURISCVState *env);
-> diff --git a/target/riscv/machine.c b/target/riscv/machine.c
-> index 6e70b145a5..ba96ceceef 100644
-> --- a/target/riscv/machine.c
-> +++ b/target/riscv/machine.c
-> @@ -240,16 +240,22 @@ static int debug_post_load(void *opaque, int versio=
-n_id)
->
->  static const VMStateDescription vmstate_debug =3D {
->      .name =3D "cpu/debug",
-> -    .version_id =3D 3,
-> -    .minimum_version_id =3D 3,
-> +    .version_id =3D 4,
-> +    .minimum_version_id =3D 4,
->      .needed =3D debug_needed,
->      .post_load =3D debug_post_load,
->      .fields =3D (const VMStateField[]) {
->          VMSTATE_UINT16(env.mcontext, RISCVCPU),
->          VMSTATE_UINT8(env.trigger_cur, RISCVCPU),
-> -        VMSTATE_UINT64_ARRAY(env.tdata1, RISCVCPU, RV_MAX_TRIGGERS),
-> -        VMSTATE_UINT64_ARRAY(env.tdata2, RISCVCPU, RV_MAX_TRIGGERS),
-> -        VMSTATE_UINT64_ARRAY(env.tdata3, RISCVCPU, RV_MAX_TRIGGERS),
-> +        VMSTATE_VARRAY_UINT32(env.tdata1, RISCVCPU,
-> +                              env.num_triggers, 0,
-> +                              vmstate_info_uint64, uint64_t),
-> +        VMSTATE_VARRAY_UINT32(env.tdata2, RISCVCPU,
-> +                              env.num_triggers, 0,
-> +                              vmstate_info_uint64, uint64_t),
-> +        VMSTATE_VARRAY_UINT32(env.tdata3, RISCVCPU,
-> +                              env.num_triggers, 0,
-> +                              vmstate_info_uint64, uint64_t),
->          VMSTATE_END_OF_LIST()
->      }
->  };
+>      env->tdata1 =3D g_new0(uint64_t, env->num_triggers);
+>      env->tdata2 =3D g_new0(uint64_t, env->num_triggers);
+>      env->tdata3 =3D g_new0(uint64_t, env->num_triggers);
 > --
 > 2.43.0
 >
