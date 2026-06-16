@@ -4,99 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96F8ACD98E1
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 10:11:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81EA0CD98DA
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 10:11:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZQlE-0000iT-Av; Tue, 16 Jun 2026 06:11:14 -0400
+	id 1wZQht-0001v3-0N; Tue, 16 Jun 2026 06:07:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wZQl5-0000ZY-LK
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 06:11:04 -0400
-Received: from mail-yx1-xb135.google.com ([2607:f8b0:4864:20::b135])
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1wZQhd-0001cX-Gb
+ for qemu-devel@nongnu.org; Tue, 16 Jun 2026 06:07:30 -0400
+Received: from mail-pj1-x1030.google.com ([2607:f8b0:4864:20::1030])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wZQl3-0004c9-VQ
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 06:11:03 -0400
-Received: by mail-yx1-xb135.google.com with SMTP id
- 956f58d0204a3-6603246b66dso4621753d50.1
- for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 03:11:01 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1781604660; cv=none;
- d=google.com; s=arc-20240605;
- b=GHpVg5NGKtyMSqSoTd9eQVSwQOTEBs/nvDle9mda+AzF3AFq5g/wP7NCiUNa/A8SQg
- +nEAVT5afaj4cZ6vSUxebPTdv03thbJpu9u0GeLDn5dhw4U6n/xGKSkbazLAyfmn9Of4
- x2wn+Yb31/eAQbddHXyVUIDlqb580tHGsLiNSh1te/beMYc/1nVGUrjvuyU2PBWizTUJ
- p9wl4uRBCt7rA1uM+swVgWyP/pSQcCCTneHueC8/QRq/oMQJ/qLV27/P+mSJnmYWs9GN
- vS7V7D70yszKial78gbUn6XS3tozSy9P/O9HCBqIaNt2EpdMHY0N2K8oevTsyukPlToK
- Ya6g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=HGgDdY6l643Rx8ZP1e8GqXoXTcmW8b2a6xoyCwC1PhU=;
- fh=VUZ7eJox894qpEuQTEFSefKlY4l3x+uBmRGBSaSsOHU=;
- b=X8VNE5VEbg89xNltaGr8CaLS6KLLBEkUBZLuI8pNkdgbz1ctIkr1q9LtSj/tYkAG90
- XbyKAvijPkug3I2W3d/KyL5LoAl7vjkmCgTaMQ0SgYMkkjUfpFkYv6MG2FSgpb9cXa2b
- T3BGPXNqtgj6gMJuWTP3cA0NBGMCq2NPznd+ksRAxoMKm3eVA1NiVp9MBrfhjKp32nHg
- +2fLzEZhBjk0cGX59vdW4AmC5yw8whXCWRfeia2gVEHSbyo4KnIQdHaHC3XLrqN5MG8P
- 53ULSfTTB41jwPHdbqoAZDRDfkBp71UZvc8xpF2CEdSoV3C194q0Q1GneYwpexe4CN00
- ZxIg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1wZQhb-0003T7-QH
+ for qemu-devel@nongnu.org; Tue, 16 Jun 2026 06:07:29 -0400
+Received: by mail-pj1-x1030.google.com with SMTP id
+ 98e67ed59e1d1-36d98b68d68so2907950a91.2
+ for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 03:07:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1781604660; x=1782209460; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=HGgDdY6l643Rx8ZP1e8GqXoXTcmW8b2a6xoyCwC1PhU=;
- b=hch7LdEM1LoFFUsvG73czamuf3MM+ep6VdTHVmRb70tIPu59lSXuWCJKz33Xkas0Gm
- FMKC8DG8ZGSCY9XURrXltCf069tSO2BTZs/o4qAZvWn/zir3vadjhRO1oAU+sCeQf4tb
- L5uaody5GraKOQimvqgpKZDt7CsYAaOZhfvRkWrpK4NcNLHQBT9kj9IdTdbPQ8gwqDrm
- Uh9JUTzPl/iJ1VWKTursINzVXxAIhycb4c2Pd7QU5OofB1iDEVFaXZ9U9D8z90kCAWOH
- A9AHetvbeasnzJS2l4c7q8QA/vva3yjm3i72R3MOGEEtV/zRw42C82xf/SRvzftdUFs2
- bmHQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781604660; x=1782209460;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=gmail.com; s=20251104; t=1781604446; x=1782209246; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=HGgDdY6l643Rx8ZP1e8GqXoXTcmW8b2a6xoyCwC1PhU=;
- b=TbWj7k6QLvfNPTm9Lvp6q3unb1YsDVnvsbGUNPnDI/nNfsUUnBm7d3kHAwrmWinSne
- SgilteJ3WfTlT+dgDZWEfCLNpWAPZrY0JUM5iDAj213fhk2Liln0pq1yIgAH3AdS1aAh
- lpgI+1TfosR71No1ey6ne1KW3O117SHyvjVnVX3Bky4ajxW+0S75U66B4jNw06Dgrde+
- vkr6bktrJEdgw065D8bWWnu8+HDCsgOzMe2yAsHzrW4qgWWfRcVyFEA9/aOQw5UGelmm
- eadqpgiiL3xDWnD4bGmwRZxVLTl2+DDfnjrccIXt5wyl1WsL3PtbbRGODTxSp9+wC2E2
- jTaQ==
-X-Gm-Message-State: AOJu0YwN1jpoBNzO66mvO7Vzd9GQp+dFMFyno7UCNHRYzfHcQRhSkqM0
- Re1EghqL9+7TrIDqx4Knpk8Vd2sQWQrf86Ru+A/8SpYCB7OrG5EfVNomNHxq2EehwfkA7So3yyC
- e+4I1yct9/FZqSW9vz97ULc3IAc913n/qFQC5G0VeqiLFyxiOnmNrHK8=
-X-Gm-Gg: Acq92OFZiBTvRxZRrMUhm2ZxCmit6eiDl6dIuANXLbekQ/GVlk09wlj3Gkpg1l7yq8T
- kPgD38r0fiM+TvQ5W4HmoLypHdM7W3Lz/IaQsBhpdOx6zpzrAa+EoC61tv9HsJEsN/kKuwuaVUB
- oKeWuZkqLAdJOnKSSrG2FlwmqQJJT8Ksq3oON0cAdT0avntZKSK/Z1O1om3NV5EgsYCw3SBsDZ1
- Bpsb+60ZmYSaqeeWnBQSXqR0BHOgbrA7cseIo6oWbEbB+HuhmvUpvxmqSsrxPelrXfVE8ajdxXV
- DVXMFkJPoOdkiGCcpI7WVP+JSJArzn4/ImjE6QvvQh5+6UAT4sPaGYptGF4HogbCcig=
-X-Received: by 2002:a53:a64d:0:b0:660:4538:232f with SMTP id
- 956f58d0204a3-662b61b7b1emr1704257d50.62.1781604660330; Tue, 16 Jun 2026
- 03:11:00 -0700 (PDT)
+ bh=kslYU5AYmj7thTXYRZ+gLiZ7/V0BzViJNUN2iFTUqIw=;
+ b=cFZLAc+ti2VvszoexjzdENul26DhcUCXXCvd5boJjddxg6oF+r0LAGo/v3zZeBG0tQ
+ QOPR5koYdY82OIPkTUUdGAtTTOhf3A0MaZkz4xnMuW9F0LNxyNas5qVMO2263fh3zXu3
+ Tpq/r2I+2vFFrQPh9bOFZj9Jwk7mZfS/PDYkbRC59vgMbEtnYuUOm5duUWOIDSxrveGW
+ r6S3jEW/w/2YxCrOKIsGe43nup2Quthc6R7n1uHHv9E8Sh/JInREgBrswKosfnffrR57
+ gBdr1Pz7syMTpILXGu8gin88JDkxsQn4XMlDaGu+d6GbgV95usCM4m/tPNqVzKGFypN6
+ fALQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1781604446; x=1782209246;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=kslYU5AYmj7thTXYRZ+gLiZ7/V0BzViJNUN2iFTUqIw=;
+ b=VLLGmPaZdGwsFKMiJwBmBPtkYQpXT1cdvIAoqgDOPvcAZNU3GL0KUnjvjKqwlhGGFN
+ 76rtd4f81vNhM16m+u2EkyebADp4C220P1ypCjdZMueP148hGOSTP3hUHiv2x/lW+Zt3
+ JAN3Deq9nuxT2f5I5h8avKhZnIlyLEJymKsYYh8iHx/KADi6ISmxk328AiSwgUDa7Za8
+ IznTfQNuPJZJqGAQ3bbad5CQKjhK3IQvhoMkS/ZakdelPgGGUfMGDI9u5s5CPyz9qYjg
+ hyY32AqVqBRakpoTwKOcTgh3tQt+mRjXZVecl7jZp/z3248CUkbA7s/xH+Tm0ABXBtCx
+ i7+A==
+X-Gm-Message-State: AOJu0YzHIn3Lr7SZ7CdG0FayF5lDI+XmYE0eeiVJ6WZwIJ+hzGOp88OA
+ 3lqYo8r95ALw4Njs/wmNNPesI54u/HeDOGu95Ot4WwbAfZLldy8zz/Ys62gpVw7i
+X-Gm-Gg: Acq92OF3XQ3rpkcEuKRujX6hiPEd+gQ62EDqs92zaME1VsU3Q23X7EbTy1TOySLIjkk
+ 2pcnTvTriW/GG62EF+xFVQszcYjIlOCLrtPBcVjSNKETXbIjLpEoPXxRFB7izeJ/RfqVWpOs6fM
+ DgcJccCz/ovTxWiIrSNJn9XeiMp5aIWV+yEklrUQ9OcbUvtv80j/w1sbGA20eX8U+b+vnee+aak
+ 6icFWqsGJci1fx6Vwx2h6ZQltCKrcpJHk/v06fPS3b2nZBP47WkpCi4C5sZogxArnINqRCVdNKF
+ l1ULNXwZe4xaNh0IS6+JXmV5eewk/uNo2AipNJ3Q94pThbs01Yw694SntvuWbCEcgmnY1JzUOec
+ ZAcuZi8+Y7KhmpW9QyHOvjy/CjnMpTpkXtwXx1xDOzY9lrmqngfUqtgnAGfhbZHTetW3b2RoZUw
+ bA0AtbVmHfLn453ORP5JyWR8J7fDHYYC+rmhC1uf1k
+X-Received: by 2002:a17:90a:d60e:b0:36a:1ed8:6fe6 with SMTP id
+ 98e67ed59e1d1-37c2bd52996mr14481707a91.24.1781604446463; 
+ Tue, 16 Jun 2026 03:07:26 -0700 (PDT)
+Received: from toolbx.alistair23.me ([2403:581e:fdf9:0:13b2:851f:d9cb:44c5])
+ by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-c866519f0a6sm10916735a12.22.2026.06.16.03.07.23
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 16 Jun 2026 03:07:25 -0700 (PDT)
+From: alistair23@gmail.com
+X-Google-Original-From: alistair.francis@wdc.com
+To: qemu-devel@nongnu.org
+Cc: alistair23@gmail.com, Anton Johansson <anjo@rev.ng>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Alistair Francis <alistair.francis@wdc.com>
+Subject: [PULL 32/83] target/riscv: Fix size of mseccfg
+Date: Tue, 16 Jun 2026 20:04:35 +1000
+Message-ID: <20260616100527.1939565-33-alistair.francis@wdc.com>
+X-Mailer: git-send-email 2.54.0
+In-Reply-To: <20260616100527.1939565-1-alistair.francis@wdc.com>
+References: <20260616100527.1939565-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
-References: <20260602063350.3623723-1-kchiu@axiado.com>
- <20260602063350.3623723-7-kchiu@axiado.com>
-In-Reply-To: <20260602063350.3623723-7-kchiu@axiado.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 16 Jun 2026 11:10:46 +0100
-X-Gm-Features: AVVi8CfsXLHO3w91S8Nmz8Qh4yzvapP6Z9h713rS8Hj3cTpQ50ZaLwkB46SDrKY
-Message-ID: <CAFEAcA8QBV9gXh2D_Uj5_z9PnXd6PP99Tya0zthoRmyY53efDw@mail.gmail.com>
-Subject: Re: [PATCH v3 6/6] hw/arm: ax3000-soc: Enable Cadence GPIO controllers
-To: Kuan-Jui Chiu <kchiu@axiado.com>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b135;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb135.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1030;
+ envelope-from=alistair23@gmail.com; helo=mail-pj1-x1030.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -114,20 +105,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 2 Jun 2026 at 07:34, Kuan-Jui Chiu <kchiu@axiado.com> wrote:
->
-> Enable 8 Cadence GPIO controllers into Axiado AX3000 SoC
->
-> Signed-off-by: Kuan-Jui Chiu <kchiu@axiado.com>
+From: Anton Johansson <anjo@rev.ng>
 
-I reviewed this patch last time, and it essentially hasn't changed.
-Please carry across Reviewed-by: tags from previous patchsets
-as per our process:
+mseccfg is defined in version 20250508 of the privileged specification
+to be 64 bits in size.  Update relevant function arguments.
 
-https://www.qemu.org/docs/master/devel/submitting-a-patch.html#proper-use-of-reviewed-by-tags-can-aid-review
+Signed-off-by: Anton Johansson <anjo@rev.ng>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Acked-by: Alistair Francis <alistair.francis@wdc.com>
+Message-ID: <20260520125406.28693-22-anjo@rev.ng>
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+---
+ target/riscv/cpu.h     | 2 +-
+ target/riscv/pmp.h     | 4 ++--
+ target/riscv/machine.c | 2 +-
+ target/riscv/pmp.c     | 4 ++--
+ 4 files changed, 6 insertions(+), 6 deletions(-)
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+index 45dc0393f9..8726929bd3 100644
+--- a/target/riscv/cpu.h
++++ b/target/riscv/cpu.h
+@@ -465,7 +465,7 @@ struct CPUArchState {
+ 
+     /* physical memory protection */
+     pmp_table_t pmp_state;
+-    target_ulong mseccfg;
++    uint64_t mseccfg;
+ 
+     /* trigger module */
+     uint16_t mcontext;
+diff --git a/target/riscv/pmp.h b/target/riscv/pmp.h
+index 17307ef88a..91130289d8 100644
+--- a/target/riscv/pmp.h
++++ b/target/riscv/pmp.h
+@@ -71,8 +71,8 @@ void pmpcfg_csr_write(CPURISCVState *env, uint32_t reg_index,
+                       target_ulong val);
+ target_ulong pmpcfg_csr_read(CPURISCVState *env, uint32_t reg_index);
+ 
+-void mseccfg_csr_write(CPURISCVState *env, target_ulong val);
+-target_ulong mseccfg_csr_read(CPURISCVState *env);
++void mseccfg_csr_write(CPURISCVState *env, uint64_t val);
++uint64_t mseccfg_csr_read(CPURISCVState *env);
+ 
+ void pmpaddr_csr_write(CPURISCVState *env, uint32_t addr_index,
+                        target_ulong val);
+diff --git a/target/riscv/machine.c b/target/riscv/machine.c
+index 78ca607b48..dad45f10c3 100644
+--- a/target/riscv/machine.c
++++ b/target/riscv/machine.c
+@@ -439,7 +439,7 @@ static const VMStateDescription vmstate_mseccfg = {
+     .minimum_version_id = 1,
+     .needed = mseccfg_needed,
+     .fields = (const VMStateField[]) {
+-        VMSTATE_UINTTL(env.mseccfg, RISCVCPU),
++        VMSTATE_UINT64(env.mseccfg, RISCVCPU),
+         VMSTATE_END_OF_LIST()
+     }
+ };
+diff --git a/target/riscv/pmp.c b/target/riscv/pmp.c
+index 58a8923d0d..211f5b3862 100644
+--- a/target/riscv/pmp.c
++++ b/target/riscv/pmp.c
+@@ -667,7 +667,7 @@ target_ulong pmpaddr_csr_read(CPURISCVState *env, uint32_t addr_index)
+ /*
+  * Handle a write to a mseccfg CSR
+  */
+-void mseccfg_csr_write(CPURISCVState *env, target_ulong val)
++void mseccfg_csr_write(CPURISCVState *env, uint64_t val)
+ {
+     int i;
+     uint64_t mask = MSECCFG_MMWP | MSECCFG_MML;
+@@ -713,7 +713,7 @@ void mseccfg_csr_write(CPURISCVState *env, target_ulong val)
+ /*
+  * Handle a read from a mseccfg CSR
+  */
+-target_ulong mseccfg_csr_read(CPURISCVState *env)
++uint64_t mseccfg_csr_read(CPURISCVState *env)
+ {
+     trace_mseccfg_csr_read(env->mhartid, env->mseccfg);
+     return env->mseccfg;
+-- 
+2.54.0
 
-thanks
--- PMM
 
