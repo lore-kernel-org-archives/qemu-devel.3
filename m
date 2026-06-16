@@ -4,81 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F017CD98E4
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 19:10:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2428CD98E1
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 19:11:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZZAh-0000AU-Tn; Tue, 16 Jun 2026 15:10:05 -0400
+	id 1wZZAV-00075B-RD; Tue, 16 Jun 2026 15:09:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wZZ8T-0004iK-WD
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 15:07:49 -0400
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ id 1wZZ8E-0004ZQ-Li
+ for qemu-devel@nongnu.org; Tue, 16 Jun 2026 15:07:37 -0400
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wZZ8O-0001B4-77
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 15:07:45 -0400
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-490aaeabdb4so34649045e9.1
- for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 12:07:37 -0700 (PDT)
+ id 1wZZ87-0000xf-O3
+ for qemu-devel@nongnu.org; Tue, 16 Jun 2026 15:07:28 -0400
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-490b12270b3so30451355e9.1
+ for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 12:07:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1781636856; x=1782241656; darn=nongnu.org;
+ d=linaro.org; s=google; t=1781636821; x=1782241621; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=mhyD5aUR+rlm/Tn1MIb7omoW4yLbGARIJaHm5kA7KoY=;
- b=j7i2pNBnIhdS5EbAfcI13sqnyR18zqGH2IGclCPKTnpdCK4/Fet/fM3WwfkpAHEAFR
- ZafZiPoneMSlMf4LKuKS1C14TTeYNeyrSDjMvNv2rDTYIzhKwA1qLIHxAk2xD8tIOUuD
- +uy/gOORCQ4XT6ch7nVfWcBeBD/455vvcVxsI617rJl61SyQTomkpaiVpKFuI9VD8muI
- hHvpknB4zyuhmFWL6hqk03w9l1prPm6Z+zA8F3/b0e+jdbVSeyenDglUIfuynugj36xh
- M4/4CDChfICvmoWJJEb1vlzRO4QLM6SNBv/5iGkxsU6K4dlPdiWP4WbFR2Owb5zdhe1a
- QCsA==
+ :reply-to; bh=PYQ8HdK5SkU6BX/BtmWU/KoQEGIEXyhmRcW7vzpl7zc=;
+ b=h0wh+SBIXmiWKI/xi3nihv/iI16LPz8wcA0ssPDIYEqu5oQYQ1BJXe/bGwkDvdTq/m
+ 4LxbWGG/P05Ftqs0uY9HaMsmp91BUjy4R1ActAk0EsDgLL46Xyqnh/3RLRcdXrESPfbK
+ BH0f/zOGxTpCzGF9kPVIcAScQg/5LLM2lBsL7Ssp8ACPIbCehyEV/6vuoEynfo+onEG7
+ y+iKc4FEAvLU7Z/GqLNy/hLNpfNoB1cqpOjdk3/VwYXkBz3OSZgZVEjtfU33FzTHWkdS
+ lKp91D4AghTm/H8fJ76ukJZdkyaVm7z1khGZ9aUUc3ZMk8o1fxPnN/SQZrB6OJ/rUybF
+ tuvQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781636856; x=1782241656;
+ d=1e100.net; s=20251104; t=1781636821; x=1782241621;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=mhyD5aUR+rlm/Tn1MIb7omoW4yLbGARIJaHm5kA7KoY=;
- b=PLiimICeKMm/I2XRHiEx0daMMxbaf3mxbHLM9K0+2yLT6/Fe4ZBiEkJ7v6dmNckGY+
- CL+KB5okScuTSIXjeUuXbnP43i1wIUn+BgJeMP77IVRd+gJFeEwWKJgAktUjfq+vXjr8
- nFvAIMOrwJ2gmuy6145GwwJqVnnfT0CTYbi/TS8PTOOTJgYEy9QV7RX5KpR/ASCjx4pS
- iWIW0OobtKZXQtUeWIPeyzgZw8LU7KbsRYYAgXd+TIjeU3eLmEXAA2cQItDnkbjL0d5V
- Vuh02P9kGLVwPa5xOi3YgRtewspjMLnLq6r5WyyNGMwv6yhk2VSLA8cN7jX4xvbOUd+9
- bp2g==
-X-Gm-Message-State: AOJu0Yy7lVom/1L1MlhJ4ll3sp1StaVRkS7wNTy+MORAONiuS+Oyw4Op
- 9yboFmShdH6jANXWjduK6rOjMgsT8CQFft6t0AFjJ18FRUKXjDu2MJzg59y++ZqUWsI/pLeRO8E
- NfTLE
-X-Gm-Gg: Acq92OHt+Kvv4HSWS45tPFcFZS5yhh5WzAnd5lLrib3MMjLVZK47ozyUC+xYYi9Qq6k
- ZaWPpeAsFOpF0pD8gxvqoLa2xUzcLG2uoY5BSyY7aV3qSGXev6HtXBx3sQU5Kxd6Y2U5YHCTi23
- bkit2hNJtRDbXIdCe/8CTLkZKQDW9GL2Jg7yRNNLQ4OGLMCvPVZmB7Q0itwguZagqfx9p8p06BP
- 7oTQZ6MzCfBIDRPGhFcgH7aoqCsNmL/xkeKyvGsmQtDPa31ZN5K+HbeN4TIOpSSrvtIqLDY6cWv
- fbnGYRpLRYWZ9nRhHIoFuzoV2MDQO+jtdTHLjfOoCWGBYUkB9V8eQgJHyB3H9+TYGikOUMHaKFv
- +VXiVToWUSAZFmxS/U4YQvjcgU+IfypgOd5U3x/eWQapsDwtqiRYtA9KX2RgiCPGhF2WoLbzjKz
- JslSGgQGBYN30Bc6AmQKnox8pF6I/WDIi/t6ZNLO0aLYhXZVSSW5SGOe+SBSCOKz8+84TM50luF
- m/iuwTDxgNE+AIyTVcIEZUIaFoI+Z/c
-X-Received: by 2002:a05:600c:8283:b0:490:d38c:7836 with SMTP id
- 5b1f17b1804b1-492333a1683mr12829605e9.3.1781636856314; 
- Tue, 16 Jun 2026 12:07:36 -0700 (PDT)
+ bh=PYQ8HdK5SkU6BX/BtmWU/KoQEGIEXyhmRcW7vzpl7zc=;
+ b=eeOgmsojduTASLpuxftS7lJAzRaryWvqzk+ahvR5xLSyHQ9MBzbjgNTx7VBnme3vJl
+ k4cDYDcmay3jZTWG45Tbo4EwltQPJ8vi8BQrEcd1j5vCzjTHGKecQUdf93Lx7G18ol3U
+ XwRzkV/9gr43kUuNcjgF66BPzR0ImHMmU8SuqIONAIqbt7hNfTkpYcIdJMfhv1yWi5PO
+ TFdsIxlRnLJzGk+SMf7ZgdUsT1OZaCDX5pYYIfziyXbirXKbtXhR4g7P/c2lTekgKNi/
+ /hSAHGIpzlLtNL054VpaUdf5fE33WmnFaBpX0dURRCgLEvfgT2YsyNLA5huCAybSkK8H
+ axxQ==
+X-Gm-Message-State: AOJu0Yw09IziPmAeIZHLkW0wloJFCHvdoqCgRzuGU0e8eETFcGA6CjEF
+ HjxuMfAqaKgiqObFaqcDSKMUJSoVQgdHLfhZwKa7HmuA7E37OY/jSCXwwp3YRGAjJLd616lPA8x
+ FNSxv
+X-Gm-Gg: Acq92OGZUSUDVTKu87cK7qCnUMfTONxWwR0JLwp2IJpRbXWKDqnOz8NdG9xLPD14lHm
+ e+69Z5tqIJjWOa+JSl0fZGZJ9ROGT9Xv+0rMkrSlLaKJrqu2kdBgZSs/Uhvb9+VkbmLJ1IOV6bK
+ HJ6AyXp4bXAIdYEY1CYEUGuaFYlY9DW6vixf+cu6QAivgSfvwGmoOkAp/ynhrKVdTsS9gM6FaJA
+ fN07F3uMtEj/LvyPMXDnSUWydy5m9Vws7VhLoKz47lh79IZuHEmYERIlYeZ2slxrUuLktsG+DAT
+ 1pfvDWx01VNpOONn1wgnb4/4XWglDmaLAZDoKhnoFNBGErs5fFFzh1yWyk0P9vREQ7RVrgEwNW2
+ H0xUrqHpd6AgNblSSKaIh6452ftbUV2SQN3NwKd46Dvw3kRMshcSqTTjljIUqoQdvGg5Gk7KYNI
+ mYlSA/qKWqc9LjbiIh2HnNCNkAJsFXjXXwhpeqNZNnWJ0PDIA4y5+OTc4Cd4jpLlVChAbGqxPiD
+ BHsaTJhdj7tYD+u3EPqqFrnM35uvCv1
+X-Received: by 2002:a05:600c:3e8e:b0:490:ea8a:32da with SMTP id
+ 5b1f17b1804b1-492333d6b3bmr11595385e9.26.1781636820743; 
+ Tue, 16 Jun 2026 12:07:00 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4606f2d9becsm45078765f8f.34.2026.06.16.12.07.35
+ ffacd0b85a97d-4606f2d9becsm45078765f8f.34.2026.06.16.12.06.59
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 16 Jun 2026 12:07:35 -0700 (PDT)
+ Tue, 16 Jun 2026 12:06:59 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 49/61] target/arm: Implement SVE bitwise unary operations
- (predicated, zeroing)
-Date: Tue, 16 Jun 2026 20:06:26 +0100
-Message-ID: <20260616190639.3462006-50-peter.maydell@linaro.org>
+Subject: [PULL 16/61] hw/arm/smmuv3-accel: Introduce CMDQV ops interface
+Date: Tue, 16 Jun 2026 20:05:53 +0100
+Message-ID: <20260616190639.3462006-17-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260616190639.3462006-1-peter.maydell@linaro.org>
 References: <20260616190639.3462006-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x336.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,105 +100,97 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+From: Shameer Kolothum <skolothumtho@nvidia.com>
 
-This includes CLS, CLZ, CNT, CNOT, NOT, FABS, FNEG.
+Command Queue Virtualization (CMDQV) is a hardware extension available
+on certain platforms that allows the SMMUv3 command queue to be
+virtualized and passed through to a VM, improving performance.
 
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Message-id: 20260604234852.573178-7-richard.henderson@linaro.org
+For example, NVIDIA Tegra241 implements CMDQV to support virtualization
+of multiple command queues (VCMDQs).
+
+The term CMDQV is used here generically to refer to any platform that
+provides hardware support to virtualize the SMMUv3 command queue.
+
+CMDQV support is a specialization of the IOMMUFD-backed accelerated
+SMMUv3 path. Introduce an ops interface to factor out CMDQV-specific
+probe, initialization, and vIOMMU allocation logic from the base
+implementation. The ops pointer and associated state are stored in
+the accelerated SMMUv3 state.
+
+This provides an extensible design to support future vendor-specific
+CMDQV implementations.
+
+No functional change.
+
+Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
+Tested-by: Nicolin Chen <nicolinc@nvidia.com>
+Reviewed-by: Eric Auger <eric.auger@redhat.com>
+Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
+Tested-by: Eric Auger <eric.auger@redhat.com>
+Message-id: 20260609112552.378999-7-skolothumtho@nvidia.com
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/arm/tcg/sve.decode      |  8 ++++++++
- target/arm/tcg/translate-sve.c | 21 ++++++++++++++++++---
- 2 files changed, 26 insertions(+), 3 deletions(-)
+ hw/arm/smmuv3-accel.h | 34 ++++++++++++++++++++++++++++++++++
+ 1 file changed, 34 insertions(+)
 
-diff --git a/target/arm/tcg/sve.decode b/target/arm/tcg/sve.decode
-index 31b65fab1b..e79b5e84c1 100644
---- a/target/arm/tcg/sve.decode
-+++ b/target/arm/tcg/sve.decode
-@@ -400,6 +400,14 @@ NOT_zpz_m       00000100 .. 011 110 101 ... ..... .....         @rd_pg_rn
- FABS_m          00000100 .. 011 100 101 ... ..... .....         @rd_pg_rn
- FNEG_m          00000100 .. 011 101 101 ... ..... .....         @rd_pg_rn
+diff --git a/hw/arm/smmuv3-accel.h b/hw/arm/smmuv3-accel.h
+index 87fecb5c68..b45f25ad03 100644
+--- a/hw/arm/smmuv3-accel.h
++++ b/hw/arm/smmuv3-accel.h
+@@ -10,11 +10,44 @@
+ #define HW_ARM_SMMUV3_ACCEL_H
  
-+CLS_z           00000100 .. 001 000 101 ... ..... .....         @rd_pg_rn
-+CLZ_z           00000100 .. 001 001 101 ... ..... .....         @rd_pg_rn
-+CNT_zpz_z       00000100 .. 001 010 101 ... ..... .....         @rd_pg_rn
-+CNOT_z          00000100 .. 001 011 101 ... ..... .....         @rd_pg_rn
-+NOT_zpz_z       00000100 .. 001 110 101 ... ..... .....         @rd_pg_rn
-+FABS_z          00000100 .. 001 100 101 ... ..... .....         @rd_pg_rn
-+FNEG_z          00000100 .. 001 101 101 ... ..... .....         @rd_pg_rn
+ #include "hw/arm/smmu-common.h"
++#include "hw/arm/smmuv3.h"
+ #include "system/iommufd.h"
+ #ifdef CONFIG_LINUX
+ #include <linux/iommufd.h>
+ #endif
+ 
++/*
++ * CMDQ-Virtualization (CMDQV) hardware support, extends the SMMUv3 to
++ * support multiple VCMDQs with virtualization capabilities.
++ * CMDQV specific behavior is factored behind this ops interface.
++ */
++typedef struct SMMUv3AccelCmdqvOps {
++    /**
++     * @probe: Mandatory. Vendor-specific device probing.
++     */
++    bool (*probe)(SMMUv3State *s, HostIOMMUDeviceIOMMUFD *idev, Error **errp);
++    /**
++     * @init: Optional callback. Initialize CMDQV hardware.
++     */
++    bool (*init)(SMMUv3State *s, Error **errp);
++    /**
++     * @alloc_viommu: Mandatory. Allocate CMDQV viommu resources.
++     */
++    bool (*alloc_viommu)(SMMUv3State *s,
++                         HostIOMMUDeviceIOMMUFD *idev,
++                         uint32_t *out_viommu_id,
++                         Error **errp);
++    /**
++     * @free_viommu: Optional callback. Free CMDQV viommu resources.
++     * If NULL, the viommu_id is freed directly via iommufd_backend_free_id().
++     */
++    void (*free_viommu)(SMMUv3State *s);
++    /**
++     * @reset: Optional callback. Reset CMDQV state.
++     */
++    void (*reset)(SMMUv3State *s);
++} SMMUv3AccelCmdqvOps;
 +
- # SVE integer unary operations (predicated)
- # Note esz > original size for extensions.
- ABS_m           00000100 .. 010 110 101 ... ..... .....         @rd_pg_rn
-diff --git a/target/arm/tcg/translate-sve.c b/target/arm/tcg/translate-sve.c
-index afbed77ec3..d6a1683719 100644
---- a/target/arm/tcg/translate-sve.c
-+++ b/target/arm/tcg/translate-sve.c
-@@ -781,30 +781,41 @@ static gen_helper_gvec_3 * const sve_cls_fns[4] = {
-     gen_helper_sve_cls_s, gen_helper_sve_cls_d,
- };
- TRANS_FEAT(CLS_m, aa64_sme_or_sve, gen_gvec_ool_arg_zpz, sve_cls_fns[a->esz], a, 0)
-+TRANS_FEAT(CLS_z, aa64_sme2p2_or_sve2p2, gen_gvec_ool_arg_zpz, sve_cls_fns[a->esz], a, 1)
+ /*
+  * Represents an accelerated SMMU instance backed by an iommufd vIOMMU object.
+  * Holds bypass and abort proxy HWPT IDs used for device attachment.
+@@ -27,6 +60,7 @@ typedef struct SMMUv3AccelState {
+     QLIST_HEAD(, SMMUv3AccelDevice) device_list;
+     bool auto_mode;
+     bool auto_finalised;
++    const SMMUv3AccelCmdqvOps *cmdqv_ops;
+ } SMMUv3AccelState;
  
- static gen_helper_gvec_3 * const sve_clz_fns[4] = {
-     gen_helper_sve_clz_b, gen_helper_sve_clz_h,
-     gen_helper_sve_clz_s, gen_helper_sve_clz_d,
- };
- TRANS_FEAT(CLZ_m, aa64_sme_or_sve, gen_gvec_ool_arg_zpz, sve_clz_fns[a->esz], a, 0)
-+TRANS_FEAT(CLZ_z, aa64_sme2p2_or_sve2p2, gen_gvec_ool_arg_zpz, sve_clz_fns[a->esz], a, 1)
- 
- static gen_helper_gvec_3 * const sve_cnt_zpz_fns[4] = {
-     gen_helper_sve_cnt_zpz_b, gen_helper_sve_cnt_zpz_h,
-     gen_helper_sve_cnt_zpz_s, gen_helper_sve_cnt_zpz_d,
- };
--TRANS_FEAT(CNT_zpz_m, aa64_sme_or_sve, gen_gvec_ool_arg_zpz, sve_cnt_zpz_fns[a->esz], a, 0)
-+TRANS_FEAT(CNT_zpz_m, aa64_sme_or_sve, gen_gvec_ool_arg_zpz,
-+           sve_cnt_zpz_fns[a->esz], a, 0)
-+TRANS_FEAT(CNT_zpz_z, aa64_sme2p2_or_sve2p2, gen_gvec_ool_arg_zpz,
-+           sve_cnt_zpz_fns[a->esz], a, 1)
- 
- static gen_helper_gvec_3 * const sve_cnot_fns[4] = {
-     gen_helper_sve_cnot_b, gen_helper_sve_cnot_h,
-     gen_helper_sve_cnot_s, gen_helper_sve_cnot_d,
- };
--TRANS_FEAT(CNOT_m, aa64_sme_or_sve, gen_gvec_ool_arg_zpz, sve_cnot_fns[a->esz], a, 0)
-+TRANS_FEAT(CNOT_m, aa64_sme_or_sve, gen_gvec_ool_arg_zpz,
-+           sve_cnot_fns[a->esz], a, 0)
-+TRANS_FEAT(CNOT_z, aa64_sme2p2_or_sve2p2, gen_gvec_ool_arg_zpz,
-+           sve_cnot_fns[a->esz], a, 1)
- 
- static gen_helper_gvec_3 * const sve_not_zpz_fns[4] = {
-     gen_helper_sve_not_zpz_b, gen_helper_sve_not_zpz_h,
-     gen_helper_sve_not_zpz_s, gen_helper_sve_not_zpz_d,
- };
--TRANS_FEAT(NOT_zpz_m, aa64_sme_or_sve, gen_gvec_ool_arg_zpz, sve_not_zpz_fns[a->esz], a, 0)
-+TRANS_FEAT(NOT_zpz_m, aa64_sme_or_sve, gen_gvec_ool_arg_zpz,
-+           sve_not_zpz_fns[a->esz], a, 0)
-+TRANS_FEAT(NOT_zpz_z, aa64_sme2p2_or_sve2p2, gen_gvec_ool_arg_zpz,
-+           sve_not_zpz_fns[a->esz], a, 1)
- 
- static gen_helper_gvec_3 * const sve_abs_fns[4] = {
-     gen_helper_sve_abs_b, gen_helper_sve_abs_h,
-@@ -857,6 +868,8 @@ static gen_helper_gvec_3 * const fabs_ah_fns[4] = {
- };
- TRANS_FEAT(FABS_m, aa64_sme_or_sve, gen_gvec_ool_arg_zpz,
-            s->fpcr_ah ? fabs_ah_fns[a->esz] : fabs_fns[a->esz], a, 0)
-+TRANS_FEAT(FABS_z, aa64_sme2p2_or_sve2p2, gen_gvec_ool_arg_zpz,
-+           s->fpcr_ah ? fabs_ah_fns[a->esz] : fabs_fns[a->esz], a, 1)
- 
- static gen_helper_gvec_3 * const fneg_fns[4] = {
-     NULL,                  gen_helper_sve_fneg_h,
-@@ -868,6 +881,8 @@ static gen_helper_gvec_3 * const fneg_ah_fns[4] = {
- };
- TRANS_FEAT(FNEG_m, aa64_sme_or_sve, gen_gvec_ool_arg_zpz,
-            s->fpcr_ah ? fneg_ah_fns[a->esz] : fneg_fns[a->esz], a, 0)
-+TRANS_FEAT(FNEG_z, aa64_sme2p2_or_sve2p2, gen_gvec_ool_arg_zpz,
-+           s->fpcr_ah ? fneg_ah_fns[a->esz] : fneg_fns[a->esz], a, 1)
- 
- static gen_helper_gvec_3 * const sxtb_fns[4] = {
-     NULL,                  gen_helper_sve_sxtb_h,
+ typedef struct SMMUS1Hwpt {
 -- 
 2.43.0
 
