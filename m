@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2295CD98E4
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 15:56:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE091CD98DA
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 15:56:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZW9B-00027G-Rr; Tue, 16 Jun 2026 11:56:17 -0400
+	id 1wZW9J-00027t-A7; Tue, 16 Jun 2026 11:56:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wZW9A-00026Y-5l
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 11:56:16 -0400
+ id 1wZW9I-00027l-3t
+ for qemu-devel@nongnu.org; Tue, 16 Jun 2026 11:56:24 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wZW98-0003mU-JQ
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 11:56:15 -0400
+ id 1wZW9G-0003o8-B8
+ for qemu-devel@nongnu.org; Tue, 16 Jun 2026 11:56:23 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781625373;
+ s=mimecast20190719; t=1781625381;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=k27/eUmDM815VUaa7ufhF5v1wTbU/Zq3allr9yBd0J8=;
- b=EjQQMtV/2rcQI+sV8jhwwvVx4TUG4cAJraa92WmjdaCfnX5S78xU6p8x96Ojt64Pn6jsNl
- xlxfIkBJRPsAO6yJ1AprpulkOV7wiOQc/xXBKeQ78Em3mbCCEqvAnfeDtmZ8fNat4OKNcu
- 3gEXcQYTj0KgHb7U89o+wO20z8p2+TQ=
+ bh=TTqi9MQR7wiJYeoYzsF+QEaiQ0Xxlem9KZFK9Xjbd84=;
+ b=W4qYUbo5m9mnkEhllDPxTShDbaKUBWzvkatmiHVMVDCHHPzazsvuEwyOmggeZuKNUe7xbp
+ ZKpq3lY/Wh2Lr35emGAngtPg77VQyjnwIUl4JtnnVqJy3Hz1lSQjiz11yfBmHczCJdbOYh
+ e+NBBzXxucsSh3paSFvRIcM8bTk2X8k=
 Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-459-x2ua3dkXOAWShivtgQ12Jw-1; Tue,
- 16 Jun 2026 11:56:10 -0400
-X-MC-Unique: x2ua3dkXOAWShivtgQ12Jw-1
-X-Mimecast-MFC-AGG-ID: x2ua3dkXOAWShivtgQ12Jw_1781625369
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-607-uVb3ePQKNpevU-_hWYl0SQ-1; Tue,
+ 16 Jun 2026 11:56:18 -0400
+X-MC-Unique: uVb3ePQKNpevU-_hWYl0SQ-1
+X-Mimecast-MFC-AGG-ID: uVb3ePQKNpevU-_hWYl0SQ_1781625376
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 32FD518005BD; Tue, 16 Jun 2026 15:56:08 +0000 (UTC)
+ id F01B91800841; Tue, 16 Jun 2026 15:56:14 +0000 (UTC)
 Received: from berrange.com (unknown [10.44.49.111])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id B014E195419F; Tue, 16 Jun 2026 15:56:02 +0000 (UTC)
+ id B88A2195411C; Tue, 16 Jun 2026 15:56:08 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
@@ -61,9 +61,10 @@ Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
  Paolo Bonzini <pbonzini@redhat.com>, BALATON Zoltan <balaton@eik.bme.hu>,
  Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [RFC 1/7] meson: add --enable-deprecations configure flag
-Date: Tue, 16 Jun 2026 16:55:48 +0100
-Message-ID: <20260616155554.264412-2-berrange@redhat.com>
+Subject: [RFC 2/7] qom: deprecated embedding object structs within other
+ objects
+Date: Tue, 16 Jun 2026 16:55:49 +0100
+Message-ID: <20260616155554.264412-3-berrange@redhat.com>
 In-Reply-To: <20260616155554.264412-1-berrange@redhat.com>
 References: <20260616155554.264412-1-berrange@redhat.com>
 MIME-Version: 1.0
@@ -94,107 +95,150 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-A challenge with QEMU is that internal APIs get obsoleted but chasing
-down use of old APIs is not as simple as it should be. Introduce a
---enable-deprecations configure flag which expands the macro
-"QEMU_DEPRECATIONS" into "G_GNUC_DEPRECATED". This will trigger a
-compiler warning for any use of the deprecated APIs.
+The QOM APIs currently allow objects to be either allocated directly
+on the heap, or statically embedded inside the struct of another object.
 
-It would generally be a good idea to disable -Werror when turning on
-deprecations otherwise the build will quickly abort.
+For the latter QOM has logic to avoid calling 'free' on the object when
+finalizers complete, however, this is not sufficient to make the
+practice safe.
 
+Users of QOM expect that if they call "object_ref" to acquire their own
+reference, then object will never be freed as long as they hold it.
 
-XXX: possibly add  -Wno-error=deprecated-declarations, so we have
-show deprecations by default despite -Werror being on by default.
-This would trigger very many warnings but might be worth it if we
-want to strongly nudge maintainers to convert existing code. Our
-historical approach of "hope" has never worked to eliminate old
-code patterns.
+This expectation is broken when an instance is embedded, as the "owner"
+object's may be finalized, which frees the memory that is storing the
+embedded QOM instance, even if its ref-count is still live.
+
+Worse still is that a user of a QOM object cannot easily tell if the
+instance they're using is embedded or directly heap allocated.
+
+Mark the APIs for embedding objects as deprecated as the first step
+towards removal of this flawed design concept. All objects must now
+be directly heap allocated going forward, and existing usage must be
+incrementally converted.
 
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- include/qemu/osdep.h          | 19 +++++++++++++++++++
- meson.build                   |  1 +
- meson_options.txt             |  2 ++
- scripts/meson-buildoptions.sh |  3 +++
- 4 files changed, 25 insertions(+)
+ include/qom/object.h | 28 ++++++++++++++++++++++++----
+ qom/object.c         |  6 ++++++
+ 2 files changed, 30 insertions(+), 4 deletions(-)
 
-diff --git a/include/qemu/osdep.h b/include/qemu/osdep.h
-index 2f0e61ad6b..99b8f9cbb7 100644
---- a/include/qemu/osdep.h
-+++ b/include/qemu/osdep.h
-@@ -447,6 +447,25 @@ void QEMU_ERROR("code path is reachable")
-         ((void)0))
- #endif
+diff --git a/include/qom/object.h b/include/qom/object.h
+index 11f55613fc..dd708b1136 100644
+--- a/include/qom/object.h
++++ b/include/qom/object.h
+@@ -854,8 +854,13 @@ bool object_set_props_from_keyval(Object *obj, const QDict *qdict,
+  * This function will initialize an object.  The memory for the object should
+  * have already been allocated.  The returned object has a reference count of 1,
+  * and will be finalized when the last reference is dropped.
++ *
++ * Use of this function is now deprecated. All objects must be
++ * allocated using the object_new() family of functions and not
++ * statically embedded in a larger struct.
+  */
+-void object_initialize(void *obj, size_t size, const char *typename);
++void object_initialize(void *obj, size_t size, const char *typename)
++    QEMU_DEPRECATED;
  
-+/*
-+ * Tag an internal APIs which should no longer be used
-+ * to emit a warning during build if --enable-deprecations
-+ * is used with configure. Use of -Werror will trigger
-+ * immediate build failure if this is used.
-+ */
-+#ifdef CONFIG_DEPRECATIONS
-+# define QEMU_DEPRECATED G_GNUC_DEPRECATED
-+# define QEMU_DEPRECATIONS_OFF \
-+    _Pragma("GCC diagnostic push") \
-+    _Pragma("GCC diagnostic ignored \"-Wdeprecated-declarations\"")
-+# define QEMU_DEPRECATIONS_ON \
-+    _Pragma("GCC diagnostic pop")
-+#else
-+# define QEMU_DEPRECATED
-+# define QEMU_DEPRECATIONS_OFF
-+# define QEMU_DEPRECATIONS_ON
-+#endif
-+
- /*
-  * Minimum function that returns zero only if both values are zero.
-  * Intended for use with unsigned values only.
-diff --git a/meson.build b/meson.build
-index 19e123423b..9e863aa897 100644
---- a/meson.build
-+++ b/meson.build
-@@ -2567,6 +2567,7 @@ config_host_data.set('CONFIG_DEBUG_STACK_USAGE', get_option('debug_stack_usage')
- config_host_data.set('CONFIG_DEBUG_TCG', get_option('debug_tcg'))
- config_host_data.set('CONFIG_DEBUG_REMAP', get_option('debug_remap'))
- config_host_data.set('CONFIG_QOM_CAST_DEBUG', get_option('qom_cast_debug'))
-+config_host_data.set('CONFIG_DEPRECATIONS', get_option('deprecations'))
- config_host_data.set('CONFIG_REPLICATION', get_option('replication').allowed())
- config_host_data.set('CONFIG_FSFREEZE', qga_fsfreeze)
- config_host_data.set('CONFIG_FSTRIM', qga_fstrim)
-diff --git a/meson_options.txt b/meson_options.txt
-index a07cb47d35..8f5924422d 100644
---- a/meson_options.txt
-+++ b/meson_options.txt
-@@ -367,6 +367,8 @@ option('qom_cast_debug', type: 'boolean', value: true,
-        description: 'cast debugging support')
- option('slirp_smbd', type : 'feature', value : 'auto',
-        description: 'use smbd (at path --smbd=*) in slirp networking')
-+option('deprecations', type: 'boolean', value: true,
-+       description: 'enable internal API deprecation warnings')
+ /**
+  * object_initialize_child_with_props:
+@@ -873,6 +878,10 @@ void object_initialize(void *obj, size_t size, const char *typename);
+  * has a reference count of 1 (for the "child<...>" property from the parent),
+  * so the object will be finalized automatically when the parent gets removed.
+  *
++ * Use of this function is now deprecated. All objects must be
++ * allocated using the object_new() family of functions and not
++ * statically embedded in a larger struct.
++ *
+  * The variadic parameters are a list of pairs of (propname, propvalue)
+  * strings. The propname of %NULL indicates the end of the property list.
+  * If the object implements the user creatable interface, the object will
+@@ -883,7 +892,8 @@ void object_initialize(void *obj, size_t size, const char *typename);
+ bool object_initialize_child_with_props(Object *parentobj,
+                              const char *propname,
+                              void *childobj, size_t size, const char *type,
+-                             Error **errp, ...) G_GNUC_NULL_TERMINATED;
++                             Error **errp, ...) G_GNUC_NULL_TERMINATED
++    QEMU_DEPRECATED;
  
- option('qemu_ga_manufacturer', type: 'string', value: 'QEMU',
-        description: '"manufacturer" name for qemu-ga registry entries')
-diff --git a/scripts/meson-buildoptions.sh b/scripts/meson-buildoptions.sh
-index c003985047..fb57f0610d 100644
---- a/scripts/meson-buildoptions.sh
-+++ b/scripts/meson-buildoptions.sh
-@@ -13,6 +13,7 @@ meson_options_help() {
-   printf "%s\n" '  --datadir=VALUE          Data file directory [share]'
-   printf "%s\n" '  --disable-coroutine-pool coroutine freelist (better performance)'
-   printf "%s\n" '  --disable-debug-info     Enable debug symbols and other information'
-+  printf "%s\n" '  --disable-deprecations   enable internal API deprecation warnings'
-   printf "%s\n" '  --disable-hexagon-idef-parser'
-   printf "%s\n" '                           use idef-parser to automatically generate TCG'
-   printf "%s\n" '                           code for the Hexagon frontend'
-@@ -306,6 +307,8 @@ _meson_option_parse() {
-     --disable-debug-stack-usage) printf "%s" -Ddebug_stack_usage=false ;;
-     --enable-debug-tcg) printf "%s" -Ddebug_tcg=true ;;
-     --disable-debug-tcg) printf "%s" -Ddebug_tcg=false ;;
-+    --enable-deprecations) printf "%s" -Ddeprecations=true ;;
-+    --disable-deprecations) printf "%s" -Ddeprecations=false ;;
-     --enable-dmg) printf "%s" -Ddmg=enabled ;;
-     --disable-dmg) printf "%s" -Ddmg=disabled ;;
-     --docdir=*) quote_sh "-Ddocdir=$2" ;;
+ /**
+  * object_initialize_child_with_propsv:
+@@ -897,12 +907,17 @@ bool object_initialize_child_with_props(Object *parentobj,
+  *
+  * See object_initialize_child() for documentation.
+  *
++ * Use of this function is now deprecated. All objects must be
++ * allocated using the object_new() family of functions and not
++ * statically embedded in a larger struct.
++ *
+  * Returns: %true on success, %false on failure.
+  */
+ bool object_initialize_child_with_propsv(Object *parentobj,
+                               const char *propname,
+                               void *childobj, size_t size, const char *type,
+-                              Error **errp, va_list vargs);
++                              Error **errp, va_list vargs)
++    QEMU_DEPRECATED;
+ 
+ /**
+  * object_initialize_child:
+@@ -917,13 +932,18 @@ bool object_initialize_child_with_propsv(Object *parentobj,
+  *   object_initialize_child_with_props(parent, propname,
+  *                                      child, sizeof(*child), type,
+  *                                      &error_abort, NULL)
++ *
++ * Use of this function is now deprecated. All objects must be
++ * allocated using the object_new() family of functions and not
++ * statically embedded in a larger struct.
+  */
+ #define object_initialize_child(parent, propname, child, type)          \
+     object_initialize_child_internal((parent), (propname),              \
+                                      (child), sizeof(*(child)), (type))
+ void object_initialize_child_internal(Object *parent, const char *propname,
+                                       void *child, size_t size,
+-                                      const char *type);
++                                      const char *type)
++    QEMU_DEPRECATED;
+ 
+ /**
+  * object_dynamic_cast:
+diff --git a/qom/object.c b/qom/object.c
+index 0ac201de4c..33b2801ee4 100644
+--- a/qom/object.c
++++ b/qom/object.c
+@@ -522,9 +522,11 @@ bool object_initialize_child_with_props(Object *parentobj,
+     bool ok;
+ 
+     va_start(vargs, errp);
++QEMU_DEPRECATIONS_OFF;
+     ok = object_initialize_child_with_propsv(parentobj, propname,
+                                              childobj, size, type, errp,
+                                              vargs);
++QEMU_DEPRECATIONS_ON;
+     va_end(vargs);
+     return ok;
+ }
+@@ -539,7 +541,9 @@ bool object_initialize_child_with_propsv(Object *parentobj,
+     Object *obj;
+     UserCreatable *uc;
+ 
++QEMU_DEPRECATIONS_OFF;
+     object_initialize(childobj, size, type);
++QEMU_DEPRECATIONS_ON;
+     obj = OBJECT(childobj);
+ 
+     if (!object_set_propv(obj, vargs, errp)) {
+@@ -576,8 +580,10 @@ void object_initialize_child_internal(Object *parent,
+                                       void *child, size_t size,
+                                       const char *type)
+ {
++QEMU_DEPRECATIONS_OFF;
+     object_initialize_child_with_props(parent, propname, child, size, type,
+                                        &error_abort, NULL);
++QEMU_DEPRECATIONS_ON;
+ }
+ 
+ static inline bool object_property_is_child(ObjectProperty *prop)
 -- 
 2.54.0
 
