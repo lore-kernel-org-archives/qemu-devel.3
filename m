@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03743CD98E3
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 15:57:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE2A6CD98E3
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 15:57:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZW9W-0002CQ-7l; Tue, 16 Jun 2026 11:56:38 -0400
+	id 1wZW9o-0002Of-VB; Tue, 16 Jun 2026 11:56:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wZW9U-0002Bs-Dd
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 11:56:36 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1wZW9f-0002Jy-6M
+ for qemu-devel@nongnu.org; Tue, 16 Jun 2026 11:56:47 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wZW9S-0003p3-B6
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 11:56:36 -0400
+ id 1wZW9U-0003pF-CX
+ for qemu-devel@nongnu.org; Tue, 16 Jun 2026 11:56:38 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781625393;
+ s=mimecast20190719; t=1781625395;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=cLJZ6XcA8ayCW7/0LWEa3/BF3pKTaWaZXznPUjSJF8Q=;
- b=K6NFh5b/5w9/m+50fip+XdX9bIpkJNeibmVIcC0LY2qCbl6hJTMbpk5VkO65Oa7Sv82Dgo
- 8y6KiPB+p60PCloeC2cmUOOKq4TAequG8eB8b/UhGon/7TMYHbJ06GTt4KJTwmdiQGQ+bE
- zwRCFF/Q/Nu3SndttirgQPk8QruRtlg=
+ bh=uuqZ60xVWcRIwM3ffZ1a2664p6ZIoKfbkaE0NcmmH0c=;
+ b=av7YTWUGYQWuqdZke3fON0qfIrm/CliuHso8Xg/fj5ANBiSS/LrQdUA2uydQoU4LguHnBL
+ rwwQp0ndKVJ0ytgpkI6o8ecZ4iArAR2h8EGSuezb+3VryrCwEcFHwxLeYCSWDGplhaTuhU
+ 6Ru5JSUPS3Ong/y7sawsGvnIFFgOsjI=
 Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-14-HCfVa5-sOaavKt4vJcGtVA-1; Tue,
- 16 Jun 2026 11:56:29 -0400
-X-MC-Unique: HCfVa5-sOaavKt4vJcGtVA-1
-X-Mimecast-MFC-AGG-ID: HCfVa5-sOaavKt4vJcGtVA_1781625387
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-53-iK5ov1o0P8O7Jt7VBWf2rQ-1; Tue,
+ 16 Jun 2026 11:56:34 -0400
+X-MC-Unique: iK5ov1o0P8O7Jt7VBWf2rQ-1
+X-Mimecast-MFC-AGG-ID: iK5ov1o0P8O7Jt7VBWf2rQ_1781625392
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id BE2C71800A7E; Tue, 16 Jun 2026 15:56:26 +0000 (UTC)
+ id 2D7B3180025B; Tue, 16 Jun 2026 15:56:32 +0000 (UTC)
 Received: from berrange.com (unknown [10.44.49.111])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id A1057195419E; Tue, 16 Jun 2026 15:56:21 +0000 (UTC)
+ id 3EB2D195419F; Tue, 16 Jun 2026 15:56:27 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
@@ -61,23 +61,24 @@ Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
  Paolo Bonzini <pbonzini@redhat.com>, BALATON Zoltan <balaton@eik.bme.hu>,
  Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [RFC 4/7] system: add memory_region_new / memory_region_new_io
-Date: Tue, 16 Jun 2026 16:55:51 +0100
-Message-ID: <20260616155554.264412-5-berrange@redhat.com>
+Subject: [RFC 5/7] system: add qemu_irq_new / qemu_irq_new_child /
+ qemu_irq_new_array
+Date: Tue, 16 Jun 2026 16:55:52 +0100
+Message-ID: <20260616155554.264412-6-berrange@redhat.com>
 In-Reply-To: <20260616155554.264412-1-berrange@redhat.com>
 References: <20260616155554.264412-1-berrange@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -94,326 +95,189 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Prepare for the move to dynamically allocated memory regions by
-introducing memory_region_new and memory_region_new_io functions
-which call through to object_new instead of object_initialize.
-
-TBD: add "new" variants for all the other memory_region_init
-variants.
+Prepare for the move to dynamically allocated IRQ objects by
+introducing qemu_irq_new / qemu_irq_new_child / qemu_irq_new_array
+functions which call through to object_new instead of object_initialize.
 
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- include/system/memory.h | 76 ++++++++++++++++++++++++++++++------
- system/memory.c         | 85 ++++++++++++++++++++++++++++++++++-------
- 2 files changed, 136 insertions(+), 25 deletions(-)
+ hw/core/irq.c         | 35 ++++++++++++++++++++
+ include/hw/core/irq.h | 75 ++++++++++++++++++++++++++++++++++++++++---
+ 2 files changed, 106 insertions(+), 4 deletions(-)
 
-diff --git a/include/system/memory.h b/include/system/memory.h
-index 1417132f6d..b4c5a185c0 100644
---- a/include/system/memory.h
-+++ b/include/system/memory.h
-@@ -1300,19 +1300,44 @@ static inline bool memory_region_section_intersect_range(MemoryRegionSection *s,
+diff --git a/hw/core/irq.c b/hw/core/irq.c
+index 106805e241..e943c87b81 100644
+--- a/hw/core/irq.c
++++ b/hw/core/irq.c
+@@ -49,6 +49,13 @@ void qemu_init_irq(IRQState *irq, qemu_irq_handler handler, void *opaque,
+     init_irq_fields(irq, handler, opaque, n);
+ }
+ 
++IRQState *qemu_irq_new(qemu_irq_handler handler, void *opaque, int n)
++{
++    IRQState *irq = IRQ(object_new(TYPE_IRQ));
++    init_irq_fields(irq, handler, opaque, n);
++    return irq;
++}
++
+ void qemu_init_irq_child(Object *parent, const char *propname,
+                          IRQState *irq, qemu_irq_handler handler,
+                          void *opaque, int n)
+@@ -57,14 +64,42 @@ void qemu_init_irq_child(Object *parent, const char *propname,
+     init_irq_fields(irq, handler, opaque, n);
+ }
+ 
++IRQState *qemu_irq_new_child(Object *parent, const char *propname,
++                             qemu_irq_handler handler,
++                             void *opaque, int n,
++                             Error **errp)
++{
++    IRQState *irq = IRQ(object_new_with_props(TYPE_IRQ, parent, propname,
++                                              errp, NULL));
++    if (!irq) {
++        return NULL;
++    }
++    init_irq_fields(irq, handler, opaque, n);
++    return irq;
++}
++
++
+ void qemu_init_irqs(IRQState irq[], size_t count,
+                     qemu_irq_handler handler, void *opaque)
+ {
+     for (size_t i = 0; i < count; i++) {
++        QEMU_DEPRECATIONS_OFF;
+         qemu_init_irq(&irq[i], handler, opaque, i);
++        QEMU_DEPRECATIONS_ON;
+     }
+ }
+ 
++IRQState **qemu_irq_new_array(size_t count,
++                              qemu_irq_handler handler, void *opaque)
++{
++    IRQState **irqs = g_new0(IRQState *, count);
++    for (size_t i = 0; i < count; i++) {
++        irqs[i] = qemu_irq_new(handler, opaque, i);
++    }
++    return irqs;
++}
++
++
+ qemu_irq *qemu_extend_irqs(qemu_irq *old, int n_old, qemu_irq_handler handler,
+                            void *opaque, int n)
+ {
+diff --git a/include/hw/core/irq.h b/include/hw/core/irq.h
+index 291fdd67df..af9bf6fb12 100644
+--- a/include/hw/core/irq.h
++++ b/include/hw/core/irq.h
+@@ -34,7 +34,12 @@ static inline void qemu_irq_pulse(qemu_irq irq)
+     qemu_set_irq(irq, 0);
+ }
+ 
+-/*
++/**
++ * qemu_init_irq: Initialize IRQ
++ * @handler: handler function for incoming interrupts
++ * @opaque: opaque data to pass to @handler
++ * @n: interrupt number to pass to @handler
++ *
+  * Init a single IRQ. The irq is assigned with a handler, an opaque data
+  * and the interrupt number. The caller must free this with qemu_free_irq().
+  * If you are using this inside a device's init or realize method, then
+@@ -42,7 +47,21 @@ static inline void qemu_irq_pulse(qemu_irq irq)
+  * to manually clean up the IRQ.
+  */
+ void qemu_init_irq(IRQState *irq, qemu_irq_handler handler, void *opaque,
+-                   int n);
++                   int n)
++    QEMU_DEPRECATED;
++/**
++ * qemu_new_irq: Allocate IRQ
++ * @handler: handler function for incoming interrupts
++ * @opaque: opaque data to pass to @handler
++ * @n: interrupt number to pass to @handler
++ *
++ * The returned IRQ will have a single reference, which is held by the
++ * caller and must be released to free the returned IRQ object when
++ * no longer required.
++ *
++ * Returns: the newly allocated IRQ
++ */
++IRQState *qemu_irq_new(qemu_irq_handler handler, void *opaque, int n);
  
  /**
-  * memory_region_init: Initialize a memory region
-- *
-- * The region typically acts as a container for other memory regions.  Use
-- * memory_region_add_subregion() to add subregions.
-- *
-  * @mr: the #MemoryRegion to be initialized
-  * @owner: the object that tracks the region's reference count
-  * @name: used for debugging; not visible to the user or ABI
-  * @size: size of the region; any subregions beyond this size will be clipped
+  * qemu_init_irq_child: Initialize IRQ and make it a QOM child
+@@ -56,10 +75,38 @@ void qemu_init_irq(IRQState *irq, qemu_irq_handler handler, void *opaque,
+  * Init a single IRQ and make the IRQ object a child of @parent with
+  * the child-property name @propname. The IRQ object will thus be
+  * automatically freed when @parent is destroyed.
 + *
-+ * The region typically acts as a container for other memory regions.  Use
-+ * memory_region_add_subregion() to add subregions.
-+ *
-+ * Use of this function is now deprecated. All memory regions must be
-+ * allocated using the memory_region_new() family of functions and not
++ * Use of this function is now deprecated. All IRQs must be
++ * allocated using the qemu_irq_new() family of functions and not
 + * statically embedded in a larger struct.
   */
- void memory_region_init(MemoryRegion *mr,
-                         Object *owner,
-                         const char *name,
--                        uint64_t size);
-+                        uint64_t size)
+ void qemu_init_irq_child(Object *parent, const char *propname,
+                          IRQState *irq, qemu_irq_handler handler,
+-                         void *opaque, int n);
++                         void *opaque, int n)
 +    QEMU_DEPRECATED;
 +
-+
 +/**
-+ * memory_region_new: Allocate a memory region.
-+ * @owner: the object that owns the memory region in the composition tree
-+ * @name: used for debugging; not visible to the user or ABI
-+ * @size: size of the region; any subregions beyond this size will be clipped
++ * qemu_init_irq_child: Allocate IRQ and make it a QOM child
++ * @parent: QOM object which owns this IRQ
++ * @propname: child property name
++ * @handler: handler function for incoming interrupts
++ * @opaque: opaque data to pass to @handler
++ * @n: interrupt number to pass to @handler
 + *
-+ * The region typically acts as a container for other memory regions.  Use
-+ * memory_region_add_subregion() to add subregions.
++ * Allocate a single IRQ and make the IRQ object a child of @parent with
++ * the child-property name @propname.
 + *
-+ * The returned memory region will have a single reference, which is
-+ * held by the @owner object in the QOM composition tree. Thus in the
-+ * absence of any further references being acquired, the memory region
-+ * will be freed when @owner is freed
++ * The returned IRQ will have a single reference, which is held by the
++ * @owner object in the QOM composition tree. Thus in the absence of
++ * any further references being acquired, the IRQ will be freed when
++ * @owner is freed
 + *
-+ * Returns: the newly allocated memory region
++ * Returns: the newly allocated IRQ
 + */
-+MemoryRegion *memory_region_new(Object *owner,
-+                                const char *name,
-+                                uint64_t size);
++IRQState *qemu_irq_new_child(Object *parent, const char *propname,
++                             qemu_irq_handler handler,
++                             void *opaque, int n,
++                             Error **errp);
+ 
  
  /**
-  * memory_region_ref: Add 1 to a memory region's reference count
-@@ -1344,11 +1369,7 @@ void memory_region_ref(MemoryRegion *mr);
- void memory_region_unref(MemoryRegion *mr);
- 
- /**
-- * memory_region_init_io: Initialize an I/O memory region.
-- *
-- * Accesses into the region will cause the callbacks in @ops to be called.
-- * if @size is nonzero, subregions will be clipped to @size.
-- *
-+ * memory_region_init_io: Initialize an I/O memory region
-  * @mr: the #MemoryRegion to be initialized.
-  * @owner: the object that tracks the region's reference count
-  * @ops: a structure containing read and write callbacks to be used when
-@@ -1356,13 +1377,46 @@ void memory_region_unref(MemoryRegion *mr);
-  * @opaque: passed to the read and write callbacks of the @ops structure.
-  * @name: used for debugging; not visible to the user or ABI
-  * @size: size of the region.
+@@ -69,9 +116,29 @@ void qemu_init_irq_child(Object *parent, const char *propname,
+  * @count: number of IRQs to initialize
+  * @handler: handler to assign to each IRQ
+  * @opaque: opaque data to pass to @handler
 + *
-+ * Accesses into the region will cause the callbacks in @ops to be called.
-+ * if @size is nonzero, subregions will be clipped to @size.
-+ *
-+ * Use of this function is now deprecated. All memory regions must be
-+ * allocated using the memory_region_new() family of functions and not
++ * Use of this function is now deprecated. All IRQs must be
++ * allocated using the qemu_irq_new() family of functions and not
 + * statically embedded in a larger struct.
   */
- void memory_region_init_io(MemoryRegion *mr,
-                            Object *owner,
-                            const MemoryRegionOps *ops,
-                            void *opaque,
-                            const char *name,
--                           uint64_t size);
-+                           uint64_t size)
+ void qemu_init_irqs(IRQState irq[], size_t count,
+-                    qemu_irq_handler handler, void *opaque);
++                    qemu_irq_handler handler, void *opaque)
 +    QEMU_DEPRECATED;
-+
 +/**
-+ * memory_region_new_io: Allocates an I/O memory region
-+ * @owner: the object that tracks the region's reference count
-+ * @ops: a structure containing read and write callbacks to be used when
-+ *       I/O is performed on the region.
-+ * @opaque: passed to the read and write callbacks of the @ops structure.
-+ * @name: used for debugging; not visible to the user or ABI
-+ * @size: size of the region.
++ * qemu_irq_new_array: Allocate an array of IRQs.
++ * @count: number of IRQs to initialize
++ * @handler: handler to assign to each IRQ
++ * @opaque: opaque data to pass to @handler
 + *
-+ * Accesses into the region will cause the callbacks in @ops to be called.
-+ * if @size is nonzero, subregions will be clipped to @size.
++ * The returned IRQs will have a single reference, which is held by the
++ * caller and must be released to free the returned IRQs object when
++ * no longer required. The return array memory must also be freed by
++ * the caller.
 + *
-+ * The returned memory region will have a single reference, which is
-+ * held by the @owner object in the QOM composition tree. Thus in the
-+ * absence of any further references being acquired, the memory region
-+ * will be freed when @owner is freed
-+ *
-+ * Returns: the newly allocated memory region
++ * Returns: an array of IRQ objects
 + */
-+MemoryRegion *memory_region_new_io(Object *owner,
-+                                   const MemoryRegionOps *ops,
-+                                   void *opaque,
-+                                   const char *name,
-+                                   uint64_t size);
++IRQState **qemu_irq_new_array(size_t count,
++                              qemu_irq_handler handler, void *opaque);
  
- /**
-  * memory_region_init_ram_flags_nomigrate:  Initialize RAM memory region.
-diff --git a/system/memory.c b/system/memory.c
-index 739ba11da6..e8a539e37e 100644
---- a/system/memory.c
-+++ b/system/memory.c
-@@ -1214,6 +1214,18 @@ static char *memory_region_escape_name(const char *name)
-     return escaped;
- }
- 
-+static char *memory_region_make_child(Object **owner,
-+                                      const char *name)
-+{
-+    g_autofree char *escaped_name = memory_region_escape_name(name);
-+
-+    if (!*owner) {
-+        *owner = machine_get_container("unattached");
-+    }
-+
-+    return g_strdup_printf("%s[*]", escaped_name);
-+}
-+
- static void memory_region_do_init(MemoryRegion *mr,
-                                   Object *owner,
-                                   const char *name,
-@@ -1227,20 +1239,6 @@ static void memory_region_do_init(MemoryRegion *mr,
-     mr->owner = owner;
-     mr->dev = (DeviceState *) object_dynamic_cast(mr->owner, TYPE_DEVICE);
-     mr->ram_block = NULL;
--
--    if (name) {
--        char *escaped_name = memory_region_escape_name(name);
--        char *name_array = g_strdup_printf("%s[*]", escaped_name);
--
--        if (!owner) {
--            owner = machine_get_container("unattached");
--        }
--
--        object_property_add_child(owner, name_array, OBJECT(mr));
--        object_unref(OBJECT(mr));
--        g_free(name_array);
--        g_free(escaped_name);
--    }
- }
- 
- void memory_region_init(MemoryRegion *mr,
-@@ -1250,6 +1248,31 @@ void memory_region_init(MemoryRegion *mr,
- {
-     object_initialize(mr, sizeof(*mr), TYPE_MEMORY_REGION);
-     memory_region_do_init(mr, owner, name, size);
-+    if (name) {
-+        g_autofree char *childname = memory_region_make_child(&owner, name);
-+        object_property_add_child(owner, childname, OBJECT(mr));
-+        object_unref(OBJECT(mr));
-+    }
-+}
-+
-+MemoryRegion *memory_region_new(Object *owner,
-+                                const char *name,
-+                                uint64_t size)
-+{
-+    /*
-+     * error_abort is safe, because 'childname' includes a wildcard
-+     * for dynamically assigning a unique name. Thus adding the child
-+     * property cannot fail
-+     */
-+    MemoryRegion *mr = MEMORY_REGION(object_new(TYPE_MEMORY_REGION));
-+    memory_region_do_init(mr, owner, name, size);
-+    if (name) {
-+        g_autofree char *childname = memory_region_make_child(&owner, name);
-+        object_property_add_child(owner, childname, OBJECT(mr));
-+        object_unref(OBJECT(mr));
-+
-+    }
-+    return mr;
- }
- 
- static void memory_region_get_container(Object *obj, Visitor *v,
-@@ -1574,10 +1597,22 @@ void memory_region_init_io(MemoryRegion *mr, Object *owner,
-                            const char *name, uint64_t size)
- {
-     g_assert(!ops || !(ops->impl.unaligned && !ops->valid.unaligned));
-+    QEMU_DEPRECATIONS_OFF;
-     memory_region_init(mr, owner, name, size);
-+    QEMU_DEPRECATIONS_ON;
-     memory_region_set_ops(mr, ops, opaque);
- }
- 
-+MemoryRegion *memory_region_new_io(Object *owner,
-+                                   const MemoryRegionOps *ops, void *opaque,
-+                                   const char *name, uint64_t size)
-+{
-+    g_assert(!ops || !(ops->impl.unaligned && !ops->valid.unaligned));
-+    MemoryRegion *mr = memory_region_new(owner, name, size);
-+    memory_region_set_ops(mr, ops, opaque);
-+    return mr;
-+}
-+
- static bool memory_region_set_ram_block(MemoryRegion *mr, RAMBlock *rb)
- {
-     mr->terminates = true;
-@@ -1597,7 +1632,9 @@ bool memory_region_init_ram_flags_nomigrate(MemoryRegion *mr, Object *owner,
- {
-     RAMBlock *rb;
- 
-+    QEMU_DEPRECATIONS_OFF;
-     memory_region_init(mr, owner, name, size);
-+    QEMU_DEPRECATIONS_ON;
-     mr->ram = true;
-     rb = qemu_ram_alloc(size, ram_flags, mr, errp);
-     return memory_region_set_ram_block(mr, rb);
-@@ -1615,7 +1652,9 @@ bool memory_region_init_resizeable_ram(MemoryRegion *mr,
- {
-     RAMBlock *rb;
- 
-+    QEMU_DEPRECATIONS_OFF;
-     memory_region_init(mr, owner, name, size);
-+    QEMU_DEPRECATIONS_ON;
-     mr->ram = true;
-     rb = qemu_ram_alloc_resizeable(size, max_size, resized, mr, errp);
-     return memory_region_set_ram_block(mr, rb);
-@@ -1630,7 +1669,9 @@ bool memory_region_init_ram_from_file(MemoryRegion *mr, Object *owner,
- {
-     RAMBlock *rb;
- 
-+    QEMU_DEPRECATIONS_OFF;
-     memory_region_init(mr, owner, name, size);
-+    QEMU_DEPRECATIONS_ON;
-     mr->ram = true;
-     mr->readonly = !!(ram_flags & RAM_READONLY);
-     mr->align = align;
-@@ -1645,7 +1686,9 @@ bool memory_region_init_ram_from_fd(MemoryRegion *mr, Object *owner,
- {
-     RAMBlock *rb;
- 
-+    QEMU_DEPRECATIONS_OFF;
-     memory_region_init(mr, owner, name, size);
-+    QEMU_DEPRECATIONS_ON;
-     mr->ram = true;
-     mr->readonly = !!(ram_flags & RAM_READONLY);
-     rb = qemu_ram_alloc_from_fd(size, size, NULL, mr, ram_flags, fd, offset,
-@@ -1667,7 +1710,9 @@ void memory_region_init_ram_ptr(MemoryRegion *mr, Object *owner,
-                                 const char *name, uint64_t size,
-                                 void *ptr)
- {
-+    QEMU_DEPRECATIONS_OFF;
-     memory_region_init(mr, owner, name, size);
-+    QEMU_DEPRECATIONS_ON;
-     mr->ram = true;
-     memory_region_set_ram_ptr(mr, size, ptr);
- }
-@@ -1676,7 +1721,9 @@ void memory_region_init_ram_device_ptr(MemoryRegion *mr, Object *owner,
-                                        const char *name, uint64_t size,
-                                        void *ptr)
- {
-+    QEMU_DEPRECATIONS_OFF;
-     memory_region_init_io(mr, owner, &ram_device_mem_ops, mr, name, size);
-+    QEMU_DEPRECATIONS_ON;
-     mr->ram = true;
-     mr->ram_device = true;
-     memory_region_set_ram_ptr(mr, size, ptr);
-@@ -1686,7 +1733,9 @@ void memory_region_init_alias(MemoryRegion *mr, Object *owner,
-                               const char *name, MemoryRegion *orig,
-                               hwaddr offset, uint64_t size)
- {
-+    QEMU_DEPRECATIONS_OFF;
-     memory_region_init(mr, owner, name, size);
-+    QEMU_DEPRECATIONS_ON;
-     mr->alias = orig;
-     mr->alias_offset = offset;
- }
-@@ -1704,6 +1753,12 @@ void memory_region_init_iommu(void *_iommu_mr,
-     object_initialize(_iommu_mr, instance_size, mrtypename);
-     mr = MEMORY_REGION(_iommu_mr);
-     memory_region_do_init(mr, owner, name, size);
-+    if (name) {
-+        g_autofree char *childname = memory_region_make_child(&owner, name);
-+        object_property_add_child(owner, childname, OBJECT(mr));
-+        object_unref(OBJECT(mr));
-+    }
-+
-     iommu_mr = IOMMU_MEMORY_REGION(mr);
-     mr->terminates = true;  /* then re-forwards */
-     QLIST_INIT(&iommu_mr->iommu_notify);
-@@ -3703,7 +3758,9 @@ bool memory_region_init_rom_device(MemoryRegion *mr, Object *owner,
-     RAMBlock *rb;
- 
-     assert(ops);
-+    QEMU_DEPRECATIONS_OFF;
-     memory_region_init_io(mr, owner, ops, opaque, name, size);
-+    QEMU_DEPRECATIONS_ON;
-     rb = qemu_ram_alloc(size, 0, mr, errp);
-     if (memory_region_set_ram_block(mr, rb)) {
-         mr->rom_device = true;
+ /* Returns an array of N IRQs. Each IRQ is assigned the argument handler and
+  * opaque data.
 -- 
 2.54.0
 
