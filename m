@@ -4,82 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55613CD98E6
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 10:11:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8792ECD98E8
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 10:11:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZQgo-0006jr-8O; Tue, 16 Jun 2026 06:06:38 -0400
+	id 1wZQiO-0004p0-9T; Tue, 16 Jun 2026 06:08:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wZQgn-0006b4-3N
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 06:06:37 -0400
-Received: from mail-pg1-x529.google.com ([2607:f8b0:4864:20::529])
+ id 1wZQiN-0004oS-3q
+ for qemu-devel@nongnu.org; Tue, 16 Jun 2026 06:08:15 -0400
+Received: from mail-pg1-x536.google.com ([2607:f8b0:4864:20::536])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wZQgl-0003Cp-BL
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 06:06:36 -0400
-Received: by mail-pg1-x529.google.com with SMTP id
- 41be03b00d2f7-c855599a77aso2142283a12.0
- for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 03:06:34 -0700 (PDT)
+ id 1wZQiL-0003bX-HO
+ for qemu-devel@nongnu.org; Tue, 16 Jun 2026 06:08:14 -0400
+Received: by mail-pg1-x536.google.com with SMTP id
+ 41be03b00d2f7-c8857a27041so1312024a12.1
+ for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 03:08:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1781604394; x=1782209194; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1781604492; x=1782209292; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=bS5R3RsGVTQdordSW0UVUW5jFQW+AZvEdBGjeszpt5o=;
- b=XxPMaE+PE6ww/GI7yaeY85DscjbDCsrPTAE+icOYOGRqrDAfMNtTecmakHRGg7Nj8E
- ERiTse2sVFJuFxczhhSsZEZixCLX7BIm/n74hLAkSOwN+LaNVk4GutchFGvACKHObxse
- pGHLmvukCcAjZG5PnG8aVsk7egYNYi6N6euv39TjmZ8+Gch8hkq4/1Kr3YQ4KQ1WIfkE
- 7mSn+o0odUN1DHmuTF8ISq+KPJpV2omGj6Y/LMpeMn05EkI5JUGgveSB6glqo9je6mdK
- HaGAg+xMwh0WqHyrtgDvOGCi394YUjCdOR3y3gRsMat5m7uDC7Z6E2ZWQEHfKed9FLPn
- rOqg==
+ bh=lMD4n4yKqyqaSyFhuXV0YZ2Qu85Y+oSmxAVjdW60sk4=;
+ b=GO5qU5QiugC2IyMxcudd4S18WuzTFJTA7RvCKYJuaVxl8RNMzagCi62I7g9qUlWoE5
+ juNsGahHDccyA9TsccxeJrRklGJKLgtvPgbvv2atVZXMhvCWOuIQCy2qgEvkPHq4v0Fy
+ fGKS3QgdltRFfhHC7Ozm+zCWG5r0AmwvY9w8LHPLZRcFTmPbrM2mMsWE54YGN7XITjNp
+ GpMzmdCxHP+Gkb6NXoikIY83l7tSXA8I/Z72zo5FixWsFTtEsw6xJmjxOk2cI8ox3/pw
+ DFwDRNxeh21vYZgGekRUThLdlfDVI8MACYBCeDn5BlPnXfno269dYyRoNR+jL4wXm/lx
+ LFhA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781604394; x=1782209194;
+ d=1e100.net; s=20251104; t=1781604492; x=1782209292;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=bS5R3RsGVTQdordSW0UVUW5jFQW+AZvEdBGjeszpt5o=;
- b=hbYQiyw2nXM631FYg0/mChdzSFPE34qI4yTQufsN3xQU7bdrOfd4ZyqE2UdhDhwdNf
- QHkulwk4Lb6g1EiLfq9I3XgM79k9geuxqZZkJC2CvdUjqWY4u+OwlT9Bt/f8jux+SyMw
- 4XINGrztgnZqb7a8FKV3wvMA/mWwu6VXevSwQrpQjc9hlj5hyPrHSIqhM04OGl1Qppyv
- HDI40t1o5ZmIEH28P3mGhKQS9vXQkE9ySmfSC30I2qPebVt9tVKmSGMVR7zTQTvTcv39
- q+piE/TvMovHiB972/wZfxhl2lyGDUUSq+yoFuWzk9O3zyfVcJJ8G3xrPjLdISnEgcNK
- 94Rw==
-X-Gm-Message-State: AOJu0YyoefgjGqRbRe1zIr9Ml9CX3k/yHPIb2T/yNxtjwvje1PCOs15T
- xFM+eg6pjAxr+1I1+UELVQfDMbhl7RyvpGMiyR694AYpntw6Uxx4jCrHfZPkLlhb
-X-Gm-Gg: Acq92OF9ZM9DdGRikmtwiFHIAEFOeihNB1yALXB9BaFscNhnNB0Vji3sqyLyEYrqivZ
- 67PAYGQmrZ93VZ/xJOn1oGWHW7S05iCbZJbjWCZw6z2AyUr/K9jghvBAEPai1J4Ibd6s73nH2YC
- 1P8EEfI1FQNfO52lwVwezoceh5ax1YPDAGf20F1JqQzvQZzGCDnSGQT/abM3XdlHxPOV8zBRl+1
- B9hGFVUWExl7WZfzIKj84dw+ptO1LOU81UkWotmTeAxzfB/AToHyZhOAcIGq1ClnEWtG75SOApb
- PIHCsMgH6nLKHxm/13nmJXJ2EnzJA0snYaqwAKvc32R7YeIBuHpxZbvdBO2JhgmztBaK7ccPwOH
- Wbj1EjR8PqfuIP5s0TAVWfDAu03DLqPefESkaIFe0xLSARDmnP4CEkwF/tITe8n3jzfaLBw8eDK
- cypOwWT/4IM7/UgvUbvTOdF2+3bEw7vDRzpZYSsopj
-X-Received: by 2002:a05:6a21:b94:b0:3b3:216b:274c with SMTP id
- adf61e73a8af0-3b7e4cffefemr3336350637.22.1781604394056; 
- Tue, 16 Jun 2026 03:06:34 -0700 (PDT)
+ bh=lMD4n4yKqyqaSyFhuXV0YZ2Qu85Y+oSmxAVjdW60sk4=;
+ b=YFLzgZto7TZ83NhfF4uINOccMBDv0xbyKFZ4t1L6Y4TznQPf13AIqFAfhruRFq30WO
+ BNxtUabtkfX9nflSMMxRyOQSQ2pNlSiQfHwg4A/X0x2pLXVczgyNJq0t3TE0nmY93mhZ
+ 4SkAYSGb+FYKpG4Zs+DZw7x9xpGoIx+LWm3LWMjI1JYD1sgXCQbcEB1uZ4XdCnspfwyq
+ rlfKq0oYckf/l59k9UWF8Vyyf0OxRewKXwbo5Ir47uvwB6ywCLmco7KikjRw8SLeFEIy
+ PE9O/R0Roq0+OirFid+Jkkm2hNeGjpiPbagsxSMISKhlgTmFcQ57I7uuyG5f/VZiX918
+ 0r/Q==
+X-Gm-Message-State: AOJu0YxlA05pwzyCHr2YcD2h+s5AQlHESlxtcYcCtyOXZNQO1E42AYCw
+ MyqzqUYxOoS4LwyO+mQkxQfTvHKwARUkrLVxYXgcqP2k56+ZIHRcwKES+ekfwggb
+X-Gm-Gg: Acq92OE0rpp8ukjjBI58uYppF4qgpmtn7FuPP66qKEBPSu9iK9dTOFzl8vYQT5qUYIM
+ DlB6mjVmCIVHMzWoVIK2x+NuYh0bYQZPmk4qX1ANJ0WRCPfICjlFKxL3sq5CN6s/ZHamOADtTC7
+ l4A5bvTI7K/hUA/7fkq3xq/sWlpTSlBeqZntRG1Ne48GDX7vrUlgkQPLdhkXRD//prWldYY2j6a
+ YueGoXw7Qpk2SWuIXkcPf2BE9hZLGI2zY4g6+lNBg81sbK6HoNC8NIRXrEW77xA2DYayFZXdS0T
+ 3I2AaLap32kJ9tpV/DudoU1mmHNR0SORGTvBrtP6OvPeO/HHk6TZKDlL76wO9tAVqrG6ewlUTpZ
+ +6v8BucloTl5WYvFiT2pdAZbxJsYnslMeoRaClqLgtrJdZuOa3f9Vl2Xa4oEovN6wse2qC/UCbi
+ +XYjhS6jx3dN7w3JuZKYghEECIhvqMcEr/pD3lqjtY
+X-Received: by 2002:a05:6a21:9206:b0:3b4:3ef0:9132 with SMTP id
+ adf61e73a8af0-3b7962554b9mr17021964637.11.1781604490723; 
+ Tue, 16 Jun 2026 03:08:10 -0700 (PDT)
 Received: from toolbx.alistair23.me ([2403:581e:fdf9:0:13b2:851f:d9cb:44c5])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-c866519f0a6sm10916735a12.22.2026.06.16.03.06.31
+ 41be03b00d2f7-c866519f0a6sm10916735a12.22.2026.06.16.03.08.07
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 16 Jun 2026 03:06:33 -0700 (PDT)
+ Tue, 16 Jun 2026 03:08:10 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com, Anton Johansson <anjo@rev.ng>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 17/83] target/riscv: Fix size of guest_phys_fault_addr
-Date: Tue, 16 Jun 2026 20:04:20 +1000
-Message-ID: <20260616100527.1939565-18-alistair.francis@wdc.com>
+Cc: alistair23@gmail.com,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Subject: [PULL 45/83] target/riscv: Remove target_ulong use in
+ get_physical_address()
+Date: Tue, 16 Jun 2026 20:04:48 +1000
+Message-ID: <20260616100527.1939565-46-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616100527.1939565-1-alistair.francis@wdc.com>
 References: <20260616100527.1939565-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::529;
- envelope-from=alistair23@gmail.com; helo=mail-pg1-x529.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::536;
+ envelope-from=alistair23@gmail.com; helo=mail-pg1-x536.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -103,68 +106,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Anton Johansson <anjo@rev.ng>
+From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-Widen to 64 bits, and use hwaddr as argument to get_physical_address().
+Use uint32_t for RV32, uint64_t otherwise.
 
-Signed-off-by: Anton Johansson <anjo@rev.ng>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Acked-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20260520125406.28693-7-anjo@rev.ng>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Message-ID: <20260527201348.29511-6-philmd@linaro.org>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/cpu.h        | 2 +-
- target/riscv/cpu_helper.c | 3 +--
- target/riscv/machine.c    | 2 +-
- 3 files changed, 3 insertions(+), 4 deletions(-)
+ target/riscv/cpu_helper.c | 14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
 
-diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-index 2cc1b68f34..50f9ce1f86 100644
---- a/target/riscv/cpu.h
-+++ b/target/riscv/cpu.h
-@@ -238,7 +238,7 @@ struct CPUArchState {
-     uint64_t badaddr;
-     uint64_t bins;
- 
--    target_ulong guest_phys_fault_addr;
-+    uint64_t guest_phys_fault_addr;
- 
-     target_ulong priv_ver;
-     target_ulong vext_ver;
 diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
-index f81354c90d..a25727b0da 100644
+index a8d4a1a4f4..430378490f 100644
 --- a/target/riscv/cpu_helper.c
 +++ b/target/riscv/cpu_helper.c
-@@ -1236,7 +1236,7 @@ static bool check_svukte_addr(CPURISCVState *env, vaddr addr)
-  */
- static int get_physical_address(CPURISCVState *env, hwaddr *physical,
-                                 int *ret_prot, vaddr addr,
--                                target_ulong *fault_pte_addr,
-+                                hwaddr *fault_pte_addr,
-                                 int access_type, int mmu_idx,
-                                 bool first_stage, bool two_stage,
-                                 bool is_debug, bool is_probe)
-@@ -1876,7 +1876,6 @@ bool riscv_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
-         ret = get_physical_address(env, &pa, &prot, address,
-                                    &env->guest_phys_fault_addr, access_type,
-                                    mmu_idx, true, true, false, probe);
--
-         /*
-          * A G-stage exception may be triggered during two state lookup.
-          * And the env->guest_phys_fault_addr has already been set in
-diff --git a/target/riscv/machine.c b/target/riscv/machine.c
-index b7790c14d0..a4d337c27a 100644
---- a/target/riscv/machine.c
-+++ b/target/riscv/machine.c
-@@ -458,7 +458,7 @@ const VMStateDescription vmstate_riscv_cpu = {
-         VMSTATE_UINT64(env.load_val, RISCVCPU),
-         VMSTATE_UINT8(env.frm, RISCVCPU),
-         VMSTATE_UINT64(env.badaddr, RISCVCPU),
--        VMSTATE_UINTTL(env.guest_phys_fault_addr, RISCVCPU),
-+        VMSTATE_UINT64(env.guest_phys_fault_addr, RISCVCPU),
-         VMSTATE_UINTTL(env.priv_ver, RISCVCPU),
-         VMSTATE_UINTTL(env.vext_ver, RISCVCPU),
-         VMSTATE_UINT32(env.misa_mxl, RISCVCPU),
+@@ -1675,16 +1675,18 @@ static int get_physical_address(CPURISCVState *env, hwaddr *physical,
+             return TRANSLATE_FAIL;
+         }
+ 
+-        target_ulong *pte_pa = qemu_map_ram_ptr(mr->ram_block, addr1);
+-        target_ulong old_pte;
++        void *pte_pa = qemu_map_ram_ptr(mr->ram_block, addr1);
++        uint64_t old_pte;
+ 
+         if (riscv_cpu_sxl(env) == MXL_RV32) {
+-            old_pte = qatomic_cmpxchg((uint32_t *)pte_pa, cpu_to_le32(pte),
+-                                      cpu_to_le32(updated_pte));
++            uint32_t cmp = cpu_to_le32(pte);
++            uint32_t val = cpu_to_le32(updated_pte);
++            old_pte = qatomic_cmpxchg((uint32_t *)pte_pa, cmp, val);
+             old_pte = le32_to_cpu(old_pte);
+         } else {
+-            old_pte = qatomic_cmpxchg(pte_pa, cpu_to_le64(pte),
+-                                      cpu_to_le64(updated_pte));
++            uint64_t cmp = cpu_to_le64(pte);
++            uint64_t val = cpu_to_le64(updated_pte);
++            old_pte = qatomic_cmpxchg((uint64_t *)pte_pa, cmp, val);
+             old_pte = le64_to_cpu(old_pte);
+         }
+         if (old_pte != pte) {
 -- 
 2.54.0
 
