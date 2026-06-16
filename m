@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE401CD98DA
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 10:11:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DCAA1CD98CF
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 10:11:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZQir-0005ux-5W; Tue, 16 Jun 2026 06:08:45 -0400
+	id 1wZQjL-0006Jd-A1; Tue, 16 Jun 2026 06:09:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wZQip-0005uT-Tl
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 06:08:43 -0400
-Received: from mail-pg1-x52a.google.com ([2607:f8b0:4864:20::52a])
+ id 1wZQj0-000601-55
+ for qemu-devel@nongnu.org; Tue, 16 Jun 2026 06:08:54 -0400
+Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wZQio-0003ia-CC
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 06:08:43 -0400
-Received: by mail-pg1-x52a.google.com with SMTP id
- 41be03b00d2f7-c85b2139015so1408959a12.2
- for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 03:08:42 -0700 (PDT)
+ id 1wZQiy-0003ji-HP
+ for qemu-devel@nongnu.org; Tue, 16 Jun 2026 06:08:53 -0400
+Received: by mail-pf1-x436.google.com with SMTP id
+ d2e1a72fcca58-842264dde84so2722833b3a.0
+ for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 03:08:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1781604521; x=1782209321; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1781604531; x=1782209331; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=mBrN/o82KX/qPCIojmby70acTiwbieQ12mji/59OGMU=;
- b=B44lAT5sqbhTEtDIJ3dbK1VoKcVBZnCnS7W8EY0VhtYpihWn/tpysvIWn0F9SVb/aw
- XqWkzZZzYrKEZigUE4nwCLj2QmmVRhe/RHZsFH1Pd6gNSNevg/T8W8VeqIsI2TYWgTYT
- +5/NnE3vyXadIXOW3AT+6zjpvXRixivlbhqqrPV9yKwMrDdjjsVVlIFZR2ahkn/rRqLS
- oe3PotLcNWPaS1b/8wGraAuwWP+3aX5fVjSfkYIrk9BapdnIOIjHnWUavFEgND3yjMS2
- w5jMmpcYSZPViB4kjImGGu96CDppR5yoLdDFIXf37hj98iNX7j/m1Y+sNZJnNIrBbuGq
- IPDQ==
+ bh=GB27e2Kj2VlqVIO8yDB2+UY5InhZ7Eg6JtDLLKAzkDQ=;
+ b=lN+teEHDlSBsVKm2yLN73XXxlDAENa2ooMeqgXBG29TmSXJFygEh8d3z6cPcyw4loe
+ M4tRZOCtNv76iZ8zRWQcHgP1kFj8TyqyPEl6eVhcidxzc1sOK1Hv9zC1Fw9K2io1bOyJ
+ kvwVcJX21o2YswizO2BOCL2Z2CZlf5vxxgoRTbVB+lFsaa3SCYsSjfS6e6IK8bkRnuLU
+ 5Z7BvvocPai+B/UcdW9wBJa9ajhHXTl/bCnv30yKlNRLxhAnitTosbidGTp/IkyRzW4u
+ zM8XF6evbeQ+ItnneoVTs7w5GXslhkYqqf9cag0iql3zkyk3spWZ8GzRF9p7OwOaJye9
+ DGog==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781604521; x=1782209321;
+ d=1e100.net; s=20251104; t=1781604531; x=1782209331;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=mBrN/o82KX/qPCIojmby70acTiwbieQ12mji/59OGMU=;
- b=YaT2D5ITrG4+x1EXqY7TbWIE6jmlw2fMdXlLMk1733og+xGuJJShGfGwW3u+HWYhUQ
- UKh9jJizaBkxCJtJqJe8fSz5Kxw/hUOy7jyRrCNOadBe6V8Cxsz7WsK9L4Xiygik8qpy
- k9Pa4mCT4j75edNm5RRKLg59wM7MPyD2yHfBm5rhsrIKw/6pDvJE2fp1fAMI1GrdOJCP
- ibI0RtKoarajIRmSuQjbTdZ5rxb/UVkjxC3/dMzP/c3Nv5DsXRbwsTiR9ttgL1lLScAm
- NcbO76kQCpxJ6nX+Zwoj3CYrpXrBcfeLPYsURVfw7kFlzGduI+8I5moST9H3Xhs8xMhR
- LREg==
-X-Gm-Message-State: AOJu0YwgOmKq28wtcImvNqrtVNF/dIbw0WO1HG/uw0s+cKT77pLSzamC
- LUOSJ6qxHZbgEmlGTUHiupsLy60z2H2IchVrTDBydD4uS8GfVYCmVDs0eYcpyAcO
-X-Gm-Gg: Acq92OEDTE0ljaHeNro78CVYK3PIpAa8KAPK0oFR2aim7y53ZPOsZygNFZpOoTAzi+f
- GXHk1u+zomRW8a4+fB8CamuCUsBVpNJSpuuSEhpAiyXTkQSNqVTCTqeXyg6Uz/tlcySfm/meDQI
- Q8J1F86S5j6DhMXX2gvHkrrQxbsaq7bT2nTudRlYQJvvNKtdg0fsoqgh8mxrwnxOa+grT25YIm8
- irQvKmEwzuB9zSa+0jmp72zH5bKWNVaw18Eq1hLWpOvB0CGz9izcGmqlCibgC3wWW/EyUkKudZf
- pcTD/aZysw1eSyKlKmJEPDO0Bo+/BiC9h8l07+yI/jNAwvFR5IGI30ka31I+J6pCtV4GYapTbwT
- t7vsqFQ6MmrWF+PPyeGE5q3RxmyTRL1VPrr9RUReoRS9ZneUx9Z3h8uxDRLsDUphP3yWgzv/1TB
- 9fkzS9lLaDD4yBwGXc9ss/oVBnTM7Vbxt2gIv3FQj5
-X-Received: by 2002:a05:6a20:9186:b0:39b:8dcb:f36d with SMTP id
- adf61e73a8af0-3b7e49d09f6mr3387802637.35.1781604521064; 
- Tue, 16 Jun 2026 03:08:41 -0700 (PDT)
+ bh=GB27e2Kj2VlqVIO8yDB2+UY5InhZ7Eg6JtDLLKAzkDQ=;
+ b=p08umgFqL9g/wTrVtTZTDKZiABtJLimsSGg9KBYKYC9XtBpAi2Nju7tcnI44qEbHwQ
+ GZ/l15m4h2J0qCqxhwMdIRjvN2v9q25wswac5lj5YtbZxu+PqzGgedfe+K1tpdF5O7oy
+ 5KJlgaAvD9RdmNgaDabEaL/cR8AfgImZ9qq6EooQQdYDdLRAcuguRle77jIPOWFXrez8
+ HCCq6yb61klMd4T/OgBxOpF/Eh+GAp3Czc7ty6ww5AyrFtPlbFeRiTiflyPxIJsdeJcV
+ pqHr5C5x4B0xMaREWL8FFeFuQuz2wGV/XAWZ7Sh/nSRnWUANzTlbATZhAWiV4b1rQErk
+ Qodw==
+X-Gm-Message-State: AOJu0Yw6D38DDVeHrars6GDfN5L723KBkx8C8cHPcONL8MMdUPUE2Yk6
+ AY5Jot1QsxZafaZ5q78or/m5B09+JOSD4/wE6c5WUM6WaovZ7/M63KRZIrkh/+IF
+X-Gm-Gg: Acq92OGGR6h9qCOzN7ChsT4HlhcaLXHuBUHlQ1EzpmbYtjoIQ1QkimQMkw49IomLU4v
+ hkJs01BE4OPpuzLIs7Shyph1LgODw1fk3BF5TB3NcpNfCNkHU94EQOS1r0NGagEZlnueuui+9ki
+ kA51VS59T9F003Up+PLoFj2Xg02hLvJsOi2HjVsONwh271GciXeE6IL2rkn7dwmcizJkW+/AmJP
+ XO+QlD51o28YLaRzf3uPLPZysMqtvT7ASu0w2KoJ2Y0U2bJKnp0GjFZRpbKRsNaAqUSeIrl0i0X
+ DwpSL1yzTBkHs+AscUIxga77DJpWeJQr1xhvARIX3ByTtmbq1DzmO0RD3tgyj91SoYf2i3BCczz
+ 5HPZ7w85bB+ULdpl+LPOBOXO1YWbIItNgM5trvJZ1kn2AN1I+OUxrs5XFeOUyBJUZwd/vrwBeTF
+ C7/hfFawBJzNcal58Yn1XLBkWTgdQF/Uv4mp7JglCb
+X-Received: by 2002:a05:6a20:d492:b0:3b4:6f45:d8ed with SMTP id
+ adf61e73a8af0-3b7e249580emr2906416637.21.1781604531160; 
+ Tue, 16 Jun 2026 03:08:51 -0700 (PDT)
 Received: from toolbx.alistair23.me ([2403:581e:fdf9:0:13b2:851f:d9cb:44c5])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-c866519f0a6sm10916735a12.22.2026.06.16.03.08.37
+ 41be03b00d2f7-c866519f0a6sm10916735a12.22.2026.06.16.03.08.48
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 16 Jun 2026 03:08:40 -0700 (PDT)
+ Tue, 16 Jun 2026 03:08:50 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com, Jim Shu <jim.shu@sifive.com>,
- Frank Chang <frank.chang@sifive.com>,
+Cc: alistair23@gmail.com, Anton Blanchard <antonb@tenstorrent.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 53/83] target/riscv: Add the implied rule for G extension
-Date: Tue, 16 Jun 2026 20:04:56 +1000
-Message-ID: <20260616100527.1939565-54-alistair.francis@wdc.com>
+Subject: [PULL 56/83] target/riscv: Improve alignment in riscv_cpu_dump_state
+Date: Tue, 16 Jun 2026 20:04:59 +1000
+Message-ID: <20260616100527.1939565-57-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616100527.1939565-1-alistair.francis@wdc.com>
 References: <20260616100527.1939565-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52a;
- envelope-from=alistair23@gmail.com; helo=mail-pg1-x52a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
+ envelope-from=alistair23@gmail.com; helo=mail-pf1-x436.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -103,93 +103,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jim Shu <jim.shu@sifive.com>
+From: Anton Blanchard <antonb@tenstorrent.com>
 
-Add the missing implied rule from G to imafd_zicsr_zifencei.
-We can also remove the auto-enables in riscv_cpu_validate_g() as
-IMAFD, Zicsr, Zifencei extensions can be enabled by the implied rule.
+Align all the CSR values. mcountinhibit is the longest CSR name at
+13 characters, so use that width for PC, implicit state, and CSR names.
+Also remove the redundant '=' from the implicit state lines.t
 
-Signed-off-by: Jim Shu <jim.shu@sifive.com>
-Reviewed-by: Frank Chang <frank.chang@sifive.com>
+Signed-off-by: Anton Blanchard <antonb@tenstorrent.com>
+Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20260528054213.678458-2-frank.chang@sifive.com>
+Message-ID: <20260529053519.1224019-2-antonb@tenstorrent.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/cpu.c         | 14 +++++++++++++-
- target/riscv/tcg/tcg-cpu.c | 21 ++++-----------------
- 2 files changed, 17 insertions(+), 18 deletions(-)
+ target/riscv/cpu.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
 diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index 5a3560308f..455d5b3d48 100644
+index a5b1c2ba62..a74384a091 100644
 --- a/target/riscv/cpu.c
 +++ b/target/riscv/cpu.c
-@@ -2095,6 +2095,18 @@ static RISCVCPUImpliedExtsRule RVV_IMPLIED = {
-     },
- };
- 
-+static RISCVCPUImpliedExtsRule RVG_IMPLIED = {
-+    .is_misa = true,
-+    .ext = RVG,
-+    .implied_misa_exts = RVI | RVM | RVA | RVF | RVD,
-+    .implied_multi_exts = {
-+        CPU_CFG_OFFSET(ext_zicsr),
-+        CPU_CFG_OFFSET(ext_zifencei),
-+
-+        RISCV_IMPLIED_EXTS_RULE_END
-+    },
-+};
-+
- static RISCVCPUImpliedExtsRule ZCB_IMPLIED = {
-     .ext = CPU_CFG_OFFSET(ext_zcb),
-     .implied_multi_exts = {
-@@ -2502,7 +2514,7 @@ static RISCVCPUImpliedExtsRule ZVFBFA_IMPLIED = {
- 
- RISCVCPUImpliedExtsRule *riscv_misa_ext_implied_rules[] = {
-     &RVA_IMPLIED, &RVD_IMPLIED, &RVF_IMPLIED,
--    &RVM_IMPLIED, &RVV_IMPLIED, NULL
-+    &RVM_IMPLIED, &RVV_IMPLIED, &RVG_IMPLIED, NULL
- };
- 
- RISCVCPUImpliedExtsRule *riscv_multi_ext_implied_rules[] = {
-diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
-index 60afb4ccc2..942c2851e8 100644
---- a/target/riscv/tcg/tcg-cpu.c
-+++ b/target/riscv/tcg/tcg-cpu.c
-@@ -498,30 +498,17 @@ static void riscv_cpu_validate_g(RISCVCPU *cpu)
-             continue;
-         }
- 
--        if (!cpu_misa_ext_is_user_set(bit)) {
--            riscv_cpu_write_misa_bit(cpu, bit, true);
--            continue;
--        }
--
-         if (send_warn) {
-             warn_report(warn_msg, riscv_get_misa_ext_name(bit));
-         }
-     }
- 
--    if (!cpu->cfg.ext_zicsr) {
--        if (!cpu_cfg_ext_is_user_set(CPU_CFG_OFFSET(ext_zicsr))) {
--            cpu->cfg.ext_zicsr = true;
--        } else if (send_warn) {
--            warn_report(warn_msg, "zicsr");
--        }
-+    if (!cpu->cfg.ext_zicsr && send_warn) {
-+        warn_report(warn_msg, "zicsr");
-     }
- 
--    if (!cpu->cfg.ext_zifencei) {
--        if (!cpu_cfg_ext_is_user_set(CPU_CFG_OFFSET(ext_zifencei))) {
--            cpu->cfg.ext_zifencei = true;
--        } else if (send_warn) {
--            warn_report(warn_msg, "zifencei");
--        }
-+    if (!cpu->cfg.ext_zifencei && send_warn) {
-+        warn_report(warn_msg, "zifencei");
+@@ -572,7 +572,7 @@ static void riscv_dump_csr(CPURISCVState *env, int csrno, FILE *f)
+      * to do the filtering of the registers that are present.
+      */
+     if (res == RISCV_EXCP_NONE) {
+-        qemu_fprintf(f, " %-8s " TARGET_FMT_lx "\n",
++        qemu_fprintf(f, " %-13s " TARGET_FMT_lx "\n",
+                      csr_ops[csrno].name, val);
      }
  }
+@@ -601,17 +601,17 @@ static void riscv_cpu_dump_state(CPUState *cs, FILE *f, int flags)
+     uint8_t *p;
  
+ #if !defined(CONFIG_USER_ONLY)
+-    qemu_fprintf(f, " %s %s\n", "priv   =  ", riscv_priv_str(env->priv));
++    qemu_fprintf(f, " %-13s %s\n", "priv", riscv_priv_str(env->priv));
+ 
+     if (riscv_has_ext(env, RVH)) {
+-        qemu_fprintf(f, " %s %d\n", "V      =  ", env->virt_enabled);
++        qemu_fprintf(f, " %-13s %d\n", "V", env->virt_enabled);
+     }
+ 
+     if (cpu->cfg.ext_zicfilp) {
+-        qemu_fprintf(f, " %s %d\n", "elp    =  ", env->elp);
++        qemu_fprintf(f, " %-13s %d\n", "elp", env->elp);
+     }
+ #endif
+-    qemu_fprintf(f, " %s %" PRIx64 "\n", "pc      ", env->pc);
++    qemu_fprintf(f, " %-13s %" PRIx64 "\n", "pc", env->pc);
+ #ifndef CONFIG_USER_ONLY
+     for (i = 0; i < ARRAY_SIZE(csr_ops); i++) {
+         int csrno = i;
 -- 
 2.54.0
 
