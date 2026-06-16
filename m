@@ -4,81 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 520EBCD98E4
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 19:17:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E050CD98E1
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 19:17:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZZFG-0005zF-R4; Tue, 16 Jun 2026 15:14:46 -0400
+	id 1wZZBy-0001kJ-L0; Tue, 16 Jun 2026 15:11:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wZZ8R-0004hq-VY
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 15:07:46 -0400
-Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
+ id 1wZZ8P-0004dX-OM
+ for qemu-devel@nongnu.org; Tue, 16 Jun 2026 15:07:43 -0400
+Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wZZ8L-00015k-6u
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 15:07:40 -0400
-Received: by mail-wr1-x434.google.com with SMTP id
- ffacd0b85a97d-46019edc13dso2389662f8f.1
- for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 12:07:31 -0700 (PDT)
+ id 1wZZ8J-00017P-Fj
+ for qemu-devel@nongnu.org; Tue, 16 Jun 2026 15:07:38 -0400
+Received: by mail-wr1-x42f.google.com with SMTP id
+ ffacd0b85a97d-45ef56d9b67so4212628f8f.2
+ for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 12:07:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1781636850; x=1782241650; darn=nongnu.org;
+ d=linaro.org; s=google; t=1781636851; x=1782241651; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=DDFEDfApovF7jVMAHqKHtDSTTw1A8a353M/NBq8GCgA=;
- b=zXQH8tgmHKux/vaqd51tvBaNn1iLMjVEgPs6xL6d6g1CPSHyBMnPhfJx749T1jNK1n
- GFe2PkVvgbBZsfLRr9EHlgGT9dlW6gsFVq1oollGahDxb3xnzxyS8Q4GBC2VMFvrTzqr
- AMri4VkYpElxw3VzjJ05/wSvljnuNGmm0loGayAIiVXYf8n9Y+SsTIhx0iismcgxi2Q0
- TE69/03kzqOX+TqPgi3aqfWIHvzlXKuDA8DR2d0NKiw++DDDsugCPtcV1oWCJGhKBK5T
- 8/lgQNNXtSjDKbFakl5YN6WBuF7dNxP3pYlK7rb3aJyXV6wbakZMdGBVBHb0kTUYmjR4
- aTkQ==
+ :reply-to; bh=ghI20RlhSwol2c5KJyoQIvx6SEEjO2aKn93WrShChRM=;
+ b=kg0yBfP9G/m9i+4ls4qefKIahNEiYKHb2LRluNaSOqwXrfv3Nzhd+wsv/VAicyzB/u
+ iGI4Gz8wo1OzTt7JfJaYP+u4RzSvWRA4GrlesenP2X42hpbgUl8Sv8amCkDHQpgssJoZ
+ CllIV4y5utLyxcBdZP98DLy+TeX09y+JBKj4Vbin9zDnpQA/7+NZw2I7D7v3Kh51IVHt
+ 2jaq2vGXDEaKFbEpMfrRF4EsXKaq7VzU0rDLRjfTdSQrpvinz2ENHumoy2suvfpU8k+q
+ LkheDyXh1i3tWvjIEG863+UpyU5C6SsDg1RMolO7DuvLDlykxmv1OfK8B8X7bw66HbWW
+ erog==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781636850; x=1782241650;
+ d=1e100.net; s=20251104; t=1781636851; x=1782241651;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=DDFEDfApovF7jVMAHqKHtDSTTw1A8a353M/NBq8GCgA=;
- b=T5h1rSsb+CrSMOrKdH4cOl8pxWU59pBtJ4MSx9x4BX3LUIjpT9WGE/oRKOEOApPdPa
- dOdzyk/dqxVp2FJsMkXxyjRmE+OJr+04YF5VLCnjIJpPRY6ECzeMC6eQYDvdZMHdfJiV
- MpXaySxOMVE6ui3jzNtPsmH8DdYqHL0EjHv+1Azfjko2Y5mxvS+jHN3BS96GYPKjxt29
- eJ3nWEguHN1SH/EPwN9XvkAxDhx6AjR4RYdjSRfxgtTToxVvMSO6nqIM7OHhREKEpQP5
- 9BC3CMvDx8u5FTkYz8rnEobmlvp6Ry6xEjDqg6PGbzb5Z0kzxaiVrPmeWkwNPlpR3i+3
- eDgw==
-X-Gm-Message-State: AOJu0Ywnhz+dwmPC/Qn3t4qGk2lPpbTlkU050tvvBQoHToAhwaouS+IW
- PvLB/Oy2rk3s5n8SaG+hMKrbEIFbismZm+Ic1qpbdhL6j4pSB7jFlfzOKgEiEhsiP2uHaputoq6
- p98Yj
-X-Gm-Gg: Acq92OEmCNiXPMutNYU86ZUokXCLMhFNBtezY5bWy9ehaAwHvZatdb3KRatHgKNN4kF
- yOqp77vhKlMCUxD0mOrp44wL95V85Lu7xL9P26kwQeXKxm+aJtmL72bIzCRMXNy2vftrg4Q/p6l
- CjixoQ6Pp5C5CrXVmNO3LaDez6pGiG5eqcvBkX4723VO2cEUUCyZwG8tuWm3QlaOI913v8MYggC
- zyykO6vE/v/po4winc9TkXg720rVdQKmn5nHJwlOETbaUCNsWwaGI2b37HMcF6hSLgo+mjcpT5B
- ucNm65J2w03evVLxi57FF5DhFLZPnURhXo7v3Sc6x1smVIenpCtohwEHhf2o9iPgD5eZb30zwLb
- 4i8MdlMboxLQRfT88wi6TzAf6jl3OYYyIndVJ9EvS9Y5xaYrQJx4rVTjaDYKpwBUAtn8sEYg19L
- ShftDwTmBW2jRdi1qBps370K3u4gjhAkTtck0dqfJ2OR9D3vIRrCi5et+YcaYFp0vuDMYonheT6
- XpazaY2wsgaXKx+P/qonQfTRKXBo9B+
-X-Received: by 2002:a05:6000:4007:b0:45e:f3b2:122a with SMTP id
- ffacd0b85a97d-46240cf969emr1017103f8f.26.1781636850116; 
- Tue, 16 Jun 2026 12:07:30 -0700 (PDT)
+ bh=ghI20RlhSwol2c5KJyoQIvx6SEEjO2aKn93WrShChRM=;
+ b=a3BDTGUipBdeiCbxa2qlyoaYH5OaB+TGro+rlTFtotGzaE07N3fXBljn0DTeMryEl0
+ atwoCNHXYkAvdNdqyqG4LaXruEUsWL919PUGMbT7qw+WNUOaX/jORCs++1yKXT6KMB49
+ zJ88ixNgvPDdaKoRGoiSTVD6SGyCkKLoJv3tEEz34SDtpT0sGdFxTbHOUXXa6KM5EZ/K
+ OVc3REQ9ocXt6vMxf3LUe16RcuI/H1O5AAzPeKyUoRVzghG1id8AGYMOgtt48mb5to7f
+ LWviuLTftCOddOu3t92i2YXjTZLrcEkk4NeYa+wfe/KfSBCzDOptD76BMAxSy12k/+mp
+ kR6w==
+X-Gm-Message-State: AOJu0YxaXeNMLlpL7xlHFCTxGoli/6Njzef8u6DgjFJXfmenlKdxLv2q
+ USZ3wk68PsKEU/mj9edSTFCLP0IAqdv8m/rRfnMxnrwQYzYALNwrjBCuzM5Kpg7/V/aQ+832zkI
+ X3poF
+X-Gm-Gg: Acq92OFi+m2ntFaFX8HavdIBSgyWQNHhnIk9fbgMyh88EPgk6g92gXY3G2TjFV6BWMA
+ +t/efZBS2Olc/e+5JCwpi5YDVl4jh1m4Umc5YOMdcOiePlyl1s1byX93xV20XOfU9XW9ClHbG4S
+ yP3dC3P/i6iHE5kThMqaJGIoLWJsSvaXzhivzDwutZay58P/7tgiG6z332om70nMUFJzh5e6zhN
+ pYI/rftc8EhOLOEG+cMuDtn0tNORiOoef3C37v1DpXbmNXANAMFmtYGXO8u9uHPCG/1++5sk9BB
+ Kh1xONIBrlN8zEgb9Al0GLvvZfJ0Ykrc3D1b8ZdwLuVhXHtvsAQzwhFCGXxtUz69prhRG+Q5MCQ
+ /UQuGWxlx2CVlRIL6Vxwzp2YDgt4zLdV6isk5via26lGTDZtyJ86FjG7ICZZYep7gDsyq7M2S4b
+ as5D+DvRlqUBSDCLCtCF0/25UVK+ap/Tq2Ku87lmVe8IEtEVtvH9h8xtlniEZnbF6CL/FB1/SZE
+ qjI0oC503EMMOOMUsz3vMlNSoHuj0Ug
+X-Received: by 2002:a5d:5e8e:0:b0:45e:7997:8b7a with SMTP id
+ ffacd0b85a97d-462356ec3ccmr1101595f8f.16.1781636851175; 
+ Tue, 16 Jun 2026 12:07:31 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4606f2d9becsm45078765f8f.34.2026.06.16.12.07.29
+ ffacd0b85a97d-4606f2d9becsm45078765f8f.34.2026.06.16.12.07.30
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 16 Jun 2026 12:07:29 -0700 (PDT)
+ Tue, 16 Jun 2026 12:07:30 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 43/61] hw/arm/bcm2838: Route I2C interrupts to GIC
-Date: Tue, 16 Jun 2026 20:06:20 +0100
-Message-ID: <20260616190639.3462006-44-peter.maydell@linaro.org>
+Subject: [PULL 44/61] target/arm: Add feature predicates for SVE2.2 and SME2.2
+Date: Tue, 16 Jun 2026 20:06:21 +0100
+Message-ID: <20260616190639.3462006-45-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260616190639.3462006-1-peter.maydell@linaro.org>
 References: <20260616190639.3462006-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::434;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x434.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,124 +100,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Nicholas Righi <nicholasrighi@gmail.com>
+From: Richard Henderson <richard.henderson@linaro.org>
 
-The I2C interrupts are only routed to the legacy interrupt controller. This means
-that for modern device trees that use the GIC, the interrupts don't work. This patch
-adds a splitter to route the I2C interrupt to both the legacy interrupt controller and the GIC.
-
-Testing
-
-Add these lines to QEMU invocation
-
--drive if=none,id=i2c_storage,format=raw,file=eeprom.bin \
--device at24c-eeprom,bus=i2c-bus.1,address=0x50,drive=i2c_storage,rom-size=4096 \
-
-note: eeprom.bin is all zeros
-
-Before this change, running i2c get to read from EEPROM would result in this
-
-i2cget -y 1 0x50
-Error: Read failed
-
-After this change, running i2c to read from EEPROM results in this
-
-i2cget -y 1 0x50
-0x00
-
-The eeprom can now also be enabled in the device tree. Before the
-eeprom driver load would fail due to the read failing
-
-ls -l /sys/bus/i2c/devices/i2c-1/1-0050/ | grep -i eeprom
--rw------- 1 root root 4096 May 17 16:57 eeprom
-
-Signed-off-by: Nicholas Righi <nicholasrighi@gmail.com>
-Message-id: 20260609024027.22140-1-nicholasrighi@gmail.com
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Message-id: 20260604234852.573178-2-richard.henderson@linaro.org
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- hw/arm/bcm2835_peripherals.c         | 9 +++++++++
- hw/arm/bcm2838.c                     | 4 ++++
- include/hw/arm/bcm2835_peripherals.h | 2 ++
- include/hw/arm/bcm2838_peripherals.h | 1 +
- 4 files changed, 16 insertions(+)
+ target/arm/cpu-features.h | 17 ++++++++++++++++-
+ 1 file changed, 16 insertions(+), 1 deletion(-)
 
-diff --git a/hw/arm/bcm2835_peripherals.c b/hw/arm/bcm2835_peripherals.c
-index 8a1e72dfab..558c180df9 100644
---- a/hw/arm/bcm2835_peripherals.c
-+++ b/hw/arm/bcm2835_peripherals.c
-@@ -179,6 +179,8 @@ static void raspi_peripherals_base_init(Object *obj)
-                             &s->orgated_i2c_irq, TYPE_OR_IRQ);
-     object_property_set_int(OBJECT(&s->orgated_i2c_irq), "num-lines",
-                             ORGATED_I2C_IRQ_COUNT, &error_abort);
-+    object_initialize_child(obj, "orgated-i2c-irq-splitter",
-+                            &s->orgated_i2c_irq_splitter, TYPE_SPLIT_IRQ);
+diff --git a/target/arm/cpu-features.h b/target/arm/cpu-features.h
+index 9e70d30964..a80b251589 100644
+--- a/target/arm/cpu-features.h
++++ b/target/arm/cpu-features.h
+@@ -1516,7 +1516,12 @@ static inline bool isar_feature_aa64_sve2(const ARMISARegisters *id)
+ 
+ static inline bool isar_feature_aa64_sve2p1(const ARMISARegisters *id)
+ {
+-    return FIELD_EX64_IDREG(id, ID_AA64ZFR0, SVEVER) >=2;
++    return FIELD_EX64_IDREG(id, ID_AA64ZFR0, SVEVER) >= 2;
++}
++
++static inline bool isar_feature_aa64_sve2p2(const ARMISARegisters *id)
++{
++    return FIELD_EX64_IDREG(id, ID_AA64ZFR0, SVEVER) >= 3;
  }
  
- static void bcm2835_peripherals_realize(DeviceState *dev, Error **errp)
-@@ -504,7 +506,14 @@ void bcm_soc_peripherals_common_realize(DeviceState *dev, Error **errp)
-         sysbus_connect_irq(SYS_BUS_DEVICE(&s->i2c[n]), 0,
-                            qdev_get_gpio_in(DEVICE(&s->orgated_i2c_irq), n));
-     }
-+
-+    qdev_prop_set_uint32(DEVICE(&s->orgated_i2c_irq_splitter), "num-lines", 2);
-+    if (!qdev_realize(DEVICE(&s->orgated_i2c_irq_splitter), NULL, errp)) {
-+        return;
-+    }
-     qdev_connect_gpio_out(DEVICE(&s->orgated_i2c_irq), 0,
-+                          qdev_get_gpio_in(DEVICE(&s->orgated_i2c_irq_splitter), 0));
-+    qdev_connect_gpio_out(DEVICE(&s->orgated_i2c_irq_splitter), 0,
-                           qdev_get_gpio_in_named(DEVICE(&s->ic),
-                                                  BCM2835_IC_GPU_IRQ,
-                                                  INTERRUPT_I2C));
-diff --git a/hw/arm/bcm2838.c b/hw/arm/bcm2838.c
-index c14a854046..089af412a3 100644
---- a/hw/arm/bcm2838.c
-+++ b/hw/arm/bcm2838.c
-@@ -184,6 +184,10 @@ static void bcm2838_realize(DeviceState *dev, Error **errp)
-     sysbus_connect_irq(SYS_BUS_DEVICE(&ps_base->aux), 0,
-                        qdev_get_gpio_in(gicdev, GIC_SPI_INTERRUPT_AUX_UART1));
+ static inline bool isar_feature_aa64_sve2_aes(const ARMISARegisters *id)
+@@ -1625,6 +1630,11 @@ static inline bool isar_feature_aa64_sme2p1(const ARMISARegisters *id)
+     return FIELD_EX64_IDREG(id, ID_AA64SMFR0, SMEVER) >= 2;
+ }
  
-+    /* Connect the I2C interrupt to the interrupt controller */
-+    qdev_connect_gpio_out(DEVICE(&ps_base->orgated_i2c_irq_splitter), 1,
-+                          qdev_get_gpio_in(gicdev, GIC_SPI_INTERRUPT_I2C));
++static inline bool isar_feature_aa64_sme2p2(const ARMISARegisters *id)
++{
++    return FIELD_EX64_IDREG(id, ID_AA64SMFR0, SMEVER) >= 3;
++}
 +
-     /* Connect VC mailbox to the interrupt controller */
-     sysbus_connect_irq(SYS_BUS_DEVICE(&ps_base->mboxes), 0,
-                        qdev_get_gpio_in(gicdev, GIC_SPI_INTERRUPT_MBOX));
-diff --git a/include/hw/arm/bcm2835_peripherals.h b/include/hw/arm/bcm2835_peripherals.h
-index bf35bb18e5..4f356f4643 100644
---- a/include/hw/arm/bcm2835_peripherals.h
-+++ b/include/hw/arm/bcm2835_peripherals.h
-@@ -33,6 +33,7 @@
- #include "hw/usb/hcd-dwc2.h"
- #include "hw/ssi/bcm2835_spi.h"
- #include "hw/i2c/bcm2835_i2c.h"
-+#include "hw/core/split-irq.h"
- #include "hw/nvram/bcm2835_otp.h"
- #include "hw/misc/unimp.h"
- #include "qom/object.h"
-@@ -72,6 +73,7 @@ struct BCMSocPeripheralBaseState {
-     BCM2835SPIState spi[1];
-     BCM2835I2CState i2c[3];
-     OrIRQState orgated_i2c_irq;
-+    SplitIRQ orgated_i2c_irq_splitter;
-     BCM2835OTPState otp;
-     UnimplementedDeviceState dbus;
-     UnimplementedDeviceState ave0;
-diff --git a/include/hw/arm/bcm2838_peripherals.h b/include/hw/arm/bcm2838_peripherals.h
-index 7ee1bd066f..0be97e67c7 100644
---- a/include/hw/arm/bcm2838_peripherals.h
-+++ b/include/hw/arm/bcm2838_peripherals.h
-@@ -22,6 +22,7 @@
- #define GIC_SPI_INTERRUPT_DMA_7_8      87
- #define GIC_SPI_INTERRUPT_DMA_9_10     88
- #define GIC_SPI_INTERRUPT_AUX_UART1    93
-+#define GIC_SPI_INTERRUPT_I2C          117
- #define GIC_SPI_INTERRUPT_SDHOST       120
- #define GIC_SPI_INTERRUPT_UART0        121
- #define GIC_SPI_INTERRUPT_RNG200       125
+ static inline bool isar_feature_aa64_f8cvt(const ARMISARegisters *id)
+ {
+     return FIELD_EX64_IDREG(id, ID_AA64FPFR0, F8CVT);
+@@ -1688,6 +1698,11 @@ static inline bool isar_feature_aa64_sme2p1_or_sve2p1(const ARMISARegisters *id)
+     return isar_feature_aa64_sme2p1(id) || isar_feature_aa64_sve2p1(id);
+ }
+ 
++static inline bool isar_feature_aa64_sme2p2_or_sve2p2(const ARMISARegisters *id)
++{
++    return isar_feature_aa64_sme2p2(id) || isar_feature_aa64_sve2p2(id);
++}
++
+ static inline bool isar_feature_aa64_sme2_i16i64(const ARMISARegisters *id)
+ {
+     return isar_feature_aa64_sme2(id) && isar_feature_aa64_sme_i16i64(id);
 -- 
 2.43.0
 
