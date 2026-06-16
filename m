@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71091CD98CF
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 10:08:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6352CD98E6
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 10:09:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZQhN-0000S5-5H; Tue, 16 Jun 2026 06:07:13 -0400
+	id 1wZQhU-0000vE-7n; Tue, 16 Jun 2026 06:07:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wZQhL-0000JO-76
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 06:07:11 -0400
-Received: from mail-pg1-x534.google.com ([2607:f8b0:4864:20::534])
+ id 1wZQhS-0000iE-9V
+ for qemu-devel@nongnu.org; Tue, 16 Jun 2026 06:07:18 -0400
+Received: from mail-pg1-x52a.google.com ([2607:f8b0:4864:20::52a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wZQhJ-0003Mp-GN
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 06:07:10 -0400
-Received: by mail-pg1-x534.google.com with SMTP id
- 41be03b00d2f7-c85ba774551so1573131a12.0
- for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 03:07:09 -0700 (PDT)
+ id 1wZQhQ-0003RN-Lt
+ for qemu-devel@nongnu.org; Tue, 16 Jun 2026 06:07:18 -0400
+Received: by mail-pg1-x52a.google.com with SMTP id
+ 41be03b00d2f7-c85a297d2d2so2648195a12.0
+ for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 03:07:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1781604428; x=1782209228; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1781604435; x=1782209235; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=4TnZbo83Oivu2UJ9QwpQikoITuKpWmQjIVYnelr1oZ8=;
- b=EFKQRcf6rG/KyEMNJ6saeQ9GBWLnzp+ZTmX52fAk0jbJTXfdbX9PCLVnLOrIa7shJW
- m9OF75YCyjoVr7U2siVsf+UY+tbyknJLLIGjY9OFI4YwduEHNP+NfvO9KXEyFjTZE73P
- xfr4odaaHWk7Ys0LOq9I71g2tw4epPGtUlV7NpjBXxuDiEqiiwIap2mLuAJqayucZZdZ
- tkL6JxsGhtzmhdcuyk+vY4DG8ickbVEIty9h5/Daur5Cf5d2ZArsJ7RPAwrH1fplRTrh
- l9EuIlly1GLQPT6uy4VvNonNBb0mqZmE2HPmcWW0XSHe3QvmjNa2VwEzrOsg7/QAHiWU
- t5GA==
+ bh=Fo8RfBkdy4Aa8xwG5toPk/LTT+2RXG0B985ij9QtC/Y=;
+ b=XOIcZAt5EyLhlmNAa7s4JRadDnYdwUmQEl76ZiT8iZ9r7Xnm2IYqd9MLlc6Vu3h87p
+ RW81VRFEPWH8JqjMzzlPw5mIYTkefS4eETjODcMbWPlruBY5ZOKLZksTDVfdpIwr3FM5
+ 4aH20MBA6N8VK8+QUQJPTPrUbyn8Bjhe6vgiEsrKzAn2e7Au+JvYUK2Nz2nM3o+qHrMh
+ aZYaS7s8iBmkW+hDtzYOq0LqH8g8Zse7x3qjinoGcjsP2pCgGGlXVz1FoYtKULDR3tIK
+ fw5R5J2fVLZa86HKEN5Z1u6fBk6nBlaQavm8IzgO4EQk7qOu5a5rcRAF/wxzvridQhOf
+ 0ziQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781604428; x=1782209228;
+ d=1e100.net; s=20251104; t=1781604435; x=1782209235;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=4TnZbo83Oivu2UJ9QwpQikoITuKpWmQjIVYnelr1oZ8=;
- b=Tt4RlkcnKiZBkKSc4mNcaqli7bk5F0wOJLkdGIHYa5bsLkj4JU+9lS1b5VkSfdBdAB
- 4zpWKJxfvGW4loW23HEz0JC3KTWAunRT+Tv/b4Tn1PaXBQSRqH/GNi+KXnqsIuj6/EeS
- Jv9c9PswcxcKvZbAydLUZYBNToTCguxS3ruAXjRPUm3Wi8VjV0Cn9ouJd8tTs7Iqs9yf
- TvFB7UcvSVoPuwZHwQ/aZ2O6OUKSAKJS/uU3y6aVkocWwGYdOv47G3I4yILwG5nbvVbY
- kV6aWOdPwLvkHC4FKtPCCr9CfXfxxXJib4tc0SrUee9XwGrqt7S1oQsehW/nGFARSITA
- G4NQ==
-X-Gm-Message-State: AOJu0YywRjexUxuwG1r6nKbVDu5lePWuyBN4LZlLN/KhZRPY2vSGrCsm
- Qd4S7iJ8Hm36BHeLZJSyxw9VZRVo9cmwOl9M//61XgXIKk0KcbjY4+lpg2MnlWE3
-X-Gm-Gg: Acq92OFqFDJz2m25/zWMc/JQyB9St4DoocNhpMMqLQ1CNaPFs1zb+sVEWmp+cCFcQyY
- J6716otqPybri4gOmgcHCHcvb/FqDB3IAVb8hDW4xPqM4Cp4ZAYNlZYWJ+vh3fd/6iClk3Y6AlN
- uUiYjzuyDvEMKt3Vnn+z1uvxi0kMUBo/B0SzF3+NFh6PYW8LaPW2dc2SuJxZW4fM/LgmsVw/lbV
- wgX2Ow+r/DMn7imOXtnq5BMArn4TSElV7lRQvxwcw4u3MP1iZSykgN/iexxtX87YyeAgdXD+lwx
- r2oWq4aymdQiiA0gKxWos5mIMVCaAoW6Y/vZCFo0r8xpjMIcAMt8cWljPYj3UoyEVEZCxdyRlHs
- /RzTliYLf5xns090shxDfWprOvaKlaoWsWYKN4r0hr7sfSvakkwqp0295jHcr4UQPt3q/uFU/9i
- 79fKoHLQoiYxZGHCfvSp5KwTsoBqpTDhVYvSWnQGJD
-X-Received: by 2002:a05:6a20:9f48:b0:3b2:86e8:a817 with SMTP id
- adf61e73a8af0-3b796409353mr16761094637.31.1781604428245; 
- Tue, 16 Jun 2026 03:07:08 -0700 (PDT)
+ bh=Fo8RfBkdy4Aa8xwG5toPk/LTT+2RXG0B985ij9QtC/Y=;
+ b=WW1hUGH1AmHDgYZuG4rfyJ2UawwGkaP7G+0D2QhVTVCa2BK6LsWfYrLlKIVqzm2xHn
+ pkIG0IFCPPFzdBqOjUUywgKnKRIbJzmotYJC6f4YzE4z1fRrDAqc7duWuvNgIxehAdgy
+ flNlLUQUVOwbV4DMM254rwfGkOzzA0+Vh3o3J4XsKedDYl5o/D9w+4TLAzrgH+cl+O38
+ wN3k7euEEHpWYPuxXMNIGK25KnXk6xZF2YiwtP0u/p2T/cH4HmPcO9Zr4irkUCN4kcFp
+ ARvVvvTyU6CVmipHfDzuIZZq3NHLEaG9gissrB93mLrMfwFhGb1bV7Cz8kWU9tEAJIhp
+ cbDg==
+X-Gm-Message-State: AOJu0YxpjYyDCi1KkqoVph2ai2pFmCIjqk1KsU/SZudNKySzbHQhEF+F
+ v+5k0PEM8nrjmjBbwY9eph8wP0/yjuxuk5UzgDRt7tFwwAoq9yhOtTSbbyML3eH7
+X-Gm-Gg: Acq92OEJF5aQX4yNG8KFHV1dG7nUNxfKdelrUIW2iwn+218MMty7ZyGELwwK9AB9CQi
+ YbEhHAYFGEsJExqf50AKSLZYv91z0LOYWfiNmCe04KK1aphbXrsiXzv0lh54puEK2VaRrBxot/B
+ pDuCBqF55D/D5Di9zvHGo02mOhAU3NlCH6xFKlUrU4HJHgJp2M4ImPbX7Fou0SywCc1YLHnFpwJ
+ ahupcTbQvXloa0FWsFYQmpZSKZbENA7XHOVQDcWMXN5df6QO5ITSwNeJfcAXpLTEqiodUHUPJcu
+ jrmxblgt0Dwo6a1vX2CVky56rRlC8AnNWqEtAec/UBfasGg/vCv2fU9kwAzVqUBLyyBarDqEnkk
+ 7a3clggWbMgDzDNNHF6+W/RG/BnpN40/CXgACv+/U+XgsgK11/a4g1tbyeZ8N4EeTqDR5ufMyNK
+ Dd3PG5H4weoFibm/tmgqROg+uhLWd17NJ+1S8z9Jsz
+X-Received: by 2002:a05:6a20:94ce:b0:3a0:adc5:52c1 with SMTP id
+ adf61e73a8af0-3b7e473ff32mr3275654637.11.1781604435243; 
+ Tue, 16 Jun 2026 03:07:15 -0700 (PDT)
 Received: from toolbx.alistair23.me ([2403:581e:fdf9:0:13b2:851f:d9cb:44c5])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-c866519f0a6sm10916735a12.22.2026.06.16.03.07.05
+ 41be03b00d2f7-c866519f0a6sm10916735a12.22.2026.06.16.03.07.12
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 16 Jun 2026 03:07:07 -0700 (PDT)
+ Tue, 16 Jun 2026 03:07:14 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org
@@ -71,17 +71,18 @@ Cc: alistair23@gmail.com, Anton Johansson <anjo@rev.ng>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 27/83] target/riscv: Fix size of irq_overflow_left
-Date: Tue, 16 Jun 2026 20:04:30 +1000
-Message-ID: <20260616100527.1939565-28-alistair.francis@wdc.com>
+Subject: [PULL 29/83] target/riscv: Replace target_ulong in
+ riscv_cpu_get_trap_name()
+Date: Tue, 16 Jun 2026 20:04:32 +1000
+Message-ID: <20260616100527.1939565-30-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616100527.1939565-1-alistair.francis@wdc.com>
 References: <20260616100527.1939565-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::534;
- envelope-from=alistair23@gmail.com; helo=mail-pg1-x534.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52a;
+ envelope-from=alistair23@gmail.com; helo=mail-pg1-x52a.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -107,36 +108,45 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Anton Johansson <anjo@rev.ng>
 
-Fix to 64 bits to hold all relevant values.  Also update comment to
-reflect that irq_overflow_left stores the ns beyond INT64_MAX until the
-next overflow, this to account for the uint64_t/int64_t timer value
-difference between RISCV/QEMU.
+Fix cause argument to 64 bit to match env->mcause.
 
 Signed-off-by: Anton Johansson <anjo@rev.ng>
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Acked-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20260520125406.28693-17-anjo@rev.ng>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Message-ID: <20260520125406.28693-19-anjo@rev.ng>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/cpu.h | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ target/riscv/cpu.h | 2 +-
+ target/riscv/cpu.c | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-index 380749f9a8..5d01672f12 100644
+index 6477c7de99..a92cb249fa 100644
 --- a/target/riscv/cpu.h
 +++ b/target/riscv/cpu.h
-@@ -224,8 +224,8 @@ typedef struct PMUCTRState {
-     uint64_t mhpmcounter_val;
-     /* Snapshot value of a counter */
-     uint64_t mhpmcounter_prev;
--    /* Value beyond UINT32_MAX/UINT64_MAX before overflow interrupt trigger */
--    target_ulong irq_overflow_left;
-+    /* Value beyond INT64_MAX before overflow interrupt trigger */
-+    uint64_t irq_overflow_left;
- } PMUCTRState;
+@@ -603,7 +603,7 @@ extern const char * const riscv_int_regnamesh[];
+ extern const char * const riscv_fpr_regnames[];
+ extern const char * const riscv_rvv_regnames[];
  
- typedef struct PMUFixedCtrState {
+-const char *riscv_cpu_get_trap_name(target_ulong cause, bool async);
++const char *riscv_cpu_get_trap_name(uint64_t cause, bool async);
+ int riscv_cpu_write_elf64_note(WriteCoreDumpFunction f, CPUState *cs,
+                                int cpuid, DumpState *s);
+ int riscv_cpu_write_elf32_note(WriteCoreDumpFunction f, CPUState *cs,
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index c063604298..e792655cc2 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -386,7 +386,7 @@ static const char * const riscv_intr_names[] = {
+     [IRQ_PMU_OVF] = "counter_overflow",
+ };
+ 
+-const char *riscv_cpu_get_trap_name(target_ulong cause, bool async)
++const char *riscv_cpu_get_trap_name(uint64_t cause, bool async)
+ {
+     if (async) {
+         if ((cause < ARRAY_SIZE(riscv_intr_names)) && riscv_intr_names[cause]) {
 -- 
 2.54.0
 
