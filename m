@@ -4,94 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88A32CD98DA
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 10:23:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D0B2CD98CF
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 10:24:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZQwj-0002ki-4q; Tue, 16 Jun 2026 06:23:05 -0400
+	id 1wZQxZ-00036Z-TI; Tue, 16 Jun 2026 06:23:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wZQwh-0002k4-T2
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 06:23:03 -0400
-Received: from mail-yx1-xb12e.google.com ([2607:f8b0:4864:20::b12e])
+ id 1wZQxX-000361-RX
+ for qemu-devel@nongnu.org; Tue, 16 Jun 2026 06:23:55 -0400
+Received: from mail-yx1-xb132.google.com ([2607:f8b0:4864:20::b132])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wZQwg-0007Fx-Cu
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 06:23:03 -0400
-Received: by mail-yx1-xb12e.google.com with SMTP id
- 956f58d0204a3-6606678420bso4540592d50.1
- for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 03:23:01 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1781605381; cv=none;
+ id 1wZQxW-0007MT-Gy
+ for qemu-devel@nongnu.org; Tue, 16 Jun 2026 06:23:55 -0400
+Received: by mail-yx1-xb132.google.com with SMTP id
+ 956f58d0204a3-660e9ea26b9so4587799d50.3
+ for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 03:23:54 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1781605433; cv=none;
  d=google.com; s=arc-20240605;
- b=O9qPYYIBs9P6VaCq8TYeytFMuli8Wl8mXqcxiZ0Y31LHge3O8gAUqu7Rt4XjCnkplW
- roZywC1wejwobBUJsAEimlk61KUzYzlJyPjdEXEgbMlHNs8V5C6cV0XGTGXIdvpXXUdA
- UHU1axSGYftdi/fqFPLtvDXEv+1wYhKWlxwKErXD0RInQMLnewl5NAsZrzxirpOeZsiu
- TwbceAmRBaYc/6xIUtzWiIIZ2m01S4cw2gy/jDSUKGNy91TKaspbf68g2InR06UTwwGI
- K0LSA0AQgT4Xna9Ct/85DuHAZzzH6VgVYDcsnxSzK+y/vonIBF0CxJWxmWx15/F3iKeu
- EXfA==
+ b=lDsFbZeUdce2fOd2uYNcod/F7maiElw6oqOTAt6jMd5+J/qqikd2Kpapa4imP29h/k
+ 0oWc+SnmThUBJu8FUW82xktStFMZ68dELosm/flrji8c/wNoNUu+Z5Tx8uOECh1/BRQ/
+ sm19RT3s/Z/9Qe/grgsfpaYP3FTui1cSnDNNIFDdMUUImrXq7uU6yyD09MjhAM/Kb/Ry
+ 2hT2sQJzNkmgoVTxzR56BWf0uox+Mha13I1SQgeIGEOfvxhGnAlc0Gjyb6+po4n5NXvC
+ KpToIDjW4YkQZB8osEj/bc0TmanfDInRnHDpsConTpMzte9xRR0a2/fjjuHImumzDx2I
+ OMwA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:dkim-signature;
- bh=8t9jDR8VhGt2shfPePFmy2qffULY/LZf5arHakZEADg=;
+ bh=64sCoBfIuXYmVUlEGieFuQBeLrctJsrvbr/fX56BAWU=;
  fh=VUZ7eJox894qpEuQTEFSefKlY4l3x+uBmRGBSaSsOHU=;
- b=hyzKs3ZWMvVm0bFYuslmqkRNsN139X1Lqf/c9SAFC2NzpCPyk/tSGRRT3FnJkEb78T
- Kx+fSLiIfSQn0fxwal+GRizsShvtwEQ6J5vRksyfRYnl5B+uWYw92+ehCM1YgAt8QOMR
- AWcMZLOP5GPRwGAySVdc8B1bCuWOeQCAQrECwn4yze/2LvbCbnYPAcIZye0Hmvz2XmL4
- lw6FhEaXar6k+l3rZW5XUd6izkD5hcSQgai77f1l/0MhYgsN2HnIy46AAeRZmnaBAGfu
- iv8Z6ZZTH5xjOFraM5QTL07sFr6ltwuXQ9Dq3ON2luix16MLymZBc661DXG0o9XS1cpy
- BNMA==; darn=nongnu.org
+ b=SKJ2O7Am9lZWtF4XPT2ry3sDFlhUnK67aeX0QHqZRduxOGkhJeiOFST3Mi60xuvPqz
+ QBbUOj8xPhDMrqaEOEp6px+aj+d2zsE7ZLN27c0PGYSEkCjpXlx+/7/tKSO4t+miewUP
+ A37wTe+y1R7MVwWX03eGcoqBfWg8QQ6SgJ+xIaefCQznL3oVKaOQMi78QDH/Grfuwlcb
+ YA6EAxoaoeTg62COvKB69autOvrUsNxPdi133fYRaWRw/LXwA/FpqOXmPbtkc8IdlTmx
+ AIe1/Fba4nt5suKf+QyGhOm0Uqohp4/P1mze5OVHPuZTiJZ+wYIQm393r1QqFIA0hxGD
+ zOpw==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1781605381; x=1782210181; darn=nongnu.org;
+ d=linaro.org; s=google; t=1781605433; x=1782210233; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=8t9jDR8VhGt2shfPePFmy2qffULY/LZf5arHakZEADg=;
- b=kTQ2jL1nKEnSDFlc2CPrStvLHR6M+SfC79RyFJFw92kaYEWbvCbzxF+XLpwFWmq6LX
- IlgXuKi2g1uyyC5je3hA+gVl6JWf0btbz81LfzX1vlm5EZcaSx14A8QqewPT0szh5mLS
- vOn+jSgzJoiD2b4Motj/N5C0rfjnMvfPJoN0qPPxvMQ8iXSATC0SxW5uXW7MBt0UePCd
- TXK59074jZ/f0Qc8IP7fXJOk0DDHvb++cGXaeJvmj7wLMDpuSsTZDLWjEjPomJAAQZNx
- nF9MaE6lRR6PDtjgJmeGANXQ/HOV9dO1KsxkgXS4kgrpI/MlHB/SouxKXkor+tfKWDJt
- JhMQ==
+ bh=64sCoBfIuXYmVUlEGieFuQBeLrctJsrvbr/fX56BAWU=;
+ b=SCKh+6fd97X7Y5m30PEkBpiCQ0pIzlevMxrGFGC4SZsTwxBX5cMhdECPhBPzKXzmYY
+ 4/4ZOVQPDDuapJtVBFBPGUZI3JqDzUhiKzhCG4MWBqvOKhDDytGSzYhXaijK4/vS5l/8
+ jlDYzxy/0uDMfSqcJjB7QIKQZBAvTSztDXhJRv+lq/0+pYopqbJ2/5x0Ypqi7PSDPimt
+ NBd2A2QpaSGzk9VIVRuGkOd4cENR943aWyg/rfNiPjpj8MJR+dd2FrKMe4gKDASzkZpT
+ kM2MPyE6lMHYGjG8Nnh5tMbvnK28Bj/Am43KqIy62nYz5kieqjtsJYOkluAfHHndh8E2
+ AaUw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781605381; x=1782210181;
+ d=1e100.net; s=20251104; t=1781605433; x=1782210233;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=8t9jDR8VhGt2shfPePFmy2qffULY/LZf5arHakZEADg=;
- b=a3EuzKVITojhhWSJQwZfsW86NkrxO11UJ+S5i1IhlxYRqMo9Z9GHkCSIewPQSPhiLT
- T2MkB8jgsk/JzT8kmidm+qOPqkusH9TjT9LfNwutERvn6jy7/kXPznWfLFgNcM9p8uzo
- sIuJ+00ychXIarlDNCPVKuHTRjnL3ErwUXdJLFFZSGaXLd+o1xy0h3yL8nWGceHx60Rb
- yBXMjV0osSrX1JXGp1SagDdCmbi7AcbB4kH8/YnP6C8SMFIuUMRronst1qUpzuHoGZmk
- VwOmix8n6eaH+Ov8ZiEgdew5gCFYWhPNqbgSCgPnvNOyAnUFgHuYVOglQE94VT7RtE9n
- IbYw==
-X-Gm-Message-State: AOJu0Yxkm15mR1fhaHsOY0v4uXngZvaTiWopxWbmgIELza7/4Uwq2p3v
- g2QEvAWPMleFE1eYO6dKJVTbQ7MrSdUZ1Y45SEJkRRwvwYs+STsXeIhDYmlbdMz+wAW2M//Xaox
- fL7tOQ12Pt+hkIkncGVymCAclJLwfUi1AMsXWSHwUCg==
-X-Gm-Gg: Acq92OFYvn+pByYBX6QnRuDJ5hsVtIPBAi9FRjj7v4NjauGlxOoSygwj9r3R9vWi659
- 3MLpj12gU2qB8Fg94MpzbP5hJT+iqi/RcJXY++orXQ+roeGp/LhMDnkxXDFToTavMMEfbVPXRN8
- ebg+/4UXfRr3uUBdMIILzp81wTlYoi1RYb6QBmw9giJVQANx3Wu2cMj18bTefaTmMY3lkZZUd5v
- TgiGrP3BcpUwi8DI+M/U4ZFBGpWl9KnJycR3duEkV/wIwW4K2UsUFclblXUMuuQ1gPEryyLaLV0
- /3cYoaY8EF3RLhfyz19dDkyP8uKE0HLONor1qjGsfjFx++7DqsleYOlFzbSIK43Ahxs=
-X-Received: by 2002:a05:690e:11c2:b0:660:580f:694 with SMTP id
- 956f58d0204a3-66285054f45mr12881945d50.44.1781605380988; Tue, 16 Jun 2026
- 03:23:00 -0700 (PDT)
+ bh=64sCoBfIuXYmVUlEGieFuQBeLrctJsrvbr/fX56BAWU=;
+ b=bMOywnazPsULn/x+wvh3/I4FOts8YAAQ1YKgcwHGdt3109TYNDyZ3aK+UxVXJLV8qR
+ DmpS3+wgLm1wQkFiJ1mtEVzUuplt8hlWwJyxb0W4Cox6VMX4IoG8S0rBGFXLX9S90AXv
+ dFnpnvSqHOIkdK4f5Ft9VmJl2zC4ABYiodJdKulFGvj92kuLeXn/Gw45PFyUdFXWXZA3
+ Fw85irNkbozKTNyvoPV1Gmx6YNxE4qxu1qm4CrB0FxOA8sM2caOYlJrPblj0TRB37oJ7
+ cYtIw0B+IANcwBiNy8GyG6P1mVgtz61YbVLZ87PmJN0ZvDwSQedrQkSzb0HGahbKxdll
+ Rt7Q==
+X-Gm-Message-State: AOJu0Yz8FOH5LugQ6VfaVIQMoy9RGmW8BUoY84/BC1sXuAR1JSL0Y3jy
+ /1nIDBgwX6Hc0kGUGTZC2e236k1Gi5FZ/KvwvmwsG6//XkXF34QxotAo0OaWaIMIvsrCtheXLGl
+ Jl1ywqyPyGcngkaWMTBHNJDXQFp7vmwZpbLbFuAhaZj/oq/YKPrEO
+X-Gm-Gg: Acq92OEx4j0L+adipRlZvRUUp9gstOzXYyXN/CTAp3krQDpZj8s+UXeETOdIuZlITnh
+ d0GLsv+3N61zfGgDe/cEY0VrSSeGjbWSLVWzabfq3vh2JznrAosmnRuym47btJiY0amZf2bX4fk
+ 734Q05CehaEEvUQxUNqCIT8t/brPfLtCzy6EnrtMOueXnjt5YujG7YRiihCYTtqhATIultiREO4
+ 7sK8p897Cd7rvzYGAub+jbdSBwD5IFMxDpnVkzFqEKmLUeY4dIJayp1/+WAZLVXwp9fn4ME6O1f
+ qdzHpKHCdkMVjqH0iCkLykSax2yfkLwlIR/sCLWIujiQcW8KDViiJ/7WlHqan1sD14w=
+X-Received: by 2002:a05:690e:1447:b0:662:a4ee:105f with SMTP id
+ 956f58d0204a3-662a4ee1245mr6106244d50.48.1781605433384; Tue, 16 Jun 2026
+ 03:23:53 -0700 (PDT)
 MIME-Version: 1.0
 References: <20260602063350.3623723-1-kchiu@axiado.com>
- <20260602063350.3623723-3-kchiu@axiado.com>
-In-Reply-To: <20260602063350.3623723-3-kchiu@axiado.com>
+ <20260602063350.3623723-4-kchiu@axiado.com>
+In-Reply-To: <20260602063350.3623723-4-kchiu@axiado.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 16 Jun 2026 11:22:49 +0100
-X-Gm-Features: AVVi8Ce3BrxeNEkMjDtlBNReS6T9nYqI39BYEMksjsmHev0KJRp_0mPyr5aaqsc
-Message-ID: <CAFEAcA_1iWjVskvWBgye6OFGgGAcvwhGUkVPmKZGT44fGMux=g@mail.gmail.com>
-Subject: Re: [PATCH v3 2/6] hw/sd: Add Axiado SD host controller with eMMC PHY
+Date: Tue, 16 Jun 2026 11:23:42 +0100
+X-Gm-Features: AVVi8CdF-udtWh0mL_IpeFy8_rj2lgF12LKKEQj-kW0LfZzDYBUCWjHww8dsksU
+Message-ID: <CAFEAcA_d0NBsEVVSMDKwaJpvLfA2LMCEzYJiUPgee9bQ9o6BSA@mail.gmail.com>
+Subject: Re: [PATCH v3 3/6] hw/arm: ax3000-soc: Enable Axiado SD host
+ controller
 To: Kuan-Jui Chiu <kchiu@axiado.com>
 Cc: qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12e;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b132;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb132.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -116,34 +117,12 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On Tue, 2 Jun 2026 at 07:34, Kuan-Jui Chiu <kchiu@axiado.com> wrote:
 >
-> This patch add a new model for Axiado SD host controller which is compatible
-> with SDHCI 3.0 spec
->
-> This device model also includes a eMMC PHY which helps to control SD/eMMC
+> Enable SD host controller into Axiado AX3000 SoC to load kernel and rootfs
+> from eMMC.
 >
 > Signed-off-by: Kuan-Jui Chiu <kchiu@axiado.com>
+> ---
 
-> +static void axiado_sdhci_realize(DeviceState *dev, Error **errp)
-> +{
-> +    AxiadoSDHCIState *s = AXIADO_SDHCI(dev);
-> +    SysBusDevice *sbd = SYS_BUS_DEVICE(dev);
-> +    SysBusDevice *sdhci_sbd;
-> +
-> +    qdev_prop_set_uint64(DEVICE(&s->sdhci), "capareg", 0x216737eed0b0);
-> +    qdev_prop_set_uint64(DEVICE(&s->sdhci), "sd-spec-version", 3);
-> +
-> +    sdhci_sbd = SYS_BUS_DEVICE(&s->sdhci);
-> +    sysbus_realize(sdhci_sbd, errp);
-> +    if (*errp) {
-> +        return;
-> +    }
-
-You need an "ERRP_GUARD();" line at the top of this function,
-because otherwise errp can be NULL here. (There's a long comment
-in include/qapi/error.h that discusses the various ways of
-handling Error objects and the standard patterns to use.)
-
-Otherwise
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
 thanks
