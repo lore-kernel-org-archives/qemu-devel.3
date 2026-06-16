@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 609F7CD98CF
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 10:10:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04495CD98DA
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 10:10:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZQkG-0002OX-BB; Tue, 16 Jun 2026 06:10:12 -0400
+	id 1wZQjL-0006JM-83; Tue, 16 Jun 2026 06:09:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wZQkE-00029R-4L
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 06:10:10 -0400
-Received: from mail-pg1-x52a.google.com ([2607:f8b0:4864:20::52a])
+ id 1wZQj3-00060R-NG
+ for qemu-devel@nongnu.org; Tue, 16 Jun 2026 06:08:58 -0400
+Received: from mail-pj1-x102a.google.com ([2607:f8b0:4864:20::102a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wZQkC-0004Q2-0X
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 06:10:09 -0400
-Received: by mail-pg1-x52a.google.com with SMTP id
- 41be03b00d2f7-c8585c51f1fso1923239a12.1
- for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 03:10:07 -0700 (PDT)
+ id 1wZQj2-0003k4-06
+ for qemu-devel@nongnu.org; Tue, 16 Jun 2026 06:08:57 -0400
+Received: by mail-pj1-x102a.google.com with SMTP id
+ 98e67ed59e1d1-36ba706ab46so2774175a91.1
+ for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 03:08:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1781604606; x=1782209406; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1781604535; x=1782209335; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=V89OmXjJ6i0x2VVOQnLfX1TIcadCG73wFIW02DeqfbQ=;
- b=MblsKFVzinoJBx/AgzGkcDk2KMjqWsw0jpWq4/La/pORDAj4Ft2BKnlqGNrqu/C1CU
- auD0srLrICzmxG+3+DE+LCGZCPg6hAZrT0V2aw6XUXSmFujMzvv4rsQlb75bXqNglOHx
- Ul6MCHqLURRtdhaDrxd69CyE9c+jwocSNQ0Z4TKsPo+ygLWFDW9TDrdtCPJIc1Wl7HdX
- WmNVRg1PXONvhcByP6054IBGwAso5YM2Y7C4Z42zWoi3HVeK1/k1TyFn7AL3Q01J1SLK
- SCuVCOwIHnGqvm7Q8M0HqpLCWvZKCV0ObAtacneww4WrOP/wHnjS2VQEPGDjzCPRR9UM
- Vvrg==
+ bh=LC8Tp9LOlX1iIxsS7p263aBjVp7XomH0anhd7+QMmbM=;
+ b=WZbtRBO44CxxTWSOoL/EXKbXJVEExtxI61LHHDKQ2iXWdSHfrkCZ53yfW5nRy3wswG
+ wLmKcmELsfGouUCNRh0/Gsq6EIxD+cDOOdKdRTHa8XMo/7uWV/oQ7YpAtezs6pgEHMxF
+ nc4SWwayEyH51FHVftZt0QfGcaMT0CyiEhLbKgVUStGVfCoOwk/LJugPn2v85nauJz9W
+ 0iDaZkP2lplvOY5Fa3+0FqySr+LkSU05vh20ArI4Ay+5YNaxg4SNnUUToXxAhl1V3SYe
+ 6806+of5kIy58DI92Ke9MdTrxf18uZe4RAyLE6yud9hzPA1Ojb6yELa5qfs7+jcQEf5z
+ NjTw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781604606; x=1782209406;
+ d=1e100.net; s=20251104; t=1781604535; x=1782209335;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=V89OmXjJ6i0x2VVOQnLfX1TIcadCG73wFIW02DeqfbQ=;
- b=sVdErzJujYX4k+E8kTdxNgnJMJAEPmD37xbOCPApFeIUI1BuBnBj5Xh2bwExvmR0zs
- kws5bxu8hQOz+g1K8YlVlnhAn0Q1OCzGcfDe1hI65b4YlMhUAUM5GaNmu/SeDr7HWVIb
- bKvGyoF6yzR1lXFSqoMZfBgppNy02ebLrl8JlMSl57DHraFUUeof1rXPlZcATO0oo66E
- W3D1Md2PRiuHUpTiyAXc/3njNWBtERifM7zEQbEmqygvELxl02jwPACvZH8yuK/3yWnl
- 1JIOp5rmSsbDm2arwTjS3oA4W8s3srW14eUQJeoy8i3Srnvh5lCqmWEIr/uth3DVTQos
- yEnQ==
-X-Gm-Message-State: AOJu0YzX65iQ1Nk8jrmPcWujeNyix7ic4GuFyeEX0PyHP6db6iz7P2Mu
- rwpczomR/whx3bsCszVShu5wWS0jyHPIFdLzoTxsSOHlyGFzIGGl+QAYpnx7WLCO
-X-Gm-Gg: Acq92OGZ0LHQnOZ9fotmR9ztr2MZlTwf2u5cwhOlxJ60206jmOh9LOJVabG/c0tqgmM
- u66O9tgzG7eN+7o6t9Zl/vovej/6wnULoN4Mj8QLLNbhUOGcRf2Tum1jnPmFDGtkA/X5XQU/jhj
- b+o6ORN9bu0+6lXMLnHsUn1kWZEfvSZfYNJ1OGWzfhOp5X7GibRbSMekpYOw54LZ8nKXlStar4n
- bTn3bxAoIIjbu5dlzrQUUECMmYSMgb88k9pYqna04vAG/Zyln2n4lVnhqEC9EyjLdK5c9g8ciJA
- a5FpKy2piM7ZUCLNI675r/GnCSzqQGwVxjv3uL7rpGwHMFZVYOgIR5A4z5zBp4ptf33aSdk5hUJ
- R/Z9Dxn0i4IpYfkyuBrovc+qrTiuE5ZNvlXiggoJ1g86aw/4CGGiPm+wF5mc4bBVCI3+tCMQaLV
- cw5i1WljS3IGU70QQaDB1BXv/7tpGan/vOf3SkVc5l
-X-Received: by 2002:a05:6a21:2d07:b0:3b3:ccd0:cf62 with SMTP id
- adf61e73a8af0-3b7e266e35bmr2847178637.36.1781604606556; 
- Tue, 16 Jun 2026 03:10:06 -0700 (PDT)
+ bh=LC8Tp9LOlX1iIxsS7p263aBjVp7XomH0anhd7+QMmbM=;
+ b=tTOhQPlgiiPVI/A8PtXrIMoQKEdltF8KBDEr8qWk1+8ooQwDW5A1Y/6bZXvb/PPQ5K
+ 6xUeDVqhXF0c4D/Ci2W5Q+Xb7uwAtAyDZROtEloM3s0X0xEt6k9A0XMFgIwtmPTswuc6
+ FJDeG10RlTz8pblgaKItD73GBR4QjzQ+07lJd1LxQ6NWrbcCALYR/ZxEfvX3iEdHUiRZ
+ WBtkdqPJJDEn+nMdQEG3pLvMhIpcuOO7T5eBhgClmRsRQDWbWh1xzNL1xcZktrLFTqGC
+ O9eDz3ZtbNKrPzUSZgK6KIXOgGHqTIoDp6ooMrsi+gUwvmAgUWlbiH1Qp7OwtVIUVJka
+ HdZw==
+X-Gm-Message-State: AOJu0YwAmTlofLNfsgQM8LTbI3NLC0f1XGvDmKpybwxgdebMO62bgkV3
+ jmvQaIF0Emq/G9W0f0V65ANMhzmJ5pbuuJoK8Zb/JcunPuZfoaVHNvxua649VVyr
+X-Gm-Gg: Acq92OG1NyH9v61d+w2Vz/cFTOF8d0p5DbGf4q52ohEy0gNUV5yJoq5BM+LhftA6Dpr
+ 8UFt+D/QdIwzi4GgOyck+KUDmPqk3i0uou5YKS+AbQoer980lAEeIsbD6xfd4hSkh0HFKQQ90fP
+ tL1/MS9o5Aka7KHvvdd8QcL05VhVAZotvM1BtN29/RZ8CbsYU+clGibCmd3GWfY2l5m19f9WcJ6
+ 2WACxwZBhPjMI+vunUImvxmYKeFEcK1KuPxLyBUlYPquIww+XFGcGZQx9yoxL+vCvJCDhufRqUT
+ e7woVpNpBRA0t3UMwxg5uH21lUDgjkHdi3kE6J9CpQQPRukyiHRSXIHUiWDCbrPjbjJa9kRNvt+
+ y2NHDSXpnr7wuXTWIuMW1C/i8uzuPVCM1EvdK+4PzK8oYhUkFG33PR780fHCcsTdg8DUDjUSO0y
+ 2Gl5fyYmUVcm3qdYH8Crrh/eA1kamMd9ks9c0hOX3J
+X-Received: by 2002:a17:90b:4f88:b0:368:5367:d679 with SMTP id
+ 98e67ed59e1d1-37c5284102dmr3014066a91.9.1781604534720; 
+ Tue, 16 Jun 2026 03:08:54 -0700 (PDT)
 Received: from toolbx.alistair23.me ([2403:581e:fdf9:0:13b2:851f:d9cb:44c5])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-c866519f0a6sm10916735a12.22.2026.06.16.03.10.03
+ 41be03b00d2f7-c866519f0a6sm10916735a12.22.2026.06.16.03.08.51
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 16 Jun 2026 03:10:05 -0700 (PDT)
+ Tue, 16 Jun 2026 03:08:53 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 78/83] hw/riscv/sifive_u.c: add cpu-map, cluster and core DTs
-Date: Tue, 16 Jun 2026 20:05:21 +1000
-Message-ID: <20260616100527.1939565-79-alistair.francis@wdc.com>
+Cc: alistair23@gmail.com, Abhigyan Kumar <314abh@gmail.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Subject: [PULL 57/83] target/riscv: mask vxrm csrw write to the low 2 bits
+Date: Tue, 16 Jun 2026 20:05:00 +1000
+Message-ID: <20260616100527.1939565-58-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616100527.1939565-1-alistair.francis@wdc.com>
 References: <20260616100527.1939565-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52a;
- envelope-from=alistair23@gmail.com; helo=mail-pg1-x52a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102a;
+ envelope-from=alistair23@gmail.com; helo=mail-pj1-x102a.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -103,68 +103,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+From: Abhigyan Kumar <314abh@gmail.com>
 
-We want to consolidate the CPU socket FDT creation into a single helper.
-'virt' and spike has the same code but sifive_u does not have cpu-map,
-cluster and core subnodes.
+Citing the RISC-V specification:
 
-These subnodes are present in other boards even in single socket configs
-without NUMA.  This is a strong indicator that their presence doesn't
-hurt a NUMA-less board like sifive_u.
+    "The vector fixed-point rounding-mode register holds a two-bit
+    read-write rounding-mode field in the least-significant bits
+    (vxrm[1:0]). The upper bits, vxrm[XLEN-1:2], should be written as
+    zeros."
 
-Add these DTs to make the FDT standardization straightforward.
+QEMU wrote full value into env->vxrm causing read of upper bits too.
+Used existing macros for bit-masking. Previous had a hard-coded value.
 
-Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3470
+Signed-off-by: Abhigyan Kumar <314abh@gmail.com>
 Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20260615203734.954428-9-daniel.barboza@oss.qualcomm.com>
+Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Message-ID: <20260530102100.78150-1-314abh@gmail.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- hw/riscv/sifive_u.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ target/riscv/csr.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/hw/riscv/sifive_u.c b/hw/riscv/sifive_u.c
-index 9a791b36d6..a4265fed0f 100644
---- a/hw/riscv/sifive_u.c
-+++ b/hw/riscv/sifive_u.c
-@@ -109,6 +109,7 @@ static void create_fdt(SiFiveUState *s, const MemMapEntry *memmap,
-         "sifive,plic-1.0.0", "riscv,plic0"
-     };
-     g_autofree uint32_t *intc_phandles = g_new0(uint32_t, ms->smp.cpus);
-+    g_autofree char *clust_name = NULL;
+diff --git a/target/riscv/csr.c b/target/riscv/csr.c
+index 19d5a55b54..ec931a8c3d 100644
+--- a/target/riscv/csr.c
++++ b/target/riscv/csr.c
+@@ -989,7 +989,7 @@ static RISCVException write_vxrm(CPURISCVState *env, int csrno,
+ #if !defined(CONFIG_USER_ONLY)
+     env->mstatus |= MSTATUS_VS;
+ #endif
+-    env->vxrm = val;
++    env->vxrm = val & (VCSR_VXRM >> VCSR_VXRM_SHIFT);
+     return RISCV_EXCP_NONE;
+ }
  
-     fdt = ms->fdt = create_board_device_tree("SiFive HiFive Unleashed A00",
-         "sifive,hifive-unleashed-a00", &s->fdt_size);
-@@ -143,11 +144,17 @@ static void create_fdt(SiFiveUState *s, const MemMapEntry *memmap,
-         CLINT_TIMEBASE_FREQ);
-     qemu_fdt_setprop_cell(fdt, "/cpus", "#size-cells", 0x0);
-     qemu_fdt_setprop_cell(fdt, "/cpus", "#address-cells", 0x1);
-+    qemu_fdt_add_subnode(fdt, "/cpus/cpu-map");
-+
-+    clust_name = g_strdup_printf("/cpus/cpu-map/cluster%d", 0);
-+    qemu_fdt_add_subnode(fdt, clust_name);
- 
-     for (cpu = ms->smp.cpus - 1; cpu >= 0; cpu--) {
-         int cpu_phandle = phandle++;
-         nodename = g_strdup_printf("/cpus/cpu@%d", cpu);
-         char *intc = g_strdup_printf("/cpus/cpu@%d/interrupt-controller", cpu);
-+        g_autofree char *core_name = NULL;
-+
-         qemu_fdt_add_subnode(fdt, nodename);
-         /* cpu 0 is the management hart that does not have mmu */
-         if (cpu != 0) {
-@@ -173,6 +180,11 @@ static void create_fdt(SiFiveUState *s, const MemMapEntry *memmap,
-         qemu_fdt_setprop_string(fdt, intc, "compatible", "riscv,cpu-intc");
-         qemu_fdt_setprop(fdt, intc, "interrupt-controller", NULL, 0);
-         qemu_fdt_setprop_cell(fdt, intc, "#interrupt-cells", 1);
-+
-+        core_name = g_strdup_printf("%s/core%d", clust_name, cpu);
-+        qemu_fdt_add_subnode(fdt, core_name);
-+        qemu_fdt_setprop_cell(fdt, core_name, "cpu", cpu_phandle);
-+
-         g_free(intc);
-         g_free(nodename);
-     }
 -- 
 2.54.0
 
