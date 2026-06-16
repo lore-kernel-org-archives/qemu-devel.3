@@ -4,101 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E69DCCD98DA
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 13:44:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DAA5ECD98E1
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 13:47:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZU4j-00017p-Jz; Tue, 16 Jun 2026 09:43:33 -0400
+	id 1wZU80-0002C3-W4; Tue, 16 Jun 2026 09:46:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wZU4h-00016J-QJ
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 09:43:31 -0400
-Received: from mail-yx1-xb12d.google.com ([2607:f8b0:4864:20::b12d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wZU4g-0002uZ-8T
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 09:43:31 -0400
-Received: by mail-yx1-xb12d.google.com with SMTP id
- 956f58d0204a3-6611689dc10so4680834d50.1
- for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 06:43:29 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1781617409; cv=none;
- d=google.com; s=arc-20240605;
- b=FHEs9YJVvyl2j+OffFqV+lOZg7U7hkQCQaJnTEG1x1p+QdYjVZTaFs/G3XM8dqGesi
- s3pD316daKuaqR3DG+KEXHDRq2D6NIMhxtsvXotLUSbs7wCsk3Va8pbRf+mpUxoLRR4x
- 4ojHJJFvnDooI5RadJb/yFlUQ51LCD/u8Fph+QdVKU+wdJgUp5PjGUi2Lz4hjMpjwzuU
- q2WrrLzcWdNo4iJyXTD4o0fgGu/IKi/7uXcpMn+V+GYnzgXFiMUd6BVoMY1Uk15FZM01
- bz/x6IJAC9EPd0vOV48MQrvMtVv6+oBSBFuSBVKK5zJ2SWK3kDRxCiTfayOqoeTKGxTC
- mbAA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=rFx0EQzEcHO811YSsAQIZMlh7Pfymft/YImwBbwytGc=;
- fh=/ftcwOPYeEIhzseC7WF42kR+xVR/IJiWpLC1+A7SOWQ=;
- b=Q0ujPtTiw3RIqpcnaE0ecMYj5LjLB46yVR/93ej/pDVGGuInl+w4ElZAw7f0At1IJa
- IE5aSDCBHU9/608Z1N8ciM67cmg6HHygfS1Cv3LYpERYrd5+04LGru2Vrrb8v389Myu1
- Z2urP9mI05H4GFUcEvcbjZKwLfvhaGSB+3P5QRgo2CQuSmVPb9/Vf5LhjOw3BY6SmfoP
- XJS3w3yTNGyZU3U/QBJdA0JLE6wVAs8jnCHTUoW8DdKRIcsJ5C2d2uoMm+MDQV1WcBYQ
- nn49nh0WjflltcBJLtvT9fnAysv38ctCMezLCTZ3+2AM3UnnFs9NRmpLngFg1sbwveb6
- G/Tw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1781617409; x=1782222209; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=rFx0EQzEcHO811YSsAQIZMlh7Pfymft/YImwBbwytGc=;
- b=hddOmwUFbTT1gtvjuTUSPWOP2eKuWBwOlB2HhqH6q6L/8zV9eXbUIU2ncTFYPtxHSm
- 3A60og2zZFzm6D7ZuxvuUjFtHWXt+IlOvQMxkj5imyIAiIdozD201jH8G4m+q7+lwhW4
- BRYjDw4ZkuS5iENldt5+W6ry8BpmhZ+qsrMhSTkfV0e7pZa6pQFtAAZ4MpeIwhePPSay
- lVeXnIaICckw9aEVgGc17iFmCLi0lexoHcSe3IFpkB3p1Mb1elIIS7NAoU0TqaUWQgEi
- k4LFFd8d+NOVk0DD6NvxwmOC2aZ7lQEMLXvuhAb4Bjr8TFVl88DuFE1T65wBjN8wOlmd
- J8Ig==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781617409; x=1782222209;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=rFx0EQzEcHO811YSsAQIZMlh7Pfymft/YImwBbwytGc=;
- b=BJfOT78Xto+HOk5e1xcVSForfGlvKOzLcHi/SHFm1jDOSbbFd4HJCuXAXc0swzHAHb
- xKtaz1gulFIdbjgH4KUb4Qr3UoSwSEEXO8t4S9Gq18wtzIOfKNzDspz+7F53a4iZ8Lc1
- CbET6WLpJW0j40hclBdr4QgYNZXQ66suztjGt5/ImNk9xz/1M6Tgi7OjtDYlZv1d8ZhL
- jU2s4FWDMU0rfiQUWLr2bwhVjV5cMACvst8taov4g3Y7eYi8FgyQ6MfrmOJVg/GN9/sd
- OltvCyuACNbcqWHnj2SrtiS16kR/RebcnlTy5i2v4rR4hityWPSpWgtHj1GOIzymQ0qm
- 5kMw==
-X-Gm-Message-State: AOJu0Yy/bkgrATPtuJsfoS9YCYjdYZ7T9g4mWjuhwrlqTO05QxajmlLU
- zRNOqcRlxKoMo5eT2xeAIt+ODOyLsasaS+c+f68byzwvrnl4Gpog+59llUFvjkOExDlIDGQtlwi
- KwUV/+dnnFTl2D2WE2qT3NusWi3eOLX0IzHolWaBLxA==
-X-Gm-Gg: Acq92OH2F3KFOFTcwyDecD8NvMLvg7wMHaIpNX3GC1k9hugpPShrFJhzt4ac52OaHel
- UqCvaQLAVVFUjcYQ/HnCXGl7kAQjeBON/3daSEJ9sJIA7pYHnhV4esHuY2Ci/Qh74KHEUVGjxN2
- 3IVls3ttVgFmH5j3kzFaY3u2UcuKC87aEJFMrkBFpLJ4ELxrmROq+1vi94/nsEAo3GnMjPGzLp2
- UNONA8nlCG7em+LN2AWt92kftORPJiLL/X2+VISzWbeO2UurcLlOKeqONjg6O2lKiKgfCGQ2ALw
- igFPpHr80ieohkjVbbVZMzJQG/ntvxOLcKb4OTXdgnrihjCJrUyB/MBxn5h3tAml0eg=
-X-Received: by 2002:a05:690e:e89:b0:65e:1d95:29cd with SMTP id
- 956f58d0204a3-662782d4ed5mr16406881d50.40.1781617408870; Tue, 16 Jun 2026
- 06:43:28 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <cui.tao@linux.dev>) id 1wZU7v-0002Bd-Mr
+ for qemu-devel@nongnu.org; Tue, 16 Jun 2026 09:46:51 -0400
+Received: from out-179.mta1.migadu.com ([2001:41d0:203:375::b3])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <cui.tao@linux.dev>) id 1wZU7r-0004GA-Mz
+ for qemu-devel@nongnu.org; Tue, 16 Jun 2026 09:46:50 -0400
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and
+ include these headers.
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+ t=1781617601;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=x6A/v0v0NNN7dzQ8Ajqsz3CqsjJ+V8Ilr1nT2Fz9k98=;
+ b=nzkZvR3O4+IRB+PkBSME1O0LnnOjS7lBlMq/tc8DtyhSETsUZ1MhlZSrJ29h+FvEIqZh/o
+ y35LHMpQVC8omHysufZqAOcONxGgGXPeoQUBfs0EhwQtHtCs8E0LHo7KJC3SN+UOraI1Kt
+ zYX0KpxcRIx86qWo/MpwV4CWxJPMth0=
+From: Tao Cui <cui.tao@linux.dev>
+To: gaosong@loongson.cn
+Cc: cohuck@redhat.com, cui.tao@linux.dev, cuitao@kylinos.cn,
+ kvm@vger.kernel.org, maobibo@loongson.cn, mst@redhat.com,
+ pbonzini@redhat.com, qemu-devel@nongnu.org
+Subject: Re: [PATCH 0/2] target/loongarch: PV TLB flush advertisement
+Date: Tue, 16 Jun 2026 21:46:21 +0800
+Message-ID: <20260616134621.114322-1-cui.tao@linux.dev>
+In-Reply-To: <636afc5b-968a-3027-8683-21df1c14838a@loongson.cn>
+References: <636afc5b-968a-3027-8683-21df1c14838a@loongson.cn>
 MIME-Version: 1.0
-References: <20260604234852.573178-1-richard.henderson@linaro.org>
- <20260604234852.573178-24-richard.henderson@linaro.org>
-In-Reply-To: <20260604234852.573178-24-richard.henderson@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 16 Jun 2026 14:43:16 +0100
-X-Gm-Features: AVVi8CfWAkgaeP3TjuE937BV1pQiu8H52TgM5b0U_LOfA_D46dmutV0RS98U4T4
-Message-ID: <CAFEAcA9zRtLb_judmNjvXSq_ZgASNyQZJMGmhcgaQ+p2RkcKKw@mail.gmail.com>
-Subject: Re: [PATCH 23/25] target/arm: Enable FEAT_SVE2p2 for -cpu max
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12d;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12d.google.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Migadu-Flow: FLOW_OUT
+Received-SPF: pass client-ip=2001:41d0:203:375::b3;
+ envelope-from=cui.tao@linux.dev; helo=out-179.mta1.migadu.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,28 +67,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 5 Jun 2026 at 00:52, Richard Henderson
-<richard.henderson@linaro.org> wrote:
+Hi Song,
+
+Thanks for the suggestion.
+
+Bibo has also raised a few comments on the KVM side that require some
+adjustments to the paired kernel series. I'll rework the series
+accordingly and regenerate the linux-headers via
+scripts/update-linux-headers.sh in the next version, along with those
+changes.
+
+Thanks,
+--
+Tao
+
+> Hi, you should use scripts/update-linux-headers.sh to update the
+> linux-headers.
 >
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->  linux-user/aarch64/elfload.c  | 1 +
->  target/arm/tcg/cpu64.c        | 2 +-
->  docs/system/arm/emulation.rst | 1 +
->  3 files changed, 3 insertions(+), 1 deletion(-)
 
-This is fine as a patch, so
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-
-but maybe we should hold off on enabling SVE2p2 for "max"
-until we have SME2p2 ? Architecturally if you have SVE2p2
-and SME then you're supposed to also have SME2p2.
-I know we usually don't worry about that kind of "feature X
-implies feature Y" when adding a new feature, trusting the
-guest to check separately for X and Y being present, but
-I feel like SVE/SME versions are particularly likely to be
-something guest software might make assumptions about here.
-
-thanks
--- PMM
 
