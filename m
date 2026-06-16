@@ -4,83 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2ADFDCD98DA
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 10:10:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 277BCCD98E1
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 10:10:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZQjT-0006ko-JD; Tue, 16 Jun 2026 06:09:23 -0400
+	id 1wZQic-0005cT-K2; Tue, 16 Jun 2026 06:08:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wZQjR-0006c0-5h
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 06:09:21 -0400
-Received: from mail-pg1-x529.google.com ([2607:f8b0:4864:20::529])
+ id 1wZQib-0005br-0E
+ for qemu-devel@nongnu.org; Tue, 16 Jun 2026 06:08:29 -0400
+Received: from mail-pg1-x52d.google.com ([2607:f8b0:4864:20::52d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wZQjO-0003r0-IU
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 06:09:20 -0400
-Received: by mail-pg1-x529.google.com with SMTP id
- 41be03b00d2f7-c85825bbc4fso2696281a12.2
- for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 03:09:17 -0700 (PDT)
+ id 1wZQiZ-0003d2-7S
+ for qemu-devel@nongnu.org; Tue, 16 Jun 2026 06:08:28 -0400
+Received: by mail-pg1-x52d.google.com with SMTP id
+ 41be03b00d2f7-c86307c4e6bso1517534a12.0
+ for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 03:08:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1781604556; x=1782209356; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1781604506; x=1782209306; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=hTJICuTgtDm/SYdUsrTzXK3QgvqftbPFI8VVLkqtBQ0=;
- b=lzh8q/5BOINsa4GC9vcJi645RfF5exWtEush+D/7I4AUdBeo0qnF8Tu4hIiFAI6x/C
- jbGWUvaO/f30A7zBEFibz3J7P8S3b2gnJgBZ8ePDvKJRQa7zhOICewCC8w/lzzem7eME
- 2AoOrvlJHXkEz37jcV84R9/Pd0a6+Mb7BjCSyxhATxagiyqCyaPBd4UIwU8q5WzLyYCq
- T8V4DD8DROAk/Mnw8Ta5RSBSU+V7Sgkr0T0YUyHMEW14kCbQJ3VQU5Ct0QgT6YebxUqC
- 1+Hs6GDN1VT//FqZ3khxdZpGe1TD9o3pSmBIfMGRGPqHvU9vZNkZgqqbOgdMWSgB4as7
- g30Q==
+ bh=783WOVRdzAZMS0Kq52fQLIJbCbqqdOyC83jusazd0xU=;
+ b=pEc1nrc62bXGyJE62HgdwZdGKSKxVnGgLw8OudXkFLJhOzb15bdrgfeNFJJp9fX1yp
+ 3xQipo8ijLyzLG4wwMxYSaI6Cis5NhJjbpsY6nWMpDelD2aplU5/Idhnn+sJp6hAKajS
+ jDOilsB3cXq0ue5siHcPZWr37H978lAhTrOg8yBy7nSZ3+8b+/neLlG5QBSKUBQnsypv
+ f3UzBVFzu9f/7q2gARlZRQptzElub1XpAmD/oONIeUQvDd9MVMqRlTtVnfyJrxIlgOiO
+ MKQfOeYHHzxcOlLoSh0D9lRs2Wym9+duYwunphLDuRYVpJakAOQ5yFM+xj+qML9o3rLV
+ soaw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781604556; x=1782209356;
+ d=1e100.net; s=20251104; t=1781604506; x=1782209306;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=hTJICuTgtDm/SYdUsrTzXK3QgvqftbPFI8VVLkqtBQ0=;
- b=EFV4qVfZLELR9zfuNsoyszYGTy4obrL+uMPInh1Cw/XuubT3sGAjzl2f28xC0oBNe7
- ZcgCv7Ap2w+50iZZTu3D2zodsP5Ty6AhfMTiU3fAzTJB7wHE/QRkIBBNWf5+kyqxljCt
- lpSVNK3TLB6k6+ArrPPL0f9+BC7l7rGisfR6OsLXAg4DRyefRkPKo+49Tpt3SV1cUF+9
- jzLjwLAm395lP43vrXC3kEuUucEYwznbD3Sy7L1keqH5sn99z1M16BlD61hmh/zQdyNZ
- /lV5i0u+cA9mqiSwtihRRi3urMt3IxVI9W6P4HVabdipVPIMKfRBRNkeNCpkzTzaQsvM
- HcpQ==
-X-Gm-Message-State: AOJu0YyFNh8SXwcNUTbIVfPDEX++eNtK2qAcnrasQqEftyvRN38j4Zcs
- bL7q82z4nnW77b6re6oEaXpoENDguCdGP6GXpJCItdxede6tya7nVZDCeHXXJstJ
-X-Gm-Gg: Acq92OGNlDvbfiZpg3J7l87n0h/M70sbayAii6LGm+vGhwj0lqCmMa3nn9pAMMSSYeg
- awUO55k/G/3wh6ZiiP2E1S+34raFQZdnvpPahpwJoxhgqTZ0M+7JvJoB5vRBVMdjxxIiZIxcG/U
- O3rHyQ21LCHZoRNHxblmDfsJzcSGWOlkOWka9aRj/C+OtxYtFFHreKHjMG5v5rdVd8YJIkRJdkU
- cxGnm13PF9dJgaUf8rXvcWyrywtwoGFw4mVgDVDtMEtUKf2HrfSD+hofm8zOzENn99YXNsMkSH7
- IL3fLDE0u/trROWgxyjYJ2CLLmVi8eT6ikBl3ofHhOku5lchTiiYqXDr/NeTDMkwsZQ91pmNIjD
- 372cAtBa+zFXiKgb4+h42Beoop5n+EdnVLwAXZHx8hcD76SrVoUCxCOREWry455gq5VuADjhBHS
- QzigtKdnCdtqKnP3sTnFzUVpjyKHEsPDbq8X4eQf5M
-X-Received: by 2002:a05:6a20:6a08:b0:3b4:b340:411d with SMTP id
- adf61e73a8af0-3b7840eceb8mr21432443637.24.1781604555956; 
- Tue, 16 Jun 2026 03:09:15 -0700 (PDT)
+ bh=783WOVRdzAZMS0Kq52fQLIJbCbqqdOyC83jusazd0xU=;
+ b=ZtC9yB6PXdNPWbyj0wCx4tfCUBs1vsCJOZQn06yvPnVoHdz/n3tTuqnH4H5xbulZ5V
+ qx6MFuqVnVOuuT4P4AETPf6JNfYRp/fUXEh6CHWunm6bkxLI62GjAmeWXO5nQBQ6Syij
+ kq4boULM5Ei3IwbRT00y661bJZ5gx/2HgBzItqNUtwt+EtDTSni1/mjBcANBHRIlv/Q0
+ efVNZaNMSr2QMohLSVH3fjoc9Xm9HRvPNwosinZzJoOLCUB0ZNo1/kHgMlswuoSZE8z/
+ NC2/w8GScMzyujADdqbPOazrjzN4K2GsW8F6KtFIEHlzOK6mUWjJ4B52jaoz2aiQv4jl
+ HWhA==
+X-Gm-Message-State: AOJu0Ywm0QM0qk9ItnTeZplZn9s0GishdidO4yqlsRvgKJ0GiX/lklg3
+ WD0ykLdygXenq4cX8aculyQlxzjBRAxeyulNHTiut+3R0fszwQWSaB4xxdS5bfh4
+X-Gm-Gg: Acq92OHwFopQ7PP9i+Dt5WW69KZHQo3iM9hbEC3oLxhmtZWWsB4fnU5TCUaPTCm9MvI
+ UysZGw8Yhyzj/LkvhPnbI7k/vRfYuIyK+P15bAXNcxX+ubqnAA+SYhPTcsRm0hJlhid9ilIPLki
+ 7w6BKEKVmnlx8TSE2lmX/nP15ssVMGcRuMK5vk2Vvxtl/OXvWxEUFnFCpU25pH8Co7vq+N6N0fZ
+ AfzTb+m7vyf44sJDAteNQlm4pEJFjejgD2x2+FE6lO+WLV5VQLwvo/exlPpxpjRwHHIT3Z+uDeu
+ EAUBQ0jwpvC1Zeqtb4UqNOvbiE87m/xQ85NKtrhXWR391Xi/5LvPUojwkAZZN0BBXQYKvEskHq1
+ 4OlkwQz/OOlWW6+0Mi9LLdZhVGGhHjhoIXkbtKZ10eBrsgECiqmaC428R9xL1PxmJxENmJQ4r3D
+ N5DnTbB5jR4pjpUr2KTerBf8F8bBp7+WaiXkIJ4c4p
+X-Received: by 2002:a05:6a20:2443:b0:3b4:813d:dc1 with SMTP id
+ adf61e73a8af0-3b7e49c16eemr3380073637.31.1781604505741; 
+ Tue, 16 Jun 2026 03:08:25 -0700 (PDT)
 Received: from toolbx.alistair23.me ([2403:581e:fdf9:0:13b2:851f:d9cb:44c5])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-c866519f0a6sm10916735a12.22.2026.06.16.03.09.12
+ 41be03b00d2f7-c866519f0a6sm10916735a12.22.2026.06.16.03.08.21
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 16 Jun 2026 03:09:14 -0700 (PDT)
+ Tue, 16 Jun 2026 03:08:25 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com, Max Chou <max.chou@sifive.com>,
- Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 63/83] target/riscv: Set mstatus.FS dirty when scalar FP raises
- exceptions
-Date: Tue, 16 Jun 2026 20:05:06 +1000
-Message-ID: <20260616100527.1939565-64-alistair.francis@wdc.com>
+Cc: alistair23@gmail.com, Djordje Todorovic <Djordje.Todorovic@htecgroup.com>,
+ Djordje Todorovic <djordje.todorovic@htecgroup.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Subject: [PULL 49/83] target/riscv: Add big-endian CPU configuration field and
+ reset logic
+Date: Tue, 16 Jun 2026 20:04:52 +1000
+Message-ID: <20260616100527.1939565-50-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616100527.1939565-1-alistair.francis@wdc.com>
 References: <20260616100527.1939565-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::529;
- envelope-from=alistair23@gmail.com; helo=mail-pg1-x529.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52d;
+ envelope-from=alistair23@gmail.com; helo=mail-pg1-x52d.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -104,366 +107,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Max Chou <max.chou@sifive.com>
+From: Djordje Todorovic <Djordje.Todorovic@htecgroup.com>
 
-According to the RISC-V privileged spec 3.1.6, any instruction that
-modifies FP extension state (FP CSRs including fflags, or f registers)
-must set mstatus.FS to Dirty.  Raising fflags bits is modifying fcsr
-(an FP CSR).
+Add a big_endian field to RISCVCPUConfig and wire it into the CPU
+reset path. When cfg.big_endian is set, riscv_cpu_reset_hold()
+writes 1 into the MSTATUS MBE/SBE/UBE fields using set_field();
+otherwise it writes 0. This makes the reset value deterministic on
+both cold and warm reset.
 
-Scalar FP instructions that write integer registers (FP comparisons and
-FP-to-integer conversions) never call mark_fs_dirty at translation time
-to set mstatus.FS to dirty.  However, they can raise FP exception flags
-via softfloat functions, which modifies fflags without any mechanism to
-dirty mstatus.FS.
+This models fixed-endian harts, not mixed-endian implementations where
+the guest can toggle MBE/SBE/UBE at runtime. The MBE/SBE/UBE bits are
+not included in the writable mask of any mstatus/mstatush/sstatus CSR
+write path (unchanged by this series), so the value chosen at reset is
+effectively hardwired per section 3.1.6.5 of the RISC-V Privileged
+Specification.
 
-The affected helpers:
-- Comparisons: fle/fleq/flt/fltq/feq
-  — raise NV on NaN operands
-- FP-to-integer: fcvt.[w|wu|l|lu]/fcvtmod.w.d
-  — raise NX on inexact or NV on out-of-range
+The user-facing property and documentation are added in a later patch,
+once the full endianness support is in place.
 
-Fix this issue by
-1. Save float_exception_flags before the softfloat operation
-2. Perform the operation
-3. If any new exception bits are set, set fs to dirty
-
-Signed-off-by: Max Chou <max.chou@sifive.com>
+Signed-off-by: Djordje Todorovic <djordje.todorovic@htecgroup.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20260611105037.157773-2-max.chou@sifive.com>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Message-ID: <20260527201348.29511-10-philmd@linaro.org>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/cpu.h        |   1 +
- target/riscv/fpu_helper.c | 157 +++++++++++++++++++++++++++++++-------
- 2 files changed, 130 insertions(+), 28 deletions(-)
+ target/riscv/cpu_cfg_fields.h.inc | 1 +
+ target/riscv/cpu.c                | 7 +++++++
+ 2 files changed, 8 insertions(+)
 
-diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-index eec5acea5f..7582874c35 100644
---- a/target/riscv/cpu.h
-+++ b/target/riscv/cpu.h
-@@ -676,6 +676,7 @@ G_NORETURN void riscv_raise_exception(CPURISCVState *env,
+diff --git a/target/riscv/cpu_cfg_fields.h.inc b/target/riscv/cpu_cfg_fields.h.inc
+index 734fa079f2..9eb47af0a7 100644
+--- a/target/riscv/cpu_cfg_fields.h.inc
++++ b/target/riscv/cpu_cfg_fields.h.inc
+@@ -157,6 +157,7 @@ BOOL_FIELD(ext_xmipscmov)
+ BOOL_FIELD(ext_xmipslsp)
+ BOOL_FIELD(ext_xlrbr)
  
- uint8_t riscv_cpu_get_fflags(CPURISCVState *env);
- void riscv_cpu_set_fflags(CPURISCVState *env, uint8_t);
-+void riscv_cpu_check_fflags(CPURISCVState *env, FloatExceptionFlags);
- 
- #ifndef CONFIG_USER_ONLY
- void cpu_set_exception_base(int vp_index, uint64_t address);
-diff --git a/target/riscv/fpu_helper.c b/target/riscv/fpu_helper.c
-index e6d1ffb1d6..db1475271b 100644
---- a/target/riscv/fpu_helper.c
-+++ b/target/riscv/fpu_helper.c
-@@ -50,6 +50,22 @@ void riscv_cpu_set_fflags(CPURISCVState *env, uint8_t hard)
-     set_float_exception_flags(soft, &env->fp_status);
- }
- 
-+#ifndef CONFIG_USER_ONLY
-+void riscv_cpu_check_fflags(CPURISCVState *env,
-+                            FloatExceptionFlags pre_fflag)
-+{
-+    if (get_float_exception_flags(&env->fp_status) & ~pre_fflag) {
-+        env->mstatus |= MSTATUS_FS;
-+        if (env->virt_enabled) {
-+            env->mstatus_hs |= MSTATUS_FS;
-+        }
-+    }
-+}
-+#else
-+void riscv_cpu_check_fflags(CPURISCVState *env,
-+                            FloatExceptionFlags pre_fflag) {}
-+#endif
-+
- void helper_set_rounding_mode(CPURISCVState *env, uint32_t rm)
- {
-     FloatRoundMode softrm;
-@@ -286,59 +302,86 @@ target_ulong helper_fle_s(CPURISCVState *env, uint64_t rs1, uint64_t rs2)
- {
-     float32 frs1 = check_nanbox_s(env, rs1);
-     float32 frs2 = check_nanbox_s(env, rs2);
--    return float32_le(frs1, frs2, &env->fp_status);
-+    FloatExceptionFlags pre_fflag = get_float_exception_flags(&env->fp_status);
-+    target_ulong ret = float32_le(frs1, frs2, &env->fp_status);
-+    riscv_cpu_check_fflags(env, pre_fflag);
-+    return ret;
- }
- 
- target_ulong helper_fleq_s(CPURISCVState *env, uint64_t rs1, uint64_t rs2)
- {
-     float32 frs1 = check_nanbox_s(env, rs1);
-     float32 frs2 = check_nanbox_s(env, rs2);
--    return float32_le_quiet(frs1, frs2, &env->fp_status);
-+    FloatExceptionFlags pre_fflag = get_float_exception_flags(&env->fp_status);
-+    target_ulong ret = float32_le_quiet(frs1, frs2, &env->fp_status);
-+    riscv_cpu_check_fflags(env, pre_fflag);
-+    return ret;
- }
- 
- target_ulong helper_flt_s(CPURISCVState *env, uint64_t rs1, uint64_t rs2)
- {
-     float32 frs1 = check_nanbox_s(env, rs1);
-     float32 frs2 = check_nanbox_s(env, rs2);
--    return float32_lt(frs1, frs2, &env->fp_status);
-+    FloatExceptionFlags pre_fflag = get_float_exception_flags(&env->fp_status);
-+    target_ulong ret = float32_lt(frs1, frs2, &env->fp_status);
-+    riscv_cpu_check_fflags(env, pre_fflag);
-+    return ret;
- }
- 
- target_ulong helper_fltq_s(CPURISCVState *env, uint64_t rs1, uint64_t rs2)
- {
-     float32 frs1 = check_nanbox_s(env, rs1);
-     float32 frs2 = check_nanbox_s(env, rs2);
--    return float32_lt_quiet(frs1, frs2, &env->fp_status);
-+    FloatExceptionFlags pre_fflag = get_float_exception_flags(&env->fp_status);
-+    target_ulong ret = float32_lt_quiet(frs1, frs2, &env->fp_status);
-+    riscv_cpu_check_fflags(env, pre_fflag);
-+    return ret;
- }
- 
- target_ulong helper_feq_s(CPURISCVState *env, uint64_t rs1, uint64_t rs2)
- {
-     float32 frs1 = check_nanbox_s(env, rs1);
-     float32 frs2 = check_nanbox_s(env, rs2);
--    return float32_eq_quiet(frs1, frs2, &env->fp_status);
-+    FloatExceptionFlags pre_fflag = get_float_exception_flags(&env->fp_status);
-+    target_ulong ret = float32_eq_quiet(frs1, frs2, &env->fp_status);
-+    riscv_cpu_check_fflags(env, pre_fflag);
-+    return ret;
- }
- 
- target_ulong helper_fcvt_w_s(CPURISCVState *env, uint64_t rs1)
- {
-     float32 frs1 = check_nanbox_s(env, rs1);
--    return float32_to_int32(frs1, &env->fp_status);
-+    FloatExceptionFlags pre_fflag = get_float_exception_flags(&env->fp_status);
-+    target_ulong ret = float32_to_int32(frs1, &env->fp_status);
-+    riscv_cpu_check_fflags(env, pre_fflag);
-+    return ret;
- }
- 
- target_ulong helper_fcvt_wu_s(CPURISCVState *env, uint64_t rs1)
- {
-     float32 frs1 = check_nanbox_s(env, rs1);
--    return (int32_t)float32_to_uint32(frs1, &env->fp_status);
-+    FloatExceptionFlags pre_fflag = get_float_exception_flags(&env->fp_status);
-+    target_ulong ret = (int32_t)float32_to_uint32(frs1, &env->fp_status);
-+    riscv_cpu_check_fflags(env, pre_fflag);
-+    return ret;
- }
- 
- target_ulong helper_fcvt_l_s(CPURISCVState *env, uint64_t rs1)
- {
-     float32 frs1 = check_nanbox_s(env, rs1);
--    return float32_to_int64(frs1, &env->fp_status);
-+    FloatExceptionFlags pre_fflag = get_float_exception_flags(&env->fp_status);
-+    target_ulong ret = float32_to_int64(frs1, &env->fp_status);
-+    riscv_cpu_check_fflags(env, pre_fflag);
-+    return ret;
- }
- 
- target_ulong helper_fcvt_lu_s(CPURISCVState *env, uint64_t rs1)
- {
-     float32 frs1 = check_nanbox_s(env, rs1);
--    return float32_to_uint64(frs1, &env->fp_status);
-+    FloatExceptionFlags pre_fflag = get_float_exception_flags(&env->fp_status);
-+    target_ulong ret = float32_to_uint64(frs1, &env->fp_status);
-+    riscv_cpu_check_fflags(env, pre_fflag);
-+    return ret;
- }
- 
- uint64_t helper_fcvt_s_w(CPURISCVState *env, target_ulong rs1)
-@@ -453,52 +496,83 @@ uint64_t helper_fsqrt_d(CPURISCVState *env, uint64_t frs1)
- 
- target_ulong helper_fle_d(CPURISCVState *env, uint64_t frs1, uint64_t frs2)
- {
--    return float64_le(frs1, frs2, &env->fp_status);
-+    FloatExceptionFlags pre_fflag = get_float_exception_flags(&env->fp_status);
-+    target_ulong ret = float64_le(frs1, frs2, &env->fp_status);
-+    riscv_cpu_check_fflags(env, pre_fflag);
-+    return ret;
- }
- 
- target_ulong helper_fleq_d(CPURISCVState *env, uint64_t frs1, uint64_t frs2)
- {
--    return float64_le_quiet(frs1, frs2, &env->fp_status);
-+    FloatExceptionFlags pre_fflag = get_float_exception_flags(&env->fp_status);
-+    target_ulong ret = float64_le_quiet(frs1, frs2, &env->fp_status);
-+    riscv_cpu_check_fflags(env, pre_fflag);
-+    return ret;
- }
- 
- target_ulong helper_flt_d(CPURISCVState *env, uint64_t frs1, uint64_t frs2)
- {
--    return float64_lt(frs1, frs2, &env->fp_status);
-+    FloatExceptionFlags pre_fflag = get_float_exception_flags(&env->fp_status);
-+    target_ulong ret = float64_lt(frs1, frs2, &env->fp_status);
-+    riscv_cpu_check_fflags(env, pre_fflag);
-+    return ret;
- }
- 
- target_ulong helper_fltq_d(CPURISCVState *env, uint64_t frs1, uint64_t frs2)
- {
--    return float64_lt_quiet(frs1, frs2, &env->fp_status);
-+    FloatExceptionFlags pre_fflag = get_float_exception_flags(&env->fp_status);
-+    target_ulong ret = float64_lt_quiet(frs1, frs2, &env->fp_status);
-+    riscv_cpu_check_fflags(env, pre_fflag);
-+    return ret;
- }
- 
- target_ulong helper_feq_d(CPURISCVState *env, uint64_t frs1, uint64_t frs2)
- {
--    return float64_eq_quiet(frs1, frs2, &env->fp_status);
-+    FloatExceptionFlags pre_fflag = get_float_exception_flags(&env->fp_status);
-+    target_ulong ret = float64_eq_quiet(frs1, frs2, &env->fp_status);
-+    riscv_cpu_check_fflags(env, pre_fflag);
-+    return ret;
- }
- 
- target_ulong helper_fcvt_w_d(CPURISCVState *env, uint64_t frs1)
- {
--    return float64_to_int32(frs1, &env->fp_status);
-+    FloatExceptionFlags pre_fflag = get_float_exception_flags(&env->fp_status);
-+    target_ulong ret = float64_to_int32(frs1, &env->fp_status);
-+    riscv_cpu_check_fflags(env, pre_fflag);
-+    return ret;
- }
- 
- uint64_t helper_fcvtmod_w_d(CPURISCVState *env, uint64_t value)
- {
--    return float64_to_int32_modulo(value, float_round_to_zero, &env->fp_status);
-+    FloatExceptionFlags pre_fflag = get_float_exception_flags(&env->fp_status);
-+    uint64_t ret = float64_to_int32_modulo(value, float_round_to_zero,
-+                                           &env->fp_status);
-+    riscv_cpu_check_fflags(env, pre_fflag);
-+    return ret;
- }
- 
- target_ulong helper_fcvt_wu_d(CPURISCVState *env, uint64_t frs1)
- {
--    return (int32_t)float64_to_uint32(frs1, &env->fp_status);
-+    FloatExceptionFlags pre_fflag = get_float_exception_flags(&env->fp_status);
-+    target_ulong ret = (int32_t)float64_to_uint32(frs1, &env->fp_status);
-+    riscv_cpu_check_fflags(env, pre_fflag);
-+    return ret;
- }
- 
- target_ulong helper_fcvt_l_d(CPURISCVState *env, uint64_t frs1)
- {
--    return float64_to_int64(frs1, &env->fp_status);
-+    FloatExceptionFlags pre_fflag = get_float_exception_flags(&env->fp_status);
-+    target_ulong ret = float64_to_int64(frs1, &env->fp_status);
-+    riscv_cpu_check_fflags(env, pre_fflag);
-+    return ret;
- }
- 
- target_ulong helper_fcvt_lu_d(CPURISCVState *env, uint64_t frs1)
- {
--    return float64_to_uint64(frs1, &env->fp_status);
-+    FloatExceptionFlags pre_fflag = get_float_exception_flags(&env->fp_status);
-+    target_ulong ret = float64_to_uint64(frs1, &env->fp_status);
-+    riscv_cpu_check_fflags(env, pre_fflag);
-+    return ret;
- }
- 
- uint64_t helper_fcvt_d_w(CPURISCVState *env, target_ulong rs1)
-@@ -619,35 +693,50 @@ target_ulong helper_fle_h(CPURISCVState *env, uint64_t rs1, uint64_t rs2)
- {
-     float16 frs1 = check_nanbox_h(env, rs1);
-     float16 frs2 = check_nanbox_h(env, rs2);
--    return float16_le(frs1, frs2, &env->fp_status);
-+    FloatExceptionFlags pre_fflag = get_float_exception_flags(&env->fp_status);
-+    target_ulong ret = float16_le(frs1, frs2, &env->fp_status);
-+    riscv_cpu_check_fflags(env, pre_fflag);
-+    return ret;
- }
- 
- target_ulong helper_fleq_h(CPURISCVState *env, uint64_t rs1, uint64_t rs2)
- {
-     float16 frs1 = check_nanbox_h(env, rs1);
-     float16 frs2 = check_nanbox_h(env, rs2);
--    return float16_le_quiet(frs1, frs2, &env->fp_status);
-+    FloatExceptionFlags pre_fflag = get_float_exception_flags(&env->fp_status);
-+    target_ulong ret = float16_le_quiet(frs1, frs2, &env->fp_status);
-+    riscv_cpu_check_fflags(env, pre_fflag);
-+    return ret;
- }
- 
- target_ulong helper_flt_h(CPURISCVState *env, uint64_t rs1, uint64_t rs2)
- {
-     float16 frs1 = check_nanbox_h(env, rs1);
-     float16 frs2 = check_nanbox_h(env, rs2);
--    return float16_lt(frs1, frs2, &env->fp_status);
-+    FloatExceptionFlags pre_fflag = get_float_exception_flags(&env->fp_status);
-+    target_ulong ret = float16_lt(frs1, frs2, &env->fp_status);
-+    riscv_cpu_check_fflags(env, pre_fflag);
-+    return ret;
- }
- 
- target_ulong helper_fltq_h(CPURISCVState *env, uint64_t rs1, uint64_t rs2)
- {
-     float16 frs1 = check_nanbox_h(env, rs1);
-     float16 frs2 = check_nanbox_h(env, rs2);
--    return float16_lt_quiet(frs1, frs2, &env->fp_status);
-+    FloatExceptionFlags pre_fflag = get_float_exception_flags(&env->fp_status);
-+    target_ulong ret = float16_lt_quiet(frs1, frs2, &env->fp_status);
-+    riscv_cpu_check_fflags(env, pre_fflag);
-+    return ret;
- }
- 
- target_ulong helper_feq_h(CPURISCVState *env, uint64_t rs1, uint64_t rs2)
- {
-     float16 frs1 = check_nanbox_h(env, rs1);
-     float16 frs2 = check_nanbox_h(env, rs2);
--    return float16_eq_quiet(frs1, frs2, &env->fp_status);
-+    FloatExceptionFlags pre_fflag = get_float_exception_flags(&env->fp_status);
-+    target_ulong ret = float16_eq_quiet(frs1, frs2, &env->fp_status);
-+    riscv_cpu_check_fflags(env, pre_fflag);
-+    return ret;
- }
- 
- target_ulong helper_fclass_h(CPURISCVState *env, uint64_t rs1)
-@@ -683,25 +772,37 @@ uint64_t helper_froundnx_h(CPURISCVState *env, uint64_t rs1)
- target_ulong helper_fcvt_w_h(CPURISCVState *env, uint64_t rs1)
- {
-     float16 frs1 = check_nanbox_h(env, rs1);
--    return float16_to_int32(frs1, &env->fp_status);
-+    FloatExceptionFlags pre_fflag = get_float_exception_flags(&env->fp_status);
-+    target_ulong ret = float16_to_int32(frs1, &env->fp_status);
-+    riscv_cpu_check_fflags(env, pre_fflag);
-+    return ret;
- }
- 
- target_ulong helper_fcvt_wu_h(CPURISCVState *env, uint64_t rs1)
- {
-     float16 frs1 = check_nanbox_h(env, rs1);
--    return (int32_t)float16_to_uint32(frs1, &env->fp_status);
-+    FloatExceptionFlags pre_fflag = get_float_exception_flags(&env->fp_status);
-+    target_ulong ret = (int32_t)float16_to_uint32(frs1, &env->fp_status);
-+    riscv_cpu_check_fflags(env, pre_fflag);
-+    return ret;
- }
- 
- target_ulong helper_fcvt_l_h(CPURISCVState *env, uint64_t rs1)
- {
-     float16 frs1 = check_nanbox_h(env, rs1);
--    return float16_to_int64(frs1, &env->fp_status);
-+    FloatExceptionFlags pre_fflag = get_float_exception_flags(&env->fp_status);
-+    target_ulong ret = float16_to_int64(frs1, &env->fp_status);
-+    riscv_cpu_check_fflags(env, pre_fflag);
-+    return ret;
- }
- 
- target_ulong helper_fcvt_lu_h(CPURISCVState *env, uint64_t rs1)
- {
-     float16 frs1 = check_nanbox_h(env, rs1);
--    return float16_to_uint64(frs1, &env->fp_status);
-+    FloatExceptionFlags pre_fflag = get_float_exception_flags(&env->fp_status);
-+    target_ulong ret = float16_to_uint64(frs1, &env->fp_status);
-+    riscv_cpu_check_fflags(env, pre_fflag);
-+    return ret;
- }
- 
- uint64_t helper_fcvt_h_w(CPURISCVState *env, target_ulong rs1)
++BOOL_FIELD(big_endian)
+ BOOL_FIELD(mmu)
+ BOOL_FIELD(pmp)
+ BOOL_FIELD(debug)
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index ee74cc5b20..cc793aef18 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -740,6 +740,13 @@ static void riscv_cpu_reset_hold(Object *obj, ResetType type)
+             env->mstatus = set_field(env->mstatus, MSTATUS_MDT, 1);
+         }
+     }
++    /*
++     * Model fixed-endian harts: MBE/SBE/UBE are initialized from the
++     * CPU configuration and are intentionally not writable via status CSRs.
++     */
++    env->mstatus = set_field(env->mstatus, MSTATUS_MBE, cpu->cfg.big_endian);
++    env->mstatus = set_field(env->mstatus, MSTATUS_SBE, cpu->cfg.big_endian);
++    env->mstatus = set_field(env->mstatus, MSTATUS_UBE, cpu->cfg.big_endian);
+     env->mcause = 0;
+     env->miclaim = MIP_SGEIP;
+     env->pc = env->resetvec;
 -- 
 2.54.0
 
