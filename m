@@ -4,114 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A11ABCD98E4
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 16:16:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D4DDCD98E1
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 16:23:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZWSA-0002LS-TE; Tue, 16 Jun 2026 12:15:54 -0400
+	id 1wZWYT-0004XN-QD; Tue, 16 Jun 2026 12:22:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wZWRv-0002HF-0h
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 12:15:47 -0400
-Received: from mail-yx1-xb12d.google.com ([2607:f8b0:4864:20::b12d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wZWRs-0001w2-PG
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 12:15:38 -0400
-Received: by mail-yx1-xb12d.google.com with SMTP id
- 956f58d0204a3-660512d80b4so50450d50.1
- for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 09:15:35 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1781626535; cv=none;
- d=google.com; s=arc-20240605;
- b=cWWGB0tgAEets0VyFcrBq0Jzp/3aI7NYBJM94kqGj5SoOTdsK2/tQhsYEGl3QR/g4d
- 1d8OJH/H+dkSp+q2xbyXPRtkJ4D1UbcESfRkP7Ra9BodKnpC50WJuChqER3eGLl6ic/9
- GViUTxwu+5jKrdB7BK+iZ4Edf5133a4QQdH4NcDpbYDzz2pTfltHbM01DWBlKXxAzU6K
- qSqgczyht2Fy0Lf/T1ZpsNzpgWIq47oCBUl7Rvg5mawEvX/fdMAU1MSPGOmE6pc8rxFV
- 68u4W/hzzVhAwiNz9ameDtjtoGFABquLk4jDhE8MsxbzLYHlzmVjB9PJITbRm+hofiom
- vZdA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=LLVwguNlI+Qh2NCF9WaQ5Y8JjgKFIw5l50opkptOCks=;
- fh=XkDcxgI35ocrFMcNShv78moWJRjgxn1fBL8CPzXhL5I=;
- b=CyOrXfM+cAD/vbIhrCskNyJAGMy4ED5OW/MEKWBTLzdE6AH70YLsn0WZEf0ZAjfHUf
- V2OXa++kqDGH9WX5pTCrkGSjMtZ5MVmtAUxwwHDt1tKWB2Ik0X0rd3KsvnyJX2o9dzu0
- Z5eJl8yncQolH/bGTlzA1kLhSKSbEU7TikTmr3NA4YqcWc1Vjfw1us1B8CAgOi9gJ/A9
- ToK38J0IqTly2cZrYUp2kaYQJC3NeRj3mQfMI1NHHGzJD+6YR8pCInHzdqgXqmzNf2ow
- Cni2RTs0u1t3kSOA/EgXT+dWSBo2HpKqARfAsXdVQeKo3/e/QhhVi24SSkEPQJd3WAaB
- Xwpw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1781626535; x=1782231335; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=LLVwguNlI+Qh2NCF9WaQ5Y8JjgKFIw5l50opkptOCks=;
- b=cuu5+XmhkubCa2Wgf2o9CV9EA1iDk6VNk2w/gjWQLtHzyW22v4xsx/Q+5Qx3MSigwq
- PZeYqMsGSPIKXZ6l+ea36xOlobqzW0mhEmXrScw1V2Te3cO1ChNli+eJNNMNdvmytB8I
- 3gWXRDFXVWNN3L8mwPrhbUhiDK8OTNyESVBMC5kmOYi3c6QQstayATri/SeeYj/VK/Bi
- QSBwtQhDo/Iaf65Fl5louN0LpNJVm6vW7qficTu+lWWyaAvFBR9czf79/xqfCjWxGzvd
- wtUHiixIiwRyZd0i1S0O7LnOektv1KRW2SBy61Oxl4HX71Xb5+bz1kPPwxX1dZDrGHnA
- 45VA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781626535; x=1782231335;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=LLVwguNlI+Qh2NCF9WaQ5Y8JjgKFIw5l50opkptOCks=;
- b=Pl/SryIeVembpxPrPVI3ESp+Egtm3yRGCZb+ucPsw3nbBrBEsFiWB7oxc6nGgrd6V7
- Zxnh9eCYPoqteyIemLYdO8TkzKqeOFzSLiH+VO+UqsIu7jnEYbcQTkHuoxMNAZmVQ8zi
- rhx794yUhoBLj/lhfqCoL0h5X9p84hdDOVC52drj+uWW1DmTfC2bo8i6pjfTRJwpI7dx
- imH/sf+wqv715g9IrqBDw4z3CncsctuiGI8V/KwrytcvI+tsc5desBlnaTEo/5I6XXUB
- iNM0UZM2OrNlILyVcgQzFkn2fUjyL33xTkMtTW0pvsfwFh5m/OgmRpI1+oyPnIufKlFh
- Ebdw==
-X-Gm-Message-State: AOJu0YxXlSa/1EKE8r2EoxJ4K1DY4sCIb9tRwiD102lHvMvvm4PBZrk7
- hTnZDhEvBSjgK2hMaSCPyce6KmrnkyOFl6lnTclj2jMvQZi+1JpTdaRcK0sf1ayE4wbeaS7bCiR
- mpoBNyyI+xsndZ3aTr4LWTHdGYV76SJ+7QLFWPGVtiw==
-X-Gm-Gg: AfdE7cndGF8VL+YyonNE5+3sdPcYFHKyyQUTE1Apj/Fdl0YUfIrMxgKxyZGKWmmIC+W
- d4E2E3RAGxd3jqsa8pSHkiLzpcsGvPA+ANdlTkU2grY5Z0aaQ5VB4iuKoQUO7Di4Bt2MrYm4pF5
- btQi55gdQu1/GFdHt0KChFY89/wwk8h6RG5Dv8BPfxP1A1UI5NpG25Qc72gt0oN2pdPnkVlB59T
- RQllTPnZ6bUhjcMu+Fn053q3WYCStoSIgkr0K1DrNtykP+N+2lVuGbd7GwzJHBZDxPbXRWci/uw
- YJoLo79nYHxn6P6HJMU6gWXP3RSDDTtep95tnCNxWStk8sqPJJ2uauemXV9r/L0ZVFM=
-X-Received: by 2002:a53:ab0f:0:b0:662:c0f6:77f5 with SMTP id
- 956f58d0204a3-662ca40a76emr171083d50.25.1781626534821; Tue, 16 Jun 2026
- 09:15:34 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1wZWYS-0004XB-KI; Tue, 16 Jun 2026 12:22:25 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1wZWYQ-0003Zn-FH; Tue, 16 Jun 2026 12:22:24 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
+ t=1781626926; bh=h/Z0rjicii+tMlkS13IS2KlBhX5GgAwz8GqpSuuflUs=;
+ h=Date:Subject:To:Cc:References:From:In-Reply-To;
+ b=ogovCSHejXZCaFZI7cYTB6m9ZB/x4xUtwRQrPAZ840/PG7MI3RdazykAfTNmhIoB0
+ zL2I6YuBsEE4JlZcXvZuNwgDXM3MJ6I5OJvDRvi5dfY1OjcZNMNpk6bCP9M0YvXBEn
+ 8o+lQZHrXe4ozDksZmX0q0EEbFrHfenLphXeqMc32DZpDIWPyS1P456VHlsqDPRhfk
+ 7V+0z1aktR0MACgNph6lCSOpeHzFrJfiIKq0+g7+81+Tfic2+JyWeqEkGfqWSjJH6t
+ 4IjfZiJG3fbTrdPCL9yQOlaGnt1RswgxQ2Xz8zhpD9NO/hHON7qh3yryYrGfTWD/j+
+ OEx/6Od9s+1fA==
+Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by isrv.corpit.ru (Postfix) with ESMTP id 8F5BC1B7F35;
+ Tue, 16 Jun 2026 19:22:06 +0300 (MSK)
+Message-ID: <906da372-3116-444f-919f-6cc3396fce0c@tls.msk.ru>
+Date: Tue, 16 Jun 2026 19:22:06 +0300
 MIME-Version: 1.0
-References: <20260616155554.264412-1-berrange@redhat.com>
- <20260616155554.264412-3-berrange@redhat.com>
-In-Reply-To: <20260616155554.264412-3-berrange@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 16 Jun 2026 17:15:22 +0100
-X-Gm-Features: AVVi8CdFlr3FYQBf7wBSbIYWZI8KebUltLDrKIvvA-mfqfBGJRgaWBcU3DHCm_Q
-Message-ID: <CAFEAcA8twCjEdr6R=JPEuWzf2+Gvuznro290ZZW8Eb0zubLpew@mail.gmail.com>
-Subject: Re: [RFC 2/7] qom: deprecated embedding object structs within other
- objects
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@mailo.com>, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Peter Xu <peterx@redhat.com>, 
- =?UTF-8?Q?Herv=C3=A9_Poussineau?= <hpoussin@reactos.org>, 
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- "Michael S. Tsirkin" <mst@redhat.com>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
- Aurelien Jarno <aurelien@aurel32.net>, Fabiano Rosas <farosas@suse.de>, 
- Paolo Bonzini <pbonzini@redhat.com>, BALATON Zoltan <balaton@eik.bme.hu>, 
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, 
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12d;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/2] Replace assert with bound checks in PnvPHB3
+To: Aditya Gupta <adityag@linux.ibm.com>, qemu-devel@nongnu.org
+Cc: qemu-ppc@nongnu.org, Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Zexiang Zhang <chan9yan9@gmail.com>, Nicholas Piggin <npiggin@gmail.com>,
+ Thomas Huth <thuth@redhat.com>, Miles Glenn <milesg@linux.ibm.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ qemu-stable <qemu-stable@nongnu.org>
+References: <20260326190438.734239-1-adityag@linux.ibm.com>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <20260326190438.734239-1-adityag@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -128,34 +114,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 16 Jun 2026 at 16:56, Daniel P. Berrang=C3=A9 <berrange@redhat.com>=
- wrote:
->
-> The QOM APIs currently allow objects to be either allocated directly
-> on the heap, or statically embedded inside the struct of another object.
->
-> For the latter QOM has logic to avoid calling 'free' on the object when
-> finalizers complete, however, this is not sufficient to make the
-> practice safe.
->
-> Users of QOM expect that if they call "object_ref" to acquire their own
-> reference, then object will never be freed as long as they hold it.
->
-> This expectation is broken when an instance is embedded, as the "owner"
-> object's may be finalized, which frees the memory that is storing the
-> embedded QOM instance, even if its ref-count is still live.
->
-> Worse still is that a user of a QOM object cannot easily tell if the
-> instance they're using is embedded or directly heap allocated.
->
-> Mark the APIs for embedding objects as deprecated as the first step
-> towards removal of this flawed design concept. All objects must now
-> be directly heap allocated going forward, and existing usage must be
-> incrementally converted.
+On 26.03.2026 22:04, Aditya Gupta wrote:
+> Overview
+> ========
+> 
+> PHB in Power8 supports 8 byte registers, and hence the ops structure
+> allows accessing of 8 bytes in 'pnv_phb3_reg_ops'
+> 
+> Both 'pnv_phb3_reg_read' & 'pnv_phb3_reg_write' pass the arguments as is
+> to 'pnv_phb3_config_{read,write}', if offset is PHB_CONFIG_DATA.
+> 
+> This when called with size as 8, causes following assert failure in
+> 'pci_host_config_read_common' & 'pci_host_config_write_common':
+> 
+>      assert(len <= 4);
+> 
+> This patch series splits it into two patches:
+> 1. Fix PnvPHB3 code so that it never calls pci_host_config_{read,write}_common
+>     with read/write size of >4, thus fixing the assert problem
+> 2. Replace the assert with bounds checking
+> 
+> Patch #2 should not have any functional change, since the issue is
+> already fixed by patch #1
 
-I think if you mark an API that we call in 800+ places and 150+ files
-as deprecated, mostly what will happen is nobody ever turns on the
---enable-deprecated option because the output will be full of noise...
+Hi!
 
--- PMM
+Is this a qemu-stable material?
+
+Thanks,
+
+/mjt
 
