@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8DF39CD98DA
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 10:06:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF354CD98CF
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 10:06:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZQgk-0006K9-Q6; Tue, 16 Jun 2026 06:06:34 -0400
+	id 1wZQgs-00078q-CU; Tue, 16 Jun 2026 06:06:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wZQgj-0006Em-V5
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 06:06:33 -0400
-Received: from mail-pg1-x532.google.com ([2607:f8b0:4864:20::532])
+ id 1wZQgq-0006v1-Ae
+ for qemu-devel@nongnu.org; Tue, 16 Jun 2026 06:06:40 -0400
+Received: from mail-pg1-x534.google.com ([2607:f8b0:4864:20::534])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wZQgi-0003BF-0z
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 06:06:33 -0400
-Received: by mail-pg1-x532.google.com with SMTP id
- 41be03b00d2f7-c8588f8fef3so1564749a12.0
- for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 03:06:31 -0700 (PDT)
+ id 1wZQgo-0003DG-Ky
+ for qemu-devel@nongnu.org; Tue, 16 Jun 2026 06:06:39 -0400
+Received: by mail-pg1-x534.google.com with SMTP id
+ 41be03b00d2f7-c85b2139015so1408343a12.2
+ for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 03:06:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1781604391; x=1782209191; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1781604397; x=1782209197; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=mKjw3Caa8EWbAlus8Dj+hIcL/xWzcqCPd2ngBCbDbuE=;
- b=ohxD/qEExUk97cMN72sCou9nSL6ThdoMNhX8ntJBvLbneP+/cgEhnZ9yo587Z4DcPu
- WkWyao+I2F/kow+fVLaqmISCfA10tvE/KxBbIFmRZ9h8e5m22mUKddcBrTmm6blUM/YQ
- wTZIeC9a9XLCWXboPxpBH+JTxr3oSQ3DVBE02ugpvqxa3nXSvhb42ubvHTZYLDKp1WBS
- imGl56yPCy/8FqhLjjltCP8aCBaGCR2XnnoHaVFSXqi3udaRy6kEYlr/91I6iKB41MRD
- WFqPOkyH+ffBTuvMJGlX+GbflKiOfqxaW7QMYzgJZ/uDg2yBRPkjEo+yMxOdoYgya+n0
- HDzw==
+ bh=IPNd6SRZTVpSELxV3dLcc+YGY5aEYk44oCfhXn4GB7c=;
+ b=IQH7y4HmM79cYbTZkEfyKIK1usfCOROgDZhs5whSV/JiaHfjeU88VMLNuLhXlCrWJ0
+ NXmLNoSm5lvBHkxnu+PT08X0lB9kU2DT5YeI+DU+RA6GCvS9pfzfvkljkH4f3nL1Blqx
+ +6YQmRX/Ca/qkkyTo3uVxUo/shWJztZGhSph+jJ1c31UbyYbu5yw9avlbkeMjuYWQWAP
+ SmXUN+qgBpYb/rh3e1Vi+rJ3um28M8Kd30ua0tcfuivexXf4NkqoyMD52OAUWoQ2F/kG
+ 3WsJge9r1K2yad3+2Lk5N8FcRJaovbKnETCVewx9iN1nG5LH8Zxfvj7cDHJIe+mvzFnH
+ KOpw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781604391; x=1782209191;
+ d=1e100.net; s=20251104; t=1781604397; x=1782209197;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=mKjw3Caa8EWbAlus8Dj+hIcL/xWzcqCPd2ngBCbDbuE=;
- b=c1ucwO4DfM8tdRJLNxhgMvN10w7PyIZXQkTzq4jKThXIeWa/nISrndNRNg1/nVpH4o
- jeWjNdd7phl3eNWdmb4T6p2FECutDCMjKHFSnHHmrbg/3EGsRCaMnBTbd9lgsdpZaWBA
- nNexpf0XkNFb4yW69rxryXact9JzfYrPVNaMNXh2bbJvN6wm7D169R0/l1ZNIXI1Dnsr
- LVn6vzaT5WgAz80WSLjURiI8s16C6OBVIyBEzRh+swCuiPefAueMuiwtSpiB0cZ21JOJ
- UL7J2SnmWN+8LSNEo+dBaVeV2uIULyesSNPTg7CrK4IrKM2/WZoFLEFgeHJoH6ARUiRP
- N+xg==
-X-Gm-Message-State: AOJu0YwnlcEN8t1nyNrWhKPhktpUlZ+FDCUrJb3xkLOOZQnuLE7McoZw
- hGiMri7HbDVcbzMj4rPrHec9Od/Y2I83lMVbyMsFNBrX0EemW86x+d0iNH4BJE4h
-X-Gm-Gg: Acq92OFzL5pCLzjR4nEcxF5r2hLQnffXdqVqyTm1JWbDxpC7b5a4wtAAaaEItIT6YHz
- OMW5O50IAXvFDoazT+Nuz6Fldhwc9jWtd0IQyUkgHgopFTlmeGmv59fiOs2hRrXfDE37xiknHTo
- 2ZjwJbk1Fx3od1DRIBfkoJG9N23ZQv3aXqEvOPqNllvQyFJrZGKAoqQfm4U1X/aycmXndKNrK9z
- B3ktQk1cTc+bsoRb99nokDsDI8K0Dx1UDKJCo4dr9XHMB0py4DiIHgpET3lY0IiyvIW7cVHp+5b
- 61CExHCw13mSepR41dOAIXR6TmjTmoUvcnm8ap95p5S5sPaIPcuP5zCmYNi+eANY2StjY0oKUNV
- RvOInFpIMfomOMoM5ZdhM71TE+ypi6OQCiPfnrh2M4A7LZGxZuYPuChdCxF3QXF//FVxGQU1S53
- xxKx+Cq5uuCHs/ydRmi+yemD06uZH8My/aK2mubKM3
-X-Received: by 2002:a05:6a20:ce46:b0:3b4:8aad:6337 with SMTP id
- adf61e73a8af0-3b7e49b8c55mr3424674637.15.1781604390684; 
- Tue, 16 Jun 2026 03:06:30 -0700 (PDT)
+ bh=IPNd6SRZTVpSELxV3dLcc+YGY5aEYk44oCfhXn4GB7c=;
+ b=RHjmokx0pcO0bWzxHm1V9hUAJ9tvZWYPayD3g20S31ktjRAFu9dCy9se5FSKolwN+9
+ 3Ay++an3WpWPC5LaKllMvVtazQhmUJONwzylwvjx9Zg63+EJo1xZLT+GHAfPyoRo4147
+ IwJwdn7XpXoTPmoEg/YPGWgm3f4l/1ctC9+NgvmZakkzRe/fyT1ONcmm7vt5fTu6r7GU
+ aFunbCRGQQlTU/mC/M9S1IXMqdTX772+1yWHBaOJMf/yVNSu41aZN5O8bwJAH9saaaJc
+ 6nh/FKcTnN//fecY/TEz6p2PQN4bOTbktBtlWhSDWljnE3GhX96voRLWZjvET1vaj4bj
+ zkhQ==
+X-Gm-Message-State: AOJu0YzaWyE+frhSkY5vBJGdcznxTt/o48JgPWmjEbZELBsbNEh0ssY2
+ iqDsnUK90jrQ0JVqIqt06ubVq4WzgxYyDGzEyzvFcZc5oqS5Mxfr657QY1AdZoiB
+X-Gm-Gg: Acq92OEmqHk9IJov37TLrrV06kYc5f/+GIj+e4eVeEgd1vNz+DtYqY9FzOWG5Zglzyt
+ 5hpwc+S7qNBztZjU1us+eFiH3RxW+1PEk6U5DTUtGyTfAGwJ3MFQ8AU5Rv5xv8yyhwKRz3i4MCq
+ J8mgkWEZVfHcZ65R+NfxG9KkX5anE6uhbjngR/3l7N/X2K65fdnhEqD7FPK0ixdfVuLdM2CJcSP
+ yrYqc/OGchQHa4FV7fT02zN4AJcHIFzlvYuBX5rT+34fLNqBmS79uYDJt4tGcI4ePSuKWGjhI4q
+ 5MxSAS8nPjU2YMI6MiNoHGKRXZJG6h4ofOSgTO4yqJp2O+XiQzLLMPCSUxmfhaipGnXYS88+71g
+ lvPipDodfuaImomLsCP3EgSAfGgRd7wZ9XUlSHAVReIByuO9e3UzSinkseoR6tchqte/dtJnTz4
+ YilGxv2cf4tkKyavaHS6QVMTkYN6ZwOBfo/WQWnsiv
+X-Received: by 2002:a05:6a20:2443:b0:3b4:813d:dc1 with SMTP id
+ adf61e73a8af0-3b7e49c16eemr3372376637.31.1781604397219; 
+ Tue, 16 Jun 2026 03:06:37 -0700 (PDT)
 Received: from toolbx.alistair23.me ([2403:581e:fdf9:0:13b2:851f:d9cb:44c5])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-c866519f0a6sm10916735a12.22.2026.06.16.03.06.27
+ 41be03b00d2f7-c866519f0a6sm10916735a12.22.2026.06.16.03.06.34
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 16 Jun 2026 03:06:30 -0700 (PDT)
+ Tue, 16 Jun 2026 03:06:36 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org
 Cc: alistair23@gmail.com, Anton Johansson <anjo@rev.ng>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 16/83] target/riscv: Fix size of badaddr and bins
-Date: Tue, 16 Jun 2026 20:04:19 +1000
-Message-ID: <20260616100527.1939565-17-alistair.francis@wdc.com>
+Subject: [PULL 18/83] target/riscv: Fix size of priv_ver and vext_ver
+Date: Tue, 16 Jun 2026 20:04:21 +1000
+Message-ID: <20260616100527.1939565-19-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616100527.1939565-1-alistair.francis@wdc.com>
 References: <20260616100527.1939565-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::532;
- envelope-from=alistair23@gmail.com; helo=mail-pg1-x532.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::534;
+ envelope-from=alistair23@gmail.com; helo=mail-pg1-x534.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -105,87 +105,74 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Anton Johansson <anjo@rev.ng>
 
-Fix these fields to 64 bits as they cannot be made smaller. Also make
-sure stores to these fields from TCG are 64 bits in size to avoid
-incorrect values on big endian hosts.
+Fix these fields to 32 bits, also update corresponding priv_ver field
+in DisasContext as well as function arguments. 32 bits was chosen
+since it's large enough to fit all stored values and int/int32_t is
+used in RISCVCPUDef and a few functions.
 
 Signed-off-by: Anton Johansson <anjo@rev.ng>
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Acked-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20260520125406.28693-6-anjo@rev.ng>
+Message-ID: <20260520125406.28693-8-anjo@rev.ng>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/cpu.h                             | 4 ++--
- target/riscv/machine.c                         | 2 +-
- target/riscv/translate.c                       | 6 ++++--
- target/riscv/insn_trans/trans_privileged.c.inc | 2 +-
- 4 files changed, 8 insertions(+), 6 deletions(-)
+ target/riscv/cpu.h       | 6 +++---
+ target/riscv/machine.c   | 4 ++--
+ target/riscv/translate.c | 2 +-
+ 3 files changed, 6 insertions(+), 6 deletions(-)
 
 diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-index 6692bff456..2cc1b68f34 100644
+index 50f9ce1f86..5336344cba 100644
 --- a/target/riscv/cpu.h
 +++ b/target/riscv/cpu.h
-@@ -235,8 +235,8 @@ struct CPUArchState {
-     uint8_t frm;
-     float_status fp_status;
+@@ -240,8 +240,8 @@ struct CPUArchState {
  
--    target_ulong badaddr;
--    target_ulong bins;
-+    uint64_t badaddr;
-+    uint64_t bins;
+     uint64_t guest_phys_fault_addr;
  
-     target_ulong guest_phys_fault_addr;
+-    target_ulong priv_ver;
+-    target_ulong vext_ver;
++    uint32_t priv_ver;
++    uint32_t vext_ver;
  
-diff --git a/target/riscv/machine.c b/target/riscv/machine.c
-index 5c692e0fe6..b7790c14d0 100644
---- a/target/riscv/machine.c
-+++ b/target/riscv/machine.c
-@@ -457,7 +457,7 @@ const VMStateDescription vmstate_riscv_cpu = {
-         VMSTATE_UINT64(env.load_res, RISCVCPU),
-         VMSTATE_UINT64(env.load_val, RISCVCPU),
-         VMSTATE_UINT8(env.frm, RISCVCPU),
--        VMSTATE_UINTTL(env.badaddr, RISCVCPU),
-+        VMSTATE_UINT64(env.badaddr, RISCVCPU),
-         VMSTATE_UINTTL(env.guest_phys_fault_addr, RISCVCPU),
-         VMSTATE_UINTTL(env.priv_ver, RISCVCPU),
-         VMSTATE_UINTTL(env.vext_ver, RISCVCPU),
-diff --git a/target/riscv/translate.c b/target/riscv/translate.c
-index 7c23996271..1ea7faea4c 100644
---- a/target/riscv/translate.c
-+++ b/target/riscv/translate.c
-@@ -273,7 +273,7 @@ static void generate_exception(DisasContext *ctx, RISCVException excp)
- 
- static void gen_exception_illegal(DisasContext *ctx)
- {
--    tcg_gen_st_i32(tcg_constant_i32(ctx->opcode), tcg_env,
-+    tcg_gen_st_i64(tcg_constant_i64(ctx->opcode), tcg_env,
-                    offsetof(CPURISCVState, bins));
-     if (ctx->virt_inst_excp) {
-         generate_exception(ctx, RISCV_EXCP_VIRT_INSTRUCTION_FAULT);
-@@ -284,7 +284,9 @@ static void gen_exception_illegal(DisasContext *ctx)
- 
- static void gen_exception_inst_addr_mis(DisasContext *ctx, TCGv target)
- {
--    tcg_gen_st_tl(target, tcg_env, offsetof(CPURISCVState, badaddr));
-+    TCGv_i64 ext = tcg_temp_new_i64();
-+    tcg_gen_extu_tl_i64(ext, target);
-+    tcg_gen_st_i64(ext, tcg_env, offsetof(CPURISCVState, badaddr));
-     generate_exception(ctx, RISCV_EXCP_INST_ADDR_MIS);
+     /* RISCVMXL, but uint32_t for vmstate migration */
+     uint32_t misa_mxl;      /* current mxl */
+@@ -846,7 +846,7 @@ bool riscv_cpu_eff_priv(CPURISCVState *env, int *priv, bool *virt)
  }
  
-diff --git a/target/riscv/insn_trans/trans_privileged.c.inc b/target/riscv/insn_trans/trans_privileged.c.inc
-index 8a62b4cfcd..a8eaccef67 100644
---- a/target/riscv/insn_trans/trans_privileged.c.inc
-+++ b/target/riscv/insn_trans/trans_privileged.c.inc
-@@ -68,7 +68,7 @@ static bool trans_ebreak(DisasContext *ctx, arg_ebreak *a)
-     if (pre == 0x01f01013 && ebreak == 0x00100073 && post == 0x40705013) {
-         generate_exception(ctx, RISCV_EXCP_SEMIHOST);
-     } else {
--        tcg_gen_st_tl(tcg_constant_tl(ebreak_addr), tcg_env,
-+        tcg_gen_st_i64(tcg_constant_i64(ebreak_addr), tcg_env,
-                       offsetof(CPURISCVState, badaddr));
-         generate_exception(ctx, RISCV_EXCP_BREAKPOINT);
-     }
+ static inline bool riscv_cpu_allow_16bit_insn(const RISCVCPUConfig *cfg,
+-                                              target_long priv_ver,
++                                              uint32_t priv_ver,
+                                               uint32_t misa_ext)
+ {
+     /* In priv spec version 1.12 or newer, C always implies Zca */
+diff --git a/target/riscv/machine.c b/target/riscv/machine.c
+index a4d337c27a..b6a85ccd3e 100644
+--- a/target/riscv/machine.c
++++ b/target/riscv/machine.c
+@@ -459,8 +459,8 @@ const VMStateDescription vmstate_riscv_cpu = {
+         VMSTATE_UINT8(env.frm, RISCVCPU),
+         VMSTATE_UINT64(env.badaddr, RISCVCPU),
+         VMSTATE_UINT64(env.guest_phys_fault_addr, RISCVCPU),
+-        VMSTATE_UINTTL(env.priv_ver, RISCVCPU),
+-        VMSTATE_UINTTL(env.vext_ver, RISCVCPU),
++        VMSTATE_UINT32(env.priv_ver, RISCVCPU),
++        VMSTATE_UINT32(env.vext_ver, RISCVCPU),
+         VMSTATE_UINT32(env.misa_mxl, RISCVCPU),
+         VMSTATE_UINT32(env.misa_ext, RISCVCPU),
+         VMSTATE_UNUSED(4),
+diff --git a/target/riscv/translate.c b/target/riscv/translate.c
+index 1ea7faea4c..18a1e0ae99 100644
+--- a/target/riscv/translate.c
++++ b/target/riscv/translate.c
+@@ -59,7 +59,7 @@ typedef struct DisasContext {
+     DisasContextBase base;
+     target_ulong cur_insn_len;
+     target_ulong pc_save;
+-    target_ulong priv_ver;
++    uint32_t priv_ver;
+     RISCVMXL misa_mxl_max;
+     RISCVMXL xl;
+     RISCVMXL address_xl;
 -- 
 2.54.0
 
