@@ -4,51 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F185ECD98DA
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 09:52:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8F20CD98DA
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 10:04:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZQTG-0001dI-Ng; Tue, 16 Jun 2026 05:52:38 -0400
+	id 1wZQeH-0004OQ-AE; Tue, 16 Jun 2026 06:04:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lixianglai@loongson.cn>)
- id 1wZQTD-0001cw-56
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 05:52:35 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <lixianglai@loongson.cn>) id 1wZQT9-0007US-4a
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 05:52:34 -0400
-Received: from loongson.cn (unknown [10.2.5.185])
- by gateway (Coremail) with SMTP id _____8Bxt3jRHDFqLbQUAA--.29489S3;
- Tue, 16 Jun 2026 17:52:17 +0800 (CST)
-Received: from localhost.localdomain (unknown [10.2.5.185])
- by front1 (Coremail) with SMTP id qMiowJCxGODQHDFqkBOoAA--.56955S2;
- Tue, 16 Jun 2026 17:52:16 +0800 (CST)
-From: Xianglai Li <lixianglai@loongson.cn>
-To: qemu-devel@nongnu.org,
-	lixianglai@loongson.cn
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Bibo Mao <maobibo@loongson.cn>, Song Gao <gaosong@loongson.cn>
-Subject: [PATCH V2] target/loongarch: clear the registers when cpu is reset
-Date: Tue, 16 Jun 2026 17:25:54 +0800
-Message-Id: <20260616092554.1704380-1-lixianglai@loongson.cn>
-X-Mailer: git-send-email 2.39.1
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1wZQeF-0004Nn-Lj
+ for qemu-devel@nongnu.org; Tue, 16 Jun 2026 06:03:59 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1wZQeD-00028d-1t
+ for qemu-devel@nongnu.org; Tue, 16 Jun 2026 06:03:59 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1781604234;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=ocN4TMh4a49jzz/P5LZezRinQosZaAjc2LCF+4G99kg=;
+ b=YCmomaTPff7gtprhJRZgkNk2W+0tkR4RBPbSoQCJGLKSxTkC6BAUmg7k/tJ0lPn/hsDYGi
+ 4o8UQa73Wv3aAklT7nN3L51GdUKN4Zf1vtruqF47qRuE+yIzJLK6dpPVE9hUprXFzQ2IOw
+ fL5euh8n0Xhl6Xe/pO0KGKOdv9w7brs=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-367-e2ssvhUSOP-Uoe-AE-jiPA-1; Tue,
+ 16 Jun 2026 06:03:51 -0400
+X-MC-Unique: e2ssvhUSOP-Uoe-AE-jiPA-1
+X-Mimecast-MFC-AGG-ID: e2ssvhUSOP-Uoe-AE-jiPA_1781604230
+Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 0B7321955DB4; Tue, 16 Jun 2026 10:03:49 +0000 (UTC)
+Received: from redhat.com (unknown [10.44.34.4])
+ by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4914B1624; Tue, 16 Jun 2026 10:03:44 +0000 (UTC)
+Date: Tue, 16 Jun 2026 12:03:42 +0200
+From: Kevin Wolf <kwolf@redhat.com>
+To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Cc: Christian Barry <christian.barry@usp.br>, qemu-devel@nongnu.org,
+ Eric Blake <eblake@redhat.com>, John Snow <jsnow@redhat.com>,
+ qemu-block@nongnu.org, Hanna Reitz <hreitz@redhat.com>,
+ David de Barros Tadokoro <davidbtadokoro@usp.br>,
+ Eduardo Augusto Cavalcanti <eduardoaugustoabc@ime.usp.br>
+Subject: Re: [PATCH] block: qcow2-bitmap: fix persistent bitmap corruption on
+ ENOSPC
+Message-ID: <ajEffqTgNxUEncoj@redhat.com>
+References: <20260610023337.165474-1-christian.barry@usp.br>
+ <c2a0d86c-5989-40ca-9a7c-265b15e6b1c6@yandex-team.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJCxGODQHDFqkBOoAA--.56955S2
-X-CM-SenderInfo: 5ol0xt5qjotxo6or00hjvr0hdfq/
-X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
- ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
- nUUI43ZEXa7xR_UUUUUUUUU==
-Received-SPF: pass client-ip=114.242.206.163;
- envelope-from=lixianglai@loongson.cn; helo=mail.loongson.cn
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+In-Reply-To: <c2a0d86c-5989-40ca-9a7c-265b15e6b1c6@yandex-team.ru>
+X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 8
+X-Spam_score: 0.8
+X-Spam_bar: /
+X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -64,194 +89,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Use virt-manager to start a virtual machine, and then use the following
-command to manually trigger the crash of the virtual machine:
-echo c > /proc/sysrq-trigger
+Am 16.06.2026 um 11:06 hat Vladimir Sementsov-Ogievskiy geschrieben:
+> 10.06.26 05:33, Christian Barry пишет:
+> > From: Christian Barry <christian.barry@usp.br>
+> > 
+> > Changed qcow2_co_remove_persistent_dirty_bitmap() to treat free_bitmap_clusters()
+> > failure as fatal and roll back the header update through a new helper
+> > function rollback_ext_header_and_dir_helper(), which was also applied
+> > to update_ext_header_and_dir(), which had internal rollback logic.
+> > Changed bitmap_list_store() to zero the cluster tail after write,
+> > guaranteeing that qemu-img won't parse into stale bytes.
+> > 
+> > Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3516
+> 
+> Hi!
+> 
+> First, seem like two different fixes merged into one commit, please if
+> possible, make them separate two commits.
+> 
+> Next, please, make commit messages more descriptive, about what the
+> issue we solve (link is good as additional information, but the commit
+> message itself should be complete).
+> 
+> For example, I don't understand free_bitmap_clusters makes the image
+> unreadable. And we we fix it in one place, leaving other calls to
+> free_bitmap_clusters() unchanged. Could we fix free_bitmap_clusters()
+> itself? See also my comments below
 
-After the VM is abnormal, the ESTAT register has a certain probability of
-remaining interrupted. Then the VM is forced to restart and the VM is
-suspended in the interrupt handling function during startup.
+I haven't looked at the patch yet, but this sounds like apart from
+splitting the patches into one logical change per patch and improving
+the commit message, the patch series should also include a test case
+(probably qemu-iotests) that demonstrates the problem and how the patch
+changes behaviour.
 
-In order to clear the remaining interrupt information in the ESTAT
-register, we carried out the operation and checked the status of other
-registers during the reset process:
-
-Set the CSR_CRMD, CSR_ESTAT, CSR_MSGIS and CSR_PERFCTRL registers to the
-reset state when the CPU is reset.
-
-Signed-off-by: Xianglai Li <lixianglai@loongson.cn>
----
-Cc: Alex Bennée <alex.bennee@linaro.org>
-Cc: Bibo Mao <maobibo@loongson.cn>
-Cc: Song Gao <gaosong@loongson.cn>
-
-changelog:
-V1->V2:
-1.Add a description of the issues related to this patch
-2.Replace the macro definition MAX_PERF_EVENTS with the variable
-perf_event_num as the condition for the for loop.
-3.Rebase against the latest codebase.
-4.Refer to the usage of end_reset_fields on ARM and other architectures,
-and modify the current implementation accordingly.
-
-Signed-off-by: Xianglai Li <lixianglai@loongson.cn>
----
- target/loongarch/cpu-csr.h |  7 +++++++
- target/loongarch/cpu.c     | 41 +++++++++++++++++---------------------
- target/loongarch/cpu.h     | 22 +++++++++++---------
- 3 files changed, 38 insertions(+), 32 deletions(-)
-
-diff --git a/target/loongarch/cpu-csr.h b/target/loongarch/cpu-csr.h
-index d860417af2..d936af8e57 100644
---- a/target/loongarch/cpu-csr.h
-+++ b/target/loongarch/cpu-csr.h
-@@ -211,6 +211,13 @@ FIELD(CSR_DMW_64, VSEG, 60, 4)
- #define LOONGARCH_CSR_PERFCTRL(N)    (0x200 + 2 * N)
- #define LOONGARCH_CSR_PERFCNTR(N)    (0x201 + 2 * N)
- 
-+FIELD(CSR_PERFCTRL, EV, 0, 10)
-+FIELD(CSR_PERFCTRL, PLV0, 16, 1)
-+FIELD(CSR_PERFCTRL, PLV1, 17, 1)
-+FIELD(CSR_PERFCTRL, PLV2, 18, 1)
-+FIELD(CSR_PERFCTRL, PLV3, 19, 1)
-+FIELD(CSR_PERFCTRL, PMIE, 20, 1)
-+
- /* Debug CSRs */
- #define LOONGARCH_CSR_DBG            0x500 /* debug config */
- FIELD(CSR_DBG, DST, 0, 1)
-diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
-index fb03424ffa..aa6ecd9da2 100644
---- a/target/loongarch/cpu.c
-+++ b/target/loongarch/cpu.c
-@@ -623,44 +623,39 @@ static void loongarch_cpu_reset_hold(Object *obj, ResetType type)
-     env->fcsr0 = 0x0;
- 
-     int n;
--    /* Set csr registers value after reset, see the manual 6.4. */
--    sys->CSR_CRMD = FIELD_DP64(sys->CSR_CRMD, CSR_CRMD, PLV, 0);
--    sys->CSR_CRMD = FIELD_DP64(sys->CSR_CRMD, CSR_CRMD, IE, 0);
--    sys->CSR_CRMD = FIELD_DP64(sys->CSR_CRMD, CSR_CRMD, DA, 1);
--    sys->CSR_CRMD = FIELD_DP64(sys->CSR_CRMD, CSR_CRMD, PG, 0);
--    sys->CSR_CRMD = FIELD_DP64(sys->CSR_CRMD, CSR_CRMD, DATF, 0);
--    sys->CSR_CRMD = FIELD_DP64(sys->CSR_CRMD, CSR_CRMD, DATM, 0);
- 
--    sys->CSR_EUEN = FIELD_DP64(sys->CSR_EUEN, CSR_EUEN, FPE, 0);
--    sys->CSR_EUEN = FIELD_DP64(sys->CSR_EUEN, CSR_EUEN, SXE, 0);
--    sys->CSR_EUEN = FIELD_DP64(sys->CSR_EUEN, CSR_EUEN, ASXE, 0);
--    sys->CSR_EUEN = FIELD_DP64(sys->CSR_EUEN, CSR_EUEN, BTE, 0);
-+    memset(sys, 0, offsetof(CPUSysState, end_reset_fields));
- 
--    sys->CSR_MISC = 0;
--
--    sys->CSR_ECFG = FIELD_DP64(sys->CSR_ECFG, CSR_ECFG, VS, 0);
--    sys->CSR_ECFG = FIELD_DP64(sys->CSR_ECFG, CSR_ECFG, LIE, 0);
-+    /* Set csr registers value after reset, see the manual 6.4. */
-+    sys->CSR_CRMD = FIELD_DP64(sys->CSR_CRMD, CSR_CRMD, DA, 1);
- 
--    sys->CSR_ESTAT = sys->CSR_ESTAT & (~MAKE_64BIT_MASK(0, 2));
--    sys->CSR_RVACFG = FIELD_DP64(sys->CSR_RVACFG, CSR_RVACFG, RBITS, 0);
-     sys->CSR_CPUID = cs->cpu_index;
-     sys->CSR_TCFG = FIELD_DP64(sys->CSR_TCFG, CSR_TCFG, EN, 0);
-     sys->CSR_LLBCTL = FIELD_DP64(sys->CSR_LLBCTL, CSR_LLBCTL, KLO, 0);
-     sys->CSR_TLBRERA = FIELD_DP64(sys->CSR_TLBRERA, CSR_TLBRERA, ISTLBR, 0);
-     sys->CSR_MERRCTL = FIELD_DP64(sys->CSR_MERRCTL, CSR_MERRCTL, ISMERR, 0);
-     sys->CSR_TID = cs->cpu_index;
-+
-+    sys->CSR_DBG = FIELD_DP64(sys->CSR_DBG, CSR_DBG, DST, 0);
-+    for (n = 0; n < env->perf_event_num; n++) {
-+        sys->CSR_PERFCTRL[n] = FIELD_DP64(sys->CSR_PERFCTRL[n], CSR_PERFCTRL,
-+                                          PLV0, 0);
-+        sys->CSR_PERFCTRL[n] = FIELD_DP64(sys->CSR_PERFCTRL[n], CSR_PERFCTRL,
-+                                          PLV1, 0);
-+        sys->CSR_PERFCTRL[n] = FIELD_DP64(sys->CSR_PERFCTRL[n], CSR_PERFCTRL,
-+                                          PLV2, 0);
-+        sys->CSR_PERFCTRL[n] = FIELD_DP64(sys->CSR_PERFCTRL[n], CSR_PERFCTRL,
-+                                          PLV3, 0);
-+        sys->CSR_PERFCTRL[n] = FIELD_DP64(sys->CSR_PERFCTRL[n], CSR_PERFCTRL,
-+                                          PMIE, 0);
-+    }
-+
-     /*
-      * Workaround for edk2-stable202408, CSR PGD register is set only if
-      * its value is equal to zero for boot cpu, it causes reboot issue.
-      *
-      * Here clear CSR registers relative with TLB.
-      */
--    sys->CSR_PGDH = 0;
--    sys->CSR_PGDL = 0;
--    sys->CSR_PWCH = 0;
--    sys->CSR_EENTRY = 0;
--    sys->CSR_TLBRENTRY = 0;
--    sys->CSR_MERRENTRY = 0;
-     /* set CSR_PWCL.PTBASE and CSR_STLBPS.PS bits from CSR_PRCFG2 */
-     if (sys->CSR_PRCFG2 == 0) {
-         sys->CSR_PRCFG2 = 0x3fffff000;
-diff --git a/target/loongarch/cpu.h b/target/loongarch/cpu.h
-index ad30c73167..2576239b31 100644
---- a/target/loongarch/cpu.h
-+++ b/target/loongarch/cpu.h
-@@ -325,22 +325,30 @@ typedef struct CPUSysState {
-     uint64_t CSR_MISC;
-     uint64_t CSR_ECFG;
-     uint64_t CSR_ESTAT;
-+    uint64_t CSR_PGDL;
-+    uint64_t CSR_PGDH;
-+    uint64_t CSR_EENTRY;
-+    uint64_t CSR_PWCH;
-+    uint64_t CSR_RVACFG;
-+    uint64_t CSR_TLBRENTRY;
-+    uint64_t CSR_MERRENTRY;
-+    /* Msg interrupt registers */
-+    uint64_t CSR_MSGIS[N_MSGIS];
-+
-+    /* Fields up to this point are cleared by a CPU reset */
-+    struct {} end_reset_fields;
-+
-     uint64_t CSR_ERA;
-     uint64_t CSR_BADV;
-     uint64_t CSR_BADI;
--    uint64_t CSR_EENTRY;
-     uint64_t CSR_TLBIDX;
-     uint64_t CSR_TLBEHI;
-     uint64_t CSR_TLBELO0;
-     uint64_t CSR_TLBELO1;
-     uint64_t CSR_ASID;
--    uint64_t CSR_PGDL;
--    uint64_t CSR_PGDH;
-     uint64_t CSR_PGD;
-     uint64_t CSR_PWCL;
--    uint64_t CSR_PWCH;
-     uint64_t CSR_STLBPS;
--    uint64_t CSR_RVACFG;
-     uint64_t CSR_CPUID;
-     uint64_t CSR_PRCFG1;
-     uint64_t CSR_PRCFG2;
-@@ -354,7 +362,6 @@ typedef struct CPUSysState {
-     uint64_t CSR_LLBCTL;
-     uint64_t CSR_IMPCTL1;
-     uint64_t CSR_IMPCTL2;
--    uint64_t CSR_TLBRENTRY;
-     uint64_t CSR_TLBRBADV;
-     uint64_t CSR_TLBRERA;
-     uint64_t CSR_TLBRSAVE;
-@@ -365,7 +372,6 @@ typedef struct CPUSysState {
-     uint64_t CSR_MERRCTL;
-     uint64_t CSR_MERRINFO1;
-     uint64_t CSR_MERRINFO2;
--    uint64_t CSR_MERRENTRY;
-     uint64_t CSR_MERRERA;
-     uint64_t CSR_MERRSAVE;
-     uint64_t CSR_CTAG;
-@@ -375,8 +381,6 @@ typedef struct CPUSysState {
-     uint64_t CSR_DBG;
-     uint64_t CSR_DERA;
-     uint64_t CSR_DSAVE;
--    /* Msg interrupt registers */
--    uint64_t CSR_MSGIS[N_MSGIS];
-     uint64_t CSR_MSGIR;
-     uint64_t CSR_MSGIE;
- } CPUSysState;
--- 
-2.39.1
+Kevin
 
 
