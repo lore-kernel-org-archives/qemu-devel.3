@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE091CD98DA
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 15:56:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1006CD98E1
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 15:57:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZW9J-00027t-A7; Tue, 16 Jun 2026 11:56:25 -0400
+	id 1wZW9x-0002YB-4t; Tue, 16 Jun 2026 11:57:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wZW9I-00027l-3t
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 11:56:24 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1wZW9g-0002Nw-IE
+ for qemu-devel@nongnu.org; Tue, 16 Jun 2026 11:56:49 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wZW9G-0003o8-B8
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 11:56:23 -0400
+ id 1wZW9e-0003pW-Ov
+ for qemu-devel@nongnu.org; Tue, 16 Jun 2026 11:56:48 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781625381;
+ s=mimecast20190719; t=1781625402;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=TTqi9MQR7wiJYeoYzsF+QEaiQ0Xxlem9KZFK9Xjbd84=;
- b=W4qYUbo5m9mnkEhllDPxTShDbaKUBWzvkatmiHVMVDCHHPzazsvuEwyOmggeZuKNUe7xbp
- ZKpq3lY/Wh2Lr35emGAngtPg77VQyjnwIUl4JtnnVqJy3Hz1lSQjiz11yfBmHczCJdbOYh
- e+NBBzXxucsSh3paSFvRIcM8bTk2X8k=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=kMrxoR+qtQ8YIacApPzKbmwL4gIuSvYrdRw8AcbTj6U=;
+ b=TEkRZmp/PMHx/OQIh7c93AUCTi34ARWoyFcOdjkYl/dKTSd/xXXJIExjHaW0dugDXx2TST
+ oKfeV6GhvjL+vCsdwt9zXeMSKziqFBfHnxK792BPNnVedlLIDs6Noi36Z1urP6GK6cb/XD
+ OMjnJf1/D8GKuo2V28a2RypctjPDnzw=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-607-uVb3ePQKNpevU-_hWYl0SQ-1; Tue,
- 16 Jun 2026 11:56:18 -0400
-X-MC-Unique: uVb3ePQKNpevU-_hWYl0SQ-1
-X-Mimecast-MFC-AGG-ID: uVb3ePQKNpevU-_hWYl0SQ_1781625376
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-570-A_ekmGo-OF6j-ojGcfvClQ-1; Tue,
+ 16 Jun 2026 11:56:39 -0400
+X-MC-Unique: A_ekmGo-OF6j-ojGcfvClQ-1
+X-Mimecast-MFC-AGG-ID: A_ekmGo-OF6j-ojGcfvClQ_1781625398
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id F01B91800841; Tue, 16 Jun 2026 15:56:14 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id DB87219540D5; Tue, 16 Jun 2026 15:56:37 +0000 (UTC)
 Received: from berrange.com (unknown [10.44.49.111])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id B88A2195411C; Tue, 16 Jun 2026 15:56:08 +0000 (UTC)
+ id A19A1195419E; Tue, 16 Jun 2026 15:56:32 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
@@ -61,25 +61,25 @@ Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
  Paolo Bonzini <pbonzini@redhat.com>, BALATON Zoltan <balaton@eik.bme.hu>,
  Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [RFC 2/7] qom: deprecated embedding object structs within other
- objects
-Date: Tue, 16 Jun 2026 16:55:49 +0100
-Message-ID: <20260616155554.264412-3-berrange@redhat.com>
+Subject: [RFC 6/7] hw/isa: convert PIIX embedded QOM objects to heap allocated
+Date: Tue, 16 Jun 2026 16:55:53 +0100
+Message-ID: <20260616155554.264412-7-berrange@redhat.com>
 In-Reply-To: <20260616155554.264412-1-berrange@redhat.com>
 References: <20260616155554.264412-1-berrange@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+X-Spam_score_int: 8
+X-Spam_score: 0.8
+X-Spam_bar: /
+X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,150 +95,184 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The QOM APIs currently allow objects to be either allocated directly
-on the heap, or statically embedded inside the struct of another object.
+Update for the new preferred QOM design by removing embedded QOM
+objects from the PIIXState struct for the RTC, IDE, UHCI, PM,
+IRQ and memory region classes.
 
-For the latter QOM has logic to avoid calling 'free' on the object when
-finalizers complete, however, this is not sufficient to make the
-practice safe.
-
-Users of QOM expect that if they call "object_ref" to acquire their own
-reference, then object will never be freed as long as they hold it.
-
-This expectation is broken when an instance is embedded, as the "owner"
-object's may be finalized, which frees the memory that is storing the
-embedded QOM instance, even if its ref-count is still live.
-
-Worse still is that a user of a QOM object cannot easily tell if the
-instance they're using is embedded or directly heap allocated.
-
-Mark the APIs for embedding objects as deprecated as the first step
-towards removal of this flawed design concept. All objects must now
-be directly heap allocated going forward, and existing usage must be
-incrementally converted.
+XXXX:  there seems to be little benefit in having any of the
+instance fields for RTC, IDE, UHCI, PM & IRQ objects.  These
+objects are all kept alive via the 'child' property which owns
+the primary reference. The instance fields are accessed durnig
+setup and then never again, so all these instances fields could
+arguably go away entirely.
 
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- include/qom/object.h | 28 ++++++++++++++++++++++++----
- qom/object.c         |  6 ++++++
- 2 files changed, 30 insertions(+), 4 deletions(-)
+ hw/isa/piix.c                 | 65 ++++++++++++++++++++++-------------
+ include/hw/southbridge/piix.h | 12 +++----
+ 2 files changed, 47 insertions(+), 30 deletions(-)
 
-diff --git a/include/qom/object.h b/include/qom/object.h
-index 11f55613fc..dd708b1136 100644
---- a/include/qom/object.h
-+++ b/include/qom/object.h
-@@ -854,8 +854,13 @@ bool object_set_props_from_keyval(Object *obj, const QDict *qdict,
-  * This function will initialize an object.  The memory for the object should
-  * have already been allocated.  The returned object has a reference count of 1,
-  * and will be finalized when the last reference is dropped.
-+ *
-+ * Use of this function is now deprecated. All objects must be
-+ * allocated using the object_new() family of functions and not
-+ * statically embedded in a larger struct.
-  */
--void object_initialize(void *obj, size_t size, const char *typename);
-+void object_initialize(void *obj, size_t size, const char *typename)
-+    QEMU_DEPRECATED;
+diff --git a/hw/isa/piix.c b/hw/isa/piix.c
+index 31fa53e6a4..cd23486ef9 100644
+--- a/hw/isa/piix.c
++++ b/hw/isa/piix.c
+@@ -308,18 +308,22 @@ static void pci_piix_realize(PCIDevice *dev, const char *uhci_type,
+         return;
+     }
  
- /**
-  * object_initialize_child_with_props:
-@@ -873,6 +878,10 @@ void object_initialize(void *obj, size_t size, const char *typename);
-  * has a reference count of 1 (for the "child<...>" property from the parent),
-  * so the object will be finalized automatically when the parent gets removed.
-  *
-+ * Use of this function is now deprecated. All objects must be
-+ * allocated using the object_new() family of functions and not
-+ * statically embedded in a larger struct.
-+ *
-  * The variadic parameters are a list of pairs of (propname, propvalue)
-  * strings. The propname of %NULL indicates the end of the property list.
-  * If the object implements the user creatable interface, the object will
-@@ -883,7 +892,8 @@ void object_initialize(void *obj, size_t size, const char *typename);
- bool object_initialize_child_with_props(Object *parentobj,
-                              const char *propname,
-                              void *childobj, size_t size, const char *type,
--                             Error **errp, ...) G_GNUC_NULL_TERMINATED;
-+                             Error **errp, ...) G_GNUC_NULL_TERMINATED
-+    QEMU_DEPRECATED;
+-    memory_region_init_io(&d->rcr_mem, OBJECT(dev), &rcr_ops, d,
+-                          "piix-reset-control", 1);
++    d->rcr_mem = memory_region_new_io(OBJECT(dev), &rcr_ops, d,
++                                      "piix-reset-control", 1);
+     memory_region_add_subregion_overlap(pci_address_space_io(dev),
+-                                        PIIX_RCR_IOPORT, &d->rcr_mem, 1);
++                                        PIIX_RCR_IOPORT, d->rcr_mem, 1);
  
- /**
-  * object_initialize_child_with_propsv:
-@@ -897,12 +907,17 @@ bool object_initialize_child_with_props(Object *parentobj,
-  *
-  * See object_initialize_child() for documentation.
-  *
-+ * Use of this function is now deprecated. All objects must be
-+ * allocated using the object_new() family of functions and not
-+ * statically embedded in a larger struct.
-+ *
-  * Returns: %true on success, %false on failure.
-  */
- bool object_initialize_child_with_propsv(Object *parentobj,
-                               const char *propname,
-                               void *childobj, size_t size, const char *type,
--                              Error **errp, va_list vargs);
-+                              Error **errp, va_list vargs)
-+    QEMU_DEPRECATED;
+     /* PIC */
+     if (d->has_pic) {
+         qemu_irq *i8259;
  
- /**
-  * object_initialize_child:
-@@ -917,13 +932,18 @@ bool object_initialize_child_with_propsv(Object *parentobj,
-  *   object_initialize_child_with_props(parent, propname,
-  *                                      child, sizeof(*child), type,
-  *                                      &error_abort, NULL)
-+ *
-+ * Use of this function is now deprecated. All objects must be
-+ * allocated using the object_new() family of functions and not
-+ * statically embedded in a larger struct.
-  */
- #define object_initialize_child(parent, propname, child, type)          \
-     object_initialize_child_internal((parent), (propname),              \
-                                      (child), sizeof(*(child)), (type))
- void object_initialize_child_internal(Object *parent, const char *propname,
-                                       void *child, size_t size,
--                                      const char *type);
-+                                      const char *type)
-+    QEMU_DEPRECATED;
+-        qemu_init_irq_child(OBJECT(dev), "i8259-irq", &d->i8259_irq,
+-                            piix_request_i8259_irq, d, 0);
+-        i8259 = i8259_init(isa_bus, &d->i8259_irq);
++        d->i8259_irq = qemu_irq_new_child(OBJECT(dev), "i8259-irq",
++                                          piix_request_i8259_irq, d, 0,
++                                          errp);
++        if (!d->i8259_irq) {
++            return;
++        }
++        i8259 = i8259_init(isa_bus, d->i8259_irq);
  
- /**
-  * object_dynamic_cast:
-diff --git a/qom/object.c b/qom/object.c
-index 0ac201de4c..33b2801ee4 100644
---- a/qom/object.c
-+++ b/qom/object.c
-@@ -522,9 +522,11 @@ bool object_initialize_child_with_props(Object *parentobj,
-     bool ok;
+         for (size_t i = 0; i < ISA_NUM_IRQS; i++) {
+             d->isa_irqs_in[i] = i8259[i];
+@@ -340,38 +344,45 @@ static void pci_piix_realize(PCIDevice *dev, const char *uhci_type,
+     i8257_dma_init(OBJECT(dev), isa_bus, 0);
  
-     va_start(vargs, errp);
-+QEMU_DEPRECATIONS_OFF;
-     ok = object_initialize_child_with_propsv(parentobj, propname,
-                                              childobj, size, type, errp,
-                                              vargs);
-+QEMU_DEPRECATIONS_ON;
-     va_end(vargs);
-     return ok;
+     /* RTC */
+-    qdev_prop_set_int32(DEVICE(&d->rtc), "base_year", 2000);
+-    if (!qdev_realize(DEVICE(&d->rtc), BUS(isa_bus), errp)) {
++    qdev_prop_set_int32(DEVICE(d->rtc), "base_year", 2000);
++    if (!qdev_realize(DEVICE(d->rtc), BUS(isa_bus), errp)) {
+         return;
+     }
+-    irq = object_property_get_uint(OBJECT(&d->rtc), "irq", &error_fatal);
+-    isa_connect_gpio_out(ISA_DEVICE(&d->rtc), 0, irq);
++    irq = object_property_get_uint(OBJECT(d->rtc), "irq", &error_fatal);
++    isa_connect_gpio_out(ISA_DEVICE(d->rtc), 0, irq);
+ 
+     /* IDE */
+-    qdev_prop_set_int32(DEVICE(&d->ide), "addr", dev->devfn + 1);
+-    if (!qdev_realize(DEVICE(&d->ide), BUS(pci_bus), errp)) {
++    qdev_prop_set_int32(DEVICE(d->ide), "addr", dev->devfn + 1);
++    if (!qdev_realize(DEVICE(d->ide), BUS(pci_bus), errp)) {
+         return;
+     }
+ 
+     /* USB */
+     if (d->has_usb) {
+-        object_initialize_child(OBJECT(dev), "uhci", &d->uhci, uhci_type);
+-        qdev_prop_set_int32(DEVICE(&d->uhci), "addr", dev->devfn + 2);
+-        if (!qdev_realize(DEVICE(&d->uhci), BUS(pci_bus), errp)) {
++        d->uhci = UHCI(object_new_with_props(
++                           uhci_type, OBJECT(d), "uhci", errp, NULL));
++        if (!d->uhci) {
++            return;
++        }
++        qdev_prop_set_int32(DEVICE(d->uhci), "addr", dev->devfn + 2);
++        if (!qdev_realize(DEVICE(d->uhci), BUS(pci_bus), errp)) {
+             return;
+         }
+     }
+ 
+     /* Power Management */
+     if (d->has_acpi) {
+-        object_initialize_child(OBJECT(d), "pm", &d->pm, TYPE_PIIX4_PM);
+-        qdev_prop_set_int32(DEVICE(&d->pm), "addr", dev->devfn + 3);
+-        qdev_prop_set_uint32(DEVICE(&d->pm), "smb_io_base", d->smb_io_base);
+-        qdev_prop_set_bit(DEVICE(&d->pm), "smm-enabled", d->smm_enabled);
+-        if (!qdev_realize(DEVICE(&d->pm), BUS(pci_bus), errp)) {
++        d->pm = PIIX4_PM(object_new_with_props(
++                             TYPE_PIIX4_PM, OBJECT(d), "pm", errp, NULL));
++        if (!d->pm) {
++        }
++        qdev_prop_set_int32(DEVICE(d->pm), "addr", dev->devfn + 3);
++        qdev_prop_set_uint32(DEVICE(d->pm), "smb_io_base", d->smb_io_base);
++        qdev_prop_set_bit(DEVICE(d->pm), "smm-enabled", d->smm_enabled);
++        if (!qdev_realize(DEVICE(d->pm), BUS(pci_bus), errp)) {
+             return;
+         }
+-        qdev_connect_gpio_out(DEVICE(&d->pm), 0, d->isa_irqs_in[9]);
++        qdev_connect_gpio_out(DEVICE(d->pm), 0, d->isa_irqs_in[9]);
+     }
+ 
+     pci_bus_irqs(pci_bus, piix_set_pci_irq, d, PIIX_NUM_PIRQS);
+@@ -406,7 +417,9 @@ static void pci_piix_init(Object *obj)
+     qdev_init_gpio_out_named(DEVICE(obj), d->isa_irqs_in, "isa-irqs",
+                              ISA_NUM_IRQS);
+ 
+-    object_initialize_child(obj, "rtc", &d->rtc, TYPE_MC146818_RTC);
++    d->rtc = MC146818_RTC(
++        object_new_with_props(TYPE_MC146818_RTC, obj, "rtc",
++                              &error_abort, NULL));
  }
-@@ -539,7 +541,9 @@ bool object_initialize_child_with_propsv(Object *parentobj,
-     Object *obj;
-     UserCreatable *uc;
  
-+QEMU_DEPRECATIONS_OFF;
-     object_initialize(childobj, size, type);
-+QEMU_DEPRECATIONS_ON;
-     obj = OBJECT(childobj);
- 
-     if (!object_set_propv(obj, vargs, errp)) {
-@@ -576,8 +580,10 @@ void object_initialize_child_internal(Object *parent,
-                                       void *child, size_t size,
-                                       const char *type)
+ static const Property pci_piix_props[] = {
+@@ -462,7 +475,9 @@ static void piix3_init(Object *obj)
  {
-+QEMU_DEPRECATIONS_OFF;
-     object_initialize_child_with_props(parent, propname, child, size, type,
-                                        &error_abort, NULL);
-+QEMU_DEPRECATIONS_ON;
+     PIIXState *d = PIIX_PCI_DEVICE(obj);
+ 
+-    object_initialize_child(obj, "ide", &d->ide, TYPE_PIIX3_IDE);
++    d->ide = PCI_IDE(
++        object_new_with_props(TYPE_PIIX3_IDE, obj, "ide",
++                              &error_abort, NULL));
  }
  
- static inline bool object_property_is_child(ObjectProperty *prop)
+ static void piix3_class_init(ObjectClass *klass, const void *data)
+@@ -492,7 +507,9 @@ static void piix4_init(Object *obj)
+ {
+     PIIXState *s = PIIX_PCI_DEVICE(obj);
+ 
+-    object_initialize_child(obj, "ide", &s->ide, TYPE_PIIX4_IDE);
++    s->ide = PCI_IDE(
++        object_new_with_props(TYPE_PIIX4_IDE, obj, "ide",
++                              &error_abort, NULL));
+ }
+ 
+ static void piix4_class_init(ObjectClass *klass, const void *data)
+diff --git a/include/hw/southbridge/piix.h b/include/hw/southbridge/piix.h
+index a296b1205a..8bd24946de 100644
+--- a/include/hw/southbridge/piix.h
++++ b/include/hw/southbridge/piix.h
+@@ -53,15 +53,15 @@ struct PIIXState {
+     qemu_irq cpu_intr;
+     qemu_irq isa_irqs_in[ISA_NUM_IRQS];
+ 
+-    IRQState i8259_irq;
++    IRQState *i8259_irq;
+ 
+     /* This member isn't used. Just for save/load compatibility */
+     int32_t pci_irq_levels_vmstate[PIIX_NUM_PIRQS];
+ 
+-    MC146818RtcState rtc;
+-    PCIIDEState ide;
+-    UHCIState uhci;
+-    PIIX4PMState pm;
++    MC146818RtcState *rtc;
++    PCIIDEState *ide;
++    UHCIState *uhci;
++    PIIX4PMState *pm;
+ 
+     uint32_t smb_io_base;
+ 
+@@ -69,7 +69,7 @@ struct PIIXState {
+     uint8_t rcr;
+ 
+     /* IO memory region for Reset Control Register (PIIX_RCR_IOPORT) */
+-    MemoryRegion rcr_mem;
++    MemoryRegion *rcr_mem;
+ 
+     bool has_acpi;
+     bool has_pic;
 -- 
 2.54.0
 
