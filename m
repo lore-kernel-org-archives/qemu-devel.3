@@ -4,139 +4,144 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF4E7CD98E4
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 19:20:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A820CCD98EE
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 19:20:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZZIx-0004YQ-CT; Tue, 16 Jun 2026 15:18:37 -0400
+	id 1wZZKX-0006Ys-Mz; Tue, 16 Jun 2026 15:20:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wZZIp-0004UE-FO
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 15:18:27 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <nathanc@nvidia.com>)
+ id 1wZZJv-0005t2-Pz
+ for qemu-devel@nongnu.org; Tue, 16 Jun 2026 15:19:39 -0400
+Received: from mail-eastusazlp17011000f.outbound.protection.outlook.com
+ ([2a01:111:f403:c100::f] helo=BL2PR02CU003.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wZZIl-00050D-RJ
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 15:18:27 -0400
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65GIOXhi397506
- for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 19:18:22 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- rDPBpbn3NrFJ9h2c6whQdKT87AiX1bT3S9Z9eVC3rNE=; b=Du1kjJpMMDn3sC19
- cITPSpM9MqC+uzYvO5DlJ+UYSIX2aM+6X6axWgrHQiNIKh4PiBAzn9WwpVjRlcIA
- V3CRzLcxd3dDPzcjD8NI21IjAMeU6N44BR/3Ynh3fQHycfszSVECW6AC45zMv3zy
- UblgtPRqsvqDv9sySdLRFBzt0JztLzszQFG+ho/dEvkRGVQKlMoNxI/WS04mWf67
- k0paxjAhEyoDS3riIYexu/sy+GQ8x0u2avxzR0Ick1LtttNExBb5/W/ZVllGV8la
- aRrAS1TNqcUyhd8W9uRxeg9lyCz4A0y/jjeor92YHxfRLqYbxHgyEPD6ep0nm7u+
- +eeugg==
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
- [209.85.222.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ety52v27a-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 19:18:22 +0000 (GMT)
-Received: by mail-qk1-f198.google.com with SMTP id
- af79cd13be357-9158f07f5eeso786999285a.0
- for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 12:18:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1781637502; x=1782242302; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=rDPBpbn3NrFJ9h2c6whQdKT87AiX1bT3S9Z9eVC3rNE=;
- b=dfdeylhlb3xDnTYb9ZeUtXhYRLKLeML9O0QADyj5cLVwrWGnh15svXmgb6bhN+QSzz
- JAv99FoTDu7SsRJyz84/IFrFFOg7o3Gc37RU1d0TKBOJsoahDVBHMTF0u/KLoIzeVdcd
- O3KziRQH3+mBqEI9b+wov4++nJXQb/NRQOsX1ywOQIC87OLPfsmT8lT5r9HrRVZ5RYyj
- e/Jw3ysKr1jfv0mn7msDYXdiovd+zAuopexy+frtS7qAtsNnbFpQU5+mtNBRg3TSDSuX
- vpQ7E3UNYdzEzMctN6yrCRv+/8qZjf97w8WaCziTdheAxMklJcVIJ5xYc8O5gqThjVT7
- 6g6A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781637502; x=1782242302;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=rDPBpbn3NrFJ9h2c6whQdKT87AiX1bT3S9Z9eVC3rNE=;
- b=kuMyTMhwbHz/bjV3+rXiKQJiDPI/ESMl0Zhuq+CHoUIXEy0lkWLIpA8L0ld9jBWeJd
- EtxhCcyP9BdQZZGExzWfiXnQZgAWiRgVhmcQqHzQkO7tRwjabTQl+5cNUQhygvFP2k2n
- Sqwk9YgRhkDrIOK4Kp3Wbimk9LVZKxG1pxiJ31ifXn6AFTDq6mF4CfevUPqypj0gyDaK
- Ha6HEy9hN6jVK+b5vrNArIFXAmh9vxRzSA407B3T02l+Y2cYeONgcFKusuxbdHF1YBOL
- GiskI3+T6ky3fOXCU+ZtF6nURFv+XCb5WQMgXsN4SSw+czMmtRXY/sEKe5tvUsb7DUii
- cYKg==
-X-Gm-Message-State: AOJu0YxwHLRb4OcORWGCTiNiydeqUA3ji3eOKckNrZNYOXX6/fuR2Pru
- ZQbz+FVPpFb+l4Tx7YsnlUyu6I5oU8qyk6J5yKL4Piv47pQX/9CrbAPDjsOD7qczARhgbew8gS4
- 2kdrVcuEKuPnMMfeP+9cHrMcxa0MutRRUCx6jlpb/3x1C05D4MqTkKR2Syc4Tb4ltzQ==
-X-Gm-Gg: Acq92OGskZvAnyF8QSQayCAgrWRwE1IncwCqZrqXMzb/PG7covMHjb/BUul5CtQ9RqE
- 9rKfDt5l68JGBTcgbfFIcHjJYWZjK1p6ccClslvbnPhw8G5VxstDZJhaglbxQVoRlt6b02qzV9k
- VodnvP3GBcqwYC7LXz3skBD1RA85a599FIHi6GIgDROvBBeaVCYg2LyDdRZMUVVidcQxBcsyJp4
- geEVLXNEih4vInDllVYEBWV8sEKQnbhirL953nZIMhl4BXMLBH7H0nnPgsJ01a9HzlyqdyMwjKs
- 1Ggt5Ny0adERS4WJpRWNtR9H2sN7gDrvGcTWkFltff3+O4S6Ggm/t9uprvTDgw/Rcfj3bo5jPPe
- Hgb38pywcKPSkyMniWsAr3ADxX4J7J92yOU1Q2mKw8y5FZfOa2i3MMlW1g9CfX/0XkHiR5aHpp7
- f7drs=
-X-Received: by 2002:a05:620a:25cf:b0:914:7e9a:2716 with SMTP id
- af79cd13be357-91dbcb1d710mr42380585a.38.1781637501612; 
- Tue, 16 Jun 2026 12:18:21 -0700 (PDT)
-X-Received: by 2002:a05:620a:25cf:b0:914:7e9a:2716 with SMTP id
- af79cd13be357-91dbcb1d710mr42374085a.38.1781637500904; 
- Tue, 16 Jun 2026 12:18:20 -0700 (PDT)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4606f2e592csm49771436f8f.36.2026.06.16.12.18.19
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 16 Jun 2026 12:18:20 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-To: qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PATCH 09/10] accel/tcg: Move cpu_loop_exit_*() out of
- 'exec/cpu-common.h'
-Date: Tue, 16 Jun 2026 21:17:15 +0200
-Message-ID: <20260616191716.12932-10-philmd@oss.qualcomm.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260616191716.12932-1-philmd@oss.qualcomm.com>
-References: <20260616191716.12932-1-philmd@oss.qualcomm.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+ (Exim 4.90_1) (envelope-from <nathanc@nvidia.com>)
+ id 1wZZJt-0005QE-FP
+ for qemu-devel@nongnu.org; Tue, 16 Jun 2026 15:19:35 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=vwcMV2tT6+sjIU71Yrr3LHX9l7gAcJVFffIvq21bJFjOy9gpBjrG3EwE5/DNISfeGyliX0TLVUtyVy08eCF8qoo7vhxNEQF+6L4KcYfyelXRtJ+SSttqMK5cHYcluXSDiVNvhBQ0mqkDG9r0qmNMeG4SHdUihkHjlbL0LGUvhG5Oi/F0A0fqTxJYG1rwFBRsYJFqgtkN4p5P/Y09u2ZHw1PR/+1Ny182a1Hbfxn4ECpfiOzz5VMKsTpdXrYlqiW4SVy6mF5KaedUamix3x/9Dsv/S+SG/uiCfnzylSd9K9BoYyKPY8zXCiGHQ2oXk/S+4NjSFr8Ce/L2Nge+ts7djg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=yYd3Fnlu5jtAMzjYdXx3t2M7YcfEUT3XAfcR60eJpVM=;
+ b=KOAYLD5F4wKJyGmti9MO46a8TTi4skVyI9s0b+Vu3Li7kz0Ju0lQMaoVIE6hI3n0i/8vovE0lEZ0K5QogUyVu+IuhAxPTIdKvZBzQy2u3tsBbwCR5EeElPv46A7KqgfofgM3ZWRe1GJNm/roj+jHub8QYbE/UmF5xIr59H+Hvc4wfD5ppqTBcpjdYNjZDTkytuAKqoH0Jf7ADf5aH00n3FUUaDQd6MIS1ap8FHIpmCSGWT2S8606zz20+6DGEhQQYerOjQMwruD3ksBL7ZhskzC8utF3p+1so7I5uR0qtLYY06h5PBUWjawJdPNdRcobuU2AuKGVt7MJyAThDVv4Dg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=yYd3Fnlu5jtAMzjYdXx3t2M7YcfEUT3XAfcR60eJpVM=;
+ b=WeHHu2+E/Pi/CtS98r7NIpx9u4OxdDq7LZZWHSXjxu+6/oaBy9ILpBo/pndNP+bPThrafoECc1ap6ASBdnpbKOyyQltM3Sw+RLUjRxdOyjzaRDvBT0+6WajkjLUkk3taP/WuDXgtlkxAgZUR31gdWdaIbnLsXKxWFJmZ93LHQKdHIDi3qljs7xGOZJivV+362krzhiBNoh2ueePdEju4pNJGT3ldL5YLAyy+Cw+QtK/EbQGHfjitkSUHRdO1/mMOJTen5gRYlDYwafjPgdisKdgU0OwPGNUHbmpHKVGY9qZB3riIxHuMbXRWPtxGSB+cF9fB1kYevEveAwuRBYjCUQ==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from DM4PR12MB5390.namprd12.prod.outlook.com (2603:10b6:5:389::15)
+ by CY3PR12MB9631.namprd12.prod.outlook.com (2603:10b6:930:ff::6) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.113.15; Tue, 16 Jun
+ 2026 19:19:25 +0000
+Received: from DM4PR12MB5390.namprd12.prod.outlook.com
+ ([fe80::2815:c27e:a0a:2720]) by DM4PR12MB5390.namprd12.prod.outlook.com
+ ([fe80::2815:c27e:a0a:2720%6]) with mapi id 15.21.0113.015; Tue, 16 Jun 2026
+ 19:19:25 +0000
+Message-ID: <bc80fc18-79ba-42e3-8e5d-751a32ef00c5@nvidia.com>
+Date: Tue, 16 Jun 2026 12:19:22 -0700
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 2/3] vfio/pci: Add ats property
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org
+Cc: Yi Liu <yi.l.liu@intel.com>, Eric Auger <eric.auger@redhat.com>,
+ Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
+ Zhao Liu <zhao1.liu@intel.com>, Alex Williamson <alex@shazbot.org>,
+ Matt Ochs <mochs@nvidia.com>, Nicolin Chen <nicolinc@nvidia.com>,
+ Shameer Kolothum <skolothumtho@nvidia.com>
+References: <20260615204849.3659647-1-nathanc@nvidia.com>
+ <20260615204849.3659647-3-nathanc@nvidia.com>
+ <363ad338-7ae3-4dd1-a5ed-c87d76abce52@redhat.com>
+Content-Language: en-US
+From: Nathan Chen <nathanc@nvidia.com>
+In-Reply-To: <363ad338-7ae3-4dd1-a5ed-c87d76abce52@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjE2MDE5NyBTYWx0ZWRfX4z62yIwpZfM8
- c8jqq3wyE4hfSNnY9GcvPrxpFARZ2BfTq6WZwzaFHLZbtE6dUPrhDaA2cKOsfKWYrlDyo6LHyDq
- iFra8tFVaeqZ1SBycL1g2IllmOJwhDQ=
-X-Authority-Analysis: v=2.4 cv=FJwrAeos c=1 sm=1 tr=0 ts=6a31a17e cx=c_pps
- a=qKBjSQ1v91RyAK45QCPf5w==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
- a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
- a=EUspDBNiAAAA:8 a=JcJdSHE08ybhFAncEmoA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=NFOGd7dJGGMPyQGDc5-O:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjE2MDE5NyBTYWx0ZWRfX38krbvwM9lW5
- yVk4Fwt6Lkme1SIB3YMTYeoolooXtb72NGAHoS09Vi2AZNuwZ9oajBQGQW4S007EpsoWnR7g/4y
- aJRxIb54HNb02O69qNyw+tQfwnHWD8O4DGymCewbbEGSG1EYGgII8jBWCi70LREaat/OWw/U4oM
- PCF06Rj1BjBwBdM+zL+bCPyyka28ZkdHK9ruv4Rh5wAWYmsJxcPwQtV6rAlZd7WMSYNru5uR9MM
- cIOl/DGx0OoqxIHdw6Ob9orl2pvGv2js3jv/bhgdidLvS5cLGo6S3lGP+RgaRhw3IoSxvcJTZgp
- QSffm2vxIW5LFgIa8CRIT298mTgofgN7AymgARpL+YEWGpDkvP4MrWoTQG9bF73xoK2DmCAZFvR
- mQltslnJcETKt1QjDD/hJz4RItzGh/DNswRX7uizmX5f4XiQ82SWe0U9lgsGxhJUgOYsswtLmay
- 9VaTEL6p/QYrs2wqtnA==
-X-Proofpoint-ORIG-GUID: 2Pfi1K7FdAyT6ma7pcpSdouFMJEI4Fpf
-X-Proofpoint-GUID: 2Pfi1K7FdAyT6ma7pcpSdouFMJEI4Fpf
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-16_05,2026-06-16_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 lowpriorityscore=0 spamscore=0 phishscore=0 malwarescore=0
- impostorscore=0 adultscore=0 suspectscore=0 bulkscore=0 priorityscore=1501
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606040000 definitions=main-2606160197
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-ClientProxiedBy: SN6PR04CA0080.namprd04.prod.outlook.com
+ (2603:10b6:805:f2::21) To DM4PR12MB5390.namprd12.prod.outlook.com
+ (2603:10b6:5:389::15)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DM4PR12MB5390:EE_|CY3PR12MB9631:EE_
+X-MS-Office365-Filtering-Correlation-Id: 8e0e95e2-764d-4afb-6bee-08decbdc2d62
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|376014|23010399003|366016|1800799024|6133799003|56012099006|11063799006|4143699003|22082099003|18002099003;
+X-Microsoft-Antispam-Message-Info: Iac/jusFnQkFvwYbgOOzLYJkh1fhgdPeQyOh7wH+DjeFWfP9QEveFjthsA/381TwaH+O9Ehl6jfgQIbbBjYn73/zygXwoAg8bBnYlJumg1wTiY0sgFRNk3/7GNcJ9O1oy+16/LLWKg2wE1IjHubfUQ44Bl9xt5x5dpdBcO9SKHxkD8jQRJ3rvn7d1vspDREh3rduBr7nYNqseUS6sHrApvNB+2X1lIV6wj8FQWKhaT/InyVkwfxfDihHov/zgi6fJ7983IR3N23dhEbgGVP8mrYGPM6cysKa11YkmGiWALh+gdXe3MIo9Lbm8MlKQ7LZQTfzBif0SoowMMAJYF/BibltRilGG94Vx8WPjqcaBBG6FErDb5EBkY0+3Vq5pyK0YxaROU6lm7YfscQnxKUdKVxyB1Dnv31B/dKgiu82ts7FrZokiadmcp1J6VZP5FAtvtznwqgM5ef+V9a0vibL6D9juF0zkqi+xnHCuH4tHdnPsqebK25g5yzNQZSoclj99c51pGXL3/0pMYKWZkMZ0A/bZFKIGpZX0qTs5gP3X6/0embaPcwFumekesvqRMciK76DQv74sHJN353AS5jaBmEOuSbQ46+lEqvXAiPG4PCOwuzRkey0lakTd3kt4D2rVU6sL8Zyaha8uf8OOykPLig1WynvVysL1+lc2D3MadvlkeRG3UyM+Moydn6wZx0e
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:DM4PR12MB5390.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(376014)(23010399003)(366016)(1800799024)(6133799003)(56012099006)(11063799006)(4143699003)(22082099003)(18002099003);
+ DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?anVSVHdPMTFSYWhrVFNjNldneFErcmdmMFpHeHZnL2V2RzRGeFEycmtyQXo0?=
+ =?utf-8?B?QUNCMFQzOFZyVHhmMm1sOVpzTUVWdkxLODhzVExKaHhPM3g5OHMzN1ZTbjA3?=
+ =?utf-8?B?bElySGg2enRORmFkazB6ZDQzWVVHZUFSYWliWkVEUGVlWklsS1NoNjhWSWNh?=
+ =?utf-8?B?ZjBER3BoVkdVV3REOXRZY0tzVlpTUWtlWXNMSTk1YmE5RzNxWXR1SmhCWTBM?=
+ =?utf-8?B?K1VGN0x4djNtM0xIVWdJaSthd0o1cDYvUzllZ0ZlaVlVMndMcGs4SUM3TGd3?=
+ =?utf-8?B?dVdDSkxvY3E3QnJwUUJnN3AzOTFSTkNZT0Z2MzJINVdFbE9wR1VKYWMyK0ht?=
+ =?utf-8?B?KzFINHJXd3ZtckhDVXppKzY5VE9xdVF5bHdzK081TDF1amJJUVFLWS9TQ0FE?=
+ =?utf-8?B?SmJWQldOYXVVN2l6SXV5b25CZnVFZ3dGNm1xZEtkR3RQdTBIYkFOVFNnNVhN?=
+ =?utf-8?B?M0U1YUFyUmhHbW5WUTJJZXlqVzZoSDFCOWRLOWd3ZTNSR0ZONTdISkZWQUxM?=
+ =?utf-8?B?Zi9LN2hXWFd3dTNVNVRhcVlVV1B3dkxjK0ZWTFRVYW5DK1FoUWtKcThRTDJV?=
+ =?utf-8?B?eHdjUmFLbDUyOVFlVGRhenhEcHpPS0hqZEk1ZXI4MWhhSkRzS2RjMWVkTW9l?=
+ =?utf-8?B?d1VKVForSmVhOEswS3Z3cGY1Rnk2cWZZeDROaS9jY3BQN1VaV3RKSUpYKzJK?=
+ =?utf-8?B?ZmQwUFFFZzFsSmhra3hRSGhIckIvUnQ3cjhGQkoySG91VEMySWFmQStUblM1?=
+ =?utf-8?B?Mm1lYjRMaEROLzFENHExZU9PMjBTLzcvVEtydDNxUzZ4MXQrTElTQittUHc3?=
+ =?utf-8?B?aW42dXY1U29hQk41U3JlT1ljNXViVktRS1MzcDRkM3BCUGxjYUJ6V3FjV1F2?=
+ =?utf-8?B?ZzF0eGZYeThKY1YrR1lCQXNTa3Vndm9qUGJKbk5nQUU3RStIdnBHOElLR0Va?=
+ =?utf-8?B?a1kydXpiRFdwTk1sU05TQmJiYzExY3FudkNQb3pQUVdWZFptMlZOY0YrcDc5?=
+ =?utf-8?B?MzdmN3FtZjJJdERCMy9GdWxGdDFLV2Z0Y3JvKzZORWROMDU4VUdZWVZyb0xv?=
+ =?utf-8?B?bFZmZUsxQUx0TW0rK2RZS0tRRGdGQ3JUNVo1YnYyMGlXZHlCdGVUUEdCZ0Zt?=
+ =?utf-8?B?VXBnYmtGK29ya21BU0FmQ1ExRlQ5allSSVpIVE5XaUZoN0t4Z1ZXNTdoVmow?=
+ =?utf-8?B?TVhTc0F1Uys0M1RGMURCd1k3OWFveE9vR2Z5Y2tVbCtpOGtub3EzQjIrNmwy?=
+ =?utf-8?B?SFpuRFhGU0xvUU9UTDFwS04yS2lWSWZOR0JWVGN3cXR1WXpBN2NqcUcrcFBx?=
+ =?utf-8?B?b1BNUndMaWMwNnVEdXhFSXhDVDJUNFZJU1puKzFzSFJtTnZxekZlZUh5UTZW?=
+ =?utf-8?B?OW5BRkI2ZXVLTTdtOW52MzhuVzBoUFNsV1hSVkphM2U4UVhkN09kSUxNZVhP?=
+ =?utf-8?B?NTBDemNNRmlRZmZWZk10bVpFYTFpWXplVExuN1NQWnE5M2JobVcxT0tVbnBw?=
+ =?utf-8?B?eDdQcTI3dU5meWNrK09qSXZMRk1wekQ3bzk5OUFUM3djaitVQ3hrMEl4VVox?=
+ =?utf-8?B?U2x0c3BrMEpJMGQrcUwvcllNOXp3cWwrKzlVSk81OWR4K0ZablB4dmJPTHNq?=
+ =?utf-8?B?N2grODM2UUx4SkQyZFdtRnAzd04wdHkwQUxpME1lOEhEZ2lnN0N3Qzdtd2pH?=
+ =?utf-8?B?TFhPK1g5a25EdFg2YnJDekFWK2Y0aEc0cy8wZ0l0b2RoN3BHWWdBOGxhM2Q3?=
+ =?utf-8?B?eVNWLzd0czNGV2JIb29HWWN5QkJrR2U1bVBTalRhZmpaZEtOWUhiY3kzMEwz?=
+ =?utf-8?B?Z2hOUk40OGpPVHpmQjhLbkJDaklYalVzUTBGTXF1RFpucXRYNTdoWjczUGlW?=
+ =?utf-8?B?aXZpTmZpc1JLRlRFcUk2VmwxL1NEaWgwTCthZmlLaE5HRXpwY2h5MGRTSWM4?=
+ =?utf-8?B?TVdyVzU4Ukhxb3h6Snk5eWpuRDh5dnRRSnc5NnhKVVZuaGhjNGJrRHg1bUJh?=
+ =?utf-8?B?c3N2c2sxMGlTWGtXcVBYa0NxVG1ZeDd2MmV3NDZvdjg0VmJ5ejNheGM1R2Ux?=
+ =?utf-8?B?NTgyNTllbHZMNlB6K0JhUjlZZ3REcUxpakhFNnFhb0tId3FCUndQeG5LUnB6?=
+ =?utf-8?B?NlpIaDRLb2NOazdoNVowYkFuSG12T1BWUjBzMXdraGsxQjFIbHNXNkRFRFI5?=
+ =?utf-8?B?QlRsY2tBWkx3Nm8yd29YS0ZEZEE1Q1pEamg1ZkNINlJjbnE0ZTNWbmNscVEr?=
+ =?utf-8?B?a0VHRnd0ZVlsMFFReTlXRDU0MTgyeGdsc2puR05YeWVUMUFNZWU0T3BJemFQ?=
+ =?utf-8?B?bmJKc0QrV2dHOTRBRFNESFZEZDBzTVpJUGdBQWZlQW5lNHE4Ritadz09?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 8e0e95e2-764d-4afb-6bee-08decbdc2d62
+X-MS-Exchange-CrossTenant-AuthSource: DM4PR12MB5390.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Jun 2026 19:19:24.9265 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: vgC4eiNziF0xO2pcT94PjCV8KVh3NGdNqSuQpAYOQbiLzTR6L4JQf2iduAjm3pFCfjMrlmVrFFvc+dXdywJvPA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY3PR12MB9631
+Received-SPF: permerror client-ip=2a01:111:f403:c100::f;
+ envelope-from=nathanc@nvidia.com;
+ helo=BL2PR02CU003.outbound.protection.outlook.com
+X-Spam_score_int: -14
+X-Spam_score: -1.5
+X-Spam_bar: -
+X-Spam_report: (-1.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FORGED_SPF_HELO=1, SPF_HELO_PASS=-0.001,
+ SPF_NONE=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -152,631 +157,227 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Move the following TCG-specific cpu_loop_exit_*() declarations
-out of the generic "exec/cpu-common.h" header, to the recently
-created "accel/tcg/cpu-loop.h" one, documenting them:
 
- - cpu_loop_exit_requested()
- - cpu_loop_exit_noexc()
- - cpu_loop_exit_atomic()
- - cpu_loop_exit_restore()
- - cpu_loop_exit()
 
-Include "accel/tcg/cpu-loop.h" where appropriate.
+On 6/16/2026 5:47 AM, Cédric Le Goater wrote:
+> On 6/15/26 22:48, Nathan Chen wrote:
+>> From: Nathan Chen <nathanc@nvidia.com>
+>>
+>> Add an "ats" OnOffAuto property to vfio-pci. When the device has an ATS
+>> extended capability in config space but we should not expose it (ats=off,
+>> or ats=auto and kernel reports IOMMU_HW_CAP_PCI_ATS_NOT_SUPPORTED), mask
+>> the capability so the guest does not see it.
+>>
+>> If ATS is explicitly requested but not supported by the kernel, fail
+>> device realize.
+>>
+>> This aligns with the kernel's per-device effective ATS reporting and 
+>> allows
+>> vfio-pci to mask ATS when the host kernel reports ATS as unsupported.
+>>
+>> Introduce a new compat for the changed default for vfio-pci device ATS
+>> property, from "on" to "auto".
+>>
+>> Suggested-by: Shameer Kolothum <skolothumtho@nvidia.com>
+>> Signed-off-by: Nathan Chen <nathanc@nvidia.com>
+>> ---
+>>   hw/vfio/pci.h     |  1 +
+>>   hw/core/machine.c |  1 +
+>>   hw/vfio/pci.c     | 74 +++++++++++++++++++++++++++++++++++++++++++++--
+>>   3 files changed, 73 insertions(+), 3 deletions(-)
+>>
+>> diff --git a/hw/vfio/pci.h b/hw/vfio/pci.h
+>> index c3a1f53d35..f2934f2d84 100644
+>> --- a/hw/vfio/pci.h
+>> +++ b/hw/vfio/pci.h
+>> @@ -188,6 +188,7 @@ struct VFIOPCIDevice {
+>>       bool clear_parent_atomics_on_exit;
+>>       bool skip_vsc_check;
+>>       uint16_t vpasid_cap_offset;
+>> +    OnOffAuto ats;
+>>       VFIODisplay *dpy;
+>>       Notifier irqchip_change_notifier;
+>>       VFIOPCICPR cpr;
+>> diff --git a/hw/core/machine.c b/hw/core/machine.c
+>> index 4d8b15d99e..c0cdf7c9da 100644
+>> --- a/hw/core/machine.c
+>> +++ b/hw/core/machine.c
+>> @@ -43,6 +43,7 @@ GlobalProperty hw_compat_11_0[] = {
+>>       { "chardev-vc", "encoding", "cp437" },
+>>       { "tpm-crb", "cap-chunk", "off" },
+>>       { "tpm-crb", "x-allow-chunk-migration", "off" },
+>> +    { "vfio-pci", "ats", "on" },
+> 
+> 
+> This compat "ats=on" for old machine types (11.0 and below) should preserve
+> the old guest-visible behavior : ATS is always advertised regardless of
+> kernel capability.
+> 
+> Now, if the kernel is upgraded and reports 
+> IOMMU_HW_CAP_PCI_ATS_NOT_SUPPORTED,
+> the VM will now fail to realize the vfio-pci device, fail to boot and the
+> backward compatibility across machine types is broken ... Tough.
+> 
+> We could argue that the previous behavior was wrong but should be "bug"
+> compatible too.
+> 
+> 
+> So, we could  :
+> 
+> 1. ignore,
+> 2. use a compat "ats=auto", which would hide ATS reported unsupported
+>     in new kernels,
+> 3. add a legacy compat "x-ats-strict=off" property to warn but not fail
+>     realize, and keep ATS enabled.
+> 
+> In any case, we need a warning at start time.
+> 
+> Ideas ?
+> 
+I agree with Shameer on choosing option 2 to avoid the device realize 
+failure. I will use a compat "ats=auto" and emit an additional warning 
+indicating kernel does not support ATS when vdev->ats == ON_OFF_AUTO_AUTO>
+> 
+>>   };
+>>   const size_t hw_compat_11_0_len = G_N_ELEMENTS(hw_compat_11_0);
+>> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
+>> index 9c06b25e63..0f592ada89 100644
+>> --- a/hw/vfio/pci.c
+>> +++ b/hw/vfio/pci.c
+>> @@ -2546,7 +2546,49 @@ static bool 
+>> vfio_pci_synthesize_pasid_cap(VFIOPCIDevice *vdev, Error **errp)
+>>       return true;
+>>   }
+>> -static void vfio_add_ext_cap(VFIOPCIDevice *vdev)
+>> +/*
+>> + * Determine whether ATS capability should be advertised for @vdev, 
+>> based on
+>> + * whether it was enabled on the command line and whether it is 
+>> supported
+>> + * according to the kernel.
+>> + *
+>> + * Store whether ATS capability should be advertised in @ats_needed.
+>> + *
+>> + * Returns false only when ats=on is explicitly requested but the kernel
+>> + * reports it is not supported. Returns true in all other cases.
+>> + */
+>> +static bool vfio_pci_ats_requested_and_supported(VFIOPCIDevice *vdev,
+>> +                                                 bool *ats_needed, 
+>> Error **errp)
+>> +{
+>> +    HostIOMMUDevice *hiod = vdev->vbasedev.hiod;
+>> +    HostIOMMUDeviceClass *hiodc;
+>> +    bool ats_supported;
+>> +    *ats_needed = false;
+>> +
+>> +    if (vdev->ats == ON_OFF_AUTO_OFF) {
+>> +        return true;
+>> +    }
+>> +
+>> +    *ats_needed = true;
+>> +    if (!hiod) {
+>> +        return true;
+>> +    }
+>> +    hiodc = HOST_IOMMU_DEVICE_GET_CLASS(hiod);
+>> +    if (!hiodc || !hiodc->support_ats) {
+>> +        return true;
+>> +    }
+>> +
+>> +    ats_supported = hiodc->support_ats(hiod);
+>> +    if (vdev->ats == ON_OFF_AUTO_ON && !ats_supported) {
+>> +        error_setg(errp, "vfio-pci: ATS requested but not supported 
+>> by kernel");
+>> +        *ats_needed = false;
+>> +        return false;
+>> +    }
+>> +
+>> +    *ats_needed = ats_supported;
+>> +    return true;
+>> +}
+>> +
+>> +static void vfio_add_ext_cap(VFIOPCIDevice *vdev, bool ats_needed)
+>>   {
+>>       PCIDevice *pdev = PCI_DEVICE(vdev);
+>>       bool pasid_cap_added = false;
+>> @@ -2635,7 +2677,18 @@ static void vfio_add_ext_cap(VFIOPCIDevice *vdev)
+>>            */
+>>           case PCI_EXT_CAP_ID_PASID:
+>>               pasid_cap_added = true;
+>> -            /* fallthrough */
+>> +            pcie_add_capability(pdev, cap_id, cap_ver, next, size);
+>> +            break;
+>> +        case PCI_EXT_CAP_ID_ATS:
+>> +            /*
+>> +             * If ATS is requested and supported according to the 
+>> kernel, add
+>> +             * the ATS capability. If not supported according to the 
+>> kernel or
+>> +             * disabled on the qemu command line, omit the ATS cap.
+>> +             */
+>> +            if (ats_needed) {
+>> +                pcie_add_capability(pdev, cap_id, cap_ver, next, size);
+>> +            }
+>> +            break;
+>>           default:
+>>               pcie_add_capability(pdev, cap_id, cap_ver, next, size);
+>>           }
+>> @@ -2657,6 +2710,7 @@ static void vfio_add_ext_cap(VFIOPCIDevice *vdev)
+>>   bool vfio_pci_add_capabilities(VFIOPCIDevice *vdev, Error **errp)
+>>   {
+>>       PCIDevice *pdev = PCI_DEVICE(vdev);
+>> +    bool ats_needed = false;
+>>       if (!(pdev->config[PCI_STATUS] & PCI_STATUS_CAP_LIST) ||
+>>           !pdev->config[PCI_CAPABILITY_LIST]) {
+>> @@ -2667,7 +2721,11 @@ bool vfio_pci_add_capabilities(VFIOPCIDevice 
+>> *vdev, Error **errp)
+>>           return false;
+>>       }
+>> -    vfio_add_ext_cap(vdev);
+>> +    if (!vfio_pci_ats_requested_and_supported(vdev, &ats_needed, 
+>> errp)) {
+>> +        return false;
+>> +    }
+>> +
+>> +    vfio_add_ext_cap(vdev, ats_needed);
+>>       return true;
+>>   }
+>> @@ -3815,6 +3873,7 @@ static const Property vfio_pci_properties[] = {
+>>       DEFINE_PROP_BOOL("skip-vsc-check", VFIOPCIDevice, 
+>> skip_vsc_check, true),
+>>       DEFINE_PROP_UINT16("x-vpasid-cap-offset", VFIOPCIDevice,
+>>                          vpasid_cap_offset, 0),
+>> +    DEFINE_PROP_ON_OFF_AUTO("ats", VFIOPCIDevice, ats, 
+>> ON_OFF_AUTO_AUTO),
+>>   };
+>>   static void vfio_pci_set_fd(Object *obj, const char *str, Error **errp)
+>> @@ -3973,6 +4032,15 @@ static void vfio_pci_class_init(ObjectClass 
+>> *klass, const void *data)
+>>                                             "a vIOMMU. A value of 0 
+>> (default) places the capability at the "
+>>                                             "end of the extended 
+>> configuration space. The offset must be "
+>>                                             "4-byte aligned and within 
+>> the PCIe extended configuration space");
+>> +   object_class_property_set_description(klass, /* 11.1 */
+>> +                                          "ats",
+>> +                                          "Control guest visibility 
+>> of the ATS PCIe extended capability. "
+>> +                                          "Valid values are on, off, 
+>> and auto (default). "
+>> +                                          "'off' always masks ATS. "
+>> +                                          "'on' requires ATS support 
+>> for the device and fails realize if the "
+>> +                                          "host kernel reports ATS as 
+>> unavailable for this device. "
+>> +                                          "'auto' masks ATS only when 
+>> the host kernel reports "
+>> +                                          "ATS as unavailable");
+> 
+> if you resend, could you please fix the alignment of the two
+> object_class_property_set_description block() above.
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
----
- include/accel/tcg/cpu-loop.h         | 42 ++++++++++++++++++++++++++++
- include/exec/cpu-common.h            | 22 ---------------
- accel/tcg/cpu-exec-common.c          |  1 +
- accel/tcg/cputlb.c                   |  1 +
- accel/tcg/tb-maint.c                 |  1 +
- accel/tcg/tcg-runtime.c              |  1 +
- accel/tcg/watchpoint.c               |  1 +
- hw/misc/mips_itu.c                   |  1 +
- plugins/api.c                        |  1 +
- semihosting/console.c                |  1 +
- target/arm/tcg/helper-a64.c          |  1 +
- target/avr/helper.c                  |  1 +
- target/hexagon/op_helper.c           |  1 +
- target/i386/tcg/excp_helper.c        |  1 +
- target/i386/tcg/misc_helper.c        |  1 +
- target/i386/tcg/system/bpt_helper.c  |  1 +
- target/i386/tcg/system/misc_helper.c |  1 +
- target/i386/tcg/user/excp_helper.c   |  1 +
- target/i386/tcg/user/seg_helper.c    |  1 +
- target/loongarch/tcg/tcg_cpu.c       |  1 +
- target/loongarch/tcg/tlb_helper.c    |  1 +
- target/m68k/helper.c                 |  1 +
- target/microblaze/op_helper.c        |  1 +
- target/mips/tcg/exception.c          |  1 +
- target/mips/tcg/system/tlb_helper.c  |  1 +
- target/or1k/exception_helper.c       |  1 +
- target/or1k/fpu_helper.c             |  1 +
- target/or1k/mmu.c                    |  1 +
- target/ppc/user_only_helper.c        |  1 +
- target/riscv/cpu_helper.c            |  1 +
- target/riscv/op_helper.c             |  1 +
- target/rx/op_helper.c                |  1 +
- target/s390x/mmu_helper.c            |  3 ++
- target/s390x/tcg/cc_helper.c         |  1 +
- target/s390x/tcg/debug.c             |  1 +
- target/s390x/tcg/mem_helper.c        |  1 +
- target/s390x/tcg/misc_helper.c       |  1 +
- target/sh4/helper.c                  |  1 +
- target/sparc/helper.c                |  1 +
- target/sparc/mmu_helper.c            |  1 +
- target/tricore/helper.c              |  1 +
- target/xtensa/exc_helper.c           |  1 +
- 42 files changed, 84 insertions(+), 22 deletions(-)
+Yes, I'll fix this in the next refresh.
 
-diff --git a/include/accel/tcg/cpu-loop.h b/include/accel/tcg/cpu-loop.h
-index 2fc38c8f1c4..0b5ac412d4a 100644
---- a/include/accel/tcg/cpu-loop.h
-+++ b/include/accel/tcg/cpu-loop.h
-@@ -40,4 +40,46 @@ bool cpu_unwind_state_data(CPUState *cpu, uintptr_t host_pc, uint64_t *data);
-  */
- bool cpu_restore_state(CPUState *cpu, uintptr_t host_pc);
- 
-+/**
-+ * cpu_loop_exit_noexc:
-+ * @cpu: the cpu context
-+ *
-+ * Exit the current TB, but without causing any exception to be raised.
-+ */
-+G_NORETURN void cpu_loop_exit_noexc(CPUState *cpu);
-+
-+/**
-+ * cpu_loop_exit_restore:
-+ * @cpu: the cpu context
-+ * @host_pc: the host pc within the translation
-+ *
-+ * Attempt to restore the state for a fault occurring in translated
-+ * code. If @host_pc is not in translated code no state is
-+ * restored. Finally, exit the current TB.
-+ */
-+G_NORETURN void cpu_loop_exit_restore(CPUState *cpu, uintptr_t host_pc);
-+G_NORETURN void cpu_loop_exit_atomic(CPUState *cpu, uintptr_t host_pc);
-+
-+/**
-+ * cpu_loop_exit:
-+ * @cpu: the cpu context
-+ *
-+ * Exit the current TB.
-+ */
-+G_NORETURN void cpu_loop_exit(CPUState *cpu);
-+
-+/**
-+ * cpu_loop_exit_requested:
-+ * @cpu: The CPU state to be tested
-+ *
-+ * Indicate if somebody asked for a return of the CPU to the main loop
-+ * (e.g., via cpu_exit() or cpu_interrupt()).
-+ *
-+ * This is helpful for architectures that support interruptible
-+ * instructions. After writing back all state to registers/memory, this
-+ * call can be used to check if it makes sense to return to the main loop
-+ * or to continue executing the interruptible instruction.
-+ */
-+bool cpu_loop_exit_requested(const CPUState *cpu);
-+
- #endif
-diff --git a/include/exec/cpu-common.h b/include/exec/cpu-common.h
-index 664e21e0b6c..da359ee3128 100644
---- a/include/exec/cpu-common.h
-+++ b/include/exec/cpu-common.h
-@@ -61,28 +61,6 @@ void cpu_destroy_address_spaces(CPUState *cpu);
- /* vl.c */
- void list_cpus(void);
- 
--#ifdef CONFIG_TCG
--
--/**
-- * cpu_loop_exit_requested:
-- * @cpu: The CPU state to be tested
-- *
-- * Indicate if somebody asked for a return of the CPU to the main loop
-- * (e.g., via cpu_exit() or cpu_interrupt()).
-- *
-- * This is helpful for architectures that support interruptible
-- * instructions. After writing back all state to registers/memory, this
-- * call can be used to check if it makes sense to return to the main loop
-- * or to continue executing the interruptible instruction.
-- */
--bool cpu_loop_exit_requested(const CPUState *cpu);
--
--G_NORETURN void cpu_loop_exit_noexc(CPUState *cpu);
--G_NORETURN void cpu_loop_exit_atomic(CPUState *cpu, uintptr_t pc);
--G_NORETURN void cpu_loop_exit_restore(CPUState *cpu, uintptr_t pc);
--#endif /* CONFIG_TCG */
--G_NORETURN void cpu_loop_exit(CPUState *cpu);
--
- /**
-  * env_archcpu(env)
-  * @env: The architecture environment
-diff --git a/accel/tcg/cpu-exec-common.c b/accel/tcg/cpu-exec-common.c
-index b571488be9e..8e7d986e191 100644
---- a/accel/tcg/cpu-exec-common.c
-+++ b/accel/tcg/cpu-exec-common.c
-@@ -22,6 +22,7 @@
- #include "system/tcg.h"
- #include "qemu/atomic.h"
- #include "qemu/plugin.h"
-+#include "accel/tcg/cpu-loop.h"
- #include "internal-common.h"
- 
- bool tcg_allowed;
-diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
-index 31c8351231a..6860ac97081 100644
---- a/accel/tcg/cputlb.c
-+++ b/accel/tcg/cputlb.c
-@@ -20,6 +20,7 @@
- #include "qemu/osdep.h"
- #include "qemu/main-loop.h"
- #include "qemu/target-info.h"
-+#include "accel/tcg/cpu-loop.h"
- #include "accel/tcg/cpu-ops.h"
- #include "accel/tcg/iommu.h"
- #include "accel/tcg/probe.h"
-diff --git a/accel/tcg/tb-maint.c b/accel/tcg/tb-maint.c
-index 0c7ac5a72c0..d9801a34275 100644
---- a/accel/tcg/tb-maint.c
-+++ b/accel/tcg/tb-maint.c
-@@ -26,6 +26,7 @@
- #include "exec/mmap-lock.h"
- #include "exec/tb-flush.h"
- #include "exec/target_page.h"
-+#include "accel/tcg/cpu-loop.h"
- #include "accel/tcg/cpu-ops.h"
- #include "tb-internal.h"
- #include "system/tcg.h"
-diff --git a/accel/tcg/tcg-runtime.c b/accel/tcg/tcg-runtime.c
-index f483c9c2ba2..7c0aab98a80 100644
---- a/accel/tcg/tcg-runtime.c
-+++ b/accel/tcg/tcg-runtime.c
-@@ -25,6 +25,7 @@
- #include "qemu/host-utils.h"
- #include "exec/cpu-common.h"
- #include "exec/helper-proto-common.h"
-+#include "accel/tcg/cpu-loop.h"
- #include "accel/tcg/getpc.h"
- 
- #define HELPER_H  "accel/tcg/tcg-runtime.h"
-diff --git a/accel/tcg/watchpoint.c b/accel/tcg/watchpoint.c
-index cfb37a49e72..c75ed278459 100644
---- a/accel/tcg/watchpoint.c
-+++ b/accel/tcg/watchpoint.c
-@@ -25,6 +25,7 @@
- #include "exec/translation-block.h"
- #include "system/tcg.h"
- #include "system/replay.h"
-+#include "accel/tcg/cpu-loop.h"
- #include "accel/tcg/cpu-ops.h"
- #include "hw/core/cpu.h"
- #include "internal-common.h"
-diff --git a/hw/misc/mips_itu.c b/hw/misc/mips_itu.c
-index 82c0a90f704..c20eca28a1e 100644
---- a/hw/misc/mips_itu.c
-+++ b/hw/misc/mips_itu.c
-@@ -25,6 +25,7 @@
- #include "hw/core/cpu.h"
- #include "hw/misc/mips_itu.h"
- #include "hw/core/qdev-properties.h"
-+#include "accel/tcg/cpu-loop.h"
- #include "target/mips/cpu.h"
- 
- #define ITC_TAG_ADDRSPACE_SZ (ITC_ADDRESSMAP_NUM * 8)
-diff --git a/plugins/api.c b/plugins/api.c
-index 2d5fe9327f7..690b5994f62 100644
---- a/plugins/api.c
-+++ b/plugins/api.c
-@@ -40,6 +40,7 @@
- #include "qemu/plugin.h"
- #include "qemu/log.h"
- #include "system/memory.h"
-+#include "accel/tcg/cpu-loop.h"
- #include "tcg/tcg.h"
- #include "exec/cpu-common.h"
- #include "exec/gdbstub.h"
-diff --git a/semihosting/console.c b/semihosting/console.c
-index a4db8d8e76d..91e5d50d502 100644
---- a/semihosting/console.c
-+++ b/semihosting/console.c
-@@ -18,6 +18,7 @@
- #include "qemu/osdep.h"
- #include "semihosting/semihost.h"
- #include "semihosting/console.h"
-+#include "accel/tcg/cpu-loop.h"
- #include "exec/cpu-common.h"
- #include "exec/gdbstub.h"
- #include "qemu/log.h"
-diff --git a/target/arm/tcg/helper-a64.c b/target/arm/tcg/helper-a64.c
-index a0f9215f1c9..05ab9ab6d31 100644
---- a/target/arm/tcg/helper-a64.c
-+++ b/target/arm/tcg/helper-a64.c
-@@ -31,6 +31,7 @@
- #include "qemu/crc32c.h"
- #include "exec/cpu-common.h"
- #include "accel/tcg/cpu-ldst.h"
-+#include "accel/tcg/cpu-loop.h"
- #include "accel/tcg/helper-retaddr.h"
- #include "accel/tcg/probe.h"
- #include "exec/target_page.h"
-diff --git a/target/avr/helper.c b/target/avr/helper.c
-index f3be8483b27..f452c9d9040 100644
---- a/target/avr/helper.c
-+++ b/target/avr/helper.c
-@@ -23,6 +23,7 @@
- #include "qemu/error-report.h"
- #include "cpu.h"
- #include "accel/tcg/cpu-ops.h"
-+#include "accel/tcg/cpu-loop.h"
- #include "exec/cputlb.h"
- #include "exec/page-protection.h"
- #include "exec/target_page.h"
-diff --git a/target/hexagon/op_helper.c b/target/hexagon/op_helper.c
-index 368391bb846..0a946433644 100644
---- a/target/hexagon/op_helper.c
-+++ b/target/hexagon/op_helper.c
-@@ -18,6 +18,7 @@
- #include "qemu/osdep.h"
- #include "qemu/log.h"
- #include "accel/tcg/cpu-ldst.h"
-+#include "accel/tcg/cpu-loop.h"
- #include "accel/tcg/probe.h"
- #include "exec/helper-proto.h"
- #include "fpu/softfloat.h"
-diff --git a/target/i386/tcg/excp_helper.c b/target/i386/tcg/excp_helper.c
-index 32f2784e923..1eaa602c91d 100644
---- a/target/i386/tcg/excp_helper.c
-+++ b/target/i386/tcg/excp_helper.c
-@@ -18,6 +18,7 @@
-  */
- 
- #include "qemu/osdep.h"
-+#include "accel/tcg/cpu-loop.h"
- #include "cpu.h"
- #include "qemu/log.h"
- #include "system/runstate.h"
-diff --git a/target/i386/tcg/misc_helper.c b/target/i386/tcg/misc_helper.c
-index 2b5f092a23f..f7342871ded 100644
---- a/target/i386/tcg/misc_helper.c
-+++ b/target/i386/tcg/misc_helper.c
-@@ -19,6 +19,7 @@
- 
- #include "qemu/osdep.h"
- #include "qemu/log.h"
-+#include "accel/tcg/cpu-loop.h"
- #include "cpu.h"
- #include "exec/helper-proto.h"
- #include "exec/cputlb.h"
-diff --git a/target/i386/tcg/system/bpt_helper.c b/target/i386/tcg/system/bpt_helper.c
-index aebb5caac37..2feea69c8a1 100644
---- a/target/i386/tcg/system/bpt_helper.c
-+++ b/target/i386/tcg/system/bpt_helper.c
-@@ -18,6 +18,7 @@
-  */
- 
- #include "qemu/osdep.h"
-+#include "accel/tcg/cpu-loop.h"
- #include "cpu.h"
- #include "exec/helper-proto.h"
- #include "exec/watchpoint.h"
-diff --git a/target/i386/tcg/system/misc_helper.c b/target/i386/tcg/system/misc_helper.c
-index bb79d4e470e..2998b1aae75 100644
---- a/target/i386/tcg/system/misc_helper.c
-+++ b/target/i386/tcg/system/misc_helper.c
-@@ -22,6 +22,7 @@
- #include "cpu.h"
- #include "exec/helper-proto.h"
- #include "accel/tcg/cpu-ldst.h"
-+#include "accel/tcg/cpu-loop.h"
- #include "system/address-spaces.h"
- #include "system/memory.h"
- #include "exec/cputlb.h"
-diff --git a/target/i386/tcg/user/excp_helper.c b/target/i386/tcg/user/excp_helper.c
-index 6c5df5e0e88..0957ad2e9ec 100644
---- a/target/i386/tcg/user/excp_helper.c
-+++ b/target/i386/tcg/user/excp_helper.c
-@@ -18,6 +18,7 @@
-  */
- 
- #include "qemu/osdep.h"
-+#include "accel/tcg/cpu-loop.h"
- #include "cpu.h"
- #include "tcg/helper-tcg.h"
- 
-diff --git a/target/i386/tcg/user/seg_helper.c b/target/i386/tcg/user/seg_helper.c
-index 28bbef1bbae..3a4a6d5a745 100644
---- a/target/i386/tcg/user/seg_helper.c
-+++ b/target/i386/tcg/user/seg_helper.c
-@@ -22,6 +22,7 @@
- #include "cpu.h"
- #include "exec/helper-proto.h"
- #include "accel/tcg/cpu-ldst.h"
-+#include "accel/tcg/cpu-loop.h"
- #include "tcg/helper-tcg.h"
- #include "tcg/seg_helper.h"
- 
-diff --git a/target/loongarch/tcg/tcg_cpu.c b/target/loongarch/tcg/tcg_cpu.c
-index f556234d9d2..8dc4bb15a1d 100644
---- a/target/loongarch/tcg/tcg_cpu.c
-+++ b/target/loongarch/tcg/tcg_cpu.c
-@@ -10,6 +10,7 @@
- #include "qemu/log.h"
- #include "qemu/plugin.h"
- #include "accel/tcg/cpu-ldst.h"
-+#include "accel/tcg/cpu-loop.h"
- #include "accel/tcg/cpu-ops.h"
- #include "exec/translation-block.h"
- #include "exec/target_page.h"
-diff --git a/target/loongarch/tcg/tlb_helper.c b/target/loongarch/tcg/tlb_helper.c
-index 7623f4f9bdb..a4b90beca65 100644
---- a/target/loongarch/tcg/tlb_helper.c
-+++ b/target/loongarch/tcg/tlb_helper.c
-@@ -17,6 +17,7 @@
- #include "exec/page-protection.h"
- #include "exec/target_page.h"
- #include "accel/tcg/cpu-ldst.h"
-+#include "accel/tcg/cpu-loop.h"
- #include "exec/log.h"
- #include "cpu-csr.h"
- #include "tcg/tcg_loongarch.h"
-diff --git a/target/m68k/helper.c b/target/m68k/helper.c
-index 2dd9ec1bdcb..5f91d206f59 100644
---- a/target/m68k/helper.c
-+++ b/target/m68k/helper.c
-@@ -25,6 +25,7 @@
- #include "exec/target_page.h"
- #include "exec/gdbstub.h"
- #include "exec/helper-proto.h"
-+#include "accel/tcg/cpu-loop.h"
- #include "system/memory.h"
- #include "gdbstub/helpers.h"
- #include "fpu/softfloat.h"
-diff --git a/target/microblaze/op_helper.c b/target/microblaze/op_helper.c
-index 84c60c2636e..3da0c68da39 100644
---- a/target/microblaze/op_helper.c
-+++ b/target/microblaze/op_helper.c
-@@ -24,6 +24,7 @@
- #include "exec/helper-proto.h"
- #include "qemu/host-utils.h"
- #include "accel/tcg/cpu-ldst-common.h"
-+#include "accel/tcg/cpu-loop.h"
- #include "fpu/softfloat.h"
- 
- void helper_put(uint32_t id, uint32_t ctrl, uint32_t data)
-diff --git a/target/mips/tcg/exception.c b/target/mips/tcg/exception.c
-index d32bcebf469..630b8b809fa 100644
---- a/target/mips/tcg/exception.c
-+++ b/target/mips/tcg/exception.c
-@@ -24,6 +24,7 @@
- #include "internal.h"
- #include "exec/helper-proto.h"
- #include "exec/translation-block.h"
-+#include "accel/tcg/cpu-loop.h"
- 
- target_ulong exception_resume_pc(CPUMIPSState *env)
- {
-diff --git a/target/mips/tcg/system/tlb_helper.c b/target/mips/tcg/system/tlb_helper.c
-index c850ddd9650..4398c6f80b4 100644
---- a/target/mips/tcg/system/tlb_helper.c
-+++ b/target/mips/tcg/system/tlb_helper.c
-@@ -26,6 +26,7 @@
- #include "exec/page-protection.h"
- #include "exec/target_page.h"
- #include "accel/tcg/cpu-ldst.h"
-+#include "accel/tcg/cpu-loop.h"
- #include "exec/log.h"
- #include "exec/helper-proto.h"
- 
-diff --git a/target/or1k/exception_helper.c b/target/or1k/exception_helper.c
-index 3e76acae9c3..eeb82bc49f4 100644
---- a/target/or1k/exception_helper.c
-+++ b/target/or1k/exception_helper.c
-@@ -18,6 +18,7 @@
-  */
- 
- #include "qemu/osdep.h"
-+#include "accel/tcg/cpu-loop.h"
- #include "exec/helper-proto.h"
- 
- #include "target/or1k/cpu.h"
-diff --git a/target/or1k/fpu_helper.c b/target/or1k/fpu_helper.c
-index 39b6195dd7d..e680606d4da 100644
---- a/target/or1k/fpu_helper.c
-+++ b/target/or1k/fpu_helper.c
-@@ -19,6 +19,7 @@
-  */
- 
- #include "qemu/osdep.h"
-+#include "accel/tcg/cpu-loop.h"
- #include "cpu.h"
- #include "exec/helper-proto.h"
- #include "fpu/softfloat.h"
-diff --git a/target/or1k/mmu.c b/target/or1k/mmu.c
-index 3ff288a1f94..3fc56e1b771 100644
---- a/target/or1k/mmu.c
-+++ b/target/or1k/mmu.c
-@@ -24,6 +24,7 @@
- #include "exec/cputlb.h"
- #include "exec/page-protection.h"
- #include "exec/target_page.h"
-+#include "accel/tcg/cpu-loop.h"
- #include "qemu/host-utils.h"
- #include "hw/core/loader.h"
- 
-diff --git a/target/ppc/user_only_helper.c b/target/ppc/user_only_helper.c
-index ae210eb8474..cc6d7ee88aa 100644
---- a/target/ppc/user_only_helper.c
-+++ b/target/ppc/user_only_helper.c
-@@ -19,6 +19,7 @@
-  */
- 
- #include "qemu/osdep.h"
-+#include "accel/tcg/cpu-loop.h"
- #include "cpu.h"
- #include "internal.h"
- 
-diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
-index 17305e1bb75..97fea4d0c7e 100644
---- a/target/riscv/cpu_helper.c
-+++ b/target/riscv/cpu_helper.c
-@@ -29,6 +29,7 @@
- #include "system/memory.h"
- #include "instmap.h"
- #include "tcg/tcg-op.h"
-+#include "accel/tcg/cpu-loop.h"
- #include "accel/tcg/cpu-ops.h"
- #include "trace.h"
- #include "semihosting/common-semi.h"
-diff --git a/target/riscv/op_helper.c b/target/riscv/op_helper.c
-index 81873014cb8..987ef67d177 100644
---- a/target/riscv/op_helper.c
-+++ b/target/riscv/op_helper.c
-@@ -23,6 +23,7 @@
- #include "internals.h"
- #include "exec/cputlb.h"
- #include "accel/tcg/cpu-ldst.h"
-+#include "accel/tcg/cpu-loop.h"
- #include "accel/tcg/probe.h"
- #include "exec/helper-proto.h"
- #include "exec/tlb-flags.h"
-diff --git a/target/rx/op_helper.c b/target/rx/op_helper.c
-index ca3e9e85fc7..36df7d377e5 100644
---- a/target/rx/op_helper.c
-+++ b/target/rx/op_helper.c
-@@ -21,6 +21,7 @@
- #include "cpu.h"
- #include "exec/helper-proto.h"
- #include "accel/tcg/cpu-ldst.h"
-+#include "accel/tcg/cpu-loop.h"
- #include "fpu/softfloat.h"
- #include "tcg/debug-assert.h"
- 
-diff --git a/target/s390x/mmu_helper.c b/target/s390x/mmu_helper.c
-index 255271b9d34..2f886d424a1 100644
---- a/target/s390x/mmu_helper.c
-+++ b/target/s390x/mmu_helper.c
-@@ -24,6 +24,9 @@
- #include "system/kvm.h"
- #include "system/tcg.h"
- #include "system/memory.h"
-+#ifdef CONFIG_TCG
-+#include "accel/tcg/cpu-loop.h"
-+#endif
- #include "exec/page-protection.h"
- #include "exec/target_page.h"
- #include "hw/core/hw-error.h"
-diff --git a/target/s390x/tcg/cc_helper.c b/target/s390x/tcg/cc_helper.c
-index 6595ac763c3..e538a75d713 100644
---- a/target/s390x/tcg/cc_helper.c
-+++ b/target/s390x/tcg/cc_helper.c
-@@ -20,6 +20,7 @@
- 
- #include "qemu/osdep.h"
- #include "cpu.h"
-+#include "accel/tcg/cpu-loop.h"
- #include "s390x-internal.h"
- #include "tcg_s390x.h"
- #include "exec/helper-proto.h"
-diff --git a/target/s390x/tcg/debug.c b/target/s390x/tcg/debug.c
-index 50d2853d443..99140b1ac9a 100644
---- a/target/s390x/tcg/debug.c
-+++ b/target/s390x/tcg/debug.c
-@@ -7,6 +7,7 @@
- #include "qemu/osdep.h"
- #include "exec/breakpoint.h"
- #include "exec/watchpoint.h"
-+#include "accel/tcg/cpu-loop.h"
- #include "target/s390x/cpu.h"
- #include "target/s390x/s390x-internal.h"
- #include "tcg_s390x.h"
-diff --git a/target/s390x/tcg/mem_helper.c b/target/s390x/tcg/mem_helper.c
-index 8474a694110..414e6838c87 100644
---- a/target/s390x/tcg/mem_helper.c
-+++ b/target/s390x/tcg/mem_helper.c
-@@ -28,6 +28,7 @@
- #include "exec/cputlb.h"
- #include "exec/page-protection.h"
- #include "accel/tcg/cpu-ldst.h"
-+#include "accel/tcg/cpu-loop.h"
- #include "accel/tcg/probe.h"
- #include "exec/target_page.h"
- #include "exec/tlb-flags.h"
-diff --git a/target/s390x/tcg/misc_helper.c b/target/s390x/tcg/misc_helper.c
-index 036be93fb32..09a45e58a5d 100644
---- a/target/s390x/tcg/misc_helper.c
-+++ b/target/s390x/tcg/misc_helper.c
-@@ -28,6 +28,7 @@
- #include "qemu/timer.h"
- #include "exec/cputlb.h"
- #include "accel/tcg/cpu-ldst-common.h"
-+#include "accel/tcg/cpu-loop.h"
- #include "accel/tcg/cpu-mmu-index.h"
- #include "exec/target_page.h"
- #include "qapi/error.h"
-diff --git a/target/sh4/helper.c b/target/sh4/helper.c
-index b3ec7ce64d0..b6b057f104b 100644
---- a/target/sh4/helper.c
-+++ b/target/sh4/helper.c
-@@ -24,6 +24,7 @@
- #include "exec/page-protection.h"
- #include "exec/target_page.h"
- #include "exec/log.h"
-+#include "accel/tcg/cpu-loop.h"
- #include "qemu/plugin.h"
- 
- #if !defined(CONFIG_USER_ONLY)
-diff --git a/target/sparc/helper.c b/target/sparc/helper.c
-index c5d88de37c9..8de261b0e30 100644
---- a/target/sparc/helper.c
-+++ b/target/sparc/helper.c
-@@ -21,6 +21,7 @@
- #include "cpu.h"
- #include "qemu/timer.h"
- #include "qemu/host-utils.h"
-+#include "accel/tcg/cpu-loop.h"
- #include "exec/cpu-common.h"
- #include "exec/helper-proto.h"
- 
-diff --git a/target/sparc/mmu_helper.c b/target/sparc/mmu_helper.c
-index e441ffb8f7e..07ba25dfcea 100644
---- a/target/sparc/mmu_helper.c
-+++ b/target/sparc/mmu_helper.c
-@@ -21,6 +21,7 @@
- #include "qemu/log.h"
- #include "cpu.h"
- #include "exec/cputlb.h"
-+#include "accel/tcg/cpu-loop.h"
- #include "accel/tcg/cpu-mmu-index.h"
- #include "exec/page-protection.h"
- #include "exec/target_page.h"
-diff --git a/target/tricore/helper.c b/target/tricore/helper.c
-index ce1693622b7..273713a1473 100644
---- a/target/tricore/helper.c
-+++ b/target/tricore/helper.c
-@@ -20,6 +20,7 @@
- #include "hw/core/registerfields.h"
- #include "cpu.h"
- #include "exec/cputlb.h"
-+#include "accel/tcg/cpu-loop.h"
- #include "accel/tcg/cpu-mmu-index.h"
- #include "exec/page-protection.h"
- #include "exec/target_page.h"
-diff --git a/target/xtensa/exc_helper.c b/target/xtensa/exc_helper.c
-index fdc522698dc..7cb67d179a8 100644
---- a/target/xtensa/exc_helper.c
-+++ b/target/xtensa/exc_helper.c
-@@ -28,6 +28,7 @@
- #include "qemu/osdep.h"
- #include "qemu/log.h"
- #include "qemu/main-loop.h"
-+#include "accel/tcg/cpu-loop.h"
- #include "cpu.h"
- #include "exec/helper-proto.h"
- #include "qemu/host-utils.h"
--- 
-2.53.0
-
+Thanks,
+Nathan
 
