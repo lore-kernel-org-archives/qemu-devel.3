@@ -4,98 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65574CD8CA8
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 03:37:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F0FACD8CA8
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 03:45:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZKbO-0006x8-5h; Mon, 15 Jun 2026 23:36:38 -0400
+	id 1wZKis-00005r-Ef; Mon, 15 Jun 2026 23:44:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wZKbG-0006wg-B4
- for qemu-devel@nongnu.org; Mon, 15 Jun 2026 23:36:30 -0400
-Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
+ id 1wZKiq-00005W-OV
+ for qemu-devel@nongnu.org; Mon, 15 Jun 2026 23:44:20 -0400
+Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wZKbE-0007JK-Ge
- for qemu-devel@nongnu.org; Mon, 15 Jun 2026 23:36:30 -0400
-Received: by mail-ed1-x530.google.com with SMTP id
- 4fb4d7f45d1cf-68852b58d87so7125694a12.3
- for <qemu-devel@nongnu.org>; Mon, 15 Jun 2026 20:36:28 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1781580987; cv=none;
+ id 1wZKip-0000jN-5I
+ for qemu-devel@nongnu.org; Mon, 15 Jun 2026 23:44:20 -0400
+Received: by mail-ed1-x52b.google.com with SMTP id
+ 4fb4d7f45d1cf-68d232ed3f9so6291206a12.0
+ for <qemu-devel@nongnu.org>; Mon, 15 Jun 2026 20:44:18 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1781581457; cv=none;
  d=google.com; s=arc-20240605;
- b=eOr14xT/qD28f+o3AgiRkWDe7+Us/KXhXBqiqS5gYPZczs2uxgesFWeUU3QTjXz04o
- kRgslbJGcKibWba1AoMlbcewHjlG29ifZvi548SPox6/5AfonmltYNf3WbXoKLq3D+0r
- HFdyVroNLgKiAhYFNU4d/Hpry8/f3W1qGFIAIp7tK4L8c6sP/s9a6KUqjVJ0tjAAsDaB
- 0sLnZ2KvYQfbv1+yIwngPx88CqCIQSnOi+JJIy5uSgaUdJcXz9xhuG1K6FM7fwpIq0u9
- c50RTiOafBHHIWZevPQDcGnRJNQzz3P5De+aSHrrgaTEDFNWlHLBn2IzWUHrnPGBoxqn
- oEZQ==
+ b=Erxq9rW3EwyTRV7JGwwA/hmSPONLJIKgCQoC01mwzQo/DB8h1ASWTjlFahOQ3b+RqX
+ nwn9RhNSAS1AHgHyMT3ctNaK+9/6xHqw51pdQ1j/fgk2rSvXewGAFRYGH84WLKlbd2DL
+ UYXiPegDksSB4mjtvyN2DL7n2bnhUaOGFi0D3V2QlLjQXhwedXDVn5RSXNapazCgGG7x
+ coj3IkjRSSAyXmvrazjase51epktgWkNmp8HBlpudi5GcDx6UtKbDXTaVq4TrSgxO6Me
+ jzIbFHJVp9lFxXDHJY6hdRehC8pIcREcDxf4DPRZrsTgwgehWVdpM6HYSAuJd1NCOsBy
+ qF3Q==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=PYdHyauYmderA8Rp9+txY9RPFdvtmdE57KgE5PnKn0g=;
- fh=5zjSrN0211VqBNyWQW+pqpsjKZ6jf0TG1tkKVAMci9Q=;
- b=GR+3WAFHZuxY8AKrSLhpmiKfjnMvHk/9dSDXtKayGHBWHPhVPw9TDtQ2yzGugm8/sF
- tL8JfElB7nJyG0Aj/vJlkR5aMou1wSXNXo82pYXfCVs6pE7NXMhGHuOb0BdldIZ1BLw4
- 1XwrCW+YGw1d4ttlbRW/ItJnw6OW2pXJ0L1mTdhvO8gPDHgW/SYuSZYRm5iy4HeC3ZR/
- Wd6Jte35IjN0FIR+zG21gUc6m+ItogUlaYZWc7cJ++LzR8XxY02criDTJMQA13bEiHEo
- s8wZ63KQcxNNDk4cwLoSWxCRzt+cjmRYAdaaw1Q6oQVNBIvsjPc+UX9JrqfZQXYoFbBR
- yZEQ==; darn=nongnu.org
+ bh=hJDm1EoT0f1HlKtP6PspAMHEHdYnq5dfOmfvoJsPUYc=;
+ fh=ss/HGO4RwpwHFtzwgPsbC23QsemYg8f9BjqPHLpkgZI=;
+ b=YLC8N1zlhqiuvstK7aLR97TScwntRr8vbA9XcD4qHj0vQw/ERXFsnLsWalIIpM7hSy
+ FS3RFuJOxgnl0R70zkBtr6EhLG7MXTBGYS1J/KYb7/mljJPHced/nhWpLKlEwHUKlwxR
+ QJntFW99p+GsELwxtGEZSFiwSdW4GgrmQvUZ+5L1tGe3nd0H7kRP9hbU8NF53hSE8NNK
+ 9t2ObBvHqgWWwiEFyH1ApUkksGFGM6JXEwPbR3PC5uU4mOT2JsYIHjcyNZmhaI2mmY2p
+ /fzYtajTL8DWny4BAJygAIUqThi24t7K5N8xbJQLFaB5m1M5Z+DnCB68kPhA3gBLGTiA
+ KSQA==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1781580987; x=1782185787; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1781581457; x=1782186257; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=PYdHyauYmderA8Rp9+txY9RPFdvtmdE57KgE5PnKn0g=;
- b=lrLhVvSGvvASdCV6R8O5sgiNhd4fpR2UTP4U2eJLjody4//6bTY1SCatyPSDreqDEi
- IGe+u+fqxK+06meep68q1M60m55ekuLfx5XXEysEueqPnyB4CO8ADyY6Ys23DC+H1VWN
- 7VvAY2+5v/XPK7M5/GKoA+8RwoY3bk95BvdWRT9jB8WCDJ2t1EGaejOht/WHihC7TyCG
- TXBxuEE8XjB8z8ThMvtvHPRmXV63YN0DPepTJg1pcHWHon4Ya6EnTs/vCE4jBHoQp440
- mixceh/izeFzy/K5oTSgaQDvWR82SEs57cb9w4RouvAcknWIIEtVTL2JYJHmrBQgK3qP
- fi/w==
+ bh=hJDm1EoT0f1HlKtP6PspAMHEHdYnq5dfOmfvoJsPUYc=;
+ b=askRqcfwnE13lfnPi2HAipofBhqD/hWj8sB82GW5Gg308W+TmOynYO7hBN+lwxtb0U
+ zejZjyaaes2c4MrRUoi0mdVeXCTvJtD9bdG83YAyzpr6zbM7hHDIN3hTDktU8G34G93e
+ MG4zelQRmOewdbGom+yAdIsQSEN+COyGwgMBo8LOFTDYALP4B5c2hJQtnlkWmzq9yBMq
+ t3DnhAOBcHIIdOhKS5s4udq3xWcJnN6/mxzBpQq/v40sI50m7SAgqZ3iXxCtZb8Z+C+6
+ RVenBS5i+9DqKAH3Kev/vMUib8lMOBksSR+VO27Mnj6K6JrWpPKg8Kw4xLNZWRMGKS/l
+ ffTQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781580987; x=1782185787;
+ d=1e100.net; s=20251104; t=1781581457; x=1782186257;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=PYdHyauYmderA8Rp9+txY9RPFdvtmdE57KgE5PnKn0g=;
- b=NAvnMt5mgtRZ0Jiui0x+Nymut7hpg0py9B5QQ2g3ZftYuEz0vpau1PmtGOnbYMsK1R
- 08PdrsUczgr40Y1nPioTSgIkKbSCy5qUOu2miJm9j1QfRbi6SXERyjkwyfH3PUrMs2xI
- xlY1XqJ3ekJVA/2Ax90mGekZ/bK/yuY5FdaBcApuOjMVS7nTnm4JcppKfdBdKnYldaGu
- 7qo2w93czGJLjyOdAzQsqeYdMPqEVhHc1gv5gwjaa9sJ1tmUGfkyPdMOsLwlP9cLBWd1
- IAxGDP5DSvfaRKStA+uFYQA9M5hyaJYDfnSICrmSTJOnGWLJCtTiOMOUZ49+KF81TrYO
- qQlQ==
-X-Gm-Message-State: AOJu0YyX9icLToiglkBPVuzXHIyY8VUUBxT/NAPVQ7PNYi8oV27Rb15A
- AVQAM5gzmax48z1jUjMRXtQaGZOSBYWHWj/4HmAhbNREyhsTT1KNovahvVknseHkwshYQg6zsHf
- 57ZNVEObNxXnUsG4ApxStlaNbKSHEK1A=
-X-Gm-Gg: Acq92OFZolw6Gjk4gBM2HE5fVk4sZrDoU2pswVNqpyW4L14HG5WkyJ/w+9w2nrKmJXS
- ags7OSTjUlIWSdXCxWESpYUdGj0rwUgqEl5FLeUDhWMqQOxAbkFgJs2elThWJF/J1tGCS9ZEL4Y
- GySAueJ3hm+WUm9+N40HfSp6PaHud+BuVUyCskDKOo4M7xbseINP8kfIDPMWM983uuQ4o1j8aNt
- 2qQLejdrYOj1e8J6pJ1JA4V7krfmezNUFEL+qpZSFcv4W6f6U6P3Q4yDUl4ttuETpyAVCX9V8rL
- xK//VRoISzsSBYIUzTf4lt4FxrbMDPtociV0Hv3tvlyCmC6G
-X-Received: by 2002:a05:6402:a50a:10b0:694:faab:5454 with SMTP id
- 4fb4d7f45d1cf-694faab549emr964287a12.19.1781580986624; Mon, 15 Jun 2026
- 20:36:26 -0700 (PDT)
+ bh=hJDm1EoT0f1HlKtP6PspAMHEHdYnq5dfOmfvoJsPUYc=;
+ b=G3EzZwVgmnYcWqwOrY6ggpajDtHVO33cFQ0LYQo47zSshfLn8KrbpasMRZIzsXtsfP
+ BnJc/eh4HLKltcQ81doW3i/Va5GS37GeatAfk51bt/fCmcuH0cagTJtGEO2pvv9k0Wmb
+ Ej+Y5ym4/0ETdR2X2FcEAT7b7VHiB2H/l9SwJjbvEEtX2WP9HIMCR8fph6gvtkOtLE9X
+ njYkDPl5s6/0XpRH5tMHl2cR8MPwrpSIGaKiinas/WO/zWSavSVg5+ibq+j+pwMV3Qp6
+ Jbu/Gf/3nu5l78Np0f/Tep4D9OH1uaL/Ehce1AR+YMo1e6mBgBBkTf1ifY7JNDANjv54
+ iKtA==
+X-Gm-Message-State: AOJu0YzI+BOiUuIQMo9fLTq10RMQ2PuzTaddso/IXCcOvSAgun4Rtd0Y
+ 1EgKv06i/x6S3kfXSPyFjeq7Z9a/iAlv3Cfe8vnkJCOGLDufFzL0x6MIEHgJCsk0vbGanBTi4Lt
+ j9iJUgUqtPDuN1LC5+kTpPeJRJ/eCMd0=
+X-Gm-Gg: Acq92OGVg+gzxJg2Wp11B7hda+S0nRvRkitGfPxeBHThqLlqNnJqV9/CIqwkGC8uoXv
+ Bl/+/KzokIwq1kxuvC8A+7eUcfuM8NCNtwGHdj96fUMggo+OrcVPxiWvb5R3vbFcKmsyaLr/+TH
+ zOwt3ArWESem/PXOihppUawfUO1R4Ms03CrPZax259ZLPqDvVwQ5sclxY/xAu3kFx3ZiXBqUG2J
+ mtg2lWfejr60IP3WOGYO6hn9RRdlUPDjBMq1SFhxtCkYoJH+27CVEhSS33LjHQaJYdrvz6AFZxP
+ cunNaA2E9wdpa7AjyFJU9LOPe6ErgQF82bpBGw==
+X-Received: by 2002:a05:6402:2350:b0:691:b158:b40c with SMTP id
+ 4fb4d7f45d1cf-6950877be80mr935871a12.7.1781581457438; Mon, 15 Jun 2026
+ 20:44:17 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260615203734.954428-1-daniel.barboza@oss.qualcomm.com>
-In-Reply-To: <20260615203734.954428-1-daniel.barboza@oss.qualcomm.com>
+References: <20260611123412.2135600-1-daniel.barboza@oss.qualcomm.com>
+ <20260611123412.2135600-2-daniel.barboza@oss.qualcomm.com>
+In-Reply-To: <20260611123412.2135600-2-daniel.barboza@oss.qualcomm.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Tue, 16 Jun 2026 13:36:00 +1000
-X-Gm-Features: AVVi8Ccpl3BIHKowEduWCyOi17Wd-mhaPsvn-pNMM6VA6hUJAe7I034cYy6FvnI
-Message-ID: <CAKmqyKOD4G5u==kr7ueyHAk-RpoqPPrefMou8_OxUbZ_go5b0A@mail.gmail.com>
-Subject: Re: [PATCH 00/13] hw/riscv: FDT creation helpers
-To: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Joel Stanley <joel@jms.id.au>, Nicholas Piggin <npiggin@gmail.com>,
- Portia Stephens <portias@oss.tenstorrent.com>
+Date: Tue, 16 Jun 2026 13:43:51 +1000
+X-Gm-Features: AVVi8CeUMVwxFseqyxQK8Po8xmrXAraJKUG5D4BoOhVixR3EJCH91g6KR8wW0wc
+Message-ID: <CAKmqyKPHYPqwPPt3T6M9CstuMMFWXmvD8Etjkfdnw8Af_RhQHg@mail.gmail.com>
+Subject: Re: [PATCH v3 1/3] target/riscv/cpu: add CPU unrealize callback
+To: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
- liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, chao.liu.zevorn@gmail.com
+ liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, chao.liu.zevorn@gmail.com, 
+ philmd@oss.qualcomm.com, Palmer Dabbelt <palmer@dabbelt.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::530;
- envelope-from=alistair23@gmail.com; helo=mail-ed1-x530.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
+ envelope-from=alistair23@gmail.com; helo=mail-ed1-x52b.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -119,79 +119,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jun 16, 2026 at 6:43=E2=80=AFAM Daniel Henrique Barboza
+On Thu, Jun 11, 2026 at 10:34=E2=80=AFPM Daniel Henrique Barboza
 <daniel.barboza@oss.qualcomm.com> wrote:
 >
-> Salutations,
+> Next patch is going to dynamically allocate debug trigger arrays during
+> realize() time.  We need a way of freeing them during unrealize(), which
+> doesn't exist at this moment.
 >
+> There's a lot going on in that patch already so we're adding the
+> callback infrastructure beforehand.
 >
-> We have a good amount of code repetition between boards, mostly because
-> we copied/pasted components from one to the other across the years.  But
-> now we want to upstream the RISC-V Server Platform, currently at v8 [1],
-> and this topic came in the review.  This is a work I've been ducking for
-> 2 years now but seems like it's time we do something about it.
->
-> The patches are mostly code moving work with some design decisions
-> here and there in the new helper file.  When needed I changed board code
-> first to be compatible with what would be the helper (usually the code
-> from 'virt', which is more modern) and then I moved stuff to a helper.
->
-> The result of this series in the FDTs:
->
-> - for 'virt': no changes;
-> - for 'spike': the /htif node changed places with /soc;
-> - for 'sifive_u': phandles values for cpu-intc changed because now we're
->   generating them (see patch 1).  Aside from that the board now has a
->   'cpu-map' subnode with cluster and core IDs;
->
->
-> This is not everything -  I have a shorter follow up FDT  series ready
-> to go as soon as we get this accepted.  Figured that 13 patches is
-> enough for one go.
->
->
-> Patches based on alistair/riscv-to-apply.next.
->
->
-> [1] https://lore.kernel.org/qemu-devel/20260610214133.1882563-1-daniel.ba=
-rboza@oss.qualcomm.com/
->
-> Daniel Henrique Barboza (13):
->   hw/riscv/sifive_u.c: add a FDT phandle to cpu-intc
->   hw/riscv: add fdt-common helper
->   hw/riscv/numa: make numa_enabled() public
->   hw/riscv: add create_fdt_socket_memory() helper
->   hw/riscv/sifive_u.c: add intc_phandles array
->   hw/riscv/spike.c: add intc_phandles array
->   hw/riscv: add create_fdt_clint() helper
->   hw/riscv/sifive_u.c: add cpu-map, cluster and core DTs
->   hw/riscv: add fdt_create_cpu_socket_subnode() helper
->   hw/riscv: add create_fdt_socket_cpus()
->   hw/riscv/spike.c: use create_fdt_socket_cpus()
->   hw/riscv/fdt_common.c: create create_fdt_socket_cpu_internal()
->   hw/riscv: add create_fdt_socket_cpu_sifive()
+> Suggested-by: Philippe Mathieu-Daud=C3=A9 <philmd@oss.qualcomm.com>
+> Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 
-Thanks!
-
-Applied to riscv-to-apply.next
-
-@Joel Stanley , @Nicholas Piggin , @Portia Stephens FYI
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 
 Alistair
 
+> ---
+>  target/riscv/cpu.c | 9 +++++++++
+>  target/riscv/cpu.h | 2 ++
+>  2 files changed, 11 insertions(+)
 >
->  hw/riscv/fdt-common.c         | 202 ++++++++++++++++++++++++++++++++++
->  hw/riscv/meson.build          |   1 +
->  hw/riscv/numa.c               |  20 ++--
->  hw/riscv/sifive_u.c           |  88 ++++-----------
->  hw/riscv/spike.c              | 123 ++++-----------------
->  hw/riscv/virt.c               | 182 +++++-------------------------
->  include/hw/riscv/fdt-common.h |  33 ++++++
->  include/hw/riscv/numa.h       |   8 ++
->  8 files changed, 322 insertions(+), 335 deletions(-)
->  create mode 100644 hw/riscv/fdt-common.c
->  create mode 100644 include/hw/riscv/fdt-common.h
+> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+> index c1b10cc7ef..5b2133d811 100644
+> --- a/target/riscv/cpu.c
+> +++ b/target/riscv/cpu.c
+> @@ -1012,6 +1012,13 @@ static void riscv_cpu_realize(DeviceState *dev, Er=
+ror **errp)
+>      mcc->parent_realize(dev, errp);
+>  }
 >
+> +static void riscv_cpu_unrealize(DeviceState *dev)
+> +{
+> +    RISCVCPUClass *mcc =3D RISCV_CPU_GET_CLASS(dev);
+> +
+> +    mcc->parent_unrealize(dev);
+> +}
+> +
+>  bool riscv_cpu_accelerator_compatible(RISCVCPU *cpu)
+>  {
+>      if (tcg_enabled()) {
+> @@ -2667,6 +2674,8 @@ static void riscv_cpu_common_class_init(ObjectClass=
+ *c, const void *data)
+>
+>      device_class_set_parent_realize(dc, riscv_cpu_realize,
+>                                      &mcc->parent_realize);
+> +    device_class_set_parent_unrealize(dc, riscv_cpu_unrealize,
+> +                                      &mcc->parent_unrealize);
+>
+>      resettable_class_set_parent_phases(rc, NULL, riscv_cpu_reset_hold, N=
+ULL,
+>                                         &mcc->parent_phases);
+> diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+> index c98652cd62..11cd710990 100644
+> --- a/target/riscv/cpu.h
+> +++ b/target/riscv/cpu.h
+> @@ -575,6 +575,7 @@ typedef struct RISCVCPUDef {
+>  /**
+>   * RISCVCPUClass:
+>   * @parent_realize: The parent class' realize handler.
+> + * @parent_unrealize: The parent class' unrealize handler.
+>   * @parent_phases: The parent class' reset phase handlers.
+>   *
+>   * A RISCV CPU model.
+> @@ -583,6 +584,7 @@ struct RISCVCPUClass {
+>      CPUClass parent_class;
+>
+>      DeviceRealize parent_realize;
+> +    DeviceUnrealize parent_unrealize;
+>      ResettablePhases parent_phases;
+>      RISCVCPUDef *def;
+>  };
 > --
 > 2.43.0
 >
