@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C534CD98E1
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 13:28:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9BA8CD98DA
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 13:28:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZTpb-0007uK-Ho; Tue, 16 Jun 2026 09:27:55 -0400
+	id 1wZTpo-0000B8-5G; Tue, 16 Jun 2026 09:28:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1wZTpZ-0007iZ-MH
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 09:27:53 -0400
+ id 1wZTpm-0000AV-OM
+ for qemu-devel@nongnu.org; Tue, 16 Jun 2026 09:28:06 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1wZTpX-0005zK-RV
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 09:27:53 -0400
+ id 1wZTpk-00061l-WB
+ for qemu-devel@nongnu.org; Tue, 16 Jun 2026 09:28:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781616471;
+ s=mimecast20190719; t=1781616484;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=qySDmpGubd1jDBl8VeG5Y8I9gHIq9QwIiLHxNZ7iLZI=;
- b=jDIv023kWjHT6kPFDGxL2tBiQNH0UPm0jrN8LBFKtgLxZhgPUOZRYOFmJqkdToNFBcWmjj
- CraXypg91PNMP+NIFYCOiSC0ZZFdVZvBJvW2rD6PfMaIF4YyiCnakMetTJyIRBI3tEg8w5
- wSf54+x8G5z5/KjtVWzuXXY0nDfKkxo=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=Gh68cijheTqVFJPOiChbFylAMbtUDn2JoOSaWYjZSOQ=;
+ b=b0viYKtbls/1i4JIkUFm+IuxAIjikWIKKdX1QRq6tQMNaKpmjP8/2MOguUbBOf/SsYLNjf
+ 7J3xaS7e6+LmQiHH5ablTUOjRAK+3guldfsAHBHUpWVdX4iSHeq+Pg0//f3128PpfIX6/e
+ d1spR2+2e5ew4khXtVx1ZUvHVbbwFQ0=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-466-C5W2-Wa8NoS7vpCoZazcbQ-1; Tue,
- 16 Jun 2026 09:27:46 -0400
-X-MC-Unique: C5W2-Wa8NoS7vpCoZazcbQ-1
-X-Mimecast-MFC-AGG-ID: C5W2-Wa8NoS7vpCoZazcbQ_1781616464
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-166-abO3NdMiMoKhYV8Ao9a1PA-1; Tue,
+ 16 Jun 2026 09:28:00 -0400
+X-MC-Unique: abO3NdMiMoKhYV8Ao9a1PA-1
+X-Mimecast-MFC-AGG-ID: abO3NdMiMoKhYV8Ao9a1PA_1781616478
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B85E3195607E; Tue, 16 Jun 2026 13:27:44 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1EA911955EB1; Tue, 16 Jun 2026 13:27:58 +0000 (UTC)
 Received: from laptop.redhat.com (unknown [10.44.48.30])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id BC2353008B3B; Tue, 16 Jun 2026 13:27:38 +0000 (UTC)
+ id BFF293008B3B; Tue, 16 Jun 2026 13:27:51 +0000 (UTC)
 From: Eric Auger <eric.auger@redhat.com>
 To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
  qemu-arm@nongnu.org, kvmarm@lists.linux.dev, peter.maydell@linaro.org,
@@ -56,9 +56,10 @@ To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
 Cc: maz@kernel.org, oliver.upton@linux.dev, pbonzini@redhat.com,
  armbru@redhat.com, berrange@redhat.com, abologna@redhat.com,
  jdenemar@redhat.com
-Subject: [RFC PATCH v6 10/17] target/arm/kvm: Retrieve writable ID reg map
-Date: Tue, 16 Jun 2026 15:16:57 +0200
-Message-ID: <20260616132625.1732031-11-eric.auger@redhat.com>
+Subject: [RFC PATCH v6 12/17] target/arm/kvm: Introduce
+ kvm_arm_expose_idreg_properties
+Date: Tue, 16 Jun 2026 15:16:59 +0200
+Message-ID: <20260616132625.1732031-13-eric.auger@redhat.com>
 In-Reply-To: <20260616132625.1732031-1-eric.auger@redhat.com>
 References: <20260616132625.1732031-1-eric.auger@redhat.com>
 MIME-Version: 1.0
@@ -89,122 +90,221 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Cornelia Huck <cohuck@redhat.com>
+This helper decode the ID reg writable mask, matches it against
+ID reg fields defined in target/arm/cpu-idregs.h.inc and
+for each writable named field, generates a uint64 property.
 
-Add an helper to retrieve the writable id reg bitmask.
-
-then retrieve the writable_map array and dispatch it in the writable_map
-fields of arm64_id_regs[] elements.
+REVIDR_EL1 and AIDR_EL1 are writable but they do not expose any
+field. They will be handled separately.
 
 Signed-off-by: Eric Auger <eric.auger@redhat.com>
-Signed-off-by: Cornelia Huck <cohuck@redhat.com>
 
 ---
 
 v5 -> v6
-- use arm64_id_regs[].writable_map
-- squashed 2 commits (helper + user)
-- removed stub
----
- target/arm/kvm.c | 61 ++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 61 insertions(+)
+- for enum values, check against value value when setting the prop
+- do not check writable_map flag anymore
 
+v4 -> v5:
+- free prop_name
+- check cpu->writable_map as a preamble in kvm_arm_expose_idreg_properties
+---
+ target/arm/kvm_arm.h    |  10 +++
+ target/arm/kvm.c        | 144 ++++++++++++++++++++++++++++++++++++++++
+ target/arm/trace-events |   4 ++
+ 3 files changed, 158 insertions(+)
+
+diff --git a/target/arm/kvm_arm.h b/target/arm/kvm_arm.h
+index e7c40fb003..2b3474cc36 100644
+--- a/target/arm/kvm_arm.h
++++ b/target/arm/kvm_arm.h
+@@ -142,6 +142,16 @@ void kvm_arm_set_cpu_features_from_host(ARMCPU *cpu);
+  */
+ void kvm_arm_add_vcpu_properties(ARMCPU *cpu);
+ 
++typedef struct ARM64SysReg ARM64SysReg;
++/**
++ * kvm_arm_expose_idreg_properties:
++ * @cpu: The CPU object to generate the properties for
++ * @reg: registers from the host
++ *
++ * analyze the writable mask and generate properties for writable fields
++ */
++void kvm_arm_expose_idreg_properties(ARMCPU *cpu, ARM64SysReg *regs);
++
+ /**
+  * kvm_arm_steal_time_finalize:
+  * @cpu: ARMCPU for which to finalize kvm-steal-time
 diff --git a/target/arm/kvm.c b/target/arm/kvm.c
-index a54ef51ec2..6f91407d41 100644
+index 71a214f228..54392f3077 100644
 --- a/target/arm/kvm.c
 +++ b/target/arm/kvm.c
-@@ -28,6 +28,7 @@
- #include "kvm_arm.h"
- #include "cpu.h"
- #include "cpu-sysregs.h"
-+#include "cpu-idregs.h"
- #include "trace.h"
- #include "internals.h"
- #include "hw/pci/pci.h"
-@@ -51,6 +52,7 @@ const KVMCapabilityInfo kvm_arch_required_capabilities[] = {
- static bool cap_has_mp_state;
- static bool cap_has_inject_serror_esr;
- static bool cap_has_inject_ext_dabt;
-+static bool writable_map_dispatched;
- 
- /**
-  * ARMHostCPUFeatures: information about the host CPU (identified
-@@ -273,6 +275,21 @@ static uint32_t kvm_arm_sve_get_vls(int fd)
-     return vls[0] & MAKE_64BIT_MASK(0, ARM_MAX_VQ);
+@@ -327,6 +327,150 @@ static int get_host_cpu_idregs(ARMCPU *cpu, int fd, ARMHostCPUFeatures *ahcf)
+     return err;
  }
  
-+static int kvm_feature_idx_to_idregs_idx(int kidx)
++static ARM64SysRegField *get_field(int i, ARM64SysReg *reg)
 +{
-+    int op1, crm, op2;
-+    ARMSysRegs sysreg;
++    for (int f = 0; f < reg->fields_count; f++) {
++        struct ARM64SysRegField *field = &reg->fields[f];
++        int upper = field->shift + field->length - 1;
 +
-+    op1 = kidx / 64;
-+    if (op1 == 2) {
-+        op1 = 3;
++        if (i >= field->shift && i <= upper) {
++            return field;
++        }
 +    }
-+    crm = (kidx % 64) / 8;
-+    op2 = kidx % 8;
-+    sysreg = ENCODE_ID_REG(3, op1, 0, crm, op2);
-+    return get_sysreg_idx(sysreg);
++    return NULL;
 +}
 +
- static void kvm_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
- {
-     /* Identify the feature bits corresponding to the host CPU, and
-@@ -480,9 +497,53 @@ static void kvm_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
-     ahcf->features = features;
- }
- 
-+static int kvm_arm_get_writable_id_regs(uint64_t *idregmap)
++static void set_sysreg_prop(Object *obj, Visitor *v,
++                            const char *name, void *opaque,
++                            Error **errp)
 +{
-+    int cap_writable_id_regs;
-+    struct reg_mask_range range = {
-+        .range = KVM_ARM_FEATURE_ID_RANGE,
-+        .reserved = {0},
-+        .addr = (uint64_t)idregmap,
-+    };
++    ARM64SysRegField *field = (ARM64SysRegField *)opaque;
++    ARMCPU *cpu = ARM_CPU(obj);
++    uint64_t *idregs = cpu->isar.idregs;
++    uint64_t old, value, mask;
++    int lower = field->shift;
++    int length = field->length;
++    int index = field->index;
 +
-+    cap_writable_id_regs =
-+        kvm_check_extension(kvm_state, KVM_CAP_ARM_SUPPORTED_REG_MASK_RANGES);
-+
-+    if (!cap_writable_id_regs ||
-+        !(cap_writable_id_regs & (1 << KVM_ARM_FEATURE_ID_RANGE))) {
-+        return -ENOSYS;
++    if (!visit_type_uint64(v, name, &value, errp)) {
++        return;
 +    }
 +
-+    if (kvm_vm_ioctl(kvm_state, KVM_ARM_GET_REG_WRITABLE_MASKS, &range)) {
-+        return -errno;
++    if (length < 64 && value > ((1 << length) - 1)) {
++        error_setg(errp,
++                   "idreg %s set value (0x%lx) exceeds length of field (%d)!",
++                   name, value, length);
++        return;
 +    }
++
++    if (field->arch_vals) {
++        /* this field has some enum values */
++        for (int i = 0; i < field->arch_vals_count; i++) {
++            if (value == field->arch_vals[i].value) {
++                goto valid;
++            }
++        }
++        error_setg(errp,
++                   "idreg %s set value (0x%lx) does not match any "
++                   "arch valid enum value!", name, value);
++        return;
++    }
++
++valid:
++
++    mask = MAKE_64BIT_MASK(lower, length);
++    value = value << lower;
++    old = idregs[index];
++    idregs[index] = old & ~mask;
++    idregs[index] |= value;
++    trace_set_sysreg_prop(name, old, mask, value, idregs[index]);
++}
++
++static void get_sysreg_prop(Object *obj, Visitor *v,
++                            const char *name, void *opaque,
++                            Error **errp)
++{
++    ARM64SysRegField *field = (ARM64SysRegField *)opaque;
++    ARMCPU *cpu = ARM_CPU(obj);
++    uint64_t *idregs = cpu->isar.idregs;
++    uint64_t value, mask;
++    int lower = field->shift;
++    int length = field->length;
++    int index = field->index;
++
++    mask = MAKE_64BIT_MASK(lower, length);
++    value = (idregs[index] & mask) >> lower;
++    visit_type_uint64(v, name, &value, errp);
++    trace_get_sysreg_prop(name, value);
++}
++
++/*
++ * decode_idreg_writemap: Generate props for writable fields
++ *
++ * @obj: CPU object
++ * @reg: description of the sysreg
++ */
++static int
++decode_idreg_writemap(Object *obj, ARM64SysReg *reg)
++{
++    uint64_t map = reg->writable_mask;
++    int i = ctz64(map);
++    int nb_sysreg_props = 0;
++
++    while (map) {
++        ARM64SysRegField *field = get_field(i, reg);
++        int lower, upper;
++        char *prop_name;
++        uint64_t field_mask;
++
++        if (!field) {
++            warn_report("%s bit %d of %s is writable but no named field "
++                        "in target/arm/cpu-idregs.h.inc",
++                        __func__, i, reg->name);
++            warn_report("%s is target/arm/cpu-idregs.h.inc up-to-date?", __func__);
++            map =  map & ~BIT_ULL(i);
++            i = ctz64(map);
++            continue;
++        }
++        lower = field->shift;
++        upper = field->shift + field->length - 1;
++        prop_name = g_strdup_printf("SYSREG_%s_%s", reg->name, field->name);
++        trace_decode_idreg_writemap(field->name, lower, upper, prop_name);
++        object_property_add(obj, prop_name, "uint64",
++                            get_sysreg_prop, set_sysreg_prop, NULL, field);
++        g_free(prop_name);
++        nb_sysreg_props++;
++
++        field_mask = MAKE_64BIT_MASK(lower, field->length);
++        map = map & ~field_mask;
++        i = ctz64(map);
++    }
++    trace_nb_sysreg_props(reg->name, nb_sysreg_props);
 +    return 0;
 +}
 +
- void kvm_arm_set_cpu_features_from_host(ARMCPU *cpu)
- {
-     CPUARMState *env = &cpu->env;
-+    uint64_t *writable_map;
++/* analyze the writable mask and generate properties for writable fields */
++void kvm_arm_expose_idreg_properties(ARMCPU *cpu, ARM64SysReg *regs)
++{
++    Object *obj = OBJECT(cpu);
 +
-+    writable_map = g_new(uint64_t, KVM_ARM_FEATURE_ID_RANGE_SIZE);
++    for (int i = 0; i < NUM_ID_IDX; i++) {
++        ARM64SysReg *sysregdesc = &regs[i];
 +
-+    if (!writable_map_dispatched &&
-+        !kvm_arm_get_writable_id_regs(writable_map)) {
-+        for (int i = 0; i < KVM_ARM_FEATURE_ID_RANGE_SIZE; i++) {
-+            uint64_t mask = writable_map[i];
-+
-+            if (mask) {
-+                int idx = kvm_feature_idx_to_idregs_idx(i);
-+
-+                if (idx < 0 || idx > ARRAY_SIZE(arm64_id_regs)) {
-+                    continue;
-+                }
-+                arm64_id_regs[idx].writable_mask = mask;
++        if (sysregdesc->writable_mask) {
++            /*
++             * special case REVIDR_EL1 and AIDR_EL1 which are writable but
++             * do not expose named fields. They will need to be handled
++             * separately
++             */
++            if (strcmp(sysregdesc->name, "REVIDR_EL1") &&
++                strcmp(sysregdesc->name, "AIDR_EL1")) {
++                decode_idreg_writemap(obj, sysregdesc);
 +            }
 +        }
-+        writable_map_dispatched = true;
 +    }
-+    g_free(writable_map);
++}
++
+ static void
+ kvm_arm_get_host_cpu_features(ARMCPU *cpu, ARMHostCPUFeatures *ahcf)
+ {
+diff --git a/target/arm/trace-events b/target/arm/trace-events
+index c25d2a1191..d72ad6b671 100644
+--- a/target/arm/trace-events
++++ b/target/arm/trace-events
+@@ -15,6 +15,10 @@ arm_gt_update_irq(int timer, int irqstate) "gt_update_irq: timer %d irqstate %d"
+ kvm_arm_fixup_msi_route(uint64_t iova, uint64_t gpa) "MSI iova = 0x%"PRIx64" is translated into 0x%"PRIx64
+ get_host_cpu_idregs(const char *name, uint64_t value) "scratch vcpu host value for %s is 0x%"PRIx64
+ kvm_arm_writable_idregs_to_cpreg_list(const char *name, uint64_t previous, uint64_t new) "%s overwrite default 0x%"PRIx64" with 0x%"PRIx64
++decode_idreg_writemap(const char* name, int lower, int upper, char *prop_name) "%s [%d:%d] is writable (prop %s)"
++get_sysreg_prop(const char *name, uint64_t value) "%s 0x%"PRIx64
++set_sysreg_prop(const char *name, uint64_t old, uint64_t mask, uint64_t field_value, uint64_t new) "%s old reg value=0x%"PRIx64" mask=0x%"PRIx64" new field value=0x%"PRIx64" new reg value=0x%"PRIx64
++nb_sysreg_props(const char *name, int count) "%s: %d SYSREG properties"
  
-     if (!arm_host_cpu_features.dtb_compatible) {
-         kvm_arm_get_host_cpu_features(&arm_host_cpu_features);
+ # cpu.c
+ arm_cpu_reset(uint64_t mp_aff) "cpu %" PRIu64
 -- 
 2.53.0
 
