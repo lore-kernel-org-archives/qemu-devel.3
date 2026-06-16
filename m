@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A766CCD98E1
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 19:11:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1D87CD98E4
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 19:13:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZZAP-00068Z-1q; Tue, 16 Jun 2026 15:09:45 -0400
+	id 1wZZBQ-00010M-Rl; Tue, 16 Jun 2026 15:10:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wZZ8L-0004b0-EA
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 15:07:41 -0400
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ id 1wZZ8S-0004iG-NU
+ for qemu-devel@nongnu.org; Tue, 16 Jun 2026 15:07:49 -0400
+Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wZZ8G-00013t-35
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 15:07:35 -0400
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-490b211ee6aso37313495e9.3
- for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 12:07:27 -0700 (PDT)
+ id 1wZZ8L-00014e-2u
+ for qemu-devel@nongnu.org; Tue, 16 Jun 2026 15:07:41 -0400
+Received: by mail-wr1-x42f.google.com with SMTP id
+ ffacd0b85a97d-45ef189aa1cso3364954f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 12:07:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1781636846; x=1782241646; darn=nongnu.org;
+ d=linaro.org; s=google; t=1781636849; x=1782241649; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=lXTnLo9AYMynqhYOAlIEHSPGTicUDN6Avwxqc5XliDA=;
- b=cT8M3iET7T18YC1KcYN2E+iQXQ/dTDyxYqxDkdQxUAE2pE5ZXD/5Hkn21NJNjqUeO9
- V+Gv55s2BBdxU5gO/yg1nmOTFM83rzHJ95FPzgr7a/e0yCxzG2eoj1JN6PkUUcRAmU8A
- oeS2uEvzD+0cRwdc153HAXy4jAnRW6kMR1WFdJss1X4TqA+SKfFpzLxhXGh306nybyFj
- RkYPd3xkFQKYTZEgNavJhmiM9SzVj3RRIHTBJmVzhH+CIy69X4ghMQ1gOvpCsOvpWo7/
- Pfbz25PQC5VaMye84CjDu1sGWgT+byFycuSDrZIrEQuPvyboQZukYVnsWgkWcl6XF/5X
- jPXA==
+ :reply-to; bh=kMc87tQ2ULiuGMs7LUUhtdlm3P0nrGr1QZBHW/A68sk=;
+ b=DkBd5DBkNynmQ2IUD1LN7scgHopP8+4h8gNy0yPnlz623kay9vCxPW6Ab24/gxj3cH
+ TlbHD9Ik3Xslq8A0VabHU4L4/5XlRC0tM78sNTThInNYIdlGDRmYKotS/9XYc7oukVHs
+ V3JBhevXoiYdbP9Nbw6OncVW3AczaUbxKYAZpKjWZN+wksJo7/Wk9RQPAiMjourcE8To
+ HOExz+BJu0/lENsS2gKXGrzXFnpex3baEIBGxYlhpixB7tczFvhgeq7XzLzm3rsry9Nm
+ ssjDeK3k+1p0Uuu3AQViHzuPsom4Cbr6lb4zcqBwRC+a+paNnA+S+9wSHub1YDFLjjOk
+ DcFA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781636846; x=1782241646;
+ d=1e100.net; s=20251104; t=1781636849; x=1782241649;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=lXTnLo9AYMynqhYOAlIEHSPGTicUDN6Avwxqc5XliDA=;
- b=FDC4LlI0CKnPwRM7L/fFHAHVVnjPFNuO5WlC56Kpv3cdrfTx0vIFticcFfsjih+x2D
- XZFLV4GLwRAhZCHpPtE09YN0eemMei4h1X0+PYA4Q8vaNQqAOZPO4wMtIgQayg5ujUeJ
- LAPZmHppqR74g9XTXp7fxSi1cWFxnN36eJPn0bSz/bhVuX6ACBPRll/LmHfvRpHzQZoK
- 6cTaGu0+B/gtFk8fajnj6U/3nYcKLfkv1d7H/es7Azp40jPpSmEp7Bh5i2TYSWyjbjOU
- x+bwFfOH75fKH/WNKbosm3yX34zEx7lxiKChtnnUtAFRWHH7EI7FKX/MZ++/t/jtueGH
- 86tg==
-X-Gm-Message-State: AOJu0YwrRdS4rsJ+syopVB97MdaKbk6MyrSyTJwmNbFIzYrYLVqvWI/S
- fFrVKa7aFQusM5NMDlL7gRtjPWJkkT4aECBii4WWzt9OlOxL+mlDdJTzJpsOyJrlkQc1FcPzNty
- kajIv
-X-Gm-Gg: Acq92OHaOXzHwvuedTwnPao4XCSP9Be9SBQbtdCN4Gr68wxJvqfTJ1XhDsk//PHe2Q+
- 5dd4OxKQlxQKY85l0KHFg0AnPROESNKUVgqfkLTU+ODrC07DylkP3dRMpl0AfFdNEtMSC2ZAH8M
- R2DTueHYVpb41rbCjJoIcBHlT6C52KLRzIEHQEzD9l7kARW026dWOyS6MhgMbf6NH1w6RskYAET
- P6mVMqAbaXPAhcpHR+F0JsMjL9uQhbAw+kbH8M766NsJ5OOmQrCjj/z+1s238BpGiAKQAQhtaLQ
- h67+DT+6zb2rp+N093zFlUiLdAx5OgAqoXY5/32+u1Qkmg+rL84SYzcw2h11xVvDyB9ATYu750E
- klEc9b2uCBeMk7v+jnNTR8kzuMmX+Vi1uuQgMLaSGMSNXCa4VhHf59MR9qM+KsrYm2Zx7jfa7J6
- wkQNHXAF/H8mMkA/AYKWDkApue9V5B4HytgcYwQ+swvBJnZ1bqzU1oJfcdwUQ3ULQFH537TKrkn
- 8ZYfmOhC8Msvxf0gDw9U1HCabv2FNX25J8xpmsXDjU=
-X-Received: by 2002:a05:600c:19cb:b0:490:bb45:79f0 with SMTP id
- 5b1f17b1804b1-492333ba306mr13126225e9.3.1781636846123; 
- Tue, 16 Jun 2026 12:07:26 -0700 (PDT)
+ bh=kMc87tQ2ULiuGMs7LUUhtdlm3P0nrGr1QZBHW/A68sk=;
+ b=U/sdRx4PJorLR9e79g8f5ws6vWScyWgyGX9XyMyPixwkZ41on1ItquqV7+S3/B0mvG
+ RfwIKuR31SfZBb3lSsNmOp/D/8+9UlOBHJL36Nx3/knDI+qbWLw6dWHtp52lBp7tVugk
+ QVWGU3IAQ++Eie6LM0nVVbjf17IIuK6YczwMYLq0lptgz4bFWN2NptIm9+SMTzdb5mdU
+ D893qGfogcv0XZG3S2nxPkzyAr2/twertqS+aGlpYgb0WrdTNdR/ajw9w6Uly3xeg+qX
+ oDcllMO+N9SIpYQy7OokDSB5WM/zTotcxdGK8LTexJnIEVVVD/9ZzH6TBptlELPwpuYe
+ rm9w==
+X-Gm-Message-State: AOJu0Yw1AgX4v5dqbqBc+uWufVyrFY0jVe3pvjHeobhLTkrW7aiqpKbh
+ /X38K3UydkCfO2SV4hFS9i4a/ybvhgmysms1BbqjA/mNDvdYw09o8oMZ127lsRpHce+TTKW8yjr
+ 1ru1R
+X-Gm-Gg: Acq92OHuKSJTqYPwyKTznrAMO/+38IujRq/CTrc/ESQRLZGdPdSRfW4VJoDMe2ZnICF
+ EV90h7yZnQlLceI5SwdQPoVM1C43LxXOjDQ8lgtaOX4SmPv2lLSmrb8eQbRxWyzzpHOPBqWX8A1
+ 7uzzFFHE5mLo2UMHBTy91D54u3myzLMRzTkkPqmgFZ7TKNwtJsuGhepSqFXHA+01GJBCX2kSN1J
+ 7v/WnsADIlzyQjndLEcMcwso4IzQLO4Q7xoGPGYdS18AjEdINOtOM06imIcbuU72g/onji7xg22
+ jiVDGs/95mVF6IQyu5zLuoE8maeR7sNzwLw2znDE6qNfAdHN+tx7lWbg1dBsidvSL3PqGvRrZRx
+ SoojNn3o79m38IJlCJtvnKc/tUzn6+DqaCaGUX3kCQZ663vu0Ysns4g3J/WeEgQTuySc6WOZOAT
+ KBOA2ed3WWT0l4ZOcDKvpvUvyrXJFSDlPtjfxLEC8Ky4SM3ulfVpl/VZAzOKEnalBuJvLM4C0SN
+ unJlGblMVrTZD/CDBxPVfp/UnaLM46F
+X-Received: by 2002:a05:6000:270b:b0:462:2636:2b39 with SMTP id
+ ffacd0b85a97d-46236462425mr901749f8f.14.1781636848972; 
+ Tue, 16 Jun 2026 12:07:28 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4606f2d9becsm45078765f8f.34.2026.06.16.12.07.25
+ ffacd0b85a97d-4606f2d9becsm45078765f8f.34.2026.06.16.12.07.27
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 16 Jun 2026 12:07:25 -0700 (PDT)
+ Tue, 16 Jun 2026 12:07:27 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 40/61] hw/arm/tegra241-cmdqv: Document the CMDQV design and
- lifecycle
-Date: Tue, 16 Jun 2026 20:06:17 +0100
-Message-ID: <20260616190639.3462006-41-peter.maydell@linaro.org>
+Subject: [PULL 42/61] target/arm: honour CCR.BFHFNMIGN for probed data
+ BusFaults
+Date: Tue, 16 Jun 2026 20:06:19 +0100
+Message-ID: <20260616190639.3462006-43-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260616190639.3462006-1-peter.maydell@linaro.org>
 References: <20260616190639.3462006-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,132 +101,120 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Shameer Kolothum <skolothumtho@nvidia.com>
+From: Kyle Fox <kylefoxaustin.github@gmail.com>
 
-Add an overview describing the Tegra241 CMDQV passthrough model, MMIO
-layout, guest-driven lifecycle, and per-VM isolation.
+M-profile CCR.BFHFNMIGN lets software executing at a negative execution
+priority (in HardFault/NMI, or with FAULTMASK set) suppress precise data
+BusFaults caused by load/store instructions: the access completes
+returning UNKNOWN data, the fault status is recorded in BFSR/BFAR, but no
+BusFault exception is taken. Software uses this to probe for the presence
+of a device.
 
-Tested-by: Nicolin Chen <nicolinc@nvidia.com>
-Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
-Tested-by: Eric Auger <eric.auger@redhat.com>
-Reviewed-by: Eric Auger <eric.auger@redhat.com>
-Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
-Message-id: 20260609112552.378999-31-skolothumtho@nvidia.com
+QEMU stored CCR.BFHFNMIGN but never consumed it: arm_cpu_do_transaction_
+failed() always raised the external abort, which arm_v7m_cpu_do_interrupt()
+pended as a BusFault and then escalated to a HardFault it could not take at
+priority -1, aborting the VM with "Lockup: can't escalate 3 to HardFault".
+
+Honour the bit in arm_cpu_do_transaction_failed(): when the access is a
+data access from M-profile code at negative priority with BFHFNMIGN set,
+record PRECISERR/BFARVALID and BFAR and return without raising, so the
+faulting instruction completes instead of re-faulting forever. Instruction
+fetches are unaffected, since BFHFNMIGN applies only to data accesses.
+
+The SG instruction's stack-word load is also an AccType_NORMAL data access
+that must honour BFHFNMIGN, but QEMU performs it manually in
+v7m_read_sg_stack_word() (outside the TCG TLB, so it never reaches
+arm_cpu_do_transaction_failed()). Apply the same suppression there: on a
+BusFault, record the status and, when BFHFNMIGN is set at negative
+priority, return the UNKNOWN data instead of pending ARMV7M_EXCP_BUS. The
+remaining manual EXCP_BUS sites (vector-table loads, stacking, unstacking)
+are AccType_VECTABLE/STACK/UNSTACK and are not required to honour the bit,
+so they are left unchanged.
+
+This surfaced running the real NXP i.MX 95 System Manager firmware on the
+emulated Cortex-M33: its SystemMemoryProbe() (set BFHFNMIGN + FAULTMASK,
+do the access, test CFSR.BFARVALID) locked up the VM. With this change the
+SM's debug-monitor memory-probe commands run and recover correctly.
+
+Signed-off-by: Kyle Fox <kylefoxaustin.github@gmail.com>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+[PMM: minor tweak to v7m_read_sg_stack_word() code]
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- hw/arm/tegra241-cmdqv.c | 100 ++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 100 insertions(+)
+ target/arm/tcg/m_helper.c   | 16 ++++++++++++++--
+ target/arm/tcg/tlb_helper.c | 24 ++++++++++++++++++++++++
+ 2 files changed, 38 insertions(+), 2 deletions(-)
 
-diff --git a/hw/arm/tegra241-cmdqv.c b/hw/arm/tegra241-cmdqv.c
-index d821eafca1..29c488e0e4 100644
---- a/hw/arm/tegra241-cmdqv.c
-+++ b/hw/arm/tegra241-cmdqv.c
-@@ -7,6 +7,106 @@
-  * SPDX-License-Identifier: GPL-2.0-or-later
-  */
+diff --git a/target/arm/tcg/m_helper.c b/target/arm/tcg/m_helper.c
+index c5a553a5d4..f4ba93b291 100644
+--- a/target/arm/tcg/m_helper.c
++++ b/target/arm/tcg/m_helper.c
+@@ -2086,8 +2086,20 @@ static bool v7m_read_sg_stack_word(ARMCPU *cpu, ARMMMUIdx mmu_idx,
+         env->v7m.cfsr[M_REG_NS] |=
+             (R_V7M_CFSR_PRECISERR_MASK | R_V7M_CFSR_BFARVALID_MASK);
+         env->v7m.bfar = addr;
+-        armv7m_nvic_set_pending(env->nvic, ARMV7M_EXCP_BUS, false);
+-        return false;
++        /*
++         * The SG instruction's stack-word load is an AccType_NORMAL data
++         * access, so CCR.BFHFNMIGN applies: at negative execution priority
++         * with BFHFNMIGN set, the BusFault is suppressed -- the access
++         * completes returning UNKNOWN data (status recorded above), with no
++         * BusFault exception pended.
++         */
++        if (!((env->v7m.ccr[M_REG_NS] & R_V7M_CCR_BFHFNMIGN_MASK) &&
++            armv7m_nvic_neg_prio_requested(env->nvic, env->v7m.secure))) {
++            armv7m_nvic_set_pending(env->nvic, ARMV7M_EXCP_BUS, false);
++            return false;
++        }
++        /* BusFault suppressed; data value is UNKNOWN, we choose 0 */
++        value = 0;
+     }
  
-+/*
-+ * Tegra241 CMDQV - overview
-+ * =========================
-+ *
-+ * NVIDIA Tegra241 extends SMMUv3 with a Command Queue Virtualization (CMDQ-V)
-+ * block. It lets a guest issue SMMU invalidation commands directly to
-+ * dedicated hardware queues (vCMDQs) without trapping into the hypervisor on
-+ * the fast path. vCMDQs are exclusively allocated to Virtual Interfaces
-+ * (VINTFs); the host kernel allocates one VINTF per emulated SMMUv3 instance
-+ * via iommufd. QEMU emulates the CMDQV MMIO region and drives the host kernel
-+ * calls (VIOMMU_ALLOC, HW_QUEUE_ALLOC, mmap); the actual command processing
-+ * happens on real hardware.
-+ *
-+ * A vCMDQ becomes functional only once allocated to the host VINTF; until then
-+ * no command processing happens, and trapped register accesses fall back to a
-+ * QEMU-side cache. After allocation, the cached register state is migrated to
-+ * the hardware and command processing runs on the host; guest accesses to the
-+ * live control/status registers then bypass QEMU and reach the host directly.
-+ *
-+ * MMIO layout (64KB pages, total TEGRA241_CMDQV_IO_LEN)
-+ * -----------------------------------------------------
-+ *   0x00000  CMDQV Config page: QEMU-trapped.
-+ *   0x10000  Direct vCMDQ Page 0 (control/status): QEMU-trapped and routed
-+ *            to either the mmap'd host VINTF Page 0 (if the vCMDQ has been
-+ *            allocated to a VINTF) or a per-vCMDQ register cache (otherwise).
-+ *   0x20000  Direct vCMDQ Page 1 (BASE / DRAM addresses): QEMU-trapped.
-+ *   0x30000  VINTF Page 0 (per-VINTF control/status): the guest's virtual
-+ *            VINTF Page 0 aperture, backed by the host VINTF Page 0 (mmap'd
-+ *            via iommufd) and installed into guest MMIO as a RAM-device
-+ *            subregion when VINTF is enabled; subsequent accesses bypass QEMU.
-+ *   0x40000  VINTF Page 1 (per-VINTF BASE): QEMU-trapped. Although this is
-+ *            a HW alias of the direct Page 1, the kernel only exposes mmap
-+ *            for the host VINTF Page 0; the host VINTF Page 1 is not mmap'd
-+ *            and stays trapped.
-+ *
-+ * The direct vCMDQ apertures (0x10000/0x20000) are HW aliases of the VINTF
-+ * apertures (0x30000/0x40000); they expose the same per-vCMDQ register slots
-+ * under different addressing.
-+ *
-+ * The direct vCMDQ Page 0 stays trapped rather than aliased to the host VINTF
-+ * Page 0 mmap. The CMDQV architecture allows software to program a vCMDQ
-+ * through the direct aperture before allocating it to a VINTF; aliasing to
-+ * the host VINTF Page 0 mmap would route those accesses into unallocated
-+ * logical slots where the hardware silently drops them, so trapping keeps
-+ * accesses well-defined for an unallocated vCMDQ.
-+ *
-+ * Lifecycle (driven by guest events)
-+ * ----------------------------------
-+ * 1. First vfio-pci device attach (.set_iommu_device) triggers:
-+ *    - tegra241_cmdqv_probe(): IOMMU_GET_HW_INFO confirms host CMDQV support.
-+ *    - IOMMU_VIOMMU_ALLOC: the kernel allocates and enables a VINTF for this
-+ *      VM, configures the VM's VMID (from its stage-2 HWPT) in VINTF_CONFIG,
-+ *      forces HYP_OWN=0, and returns the mmap offset/length for the host
-+ *      VINTF Page 0, which QEMU then mmap()s.
-+ *
-+ * 2. Guest writes VINTF_CONFIG.ENABLE = 1:
-+ *    QEMU installs the mmap'd host VINTF Page 0 into guest MMIO as the guest's
-+ *    virtual VINTF Page 0 aperture (a RAM-device subregion) and reports
-+ *    STATUS.ENABLE_OK = 1. The aperture is now a direct window onto the host
-+ *    page, so accesses no longer trap into QEMU; a vCMDQ within it operates as
-+ *    a real command queue only once it has been allocated (step 3).
-+ *
-+ * 3. Guest completes vCMDQ setup (BASE, CMDQ_ALLOC_MAP.ALLOC, CMDQV_EN,
-+ *    VINTF.ENABLE, in any order; each precondition write retries the HW queue
-+ *    allocation):
-+ *    IOMMU_HW_QUEUE_ALLOC grants the guest a new host vCMDQ in this VM's
-+ *    VINTF, binding the guest BASE GPA (translated through stage-2 and pinned
-+ *    by the kernel) to it.
-+ *
-+ * 4. Guest SMMU driver programs a Stream Table Entry for a passthrough
-+ *    device: IOMMU_VDEVICE_ALLOC programs SID_MATCH/SID_REPLACE in this VM's
-+ *    VINTF so that the HW translates the device's guest vSID into its host
-+ *    pSID. Commands referencing unmapped SIDs are rejected by HW.
-+ *
-+ *    This reflects the current accel SMMUv3 design, which allocates the
-+ *    vDEVICE when the guest programs the STE.
-+ *
-+ * Per-VM isolation
-+ * ----------------
-+ * - Each VM has its own iommufd FD; all iommufd objects (VINTF, vdevices,
-+ *   hw_queues, mmap regions) belong to that FD. Cross-FD lookups fail, so
-+ *   one VM cannot reach another VM's IDs.
-+ * - IOMMU_VIOMMU_ALLOC configures the VM's VMID in VINTF_CONFIG; the CMDQV
-+ *   hardware substitutes / checks VMID on every command the guest issues.
-+ * - The kernel allocates the VINTF with HYP_OWN = 0, which restricts the
-+ *   guest to a safe subset of commands.
-+ * - IOMMU_VDEVICE_ALLOC populates SID_MATCH/SID_REPLACE so invalidations
-+ *   only reach the host StreamIDs assigned to this VM (see step 4).
-+ * - IOMMU_HW_QUEUE_ALLOC binds each vCMDQ to a single VINTF, so a guest
-+ *   cannot reach a vCMDQ that belongs to another VM.
-+ *
-+ * Limits exposed to the guest
-+ * ---------------------------
-+ * One VINTF per emulated SMMUv3 and two vCMDQs per VINTF. The HW maximum
-+ * vCMDQ size is 8MiB, but the size QEMU exposes to the guest may be smaller.
-+ * The queue must be physically contiguous in host memory, so QEMU caps the
-+ * exposed size to the host memory-backend page size. Use hugepage backing to
-+ * reach the 8MiB maximum.
-+ */
+     *spdata = value;
+diff --git a/target/arm/tcg/tlb_helper.c b/target/arm/tcg/tlb_helper.c
+index f90765cb59..cbef9cb03e 100644
+--- a/target/arm/tcg/tlb_helper.c
++++ b/target/arm/tcg/tlb_helper.c
+@@ -10,6 +10,7 @@
+ #include "helper.h"
+ #include "internals.h"
+ #include "cpu-features.h"
++#include "hw/intc/armv7m_nvic.h"
+ 
+ /*
+  * Returns true if the stage 1 translation regime is using LPAE format page
+@@ -318,8 +319,31 @@ void arm_cpu_do_transaction_failed(CPUState *cs, hwaddr physaddr,
+                                    MemTxResult response, uintptr_t retaddr)
+ {
+     ARMCPU *cpu = ARM_CPU(cs);
++    CPUARMState *env = &cpu->env;
+     ARMMMUFaultInfo fi = {};
+ 
++    /*
++     * For M-profile, CCR.BFHFNMIGN lets software executing at a negative
++     * priority (in HardFault/NMI, or with FAULTMASK set) suppress precise
++     * data BusFaults from load/store instructions: the access completes
++     * returning UNKNOWN data (the store is dropped), the fault status is
++     * recorded in BFSR/BFAR, but no BusFault exception is taken. This is
++     * the mechanism software uses to probe for the presence of a device
++     * (e.g. the NXP System Manager's SystemMemoryProbe). Honour it by
++     * recording the status and returning without raising, so the faulting
++     * instruction completes rather than re-faulting forever. BFHFNMIGN
++     * applies only to data accesses, so instruction fetches are unaffected.
++     */
++    if (arm_feature(env, ARM_FEATURE_M) &&
++        access_type != MMU_INST_FETCH &&
++        (env->v7m.ccr[M_REG_NS] & R_V7M_CCR_BFHFNMIGN_MASK) &&
++        armv7m_nvic_neg_prio_requested(env->nvic, env->v7m.secure)) {
++        env->v7m.cfsr[M_REG_NS] |=
++            (R_V7M_CFSR_PRECISERR_MASK | R_V7M_CFSR_BFARVALID_MASK);
++        env->v7m.bfar = addr;
++        return;
++    }
 +
- #include "qemu/osdep.h"
- #include "qemu/log.h"
+     /* now we have a real cpu fault */
+     cpu_restore_state(cs, retaddr);
  
 -- 
 2.43.0
