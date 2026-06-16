@@ -4,81 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F4E5CD98E4
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 19:15:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 356FFCD98EE
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 19:15:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZZAU-0006tl-MM; Tue, 16 Jun 2026 15:09:50 -0400
+	id 1wZZFK-0006A1-0s; Tue, 16 Jun 2026 15:14:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wZZ7k-0004UR-Mi
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 15:07:24 -0400
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ id 1wZZ8Q-0004dj-1A
+ for qemu-devel@nongnu.org; Tue, 16 Jun 2026 15:07:44 -0400
+Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wZZ7c-0000uu-P0
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 15:06:55 -0400
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-49230a567a9so6465995e9.0
- for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 12:06:52 -0700 (PDT)
+ id 1wZZ8K-0001Aa-Vt
+ for qemu-devel@nongnu.org; Tue, 16 Jun 2026 15:07:38 -0400
+Received: by mail-wr1-x42a.google.com with SMTP id
+ ffacd0b85a97d-461a15bb819so939451f8f.3
+ for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 12:07:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1781636811; x=1782241611; darn=nongnu.org;
+ d=linaro.org; s=google; t=1781636854; x=1782241654; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=AIHwlbRuUl3nYtw5K+xyEs99Ce+k47eRk9h4LhKsLb4=;
- b=JsquobFpjsNmDIHs3k8tocNby6OOTWDrhgbGYVtY9HWZjbIh4DhrGJH7DMBnVL7Vx5
- j+YFDzPNkyfowPLeiP8ku6WUZN20lZ2PCDozPzdyfIpSK9CfzXR9MGFay+sSXkY6flAB
- ZEW0D/ew/B6z/81GjxHVw2LUVpLcvSEoFpc6UsaC3VFJQJA24Yg3NCjz3urzmbC5hfOQ
- Ba6wSs8TLTZlkNTlQEI7PF3yMsTQZUp5y3Dt+3EB0yso/I4F40npCpUvgxa5iXevylsK
- vVn6uHkt5mvw+YWm6J3qZqZ/2NLyQBsijtFPQ2L3w1GfsNC1P2zNp+liy0plmNGPUmsJ
- 7XTw==
+ :reply-to; bh=JXl9aM3YjYB0IaDfx/Jq49OoS0qkx8Ry7BVlhdhFJ5k=;
+ b=x6TH0RjTXW5yNJ5O0mRns8SusjeUzDgZxlU+vjnud/39kLCXxFtdWOvQW6OtJuaZdm
+ pl/HUsock7sva5GhrTpmn9yFxrW7oFFPmBjK4TuSmrBj5dnZ3GKzyjTWQZ+26nJkDYER
+ IsMpg8VJFFDtWKbOvkkqsfVl2hl7vy/kX9UURm4aWccRTOKpm9vrkAt/TEU9mK3mO8My
+ HrPGic47hryU3DdDa4XtBqqzYvbYcsTYs+y6P+sPANxzyDjGIefY5DKB+IYHcISXhTh/
+ u8rjfjSBfWZZd/qj8IA9SQGl2s5wHEf9Y6Wr9dHWo6NNZ6kx3PUbMOW0jb3W6BC9WK34
+ eq6w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781636811; x=1782241611;
+ d=1e100.net; s=20251104; t=1781636854; x=1782241654;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=AIHwlbRuUl3nYtw5K+xyEs99Ce+k47eRk9h4LhKsLb4=;
- b=Ieio1R2Kp0YKOh5hQWc6ZhvfGQkm1qCt6XC3Q3/F04Ilo1+k2ePdJ+JBXrocwnPhqb
- PE9IC+1lei5Gu6ojF2ISRl6HY550uTd3ofSIrfjOSPVXZpFCRib9+XFryjKIfDe5E7Ur
- TlPd4QR5ORaZeQ1/1NP5bV3lTbYtzUdAZFqtRh+C4mb9UrlFz/HsCCgL0ZG3+YsfKHDP
- jqGgrY7rMSny2gAka9d/ZlveJPVFgJUkvrwPJmqjIW6MlNMugfYnm+8dmA2ROyUoUuAe
- zFoPEKE4nhhfybhYMrzZVsowOitGIFNpelhiyfLNHE81LfXH6+BHV0PoYzjJ2M2ukzg6
- LTmA==
-X-Gm-Message-State: AOJu0Yyb64uDQoJ/0Km/zQOKai6HU6/WsXnFRJvxknDTifsdVQ58YFiW
- AEKy7GMcFuuVZhi3nkOEZxXC/DEQW/As0Gj3SRa8cT44U1I2JvPUUfPDB0NJejgFKA6xYIwj1KI
- jJKQJ
-X-Gm-Gg: Acq92OHZNGmGzCy/EV1/tH5uR0ruHQiKtTqUSNL6rPXwyuVfxpEsHj3GjF4V71GTlal
- 1YG5lFsLPOvgbjj1DwCT37H7SfXu9GDc6NcfNXjG9O5Sj3Z2uTaqPu3YvJ89ohh+Zq572JZv0gv
- lQM/o1+/3CSd1ikHh1a1kvUgRRGJaZGrGImUX7jYQ5UGOkxnIdjSEGkOanpOf/OqILCMdFoAL1C
- Z1vRUmP/GKuzAszicj5gtkNadFr5FZXTlyxlcW2WEZOuyw5kkPotS8gYD0FLlrHLch3DY+vdSby
- ZLXblVa3JIWQfCAljZJosst3fK490QYpqoO6ytbOrp8fp9WWN3F7XiQ49r2RPVfhn6b7vYphSb5
- 4Oo5kDbR+Xr/nSpoUXxMFlDSb0ALLhCe78tBgEJ071STpoIBKjppIySTH6TTQdFVhdfLfIgS7im
- QO2rEiRNXOE3HyV/3IL3bC5A4uMThv3zWCyDiW/lxmdJC64+YHnjpON7LkKzcEPlwinxw30c5/t
- ll4S4ZH84qaVUNJmAZn6zrAtQpoEQHv
-X-Received: by 2002:a05:600c:19c6:b0:48e:6db3:ff33 with SMTP id
- 5b1f17b1804b1-492333f9b76mr11316645e9.14.1781636811202; 
- Tue, 16 Jun 2026 12:06:51 -0700 (PDT)
+ bh=JXl9aM3YjYB0IaDfx/Jq49OoS0qkx8Ry7BVlhdhFJ5k=;
+ b=IfnsUICn3SbdmKriA1s8b0Q7OExLGghb/Yq7QSQobEhYuWYPtRYbd3rNYsCbktm1mh
+ nfgZooqffWq+XhG2Rc0cpLNHXhXnaPWYkdIteN7wRMx1wVdIPAgVCX7smlE8VHO5Tu/a
+ 5tLuoDL3j2QbacWpq0UpTLlB67gTcrDxuKw5dyIxTG7aCQH72KA2yDT7VdicplfMU3Hy
+ chxCCqGuln1FBCvWGChVa6nrOLFfr+FrKpEE2aeseCnfFFJwwZedmnvSgmG1pHXQjOXp
+ c7cwsNQUtg18ASmxaYES6PNI2eETSpOVLdl6dXEnuMa//FLZg+8uCaZDWMPVSxpU99cp
+ szsA==
+X-Gm-Message-State: AOJu0YxXph/r1utQGbNTRD42FWpSnOxy52d8aOb4IQNQ0eC/Cix8V4Z/
+ RbAa7ZL5pRzmALRG+CSvm0FRMZULx8YBAhwbDmvpniQ63ZTPevqGM41C4+ZN4Wm2CA7rjlcNUf7
+ pNLKr
+X-Gm-Gg: Acq92OGWzEvNvuxDDr27sqvrZEsYAQoI1QVXcedHQ+035AGMXfVRlpDf2Zj/ZlMCG1b
+ pDCFDPtiVXwOl9d4NRmIVYykPbMvPrwTI/EMtpdvcXeUOLjhMKQ0xIaP1e5qYKU0xELH9uTo1yQ
+ A7YZYEiixe9ufzYo31bvzyujwcgow4jxalYuQgj+yZTdiAoChtqqOWmcB/rKf478CpHc0H7wJLn
+ s7F5yF63flC7Xy0fox4DeSeRqkD9VhkjUVe9yk66E2uIIOrkQ209krI/lr5vozAz/VNj+GthFRu
+ mb7ahY+kUpCvJsV3uYa10MzraXlxkK9rEU9lpadU9+ctswZkpWC/UtJS/ERVWFDBrZi4mabTxyU
+ /3DLpyxK7LD285OaoPOVYkjJscy01GBsDWMmR0Rb0+Kxow6ANFfBl7qPQKPrHkO5R+k7mJROl0Q
+ FvMzDtILLGWuMzHBxef6Mg0kw6k4tzOQg15xIiWjzXF8RcBA61mAEjfrySA9h0hC4KBiEFVCTaq
+ cY/HeacmIreKZCnGJaxkZV0xl6uqz7e
+X-Received: by 2002:a05:6000:22c4:b0:45e:fb69:f02b with SMTP id
+ ffacd0b85a97d-4623f2e7641mr943955f8f.1.1781636854169; 
+ Tue, 16 Jun 2026 12:07:34 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4606f2d9becsm45078765f8f.34.2026.06.16.12.06.49
+ ffacd0b85a97d-4606f2d9becsm45078765f8f.34.2026.06.16.12.07.33
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 16 Jun 2026 12:06:49 -0700 (PDT)
+ Tue, 16 Jun 2026 12:07:33 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 08/61] hw/arm/smmuv3: Set default ats, ril, ssidsize,
- oas to auto
-Date: Tue, 16 Jun 2026 20:05:45 +0100
-Message-ID: <20260616190639.3462006-9-peter.maydell@linaro.org>
+Subject: [PULL 47/61] target/arm: Expand DO_ZPZ in translate-sve.c
+Date: Tue, 16 Jun 2026 20:06:24 +0100
+Message-ID: <20260616190639.3462006-48-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260616190639.3462006-1-peter.maydell@linaro.org>
 References: <20260616190639.3462006-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x334.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,105 +100,114 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Nathan Chen <nathanc@nvidia.com>
+From: Richard Henderson <richard.henderson@linaro.org>
 
-Set the default value of ATS, RIL, SSIDSIZE, and OAS to auto, in order
-to match the host IOMMU properties when accel=on.
+Prepare for adding zeroing instructions for some of these.
 
-If accel=off and these property values are set to auto, the default
-property values defined in smmuv3_init_id_regs() for OAS and RIL will
-remain unchanged, while SSIDSIZE and ATS values will remain initialized
-at 0.
-
-Introduce a new compat for the changed defaults.
-
-Reviewed-by: Shameer Kolothum <skolothumtho@nvidia.com>
-Reviewed-by: Eric Auger <eric.auger@redhat.com>
-Signed-off-by: Nathan Chen <nathanc@nvidia.com>
-Tested-by: Eric Auger <eric.auger@redhat.com>
-Message-id: 20260608174900.2227340-9-nathanc@nvidia.com
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Message-id: 20260604234852.573178-5-richard.henderson@linaro.org
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- hw/arm/smmuv3.c   | 23 +++++++++++++++--------
- hw/core/machine.c |  5 +++++
- 2 files changed, 20 insertions(+), 8 deletions(-)
+ target/arm/tcg/translate-sve.c | 84 +++++++++++++++++++++++++++-------
+ 1 file changed, 67 insertions(+), 17 deletions(-)
 
-diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
-index 89289ab6d2..83fa6468fd 100644
---- a/hw/arm/smmuv3.c
-+++ b/hw/arm/smmuv3.c
-@@ -2129,12 +2129,19 @@ static const Property smmuv3_properties[] = {
-     DEFINE_PROP_BOOL("accel", SMMUv3State, accel, false),
-     /* GPA of MSI doorbell, for SMMUv3 accel use. */
-     DEFINE_PROP_UINT64("msi-gpa", SMMUv3State, msi_gpa, 0),
-+    /*
-+     * AUTO values for accel=off will resolve to:
-+     * ril: on
-+     * ats: off
-+     * oas: 44
-+     * ssidsize: 0
-+     */
-     /* RIL can be turned off for accel cases */
--    DEFINE_PROP_ON_OFF_AUTO("ril", SMMUv3State, ril, ON_OFF_AUTO_ON),
--    DEFINE_PROP_ON_OFF_AUTO("ats", SMMUv3State, ats, ON_OFF_AUTO_OFF),
--    DEFINE_PROP_OAS_MODE("oas", SMMUv3State, oas, OAS_MODE_44),
-+    DEFINE_PROP_ON_OFF_AUTO("ril", SMMUv3State, ril, ON_OFF_AUTO_AUTO),
-+    DEFINE_PROP_ON_OFF_AUTO("ats", SMMUv3State, ats, ON_OFF_AUTO_AUTO),
-+    DEFINE_PROP_OAS_MODE("oas", SMMUv3State, oas, OAS_MODE_AUTO),
-     DEFINE_PROP_SSIDSIZE_MODE("ssidsize", SMMUv3State, ssidsize,
--                              SSID_SIZE_MODE_0),
-+                              SSID_SIZE_MODE_AUTO),
- };
+diff --git a/target/arm/tcg/translate-sve.c b/target/arm/tcg/translate-sve.c
+index 4fd17905d5..8ab4526468 100644
+--- a/target/arm/tcg/translate-sve.c
++++ b/target/arm/tcg/translate-sve.c
+@@ -776,24 +776,74 @@ TRANS_FEAT(SEL_zpzz, aa64_sme_or_sve, do_sel_z, a->rd, a->rn, a->rm, a->pg, a->e
+  *** SVE Integer Arithmetic - Unary Predicated Group
+  */
  
- static void smmuv3_instance_init(Object *obj)
-@@ -2164,22 +2171,22 @@ static void smmuv3_class_init(ObjectClass *klass, const void *data)
-         "enabling.");
-     object_class_property_set_description(klass, "ril",
-         "Enable/disable range invalidation support (for accel=on). "
--        "Valid values are on, off, and auto. Defaults to on. "
-+        "Valid values are on, off, and auto. Defaults to auto. "
-         "Any attempt to turn it 'on' while the host does not support "
-         "it would fail.");
-     object_class_property_set_description(klass, "ats",
-         "Enable/disable ATS support (for accel=on). "
--        "Valid values are on, off, and auto. Defaults to off. "
-+        "Valid values are on, off, and auto. Defaults to auto. "
-         "Please ensure host platform supports ATS before setting it "
-         "to on.");
-     object_class_property_set_description(klass, "oas",
-         "Set Output Address Size in bits (for accel=on). "
--        "Valid values are 44, 48, and auto. Defaults to 44 bits."
-+        "Valid values are 44, 48, and auto. Defaults to auto."
-         "Please ensure the value does not exceed the maximum "
-         "Output Address Size supported by the host platform.");
-     object_class_property_set_description(klass, "ssidsize",
-         "Set number of bits used to represent SubstreamIDs (SSIDs). "
--        "Valid values are 0-20 and auto. Defaults to 0. "
-+        "Valid values are 0-20 and auto. Defaults to auto. "
-         "A value of N allows SSIDs in the range [0 .. 2^N - 1]. "
-         "A value of 0 disables SubstreamID support. A value greater "
-         "than 0 is required to enable PASID support."
-diff --git a/hw/core/machine.c b/hw/core/machine.c
-index 4d8b15d99e..9a10e45aab 100644
---- a/hw/core/machine.c
-+++ b/hw/core/machine.c
-@@ -38,11 +38,16 @@
- #include "hw/virtio/virtio-iommu.h"
- #include "hw/acpi/generic_event_device.h"
- #include "qemu/audio.h"
-+#include "hw/arm/smmuv3.h"
+-#define DO_ZPZ(NAME, FEAT, name) \
+-    static gen_helper_gvec_3 * const name##_fns[4] = {              \
+-        gen_helper_##name##_b, gen_helper_##name##_h,               \
+-        gen_helper_##name##_s, gen_helper_##name##_d,               \
+-    };                                                              \
+-    TRANS_FEAT(NAME, FEAT, gen_gvec_ool_arg_zpz, name##_fns[a->esz], a, 0)
++static gen_helper_gvec_3 * const sve_cls_fns[4] = {
++    gen_helper_sve_cls_b, gen_helper_sve_cls_h,
++    gen_helper_sve_cls_s, gen_helper_sve_cls_d,
++};
++TRANS_FEAT(CLS_m, aa64_sme_or_sve, gen_gvec_ool_arg_zpz, sve_cls_fns[a->esz], a, 0)
  
- GlobalProperty hw_compat_11_0[] = {
-     { "chardev-vc", "encoding", "cp437" },
-     { "tpm-crb", "cap-chunk", "off" },
-     { "tpm-crb", "x-allow-chunk-migration", "off" },
-+    { TYPE_ARM_SMMUV3, "ats", "off" },
-+    { TYPE_ARM_SMMUV3, "ril", "on" },
-+    { TYPE_ARM_SMMUV3, "ssidsize", "0" },
-+    { TYPE_ARM_SMMUV3, "oas", "44" },
- };
- const size_t hw_compat_11_0_len = G_N_ELEMENTS(hw_compat_11_0);
+-DO_ZPZ(CLS_m, aa64_sme_or_sve, sve_cls)
+-DO_ZPZ(CLZ_m, aa64_sme_or_sve, sve_clz)
+-DO_ZPZ(CNT_zpz_m, aa64_sme_or_sve, sve_cnt_zpz)
+-DO_ZPZ(CNOT_m, aa64_sme_or_sve, sve_cnot)
+-DO_ZPZ(NOT_zpz_m, aa64_sme_or_sve, sve_not_zpz)
+-DO_ZPZ(ABS_m, aa64_sme_or_sve, sve_abs)
+-DO_ZPZ(NEG_m, aa64_sme_or_sve, sve_neg)
+-DO_ZPZ(RBIT_m, aa64_sme_or_sve, sve_rbit)
+-DO_ZPZ(ORQV, aa64_sme2p1_or_sve2p1, sve2p1_orqv)
+-DO_ZPZ(EORQV, aa64_sme2p1_or_sve2p1, sve2p1_eorqv)
+-DO_ZPZ(ANDQV, aa64_sme2p1_or_sve2p1, sve2p1_andqv)
++static gen_helper_gvec_3 * const sve_clz_fns[4] = {
++    gen_helper_sve_clz_b, gen_helper_sve_clz_h,
++    gen_helper_sve_clz_s, gen_helper_sve_clz_d,
++};
++TRANS_FEAT(CLZ_m, aa64_sme_or_sve, gen_gvec_ool_arg_zpz, sve_clz_fns[a->esz], a, 0)
++
++static gen_helper_gvec_3 * const sve_cnt_zpz_fns[4] = {
++    gen_helper_sve_cnt_zpz_b, gen_helper_sve_cnt_zpz_h,
++    gen_helper_sve_cnt_zpz_s, gen_helper_sve_cnt_zpz_d,
++};
++TRANS_FEAT(CNT_zpz_m, aa64_sme_or_sve, gen_gvec_ool_arg_zpz, sve_cnt_zpz_fns[a->esz], a, 0)
++
++static gen_helper_gvec_3 * const sve_cnot_fns[4] = {
++    gen_helper_sve_cnot_b, gen_helper_sve_cnot_h,
++    gen_helper_sve_cnot_s, gen_helper_sve_cnot_d,
++};
++TRANS_FEAT(CNOT_m, aa64_sme_or_sve, gen_gvec_ool_arg_zpz, sve_cnot_fns[a->esz], a, 0)
++
++static gen_helper_gvec_3 * const sve_not_zpz_fns[4] = {
++    gen_helper_sve_not_zpz_b, gen_helper_sve_not_zpz_h,
++    gen_helper_sve_not_zpz_s, gen_helper_sve_not_zpz_d,
++};
++TRANS_FEAT(NOT_zpz_m, aa64_sme_or_sve, gen_gvec_ool_arg_zpz, sve_not_zpz_fns[a->esz], a, 0)
++
++static gen_helper_gvec_3 * const sve_abs_fns[4] = {
++    gen_helper_sve_abs_b, gen_helper_sve_abs_h,
++    gen_helper_sve_abs_s, gen_helper_sve_abs_d,
++};
++TRANS_FEAT(ABS_m, aa64_sme_or_sve, gen_gvec_ool_arg_zpz, sve_abs_fns[a->esz], a, 0)
++
++static gen_helper_gvec_3 * const sve_neg_fns[4] = {
++    gen_helper_sve_neg_b, gen_helper_sve_neg_h,
++    gen_helper_sve_neg_s, gen_helper_sve_neg_d,
++};
++TRANS_FEAT(NEG_m, aa64_sme_or_sve, gen_gvec_ool_arg_zpz, sve_neg_fns[a->esz], a, 0)
++
++static gen_helper_gvec_3 * const sve_rbit_fns[4] = {
++    gen_helper_sve_rbit_b, gen_helper_sve_rbit_h,
++    gen_helper_sve_rbit_s, gen_helper_sve_rbit_d,
++};
++TRANS_FEAT(RBIT_m, aa64_sme_or_sve, gen_gvec_ool_arg_zpz, sve_rbit_fns[a->esz], a, 0)
++
++static gen_helper_gvec_3 * const sve2p1_orqv_fns[4] = {
++    gen_helper_sve2p1_orqv_b, gen_helper_sve2p1_orqv_h,
++    gen_helper_sve2p1_orqv_s, gen_helper_sve2p1_orqv_d,
++};
++TRANS_FEAT(ORQV, aa64_sme2p1_or_sve2p1, gen_gvec_ool_arg_zpz,
++           sve2p1_orqv_fns[a->esz], a, 0)
++
++static gen_helper_gvec_3 * const sve2p1_eorqv_fns[4] = {
++    gen_helper_sve2p1_eorqv_b, gen_helper_sve2p1_eorqv_h,
++    gen_helper_sve2p1_eorqv_s, gen_helper_sve2p1_eorqv_d,
++};
++TRANS_FEAT(EORQV, aa64_sme2p1_or_sve2p1, gen_gvec_ool_arg_zpz,
++           sve2p1_eorqv_fns[a->esz], a, 0)
++
++static gen_helper_gvec_3 * const sve2p1_andqv_fns[4] = {
++    gen_helper_sve2p1_andqv_b, gen_helper_sve2p1_andqv_h,
++    gen_helper_sve2p1_andqv_s, gen_helper_sve2p1_andqv_d,
++};
++TRANS_FEAT(ANDQV, aa64_sme2p1_or_sve2p1, gen_gvec_ool_arg_zpz,
++           sve2p1_andqv_fns[a->esz], a, 0)
  
+ static gen_helper_gvec_3 * const fabs_fns[4] = {
+     NULL,                  gen_helper_sve_fabs_h,
 -- 
 2.43.0
 
