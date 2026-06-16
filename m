@@ -4,146 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67621CD98E1
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C939CD98DA
 	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 01:00:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZIAJ-0002mu-BI; Mon, 15 Jun 2026 21:00:31 -0400
+	id 1wZIA2-0002l4-8H; Mon, 15 Jun 2026 21:00:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wZIAB-0002mD-Kp
- for qemu-devel@nongnu.org; Mon, 15 Jun 2026 21:00:23 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wZIA9-0002IT-VB
- for qemu-devel@nongnu.org; Mon, 15 Jun 2026 21:00:23 -0400
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65G0OSJc2094036
- for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 01:00:18 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- oRfbxoOFvfTAzPFyrc9wxW2+PCZx/i84izz3Dv0qXxM=; b=DSj4UwyASxxWGUxU
- xDBg4Trfkussg3RImbwqElmv4xbdirMX0/Q9bAfw4p/F0uZLwVuFH9Bz8wzIcvNg
- wpnaSPtQeH6Pqj4VTVTKlibxRkXKdRGEW0L+jnq3j9013Q+PQqlaH74pqMzEm58j
- NdVQ+zO60pixUEgi3Joo9dILaZUwsmYgUdtDKZZ2B1u0WHRcyKxKXltGjZ/3Xges
- v/Y7bU0siyqGmJ6BsqAV1EJmZxgEDWOcXDunWo9bCr14UItGCZZgA7zm/S742X1k
- YiVd3+hIPqwtjvMDIN1Ux4apQhDTi90JuApwsTE4VYGUJjHYGG2hgCHuB93JZXMi
- X6HIaQ==
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
- [209.85.222.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4eter23xq4-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 01:00:18 +0000 (GMT)
-Received: by mail-qk1-f198.google.com with SMTP id
- af79cd13be357-915ba226a9bso998344785a.2
- for <qemu-devel@nongnu.org>; Mon, 15 Jun 2026 18:00:18 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1wZIA0-0002ks-Bb
+ for qemu-devel@nongnu.org; Mon, 15 Jun 2026 21:00:12 -0400
+Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1wZI9w-0002GX-D5
+ for qemu-devel@nongnu.org; Mon, 15 Jun 2026 21:00:10 -0400
+Received: by mail-ed1-x532.google.com with SMTP id
+ 4fb4d7f45d1cf-68acf0a15b3so6070843a12.1
+ for <qemu-devel@nongnu.org>; Mon, 15 Jun 2026 18:00:06 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1781571605; cv=none;
+ d=google.com; s=arc-20240605;
+ b=c07ZLFIdlt2UvrSU9hWjKfQ+bgfLmMvwcEFYki0j0l/9aT2XTU8a+EK/BI2XRjM4Xq
+ PqRCwoln5xpQBhMKIbU4fGgdsL6AOofHpJ+AeOHSW65bj07WxJ/rO8KW0tx06ZWns2ni
+ 8JwDJqgdxQZrbO+JrTcXZukVwwmFCp6QttTtlvHnOdP4JcqfEB2zeQiCLuatzI/ZpeUF
+ 4MBozrONQExkdipPHblYAgpMboZqL98Z+Nip/LHSdKD164VVLA83Wp8JeDqRYRbLgIaJ
+ mKvGk2S7DnIkp6EOvQFgCRcEiG3KDn5IIXe7VyEWDoI9uEgQTuYQyO4tQWQEgIT88Qt1
+ Qa0Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=1E5PN35gchOkVa8iafjrFAkQGCPeP0M/94/inCg3Fbw=;
+ fh=QMl3m49tuLtOusuuXCnCOZCsoZiLfsjUwXG2nLBmcSY=;
+ b=MTAZjtzWD4iBXVecYrIEdqi4NYrVIbH1eounswVfpJJZd2KAOfqJDJ8xzkZzxBmXf6
+ L+LF3RuSAEmD3Ne10Xe7MN+gs42yRBTHdd9lqa5fFpYgCTfdENrjHtpE2Bb70V8d4GKD
+ a6lJzI6NWp+FI7WRdno9gh/gIMmZoaJXHX/4UYYEO81Vaxgss7i4FRZgNC+WA4QaiB1/
+ 9W7VoI0U1nnf0zMuzMfWteiTHGM+UlgnpRIPoBxDbe0NEeEaHyGOP/ZGtWIuXi2emcV0
+ aNSVyy/VrDkCpK+D6mKwSkF5K7UBZkXvRiSzc6QJcAnGcp2opCYt5N0kgzGdRSlBHR06
+ kDyA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1781571618; x=1782176418; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=oRfbxoOFvfTAzPFyrc9wxW2+PCZx/i84izz3Dv0qXxM=;
- b=FxPccY48NJbuOxfCRjiSmDT5Pxei2Taj4NFxb2zhshmrIHX3teNlbI/T1MZbg7Xc3q
- xl1le4mw7aa6DwlsGIrNHcJyRS4faW8tj92HKOdeFedd3ZILQS2z/X3JR43se4s1/Too
- 5sjTcKVyiIS0CMquA8BBSo4bKayf/cAgRWpURL+C+zVQPkY/12dBn5LkAVrafggAEBB6
- DuKdv5cZ/vS/V5crJAOlEQrc21awBR1Z4jWissIcgJXG8bsBz0XzjBc9Ab6S4D7WNTy/
- DIyMnBXP65+NCRZU2ZneXE1wPGMZQsxoNC5ZIFid66pB13pXTJqQhtyNrr9/6oe0cqwN
- r7yA==
+ d=gmail.com; s=20251104; t=1781571605; x=1782176405; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=1E5PN35gchOkVa8iafjrFAkQGCPeP0M/94/inCg3Fbw=;
+ b=pRIvF3BSuWvmHKLvuBfQJk8VWoJ3bmnG18wBagLhPXh30/Dh13Fk3tx2pZ5toOhYuo
+ GpDDHI4lkDdKXKyoiaj3psOQ28Ohqw9dBrEr+vzd26qAYeZTZ2uypl8gTCxfOKs2aOd5
+ X2pYEEqVL6CR4sKTX2wfqhMl2FX7Nf6dMdda/MehmxoUcZ2fkTCpVn7zEBOvel87dWdp
+ xrbs2VmDMaMAWRKQmTvXa4PuKTzKcsAvIJoZP8zULzrKFr+mKYRCXACU0rNzEUPlejfY
+ 4De743RgZY5cpqzCxjwvhYxhXaLuZCqY2fhOjIRn6yyM3nyRyeWKspXVwPcWRFV0Tr9n
+ 64Ug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781571618; x=1782176418;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=oRfbxoOFvfTAzPFyrc9wxW2+PCZx/i84izz3Dv0qXxM=;
- b=CEc3rNtt7mZdRWcoKNtzwDREQ3B3zjIDQ4EWNnXFlyTw4HJpIjAODiXU1H6NthSt0H
- GzLofNlS95VRLebPyJpLCPDQDOBcQf7XDaS5JTjyQ3xTVn2Qzat1hJqnHaRnwkrcpm1I
- Tk6gjYQLscfgDlKOHpEdiNoP9s2jMJJF926EXcK8410q10pL6LOKO6wkEbW7rSwM1Zeg
- sqtBLknqCtGMNr2OwtFGRuLvBliS4Zg8lJ3Xo2fqxG3lMWbKQRL7tJUu22ar6h7B3pLG
- h432rlk/vSzKx3pBpI+WTeL+Ne1lLvwcynkFxd57BQq49abdR1S93Ak1CuzeDoBkBDj+
- zb1w==
-X-Forwarded-Encrypted: i=1;
- AFNElJ8kddPZ/jPqgZ7KgyicYawVo+muR5eePTSfHbxJ3GUdP4phwpqtUu7Mhu6L4lFUnkmmIpsjK8uL0+8t@nongnu.org
-X-Gm-Message-State: AOJu0YylnCv41W3WDmoVyVlLsPOy9tDN6srA1DcRwjnaT2ydLpifJ0/o
- t915LN3K4Uro7LUIqz9a13x2oiCpnh+C8CvL55SY03foVT4z5n9tOrJ3FIrl+qT9KVEgzWysOP9
- Z3WzWov7q3VvD9E9XCeylVAHgSZbJ+is7ibNKHpY/RtC+YlGr9IwnWxvZmLTZbJ7hJA==
-X-Gm-Gg: Acq92OHaxLc4SKjxS7pZRgrKy0R+OzH0Rm62D5M9dCyOhBbGm581ezX6ahxLJ7Aa10F
- UrCij0/X6RH8Skq5WggJ1uQiNbaEebFCaIyvZ4cEnEuOCmAzSVL1xKoa4TVIJ/c9dNoamZi8y6R
- U8IlksmWfo9vdQDbcMqugfmAybIosUexi8w8S+Kc2G8npL8YbRDyQau+VvUXH1MDY5AqcnLyJTY
- 44HX/dQhXQR6EIyg4bFKTmwAzMOYid9JnEGQV1KQfjABDIb/dYFbYgN2v6PPVAi+oHwh/kCcfjy
- J7i+rgNPWkBLxm0JKEVkcUtOCjis0/1n8N+jBCSPtQCIJHv5enpacKCTduhVg0ZHYlqZVACSoAZ
- /i+1cR+pSZqTjZ8xzMG+WwGO4dfu9ktTp/ubfmJoiHR6bstwTXcBE9mG/zZUVu2tVfiTRvamO
-X-Received: by 2002:a05:620a:a416:20b0:918:4137:6be with SMTP id
- af79cd13be357-9184137090fmr1307524085a.53.1781571617713; 
- Mon, 15 Jun 2026 18:00:17 -0700 (PDT)
-X-Received: by 2002:a05:620a:a416:20b0:918:4137:6be with SMTP id
- af79cd13be357-9184137090fmr1307517685a.53.1781571617177; 
- Mon, 15 Jun 2026 18:00:17 -0700 (PDT)
-Received: from [192.168.69.214] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4922fa8b423sm32990475e9.11.2026.06.15.18.00.15
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 15 Jun 2026 18:00:15 -0700 (PDT)
-Message-ID: <1b43d007-ba84-4ce8-abde-f242bf817ad6@oss.qualcomm.com>
-Date: Tue, 16 Jun 2026 03:00:14 +0200
+ d=1e100.net; s=20251104; t=1781571605; x=1782176405;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=1E5PN35gchOkVa8iafjrFAkQGCPeP0M/94/inCg3Fbw=;
+ b=GCjPGaUlmmkkV0i8pDTC08i49Jt1Vzdv8L0oFbMg4JswMDaMmfkqIDt39tKDUmOUly
+ uODw9UCrpdtI4FQXILNxWDS7LOkuf31KzyX3T+99VFYoBQSNvDdQhvfpo1LB9p1e8QMM
+ UxwztS88A8LKja1itDTX3y2PFscoMaM3VPqWMwceinSvFW9//ajHoV/jr0drlSCJ2EO8
+ lu6IfwitOBUyyshVw+kEOLZNllTlfxlZVo38n7z8KGJVMYpcdC5i/bBpS+530Kpd4TLs
+ 9OzO69lsNakJm06x+c8cItO4WiXjgpUEa2uGZi4zgSmiADpRplEG4TpsjP/Cmf9bCayw
+ m0dQ==
+X-Gm-Message-State: AOJu0Yy+hpUIPWcrvSwirhgRNFWn0lSyPjmbrvOtrVZ2xJld8b4CjQY4
+ J8XR1MsckH/92jKzqqwRmey67heuF6jUu4OddTTWc0Ow2DPAdm+/7gRQHnb0S5T6/xsL2qPIrPE
+ 2YDnVtHva22iz9xHHQcIQ+lUNJEERNTk=
+X-Gm-Gg: Acq92OGK45bZhrkBiVDYpmgdAPs6C+S6ne8BBjdt18/OLv8ROu9FiFTtlx6TvthXCsi
+ EwS9nCulDthijEFQcMexS0LZTKJkbIevCo7N9SIRumRTtrqvMoQ6jL4MNMxUiu/wcDLc7LyAKZ2
+ Meya5SkqCSHN41Krc+En+L3sDQUCQyC59rK0t2SRQAe2dgeuWg/ElHRMc9yb5b95pP2Jc12JEGM
+ YjjEc+tiGTs24Y8kEo0anZHCrqa2L7Sq4BfYFvnO9sh3miCrwOENDFgAlBuICLiocfknypgm5WS
+ 4PPr/zBNn/ZiZNkvQckQb/YHvyaHnK1rrlNKSaCAd3yfXa8e
+X-Received: by 2002:a05:6402:3511:b0:68f:cc85:7c1c with SMTP id
+ 4fb4d7f45d1cf-695087ee3b9mr644464a12.28.1781571604949; Mon, 15 Jun 2026
+ 18:00:04 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 1/7] igb: Define TRL registers and core state
-Content-Language: en-US
-To: Josh Hilke <jrhilke@google.com>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, qemu-devel@nongnu.org
-Cc: Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
- Jason Wang <jasowang@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- David Matlack <dmatlack@google.com>,
- Alex Williamson <alex.williamson@nvidia.com>
-References: <20260615-igb-trl-v4-0-cf5739bf529f@google.com>
- <20260615-igb-trl-v4-1-cf5739bf529f@google.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <20260615-igb-trl-v4-1-cf5739bf529f@google.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjE2MDAwNiBTYWx0ZWRfX3N84YAGBP8wB
- geO5oCfNTDbN3ZLZCdjRzph45XcXFi/zS0iFWRbjKwKIyt15WfmgnUgKRAPE74t6nBytLW4PLiB
- 60KcCNJi1T4JYaWotEQWU2+WZ4M/4Qk=
-X-Proofpoint-GUID: DY8GvlLweoICmwxCOJAGLd6b5Zbe6ST1
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjE2MDAwNiBTYWx0ZWRfXzmEeEns+yTn/
- YZMDY3dme99koqSJ1vtROJmPb0ngyWP+ewmtnmUwmj+uqtjjTROQPMBL+L8NBrz1BrICyMu0lhu
- bmHDiJCL+k25kiV1I0/h1WqwevTylUAyH+/LuYnUE8MaxKEhPBMIdLdSTPPmLgBnxw8gZrhfZpk
- q4aXPgXCSvxoNslj7oBBpm3x4ldF3oYV2GWWzSWIn4D/cBFjVkTpb8H/mPHYQijLVVwNsi/4Aaz
- 5Uuh61GggZAZwYhkfExdZDZCSn4aWq3Smpk94OsA8rlQQnajLQrQWJ06r5LeIQYxon8Bd3brKgj
- Ck5w1UqHCDcSs/MJRL7cpnIO9kMT+0lCbaPsqypQHwPtHYhSwKUXgy47wqP02VMoMp8O6/ZU0Zu
- Nuk9vwx7q73t3cyES8lsS7ymUi3mEOUINz7qRDlDbVP6k3K4Yk1kVd8pn2nydEKBirGbk+oNLIb
- KVsu2e/A30ooTqUDjVg==
-X-Authority-Analysis: v=2.4 cv=F4tnsKhN c=1 sm=1 tr=0 ts=6a30a022 cx=c_pps
- a=qKBjSQ1v91RyAK45QCPf5w==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
- a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22
- a=1XWaLZrsAAAA:8 a=3OPROYpsI0mELyp5-YsA:9 a=QEXdDO2ut3YA:10
- a=NFOGd7dJGGMPyQGDc5-O:22
-X-Proofpoint-ORIG-GUID: DY8GvlLweoICmwxCOJAGLd6b5Zbe6ST1
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-16_01,2026-06-15_04,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 bulkscore=0 clxscore=1015 impostorscore=0 spamscore=0
- adultscore=0 lowpriorityscore=0 priorityscore=1501 suspectscore=0
- malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606040000
- definitions=main-2606160006
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+References: <20260610214133.1882563-1-daniel.barboza@oss.qualcomm.com>
+ <20260610214133.1882563-5-daniel.barboza@oss.qualcomm.com>
+In-Reply-To: <20260610214133.1882563-5-daniel.barboza@oss.qualcomm.com>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Tue, 16 Jun 2026 10:59:38 +1000
+X-Gm-Features: AVVi8CezCRiYVm4Km_6WoSfIK0MKlYDvZaU2mVTg0CZWmUsRuGx8Myo6BJepfgA
+Message-ID: <CAKmqyKMah2sA8Z9aTKHp1_=7snEnABkrBNmQVhJ0xk=xHFk1ug@mail.gmail.com>
+Subject: Re: [PATCH v8 4/7] tests/functional/riscv64: add riscv-server-ref
+ tests
+To: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
+ liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, chao.liu.zevorn@gmail.com, 
+ andrew.jones@oss.qualcomm.com, leif.lindholm@oss.qualcomm.com, uwu@icenowy.me, 
+ Palmer Dabbelt <palmer@dabbelt.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::532;
+ envelope-from=alistair23@gmail.com; helo=mail-ed1-x532.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -160,59 +121,137 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 16/6/26 00:18, Josh Hilke wrote:
-> Introduce register offsets and bitmask constants for the Transmit Rate
-> Limiter (TRL). Add the IGBTrlQueue structure and corresponding fields to
-> IGBCore to track TRL state (timers, throttling status, and target rates)
-> per queue. Initialize and free these timers during the device
-> realize/uninit lifecycle, and reset them on device reset.
-> 
-> Signed-off-by: Josh Hilke <jrhilke@google.com>
+On Thu, Jun 11, 2026 at 7:44=E2=80=AFAM Daniel Henrique Barboza
+<daniel.barboza@oss.qualcomm.com> wrote:
+>
+> Add two tests for the recently added riscv-server-ref machine:
+>
+> - a new test_opensbi.py test.  The idea is to have a quick test that can
+> catch trivial regressions that would prevent OpenSBI to finish;
+> - a new Linux boot "thorough" test that will boot the machine up to the
+> buildroot prompt.
+>
+> Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+
+Alistair
+
 > ---
->   hw/net/igb_common.h |  1 +
->   hw/net/igb_core.c   | 59 +++++++++++++++++++++++++++++++++++++++++++++++++++++
->   hw/net/igb_core.h   | 13 ++++++++++++
->   hw/net/igb_regs.h   |  6 ++++++
->   4 files changed, 79 insertions(+)
-
-
-> diff --git a/hw/net/igb_core.h b/hw/net/igb_core.h
-> index d70b54e..f3d50bc 100644
-> --- a/hw/net/igb_core.h
-> +++ b/hw/net/igb_core.h
-> @@ -63,6 +63,13 @@ typedef struct IGBIntrDelayTimer_st {
->       IGBCore *core;
->   } IGBIntrDelayTimer;
->   
-> +typedef struct IGBTrlQueue_st {
-> +    QEMUTimer *timer;
-> +    IGBCore *core;
-> +    int queue_idx;
-> +    uint32_t trlrc;
-> +} IGBTrlQueue;
+>  tests/functional/riscv64/meson.build        |  2 +
+>  tests/functional/riscv64/test_opensbi.py    |  4 ++
+>  tests/functional/riscv64/test_server_ref.py | 59 +++++++++++++++++++++
+>  3 files changed, 65 insertions(+)
+>  create mode 100755 tests/functional/riscv64/test_server_ref.py
+>
+> diff --git a/tests/functional/riscv64/meson.build b/tests/functional/risc=
+v64/meson.build
+> index 5871211e89..2eb12586bf 100644
+> --- a/tests/functional/riscv64/meson.build
+> +++ b/tests/functional/riscv64/meson.build
+> @@ -2,6 +2,7 @@
+>
+>  test_riscv64_timeouts =3D {
+>    'boston' : 120,
+> +  'server_ref' : 120,
+>    'tuxrun' : 120,
+>  }
+>
+> @@ -13,6 +14,7 @@ tests_riscv64_system_quick =3D [
+>  tests_riscv64_system_thorough =3D [
+>    'endianness',
+>    'boston',
+> +  'server_ref',
+>    'sifive_u',
+>    'tuxrun',
+>  ]
+> diff --git a/tests/functional/riscv64/test_opensbi.py b/tests/functional/=
+riscv64/test_opensbi.py
+> index d077e40f42..057f55f90b 100755
+> --- a/tests/functional/riscv64/test_opensbi.py
+> +++ b/tests/functional/riscv64/test_opensbi.py
+> @@ -32,5 +32,9 @@ def test_riscv_virt(self):
+>          self.set_machine('virt')
+>          self.boot_opensbi()
+>
+> +    def test_riscv_server_ref(self):
+> +        self.set_machine('riscv-server-ref')
+> +        self.boot_opensbi()
 > +
->   struct IGBCore {
->       uint32_t mac[E1000E_MAC_SIZE];
->       uint16_t phy[MAX_PHY_REG_ADDRESS + 1];
-> @@ -99,6 +106,9 @@ struct IGBCore {
->       void (*owner_start_recv)(PCIDevice *d);
->   
->       int64_t timadj;
+>  if __name__ =3D=3D '__main__':
+>      QemuSystemTest.main()
+> diff --git a/tests/functional/riscv64/test_server_ref.py b/tests/function=
+al/riscv64/test_server_ref.py
+> new file mode 100755
+> index 0000000000..2ecfcf60ad
+> --- /dev/null
+> +++ b/tests/functional/riscv64/test_server_ref.py
+> @@ -0,0 +1,59 @@
+> +#!/usr/bin/env python3
+> +#
+> +# Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
+> +#
+> +# SPDX-License-Identifier: GPL-2.0-or-later
+> +#
+> +"""
+> +riscv-server-ref board test
+> +"""
 > +
-> +    /* Transmit Rate Limiting */
-> +    IGBTrlQueue trl[IGB_NUM_QUEUES];
->   };
->   
->   void
-> @@ -143,4 +153,7 @@ igb_receive_iov(IGBCore *core, const struct iovec *iov, int iovcnt);
->   void
->   igb_start_recv(IGBCore *core);
->   
-> +bool igb_trl_enabled(uint32_t trlrc);
-
-    bool igb_trl_enabled(const IGBTrlQueue *q);
-
-> +uint64_t igb_trl_get_target_rate(const IGBTrlQueue *q);
+> +from qemu_test import QemuSystemTest, Asset
+> +from qemu_test import wait_for_console_pattern
 > +
->   #endif
+> +class RiscvServerRefTest(QemuSystemTest):
+> +    """
+> +    Test the riscv-server-ref board
+> +    """
+> +
+> +    ASSET_KERNEL =3D Asset(
+> +        ('https://github.com/danielhb/qemu-machine-boot/raw/refs/heads/'
+> +         'master/riscv/images/virt64/buildroot/Image'),
+> +        '6bacc876c769c1bb6057d2bf549eba67fbe83916e8223f9fe21c8e8fff665a3=
+6')
+> +
+> +    ASSET_ROOTFS =3D Asset(
+> +        ('https://github.com/danielhb/qemu-machine-boot/raw/refs/heads/'
+> +         'master/riscv/images/virt64/buildroot/rootfs.ext2'),
+> +        'f00bb88749f945d80675540a1338bd1ccb226574685a5b6c65ab44027d0411a=
+8')
+> +
+> +    def test_boot_linux_test(self):
+> +        self.set_machine('riscv-server-ref')
+> +        kernel_path =3D self.ASSET_KERNEL.fetch()
+> +        rootfs_path =3D self.ASSET_ROOTFS.fetch()
+> +
+> +        self.vm.add_args('-kernel', kernel_path)
+> +        self.vm.add_args('-append', 'rw rootwait root=3D/dev/sda')
+> +        self.vm.add_args('-drive',
+> +            f'file=3D{rootfs_path},format=3Draw,id=3Dhd0,snapshot=3Don,i=
+f=3Dnone')
+> +        self.vm.add_args('-device', 'ahci,id=3Dahci')
+> +        self.vm.add_args('-device', 'ide-hd,drive=3Dhd0,bus=3Dahci.0')
+> +
+> +        self.vm.set_console()
+> +        self.vm.launch()
+> +
+> +        # Wait for OpenSBI
+> +        wait_for_console_pattern(self, 'OpenSBI')
+> +
+> +        # Wait for Linux kernel boot
+> +        wait_for_console_pattern(self, 'Linux version')
+> +        wait_for_console_pattern(self, 'Machine model: qemu,riscv-server=
+-ref')
+> +
+> +        # Test e1000e network card functionality
+> +        wait_for_console_pattern(self, 'e1000e')
+> +        wait_for_console_pattern(self, 'Network Connection')
+> +
+> +        # Wait for boot to complete - system reaches login prompt
+> +        wait_for_console_pattern(self, 'Run /sbin/init as init process')
+> +
+> +if __name__ =3D=3D '__main__':
+> +    QemuSystemTest.main()
+> --
+> 2.43.0
+>
+>
 
