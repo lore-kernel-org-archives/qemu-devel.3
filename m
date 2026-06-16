@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 356FFCD98EE
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43751CD98F0
 	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 19:15:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZZFK-0006A1-0s; Tue, 16 Jun 2026 15:14:50 -0400
+	id 1wZZFF-0005qJ-FD; Tue, 16 Jun 2026 15:14:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wZZ8Q-0004dj-1A
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 15:07:44 -0400
-Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
+ id 1wZZ7x-0004V1-AO
+ for qemu-devel@nongnu.org; Tue, 16 Jun 2026 15:07:28 -0400
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wZZ8K-0001Aa-Vt
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 15:07:38 -0400
-Received: by mail-wr1-x42a.google.com with SMTP id
- ffacd0b85a97d-461a15bb819so939451f8f.3
- for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 12:07:35 -0700 (PDT)
+ id 1wZZ7q-0000wj-0D
+ for qemu-devel@nongnu.org; Tue, 16 Jun 2026 15:07:10 -0400
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-490bc6a7958so1523615e9.1
+ for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 12:06:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1781636854; x=1782241654; darn=nongnu.org;
+ d=linaro.org; s=google; t=1781636815; x=1782241615; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=JXl9aM3YjYB0IaDfx/Jq49OoS0qkx8Ry7BVlhdhFJ5k=;
- b=x6TH0RjTXW5yNJ5O0mRns8SusjeUzDgZxlU+vjnud/39kLCXxFtdWOvQW6OtJuaZdm
- pl/HUsock7sva5GhrTpmn9yFxrW7oFFPmBjK4TuSmrBj5dnZ3GKzyjTWQZ+26nJkDYER
- IsMpg8VJFFDtWKbOvkkqsfVl2hl7vy/kX9UURm4aWccRTOKpm9vrkAt/TEU9mK3mO8My
- HrPGic47hryU3DdDa4XtBqqzYvbYcsTYs+y6P+sPANxzyDjGIefY5DKB+IYHcISXhTh/
- u8rjfjSBfWZZd/qj8IA9SQGl2s5wHEf9Y6Wr9dHWo6NNZ6kx3PUbMOW0jb3W6BC9WK34
- eq6w==
+ :reply-to; bh=/PbbrDXH+b4CwM0ZMVh7ZRRPi4k/+m03KAIQLjS5GKw=;
+ b=mAbr0daiXKqvF3JomDC6nqAmN9coDctITWilaLeoABBsZMVf8SISEQt3gSahM1nTZ8
+ u4oUh56yMrW8gqwgYRyQOo3rDTkhG6Gs6z03gPBL4IfaavWUV7NV5NbSseYWXi7WziXg
+ DoE0C5Qx2hat74kRV24EVJCgcVsu7IIMR4tf2ntEARbcZ/ZRJZTgT4JLnrbp7aWlIaep
+ B59S3Eikcz5JjCJT654Dz/e/+A1pg5F4URwJsBY0tlEVeSTCAl+Gvi/NF2/kLgvLnbFB
+ Mn9RWcE6TvRWZM5lBTdPvj5ba1U0lTz1ynG+YvJYAc4gpHoU4VHf1UZgaQm2w8mYeWtb
+ 9a1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781636854; x=1782241654;
+ d=1e100.net; s=20251104; t=1781636815; x=1782241615;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=JXl9aM3YjYB0IaDfx/Jq49OoS0qkx8Ry7BVlhdhFJ5k=;
- b=IfnsUICn3SbdmKriA1s8b0Q7OExLGghb/Yq7QSQobEhYuWYPtRYbd3rNYsCbktm1mh
- nfgZooqffWq+XhG2Rc0cpLNHXhXnaPWYkdIteN7wRMx1wVdIPAgVCX7smlE8VHO5Tu/a
- 5tLuoDL3j2QbacWpq0UpTLlB67gTcrDxuKw5dyIxTG7aCQH72KA2yDT7VdicplfMU3Hy
- chxCCqGuln1FBCvWGChVa6nrOLFfr+FrKpEE2aeseCnfFFJwwZedmnvSgmG1pHXQjOXp
- c7cwsNQUtg18ASmxaYES6PNI2eETSpOVLdl6dXEnuMa//FLZg+8uCaZDWMPVSxpU99cp
- szsA==
-X-Gm-Message-State: AOJu0YxXph/r1utQGbNTRD42FWpSnOxy52d8aOb4IQNQ0eC/Cix8V4Z/
- RbAa7ZL5pRzmALRG+CSvm0FRMZULx8YBAhwbDmvpniQ63ZTPevqGM41C4+ZN4Wm2CA7rjlcNUf7
- pNLKr
-X-Gm-Gg: Acq92OGWzEvNvuxDDr27sqvrZEsYAQoI1QVXcedHQ+035AGMXfVRlpDf2Zj/ZlMCG1b
- pDCFDPtiVXwOl9d4NRmIVYykPbMvPrwTI/EMtpdvcXeUOLjhMKQ0xIaP1e5qYKU0xELH9uTo1yQ
- A7YZYEiixe9ufzYo31bvzyujwcgow4jxalYuQgj+yZTdiAoChtqqOWmcB/rKf478CpHc0H7wJLn
- s7F5yF63flC7Xy0fox4DeSeRqkD9VhkjUVe9yk66E2uIIOrkQ209krI/lr5vozAz/VNj+GthFRu
- mb7ahY+kUpCvJsV3uYa10MzraXlxkK9rEU9lpadU9+ctswZkpWC/UtJS/ERVWFDBrZi4mabTxyU
- /3DLpyxK7LD285OaoPOVYkjJscy01GBsDWMmR0Rb0+Kxow6ANFfBl7qPQKPrHkO5R+k7mJROl0Q
- FvMzDtILLGWuMzHBxef6Mg0kw6k4tzOQg15xIiWjzXF8RcBA61mAEjfrySA9h0hC4KBiEFVCTaq
- cY/HeacmIreKZCnGJaxkZV0xl6uqz7e
-X-Received: by 2002:a05:6000:22c4:b0:45e:fb69:f02b with SMTP id
- ffacd0b85a97d-4623f2e7641mr943955f8f.1.1781636854169; 
- Tue, 16 Jun 2026 12:07:34 -0700 (PDT)
+ bh=/PbbrDXH+b4CwM0ZMVh7ZRRPi4k/+m03KAIQLjS5GKw=;
+ b=E4vFODXPyghFolvNVY9sgMpP72MBqtbnXSip63UtFh/Tyf6ffCc2rb918pqscVu9eR
+ 16u91TZNkqY+RxvXJsB3tEBNEKDH1mudWLQGpCFTolFpmXvplJ/EM4qMxsN1riHE/yDD
+ /YQe//ejTcGHYkMsbBBQ5kk7Z0Z5crJMKiIB3RuUwie6gOXMk6p8WUs97UA2gZd+VY8R
+ zt4aGBnhiCpUx8qsiFdc0RxSvEA/C+QdwdiP2SXzXXssdsyF6R0GKFlCj+Kjoo/Z2ayM
+ VEkFT98NXe8EeB3VPuxhLl2ba+Zz5l5wxibqd4f3wZt69q+82X+Wd5XyK2ayqBksDj+w
+ HAnw==
+X-Gm-Message-State: AOJu0YxOb7eyuwNzON7cXC7H5Yg1b4qcTXC19vAmTUqNp+Fyskw/WZr3
+ cM/mxidpep/Hi6brB7Ml95+vppKZxWvGkXmZeX+tvZDZcOnppMBHyDEcL/FPGAnMlv03963Y8l0
+ rTgGu
+X-Gm-Gg: Acq92OGnmK4De5pTMcITM3eRMa/KtcXt96leyIC2VOlYOkh5shLqWLL9DqEI0G/Mo+6
+ Pt5NSUhv8AI8WMJ5sz5H3yPoDDi7zP8OGjNVUnFyZdU8b7RbmP/WKkzXXZb9xEAuy1FaqtA2MTg
+ 4GYkgGQzRp7ZcMI0nQhGmtSuGLHCQJCJxzq+FSb1cYSh56ycuP7jaGw1sKP3kMBR3L1ne14T+yZ
+ Fzt1EJFnRodpUvJlZ1xqSez1lDI9uHYCLIUecGrqN+8QaQgVV2Tz1fAiOZmSwniEMdWjYRIkkY4
+ 53jhlqt8BFSdtPBlVtvC2lS0HoGQo7gtZ/cvY1bCtP5cm4XtUFfbxT8whXJdbuip2ml7jnx8k8I
+ MRkJ0cG1L7kQ0pLSTmTqgOgmMfQf/8mMcQ6en3rYWaFZriIcLdHv1PaYcOvt7bsJ3uYUdFDskxW
+ 2QkS3XJH5NsOG2huckGgnFh2F97s89DPySpv1xwIWzOEbog5Gp1dqHlixqsxU0/Cg22MrtQow9q
+ fml8xbB1urQs1KBJq5r7u9e/Zfb5Jb6XYQ/z7Dmy+Q=
+X-Received: by 2002:a05:600c:6c10:b0:490:55d9:149a with SMTP id
+ 5b1f17b1804b1-4922fb14703mr68476865e9.18.1781636815432; 
+ Tue, 16 Jun 2026 12:06:55 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4606f2d9becsm45078765f8f.34.2026.06.16.12.07.33
+ ffacd0b85a97d-4606f2d9becsm45078765f8f.34.2026.06.16.12.06.54
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 16 Jun 2026 12:07:33 -0700 (PDT)
+ Tue, 16 Jun 2026 12:06:54 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 47/61] target/arm: Expand DO_ZPZ in translate-sve.c
-Date: Tue, 16 Jun 2026 20:06:24 +0100
-Message-ID: <20260616190639.3462006-48-peter.maydell@linaro.org>
+Subject: [PULL 11/61] backends/iommufd: Update iommufd_backend_get_device_info
+Date: Tue, 16 Jun 2026 20:05:48 +0100
+Message-ID: <20260616190639.3462006-12-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260616190639.3462006-1-peter.maydell@linaro.org>
 References: <20260616190639.3462006-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,114 +100,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+From: Nicolin Chen <nicolinc@nvidia.com>
 
-Prepare for adding zeroing instructions for some of these.
+The updated IOMMUFD uAPI introduces the ability for userspace to request
+a specific hardware info data type via IOMMU_GET_HW_INFO. Update
+iommufd_backend_get_device_info() to set IOMMU_HW_INFO_FLAG_INPUT_TYPE
+when a non-zero type is supplied, and adjust all callers to pass a type
+value explicitly initialised to zero (IOMMU_HW_INFO_TYPE_DEFAULT) when
+no specific type is requested.
 
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Message-id: 20260604234852.573178-5-richard.henderson@linaro.org
+Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
+Reviewed-by: Eric Auger <eric.auger@redhat.com>
+Tested-by: Nicolin Chen <nicolinc@nvidia.com>
+Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
+Tested-by: Eric Auger <eric.auger@redhat.com>
+Message-id: 20260609112552.378999-2-skolothumtho@nvidia.com
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/arm/tcg/translate-sve.c | 84 +++++++++++++++++++++++++++-------
- 1 file changed, 67 insertions(+), 17 deletions(-)
+ backends/iommufd.c    | 7 +++++++
+ hw/arm/smmuv3-accel.c | 2 +-
+ hw/vfio/iommufd.c     | 4 ++--
+ 3 files changed, 10 insertions(+), 3 deletions(-)
 
-diff --git a/target/arm/tcg/translate-sve.c b/target/arm/tcg/translate-sve.c
-index 4fd17905d5..8ab4526468 100644
---- a/target/arm/tcg/translate-sve.c
-+++ b/target/arm/tcg/translate-sve.c
-@@ -776,24 +776,74 @@ TRANS_FEAT(SEL_zpzz, aa64_sme_or_sve, do_sel_z, a->rd, a->rn, a->rm, a->pg, a->e
-  *** SVE Integer Arithmetic - Unary Predicated Group
-  */
+diff --git a/backends/iommufd.c b/backends/iommufd.c
+index 410b044370..8c3a981392 100644
+--- a/backends/iommufd.c
++++ b/backends/iommufd.c
+@@ -390,16 +390,23 @@ bool iommufd_backend_get_dirty_bitmap(IOMMUFDBackend *be,
+     return true;
+ }
  
--#define DO_ZPZ(NAME, FEAT, name) \
--    static gen_helper_gvec_3 * const name##_fns[4] = {              \
--        gen_helper_##name##_b, gen_helper_##name##_h,               \
--        gen_helper_##name##_s, gen_helper_##name##_d,               \
--    };                                                              \
--    TRANS_FEAT(NAME, FEAT, gen_gvec_ool_arg_zpz, name##_fns[a->esz], a, 0)
-+static gen_helper_gvec_3 * const sve_cls_fns[4] = {
-+    gen_helper_sve_cls_b, gen_helper_sve_cls_h,
-+    gen_helper_sve_cls_s, gen_helper_sve_cls_d,
-+};
-+TRANS_FEAT(CLS_m, aa64_sme_or_sve, gen_gvec_ool_arg_zpz, sve_cls_fns[a->esz], a, 0)
++/*
++ * @type can carry a desired HW info type defined in the uapi headers. If caller
++ * doesn't have one, indicating it wants the default type, then @type should be
++ * zeroed (i.e. IOMMU_HW_INFO_TYPE_DEFAULT).
++ */
+ bool iommufd_backend_get_device_info(IOMMUFDBackend *be, uint32_t devid,
+                                      uint32_t *type, void *data, uint32_t len,
+                                      uint64_t *caps, uint8_t *max_pasid_log2,
+                                      Error **errp)
+ {
+     struct iommu_hw_info info = {
++        .flags = (*type) ? IOMMU_HW_INFO_FLAG_INPUT_TYPE : 0,
+         .size = sizeof(info),
+         .dev_id = devid,
+         .data_len = len,
+         .data_uptr = (uintptr_t)data,
++        .in_data_type = *type,
+     };
  
--DO_ZPZ(CLS_m, aa64_sme_or_sve, sve_cls)
--DO_ZPZ(CLZ_m, aa64_sme_or_sve, sve_clz)
--DO_ZPZ(CNT_zpz_m, aa64_sme_or_sve, sve_cnt_zpz)
--DO_ZPZ(CNOT_m, aa64_sme_or_sve, sve_cnot)
--DO_ZPZ(NOT_zpz_m, aa64_sme_or_sve, sve_not_zpz)
--DO_ZPZ(ABS_m, aa64_sme_or_sve, sve_abs)
--DO_ZPZ(NEG_m, aa64_sme_or_sve, sve_neg)
--DO_ZPZ(RBIT_m, aa64_sme_or_sve, sve_rbit)
--DO_ZPZ(ORQV, aa64_sme2p1_or_sve2p1, sve2p1_orqv)
--DO_ZPZ(EORQV, aa64_sme2p1_or_sve2p1, sve2p1_eorqv)
--DO_ZPZ(ANDQV, aa64_sme2p1_or_sve2p1, sve2p1_andqv)
-+static gen_helper_gvec_3 * const sve_clz_fns[4] = {
-+    gen_helper_sve_clz_b, gen_helper_sve_clz_h,
-+    gen_helper_sve_clz_s, gen_helper_sve_clz_d,
-+};
-+TRANS_FEAT(CLZ_m, aa64_sme_or_sve, gen_gvec_ool_arg_zpz, sve_clz_fns[a->esz], a, 0)
-+
-+static gen_helper_gvec_3 * const sve_cnt_zpz_fns[4] = {
-+    gen_helper_sve_cnt_zpz_b, gen_helper_sve_cnt_zpz_h,
-+    gen_helper_sve_cnt_zpz_s, gen_helper_sve_cnt_zpz_d,
-+};
-+TRANS_FEAT(CNT_zpz_m, aa64_sme_or_sve, gen_gvec_ool_arg_zpz, sve_cnt_zpz_fns[a->esz], a, 0)
-+
-+static gen_helper_gvec_3 * const sve_cnot_fns[4] = {
-+    gen_helper_sve_cnot_b, gen_helper_sve_cnot_h,
-+    gen_helper_sve_cnot_s, gen_helper_sve_cnot_d,
-+};
-+TRANS_FEAT(CNOT_m, aa64_sme_or_sve, gen_gvec_ool_arg_zpz, sve_cnot_fns[a->esz], a, 0)
-+
-+static gen_helper_gvec_3 * const sve_not_zpz_fns[4] = {
-+    gen_helper_sve_not_zpz_b, gen_helper_sve_not_zpz_h,
-+    gen_helper_sve_not_zpz_s, gen_helper_sve_not_zpz_d,
-+};
-+TRANS_FEAT(NOT_zpz_m, aa64_sme_or_sve, gen_gvec_ool_arg_zpz, sve_not_zpz_fns[a->esz], a, 0)
-+
-+static gen_helper_gvec_3 * const sve_abs_fns[4] = {
-+    gen_helper_sve_abs_b, gen_helper_sve_abs_h,
-+    gen_helper_sve_abs_s, gen_helper_sve_abs_d,
-+};
-+TRANS_FEAT(ABS_m, aa64_sme_or_sve, gen_gvec_ool_arg_zpz, sve_abs_fns[a->esz], a, 0)
-+
-+static gen_helper_gvec_3 * const sve_neg_fns[4] = {
-+    gen_helper_sve_neg_b, gen_helper_sve_neg_h,
-+    gen_helper_sve_neg_s, gen_helper_sve_neg_d,
-+};
-+TRANS_FEAT(NEG_m, aa64_sme_or_sve, gen_gvec_ool_arg_zpz, sve_neg_fns[a->esz], a, 0)
-+
-+static gen_helper_gvec_3 * const sve_rbit_fns[4] = {
-+    gen_helper_sve_rbit_b, gen_helper_sve_rbit_h,
-+    gen_helper_sve_rbit_s, gen_helper_sve_rbit_d,
-+};
-+TRANS_FEAT(RBIT_m, aa64_sme_or_sve, gen_gvec_ool_arg_zpz, sve_rbit_fns[a->esz], a, 0)
-+
-+static gen_helper_gvec_3 * const sve2p1_orqv_fns[4] = {
-+    gen_helper_sve2p1_orqv_b, gen_helper_sve2p1_orqv_h,
-+    gen_helper_sve2p1_orqv_s, gen_helper_sve2p1_orqv_d,
-+};
-+TRANS_FEAT(ORQV, aa64_sme2p1_or_sve2p1, gen_gvec_ool_arg_zpz,
-+           sve2p1_orqv_fns[a->esz], a, 0)
-+
-+static gen_helper_gvec_3 * const sve2p1_eorqv_fns[4] = {
-+    gen_helper_sve2p1_eorqv_b, gen_helper_sve2p1_eorqv_h,
-+    gen_helper_sve2p1_eorqv_s, gen_helper_sve2p1_eorqv_d,
-+};
-+TRANS_FEAT(EORQV, aa64_sme2p1_or_sve2p1, gen_gvec_ool_arg_zpz,
-+           sve2p1_eorqv_fns[a->esz], a, 0)
-+
-+static gen_helper_gvec_3 * const sve2p1_andqv_fns[4] = {
-+    gen_helper_sve2p1_andqv_b, gen_helper_sve2p1_andqv_h,
-+    gen_helper_sve2p1_andqv_s, gen_helper_sve2p1_andqv_d,
-+};
-+TRANS_FEAT(ANDQV, aa64_sme2p1_or_sve2p1, gen_gvec_ool_arg_zpz,
-+           sve2p1_andqv_fns[a->esz], a, 0)
+     if (ioctl(be->fd, IOMMU_GET_HW_INFO, &info)) {
+diff --git a/hw/arm/smmuv3-accel.c b/hw/arm/smmuv3-accel.c
+index 06dadf9cc7..163d3e7279 100644
+--- a/hw/arm/smmuv3-accel.c
++++ b/hw/arm/smmuv3-accel.c
+@@ -176,7 +176,7 @@ smmuv3_accel_hw_compatible(SMMUv3State *s, HostIOMMUDeviceIOMMUFD *hiodi,
+                            Error **errp)
+ {
+     struct iommu_hw_info_arm_smmuv3 info;
+-    uint32_t data_type;
++    uint32_t data_type = IOMMU_HW_INFO_TYPE_DEFAULT;
+     uint64_t caps;
  
- static gen_helper_gvec_3 * const fabs_fns[4] = {
-     NULL,                  gen_helper_sve_fabs_h,
+     if (!iommufd_backend_get_device_info(hiodi->iommufd, hiodi->devid,
+diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
+index df148a49a7..495a59cc2e 100644
+--- a/hw/vfio/iommufd.c
++++ b/hw/vfio/iommufd.c
+@@ -353,7 +353,7 @@ static bool iommufd_cdev_autodomains_get(VFIODevice *vbasedev,
+     IOMMUFDBackend *iommufd = vbasedev->iommufd;
+     VFIOContainer *bcontainer = VFIO_IOMMU(container);
+     bool viommu_nesting, viommu_nesting_dirty;
+-    uint32_t type, flags = 0;
++    uint32_t type = IOMMU_HW_INFO_TYPE_DEFAULT, flags = 0;
+     uint64_t hw_caps;
+     VendorCaps caps;
+     VFIOIOASHwpt *hwpt;
+@@ -948,7 +948,7 @@ static bool hiod_iommufd_vfio_realize(HostIOMMUDevice *hiod, void *opaque,
+     HostIOMMUDeviceIOMMUFD *hiodi;
+     HostIOMMUDeviceCaps *caps = &hiod->caps;
+     VendorCaps *vendor_caps = &caps->vendor_caps;
+-    enum iommu_hw_info_type type;
++    uint32_t type = IOMMU_HW_INFO_TYPE_DEFAULT;
+     uint8_t max_pasid_log2;
+     uint64_t hw_caps;
+ 
 -- 
 2.43.0
 
