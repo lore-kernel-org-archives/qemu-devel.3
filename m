@@ -4,48 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4793ECD98E6
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 12:33:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3CFFCD98DA
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 12:33:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZSyh-0003sB-Pe; Tue, 16 Jun 2026 08:33:15 -0400
+	id 1wZSyj-0003ss-81; Tue, 16 Jun 2026 08:33:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lhestz@163.com>) id 1wZSyf-0003rD-BN
+ (Exim 4.90_1) (envelope-from <lhestz@163.com>) id 1wZSyf-0003rC-BO
  for qemu-devel@nongnu.org; Tue, 16 Jun 2026 08:33:13 -0400
 Received: from m16.mail.163.com ([220.197.31.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lhestz@163.com>) id 1wZSyc-0006fy-W9
+ (Exim 4.90_1) (envelope-from <lhestz@163.com>) id 1wZSyc-0006bv-MM
  for qemu-devel@nongnu.org; Tue, 16 Jun 2026 08:33:13 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
- s=s110527; h=From:To:Subject:Date:Message-ID:MIME-Version; bh=G0
- ytJBKH6ieo2ArfDwfcC6VgasgMg/pQ2KxrNKkOdlY=; b=muCRbzCy8zyG9lnOze
- Of1KLx957/IWu4jrNPE/RarnAO1+WUr3+ctlt5DEBy47ujuMGm83+ZLIGVn2tFpL
- qkAgH/iFzrDMaCwT43Tn3g7oMvpX56NxZLiM2uu8zLdH6cp4EobqaZoYvIEr/2vy
- mo1gc53Y1yaBckcZqPfm45J1k=
+ s=s110527; h=From:To:Subject:Date:Message-ID:MIME-Version; bh=Cx
+ gaaUELLdSbKVoQyj9c6YlfTkouYcYb+S14x2yz0fo=; b=oa2FntyYQ3345HS/jV
+ K0Gs0DOxaMN/x1Tkx17Z9agqvvpXRWOuV9HsRpWJuXY7A8wGNuAoUzclzRBjvmFZ
+ KFX6mgBGSDZtUTbXXa8Na33qftOOOsHY1tHnG9GTn/XPsz7qXXjjZfTUHv5yR2N1
+ tCJ3zwOt+3UJNaWm68uXzq0Qo=
 Received: from zinogre.. (unknown [])
- by gzga-smtp-mtada-g1-3 (Coremail) with SMTP id _____wAX35lzQjFqmGm1DQ--.51S3; 
+ by gzga-smtp-mtada-g1-3 (Coremail) with SMTP id _____wAX35lzQjFqmGm1DQ--.51S2; 
  Tue, 16 Jun 2026 20:32:54 +0800 (CST)
 From: helei <lhestz@163.com>
 To: qemu-devel@nongnu.org
-Cc: arei.gonglei@huawei.com, zhenwei.pi@linux.dev, mst@redhat.com,
- helei <lhestz@163.com>
-Subject: [PATCH v2] hw/virtio-crypto: enforce max akcipher key length
-Date: Tue, 16 Jun 2026 20:32:51 +0800
-Message-ID: <20260616123251.26446-2-lhestz@163.com>
+Cc: arei.gonglei@huawei.com,
+	zhenwei.pi@linux.dev,
+	mst@redhat.com
+Subject: [PATCH v2 0/1] hw/virtio-crypto: add akcipher keylen validation
+Date: Tue, 16 Jun 2026 20:32:50 +0800
+Message-ID: <20260616123251.26446-1-lhestz@163.com>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260616123251.26446-1-lhestz@163.com>
-References: <20260616123251.26446-1-lhestz@163.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: _____wAX35lzQjFqmGm1DQ--.51S3
-X-Coremail-Antispam: 1Uf129KBjvdXoW7XFWDuw4DZF47KF48Gw4Durg_yoW3urb_A3
- yku3yxWw4rXF10va1UArWrWr12g3WfAFnF9FZIg3W8A3Wxta1DJF1xJrs5WF47Z3y8JF45
- GF45Ars0gw13ujkaLaAFLSUrUUUUjb8apTn2vfkv8UJUUUU8Yxn0WfASr-VFAUDa7-sFnT
- 9fnUUvcSsGvfC2KfnxnUUI43ZEXa7sRyOpRJUUUUU==
+X-CM-TRANSID: _____wAX35lzQjFqmGm1DQ--.51S2
+X-Coremail-Antispam: 1Uf129KBjvdXoWrXFyrAF4rJFyrZF1UCFyxuFg_yoWxWFc_Jr
+ Wv93y7uw40yFn2vayjvFW8Wr17u3yIyFn8Wrn0q3WxXFyrZF4kZF1xJFn3K3W7ArW8XrW5
+ GFs5Z3sYvwnxujkaLaAFLSUrUUUUjb8apTn2vfkv8UJUUUU8Yxn0WfASr-VFAUDa7-sFnT
+ 9fnUUvcSsGvfC2KfnxnUUI43ZEXa7IU19a9DUUUUU==
 X-Originating-IP: [2409:8a00:18c1:5350:3587:e387:c9c3:2fb]
-X-CM-SenderInfo: pokh23r26rljoofrz/xtbC8xaUv2oxQnYROwAA3L
+X-CM-SenderInfo: pokh23r26rljoofrz/xtbC0haUv2oxQnb7EwAA3o
 Received-SPF: pass client-ip=220.197.31.2; envelope-from=lhestz@163.com;
  helo=m16.mail.163.com
 X-Spam_score_int: -20
@@ -71,30 +70,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-enforce the global max_size boundary for akcipher session creation
+The virtio-crypto spec does not dictate a maximum length limit for 
+asymmetric cipher (akcipher) keys. We added a hard limit which mirrors
+the linux kernels's internal limit for akcipher keys (see 
+keyctl framework and the add_key syscall).
+Maybe we should update the virtio-spec and add a max_akcipher_key_len
+field for virtio crypto devices.
 
-Signed-off-by: helei <lhestz@163.com>
----
+v2:
+  - dropped the hardcoded limit mirroring the linux kernel.
+  - enforced the global max_size boundary specifically for akcipher
+    session creation
+
+helei (1):
+  hw/virtio-crypto: enforce max akcipher key length
+
  hw/virtio/virtio-crypto.c | 6 ++++++
  1 file changed, 6 insertions(+)
 
-diff --git a/hw/virtio/virtio-crypto.c b/hw/virtio/virtio-crypto.c
-index 6fceb39681..79e2acb56c 100644
---- a/hw/virtio/virtio-crypto.c
-+++ b/hw/virtio/virtio-crypto.c
-@@ -216,6 +216,12 @@ virtio_crypto_create_asym_session(VirtIOCrypto *vcrypto,
-         return -VIRTIO_CRYPTO_NOTSUPP;
-     }
- 
-+    if (unlikely(keylen > vcrypto->conf.max_size)) {
-+        error_report("virtio-crypto length of akcipher key is too large: %u",
-+                     keylen);
-+        return -VIRTIO_CRYPTO_ERR;
-+    }
-+
-     if (keylen) {
-         asym_info->key = g_malloc(keylen);
-         if (iov_to_buf(iov, out_num, 0, asym_info->key, keylen) != keylen) {
 -- 
 2.43.0
 
