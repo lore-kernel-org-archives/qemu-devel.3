@@ -4,139 +4,137 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36DFBCD98DE
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 00:36:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 359B5CD98DE
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 00:37:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZHmF-00054i-UH; Mon, 15 Jun 2026 20:35:39 -0400
+	id 1wZHnU-0005aO-RZ; Mon, 15 Jun 2026 20:36:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wZHmE-00054A-AB
- for qemu-devel@nongnu.org; Mon, 15 Jun 2026 20:35:38 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ id 1wZHnP-0005V8-Bc
+ for qemu-devel@nongnu.org; Mon, 15 Jun 2026 20:36:51 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wZHmC-0005xR-7P
- for qemu-devel@nongnu.org; Mon, 15 Jun 2026 20:35:38 -0400
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+ id 1wZHnN-00069M-RD
+ for qemu-devel@nongnu.org; Mon, 15 Jun 2026 20:36:51 -0400
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65G0Nuvk1584868
- for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 00:35:33 GMT
+ 65G0OPSS2064163
+ for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 00:36:48 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- iyNHJu2rfq7X4g4ZVHm/TekJwUb8j/sOpMnuWZiFWCU=; b=T5qDopSh77g0BBSn
- UKOgrc6znyKsEJbvxYWM/2KM91ChrBBOpTS+egZGb8FMI0L29puDpXDFaPteNAws
- 714PIdkpPrdubCUrdmo8cRX2eA6zPncMnItpIMZG/gb72VOiyMQlH+xOl2Adatq+
- eh4+qRowT+MEwuWDfn95HapAFfEGEqEL+gf2mOM/tX2O2PZEhLqWavLb5elo6Emh
- tXKpKjycpBjXEXXW3vEaCZHP+mQ7l0D4rY4sUCpkAjtDNy7ZB3n1ieZPrwbUmAw2
- YqAFHKI2gCd0pBjIfJdoUa+5cXjfNBwJqxpe3bjasIKBfrTKozQr4x87ngEW6ZgH
- QhQ/hQ==
-Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
- [209.85.219.70])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4etew0ktxj-1
+ AbuYbK3pjxiY3ihwluJLqjh3Xg7cgM/OaetNnrjndj0=; b=hSgafwPl37ny/Su8
+ t+HE7lynpf9f3F7m2e81oVqLrhaT4kXBR6YmqPHxwbS3YykD9cScefv9DlzL+KuN
+ HH2roNavW133hS7ctewtz103dPZHO2M7uK4uYsnmt4gqGWBtjNYN0lRluNSMOM90
+ cQ5TUrMj3p7dGJwHoVjmwDzUIjU4sQg5F411sgZAgNkvcR2Fl4wJmA95DR4fhW+n
+ sgJGv0IJnHiW1lPVwQ6VmN94Fb8BmAoN9RT6DjdWDwY+/W00K8Sp8xmlyNO3L5PQ
+ 9Vz+UtnV6oH2wxhrpEWC7UKjyv7drfzxP6juKpDdFYvAgcc69TMdhUBKFFHuq1H0
+ dCTtVg==
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
+ [209.85.222.198])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4eteguuuur-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 00:35:33 +0000 (GMT)
-Received: by mail-qv1-f70.google.com with SMTP id
- 6a1803df08f44-8ccd719a2f2so60103896d6.0
- for <qemu-devel@nongnu.org>; Mon, 15 Jun 2026 17:35:33 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 00:36:47 +0000 (GMT)
+Received: by mail-qk1-f198.google.com with SMTP id
+ af79cd13be357-9158f2c4b55so638470485a.0
+ for <qemu-devel@nongnu.org>; Mon, 15 Jun 2026 17:36:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1781570133; x=1782174933; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1781570207; x=1782175007; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=iyNHJu2rfq7X4g4ZVHm/TekJwUb8j/sOpMnuWZiFWCU=;
- b=L9hK7UuoTj5SRBYHdJ4QvsE10I8SXjSTYKfSLbWQxGXTiQaLcPy3hivcxBjpgB8qz1
- lu0h8lAF7yy5+Jt5SZ7MTu6mZfKAilmsYehrKWDYkmvGHsVOAOqQz+oYuqPYwChKOGrm
- GKhO0yG4JGmY1b3QDXvHItr/ZlAWz6BDfEsix8fTBh8smEsELwiPxTUTZn999C6bkehw
- VQ7EzPwY5+mXOcfNbcHEP37EepXP9J68pVaOmpu8eeOeVv19IcoXFqAO/BbZDcu9xXx8
- 97wx67ZMJbnOprW8Q0mY4mzE2rw7CLp3Sgry+g8yrIfs6R2y1FmzG5uvk1Uya2K6QCE9
- wDcQ==
+ bh=AbuYbK3pjxiY3ihwluJLqjh3Xg7cgM/OaetNnrjndj0=;
+ b=dbUrihnAs4+cbMC5EdFzvzsnbGlN8RsDeNvCrl+0kDcCJxPmN+5dZ+GYLfaErOcatW
+ Pr2yx40G+iwhz58IglDVFDbOwSvphjETIcTNPvdF1b+O7tVQGWOgZXIjLhQKtDrkx8Un
+ Q2c4F5x1CVmIfWJVqvQNgEFDma+l64ACm+juDYJaWk2ATih1tSZHRyMyL8QpJ6K1u6JT
+ 91d0DD8de89ab6mNG1YZYD5g/8dChMj7A0sFuxI1yVUwF5HCcOUhXDR8nq0QB9I86cy1
+ 4TeS+Btf8//s4QXEzD6qg9MSc2IR7wDC85Q59nkqmPF6cx+2QDIhivulStLAwBvGdutC
+ TMCQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781570133; x=1782174933;
+ d=1e100.net; s=20251104; t=1781570207; x=1782175007;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=iyNHJu2rfq7X4g4ZVHm/TekJwUb8j/sOpMnuWZiFWCU=;
- b=CgYzF0CLbJwByKQd2rP8o2J6C7rt80vTZ8190MZLbKoBFBh9/fF6Ho7q9gy6uLiRVt
- 9O8Yup/Tb+4kCcmbXA+41EgwPt+oSsRREtCe7NNPy+/UXoFxk4rd/Valpm8jZ96AeN7t
- A1QlxUJcVmDUGbgxdQMqMwYsiwDvuq8SkJoIZcID3hQ2GzRuPFs8cniq+2DFve68LQUr
- zQMUaO06aHLOcNn4VGaBvviCShMLczkDbiD6vJD9cTFXt2yOku0OGOojg9BpzeWXy+Cp
- 9ccWsivDSrDAZOhCBLDqRWd3o6xZCqj17UVETz+z79i0FEmpsxGecjPNJe4w/SiqpEXU
- ehxA==
+ bh=AbuYbK3pjxiY3ihwluJLqjh3Xg7cgM/OaetNnrjndj0=;
+ b=ht/gdNNQuvH6GYIBmJqx86PaujjPnR25z6KMZ17//nzoEYhI2pjMBeIa27f0Jktbqh
+ DJx9fdI9t+/Z1zPLf1OKGcg5VH8V7lSxPJxVKFvgZLfm+6EwNipsoTKC9mgDIKRDk5+V
+ nTVTg7cMI8/CtsdHUxVlPG1jHEOwpwrVBmdH0b99G81hlvp7Y4Q1IF24BBVvKZoJxuuA
+ tvVkLVz0Gozmo60Ivtu4U2m21Sb/4afLlEHrL/3DzQ1edxCG9Q0O4dZfbU0Iy6iVWBw0
+ f5h8xp9qPvouXuRmHmswo7wQYxg+e5A5U6VJhJi/WsXm9ZGrKxdU4mpmP4bqLqK48sYH
+ f4qw==
 X-Forwarded-Encrypted: i=1;
- AFNElJ8nkd7wN76OOv0wwB3w/SUuXozG+eM+oi5vPLKT/dGqdAuace/JQoJ4RS68kQ9hLRhkt1jR+BGN6GtR@nongnu.org
-X-Gm-Message-State: AOJu0YzUvTNQyXvR1WHP9ULZ2QyNXKSTMCofbTiiCPHp4dvasx1db1++
- 2it9qjWDizopKOgRwi3YNnwENqmhqzaU94cWExG16R2EyeK7pFSvF8HlodEeDiuP5MjJbd/jHbs
- BtoMxMvkXqxFgse1LnIWN+or++Q4MVxA4L7XDRw/udMaPnnKpCznMPXv41A==
-X-Gm-Gg: Acq92OGz2LU2Vc46SMoY/THfwkhhkeInTLyzoZgQbOBveGutqzuTIER7IH/SKy0g23x
- EIqwIiAqfINKY5Zcm3++/Ld2iJi6/GJLvuls5nbuODUpNhBJ23k+7cnz4UkePsF5WPwvscBCgia
- DlHpSxZ4YefVMYpA9yf66QV/izqETHueXj4KtGQBncILAtEdhsqJFVgxJ44dx9t7h70FgRijB4I
- 6lEp9Xm9GxACZ5HbMJsylxm3evMbwC/uv0t63EG2f7fp9L0UZosDtR+adLsN9NPqDchM21Lrj5u
- GlM3CnsgcEhJ63qCVkOBpmeG1L9VS6vFVsM8jCxBd8uZZ3+OGs1cYod6eSzY1l2Wk/578kxUMpj
- KtnarrN+2VA1BVJGV2fiU35uD2knXf0T275bkWOsNc9eK4CjqSBoeahmEcoHstEFiwonllQeb
-X-Received: by 2002:a05:620a:2681:b0:914:7b4f:cf5b with SMTP id
- af79cd13be357-91c468c8dc3mr245971585a.16.1781570132777; 
- Mon, 15 Jun 2026 17:35:32 -0700 (PDT)
-X-Received: by 2002:a05:620a:2681:b0:914:7b4f:cf5b with SMTP id
- af79cd13be357-91c468c8dc3mr245968385a.16.1781570132354; 
- Mon, 15 Jun 2026 17:35:32 -0700 (PDT)
+ AFNElJ9zV7nkI76LPIzJOd7Ez5aXfD4qR6jJdsftaDXgr3E2QKW2lOgoyK6AGxRiigGv2jjIuo0YXN2ChlPI@nongnu.org
+X-Gm-Message-State: AOJu0YzA9lMGpiJaTDX6wSd1jqdEVF4ahN8Wkf88X2qTV7e1xnOf6Ymn
+ eteM36XZMevOHpR6sxEhhBk/nYPuZOuEa4DWdkxaTnThUPI8cATSfz6sfZNgTBI2mKD7cTwavyP
+ raOE3QQg1lX8zkjbUrj0hPsP4iLPWyGhoQaSug2v/fEsCz6iaBzFtxkBRoQ==
+X-Gm-Gg: Acq92OGdS9c4KgOQNYDaiLCQC5mcMDbZuQtOzwGZYAke1iTH0mvwq+BmON7T0QeLtcJ
+ 5uHz5LDUZE+t+OjgtwxZsrdqtz+GuVKsAQor/kzREg+arVpM3ivD4G5HldibcH9lnlSDxaNC1k5
+ KF1eNxC6nnNASehmjhpPiyULjSzdWUfh2XlAOv8EsKTEPJ07lfNwu6U+vpCizxSn5qa7BZdlm9Z
+ Wzi4tMRgBMnPnKXBj5OmJIgHiFPEVGuVtSw1FQA9EywTMBvHTZlOp+KAH5NdwzML6oB3CPm9+bU
+ vakCtzaeFB9/G7DMYK392mOJQwZ3OsfBgHs/gLKZPzPLoxtLKWq/LLTU7JJUjot+CkiL8V1clgi
+ Ldpwxym2xrppjNZPQsJDP2wwwcXI0HjLjR1ZC2dnkWbxXMMvFaLc/oW87YVgirQUr09VhxObi
+X-Received: by 2002:a05:620a:2943:b0:915:e7bf:e6ff with SMTP id
+ af79cd13be357-91c23c7bb91mr349921685a.11.1781570207110; 
+ Mon, 15 Jun 2026 17:36:47 -0700 (PDT)
+X-Received: by 2002:a05:620a:2943:b0:915:e7bf:e6ff with SMTP id
+ af79cd13be357-91c23c7bb91mr349917885a.11.1781570206693; 
+ Mon, 15 Jun 2026 17:36:46 -0700 (PDT)
 Received: from [192.168.69.214] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4619fb12edbsm2463045f8f.17.2026.06.15.17.35.30
+ 5b1f17b1804b1-49230a45b30sm10436305e9.2.2026.06.15.17.36.44
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 15 Jun 2026 17:35:31 -0700 (PDT)
-Message-ID: <05604cb4-6f61-4b64-90ce-505ac87d8a04@oss.qualcomm.com>
-Date: Tue, 16 Jun 2026 02:35:29 +0200
+ Mon, 15 Jun 2026 17:36:46 -0700 (PDT)
+Message-ID: <66c2731a-91cf-48e3-9303-8353c6be418c@oss.qualcomm.com>
+Date: Tue, 16 Jun 2026 02:36:44 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] meson.build: check MAINTAINERS file is consistent
- with source tree
+Subject: Re: [PATCH 03/13] hw/riscv/numa: make numa_enabled() public
 Content-Language: en-US
-To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- John Snow <jsnow@redhat.com>, Cleber Rosa <crosa@redhat.com>,
- philmd@oss.qualcomm.com, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, armbru@redhat.com
-References: <20260615201723.2959015-1-pierrick.bouvier@oss.qualcomm.com>
- <20260615201723.2959015-3-pierrick.bouvier@oss.qualcomm.com>
+To: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, liwei1518@gmail.com,
+ zhiwei_liu@linux.alibaba.com, chao.liu.zevorn@gmail.com,
+ Palmer Dabbelt <palmer@dabbelt.com>
+References: <20260615203734.954428-1-daniel.barboza@oss.qualcomm.com>
+ <20260615203734.954428-4-daniel.barboza@oss.qualcomm.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <20260615201723.2959015-3-pierrick.bouvier@oss.qualcomm.com>
+In-Reply-To: <20260615203734.954428-4-daniel.barboza@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjE2MDAwMyBTYWx0ZWRfX3MMK1t9bAHoY
- AxaCmwGRStaNkoq+0O1ZP3ZNbmkXJ9U6TV1NACgEm7vthl7a5NwjXgG2EcShd2JGKhrCsQ1Xrh4
- U5dSlKpbgexPANSv7jWUToYj6KBToGg=
-X-Authority-Analysis: v=2.4 cv=QLlYgALL c=1 sm=1 tr=0 ts=6a309a55 cx=c_pps
- a=oc9J++0uMp73DTRD5QyR2A==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjE2MDAwMyBTYWx0ZWRfX8lqeD/R0IawV
+ OiJE/0fteO2m56NMNOKg5grt5Jw/sQwM2MGmjrnApk0ynmZve0UwhLf8yX/NdRFHBzNnZOoDshb
+ ZNxoA7CmrJ5BYwPrObDmgJzhNnhUDurUEJ/0l5XwxY8wQo3DEkaRGJUuvZ9akM26u9mJvjgy06Y
+ kGb/K7WDl/2Dd+L9IGBVaWBRxZbF042XBsxTNnejZYJHheX9XhDaFEHLTOY3PQRtEvWLavCgBEh
+ XewYf5grZAIQ+m/HWhJxxDhRCss6XdKd/Y0dZZAHQ/dram8HGHb8etAVGrKFeubES2xWZeBY8wh
+ wFvgjqCqkWXCGzZe2K9FGH6wulp9v24jSSjlSu0d/FPQG1WhNjbDPl9OZAb4SjOlDeJ1L57OvU4
+ k3tpAQXZYj1Dzu6P4rCfEWmfFZ/3/TNX2Jz7j21xNygHCfxsddnIas+yqdQJ3SmU0cB5BBYQdOB
+ IhrPySXzH3o6h9TdXhA==
+X-Proofpoint-ORIG-GUID: p-ZTHS6gWZdeJCSE3tMlFacsrymyE1Vw
+X-Authority-Analysis: v=2.4 cv=HMvz0Itv c=1 sm=1 tr=0 ts=6a309a9f cx=c_pps
+ a=qKBjSQ1v91RyAK45QCPf5w==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
  a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22
- a=EUspDBNiAAAA:8 a=Ds2MHxTp7O98hlkQ-QsA:9 a=QEXdDO2ut3YA:10
- a=iYH6xdkBrDN1Jqds4HTS:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjE2MDAwMyBTYWx0ZWRfX0K54Zu4bZvRv
- HM+qTS8KLGa5+4NF0DfCfL98zYs/5mt9+JaFEax29RqCzkiXgCuYu+K8pzpy0lLTH8pQKXit0Iq
- eSaFRNioFeiig3z3wIMzhBxVivgWCSlSb91SS0vkagcn04euay04TlKt7gFp2LwD4hVNXUUv2Oo
- HsBTLgnSU5Zf2IldGtGN2PwfXh7hpj33LghK0o9ZDIyoRb0xm+/PX9ZYQvw5RjttNLzyt25z8Av
- QWGuGq6agNM1q8ViCcfGjkfsiteEalCKQdjpptYb3yN/b7PWMtZ2ORqyt82WuAarpeDsKL+VYxV
- KgxKxWBuC6cwe2EL85Kh7uY+QfVu+dYEFbw7aXsc4wM3lL9FbhVtTseuQbn+XvhKH5CnRCJHR5w
- G3szEvL43V+qKV2Mh//guHOLzbA7Tp5WprF2Tfl4FcqadivkBzxXfMcmJk/ps2zmwpBCH5GmXst
- mT2LcRq6XmyBBk0zVuQ==
-X-Proofpoint-GUID: QJaOVQ5tJNaG2kYbhXGEtBFBVA-uFCOv
-X-Proofpoint-ORIG-GUID: QJaOVQ5tJNaG2kYbhXGEtBFBVA-uFCOv
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
+ a=EUspDBNiAAAA:8 a=3x77jrtbuF8AUm31dGkA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=NFOGd7dJGGMPyQGDc5-O:22
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjE2MDAwMyBTYWx0ZWRfX7EnycCVVhzNS
+ jAIhXOhVGvP50yszo+dldnqkKuxvddNnr0itdQTBlErZm2dG5CoRC8AqSE7b9U2FWgdVJgMQLxt
+ 3HBLbyUPI3F6JVRd3/vAYcyiVx60xp8=
+X-Proofpoint-GUID: p-ZTHS6gWZdeJCSE3tMlFacsrymyE1Vw
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-06-16_01,2026-06-15_04,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 clxscore=1015 priorityscore=1501 adultscore=0 spamscore=0
- bulkscore=0 suspectscore=0 impostorscore=0 phishscore=0 lowpriorityscore=0
+ lowpriorityscore=0 clxscore=1015 spamscore=0 malwarescore=0 suspectscore=0
+ phishscore=0 bulkscore=0 adultscore=0 priorityscore=1501 impostorscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2606040000 definitions=main-2606160003
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -159,104 +157,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 15/6/26 22:17, Pierrick Bouvier wrote:
-> We add a new script: scripts/check-maintainers-file.py, that will run at
-> configuration time (and not at build time), to not hurt build time.
-> This script runs in 0.2s on my dev VM, which has an old cpu.
+On 15/6/26 22:37, Daniel Henrique Barboza wrote:
+> There's FDT logic gated around 'numa_enabled()' in virt.c and spike.c.
+> We want to move the FDT code to a common helper without having to call
+> hw/riscv/numa.c functions from it, but at the same time being aware of
+> the FDT changes if numa is enabled.
 > 
-> We can expect things to be mostly in sync since adding or removing a
-> source or test file will trigger a configure step.
-
-You mention adding/removing but this script only checks for removals,
-no additions; did I miss something?
-
-> For the rest, like docs, tcg tests, or remaining files, GitLab CI will
-> build things from scratch and always run the configure step.
+> To do that the boards will inform the FDT helpers if we have
+> numa_enabled in the env or not.  And for the boards to be able to do
+> that we need the static 'numa_enabled' function to be public.
 > 
-> With this, it should be impossible by design to have an upstream
-> MAINTAINERS file with non existing file entries.
-> 
-> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+> Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 > ---
->   meson.build                       |  5 +++
->   scripts/check-maintainers-file.py | 53 +++++++++++++++++++++++++++++++
->   2 files changed, 58 insertions(+)
->   create mode 100755 scripts/check-maintainers-file.py
-> 
-> diff --git a/meson.build b/meson.build
-> index 19e123423b5..57e9c9de42b 100644
-> --- a/meson.build
-> +++ b/meson.build
-> @@ -17,6 +17,11 @@ add_test_setup('thorough',
->   
->   meson.add_postconf_script(find_program('scripts/symlink-install-tree.py'))
->   
-> +# check our MAINTAINERS file is consistent
-> +check_maintainers = find_program('scripts/check-maintainers-file.py')
-> +maintainers_file = files('MAINTAINERS')
-> +run_command([check_maintainers, maintainers_file], check: true)
-> +
->   ####################
->   # Global variables #
->   ####################
-> diff --git a/scripts/check-maintainers-file.py b/scripts/check-maintainers-file.py
-> new file mode 100755
-> index 00000000000..b001816a401
-> --- /dev/null
-> +++ b/scripts/check-maintainers-file.py
-> @@ -0,0 +1,53 @@
-> +#! /usr/bin/env python3
-> +
-> +# Check incorrect file entries in MAINTAINERS
-> +#
-> +# Author: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-> +#
-> +# SPDX-License-Identifier: GPL-2.0-or-later
-> +
-> +import argparse
-> +import glob
-> +import sys
-> +
-> +
-> +def check_one_entry(line) -> bool:
-> +    return True
-> +
-> +
-> +def main() -> None:
-> +    parser = argparse.ArgumentParser(description="Check MAINTAINERS file")
-> +    parser.add_argument("maintainers", help="Path to MAINTAINERS file")
-> +    args = parser.parse_args()
-> +
-> +    found_file_entry = False
-> +    found_incorrect_entries = False
-> +    line_counter = 0
-> +
-> +    with open(args.maintainers) as file:
-> +        for entry in file:
-> +            line_counter += 1
-> +
-> +            if not entry.startswith("F:"):
-> +                continue
-> +            entry = entry[2:].strip()
-> +            found_file_entry = True
-> +
-> +            file_exists = len(glob.glob(entry, recursive=True)) > 0
-> +            if file_exists:
-> +                continue
-> +
-> +            found_incorrect_entries = True
-> +            print(
-> +                f"No matching files for {args.maintainers} +{line_counter}: {entry}",
-> +                file=sys.stderr,
-> +            )
-> +
-> +    if not found_file_entry:
-> +        raise Exception("no file entry found - is MAINTAINERS path correct?")
-> +    if found_incorrect_entries:
-> +        raise Exception(f"incorrect entries found in {args.maintainers}")
-> +
-> +
-> +if __name__ == "__main__":
-> +    main()
+>   hw/riscv/numa.c         | 20 ++++++++++----------
+>   include/hw/riscv/numa.h |  8 ++++++++
+>   2 files changed, 18 insertions(+), 10 deletions(-)
 
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 
