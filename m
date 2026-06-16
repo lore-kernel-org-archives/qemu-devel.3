@@ -4,146 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C090CCD98DE
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 03:15:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D5D0CD98DE
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 03:15:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZKGr-0000qY-Ed; Mon, 15 Jun 2026 23:15:25 -0400
+	id 1wZKGm-0000pf-8F; Mon, 15 Jun 2026 23:15:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wZKGn-0000qA-3C
- for qemu-devel@nongnu.org; Mon, 15 Jun 2026 23:15:21 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wZKGj-0002AT-RI
- for qemu-devel@nongnu.org; Mon, 15 Jun 2026 23:15:20 -0400
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65G1xlDF1690900
- for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 03:15:15 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- GLUVqZxGqA7FDCAfbLW/t3tP9KqzTJqGEOQ8iSBXLnc=; b=ePgbG5HtiqkpcGag
- dV46roD7kqIwczH3GPp4q7V5+UUEJU3hkmEEwI0BpH2kTYL1k8pollbA6QVm4gqI
- L6Xr5fsUzO2m91mZhTxMGPN3pZipoiJskZBqtgNcd34tQNXlfMi3kPkuzG0q8P5R
- 2PNncB+UcxirRP0lRaALQZVUTuDLdPyuy9SXiDIBuKmOWoEnC6ZZipDrv7JCzYgK
- j3FFG31MocLlbFlbaQEU6rpjsykLIRZG/o00xMIyVoBhUE76+Ps6zgB7ejRGiqj6
- vINfpFSpj1mbgtVZcyZ0u22p/pCs/hMBDUf8XgSEd5FbToA+6jppy6zQmQU/kDLj
- cqPZ3A==
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4etetjvfwu-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 03:15:15 +0000 (GMT)
-Received: by mail-qk1-f199.google.com with SMTP id
- af79cd13be357-915767b341eso393738585a.3
- for <qemu-devel@nongnu.org>; Mon, 15 Jun 2026 20:15:15 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1wZKGk-0000p8-2E
+ for qemu-devel@nongnu.org; Mon, 15 Jun 2026 23:15:18 -0400
+Received: from mail-ed1-x52c.google.com ([2a00:1450:4864:20::52c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1wZKGh-0001yb-Jq
+ for qemu-devel@nongnu.org; Mon, 15 Jun 2026 23:15:17 -0400
+Received: by mail-ed1-x52c.google.com with SMTP id
+ 4fb4d7f45d1cf-68acf0a15b3so6184917a12.1
+ for <qemu-devel@nongnu.org>; Mon, 15 Jun 2026 20:15:14 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1781579713; cv=none;
+ d=google.com; s=arc-20240605;
+ b=O539fpQ5tQVwN/NiywFfwpvWhyT4nmiS8UvXvoNws4wNaWQXrOMmm7JQT6kbjmvjff
+ T/+m93sTpqhYLL2oE6xFc6sWgkDzsfcJp1mWoMgzA8ZMFGQgbFpKAewuKRLv7eakhH3m
+ 9nLDYGupaQFtLAqDBEKUIZ8x2PeFOvYlfZh7xfcVwkpduQmUfzscFl81QKS7/Z0oFUFc
+ /ercPIAXIk5Aw4S4Hby063T/ROQa1G3mTo3t1hbpWtinwhhXOMPpTzNI3O+1deLsbyfB
+ C5Gs08W00UxkGhajhTSMhXDvMzY7eeX9BmE3s49HJ16ZbnozGZdLumEO2Oke8e+Q5EMP
+ Q/iQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=2//7fekKtdDPkgBvtLRGOmWSThEKpL0MI6l5G2YadNg=;
+ fh=y/39rxWsHsSIhiCgFyox46bvYsAfNaBS3wRFv9pkMrs=;
+ b=XgklTELhaXD5rK2UJu/hB01TshZq8wDWo3yGb+OjRgjTODiqqNyEolLUFhcGpKzDa6
+ Nc/15Gcqhnkm1fhI7MMi8EgpU29jrSuMu0PkZkALt/9mGQXvHS1lnj+YNaM/tv6CFyZT
+ H1bjMx30YLE94HhUdRn1NRVFcfTz/khDEc0sIGyRCs8JGM7Hbpez/cY6PXtwV7YtYNfa
+ prHjUjyrbJ6peGcUa9O9Vq6fKgjAZYiNqeJ/mSjamUv1fnD30JYaKympMEsQJ011Q0nW
+ P2nFjHMVsLtX5NNs7AVL9YPjJAcyY6FAoTa/fcfBU3Tqm/56WeCbGCASwskP6YH6SWit
+ pY4w==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1781579714; x=1782184514; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=GLUVqZxGqA7FDCAfbLW/t3tP9KqzTJqGEOQ8iSBXLnc=;
- b=Bpj8qUXePCMN/LFpzgtT4vzgDyNJPdwmbx6K2CbrXyonN6Y/y+LIgONJ917LoQittg
- NIzNZrG9jnL/d0S6kCma1+TI520JQnjMudgUk4k12ZmVLHizaEhGQ4HaCbKE2vqToe2E
- x/2+GQVZ3zkSFKFLEoB133hPedeCzbuNb9YHg3tBM+VSwgL/0Dzeh/ArydCj5grVYal7
- 1BMz4oKrBZwzQn59i4LjcuNdsZMPjsAsRARADvCkspNcehSMyR0Le3OHocYDzorM+GMN
- T0L1klG4G0U421WmI4uQyGS27Sa/ASwb0OWGfI/p31dsIwP2bz/0XXqu0urgECBn/tDG
- 0nEQ==
+ d=gmail.com; s=20251104; t=1781579713; x=1782184513; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=2//7fekKtdDPkgBvtLRGOmWSThEKpL0MI6l5G2YadNg=;
+ b=Edj1zrqWvf8SkGs8Xd2pkzXziB6wGUjmnQG0SdkDwO5djEg2YBCnMcIDJnqSnga74c
+ JVxpd6fSo1GxNOfy2bVkwYFW8AYYtj/hNqvvmaJbRC9mlV8LEo9q4MBVeZCsSTaa1eG1
+ 9aJwySgxyhhLj1GNKupJIXvX55xriO8vb9qrRBqVo6sn/e+bDbOSlGnjXMhJdaCWoAyi
+ jHAYzm9nxOUExfllo6HbfLD9NTDoC2jwpwHwomWhjUQC8JoeO1LLGQ3oeR1vI8FMvRbt
+ /8NnIubJU+83xGHU1BGAFoA0Er3U0fZXjtkCGNIEYeSl8K3V2YbLAh42kye44qmbimt+
+ pcbA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781579714; x=1782184514;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=GLUVqZxGqA7FDCAfbLW/t3tP9KqzTJqGEOQ8iSBXLnc=;
- b=J8lsjhD656AfyumY0ziN6j21pRUL265ziD0SbX7cII7jZ8Um2/KzkdHtmyJ3/XTJM1
- 7yMu32Ro39emFgjID//VOoNTXMuk2258frsgabwXpflv9S3x5zZyzONL4SrypUa80ivi
- wRKwtNKlXed5GkQ+bdqIIVJyoIwOw6wVdQXyL9pMtkVpKo3hjnNB4/f8iyKvWJOuNrHI
- 4BLrwdzJlnyYsl1Rg8rNRRjvux81+zJPeeIUOJwAPOx+4tbHNKYx6cEEsFJTbxOHA4Nd
- 0/gJkEhdsH6l0k0VkVCjdj8C3ZVOiU3DTmZZ29S0DqSabSslmWPuoAF+uyQBzUtaGFSZ
- tQ9w==
-X-Forwarded-Encrypted: i=1;
- AFNElJ+n+xF0swanzulXh3GPl0FDlOn6xGiaTr1tefVYciRhYnFITpKhUjXD/LoA8zEl9vEqOrGLFa2KEEyz@nongnu.org
-X-Gm-Message-State: AOJu0Yx6AAfNO0I5diHeHJfIOBjGr7Od31OlyZsqtFn1Q0ra5yn9Gi6u
- dHE9j/3WCVBR3nDiplx3wDVP3ypn1UESfaJ0u20FvdY6vY4yKSA9nR1ihWis6XEnVwGL2KYllPZ
- utaDmOTc7EYauCDG33sqQJjLkDeJhNf2Q6XZW6awRZ9Ne312CAOGswG2yGA==
-X-Gm-Gg: Acq92OGjIWuexgFtTl3vOuB2J7BsyGFmt3WqcTUmUWgK4arzDPLqZfOMva6OpPz0l6Z
- AkxGMrPYvW8Idx1vnrNr5uRVgkZYPE1w+qWOrjRnqWxNBXW5WD4ZATPkLgGym1+9QL80QO7Ta9k
- khshFbtieDnDYX1k0cD+KYMUq+5SGcG+UIrRmglnV6U1Lt6X/AdMv6RfLMcS8UXTYOQGKTjKRg4
- Txe5xajv87E9MDBeJcTa18Q8owPCo87GIyhy65g5wycVEJr/4uYUn6X6jrNpGpNQyOG/v5cLo6v
- evF8s4OBMoDu2RvYKc9MoZP5idttBsZSjbM1m9pFyKcIAdr1HyM4zLBOrBk+kt46AiPhPJPqzhL
- VoLi2NZKlay0Fi+WI6XkDsyrnsm+aAajZryCNQKitXy46a7+Mab3gZq0rzmHz8wXlYy2KUU+D
-X-Received: by 2002:a05:620a:270e:b0:914:e3dd:17d1 with SMTP id
- af79cd13be357-91c454144c1mr247490185a.11.1781579714189; 
- Mon, 15 Jun 2026 20:15:14 -0700 (PDT)
-X-Received: by 2002:a05:620a:270e:b0:914:e3dd:17d1 with SMTP id
- af79cd13be357-91c454144c1mr247487185a.11.1781579713691; 
- Mon, 15 Jun 2026 20:15:13 -0700 (PDT)
-Received: from [192.168.69.214] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49230a4f8d7sm23001015e9.5.2026.06.15.20.15.12
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 15 Jun 2026 20:15:12 -0700 (PDT)
-Message-ID: <f3724a1c-cd1b-4651-9a8a-91ca4945f087@oss.qualcomm.com>
-Date: Tue, 16 Jun 2026 05:15:12 +0200
+ d=1e100.net; s=20251104; t=1781579713; x=1782184513;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=2//7fekKtdDPkgBvtLRGOmWSThEKpL0MI6l5G2YadNg=;
+ b=RHTuMP35uzQWXkw8J5B5f/Sui/44QjGY8rnXcDEYzRDnilsnADmuh3aXFw36KB6hoW
+ 0Ai8LOIqavzkYR7uRFtFS+bdYVJhcQkZbm/Ep8VjTpPBUbt535G9py7Fxw3hPtsPjxGS
+ 1VpyyA7sfhFsxBBwrgbIjDSSCD0FZX3U0AfOgBAxNYNlJql7Q+pz0eawjrZmMIjnDhqC
+ svXTZBT8sTTTBLkD2rQ1hw27j5o69I4SACTFJvHEcUG0Nu1wMqaNGe6QoIyUpNCrRp1Z
+ +4Xi3QnbwQ+q2d7rMo/OSfXTrSgaHEqhmjxvA9o3vUc7dgDZD2cEOALPVpPRxhi0Ita+
+ Hz2Q==
+X-Gm-Message-State: AOJu0YzaR4/gU3IWpEkvaFoZwQkw3klO/ZMiaZmjGUBagUnMZ8vq0iGq
+ lAyS+lhUaqfCDTsGKmmQx8D8b1KQvKT3C1tR6gExJwBeREdE6lJmEV+FaU1fmUAGRWFfxta+Qjp
+ XonKIVSLzNjW5slZiF3r7smb99w0WzCI=
+X-Gm-Gg: Acq92OGlFoql2srCVSQwgGgAcKvZZHuWmIJ9482t6Itqux9wM6b1flho05xolNeEOYT
+ i5azBWwCYPUKy+KopF1bz5/mHp8smgne6rvsaEeV5tsvF/sNtQxF4CRsUN+b/Lj4x3Ggb9HWDVk
+ UL6oYUUh+Kya7ZV5z11K8HTObjtC0pzFuMt4/NY20PZJxuP3LRn1ZXkINbrmyt9D3UpI4ntoEC3
+ ufNiWbZPCuxa+3cmyLYinGY8eR9KNYveOAguchOiu51MUzPaFx+W7XyUz73M3yUKvORcObTTZrw
+ CGHu4qTVrQkkySHCdNZcOT9VeE+YqqrDn19J//mnJZ8jMOMk
+X-Received: by 2002:a05:6402:1ec7:b0:691:7054:8c6a with SMTP id
+ 4fb4d7f45d1cf-695087df672mr793580a12.20.1781579712706; Mon, 15 Jun 2026
+ 20:15:12 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] meson.build: check MAINTAINERS file is consistent
- with source tree
-Content-Language: en-US
-To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- John Snow <jsnow@redhat.com>, Cleber Rosa <crosa@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, armbru@redhat.com
-References: <20260615201723.2959015-1-pierrick.bouvier@oss.qualcomm.com>
- <20260615201723.2959015-3-pierrick.bouvier@oss.qualcomm.com>
- <05604cb4-6f61-4b64-90ce-505ac87d8a04@oss.qualcomm.com>
- <36f118b4-8e24-4425-bc45-df2f13651c21@oss.qualcomm.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <36f118b4-8e24-4425-bc45-df2f13651c21@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjE2MDAyOSBTYWx0ZWRfX6RXffsEcbHpe
- yPXs5swdNk1qGi4D30uchZRrnui9Kv4mNNEw1TXEHidUxCAHhMPhvcgzgKJU9TUdXaxS1wtMl+i
- n67aM8TFnNvsM1p1jfW7qTgjbMKZG6dKQdz4Gw29vmfTJCizkQXVPwuxKh7H3ShQpjOXIOS/Fry
- 57HeGhWJ2HUvrtMrwS5OP5ZI+06uyLA6Zvb2QWUScAlYpZbQnGVZlP3LmUfbKyOiYlyUpbXMVft
- Ro5yipUpCKLkIwBe3CJNJl2tN4KD9Nu4nS2e2H4iiQfytCMZL3kKNSm8b460MXhUPm5JfCgGhF/
- gRT0/LArW0HlQbEts6dgkw9LJdkN14cw1F7/9/HJwKDUX/eSIhjT6d46QM+uy/s2sn/x9CJ1MjB
- IHcYS0/9kthFO/5WxqBhFTyI7C5QvGcMx/EBFikPh2CfAJadDnB9DtcnuhkEx7ZbBpysPOZ7f0R
- 4nbUxfSQs6AlFRwcxNw==
-X-Proofpoint-ORIG-GUID: 9E-yW18D2kU4HigEzc9nyQ8aodyK1Zkv
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjE2MDAyOSBTYWx0ZWRfX6+w09prBvgYk
- d9RORm221JvJoPxyrR+2swWJSMnZ6e5/GmqsOAg/I1zk7r2VaanVg0SQCU4N5bDd3wsKec17YaP
- WOmpC0xSPApo0LMCP/Wf0jpLC1jEpPo=
-X-Authority-Analysis: v=2.4 cv=HttG3UTS c=1 sm=1 tr=0 ts=6a30bfc3 cx=c_pps
- a=HLyN3IcIa5EE8TELMZ618Q==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
- a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22
- a=EUspDBNiAAAA:8 a=rwyCfCsHDfdlQnhIS-QA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=bTQJ7kPSJx9SKPbeHEYW:22
-X-Proofpoint-GUID: 9E-yW18D2kU4HigEzc9nyQ8aodyK1Zkv
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-16_01,2026-06-15_04,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 spamscore=0 suspectscore=0 clxscore=1015 impostorscore=0
- malwarescore=0 bulkscore=0 priorityscore=1501 lowpriorityscore=0 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606040000 definitions=main-2606160029
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+References: <20260615203734.954428-1-daniel.barboza@oss.qualcomm.com>
+ <20260615203734.954428-8-daniel.barboza@oss.qualcomm.com>
+In-Reply-To: <20260615203734.954428-8-daniel.barboza@oss.qualcomm.com>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Tue, 16 Jun 2026 13:14:44 +1000
+X-Gm-Features: AVVi8Cf-txzAHHbpjJBy1yrNFquJBwPseazDhfxWYZrzZWPVQnyzaC8acLSTyz4
+Message-ID: <CAKmqyKOVtBTwY1Wpv5KGvEM12H6hMa1=ySfQwjK1gDrXQhC-ng@mail.gmail.com>
+Subject: Re: [PATCH 07/13] hw/riscv: add create_fdt_clint() helper
+To: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
+ liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, chao.liu.zevorn@gmail.com, 
+ Palmer Dabbelt <palmer@dabbelt.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::52c;
+ envelope-from=alistair23@gmail.com; helo=mail-ed1-x52c.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -160,125 +119,274 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 16/6/26 04:51, Pierrick Bouvier wrote:
-> On 6/15/2026 5:35 PM, Philippe Mathieu-Daudé wrote:
->> On 15/6/26 22:17, Pierrick Bouvier wrote:
->>> We add a new script: scripts/check-maintainers-file.py, that will run at
->>> configuration time (and not at build time), to not hurt build time.
->>> This script runs in 0.2s on my dev VM, which has an old cpu.
->>>
->>> We can expect things to be mostly in sync since adding or removing a
->>> source or test file will trigger a configure step.
->>
->> You mention adding/removing but this script only checks for removals,
->> no additions; did I miss something?
->>
-> The initial scope was only to check the MAINTAINERS file itself is
-> correct. But while we're at it, we could extend the script to check that
-> all files in the tree belong to at least one maintainer entry. This
-> could have the benefit to force coverage for all new files. First we can
-> try to see what is not covered at the moment.
+On Tue, Jun 16, 2026 at 6:42=E2=80=AFAM Daniel Henrique Barboza
+<daniel.barboza@oss.qualcomm.com> wrote:
+>
+> Move all clint FDT generation to fdt-common.c reducing code repetition.
+>
+> Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 
-OK. So far removing "adding or" and check_one_entry():
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Alistair
 
-> 
-> What do you think Markus?
-> 
->>> For the rest, like docs, tcg tests, or remaining files, GitLab CI will
->>> build things from scratch and always run the configure step.
->>>
->>> With this, it should be impossible by design to have an upstream
->>> MAINTAINERS file with non existing file entries.
->>>
->>> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
->>> ---
->>>    meson.build                       |  5 +++
->>>    scripts/check-maintainers-file.py | 53 +++++++++++++++++++++++++++++++
->>>    2 files changed, 58 insertions(+)
->>>    create mode 100755 scripts/check-maintainers-file.py
->>>
->>> diff --git a/meson.build b/meson.build
->>> index 19e123423b5..57e9c9de42b 100644
->>> --- a/meson.build
->>> +++ b/meson.build
->>> @@ -17,6 +17,11 @@ add_test_setup('thorough',
->>>      meson.add_postconf_script(find_program('scripts/symlink-install-
->>> tree.py'))
->>>    +# check our MAINTAINERS file is consistent
->>> +check_maintainers = find_program('scripts/check-maintainers-file.py')
->>> +maintainers_file = files('MAINTAINERS')
->>> +run_command([check_maintainers, maintainers_file], check: true)
->>> +
->>>    ####################
->>>    # Global variables #
->>>    ####################
->>> diff --git a/scripts/check-maintainers-file.py b/scripts/check-
->>> maintainers-file.py
->>> new file mode 100755
->>> index 00000000000..b001816a401
->>> --- /dev/null
->>> +++ b/scripts/check-maintainers-file.py
->>> @@ -0,0 +1,53 @@
->>> +#! /usr/bin/env python3
->>> +
->>> +# Check incorrect file entries in MAINTAINERS
->>> +#
->>> +# Author: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
->>> +#
->>> +# SPDX-License-Identifier: GPL-2.0-or-later
->>> +
->>> +import argparse
->>> +import glob
->>> +import sys
->>> +
->>> +
->>> +def check_one_entry(line) -> bool:
->>> +    return True
->>> +
->>> +
->>> +def main() -> None:
->>> +    parser = argparse.ArgumentParser(description="Check MAINTAINERS
->>> file")
->>> +    parser.add_argument("maintainers", help="Path to MAINTAINERS file")
->>> +    args = parser.parse_args()
->>> +
->>> +    found_file_entry = False
->>> +    found_incorrect_entries = False
->>> +    line_counter = 0
->>> +
->>> +    with open(args.maintainers) as file:
->>> +        for entry in file:
->>> +            line_counter += 1
->>> +
->>> +            if not entry.startswith("F:"):
->>> +                continue
->>> +            entry = entry[2:].strip()
->>> +            found_file_entry = True
->>> +
->>> +            file_exists = len(glob.glob(entry, recursive=True)) > 0
->>> +            if file_exists:
->>> +                continue
->>> +
->>> +            found_incorrect_entries = True
->>> +            print(
->>> +                f"No matching files for {args.maintainers}
->>> +{line_counter}: {entry}",
->>> +                file=sys.stderr,
->>> +            )
->>> +
->>> +    if not found_file_entry:
->>> +        raise Exception("no file entry found - is MAINTAINERS path
->>> correct?")
->>> +    if found_incorrect_entries:
->>> +        raise Exception(f"incorrect entries found in
->>> {args.maintainers}")
->>> +
->>> +
->>> +if __name__ == "__main__":
->>> +    main()
->>
-> 
-
+> ---
+>  hw/riscv/fdt-common.c         | 33 +++++++++++++++++++++++++
+>  hw/riscv/sifive_u.c           | 25 +++----------------
+>  hw/riscv/spike.c              | 31 ++++-------------------
+>  hw/riscv/virt.c               | 46 ++++++-----------------------------
+>  include/hw/riscv/fdt-common.h |  5 ++++
+>  5 files changed, 54 insertions(+), 86 deletions(-)
+>
+> diff --git a/hw/riscv/fdt-common.c b/hw/riscv/fdt-common.c
+> index 719c36e001..d2661ec389 100644
+> --- a/hw/riscv/fdt-common.c
+> +++ b/hw/riscv/fdt-common.c
+> @@ -12,6 +12,7 @@
+>  #include "system/device_tree.h"
+>  #include "hw/core/boards.h"
+>  #include "hw/riscv/fdt-common.h"
+> +#include "target/riscv/cpu_bits.h"
+>
+>  void *create_board_device_tree(const char *model, const char *compatible=
+,
+>                                 int *fdt_size)
+> @@ -50,3 +51,35 @@ void create_fdt_socket_memory(void *fdt, hwaddr addr, =
+uint64_t size,
+>          qemu_fdt_setprop_cell(fdt, mem_name, "numa-node-id", socket_id);
+>      }
+>  }
+> +
+> +void create_fdt_socket_clint(void *fdt, hwaddr addr, uint64_t size,
+> +                             int socket_id, uint32_t *intc_phandles,
+> +                             int num_harts, bool numa_enabled)
+> +{
+> +    g_autofree uint32_t *clint_cells =3D g_new0(uint32_t, num_harts * 4)=
+;
+> +    g_autofree char *clint_name =3D NULL;
+> +    static const char * const clint_compat[2] =3D {
+> +        "sifive,clint0", "riscv,clint0"
+> +    };
+> +
+> +    for (int cpu =3D 0; cpu < num_harts; cpu++) {
+> +        clint_cells[cpu * 4 + 0] =3D cpu_to_be32(intc_phandles[cpu]);
+> +        clint_cells[cpu * 4 + 1] =3D cpu_to_be32(IRQ_M_SOFT);
+> +        clint_cells[cpu * 4 + 2] =3D cpu_to_be32(intc_phandles[cpu]);
+> +        clint_cells[cpu * 4 + 3] =3D cpu_to_be32(IRQ_M_TIMER);
+> +    }
+> +
+> +    clint_name =3D g_strdup_printf("/soc/clint@%"HWADDR_PRIx, addr);
+> +    qemu_fdt_add_subnode(fdt, clint_name);
+> +    qemu_fdt_setprop_string_array(fdt, clint_name, "compatible",
+> +                                  (char **)&clint_compat,
+> +                                  ARRAY_SIZE(clint_compat));
+> +    qemu_fdt_setprop_sized_cells(fdt, clint_name, "reg",
+> +                                 2, addr, 2, size);
+> +    qemu_fdt_setprop(fdt, clint_name, "interrupts-extended",
+> +                     clint_cells, num_harts * sizeof(uint32_t) * 4);
+> +
+> +    if (numa_enabled) {
+> +        qemu_fdt_setprop_cell(fdt, clint_name, "numa-node-id", socket_id=
+);
+> +    }
+> +}
+> diff --git a/hw/riscv/sifive_u.c b/hw/riscv/sifive_u.c
+> index ce86989bc8..9a791b36d6 100644
+> --- a/hw/riscv/sifive_u.c
+> +++ b/hw/riscv/sifive_u.c
+> @@ -105,9 +105,6 @@ static void create_fdt(SiFiveUState *s, const MemMapE=
+ntry *memmap,
+>      uint32_t plic_phandle, prci_phandle, gpio_phandle, phandle =3D 1;
+>      uint32_t hfclk_phandle, rtcclk_phandle, phy_phandle;
+>      static const char * const ethclk_names[2] =3D { "pclk", "hclk" };
+> -    static const char * const clint_compat[2] =3D {
+> -        "sifive,clint0", "riscv,clint0"
+> -    };
+>      static const char * const plic_compat[2] =3D {
+>          "sifive,plic-1.0.0", "riscv,plic0"
+>      };
+> @@ -180,25 +177,9 @@ static void create_fdt(SiFiveUState *s, const MemMap=
+Entry *memmap,
+>          g_free(nodename);
+>      }
+>
+> -    cells =3D  g_new0(uint32_t, ms->smp.cpus * 4);
+> -    for (cpu =3D 0; cpu < ms->smp.cpus; cpu++) {
+> -        cells[cpu * 4 + 0] =3D cpu_to_be32(intc_phandles[cpu]);
+> -        cells[cpu * 4 + 1] =3D cpu_to_be32(IRQ_M_SOFT);
+> -        cells[cpu * 4 + 2] =3D cpu_to_be32(intc_phandles[cpu]);
+> -        cells[cpu * 4 + 3] =3D cpu_to_be32(IRQ_M_TIMER);
+> -    }
+> -    nodename =3D g_strdup_printf("/soc/clint@%lx",
+> -        (long)memmap[SIFIVE_U_DEV_CLINT].base);
+> -    qemu_fdt_add_subnode(fdt, nodename);
+> -    qemu_fdt_setprop_string_array(fdt, nodename, "compatible",
+> -        (char **)&clint_compat, ARRAY_SIZE(clint_compat));
+> -    qemu_fdt_setprop_cells(fdt, nodename, "reg",
+> -        0x0, memmap[SIFIVE_U_DEV_CLINT].base,
+> -        0x0, memmap[SIFIVE_U_DEV_CLINT].size);
+> -    qemu_fdt_setprop(fdt, nodename, "interrupts-extended",
+> -        cells, ms->smp.cpus * sizeof(uint32_t) * 4);
+> -    g_free(cells);
+> -    g_free(nodename);
+> +    create_fdt_socket_clint(fdt, memmap[SIFIVE_U_DEV_CLINT].base,
+> +                            memmap[SIFIVE_U_DEV_CLINT].size, 0,
+> +                            intc_phandles, ms->smp.cpus, false);
+>
+>      nodename =3D g_strdup_printf("/soc/otp@%lx",
+>          (long)memmap[SIFIVE_U_DEV_OTP].base);
+> diff --git a/hw/riscv/spike.c b/hw/riscv/spike.c
+> index 82005ec163..b15188fb07 100644
+> --- a/hw/riscv/spike.c
+> +++ b/hw/riscv/spike.c
+> @@ -58,13 +58,10 @@ static void create_fdt(SpikeState *s, const MemMapEnt=
+ry *memmap,
+>      unsigned long clint_addr;
+>      int cpu, socket;
+>      MachineState *ms =3D MACHINE(s);
+> -    uint32_t *clint_cells;
+>      uint32_t cpu_phandle, phandle =3D 1;
+> -    char *clint_name, *clust_name;
+> +    char *clust_name;
+>      char *core_name, *cpu_name, *intc_name;
+> -    static const char * const clint_compat[2] =3D {
+> -        "sifive,clint0", "riscv,clint0"
+> -    };
+> +    bool numa_enabled =3D riscv_numa_enabled(ms);
+>
+>      fdt =3D ms->fdt =3D create_board_device_tree("ucbbar,spike-bare,qemu=
+",
+>          "ucbbar,spike-bare-dev", &fdt_size);
+> @@ -136,29 +133,11 @@ static void create_fdt(SpikeState *s, const MemMapE=
+ntry *memmap,
+>          create_fdt_socket_memory(fdt, memaddr, memsize, socket,
+>                                   riscv_numa_enabled(ms));
+>
+> -        clint_cells =3D  g_new0(uint32_t, s->soc[socket].num_harts * 4);
+> -
+> -        for (cpu =3D 0; cpu < s->soc[socket].num_harts; cpu++) {
+> -            clint_cells[cpu * 4 + 0] =3D cpu_to_be32(intc_phandles[cpu])=
+;
+> -            clint_cells[cpu * 4 + 1] =3D cpu_to_be32(IRQ_M_SOFT);
+> -            clint_cells[cpu * 4 + 2] =3D cpu_to_be32(intc_phandles[cpu])=
+;
+> -            clint_cells[cpu * 4 + 3] =3D cpu_to_be32(IRQ_M_TIMER);
+> -        }
+> -
+>          clint_addr =3D memmap[SPIKE_CLINT].base +
+>              (memmap[SPIKE_CLINT].size * socket);
+> -        clint_name =3D g_strdup_printf("/soc/clint@%lx", clint_addr);
+> -        qemu_fdt_add_subnode(fdt, clint_name);
+> -        qemu_fdt_setprop_string_array(fdt, clint_name, "compatible",
+> -            (char **)&clint_compat, ARRAY_SIZE(clint_compat));
+> -        qemu_fdt_setprop_cells(fdt, clint_name, "reg",
+> -            0x0, clint_addr, 0x0, memmap[SPIKE_CLINT].size);
+> -        qemu_fdt_setprop(fdt, clint_name, "interrupts-extended",
+> -            clint_cells, s->soc[socket].num_harts * sizeof(uint32_t) * 4=
+);
+> -        riscv_socket_fdt_write_id(ms, clint_name, socket);
+> -
+> -        g_free(clint_name);
+> -        g_free(clint_cells);
+> +        create_fdt_socket_clint(fdt, clint_addr, memmap[SPIKE_CLINT].siz=
+e,
+> +                                socket, intc_phandles,
+> +                                s->soc[socket].num_harts, numa_enabled);
+>          g_free(clust_name);
+>      }
+>
+> diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
+> index df3eadef78..b134f11266 100644
+> --- a/hw/riscv/virt.c
+> +++ b/hw/riscv/virt.c
+> @@ -302,42 +302,6 @@ static void create_fdt_socket_cpus(RISCVVirtState *s=
+, int socket,
+>      }
+>  }
+>
+> -static void create_fdt_socket_clint(RISCVVirtState *s,
+> -                                    int socket,
+> -                                    uint32_t *intc_phandles)
+> -{
+> -    int cpu;
+> -    g_autofree char *clint_name =3D NULL;
+> -    g_autofree uint32_t *clint_cells =3D NULL;
+> -    hwaddr clint_addr;
+> -    MachineState *ms =3D MACHINE(s);
+> -    static const char * const clint_compat[2] =3D {
+> -        "sifive,clint0", "riscv,clint0"
+> -    };
+> -
+> -    clint_cells =3D g_new0(uint32_t, s->soc[socket].num_harts * 4);
+> -
+> -    for (cpu =3D 0; cpu < s->soc[socket].num_harts; cpu++) {
+> -        clint_cells[cpu * 4 + 0] =3D cpu_to_be32(intc_phandles[cpu]);
+> -        clint_cells[cpu * 4 + 1] =3D cpu_to_be32(IRQ_M_SOFT);
+> -        clint_cells[cpu * 4 + 2] =3D cpu_to_be32(intc_phandles[cpu]);
+> -        clint_cells[cpu * 4 + 3] =3D cpu_to_be32(IRQ_M_TIMER);
+> -    }
+> -
+> -    clint_addr =3D s->memmap[VIRT_CLINT].base +
+> -                 s->memmap[VIRT_CLINT].size * socket;
+> -    clint_name =3D g_strdup_printf("/soc/clint@%"HWADDR_PRIx, clint_addr=
+);
+> -    qemu_fdt_add_subnode(ms->fdt, clint_name);
+> -    qemu_fdt_setprop_string_array(ms->fdt, clint_name, "compatible",
+> -                                  (char **)&clint_compat,
+> -                                  ARRAY_SIZE(clint_compat));
+> -    qemu_fdt_setprop_sized_cells(ms->fdt, clint_name, "reg",
+> -        2, clint_addr, 2, s->memmap[VIRT_CLINT].size);
+> -    qemu_fdt_setprop(ms->fdt, clint_name, "interrupts-extended",
+> -        clint_cells, s->soc[socket].num_harts * sizeof(uint32_t) * 4);
+> -    riscv_socket_fdt_write_id(ms, clint_name, socket);
+> -}
+> -
+>  static void create_fdt_socket_aclint(RISCVVirtState *s,
+>                                       int socket,
+>                                       uint32_t *intc_phandles)
+> @@ -728,6 +692,7 @@ static void create_fdt_sockets(RISCVVirtState *s,
+>      uint32_t xplic_phandles[MAX_NODES];
+>      g_autofree uint32_t *intc_phandles =3D NULL;
+>      int socket_count =3D riscv_socket_count(ms);
+> +    bool numa_enabled =3D riscv_numa_enabled(ms);
+>
+>      qemu_fdt_add_subnode(ms->fdt, "/cpus");
+>      qemu_fdt_setprop_cell(ms->fdt, "/cpus", "timebase-frequency",
+> @@ -762,8 +727,13 @@ static void create_fdt_sockets(RISCVVirtState *s,
+>              create_fdt_socket_aclint(s, socket,
+>                                       &intc_phandles[phandle_pos]);
+>          } else if (tcg_enabled()) {
+> -            create_fdt_socket_clint(s, socket,
+> -                                    &intc_phandles[phandle_pos]);
+> +            hwaddr clintaddr =3D s->memmap[VIRT_CLINT].base +
+> +                               s->memmap[VIRT_CLINT].size * socket;
+> +
+> +            create_fdt_socket_clint(ms->fdt, clintaddr,
+> +                                    s->memmap[VIRT_CLINT].size,
+> +                                    socket, &intc_phandles[phandle_pos],
+> +                                    s->soc[socket].num_harts, numa_enabl=
+ed);
+>          }
+>      }
+>
+> diff --git a/include/hw/riscv/fdt-common.h b/include/hw/riscv/fdt-common.=
+h
+> index 81689f418b..6e81d6cd6c 100644
+> --- a/include/hw/riscv/fdt-common.h
+> +++ b/include/hw/riscv/fdt-common.h
+> @@ -13,4 +13,9 @@ void *create_board_device_tree(const char *model, const=
+ char *compatible,
+>                                 int *fdt_size);
+>  void create_fdt_socket_memory(void *fdt, hwaddr addr, uint64_t size,
+>                                int socket_id, bool numa_enabled);
+> +void create_fdt_clint(void *fdt, hwaddr addr, uint64_t size,
+> +                      uint32_t *intc_phandles, int num_harts);
+> +void create_fdt_socket_clint(void *fdt, hwaddr addr, uint64_t size,
+> +                             int socket_id, uint32_t *intc_phandles,
+> +                             int num_harts, bool numa_enabled);
+>  #endif
+> --
+> 2.43.0
+>
+>
 
