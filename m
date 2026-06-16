@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1006CD98E1
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 15:57:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1417FCD98DA
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 15:57:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZW9x-0002YB-4t; Tue, 16 Jun 2026 11:57:06 -0400
+	id 1wZWA1-0002dE-Cl; Tue, 16 Jun 2026 11:57:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wZW9g-0002Nw-IE
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 11:56:49 -0400
+ id 1wZW9k-0002Og-HP
+ for qemu-devel@nongnu.org; Tue, 16 Jun 2026 11:56:55 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wZW9e-0003pW-Ov
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 11:56:48 -0400
+ id 1wZW9j-0003qE-9a
+ for qemu-devel@nongnu.org; Tue, 16 Jun 2026 11:56:52 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781625402;
+ s=mimecast20190719; t=1781625410;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=kMrxoR+qtQ8YIacApPzKbmwL4gIuSvYrdRw8AcbTj6U=;
- b=TEkRZmp/PMHx/OQIh7c93AUCTi34ARWoyFcOdjkYl/dKTSd/xXXJIExjHaW0dugDXx2TST
- oKfeV6GhvjL+vCsdwt9zXeMSKziqFBfHnxK792BPNnVedlLIDs6Noi36Z1urP6GK6cb/XD
- OMjnJf1/D8GKuo2V28a2RypctjPDnzw=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=lgr8s/niUw4Oc3KLoZ61Pzh0nCN2NdKi1xx3OTKo8n4=;
+ b=jICluEjlD9PS0DixSeVrXOVNKkmUzsdmeb+DIBbDAJjLiInWQzNvc+EpcwZWOrV6vo991i
+ uMbqA7e3M2Tjbrlw5K6ivlfC3xc4MmLOO9/X65hWXAfmivJFVYTPFyF0BVO/WqzNyubbeH
+ zf+C0Iq6cRkCUiDvpRYX0PCFYnK+0B0=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-570-A_ekmGo-OF6j-ojGcfvClQ-1; Tue,
- 16 Jun 2026 11:56:39 -0400
-X-MC-Unique: A_ekmGo-OF6j-ojGcfvClQ-1
-X-Mimecast-MFC-AGG-ID: A_ekmGo-OF6j-ojGcfvClQ_1781625398
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-664-YpKC7b5APHWmISvbhe6tEA-1; Tue,
+ 16 Jun 2026 11:56:44 -0400
+X-MC-Unique: YpKC7b5APHWmISvbhe6tEA-1
+X-Mimecast-MFC-AGG-ID: YpKC7b5APHWmISvbhe6tEA_1781625403
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id DB87219540D5; Tue, 16 Jun 2026 15:56:37 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id DE36119560B5; Tue, 16 Jun 2026 15:56:42 +0000 (UTC)
 Received: from berrange.com (unknown [10.44.49.111])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id A19A1195419E; Tue, 16 Jun 2026 15:56:32 +0000 (UTC)
+ id 5BE31195419E; Tue, 16 Jun 2026 15:56:38 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
@@ -61,9 +61,9 @@ Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
  Paolo Bonzini <pbonzini@redhat.com>, BALATON Zoltan <balaton@eik.bme.hu>,
  Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [RFC 6/7] hw/isa: convert PIIX embedded QOM objects to heap allocated
-Date: Tue, 16 Jun 2026 16:55:53 +0100
-Message-ID: <20260616155554.264412-7-berrange@redhat.com>
+Subject: [RFC 7/7] qom: improve error message for invalid ID values
+Date: Tue, 16 Jun 2026 16:55:54 +0100
+Message-ID: <20260616155554.264412-8-berrange@redhat.com>
 In-Reply-To: <20260616155554.264412-1-berrange@redhat.com>
 References: <20260616155554.264412-1-berrange@redhat.com>
 MIME-Version: 1.0
@@ -95,184 +95,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Update for the new preferred QOM design by removing embedded QOM
-objects from the PIIXState struct for the RTC, IDE, UHCI, PM,
-IRQ and memory region classes.
-
-XXXX:  there seems to be little benefit in having any of the
-instance fields for RTC, IDE, UHCI, PM & IRQ objects.  These
-objects are all kept alive via the 'child' property which owns
-the primary reference. The instance fields are accessed durnig
-setup and then never again, so all these instances fields could
-arguably go away entirely.
+Include the actual ID that was validated, since this may not be
+obvious in all contexts.
 
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- hw/isa/piix.c                 | 65 ++++++++++++++++++++++-------------
- include/hw/southbridge/piix.h | 12 +++----
- 2 files changed, 47 insertions(+), 30 deletions(-)
+ qom/object.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/hw/isa/piix.c b/hw/isa/piix.c
-index 31fa53e6a4..cd23486ef9 100644
---- a/hw/isa/piix.c
-+++ b/hw/isa/piix.c
-@@ -308,18 +308,22 @@ static void pci_piix_realize(PCIDevice *dev, const char *uhci_type,
-         return;
-     }
+diff --git a/qom/object.c b/qom/object.c
+index 415d5c5291..9cd17e3bcc 100644
+--- a/qom/object.c
++++ b/qom/object.c
+@@ -774,7 +774,7 @@ object_new_with_props_helper(const char *typename,
+            (id == NULL && parent == NULL));
  
--    memory_region_init_io(&d->rcr_mem, OBJECT(dev), &rcr_ops, d,
--                          "piix-reset-control", 1);
-+    d->rcr_mem = memory_region_new_io(OBJECT(dev), &rcr_ops, d,
-+                                      "piix-reset-control", 1);
-     memory_region_add_subregion_overlap(pci_address_space_io(dev),
--                                        PIIX_RCR_IOPORT, &d->rcr_mem, 1);
-+                                        PIIX_RCR_IOPORT, d->rcr_mem, 1);
- 
-     /* PIC */
-     if (d->has_pic) {
-         qemu_irq *i8259;
- 
--        qemu_init_irq_child(OBJECT(dev), "i8259-irq", &d->i8259_irq,
--                            piix_request_i8259_irq, d, 0);
--        i8259 = i8259_init(isa_bus, &d->i8259_irq);
-+        d->i8259_irq = qemu_irq_new_child(OBJECT(dev), "i8259-irq",
-+                                          piix_request_i8259_irq, d, 0,
-+                                          errp);
-+        if (!d->i8259_irq) {
-+            return;
-+        }
-+        i8259 = i8259_init(isa_bus, d->i8259_irq);
- 
-         for (size_t i = 0; i < ISA_NUM_IRQS; i++) {
-             d->isa_irqs_in[i] = i8259[i];
-@@ -340,38 +344,45 @@ static void pci_piix_realize(PCIDevice *dev, const char *uhci_type,
-     i8257_dma_init(OBJECT(dev), isa_bus, 0);
- 
-     /* RTC */
--    qdev_prop_set_int32(DEVICE(&d->rtc), "base_year", 2000);
--    if (!qdev_realize(DEVICE(&d->rtc), BUS(isa_bus), errp)) {
-+    qdev_prop_set_int32(DEVICE(d->rtc), "base_year", 2000);
-+    if (!qdev_realize(DEVICE(d->rtc), BUS(isa_bus), errp)) {
-         return;
-     }
--    irq = object_property_get_uint(OBJECT(&d->rtc), "irq", &error_fatal);
--    isa_connect_gpio_out(ISA_DEVICE(&d->rtc), 0, irq);
-+    irq = object_property_get_uint(OBJECT(d->rtc), "irq", &error_fatal);
-+    isa_connect_gpio_out(ISA_DEVICE(d->rtc), 0, irq);
- 
-     /* IDE */
--    qdev_prop_set_int32(DEVICE(&d->ide), "addr", dev->devfn + 1);
--    if (!qdev_realize(DEVICE(&d->ide), BUS(pci_bus), errp)) {
-+    qdev_prop_set_int32(DEVICE(d->ide), "addr", dev->devfn + 1);
-+    if (!qdev_realize(DEVICE(d->ide), BUS(pci_bus), errp)) {
-         return;
-     }
- 
-     /* USB */
-     if (d->has_usb) {
--        object_initialize_child(OBJECT(dev), "uhci", &d->uhci, uhci_type);
--        qdev_prop_set_int32(DEVICE(&d->uhci), "addr", dev->devfn + 2);
--        if (!qdev_realize(DEVICE(&d->uhci), BUS(pci_bus), errp)) {
-+        d->uhci = UHCI(object_new_with_props(
-+                           uhci_type, OBJECT(d), "uhci", errp, NULL));
-+        if (!d->uhci) {
-+            return;
-+        }
-+        qdev_prop_set_int32(DEVICE(d->uhci), "addr", dev->devfn + 2);
-+        if (!qdev_realize(DEVICE(d->uhci), BUS(pci_bus), errp)) {
-             return;
-         }
-     }
- 
-     /* Power Management */
-     if (d->has_acpi) {
--        object_initialize_child(OBJECT(d), "pm", &d->pm, TYPE_PIIX4_PM);
--        qdev_prop_set_int32(DEVICE(&d->pm), "addr", dev->devfn + 3);
--        qdev_prop_set_uint32(DEVICE(&d->pm), "smb_io_base", d->smb_io_base);
--        qdev_prop_set_bit(DEVICE(&d->pm), "smm-enabled", d->smm_enabled);
--        if (!qdev_realize(DEVICE(&d->pm), BUS(pci_bus), errp)) {
-+        d->pm = PIIX4_PM(object_new_with_props(
-+                             TYPE_PIIX4_PM, OBJECT(d), "pm", errp, NULL));
-+        if (!d->pm) {
-+        }
-+        qdev_prop_set_int32(DEVICE(d->pm), "addr", dev->devfn + 3);
-+        qdev_prop_set_uint32(DEVICE(d->pm), "smb_io_base", d->smb_io_base);
-+        qdev_prop_set_bit(DEVICE(d->pm), "smm-enabled", d->smm_enabled);
-+        if (!qdev_realize(DEVICE(d->pm), BUS(pci_bus), errp)) {
-             return;
-         }
--        qdev_connect_gpio_out(DEVICE(&d->pm), 0, d->isa_irqs_in[9]);
-+        qdev_connect_gpio_out(DEVICE(d->pm), 0, d->isa_irqs_in[9]);
-     }
- 
-     pci_bus_irqs(pci_bus, piix_set_pci_irq, d, PIIX_NUM_PIRQS);
-@@ -406,7 +417,9 @@ static void pci_piix_init(Object *obj)
-     qdev_init_gpio_out_named(DEVICE(obj), d->isa_irqs_in, "isa-irqs",
-                              ISA_NUM_IRQS);
- 
--    object_initialize_child(obj, "rtc", &d->rtc, TYPE_MC146818_RTC);
-+    d->rtc = MC146818_RTC(
-+        object_new_with_props(TYPE_MC146818_RTC, obj, "rtc",
-+                              &error_abort, NULL));
- }
- 
- static const Property pci_piix_props[] = {
-@@ -462,7 +475,9 @@ static void piix3_init(Object *obj)
- {
-     PIIXState *d = PIIX_PCI_DEVICE(obj);
- 
--    object_initialize_child(obj, "ide", &d->ide, TYPE_PIIX3_IDE);
-+    d->ide = PCI_IDE(
-+        object_new_with_props(TYPE_PIIX3_IDE, obj, "ide",
-+                              &error_abort, NULL));
- }
- 
- static void piix3_class_init(ObjectClass *klass, const void *data)
-@@ -492,7 +507,9 @@ static void piix4_init(Object *obj)
- {
-     PIIXState *s = PIIX_PCI_DEVICE(obj);
- 
--    object_initialize_child(obj, "ide", &s->ide, TYPE_PIIX4_IDE);
-+    s->ide = PCI_IDE(
-+        object_new_with_props(TYPE_PIIX4_IDE, obj, "ide",
-+                              &error_abort, NULL));
- }
- 
- static void piix4_class_init(ObjectClass *klass, const void *data)
-diff --git a/include/hw/southbridge/piix.h b/include/hw/southbridge/piix.h
-index a296b1205a..8bd24946de 100644
---- a/include/hw/southbridge/piix.h
-+++ b/include/hw/southbridge/piix.h
-@@ -53,15 +53,15 @@ struct PIIXState {
-     qemu_irq cpu_intr;
-     qemu_irq isa_irqs_in[ISA_NUM_IRQS];
- 
--    IRQState i8259_irq;
-+    IRQState *i8259_irq;
- 
-     /* This member isn't used. Just for save/load compatibility */
-     int32_t pci_irq_levels_vmstate[PIIX_NUM_PIRQS];
- 
--    MC146818RtcState rtc;
--    PCIIDEState ide;
--    UHCIState uhci;
--    PIIX4PMState pm;
-+    MC146818RtcState *rtc;
-+    PCIIDEState *ide;
-+    UHCIState *uhci;
-+    PIIX4PMState *pm;
- 
-     uint32_t smb_io_base;
- 
-@@ -69,7 +69,7 @@ struct PIIXState {
-     uint8_t rcr;
- 
-     /* IO memory region for Reset Control Register (PIIX_RCR_IOPORT) */
--    MemoryRegion rcr_mem;
-+    MemoryRegion *rcr_mem;
- 
-     bool has_acpi;
-     bool has_pic;
+     if (id != NULL && !id_wellformed(id)) {
+-        error_setg(errp, QERR_INVALID_PARAMETER_VALUE, "id", "an identifier");
++        error_setg(errp, "QOM ID value '%s' is not valid", id);
+         error_append_hint(errp, "Identifiers consist of letters, digits, "
+                           "'-', '.', '_', starting with a letter.\n");
+         return NULL;
 -- 
 2.54.0
 
