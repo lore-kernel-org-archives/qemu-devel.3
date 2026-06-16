@@ -4,136 +4,135 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7945CD98E3
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 15:35:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77D62CD98E1
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 15:35:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZVoc-0001SJ-D7; Tue, 16 Jun 2026 11:35:02 -0400
+	id 1wZVon-0001xG-P8; Tue, 16 Jun 2026 11:35:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wZVoa-0001QQ-0F
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 11:35:00 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ id 1wZVol-0001lq-Nk
+ for qemu-devel@nongnu.org; Tue, 16 Jun 2026 11:35:11 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wZVoY-0004zU-7q
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 11:34:59 -0400
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+ id 1wZVoj-0005FQ-QM
+ for qemu-devel@nongnu.org; Tue, 16 Jun 2026 11:35:11 -0400
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65GDxcFA3432049
- for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 15:34:57 GMT
+ 65GDxaBT3731593
+ for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 15:35:09 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- Xeu8tBqbijTrsroTzP2ZlpdNk1D/p74BXzHdUiyh+qs=; b=E+5IKGA2lzwhmNYO
- CsfkzZztk7xWYJW47qpO4Y/toe22s06V21aWReCQm+IUdfrWu/+QudpKv595NSg7
- SrovKzNfAaijxWwH1I9Lsqdggbbt9EH4L4tmok0R9hZJVbPYNL2pJ+H61UQ9hZlB
- W+j0TjjLPCVuulI6RnqPxk6vRcBK2wmvwqsRMgY56JSyk8boXxS9PCs7c/0mOIWV
- O1jB6eiQ4czYvcW+mV3ZV6dfPwryKVR92Z3hZgXXzbDquFr700vm6BnHNdrX4B1j
- xc8rKBKx5sklLWewqq0+SHGcRrBv38iVDiajUFQNU4HVs9+Y62/qKjqpik6FbNxQ
- gtS0VQ==
-Received: from mail-ot1-f70.google.com (mail-ot1-f70.google.com
- [209.85.210.70])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4eu1762dre-1
+ quGeWyIj+ay0uGXkySM3O/jRcX2BsNxbJSEHdVFTLB8=; b=Erm6BYKzAVZSZUta
+ h2XedqyI/G8jnzM9UTvUyPBPif4FiABxXaQUz/Z0xqXGyH5lnBTOT9FFU5qzWLmg
+ d19pcZMXwXmoIYTmji5E8m6MFGdQ5eTOnq+I36it/Q5LPxs5DX386SwDunUEudXN
+ O/put5VwAp+bNE+wff0ISv9sXr57Yj6ECuxASEPe9a+kzPnyALvWNw5PoqzLlugo
+ Ji/fSrVxuXtRqsB7VP0JfmWzrZzc2twY9ZoHD5RCS4QkyCkERYxqdPVaHU20QpvF
+ na6J7Rpk/yUnmXp823RH9MxR0M33lhpGm024tRS2wIqiXePOCJW9TAknoom17Mxi
+ UBPUxg==
+Received: from mail-vk1-f199.google.com (mail-vk1-f199.google.com
+ [209.85.221.199])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4eu1yst5eb-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 15:34:56 +0000 (GMT)
-Received: by mail-ot1-f70.google.com with SMTP id
- 46e09a7af769-7e6b73b3920so5559776a34.0
- for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 08:34:56 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 15:35:08 +0000 (GMT)
+Received: by mail-vk1-f199.google.com with SMTP id
+ 71dfb90a1353d-59eb3f8969aso2925331e0c.0
+ for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 08:35:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1781624096; x=1782228896; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1781624108; x=1782228908; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Xeu8tBqbijTrsroTzP2ZlpdNk1D/p74BXzHdUiyh+qs=;
- b=JRb/kUk3G47m5F1hC23QBeY0FX4MePyk7CY9pYG9EhmhYahIjfbG0TInFep38g/Zc5
- XLQLunlDKWJpjTpxK1ml+OS2p9RZaGCsZlAx3ri7gIshCX35LnarBywcrMBMHGaGorQu
- WSSZcq6Kr9oL5rUbooC45cRfwa1OwrlUfuV7avgYqNNVJG3x9bJeQ21SR7Dqx9SRh69Q
- G2I64VUVWSe/E/9UMKbaxrF7GSj10V6fHvETUljApyW1cr2/2Mileobnd3fVIt+hAKr9
- mQCQgF1cNsKbZ5cFFTPDhVaUM2uoK6sCpQbvN2MhXCRa2uu9KZoPzPfLu1dsgiODHap5
- MgvQ==
+ bh=quGeWyIj+ay0uGXkySM3O/jRcX2BsNxbJSEHdVFTLB8=;
+ b=GkDjQSlA0ivZNEaOwia2Sq8j3dmZaPy60jCm8jbLP0c24BnCotivVeIMYns8/H7/EW
+ ORS4Ub9dHXnApboevKqn0v0tb5oHt74FUrJuc9SS1TXCPWFBrXhyMSdAFK8lahe0CreY
+ 8vt/mFOBX8gy7Rap1rj3p1kb+rdmiBmp7WmXifwaTgQ7eGrBpQj7yMNY/AeAyOxrRR1n
+ 5GbW7uD77tz0BU6+VlU7V+eSIQMTEYQNAzdC8zucUBfTP5NIetwK+pr/sQ8HcjgbLFDE
+ OQiJF6Y9v0DtqkUQPd3FhtMCR2mmVAksik1TxXrMlwI71EdDlGd+EJ6+nVKkqLzOgIBb
+ GiQA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781624096; x=1782228896;
+ d=1e100.net; s=20251104; t=1781624108; x=1782228908;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=Xeu8tBqbijTrsroTzP2ZlpdNk1D/p74BXzHdUiyh+qs=;
- b=sKQGaxdpib6xT2WhMFbPkN53fRdSITS7K5iAc21c6jtGiSdq1l3HSJgXQkY9SffGe+
- 1Gz1B8qE/Z7OhGwvs/Vu+GZIu4uEzx7uxXgMCfV3Xgqfjb00ay81pkOwMDWLGqGcKM7B
- gWHXAkMMVk17mrbhZNu6JmD5/6MwONq38jIc3LIj5pygszaZwmllBxRUABwDF80bBiY9
- ZJkveKJhCViyVuavBq3bWqlAJ3gbY/RhAQ4BIya6lkcKghUnbVCsrTyA5WYmoQOqyuHF
- ZQtU234HDYJDpnuIuZTpnJUVug83Iqvi+r+/qHODGKZAzO91Uj5UekuYd7OZIK19dSoE
- FlRA==
-X-Gm-Message-State: AOJu0Yw5vuowEJkdgTvPAcwNb5e4SbQwbxlAkk0YNnk5xLNl8h0XjmeK
- jmmi4v9P9Acjbg/Ovs9bJhsDc+Wn0ad2TJI5ll+yj0+6e2E2iFj8n+T05FRgyPX7LE/5e7bbG1/
- Fd95JWAY6vgI1P9B2ughfNarRYqEAsMmMuTDd719cQ6xrwGx4YHqwvI0KbrrIeSo1TA==
-X-Gm-Gg: Acq92OE2oywZ/NqnhW8dHBt8n828DkswQvw0EvSCZyCVANenQD0wQ5elnqSoEHKVacF
- rYiTuhkRl9HTVFTXH7/NXPIGtup1UhCPjBA16L9QTtCc2bt5PhCYZzW3Ap4psBOf0igHz9OJfJy
- FeRIz9ZPUn38bhbRGol9C/246ZAwK/NdM6mIVxMpIbsyVl3b1eE/hpnnGiXuUZibZovNMq1t5Cl
- ALm4r7mC+aDhPTr/QESLQk64RH+h5K93Xhi4uwswmM/sBvwTivGrtPWpycvRebLgdvCNWCmT5hV
- gFoCmiZUuFwgI9Ca5FgseSCgJqM855a9U/thxmVB0EzyNBwP7lo84FQfmqmkDA28IFvsrgMLcpG
- S6Z0BZqPIAbnukj0rghIQbrW9rI4C9nOO9zvH2uqSmuxrzJm9FZYgTtjLl3u4F65X7v0Nsd5xb7
- q7VaQ=
-X-Received: by 2002:a05:6820:807:b0:69e:2cb4:2ed8 with SMTP id
- 006d021491bc7-69eec9d8ea9mr8552608eaf.26.1781624095980; 
- Tue, 16 Jun 2026 08:34:55 -0700 (PDT)
-X-Received: by 2002:a05:6820:807:b0:69e:2cb4:2ed8 with SMTP id
- 006d021491bc7-69eec9d8ea9mr8552587eaf.26.1781624095564; 
- Tue, 16 Jun 2026 08:34:55 -0700 (PDT)
+ bh=quGeWyIj+ay0uGXkySM3O/jRcX2BsNxbJSEHdVFTLB8=;
+ b=BbMai9VENl3txuZY3tOa8+0ayGOihombEfJjYUwuNQyHQNgs+EOoMp90DZjnp/6bk+
+ qO9enbo5n5rL6RfZp34M1Wr6YngPYZ4uAOOYnA/n8zbe/6Hc80rsp3STo6M9RLWLBa+a
+ 9A+/QVvu7btZ0qHgf8twgEAockT4qTVp2oD/qOI2DJg5HWA1slniuFoTUou9MF0EPpEv
+ q9ekxUGMYyynMvkcYiYwgXzjREM3UuwRU70FcEr/StaTpgczMo4xEMdowLDREBywsNVE
+ 4KiaMQwn/lz7F0MWOGMmsI7pTrnFTRhaJm8aIGUUaq3Ig+GgBmCZumIDt+3i5Y7gfCpt
+ c+0w==
+X-Gm-Message-State: AOJu0YywrID/KTFkZV4IxMCIRQ1VrUjlEWSdcJ888qyeJezwwpzGvdni
+ GIOHzfvznQ2mbRwQIKiPUmZmeP4mKAmFh6LqH7I0ie73HOGCL2JcbEXbFfN3chXSi8xC5FuoRuP
+ sAaC9nTt2+JMo/aSq80LAo47dwamMC6KaKKgbR9BVPDVkS3ECo1PqvbYKn6jk/Jr12w==
+X-Gm-Gg: Acq92OFmtHEl3cdrXdN5nKGuyJdGPeHG6LWtFsaduRWFGDKgGX/OOVy0natYziBWuR2
+ Xnl4IQLHIzMmt5Q/RCCpp8FuytDr6JGSubBQvYiqTW8s8paq9tY0oZ+zNYm4xPidimF2/DGFSnK
+ MUOmp7bpepr/R2ciQBnuOOwtK1Faep3mF0KVMdASFDUfzlp1tQ7ViWrz8grdAZjqVZdhEiaUXEw
+ CJQ2KO/3uIBbokmZwN9VoqCCOrnE+0oiThpliT4Is4VgZfQawyxUcCRAqA0Cp2zqrtscefYWGbL
+ FrJI7AJ9EyGS0QrKhfnBHKC2S3BSZ8U1feoSBnEV2PhVxBYpfHIApx3u5pE5YhTKcBtzXI1Kj6u
+ x4k/NxUYfUpZ9OJYTT4pf3cdef3AHjlspfT3nyaZkkRHeaRyagPZspueKLWopKdwYhddU2tcqip
+ ZzbOo=
+X-Received: by 2002:a05:6102:3749:b0:6d3:9409:d1bb with SMTP id
+ ada2fe7eead31-71f60c13d05mr7776383137.19.1781624108010; 
+ Tue, 16 Jun 2026 08:35:08 -0700 (PDT)
+X-Received: by 2002:a05:6102:3749:b0:6d3:9409:d1bb with SMTP id
+ ada2fe7eead31-71f60c13d05mr7775842137.19.1781624102712; 
+ Tue, 16 Jun 2026 08:35:02 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4606f2c3782sm40578196f8f.25.2026.06.16.08.34.54
+ ffacd0b85a97d-4606f26393asm48210285f8f.5.2026.06.16.08.35.01
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 16 Jun 2026 08:34:54 -0700 (PDT)
+ Tue, 16 Jun 2026 08:35:02 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Nicholas Piggin <npiggin@gmail.com>,
- Chinmay Rath <rathc@linux.ibm.com>, Glenn Miles <milesg@linux.ibm.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-ppc@nongnu.org
-Subject: [PATCH 3/5] target/ppc: Restrict TCGTBCPUState to TCG
-Date: Tue, 16 Jun 2026 17:34:29 +0200
-Message-ID: <20260616153432.92939-4-philmd@oss.qualcomm.com>
+ Stafford Horne <shorne@gmail.com>
+Subject: [PATCH 4/5] target/or1k: Have exception_helper.c absorb exception.c
+Date: Tue, 16 Jun 2026 17:34:30 +0200
+Message-ID: <20260616153432.92939-5-philmd@oss.qualcomm.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260616153432.92939-1-philmd@oss.qualcomm.com>
 References: <20260616153432.92939-1-philmd@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: drL4Ug6ypWopuC-8Kbqc0sSvT7_nK4CU
-X-Proofpoint-ORIG-GUID: drL4Ug6ypWopuC-8Kbqc0sSvT7_nK4CU
-X-Authority-Analysis: v=2.4 cv=I4RVgtgg c=1 sm=1 tr=0 ts=6a316d20 cx=c_pps
- a=7uPEO8VhqeOX8vTJ3z8K6Q==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+X-Proofpoint-GUID: u9PuYID62X8n-yGcn7UyaLudkA4nviEA
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjE2MDE1OSBTYWx0ZWRfXyJV6oEv4+Fol
+ rkCUri3h0BWidxbmgdIEt7QQ+mUTWbHpslEDs1UOLsLR4ySiJfaX8U1WwXngJtcHHOwlBMBPq35
+ RU23vP7FmUMlAFzKkBI71IQAyAXs7ys=
+X-Proofpoint-ORIG-GUID: u9PuYID62X8n-yGcn7UyaLudkA4nviEA
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjE2MDE1OSBTYWx0ZWRfX9L65SDuGqTNj
+ 0eBc0FHNI0ypTTXRuogphGlg6ws2fXJuRh1/t8rgey4Zfa3uJJ+u/nzI4Xzd2T5XPHG3hsFJfyy
+ oWDj8sPZXFKGmj5Fwb6x+xS+lrQ7Yon8S35ymumxcYncI4QVwEdUxNsbQcGRvnzL3oiWIm+uEj+
+ k7x9MBydcDrNhkJhZ+WS3cXnjy6Ka/EuUPufrq3MTfx0BhCtjRi8I6fyXJ9Qe7JWtnIJ+FJGppe
+ rZeWUu5uUYgJtp28UwIKXmdETmpEClwv31F8PrC+MmUqNgE6YI7Cn14KypLE2I5Sk+LMeaHbQdO
+ vZ70KLOe+S0NnkLH0q4rq4x7SmwzU+Hv2P1a6Dxktx4VqNUlxrtGRm7PY/JNpAAT4ARSzehE9f9
+ FgA4fuzXmF9ST/Nhr6Dx77u0qj6xZbKB7bU5FJcByzibERcMsvfeFRYvB6tMJJCm9mO0WtCrs2F
+ WkuSKHRb1rrSndQS9dw==
+X-Authority-Analysis: v=2.4 cv=JJcLdcKb c=1 sm=1 tr=0 ts=6a316d2c cx=c_pps
+ a=+D9SDfe9YZWTjADjLiQY5g==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
  a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
- a=EUspDBNiAAAA:8 a=HPnlhGH_Al5Q2uv1BhQA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=EXS-LbY8YePsIyqnH6vw:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjE2MDE1OSBTYWx0ZWRfX7BQOsh4cUpN5
- 12SGcLplhfwnADtxcORtwDw/G3Yu9m4ZF2D/WcEunBHcYj/suhHOLl5dcG8lCQtXV9LU94yzHc7
- ngSPeo8Xs7l24UnLMTz8ZZMwkEvOWVA=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjE2MDE1OSBTYWx0ZWRfXxFQBYZreem7p
- iC+wtFtddaOqd/ZpBYlEYgkaKNW7fpk+SD1HxYSUeOzPiFQnFYCdiH5EN2EddeKbKiqsQVm7WhW
- bz4DyoJk/klj8kc84FPAxd69Ix0rYcncxlhQP+nzRwvEehBfhRrZYKu/YhQR1m4GaP4DmagaXFT
- NM1y/Z53L/yWGfPPHDnnstjI75sltDbPVZbIDaXID+An61phX87I+BCXhQzJAIsL6AQ9Kl9KCYP
- e+8Dqsekp8sXTN9Yy7QJu+rsuo86TeDBhWEc4aG00HDkwkdS3wwPi3KIXfv13yw+aw8s/Vt28rz
- uJJ3Vg1bxbx4VYrEkugEBK5CKrTe9cIoAvOEd3M0SulM2GoZs5aigH72KKgz/P/oLaA21vYokmf
- ziuZLMzaoabIm+uNbVu3J8PGtmEsQM3Phr1gWfvGpzDrXTSzcIQo0WppSMV9/FaUAmiYy+DSZS+
- barm+XUjlc/xdguZHZg==
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22
+ a=mDV3o1hIAAAA:8 a=EUspDBNiAAAA:8 a=pGLkceISAAAA:8 a=GxDvOs8Khul7NjIAD50A:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=vmgOmaN-Xu0dpDh8OwbV:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-06-16_04,2026-06-15_04,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 phishscore=0 spamscore=0 suspectscore=0 lowpriorityscore=0
- priorityscore=1501 clxscore=1015 bulkscore=0 malwarescore=0 adultscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606040000 definitions=main-2606160159
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+ spamscore=0 clxscore=1015 bulkscore=0 malwarescore=0 suspectscore=0
+ phishscore=0 priorityscore=1501 adultscore=0 impostorscore=0
+ lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606040000
+ definitions=main-2606160159
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -156,66 +155,105 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-TCGTBCPUState is a structure used during TCG translation,
-therefore not needed when TCG is not available.
+OpenRISC is only available with TCG. No need to keep
+raise_exception() in a distinct file unit, merge it
+with exception_helper.c.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 ---
- target/ppc/internal.h    | 5 ++++-
- target/ppc/helper_regs.c | 3 ++-
- 2 files changed, 6 insertions(+), 2 deletions(-)
+ target/or1k/exception.h        |  2 +-
+ target/or1k/exception.c        | 30 ------------------------------
+ target/or1k/exception_helper.c | 13 +++++++++++--
+ target/or1k/meson.build        |  1 -
+ 4 files changed, 12 insertions(+), 34 deletions(-)
+ delete mode 100644 target/or1k/exception.c
 
-diff --git a/target/ppc/internal.h b/target/ppc/internal.h
-index dda23b66096..a3bb12afd93 100644
---- a/target/ppc/internal.h
-+++ b/target/ppc/internal.h
-@@ -22,7 +22,6 @@
- #include "exec/memop.h"
- #include "hw/core/registerfields.h"
- #include "exec/page-protection.h"
--#include "accel/tcg/tb-cpu-state.h"
+diff --git a/target/or1k/exception.h b/target/or1k/exception.h
+index f62fc314c1f..654ac9e515d 100644
+--- a/target/or1k/exception.h
++++ b/target/or1k/exception.h
+@@ -20,7 +20,7 @@
+ #ifndef TARGET_OPENRISC_EXCEPTION_H
+ #define TARGET_OPENRISC_EXCEPTION_H
  
- static inline bool ppc_env_is_little_endian(const CPUPPCState *env)
- {
-@@ -326,6 +325,10 @@ static inline int ger_pack_masks(int pmsk, int ymsk, int xmsk)
-     return msk;
- }
+-#include "cpu.h"
++#include "target/or1k/cpu-qom.h"
  
-+#ifdef CONFIG_TCG
-+#include "accel/tcg/tb-cpu-state.h"
+ G_NORETURN void raise_exception(OpenRISCCPU *cpu, uint32_t excp);
+ 
+diff --git a/target/or1k/exception.c b/target/or1k/exception.c
+deleted file mode 100644
+index e213be36b6b..00000000000
+--- a/target/or1k/exception.c
++++ /dev/null
+@@ -1,30 +0,0 @@
+-/*
+- * OpenRISC exception.
+- *
+- * Copyright (c) 2011-2012 Jia Liu <proljc@gmail.com>
+- *
+- * This library is free software; you can redistribute it and/or
+- * modify it under the terms of the GNU Lesser General Public
+- * License as published by the Free Software Foundation; either
+- * version 2.1 of the License, or (at your option) any later version.
+- *
+- * This library is distributed in the hope that it will be useful,
+- * but WITHOUT ANY WARRANTY; without even the implied warranty of
+- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+- * Lesser General Public License for more details.
+- *
+- * You should have received a copy of the GNU Lesser General Public
+- * License along with this library; if not, see <http://www.gnu.org/licenses/>.
+- */
+-
+-#include "qemu/osdep.h"
+-#include "cpu.h"
+-#include "exception.h"
+-
+-G_NORETURN void raise_exception(OpenRISCCPU *cpu, uint32_t excp)
+-{
+-    CPUState *cs = CPU(cpu);
+-
+-    cs->exception_index = excp;
+-    cpu_loop_exit(cs);
+-}
+diff --git a/target/or1k/exception_helper.c b/target/or1k/exception_helper.c
+index c2c9d136528..3e76acae9c3 100644
+--- a/target/or1k/exception_helper.c
++++ b/target/or1k/exception_helper.c
+@@ -18,9 +18,18 @@
+  */
+ 
+ #include "qemu/osdep.h"
+-#include "cpu.h"
+ #include "exec/helper-proto.h"
+-#include "exception.h"
 +
- TCGTBCPUState ppc_get_tb_cpu_state(CPUState *cs);
-+#endif
++#include "target/or1k/cpu.h"
++#include "target/or1k/exception.h"
++
++G_NORETURN void raise_exception(OpenRISCCPU *cpu, uint32_t excp)
++{
++    CPUState *cs = CPU(cpu);
++
++    cs->exception_index = excp;
++    cpu_loop_exit(cs);
++}
  
- #endif /* PPC_INTERNAL_H */
-diff --git a/target/ppc/helper_regs.c b/target/ppc/helper_regs.c
-index a07e6a7b7b6..acf74c543a1 100644
---- a/target/ppc/helper_regs.c
-+++ b/target/ppc/helper_regs.c
-@@ -27,7 +27,6 @@
- #include "power8-pmu.h"
- #include "cpu-models.h"
- #include "spr_common.h"
--#include "accel/tcg/cpu-ops.h"
- #include "internal.h"
- 
- /* Swap temporary saved registers with GPRs */
-@@ -261,6 +260,7 @@ void hreg_update_pmu_hflags(CPUPPCState *env)
-     env->hflags |= hreg_compute_pmu_hflags_value(env);
- }
- 
-+#ifdef CONFIG_TCG
- TCGTBCPUState ppc_get_tb_cpu_state(CPUState *cs)
+ void HELPER(exception)(CPUOpenRISCState *env, uint32_t excp)
  {
-     CPUPPCState *env = cpu_env(cs);
-@@ -277,6 +277,7 @@ TCGTBCPUState ppc_get_tb_cpu_state(CPUState *cs)
- 
-     return (TCGTBCPUState){ .pc = env->nip, .flags = hflags_current };
- }
-+#endif /* CONFIG_TCG */
- 
- #ifndef CONFIG_USER_ONLY
- void cpu_interrupt_exittb(CPUState *cs)
+diff --git a/target/or1k/meson.build b/target/or1k/meson.build
+index 7cea45287a2..dba5044b655 100644
+--- a/target/or1k/meson.build
++++ b/target/or1k/meson.build
+@@ -5,7 +5,6 @@ or1k_ss.add(gen)
+ or1k_ss.add(files(
+   'cpu.c',
+   'disas.c',
+-  'exception.c',
+   'exception_helper.c',
+   'fpu_helper.c',
+   'interrupt_helper.c',
 -- 
 2.53.0
 
