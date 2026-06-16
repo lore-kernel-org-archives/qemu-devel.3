@@ -4,80 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E050CD98E1
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 19:17:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E06F2CD98E1
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 19:18:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZZBy-0001kJ-L0; Tue, 16 Jun 2026 15:11:24 -0400
+	id 1wZZGs-0006Pg-6G; Tue, 16 Jun 2026 15:16:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wZZ8P-0004dX-OM
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 15:07:43 -0400
-Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wZZGq-000672-65
+ for qemu-devel@nongnu.org; Tue, 16 Jun 2026 15:16:24 -0400
+Received: from mail-pg1-x536.google.com ([2607:f8b0:4864:20::536])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wZZ8J-00017P-Fj
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 15:07:38 -0400
-Received: by mail-wr1-x42f.google.com with SMTP id
- ffacd0b85a97d-45ef56d9b67so4212628f8f.2
- for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 12:07:32 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wZZGo-0004Cc-JF
+ for qemu-devel@nongnu.org; Tue, 16 Jun 2026 15:16:23 -0400
+Received: by mail-pg1-x536.google.com with SMTP id
+ 41be03b00d2f7-c85d8615b09so2933478a12.3
+ for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 12:16:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1781636851; x=1782241651; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=ghI20RlhSwol2c5KJyoQIvx6SEEjO2aKn93WrShChRM=;
- b=kg0yBfP9G/m9i+4ls4qefKIahNEiYKHb2LRluNaSOqwXrfv3Nzhd+wsv/VAicyzB/u
- iGI4Gz8wo1OzTt7JfJaYP+u4RzSvWRA4GrlesenP2X42hpbgUl8Sv8amCkDHQpgssJoZ
- CllIV4y5utLyxcBdZP98DLy+TeX09y+JBKj4Vbin9zDnpQA/7+NZw2I7D7v3Kh51IVHt
- 2jaq2vGXDEaKFbEpMfrRF4EsXKaq7VzU0rDLRjfTdSQrpvinz2ENHumoy2suvfpU8k+q
- LkheDyXh1i3tWvjIEG863+UpyU5C6SsDg1RMolO7DuvLDlykxmv1OfK8B8X7bw66HbWW
- erog==
+ d=linaro.org; s=google; t=1781637381; x=1782242181; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=y09laihlfeXrpZoAkvqPVxo5TWCBfKck8F94Kbnt650=;
+ b=JD8YVngMpslUVTfxGyaGsoBa++s68GEwI0M7oTan7O7OQj7OSI/cCPVCQnO7Op6RxH
+ BlN9lxwyDg6CdmjI+2duDv5cLSS5NBW0fXJUj+5l6Luogu8A67w96eqAqgxssB3RiF7z
+ 57dvcxm1YtOLuvNfDOh8BazvXgewgCw9TvQyPbu/zJY8Zpuo5jRltRc8UqOa3bxuw+RG
+ 1S+3HoTHiPwGZDgpNqMrj6mQsubwnbBj7bk5ZylFHOmA3hNipS7TDhcbdPphETXIUf/Z
+ BNJvGMFptcdHnoJ8kGkS3IOqXFNOF28RcSCyPfygCnVoXvIGLAOGY9MRizd5E1Ot9Md2
+ Z61A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781636851; x=1782241651;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=ghI20RlhSwol2c5KJyoQIvx6SEEjO2aKn93WrShChRM=;
- b=a3BDTGUipBdeiCbxa2qlyoaYH5OaB+TGro+rlTFtotGzaE07N3fXBljn0DTeMryEl0
- atwoCNHXYkAvdNdqyqG4LaXruEUsWL919PUGMbT7qw+WNUOaX/jORCs++1yKXT6KMB49
- zJ88ixNgvPDdaKoRGoiSTVD6SGyCkKLoJv3tEEz34SDtpT0sGdFxTbHOUXXa6KM5EZ/K
- OVc3REQ9ocXt6vMxf3LUe16RcuI/H1O5AAzPeKyUoRVzghG1id8AGYMOgtt48mb5to7f
- LWviuLTftCOddOu3t92i2YXjTZLrcEkk4NeYa+wfe/KfSBCzDOptD76BMAxSy12k/+mp
- kR6w==
-X-Gm-Message-State: AOJu0YxaXeNMLlpL7xlHFCTxGoli/6Njzef8u6DgjFJXfmenlKdxLv2q
- USZ3wk68PsKEU/mj9edSTFCLP0IAqdv8m/rRfnMxnrwQYzYALNwrjBCuzM5Kpg7/V/aQ+832zkI
- X3poF
-X-Gm-Gg: Acq92OFi+m2ntFaFX8HavdIBSgyWQNHhnIk9fbgMyh88EPgk6g92gXY3G2TjFV6BWMA
- +t/efZBS2Olc/e+5JCwpi5YDVl4jh1m4Umc5YOMdcOiePlyl1s1byX93xV20XOfU9XW9ClHbG4S
- yP3dC3P/i6iHE5kThMqaJGIoLWJsSvaXzhivzDwutZay58P/7tgiG6z332om70nMUFJzh5e6zhN
- pYI/rftc8EhOLOEG+cMuDtn0tNORiOoef3C37v1DpXbmNXANAMFmtYGXO8u9uHPCG/1++5sk9BB
- Kh1xONIBrlN8zEgb9Al0GLvvZfJ0Ykrc3D1b8ZdwLuVhXHtvsAQzwhFCGXxtUz69prhRG+Q5MCQ
- /UQuGWxlx2CVlRIL6Vxwzp2YDgt4zLdV6isk5via26lGTDZtyJ86FjG7ICZZYep7gDsyq7M2S4b
- as5D+DvRlqUBSDCLCtCF0/25UVK+ap/Tq2Ku87lmVe8IEtEVtvH9h8xtlniEZnbF6CL/FB1/SZE
- qjI0oC503EMMOOMUsz3vMlNSoHuj0Ug
-X-Received: by 2002:a5d:5e8e:0:b0:45e:7997:8b7a with SMTP id
- ffacd0b85a97d-462356ec3ccmr1101595f8f.16.1781636851175; 
- Tue, 16 Jun 2026 12:07:31 -0700 (PDT)
-Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
+ d=1e100.net; s=20251104; t=1781637381; x=1782242181;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=y09laihlfeXrpZoAkvqPVxo5TWCBfKck8F94Kbnt650=;
+ b=BEx7NbMkHg1yDgCzuugSOcgrdCn3WpXPSH9bI6lbDQ7VO3eAhbirXKz+a1ApSSIR2i
+ lTOlCaAokY8ox3078Ogr7inBCpnYtaKDdTIZ6PqtG3/nzEgxRppmvWok+1Pm02QpeCma
+ ek9evuYnkRuJtHYeRF1RoxVSx8f7gL9EtwGp0OfEQmqNtYfUKYmsG02pjZFMdfo0pj0I
+ /N5PNkQgaojBkykOXX/azuNFTAvjZVm9RbivgsuSFhNZPoX420gRm0tdATnseAtsJMxy
+ BLUodegVcivedl0cnneeQiFo5Q8nN/OjDsN1TwcD2r8Wb3NJI9LPWg+uyduKKPev1sbY
+ cAUg==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ8FMCAw3rhzjc5zhDKmBtiPgQmYQ45xAISNjAJP1vtdAwMNtaakn4fKjola7tLsWU+SKwPvkRXcYJov@nongnu.org
+X-Gm-Message-State: AOJu0Yxaz3QZFhE9QaULjykCLHWdKHEukgjpWGDXPk1w7RNyQ1+wWKdJ
+ qzObbk6AQ4zd9fhzv3wTeCHa8tz5qO7zIohRfXgmFjAFB95uzuclg+t3FjTRjnbHcEj5By485LI
+ dPuZx
+X-Gm-Gg: Acq92OHnUG6Qkjp/R3QQjKlk5O+vSdagBkQl80iuU64WpC4zDiJFVaFHj4G6D9+vZDj
+ OUiBmgWEtE+FweUHqn/+uC2M6T5ryyMMTyFU+ZEQAiz3LGTHFYgvwwzU01/B7HWwuZDyeGNKFZU
+ CSqlKN6i2lZb1tCSxICOC7U9GMaHde6XcJtbS+az8iiR8aNNULvWN5f1ZbcaPB1NKfHhtzsztF1
+ uNF/DXPn9IPNxk7ZsqrXoHlRZxLDWeNSheghO7hI52LVogWY02Hii4IZywh1zDZbM03xlbPho7Y
+ U8V0mA5PpPWyKjwY9nhPzPCADR+QvqcHfE+qBidojSuriG8DnCWZuJyWoY2C5z9se1VV/l9ziGJ
+ weWRyzO27MUX4Xg5c4nVfDIxgkirmM0s9WhL9qHPAaKKDypKer1Enz3Jd1RAnYTF8/K3jg9Dr1n
+ nzZfT6pKKOl7poKV1nSvfdm7wEvKQb3lhlEsYCSIDSgiigquZda2AE7FAZe8mD1sYY3cXJ
+X-Received: by 2002:a05:6a20:9154:b0:3b3:1c7b:ff0 with SMTP id
+ adf61e73a8af0-3b8b7cd8611mr749502637.32.1781637381064; 
+ Tue, 16 Jun 2026 12:16:21 -0700 (PDT)
+Received: from [192.168.0.4] (174-21-129-215.tukw.qwest.net. [174.21.129.215])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4606f2d9becsm45078765f8f.34.2026.06.16.12.07.30
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 16 Jun 2026 12:07:30 -0700 (PDT)
-From: Peter Maydell <peter.maydell@linaro.org>
-To: qemu-devel@nongnu.org
-Subject: [PULL 44/61] target/arm: Add feature predicates for SVE2.2 and SME2.2
-Date: Tue, 16 Jun 2026 20:06:21 +0100
-Message-ID: <20260616190639.3462006-45-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260616190639.3462006-1-peter.maydell@linaro.org>
-References: <20260616190639.3462006-1-peter.maydell@linaro.org>
+ 41be03b00d2f7-c866518677dsm12306307a12.19.2026.06.16.12.16.19
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 16 Jun 2026 12:16:19 -0700 (PDT)
+Message-ID: <15db05bc-b406-44c4-af00-d6ae88833378@linaro.org>
+Date: Tue, 16 Jun 2026 12:16:18 -0700
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 0/6] system/memory: Constify various
+ AddressSpace/MemoryRegionCache arguments
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ qemu-devel@nongnu.org
+Cc: Peter Xu <peterx@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
+References: <20260616020359.18627-1-philmd@oss.qualcomm.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20260616020359.18627-1-philmd@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::536;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x536.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,59 +107,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+On 6/15/26 19:03, Philippe Mathieu-Daudé wrote:
+> Philippe Mathieu-Daudé (6):
+>    system/memory: Constify various AddressSpace arguments (checks)
+>    system/memory: Constify various AddressSpace arguments (flat-range)
+>    system/memory: Constify various AddressSpace arguments (notify)
+>    system/memory: Constify various AddressSpace arguments (cache)
+>    system/memory: Constify various AddressSpace arguments (access)
+>    system/memory: Constify various MemoryRegionCache arguments
 
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Message-id: 20260604234852.573178-2-richard.henderson@linaro.org
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
----
- target/arm/cpu-features.h | 17 ++++++++++++++++-
- 1 file changed, 16 insertions(+), 1 deletion(-)
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-diff --git a/target/arm/cpu-features.h b/target/arm/cpu-features.h
-index 9e70d30964..a80b251589 100644
---- a/target/arm/cpu-features.h
-+++ b/target/arm/cpu-features.h
-@@ -1516,7 +1516,12 @@ static inline bool isar_feature_aa64_sve2(const ARMISARegisters *id)
- 
- static inline bool isar_feature_aa64_sve2p1(const ARMISARegisters *id)
- {
--    return FIELD_EX64_IDREG(id, ID_AA64ZFR0, SVEVER) >=2;
-+    return FIELD_EX64_IDREG(id, ID_AA64ZFR0, SVEVER) >= 2;
-+}
-+
-+static inline bool isar_feature_aa64_sve2p2(const ARMISARegisters *id)
-+{
-+    return FIELD_EX64_IDREG(id, ID_AA64ZFR0, SVEVER) >= 3;
- }
- 
- static inline bool isar_feature_aa64_sve2_aes(const ARMISARegisters *id)
-@@ -1625,6 +1630,11 @@ static inline bool isar_feature_aa64_sme2p1(const ARMISARegisters *id)
-     return FIELD_EX64_IDREG(id, ID_AA64SMFR0, SMEVER) >= 2;
- }
- 
-+static inline bool isar_feature_aa64_sme2p2(const ARMISARegisters *id)
-+{
-+    return FIELD_EX64_IDREG(id, ID_AA64SMFR0, SMEVER) >= 3;
-+}
-+
- static inline bool isar_feature_aa64_f8cvt(const ARMISARegisters *id)
- {
-     return FIELD_EX64_IDREG(id, ID_AA64FPFR0, F8CVT);
-@@ -1688,6 +1698,11 @@ static inline bool isar_feature_aa64_sme2p1_or_sve2p1(const ARMISARegisters *id)
-     return isar_feature_aa64_sme2p1(id) || isar_feature_aa64_sve2p1(id);
- }
- 
-+static inline bool isar_feature_aa64_sme2p2_or_sve2p2(const ARMISARegisters *id)
-+{
-+    return isar_feature_aa64_sme2p2(id) || isar_feature_aa64_sve2p2(id);
-+}
-+
- static inline bool isar_feature_aa64_sme2_i16i64(const ARMISARegisters *id)
- {
-     return isar_feature_aa64_sme2(id) && isar_feature_aa64_sme_i16i64(id);
--- 
-2.43.0
-
+r~
 
