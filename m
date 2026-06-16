@@ -4,86 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3364ACD98E6
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 10:11:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C21B1CD98DA
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 10:11:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZQjd-0007Re-W4; Tue, 16 Jun 2026 06:09:34 -0400
+	id 1wZQi4-0003el-IY; Tue, 16 Jun 2026 06:07:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wZQjb-0007AN-H4
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 06:09:31 -0400
-Received: from mail-pj1-x1031.google.com ([2607:f8b0:4864:20::1031])
+ id 1wZQi2-0003JD-5Y
+ for qemu-devel@nongnu.org; Tue, 16 Jun 2026 06:07:54 -0400
+Received: from mail-pj1-x102f.google.com ([2607:f8b0:4864:20::102f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wZQjY-0003vw-GH
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 06:09:31 -0400
-Received: by mail-pj1-x1031.google.com with SMTP id
- 98e67ed59e1d1-36d8b644473so3794922a91.3
- for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 03:09:28 -0700 (PDT)
+ id 1wZQhz-0003YC-Vv
+ for qemu-devel@nongnu.org; Tue, 16 Jun 2026 06:07:53 -0400
+Received: by mail-pj1-x102f.google.com with SMTP id
+ 98e67ed59e1d1-36ba285e98bso4337249a91.2
+ for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 03:07:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1781604567; x=1782209367; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1781604471; x=1782209271; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=XkQvFZUVhtVsED3Y4QMiMbRrPxGXy039Nz4aN1nTJpU=;
- b=O9MvHF+R3a046qbhAYvE0WtNY7rChLNgLOwqBeE/fevLhADx6glH+MdSjFzRcoccIr
- NYr6yohOy6XrMK+QLJQDRbbBOqZron8ILxPkxjHmBoxgPpUOtHPZJrnFiWIL8hiH/8dV
- P4if77MPKiNPJcRoQmWjnS8ZXF7DkXpT+vlNYMAKw0Nid9WB2crrmoqMIAgUahjx46st
- Y5SfCwDASfoQDuxxM+Sb/wgYoeT3jP1CGUPfifmIB3TarElQ0WiN5WnwpU6xHcW0yUCr
- VLI6Rh1u/JGInLTD6k4fIleSSm5MwhNuXciA4go52VXMF1nsmmv2XZVIltjzfENApss+
- zRTw==
+ bh=NZCHWP87J1KCGD/lBAcv42oDW/fhm0BWCAY/URuwlgY=;
+ b=mhEuV067Amlq2Op/1hmoqYvuCNw9aUm6vZiZ8dMKtu15KkDSJMg3EZDKZmEb9lwHC3
+ QQSN46vkWYFfRrRnCMl2pytxP154RV9SLOUwINFyXPY4JSOAfOT7EBdRqaCdFvd8HR88
+ ovde2UA5SJ0/Ez3Jlx1XgJ4UW1u36TIwB/gVygVlTnKx0e6loC8l9nmKLH7XsAGdti0d
+ 9QCm4XO0ajv8NavyDyTJMygObujzBT5vutLaWSapFwL+qE1f/UepUj8Wp/ClOGSczYPq
+ VFeemnV8Kj0lgu2QCi62lsAWJHLe8NRhnVMB0SBP+UhMSTR1a9Buhm2TY3J4wlw6jWNz
+ xksQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781604567; x=1782209367;
+ d=1e100.net; s=20251104; t=1781604471; x=1782209271;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=XkQvFZUVhtVsED3Y4QMiMbRrPxGXy039Nz4aN1nTJpU=;
- b=ooZYcE0sJt3LPolBvFi1oa8d6+W+7JtPhg+ja7WKWEg6J6XgKi3+yOh0Tloqzdm/hm
- LyY4joTP9685fWoogsduKo3K5Ns2lM7wz8j1MxnOvkYVoesn3KuBGPGvmSgDZVNP11H4
- KiD0TLFYROOnv5/9v4N5fGXYQ1e+Wsah3ZCKAp93g5FIekzovxse0Jhs5BrWEJKdrN6o
- vukSQktfnyTvrrtzMHR6cU1fRbfmAcr941AabALwRaF/xtw1b40jXJVEYQEOl6ZR26V/
- zFgDIG29AQNLX4j3chfvg5tJMmFH/Aet68a6q+AV+KZEq8HstDqAP1kS6TRlNQw4Cjdq
- 9oQw==
-X-Gm-Message-State: AOJu0YyBP5t3OWDS84IGf9UOauWP4lbwyXfWd2y6TQpH+uRpDCbmcBeY
- VsNFOGYM+AOOFEEGnXfedtPJSb2h7y+tO7ciDjfwekFx05urLT+nGtaysCb1ziq6
-X-Gm-Gg: Acq92OHicKrL1uLKgkq1PVSzcKOEZj1OTUp/5Y7t3f3rY7zEOoCO92zpmhMKP3+DtZk
- A2ZcIhv2kaqWh3Z2/manXO1MJwr5wOP7LZlBBiXXSQor5BiGxwx7PlSNTqIuR8YVdKYIpemTOhM
- d8fEF46HsYFjhJm+ZIv7jfq+CmTJ0wHxSPT8M7S0CHTLwotTKuFerzAdzuLHsNOgqNKx9YY39t1
- hXwVMr55BGAiY9QxNEc8l1DfDi5LrrvAt6OoqC95IZYhP/NoIuuccjwAQUmDGqKB6/ZxIW79N8+
- GnJe7+nZk3JS+g9mvG9tpWbljyoc7BXFHyIelm/boLZ8yVlSBbDPoTCYVBrxiX/egDtu8JUOuP6
- 8DNfXHMRpTP17mYiV80ct4+KUU8L8DIhVqR4D0Bq7sQnZh0obVUzT0EZNpuZz/aiKJUvUi8A2qp
- VYRQ9YeDSeFZnRvJo4GxstxIlyxeeq03XD6cv3pFKK
-X-Received: by 2002:a05:6a21:1405:b0:39c:126c:93b5 with SMTP id
- adf61e73a8af0-3b7e49a525emr3193043637.21.1781604567160; 
- Tue, 16 Jun 2026 03:09:27 -0700 (PDT)
+ bh=NZCHWP87J1KCGD/lBAcv42oDW/fhm0BWCAY/URuwlgY=;
+ b=ftGb8OWgxfULxICNCqnNxkpDMx+6FNF+/LRk1OZaTmVAovNqIvoOv0gj9HKNxfFwFH
+ lBCQAczf+L7/XJAN0VM4DyrInoXWZzsvDmOZhbFIVORP2nUnfIxi5RRvl7/GctNZps3S
+ gdatgBaAtpCoL0Uh4zDXCwwG6KEtldKXi6brpnKD7mRGnuQWqQNHYqU/790aKWNkjFrB
+ IR/GgDVwzbG71KSJ6qXv+q5fkXsKCITkZm+VhaB2PxrF61Bg+7LUzbihZQ+QlF6mkuue
+ Sl2z5iCDY5docwKLNIZPdBJmRxlJJEJc333CMj1SHhXVutJ+K4aq5dQjbNfOqkzVffNe
+ ZnUQ==
+X-Gm-Message-State: AOJu0Yz/dP0NjRld7k2+rIyWTiO+OXS838kMPgCUSH/5jrtPJ+7NqPCB
+ vcEybzYRiO4MMwBPeIbshO75g/oySfK9Yo8rN5JDcWoigYSTltlPIPihJrZ2bKb8
+X-Gm-Gg: Acq92OFleOAMjh14BClrWRZZ6b0yUOBH2N+hH9IRT01ICEfVVb+lKxIpE8DsST87Qm/
+ eEPfAPyITF9612E5lon5vWrCfgaGYY2XKGqm4aj1GlcSxUmhvpBzkT3By+Z58fgUBg4kUPIVgdW
+ 5CEMqt+Mxu7XX+8DvyDYRxjWpusxvWSSyjCzY+Y6e50byAU0rOPqWPRA3CmXETLDH6dnXcnucjF
+ Hf99CWNXD8CZLHudoA7hGz3k+y4s6IfsPju8nBkW7ligJgXhh2Wc7m0USyud1b2VnXsxhrDmsO9
+ 34sDjyvfzGvnQMpMG1QvHPz+7mPaaWkeGWRGcee2iFZzppuMFVD8ux2ZJWxbJUvenhLx+o5epJP
+ DgJafqEqiN5YLEMe72P4pBO9Y5OiV1TeFG5lZuIK5Fh5CmP66PHGWuVxHxk4rTDZx7M7TeAEOOs
+ hVCnVGXCClWJQQlgvU00alCXhch7djUZx/fyEJ0xKJ
+X-Received: by 2002:a05:6a20:2443:b0:3b4:b276:a789 with SMTP id
+ adf61e73a8af0-3b7841ab01dmr20768275637.36.1781604470534; 
+ Tue, 16 Jun 2026 03:07:50 -0700 (PDT)
 Received: from toolbx.alistair23.me ([2403:581e:fdf9:0:13b2:851f:d9cb:44c5])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-c866519f0a6sm10916735a12.22.2026.06.16.03.09.23
+ 41be03b00d2f7-c866519f0a6sm10916735a12.22.2026.06.16.03.07.47
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 16 Jun 2026 03:09:26 -0700 (PDT)
+ Tue, 16 Jun 2026 03:07:50 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com, Chao Liu <chao.liu@zevorn.cn>,
- Chao Liu <chao.liu.zevorn@gmail.com>,
- LIU Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Peng Jiang <3160104094@zju.edu.cn>,
+Cc: alistair23@gmail.com,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
  Alistair Francis <alistair.francis@wdc.com>,
- Nutty Liu <nutty.liu@hotmail.com>
-Subject: [PULL 66/83] target/riscv: add thead-c908 cpu support
-Date: Tue, 16 Jun 2026 20:05:09 +1000
-Message-ID: <20260616100527.1939565-67-alistair.francis@wdc.com>
+ Chao Liu <chao.liu.zevorn@gmail.com>
+Subject: [PULL 39/83] target/riscv/cpu_helper.c: add PMA access fault
+Date: Tue, 16 Jun 2026 20:04:42 +1000
+Message-ID: <20260616100527.1939565-40-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260616100527.1939565-1-alistair.francis@wdc.com>
 References: <20260616100527.1939565-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1031;
- envelope-from=alistair23@gmail.com; helo=mail-pj1-x1031.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102f;
+ envelope-from=alistair23@gmail.com; helo=mail-pj1-x102f.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -107,524 +105,155 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Chao Liu <chao.liu@zevorn.cn>
+From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 
-The C908 processor is based on the RV64GCB[V] instruction
-set, compatible to RVA22 Profile and implements the XIE
-(XuanTie Instruction Extension) technology.
+We're not doing anything special w.r.t PMA (Physical Memory Access)
+related faults, handling them like regular faults that will eventually
+turn to be regular page faults.
 
-Signed-off-by: Chao Liu <chao.liu.zevorn@gmail.com>
-Suggested-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
-Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Tested-by: Peng Jiang <3160104094@zju.edu.cn>
-Acked-by: Alistair Francis <alistair.francis@wdc.com>
-Reviewed-by: Nutty Liu <nutty.liu@hotmail.com>
-Message-ID: <a3e232ace12afd93adb60aed198cac3284daa56c.1781246408.git.chao.liu@processmission.com>
+Turns out we can't do that.  Priv spec section "Virtual Address
+Translation Process" mentions:
+
+"If a store to the PTE at address a+va.vpn[i]×PTESIZE would violate a
+PMA or PMP check, raise an access-fault exception corresponding to the
+original access type."
+
+This means that we should handle PMA violations with access faults, like
+we're already doing with PMP.  One clear code path where we should throw
+a PMA failure, exposed by [1], is the error return from
+address_space_ld* call.
+
+There's a separated issue with the error code being returned by them (it
+always return DECODE_ERROR even with 'rejected' reads) that we're going
+to work around it by assuming that we did a good job with the PTE
+address sanitization beforehand, and interpret that the error here is
+related to PMA.  This is of course not ideal but fixing this QEMU API is
+out of scope for this work.
+
+All this said, we'll set the new pmp_pma_violation flag when we have
+either a PMP or a PMA fault, and everything else shall fall into place.
+
+[1] https://gitlab.com/qemu-project/qemu/-/work_items/3502
+
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3502
+Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
+Message-ID: <20260522172502.320529-1-daniel.barboza@oss.qualcomm.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/cpu-qom.h |   2 +
- target/riscv/cpu.c     |  51 ++++++
- target/riscv/th_csr.c  | 376 ++++++++++++++++++++++++++++++++++++++++-
- 3 files changed, 428 insertions(+), 1 deletion(-)
+ target/riscv/cpu.h        |  3 ++-
+ target/riscv/cpu_helper.c | 34 +++++++++++++++++++++++++---------
+ 2 files changed, 27 insertions(+), 10 deletions(-)
 
-diff --git a/target/riscv/cpu-qom.h b/target/riscv/cpu-qom.h
-index 30dcdcfaae..1a28f1369c 100644
---- a/target/riscv/cpu-qom.h
-+++ b/target/riscv/cpu-qom.h
-@@ -52,6 +52,8 @@
- #define TYPE_RISCV_CPU_SIFIVE_U34       RISCV_CPU_TYPE_NAME("sifive-u34")
- #define TYPE_RISCV_CPU_SIFIVE_U54       RISCV_CPU_TYPE_NAME("sifive-u54")
- #define TYPE_RISCV_CPU_THEAD_C906       RISCV_CPU_TYPE_NAME("thead-c906")
-+#define TYPE_RISCV_CPU_THEAD_C908       RISCV_CPU_TYPE_NAME("thead-c908")
-+#define TYPE_RISCV_CPU_THEAD_C908V      RISCV_CPU_TYPE_NAME("thead-c908v")
- #define TYPE_RISCV_CPU_VEYRON_V1        RISCV_CPU_TYPE_NAME("veyron-v1")
- #define TYPE_RISCV_CPU_TT_ASCALON       RISCV_CPU_TYPE_NAME("tt-ascalon")
- #define TYPE_RISCV_CPU_XIANGSHAN_NANHU  RISCV_CPU_TYPE_NAME("xiangshan-nanhu")
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index a74384a091..fa497e5e8a 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -3121,6 +3121,57 @@ static const TypeInfo riscv_cpu_type_infos[] = {
- #endif
-     ),
- 
-+    DEFINE_RISCV_CPU(TYPE_RISCV_CPU_THEAD_C908, TYPE_RISCV_VENDOR_CPU,
-+        .misa_mxl_max = MXL_RV64,
-+        .misa_ext = RVI | RVM | RVA | RVF | RVD | RVC | RVS | RVU,
-+        .priv_spec = PRIV_VERSION_1_12_0,
-+
-+        /* ISA extensions */
-+        .cfg.ext_xtheadba = true,
-+        .cfg.ext_xtheadbb = true,
-+        .cfg.ext_xtheadbs = true,
-+        .cfg.ext_xtheadcmo = true,
-+        .cfg.ext_xtheadcondmov = true,
-+        .cfg.ext_xtheadfmv = true,
-+        .cfg.ext_xtheadfmemidx = true,
-+        .cfg.ext_xtheadmac = true,
-+        .cfg.ext_xtheadmemidx = true,
-+        .cfg.ext_xtheadmempair = true,
-+        .cfg.ext_xtheadsync = true,
-+        .cfg.ext_smepmp = true,
-+        .cfg.ext_sscofpmf = true,
-+        .cfg.ext_sstc = true,
-+        .cfg.ext_svpbmt = true,
-+        .cfg.ext_svinval = true,
-+        .cfg.ext_svnapot = true,
-+        .cfg.ext_zba = true,
-+        .cfg.ext_zbb = true,
-+        .cfg.ext_zbc = true,
-+        .cfg.ext_zbs = true,
-+        .cfg.ext_zkt = true,
-+        .cfg.ext_zbkc = true,
-+        .cfg.ext_zicsr = true,
-+        .cfg.ext_zifencei = true,
-+        .cfg.ext_zihintpause = true,
-+        .cfg.ext_zicbom = true,
-+        .cfg.ext_zicboz = true,
-+
-+        .cfg.pmp = true,
-+        .cfg.mmu = true,
-+        .cfg.max_satp_mode = VM_1_10_SV48,
-+
-+        .cfg.marchid = 0x8d143000,
-+        .cfg.mvendorid = THEAD_VENDOR_ID,
-+#ifndef CONFIG_USER_ONLY
-+        .custom_csrs = th_csr_list,
-+#endif
-+    ),
-+
-+    DEFINE_RISCV_CPU(TYPE_RISCV_CPU_THEAD_C908V, TYPE_RISCV_CPU_THEAD_C908,
-+        .misa_ext = RVI | RVM | RVA | RVF | RVD | RVC | RVS | RVU | RVV,
-+        .vext_spec = VEXT_VERSION_1_00_0,
-+    ),
-+
-     DEFINE_RISCV_CPU(TYPE_RISCV_CPU_TT_ASCALON, TYPE_RISCV_VENDOR_CPU,
-         .misa_mxl_max = MXL_RV64,
-         .misa_ext = RVG | RVC | RVS | RVU | RVH | RVV,
-diff --git a/target/riscv/th_csr.c b/target/riscv/th_csr.c
-index a4ea4ce391..431f4cc286 100644
---- a/target/riscv/th_csr.c
-+++ b/target/riscv/th_csr.c
-@@ -2,6 +2,9 @@
-  * T-Head-specific CSRs.
-  *
-  * Copyright (c) 2024 VRULL GmbH
-+ * Copyright (c) 2025 Chao Liu <chao.liu.zevorn@gmail.com>
-+ *
-+ * For more information, see XuanTie-C908-UserManual_xrvm_20240530.pdf
-  *
-  * This program is free software; you can redistribute it and/or modify it
-  * under the terms and conditions of the GNU General Public License,
-@@ -21,13 +24,84 @@
- #include "cpu_vendorid.h"
- #include "target/riscv/csr.h"
- 
--#define CSR_TH_SXSTATUS 0x5c0
-+/* Extended M-mode control registers of T-Head */
-+#define CSR_TH_MXSTATUS        0x7c0
-+#define CSR_TH_MHCR            0x7c1
-+#define CSR_TH_MCOR            0x7c2
-+#define CSR_TH_MCCR2           0x7c3
-+#define CSR_TH_MHINT           0x7c5
-+#define CSR_TH_MRVBR           0x7c7
-+#define CSR_TH_MCOUNTERWEN     0x7c9
-+#define CSR_TH_MCOUNTERINTEN   0x7ca
-+#define CSR_TH_MCOUNTEROF      0x7cb
-+#define CSR_TH_MCINS           0x7d2
-+#define CSR_TH_MCINDEX         0x7d3
-+#define CSR_TH_MCDATA0         0x7d4
-+#define CSR_TH_MCDATA1         0x7d5
-+#define CSR_TH_MSMPR           0x7f3
-+#define CSR_TH_CPUID           0xfc0
-+#define CSR_TH_MAPBADDR        0xfc1
-+
-+/* TH_MXSTATUS bits */
-+#define TH_MXSTATUS_UCME        BIT(16)
-+#define TH_MXSTATUS_MAEE        BIT(21)
-+#define TH_MXSTATUS_THEADISAEE  BIT(22)
-+
-+/* Extended S-mode control registers of T-Head */
-+#define CSR_TH_SXSTATUS        0x5c0
-+#define CSR_TH_SHCR            0x5c1
-+#define CSR_TH_SCER2           0x5c2
-+#define CSR_TH_SCER            0x5c3
-+#define CSR_TH_SCOUNTERINTEN   0x5c4
-+#define CSR_TH_SCOUNTEROF      0x5c5
-+#define CSR_TH_SCYCLE          0x5e0
-+#define CSR_TH_SHPMCOUNTER3    0x5e3
-+#define CSR_TH_SHPMCOUNTER4    0x5e4
-+#define CSR_TH_SHPMCOUNTER5    0x5e5
-+#define CSR_TH_SHPMCOUNTER6    0x5e6
-+#define CSR_TH_SHPMCOUNTER7    0x5e7
-+#define CSR_TH_SHPMCOUNTER8    0x5e8
-+#define CSR_TH_SHPMCOUNTER9    0x5e9
-+#define CSR_TH_SHPMCOUNTER10   0x5ea
-+#define CSR_TH_SHPMCOUNTER11   0x5eb
-+#define CSR_TH_SHPMCOUNTER12   0x5ec
-+#define CSR_TH_SHPMCOUNTER13   0x5ed
-+#define CSR_TH_SHPMCOUNTER14   0x5ee
-+#define CSR_TH_SHPMCOUNTER15   0x5ef
-+#define CSR_TH_SHPMCOUNTER16   0x5f0
-+#define CSR_TH_SHPMCOUNTER17   0x5f1
-+#define CSR_TH_SHPMCOUNTER18   0x5f2
-+#define CSR_TH_SHPMCOUNTER19   0x5f3
-+#define CSR_TH_SHPMCOUNTER20   0x5f4
-+#define CSR_TH_SHPMCOUNTER21   0x5f5
-+#define CSR_TH_SHPMCOUNTER22   0x5f6
-+#define CSR_TH_SHPMCOUNTER23   0x5f7
-+#define CSR_TH_SHPMCOUNTER24   0x5f8
-+#define CSR_TH_SHPMCOUNTER25   0x5f9
-+#define CSR_TH_SHPMCOUNTER26   0x5fa
-+#define CSR_TH_SHPMCOUNTER27   0x5fb
-+#define CSR_TH_SHPMCOUNTER28   0x5fc
-+#define CSR_TH_SHPMCOUNTER29   0x5fd
-+#define CSR_TH_SHPMCOUNTER30   0x5fe
-+#define CSR_TH_SHPMCOUNTER31   0x5ff
-+#define CSR_TH_SMIR            0x9c0
-+#define CSR_TH_SMLO0           0x9c1
-+#define CSR_TH_SMEH            0x9c2
-+#define CSR_TH_SMCIR           0x9c3
-+
-+/* Extended U-mode control registers of T-Head */
-+#define CSR_TH_FXCR            0x800
- 
- /* TH_SXSTATUS bits */
- #define TH_SXSTATUS_UCME        BIT(16)
- #define TH_SXSTATUS_MAEE        BIT(21)
- #define TH_SXSTATUS_THEADISAEE  BIT(22)
- 
-+static RISCVException mmode(CPURISCVState *env, int csrno)
-+{
-+    return RISCV_EXCP_NONE;
-+}
-+
- static RISCVException smode(CPURISCVState *env, int csrno)
- {
-     if (riscv_has_ext(env, RVS)) {
-@@ -37,11 +111,31 @@ static RISCVException smode(CPURISCVState *env, int csrno)
-     return RISCV_EXCP_ILLEGAL_INST;
- }
- 
-+static RISCVException any(CPURISCVState *env, int csrno)
-+{
-+    return RISCV_EXCP_NONE;
-+}
-+
- static bool test_thead_mvendorid(RISCVCPU *cpu)
- {
-     return cpu->cfg.mvendorid == THEAD_VENDOR_ID;
- }
- 
-+static RISCVException read_th_mxstatus(CPURISCVState *env, int csrno,
-+                                       target_ulong *val)
-+{
-+    /* We don't set MAEE here, because QEMU does not implement MAEE. */
-+    *val = TH_MXSTATUS_UCME | TH_MXSTATUS_THEADISAEE;
-+    return RISCV_EXCP_NONE;
-+}
-+
-+static RISCVException read_unimp_th_csr(CPURISCVState *env, int csrno,
-+                                        target_ulong *val)
-+{
-+    *val = 0;
-+    return RISCV_EXCP_NONE;
-+}
-+
- static RISCVException read_th_sxstatus(CPURISCVState *env, int csrno,
-                                        target_ulong *val)
- {
-@@ -51,10 +145,290 @@ static RISCVException read_th_sxstatus(CPURISCVState *env, int csrno,
- }
- 
- const RISCVCSR th_csr_list[] = {
-+    {
-+        .csrno = CSR_TH_MXSTATUS,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.mxstatus", mmode, read_th_mxstatus }
-+    },
-+    {
-+        .csrno = CSR_TH_MHCR,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.mhcr", mmode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_MCOR,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.mcor", mmode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_MCCR2,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.mccr2", mmode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_MHINT,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.mhint", mmode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_MRVBR,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.mrvbr", mmode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_MCOUNTERWEN,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.mcounterwen", mmode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_MCOUNTERINTEN,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.mcounterinten", mmode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_MCOUNTEROF,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.mcounterof", mmode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_MCINS,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.mcins", mmode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_MCINDEX,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.mcindex", mmode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_MCDATA0,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.mcdata0", mmode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_MCDATA1,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.mcdata1", mmode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_MSMPR,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.msmpr", mmode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_CPUID,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.cpuid", mmode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_MAPBADDR,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.mapbaddr", mmode, read_unimp_th_csr }
-+    },
-     {
-         .csrno = CSR_TH_SXSTATUS,
-         .insertion_test = test_thead_mvendorid,
-         .csr_ops = { "th.sxstatus", smode, read_th_sxstatus }
-     },
-+    {
-+        .csrno = CSR_TH_SHCR,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.shcr", smode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_SCER2,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.scer2", smode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_SCER,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.scer", smode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_SCOUNTERINTEN,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.scounterinten", smode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_SCOUNTEROF,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.scounterof", smode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_SCYCLE,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.scycle", smode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_SHPMCOUNTER3,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.shpmcounter3", smode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_SHPMCOUNTER4,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.shpmcounter4", smode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_SHPMCOUNTER5,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.shpmcounter5", smode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_SHPMCOUNTER6,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.shpmcounter6", smode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_SHPMCOUNTER7,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.shpmcounter7", smode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_SHPMCOUNTER8,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.shpmcounter8", smode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_SHPMCOUNTER9,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.shpmcounter9", smode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_SHPMCOUNTER10,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.shpmcounter10", smode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_SHPMCOUNTER11,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.shpmcounter11", smode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_SHPMCOUNTER12,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.shpmcounter12", smode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_SHPMCOUNTER13,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.shpmcounter13", smode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_SHPMCOUNTER14,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.shpmcounter14", smode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_SHPMCOUNTER15,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.shpmcounter15", smode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_SHPMCOUNTER16,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.shpmcounter16", smode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_SHPMCOUNTER17,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.shpmcounter17", smode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_SHPMCOUNTER18,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.shpmcounter18", smode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_SHPMCOUNTER19,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.shpmcounter19", smode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_SHPMCOUNTER20,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.shpmcounter20", smode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_SHPMCOUNTER21,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.shpmcounter21", smode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_SHPMCOUNTER22,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.shpmcounter22", smode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_SHPMCOUNTER23,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.shpmcounter23", smode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_SHPMCOUNTER24,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.shpmcounter24", smode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_SHPMCOUNTER25,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.shpmcounter25", smode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_SHPMCOUNTER26,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.shpmcounter26", smode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_SHPMCOUNTER27,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.shpmcounter27", smode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_SHPMCOUNTER28,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.shpmcounter28", smode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_SHPMCOUNTER29,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.shpmcounter29", smode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_SHPMCOUNTER30,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.shpmcounter30", smode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_SHPMCOUNTER31,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.shpmcounter31", smode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_SMIR,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.smir", smode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_SMLO0,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.smlo0", smode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_SMEH,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.smeh", smode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_SMCIR,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.smcir", smode, read_unimp_th_csr }
-+    },
-+    {
-+        .csrno = CSR_TH_FXCR,
-+        .insertion_test = test_thead_mvendorid,
-+        .csr_ops = { "th.fxcr", any, read_unimp_th_csr }
-+    },
-     { }
+diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+index 68e1ec37b4..1805aa8dfd 100644
+--- a/target/riscv/cpu.h
++++ b/target/riscv/cpu.h
+@@ -137,7 +137,8 @@ enum {
+     TRANSLATE_SUCCESS,
+     TRANSLATE_FAIL,
+     TRANSLATE_PMP_FAIL,
+-    TRANSLATE_G_STAGE_FAIL
++    TRANSLATE_G_STAGE_FAIL,
++    TRANSLATE_PMA_FAIL,
  };
+ 
+ /* Extension context status */
+diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
+index be36dca8f1..dc78fc1192 100644
+--- a/target/riscv/cpu_helper.c
++++ b/target/riscv/cpu_helper.c
+@@ -1424,7 +1424,22 @@ static int get_physical_address(CPURISCVState *env, hwaddr *physical,
+         }
+ 
+         if (res != MEMTX_OK) {
+-            return TRANSLATE_FAIL;
++            /*
++             * The result of address_space_* APIs above does not take into
++             * consideration reject reads, putting all errors in the same
++             * cathegory (DECODE_ERROR), although there's a clear
++             * distinction between a rejected read versus other errors
++             * (see memory_region_dispatch_read() ->
++             * memory_region_access_valid()).  This is something that
++             * we might have to deal with core QEMU logic some other
++             * day.
++             *
++             * For this particular error path, given that we made checks
++             * w.r.t legal PTE address before calling those APIs, we'll
++             * assume that anything != MEMTX_OK means a rejected read,
++             * i.e. a PMA error.
++             */
++            return TRANSLATE_PMA_FAIL;
+         }
+ 
+         if (riscv_cpu_sxl(env) == MXL_RV32) {
+@@ -1704,7 +1719,8 @@ static int get_physical_address(CPURISCVState *env, hwaddr *physical,
+ }
+ 
+ static void raise_mmu_exception(CPURISCVState *env, target_ulong address,
+-                                MMUAccessType access_type, bool pmp_violation,
++                                MMUAccessType access_type,
++                                bool pmp_pma_violation,
+                                 bool first_stage, bool two_stage,
+                                 bool two_stage_indirect)
+ {
+@@ -1712,7 +1728,7 @@ static void raise_mmu_exception(CPURISCVState *env, target_ulong address,
+ 
+     switch (access_type) {
+     case MMU_INST_FETCH:
+-        if (pmp_violation) {
++        if (pmp_pma_violation) {
+             cs->exception_index = RISCV_EXCP_INST_ACCESS_FAULT;
+         } else if (env->virt_enabled && !first_stage) {
+             cs->exception_index = RISCV_EXCP_INST_GUEST_PAGE_FAULT;
+@@ -1721,7 +1737,7 @@ static void raise_mmu_exception(CPURISCVState *env, target_ulong address,
+         }
+         break;
+     case MMU_DATA_LOAD:
+-        if (pmp_violation) {
++        if (pmp_pma_violation) {
+             cs->exception_index = RISCV_EXCP_LOAD_ACCESS_FAULT;
+         } else if (two_stage && !first_stage) {
+             cs->exception_index = RISCV_EXCP_LOAD_GUEST_ACCESS_FAULT;
+@@ -1730,7 +1746,7 @@ static void raise_mmu_exception(CPURISCVState *env, target_ulong address,
+         }
+         break;
+     case MMU_DATA_STORE:
+-        if (pmp_violation) {
++        if (pmp_pma_violation) {
+             cs->exception_index = RISCV_EXCP_STORE_AMO_ACCESS_FAULT;
+         } else if (two_stage && !first_stage) {
+             cs->exception_index = RISCV_EXCP_STORE_GUEST_AMO_ACCESS_FAULT;
+@@ -1856,7 +1872,7 @@ bool riscv_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
+     vaddr im_address;
+     hwaddr pa = 0;
+     int prot, prot2, prot_pmp;
+-    bool pmp_violation = false;
++    bool pmp_pma_violation = false;
+     bool first_stage_error = true;
+     bool two_stage_lookup = mmuidx_2stage(mmu_idx);
+     bool two_stage_indirect_error = false;
+@@ -1956,8 +1972,8 @@ bool riscv_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
+         }
+     }
+ 
+-    if (ret == TRANSLATE_PMP_FAIL) {
+-        pmp_violation = true;
++    if (ret == TRANSLATE_PMP_FAIL || ret == TRANSLATE_PMA_FAIL) {
++        pmp_pma_violation = true;
+     }
+ 
+     if (ret == TRANSLATE_SUCCESS) {
+@@ -1984,7 +2000,7 @@ bool riscv_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
+         cpu_check_watchpoint(cs, address, size, MEMTXATTRS_UNSPECIFIED,
+                              wp_access, retaddr);
+ 
+-        raise_mmu_exception(env, address, access_type, pmp_violation,
++        raise_mmu_exception(env, address, access_type, pmp_pma_violation,
+                             first_stage_error, two_stage_lookup,
+                             two_stage_indirect_error);
+         cpu_loop_exit_restore(cs, retaddr);
 -- 
 2.54.0
 
