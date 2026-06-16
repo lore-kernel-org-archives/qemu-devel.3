@@ -4,103 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47EB6CD98E1
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 12:44:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C669ECD98E1
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 12:46:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZT8x-0007BL-Tu; Tue, 16 Jun 2026 08:43:51 -0400
+	id 1wZTAz-0008BE-PF; Tue, 16 Jun 2026 08:45:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wZT8v-00078z-GR
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 08:43:49 -0400
-Received: from mail-yx1-xb135.google.com ([2607:f8b0:4864:20::b135])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wZT8s-0001PF-0Y
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 08:43:48 -0400
-Received: by mail-yx1-xb135.google.com with SMTP id
- 956f58d0204a3-66049669d78so4298412d50.0
- for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 05:43:45 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1781613824; cv=none;
- d=google.com; s=arc-20240605;
- b=lO0OIIVvTDH95x5cSVROTHYrYrjt0YzmVY3PqW1td5wanmSpSe+ZLYHu6wzVjBCayU
- rfC76/Pokm8mazYKgGX+hP5PGybJYDFAtRWjNcmzeRzzbjrVuiBCLZwUP/kiLT5gRIrs
- jTHALXd12IV8A2CKrrw2OPZjtoY0CEVQtH5eoFvanhsRY05+ceHXwNB0BmWU4sl1h1sS
- XPIXktZabh3jPttaHng/5LHlskQWZ56YoeV+d0t3PJD87O+J6XTepVssegGCspqsQq7Z
- KJQOH8cgxh0sKa7oLOBHIlS462uPKoNvQh7qcyGQWfRtZn9myzL/yzjvdQ/oHpbyXCWV
- tCMw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=laoIaVt7WeDw2SyRjKGoOZgX+naUFvyDr9NXQGotLjg=;
- fh=/ftcwOPYeEIhzseC7WF42kR+xVR/IJiWpLC1+A7SOWQ=;
- b=W63J8p5tsZXwxHFOpHglldC9PfgjLhucokdvpX16Mpik407YUgD1y3K2ZhFfj4CiKe
- tneYR2Iiu+YgVlBkIyrvfcy5fr9AJ6RkqsY3Wgsa8o8XbUZ90tK21/t1UL1zZUqjYdyh
- cgLBnab43Tio9J+tz6NoGsb2NK+HHn6YObxLMRYrqJt2ULmR2GkT2cpQ9IjrOiPhu6U0
- kX6gLwTWDcxe74cPfhfILCagGBUJvo0NljR0/hws/BWT6tYjk10DNMUGYqklFngyPEr1
- W5ATjQJuhL+fmtRm9DhBjgyHSz0Xmre0h86O2KTLKs8EYdlmw8KNEpOSJ0H8UyWOwWoL
- SF8g==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1781613824; x=1782218624; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=laoIaVt7WeDw2SyRjKGoOZgX+naUFvyDr9NXQGotLjg=;
- b=b6/d+hnhVIKmK0TPMcrQKvPHGczD5vUu7b90wE82PndZ9qqhZ/IUoQqEH825uIAtTE
- VFlX/XU/imfBGiBdcMSfBGyHhFNhHIKDdeO3z/5ss4rE5FMLYifFjRfwLJy3z/9FCar4
- IdE6OU75t8/qanu5zyxoxrQRDhmXAuyk8y9b08lTnYnxrWwYi1uj1YMm64UXl51fLjzL
- WOuBbKV+Rz9SHS5vibzIXLl5oVyd4v8uMYLoEjApMEC3++Ok3Sp9edVu+ePzybRgcyn4
- +T6Z5y+fl21f+ajYKqa/YzTZkfYO+PE29AumxrQdPG7mY8NL26VgF3o+egVzSTG7HWqS
- 4WcQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781613824; x=1782218624;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=laoIaVt7WeDw2SyRjKGoOZgX+naUFvyDr9NXQGotLjg=;
- b=mdNQuGep1Dz9V34sJIvazdrEff3U/su54/I84MVVt2A6xaQC7Fpp6rYzxwmKoSwxer
- vfLNfcXra1dliJzSD5CeBJhABWLXHBORj9l8kHzqcaYOdYZYqAvYJPlUVbFcZ1WJXbNO
- v3JVN1IXTQEXL+VPnJuntAf+5eEL8U83cZbWk5qozTTg7N/QZctEh7eQqMS36e3Odhca
- GjpdHIWVfXrjllDHafU9+cO0FRP9oEiwBrxA0qHBlrSDXrNotV9yKx/NFv1JNcDSxGw1
- YGCl7IZjuT3xs44VHGREUI1vZe6gHY2qngo4CzONjolPyFw+5F10v4qkjK5JHn0lEET+
- QFYg==
-X-Gm-Message-State: AOJu0YydoyDfHdOZ+htJeoq4M4fGvlCDfPV9wwhYbczhJ+i7Q7yEXjbm
- nLytHU6+ZOXWSSScmcxSsV3pTtDntA6FoJWMK6MjIVTh/iYThuONcer884YIM+qMmaVRgCJ26lZ
- rGi53oMP3XSgvnGaDDdPDZ0VlMLZbr6HFoLIr+B9j8jDNinzi0L7X
-X-Gm-Gg: Acq92OG/GxWGiUThbwypevyuPZLRMEqTTM+bGJVpnf+L3tkWbCm48P1TuQz4htrjURi
- iBzb8MSTfWXszAEltmf+k752OfOqRkDPJ1SEDaRuwi1RmtgFdKujcVNse1/LvQmQjRBzN57k9y7
- 0r7KHQbxPBECa1+HO0LnQPylwJLmk4iHzgcW8vUTix1+28FQkSPABAaiq9OZdRAV/e5cRTkEI8n
- iSSqd74S53dXaO/XQz4ULv1Z5ejq2Cv7hhG6+XD6DgrZjL2+nxLrQoKEVy0c0wXGXhkcafXY23h
- bXZCgYd7FKFvC9d+jraVSZoPiTVp100tSro+v2L03TmiP2XRUZLeITdMdCuIPRJPyTfpQ3Im/oT
- TVw==
-X-Received: by 2002:a05:690e:12c1:b0:651:cf23:6612 with SMTP id
- 956f58d0204a3-662782d7051mr14533944d50.34.1781613823960; Tue, 16 Jun 2026
- 05:43:43 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <cassel@kernel.org>)
+ id 1wZTAv-0008AB-Nt; Tue, 16 Jun 2026 08:45:54 -0400
+Received: from sea.source.kernel.org ([172.234.252.31])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <cassel@kernel.org>)
+ id 1wZTAt-0002KO-RK; Tue, 16 Jun 2026 08:45:53 -0400
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+ by sea.source.kernel.org (Postfix) with ESMTP id 00D3840677;
+ Tue, 16 Jun 2026 12:45:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 936E11F00ACA;
+ Tue, 16 Jun 2026 12:45:45 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+ s=k20260515; t=1781613947;
+ bh=AkZ4e6rUtR56qPue2f84yMLmGRJUBlR6W2sLg+1qU6o=;
+ h=From:To:Cc:Subject:Date;
+ b=OjIwwN3aJ+R5aYnPxjdeGGdYqyPFNAZpfTprwO9zbW65HgwbW49gqRmi6QttgAToC
+ jt098Dpxltu7AXIph3HQWEj0yxvv0HuT8VWnLANZzdFmjczY07HW/d83IVQRZBt2EK
+ GwjR/ZKdZga9CWxwg7H/uAqwuvIIkBfDJRxpNinr7Tsin2UnEPUhrOmh0W7sqiBZcy
+ muVyrjYT30DAIIe3btzMQ36+mO8r+NHTrGsowHUKKkK7wtB2JOYigmm2JH0JijW/zO
+ 4D5aL6l4rj0sea1cfMUaRMq5drSMBMvw2DiI4suVq1tpHf3sA7pyEM0HkrUvrnH8fU
+ A6D6mqMDcYPBA==
+From: Niklas Cassel <cassel@kernel.org>
+To: Kevin Wolf <kwolf@redhat.com>,
+	Hanna Reitz <hreitz@redhat.com>
+Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org,
+ Sam Li <faithilikerun@gmail.com>,
+ Dmitry Fomichev <dmitry.fomichev@wdc.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>, Damien Le Moal <dlemoal@kernel.org>,
+ Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+ Niklas Cassel <cassel@kernel.org>
+Subject: [PATCH] file-posix: fix cache.direct=on check for zoned block devices
+Date: Tue, 16 Jun 2026 14:45:35 +0200
+Message-ID: <20260616124535.1818951-1-cassel@kernel.org>
+X-Mailer: git-send-email 2.54.0
 MIME-Version: 1.0
-References: <20260604234852.573178-1-richard.henderson@linaro.org>
- <20260604234852.573178-12-richard.henderson@linaro.org>
-In-Reply-To: <20260604234852.573178-12-richard.henderson@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 16 Jun 2026 13:43:32 +0100
-X-Gm-Features: AVVi8CeaOQ6yPz4_zQYXf4uAJXrN6Y_KF6DsdjE35YC67mTANLchqI-ot9qDvWM
-Message-ID: <CAFEAcA8UuBtuZvyQP4bUVoeNcP34o5pTY34Zu-QPXPon_Zy3Bg@mail.gmail.com>
-Subject: Re: [PATCH 11/25] target/arm: Implement Floating-point round to
- integral value (predicated, zeroing)
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b135;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb135.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=172.234.252.31; envelope-from=cassel@kernel.org;
+ helo=sea.source.kernel.org
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,16 +71,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 5 Jun 2026 at 00:51, Richard Henderson
-<richard.henderson@linaro.org> wrote:
->
-> This is the various FRINT rounding modes.
->
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
+For zoned block devices with SWR zones, the order of the writes must be
+maintained to avoid write not at write pointer errors.
+Thus, cache.direct=on must be used to bypass the page cache, since the
+page cache uses write-back caching, where the physical order of the writes
+is not guaranteed.
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+There is already a check for cache.direct=on in raw_open_common(),
+however, this check is done before raw_refresh_zoned_limits() has been
+called (which initializes bs->bl.zoned), so it is currently dead code.
 
-thanks
--- PMM
+Fix this by moving the check to raw_refresh_zoned_limits(), such that the
+check is done after bs->bl.zoned has been initialized.
+
+Fixes: 774c726ceb2a ("block: add zoned BlockDriver check to block layer")
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
+---
+ block/file-posix.c | 22 ++++++++++------------
+ 1 file changed, 10 insertions(+), 12 deletions(-)
+
+diff --git a/block/file-posix.c b/block/file-posix.c
+index 5019ddade9..2cdae2d40c 100644
+--- a/block/file-posix.c
++++ b/block/file-posix.c
+@@ -800,18 +800,6 @@ static int raw_open_common(BlockDriverState *bs, QDict *options,
+             goto fail;
+         }
+     }
+-#ifdef CONFIG_BLKZONED
+-    /*
+-     * The kernel page cache does not reliably work for writes to SWR zones
+-     * of zoned block device because it can not guarantee the order of writes.
+-     */
+-    if ((bs->bl.zoned != BLK_Z_NONE) &&
+-        (!(s->open_flags & O_DIRECT))) {
+-        error_setg(errp, "The driver supports zoned devices, and it requires "
+-                         "cache.direct=on, which was not specified.");
+-        return -EINVAL; /* No host kernel page cache */
+-    }
+-#endif
+ 
+ #ifdef __FreeBSD__
+     if (S_ISCHR(st.st_mode)) {
+@@ -1462,6 +1450,16 @@ static void raw_refresh_zoned_limits(BlockDriverState *bs, struct stat *st,
+     }
+     bs->bl.zoned = zoned;
+ 
++    /*
++     * The kernel page cache does not reliably work for writes to SWR zones
++     * of zoned block device because it can not guarantee the order of writes.
++     */
++    if (!(s->open_flags & O_DIRECT)) {
++        error_setg(errp, "The driver supports zoned devices, and it requires "
++                         "cache.direct=on, which was not specified.");
++        goto no_zoned;
++    }
++
+     ret = get_sysfs_long_val(st, "max_open_zones");
+     if (ret >= 0) {
+         bs->bl.max_open_zones = ret;
+-- 
+2.54.0
+
 
