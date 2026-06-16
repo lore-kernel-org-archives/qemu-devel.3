@@ -4,119 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09379CD98E1
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 23:03:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DAFEFCD98D2
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 23:54:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZcnP-0006z4-Pl; Tue, 16 Jun 2026 19:02:15 -0400
+	id 1wZdbL-0008S9-9E; Tue, 16 Jun 2026 19:53:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1wZcnO-0006yg-UK
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 19:02:14 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1wZcnN-0001GC-0o
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 19:02:14 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781650931;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=psGvQPF4L61GMg2ufnde8AbhD6rsAtI3w+6cM4o/hfc=;
- b=HKdXmXUTCjhdsIslKP0gLFhDslCKDIH9/cCO+RqMazMf+Jufp2Gu94fXpTF6i97Ky8jUBA
- L6XuDadw6RdEzc9eaSWYNrklqZl169Tbt6xo4OkIbUyrYiYqP9V+kstoce06YRD+9yQ/HL
- oOG2ttcRTe1iEz6+xETXWhfZR1zfuYA=
-Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com
- [209.85.214.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-359-CK4EN41ZOOyBThm_HuCqbQ-1; Tue, 16 Jun 2026 19:02:09 -0400
-X-MC-Unique: CK4EN41ZOOyBThm_HuCqbQ-1
-X-Mimecast-MFC-AGG-ID: CK4EN41ZOOyBThm_HuCqbQ_1781650929
-Received: by mail-pl1-f200.google.com with SMTP id
- d9443c01a7336-2bf11699875so3276505ad.1
- for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 16:02:09 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <joel.stan@gmail.com>)
+ id 1wZdbI-0008RG-UM
+ for qemu-devel@nongnu.org; Tue, 16 Jun 2026 19:53:48 -0400
+Received: from mail-yw1-x1133.google.com ([2607:f8b0:4864:20::1133])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <joel.stan@gmail.com>)
+ id 1wZdbG-0006fm-AV
+ for qemu-devel@nongnu.org; Tue, 16 Jun 2026 19:53:48 -0400
+Received: by mail-yw1-x1133.google.com with SMTP id
+ 00721157ae682-7dd3f176f84so50919967b3.0
+ for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 16:53:45 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1781654025; cv=none;
+ d=google.com; s=arc-20240605;
+ b=cyfiraarlR6N234fbjoiQNWzrE+yFFkhcw0VOvlGoY9jFKymbuBDPRQRGu0Q2P5X/E
+ kLHM5Uu0B3mKfgQzsKBgGq44iTL31vDcPvfOI4tadjzcVk2czd7vzP09v0b310eeuTFu
+ mw0Kvf5yJhhPvX3sOrQOL7mZGll/2kMixiShzCel+Cj19/EYpre4/+NHEzmQ6DpHzZn4
+ q4Tr9s8NQd2pPb7W4AaN3xBoSG81nSJxXw7l20YbqMLdsClgFyWbGdtY2ljQbrOtBUta
+ hXrjx8jv5t3ISZLM5frD6RWYp2XOfME1nGL5PLTeWbmsEu0cWpwhmZBkuwGOgzwTJZHg
+ LCvQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=3uyaD0H+P51kA/CNyr779LEJ13leNm6JvFsygQeaYEE=;
+ fh=wTC9xWqV/VwFjaOXl+IbV7w3e8aKHG3gq+rXuyfkzaE=;
+ b=Uyi0nXMi5axB+4TqQMoNUNeMV6Wzt6ouLCmHa2iqzxfscwaS7r6KasIpmMINjzVLP6
+ fgqwIV2jaBGFJA0eDoD50GaspW7IfiPln96A2CGcwFVJUnj38BUHN9OUwUc/J7ocPb4F
+ etsWIntDUbK48Tcz+xjYCH6b6aRFbp9XfIZETfWp684NcenOJk9A4/bZvGvDrF7ntLIe
+ dZu5n3ih9GFRzO6Awxp+gNJLuMtiQ3ZJsepqUtarccICHnOombMG5gLhuVu4DgPdW9ff
+ 1UbWUrW52/Q+Ee3BrMaNhY65lwiGc2z4gKFRwyPo0PVir55+0aR2C1b0+1kF09ORXlDs
+ GGjg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1781650928; x=1782255728; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=psGvQPF4L61GMg2ufnde8AbhD6rsAtI3w+6cM4o/hfc=;
- b=Ys5KjpYZ8VLBH1IytARz/RegKovNKwQ1MKIZazIUp0tUyvKoRmq9Z2oXPSV0G/KBD8
- lxoe9eKR1IX/Ir+6J5hQMnmtCbENzu/DFY7XSLiBzhNz3rwmSwyEX73uT30DENNmpH0M
- 1hcv8yN42Ak2Z0ToSkun/nUdA4Soh0fTVlhhk+hMV9A9uE4v8qG569w9eR/N7H45TKBX
- KpaXQu3GaiRw1Y/2CuNMynMjs22l/+2T3eEO1QNztHjYeP+pTyeY2gjbqvLUMrbILAvp
- /IJ974L86PiT6IUuFY8doyhjQtjjQa571HCifwxvXXHfWQpZjAd9JW46rhjTojUW9E/7
- /A/w==
+ d=jms.id.au; s=google; t=1781654025; x=1782258825; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=3uyaD0H+P51kA/CNyr779LEJ13leNm6JvFsygQeaYEE=;
+ b=ctkNPnaQpQzgh+2viHAxkCylTCuGYtDgl2XuDa/6NY+KG2qezNV7EMkxjCLbR24xFA
+ xCxcd/sMwMSsX/TabFKCTHn4qzIAiHbor0AEVVjCgkPanFv8TTiCLRbBo10TGjlY4o2v
+ KhRsQr25dCAk3iGMp/xs5VGU2+tf9c50uMKcg=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781650928; x=1782255728;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=psGvQPF4L61GMg2ufnde8AbhD6rsAtI3w+6cM4o/hfc=;
- b=eCxpkP7MjyPlQ6l+8jNp9qvbsqTjMfPu0+1i/F3g19xbP1MU8g8MobczX4hqQ87tch
- KQUcZTI5nPynLfXHbrKQXgfrFrQ9PZ2DGNlm5prA5SOZ+HQk6dfA7WthHAQjSMz6uXHk
- OceSZsyuk1wK9yvpcyR/VmRbpOhA3e49H3asw4Xo9dsFRQ3TG1zKU2335+KQgtHnjY1a
- pB5CAkBND+YC/bugXzqLz4SLWK8O03WJT2eTqZ8IZL/wo534ZUbc5juRIzm+27QF6NVr
- DgJ3UPKOCSBW20TJPGEzYNVfSEuF5/2CHi9Yg8FjnZKaYFD4tn+p5V+QTMYsoL4OnYtB
- eoEA==
+ d=1e100.net; s=20251104; t=1781654025; x=1782258825;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=3uyaD0H+P51kA/CNyr779LEJ13leNm6JvFsygQeaYEE=;
+ b=BUIOKTu2yEsgTL+8c9oOrt/luc0zNe+bdOjGbrlQTYD2z7X5EwMP9cTPGffLtF6BhD
+ iuZ25eq7je6SrrNGw6ijfiBEyugl26qji10ALnL9lsuBMCn0R0LAvM2jLz5C+rqZU7Yn
+ EzY6XLFn67kTnfptmISeMugX6ADku6Li8PTSfLGghPIeDhSq9lgpSLkfPXFWUapLbiHe
+ LW4fyRW/56nTA1SlYNh7zcdfLhaJ0lvslXdyRnCgTSOE4xRv66dqZqGA8Vakgc4drKw1
+ 5A/h0c9gll8zY30uW1IFAswLrDuwUtDHzUjtUrm0f1onfGCLsK7nlLbpXYEz0gz5MQph
+ fMwQ==
 X-Forwarded-Encrypted: i=1;
- AFNElJ8BFsZyj9BjHh79YAAQE6QkHUk7KzRTejRtCIoc6A8eIPuaK7zKyLjVGf6LsWhKXU1PebCLJ4TG/NIj@nongnu.org
-X-Gm-Message-State: AOJu0YzRSDjfcPtBl2n77JSuPu0DsFaQTBEASlWN4f0RAV0nLejHKmP3
- CbAgh7yzFf5JAHxg+2mOHb2vUiovOaVRMvvR5bxhzeum6CK4tfFanpiNMUwtFtjcxra4euYMz3f
- ZMFurM2Q7yvSKK0T5l2fewLDWcOhFR1Mw9HNgr0QRALMljUh6MaELG+9y
-X-Gm-Gg: AfdE7cnxXUAsIK7Hv3rqbBTY51XUq4r6ih4trprHUBLuk1lZ3jtickZwJrgL0U2HYDT
- hYFPfxV0kbkQxEHWjQ00MFYi0qXq+MPpzHplawnOq5u+N3maKJQxPv9fSmpv08QxUR+DD1ophY8
- DPcYULQDfY+ZZBRZyKR9h7FXtUQUUtprNOYyyo0s85lqWWPBAa+StRwZitisTYAnqGaFXKG68VL
- nZLAm4J+AsbvDVmKcl8R6T7cccO1xSbDIJMiDzkfcuC1W3AOhqXm/QrOVU/eX3bVoO6rPWnlxeb
- VH7xGx8nQeaBmHPnKIhDwbDtvgX4I6Zj2SilkVvJzbvxB7gEIa4LuiDBhhEBqZRZl6BmDKXit3l
- gtQ+cTLkA9vBMaltk6Vx1UnYXFtMR5xeAew0hwhZ5X7rA8gStVtgSjteIOCmQXM6I
-X-Received: by 2002:a17:903:2ed0:b0:2c0:d29b:34ff with SMTP id
- d9443c01a7336-2c6bcfbc399mr5214825ad.10.1781650928476; 
- Tue, 16 Jun 2026 16:02:08 -0700 (PDT)
-X-Received: by 2002:a17:903:2ed0:b0:2c0:d29b:34ff with SMTP id
- d9443c01a7336-2c6bcfbc399mr5214415ad.10.1781650927992; 
- Tue, 16 Jun 2026 16:02:07 -0700 (PDT)
-Received: from [192.168.68.51] (n175-34-8-244.mrk21.qld.optusnet.com.au.
- [175.34.8.244]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2c4327ac794sm143688145ad.46.2026.06.16.16.02.00
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 16 Jun 2026 16:02:07 -0700 (PDT)
-Message-ID: <fa3c7e4d-4ec5-4aa9-a9b0-612f54ba474c@redhat.com>
-Date: Wed, 17 Jun 2026 09:01:57 +1000
+ AFNElJ+u/ayU1Et5ndbyxPmi3RqegkEDPEW2Fgx1fr2wTbtWmn1wrJ+A+WuSo9G9g1/H+bbMOYn32LJc9g+S@nongnu.org
+X-Gm-Message-State: AOJu0YwdqIhmBVdlhjcHOBOwuH5+46gntnJziOjKqN8QRkBk2Q3LXKQr
+ 9GsOT5r8iW3krAJ2RILr3BviEWiJGpuZjl78WeSc0GkkNyueAtOuF02X1UtJIPf+i6azEnjIMsQ
+ 3kmLj5nfApbk61+H/7fxXPztMuEVVYeE=
+X-Gm-Gg: AfdE7clalm63VWACYDQgc+lSZ7FAyxu78CA0UY/IZLx7v/ubiEgYO1RLXeKOt7aX3cf
+ IRMMCq/mVo9vNbxhpt6OE7oz7PONecYIJniSRDf8rY9uCjIB1LVN4ZF+iM7QHfDUyUNRimHgpVq
+ JUDRY0oMGQKA2weaQ8iJ2lOExpbusjJ47wZX1BJhw+GzPcsbQNSHXXWv0zj+Ad0S/NVJGMmML7V
+ AypuCG9ygJex2WN+KimY9+v8p58F2d/YIFFBSojes2DCWeRVe+ajPiIl42A+uB6Nz5c+ogmSyfF
+ XvPrm3sfcj7N4GEr8QwRLdiIj1Fl6OOI5Mn5aaa6UwSt/lFoAErze1kfzX/1Mm+VxJCl13K6deE
+ YIOaLt5jjUt4uZ145TLBWO4k5
+X-Received: by 2002:a53:c0cf:0:b0:65e:4ac9:272e with SMTP id
+ 956f58d0204a3-662cbd1f291mr977534d50.50.1781654024771; Tue, 16 Jun 2026
+ 16:53:44 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/2] system/memory: Use qemu_ram_{copy, move}() in ram
- device region accessors
-To: "Michael S. Tsirkin" <mst@redhat.com>, Ding Hui <dinghui@sangfor.com.cn>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, peterx@redhat.com,
- alex@shazbot.org, richard.henderson@linaro.org, peter.maydell@linaro.org,
- berrange@redhat.com, philmd@oss.qualcomm.com, philmd@mailo.com,
- david@kernel.org, clg@redhat.com, pbonzini@redhat.com, phrdina@redhat.com,
- jugraham@redhat.com, liugang24219@sangfor.com.cn, shan.gavin@gmail.com
-References: <20260616052552.389021-1-gshan@redhat.com>
- <20260616052552.389021-2-gshan@redhat.com>
- <20260616021153-mutt-send-email-mst@kernel.org>
- <dfc55b58-5f5d-4ac8-a508-b208cf9565fa@redhat.com>
- <20260616054555-mutt-send-email-mst@kernel.org>
- <ecbd8c97-29f4-4e80-af15-ef5c25f2a66b@sangfor.com.cn>
- <20260616115004-mutt-send-email-mst@kernel.org>
-Content-Language: en-US
-From: Gavin Shan <gshan@redhat.com>
-In-Reply-To: <20260616115004-mutt-send-email-mst@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=gshan@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+References: <20260603065859.592063-1-joel@jms.id.au>
+ <20260603065859.592063-8-joel@jms.id.au>
+ <CAKmqyKP0VxQj0apsuVOrCeaP0KVHy5VfdqH-Nn9_99Vc76Ru_w@mail.gmail.com>
+In-Reply-To: <CAKmqyKP0VxQj0apsuVOrCeaP0KVHy5VfdqH-Nn9_99Vc76Ru_w@mail.gmail.com>
+From: Joel Stanley <joel@jms.id.au>
+Date: Wed, 17 Jun 2026 09:23:33 +0930
+X-Gm-Features: AVVi8CcFJ3G0RX6JPO1K2-FuV6xVNUm69iRE_OsHDmYuZfclUjLd1CAoD8fziiA
+Message-ID: <CACPK8Xdow4U7qJ73BFneyzxo6U1RK1kLnY=UkdQzskY7H=oqOQ@mail.gmail.com>
+Subject: Re: [PATCH v8 07/12] hw/riscv: Add Tenstorrent Atlantis machine
+To: Alistair Francis <alistair23@gmail.com>
+Cc: Alistair Francis <alistair.francis@wdc.com>,
+ Nicholas Piggin <npiggin@gmail.com>, 
+ Andrew Jones <andrew.jones@oss.qualcomm.com>, 
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Chao Liu <chao.liu.zevorn@gmail.com>, 
+ Michael Ellerman <mpe@kernel.org>, Joel Stanley <jms@oss.tenstorrent.com>, 
+ Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>, 
+ Portia Stephens <portias@oss.tenstorrent.com>, qemu-riscv@nongnu.org,
+ qemu-devel@nongnu.org, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1133;
+ envelope-from=joel.stan@gmail.com; helo=mail-yw1-x1133.google.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, FREEMAIL_FORGED_FROMDOMAIN=0.001,
+ FREEMAIL_FROM=0.001, HEADER_FROM_DIFFERENT_DOMAINS=0.249,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -132,68 +127,118 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/17/26 1:51 AM, Michael S. Tsirkin wrote:
-> On Tue, Jun 16, 2026 at 08:50:27PM +0800, Ding Hui wrote:
->>> What is the question, exactly? That's why I made the list of 11 issues.
->>> Is that unclear, somehow?  Another reason to include that, maybe.
->>>
->>
->> We can take the e1000 issue on aarch64 for example:
->>
->> Link: https://lore.kernel.org/qemu-devel/20260527091711.3901-1-liugang24219@sangfor.com.cn/
->>
->> The software allocate ring buffer for hardware to receive packet.
->> In normal case, the hardware fill the RX ring descriptor, and with status DD bit=1 (Descriptor Done),
->> then the ownership of the ring descriptor is converted to software, after the software consume
->> the descriptor, it will write status DD bit=0 and give it back to hardware to refill data.
->>
->> pci_dma_write calls memcpy at the underlying level, and on aarch64 with glibc 2.24+,
->> the memcpy/memmove implementation uses a branchless sequence that copies
->> the same byte three times when count == 1.
-> 
-> Yes this is issue 11:
-> 
-> 10. on non-x86 memcpy will do multiple overlapping stores even
-> for single byte writes. E.g. it does it to avoid extra branches.
-> This is causing issues in practice.
-> 
+On Mon, 15 Jun 2026 at 15:15, Alistair Francis <alistair23@gmail.com> wrote=
+:
+>
+> On Wed, Jun 3, 2026 at 5:04=E2=80=AFPM Joel Stanley <joel@jms.id.au> wrot=
+e:
 
-This issue should be fixed by this series. With this series applied, the memcpy/memmove
-are replaced with 'qatomic_set((uint8_t *)dst, qatomic_read((uint8_t *)src))' in
-qemu_ram_{copy, backwards_copy}_unaligned(). I hope Ding can give this series a try
-to confirm.
+> > +static void load_fdt(TTAtlantisState *s)
+> > +{
+> > +    MachineState *ms =3D MACHINE(s);
+> > +    char **node_path;
+> > +    Error *err =3D NULL;
+> > +
+> > +    ms->fdt =3D load_device_tree(ms->dtb, &s->fdt_size);
+> > +    if (!ms->fdt) {
+> > +        error_report("load_device_tree() failed");
+> > +        exit(1);
+> > +    }
+> > +
+> > +    qemu_fdt_add_path(ms->fdt, "/chosen");
+> > +
+> > +    /* Clear memory nodes and update with the specified RAM size */
+> > +    node_path =3D qemu_fdt_node_unit_path(ms->fdt, "memory", &err);
+> > +    if (err) {
+> > +        warn_report_err(err);
+> > +    } else {
+> > +        for (int i =3D 0; node_path[i]; i++) {
+> > +            qemu_fdt_nop_node(ms->fdt, node_path[i]);
+>
+> Should we print a warning here to the user that we are doing this? I
+> would be confused (and annoyed) if QEMU deleted my memory regions and
+> I didn't know
 
-After this series is applied:
+The code is the same for the arm machines; they silently update the
+device tree when provided one. I agree with you though, I will add a
+warning.
 
-   pci_dma_write
-     pci_dma_rw
-       dma_memory_rw
-         dma_memory_rw_relaxed
-           address_space_rw
-             address_space_write
-               flatview_write
-                 flatview_write_continue
-                   flatview_write_continue_step
-                     memory_access_is_direct          // return true
-                     qemu_ram_move                    // replaced original memmove()
-                       qemu_ram_{copy, backwards_copy}_unaligned
-                         qatomic_set((uint8_t *)dst, qatomic_read((uint8_t *)src));
+I added this as in testing the device tree was larger than what the
+machine had, which Linux happily tries to use and crashes during boot.
+I can see the argument for not touching the device tree at all but on
+balance I decided helping the user out is the right thing to do. If
+users complain I'm happy to change it.
 
-For this specific case, what's done in this series is similar to the proposed
-in that thread [1]. In the proposal, pci_dma_write() is replaced with address_space_stb(),
-and eventually bail into "*(uint8_t *)ptr = v;". However, address_space_stb()
-seems not friendly to DMA write from from syntax level because the limited
-size is supported by it.
+> > +static void tt_atlantis_machine_done(Notifier *notifier, void *data)
+> > +{
+> > +    TTAtlantisState *s =3D container_of(notifier, TTAtlantisState, mac=
+hine_done);
+> > +    MachineState *machine =3D MACHINE(s);
+> > +    hwaddr start_addr =3D s->memmap[TT_ATL_DDR_LO].base;
+> > +    hwaddr mem_size;
+> > +    target_ulong firmware_end_addr, kernel_start_addr;
+> > +    const char *firmware_name =3D riscv_default_firmware_name(&s->soc)=
+;
+> > +    uint64_t fdt_load_addr;
+> > +    uint64_t kernel_entry;
+> > +    RISCVBootInfo boot_info;
+> > +
+> > +    /*
+> > +     * A user provided dtb must include everything, including
+> > +     * dynamic sysbus devices. Our FDT needs to be finalized.
+> > +     */
+> > +    if (machine->dtb =3D=3D NULL) {
+> > +        finalize_fdt(s);
+>
+> Was expecting a finalise here :)
 
-   [1] https://lore.kernel.org/qemu-devel/20260527091711.3901-1-liugang24219@sangfor.com.cn/
+Desensitized.
 
-   address_space_stb
-     address_space_stm_internal
-       stm_p
-         stb_p
-           *(uint8_t *)ptr = v;
+> > +    /* DDR */
+> > +
+> > +    /* The high address covers all of RAM, the low address just the fi=
+rst 2GB */
+> > +    lo_ram_size =3D s->memmap[TT_ATL_DDR_LO].size;
+> > +    hi_ram_size =3D s->memmap[TT_ATL_DDR_HI].size;
+> > +    if (machine->ram_size > hi_ram_size) {
+>
+> What if machine->ram_size is less then s->memmap[TT_ATL_DDR_HI].size?
+> You will still allocate s->memmap[TT_ATL_DDR_HI].size instead of what
+> the user asked for. You then report what the user asked for in the DT,
+> so there is a bunch of wasted memory.
+>
+> Memory is expensive these days, we can't waste it
+>
+> Also, if the user asks for 2GB or less, you shouldn't create ram.high at =
+all
 
-Thanks,
-Gavin
+Good catch. There's an even better bug; ram.high and ram.low are
+aliases into the machine ram region and they are always sized to their
+default maximum, regardless of the machine ram size.
 
+address-space: memory
+  0000000000000000-ffffffffffffffff (prio 0, container): system
+    0000000000000000-000000007fffffff (prio 0, ram): alias ram.low
+@tt_atlantis.ram 0000000000000000-000000007fffffff
+    0000000100000000-00000010ffffffff (prio 0, ram): alias ram.high
+@tt_atlantis.ram 0000000000000000-0000000fffffffff
+memory-region: tt_atlantis.ram
+  0000000000000000-00000000ffffffff (prio 0, ram): tt_atlantis.ram
+
+They should be sized to the configured size.
+
+The device tree is okay because it sets the region based on the
+configured ram size, and Linux politely doesn't write outside of that.
+
+In hardware the high region is where the ram lives and low is an alias
+of the first 2GB. I'll fix up the modelling to match, and set the
+sizes appropriately.
+
+> Otherwise looks good
+
+Thanks for the review.
+
+Cheers,
+
+Joel
 
