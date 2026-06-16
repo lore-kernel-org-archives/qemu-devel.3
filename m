@@ -4,105 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92ED0CD98CF
-	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 08:31:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A43B9CD98E3
+	for <qemu-devel@archiver.kernel.org>; Tue, 16 Jun 2026 08:39:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZPC1-0003sO-7L; Tue, 16 Jun 2026 04:30:45 -0400
+	id 1wZPKC-0005JL-1q; Tue, 16 Jun 2026 04:39:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wZPBz-0003pB-92
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 04:30:43 -0400
-Received: from mail-yx1-xb131.google.com ([2607:f8b0:4864:20::b131])
+ id 1wZPKA-0005Ih-6b
+ for qemu-devel@nongnu.org; Tue, 16 Jun 2026 04:39:10 -0400
+Received: from mail-yx1-xb12d.google.com ([2607:f8b0:4864:20::b12d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wZPBx-0004n2-PC
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 04:30:43 -0400
-Received: by mail-yx1-xb131.google.com with SMTP id
- 956f58d0204a3-6626b5ace23so3911590d50.0
- for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 01:30:41 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1781598640; cv=none;
+ id 1wZPK8-0006B9-P0
+ for qemu-devel@nongnu.org; Tue, 16 Jun 2026 04:39:09 -0400
+Received: by mail-yx1-xb12d.google.com with SMTP id
+ 956f58d0204a3-6605859ed83so1035753d50.3
+ for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 01:39:08 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1781599147; cv=none;
  d=google.com; s=arc-20240605;
- b=fsfBFjh9xg/NfLhSprGHzSWIhMHnWv5qd5sCctkfBSLRWovwAgntXyQ3vhgs7VkJtn
- t6P++bR6/nLYiLwknIZ6HH89jRZZGq7xvVnqmxSJepURoD1OIPo8GYf4Bf1+tf93xtX/
- PjiYbJrXPOE11E53685j/jJ89MyX1WmGEjrUbYt0w+txGoc8nKfWinG5ueinAWxJDuQc
- l+ELULGbsg0e+SJKRB++X53nrBX4jgoQyFWoVYFCoV2gBomUEYwlypJo+UFlXv5KGNIj
- T+PPddopnBB+Ounl8oSgZqyCwk+m+iCF1zIvuFeYrMN0JnO44LfTh19qmwH0EUSoU6bE
- YY5w==
+ b=ItuLImlXG2HxX8MT7qqNXlrE0LR+2T8/T5r4PWt6+rakYIR3bAtwxJ+GYJe+3KYe1T
+ QT/UN5MdDPl+wWvuiLkLHvp93gY/FSRlNFVraIPjV8q1VeQPPjxu+FSyWWKxqz5mwOhd
+ iMOMqYMh51r+BAPAH5IDs5TPvAUs5AwJk+ZQSzk+u0zDzFZ1hrNeBZ+YMY0WkspXf7Qc
+ 6ykIG3jWKS/RFp85C6w/n6Ld2sbn6WDt1q8bxWE9OrGmMTzEY+Q3xBPfQ9hwDQUzuvAm
+ jCDmypSBrTXCnTUhEb44A2HSN5sVQzAZeJrXxeCAuYJsNwg7CEsaN9WEphlya7BQImm1
+ lWMw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=ipFAUhzjvMHVGdUYRdJgwNu9TuMm8bv+SyOKrpfzJqI=;
- fh=3P9WV+Oqv16eOJ3dAbNAhhRxUBqLtDgHDVg9YpB2Xeo=;
- b=NMOFCBO+i7tUc3ZvJfn3qWNjld1vYhzXH5rsLlOPwkfnTqqxgYlLDNyfYCZQrNdVpP
- 8a6VqOsuUfoH/PFbVuYVK/jHgIBI8ip23gjaXLO7DsU2UsD5/uhuua0s5WhxzjUhcGm7
- boGJR4zkj+xkdL17N/1U93Mh+gFtZQ68NmYBxaN/DBzUQ8622ixzzZDTOEX91ayqBr83
- G/J9YAR9KfU4/U91IBhv9XfSgYjSLkovEf78LV1raIc0cfsCX1wZMtNU4lzK8W8yi+XP
- sPsPVRui4BWHUFXfIS6qMaw4JvJ2nSATCRowMwYbTsC/o2afWZD1C7o1fSSmlkurzgOE
- vhcg==; darn=nongnu.org
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=N/MzDZHrzQwAaBrdyKTl6mbJ8PrjnugzPWBeKnXXafk=;
+ fh=OwYFBL65Din92tpHXFu1nP6pn6YPr5LFIlwd2G78oFM=;
+ b=EQ151r/eaj+XF89w3QqQaScI4mRKTRFcBjysTotqvmNsH0klU3dx6cXGD9x3ow4fwO
+ /sS5PrCf7zoNLEdEH+iPxOfJ1T8rATGUQtDmwdYrFPU4HnNKKI2GnX6TKxr7hYu7DwsU
+ 2dm2VCbxZRq9XFfivRsu1SpEYGO1A4gZyiAEBNf6vb2DxyLURf89GjHsdkNW9PYXzr58
+ cfRuWlnK8LA8NOD/qQDUxMPb3VBsq3LLJKgHGpD3+4g4fQ8Wdzk6EKKAAsLA/DJ1l5uF
+ TToGXUPYB45M2Fk2y/9rF+MWI9zjfHmsFgBRUUPKOR8VOYRzSH8djMblMi/3wKdlELca
+ oxrA==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1781598640; x=1782203440; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=ipFAUhzjvMHVGdUYRdJgwNu9TuMm8bv+SyOKrpfzJqI=;
- b=QDFEYXGPVbV3hVlyDKMCXVOSDbtMddWm7uLBieDIVqIMVprgBMqXx+ujHWrXVH6YSM
- W4s+QQD90tKtdcxb+dtmNAnBSTRP7KlhG6llWPKoqw/DfToEgGB9K2S1uCDzU1lQDpQH
- CXUaXIkuJRSFu4+d9WpExXUf4qnYu8EEMlZUg76eGjRlOpIUxGp3gJfx6PobnuiG+TTR
- 6FBnoloWzpwLETI0nEL7ceLiSx6uBr13ZRDpz+3zdnubrtrf9NY2YYSDV/eyhHDut1pS
- kP6Xpy5uWGZwqFroBaWTJ1F02uUE6Yi8XG3Ft9bRACrihCpJ3PRy/pLt9DRbFfe+MVmH
- ZmuA==
+ d=linaro.org; s=google; t=1781599147; x=1782203947; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=N/MzDZHrzQwAaBrdyKTl6mbJ8PrjnugzPWBeKnXXafk=;
+ b=JnRtlJ7AB38RweHAI6grnGGzh7OtSQUWlbIfnw9MnqUI7Bt0NTj4fpJrRtRcnzj6x/
+ AlGARyBrrMwUc9scBQS4JCSm072xv9xfhm8I5m6crcYSihsTY3Yck1KEOgK3AqfNysuJ
+ pz7FtCrzgwpc0LpSyCKfvLiyjDCySEwbKehrg5vMzUMTXALo0Mnhf4fRADasQDr+xadV
+ MUW4W+qwa4b3GXLodicIvPsIwU5iOl/8Vw0vPdEYKpzbRT+NrCytJm2zFN1B7Vv8zLqZ
+ VPSASw4MtOlKpH+TNAZixMC6Dyjt148HWYTBUTy/Ma2pGNLujWejWK8x6Chd8OkeHAtB
+ BGIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781598640; x=1782203440;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=ipFAUhzjvMHVGdUYRdJgwNu9TuMm8bv+SyOKrpfzJqI=;
- b=C0sadIFwNlNRxGQVUKiqu59DpNL3QnDypSiCeC1yTVvY7FPwn+LmfQAxjnNMijvxrM
- NmYQMx9MRNwOtmey3oTlSAeDDcI7fax5JO+KNKfBcq8oDmychqsKYfmnm+fy9+Ne6pOa
- k+2dhlvU6gFceObSTQRZPNHBL9gNr0GuOtUkNd7DEPjDAelznsRuIemzWV7AwgPozePy
- v210X511dthPv33Su5lYTOKnuRZut+YzlLV7dIqt5k2loMz1HOboLvd8/ks26E+O3fLX
- 9lQBOH5zAoKLQkXdMPdxtRO9c7zybEZ1vao+ZqFLFO8zfTlfSNx/Ol/675EGbIUje+tz
- fVbw==
-X-Forwarded-Encrypted: i=1;
- AFNElJ/XN13v7CtNtx+hLMcs65qybn0HjHe/NEVbn+zf95JgGdjW3VnMdJbh6piT/LZsyOacQax07Djoij2I@nongnu.org
-X-Gm-Message-State: AOJu0YxcV5FP+TihTE2CfKpVjqkkeDiSrV0q8dDA55dxPS4SyCGHCDve
- 9c24ZR2n4uftsrtd6mKKJ57fvLAgLGvozlE5jwz/bsQkAzz/dM7gVnOuln8qGylBUTknOPrA3oi
- Y8nvgNj3Gn6PSSObKhK9vUQsYtFZ1bDcOgJdbkuX0ag==
-X-Gm-Gg: Acq92OEXvfV2VbOxZchELSEavORP8N7fUfGcUHqOt8M/XUEhP3djQvJAtGWpO4KOxQ0
- zUfSdDOorTugeaDablJm6rT4RJB/2ZsMSuL02DB8B69YKRW8mKwk1lPcTsT3O5fGEDaQEe9CN8j
- ITkFNXaReQtRMAEhfaeDFQ+OQAzL3zpXQ7d/sv84fACQTTAOB39vB3JyCW/NqMAu8Ke1xAw3Xq0
- zQVRM7QZdmYUWR5kxanSu3pDsQYUYcojaTpPvnn5U9pjQcDtnokDMkbS6jxfzjmKe5MEnSXZly1
- 5lCFMesKXk4nCMobJcLXReG3DpCq1MFk5Xvh/Gb7i5Ij75XDubxmJCvVrGqkJdjWExg=
-X-Received: by 2002:a05:690e:2551:b0:65e:b380:b6c5 with SMTP id
- 956f58d0204a3-662b4a0443cmr1685685d50.21.1781598640103; Tue, 16 Jun 2026
- 01:30:40 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1781599147; x=1782203947;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=N/MzDZHrzQwAaBrdyKTl6mbJ8PrjnugzPWBeKnXXafk=;
+ b=n7gbxqQ7Nz0PZkJ3Y6Irv/LxoseTWFDdr1wfFlWszUhYmtXFh6AmpbUh7NAZZG77Vn
+ 4pSbYPKcqC+akljY4ZU9HNfGbeN/dRO3ssVXAUIxRX8X8WOqtLJYAzaStXuT4d/vlTC+
+ HW3vUNRUJ/CQhC2PtRb7hTQTJRtDIrrFTHICzIjisDrXlIuEmw1sYRVWObMzz743OGwL
+ QUR6wZ7wrjIOMaQq3YZ6Oz3IV1nZS6Z8qLgq3RpRFCfWozG203AJxAF2cAZd77GrFB5i
+ RC97jdAilb8d/zKecyaNvuIQe/VBj7gV3ymRQHvEHhZu9qqW1KOF2EmoNBglYnNieCaM
+ 7Aqw==
+X-Gm-Message-State: AOJu0YykZDbrFE7o0b4QMYlhSx9+JPblIgXEURiHgVihDQk/em8lX+La
+ X+Ky2p4eYUVIJPI0u74dCP1e8tJ5UkEnHOdwqHewdCZUfIp8Nax2r7eWqFeAYepXjUA8QxsuWep
+ EXqJrUCXD+r5p3zBMuf1o/Yqw/MWyRuR9C7dfOxgkzw==
+X-Gm-Gg: Acq92OHWYhN6GnD8QSWeBhABkxkfjT6ufPx8QkYw7IVuL3cfY3MVjVN1E4dT0oKXbCE
+ zGt0xkPP9OZZWJPyYiKpB7Aiyk0zwbQwvfVCWg8/yYNUmaOjZqaBS8tUxq4edLCNhHUTURCMm3E
+ HhJRcMvDh3vgq/STaQKiy/v4ac4RdCx5/hcyuZpDjmxgd8mFFoEsg3YfE/iXppmKcMdF/CgWUww
+ IsiUgDf3NV/sUf5ObOt3FZW4qf41bF+yVk8S9+PdburdUpNOuhAl6Gx+Tn4F0/+VM3m5QJpnrl9
+ E5c5HIrfISXoYpcdVU8JWAPYxzb2pbc6d8HMjz0S+69p/RTp04rMsQK61MFHQzAForI=
+X-Received: by 2002:a05:690e:168f:b0:65c:468:7b6f with SMTP id
+ 956f58d0204a3-662b61004cemr1820537d50.25.1781599147455; Tue, 16 Jun 2026
+ 01:39:07 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260615201723.2959015-1-pierrick.bouvier@oss.qualcomm.com>
- <20260615201723.2959015-3-pierrick.bouvier@oss.qualcomm.com>
- <ajEA4CybcZHwYEEF@redhat.com>
-In-Reply-To: <ajEA4CybcZHwYEEF@redhat.com>
+References: <20260615193526.2883349-1-pierrick.bouvier@oss.qualcomm.com>
+ <20260615193526.2883349-25-pierrick.bouvier@oss.qualcomm.com>
+In-Reply-To: <20260615193526.2883349-25-pierrick.bouvier@oss.qualcomm.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 16 Jun 2026 09:30:28 +0100
-X-Gm-Features: AVVi8CfY2uKxoxt1rtg1ZZ0nD74Ahl3ygbRtVC18IkZfkJlbqVAyJx97HWcAaiM
-Message-ID: <CAFEAcA_r2+S+iy4nu4Kv9Gjwsu_izq5iHUYs6vycq=dX-+Cpsw@mail.gmail.com>
-Subject: Re: [PATCH 2/2] meson.build: check MAINTAINERS file is consistent
- with source tree
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-devel@nongnu.org,
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- John Snow <jsnow@redhat.com>, Cleber Rosa <crosa@redhat.com>,
- philmd@oss.qualcomm.com, 
- Paolo Bonzini <pbonzini@redhat.com>, armbru@redhat.com, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@mailo.com>
+Date: Tue, 16 Jun 2026 09:38:55 +0100
+X-Gm-Features: AVVi8CeBiXsaaP8WvsS35Gk7ZM6dJeweoMraRQ9-BFavj9JuBdA2ney85y5H91A
+Message-ID: <CAFEAcA_-qwKp9tVeO2q1-uUzb+cSXgO+iZD0Rah-7jqemAJpiA@mail.gmail.com>
+Subject: Re: [PATCH v2 24/26] scripts/checkpatch: ignore spaces required
+ around some operators in C++
+To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org, Chao Liu <chao.liu.zevorn@gmail.com>, 
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Brian Cain <brian.cain@oss.qualcomm.com>, 
+ Richard Henderson <richard.henderson@linaro.org>,
+ Alexandre Iooss <erdnaxe@crans.org>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b131;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb131.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -125,39 +120,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 16 Jun 2026 at 08:54, Daniel P. Berrang=C3=A9 <berrange@redhat.com>=
- wrote:
+On Mon, 15 Jun 2026 at 20:39, Pierrick Bouvier
+<pierrick.bouvier@oss.qualcomm.com> wrote:
 >
-> On Mon, Jun 15, 2026 at 01:17:23PM -0700, Pierrick Bouvier wrote:
-> > We add a new script: scripts/check-maintainers-file.py, that will run a=
-t
-> > configuration time (and not at build time), to not hurt build time.
-> > This script runs in 0.2s on my dev VM, which has an old cpu.
-> >
-> > We can expect things to be mostly in sync since adding or removing a
-> > source or test file will trigger a configure step.
-> > For the rest, like docs, tcg tests, or remaining files, GitLab CI will
-> > build things from scratch and always run the configure step.
-> >
-> > With this, it should be impossible by design to have an upstream
-> > MAINTAINERS file with non existing file entries.
+> C++ has a different style when it comes to space around references,
+> dereferences, so don't report it.
+> Also, closing templates with >> gets wrongly confused with >> operator,
+> so just relax this check.
 >
-> Accuracy of the MAINTAINERS file is an upstream-only concern, but
-> IIUC, this check is going to apply universally to every build of
-> QEMU which is undesirable. It is irrelevant to end users and not
-> appropriate to check in downsteam vendors forks.
+> Some examples:
+> ERROR: spaces required around that '&' (ctx:WxV)
+> +                auto &[counter, p] = *static_cast<TbData*>(udata);
+>                       ^
 >
-> In a "normal" modern project this kind of check would be done in
-> a CI job on the merge request, since that's the only place it is
-> relevant. In our case, the nearest fit is the checkpatch.pl file.
+> ERROR: spaces required around that '*' (ctx:VxO)
+> +                auto &[counter, p] = *static_cast<TbData*>(udata);
+>                                                          ^
+>
+> ERROR: spaces required around that '>>' (ctx:VxW)
+> +        std::vector<std::pair<Vaddr, uint64_t>> v;                                              ^
+>
+> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+> ---
+>  scripts/checkpatch.pl | 25 +++++++++++++++++++++++++
+>  1 file changed, 25 insertions(+)
+>
+> diff --git a/scripts/checkpatch.pl b/scripts/checkpatch.pl
+> index 2189db19f54..538e059e265 100755
+> --- a/scripts/checkpatch.pl
+> +++ b/scripts/checkpatch.pl
+> @@ -2621,6 +2621,31 @@ sub process {
+>                                                 if ($op eq '::') {
+>                                                         $ok = 1;
+>                                                 }
+> +
+> +                                               # Ignore * in C++: templates and
+> +                                               # pointer types are incorrectly
+> +                                               # flagged. Example:
+> +                                               # static_cast<T*>
+> +                                               if ($op eq '*') {
+> +                                                       $ok = 1;
+> +                                               }
+> +
+> +                                               # Ignore & in C++: & means a
+> +                                               # reference, and this create
+> +                                               # issues with some constructions.
+> +                                               # Example:
+> +                                               # auto &[first, second] = pair;
+> +                                               if ($op eq '&') {
+> +                                                       $ok = 1;
+> +                                               }
+> +
+> +                                               # Ignore >> in C++
+> +                                               # checkpatch is confused by
+> +                                               # >> closing templates. Example:
+> +                                               # vector<pair<A, B>>
+> +                                               if ($op eq '>>') {
+> +                                                       $ok = 1;
+> +                                               }
+>                                         }
 
-You could put it in "make check", or (if you want to avoid the
-downstream-forks issue) in some sub-bit of "make check"
-that we don't check by default but do check in one of our CI jobs.
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
-checkpatch isn't a great place for checks that you want to
-stay consistent on because so much of its output is "this
-is wrong/merely something to check, ignore".
-
+thanks
 -- PMM
 
