@@ -4,49 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C319CD98EE
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jun 2026 06:44:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 148A2CD98EE
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jun 2026 06:44:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZk0I-00053J-1A; Wed, 17 Jun 2026 02:44:02 -0400
+	id 1wZk0H-00052r-7C; Wed, 17 Jun 2026 02:44:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <guobin@linux.alibaba.com>)
- id 1wZk07-00050i-V9
+ id 1wZk08-00050k-7u
  for qemu-devel@nongnu.org; Wed, 17 Jun 2026 02:43:52 -0400
-Received: from [115.124.30.98] (helo=out30-98.freemail.mail.aliyun.com)
+Received: from [115.124.30.113] (helo=out30-113.freemail.mail.aliyun.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <guobin@linux.alibaba.com>)
- id 1wZk03-00087l-Vv
- for qemu-devel@nongnu.org; Wed, 17 Jun 2026 02:43:51 -0400
+ id 1wZk04-00087t-12
+ for qemu-devel@nongnu.org; Wed, 17 Jun 2026 02:43:52 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=linux.alibaba.com; s=default;
- t=1781678614; h=From:To:Subject:Date:Message-ID:MIME-Version;
- bh=CdH+sNES2FdBHJISfag0GHIwn/jVXYTmNClZbL3Udf8=;
- b=Kfj2ecmOK/hmjGVR1zEhQZ2UOleVwl7lS7D/zoXLxEYPAB9EdDGLjxkSYWOVqNxUxc4DxUz3A8Jzj8G/yHdHOrfT/a8PyGccm2R3UiYnZYRk6KkDLHDCI5I5fh2aHXxg0qnqUFmTqRuQTVbSpveborr8hdvHFNxLTlfZlum1fK0=
-X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R811e4; CH=green; DM=||false|;
- DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033032089153;
+ t=1781678615; h=From:To:Subject:Date:Message-ID:MIME-Version;
+ bh=RvHiGd84B4E+MzEP41DH/YKTdVyWkPmp3PJ1VyYskjc=;
+ b=BQoKB4Sm6716Lsu/pi8zdiB7V7375RjAlUWuUT977yk37u4t5A7tUhCWIOrxvwFoyTJDNXYCBcQLZT73m4nVckq9UkqnDvIFdIDFB+EefMNY0hegQ7+WUb1k7VAs9kQXaWQVge+vPItX9JXEIAlrIzuIc32KQl/dbF5fzU24nyg=
+X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R151e4; CH=green; DM=||false|;
+ DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033037026112;
  MF=guobin@linux.alibaba.com; NM=1; PH=DS; RN=4; SR=0;
- TI=SMTPD_---0X52TpQC_1781678613; 
+ TI=SMTPD_---0X52TpQs_1781678614; 
 Received: from localhost(mailfrom:guobin@linux.alibaba.com
- fp:SMTPD_---0X52TpQC_1781678613 cluster:ay36) by smtp.aliyun-inc.com;
- Wed, 17 Jun 2026 14:43:33 +0800
+ fp:SMTPD_---0X52TpQs_1781678614 cluster:ay36) by smtp.aliyun-inc.com;
+ Wed, 17 Jun 2026 14:43:34 +0800
 From: Bin Guo <guobin@linux.alibaba.com>
 To: qemu-devel@nongnu.org
 Cc: peterx@redhat.com,
 	lizhijian@fujitsu.com,
 	farosas@suse.de
-Subject: [PATCH v2 1/2] migration/rdma: honor blocking mode in QIOChannelRDMA
- readv
-Date: Wed, 17 Jun 2026 14:43:31 +0800
-Message-ID: <20260617064332.75618-1-guobin@linux.alibaba.com>
+Subject: [PATCH v2 2/2] migration/rdma: account transferred bytes for zero
+ page compression
+Date: Wed, 17 Jun 2026 14:43:32 +0800
+Message-ID: <20260617064332.75618-2-guobin@linux.alibaba.com>
 X-Mailer: git-send-email 2.50.1
+In-Reply-To: <20260617064332.75618-1-guobin@linux.alibaba.com>
+References: <20260617064332.75618-1-guobin@linux.alibaba.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.30.98 (deferred)
-Received-SPF: pass client-ip=115.124.30.98;
- envelope-from=guobin@linux.alibaba.com; helo=out30-98.freemail.mail.aliyun.com
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.30.113 (deferred)
+Received-SPF: pass client-ip=115.124.30.113;
+ envelope-from=guobin@linux.alibaba.com;
+ helo=out30-113.freemail.mail.aliyun.com
 X-Spam_score_int: -166
 X-Spam_score: -16.7
 X-Spam_bar: ----------------
@@ -70,99 +73,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-QIOChannelRDMA's readv already blocks inside qemu_rdma_exchange_recv()
-when waiting for the next RDMA SEND message.  What it did not do was
-keep blocking when the bytes from a single receive were insufficient
-to satisfy the full request -- it returned partial data (or EAGAIN)
-instead of waiting for more.
+RDMA zero page compression sends an RDMA_CONTROL_COMPRESS message
+instead of an RDMA Write, but the transfer accounting
+(mig_stats.rdma_bytes and ram_transferred_add) was not updated.
+This caused migration progress and bandwidth to be undercounted.
 
-Loop on qemu_rdma_exchange_recv() when the channel is blocking and
-the receive buffer cannot satisfy the request.  This matches the
-behaviour of other QIOChannel implementations, which block until
-the full request is satisfied (or an error occurs).
-
-Also remove the stale XXX comments about unimplemented blocking support.
+Account the wire cost (RDMAControlHeader + RDMACompress payload),
+matching how the non-RDMA path accounts for zero page markers.
 
 Reviewed-by: Li Zhijian <lizhijian@fujitsu.com>
 Signed-off-by: Bin Guo <guobin@linux.alibaba.com>
 ---
- migration/rdma.c | 46 +++++++++++++++++++++-------------------------
- 1 file changed, 21 insertions(+), 25 deletions(-)
+ migration/rdma.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
 diff --git a/migration/rdma.c b/migration/rdma.c
-index 3e37a1d440..201cb9eb12 100644
+index 201cb9eb12..f08468881f 100644
 --- a/migration/rdma.c
 +++ b/migration/rdma.c
-@@ -388,7 +388,7 @@ struct QIOChannelRDMA {
-     QIOChannel parent;
-     RDMAContext *rdmain;
-     RDMAContext *rdmaout;
--    bool blocking; /* XXX we don't actually honour this yet */
-+    bool blocking;
- };
+@@ -1930,15 +1930,15 @@ retry:
+                 }
  
- /*
-@@ -2710,32 +2710,29 @@ static ssize_t qio_channel_rdma_readv(QIOChannel *ioc,
-             break;
-         }
- 
--
--        /* We've got nothing at all, so lets wait for
--         * more to arrive
--         */
--        ret = qemu_rdma_exchange_recv(rdma, &head, RDMA_CONTROL_QEMU_FILE,
--                                      errp);
--
--        if (ret < 0) {
--            rdma->errored = true;
--            return -1;
--        }
--
-         /*
--         * SEND was received with new bytes, now try again.
-+         * We've got nothing at all, so lets wait for
-+         * more to arrive.
-          */
--        len = qemu_rdma_fill(rdma, data, want, 0);
--        done += len;
--        want -= len;
--
--        /* Still didn't get enough, so lets just return */
--        if (want) {
--            if (done == 0) {
--                return QIO_CHANNEL_ERR_BLOCK;
--            } else {
--                break;
-+        do {
-+            ret = qemu_rdma_exchange_recv(rdma, &head,
-+                                          RDMA_CONTROL_QEMU_FILE, errp);
-+            if (ret < 0) {
-+                rdma->errored = true;
-+                return -1;
-             }
-+
-+            /*
-+             * SEND was received with new bytes, now try again.
-+             */
-+            len = qemu_rdma_fill(rdma, data, want, 0);
-+            done += len;
-+            want -= len;
-+            data += len;
-+        } while (want && rioc->blocking);
-+
-+        if (want && done == 0) {
-+            return QIO_CHANNEL_ERR_BLOCK;
-         }
-     }
-     return done;
-@@ -2771,7 +2768,6 @@ static int qio_channel_rdma_set_blocking(QIOChannel *ioc,
-                                          Error **errp)
- {
-     QIOChannelRDMA *rioc = QIO_CHANNEL_RDMA(ioc);
--    /* XXX we should make readv/writev actually honour this :-) */
-     rioc->blocking = blocking;
-     return 0;
- }
+                 /*
+-                 * TODO: Here we are sending something, but we are not
+-                 * accounting for anything transferred.  The following is wrong:
+-                 *
+-                 * stat64_add(&mig_stats.rdma_bytes, sge.length);
+-                 *
+-                 * because we are using some kind of compression.  I
+-                 * would think that head.len would be the more similar
+-                 * thing to a correct value.
++                 * Account for the control message we just sent.
++                 * The actual bytes on the wire are the control header
++                 * plus the RDMACompress payload, not the original page
++                 * size (which was never transferred).
+                  */
++                qatomic_add(&mig_stats.rdma_bytes,
++                            sizeof(RDMAControlHeader) + sizeof(RDMACompress));
++                ram_transferred_add(sizeof(RDMAControlHeader) +
++                                    sizeof(RDMACompress));
+                 qatomic_add(&mig_stats.zero_pages,
+                             sge.length / qemu_target_page_size());
+                 return 1;
 -- 
 2.50.1 (Apple Git-155)
 
