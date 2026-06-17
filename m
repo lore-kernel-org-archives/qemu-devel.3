@@ -4,91 +4,145 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 295D0CD98E2
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jun 2026 15:26:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F110CD98F2
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jun 2026 15:35:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZs92-0002jL-BQ; Wed, 17 Jun 2026 11:25:36 -0400
+	id 1wZsHX-0008Vo-Ib; Wed, 17 Jun 2026 11:34:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wZs91-0002i0-7M
- for qemu-devel@nongnu.org; Wed, 17 Jun 2026 11:25:35 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wZsHV-0008UY-OF
+ for qemu-devel@nongnu.org; Wed, 17 Jun 2026 11:34:21 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wZs8z-0004sl-EW
- for qemu-devel@nongnu.org; Wed, 17 Jun 2026 11:25:34 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781709932;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=faZf4696yal0epOYIe7aL8QIsDmTUlbHO/VDxfj8Rcg=;
- b=R4ZOY8LVeKb8IG3X+Lo5EJYeVFK7Xa8CD+g1Z6QMOggCn68pBRqDsC6kgVbggNFsLwB31s
- nRZ3Hpem9B5LbMrorQZeTOpAp4X5xiDA28ovrPNDfQ/msIG/+cHYiPrcs83t93E75e3VYr
- uNKQzc+7GUdOHOepgBlMsvEe45ZH3qE=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-349-f8PJgeeFNyaQlZrpiy_v2w-1; Wed,
- 17 Jun 2026 11:25:31 -0400
-X-MC-Unique: f8PJgeeFNyaQlZrpiy_v2w-1
-X-Mimecast-MFC-AGG-ID: f8PJgeeFNyaQlZrpiy_v2w_1781709930
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8EB89195D005
- for <qemu-devel@nongnu.org>; Wed, 17 Jun 2026 15:25:30 +0000 (UTC)
-Received: from localhost (unknown [10.44.22.6])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id A8A9B18005B6; Wed, 17 Jun 2026 15:25:29 +0000 (UTC)
-From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Wed, 17 Jun 2026 19:23:20 +0400
-Subject: [GIT PULL 23/27] tools/qemu-vnc: Have console_get_mouse/keyboard
- take const QemuConsole
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wZsHK-0007RN-Ki
+ for qemu-devel@nongnu.org; Wed, 17 Jun 2026 11:34:12 -0400
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 65HFOejf2638867
+ for <qemu-devel@nongnu.org>; Wed, 17 Jun 2026 15:34:07 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ X4L7RJpXFn2WXJGXM8VxPzJUgx+32htZycnzR5dWu7A=; b=KVMl9pIeCiUEi+Ht
+ yp15nWY0973bnxJrFuQTy3hXYy2NumM/tcZOTQX2UWz0O5biM97w6AfGGdGybgM9
+ gdUk9GayKZGRtShX2HAKi9cgJVtAZXZt85cxqWe54c88mO9JMnAySYJlIsLI7aWp
+ BEw1Y5DSsTlhADxx2nYcGYFrzBhQIxR49RO0WrJ3GrGRd/uNM0VB6viI3Z8bGbsN
+ 1MFLjMGzFradnDkHmUrG2hJ2m4tG/m6tAu2eDbmDJsFCu365F+qcYaxXWvtAnuHx
+ fmNeeDjE6gj7Jc/KOyafO5eLVWfvboCXPSSGorP/SuE3AvtEPixOY78ljUUlMFtM
+ gnXd0g==
+Received: from mail-ua1-f70.google.com (mail-ua1-f70.google.com
+ [209.85.222.70])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4eueet3v34-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Wed, 17 Jun 2026 15:34:07 +0000 (GMT)
+Received: by mail-ua1-f70.google.com with SMTP id
+ a1e0cc1a2514c-966d40aca0eso1437462241.1
+ for <qemu-devel@nongnu.org>; Wed, 17 Jun 2026 08:34:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1781710446; x=1782315246; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=X4L7RJpXFn2WXJGXM8VxPzJUgx+32htZycnzR5dWu7A=;
+ b=Z6w93KvhpY21uXQSvcceslNzpp8hfUxxE68VoyGVHL1Hcklt6uYJ9w65ESH8cCFFQZ
+ L+dX41N9JSFAgK15VrqNQKmCg5A3B1Q4Vlwd+lvfWPQVYXAlVX6SfObvaN1/YaF9MPpq
+ 5ivkuSTU8EIL9UZvx0bJXFgsOqUfwTTi5quaElofF2ggmzGZKPMpa5fxpUFMnC9Dd+92
+ Rn9y+K3XcbWx+n6G8XyZuOKNXQOcg78fs/jYilT5CiDgh51hOQH3XyI0ZC0i4/3eRTSk
+ Xo5F1sOQdH6l29K0vRSAMxAO0RvHb77sGX20yi51vFYyW5tKd9+KKDMYmBHyZaCv5/Q9
+ fiOA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1781710446; x=1782315246;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=X4L7RJpXFn2WXJGXM8VxPzJUgx+32htZycnzR5dWu7A=;
+ b=kS5nFGhtlAvHI1iHz1qsaYzkLtLO6yIpyDsQkVIQzGKW/fuvoE4HUYNgw4IP0eI1Tp
+ 0VMuSyqfowAQtZbWDhZ+dxhrEIK936oZ+cmZ3OxtaB67iMtY+6OqsioFsCK9XR434yJO
+ QZkG8BJ9FP19Hbm5j0+cFHLjiArbgoIVSQptxlqmQnEYEjX3ubiX3q3biyWstF10vmnI
+ cB4SCPvDCR6RVQp0aLXUlOS/vpTHUJ2FBevMnX/AFBkG9gzrm965XfDj/GCIbn+nid6A
+ Rz8YewCY5wktg/acCJBe1Bl3RgRYAlhDORpdm959at098REg3fdqgtICIxCde0UwoOys
+ 6omw==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ/icLiv4SM2VWV4cLoppkQhKPYH2v97X7cX/trIiic5UemT1ZdMKksaZ1aLdXxNAHbRH9GJrbNnQixj@nongnu.org
+X-Gm-Message-State: AOJu0YzM7f1CxMxG/Sy0vyMo1j16RJVVKpDyU4PwkyK1//PU2AvZ5Oep
+ sImr00uk1l+hFshJMoF5qk2yZUgW3+4wvkOEsBMfCm0VDYPTE20Dro7gbvLqtfEpuYkanwg5gwU
+ QSXl22uyAa8SvjOoMZfhcNLLqt7cUvHbmXq5MCyD+pdIerBuBMMey1A6EpQ==
+X-Gm-Gg: AfdE7cl9j35pCZoZYd76fksLqgEsRDA77J/6GrEskwYQs755PB4ObK+XQ6xN3WnGoUJ
+ HCbv3EOQ2+vNpjdxgFGLUdE/X1yolRzhImHXb1enu14awnxq4cgKP8gC84IowKzLtw5gvf39Bug
+ nHUo1qHGMwhlx1Idgikc3TPp89aUt21nGgTEVQWjCKJiHKpu/I/ItYc7uJqFWcXFrKTSK/kcOcU
+ Tj6UWbggo2QtbSkSdKjqeKi8oq86H+Z0q2bGcto/s3gO724RZgYnPRjBY1pOvEO1DmKSaV6fEsP
+ 09CRbe2ckK6HJWgmmlDehU1IfJzvS5F6MAH2OGzL+3EUN+XzkHsnXPkLXvCHALG3QHRgMh8dOQt
+ tVstIs25obiThhr4Kjb8lPrsolK2V+6LbsZnHJb1/XShUC3XUsF8FP7OZQkOBfA==
+X-Received: by 2002:a05:6102:8394:10b0:726:cd42:d039 with SMTP id
+ ada2fe7eead31-726cd42ecdbmr949290137.24.1781710446422; 
+ Wed, 17 Jun 2026 08:34:06 -0700 (PDT)
+X-Received: by 2002:a05:6102:8394:10b0:726:cd42:d039 with SMTP id
+ ada2fe7eead31-726cd42ecdbmr949262137.24.1781710446061; 
+ Wed, 17 Jun 2026 08:34:06 -0700 (PDT)
+Received: from [192.168.69.213] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-4606f26f1cdsm57494304f8f.11.2026.06.17.08.34.05
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 17 Jun 2026 08:34:05 -0700 (PDT)
+Message-ID: <1ed6596c-0e54-4296-a294-ce44e1008341@oss.qualcomm.com>
+Date: Wed, 17 Jun 2026 17:34:04 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 08/10] accel/tcg: Have cpu_loop_exit_requested() take
+ const cpu and un-inline
+Content-Language: en-US
+To: Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>
+References: <20260616191716.12932-1-philmd@oss.qualcomm.com>
+ <20260616191716.12932-9-philmd@oss.qualcomm.com>
+ <8633117c-e2e7-4e68-8684-6b7bb6b6fc20@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+In-Reply-To: <8633117c-e2e7-4e68-8684-6b7bb6b6fc20@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260617-ui-input-v1-23-79e9aedc5899@redhat.com>
-References: <20260617-ui-input-v1-0-79e9aedc5899@redhat.com>
-In-Reply-To: <20260617-ui-input-v1-0-79e9aedc5899@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Stefan Hajnoczi <stefanha@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2003;
- i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=+7928dyer7hqpvdZhH2zzD4wlqKd41p2LOQoGgqpc70=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqMrvpjuHnOC1vM/cOTCWUgNJU+FoX2QoJCarEl
- wjRzLGnYNGJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCajK76QAKCRDa6OEJdZac
- 5dM4EACUtzjfvJYGfVBa9Esh3vNnpcuh/lchrCCz1Ba8Dwt9iK6knu1gcHopey3tmEudLLC5zSi
- jO1th7xo7rxIpP+DM7dgQD9bN/foYbsEGE+L77knNLGerjLHn2nh98lbITDKBiLubdRgx5EzvoL
- 1QyAUMhS/S9PfEop2YKAhvl8oIaKkMMd2HBNakKZEwJ/ow7lIBUN1gtXysUHRoKO1N/PNvyUjx0
- agC+SW/mrEUJku9PYBmVfpCNLTyYtZUIoIsh6UPaIbWwv6rOJhUCLmVIzRe1+v2lIj5atEMyyw6
- povfMrcKOh5RvhrLrpV2UkXgUlpPWUEfrnVAYq8v2wSHhBwRWsI2gcGMOBy1PokZBfmzpIfOWes
- +LJMW35LcJuTlC2VdW5JYk0YtKAn6xkRjEGWJm9fKTM96v4OKcpgdtOxuTLn2ZJEbkbM2CPfvkF
- yr7IN33VNc60qt+x+8xPH0pi2nXI+8IZNm+bvDyNG9onnqFVMzCJs4O/rAsNsOokZejn0BWPni4
- u8C/qvNOtZEqxzWK5tOwkTEAlqzaB5bqDNsg2mpHiiQJcA8tkZKPjnMK450b1YCXko5dyOBKfjz
- RLWqz8FEIgiOagV91efWbXiiV+arhGT/wZf0dEvWwaqflIWhwWbLidDrocqEXtB8m8jOeLeXers
- Osbr2aWTsS64Tcw==
-X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
- fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=marcandre.lureau@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 8
-X-Spam_score: 0.8
-X-Spam_bar: /
-X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-Proofpoint-GUID: TTjXUrZezyPKhHNydXO3v11_LBlpBnds
+X-Authority-Analysis: v=2.4 cv=JufBas4C c=1 sm=1 tr=0 ts=6a32be6f cx=c_pps
+ a=R6oCqFB+Yf/t2GF8e0/dFg==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+ a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22
+ a=5NyoWofplgpWzV8F83sA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=TD8TdBvy0hsOASGTdmB-:22
+X-Proofpoint-ORIG-GUID: TTjXUrZezyPKhHNydXO3v11_LBlpBnds
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjE3MDE0OSBTYWx0ZWRfXxiGrkJdacDG4
+ wRf+IzbiRdyauGcmw66yy5ur0SsgDx+qnmUjoK+xIO15PQ8vzMHBD8eI5HDIotAAnJFepPKQGHg
+ djSHrMqU3THqG6JLJIAv/H3pVzLbgr7dQCJvI1KeINdNlr2IX0lNBg00a/ByZlTwdGpYtTOvy4G
+ qGu6SdorfP5CGtcojjFc1mFiEvW2Qj9O6EoAf6tQP5mJWu9IV8SKkMkaK2s308DQDblNopHq/OU
+ ri5+2/tDmEgxRQZol0Cy6BfR2YlX4niqwoSARLulEirqCUJvTqZ7ECFd556dy3t0I3KzFp1FLmu
+ oqqr73o0bC4XJpn2UihBfzIXlYWXsNW8BGW1DVkGZ8t4UxYbjJp6tOL203rWGui4cyTuqhYnal3
+ zo1ntmCg8XHHrlmdgxWsUV6Zz0bCywz6oOHARw6ictirXoRRtfW3zSr8sFqWz8fL+Ypkx8Mg5e8
+ 41kCeK+pc5jh4nHn0dA==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjE3MDE0OSBTYWx0ZWRfX3n9bd+YGBnEb
+ Isl2j1uZ3A8Lfr/Oa2oHfhkCHDQgQUyTP/H4nc2dc4/nZAniiDwkGYak18jEcRI/Xqbr6bpeM77
+ szGicYI9FpafLC2rqSvfp9/BsBSQ/8s=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-17_02,2026-06-17_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 clxscore=1015 adultscore=0 priorityscore=1501 impostorscore=0
+ spamscore=0 bulkscore=0 lowpriorityscore=0 suspectscore=0 phishscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606170149
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,58 +158,15 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+On 17/6/26 16:44, Richard Henderson wrote:
+> On 6/16/26 12:17, Philippe Mathieu-Daudé wrote:
+>> Of the 5 calls in our codebase, 4 are unlikely(), so not worth
+>> inlining in header. Since the CPUState is simply read-only
+>> accessed, make the argument const.
+> 
+> Unlikely to trigger, but still called within inner loops.
+> Please keep this inline.
 
-Both console_get_mouse() and console_get_keyboard() only
-access @con in read-only mode. Make that argument const.
-
-Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Message-ID: <20260611114212.27472-2-philmd@oss.qualcomm.com>
----
- tools/qemu-vnc/qemu-vnc.h | 4 ++--
- tools/qemu-vnc/display.c  | 4 ++--
- 2 files changed, 4 insertions(+), 4 deletions(-)
-
-diff --git a/tools/qemu-vnc/qemu-vnc.h b/tools/qemu-vnc/qemu-vnc.h
-index 6e483e4b475..15e4ead80b7 100644
---- a/tools/qemu-vnc/qemu-vnc.h
-+++ b/tools/qemu-vnc/qemu-vnc.h
-@@ -26,8 +26,8 @@ void input_setup(QemuDBusDisplay1Keyboard *kbd,
-                  QemuDBusDisplay1Mouse *mouse);
- bool console_setup(GDBusConnection *bus, const char *bus_name,
-                    const char *console_path);
--QemuDBusDisplay1Keyboard *console_get_keyboard(QemuConsole *con);
--QemuDBusDisplay1Mouse *console_get_mouse(QemuConsole *con);
-+QemuDBusDisplay1Keyboard *console_get_keyboard(const QemuConsole *con);
-+QemuDBusDisplay1Mouse *console_get_mouse(const QemuConsole *con);
- 
- void audio_setup(GDBusObjectManager *manager);
- void clipboard_setup(GDBusObjectManager *manager, GDBusConnection *bus);
-diff --git a/tools/qemu-vnc/display.c b/tools/qemu-vnc/display.c
-index 8fe9b6fc898..b485cbe3100 100644
---- a/tools/qemu-vnc/display.c
-+++ b/tools/qemu-vnc/display.c
-@@ -433,7 +433,7 @@ bool console_setup(GDBusConnection *bus, const char *bus_name,
-     return true;
- }
- 
--QemuDBusDisplay1Keyboard *console_get_keyboard(QemuConsole *con)
-+QemuDBusDisplay1Keyboard *console_get_keyboard(const QemuConsole *con)
- {
-     ConsoleData *cd;
- 
-@@ -444,7 +444,7 @@ QemuDBusDisplay1Keyboard *console_get_keyboard(QemuConsole *con)
-     return cd ? cd->keyboard_proxy : NULL;
- }
- 
--QemuDBusDisplay1Mouse *console_get_mouse(QemuConsole *con)
-+QemuDBusDisplay1Mouse *console_get_mouse(const QemuConsole *con)
- {
-     ConsoleData *cd;
- 
-
--- 
-2.54.0
-
+Why not inline all of them then? What is so special about
+this particular one?
 
