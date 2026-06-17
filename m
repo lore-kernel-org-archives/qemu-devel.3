@@ -4,119 +4,115 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92A1BCD98E2
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jun 2026 07:17:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12CA2CD98E2
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jun 2026 07:28:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZkWR-0005tj-G4; Wed, 17 Jun 2026 03:17:15 -0400
+	id 1wZkga-0007VJ-Vr; Wed, 17 Jun 2026 03:27:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <saif.abrar@linux.ibm.com>)
- id 1wZkWN-0005rx-8T; Wed, 17 Jun 2026 03:17:11 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wZkgR-0007UZ-2p
+ for qemu-devel@nongnu.org; Wed, 17 Jun 2026 03:27:36 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <saif.abrar@linux.ibm.com>)
- id 1wZkWL-0006fM-Jy; Wed, 17 Jun 2026 03:17:11 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65GLnb2L2726649; Wed, 17 Jun 2026 07:16:59 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=i8mUHs
- Cdgz33kDzmw5LDv750tiCwDgOl6ifP6vAi5O0=; b=sClposnrLX547Dv/jr3QgM
- X0MN8goe43BxPuo49ghf/qQaB9RlLEfWHS5Gth3GTo6I11LPbWop4GdPPMv5phdW
- QnPRNdWtBtT1EIg260RP7PlEryctQy0nZFEEx7Ib4IDKzf/rxhxWmAqR5TFTHgP6
- 791XqhUpDHSJSZXxLtaSVN7+MPtvLKxARhZWWcItZFYJu9F2RucIcN+rhKxHbWcu
- mKrBqnZdxE5lxOUBolQIGAlxmBrP/vOLjYnYV3+XtbC8JP5k+TxSeTjBc+3fQFfZ
- wUfWWWcmQxHlyCQC8K9TOJV4+t/xWyu5DC8Al81IwFCJEkVsr7VklKdHxkrhsNFw
- ==
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4eueqvspvr-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 17 Jun 2026 07:16:58 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 65H74iwS020357;
- Wed, 17 Jun 2026 07:16:57 GMT
-Received: from smtprelay07.wdc07v.mail.ibm.com ([172.16.1.74])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4eudvaa0xg-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 17 Jun 2026 07:16:57 +0000 (GMT)
-Received: from smtpav03.dal12v.mail.ibm.com (smtpav03.dal12v.mail.ibm.com
- [10.241.53.102])
- by smtprelay07.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 65H7Gu6h32637556
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 17 Jun 2026 07:16:56 GMT
-Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 4C8135803F;
- Wed, 17 Jun 2026 07:16:56 +0000 (GMT)
-Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 5E7B458056;
- Wed, 17 Jun 2026 07:16:51 +0000 (GMT)
-Received: from [9.43.52.172] (unknown [9.43.52.172])
- by smtpav03.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Wed, 17 Jun 2026 07:16:51 +0000 (GMT)
-Message-ID: <cb8f0fc3-f95f-47d0-9695-c257ee49d79c@linux.ibm.com>
-Date: Wed, 17 Jun 2026 12:46:49 +0530
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wZkgO-00009b-Te
+ for qemu-devel@nongnu.org; Wed, 17 Jun 2026 03:27:34 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1781681251;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=DzZqM/JHTroZwaroo8DN1xvCqQvgQr0ZC3Pe+0bufMk=;
+ b=cSNGG4kMSAMR3sEOvIwq13BKcWrV3j6c0rkHqH3St5NgVORivCvD9XwJXxE049OFkmddQw
+ /rE2mP0FKVm8SJ2dlw7+f11dpmeU/JddCFH1tL5clhYBRyxDiWLzLC+Bixq7A7uRYf056j
+ qKOTCFiqWO9uyw3sVquQrJxzBIg5AzU=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-519-b1on-C-SNCqTdwml1bLwcg-1; Wed, 17 Jun 2026 03:27:30 -0400
+X-MC-Unique: b1on-C-SNCqTdwml1bLwcg-1
+X-Mimecast-MFC-AGG-ID: b1on-C-SNCqTdwml1bLwcg_1781681249
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-460153ce644so3948238f8f.0
+ for <qemu-devel@nongnu.org>; Wed, 17 Jun 2026 00:27:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1781681249; x=1782286049; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=DzZqM/JHTroZwaroo8DN1xvCqQvgQr0ZC3Pe+0bufMk=;
+ b=A95d5ezpbzxvqAvzSIGxKyxjkbTuu3JCIbTvyi3WfWnlhw1lQ/V2rkg4jFIfmP6An8
+ m+5uaUhns91znPrbcVJwEOAkhAA8pKK0JODm5C1AirwLaybagFY/kghMIaI1iPH+a2xn
+ +02YGZ951Z+usDOaoLoRmGNGbmXV3fle8jRPsHUh9pBtNCJbdsp2sWyPontrrQHQ/Apq
+ drWtjWk5D90Eouc9z17gkeq1B3PVbLBV7XguGOWcXD+bTXgZu9MiSgHD6vWYg/3pplYE
+ Y73HxNjNWAgGkiQ39NOcccYOzUnccUpzFrBH1e/M9bPTvmPE91RzCPTHCwOe2H52Ydb3
+ mjdA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1781681249; x=1782286049;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=DzZqM/JHTroZwaroo8DN1xvCqQvgQr0ZC3Pe+0bufMk=;
+ b=QBGIaLYKD/cJWHbk9/usfeZeCpDM4IPt8wqfs7r8Nkd06fqmqz/Q5VANSZqDn+jE/j
+ JUCDYmOcACB3W6dALGGN4DqDskfDQsmPUHvtPAYPajXxy7P6qa7Ei5gR1GCVxjbL6uQS
+ /l9oE6O/t4DL5ypuvlQO/IuuAM3RaNTUrMf24gPhmXCTUprPRjE35uVYUvmC0mLbJnhR
+ kYwvGtKQXRq8isCWxHmEbOlEfNARDmXw1t9/g3dIZyfNQt/9ILsKKf8iJyDRt9vO+86c
+ 5LpD571dpZ6izsN542sL9M3rfdm4F5fUJDE/MExhvBZDAXwZ7Om0LcVXTJKc4IoOT4MH
+ UeFQ==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ9JFvJO7kwHmdVIQPYVnDBm6heCJJuk3WsNRCqznM1xBn5xF+pu/Dmi56Tp6lUKWK/VQochafV/nNyt@nongnu.org
+X-Gm-Message-State: AOJu0YzQPy387XQaKMQTe7pRhRh87bZuTjh/pHnNQDiwE6AllqZPGbxZ
+ nQn7VWp7okDWdClp3BcXvyfPb5PcjnijZtpozCSxVL1daxSoylI0uVDjvj2zs5bNphw1ohNH76L
+ kM67UO5cW2iX9G4Zm/MuWOZA1PXigfxmeewHaBvdzJTIUrzwfirdzFeDH
+X-Gm-Gg: AfdE7clcBH1nkDEnYZOIKhGr82C+wVs5JbIMJF/b3faG1sOdkRanH52ajEkuEyMPjHv
+ u5gd0m8ki7fqKXgUdfwGOvNJbtWbmpqln1Xgq4g3SE1OY0c5xWWNbmb0TX5xsOxmL2cZ5uBJI8V
+ Zr/s9vi6r4AtJ1fUlJZmYRn9HZup5C2UHQuTcPlcUatF2NvFOGO3OISmZjsOf7cENWQ614Dicnl
+ BbnhhExRx4tzc0exCo3GbqDram2hPAsHYeMKinDDTXyW/u9Lr6VHM4uIvinjRqZwpdPf7zNiL39
+ tj40oMxx1X8f0bfSvFFE3qw8dozZwwkGTY0hxiXIDlKFCP0ffZBnuMMLj91sB6auM3QVHxwaper
+ CAWAl3nWQRt+9r8YsGRxYvc/fkNJs1GGm
+X-Received: by 2002:a5d:588d:0:b0:43f:dbbf:6d93 with SMTP id
+ ffacd0b85a97d-462410d3c5bmr4025578f8f.27.1781681248676; 
+ Wed, 17 Jun 2026 00:27:28 -0700 (PDT)
+X-Received: by 2002:a5d:588d:0:b0:43f:dbbf:6d93 with SMTP id
+ ffacd0b85a97d-462410d3c5bmr4025519f8f.27.1781681248004; 
+ Wed, 17 Jun 2026 00:27:28 -0700 (PDT)
+Received: from redhat.com (IGLD-80-230-85-71.inter.net.il. [80.230.85.71])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-4606f2cf5d9sm45077915f8f.32.2026.06.17.00.27.25
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 17 Jun 2026 00:27:27 -0700 (PDT)
+Date: Wed, 17 Jun 2026 03:27:23 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Gavin Shan <gshan@redhat.com>
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, peterx@redhat.com,
+ alex@shazbot.org, richard.henderson@linaro.org,
+ peter.maydell@linaro.org, berrange@redhat.com,
+ philmd@oss.qualcomm.com, philmd@mailo.com, david@kernel.org,
+ clg@redhat.com, pbonzini@redhat.com, phrdina@redhat.com,
+ jugraham@redhat.com, liugang24219@sangfor.com.cn,
+ dinghui@sangfor.com.cn, shan.gavin@gmail.com
+Subject: Re: [PATCH v3 0/2] system/memory: Make ram device region directly
+ accessible
+Message-ID: <20260617031443-mutt-send-email-mst@kernel.org>
+References: <20260616052552.389021-1-gshan@redhat.com>
+ <ae17b5a6-eed8-4d4c-a798-cb92ffa6c915@redhat.com>
+ <20260616014419-mutt-send-email-mst@kernel.org>
+ <2015405e-7839-4ab9-b5a0-712b644da3c8@redhat.com>
+ <20260617013709-mutt-send-email-mst@kernel.org>
+ <ee0280dc-0c21-44df-a1cb-94c580140491@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 9/9] pnv/phb4: Mask off LSI Source-ID based on number
- of interrupts
-To: Jishnu Warrier <jishnuvw@linux.ibm.com>
-Cc: qemu-ppc@nongnu.org, qemu-devel@nongnu.org, clg@kaod.org,
- npiggin@gmail.com, fbarrat@linux.ibm.com, mst@redhat.com,
- marcel.apfelbaum@gmail.com, cohuck@redhat.com, pbonzini@redhat.com,
- thuth@redhat.com, lvivier@redhat.com, danielhb413@gmail.com,
- harshpb@linux.ibm.com, adityag@linux.ibm.com
-References: <20260210134110.1515322-1-saif.abrar@linux.vnet.ibm.com>
- <20260305060923.3753402-1-saif.abrar@linux.vnet.ibm.com>
- <20260305060923.3753402-10-saif.abrar@linux.vnet.ibm.com>
- <auxjiykky33cggvrgi7jbeaaje3qo6szmtiilpgfs6dnbbolc5@zejcua7lpp5x>
-Content-Language: en-US
-From: Saif Abrar <saif.abrar@linux.ibm.com>
-In-Reply-To: <auxjiykky33cggvrgi7jbeaaje3qo6szmtiilpgfs6dnbbolc5@zejcua7lpp5x>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjE3MDA2MiBTYWx0ZWRfX7DiV/mcmpU6z
- qPZkmEiaSVn5BToHDjaLdbJLWjcLYl4v68kagcf/ZSGbUz+KqpYCzOwTbIzV7CQv/vugMzxZpDP
- sNQU0yfqwg57ajjvpB3eHOAHTPibpr8=
-X-Proofpoint-GUID: vuSypYF5Zvyt7AWOWlJD0J4_itk0wx__
-X-Authority-Analysis: v=2.4 cv=bMgm5v+Z c=1 sm=1 tr=0 ts=6a3249eb cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
- a=kUKHeS9f1dJEPYFD:21 a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22
- a=VnNF1IyMAAAA:8 a=aow-egSQAAAA:8 a=icP3stVFIlYJmjWPloYA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=gFNbaldVC-z-bsjSTzMo:22
-X-Proofpoint-ORIG-GUID: 7kBEm3-ruC-BNqla9zMM19WmnUHbVQ6V
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjE3MDA2MiBTYWx0ZWRfXxQ6GzYqkTJQV
- Fhqr/lu9wGkmOv5OaKqv7Uy2D6OmQYt56bWa2Z5nOo+hoKxNlNzqAfLYQxlxgSvPZBBUZZLKU8q
- sqjs5uo9URqvIzswRzbmX5s6R7bFQlHJwdvUD638Z9yL8l+EkskL3h7gDdtSvRuzixw9EJCppdC
- +3A14s19XO/8Drmpxx1zFjhU821oJqRfrbYG3J2n/brpMMD+AORoQWaaY7Oqikt5pFX0Xzo9XhD
- +2CdsirrmTt8Okx0suhWa63BLpGntqOwtBx6PYjoP1sDvZZ6FfRa6UiyGaxDVCGfFcIxFhdLlOr
- s2MHQWl3+l1PBP7WN25NXRqMK5z+2JS+IDjnM9Bi0oBB4v2G4KjkwtlAJdS/WMPoKKoqlrBwXwr
- FWHmVfLXnB468ZbhNh7IWIbInvFpCM0YCFhMwcQAk+0AWDXu0fqKRVCOAY+Ji8XZBiNEjohe3k1
- NxSWbMKAYF8fWddUqbA==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-16_05,2026-06-16_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 impostorscore=0 malwarescore=0 adultscore=0 spamscore=0
- bulkscore=0 priorityscore=1501 phishscore=0 clxscore=1015 lowpriorityscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606170062
-Received-SPF: pass client-ip=148.163.156.1;
- envelope-from=saif.abrar@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ee0280dc-0c21-44df-a1cb-94c580140491@redhat.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -132,87 +128,108 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Wed, Jun 17, 2026 at 05:00:45PM +1000, Gavin Shan wrote:
+> Hi Michael,
+> 
+> On 6/17/26 3:52 PM, Michael S. Tsirkin wrote:
+> > On Wed, Jun 17, 2026 at 12:35:00PM +1000, Gavin Shan wrote:
+> > > On 6/16/26 3:44 PM, Michael S. Tsirkin wrote:
+> > > > On Tue, Jun 16, 2026 at 03:40:34PM +1000, Gavin Shan wrote:
+> > > > > On 6/16/26 3:25 PM, Gavin Shan wrote:
+> > > > > > All ram device regions was turned to be indirectly accessible by commit
+> > > > > > 4a2e242bbb ("memory: Don't use memcpy for ram_device regions"). This leads
+> > > > > > to a hanged guest where a NVidia GH100 GPU is passed from host. The memory
+> > > > > > in its PCI BAR#4 can be allocated as DMA target buffer. qemu has to take
+> > > > > > DMA bounce buffer in address_space_map() to cover the DMA request. However,
+> > > > > > the bounce buffer size is 4096 bytes and we're overrunning it easily when
+> > > > > > the guest has significant disk activities on compiling 'cuda-samples'.
+> > > > > > The full log and problem description can be found from PATCH[1/2]'s commit
+> > > > > > log.
+> > > > > > 
+> > > > > > Try to fix the issue handled in commit 4a2e242bbb by replacing memcopy()/
+> > > > > > memmove() with newly added helpers qemu_ram_{copy, move}() that works on
+> > > > > > top of __builtin_{memcpy, memmove} or unaligned access friendly memory
+> > > > > > movement in the accessors to the ram device regions. With this, we can
+> > > > > > basically revert that commit to make ram device region directly accessible
+> > > > > > again and bypass the bounce buffer in address_space_map() where the guest
+> > > > > > hang is caused.
+> > > > > > 
+> > > > > > PATCH[1] uses qemu_ram_{copy, move}() in ram device region accessors
+> > > > > > PATCH[2] makes ram device region directly accessible again
+> > > > > > 
+> > > > > Michael asked to include below context in the cover letter in v3, but I
+> > > > > didn't noticed that before I sent v3 series, appended with them.
+> > > > > 
+> > > 
+> > > Looking at the list of issues (questions) raised by Michael, I don't understand
+> > > every one
+> > 
+> > Gavin, I doubt one should make memory.c changes without understanding the issues
+> > it is trying to address.
+> > 
+> > What is unclear? Ask away.
+> > 
+> 
+> Yeah, absolutely. I need some time to understand all questions or suggestions
+> by digging the code a bit, before I'm able to come back to you, but not very
+> soon though :-)
+> 
+> > 
+> > > before I'm able to put more time to dig, but I feel this series has
+> > > too ambitious goal to cover accesses to all the directly accessible regions
+> > > with the newly introduced qemu_ram_{copy, move}. It causes too many behavior
+> > > changes and concerns, making this series impossible to land.
+> > > 
+> > > I would suggest to break down the goal and step back to apply the newly introduced
+> > > qemu_ram_{copy, move} to the ram device regions only? It's actually something
+> > > proposed by Peter Xu in the earlier replies. Taking address_space_write() as an
+> > > example, the indirectly accessible regions are covered by memory_region_dispatch_write()
+> > > in (1), the ram device region is covered by qemu_ram_move() in (2), and all other
+> > > directly accessible regions are covered by memmove() in (3).
+> > > 
+> > >    address_space_write
+> > >      flatview_write
+> > >        flatview_write_continue
+> > >          flatview_write_continue_step
+> > >            memory_access_size             // (1) indirectly accessible region
+> > >            memory_region_dispatch_write
+> > >              access_with_adjusted_size
+> > >                memory_region_write_accessor
+> > >                  mr->ops->write
+> > >            qemu_ram_move                  // (2) ram device region
+> > >            memmove                        // (3) all other directly accessible regions
+> > > 
+> > > With the limitation, only the ram device regions in (2) are affected. We're
+> > > basically moving the accesses to the ram device region from (1) to (2). No
+> > > changes introduced to other types of regions. The goal is to make the ram device
+> > > region accessible so that the bounce buffer can be bypassed in DMA path.
+> > 
+> > Esthetics aside - ram device regions have all the same issues.
+> > 
+> > Maybe you can limit the scope of the changes,
+> > but I doubt you can get out understanding)
+> > 
+> 
+> Yes. Limited to the scope of VFIO and PCI BARs, it depends on how the PCI BARs
+> are mapped, pgprot_noncached or pgprot_writecombine. The listed problems and
+> concerns are existing on the ram device region exposed with pgprot_noncached.
+> However, everything should be just fine if the region is exposed with pgprot_writecombine.
+> Am I understanding this correctly?
 
-On 11-05-2026 14:16, Jishnu Warrier wrote:
-> On Thu, Mar 05, 2026 at 12:09:11AM -0600, Saif Abrar wrote:
->> Add a method to reset the value of LSI Source-ID.
->> Mask off LSI source-id based on number of interrupts in the big/small PHB.
->>
->> Signed-off-by: Saif Abrar <saif.abrar@linux.vnet.ibm.com>
->> Reviewed-by: Cédric Le Goater <clg@kaod.org>
->> ---
->> v3: Updates for coding guidelines.
->> v2: Introduced method pnv_phb4_xsrc_reset().
->>
->>   hw/pci-host/pnv_phb4.c | 12 +++++++++---
->>   1 file changed, 9 insertions(+), 3 deletions(-)
->>
->> diff --git a/hw/pci-host/pnv_phb4.c b/hw/pci-host/pnv_phb4.c
->> index 254bbe4089..5e885cb89d 100644
->> --- a/hw/pci-host/pnv_phb4.c
->> +++ b/hw/pci-host/pnv_phb4.c
->> @@ -490,6 +490,7 @@ static void pnv_phb4_update_xsrc(PnvPHB4 *phb)
->>   
->>       lsi_base = GETFIELD(PHB_LSI_SRC_ID, phb->regs[PHB_LSI_SOURCE_ID >> 3]);
->>       lsi_base <<= 3;
->> +    lsi_base &= (xsrc->nr_irqs - 1);
->>   
->>       /* TODO: handle reset values of PHB_LSI_SRC_ID */
->>       if (!lsi_base) {
->> @@ -1944,6 +1945,12 @@ static void pnv_phb4_ro_mask_init(PnvPHB4 *phb)
->>       /* TODO: Add more RO-masks as regs are implemented in the model */
->>   }
->>   
->> +static void pnv_phb4_xsrc_reset(PnvPHB4 *phb)
->> +{
->> +    phb->regs[PHB_LSI_SOURCE_ID >> 3] = PPC_BITMASK(4, 12);
-> If I am not wrong, according to PHB5 spec page 104, the LSI Source ID field should be bits 3-15:
->      PPC_BITMASK(3, 15)  // 0x1FF8000000000000ULL
-> 03:12 LSI Source ID(00:09)
-> RW
->
-> 13:15 LSI Source ID(10:12)
-> R0
+Not everything)
+
+We have issues around guest RAM access, too.
+
+But yes you can then mostly access device RAM as guest RAM on
+arm and x86. I am not sure about power. for power pgprot_writecombine
+is cache inhibited and I am not sure e.g. vector instructions
+with misaligned addresses behave the same.
 
 
-This patchset is for PHB5. Your observation is about the next version PHB5B.
 
-
->> +    pnv_phb4_update_xsrc(phb);
->> +}
->> +
->>   static void pnv_phb4_err_reg_reset(PnvPHB4 *phb)
->>   {
->>       STICKY_RST(PHB_ERR_STATUS,       0, PPC_BITMASK(0, 33));
->> @@ -2000,10 +2007,11 @@ static void pnv_phb4_reset(Object *obj, ResetType type)
->>       PnvPHB4 *phb = PNV_PHB4(obj);
->>   
->>       pnv_phb4_pbl_core_reset(phb);
->> +
->> +    pnv_phb4_xsrc_reset(phb);
->>       pnv_phb4_err_reg_reset(phb);
->>       pnv_phb4_pcie_stack_reg_reset(phb);
->>       pnv_phb4_regb_err_reg_reset(phb);
->> -    phb->regs[PHB_PCIE_CRESET >> 3] = 0xE000000000000000;
->>   }
->>   
->>   static void pnv_phb4_instance_init(Object *obj)
->> @@ -2080,8 +2088,6 @@ static void pnv_phb4_realize(DeviceState *dev, Error **errp)
->>           return;
->>       }
->>   
->> -    pnv_phb4_update_xsrc(phb);
->> -
->>       phb->qirqs = qemu_allocate_irqs(xive_source_set_irq, xsrc, xsrc->nr_irqs);
->>   
->>       pnv_phb4_xscom_realize(phb);
->> -- 
->> 2.47.3
->>
-
-Thanks,
-
-Saif
-
+> [...]
+> 
+> Thanks,
+> Gavin
 
 
