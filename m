@@ -4,113 +4,142 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4CC2CD98E2
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jun 2026 05:53:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7206CCD98E2
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jun 2026 06:04:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZjCC-00033t-Ht; Wed, 17 Jun 2026 01:52:16 -0400
+	id 1wZjN4-0004yO-OK; Wed, 17 Jun 2026 02:03:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wZjCA-000335-UL
- for qemu-devel@nongnu.org; Wed, 17 Jun 2026 01:52:15 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wZjMx-0004xX-6g
+ for qemu-devel@nongnu.org; Wed, 17 Jun 2026 02:03:25 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wZjC8-0006G0-KQ
- for qemu-devel@nongnu.org; Wed, 17 Jun 2026 01:52:14 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781675531;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=IWVgqzOTX5oPz+NDo2MDzss8B1MaOP+2UdmjAj6uOb8=;
- b=MPppUt4EP/dYZ5ArgTG87982OarOP+CDjaNbNtEmwt/QKIf58hsHnky/Gi9kFSRSNWFptx
- +aT+YqLaGIQAPHEHRNQV9zbHklUGH/KmkulOEf8omcCvv6tCu6kiZxislZcWdPb0EHRBiu
- uJRjpD/rQ+6VA1DNXqc9Wr3gZjOw+Lg=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-399-MB-V5hHoNmechNMgckKKbw-1; Wed, 17 Jun 2026 01:52:09 -0400
-X-MC-Unique: MB-V5hHoNmechNMgckKKbw-1
-X-Mimecast-MFC-AGG-ID: MB-V5hHoNmechNMgckKKbw_1781675528
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-490bfd70b0fso53060995e9.0
- for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 22:52:09 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wZjMt-0008Mo-K4
+ for qemu-devel@nongnu.org; Wed, 17 Jun 2026 02:03:22 -0400
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 65H60pDT274624
+ for <qemu-devel@nongnu.org>; Wed, 17 Jun 2026 06:03:09 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ d5gh9WoT+7JXtpu9g+VmN4U7nytmQ0VdETWTeIE2GSM=; b=M5kQeRarIZ5XOrCs
+ NkoYY98KBXmtJvapxfw60gLhItf4Pkhb4y5ieqnREJ+r1K/A3/Cz6CqiFo1ZQOBL
+ /HAL0taKQ0DGWML68U5Q879MWgnDwE8PQH+JtvUp9koLlF8j4GwBDHERW0RMvgdu
+ MXXseF8nnVsKwkjdMXR1FNDNtNR1cnWRth/u1/G+5p3lLjKFDUuKm9LjN+Tfp25d
+ EFheyqGaHeYpPktCesdu4fKycNTbeuaRToV/84YhQ6zrVnWhio6j6HSZUvG3hnay
+ dZIBr+YCCJZXNUpPoyaAe68xmLWo3au2f/rtsUZHivwiKxqtrPkayQ1OvuNf0vNj
+ e+RU2g==
+Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
+ [209.85.160.200])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4eueemhm01-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Wed, 17 Jun 2026 06:03:09 +0000 (GMT)
+Received: by mail-qt1-f200.google.com with SMTP id
+ d75a77b69052e-517878a92c5so95659871cf.3
+ for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 23:03:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1781675528; x=1782280328; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=IWVgqzOTX5oPz+NDo2MDzss8B1MaOP+2UdmjAj6uOb8=;
- b=CmvwRIE/HfnjivXwGmpavoTMwGHQFCn9rCwa9nzq5IQij66tIYPoZvFXL2UU0hyERw
- 7anmZ7DWKlRqAP5RklDWaf9BNzObHI4pe61rwFtK3XNOKddI+Mv/LBBXbVwwRKP6JdnT
- KYqYMAat7a04GFKo3RO2rZ3iR7Ass+/McxQc3R3hJPw9BkQoCGGiMJ6fxdAiuaH9O8n7
- XJgk5zMTylIkz+UAZlNV+1RZe2kuQ0BtpwcO+LBwlfzLRV2lKzz26mv9txbl/GCFZDrO
- iC8mibU1/gydDW/N5igtLCH81XOPHPBLiy2LwtXGEfnIrIKhkxLBe2RotV8yqJpGGnEt
- Zn9Q==
+ d=oss.qualcomm.com; s=google; t=1781676188; x=1782280988; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=d5gh9WoT+7JXtpu9g+VmN4U7nytmQ0VdETWTeIE2GSM=;
+ b=X7sDH0JiWcbwD0BLXOiqhdJ3b6urgN3JG22c5VoMbH/u5mzHPhB1wf7kAJ0aPS7NRN
+ Z2haqWK9XU9bzZ7eV3DpF7tg6JqcNanGbwO8Y6EogJUmKZsGwIzVpCSpNs/3zCUYNR5V
+ 7/u4PLxYwg9bZXzisZbFvjL0bx1bQzsjSAHhooYHBVPh0IMZYLXqhy/ddlMg3PzQkEnW
+ B2lfbdkpuN8Q0MIoQJeMHfJ0WoxtP3pFieOMsoKWT8snGib9xkz5vfqJFhAVIP+ch3yq
+ eXanq+cmTI/N0b/6odETolqxOWiTAajR63WcCDtN6Ksso+CIavdljmc+XdjP4ttOLliy
+ DKIA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781675528; x=1782280328;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=IWVgqzOTX5oPz+NDo2MDzss8B1MaOP+2UdmjAj6uOb8=;
- b=LQ4upn4Tef1WEY0VqHf1GF9uu8LPzGUF3bKVBtgw1scooxxrrq4kILZfTNWF8gppct
- Kzyg7A32g1R9M3r0y0cTthmgPLRjpYSwIaVPAyWuOEUOAh19RM4wOMJV5m/NzI6yWvMy
- 4lltm/bJrrdXqamrA8KqJZGYMDAad/8PNaiyRkrcrxHFvLneIBLUvThD+EdInAcc/vNg
- GSWqFfkopc4/k6E66H1JTJijueyk5UUUjUJw4fYnTPZ4HbyezM9LXEvJY8/EgWU5b4Jl
- EmZzufGVclk/YKKogBBHZjEEGrxWn+hYc1HtEWzuKXmKZAhECNhKGpp5G3pzjg15TuDc
- u+QA==
-X-Forwarded-Encrypted: i=1;
- AFNElJ8xxos7Ishm4e+C2OiCtbrzVbGclpCkx5W1BJL8ZsK+7QIEIFcXPmbVkjmHccH43dZG3DOzrIPRbikm@nongnu.org
-X-Gm-Message-State: AOJu0YxWreQO4nIu+IxNkUgjTfx2jYD6TzcRFRBrIQw620RFHDTY3Klo
- xc6K69sMRrjO66sbumjRxXuVXHbVX3hxurawZfYbOZIv4BP3RU+4Cxs/mqb6au4DpxQ/zS1QQsJ
- c4laCJYT5FN/R6+Cltprs9cXuxlXag3KEFqO5AORk1CcgxYBdAK84qLFJ
-X-Gm-Gg: Acq92OFhdoB7DUvcAJ0RrmiOf0+0v/abobzRN3k861FaEf8po3h6FQLIGAbwqusECX4
- 5MePBxhoi4epP2NLP0Aq8SP5dhQqmunD2ks00bxXKb1ninO8oKPA0CvdKtAJPeOkbiHBX/klVpH
- hetAZPQvBQGtaNmmo/qfzLjk6WRI84LFyef1EMV0cKCYTo7etQBQjeF1bbZj/tTOvRYk+r1XFB1
- ogepIRArdr0OcTKe9tHi5mDdy8uO1rHjRKHJni5MoIYJjhWQpusbd+hse1eiLW1jqGBODTpS7wX
- Yk5Pw9GrvAgQXzMkeabt0hUTCOUnlApOKWH26iUSMeR0M9c5X/T4xrvUUjZwv9RM2vYImVfPeAW
- JF2o26oI1o/mSEjMFAYwYS160U6SdRxNk
-X-Received: by 2002:a05:600c:698e:b0:490:d9d0:51c8 with SMTP id
- 5b1f17b1804b1-492341275e3mr22565845e9.18.1781675528209; 
- Tue, 16 Jun 2026 22:52:08 -0700 (PDT)
-X-Received: by 2002:a05:600c:698e:b0:490:d9d0:51c8 with SMTP id
- 5b1f17b1804b1-492341275e3mr22565225e9.18.1781675527538; 
- Tue, 16 Jun 2026 22:52:07 -0700 (PDT)
-Received: from redhat.com (IGLD-80-230-85-71.inter.net.il. [80.230.85.71])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4606f263945sm52313133f8f.8.2026.06.16.22.52.05
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 16 Jun 2026 22:52:07 -0700 (PDT)
-Date: Wed, 17 Jun 2026 01:52:03 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Gavin Shan <gshan@redhat.com>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, peterx@redhat.com,
- alex@shazbot.org, richard.henderson@linaro.org,
- peter.maydell@linaro.org, berrange@redhat.com,
- philmd@oss.qualcomm.com, philmd@mailo.com, david@kernel.org,
- clg@redhat.com, pbonzini@redhat.com, phrdina@redhat.com,
- jugraham@redhat.com, liugang24219@sangfor.com.cn,
- dinghui@sangfor.com.cn, shan.gavin@gmail.com
-Subject: Re: [PATCH v3 0/2] system/memory: Make ram device region directly
- accessible
-Message-ID: <20260617013709-mutt-send-email-mst@kernel.org>
-References: <20260616052552.389021-1-gshan@redhat.com>
- <ae17b5a6-eed8-4d4c-a798-cb92ffa6c915@redhat.com>
- <20260616014419-mutt-send-email-mst@kernel.org>
- <2015405e-7839-4ab9-b5a0-712b644da3c8@redhat.com>
+ d=1e100.net; s=20251104; t=1781676188; x=1782280988;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=d5gh9WoT+7JXtpu9g+VmN4U7nytmQ0VdETWTeIE2GSM=;
+ b=p16W0iD+LcIJ+OdBbgV+R5XI3xyJS89HKJyeLwXBRZ32z7bhJgjJk0ICXmLj+desYX
+ 6PuKN5+P56onTMWbafe7ZxdMI6fssoYFvd9X8M13QZNi3iH6kc593jkL9V62Y5dM6Zu8
+ rT5wuQhzw4RQdygUt79CcOPdQQ5Tbn7YnxvWxUGLJjK2d14VImbZaLezVaO1gT5Of3Oa
+ 51RtydG/A8o2gAD592owLneQe8SwBW6XGFPxI/FHY7UxjsjqYqa0mvCEcUp9FfjDiOy1
+ 0BR3U46hjNLEVVxxW6EFBcWlxGPYxlyIcW3W3vr0xAIZcKSktVKtzccWrV+NPHVhDFtv
+ xULQ==
+X-Gm-Message-State: AOJu0Yzo29SkyGGwjvixx/Z9tmD5RnegysuVbqfoxvO+gMoWNXTd/rU8
+ ZjLmic3Ti/ZqAzzbZaW5dQ+6f0uWnwwDTUOY9aONzC13W/vj19Olqz0ITrf7C3wLTnl0BRUaPwl
+ ofG0JQUN3cS8zLkIlmEz4R5wU8QnFL3gWsTjmo2TQ+om6rLs+sJJEBWCSCw==
+X-Gm-Gg: Acq92OGoUZuaI88U9dLPi+5nreXJw0NXU1kVn7y9uFVkXwRUAwOUed/C2goODLKvIRU
+ cw0Vj5L8ZvLGpuKaE6LiuYzwVR8HjFhIhB3GP34OhjS+CajhiC+2NulSbI7awrPNYd/kekBHcfZ
+ uyB+XmH3vTBG/FFu/iI8NT0UBFELxv5vAzI7l5KY8chcGtArngVlIIn+yfUcwdpE9IoEyBRc8xf
+ 63X7MpVV3P3cw8g/3yx90a0RGIfmlld4+zQON31uxaoWrlg3kCXkSgLcvMrY2pdzzIeqvZDUtzb
+ HUI/CHLohcuaHRQe5uLuq9Ka1HKfsS3dZEmFWf7FLqERbTNsyIgyiO8Ya5M557DUMlcm02+GDeK
+ m2Vno53FVQUiGtoHUWeEuQ19AL2jAqKbG0YXQCEe44gcK7AAiVaB2SDkhJot/aQ==
+X-Received: by 2002:a05:620a:7081:b0:915:3d27:a816 with SMTP id
+ af79cd13be357-91d8e3a1d4dmr442211185a.49.1781676188490; 
+ Tue, 16 Jun 2026 23:03:08 -0700 (PDT)
+X-Received: by 2002:a05:620a:7081:b0:915:3d27:a816 with SMTP id
+ af79cd13be357-91d8e3a1d4dmr442209485a.49.1781676188129; 
+ Tue, 16 Jun 2026 23:03:08 -0700 (PDT)
+Received: from [192.168.69.208] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4922fa3abd0sm150365495e9.1.2026.06.16.23.03.06
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 16 Jun 2026 23:03:07 -0700 (PDT)
+Message-ID: <302cf743-9ccc-4ed3-9306-57f40211458e@oss.qualcomm.com>
+Date: Wed, 17 Jun 2026 08:03:06 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <2015405e-7839-4ab9-b5a0-712b644da3c8@redhat.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 4/5 qemu] block/file-posix: Clean up sys/ioctl import
+To: Damien Zammit <damien@zamaudio.com>, bug-hurd@gnu.org
+Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, manolodemedici@gmail.com,
+ pbonzini@redhat.com, stefanb@linux.ibm.com, peter.maydell@linaro.org,
+ kwolf@redhat.com, berrange@redhat.com, eblake@redhat.com, bugaevc@gmail.com
+References: <20260208055858.2166524-1-damien@zamaudio.com>
+ <20260208055858.2166524-5-damien@zamaudio.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <20260208055858.2166524-5-damien@zamaudio.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjE3MDA1MiBTYWx0ZWRfX7Tb2ELWkg1q5
+ e9Nd5QRLL0R6KK8ds21zI0CBKJA9NbRcKuLcn6OawGzeyUkuyKlLjxa/rmrWppi2dAAkeG+jLMz
+ IYVXztRsflTT3TC5LqDGtrcVVdZlFXo=
+X-Authority-Analysis: v=2.4 cv=D4d37PRj c=1 sm=1 tr=0 ts=6a32389d cx=c_pps
+ a=JbAStetqSzwMeJznSMzCyw==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+ a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
+ a=1aEGRzILAAAA:8 a=EUspDBNiAAAA:8 a=1tSEMpTH9XP_W59IOagA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=uxP6HrT_eTzRwkO_Te1X:22 a=YnQOWIQKVlvq_qt1GCjI:22
+X-Proofpoint-GUID: ZicM-vs-1jIKRQFVNqlDs0AkM0MHVnjx
+X-Proofpoint-ORIG-GUID: ZicM-vs-1jIKRQFVNqlDs0AkM0MHVnjx
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjE3MDA1MiBTYWx0ZWRfX52jrUdaW/Nb+
+ H+w1446FBfStVY2caYVmjZM/Uy2DQ2F+XYkCySfaU3mtlS65onS+RoXsbVqCQKSzY+CH/I7tJUI
+ MkLV6N2RjrUhWC9Kzch/3oPjUMeXQ2R72Hw/0pPz5+QcQv1mXtBpDrH8pJjDpCkniwfLiqxtrJN
+ vM1LKPnUt0MMrL/z9nE1QmSN6Cn+AAAWOdqZgLZXEfXnVt8JkDR9MlWTQjWtGe4rkmq1ROQyi05
+ HVO0T+KgK+6HYfBSX/lguY4vbVR1wSdzIlDkQ6r00jc0EL0M1LmMq9lmMdVNFw/R/OQpzciEKen
+ Aa1ofX443C5GTAxZHXJyyGXsvAT4nDOfWGBUDeeQsXk4HykKZ2X3JrVFhK8huvJkQvecChzgDlN
+ 6cWBPg7ZA5P/h52GK3Aq9OE2NbR+x/Q32IX22oRxL9owElqtB669iB9X7CqfQsRmkQmjKjBmnct
+ YELnTtkKsUTknen0JiQ==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-16_05,2026-06-16_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 bulkscore=0 spamscore=0 adultscore=0 clxscore=1015
+ impostorscore=0 malwarescore=0 lowpriorityscore=0 suspectscore=0
+ priorityscore=1501 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2606170052
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -126,167 +155,14 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jun 17, 2026 at 12:35:00PM +1000, Gavin Shan wrote:
-> On 6/16/26 3:44 PM, Michael S. Tsirkin wrote:
-> > On Tue, Jun 16, 2026 at 03:40:34PM +1000, Gavin Shan wrote:
-> > > On 6/16/26 3:25 PM, Gavin Shan wrote:
-> > > > All ram device regions was turned to be indirectly accessible by commit
-> > > > 4a2e242bbb ("memory: Don't use memcpy for ram_device regions"). This leads
-> > > > to a hanged guest where a NVidia GH100 GPU is passed from host. The memory
-> > > > in its PCI BAR#4 can be allocated as DMA target buffer. qemu has to take
-> > > > DMA bounce buffer in address_space_map() to cover the DMA request. However,
-> > > > the bounce buffer size is 4096 bytes and we're overrunning it easily when
-> > > > the guest has significant disk activities on compiling 'cuda-samples'.
-> > > > The full log and problem description can be found from PATCH[1/2]'s commit
-> > > > log.
-> > > > 
-> > > > Try to fix the issue handled in commit 4a2e242bbb by replacing memcopy()/
-> > > > memmove() with newly added helpers qemu_ram_{copy, move}() that works on
-> > > > top of __builtin_{memcpy, memmove} or unaligned access friendly memory
-> > > > movement in the accessors to the ram device regions. With this, we can
-> > > > basically revert that commit to make ram device region directly accessible
-> > > > again and bypass the bounce buffer in address_space_map() where the guest
-> > > > hang is caused.
-> > > > 
-> > > > PATCH[1] uses qemu_ram_{copy, move}() in ram device region accessors
-> > > > PATCH[2] makes ram device region directly accessible again
-> > > > 
-> > > Michael asked to include below context in the cover letter in v3, but I
-> > > didn't noticed that before I sent v3 series, appended with them.
-> > > 
+On 8/2/26 06:59, Damien Zammit wrote:
+> Since all platforms except sun include this header,
+> clean up the ifdefs.
 > 
-> Looking at the list of issues (questions) raised by Michael, I don't understand
-> every one
+> Signed-off-by: Damien Zammit <damien@zamaudio.com>
+> ---
+>   block/file-posix.c | 15 ++++-----------
+>   1 file changed, 4 insertions(+), 11 deletions(-)
 
-Gavin, I doubt one should make memory.c changes without understanding the issues
-it is trying to address.
-
-What is unclear? Ask away.
-
-
-> before I'm able to put more time to dig, but I feel this series has
-> too ambitious goal to cover accesses to all the directly accessible regions
-> with the newly introduced qemu_ram_{copy, move}. It causes too many behavior
-> changes and concerns, making this series impossible to land.
-> 
-> I would suggest to break down the goal and step back to apply the newly introduced
-> qemu_ram_{copy, move} to the ram device regions only? It's actually something
-> proposed by Peter Xu in the earlier replies. Taking address_space_write() as an
-> example, the indirectly accessible regions are covered by memory_region_dispatch_write()
-> in (1), the ram device region is covered by qemu_ram_move() in (2), and all other
-> directly accessible regions are covered by memmove() in (3).
-> 
->   address_space_write
->     flatview_write
->       flatview_write_continue
->         flatview_write_continue_step
->           memory_access_size             // (1) indirectly accessible region
->           memory_region_dispatch_write
->             access_with_adjusted_size
->               memory_region_write_accessor
->                 mr->ops->write
->           qemu_ram_move                  // (2) ram device region
->           memmove                        // (3) all other directly accessible regions
-> 
-> With the limitation, only the ram device regions in (2) are affected. We're
-> basically moving the accesses to the ram device region from (1) to (2). No
-> changes introduced to other types of regions. The goal is to make the ram device
-> region accessible so that the bounce buffer can be bypassed in DMA path.
-
-Esthetics aside - ram device regions have all the same issues.
-
-Maybe you can limit the scope of the changes,
-but I doubt you can get out understanding)
-
-
-> > > ----
-> > > 
-> > > The issues listed by Michael:
-> > > 
-> > > 1. On x86, memcpy is different from __builtin_memcpy if one uses old 1.0
-> > >     force-headers from 2019. Likely no longer relevant.
-> > > 
-> > > 2. variable length memcpy can translate 2,4,8 byte guest access into
-> > >     multiple byte accesses. doing this for mmio is guaranteed to break devices.
-> > > 
-> > > 3. (theoretical concern) also on x86, unaligned accesses are possible on guest
-> > >     and host, so converting an unaligned access to a series of aligned ones can
-> > >     in theory break devices.
-> > > 
-> > > 4. also on x86, vector instructions for large (>16 byte) writes into
-> > >     pgprot_noncached memory are safe and faster than multiple 8 byte ones.
-> > > 
-> > > 5. also on x86 it so happens that if you write a fixed-size memcpy this gets
-> > >     optimized to a single store/load and it works for aligned and unaligned
-> > >     addresses on that architecture. How to ensure this keeps being correct
-> > >     is left as an excerise for the reader. But qemu already relies on this
-> > >     and did for years.
-> > > 
-> > > 6. on non-x86 both unaligned accesses and vector instructions for accessing
-> > >     UC memory are illegal.
-> > > 
-> > > 7. standard vfio gives KVM VM_ALLOW_ANY_UNCACHED, so even on non x86 guest can
-> > >     map the memory as as pgprot_noncached/ioremap or pgprot_writecombine/ioremap_uc.
-> > >     If it does the second then it can use unaligned or vector for access.
-> > >     This is why normal passthrough tends to work - it never traps to qemu at
-> > >     all. But for qemu, vfio uses  pgprot_noncached unconditionally so qemu
-> > >     can't use unaligned or vector instructions on non-x86.
-> > > 
-> > > 
-> > > 8. But for nvgrace RAM, vfio has a driver that uses pgprot_writecombine/ioremap_uc.
-> > >     so qemu could safely use unaligned/vector instructioons even on non-x86.
-> > > 
-> > > 9. Except sadly, vfio currently does not tell qemu how it maps
-> > >     the memory, so qemu can not know what is safe on non-x86.
-> > > 
-> > 
-> > And more:
-> > 
-> > 10. on x86 memcpy will sometimes do multiple overlapping stores when
-> > size is not a power of 2. for example, a 15 byte write is done with
-> > 2 8-byte stores. This is theoretically an issue
-> > if guest does something super clever with ordering,
-> > but does not seem to be in practice.
-> > 
-> > 10. on non-x86 memcpy will do multiple overlapping stores even
-> > for single byte writes. E.g. it does it to avoid extra branches.
-> > This is causing issues in practice.
-> > 
-> > 
-> > 
-> > 
-> > 
-> > > Now, what is to be done?
-> > > 
-> > > 
-> > > A. on x86, we must avoid converting 2,4,8 byte accesses into byte accesses.
-> > > At least for aligned, perferably for unaligned accesses too.
-> > > Fixed width memcpy seems to work for this. Whether we should bother with
-> > > __builtin to work around broken old fortify headers, I donnu.
-> > > I do not have any answer how to check that compiler does this correctly.
-> > > If anyone is motivated enough, adding a GCC builtin could be possible.
-> > > Given qemu did this for years, I think we can leave solving this for
-> > > another day.
-> > > 
-> > > B. Also on x86, I do not see why we should not use memcpy for large
-> > > accesses if we can. Better perf.
-> > > 
-> > > C. on non-x86, we currently must not memcpy since we do not know if it
-> > > is pgprot_noncached. yes, performance will be bad for DMA into device RAM.
-> > > 
-> > > D. It goes without saying that casting an unaligned address to unint32_t
-> > > (be it for qatomic_set or whatever) is undefined behaviour in C
-> > > and so a bad idea on any architecture.
-> > > 
-> > > E. also for non-x86, we really should teach vfio to tell qemu whether
-> > > it maps device pgprot_noncached or pgprot_writecombine.
-> > > we will then be able to use memcpy for >8 accesses.
-> > > 
-> > > Anyone, correct me if I'm wrong? Maybe I should start a new thread with
-> > > this summary?
-> > > 
-> 
-> Thanks,
-> Gavin
-
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 
