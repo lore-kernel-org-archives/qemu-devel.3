@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5424ECD98F0
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8515CD98F5
 	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jun 2026 12:03:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZoyw-0004Ew-Be; Wed, 17 Jun 2026 08:03:00 -0400
+	id 1wZoyk-00046U-H7; Wed, 17 Jun 2026 08:02:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <163wangjack@gmail.com>)
- id 1wZorK-0002KW-Lq
- for qemu-devel@nongnu.org; Wed, 17 Jun 2026 07:55:06 -0400
-Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
+ id 1wZomB-0000rJ-KQ
+ for qemu-devel@nongnu.org; Wed, 17 Jun 2026 07:49:47 -0400
+Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <163wangjack@gmail.com>)
- id 1wZorH-0005z7-K8
- for qemu-devel@nongnu.org; Wed, 17 Jun 2026 07:55:06 -0400
-Received: by mail-pl1-x630.google.com with SMTP id
- d9443c01a7336-2c40397e3caso54817565ad.2
- for <qemu-devel@nongnu.org>; Wed, 17 Jun 2026 04:55:03 -0700 (PDT)
+ id 1wZomA-0003cd-2F
+ for qemu-devel@nongnu.org; Wed, 17 Jun 2026 07:49:47 -0400
+Received: by mail-pl1-x629.google.com with SMTP id
+ d9443c01a7336-2bf30d530bdso56547915ad.3
+ for <qemu-devel@nongnu.org>; Wed, 17 Jun 2026 04:49:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1781697302; x=1782302102; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1781696984; x=1782301784; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:from:to:cc:subject:date:message-id:reply-to;
  bh=HuoZ1XF/SGtRMQNUv5o7lgVgKw3GW1pchp5QRRK8IPk=;
- b=Zr4yCHxfwQKuphQl9w5v0iw1P1Oebhg52X/S9tY/9ty663qA/73EhVo7tHrHWp6GiU
- EHHIpieQ+ymYPslVbYeCmO8pdHgS+nyqqq4+RvTGn8ZZhhSJuL0N1OBu25vDujZzlebX
- K/537d9lcJd5I+g6zq0E8A9oY6J+fm3RTSsj5ZfL27NVbKZrqOPXl4Sdba9Oq+Vb8Ggu
- nzTVe1xCm4K/j8Lxq1uJD3Hi3wjzOqauF4S01w1+I4lrjrfoWB/Q6m5cH3N2RuV6MOzy
- WjQAPTa7ROOCq2LKjiGEJA/TmqKRyPojmD7FmIkW1sLA/NoRFow7liQ7zlK+FukcfG7E
- 573w==
+ b=Yukfyo4u71NPca1lFCyFX20MtuBdeE+0BSBxKb9Vfss7mieu1D5W8MeQTi368PToEX
+ hE4fdYaK/VGuE854KL4RVKH7wY0YDgFmg3pMjNDe4S96BdNzzeasiO9U4pldIOmXU9SC
+ OSNCC8oXqdlZV4hqGwq6jJ5pdQ20o+6OSWf7aEqOEIV0NSjrc40b/nSc4qDjdVEWvXvt
+ RtxHMs14vBi0Eiqi+df/HBPWnQgC3kXpAX60hNIu1j8cKIR+98ja/fiLZgzBufyMrEsZ
+ Rt+yW54FIYZ29wPeNI0RYITY3p4Y17bxDmQM9ZwJ4Hn1QdIbEqaAP1mjdk8B0GyG9tQN
+ 4+7g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781697302; x=1782302102;
+ d=1e100.net; s=20251104; t=1781696984; x=1782301784;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
  bh=HuoZ1XF/SGtRMQNUv5o7lgVgKw3GW1pchp5QRRK8IPk=;
- b=My3ntG21bHAjOsAHZ9ked65s/Rzo0sm0KLWyh3nE7MKpy9oVhzudV/pRXCxR2eQ4Di
- YfhJ3Ve/0OoSIanuDioPBJ/6/p5KsHicFAT4V0mipFL8MxQJcvplHtLgU6pB0+iTNqa9
- jYFrGkM+V3zEDPAL5b1IE2YzbCgqE0K2tOy5C0MFbY/Mp7dRqpuq07RrbA1sbGnYPAC3
- GczONyQQoFMLDWqrmTOlv6A7wvDQOrRv4PDRANJYgIAaP41rNrmoBdUYaarzxBEOtjhH
- aWxQinPw+GfTNRCHoAKIk3ffLOw6tMLMiZ+ZSSqIzasdXrN5/YJpRwOK2KmRtGj8h+Iz
- 27AA==
-X-Gm-Message-State: AOJu0Yxj3XfhndRN8HEN9NJK+aGLNZAwtlFzmZIzq6aFc0GcTdkd2xqY
- rKTXp6Vko1HPI0goqcyck53tELmTpx5BJLmFOf+rNbxT4YBTE4l4K5nA2TrPCg==
-X-Gm-Gg: AfdE7cn0yAMTHRS63O0P2LWIaZ1t/WYV99qMAaqGKnpTsNu9j8VdDl9CcSmUdTTGB+P
- Rd2PV8y5Olqqu2seIDSWIaUWHEmEdMBm1msvCeyJZ7Vm6nXIfviHvW3/fQZnyshphqh+oM9VXt5
- 7M2jWAFjMMJMjOi/1/tUSbMElfk8nOteIXsFH9xxhyYy1i1dsGYiLWs99/0U9HoImukghFZP4Zi
- m+BpbN3Z1gC5dSIy4YysOlq2+LMDTozSh9rsYvAhAQw7CBVbk/c9nQl0izhuECTnenEj1pFZJYi
- xvp8Qr8pj9fi7LiX0x0jyERxQD0pTd5ovJeDYVzIpd0J5xdoO27M2HP4aG0m1sFiTWzeCLX7Cxh
- AMwJaAZgXzDX3uhunOA3b3rlx79SycJRM+BOjhoiszOrn2VylDj4WDsHAohXVERqNoZ62EcA2xp
- Tec2wQNzqyzZHcLY9qBvrK+Q2g
-X-Received: by 2002:a17:902:f609:b0:2c1:b8af:18ab with SMTP id
- d9443c01a7336-2c6bc20b7f0mr36324575ad.19.1781697301939; 
- Wed, 17 Jun 2026 04:55:01 -0700 (PDT)
+ b=r8uA04A1sOSwxMRArJERvPODExwh3C5g/XbkeAlx7IzGin6buMpYPhQ0LCTlKVFQ5t
+ b+KgH9AlPFlvV3ppnCrXzz7IEsOCrSd5+BxyzKK+qGX0vxbwxbNUw/cPOttZ1cG7eMJc
+ tnlMTVuevt5OvZImtC/9a5b+3E9uz0VFj7Nir2sxpkAelW3qRPTY2L6YEXFH6SE+BPFY
+ CnPpNSYdV3f53bXI8gBQ1Qk9bhFa9hor0j8KFKkEubRcv69uLie5/ax2muGpgMJcnBY1
+ N5TJL3zqA73zNvB3Ad4L1+xQir3Kbw5ofcncXtPv9KCdRTOIUcbpIFvlEP3l6PDu2ook
+ MQ+w==
+X-Gm-Message-State: AOJu0YwjmB0zAJH7BQ4whLBeY0VMLyGRAarVdhYmn2y75eb1B5dSnIab
+ fwlG5z55m0no6D7D4GxKElDYXGWUS3efCUrvceH2YgaWJVeIrjAm7zllkmhrPg==
+X-Gm-Gg: AfdE7clF+uGzeyn9QgIZVXZ6+uGU/5OZ8g95Md4gc88e+IFdppBK5GYIMXdNvBKZzmu
+ A3EsKHcuAhfQpaceazGA2lliZpPIKl/fzrBWCMmzMNifCxWMxEs1DXL2KBAx57VtBmWMC8GSF4j
+ eN1JqwxsR3GrSMkffcEhYX2syfRiLBBiRolYkOozIFxg6Kcvr1fmdVA/R8dSmC+6c3K2NuMa3KR
+ ZzPeHMU7b9mqAm145qYGvR/i4YijbR/t9hEliXZ5w5Win2KasDzuhjdRwDKNIXfPWJmJrXGNnLz
+ mxq9KgOGACn2d8o4LbRtLJe3hjP8O/krWIjCBJBGH16r7h6Hkv0ZmF1NM9ZtQ31EBhjfKgqdPD/
+ XZ1Ru96N73qfiNfsuv8lgYTRW9AbS9GIMa+yTxBNAEeCySWLah/CdO3aGpFkjJEhnQLg1EghoBU
+ 5LofPouSkMOgobeUyxVxowyJhX
+X-Received: by 2002:a17:902:da8c:b0:2bf:175a:db61 with SMTP id
+ d9443c01a7336-2c6bc099eb7mr33665965ad.7.1781696984033; 
+ Wed, 17 Jun 2026 04:49:44 -0700 (PDT)
 Received: from localhost.localdomain ([82.40.42.115])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2c42f1f1014sm163576605ad.16.2026.06.17.04.54.57
+ d9443c01a7336-2c43345e3ffsm164290415ad.71.2026.06.17.04.49.39
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 17 Jun 2026 04:55:01 -0700 (PDT)
+ Wed, 17 Jun 2026 04:49:43 -0700 (PDT)
 From: jw_mac <163wangjack@gmail.com>
 To: qemu-devel@nongnu.org,
 	qemu-arm@nongnu.org,
@@ -70,13 +70,13 @@ To: qemu-devel@nongnu.org,
 Cc: peter.maydell@linaro.org, mjt@tls.msk.ru, laurent@vivier.eu,
  jw_mac <77239050qq@gmail.com>, Wang <163wangjack@gamil.com>
 Subject: [PATCH trivial] Signed-off-by: jw_mac <163wangjack@gamil.com>
-Date: Wed, 17 Jun 2026 19:54:41 +0800
-Message-ID: <20260617115442.91715-1-163wangjack@gmail.com>
+Date: Wed, 17 Jun 2026 19:49:12 +0800
+Message-ID: <20260617114912.82494-1-163wangjack@gmail.com>
 X-Mailer: git-send-email 2.53.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
- envelope-from=163wangjack@gmail.com; helo=mail-pl1-x630.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
+ envelope-from=163wangjack@gmail.com; helo=mail-pl1-x629.google.com
 X-Spam_score_int: -13
 X-Spam_score: -1.4
 X-Spam_bar: -
@@ -85,7 +85,7 @@ X-Spam_report: (-1.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  FROM_STARTS_WITH_NUMS=0.738, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Wed, 17 Jun 2026 08:02:38 -0400
+X-Mailman-Approved-At: Wed, 17 Jun 2026 08:02:34 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
