@@ -4,156 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E40F3CD98EE
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jun 2026 06:42:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6E42CD98E2
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jun 2026 06:43:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZjxt-00044p-K0; Wed, 17 Jun 2026 02:41:33 -0400
+	id 1wZjz6-0004Zg-N8; Wed, 17 Jun 2026 02:42:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1wZjxo-00043v-4T
- for qemu-devel@nongnu.org; Wed, 17 Jun 2026 02:41:28 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wZjz4-0004ZC-Ij
+ for qemu-devel@nongnu.org; Wed, 17 Jun 2026 02:42:46 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1wZjxm-0007q7-DX
- for qemu-devel@nongnu.org; Wed, 17 Jun 2026 02:41:27 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wZjz3-0007ze-3i
+ for qemu-devel@nongnu.org; Wed, 17 Jun 2026 02:42:46 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781678485;
+ s=mimecast20190719; t=1781678564;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=JBpFjUflSjpTZIiB5JbQM2AoqPQYTsnx1PEDFL66A1I=;
- b=ElxjXMIU2GzmIBlXyqqRH0l3rsFZAaoFY6dCY+S9W/GhjmDxg6rayhMJln+i9A6KKlqxix
- NzGLBoOgbfNjJmNQGRpPz3AaaLN+H/c1aDeYf/n69KKreEhEbMBWV34f08eOAtsPxwt8pD
- AUYDLp/9p0jjFgFuSFJfyklZ1EMjuWg=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-527-NuaCIcoqPx-JExWxZ-U9sQ-1; Wed, 17 Jun 2026 02:41:21 -0400
-X-MC-Unique: NuaCIcoqPx-JExWxZ-U9sQ-1
-X-Mimecast-MFC-AGG-ID: NuaCIcoqPx-JExWxZ-U9sQ_1781678480
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-490b3f53c81so22960365e9.3
- for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 23:41:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1781678480; x=1782283280; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=JBpFjUflSjpTZIiB5JbQM2AoqPQYTsnx1PEDFL66A1I=;
- b=FCuVUPotpxy1vjEh/5nLaBbzL4ZO6nEXVejethhy08r7PEllqniVD4CqvuGxw9WD0K
- oEOvg/1ukQK5eVhDbVp3CxUq60fbsVbOmnbi/CAGqRkLcg/xg6ZR+DXqfFsKxunF83jT
- RCcGGftgMFQYw81sMIoRzelvSSaTqy76GLW0+eK/9hfhpsVy+p6jvf/PBqXIV7H8f8wb
- iJGxEL8pT8ffLxOysHHlnL3rmxcsqYWDJfAD3wEskdsnUls0f2lxQkulhsfshEkl4UQd
- wuEyIglzos9bcXIjW606BeS6TP+chUmAffqBuFEqNDgyCV01f4Ou716o+Vm0Hsk9gpOw
- JfhA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781678480; x=1782283280;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=JBpFjUflSjpTZIiB5JbQM2AoqPQYTsnx1PEDFL66A1I=;
- b=gZdt9tRnkQpSWBJ7Z0LzTD7FXkyT16id5Js0wJ3Rp6eMsRW22g8W9ldQ1upppWBMvk
- vqWD5FERAV/x2ryEn68ntDP18dl6Rbw/+b2KBS8zlHdA87w5Z27u871pFHqLpUaQU1/C
- 3E0t/GbNIZ+ITnhi934tXQhnXUUG8Jt6Ek9d74e5+1Fm4qZGHnD+oWCMIW06Rff+lU/D
- WA8Z6iAbZNVXi46QxrMS4E/HnELPf2F5+Ep2uDysjgcOlyl79yB1ibZCZ895a5zOlyhE
- R9l4+dVNP/Skqpi7dd885dahyuWC6woZ/bNkk3xxi6Z2XjfE/uTHmmTHw1n+m59R4IM4
- rWxg==
-X-Forwarded-Encrypted: i=1;
- AFNElJ9UF6ZuylYk3gHe6SGEcCjwcDGoPByxzDdpwJGdaBis05SE6sMQ+NJgak3YD/BviGMq588IEDjh3QbA@nongnu.org
-X-Gm-Message-State: AOJu0YxmFbnsPbr5TCnGPDuGhDBzsRgOqzx1L88FwM+x32RxQo3x+Ypa
- oUxbtUXw/XrAELS0Tsneg7lB4nUD7OkXpApORZMi6PxRd3EizKDswR0ah+aMjdlw4Aw/MDlGOcx
- iyJSrMkkWsnUbkx8Mm/Ig76oM2n8AOaIsxd+3AmdyqS1UxVVovcML0zze
-X-Gm-Gg: Acq92OHLpASfZ218fjTb54TO+iLUQBfyA1Awrj8fnoZS+9jqRqxAsFcoqwRc2H0axYs
- JVWZTG43RVDwUqO/NCThEWgF9Y56oRVpjfYQRY04FcDf6se1+sRtW+0cRXeR5bydc+TEIY0b53p
- QI5pI5R1T99WilpWvSH23cuWyuFxF85ZzSh2xl5yyXiBf4g/eQwn9KyOjIYtZtoubPoej+jCp5O
- y7A2pd9ADDUY83ogcN+6kW6s9SusMr/MWr2i6Ek56yF8j+oGrv8/PYN9eyl5cWizN+0teaH40Yc
- 3350L+NQTQPStOLOeThbGKVzjLOj15x1rTjADBIFBrLY2MJ9qjYj4VItn50+Sr07l8BWZE5VNAz
- 8kz7/438=
-X-Received: by 2002:a05:600c:c113:b0:492:32f3:a344 with SMTP id
- 5b1f17b1804b1-492333dd1efmr32618525e9.31.1781678480240; 
- Tue, 16 Jun 2026 23:41:20 -0700 (PDT)
-X-Received: by 2002:a05:600c:c113:b0:492:32f3:a344 with SMTP id
- 5b1f17b1804b1-492333dd1efmr32618035e9.31.1781678479822; 
- Tue, 16 Jun 2026 23:41:19 -0700 (PDT)
-Received: from [192.168.0.9] ([47.64.114.89]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4922fa96f0esm147724455e9.12.2026.06.16.23.41.18
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 16 Jun 2026 23:41:19 -0700 (PDT)
-Message-ID: <183d0ed6-fc14-426f-95af-4767ea65c0b2@redhat.com>
-Date: Wed, 17 Jun 2026 08:41:17 +0200
+ in-reply-to:in-reply-to:references:references;
+ bh=zQ6N724csDt5tr46+bdOxwOzzzzEDLMw7t14L2V9SA0=;
+ b=cT0otiPP1WCtpjjYPZXT2r8+JWcGUmJU9Arw5n+pLAco3sh1S60hXOlYYPuk0EAq3x1q16
+ 3+97CuH/4LzRj6kI8pRCclpffDbBJRS8bcw0IAOEKdTtzhvnYGOyv7e975N5EIFfMrSSlx
+ JygRpEwZ/ZGA7lYbzpN6+dZ2G7Uec10=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-665-lDuy9KjtO8iXZ8uG50t0HQ-1; Wed,
+ 17 Jun 2026 02:42:40 -0400
+X-MC-Unique: lDuy9KjtO8iXZ8uG50t0HQ-1
+X-Mimecast-MFC-AGG-ID: lDuy9KjtO8iXZ8uG50t0HQ_1781678559
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A29221955F0D; Wed, 17 Jun 2026 06:42:39 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.44.22.4])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5E2D9180058F; Wed, 17 Jun 2026 06:42:39 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 992A421E6A01; Wed, 17 Jun 2026 08:42:36 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Cc: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ qemu-devel@nongnu.org,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
+ <marcandre.lureau@redhat.com>,
+ John Snow <jsnow@redhat.com>,  Cleber Rosa <crosa@redhat.com>,  Daniel P.
+ =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  Paolo Bonzini
+ <pbonzini@redhat.com>
+Subject: Re: [PATCH 2/2] meson.build: check MAINTAINERS file is consistent
+ with source tree
+In-Reply-To: <36f118b4-8e24-4425-bc45-df2f13651c21@oss.qualcomm.com> (Pierrick
+ Bouvier's message of "Mon, 15 Jun 2026 19:51:22 -0700")
+References: <20260615201723.2959015-1-pierrick.bouvier@oss.qualcomm.com>
+ <20260615201723.2959015-3-pierrick.bouvier@oss.qualcomm.com>
+ <05604cb4-6f61-4b64-90ce-505ac87d8a04@oss.qualcomm.com>
+ <36f118b4-8e24-4425-bc45-df2f13651c21@oss.qualcomm.com>
+Date: Wed, 17 Jun 2026 08:42:36 +0200
+Message-ID: <87fr2lpt0j.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] tests/functional/aspeed: unify boot completion detection
- on 'login:' prompt
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- qemu-devel@nongnu.org, qemu-arm@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Jamin Lin <jamin_lin@aspeedtech.com>, kane_chen@aspeedtech.com,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
- Ed Tanous <etanous@nvidia.com>,
- William de Abreu Pinho <williamdapinho@gmail.com>
-References: <20260617042718.2883655-1-clg@redhat.com>
-Content-Language: en-US
-From: Thomas Huth <thuth@redhat.com>
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20260617042718.2883655-1-clg@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+X-Spam_score_int: 8
+X-Spam_score: 0.8
+X-Spam_bar: /
+X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -169,31 +95,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 17/06/2026 06.27, Cédric Le Goater wrote:
-> The boot completion check in AspeedTest waits for the systemd
-> "Hostname set to" message, which occasionally causes intermittent test
-> timeouts, e.g. on ast2500 SoC machines. The root cause seems to be
-> console output interleaving of both systemd and the getty login
-> process. This results in the expected pattern string being broken up.
-> 
-> Unify and simplify all boot completion checks by looking for the
-> generic 'login:' substring in AspeedTest.wait_for_boot_complete().
-> With the override gone, remove the redundant FacebookAspeedTest class
-> and update the Anacapa, Bletchley, and Catalina tests to inherit
-> directly from AspeedTest. Also drop the now-dead image_hostname
-> parameter from do_test_arm_aspeed_openbmc().
-> 
-> Reported-by: Peter Maydell <peter.maydell@linaro.org>
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3117
-> Signed-off-by: Cédric Le Goater <clg@redhat.com>
-> ---
->   tests/functional/arm/test_aspeed_anacapa.py   |  6 +++---
->   tests/functional/arm/test_aspeed_bletchley.py |  6 +++---
->   tests/functional/arm/test_aspeed_catalina.py  |  6 +++---
->   .../arm/test_aspeed_gb200nvl_bmc.py           |  3 +--
->   tests/functional/aspeed.py                    | 21 ++++---------------
->   5 files changed, 14 insertions(+), 28 deletions(-)
+Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> writes:
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+> On 6/15/2026 5:35 PM, Philippe Mathieu-Daud=C3=A9 wrote:
+>> On 15/6/26 22:17, Pierrick Bouvier wrote:
+>>> We add a new script: scripts/check-maintainers-file.py, that will run at
+>>> configuration time (and not at build time), to not hurt build time.
+>>> This script runs in 0.2s on my dev VM, which has an old cpu.
+>>>
+>>> We can expect things to be mostly in sync since adding or removing a
+>>> source or test file will trigger a configure step.
+>>=20
+>> You mention adding/removing but this script only checks for removals,
+>> no additions; did I miss something?
+>>
+> The initial scope was only to check the MAINTAINERS file itself is
+> correct. But while we're at it, we could extend the script to check that
+> all files in the tree belong to at least one maintainer entry. This
+> could have the benefit to force coverage for all new files. First we can
+> try to see what is not covered at the moment.
+>
+> What do you think Markus?
+
+I periodically post a report on MAINTAINERS coverage.  The most recent
+one is for v10.2.0-rc4:
+
+    Subject: Report on MAINTAINERS coverage
+    To: qemu-devel@nongnu.org
+    Date: Thu, 18 Dec 2025 13:45:24 +0100
+    Message-ID: <87h5toc61n.fsf@pond.sub.org>
+    https://lore.kernel.org/qemu-devel/87h5toc61n.fsf@pond.sub.org/
+
+We had more than a thousand files not covered then.  Getting to 100%
+coverage would take a big push, and require help from many people.
+
+Even with imperfect coverage, we could still require coverage for all
+new files.  I'm not sure this is practical without at least some
+targeted MAINTAINERS improvements.  Test-drive with a month or three
+worth of existing commits to see how bad it would have been, to give us
+an idea on how bad it would be?  Or just take the plunge, and revert if
+it turns out to be bad?
+
+This series tries to solve a smaller problem.  Even if we decide we want
+the bigger problem solved, getting the smaller problem solved sooner is
+probably better than getting it solved together with the bigger one
+later.
 
 
