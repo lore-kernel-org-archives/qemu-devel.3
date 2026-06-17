@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4857CD98E2
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jun 2026 07:55:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79E42CD98ED
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jun 2026 07:56:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZl7K-000684-Ry; Wed, 17 Jun 2026 03:55:23 -0400
+	id 1wZl7j-0006AH-0B; Wed, 17 Jun 2026 03:55:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wZl7I-00067e-4d
- for qemu-devel@nongnu.org; Wed, 17 Jun 2026 03:55:20 -0400
+ id 1wZl7h-0006A3-CL
+ for qemu-devel@nongnu.org; Wed, 17 Jun 2026 03:55:45 -0400
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wZl7F-0006MS-8A
- for qemu-devel@nongnu.org; Wed, 17 Jun 2026 03:55:19 -0400
+ id 1wZl7f-0006gP-Fb
+ for qemu-devel@nongnu.org; Wed, 17 Jun 2026 03:55:45 -0400
 Received: from [133.11.54.183] (h183.csg.ci.i.u-tokyo.ac.jp [133.11.54.183])
  (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 65H7sxCp064597
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 65H7tZZh064788
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Wed, 17 Jun 2026 16:54:59 +0900 (JST)
+ Wed, 17 Jun 2026 16:55:35 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=MXSpxOxnyD7BxUSNzGGp7BOAW4aDpJ8Z7OiU6wGXC8I=; 
+DKIM-Signature: a=rsa-sha256; bh=Jl6Bw2oHiNk9lZd8G5x/7MVXbzJ1Nv8PaKEeyuaD0Cc=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=From:Message-ID:To:Subject:Date;
- s=rs20250326; t=1781682899; v=1;
- b=hxaOyxiYGQyHOG9kKqrgPZ9ltwyVXnFZ+NaCSdjZCZrts6w7RTod68OApd/alpm3
- nnvO3pTUK3+QjvjTpm81/+lOATOr3sNlfop0Br7RD9yjeW510vFG3u3yz1ORPW1t
- gZvT8zJNu8HEqLev96NslY0dcbTAUKX24A9VCMefU47LlVbVUVVe9S74y0p/pjyS
- iJ9d1Ci7mlp9QKHWOjJPefxx1tegfVxGj+YO22DJd4P+MPpJDR7IlrgegmduEMfY
- qeMp5Qq7VmwI0nxtqEcMqW55bDbcMsHvfRCHMEboLAip3nk946csyphev+WYxIjA
- AoS1TdkewkhyjO3N5tk9wg==
-Message-ID: <770787d0-250d-47fc-827a-c2b4226e4840@rsg.ci.i.u-tokyo.ac.jp>
-Date: Wed, 17 Jun 2026 16:54:59 +0900
+ s=rs20250326; t=1781682935; v=1;
+ b=CFkddcXWXnMZVWmCVlt2dionGOqWtiDO6vc/gdmUgTj2gw85tt+4bVi/m1X1svZQ
+ zJ8AT3yQF9k5u05jxka/Amv9an/1d3n9mw4RGbceZl2/OxDYay4EliO0zLUqLMRt
+ AyTVHnvA+3p4n+D/pxj4aRyfXa/0X8Cwi1HoF5Z65a5EGUO5R3eEgx2ZVCMCW+1U
+ AW626IAZEO7/2YUjXnZ7L/RhhG1PKN0FYuTk6oYAG6hRcuHuu5aMX/7sVMmgOa9/
+ K1rTiTA/CbLR7DuQcj3w/jNu9z6IXXAo0kG3BOtfJRnq7u6tGL1mafKeHlgJDIXX
+ UdjagQkJuUc1myODa3o3/g==
+Message-ID: <9ce7cef1-7e5c-49c0-840b-05a0e4237d5b@rsg.ci.i.u-tokyo.ac.jp>
+Date: Wed, 17 Jun 2026 16:55:34 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 1/7] igb: Define TRL registers and core state
+Subject: Re: [PATCH v5 5/7] igb: Implement TRL throttling and timer resumption
 To: Josh Hilke <jrhilke@google.com>, qemu-devel@nongnu.org
 Cc: Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
  Jason Wang <jasowang@redhat.com>, Fabiano Rosas <farosas@suse.de>,
@@ -48,10 +48,10 @@ Cc: Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
  David Matlack <dmatlack@google.com>,
  Alex Williamson <alex.williamson@nvidia.com>
 References: <20260616-igb-trl-v5-0-1183e3635e06@google.com>
- <20260616-igb-trl-v5-1-1183e3635e06@google.com>
+ <20260616-igb-trl-v5-5-1183e3635e06@google.com>
 Content-Language: en-US
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <20260616-igb-trl-v5-1-1183e3635e06@google.com>
+In-Reply-To: <20260616-igb-trl-v5-5-1183e3635e06@google.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=49.212.243.89;
@@ -78,170 +78,155 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 2026/06/17 7:35, Josh Hilke wrote:
-> Introduce register offsets and bitmask constants for the Transmit Rate
-> Limiter (TRL). Add the IGBTrlQueue structure and corresponding fields to
-> IGBCore to track TRL state (timers, throttling status, and target rates)
-> per queue. Initialize and free these timers during the device
-> realize/uninit lifecycle, and reset them on device reset.
+> Integrate throttling logic into the transmission path. In
+> `igb_start_xmit`, check if the queue is currently throttled.  Accumulate
+> bytes sent, calculate the transmission delay based on the configured
+> target rate, and if a throttle is triggered, set the virtual timer, mark
+> the queue as throttled, and defer remaining packets.  Implement the
+> timer callback to clear the throttled state and resume transmission when
+> the timer expires.
 > 
 > Signed-off-by: Josh Hilke <jrhilke@google.com>
 > ---
->   hw/net/igb_common.h |  1 +
->   hw/net/igb_core.c   | 41 +++++++++++++++++++++++++++++++++++++++++
->   hw/net/igb_core.h   | 12 ++++++++++++
->   hw/net/igb_regs.h   |  6 ++++++
->   4 files changed, 60 insertions(+)
+>   hw/net/igb_core.c | 73 +++++++++++++++++++++++++++++++++++++++++++++++++++++--
+>   1 file changed, 71 insertions(+), 2 deletions(-)
 > 
-> diff --git a/hw/net/igb_common.h b/hw/net/igb_common.h
-> index b316a5b..8c0a0cf 100644
-> --- a/hw/net/igb_common.h
-> +++ b/hw/net/igb_common.h
-> @@ -148,6 +148,7 @@ enum {
->       defreg(MTA_A),
->   
->       defreg(VTIVAR), defreg(VTIVAR_MISC),
-> +    defreg(TRLDQSEL), defreg(TRLRC),
->   };
->   
->   uint64_t igb_mmio_read(void *opaque, hwaddr addr, unsigned size);
 > diff --git a/hw/net/igb_core.c b/hw/net/igb_core.c
-> index 45d8fd7..44e8e58 100644
+> index b7f880e..7f14564 100644
 > --- a/hw/net/igb_core.c
 > +++ b/hw/net/igb_core.c
-> @@ -2136,6 +2136,15 @@ igb_set_phy_ctrl(IGBCore *core, uint16_t val)
->       }
+> @@ -96,6 +96,8 @@ igb_receive_internal(IGBCore *core, const struct iovec *iov, int iovcnt,
+>   
+>   static void igb_raise_interrupts(IGBCore *core, size_t index, uint32_t causes);
+>   static void igb_reset(IGBCore *core, bool sw);
+> +static uint64_t igb_trl_get_target_rate(const IGBTrlQueue *q);
+> +
+>   
+>   static inline void
+>   igb_raise_legacy_irq(IGBCore *core)
+> @@ -875,6 +877,16 @@ igb_tx_enabled(IGBCore *core, const E1000ERingInfo *txi)
+>           (core->mac[TXDCTL0 + (qn * 16)] & E1000_TXDCTL_QUEUE_ENABLE);
 >   }
 >   
-> +
-> +static void igb_trl_reset(IGBCore *core)
+> +static uint64_t igb_trl_calculate_delay(uint64_t target_rate,
+> +                                        size_t bytes_sent)
 > +{
-> +    for (int i = 0; i < IGB_NUM_QUEUES; i++) {
-> +        core->trl[i].trlrc = 0;
-> +        timer_del(core->trl[i].timer);
-> +    }
-> +}
+> +    uint64_t low, high;
 > +
->   void igb_core_set_link_status(IGBCore *core)
->   {
->       NetClientState *nc = qemu_get_queue(core->owner_nic);
-> @@ -4282,6 +4291,33 @@ igb_autoneg_resume(IGBCore *core)
->       }
->   }
->   
-> +bool igb_trl_enabled(const IGBTrlQueue *q)
-> +{
-> +    return q->trlrc & E1000_TRLRC_RS_ENA;
-> +}
-> +
-> +static void igb_trl_timer_cb(void *opaque)
-> +{
-> +    /* Stub */
-> +}
-> +
-> +static void igb_trl_init(IGBCore *core)
-> +{
-> +    for (int i = 0; i < IGB_NUM_QUEUES; i++) {
-> +        IGBTrlQueue *q = &core->trl[i];
-> +        q->timer = timer_new_ns(QEMU_CLOCK_VIRTUAL, igb_trl_timer_cb, q);
-> +        q->core = core;
-> +        q->qidx = i;
-> +    }
-> +}
-> +
-> +static void igb_trl_uninit(IGBCore *core)
-> +{
-> +    for (int i = 0; i < IGB_NUM_QUEUES; i++) {
-> +        timer_free(core->trl[i].timer);
-> +    }
-> +}
-> +
->   void
->   igb_core_pci_realize(IGBCore        *core,
->                        const uint16_t *eeprom_templ,
-> @@ -4297,6 +4333,7 @@ igb_core_pci_realize(IGBCore        *core,
->       for (i = 0; i < IGB_NUM_QUEUES; i++) {
->           net_tx_pkt_init(&core->tx[i].tx_pkt, E1000E_MAX_TX_FRAGS);
->       }
-> +    igb_trl_init(core);
->   
->       net_rx_pkt_init(&core->rx_pkt);
->   
-> @@ -4321,6 +4358,8 @@ igb_core_pci_uninit(IGBCore *core)
->           net_tx_pkt_uninit(core->tx[i].tx_pkt);
->       }
->   
-> +    igb_trl_uninit(core);
-> +
->       net_rx_pkt_uninit(core->rx_pkt);
->   }
->   
-> @@ -4469,6 +4508,8 @@ static void igb_reset(IGBCore *core, bool sw)
->   
->       igb_intrmgr_reset(core);
->   
-> +    igb_trl_reset(core);
-> +
->       memset(core->phy, 0, sizeof core->phy);
->       memcpy(core->phy, igb_phy_reg_init, sizeof igb_phy_reg_init);
->   
-> diff --git a/hw/net/igb_core.h b/hw/net/igb_core.h
-> index d70b54e..d80cfaa 100644
-> --- a/hw/net/igb_core.h
-> +++ b/hw/net/igb_core.h
-> @@ -63,6 +63,13 @@ typedef struct IGBIntrDelayTimer_st {
->       IGBCore *core;
->   } IGBIntrDelayTimer;
->   
-> +typedef struct IGBTrlQueue_st {
-> +    QEMUTimer *timer;
-> +    IGBCore *core;
-> +    unsigned int qidx;
+> +    mulu64(&low, &high, bytes_sent, NANOSECONDS_PER_SECOND);
+> +    divu128(&low, &high, target_rate);
 
-Using an unsigned type is a good improvement, but unsigned int is not a 
-type used elsewhere for the queue index. A possible candidate is 
-uint32_t, which is used by core->mac[TRLDQSEL].
+What Philippe suggested is to use muldiv64(), but this is more 
+complicated because of uint64_t. I think it will be simpler and more 
+accurate if you merge igb_trl_get_target_rate() and this function.
 
 Regards,
 Akihiko Odaki
 
-> +    uint32_t trlrc;
-> +} IGBTrlQueue;
+> +    return low;
+> +}
 > +
->   struct IGBCore {
->       uint32_t mac[E1000E_MAC_SIZE];
->       uint16_t phy[MAX_PHY_REG_ADDRESS + 1];
-> @@ -99,6 +106,9 @@ struct IGBCore {
->       void (*owner_start_recv)(PCIDevice *d);
+>   static void
+>   igb_start_xmit(IGBCore *core, const IGB_TxRing *txr)
+>   {
+> @@ -883,12 +895,19 @@ igb_start_xmit(IGBCore *core, const IGB_TxRing *txr)
+>       union e1000_adv_tx_desc desc;
+>       const E1000ERingInfo *txi = txr->i;
+>       uint32_t eic = 0;
+> +    size_t bytes_sent = 0;
+> +    uint64_t target_rate;
+> +    uint64_t delay_ns;
 >   
->       int64_t timadj;
+>       if (!igb_tx_enabled(core, txi)) {
+>           trace_e1000e_tx_disabled();
+>           return;
+>       }
+>   
+> +    if (timer_pending(core->trl[txi->idx].timer)) {
+> +        return;
+> +    }
 > +
-> +    /* Transmit Rate Limiting */
-> +    IGBTrlQueue trl[IGB_NUM_QUEUES];
->   };
+>       d = pcie_sriov_get_vf_at_index(core->owner, txi->idx % 8);
+>       if (!d) {
+>           d = core->owner;
+> @@ -902,9 +921,19 @@ igb_start_xmit(IGBCore *core, const IGB_TxRing *txr)
+>           trace_e1000e_tx_descr((void *)(intptr_t)desc.read.buffer_addr,
+>                                 desc.read.cmd_type_len, desc.wb.status);
 >   
->   void
-> @@ -143,4 +153,6 @@ igb_receive_iov(IGBCore *core, const struct iovec *iov, int iovcnt);
->   void
->   igb_start_recv(IGBCore *core);
->   
-> +bool igb_trl_enabled(const IGBTrlQueue *q);
+> -        igb_process_tx_desc(core, d, txr->tx, &desc, txi->idx);
+> +        bytes_sent += igb_process_tx_desc(core, d, txr->tx, &desc, txi->idx);
+>           igb_ring_advance(core, txi, 1);
+>           eic |= igb_txdesc_writeback(core, base, &desc, txi);
 > +
->   #endif
-> diff --git a/hw/net/igb_regs.h b/hw/net/igb_regs.h
-> index 4dc4c31..9ef628b 100644
-> --- a/hw/net/igb_regs.h
-> +++ b/hw/net/igb_regs.h
-> @@ -718,4 +718,10 @@ static inline uint8_t igb_ivar_entry_tx(uint8_t i)
->       return i < 8 ? i * 4 + 1 : (i - 8) * 4 + 3;
+> +        target_rate = igb_trl_get_target_rate(&core->trl[txi->idx]);
+> +        if (target_rate > 0) {
+> +            delay_ns = igb_trl_calculate_delay(target_rate, bytes_sent);
+> +            if (delay_ns > 0) {
+> +                timer_mod(core->trl[txi->idx].timer,
+> +                          qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) + delay_ns);
+> +                break;
+> +            }
+> +        }
+>       }
+>   
+>       if (eic) {
+> @@ -4330,15 +4359,55 @@ igb_autoneg_resume(IGBCore *core)
+>                     qemu_clock_get_ms(QEMU_CLOCK_VIRTUAL) + 500);
+>       }
+>   }
+> +static uint32_t igb_trl_get_scaled_rate_factor(uint32_t trlrc)
+> +{
+> +    /*
+> +     * The TRLRC register stores the Rate Factor in 10.14 fixed-point format:
+> +     * - Bits 13:0: Fractional part
+> +     * - Bits 23:14: Integer part
+> +     *
+> +     * Combined, the lower 24 bits of the register (23:0) represent the
+> +     * concatenated 24-bit scaled Rate Factor directly.
+> +     */
+> +    return extract32(trlrc, 0, 24);
+> +}
+>   
+>   bool igb_trl_enabled(const IGBTrlQueue *q)
+>   {
+>       return q->trlrc & E1000_TRLRC_RS_ENA;
 >   }
 >   
-> +/* Transmit Rate Limiting */
-> +#define E1000_TRLDQSEL 0x03604
-> +#define E1000_TRLRC 0x036B0
-> +#define E1000_TRLRC_RS_ENA BIT(31)
-> +#define E1000_LINK_RATE_1GBPS (1000000000ULL / BITS_PER_BYTE)
+> +static uint64_t igb_trl_get_target_rate(const IGBTrlQueue *q)
+> +{
+> +    const uint32_t rf_scaled = igb_trl_get_scaled_rate_factor(q->trlrc);
 > +
->   #endif
+> +    if (!igb_trl_enabled(q)) {
+> +        return 0;
+> +    }
+> +
+> +    if (rf_scaled == 0) {
+> +        return 0;
+> +    }
+> +
+> +    /*
+> +     * The rate factor is a fixed-point number with a 14-bit fractional part:
+> +     * Rate Factor = rf_scaled / 2^14
+> +     *
+> +     * The target rate is:
+> +     * Target Rate = Link Rate / Rate Factor
+> +     *             = Link Rate / (rf_scaled / 2^14)
+> +     *             = (Link Rate * 2^14) / rf_scaled
+> +     */
+> +    return (E1000_LINK_RATE_1GBPS << 14) / rf_scaled;
+> +}
+> +
+>   static void igb_trl_timer_cb(void *opaque)
+>   {
+> -    /* Stub */
+> +    IGBTrlQueue *trl = opaque;
+> +    IGB_TxRing txr;
+> +
+> +    igb_tx_ring_init(trl->core, &txr, trl->qidx);
+> +    igb_start_xmit(trl->core, &txr);
+>   }
+>   
+>   static void igb_trl_init(IGBCore *core)
 > 
 
 
