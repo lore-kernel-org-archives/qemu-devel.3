@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C13CCD98F0
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 483D3CD98EE
 	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jun 2026 09:23:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZmUV-0000pN-Oz; Wed, 17 Jun 2026 05:23:23 -0400
+	id 1wZmUJ-0000nr-IB; Wed, 17 Jun 2026 05:23:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wZmUU-0000ot-7k
- for qemu-devel@nongnu.org; Wed, 17 Jun 2026 05:23:22 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1wZmUI-0000ng-35
+ for qemu-devel@nongnu.org; Wed, 17 Jun 2026 05:23:10 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wZmUS-0004Cy-Qc
- for qemu-devel@nongnu.org; Wed, 17 Jun 2026 05:23:21 -0400
+ id 1wZmUG-00049V-7q
+ for qemu-devel@nongnu.org; Wed, 17 Jun 2026 05:23:09 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781688199;
+ s=mimecast20190719; t=1781688185;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=bZIC/xxtbFlAxZL0+y3obxG2jQxORfBlbM5DjzJ3Zjk=;
- b=jTL7ao4hgbxxOyS+oxX/puI2SpoyIn2/nEJlvfFsKSxjZB2RUkAqG8kz62+HxPk1CDO6Oy
- cCGaUSsuWY8IYmTwMaFc/nobIh4wA7jqB4OlQO9aslVkGjKRO3SQj+HbGViqBVvwGI3Qdq
- Sg/tV0IO0jgXUNa5pEBI9Up7xf8xd2k=
+ bh=oWetp9l2YsEa6Q9V7L7u0GsC1di/rWex70E0vzJTv6k=;
+ b=c7CXFpdwxIhzOXR35PAWYtQXqtS2++zuoJI+mEltzB3K+fEOrsLEL2DaoFoMICwcV/BLi+
+ KBe5qU4oPUyHsz/lDgIdZIvYxFiyKwySENBCbVynEjthVyNjR4PtXOZV6QSLam6kc1Hqor
+ d1okMDJlW2+TLYK3qcAls6kN55SZJTU=
 Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-15-v32RYH8dOYW4Ofp3jMjmUg-1; Wed,
- 17 Jun 2026 05:23:18 -0400
-X-MC-Unique: v32RYH8dOYW4Ofp3jMjmUg-1
-X-Mimecast-MFC-AGG-ID: v32RYH8dOYW4Ofp3jMjmUg_1781688197
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-456-8Qff8oe5MvS62Ke1vIT0cg-1; Wed,
+ 17 Jun 2026 05:23:04 -0400
+X-MC-Unique: 8Qff8oe5MvS62Ke1vIT0cg-1
+X-Mimecast-MFC-AGG-ID: 8Qff8oe5MvS62Ke1vIT0cg_1781688183
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 92D351800DBA
- for <qemu-devel@nongnu.org>; Wed, 17 Jun 2026 09:23:17 +0000 (UTC)
+ id 0846718009F0
+ for <qemu-devel@nongnu.org>; Wed, 17 Jun 2026 09:23:03 +0000 (UTC)
 Received: from [10.44.50.120] (unknown [10.44.50.120])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id B4ADB1800667; Wed, 17 Jun 2026 09:23:16 +0000 (UTC)
-Message-ID: <d4db54b4-eefa-433c-afb8-0135270ad95b@redhat.com>
-Date: Wed, 17 Jun 2026 11:23:15 +0200
+ id DAA341800661; Wed, 17 Jun 2026 09:23:01 +0000 (UTC)
+Content-Type: multipart/mixed; boundary="------------CwP7mwdd3X0yQW5eyXgVC3ag"
+Message-ID: <097aa3e7-a3f7-45d4-8355-5cb270f690bd@redhat.com>
+Date: Wed, 17 Jun 2026 11:22:58 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 4/7] json-streamer: make brace/bracket count unsigned
+Subject: Re: [PATCH v3 0/7] qobject: switch JSON parser to push
 To: Markus Armbruster <armbru@redhat.com>
 Cc: qemu-devel@nongnu.org
 References: <20260525150503.393743-1-pbonzini@redhat.com>
- <20260525150503.393743-5-pbonzini@redhat.com> <877bo0rzo5.fsf@pond.sub.org>
+ <87y0gfviuk.fsf@pond.sub.org>
 From: Paolo Bonzini <pbonzini@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=pbonzini@redhat.com; keydata=
@@ -94,18 +94,16 @@ Autocrypt: addr=pbonzini@redhat.com; keydata=
  JBrdmNZSQDz0iKmSrx8xkoXYfA3bgtFN8WJH2xgFL28XnqY4M6dLhJwV3z08tPSRqYFm4NMP
  dRsn0/7oymhneL8RthIvjDDQ5ktUjMe8LtHr70OZE/TT88qvEdhiIVUogHdo4qBrk41+gGQh
  b906Dudw5YhTJFU3nC6bbF2nrLlB4C/XSiH76ZvqzV0Z/cAMBo5NF/w=
-In-Reply-To: <877bo0rzo5.fsf@pond.sub.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+In-Reply-To: <87y0gfviuk.fsf@pond.sub.org>
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -122,71 +120,156 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/15/26 10:11, Markus Armbruster wrote:
->> +         * Cause error recovery to end immediately.
->> +         * If not in error recovery, the parser will raise an error
->> +         * (due to JSON_ERROR or unexpected JSON_R{CURLY,SQUARE})
-> 
-> What do you mean by "due to JSON_ERROR"?
+This is a multi-part message in MIME format.
+--------------CwP7mwdd3X0yQW5eyXgVC3ag
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-due to passing it to json_parser_feed().  Rewritten:
+On 6/15/26 19:01, Markus Armbruster wrote:
+> Looks pretty good.  One more respin should get us there.
 
-         /*
-          * We goto here due to receiving either JSON_ERROR or a
-          * JSON_R{CURLY,SQUARE}) that is known to be unbalanced.
-          * If in error recovery, end it immediately.  If not in
-          * error recovery, json_parser_feed() will raise an error
-          * but error recovery won't be entered at all.
-          */
-
-> We get here on unmatched } or ]: that's the gotos
-> you add above.
-> 
-> We also get here on end of non-empty input: that's when the if right
-> above doesn't return.
-> 
->> +         * but error recovery won't be entered at all.
->> +         */
-> 
-> This is the only comment on error recovery.  Would a comment giving a
-> brief overview on error recovery be useful?
-
-It is added in the next commit.  At this point there are still relics of 
-the GQueue so it's kinda pointless.
+Cool, I attach the current overall delta from your review comments.
 
 Paolo
+--------------CwP7mwdd3X0yQW5eyXgVC3ag
+Content-Type: text/x-patch; charset=UTF-8; name="fixes.patch"
+Content-Disposition: attachment; filename="fixes.patch"
+Content-Transfer-Encoding: base64
 
->> +        parser->brace_count = 0;
->> +        parser->bracket_count = 0;
->>           break;
->>       default:
->>           break;
->> @@ -83,9 +98,7 @@ void json_message_process_token(JSONLexer *lexer, GString *input,
->>   
->>       g_queue_push_tail(&parser->tokens, token);
->>   
->> -    if ((parser->brace_count > 0 || parser->bracket_count > 0)
->> -        && parser->brace_count >= 0 && parser->bracket_count >= 0
->> -        && type != JSON_END_OF_INPUT) {
->> +    if (parser->brace_count > 0 || parser->bracket_count > 0) {
->>           return;
->>       }
-> 
-> We get here when
-> 
-> * no lexical error, and
-> 
-> * no limits exceeded, and
-> 
-> * the curlies and squares are balanced, either in fact or because
->    we passed through end_error_recovery.
-> 
-> Good.
-> 
->         /* Process all tokens in the queue */
->         while (!g_queue_is_empty(&parser->tokens)) {
-> 
-> 
-> 
+ZGlmZiAtLWdpdCBhL3FvYmplY3QvanNvbi1wYXJzZXIuYyBiL3FvYmplY3QvanNvbi1wYXJz
+ZXIuYwppbmRleCA4YzU4YWUwMzQ5YS4uYTE4OGQ1OGQwMDYgMTAwNjQ0Ci0tLSBhL3FvYmpl
+Y3QvanNvbi1wYXJzZXIuYworKysgYi9xb2JqZWN0L2pzb24tcGFyc2VyLmMKQEAgLTcxLDkg
+KzcxLDEyIEBAIHR5cGVkZWYgc3RydWN0IEpTT05QYXJzZXJTdGFja0VudHJ5IHsKICAqIGRl
+c2NyaXB0aW9uLCAiLT4gYWN0aW9uIiByZXByZXNlbnRzIHRoZSBwc2V1ZG9jb2RlIG9mIHRo
+ZSBhY3Rpb24KICAqIGFuZCAiLT4gU1RBVEUiIHNldHMgdGhlIHRvcCBzdGFjayBlbnRyeSdz
+IHN0YXRlIHRvIFNUQVRFLgogICoKKyAqIFRoZSBzdGF0ZSBhbG9uZSBpcyBlbm91Z2ggdG8g
+dGVsbCB5b3Ugd2hhdCB0byBwYXJzZTsgdGhlIHN0YXRlIHBsdXMKKyAqIHRoZSB0eXBlIG9m
+IHRoZSB0b3Agb2Ygc3RhY2sgdGVsbHMgeW91IHdoaWNoIGFjdGlvbiB0byB0YWtlLgorICoK
+ICAqIC8vIFRoZSBpbml0aWFsIHN0YXRlIGlzIEJFRk9SRV9WQUxVRS4KICAqIGlucHV0IDo9
+ICB2YWx1ZSAgICAgICAgIC0+IEVORF9PRl9WQUxVRSAtPiByZXR1cm4gcGFyc2VkIHZhbHVl
+Ci0gKiAgICAgICAgICAgRU5EX09GX0lOUFVUICAtPiBjaGVjayBzdGFjayBpcyBlbXB0eQor
+ICogICAgICAgICAgIChpbnB1dCB8IEVORF9PRl9JTlBVVCkKICAqCiAgKiAvLyBlbnRlcmVk
+IG9uIEJFRk9SRV9WQUxVRTsgYWZ0ZXIgYW55IG9mIHRoZXNlIHJ1bGVzIGFyZSBwcm9jZXNz
+ZWQsIHRoZQogICogLy8gcGFyc2VyIGhhcyBjb21wbGV0ZWQgYSBRT2JqZWN0IGFuZCBpcyBp
+biB0aGUgRU5EX09GX1ZBTFVFIHN0YXRlLgpAQCAtMTIyLDYgKzEyNSw5IEBAIHR5cGVkZWYg
+c3RydWN0IEpTT05QYXJzZXJTdGFja0VudHJ5IHsKICAqICAgICAgICAgKCd9JyAgICAgICAg
+ICAgIC0+IHBvcCBjb21wbGV0ZWQgUURpY3QgLT4gRU5EX09GX1ZBTFVFCiAgKiAgICAgICAg
+ICB8ICcsJyAgICAgICAgICAtPiBCRUZPUkVfS0VZCiAgKiAgICAgICAgICAgIGRpY3RfcGFp
+cnMpICAtPiBFTkRfT0ZfVkFMVUUKKyAqCisgKiBQYXJzZSBlcnJvcnMgaWdub3JlIHRoZSB0
+b2tlbi4gIGpzb25fcGFyc2VyX3Jlc2V0KCkgY2FuIGJlCisgKiBjYWxsZWQgdG8gcmVzdGFy
+dCBwYXJzaW5nIGZyb20gc2NyYXRjaCwgd2l0aCBhbiBlbXB0eSBzdGFjay4KICAqLwogCiAj
+ZGVmaW5lIEJVR19PTihjb25kKSBhc3NlcnQoIShjb25kKSkKQEAgLTE0MCw2ICsxNDYsNyBA
+QCBzdGF0aWMgdm9pZCBwdXNoX2VudHJ5KEpTT05QYXJzZXJDb250ZXh0ICpjdHh0LCBRT2Jq
+ZWN0ICpwYXJ0aWFsLAogICAgIGdfcXVldWVfcHVzaF90YWlsKGN0eHQtPnN0YWNrLCBlbnRy
+eSk7CiB9CiAKKy8qIERyb3AgdGhlIHRvcCBlbnRyeSBhbmQgcmV0dXJuIHRoZSBuZXcgdG9w
+IGVudHJ5LiAgKi8KIHN0YXRpYyBKU09OUGFyc2VyU3RhY2tFbnRyeSAqcG9wX2VudHJ5KEpT
+T05QYXJzZXJDb250ZXh0ICpjdHh0KQogewogICAgIEpTT05QYXJzZXJTdGFja0VudHJ5ICpl
+bnRyeSA9IGdfcXVldWVfcG9wX3RhaWwoY3R4dC0+c3RhY2spOwpAQCAtMTYzLDcgKzE3MCw3
+IEBAIHN0YXRpYyB2b2lkIEdfR05VQ19QUklOVEYoMywgNCkgcGFyc2VfZXJyb3IoSlNPTlBh
+cnNlckNvbnRleHQgKmN0eHQsCiAgICAgdmFfc3RhcnQoYXAsIG1zZyk7CiAgICAgdnNucHJp
+bnRmKG1lc3NhZ2UsIHNpemVvZihtZXNzYWdlKSwgbXNnLCBhcCk7CiAgICAgdmFfZW5kKGFw
+KTsKLSAgICBlcnJvcl9zZXRnKCZjdHh0LT5lcnIsICJKU09OIHBhcnNlIGVycm9yIGF0IGxp
+bmUgJWQsIGNvbHVtbiAlZCwgJXMiLAorICAgIGVycm9yX3NldGcoJmN0eHQtPmVyciwgIiVk
+OiVkOiBKU09OIHBhcnNlIGVycm9yLCAlcyIsCiAgICAgICAgICAgICAgICB0b2tlbi0+eSwg
+dG9rZW4tPngsIG1lc3NhZ2UpOwogfQogCkBAIC00ODMsMjAgKzQ5MCwyMSBAQCBzdGF0aWMg
+UU9iamVjdCAqcGFyc2VfdG9rZW4oSlNPTlBhcnNlckNvbnRleHQgKmN0eHQsIGNvbnN0IEpT
+T05Ub2tlbiAqdG9rZW4pCiAgICAgY2FzZSBCRUZPUkVfS0VZOgogICAgICAgICAvKiBFeHBl
+Y3Rpbmcgb2JqZWN0IGtleSAqLwogICAgICAgICBhc3NlcnQocW9iamVjdF90eXBlKGVudHJ5
+LT5wYXJ0aWFsKSA9PSBRVFlQRV9RRElDVCk7Ci0gICAgICAgIGlmICh0b2tlbi0+dHlwZSA9
+PSBKU09OX1NUUklORyB8fCB0b2tlbi0+dHlwZSA9PSBKU09OX0lOVEVSUCkgewotICAgICAg
+ICAgICAga2V5X29iaiA9IHBhcnNlX2JlZ2luX3ZhbHVlKGN0eHQsIHRva2VuKTsKLSAgICAg
+ICAgICAgIGlmICgha2V5X29iaikgewotICAgICAgICAgICAgICAgIC8qIHBhcnNlIGVycm9y
+IGhhcHBlbmVkICovCi0gICAgICAgICAgICAgICAgcmV0dXJuIE5VTEw7Ci0gICAgICAgICAg
+ICB9Ci0gICAgICAgIH0KLSAgICAgICAgaWYgKCFrZXlfb2JqIHx8IHFvYmplY3RfdHlwZShr
+ZXlfb2JqKSAhPSBRVFlQRV9RU1RSSU5HKSB7Ci0gICAgICAgICAgICBwYXJzZV9lcnJvcihj
+dHh0LCB0b2tlbiwgImtleSBpcyBub3QgYSBzdHJpbmcgaW4gb2JqZWN0Iik7CisgICAgICAg
+IGlmICh0b2tlbi0+dHlwZSAhPSBKU09OX1NUUklORyAmJiB0b2tlbi0+dHlwZSAhPSBKU09O
+X0lOVEVSUCkgeworICAgICAgICAgICAgcGFyc2VfZXJyb3IoY3R4dCwgdG9rZW4sICJleHBl
+Y3RpbmcgdmFsdWUiKTsKICAgICAgICAgICAgIHJldHVybiBOVUxMOwogICAgICAgICB9CiAK
+LSAgICAgICAgLyogU3RvcmUga2V5IGluIGEgc3BlY2lhbCBlbnRyeSBvbiB0aGUgc3RhY2sg
+Ki8KLSAgICAgICAgcHVzaF9lbnRyeShjdHh0LCBrZXlfb2JqLCBFTkRfT0ZfS0VZKTsKKyAg
+ICAgICAga2V5X29iaiA9IHBhcnNlX2JlZ2luX3ZhbHVlKGN0eHQsIHRva2VuKTsKKyAgICAg
+ICAgaWYgKCFrZXlfb2JqKSB7CisgICAgICAgICAgICAvKiBQYXJzZSBlcnJvciBhbHJlYWR5
+IHJlcG9ydGVkICovCisgICAgICAgIH0gZWxzZSBpZiAocW9iamVjdF90eXBlKGtleV9vYmop
+ICE9IFFUWVBFX1FTVFJJTkcpIHsKKyAgICAgICAgICAgIC8qIEFuIGludGVycG9sYXRpb24g
+d2FzIHZhbGlkIHN5bnRhY3RpY2FsbHkgYnV0IG5vdCAlcyAqLworICAgICAgICAgICAgcGFy
+c2VfZXJyb3IoY3R4dCwgdG9rZW4sICJrZXkgaXMgbm90IGEgc3RyaW5nIGluIG9iamVjdCIp
+OworICAgICAgICB9IGVsc2UgeworICAgICAgICAgICAgLyogU3RvcmUga2V5IGluIGEgc3Bl
+Y2lhbCBlbnRyeSBvbiB0aGUgc3RhY2sgKi8KKyAgICAgICAgICAgIHB1c2hfZW50cnkoY3R4
+dCwga2V5X29iaiwgRU5EX09GX0tFWSk7CisgICAgICAgIH0KICAgICAgICAgcmV0dXJuIE5V
+TEw7CiAKICAgICBjYXNlIEVORF9PRl9LRVk6CkBAIC01NjUsMTUgKzU3MywyMSBAQCBzdGF0
+aWMgUU9iamVjdCAqcGFyc2VfdG9rZW4oSlNPTlBhcnNlckNvbnRleHQgKmN0eHQsIGNvbnN0
+IEpTT05Ub2tlbiAqdG9rZW4pCiAKICAgICBhc3NlcnQodmFsdWUpOwogICAgIGlmIChlbnRy
+eSA9PSBOVUxMKSB7Ci0gICAgICAgIC8qIFRoZSB0b3BsZXZlbCB2YWx1ZSBpcyBjb21wbGV0
+ZS4gICovCisgICAgICAgIC8qIFBhcnNlIHN0YWNrIG5vdyBlbXB0eSwgdGhlIHRvcC1sZXZl
+bCB2YWx1ZSBpcyBjb21wbGV0ZS4gICovCiAgICAgICAgIHJldHVybiB2YWx1ZTsKICAgICB9
+CiAKKyAgICAvKgorICAgICAqIFBhcnNlIHN0YWNrIGlzIG5vdCBlbXB0eSBhbmQgZW50cnkt
+PnBhcnRpYWwgaXMgdGhlIHRvcCBvZiBzdGFjay4KKyAgICAgKiBJdCdzIGEgUVN0cmluZyB3
+aXRoIHRoZSBrZXkgKGFuZCBhIFFEaWN0IGlzIGJlbG93IGl0KSBpZiB3ZSdyZQorICAgICAq
+IHBhcnNpbmcgYW4gb2JqZWN0LCBvciBhIFFMaXN0IGlmIHdlJ3JlIHBhcnNpbmcgYW4gYXJy
+YXkuCisgICAgICovCiAgICAga2V5ID0gcW9iamVjdF90byhRU3RyaW5nLCBlbnRyeS0+cGFy
+dGlhbCk7CiAgICAgaWYgKGtleSkgewogICAgICAgICBjb25zdCBjaGFyICprZXlfc3RyOwog
+ICAgICAgICBRRGljdCAqZGljdDsKIAorICAgICAgICAvKiBQb3Agb2ZmIGtleSwgYW5kIHN0
+b3JlIChrZXksIHZhbHVlKSBpbiBRRGljdC4gICovCiAgICAgICAgIGVudHJ5ID0gcG9wX2Vu
+dHJ5KGN0eHQpOwogICAgICAgICBkaWN0ID0gcW9iamVjdF90byhRRGljdCwgZW50cnktPnBh
+cnRpYWwpOwogICAgICAgICBhc3NlcnQoZGljdCk7CkBAIC01ODYsNyArNjAwLDcgQEAgc3Rh
+dGljIFFPYmplY3QgKnBhcnNlX3Rva2VuKEpTT05QYXJzZXJDb250ZXh0ICpjdHh0LCBjb25z
+dCBKU09OVG9rZW4gKnRva2VuKQogICAgICAgICBxZGljdF9wdXRfb2JqKGRpY3QsIGtleV9z
+dHIsIHZhbHVlKTsKICAgICAgICAgcW9iamVjdF91bnJlZihrZXkpOwogICAgIH0gZWxzZSB7
+Ci0gICAgICAgIC8qIEFkZCB0byBhcnJheSAqLworICAgICAgICAvKiBBcnJheSwganVzdCBz
+dG9yZSB2YWx1ZSBpbiB0aGUgUUxpc3QuICAqLwogICAgICAgICBxbGlzdF9hcHBlbmRfb2Jq
+KHFvYmplY3RfdG8oUUxpc3QsIGVudHJ5LT5wYXJ0aWFsKSwgdmFsdWUpOwogICAgIH0KIApA
+QCAtNjIyLDcgKzYzNiw3IEBAIHZvaWQganNvbl9wYXJzZXJfZGVzdHJveShKU09OUGFyc2Vy
+Q29udGV4dCAqY3R4dCkKIAogLyoKICAqIEFkdmFuY2UgdGhlIHBhcnNlciBiYXNlZCBvbiB0
+aGUgdG9rZW4gdGhhdCBpcyBwYXNzZWQuCi0gKiBSZXR1cm4gdGhlIGZpbmlzaGVkIHRvcGxl
+dmVsIHZhbHVlIGlmIHRoZSB0b2tlbiBjb21wbGV0ZXMgaXQuCisgKiBSZXR1cm4gdGhlIGZp
+bmlzaGVkIHRvcC1sZXZlbCB2YWx1ZSBpZiB0aGUgdG9rZW4gY29tcGxldGVzIGl0LgogICog
+SWYgYW4gZXJyb3IgaXMgcmV0dXJuZWQsIHRoZSBmdW5jdGlvbiBtdXN0IG5vdCBiZSBjYWxs
+ZWQgd2l0aG91dAogICogZmlyc3QgcmVzZXR0aW5nIHRoZSBwYXJzZXIuCiAgKi8KQEAgLTYz
+NCw3ICs2NDgsNyBAQCBRT2JqZWN0ICpqc29uX3BhcnNlcl9mZWVkKEpTT05QYXJzZXJDb250
+ZXh0ICpjdHh0LCBjb25zdCBKU09OVG9rZW4gKnRva2VuLAogICAgIGFzc2VydCghY3R4dC0+
+ZXJyKTsKICAgICBzd2l0Y2ggKHRva2VuLT50eXBlKSB7CiAgICAgY2FzZSBKU09OX0VSUk9S
+OgotICAgICAgICBwYXJzZV9lcnJvcihjdHh0LCB0b2tlbiwgIkpTT04gcGFyc2UgZXJyb3Is
+IHN0cmF5ICclcyciLCB0b2tlbi0+c3RyKTsKKyAgICAgICAgcGFyc2VfZXJyb3IoY3R4dCwg
+dG9rZW4sICJzdHJheSAnJXMnIiwgdG9rZW4tPnN0cik7CiAgICAgICAgIGJyZWFrOwogCiAg
+ICAgY2FzZSBKU09OX0VORF9PRl9JTlBVVDoKZGlmZiAtLWdpdCBhL3FvYmplY3QvanNvbi1z
+dHJlYW1lci5jIGIvcW9iamVjdC9qc29uLXN0cmVhbWVyLmMKaW5kZXggMmMxZjIwZmM2MmIu
+LjZkN2M5NDdmOTRhIDEwMDY0NAotLS0gYS9xb2JqZWN0L2pzb24tc3RyZWFtZXIuYworKysg
+Yi9xb2JqZWN0L2pzb24tc3RyZWFtZXIuYwpAQCAtMzQsNyArMzQsNyBAQCB2b2lkIGpzb25f
+bWVzc2FnZV9wcm9jZXNzX3Rva2VuKEpTT05MZXhlciAqbGV4ZXIsIEdTdHJpbmcgKmlucHV0
+LAogICAgICAgICBwYXJzZXItPmJyYWNlX2NvdW50Kys7CiAgICAgICAgIGJyZWFrOwogICAg
+IGNhc2UgSlNPTl9SQ1VSTFk6Ci0gICAgICAgIGlmIChwYXJzZXItPmJyYWNlX2NvdW50IDw9
+IDApIHsKKyAgICAgICAgaWYgKCFwYXJzZXItPmJyYWNlX2NvdW50KSB7CiAgICAgICAgICAg
+ICBnb3RvIGVuZF9lcnJvcl9yZWNvdmVyeTsKICAgICAgICAgfQogICAgICAgICBwYXJzZXIt
+PmJyYWNlX2NvdW50LS07CkBAIC00Myw3ICs0Myw3IEBAIHZvaWQganNvbl9tZXNzYWdlX3By
+b2Nlc3NfdG9rZW4oSlNPTkxleGVyICpsZXhlciwgR1N0cmluZyAqaW5wdXQsCiAgICAgICAg
+IHBhcnNlci0+YnJhY2tldF9jb3VudCsrOwogICAgICAgICBicmVhazsKICAgICBjYXNlIEpT
+T05fUlNRVUFSRToKLSAgICAgICAgaWYgKHBhcnNlci0+YnJhY2tldF9jb3VudCA8PSAwKSB7
+CisgICAgICAgIGlmICghcGFyc2VyLT5icmFja2V0X2NvdW50KSB7CiAgICAgICAgICAgICBn
+b3RvIGVuZF9lcnJvcl9yZWNvdmVyeTsKICAgICAgICAgfQogICAgICAgICBwYXJzZXItPmJy
+YWNrZXRfY291bnQtLTsKQEAgLTUxLDkgKzUxLDEwIEBAIHZvaWQganNvbl9tZXNzYWdlX3By
+b2Nlc3NfdG9rZW4oSlNPTkxleGVyICpsZXhlciwgR1N0cmluZyAqaW5wdXQsCiAgICAgY2Fz
+ZSBKU09OX0VSUk9SOgogICAgIGVuZF9lcnJvcl9yZWNvdmVyeToKICAgICAgICAgLyoKLSAg
+ICAgICAgICogQ2F1c2UgZXJyb3IgcmVjb3ZlcnkgdG8gZW5kIGltbWVkaWF0ZWx5LgotICAg
+ICAgICAgKiBJZiBub3QgaW4gZXJyb3IgcmVjb3ZlcnksIHRoZSBwYXJzZXIgd2lsbCByYWlz
+ZSBhbiBlcnJvcgotICAgICAgICAgKiAoZHVlIHRvIEpTT05fRVJST1Igb3IgdW5leHBlY3Rl
+ZCBKU09OX1J7Q1VSTFksU1FVQVJFfSkKKyAgICAgICAgICogV2UgY29tZSBoZXJlIGR1ZSB0
+byByZWNlaXZpbmcgZWl0aGVyIEpTT05fRVJST1Igb3IgYQorICAgICAgICAgKiBKU09OX1J7
+Q1VSTFksU1FVQVJFfSkgdGhhdCBpcyBrbm93biB0byBiZSB1bmJhbGFuY2VkLgorICAgICAg
+ICAgKiBJZiBpbiBlcnJvciByZWNvdmVyeSwgZW5kIGl0IGltbWVkaWF0ZWx5LiAgSWYgbm90
+IGluCisgICAgICAgICAqIGVycm9yIHJlY292ZXJ5LCBqc29uX3BhcnNlcl9mZWVkKCkgd2ls
+bCByYWlzZSBhbiBlcnJvcgogICAgICAgICAgKiBidXQgZXJyb3IgcmVjb3Zlcnkgd29uJ3Qg
+YmUgZW50ZXJlZCBhdCBhbGwuCiAgICAgICAgICAqLwogICAgICAgICBwYXJzZXItPmJyYWNl
+X2NvdW50ID0gMDsKQEAgLTk4LDEyICs5OSwxMiBAQCB2b2lkIGpzb25fbWVzc2FnZV9wcm9j
+ZXNzX3Rva2VuKEpTT05MZXhlciAqbGV4ZXIsIEdTdHJpbmcgKmlucHV0LAogCiAgICAgaWYg
+KChwYXJzZXItPmJyYWNlX2NvdW50ID09IDAgJiYgcGFyc2VyLT5icmFja2V0X2NvdW50ID09
+IDApCiAgICAgICAgIHx8IHR5cGUgPT0gSlNPTl9FTkRfT0ZfSU5QVVQpIHsKKyAgICAgICAg
+anNvbl9wYXJzZXJfcmVzZXQoJnBhcnNlci0+cGFyc2VyKTsKICAgICAgICAgcGFyc2VyLT5l
+cnJvciA9IGZhbHNlOwogICAgICAgICBwYXJzZXItPmJyYWNlX2NvdW50ID0gMDsKICAgICAg
+ICAgcGFyc2VyLT5icmFja2V0X2NvdW50ID0gMDsKICAgICAgICAgcGFyc2VyLT50b2tlbl9j
+b3VudCA9IDA7CiAgICAgICAgIHBhcnNlci0+dG9rZW5fc2l6ZSA9IDA7Ci0gICAgICAgIGpz
+b25fcGFyc2VyX3Jlc2V0KCZwYXJzZXItPnBhcnNlcik7CiAgICAgfQogfQogCg==
+
+--------------CwP7mwdd3X0yQW5eyXgVC3ag--
 
 
