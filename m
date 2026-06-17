@@ -4,91 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51BD2CD98E2
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jun 2026 15:25:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 669E1CD98F2
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jun 2026 15:25:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZs8m-00014G-D0; Wed, 17 Jun 2026 11:25:20 -0400
+	id 1wZs8i-0000c2-Ep; Wed, 17 Jun 2026 11:25:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wZs8d-0000Kr-EB
- for qemu-devel@nongnu.org; Wed, 17 Jun 2026 11:25:13 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1wZs8X-0008Tn-Q7
+ for qemu-devel@nongnu.org; Wed, 17 Jun 2026 11:25:07 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wZs8c-0004WG-2j
- for qemu-devel@nongnu.org; Wed, 17 Jun 2026 11:25:11 -0400
+ id 1wZs8V-0004V4-7l
+ for qemu-devel@nongnu.org; Wed, 17 Jun 2026 11:25:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781709909;
+ s=mimecast20190719; t=1781709901;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=k2jo5NzPSf0WlbFoDkYEqqTSBWztZUWwmeVeb0hOwvg=;
- b=M19SGgjiHnqoE3YzwSuCrML8zJj0pD+Fl7rKmzm/OHi6wtV5AEGNiozcc0YjLrs5UBWRYh
- j8ZY/kRfBeXryP96H3onflakU84VAj+pDerUN1Yvr7QeR+8oBEd8MIcMkvkELkxsdRkM72
- cLYPKLNSrkQzTeheUUaNW3DT4ivHLrU=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=OPe0ZtgcgplBe9clL4K9XGe/1YuhoCFrRqqQUH4p+LM=;
+ b=Qpxb6DNmj3r1jJSQIQRv0dB8h3kcQShkrPiztpsbWDjRB6oykrxy1IznHsXhO5443Ws1Fh
+ AEcX+xzGudiiaRXTVeQSkBgR/OWQ8K9TveRF+XUj3ZX4aJkQvW4rAjZQ81o1uQvqarUJZT
+ luI57xj1jRp03kctmnn3FUvW35jUpC8=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-424-2mh1zV6QP3GNLzj2K1RIyA-1; Wed,
- 17 Jun 2026 11:25:05 -0400
-X-MC-Unique: 2mh1zV6QP3GNLzj2K1RIyA-1
-X-Mimecast-MFC-AGG-ID: 2mh1zV6QP3GNLzj2K1RIyA_1781709905
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-29-FBJB761lO_SScMQ8k4n2EA-1; Wed,
+ 17 Jun 2026 11:25:00 -0400
+X-MC-Unique: FBJB761lO_SScMQ8k4n2EA-1
+X-Mimecast-MFC-AGG-ID: FBJB761lO_SScMQ8k4n2EA_1781709899
+Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 061CF19539AB
- for <qemu-devel@nongnu.org>; Wed, 17 Jun 2026 15:25:05 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id AFE3F1806C8F
+ for <qemu-devel@nongnu.org>; Wed, 17 Jun 2026 15:24:59 +0000 (UTC)
 Received: from localhost (unknown [10.44.22.6])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id D837019540C9; Wed, 17 Jun 2026 15:25:03 +0000 (UTC)
+ by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 6EB4E36918; Wed, 17 Jun 2026 15:24:57 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Wed, 17 Jun 2026 19:23:15 +0400
-Subject: [GIT PULL 18/27] hw/input/virtio-input-hid: use
+Date: Wed, 17 Jun 2026 19:23:14 +0400
+Subject: [GIT PULL 17/27] hw/input/hid: use
  qemu_input_handler_set_leds_mask() for LED state
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260617-ui-input-v1-18-79e9aedc5899@redhat.com>
+Message-Id: <20260617-ui-input-v1-17-79e9aedc5899@redhat.com>
 References: <20260617-ui-input-v1-0-79e9aedc5899@redhat.com>
 In-Reply-To: <20260617-ui-input-v1-0-79e9aedc5899@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Stefan Hajnoczi <stefanha@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=947;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=858;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=U/+2C6Maw3rGE3j6JafFp5i8L1ADiWudqdjvruBnowI=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqMrvp0GtnyQY1gwQOElWFXE2aCLDSv9eZHDAaL
- 4dkOU025q2JAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCajK76QAKCRDa6OEJdZac
- 5U9qD/9dvRSlGYDqwMjNxuGsP8ScfbSCzgVTY9sIA9TWfgBvxTkJoUqVeIOr0aI6dnbhwfE8Af+
- CePR3ZEMI3mMGxb/B7RzLhuoLmFwCyE1dENRMtq/0W4Llm+uYWuYmzaGY8EPAUz9HVCEoJbbJBE
- 1fDwqHuCm4OgW9VSarFyWR6SFyhq6bQNkRn0rqWPSpPa6AKwqLmhfisUuGieB5lE36mRm9sHkx1
- uqttAqv4erBz5fcVvbEcHX0D7/cRTpe8gsifeLtzafYy6/ENTwnELpdHXigOxDs5JJMyoiB9ZUH
- saThGAW36t2aJyo/+MqbQVbfDMM9BTGcEMWWUCJlm8YmTkZJvvvankZmnc3wwyIWWLEYLarUlMH
- g3ogvxfE7tUwSOocdGn9/pRJm6P9X8oOWdbK/6CkV6dSSXUyu2/AEtTizlrwwJJbp6DvNVZLFPR
- kw4GZ0Y5cFeQkadIWUgRaZZeDndqCHR5WorGOKKPvBqajbdP5d3giAYsxrjXVvtAgyOVfL+7JEG
- wZEOUl4RmQxgtLbhw1xJ4UFNS7DGUUjVaS8Bi/iF7MYjmkPbZ9LnILjotJosyH1ZrWbmcUzYscU
- v8rursXzgDLJqY+mGdCdFNUmYvYNFsxe1e7nO7E+HxDI3/Tmuortq00ewrYI5wdDVHPpGZLEKog
- R6qKa1osaWLdmXw==
+ bh=eSz1oEtt5TSsU8DookHorgm0XH4U/qXJH5qx7l6b0+c=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqMrvpguNebkFCOGrGX/i6R9qADK9MZbaZmcYne
+ 99Bov4Ulr6JAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCajK76QAKCRDa6OEJdZac
+ 5VyPEACDSEM8VooJx3Or9H+KDbjr8RPBbfjW9SKJwmbHAL3l8cstXlSjfIbAh/91mO6QAMSz8pS
+ YYEQoyTrhIThQ7L3gxKcUMcnksCFMtdfdSJ7sLAJ3f7sfD43ZoPj8NaTTEK0ZA2VQAyrS3eZZ9j
+ z6ZnLbVMgkcrqQA5WrsPVdJEchC4weeFdy8Bp3gVsb5okLcpJWu7sAQUNdTmUiKiQ01He3FjcGV
+ n07joz846ddzsHrjxe9agdiyWOHg6ChZpyRE1H5Hx2mqaKs3/ViMOzi9CJ0M4BTERQEu7BScTaH
+ K3DFJspt/GkSHHp6IhZCelnTKphkR2Bs3Ph97P/BqkM22VVFlQ6A5ImokWfXn9bEB+oe2LrfZ7e
+ 2MixNKBn2tmkuPlOOZ6RrHo//fMd87yywgBYuaTNy5j+IXq2TPpwwK94H4hqmkGRD5IQEpdSW/2
+ O6fvYJkenryCa984Fzj9MlM8h1chwyjiQcLD7YYNRl7AtRdKWXf3KR7Lnxiq1aSpMJ0AfH3v+SJ
+ UE8lgvQ9JSs2iSo9+gQ2M9b+bz5zd+PwpaqChfqWVO+aACn2MlJ6nHgpCsUjMxec+p/88/X7Nze
+ VMUuV8XvQtC/NrNULVWuKm81trNf3i0qU0Jj5I6niAMc6bQvHaJ97ZQRg7wj1+XpSlAJ0tRJ1xz
+ ehlp/+oPLz81pPw==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124;
+X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
+Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 8
-X-Spam_score: 0.8
-X-Spam_bar: /
-X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,30 +106,30 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- hw/input/virtio-input-hid.c | 3 ++-
+ hw/input/hid.c | 3 ++-
  1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/hw/input/virtio-input-hid.c b/hw/input/virtio-input-hid.c
-index 73423ac0c73..1019d6b2e53 100644
---- a/hw/input/virtio-input-hid.c
-+++ b/hw/input/virtio-input-hid.c
-@@ -12,6 +12,7 @@
- #include "hw/virtio/virtio.h"
- #include "hw/core/qdev-properties.h"
- #include "hw/virtio/virtio-input.h"
-+#include "ui/input.h"
+diff --git a/hw/input/hid.c b/hw/input/hid.c
+index 467ba8f14f3..0f28827554e 100644
+--- a/hw/input/hid.c
++++ b/hw/input/hid.c
+@@ -25,6 +25,7 @@
  
+ #include "qemu/osdep.h"
  #include "ui/console.h"
- 
-@@ -208,7 +209,7 @@ static void virtio_input_hid_handle_status(VirtIOInput *vinput,
-         } else {
-             vhid->ledstate &= ~ledbit;
++#include "ui/input.h"
+ #include "qemu/timer.h"
+ #include "hw/input/hid.h"
+ #include "migration/vmstate.h"
+@@ -470,7 +471,7 @@ int hid_keyboard_write(HIDState *hs, uint8_t *buf, int len)
+         if (hs->kbd.leds & 0x02) {
+             ledstate |= QEMU_CAPS_LOCK_LED;
          }
--        kbd_put_ledstate(vhid->ledstate);
-+        qemu_input_handler_set_leds_mask(vhid->hs, vhid->ledstate);
-         break;
-     default:
-         qemu_log_mask(LOG_GUEST_ERROR,
+-        kbd_put_ledstate(ledstate);
++        qemu_input_handler_set_leds_mask(hs->s, ledstate);
+         return 1;
+     }
+     return 0;
 
 -- 
 2.54.0
