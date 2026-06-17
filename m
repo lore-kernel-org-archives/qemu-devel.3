@@ -4,100 +4,117 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52A12CD98EE
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jun 2026 06:29:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC4B6CD98EE
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jun 2026 06:30:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZjm4-0006Xc-Dx; Wed, 17 Jun 2026 02:29:20 -0400
+	id 1wZjmy-0007H3-8Z; Wed, 17 Jun 2026 02:30:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wZjlk-0006Sn-Tz
- for qemu-devel@nongnu.org; Wed, 17 Jun 2026 02:29:03 -0400
-Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wZjli-0005JJ-A4
- for qemu-devel@nongnu.org; Wed, 17 Jun 2026 02:29:00 -0400
-Received: by mail-wr1-x433.google.com with SMTP id
- ffacd0b85a97d-4629d80fa08so288364f8f.3
- for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 23:28:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1781677733; x=1782282533; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=+oTNNqJndgPRI/V6E3Q3Aon3XWcY5YX/dMe9WULB0bs=;
- b=bV+VPn5yNRdrHaijMdHUQnf5+Nk2wdu63qRb+nZj9n+O4Pa77o/b1z+GzHyTWjzgLp
- je7bIcVpGnwkEbiJKzNhwIIr+MhOvRiP5z5pM5V9n5jiP6iBkT289L3iJ6AtDayeKOTd
- /0MAGleOoPyrUHSm5AcPtf7KUpLHwJ+xS2zVrRi40NP/igIX7kJv3wOSLZJmX/hNehAu
- vXOzsvtTTk1zn+J+K2rOy5LLsnnjFg5Vh4QDvP3+pW0Lsu1Rj65rRr3r5mGkOVdNEpqx
- T0zrjmQE/UIyI2vN7dKu2FzPWTlakvJzyJ+IamQi27zYXr+kTi8nerbTbnSmGWs+CqFU
- eEuw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781677733; x=1782282533;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=+oTNNqJndgPRI/V6E3Q3Aon3XWcY5YX/dMe9WULB0bs=;
- b=mIFzdBFpSZgLLi1kA7ID7xsXOK8eI9il+rndVb8/Cg+R3urU1O/wKrLiYb0luasIWB
- g/IyFDR27cX03UZh8O9zeLSjAMmFnVHMWWO0rCNu/ab2YX+OT4aHYKGZ2B1wGAsT/Buc
- eT7zEeiSyjgvUg0l7WPA2wFCUPbmI2JmjuZ8cEC/xzJpX0tEzXyVpaR6uiQNKPsNj8HZ
- t0bI0JKs/kbIIO2EORTTT6qvCluBs0V9P3yR5xUtRuLB7ZgoXe+AH94z4im/Gi3udxFo
- G+/oASRd7mJ13gPl/YfQw0q2aF9vghza90b2odIL2CsTyCQPdRFfapdhTf2piJ9ee5dX
- CFwQ==
-X-Forwarded-Encrypted: i=1;
- AFNElJ99N/Otf8l7hO9yXFw34UOjJSQ+//38gOeul0wtFxemXTxVn4gYEqWuDi/P2qN2W+exrWJu1aN5ZINv@nongnu.org
-X-Gm-Message-State: AOJu0Yzgq2rA3UvcS9URH20UjUlqSY+tkQxH++kVuV22qzAVa0aHKXhf
- zSKyzbXeL8U2wVBHdiCIKg5rBLgBcoZhJAAhibHI0iL0rM7b0bjBaS1f9SKKRutt/P0=
-X-Gm-Gg: Acq92OGRzNjEAcPPUoF+cF6ZQVLoXs7W05QPe/uWTv+M10Xo7eqLTOR5z5mH5bRmbBm
- 4NaFEf4DRQZtrECU0ilc6mbbHNIJXNALgX0e8c1EK8Bu5VGQsdAJ8NyUzusavWJhe9F646KbkHq
- 3LkSCTB1AmoIOLo6W/fIqCVGx8GsqwRngIXxWsg054LBj3kP8v2fQAx7vWdtSkP4tPi8Ah2iCb7
- ODkdq9DdQa0k8m7ufGB8JZYTjvwiIPu/lVhho84A72Ee7HDZobCWBnwcRtyn9RgBkPtUECp5TNE
- 2bUv8LXi0/M49QtxvNhpN5zYEEY5vkdT8603h6/OAsyeF+CcLuKJCPqfOF4P6tvtuAGPHTE7ZIg
- M0nZ3xDggCwBflZ/cQ6O8FruihZPHKwjMJ5MuHDlg3piSBFiGM0W75dF3nCfX8hzc7rI0FQqgHm
- vay4MS2EwvBOhNbNuLSFlkVNg=
-X-Received: by 2002:a05:600c:c3db:10b0:490:e19b:bd99 with SMTP id
- 5b1f17b1804b1-492333de36cmr31189985e9.30.1781677733097; 
- Tue, 16 Jun 2026 23:28:53 -0700 (PDT)
-Received: from draig.lan ([185.124.0.195]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49233bf3a7bsm27941795e9.2.2026.06.16.23.28.49
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 16 Jun 2026 23:28:51 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id D69745F803;
- Wed, 17 Jun 2026 07:28:48 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
-Cc: Christian Borntraeger <borntraeger@linux.ibm.com>,  Paolo Bonzini
- <pbonzini@redhat.com>,  qemu-devel@nongnu.org,  "Michael S. Tsirkin"
- <mst@redhat.com>,  Alistair Francis <alistair.francis@wdc.com>,  BALATON
- Zoltan <balaton@eik.bme.hu>,  Fabiano Rosas <farosas@suse.de>,  Kevin Wolf
- <kwolf@redhat.com>,  Peter Maydell <peter.maydell@linaro.org>,  Warner
- Losh <imp@bsdimp.com>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>,  Paolo Bonzini <bonzini@gnu.org>
-Subject: Re: [PATCH v2] docs/devel: relax policy on AI-generated contributions
-In-Reply-To: <ajGLcOrCjJFW3Biw@redhat.com> ("Daniel P. =?utf-8?Q?Berrang?=
- =?utf-8?Q?=C3=A9=22's?= message of
- "Tue, 16 Jun 2026 18:44:16 +0100")
-References: <20260529094619.1034458-1-pbonzini@redhat.com>
- <9ad69343-38b5-449c-8d7b-5cbde9d3b72f@linux.ibm.com>
- <ajGLcOrCjJFW3Biw@redhat.com>
-User-Agent: mu4e 1.14.2-pre1; emacs 30.1
-Date: Wed, 17 Jun 2026 07:28:48 +0100
-Message-ID: <87y0gdhe8v.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <saif.abrar@linux.ibm.com>)
+ id 1wZjmk-00072E-PT; Wed, 17 Jun 2026 02:30:04 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <saif.abrar@linux.ibm.com>)
+ id 1wZjmi-0005Wt-De; Wed, 17 Jun 2026 02:30:02 -0400
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 65GLmSeQ2746450; Wed, 17 Jun 2026 06:29:56 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=zqbTjc
+ upCpOrI97jJeV3FQMRNY/QgF7qRpxBYaa1jr0=; b=O/uBIOe7LZ1ytyzXn1TuTu
+ ZCp5DEyGib51HQN4E4UtHbI+YrVctp0T3ZtZSbGY1E1SDrkrykdR9jMe8DjPueyA
+ 8J1mRvieEJN5K64DBdmbLhhCBzakmfBOcsp3vAEarZbLeiCpmMIs5OaYX71orkLk
+ i9GOL6osxai1J2xP8mAOLM6EGoCYg1VeXjQMETweZV64h5w8hM/9v3SnxH8ph7ng
+ IryW+6PghjBmKNy2ee4acMI4yRQtRDUFkp2N0Do4ZnVI8L6TljvsnrcAzRf3cgM2
+ qvnSejSi7NUK33JzDRgwi9EUVAxC224kklz966y7vZllbFWcNj8O86ABIVQr6mzg
+ ==
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4eueqthhp1-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 17 Jun 2026 06:29:55 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 65H6JvQe029690;
+ Wed, 17 Jun 2026 06:29:54 GMT
+Received: from smtprelay05.wdc07v.mail.ibm.com ([172.16.1.72])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4eudva1upf-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 17 Jun 2026 06:29:54 +0000 (GMT)
+Received: from smtpav03.dal12v.mail.ibm.com (smtpav03.dal12v.mail.ibm.com
+ [10.241.53.102])
+ by smtprelay05.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 65H6TqNw34079478
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 17 Jun 2026 06:29:53 GMT
+Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id BFA3F58056;
+ Wed, 17 Jun 2026 06:29:52 +0000 (GMT)
+Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id D27985803F;
+ Wed, 17 Jun 2026 06:29:48 +0000 (GMT)
+Received: from [9.43.52.172] (unknown [9.43.52.172])
+ by smtpav03.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Wed, 17 Jun 2026 06:29:48 +0000 (GMT)
+Message-ID: <1ed35ef0-3df1-478b-a688-ed1e163c6f22@linux.ibm.com>
+Date: Wed, 17 Jun 2026 11:59:47 +0530
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::433;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x433.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 6/9] pnv/phb4: Set link-active status in HPSTAT and LMR
+ registers
+To: Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-ppc@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: clg@kaod.org, npiggin@gmail.com, fbarrat@linux.ibm.com, mst@redhat.com,
+ marcel.apfelbaum@gmail.com, cohuck@redhat.com, pbonzini@redhat.com,
+ thuth@redhat.com, lvivier@redhat.com, danielhb413@gmail.com
+References: <20260210134110.1515322-1-saif.abrar@linux.vnet.ibm.com>
+ <20260305060923.3753402-1-saif.abrar@linux.vnet.ibm.com>
+ <20260305060923.3753402-7-saif.abrar@linux.vnet.ibm.com>
+ <ccf998df-3d57-4d4f-8ff5-5ca2981d9939@linux.ibm.com>
+Content-Language: en-US
+From: Saif Abrar <saif.abrar@linux.ibm.com>
+In-Reply-To: <ccf998df-3d57-4d4f-8ff5-5ca2981d9939@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Proofpoint-ORIG-GUID: CNRmO_dIyG1vbQef02J7GeVo86l15Wry
+X-Proofpoint-GUID: zey1XV2x_Zz9BWXxK8FT1y5Tl4zAaf0r
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjE3MDA1NyBTYWx0ZWRfX7EmM1TtgQwVh
+ NE3R7QCXUc576Ggx/1QdAN6Xyv3QD3ndGoDbLByZq6wnvTjxprQP2SdZMBSqy4VVTBgLxhS5lYF
+ 7cBmi72zvmWsPNKyhPn3HaSMnYw3tiYiog4omgTuURVMD2Mxz7x71PNTFJJWBoe6fbj2wrcT4Mo
+ HpIpc59mb7Vt914/gDwsaCuwynVIuyaQem7i/GyhT9buTUKAyiBnP478APfVrWnGEfq++Fy48uq
+ EMBjJk2k/HW0DJm1PY3AWEAzllZwJOuYRD8bwsp0nY+8F63NcTuvdxISsEw9og+m0jtgZR/KrVa
+ rwcAMu5SBM4uWNq7qOyHw7E6GW6LwnFJOnxLFFgKTNJQJsbYZ3Sn1NXrlGVCOhlsm7M9H/vBsKq
+ +ON556OjDeg8SIFcaBx+WSapRIsu34wC8PYQ3+h+oBH9yy34BCsOw0IGROE6MgocgmD1o2k/5tX
+ mIProcBN5j3BUsnTX+g==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjE3MDA1NyBTYWx0ZWRfX+hMROxrKBgto
+ hn/MNzjbMoN3VWIql44RFHxaucje8dEO59bLc5XoDLRL7C6MiJXnuIWlMgVu5JwkLddHqkLg+a5
+ uLw2B1xymbDX+ui1md8/y6Qx1uIR+tI=
+X-Authority-Analysis: v=2.4 cv=B4KJFutM c=1 sm=1 tr=0 ts=6a323ee3 cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+ a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=VnNF1IyMAAAA:8
+ a=20KFwNOVAAAA:8 a=7wBnWPr69wzpIwNrFDsA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-16_05,2026-06-16_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 adultscore=0 lowpriorityscore=0 suspectscore=0
+ priorityscore=1501 clxscore=1015 phishscore=0 spamscore=0 bulkscore=0
+ impostorscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2606170057
+Received-SPF: pass client-ip=148.163.156.1;
+ envelope-from=saif.abrar@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -114,55 +131,142 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
 
-> On Tue, Jun 16, 2026 at 07:06:23PM +0200, Christian Borntraeger wrote:
->> Am 29.05.26 um 11:46 schrieb Paolo Bonzini:
->> > -Exceptions do not remove the need for authors to comply with all other
->> > -requirements for contribution.  In particular, the "Signed-off-by"
->> > -label in a patch submission is a statement that the author takes
->> > -responsibility for the entire contents of the patch, including any pa=
-rts
->> > -that were generated or assisted by AI tools or other tools.
->> > +.. code-block:: none
->> > +
->> > +     AI-used-for: tests, docs
->> > +     AI-used-for: code
->> > +     AI-used-for: code (refactoring)
->> > +     AI-used-for: code (prototype)
->> > +     AI-used-for: research
->> > +
->> > +``AI-used-for`` should not be included for "background" usage such as
->> > +autocomplete or obtaining a pre-review of the patch.
->>=20
->> So what about using AI for security scanning? So how do we want to treat
->> a patch from a human that is based on an AI report.
->> And if ok, would we then add something like
->>=20
->> Reported-by: Claude, chatgpt whatever?
+On 05-05-2026 23:16, Harsh Prateek Bora wrote:
 >
-> I see no need to provide advertizing for these tools.
 >
-> Our security disclosure rules require that the submitter acknowledge
-> they have reviewed any LLM output themselves before reporting.  So
-> from that POV it is the human who gave us the report and whom
-> deserves the credit, not any tool or vendor.
+> On 05/03/26 11:39 am, Saif Abrar wrote:
+>> Config-read the link-status register in the PCI-E macro,
+>> Depending on the link-active bit, set the link-active status
+>> in the HOTPLUG_STATUS and LINK_MANAGEMENT registers
+>> Also, clear the Presence-status active low bit in HOTPLUG_STATUS reg
+>> after config-reading the slot-status in the PCI-E macro.
+>>
+>> Signed-off-by: Saif Abrar <saif.abrar@linux.vnet.ibm.com>
+>> Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+>> ---
+>> v4: Variables declaration moved to the top of the method 
+>> pnv_phb4_reg_read().
+>> v3: Updates for coding guidelines.
+>>
+>>   hw/pci-host/pnv_phb4.c | 59 +++++++++++++++++++++++++++++++++++++++++-
+>>   1 file changed, 58 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/hw/pci-host/pnv_phb4.c b/hw/pci-host/pnv_phb4.c
+>> index 25539b7c32..c35f632e64 100644
+>> --- a/hw/pci-host/pnv_phb4.c
+>> +++ b/hw/pci-host/pnv_phb4.c
+>> @@ -511,6 +511,20 @@ static uint32_t get_exp_offset(PCIDevice *pdev)
+>>       return rpc->exp_offset;
+>>   }
+>>   +/*
+>> + * Config-read the link-status register in the PCI-E macro,
+>> + * convert to LE and check the link-active bit.
+>> + */
+>> +static uint32_t is_link_active(PnvPHB4 *phb)
+>> +{
+>> +    PCIHostState *pci = PCI_HOST_BRIDGE(phb->phb_base);
+>> +    PCIDevice *pdev = pci_find_device(pci->bus, 0, 0);
+>> +    uint32_t exp_offset = get_exp_offset(pdev);
+>> +
+>> +    return (bswap32(pnv_phb4_rc_config_read(phb, exp_offset + 
+>> PCI_EXP_LNKSTA, 4)
+>> +                    ) & PCI_EXP_LNKSTA_DLLLA);
 >
-> FWIW, although pretty much every security report recently smells
-> strongly of LLM (highly structured markdown with headings that
-> look the same from all reporters), almost none of them credit the
-> specific tool used anyway.
+> Shouldn't we be reading only 16 bits for PCI_EXP_LNKSTA ?
 
-We have created a new label Audit Tooling: AI in the issues but the most
-interesting thing about that is to see how AI does compared to existing
-fuzzing and static analysis techniques. The underlying model isn't super
-interesting here.
+Using be16_to_cpu() now.
 
 >
-> With regards,
-> Daniel
+>> +}
+>> +
+>>   /*
+>>    * Apply sticky-mask 's' to the reset-value 'v' and write to the 
+>> address 'a'.
+>>    * RC-config space values and masks are LE.
+>> @@ -729,6 +743,11 @@ static void pnv_phb4_reg_write(void *opaque, 
+>> hwaddr off, uint64_t val,
+>>           val = 0;
+>>           break;
+>>   +    case PHB_PCIE_HOTPLUG_STATUS:
+>> +        /* For normal operations, Simspeed diagnostic bit is always 
+>> zero */
+>> +        val &= PHB_PCIE_HPSTAT_SIMDIAG;
+>> +        break;
+>> +
+>>       /* Read only registers */
+>>       case PHB_CPU_LOADSTORE_STATUS:
+>>       case PHB_ETU_ERR_SUMMARY:
+>> @@ -876,6 +895,10 @@ static void pnv_phb4_reg_write(void *opaque, 
+>> hwaddr off, uint64_t val,
+>>   static uint64_t pnv_phb4_reg_read(void *opaque, hwaddr off, 
+>> unsigned size)
+>>   {
+>>       PnvPHB4 *phb = PNV_PHB4(opaque);
+>> +    /* Get the PCI-E capability offset from the root-port */
+>> +    PCIHostState *pci = PCI_HOST_BRIDGE(phb->phb_base);
+>> +    PCIDevice *pdev = pci_find_device(pci->bus, 0, 0);
+>> +    uint32_t exp_base = get_exp_offset(pdev);
+>>       uint64_t val;
+>>         if ((off & 0xfffc) == PHB_CONFIG_DATA) {
+>> @@ -944,8 +967,37 @@ static uint64_t pnv_phb4_reg_read(void *opaque, 
+>> hwaddr off, unsigned size)
+>>           val |= PHB_PCIE_DLP_INBAND_PRESENCE | PHB_PCIE_DLP_TL_LINKACT;
+>>           return val;
+>>   +    /*
+>> +     * Read PCI-E registers and set status for:
+>> +     * - Card present (active low bit 10)
+>> +     * - Link active  (bit 12)
+>> +     */
+>>       case PHB_PCIE_HOTPLUG_STATUS:
+>> -        /* Clear write-only bit */
+>> +        /*
+>> +         * Presence-status bit hpi_present_n is active-low, with 
+>> reset value 1.
+>> +         * Start by setting this bit to 1, indicating the card is 
+>> not present.
+>> +         * Then check the PCI-E register and clear the bit if card 
+>> is present.
+>> +         */
+>> +        val |= PHB_PCIE_HPSTAT_PRESENCE;
+>> +
+>> +        /*
+>> +         * Config-read the PCI-E macro register for slot-status.
+>> +         * Method for config-read converts to BE value.
+>> +         * To check actual bit in the PCI-E register,
+>> +         * convert the value back to LE using bswap32().
+>> +         * Clear the Presence-status active low bit.
+>> +         */
+>> +        if (bswap32(pnv_phb4_rc_config_read(phb, exp_base + 
+>> PCI_EXP_SLTSTA, 4))
+>> +                    & PCI_EXP_SLTSTA_PDS) {
+>> +            val &= ~PHB_PCIE_HPSTAT_PRESENCE;
+>> +        }
+>> +
+>> +        /* Check if link is active and set the bit */
+>> +        if (is_link_active(phb)) {
+>> +            val |= PHB_PCIE_HPSTAT_LINKACTIVE;
+>> +        }
+>> +
+>> +        /* Clear write-only resample-bit */
+>>           val &= ~PHB_PCIE_HPSTAT_RESAMPLE;
+>>           return val;
+>>   @@ -953,6 +1005,11 @@ static uint64_t pnv_phb4_reg_read(void 
+>> *opaque, hwaddr off, unsigned size)
+>>       case PHB_PCIE_LMR:
+>>           /* These write-only bits always read as 0 */
+>>           val &= ~(PHB_PCIE_LMR_CHANGELW | PHB_PCIE_LMR_RETRAINLINK);
+>> +
+>> +        /* Check if link is active and set the bit */
+>> +        if (is_link_active(phb)) {
+>> +            val |= PHB_PCIE_LMR_LINKACTIVE;
+>> +        }
+>>           return val;
+>>         /* Silent simple reads */
+>
+Thanks,
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+Saif
+
+
 
