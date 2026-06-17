@@ -4,60 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2963FCD98F1
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jun 2026 09:52:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47920CD98E2
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jun 2026 09:52:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZmvs-0005Xf-N4; Wed, 17 Jun 2026 05:51:40 -0400
+	id 1wZmw8-0005m2-5x; Wed, 17 Jun 2026 05:51:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <saif.abrar@linux.ibm.com>)
- id 1wZmvm-0005W0-Bt; Wed, 17 Jun 2026 05:51:34 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ id 1wZmw7-0005lj-7W; Wed, 17 Jun 2026 05:51:55 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <saif.abrar@linux.ibm.com>)
- id 1wZmvi-0003vt-Te; Wed, 17 Jun 2026 05:51:34 -0400
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ id 1wZmw5-000465-Kt; Wed, 17 Jun 2026 05:51:54 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65H8mcLR4022190; Wed, 17 Jun 2026 09:51:13 GMT
+ 65H8mKC2080090; Wed, 17 Jun 2026 09:51:27 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=6P0xO6
- YVZ1k+r3i0OeldoUdmh86QW+7HDgFcIh+8VtE=; b=X3fxkJQ3UIYFm0lglaodk3
- 3OrV//r9u3Jn4m+318p6yeUsLl+HeSpqiljBSwgaaW3eV1LAnDzWvVgkCoDYVXIo
- D5zFbH31b//42WpYBml0BJCX/YvRV7M+hceUgo5vj+SKhMmgzAQTZZfdXVT2kDCs
- lpINJiTHwrPWOYInlqtBtEyBtT/GHOYShNpln+4t+YjGicPd4S1Aau9CzbIEdcGf
- ePZeOS+LUUHep2bu3OicgbZmqczhnxl5k2jHk5HaWHYxa8BkfQQUQF3e5zZrAMH7
- 5DMi1APHpk5hRJK2quT6Oi2GPK+C4so70yFCzSYwTWbwCnnCksXCGrWRBQcIFrdA
+ :message-id:mime-version:references:subject:to; s=pp1; bh=oQmZt4
+ L2GArq7kRvhjUh1lFXQ7vfbRdlwdqxoz1FobQ=; b=inxS+M0KXVt3voGVW1oEyX
+ LhFWCJXZUzQOcj6H6JW7JzZZXWz5ea/zo8PjIctFGg/J0fzU1Q+zD3H4MO3e/5O7
+ 0XaXT9R84xZcXEvXVwEK0WiVdrGW/jj4PFCwnh8ufzL+vSAe71Gi9FR8NtWTdbF9
+ mu0Byu4y2UqWaDyjfTnHYz3tUxadD2S8+uYdfMTBCo/Q5TxCqt8POdeiKL4FKF7p
+ +AjwiujbTGiAxhLmSojh31BpY4rXv9H0TyE461tB9/OrFBH4Wn3J24P1kWFRsQpD
+ 7nJzw8exnm3kVoZ9ub6rxu3piPNMfFEVLvWZ8k3TlXxB+h+iG675af35YZ61nLKA
  ==
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4eueqx28jq-1
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4euequ29ag-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 17 Jun 2026 09:51:12 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 65H9nblo023382;
- Wed, 17 Jun 2026 09:51:12 GMT
-Received: from smtprelay03.wdc07v.mail.ibm.com ([172.16.1.70])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4eudvaah6y-1
+ Wed, 17 Jun 2026 09:51:26 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 65H9ncee005322;
+ Wed, 17 Jun 2026 09:51:25 GMT
+Received: from smtprelay02.dal12v.mail.ibm.com ([172.16.1.4])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4eudva2hm7-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 17 Jun 2026 09:51:12 +0000 (GMT)
+ Wed, 17 Jun 2026 09:51:25 +0000 (GMT)
 Received: from smtpav01.wdc07v.mail.ibm.com (smtpav01.wdc07v.mail.ibm.com
  [10.39.53.228])
- by smtprelay03.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 65H9od9p26477064
+ by smtprelay02.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 65H9pOQ466126088
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 17 Jun 2026 09:50:39 GMT
+ Wed, 17 Jun 2026 09:51:24 GMT
 Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id D41F458059;
- Wed, 17 Jun 2026 09:51:10 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 7150158055;
+ Wed, 17 Jun 2026 09:51:24 +0000 (GMT)
 Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 3E57658063;
- Wed, 17 Jun 2026 09:51:09 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id C77F858059;
+ Wed, 17 Jun 2026 09:51:22 +0000 (GMT)
 Received: from gfwr526.rchland.ibm.com (unknown [9.10.239.119])
  by smtpav01.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Wed, 17 Jun 2026 09:51:09 +0000 (GMT)
+ Wed, 17 Jun 2026 09:51:22 +0000 (GMT)
 From: Saif Abrar <saif.abrar@linux.ibm.com>
 To: qemu-ppc@nongnu.org, qemu-devel@nongnu.org
 Cc: harshpb@linux.ibm.com, clg@kaod.org, npiggin@gmail.com,
@@ -66,9 +66,9 @@ Cc: harshpb@linux.ibm.com, clg@kaod.org, npiggin@gmail.com,
  lvivier@redhat.com, danielhb413@gmail.com, kowal@linux.ibm.com,
  chalapathi.v@linux.ibm.com, calebs@linux.ibm.com, milesg@linux.ibm.com,
  jishnuvw@linux.ibm.com, adityag@linux.ibm.com, amachhiw@linux.ibm.com
-Subject: [PATCH v5 2/9] pnv/phb5: Add reset logic to PHB5
-Date: Wed, 17 Jun 2026 04:50:51 -0500
-Message-ID: <20260617095058.652789-3-saif.abrar@linux.ibm.com>
+Subject: [PATCH v5 8/9] pnv/phb5: Implement IODA PCT table
+Date: Wed, 17 Jun 2026 04:50:57 -0500
+Message-ID: <20260617095058.652789-9-saif.abrar@linux.ibm.com>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260617095058.652789-1-saif.abrar@linux.ibm.com>
 References: <20260617095058.652789-1-saif.abrar@linux.ibm.com>
@@ -77,41 +77,41 @@ Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
 X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjE3MDA5MiBTYWx0ZWRfXzpBxGKpRRlAT
- ZO2iC7TPLbu1M7QexdPeHA9eEohJHELIr6ezSUrswWY/iFgCrRKQrKpCDDK35qTCeu3s2yKvXy+
- CrC5mwyAIgSsaGJiM27OjFsqRFZOleFMc7nSpgwdbIDsthxsHj1OeC9iapIbLR02/mxual8Igd8
- Tt1T5P2CH0XyHycInM1OAPS4Dt/fOFh4zFZNaXufxmeCFpCEbZJpYBE/xPBInNVo1BJ8QzSiVmx
- q/Ch8a/+YxDWo6CzBxFqGUfKx6Wc0OAuuqFBacRucY7otsPWkrPZR3X3emEhgTSNEnxZrRQbHLA
- 8VkCul6Y/dX+7PQPIlWrK96hA5urORNlpf989JR4Swz7lw5zA2iQRDmscJh1oe5nPGwrIYvJ0dL
- Gu5RqPheMLPL2tLxoHwWNWutLBb5ZL9JH5fznba8jBy/l3MoctOu43G9efuoWM2Oe+k/hzM1YXs
- PpMXLSHaUxQisLki5MQ==
-X-Proofpoint-GUID: EG6UvLU92d-fmb8AraCCzcpByuRonkVl
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjE3MDA5MiBTYWx0ZWRfX6yYzECBjAtsY
- ojLz167UWQS2XhhTVwPrfsezb9s37GRxaezCxSfe2viatkcvrwb5WserzBdv+RWTPhHsBgY6jfL
- RW4w2BBEfK7ijU9UB/m09M5dAky6Yok=
-X-Proofpoint-ORIG-GUID: 6S8sefvGMVu7iAD9q6PRT-MLcs3As341
-X-Authority-Analysis: v=2.4 cv=auGCzyZV c=1 sm=1 tr=0 ts=6a326e11 cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjE3MDA5MiBTYWx0ZWRfX8hUkh7JgjxXX
+ xllyagCKCqosYj//q8L7g/NqZnPmYEVbNvnwjU1RJXtk4wtsxlJdoq4fI7JujNgSHJmHzm2U1V4
+ xmfAEWMN3bjVrojLFCg268WZthChU7o=
+X-Proofpoint-ORIG-GUID: wkI6A9MpEBGNhglSsGCtNd5Vp8qHAjm0
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjE3MDA5MiBTYWx0ZWRfXy9vr0loA9mQc
+ +PBhp4CcJX0Zk05eucnZJxK0ai/365fKhgr1Aax5e0fHcGwpuq30o0phuXjhT0mVAC3usckN1fF
+ NhN2nGGInxLWf3yTpBSReoKJN6jvUX5XHRO83FCRY4HJWfJIqKl1Ygr+Tdi08IHH5/IlpqYj47H
+ aqZEjcIXaI9+qR2u4JhtNq7Neo3y0yTAHFU7lAvASM914BNMxLweBX6/3+w56cb7yAFpldlFXbw
+ Zc9LQDLqg3FepHCrepwfm2eyr9q4gOPOgaRvFdW1hk965/XQOWqm+ahWrp6ySQJCIkg0OOvBLOy
+ OyAJpm2Q6umbDQXFQmpMZ5S7lN8aRbCPL8FPzJYrcZKxsKS3xejCTW/MDU4f3tFir7lri0cUAb3
+ RTLsmLhAN3OBEYZ6jcyiNgXnDrDLt4aCjHNY1LNdWxHOd+03tUVzgb+3RyJIgbl6KjBRpoXn7du
+ vDDZXq0NqbjbG5dFrnw==
+X-Proofpoint-GUID: RzaKJKaFqybx72K7IxA4nhj2m951lZEs
+X-Authority-Analysis: v=2.4 cv=L9gtheT8 c=1 sm=1 tr=0 ts=6a326e1e cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
  a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=Y2IxJ9c9Rs8Kov3niI8_:22 a=VnNF1IyMAAAA:8
- a=aow-egSQAAAA:8 a=20KFwNOVAAAA:8 a=-pyOBniqGHMB7m_1-yAA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=gFNbaldVC-z-bsjSTzMo:22
+ a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=VnNF1IyMAAAA:8
+ a=aow-egSQAAAA:8 a=zgsLwUnGCMBw8fX4dgEA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=gFNbaldVC-z-bsjSTzMo:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-06-17_01,2026-06-16_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 clxscore=1015 priorityscore=1501 suspectscore=0 impostorscore=0
- spamscore=0 lowpriorityscore=0 adultscore=0 malwarescore=0 bulkscore=0
+ bulkscore=0 impostorscore=0 malwarescore=0 clxscore=1015 adultscore=0
+ phishscore=0 lowpriorityscore=0 suspectscore=0 priorityscore=1501 spamscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606170092
-Received-SPF: pass client-ip=148.163.158.5;
- envelope-from=saif.abrar@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
+Received-SPF: pass client-ip=148.163.156.1;
+ envelope-from=saif.abrar@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
 X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -130,322 +130,80 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Saif Abrar <saif.abrar@linux.vnet.ibm.com>
 
-Add a method to be invoked on QEMU reset.
-Also add CFG and PBL core-blocks reset logic using
-appropriate bits of PHB_PCIE_CRESET register.
-
-Tested by reading the reset value of a register.
+IODA PCT table is implemented
+without any functionality, being a debug table.
 
 Signed-off-by: Saif Abrar <saif.abrar@linux.ibm.com>
 Reviewed-by: Cédric Le Goater <clg@kaod.org>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Reviewed-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
 Reviewed-by: Aditya Gupta <adityag@linux.ibm.com>
 Reviewed-by: Jishnu Warrier <Jishnu.Warrier@ibm.com>
 ---
-v5:
-- New macro for SCOM to PCBA address conversion.
-- Rename phb4 to phb5 in methods and macros.
-v4: General updates.
+v5: Updated IODA3 PCT table max size to 128 * 2 entries each.
 v3: Updates for coding guidelines.
-v2:
-- Using the ResettableClass.
-- Reset of the root complex registers done in pnv_phb_root_port_reset_hold().
 
 
- hw/pci-host/pnv_phb.c               |   1 +
- hw/pci-host/pnv_phb4.c              | 100 +++++++++++++++++++++++++++-
- include/hw/pci-host/pnv_phb4.h      |   1 +
- include/hw/pci-host/pnv_phb4_regs.h |  16 ++++-
- tests/qtest/pnv-phb-test.c          |  31 ++++++++-
- 5 files changed, 145 insertions(+), 4 deletions(-)
+ hw/pci-host/pnv_phb4.c              | 7 +++++++
+ include/hw/pci-host/pnv_phb4.h      | 2 ++
+ include/hw/pci-host/pnv_phb4_regs.h | 1 +
+ 3 files changed, 10 insertions(+)
 
-diff --git a/hw/pci-host/pnv_phb.c b/hw/pci-host/pnv_phb.c
-index 0b556d1bf5..d4f452d7b2 100644
---- a/hw/pci-host/pnv_phb.c
-+++ b/hw/pci-host/pnv_phb.c
-@@ -232,6 +232,7 @@ static void pnv_phb_root_port_reset_hold(Object *obj, ResetType type)
-     pci_set_long(conf + PCI_PREF_BASE_UPPER32, 0x1); /* Hack */
-     pci_set_long(conf + PCI_PREF_LIMIT_UPPER32, 0xffffffff);
-     pci_config_set_interrupt_pin(conf, 0);
-+    pnv_phb4_cfg_core_reset(d);
- }
- 
- static void pnv_phb_root_port_realize(DeviceState *dev, Error **errp)
 diff --git a/hw/pci-host/pnv_phb4.c b/hw/pci-host/pnv_phb4.c
-index 396bc47817..c9f3b02b39 100644
+index e9d9323dba..91b2064113 100644
 --- a/hw/pci-host/pnv_phb4.c
 +++ b/hw/pci-host/pnv_phb4.c
-@@ -1,7 +1,8 @@
- /*
-  * QEMU PowerPC PowerNV (POWER9) PHB4 model
-+ * QEMU PowerPC PowerNV (POWER10) PHB5 model
-  *
-- * Copyright (c) 2018-2020, IBM Corporation.
-+ * Copyright (c) 2018-2026, IBM Corporation.
-  *
-  * This code is licensed under the GPL version 2 or later. See the
-  * COPYING file in the top-level directory.
-@@ -22,6 +23,7 @@
- #include "hw/core/qdev-properties.h"
- #include "qom/object.h"
- #include "trace.h"
-+#include "system/reset.h"
- 
- #define phb_error(phb, fmt, ...)                                        \
-     qemu_log_mask(LOG_GUEST_ERROR, "phb4[%d:%d]: " fmt "\n",            \
-@@ -499,6 +501,78 @@ static void pnv_phb4_update_xsrc(PnvPHB4 *phb)
-     }
- }
- 
-+/*
-+ * Get the PCI-E capability offset from the root-port
-+ */
-+static uint32_t get_exp_offset(PCIDevice *pdev)
-+{
-+    PCIERootPortClass *rpc = PCIE_ROOT_PORT_GET_CLASS(pdev);
-+
-+    return rpc->exp_offset;
-+}
-+
-+void pnv_phb4_cfg_core_reset(PCIDevice *d)
-+{
-+    uint8_t *conf = d->config;
-+    uint32_t exp_offset = get_exp_offset(d);
-+
-+    pci_set_word(conf + PCI_COMMAND, PCI_COMMAND_SERR);
-+    pci_set_word(conf + PCI_STATUS, PCI_STATUS_CAP_LIST);
-+    pci_set_long(conf + PCI_CLASS_REVISION, 0x06040000);
-+    pci_set_long(conf + PCI_CACHE_LINE_SIZE, BIT(16));
-+    pci_set_word(conf + PCI_MEMORY_BASE, BIT(4));
-+    pci_set_word(conf + PCI_PREF_MEMORY_BASE, BIT(0) | BIT(4));
-+    pci_set_word(conf + PCI_PREF_MEMORY_LIMIT, PCI_PREF_RANGE_TYPE_64);
-+    pci_set_long(conf + PCI_CAPABILITY_LIST, BIT(6));
-+    pci_set_word(conf + PCI_BRIDGE_CONTROL, PCI_BRIDGE_CTL_SERR);
-+    pci_set_long(conf + PCI_BRIDGE_CONTROL + PCI_PM_PMC, 0xC8034801);
-+
-+    pci_set_long(conf + exp_offset, 0x420010);
-+    pci_set_long(conf + exp_offset + PCI_EXP_DEVCAP,  0x8022);
-+    pci_set_long(conf + exp_offset + PCI_EXP_DEVCTL, PCI_EXP_DEVCTL_EXT_TAG
-+                                              | PCI_EXP_DEVCTL_PAYLOAD_512B);
-+    pci_set_long(conf + exp_offset + PCI_EXP_LNKCAP, PCI_EXP_LNKCAP_LBNC
-+                 | PCI_EXP_LNKCAP_DLLLARC | BIT(8) | PCI_EXP_LNKCAP_SLS_32_0GB);
-+    pci_set_word(conf + exp_offset + PCI_EXP_LNKCTL, PCI_EXP_LNKCTL_RCB);
-+    pci_set_long(conf + exp_offset + PCI_EXP_SLTCTL,
-+                                                   PCI_EXP_SLTCTL_ASPL_DISABLE);
-+    pci_set_long(conf + exp_offset + PCI_EXP_DEVCAP2, BIT(16)
-+                  | PCI_EXP_DEVCAP2_ARI | PCI_EXP_DEVCAP2_COMP_TMOUT_DIS | 0xF);
-+    pci_set_long(conf + exp_offset + PCI_EXP_DEVCTL2, PCI_EXP_DEVCTL2_ARI);
-+    pci_set_long(conf + exp_offset + PCI_EXP_LNKCAP2, BIT(23)
-+                       | PCI_EXP_LNKCAP2_SLS_32_0GB
-+                       | PCI_EXP_LNKCAP2_SLS_16_0GB | PCI_EXP_LNKCAP2_SLS_8_0GB
-+                       | PCI_EXP_LNKCAP2_SLS_5_0GB | PCI_EXP_LNKCAP2_SLS_2_5GB);
-+    pci_set_long(conf + PHB_AER_ECAP, PCI_EXT_CAP(0x1, 0x1, 0x148));
-+    pci_set_long(conf + PHB_SEC_ECAP, (0x1A0 << 20) | BIT(16)
-+                                                       | PCI_EXT_CAP_ID_SECPCI);
-+    pci_set_long(conf + PHB_LMR_ECAP, 0x1E810027);
-+    /* LMR - Margining Lane Control / Status Register # 2 to 16 */
-+    for (int i = PHB_LMR_CTLSTA_2 ; i <= PHB_LMR_CTLSTA_16 ; i += 4) {
-+        pci_set_long(conf + i, 0x9C38);
-+    }
-+
-+    pci_set_long(conf + PHB_DLF_ECAP, 0x1F410025);
-+    pci_set_long(conf + PHB_DLF_CAP,  0x80000001);
-+    pci_set_long(conf + P16_ECAP, 0x22410026);
-+    pci_set_long(conf + P32_ECAP, 0x1002A);
-+    pci_set_long(conf + P32_CAP,  0x103);
-+}
-+
-+static void pnv_phb4_pbl_core_reset(PnvPHB4 *phb)
-+{
-+    /* Zero all registers initially */
-+    for (int i = PHB_PBL_CONTROL ; i <= PHB_PBL_ERR1_STATUS_MASK ; i += 8) {
-+        phb->regs[i >> 3] = 0x0;
-+    }
-+
-+    /* Set specific register values */
-+    phb->regs[PHB_PBL_CONTROL       >> 3] = 0xC009000000000000;
-+    phb->regs[PHB_PBL_TIMEOUT_CTRL  >> 3] = 0x2020000000000000;
-+    phb->regs[PHB_PBL_NPTAG_ENABLE  >> 3] = 0xFFFFFFFF00000000;
-+    phb->regs[PHB_PBL_SYS_LINK_INIT >> 3] = 0x80088B4642473000;
-+}
-+
- static void pnv_phb4_reg_write(void *opaque, hwaddr off, uint64_t val,
-                                unsigned size)
- {
-@@ -612,6 +686,18 @@ static void pnv_phb4_reg_write(void *opaque, hwaddr off, uint64_t val,
-         pnv_phb4_update_xsrc(phb);
+@@ -264,6 +264,11 @@ static uint64_t *pnv_phb4_ioda_access(PnvPHB4 *phb,
+         mask = phb->big_phb ? PNV_PHB4_MAX_MIST : (PNV_PHB4_MAX_MIST >> 1);
+         mask -= 1;
          break;
- 
-+    /* Reset core blocks */
-+    case PHB_PCIE_CRESET:
-+        if (val & PHB_PCIE_CRESET_CFG_CORE) {
-+            PCIHostState *pci = PCI_HOST_BRIDGE(phb->phb_base);
-+
-+            pnv_phb4_cfg_core_reset(pci_find_device(pci->bus, 0, 0));
-+        }
-+        if (val & PHB_PCIE_CRESET_PBL) {
-+            pnv_phb4_pbl_core_reset(phb);
-+        }
++    case IODA3_TBL_PCT:
++        tptr = phb->ioda_PCT;
++        mask = phb->big_phb ? PNV_PHB4_MAX_PCT : (PNV_PHB4_MAX_PCT >> 1);
++        mask -= 1;
 +        break;
-+
-     /* Silent simple writes */
-     case PHB_ASN_CMPM:
-     case PHB_CONFIG_ADDRESS:
-@@ -1532,6 +1618,13 @@ static PCIIOMMUOps pnv_phb4_iommu_ops = {
-     .get_address_space = pnv_phb4_dma_iommu,
- };
- 
-+static void pnv_phb4_reset(Object *obj, ResetType type)
-+{
-+    PnvPHB4 *phb = PNV_PHB4(obj);
-+
-+    pnv_phb4_pbl_core_reset(phb);
-+}
-+
- static void pnv_phb4_instance_init(Object *obj)
- {
-     PnvPHB4 *phb = PNV_PHB4(obj);
-@@ -1608,6 +1701,8 @@ static void pnv_phb4_realize(DeviceState *dev, Error **errp)
-     phb->qirqs = qemu_allocate_irqs(xive_source_set_irq, xsrc, xsrc->nr_irqs);
- 
-     pnv_phb4_xscom_realize(phb);
-+
-+    qemu_register_resettable(OBJECT(dev));
- }
- 
- /*
-@@ -1701,12 +1796,15 @@ static void pnv_phb4_class_init(ObjectClass *klass, const void *data)
- {
-     DeviceClass *dc = DEVICE_CLASS(klass);
-     XiveNotifierClass *xfc = XIVE_NOTIFIER_CLASS(klass);
-+    ResettableClass *rc = RESETTABLE_CLASS(klass);
- 
-     dc->realize         = pnv_phb4_realize;
-     device_class_set_props(dc, pnv_phb4_properties);
-     dc->user_creatable  = false;
- 
-     xfc->notify         = pnv_phb4_xive_notify;
-+
-+    rc->phases.enter = pnv_phb4_reset;
- }
- 
- static const TypeInfo pnv_phb4_type_info = {
+     case IODA3_TBL_RCAM:
+         mask = phb->big_phb ? 127 : 63;
+         break;
+@@ -362,6 +367,8 @@ static void pnv_phb4_ioda_write(PnvPHB4 *phb, uint64_t val)
+     /* Handle side effects */
+     switch (table) {
+     case IODA3_TBL_LIST:
++    case IODA3_TBL_PCT:
++        /* No action for debug tables */
+         break;
+     case IODA3_TBL_MIST: {
+         /* Special mask for MIST partial write */
 diff --git a/include/hw/pci-host/pnv_phb4.h b/include/hw/pci-host/pnv_phb4.h
-index de996e718b..47a5c3edf5 100644
+index bea0684724..b7e15b87d1 100644
 --- a/include/hw/pci-host/pnv_phb4.h
 +++ b/include/hw/pci-host/pnv_phb4.h
-@@ -160,6 +160,7 @@ void pnv_phb4_pic_print_info(PnvPHB4 *phb, GString *buf);
- int pnv_phb4_pec_get_phb_id(PnvPhb4PecState *pec, int stack_index);
- PnvPhb4PecState *pnv_pec_add_phb(PnvChip *chip, PnvPHB *phb, Error **errp);
- void pnv_phb4_bus_init(DeviceState *dev, PnvPHB4 *phb);
-+void pnv_phb4_cfg_core_reset(PCIDevice *d);
- extern const MemoryRegionOps pnv_phb4_xscom_ops;
- 
- /*
+@@ -65,6 +65,7 @@ OBJECT_DECLARE_SIMPLE_TYPE(PnvPHB4RootBus, PNV_PHB4_ROOT_BUS)
+ #define PNV_PHB4_MAX_LSIs          8
+ #define PNV_PHB4_MAX_INTs          4096
+ #define PNV_PHB4_MAX_MIST          (PNV_PHB4_MAX_INTs >> 2)
++#define PNV_PHB4_MAX_PCT           (128 * 2)
+ #define PNV_PHB4_MAX_MMIO_WINDOWS  32
+ #define PNV_PHB4_MIN_MMIO_WINDOWS  16
+ #define PNV_PHB4_NUM_REGS          (0x3000 >> 3)
+@@ -138,6 +139,7 @@ struct PnvPHB4 {
+     /* On-chip IODA tables */
+     uint64_t ioda_LIST[PNV_PHB4_MAX_LSIs];
+     uint64_t ioda_MIST[PNV_PHB4_MAX_MIST];
++    uint64_t ioda_PCT[PNV_PHB4_MAX_PCT];
+     uint64_t ioda_TVT[PNV_PHB4_MAX_TVEs];
+     uint64_t ioda_MBT[PNV_PHB4_MAX_MBEs];
+     uint64_t ioda_MDT[PNV_PHB4_MAX_PEs];
 diff --git a/include/hw/pci-host/pnv_phb4_regs.h b/include/hw/pci-host/pnv_phb4_regs.h
-index bea96f4d91..6892e21cc9 100644
+index c1d5a83271..e30adff7b2 100644
 --- a/include/hw/pci-host/pnv_phb4_regs.h
 +++ b/include/hw/pci-host/pnv_phb4_regs.h
-@@ -343,6 +343,18 @@
- #define PHB_RC_CONFIG_BASE                      0x1000
- #define   PHB_RC_CONFIG_SIZE                    0x800
+@@ -486,6 +486,7 @@
  
-+#define PHB_AER_ECAP                            0x100
-+#define PHB_AER_CAPCTRL                         0x118
-+#define PHB_SEC_ECAP                            0x148
-+#define PHB_LMR_ECAP                            0x1A0
-+#define PHB_LMR_CTLSTA_2                        0x1AC
-+#define PHB_LMR_CTLSTA_16                       0x1E4
-+#define PHB_DLF_ECAP                            0x1E8
-+#define PHB_DLF_CAP                             0x1EC
-+#define P16_ECAP                                0x1F4
-+#define P32_ECAP                                0x224
-+#define P32_CAP                                 0x228
-+
- /* PHB4 REGB registers */
- 
- /* PBL core */
-@@ -368,7 +380,7 @@
- #define PHB_PCIE_SCR                    0x1A00
- #define   PHB_PCIE_SCR_SLOT_CAP         PPC_BIT(15)
- #define   PHB_PCIE_SCR_MAXLINKSPEED     PPC_BITMASK(32, 35)
--
-+#define PHB_PCIE_BNR                    0x1A08
- 
- #define PHB_PCIE_CRESET                 0x1A10
- #define   PHB_PCIE_CRESET_CFG_CORE      PPC_BIT(0)
-@@ -423,6 +435,8 @@
- #define PHB_PCIE_LANE_EQ_CNTL23         0x1B08 /* DD1 only */
- #define PHB_PCIE_TRACE_CTRL             0x1B20
- #define PHB_PCIE_MISC_STRAP             0x1B30
-+#define PHB_PCIE_PHY_RXEQ_STAT_G3_00_03 0x1B40
-+#define PHB_PCIE_PHY_RXEQ_STAT_G5_12_15 0x1B98
- 
- /* Error */
- #define PHB_REGB_ERR_STATUS             0x1C00
-diff --git a/tests/qtest/pnv-phb-test.c b/tests/qtest/pnv-phb-test.c
-index 2eda521249..54fe1838a7 100644
---- a/tests/qtest/pnv-phb-test.c
-+++ b/tests/qtest/pnv-phb-test.c
-@@ -17,7 +17,8 @@
- #define PHB3_PBCQ_SPCI_ASB_DATA      0x2
- 
- /* Index of PNV_CHIP_POWER10 in pnv_chips[] within "pnv-xscom.h" */
--#define PHB4_XSCOM              0x40084800ull
-+#define PHB5_XSCOM              0x40084800ull
-+#define PNV_P10_CHIP_INDEX      3
- 
- /* SCOM to PCBA address conversion */
- #define SCOM_TO_PCBA(scom, addr) (((scom) >> 3) + (addr))
-@@ -37,6 +38,29 @@ static uint64_t pnv_phb_xscom_read(QTestState *qts, const PnvChip *chip,
-                                                               indirect_data)));
- }
- 
-+#define PHB5_XSCOM_READ(a) pnv_phb_xscom_read(qts, \
-+                                   &pnv_chips[PNV_P10_CHIP_INDEX], PHB5_XSCOM, \
-+                                   PHB_SCOM_HV_IND_ADDR, PHB_SCOM_HV_IND_DATA, \
-+                                   PPC_BIT(0) | (a))
-+
-+/* Assert that 'PHB PBL Control' register has correct reset value */
-+static void phb5_reset_test(QTestState *qts)
-+{
-+    g_assert_cmpuint(PHB5_XSCOM_READ(PHB_PBL_CONTROL), ==, 0xC009000000000000);
-+}
-+
-+static void phb5_tests(void)
-+{
-+    QTestState *qts = NULL;
-+
-+    qts = qtest_initf("-machine powernv10 -accel tcg");
-+
-+    /* Check reset value of a register */
-+    phb5_reset_test(qts);
-+
-+    qtest_quit(qts);
-+}
-+
- /* Assert that 'PHB - Version Register' bits[24:31] are as expected */
- static void phb_version_test(const void *data)
- {
-@@ -59,7 +83,7 @@ static void phb_version_test(const void *data)
-         expected_ver = 0xA4;
-     } else if (chip->chip_type == PNV_CHIP_POWER10) {
-         machine = "powernv10";
--        phb_xscom = PHB4_XSCOM;
-+        phb_xscom = PHB5_XSCOM;
-         indirect_addr = PHB_SCOM_HV_IND_ADDR;
-         indirect_data = PHB_SCOM_HV_IND_DATA;
-         reg_phb_version |= PPC_BIT(0);
-@@ -96,5 +120,8 @@ int main(int argc, char **argv)
-     /* PHB[345] tests */
-     add_phbX_version_test();
- 
-+    /* PHB5 specific tests */
-+    qtest_add_func("phb5", phb5_tests);
-+
-     return g_test_run();
- }
+ #define IODA3_TBL_LIST          1
+ #define IODA3_TBL_MIST          2
++#define IODA3_TBL_PCT           3
+ #define IODA3_TBL_RCAM          5
+ #define IODA3_TBL_MRT           6
+ #define IODA3_TBL_PESTA         7
 -- 
 2.52.0
 
