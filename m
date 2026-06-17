@@ -4,28 +4,28 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40000CD98EE
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jun 2026 08:51:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA0E2CD98EE
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jun 2026 08:51:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZlz5-0000cQ-Ly; Wed, 17 Jun 2026 04:50:55 -0400
+	id 1wZlz7-0000cf-Kg; Wed, 17 Jun 2026 04:50:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kchiu@axiado.com>) id 1wZlyz-0000ao-GO
+ (Exim 4.90_1) (envelope-from <kchiu@axiado.com>) id 1wZlyz-0000an-E7
  for qemu-devel@nongnu.org; Wed, 17 Jun 2026 04:50:49 -0400
-Received: from mail-northcentralusazlp170130007.outbound.protection.outlook.com
- ([2a01:111:f403:c105::7] helo=CH4PR04CU002.outbound.protection.outlook.com)
+Received: from mail-westusazlp170100005.outbound.protection.outlook.com
+ ([2a01:111:f403:c001::5] helo=BYAPR05CU005.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kchiu@axiado.com>) id 1wZlyw-0004QO-UJ
+ (Exim 4.90_1) (envelope-from <kchiu@axiado.com>) id 1wZlyx-0004PM-0S
  for qemu-devel@nongnu.org; Wed, 17 Jun 2026 04:50:49 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=tC3cj8E8ci+cUtTDADnYibXBCNPjjoOPDqN2kFZaekd/9pCx1SdNOY1DqyhjP+PYCE3VoxgbyWsyEol0NoF9dNagC5LRPNzaHKXUjQe1R6DMXNv261Fawr0gma9lM7DinAtP82xXwZrlL1Ka16Ru/9Mfm+APVwUxw9IFwhtDAI+Y5peVlhabXZ8fhq7Ai41+FBFkWFspUho2wEXLjjlExhvyOO+NMbFCWj98/3d9E5iXFUfU+IW1UxZBCI47BOklgiOh6q9omLrO0Ru9e0qv3gR10w6vQKNbLC71UCRPmFRykbzJXRZ37i2eGm1t94WWL47CrpE9LxOd7SaF9r59DQ==
+ b=Y8mJnOEvDO54ON26EXmK79B93ZwN8xGCT+YB2VKZIhTx1l89HWuG5DYXUS/C4cghMGi36zclJDtR1Cx0QH4OJhEkvAU2fyRaNk+k4kJTBCEWbiCeGhiHJuNk47TFhuH1b9Wn0vE3j0SUg+ol9l1U8lj6psXwmXk7LnfXBbuVhOIx9+qt4VueACIDStjOW1H/ZSrIN2sf+Y3XPJcPQ0d2pSt0aPrqRz/YgdGNVpF2GWdr6DAF3JMhakZHsEnwAK8RsAdZWYgUibhc6YDHW1uGKE25AYQ3fKvvYgXhimC2C+5jKnTW7JoPz+oBZdBbWUQgvCV8uFqMJw5668XwTnbutg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=yjSUt3ThW/9UKhR23gWjG1mONtW/zCAfQcIPatxC2yQ=;
- b=b5p3blgNDtjuB5gANb89KUBo82P0whSrSl9iGDR7A6YgRqmHVdtnOfNUwuyXkue9S+9+P6Feb7byAOTHtOeYZtG/BsUY/7WO2co8iSok2Ajg11GGPjZ5xbYxcfLBHQqDkxnLo68p6zayk864JSimZwEaLDMmgHORhZ77eRVIHCASqToFeFUODdpf7wZZ9O9E8Uk6euk8JTIgu+drU9k7ThrbHSveODnnvaOxZKJnG95FzsxFEdE+6XwOlsnoiO+sLvJqoo+V1DSZSRnoU1Cb221lmvzEf9m+CBIKakpwWWhmAUvwc+K4xjiowW8K8856Z0cxokRbkT6dyHZvhRox8A==
+ bh=AG1ansV0CUtjHs6A6pOD9+gFy1I9aWqswt4hrJSt0x8=;
+ b=ZgHGP63snCPmMQLmF+f1awQq0Z0oLFfU4gC3TVzsOX9FONk2QwnVI7IQeXq6lH6OL4uUx0cb+uIqJXmZfeEuLb1zx2FQTGCUlLH06oU0FmAJLVoLj26A/N65vjT3Fv4hmxZ08fwzHLNoDzpQ7qoF/ALZHNOrQvrw9Pdq//MtV6w4UhVIBdJ01QCpfwCgS9BBWL9kPfXKM84WulqSwf/Zn5VciT9YgaeSWIW10+DNuzJPdNzA2Ttdi0uUBE3rkCahFC90U5gpf91px9mgWMO6cFQX+Ot8sL14P+h0h9nAhqX/7m5jAP1TkhCEH5Kv2IabhTjE+zg2pPOAhNRPKtKgkw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=fail (sender ip is
  64.62.143.114) smtp.rcpttodomain=axiado.com smtp.mailfrom=axiado.com;
  dmarc=none action=none header.from=axiado.com; dkim=none (message not
@@ -33,16 +33,16 @@ ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=fail (sender ip is
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=axiado.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=yjSUt3ThW/9UKhR23gWjG1mONtW/zCAfQcIPatxC2yQ=;
- b=EJsZcpbEo1ifN+g6Z9XFoKF1Cyxvm7lsEXGrgz/3R2xJSGQo+TE2OMNyYL2cXKQX6+R2OXRd6y7xHCWhgSYSaxUoGS+kDGHVp4tMG9JjAdQ+bEptyWzKFFDYMERfrKMJUlbdrk15taS6dMgcsrLtJ6s8E0ldADuRJNNFqdrN7cziNdFhy6yzdmv9tvr8ROlOBc3u+ME28oqAwPOyvLQjFPbCvqo/7zeKf4vSksW9M8nNcp5QbBW51v44Vm7iFf+8ZH8n4aXx2rmhPytxhdm7URYef9VoAmRqpLztRIDNGc33nxVDpWMqqoDszkLij0Tb6LHHe7CvAikUgLgJamj0Ww==
-Received: from MW4PR04CA0260.namprd04.prod.outlook.com (2603:10b6:303:88::25)
- by SA0PR18MB3584.namprd18.prod.outlook.com (2603:10b6:806:97::12)
+ bh=AG1ansV0CUtjHs6A6pOD9+gFy1I9aWqswt4hrJSt0x8=;
+ b=EaE/gME1aSr2CmAMzAlEPA04wpV+y8OIa7KzMAaSsu2wiA3XYE5eaBxjBUeKqSxN6gcVSig/z9uy1pO27zlOBWy6l4IFnvVCYOSf1/34CNTP5R46prwcJk09z+wt8cBR4qowbRbzb/0/3tkIE/B5lIct6+doMqzeXQnf7BFII6SV3YnLFznjDqpLXh7ykMEh6d3xOvUG1don4bmp8tFd2J7YtPictCyYz65fI0mqNRvsvRsr7O8Wx8EO6tTimI5EqgbdZHjzOZxJwj9OZa9RO1PlU5f1/G6fribukMkhWEzRucqhgX33WPUnL2KZwJzzuOupJap11zZlWcM0b/YP2A==
+Received: from SJ0PR13CA0143.namprd13.prod.outlook.com (2603:10b6:a03:2c6::28)
+ by BL1PR18MB4149.namprd18.prod.outlook.com (2603:10b6:208:310::7)
  with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.139.11; Wed, 17 Jun
- 2026 08:50:39 +0000
-Received: from CO1PEPF000066EB.namprd05.prod.outlook.com
- (2603:10b6:303:88:cafe::87) by MW4PR04CA0260.outlook.office365.com
- (2603:10b6:303:88::25) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.113.16; Wed, 17 Jun
+ 2026 08:50:40 +0000
+Received: from CO1PEPF000066EA.namprd05.prod.outlook.com
+ (2603:10b6:a03:2c6:cafe::92) by SJ0PR13CA0143.outlook.office365.com
+ (2603:10b6:a03:2c6::28) with Microsoft SMTP Server (version=TLS1_3,
  cipher=TLS_AES_256_GCM_SHA384) id 15.21.139.11 via Frontend Transport; Wed,
  17 Jun 2026 08:50:39 +0000
 X-MS-Exchange-Authentication-Results: spf=fail (sender IP is 64.62.143.114)
@@ -52,19 +52,19 @@ Received-SPF: Fail (protection.outlook.com: domain of axiado.com does not
  designate 64.62.143.114 as permitted sender) receiver=protection.outlook.com; 
  client-ip=64.62.143.114; helo=smtp.corp.axiado.com;
 Received: from smtp.corp.axiado.com (64.62.143.114) by
- CO1PEPF000066EB.mail.protection.outlook.com (10.167.249.7) with Microsoft
+ CO1PEPF000066EA.mail.protection.outlook.com (10.167.249.5) with Microsoft
  SMTP Server (version=TLS1_3, cipher=TLS_AES_256_GCM_SHA384) id 15.21.139.8
  via Frontend Transport; Wed, 17 Jun 2026 08:50:39 +0000
 Received: from axiado.com (unknown [10.4.1.181])
- by smtp.corp.axiado.com (Postfix) with ESMTP id B82E34186B5A;
+ by smtp.corp.axiado.com (Postfix) with ESMTP id EEFC740BFE07;
  Wed, 17 Jun 2026 01:47:59 -0700 (PDT)
 From: Kuan-Jui Chiu <kchiu@axiado.com>
 To: qemu-devel@nongnu.org,
 	peter.maydell@linaro.org
 Cc: Kuan-Jui Chiu <kchiu@axiado.com>
-Subject: [PATCH v4 1/6] hw/arm: Add Axiado SoC AX3000
-Date: Wed, 17 Jun 2026 01:50:23 -0700
-Message-Id: <20260617085030.2586072-2-kchiu@axiado.com>
+Subject: [PATCH v4 5/6] hw/gpio: Add Cadence GPIO controller
+Date: Wed, 17 Jun 2026 01:50:26 -0700
+Message-Id: <20260617085030.2586072-5-kchiu@axiado.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20260617085030.2586072-1-kchiu@axiado.com>
 References: <20260617085030.2586072-1-kchiu@axiado.com>
@@ -72,33 +72,33 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-EOPAttributedMessage: 0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CO1PEPF000066EB:EE_|SA0PR18MB3584:EE_
+X-MS-TrafficTypeDiagnostic: CO1PEPF000066EA:EE_|BL1PR18MB4149:EE_
 Content-Type: text/plain
-X-MS-Office365-Filtering-Correlation-Id: e9e2e851-1863-45d1-1463-08decc4d8195
+X-MS-Office365-Filtering-Correlation-Id: 95f14446-a8c7-48a4-a45d-08decc4d81c1
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|82310400026|23010399003|1800799024|36860700016|376014|22082099003|18002099003|3023799007|56012099006|5023799004|6133799003;
-X-Microsoft-Antispam-Message-Info: Sf92Qrz/X+pbsQg5948q06X5Sd6fokUJkF+kUY7BX1cW8uoSqKQBDoiQqrOnqZPGMo5v94Rx2JLocjDtRN+yQWQtobL8atmCqbHUQlYQaMb/NaB7IQHkMOOyQSG6jiWHyb6tseEY4yUeGYxQFWyc3NHY2Gms4P0ClQPS7eoAJ+5Xi1kwa7cPXWmXTIdyfDw1TjIr8fujgP7l40mWu8LaoUNiMG8ZZDs0M3aD+A/D0/hWFzJLHoJDx0nj8SjSOMlxzsxXl5Xo2dnlrBVV5ah4gEPPm1QSRL8HXg/aLQumRhJHKwHFF2z2pYjjmX/28taiekJoAXYlv+LLE0BYlWGcr1ZJRes3X4nGOp+wlWBqyzcHvva/28tOc45nd0evZApZaySxocmYcuMlssziHcQYoyG96IkLE0usy2/ysSXDRLHuldIhM8LfJSGo6VaNFUODjkqeR2NkThS4KZZ9xOzo2x9Mi19H5g/J+eZyHl66wKF0UBHbRpxbIzfukJW7chLlcOfv1x52Rg40EOw3+a4Jo9PyyWhJcr5HVRTwinqJPNwmg1m8mHBUniYaRnP96tddCRkARkOSREUo77YO7jEFxMrsUquSNoASR4gzgHMK0HJik0HKFatl3tz4T2T+mjeUPjRu7JWy/BRf5TnjovP6geb6sHlTo600AlX6vzmKhQLe4zt7Ncrt5jgs/Zwb3nLmbWA/7druU4TOxefhQ/QYOOjzcQfolEy9Sqk7QokSgl0=
+ ARA:13230040|376014|36860700016|82310400026|23010399003|1800799024|6133799003|56012099006|3023799007|22082099003|18002099003;
+X-Microsoft-Antispam-Message-Info: vLSTzOezevEKaLDRsbzavRFAhfMxkEW/o5PBbUsqHG9RldXwuhAwLWd4NOZ0+Aef4tOcEs6+SeoY0ePZ4n5CZpEfUSk/wjXvVcQwxJOJdafoIQuL8KaEearbv0+XQgqU7zFir1xhPcfrj7YWDpb92AUMXAlWltZidwQ4IDREMFhixcTHfV5X7eu/tHzp3o6IvlctPlS5O203sVzuUh7RyhqMiPuEXqHR1Qya4+5YXYpcwLsjzzl6PFsnxbL6EW38YqmrwpkP8S2x9X4mdlXvHA44ak4vimD7d2Y7oy5w+Jru6ZVzM1BIAfINg+ZVEFe6Zxkik0l6Jt0tghh4nqnnnpu4xjhwsPb6j2/RUTyB+R063kAmvxW0XiTZQBKi+HA5dJP3pgf/doghsqlAa5uimZBn105uzngsIB94K/RvAUljTtGqvd5vvcWMuUnpRcGJrLZOKo5D6A+Xo+bHQaoSOPwR8RQ/BMpf7yMxF4PrHee0+80TCw9cP1NpbwlEFIXVam4ZKYsMBVZoXVa0KV60SOLvtXerSNpBmp5FlugdIHutMyIq+8pEfZMGzuR8JNoiLifLfPiKTS2ftSusOOQpXhZfbht5SMFoyb1ost+UKn80IkIE1XUzOMa56uWH7Oo4B6N95qcIteLj8438fmvDR0N6vTLkPp3NFNAoZcI4d00MsnSLRjdZu3vGhUJF0TfporiNk6iISeKCTpTzdOtaYXR12Zds53SQR69kLjaw8/k=
 X-Forefront-Antispam-Report: CIP:64.62.143.114; CTRY:US; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:smtp.corp.axiado.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230040)(82310400026)(23010399003)(1800799024)(36860700016)(376014)(22082099003)(18002099003)(3023799007)(56012099006)(5023799004)(6133799003);
+ SFS:(13230040)(376014)(36860700016)(82310400026)(23010399003)(1800799024)(6133799003)(56012099006)(3023799007)(22082099003)(18002099003);
  DIR:OUT; SFP:1102; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: PoL52rj18RJTkpDfe6UWhRV4EUgPt0heHoochtcQPnm/ArhXSBwNufa3hUNtpY0QTh/Oz5RIT+NBN4XUlJEKy2vM2AVdBB1dGF+y+8NkyFw0JZK8bm528DFNJgVcBCAR2T8FoGAP+lnQj0qWlZ36wnSODoiaWYOt+XNGHEZwNP21ZM37Q/vm4h/i9UClGu3s0T8yA7dkQLp2cMKK3RZ2535Ki3HbWajHcWNbYGjnYlOuHDPte0v1uLoFJxzVM+jLJ4C76QdzSgyac/FiXxhenbrGEksgJB3D7rVSwzbo2gLuik/dE9hKCYq5DzL0TxN40sosmVh+d9qeaV+jvdCsaibIQnCpTdKmbKOusU+TA23q4AY8FJtBNxqY1xCJ66QCMoN0ckiHV00Jjq/RgxOmfS0LXwWDYYO2o2sFnOYrby1OGl+RMzgnYMJmaw3DfQRe
+X-MS-Exchange-AntiSpam-MessageData-0: 829p7VlGfgkShU9/sGyVArVve94eohqGcSL/vp1EMEJnJIEQPhap0vnz3Ovm4/21z/S3NQ+SjIjOds9Ku0T0domHX0yL5pGEsh2i0L4Z+xjk7Yf2crInG0OgbmbVVowBwujHSytCsQGvn0M91bXY/FAdIMWjnEEHded06CpepHdk8QEJ+yE1Vo/7pP0QVY1/AvKtoOa12mjlIwaXs29bTt/LUjqAhNk5x2K4E32/k4mwZYR73gwKEQ5xqjfwtBVcU6MVWxMcc+7N5NL5Yy1mOABVpC98XedJ3gNWj1393cUv5QPz/RjbHYd7TAJF4dbZQYvLbLy1b7um62QG1EgyTJZQC6TSKClq3JAugB6SeYBnoSdsqdzaSCrWGuCAlWUbjx4fmGYKgqjXRNVZXb6+QrsXBzNtYUzCzKkVbiHbj5zmxqo59kQUSaRv2nVg4NGK
 X-OriginatorOrg: axiado.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 17 Jun 2026 08:50:39.0890 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: e9e2e851-1863-45d1-1463-08decc4d8195
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 17 Jun 2026 08:50:39.3809 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 95f14446-a8c7-48a4-a45d-08decc4d81c1
 X-MS-Exchange-CrossTenant-Id: ff2db17c-4338-408e-9036-2dee8e3e17d7
 X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=ff2db17c-4338-408e-9036-2dee8e3e17d7; Ip=[64.62.143.114];
  Helo=[smtp.corp.axiado.com]
-X-MS-Exchange-CrossTenant-AuthSource: CO1PEPF000066EB.namprd05.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthSource: CO1PEPF000066EA.namprd05.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Anonymous
 X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA0PR18MB3584
-Received-SPF: pass client-ip=2a01:111:f403:c105::7;
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BL1PR18MB4149
+Received-SPF: pass client-ip=2a01:111:f403:c001::5;
  envelope-from=kchiu@axiado.com;
- helo=CH4PR04CU002.outbound.protection.outlook.com
+ helo=BYAPR05CU005.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -121,63 +121,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patch adds new model for Axiado SoC AX3000 which supports
-    4 Cortex-A53 ARM64 CPUs
-    Arm Generic Interrupt Controller v3
-    4 Cadence UARTs
+This patch add a new model for Cadence GPIO controller which
+supports 32 pins and interrupts for level-triggered/edge-triggered type on
+input pins.
+
+Also define new trace functions for analysis purpose and new configuration to
+enable this model.
 
 Signed-off-by: Kuan-Jui Chiu <kchiu@axiado.com>
 ---
- MAINTAINERS                 |   7 ++
- hw/arm/Kconfig              |   7 ++
- hw/arm/ax3000-soc.c         | 218 ++++++++++++++++++++++++++++++++++++
- hw/arm/meson.build          |   3 +
- include/hw/arm/ax3000-soc.h |  71 ++++++++++++
- 5 files changed, 306 insertions(+)
- create mode 100644 hw/arm/ax3000-soc.c
- create mode 100644 include/hw/arm/ax3000-soc.h
+ hw/gpio/Kconfig                |   3 +
+ hw/gpio/cadence_gpio.c         | 292 +++++++++++++++++++++++++++++++++
+ hw/gpio/meson.build            |   1 +
+ hw/gpio/trace-events           |   5 +
+ include/hw/gpio/cadence_gpio.h |  55 +++++++
+ 5 files changed, 356 insertions(+)
+ create mode 100644 hw/gpio/cadence_gpio.c
+ create mode 100644 include/hw/gpio/cadence_gpio.h
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 2b5b581e173..340428cda55 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -1294,6 +1294,13 @@ M: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
- S: Maintained
- F: rust/hw/char/pl011/
+diff --git a/hw/gpio/Kconfig b/hw/gpio/Kconfig
+index a209294c20c..fcc7c70bd50 100644
+--- a/hw/gpio/Kconfig
++++ b/hw/gpio/Kconfig
+@@ -30,3 +30,6 @@ config PCF8574
  
-+Axiado SoCs and EVKs
-+M: Kuan-Jui Chiu <kchiu@axiado.com>
-+L: qemu-arm@nongnu.org
-+S: Maintained
-+F: hw/arm/ax3000*.c
-+F: include/hw/arm/ax3000*.h
+ config ZAURUS_SCOOP
+     bool
 +
- AVR Machines
- -------------
- 
-diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
-index fb798ccbeed..818ffdbce56 100644
---- a/hw/arm/Kconfig
-+++ b/hw/arm/Kconfig
-@@ -717,3 +717,10 @@ config ARMSSE
-     select UNIMP
-     select SSE_COUNTER
-     select SSE_TIMER
-+
-+config AXIADO_SOC
++config CADENCE_GPIO
 +    bool
-+    depends on ARM
-+    select ARM_GIC
-+    select CADENCE # UART
-+    select UNIMP
-diff --git a/hw/arm/ax3000-soc.c b/hw/arm/ax3000-soc.c
+diff --git a/hw/gpio/cadence_gpio.c b/hw/gpio/cadence_gpio.c
 new file mode 100644
-index 00000000000..517cc6f52d5
+index 00000000000..ce8256b381b
 --- /dev/null
-+++ b/hw/arm/ax3000-soc.c
-@@ -0,0 +1,218 @@
++++ b/hw/gpio/cadence_gpio.c
+@@ -0,0 +1,292 @@
 +/*
-+ * Axiado SoC AX3000
++ * Cadence GPIO emulation.
 + *
 + * Author: Kuan-Jui Chiu <kchiu@axiado.com>
 + *
@@ -185,34 +165,206 @@ index 00000000000..517cc6f52d5
 + */
 +
 +#include "qemu/osdep.h"
-+#include "system/address-spaces.h"
-+#include "hw/arm/bsa.h"
-+#include "hw/arm/ax3000-soc.h"
-+#include "hw/misc/unimp.h"
-+#include "system/system.h"
-+#include "qobject/qlist.h"
-+#include "qom/object.h"
-+#include "hw/core/boards.h"
++#include "hw/gpio/cadence_gpio.h"
++#include "hw/core/irq.h"
++#include "migration/vmstate.h"
++#include "qemu/log.h"
++#include "trace.h"
 +
-+static uint64_t pll_read(void *opaque, hwaddr offset, unsigned size)
++static void cdns_gpio_update_irq(CadenceGPIOState *s)
 +{
-+    switch (offset) {
-+    case CLKRST_CPU_PLL_POSTDIV_OFFSET:
-+        return 0x20891b;
-+    case CLKRST_CPU_PLL_STS_OFFSET:
-+        return 0x01;
-+    default:
-+        return 0x00;
++    qemu_set_irq(s->irq, s->isr ? 1 : 0);
++}
++
++static void cdns_gpio_update_isr_with_inpvr(CadenceGPIOState *s, uint32_t new)
++{
++    uint32_t new_isr = 0;
++    uint32_t any_edges, rising_edges, falling_edges, deassert_mask;
++
++    /*
++     * If ITR is set, this is level triggered:
++     * set corresponding ISR bits when IVR matches new inpvr value.
++     */
++    new_isr |= s->itr & ~(s->ivr ^ new);
++
++    /*
++     * If ITR is not set, this is edge-triggered:
++     * If IOAR bit is set, trigger on any edge;
++     * otherwise trigger on rising edge if IVR is set,
++     * trigger on falling edge if IVR bit is 0.
++     */
++    any_edges = s->ioar & (s->inpvr ^ new);
++    rising_edges = s->ivr & ~s->inpvr & new;
++    falling_edges = ~s->ivr & s->inpvr & ~new;
++    new_isr |= ~s->itr & (any_edges | rising_edges | falling_edges);
++
++    /*
++     * In bypass mode or if this isn't an input pin, the corresponding ISR
++     * bit is forced to zero.
++     */
++    deassert_mask = s->bmr | ~s->dmr | s->imr;
++
++    new_isr &= ~deassert_mask;
++    s->isr = new_isr;
++
++    cdns_gpio_update_irq(s);
++}
++
++static void cdns_gpio_update_isr(CadenceGPIOState *s)
++{
++    cdns_gpio_update_isr_with_inpvr(s, s->inpvr);
++}
++
++static void cdns_gpio_set(void *opaque, int line, int level)
++{
++    CadenceGPIOState *s = CADENCE_GPIO(opaque);
++    uint32_t new_inpvr = deposit32(s->inpvr, line, 1, level ? 1 : 0);
++
++    trace_cdns_gpio_set(DEVICE(s)->canonical_path, line, level);
++
++    cdns_gpio_update_isr_with_inpvr(s, new_inpvr);
++
++    /* Sync INPVR with new value */
++    s->inpvr = new_inpvr;
++}
++
++static inline void cdns_gpio_update_output_irq(CadenceGPIOState *s)
++{
++    uint32_t is_output = ~s->bmr & ~s->dmr & s->oer;
++
++    for (int i = 0; i < CDNS_GPIO_NUM; i++) {
++        if (extract32(is_output, i, 1)) {
++            /* Forward the output value to corresponding irq */
++            qemu_set_irq(s->output[i], extract32(s->ovr, i, 1));
++        }
 +    }
 +}
 +
-+static void pll_write(void *opaque, hwaddr offset, uint64_t val, unsigned size)
++static uint64_t cdns_gpio_read(void *opaque, hwaddr offset, unsigned size)
 +{
++    CadenceGPIOState *s = CADENCE_GPIO(opaque);
++    uint32_t reg_value = 0x0;
++
++    switch (offset) {
++    case CDNS_GPIO_BYPASS_MODE:
++        reg_value = s->bmr;
++        break;
++
++    case CDNS_GPIO_DIRECTION_MODE:
++        reg_value = s->dmr;
++        break;
++
++    case CDNS_GPIO_OUTPUT_EN:
++        reg_value = s->oer;
++        break;
++
++    case CDNS_GPIO_OUTPUT_VALUE:
++        reg_value = s->ovr;
++        break;
++
++    case CDNS_GPIO_INPUT_VALUE:
++        reg_value = s->inpvr;
++        break;
++
++    case CDNS_GPIO_IRQ_MASK:
++        reg_value = s->imr;
++        break;
++
++    case CDNS_GPIO_IRQ_STATUS:
++        reg_value = s->isr;
++        break;
++
++    case CDNS_GPIO_IRQ_TYPE:
++        reg_value = s->itr;
++        break;
++
++    case CDNS_GPIO_IRQ_VALUE:
++        reg_value = s->ivr;
++        break;
++
++    case CDNS_GPIO_IRQ_ANY_EDGE:
++        reg_value = s->ioar;
++        break;
++
++    default:
++        qemu_log_mask(LOG_GUEST_ERROR, "[%s]%s: Bad register at offset 0x%"
++                      HWADDR_PRIx "\n", TYPE_CADENCE_GPIO, __func__, offset);
++        break;
++    }
++
++    trace_cdns_gpio_read(DEVICE(s)->canonical_path, offset, reg_value);
++
++    return reg_value;
 +}
 +
-+static const MemoryRegionOps pll_ops = {
-+    .read = pll_read,
-+    .write = pll_write,
++static void cdns_gpio_write(void *opaque, hwaddr offset, uint64_t value,
++                            unsigned size)
++{
++    CadenceGPIOState *s = CADENCE_GPIO(opaque);
++
++    trace_cdns_gpio_write(DEVICE(s)->canonical_path, offset, value);
++
++    switch (offset) {
++    case CDNS_GPIO_BYPASS_MODE:
++        s->bmr = value;
++        cdns_gpio_update_output_irq(s);
++        cdns_gpio_update_isr(s);
++        break;
++
++    case CDNS_GPIO_DIRECTION_MODE:
++        s->dmr = value;
++        cdns_gpio_update_output_irq(s);
++        cdns_gpio_update_isr(s);
++        break;
++
++    case CDNS_GPIO_OUTPUT_EN:
++        s->oer = value;
++        cdns_gpio_update_output_irq(s);
++        break;
++
++    case CDNS_GPIO_OUTPUT_VALUE:
++        s->ovr = value;
++        cdns_gpio_update_output_irq(s);
++        break;
++
++    case CDNS_GPIO_IRQ_EN:
++        s->imr &= ~value;
++        cdns_gpio_update_isr(s);
++        break;
++
++    case CDNS_GPIO_IRQ_DIS:
++        s->imr |= value;
++        cdns_gpio_update_isr(s);
++        break;
++
++    case CDNS_GPIO_IRQ_TYPE:
++        s->itr = value;
++        break;
++
++    case CDNS_GPIO_IRQ_VALUE:
++        s->ivr = value;
++        break;
++
++    case CDNS_GPIO_IRQ_ANY_EDGE:
++        s->ioar = value;
++        break;
++
++    case CDNS_GPIO_INPUT_VALUE:
++    case CDNS_GPIO_IRQ_MASK:
++    case CDNS_GPIO_IRQ_STATUS:
++        /* Read-Only */
++        break;
++
++    default:
++        qemu_log_mask(LOG_GUEST_ERROR, "[%s]%s: Bad register at offset 0x%"
++                      HWADDR_PRIx "\n", TYPE_CADENCE_GPIO, __func__, offset);
++        break;
++    }
++}
++
++static const MemoryRegionOps cdns_gpio_ops = {
++    .read = cdns_gpio_read,
++    .write = cdns_gpio_write,
 +    .endianness = DEVICE_LITTLE_ENDIAN,
 +    .impl = {
 +        .min_access_size = 4,
@@ -224,267 +376,161 @@ index 00000000000..517cc6f52d5
 +    }
 +};
 +
-+static void ax3000_init(Object *obj)
-+{
-+    Ax3000SoCState *s = AX3000_SOC(obj);
-+    Ax3000SoCClass *sc = AX3000_SOC_GET_CLASS(s);
-+
-+    for (int i = 0; i < sc->num_cpus; i++) {
-+        g_autofree char *name = g_strdup_printf("cpu%d", i);
-+        object_initialize_child(obj, name, &s->cpu[i],
-+                                ARM_CPU_TYPE_NAME("cortex-a53"));
-+    }
-+
-+    object_initialize_child(obj, "gic", &s->gic, gicv3_class_name());
-+
-+    for (int i = 0; i < AX3000_NUM_UARTS; i++) {
-+        g_autofree char *name = g_strdup_printf("uart%d", i);
-+        object_initialize_child(obj, name, &s->uart[i], TYPE_CADENCE_UART);
-+    }
-+}
-+
-+static void ax3000_realize(DeviceState *dev, Error **errp)
-+{
-+    Ax3000SoCState *s = AX3000_SOC(dev);
-+    Ax3000SoCClass *sc = AX3000_SOC_GET_CLASS(s);
-+    SysBusDevice *gic_sbd = SYS_BUS_DEVICE(&s->gic);
-+    DeviceState *gic_dev = DEVICE(&s->gic);
-+    QList *redist_region_count;
-+    SysBusDevice *sdhci0_sbd;
-+    DeviceState *card;
-+
-+    /* CPUs */
-+    for (int i = 0; i < sc->num_cpus; i++) {
-+        object_property_set_int(OBJECT(&s->cpu[i]), "cntfrq", 8000000,
-+                                &error_abort);
-+
-+        if (object_property_find(OBJECT(&s->cpu[i]), "has_el3")) {
-+            object_property_set_bool(OBJECT(&s->cpu[i]), "has_el3",
-+                                     false, &error_abort);
-+        }
-+
-+        if (!qdev_realize(DEVICE(&s->cpu[i]), NULL, errp)) {
-+            return;
-+        }
-+    }
-+
-+    /* GIC */
-+    qdev_prop_set_uint32(gic_dev, "num-cpu", sc->num_cpus);
-+    qdev_prop_set_uint32(gic_dev, "num-irq",
-+                         AX3000_NUM_IRQS + GIC_INTERNAL);
-+
-+    redist_region_count = qlist_new();
-+    qlist_append_int(redist_region_count, sc->num_cpus);
-+    qdev_prop_set_array(gic_dev, "redist-region-count", redist_region_count);
-+
-+    if (!sysbus_realize(gic_sbd, errp)) {
-+        return;
-+    }
-+
-+    sysbus_mmio_map(gic_sbd, 0, AX3000_GIC_DIST_BASE);
-+    sysbus_mmio_map(gic_sbd, 1, AX3000_GIC_REDIST_BASE);
-+
-+    /*
-+     * Wire the outputs from each CPU's generic timer and the GICv3
-+     * maintenance interrupt signal to the appropriate GIC PPI inputs, and
-+     * the GIC's IRQ/FIQ interrupt outputs to the CPU's inputs.
-+     */
-+    for (int i = 0; i < sc->num_cpus; i++) {
-+        DeviceState *cpu_dev = DEVICE(&s->cpu[i]);
-+        int intidbase = AX3000_NUM_IRQS + i * GIC_INTERNAL;
-+        qemu_irq irq;
-+
-+        /*
-+         * Mapping from the output timer irq lines from the CPU to the
-+         * GIC PPI inputs.
-+         */
-+        static const int timer_irqs[] = {
-+            [GTIMER_PHYS] = ARCH_TIMER_NS_EL1_IRQ,
-+            [GTIMER_VIRT] = ARCH_TIMER_VIRT_IRQ,
-+            [GTIMER_HYP]  = ARCH_TIMER_NS_EL2_IRQ,
-+            [GTIMER_SEC]  = ARCH_TIMER_S_EL1_IRQ
-+        };
-+
-+        for (int j = 0; j < ARRAY_SIZE(timer_irqs); j++) {
-+            irq = qdev_get_gpio_in(gic_dev, intidbase + timer_irqs[j]);
-+            qdev_connect_gpio_out(cpu_dev, j, irq);
-+        }
-+
-+        irq = qdev_get_gpio_in(gic_dev, intidbase + ARCH_GIC_MAINT_IRQ);
-+        qdev_connect_gpio_out_named(cpu_dev, "gicv3-maintenance-interrupt",
-+                                        0, irq);
-+
-+        sysbus_connect_irq(gic_sbd, i,
-+                           qdev_get_gpio_in(cpu_dev, ARM_CPU_IRQ));
-+        sysbus_connect_irq(gic_sbd, i + sc->num_cpus,
-+                           qdev_get_gpio_in(cpu_dev, ARM_CPU_FIQ));
-+        sysbus_connect_irq(gic_sbd, i + 2 * sc->num_cpus,
-+                           qdev_get_gpio_in(cpu_dev, ARM_CPU_VIRQ));
-+        sysbus_connect_irq(gic_sbd, i + 3 * sc->num_cpus,
-+                           qdev_get_gpio_in(cpu_dev, ARM_CPU_VFIQ));
-+    }
-+
-+    /* DRAM */
-+    for (int i = 0; i < AX3000_NUM_BANKS; i++) {
-+        struct {
-+            hwaddr addr;
-+            size_t size;
-+            const char *name;
-+        } dram_table[] = {
-+            { AX3000_DRAM0_BASE, AX3000_DRAM0_SIZE, "dram0" },
-+            { AX3000_DRAM1_BASE, AX3000_DRAM1_SIZE, "dram1" }
-+        };
-+
-+        memory_region_init_ram(&s->dram[i], OBJECT(s), dram_table[i].name,
-+                               dram_table[i].size, &error_fatal);
-+        memory_region_add_subregion(get_system_memory(), dram_table[i].addr,
-+                                    &s->dram[i]);
-+    }
-+
-+    /* UARTs */
-+    for (int i = 0; i < AX3000_NUM_UARTS; i++) {
-+        struct {
-+            hwaddr addr;
-+            unsigned int irq;
-+        } serial_table[] = {
-+            { AX3000_UART0_BASE, AX3000_UART0_IRQ },
-+            { AX3000_UART1_BASE, AX3000_UART1_IRQ },
-+            { AX3000_UART2_BASE, AX3000_UART2_IRQ },
-+            { AX3000_UART3_BASE, AX3000_UART3_IRQ }
-+        };
-+
-+        qdev_prop_set_chr(DEVICE(&s->uart[i]), "chardev", serial_hd(i));
-+        if (!sysbus_realize(SYS_BUS_DEVICE(&s->uart[i]), errp)) {
-+            return;
-+        }
-+
-+        sysbus_mmio_map(SYS_BUS_DEVICE(&s->uart[i]), 0, serial_table[i].addr);
-+        sysbus_connect_irq(SYS_BUS_DEVICE(&s->uart[i]), 0,
-+                           qdev_get_gpio_in(gic_dev, serial_table[i].irq));
-+    }
-+
-+    /* Timer control */
-+    create_unimplemented_device("ax3000.timerctrl", AX3000_TIMER_CTRL, 32);
-+
-+    /* PLL control */
-+    memory_region_init_io(&s->pll_ctrl, OBJECT(s), &pll_ops, s,
-+                          "ax3000.pllctrl", 32);
-+    memory_region_add_subregion(get_system_memory(), AX3000_PLL_BASE,
-+                                &s->pll_ctrl);
-+}
-+
-+static void ax3000_class_init(ObjectClass *oc, const void *data)
-+{
-+    DeviceClass *dc = DEVICE_CLASS(oc);
-+    Ax3000SoCClass *sc = AX3000_SOC_CLASS(oc);
-+
-+    dc->desc = "Axiado SoC AX3000";
-+    dc->realize = ax3000_realize;
-+    sc->num_cpus = AX3000_NUM_CPUS;
-+}
-+
-+static const TypeInfo axiado_soc_types[] = {
-+    {
-+        .name           = TYPE_AX3000_SOC,
-+        .parent         = TYPE_SYS_BUS_DEVICE,
-+        .instance_size  = sizeof(Ax3000SoCState),
-+        .instance_init  = ax3000_init,
-+        .class_init     = ax3000_class_init,
++static const VMStateDescription vmstate_cdns_gpio = {
++    .name = TYPE_CADENCE_GPIO,
++    .version_id = 1,
++    .minimum_version_id = 1,
++    .fields = (const VMStateField[]) {
++        VMSTATE_UINT32(bmr, CadenceGPIOState),
++        VMSTATE_UINT32(dmr, CadenceGPIOState),
++        VMSTATE_UINT32(oer, CadenceGPIOState),
++        VMSTATE_UINT32(ovr, CadenceGPIOState),
++        VMSTATE_UINT32(inpvr, CadenceGPIOState),
++        VMSTATE_UINT32(imr, CadenceGPIOState),
++        VMSTATE_UINT32(isr, CadenceGPIOState),
++        VMSTATE_UINT32(itr, CadenceGPIOState),
++        VMSTATE_UINT32(ivr, CadenceGPIOState),
++        VMSTATE_UINT32(ioar, CadenceGPIOState),
++        VMSTATE_END_OF_LIST()
 +    }
 +};
 +
-+DEFINE_TYPES(axiado_soc_types)
-diff --git a/hw/arm/meson.build b/hw/arm/meson.build
-index 8f66a80e10e..111ab2ba010 100644
---- a/hw/arm/meson.build
-+++ b/hw/arm/meson.build
-@@ -108,6 +108,9 @@ arm_common_ss.add(when: 'CONFIG_SX1', if_true: files('omap_sx1.c'))
- arm_common_ss.add(when: 'CONFIG_VERSATILE', if_true: files('versatilepb.c'))
- arm_common_ss.add(when: 'CONFIG_VEXPRESS', if_true: files('vexpress.c'))
- 
-+arm_common_ss.add(when: ['CONFIG_AXIADO_SOC', 'TARGET_AARCH64'], if_true: files(
-+  'ax3000-soc.c'))
++static void cdns_gpio_reset(DeviceState *dev)
++{
++    CadenceGPIOState *s = CADENCE_GPIO(dev);
 +
- arm_common_ss.add(files('boot.c'))
- 
- hw_common_arch += {'arm': arm_common_ss}
-diff --git a/include/hw/arm/ax3000-soc.h b/include/hw/arm/ax3000-soc.h
++    s->bmr      = 0;
++    s->dmr      = 0;
++    s->oer      = 0;
++    s->ovr      = 0;
++    s->inpvr    = 0;
++    s->imr      = 0xffffffff;
++    s->isr      = 0;
++    s->itr      = 0;
++    s->ivr      = 0;
++    s->ioar     = 0;
++}
++
++static void cdns_gpio_init(Object *obj)
++{
++    CadenceGPIOState *s = CADENCE_GPIO(obj);
++
++    memory_region_init_io(&s->iomem, obj, &cdns_gpio_ops, s,
++                          TYPE_CADENCE_GPIO, CDNS_GPIO_REG_SIZE);
++
++    qdev_init_gpio_in(DEVICE(s), cdns_gpio_set, CDNS_GPIO_NUM);
++    qdev_init_gpio_out(DEVICE(s), s->output, CDNS_GPIO_NUM);
++
++    sysbus_init_irq(SYS_BUS_DEVICE(obj), &s->irq);
++    sysbus_init_mmio(SYS_BUS_DEVICE(obj), &s->iomem);
++}
++
++static void cdns_gpio_class_init(ObjectClass *klass, const void *data)
++{
++    DeviceClass *dc = DEVICE_CLASS(klass);
++
++    device_class_set_legacy_reset(dc, cdns_gpio_reset);
++    dc->vmsd = &vmstate_cdns_gpio;
++    dc->desc = "Cadence GPIO controller";
++}
++
++static const TypeInfo cdns_gpio_info = {
++    .name = TYPE_CADENCE_GPIO,
++    .parent = TYPE_SYS_BUS_DEVICE,
++    .instance_size = sizeof(CadenceGPIOState),
++    .instance_init = cdns_gpio_init,
++    .class_init = cdns_gpio_class_init,
++};
++
++static void cdns_gpio_register_types(void)
++{
++    type_register_static(&cdns_gpio_info);
++}
++
++type_init(cdns_gpio_register_types)
+diff --git a/hw/gpio/meson.build b/hw/gpio/meson.build
+index 6a67ee958fa..0555f44b6a7 100644
+--- a/hw/gpio/meson.build
++++ b/hw/gpio/meson.build
+@@ -19,3 +19,4 @@ system_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files('aspeed_gpio.c'))
+ system_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files('aspeed_sgpio.c'))
+ system_ss.add(when: 'CONFIG_SIFIVE_GPIO', if_true: files('sifive_gpio.c'))
+ system_ss.add(when: 'CONFIG_PCF8574', if_true: files('pcf8574.c'))
++system_ss.add(when: 'CONFIG_CADENCE_GPIO', if_true: files('cadence_gpio.c'))
+diff --git a/hw/gpio/trace-events b/hw/gpio/trace-events
+index cea896b28f6..80ca783a039 100644
+--- a/hw/gpio/trace-events
++++ b/hw/gpio/trace-events
+@@ -46,3 +46,8 @@ stm32l4x5_gpio_read(char *gpio, uint64_t addr) "GPIO%s addr: 0x%" PRIx64 " "
+ stm32l4x5_gpio_write(char *gpio, uint64_t addr, uint64_t data) "GPIO%s addr: 0x%" PRIx64 " val: 0x%" PRIx64 ""
+ stm32l4x5_gpio_update_idr(char *gpio, uint32_t old_idr, uint32_t new_idr) "GPIO%s from: 0x%x to: 0x%x"
+ stm32l4x5_gpio_pins(char *gpio, uint16_t disconnected, uint16_t high) "GPIO%s disconnected pins: 0x%x levels: 0x%x"
++
++# cadence_gpio.c
++cdns_gpio_read(const char *path, uint64_t offset, uint32_t value) "%s:reg[0x%04" PRIx64 "] -> 0x%" PRIx32
++cdns_gpio_write(const char *path, uint64_t offset, uint64_t value) "%s:reg[0x%04" PRIx64 "] <- 0x%04" PRIx64
++cdns_gpio_set(const char *path, int line, int level) "%s:[%d] <- %d"
+diff --git a/include/hw/gpio/cadence_gpio.h b/include/hw/gpio/cadence_gpio.h
 new file mode 100644
-index 00000000000..6e3b5f51d30
+index 00000000000..ed3f77b894f
 --- /dev/null
-+++ b/include/hw/arm/ax3000-soc.h
-@@ -0,0 +1,71 @@
++++ b/include/hw/gpio/cadence_gpio.h
+@@ -0,0 +1,55 @@
 +/*
-+ * Axiado SoC AX3000
++ * Cadence GPIO registers definition.
 + *
 + * Author: Kuan-Jui Chiu <kchiu@axiado.com>
 + *
 + * SPDX-License-Identifier: GPL-2.0-or-later
 + */
 +
-+#ifndef AXIADO_AX3000_H
-+#define AXIADO_AX3000_H
++#ifndef CADENCE_GPIO_H
++#define CADENCE_GPIO_H
 +
-+#include "cpu.h"
-+#include "hw/intc/arm_gicv3_common.h"
-+#include "hw/char/cadence_uart.h"
 +#include "hw/core/sysbus.h"
-+#include "qemu/units.h"
++#include "qom/object.h"
 +
-+#define TYPE_AX3000_SOC "ax3000"
-+OBJECT_DECLARE_TYPE(Ax3000SoCState, Ax3000SoCClass, AX3000_SOC)
++#define TYPE_CADENCE_GPIO "cadence_gpio"
++OBJECT_DECLARE_SIMPLE_TYPE(CadenceGPIOState, CADENCE_GPIO)
 +
-+#define AX3000_DRAM0_BASE       0x3C000000
-+#define AX3000_DRAM0_SIZE       (1088 * MiB)
-+#define AX3000_DRAM1_BASE       0x400000000
-+#define AX3000_DRAM1_SIZE       (2 * GiB)
++#define CDNS_GPIO_REG_SIZE      0x400
++#define CDNS_GPIO_NUM           32
 +
-+#define AX3000_GIC_DIST_BASE    0x80300000
-+#define AX3000_GIC_DIST_SIZE    (64 * KiB)
-+#define AX3000_GIC_REDIST_BASE  0x80380000
-+#define AX3000_GIC_REDIST_SIZE  (512 * KiB)
++#define CDNS_GPIO_BYPASS_MODE           0x00
++#define CDNS_GPIO_DIRECTION_MODE        0x04
++#define CDNS_GPIO_OUTPUT_EN             0x08
++#define CDNS_GPIO_OUTPUT_VALUE          0x0c
++#define CDNS_GPIO_INPUT_VALUE           0x10
++#define CDNS_GPIO_IRQ_MASK              0x14
++#define CDNS_GPIO_IRQ_EN                0x18
++#define CDNS_GPIO_IRQ_DIS               0x1c
++#define CDNS_GPIO_IRQ_STATUS            0x20
++#define CDNS_GPIO_IRQ_TYPE              0x24
++#define CDNS_GPIO_IRQ_VALUE             0x28
++#define CDNS_GPIO_IRQ_ANY_EDGE          0x2c
 +
-+#define AX3000_UART0_BASE       0x80520000
-+#define AX3000_UART1_BASE       0x805a0000
-+#define AX3000_UART2_BASE       0x80620000
-+#define AX3000_UART3_BASE       0x80520800
++struct CadenceGPIOState {
++    /*< private >*/
++    SysBusDevice parent_obj;
 +
-+#define AX3000_TIMER_CTRL       0x8A020000
-+#define AX3000_PLL_BASE         0x80000000
-+#define CLKRST_CPU_PLL_POSTDIV_OFFSET   0x0C
-+#define CLKRST_CPU_PLL_STS_OFFSET       0x14
++    /*< public >*/
++    MemoryRegion iomem;
 +
-+enum Ax3000Configuration {
-+    AX3000_NUM_CPUS     = 4,
-+    AX3000_NUM_IRQS     = 224,
-+    AX3000_NUM_BANKS    = 2,
-+    AX3000_NUM_UARTS    = 4,
++    uint32_t bmr;
++    uint32_t dmr;
++    uint32_t oer;
++    uint32_t ovr;
++    uint32_t inpvr;
++    uint32_t imr;
++    uint32_t isr;
++    uint32_t itr;
++    uint32_t ivr;
++    uint32_t ioar;
++    qemu_irq irq;
++    qemu_irq output[CDNS_GPIO_NUM];
 +};
 +
-+typedef struct Ax3000SoCState {
-+    SysBusDevice        parent;
-+
-+    ARMCPU              cpu[AX3000_NUM_CPUS];
-+    GICv3State          gic;
-+    MemoryRegion        dram[AX3000_NUM_BANKS];
-+    MemoryRegion        pll_ctrl;
-+    CadenceUARTState    uart[AX3000_NUM_UARTS];
-+} Ax3000SoCState;
-+
-+typedef struct Ax3000SoCClass {
-+    SysBusDeviceClass   parent;
-+
-+    uint32_t            num_cpus;
-+} Ax3000SoCClass;
-+
-+enum Ax3000Irqs {
-+    AX3000_UART0_IRQ    = 112,
-+    AX3000_UART1_IRQ    = 113,
-+    AX3000_UART2_IRQ    = 114,
-+    AX3000_UART3_IRQ    = 170,
-+};
-+
-+#endif /* AXIADO_AX3000_H */
++#endif /* CADENCE_GPIO_H */
 -- 
 2.34.1
 
