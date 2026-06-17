@@ -4,85 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 452DECD98F2
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jun 2026 05:41:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E625CCD98E1
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jun 2026 05:41:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZj1W-0007Js-Oa; Wed, 17 Jun 2026 01:41:14 -0400
+	id 1wZj1d-0007MB-I0; Wed, 17 Jun 2026 01:41:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <joel.stan@gmail.com>)
- id 1wZj1U-0007J4-JV
- for qemu-devel@nongnu.org; Wed, 17 Jun 2026 01:41:12 -0400
-Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
+ id 1wZj1b-0007Le-OI
+ for qemu-devel@nongnu.org; Wed, 17 Jun 2026 01:41:19 -0400
+Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <joel.stan@gmail.com>)
- id 1wZj1T-0003uV-76
- for qemu-devel@nongnu.org; Wed, 17 Jun 2026 01:41:12 -0400
-Received: by mail-pl1-x633.google.com with SMTP id
- d9443c01a7336-2c6c57c5c07so513075ad.1
- for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 22:41:10 -0700 (PDT)
+ id 1wZj1a-0003wE-C9
+ for qemu-devel@nongnu.org; Wed, 17 Jun 2026 01:41:19 -0400
+Received: by mail-pl1-x632.google.com with SMTP id
+ d9443c01a7336-2c0b9328c4aso39842245ad.0
+ for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 22:41:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1781674870; x=1782279670; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1781674877; x=1782279677; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:sender:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Lp7xEj51Z44lN7tJkr0UCrWIcX0S3C7ow2fXXn9SBtw=;
- b=bvcWgiPv/EcCPDv2af9GlRDileMq+lWMUK7FRIi/eNhX+uvP654S0B3nYKJzPvChVy
- 7m5HRQQy7KdZK0newa9FAsHA6nDb7gTrd0jgjBPCe36+wkvomarPbHH+EBGz1IDD0elf
- EjICgTSVPrNN9vmbsdQGjRr3bw8nfu51SY95HvEX9IffGXu17o2pXTYGNvnL9n5bvX3j
- cKh6hyFADUXR5cJ30FLupFS2/6EtoVUidTfZZ17N5AbVHx9TIw338cxTuKe2PiYnlnOf
- 2mv9WAKpYwiahXfUSqvf9w0cbj63a0iH6H5qZnhDZj4HN2JXp6N11dp8Q621QyDar/Dv
- Gdpg==
+ bh=sH/6co8o4Sx4ydjWdvE8FaqBd8Mma9TOL81HqBgwXvY=;
+ b=AFY/01DPcDshAfnfx/LmKAq+Jvc2dDPp3ukYRFQnQXb65JJLGV/Kea32V/36rDHlEF
+ Ro0B/WZrXhjPVHRoAHYAPT9gxxJ0NnHzw6vAJtsF/gyoEeePiKIrNu0ebX85OZkTXDYL
+ C4IZzA68DHbFaiTUBNiBjitHmTfaGaH2/gfZEG1aNm2stGR0Ns3Pz3uAp98zSfwVVRZ+
+ aMMJ+bBehA0XtygyI+jGTFzv9pLe3bC/5vKlTOFEJU72L3WoTcCCjv+zws5XOH9Mkbp6
+ TIGYatfduqFAfltR9FslCfZq3hK1VIjCpprU3ECsdOpsIscZZkIbtaf105X3ChpYOQ6J
+ bGaw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781674870; x=1782279670;
+ d=1e100.net; s=20251104; t=1781674877; x=1782279677;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:sender:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Lp7xEj51Z44lN7tJkr0UCrWIcX0S3C7ow2fXXn9SBtw=;
- b=ghgIQid5D/S66Jx8doW4yPUR9AKeOzsLgtHbViRkiogSJRiNvRck+FsVliBJ6NK3n5
- HhCW31I/vZWKryt6z3xz5kJdFfwvafiyZXAEWXPwiZ3qdazuXofYhnwQorOEj2pxCFjX
- cYe6n5OSj71AmagUX9SQbk0bPg0XJUBkipS0tKGyaNZZ509+5KoCKJQ4M6KKRaeXqGBq
- KH0XlyzmXLX5iX5lqHQYDnCwHPLkvqw20pdx08p/zLGI6scWU2kCnzia22o8LICtVvQG
- 0K7aI3IGEk0Vquh/MKCOggA3paRKyqyeEANfzBkpOmf5lbrSaCLxmQ1AgkvOa7wbSgos
- n72A==
+ bh=sH/6co8o4Sx4ydjWdvE8FaqBd8Mma9TOL81HqBgwXvY=;
+ b=fYorXqfZrYruoVhzXalJjI6YhGn7SvA98EBPZNMhOLT9tQ4g8C6Whhnm6RQlj+A+dG
+ dGPZbJQon0J3zWsGOsgLqTClkcVWQSC94MgPS2cZHycS2zzVQQM56059zpdxP3D/vrqt
+ yFfhIVk9YOrzHi8BoaljMcrtkO5JVW8a2iK68eh+DsHCqHUAgvdMC57LRuiCOkL2mnox
+ SoslTgKuI6ktOYFNpHmSYVSFG8bh8x5ZEA6DS3OhXERlw97hoy9jyEJ/eQ1X/Rm/8Upg
+ oKdD/UMs23+GuAda/0fhkz1wF0z6I90o+i8mUcvdfmQTOud5z1GHs3/Wl28yizGli3mh
+ i3WA==
 X-Forwarded-Encrypted: i=1;
- AFNElJ8zFeIGLJ2y9vDT9IQQhm8sUXNiiJmmSiPubFwooVHDwOoC91ErirCsBDWDUN7omvUmUY16OqxK3Aqr@nongnu.org
-X-Gm-Message-State: AOJu0Yz/QVHEnDggR3nL5yotixj5ZS5sMSfb6ZxtMtLks4YzOU/H5vkc
- ctxisZVhYsGkXASofJaLGSkvpzCStG/HDzVSJN/QyvoJ989rhuxQEHhW
-X-Gm-Gg: AfdE7ckA1NLX+4Jk16DRpsWooMLeobijXwjRZBfMoZ8zL7lHTQ2lJUQcZstXLxrfaVY
- 1zcljF3S3MvvDuZ/YDBQowxg5orj554nQ6kd8JgThHeVBVZmuUdACR+lJv8yo2z/PIvODR441MK
- UYsCYso7UoTY+faA8uJsKfgVsGCxSryYt5bSwQ6uY2ZUOFQaAdERzQMDjvpSLLqIHL8IjOJVN2L
- Jt5PvCkvYXaFAVRGTV00KSBPnUNFd7BrBv7U9jNuCDMjrdgO4PcvEKQKpYh+BdWQjsvQRHeeD/C
- cdhrYuUaBBbqWWX7WM2pMMdctMPELV7OgWpjP4QqRdHfHMHhlP6biVoNfYjm5RG7DNMIj8+IFgg
- AiQWJCslnxbjdx+dVoVpSAZ6z6ypbr70PLT/G6Al27rz6/F2FIqyZUzunMUzU1An1mdHM4NDPA4
- rBw7MlcSHeUdVwPJrf94TNkpIVe5omiJRkLee7IfwpqupxEFj/52ffj4hT7wiSTL6QXXaESbkQG
- CHitQd51t4NsHl1YJlgrUFjjtbXBBYDDWPRHaEJaIs=
-X-Received: by 2002:a17:903:2411:b0:2c0:ca93:1303 with SMTP id
- d9443c01a7336-2c6bbf93604mr20397155ad.6.1781674869654; 
- Tue, 16 Jun 2026 22:41:09 -0700 (PDT)
+ AFNElJ/QPClBU4jgFx+ADuhiHhk9w0dVHil7252nPur/PiGubTmArWpkPgpUGKrWua4nJoeYkxLnhm+bMmHn@nongnu.org
+X-Gm-Message-State: AOJu0YyOWywLJGe/Hu+AdjHljLsIMwgyhkqZHG+agmk6ischWe+z7ns0
+ YBQ7D5wEIrsEiS/de4fFkrwsom4LtTVJgPYXjZEsIkzQ+cSQ9/vGG9iPPEH34BYI
+X-Gm-Gg: AfdE7cl7fJX006rkNJl2UKXhb6xdUYRTozbsl7hbMr8wNWmNwdTZVR7HyyaoZRpgNjV
+ SCWv34e4n1fkPaS8pzAdtxI4onU7TgmzsVhVKFYUxTex/WIaPaJS7/KdLJI5ksdVZsnD0fxDLKo
+ FXIJuNeM+ft1ec1WZmrWPQRArS/EWrGdxLRIko2z90G7piWvzBW5coPN6gJYK3khVoD7RBL/w6Q
+ b+B3kUl5tbtPhduDil26JrXZCEA7jc9xVtMq9Co7pRtBhM3BUPViTAPy7eLFcryF1fNao7KPV2a
+ AcfD5Emr7g19jGY3Mijy3v9GqT2esW+6ehfA0G2JUbZ2UFAfyfgTxPdwXKGtkHZO1JQACjxQ9mR
+ VlqYpyBwVe8S32g+1MgeSlZBD8qj4kXNn5B09SBeMKvT9A0zOZNOYpHI48/mxQAmK/8kYdbDOjT
+ SNt7zI7zrI31yo5hCRUh4EDBVnyaqI3Ugh0fokSPOOMmz8dk6zTCvYBKBng/JuGgXSnXG60cyqR
+ 7mcZ66ZIm2ZjWJNEI27fje3O/41nprwa/d5XrsBtag=
+X-Received: by 2002:a17:902:e550:b0:2c6:6926:8968 with SMTP id
+ d9443c01a7336-2c6bc208e20mr23353475ad.20.1781674875433; 
+ Tue, 16 Jun 2026 22:41:15 -0700 (PDT)
 Received: from donnager-debian.. ([45.124.203.15])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2c433078264sm149294725ad.65.2026.06.16.22.41.07
+ d9443c01a7336-2c433078264sm149294725ad.65.2026.06.16.22.41.12
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 16 Jun 2026 22:41:09 -0700 (PDT)
+ Tue, 16 Jun 2026 22:41:15 -0700 (PDT)
 From: Joel Stanley <joel@jms.id.au>
 To: alistair.francis@wdc.com,
  Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
  Anton Johansson <anjo@rev.ng>
 Cc: qemu-riscv@nongnu.org,
 	qemu-devel@nongnu.org
-Subject: [PATCH 1/3] target/riscv: Avoid NULL deref in IMSIC CSR write
-Date: Wed, 17 Jun 2026 15:09:26 +0930
-Message-ID: <20260617054034.1020724-2-joel@jms.id.au>
+Subject: [PATCH 3/3] tests/functional/riscv64: Add virt machine AIA boot test
+Date: Wed, 17 Jun 2026 15:09:28 +0930
+Message-ID: <20260617054034.1020724-4-joel@jms.id.au>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260617054034.1020724-1-joel@jms.id.au>
 References: <20260617054034.1020724-1-joel@jms.id.au>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
- envelope-from=joel.stan@gmail.com; helo=mail-pl1-x633.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
+ envelope-from=joel.stan@gmail.com; helo=mail-pl1-x632.google.com
 X-Spam_score_int: -16
 X-Spam_score: -1.7
 X-Spam_bar: -
@@ -106,49 +106,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-rmw_xireg_aia() and rmw_xtopei() were changed to store the IMSIC
-callback's value in a local before passing it back to the caller.
-For write only CSR accesses that pointer is NULL, causing a crash when
-guest programs write to xireg or xtopei, such as when the guest sets up
-the IMSIC.
+Add coverage of the riscv64 virt machine's Advanced Interrupt
+Architecture models. With this the APLIC and IMSIC models are used by
+Linux, catching regressions.
 
-This only happens when setting aia=aplic-imsic so none of the existing
-boot tests caught it.
+This test requires a kernel >= 6.10, as AIA drivers were added to Linux
+in 6.10.
 
-Fix it by guarding the pointer dereference as done for other CSRs.
+Boot time is ~5s on a laptop.
 
-Fixes: 63469ad75dcc ("target/riscv: Fix arguments to board IMSIC emulation callbacks")
 Signed-off-by: Joel Stanley <joel@jms.id.au>
 ---
- target/riscv/csr.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ tests/functional/riscv64/test_tuxrun.py | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-index ec931a8c3ddf..4502f2ab4788 100644
---- a/target/riscv/csr.c
-+++ b/target/riscv/csr.c
-@@ -2732,7 +2732,9 @@ static RISCVException rmw_xireg_aia(CPURISCVState *env, int csrno,
-                                     AIA_MAKE_IREG(isel, priv, virt, vgein,
-                                                   riscv_cpu_mxl_bits(env)),
-                                     &wide_val, new_val, wr_mask);
--            *val = wide_val;
-+            if (val) {
-+                *val = wide_val;
-+            }
-         }
-     } else {
-         isel_reserved = true;
-@@ -3008,7 +3010,9 @@ static RISCVException rmw_xtopei(CPURISCVState *env, int csrno,
-                     AIA_MAKE_IREG(ISELECT_IMSIC_TOPEI, priv, virt, vgein,
-                                   riscv_cpu_mxl_bits(env)),
-                     &wide_val, new_val, wr_mask);
--    *val = wide_val;
-+    if (val) {
-+        *val = wide_val;
-+    }
+diff --git a/tests/functional/riscv64/test_tuxrun.py b/tests/functional/riscv64/test_tuxrun.py
+index 43d1242be52b..6203a45060ce 100755
+--- a/tests/functional/riscv64/test_tuxrun.py
++++ b/tests/functional/riscv64/test_tuxrun.py
+@@ -41,6 +41,13 @@ def test_riscv64_maxcpu(self):
+         self.common_tuxrun(kernel_asset=self.ASSET_RISCV64_KERNEL,
+                            rootfs_asset=self.ASSET_RISCV64_ROOTFS)
  
- done:
-     if (ret) {
++    def test_riscv64_aia(self):
++        self.set_machine('virt')
++        self.vm.set_machine('virt,aia=aplic-imsic')
++        self.cpu='max'
++        self.common_tuxrun(kernel_asset=self.ASSET_RISCV64_KERNEL,
++                           rootfs_asset=self.ASSET_RISCV64_ROOTFS)
++
+     def test_riscv64_rv32(self):
+         self.set_machine('virt')
+         self.cpu='rv32'
 -- 
 2.47.3
 
