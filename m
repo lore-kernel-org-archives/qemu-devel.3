@@ -4,118 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61027CD98EE
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jun 2026 07:14:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28D89CD98E2
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jun 2026 07:14:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZkTA-0003UH-HW; Wed, 17 Jun 2026 03:13:52 -0400
+	id 1wZkTV-0003cj-Pg; Wed, 17 Jun 2026 03:14:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <saif.abrar@linux.ibm.com>)
- id 1wZkT5-0003Tt-DQ; Wed, 17 Jun 2026 03:13:48 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1wZkTT-0003Z1-6Y; Wed, 17 Jun 2026 03:14:11 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <saif.abrar@linux.ibm.com>)
- id 1wZkT3-000600-KE; Wed, 17 Jun 2026 03:13:47 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65GLmfBu2746770; Wed, 17 Jun 2026 07:13:36 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=YPOkva
- kNnFpbhL5tfEV2NAqN7efM3ebQ2v16CDO+ly8=; b=i52fCwceaRCx4sAeE8iqR4
- 7wuYuQagnZpDc4m/TW4DVrHhZOqsaEXxvoDKdnVN4BU514M17gsbFQwOg64VWyyZ
- NC+mPBqeX2CEBCVQZ/ZJWaR/5vlJxY/FfXk0rw2h6KQ8Bu2+Z6BuFEMtNZhMfmXG
- y66dR/vyM7cTp+0A7koJjXzCyl5VZulPDao7N30v979LhKpb2HNXVEqI/JtjMOsX
- YRrcb4ko3Jlvbesj2XoYmdTrPwckMx+zSlpIl48inythWLb88Wx+S1ww3BiJiWjj
- 9+/+AvA0w7LYt3EtLxNHWiM1Sspk3c9m9HOoJRszorYfW2yZdAsrKOKP10O8pSzg
- ==
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4eueqthpqk-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 17 Jun 2026 07:13:35 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 65H74drS012583;
- Wed, 17 Jun 2026 07:13:34 GMT
-Received: from smtprelay07.dal12v.mail.ibm.com ([172.16.1.9])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4eudva20je-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 17 Jun 2026 07:13:34 +0000 (GMT)
-Received: from smtpav03.dal12v.mail.ibm.com (smtpav03.dal12v.mail.ibm.com
- [10.241.53.102])
- by smtprelay07.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 65H7DXDi56885542
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 17 Jun 2026 07:13:33 GMT
-Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 55C315803F;
- Wed, 17 Jun 2026 07:13:33 +0000 (GMT)
-Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 6294E5805A;
- Wed, 17 Jun 2026 07:13:28 +0000 (GMT)
-Received: from [9.43.52.172] (unknown [9.43.52.172])
- by smtpav03.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Wed, 17 Jun 2026 07:13:28 +0000 (GMT)
-Message-ID: <4fd22724-a0d7-441f-bb41-4adbfeac74ba@linux.ibm.com>
-Date: Wed, 17 Jun 2026 12:43:26 +0530
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1wZkTQ-00063H-N9; Wed, 17 Jun 2026 03:14:10 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
+ t=1781680442; bh=TKP66f0lHc54gTy60FXw6p4cpGq4pXC75DBqNM+heYs=;
+ h=Date:Subject:To:Cc:References:From:In-Reply-To;
+ b=UmTKy0U8MSourFRlNfvp1yXP65Re5UzozCTG/BPdbTzZCnz+bUzenx3rMOeyIjI8a
+ Xc8eoFUJzQ7okE9MBf1DQ+65OpgchBgjOQzYyw2H7m4VmAx18qxKQ2S5DwtsB0qPyk
+ 8fyQErrXGTzfemfFNnN5w+9NkuNuYJxePfM1fFBOMcTZDB2RcmhL1YzGCHitdZzVNj
+ 6zmnP8c+9px00k0U0UH20+K60IUtdyixNBmKLhtqCfugkzgq+mLP/Oz8aA52Ptxwl+
+ OvwDDEBnv6HGDQci6YMNaDEqB4Zs458cXCQdyPE3t9jdextCBe/FrTj8oXiNWl9ZQ6
+ FFji5lJWkxUsA==
+Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by isrv.corpit.ru (Postfix) with ESMTP id 7BDD51B8201;
+ Wed, 17 Jun 2026 10:14:02 +0300 (MSK)
+Message-ID: <2ef3734d-30e0-429d-9d8c-7b755759cf20@tls.msk.ru>
+Date: Wed, 17 Jun 2026 10:14:04 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 8/9] pnv/phb4: Implement IODA PCT table
-To: Jishnu Warrier <jishnuvw@linux.ibm.com>
-Cc: qemu-ppc@nongnu.org, qemu-devel@nongnu.org, clg@kaod.org,
- npiggin@gmail.com, fbarrat@linux.ibm.com, mst@redhat.com,
- marcel.apfelbaum@gmail.com, cohuck@redhat.com, pbonzini@redhat.com,
- thuth@redhat.com, lvivier@redhat.com, danielhb413@gmail.com,
- harshpb@linux.ibm.com, adityag@linux.ibm.com
-References: <20260210134110.1515322-1-saif.abrar@linux.vnet.ibm.com>
- <20260305060923.3753402-1-saif.abrar@linux.vnet.ibm.com>
- <20260305060923.3753402-9-saif.abrar@linux.vnet.ibm.com>
- <wphhqba6a5d73fcvxsfk47gonvxobpn2ba6v4zj7xshhlp3msi@zvm2luq7gv2g>
-Content-Language: en-US
-From: Saif Abrar <saif.abrar@linux.ibm.com>
-In-Reply-To: <wphhqba6a5d73fcvxsfk47gonvxobpn2ba6v4zj7xshhlp3msi@zvm2luq7gv2g>
+Subject: Re: [PULL 00/83] riscv-to-apply queue
+To: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ alistair23@gmail.com, qemu-devel@nongnu.org
+Cc: Alistair Francis <alistair.francis@wdc.com>,
+ qemu-stable <qemu-stable@nongnu.org>, Anton Johansson <anjo@rev.ng>
+References: <20260616100527.1939565-1-alistair.francis@wdc.com>
+ <b72bbbc2-2195-44e5-a2b8-359aaba21091@tls.msk.ru>
+ <b0a93da1-2a32-4d57-8958-04327b6742c1@oss.qualcomm.com>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <b0a93da1-2a32-4d57-8958-04327b6742c1@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-ORIG-GUID: uc84JY_XItSgCemuKqcVnC-far1zP5yR
-X-Proofpoint-GUID: -CPezphM2reppwzxOeFD8T6XmPZTuSMF
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjE3MDA2MiBTYWx0ZWRfX/2G3x9vEs7Ay
- CkVMKcBqVyQjcgxmJsnvpU2aulm8iDZtxWBtewm8zi/dqS+vmAS14CNK9C3eOfL0UXX3LmrXH4x
- dFfFsIa2SLVGzTYSeLPJALPC63gUKoRgn8CSb0u77zfpiXg2dqvU/7+pdMYx2YKzI1+xGiWywfg
- hCIiD/MSkADzMYTs+e5aDKu0flzr2RhtKifWtrPyMHStQYjv13lxDjr+522pYIjL1HwwwTwCup0
- 8cTAJ5NGm6k94vywKJL0R/0cGymfQmoGFWcB/aA/Eg+qLHUuHh0lcTRbEghd5cBq7bXljhWBtYm
- iCqs6kSwv6irlwqLAjm/Gkv9lNY3YWxHcEGOVX7kSogPKKfY7F5Dhx+fS/GjsXX6xgoLb5eM3cf
- xztEta9D+sY7YYE0YdV1zFGMinhHtRDYoJIZXjLUe0J8e2HAJSOorIIQgbUyVi8tzPYSWjEj72U
- l9W/s1Ajglqm0+CxCcw==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjE3MDA2MiBTYWx0ZWRfXwqeOQ20DQnRn
- bUhlKT0opOhcxNjL3hQ4dqC91x28NYBGMoSYq/oG0TK+gZaiLEY6Xv+9zeG4R8endNRPXcwIdG3
- NKo/Om2UN04vsRYDw1MStV/npACzqwM=
-X-Authority-Analysis: v=2.4 cv=B4KJFutM c=1 sm=1 tr=0 ts=6a32491f cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
- a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=VnNF1IyMAAAA:8
- a=aow-egSQAAAA:8 a=oaL83f0BrliydTA493kA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=gFNbaldVC-z-bsjSTzMo:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-16_05,2026-06-16_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 adultscore=0 lowpriorityscore=0 suspectscore=0
- priorityscore=1501 clxscore=1015 phishscore=0 spamscore=0 bulkscore=0
- impostorscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2606170062
-Received-SPF: pass client-ip=148.163.156.1;
- envelope-from=saif.abrar@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -132,108 +113,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 16.06.2026 23:12, Daniel Henrique Barboza wrote:
+...
+>>> Daniel Henrique Barboza (24):
+>>>        target/riscv/tcg: disable svpbmt if satp_mode < sv39
+>>>        target/riscv/csr.c: do not allow mstatus MPV/GVA writes
+>>>        target/riscv/csr.c: fix mstatus.UXL reserved value
+>>>        disas/riscv.c: add 'cbo' insns to disassembler
+>>>        target/riscv/insn_trans/trans_rvzicbo.c.inc: save opcode before helpers
+>>>        target/riscv/cpu_helper.c: fault with reserved PTE.PBMT val
+>>>        target/riscv/cpu_helper.c: allow LOAD_ADDR_MIS promotion to AMO fault
+>>>        target/riscv/cpu_helper.c: add PMA access fault
+>>>        target/riscv/tcg: disable svnapot if satp_mode < sv39
+>>>        disas/riscv.c: fix inst_length()
+>>>        hw/riscv/virt.c: fix 'iommu-map' FDT entry
+>>>        hw/riscv/sifive_u.c: add a FDT phandle to cpu-intc
+>>>        hw/riscv: add fdt-common helper
+>>>        hw/riscv/numa: make numa_enabled() public
+>>>        hw/riscv: add create_fdt_socket_memory() helper
+>>>        hw/riscv/sifive_u.c: add intc_phandles array
+>>>        hw/riscv/spike.c: add intc_phandles array
+>>>        hw/riscv: add create_fdt_clint() helper
+>>>        hw/riscv/sifive_u.c: add cpu-map, cluster and core DTs
+>>>        hw/riscv: add fdt_create_cpu_socket_subnode() helper
+>>>        hw/riscv: add create_fdt_socket_cpus()
+>>>        hw/riscv/spike.c: use create_fdt_socket_cpus()
+>>>        hw/riscv/fdt_common.c: create create_fdt_socket_cpu_internal()
+>>>        hw/riscv: add create_fdt_socket_cpu_sifive()
 
-On 11-05-2026 12:54, Jishnu Warrier wrote:
-> On Thu, Mar 05, 2026 at 12:09:10AM -0600, Saif Abrar wrote:
->> IODA PCT table (#3) is implemented
->> without any functionality, being a debug table.
->>
->> Signed-off-by: Saif Abrar <saif.abrar@linux.vnet.ibm.com>
->> Reviewed-by: Cédric Le Goater <clg@kaod.org>
->> ---
->> v3: Updates for coding guidelines.
->>
->>   hw/pci-host/pnv_phb4.c              | 6 ++++++
->>   include/hw/pci-host/pnv_phb4.h      | 2 ++
->>   include/hw/pci-host/pnv_phb4_regs.h | 1 +
->>   3 files changed, 9 insertions(+)
->>
->> diff --git a/hw/pci-host/pnv_phb4.c b/hw/pci-host/pnv_phb4.c
->> index a6fa578e85..254bbe4089 100644
->> --- a/hw/pci-host/pnv_phb4.c
->> +++ b/hw/pci-host/pnv_phb4.c
->> @@ -264,6 +264,10 @@ static uint64_t *pnv_phb4_ioda_access(PnvPHB4 *phb,
->>           mask = phb->big_phb ? PNV_PHB4_MAX_MIST : (PNV_PHB4_MAX_MIST >> 1);
->>           mask -= 1;
->>           break;
->> +    case IODA3_TBL_PCT:
->> +        tptr = phb->ioda_PCT;
->> +        mask = 7;
-> According to PHB5 spec (lines 13568-13580):
-> - Small PHB: 64 entries (mask should be 63)
-> - Big PHB: 128 entries (mask should be 127)
-> - Each entry has 2 parts, so total is 128/256
+>  From my patches I believe you can pick all the patches that have a "Resolves"
+> tag.  All of them are fixing stuff introduced several releases ago that people
+> on Gitlab found.  Should apply without too much hassle in stable 10.0.x and
+> above.
 
+This makes sense.
 
-Updated.
+You used Fixes at least once, instead of resolves, in "target/riscv/csr.c:
+fix mstatus.UXL reserved value", but that's Ok.
 
+I'm NOT picking up
 
->
->> +        break;
->>       case IODA3_TBL_RCAM:
->>           mask = phb->big_phb ? 127 : 63;
->>           break;
->> @@ -362,6 +366,8 @@ static void pnv_phb4_ioda_write(PnvPHB4 *phb, uint64_t val)
->>       /* Handle side effects */
->>       switch (table) {
->>       case IODA3_TBL_LIST:
->> +    case IODA3_TBL_PCT:
->> +        /* No action for debug tables */
->>           break;
->>       case IODA3_TBL_MIST: {
->>           /* Special mask for MIST partial write */
->> diff --git a/include/hw/pci-host/pnv_phb4.h b/include/hw/pci-host/pnv_phb4.h
->> index bea0684724..6bb75edeef 100644
->> --- a/include/hw/pci-host/pnv_phb4.h
->> +++ b/include/hw/pci-host/pnv_phb4.h
->> @@ -65,6 +65,7 @@ OBJECT_DECLARE_SIMPLE_TYPE(PnvPHB4RootBus, PNV_PHB4_ROOT_BUS)
->>   #define PNV_PHB4_MAX_LSIs          8
->>   #define PNV_PHB4_MAX_INTs          4096
->>   #define PNV_PHB4_MAX_MIST          (PNV_PHB4_MAX_INTs >> 2)
->> +#define PNV_PHB4_MAX_PCT           128
-> Question: Is PCT table 8 or 128 entries? Check PHB5 spec.
-> - If 8 entries: mask=7 is correct
-> - If 128 entries: mask should be 127
+  target/riscv/tcg: disable svnapot if satp_mode < sv39
+  target/riscv/tcg: disable svpbmt if satp_mode < sv39
 
+to 10.0.x because it doesn't have max_satp_mode field in RISCVCPUConfig
+(it misses commit 357ce8171a9c75 "target/riscv: cpu: store max SATP mode
+as a single integer").
 
-Updated.
+Thank you!
 
-
->
-> Thanks,
-> Jishnu
->
->>   #define PNV_PHB4_MAX_MMIO_WINDOWS  32
->>   #define PNV_PHB4_MIN_MMIO_WINDOWS  16
->>   #define PNV_PHB4_NUM_REGS          (0x3000 >> 3)
->> @@ -138,6 +139,7 @@ struct PnvPHB4 {
->>       /* On-chip IODA tables */
->>       uint64_t ioda_LIST[PNV_PHB4_MAX_LSIs];
->>       uint64_t ioda_MIST[PNV_PHB4_MAX_MIST];
->> +    uint64_t ioda_PCT[PNV_PHB4_MAX_PCT];
->>       uint64_t ioda_TVT[PNV_PHB4_MAX_TVEs];
->>       uint64_t ioda_MBT[PNV_PHB4_MAX_MBEs];
->>       uint64_t ioda_MDT[PNV_PHB4_MAX_PEs];
->> diff --git a/include/hw/pci-host/pnv_phb4_regs.h b/include/hw/pci-host/pnv_phb4_regs.h
->> index c1d5a83271..e30adff7b2 100644
->> --- a/include/hw/pci-host/pnv_phb4_regs.h
->> +++ b/include/hw/pci-host/pnv_phb4_regs.h
->> @@ -486,6 +486,7 @@
->>   
->>   #define IODA3_TBL_LIST          1
->>   #define IODA3_TBL_MIST          2
->> +#define IODA3_TBL_PCT           3
->>   #define IODA3_TBL_RCAM          5
->>   #define IODA3_TBL_MRT           6
->>   #define IODA3_TBL_PESTA         7
->> -- 
->> 2.47.3
->>
->>
-
-Thanks,
-
-Saif
-
-
+/mjt
 
