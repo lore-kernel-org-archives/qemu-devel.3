@@ -4,112 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79428CD98F6
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jun 2026 11:19:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA0C5CD98E2
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jun 2026 11:20:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZoHv-0003sf-Oj; Wed, 17 Jun 2026 07:18:31 -0400
+	id 1wZoJR-0004MD-VS; Wed, 17 Jun 2026 07:20:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1wZoHt-0003rk-QG
- for qemu-devel@nongnu.org; Wed, 17 Jun 2026 07:18:29 -0400
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1wZoJI-0004LA-KK
+ for qemu-devel@nongnu.org; Wed, 17 Jun 2026 07:19:58 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1wZoHr-0002I3-HJ
- for qemu-devel@nongnu.org; Wed, 17 Jun 2026 07:18:29 -0400
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1wZoJG-0002jn-K9
+ for qemu-devel@nongnu.org; Wed, 17 Jun 2026 07:19:56 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781695105;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
+ s=mimecast20190719; t=1781695192;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=MJa/v3fzWHcqTS+sv8/Tv9pO001GXOn0I4sYw8p6i98=;
- b=VtGi3O/dGYO4j7Fk8ZWHxqQcq/VH+9zy2qXHQTZqVR45zBFO3tNAa1oe1W02PKzV7XPocK
- l0KygbHcu2PKSFEXCY4OW6TYxl/t5TfW2AUXffobpa1XgnJpJqYLyWrpyaZyUvV9AeBAtv
- zQ9idOqY/X7IunRVWhBbUQ55dZhJ+1U=
+ bh=BZAoga0oC+iVKdLbNIEPMkEcyeRGCdZjKHBJ6qJIXT4=;
+ b=gy1Nlcbh7hBBsegUKzT23sc7SgBt6xOwxg43vN36g7uCsu/30i14rft25slGHjEujS5CSS
+ qmKRRtqn7PErb3WMCslThHxqN3N/cDb6WGFJlsN4ruM/cjOCbPUecyAPdWDonODcaYFyca
+ sM3vJ7NLt9zEIUNwaNL/tkzJsBLzAGc=
 Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
  [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-532-5Mx-lJ3ZOPW0RNE2FM-0Rg-1; Wed, 17 Jun 2026 07:18:24 -0400
-X-MC-Unique: 5Mx-lJ3ZOPW0RNE2FM-0Rg-1
-X-Mimecast-MFC-AGG-ID: 5Mx-lJ3ZOPW0RNE2FM-0Rg_1781695103
+ us-mta-360-hcOW016kOLuMYsNBb1_9PQ-1; Wed, 17 Jun 2026 07:19:48 -0400
+X-MC-Unique: hcOW016kOLuMYsNBb1_9PQ-1
+X-Mimecast-MFC-AGG-ID: hcOW016kOLuMYsNBb1_9PQ_1781695188
 Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-461a5d02540so1072867f8f.3
- for <qemu-devel@nongnu.org>; Wed, 17 Jun 2026 04:18:24 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781695103; x=1782299903;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ ffacd0b85a97d-46250b59ed5so561201f8f.2
+ for <qemu-devel@nongnu.org>; Wed, 17 Jun 2026 04:19:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1781695187; x=1782299987; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:from:to:cc:subject:date
  :message-id:reply-to;
- bh=MJa/v3fzWHcqTS+sv8/Tv9pO001GXOn0I4sYw8p6i98=;
- b=X//LLtLBM1r3iRbI0LtjPpShHF1aJ62tXEIcxuPIV9fLdXstJxdNFSkaCRIkDPZ9DP
- +Hndwe+iKnkagpLm+8R36WTS4SZdRK7sgJFBX1vvn9awNK2cgHRUsSH6ZFeCsDoxcjX7
- E8v/sNs4j8Rc2toz03atKp6zdTpuEvyEE3Fxy3D2L6AnrMToq2MnnZshUMGBES5Vchn9
- p3k2rThEkh4GolCCc48Ui7dyUIG8J+iGdk11m0NRNrm0xO86Y0P1UryzQe/1F+zfK+pp
- 9oopjDkYU1tiSzXE/qL8oFCyWLJvem30CNykSQJzIRdNGHQ2HOWnHXkmoQYmRVu1tidC
- Iy+w==
-X-Forwarded-Encrypted: i=1;
- AFNElJ9edOstMkiQddd49GWZMtSHf7ikvWgRmyDfEzddBVs3TTFvULw7CXP3OP4cZ2hFo8VqSYyIZjQVJZRC@nongnu.org
-X-Gm-Message-State: AOJu0YyEcj53QgytBpm8BA0ga70BvIIpmbqgdShzough+pmJ2hBu/Mqt
- o1ZX6BsCjWY1tLL+HzJRmI1BcuEVRXShFeY4hizZGDTn6HB6OB1qpfjWpIqstybdykx7llU5iAt
- 8W6Z/X2G5jfiudFRdB3lVaWKvwW3wa90xHiFi2B3U2RFxgGnRDnQI7Ouf
-X-Gm-Gg: AfdE7cl7EnwJcg+H5NYxYqAiFWgRMVenVzxdwLo5vu/k97nVG5p7MJ9R5DgL4m5USmo
- RArgkYZd9yztTlZNUmz3T5NY6EDbQA81C/YVBhUng9gjlHWBspU9b+dVa0eTX18nbf/wM7qzPyc
- YCcG9ci0Zb7oyPkukiFRo8byxTzbrU4k1vZbMLuzCxq9DmGD+EFdsBFS/6I+s3xJWvYjc8eqa35
- kjywBk5v3mL8n2FLZjdufX5kR7YJ7RXNzP4/taZ7Xll43s84ogL5ffqgK8cBtGFDEzkLrQRjXhe
- 0dh31wNS9WdnhVnWURNbIW12MK9Uo4dZSM7jh4akrkAzQTW9byGmKga20ScI6T+WHPYCC4eh7Pf
- KGsZjDniTPmL5CHc/lX0jvqcoMQ7FODtNJRHGuDIc2byVOWj6/i47fJlEDNE=
-X-Received: by 2002:a5d:4e47:0:b0:460:3234:2940 with SMTP id
- ffacd0b85a97d-46239b1ed67mr4872319f8f.43.1781695103101; 
- Wed, 17 Jun 2026 04:18:23 -0700 (PDT)
-X-Received: by 2002:a5d:4e47:0:b0:460:3234:2940 with SMTP id
- ffacd0b85a97d-46239b1ed67mr4872208f8f.43.1781695102270; 
- Wed, 17 Jun 2026 04:18:22 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
- ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4606f2ce361sm50546429f8f.31.2026.06.17.04.18.20
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 17 Jun 2026 04:18:21 -0700 (PDT)
-Message-ID: <44746edc-2cdb-4fc3-914a-da7c3458c866@redhat.com>
-Date: Wed, 17 Jun 2026 13:18:19 +0200
+ bh=BZAoga0oC+iVKdLbNIEPMkEcyeRGCdZjKHBJ6qJIXT4=;
+ b=ntSv2ZF1KWF5JFV6RBkplYOAPWw021Z3rQnvdxUWW+AOAZEnbOvKCGMHeeJ369nOpl
+ ECVcnn0/i1a1Wrn+XSozI4jGjcysPTbsFYx5IHRSqWv1dCOaUv2lmKSODfeKhALJRCAz
+ H9et2w04dufhOCQ2bdI1airTIGMPzOvU4zmiitrSH6cPDnwMx7Xb+FXTGRsJBpRgXgxL
+ N5h/GNv2DYnztcDyG5ZBh2c62cAvxK8XnAhMbmLRg1LJGW1W8o+tP0HS6Jf6Nl5HGVqt
+ 0LLPgwpvoqa602YfWD2D8OC6suCa1UBrEmlr2fQ9+Rc9NGBzdYrQ0HlAgz9iRgyM7w2q
+ 63sg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1781695187; x=1782299987;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=BZAoga0oC+iVKdLbNIEPMkEcyeRGCdZjKHBJ6qJIXT4=;
+ b=KkZ6VO0LhMLhJOB3HwBQPzzvsyFR+yRYRBMdz0EGw4ugT4snzWg/G1PMjlCCKO/cPZ
+ gUvxTM1pYYSm/9jZfJ8kVHxrJuVf6KHpTMkz4JLsyQC0fyPcLvOBwlNnsnLITYVl6gXZ
+ xCM6IUFHnDw1QqEifBiK+YE6Vz4CuqzFPVrdRBY5lWMSjjfFtun9mgpw+/nXxsFeVB8I
+ hWfCJznTl+t0mWd5fLYjQIzA1S1qR1SIuSO4AcNGGj2ZtXpgMFtC0USPKyNBrjlyR6qa
+ BgFjp4cSHhWCRF9gixotz7gYWy5a5h7sK/wXUu0RlJvSi+IkYPB+Y0Mcw2LCSIwvSIoS
+ a+8w==
+X-Gm-Message-State: AOJu0YwkiahGVgv6Ad/0XDqImSv0wOW1SYTdK+w8Qv9olYqY4cIM9krh
+ uzGH91KU8Khh+N/Q8VaAyaM3PaYq0r7IgSgKnpUhek26q/XfxDO3Btk9HsO31iBehmIWDiuWzKl
+ 7zZJrzUrC1zCmt3xWl32Dq+HGvUPqpYmsUutb3Ol7sd9o0PcYHsxozdFp
+X-Gm-Gg: AfdE7cmH4fLnVXJ+M6QML46IK+E0GQYeoDFyYkY2+h2ce54tZwTCwVKYfmmxcg/YCXl
+ k2+4NIqJJpmiEsE9dl/tto1DpDZqCAu5wr0Bt0AEyh03LuKYFsX20IfpWnBOfeLnjrjIBb0F4ip
+ OK7vUEBvuBx1P31/GA3mj598qy+PC8KWnSLb2hCmMf+UJOZgTFxPBzVw3zXRXr6YeDV4qK84kuK
+ gCGlXqqmXetfimxpt5cOJ5E4ZTALwxNZt0l0cwbCDrhwHdNBLpYbpLClNz1TWVvdHDDwLCfO87E
+ ff+4hW17Kt9P55WOtWXjzfrstOpAOaqqBKHdwC1+Kl3wwmoVceNBM4O2y1klM3gsO9MBSUo=
+X-Received: by 2002:a05:6000:2683:b0:45e:de42:6e90 with SMTP id
+ ffacd0b85a97d-462386f3fbemr6237055f8f.37.1781695187617; 
+ Wed, 17 Jun 2026 04:19:47 -0700 (PDT)
+X-Received: by 2002:a05:6000:2683:b0:45e:de42:6e90 with SMTP id
+ ffacd0b85a97d-462386f3fbemr6237015f8f.37.1781695187208; 
+ Wed, 17 Jun 2026 04:19:47 -0700 (PDT)
+Received: from imammedo ([213.175.37.14]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-461eaa0d1c7sm9798088f8f.7.2026.06.17.04.19.46
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 17 Jun 2026 04:19:46 -0700 (PDT)
+Date: Wed, 17 Jun 2026 13:19:45 +0200
+From: Igor Mammedov <imammedo@redhat.com>
+To: fanhuang <FangSheng.Huang@amd.com>
+Cc: <qemu-devel@nongnu.org>, <david@kernel.org>, <gourry@gourry.net>,
+ <philmd@mailo.com>, <Zhigang.Luo@amd.com>, <Lianjie.Shi@amd.com>
+Subject: Re: [PATCH v12 0/4] hw/mem: add sp-mem device for Specific Purpose
+ Memory
+Message-ID: <20260617131945.5d7cbc5f@imammedo>
+In-Reply-To: <20260616090808.3047939-1-FangSheng.Huang@amd.com>
+References: <20260616090808.3047939-1-FangSheng.Huang@amd.com>
+X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v6 00/17] kvm/arm: Introduce a customizable aarch64
- KVM host model
-Content-Language: en-US
-To: Khushit Shah <khushit.shah@nutanix.com>
-Cc: "eric.auger.pro@gmail.com" <eric.auger.pro@gmail.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
- "kvmarm@lists.linux.dev" <kvmarm@lists.linux.dev>,
- "peter.maydell@linaro.org" <peter.maydell@linaro.org>,
- Shaju Abraham <shaju.abraham@nutanix.com>,
- "yangjinqian1@huawei.com" <yangjinqian1@huawei.com>,
- "cohuck@redhat.com" <cohuck@redhat.com>,
- "richard.henderson@linaro.org" <richard.henderson@linaro.org>,
- "sebott@redhat.com" <sebott@redhat.com>,
- "skolothumtho@nvidia.com" <skolothumtho@nvidia.com>,
- "philmd@linaro.org" <philmd@linaro.org>, "maz@kernel.org" <maz@kernel.org>,
- "oliver.upton@linux.dev" <oliver.upton@linux.dev>,
- "pbonzini@redhat.com" <pbonzini@redhat.com>,
- "armbru@redhat.com" <armbru@redhat.com>,
- "berrange@redhat.com" <berrange@redhat.com>,
- "abologna@redhat.com" <abologna@redhat.com>,
- "jdenemar@redhat.com" <jdenemar@redhat.com>
-References: <20260616132625.1732031-1-eric.auger@redhat.com>
- <6A6A8465-A9CD-4FF4-AD4D-9A5231BD5062@nutanix.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <6A6A8465-A9CD-4FF4-AD4D-9A5231BD5062@nutanix.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
@@ -129,226 +116,130 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Tue, 16 Jun 2026 17:08:04 +0800
+fanhuang <FangSheng.Huang@amd.com> wrote:
 
+> This series adds a TYPE_MEMORY_DEVICE subclass `sp-mem` for boot-time
+> SOFT_RESERVED guest memory, following the direction from the v7
+> thread [1] and the v8 / v9 / v10 / v11 reviews [2][3][4][5].
 
-On 6/17/26 11:31 AM, Khushit Shah wrote:
->
->> On 16 Jun 2026, at 6:46 PM, Eric Auger <eric.auger@redhat.com> wrote:
->>
->> !-------------------------------------------------------------------|
->>  CAUTION: External Email
->>
->> |-------------------------------------------------------------------!
->>
-> Hi Eric, 
->
-> Thanks for the v6.
->
->> This series enhances the current host KVM model with capability to
->> set writable ID reg fields. 
->>
->> Since v6.7 kernel, KVM/arm allows the userspace to overwrite the values
->> of a subset of ID regs. The list of writable fields continues to grow.
->> The feature ID range is defined as the AArch64 System register space
->> with op0==3, op1=={0, 1, 3}, CRn==0, CRm=={0-7}, op2=={0-7}.
->>
->> The end goal is to get more flexibility when migrating guests
->> between different host hardware.
->>
->> QEMU retrieves the writable ID fields from KVM UAPI [1] and
->> match them against a generated description of ID regs and their
->> named fields that stem from AARCHMRS Registers.json file.
->> Current description is based on latest 2026-03 edition.
->> The content of the generated files was compared against kernel
->> linux/arch/arm64/tools/sysreg file. It is not straightforward
->> to have unit tests for python scripts as there are many cases for
->> field extraction.
->>
->> For each writable named field a uint64 property is created
->> following the "SYSREG_<REG>_<FIELD>" naming convention. REG and
->> FIELD names are those described in ARM ARM Reference manual.
->>
->> The list of SYSREG_ID properties can be retrieved through the qmp
->> monitor using query-cpu-model-expansion [2].
->>
->> For the record, Jinqian was able to migrate between Hisilicon KunPeng
->> HIP09 and HIP12 chips with this series using this kind of command:
->>
->> -cpu host,pauth=off,pmu=off,sve=off,\
->> SYSREG_ID_AA64PFR1_EL1_NMI=0x0,\
->> SYSREG_ID_AA64ISAR1_EL1_LS64=0x0,\
->> SYSREG_ID_AA64ISAR1_EL1_XS=0x0,\
->> SYSREG_ID_AA64ISAR1_EL1_LRCPC=0x2,\
->> SYSREG_ID_AA64ISAR2_EL1_RPRFM=0x0,\
->> SYSREG_ID_AA64ISAR2_EL1_CLRBHB=0x0,\
->> SYSREG_ID_AA64ISAR2_EL1_PAC_frac=0x0,\
->> SYSREG_ID_AA64ISAR2_EL1_BC=0x0,\
->> SYSREG_ID_AA64ISAR2_EL1_RPRES=0x0,\
->> SYSREG_ID_AA64ISAR2_EL1_WFxT=0x0,\
->> SYSREG_ID_AA64MMFR0_EL1_FGT=0x0,\
->> SYSREG_ID_AA64MMFR0_EL1_BigEnd=0x0,\
->> SYSREG_ID_AA64MMFR1_EL1_ECBHB=0x0,\
->> SYSREG_ID_AA64MMFR1_EL1_CMOW=0x0,\
->> SYSREG_ID_AA64MMFR1_EL1_TIDCP1=0x0,\
->> SYSREG_ID_AA64MMFR1_EL1_nTLBPA=0x0,\
->> SYSREG_ID_AA64MMFR1_EL1_AFP=0x0,\
->> SYSREG_ID_AA64MMFR1_EL1_HCX=0x0,\
->> SYSREG_ID_AA64MMFR1_EL1_ETS=0x0,\
->> SYSREG_ID_AA64MMFR1_EL1_PAN=0x2,\
->> SYSREG_ID_AA64MMFR1_EL1_HAFDBS=0x2,\
->> SYSREG_ID_AA64MMFR2_EL1_CnP=0x0,\
->> SYSREG_ID_AA64MMFR3_EL1_TCRX=0x0,\
->> SYSREG_ID_AA64DFR0_EL1_PMUVer=0x6,\
->> SYSREG_ID_AA64DFR0_EL1_DebugVer=0x9,\
->> SYSREG_ID_AA64DFR0_EL1_DoubleLock=0xf,\
->> SYSREG_ID_AA64ZFR0_EL1_F64MM=0x0,\
->> SYSREG_ID_AA64ZFR0_EL1_F32MM=0x0,\
->> SYSREG_ID_AA64ZFR0_EL1_SM4=0x0,\
->> SYSREG_ID_AA64ZFR0_EL1_SHA3=0x0,\
->> SYSREG_ID_AA64ZFR0_EL1_BitPerm=0x0,\
->> SYSREG_ID_AA64ZFR0_EL1_AES=0x0,\
->> SYSREG_ID_AA64ZFR0_EL1_SVEver=0x0,\
->> SYSREG_CTR_EL0_L1Ip=0x2 \
->>
->> Connie & Eric
->>
->> This series can be found at:
->> https://urldefense.proofpoint.com/v2/url?u=https-3A__github.com_eauger_qemu_tree_arm-2Dcpu-2Dmodel-2Dv6&d=DwIDAg&c=s883GpUCOChKOHiocYtGcg&r=PGWMyignA0NiDmTlyP7vOTHozBws_VN86yrVmSMkBp0&m=CIDxwz9G74N7XMNYrbkXrfmPGYOEMVyHDG5MW0tgCdgJeSxgHHAZKmHhQLkM8PTn&s=Hlpt4MU__nclTetQfJWeWLwy0ShnarmfgXq4DmGpaGU&e= 
->>
->> History:
->> --------
->> v5 -> v6:
->> v6 is mostly for Khushit to see how he may work on top
->> of this series. It fulfills some of his requirements:
->> - Upon Khushit request I added description for enum values
->>  and reserved fields
->> - set_sysreg_prop checks the input value against enum values
->>  if any
->> - writable_bitmap is now dispatched into the sysreg descripton
->>  and not stored in vcpu state anymore (besides it is VM wide)
->> - implemented write for qmp inspection. However this is not
->>  yet checked against KVM. That's the next step I think, ie.
->>  instantiate a scratch vcpu to test if the field value can be
->>  applied?
->> - if some inconsistencies between writable mask and idreg
->>  field, reserved fields only produce traces
->> - simplify checks related to availability of writable map
->> - this version does not yet fix some reported issues about host
->>  supporting nested virt. I will further sync with Khushit.
->>  so this is definitively not candidate to be applied, hence the
->>  RFC tag.
-> Thanks!, Will use this series as the base for our v3.
+review is done, modulo cosmetic patch restructuring and missing tests
+LGTM.
 
-OK.
+as for adding duplication, I'm expecting cleanup/consolidation
+refactoring on top, that I've asked for in earlier reviews. 
 
-Few notes:
-- I saw there are capabilities to define property aliases (source and
-destination types must match though). So there could be way to associate
-a FEAT_ property to SYSREG property for those who strictly match. 
-
-- In case people would like to have labelled strings, we could turn the
-SYSREG props, which are currently uint64 into string props. on set we
-would convert the string into the isar uint64.
-You could maintain a separate description file that associate enum
-values to string values. If an association exists we would do an
-intermediate translation.
-
-Thanks
-
-Eric
->
-> Warm Regards,
-> Khushit
->> v4 -> v5:
->> - generate target/arm/cpu-idregs.h.inc that look similar to
->>  the format used in [RFC PATCH v1 02/13] target/arm:
->>  named_cpu_model: Add ID Register Fields without the
->>  description of the value values nor safe policy/value.
->>  I guess valid values could be generated from the Registers.json
->>  file too. Safe policy/values cannot.
->>  I reused one patch from the above series.
->>  Let's see how both series can progress/coexist without any
->>  anticipated bias.
->> - Addressed all comments from Shameer on v4
->> - Addressed 2 comments from v4 that were missed including the
->>  issue of IDreg visibility affected by some other settings.
->>  Unfortunately I was not able to test it.
->> - Further look at overrides between low level id reg field
->>  properties versus legacy CPU options. I have the feeling they
->>  can coexist as long as we document the hierarchy between them:
->>  host kvm default -> ID reg field props -> legacy CPU options
->> - Noticed more writable fields that are RES0/RAZ
->> - Improved commit messages in general
->>
->> References:
->> -----------
->>
->> [1]
->> KVM_CAP_ARM_SUPPORTED_REG_MASK_RANGES
->> KVM_ARM_GET_REG_WRITABLE_MASKS
->> Documentation/virt/kvm/api.rst
->>
->> [2]
->> qemu-system-aarch64 -qmp unix:/home/augere/TEST/QEMU/qmp-sock,server,nowait -M virt --enable-kvm -cpu host
->> sudo build/run qmp-shell /home/augere/TEST/QEMU/qmp-sock
->> Welcome to the QMP low-level shell!
->> Connected to QEMU 11.0.50
->> (QEMU) query-cpu-model-expansion type=full model={"name":"host"}
->>
->>
->> Cornelia Huck (3):
->>  target/arm/kvm: Retrieve writable ID reg map
->>  arm-qmp-cmds: introspection for ID register props
->>  arm/cpu-features: document ID reg properties
->>
->> Eric Auger (13):
->>  scripts: introduce scripts/update-aarch64-cpu-sysregs-header.py
->>  target/arm/cpu-sysregs.h.inc: Sort by name alphabetical order
->>  target/arm/cpu-sysregs.h.inc: Update with automatic generation
->>  arm/cpu: Add infra to handle generated ID register definitions
->>  scripts: Introduce scripts/aarch64_sysreg_helpers module
->>  scripts: Introduce scripts/update-aarch64-cpu-sysreg-properties.py
->>  target/arm/cpu-idregs.h.inc: generate with script
->>  target/arm/cpu-idregs.h.inc: Generate enum values
->>  arm/kvm: Initialize all writable ID registers from host
->>  target/arm/kvm: Introduce kvm_arm_expose_idreg_properties
->>  target/arm/cpu: Expose writable ID reg field properties on the kvm
->>    host vcpu model
->>  target/arm/cpu-idregs.h.inc: Generate reserved fields
->>  target/arm/kvm: Ignore and trace unexpected writable reserved fields
->>
->> Shaju Abraham (1):
->>  target/arm/cpu_idregs: generate tables for Arm64 ID registers and
->>    fields
->>
->> docs/system/arm/cpu-features.rst              |  106 +-
->> target/arm/cpu-idregs.h                       |   41 +
->> target/arm/kvm_arm.h                          |   10 +
->> target/arm/cpu-idregs.h.inc                   | 2164 +++++++++++++++++
->> target/arm/cpu-sysregs.h.inc                  |   57 +-
->> target/arm/arm-qmp-cmds.c                     |   29 +
->> target/arm/cpu-idregs.c                       |   96 +
->> target/arm/cpu64.c                            |    5 +
->> target/arm/kvm.c                              |  311 ++-
->> scripts/aarch64_sysreg_helpers.py             |  109 +
->> .../update-aarch64-cpu-sysreg-properties.py   |  290 +++
->> scripts/update-aarch64-cpu-sysregs-header.py  |   51 +
->> target/arm/meson.build                        |    1 +
->> target/arm/trace-events                       |    7 +
->> 14 files changed, 3244 insertions(+), 33 deletions(-)
->> create mode 100644 target/arm/cpu-idregs.h
->> create mode 100644 target/arm/cpu-idregs.h.inc
->> create mode 100644 target/arm/cpu-idregs.c
->> create mode 100644 scripts/aarch64_sysreg_helpers.py
->> create mode 100644 scripts/update-aarch64-cpu-sysreg-properties.py
->> create mode 100755 scripts/update-aarch64-cpu-sysregs-header.py
->>
->> -- 
->> 2.53.0
->>
+> 
+> Background
+> ----------
+> 
+> This series targets coherent CPU + accelerator shared-address-space
+> systems, where the accelerator's HBM is not a device-private
+> framebuffer behind a PCIe BAR but a tier of host system memory:
+> visible to the CPU in the platform physical address space, shared
+> coherently with the accelerator over the platform fabric, and bound
+> to a NUMA proximity domain set by platform firmware at boot fabric
+> training.
+> 
+> For such a region to function correctly in the guest, two things
+> must hold simultaneously: the CPU memory subsystem has to see it in
+> the system memory map (so the CPU side can address it), and it has
+> to be reserved exclusively for the accelerator's driver (so the
+> kernel's general allocator does not hand SPM pages to unrelated
+> workloads). The SOFT_RESERVED memory type in E820 plus a matching
+> SRAT memory-affinity entry is the mechanism that delivers both: a
+> firmware-produced topology that the CPU memory subsystem honors and
+> the accelerator's driver consumes for its own range.
+> 
+> Approach
+> --------
+> 
+> The series introduces a new TYPE_MEMORY_DEVICE subclass `sp-mem`.
+> Each instance binds one host memory backend to a single NUMA
+> proximity domain and is boot-time only; placement, mapped-state
+> enforcement, and QMP introspection come from the existing
+> memory-device framework.
+> 
+> Testing
+> -------
+> 
+> Verified end-to-end on q35 + KVM, with both SeaBIOS and OVMF, for:
+> 
+> - single sp-mem instance
+> - two sp-mem instances on different NUMA nodes
+> 
+> Guest observations: /proc/iomem shows one SOFT_RESERVED entry per
+> sp-mem device, dmesg SRAT parsing reports the matching
+> memory_affinity entries with correct PXM, and the umbrella
+> HOTPLUGGABLE entry covers the remaining hotplug-memory window
+> without overlapping the sp-mem ranges.
+> 
+> Changes since v11
+> -----------------
+> 
+>   - Drop the unneeded memory-device.h and system/hostmem.h includes
+>     from sp-mem.h (HostMemoryBackend is forward-declared).
+>   - Use SP_MEM_MEMDEV_PROP in sp_mem_get_memory_region()'s error
+>     message, matching realize().
+>   - Move the .unmigratable comment next to the field it documents.
+> 
+> All v11 patch-1 review comments from Philippe; patches 2-4 unchanged.
+> Patch 4 (MAINTAINERS) retains the Acked-by from Igor and David.
+> 
+> Previous versions
+> -----------------
+> 
+>   v1: https://lore.kernel.org/qemu-devel/20250924103324.2074819-1-FangSheng.Huang@amd.com/
+>   v2: https://lore.kernel.org/qemu-devel/20251020090701.4036748-1-FangSheng.Huang@amd.com/
+>   v3: https://lore.kernel.org/qemu-devel/20251208105137.2058928-1-FangSheng.Huang@amd.com/
+>   v4: https://lore.kernel.org/qemu-devel/20251209093841.2250527-1-FangSheng.Huang@amd.com/
+>   v5: https://lore.kernel.org/qemu-devel/20260123024312.1601732-1-FangSheng.Huang@amd.com/
+>   v6: https://lore.kernel.org/qemu-devel/20260226105023.256568-1-FangSheng.Huang@amd.com/
+>   v7: https://lore.kernel.org/qemu-devel/20260306082735.1106690-1-FangSheng.Huang@amd.com/
+>   v8: https://lore.kernel.org/qemu-devel/20260527074215.229119-1-FangSheng.Huang@amd.com/
+>   v9: https://lore.kernel.org/qemu-devel/20260602084447.1100554-1-FangSheng.Huang@amd.com/
+>   v10: https://lore.kernel.org/qemu-devel/20260605104609.1739911-1-FangSheng.Huang@amd.com/
+>   v11: https://lore.kernel.org/qemu-devel/20260611100637.2460507-1-FangSheng.Huang@amd.com/
+> 
+>   [1] v7 thread closeout:
+>       https://lore.kernel.org/qemu-devel/666a7ba1-5d3a-4732-b872-0d9fb2fe8461@amd.com/
+>   [2] v8 review:
+>       https://lore.kernel.org/qemu-devel/20260601105057.2d764e55@imammedo/
+>   [3] v9 review:
+>       https://lore.kernel.org/qemu-devel/20260602084447.1100554-1-FangSheng.Huang@amd.com/T/
+>   [4] v10 review:
+>       https://lore.kernel.org/qemu-devel/20260605104609.1739911-1-FangSheng.Huang@amd.com/T/
+>   [5] v11 review:
+>       https://lore.kernel.org/qemu-devel/20260611100637.2460507-1-FangSheng.Huang@amd.com/T/
+> 
+> fanhuang (4):
+>   hw/mem: add sp-mem device for Specific Purpose Memory
+>   i386/acpi-build: partition device_memory SRAT umbrella for sp-mem
+>   hw/i386: hook sp-mem into the pc machine plug path
+>   MAINTAINERS: cover sp-mem under Memory devices, add R: tag
+> 
+>  MAINTAINERS                  |   3 +
+>  qapi/machine.json            |  43 ++++++++++-
+>  hw/i386/e820_memory_layout.h |  11 +--
+>  include/hw/mem/sp-mem.h      |  33 +++++++++
+>  hw/core/machine-hmp-cmds.c   |  11 +++
+>  hw/i386/acpi-build.c         |  96 +++++++++++++++++++++++--
+>  hw/i386/pc.c                 |  36 ++++++++++
+>  hw/mem/sp-mem.c              | 136 +++++++++++++++++++++++++++++++++++
+>  hw/i386/Kconfig              |   2 +
+>  hw/mem/Kconfig               |   4 ++
+>  hw/mem/meson.build           |   1 +
+>  11 files changed, 365 insertions(+), 11 deletions(-)
+>  create mode 100644 include/hw/mem/sp-mem.h
+>  create mode 100644 hw/mem/sp-mem.c
+> 
+> 
+> base-commit: 2f28d34ea0aead9830478cd1d3d0dd9d9191d82e
+> --
+> 2.34.1
+> 
 
 
