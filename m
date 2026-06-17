@@ -4,60 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47920CD98E2
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jun 2026 09:52:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49DCDCD98E4
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jun 2026 09:52:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZmw8-0005m2-5x; Wed, 17 Jun 2026 05:51:56 -0400
+	id 1wZmvt-0005Yb-CO; Wed, 17 Jun 2026 05:51:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <saif.abrar@linux.ibm.com>)
- id 1wZmw7-0005lj-7W; Wed, 17 Jun 2026 05:51:55 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ id 1wZmvm-0005WG-Ph; Wed, 17 Jun 2026 05:51:36 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <saif.abrar@linux.ibm.com>)
- id 1wZmw5-000465-Kt; Wed, 17 Jun 2026 05:51:54 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ id 1wZmvi-0003wJ-VJ; Wed, 17 Jun 2026 05:51:34 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65H8mKC2080090; Wed, 17 Jun 2026 09:51:27 GMT
+ 65H8mZXa4022112; Wed, 17 Jun 2026 09:51:17 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=oQmZt4
- L2GArq7kRvhjUh1lFXQ7vfbRdlwdqxoz1FobQ=; b=inxS+M0KXVt3voGVW1oEyX
- LhFWCJXZUzQOcj6H6JW7JzZZXWz5ea/zo8PjIctFGg/J0fzU1Q+zD3H4MO3e/5O7
- 0XaXT9R84xZcXEvXVwEK0WiVdrGW/jj4PFCwnh8ufzL+vSAe71Gi9FR8NtWTdbF9
- mu0Byu4y2UqWaDyjfTnHYz3tUxadD2S8+uYdfMTBCo/Q5TxCqt8POdeiKL4FKF7p
- +AjwiujbTGiAxhLmSojh31BpY4rXv9H0TyE461tB9/OrFBH4Wn3J24P1kWFRsQpD
- 7nJzw8exnm3kVoZ9ub6rxu3piPNMfFEVLvWZ8k3TlXxB+h+iG675af35YZ61nLKA
+ :message-id:mime-version:references:subject:to; s=pp1; bh=46/FP8
+ 6r/EDIcUaAQ5C6sUZmRnMSwbTVMcfq9Ha3A7g=; b=iVSx2bx/4jANAp6nTZttuz
+ nnCIjnhfLkdxww8JnbuXzyhvOtJQE/f04MNasY4ZksnLHBwtC/I0c5gcaWT5Fgrv
+ FpyGhl2B0G3aCzQHF9YiuLpR2aPAykflN4Gr2/WEuIVUYS/QQOxGBKtAcIxcchxW
+ vPjn4AiwwN8cSDF6W0pAl/d2UCKDoZNu98KAKgStdsBQv2YunLaWa1sQ2Uk+PETx
+ wWbqnbSciTPSBJ2Oe0Y1rvbYI4IlbPY39ykV204jYfGwqIH5N5E9GtS9ExmrfbJM
+ sP596WWBfD2Uhk8dEQxso2nuRIIGxtx9sKzBrq/NB65o0TydhTBAka6jIgpCSjcQ
  ==
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4euequ29ag-1
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4eueqx28jw-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 17 Jun 2026 09:51:26 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 65H9ncee005322;
- Wed, 17 Jun 2026 09:51:25 GMT
-Received: from smtprelay02.dal12v.mail.ibm.com ([172.16.1.4])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4eudva2hm7-1
+ Wed, 17 Jun 2026 09:51:16 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 65H9ng5s023793;
+ Wed, 17 Jun 2026 09:51:16 GMT
+Received: from smtprelay05.wdc07v.mail.ibm.com ([172.16.1.72])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4eudvaah78-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 17 Jun 2026 09:51:25 +0000 (GMT)
+ Wed, 17 Jun 2026 09:51:16 +0000 (GMT)
 Received: from smtpav01.wdc07v.mail.ibm.com (smtpav01.wdc07v.mail.ibm.com
  [10.39.53.228])
- by smtprelay02.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 65H9pOQ466126088
+ by smtprelay05.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 65H9pEPO13238904
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 17 Jun 2026 09:51:24 GMT
+ Wed, 17 Jun 2026 09:51:14 GMT
 Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 7150158055;
- Wed, 17 Jun 2026 09:51:24 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id C62CA5804B;
+ Wed, 17 Jun 2026 09:51:14 +0000 (GMT)
 Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id C77F858059;
- Wed, 17 Jun 2026 09:51:22 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id B9C3D58091;
+ Wed, 17 Jun 2026 09:51:12 +0000 (GMT)
 Received: from gfwr526.rchland.ibm.com (unknown [9.10.239.119])
  by smtpav01.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Wed, 17 Jun 2026 09:51:22 +0000 (GMT)
+ Wed, 17 Jun 2026 09:51:12 +0000 (GMT)
 From: Saif Abrar <saif.abrar@linux.ibm.com>
 To: qemu-ppc@nongnu.org, qemu-devel@nongnu.org
 Cc: harshpb@linux.ibm.com, clg@kaod.org, npiggin@gmail.com,
@@ -66,9 +66,10 @@ Cc: harshpb@linux.ibm.com, clg@kaod.org, npiggin@gmail.com,
  lvivier@redhat.com, danielhb413@gmail.com, kowal@linux.ibm.com,
  chalapathi.v@linux.ibm.com, calebs@linux.ibm.com, milesg@linux.ibm.com,
  jishnuvw@linux.ibm.com, adityag@linux.ibm.com, amachhiw@linux.ibm.com
-Subject: [PATCH v5 8/9] pnv/phb5: Implement IODA PCT table
-Date: Wed, 17 Jun 2026 04:50:57 -0500
-Message-ID: <20260617095058.652789-9-saif.abrar@linux.ibm.com>
+Subject: [PATCH v5 4/9] pnv/phb5: Implement read-only and write-only bits of
+ registers
+Date: Wed, 17 Jun 2026 04:50:53 -0500
+Message-ID: <20260617095058.652789-5-saif.abrar@linux.ibm.com>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260617095058.652789-1-saif.abrar@linux.ibm.com>
 References: <20260617095058.652789-1-saif.abrar@linux.ibm.com>
@@ -77,41 +78,41 @@ Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
 X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjE3MDA5MiBTYWx0ZWRfX8hUkh7JgjxXX
- xllyagCKCqosYj//q8L7g/NqZnPmYEVbNvnwjU1RJXtk4wtsxlJdoq4fI7JujNgSHJmHzm2U1V4
- xmfAEWMN3bjVrojLFCg268WZthChU7o=
-X-Proofpoint-ORIG-GUID: wkI6A9MpEBGNhglSsGCtNd5Vp8qHAjm0
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjE3MDA5MiBTYWx0ZWRfXy9vr0loA9mQc
- +PBhp4CcJX0Zk05eucnZJxK0ai/365fKhgr1Aax5e0fHcGwpuq30o0phuXjhT0mVAC3usckN1fF
- NhN2nGGInxLWf3yTpBSReoKJN6jvUX5XHRO83FCRY4HJWfJIqKl1Ygr+Tdi08IHH5/IlpqYj47H
- aqZEjcIXaI9+qR2u4JhtNq7Neo3y0yTAHFU7lAvASM914BNMxLweBX6/3+w56cb7yAFpldlFXbw
- Zc9LQDLqg3FepHCrepwfm2eyr9q4gOPOgaRvFdW1hk965/XQOWqm+ahWrp6ySQJCIkg0OOvBLOy
- OyAJpm2Q6umbDQXFQmpMZ5S7lN8aRbCPL8FPzJYrcZKxsKS3xejCTW/MDU4f3tFir7lri0cUAb3
- RTLsmLhAN3OBEYZ6jcyiNgXnDrDLt4aCjHNY1LNdWxHOd+03tUVzgb+3RyJIgbl6KjBRpoXn7du
- vDDZXq0NqbjbG5dFrnw==
-X-Proofpoint-GUID: RzaKJKaFqybx72K7IxA4nhj2m951lZEs
-X-Authority-Analysis: v=2.4 cv=L9gtheT8 c=1 sm=1 tr=0 ts=6a326e1e cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjE3MDA5MiBTYWx0ZWRfX0vw12BSOsUX7
+ a3aHrO35HQITtsd0dEV7mErfzh91OaNTctZyIxBHDoNf92IwHFIaAFe9rWlXfygYapq0H3xB/jF
+ mcosDSAeXCzIwM9w3eXlfFUNeST+4xa0SbrrPXMPXMFHi5v77S1/fa+IVds5o+y1z6XekiRn8Yb
+ 63G/cwFbjsksuP9WxkZEhE4xARKTOOvFJnKpCO06idO/AwfRbDGcuSqZ+InvF+bVVoSRP2/KqBS
+ /YD0q4k4YQtlnJ2mPQ4qBtVWPFjWVQc5KPHSG+U6Vjn7v4lC6Oqo90FTNc5xWIzTWJ9TrNAWHFb
+ g1Sxg9oHZhxtzh+t0umJsBbx0lLPfWYCT85CbvZadgbF1a1Jzktzg2027t7ujmUf+IerAOI5H1U
+ GXIFV8WCFXzgWeoBcifKQ+UVqk/zUeqRol+qrMzTrGm4EtY8/zt0HKgciThhuAqJ1qK75eSPMH7
+ GxmaLrZR7F3q9FPhiUg==
+X-Proofpoint-GUID: Fx6VbbFrzLVKt86UrFlTtcbRPkAacTCy
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjE3MDA5MiBTYWx0ZWRfX3hmFkOb+/hpS
+ a17Qi82Mg/YhEzZgnA8JJTjvL7OGKBM3sZgEkcAzKcmhAzZMRiNlaJEAmlCFeh5gbMblcXtQdDl
+ f+bW9DCelEgcKxF/vmBAUzYgy1Ub/pE=
+X-Proofpoint-ORIG-GUID: kIc8qe6dEgTnOkqgevA0hRwoT5D0-Aqj
+X-Authority-Analysis: v=2.4 cv=auGCzyZV c=1 sm=1 tr=0 ts=6a326e15 cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
  a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=VnNF1IyMAAAA:8
- a=aow-egSQAAAA:8 a=zgsLwUnGCMBw8fX4dgEA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=gFNbaldVC-z-bsjSTzMo:22
+ a=RnoormkPH1_aCDwRdu11:22 a=Y2IxJ9c9Rs8Kov3niI8_:22 a=VnNF1IyMAAAA:8
+ a=aow-egSQAAAA:8 a=20KFwNOVAAAA:8 a=djULNIhFhI7Ibwp2e0QA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=gFNbaldVC-z-bsjSTzMo:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-06-17_01,2026-06-16_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 impostorscore=0 malwarescore=0 clxscore=1015 adultscore=0
- phishscore=0 lowpriorityscore=0 suspectscore=0 priorityscore=1501 spamscore=0
+ phishscore=0 clxscore=1015 priorityscore=1501 suspectscore=0 impostorscore=0
+ spamscore=0 lowpriorityscore=0 adultscore=0 malwarescore=0 bulkscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606170092
-Received-SPF: pass client-ip=148.163.156.1;
- envelope-from=saif.abrar@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
+Received-SPF: pass client-ip=148.163.158.5;
+ envelope-from=saif.abrar@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
 X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -130,80 +131,376 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Saif Abrar <saif.abrar@linux.vnet.ibm.com>
 
-IODA PCT table is implemented
-without any functionality, being a debug table.
+SW cannot write the read-only(RO) bits of a register
+and write-only(WO) bits of a register return 0 when read.
+
+Added ro_mask[] for each register that defines which
+bits in that register are RO.
+When writing to a register, the RO-bits are not updated.
+
+When reading a register, clear the WO bits and return the updated value.
+
+Tested the registers PHB_DMA_SYNC, PHB_PCIE_HOTPLUG_STATUS, PHB_PCIE_LMR,
+PHB_PCIE_DLP_TRWCTL, PHB_LEM_ERROR_AND_MASK and PHB_LEM_ERROR_OR_MASK
+by writing all 1's and reading back the value.
+The WO bits in these registers should read back as 0.
+
+Add .class_size in pnv_phb4_type_info.
 
 Signed-off-by: Saif Abrar <saif.abrar@linux.ibm.com>
 Reviewed-by: Cédric Le Goater <clg@kaod.org>
+Reviewed-by: "Michael S. Tsirkin" <mst@redhat.com>
+Reviewed-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
 Reviewed-by: Aditya Gupta <adityag@linux.ibm.com>
 Reviewed-by: Jishnu Warrier <Jishnu.Warrier@ibm.com>
 ---
-v5: Updated IODA3 PCT table max size to 128 * 2 entries each.
-v3: Updates for coding guidelines.
+v5: Moved PnvPHB4Class initialization from instance_init class_init method.
+v3:
+- Updates for coding guidelines.
+- Added class size for PnvPHB4Class.
+v2: New PnvPHB4Class to hold each register's RO mask.
 
 
- hw/pci-host/pnv_phb4.c              | 7 +++++++
- include/hw/pci-host/pnv_phb4.h      | 2 ++
- include/hw/pci-host/pnv_phb4_regs.h | 1 +
- 3 files changed, 10 insertions(+)
+ hw/pci-host/pnv_phb4.c              | 79 ++++++++++++++++++++++++++---
+ include/hw/pci-host/pnv_phb4.h      | 13 ++++-
+ include/hw/pci-host/pnv_phb4_regs.h | 20 ++++++--
+ tests/qtest/pnv-phb-test.c          | 63 ++++++++++++++++++++++-
+ 4 files changed, 161 insertions(+), 14 deletions(-)
 
 diff --git a/hw/pci-host/pnv_phb4.c b/hw/pci-host/pnv_phb4.c
-index e9d9323dba..91b2064113 100644
+index 4d4e239deb..ee378c0cba 100644
 --- a/hw/pci-host/pnv_phb4.c
 +++ b/hw/pci-host/pnv_phb4.c
-@@ -264,6 +264,11 @@ static uint64_t *pnv_phb4_ioda_access(PnvPHB4 *phb,
-         mask = phb->big_phb ? PNV_PHB4_MAX_MIST : (PNV_PHB4_MAX_MIST >> 1);
-         mask -= 1;
-         break;
-+    case IODA3_TBL_PCT:
-+        tptr = phb->ioda_PCT;
-+        mask = phb->big_phb ? PNV_PHB4_MAX_PCT : (PNV_PHB4_MAX_PCT >> 1);
-+        mask -= 1;
+@@ -705,6 +705,12 @@ static void pnv_phb4_reg_write(void *opaque, hwaddr off, uint64_t val,
+         return;
+     }
+ 
++    /* Update 'val' according to the register's RO-mask */
++    PnvPHB4Class *k = PNV_PHB4_GET_CLASS(phb);
++
++    val = (phb->regs[off >> 3] & k->ro_mask[off >> 3]) |
++            (val & ~(k->ro_mask[off >> 3]));
++
+     /* Record whether it changed */
+     changed = phb->regs[off >> 3] != val;
+ 
+@@ -780,7 +786,7 @@ static void pnv_phb4_reg_write(void *opaque, hwaddr off, uint64_t val,
+     case PHB_TCE_TAG_ENABLE:
+     case PHB_INT_NOTIFY_ADDR:
+     case PHB_INT_NOTIFY_INDEX:
+-    case PHB_DMARD_SYNC:
++    case PHB_DMA_SYNC:
+        break;
+ 
+     /* Noise on anything else */
+@@ -818,7 +824,7 @@ static uint64_t pnv_phb4_reg_read(void *opaque, hwaddr off, unsigned size)
+     case PHB_VERSION:
+         return PNV_PHB4_PEC_GET_CLASS(phb->pec)->version;
+ 
+-        /* Read-only */
++    /* Read-only */
+     case PHB_PHB4_GEN_CAP:
+         return 0xe4b8000000000000ull;
+     case PHB_PHB4_TCE_CAP:
+@@ -828,18 +834,49 @@ static uint64_t pnv_phb4_reg_read(void *opaque, hwaddr off, unsigned size)
+     case PHB_PHB4_EEH_CAP:
+         return phb->big_phb ? 0x2000000000000000ull : 0x1000000000000000ull;
+ 
++    /* Write-only, read will return zeros */
++    case PHB_LEM_ERROR_AND_MASK:
++    case PHB_LEM_ERROR_OR_MASK:
++        return 0;
++    case PHB_PCIE_DLP_TRWCTL:
++        val &= ~PHB_PCIE_DLP_TRWCTL_WREN;
++        return val;
+     /* IODA table accesses */
+     case PHB_IODA_DATA0:
+         return pnv_phb4_ioda_read(phb);
+ 
++    /*
++     * DMA sync: make it look like it's complete,
++     *           clear write-only read/write start sync bits.
++     */
++    case PHB_DMA_SYNC:
++        val = PHB_DMA_SYNC_RD_COMPLETE |
++            ~(PHB_DMA_SYNC_RD_START | PHB_DMA_SYNC_WR_START);
++        return val;
++
++    /*
++     * PCI-E Stack registers
++     */
++    case PHB_PCIE_SCR:
++        val |= PHB_PCIE_SCR_PLW_X16; /* RO bit */
 +        break;
-     case IODA3_TBL_RCAM:
-         mask = phb->big_phb ? 127 : 63;
-         break;
-@@ -362,6 +367,8 @@ static void pnv_phb4_ioda_write(PnvPHB4 *phb, uint64_t val)
-     /* Handle side effects */
-     switch (table) {
-     case IODA3_TBL_LIST:
-+    case IODA3_TBL_PCT:
-+        /* No action for debug tables */
-         break;
-     case IODA3_TBL_MIST: {
-         /* Special mask for MIST partial write */
++
+     /* Link training always appears trained */
+     case PHB_PCIE_DLP_TRAIN_CTL:
+         /* TODO: Do something sensible with speed ? */
+-        return PHB_PCIE_DLP_INBAND_PRESENCE | PHB_PCIE_DLP_TL_LINKACT;
++        val |= PHB_PCIE_DLP_INBAND_PRESENCE | PHB_PCIE_DLP_TL_LINKACT;
++        return val;
++
++    case PHB_PCIE_HOTPLUG_STATUS:
++        /* Clear write-only bit */
++        val &= ~PHB_PCIE_HPSTAT_RESAMPLE;
++        return val;
+ 
+-    /* DMA read sync: make it look like it's complete */
+-    case PHB_DMARD_SYNC:
+-        return PHB_DMARD_SYNC_COMPLETE;
++    /* Link Management Register */
++    case PHB_PCIE_LMR:
++        /* These write-only bits always read as 0 */
++        val &= ~(PHB_PCIE_LMR_CHANGELW | PHB_PCIE_LMR_RETRAINLINK);
++        return val;
+ 
+     /* Silent simple reads */
+     case PHB_LSI_SOURCE_ID:
+@@ -1684,6 +1721,30 @@ static PCIIOMMUOps pnv_phb4_iommu_ops = {
+     .get_address_space = pnv_phb4_dma_iommu,
+ };
+ 
++static void pnv_phb4_ro_mask_init(PnvPHB4Class *phb4c)
++{
++    /*
++     * Set register specific RO-masks
++     */
++
++    /* PBL - Error Injection Register (0x1910) */
++    phb4c->ro_mask[PHB_PBL_ERR_INJECT >> 3] =
++        PPC_BITMASK(0, 23) | PPC_BITMASK(28, 35) | PPC_BIT(38) | PPC_BIT(46) |
++        PPC_BITMASK(49, 51) | PPC_BITMASK(55, 63);
++
++    /* Reserved bits[60:63] */
++    phb4c->ro_mask[PHB_TXE_ERR_LEM_ENABLE >> 3] =
++    phb4c->ro_mask[PHB_TXE_ERR_AIB_FENCE_ENABLE >> 3] = PPC_BITMASK(60, 63);
++    /* Reserved bits[36:63] */
++    phb4c->ro_mask[PHB_RXE_TCE_ERR_LEM_ENABLE >> 3] =
++    phb4c->ro_mask[PHB_RXE_TCE_ERR_AIB_FENCE_ENABLE >> 3] = PPC_BITMASK(36, 63);
++    /* Reserved bits[40:63] */
++    phb4c->ro_mask[PHB_ERR_LEM_ENABLE >> 3] =
++    phb4c->ro_mask[PHB_ERR_AIB_FENCE_ENABLE >> 3] = PPC_BITMASK(40, 63);
++
++    /* TODO: Add more RO-masks as regs are implemented in the model */
++}
++
+ static void pnv_phb4_err_reg_reset(PnvPHB4 *phb)
+ {
+     STICKY_RST(PHB_ERR_STATUS,       0, PPC_BITMASK(0, 33));
+@@ -1743,6 +1804,7 @@ static void pnv_phb4_reset(Object *obj, ResetType type)
+     pnv_phb4_err_reg_reset(phb);
+     pnv_phb4_pcie_stack_reg_reset(phb);
+     pnv_phb4_regb_err_reg_reset(phb);
++    phb->regs[PHB_PCIE_CRESET >> 3] = 0xE000000000000000;
+ }
+ 
+ static void pnv_phb4_instance_init(Object *obj)
+@@ -1917,6 +1979,7 @@ static void pnv_phb4_class_init(ObjectClass *klass, const void *data)
+     DeviceClass *dc = DEVICE_CLASS(klass);
+     XiveNotifierClass *xfc = XIVE_NOTIFIER_CLASS(klass);
+     ResettableClass *rc = RESETTABLE_CLASS(klass);
++    PnvPHB4Class *phb4c = PNV_PHB4_CLASS(klass);
+ 
+     dc->realize         = pnv_phb4_realize;
+     device_class_set_props(dc, pnv_phb4_properties);
+@@ -1925,6 +1988,9 @@ static void pnv_phb4_class_init(ObjectClass *klass, const void *data)
+     xfc->notify         = pnv_phb4_xive_notify;
+ 
+     rc->phases.enter = pnv_phb4_reset;
++
++    /* Initialize RO-mask of registers */
++    pnv_phb4_ro_mask_init(phb4c);
+ }
+ 
+ static const TypeInfo pnv_phb4_type_info = {
+@@ -1932,6 +1998,7 @@ static const TypeInfo pnv_phb4_type_info = {
+     .parent        = TYPE_DEVICE,
+     .instance_init = pnv_phb4_instance_init,
+     .instance_size = sizeof(PnvPHB4),
++    .class_size    = sizeof(PnvPHB4Class),
+     .class_init    = pnv_phb4_class_init,
+     .interfaces = (const InterfaceInfo[]) {
+             { TYPE_XIVE_NOTIFIER },
 diff --git a/include/hw/pci-host/pnv_phb4.h b/include/hw/pci-host/pnv_phb4.h
-index bea0684724..b7e15b87d1 100644
+index 47a5c3edf5..bea0684724 100644
 --- a/include/hw/pci-host/pnv_phb4.h
 +++ b/include/hw/pci-host/pnv_phb4.h
-@@ -65,6 +65,7 @@ OBJECT_DECLARE_SIMPLE_TYPE(PnvPHB4RootBus, PNV_PHB4_ROOT_BUS)
- #define PNV_PHB4_MAX_LSIs          8
- #define PNV_PHB4_MAX_INTs          4096
- #define PNV_PHB4_MAX_MIST          (PNV_PHB4_MAX_INTs >> 2)
-+#define PNV_PHB4_MAX_PCT           (128 * 2)
- #define PNV_PHB4_MAX_MMIO_WINDOWS  32
- #define PNV_PHB4_MIN_MMIO_WINDOWS  16
- #define PNV_PHB4_NUM_REGS          (0x3000 >> 3)
-@@ -138,6 +139,7 @@ struct PnvPHB4 {
-     /* On-chip IODA tables */
-     uint64_t ioda_LIST[PNV_PHB4_MAX_LSIs];
-     uint64_t ioda_MIST[PNV_PHB4_MAX_MIST];
-+    uint64_t ioda_PCT[PNV_PHB4_MAX_PCT];
-     uint64_t ioda_TVT[PNV_PHB4_MAX_TVEs];
-     uint64_t ioda_MBT[PNV_PHB4_MAX_MBEs];
-     uint64_t ioda_MDT[PNV_PHB4_MAX_PEs];
+@@ -19,7 +19,7 @@
+ 
+ 
+ #define TYPE_PNV_PHB4 "pnv-phb4"
+-OBJECT_DECLARE_SIMPLE_TYPE(PnvPHB4, PNV_PHB4)
++OBJECT_DECLARE_TYPE(PnvPHB4, PnvPHB4Class, PNV_PHB4)
+ 
+ typedef struct PnvPhb4PecStack PnvPhb4PecStack;
+ 
+@@ -156,6 +156,17 @@ struct PnvPHB4 {
+     QLIST_HEAD(, PnvPhb4DMASpace) dma_spaces;
+ };
+ 
++typedef struct PnvPHB4Class {
++    DeviceClass parent_class;
++
++    /*
++     * Read-only bitmask for registers
++     * Bit value: 1 => RO bit
++     *            0 => RW bit
++     */
++    uint64_t ro_mask[PNV_PHB4_NUM_REGS];
++} PnvPHB4Class;
++
+ void pnv_phb4_pic_print_info(PnvPHB4 *phb, GString *buf);
+ int pnv_phb4_pec_get_phb_id(PnvPhb4PecState *pec, int stack_index);
+ PnvPhb4PecState *pnv_pec_add_phb(PnvChip *chip, PnvPHB *phb, Error **errp);
 diff --git a/include/hw/pci-host/pnv_phb4_regs.h b/include/hw/pci-host/pnv_phb4_regs.h
-index c1d5a83271..e30adff7b2 100644
+index df5e86d29a..dfd0e01d1e 100644
 --- a/include/hw/pci-host/pnv_phb4_regs.h
 +++ b/include/hw/pci-host/pnv_phb4_regs.h
-@@ -486,6 +486,7 @@
+@@ -180,9 +180,11 @@
+ #define PHB_M64_AOMASK                  0x1d0
+ #define PHB_M64_UPPER_BITS              0x1f0
+ #define PHB_NXLATE_PREFIX               0x1f8
+-#define PHB_DMARD_SYNC                  0x200
+-#define   PHB_DMARD_SYNC_START          PPC_BIT(0)
+-#define   PHB_DMARD_SYNC_COMPLETE       PPC_BIT(1)
++#define PHB_DMA_SYNC                    0x200
++#define   PHB_DMA_SYNC_RD_START         PPC_BIT(0)
++#define   PHB_DMA_SYNC_RD_COMPLETE      PPC_BIT(1)
++#define   PHB_DMA_SYNC_WR_START         PPC_BIT(2)
++#define   PHB_DMA_SYNC_WR_COMPLETE      PPC_BIT(3)
+ #define PHB_RTC_INVALIDATE              0x208
+ #define   PHB_RTC_INVALIDATE_ALL        PPC_BIT(0)
+ #define   PHB_RTC_INVALIDATE_RID        PPC_BITMASK(16, 31)
+@@ -370,6 +372,7 @@
+ #define P32_CAP                                 0x228
+ #define P32_CTL                                 0x22C
+ #define P32_STAT                                0x230
++
+ /* PHB4 REGB registers */
  
- #define IODA3_TBL_LIST          1
- #define IODA3_TBL_MIST          2
-+#define IODA3_TBL_PCT           3
- #define IODA3_TBL_RCAM          5
- #define IODA3_TBL_MRT           6
- #define IODA3_TBL_PESTA         7
+ /* PBL core */
+@@ -395,8 +398,8 @@
+ #define PHB_PCIE_SCR                    0x1A00
+ #define   PHB_PCIE_SCR_SLOT_CAP         PPC_BIT(15)
+ #define   PHB_PCIE_SCR_MAXLINKSPEED     PPC_BITMASK(32, 35)
++#define   PHB_PCIE_SCR_PLW_X16          PPC_BIT(41) /* x16 */
+ #define PHB_PCIE_BNR                    0x1A08
+-
+ #define PHB_PCIE_CRESET                 0x1A10
+ #define   PHB_PCIE_CRESET_CFG_CORE      PPC_BIT(0)
+ #define   PHB_PCIE_CRESET_TLDLP         PPC_BIT(1)
+@@ -405,7 +408,14 @@
+ #define   PHB_PCIE_CRESET_PIPE_N        PPC_BIT(4)
+ #define   PHB_PCIE_CRESET_REFCLK_N      PPC_BIT(8)
+ #define PHB_PCIE_HOTPLUG_STATUS         0x1A20
++#define   PHB_PCIE_HPSTAT_SIMDIAG       PPC_BIT(3)
++#define   PHB_PCIE_HPSTAT_RESAMPLE      PPC_BIT(9)
+ #define   PHB_PCIE_HPSTAT_PRESENCE      PPC_BIT(10)
++#define   PHB_PCIE_HPSTAT_LINKACTIVE    PPC_BIT(12)
++#define PHB_PCIE_LMR                    0x1A30
++#define   PHB_PCIE_LMR_CHANGELW         PPC_BIT(0)
++#define   PHB_PCIE_LMR_RETRAINLINK      PPC_BIT(1)
++#define   PHB_PCIE_LMR_LINKACTIVE       PPC_BIT(8)
+ 
+ #define PHB_PCIE_DLP_TRAIN_CTL          0x1A40
+ #define   PHB_PCIE_DLP_LINK_WIDTH       PPC_BITMASK(30, 35)
+@@ -433,7 +443,7 @@
+ 
+ #define PHB_PCIE_DLP_TRWCTL             0x1A80
+ #define   PHB_PCIE_DLP_TRWCTL_EN        PPC_BIT(0)
+-
++#define   PHB_PCIE_DLP_TRWCTL_WREN      PPC_BIT(1)
+ #define PHB_PCIE_DLP_ERRLOG1            0x1AA0
+ #define PHB_PCIE_DLP_ERRLOG2            0x1AA8
+ #define PHB_PCIE_DLP_ERR_STATUS         0x1AB0
+diff --git a/tests/qtest/pnv-phb-test.c b/tests/qtest/pnv-phb-test.c
+index fe1ac27264..76212acacc 100644
+--- a/tests/qtest/pnv-phb-test.c
++++ b/tests/qtest/pnv-phb-test.c
+@@ -76,7 +76,8 @@ static void phb5_sticky_rst_test(QTestState *qts)
+      * Sticky reset test of PHB_PBL_ERR_STATUS.
+      *
+      * Write all 1's to reg PHB_PBL_ERR_INJECT.
+-     * Updated value will be copied to reg PHB_PBL_ERR_STATUS.
++     * RO-only bits will not be written and
++     * updated value will be copied to reg PHB_PBL_ERR_STATUS.
+      *
+      * Reset PBL core by setting PHB_PCIE_CRESET_PBL in reg PHB_PCIE_CRESET.
+      * Verify the sticky bits are still set.
+@@ -84,7 +85,62 @@ static void phb5_sticky_rst_test(QTestState *qts)
+     PHB5_XSCOM_WRITE(PHB_PBL_ERR_INJECT, PPC_BITMASK(0, 63));
+     PHB5_XSCOM_WRITE(PHB_PCIE_CRESET, PHB_PCIE_CRESET_PBL); /*Reset*/
+     val = PHB5_XSCOM_READ(PHB_PBL_ERR_STATUS);
+-    g_assert_cmpuint(val, ==, (PPC_BITMASK(0, 9) | PPC_BITMASK(12, 63)));
++    g_assert_cmpuint(val, ==, (PPC_BITMASK(24, 27) | PPC_BITMASK(36, 37) |
++                     PPC_BITMASK(39, 45) | PPC_BITMASK(47, 48) |
++                     PPC_BITMASK(52, 54)));
++
++}
++
++/* Check that write-only bits/regs return 0 when read */
++static void phb4_writeonly_read_test(QTestState *qts)
++{
++    uint64_t val;
++
++    /*
++     * Set all bits of PHB_DMA_SYNC,
++     * bits 0 and 2 are write-only and should be read as 0.
++     */
++    PHB5_XSCOM_WRITE(PHB_DMA_SYNC, PPC_BITMASK(0, 63));
++    val = PHB5_XSCOM_READ(PHB_DMA_SYNC);
++    g_assert_cmpuint(val & PPC_BIT(0), ==, 0x0);
++    g_assert_cmpuint(val & PPC_BIT(2), ==, 0x0);
++
++    /*
++     * Set all bits of PHB_PCIE_HOTPLUG_STATUS,
++     * bit 9 is write-only and should be read as 0.
++     */
++    PHB5_XSCOM_WRITE(PHB_PCIE_HOTPLUG_STATUS, PPC_BITMASK(0, 63));
++    val = PHB5_XSCOM_READ(PHB_PCIE_HOTPLUG_STATUS);
++    g_assert_cmpuint(val & PPC_BIT(9), ==, 0x0);
++
++    /*
++     * Set all bits of PHB_PCIE_LMR,
++     * bits 0 and 1 are write-only and should be read as 0.
++     */
++    PHB5_XSCOM_WRITE(PHB_PCIE_LMR, PPC_BITMASK(0, 63));
++    val = PHB5_XSCOM_READ(PHB_PCIE_LMR);
++    g_assert_cmpuint(val & PPC_BIT(0), ==, 0x0);
++    g_assert_cmpuint(val & PPC_BIT(1), ==, 0x0);
++
++    /*
++     * Set all bits of PHB_PCIE_DLP_TRWCTL,
++     * write-only bit-1 should be read as 0.
++     */
++    PHB5_XSCOM_WRITE(PHB_PCIE_DLP_TRWCTL, PPC_BITMASK(0, 63));
++    val = PHB5_XSCOM_READ(PHB_PCIE_DLP_TRWCTL);
++    g_assert_cmpuint(val & PPC_BIT(1), ==, 0x0);
++
++    /*
++     * Set all bits of PHB_LEM_ERROR_AND_MASK, PHB_LEM_ERROR_OR_MASK,
++     * both regs are write-only and should be read as 0.
++     */
++    PHB5_XSCOM_WRITE(PHB_LEM_ERROR_AND_MASK, PPC_BITMASK(0, 63));
++    val = PHB5_XSCOM_READ(PHB_LEM_ERROR_AND_MASK);
++    g_assert_cmpuint(val, ==, 0x0);
++
++    PHB5_XSCOM_WRITE(PHB_LEM_ERROR_OR_MASK, PPC_BITMASK(0, 63));
++    val = PHB5_XSCOM_READ(PHB_LEM_ERROR_OR_MASK);
++    g_assert_cmpuint(val, ==, 0x0);
+ }
+ 
+ static void phb5_tests(void)
+@@ -99,6 +155,9 @@ static void phb5_tests(void)
+     /* Check sticky reset of a register */
+     phb5_sticky_rst_test(qts);
+ 
++    /* Check write-only logic */
++    phb4_writeonly_read_test(qts);
++
+     qtest_quit(qts);
+ }
+ 
 -- 
 2.52.0
 
