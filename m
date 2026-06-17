@@ -4,76 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81785CD98E2
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jun 2026 15:24:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2ADE3CD98E2
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jun 2026 15:25:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZs86-0007Ax-75; Wed, 17 Jun 2026 11:24:38 -0400
+	id 1wZs8g-0000S6-VT; Wed, 17 Jun 2026 11:25:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wZs82-0006rK-25
- for qemu-devel@nongnu.org; Wed, 17 Jun 2026 11:24:35 -0400
+ id 1wZs8B-0007vU-Fq
+ for qemu-devel@nongnu.org; Wed, 17 Jun 2026 11:24:46 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wZs7y-0004J7-No
- for qemu-devel@nongnu.org; Wed, 17 Jun 2026 11:24:33 -0400
+ id 1wZs89-0004OI-Ip
+ for qemu-devel@nongnu.org; Wed, 17 Jun 2026 11:24:43 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781709869;
+ s=mimecast20190719; t=1781709880;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=OS0BvrZteOopO22QianGRQGnCdCp4nlyvY3EnxVGj8g=;
- b=fF4B/MgDZFzhHX6E4EkSYNWwNdv81ygGyozR7Sf/9GWI9v8fq8gF7FmNiG8d+Ydk3x5Pki
- fKCBkALD2lVlGohfavjNDmbMxG7rTS1ytDrzp/3EXgre7kZN4Zl35HpZXFuKXmCk+wY04F
- C4AmQh+gxBq+YDja/3VIO9gXrhU0QH0=
+ bh=bFuHXn1a4HZLi+ZiWQR6/9L0ttH0GIGQ74TtaECR1mI=;
+ b=hyJvWwkhgN69m0mlRPVSmWrosgR8rZs3BD8nRUSkzg4Y8RAe2DaSosf+MBPDWYbdy6m6+B
+ MsuYOjVCgduNFzKkTZR25DijRZ4VuR8HkyEFMXqEw48QH3sM9SweDuXfsJYTrXLp3igMBK
+ WGUBwKu7S/+azyWdWl0cVvRswdPcB14=
 Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-517-Cuoqjze-P6K7rK2hXhQ81Q-1; Wed,
- 17 Jun 2026 11:24:28 -0400
-X-MC-Unique: Cuoqjze-P6K7rK2hXhQ81Q-1
-X-Mimecast-MFC-AGG-ID: Cuoqjze-P6K7rK2hXhQ81Q_1781709867
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-101-mXQDvEttOL6kV8gH1Q4n7Q-1; Wed,
+ 17 Jun 2026 11:24:39 -0400
+X-MC-Unique: mXQDvEttOL6kV8gH1Q4n7Q-1
+X-Mimecast-MFC-AGG-ID: mXQDvEttOL6kV8gH1Q4n7Q_1781709878
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id BDB73195395D
- for <qemu-devel@nongnu.org>; Wed, 17 Jun 2026 15:24:27 +0000 (UTC)
+ id 6CEAE19539BC
+ for <qemu-devel@nongnu.org>; Wed, 17 Jun 2026 15:24:38 +0000 (UTC)
 Received: from localhost (unknown [10.44.22.6])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 9546018005B3; Wed, 17 Jun 2026 15:24:25 +0000 (UTC)
+ id 31DA218005B6; Wed, 17 Jun 2026 15:24:36 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Wed, 17 Jun 2026 19:23:08 +0400
-Subject: [GIT PULL 11/27] hw/arm: keep QemuInputHandlerState in musicpal
+Date: Wed, 17 Jun 2026 19:23:10 +0400
+Subject: [GIT PULL 13/27] hw/input: keep QemuInputHandlerState in stellaris
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260617-ui-input-v1-11-79e9aedc5899@redhat.com>
+Message-Id: <20260617-ui-input-v1-13-79e9aedc5899@redhat.com>
 References: <20260617-ui-input-v1-0-79e9aedc5899@redhat.com>
 In-Reply-To: <20260617-ui-input-v1-0-79e9aedc5899@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Stefan Hajnoczi <stefanha@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1500;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2322;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=QJ+id6RnEmy1UMWxYzi3z2UECPHZM98p4AGKtZtfKoA=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqMrvoBQxejkcPdnMlHGCRiag+994WQ2Joueegc
- EQ9msYx5/CJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCajK76AAKCRDa6OEJdZac
- 5W23D/4ndabr9fxP/N9KMngXCVD4N6hAu/3II186vMmAlFsU5pFaKs+4cCTCk8lzT7rsQO2kQsX
- 15fS5rH9w+Cz5IdySSdh9Cuogzp1lXi4x52ECjVZBf+pfT+KrwpH04tWKiuIcWHaneUW31XROxK
- YYCSTr2JHBKCIZ3GY+y5XigwJrTHqqmvPxQTSaT2KYTz5n3G0cttaMcVPqSk3yrT1cdErilGCU6
- T9T9oPq1ZThuRlXk4pVAHhPC54XW8EoFLvF+UHKYDHI4o6rUgV3gV7ivohtzf1lqIJsbn4g5dpN
- mgH3sjYIYHvGn9ROFNNPifNhpOujyFr4WYdGcSH0HJGunV7CrrOLNpuhdUB57maHeTcMifM8K7z
- j1sju8ET4lcPEZxbHYQSsRaxFFDUPhxY2GYFVaxPnXJ52m9pfyLbWLvnnj0niKJO3pxLgEaKhDZ
- phJuNjj3rlQ2D95Rjaubt9SqZ5xf6PjEboU7m8qgOsllICY/TwsJUCBanyPo9E0mmDn4NVkQ2A+
- Evnd5eejB2LClPgGbHbHPv2/SEY+0EzUw0ON2rgWp6+q4zkUaxQr0Lo+rQer/sSWhgryQN6ThOw
- 1RoIabnsQF/hi8josgCZtXTXYgYY0clzGIDc8llnDDQvzQXM+CuVLWy1PCXMZkknwbljAEhKQ5E
- cfxvnEp199u/guA==
+ bh=xge/K+Jj02hX/XLvoqYHxXtf7aahrJ54qsucnmC3qhs=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqMrvptzG90qQC1MhGYDPiM22cndGvkOIotLNWh
+ fSfts+CmgCJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCajK76QAKCRDa6OEJdZac
+ 5fNlD/9YZm+RT/cLr5vQ2gRWlniUj0x7LBoWXvO5Z3H0akcpdTuamGM820s61RjY2G7Kv57GVap
+ Br0spJZKaC1cOsU0oQBfy7Nw/wRcLXa60fSxo6x2vGdOxdfsd8+DwUvCT0fONX2ZExfMr/K5AvA
+ WiELUvAOY1gLws6g6OhWzKfadP4m6Zbw6kcp/4VxJ4Hp1cBy67l+xd9dXcpfTXENfuSVu0B9Nfq
+ qmeES3DmmAzevx7P+1ANDF8uKV1OdjrBRVyyvlMzkC4x9qCeO51Kz1MD0Vyaz+bAnGyQaZrA2VY
+ T7Ba/VlfDI+rQK5USvuYKupz8VJ5fMpexuKtdGkk4viEFs81NihdbeF17NPkPGP93kvT0wxwOJ5
+ g9qkBpwSMV33PijMbMkYJOrK9CEf7Ejri4kM1t2XDLh3mU3JMd1o4K7qjz1yM+1JphkjJC6vQuX
+ /Dht95NQMjN5CxKZhuV6odGG3FksrRjCVNrkWz8WcGCo0rT8fm6Z6y+4SqPoO6bPIXoZ9SD42Xi
+ ukUWEu6EAYunYdctJL6QY/NOMdI8MkyOs5Btc5h7KQxLoL0P+MZ6Gg/zBKkuylfu+PRWxXr2xSn
+ +pvP9yJePnU/5034ItEoBl+JtYV7XvzSAkiL+ioAU1etLZA/Od5GKKLB6JdAqeKY2xL1FuJJWKB
+ lWVZxY23ffMWOlg==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
@@ -105,50 +105,65 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Track the input handled state, and dispose it on unrealize.
 
+Also free some allocated fields during unrealize.
+
 Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- hw/arm/musicpal.c | 13 ++++++++++++-
- 1 file changed, 12 insertions(+), 1 deletion(-)
+ include/hw/input/stellaris_gamepad.h |  2 ++
+ hw/input/stellaris_gamepad.c         | 12 +++++++++++-
+ 2 files changed, 13 insertions(+), 1 deletion(-)
 
-diff --git a/hw/arm/musicpal.c b/hw/arm/musicpal.c
-index e2630243eb7..69e83bdd973 100644
---- a/hw/arm/musicpal.c
-+++ b/hw/arm/musicpal.c
-@@ -1062,6 +1062,7 @@ struct musicpal_key_state {
+diff --git a/include/hw/input/stellaris_gamepad.h b/include/hw/input/stellaris_gamepad.h
+index e011482646f..c1069735010 100644
+--- a/include/hw/input/stellaris_gamepad.h
++++ b/include/hw/input/stellaris_gamepad.h
+@@ -13,6 +13,7 @@
+ 
+ #include "hw/core/sysbus.h"
+ #include "qom/object.h"
++#include "ui/input.h"
+ 
+ /*
+  * QEMU interface:
+@@ -28,6 +29,7 @@ OBJECT_DECLARE_SIMPLE_TYPE(StellarisGamepad, STELLARIS_GAMEPAD)
+ struct StellarisGamepad {
      SysBusDevice parent_obj;
-     /*< public >*/
  
 +    QemuInputHandlerState *hs;
-     uint32_t pressed_keys;
-     qemu_irq out[8];
- };
-@@ -1158,7 +1159,16 @@ static const QemuInputHandler musicpal_key_handler = {
- 
- static void musicpal_key_realize(DeviceState *dev, Error **errp)
- {
--    qemu_input_handler_register(dev, &musicpal_key_handler);
-+    musicpal_key_state *s = MUSICPAL_KEY(dev);
-+
-+    s->hs = qemu_input_handler_register(dev, &musicpal_key_handler);
+     uint32_t num_buttons;
+     qemu_irq *irqs;
+     uint32_t *keycodes;
+diff --git a/hw/input/stellaris_gamepad.c b/hw/input/stellaris_gamepad.c
+index 25769fc2616..376d91abad7 100644
+--- a/hw/input/stellaris_gamepad.c
++++ b/hw/input/stellaris_gamepad.c
+@@ -59,7 +59,16 @@ static void stellaris_gamepad_realize(DeviceState *dev, Error **errp)
+     s->irqs = g_new0(qemu_irq, s->num_buttons);
+     s->pressed = g_new0(uint8_t, s->num_buttons);
+     qdev_init_gpio_out(dev, s->irqs, s->num_buttons);
+-    qemu_input_handler_register(dev, &stellaris_gamepad_handler);
++    s->hs = qemu_input_handler_register(dev, &stellaris_gamepad_handler);
 +}
 +
-+static void musicpal_key_unrealize(DeviceState *dev)
++static void stellaris_gamepad_unrealize(DeviceState *dev)
 +{
-+    musicpal_key_state *s = MUSICPAL_KEY(dev);
++    StellarisGamepad *s = STELLARIS_GAMEPAD(dev);
 +
++    g_clear_pointer(&s->irqs, g_free);
++    g_clear_pointer(&s->pressed, g_free);
 +    g_clear_pointer(&s->hs, qemu_input_handler_unregister);
  }
  
- static const VMStateDescription musicpal_key_vmsd = {
-@@ -1177,6 +1187,7 @@ static void musicpal_key_class_init(ObjectClass *klass, const void *data)
+ static void stellaris_gamepad_reset_enter(Object *obj, ResetType type)
+@@ -81,6 +90,7 @@ static void stellaris_gamepad_class_init(ObjectClass *klass, const void *data)
  
-     dc->vmsd = &musicpal_key_vmsd;
-     dc->realize = musicpal_key_realize;
-+    dc->unrealize = musicpal_key_unrealize;
+     rc->phases.enter = stellaris_gamepad_reset_enter;
+     dc->realize = stellaris_gamepad_realize;
++    dc->unrealize = stellaris_gamepad_unrealize;
+     dc->vmsd = &vmstate_stellaris_gamepad;
+     device_class_set_props(dc, stellaris_gamepad_properties);
  }
- 
- static const TypeInfo musicpal_key_info = {
 
 -- 
 2.54.0
