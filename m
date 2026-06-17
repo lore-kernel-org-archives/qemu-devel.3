@@ -4,107 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6EB3DCD98E4
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jun 2026 11:04:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7551CD98F1
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jun 2026 11:06:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZo4G-0000WX-CS; Wed, 17 Jun 2026 07:04:24 -0400
+	id 1wZo5w-0001BB-0t; Wed, 17 Jun 2026 07:06:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1wZo4D-0000WO-Vx
- for qemu-devel@nongnu.org; Wed, 17 Jun 2026 07:04:22 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wZo5v-0001B3-AI
+ for qemu-devel@nongnu.org; Wed, 17 Jun 2026 07:06:07 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1wZo4C-0004Ip-9Q
- for qemu-devel@nongnu.org; Wed, 17 Jun 2026 07:04:21 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wZo5t-0005Jz-P7
+ for qemu-devel@nongnu.org; Wed, 17 Jun 2026 07:06:07 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781694259;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ s=mimecast20190719; t=1781694365;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=8Hyxu/rS4LPPZUzRrIZO8rrSqXLDza1jR8VjK98X1UE=;
- b=Lrvxvv5rpM2wyAoLi039Kwk2fTIxA/ZsirWApQsI2VdkRkuVWgOB8Z1KIl+bmGScoJhf3i
- pJnxFm5ovcDYiFX7HnIXEqOfDUYxHxlb6Lklpu0AcjOi4OK4nGN5mFaBxTvj3X9cMNqy67
- C71lYyWB7Hg4+rs3N/18wrE2zzhUoaE=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-646-xzT7CXaOMJy2_EY-P89TNw-1; Wed, 17 Jun 2026 07:04:18 -0400
-X-MC-Unique: xzT7CXaOMJy2_EY-P89TNw-1
-X-Mimecast-MFC-AGG-ID: xzT7CXaOMJy2_EY-P89TNw_1781694257
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-4623bdcad2fso575296f8f.0
- for <qemu-devel@nongnu.org>; Wed, 17 Jun 2026 04:04:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1781694257; x=1782299057; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:from:to:cc:subject:date
- :message-id:reply-to;
- bh=8Hyxu/rS4LPPZUzRrIZO8rrSqXLDza1jR8VjK98X1UE=;
- b=qeTl7em/KUV3YgZmhu1bCu9mdPMh7oxITrML7M6s2/HFu+Zr008sgE404ft5i2/0fy
- 1j2wkczi3oySFpL4OzpFdliQIMi8l+Gpl/LWxtfK/avJEcS4rN7MeLoXP9+sE9f2Mk9U
- 4v26+e+amln+9aoovsjBtg8QgSCfo9H7ahOt/qvgEf5TQ4Jb8AnyRrYBBE/kbHIRGRBM
- D+gHknCm6ZXAld4uRjqIQfuM8EhKuXYoeSiWSN2b1Sz20NcKyn43RnE7sLIqOku4flD6
- CjfpxDZz7/9Xm8JD1qjXrpP1o1hgYFxFWe9PoISUE9GW/ypbhJ2sjFmdqMakJ3rQokWt
- ASqA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781694257; x=1782299057;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=8Hyxu/rS4LPPZUzRrIZO8rrSqXLDza1jR8VjK98X1UE=;
- b=mamqmKHURQlN8eX1txGS5UQUVxQWKYzE/xN+clfTFWGiqtRe6PVT6HL7QZymYkDW9S
- HCWnIiI/l0Ta2/V0F99GB4FBklMvkD6qXsGJ0qNMMYQMrwqhWjPx3ypmq2iN8l+Mv64H
- RolJxNarORaWyFtGqQ+HN5pDkFwB5Lp4+LNWTYftqPZKkcRmYl76NZ0k1MFoRIhpAcFf
- 9zZIpMH1wQYEd3RNEFGFSUH2F4aMRbkm3YdW+o1ET4rK3UySY6/rAlI5Qm7vssjWQq3+
- c67GLohGySBfb048Yy6scemw+gZ6oFS6GB9lpAM3knccxlLNLrZ0q5AOjgkUJ0QZJT6x
- DVYg==
-X-Gm-Message-State: AOJu0YxxblnQtG58isYhMHetSNvcTzie9Mdk2ukhHwjO9skJLhEaf89a
- 2XvpAQiXndbOdfvKcfQ3t8dZfEp8EDXII5LzMkNUwwqZpRWILL4gH9u9KxKJVW/2PS60R1J/aPA
- qORIXbVVwtRyjat7D5P1KS0MrGWHNA6zMyALWZPPSXjvAMzWfgJy577Vo
-X-Gm-Gg: Acq92OELbAvT1Nh/3Ww6ToQs7p4QNJQ71Nu1wid0XleD1HxyS+jwtqvAy8RNvQiHulB
- ckh72A9z/oqITJlwzq2OdeQfH00i5phXL0gDrMU/zy9U1AgocMTEyQ98+vQVUDg6jsl+0RFR8dP
- 2VsA4U8sMdWGLQv1kIrI6RAXKqyiJTXERVB6hZWukLdJZVGobc/7fsTlVHX4kBRemfbSf9/JtwY
- G6Osu+NOGyQrUfYqXciKsd4P4GZM+iRN1XjYwwu1zGN8AOE6QOB8nUHSv8NJbmgj3SzIrzFNQVM
- Q+p4jcccmqrYSfrqQuVYhYOexpdbCqIXe+veOW1ylylFQzm5LpBdG+xnc+E3+zWT5WCIxgQ=
-X-Received: by 2002:a05:600c:609a:b0:490:5e2a:f924 with SMTP id
- 5b1f17b1804b1-4923339fd97mr57733315e9.7.1781694256698; 
- Wed, 17 Jun 2026 04:04:16 -0700 (PDT)
-X-Received: by 2002:a05:600c:609a:b0:490:5e2a:f924 with SMTP id
- 5b1f17b1804b1-4923339fd97mr57732385e9.7.1781694256033; 
- Wed, 17 Jun 2026 04:04:16 -0700 (PDT)
-Received: from imammedo ([213.175.46.86]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4922fa9f2c0sm185907885e9.15.2026.06.17.04.04.14
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 17 Jun 2026 04:04:15 -0700 (PDT)
-Date: Wed, 17 Jun 2026 13:04:12 +0200
-From: Igor Mammedov <imammedo@redhat.com>
-To: fanhuang <FangSheng.Huang@amd.com>
-Cc: <qemu-devel@nongnu.org>, <david@kernel.org>, <gourry@gourry.net>,
- <philmd@mailo.com>, <Zhigang.Luo@amd.com>, <Lianjie.Shi@amd.com>
-Subject: Re: [PATCH v12 2/4] i386/acpi-build: partition device_memory SRAT
- umbrella for sp-mem
-Message-ID: <20260617130412.3c81b99f@imammedo>
-In-Reply-To: <20260616090808.3047939-3-FangSheng.Huang@amd.com>
-References: <20260616090808.3047939-1-FangSheng.Huang@amd.com>
- <20260616090808.3047939-3-FangSheng.Huang@amd.com>
-X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-redhat-linux-gnu)
+ bh=pKqvXiNOwYSNTzm1nO5sAsTNsjacc5XsjUk84YGB1fQ=;
+ b=adPZEcegbwDVRW4tSYwoAX3IOgcM9kisEGjjrebiQFZyiZFZrD7o578fNJ/y/hzHCdqraD
+ UX7Fob99h/gYy1CkbcCjWh+s0i9+meZjsM6xPnGqb8S6+RYvwED7tRBsmgoWdwGKER6Jig
+ MP0716Bmq5vwxYJfmlJa4vrVHDTGOUY=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-124-vDd3TUkYMl6MP1Lz3y7Xfw-1; Wed,
+ 17 Jun 2026 07:05:58 -0400
+X-MC-Unique: vDd3TUkYMl6MP1Lz3y7Xfw-1
+X-Mimecast-MFC-AGG-ID: vDd3TUkYMl6MP1Lz3y7Xfw_1781694357
+Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 016641955EB6; Wed, 17 Jun 2026 11:05:56 +0000 (UTC)
+Received: from redhat.com (unknown [10.44.48.201])
+ by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A77063189; Wed, 17 Jun 2026 11:05:50 +0000 (UTC)
+Date: Wed, 17 Jun 2026 12:05:47 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Peter Xu <peterx@redhat.com>,
+ =?utf-8?B?SGVydsOp?= Poussineau <hpoussin@reactos.org>,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Aurelien Jarno <aurelien@aurel32.net>, Fabiano Rosas <farosas@suse.de>,
+ Paolo Bonzini <pbonzini@redhat.com>, BALATON Zoltan <balaton@eik.bme.hu>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>
+Subject: Re: [RFC 0/7] qom: deprecate embedded objects and instance properties
+Message-ID: <ajJ_ixB67goD5V8E@redhat.com>
+References: <20260616155554.264412-1-berrange@redhat.com>
+ <87jyrxo2k6.fsf@pond.sub.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <87jyrxo2k6.fsf@pond.sub.org>
+User-Agent: Mutt/2.3.2 (2026-04-26)
+X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+X-Spam_score_int: 8
+X-Spam_score: 0.8
+X-Spam_bar: /
+X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,151 +96,29 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 16 Jun 2026 17:08:06 +0800
-fanhuang <FangSheng.Huang@amd.com> wrote:
-
-> Restructure the device_memory SRAT umbrella entry into a per-kind
-> partition: each TYPE_SP_MEM device gets an ENABLED entry at its own
-> proximity_domain; the remaining sub-ranges get HOTPLUGGABLE | ENABLED
-> placeholders at the highest PXM, preserving the existing umbrella
-> convention.
+On Wed, Jun 17, 2026 at 12:59:21PM +0200, Markus Armbruster wrote:
+> Daniel P. Berrangé <berrange@redhat.com> writes:
 > 
-> Signed-off-by: FangSheng Huang <FangSheng.Huang@amd.com>
-
-LGTM, but i haven't really tested it.
-please add test case for this, see tests/qtest/bios-tables-test.c
-for examples and process.
-
-With condition adding test to cover it:
-Reviewed-by: Igor Mammedov <imammedo@redhat.com>
-
-> ---
->  hw/i386/acpi-build.c | 96 ++++++++++++++++++++++++++++++++++++++++++--
->  1 file changed, 92 insertions(+), 4 deletions(-)
+> > QOM has two rather unusual / surprising features historicall
+> >
+> >  * The ability to embed a QOM instance's memory inside another
+> >    struct
+> >  * The ability to register properties against the instnce
+> >    instead of struct
 > 
-> diff --git a/hw/i386/acpi-build.c b/hw/i386/acpi-build.c
-> index 0d7c83d5e9..db144b5706 100644
-> --- a/hw/i386/acpi-build.c
-> +++ b/hw/i386/acpi-build.c
-> @@ -52,6 +52,7 @@
->  #include "migration/vmstate.h"
->  #include "hw/mem/memory-device.h"
->  #include "hw/mem/nvdimm.h"
-> +#include "hw/mem/sp-mem.h"
->  #include "system/numa.h"
->  #include "system/reset.h"
->  #include "hw/hyperv/vmbus-bridge.h"
-> @@ -1346,6 +1347,96 @@ build_tpm_tcpa(GArray *table_data, BIOSLinker *linker, GArray *tcpalog,
->  }
->  #endif
->  
-> +typedef struct {
-> +    uint64_t addr;
-> +    uint64_t size;
-> +    uint32_t node;
-> +} SpMemRange;
-> +
-> +static int sp_mem_collect_ranges_cb(Object *obj, void *opaque)
-> +{
-> +    GArray *ranges = opaque;
-> +    SpMemDevice *spm;
-> +    MemoryDeviceClass *mdc;
-> +    SpMemRange r;
-> +
-> +    if (!object_dynamic_cast(obj, TYPE_SP_MEM)) {
-> +        return 0;
-> +    }
-> +    spm = SP_MEM(obj);
-> +    mdc = MEMORY_DEVICE_GET_CLASS(MEMORY_DEVICE(spm));
-> +    r.addr = mdc->get_addr(MEMORY_DEVICE(spm));
-> +    r.size = memory_region_size(
-> +                 host_memory_backend_get_memory(spm->hostmem));
-> +    r.node = spm->node;
-> +    g_array_append_val(ranges, r);
-> +    return 0;
-> +}
-> +
-> +static gint sp_mem_range_compare(gconstpointer a, gconstpointer b)
-> +{
-> +    const SpMemRange *range_a = a;
-> +    const SpMemRange *range_b = b;
-> +
-> +    if (range_a->addr < range_b->addr) {
-> +        return -1;
-> +    }
-> +    if (range_a->addr > range_b->addr) {
-> +        return 1;
-> +    }
-> +    return 0;
-> +}
-> +
-> +/*
-> + * Emit SRAT memory-affinity entries covering the device_memory region.
-> + *
-> + * For each plugged TYPE_SP_MEM device, emit an ENABLED entry at the
-> + * device's own proximity_domain.  All remaining sub-ranges (gaps
-> + * between sp-mem devices, leading and trailing padding, and ranges
-> + * occupied by other memory devices) are covered by HOTPLUGGABLE |
-> + * ENABLED placeholder entries at PXM = nb_numa_nodes - 1.
-> + */
-> +static void build_srat_device_memory(GArray *table_data, MachineState *ms)
-> +{
-> +    g_autoptr(GArray) ranges = g_array_new(FALSE, TRUE, sizeof(SpMemRange));
-> +    uint32_t hotplug_pxm = ms->numa_state->num_nodes - 1;
-> +    uint64_t region_start, region_end;
-> +    guint i;
-> +
-> +    region_start = ms->device_memory->base;
-> +    region_end = region_start + memory_region_size(&ms->device_memory->mr);
-> +
-> +    object_child_foreach_recursive(qdev_get_machine(),
-> +                                   sp_mem_collect_ranges_cb, ranges);
-> +    g_array_sort(ranges, sp_mem_range_compare);
-> +
-> +    for (i = 0; i < ranges->len; i++) {
-> +        SpMemRange *r = &g_array_index(ranges, SpMemRange, i);
-> +
-> +        if (region_start < r->addr) {
-> +            build_srat_memory(table_data, region_start, r->addr - region_start,
-> +                              hotplug_pxm,
-> +                              MEM_AFFINITY_HOTPLUGGABLE |
-> +                              MEM_AFFINITY_ENABLED);
-> +        }
-> +        build_srat_memory(table_data, r->addr, r->size, r->node,
-> +                          MEM_AFFINITY_ENABLED);
-> +        region_start = r->addr + r->size;
-> +    }
-> +
-> +    /*
-> +     * Cover the rest of the device_memory window that no sp-mem device
-> +     * occupies. Keeping it HOTPLUGGABLE preserves the umbrella entry's
-> +     * role for future pc-dimm / virtio-mem hot-add into this window.
-> +     */
-> +    if (region_start < region_end) {
-> +        build_srat_memory(table_data, region_start, region_end - region_start,
-> +                          hotplug_pxm,
-> +                          MEM_AFFINITY_HOTPLUGGABLE |
-> +                          MEM_AFFINITY_ENABLED);
-> +    }
-> +}
-> +
->  #define HOLE_640K_START  (640 * KiB)
->  #define HOLE_640K_END   (1 * MiB)
->  
-> @@ -1482,10 +1573,7 @@ build_srat(GArray *table_data, BIOSLinker *linker, MachineState *machine)
->       * providing _PXM method if necessary.
->       */
->      if (machine->device_memory) {
-> -        build_srat_memory(table_data, machine->device_memory->base,
-> -                          memory_region_size(&machine->device_memory->mr),
-> -                          nb_numa_nodes - 1,
-> -                          MEM_AFFINITY_HOTPLUGGABLE | MEM_AFFINITY_ENABLED);
-> +        build_srat_device_memory(table_data, machine);
->      }
->  
->      acpi_table_end(linker, &table);
+> I figure you mean "against the instance instead of the class".
+
+Yes indeed
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+|: https://libvirt.org          ~~          https://entangle-photo.org :|
+|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
 
 
