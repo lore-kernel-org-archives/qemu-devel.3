@@ -4,66 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74EADCD98E2
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jun 2026 06:38:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2EB52CD98F0
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jun 2026 06:38:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZjtx-0001wM-Dq; Wed, 17 Jun 2026 02:37:29 -0400
+	id 1wZjuW-0001zW-M3; Wed, 17 Jun 2026 02:38:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wang.yechao255@zte.com.cn>)
- id 1wZjtv-0001vq-2L; Wed, 17 Jun 2026 02:37:27 -0400
-Received: from mxhk.zte.com.cn ([160.30.148.34])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wang.yechao255@zte.com.cn>)
- id 1wZjts-00074X-8R; Wed, 17 Jun 2026 02:37:26 -0400
-Received: from mse-fl2.zte.com.cn (unknown [10.5.228.133])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mxhk.zte.com.cn (FangMail) with ESMTPS id 4ggDfx3Vyvz5B12k;
- Wed, 17 Jun 2026 14:37:13 +0800 (CST)
-Received: from szxl2zmapp05.zte.com.cn ([10.1.32.37])
- by mse-fl2.zte.com.cn with SMTP id 65H6b5x6070819;
- Wed, 17 Jun 2026 14:37:05 +0800 (+08)
- (envelope-from wang.yechao255@zte.com.cn)
-Received: from localhost.localdomain (unknown [10.234.74.162])
- by smtp (Zmail) with SMTP; Wed, 17 Jun 2026 14:37:07 +0800
-X-Zmail-TransId: 3e816a324092004-f1ef0
-X-Zmail-LocalSMTP: 1
-X-Zmail-RealSender: wang.yechao255@zte.com.cn
-From: Wang Yechao <wang.yechao255@zte.com.cn>
-To: qemu-devel@nongnu.org, qemu-riscv@nongnu.org
-Cc: Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Chao Liu <chao.liu.zevorn@gmail.com>,
- Wang Yechao <wang.yechao255@zte.com.cn>
-Subject: [PATCH] target/riscv/kvm: add extensions after v7.1-rc4 update
-Date: Wed, 17 Jun 2026 14:36:30 +0800
-Message-ID: <20260617063630.111472-1-wang.yechao255@zte.com.cn>
-X-Mailer: git-send-email 2.41.0
+ (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
+ id 1wZjuI-0001yY-Qg
+ for qemu-devel@nongnu.org; Wed, 17 Jun 2026 02:37:51 -0400
+Received: from mail-dl1-x1244.google.com ([2607:f8b0:4864:20::1244])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
+ id 1wZjuA-000790-AX
+ for qemu-devel@nongnu.org; Wed, 17 Jun 2026 02:37:43 -0400
+Received: by mail-dl1-x1244.google.com with SMTP id
+ a92af1059eb24-1363fe80fe8so7760525c88.0
+ for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 23:37:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1781678258; x=1782283058; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=glGT/9Tgf/nxMCnzrBWKieQYTY5bAp/gZqD5zP9BJKg=;
+ b=BjmCDdO2V1JXBmNnwn4YdE8Oj98lJSdAbdU4BlacUMBDvhNmKRaagkKJQMndL3EpGZ
+ 7aGAtb5ipBNwZ0oP+2Px00s1oagHCJXhuuIftoI6CVcGHGh/2epexWv8Dcp7aKDBhdqa
+ tEl3o4SB9U2Tx1BVbtV9skep6SgQ7X8CkQ/mKvERINQutX4TZ/3xspBgumDDzkC7xTw6
+ 2S24U5F/NwLijDWeIyoBkqRjes49EEeDeLTloul4Dymk7GxTeD0Jbz2gqmhCioWf/t8J
+ /7HgX4Hbzidvvgj2ebuxqkvXach3XhJrZJ/AgKIc89TBq3UWO0CQpbNW282SLqsi8XYa
+ b1AQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1781678258; x=1782283058;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=glGT/9Tgf/nxMCnzrBWKieQYTY5bAp/gZqD5zP9BJKg=;
+ b=L0MpOi12o2ZIhJx/dx8dqB3loMp2SLCsYkCoqAdJaOy7nsa2NxvA6w5qFss3UEFaEO
+ NK/xIjPO8GyC0GynCr4QXJf2IvURGcxgDlklizvqax763scrqEmEmAilPjHKhNO0n0Vl
+ oox6pJCB8cGF+5IIIo8WE91FjCKK6F5UbIQZkk6veKSW0mFvYnqBvcJvAbswnQBKm5l8
+ P+tpa6O3qkO7b0R5G+rwYrjAejEwi5QfVYvjNQn7xWJjA5SFVC4smJJOfM78tqoVPd+q
+ JaRVjiu7K96ZybqHzi3wsZSHGg+TG216+3uQHSAJ0DLJCWSgrOAoEhntVAHAHgeckHir
+ vIlQ==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ9Q8K2Vx+kJKsmyLAOetiaH4ZxXPZoTH0UaV1afhKAQW9eAx7t2oFNPNmqUzUZeoZe+TXM42asDXRGL@nongnu.org
+X-Gm-Message-State: AOJu0YzVKhaIzYG+AIICB8q5tV3z+wKzbeUdYTn2BO5fxVcsW6kj2i6a
+ 9FZf5uaq6G/LteuPCEcvJJbPj2/OT5BthCcD/OEqvd0tsA8QC2+yUa+F+SnpRnh1
+X-Gm-Gg: Acq92OEzeU2KKuzZCIqI/oxApnBXOBM6cCV1N65tUbIE3nncacg5AJ/6VeR4lRBWNgD
+ yYDR1ALeFWft5msFApRVe7rWjwwh/SEcGdcZ5pzRimyjFC8pMF4u1YutIvDPGizhebcs+0vGbyP
+ 45cJrquluCsq6b1N+hNkuKz1nvn6YJn81NGbULbZDYrR4j68cqSktvt+O6g82vbcFEJf/EymWmy
+ 1NUHcHKa5si4HeH91rDNRmcrPErnZBN22WajUp9L1/YabSkgaNYRyDj8aWWVJuevHiYEZjlOG/t
+ CW/1CJ1d1FIU6Acbe+w+RytPJm543kPVGGgP/VQ5/T22Pp80dauHRpOlWQ66DxHf851g1XQ+ems
+ mIxQz+RhZrir5dbfxeOcbPfWUeWRN7rVtHtzfTxoXIe5eJxuhRlPEAiz9Uk66U7BPPyxsl5FgWQ
+ ixaJY2XfWt6g8B8rjhhUHhRLUQuyeQEIMsZJdV53tGidjzUabj
+X-Received: by 2002:a05:7022:3d05:b0:138:6027:b768 with SMTP id
+ a92af1059eb24-1398f6de208mr992799c88.27.1781678258395; 
+ Tue, 16 Jun 2026 23:37:38 -0700 (PDT)
+Received: from localhost ([64.186.250.142]) by smtp.gmail.com with ESMTPSA id
+ a92af1059eb24-1384b9110d3sm16199635c88.5.2026.06.16.23.37.36
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 16 Jun 2026 23:37:37 -0700 (PDT)
+Date: Wed, 17 Jun 2026 14:37:34 +0800
+From: Chao Liu <chao.liu.zevorn@gmail.com>
+To: Kuan-Wei Chiu <visitorckw@gmail.com>
+Cc: pbonzini@redhat.com, marcandre.lureau@redhat.com, 
+ alistair.francis@wdc.com, farosas@suse.de, lvivier@redhat.com,
+ liwei1518@gmail.com, 
+ daniel.barboza@oss.qualcomm.com, zhiwei_liu@linux.alibaba.com,
+ jserv@ccns.ncku.edu.tw, 
+ eleanor15x@gmail.com, marscheng@google.com, qemu-devel@nongnu.org, 
+ qemu-riscv@nongnu.org
+Subject: Re: [PATCH v3 0/5] hw/riscv: Add support for Milk-V Duo board
+Message-ID: <ajI_7sMKcaa-_lKD@ChaodeMacBook-Pro.local>
+References: <20260616190147.1286316-1-visitorckw@gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: multipart/mixed;
-	boundary="=====_001_next====="
-X-MAIL: mse-fl2.zte.com.cn 65H6b5x6070819
-X-TLS: YES
-X-ENVELOPE-SENDER: wang.yechao255@zte.com.cn
-X-SOURCE-IP: 10.5.228.133 unknown Wed, 17 Jun 2026 14:37:13 +0800
-X-CLEAN: YES
-X-Fangmail-Anti-Spam-Filtered: true
-X-Fangmail-MID-QID: 6A324099.001/4ggDfx3Vyvz5B12k
-Received-SPF: pass client-ip=160.30.148.34;
- envelope-from=wang.yechao255@zte.com.cn; helo=mxhk.zte.com.cn
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, HTML_MESSAGE=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260616190147.1286316-1-visitorckw@gmail.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1244;
+ envelope-from=chao.liu.zevorn@gmail.com; helo=mail-dl1-x1244.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -79,97 +105,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Tue, Jun 16, 2026 at 07:01:42PM +0800, Kuan-Wei Chiu wrote:
+Hi Kuan-Wei,
 
+> Add initial support for the Milk-V Duo board.
+> 
+> The Sophgo CV1800B SoC features T-Head C906 processing, standard PLIC
+> and CLINT controllers, a dw8250 uart, and basic clock control. The
+> current implementation can successfully run OpenSBI and boot Linux v7.0
+> from an SD card to the Linux shell.
+Can you add a document for the Milk-V Duo board?
 
---=====_001_next=====
-Content-Type: multipart/related;
-	boundary="=====_002_next====="
-
-
---=====_002_next=====
-Content-Type: multipart/alternative;
-	boundary="=====_003_next====="
-
-
---=====_003_next=====
-Content-Type: text/plain;
-	charset="UTF-8"
-Content-Transfer-Encoding: base64
-
-RXhwb3NlIHppbHNkLCB6Y2xzZCBhbmQgemFsYXNyLg0KDQpTaWduZWQtb2ZmLWJ5OiBXYW5nIFll
-Y2hhbyA8d2FuZy55ZWNoYW8yNTVAenRlLmNvbS5jbj4NCi0tLQ0KIHRhcmdldC9yaXNjdi9rdm0v
-a3ZtLWNwdS5jIHwgMyArKysNCiAxIGZpbGUgY2hhbmdlZCwgMyBpbnNlcnRpb25zKCspDQoNCmRp
-ZmYgLS1naXQgYS90YXJnZXQvcmlzY3Yva3ZtL2t2bS1jcHUuYyBiL3RhcmdldC9yaXNjdi9rdm0v
-a3ZtLWNwdS5jDQppbmRleCA1M2Q4ODMzOWMxLi42YmViYmFmN2Q0IDEwMDY0NA0KLS0tIGEvdGFy
-Z2V0L3Jpc2N2L2t2bS9rdm0tY3B1LmMNCisrKyBiL3RhcmdldC9yaXNjdi9rdm0va3ZtLWNwdS5j
-DQpAQCAtMzAzLDEwICszMDMsMTMgQEAgc3RhdGljIEtWTUNQVUNvbmZpZyBrdm1fbXVsdGlfZXh0
-X2NmZ3NbXSA9IHsNCiAgICAgS1ZNX0VYVF9DRkcoInppaGludG50bCIsIGV4dF96aWhpbnRudGws
-IEtWTV9SSVNDVl9JU0FfRVhUX1pJSElOVE5UTCksDQogICAgIEtWTV9FWFRfQ0ZHKCJ6aWhpbnRw
-YXVzZSIsIGV4dF96aWhpbnRwYXVzZSwgS1ZNX1JJU0NWX0lTQV9FWFRfWklISU5UUEFVU0UpLA0K
-ICAgICBLVk1fRVhUX0NGRygiemlocG0iLCBleHRfemlocG0sIEtWTV9SSVNDVl9JU0FfRVhUX1pJ
-SFBNKSwNCisgICAgS1ZNX0VYVF9DRkcoInppbHNkIiwgZXh0X3ppbHNkLCBLVk1fUklTQ1ZfSVNB
-X0VYVF9aSUxTRCksDQogICAgIEtWTV9FWFRfQ0ZHKCJ6aW1vcCIsIGV4dF96aW1vcCwgS1ZNX1JJ
-U0NWX0lTQV9FWFRfWklNT1ApLA0KICAgICBLVk1fRVhUX0NGRygiemNtb3AiLCBleHRfemNtb3As
-IEtWTV9SSVNDVl9JU0FfRVhUX1pDTU9QKSwNCisgICAgS1ZNX0VYVF9DRkcoInpjbHNkIiwgZXh0
-X3pjbHNkLCBLVk1fUklTQ1ZfSVNBX0VYVF9aQ0xTRCksDQogICAgIEtWTV9FWFRfQ0ZHKCJ6YWJo
-YSIsIGV4dF96YWJoYSwgS1ZNX1JJU0NWX0lTQV9FWFRfWkFCSEEpLA0KICAgICBLVk1fRVhUX0NG
-RygiemFjYXMiLCBleHRfemFjYXMsIEtWTV9SSVNDVl9JU0FfRVhUX1pBQ0FTKSwNCisgICAgS1ZN
-X0VYVF9DRkcoInphbGFzciIsIGV4dF96YWxhc3IsIEtWTV9SSVNDVl9JU0FfRVhUX1pBTEFTUiks
-DQogICAgIEtWTV9FWFRfQ0ZHKCJ6YXdycyIsIGV4dF96YXdycywgS1ZNX1JJU0NWX0lTQV9FWFRf
-WkFXUlMpLA0KICAgICBLVk1fRVhUX0NGRygiemZhIiwgZXh0X3pmYSwgS1ZNX1JJU0NWX0lTQV9F
-WFRfWkZBKSwNCiAgICAgS1ZNX0VYVF9DRkcoInpmYmZtaW4iLCBleHRfemZiZm1pbiwgS1ZNX1JJ
-U0NWX0lTQV9FWFRfWkZCRk1JTiksDQotLSANCjIuMjcuMA==
-
-
---=====_003_next=====
-Content-Type: text/html ;
-	charset="UTF-8"
-Content-Transfer-Encoding: base64
-
-RXhwb3NlJm5ic3A7emlsc2QsJm5ic3A7emNsc2QmbmJzcDthbmQmbmJzcDt6YWxhc3IuPGJyIC8+
-DTxiciAvPlNpZ25lZC1vZmYtYnk6Jm5ic3A7V2FuZyZuYnNwO1llY2hhbyZuYnNwOyZsdDt3YW5n
-LnllY2hhbzI1NUB6dGUuY29tLmNuJmd0Ow08YnIgLz4tLS08YnIgLz4mbmJzcDt0YXJnZXQvcmlz
-Y3Yva3ZtL2t2bS1jcHUuYyZuYnNwO3wmbmJzcDszJm5ic3A7KysrPGJyIC8+Jm5ic3A7MSZuYnNw
-O2ZpbGUmbmJzcDtjaGFuZ2VkLCZuYnNwOzMmbmJzcDtpbnNlcnRpb25zKCspPGJyIC8+DTxiciAv
-PmRpZmYmbmJzcDstLWdpdCZuYnNwO2EvdGFyZ2V0L3Jpc2N2L2t2bS9rdm0tY3B1LmMmbmJzcDti
-L3RhcmdldC9yaXNjdi9rdm0va3ZtLWNwdS5jPGJyIC8+aW5kZXgmbmJzcDs1M2Q4ODMzOWMxLi42
-YmViYmFmN2Q0Jm5ic3A7MTAwNjQ0PGJyIC8+LS0tJm5ic3A7YS90YXJnZXQvcmlzY3Yva3ZtL2t2
-bS1jcHUuYzxiciAvPisrKyZuYnNwO2IvdGFyZ2V0L3Jpc2N2L2t2bS9rdm0tY3B1LmM8YnIgLz5A
-QCZuYnNwOy0zMDMsMTAmbmJzcDsrMzAzLDEzJm5ic3A7QEAmbmJzcDtzdGF0aWMmbmJzcDtLVk1D
-UFVDb25maWcmbmJzcDtrdm1fbXVsdGlfZXh0X2NmZ3NbXSZuYnNwOz0mbmJzcDt7PGJyIC8+Jm5i
-c3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7S1ZNX0VYVF9DRkcoJnF1b3Q7emloaW50bnRsJnF1
-b3Q7LCZuYnNwO2V4dF96aWhpbnRudGwsJm5ic3A7S1ZNX1JJU0NWX0lTQV9FWFRfWklISU5UTlRM
-KSw8YnIgLz4mbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDtLVk1fRVhUX0NGRygmcXVvdDt6
-aWhpbnRwYXVzZSZxdW90OywmbmJzcDtleHRfemloaW50cGF1c2UsJm5ic3A7S1ZNX1JJU0NWX0lT
-QV9FWFRfWklISU5UUEFVU0UpLDxiciAvPiZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwO0tW
-TV9FWFRfQ0ZHKCZxdW90O3ppaHBtJnF1b3Q7LCZuYnNwO2V4dF96aWhwbSwmbmJzcDtLVk1fUklT
-Q1ZfSVNBX0VYVF9aSUhQTSksPGJyIC8+KyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwO0tWTV9FWFRf
-Q0ZHKCZxdW90O3ppbHNkJnF1b3Q7LCZuYnNwO2V4dF96aWxzZCwmbmJzcDtLVk1fUklTQ1ZfSVNB
-X0VYVF9aSUxTRCksPGJyIC8+Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7S1ZNX0VYVF9D
-RkcoJnF1b3Q7emltb3AmcXVvdDssJm5ic3A7ZXh0X3ppbW9wLCZuYnNwO0tWTV9SSVNDVl9JU0Ff
-RVhUX1pJTU9QKSw8YnIgLz4mbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDtLVk1fRVhUX0NG
-RygmcXVvdDt6Y21vcCZxdW90OywmbmJzcDtleHRfemNtb3AsJm5ic3A7S1ZNX1JJU0NWX0lTQV9F
-WFRfWkNNT1ApLDxiciAvPismbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDtLVk1fRVhUX0NGRygmcXVv
-dDt6Y2xzZCZxdW90OywmbmJzcDtleHRfemNsc2QsJm5ic3A7S1ZNX1JJU0NWX0lTQV9FWFRfWkNM
-U0QpLDxiciAvPiZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwO0tWTV9FWFRfQ0ZHKCZxdW90
-O3phYmhhJnF1b3Q7LCZuYnNwO2V4dF96YWJoYSwmbmJzcDtLVk1fUklTQ1ZfSVNBX0VYVF9aQUJI
-QSksPGJyIC8+Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7S1ZNX0VYVF9DRkcoJnF1b3Q7
-emFjYXMmcXVvdDssJm5ic3A7ZXh0X3phY2FzLCZuYnNwO0tWTV9SSVNDVl9JU0FfRVhUX1pBQ0FT
-KSw8YnIgLz4rJm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7S1ZNX0VYVF9DRkcoJnF1b3Q7emFsYXNy
-JnF1b3Q7LCZuYnNwO2V4dF96YWxhc3IsJm5ic3A7S1ZNX1JJU0NWX0lTQV9FWFRfWkFMQVNSKSw8
-YnIgLz4mbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDtLVk1fRVhUX0NGRygmcXVvdDt6YXdy
-cyZxdW90OywmbmJzcDtleHRfemF3cnMsJm5ic3A7S1ZNX1JJU0NWX0lTQV9FWFRfWkFXUlMpLDxi
-ciAvPiZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwO0tWTV9FWFRfQ0ZHKCZxdW90O3pmYSZx
-dW90OywmbmJzcDtleHRfemZhLCZuYnNwO0tWTV9SSVNDVl9JU0FfRVhUX1pGQSksPGJyIC8+Jm5i
-c3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7S1ZNX0VYVF9DRkcoJnF1b3Q7emZiZm1pbiZxdW90
-OywmbmJzcDtleHRfemZiZm1pbiwmbmJzcDtLVk1fUklTQ1ZfSVNBX0VYVF9aRkJGTUlOKSw8YnIg
-Lz4tLSZuYnNwOw08YnIgLz4yLjI3LjA8YnIgLz4=
-
-
---=====_003_next=====--
-
---=====_002_next=====--
-
---=====_001_next=====--
-
+Thanks,
+Chao
+> ---
+> Changes in v3:
+> - Rebase on master branch.
+> - Drop custom T-Head PMU CSR patch to avoid duplication.
+> - Use REG_BYTE_WIDTH macro in clock controller.
+> 
+> Changes in v2:
+> - Added link for the custom T-Head PMU CSRs
+> - Added qtest to validate basic for the dw8250 and clock controller.
+> - Removed RFC tag.
+> 
+> Kuan-Wei Chiu (5):
+>   hw/char: Add dw8250 UART
+>   hw/misc: Add Sophgo CV1800B clock controller
+>   hw/riscv: Add Sophgo CV1800B SoC support
+>   hw/riscv: Add Milk-V Duo board support
+>   tests/qtest: Add qtest for Milk-V Duo board
+> 
+>  MAINTAINERS                                 |  12 ++
+>  configs/devices/riscv64-softmmu/default.mak |   1 +
+>  hw/char/Kconfig                             |   4 +
+>  hw/char/dw8250.c                            | 118 ++++++++++++++
+>  hw/char/meson.build                         |   1 +
+>  hw/misc/Kconfig                             |   3 +
+>  hw/misc/cv1800b_clk.c                       |  90 +++++++++++
+>  hw/misc/meson.build                         |   1 +
+>  hw/riscv/Kconfig                            |  14 ++
+>  hw/riscv/cv1800b.c                          | 168 ++++++++++++++++++++
+>  hw/riscv/meson.build                        |   3 +
+>  hw/riscv/milkv_duo.c                        | 124 +++++++++++++++
+>  include/hw/char/dw8250.h                    |  27 ++++
+>  include/hw/misc/cv1800b_clk.h               |  24 +++
+>  include/hw/riscv/cv1800b.h                  |  52 ++++++
+>  tests/qtest/meson.build                     |   3 +-
+>  tests/qtest/milkv-duo-test.c                |  70 ++++++++
+>  17 files changed, 714 insertions(+), 1 deletion(-)
+>  create mode 100644 hw/char/dw8250.c
+>  create mode 100644 hw/misc/cv1800b_clk.c
+>  create mode 100644 hw/riscv/cv1800b.c
+>  create mode 100644 hw/riscv/milkv_duo.c
+>  create mode 100644 include/hw/char/dw8250.h
+>  create mode 100644 include/hw/misc/cv1800b_clk.h
+>  create mode 100644 include/hw/riscv/cv1800b.h
+>  create mode 100644 tests/qtest/milkv-duo-test.c
+> 
+> -- 
+> 2.54.0.1136.gdb2ca164c4-goog
+> 
 
