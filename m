@@ -4,105 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E296CD98E2
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jun 2026 14:31:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 250E7CD98E4
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jun 2026 14:31:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZrIK-0006ea-Po; Wed, 17 Jun 2026 10:31:09 -0400
+	id 1wZrIg-0006lX-Ez; Wed, 17 Jun 2026 10:31:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wZrIE-0006cx-Vh
- for qemu-devel@nongnu.org; Wed, 17 Jun 2026 10:31:02 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1wZrIf-0006k4-17
+ for qemu-devel@nongnu.org; Wed, 17 Jun 2026 10:31:29 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wZrIC-0007e1-K0
- for qemu-devel@nongnu.org; Wed, 17 Jun 2026 10:31:01 -0400
+ id 1wZrIc-0007q4-86
+ for qemu-devel@nongnu.org; Wed, 17 Jun 2026 10:31:28 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781706660;
+ s=mimecast20190719; t=1781706685;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=3/m8px2SzlRS8AyDVnogUZnSnnrVsntNilzOMSCr4pY=;
- b=BDUdpeMymyGbvCbacLZL+00pMZd2/7P57gU1rmPTYB7eE9IKSzQv7vwuHmo2NOytx5XXRC
- vSbRngQgeiEtwy8zNYG8Vs3xMDriEbDbDrZqPuzAZVsaoF8fhBvUA12v/5nSyRy0C+im0b
- MZMvqxhhVB1KP1YJriUgajxmUeQBESc=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=yFcQux/tAmWJGykxyHq+NKOI4I25Z8GS1E9kXCx1v+M=;
+ b=HhwdRR6dc95gspk4Z/r/arOwjG98n1xEVPjH5+BuroSYG2b1g2+BYUGbIpdU2WmxqxYUS6
+ OK52H5W/XLh4h+6HcrXaU+ZpZSXrLKdPEP82/4mE/Nj5uuS6lb4+VDDkbM1ahukyjBbYIY
+ mDp8/R9/wNhQ5oGjTpk5cwGSbag46KQ=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-622-H5o8e02WO-uPXkIb85vQag-1; Wed, 17 Jun 2026 10:30:58 -0400
-X-MC-Unique: H5o8e02WO-uPXkIb85vQag-1
-X-Mimecast-MFC-AGG-ID: H5o8e02WO-uPXkIb85vQag_1781706657
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-490b79e6b94so56227665e9.2
- for <qemu-devel@nongnu.org>; Wed, 17 Jun 2026 07:30:58 -0700 (PDT)
+ us-mta-433-sJ8LFlIMMyST2c9muk-j9g-1; Wed, 17 Jun 2026 10:31:22 -0400
+X-MC-Unique: sJ8LFlIMMyST2c9muk-j9g-1
+X-Mimecast-MFC-AGG-ID: sJ8LFlIMMyST2c9muk-j9g_1781706681
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-490dad70f95so59778685e9.3
+ for <qemu-devel@nongnu.org>; Wed, 17 Jun 2026 07:31:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1781706657; x=1782311457; darn=nongnu.org;
+ d=redhat.com; s=google; t=1781706681; x=1782311481; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=3/m8px2SzlRS8AyDVnogUZnSnnrVsntNilzOMSCr4pY=;
- b=K6NxZPh1m75pjtiIBABUCAiK0elSUwhhJ/HroHTnaE0iYt4Ai0kGyLdCs766aKdq28
- imV+XV06ZgjH0kmYnTf2V86c6KR/BqeXXUiXz+i6vM4smYXBphNJ4gUPWNkou3ReLLmr
- MyCuAfqJ4SNqBkLxQYmBKKRxMPd3eou9XyaCQHw39eEYh/ICyqJQ5Kgl6d9wlHXjVsm3
- 7sl4g1+Y/WSXL7G72iMcJcdkr2/h8FgA69KpMMjgOgl/x29uV+lPq2hPpBbKF1+j6EvS
- Qsbn0WmF5yXYoOXFr40pTgwmPeLGcljc+cqOwUNGZcbL5N7hBTApi9IdXZf3Hz5fES0M
- 8/Ig==
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=yFcQux/tAmWJGykxyHq+NKOI4I25Z8GS1E9kXCx1v+M=;
+ b=lRUMiApsYDmYXneZ9KhCNckh3nFg9Yho9vL4hiNAOOv5Imy/1Jo3HpIl9CFroccTMh
+ 5zWYeYS5gHpkyyhhJE4WCBqCoxoZZF1Q3x+1yBW4XdK0imJdOYUdFAP0+TbwaY4e0Xv9
+ y87q4dZgnL9DH3Sb6OsuuhcpNOLjT4MuURvGMzNy1RaUIyk2W1FwEsnw6E+X2+z+NMG+
+ TraLon8ceIPfMxUSPyDuqBfl0dLwYPHvCDl572XmYm4DN2NYEHrw7gUm0K9HuIH2g8L9
+ ROzaXPtaH3xSXaO2AmV6J6E/1wyufl03GiUz7aKxJjKrbTRJMRgPEtn6spmN7ncnBheL
+ Ajkw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781706657; x=1782311457;
+ d=1e100.net; s=20251104; t=1781706681; x=1782311481;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=3/m8px2SzlRS8AyDVnogUZnSnnrVsntNilzOMSCr4pY=;
- b=XSHH5tSgu9lqyrGd/KEs6+xc8heKbp1ojiD9evtSprYYks02Ks/ZuLKuDDAS04PyN6
- jnxLQ6c08+2u5TZ0T+h3SHTf4IzmokTe178MMlbXvM10zd9yqvNMHID0sUe2PsH5K4v2
- 7WpFAtkIY00yxw3raWYW3ppMzjvM+g6UUmegu0D/Dd+NJ+4bWZ38rkwVUpgwCQel9pAe
- R8u8AF28i+Cf67E09OkQDe0fYP6XvKka8pyfSw/6/8btgHhqB36WazUm4NZr1wphQLvz
- +lat8T/NbTmgaSML8Ri5yhK6EG0/QPxtEmuOdkKD2QHAPXm1YsXOS51s5KP2RyFeCW/D
- x2Cg==
-X-Gm-Message-State: AOJu0YxgxyfubJRwuOV7EdsvVzO8lBSSe5SLAk/PfVSckjdVgoIkz+nu
- r2mhLprCgbciEIxHZpTikpDm/Bx589FzC5gwxo/nVxQbIu+5NqnahsnRF2a3XbGTRKjAeWjY23l
- 0hpw4jgjk1HwKawfzhlK1jeUQs3+R3gZyoo9zo9wkRRA1JM6+WbmfWlGXLehc4yyBahX6mutRa2
- wlmn6THHvSiUfZZ4nVuP/nAiVjcQQARjZ1wSZYUk3T
-X-Gm-Gg: Acq92OHpnntQ7OluC4lFbgy+QyUc81oKrCh5di6M6yg1MO227vhLB/A1b+N4+f5yJ7p
- TRcWejLVcIu50yqH+cauBuZ8fUQAKrnl5GF0hAMsX5d3bL07DAWfRYJeLqOEN1Gdxu2VYXh3EFF
- 85ceM2j5SgnUuYBoA+rWQ2hrd6mtgcgExrJVNAFBmN527rOoZ80obZFhuPG4rY/iZw/5l3Sxjfi
- gRgCT5cc84uw8TQwbxkg/TWRLw7jnTN7icFUxyf6Yx+5kRaZoXi66XSzrp6YN5WPJmsH00DeTSL
- Og+zAn9dpn6SKs+p2wkLj++kESjxJtRiYC4H4LDQAS4D9wBmmktum+QoETZa55GIOnwpmaKQtm2
- XveyVZGOA+ATGDWiszIIsbeAW2A07vWllddcI/ztu53adG5pPNA0qXXX/L3InxYLwVDSygSyYYn
- Yf3l0CqhS7HbeCcVKT
-X-Received: by 2002:a05:600c:34d2:b0:492:34f5:94cb with SMTP id
- 5b1f17b1804b1-49234f5956bmr39373865e9.26.1781706656999; 
- Wed, 17 Jun 2026 07:30:56 -0700 (PDT)
-X-Received: by 2002:a05:600c:34d2:b0:492:34f5:94cb with SMTP id
- 5b1f17b1804b1-49234f5956bmr39372825e9.26.1781706656318; 
- Wed, 17 Jun 2026 07:30:56 -0700 (PDT)
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=yFcQux/tAmWJGykxyHq+NKOI4I25Z8GS1E9kXCx1v+M=;
+ b=onyxAmln3WVO1S0mvUKxQvZK71nkHG1nPrLghfjXNRLd9Lp9DiMFJTWfv2JPvZX7jX
+ etmSYWFk+P48hfZAbN36KR8b7Hx78WNrC7SMySTpxcoL94ApP+fXEoqSF8KKvJEUwSjA
+ gmR2qjU3fD8CZa0xDYGbf0rDpmE4jiL8BsyNKFInlmLua/M3M6zDvQcT2r/S6TQCmuix
+ 7Mz6PeMcakMTQ0qVTHf9JpalVnUpW9+Kdkz9ysWW5riqceActSbYzeC6iVpmKskW6F9O
+ Du2b95NSALex+2xO+Gp3BqC6vVE3+L8Wr9jfCA1UFv2oiFvF4z9SPo1wzOY0YtX9sqkM
+ QqiQ==
+X-Gm-Message-State: AOJu0Yw7Bl0EBLnmFGZVO/Ztup8EFEYyChanofHieGDctcCGTwfjzjGi
+ QUgGVAlH0LAQMEbkIdS+nkDiWr3Cz1s103fMXHuTf11ok5fmnPdmHi0UUgLtU1oJiztwtotPMXt
+ 7c4N7Lq2EPJw+TJDXCG5C/vmDFTy6JtgUtM7YQ7Sjs7JZplju9pIoK8RIDMgAfscgEMB7n6kSK9
+ 4xP0XnFex1CXG8/VzDKLvBo/9lADTGgIN0Xy1IyZTs
+X-Gm-Gg: Acq92OGawP8mKbHfERrQI2FZjouddr2HkeIaVFL/Pn4lV4mhifPgqSs3AwTCLr7Bvq6
+ cBd3iajfV6RcVlm9K2y62MfGTqyAhEb9VYbfK5ZBaIzV0lOlDzx5wQm+Tr8NLXbz8ygaiMK7z/P
+ HdRaxvxJluditicPQoeRj99gXr0E0Q77LCMcEv/cyVesuizzZzGKcOVL41THafG4DNzKvpk6MNW
+ J/BO6RSNv15VwJpEK5XWn9Q+k6K8FICuxEr9iRVNWedp+JEDr27NOqaEtzm5JzfM9d9KcDnpSW2
+ hFTu7xf/9267c0+k8oAOm4CwaaSORe4NPpS7yH5Ng9XiJTLu9oZOjSIgKGQFCJcQ3LJvn92Oa/J
+ 1zDVHEnUYfgKHaZ3QNwa5y5coLOEZgRAuWPXQj0XVxrmUIWomn2HZVSjTU2uuH/x6/BeR3AuzAb
+ P5OTHFiQbrlCCQy9QW
+X-Received: by 2002:a05:600c:4e92:b0:491:ba04:2ce4 with SMTP id
+ 5b1f17b1804b1-4923410c35dmr55893465e9.16.1781706680557; 
+ Wed, 17 Jun 2026 07:31:20 -0700 (PDT)
+X-Received: by 2002:a05:600c:4e92:b0:491:ba04:2ce4 with SMTP id
+ 5b1f17b1804b1-4923410c35dmr55892705e9.16.1781706679985; 
+ Wed, 17 Jun 2026 07:31:19 -0700 (PDT)
 Received: from [192.168.10.48] ([151.95.156.160])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4923756ff5csm7663045e9.0.2026.06.17.07.30.54
- for <qemu-devel@nongnu.org>
+ 5b1f17b1804b1-4922fa96f0esm184613725e9.12.2026.06.17.07.31.18
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 17 Jun 2026 07:30:54 -0700 (PDT)
+ Wed, 17 Jun 2026 07:31:18 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL 03/16] target/i386: add more easy cases to gen_eflags_adcox
-Date: Wed, 17 Jun 2026 16:30:33 +0200
-Message-ID: <20260617143046.445322-4-pbonzini@redhat.com>
+Cc: Kostiantyn Kostiuk <kkostiuk@redhat.com>
+Subject: [PULL 12/16] qga/meson: Use windows.compile_resources instead of
+ custom_target
+Date: Wed, 17 Jun 2026 16:30:42 +0200
+Message-ID: <20260617143046.445322-13-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260617143046.445322-1-pbonzini@redhat.com>
 References: <20260617143046.445322-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -119,43 +121,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-prepare_update_cf() sometimes results in CC_OP_ADCX, so this
-improves a bit the handling of BT+RCL and the like.
+From: Kostiantyn Kostiuk <kkostiuk@redhat.com>
 
+windows.compile_resources supports more compiles and works
+in both MinGW and MSVC environment. While 'windres' is a
+MinGW specific tool.
+
+Signed-off-by: Kostiantyn Kostiuk <kkostiuk@redhat.com>
+Link: https://lore.kernel.org/r/20260330113906.168002-4-kkostiuk@redhat.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/tcg/emit.c.inc | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ qga/meson.build | 8 +++-----
+ 1 file changed, 3 insertions(+), 5 deletions(-)
 
-diff --git a/target/i386/tcg/emit.c.inc b/target/i386/tcg/emit.c.inc
-index 8eca66b6967..83c889cc3b2 100644
---- a/target/i386/tcg/emit.c.inc
-+++ b/target/i386/tcg/emit.c.inc
-@@ -3332,17 +3332,21 @@ static bool gen_eflags_adcox(DisasContext *s, X86DecodedInsn *decode, bool want_
-      * to be followed by rotations within the same basic block.
-      */
-     switch (s->cc_op) {
-+    case CC_OP_ADCX:
-+    case CC_OP_ADOX:
-     case CC_OP_ADCOX:
-         /* No need to compute the full EFLAGS, CF/OF are already isolated.  */
--        tcg_gen_mov_tl(decode->cc_src, cpu_cc_src);
--        if (need_flags) {
-+        if (s->cc_op != CC_OP_ADCX && need_flags) {
-             tcg_gen_mov_tl(decode->cc_src2, cpu_cc_src2);
-             got_of = true;
-         }
--        if (want_carry || need_flags) {
-+        if (s->cc_op != CC_OP_ADOX && (want_carry || need_flags)) {
-             tcg_gen_mov_tl(decode->cc_dst, cpu_cc_dst);
-             got_cf = true;
-         }
-+        /* fallthrough */
-+    case CC_OP_EFLAGS:
-+        tcg_gen_mov_tl(decode->cc_src, cpu_cc_src);
-         break;
+diff --git a/qga/meson.build b/qga/meson.build
+index 1c6433ef250..85bdacf7e2a 100644
+--- a/qga/meson.build
++++ b/qga/meson.build
+@@ -105,16 +105,14 @@ endif
+ qga_objs = []
+ if host_os == 'windows'
+   windmc = find_program('windmc', required: true)
+-  windres = find_program('windres', required: true)
  
-     case CC_OP_LOGICB ... CC_OP_LOGICQ:
+   msgrc = custom_target('messages-win32.rc',
+                         input: 'messages-win32.mc',
+                         output: ['messages-win32.rc', 'MSG00409.bin', 'messages-win32.h'],
+                         command: [windmc, '-h', '@OUTDIR@', '-r', '@OUTDIR@', '@INPUT@'])
+-  msgobj = custom_target('messages-win32.o',
+-                         input: msgrc[0],
+-                         output: 'messages-win32.o',
+-                         command: [windres, '-I', '@OUTDIR@', '-o', '@OUTPUT@', '@INPUT@'])
++
++  windows = import('windows')
++  msgobj = windows.compile_resources(msgrc[0])
+ 
+   qga_objs = [msgobj]
+ endif
 -- 
 2.54.0
 
