@@ -4,105 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 481BECD98EE
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jun 2026 08:56:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5549CD98EE
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jun 2026 09:00:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZm3q-0002S5-1H; Wed, 17 Jun 2026 04:55:50 -0400
+	id 1wZm7w-0004OM-Oe; Wed, 17 Jun 2026 05:00:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kchiu@axiado.com>) id 1wZm3n-0002RJ-P3
- for qemu-devel@nongnu.org; Wed, 17 Jun 2026 04:55:47 -0400
-Received: from mail-westusazon11022078.outbound.protection.outlook.com
- ([52.101.43.78] helo=SJ2PR03CU001.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1wZm7u-0004NK-D2
+ for qemu-devel@nongnu.org; Wed, 17 Jun 2026 05:00:02 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kchiu@axiado.com>) id 1wZm3l-0005f6-Uw
- for qemu-devel@nongnu.org; Wed, 17 Jun 2026 04:55:47 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=dnmxAvKT+lsrTx5Zb79R9/qQxqHIRjLyDEY27+kZljhPGeMifu4D+7bmx2hgDZOMTUxjylUhriCp4zPJD1L0KVh3iqSnybDIhdzJPjVAPWLgyJEm85NO9SG/xOO9BQ825/U/bR05nVFrjENaAd33HaQL3VOxNxaLieU0ePnRmD0XCQ3BI2FNDcZEHOCWSzD+c9g0ZVcu9R/h8eX7hEA97pd8xXB3dIZCsXrgY68mkYDAP9JRZQpXm3Ug1ysZaVjeidMRgiDxsqa3msbu9bMxygF3M7tHSM3igwjbk4TTPg1sxB9VNCChwuol7eD4RE4GypKHvIirVlgovgE7y65LOQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=4AiZpXH/JcbXMqZwstjIRIxND8zXkrImDaCnngimUrI=;
- b=jMrAHPNTdHsns9WdbE1Xw3BaSqLU6zUp5OaRVOH3f7ffLl0r3yYccS2WWjD7T3FFWc/9wmnE7Fpsft+SqtHgnDCb+lNpi/Tu5p/7HM9FfCoiB1mitdCjBYmSoX3yLGLF60aWkBn+JQxXofqE1D8Cd/o1G/IKw89I1nXapvVdzQwSFPnmWkxbjwfZBD6Lq+Bd+FHcGmE0n38Nm/Jw6iPjuLyuSFClo4VLFQZxxgsUcVbhcwkenSxFdejiAJo79I2aNKdkciePMrVmf1RBGO4KpvxHXOF2q5iyF4gfXeQOAinx7h+6r6dcJtpF6Q+lrEXngui/8/bfRYYYbo43TQpwDQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=fail (sender ip is
- 64.62.143.114) smtp.rcpttodomain=axiado.com smtp.mailfrom=axiado.com;
- dmarc=none action=none header.from=axiado.com; dkim=none (message not
- signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=axiado.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=4AiZpXH/JcbXMqZwstjIRIxND8zXkrImDaCnngimUrI=;
- b=wxCpMSC2yyl5B810hs5U2J8SJy9xPDCGltu2CKUH3I33Tub4mGoucevmefAsALXmtokHaqaFA5dd84cieMPg/6hzpY0xEUIxFLqzighpGSlSjAcfbQbfdvaCf5SRmxuG1dY9Gg9G8wIhgxL/nM48wTb5GS8uhu18yCPRQ0Mkxou0nLT57v8OOqOifof5Wt/ND2SMV7ubQT37Mn3wHSEXWrSQUe0pLpjs67eUqqMLyFRMk7/buBCAgm9kMwxCcsXNBGsV+wNObWVxTqAUvVd80+Mn+dcujFU72rdrUx6r1a5eIIHpDff8+Kxay8PJH3Er4xRLfH3se8+W7PazMIf4nw==
-Received: from SJ0PR05CA0130.namprd05.prod.outlook.com (2603:10b6:a03:33d::15)
- by SA1PR18MB4806.namprd18.prod.outlook.com (2603:10b6:806:1dd::5)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.139.11; Wed, 17 Jun
- 2026 08:50:39 +0000
-Received: from SJ1PEPF00002325.namprd03.prod.outlook.com
- (2603:10b6:a03:33d:cafe::3c) by SJ0PR05CA0130.outlook.office365.com
- (2603:10b6:a03:33d::15) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.21.139.11 via Frontend Transport; Wed,
- 17 Jun 2026 08:50:39 +0000
-X-MS-Exchange-Authentication-Results: spf=fail (sender IP is 64.62.143.114)
- smtp.mailfrom=axiado.com; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=axiado.com;
-Received-SPF: Fail (protection.outlook.com: domain of axiado.com does not
- designate 64.62.143.114 as permitted sender) receiver=protection.outlook.com; 
- client-ip=64.62.143.114; helo=smtp.corp.axiado.com;
-Received: from smtp.corp.axiado.com (64.62.143.114) by
- SJ1PEPF00002325.mail.protection.outlook.com (10.167.242.88) with Microsoft
- SMTP Server (version=TLS1_3, cipher=TLS_AES_256_GCM_SHA384) id 15.21.139.8
- via Frontend Transport; Wed, 17 Jun 2026 08:50:38 +0000
-Received: from axiado.com (unknown [10.4.1.181])
- by smtp.corp.axiado.com (Postfix) with ESMTP id 993E64186B51;
- Wed, 17 Jun 2026 01:47:59 -0700 (PDT)
-From: Kuan-Jui Chiu <kchiu@axiado.com>
-To: qemu-devel@nongnu.org,
-	peter.maydell@linaro.org
-Cc: Kuan-Jui Chiu <kchiu@axiado.com>
-Subject: [PATCH v4 0/6] Add Axiado SoC AX3000 and EVK board
-Date: Wed, 17 Jun 2026 01:50:22 -0700
-Message-Id: <20260617085030.2586072-1-kchiu@axiado.com>
-X-Mailer: git-send-email 2.34.1
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1wZm7s-0006bi-M7
+ for qemu-devel@nongnu.org; Wed, 17 Jun 2026 05:00:02 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1781686799;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=c02hf33DdgzjAVGOLCeOgnML1B3Mm3pAYOvAzjAcWY4=;
+ b=is+FZC+OCRR74zsEs4MQhdt4ofYb9H7n2vREdgo+ISu4WiRfgqXQEz65J3ggTyRxlSU2v5
+ cY5aWD9g1/ssaBVmIvlnzzE8itWPG/y5DbaihFhh18NH1Z9i8KnKRb6ABLfgoHiw0MwMQY
+ +FK2uDKDMTgbLTmtNFxR8/B+WqZREuE=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-605-HdJrCXNuOGeAnikqpD_XOQ-1; Wed, 17 Jun 2026 04:59:57 -0400
+X-MC-Unique: HdJrCXNuOGeAnikqpD_XOQ-1
+X-Mimecast-MFC-AGG-ID: HdJrCXNuOGeAnikqpD_XOQ_1781686796
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-490ae016853so40796995e9.2
+ for <qemu-devel@nongnu.org>; Wed, 17 Jun 2026 01:59:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1781686796; x=1782291596; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=c02hf33DdgzjAVGOLCeOgnML1B3Mm3pAYOvAzjAcWY4=;
+ b=LUHO6d9VILhpeGCwqmzlYNSmhYloJMh0YCuGcAVZ7nRvaFxytw+k5fSrxwwPeDVbN/
+ lR/weB76XbCjK85Vk3wDWJcojkkC4vQQujncim2YjkKRK9d46iaR8ks2h511j6AA3r5V
+ ws8PML0n/OMh0FNSKHFK9tRqMbEXRRR0Nn94QIt5MkJO8hAoULR9LAkpbrV5Srhr6ERE
+ 4PIueKbqnJCRO+ri+SIn67u9NnGuroZpnEUn5Jf5y+7IOBJPJnqugWAcf/KlwdtX7vBq
+ nHu+yYBn3cChxAla8k7+XTuHwI336avg3MN+wDK5Lkg1xIWN5S69nq61MxYJ758EIxt5
+ zbbQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1781686796; x=1782291596;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=c02hf33DdgzjAVGOLCeOgnML1B3Mm3pAYOvAzjAcWY4=;
+ b=D00nYfjy4iYe+mTTn22l5g1ZNszv28lQNCeJ+XIvoj9X8XfIeEuZE1OrKhR5koXF+Z
+ uiGdSKFKZZGeHfQMTEqJJoHstCPMrE0A1mhIDha+7lIqpmGhPIFP5tBTGW6nHmGq5Q+h
+ Ejf0FsrcqhfN5n2koaDNTHg4jeT8kr6kxUebepxzu+ztU+pxyovRj3vYgE17OjPW7Nab
+ aaUE9qxzwPGLRLyKn8GQa2br5mDnUaNnY5JHtwT9NqL45ZAP0tUJoBkK9XjS/DQnhSX2
+ iruopOS6v+usFDgdMzEa3wL7UaoKLmg1Wn36lBhFKvJ2uo42DKZo+njEZeMScw7DFOia
+ 9nCg==
+X-Gm-Message-State: AOJu0YwpSCSCvZc08JdJZaweH48CL4NaqxUYxA5uH1fd8xdZQRtteEGO
+ WoJnMQT6BjbKS/5q7nT0Eq60uq1CNj0/J9qsY7d+sDV2B4/lkTi4fuwm3O3nrz0JnkSkQ4r28Sw
+ 8tZxtBJN+RGDCPj3lfPszWT67GXvdzxrb+RTErUSw3u0yTkmnDpYbMkkK
+X-Gm-Gg: Acq92OEu2jsYobuutl2xkv8+H6ydRkS3+8JW2eu/xtuDlI8wPFhhBf9hOLNLYfYWrEo
+ ZXTg16TAmbJDU9lnMqlalXjVHHf2gc9UptsOjKf2rUN4ifLOca5b+tOkmkeqm1o+TH5VlNgnWDw
+ UYJ3ObkBWEcbMbmEkLZQYe4LN4KKukOIeP+xbHHmV1UXi4gcDmWIEIjE3wlbk6SBR0QlJaLoUTN
+ E5Vp4kRd9p5TPVF6eP/7wMI3oczz3+g6XG3ZZoMzwfTSGZropx7+gAJ/mNB8ZfP6BG30fAH0A/n
+ QJe6Xd7x12Ho3YG3ULtdD9DeVDH6r35JLbxJXsrmcbxkEqnvKSEyq36V84aipCrOAytRX9wFnbE
+ QQA8vXZMzvCa2R81xHHpKgm3ixr6f0O+s+27UGT/WW65CHNVKGfjmem4MEBzX
+X-Received: by 2002:a05:600c:8b52:b0:490:e281:287d with SMTP id
+ 5b1f17b1804b1-492340ff916mr42228215e9.1.1781686796537; 
+ Wed, 17 Jun 2026 01:59:56 -0700 (PDT)
+X-Received: by 2002:a05:600c:8b52:b0:490:e281:287d with SMTP id
+ 5b1f17b1804b1-492340ff916mr42227775e9.1.1781686796104; 
+ Wed, 17 Jun 2026 01:59:56 -0700 (PDT)
+Received: from sgarzare-redhat (host-82-53-135-12.retail.telecomitalia.it.
+ [82.53.135.12]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4922fa97a07sm253983665e9.14.2026.06.17.01.59.54
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 17 Jun 2026 01:59:55 -0700 (PDT)
+Date: Wed, 17 Jun 2026 10:59:20 +0200
+From: Stefano Garzarella <sgarzare@redhat.com>
+To: Luigi Leonardi <leonardi@redhat.com>
+Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>, 
+ Gerd Hoffmann <kraxel@redhat.com>, Ani Sinha <anisinha@redhat.com>,
+ Zhao Liu <zhao1.liu@intel.com>, Oliver Steffen <osteffen@redhat.com>
+Subject: Re: [PATCH v4] igvm: add device tree parameter support
+Message-ID: <ajJhzopQfKWorBiu@sgarzare-redhat>
+References: <20260615-microvm_device_tree-v4-1-128a59fd2f78@redhat.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SJ1PEPF00002325:EE_|SA1PR18MB4806:EE_
-Content-Type: text/plain
-X-MS-Office365-Filtering-Correlation-Id: 2d5c2601-8094-4dcc-4030-08decc4d8172
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|82310400026|23010399003|1800799024|376014|36860700016|3023799007|56012099006|18002099003|13003099007;
-X-Microsoft-Antispam-Message-Info: xiVxTa96+Vpf2VvVjVSkQCusdnYFtDWo7XGD5LP01b8pplZoN3nbY6dFsTdYY8oA0f1o5R8fzNJYYhtGTbmDR3YkE3VeBtvFkek+IPvQ0eXHoYaPKZYUPokFkL26q2Bnthn/G8yVUl1mFW7ZpqYzAQlk0YjNyrXtWB8rCMPkmIxiNDjYbe/SPMNjOQQcFWQQIQZIL30UBZ01FSXPhdYt3J3rc0Eftaa+3j6Js5jcHx2lyBoePgjUJuRyw345qCkem3QU5d+qruVMmju95mQrqDKF6UQnCjHl8Q6r8G9T2Mo6sbYX+CViTAwAr0o0TIsnY0FdYH+6Hmfoz3jaspCuvdKWB8NipzC84VHxMgNZwW1/1Y/pwMqxo1SelzN3XdPXNZaUPHF8U5f3b67SIirR/dCOlHCqPO59f/tYDmiOOfraLKXv4K5wZ779wmr9UrL+K3ADC+yU2F+8RGL8abAZfW+bDI+ASQlMQHYKfWOmpb5jTOSpn+HKDiygwB1mUbKmHTyZAyTRfHk81avUeZEOVYHZ7Zj7kGt4g1gEgUqnx08PTD5EUAQzLs+K+fI5Z5V7I/458Eafh7gwHsfunFAA3fE8lL7QuVeJyZGxo0/xaGbNnvmmyBpZKmNu+bVbWckgaIRNSy5/Ub8b+QqeqA94y9R8EZS60NPOouMw4WnQ/nYFIQukyoNbTniYdcJ/MPY3
-X-Forefront-Antispam-Report: CIP:64.62.143.114; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:smtp.corp.axiado.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230040)(82310400026)(23010399003)(1800799024)(376014)(36860700016)(3023799007)(56012099006)(18002099003)(13003099007);
- DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: OEG6iVcS/oLBul0OKRwV+VZgasFjH1VcmCg0HxAlJ2l9r1ASxq01Kh5tMpp4JQDlz9AXG55lsqFbhP/X8S7CPke7ts/WWes3qPKZaePOj6fDealRK1Q15gN/4SmVMOBghzz13SfsKPaKwdibPZCEWm9N+rpCZtQnwHyQVVMR4Pcow1HQRx5frLJ/bmdKr+DOgtWOC1mTRDVBhVztDmlf75bitXMXtWwfMbu1cfC3KzEZg+BLo+iVIYNQJLjVph+meSIVWjlaVy7c4FkOZCC7HSIRmIwW+/WK1ZkwkHsh51FoCIcdUNDTzQAlwI9iVCx8TAnh770qdwvSXKfKpT9tFDmNZEnqzTJ4umDR8ulln4ol424eqRd2o4VFGiliLda8Yb/T9gdLxCb5+03cE8C/30Bx29ZhtlVG4KlRh4a9amHJ6+QqjoE7gWlGVpG7VaDU
-X-OriginatorOrg: axiado.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 17 Jun 2026 08:50:38.9031 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 2d5c2601-8094-4dcc-4030-08decc4d8172
-X-MS-Exchange-CrossTenant-Id: ff2db17c-4338-408e-9036-2dee8e3e17d7
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=ff2db17c-4338-408e-9036-2dee8e3e17d7; Ip=[64.62.143.114];
- Helo=[smtp.corp.axiado.com]
-X-MS-Exchange-CrossTenant-AuthSource: SJ1PEPF00002325.namprd03.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA1PR18MB4806
-Received-SPF: pass client-ip=52.101.43.78; envelope-from=kchiu@axiado.com;
- helo=SJ2PR03CU001.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <20260615-microvm_device_tree-v4-1-128a59fd2f78@redhat.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=sgarzare@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,92 +120,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patchset introduces Axiado SoC AX3000 and a EVK SCM3003 for emulation
-The model for Axiado SoC AX3000 supports
-  4 Cortex-A53 CPUs
-  Arm Generic Interrupt Controller v3
-  4 Cadence UARTs
-  1 SDHCI controller with PHY
-  8 Cadence GPIOs
+On Mon, Jun 15, 2026 at 11:11:53AM +0200, Luigi Leonardi wrote:
+>Coconut SVSM, with the upcoming device tree support [1], will use
+>the IGVM device tree parameter to discover virtio-mmio and ISA serial
+>devices instead of relying on the fw_cfg interface, which is
+>QEMU-specific.
+>
+>The device tree is packed before copying into the IGVM parameter area
+>to reduce its size, since IGVM files can define tighter memory
+>constraints for parameter areas. Packing is done in the generic IGVM
+>backend rather than in per-architecture device tree setup code, so
+>that each architecture does not need to handle it individually.
+>
+>[1] https://github.com/coconut-svsm/svsm/pull/1006
+>
+>Signed-off-by: Luigi Leonardi <leonardi@redhat.com>
+>---
+>This device tree will be consumed by Coconut SVSM with the upcoming device
+>tree support [1]. This will allow SVSM to run on a normal CPU
+>(not AMD SEV-SNP) and execute all its tests using upstream QEMU.
+>
+>Eventually edk2 will also be able to consume DT via IGVM, but the work
+>has not started yet.
+>
+>[1] https://github.com/coconut-svsm/svsm/pull/1006
+>
+>To: qemu-devel@nongnu.org
+>Cc: Michael S. Tsirkin <mst@redhat.com>
+>Cc: Paolo Bonzini <pbonzini@redhat.com>
+>Cc: Richard Henderson <richard.henderson@linaro.org>
+>Cc: Gerd Hoffmann <kraxel@redhat.com>
+>Cc: Stefano Garzarella <sgarzare@redhat.com>
+>Cc: Ani Sinha <anisinha@redhat.com>
+>Cc: Zhao Liu <zhao1.liu@intel.com>
+>Cc: Oliver Steffen <osteffen@redhat.com>
+>---
+>Changes in v4:
+>- Using g_memdup2 [Stefano]
+>- madt directive is now protected by CONFIG_FDT [Stefano]
+>- Link to v3: https://lore.kernel.org/qemu-devel/20260611-microvm_device_tree-v3-1-dfb9cf0000b8@redhat.com
 
-Verified the machine "axiado-scm3003" with following command
+Thanks for the update, LGTM!
 
-qemu-system-aarch64 \
-    -m 4G \
-    -machine axiado-scm3003 \
-    -device loader,file=u-boot.bin,addr=0x3C000000,cpu-num=0 \
-    -nographic \
-    -serial null \
-    -serial null \
-    -serial null \
-    -serial mon:stdio \
-    -drive if=sd,file=obmc-phosphor-image-evk-axiado-qemu.wic,format=raw
-
-Refer Axiado website for more product information
-https://axiado.com/products/
-
-Changes in v4:
-  1. Remove ERRP_GUARD from axiado_sdhci
-  2. Optimize ISR update function of cadence_gpio with logical operation
-
-Changes in v3:
-  1. Add a new patch for Axiado SD host controller
-  2. Fill in valid/impl parameters of MemoryRegionOps in
-     ax3000-soc/cadence_gpio/axiado_sdhci
-  3. Follow C99 standard to declare variable in for-loop
-  4. Remove comment "TBD" from empty function
-  5. Define marco for bit definition in axiado_sdhci
-  6. Move object_initialize_child() to instance_init() from realize() in
-     axiado_sdhci
-  7. Remove callback of get_default_cpu_type() from ax3000-soc and set
-     type of CPU to A53
-  8. Update the command to run "axiado-scm3003" in QEMU
-
-Changes in v2:
-  1. Move axiado-* to ax3000-* in hw/arm and include/hw/arm
-  2. Add axiado_sdhci to support AXIADO_SDHCI
-  3. Move implementation for eMMC PHY device to axiado_sdhci
-  4. Use UNIMP to create dummy device "timerctrl"
-  5. Add cadence_gpio to support CADENCE_GPIO
-  6. Enable Cadence GPIO controllers on AX3000 SoC
-
-Kuan-Jui Chiu (6):
-  hw/arm: Add Axiado SoC AX3000
-  hw/sd: Add Axiado SD host controller with eMMC PHY
-  hw/arm: ax3000-soc: Enable Axiado SD host controller
-  hw/arm: Add Axiado EVK SCM3003
-  hw/gpio: Add Cadence GPIO controller
-  hw/arm: ax3000-soc: Enable Cadence GPIO controllers
-
- MAINTAINERS                    |   9 +
- hw/arm/Kconfig                 |  14 ++
- hw/arm/ax3000-boards.c         |  47 ++++++
- hw/arm/ax3000-evk.c            |  27 +++
- hw/arm/ax3000-soc.c            | 267 ++++++++++++++++++++++++++++++
- hw/arm/meson.build             |   6 +
- hw/gpio/Kconfig                |   3 +
- hw/gpio/cadence_gpio.c         | 292 +++++++++++++++++++++++++++++++++
- hw/gpio/meson.build            |   1 +
- hw/gpio/trace-events           |   5 +
- hw/sd/Kconfig                  |   4 +
- hw/sd/axiado_sdhci.c           | 114 +++++++++++++
- hw/sd/meson.build              |   1 +
- include/hw/arm/ax3000-boards.h |  28 ++++
- include/hw/arm/ax3000-soc.h    |  99 +++++++++++
- include/hw/gpio/cadence_gpio.h |  55 +++++++
- include/hw/sd/axiado_sdhci.h   |  21 +++
- 17 files changed, 993 insertions(+)
- create mode 100644 hw/arm/ax3000-boards.c
- create mode 100644 hw/arm/ax3000-evk.c
- create mode 100644 hw/arm/ax3000-soc.c
- create mode 100644 hw/gpio/cadence_gpio.c
- create mode 100644 hw/sd/axiado_sdhci.c
- create mode 100644 include/hw/arm/ax3000-boards.h
- create mode 100644 include/hw/arm/ax3000-soc.h
- create mode 100644 include/hw/gpio/cadence_gpio.h
- create mode 100644 include/hw/sd/axiado_sdhci.h
-
--- 
-2.34.1
+Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
 
 
