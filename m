@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2ADE3CD98E2
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jun 2026 15:25:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65AE3CD98E2
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jun 2026 15:25:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZs8g-0000S6-VT; Wed, 17 Jun 2026 11:25:15 -0400
+	id 1wZs8X-0008KL-KJ; Wed, 17 Jun 2026 11:25:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wZs8B-0007vU-Fq
- for qemu-devel@nongnu.org; Wed, 17 Jun 2026 11:24:46 -0400
+ id 1wZs8I-00080J-6k
+ for qemu-devel@nongnu.org; Wed, 17 Jun 2026 11:24:50 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wZs89-0004OI-Ip
- for qemu-devel@nongnu.org; Wed, 17 Jun 2026 11:24:43 -0400
+ id 1wZs8G-0004PE-7Y
+ for qemu-devel@nongnu.org; Wed, 17 Jun 2026 11:24:49 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781709880;
+ s=mimecast20190719; t=1781709887;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=bFuHXn1a4HZLi+ZiWQR6/9L0ttH0GIGQ74TtaECR1mI=;
- b=hyJvWwkhgN69m0mlRPVSmWrosgR8rZs3BD8nRUSkzg4Y8RAe2DaSosf+MBPDWYbdy6m6+B
- MsuYOjVCgduNFzKkTZR25DijRZ4VuR8HkyEFMXqEw48QH3sM9SweDuXfsJYTrXLp3igMBK
- WGUBwKu7S/+azyWdWl0cVvRswdPcB14=
+ bh=Fyg+V/YGlQ10OA7N0ZvlQJ2lOYS9yJAZDhN3+859L6s=;
+ b=TiuqFzUvVImWK0+7Jj3hpg4YG0/yuOwLpovJ2S6JfX8BSOooe4yFgHpSfQ4Qp0675XVW6J
+ h06qa4aj68/myW8QhGpAuS0KrD7/BvkHOwxkdX3whkEp3YfPzNaus9z3UakHLY8jdMqAT3
+ f9Z6f6UdB6W5EVwB9yjNr+ElprH480E=
 Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-101-mXQDvEttOL6kV8gH1Q4n7Q-1; Wed,
- 17 Jun 2026 11:24:39 -0400
-X-MC-Unique: mXQDvEttOL6kV8gH1Q4n7Q-1
-X-Mimecast-MFC-AGG-ID: mXQDvEttOL6kV8gH1Q4n7Q_1781709878
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-549-UhAq3ozSOHy7mRHwa__jXA-1; Wed,
+ 17 Jun 2026 11:24:45 -0400
+X-MC-Unique: UhAq3ozSOHy7mRHwa__jXA-1
+X-Mimecast-MFC-AGG-ID: UhAq3ozSOHy7mRHwa__jXA_1781709883
+Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6CEAE19539BC
- for <qemu-devel@nongnu.org>; Wed, 17 Jun 2026 15:24:38 +0000 (UTC)
+ id 9E88F1945CAC
+ for <qemu-devel@nongnu.org>; Wed, 17 Jun 2026 15:24:43 +0000 (UTC)
 Received: from localhost (unknown [10.44.22.6])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 31DA218005B6; Wed, 17 Jun 2026 15:24:36 +0000 (UTC)
+ by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 8DB6436918; Wed, 17 Jun 2026 15:24:42 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Wed, 17 Jun 2026 19:23:10 +0400
-Subject: [GIT PULL 13/27] hw/input: keep QemuInputHandlerState in stellaris
+Date: Wed, 17 Jun 2026 19:23:11 +0400
+Subject: [GIT PULL 14/27] hw/m68k: keep QemuInputHandlerState in next-kbd
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260617-ui-input-v1-13-79e9aedc5899@redhat.com>
+Message-Id: <20260617-ui-input-v1-14-79e9aedc5899@redhat.com>
 References: <20260617-ui-input-v1-0-79e9aedc5899@redhat.com>
 In-Reply-To: <20260617-ui-input-v1-0-79e9aedc5899@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Stefan Hajnoczi <stefanha@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2322;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1523;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=xge/K+Jj02hX/XLvoqYHxXtf7aahrJ54qsucnmC3qhs=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqMrvptzG90qQC1MhGYDPiM22cndGvkOIotLNWh
- fSfts+CmgCJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCajK76QAKCRDa6OEJdZac
- 5fNlD/9YZm+RT/cLr5vQ2gRWlniUj0x7LBoWXvO5Z3H0akcpdTuamGM820s61RjY2G7Kv57GVap
- Br0spJZKaC1cOsU0oQBfy7Nw/wRcLXa60fSxo6x2vGdOxdfsd8+DwUvCT0fONX2ZExfMr/K5AvA
- WiELUvAOY1gLws6g6OhWzKfadP4m6Zbw6kcp/4VxJ4Hp1cBy67l+xd9dXcpfTXENfuSVu0B9Nfq
- qmeES3DmmAzevx7P+1ANDF8uKV1OdjrBRVyyvlMzkC4x9qCeO51Kz1MD0Vyaz+bAnGyQaZrA2VY
- T7Ba/VlfDI+rQK5USvuYKupz8VJ5fMpexuKtdGkk4viEFs81NihdbeF17NPkPGP93kvT0wxwOJ5
- g9qkBpwSMV33PijMbMkYJOrK9CEf7Ejri4kM1t2XDLh3mU3JMd1o4K7qjz1yM+1JphkjJC6vQuX
- /Dht95NQMjN5CxKZhuV6odGG3FksrRjCVNrkWz8WcGCo0rT8fm6Z6y+4SqPoO6bPIXoZ9SD42Xi
- ukUWEu6EAYunYdctJL6QY/NOMdI8MkyOs5Btc5h7KQxLoL0P+MZ6Gg/zBKkuylfu+PRWxXr2xSn
- +pvP9yJePnU/5034ItEoBl+JtYV7XvzSAkiL+ioAU1etLZA/Od5GKKLB6JdAqeKY2xL1FuJJWKB
- lWVZxY23ffMWOlg==
+ bh=DBBYHwbqJbFwGl+d/VFOQNwyJmVR5Qb+sHR1dfLAJ5E=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqMrvpvPM7B9Vbo1UPKodmRkopX38wjVUQV3x1S
+ efqsN3wUViJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCajK76QAKCRDa6OEJdZac
+ 5TrcD/9s3pylvGUZ3wmn4vQjxz9DPzhW7uFt1iOSK8Yc9LXkU8qTPf0OHG+9dL1JilzDwDl4Ty2
+ naQGTRHMPITvLHoMJ5yiaWXUdoTTi2JJWq5LUANS0RUfODJTO37DWdBc3AbkgqGsxZr1l3pUYik
+ MCXjEyDB3Hxp4c5UIiEx2fD7fsYsKAgGNDK18cHTTIUGRa6s6qWbOFe8IsQJ4B9Tys8HuWniLwA
+ 11LBD35jBzH2HLT42ebfsWwtCotrdZjr9cwoOqkqs556ARl/vwu7w5h5UEFMOzmov5MEvVPgP80
+ BURZpCykC6V5iAEIJ7+AVb8DoYFQDFrwJaD6YCjRmc4KCswv/ZaaVNgdTnurST5MMdKDde3dzrf
+ Uw6IAk+zmpythOA6zZiyN6IllcTnhemrMg3Q/0PIB4qftMFB4L0aSDPH3CCuAD0pVaa/Vv5FckX
+ RSjeSYTHSYSvz8ZDskRtJStEWb1mvXZQio2hHVlzNileTPvRZqunYSEDLOk42dijFDqTi3Ug8fb
+ 7dRlkhXzl8meufJtSJhjyFgk48aYKsCmXZEGh24cF94pmy+Us8wT29URTRLlaCURyZbqHek6gff
+ QaAGHFdCqFe62lYa2fthLA5ZRs+DR0Z/jVD0/7j0h3t4FEXSI5lB9AzWt4JevzcSZWdl/vEg7Id
+ c2RKMlg27+8ZUKw==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
 Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -105,65 +105,48 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Track the input handled state, and dispose it on unrealize.
 
-Also free some allocated fields during unrealize.
-
 Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- include/hw/input/stellaris_gamepad.h |  2 ++
- hw/input/stellaris_gamepad.c         | 12 +++++++++++-
- 2 files changed, 13 insertions(+), 1 deletion(-)
+ hw/m68k/next-kbd.c | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
-diff --git a/include/hw/input/stellaris_gamepad.h b/include/hw/input/stellaris_gamepad.h
-index e011482646f..c1069735010 100644
---- a/include/hw/input/stellaris_gamepad.h
-+++ b/include/hw/input/stellaris_gamepad.h
-@@ -13,6 +13,7 @@
- 
- #include "hw/core/sysbus.h"
- #include "qom/object.h"
-+#include "ui/input.h"
- 
- /*
-  * QEMU interface:
-@@ -28,6 +29,7 @@ OBJECT_DECLARE_SIMPLE_TYPE(StellarisGamepad, STELLARIS_GAMEPAD)
- struct StellarisGamepad {
-     SysBusDevice parent_obj;
- 
+diff --git a/hw/m68k/next-kbd.c b/hw/m68k/next-kbd.c
+index 7be5ab2fb79..84a610edab2 100644
+--- a/hw/m68k/next-kbd.c
++++ b/hw/m68k/next-kbd.c
+@@ -65,6 +65,7 @@ typedef struct {
+ struct NextKBDState {
+     SysBusDevice sbd;
+     MemoryRegion mr;
 +    QemuInputHandlerState *hs;
-     uint32_t num_buttons;
-     qemu_irq *irqs;
-     uint32_t *keycodes;
-diff --git a/hw/input/stellaris_gamepad.c b/hw/input/stellaris_gamepad.c
-index 25769fc2616..376d91abad7 100644
---- a/hw/input/stellaris_gamepad.c
-+++ b/hw/input/stellaris_gamepad.c
-@@ -59,7 +59,16 @@ static void stellaris_gamepad_realize(DeviceState *dev, Error **errp)
-     s->irqs = g_new0(qemu_irq, s->num_buttons);
-     s->pressed = g_new0(uint8_t, s->num_buttons);
-     qdev_init_gpio_out(dev, s->irqs, s->num_buttons);
--    qemu_input_handler_register(dev, &stellaris_gamepad_handler);
-+    s->hs = qemu_input_handler_register(dev, &stellaris_gamepad_handler);
+     KBDQueue queue;
+     uint16_t shift;
+ };
+@@ -304,7 +305,14 @@ static void nextkbd_realize(DeviceState *dev, Error **errp)
+     memory_region_init_io(&s->mr, OBJECT(dev), &kbd_ops, s, "next.kbd", 0x1000);
+     sysbus_init_mmio(SYS_BUS_DEVICE(dev), &s->mr);
+ 
+-    qemu_input_handler_register(dev, &nextkbd_handler);
++    s->hs = qemu_input_handler_register(dev, &nextkbd_handler);
 +}
 +
-+static void stellaris_gamepad_unrealize(DeviceState *dev)
++static void nextkbd_unrealize(DeviceState *dev)
 +{
-+    StellarisGamepad *s = STELLARIS_GAMEPAD(dev);
++    NextKBDState *s = NEXTKBD(dev);
 +
-+    g_clear_pointer(&s->irqs, g_free);
-+    g_clear_pointer(&s->pressed, g_free);
 +    g_clear_pointer(&s->hs, qemu_input_handler_unregister);
  }
  
- static void stellaris_gamepad_reset_enter(Object *obj, ResetType type)
-@@ -81,6 +90,7 @@ static void stellaris_gamepad_class_init(ObjectClass *klass, const void *data)
- 
-     rc->phases.enter = stellaris_gamepad_reset_enter;
-     dc->realize = stellaris_gamepad_realize;
-+    dc->unrealize = stellaris_gamepad_unrealize;
-     dc->vmsd = &vmstate_stellaris_gamepad;
-     device_class_set_props(dc, stellaris_gamepad_properties);
+ static const VMStateDescription nextkbd_vmstate = {
+@@ -319,6 +327,7 @@ static void nextkbd_class_init(ObjectClass *oc, const void *data)
+     set_bit(DEVICE_CATEGORY_INPUT, dc->categories);
+     dc->vmsd = &nextkbd_vmstate;
+     dc->realize = nextkbd_realize;
++    dc->unrealize = nextkbd_unrealize;
+     device_class_set_legacy_reset(dc, nextkbd_reset);
  }
+ 
 
 -- 
 2.54.0
