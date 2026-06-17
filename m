@@ -4,120 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 251ADCD98EE
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jun 2026 06:34:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74EADCD98E2
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jun 2026 06:38:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZjrI-00015X-KF; Wed, 17 Jun 2026 02:34:44 -0400
+	id 1wZjtx-0001wM-Dq; Wed, 17 Jun 2026 02:37:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>)
- id 1wZjrG-0000xD-P2; Wed, 17 Jun 2026 02:34:42 -0400
-Received: from smtpout5.mo538.mail-out.ovh.net ([51.210.91.34])
+ (Exim 4.90_1) (envelope-from <wang.yechao255@zte.com.cn>)
+ id 1wZjtv-0001vq-2L; Wed, 17 Jun 2026 02:37:27 -0400
+Received: from mxhk.zte.com.cn ([160.30.148.34])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>)
- id 1wZjrE-0006VV-OF; Wed, 17 Jun 2026 02:34:42 -0400
-Received: from director5.derp.mail-out.ovh.net
- (director5.derp.mail-out.ovh.net [57.128.106.70])
- by mo538.mail-out.ovh.net (Postfix) with ESMTPS id 4ggDbv4XpWz5w44;
- Wed, 17 Jun 2026 06:34:35 +0000 (UTC)
-Received: from director5.derp.mail-out.ovh.net
- (director5.derp.mail-out.ovh.net. [127.0.0.1])
- by director5.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
- for <alexander.hansen@9elements.com>; Wed, 17 Jun 2026 06:34:35 +0000 (UTC)
-Received: from mta6.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.110.178.215])
- by director5.derp.mail-out.ovh.net (Postfix) with ESMTPS id
- 4ggDbv1xjSz7y6x; Wed, 17 Jun 2026 06:34:35 +0000 (UTC)
-Received: from kaod.org (unknown [10.1.6.3])
- (Authenticated sender: clg@kaod.org)
- by mta6.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id DFB161B434AE;
- Wed, 17 Jun 2026 06:34:33 +0000 (UTC)
-Authentication-Results: garm.ovh; auth=pass
- (GARM-104R005412dbac3-c9ea-4443-9b6b-50215850a1d0,
- EB55872F2CD222A6031BC41A4E4DFBE49714FCD6) smtp.auth=clg@kaod.org
-X-OVh-ClientIp: 82.64.250.170
-Message-ID: <b241d959-2266-4193-9421-47d46d40b6f6@kaod.org>
-Date: Wed, 17 Jun 2026 08:34:33 +0200
+ (Exim 4.90_1) (envelope-from <wang.yechao255@zte.com.cn>)
+ id 1wZjts-00074X-8R; Wed, 17 Jun 2026 02:37:26 -0400
+Received: from mse-fl2.zte.com.cn (unknown [10.5.228.133])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mxhk.zte.com.cn (FangMail) with ESMTPS id 4ggDfx3Vyvz5B12k;
+ Wed, 17 Jun 2026 14:37:13 +0800 (CST)
+Received: from szxl2zmapp05.zte.com.cn ([10.1.32.37])
+ by mse-fl2.zte.com.cn with SMTP id 65H6b5x6070819;
+ Wed, 17 Jun 2026 14:37:05 +0800 (+08)
+ (envelope-from wang.yechao255@zte.com.cn)
+Received: from localhost.localdomain (unknown [10.234.74.162])
+ by smtp (Zmail) with SMTP; Wed, 17 Jun 2026 14:37:07 +0800
+X-Zmail-TransId: 3e816a324092004-f1ef0
+X-Zmail-LocalSMTP: 1
+X-Zmail-RealSender: wang.yechao255@zte.com.cn
+From: Wang Yechao <wang.yechao255@zte.com.cn>
+To: qemu-devel@nongnu.org, qemu-riscv@nongnu.org
+Cc: Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Chao Liu <chao.liu.zevorn@gmail.com>,
+ Wang Yechao <wang.yechao255@zte.com.cn>
+Subject: [PATCH] target/riscv/kvm: add extensions after v7.1-rc4 update
+Date: Wed, 17 Jun 2026 14:36:30 +0800
+Message-ID: <20260617063630.111472-1-wang.yechao255@zte.com.cn>
+X-Mailer: git-send-email 2.41.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 2/5] ast2600: yosemite4 functional test
-To: Alexander Hansen <alexander.hansen@9elements.com>, qemu-devel@nongnu.org
-Cc: Titus Rwantare <titusr@google.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Jamin Lin <jamin_lin@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
- qemu-arm@nongnu.org
-References: <20260610122252.349321-1-alexander.hansen@9elements.com>
- <20260610122252.349321-3-alexander.hansen@9elements.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Autocrypt: addr=clg@kaod.org; keydata=
- xsFNBFu8o3UBEADP+oJVJaWm5vzZa/iLgpBAuzxSmNYhURZH+guITvSySk30YWfLYGBWQgeo
- 8NzNXBY3cH7JX3/a0jzmhDc0U61qFxVgrPqs1PQOjp7yRSFuDAnjtRqNvWkvlnRWLFq4+U5t
- yzYe4SFMjFb6Oc0xkQmaK2flmiJNnnxPttYwKBPd98WfXMmjwAv7QfwW+OL3VlTPADgzkcqj
- 53bfZ4VblAQrq6Ctbtu7JuUGAxSIL3XqeQlAwwLTfFGrmpY7MroE7n9Rl+hy/kuIrb/TO8n0
- ZxYXvvhT7OmRKvbYuc5Jze6o7op/bJHlufY+AquYQ4dPxjPPVUT/DLiUYJ3oVBWFYNbzfOrV
- RxEwNuRbycttMiZWxgflsQoHF06q/2l4ttS3zsV4TDZudMq0TbCH/uJFPFsbHUN91qwwaN/+
- gy1j7o6aWMz+Ib3O9dK2M/j/O/Ube95mdCqN4N/uSnDlca3YDEWrV9jO1mUS/ndOkjxa34ia
- 70FjwiSQAsyIwqbRO3CGmiOJqDa9qNvd2TJgAaS2WCw/TlBALjVQ7AyoPEoBPj31K74Wc4GS
- Rm+FSch32ei61yFu6ACdZ12i5Edt+To+hkElzjt6db/UgRUeKfzlMB7PodK7o8NBD8outJGS
- tsL2GRX24QvvBuusJdMiLGpNz3uqyqwzC5w0Fd34E6G94806fwARAQABzSBDw6lkcmljIExl
- IEdvYXRlciA8Y2xnQGthb2Qub3JnPsLBeAQTAQIAIgUCW7yjdQIbAwYLCQgHAwIGFQgCCQoL
- BBYCAwECHgECF4AACgkQUaNDx8/77KGRSxAAuMJJMhJdj7acTcFtwof7CDSfoVX0owE2FJdd
- M43hNeTwPWlV5oLCj1BOQo0MVilIpSd9Qu5wqRD8KnN2Bv/rllKPqK2+i8CXymi9hsuzF56m
- 76wiPwbsX54jhv/VYY9Al7NBknh6iLYJiC/pgacRCHtSj/wofemSCM48s61s1OleSPSSvJE/
- jYRa0jMXP98N5IEn8rEbkPua/yrm9ynHqi4dKEBCq/F7WDQ+FfUaFQb4ey47A/aSHstzpgsl
- TSDTJDD+Ms8y9x2X5EPKXnI3GRLaCKXVNNtrvbUd9LsKymK3WSbADaX7i0gvMFq7j51P/8yj
- neaUSKSkktHauJAtBNXHMghWm/xJXIVAW8xX5aEiSK7DNp5AM478rDXn9NZFUdLTAScVf7LZ
- VzMFKR0jAVG786b/O5vbxklsww+YXJGvCUvHuysEsz5EEzThTJ6AC5JM2iBn9/63PKiS3ptJ
- QAqzasT6KkZ9fKLdK3qtc6yPaSm22C5ROM3GS+yLy6iWBkJ/nEYh/L/du+TLw7YNbKejBr/J
- ml+V3qZLfuhDjW0GbeJVPzsENuxiNiBbyzlSnAvKlzda/sBDvxmvWhC+nMRQCf47mFr8Xx3w
- WtDSQavnz3zTa0XuEucpwfBuVdk4RlPzNPri6p2KTBhPEvRBdC9wNOdRBtsP9rAPjd52d73O
- wU0EW7yjdQEQALyDNNMw/08/fsyWEWjfqVhWpOOrX2h+z4q0lOHkjxi/FRIRLfXeZjFfNQNL
- SoL8j1y2rQOs1j1g+NV3K5hrZYYcMs0xhmrZKXAHjjDx7FW3sG3jcGjFW5Xk4olTrZwFsZVU
- cP8XZlArLmkAX3UyrrXEWPSBJCXxDIW1hzwpbV/nVbo/K9XBptT/wPd+RPiOTIIRptjypGY+
- S23HYBDND3mtfTz/uY0Jytaio9GETj+fFis6TxFjjbZNUxKpwftu/4RimZ7qL+uM1rG1lLWc
- 9SPtFxRQ8uLvLOUFB1AqHixBcx7LIXSKZEFUCSLB2AE4wXQkJbApye48qnZ09zc929df5gU6
- hjgqV9Gk1rIfHxvTsYltA1jWalySEScmr0iSYBZjw8Nbd7SxeomAxzBv2l1Fk8fPzR7M616d
- tb3Z3HLjyvwAwxtfGD7VnvINPbzyibbe9c6gLxYCr23c2Ry0UfFXh6UKD83d5ybqnXrEJ5n/
- t1+TLGCYGzF2erVYGkQrReJe8Mld3iGVldB7JhuAU1+d88NS3aBpNF6TbGXqlXGF6Yua6n1c
- OY2Yb4lO/mDKgjXd3aviqlwVlodC8AwI0SdujWryzL5/AGEU2sIDQCHuv1QgzmKwhE58d475
- KdVX/3Vt5I9kTXpvEpfW18TjlFkdHGESM/JxIqVsqvhAJkalABEBAAHCwV8EGAECAAkFAlu8
- o3UCGwwACgkQUaNDx8/77KEhwg//WqVopd5k8hQb9VVdk6RQOCTfo6wHhEqgjbXQGlaxKHoX
- ywEQBi8eULbeMQf5l4+tHJWBxswQ93IHBQjKyKyNr4FXseUI5O20XVNYDJZUrhA4yn0e/Af0
- IX25d94HXQ5sMTWr1qlSK6Zu79lbH3R57w9jhQm9emQEp785ui3A5U2Lqp6nWYWXz0eUZ0Ta
- d2zC71Gg9VazU9MXyWn749s0nXbVLcLS0yops302Gf3ZmtgfXTX/W+M25hiVRRKCH88yr6it
- +OMJBUndQVAA/fE9hYom6t/zqA248j0QAV/pLHH3hSirE1mv+7jpQnhMvatrwUpeXrOiEw1n
- HzWCqOJUZ4SY+HmGFW0YirWV2mYKoaGO2YBUwYF7O9TI3GEEgRMBIRT98fHa0NPwtlTktVIS
- l73LpgVscdW8yg9Gc82oe8FzU1uHjU8b10lUXOMHpqDDEV9//r4ZhkKZ9C4O+YZcTFu+mvAY
- 3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
- ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
- KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20260610122252.349321-3-alexander.hansen@9elements.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-x-ovh-tracer-id: 4610278645044194315
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTGLGTMNMN+0oYZIin2NqfPH0lSHtFAiHMk/e0NrjPZQxFECbX8e2fLnGXAL8usi4o6bjVP8KFsvsf8TskZQ8Wp4kkQlfO3PDnhuUegfijqrnSNRTrq9QxOZbr4xQMjCcylnXnjLloLRas0RdLvx9ujrrPy4EV8XhMQFZe4d4TMY2dUxfW7Xnxcy52vjJyfXCKUWppY+GtpS2OcRntZkOeYhBgT+3cPNa5+CeS/j/V7A/FcnMK6A14xT/4mayH/eBEc/8fNBT0vnfCgjTmsYvSHSTFOhSUPbG/nP5ynaEoJNy16m2UPuAdfShjNgktHuUIuJpLD1rECYiC8KlvBMsGAzRoHacazAyyoowuSKe+ozhywzGGxSdFOTznnGXM7I8YnA3iTJuTmhpLvBGYv7zkWmqiUUyby5BlRlNL1r3Kxla/ev9DYsw1M2WZN1cGlBKS83GBCLkqJpwpYt85G0CpojASV/El1nTfb/IyRnp9FAxB1VpM8hKTJfUOzB+4qDTwPxPjn5a+u44Czqs4XCQUY+r9T5FumHyswV4WfVumqvkEUjA4ICGsTarRYHHRmRmelBpHZBWemuk2dLW2Pz+e76mKAwfi6qhJE1oqGp3s6JWPr6vcFk68hsOWv2D99ItR4CGtJX1QaMhbx+TNufkrv52u1LAKgSiZ9f4xQrkYcRWw
-DKIM-Signature: a=rsa-sha256; bh=Cdw9jkBLSD+gwSz4cWwETzAuy3b5mQQmTN4J0gV0oTY=; 
- c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1781678077; v=1;
- b=uDZ69PVuagSrSFtE3NHbeqjDZSg7xFkz+yhTytYKMMyHjoAPBdTuZU8N8wS4g/9FSZjG1/Ex
- ph7ssElo1+o0B8/wnkqNYk+VowaDqLj9tQwufLjKZuwgXjiJR3CpeVScvXYG/EZsym5/LIHe1fl
- igUIWJqrauWyaMNE4nMVXkRYfOCfKAI1fIEJU+DHvHCJFigN7x+IwrRdMURZpGDCcO9PVvkEGgW
- nWEqCCnIFBbh3w+IKBizquI8FAwpPDrm/bbeVDvtkA7NsYyacRm0NK6K2kOQRJ+2afUkM1Bj7Hu
- GKMfplA7Cnj3V9EIZr8+1ts8GD/G5TrlJURq7DYIPz0bA==
-Received-SPF: pass client-ip=51.210.91.34; envelope-from=clg@kaod.org;
- helo=smtpout5.mo538.mail-out.ovh.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: multipart/mixed;
+	boundary="=====_001_next====="
+X-MAIL: mse-fl2.zte.com.cn 65H6b5x6070819
+X-TLS: YES
+X-ENVELOPE-SENDER: wang.yechao255@zte.com.cn
+X-SOURCE-IP: 10.5.228.133 unknown Wed, 17 Jun 2026 14:37:13 +0800
+X-CLEAN: YES
+X-Fangmail-Anti-Spam-Filtered: true
+X-Fangmail-MID-QID: 6A324099.001/4ggDfx3Vyvz5B12k
+Received-SPF: pass client-ip=160.30.148.34;
+ envelope-from=wang.yechao255@zte.com.cn; helo=mxhk.zte.com.cn
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, HTML_MESSAGE=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -133,111 +79,97 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/10/26 14:20, Alexander Hansen wrote:
-> Add a functional test for the Yosemite V4 (fby4-bmc) machine
-> that validates:
-> - U-Boot initialization and kernel boot sequence
-> 
-> The test uses an OpenBMC image built for the yosemite4 board and
-> validates console output through the boot process.
-> 
-> Cc: Titus Rwantare <titusr@google.com>
-> Cc: "Cédric Le Goater" <clg@kaod.org> (maintainer:ASPEED BMCs)
-> Cc: Peter Maydell <peter.maydell@linaro.org> (maintainer:ASPEED BMCs)
-> Cc: Steven Lee <steven_lee@aspeedtech.com> (reviewer:ASPEED BMCs)
-> Cc: Troy Lee <leetroy@gmail.com> (reviewer:ASPEED BMCs)
-> Cc: Jamin Lin <jamin_lin@aspeedtech.com> (reviewer:ASPEED BMCs)
-> Cc: Kane Chen <kane_chen@aspeedtech.com> (reviewer:ASPEED BMCs)
-> Cc: Andrew Jeffery <andrew@codeconstruct.com.au> (reviewer:ASPEED BMCs)
-> Cc: Joel Stanley <joel@jms.id.au> (reviewer:ASPEED BMCs)
-> Cc: qemu-arm@nongnu.org (open list:ASPEED BMCs)
-> Cc: qemu-devel@nongnu.org (open list:All patches CC here)
-> Signed-off-by: Alexander Hansen <alexander.hansen@9elements.com>
 
 
+--=====_001_next=====
+Content-Type: multipart/related;
+	boundary="=====_002_next====="
 
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
 
-Thanks,
+--=====_002_next=====
+Content-Type: multipart/alternative;
+	boundary="=====_003_next====="
 
-C.
 
-> ---
->   tests/functional/arm/meson.build         |  2 ++
->   tests/functional/arm/test_aspeed_fby4.py | 45 ++++++++++++++++++++++++
->   2 files changed, 47 insertions(+)
->   create mode 100755 tests/functional/arm/test_aspeed_fby4.py
-> 
-> diff --git a/tests/functional/arm/meson.build b/tests/functional/arm/meson.build
-> index 61b00932db..19331b3f16 100644
-> --- a/tests/functional/arm/meson.build
-> +++ b/tests/functional/arm/meson.build
-> @@ -15,6 +15,7 @@ test_arm_timeouts = {
->     'aspeed_anacapa' : 480,
->     'aspeed_bletchley' : 480,
->     'aspeed_catalina' : 480,
-> +  'aspeed_fby4': 480,
->     'aspeed_gb200nvl_bmc' : 480,
->     'aspeed_rainier' : 480,
->     'bpim2u' : 500,
-> @@ -50,6 +51,7 @@ tests_arm_system_thorough = [
->     'aspeed_anacapa',
->     'aspeed_bletchley',
->     'aspeed_catalina',
-> +  'aspeed_fby4',
->     'aspeed_gb200nvl_bmc',
->     'aspeed_rainier',
->     'bpim2u',
-> diff --git a/tests/functional/arm/test_aspeed_fby4.py b/tests/functional/arm/test_aspeed_fby4.py
-> new file mode 100755
-> index 0000000000..a521834f79
-> --- /dev/null
-> +++ b/tests/functional/arm/test_aspeed_fby4.py
-> @@ -0,0 +1,45 @@
-> +#!/usr/bin/env python3
-> +#
-> +# Functional test that boots the ASPEED machines
-> +#
-> +# SPDX-License-Identifier: GPL-2.0-or-later
-> +
-> +from qemu_test import Asset
-> +from qemu_test import wait_for_console_pattern
-> +from aspeed import AspeedTest
-> +
-> +
-> +class YosemiteV4Machine(AspeedTest):
-> +
-> +    ASSET_YOSEMITE_V4_FLASH = Asset(
-> +        'https://github.com/legoater/qemu-aspeed-boot/raw/refs/heads/master/images/yosemite4-bmc/openbmc-20260505132843/obmc-phosphor-image-yosemite4-20260505132843.static.mtd.xz',
-> +        'dff6946363b41f952b15cfc3156482b89fcfc1b0ecfc3ec8b3ed496a5f001ef9')
-> +
-> +    def do_test_arm_aspeed_openbmc_no_network(self, machine, image, uboot,
-> +                                   cpu_id, soc):
-> +
-> +        self.set_machine(machine)
-> +        self.vm.set_console()
-> +        self.vm.add_args('-drive', f'file={image},if=mtd,format=raw',
-> +                         '-snapshot')
-> +        self.vm.launch()
-> +
-> +        self.wait_for_console_pattern(f'U-Boot {uboot}')
-> +        self.wait_for_console_pattern('## Loading kernel from FIT Image')
-> +        self.wait_for_console_pattern('Starting kernel ...')
-> +        self.wait_for_console_pattern(f'Booting Linux on physical CPU {cpu_id}')
-> +        self.wait_for_console_pattern(f'ASPEED {soc}')
-> +        self.wait_for_console_pattern('/init as init process')
-> +        # yosemite v4 does not emit the hostname log which is
-> +        # different from the other machines.
-> +        self.wait_for_console_pattern('yosemite4 login:')
-> +
-> +    def test_arm_ast2600_yosemitev4_openbmc(self):
-> +        image_path = self.uncompress(self.ASSET_YOSEMITE_V4_FLASH)
-> +
-> +        self.do_test_arm_aspeed_openbmc_no_network('fby4-bmc', image=image_path,
-> +                                        uboot='2019.04', cpu_id='0xf00',
-> +                                        soc='AST2600 rev A3')
-> +
-> +if __name__ == '__main__':
-> +    AspeedTest.main()
+--=====_003_next=====
+Content-Type: text/plain;
+	charset="UTF-8"
+Content-Transfer-Encoding: base64
+
+RXhwb3NlIHppbHNkLCB6Y2xzZCBhbmQgemFsYXNyLg0KDQpTaWduZWQtb2ZmLWJ5OiBXYW5nIFll
+Y2hhbyA8d2FuZy55ZWNoYW8yNTVAenRlLmNvbS5jbj4NCi0tLQ0KIHRhcmdldC9yaXNjdi9rdm0v
+a3ZtLWNwdS5jIHwgMyArKysNCiAxIGZpbGUgY2hhbmdlZCwgMyBpbnNlcnRpb25zKCspDQoNCmRp
+ZmYgLS1naXQgYS90YXJnZXQvcmlzY3Yva3ZtL2t2bS1jcHUuYyBiL3RhcmdldC9yaXNjdi9rdm0v
+a3ZtLWNwdS5jDQppbmRleCA1M2Q4ODMzOWMxLi42YmViYmFmN2Q0IDEwMDY0NA0KLS0tIGEvdGFy
+Z2V0L3Jpc2N2L2t2bS9rdm0tY3B1LmMNCisrKyBiL3RhcmdldC9yaXNjdi9rdm0va3ZtLWNwdS5j
+DQpAQCAtMzAzLDEwICszMDMsMTMgQEAgc3RhdGljIEtWTUNQVUNvbmZpZyBrdm1fbXVsdGlfZXh0
+X2NmZ3NbXSA9IHsNCiAgICAgS1ZNX0VYVF9DRkcoInppaGludG50bCIsIGV4dF96aWhpbnRudGws
+IEtWTV9SSVNDVl9JU0FfRVhUX1pJSElOVE5UTCksDQogICAgIEtWTV9FWFRfQ0ZHKCJ6aWhpbnRw
+YXVzZSIsIGV4dF96aWhpbnRwYXVzZSwgS1ZNX1JJU0NWX0lTQV9FWFRfWklISU5UUEFVU0UpLA0K
+ICAgICBLVk1fRVhUX0NGRygiemlocG0iLCBleHRfemlocG0sIEtWTV9SSVNDVl9JU0FfRVhUX1pJ
+SFBNKSwNCisgICAgS1ZNX0VYVF9DRkcoInppbHNkIiwgZXh0X3ppbHNkLCBLVk1fUklTQ1ZfSVNB
+X0VYVF9aSUxTRCksDQogICAgIEtWTV9FWFRfQ0ZHKCJ6aW1vcCIsIGV4dF96aW1vcCwgS1ZNX1JJ
+U0NWX0lTQV9FWFRfWklNT1ApLA0KICAgICBLVk1fRVhUX0NGRygiemNtb3AiLCBleHRfemNtb3As
+IEtWTV9SSVNDVl9JU0FfRVhUX1pDTU9QKSwNCisgICAgS1ZNX0VYVF9DRkcoInpjbHNkIiwgZXh0
+X3pjbHNkLCBLVk1fUklTQ1ZfSVNBX0VYVF9aQ0xTRCksDQogICAgIEtWTV9FWFRfQ0ZHKCJ6YWJo
+YSIsIGV4dF96YWJoYSwgS1ZNX1JJU0NWX0lTQV9FWFRfWkFCSEEpLA0KICAgICBLVk1fRVhUX0NG
+RygiemFjYXMiLCBleHRfemFjYXMsIEtWTV9SSVNDVl9JU0FfRVhUX1pBQ0FTKSwNCisgICAgS1ZN
+X0VYVF9DRkcoInphbGFzciIsIGV4dF96YWxhc3IsIEtWTV9SSVNDVl9JU0FfRVhUX1pBTEFTUiks
+DQogICAgIEtWTV9FWFRfQ0ZHKCJ6YXdycyIsIGV4dF96YXdycywgS1ZNX1JJU0NWX0lTQV9FWFRf
+WkFXUlMpLA0KICAgICBLVk1fRVhUX0NGRygiemZhIiwgZXh0X3pmYSwgS1ZNX1JJU0NWX0lTQV9F
+WFRfWkZBKSwNCiAgICAgS1ZNX0VYVF9DRkcoInpmYmZtaW4iLCBleHRfemZiZm1pbiwgS1ZNX1JJ
+U0NWX0lTQV9FWFRfWkZCRk1JTiksDQotLSANCjIuMjcuMA==
+
+
+--=====_003_next=====
+Content-Type: text/html ;
+	charset="UTF-8"
+Content-Transfer-Encoding: base64
+
+RXhwb3NlJm5ic3A7emlsc2QsJm5ic3A7emNsc2QmbmJzcDthbmQmbmJzcDt6YWxhc3IuPGJyIC8+
+DTxiciAvPlNpZ25lZC1vZmYtYnk6Jm5ic3A7V2FuZyZuYnNwO1llY2hhbyZuYnNwOyZsdDt3YW5n
+LnllY2hhbzI1NUB6dGUuY29tLmNuJmd0Ow08YnIgLz4tLS08YnIgLz4mbmJzcDt0YXJnZXQvcmlz
+Y3Yva3ZtL2t2bS1jcHUuYyZuYnNwO3wmbmJzcDszJm5ic3A7KysrPGJyIC8+Jm5ic3A7MSZuYnNw
+O2ZpbGUmbmJzcDtjaGFuZ2VkLCZuYnNwOzMmbmJzcDtpbnNlcnRpb25zKCspPGJyIC8+DTxiciAv
+PmRpZmYmbmJzcDstLWdpdCZuYnNwO2EvdGFyZ2V0L3Jpc2N2L2t2bS9rdm0tY3B1LmMmbmJzcDti
+L3RhcmdldC9yaXNjdi9rdm0va3ZtLWNwdS5jPGJyIC8+aW5kZXgmbmJzcDs1M2Q4ODMzOWMxLi42
+YmViYmFmN2Q0Jm5ic3A7MTAwNjQ0PGJyIC8+LS0tJm5ic3A7YS90YXJnZXQvcmlzY3Yva3ZtL2t2
+bS1jcHUuYzxiciAvPisrKyZuYnNwO2IvdGFyZ2V0L3Jpc2N2L2t2bS9rdm0tY3B1LmM8YnIgLz5A
+QCZuYnNwOy0zMDMsMTAmbmJzcDsrMzAzLDEzJm5ic3A7QEAmbmJzcDtzdGF0aWMmbmJzcDtLVk1D
+UFVDb25maWcmbmJzcDtrdm1fbXVsdGlfZXh0X2NmZ3NbXSZuYnNwOz0mbmJzcDt7PGJyIC8+Jm5i
+c3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7S1ZNX0VYVF9DRkcoJnF1b3Q7emloaW50bnRsJnF1
+b3Q7LCZuYnNwO2V4dF96aWhpbnRudGwsJm5ic3A7S1ZNX1JJU0NWX0lTQV9FWFRfWklISU5UTlRM
+KSw8YnIgLz4mbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDtLVk1fRVhUX0NGRygmcXVvdDt6
+aWhpbnRwYXVzZSZxdW90OywmbmJzcDtleHRfemloaW50cGF1c2UsJm5ic3A7S1ZNX1JJU0NWX0lT
+QV9FWFRfWklISU5UUEFVU0UpLDxiciAvPiZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwO0tW
+TV9FWFRfQ0ZHKCZxdW90O3ppaHBtJnF1b3Q7LCZuYnNwO2V4dF96aWhwbSwmbmJzcDtLVk1fUklT
+Q1ZfSVNBX0VYVF9aSUhQTSksPGJyIC8+KyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwO0tWTV9FWFRf
+Q0ZHKCZxdW90O3ppbHNkJnF1b3Q7LCZuYnNwO2V4dF96aWxzZCwmbmJzcDtLVk1fUklTQ1ZfSVNB
+X0VYVF9aSUxTRCksPGJyIC8+Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7S1ZNX0VYVF9D
+RkcoJnF1b3Q7emltb3AmcXVvdDssJm5ic3A7ZXh0X3ppbW9wLCZuYnNwO0tWTV9SSVNDVl9JU0Ff
+RVhUX1pJTU9QKSw8YnIgLz4mbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDtLVk1fRVhUX0NG
+RygmcXVvdDt6Y21vcCZxdW90OywmbmJzcDtleHRfemNtb3AsJm5ic3A7S1ZNX1JJU0NWX0lTQV9F
+WFRfWkNNT1ApLDxiciAvPismbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDtLVk1fRVhUX0NGRygmcXVv
+dDt6Y2xzZCZxdW90OywmbmJzcDtleHRfemNsc2QsJm5ic3A7S1ZNX1JJU0NWX0lTQV9FWFRfWkNM
+U0QpLDxiciAvPiZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwO0tWTV9FWFRfQ0ZHKCZxdW90
+O3phYmhhJnF1b3Q7LCZuYnNwO2V4dF96YWJoYSwmbmJzcDtLVk1fUklTQ1ZfSVNBX0VYVF9aQUJI
+QSksPGJyIC8+Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7S1ZNX0VYVF9DRkcoJnF1b3Q7
+emFjYXMmcXVvdDssJm5ic3A7ZXh0X3phY2FzLCZuYnNwO0tWTV9SSVNDVl9JU0FfRVhUX1pBQ0FT
+KSw8YnIgLz4rJm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7S1ZNX0VYVF9DRkcoJnF1b3Q7emFsYXNy
+JnF1b3Q7LCZuYnNwO2V4dF96YWxhc3IsJm5ic3A7S1ZNX1JJU0NWX0lTQV9FWFRfWkFMQVNSKSw8
+YnIgLz4mbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDtLVk1fRVhUX0NGRygmcXVvdDt6YXdy
+cyZxdW90OywmbmJzcDtleHRfemF3cnMsJm5ic3A7S1ZNX1JJU0NWX0lTQV9FWFRfWkFXUlMpLDxi
+ciAvPiZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwO0tWTV9FWFRfQ0ZHKCZxdW90O3pmYSZx
+dW90OywmbmJzcDtleHRfemZhLCZuYnNwO0tWTV9SSVNDVl9JU0FfRVhUX1pGQSksPGJyIC8+Jm5i
+c3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7S1ZNX0VYVF9DRkcoJnF1b3Q7emZiZm1pbiZxdW90
+OywmbmJzcDtleHRfemZiZm1pbiwmbmJzcDtLVk1fUklTQ1ZfSVNBX0VYVF9aRkJGTUlOKSw8YnIg
+Lz4tLSZuYnNwOw08YnIgLz4yLjI3LjA8YnIgLz4=
+
+
+--=====_003_next=====--
+
+--=====_002_next=====--
+
+--=====_001_next=====--
 
 
