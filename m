@@ -4,87 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B4DACD98E2
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jun 2026 14:47:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65880CD98E2
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jun 2026 14:52:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZrXV-0007xU-R4; Wed, 17 Jun 2026 10:46:50 -0400
+	id 1wZrcE-0000i8-Qh; Wed, 17 Jun 2026 10:51:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wZrXL-0007uj-MA
- for qemu-devel@nongnu.org; Wed, 17 Jun 2026 10:46:40 -0400
-Received: from mail-pj1-x102a.google.com ([2607:f8b0:4864:20::102a])
+ id 1wZrbu-0000fw-DF
+ for qemu-devel@nongnu.org; Wed, 17 Jun 2026 10:51:30 -0400
+Received: from mail-pj1-x1031.google.com ([2607:f8b0:4864:20::1031])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wZrXG-0005yz-JV
- for qemu-devel@nongnu.org; Wed, 17 Jun 2026 10:46:38 -0400
-Received: by mail-pj1-x102a.google.com with SMTP id
- 98e67ed59e1d1-36d5b11201aso4031306a91.2
- for <qemu-devel@nongnu.org>; Wed, 17 Jun 2026 07:46:33 -0700 (PDT)
+ id 1wZrbn-0007vI-Qw
+ for qemu-devel@nongnu.org; Wed, 17 Jun 2026 10:51:21 -0400
+Received: by mail-pj1-x1031.google.com with SMTP id
+ 98e67ed59e1d1-36da151a152so4180344a91.1
+ for <qemu-devel@nongnu.org>; Wed, 17 Jun 2026 07:51:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1781707592; x=1782312392; darn=nongnu.org;
+ d=linaro.org; s=google; t=1781707867; x=1782312667; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=s2xPCCVxQlLpectea6P3aODk94xrC0wK+E+4zwUjVvs=;
- b=sPVixIs0xUH3C/wy62u9xCJMIVy0zWJMuCo+PEXdDcCclWP0m90WUdWV3IluzjsUc8
- PckebEDE9KPMVXOxWHv/8yMlV0Fy7W/zDrAkL0FZgE1cqoyXWvLmX36zCO6v+88jnsOS
- KwgloLvVr4+1AzwVakv+wpV9edwICfZrTYMFbgCOgHk8VykyKXz3cjKehiDAurtUOUXv
- r/Ngz8oG8waRS3xqz7DijQzbG9KcjGvM6JkiWJNuCO56B0+V7MeTJ/KW8KRinzRG/8Jl
- yD1VT4PP847lO0fVfhseFZttQxqIx2m45Ory+fMZy+lXLpscYwQ6GzJDhy6bBZw+K98D
- L6LA==
+ bh=WYemxzS8oIfdXRpcGrHyfNkpyGVjpdK45RZ2HLBL3+I=;
+ b=xkOF1DDxx7LkiGMqTkMHXw4s0UADKprCSpQGaTsXrS5OkDUN1ZW6VY35hrpwJv/RlF
+ 8JVkwVhRhn38F4Ox69/sE/qR0+/ZLFNVV+XopKk6/Ry64dIhqCva2qOpTxU+XOcRozFI
+ lRaZsd8gcidYEOjWRhI44lJK7v0xS6/QcqZqmhPZd1ZC5XPsLOKG3mI2H2yCazS+t0fy
+ teYVj27SusaKiBShGblK4pNXyOnmyErx8WZPj2fQVzkvSoj3Ah9TznEygbdNOb/qvwFk
+ w80ZLdtjRD2ldpBWLuKpPpFmp6Rn1F1AwA2wh5y9qwzW5vPNdN0lTgbo8qvsbaDVlrNN
+ 3XGw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781707592; x=1782312392;
+ d=1e100.net; s=20251104; t=1781707867; x=1782312667;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=s2xPCCVxQlLpectea6P3aODk94xrC0wK+E+4zwUjVvs=;
- b=ewCnl/k4Jixye0IP9IpEFbW6yXyH09K5difTMO81zgbYj8TaSB15pzNfGzkHbASZrX
- iEKM4pGGqEUZDgiFXAWYFGBunhjTmQoxEUr89nDXAntcN4NJATzR6FZkqzuCMKeGR98Y
- vFrxNBr5l0oUe3RlEf2pFnRLIzZ/W6xJZoBWpfGYOBkkfAEwUTOQLGc7ar5EteRPAv+N
- UyxDmsd1O2MMVTar0i28ZVRif4GzV2x60qNibRdZb3eUfXethCQO+OJdo7JunUEFOfM1
- 6IB4soVZMvwQqaZPv4JJBskBlWKMDqqFIfxfFM6d21Ss0FP36u7kD8aYj0AMG1Cnr5QE
- SkYQ==
+ bh=WYemxzS8oIfdXRpcGrHyfNkpyGVjpdK45RZ2HLBL3+I=;
+ b=R+iz7y5vhEL+gQKYlsewkdJY8MLrN6vDAHxYFqLUL2mw/3oqOMxVzsdXgyt2OosxzC
+ /Hs57F7XwiVfsfkX95puJtOTf/MieuLD08hBxgEzofGQODuYTyOhAV3DlwqWUzj2Gp2l
+ EZW3X6Ra/dhLaWdFg5umTgkF5+Xr6czRQ39+kOIfnY65Vb1HK37wZ34pRJpOkHNILAlY
+ iz6RzjDSa+7Z+cthiI/vaUvPUaVwezNX99T1X0lfWKsLH2kF4kLG1iRIYx4q5k2QQWhQ
+ bsdJGOKl1Sk2i/+nzJ+49NnWz+3HvvaCAIDWLDHFnn+UvBy0gPVjZ8cIdI/REU6OmuqR
+ sOnQ==
 X-Forwarded-Encrypted: i=1;
- AFNElJ9QWHE9xWXtsIAH9nj4W8+oA0aZXKo9npBmqrBLay9QsxOk9pyNolt5BQPeyyQbcTXXV+wTg35biBgd@nongnu.org
-X-Gm-Message-State: AOJu0Yzg8vfvGscNpgC97Zvi4nwfaz7lojVVaEq6cII5Z+gqhD7zhB8E
- BFhAzPtcvIjOJ+Ldi8sSvnvebcuCNc4yPZvDYTyMbUbZM0yG6s/nLG4EGWFcUAhaEyZ1QnQMny0
- 2NglV
-X-Gm-Gg: AfdE7clEF3TULVIaN+tcuqbphq2bAiV6ogO5dG2luJUh/8LmW7yKWE8/iUMd5Wy779L
- 55Arji22JtCmBR5KxWRt5JkYt9zK/ZGyxsTpkwPgud64UJndTNARvhuAe9eVKmxmfMw9Xla7kxk
- vttS+5WSIqdEUmdfvg+Ojl3OonefvsebSWrsWz+IU/nmBPS2y3vK0k6tyIP6uQEmuB9weHTgncC
- 2sOob9QM/Qt6K5GsdKCA0UkIujmNx3W2fC/VeX3jrR5jT3wPBMTQDp4LmELCl6QOeQ9mZc1eSI6
- yv7IG04Y9rPMwI7xAwO0hzRqBBQZ7mFtXJQ3ylIQgatP5VBcC6sx1F7zU4JIA/BpAClTc/B5yZo
- Nf5TdsrrnJVCGqMiTGzhpyrxj78FhiztLa832EaoNochu3wEaUg/gLPyx2rV+vlvriGXAGCSxA5
- DnAaUGmnMwD7V6TOdcOMkGYMPg5BCkq2boKnYHEyEPPM6uYTeKo0mbyHshvA==
-X-Received: by 2002:a17:90b:1ccf:b0:368:341a:a925 with SMTP id
- 98e67ed59e1d1-37c93d53bdfmr3835351a91.23.1781707591924; 
- Wed, 17 Jun 2026 07:46:31 -0700 (PDT)
+ AFNElJ+GV0uyP91yE28Hoc0GMPUG6bIPhOZPIF/wQv9vL6MWQRRcObMVukJYpv2eWNw+ra2KYL3SNNhDi8cZ@nongnu.org
+X-Gm-Message-State: AOJu0YxHrPouSjI5TJyEi0vXXR5JG7TdemHipSADPYjkqp/sQfsCBcm8
+ sJwzusSx0bo/APlKAbVJKMFXZqiUQboVEOyAv1iGL7EN9BGYpgWlBxs/VK3jNOFCyhQ=
+X-Gm-Gg: AfdE7cn2wCfqDdceBR7N5OIPZguP5v++Y2UkIDR0GnbT0hFSVroLv3it992ukH8x5ck
+ cI0n8aC0gHXTdBxOtOtZFgEpEMnbWtRa68RuqCVJLV+jiedYzG+f4AXN5yOzBuY62/72wDFNFPu
+ 1+/ZGlkCiFMvb8+KdMG7ubOSl+q9di4c3zKVTnipEz1L/TgE5DJAg/mqM0Dc8YLvn23XbgrRtCG
+ LKWGNo9i5zPt6j+voWjHda1CgxduGnTEFWWyMaG0w5V8Hu23xwVwKu4eEaks5k/LAT+oh+bAEUT
+ aNEULSLm60D63NwwjQ44YQNezxFWMzKcWC99t+SSJFGHyl7GPcsWwuWtiBHMTL9w7XLfIlnOIuG
+ EcTRkAkz4Ht9a8mAOiSuoCBbgLhquHHOql1tI6yGR7ARRzmGnvnJOl41r1Dej8/VYkR95tkBEG4
+ jbP3YFfVL0h4wCeQ1pZDgXL5D40x7VSj33nk7KkBiVrbUz6J1w0Amd9x4Zrw==
+X-Received: by 2002:a17:90b:5347:b0:36a:7c8f:1423 with SMTP id
+ 98e67ed59e1d1-37c933225bfmr4598176a91.9.1781707866822; 
+ Wed, 17 Jun 2026 07:51:06 -0700 (PDT)
 Received: from [192.168.0.4] (174-21-129-215.tukw.qwest.net. [174.21.129.215])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-37c521ae78csm6300167a91.4.2026.06.17.07.46.31
+ 98e67ed59e1d1-37c521ca7a7sm6350396a91.7.2026.06.17.07.51.06
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 17 Jun 2026 07:46:31 -0700 (PDT)
-Message-ID: <d66a13f5-99a9-476e-ad67-86dcc909622f@linaro.org>
-Date: Wed, 17 Jun 2026 07:46:29 -0700
+ Wed, 17 Jun 2026 07:51:06 -0700 (PDT)
+Message-ID: <05667f78-bdf8-425b-a242-4c1aa21e8626@linaro.org>
+Date: Wed, 17 Jun 2026 07:51:04 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 01/10] target/arm: Restrict TCG specific headers
+Subject: Re: [PATCH 02/10] hw/s390x/ipl: Remove TCG dependency in
+ handle_diag_308()
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
  qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>
 References: <20260616191716.12932-1-philmd@oss.qualcomm.com>
- <20260616191716.12932-2-philmd@oss.qualcomm.com>
+ <20260616191716.12932-3-philmd@oss.qualcomm.com>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260616191716.12932-2-philmd@oss.qualcomm.com>
+In-Reply-To: <20260616191716.12932-3-philmd@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102a;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1031;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1031.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,15 +108,18 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 6/16/26 12:17, Philippe Mathieu-Daudé wrote:
-> Avoid including TCG-specific headers in non-TCG builds.
-> 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-> ---
->   target/arm/internals.h | 4 +++-
->   target/arm/cpu-irq.c   | 3 ++-
->   2 files changed, 5 insertions(+), 2 deletions(-)
+>       case DIAG308_STORE:
+>       case DIAG308_PV_STORE:
+>           if (diag308_parm_check(env, r1, addr, ra, true)) {
+> -            return;
+> +            break;
+>           }
+>           if (subcode == DIAG308_PV_STORE) {
+>               iplb = s390_ipl_get_iplb_pv();
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Why change these return to break, rather than just return false?
+There aren't *that* many places where reset_requested are set.
+
 
 r~
 
