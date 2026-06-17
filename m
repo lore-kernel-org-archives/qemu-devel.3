@@ -4,97 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1ACEACD98F0
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jun 2026 07:28:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B7B3CD98E2
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jun 2026 07:28:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZkgu-0007WJ-Nq; Wed, 17 Jun 2026 03:28:08 -0400
+	id 1wZkh6-0007Yl-UA; Wed, 17 Jun 2026 03:28:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wZkgX-0007V6-N1; Wed, 17 Jun 2026 03:27:42 -0400
-Received: from isrv.corpit.ru ([212.248.84.144])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wZkgT-00009i-PO; Wed, 17 Jun 2026 03:27:40 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1781681249; bh=R+CjjmkdTv3oPv5fIESiQMapaUVYzvTVMVSiRjUovWQ=;
- h=Date:Subject:To:Cc:References:From:In-Reply-To;
- b=pUQFDbQRW5dzlj7qsn4R9TaQDZXEvymWsVskCDSwmkcKYKaHhxpwFA7sGgdFCdE4a
- sumXK1HC3xjURWQM/xsNN3Pdb0QKNAPTg4qfnD+KYmWhVrNalbXcjbGanOxMU7Xmhm
- xCiYum4QLq3w+QCWvfxs62jyJecpao4JQLHyYpWwOW8w9mKwjhUthyLJrmfhjFiYjr
- xGu5mgFX+8yVGp7IgwvD3NEcCyC1yduauk6f7EKeU7xaHZ3QElM9N2rpDIqnTV3iA+
- K0n3QZbqSfSH3WeTcjiVqstHCH52AJyb1VNa2AnVs6/4Dz2HAolPzHBB1NbLBDO6Fb
- 2h3/N9I6ocVog==
-Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by isrv.corpit.ru (Postfix) with ESMTP id DD97C1B821E;
- Wed, 17 Jun 2026 10:27:29 +0300 (MSK)
-Message-ID: <d5724c37-9e03-40cf-9679-0c0ed783be2d@tls.msk.ru>
-Date: Wed, 17 Jun 2026 10:27:31 +0300
+ (Exim 4.90_1) (envelope-from <guobin@U-QD9X07DR-1901.local>)
+ id 1wZkgf-0007W2-CX
+ for qemu-devel@nongnu.org; Wed, 17 Jun 2026 03:27:53 -0400
+Received: from [2401:b180:1000:3::1:c0ed] (helo=U-QD9X07DR-1901.local)
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <guobin@U-QD9X07DR-1901.local>) id 1wZkgV-00009U-53
+ for qemu-devel@nongnu.org; Wed, 17 Jun 2026 03:27:46 -0400
+Received: by U-QD9X07DR-1901.local (Postfix, from userid 502)
+ id AB51E5DF7616; Wed, 17 Jun 2026 14:36:45 +0800 (CST)
+From: Bin Guo <guobin@linux.alibaba.com>
+To: peterx@redhat.com
+Cc: qemu-devel@nongnu.org,
+	farosas@suse.de,
+	lizhijian@fujitsu.com
+Subject: Re: [PATCH 1/2] migration/rdma: honor blocking mode in QIOChannelRDMA
+ readv
+Date: Wed, 17 Jun 2026 14:36:45 +0800
+Message-ID: <20260617063645.69850-1-guobin@linux.alibaba.com>
+X-Mailer: git-send-email 2.50.1
+In-Reply-To: <20260529070408.92651-2-guobin@linux.alibaba.com>
+References: <20260529070408.92651-1-guobin@linux.alibaba.com>
+ <20260529070408.92651-2-guobin@linux.alibaba.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/3] 9pfs: fix invalid union V9fsFidOpenState access
-To: Christian Schoenebeck <qemu_oss@crudebyte.com>, qemu-devel@nongnu.org,
- qemu-stable@nongnu.org
-Cc: Greg Kurz <groug@kaod.org>, Feifan Qian <bea1e@proton.me>
-References: <cover.1781621428.git.qemu_oss@crudebyte.com>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <cover.1781621428.git.qemu_oss@crudebyte.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -19
-X-Spam_score: -2.0
-X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 2401:b180:1000:3::1:c0ed
+ (deferred)
+Received-SPF: none client-ip=2401:b180:1000:3::1:c0ed;
+ envelope-from=guobin@U-QD9X07DR-1901.local; helo=U-QD9X07DR-1901.local
+X-Spam_score_int: -8
+X-Spam_score: -0.9
+X-Spam_bar: /
+X-Spam_report: (-0.9 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.249, NO_DNS_FOR_FROM=0.001, RDNS_NONE=0.793,
+ SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,21 +61,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 16.06.2026 18:00, Christian Schoenebeck wrote:
-> The individual FID types (P9_FID_NONE, P9_FID_FILE, P9_FID_DIR, P9_FID_XATTR)
-> share union V9fsFidOpenState with FID-type specific fields. Accessing any of
-> the union fields must comply with the FID-type to avoid undefined behaviour
-> or information disclosure.
-..
+On Tue, 16 Jun 2026, Peter Xu wrote:
+> this patch made it the other way round: the channel didn't respect
+> blocking mode because it always blocks, not always non-block.
 
-Hi!
+You're right, the commit message was misleading.
 
-Next batch of qemu stable series is scheduled for Jun-25 (patch freeze at
-Jun-23).  It would be great if this and other 9pfs fixes landed in the
-master branch before the freeze.  As far as I can see, we've several
-issues in there.
+The function already blocks inside qemu_rdma_exchange_recv() when
+waiting for the next RDMA SEND message.  What it didn't do was keep
+blocking when the bytes from a *single* receive were not enough to
+satisfy the full request -- it would return partial data instead of
+waiting for more.
 
-Thanks,
+In blocking mode a QIOChannel readv should keep trying until the
+request is satisfied (or an error occurs), matching the behaviour of
+other QIOChannel implementations.  That's what the loop is for.
 
-/mjt
+> Also, this is only the read path; there's also write.
+
+The write path already loops over the full iov in
+qio_channel_rdma_writev(), so it handles the blocking case
+correctly.  Only read needed fixing.
+
+I'll send a v2 with a corrected commit message.  Thanks for the
+review.
+
+Bin Guo
 
