@@ -4,85 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8EFECD98E2
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jun 2026 15:13:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B1EACD98E4
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jun 2026 15:15:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZrwX-0001Az-0j; Wed, 17 Jun 2026 11:12:41 -0400
+	id 1wZryg-0001oE-53; Wed, 17 Jun 2026 11:14:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wZrwV-0001Ak-0h
- for qemu-devel@nongnu.org; Wed, 17 Jun 2026 11:12:39 -0400
-Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
+ id 1wZryZ-0001nE-Ct
+ for qemu-devel@nongnu.org; Wed, 17 Jun 2026 11:14:47 -0400
+Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wZrwT-00082p-3R
- for qemu-devel@nongnu.org; Wed, 17 Jun 2026 11:12:38 -0400
-Received: by mail-pf1-x42a.google.com with SMTP id
- d2e1a72fcca58-84230ab8857so2791102b3a.1
- for <qemu-devel@nongnu.org>; Wed, 17 Jun 2026 08:12:36 -0700 (PDT)
+ id 1wZryX-0000Kl-RN
+ for qemu-devel@nongnu.org; Wed, 17 Jun 2026 11:14:47 -0400
+Received: by mail-pf1-x430.google.com with SMTP id
+ d2e1a72fcca58-8453427d3f4so268234b3a.3
+ for <qemu-devel@nongnu.org>; Wed, 17 Jun 2026 08:14:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1781709155; x=1782313955; darn=nongnu.org;
+ d=linaro.org; s=google; t=1781709284; x=1782314084; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=uxm9CDMZOFNk5XylyACfrJ54A/jd2faq1oga7Ykt2vg=;
- b=G9q7x1NQ25WRpdQEcdB91mvCKz9eeixlmMdtw6r+SNKRr/XsJU3io6Wz0s8S8x8FrA
- 9TglRuC6BdL7v3CyzlICRYJBn4PE2Tf3NaukHBesl7SZdmQ5bURgwqV3g99sQEAd6zdE
- Eq9cgQFjMSP/BRmlED2KwVHkbynNXqOBuhDTPLAI/nmUIZqxJvdowJaFHNTjdz7pnUSg
- SJYMkcdp7blReaZHErbHXKaYf7c+IQjPvGghWqWVrG3738K8t0hIRw2ZMDTi/NAPvOgf
- x9BUjoIsPbiNwpUKXsZgYPZrKXz0XCVKvyuvzEsz1TQ9BthSLZg7Rbj1DixLXqkykIk0
- 3brQ==
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=Z4+Qlk5hwUeY1QVjcsd3HUVVSz7zrwKYW2IUR312y90=;
+ b=RyhWeK40pmAgbOe8nplaAdezOHqiDULU1Ervkm18O9agKtxgRP73dAdN2gQ1zNlsEL
+ b+3YJP0cwRZaKIGRAzv5B34QREAyr+Ho2gwfpjibNb2esbcoEKAg6UPWYGlz4mvJUnIc
+ YGMVHUEecHdNSqQ1klSJUmhlzZ3frNCnZ6f+hgoCsbVnfCoOQrEXQ0+JwAp41oWk+iEz
+ ftOM120m8HknM009Ctk1anyf3fxTix5LW0yskDf9gfv8rOvbNdlpp4TvY0biqnpDxxlT
+ RJ93bw/QRqoCxLYY6pEBW+paGKmPuHyIANmtHure38HmsWw4yTiq9eXaVqTfL7DRJUHJ
+ rqnQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781709155; x=1782313955;
+ d=1e100.net; s=20251104; t=1781709284; x=1782314084;
  h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=uxm9CDMZOFNk5XylyACfrJ54A/jd2faq1oga7Ykt2vg=;
- b=NXubS26Oq6qNmnLgGRG6IAJao5HV8om2Xhfvc3Tn82FFU/qx/ms7Wn+c/N4BC39eFY
- cU00r1uHA4Uzy0O7miV+Shq9nuZHWfysDwH7foJiPrICVh7vIs3miKHzD7FoZsb03/er
- 0yXErIWGqU7r83AmbKEpOoMI5O58ZRYasv80tFBRrBRCvhktNxTSpGrAuNNkRhB4/lDH
- SerYZ0MDuI7cn1paJ/7QbNEWt7j0vy8oFN8wlJKEsMNqxLmGWR6GWP92YOfZs693ZTus
- CLBtO65nxrWuHSp/Ncr0dJYuqiv1Y8wAskuudTOBH0jSO9cb+gEgZpRZgdwtz0/xpV0a
- +ZeQ==
-X-Gm-Message-State: AOJu0Yyt0QRsjOiegaeclUKjnVUSv5p4Ya2U/+94if6C2rfAT4RdqHe4
- c6tak3bnn0APfrvpotHovvQqPCi+KTNtDTiOHe0XbvpPnSURpDtFF0DegKthkuc69t8jBQxrIoy
- lDABo
-X-Gm-Gg: AfdE7ck1iVkUX0TyUcSGsMlqNT8VxwOW+saDGw8Ert7vgkcVAP2wp4T/KiIRl+0Y48f
- 9GzqceQIjtEcHfLX7UP18WEiMR/Z0AWJuG5ObO3ECrs7Ud2yANBO1yYDCBt/I2ImbWuzEpIw8WQ
- f5zBKsnzXegNh7d1LLOj1KvBzhrWxq7TTIgtAzqIRdHyGuJOn6L1uf0rRYJYvFQmCUw4YalTFM2
- UwU7YHmizP35TggE5K4zGTYQlCI/R7DNGEB4E+OSzEVK49oBl4LLW7XogNHGxH0+XIqT/uq3RCH
- pUrruRaKwms4JKsW69Lp2Pd7cy6eBhbuFanQlSEgQguRPrLpfsWEPEXMr28F9GGCp7K0M9PRYr9
- YCeYyIDNlW35dCVRLenbVls92Ox+UOVkO/7HmyYHqEnwb3MPT4Y3YLmYjG8HUey9ku4NrARos5S
- SKzy8k1i6QErRBaHKsfRIA8LjcO7LgNfGOc0NTTKSG05S18ewmJxJNYL/Urg==
-X-Received: by 2002:a05:6a00:66c5:b0:845:31a6:d84d with SMTP id
- d2e1a72fcca58-84531a6df5bmr1581882b3a.7.1781709154972; 
- Wed, 17 Jun 2026 08:12:34 -0700 (PDT)
+ bh=Z4+Qlk5hwUeY1QVjcsd3HUVVSz7zrwKYW2IUR312y90=;
+ b=SCAMca38nn1ZE09xZNgWqPSF0BBbR/8ftbMTrWdYjN+6AXQFqisGoGHGzQ7LMaEC5G
+ PUVvqQnUNoG++xYBgA66qsiCnUaDyc8Y36N+OlrIA3ITJsZovDARlFM3EGBjM7SpHQv+
+ 65lRDtWJm640MzgtI9esHC8GpmquE/71cpZPqxU8qVzCoRWNs6bQYbE9NR5K4ZBrk7h0
+ Q2SQATvR8JRqzIiRPpHHVcaf4ZLP+ezg2tGdUElmoErlXaUecftThRyzOgWyNqqRwaRv
+ DTUCh2HOa1T7TrAj12UCT4cquoFUhnMsHQYwqZQ5HthsQmRETrethgrZsibXGmWtQUNg
+ bCjg==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ/v11nZskt5NT28DulxAXzXW1TIgBtHTNBEaJnCEyfSwpoqHXtb2WcZPRzW2sNk6wQxKHYCqtyC7uyd@nongnu.org
+X-Gm-Message-State: AOJu0Yxa863NTorU5us6WM10tigC5hnaP8XuScAhfW683Mc07OhwO9LJ
+ JixPV0YvJVIdrLw/s+ma74SQEhVAqS5XXD+yMrCUoWXn3HWWvsInsO7YjlNuaWcNbf8=
+X-Gm-Gg: Acq92OF0118UNiVQ5e9Q1bx8JwlxP3SOP/1SVcYc1D+x7+79xNXwcWRUHPRpk/aHFWW
+ L3MyCTlN8f7MMzLPOuYNkVB8J7Tes5HDRRc01akaAA9iPELYRT5W2x9Zymd898Ej2rPrcSt2KGC
+ isVQP3ol6MdU/gjHUvUiHc2O8qKysWPNyxWabQ5PQW6IHm5JOy+PFOjeBZ3OaIZhelvBr9IgKwF
+ P7otWImR0D06N5RERaqYpHpbs3JDw8wsH6FpzyKJIIJ6JMPl3rYLH6QbCrdL15MrWDqyTE7nJPe
+ YXUufW2dgZ3yPl9fyFTbcGBdPySQ5xOzLoqJZpEKvBq40/+o5AowJtSq15nqI4KdI7fj8Gr3Oxr
+ /LcRLsvqKn5YPRhItaDDQlYJmLVVHIpw4MacHQqo81UKxNEcV4Ic3z1+tP+QKSztcXl7mM+KFAC
+ e5p+YfREJvGmnq6d80kBaYff3Z5uQLsl3ht03HPK+hCiGyxpGl0+NNbU3SSA==
+X-Received: by 2002:a05:6a00:1da5:b0:83a:ebec:452f with SMTP id
+ d2e1a72fcca58-845246b6b72mr4160819b3a.42.1781709283919; 
+ Wed, 17 Jun 2026 08:14:43 -0700 (PDT)
 Received: from [192.168.0.4] (174-21-129-215.tukw.qwest.net. [174.21.129.215])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-8434b048496sm17457162b3a.54.2026.06.17.08.12.34
- for <qemu-devel@nongnu.org>
+ d2e1a72fcca58-8434b055095sm19752930b3a.57.2026.06.17.08.14.43
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 17 Jun 2026 08:12:34 -0700 (PDT)
-Message-ID: <41c2e3f7-a24a-4f88-a461-300600dc2d07@linaro.org>
-Date: Wed, 17 Jun 2026 08:12:32 -0700
+ Wed, 17 Jun 2026 08:14:43 -0700 (PDT)
+Message-ID: <753707e7-b9fe-4e58-8227-90a126a6be18@linaro.org>
+Date: Wed, 17 Jun 2026 08:14:41 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] system/memory: Remove unnecessary CONFIG_USER_ONLY
- guards
-To: qemu-devel@nongnu.org
+Subject: Re: [PATCH 2/2] system/memory: Rename cpu_exec_init_all() ->
+ machine_memory_init()
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>
 References: <20260616153754.93545-1-philmd@oss.qualcomm.com>
- <20260616153754.93545-2-philmd@oss.qualcomm.com>
+ <20260616153754.93545-3-philmd@oss.qualcomm.com>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260616153754.93545-2-philmd@oss.qualcomm.com>
+In-Reply-To: <20260616153754.93545-3-philmd@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x430.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,31 +109,17 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 6/16/26 08:37, Philippe Mathieu-Daudé wrote:
-> This header is only used when building system units,
-> checking for CONFIG_USER_ONLY is pointless.
+> cpu_exec_init_all() is system specific: it initializes globals
+> for the memory subsystem. Rename it as machine_memory_init()
+> and restrict its declaration to 'system/' namespace.
 > 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+> Signed-off-by: Philippe Mathieu-Daudé<philmd@oss.qualcomm.com>
 > ---
->   system/memory-internal.h | 2 --
->   1 file changed, 2 deletions(-)
-> 
-> diff --git a/system/memory-internal.h b/system/memory-internal.h
-> index 0066ffdffb6..c7573a68b5e 100644
-> --- a/system/memory-internal.h
-> +++ b/system/memory-internal.h
-> @@ -14,7 +14,6 @@
->   #ifndef MEMORY_INTERNAL_H
->   #define MEMORY_INTERNAL_H
->   
-> -#ifndef CONFIG_USER_ONLY
->   static inline AddressSpaceDispatch *flatview_to_dispatch(FlatView *fv)
->   {
->       return fv->dispatch;
-> @@ -57,4 +56,3 @@ static inline MemOp devend_memop(enum device_endian end)
->   }
->   
->   #endif
-> -#endif
+>   include/exec/cpu-common.h | 1 -
+>   system/memory-internal.h  | 2 ++
+>   system/physmem.c          | 2 +-
+>   system/vl.c               | 3 ++-
+>   4 files changed, 5 insertions(+), 3 deletions(-)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
