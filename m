@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09318CD98F0
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jun 2026 20:17:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3150CD98F0
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jun 2026 20:17:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZwgH-0002bc-AT; Wed, 17 Jun 2026 16:16:13 -0400
+	id 1wZwgH-0002bg-Gd; Wed, 17 Jun 2026 16:16:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
- <3iAAzagcKCq0WeUVYXRTbbTYR.PbZdRZh-QRiRYabaTah.beT@flex--jrhilke.bounces.google.com>)
- id 1wZwgG-0002bF-AC
- for qemu-devel@nongnu.org; Wed, 17 Jun 2026 16:16:12 -0400
-Received: from mail-pg1-x54a.google.com ([2607:f8b0:4864:20::54a])
+ <3hwAzagcKCqwVdTUXWQSaaSXQ.OaYcQYg-PQhQXZaZSZg.adS@flex--jrhilke.bounces.google.com>)
+ id 1wZwgF-0002ab-Eh
+ for qemu-devel@nongnu.org; Wed, 17 Jun 2026 16:16:11 -0400
+Received: from mail-pl1-x64a.google.com ([2607:f8b0:4864:20::64a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from
- <3iAAzagcKCq0WeUVYXRTbbTYR.PbZdRZh-QRiRYabaTah.beT@flex--jrhilke.bounces.google.com>)
- id 1wZwgE-0002u2-SW
- for qemu-devel@nongnu.org; Wed, 17 Jun 2026 16:16:12 -0400
-Received: by mail-pg1-x54a.google.com with SMTP id
- 41be03b00d2f7-c8582b167f7so111220a12.0
- for <qemu-devel@nongnu.org>; Wed, 17 Jun 2026 13:16:10 -0700 (PDT)
+ <3hwAzagcKCqwVdTUXWQSaaSXQ.OaYcQYg-PQhQXZaZSZg.adS@flex--jrhilke.bounces.google.com>)
+ id 1wZwgD-0002rw-Vg
+ for qemu-devel@nongnu.org; Wed, 17 Jun 2026 16:16:11 -0400
+Received: by mail-pl1-x64a.google.com with SMTP id
+ d9443c01a7336-2c6a997c400so10592425ad.1
+ for <qemu-devel@nongnu.org>; Wed, 17 Jun 2026 13:16:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20251104; t=1781727369; x=1782332169; darn=nongnu.org;
+ d=google.com; s=20251104; t=1781727368; x=1782332168; darn=nongnu.org;
  h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
  :date:from:to:cc:subject:date:message-id:reply-to;
- bh=GYlI/RPJAOu9sVPxOCzznuMsF7sHk3l3K3UNAlhhfls=;
- b=bNzbaMLuaDorgfTshGlwZYXmv5Te8MiOU1k6LT8qVn/iMJ9mTl87LlywickI9hgQl5
- +2JmJz19yWjS9irqqiv9OCCLVWNg7eeDyIlxh2hFGyMjrjPL7pLGYuP4Sqk1NRlViunF
- 0GY7DQFg2w1SNLAqlZEtY/cFyGD8+F2zGfisViOjcpam3iaNalc6m+yH7pXM03k9c5dR
- Mfx7IdU7AwJdMAiuavo4e9S8OAxafYtOqNYsbEOcN+UZW5YszzuZjHKM2X+di/Ph9/1U
- WF0uOFIjldGMPuywSX01GuMv1JcJgsCQBa5+Wkd1Z2YeY1eptK7iqacedGdLk+hStn3G
- LgRg==
+ bh=zr5cAgisuTTwj1uLp4YSvgrOqin2FJi9yi3VNvJGcqA=;
+ b=XrJaAAiW1B5gKIoT7+H0U5zqHv2iRWuOTDjSFn3ja64QVjSp8zxPu6LD9xONR4jL8Q
+ OwxwLz29e2aKZdP3JQE9JRxCYiqbF0PbaoE7HLOvWv7DdzByLQAQk8hfJnR7J/OuI9iE
+ sp0Y8DeUuHB29kb9ukB8hqMTTReUdd8nHN4sVNHogwyAg00c9g/l4whaaEUwI1eRy2Mw
+ ONEjKhJGSroht/LFp7aUr15e4F3FpkZln2gARIFP01hhBr4vNLmC4dvWP49BLme7N6sA
+ 7Xap1tyIDa7Pu9fZPJ3x4t3HzByORgIhNkkBgEiT+LSZ1lOTfqsaEWE1sT3pMzyuwduF
+ IE2Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781727369; x=1782332169;
+ d=1e100.net; s=20251104; t=1781727368; x=1782332168;
  h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
  :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=GYlI/RPJAOu9sVPxOCzznuMsF7sHk3l3K3UNAlhhfls=;
- b=lPt3UDNmSE++fSWsy6tI93D18cg0xZNiZM8iFBMUK+SIaVR6DBANm9mvmwLRCWXqKL
- hkN+QqfLNU5/B5PuItcp9ormtilTx4zITmq/qwuyy+lbUfZXH/6/FrAX0NgQ9P1iWU4r
- p8n0wU0mpZB1f6eGuA9Fw5wp83h2j0vqv1GT3fxY79Q+2lF5ts7L3JammkJPLQr7VvIm
- LwpeKgvDwrdfJU8e3WDv6nIc/Y4JYiMallMFy+7fLCEGwfDGeVdhki0egHXJlSwibiVT
- kbLi2qUa8G+AAH1Sg6e7vjEZ14OlCRj7geWSMqWre5hwjACBAIP5zhfXboUCAIPmr0b+
- r+yg==
+ bh=zr5cAgisuTTwj1uLp4YSvgrOqin2FJi9yi3VNvJGcqA=;
+ b=VdAd+HCBYb86Rl4shI2d7Zxb56EMNiiZDBtWi7MafqKzHBB2Jc6OZMK++jvT/tBCRH
+ Bas7+/Dl/rSpWavNZUSPIxo8dj2OoVlN6lLcAXxDHv1g7J3SkMOc1Bf4r++onIfC2d1e
+ fjij6Ihk2gi0bMTsMFxawd+PweWyV5ffzX35Dxw2CweJAe1+bAD5clWXaPuL1nNwG9yM
+ 32mfOHrzsjQc42kK4OM0Uz6F4Drj/C0vWU41sCI7RTucf7oKS9iOuvRXIbKOXCHNdWKg
+ V0kaFp9pvW7/KpDMra7qtai2MHDcPkwSR9y4OiRHcdbeCxTRuIfO/3y0tdYFqQwXansf
+ mNaw==
 X-Forwarded-Encrypted: i=1;
- AFNElJ9e59B5S06aET3lhBsX9N6ha35Jjp/Qa8SenlF7c2hfqpdVY6pq8cUXPzxkpmbuZAEoBE6yKjGXCuwL@nongnu.org
-X-Gm-Message-State: AOJu0YxohQR7yJM/lgl3rfSwn0CQ2Tvi9idnEp0iBO7TRIPnHnv1prKI
- qyht8NqgVaU5VdKk3yTGMZh1xIl49GBPMaFqKmGNTOR2tqd2WCmV5/viKApIcIBi5uzri1ZP1J/
- aJwetgPQD
-X-Received: from pgac18.prod.google.com ([2002:a05:6a02:2952:b0:c85:fff:9472])
+ AFNElJ9aDShjfMohXySIZnE54ePl1IT+te7P1A2ixN0CcSCgHfe7kudqoXTPgvDWKoyAPVm/QRNh5ridfsF6@nongnu.org
+X-Gm-Message-State: AOJu0YwhkymSm97QRuw4aiTt+Vf9PlNbSVlID2mHMa/Lz/5bZ5RgzMWd
+ KQZuYyn9ktd9MCeIpsD6+tK7g/TE8NBUQhYx+8Msdd0S0OUSdt3u2N9xPLo6zUBd+XjSln6MHQ5
+ RL6wih47S
+X-Received: from plgv5.prod.google.com ([2002:a17:902:e8c5:b0:2c6:a183:90e6])
  (user=jrhilke job=prod-delivery.src-stubby-dispatcher) by
- 2002:a05:6a20:3d02:b0:3b3:1951:489b
- with SMTP id adf61e73a8af0-3b8b85fc238mr6459441637.45.1781727368708; Wed, 17
- Jun 2026 13:16:08 -0700 (PDT)
-Date: Wed, 17 Jun 2026 20:15:49 +0000
+ 2002:a17:903:2b06:b0:2bc:e299:4b3f
+ with SMTP id d9443c01a7336-2c6de418458mr6859965ad.10.1781727367829; Wed, 17
+ Jun 2026 13:16:07 -0700 (PDT)
+Date: Wed, 17 Jun 2026 20:15:48 +0000
 In-Reply-To: <20260617-igb-trl-v6-0-bbdfcadb81e2@google.com>
 Mime-Version: 1.0
 References: <20260617-igb-trl-v6-0-bbdfcadb81e2@google.com>
 X-Mailer: b4 0.14.3
-Message-ID: <20260617-igb-trl-v6-4-bbdfcadb81e2@google.com>
-Subject: [PATCH v6 4/7] igb: Refactor TX path to return processed byte count
+Message-ID: <20260617-igb-trl-v6-3-bbdfcadb81e2@google.com>
+Subject: [PATCH v6 3/7] igb: Implement TRL register write and configuration
 From: Josh Hilke <jrhilke@google.com>
 To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, qemu-devel@nongnu.org
 Cc: Josh Hilke <jrhilke@google.com>,
@@ -73,9 +73,9 @@ Cc: Josh Hilke <jrhilke@google.com>,
  David Matlack <dmatlack@google.com>,
  Alex Williamson <alex.williamson@nvidia.com>
 Content-Type: text/plain; charset="utf-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::54a;
- envelope-from=3iAAzagcKCq0WeUVYXRTbbTYR.PbZdRZh-QRiRYabaTah.beT@flex--jrhilke.bounces.google.com;
- helo=mail-pg1-x54a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::64a;
+ envelope-from=3hwAzagcKCqwVdTUXWQSaaSXQ.OaYcQYg-PQhQXZaZSZg.adS@flex--jrhilke.bounces.google.com;
+ helo=mail-pl1-x64a.google.com
 X-Spam_score_int: -95
 X-Spam_score: -9.6
 X-Spam_bar: ---------
@@ -98,66 +98,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Modify igb_process_tx_desc to return the total size of the transmitted
-packet (in bytes) when processing the End of Packet (EOP) descriptor,
-and 0 otherwise. This allows the transmission loop to track how many
-bytes are being sent for rate-limiting calculations.
+Implement write handlers for TLDQSEL and TRLRC registers to allow the
+guest to configure Transmit Rate Limiting. Translate the register Rate
+Factor into a physical target rate (bytes/sec) per queue.  Disable TRL
+and clear timers when the link status changes or when TRL is disabled by
+the guest.
 
 Signed-off-by: Josh Hilke <jrhilke@google.com>
 ---
- hw/net/igb_core.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ hw/net/igb_core.c | 37 ++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 36 insertions(+), 1 deletion(-)
 
 diff --git a/hw/net/igb_core.c b/hw/net/igb_core.c
-index 65403f9..693353e 100644
+index 44e8e58..65403f9 100644
 --- a/hw/net/igb_core.c
 +++ b/hw/net/igb_core.c
-@@ -599,7 +599,7 @@ igb_on_tx_done_update_stats(IGBCore *core, struct NetTxPkt *tx_pkt, int qn)
+@@ -2145,11 +2145,20 @@ static void igb_trl_reset(IGBCore *core)
      }
  }
  
--static void
-+static size_t
- igb_process_tx_desc(IGBCore *core,
-                     PCIDevice *dev,
-                     struct igb_tx *tx,
-@@ -632,10 +632,10 @@ igb_process_tx_desc(IGBCore *core,
-             tx->ctx[idx].seqnum_seed = le32_to_cpu(tx_ctx_desc->seqnum_seed);
-             tx->ctx[idx].type_tucmd_mlhl = le32_to_cpu(tx_ctx_desc->type_tucmd_mlhl);
-             tx->ctx[idx].mss_l4len_idx = le32_to_cpu(tx_ctx_desc->mss_l4len_idx);
--            return;
-+            return 0;
-         } else {
-             /* unknown descriptor type */
--            return;
-+            return 0;
-         }
-     } else {
-         /* legacy descriptor */
-@@ -654,11 +654,13 @@ igb_process_tx_desc(IGBCore *core,
-     }
++static void igb_trl_disable(IGBTrlQueue *q)
++{
++    q->trlrc &= ~E1000_TRLRC_RS_ENA;
++}
++
+ void igb_core_set_link_status(IGBCore *core)
+ {
+     NetClientState *nc = qemu_get_queue(core->owner_nic);
+     uint32_t old_status = core->mac[STATUS];
  
-     if (cmd_type_len & E1000_TXD_CMD_EOP) {
-+        size_t total_len = 0;
-         if (!tx->skip_cp && net_tx_pkt_parse(tx->tx_pkt)) {
-             idx = (tx->first_olinfo_status >> 4) & 1;
-             igb_tx_insert_vlan(core, queue_index, tx,
-                 tx->ctx[idx].vlan_macip_lens >> IGB_TX_FLAGS_VLAN_SHIFT,
-                 !!(tx->first_cmd_type_len & E1000_TXD_CMD_VLE));
-+            total_len = net_tx_pkt_get_total_len(tx->tx_pkt);
++    for (int i = 0; i < IGB_NUM_QUEUES; i++) {
++        igb_trl_disable(&core->trl[i]);
++    }
++
+     trace_e1000e_link_status_changed(nc->link_down ? false : true);
  
-             if ((tx->first_cmd_type_len & E1000_ADVTXD_MAC_TSTAMP) &&
-                 (core->mac[TSYNCTXCTL] & E1000_TSYNCTXCTL_ENABLED) &&
-@@ -675,7 +677,9 @@ igb_process_tx_desc(IGBCore *core,
-         tx->first = true;
-         tx->skip_cp = false;
-         net_tx_pkt_reset(tx->tx_pkt, net_tx_pkt_unmap_frag_pci, dev);
-+        return total_len;
-     }
-+    return 0;
+     if (nc->link_down) {
+@@ -2632,6 +2641,29 @@ static void igb_set_vtivar(IGBCore *core, int index, uint32_t val)
+      */
  }
  
- static uint32_t igb_tx_wb_eic(IGBCore *core, int queue_idx)
++static uint32_t igb_get_trlrc(IGBCore *core, int index)
++{
++    const uint32_t qidx = core->mac[TRLDQSEL];
++
++    return core->trl[qidx].trlrc;
++}
++
++static void igb_set_trldqsel(IGBCore *core, int index, uint32_t val)
++{
++    core->mac[index] = extract32(val, 0, 4);
++}
++
++static void igb_set_trlrc(IGBCore *core, int index, uint32_t val)
++{
++    const uint32_t qidx = core->mac[TRLDQSEL];
++
++    core->trl[qidx].trlrc = val;
++
++    if (!igb_trl_enabled(&core->trl[qidx])) {
++        igb_trl_disable(&core->trl[qidx]);
++    }
++}
++
+ static inline void
+ igb_autoneg_timer(void *opaque)
+ {
+@@ -3687,6 +3719,7 @@ static const readops igb_macreg_readops[] = {
+     [RQDPC15] = igb_mac_read_clr4,
+     [VTIVAR ... VTIVAR + 7] = igb_mac_readreg,
+     [VTIVAR_MISC ... VTIVAR_MISC + 7] = igb_mac_readreg,
++    [TRLRC] = igb_get_trlrc,
+ };
+ enum { IGB_NREADOPS = ARRAY_SIZE(igb_macreg_readops) };
+ 
+@@ -4135,7 +4168,9 @@ static const writeops igb_macreg_writeops[] = {
+     [PVTEICR6] = igb_set_vteicr,
+     [PVTEICR7] = igb_set_vteicr,
+     [VTIVAR ... VTIVAR + 7] = igb_set_vtivar,
+-    [VTIVAR_MISC ... VTIVAR_MISC + 7] = igb_mac_writereg
++    [VTIVAR_MISC ... VTIVAR_MISC + 7] = igb_mac_writereg,
++    [TRLDQSEL] = igb_set_trldqsel,
++    [TRLRC]    = igb_set_trlrc,
+ };
+ enum { IGB_NWRITEOPS = ARRAY_SIZE(igb_macreg_writeops) };
+ 
 
 -- 
 2.55.0.rc0.738.g0c8ab3ebcc-goog
