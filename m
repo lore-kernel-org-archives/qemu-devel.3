@@ -4,131 +4,132 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6889CD98F2
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jun 2026 17:15:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8DFB7CD98F3
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jun 2026 17:15:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZtrO-0000SR-4x; Wed, 17 Jun 2026 13:15:32 -0400
+	id 1wZtra-0000WJ-R2; Wed, 17 Jun 2026 13:15:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wZtqs-0000GP-N2
- for qemu-devel@nongnu.org; Wed, 17 Jun 2026 13:15:05 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ id 1wZtrF-0000Ro-BR
+ for qemu-devel@nongnu.org; Wed, 17 Jun 2026 13:15:26 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wZtqq-0006aJ-MI
- for qemu-devel@nongnu.org; Wed, 17 Jun 2026 13:14:58 -0400
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+ id 1wZtrC-0006ty-UC
+ for qemu-devel@nongnu.org; Wed, 17 Jun 2026 13:15:21 -0400
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65HFpKs23015136
- for <qemu-devel@nongnu.org>; Wed, 17 Jun 2026 17:14:55 GMT
+ 65HFoawg083451
+ for <qemu-devel@nongnu.org>; Wed, 17 Jun 2026 17:15:17 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- paZaHfnqARyuzdyBchJ5nZVV2dKousWukxyV8h1bi4c=; b=TTLnT6sC8GJmRx29
- 8YbSXUI6DpZ+MgIHrHf7P8VmvOe80dxya863UzYQ5Jry61cBDdVx/L4HGEdoyRaN
- cXdL+zI5qHZhPxZ1oBX+3+nT8uGwjRrmj2skFbolnvwkRjKRgaMclRn7UZBMROX7
- PQFGjWy8GSQQQpVLO3OQ/Qkcwc5hofgwih8Q/9EIUOupwIdGCS6pCP3QaG1B3slR
- oLKuGwHBadUV5LQahs/Q8mImjKTS/kWlqavzpzV8/IqbteEadDZnwGOFt8iZhtAq
- xDOsIhn0IvC6ePMyTJrSJUQpVyBuPZ4vafLomo8HDUIvSMo6ZpOWnnRXOP7/ZdEJ
- f4zDzw==
-Received: from mail-ua1-f72.google.com (mail-ua1-f72.google.com
- [209.85.222.72])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4euees4hbh-1
+ d1qcnFgIJS/s8/eMiv7yW5TdwLgkeVqMxZf31gL2MIM=; b=ZWxTT6X3FDhDPxK4
+ 0pQD89rhSfqzjTv2irTUXGmZjxIrMM6myQS9nVLxAkSGifgncU7leCGFkol6wVJr
+ VDFjDamovlCRrsvBEc6eQhL61YMOKkDd15MZBS0TGbcsKn86vsGYkKBjsAv33Ocz
+ 93Sy+GXlhJAG4x/xO5S43tRdrPtjhJbh95bndPCXoxW/Sn9rdQ+eORQAqrwMpO/3
+ QcVLR3oWbf+6JgZYw5sqU7P6+2tM07jifckQ3BZw8a1GAeXDEQWfmo6cIJiatOwE
+ kb3wD13l2nSAj7pyzy9V7uKzNHwlMPbBFUhC3em3B2a7H78JpoxQepigrewokjRp
+ TAd1hw==
+Received: from mail-ua1-f70.google.com (mail-ua1-f70.google.com
+ [209.85.222.70])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4euw9vh14x-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 17 Jun 2026 17:14:55 +0000 (GMT)
-Received: by mail-ua1-f72.google.com with SMTP id
- a1e0cc1a2514c-966cf5e2a48so659693241.3
- for <qemu-devel@nongnu.org>; Wed, 17 Jun 2026 10:14:55 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Wed, 17 Jun 2026 17:15:16 +0000 (GMT)
+Received: by mail-ua1-f70.google.com with SMTP id
+ a1e0cc1a2514c-9638fe9399dso2605613241.3
+ for <qemu-devel@nongnu.org>; Wed, 17 Jun 2026 10:15:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1781716495; x=1782321295; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1781716516; x=1782321316; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=paZaHfnqARyuzdyBchJ5nZVV2dKousWukxyV8h1bi4c=;
- b=JvrI3ZvuT8IxcLNX6w/VGEji/u6kbCK7SP8XfigKL5yOCNeK75SFNl0A+SeIco8O8g
- zavABvvgfIS7Ijdgb550yxlLhFGYhUgXnM0bQayUyp6GMQUqpTK+jHPHQSE6BxUinazQ
- TmRpMagdSAFvTxOKfCf6+r1BN10Z7tyLetI1uhcyqGVeE5mNsVwYXoLY8FnrbLTF7kDR
- Q9Y4fsfzo55qD+YYiiOj/9XAimwZLOHyDynsJtkfzagi/jR/auvpNxHCe0r+/fnjrNxi
- 1+y1TxgOMzu8CVBbqC0tm9qC2yL+YKbiKPRCQOwmWXEWozX8la5A/kVO8CVXa/qYcieL
- Ubcw==
+ bh=d1qcnFgIJS/s8/eMiv7yW5TdwLgkeVqMxZf31gL2MIM=;
+ b=K8nD3PVuCm4YGANHvnU7xJxHmzYgIyzvzl8G+DH62Mtxp7f80CIayWovcAhewD20GV
+ VU3NAMlfTaVNABJxXiOrnUpvQtm18w3Yr1DA075xXJ2c/c53evvWvl8zT5TKQhnr4Ain
+ cQj1MIH4DzZsRAw6Hy6UHeB4gMO5r770KFQt1JAGQsp7fHDQ3/10IjACCg7R0HjnGdQc
+ 2adMaUaDsNN8jxqeAzAJrXyaS8nWu93TsJbtOxVkbfFbEqrAnztcQKhUY7HXeRC2wQKX
+ caDm24OQRV/i0SlilUxLoSKy7LMVxXCFSbYW98c6Q39PmVoE3CMw0wy3nOQVLL4459t+
+ hS0Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781716495; x=1782321295;
+ d=1e100.net; s=20251104; t=1781716516; x=1782321316;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=paZaHfnqARyuzdyBchJ5nZVV2dKousWukxyV8h1bi4c=;
- b=hOvdYwRqE9KIXiwzf+44FZhSzRfCyqTtkMPbyuLPa79OeRkCe88Dnr0s8KUMVVat2Y
- gLirFq9Jbmzb+ckVTh/9kwBa+q5HYXv1Q37qFY0DZzDOs0LS8dK5bHJRjU7n1y/hj7hk
- uPUG2QglPCnfhesjVHzW0Ufs7J4SRgBRXbxe9mqoBu2+jqYzs1dsSklNE+8mKvDNHeVE
- jKpjJgNMnyYFPhuBdeHoIZPBHjU0FH2PLwRjJMLsXF8zFiFpicGCL0OT2U0+ySbKkHcO
- MbUyDdaEKOW1Msa6NLByGZICLHdMFjaqF5aSp/76lZ8LLPWyTGsnDZPs8uML9UmYN38a
- BRiw==
-X-Gm-Message-State: AOJu0YyktkUvyix3b8dJHuoxhfshQ9DEq+sJ8VrHgaSXdriRutfASZrb
- xUdRhu//0a25TxGzsbDjM890UplvSVTyLyNYDsTHrLgdKT5d2yh8OAWcSQ3w3fgAoWrrWieM+JJ
- RDJLEK1MYQtCojZNW5/Kjv5h45a/8U94NE94BOASm1zdLQkcR/W41ALa99qNgVsdm1w==
-X-Gm-Gg: AfdE7cnTUcIj+PKEt5PVkY2mbnbQuJUr2aWiqkt14GHdjpCN+YRE6gs+CeS3VOLBFEj
- aw8nVsGygcUv7ZEWr3DVRdeVnVhce4h+YH1Q9QwOaXgORudznstENdt9YeH/QKJlTkQE2hNNmmm
- gZTx5fJyd6Ig9WAIq+3GbUdcQseKKB4YLisg7giqzzBWlEQjeXvCwo23Z1P/p4mWP/Wto/Bo5GG
- sawESeYoNDwHstiBiQnnk5/lUS61NDWGLhojpMfMpulD/drRjs9BFnCks8tHmWhU4/byOxvdoll
- DfppLOCjGKcl35DlYoZX8IUZneLpYknuTp9SXs7rPTo3TKbjAsXzgsrco+1/fZ78u/HYlznkM1Z
- bHGE4nlWfEKW8McqUl9xzBsIxsP68otqN4Kie+34RK3OWmA9qtoF7NFFkHBmCmZvQO6K4
-X-Received: by 2002:a05:6102:5120:b0:631:4cda:3e86 with SMTP id
- ada2fe7eead31-727c7276211mr348097137.24.1781716494675; 
- Wed, 17 Jun 2026 10:14:54 -0700 (PDT)
-X-Received: by 2002:a05:6102:5120:b0:631:4cda:3e86 with SMTP id
- ada2fe7eead31-727c7276211mr348074137.24.1781716494222; 
- Wed, 17 Jun 2026 10:14:54 -0700 (PDT)
+ bh=d1qcnFgIJS/s8/eMiv7yW5TdwLgkeVqMxZf31gL2MIM=;
+ b=A7+lP/efjToTkX6GPVnFKnkIIByt8L1NQO5AYbjp4ENYH8q6AHqMTTqoBIQ5pTx2Qn
+ l05bJTg4pa3G27M4Hzu89v+XcudyQyUqcckq+4JH2BUMcjKRawXNnNWGPaljqeBncJT5
+ AM3iQscyIC9MEwSTPodmctOSdh2UggOxKCujlkZXu+e5LL2jLeORwhTJ5a0ozMQCHddj
+ aeRScmM0kg03YIOrX9DglYuYQoLWypnx5iPdZ/RUsh4KPvXjXFh7Yx64sWaHnpocWh3l
+ MbAw8wi4urEiCco5/4vqFv4uiK3MRlpx9SxFE4jN9+Tp6ZlA+6wO5CdfYQEx/NpXqn0L
+ eUQA==
+X-Gm-Message-State: AOJu0Yy9ILhTboylZdr7K+0P//1S3UyYG/4T9dorrVX8bkZM2OPPiiEi
+ ovA10Ty+zetJTxT96hShUtD1G0bMZLkPPKc4Q8vQvYk0VE1j/ZOjXzqtBuBxe2g1kSpihYhX8qn
+ zBEv/LCHXL76PfQlxLf5QZ8e+MYHB3N/EqFx8g+KmlBkdtVjuX7NoHTJ2AGTdR3/H9w==
+X-Gm-Gg: AfdE7cnyLOA2rrJJFyXhR4uM86oGCS8Ou1xorWeQIDNlbis73/quuSTBkht2PlW85Q0
+ neWueNqI5iSXTXl/Kd88IH+yqfVMpK0yUzAqOA2sZB9Hhig7PwuZFMFhKawOQ9BImJZYmCqR9e4
+ WotPC8t2PzNhhiP8Nzke4PSzmP0VuElOzllIsZDvQFc5SNxjLIg0qTk5zX8ORUmYDcVeH2LMBdZ
+ 5Oc/1pvAsf+x4C3TcfmN13NMYMCExQhcH2MoOJMJr2DYyXL0nIobT0HO/Zlzz+GKrqm1CMX8Pf2
+ 7xCog9MW+rvcjtzJyraWb2RFpFM3CZ4kjdV6p/VMfMPHX76PLtxF7IafH4RHLuhZsu3dtU5u6zO
+ YxAMoQPF1r3LIVX02Of1FieJ6YdtSpi0+2/KEZC5+N3Tx/G9YarNhqv+Y7RhGmGndDIQy
+X-Received: by 2002:a05:6102:f0f:b0:631:2dc6:2f5c with SMTP id
+ ada2fe7eead31-7245a1ee5f3mr2833450137.0.1781716515759; 
+ Wed, 17 Jun 2026 10:15:15 -0700 (PDT)
+X-Received: by 2002:a05:6102:f0f:b0:631:2dc6:2f5c with SMTP id
+ ada2fe7eead31-7245a1ee5f3mr2833408137.0.1781716515142; 
+ Wed, 17 Jun 2026 10:15:15 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4606f263945sm57481649f8f.8.2026.06.17.10.14.53
+ 5b1f17b1804b1-49230a4ff67sm176451915e9.6.2026.06.17.10.15.14
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 17 Jun 2026 10:14:53 -0700 (PDT)
+ Wed, 17 Jun 2026 10:15:14 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>
-Subject: [PATCH v2 02/11] hw/s390x/ipl: Remove TCG dependency in
- handle_diag_308()
-Date: Wed, 17 Jun 2026 19:14:29 +0200
-Message-ID: <20260617171438.75914-3-philmd@oss.qualcomm.com>
+Subject: [PATCH v2 05/11] accel/tcg: Move cpu_exec_step_atomic() out of
+ 'exec/cpu-common.h'
+Date: Wed, 17 Jun 2026 19:14:32 +0200
+Message-ID: <20260617171438.75914-6-philmd@oss.qualcomm.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260617171438.75914-1-philmd@oss.qualcomm.com>
 References: <20260617171438.75914-1-philmd@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: g3OEZkSllJSCXCjr17ouw_5qmfEOUoA6
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjE3MDE2NiBTYWx0ZWRfX5eQc3QfeLmdO
- 9SIlDURiiZNmYz+WYbd6I8BHGl84nLkhbJMlQPfaBREplkb9bDm16pM7IJD/qC4rXoPdPN+/t/h
- PEwjdZ7+bTOqDEZ+k+o1JGGZMQQblaxrvwXRg0CKJw7oj//OZXp8+3P47f85jqx5lVC+wpi4EeW
- CibwbHJ03QKt4Gt9MngLvWcb9uIYa43VIMqkSvZxMc+d1BWugReeOrOPX62NWNnGv+8/d1lBxTZ
- m2aJSC6dT4GRVK2ByW/5Pp4AdaIHE22RTQTnwjgfKm5Dk09uuoo84vfYMzkor85wabg4sXw+7/r
- yf46vzT0jVN/4BoVngIsx61M1UX3EBWiSRTmYk8Dm//9wA9WzfBJpuzB+6AI3CRdEos4Z1LEg+B
- SuSxJL9Rep08RldPlhuRjm75GXxzcuaupZOeO5Z6yFNsYAu0uX6kbkvPJNYA0TMQaV6i5eq1JZd
- Cvy9468EgF5p6ONb0WQ==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjE3MDE2NiBTYWx0ZWRfX31CFieC+hGbT
- fQ6UeF1rxS/g4MriOsWdvRk0L3vT8LmlJrvmetogRXVWK2+HnfALwbyjYwmWa73rSrBTvl5vc0O
- HXNO7TZsOquqascBgNWJAo42qcQCj+I=
-X-Authority-Analysis: v=2.4 cv=KeTidwYD c=1 sm=1 tr=0 ts=6a32d60f cx=c_pps
- a=ULNsgckmlI/WJG3HAyAuOQ==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+X-Proofpoint-ORIG-GUID: h138AydSQPMfOZHyaa9IsWsGpOojvjDa
+X-Proofpoint-GUID: h138AydSQPMfOZHyaa9IsWsGpOojvjDa
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjE3MDE2NiBTYWx0ZWRfX3N+erViZlcjo
+ 5T5I1vhk1h34e/4KmfaXqVzgctHaCL8fJRpw/OPPZnUNFN8TCTzv72UnNehrf6bLBChQncsWGki
+ yy5RgXgUhz3crQiT0Zjby/cGTORAYm/CTf5qJxCi1iB12PivqpbZ0kC6PbTenumc38aKl6TzsNN
+ BSa4sFuGSpqXSW35dW7umrgJRhohoQLxWY/BzWNR+MbNUfzuIP5ASMtFC/Qo+oIiBq44z+eqRar
+ zIcDsEP+kr6ZGphKn+G+d/qmwjLCEgUW41li5AySuawWT3HO+FtoM2drx3nTMbUwLAez4tlvW1v
+ LYZLa7xtiDuhze2GOt++X4j5+mZlIWVtJeDksIYuSoZuQsVLccAISzWYQkkwb/FOWkjmngpjJv0
+ JYA41haWJyUD/LoUpPbbCknn2ioEL77WuAlHFLkYBk/HjPTjsiZobuFRTbLDN7YfUCHvc4DDTXH
+ e/vkpX9l80gTUTGwm1g==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjE3MDE2NiBTYWx0ZWRfX1mOaNCX/TuCI
+ o+LZmmEkl9BfmyvgI20f8UhXRFx8yrQeeiH7X17x609jiV/6D40mL0Q11S1PA+iw7dcRNfQZN9O
+ P7O3neF56cJ4NMunW3RGM0NNpjlVB6g=
+X-Authority-Analysis: v=2.4 cv=YJKvDxGx c=1 sm=1 tr=0 ts=6a32d624 cx=c_pps
+ a=R6oCqFB+Yf/t2GF8e0/dFg==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
  a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22
- a=EUspDBNiAAAA:8 a=KKAkSRfTAAAA:8 a=O4nC0eKGiR0KFeLeyJoA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=1WsBpfsz9X-RYQiigVTh:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-GUID: g3OEZkSllJSCXCjr17ouw_5qmfEOUoA6
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22
+ a=EUspDBNiAAAA:8 a=KKAkSRfTAAAA:8 a=xWu8-Agft_6X_INOG6MA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=O8hF6Hzn-FEA:10 a=TD8TdBvy0hsOASGTdmB-:22
+ a=cvBusfyB2V15izCimMoJ:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-06-17_02,2026-06-17_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 spamscore=0 lowpriorityscore=0 suspectscore=0 phishscore=0
- bulkscore=0 malwarescore=0 adultscore=0 priorityscore=1501 impostorscore=0
+ malwarescore=0 phishscore=0 adultscore=0 impostorscore=0 clxscore=1015
+ suspectscore=0 bulkscore=0 lowpriorityscore=0 spamscore=0 priorityscore=1501
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606170166
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -151,178 +152,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Rather than calling a TCG specific method in s390_ipl_reset_request(),
-have handle_diag_308() return whether a vCPU reset is pending, and use
-that in the TCG DIAG helper to return to the main loop.
+Move the TCG-specific cpu_exec_step_atomic() declaration out
+of the generic "exec/cpu-common.h" header, to the recently
+created "accel/tcg/cpu-loop.h" one.
+
+Include "accel/tcg/cpu-loop.h" where appropriate.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/s390x/s390x-internal.h  |  3 ++-
- hw/s390x/ipl.c                 |  5 -----
- target/s390x/diag.c            | 32 ++++++++++++++++----------------
- target/s390x/tcg/misc_helper.c |  5 ++++-
- 4 files changed, 22 insertions(+), 23 deletions(-)
+ include/accel/tcg/cpu-loop.h    | 2 ++
+ include/exec/cpu-common.h       | 2 --
+ accel/tcg/tcg-accel-ops-mttcg.c | 1 +
+ accel/tcg/tcg-accel-ops-rr.c    | 1 +
+ 4 files changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/target/s390x/s390x-internal.h b/target/s390x/s390x-internal.h
-index e7e4f2b45d4..35d1e34ef4d 100644
---- a/target/s390x/s390x-internal.h
-+++ b/target/s390x/s390x-internal.h
-@@ -385,7 +385,8 @@ int mmu_translate_real(CPUS390XState *env, hwaddr raddr, int rw,
+diff --git a/include/accel/tcg/cpu-loop.h b/include/accel/tcg/cpu-loop.h
+index 528adb5588c..d8a5f98f9cf 100644
+--- a/include/accel/tcg/cpu-loop.h
++++ b/include/accel/tcg/cpu-loop.h
+@@ -13,4 +13,6 @@
+  */
+ int cpu_exec(CPUState *cpu);
  
- /* misc_helper.c */
- int handle_diag_288(CPUS390XState *env, uint64_t r1, uint64_t r3);
--void handle_diag_308(CPUS390XState *env, uint64_t r1, uint64_t r3,
-+/* Return whether a CPU reset is pending */
-+bool handle_diag_308(CPUS390XState *env, uint64_t r1, uint64_t r3,
-                      uintptr_t ra);
++void cpu_exec_step_atomic(CPUState *cpu);
++
+ #endif
+diff --git a/include/exec/cpu-common.h b/include/exec/cpu-common.h
+index ac3ab0e1cdf..ea9a49a1435 100644
+--- a/include/exec/cpu-common.h
++++ b/include/exec/cpu-common.h
+@@ -21,8 +21,6 @@
+ #define EXCP_YIELD      0x10004 /* cpu wants to yield timeslice to another */
+ #define EXCP_ATOMIC     0x10005 /* stop-the-world and emulate atomic */
  
+-void cpu_exec_step_atomic(CPUState *cpu);
+-
+ #define REAL_HOST_PAGE_ALIGN(addr) ROUND_UP((addr), qemu_real_host_page_size())
  
-diff --git a/hw/s390x/ipl.c b/hw/s390x/ipl.c
-index fa50749a7d3..4cca21c6217 100644
---- a/hw/s390x/ipl.c
-+++ b/hw/s390x/ipl.c
-@@ -18,7 +18,6 @@
- #include "system/physmem.h"
- #include "system/reset.h"
- #include "system/runstate.h"
--#include "system/tcg.h"
- #include "elf.h"
- #include "hw/core/loader.h"
- #include "hw/core/qdev-properties.h"
-@@ -690,10 +689,6 @@ void s390_ipl_reset_request(CPUState *cs, enum s390_reset reset_type)
-     } else {
-         qemu_system_reset_request(SHUTDOWN_CAUSE_GUEST_RESET);
-     }
--    /* as this is triggered by a CPU, make sure to exit the loop */
--    if (tcg_enabled()) {
--        cpu_loop_exit(cs);
--    }
- }
- 
- void s390_ipl_get_reset_request(CPUState **cs, enum s390_reset *reset_type)
-diff --git a/target/s390x/diag.c b/target/s390x/diag.c
-index 01cc802eaed..80f09584789 100644
---- a/target/s390x/diag.c
-+++ b/target/s390x/diag.c
-@@ -95,7 +95,7 @@ static void s390_ipl_write(CPUS390XState *env, uint64_t addr,
-     }
- }
- 
--void handle_diag_308(CPUS390XState *env, uint64_t r1, uint64_t r3, uintptr_t ra)
-+bool handle_diag_308(CPUS390XState *env, uint64_t r1, uint64_t r3, uintptr_t ra)
- {
-     bool valid;
-     CPUState *cs = env_cpu(env);
-@@ -105,34 +105,34 @@ void handle_diag_308(CPUS390XState *env, uint64_t r1, uint64_t r3, uintptr_t ra)
- 
-     if (env->psw.mask & PSW_MASK_PSTATE) {
-         s390_program_interrupt(env, PGM_PRIVILEGED, ra);
--        return;
-+        return false;
-     }
- 
-     if (subcode & ~0x0ffffULL) {
-         s390_program_interrupt(env, PGM_SPECIFICATION, ra);
--        return;
-+        return false;
-     }
- 
-     if (subcode >= DIAG308_PV_SET && !s390_has_feat(S390_FEAT_UNPACK)) {
-         s390_program_interrupt(env, PGM_SPECIFICATION, ra);
--        return;
-+        return false;
-     }
- 
-     switch (subcode) {
-     case DIAG308_RESET_MOD_CLR:
-         s390_ipl_reset_request(cs, S390_RESET_MODIFIED_CLEAR);
--        break;
-+        return true;
-     case DIAG308_RESET_LOAD_NORM:
-         s390_ipl_reset_request(cs, S390_RESET_LOAD_NORMAL);
--        break;
-+        return true;
-     case DIAG308_LOAD_CLEAR:
-         /* Well we still lack the clearing bit... */
-         s390_ipl_reset_request(cs, S390_RESET_REIPL);
--        break;
-+        return true;
-     case DIAG308_SET:
-     case DIAG308_PV_SET:
-         if (diag308_parm_check(env, r1, addr, ra, false)) {
--            return;
-+            return false;
-         }
-         iplb = g_new0(IplParameterBlock, 1);
-         s390_ipl_read(env, addr, iplb, sizeof(iplb->len));
-@@ -159,11 +159,11 @@ void handle_diag_308(CPUS390XState *env, uint64_t r1, uint64_t r3, uintptr_t ra)
-         env->regs[r1 + 1] = DIAG_308_RC_OK;
- out:
-         g_free(iplb);
--        return;
-+        return false;
-     case DIAG308_STORE:
-     case DIAG308_PV_STORE:
-         if (diag308_parm_check(env, r1, addr, ra, true)) {
--            return;
-+            return false;
-         }
-         if (subcode == DIAG308_PV_STORE) {
-             iplb = s390_ipl_get_iplb_pv();
-@@ -172,30 +172,30 @@ out:
-         }
-         if (!iplb) {
-             env->regs[r1 + 1] = DIAG_308_RC_NO_CONF;
--            return;
-+            return false;
-         }
- 
-         s390_ipl_write(env, addr, iplb, be32_to_cpu(iplb->len));
-         env->regs[r1 + 1] = DIAG_308_RC_OK;
--        return;
-+        return false;
-     case DIAG308_PV_START:
-         iplb = s390_ipl_get_iplb_pv();
-         if (!iplb) {
-             env->regs[r1 + 1] = DIAG_308_RC_NO_PV_CONF;
--            return;
-+            return false;
-         }
- 
-         if (kvm_enabled() && kvm_s390_get_hpage_1m()) {
-             error_report("Protected VMs can currently not be backed with "
-                          "huge pages");
-             env->regs[r1 + 1] = DIAG_308_RC_INVAL_FOR_PV;
--            return;
-+            return false;
-         }
- 
-         s390_ipl_reset_request(cs, S390_RESET_PV);
--        break;
-+        return true;
-     default:
-         s390_program_interrupt(env, PGM_SPECIFICATION, ra);
--        break;
-+        return false;
-     }
- }
-diff --git a/target/s390x/tcg/misc_helper.c b/target/s390x/tcg/misc_helper.c
-index 3d13c8bd8ea..036be93fb32 100644
---- a/target/s390x/tcg/misc_helper.c
-+++ b/target/s390x/tcg/misc_helper.c
-@@ -135,7 +135,10 @@ void HELPER(diag)(CPUS390XState *env, uint32_t r1, uint32_t r3, uint32_t num)
-     case 0x308:
-         /* ipl */
-         bql_lock();
--        handle_diag_308(env, r1, r3, GETPC());
-+        if (handle_diag_308(env, r1, r3, GETPC())) {
-+            /* As reset is triggered by the CPU, make sure to exit the loop */
-+            cpu_loop_exit(CPU(env_archcpu(env)));
-+        }
-         bql_unlock();
-         r = 0;
-         break;
+ /* The CPU list lock nests outside page_(un)lock or mmap_(un)lock */
+diff --git a/accel/tcg/tcg-accel-ops-mttcg.c b/accel/tcg/tcg-accel-ops-mttcg.c
+index 4160e2ba947..69560fdb9d8 100644
+--- a/accel/tcg/tcg-accel-ops-mttcg.c
++++ b/accel/tcg/tcg-accel-ops-mttcg.c
+@@ -32,6 +32,7 @@
+ #include "qemu/notify.h"
+ #include "qemu/guest-random.h"
+ #include "hw/core/boards.h"
++#include "accel/tcg/cpu-loop.h"
+ #include "tcg/startup.h"
+ #include "tcg-accel-ops.h"
+ #include "tcg-accel-ops-mttcg.h"
+diff --git a/accel/tcg/tcg-accel-ops-rr.c b/accel/tcg/tcg-accel-ops-rr.c
+index f84342e0449..5b132d3d5d8 100644
+--- a/accel/tcg/tcg-accel-ops-rr.c
++++ b/accel/tcg/tcg-accel-ops-rr.c
+@@ -32,6 +32,7 @@
+ #include "qemu/notify.h"
+ #include "qemu/guest-random.h"
+ #include "exec/cpu-common.h"
++#include "accel/tcg/cpu-loop.h"
+ #include "tcg/startup.h"
+ #include "tcg-accel-ops.h"
+ #include "tcg-accel-ops-rr.h"
 -- 
 2.53.0
 
