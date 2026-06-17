@@ -4,93 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB83CCD98E1
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jun 2026 05:42:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1CDDCCD98E1
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jun 2026 05:42:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZj1Z-0007Kx-OD; Wed, 17 Jun 2026 01:41:17 -0400
+	id 1wZj2F-0007fx-29; Wed, 17 Jun 2026 01:41:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <joel.stan@gmail.com>)
- id 1wZj1X-0007K6-E4
- for qemu-devel@nongnu.org; Wed, 17 Jun 2026 01:41:15 -0400
-Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <joel.stan@gmail.com>)
- id 1wZj1V-0003vd-U5
- for qemu-devel@nongnu.org; Wed, 17 Jun 2026 01:41:15 -0400
-Received: by mail-pl1-x62a.google.com with SMTP id
- d9443c01a7336-2c6c57c5bcfso737275ad.1
- for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 22:41:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1781674872; x=1782279672; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:sender:from:to:cc:subject:date
- :message-id:reply-to;
- bh=c8kDKuGdmXQ0qjXWUf1LvEVQeOU9K5mmWBPHFWVh0nY=;
- b=PjKyMDWCtbCr2jWTsqsiWXhF20Xhzgmh1o5GXyik5cfI+A9V0uMSHD1Tcel437Qsb/
- uVzthz1fzHRyX40uL7fFhqlMqX3QndX/K4jsXAqT4XBk7IIVR9PP1k45ihx3CzH2C1dr
- TOCT1El9vXlmTljJXzLH+OdBqqDtiGwy01AeQY/0vpBnk+j0xnNj3+ldnT0v7eNk3DP5
- 0TuEmDVzkUKzUk4tfNbyg30qWAG0PQyHBAU0tN6YWw+mrg4zKcVJEkjVLHKwv8vkGHuR
- 3iDfChnOme/t74XQ0WoeIU2UZ3lkQH6M2y5uQnOY2oTS4NphVVdVhxLHyWFfRBGi+Eai
- oe5w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781674872; x=1782279672;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:sender:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=c8kDKuGdmXQ0qjXWUf1LvEVQeOU9K5mmWBPHFWVh0nY=;
- b=Cf5qG53gc+6Pl6cmJtX/iCRLTuzylcJakRNGbKzeVJiqY4zWn10pnZhAumQqAIz+1e
- xQdxvf7e4ZnBN1628q4n4VrLf0yGdDf/JQMF1LiV+U2dCuZjdfnu0EqzHxD3SEtlxf58
- HEx7lFjpDhgXyOJqsXsgP2oAQPiRUkHvLPEOl5TpPkvs3pyg77z15lKSeOYXsjkPKRmg
- M/UhpzGmxWSJh6MR35Q2N0TZcJHqcIwcrhMVnroJchVh/TbhALPdLvp1Nu1rR2+WUVE3
- YzRbDEf5BjUhOc5KI8tBy4YCwKIB+GVwJ+E+hBtJgDaO8TTU3wSxqk+Bjp6gP/KAlxIA
- 7KzQ==
-X-Forwarded-Encrypted: i=1;
- AFNElJ+O+GLRiSobIHunQCK7jouxUv1IQudZnxiqjkLQim7vqlPfPC/peDF2cXtfipfAMzrnbRMQofuKWKEk@nongnu.org
-X-Gm-Message-State: AOJu0YwFsUlkMMcgt3qNvPb2bF7eilZs+dwulIuBp9v1ixL4cHC4tM6t
- 2ei01bsie3l4ICZH6scdUKNgbNwG7uR0VjeFWNOPjfaM0/Uy+JnCk+nx
-X-Gm-Gg: AfdE7cmzlmf6frAomkMU3LffNrixNubwSsPJgSktWODSUm30JCDWClsQfrx5qQT0xL8
- mPtv10c5wMtMBYqJGADOy9A0DmfwOYJ3vjWsR2Gl/J9vsOFyu97z8wGXhGZxx753XeEcLz7i2tV
- z9Ev0IhwDlyKPt+9vvztKrA2Out4EW+7ANzcdm6HfWqFyO7O6MFkjdnDM32i8qH1nyi8Hf7wwkC
- o8SKU0pqzwrybPnIQb1wrnBVGHSXZG+E6p3jHsvC+Us8mlV5OAAWldbMxyD020op1sj6/SMaTyI
- ptFeq5+MD9S1J+Ms96jbCp4xX5c/iErYNKBrufE2to658KCtkLaMhPkEotxtZ9tj0bAGUl9yqht
- eaccOEgm2vHLFh3eLU0vCyKZroUS1r7KaQ8BUd6VgfvuovV7PIlzPx1zura91vhe/x+vqK6L7HK
- JFaCBmSp0ZbLvwlmO3XQR1eQI23rJXrpcsP1LZvWTINZY1Q9hKIBSbzQO/Xc6uEUka6wTRQRyiI
- mLgOJCTrpzgWS2k5jaWtReGaKkD/OC0RFTmLafdReY=
-X-Received: by 2002:a17:903:46c6:b0:2c0:fa4e:91f6 with SMTP id
- d9443c01a7336-2c6bc0bdcbdmr23719745ad.13.1781674872510; 
- Tue, 16 Jun 2026 22:41:12 -0700 (PDT)
-Received: from donnager-debian.. ([45.124.203.15])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2c433078264sm149294725ad.65.2026.06.16.22.41.10
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 16 Jun 2026 22:41:12 -0700 (PDT)
-From: Joel Stanley <joel@jms.id.au>
-To: alistair.francis@wdc.com,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Anton Johansson <anjo@rev.ng>
-Cc: qemu-riscv@nongnu.org,
-	qemu-devel@nongnu.org
-Subject: [PATCH 2/3] tests/functional/riscv64: Use newer kernel for tuxrun boot
-Date: Wed, 17 Jun 2026 15:09:27 +0930
-Message-ID: <20260617054034.1020724-3-joel@jms.id.au>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260617054034.1020724-1-joel@jms.id.au>
-References: <20260617054034.1020724-1-joel@jms.id.au>
+ (Exim 4.90_1) (envelope-from <functioner@sjtu.edu.cn>)
+ id 1wZj2C-0007fN-2B
+ for qemu-devel@nongnu.org; Wed, 17 Jun 2026 01:41:56 -0400
+Received: from smtp186.sjtu.edu.cn ([202.120.2.186])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <functioner@sjtu.edu.cn>)
+ id 1wZj29-0003yF-Ep
+ for qemu-devel@nongnu.org; Wed, 17 Jun 2026 01:41:55 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=sjtu.edu.cn;
+ s=default; t=1781674899;
+ bh=4nEAJPnhBXE8/X0TZ0dV86nuXZGp8FhmYR5+XrGrnDE=;
+ h=Date:Subject:To:Cc:References:From:In-Reply-To;
+ b=OJmYspgkebpKpwWS5h5Sz7i/9GkW5DzfHslYlx4wlYFpGZr9sleWE/en1IcKlm41H
+ b07YH8Znp/2t2yq7nBtufEiw0e7Z1TAcNiRrmtU9m3uwAzBNln/edJEN0EHuAjQZqG
+ em1bVhpTnBAmId+ODHR+j3D9UI7dIIlSbDiKtLh61zHcqD5PmYhuMbv98a7vT47zwH
+ g36nKgg0g6lYRky1gPTHnLxZUd6yq1LCKpC5iFS07LflPENYpjRThOfXz5QbkQG2Fc
+ VtaUb5ECyKkwe9wQtvMqoLp7ehPM4BHgbJMUuIaT4RZtig1oHKtYcOtGW8wfkx2SfY
+ EkAGS/ETZei2Q==
+Received: from proxy188.sjtu.edu.cn (smtp188.sjtu.edu.cn [202.120.2.188])
+ by smtp186.sjtu.edu.cn (Postfix) with ESMTPS id 59B762FF3F6;
+ Wed, 17 Jun 2026 05:41:39 +0000 (UTC)
+Received: from [10.0.1.62] (unknown [202.120.40.100])
+ by proxy188.sjtu.edu.cn (Postfix) with ESMTPSA id 31BF537C951;
+ Wed, 17 Jun 2026 13:41:38 +0800 (CST)
+Message-ID: <a9765b91-1d96-4549-b160-e3e271880d2a@sjtu.edu.cn>
+Date: Wed, 17 Jun 2026 13:41:36 +0800
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
- envelope-from=joel.stan@gmail.com; helo=mail-pl1-x62a.google.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FORGED_FROMDOMAIN=0.001,
- FREEMAIL_FROM=0.001, HEADER_FROM_DIFFERENT_DOMAINS=0.249,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/1] plugins: use int64_t for the syscall filter return
+ value
+To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: qemu-devel <qemu-devel@nongnu.org>, Riku Voipio <riku.voipio@iki.fi>,
+ Laurent Vivier <laurent@vivier.eu>, Alexandre Iooss <erdnaxe@crans.org>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Zhengwei Qi <qizhwei@sjtu.edu.cn>, Yun Wang <yunwang94@sjtu.edu.cn>,
+ Mingyuan Xia <xiamy@ultrarisc.com>, Kailiang Xu <xukl2019@sjtu.edu.cn>
+References: <20260612055642.589337-1-functioner@sjtu.edu.cn>
+ <20260612055642.589337-2-functioner@sjtu.edu.cn>
+ <87se6sdonm.fsf@draig.linaro.org>
+ <bd162496-6325-4f96-8ad7-72fbfb3e89f8@sjtu.edu.cn>
+ <102068b3-f181-49f4-addc-4444afbc03a9@oss.qualcomm.com>
+ <ec256e96-5519-40ac-a0cd-b16acb6e8e04@sjtu.edu.cn>
+ <848e1ecb-cced-4c6c-a4c5-3daf3ed0edc2@oss.qualcomm.com>
+From: Ziyang Zhang <functioner@sjtu.edu.cn>
+In-Reply-To: <848e1ecb-cced-4c6c-a4c5-3daf3ed0edc2@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=202.120.2.186;
+ envelope-from=functioner@sjtu.edu.cn; helo=smtp186.sjtu.edu.cn
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,39 +85,10 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The published tuxrun kernel is 6.4 which predates the introduction of
-AIA support in Linux. Update it to a 6.11 kernel, the newest build
-on the tuxrun site.
+On Tue, 16 Jun 2026 11:21:52 -0700, Pierrick Bouvier wrote:
+> Would that be ok for you to wait for it to come down (hopefully before
+> end of the week), and then publish a new version of yours rebased on
+> top? I can ping you once it's merged if you want.
 
-Boot times on a laptop are slightly longer but still reasonable:
-
-                       | v6.4.16 | v6.11.9
-  ---------------------|---------|--------
-   test_riscv64        | 4.82s   | 5.56s
-  ---------------------|---------|--------
-   test_riscv64_maxcpu | 4.94s   | 5.30s
-
-Signed-off-by: Joel Stanley <joel@jms.id.au>
----
- tests/functional/riscv64/test_tuxrun.py | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/tests/functional/riscv64/test_tuxrun.py b/tests/functional/riscv64/test_tuxrun.py
-index 0d8de36204a3..43d1242be52b 100755
---- a/tests/functional/riscv64/test_tuxrun.py
-+++ b/tests/functional/riscv64/test_tuxrun.py
-@@ -17,8 +17,8 @@
- class TuxRunRiscV64Test(TuxRunBaselineTest):
- 
-     ASSET_RISCV64_KERNEL = Asset(
--        'https://storage.tuxboot.com/buildroot/20241119/riscv64/Image',
--        '2bd8132a3bf21570290042324fff48c987f42f2a00c08de979f43f0662ebadba')
-+        'https://storage.tuxboot.com/kernels/6.11.9/riscv64/Image',
-+        '174f8bb87f08961e54fa3fcd954a8e31f4645f6d6af4dd43983d5e9841490fb0')
-     ASSET_RISCV64_ROOTFS = Asset(
-         'https://storage.tuxboot.com/buildroot/20241119/riscv64/rootfs.ext4.zst',
-         'aa4736a9872651dfc0d95e709465eedf1134fd19d42b8cb305bfd776f9801004')
--- 
-2.47.3
-
+Thanks. I will send a new patch later.
 
