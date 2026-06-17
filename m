@@ -4,65 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD2E9CD98ED
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jun 2026 22:44:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82FA8CD98F0
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jun 2026 23:51:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZyzY-0001Yw-4B; Wed, 17 Jun 2026 18:44:16 -0400
+	id 1wa022-0004PH-4L; Wed, 17 Jun 2026 19:50:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1wZyzW-0001Th-UJ
- for qemu-devel@nongnu.org; Wed, 17 Jun 2026 18:44:14 -0400
-Received: from zero.eik.bme.hu ([152.66.115.2])
+ (Exim 4.90_1) (envelope-from <mhjacobson@me.com>) id 1wa01w-0004NL-IR
+ for qemu-devel@nongnu.org; Wed, 17 Jun 2026 19:50:48 -0400
+Received: from p-east2-cluster1-host7-snip4-8.eps.apple.com ([57.103.76.71]
+ helo=outbound.st.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1wZyzU-0000lV-FH
- for qemu-devel@nongnu.org; Wed, 17 Jun 2026 18:44:14 -0400
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 71EBD596988;
- Thu, 18 Jun 2026 00:44:10 +0200 (CEST)
-X-Virus-Scanned: amavis at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id bYtYqfQ-A4IY; Thu, 18 Jun 2026 00:44:07 +0200 (CEST)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id E143B59698C; Thu, 18 Jun 2026 00:44:07 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id DF079596990;
- Thu, 18 Jun 2026 00:44:07 +0200 (CEST)
-Date: Thu, 18 Jun 2026 00:44:07 +0200 (CEST)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: Paolo Bonzini <pbonzini@redhat.com>
-cc: =?ISO-8859-15?Q?Daniel_P=2E_Berrang=E9?= <berrange@redhat.com>, 
- qemu-devel@nongnu.org, 
- =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@mailo.com>, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
- Peter Xu <peterx@redhat.com>, 
- =?ISO-8859-15?Q?Herv=E9_Poussineau?= <hpoussin@reactos.org>, 
- =?ISO-8859-15?Q?Alex_Benn=E9e?= <alex.bennee@linaro.org>, 
- "Michael S. Tsirkin" <mst@redhat.com>, 
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
- Aurelien Jarno <aurelien@aurel32.net>, Fabiano Rosas <farosas@suse.de>, 
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, 
- =?ISO-8859-15?Q?Marc-Andr=E9_Lureau?= <marcandre.lureau@redhat.com>
-Subject: Re: [RFC 4/7] system: add memory_region_new / memory_region_new_io
-In-Reply-To: <aa4d417e-2e61-44ef-a695-31bc19dbafd1@redhat.com>
-Message-ID: <9976f829-7c33-7dce-b38e-aa6f04d6ec9d@eik.bme.hu>
-References: <20260616155554.264412-1-berrange@redhat.com>
- <20260616155554.264412-5-berrange@redhat.com>
- <aa4d417e-2e61-44ef-a695-31bc19dbafd1@redhat.com>
+ (Exim 4.90_1) (envelope-from <mhjacobson@me.com>) id 1wa01u-0003tp-0G
+ for qemu-devel@nongnu.org; Wed, 17 Jun 2026 19:50:47 -0400
+Received: from outbound.st.icloud.com (unknown [127.0.0.2])
+ by p00-icloudmta-asmtp-us-east-1a-60-percent-11 (Postfix) with ESMTPS id
+ C8A071800CDA; Wed, 17 Jun 2026 23:50:41 +0000 (UTC)
+X-ICL-Out-Info: HUtFAUMHWwJACUgATUQeDx5WFlZNRAJCTQ5JHVoHRQNGD1YCWgZLVxQEFVsHVghdEkoXXS1aDhwTVhUTC1NWXxUXG1wAFxlRTQ5YWwhbBA8fTAxRAkIFVl5KDB0EVAddBV1WUAJaS0IES0VoXAVcHEAXSB1faktWFAQVVkNUBF9QVBFXUAtZAkIPSAVcAFkBRQlLAUMFWgZJCFUGQFoDWBFaF1EeWAVyHVxWUAJaVRIEQAhWUF4IXh9MHA==
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=me.com; s=1a1hai;
+ t=1781740242; x=1784332242; bh=QxIFPOHU7e9gIqyhQkeZZjwyxbbbOQrk6FsunfvYN9E=;
+ h=From:To:Subject:Date:Message-ID:MIME-Version:x-icloud-hme;
+ b=iCGb2VA+Vy00aS1gfGjSHtgzcQZZ7R6sY9JtHlUjAQwcOUvY0Th650yccUkbzjhrlE7dKii2joucDfDj48NXdt9NdsiNZOPrawHoPLZek4TOyHw88fQ2SdvXS4UId3zyXHBu4mmn8Gml9cenux8ZKVTJ7qEtXL7rw8f6IoPCYVSnJ3VrmU1hoLtzb2CuoNGoS4vY+AR11dFZpYqMnJ6xghipVgsaf2GJU3UwimNoGGSG6CmF6G9cH+YToJWDsRMVdTT2dgAHsYDqhbOptePExa7EsLWhrOhQEsDkWF64FaxFCKk34ur0WIpZaDXMoStGuW4pX9Pw58H+dAPwL7TJ0w==
+Received: from localhost.localdomain (unknown [17.42.251.67])
+ by p00-icloudmta-asmtp-us-east-1a-60-percent-11 (Postfix) with ESMTPSA id
+ 234391800C16; Wed, 17 Jun 2026 23:50:41 +0000 (UTC)
+From: Matt Jacobson <mhjacobson@me.com>
+To: qemu-devel@nongnu.org
+Cc: Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ qemu-block@nongnu.org, Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Laurent Vivier <laurent@vivier.eu>, Matt Jacobson <mhjacobson@me.com>
+Subject: [PATCH v2 4/5] hw/m68k: add working floppy controller for q800
+Date: Wed, 17 Jun 2026 19:50:31 -0400
+Message-ID: <20260617235032.21491-5-mhjacobson@me.com>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260617235032.21491-1-mhjacobson@me.com>
+References: <20260617235032.21491-1-mhjacobson@me.com>
 MIME-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="3866299591-1801473636-1781736247=:56434"
-Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
- helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjE3MDIyOCBTYWx0ZWRfXwThi3PryvK4x
+ /Y/3lcd336p/bZuTRydYIG4YX0MqDYHzs7Z/qfCGuUE2Vd/BZUkuA6IzOv4lgxm3D3Rl0m4IQur
+ /NB5SKOPNCTEkDBgH18NPrKuMTUkvbx0MNkxx/P+8lB8VWd1/3vF74A6yF6zyyVZ7Zr3bRV5vEB
+ yZka5IGaB6EQ7wUUtR8dxim4QFvTvoapTU51VohbydOFwqQBDdDqwTjUkyxqBXZ6A5tadymMzf3
+ sNbcw0uLivaI2vednMBtasEfpCvYJzGdTqsALqfjBOmNzIKkZYKYX/GUp4Mawvt0I4hiZFpXWeZ
+ g1PMwVG2ph1Z6Ez0sdl
+X-Proofpoint-ORIG-GUID: fQAeRe0chWi0TUH8f3v0ER_qmOQwbJTp
+X-Proofpoint-GUID: fQAeRe0chWi0TUH8f3v0ER_qmOQwbJTp
+Received-SPF: pass client-ip=57.103.76.71; envelope-from=mhjacobson@me.com;
+ helo=outbound.st.icloud.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -78,91 +74,134 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Switch the Quadra 800 machine to the working SWIM2 floppy controller.
+Hook up the HeadSel bit on the VIA to control the head selection (the
+IWM does not handle this part itself).
 
---3866299591-1801473636-1781736247=:56434
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8BIT
+Signed-off-by: Matt Jacobson <mhjacobson@me.com>
+---
+ hw/m68k/q800.c            |  5 +++--
+ hw/misc/mac_via.c         | 16 ++++++++++++++++
+ include/hw/m68k/q800.h    |  4 ++--
+ include/hw/misc/mac_via.h |  4 ++++
+ 4 files changed, 25 insertions(+), 4 deletions(-)
 
-On Wed, 17 Jun 2026, Paolo Bonzini wrote:
-> On 6/16/26 17:55, Daniel P. Berrangé wrote:
->> Prepare for the move to dynamically allocated memory regions by
->> introducing memory_region_new and memory_region_new_io functions
->> which call through to object_new instead of object_initialize.
->> 
->> TBD: add "new" variants for all the other memory_region_init
->> variants.
->> 
->> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
->
-> Zoltan already proposed this, but I really think it's a bad idea.
->
-> MemoryRegionOps callback will certainly access fields in the parent. Having a 
-> separate object gives you no benefit because you still have the same 
-> use-after-free if the MemoryRegion outlives the device.  Likewise for buses.
->
-> For buses, the fact that the parent and child live at the same time is 
-> explicitly tracked with mutual refcount and unparent.  If it's not, we have 
-> the hack that Akihiko mentioned 
-> (https://lists.gnu.org/archive/html/qemu-devel/2026-06/msg03459.html):
->
->> However, this is insufficient to avoid calling object_ref() for all
->> embedded objects. For example, consider an embedded Device that has a
->> MemoryRegion. When referencing a MemoryRegion for guest memory access,
->> QEMU automatically references the owning Device to keep the MemoryRegion
->> alive. However, that reference is ineffective if the Device itself is
->> embedded, because object_ref() does not keep the containing storage
->> alive.
->
-> If the device itself is embedded, then all the invariants must hold 
-> recursively:
->
-> - the device must be kept alive by mutual references between the device 
-> itself and its parent;
->
-> - unparent for the device should wait for all guest memory accesses to be 
-> either completed or cancelled.
->
-> So, the problem is that "QEMU automatically references the owning Device to 
-> keep the MemoryRegion alive" is a hack that should die.  I added it, mea 
-> culpa.
->
-> The model is that if it makes sense to have B outlive A, you use new. If it 
-> doesn't, you use init.  For MemoryRegions or anything that has callbacks, it 
-> makes no sense to outlive the implementor of the callbacks.  There are 
-> exceptions if the number of objects is dynamic but they're very rare.
->
-> I agree that there's extra complexity added by embedding; but I disagree that 
-> removing embedding will fix any bugs, and because it will hide a relationship 
-> between objects, I believe the complexity is not accidental.
+diff --git a/hw/m68k/q800.c b/hw/m68k/q800.c
+index ab64250c47..a6997ef802 100644
+--- a/hw/m68k/q800.c
++++ b/hw/m68k/q800.c
+@@ -47,7 +47,7 @@
+ #include "hw/audio/asc.h"
+ #include "hw/nubus/mac-nubus-bridge.h"
+ #include "hw/display/macfb.h"
+-#include "hw/block/swim.h"
++#include "hw/block/swim2.h"
+ #include "net/net.h"
+ #include "net/util.h"
+ #include "qapi/error.h"
+@@ -338,6 +338,7 @@ static void q800_machine_init(MachineState *machine)
+     /* VIA 1 */
+     object_initialize_child(OBJECT(machine), "via1", &m->via1,
+                             TYPE_MOS6522_Q800_VIA1);
++    m->via1.swim = &m->swim;
+     dinfo = drive_get(IF_MTD, 0, 0);
+     if (dinfo) {
+         qdev_prop_set_drive(DEVICE(&m->via1), "drive",
+@@ -511,7 +512,7 @@ static void q800_machine_init(MachineState *machine)
+     /* SWIM floppy controller */
+ 
+     object_initialize_child(OBJECT(machine), "swim", &m->swim,
+-                            TYPE_SWIM);
++                            TYPE_SWIM2);
+     sysbus = SYS_BUS_DEVICE(&m->swim);
+     sysbus_realize(sysbus, &error_fatal);
+     memory_region_add_subregion(&m->macio, SWIM_BASE - IO_BASE,
+diff --git a/hw/misc/mac_via.c b/hw/misc/mac_via.c
+index 26ee230dcc..09197fe519 100644
+--- a/hw/misc/mac_via.c
++++ b/hw/misc/mac_via.c
+@@ -31,6 +31,7 @@
+ #include "hw/core/qdev-properties-system.h"
+ #include "system/block-backend.h"
+ #include "system/rtc.h"
++#include "hw/block/swim2.h"
+ #include "trace.h"
+ #include "qemu/log.h"
+ 
+@@ -1080,6 +1081,17 @@ static void mos6522_q800_via1_write(void *opaque, hwaddr addr, uint64_t val,
+     mos6522_write(ms, addr, val, size);
+ 
+     switch (addr) {
++    case VIA_REG_A:
++    case VIA_REG_ANH: {
++        const bool sel = (ms->a & VIA1A_vHeadSel) != 0;
++
++        if (v1s->swim) {
++            swim2_set_sel(v1s->swim, sel);
++        }
++
++        break;
++    }
++
+     case VIA_REG_B:
+         via1_rtc_update(v1s);
+         via1_adb_update(v1s);
+@@ -1224,6 +1236,10 @@ static void mos6522_q800_via1_reset_hold(Object *obj, ResetType type)
+ 
+     /* Timer calibration hack */
+     v1s->timer_hack_state = 0;
++
++    if (v1s->swim) {
++        swim2_set_sel(v1s->swim, false);
++    }
+ }
+ 
+ static void mos6522_q800_via1_realize(DeviceState *dev, Error **errp)
+diff --git a/include/hw/m68k/q800.h b/include/hw/m68k/q800.h
+index 77551b9592..2a20314d57 100644
+--- a/include/hw/m68k/q800.h
++++ b/include/hw/m68k/q800.h
+@@ -33,7 +33,7 @@
+ #include "hw/char/escc.h"
+ #include "hw/core/or-irq.h"
+ #include "hw/scsi/esp.h"
+-#include "hw/block/swim.h"
++#include "hw/block/swim2.h"
+ #include "hw/nubus/mac-nubus-bridge.h"
+ #include "hw/display/macfb.h"
+ #include "hw/misc/djmemc.h"
+@@ -59,7 +59,7 @@ struct Q800MachineState {
+     ESCCState escc;
+     OrIRQState escc_orgate;
+     SysBusESPState esp;
+-    Swim swim;
++    SWIM2State swim;
+     MacNubusBridge mac_nubus_bridge;
+     MacfbNubusState macfb;
+     DJMEMCState djmemc;
+diff --git a/include/hw/misc/mac_via.h b/include/hw/misc/mac_via.h
+index 114f41db4c..a25f219a25 100644
+--- a/include/hw/misc/mac_via.h
++++ b/include/hw/misc/mac_via.h
+@@ -35,6 +35,8 @@
+ #define TYPE_MOS6522_Q800_VIA1 "mos6522-q800-via1"
+ OBJECT_DECLARE_SIMPLE_TYPE(MOS6522Q800VIA1State, MOS6522_Q800_VIA1)
+ 
++struct SWIM2State;
++
+ struct MOS6522Q800VIA1State {
+     /*< private >*/
+     MOS6522State parent_obj;
+@@ -77,6 +79,8 @@ struct MOS6522Q800VIA1State {
+ 
+     /* SETUPTIMEK hack */
+     int timer_hack_state;
++
++    struct SWIM2State *swim;
+ };
+ 
+ 
+-- 
+2.53.0
 
-I'm trying to understand this better. The way it originally meant to work 
-according to the memory region docs and implementation is that memory 
-region is added to an owner as a child which takes a reference and when 
-the owner is freed it will unparent its children which will then get 
-unrefed and freed as well if nothing else increased their ref count. The 
-problem is that when something accesses the memory region it has to keep 
-the owner alive as well so instead of referencing the memory region it 
-references the owner (not directly but using memory_region_ref which does 
-this). This is OK but I don't see how this mandates that the memory region 
-cannot be freed by the above ref counting together with the owner and why 
-it must be embedded? All this ref count hack does is that it passes 
-references of the memory region to the owner so the only reference to the 
-memory region itself would be from the owner and when everything unrefs 
-the owner (either directly or through any memory region) they would be 
-freed together as above. But this is now prevented by memory_region_init 
-having hard coded object_initialize which can only be used with embedded 
-objects. The problem is not referencing the owner but that memory regions 
-are not created with object_new so cannot be freed by QOM. So embedding 
-seems unrelated to this passing refs on memory regions to owner and could 
-be fixed separately that my patches attempted. Where the referencing the 
-owner hack may fail is when the owner is also owned by something else and 
-this does not pass refs further up the chain but that's a separate issue 
-which embedding does not fix either so that could be handled and fixed 
-separately.
-
-Regards,
-BALATON Zoltan
---3866299591-1801473636-1781736247=:56434--
 
