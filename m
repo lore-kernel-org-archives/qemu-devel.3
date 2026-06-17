@@ -4,37 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11DA2CD98E2
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jun 2026 13:59:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BBA30CD98E2
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jun 2026 14:11:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZqnV-0007JD-3U; Wed, 17 Jun 2026 09:59:17 -0400
+	id 1wZqyP-0001rL-TI; Wed, 17 Jun 2026 10:10:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1wZqnS-0007Ir-MV
- for qemu-devel@nongnu.org; Wed, 17 Jun 2026 09:59:14 -0400
-Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
+ id 1wZqyH-0001ke-Ue
+ for qemu-devel@nongnu.org; Wed, 17 Jun 2026 10:10:27 -0400
+Received: from zero.eik.bme.hu ([152.66.115.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1wZqnQ-0001Hf-BM
- for qemu-devel@nongnu.org; Wed, 17 Jun 2026 09:59:14 -0400
+ id 1wZqyE-0005Rt-S7
+ for qemu-devel@nongnu.org; Wed, 17 Jun 2026 10:10:25 -0400
 Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 0B77E596988;
- Wed, 17 Jun 2026 15:59:09 +0200 (CEST)
+ by zero.eik.bme.hu (Postfix) with ESMTP id 9538E596952;
+ Wed, 17 Jun 2026 16:10:16 +0200 (CEST)
 X-Virus-Scanned: amavis at eik.bme.hu
 Received: from zero.eik.bme.hu ([127.0.0.1])
  by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id yGjjOM6XWF-S; Wed, 17 Jun 2026 15:59:06 +0200 (CEST)
+ id 4ErZrakzh5vD; Wed, 17 Jun 2026 16:10:14 +0200 (CEST)
 Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 6C40E59698A; Wed, 17 Jun 2026 15:59:06 +0200 (CEST)
+ id 0F11059694F; Wed, 17 Jun 2026 16:10:14 +0200 (CEST)
 Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 69C98596989;
- Wed, 17 Jun 2026 15:59:06 +0200 (CEST)
-Date: Wed, 17 Jun 2026 15:59:06 +0200 (CEST)
+ by zero.eik.bme.hu (Postfix) with ESMTP id 0CF08596858;
+ Wed, 17 Jun 2026 16:10:14 +0200 (CEST)
+Date: Wed, 17 Jun 2026 16:10:14 +0200 (CEST)
 From: BALATON Zoltan <balaton@eik.bme.hu>
-To: Mark Cave-Ayland <mark.caveayland@nutanix.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
 cc: =?ISO-8859-15?Q?Daniel_P=2E_Berrang=E9?= <berrange@redhat.com>, 
  qemu-devel@nongnu.org, 
  =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@mailo.com>, 
@@ -45,18 +45,18 @@ cc: =?ISO-8859-15?Q?Daniel_P=2E_Berrang=E9?= <berrange@redhat.com>,
  "Michael S. Tsirkin" <mst@redhat.com>, 
  Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
  Aurelien Jarno <aurelien@aurel32.net>, Fabiano Rosas <farosas@suse.de>, 
- Paolo Bonzini <pbonzini@redhat.com>, 
  Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, 
  =?ISO-8859-15?Q?Marc-Andr=E9_Lureau?= <marcandre.lureau@redhat.com>
-Subject: Re: [RFC 0/7] qom: deprecate embedded objects and instance properties
-In-Reply-To: <b98ac13d-e508-4c0b-ba78-6e0a63f73e65@nutanix.com>
-Message-ID: <f07da77e-972a-d62d-da21-460f31cfc257@eik.bme.hu>
+Subject: Re: [RFC 4/7] system: add memory_region_new / memory_region_new_io
+In-Reply-To: <aa4d417e-2e61-44ef-a695-31bc19dbafd1@redhat.com>
+Message-ID: <817a9061-bc64-9503-0b5a-3ab1117567a2@eik.bme.hu>
 References: <20260616155554.264412-1-berrange@redhat.com>
- <b98ac13d-e508-4c0b-ba78-6e0a63f73e65@nutanix.com>
+ <20260616155554.264412-5-berrange@redhat.com>
+ <aa4d417e-2e61-44ef-a695-31bc19dbafd1@redhat.com>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="3866299591-946656722-1781704746=:6462"
-Received-SPF: pass client-ip=2001:738:2001:2001::2001;
- envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
+Content-Type: multipart/mixed; boundary="3866299591-502672408-1781705414=:6462"
+Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
+ helo=zero.eik.bme.hu
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -80,112 +80,82 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
   This message is in MIME format.  The first part should be readable text,
   while the remaining parts are likely unreadable without MIME-aware tools.
 
---3866299591-946656722-1781704746=:6462
+--3866299591-502672408-1781705414=:6462
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8BIT
 
-On Wed, 17 Jun 2026, Mark Cave-Ayland wrote:
-> On 16/06/2026 16:55, Daniel P. Berrangé wrote:
+On Wed, 17 Jun 2026, Paolo Bonzini wrote:
+> On 6/16/26 17:55, Daniel P. Berrangé wrote:
+>> Prepare for the move to dynamically allocated memory regions by
+>> introducing memory_region_new and memory_region_new_io functions
+>> which call through to object_new instead of object_initialize.
+>> 
+>> TBD: add "new" variants for all the other memory_region_init
+>> variants.
+>> 
+>> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 >
->> QOM has two rather unusual / surprising features historicall
->>
->>   * The ability to embed a QOM instance's memory inside another
->>     struct
->>   * The ability to register properties against the instnce
->>     instead of struct
->> 
->> While they both look convenient on the surface, they also
->> have significant undesirable side effects (see the commit
->> message for each patch for details).
->> 
->> The premise of this series is that their convenience does
->> not outweigh their downsides, and we would be better off
->> long term by eliminating their usage, rather than trying
->> to add more hacks on top to mitigate their downsides.
->> 
->> This comes out of two separate conversations this week
->>
->>   * Migration series where Peter proposed changes that
->>     make use of instance  properties. When I commented,
->>     Peter rightly pointed out that our docs do not
->>     discourage use of instance properties:
->>          https://urldefense.proofpoint.com/v2/url?u=https-3A__lists.gnu.org_archive_html_qemu-2Ddevel_2026-2D06_msg02368.html&d=DwIDaQ&c=s883GpUCOChKOHiocYtGcg&r=c23RpsaH4D2MKyD3EPJTDa0BAxz6tV8aUJqVSoytEiY&m=VzbegkrZ5TGWl9jpxLUfD3gMp4ZZjyUrMiBfOzSjpcaOU-hz3SuUIaGUiIM4BQdV&s=v-N9FJZ1ugUjERquAp1KfuZ3B20G9mdbHpEEFP5zkfs&e=
->>
->>   * QOM series where Akihiko proposed some funky hacks
->>     to reference counting to better track object lifecycle
->>     when embedding structs. We had a short discussion about
->>     discouraging QOM embedding, so this is a real world
->>     proposal:
->>
->>       https://urldefense.proofpoint.com/v2/url?u=https-3A__lists.gnu.org_archive_html_qemu-2Ddevel_2026-2D06_msg03459.html&d=DwIDaQ&c=s883GpUCOChKOHiocYtGcg&r=c23RpsaH4D2MKyD3EPJTDa0BAxz6tV8aUJqVSoytEiY&m=VzbegkrZ5TGWl9jpxLUfD3gMp4ZZjyUrMiBfOzSjpcaOU-hz3SuUIaGUiIM4BQdV&s=mHTDgFeywt1U_2Q9uTnAyG6zp-VjguJ4DZIJAX59vaY&e=
->> 
->> This is not likely to be a quick task, so this series
->> starts small
->>
->>   * Adds a "QEMU_DEPRECATIONS" annotation for internal APIs
->>   * Deprecate the QOM instance embedding
->>   * Deprecate the QOM instance properties
->>   * Deprecate the memory region embedding APIs
->>   * Deprecate the IRQ embedding APIs
->>   * Convert PIIX to eliminate embedding as a
->>     demonstration.
->> 
->> The QEMU_DEPRECATIONS idea is an effect to improve our our
->> historic practice where we introduce a new preferred API
->> and never really tell anyone the old APIs is bad to use.
->> 
->> If --enable-deprecations is given to configure, every use
->> of a deprecated API emits a compiler warning. This is not
->> enabled by default in this series, since we have -Werror
->> by default.
+> Zoltan already proposed this, but I really think it's a bad idea.
 >
-> I'm not sure if we're ready to start flagging things via the compiler, 
-> however I'm in broad agreement that this is direction we need to travel. 
-> Thanks for beating me to it, and starting the conversation :)
+> MemoryRegionOps callback will certainly access fields in the parent. Having a 
+> separate object gives you no benefit because you still have the same 
+> use-after-free if the MemoryRegion outlives the device.  Likewise for buses.
 >
->> Note that the proposal to stop embedding memory regions has
->> been made by Zoltan earlier this year and was rejected by Paolo:
->>
->>    https://urldefense.proofpoint.com/v2/url?u=https-3A__lists.nongnu.org_archive_html_qemu-2Ddevel_2026-2D01_msg05435.html&d=DwIDaQ&c=s883GpUCOChKOHiocYtGcg&r=c23RpsaH4D2MKyD3EPJTDa0BAxz6tV8aUJqVSoytEiY&m=VzbegkrZ5TGWl9jpxLUfD3gMp4ZZjyUrMiBfOzSjpcaOU-hz3SuUIaGUiIM4BQdV&s=oAY3a1R4rnhYdl7-qnoTVjVdGOX1Qj-GvGlOX77oZrk&e=
->>    https://urldefense.proofpoint.com/v2/url?u=https-3A__lists.nongnu.org_archive_html_qemu-2Ddevel_2026-2D05_msg06665.html&d=DwIDaQ&c=s883GpUCOChKOHiocYtGcg&r=c23RpsaH4D2MKyD3EPJTDa0BAxz6tV8aUJqVSoytEiY&m=VzbegkrZ5TGWl9jpxLUfD3gMp4ZZjyUrMiBfOzSjpcaOU-hz3SuUIaGUiIM4BQdV&s=WmpukrnrmuhhTz7hLgAA-9FStZ3fbzH3P1aT_U9f6GY&e=
->> 
->> I don't really agree with the analysis there. IMHO,  the
->> concept of embedding objects is to horrendous to allow to
->> live any longer. Yes, that's a big job, but long term it
->> is worth it.
+> For buses, the fact that the parent and child live at the same time is 
+> explicitly tracked with mutual refcount and unparent.  If it's not, we have 
+> the hack that Akihiko mentioned 
+> (https://lists.gnu.org/archive/html/qemu-devel/2026-06/msg03459.html):
 >
-> FWIW my main objection to the series was that it added yet another way of 
-> doing something to fix a particular issue in legacy code. I have a suspicion 
-> that if we can make everything in QOM properly refcounted then this approach 
-> could work globally: in particular I can see it would fix issues where the 
-> flatviews hold references to memory regions outside of the device lifecycle 
-> until the RCU thread tidies up.
+>> However, this is insufficient to avoid calling object_ref() for all
+>> embedded objects. For example, consider an embedded Device that has a
+>> MemoryRegion. When referencing a MemoryRegion for guest memory access,
+>> QEMU automatically references the owning Device to keep the MemoryRegion
+>> alive. However, that reference is ineffective if the Device itself is
+>> embedded, because object_ref() does not keep the containing storage
+>> alive.
 >
-> However as you can see, there would be quite a bit of work to get there. But 
-> at least if we can all agree on the way forward, we can start to get the 
-> relevant changes in place.
+> If the device itself is embedded, then all the invariants must hold 
+> recursively:
+>
+> - the device must be kept alive by mutual references between the device 
+> itself and its parent;
+>
+> - unparent for the device should wait for all guest memory accesses to be 
+> either completed or cancelled.
+>
+> So, the problem is that "QEMU automatically references the owning Device to 
+> keep the MemoryRegion alive" is a hack that should die.  I added it, mea 
+> culpa.
+>
+> The model is that if it makes sense to have B outlive A, you use new. If it 
+> doesn't, you use init.  For MemoryRegions or anything that has callbacks, it 
+> makes no sense to outlive the implementor of the callbacks.  There are 
+> exceptions if the number of objects is dynamic but they're very rare.
+>
+> I agree that there's extra complexity added by embedding; but I disagree that 
+> removing embedding will fix any bugs, and because it will hide a relationship 
+> between objects, I believe the complexity is not accidental.
 
-We can't convert the whole code base at once and it's unrealistic to 
-expect a single contributor like me to do that to accept my patch. What I 
-proposed is a start that can be used now for the cases I have and can 
-serve as a basis for future conversions. I did not propose to convert 
-everything either because I think having both ref counted and externally 
-managed memory regions can be useful in different cases and I don't see 
-having two ways for this confusing considering we have object_new and 
-object_initialize for same reasons. But if we deprecate object_initialize 
-then the memory_region_init functions are not needed either.
+The problem is that memory regions cannot be ref counted because they are 
+piggybacking on their owner's ref count instead of using their own. So 
+while memory regions are QOM objects and the code is there to ref count 
+and free them with their owners this can't be used and we hack around that 
+by referencing the owner instead. If there's a dependency on the parent 
+then maybe the memory region should take a ref of the parent so it does 
+not go away until the memory region is freed or the owner relation needs 
+to be taken into account instead of using the parent ref count and 
+forbidding to make memory regions proper QOM objects which is very 
+confusing and leads to all sorts of other hacks.
 
-Originally I also thought about splitting alloc and init similar to how 
-macOS Foundation does it (i.e. [[obj alloc] init]) so the allocation of 
-the memory region could be done by either object_new or embedded but that 
-does not work due to object_new setting free function and 
-object_initialize clearing it so you can only use either one or the other. 
-Therefore since memory_region_init calls object_initialize we need a 
-memory_region_new variant that uses object_new instead or we end up 
-having to convert the whole code base again to decouple object 
-initialization from memory_region_init so I did not go that way.
+And it also forces me to embed a bunch of memory regions in device states 
+that are otherwise not needed and already stored as PCI BARs or sysbus 
+regions so I should not need them in my device state. This added 
+complexity was my motivation but it turned out to be a larger issue and I 
+think restoring the ability to ref count memory regions and clean up the 
+hacks of keeping the parent alive with every object using its own ref 
+counts would be cleaner than keeping to the current way.
 
 Regards,
 BALATON Zoltan
---3866299591-946656722-1781704746=:6462--
+--3866299591-502672408-1781705414=:6462--
 
