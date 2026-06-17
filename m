@@ -4,83 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 291BECD98E2
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jun 2026 10:07:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48383CD98E4
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jun 2026 10:07:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZnAy-0003tQ-JG; Wed, 17 Jun 2026 06:07:16 -0400
+	id 1wZnAy-0003tD-HD; Wed, 17 Jun 2026 06:07:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <tomitamoeko@gmail.com>)
- id 1wZnAr-0003qh-VL
- for qemu-devel@nongnu.org; Wed, 17 Jun 2026 06:07:10 -0400
-Received: from mail-dy1-x1341.google.com ([2607:f8b0:4864:20::1341])
+ id 1wZnAv-0003qv-11
+ for qemu-devel@nongnu.org; Wed, 17 Jun 2026 06:07:14 -0400
+Received: from mail-dy1-x1342.google.com ([2607:f8b0:4864:20::1342])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <tomitamoeko@gmail.com>)
- id 1wZnAq-0008QD-II
- for qemu-devel@nongnu.org; Wed, 17 Jun 2026 06:07:09 -0400
-Received: by mail-dy1-x1341.google.com with SMTP id
- 5a478bee46e88-30bc871ecdfso1164995eec.1
- for <qemu-devel@nongnu.org>; Wed, 17 Jun 2026 03:07:08 -0700 (PDT)
+ id 1wZnAt-0008Qs-Gj
+ for qemu-devel@nongnu.org; Wed, 17 Jun 2026 06:07:12 -0400
+Received: by mail-dy1-x1342.google.com with SMTP id
+ 5a478bee46e88-30bcf74e617so1368741eec.1
+ for <qemu-devel@nongnu.org>; Wed, 17 Jun 2026 03:07:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1781690827; x=1782295627; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1781690830; x=1782295630; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=iTa0ZmGP95JPl4WlasVWnwFDJEUD2jnUmweoPYvW62I=;
- b=okajfrxlBXtzjb0TSn5TpR4+ko4GrnSWAJoWy8TKcTEM3sTWMA/2ceA9pmj7YT4+sK
- /UB17Te67KXTRGj7hr/nvkZfLZKL3E5SB7N2x+0YtMiZuXuhVlLMwDjWlsIgLCsKnM3X
- syx4Kbs8ej1IInlrqePChKyLP0TXmsWGjZgAIn676B5aQglhsmsi8vU3pexUwyW3kR13
- zCXirVdpNdMhlnJv0Nwu6FC/O5Vk2BUQCtUminCFw1QbFN9fvI52Qk6jGNxYB8yCUrEq
- i166rRK6eXP2N++iFog2RJBp9pdYVZCagiM+0J2wZOjH2cGL4VRy8ASLkKYuZ7vGJaAV
- Uahw==
+ bh=89ekN/hJz/+HQ5oxlZwhes3IcxtRF+lWDbUwT5lFOzs=;
+ b=VHwwpLh9V/rLvPI7Y71Fho3VHhx0INO5FekVGdW4QRYSbHn/1QwwgbIpI3L/5v8iO+
+ v43DR8srzBx0OTrWWBVNyGVaLoSLTMb1D3riyauTJjXPUpeu5GQD9WlBIoamTK8WS4Ve
+ skQdceCFTg4buz38Pus2eDjEdZbr9RpubOq64dktud4XPSiX8Re4U53FZ0o9AiHaSYAO
+ qutBFqxB5tzqqS9RhDOc9Vb6xH+5tQEUSFLAR92cKP5BBCilleQNIporJVqEaVEySpbO
+ FSP55Tte5jiIgGsD5iMJ7T3bqqagzBEbZMzMQ8GIWb/7GN4TDCMrooSNBu9k4CI/R2kB
+ XFSg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781690827; x=1782295627;
+ d=1e100.net; s=20251104; t=1781690830; x=1782295630;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=iTa0ZmGP95JPl4WlasVWnwFDJEUD2jnUmweoPYvW62I=;
- b=K/s+UzcCz771gOMmHpVaLSEG79R1v4ivuXIPoMyvFfXkLDLbGrIIqfqDjEqK8G5cnP
- 1bFkeBzSu0FDAdFXCeYUb4Tmkjt5HmPU0fM1mktdxBPHG27VwUPMB8fwhZ85mlA3ZQET
- xi7Nu2WZhvR9UKM+Gb26k3doUYt7JTBz2N/+ykHWe2Btz4HGp3SYeX9plJHjr8daNRUn
- HXVhsElVVmnlcmCXfiEbmoYq12c3DcX5swrqkQHpFV4U/U45tVSRNizkKXXZ2twGARhS
- SjcRBoi9A2oVCm4rBd6W4hCDXWTedEeLysK1U7t2W33XLOEOvexzhB6hxyGb1CcN6TVt
- /HZg==
-X-Gm-Message-State: AOJu0YyyYzaotfr3VXhGW75PGrq0ovjPqysf2JU0Ui359L9zOscBm+dm
- qBcBUBL5Q2vMTkM5XdiMcNH5H1uLRajBBXb7VYwvH6AzbuNYBcxTDYByIvUTzGQ9Xw==
-X-Gm-Gg: AfdE7ckks3htEX5TUc/jFhLnXj8j4siQDpM8V6jO9goLDx6i+U9iOlECjY4xLRrU68P
- V0Tbc0b1IzZYqiH/o3GT9EWkHvBMkTHTzwYD4kUlQJClONUISnMsjPFra7d3UzO94ckRFa9qy+P
- aasM8fVeB8zSiQN/ss1aovG6wh5vAyFjeQZUS98akzKYimcm7He6ThcmcsJG1TY01yuvc/jvQB9
- QEkb6CPsoJfJBHja7faF1kI2G3cG10p75sgSDB4Gt7kJ1Z9aH2cyZRArk+ogamucLI9N0uc0N2s
- lVel7AaRQqlNVpeIUg+zm9WWEzjIcMTB1OAw9KzC49GEG3SeHCqLQ/Rb56HrE/pE/mnnGpctZgY
- ptzoxZfJGWeU5dgXMNUCujP2DewK7MlzsqlFnV9gShcEkijtkI19GlQivrqGB9t8eWSHKgF62eN
- RRzlUv82xxiu1QquI1bsjy
-X-Received: by 2002:a05:7300:7643:b0:304:5b65:5971 with SMTP id
- 5a478bee46e88-30bc9f5886cmr1828902eec.20.1781690827105; 
- Wed, 17 Jun 2026 03:07:07 -0700 (PDT)
+ bh=89ekN/hJz/+HQ5oxlZwhes3IcxtRF+lWDbUwT5lFOzs=;
+ b=Wv0XbuJK96IqXx/9RoB46jc451BtHZ/+6EPYdHwbB/L0GzbfIf2a71myca2Z8T7TGM
+ m7ZONgIFSGg/QdBHl3V0IKMcBQvIxzRwXNFL7tT0Zo7OO4YEgKH/HJtvdexus3I7JTAE
+ Qa5B4ffv1Vr5HbNdizi2usuttOB1UQVm4JvsFDdppso9K3dm14+DRQBNdmleDNmpuynl
+ 8hDKFs0BkM+eFRU/iXkyeI/Ph/60bRK3dWMq3wdoK+V53Ol4oI4zBE7DOuEPHmTOK3ZN
+ 6dIP2LdJtuJDl+jIg4eEVAqBi/Rd7IFoGf/VIhdQDvEkuRaNQ2fAxiX0SeDxsFX1biKm
+ 3dLw==
+X-Gm-Message-State: AOJu0Yw+O+nt1mGe5BTioGkadqXjJqiVXiVRnm+1nneaxQcbnkv7M+If
+ tA58TwjMv3SVDDDWjt3iA1R2bxtWTtkaqYfWrHU8Qx1TIqty3ylXBd3+JeA6Vz0vkQ==
+X-Gm-Gg: AfdE7clcVJhxE/n7ThIeCGRtjiAGZ1VVmkZx5ELXoWE1QG74kaE9PukkloFPP3QcvjI
+ 5/om2CDjtwDc7PBO6E3j2aMGXODMkl0vyQtxNJZkG7soTWyJSyq9LnpK1QGenIoqYhRypcKG40p
+ s4ZZ0JVaUmfMxTgr025OxhbCsMx+duZra09DGyPd+LymrLYJFzzXMSxazZC/RJUq/isISA8Mgza
+ gJZ8scP/fqNZVstLc/BWXZYXiCJtl19p0eIhWoHRDgstJ4dr7Q9di6+9oIdxzsD9UBWSzVES7cp
+ 9E1hk2wrbk8RmWg5eUc/Y8HLBaSYZ0pB1fnyxYVZ7ymn5Tnqvack4Gq+60t1xA6Oocei1dMauH4
+ qP5cwZDd0fIW+KEK91kGzwP7C4dxvXR2dHCTgHI0S/GJQxjlxMJGaiepb7V8Q/BNBNYSQMY0q/z
+ CUC6oetdSRP7HAVwv8Xs3rGzwxCRok0Uk=
+X-Received: by 2002:a05:693c:20cb:10b0:30b:dd58:e134 with SMTP id
+ 5a478bee46e88-30bdd58e697mr275747eec.21.1781690830076; 
+ Wed, 17 Jun 2026 03:07:10 -0700 (PDT)
 Received: from kotori-desktop ([2408:820c:8ffd:b5b0:12ba:d5b5:2236:f1f1])
  by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-3081e5d3f20sm21858490eec.9.2026.06.17.03.07.04
+ 5a478bee46e88-3081e5d3f20sm21858490eec.9.2026.06.17.03.07.07
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 17 Jun 2026 03:07:06 -0700 (PDT)
+ Wed, 17 Jun 2026 03:07:09 -0700 (PDT)
 From: Tomita Moeko <tomitamoeko@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Alex Williamson <alex@shazbot.org>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
  "Michael S. Tsirkin" <mst@redhat.com>,
  Tomita Moeko <tomitamoeko@gmail.com>, K S Maan <kirandeepmaan45@gmail.com>
-Subject: [PATCH v3 4/7] hw/pci: Promote pci_patch_ids() to public
- pci_rom_patch_ids()
-Date: Wed, 17 Jun 2026 18:06:41 +0800
-Message-ID: <20260617100646.28326-5-tomitamoeko@gmail.com>
+Subject: [PATCH v3 5/7] vfio/igd: Toggle rom_need_patch_id flag on IGD devices
+Date: Wed, 17 Jun 2026 18:06:42 +0800
+Message-ID: <20260617100646.28326-6-tomitamoeko@gmail.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260617100646.28326-1-tomitamoeko@gmail.com>
 References: <20260617100646.28326-1-tomitamoeko@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1341;
- envelope-from=tomitamoeko@gmail.com; helo=mail-dy1-x1341.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1342;
+ envelope-from=tomitamoeko@gmail.com; helo=mail-dy1-x1342.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,50 +102,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Remove the static qualifier from pci_patch_ids() and rename it to
-pci_rom_patch_ids(), adding a declaration in include/hw/pci/pci.h so
-external callers can reuse it.
+IGD ROMs are known to have wrong device IDs and bogus checksums.
+Toggle the rom_need_patch_id flag when the IGD has ROM BAR or custom
+romfile so that pci_rom_patch_ids() will correct the vendor/device IDs
+and checksum.
 
 Reported-by: K S Maan <kirandeepmaan45@gmail.com>
 Signed-off-by: Tomita Moeko <tomitamoeko@gmail.com>
 ---
- hw/pci/pci.c         | 4 ++--
- include/hw/pci/pci.h | 1 +
- 2 files changed, 3 insertions(+), 2 deletions(-)
+ hw/vfio/igd.c | 22 ++++++++++++++++------
+ 1 file changed, 16 insertions(+), 6 deletions(-)
 
-diff --git a/hw/pci/pci.c b/hw/pci/pci.c
-index b4235834a0..92d4e71c04 100644
---- a/hw/pci/pci.c
-+++ b/hw/pci/pci.c
-@@ -2492,7 +2492,7 @@ uint8_t pci_rom_calculate_checksum(const uint8_t *ptr, uint32_t size)
- 
- /* Patch the PCI vendor and device ids in a PCI rom image if necessary.
-    This is needed for an option rom which is used for more than one device. */
--static void pci_patch_ids(PCIDevice *pdev, uint8_t *ptr, uint32_t size)
-+void pci_rom_patch_ids(PCIDevice *pdev, uint8_t *ptr, uint32_t size)
+diff --git a/hw/vfio/igd.c b/hw/vfio/igd.c
+index e091f21b6a..834539affb 100644
+--- a/hw/vfio/igd.c
++++ b/hw/vfio/igd.c
+@@ -512,12 +512,14 @@ void vfio_probe_igd_bar0_quirk(VFIOPCIDevice *vdev, int nr)
+ static bool vfio_pci_igd_config_quirk(VFIOPCIDevice *vdev, Error **errp)
  {
-     uint16_t vendor_id;
-     uint16_t device_id;
-@@ -2654,7 +2654,7 @@ static void pci_add_option_rom(PCIDevice *pdev, Error **errp)
+     struct vfio_region_info *opregion = NULL;
++    struct vfio_region_info *rom = NULL;
+     PCIDevice *pdev = PCI_DEVICE(vdev);
+-    int ret, gen;
++    int gen;
+     uint64_t gms_size = 0;
+     uint64_t *bdsm_size;
+     uint32_t gmch;
+     bool legacy_mode_enabled = false;
++    bool has_rombar = false;
+     Error *err = NULL;
  
-         if (pdev->rom_need_patch_id) {
-             /* Only the default rom images will be patched (if needed). */
--            pci_patch_ids(pdev, ptr, size);
-+            pci_rom_patch_ids(pdev, ptr, size);
+     if (!vfio_pci_is(vdev, PCI_VENDOR_ID_INTEL, PCI_ANY_ID) ||
+@@ -534,6 +536,10 @@ static bool vfio_pci_igd_config_quirk(VFIOPCIDevice *vdev, Error **errp)
+     gen = igd_gen(vdev);
+     gmch = vfio_pci_read_config(pdev, IGD_GMCH, 4);
+ 
++    has_rombar = !vfio_device_get_region_info(&vdev->vbasedev,
++                                              VFIO_PCI_ROM_REGION_INDEX,
++                                              &rom) && rom->size;
++
+     /*
+      * For backward compatibility, enable legacy mode when
+      * - Device geneation is 6 to 9 (including both)
+@@ -556,8 +562,6 @@ static bool vfio_pci_igd_config_quirk(VFIOPCIDevice *vdev, Error **errp)
+          * - OpRegion
+          * - Same LPC bridge and Host bridge VID/DID/SVID/SSID as host
+          */
+-        struct vfio_region_info *rom = NULL;
+-
+         legacy_mode_enabled = true;
+         info_report("IGD legacy mode enabled, "
+                     "use x-igd-legacy-mode=off to disable it if unwanted.");
+@@ -567,9 +571,7 @@ static bool vfio_pci_igd_config_quirk(VFIOPCIDevice *vdev, Error **errp)
+          * there's no ROM, there's no point in setting up this quirk.
+          * NB. We only seem to get BIOS ROMs, so UEFI VM would need CSM support.
+          */
+-        ret = vfio_device_get_region_info(&vdev->vbasedev,
+-                                          VFIO_PCI_ROM_REGION_INDEX, &rom);
+-        if ((ret || !rom->size) && !pdev->romfile) {
++        if (!has_rombar && !pdev->romfile) {
+             error_setg(&err, "Device has no ROM");
+             goto error;
          }
+@@ -610,6 +612,14 @@ static bool vfio_pci_igd_config_quirk(VFIOPCIDevice *vdev, Error **errp)
+         goto error;
      }
  
-diff --git a/include/hw/pci/pci.h b/include/hw/pci/pci.h
-index 2d8a4ad0eb..298e0e6c31 100644
---- a/include/hw/pci/pci.h
-+++ b/include/hw/pci/pci.h
-@@ -1104,5 +1104,6 @@ void pci_set_power(PCIDevice *pci_dev, bool state);
- int pci_pm_init(PCIDevice *pci_dev, uint8_t offset, Error **errp);
- 
- uint8_t pci_rom_calculate_checksum(const uint8_t *ptr, uint32_t size);
-+void pci_rom_patch_ids(PCIDevice *pdev, uint8_t *ptr, uint32_t size);
- 
- #endif
++    /*
++     * IGD are known to have bad checksums and wrong device ID in its rom,
++     * request to patch it.
++     */
++    if (has_rombar || pdev->romfile) {
++        pdev->rom_need_patch_id = true;
++    }
++
+     /*
+      * ASLS (OpRegion address) is read-only, emulated
+      * It contains HPA, guest firmware need to reprogram it with GPA.
 -- 
 2.53.0
 
