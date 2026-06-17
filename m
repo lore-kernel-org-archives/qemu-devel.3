@@ -4,28 +4,28 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3BF10CD98F3
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jun 2026 08:56:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 481BECD98EE
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jun 2026 08:56:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZm3q-0002S9-MW; Wed, 17 Jun 2026 04:55:50 -0400
+	id 1wZm3q-0002S5-1H; Wed, 17 Jun 2026 04:55:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kchiu@axiado.com>) id 1wZm3o-0002RZ-Kz
- for qemu-devel@nongnu.org; Wed, 17 Jun 2026 04:55:48 -0400
-Received: from mail-centralusazon11020141.outbound.protection.outlook.com
- ([52.101.61.141] helo=DM1PR04CU001.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <kchiu@axiado.com>) id 1wZm3n-0002RJ-P3
+ for qemu-devel@nongnu.org; Wed, 17 Jun 2026 04:55:47 -0400
+Received: from mail-westusazon11022078.outbound.protection.outlook.com
+ ([52.101.43.78] helo=SJ2PR03CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kchiu@axiado.com>) id 1wZm3m-0005fM-Lg
- for qemu-devel@nongnu.org; Wed, 17 Jun 2026 04:55:48 -0400
+ (Exim 4.90_1) (envelope-from <kchiu@axiado.com>) id 1wZm3l-0005f6-Uw
+ for qemu-devel@nongnu.org; Wed, 17 Jun 2026 04:55:47 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=lzsa93CZbCgrySrCZA6cW8KrtvQQntoz2007oNbj+nZigPQmLdxSoTh/VUSytXigiHzWlOXenRTxkn3KzeEcAMAAWCorbFyo5/2JwP/d0AroBzw/HlQuo4uQv5hLA9Og9H3FNdY0EOCqAMT93VfkQdjEbbsPvzCwqRLfyInM1q532QeDYaEuhWHrCUJ59VE/9VbZ+SMfth+Lf020bmLLXnqWRRUXDil4oAZKYbWB1Ms/F+iDzzJ8cIlMlgEPCn57x8EpnCJZ8WCGaX2Wc1RNkHR2jCOEEhDBdJir3U5vfg3HiXrhlJdnoqQMUlH4jeeFwswI45XE7tY8g+GPqTvq0w==
+ b=dnmxAvKT+lsrTx5Zb79R9/qQxqHIRjLyDEY27+kZljhPGeMifu4D+7bmx2hgDZOMTUxjylUhriCp4zPJD1L0KVh3iqSnybDIhdzJPjVAPWLgyJEm85NO9SG/xOO9BQ825/U/bR05nVFrjENaAd33HaQL3VOxNxaLieU0ePnRmD0XCQ3BI2FNDcZEHOCWSzD+c9g0ZVcu9R/h8eX7hEA97pd8xXB3dIZCsXrgY68mkYDAP9JRZQpXm3Ug1ysZaVjeidMRgiDxsqa3msbu9bMxygF3M7tHSM3igwjbk4TTPg1sxB9VNCChwuol7eD4RE4GypKHvIirVlgovgE7y65LOQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=q58+k2z7M1Jtrf+JCqem5Y3F+Nj0q2Qzq3DTpXQdgjM=;
- b=dluxCHEYQpBRJRHEo8sxdX/EUdsKxpOHR/OJGNnHrUzryc/OzbwALxoXGhX30beA9HNDKm2zuNoA90Os5Wz6ljjn0qy7iSwnZ2qIkIzq2dytk7xNYQtKQCoNx49LaD47PVgjGyiXyytdXzXsCEdD8DHfVCtaxlQpYqYGrON5FsZexyz0qdQ0Ck/jQoqfwaq8mgAY+u8D0EPpo1hnaiKXGprZFsVyWwrux24Y0iEtMBHyvQ2L1tM8QG1Z1YlyXXragZ0ANpIWmnNbrDZdcT0E6WWmlqe/OQcD6XVFV9ONxKcByXbRTsXIFHTDVxlW46FUl7wSoeEi0UdBi/jidjmFlg==
+ bh=4AiZpXH/JcbXMqZwstjIRIxND8zXkrImDaCnngimUrI=;
+ b=jMrAHPNTdHsns9WdbE1Xw3BaSqLU6zUp5OaRVOH3f7ffLl0r3yYccS2WWjD7T3FFWc/9wmnE7Fpsft+SqtHgnDCb+lNpi/Tu5p/7HM9FfCoiB1mitdCjBYmSoX3yLGLF60aWkBn+JQxXofqE1D8Cd/o1G/IKw89I1nXapvVdzQwSFPnmWkxbjwfZBD6Lq+Bd+FHcGmE0n38Nm/Jw6iPjuLyuSFClo4VLFQZxxgsUcVbhcwkenSxFdejiAJo79I2aNKdkciePMrVmf1RBGO4KpvxHXOF2q5iyF4gfXeQOAinx7h+6r6dcJtpF6Q+lrEXngui/8/bfRYYYbo43TQpwDQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=fail (sender ip is
  64.62.143.114) smtp.rcpttodomain=axiado.com smtp.mailfrom=axiado.com;
  dmarc=none action=none header.from=axiado.com; dkim=none (message not
@@ -33,16 +33,16 @@ ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=fail (sender ip is
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=axiado.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=q58+k2z7M1Jtrf+JCqem5Y3F+Nj0q2Qzq3DTpXQdgjM=;
- b=e4ksDEPomi7WHxDTM97Eozz3E4NYyBwuFJqd0JxaeQzyO8Dzr8oVoFkTE2KYEy0lqXXM7iDfKrOiNEP0RtsMHcnsJiFTMJXM3sYAlsBKaWGfzBX5Hcok4mlaQo/9/DaCdorQOZZmd98u0w52ezkR9WEDE9vAqD67jQzUZxmxWme+JY0wSVDKwBSDxbZAegiGl31wgwr3YlXhWyt2mHrAWuZTaLUVC3aw61kQxXMiDiyOs4hXpJh2j2CzUFU/dEM9GuTg2RFhFnjHP/Aur1zKt/R30ZAN+R2dc8Co+xFGb62xUQlAdIVurt9EplGkUonSzePRmfdA2qFnxF6n/sID5A==
-Received: from SJ0PR03CA0026.namprd03.prod.outlook.com (2603:10b6:a03:33a::31)
- by BL1PPF97DE7431C.namprd18.prod.outlook.com
- (2603:10b6:20f:fc04::dac) with Microsoft SMTP Server (version=TLS1_2,
+ bh=4AiZpXH/JcbXMqZwstjIRIxND8zXkrImDaCnngimUrI=;
+ b=wxCpMSC2yyl5B810hs5U2J8SJy9xPDCGltu2CKUH3I33Tub4mGoucevmefAsALXmtokHaqaFA5dd84cieMPg/6hzpY0xEUIxFLqzighpGSlSjAcfbQbfdvaCf5SRmxuG1dY9Gg9G8wIhgxL/nM48wTb5GS8uhu18yCPRQ0Mkxou0nLT57v8OOqOifof5Wt/ND2SMV7ubQT37Mn3wHSEXWrSQUe0pLpjs67eUqqMLyFRMk7/buBCAgm9kMwxCcsXNBGsV+wNObWVxTqAUvVd80+Mn+dcujFU72rdrUx6r1a5eIIHpDff8+Kxay8PJH3Er4xRLfH3se8+W7PazMIf4nw==
+Received: from SJ0PR05CA0130.namprd05.prod.outlook.com (2603:10b6:a03:33d::15)
+ by SA1PR18MB4806.namprd18.prod.outlook.com (2603:10b6:806:1dd::5)
+ with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.139.11; Wed, 17 Jun
  2026 08:50:39 +0000
-Received: from SJ5PEPF000001C9.namprd05.prod.outlook.com
- (2603:10b6:a03:33a:cafe::c) by SJ0PR03CA0026.outlook.office365.com
- (2603:10b6:a03:33a::31) with Microsoft SMTP Server (version=TLS1_3,
+Received: from SJ1PEPF00002325.namprd03.prod.outlook.com
+ (2603:10b6:a03:33d:cafe::3c) by SJ0PR05CA0130.outlook.office365.com
+ (2603:10b6:a03:33d::15) with Microsoft SMTP Server (version=TLS1_3,
  cipher=TLS_AES_256_GCM_SHA384) id 15.21.139.11 via Frontend Transport; Wed,
  17 Jun 2026 08:50:39 +0000
 X-MS-Exchange-Authentication-Results: spf=fail (sender IP is 64.62.143.114)
@@ -52,52 +52,50 @@ Received-SPF: Fail (protection.outlook.com: domain of axiado.com does not
  designate 64.62.143.114 as permitted sender) receiver=protection.outlook.com; 
  client-ip=64.62.143.114; helo=smtp.corp.axiado.com;
 Received: from smtp.corp.axiado.com (64.62.143.114) by
- SJ5PEPF000001C9.mail.protection.outlook.com (10.167.242.37) with Microsoft
+ SJ1PEPF00002325.mail.protection.outlook.com (10.167.242.88) with Microsoft
  SMTP Server (version=TLS1_3, cipher=TLS_AES_256_GCM_SHA384) id 15.21.139.8
  via Frontend Transport; Wed, 17 Jun 2026 08:50:38 +0000
 Received: from axiado.com (unknown [10.4.1.181])
- by smtp.corp.axiado.com (Postfix) with ESMTP id CBFBF4186B5B;
+ by smtp.corp.axiado.com (Postfix) with ESMTP id 993E64186B51;
  Wed, 17 Jun 2026 01:47:59 -0700 (PDT)
 From: Kuan-Jui Chiu <kchiu@axiado.com>
 To: qemu-devel@nongnu.org,
 	peter.maydell@linaro.org
 Cc: Kuan-Jui Chiu <kchiu@axiado.com>
-Subject: [PATCH v4 2/6] hw/sd: Add Axiado SD host controller with eMMC PHY
-Date: Wed, 17 Jun 2026 01:50:24 -0700
-Message-Id: <20260617085030.2586072-3-kchiu@axiado.com>
+Subject: [PATCH v4 0/6] Add Axiado SoC AX3000 and EVK board
+Date: Wed, 17 Jun 2026 01:50:22 -0700
+Message-Id: <20260617085030.2586072-1-kchiu@axiado.com>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20260617085030.2586072-1-kchiu@axiado.com>
-References: <20260617085030.2586072-1-kchiu@axiado.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-EOPAttributedMessage: 0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SJ5PEPF000001C9:EE_|BL1PPF97DE7431C:EE_
+X-MS-TrafficTypeDiagnostic: SJ1PEPF00002325:EE_|SA1PR18MB4806:EE_
 Content-Type: text/plain
-X-MS-Office365-Filtering-Correlation-Id: 700352e3-da71-4796-0caf-08decc4d8171
+X-MS-Office365-Filtering-Correlation-Id: 2d5c2601-8094-4dcc-4030-08decc4d8172
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|36860700016|23010399003|376014|1800799024|82310400026|56012099006|18002099003|22082099003;
-X-Microsoft-Antispam-Message-Info: TEei8FFwc48HqjTqS6Ldg8y0nmSA1uNdU+21wFG9eIlVaLzaxReu4oO8xwyO+WWuonIszCqI/5kgo5vPFPAPVZyQoiAj/92dRE2dfaS6fqgSepu0l6IuwqjlY31RGxIqAgvx8oapnnW5INiwc+LK5kUgpV+RdfK5A6zzCj7sPZvbPG9qSOYWRH1NsJGC3ASBWiMhuglLmtBRpr6dppUz7jrqg9jzxZu/IgaBVfckT6Hs//XBSRND5dw7tQQfBjIGUuVRqHlUnLoVucdBW27qIzTaGQHQg86thFSW066Mx9p5C2AbGlgq6ydH5sW8orPKHOYFc2OMcfm2qofxBRgh+F7OHSPZ+dFTax2Xm/CktmdKZU3h5SMJBRexB2pP16dPhV9QM2IYr1h9XuKRh/8/oiENHtIpWW5awvv2t03JFMc3IeozpV6PRGStlQ+Q7LNGsZPcl8JGbyx52alZ8xdB3uAWmy89TIfbDeBnwL75kbk0qItOXvXO2S4Q95NEiDzrzer6bU+M/JMtn3igQ9B2nPfX+unPjBBqbND2baMQrvbAKOIK7ETVEYgLKKfjop+JEaA7X223N7Xey/sQAUpvO53tt4S72emiMyBnfOKfQ54WnuUpfNC38+kyoiPqKn63cHEtAU3z4cS44rQ5S2tcn8j7rbObjICh945BEkw6IL7aEMs5erZFbiphU38H+qqSGFbRppNvySklX3sTKVTN2OJNBHuGRWhjmzlDbByp4BU=
+ ARA:13230040|82310400026|23010399003|1800799024|376014|36860700016|3023799007|56012099006|18002099003|13003099007;
+X-Microsoft-Antispam-Message-Info: xiVxTa96+Vpf2VvVjVSkQCusdnYFtDWo7XGD5LP01b8pplZoN3nbY6dFsTdYY8oA0f1o5R8fzNJYYhtGTbmDR3YkE3VeBtvFkek+IPvQ0eXHoYaPKZYUPokFkL26q2Bnthn/G8yVUl1mFW7ZpqYzAQlk0YjNyrXtWB8rCMPkmIxiNDjYbe/SPMNjOQQcFWQQIQZIL30UBZ01FSXPhdYt3J3rc0Eftaa+3j6Js5jcHx2lyBoePgjUJuRyw345qCkem3QU5d+qruVMmju95mQrqDKF6UQnCjHl8Q6r8G9T2Mo6sbYX+CViTAwAr0o0TIsnY0FdYH+6Hmfoz3jaspCuvdKWB8NipzC84VHxMgNZwW1/1Y/pwMqxo1SelzN3XdPXNZaUPHF8U5f3b67SIirR/dCOlHCqPO59f/tYDmiOOfraLKXv4K5wZ779wmr9UrL+K3ADC+yU2F+8RGL8abAZfW+bDI+ASQlMQHYKfWOmpb5jTOSpn+HKDiygwB1mUbKmHTyZAyTRfHk81avUeZEOVYHZ7Zj7kGt4g1gEgUqnx08PTD5EUAQzLs+K+fI5Z5V7I/458Eafh7gwHsfunFAA3fE8lL7QuVeJyZGxo0/xaGbNnvmmyBpZKmNu+bVbWckgaIRNSy5/Ub8b+QqeqA94y9R8EZS60NPOouMw4WnQ/nYFIQukyoNbTniYdcJ/MPY3
 X-Forefront-Antispam-Report: CIP:64.62.143.114; CTRY:US; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:smtp.corp.axiado.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230040)(36860700016)(23010399003)(376014)(1800799024)(82310400026)(56012099006)(18002099003)(22082099003);
+ SFS:(13230040)(82310400026)(23010399003)(1800799024)(376014)(36860700016)(3023799007)(56012099006)(18002099003)(13003099007);
  DIR:OUT; SFP:1102; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: yWRd2qSQ3rLbwvDFSekU2ZsXQLsxRTCfDcDcLxL4uNwh7O8pKM1ycFY2Ot3sEskFLm/CzhQCXPWfXNlbXz0G0DGarhCDIBTFs/mnbZ3C1r98BmUt6DvcQcemEv2XHDZWdZUL4Fzdzz015HeihDUcyxQG+3EIHhLqCWgAgKRH31M8dqTE3XMzi0DmbvS8x1Jv9qgo3i595OFmXBM8UvvMJB5kscWON2C4YLv4UG/3H66DNzpowdqIZ4y/VTZbeDuziyRtMd1+SPpMBSyxSamOegVw2djljDY5Vv2kQPLxeqOQFyIkAUhu+yxZUOOCu6xTGG7h5CYqibOxhBUYvTLB1bPc51lVJOvMO5ZVpEfA5+Wv1OLik/LJlQqGp6dOEYFdifSRzvzTFKlT6rpbkgZtULoAmVP9Fk7RimquAmpom0f1/pa69ifASlgoiPT5nHZy
+X-MS-Exchange-AntiSpam-MessageData-0: OEG6iVcS/oLBul0OKRwV+VZgasFjH1VcmCg0HxAlJ2l9r1ASxq01Kh5tMpp4JQDlz9AXG55lsqFbhP/X8S7CPke7ts/WWes3qPKZaePOj6fDealRK1Q15gN/4SmVMOBghzz13SfsKPaKwdibPZCEWm9N+rpCZtQnwHyQVVMR4Pcow1HQRx5frLJ/bmdKr+DOgtWOC1mTRDVBhVztDmlf75bitXMXtWwfMbu1cfC3KzEZg+BLo+iVIYNQJLjVph+meSIVWjlaVy7c4FkOZCC7HSIRmIwW+/WK1ZkwkHsh51FoCIcdUNDTzQAlwI9iVCx8TAnh770qdwvSXKfKpT9tFDmNZEnqzTJ4umDR8ulln4ol424eqRd2o4VFGiliLda8Yb/T9gdLxCb5+03cE8C/30Bx29ZhtlVG4KlRh4a9amHJ6+QqjoE7gWlGVpG7VaDU
 X-OriginatorOrg: axiado.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 17 Jun 2026 08:50:38.8956 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 700352e3-da71-4796-0caf-08decc4d8171
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 17 Jun 2026 08:50:38.9031 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 2d5c2601-8094-4dcc-4030-08decc4d8172
 X-MS-Exchange-CrossTenant-Id: ff2db17c-4338-408e-9036-2dee8e3e17d7
 X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=ff2db17c-4338-408e-9036-2dee8e3e17d7; Ip=[64.62.143.114];
  Helo=[smtp.corp.axiado.com]
-X-MS-Exchange-CrossTenant-AuthSource: SJ5PEPF000001C9.namprd05.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthSource: SJ1PEPF00002325.namprd03.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Anonymous
 X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BL1PPF97DE7431C
-Received-SPF: pass client-ip=52.101.61.141; envelope-from=kchiu@axiado.com;
- helo=DM1PR04CU001.outbound.protection.outlook.com
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA1PR18MB4806
+Received-SPF: pass client-ip=52.101.43.78; envelope-from=kchiu@axiado.com;
+ helo=SJ2PR03CU001.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -120,204 +118,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patch add a new model for Axiado SD host controller which is compatible
-with SDHCI 3.0 spec
+This patchset introduces Axiado SoC AX3000 and a EVK SCM3003 for emulation
+The model for Axiado SoC AX3000 supports
+  4 Cortex-A53 CPUs
+  Arm Generic Interrupt Controller v3
+  4 Cadence UARTs
+  1 SDHCI controller with PHY
+  8 Cadence GPIOs
 
-This device model also includes a eMMC PHY which helps to control SD/eMMC
+Verified the machine "axiado-scm3003" with following command
 
-Signed-off-by: Kuan-Jui Chiu <kchiu@axiado.com>
----
- MAINTAINERS                  |   2 +
- hw/sd/Kconfig                |   4 ++
- hw/sd/axiado_sdhci.c         | 114 +++++++++++++++++++++++++++++++++++
- hw/sd/meson.build            |   1 +
- include/hw/sd/axiado_sdhci.h |  21 +++++++
- 5 files changed, 142 insertions(+)
+qemu-system-aarch64 \
+    -m 4G \
+    -machine axiado-scm3003 \
+    -device loader,file=u-boot.bin,addr=0x3C000000,cpu-num=0 \
+    -nographic \
+    -serial null \
+    -serial null \
+    -serial null \
+    -serial mon:stdio \
+    -drive if=sd,file=obmc-phosphor-image-evk-axiado-qemu.wic,format=raw
+
+Refer Axiado website for more product information
+https://axiado.com/products/
+
+Changes in v4:
+  1. Remove ERRP_GUARD from axiado_sdhci
+  2. Optimize ISR update function of cadence_gpio with logical operation
+
+Changes in v3:
+  1. Add a new patch for Axiado SD host controller
+  2. Fill in valid/impl parameters of MemoryRegionOps in
+     ax3000-soc/cadence_gpio/axiado_sdhci
+  3. Follow C99 standard to declare variable in for-loop
+  4. Remove comment "TBD" from empty function
+  5. Define marco for bit definition in axiado_sdhci
+  6. Move object_initialize_child() to instance_init() from realize() in
+     axiado_sdhci
+  7. Remove callback of get_default_cpu_type() from ax3000-soc and set
+     type of CPU to A53
+  8. Update the command to run "axiado-scm3003" in QEMU
+
+Changes in v2:
+  1. Move axiado-* to ax3000-* in hw/arm and include/hw/arm
+  2. Add axiado_sdhci to support AXIADO_SDHCI
+  3. Move implementation for eMMC PHY device to axiado_sdhci
+  4. Use UNIMP to create dummy device "timerctrl"
+  5. Add cadence_gpio to support CADENCE_GPIO
+  6. Enable Cadence GPIO controllers on AX3000 SoC
+
+Kuan-Jui Chiu (6):
+  hw/arm: Add Axiado SoC AX3000
+  hw/sd: Add Axiado SD host controller with eMMC PHY
+  hw/arm: ax3000-soc: Enable Axiado SD host controller
+  hw/arm: Add Axiado EVK SCM3003
+  hw/gpio: Add Cadence GPIO controller
+  hw/arm: ax3000-soc: Enable Cadence GPIO controllers
+
+ MAINTAINERS                    |   9 +
+ hw/arm/Kconfig                 |  14 ++
+ hw/arm/ax3000-boards.c         |  47 ++++++
+ hw/arm/ax3000-evk.c            |  27 +++
+ hw/arm/ax3000-soc.c            | 267 ++++++++++++++++++++++++++++++
+ hw/arm/meson.build             |   6 +
+ hw/gpio/Kconfig                |   3 +
+ hw/gpio/cadence_gpio.c         | 292 +++++++++++++++++++++++++++++++++
+ hw/gpio/meson.build            |   1 +
+ hw/gpio/trace-events           |   5 +
+ hw/sd/Kconfig                  |   4 +
+ hw/sd/axiado_sdhci.c           | 114 +++++++++++++
+ hw/sd/meson.build              |   1 +
+ include/hw/arm/ax3000-boards.h |  28 ++++
+ include/hw/arm/ax3000-soc.h    |  99 +++++++++++
+ include/hw/gpio/cadence_gpio.h |  55 +++++++
+ include/hw/sd/axiado_sdhci.h   |  21 +++
+ 17 files changed, 993 insertions(+)
+ create mode 100644 hw/arm/ax3000-boards.c
+ create mode 100644 hw/arm/ax3000-evk.c
+ create mode 100644 hw/arm/ax3000-soc.c
+ create mode 100644 hw/gpio/cadence_gpio.c
  create mode 100644 hw/sd/axiado_sdhci.c
+ create mode 100644 include/hw/arm/ax3000-boards.h
+ create mode 100644 include/hw/arm/ax3000-soc.h
+ create mode 100644 include/hw/gpio/cadence_gpio.h
  create mode 100644 include/hw/sd/axiado_sdhci.h
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 340428cda55..0c112890818 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -1299,7 +1299,9 @@ M: Kuan-Jui Chiu <kchiu@axiado.com>
- L: qemu-arm@nongnu.org
- S: Maintained
- F: hw/arm/ax3000*.c
-+F: hw/*/axiado*.c
- F: include/hw/arm/ax3000*.h
-+F: include/hw/*/axiado*.h
- 
- AVR Machines
- -------------
-diff --git a/hw/sd/Kconfig b/hw/sd/Kconfig
-index 633b9afec91..c69bf24f8de 100644
---- a/hw/sd/Kconfig
-+++ b/hw/sd/Kconfig
-@@ -23,3 +23,7 @@ config SDHCI_PCI
- config CADENCE_SDHCI
-     bool
-     select SDHCI
-+
-+config AXIADO_SDHCI
-+    bool
-+    select SDHCI
-diff --git a/hw/sd/axiado_sdhci.c b/hw/sd/axiado_sdhci.c
-new file mode 100644
-index 00000000000..e1a76b80a67
---- /dev/null
-+++ b/hw/sd/axiado_sdhci.c
-@@ -0,0 +1,114 @@
-+/*
-+ * Axiado SD Host Controller
-+ *
-+ * Author: Kuan-Jui Chiu <kchiu@axiado.com>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "hw/sd/axiado_sdhci.h"
-+#include "sdhci-internal.h"
-+#include "qapi/error.h"
-+#include "hw/core/qdev-properties.h"
-+
-+#define EMMC_PHY_ID     0x00
-+#define EMMC_PHY_STATUS 0x50
-+
-+#define DLL_RDY  (1u << 0)
-+#define CAL_DONE (1u << 6)
-+
-+static uint64_t emmc_phy_read(void *opaque, hwaddr offset, unsigned size)
-+{
-+    uint32_t val = 0x00;
-+
-+    switch (offset) {
-+    case EMMC_PHY_ID:
-+        val = 0x3dff6870;
-+        break;
-+    case EMMC_PHY_STATUS:
-+        val = DLL_RDY | CAL_DONE;
-+        break;
-+    default:
-+        break;
-+    }
-+
-+    return val;
-+}
-+
-+static void emmc_phy_write(void *opaque, hwaddr offset, uint64_t value,
-+                           unsigned size)
-+{
-+}
-+
-+static const MemoryRegionOps emmc_phy_ops = {
-+    .read = emmc_phy_read,
-+    .write = emmc_phy_write,
-+    .endianness = DEVICE_LITTLE_ENDIAN,
-+    .impl = {
-+        .min_access_size = 2,
-+        .max_access_size = 4,
-+    },
-+    .valid = {
-+        .min_access_size = 2,
-+        .max_access_size = 4,
-+    }
-+};
-+
-+static void axiado_sdhci_realize(DeviceState *dev, Error **errp)
-+{
-+    AxiadoSDHCIState *s = AXIADO_SDHCI(dev);
-+    SysBusDevice *sbd = SYS_BUS_DEVICE(dev);
-+    SysBusDevice *sdhci_sbd;
-+
-+    qdev_prop_set_uint64(DEVICE(&s->sdhci), "capareg", 0x216737eed0b0);
-+    qdev_prop_set_uint64(DEVICE(&s->sdhci), "sd-spec-version", 3);
-+
-+    sdhci_sbd = SYS_BUS_DEVICE(&s->sdhci);
-+    if (!sysbus_realize(sdhci_sbd, errp)) {
-+        return;
-+    }
-+
-+    sysbus_init_mmio(sbd, sysbus_mmio_get_region(sdhci_sbd, 0));
-+
-+    /* Propagate IRQ from SDHCI and SD bus  */
-+    sysbus_pass_irq(sbd, sdhci_sbd);
-+    s->sd_bus = qdev_get_child_bus(DEVICE(sdhci_sbd), "sd-bus");
-+
-+    /* Initialize eMMC PHY MMIO */
-+    memory_region_init_io(&s->emmc_phy, OBJECT(s), &emmc_phy_ops, s,
-+                          "axiado.emmc-phy", 0x1000);
-+
-+    sysbus_init_mmio(sbd, &s->emmc_phy);
-+}
-+
-+static void axiado_sdhci_instance_init(Object *obj)
-+{
-+    AxiadoSDHCIState *s = AXIADO_SDHCI(obj);
-+
-+    object_initialize_child(OBJECT(s), "sdhci", &s->sdhci,
-+                            TYPE_SYSBUS_SDHCI);
-+}
-+
-+static void axiado_sdhci_class_init(ObjectClass *klass, const void *data)
-+{
-+    DeviceClass *dc = DEVICE_CLASS(klass);
-+
-+    dc->realize = axiado_sdhci_realize;
-+    dc->desc = "Axiado SD Host Controller with eMMC PHY";
-+}
-+
-+static const TypeInfo axiado_sdhci_info = {
-+    .name          = TYPE_AXIADO_SDHCI,
-+    .parent        = TYPE_SYS_BUS_DEVICE,
-+    .instance_size = sizeof(AxiadoSDHCIState),
-+    .instance_init = axiado_sdhci_instance_init,
-+    .class_init    = axiado_sdhci_class_init,
-+};
-+
-+static void axiado_sdhci_register_types(void)
-+{
-+    type_register_static(&axiado_sdhci_info);
-+}
-+
-+type_init(axiado_sdhci_register_types);
-diff --git a/hw/sd/meson.build b/hw/sd/meson.build
-index b43d45bc564..ebf09e30a48 100644
---- a/hw/sd/meson.build
-+++ b/hw/sd/meson.build
-@@ -10,3 +10,4 @@ system_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files('aspeed_sdhci.c'))
- system_ss.add(when: 'CONFIG_ALLWINNER_H3', if_true: files('allwinner-sdhost.c'))
- system_ss.add(when: 'CONFIG_NPCM7XX', if_true: files('npcm7xx_sdhci.c'))
- system_ss.add(when: 'CONFIG_CADENCE_SDHCI', if_true: files('cadence_sdhci.c'))
-+system_ss.add(when: 'CONFIG_AXIADO_SDHCI', if_true: files('axiado_sdhci.c'))
-diff --git a/include/hw/sd/axiado_sdhci.h b/include/hw/sd/axiado_sdhci.h
-new file mode 100644
-index 00000000000..85afebad931
---- /dev/null
-+++ b/include/hw/sd/axiado_sdhci.h
-@@ -0,0 +1,21 @@
-+/*
-+ * Axiado SD Host Controller
-+ *
-+ * Author: Kuan-Jui Chiu <kchiu@axiado.com>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "hw/sd/sdhci.h"
-+#include "qom/object.h"
-+
-+#define TYPE_AXIADO_SDHCI "axiado-sdhci"
-+OBJECT_DECLARE_SIMPLE_TYPE(AxiadoSDHCIState, AXIADO_SDHCI)
-+
-+typedef struct AxiadoSDHCIState {
-+    SysBusDevice parent;
-+
-+    SDHCIState sdhci;
-+    MemoryRegion emmc_phy;
-+    BusState *sd_bus;
-+} AxiadoSDHCIState;
 -- 
 2.34.1
 
