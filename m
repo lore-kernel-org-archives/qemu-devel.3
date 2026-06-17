@@ -4,131 +4,131 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0163CCD98F2
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jun 2026 17:16:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 735BECD98E2
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jun 2026 17:16:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZtrh-0000Yq-2Z; Wed, 17 Jun 2026 13:15:49 -0400
+	id 1wZtrV-0000Va-Qg; Wed, 17 Jun 2026 13:15:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wZtrU-0000Us-0z
- for qemu-devel@nongnu.org; Wed, 17 Jun 2026 13:15:36 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ id 1wZtqp-0000G9-FZ
+ for qemu-devel@nongnu.org; Wed, 17 Jun 2026 13:15:02 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wZtrR-0006yj-QB
- for qemu-devel@nongnu.org; Wed, 17 Jun 2026 13:15:35 -0400
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+ id 1wZtql-0006XK-MA
+ for qemu-devel@nongnu.org; Wed, 17 Jun 2026 13:14:54 -0400
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65HFoULd2731330
- for <qemu-devel@nongnu.org>; Wed, 17 Jun 2026 17:15:32 GMT
+ 65HHEmJC3454428
+ for <qemu-devel@nongnu.org>; Wed, 17 Jun 2026 17:14:48 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- SYTycsYV8IBDgqm0YFuqjeDvuJkqJsQvzubIvsOiL5w=; b=QDdLi8Bgba576CGf
- 8tV/8XASpiH/3J7RBxzHKX3Zy6Z+r3WIecwHYoUQDSkrTHRpRrc58MtLsO+w2oQn
- ksAQMoixeoNWXUcFBAStXTimCVk3xNoXf1XyLMxsHt/V8/ywHYiTzNstvAY9ZWfU
- FmUtIWA0CfdUk9hUaCfs8cjCR5VM+mqfLrPR/kIdjO0xzx56LLKbTtTpV15lX5/d
- 3XUZyQ3UdgXyMDNAZ2DcFuXVdVzvNHS1rqUjZ5cKm6ZdqoVyX/nf2Iw36hqUgl5l
- AnhoW5FATjS6dDyk0urzwyy7VEE2Ao6Qqmn53FoItmGxl4RpjSkvJV5lIkIyh5fh
- zvtorw==
-Received: from mail-ua1-f72.google.com (mail-ua1-f72.google.com
- [209.85.222.72])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4eux2c8pd5-1
+ c+3G9y9VW8KkifcodrN6+Q0v5CUyAJXSbHbCsBp8pt0=; b=O6Fm56bvHUChbXhS
+ 1eDs8o80IV+A3MlAJb5IyHeS1I7SLAGBT7QUeu48FMINszlA8knR1c4yzvX97O/0
+ zlIWmTWnkh9qzA6rnUe1gCNFbsxTjXrVLsuZ8QXfvskndKANHGBmWhx0NWNjJfIV
+ oTkoDoiEfjyye019RdKs/Mmkc9YCGKWhoimf7PDWH1Rqw34QjjOA079puNqGyoCp
+ yvPVMTCY3ucKibZ3SHw1uDk0GJ/1UkpoyW0SUXS7oZJm5JIRh5MbFEYFX5PT/2Pf
+ BIb4xWu82I9cSATW4c1uYddTBFv6/sCJMj5a+zkr9fKMe6GKLMKIR6d7Iu0RD8jW
+ LGirQQ==
+Received: from mail-vs1-f72.google.com (mail-vs1-f72.google.com
+ [209.85.217.72])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4eux2jrppm-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 17 Jun 2026 17:15:32 +0000 (GMT)
-Received: by mail-ua1-f72.google.com with SMTP id
- a1e0cc1a2514c-963d24c3886so5012252241.0
- for <qemu-devel@nongnu.org>; Wed, 17 Jun 2026 10:15:32 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Wed, 17 Jun 2026 17:14:48 +0000 (GMT)
+Received: by mail-vs1-f72.google.com with SMTP id
+ ada2fe7eead31-726a0352f82so21543137.3
+ for <qemu-devel@nongnu.org>; Wed, 17 Jun 2026 10:14:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1781716531; x=1782321331; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1781716488; x=1782321288; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=SYTycsYV8IBDgqm0YFuqjeDvuJkqJsQvzubIvsOiL5w=;
- b=QMhDaVDTin+H85jyp9ekRvTcJRKuPPL+Cg5YXQhKxTny33SWRyqZRLP3G1+dkrUNMq
- 7rlz1IyBWy+1cG590PMoWFAws/SyYboh74Oaq9HDsrqNTh0Luf8YhTVje8sDsidqNUkI
- zdetbhfawUWbe9PqpW39WdgBgCpZ3PFumugwv6bjo0NDsMQsQodsGBHyGsqLn1AvO4S7
- 8M1pXSJPBAd98gPKfIBrve6hqPhpGvXWKedgc51A5CFbi+7utVNVrYbG5c6Bvf3X8pAP
- Zr1S8imCZi6re5OXwirF+/sG/YzbeiI+h8jzoWpBgnMVmE0R1HOBf3vE2UOdrK8Y3gLk
- xiZA==
+ bh=c+3G9y9VW8KkifcodrN6+Q0v5CUyAJXSbHbCsBp8pt0=;
+ b=AVAK2rmOW3e4qTqHjHoa6YpNLboq5EAcQmHnH6WdgEauT7sWw5QP20HWckACkxeFip
+ xPAEOjVCcYxvDAtGPRdYIAPSUG8XumYW+KFUPpXgUOZV/K5HmjNtOAsVwT/G3F4txxkz
+ /gt/jeMbMpC07V9gE7CoQs8+o24ikWp3p25Ew5M2sXrcxWs3DXWRfykE+y7G5vNBN33X
+ 0sAN7t4djOtL7YaZFjhHmHjunoTboCWcoH7eytzYHGHhCjr9nQfX2M3xTtEVejklCFK1
+ 3wYBCfBi+yHjtWwDyh+5q/48sm8dd8g4+3CdigxAFJiCQrSZvRwEQTA3J1Y9ky3vS6U9
+ MlvA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781716531; x=1782321331;
+ d=1e100.net; s=20251104; t=1781716488; x=1782321288;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=SYTycsYV8IBDgqm0YFuqjeDvuJkqJsQvzubIvsOiL5w=;
- b=YpKeuyUnSkdDHx78KARvQAzdpKqhM60Yp4MH7AE86506nWSAnDLrVb4sQf8b+AQ5JB
- Dp1rzgEFLDEEXMlJ9LM62xqW0VzY/VwRDWQxrfL2a8RwfRsDg/9gXTtODoAva14c+K7M
- L6Jk/opjEBCLwaMStfrZps61zMLpDlIrqYdmihvsm+rQ+tns4xe3zFhFDpERXm+lw/0P
- NV/g5+5EHhltd2C22+6/Vj7EHcB85C/e8AMw+Ux2jzuzWveqI/WUt7BPYWdpnvSK2zP5
- EmJ6Ajnxskje1hK3v5C48Ksvb3EwhOHk8LSDTlyrwyCVH+7Xo9HI4gGtVceSac7EuVXC
- F+sg==
-X-Gm-Message-State: AOJu0YxbT2KSH/3kSZNBsqv+mxF4LcuTEdrPQo1kKlX95thB3sDMIb8e
- TvtVQKpVkAPeixcQqUrrnnMBF0kHPhTpfvM5VltrV0lD12Git3D7BSXau+MbRzqeXfbgx1+WeiU
- 0zxhLIuIethqJEZ18rdSv3Btbro/nr1ksIzLbiJb7FVb+mlwvVXgXMtRPvxStu8Bmrg==
-X-Gm-Gg: AfdE7cl+GeHOxEeWlFio7gv4GFpDMsjRdmO2li7UIeRq22WH51EzcS9pxAjVvs5xpTf
- GyRBOrSR13P0giLOr/n2w/V/rhd0cjd5AamA1fRWzrZyhdyWIKFotAO18QIxU1BTqe5Bv/2OtL+
- Q0AiQHd6Rdj7D0MQx4ccCzVFdw6A7UI7LpQeqEHwUcICH4Oa8YqqQKP5IvGqghnZcHmk46cSgKb
- dTV1C2mQndipReqbVme8cVk2nTNcCNzzwHvOS+zDLU08iZ7McGbOyROb/bb6Ck17BEAN6hmgRfX
- BjcBNhmKAJKVZqP/L0VRgpifWwmPOaNM7Z20Ogl6+UbTB/SVj0q0zzsShXtYevktVC1c8JtArNz
- 8AdLuPiSjMdAsNof6FQ0RPCwah5sBelCdYghoXMuEhE9tcm7/4H/iIC9PjjUWrH4QlP97
-X-Received: by 2002:a05:6102:443:b0:727:48aa:f604 with SMTP id
- ada2fe7eead31-72748ab1fbdmr800880137.28.1781716531343; 
- Wed, 17 Jun 2026 10:15:31 -0700 (PDT)
-X-Received: by 2002:a05:6102:443:b0:727:48aa:f604 with SMTP id
- ada2fe7eead31-72748ab1fbdmr800859137.28.1781716530830; 
- Wed, 17 Jun 2026 10:15:30 -0700 (PDT)
+ bh=c+3G9y9VW8KkifcodrN6+Q0v5CUyAJXSbHbCsBp8pt0=;
+ b=MXSDqNScq24IYRiU2W178Q+QuOX3KzJFAttD9G/cNCwz9GdqHlTvikRPc5xb/lZMb/
+ LC+rBJ4snK2Eucev+SEcEVMKBV07mGPLGsEYzXLZkuI24Fa18+nmEQhsi+jG5NGcISmq
+ QIZE5KWktNubvzYKTnj1E/D3zyB7RQuexyCKfBzxJI+AtLSTwxwfh2L2Q7O7YogfsKLZ
+ FUhXyeSJjcl19UUz7Eivg9FDei3S/xEaJbBYVCdgSqukfWB0ZAJikTAHZnF7ipSrZ+a3
+ wASwcSxM54WzQkVfuhPSEdWwMMdbfJyZqqgd8/fupACUhYEYNQd2v+PfJvN45Zsredv0
+ M1bQ==
+X-Gm-Message-State: AOJu0Yzrwm3X8Sag2mMNBP1tB8XWWepmgP6U8p2ufxgAp9AD9y9G3mBQ
+ 0u0+uusnxziUJaVJc77NhBl2S0JcrgD7AekwMKVnKaW+DeN0Jr7LVgIPPR3NDk0e4MKrNUNzf2W
+ rneP1qdoxOWWk1J0VlEVm+nqcURC14BlD9FUTpETu5EL1RAmPChyIrvPxD2G/sf7gNg==
+X-Gm-Gg: AfdE7cntnMRBp3at8+QyMSIcS3Ema0QZWMYnqf7x5cZBGDtHNx49EQc8aZQ8Lb60lgv
+ QEb4LK+XzwvddVZspKpbpPo6k30lNuhZTvkQ+e2tjZHDXZNOTT6qhyrsz5IOqi7FI736iIh5UkG
+ 4MWZ92XWGcx50LtcYwzpCavfmpvELcUmhd+W5fG4iAdQizbVbU/xYTjK8GynrBNMA8bAqIsSfQq
+ 0IsRTg92R8wXb8UMwHTUjyvz7nptx7EoHNuhDi1YvKwC1i6q3SxX3z/hmRnd6NKEJOomOy8Lr70
+ yi7Dpzhu5uOO7VvpNhpjyDqoBZXAaL9u08AZ8dyZRE3KT3gROybUBee+YITNxxN+X1A9OsPuWVm
+ evgAqagXj5U8h8Ed3vbi02KjJjsmPBKDWmHRhKCQ1Ra648UYkuO4usqih/6qR4gl1M7L3
+X-Received: by 2002:a05:6102:390a:b0:726:ec78:94fd with SMTP id
+ ada2fe7eead31-727c51d656bmr384487137.9.1781716487787; 
+ Wed, 17 Jun 2026 10:14:47 -0700 (PDT)
+X-Received: by 2002:a05:6102:390a:b0:726:ec78:94fd with SMTP id
+ ada2fe7eead31-727c51d656bmr384468137.9.1781716487442; 
+ Wed, 17 Jun 2026 10:14:47 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4619b9b7750sm27389858f8f.6.2026.06.17.10.15.29
+ 5b1f17b1804b1-4922fa3abd0sm201075925e9.1.2026.06.17.10.14.46
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 17 Jun 2026 10:15:30 -0700 (PDT)
+ Wed, 17 Jun 2026 10:14:46 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>
-Subject: [PATCH v2 07/11] accel/tcg: Move cpu_restore_state() out of
- 'exec/cpu-common.h'
-Date: Wed, 17 Jun 2026 19:14:34 +0200
-Message-ID: <20260617171438.75914-8-philmd@oss.qualcomm.com>
+Subject: [PATCH v2 01/11] target/arm: Restrict TCG specific headers
+Date: Wed, 17 Jun 2026 19:14:28 +0200
+Message-ID: <20260617171438.75914-2-philmd@oss.qualcomm.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260617171438.75914-1-philmd@oss.qualcomm.com>
 References: <20260617171438.75914-1-philmd@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjE3MDE2NiBTYWx0ZWRfX25+TA34h0TZ/
- sAyWLviEQZSXtVYgn8pWdMKdF9kJWeJY3+NAvGq8W+8QXtShPoDe8utXsGzThL8Rw746fuiN64N
- 5+7cSxNOSZ6ojPPmGfEAVg+GOKhuJbQmA4HYG3+JXYZqVCcMdp/m3Rx72rc0nJYOSsF2GgTRGEf
- SPIXZBgFYWJ8BVW+MLH7NnywAyOgahlkFpXgYTpN/0SWk1YXQh1za/UXTZZqqoIUAQ3ljaQc+Aw
- XnANW4xl1Q+4qFZQN03DJH9jCfbBu/mD3M1kBajdeffvohsx6SCom/XsxkGGQFHi+USZ7r2qhCG
- ZwJvwvJgyFUI26FDa+BjKvzz1T3Eek4udwFO7+1U2lnl/Nw+FL15qrv6CEfEcdxwC7U4c5uN+vg
- dj6S4jzVBHYKowGAD+GLDVT61//ZqxUePCF7emorp34UsOsjbagE1IpleutRbdQXLoLYSYN+jn+
- +3xmUVRiRzPlJ2jou/w==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjE3MDE2NiBTYWx0ZWRfX2MIcsOAz0QhY
- 2fo6z7hC2eUtYxSRYeBTHGuY50gPgNb5qWZzWbsJ7/9Exz555Xjxbi0I5PLTCnLZ/l17yuH8ii0
- qaYhIpF2yEVRAMyQa6i0zJfFc1L3nzo=
-X-Proofpoint-GUID: F65sR-7EfnfMAQ_oxQs6xZDOXGr6fqD1
-X-Proofpoint-ORIG-GUID: F65sR-7EfnfMAQ_oxQs6xZDOXGr6fqD1
-X-Authority-Analysis: v=2.4 cv=WN1PmHsR c=1 sm=1 tr=0 ts=6a32d634 cx=c_pps
- a=ULNsgckmlI/WJG3HAyAuOQ==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjE3MDE2NiBTYWx0ZWRfX13BCdFs2RsKp
+ kEFZRZQU/Qa2snYwdTSvLZpYcDGP2ek7qHSvG/sfL7Ku5b0CifM4lhoj1IOe3MyqKkbP1LZ8FIQ
+ d6htPX/floky5tIsSBNlGlxKWNTR2qa6FulqyluK2Dw7iBlOdFMO/DyX7NK5Kd2xSibVa/CbbkV
+ IcVsh26yjijmKp97xuXWO+8kHqVqGwu3YJuEzIYPO7hHsb+Lzzld0B+NtCpCtW/2ygoOnQwhkcv
+ br8hUS3JMStBRGrNNDPSy/0HYO5N0stj84FfwrmuVsXVw7AeomiJoWuQEfYMm7x9HUG6CxKU+0A
+ s1VIWjTjgAM/0nrF3kAuinlRj2AYBVC23u3aOQ+LQxaI5eXqQrMEhKmnD6bZs6+Wtv81m+Jy8eS
+ eNtKYgHGRCEllTbrBeVG6J4hNPwDnLp0l6A/pCdmW+H0UEXmzmpjmHNj4yLSc0eiiqAuZYV5sje
+ SfqDxJYtT0QttB4l00g==
+X-Authority-Analysis: v=2.4 cv=Fsg1OWrq c=1 sm=1 tr=0 ts=6a32d608 cx=c_pps
+ a=DUEm7b3gzWu7BqY5nP7+9g==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
  a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
- a=EUspDBNiAAAA:8 a=KKAkSRfTAAAA:8 a=7NYfQX0GWP59tyU10OEA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=1WsBpfsz9X-RYQiigVTh:22 a=cvBusfyB2V15izCimMoJ:22
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22
+ a=EUspDBNiAAAA:8 a=KKAkSRfTAAAA:8 a=snbnvTbt-5-dSQZ-83gA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=-aSRE8QhW-JAV6biHavz:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-ORIG-GUID: 34rdIYnbjbH-KR7YQdS70z8CyNggc_yZ
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjE3MDE2NiBTYWx0ZWRfX88wv8WQNrfoU
+ qTfVbAyCr4mFvKyjr1MGZv/qw5muO1mEB0gs9WdFXBvGBcK3kb1zIYVN2WXGjiAXpYw4T3H1JNK
+ nAmCKhLlCWl6TTwh59Hn9GQA2FVupxQ=
+X-Proofpoint-GUID: 34rdIYnbjbH-KR7YQdS70z8CyNggc_yZ
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-06-17_02,2026-06-17_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 malwarescore=0 lowpriorityscore=0 impostorscore=0 phishscore=0
- spamscore=0 priorityscore=1501 adultscore=0 clxscore=1015 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606170166
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+ clxscore=1015 bulkscore=0 suspectscore=0 spamscore=0 phishscore=0
+ lowpriorityscore=0 malwarescore=0 adultscore=0 priorityscore=1501
+ impostorscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2606170166
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -151,284 +151,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Move the TCG-specific cpu_restore_state() declaration out
-of the generic "exec/cpu-common.h" header, to the recently
-created "accel/tcg/cpu-loop.h" one.
-
-Include "accel/tcg/cpu-loop.h" where appropriate.
+Avoid including TCG-specific headers in non-TCG builds.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- include/accel/tcg/cpu-loop.h        | 12 ++++++++++++
- include/exec/cpu-common.h           | 12 ------------
- accel/tcg/cpu-exec-common.c         |  1 +
- accel/tcg/user-exec.c               |  1 +
- target/alpha/helper.c               |  1 +
- target/alpha/mem_helper.c           |  1 +
- target/arm/tcg/op_helper.c          |  1 +
- target/arm/tcg/tlb_helper.c         |  1 +
- target/hppa/cpu.c                   |  1 +
- target/hppa/mem_helper.c            |  1 +
- target/hppa/op_helper.c             |  1 +
- target/i386/tcg/system/svm_helper.c |  1 +
- target/m68k/op_helper.c             |  1 +
- target/microblaze/helper.c          |  1 +
- target/ppc/tcg-excp_helper.c        |  1 +
- target/s390x/tcg/excp_helper.c      |  1 +
- target/sh4/op_helper.c              |  1 +
- target/tricore/op_helper.c          |  1 +
- target/xtensa/helper.c              |  1 +
- 19 files changed, 29 insertions(+), 12 deletions(-)
+ target/arm/internals.h | 4 +++-
+ target/arm/cpu-irq.c   | 3 ++-
+ 2 files changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/include/accel/tcg/cpu-loop.h b/include/accel/tcg/cpu-loop.h
-index f328aaa0377..2fc38c8f1c4 100644
---- a/include/accel/tcg/cpu-loop.h
-+++ b/include/accel/tcg/cpu-loop.h
-@@ -28,4 +28,16 @@ void cpu_exec_step_atomic(CPUState *cpu);
-  */
- bool cpu_unwind_state_data(CPUState *cpu, uintptr_t host_pc, uint64_t *data);
- 
-+/**
-+ * cpu_restore_state:
-+ * @cpu: the cpu context
-+ * @host_pc: the host pc within the translation
-+ * @return: true if state was restored, false otherwise
-+ *
-+ * Attempt to restore the state for a fault occurring in translated
-+ * code. If @host_pc is not in translated code no state is
-+ * restored and the function returns false.
-+ */
-+bool cpu_restore_state(CPUState *cpu, uintptr_t host_pc);
-+
- #endif
-diff --git a/include/exec/cpu-common.h b/include/exec/cpu-common.h
-index ba98304c5fa..3757ab15967 100644
---- a/include/exec/cpu-common.h
-+++ b/include/exec/cpu-common.h
-@@ -64,18 +64,6 @@ void list_cpus(void);
- #ifdef CONFIG_TCG
- #include "qemu/atomic.h"
- 
--/**
-- * cpu_restore_state:
-- * @cpu: the cpu context
-- * @host_pc: the host pc within the translation
-- * @return: true if state was restored, false otherwise
-- *
-- * Attempt to restore the state for a fault occurring in translated
-- * code. If @host_pc is not in translated code no state is
-- * restored and the function returns false.
-- */
--bool cpu_restore_state(CPUState *cpu, uintptr_t host_pc);
--
- /**
-  * cpu_loop_exit_requested:
-  * @cpu: The CPU state to be tested
-diff --git a/accel/tcg/cpu-exec-common.c b/accel/tcg/cpu-exec-common.c
-index c5c513f1e4a..e48ea31373f 100644
---- a/accel/tcg/cpu-exec-common.c
-+++ b/accel/tcg/cpu-exec-common.c
-@@ -21,6 +21,7 @@
- #include "exec/log.h"
- #include "system/tcg.h"
- #include "qemu/plugin.h"
-+#include "accel/tcg/cpu-loop.h"
- #include "internal-common.h"
- 
- bool tcg_allowed;
-diff --git a/accel/tcg/user-exec.c b/accel/tcg/user-exec.c
-index d283d3cc724..7704e4017dd 100644
---- a/accel/tcg/user-exec.c
-+++ b/accel/tcg/user-exec.c
-@@ -25,6 +25,7 @@
- #include "qemu/bitops.h"
- #include "qemu/rcu.h"
- #include "accel/tcg/cpu-ldst-common.h"
-+#include "accel/tcg/cpu-loop.h"
- #include "accel/tcg/helper-retaddr.h"
- #include "accel/tcg/probe.h"
- #include "user/cpu_loop.h"
-diff --git a/target/alpha/helper.c b/target/alpha/helper.c
-index 2abf07c1919..c3614ecafda 100644
---- a/target/alpha/helper.c
-+++ b/target/alpha/helper.c
-@@ -28,6 +28,7 @@
- #include "exec/helper-proto.h"
- #include "qemu/qemu-print.h"
+diff --git a/target/arm/internals.h b/target/arm/internals.h
+index f7a57d3ea70..fcce3804f34 100644
+--- a/target/arm/internals.h
++++ b/target/arm/internals.h
+@@ -29,9 +29,11 @@
+ #include "exec/vaddr.h"
+ #include "exec/breakpoint.h"
+ #include "exec/memop.h"
++#ifdef CONFIG_TCG
+ #include "accel/tcg/tb-cpu-state.h"
+-#include "hw/core/registerfields.h"
+ #include "tcg/tcg-gvec-desc.h"
++#endif
++#include "hw/core/registerfields.h"
  #include "system/memory.h"
-+#include "accel/tcg/cpu-loop.h"
- #include "qemu/plugin.h"
- 
- 
-diff --git a/target/alpha/mem_helper.c b/target/alpha/mem_helper.c
-index 572ea9cb418..b3988417e4b 100644
---- a/target/alpha/mem_helper.c
-+++ b/target/alpha/mem_helper.c
-@@ -21,6 +21,7 @@
- #include "cpu.h"
- #include "exec/helper-proto.h"
- #include "accel/tcg/cpu-ldst.h"
-+#include "accel/tcg/cpu-loop.h"
- 
- static void do_unaligned_access(CPUAlphaState *env, vaddr addr, uintptr_t retaddr)
- {
-diff --git a/target/arm/tcg/op_helper.c b/target/arm/tcg/op_helper.c
-index 504526153a6..9f9ea39be5a 100644
---- a/target/arm/tcg/op_helper.c
-+++ b/target/arm/tcg/op_helper.c
-@@ -23,6 +23,7 @@
- #include "helper.h"
- #include "internals.h"
+ #include "syndrome.h"
  #include "cpu-features.h"
-+#include "accel/tcg/cpu-loop.h"
- #include "accel/tcg/probe.h"
- #include "cpregs.h"
+diff --git a/target/arm/cpu-irq.c b/target/arm/cpu-irq.c
+index fe514cc93af..883e8a176c3 100644
+--- a/target/arm/cpu-irq.c
++++ b/target/arm/cpu-irq.c
+@@ -8,10 +8,11 @@
  
-diff --git a/target/arm/tcg/tlb_helper.c b/target/arm/tcg/tlb_helper.c
-index f90765cb597..2ce63734099 100644
---- a/target/arm/tcg/tlb_helper.c
-+++ b/target/arm/tcg/tlb_helper.c
-@@ -8,6 +8,7 @@
  #include "qemu/osdep.h"
  #include "cpu.h"
- #include "helper.h"
-+#include "accel/tcg/cpu-loop.h"
+-#include "accel/tcg/cpu-ops.h"
  #include "internals.h"
- #include "cpu-features.h"
  
-diff --git a/target/hppa/cpu.c b/target/hppa/cpu.c
-index 6443122cf1a..a68152f9682 100644
---- a/target/hppa/cpu.c
-+++ b/target/hppa/cpu.c
-@@ -29,6 +29,7 @@
- #include "fpu/softfloat.h"
- #include "tcg/tcg.h"
- #include "hw/hppa/hppa_hardware.h"
-+#include "accel/tcg/cpu-loop.h"
- #include "accel/tcg/cpu-ops.h"
- 
- static void hppa_cpu_set_pc(CPUState *cs, vaddr value)
-diff --git a/target/hppa/mem_helper.c b/target/hppa/mem_helper.c
-index f5076492264..01e6149c811 100644
---- a/target/hppa/mem_helper.c
-+++ b/target/hppa/mem_helper.c
-@@ -21,6 +21,7 @@
- #include "qemu/log.h"
- #include "cpu.h"
- #include "exec/cputlb.h"
-+#include "accel/tcg/cpu-loop.h"
- #include "accel/tcg/cpu-mmu-index.h"
- #include "accel/tcg/probe.h"
- #include "exec/page-protection.h"
-diff --git a/target/hppa/op_helper.c b/target/hppa/op_helper.c
-index f961046e4c5..76a8d8a0d34 100644
---- a/target/hppa/op_helper.c
-+++ b/target/hppa/op_helper.c
-@@ -22,6 +22,7 @@
- #include "cpu.h"
- #include "exec/helper-proto.h"
- #include "accel/tcg/cpu-ldst.h"
-+#include "accel/tcg/cpu-loop.h"
- #include "accel/tcg/probe.h"
- #include "qemu/timer.h"
- #include "trace.h"
-diff --git a/target/i386/tcg/system/svm_helper.c b/target/i386/tcg/system/svm_helper.c
-index d5ffabc2f4d..52a234e7fac 100644
---- a/target/i386/tcg/system/svm_helper.c
-+++ b/target/i386/tcg/system/svm_helper.c
-@@ -23,6 +23,7 @@
- #include "exec/helper-proto.h"
- #include "exec/cputlb.h"
- #include "accel/tcg/cpu-ldst.h"
-+#include "accel/tcg/cpu-loop.h"
- #include "tcg/helper-tcg.h"
- 
- /* Secure Virtual Machine helpers */
-diff --git a/target/m68k/op_helper.c b/target/m68k/op_helper.c
-index 8148a8852e7..38f7a689814 100644
---- a/target/m68k/op_helper.c
-+++ b/target/m68k/op_helper.c
-@@ -21,6 +21,7 @@
- #include "cpu.h"
- #include "exec/helper-proto.h"
- #include "accel/tcg/cpu-ldst.h"
-+#include "accel/tcg/cpu-loop.h"
- #include "semihosting/semihost.h"
- #include "qemu/plugin.h"
- 
-diff --git a/target/microblaze/helper.c b/target/microblaze/helper.c
-index 6a982c18c0f..05a90f5ecb2 100644
---- a/target/microblaze/helper.c
-+++ b/target/microblaze/helper.c
-@@ -21,6 +21,7 @@
- #include "qemu/osdep.h"
- #include "cpu.h"
- #include "exec/cputlb.h"
-+#include "accel/tcg/cpu-loop.h"
- #include "accel/tcg/cpu-mmu-index.h"
- #include "exec/page-protection.h"
- #include "exec/target_page.h"
-diff --git a/target/ppc/tcg-excp_helper.c b/target/ppc/tcg-excp_helper.c
-index 5e6c1e326d4..b04f07a6377 100644
---- a/target/ppc/tcg-excp_helper.c
-+++ b/target/ppc/tcg-excp_helper.c
-@@ -21,6 +21,7 @@
- #include "qemu/log.h"
- #include "target/ppc/cpu.h"
- #include "accel/tcg/cpu-ldst.h"
-+#include "accel/tcg/cpu-loop.h"
- #include "exec/helper-proto.h"
- #include "system/runstate.h"
- 
-diff --git a/target/s390x/tcg/excp_helper.c b/target/s390x/tcg/excp_helper.c
-index 05e448d3f20..d952bb20cf1 100644
---- a/target/s390x/tcg/excp_helper.c
-+++ b/target/s390x/tcg/excp_helper.c
-@@ -24,6 +24,7 @@
- #include "exec/helper-proto.h"
- #include "exec/cputlb.h"
- #include "exec/target_page.h"
-+#include "accel/tcg/cpu-loop.h"
- #include "s390x-internal.h"
- #include "tcg_s390x.h"
- #ifndef CONFIG_USER_ONLY
-diff --git a/target/sh4/op_helper.c b/target/sh4/op_helper.c
-index cf0f80e4a54..90c065b217b 100644
---- a/target/sh4/op_helper.c
-+++ b/target/sh4/op_helper.c
-@@ -20,6 +20,7 @@
- #include "cpu.h"
- #include "exec/helper-proto.h"
- #include "accel/tcg/cpu-ldst.h"
-+#include "accel/tcg/cpu-loop.h"
- #include "fpu/softfloat.h"
- 
- #ifndef CONFIG_USER_ONLY
-diff --git a/target/tricore/op_helper.c b/target/tricore/op_helper.c
-index 3cff5000c73..46b17da2bc6 100644
---- a/target/tricore/op_helper.c
-+++ b/target/tricore/op_helper.c
-@@ -19,6 +19,7 @@
- #include "qemu/host-utils.h"
- #include "exec/helper-proto.h"
- #include "accel/tcg/cpu-ldst.h"
-+#include "accel/tcg/cpu-loop.h"
- #include "qemu/plugin.h"
- #include <zlib.h> /* for crc32 */
- 
-diff --git a/target/xtensa/helper.c b/target/xtensa/helper.c
-index 2d93b45036d..5a0e8655146 100644
---- a/target/xtensa/helper.c
-+++ b/target/xtensa/helper.c
-@@ -32,6 +32,7 @@
- #include "exec/target_page.h"
- #include "gdbstub/helpers.h"
- #include "exec/helper-proto.h"
-+#include "accel/tcg/cpu-loop.h"
- #include "qemu/error-report.h"
- #include "qemu/qemu-print.h"
- #include "qemu/host-utils.h"
+ #ifdef CONFIG_TCG
++#include "accel/tcg/cpu-ops.h"
++
+ static inline bool arm_excp_unmasked(CPUState *cs, unsigned int excp_idx,
+                                      unsigned int target_el,
+                                      unsigned int cur_el, bool secure,
 -- 
 2.53.0
 
