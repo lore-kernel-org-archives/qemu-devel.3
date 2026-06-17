@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D81BACD98F2
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jun 2026 15:26:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A59B5CD98F2
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jun 2026 15:26:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZs8f-0000HG-Vb; Wed, 17 Jun 2026 11:25:14 -0400
+	id 1wZs9U-00045V-0b; Wed, 17 Jun 2026 11:26:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wZs8L-0008II-AE
- for qemu-devel@nongnu.org; Wed, 17 Jun 2026 11:24:59 -0400
+ id 1wZs9C-0003pl-V7
+ for qemu-devel@nongnu.org; Wed, 17 Jun 2026 11:25:49 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wZs8J-0004SU-T0
- for qemu-devel@nongnu.org; Wed, 17 Jun 2026 11:24:53 -0400
+ id 1wZs9B-0004uu-42
+ for qemu-devel@nongnu.org; Wed, 17 Jun 2026 11:25:46 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781709891;
+ s=mimecast20190719; t=1781709944;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=NFLLmTbFzn0bWMghy5IUlnpMCQHdNh4voXAbjm8vvpE=;
- b=GQY3Od8TQ9eS5g42l2j1OtNOJfCx5wDddvtEe5DEbOFiSQdxF9MKAlBB4Ll+2rvEwo+LzY
- O0ZKECWtHSPwoyVGzzLY+Kf2KDSvH5Sn1610pgS9cPxbUEdMRIGYWlPrDYEU9AEP+wWj/l
- X//QLY8GIDEwXifjUBg30p4r//ZobwI=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=3MzOdUytBdgJJhzQhPUejN4Y5WnUZqTyZ0mNfL1b4Eg=;
+ b=aX75g4mHhIxWpeAaz5IINpOJ4HDP3jHJm/ZTknGDBk9c2ruxRCCQQPi8hX9gFmvQqTr8cY
+ M3p33JQaXDNe/kVrDQascf+AprERkFUlOCscC/iRaZlnSSgZujt9ZQtv9jwZ6Cnkq0Af63
+ xTMm+OgnTpBqIa3vyWmBmQvl94LFky8=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-508-UsMywOEbNry6I0rgcWHJ1A-1; Wed,
- 17 Jun 2026 11:24:49 -0400
-X-MC-Unique: UsMywOEbNry6I0rgcWHJ1A-1
-X-Mimecast-MFC-AGG-ID: UsMywOEbNry6I0rgcWHJ1A_1781709889
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-184-dvjBaLQsMqCtU9vNWlCupw-1; Wed,
+ 17 Jun 2026 11:25:42 -0400
+X-MC-Unique: dvjBaLQsMqCtU9vNWlCupw-1
+X-Mimecast-MFC-AGG-ID: dvjBaLQsMqCtU9vNWlCupw_1781709941
+Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E9044195E90A
- for <qemu-devel@nongnu.org>; Wed, 17 Jun 2026 15:24:48 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 326FD1955F15
+ for <qemu-devel@nongnu.org>; Wed, 17 Jun 2026 15:25:41 +0000 (UTC)
 Received: from localhost (unknown [10.44.22.6])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id B9C53180049F; Wed, 17 Jun 2026 15:24:47 +0000 (UTC)
+ by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 237053189; Wed, 17 Jun 2026 15:25:39 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Wed, 17 Jun 2026 19:23:12 +0400
-Subject: [GIT PULL 15/27] ui/input: qemu_input_handler_register to warn for
- unused result
+Date: Wed, 17 Jun 2026 19:23:22 +0400
+Subject: [GIT PULL 25/27] ui/pixman: fix zero rowstride in
+ qemu_pixman_image_new_shareable()
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260617-ui-input-v1-15-79e9aedc5899@redhat.com>
+Message-Id: <20260617-ui-input-v1-25-79e9aedc5899@redhat.com>
 References: <20260617-ui-input-v1-0-79e9aedc5899@redhat.com>
 In-Reply-To: <20260617-ui-input-v1-0-79e9aedc5899@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Stefan Hajnoczi <stefanha@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=750;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=5684;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=mm8Sen1rAYQT+tDCGEUKaXUqU1jKwZd0fWekh4tNr70=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqMrvpe2ta6Baq/3JBacw6MrDllAWnY63sja1bU
- l+fVK8+PL2JAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCajK76QAKCRDa6OEJdZac
- 5a3oD/97b0D2pMHJ2MZNyAWzU0mwP7KJym++47qo3ohxY5fkapPOABAEvGV8aXYvzK5U6cNz1UH
- oagnAZBEE08ITX3z5b+2ZPRPx1WSEuQAzdkkix9DWm0EB1OaYXhEfsHScS5ic4aV4sN/eMYQ0FI
- bkiZxEO8RK8HJ44tAW2G1dwt/YI2zcGSRYxysYpWEuTxLT7x+tztijphH9+hIQCwBQZ+alOynw3
- t1DOgtDvH+kFa4kwQdB29B/c/KV3GA9RZsJFHma1+yOwfy5u0AUSqHpauZhTRLoSA5Vsr+hUP7W
- Yzcjb6THglcsR3QSfx1I4RFgBzTSXEFxZ8ufveewxLKy7yv3brzYjXA8aB+3hjET/57rZmYnFXU
- axZELonJDtYctw2Q+UoX9KeCFD+eorZfGSBG252oKuqoTt9eF4bFNMQw6myALbnijzGyPJW4Bsc
- KNkqr3z+y5+e4aTNQo7uwYzMzXGsLnnDHgAM163g1kjd+pfZSk9EuzEcn0AT0Q+N8kPPl93iwNo
- vnISO6EbBJON4eYXgCIt3/Tl22n3Dlm/lB4O/LUeHATcKIkL1Ic6o9il+6FvH+xb4843lmqMVIx
- 9RzGuIxh1snwuEO9bWzoLDjcsq+dJpRWYd7M5kikCM+jSsLQipO1K34yyfc80zwjXqo8hyCRL6+
- 75TUL0KTkJNpNeg==
+ bh=SOq11z6oxabN4M1NCITQwuh+JlZhpfFFGuIR0ptG8V4=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqMrvpL7wKjpDyzs8JLOm+wykV9r4j7urpezWWo
+ VYNwTR6q36JAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCajK76QAKCRDa6OEJdZac
+ 5ZgLD/9HUjBKk5Yrnq779QlOFeOC/i7cRk6cNzQ0zExqvv/B+mX4yjcLFtmQaXI4O7DpavLPJ8N
+ Ps8WmiHdDWQn1Efo1nu9wUXkYdzPVZKT+owo/2fMG9iHLa57otVYGS5qSOqUsrIHirmrVTAyPMq
+ Dg3f925ztE04jEmK5LL8kzikmlQwrkWPHXXvZyN9YI8dllORs3z/F8+x1VbRau7hnS8r5at4R8O
+ OdSsNmP3qN+ICb25pp//AT+bcVhjjaZAnxGxLlHl5N/qsJ16sM6s8IeVDdUDhziv+9E+gX5e6EF
+ r38qvU8E8mP+nhrCO+4RCCjR8zY37rQiDMPmqtnMNdRXdbDFwt/eVQB37I/hkJxaW5NAsW/bWY0
+ JDgf6sya3gi6/s6UFdlzHXEGWWGNSffMVRn8ZYzlb1PNosfzqIaBd68MTmTbCj5a9cDAvdCPotm
+ FfolY/zB3jGgoo3DPWidr0ldJMVwbP6KF6oRCirPJ2rFAsIIc6YVGc7GwuhOYNS69v0Dd4y0qNR
+ Q/ylIcANNPM7RQqG/nfzVHVbmP5gUO/5b9dGODBQl1BBildc1qBvApmupqYwcXos8WzFq/VzB3Y
+ 8am022gGWXB2XEHMMoy1PJ/IRKnF0GqPQvNbITRaiQRnQVDEGLg4q5L435qbqVXV9RNkykuJWmO
+ i+22CKXYn2XTxpA==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
 Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -104,25 +104,165 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Suggested-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+qemu_create_displaysurface_from() callers such as xlnx_dp.c pass
+linesize=0 with data=NULL, relying on pixman to compute the stride.
+Since 1ff788db978 ("ui: use a shareable type"), the data=NULL path
+goes through qemu_pixman_image_new_shareable() which computes
+size = height * rowstride_bytes, resulting in a zero-size allocation
+and an abort in qemu_memfd_alloc().
+
+Introduce qemu-pixman-helpers.h with overflow-safe stride and buffer
+size computation (matching pixman's create_bits() formula), and use it
+from both qemu_pixman_image_new_shareable() and pixman-minimal's
+create_bits().
+
+Reported-by: Peter Maydell <peter.maydell@linaro.org>
+Fixes: 1ff788db9781 ("ui: use a shareable type")
 Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Message-ID: <20260611113614.1935094-1-marcandre.lureau@redhat.com>
 ---
- include/ui/input.h | 1 +
- 1 file changed, 1 insertion(+)
+ include/ui/pixman-minimal.h      | 25 ++++----------------
+ include/ui/qemu-pixman-helpers.h | 49 ++++++++++++++++++++++++++++++++++++++++
+ include/ui/qemu-pixman.h         |  1 +
+ ui/qemu-pixman.c                 |  8 ++++++-
+ 4 files changed, 61 insertions(+), 22 deletions(-)
 
-diff --git a/include/ui/input.h b/include/ui/input.h
-index 11146c92bd4..18088babe2a 100644
---- a/include/ui/input.h
-+++ b/include/ui/input.h
-@@ -45,6 +45,7 @@ struct QemuInputHandler {
-     QemuInputHandlerSync   sync;
- };
+diff --git a/include/ui/pixman-minimal.h b/include/ui/pixman-minimal.h
+index 6dd7de1c7e7..680cc809ace 100644
+--- a/include/ui/pixman-minimal.h
++++ b/include/ui/pixman-minimal.h
+@@ -113,6 +113,8 @@ typedef struct pixman_color {
+     uint16_t    alpha;
+ } pixman_color_t;
  
-+G_GNUC_WARN_UNUSED_RESULT
- QemuInputHandlerState *qemu_input_handler_register(DeviceState *dev,
-                                             const QemuInputHandler *handler);
- void qemu_input_handler_activate(QemuInputHandlerState *s);
++#include "qemu-pixman-helpers.h"
++
+ static inline uint32_t *create_bits(pixman_format_code_t format,
+                                     int width,
+                                     int height,
+@@ -120,28 +122,9 @@ static inline uint32_t *create_bits(pixman_format_code_t format,
+ {
+     int stride = 0;
+     size_t buf_size = 0;
+-    int bpp = PIXMAN_FORMAT_BPP(format);
+-
+-    /*
+-     * Calculate the following while checking for overflow truncation:
+-     * stride = ((width * bpp + 0x1f) >> 5) * sizeof(uint32_t);
+-     */
+-
+-    if (unlikely(__builtin_mul_overflow(width, bpp, &stride))) {
+-        return NULL;
+-    }
+-
+-    if (unlikely(__builtin_add_overflow(stride, 0x1f, &stride))) {
+-        return NULL;
+-    }
+-
+-    stride >>= 5;
+-
+-    stride *= sizeof(uint32_t);
+ 
+-    if (unlikely(__builtin_mul_overflow((size_t) height,
+-                                        (size_t) stride,
+-                                        &buf_size))) {
++    if (!qemu_pixman_image_calc_size(format, width, height,
++                                     &stride, &buf_size)) {
+         return NULL;
+     }
+ 
+diff --git a/include/ui/qemu-pixman-helpers.h b/include/ui/qemu-pixman-helpers.h
+new file mode 100644
+index 00000000000..3e247a37946
+--- /dev/null
++++ b/include/ui/qemu-pixman-helpers.h
+@@ -0,0 +1,49 @@
++/* SPDX-License-Identifier: MIT */
++/*
++ * Pixman stride and buffer size helpers.
++ * Expects PIXMAN_FORMAT_BPP() and pixman_format_code_t to be
++ * already defined (by either <pixman.h> or "pixman-minimal.h").
++ */
++
++#ifndef QEMU_PIXMAN_HELPERS_H
++#define QEMU_PIXMAN_HELPERS_H
++
++/*
++ * Compute the row stride for a pixman image, aligned to sizeof(uint32_t),
++ * as pixman does. Returns -1 on integer overflow.
++ */
++static inline int qemu_pixman_stride(pixman_format_code_t format, int width)
++{
++    int stride;
++
++    if (unlikely(__builtin_mul_overflow(width, PIXMAN_FORMAT_BPP(format),
++                                        &stride)) ||
++        unlikely(__builtin_add_overflow(stride, 31, &stride))) {
++        return -1;
++    }
++    return (stride / 32) * sizeof(uint32_t);
++}
++
++/*
++ * Compute stride and buffer size for a pixman image.
++ * If *rowstride_bytes is 0, compute it from format and width
++ * (aligned to sizeof(uint32_t), as pixman does).
++ * Returns false on integer overflow.
++ */
++static inline bool qemu_pixman_image_calc_size(pixman_format_code_t format,
++                                               int width, int height,
++                                               int *rowstride_bytes,
++                                               size_t *buf_size)
++{
++    if (!*rowstride_bytes) {
++        *rowstride_bytes = qemu_pixman_stride(format, width);
++        if (*rowstride_bytes < 0) {
++            return false;
++        }
++    }
++
++    return likely(!__builtin_mul_overflow((size_t)height,
++                                          (size_t)*rowstride_bytes, buf_size));
++}
++
++#endif /* QEMU_PIXMAN_HELPERS_H */
+diff --git a/include/ui/qemu-pixman.h b/include/ui/qemu-pixman.h
+index 4bc7a59698e..1d042c7f634 100644
+--- a/include/ui/qemu-pixman.h
++++ b/include/ui/qemu-pixman.h
+@@ -8,6 +8,7 @@
+ 
+ #ifdef CONFIG_PIXMAN
+ #include <pixman.h>
++#include "qemu-pixman-helpers.h"
+ #else
+ #include "pixman-minimal.h"
+ #endif
+diff --git a/ui/qemu-pixman.c b/ui/qemu-pixman.c
+index aea09755b94..9dc606f692a 100644
+--- a/ui/qemu-pixman.c
++++ b/ui/qemu-pixman.c
+@@ -320,12 +320,18 @@ qemu_pixman_image_new_shareable(pixman_image_t **image,
+                                 Error **errp)
+ {
+     ERRP_GUARD();
+-    size_t size = height * rowstride_bytes;
++    size_t size;
+     void *bits = NULL;
+ 
+     g_return_val_if_fail(image != NULL, false);
+     g_return_val_if_fail(handle != NULL, false);
+ 
++    if (!qemu_pixman_image_calc_size(format, width, height,
++                                     &rowstride_bytes, &size)) {
++        error_setg(errp, "Image dimensions overflow");
++        return false;
++    }
++
+     bits = qemu_pixman_shareable_alloc(name, size, handle, errp);
+     if (!bits) {
+         return false;
 
 -- 
 2.54.0
