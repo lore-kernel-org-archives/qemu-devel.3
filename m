@@ -4,46 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82766CD98F2
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71705CD98E2
 	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jun 2026 15:44:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZsQY-0003mL-NH; Wed, 17 Jun 2026 11:43:42 -0400
+	id 1wZsQg-0003rY-Og; Wed, 17 Jun 2026 11:43:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
- (envelope-from <7f5445e7e4050cc117ed4b137bb7dd1474e49d57@kylie.crudebyte.com>)
- id 1wZsQW-0003kr-LC; Wed, 17 Jun 2026 11:43:40 -0400
+ (envelope-from <08750e31fcdccf5352dc3b44475ed5ba6bc80221@kylie.crudebyte.com>)
+ id 1wZsQc-0003qm-Vr; Wed, 17 Jun 2026 11:43:47 -0400
 Received: from kylie.crudebyte.com ([5.189.157.229])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
- (envelope-from <7f5445e7e4050cc117ed4b137bb7dd1474e49d57@kylie.crudebyte.com>)
- id 1wZsQV-0002IX-8o; Wed, 17 Jun 2026 11:43:40 -0400
+ (envelope-from <08750e31fcdccf5352dc3b44475ed5ba6bc80221@kylie.crudebyte.com>)
+ id 1wZsQb-0002JY-FQ; Wed, 17 Jun 2026 11:43:46 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=crudebyte.com; s=kylie; h=Cc:To:Subject:Date:From:References:In-Reply-To:
  Message-ID:Content-Type:Content-Transfer-Encoding:MIME-Version:Content-ID:
- Content-Description; bh=OaQCMTHN5Q1bX2MsH9spPLL7wft92aNI47qi3ILU7yo=; b=XBFzt
- /A8cApMNd9XAQEo10DQ5YGfXGK/IKCrxkJGpvWNzE2q2lmZ8yj563llEA5xdbP/nEIAMd/bSD9Aei
- b+1I5ochUf4VP5cQy8q62lW5+Zz1sFZrR68XHrlr25HZGapiaYtjdYwSmFWx7OBzXjF1pjpacN4H7
- QQKdPhmRYEHfoKantWFg1c453KnyHW2jSp+UZuVsd8tMhLnvE5B/HD+ocV41GVEh+1avomJX2cu5F
- 7Iiy2DLpjIDsGkBEu7Mi0DB5Hpd95yKQAzE2nqZgXMTMv23XBUy5N/4bN2bYHQyLeqCS+bk1q3Qle
- KhvN7kZixaY2vGHP4p68pKTMjUI4MOF9BWEz3xWS5qcw3pWlp3cjXEfasm9vgvt9SVKk+rdNVzuXJ
- YW/45eg3Q3CkEmmY3fXkfCZxTT9OPDxhEghDxaRucq5uv/uzoadR+G9XDVo5q2PB5hriY4Ma6powj
- JdBPWm/02ZIciqcsHhDBJ0Pv8QwfQ9wDZurhNV8BHkS9AoiuvQHE769nZ7YcSoBQRhJpp2Ks4Dg5Y
- B4ImtVk0arBNzGsF8tcgKhx8sKcDgzio7rrc4yN1dhT1aCJmIPTH6KQLqs1kqlGSzHJttdYbsYo7h
- y2DA+ilZ0DSFdBlc35mRpb1eJrZ6pCz/n77gWU1MPa3xpjhYYDhwjJha/CYyTY=;
-Message-ID: <7f5445e7e4050cc117ed4b137bb7dd1474e49d57.1781710785.git.qemu_oss@crudebyte.com>
+ Content-Description; bh=3BZ27s7P7Q8df9ELxbX/Yz9rKy7ELrktCVvJzz21ZN8=; b=b3kCz
+ fOBRepmQZMOsTafCPx1GswCGc6Lz1uiQm4VY2df4oKMynlb6KFOV93TqkTc9EqyLoTOaHU74MXpnz
+ Ar5DkPoVvjqkSapCJt2LoZFxgfc7qSDWSiHX7+0edUfZpVU0rYKBR7noM98U3PbfXBWpBChwb2foW
+ I3FoD7FreGQtR9846yHaOVGxfgro9mM191GnSlrj79ed7GrhSPN1GksNWCS6QGmogMS3MTRUYtP29
+ mRkd2b3TZakOhxrd2hpyJ4PVh8KU2HI1uKoMmiqTOubY8CxS5ezKakW5sdg0o/LAVDqM5qsHoq05c
+ S7Lsr7VFCKIhQDLskmOTOIRqldd4BSu1EAu8nrmEkTy69AOxv6S8UQKMzEct+Ps5aZSAUw31a8ur3
+ wHAoDtRtVhAupaIc71MzSEC+/akGbYcPd27DEyXZ8ItTGY6Dahw4f+HNcHNok3KRlK63pPJ4aIu5D
+ +SW0NhpBPbfajh54qa1Pt3tlq7whteceE7dGXTGALvcoWwEfPL5DYhEsVXg+Y3z9IGWDKp2bMjRtT
+ 4PkKGqBoJk/dPaWBgkbHk2/MynBcVf5oKSJkjaDrypCEm4jJcfn23SjdtY3Mk2ucFbPg88bptiKGh
+ sFZwr71rxdFBQGk5xbpPQNp1JAZiW74Don87euq80NHILC9RBcYa2puT3nBGzM=;
+Message-ID: <08750e31fcdccf5352dc3b44475ed5ba6bc80221.1781710785.git.qemu_oss@crudebyte.com>
 In-Reply-To: <cover.1781710785.git.qemu_oss@crudebyte.com>
 References: <cover.1781710785.git.qemu_oss@crudebyte.com>
 From: Christian Schoenebeck <qemu_oss@crudebyte.com>
 Date: Wed, 17 Jun 2026 17:39:46 +0200
-Subject: [PULL 1/3] hw/9pfs: fix abort due to illegal name with Twstat rename
+Subject: [PULL 2/3] hw/9pfs: reject . and .. in Twstat rename
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org, Greg Kurz <groug@kaod.org>,
- Peter Maydell <peter.maydell@linaro.org>, Feifan Qian <bea1e@proton.me>
+ Peter Maydell <peter.maydell@linaro.org>
 Received-SPF: pass client-ip=5.189.157.229;
- envelope-from=7f5445e7e4050cc117ed4b137bb7dd1474e49d57@kylie.crudebyte.com;
+ envelope-from=08750e31fcdccf5352dc3b44475ed5ba6bc80221@kylie.crudebyte.com;
  helo=kylie.crudebyte.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -66,43 +66,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The legacy Twstat 9p request can be used to rename files and directories.
-Unlike the other, more recent rename requests like Trename and Trenameat,
-Twstat does not validate the submitted new name before passing it to
-v9fs_complete_rename().
+The other Trename and Trenameat handlers already reject "." and ".."
+as new name on rename requests by returning -EISDIR in this case.
 
-A priviliged guest user with direct communication access to 9p server
-could pass a string containing '/' as new name, which causes an assertion
-fault (DoS) in local_name_to_path().
+The legacy Twstat rename handler is missing this validation. While passing
+"." or ".." does not trigger a crash as fixed by the previous patch (since
+the fs backend driver's system calls handle these gracefully), it creates
+a behavioral inconsistency, as it is semantically meaningless to rename a
+file to a directory reference in the first place.
 
-Fix this by rejecting such strings by checking the client supplied new
-name with name_is_illegal(), similar to how Trename and Trenameat handlers
-do already.
+Fix this by rejecting "." and ".." in Twstat rename handler with -EISDIR
+to match behavior of Trename and Trenameat handlers.
 
-Reported-by: Feifan Qian <bea1e@proton.me>
 Fixes: 8cf89e007a ("virtio-9p: Add P9_TWSTAT support")
-Link: https://lore.kernel.org/qemu-devel/ba09716828e82992f9d8cac7f00eee0bc1c43c61.1780072238.git.qemu_oss@crudebyte.com
+Link: https://lore.kernel.org/qemu-devel/662333331d371c6c343c8091161de8eaa121880e.1780072238.git.qemu_oss@crudebyte.com
 Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
 ---
- hw/9pfs/9p.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ hw/9pfs/9p.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
 diff --git a/hw/9pfs/9p.c b/hw/9pfs/9p.c
-index b4314d2549..f84698bfcc 100644
+index f84698bfcc..936e4e9349 100644
 --- a/hw/9pfs/9p.c
 +++ b/hw/9pfs/9p.c
-@@ -3638,6 +3638,11 @@ static void coroutine_fn v9fs_wstat(void *opaque)
-             err = -EOPNOTSUPP;
+@@ -3642,6 +3642,10 @@ static void coroutine_fn v9fs_wstat(void *opaque)
+             err = -ENOENT;
              goto out;
          }
-+        if (name_is_illegal(v9stat.name.data)) {
-+            err = -ENOENT;
++        if (!strcmp(".", v9stat.name.data) || !strcmp("..", v9stat.name.data)) {
++            err = -EISDIR;
 +            goto out;
 +        }
-+
+ 
          v9fs_path_write_lock(s);
          err = v9fs_complete_rename(pdu, fidp, -1, &v9stat.name);
-         v9fs_path_unlock(s);
 -- 
 2.47.3
 
