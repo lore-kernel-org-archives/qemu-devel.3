@@ -4,116 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED439CD98E2
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jun 2026 10:06:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 092B1CD98E2
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jun 2026 10:07:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZn9f-0003O1-6T; Wed, 17 Jun 2026 06:05:55 -0400
+	id 1wZnAk-0003ov-R3; Wed, 17 Jun 2026 06:07:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <FangSheng.Huang@amd.com>)
- id 1wZn9c-0003Nn-CY
- for qemu-devel@nongnu.org; Wed, 17 Jun 2026 06:05:52 -0400
-Received: from mail-westus2azon11010020.outbound.protection.outlook.com
- ([52.101.46.20] helo=CO1PR03CU002.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <FangSheng.Huang@amd.com>)
- id 1wZn9Y-0007wg-R8
- for qemu-devel@nongnu.org; Wed, 17 Jun 2026 06:05:51 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=jS8G7RJx/aKr9+pxabvgJW8MRHlDiHieZo00ghrrzAxOtvTXhDsV2z0BKjbJVArhpyf4bMhazPdlHzqtRs2d02Y0yxsNkgRzpg/iOjuqZyRmAXCQQz6qwi0FdhfpMsGz5KTfTuENH7iTsGWeKsb8zDRKJlgqYqXQnrrJFX8OIgC3jeDuEw6YEFWXpghQx7bpThqlSsdNtlSZwipfBnd3mGEq5+3+bO7qz3bROKHzgHrDTR1QjX/KcP9+q4ngsdhwmlVNQKudkBJk5CiG/cZz+7MbTox6EAaUJvKSmZvQ2WoaSGeuV4u4wkoT/yw9xyynWJIVeX0eTNSuF2xS+hVGLA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=fWK5pM2SgzhKPbD+1KRSeeKFxL7QAcIQpBfInQNcqMM=;
- b=ww4A5Rh08N81/Rf8lI3QC9LOnmfSyc7mkovC/SphYnoVS42f8aVZGGCfd8wUolpqB/gBamOtvCuk0vNgaR94yYOOeH2x/evk6VHue7qjrgd3OYIwdS7YT7U00W65gUXVcY64SrNKzkTyx04354vAE08ggq9oZ4WDgnWpHcoziqYAzOMSdAjuKZzWYAP9Ope7xOupL0AMoj3gx0qoij/RPnJxzjywOeyXhO/4AAC6X9K/MgSG/TkDfWlURcEoykQ6pq3PFscnWSYvpnSUl5vGf259/qUZfQRcb8C+c1USBM6amG60fQkdRttvn1XLljhrYEBpvQwUWca9zjlFI5NFXA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 165.204.84.17) smtp.rcpttodomain=redhat.com smtp.mailfrom=amd.com; dmarc=pass
- (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=fWK5pM2SgzhKPbD+1KRSeeKFxL7QAcIQpBfInQNcqMM=;
- b=vWiQ6Bg6jeWXle0D58Hh33eRxD+EPkFJ/0C2XKN2Ao2NnE0SVvQn/pyRjNA65molMBOYAyt8UhCOMe2y1KN0z2r6qB/VqRsw3OQUbZMRsVJXZUS4lk0v5TeVbQ/eKq4h4yGkjsb9dRtzssbEQCu8aPsogsfhjdiOIaHenA4EXo0=
-Received: from DM6PR06CA0075.namprd06.prod.outlook.com (2603:10b6:5:336::8) by
- MN0PR12MB6246.namprd12.prod.outlook.com (2603:10b6:208:3c2::9) with
- Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.21.113.18; Wed, 17 Jun 2026 10:00:36 +0000
-Received: from DS2PEPF00003441.namprd04.prod.outlook.com
- (2603:10b6:5:336:cafe::24) by DM6PR06CA0075.outlook.office365.com
- (2603:10b6:5:336::8) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.21.139.11 via Frontend Transport; Wed,
- 17 Jun 2026 10:00:36 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
- smtp.mailfrom=amd.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=amd.com;
-Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
- 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
- client-ip=165.204.84.17; helo=satlexmb08.amd.com; pr=C
-Received: from satlexmb08.amd.com (165.204.84.17) by
- DS2PEPF00003441.mail.protection.outlook.com (10.167.17.68) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.21.139.8 via Frontend Transport; Wed, 17 Jun 2026 10:00:35 +0000
-Received: from satlexmb07.amd.com (10.181.42.216) by satlexmb08.amd.com
- (10.181.42.217) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.41; Wed, 17 Jun
- 2026 05:00:35 -0500
-Received: from [10.65.97.187] (10.180.168.240) by satlexmb07.amd.com
- (10.181.42.216) with Microsoft SMTP Server id 15.2.2562.41 via Frontend
- Transport; Wed, 17 Jun 2026 05:00:33 -0500
-Message-ID: <731fdc4c-3029-4dc8-a483-fdd0be4729e7@amd.com>
-Date: Wed, 17 Jun 2026 18:00:28 +0800
+ (Exim 4.90_1) (envelope-from <tomitamoeko@gmail.com>)
+ id 1wZnAi-0003oJ-CS
+ for qemu-devel@nongnu.org; Wed, 17 Jun 2026 06:07:00 -0400
+Received: from mail-dl1-x1244.google.com ([2607:f8b0:4864:20::1244])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <tomitamoeko@gmail.com>)
+ id 1wZnAg-0008Ny-Eo
+ for qemu-devel@nongnu.org; Wed, 17 Jun 2026 06:07:00 -0400
+Received: by mail-dl1-x1244.google.com with SMTP id
+ a92af1059eb24-1370417c01cso7227092c88.1
+ for <qemu-devel@nongnu.org>; Wed, 17 Jun 2026 03:06:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1781690816; x=1782295616; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=gVL7sFFHpbCPmiC5axwMOU1jI0SPrKvF1e9kwllJLYs=;
+ b=lYzIB9ZCODcgbdKvb45JYqkNeFReHLQYHtXB8DGVCep+lCfO0SkHgt5aU202yFqEFn
+ Y40J2a66pdLEUQ21Zl/hOBCxbyk9bK/hLNcszdl/YBdkl+iswzgpuegf8ZCZepslLbfq
+ Cxy1zMSED+JdP4QqK2S+xH93EaDR86JZmdDhYqlktOHAvNu48YMnYRGBPzUPR1SmBuwD
+ AesqHrXYXhhfoVpjvoiiSXGcTE00v2QgzeHBo6J47NxFkdW7sCELRTdvC2Wai7uzH4s2
+ thrjyZbDI/FzvacBtSG8P2TPp80jwuex55bZBBo5DzOA+9gwp10MuqNzhbiBiR8jUTts
+ Wauw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1781690816; x=1782295616;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=gVL7sFFHpbCPmiC5axwMOU1jI0SPrKvF1e9kwllJLYs=;
+ b=LgBCLynoDKa+skyhUCYUQ4W1WDdS1jpslEUMnkQsgbYxiGVRft/H7PJjlb8UM84JML
+ UWRXYKZz766n9YC/jTzglPZd6PQ/FnRW0t0HnfMh0oq8/781CGcsZ2krX3gAalxDWcPJ
+ dhm0fhw/m7xTWBy1EgAJzX8c+spB/j2F6NwYJOTgFSqXqJe8Q8VZ+TEn1YeKra2Ta/+W
+ sqVkWLJBihzYpjeOBJd77dUC9RMVZqtPYp3vfFjkfUSZs0S8lPw8du8fOddmX2XBXk9G
+ gOrmshqEDhbQ7nJfybEgbnoF23jzODV30CqGz9aged7zo1CjaxGwU2IaqaHfvr4PN2E8
+ 3NLA==
+X-Gm-Message-State: AOJu0YxZl0AhWwJYknSzjO/hVv9FvgmiBbIoz6BGyLAmDqSPEoEGDcQX
+ 4HKxLA6FNOQEL1EwHBCN7HKYSBmRIe4mZ5gsbmT7FPsProx5egDos1eQTmUIFBqvVQ==
+X-Gm-Gg: AfdE7ckSQ0pJE0ekglBJKKR8MRaW9SqwCUo9r/qtuCI8RuPngxtcW4jheNhusJT6pZU
+ iaAZqZgOmBY2WO9dg+cMzCOLhnxTUyW0d6yB8/Uij1QBgo1pahibPl/yGsCVgOwOOdTKhTwh0Dt
+ m2m6NOiBh9wUQGUxvfTcNbCzQWTVP3uL9cl4lon+RSm4kLLPwoIpmDs1P5j3jqeEYs/cZ4NjQ2E
+ iU1oPn7DtE+3uxuBd/uqicU0ToquWTprrjKL6Jfta9SxJ0giw17Iowxf6AZdIlj7sgEUPSuoh27
+ Q+1qjJ8nNhuVa2Yo1rORcfQABl/xMsl6ERu1kyxZJu678p4bnLHJje1bG0yYRthoZZZMRabdEHA
+ GpaE2ESSkEy8NU6ezGA92eNJcc8tHujRLRbLmLblzBdhEhIv4/OY0rA6C/UuQJHbRPGamLIPyaw
+ pSMyb2j7wq2IZoR8EcOfzh
+X-Received: by 2002:a05:7300:324d:b0:307:156f:268c with SMTP id
+ 5a478bee46e88-30bc9ce9b8emr1524086eec.13.1781690815693; 
+ Wed, 17 Jun 2026 03:06:55 -0700 (PDT)
+Received: from kotori-desktop ([2408:820c:8ffd:b5b0:12ba:d5b5:2236:f1f1])
+ by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-3081e5d3f20sm21858490eec.9.2026.06.17.03.06.52
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 17 Jun 2026 03:06:55 -0700 (PDT)
+From: Tomita Moeko <tomitamoeko@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: Alex Williamson <alex@shazbot.org>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Tomita Moeko <tomitamoeko@gmail.com>, K S Maan <kirandeepmaan45@gmail.com>
+Subject: [PATCH v3 0/7] vfio/igd: Fix garbled screen on IGD passthrough with
+ legacy VBIOS
+Date: Wed, 17 Jun 2026 18:06:37 +0800
+Message-ID: <20260617100646.28326-1-tomitamoeko@gmail.com>
+X-Mailer: git-send-email 2.53.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v12 1/4] hw/mem: add sp-mem device for Specific Purpose
- Memory
-To: Igor Mammedov <imammedo@redhat.com>
-CC: <qemu-devel@nongnu.org>, <david@kernel.org>, <gourry@gourry.net>,
- <philmd@mailo.com>, <Zhigang.Luo@amd.com>, <Lianjie.Shi@amd.com>, Peter Xu
- <peterx@redhat.com>
-References: <20260616090808.3047939-1-FangSheng.Huang@amd.com>
- <20260616090808.3047939-2-FangSheng.Huang@amd.com>
- <20260617111652.1bb4d2d4@imammedo>
-From: "Huang, FangSheng (Jerry)" <FangSheng.Huang@amd.com>
-In-Reply-To: <20260617111652.1bb4d2d4@imammedo>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DS2PEPF00003441:EE_|MN0PR12MB6246:EE_
-X-MS-Office365-Filtering-Correlation-Id: 4dbcc394-2e23-416f-f784-08decc57471b
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|23010399003|36860700016|376014|82310400026|1800799024|56012099006|4143699003|11063799006|6133799003|22082099003|18002099003;
-X-Microsoft-Antispam-Message-Info: BK0Mp2wQyR216TSOvusB8O/qEViLDbOaP5McUTIxi9Y48XgiD3pJDr/nZtktjkXhkrpyss+RhaaO53mnI7MQ5Z+jKTqBZXt+qXEKLmhxNGSWDC7jYllHvVrFltuL10ELJd8rHJ28uzj/eADiyi/gr5IeezAEEpSg1buGzI7zE1C3cC2wzwy4kbf6Up/+faukGAfAlfkLv7hbe5/FGectJWmj7es647CM3MxVP1UdETmg0Wjz+fbwejLiqZVZc9QNpXB4hQ2t8qM8tzFzBAN6/w4/M66BuUCAOoWoMyBCIrE5R6WOJFCDfW7AwN8oySBOYmzoFGeTkZDSiepNgiGtwrUsupfgqC9phoG5/n++2v80AAsDcVjjqA3U+0VYcN/rogtGWUwhfr3quPXPm2KE1bQedA2twiAYPtZlScR+V6FYt7eX71Om9FOoRNv+tIdPftH3pFW628pwulZ4VTQpxOzX5Dr7ier70ILJ3LBmzr6be1A3LmuIfQbQppq5jeQNGYNTqiLSc+iropM4ew8hBaTg6/g1zBxVGOptIqG/7n80DVM3afisLpA91NhgiUkh3PW4k+ZB9xjy2EvfhdzlMG8TB83feLmdxQgdZKD8UgIL4i6B3ane1MFBADG1j88JHDMNZnMCnQBEpNWpcMny67UEytWEwMQfXHZzWEjfQLY/JIq8W4/059PfussHWJHZrTeHTqra4iXRYJRuaGejRJjSket/1Xy7A4QA7XmxlDw=
-X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:satlexmb08.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230040)(23010399003)(36860700016)(376014)(82310400026)(1800799024)(56012099006)(4143699003)(11063799006)(6133799003)(22082099003)(18002099003);
- DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: M95mzbY6EOymrQlBlcNLbwMqVFgos8qChKooBkSHz53uGswjY6XyQLCE/57BKZpRCu19SI3a/8M7HJxODZiGXZWBDJCh0QxnCMQiKGCYLEXL3C61kcd4xOpXLOqas0MXqeRhpgFslHgClhHL/jhhPUOEMQKS3kEMDn1+Qc/8guxK9GP5YbzIL/78jkOtEx1Yxj26VQ67ocnvf+e/NI/9c3oon4bjAh8GaSMiuhd5d0VAVYxUawCWrxXtCRt7CXyO7TlfTGyxSdwH5uhY7jyjkzIULfohD1xGXpkBjOewe39NCzHXKJhp34cq/HY8cwMpJaz3ehEpmHou/Pxco8OjNj/UddIrwWLC+LI0HOJX8roi0r0LGFq687uErfzFHDwUQ7ZlXf0jGX0DboR00jGIZl+JmnOCQTY76p9YW/AYrq9zy2abVJha7oIA1BqFEkUr
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 17 Jun 2026 10:00:35.9695 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 4dbcc394-2e23-416f-f784-08decc57471b
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
- Helo=[satlexmb08.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: DS2PEPF00003441.namprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN0PR12MB6246
-Received-SPF: permerror client-ip=52.101.46.20;
- envelope-from=FangSheng.Huang@amd.com;
- helo=CO1PR03CU002.outbound.protection.outlook.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1244;
+ envelope-from=tomitamoeko@gmail.com; helo=mail-dl1-x1244.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -130,129 +100,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+This series fixes the regression that on IGD passthrough with legacy
+BIOS boot and VBIOS, the screen is garbled during BIOS POST and GRUB
+(which uses standard VGA output routines), starting from QEMU 10.0.
+Though the kernel i915 driver still works, it reports an error about
+the initial GTT programmed by VBIOS is using invalid address.
 
+i915 0000:00:02.0: [drm] *ERROR* Initial plane programming using invalid range, dma_addr=0x00000000db200000 ((null) [0x00000000baf00000-0x00000000beefffff])
 
-On 6/17/2026 5:16 PM, Igor Mammedov wrote:
-> On Tue, 16 Jun 2026 17:08:05 +0800
-> fanhuang <FangSheng.Huang@amd.com> wrote:
-> 
->> Introduce a TYPE_MEMORY_DEVICE subclass `sp-mem` for boot-time
->> SOFT_RESERVED memory exposed to the guest with a per-device NUMA
->> proximity domain.
->>
->> The device targets accelerator memory (HBM and similar) that the
->> firmware hands to the guest OS as SOFT_RESERVED memory, so a driver
->> in the guest -- rather than the kernel's general allocator -- owns
->> the range.
->>
->> Usage:
->>
->>      -object memory-backend-ram,id=spm0,size=$SIZE
->>      -numa node,nodeid=$N
->>      -device sp-mem,id=dev0,memdev=spm0,node=$N[,addr=$GPA]
->>
->> The device is boot-time only (no hotplug).
-> 
-> Modulo nitpicking/patch splitting and a migration question LGTM
-> 
->> +            case MEMORY_DEVICE_INFO_KIND_SP_MEM:
->> +                spmi = value->u.sp_mem.data;
->> +                monitor_printf(mon, "Memory device [%s]: \"%s\"\n",
->> +                               MemoryDeviceInfoKind_str(value->type),
->> +                               spmi->id ? spmi->id : "");
->> +                monitor_printf(mon, "  addr: 0x%" PRIx64 "\n", spmi->addr);
->> +                monitor_printf(mon, "  node: %" PRId64 "\n", spmi->node);
->> +                monitor_printf(mon, "  size: %" PRIu64 "\n", spmi->size);
->> +                monitor_printf(mon, "  memdev: %s\n", spmi->memdev);
->> +                break;
->>               default:
->>                   g_assert_not_reached();
->>               }
-> 
-> hmp could be a separate patch.
-> 
-> 
->> +static void sp_mem_fill_device_info(const MemoryDeviceState *md,
->> +                                    MemoryDeviceInfo *info)
->> +{
->> +    SpMemDeviceInfo *di = g_new0(SpMemDeviceInfo, 1);
->> +    SpMemDevice *spm = SP_MEM(md);
->> +    DeviceState *dev = DEVICE(md);
->> +
->> +    di->id = dev->id ? g_strdup(dev->id) : NULL;
->> +    di->addr = spm->addr;
->> +    di->size = memory_region_size(
->> +                   host_memory_backend_get_memory(spm->hostmem));
->> +    di->node = spm->node;
->> +    di->memdev = object_get_canonical_path(OBJECT(spm->hostmem));
->> +
->> +    info->u.sp_mem.data = di;
->> +    info->type = MEMORY_DEVICE_INFO_KIND_SP_MEM;
->> +}
-> 
-> if missing this doesn't break anything, I'd bundle it together with hmp patch
-> 
->
+With the help of AI disassembling the VBIOS image dumped from host, it
+is found that the VBIOS itself implements a routine like:
 
-Will split the introspection bits (fill_device_info + the HMP
-printer) into their own patch in the next respin.
+    uint32_t get_BDSM() {
+        static uint32_t saved = 0;
+        if (saved != 0) {
+            return saved;
+        }
+        return read_pci_config(BDSM_REG);
+    }
 
->> +
->> +static void sp_mem_realize(DeviceState *dev, Error **errp)
->> +{
->> +    SpMemDevice *spm = SP_MEM(dev);
->> +
->> +    if (!spm->hostmem) {
->> +        error_setg(errp, "'%s' property is required", SP_MEM_MEMDEV_PROP);
->> +        return;
->> +    }
->> +    if (host_memory_backend_is_mapped(spm->hostmem)) {
->> +        error_setg(errp, "memory backend '%s' is already in use",
->> +                   object_get_canonical_path_component(OBJECT(spm->hostmem)));
->> +        return;
->> +    }
->> +    host_memory_backend_set_mapped(spm->hostmem, true);
->> +}
->> +
->> +static void sp_mem_unrealize(DeviceState *dev)
->> +{
->> +    SpMemDevice *spm = SP_MEM(dev);
->> +
->> +    host_memory_backend_set_mapped(spm->hostmem, false);
->> +}
->> +
->> +static const VMStateDescription vmstate_sp_mem = {
->> +    .name = TYPE_SP_MEM,
->> +    /* boot-time only; no plug/unplug state to migrate */
->> +    .unmigratable = 1,
-> 
-> this is explicit migration blocker, isn't it?
-> are we sure about setting it un-migratable, if yes/no than why?
-> 
-> I don't see how plug/unplug is involved here,
-> but I'd speculate that we would want to migrate memory content itself.
-> 
-> CCing Peter,
->   for a look from migration pov
-> 
-> 
+And the saved value is not cleared after initialization. Given that IGD
+devices don't have a real ROM BAR, the VBIOS image read by default from
+host is actually the VBIOS shadow RAM region, containing host-side
+modifications like the saved BDSM value above during POST. When the
+image is executed in guest, it still uses the saved host BDSM (HPA)
+instead of the value programmed by SeaBIOS in config space (GPA). This
+address mismatch leads to the garbled screen and i915 error.
 
-You're right that the "plug/unplug" wording is off.
+The previous solution, c4c45e943e51 ("vfio/pci: Intel graphics legacy
+mode assignment"), adjusts GTT entry addresses to (addr - host BDSM +
+guest BDSM) to workaround that. But it is removed in 5aed8b0f0be2
+("vfio/igd: Remove GTT write quirk in IO BAR 4") due to inconsistent
+values in MMIO BAR0 and IO BAR4. Considering it's unsafe to expose HPA
+to guest, a ROM quirk clearing the saved value in VBIOS image is
+introduced to fix the issue.
 
-The device carries no per-device migration state, so with a normal
-RAM backend it would migrate like pc-dimm. I'd originally marked it
-unmigratable out of caution, being unsure whether the backend could
-be migrated -- but on reflection that's a property of the backend,
-not of sp-mem: a backend that can't be migrated can express that
-itself, independently of this device. So dropping the flag and
-letting sp-mem migrate like pc-dimm, leaving any restriction to the
-backend, looks like the more flexible choice.
+During debugging, it is also found that IGD VBIOS ROM doesn't always
+match the actual IGD device ID, due to the fact that IGD of the same
+CPU family has multiple device IDs but shares the same ROM image.
+However, SeaBIOS checks the device ID strictly and refuses to run if
+IDs does not match. Currently only the default path, reading ROM from
+kernel patches the device ID, but the romfile path doesn't. So the ROM
+ID patching logic is also refactored in this patch series to also handle
+the romfile path.
 
-Peter, does that match your view, or is there a reason to keep a gate
-at the device?
+These changes are tested on Haswell platform with legacy BIOS boot, by
+K S Maan. Thanks to K S Maan for continuous help on locating and testing
+the issue!
 
-Best regards,
-FangSheng Huang (Jerry)
-> 
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3093
+Reported-by: K S Maan <kirandeepmaan45@gmail.com>
+
+Changelog:
+v3:
+* Refactor ROM checksum calculation and patching logic as Alex's comment
+* Fix boundary checks as comments in v2.
+Link: https://lore.kernel.org/all/20260608134559.23971-1-tomitamoeko@gmail.com/t
+
+v2:
+* New patch 2/7 to fix regression with EFI option ROMs
+* Refine logic in ROM ID and checksum patching
+* Reorder patch 4 and 5 for cleaner bisection
+* Address comments from v1
+Link: https://lore.kernel.org/all/20260603173355.36121-1-tomitamoeko@gmail.com/t
+
+Tomita Moeko (7):
+  hw/pci: Recalculate option ROM checksum before patching ID
+  hw/pci: Skip EFI option ROM in pci_patch_ids()
+  hw/pci: Introduce rom_need_patch_id flag in PCIDevice
+  hw/pci: Promote pci_patch_ids() to public pci_rom_patch_ids()
+  vfio/igd: Toggle rom_need_patch_id flag on IGD devices
+  vfio/pci: Use pci_rom_patch_ids() for IGD ROM ID patching
+  vfio/igd: Clear saved BDSM in legacy VBIOS ROM at load time
+
+ hw/pci/pci.c                |  57 ++++++++++------
+ hw/vfio/igd-stubs.c         |   5 ++
+ hw/vfio/igd.c               | 132 ++++++++++++++++++++++++++++++++++--
+ hw/vfio/pci-quirks.c        |   5 ++
+ hw/vfio/pci.c               |  33 ++-------
+ hw/vfio/pci.h               |   3 +
+ hw/vfio/trace-events        |   1 +
+ include/hw/pci/pci.h        |   3 +
+ include/hw/pci/pci_device.h |   1 +
+ 9 files changed, 186 insertions(+), 54 deletions(-)
+
+-- 
+2.53.0
 
 
