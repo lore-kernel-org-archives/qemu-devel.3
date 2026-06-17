@@ -4,45 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28FAACD98F1
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jun 2026 12:03:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF3F5CD98E4
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jun 2026 12:03:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZoz2-0004Iy-AG; Wed, 17 Jun 2026 08:03:04 -0400
+	id 1wZozA-0004Xr-GD; Wed, 17 Jun 2026 08:03:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <guobin@U-QD9X07DR-1901.local>)
- id 1wZkgf-0007WK-Rs
- for qemu-devel@nongnu.org; Wed, 17 Jun 2026 03:27:54 -0400
-Received: from [140.205.11.250] (helo=U-QD9X07DR-1901.local)
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <guobin@U-QD9X07DR-1901.local>) id 1wZkgV-00009T-85
- for qemu-devel@nongnu.org; Wed, 17 Jun 2026 03:27:48 -0400
-Received: by U-QD9X07DR-1901.local (Postfix, from userid 502)
- id AF40A5DFDE63; Wed, 17 Jun 2026 15:27:12 +0800 (CST)
-To: peterx@redhat.com
-Cc: farosas@suse.de, guobin@linux.alibaba.com, lizhijian@fujitsu.com,
- qemu-devel@nongnu.org
-Subject: Re: [PATCH 1/2] migration/rdma: honor blocking mode in QIOChannelRDMA
- readv
-Date: Wed, 17 Jun 2026 15:27:11 +0800
-Message-ID: <20260617072712.83154-1-laiqi.gb@alibaba-inc.com>
+ (Exim 4.90_1) (envelope-from <lobanov-vla@yandex.ru>)
+ id 1wZmqR-0005v6-MH; Wed, 17 Jun 2026 05:46:03 -0400
+Received: from forward100a.mail.yandex.net ([2a02:6b8:c0e:500:1:45:d181:d100])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <lobanov-vla@yandex.ru>)
+ id 1wZmqP-0002N2-Gw; Wed, 17 Jun 2026 05:46:03 -0400
+Received: from mail-nwsmtp-smtp-production-main-64.vla.yp-c.yandex.net
+ (mail-nwsmtp-smtp-production-main-64.vla.yp-c.yandex.net
+ [IPv6:2a02:6b8:c1d:713f:0:640:12cb:0])
+ by forward100a.mail.yandex.net (Yandex) with ESMTPS id 08BEDC06EA;
+ Wed, 17 Jun 2026 12:45:54 +0300 (MSK)
+Received: by mail-nwsmtp-smtp-production-main-64.vla.yp-c.yandex.net (smtp)
+ with ESMTPSA id ojNjJbpeaiE0-EMZIIV2J; 
+ Wed, 17 Jun 2026 12:45:53 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex.ru; s=mail;
+ t=1781689553; bh=EVaD91U778GPavlRVIBviv08gdBWzqmegGsObBePI6A=;
+ h=Message-ID:Date:Cc:Subject:To:From;
+ b=KxB5rzlEutMzwkrbWQ6HQc4LPLnA1XdfWvI4XFcfjzjUmfWd01M6EEKgfUPKHay/R
+ kp+fN0TsZlnax9sjrPgXDFlY8NqZbaNKkApKA6It9QvQULOCjpsaUDUqky1LERocMP
+ J4nvBAJ/nh06+hkqbBMYrRPV8wPQHgXOObuGOnFg=
+Authentication-Results: mail-nwsmtp-smtp-production-main-64.vla.yp-c.yandex.net;
+ dkim=pass header.i=@yandex.ru
+From: Vladimir Lobanov <lobanov-vla@yandex.ru>
+To: qemu-devel@nongnu.org
+Cc: qemu-block@nongnu.org, kwolf@redhat.com, hreitz@redhat.com,
+ qemu-trivial@nongnu.org, Vladimir Lobanov <lobanov-vla@yandex.ru>
+Subject: [PATCH] block/curl: set User-Agent header
+Date: Wed, 17 Jun 2026 12:44:56 +0300
+Message-ID: <20260617094456.94880-1-lobanov-vla@yandex.ru>
 X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20260529070408.92651-2-guobin@linux.alibaba.com>
-References: <20260529070408.92651-1-guobin@linux.alibaba.com>
- <20260529070408.92651-2-guobin@linux.alibaba.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 140.205.11.250 (deferred)
-Received-SPF: none client-ip=140.205.11.250;
- envelope-from=guobin@U-QD9X07DR-1901.local; helo=U-QD9X07DR-1901.local
-X-Spam_score_int: -8
-X-Spam_score: -0.9
-X-Spam_bar: /
-X-Spam_report: (-0.9 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.249, NO_DNS_FOR_FROM=0.001, RDNS_NONE=0.793,
- SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2a02:6b8:c0e:500:1:45:d181:d100;
+ envelope-from=lobanov-vla@yandex.ru; helo=forward100a.mail.yandex.net
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-Mailman-Approved-At: Wed, 17 Jun 2026 08:02:38 -0400
 X-BeenThere: qemu-devel@nongnu.org
@@ -56,37 +67,36 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  "laiqi.gb" <laiqi.gb@alibaba-inc.com>
-From:  "laiqi.gb" via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Bin Guo <guobin@linux.alibaba.com>
+Some HTTP servers and WAFs (e.g. Amazon CloudFront) reject
+requests without a User-Agent header with 403 Forbidden. This
+makes qemu-img info and other curl-based operations fail on
+such URLs without any obvious indication of the root cause.
 
-On Tue, 16 Jun 2026, Peter Xu wrote:
-> this patch made it the other way round: the channel didn't respect
-> blocking mode because it always blocks, not always non-block.
+Set a "QEMU/<version>" User-Agent string on all curl handles
+to ensure compatibility with these endpoints.
 
-You're right, the commit message was misleading.
+Signed-off-by: Vladimir Lobanov <lobanov-vla@yandex.ru>
+---
+ block/curl.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-The function already blocks inside qemu_rdma_exchange_recv() when
-waiting for the next RDMA SEND message.  What it didn't do was keep
-blocking when the bytes from a *single* receive were not enough to
-satisfy the full request -- it would return partial data instead of
-waiting for more.
+diff --git a/block/curl.c b/block/curl.c
+index 684c677ef7..1958eb80d1 100644
+--- a/block/curl.c
++++ b/block/curl.c
+@@ -482,6 +482,8 @@ static int curl_init_state(BDRVCURLState *s, CURLState *state)
+             }
+         }
+         if (curl_easy_setopt(state->curl, CURLOPT_TIMEOUT, (long)s->timeout) ||
++            curl_easy_setopt(state->curl, CURLOPT_USERAGENT,
++                             "QEMU/" QEMU_VERSION) ||
+             curl_easy_setopt(state->curl, CURLOPT_WRITEFUNCTION,
+                              (void *)curl_read_cb) ||
+             curl_easy_setopt(state->curl, CURLOPT_WRITEDATA, (void *)state) ||
+-- 
+2.50.1 (Apple Git-155)
 
-In blocking mode a QIOChannel readv should keep trying until the
-request is satisfied (or an error occurs), matching the behaviour of
-other QIOChannel implementations.  That's what the loop is for.
-
-> Also, this is only the read path; there's also write.
-
-The write path already loops over the full iov in
-qio_channel_rdma_writev(), so it handles the blocking case
-correctly.  Only read needed fixing.
-
-I send a v2 with a corrected commit message.  Thanks for the
-review.
-
-Bin Guo
 
