@@ -4,108 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 834ADCD98E2
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jun 2026 06:24:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1562CD98EE
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jun 2026 06:24:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZjh3-0002zj-Ot; Wed, 17 Jun 2026 02:24:09 -0400
+	id 1wZjfx-0001tq-2x; Wed, 17 Jun 2026 02:23:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <saif.abrar@linux.ibm.com>)
- id 1wZjgy-0002ad-Qa; Wed, 17 Jun 2026 02:24:06 -0400
+ id 1wZjJ2-0004O6-Bg; Wed, 17 Jun 2026 01:59:20 -0400
 Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <saif.abrar@linux.ibm.com>)
- id 1wZjgx-0004BD-6F; Wed, 17 Jun 2026 02:24:04 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ id 1wZjJ0-0007Yc-U2; Wed, 17 Jun 2026 01:59:20 -0400
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65GLnbXD2726646; Wed, 17 Jun 2026 06:23:53 GMT
+ 65GLmdUZ2746645; Wed, 17 Jun 2026 05:59:08 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=DwLRdf
- a+0Q5lqkim6BdE3EQnj6iqA+5nKwrtwq4eSiM=; b=H0VHYvWphmSJ56Zx7Eu+dI
- ABTljAokKyfxLIqrRHCuP31aFHZCltQXrzvAmrBOTE04iMMmuJlMuGL9ZmNfxUGr
- 8Maz/5H5rEx843sCjGG+NoWVyEhL5EAiTg69rJSAWXXqJ57xzZEKkgCzMBKgwsic
- KwMm2/bzn9adxn6zsBc/vDBayB7qfEUyKpIv2w9C80QMQddbmCS1q9tbBJobKa5r
- faAIVazq296LIPqh+XdLuHmNH5hKO+3Ce9rVsI3nK7f9YscZXLxWzcRjPZ+ehJT/
- hkSgNPJig33/x50OWdLTKlPHNH5mTSSS4ND/bl1Su0DTUJs3qYFk/guWweym8j6Q
+ :message-id:mime-version:references:subject:to; s=pp1; bh=TNBHPB
+ u6FVSPkX45PYGSq/dMq/VZnd5wBbvFt7inwes=; b=BIntQSC90pkbTUjRPkGEJF
+ xhcJkPTaxxRcnf+vg/OGXMnx7yZyzs8bg2ADAG5AGk/ZkSc7Oa5TFtN3jz+DfxvK
+ DNDoyFv4MvLeUjoIuKOaUUN0o9PQVlA2bk5zZgKtySPhcLTm3CsJQDqY+MTL55GL
+ u2BJQN3vgmWSMmrlax++zW4IlmYXIIdD1pDGyByFCJ81jWZsZCvd+5t5fkjP4+gH
+ nUxYbrKQZEe8183BWwle1OZEJX75ymD9P0KumSP4gzzeVbJAH8CRtIchS9OImsA2
+ 1+lUWvyp01sgQrVNGYKe0vgQ64M68aI7aaWwNlmAhTn/jCDdb0SlpajESxz9iRPw
  ==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4eueqvsgxg-1
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4eueqthej0-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 17 Jun 2026 06:23:52 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 65H6JfYM031672;
- Wed, 17 Jun 2026 06:23:51 GMT
-Received: from smtprelay06.wdc07v.mail.ibm.com ([172.16.1.73])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4eudvahtp3-1
+ Wed, 17 Jun 2026 05:59:08 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 65H5neYh005738;
+ Wed, 17 Jun 2026 05:59:07 GMT
+Received: from smtprelay04.wdc07v.mail.ibm.com ([172.16.1.71])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4eudva9r99-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 17 Jun 2026 06:23:51 +0000 (GMT)
+ Wed, 17 Jun 2026 05:59:07 +0000 (GMT)
 Received: from smtpav03.dal12v.mail.ibm.com (smtpav03.dal12v.mail.ibm.com
  [10.241.53.102])
- by smtprelay06.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 65H6No9T59900402
+ by smtprelay04.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 65H5x5H036438738
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 17 Jun 2026 06:23:50 GMT
+ Wed, 17 Jun 2026 05:59:05 GMT
 Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 0AA3358056;
- Wed, 17 Jun 2026 06:23:50 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 8325D5803F;
+ Wed, 17 Jun 2026 05:59:05 +0000 (GMT)
 Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 9107F5803F;
- Wed, 17 Jun 2026 06:23:45 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 3809858056;
+ Wed, 17 Jun 2026 05:59:01 +0000 (GMT)
 Received: from [9.43.52.172] (unknown [9.43.52.172])
  by smtpav03.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Wed, 17 Jun 2026 06:23:45 +0000 (GMT)
-Message-ID: <210088ac-2a9a-44ad-8b32-1e6b589e9d5b@linux.ibm.com>
-Date: Wed, 17 Jun 2026 11:53:43 +0530
+ Wed, 17 Jun 2026 05:59:00 +0000 (GMT)
+Message-ID: <5ceda019-6ec5-4743-95d8-249702d8776f@linux.ibm.com>
+Date: Wed, 17 Jun 2026 11:28:59 +0530
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 4/9] pnv/phb4: Implement read-only and write-only bits
- of registers
-To: Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-ppc@nongnu.org,
- qemu-devel@nongnu.org
-Cc: clg@kaod.org, npiggin@gmail.com, fbarrat@linux.ibm.com, mst@redhat.com,
+Subject: Re: [PATCH v4 1/9] qtest/phb4: Add testbench for PHB4
+To: Aditya Gupta <adityag@linux.ibm.com>
+Cc: qemu-ppc@nongnu.org, qemu-devel@nongnu.org, clg@kaod.org,
+ npiggin@gmail.com, fbarrat@linux.ibm.com, mst@redhat.com,
  marcel.apfelbaum@gmail.com, cohuck@redhat.com, pbonzini@redhat.com,
  thuth@redhat.com, lvivier@redhat.com, danielhb413@gmail.com
 References: <20260210134110.1515322-1-saif.abrar@linux.vnet.ibm.com>
  <20260305060923.3753402-1-saif.abrar@linux.vnet.ibm.com>
- <20260305060923.3753402-5-saif.abrar@linux.vnet.ibm.com>
- <a82978fb-98d6-4538-abac-db6c9212d396@linux.ibm.com>
+ <20260305060923.3753402-2-saif.abrar@linux.vnet.ibm.com>
+ <af9FJIWPOH5Bej7y@li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com>
 Content-Language: en-US
 From: Saif Abrar <saif.abrar@linux.ibm.com>
-In-Reply-To: <a82978fb-98d6-4538-abac-db6c9212d396@linux.ibm.com>
+In-Reply-To: <af9FJIWPOH5Bej7y@li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 X-TM-AS-GCONF: 00
 X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjE3MDA1NyBTYWx0ZWRfXzXBf8evaOPQp
- VD36CwjqWBI1IrF+3ure9M+kAq4upLvDNURXOCfn5NyhfLT6wHYvA3l97ZbPIZBRHpCoAdNnAhc
- e0A2j46hk7h59cOQqIlpGoT2l7REe3Y=
-X-Proofpoint-GUID: V1goaoM2SFnKrXgnwke8-H4KWzVIOZqx
-X-Authority-Analysis: v=2.4 cv=bMgm5v+Z c=1 sm=1 tr=0 ts=6a323d78 cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+X-Proofpoint-ORIG-GUID: 5B6iGCaALcMiMEft7nA2zF5RmPOElAIh
+X-Proofpoint-GUID: kD2hgG5gIoBnEvHU065kapTLufjSu6Xm
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjE3MDA1MSBTYWx0ZWRfX0XhnRYLqzcur
+ KN0vMoK2GQABVHg1Evdw0NDXpe4CyfET4SqJ5iuAcOYp3pcmUYEGIUfyGvFo52qXu5FGDUV7q6v
+ OZPRCS93LIjpAnhiK11DuhEUqkOz5cMWWqfgkCxcCDYQBVQaUYBD/BXOC9OoD8DuJUSed7XxaLT
+ DuzX4tg/UEoc+YymwJsu52JMnZ3a7d1KBC+UK1XyDR56yA/QkX9tvw7zz7o5DoGaQ0qwQ5kPibB
+ bZ5D07IiilKi7NkrVIrZyZetxDoQvfd+XPYt3OGLicyMc7de0EecKk2J3PZIFAH8kgPlwntUHMF
+ 8xdajr7DNcjZ8V6mT3Wu71DFtC5JJKpCAcMW7PJLJBx+QEO9Xo/NFaQ8i8+W5xYq1uHszP18dAN
+ dhcjSt4zCZXax2pZlOfn4uCTO+ICmGyddsGnb12AtoUxc86H752N6Nh2RtAmZWuZMsRO4r1zJR8
+ sa6iNcnJFQT3GSPlulQ==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjE3MDA1MSBTYWx0ZWRfXwpX4zQ3PROLf
+ ig2HZYrQex2x2UJ0NhfSX8tOK59z7+QA04j69yg3pAPyzNevjVXpLlMqQOLl11I6SunE8X6IPFl
+ +R3aLeQvLWiJrv1NcyhP+/PT7fWnCrQ=
+X-Authority-Analysis: v=2.4 cv=B4KJFutM c=1 sm=1 tr=0 ts=6a3237ac cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
  a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=Vz1Z3UIzIUAG2MwulxIA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: 3QVSjewwvovpG7JLkmC8WmDWNT3wpD72
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjE3MDA1NyBTYWx0ZWRfX+iL3VZHL9dGe
- 7kYCd0HeoO2+rWLJiPL9NkJSLpGZu/sbEhkxvpmR/kIFYjRQqzdV7E+0e1+7VhrOTFJPJjfO5Fr
- g5lqn3Bv926k+s1Zz23z6f9MPmhkuGDscE7QfbsT5M8oVomnPkgGMYxexvYuJNnYXMS20E61z9R
- Zs94vDr/oqPd1m4Wr8tseHaRCAF235qJ8DiIZKefyfhufztFRCDPiZScbop4RCTbLkzo0cGR8y2
- GW6MewRKCtzAHMo2iuh6Dv67mRO6ObUXV+NTXOrS/LeYceRisGWEP7To5DH/2PSViFRxMm/v+uc
- 0HYiD9Wx5sBSQ9LWXviMpNCs2YQJq6sckvFop2Q9kh94jBFnnXrA/d+e1tHDbx92Bor9H3AAgfq
- uC3lwBKnvEL8ESNbI4ec+gURdeTvTAsyhnfCeOKHoa4WAxoKekf1pajm+n+ni7p0Ny2BTfUiW75
- 2PBiDlnVboDPIIFa0kQ==
+ a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=zjctwEK5lmB8oGVZkGgA:9
+ a=QEXdDO2ut3YA:10
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-06-16_05,2026-06-16_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 impostorscore=0 malwarescore=0 adultscore=0 spamscore=0
- bulkscore=0 priorityscore=1501 phishscore=0 clxscore=1015 lowpriorityscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606170057
+ malwarescore=0 adultscore=0 lowpriorityscore=0 suspectscore=0
+ priorityscore=1501 clxscore=1011 phishscore=0 spamscore=0 bulkscore=0
+ impostorscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2606170051
 Received-SPF: pass client-ip=148.163.156.1;
  envelope-from=saif.abrar@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
 X-Spam_score_int: -26
@@ -116,6 +116,7 @@ X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Wed, 17 Jun 2026 02:22:58 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -131,33 +132,32 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
-On 05-05-2026 20:25, Harsh Prateek Bora wrote:
->
->
-> On 05/03/26 11:39 am, Saif Abrar wrote:
->> @@ -1755,6 +1819,9 @@ static void pnv_phb4_instance_init(Object *obj)
->>         /* XIVE interrupt source object */
->>       object_initialize_child(obj, "source", &phb->xsrc, 
->> TYPE_XIVE_SOURCE);
+On 09-05-2026 20:03, Aditya Gupta wrote:
+> On 26/03/05 12:09AM, Saif Abrar wrote:
+>> <...snip...>
+>>
+>> +#define PHB3_PBCQ_SPCI_ASB_ADDR      0x0
+>> +#define PHB3_PBCQ_SPCI_ASB_DATA      0x2
 >> +
->> +    /* Initialize RO-mask of registers */
->> +    pnv_phb4_ro_mask_init(phb);
->>   }
->>     void pnv_phb4_bus_init(DeviceState *dev, PnvPHB4 *phb)
->> @@ -1934,6 +2001,7 @@ static const TypeInfo pnv_phb4_type_info = {
->>       .parent        = TYPE_DEVICE,
->>       .instance_init = pnv_phb4_instance_init,
->>       .instance_size = sizeof(PnvPHB4),
->> +    .class_size    = sizeof(PnvPHB4Class),
->>       .class_init    = pnv_phb4_class_init,
+>> +/* Index of PNV_CHIP_POWER10 in pnv_chips[] within "pnv-xscom.h" */
+>> +#define PNV_P10_CHIP_INDEX      3
+> nit: this is unused as of this patch.
+
+
+Removed from this patch.
+
+
 >
-> PnvPHB4Class is introducing per-register RO masks which is supposed to 
-> be a class data, but this is being initialized in instance_init which 
-> is odd. Shouldn't this be taken care via class_init ?
-> I am not a QOM expert, but this looks like a design issue.
+> rest looks good to me. i had comment about using p11, but noticed none
+> of the qtest having it, maybe that can be done separately.
 
 
-Moved to class_init() method.
+POWER11 uses same PHB5 as POWER10.
+
+
+>
+> Thanks,
+> - Aditya G
 
 
 Thanks,
