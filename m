@@ -4,79 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68AF0CD98F1
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5424ECD98F0
 	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jun 2026 12:03:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZoyg-00043z-Ca; Wed, 17 Jun 2026 08:02:42 -0400
+	id 1wZoyw-0004Ew-Be; Wed, 17 Jun 2026 08:03:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <163wangjack@gmail.com>)
- id 1wZorT-0002Sm-6q
- for qemu-devel@nongnu.org; Wed, 17 Jun 2026 07:55:16 -0400
+ id 1wZorK-0002KW-Lq
+ for qemu-devel@nongnu.org; Wed, 17 Jun 2026 07:55:06 -0400
 Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <163wangjack@gmail.com>)
- id 1wZorR-0006HC-7p
- for qemu-devel@nongnu.org; Wed, 17 Jun 2026 07:55:14 -0400
+ id 1wZorH-0005z7-K8
+ for qemu-devel@nongnu.org; Wed, 17 Jun 2026 07:55:06 -0400
 Received: by mail-pl1-x630.google.com with SMTP id
- d9443c01a7336-2c6c101aeafso3284895ad.0
- for <qemu-devel@nongnu.org>; Wed, 17 Jun 2026 04:55:12 -0700 (PDT)
+ d9443c01a7336-2c40397e3caso54817565ad.2
+ for <qemu-devel@nongnu.org>; Wed, 17 Jun 2026 04:55:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1781697312; x=1782302112; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=934hamAJ+JSUr2HsPwZHL2EyxcVP/T+xXV5QPm/j1Y4=;
- b=bPwd/Jpm3tjFB+CmltKeI8d0kQ20twbWDHNKgCwUKnbNv9p/Abs2fipWtfSofUVBt2
- Gmvt4vEFm+PtJqlNsJjaVoPIfdITXbwKKGRzJWZK0sU90culoJxMrjoCkTlL9pXkcpnl
- gFh3yND+TlBj133ne0HR+mHAx0RzEPI9fzOCEQNFGXDWfWHHnjth8/apmuzbbZGG82uU
- Y8h0ya4Yo0NQV0SxPkQBLP9CSiVN3YyrwqhKwkHxOI/yUIVTsGf/X2GzY5VD2jcqSTfx
- ihkAbvijK9Gdkfvz9c4X80A+hzWehjpPOgdRoHdqLUcPGGWL2C2zWLiq0SskzrcukoIV
- auhg==
+ d=gmail.com; s=20251104; t=1781697302; x=1782302102; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=HuoZ1XF/SGtRMQNUv5o7lgVgKw3GW1pchp5QRRK8IPk=;
+ b=Zr4yCHxfwQKuphQl9w5v0iw1P1Oebhg52X/S9tY/9ty663qA/73EhVo7tHrHWp6GiU
+ EHHIpieQ+ymYPslVbYeCmO8pdHgS+nyqqq4+RvTGn8ZZhhSJuL0N1OBu25vDujZzlebX
+ K/537d9lcJd5I+g6zq0E8A9oY6J+fm3RTSsj5ZfL27NVbKZrqOPXl4Sdba9Oq+Vb8Ggu
+ nzTVe1xCm4K/j8Lxq1uJD3Hi3wjzOqauF4S01w1+I4lrjrfoWB/Q6m5cH3N2RuV6MOzy
+ WjQAPTa7ROOCq2LKjiGEJA/TmqKRyPojmD7FmIkW1sLA/NoRFow7liQ7zlK+FukcfG7E
+ 573w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781697312; x=1782302112;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=934hamAJ+JSUr2HsPwZHL2EyxcVP/T+xXV5QPm/j1Y4=;
- b=M59BZ0nREfOYhnwRlXkgrj2ifvLO1uqqPsCOkAaNrR8kMc6jGRZloOMK9xDY4ytUn9
- Z4zgNDWToNJlk6srQt0iQRIwaW6K442xzMKioAZeBJkZyN1njirEqexgrFkr1/XkWpQi
- 3eUH/XulMDXwEHnf4OQX+sF0u9cyu/3leQMYlR3ibDGIR9slxJKphleMyyBg7CqB3Iu3
- BeRrB4LRdgssjr1kgMuc5lzStgyFHbIvpdZbZgTy0/8GsVO8ja85lvOtPzo4YI1XXmnD
- OjSIfBgusL5klTj1uyhxPnw0CP2LqfFCF4bKCHtraVJE9yp1/Bs9qy3fS79iNaYg7RTT
- woEA==
-X-Gm-Message-State: AOJu0YwFTf9EeYOHMHaDXZem779wRdr/TmxtkWRiRjQoxk7Yok245DXb
- F29afksHgremD/MrT77QhoTrzq8K1/hozT5hQvWELd2gxu0PWWWd3uXIJNKmrw==
-X-Gm-Gg: Acq92OF/D4Y0/GoIyvwB++uZisskmAffg5GD+MGSwbRjwrncykAx9TA3cf12+hzh3kX
- OFM5CAK3cEqoK2IOCqhWZlTcX2gvqqs7NnvagcxUq2waSITNOlAvsRY8mcHKgDJy3J3cn8TMznp
- b5rw6FTcdUyYPDCsgcZWzCuRTjwc5SbpZz+5TzLzUwfC5LJFfnBI6/0Cj443UVQmlPaf3mXGiyG
- 5tiqRTRjS2SavNi3nYPbkCzZiF0WOLpqvf4T5ytfLst4dglbiF2X9IPtP8l2UlALhdSmJTONqf/
- UNXuQPQTM2yNFyduBRcB0U+TN5wKtorOl4i6rGwwO6W48mTdlNchjgxbjJ2CCNWqIDGPGUf6EDe
- bDIWOykHXQv7RySyUxmSfzU9iJW1HpcSC+v/SY2F/WWFFFq8Y4SwK9HfL+VqkkbsRoQ40iK2V3z
- 8Ylic42LZ7jVoqW4Cqq+WRuv1Q
-X-Received: by 2002:a17:903:b0d:b0:2c6:95d1:3bbc with SMTP id
- d9443c01a7336-2c6bc1e0086mr34999805ad.24.1781697311702; 
- Wed, 17 Jun 2026 04:55:11 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1781697302; x=1782302102;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=HuoZ1XF/SGtRMQNUv5o7lgVgKw3GW1pchp5QRRK8IPk=;
+ b=My3ntG21bHAjOsAHZ9ked65s/Rzo0sm0KLWyh3nE7MKpy9oVhzudV/pRXCxR2eQ4Di
+ YfhJ3Ve/0OoSIanuDioPBJ/6/p5KsHicFAT4V0mipFL8MxQJcvplHtLgU6pB0+iTNqa9
+ jYFrGkM+V3zEDPAL5b1IE2YzbCgqE0K2tOy5C0MFbY/Mp7dRqpuq07RrbA1sbGnYPAC3
+ GczONyQQoFMLDWqrmTOlv6A7wvDQOrRv4PDRANJYgIAaP41rNrmoBdUYaarzxBEOtjhH
+ aWxQinPw+GfTNRCHoAKIk3ffLOw6tMLMiZ+ZSSqIzasdXrN5/YJpRwOK2KmRtGj8h+Iz
+ 27AA==
+X-Gm-Message-State: AOJu0Yxj3XfhndRN8HEN9NJK+aGLNZAwtlFzmZIzq6aFc0GcTdkd2xqY
+ rKTXp6Vko1HPI0goqcyck53tELmTpx5BJLmFOf+rNbxT4YBTE4l4K5nA2TrPCg==
+X-Gm-Gg: AfdE7cn0yAMTHRS63O0P2LWIaZ1t/WYV99qMAaqGKnpTsNu9j8VdDl9CcSmUdTTGB+P
+ Rd2PV8y5Olqqu2seIDSWIaUWHEmEdMBm1msvCeyJZ7Vm6nXIfviHvW3/fQZnyshphqh+oM9VXt5
+ 7M2jWAFjMMJMjOi/1/tUSbMElfk8nOteIXsFH9xxhyYy1i1dsGYiLWs99/0U9HoImukghFZP4Zi
+ m+BpbN3Z1gC5dSIy4YysOlq2+LMDTozSh9rsYvAhAQw7CBVbk/c9nQl0izhuECTnenEj1pFZJYi
+ xvp8Qr8pj9fi7LiX0x0jyERxQD0pTd5ovJeDYVzIpd0J5xdoO27M2HP4aG0m1sFiTWzeCLX7Cxh
+ AMwJaAZgXzDX3uhunOA3b3rlx79SycJRM+BOjhoiszOrn2VylDj4WDsHAohXVERqNoZ62EcA2xp
+ Tec2wQNzqyzZHcLY9qBvrK+Q2g
+X-Received: by 2002:a17:902:f609:b0:2c1:b8af:18ab with SMTP id
+ d9443c01a7336-2c6bc20b7f0mr36324575ad.19.1781697301939; 
+ Wed, 17 Jun 2026 04:55:01 -0700 (PDT)
 Received: from localhost.localdomain ([82.40.42.115])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2c42f1f1014sm163576605ad.16.2026.06.17.04.55.07
+ d9443c01a7336-2c42f1f1014sm163576605ad.16.2026.06.17.04.54.57
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 17 Jun 2026 04:55:11 -0700 (PDT)
+ Wed, 17 Jun 2026 04:55:01 -0700 (PDT)
 From: jw_mac <163wangjack@gmail.com>
 To: qemu-devel@nongnu.org,
 	qemu-arm@nongnu.org,
 	qemu-trivial@nongnu.org
 Cc: peter.maydell@linaro.org, mjt@tls.msk.ru, laurent@vivier.eu,
- Wang Yuxin <163wangjack@gmail.com>
-Subject: [PATCH trivial] git format-patch -1 --subject-prefix="PATCH
- trivial"Signed-off-by: jw_mac <163wangjack@gamil.com>
-Date: Wed, 17 Jun 2026 19:54:42 +0800
-Message-ID: <20260617115442.91715-2-163wangjack@gmail.com>
+ jw_mac <77239050qq@gmail.com>, Wang <163wangjack@gamil.com>
+Subject: [PATCH trivial] Signed-off-by: jw_mac <163wangjack@gamil.com>
+Date: Wed, 17 Jun 2026 19:54:41 +0800
+Message-ID: <20260617115442.91715-1-163wangjack@gmail.com>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260617115442.91715-1-163wangjack@gmail.com>
-References: <20260617115442.91715-1-163wangjack@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
@@ -104,7 +100,7 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Wang Yuxin <163wangjack@gmail.com>
+From: jw_mac <77239050qq@gmail.com>
 
 hw/timer/imx_epit: Replace DPRINTF with trace events
 
@@ -114,7 +110,7 @@ and DPRINTF macros, replacing them with modern QEMU trace events.
 This also removes an empty and meaningless DPRINTF("\n") in the
 imx_epit_realize function.
 
-Signed-off-by: jw_mac <163wangjack@gmail.com>
+Signed-off-by: Wang <163wangjack@gamil.com>
 ---
  hw/timer/imx_epit.c   | 25 +++++--------------------
  hw/timer/trace-events |  8 ++++++++
