@@ -4,60 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD160CD98E2
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jun 2026 09:52:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D911CD98F1
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jun 2026 09:52:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZmw3-0005jR-Md; Wed, 17 Jun 2026 05:51:51 -0400
+	id 1wZmw1-0005gK-7p; Wed, 17 Jun 2026 05:51:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <saif.abrar@linux.ibm.com>)
- id 1wZmw1-0005gR-JV; Wed, 17 Jun 2026 05:51:49 -0400
+ id 1wZmvz-0005dt-H9; Wed, 17 Jun 2026 05:51:47 -0400
 Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <saif.abrar@linux.ibm.com>)
- id 1wZmw0-00042x-3a; Wed, 17 Jun 2026 05:51:49 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ id 1wZmvx-00040f-RB; Wed, 17 Jun 2026 05:51:47 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65H8mNUi4104945; Wed, 17 Jun 2026 09:51:29 GMT
+ 65H8mTaE080213; Wed, 17 Jun 2026 09:51:25 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=3SRQo6
- RJt5klM2Ao63c4+ZofLEOpcRnCy190aKVi1O0=; b=j9DNjEDFZYTsebcI+Me0u1
- 4DGJDtv4U+8NuyLCSqWNZiGrGfaxfpu56PgPpbQmrauwCQmf6G+P/nLrMh420IqS
- ZEk30bZ/DNFyDMtVV9/8eVylwHNCyzM0XaSSkrF/4pigdXMaZUCupyAHLpu5kZ3f
- ucuD9nP9rXChK7Ph2Gg9cycZS45zTuSZIkCjCiqB5Ca7dJEp5vjLeGqWwyT7B3E9
- a7JrJjgQZwD7IHN7VglO4Xaxbqj5E2C08uUJsdUEJOWE8xnNXP9vh1GQN2LV5nZo
- xS7XHxjui+AHr/xdI7or/1F7SYHdurJ20SDTKt5CoFhAGzLm70IjrQCDDtkRHf4A
+ :message-id:mime-version:references:subject:to; s=pp1; bh=B8LS3r
+ jImZZHtTcnKKlmZtkIGoJntMJpYuliiQlGvAY=; b=Gy0qxFXFNfiSx47beXfpAM
+ rQ/ijauoosvi78PWxnFlC0uWEOkixxq5DDNQV1bEo9mI0syO/O6Rlh/Dbj8mu2qy
+ qVO2ZCeNwgM9dCdF2gzuNItxKOYProTHixWDiMWiCVFADTNMnW03heRok0L36fVQ
+ pc9fO3WXucIbbbicjsDoDVWLaUftU66O/u4IHW2OKh8j/RRbyFCUMkc1/wUot6b4
+ eizISPgo8dIfXn0DvcI/hx0bbLUkxUetqD7g+0vZJZYdXUhcwlX0hrgLwGe5kb5a
+ xAUzn7KfV9G/xJiWaVAgvu1UX3li6y8WGP36XMri8Qm6NfukDrSpPTLY5580fJvQ
  ==
 Received: from ppma23.wdc07v.mail.ibm.com
  (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4eueqvt9cp-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4euequ29aa-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 17 Jun 2026 09:51:28 +0000 (GMT)
+ Wed, 17 Jun 2026 09:51:25 +0000 (GMT)
 Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 65H9nfx2026006;
- Wed, 17 Jun 2026 09:51:27 GMT
-Received: from smtprelay04.wdc07v.mail.ibm.com ([172.16.1.71])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4eudvajha5-1
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 65H9nfHB026023;
+ Wed, 17 Jun 2026 09:51:23 GMT
+Received: from smtprelay02.wdc07v.mail.ibm.com ([172.16.1.69])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4eudvajh9s-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 17 Jun 2026 09:51:27 +0000 (GMT)
+ Wed, 17 Jun 2026 09:51:23 +0000 (GMT)
 Received: from smtpav01.wdc07v.mail.ibm.com (smtpav01.wdc07v.mail.ibm.com
  [10.39.53.228])
- by smtprelay04.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 65H9pQAr33227448
+ by smtprelay02.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 65H9pMvU27001534
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 17 Jun 2026 09:51:26 GMT
+ Wed, 17 Jun 2026 09:51:22 GMT
 Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 337C45804B;
- Wed, 17 Jun 2026 09:51:26 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id A582058065;
+ Wed, 17 Jun 2026 09:51:22 +0000 (GMT)
 Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 928B458063;
- Wed, 17 Jun 2026 09:51:24 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 10E6158059;
+ Wed, 17 Jun 2026 09:51:21 +0000 (GMT)
 Received: from gfwr526.rchland.ibm.com (unknown [9.10.239.119])
  by smtpav01.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Wed, 17 Jun 2026 09:51:24 +0000 (GMT)
+ Wed, 17 Jun 2026 09:51:20 +0000 (GMT)
 From: Saif Abrar <saif.abrar@linux.ibm.com>
 To: qemu-ppc@nongnu.org, qemu-devel@nongnu.org
 Cc: harshpb@linux.ibm.com, clg@kaod.org, npiggin@gmail.com,
@@ -66,10 +66,10 @@ Cc: harshpb@linux.ibm.com, clg@kaod.org, npiggin@gmail.com,
  lvivier@redhat.com, danielhb413@gmail.com, kowal@linux.ibm.com,
  chalapathi.v@linux.ibm.com, calebs@linux.ibm.com, milesg@linux.ibm.com,
  jishnuvw@linux.ibm.com, adityag@linux.ibm.com, amachhiw@linux.ibm.com
-Subject: [PATCH v5 9/9] pnv/phb5: Mask off LSI Source-ID based on number of
- interrupts
-Date: Wed, 17 Jun 2026 04:50:58 -0500
-Message-ID: <20260617095058.652789-10-saif.abrar@linux.ibm.com>
+Subject: [PATCH v5 7/9] pnv/phb5: Set link speed and width in the DLP training
+ control register
+Date: Wed, 17 Jun 2026 04:50:56 -0500
+Message-ID: <20260617095058.652789-8-saif.abrar@linux.ibm.com>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260617095058.652789-1-saif.abrar@linux.ibm.com>
 References: <20260617095058.652789-1-saif.abrar@linux.ibm.com>
@@ -78,31 +78,31 @@ Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
 X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjE3MDA5MiBTYWx0ZWRfXwosyrUpyhlzQ
- dKJAqaMMfZSBdwFeZu225SqRSqHVNHjFLA2IvwanCFWWk2UV+pLMWu8v6czicv+FWI2qj3dYQ7J
- 0WVjlSnIwXHYZpZNivWsvhYEgOIxuWA=
-X-Proofpoint-GUID: 5jn0WmN6PvwzNjY4xZAu8QKX0tTtE3BP
-X-Authority-Analysis: v=2.4 cv=bMgm5v+Z c=1 sm=1 tr=0 ts=6a326e21 cx=c_pps
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjE3MDA5MiBTYWx0ZWRfX3a73Tydv6h4p
+ V4T0vxRwOpHijWJhKoPCX2PfYm0ah3+Jw9D+V8hvncBb2CA88FzlUgztB4cCiBRHIAazFyemlEl
+ 9VC5tu61e3MNYNmnIvgkiYnBHHEc6uM=
+X-Proofpoint-ORIG-GUID: jc9b3GClWQyb3wrXSgdIDnBj0R35XXvU
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjE3MDA5MiBTYWx0ZWRfXxY9e6GAad65/
+ Sjo2gfdlecBZxyklbfVtS5XHBkfrtza/yeJIlhWt6Itx8g6Qikxn7qSkrInOnyP78hiCa2Jbiab
+ 5S8uzqeEWWFuWI3DEy5xSrY09neZNIGJ5mD77KCINmgafBvkDjCr3rCZrft0g3po+ofoDyJV59T
+ /L/D3H0Ku3m4r/XcnHNtpL72ScSzzFG7sroMDldH2WQmB5F1WTyN/fFXvOO/7VIlbnKmQTkamwj
+ BA73VT6xkU8so3uzxQh0EvExGmpXzSnUMyo+39JI52MVNp1smYbv/TV9bdVe+ALS3iYlzC6a3/i
+ zs4hVUOi02ZbkDFdNH7JAb18NfdB9eOEB42tYa/tVVi4fvMUych/ZeIYzTgxV8J1DCwhIJ4ifMr
+ hAZnb9jAXN7BmkZqPrcgBWqLjBeANjh7oofHZnKHdF2kSCCExEv1PGEEJJt9HSMGYkd+2njXE6I
+ 21iCDOxpPKKOst/rWKQ==
+X-Proofpoint-GUID: k-iYQNomFdNf-Evhqvhf8mdtZVT5EUgA
+X-Authority-Analysis: v=2.4 cv=L9gtheT8 c=1 sm=1 tr=0 ts=6a326e1d cx=c_pps
  a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
- a=kUKHeS9f1dJEPYFD:21 a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22
- a=VnNF1IyMAAAA:8 a=aow-egSQAAAA:8 a=ohFWfSm2bDoDx7FHwYQA:9 a=3ZKOabzyN94A:10
+ a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=VnNF1IyMAAAA:8
+ a=aow-egSQAAAA:8 a=20KFwNOVAAAA:8 a=AEFhk3bnKYIRDrMN3YsA:9 a=3ZKOabzyN94A:10
  a=QEXdDO2ut3YA:10 a=gFNbaldVC-z-bsjSTzMo:22
-X-Proofpoint-ORIG-GUID: 0g7TcikoGpS5h8-T1rleNiLOlukA2pz0
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjE3MDA5MiBTYWx0ZWRfX9Y+der0zTFDR
- nOAkxT9rBsn6EF0wEwmx17mtKiF17+Dif/MBG+ZEzEuJVuZhWJxXf+RzfELhXVzRwwe+igJa2q8
- OVwafWMnWY2OZnliuNRe6EZOHfW0CTmtb7XGMP1zwE5lYT1XnX3ScyLKvf0uHVwRFT7BCgsEteE
- q8+VhwT1t7iRJO9ZMwRx1UwVJOH66EPqmv1qYoz8bYlGVcEq9fL481m9+JWdZCLgYqv4TNgk8aL
- dOl0n11e/+u5OOwz4OML++9UmUUTUUnE8bRaWZJk4O6U8O0haIy1n0qKNCmLx2SoP+HUZ7omZ5Q
- xStu/djxBsla0u1W4L+/KAgrbehpymBvd7wOXEDFd9UZgVExoM3Bu+CkVDyhLAH015hxW3ue98z
- hJUTy8afII8JXGWVjPhkq7Vbe5BLvfKvzb+2iEXK1MW/ipcRkow0d861UcJFPdsu1LTgm7d0H0c
- CmRrd3v0PMbAIACkGDQ==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-06-17_01,2026-06-16_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 impostorscore=0 malwarescore=0 adultscore=0 spamscore=0
- bulkscore=0 priorityscore=1501 phishscore=0 clxscore=1015 lowpriorityscore=0
+ bulkscore=0 impostorscore=0 malwarescore=0 clxscore=1015 adultscore=0
+ phishscore=0 lowpriorityscore=0 suspectscore=0 priorityscore=1501 spamscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606170092
 Received-SPF: pass client-ip=148.163.156.1;
@@ -131,67 +131,66 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Saif Abrar <saif.abrar@linux.vnet.ibm.com>
 
-Add a method to reset the value of LSI Source-ID.
-Mask off LSI source-id based on number of interrupts in the big/small PHB.
+Get the current link-status from PCIE macro.
+Extract link-speed and link-width from the link-status
+and set in the DLP training control (PCIE_DLP_TCR) register.
 
 Signed-off-by: Saif Abrar <saif.abrar@linux.ibm.com>
 Reviewed-by: Cédric Le Goater <clg@kaod.org>
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Reviewed-by: Aditya Gupta <adityag@linux.ibm.com>
 Reviewed-by: Jishnu Warrier <Jishnu.Warrier@ibm.com>
 ---
+v5: Using be16_to_cpu as appropriate.
+v4: Variables declaration moved to the top of the method pnv_phb4_reg_read().
 v3: Updates for coding guidelines.
-v2: Introduced method pnv_phb4_xsrc_reset().
 
 
- hw/pci-host/pnv_phb4.c | 12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ hw/pci-host/pnv_phb4.c | 22 ++++++++++++++++++++--
+ 1 file changed, 20 insertions(+), 2 deletions(-)
 
 diff --git a/hw/pci-host/pnv_phb4.c b/hw/pci-host/pnv_phb4.c
-index 91b2064113..08c96aef7d 100644
+index 125f610790..e9d9323dba 100644
 --- a/hw/pci-host/pnv_phb4.c
 +++ b/hw/pci-host/pnv_phb4.c
-@@ -491,6 +491,7 @@ static void pnv_phb4_update_xsrc(PnvPHB4 *phb)
+@@ -899,6 +899,7 @@ static uint64_t pnv_phb4_reg_read(void *opaque, hwaddr off, unsigned size)
+     PCIDevice *pdev = pci_find_device(pci->bus, 0, 0);
+     uint32_t exp_base = get_exp_offset(pdev);
+     uint64_t val;
++    uint32_t v, lnkstatus;
  
-     lsi_base = GETFIELD(PHB_LSI_SRC_ID, phb->regs[PHB_LSI_SOURCE_ID >> 3]);
-     lsi_base <<= 3;
-+    lsi_base &= (xsrc->nr_irqs - 1);
+     if ((off & 0xfffc) == PHB_CONFIG_DATA) {
+         return pnv_phb4_config_read(phb, off & 0x3, size);
+@@ -960,10 +961,27 @@ static uint64_t pnv_phb4_reg_read(void *opaque, hwaddr off, unsigned size)
+         val |= PHB_PCIE_SCR_PLW_X16; /* RO bit */
+         break;
  
-     /* TODO: handle reset values of PHB_LSI_SRC_ID */
-     if (!lsi_base) {
-@@ -1943,6 +1944,12 @@ static void pnv_phb4_ro_mask_init(PnvPHB4Class *phb4c)
-     /* TODO: Add more RO-masks as regs are implemented in the model */
- }
- 
-+static void pnv_phb4_xsrc_reset(PnvPHB4 *phb)
-+{
-+    phb->regs[PHB_LSI_SOURCE_ID >> 3] = PPC_BITMASK(4, 12);
-+    pnv_phb4_update_xsrc(phb);
-+}
+-    /* Link training always appears trained */
+     case PHB_PCIE_DLP_TRAIN_CTL:
+-        /* TODO: Do something sensible with speed ? */
++        /* Get the current link-status from PCIE */
++        lnkstatus = be16_to_cpu(pnv_phb4_rc_config_read(phb,
++                                exp_base + PCI_EXP_LNKSTA, 4));
 +
- static void pnv_phb4_err_reg_reset(PnvPHB4 *phb)
- {
-     STICKY_RST(PHB_ERR_STATUS,       0, PPC_BITMASK(0, 33));
-@@ -1999,10 +2006,11 @@ static void pnv_phb4_reset(Object *obj, ResetType type)
-     PnvPHB4 *phb = PNV_PHB4(obj);
- 
-     pnv_phb4_pbl_core_reset(phb);
++        /* Extract link-speed from the link-status */
++        v = lnkstatus & PCI_EXP_LNKSTA_CLS;
 +
-+    pnv_phb4_xsrc_reset(phb);
-     pnv_phb4_err_reg_reset(phb);
-     pnv_phb4_pcie_stack_reg_reset(phb);
-     pnv_phb4_regb_err_reg_reset(phb);
--    phb->regs[PHB_PCIE_CRESET >> 3] = 0xE000000000000000;
- }
++        /* Link training always appears trained */
+         val |= PHB_PCIE_DLP_INBAND_PRESENCE | PHB_PCIE_DLP_TL_LINKACT;
++
++        /* Set the current link-speed at the LINK_SPEED position */
++        val = SETFIELD(PHB_PCIE_DLP_LINK_SPEED, val, v);
++
++        /*
++         * Extract link-width from the link-status,
++         * after shifting the required bitfields.
++         */
++        v = (lnkstatus & PCI_EXP_LNKSTA_NLW) >> PCI_EXP_LNKSTA_NLW_SHIFT;
++        /* Set the current link-width at the LINK_WIDTH position */
++        val = SETFIELD(PHB_PCIE_DLP_LINK_WIDTH, val, v);
+         return val;
  
- static void pnv_phb4_instance_init(Object *obj)
-@@ -2076,8 +2084,6 @@ static void pnv_phb4_realize(DeviceState *dev, Error **errp)
-         return;
-     }
- 
--    pnv_phb4_update_xsrc(phb);
--
-     phb->qirqs = qemu_allocate_irqs(xive_source_set_irq, xsrc, xsrc->nr_irqs);
- 
-     pnv_phb4_xscom_realize(phb);
+     /*
 -- 
 2.52.0
 
