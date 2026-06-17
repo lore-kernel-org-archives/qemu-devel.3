@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37579CD98E2
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jun 2026 15:25:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 650BDCD98F2
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jun 2026 15:25:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZs8v-0002IG-5i; Wed, 17 Jun 2026 11:25:29 -0400
+	id 1wZs8q-0001dN-DK; Wed, 17 Jun 2026 11:25:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wZs8s-0001sX-3T
- for qemu-devel@nongnu.org; Wed, 17 Jun 2026 11:25:26 -0400
+ id 1wZs8n-0001IP-Ns
+ for qemu-devel@nongnu.org; Wed, 17 Jun 2026 11:25:22 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wZs8q-0004r4-3g
- for qemu-devel@nongnu.org; Wed, 17 Jun 2026 11:25:25 -0400
+ id 1wZs8l-0004nd-KI
+ for qemu-devel@nongnu.org; Wed, 17 Jun 2026 11:25:21 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781709923;
+ s=mimecast20190719; t=1781709918;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=A0TufrWfNIzpsF2XRxjhb3IdpfDE1YSIkCHruo6etDk=;
- b=bt3ZfnHMCu8KLhlfZNDkJttd+YPs+/fIwArqwXRL87UAQDSH0tK69/TnG+t7nI1VjvZTI3
- KMHDlcCIUIolK7Xo7UWkr+rY5S4WQMDLJXYEgNwwfMfCBqeklZgRVSz6Kfcs0BlbF3DNe1
- 9doDqyZaeWx5OYgVOwJ6QY+ZXVxluUs=
+ bh=X+xkFvsKcwR1tHw2+3hEmyTvIAhj/EvH/f17YcOm1aY=;
+ b=M8M+5qWiy1mCZ8PpG7/yjxSU54vMimACWc97ICrJ/eccoPkDPIfY6JHGbIpKF+cMoMps1P
+ hQuoPDJFOyQuyZDTmdNh4As/1/AeMlsTnYxtWEfgFgKgbMRa6GwTx6veUvU6rSiTcsDz07
+ nweKxqVVpLFkvKMSpxYb445g3YQ7lyo=
 Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-139-gw3dmBxPMkuK_T-v5cqFRg-1; Wed,
- 17 Jun 2026 11:25:21 -0400
-X-MC-Unique: gw3dmBxPMkuK_T-v5cqFRg-1
-X-Mimecast-MFC-AGG-ID: gw3dmBxPMkuK_T-v5cqFRg_1781709920
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-609-EMjlzKGkN22k5Ajdu_lojg-1; Wed,
+ 17 Jun 2026 11:25:15 -0400
+X-MC-Unique: EMjlzKGkN22k5Ajdu_lojg-1
+X-Mimecast-MFC-AGG-ID: EMjlzKGkN22k5Ajdu_lojg_1781709915
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4B712180130E
- for <qemu-devel@nongnu.org>; Wed, 17 Jun 2026 15:25:20 +0000 (UTC)
+ id 2CC0418005A3
+ for <qemu-devel@nongnu.org>; Wed, 17 Jun 2026 15:25:15 +0000 (UTC)
 Received: from localhost (unknown [10.44.22.6])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 3AE2C18005B6; Wed, 17 Jun 2026 15:25:18 +0000 (UTC)
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 3075719540CB; Wed, 17 Jun 2026 15:25:13 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Wed, 17 Jun 2026 19:23:18 +0400
-Subject: [GIT PULL 21/27] ui/dbus: switch LED handling to Notifier-based
+Date: Wed, 17 Jun 2026 19:23:17 +0400
+Subject: [GIT PULL 20/27] ui/spice: switch LED handling to Notifier-based
  input API
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260617-ui-input-v1-21-79e9aedc5899@redhat.com>
+Message-Id: <20260617-ui-input-v1-20-79e9aedc5899@redhat.com>
 References: <20260617-ui-input-v1-0-79e9aedc5899@redhat.com>
 In-Reply-To: <20260617-ui-input-v1-0-79e9aedc5899@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Stefan Hajnoczi <stefanha@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2308;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2057;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=6qtFXRNmxVwlC4tujuJ/AUY20kPa48OekN0GxXj/0F8=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqMrvpiTdLRJiqMZp/+GlZku9kI8vd4kRH7r9Cx
- drPgDvh9iWJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCajK76QAKCRDa6OEJdZac
- 5UTgD/9rOQVaUt07uNAEDNS9x0/vwPkkzqKSnbiKjKqGUuzdJsbh12Y/OuS90bXTzNIsHLpJitp
- GrieYo4LlJXrl0X5u7sVn6HbIfSP/BLAKWpR5vyAWfuf3H2H7LLdVmq7ESfx2q4UgsYSBuOiJmx
- o4s6NMzPr4Qv6bJp9FqhJQtTY5EVq6NuS5sxVUwJXjh5fHVXNNzfC7jm6OAH5u7rCFRNJUPqlfV
- Y558Yio2CqijXBl9Wo+HHc53wqF0uEHncTJ3qMifrkXszUHZFq4RDzGblAA8QTkZH2v5m+0fw8W
- QvmYFKJs9Nx3xOgVfBK+9+vTt4CfzNug1nqqh+vGiVlA5+DYGvyx2zRtHML8cUjIfxkTNbtCOxB
- 7v2QprSxwwS5xCQwx5OfakjA2Fv5HOYNlepktUTHhtxeSafBnLlnObwrhfeHhT+SfaGWo2vNOvm
- f8S5pQtRHFfndTOuhDsrUZfujanX3WKuKsKqdz4XAXXTYcmu2X+OJg+T9kAeiQDt6+TtQfSPPzw
- v+VZsgJdHJ9kxXhe4QU3GH2UHyflJI3ycV5LYdnq+4G9hDGFqHyfQQ22/t0j44i35E9ayDiYwKM
- MIH1J1GsmAi6yfpT7p4431qWD70VLv7F88tY0ZSQ6XCxlYfT5535bgRH96bD7vWAKbb3W0Up2q5
- 8YEunzzirbMQwQQ==
+ bh=AKgoKK/jeW3SCcprkzEbZiHJkHFnV77luQWVh/Clp3Q=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqMrvp8oht3U4jQSXANGpXFiMqgSZApOo03TQFb
+ GAs56DedWqJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCajK76QAKCRDa6OEJdZac
+ 5VwQD/9ARDRHcgPZfE4tfnKBDwb6Q9uB5Lgw/zJdeKWYgOBF5mAACy4eWhzXbWG9aVyXx1/dek5
+ /+l/ZtO/iUJD2enLMV7DT///djrcr5crFMvNVE3b7AU0TCkNExwdEa5EiwoeIV7tnjH/2QnGfDF
+ lHnkt/i1k+NpamKGCrcPPctYFi8kFNY2/bF0zZ9agz6TWc3/qK+rripxLLQ8yVkhxPBxav//5Tq
+ aWtukqdhDmyMzRdKx5LDzWDk2GD1XjZw+t9qPGCVX1qcJAFXnwA8teU4AWJaEUH/kQ4rek9u655
+ cNuPFIl1WA6A0ZJAwQrRv4PEZrOGKs1HN0ns942JfvVBWz/JW7ceAICqf6p0ATLgnSjC1XQKpDe
+ TeOOrMnn6azL2+68sJe5aHj0Zkpi5WF4Q4Et/4KK/cwh3yZULwotzE5NRQuXCIbiFlcummcC0ly
+ /wFyvsc83vJeynoS8srfpzhD3Y6Wc42nYESFsziwah9aV6tKQF1VwJ2a1dXJro8lOw4El/j6NZN
+ ElooY/6kRSrtRiL3WJSX6Mc0UYASMVyJJtT3vv0Hx21HLIbUiGM9OfnSU5PuE+piJjaK8FpNoNb
+ AKlzInNMau3fnhJblId5BO0EvyuUgDZehp79/b03pdgq5Iar0qScWII7ICHoEOXG6a05IrbctpI
+ WAhtYrIeq056mcA==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
 Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -106,64 +106,57 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- ui/dbus-console.c | 14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ ui/spice-input.c | 16 ++++++++++------
+ 1 file changed, 10 insertions(+), 6 deletions(-)
 
-diff --git a/ui/dbus-console.c b/ui/dbus-console.c
-index 21eceb24362..9e154da1eca 100644
---- a/ui/dbus-console.c
-+++ b/ui/dbus-console.c
-@@ -27,6 +27,7 @@
- #include "ui/input.h"
- #include "ui/kbd-state.h"
- #include "trace.h"
-+#include <stdint.h>
- 
- #ifdef G_OS_UNIX
- #include <gio/gunixfdlist.h>
-@@ -46,6 +47,7 @@ struct _DBusDisplayConsole {
- 
-     QemuDBusDisplay1Keyboard *iface_kbd;
-     QKbdState *kbd;
+diff --git a/ui/spice-input.c b/ui/spice-input.c
+index f0bb915fd77..845abc7387f 100644
+--- a/ui/spice-input.c
++++ b/ui/spice-input.c
+@@ -33,6 +33,7 @@ typedef struct QemuSpiceKbd {
+     int ledstate;
+     bool emul0;
+     size_t pauseseq;
 +    Notifier led_notifier;
+ } QemuSpiceKbd;
  
-     QemuDBusDisplay1Mouse *iface_mouse;
-     QemuDBusDisplay1MultiTouch *iface_touch;
-@@ -150,6 +152,7 @@ dbus_display_console_dispose(GObject *object)
- {
-     DBusDisplayConsole *ddc = DBUS_DISPLAY_CONSOLE(object);
- 
-+    qemu_input_led_notifier_remove(&ddc->led_notifier);
-     qemu_console_unregister_listener(&ddc->dcl);
-     g_clear_object(&ddc->iface_touch);
-     g_clear_object(&ddc->iface_mouse);
-@@ -367,11 +370,13 @@ dbus_kbd_release(DBusDisplayConsole *ddc,
+ static void kbd_push_key(SpiceKbdInstance *sin, uint8_t frag);
+@@ -86,18 +87,20 @@ static uint8_t kbd_get_leds(SpiceKbdInstance *sin)
+     return kbd->ledstate;
  }
  
- static void
--dbus_kbd_qemu_leds_updated(void *data, int ledstate)
-+dbus_kbd_qemu_leds_updated(Notifier *notifier, void *data)
+-static void kbd_leds(void *opaque, int ledstate)
++static void kbd_leds(Notifier *notifier, void *data)
  {
--    DBusDisplayConsole *ddc = DBUS_DISPLAY_CONSOLE(data);
-+    DBusDisplayConsole *ddc = container_of(notifier, DBusDisplayConsole,
-+                                           led_notifier);
-+    uint32_t leds_mask = qemu_input_get_leds_mask(ddc->dcl.con);
+-    QemuSpiceKbd *kbd = opaque;
++    QemuSpiceKbd *kbd = container_of(notifier, QemuSpiceKbd, led_notifier);
++    /* spice has no associated console support */
++    uint32_t leds_mask = qemu_input_get_leds_mask(NULL);
  
--    qemu_dbus_display1_keyboard_set_modifiers(ddc->iface_kbd, ledstate);
-+    qemu_dbus_display1_keyboard_set_modifiers(ddc->iface_kbd, leds_mask);
- }
+     kbd->ledstate = 0;
+-    if (ledstate & QEMU_SCROLL_LOCK_LED) {
++    if (leds_mask & QEMU_SCROLL_LOCK_LED) {
+         kbd->ledstate |= SPICE_KEYBOARD_MODIFIER_FLAGS_SCROLL_LOCK;
+     }
+-    if (ledstate & QEMU_NUM_LOCK_LED) {
++    if (leds_mask & QEMU_NUM_LOCK_LED) {
+         kbd->ledstate |= SPICE_KEYBOARD_MODIFIER_FLAGS_NUM_LOCK;
+     }
+-    if (ledstate & QEMU_CAPS_LOCK_LED) {
++    if (leds_mask & QEMU_CAPS_LOCK_LED) {
+         kbd->ledstate |= SPICE_KEYBOARD_MODIFIER_FLAGS_CAPS_LOCK;
+     }
+     spice_server_kbd_leds(&kbd->sin, kbd->ledstate);
+@@ -247,7 +250,8 @@ void qemu_spice_input_init(void)
+     kbd = g_malloc0(sizeof(*kbd));
+     kbd->sin.base.sif = &kbd_interface.base;
+     qemu_spice.add_interface(&kbd->sin.base);
+-    qemu_add_led_event_handler(kbd_leds, kbd);
++    kbd->led_notifier.notify = kbd_leds;
++    qemu_input_led_notifier_add(&kbd->led_notifier);
  
- static gboolean
-@@ -577,7 +582,8 @@ dbus_display_console_new(DBusDisplay *display, QemuConsole *con)
- 
-     ddc->kbd = qkbd_state_init(con);
-     ddc->iface_kbd = qemu_dbus_display1_keyboard_skeleton_new();
--    qemu_add_led_event_handler(dbus_kbd_qemu_leds_updated, ddc);
-+    ddc->led_notifier.notify = dbus_kbd_qemu_leds_updated;
-+    qemu_input_led_notifier_add(&ddc->led_notifier);
-     g_object_connect(ddc->iface_kbd,
-         "swapped-signal::handle-press", dbus_kbd_press, ddc,
-         "swapped-signal::handle-release", dbus_kbd_release, ddc,
+     pointer = g_malloc0(sizeof(*pointer));
+     pointer->mouse.base.sif  = &mouse_interface.base;
 
 -- 
 2.54.0
