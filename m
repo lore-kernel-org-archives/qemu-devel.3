@@ -4,86 +4,118 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA109CD98E2
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jun 2026 06:19:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37772CD98F0
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jun 2026 06:23:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZjcI-0000ha-5Y; Wed, 17 Jun 2026 02:19:14 -0400
+	id 1wZjfv-0001tY-EW; Wed, 17 Jun 2026 02:22:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wZjcG-0000gg-Fj
- for qemu-devel@nongnu.org; Wed, 17 Jun 2026 02:19:12 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <saif.abrar@linux.ibm.com>)
+ id 1wZjWc-0006tW-7w; Wed, 17 Jun 2026 02:13:22 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wZjcE-00034W-NB
- for qemu-devel@nongnu.org; Wed, 17 Jun 2026 02:19:12 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781677148;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=+VOzHT253eQlU1G72RQrrd7zHcygnQ0SP5Ifh/akOPQ=;
- b=VOycE/qaV27NuMQ16Q3+KoCRW7suPw1rAb0m/KfP8G4KXuKK9/xrxpTimQGc9DmaMSV/qy
- pCQlf5qaNWRzzEkCJAWjbVP/AU8SD6LEO0ZbdZm7QwiYxXS8ufBlDdDZGoLkZK21JgOnhx
- KcobCDtAsyoUx7KRFJUjWdUs5Pg7Djg=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-650-_0LnBf5KO-2XiPV0do1_4Q-1; Wed,
- 17 Jun 2026 02:19:05 -0400
-X-MC-Unique: _0LnBf5KO-2XiPV0do1_4Q-1
-X-Mimecast-MFC-AGG-ID: _0LnBf5KO-2XiPV0do1_4Q_1781677144
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A01E01953998; Wed, 17 Jun 2026 06:19:03 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.44.22.4])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id BEED43008B3E; Wed, 17 Jun 2026 06:19:02 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 4984521E6A01; Wed, 17 Jun 2026 08:19:00 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Cc: Peter Maydell <peter.maydell@linaro.org>,  Daniel P. =?utf-8?Q?Berrang?=
- =?utf-8?Q?=C3=A9?=
- <berrange@redhat.com>,  qemu-devel@nongnu.org,  =?utf-8?Q?Marc-Andr=C3=A9?=
- Lureau
- <marcandre.lureau@redhat.com>,  John Snow <jsnow@redhat.com>,  Cleber Rosa
- <crosa@redhat.com>,  philmd@oss.qualcomm.com,  Paolo Bonzini
- <pbonzini@redhat.com>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@mailo.com>
-Subject: Re: [PATCH 2/2] meson.build: check MAINTAINERS file is consistent
- with source tree
-In-Reply-To: <72a4533f-067a-4539-99a5-ebbc34224167@oss.qualcomm.com> (Pierrick
- Bouvier's message of "Tue, 16 Jun 2026 11:16:01 -0700")
-References: <20260615201723.2959015-1-pierrick.bouvier@oss.qualcomm.com>
- <20260615201723.2959015-3-pierrick.bouvier@oss.qualcomm.com>
- <ajEA4CybcZHwYEEF@redhat.com>
- <CAFEAcA_r2+S+iy4nu4Kv9Gjwsu_izq5iHUYs6vycq=dX-+Cpsw@mail.gmail.com>
- <72a4533f-067a-4539-99a5-ebbc34224167@oss.qualcomm.com>
-Date: Wed, 17 Jun 2026 08:19:00 +0200
-Message-ID: <87mrwtpu3v.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <saif.abrar@linux.ibm.com>)
+ id 1wZjWa-0001wb-42; Wed, 17 Jun 2026 02:13:21 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 65GLn9CK2636783; Wed, 17 Jun 2026 06:13:10 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=uFPPZT
+ 4t0yoT/kr0uEe5siPu7p+pRn2dA/bTYV9vUNY=; b=VB8RagWDg9+HWn1jcA6eOe
+ VMtOMc0BeCGncXWcY0wmGTDDzc5KymKFLfCmJrzmd9vcAfnGoolfyOmK7+FVbo6d
+ kXZZuAzyV1aaB8iJeKFmfjVUSR06iMZaAsX2PG9NeEV2v0Nqwgk7bSusCUbY2slp
+ /oahtIbqEUZ9zYXzKPrSWEEti26XS4ag920pfDLPcdtFOO/rj4fAWaPsNwE8IeER
+ gR/Zy8Cans6c2jSN1isW7JPynkXcaBFg7AbMGmSWpzkyNMRjRuWUlsc+qdR49T9Z
+ K9vst8bT32quw3K6CiaBR0Boa4ZXd6lFl+iE4K7uuD4gBzlrVEHzq8CBZg5P1f4w
+ ==
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4eueqx1f5c-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 17 Jun 2026 06:13:10 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 65H64c5P026949;
+ Wed, 17 Jun 2026 06:13:09 GMT
+Received: from smtprelay01.wdc07v.mail.ibm.com ([172.16.1.68])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4eudva1ssb-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 17 Jun 2026 06:13:09 +0000 (GMT)
+Received: from smtpav03.dal12v.mail.ibm.com (smtpav03.dal12v.mail.ibm.com
+ [10.241.53.102])
+ by smtprelay01.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 65H6D7uR61473118
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 17 Jun 2026 06:13:07 GMT
+Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 7629758064;
+ Wed, 17 Jun 2026 06:13:07 +0000 (GMT)
+Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 4E34C5803F;
+ Wed, 17 Jun 2026 06:13:03 +0000 (GMT)
+Received: from [9.43.52.172] (unknown [9.43.52.172])
+ by smtpav03.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Wed, 17 Jun 2026 06:13:03 +0000 (GMT)
+Message-ID: <ad6e037f-cd29-4394-b337-e73352740e9b@linux.ibm.com>
+Date: Wed, 17 Jun 2026 11:43:01 +0530
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 8
-X-Spam_score: 0.8
-X-Spam_bar: /
-X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 2/9] pnv/phb4: Add reset logic to PHB4
+To: Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-ppc@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: clg@kaod.org, npiggin@gmail.com, fbarrat@linux.ibm.com, mst@redhat.com,
+ marcel.apfelbaum@gmail.com, cohuck@redhat.com, pbonzini@redhat.com,
+ thuth@redhat.com, lvivier@redhat.com, danielhb413@gmail.com
+References: <20260210134110.1515322-1-saif.abrar@linux.vnet.ibm.com>
+ <20260305060923.3753402-1-saif.abrar@linux.vnet.ibm.com>
+ <20260305060923.3753402-3-saif.abrar@linux.vnet.ibm.com>
+ <a9e49acd-855a-4506-98d6-edd8cfca8792@linux.ibm.com>
+Content-Language: en-US
+From: Saif Abrar <saif.abrar@linux.ibm.com>
+In-Reply-To: <a9e49acd-855a-4506-98d6-edd8cfca8792@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjE3MDA1MSBTYWx0ZWRfX4oEe4DAF1tx+
+ NRvwGvJXwzBLP5uySJ6DFEcfH49DTJLvkRNUDexcwKcapAxyjTsJyO4AkHy2Nj8IN/nskbYyn1V
+ MvEup0bVaXdd6rOFXM7K3E8deQwPWwJOB7oHTEE7GuqbQG1KzvqFJx0w1onUVs6zo5FY6nfdwke
+ 6C/PvgLf3CRow2kEwrwX/u2Qi6NGFkwaUOhzMNxMlwwiHh02vR2RyqdAdgPY0Wu2yy2MZ6Ejgem
+ TB80fsTvx9MXq/FX0MK07jSaQfHSJW8fwaJSGUFcE1XVxQ9Jma5TManQZjKjcQpvr0HhGWYRLDl
+ UmbAIEBX0qcpHubVqma3f4yUpdzXMXh7xxCQKuh8ZmadhdbSg9gcgDxe7+qKv6g3Dm5eah0kanZ
+ EZWYhKmQdc8ChjI4YLKBmG4yqHTNcnVQkNmHNmgIyyUA73kgROggRToVayp/zG5DIBIxejIW3V8
+ Q+mCavMh68XO8cte7hw==
+X-Proofpoint-GUID: EeI3UlVcKBdPyKJTyrFLtKL7dIwBKK6K
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjE3MDA1MSBTYWx0ZWRfXwiMZZwGN+hvD
+ yLfbzLRNdFN13jG9cePzUrR6ePZYmWeZZmNwXmNh5wp6JYRkrD/dwMDK2L1bi1BsdMzpclhdeCw
+ yC/KnEE4jsiy37iZB7lFqDSubWZUZw4=
+X-Proofpoint-ORIG-GUID: SJRAGjoNGfsqXBzZnMVyais2bBTkIXgi
+X-Authority-Analysis: v=2.4 cv=auGCzyZV c=1 sm=1 tr=0 ts=6a323af6 cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
+ a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=Y2IxJ9c9Rs8Kov3niI8_:22 a=gKRWrZZBLapbZDKzPI8A:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-16_05,2026-06-16_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 clxscore=1011 priorityscore=1501 suspectscore=0 impostorscore=0
+ spamscore=0 lowpriorityscore=0 adultscore=0 malwarescore=0 bulkscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606170051
+Received-SPF: pass client-ip=148.163.158.5;
+ envelope-from=saif.abrar@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Wed, 17 Jun 2026 02:22:58 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -98,126 +130,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> writes:
 
-> On 6/16/2026 1:30 AM, Peter Maydell wrote:
->> On Tue, 16 Jun 2026 at 08:54, Daniel P. Berrang=C3=A9 <berrange@redhat.c=
-om> wrote:
->>>
->>> On Mon, Jun 15, 2026 at 01:17:23PM -0700, Pierrick Bouvier wrote:
->>>> We add a new script: scripts/check-maintainers-file.py, that will run =
-at
->>>> configuration time (and not at build time), to not hurt build time.
->>>> This script runs in 0.2s on my dev VM, which has an old cpu.
->>>>
->>>> We can expect things to be mostly in sync since adding or removing a
->>>> source or test file will trigger a configure step.
->>>> For the rest, like docs, tcg tests, or remaining files, GitLab CI will
->>>> build things from scratch and always run the configure step.
->>>>
->>>> With this, it should be impossible by design to have an upstream
->>>> MAINTAINERS file with non existing file entries.
->>>
->>> Accuracy of the MAINTAINERS file is an upstream-only concern, but
->>> IIUC, this check is going to apply universally to every build of
->>> QEMU which is undesirable. It is irrelevant to end users and not
->>> appropriate to check in downsteam vendors forks.
->>>
+On 05-05-2026 19:46, Harsh Prateek Bora wrote:
 >
-> I accept the argument about downstream forks even though they are free
-> to remove the check since they are... forks.
-> However, it's relevant to users I think. It's very easy to move a file,
-> and forget to update associated MAINTAINERS entry, and the sooner we
-> catch that, the better. Similar, when a new file is added and not
-> covered by an entry in MAINTAINERS, it's very easy to miss that.
 >
->>> In a "normal" modern project this kind of check would be done in
->>> a CI job on the merge request, since that's the only place it is
->>> relevant. In our case, the nearest fit is the checkpatch.pl file.
+> On 05/03/26 11:39 am, Saif Abrar wrote:
+>> +void pnv_phb4_cfg_core_reset(PCIDevice *d)
+>> +{
+>> +    uint8_t *conf = d->config;
+>> +    uint32_t exp_offset = get_exp_offset(d);
+>> +
+>> +    pci_set_word(conf + PCI_COMMAND, PCI_COMMAND_SERR);
+>> +    pci_set_word(conf + PCI_STATUS, PCI_STATUS_CAP_LIST);
+>> +    pci_set_long(conf + PCI_CLASS_REVISION, 0x06040000);
+>> +    pci_set_long(conf + PCI_CACHE_LINE_SIZE, BIT(16));
+>> +    pci_set_word(conf + PCI_MEMORY_BASE, BIT(4));
+>> +    pci_set_word(conf + PCI_PREF_MEMORY_BASE, BIT(0) | BIT(4));
+>> +    pci_set_word(conf + PCI_PREF_MEMORY_LIMIT, PCI_PREF_RANGE_TYPE_64);
+>> +    pci_set_long(conf + PCI_CAPABILITY_LIST, BIT(6));
+>> +    pci_set_long(conf + PCI_CAPABILITY_LIST, BIT(6));
 >
-> It depends how fast you want to catch the problem.
-> Adding yet another round trip latency to a project that already has a
-> multi day latency for upstream is not a good thing IMHO.
+> This duplicate looks like a copy-paste error ?
 
-Yes, and ...
 
-> Also, it brings yet another burden on top maintainers that will have to
-> deal with this new failure, fix it themselves, or recreate their staging
-> set for the next batch and wait for yet another day. More time spent,
-> more noise, more iteration, just for a missing line update in
-> MAINTAINERS file.
+Duplicate removed.
 
-... yes.
 
-We might have conditioned ourselves to consider such loops normal.
-They're not.
+Thanks,
 
-> All that is nonexistent if no one can build it if it's incorrect. That's
-> why we use -Werror by default for instance. And if someone sends a patch
-> breaking this, you can be sure they didn't even try to build their own
-> code/doc/test.
+Saif
 
-I don't want make to fail during development just because I haven't
-updated MAINTAINERS, yet.  It's a distraction that could snap me out of
-the flow.  I'm developing with -Werror disabled for the same reason.
-
-I do want make to fail before I send patches.  I do another compile with
--Werror enabled then, but that's just my personal workflow.
-
-Solutions I like well enough:
-
-* Make it a compile-time warning that obeys --enable-werror.  Could well
-  be more trouble than it's worth.
-
-* Make it fail "make check".
-
-Dislike:
-
-* Make it a checkpatch.pl error.  Stays out of my hair during
-  development, but then I have to remember to actually run
-  checkpatch.pl, or risk having CI bouncing things back to me, wasting
-  everybody's time.  Meh
-
-* Make it fail CI in some other way.  Worse, because now I have to
-  remember running checkpatch.pl *and* that other way.
-
-* Make it fail "make".  Stay out of my hair!
-
-> Does that open your view on this approach?
->
->>=20
->> You could put it in "make check", or (if you want to avoid the
->> downstream-forks issue) in some sub-bit of "make check"
->> that we don't check by default but do check in one of our CI jobs.
->>
->
-> If argument above is still rejected, we can just add a CI job (calling
-> script directly). I'm not sure any kind of integration is needed. Also,
-> not sure where to fit that in any existing test suite to be honest.
->
->> checkpatch isn't a great place for checks that you want to
->> stay consistent on because so much of its output is "this
->> is wrong/merely something to check, ignore".
->>
->
-> I agree, checkpatch is not useful to enforce things. It would be
-> different if it was strictly enforced in CI, but that's not the case,
-> and won't be given the false positives it brings.
-
-CI should only reject things that are actually wrong, or at least
-undesirable.
-
-checkpatch.pl warns when you add, move, or delete files without updating
-MAINTAINERS.  It's only a warning, because MAINTAINERS may in fact not
-need an update.  Not good enough for CI rejects.
-
-The purpose of warnings is to help maintainers and developers find
-*potential* issues.
-
->
->> -- PMM
->
-> Thanks for both of you for the feedback,
-> Pierrick
 
 
