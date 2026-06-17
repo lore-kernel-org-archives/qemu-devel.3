@@ -4,140 +4,164 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68373CD98F1
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jun 2026 12:26:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C9E8CD98F0
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jun 2026 12:26:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZpLT-0003MY-UM; Wed, 17 Jun 2026 08:26:15 -0400
+	id 1wZpLN-0003Iy-2n; Wed, 17 Jun 2026 08:26:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1wZpLT-0003M1-6y
- for qemu-devel@nongnu.org; Wed, 17 Jun 2026 08:26:15 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <john.levon@nutanix.com>)
+ id 1wZpLL-0003Ie-Qg
+ for qemu-devel@nongnu.org; Wed, 17 Jun 2026 08:26:07 -0400
+Received: from mx0b-002c1b01.pphosted.com ([148.163.155.12])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1wZpLR-000422-I6
- for qemu-devel@nongnu.org; Wed, 17 Jun 2026 08:26:14 -0400
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65H8UTZd3273532
- for <qemu-devel@nongnu.org>; Wed, 17 Jun 2026 12:26:11 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- AxfZE1gPfb3A2rKqi8N+u+RT9xFooihvlI/FiUXZhrY=; b=cdJCcZ2RpEz9jImy
- k3fOTMgRyM3EjaYQADmKRKcl5O6GWb6XHdkTs5CQuRwPcLok09aiI8C27y6hHPvS
- NRmHFK2ssU/L2PKhQOn/10N5OIgabuV6fLOywP7wMvPinjyMgEb7pSUHTorysVwA
- vgIpAoU4NnC4mSujFm92uxsbAqsgKpzoYFJzTPAOCmS83i2s1QaoomjWA8jwOMT2
- AMDYV9kXIKPuipjmhzdqlyU9YE5p4OmBAhEsQgTSWOgGuz+xW4QLDHg9fRa0Fh+i
- QGEh8xYZN9vJwgaL8tSXlDMERGgZEJ9i1hw09o2xAr+GESRKq5EdOKDfnNrRakIz
- zFM4yg==
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
- [209.85.222.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4euefbu30g-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 17 Jun 2026 12:26:11 +0000 (GMT)
-Received: by mail-qk1-f198.google.com with SMTP id
- af79cd13be357-9156ceb551eso877390485a.2
- for <qemu-devel@nongnu.org>; Wed, 17 Jun 2026 05:26:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1781699170; x=1782303970; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=AxfZE1gPfb3A2rKqi8N+u+RT9xFooihvlI/FiUXZhrY=;
- b=Qqa9+FRGxoisunRNwO7d39PrksoS68xWJkf9ToYYOH/xvS6CfEkorEzGMxFw2zJUJU
- 4vkHix39JaD3p3nCfla3ctdkxSPxni5mjRlI5wotFBPa2RVtYFs9+rumFzA2C2jmIedW
- mxyvHuMnox/T7JjJBrEqgqM4kJe8EqPuBN6lv8VzMqYZuC3PYZwWiw4tYVbSm1M7vMnO
- p54JL7Z0d4tHhMc6/eoxnufHjxWkCbSCbJUzqZeBVHgyhUJKL7Ym+CEAJ94Op1451ZiZ
- /b0DnmC3+hJPn9o4pqhBUKFF54Gomt2zRzUbaio7pgMCsO3ZaRSDIh8s68YnDXrW/y1m
- MseQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781699170; x=1782303970;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=AxfZE1gPfb3A2rKqi8N+u+RT9xFooihvlI/FiUXZhrY=;
- b=lRjJXSLsyRN1W3PZuOxAD9PqVnOmJPo8TFVTKGM4qWaGGTHHgYggkDL18+UarWTieb
- 2zzFQNIDOt4ez3dsFjDQcdCL6nuPTa1UlXgOlzSXvqdGvv42OyoZ+S1BjE0eD8BWnRDP
- t/b8qBCFehtTYykuBCgsnLizm6tFLpWWIRhaXTAbwjEG2F2CbpBgow+W4cVMRjuHLDVo
- QfapEu8lBmKbyMpOrvilQQsM8PEN60dJfuTVOLcTrnCySTNd8csMPwyMnDJPnNfab9EH
- rD/i+llljccZyWGVrvq1TyNDu1utCO6S3OEFsec2taKvERKMj/fQEyJT6+yFPhSwBWhg
- XYaA==
-X-Forwarded-Encrypted: i=1;
- AFNElJ8br8C/w36/ciZIz5v0Pd72zdzMKWJ4b3qBFo/mnFEUflpg3/5FskTj41o7y/aFx+HC/8uyE/aMxNdp@nongnu.org
-X-Gm-Message-State: AOJu0Yy8mUdTaervRFHfVrZAKeY9If1Le3v5kZ8czxGpEkCt30TA1ldD
- DOQTC1stlwI8vrNWwQUKjBeB1G/jTi+/8L073IH7IWKs2+XczE/9t7y2OUKzAnbuYglTBbGwNis
- A2eRLTABziMY0LynTx5JN0DK3Pr4/Unnp9JOfpeE8mRbn8BoTy7f0gqsXww==
-X-Gm-Gg: Acq92OGx62utKhLVREtNPYODtG4SkZUzjpwF944ByQwde12u1Eqm7ndhViKdwxxH55d
- Y2n2Px4VpRoh4klVgBzXxm4Gnm7nJmy6SaIikHrysx+QH/t/jGxBRMRfKF+fonpfA3GK5/bCjKj
- g44nbxoCGZ0NySou0DZoYoF4tR5RsFezPuPfiOOE4xe6dFjlPfne3m9wA2dwdtlKoiG3t19eMRG
- rJB/uVAOAFyrWhoj/gJOrBPcRtj7z9uMTw9PcecggDFniPHathbMgUGrvD4V9wcHoz5V9LqDJLZ
- rIEWuSh6FNRBteambxHS57xEAHFQvG23XP7JrdWNfO71Wq6PzlU0S/CesMBDhx5o2lidaogIBVZ
- T4cIN930FHkoB0oE7rHgTg+4Qb1x0049x8UOJjanTbIneLDQ=
-X-Received: by 2002:a05:620a:4586:b0:915:8c48:497c with SMTP id
- af79cd13be357-91d8afcb0d4mr677448785a.28.1781699170471; 
- Wed, 17 Jun 2026 05:26:10 -0700 (PDT)
-X-Received: by 2002:a05:620a:4586:b0:915:8c48:497c with SMTP id
- af79cd13be357-91d8afcb0d4mr677441285a.28.1781699170013; 
- Wed, 17 Jun 2026 05:26:10 -0700 (PDT)
-Received: from [192.168.68.103] ([177.170.117.62])
- by smtp.gmail.com with ESMTPSA id
- af79cd13be357-9161a00ad75sm1765234485a.25.2026.06.17.05.26.08
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 17 Jun 2026 05:26:09 -0700 (PDT)
-Message-ID: <40422567-4917-429f-9fe7-b7fd8e987afa@oss.qualcomm.com>
-Date: Wed, 17 Jun 2026 09:26:06 -0300
+ (Exim 4.90_1) (envelope-from <john.levon@nutanix.com>)
+ id 1wZpLI-0003xr-Lj
+ for qemu-devel@nongnu.org; Wed, 17 Jun 2026 08:26:06 -0400
+Received: from pps.filterd (m0127842.ppops.net [127.0.0.1])
+ by mx0b-002c1b01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 65H8W94C1910355; Wed, 17 Jun 2026 05:25:51 -0700
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com; h=
+ cc:content-type:date:from:in-reply-to:message-id:mime-version
+ :references:subject:to; s=proofpoint20171006; bh=jf2XL6yxrdlGLjg
+ R0qZMnyP3oBVxMtr9dNXAxJvpRC0=; b=L8X2X3qSh8N6e24qy2sH+Hljb/uO9Cl
+ LarnB/hvQhoi5w7I4tdwlv0o7o4Ll22CihV05mUIWvbB4SMrQNftdb0ESGT/oEeW
+ Je7pH8RhAO1BPfv4FHak0UKz+jl9+95qeItsr3TN9UrPSPbwtTWYu9LDkR69lC7O
+ PSLpBnqnxBWxYNN4x3iL3eOfqute1YuHCiFANylUJs1QdMXx74G8030u3B4MUTo2
+ VmFtFxRLVRQbGlDAQR2RjqZVoDC3NAD5GbADhFWdhIpiTLKch/w1H5Qn/otn6WQs
+ lMkhWoCkznRKJIhY4C2IYuRCGt2PpbovDaUx+zyY7gLpRBJgI/PvdQQ==
+Received: from dm1pr04cu001.outbound.protection.outlook.com
+ (mail-centralusazon11020137.outbound.protection.outlook.com [52.101.61.137])
+ by mx0b-002c1b01.pphosted.com (PPS) with ESMTPS id 4eueg1sqm9-1
+ (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+ Wed, 17 Jun 2026 05:25:51 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=Ag2zcKfIVIxi0eVp/tMODhf6XxMRza9I+YkHdXjsyYb+PNr/xCALjULpHF4hISl5/p4KJaaF8T0onNnZw8V28ATvlRW6pHQh8eQnLo3cLIEjjDi4MCa98al8kPV+XXR3hUjqR2bGG9/TniIc+KX8KtaKNWxSgdehCHQNtRHATvuDxE6i/L38N0Iqe8j1fgdpb366gQOV2itOxfFNwXTrpNbBxAvhToNjXUSjjH5N011MZRhpcv43M4737DrtI65ImFVjyB+/iSN8sHqx4Z8FcRUiG0l8PUY0BWTwLXoeHxINrfRY3FrDNkKSit+TXkFXmWYiG1BGtB/3/4h1SpA/XQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=jf2XL6yxrdlGLjgR0qZMnyP3oBVxMtr9dNXAxJvpRC0=;
+ b=QDBe5+VcbNwGqu3gunlDxLrl/dOiL+L2XFktjpWNeBm3gjfJrhXO8wmAFktdAsnSNRjlX62Fz6AYMOg0EIcZUEH76onD2yJuktUddIoZAvyV5JJE5HRS77/rqUnA/2Lnz7o4swOhuuWrbYbNWFAv4wdXe+vrk6OIpQL+DKKbkpHKaxJftbsEaBkUmG8LXO0IvPIEgbko1Zq9xjXklud485W07jIqMI3mcWU1c26lSE8Ffdncxl2SyP6VXPDh3P3r7UHv9QBITVaNhnr7M7wlFFbMcHlkC1WnJy39sB264ZqzwprKVzzgCHi5VHwjW9nbe7eZuiKJE95+7TTpPSspxA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nutanix.com; dmarc=pass action=none header.from=nutanix.com;
+ dkim=pass header.d=nutanix.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=jf2XL6yxrdlGLjgR0qZMnyP3oBVxMtr9dNXAxJvpRC0=;
+ b=pCWEKrSR6YMP/MFKZmBxBpKJfbKi3DKVh0HLQtQQYwrzVOJCavViIfgp0l8iqI6hxvp0Vz0sBa9hef3O9vUnivyWW2kF2SJq2fn0lHKYUEH8uNFxg1tBqFdCR7NDAN68aFsgneE+CNtsU+ffn/a9V5eUKq5MRpCF9LDFSxUk+EQevIFRHIBor3/DsrtELdm3076akFU4dEyzGZ2HI24a+Wa9i881kW8dlaEieMv2xaWyEeFfb2KS7JDKuqlru4utzp85tCojI8xdgLPK8AnPNv85Rdz7dX1DdMG5ozAD5jvAUCgO8PWXfrKXE2ii9e8Pm4RpBhUooUUidmxASZGMfw==
+Received: from BY5PR02MB6753.namprd02.prod.outlook.com (2603:10b6:a03:209::17)
+ by LV0PR02MB11158.namprd02.prod.outlook.com (2603:10b6:408:337::9)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.113.18; Wed, 17 Jun
+ 2026 12:25:49 +0000
+Received: from BY5PR02MB6753.namprd02.prod.outlook.com
+ ([fe80::a343:65a8:bffc:5a57]) by BY5PR02MB6753.namprd02.prod.outlook.com
+ ([fe80::a343:65a8:bffc:5a57%7]) with mapi id 15.21.0139.009; Wed, 17 Jun 2026
+ 12:25:49 +0000
+Date: Wed, 17 Jun 2026 13:25:42 +0100
+From: John Levon <john.levon@nutanix.com>
+To: zhaoguohan@kylinos.cn
+Cc: Thanos Makatos <thanos.makatos@nutanix.com>,
+ =?iso-8859-1?Q?C=E9dric?= Le Goater <clg@redhat.com>, qemu-devel@nongnu.org
+Subject: Re: [PATCH] vfio-user: validate VERSION replies
+Message-ID: <ajKSRiC9yYhWeMJI@lent>
+References: <20260603062138.4008583-1-zhaoguohan@kylinos.cn>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260603062138.4008583-1-zhaoguohan@kylinos.cn>
+X-Url: http://www.movementarian.org/
+X-ClientProxiedBy: LO4P123CA0459.GBRP123.PROD.OUTLOOK.COM
+ (2603:10a6:600:1aa::14) To BY5PR02MB6753.namprd02.prod.outlook.com
+ (2603:10b6:a03:209::17)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/3] target/riscv: Avoid NULL deref in IMSIC CSR write
-To: Joel Stanley <joel@jms.id.au>, alistair.francis@wdc.com,
- Anton Johansson <anjo@rev.ng>
-Cc: qemu-riscv@nongnu.org, qemu-devel@nongnu.org
-References: <20260617054034.1020724-1-joel@jms.id.au>
- <20260617054034.1020724-2-joel@jms.id.au>
-From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <20260617054034.1020724-2-joel@jms.id.au>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-GUID: pWH-5jwuPicGd679CZvAeEgX1M6M58ae
-X-Authority-Analysis: v=2.4 cv=IeC3n2qa c=1 sm=1 tr=0 ts=6a329263 cx=c_pps
- a=qKBjSQ1v91RyAK45QCPf5w==:117 a=gdiugJE53z4H+vvYeRBHqw==:17
- a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22
- a=EUspDBNiAAAA:8 a=hClRAUHGN4GkA8EATyIA:9 a=QEXdDO2ut3YA:10
- a=NFOGd7dJGGMPyQGDc5-O:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjE3MDExOCBTYWx0ZWRfX7dVkF+wZYaVC
- 6tRI3rKOC7q1irofSBVMNmQrRzqomLOt+DCraxZL149+ZNj5sDr3Dw7y6bCXH6HSVhpEFA6Qk3T
- PzPW9tbf0O3TtJKt2a4i0C+XGsSH9D4=
-X-Proofpoint-ORIG-GUID: pWH-5jwuPicGd679CZvAeEgX1M6M58ae
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjE3MDExOCBTYWx0ZWRfX/d/RVjrqjuQ2
- ZsSZ3DiDmqKeAr1xN0Hbed9yRM+zF87UuyWFGSvmq9B0wWNKD20woBBgTinyYgJuneIHaMU8pkn
- j3ICS1WhSNDXQzdHNcWuQDhdqwFDipJcqHCvZpuYdyGznXodkGVOZYr9vkN37ujgaDqXqkS4qTo
- KPDylN0/7H5dhx4E8a6GPghANNiTTLykKchceE7cFkwGTGrdqCExDQj/MooVbKcdxmtGZDZqjaS
- bq1MJzBCEwJhWud/MC5HtRA1A9FDX2fOPKuhHnKlkU3cGftn54DajoS30JeY6mTz8Q12CFwsfMX
- Lbw2VVVeUiu6nOyLJjPJ59aIOyQp/HHg18pgrlu3aBQSE1d3vr1JKKkxADdOEo8hQ+/9NTxhmrU
- O391yxrDSTxE8TyDCNnd3Zf5hzbdrkdte0BoWjZUCyBA+Rm/BqJtB7/gb+b0lFXg2sKxlWT62/P
- hNVNsYXJlvjcFnQLo4g==
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BY5PR02MB6753:EE_|LV0PR02MB11158:EE_
+X-MS-Office365-Filtering-Correlation-Id: 86d489a3-f49e-4999-14a4-08decc6b9046
+x-proofpoint-crosstenant: true
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|376014|366016|23010399003|1800799024|3023799007|6133799003|56012099006|18002099003|22082099003;
+X-Microsoft-Antispam-Message-Info: X5ACaj9LpgfN4+/8iHvEgZu6eSdRSVwc83iFA/MYehKuFc9ffJmZRiuzEtmT2C/UslU31HpBSwhU7fsBK0gSxIBbPXkS8EVdJL+MWqO2MJ4/zabBObeNxMnOK4yT/3hgi+svIlLhYcQqp4CSlw5kEeQOfuXcVH9xR6JnRQmUNuipSj7ruSbk9O0ZhMA2ZeFQ/SIkFRPjfFWa9VFq4ORmSgIDNHodLuSxKxge/cELqZKjoPS5TUNiWHXmNw8l5BEFokg3JufzQVX+kovzd3nAQRdZgfDEw4JiuUD+zTK6Y3hS64IZojM1vCR/1Q8v0zKGjhyzX1WOszJYK2Tod91fo+tYfg1phWf92/2etT0rmRJcCmp3dxEdZ/bk+7h4aZEutgoHDhZ7HlL9MndGujnkdRqqmLK9FHaI8p5YNMX/1FqKl1BbAkmMHvmnNmslIPUsJ4NsifHaanhcSbiLW9az8wd3JcTAoJt26YoU7YeH+6V0PivV0XyOD8DqeoDNWMDNC4rk+uqkTCtfg7aLcsGYh/X/URZsOsudBAOnkXe+VIFSbrqzNURIhYhjoDs8NM2AwlHy1aXrdQgwK3iRzFIGdOqVnBqF2VJh5gewTdSUEV8KkkQJkDkR78V2Ch9rKpvEJfHYfOYQbjc+lEKQ2UeMeSPbhIEELcHQ3nS4S5Vx1Zf9ItUBAXq/QYSNJ8ITdmrp
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:BY5PR02MB6753.namprd02.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(376014)(366016)(23010399003)(1800799024)(3023799007)(6133799003)(56012099006)(18002099003)(22082099003);
+ DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?2PqDYTJXCOjtk215ZXd4VYJ0DIQ2znWkeHROthH8IDzlLXhhCzBxS8SBwW/j?=
+ =?us-ascii?Q?3n2q8p5UuoMBI5+oUYPb9SDg+Xa80fbQX/x2yLJfl3GvEIXp4clgtmrw412p?=
+ =?us-ascii?Q?tqjPed4q04CUl7iTSCA2Lp5CELNgbT++ICWDtqFgEF7oB4TUMp9w7Yw3CFo7?=
+ =?us-ascii?Q?fBLlG3Mq+kZcxlXEdJHr+YMZVbkKUiIgmZPmknct54PS+L18ETZD2MXw6nWZ?=
+ =?us-ascii?Q?oqZTKP40gXDQafTrDBynQTboTRoaxysFh2orGdBsN2uK7RqiEzjJl9Vdqnm6?=
+ =?us-ascii?Q?jagylC659hwc0b24235/zYMmJ7QUsdurKcDhjkm+jIlsItsEgCftGIippeHS?=
+ =?us-ascii?Q?nP5napA/kwy2hnnltwMCVfyrkiYXO1JDl5vZ2CTqu4V6+hjea5felxombQol?=
+ =?us-ascii?Q?6ZOr0zXtNIqxDLgWU5aYhDCZBLQAbH6Em3P17a6iWi0452j16dCfZXaA/LUb?=
+ =?us-ascii?Q?f4ip3ZKKRg+zCf/p+VZjZTENVzwd+x+t16Xu22LnpF7kHGwxt/DuzILIJVwr?=
+ =?us-ascii?Q?W8bPy3yRQAbeFaZUXTsStAmme1Zas/yydSwIFJg2RoiS+z6HmZHenmEdS3/g?=
+ =?us-ascii?Q?nmXRjt+UAMMaJc5GHXrtNj1w11ykveMR931GO6b7Cn4OOM2KBrf1sR+y55MQ?=
+ =?us-ascii?Q?/Y/FzhMVNvWAjP7iUChjdHQTymm47Kl5CXPVd2NtudwqKveQrSDCtPzabRhF?=
+ =?us-ascii?Q?hzVkovgvElGuATR2uonZIXZHtsu7EdBc/kiTCTr0xZEplPw8j48uWmECyily?=
+ =?us-ascii?Q?8Inx73RaxDG8r2mFR0tRKv3FUGMWY8geOneUDJAZAD+LodFgsJIrSlfrOj94?=
+ =?us-ascii?Q?bKWGmX6RhLoVYL1Z1XrKzdAhOFBU/pUz9Xi8TYUCfDd4J+0HEhsQz1b7q20d?=
+ =?us-ascii?Q?N3iRbDB86bNZ+98PufaNgUTcgIZsmeFNTk3kGPCOXfNFhC3z+6budNQy1oCN?=
+ =?us-ascii?Q?PlFGPJNeUKHdhZf9fDHBX+GUY1mlov7M6IwxnR4BdbPm2vdq87dqKbUcAmf8?=
+ =?us-ascii?Q?v6CCR7HeNSFC2yNPQHpflAVsOBWWFxj8b+w4CP0W59bpzplHtAJPBLsK5ccv?=
+ =?us-ascii?Q?cyFzs2r2VKmU/O1p6zxPmTbZysOqHpKR0JIZlv+I0+OrfNQo0hmF+0DUWmmT?=
+ =?us-ascii?Q?pjxC+XYCsLX5c3l13D6VCFj30X0mLoqeFw0jlUEQXWZIyLHb9Qng+aUaYEyV?=
+ =?us-ascii?Q?thXkCYYQV3DrBr9XPq84OVM++JgWf5ZwwjjgzlQn7UoBFBXKBz7T1/utNIkd?=
+ =?us-ascii?Q?LQc4mIlSSub6Bqfjibmq/FRW6ODK0aKL4wBXjKeSNZmgBYjqGH8nD82e/m6J?=
+ =?us-ascii?Q?yLeJ1yUAg22eT2Z/0LHTD5tPkWyq375vKgkrytrt+WXaSmi0yvNl9i5Alx5S?=
+ =?us-ascii?Q?JN3xIkI6BbQ3tTp50G0Scp7jmB2XfZ7T2iGiAtPG1r/6lPFjv3FgTK8U9Wdk?=
+ =?us-ascii?Q?68d9r6H/Yhgcdnh1wsHRfomiNlzVSusOGjld1xWRX9hSspHaOnD00FNX9Dzf?=
+ =?us-ascii?Q?eSFmSsuY9/ctVzcJtExKDdXe3Hq8F80CuKQgaGMtRC5CGhq3yxTp37U8gh8c?=
+ =?us-ascii?Q?mPNX2tlMkiCSJsoQUQNrEhvy2RNMoU2A4/IKSojAAXwjKKhX5TudlOzk9jWa?=
+ =?us-ascii?Q?UY9gGRe0IFSEnNdQXMpjn9rkqQxEnA8NTELEcDOMITTANOLR2jUHX0tuM/Ar?=
+ =?us-ascii?Q?O/iTzWdbKOfM6e9kZfQyYS/pw4kp2Q2P4ntFU1MvlUU9tnOnksEas0h3qzrY?=
+ =?us-ascii?Q?dNTvu57n2w=3D=3D?=
+X-Exchange-RoutingPolicyChecked: s7VvTWIjYqPABIXFf+ApAFIl4ZaB42e7VfV0sT8kEE/TuXq074ZeCRS+G34YAGStoLtXwZTZH4R28Bxm+pS/rQfa8SNYgfVoB6dIaOVZdIEsg6DJRymD3XyUv7sxZUoBojm1JsvSHaqro3+gPqcbmh5iDS2KxhUzTgb89OwOgkZrSAENw1POAGNVFtVDyvm9nB5/UTSdZHF3Bpll4DcJQ9PpEOWEq/IBX7ovf4INi5wCndtndHPRIHOzP+JNvL6iVhPRy7npU1tFh7cpJjZEAmwo/rZJ9jICFNCsAeTN2JsNnjagaVMI6xk25/neB9CivLsdPPfnQV4FO9h8l6VB2g==
+X-OriginatorOrg: nutanix.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 86d489a3-f49e-4999-14a4-08decc6b9046
+X-MS-Exchange-CrossTenant-AuthSource: BY5PR02MB6753.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 17 Jun 2026 12:25:49.0840 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: bb047546-786f-4de1-bd75-24e5b6f79043
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: qgK+f8bFoVp7qstZHo36HK587QSWfVp42eG7gH3MnEiqQ0EwIPkI1R9Qr1U1SNa3l5vO+VvbF7DhuwtoLe+QeQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV0PR02MB11158
+X-Proofpoint-GUID: MdX4oqRp_amFluXKszWdrMirj-y6dvwa
+X-Proofpoint-ORIG-GUID: MdX4oqRp_amFluXKszWdrMirj-y6dvwa
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjE3MDExNyBTYWx0ZWRfX+resyNWYdQTz
+ HCQ+jlGfgAr+c8ceUkMhjEy4IRMZ06r4rxY4PczCaa2OzQIF/E5oAqoptJj/9nFw00AYLfqyNQ/
+ oxYhyUkyb25vUejECwewQFaNpLY2Z7V+HgGqap7NhmAelWkBtblqLw5Q0qUnQDufUW0YYtTEeWE
+ jFBkmmj0QzfVVqbgVmRJwvy/8+aH+vtZ6g/71nzOV9GWKENXRwNMnpggo4l1i/xx0T7rELlOFxP
+ 79kM8NbfRoVH+Hu8OuFDJ5UVZZwvvnvkRoiBwdqfWOtvP5ieo4ygc/uf5Wy1t+Bnou9V0AQNjPZ
+ PcdMvA0LVz2HHnF5ijppZS7IPVaM5llG1nsYZ11v68cvjvzjffLx6ekGFpIFfFF8o1N8Vq7JqvP
+ KbYF03qBYdyzu1C1zLDM8Hh6pxH6LbVvXzmdXVzlczscVXdOiqnpYjIQayZ+yTdWSrT++WY9LJK
+ 7iOJUHdojXZ27qTST1g==
+X-Authority-Analysis: v=2.4 cv=c+Wbhx9l c=1 sm=1 tr=0 ts=6a32924f cx=c_pps
+ a=IXfcYWxja++gTjxmAJNAjQ==:117 a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19
+ a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19 a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19
+ a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10 a=FelO9ux0wxsA:10 a=0kUYKlekyDsA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=VofLwUrZ8Iiv6rRUPXIb:22 a=VUi8bpU7OL1Oj2-RSIOF:22
+ a=64Cc0HZtAAAA:8 a=5_zllTcJo4vDqqucfrQA:9 a=CjuIK1q_8ugA:10
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjE3MDExNyBTYWx0ZWRfX96YYNzxUUWE9
+ MCgmY0lW/5VUxd5ijAIi1Amql/a42KpHop5vN3vBxY2731v6tuNVQdDPjh7hmAhR3Q6011Y4XIH
+ miQ21MRuOBletdUcWAoNZf50umXS+xY=
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-06-17_01,2026-06-16_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 lowpriorityscore=0 priorityscore=1501 suspectscore=0 bulkscore=0
- adultscore=0 malwarescore=0 spamscore=0 clxscore=1015 impostorscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606170118
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Proofpoint-Spam-Reason: safe
+Received-SPF: pass client-ip=148.163.155.12;
+ envelope-from=john.levon@nutanix.com; helo=mx0b-002c1b01.pphosted.com
+X-Spam_score_int: -31
+X-Spam_score: -3.2
+X-Spam_bar: ---
+X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -155,54 +179,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Wed, Jun 03, 2026 at 02:21:38PM +0800, zhaoguohan@kylinos.cn wrote:
 
-
-On 6/17/2026 2:39 AM, Joel Stanley wrote:
-> rmw_xireg_aia() and rmw_xtopei() were changed to store the IMSIC
-> callback's value in a local before passing it back to the caller.
-> For write only CSR accesses that pointer is NULL, causing a crash when
-> guest programs write to xireg or xtopei, such as when the guest sets up
-> the IMSIC.
+> From: GuoHan Zhao <zhaoguohan@kylinos.cn>
 > 
-> This only happens when setting aia=aplic-imsic so none of the existing
-> boot tests caught it.
+> The vfio-user protocol makes the VERSION payload optional, so a
+> reply may legally stop after the major and minor fields.
 > 
-> Fix it by guarding the pointer dereference as done for other CSRs.
+> vfio_user_validate_version() currently assumes a capabilities string is
+> always present and NUL-terminated. When the server replies without
+> version data, QEMU ends up reusing the request-side capabilities buffer
+> and the terminating-NUL check underflows. Replies shorter than the fixed
+> VERSION header are also accessed before they are validated.
 > 
-> Fixes: 63469ad75dcc ("target/riscv: Fix arguments to board IMSIC emulation callbacks")
-> Signed-off-by: Joel Stanley <joel@jms.id.au>
-> ---
-
-Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-
->   target/riscv/csr.c | 8 ++++++--
->   1 file changed, 6 insertions(+), 2 deletions(-)
+> Reject replies shorter than the fixed VERSION header and only parse
+> capabilities when the reply actually carries version data.
 > 
-> diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-> index ec931a8c3ddf..4502f2ab4788 100644
-> --- a/target/riscv/csr.c
-> +++ b/target/riscv/csr.c
-> @@ -2732,7 +2732,9 @@ static RISCVException rmw_xireg_aia(CPURISCVState *env, int csrno,
->                                       AIA_MAKE_IREG(isel, priv, virt, vgein,
->                                                     riscv_cpu_mxl_bits(env)),
->                                       &wide_val, new_val, wr_mask);
-> -            *val = wide_val;
-> +            if (val) {
-> +                *val = wide_val;
-> +            }
->           }
->       } else {
->           isel_reserved = true;
-> @@ -3008,7 +3010,9 @@ static RISCVException rmw_xtopei(CPURISCVState *env, int csrno,
->                       AIA_MAKE_IREG(ISELECT_IMSIC_TOPEI, priv, virt, vgein,
->                                     riscv_cpu_mxl_bits(env)),
->                       &wide_val, new_val, wr_mask);
-> -    *val = wide_val;
-> +    if (val) {
-> +        *val = wide_val;
-> +    }
->   
->   done:
->       if (ret) {
+> Fixes: 36227628d824 (vfio-user: implement message send infrastructure)
+> Signed-off-by: GuoHan Zhao <zhaoguohan@kylinos.cn>
 
+Thanks!
+
+Reviewed-by: John Levon <john.levon@nutanix.com>
+
+regards
+john
 
