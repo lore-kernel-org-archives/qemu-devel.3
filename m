@@ -4,106 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41E63CD98E2
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jun 2026 14:33:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0BF99CD98E4
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jun 2026 14:33:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZrIL-0006en-IG; Wed, 17 Jun 2026 10:31:09 -0400
+	id 1wZrID-0006cS-6J; Wed, 17 Jun 2026 10:31:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wZrIJ-0006eA-9P
- for qemu-devel@nongnu.org; Wed, 17 Jun 2026 10:31:07 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1wZrIB-0006bu-SR
+ for qemu-devel@nongnu.org; Wed, 17 Jun 2026 10:30:59 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wZrIF-0007es-KR
- for qemu-devel@nongnu.org; Wed, 17 Jun 2026 10:31:07 -0400
+ id 1wZrI8-0007a6-5K
+ for qemu-devel@nongnu.org; Wed, 17 Jun 2026 10:30:59 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781706662;
+ s=mimecast20190719; t=1781706655;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Mvif4jWQltHBgV/w5wEFWTNvwJBqfVpF+YaK0ldKm4s=;
- b=BghS77JIDx+x2ZWWkJyreF1CMVBhCo048P4/KMi7BPCplPYFmgorcJezwT1vDhDb9Xr6Fx
- dQxRQzfVg+yfBqL3DO2m8IEOSEM2HWh1Vho/jF0XrKT6lHrl517OnUyagiyFmE+bIHqGB7
- EE0QQpWWYEnOwwPuiNtGDUcll6ex+aI=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=MpwcWeBuo0q2w/B8rRegV8dflyxdBlz27GTf8UtE9Y0=;
+ b=eL2Nsaq5I7co1Zj2RLAeZG7jx59l15eAq/iVsH3Its7ECzu80iKQJTRM2R9+UvUSxOkhHG
+ dQ33utHS/oph8PCaWq9Rh5NK+kSJIyL6krQhA5gFokjMtmuP+tFn2DCDCnfecWb94OgDZi
+ r5Re4zQ6xKIIxVhhnrmy208N8Y7w0fk=
+Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
+ [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-111-4A8AM-CcMHeNYeEALhjOrg-1; Wed, 17 Jun 2026 10:31:01 -0400
-X-MC-Unique: 4A8AM-CcMHeNYeEALhjOrg-1
-X-Mimecast-MFC-AGG-ID: 4A8AM-CcMHeNYeEALhjOrg_1781706660
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-490b79e6b94so56228455e9.2
- for <qemu-devel@nongnu.org>; Wed, 17 Jun 2026 07:31:00 -0700 (PDT)
+ us-mta-148-RfxEbjbCPAi10dOvaXf3Ew-1; Wed, 17 Jun 2026 10:30:53 -0400
+X-MC-Unique: RfxEbjbCPAi10dOvaXf3Ew-1
+X-Mimecast-MFC-AGG-ID: RfxEbjbCPAi10dOvaXf3Ew_1781706652
+Received: by mail-ej1-f69.google.com with SMTP id
+ a640c23a62f3a-bed16fc8424so514600866b.0
+ for <qemu-devel@nongnu.org>; Wed, 17 Jun 2026 07:30:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1781706660; x=1782311460; darn=nongnu.org;
+ d=redhat.com; s=google; t=1781706652; x=1782311452; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Mvif4jWQltHBgV/w5wEFWTNvwJBqfVpF+YaK0ldKm4s=;
- b=QNE0JGZKrxSFlEN5a074cYJOf1hHkkdVkqy1cVcWWHJzNjWpOM1m+lNU8V/4Kkr1i9
- zohLqL1S4ohrKQ0tzoYJBahMMMh84CUa2dFJMhqewyrYRsBJoQP5J1du78QpoNYePYD2
- PpszADaMV8LfZPWOItuptXnkndHWaZ7srQ10653UavqIMSjroPfklhffZAqYrq8mh3DC
- g/C5AtPkM2uYkYlAShpGU5DSmnDmSUh/gVVaGZZ3Qn78Wu1ctU+81ply4GV2LICz2K8/
- kehZVSEjOgXR/xmL4rQVjc4YT+jsWrAxzfJ5KBak3CqkEM7YAmTSHIHwlfOjm2+5Uwz4
- b4nA==
+ bh=MpwcWeBuo0q2w/B8rRegV8dflyxdBlz27GTf8UtE9Y0=;
+ b=GOP1jSM/0d/ShC1mS8ifQ3bc5S8GhCgSaEt1K6HWr9Fk1PmSVE5anjpOM1giGyD5jF
+ ckhCPLZQQ5zUzXHpyO/IuwTEZNkkhXiOEWLeJoUo537wUQ1zJ4L4yIvabJzBwkjPDNLh
+ g5VbUOpCoxld0WBGtR+zor5xYFWGfEUsdwNOdzPwQrkELd7zDYNKUwyTjZ3k4HYnXySR
+ v9vOGIolRhOppME8dpubWqlNLxw0RsBqbznekF2Hhw/REgfLeCDYvaXiB9gAh0zwnVs9
+ 7jRS+SGeEEiB6qpQnRMaekL7m36VCpoq7cz0w8jq1Lf5SD+EJQCv8gEUCnSuwg2mgBRf
+ xHlQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781706660; x=1782311460;
+ d=1e100.net; s=20251104; t=1781706652; x=1782311452;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=Mvif4jWQltHBgV/w5wEFWTNvwJBqfVpF+YaK0ldKm4s=;
- b=MZ3weg1s4pc7f1yFBTrWSeWqAaAsOWmXwQLKHePIht6SRYCFqGXkqUh7F0N6bF3iU7
- FKGuPzjWASbPdeASehebvP2P6V8W6Y0+Zq/gTG9Vgwgy2nONADOoLshQS7WAfSf+lJOL
- 8AJOxCCPSqzBzY6WjZY2SQmwcir95+MuaPTOo1pNOply4IFMyJDB8acwtvIAKbCj4ilh
- 0MnJC8UvEukiY853UtLxDDNuKcswqzviBncGNIn4es1n8zuF44JiD5ThNo36aISpcXBt
- n7C7rlb1q4n7mz4yD2R/KtURrtCuV9xP4GbhuDTGTPwLbRER8D3jkQdmL1iE7Hy/d9Li
- Du1Q==
-X-Gm-Message-State: AOJu0YwgUUBVY34Sw4M5qqulG2yGyMk5Ha0QSfg80Sn89xjGb1Iz4RDX
- XcuA7x66L/1z1peV6dl7h1PJqBXKeYeWJgY4ZCj6AoYwVhx+n7kMq0cQVK9jaBAXgEtsfl+Ndpx
- ipowZCRBE8HjrOWKhbv6UBtADKdPrLOMn15MPiEIWHcqljkPfLcsjLAVGF8cQV0W6MQLTT/lCt/
- e6UU8tXg/unymN0/brmHZbD1DVJVvUEGRAp6La3+h3
-X-Gm-Gg: Acq92OEGe2UwZK8nZH7CCCHoTQ4gB6FD4H8nGp7B7rjcsG2SstbXDoRl9YMdVFflzZg
- dQamQSLel7yMpVP3rzMKO49dchkfG19VugmTumBYQKBURFcmIRCfzDLsLW5goIGtWami28Xm8EK
- ptQqm1rs4xXpGb3D35tMn1X645S6gUb1zK9KyuSdXIM6OLVEI+QY14YKeppPkld5YTFvvRcSAxU
- FFFAazD1noxKiBjRMbe5Nh5WYEZZuoMsyxoQMO3OS4voSrx+6gaFbXS/xEd6+189WVnncLxrneo
- 5C+nGmJEYwhqTZpUlkIzSuzrU5SgQQK1SloU04aI4FNLflEuldFEmj9QJyMC9ceQI9zsgyToOAQ
- RdYfgyrnXKTJVmTUcQkaOziwaLWxZGT703xokaZUm0Vq6rXfwkIbauMEeEIiYzsZaZ2YtfF7ClD
- QjrQfXuZHQzbS8fmGf
-X-Received: by 2002:a05:600c:a305:b0:492:2c87:3d4b with SMTP id
- 5b1f17b1804b1-492333af19dmr55251555e9.12.1781706659670; 
- Wed, 17 Jun 2026 07:30:59 -0700 (PDT)
-X-Received: by 2002:a05:600c:a305:b0:492:2c87:3d4b with SMTP id
- 5b1f17b1804b1-492333af19dmr55250795e9.12.1781706658963; 
- Wed, 17 Jun 2026 07:30:58 -0700 (PDT)
+ bh=MpwcWeBuo0q2w/B8rRegV8dflyxdBlz27GTf8UtE9Y0=;
+ b=dXdPchoYzQOeZn2L0wPNUg000iZrxPXPhV5IvVbJDPRxwtf3JZTkxNQgoNe3Cpypk9
+ euGK+GuDPaukLZ1ugmUYEPzU2VYvElyYid67k6aFaA3Lmqd16jxGE7Dp8opP4g3JnF84
+ q3cdflhHyhmn4xioTOtNG5jBgdeChrA6/QKsjgWMg6ZSO+kdOcmHOo3YJ14AWST4qvyi
+ zQaL43rh4t/0jGsswi1biPic+1deqdDglefmUxPJyCc8WBk/q6l2u//v/tqbuMcTQMZm
+ B9ZtObLBaqczPnLVwg8UNRxYTQ4ISViRLpZ7SqVyp7M2hlikMA7BI5VDzNNLFowr21Mo
+ mPDA==
+X-Gm-Message-State: AOJu0YwJ6Ls7d/AF7i1ROWNfpNmwBIKU3pwO/aojJtdE4NbRe+eR8eFb
+ REWKmQ8yYpfAxsaXBNytEWaxsz/eZSDJdBFArklObugcFrBdSNkQ531UDo+p2oTRzrIeo82jaI4
+ 4+LaNAvInHq96PFCO2fR2iQO3AuNqPyz/U3pXzAzpaCdsk2GcYEL0cL26YRySFi0WQrTXvUhp+t
+ PFEpQwvkAc5C3usEqYVV0cApYNAS1OtN9O5oKKMsL+
+X-Gm-Gg: Acq92OHGGComdxXtUCUmsCcC3DEDEGutl6BxlCmo8YJwtV3kwRgZ16fhzxMY8ytoHBR
+ IWwXQCmHu0LUhs7yRGo84YkZlC0moNQc7+6OuXvo1GLOsT4rLSJtoFsg2hrdjOechANQdm2WZIl
+ Yfa3rtpz1siYYu6Os5MEnchlTO+/fVYdq5PyqB5bpnWqrPQOXQemL/+7SBtt0OqFMy+9FkzR+28
+ QiOHpUGkb8zxOJUUfNXL6r0grephxPfr177ShuP1GVntXgOwzF6cDP5GqCGBXePS8pWo6+6M1WT
+ URopCO6+N2x0ucvBX5HfKu4/FawNjSvaBrbcjiS1TV4qp9VEWbwUQjYCMzt2riydXNOJIcBmDtl
+ PD157PuG86MIVciDqBr4503ROAk+YkqCPM73u1A/WKJhho9R+GZMipKmo5jXBgSY9mLqgqEPG93
+ ZcpB9G/0pVaw3RtjOV
+X-Received: by 2002:a17:907:3e84:b0:bd7:f75a:817c with SMTP id
+ a640c23a62f3a-c05a521d4cdmr247983366b.17.1781706651850; 
+ Wed, 17 Jun 2026 07:30:51 -0700 (PDT)
+X-Received: by 2002:a17:907:3e84:b0:bd7:f75a:817c with SMTP id
+ a640c23a62f3a-c05a521d4cdmr247981066b.17.1781706651236; 
+ Wed, 17 Jun 2026 07:30:51 -0700 (PDT)
 Received: from [192.168.10.48] ([151.95.156.160])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49230a58fddsm153567495e9.8.2026.06.17.07.30.57
+ a640c23a62f3a-c06079325adsm107149866b.58.2026.06.17.07.30.49
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 17 Jun 2026 07:30:57 -0700 (PDT)
+ Wed, 17 Jun 2026 07:30:50 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Mathias Krause <minipli@grsecurity.net>
-Subject: [PULL 04/16] gdbstub: Update x86 control register bits
-Date: Wed, 17 Jun 2026 16:30:34 +0200
-Message-ID: <20260617143046.445322-5-pbonzini@redhat.com>
+Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
+Subject: [PULL 01/16] rust: fix incorrect dependency in Cargo.toml
+Date: Wed, 17 Jun 2026 16:30:31 +0200
+Message-ID: <20260617143046.445322-2-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260617143046.445322-1-pbonzini@redhat.com>
 References: <20260617143046.445322-1-pbonzini@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -120,113 +121,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Mathias Krause <minipli@grsecurity.net>
-
-The control register bits haven't been updated in a few years, making
-them lack behind features QEMU ganied in these years.
-
-Update them to the current version of the SDM and sort the 32bit version
-to be in line with all the other definitions (descending order).
-
-This should remove confusion when debugging, for example, CET-enabled
-guests:
-
-- before the change:
-  (gdb) info registers cr4
-  cr4            0x8000f0            [ PGE MCE PAE PSE ]
-
-- after the change:
-  (gdb) info registers cr4
-  cr4            0x8000f0            [ CET PGE MCE PAE PSE ]
-
-Signed-off-by: Mathias Krause <minipli@grsecurity.net>
-Link: https://lore.kernel.org/r/20260327143413.254227-1-minipli@grsecurity.net
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- gdbstub/gdb-xml/i386-32bit.xml | 47 +++++++++++++++++++---------------
- gdbstub/gdb-xml/i386-64bit.xml |  7 +++++
- 2 files changed, 34 insertions(+), 20 deletions(-)
+ rust/bindings/hwcore-sys/Cargo.toml | 1 -
+ rust/bindings/system-sys/Cargo.toml | 1 +
+ 2 files changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/gdbstub/gdb-xml/i386-32bit.xml b/gdbstub/gdb-xml/i386-32bit.xml
-index 7a66a02b67e..1dec40e1d2c 100644
---- a/gdbstub/gdb-xml/i386-32bit.xml
-+++ b/gdbstub/gdb-xml/i386-32bit.xml
-@@ -87,27 +87,34 @@
-   </flags>
+diff --git a/rust/bindings/hwcore-sys/Cargo.toml b/rust/bindings/hwcore-sys/Cargo.toml
+index c20024e921a..b5ae33da8ed 100644
+--- a/rust/bindings/hwcore-sys/Cargo.toml
++++ b/rust/bindings/hwcore-sys/Cargo.toml
+@@ -21,7 +21,6 @@ chardev-sys = { path = "../chardev-sys" }
+ qom-sys = { path = "../qom-sys" }
+ migration-sys = { path = "../migration-sys" }
+ util-sys = { path = "../util-sys" }
+-system-sys = { path = "../system-sys" }
  
-   <flags id="i386_cr4" size="4">
--	<field name="VME" start="0" end="0"/>
--	<field name="PVI" start="1" end="1"/>
--	<field name="TSD" start="2" end="2"/>
--	<field name="DE" start="3" end="3"/>
--	<field name="PSE" start="4" end="4"/>
--	<field name="PAE" start="5" end="5"/>
--	<field name="MCE" start="6" end="6"/>
--	<field name="PGE" start="7" end="7"/>
--	<field name="PCE" start="8" end="8"/>
--	<field name="OSFXSR" start="9" end="9"/>
--	<field name="OSXMMEXCPT" start="10" end="10"/>
--	<field name="UMIP" start="11" end="11"/>
--	<field name="LA57" start="12" end="12"/>
--	<field name="VMXE" start="13" end="13"/>
--	<field name="SMXE" start="14" end="14"/>
--	<field name="FSGSBASE" start="16" end="16"/>
--	<field name="PCIDE" start="17" end="17"/>
--	<field name="OSXSAVE" start="18" end="18"/>
--	<field name="SMEP" start="20" end="20"/>
--	<field name="SMAP" start="21" end="21"/>
-+	<field name="LAM_SUP" start="28" end="28"/>
-+	<field name="LASS" start="27" end="27"/>
-+	<field name="UINTR" start="25" end="25"/>
-+	<field name="PKS" start="24" end="24"/>
-+	<field name="CET" start="23" end="23"/>
- 	<field name="PKE" start="22" end="22"/>
-+	<field name="PKE" start="22" end="22"/>
-+	<field name="SMAP" start="21" end="21"/>
-+	<field name="SMEP" start="20" end="20"/>
-+	<field name="KL" start="19" end="19"/>
-+	<field name="OSXSAVE" start="18" end="18"/>
-+	<field name="PCIDE" start="17" end="17"/>
-+	<field name="FSGSBASE" start="16" end="16"/>
-+	<field name="SMXE" start="14" end="14"/>
-+	<field name="VMXE" start="13" end="13"/>
-+	<field name="LA57" start="12" end="12"/>
-+	<field name="UMIP" start="11" end="11"/>
-+	<field name="OSXMMEXCPT" start="10" end="10"/>
-+	<field name="OSFXSR" start="9" end="9"/>
-+	<field name="PCE" start="8" end="8"/>
-+	<field name="PGE" start="7" end="7"/>
-+	<field name="MCE" start="6" end="6"/>
-+	<field name="PAE" start="5" end="5"/>
-+	<field name="PSE" start="4" end="4"/>
-+	<field name="DE" start="3" end="3"/>
-+	<field name="TSD" start="2" end="2"/>
-+	<field name="PVI" start="1" end="1"/>
-+	<field name="VME" start="0" end="0"/>
-   </flags>
+ [lints]
+ workspace = true
+diff --git a/rust/bindings/system-sys/Cargo.toml b/rust/bindings/system-sys/Cargo.toml
+index 7e527130ff5..1e0fa8cf79c 100644
+--- a/rust/bindings/system-sys/Cargo.toml
++++ b/rust/bindings/system-sys/Cargo.toml
+@@ -20,6 +20,7 @@ common = { path = "../../common" }
+ migration-sys = { path = "../migration-sys" }
+ util-sys = { path = "../util-sys" }
+ qom-sys = { path = "../qom-sys" }
++hwcore-sys = { path = "../hwcore-sys" }
  
-   <flags id="i386_efer" size="4">
-diff --git a/gdbstub/gdb-xml/i386-64bit.xml b/gdbstub/gdb-xml/i386-64bit.xml
-index 6d889692114..9ac9164e6a9 100644
---- a/gdbstub/gdb-xml/i386-64bit.xml
-+++ b/gdbstub/gdb-xml/i386-64bit.xml
-@@ -102,9 +102,16 @@
-   </flags>
- 
-   <flags id="x64_cr4" size="8">
-+	<field name="FRED" start="32" end="32"/>
-+	<field name="LAM_SUP" start="28" end="28"/>
-+	<field name="LASS" start="27" end="27"/>
-+	<field name="UINTR" start="25" end="25"/>
-+	<field name="PKS" start="24" end="24"/>
-+	<field name="CET" start="23" end="23"/>
- 	<field name="PKE" start="22" end="22"/>
- 	<field name="SMAP" start="21" end="21"/>
- 	<field name="SMEP" start="20" end="20"/>
-+	<field name="KL" start="19" end="19"/>
- 	<field name="OSXSAVE" start="18" end="18"/>
- 	<field name="PCIDE" start="17" end="17"/>
- 	<field name="FSGSBASE" start="16" end="16"/>
+ [lints]
+ workspace = true
 -- 
 2.54.0
 
