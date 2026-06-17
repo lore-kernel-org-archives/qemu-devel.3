@@ -4,73 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D3D4CD98E2
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jun 2026 07:44:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4857CD98E2
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jun 2026 07:55:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZkwN-0002nJ-O7; Wed, 17 Jun 2026 03:44:03 -0400
+	id 1wZl7K-000684-Ry; Wed, 17 Jun 2026 03:55:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <junjie.cao@intel.com>)
- id 1wZkwM-0002n4-FC
- for qemu-devel@nongnu.org; Wed, 17 Jun 2026 03:44:02 -0400
-Received: from mgamail.intel.com ([192.198.163.9])
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1wZl7I-00067e-4d
+ for qemu-devel@nongnu.org; Wed, 17 Jun 2026 03:55:20 -0400
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <junjie.cao@intel.com>)
- id 1wZkwK-0003e7-Ud
- for qemu-devel@nongnu.org; Wed, 17 Jun 2026 03:44:02 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1781682241; x=1813218241;
- h=from:to:cc:subject:date:message-id:in-reply-to:
- references:mime-version:content-transfer-encoding;
- bh=JrQdhu8yn6tpuL6obR8nEfCZia2seXFUvByj6d+tDxg=;
- b=lwBQwESZNSm55wQfVyU9RhB03WBr/i7bNg+ZTWTJfTIBn9xUOezVuVjA
- MCbN8lJpDHQ/tIpPlMKXvlTK7ZClp1cbJbFwM5Tknnk2atM8nO790AJm4
- vre6JsELh2upLauN9e5Ubb6VECFBBkwSWXTwZPzJ9THX0QlAV2n8X1Roy
- TRZEnJgA45cu/O47bz+DJ9y0RzZ3yUEXPV+pRKhQT91pRSG75PH1PDajh
- LfryReUnfBgUGI0/u3qzViDaQGA5uXb1UEXIaNPhxiUATubj4QD85vPZm
- Dzga1TYXX5/c4tA6zJr2L66aAvnqR9BIC/r/jxkHYun0W5zW+Xu6mAVAM w==;
-X-CSE-ConnectionGUID: ZVSZCLuzQT6l7dXtx+6gZw==
-X-CSE-MsgGUID: JUHtcfGIR92hFus4NyqpiQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11819"; a="93133616"
-X-IronPort-AV: E=Sophos;i="6.24,209,1774335600"; d="scan'208";a="93133616"
-Received: from fmviesa003.fm.intel.com ([10.60.135.143])
- by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 17 Jun 2026 00:43:57 -0700
-X-CSE-ConnectionGUID: r3fPfwH1SKCwalYELaq4LA==
-X-CSE-MsgGUID: Q2aD1LAcSAucpuWXhWqVEQ==
-X-ExtLoop1: 1
-Received: from junjie-optiplex-micro-plus-7010.bj.intel.com ([10.238.152.98])
- by fmviesa003-auth.fm.intel.com with
- ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 Jun 2026 00:43:54 -0700
-From: Junjie Cao <junjie.cao@intel.com>
-To: Shrihari E S <shrihari.s@samsung.com>
-Cc: Junjie Cao <junjie.cao@intel.com>, jic23@kernel.org,
- linux-cxl@vger.kernel.org, linux-pci@vger.kernel.org,
- qemu-devel@nongnu.org, cpgs@samsung.com, arun.george@samsung.com,
- vikash.k5@samsung.com, s.neeraj@samsung.com, dongjoo.seo1@samsung.com,
- dave@stgolabs.net, gost.dev@samsung.com
-Subject: Re: [RFC 6/8] hw/pci: Add PCIe Streamlined Virtual Channel (SVC)
- capability.
-Date: Wed, 17 Jun 2026 23:45:18 +0800
-Message-ID: <20260617154521.520191-2-junjie.cao@intel.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260609105836.3702787-7-shrihari.s@samsung.com>
-References: <20260609105836.3702787-1-shrihari.s@samsung.com>
- <20260609105836.3702787-7-shrihari.s@samsung.com>
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1wZl7F-0006MS-8A
+ for qemu-devel@nongnu.org; Wed, 17 Jun 2026 03:55:19 -0400
+Received: from [133.11.54.183] (h183.csg.ci.i.u-tokyo.ac.jp [133.11.54.183])
+ (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 65H7sxCp064597
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Wed, 17 Jun 2026 16:54:59 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=MXSpxOxnyD7BxUSNzGGp7BOAW4aDpJ8Z7OiU6wGXC8I=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=From:Message-ID:To:Subject:Date;
+ s=rs20250326; t=1781682899; v=1;
+ b=hxaOyxiYGQyHOG9kKqrgPZ9ltwyVXnFZ+NaCSdjZCZrts6w7RTod68OApd/alpm3
+ nnvO3pTUK3+QjvjTpm81/+lOATOr3sNlfop0Br7RD9yjeW510vFG3u3yz1ORPW1t
+ gZvT8zJNu8HEqLev96NslY0dcbTAUKX24A9VCMefU47LlVbVUVVe9S74y0p/pjyS
+ iJ9d1Ci7mlp9QKHWOjJPefxx1tegfVxGj+YO22DJd4P+MPpJDR7IlrgegmduEMfY
+ qeMp5Qq7VmwI0nxtqEcMqW55bDbcMsHvfRCHMEboLAip3nk946csyphev+WYxIjA
+ AoS1TdkewkhyjO3N5tk9wg==
+Message-ID: <770787d0-250d-47fc-827a-c2b4226e4840@rsg.ci.i.u-tokyo.ac.jp>
+Date: Wed, 17 Jun 2026 16:54:59 +0900
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=192.198.163.9; envelope-from=junjie.cao@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -28
-X-Spam_score: -2.9
-X-Spam_bar: --
-X-Spam_report: (-2.9 / 5.0 requ) BAYES_00=-1.9, DATE_IN_FUTURE_06_12=1.947,
- DKIMWL_WL_HIGH=-0.445, DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1,
- DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 1/7] igb: Define TRL registers and core state
+To: Josh Hilke <jrhilke@google.com>, qemu-devel@nongnu.org
+Cc: Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
+ Jason Wang <jasowang@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ David Matlack <dmatlack@google.com>,
+ Alex Williamson <alex.williamson@nvidia.com>
+References: <20260616-igb-trl-v5-0-1183e3635e06@google.com>
+ <20260616-igb-trl-v5-1-1183e3635e06@google.com>
+Content-Language: en-US
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <20260616-igb-trl-v5-1-1183e3635e06@google.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,42 +77,171 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Shrihari,
-
-On Tue,  9 Jun 2026 16:28:34 +0530, Shrihari E S wrote:
->      if (flitmode) {
-> -        pci_long_test_and_set_mask(exp_cap + PCI_EXP_LNKSTA2,
-> +        uint32_t pos = dev->exp.exp_cap;
+On 2026/06/17 7:35, Josh Hilke wrote:
+> Introduce register offsets and bitmask constants for the Transmit Rate
+> Limiter (TRL). Add the IGBTrlQueue structure and corresponding fields to
+> IGBCore to track TRL state (timers, throttling status, and target rates)
+> per queue. Initialize and free these timers during the device
+> realize/uninit lifecycle, and reset them on device reset.
+> 
+> Signed-off-by: Josh Hilke <jrhilke@google.com>
+> ---
+>   hw/net/igb_common.h |  1 +
+>   hw/net/igb_core.c   | 41 +++++++++++++++++++++++++++++++++++++++++
+>   hw/net/igb_core.h   | 12 ++++++++++++
+>   hw/net/igb_regs.h   |  6 ++++++
+>   4 files changed, 60 insertions(+)
+> 
+> diff --git a/hw/net/igb_common.h b/hw/net/igb_common.h
+> index b316a5b..8c0a0cf 100644
+> --- a/hw/net/igb_common.h
+> +++ b/hw/net/igb_common.h
+> @@ -148,6 +148,7 @@ enum {
+>       defreg(MTA_A),
+>   
+>       defreg(VTIVAR), defreg(VTIVAR_MISC),
+> +    defreg(TRLDQSEL), defreg(TRLRC),
+>   };
+>   
+>   uint64_t igb_mmio_read(void *opaque, hwaddr addr, unsigned size);
+> diff --git a/hw/net/igb_core.c b/hw/net/igb_core.c
+> index 45d8fd7..44e8e58 100644
+> --- a/hw/net/igb_core.c
+> +++ b/hw/net/igb_core.c
+> @@ -2136,6 +2136,15 @@ igb_set_phy_ctrl(IGBCore *core, uint16_t val)
+>       }
+>   }
+>   
 > +
-> +        pci_word_test_and_set_mask(exp_cap + PCI_EXP_FLAGS,
->                                     PCI_EXP_LNKSTA2_FLIT);
-> +        pci_word_test_and_set_mask(exp_cap + PCI_EXP_FLAGS,
-> +                                   PCI_EXP_FLAGS_FLIT);
+> +static void igb_trl_reset(IGBCore *core)
+> +{
+> +    for (int i = 0; i < IGB_NUM_QUEUES; i++) {
+> +        core->trl[i].trlrc = 0;
+> +        timer_del(core->trl[i].timer);
+> +    }
+> +}
+> +
+>   void igb_core_set_link_status(IGBCore *core)
+>   {
+>       NetClientState *nc = qemu_get_queue(core->owner_nic);
+> @@ -4282,6 +4291,33 @@ igb_autoneg_resume(IGBCore *core)
+>       }
+>   }
+>   
+> +bool igb_trl_enabled(const IGBTrlQueue *q)
+> +{
+> +    return q->trlrc & E1000_TRLRC_RS_ENA;
+> +}
+> +
+> +static void igb_trl_timer_cb(void *opaque)
+> +{
+> +    /* Stub */
+> +}
+> +
+> +static void igb_trl_init(IGBCore *core)
+> +{
+> +    for (int i = 0; i < IGB_NUM_QUEUES; i++) {
+> +        IGBTrlQueue *q = &core->trl[i];
+> +        q->timer = timer_new_ns(QEMU_CLOCK_VIRTUAL, igb_trl_timer_cb, q);
+> +        q->core = core;
+> +        q->qidx = i;
+> +    }
+> +}
+> +
+> +static void igb_trl_uninit(IGBCore *core)
+> +{
+> +    for (int i = 0; i < IGB_NUM_QUEUES; i++) {
+> +        timer_free(core->trl[i].timer);
+> +    }
+> +}
+> +
+>   void
+>   igb_core_pci_realize(IGBCore        *core,
+>                        const uint16_t *eeprom_templ,
+> @@ -4297,6 +4333,7 @@ igb_core_pci_realize(IGBCore        *core,
+>       for (i = 0; i < IGB_NUM_QUEUES; i++) {
+>           net_tx_pkt_init(&core->tx[i].tx_pkt, E1000E_MAX_TX_FRAGS);
+>       }
+> +    igb_trl_init(core);
+>   
+>       net_rx_pkt_init(&core->rx_pkt);
+>   
+> @@ -4321,6 +4358,8 @@ igb_core_pci_uninit(IGBCore *core)
+>           net_tx_pkt_uninit(core->tx[i].tx_pkt);
+>       }
+>   
+> +    igb_trl_uninit(core);
+> +
+>       net_rx_pkt_uninit(core->rx_pkt);
+>   }
+>   
+> @@ -4469,6 +4508,8 @@ static void igb_reset(IGBCore *core, bool sw)
+>   
+>       igb_intrmgr_reset(core);
+>   
+> +    igb_trl_reset(core);
+> +
+>       memset(core->phy, 0, sizeof core->phy);
+>       memcpy(core->phy, igb_phy_reg_init, sizeof igb_phy_reg_init);
+>   
+> diff --git a/hw/net/igb_core.h b/hw/net/igb_core.h
+> index d70b54e..d80cfaa 100644
+> --- a/hw/net/igb_core.h
+> +++ b/hw/net/igb_core.h
+> @@ -63,6 +63,13 @@ typedef struct IGBIntrDelayTimer_st {
+>       IGBCore *core;
+>   } IGBIntrDelayTimer;
+>   
+> +typedef struct IGBTrlQueue_st {
+> +    QEMUTimer *timer;
+> +    IGBCore *core;
+> +    unsigned int qidx;
 
-Following up on Jonathan's observation here -- I'd also noticed a
-bogus Interrupt Message Number on a plain flit-mode root port, so I
-checked what the stray write actually does to the Flags register.
-The impact is wider than just UIO:
+Using an unsigned type is a good improvement, but unsigned int is not a 
+type used elsewhere for the queue index. A possible candidate is 
+uint32_t, which is used by core->mac[TRLDQSEL].
 
-The first set_mask writes PCI_EXP_LNKSTA2_FLIT (0x0400) into
-PCI_EXP_FLAGS (cap offset 0x02) instead of PCI_EXP_LNKSTA2 (0x32).
-0x0400 falls in the Interrupt Message Number field (bits 13:9) of the
-Flags register, so a flit-mode port ends up reporting a nonzero
-Interrupt Message Number (it reads back as 2).
+Regards,
+Akihiko Odaki
 
-pcie_cap_fill_lnk() runs for every flit-mode port, and x-256b-flit
-defaults to on for pcie-root-port, so even a plain
-"-device pcie-root-port" comes up with the corrupted field.
+> +    uint32_t trlrc;
+> +} IGBTrlQueue;
+> +
+>   struct IGBCore {
+>       uint32_t mac[E1000E_MAC_SIZE];
+>       uint16_t phy[MAX_PHY_REG_ADDRESS + 1];
+> @@ -99,6 +106,9 @@ struct IGBCore {
+>       void (*owner_start_recv)(PCIDevice *d);
+>   
+>       int64_t timadj;
+> +
+> +    /* Transmit Rate Limiting */
+> +    IGBTrlQueue trl[IGB_NUM_QUEUES];
+>   };
+>   
+>   void
+> @@ -143,4 +153,6 @@ igb_receive_iov(IGBCore *core, const struct iovec *iov, int iovcnt);
+>   void
+>   igb_start_recv(IGBCore *core);
+>   
+> +bool igb_trl_enabled(const IGBTrlQueue *q);
+> +
+>   #endif
+> diff --git a/hw/net/igb_regs.h b/hw/net/igb_regs.h
+> index 4dc4c31..9ef628b 100644
+> --- a/hw/net/igb_regs.h
+> +++ b/hw/net/igb_regs.h
+> @@ -718,4 +718,10 @@ static inline uint8_t igb_ivar_entry_tx(uint8_t i)
+>       return i < 8 ? i * 4 + 1 : (i - 8) * 4 + 3;
+>   }
+>   
+> +/* Transmit Rate Limiting */
+> +#define E1000_TRLDQSEL 0x03604
+> +#define E1000_TRLRC 0x036B0
+> +#define E1000_TRLRC_RS_ENA BIT(31)
+> +#define E1000_LINK_RATE_1GBPS (1000000000ULL / BITS_PER_BYTE)
+> +
+>   #endif
+> 
 
-The second line (PCI_EXP_FLAGS_FLIT into Flags) looks correct and
-should stay.  The first one looks like a typo in the destination
-register -- it was PCI_EXP_LNKSTA2 before this series (visible in the
-hunk above), so I'd restore it there rather than drop it.
-pcie_cap_flit_write_config() does maintain the LNKSTA2 flit bit, but
-only on guest LNKCTL writes; it doesn't run at realize/reset, so
-dropping the line would leave LNKSTA2 flit status reading 0 at reset
-instead of its pre-series value.
-
-Many thanks,
-Junjie
 
