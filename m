@@ -4,79 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8515CD98F5
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9DB84CD98E4
 	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jun 2026 12:03:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZoyk-00046U-H7; Wed, 17 Jun 2026 08:02:46 -0400
+	id 1wZoyk-000460-GW; Wed, 17 Jun 2026 08:02:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <163wangjack@gmail.com>)
- id 1wZomB-0000rJ-KQ
- for qemu-devel@nongnu.org; Wed, 17 Jun 2026 07:49:47 -0400
-Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
+ id 1wZowI-00033P-4m
+ for qemu-devel@nongnu.org; Wed, 17 Jun 2026 08:00:14 -0400
+Received: from mail-pj1-x102a.google.com ([2607:f8b0:4864:20::102a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <163wangjack@gmail.com>)
- id 1wZomA-0003cd-2F
- for qemu-devel@nongnu.org; Wed, 17 Jun 2026 07:49:47 -0400
-Received: by mail-pl1-x629.google.com with SMTP id
- d9443c01a7336-2bf30d530bdso56547915ad.3
- for <qemu-devel@nongnu.org>; Wed, 17 Jun 2026 04:49:45 -0700 (PDT)
+ id 1wZowG-0008JG-EZ
+ for qemu-devel@nongnu.org; Wed, 17 Jun 2026 08:00:13 -0400
+Received: by mail-pj1-x102a.google.com with SMTP id
+ 98e67ed59e1d1-37cae9b7536so457597a91.3
+ for <qemu-devel@nongnu.org>; Wed, 17 Jun 2026 05:00:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1781696984; x=1782301784; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1781697610; x=1782302410; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=HuoZ1XF/SGtRMQNUv5o7lgVgKw3GW1pchp5QRRK8IPk=;
- b=Yukfyo4u71NPca1lFCyFX20MtuBdeE+0BSBxKb9Vfss7mieu1D5W8MeQTi368PToEX
- hE4fdYaK/VGuE854KL4RVKH7wY0YDgFmg3pMjNDe4S96BdNzzeasiO9U4pldIOmXU9SC
- OSNCC8oXqdlZV4hqGwq6jJ5pdQ20o+6OSWf7aEqOEIV0NSjrc40b/nSc4qDjdVEWvXvt
- RtxHMs14vBi0Eiqi+df/HBPWnQgC3kXpAX60hNIu1j8cKIR+98ja/fiLZgzBufyMrEsZ
- Rt+yW54FIYZ29wPeNI0RYITY3p4Y17bxDmQM9ZwJ4Hn1QdIbEqaAP1mjdk8B0GyG9tQN
- 4+7g==
+ bh=DcM1fU4v1GVwSrrIPjg6LuptyJklzv35LiIaFMncmqI=;
+ b=OHo9YKBLDacoCXOGQjtXdi7fZIASFl2E+qUBuoKOFhsvlLLTesz6zaco6Fc5CR5WFt
+ //jMaFCE4bFjzbautzeSWR3odwCPt6eblM8+Oc/UND73gfAsWivmx/Az9Knampnn/tIb
+ YHUoUHeC8gr3KTRX6WGXD1+B9fudgHy70McDF4PyWptVtfSEgmxWbFP0i5gv2uBjunrw
+ 42mNNegs6kWW4i00p0SlggEom7rAbHos9Pv9/k+oMY8ozoJgXBBQH7YI2nz29zPxrh2F
+ 6ixC4tkmlmts9DRAg7buWYEQRNVNKkzYb4qJ0wkmXMCm7re6JYWg6rJt/Lgro2HxuiLv
+ 2cOQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781696984; x=1782301784;
+ d=1e100.net; s=20251104; t=1781697610; x=1782302410;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=HuoZ1XF/SGtRMQNUv5o7lgVgKw3GW1pchp5QRRK8IPk=;
- b=r8uA04A1sOSwxMRArJERvPODExwh3C5g/XbkeAlx7IzGin6buMpYPhQ0LCTlKVFQ5t
- b+KgH9AlPFlvV3ppnCrXzz7IEsOCrSd5+BxyzKK+qGX0vxbwxbNUw/cPOttZ1cG7eMJc
- tnlMTVuevt5OvZImtC/9a5b+3E9uz0VFj7Nir2sxpkAelW3qRPTY2L6YEXFH6SE+BPFY
- CnPpNSYdV3f53bXI8gBQ1Qk9bhFa9hor0j8KFKkEubRcv69uLie5/ax2muGpgMJcnBY1
- N5TJL3zqA73zNvB3Ad4L1+xQir3Kbw5ofcncXtPv9KCdRTOIUcbpIFvlEP3l6PDu2ook
- MQ+w==
-X-Gm-Message-State: AOJu0YwjmB0zAJH7BQ4whLBeY0VMLyGRAarVdhYmn2y75eb1B5dSnIab
- fwlG5z55m0no6D7D4GxKElDYXGWUS3efCUrvceH2YgaWJVeIrjAm7zllkmhrPg==
-X-Gm-Gg: AfdE7clF+uGzeyn9QgIZVXZ6+uGU/5OZ8g95Md4gc88e+IFdppBK5GYIMXdNvBKZzmu
- A3EsKHcuAhfQpaceazGA2lliZpPIKl/fzrBWCMmzMNifCxWMxEs1DXL2KBAx57VtBmWMC8GSF4j
- eN1JqwxsR3GrSMkffcEhYX2syfRiLBBiRolYkOozIFxg6Kcvr1fmdVA/R8dSmC+6c3K2NuMa3KR
- ZzPeHMU7b9mqAm145qYGvR/i4YijbR/t9hEliXZ5w5Win2KasDzuhjdRwDKNIXfPWJmJrXGNnLz
- mxq9KgOGACn2d8o4LbRtLJe3hjP8O/krWIjCBJBGH16r7h6Hkv0ZmF1NM9ZtQ31EBhjfKgqdPD/
- XZ1Ru96N73qfiNfsuv8lgYTRW9AbS9GIMa+yTxBNAEeCySWLah/CdO3aGpFkjJEhnQLg1EghoBU
- 5LofPouSkMOgobeUyxVxowyJhX
-X-Received: by 2002:a17:902:da8c:b0:2bf:175a:db61 with SMTP id
- d9443c01a7336-2c6bc099eb7mr33665965ad.7.1781696984033; 
- Wed, 17 Jun 2026 04:49:44 -0700 (PDT)
+ bh=DcM1fU4v1GVwSrrIPjg6LuptyJklzv35LiIaFMncmqI=;
+ b=hTkZfxznp8qtsu8lJVtXQ5r6A7pQt66Mod5talOE7Tn/lUm2YwAk5o9movCXCwYLQS
+ Wkwk+qS00RGnnBi3ByTfZt32QyN2nfGCAfVbH8WeYfzyOhZB7lXpPFgMDdiH1BurrPZr
+ pnfbdVndQXV/7kCeA5mSUfVaItXUFBccI5v8Uv75ggMDDmqOooI3SmzQvk3SceP53hFK
+ o+NdiyOI5voomj7C7xk+6pONhL+uAeA3Lv9gjm3Qr8jUPP0qPmMJaK/XaauFshYhd495
+ bSmM0NNCg7Bm81znrZCNGr40Uw2pmPDY+rTfkvA3lOVVL1cZHEZ3YFMnn8wh+mFb4Iou
+ mFng==
+X-Gm-Message-State: AOJu0YzRLFl90u975ZxRywj1xI4HkJwHxPla1/ZXPv3tXuXrdO+xnhzx
+ /ZZfJnOE4Tx9QWin1C6hLNzY78HFx+h+8vMFH/+wro0gFag/tfZok97md19WmQ==
+X-Gm-Gg: AfdE7cnrE3QC2HhRiaqdPdr3GyoaoDgYTkEryEylLRS8cziSXng5CqaqnewTGwQLuJB
+ fEHUD7X/vDiytfMfnq8izLYX0dpOJNNLwXg0Vn84NIHy5SS9YOhuxx4uMo6SxL4hifSuZNN9rco
+ ZiFb7K2ZPEnB+jZZ12gAWaE3+UJeWkzVV3MplKo2YwpOi8kfHhasSfTTmEgs3zpBdQIp3abgLe1
+ VA8G3Bklj+8+zRVvIZ0a2BiTL76rgPlNbkecMGeUxaSTEi2I6lLx/fI3gsR0Z5Dq42BXugtDzhC
+ drXAiSMaLys4eXsY0iIz2G2tTDDcdJcm0pxkj+HcOnSnh3uo6ebZeDLva6K2ENqvws8F4YoL7Ou
+ Szwdh+Kn9eZNxs2AtFxEELg6ctbXhs0dKATKnFRPbj4ONNTIhZdw03TCPPQfxZNR6S9yCEiZkIT
+ tffclQiOoVDeMzAR4FUXN2P9Dl
+X-Received: by 2002:a17:90b:3805:b0:36b:71e6:3df1 with SMTP id
+ 98e67ed59e1d1-37c930e0adbmr3542661a91.3.1781697610391; 
+ Wed, 17 Jun 2026 05:00:10 -0700 (PDT)
 Received: from localhost.localdomain ([82.40.42.115])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2c43345e3ffsm164290415ad.71.2026.06.17.04.49.39
+ 98e67ed59e1d1-37c521ae039sm5912367a91.1.2026.06.17.05.00.05
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 17 Jun 2026 04:49:43 -0700 (PDT)
-From: jw_mac <163wangjack@gmail.com>
+ Wed, 17 Jun 2026 05:00:09 -0700 (PDT)
+From: Wang Yuxin <163wangjack@gmail.com>
 To: qemu-devel@nongnu.org,
 	qemu-arm@nongnu.org,
 	qemu-trivial@nongnu.org
 Cc: peter.maydell@linaro.org, mjt@tls.msk.ru, laurent@vivier.eu,
- jw_mac <77239050qq@gmail.com>, Wang <163wangjack@gamil.com>
-Subject: [PATCH trivial] Signed-off-by: jw_mac <163wangjack@gamil.com>
-Date: Wed, 17 Jun 2026 19:49:12 +0800
-Message-ID: <20260617114912.82494-1-163wangjack@gmail.com>
+ Wang Yuxin <163wangjack@gmail.com>
+Subject: [PATCH trivial v2] hw/timer/imx_epit: Replace DPRINTF with trace
+ events
+Date: Wed, 17 Jun 2026 19:59:49 +0800
+Message-ID: <20260617115949.93529-1-163wangjack@gmail.com>
 X-Mailer: git-send-email 2.53.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
- envelope-from=163wangjack@gmail.com; helo=mail-pl1-x629.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102a;
+ envelope-from=163wangjack@gmail.com; helo=mail-pj1-x102a.google.com
 X-Spam_score_int: -13
 X-Spam_score: -1.4
 X-Spam_bar: -
@@ -85,7 +86,7 @@ X-Spam_report: (-1.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  FROM_STARTS_WITH_NUMS=0.738, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Wed, 17 Jun 2026 08:02:34 -0400
+X-Mailman-Approved-At: Wed, 17 Jun 2026 08:02:38 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -100,17 +101,14 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: jw_mac <77239050qq@gmail.com>
-
-hw/timer/imx_epit: Replace DPRINTF with trace events
-
 Clean up the codebase by removing the outdated DEBUG_IMX_EPIT
 and DPRINTF macros, replacing them with modern QEMU trace events.
 
 This also removes an empty and meaningless DPRINTF("\n") in the
 imx_epit_realize function.
 
-Signed-off-by: Wang <163wangjack@gamil.com>
+Signed-off-by: jw_mac <163wangjack@gmail.com>
+Signed-off-by: Wang Yuxin <163wangjack@gmail.com>
 ---
  hw/timer/imx_epit.c   | 25 +++++--------------------
  hw/timer/trace-events |  8 ++++++++
