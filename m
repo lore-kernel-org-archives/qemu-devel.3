@@ -4,93 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28B85CD98E2
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jun 2026 14:33:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49511CD98F2
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jun 2026 14:33:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZrIt-0006tL-U7; Wed, 17 Jun 2026 10:31:43 -0400
+	id 1wZrIM-0006fL-Pt; Wed, 17 Jun 2026 10:31:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wZrIs-0006py-5x
- for qemu-devel@nongnu.org; Wed, 17 Jun 2026 10:31:42 -0400
+ id 1wZrIK-0006eb-R7
+ for qemu-devel@nongnu.org; Wed, 17 Jun 2026 10:31:09 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wZrIq-0007tA-Kb
- for qemu-devel@nongnu.org; Wed, 17 Jun 2026 10:31:41 -0400
+ id 1wZrIJ-0007iS-87
+ for qemu-devel@nongnu.org; Wed, 17 Jun 2026 10:31:08 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781706700;
+ s=mimecast20190719; t=1781706666;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=p4jJwByeLF3gSUl8NugBPEvBMXk9aV8zDdpQ1K1QTDU=;
- b=AdaqHIZd3nizKsjmetKNxisBbjdcKCUGv10vMFZIkrVY6ZxxQirHGon2Giv1FNkoE15Ynw
- Zyu3GlvtlblYVLBhDCeaBOyS8PcAdAmKf3WmAByH1VgKNe+S1iznLTH4j50DEp/NJwXQjh
- 5W5I0HZy4F5x+IiFHObEz4dVWbx0Ois=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=CLghqftpXQzJ1hZZJsFZxm2xXFHvSjTG7WPPx2ZMH4I=;
+ b=JapBC+7BD+Ttm29rMoKeIlwh/oqaJcU3XqoYjID1H+879dQsPHoaRQbeVfjgRXRR8bbK0T
+ 9qCGOey+5Yu+aMx7kP0XbyisPVZx4mqwG0dB3wCdyZr2fnj/T8aX+f/s4FG2ebA9tzDLWn
+ klnp+UlzDUlsecraI0XJhCid1iNARC4=
+Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
+ [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-186-itvxhKRUOvCzVfP6JomuKA-1; Wed, 17 Jun 2026 10:31:38 -0400
-X-MC-Unique: itvxhKRUOvCzVfP6JomuKA-1
-X-Mimecast-MFC-AGG-ID: itvxhKRUOvCzVfP6JomuKA_1781706697
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-461e0dad8easo1082229f8f.0
- for <qemu-devel@nongnu.org>; Wed, 17 Jun 2026 07:31:38 -0700 (PDT)
+ us-mta-438-VWstmMn7MEqe_V7elzEzEA-1; Wed, 17 Jun 2026 10:31:04 -0400
+X-MC-Unique: VWstmMn7MEqe_V7elzEzEA-1
+X-Mimecast-MFC-AGG-ID: VWstmMn7MEqe_V7elzEzEA_1781706663
+Received: by mail-ej1-f70.google.com with SMTP id
+ a640c23a62f3a-bebacba844bso519527066b.1
+ for <qemu-devel@nongnu.org>; Wed, 17 Jun 2026 07:31:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1781706697; x=1782311497; darn=nongnu.org;
+ d=redhat.com; s=google; t=1781706663; x=1782311463; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=p4jJwByeLF3gSUl8NugBPEvBMXk9aV8zDdpQ1K1QTDU=;
- b=fvUvyOn9KBzXVomXqr6y62kDc/if8Gb7cDAD6GqkX2zVTyeaalfq5+Dxplwe14JtsP
- o9K1J/Uuyl9y5jWiV/zVWGbNJZe1b0sJhhRDyVY/5Y6FTuQXglKVogrHR4gJ6EJuHkM7
- FmJFj1/MoIgJS7DxSB7AHKZ+viD7uUZnbTnQvTv1EPcNlBtof2zf7Y8AE1bPfEvwqIG6
- OuBYuDglxRMMYbM1xUy/zGLFcwIusbcW2M022zxPKFFXp3gcY5BE1s/jivTGro2Ins+v
- xDk7wkOum98BQmP60CqGzhTecfaC9aYOOB4mXQKFl2WbAPwNN/8wPAYqtIuUdj6yVFUE
- MkNw==
+ bh=CLghqftpXQzJ1hZZJsFZxm2xXFHvSjTG7WPPx2ZMH4I=;
+ b=hE6tz7ZeCpvL0tdpN2GegBmfp7qSxQuIJOIVklsCyoY66YakhDETdOGXtXnX3JJjLM
+ UjtJv/E/DSwBxqMn/t90mqE8lpBC66ld3Drjt8TQDCRhAwizXMQdTU8a7KVSL7fGOs+w
+ Dkd+RBV8/RX9mweYZfrzxFVLf92Teq1xodes7rmYN6APG6e7qARU986XuVRn1WFp4g6z
+ heC3EC6KPhxZWGgi6xHpRHcCxdVGuT4D0660pbG8H2QJeN/6WP9P3IoGZN7i3TybtGxr
+ AvDkhFgTNsxS62iiKa+p6WO3hq/s1XW6pPbn+eGN6VPM59t80Inz7TnHEr6LnqtjBG+0
+ qbKg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781706697; x=1782311497;
+ d=1e100.net; s=20251104; t=1781706663; x=1782311463;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=p4jJwByeLF3gSUl8NugBPEvBMXk9aV8zDdpQ1K1QTDU=;
- b=MarhtxFHWS/jSRXkLmwliGCZC1U7WXixyRHjvYhD6iMILaqw0dY+NEmd/5/YIQC0Kx
- 8tZ6NPEiUlrI1et4+uKM0LjUYaK3JkybX38mRpsmmIk0SD9d/iME+Lbi8aF+uAxN14hb
- Al1+4oqWbLEFY27Jx7kUsLZEW9wqknuJ9d8r6oVOdt9KvDCBa3pGXavcOLpX0Yc9mi+q
- 9iAfmagUSmMH8EQ9sKrXfDtqK3G2BAFjHi9I6YSPDvFc1wO4r4CGScHDYvsXdt8vzvsi
- HD+GyzSDEv/UOsj4cu1OhoN2Q39+n/M8ldDIOJTGtZdDxJO2XiJQ9DKwMKmgsrOlmVBQ
- PwOQ==
-X-Gm-Message-State: AOJu0YxKPKHMVz0fwLWnTU0bHdmBxTaAek8Hc6Y5578E3KtDIppG/tvg
- C62kxjUcguLiYNuElyzE0HLfkhrT9brBwpLP3ksUlqsIgacxR35foptVQKI7GJiE1/PTwFPiriR
- fqvoQkWXQHF3f6DFmLU7dMDg8WYxNeDBEVe3GJLiNMXT5D997g1fQhrNldWuZ+QYci66j2jJn2G
- UWAiGLIJcR6UO+31HZ8liU811WcyV6cT/uSoE7pSi3
-X-Gm-Gg: Acq92OEPswVV6q3keFWbtwK1A7Rf/2b73YQ2fW3VChgj5FARGTbYCSUKdLrjRfCRwL6
- l6LdLRaqhCc7ZtsHXH7Do5ZgkDVbdHihi2jgy/UpcEyrY9BL9JhYM0LYJDAZ8ferlzuSTkfGkcv
- blahzK62rp13vXsi+cDRrXY6mYICvfRCwkNjqCavTSI1IGHzUc/uGorUEsH35aIBWK3ZihFKaec
- ev6S5f45YE+MMWy4FKikrFrNS+wu8SjUI84hhZTWEu9q4s+OAzU6EAEheJDqRFykLcwD/1Iw5Sl
- 0Ps+BEkJ2XsZQNwwDqwIYd4XSOprOPY4Wu+zARTtO81zR9h/33PuM11IepfIfWzCqeMVLMjRe5v
- zR6XUaJItWtkYEJUkMYt7P5GkNe8MCl3GhQ4h6OFWapyMjVWvKUIB4clKD0eTw5XuSbtOkLM8ca
- 0LuhE3ZysPuHVZRfao
-X-Received: by 2002:a05:600c:c84:b0:490:b58b:a8ca with SMTP id
- 5b1f17b1804b1-49234131ffamr53635215e9.27.1781706693926; 
- Wed, 17 Jun 2026 07:31:33 -0700 (PDT)
-X-Received: by 2002:a05:600c:c84:b0:490:b58b:a8ca with SMTP id
- 5b1f17b1804b1-49234131ffamr53630885e9.27.1781706690127; 
- Wed, 17 Jun 2026 07:31:30 -0700 (PDT)
+ bh=CLghqftpXQzJ1hZZJsFZxm2xXFHvSjTG7WPPx2ZMH4I=;
+ b=oWg25s0q1qaa2CPlxUmYLyab8V/IDZoqv1NeCDebGNsWG4pJOqLORj++fjmpvMYwJG
+ paGy6LY2b48ozQYeXuSep7+OphA8RYFzK1lcVQsmp6xphsKXlca+RU11gNt75wwe7kaE
+ cfg6KAXpunoUOFFTA9TaiQt8goekz49xXwO1GEvIEUUWMOrIfZ80iWd4ZM1GAlh09Qzp
+ 4wqWLu00KQRkbPt3irVfOVMpFMykenAw9zHb+UFn6Q69CZdcHCxWcR6viOBSFOGlSV7E
+ 0wPWBUjD5DqG3A3wSsmQIPSZBGF3fbPXHUqmqVLJxmu1BbiGULUJZihTK6H5GgvNxuua
+ +FCw==
+X-Gm-Message-State: AOJu0YzUZ4Ri0/R1uAKktVmC7/kt4yrUmOb6Ozr4PjVLw/jFE4tq7YMh
+ hMyZVj8t/dpdU9jXTlWU04lUgvC/AjGihg8xCfqAY6tOwBAfmUVwMykNl+cHY6oxTRFvs/wgZHc
+ jmupmx0HGoz+AbjcfAyBThs3W5wxMTCeAtA+C52MqbIZgMFb1e+1z2F78+5mxbhGjSWJVcIoZ3E
+ upjx8kk1grGUjg6atwIvqbKotkXH4fVsH0n4E2iFkD
+X-Gm-Gg: Acq92OFmZ8m/qm4oSDc7GhNCVbYUcy3Na0CuRSf8xeBAioxJu16sh4Kmdf64HTXwqit
+ TIEQBFUFvlqWVMzLModh7dA1TaCNfBxm8AEmqjzBgl2DrHGlz5FNsnmWQRp/RjtTkGzz+IlaAn3
+ mXi3PzXGax2pyH2KyjULLHFXLXBjp1VjlMLs2/gxafLSxJilEOaq69RcG7fmtVlelxv1jTVg/jF
+ XkYWT2tLHSG5pbNJ4OiwlMMXY3YMO8FgdEjKHmFi9Lrrr0gI1qULznHaLYAEUjJ9TAnfdzr29U7
+ 5pG5wXkLbuXSJPIOQS9QO4Q60WSBSb+j/iGFg3LY+0p4J2QPEXI06l76L0BKGsY/q06yDjV1G4h
+ Nlwf9AEWmfo1GJRpwMPoP0+l2Md2+MhUv8TrYSJX+KQxSMXhBpbXeNxg+5ti9YwraxXOHkTAtE3
+ f1itt1p6Z37xnwubos
+X-Received: by 2002:a17:907:72c7:b0:bef:f4a3:e0cf with SMTP id
+ a640c23a62f3a-c05a95760a7mr307186466b.48.1781706662398; 
+ Wed, 17 Jun 2026 07:31:02 -0700 (PDT)
+X-Received: by 2002:a17:907:72c7:b0:bef:f4a3:e0cf with SMTP id
+ a640c23a62f3a-c05a95760a7mr307172666b.48.1781706661172; 
+ Wed, 17 Jun 2026 07:31:01 -0700 (PDT)
 Received: from [192.168.10.48] ([151.95.156.160])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4619a041986sm29753244f8f.23.2026.06.17.07.31.29
+ a640c23a62f3a-c01d667f63asm540392866b.19.2026.06.17.07.31.00
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 17 Jun 2026 07:31:29 -0700 (PDT)
+ Wed, 17 Jun 2026 07:31:00 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Kostiantyn Kostiuk <kkostiuk@redhat.com>
-Subject: [PULL 16/16] qga/vss: Drop unused define uuid(x)
-Date: Wed, 17 Jun 2026 16:30:46 +0200
-Message-ID: <20260617143046.445322-17-pbonzini@redhat.com>
+Cc: Manolo de Medici <manolodemedici@gmail.com>,
+ Damien Zammit <damien@zamaudio.com>
+Subject: [PULL 05/16] Include new arbitrary limits if not already defined
+Date: Wed, 17 Jun 2026 16:30:35 +0200
+Message-ID: <20260617143046.445322-6-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260617143046.445322-1-pbonzini@redhat.com>
 References: <20260617143046.445322-1-pbonzini@redhat.com>
@@ -120,31 +121,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Kostiantyn Kostiuk <kkostiuk@redhat.com>
+From: Manolo de Medici <manolodemedici@gmail.com>
 
-There is no place in code where we use uuid(x), at the same time
-MSVC vss.h use it and this define broke compilation.
+Although GNU/Hurd supports unlimited path lengths
+only bounded by available memory, for now we can use
+an arbitrary limit on PATH_MAX that matches what POSIX requires.
+We don't have bandwidth to fix this properly right now.
 
-Signed-off-by: Kostiantyn Kostiuk <kkostiuk@redhat.com>
-Link: https://lore.kernel.org/r/20260330113906.168002-8-kkostiuk@redhat.com
+Author: Manolo de Medici <manolo.demedici@gmail.com>
+Signed-off-by: Damien Zammit <damien@zamaudio.com>
+Link: https://lore.kernel.org/r/20260208055858.2166524-2-damien@zamaudio.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- qga/vss-win32/vss-common.h | 2 --
- 1 file changed, 2 deletions(-)
+ include/qemu/osdep.h | 15 +++++++++++----
+ 1 file changed, 11 insertions(+), 4 deletions(-)
 
-diff --git a/qga/vss-win32/vss-common.h b/qga/vss-win32/vss-common.h
-index db849127c2f..5e993f9eda4 100644
---- a/qga/vss-win32/vss-common.h
-+++ b/qga/vss-win32/vss-common.h
-@@ -30,8 +30,6 @@
- #define __RPC__out_ecount_part(x, y)
+diff --git a/include/qemu/osdep.h b/include/qemu/osdep.h
+index 2f0e61ad6b2..1ec5b42230b 100644
+--- a/include/qemu/osdep.h
++++ b/include/qemu/osdep.h
+@@ -384,6 +384,17 @@ void QEMU_ERROR("code path is reachable")
+ #define TIME_MAX TYPE_MAXIMUM(time_t)
  #endif
- #define _declspec(x)
--#undef uuid
--#define uuid(x)
  
- #include <vss.h>
- #include "vss-handles.h"
++#ifndef PATH_MAX
++#define PATH_MAX 1024
++#endif
++
++/*
++ * Use the same value as Linux for now.
++ */
++#ifndef IOV_MAX
++#define IOV_MAX 1024
++#endif
++
+ /* Mac OSX has a <stdint.h> bug that incorrectly defines SIZE_MAX with
+  * the wrong type. Our replacement isn't usable in preprocessor
+  * expressions, but it is sufficient for our needs. */
+@@ -661,10 +672,6 @@ struct iovec {
+     void *iov_base;
+     size_t iov_len;
+ };
+-/*
+- * Use the same value as Linux for now.
+- */
+-#define IOV_MAX 1024
+ 
+ ssize_t readv(int fd, const struct iovec *iov, int iov_cnt);
+ ssize_t writev(int fd, const struct iovec *iov, int iov_cnt);
 -- 
 2.54.0
 
