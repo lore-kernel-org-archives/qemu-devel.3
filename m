@@ -4,94 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49511CD98F2
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jun 2026 14:33:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27D19CD98F6
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jun 2026 14:33:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZrIM-0006fL-Pt; Wed, 17 Jun 2026 10:31:10 -0400
+	id 1wZrIh-0006ll-Ge; Wed, 17 Jun 2026 10:31:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wZrIK-0006eb-R7
- for qemu-devel@nongnu.org; Wed, 17 Jun 2026 10:31:09 -0400
+ id 1wZrIf-0006lI-Dq
+ for qemu-devel@nongnu.org; Wed, 17 Jun 2026 10:31:29 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wZrIJ-0007iS-87
- for qemu-devel@nongnu.org; Wed, 17 Jun 2026 10:31:08 -0400
+ id 1wZrId-0007qQ-VE
+ for qemu-devel@nongnu.org; Wed, 17 Jun 2026 10:31:29 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781706666;
+ s=mimecast20190719; t=1781706687;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=CLghqftpXQzJ1hZZJsFZxm2xXFHvSjTG7WPPx2ZMH4I=;
- b=JapBC+7BD+Ttm29rMoKeIlwh/oqaJcU3XqoYjID1H+879dQsPHoaRQbeVfjgRXRR8bbK0T
- 9qCGOey+5Yu+aMx7kP0XbyisPVZx4mqwG0dB3wCdyZr2fnj/T8aX+f/s4FG2ebA9tzDLWn
- klnp+UlzDUlsecraI0XJhCid1iNARC4=
-Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
- [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=m+5mqgZNw+BewGFyL/ROgj/mTd2mWBA2DvDTABIH9Qw=;
+ b=U7Ie9W8IXN2aHjm2fa0R+Qx0GZAZbpu7y1no2io0r/9r3qN8JjfECEX4MQQ5x+mcPwSnFc
+ lesiA8hL/pZcB86j/qiskO3D684DPZMz5btFWwtuqtwE/CPmnpO6bh5TWJYQsez+hhY+xk
+ R5FXcdXTddVwz5Djhsiw0U57IbPqgJA=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-438-VWstmMn7MEqe_V7elzEzEA-1; Wed, 17 Jun 2026 10:31:04 -0400
-X-MC-Unique: VWstmMn7MEqe_V7elzEzEA-1
-X-Mimecast-MFC-AGG-ID: VWstmMn7MEqe_V7elzEzEA_1781706663
-Received: by mail-ej1-f70.google.com with SMTP id
- a640c23a62f3a-bebacba844bso519527066b.1
- for <qemu-devel@nongnu.org>; Wed, 17 Jun 2026 07:31:04 -0700 (PDT)
+ us-mta-48-QzOeFrleMO68ts89l5nafg-1; Wed, 17 Jun 2026 10:31:25 -0400
+X-MC-Unique: QzOeFrleMO68ts89l5nafg-1
+X-Mimecast-MFC-AGG-ID: QzOeFrleMO68ts89l5nafg_1781706684
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-462c1cf9003so590277f8f.1
+ for <qemu-devel@nongnu.org>; Wed, 17 Jun 2026 07:31:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1781706663; x=1782311463; darn=nongnu.org;
+ d=redhat.com; s=google; t=1781706684; x=1782311484; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=CLghqftpXQzJ1hZZJsFZxm2xXFHvSjTG7WPPx2ZMH4I=;
- b=hE6tz7ZeCpvL0tdpN2GegBmfp7qSxQuIJOIVklsCyoY66YakhDETdOGXtXnX3JJjLM
- UjtJv/E/DSwBxqMn/t90mqE8lpBC66ld3Drjt8TQDCRhAwizXMQdTU8a7KVSL7fGOs+w
- Dkd+RBV8/RX9mweYZfrzxFVLf92Teq1xodes7rmYN6APG6e7qARU986XuVRn1WFp4g6z
- heC3EC6KPhxZWGgi6xHpRHcCxdVGuT4D0660pbG8H2QJeN/6WP9P3IoGZN7i3TybtGxr
- AvDkhFgTNsxS62iiKa+p6WO3hq/s1XW6pPbn+eGN6VPM59t80Inz7TnHEr6LnqtjBG+0
- qbKg==
+ bh=m+5mqgZNw+BewGFyL/ROgj/mTd2mWBA2DvDTABIH9Qw=;
+ b=jb9zUg2bbrBkxhXAVo9H13A60rrCNMWU6l1ISvIioml3JRqhrVF64WGa9anuhoiqED
+ upJqk3S42BzBkYhYV7wOHwOW3npX+rtSVJCASI+lN9mngN4aiKQuFCiBcNNPtHad+JDa
+ doW9/KgQqE15bB2z0GwCWVJ83fbHBjrKsxHLEM53x8S3vt5Gee6D47UGxo5Q8djW2p28
+ 0X7XgKVBNLs+RB6XAR0phSk5fAhrlxlJlXhYAvZkJVjLMrlFYpUXLKnNHIAqBqckz7nX
+ ueeyHPpEprBizdOceirxHqEPKO6hs3ZdcmNdBnwAYlPHtnuOd/FxyWfzd0c/XfSSRUDK
+ YFdw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781706663; x=1782311463;
+ d=1e100.net; s=20251104; t=1781706684; x=1782311484;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=CLghqftpXQzJ1hZZJsFZxm2xXFHvSjTG7WPPx2ZMH4I=;
- b=oWg25s0q1qaa2CPlxUmYLyab8V/IDZoqv1NeCDebGNsWG4pJOqLORj++fjmpvMYwJG
- paGy6LY2b48ozQYeXuSep7+OphA8RYFzK1lcVQsmp6xphsKXlca+RU11gNt75wwe7kaE
- cfg6KAXpunoUOFFTA9TaiQt8goekz49xXwO1GEvIEUUWMOrIfZ80iWd4ZM1GAlh09Qzp
- 4wqWLu00KQRkbPt3irVfOVMpFMykenAw9zHb+UFn6Q69CZdcHCxWcR6viOBSFOGlSV7E
- 0wPWBUjD5DqG3A3wSsmQIPSZBGF3fbPXHUqmqVLJxmu1BbiGULUJZihTK6H5GgvNxuua
- +FCw==
-X-Gm-Message-State: AOJu0YzUZ4Ri0/R1uAKktVmC7/kt4yrUmOb6Ozr4PjVLw/jFE4tq7YMh
- hMyZVj8t/dpdU9jXTlWU04lUgvC/AjGihg8xCfqAY6tOwBAfmUVwMykNl+cHY6oxTRFvs/wgZHc
- jmupmx0HGoz+AbjcfAyBThs3W5wxMTCeAtA+C52MqbIZgMFb1e+1z2F78+5mxbhGjSWJVcIoZ3E
- upjx8kk1grGUjg6atwIvqbKotkXH4fVsH0n4E2iFkD
-X-Gm-Gg: Acq92OFmZ8m/qm4oSDc7GhNCVbYUcy3Na0CuRSf8xeBAioxJu16sh4Kmdf64HTXwqit
- TIEQBFUFvlqWVMzLModh7dA1TaCNfBxm8AEmqjzBgl2DrHGlz5FNsnmWQRp/RjtTkGzz+IlaAn3
- mXi3PzXGax2pyH2KyjULLHFXLXBjp1VjlMLs2/gxafLSxJilEOaq69RcG7fmtVlelxv1jTVg/jF
- XkYWT2tLHSG5pbNJ4OiwlMMXY3YMO8FgdEjKHmFi9Lrrr0gI1qULznHaLYAEUjJ9TAnfdzr29U7
- 5pG5wXkLbuXSJPIOQS9QO4Q60WSBSb+j/iGFg3LY+0p4J2QPEXI06l76L0BKGsY/q06yDjV1G4h
- Nlwf9AEWmfo1GJRpwMPoP0+l2Md2+MhUv8TrYSJX+KQxSMXhBpbXeNxg+5ti9YwraxXOHkTAtE3
- f1itt1p6Z37xnwubos
-X-Received: by 2002:a17:907:72c7:b0:bef:f4a3:e0cf with SMTP id
- a640c23a62f3a-c05a95760a7mr307186466b.48.1781706662398; 
- Wed, 17 Jun 2026 07:31:02 -0700 (PDT)
-X-Received: by 2002:a17:907:72c7:b0:bef:f4a3:e0cf with SMTP id
- a640c23a62f3a-c05a95760a7mr307172666b.48.1781706661172; 
- Wed, 17 Jun 2026 07:31:01 -0700 (PDT)
+ bh=m+5mqgZNw+BewGFyL/ROgj/mTd2mWBA2DvDTABIH9Qw=;
+ b=BXNA1v/Ne80Jqu4Dc0vjjhsnAEWdU70TDu2Jzw0WuX92xkcBpZDqB60mbAuMcn9cpd
+ WuffNV/Jpx+yaF1Uyuf1LddPNjFI5Dw3s5ZTbG+RcydcQjiIukSHrKLnoXY2ognh4+lf
+ 2/gFbTryzdim9bC97T02NjYBnvVTUW+4ab6LPFlRMhNyJ+ghtfYBe1mP3odM+MYKTIy7
+ RWv4nk56+s+/CtQd//eyyFX89lQsUPgy0j7jzg0r/BGpWWC29LKBVZ1vVPFdUbODoHIE
+ 2/ITDDH1dvrlARkb0lg7QzYfeRze4rpoeLFqxAeDehoyXzN1hNAHh5Ly/D/QS2cS6EEC
+ Sesg==
+X-Gm-Message-State: AOJu0YwrZqAZEaxYtUMtJbtuN7cJAYSssiJj5ydUlEAMQVY/RC9hPy5Q
+ tmuZCGcCmMW8vucSahtZn9+yS+eRzLU5vkoBiKQnYO5xT5b7z1O5bq8PxTfJIhob0hkJCHgyzjE
+ pCCacrsHuTlFjKqk1MuB1RbbjnvIxGW9t2BQqopspc9cmhCh8wNPMvAwigXDTlNCpqvZoh2DQjH
+ GE0/oH2CkDeoREOL73TModn98sXXGt5Vb/fVrgjkdK
+X-Gm-Gg: AfdE7ckXBXBfW08bQ8aAPfO5AfxLvPoRwM8I1hUcI+kbj+4Sw/4SQI/lZMg/Fr8JfoB
+ rfW3BmDA7qTY4LJ2LyNJYSyknXZ21JiN6uEsYRlB2Bpfs4pbhQleoSXSZhu3jBHCdKdM1W4sfxP
+ bR2uUlzR4gHlS3yle9LZxI5at7oGq9lZ+R/kevqTKubbjdP9NMqCKc+z/NbZqizLANKpNhCgI9J
+ 1v7u2dYyiQs11AAnOiyByAD8XhlANyBpggGuKmpprK/RHiFSfLGCdBbBRorc+qvjOPSSeu8A1sG
+ kLgG1syDfMQEZ7i8cH1wbg2IOWDXbwPfogfUUgAxYsdT/exi5JWqmwfbljnqK1vYIwh1o7LAPQR
+ LyWv9aRhP8ONhXBUl5xdueDxJ8lincNspP+5YCpC6kIzaBpdA3Og7hefZIG3XoZn4QnE1F2WScN
+ 0ikcU/b7u+gAwd0UZF
+X-Received: by 2002:a05:6000:1787:b0:45e:739b:3e3c with SMTP id
+ ffacd0b85a97d-4623bdcc225mr6641759f8f.0.1781706683941; 
+ Wed, 17 Jun 2026 07:31:23 -0700 (PDT)
+X-Received: by 2002:a05:6000:1787:b0:45e:739b:3e3c with SMTP id
+ ffacd0b85a97d-4623bdcc225mr6641691f8f.0.1781706683248; 
+ Wed, 17 Jun 2026 07:31:23 -0700 (PDT)
 Received: from [192.168.10.48] ([151.95.156.160])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-c01d667f63asm540392866b.19.2026.06.17.07.31.00
+ ffacd0b85a97d-4606f26434dsm55903901f8f.1.2026.06.17.07.31.20
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 17 Jun 2026 07:31:00 -0700 (PDT)
+ Wed, 17 Jun 2026 07:31:21 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Manolo de Medici <manolodemedici@gmail.com>,
- Damien Zammit <damien@zamaudio.com>
-Subject: [PULL 05/16] Include new arbitrary limits if not already defined
-Date: Wed, 17 Jun 2026 16:30:35 +0200
-Message-ID: <20260617143046.445322-6-pbonzini@redhat.com>
+Cc: Kostiantyn Kostiuk <kkostiuk@redhat.com>
+Subject: [PULL 13/16] qga/meson: Allow to use MSVC message compiler 'mc'
+Date: Wed, 17 Jun 2026 16:30:43 +0200
+Message-ID: <20260617143046.445322-14-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260617143046.445322-1-pbonzini@redhat.com>
 References: <20260617143046.445322-1-pbonzini@redhat.com>
@@ -121,54 +120,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Manolo de Medici <manolodemedici@gmail.com>
+From: Kostiantyn Kostiuk <kkostiuk@redhat.com>
 
-Although GNU/Hurd supports unlimited path lengths
-only bounded by available memory, for now we can use
-an arbitrary limit on PATH_MAX that matches what POSIX requires.
-We don't have bandwidth to fix this properly right now.
-
-Author: Manolo de Medici <manolo.demedici@gmail.com>
-Signed-off-by: Damien Zammit <damien@zamaudio.com>
-Link: https://lore.kernel.org/r/20260208055858.2166524-2-damien@zamaudio.com
+Signed-off-by: Kostiantyn Kostiuk <kkostiuk@redhat.com>
+Link: https://lore.kernel.org/r/20260330113906.168002-5-kkostiuk@redhat.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- include/qemu/osdep.h | 15 +++++++++++----
- 1 file changed, 11 insertions(+), 4 deletions(-)
+ qga/meson.build | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/qemu/osdep.h b/include/qemu/osdep.h
-index 2f0e61ad6b2..1ec5b42230b 100644
---- a/include/qemu/osdep.h
-+++ b/include/qemu/osdep.h
-@@ -384,6 +384,17 @@ void QEMU_ERROR("code path is reachable")
- #define TIME_MAX TYPE_MAXIMUM(time_t)
- #endif
+diff --git a/qga/meson.build b/qga/meson.build
+index 85bdacf7e2a..cfa2157efb2 100644
+--- a/qga/meson.build
++++ b/qga/meson.build
+@@ -104,7 +104,7 @@ endif
  
-+#ifndef PATH_MAX
-+#define PATH_MAX 1024
-+#endif
-+
-+/*
-+ * Use the same value as Linux for now.
-+ */
-+#ifndef IOV_MAX
-+#define IOV_MAX 1024
-+#endif
-+
- /* Mac OSX has a <stdint.h> bug that incorrectly defines SIZE_MAX with
-  * the wrong type. Our replacement isn't usable in preprocessor
-  * expressions, but it is sufficient for our needs. */
-@@ -661,10 +672,6 @@ struct iovec {
-     void *iov_base;
-     size_t iov_len;
- };
--/*
-- * Use the same value as Linux for now.
-- */
--#define IOV_MAX 1024
+ qga_objs = []
+ if host_os == 'windows'
+-  windmc = find_program('windmc', required: true)
++  windmc = find_program('windmc', 'mc', required: true)
  
- ssize_t readv(int fd, const struct iovec *iov, int iov_cnt);
- ssize_t writev(int fd, const struct iovec *iov, int iov_cnt);
+   msgrc = custom_target('messages-win32.rc',
+                         input: 'messages-win32.mc',
 -- 
 2.54.0
 
