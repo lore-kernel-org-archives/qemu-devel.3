@@ -4,97 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A9DBCD98F2
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jun 2026 16:09:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E739CD98E2
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jun 2026 16:15:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZspN-0007Kq-2R; Wed, 17 Jun 2026 12:09:21 -0400
+	id 1wZsuL-0008Ph-Rx; Wed, 17 Jun 2026 12:14:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <francismicheal037@gmail.com>)
- id 1wZspL-0007KQ-59
- for qemu-devel@nongnu.org; Wed, 17 Jun 2026 12:09:19 -0400
-Received: from mail-qt1-x82c.google.com ([2607:f8b0:4864:20::82c])
+ (Exim 4.90_1) (envelope-from <163wangjack@gmail.com>)
+ id 1wZsuK-0008PE-VA
+ for qemu-devel@nongnu.org; Wed, 17 Jun 2026 12:14:28 -0400
+Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <francismicheal037@gmail.com>)
- id 1wZspJ-0002TK-Ih
- for qemu-devel@nongnu.org; Wed, 17 Jun 2026 12:09:18 -0400
-Received: by mail-qt1-x82c.google.com with SMTP id
- d75a77b69052e-51788280e71so64378301cf.0
- for <qemu-devel@nongnu.org>; Wed, 17 Jun 2026 09:09:17 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1781712556; cv=none;
- d=google.com; s=arc-20240605;
- b=jwNZaINSyULaa33ivFkksQO4Y6ZirkqRPteN4GxlZV7QCd5fjJt5lSzS17qq/VS3J3
- WpeEl21yCTkqaRO4K1L4FFQ4Uy5eotjdG9Z+soAvyKIxzhim5Q/a/kobZh/p1+5xwLn6
- O24eTpSVInJq/q2sHlZ8Fe0toH0iIeCk4ZlH5PW+oKS6GJ2R9XpYI3Ac5mK4Pv9f5aNu
- 0rEK+6l3Qj7f3/rfWE4e6VAVaS/sdejrHIRht3eYa6xJXcbvPuoIVAnaLjWDOrxCjULL
- WI3/aUbf4WGQL2A2OBzp0fSE74HX7K43Va/jRdFqub+90XX8O1MHeylbtzt4Upuy/C37
- 6V4Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=to:subject:message-id:date:from:mime-version:dkim-signature;
- bh=TMTiCmwlJLeyQvlwuwJ32kwc3lB2eydS/vmc7BoNenY=;
- fh=PnYt+qEB9tAfMKoqBm2xjKOFpYyFFGPudh5cVIoieJM=;
- b=FpD6UyApvII0EOcS8JV1IWBLe59ffLWGqhCiA7K5gWWWBQ6/XFPkq6NZtiYebuk09S
- hnUXkd9HHEL8qExxDPAFhYmkvOPzDskix8NHJgq8xPBuRU2TalFXqD0QiSFOXj9tn1Em
- NHFeBoQX4Cb2rLOo4ZC/fgcQ4ojPW+Z0Wn32Qh0XnMBaM/5kuWib9R0YtdwZYoJGLdPX
- RjRNydu0sjtL9wWtXlcfcZVCzjGYxUuzNFcZAOrZZzmG7pYOT/42I1caUKg6ti0mfIE+
- ShlvIm7DLV53wA1UOIeRc1NuMbhDE6oy14GiKQ0cxbQeLdMF8xKW/LV6H27edNlNYNGY
- mzcA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <163wangjack@gmail.com>)
+ id 1wZsuI-0003t7-KR
+ for qemu-devel@nongnu.org; Wed, 17 Jun 2026 12:14:28 -0400
+Received: by mail-pf1-x429.google.com with SMTP id
+ d2e1a72fcca58-84226d0f1d2so3877579b3a.1
+ for <qemu-devel@nongnu.org>; Wed, 17 Jun 2026 09:14:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1781712556; x=1782317356; darn=nongnu.org;
- h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
- :date:message-id:reply-to;
- bh=TMTiCmwlJLeyQvlwuwJ32kwc3lB2eydS/vmc7BoNenY=;
- b=eE33JD17IegQq0Jc6lFGlzF3voWXcBE8giOkrrZAzZuneepAzI2UG/gWN3WwOpvH1t
- +QQ2rkiUrxcGaip5B2t8CKcrf98tHkkGBDdYrqR0Nx9gmrYxww3Lgv4r1v/xPvWNI4kc
- VybLrNCBYFSPySLi5PBGPbQDbCYRS8HK7PlrI8h6i9/4KJ2ApxO8quUdw91eh7/gR9Ck
- mpDYT68LHRef6lPD+NT3zbfDawIfzOBarLoQGSgsRu+LENWyK7BE81I8cfEsoriy7puv
- zdE3HtfBph0MYT/nBHMu8e5yrOsAq2r4BCPsGJ+HY5QqsMgmgtHbB11CIkX6NW+vEMTK
- OtHQ==
+ d=gmail.com; s=20251104; t=1781712865; x=1782317665; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=227EW3L/59hcD2Q03G8dQiLU/RR2N6DLxA0E9gs88jY=;
+ b=mSHC2nobkId7LmT2pTZGC5rqijv4iwJSaEl4/QNiYNCo9QBG/BX5TCeAlYCLwM6Urp
+ KoGQBFY4H3LV7F7S49IF112fwOdCgzlLfiSpl4wcjNCOiNgK/5SuNuA1pkfSgk6Tyh9R
+ RRsUYhk5mKWO6DeGTJPNqTArFm8fCHK3MlSV5IgoDwOOrzxVXAzDlvXu+MMSqD2TA7X3
+ ynvqc3BZ8jDpfFP27DO9s6GdVu1hq/WbfkPT/CqSybh2ZWm/8IlBZJITUm0b2R3gnivM
+ PEzs4gPYw9NwBOQserHZZ0GALIqFiljfgxbMhDSj3Izc+tglN8wB1Np0shRlPZeIzWal
+ Bwuw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781712556; x=1782317356;
- h=to:subject:message-id:date:from:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=TMTiCmwlJLeyQvlwuwJ32kwc3lB2eydS/vmc7BoNenY=;
- b=kNQJ01xfpwP1ZuwxxuzcQeAFEi7vUvB1d5HATQck540g7l0C7tvQtOcAKJptYvozGa
- Y5y82WvcYsYO9P5LLCNyeyv6wtFsxFZjPU2cTcPGSkQhHsktrKYNtRqZf7A8gRoOk+5a
- iBfu4HDSbD5yTg5IqcngSCPCbH/kZR6Nl8a/GpfWrc5ha/m956kIrnyyjPTE5phzRdq1
- Ltr1IfrR4RSeg2HyjH5LwxRt0m1HkX9MC5TeVcurBBOF71h0f7RKCDSxV+IN3KNMwrTE
- dWSH/V2xDUprAmdw2Sf8Yz2CqvnkFO7aKBMuT0VVeywi0dIWFvWFtjkIE9sqxh+OuCHl
- 7+tA==
-X-Gm-Message-State: AOJu0Yxbtdhdily9zwKKkROQV2xrpWtFCH7MdP4gMS93gnaWtNtnH9/O
- ulBtKsFoDP5H8YVvfOMWqqb4t9k36hX9zZwMgPd08fRqOzgk+sktwoAYfg/h0oMidqJoWeC4wP6
- +8sGX1eklc28YksjfcSZYPoaYCzaAfn8PW49vpbuWOw==
-X-Gm-Gg: Acq92OEGRGPvbD/WcY26FEZPvUd7VC4sqwfpvHtH3J0JdiXJofEJPT39c4BYLJcS8P1
- 2g3NJVlJaNQzU/HlBHcrfOy6GZaLaz+outDnD2hF5G4GC4O/p8WzFJwqzT4r49Zlc4Q1ThMVNyt
- i/0f8UxovzLX2kk2vHf1ceE2w4Pnq94G1O/2vLnCdh7T353Bn9aDcHrId5OY6zzfhzde7Xu+kka
- 2DSkFLAqQ4ENNMutz1vVTTfQo4bZMldFf/IoMGAio6rmdwMbdWZnpKYg6Mgx1dXj1rm8/I14QPQ
- RRbTKcd/1gu6+uKRRbkoyaF2AiADl/aze1PkChXxMFxuDsJWxUemyZXUTlLC/tDmZYWd7S5nfA=
- =
-X-Received: by 2002:a05:622a:8359:b0:517:78c7:d93a with SMTP id
- d75a77b69052e-519a8cb90f5mr56962771cf.16.1781712556185; Wed, 17 Jun 2026
- 09:09:16 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1781712865; x=1782317665;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=227EW3L/59hcD2Q03G8dQiLU/RR2N6DLxA0E9gs88jY=;
+ b=H0Hd6hZQ0Y4qRiB9pPFONKuLlA8RQk2F3tutZsn9BEVBwLeqG45+poPjF7/DikRPgK
+ 5d6zVPI9Nc0+B2z5JQOu8Blop1XOcGakbbIZsXKFzloF5tlvJrVO2lArCbuD5YSPXa2m
+ IGI1plWT7R9FsdZC3W9wUW3y+VLU36AtVqrWTeGYN82OecUwsTWKRJQQbmjo+sMEKqh4
+ WaEl8WKZ9RzLgjhxpkethmLjWhQdZUBLOiNG84chtODK9alGnXOJ9N2gt67VhzQoIojq
+ QqD4UAxRo3ndFPZql66RWB6W8VqrmmQtvYqtKpzA6UWT1ygDfD6xZOiL9e3b7Znt7K+w
+ fXHg==
+X-Gm-Message-State: AOJu0YyOPVeYmGGktCBVu1bs1NdZv28mp5mCM3szOvXi21M7w6lT5+u9
+ HnE7VngC7ucTyN3dQwPDUPmORWmGNYeeVUEyJPPkE8TCa19s2ym75xzGgQz8TwjrGWg=
+X-Gm-Gg: AfdE7clLpvxRAQUER/K+YVUCjh6fjhUM8qUwsg7Fc4UxdqIt0qNkXz/VgAEvOTZSQLy
+ ER/n6VSCrSn72rrgbYYAsHfOc4GvJVtABBi4Z6x0QnBRrQA/g0Ec2lBKfISP+iyKVJFdvXtC6wb
+ bGxX5DMJieHkUmesM0mNk3pbAVIC9a4iZrPgj7a3uyipp0nA6OPIwsZdGGuRfE4rZ90VjpdJirx
+ F02Lz6ck+7Yzed123a6MiVsma9mpFfaiVpQB1B4ijxFT/S1UXn/I884rcX0qw00pTI4dEFfL2hh
+ eKrnRrsPJxrjEZBEkOnIMIV95n9X5ayTZ0tEbNJ1vKAQEFJG+c+qpK2kAzeYIDv6+fbqKsDKPlX
+ IHYwKmxWFylotoVupOKrwmCTMPNiEpoEBDKVss2OdMXfvpEvD7lEs7+uwpb3Y4uie5ORaNmsoGq
+ +WCaddBiH1W/e5mfhMqJDLgyhjmxt9+L7GBfak3Q==
+X-Received: by 2002:a05:6a00:1907:b0:824:374a:1407 with SMTP id
+ d2e1a72fcca58-84524480f94mr4809339b3a.16.1781712864975; 
+ Wed, 17 Jun 2026 09:14:24 -0700 (PDT)
+Received: from localhost.localdomain ([212.135.211.99])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-8434afc825csm16342800b3a.36.2026.06.17.09.14.21
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Wed, 17 Jun 2026 09:14:24 -0700 (PDT)
+From: jack wang <163wangjack@gmail.com>
+To: qemu-devel@nongnu.org,
+	qemu-arm@nongnu.org,
+	qemu-trivial@nongnu.org
+Cc: peter.maydell@linaro.org, mjt@tls.msk.ru, laurent@vivier.eu,
+ jack wang <163wangjack@gmail.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+Subject: [PATCH v5] hw/timer/imx_epit: Replace DPRINTF with trace events
+Date: Thu, 18 Jun 2026 00:14:06 +0800
+Message-ID: <20260617161406.14705-1-163wangjack@gmail.com>
+X-Mailer: git-send-email 2.53.0
 MIME-Version: 1.0
-From: Francis Michael <francismicheal037@gmail.com>
-Date: Wed, 17 Jun 2026 09:09:09 -0700
-X-Gm-Features: AVVi8CdBLZxH5SrEz65vgImeI2vLTb0M4wnJbVgduJYVuN9HkkdTQtd76KhAdHM
-Message-ID: <CAFiVdhG=B-eeL_8QxDy71pX52pc00JtSbXjnQxSgYVScGct+gg@mail.gmail.com>
-Subject: Interested in iPXE
-To: qemu-devel@nongnu.org
-Content-Type: multipart/alternative; boundary="00000000000000dd3d0654754841"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::82c;
- envelope-from=francismicheal037@gmail.com; helo=mail-qt1-x82c.google.com
-X-Spam_score_int: -6
-X-Spam_score: -0.7
-X-Spam_bar: /
-X-Spam_report: (-0.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, HTML_IMAGE_ONLY_16=1.092,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, T_REMOTE_IMAGE=0.01 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
+ envelope-from=163wangjack@gmail.com; helo=mail-pf1-x429.google.com
+X-Spam_score_int: -13
+X-Spam_score: -1.4
+X-Spam_bar: -
+X-Spam_report: (-1.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ FROM_STARTS_WITH_NUMS=0.738, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,48 +101,107 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---00000000000000dd3d0654754841
-Content-Type: text/plain; charset="UTF-8"
+Clean up the codebase by removing the outdated DEBUG_IMX_EPIT
+and DPRINTF macros, replacing them with modern QEMU trace events.
 
-Hey QEMU Team,
+This also removes an empty and meaningless DPRINTF("\n") in the
+imx_epit_realize function.
 
-I came across https://github.com/qemu/ipxe and thought the project was
-interesting. I especially liked the focus on network booting and
-infrastructure automation, which remains incredibly useful in modern
-deployment environments.
+Signed-off-by: jack wang <163wangjack@gmail.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+---
+ hw/timer/imx_epit.c   | 25 +++++--------------------
+ hw/timer/trace-events |  8 ++++++++
+ 2 files changed, 13 insertions(+), 20 deletions(-)
 
-I think a project like this could benefit from more visibility,
-contributors, forks, stars, and community engagement.
+diff --git a/hw/timer/imx_epit.c b/hw/timer/imx_epit.c
+index c67a39f10c..374ec7d324 100644
+--- a/hw/timer/imx_epit.c
++++ b/hw/timer/imx_epit.c
+@@ -20,18 +20,7 @@
+ #include "hw/misc/imx_ccm.h"
+ #include "qemu/module.h"
+ #include "qemu/log.h"
+-
+-#ifndef DEBUG_IMX_EPIT
+-#define DEBUG_IMX_EPIT 0
+-#endif
+-
+-#define DPRINTF(fmt, args...) \
+-    do { \
+-        if (DEBUG_IMX_EPIT) { \
+-            fprintf(stderr, "[%s]%s: " fmt , TYPE_IMX_EPIT, \
+-                                             __func__, ##args); \
+-        } \
+-    } while (0)
++#include "trace.h"
+ 
+ static const char *imx_epit_reg_name(uint32_t reg)
+ {
+@@ -80,7 +69,7 @@ static uint32_t imx_epit_get_freq(IMXEPITState *s)
+     uint32_t prescaler = 1 + extract32(s->cr, CR_PRESCALE_SHIFT, CR_PRESCALE_BITS);
+     uint32_t f_in = imx_ccm_get_clock_frequency(s->ccm, imx_epit_clocks[clksrc]);
+     uint32_t freq = f_in / prescaler;
+-    DPRINTF("ptimer frequency is %u\n", freq);
++    trace_imx_epit_get_freq(freq);
+     return freq;
+ }
+ 
+@@ -146,8 +135,7 @@ static uint64_t imx_epit_read(void *opaque, hwaddr offset, unsigned size)
+                       HWADDR_PRIx "\n", TYPE_IMX_EPIT, __func__, offset);
+         break;
+     }
+-
+-    DPRINTF("(%s) = 0x%08x\n", imx_epit_reg_name(offset >> 2), reg_value);
++    trace_imx_epit_read(imx_epit_reg_name(offset >> 2), reg_value);
+ 
+     return reg_value;
+ }
+@@ -328,8 +316,7 @@ static void imx_epit_write(void *opaque, hwaddr offset, uint64_t value,
+ {
+     IMXEPITState *s = IMX_EPIT(opaque);
+ 
+-    DPRINTF("(%s, value = 0x%08x)\n", imx_epit_reg_name(offset >> 2),
+-            (uint32_t)value);
++    trace_imx_epit_write(imx_epit_reg_name(offset >> 2), value);
+ 
+     switch (offset >> 2) {
+     case 0: /* CR */
+@@ -362,7 +349,7 @@ static void imx_epit_cmp(void *opaque)
+     /* The cmp ptimer can't be running when the peripheral is disabled */
+     assert(s->cr & CR_EN);
+ 
+-    DPRINTF("sr was %d\n", s->sr);
++    trace_imx_epit_cmp(s->sr);
+     /* Set interrupt status bit SR.OCIF and update the interrupt state */
+     s->sr |= SR_OCIF;
+     imx_epit_update_int(s);
+@@ -399,8 +386,6 @@ static void imx_epit_realize(DeviceState *dev, Error **errp)
+     IMXEPITState *s = IMX_EPIT(dev);
+     SysBusDevice *sbd = SYS_BUS_DEVICE(dev);
+ 
+-    DPRINTF("\n");
+-
+     sysbus_init_irq(sbd, &s->irq);
+     memory_region_init_io(&s->iomem, OBJECT(s), &imx_epit_ops, s, TYPE_IMX_EPIT,
+                           0x00001000);
+diff --git a/hw/timer/trace-events b/hw/timer/trace-events
+index ac5afe84e8..cd83adb03d 100644
+--- a/hw/timer/trace-events
++++ b/hw/timer/trace-events
+@@ -122,3 +122,11 @@ hpet_ram_write_tn_cmp(uint8_t reg_off) "hpet_ram_writel HPET_TN_CMP + %" PRIu8
+ hpet_ram_write_invalid_tn_cmp(void) "invalid HPET_TN_CMP + 4 write"
+ hpet_ram_write_invalid(void) "invalid hpet_ram_writel"
+ hpet_ram_write_counter_write_while_enabled(void) "Writing counter while HPET enabled!"
++
++# imx_epit.c
++imx_epit_get_freq(uint32_t freq) "ptimer frequency is %u"
++imx_epit_read(const char *name, uint32_t value) "(%s) = 0x%08x"
++imx_epit_write(const char *name, uint64_t value) "(%s, value = 0x%08" PRIx64 ")"
++imx_epit_cmp(uint32_t sr) "sr was %d"
++
++
+-- 
+2.53.0
 
-If you're interested in my approach, kindly drop your WhatsApp or Telegram
-handle.
-
-
-francismicheal037@gmail.com
-
---00000000000000dd3d0654754841
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div><div><p>Hey QEMU Team,</p><p>I came across=C2=A0<a hr=
-ef=3D"https://github.com/qemu/ipxe" target=3D"_blank">https://github.com/qe=
-mu/ipxe</a>=C2=A0and thought the project was interesting. I especially like=
-d the focus on network booting and infrastructure automation, which remains=
- incredibly useful in modern deployment environments.</p><p>I think a proje=
-ct like this could benefit from more visibility, contributors, forks, stars=
-, and community engagement.</p><p>If you&#39;re interested in my approach, =
-kindly drop your WhatsApp or Telegram handle.</p></div><div dir=3D"ltr" cla=
-ss=3D"gmail_signature"></div><br class=3D"gmail-Apple-interchange-newline">=
-</div><div dir=3D"ltr" class=3D"gmail_signature" data-smartmail=3D"gmail_si=
-gnature"><div dir=3D"ltr"><img width=3D"82" height=3D"96" src=3D"https://ci=
-3.googleusercontent.com/mail-sig/AIorK4wUJKGHRZnCIbA2IuWrCwJWDs594SR-PYmhqc=
-cE_oXn33yRVWTHoKZG_1q3lkonhQwXFf75PDeIrYL4"><br><span style=3D"color:rgb(31=
-,31,31);font-family:&quot;Google Sans&quot;,Roboto;font-size:14px;text-alig=
-n:center;background-color:rgb(233,238,246)"><a href=3D"mailto:francismichea=
-l037@gmail.com" target=3D"_blank">francismicheal037@gmail.com</a></span></d=
-iv></div><img width=3D"0" height=3D"0" class=3D"mailtrack-img" alt=3D"" sty=
-le=3D"display:flex" src=3D"https://p.mailmerge.eu/trace/mail/c13119ef3de67b=
-55a87973ba4549c4b84b4cb21d.png?u=3D14137903"></div>
-
---00000000000000dd3d0654754841--
 
