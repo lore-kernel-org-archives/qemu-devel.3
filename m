@@ -4,116 +4,119 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 257A0CD98E2
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jun 2026 07:15:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 466AACD98E2
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jun 2026 07:15:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZkUQ-0004Ns-TU; Wed, 17 Jun 2026 03:15:10 -0400
+	id 1wZkUw-0005IW-7A; Wed, 17 Jun 2026 03:15:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <saif.abrar@linux.ibm.com>)
- id 1wZkTy-0004HA-ST; Wed, 17 Jun 2026 03:14:45 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <saif.abrar@linux.vnet.ibm.com>)
+ id 1wZkUu-0005IJ-Go; Wed, 17 Jun 2026 03:15:40 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <saif.abrar@linux.ibm.com>)
- id 1wZkTx-00067m-51; Wed, 17 Jun 2026 03:14:42 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ (Exim 4.90_1) (envelope-from <saif.abrar@linux.vnet.ibm.com>)
+ id 1wZkUs-0006Qv-TC; Wed, 17 Jun 2026 03:15:40 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65GLnDrD2895421; Wed, 17 Jun 2026 07:14:31 GMT
+ 65GLmgKl2636350; Wed, 17 Jun 2026 07:15:29 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=f91rzU
- lp0dnh7oHCGlpYGXEe6+j0GFhmUC0B0dl+paU=; b=bpe+U6spmTO1nosLDBF8ag
- XMycmrqru8PshMrmg8EOiMeX/x1fXcU0Jvk8bIZ6asAMAKwZpjWq8f/+QPb+W7hR
- d8FONJ61VJtZaiTssPHIZoIcQX24IeGaYKMt3wFEnAGxWY8qHHDQxmZtUnuPYvn6
- gad90VVZGbfdA3BYgwDCHLim/CjJVir4gbZ53H6Cf7exDrxgiKa00jL12AxiZFyF
- X0LrxDP7+CgE53q4Bc1ntvBGcp62EUc3Ly2VG6HAE+g5J1RolD4xc+f9GhXDe2Yp
- IdPdbuuj3WhTYKPBeuy+Am7xeGSRUXqfNgkjR22iSVAxjBfgqgaStgE/bDEP91Yw
+ :message-id:mime-version:references:subject:to; s=pp1; bh=dq7WJA
+ pIW2R2PQBT4a4r5koKDr+msvbr+mTF3OYfvZM=; b=afHSPmulUp3jRrXWIAl9iH
+ o8yZ3+iOFWvRsxGDtn5ihJKkLVPFKCgoDdECNkkoSwoqdEA32dPc3/Nj/BoW/yBj
+ bcgLoFJhvE3OLWacvbpcIB5GgObvNj9kE7sNEVEmq39xf5G2G1DG7S8cmALM6a+j
+ /+jmDiBz2jAYrvwpvy7WymWSOgND6ad5x65Z0TTasV+SXTDA3LXuej5TcXYMwsXg
+ cT3JxlvtRxG/NPSarG8ZzdzubOHDiz1RE2BG62b3WC2DI46Q0Er3QAaZmmoO1P9H
+ jhjeJHuGFu9yLPDNhCr0ebzAqFMK1AgDbJWYTARsXJzyks9d5tN2mTKC3Io7mQjw
  ==
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4euequ1pkh-1
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4eueqx1p30-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 17 Jun 2026 07:14:31 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 65H74Zpt012532;
- Wed, 17 Jun 2026 07:14:30 GMT
-Received: from smtprelay02.wdc07v.mail.ibm.com ([172.16.1.69])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4eudva20n6-1
+ Wed, 17 Jun 2026 07:15:29 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 65H74cxk014940;
+ Wed, 17 Jun 2026 07:15:28 GMT
+Received: from smtprelay04.dal12v.mail.ibm.com ([172.16.1.6])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4eudvaj0bj-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 17 Jun 2026 07:14:30 +0000 (GMT)
+ Wed, 17 Jun 2026 07:15:28 +0000 (GMT)
 Received: from smtpav03.dal12v.mail.ibm.com (smtpav03.dal12v.mail.ibm.com
  [10.241.53.102])
- by smtprelay02.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 65H7ERlW13435396
+ by smtprelay04.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 65H7FRbE16450176
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 17 Jun 2026 07:14:27 GMT
+ Wed, 17 Jun 2026 07:15:27 GMT
 Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 829C85803F;
- Wed, 17 Jun 2026 07:14:27 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 37F2B58060;
+ Wed, 17 Jun 2026 07:15:27 +0000 (GMT)
 Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id C491A58061;
- Wed, 17 Jun 2026 07:14:22 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id CD1EC58056;
+ Wed, 17 Jun 2026 07:15:21 +0000 (GMT)
 Received: from [9.43.52.172] (unknown [9.43.52.172])
  by smtpav03.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Wed, 17 Jun 2026 07:14:22 +0000 (GMT)
-Message-ID: <702f3854-acf8-4955-8436-7296ebdcd2db@linux.ibm.com>
-Date: Wed, 17 Jun 2026 12:44:20 +0530
+ Wed, 17 Jun 2026 07:15:21 +0000 (GMT)
+Message-ID: <47fa7797-ad6b-4107-985f-032a7a27af3e@linux.vnet.ibm.com>
+Date: Wed, 17 Jun 2026 12:45:19 +0530
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 0/9] pnv/phb4: Update PHB4 to the latest PHB5 spec
+Subject: Re: [PATCH v4 9/9] pnv/phb4: Mask off LSI Source-ID based on number
+ of interrupts
 To: Aditya Gupta <adityag@linux.ibm.com>
 Cc: qemu-ppc@nongnu.org, qemu-devel@nongnu.org, clg@kaod.org,
  npiggin@gmail.com, fbarrat@linux.ibm.com, mst@redhat.com,
  marcel.apfelbaum@gmail.com, cohuck@redhat.com, pbonzini@redhat.com,
  thuth@redhat.com, lvivier@redhat.com, danielhb413@gmail.com,
- Harsh Prateek Bora <harshpb@linux.ibm.com>, jishnu@linux.ibm.com
+ Harsh Prateek Bora <harshpb@linux.ibm.com>, jishnuvw@linux.ibm.com
 References: <20260210134110.1515322-1-saif.abrar@linux.vnet.ibm.com>
  <20260305060923.3753402-1-saif.abrar@linux.vnet.ibm.com>
- <af4HEUe0erFyaQmB@li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com>
+ <20260305060923.3753402-10-saif.abrar@linux.vnet.ibm.com>
+ <af9M4YtLceZXP06j@li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com>
 Content-Language: en-US
-From: Saif Abrar <saif.abrar@linux.ibm.com>
-In-Reply-To: <af4HEUe0erFyaQmB@li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com>
+From: Saif Abrar <saif.abrar@linux.vnet.ibm.com>
+In-Reply-To: <af9M4YtLceZXP06j@li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
 X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjE3MDA2MiBTYWx0ZWRfX6N187fc3kC2W
- on4KjZsly0tqJ+eejw3yiMM9Sys14aZ1oDxtqp+KY+wU2i7iP4g3qW0wCDAidcNWK8XfRjRWjFM
- Qf9H/P8nq/O2l6oZBuvp0DF53uAw+lY=
-X-Proofpoint-ORIG-GUID: bdjDhfBsGPW0b5cPZ8Npt8pSl1akqjBi
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjE3MDA2MiBTYWx0ZWRfX1Gai07ENgAPn
- G9OP/LvAeD+dreso4sjODlDDuFCrW3WxChokfcozJoE+sbjbTDiwm0hRZhTaPEkrfbTVMgunpcO
- cN9fY5YqiFhcX1CEhajXIUT2Na9avmix+Uqp0cxBsOfSqVzutwnVbiKZ+rzlgLCu596SB0mekOX
- t/6rAG8dkrH4e144Kq9XFMQdroLiI4N1v194F2XdL7vvA2tSqYKci4yOOSAZl76kMFft7lc6Mgi
- 3nkrjpHtOSUqJevTeNr0xfyTxn9bIApTPMALJA88f+AifMMu/IPkTW/mUVVsJV0W33q31TZzPjV
- g5d5rZFBO6eDzZAlIhMM4/iIsQDiB+Y3LfYa8tT6v/gR8hVaQVXEU2hdQYSbUg8LzauIPnfdLtH
- m4TWWsq+RRBWRztE46kaqBsssYjT/RtnCb4JhemM8OsOg4nmqF1agyS6OgjwZ+4gB8VwMrpODMU
- f1kUs91b8c2Bsdr9xHg==
-X-Proofpoint-GUID: s1dW6-2orvG3mkJXQiTIh7iawlZ31dDs
-X-Authority-Analysis: v=2.4 cv=L9gtheT8 c=1 sm=1 tr=0 ts=6a324957 cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
- a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=p0WdMEafAAAA:8
- a=VnNF1IyMAAAA:8 a=xrUvTQNI3rT4VkUW52AA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjE3MDA2MiBTYWx0ZWRfXzlVM+imwlhyw
+ dzo4mIxjrtpIO5IYKvyf9QV5p5RD5YorwGi4F/W/9eQeSsmU3WR9W0ESnampvjiJOjqbBxfgovQ
+ OMuUjEjVlFtXUo32knIeaWRiEnjkYNYxnpckId56045/28LeXkzMkgvDZWNlC96OjI5lwHIVb/K
+ UF5LOpoFJafBYtncRt/NHYXahtB9l9fGepSnJS1nGwvcIbJsqlPNtbbPiNe9w/dJCAn+5A+MxGY
+ w2g7seOKQTPhH/9J0QR8FuYhK9mNLp5WaYLVV1WhVGYh1c9CxlQp5Bgj+pp0+/2GnNsQICD2D73
+ d2ir333Avrp7v+cP0qarteD78BIDjy7yO8mog7h/NqTQh9P2z2LIFMyRweLGwfqUyCaSAgzP6Ln
+ Y6S0EPVrX74+kz3Ga5u3jxYOl2o6xb6UUUcG/MYJ8TqK4NPp5toG2NsWmJxb8XkCb9Ss7yUf1YX
+ ce7H1zSBzefZifqa+aw==
+X-Proofpoint-GUID: YVTyNtw3l3XxyMRgsc2HsP2lH1okew21
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjE3MDA2MiBTYWx0ZWRfX2r0DCKyxD3fQ
+ 5zbfhRTwyyg+nEzMUfFunAwBa4aB1eSLDU3ue69IKN6UI/ujDKFQvcKI+eEhv1GF0YWyP+0taxh
+ yeAB4XBeHxEgi2UwXiQ54GNqcMNVw+o=
+X-Proofpoint-ORIG-GUID: 8oRekro8tKO0E6zd9U5tjN15edBqhfDr
+X-Authority-Analysis: v=2.4 cv=auGCzyZV c=1 sm=1 tr=0 ts=6a324991 cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+ a=kUKHeS9f1dJEPYFD:21 a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22 a=Y2IxJ9c9Rs8Kov3niI8_:22
+ a=VnNF1IyMAAAA:8 a=aow-egSQAAAA:8 a=O4_W4pT-pIX9l9402FUA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=gFNbaldVC-z-bsjSTzMo:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-06-16_05,2026-06-16_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 impostorscore=0 malwarescore=0 clxscore=1015 adultscore=0
- phishscore=0 lowpriorityscore=0 suspectscore=0 priorityscore=1501 spamscore=0
+ phishscore=0 clxscore=1015 priorityscore=1501 suspectscore=0 impostorscore=0
+ spamscore=0 lowpriorityscore=0 adultscore=0 malwarescore=0 bulkscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606170062
-Received-SPF: pass client-ip=148.163.156.1;
- envelope-from=saif.abrar@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
+Received-SPF: none client-ip=148.163.158.5;
+ envelope-from=saif.abrar@linux.vnet.ibm.com; helo=mx0b-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
 X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -130,62 +133,62 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
-On 08-05-2026 21:30, Aditya Gupta wrote:
+On 09-05-2026 20:34, Aditya Gupta wrote:
 > On 26/03/05 12:09AM, Saif Abrar wrote:
->> Hello,
+>> Add a method to reset the value of LSI Source-ID.
+>> Mask off LSI source-id based on number of interrupts in the big/small PHB.
 >>
->> This patchset v4 resolves the tsan build failure seen in
->> https://gitlab.com/mstredhat/qemu/-/jobs/13201554945
+>> Signed-off-by: Saif Abrar <saif.abrar@linux.vnet.ibm.com>
+>> Reviewed-by: Cédric Le Goater <clg@kaod.org>
+>> ---
+>> v3: Updates for coding guidelines.
+>> v2: Introduced method pnv_phb4_xsrc_reset().
 >>
->> Few variables were declared directly after a case label inside a switch,
->> causing the compilation failure.
->> These are now moved to the top of the block.
+>>   hw/pci-host/pnv_phb4.c | 12 +++++++++---
+>>   1 file changed, 9 insertions(+), 3 deletions(-)
 >>
->> This series updates the existing PHB4 model to the latest spec:
->> "Power Systems Host Bridge 5 (PHB5) Functional Specification Version 0.5_00".
->>
->> Updates include the following:
->> - implemented sticky reset logic
->> - implemented read-only, write-only, W1C and WxC logic
->> - return all 1's on read to unimplemented registers
->> - update PCIE registers for link status, speed and width
->> - implement IODA PCT debug table without any functionality
->> - update LSI Source-ID register based on small/big PHB number of interrupts
->>
->> Also, a new testbench for PHB4 model is added that does XSCOM read/writes
->> to various registers of interest and verifies the values.
-> Thanks for introducing phb5, saif.
->
-> I am currently seeing powernv functional tests failing with the patches
-> applied:
->
-> 	 1/16 qemu:func-thorough+func-ppc64-thorough+thorough / func-ppc64-hv                    SKIP              0.17s   0 subtests passed
-> 	▶  2/16 test_powernv.PowernvMachine.test_powernv10                                       FAIL
-> 	▶  2/16 test_powernv.PowernvMachine.test_powernv11                                       FAIL
-> 	 3/16 qemu:func-thorough+func-ppc64-thorough+thorough / func-ppc64-fadump                OK              166.62s   1 subtests passed
-> 	▶  2/16 test_powernv.PowernvMachine.test_powernv9                                        FAIL
-> 	 2/16 qemu:func-thorough+func-ppc64-thorough+thorough / func-ppc64-powernv               ERROR           182.93s   exit status 1
->
-> Able to consistently reproduce it with: 'make check-functional-ppc64 -j4'
->
-> Bisect points to below commit:
->
-> 	commit 9b95949d3eb9e733973c692b0e8e0b9043df98e9
-> 	Author: Saif Abrar <saif.abrar@linux.vnet.ibm.com>
-> 	Date:   Thu Mar 5 00:09:04 2026 -0600
-> 	
-> 	    pnv/phb4: Add reset logic to PHB4
->
-> Can you fix the above failure ?
+>> diff --git a/hw/pci-host/pnv_phb4.c b/hw/pci-host/pnv_phb4.c
+>> index 254bbe4089..5e885cb89d 100644
+>> --- a/hw/pci-host/pnv_phb4.c
+>> +++ b/hw/pci-host/pnv_phb4.c
+>> @@ -490,6 +490,7 @@ static void pnv_phb4_update_xsrc(PnvPHB4 *phb)
+>>   
+>>       lsi_base = GETFIELD(PHB_LSI_SRC_ID, phb->regs[PHB_LSI_SOURCE_ID >> 3]);
+>>       lsi_base <<= 3;
+>> +    lsi_base &= (xsrc->nr_irqs - 1);
+>>   
+>>       /* TODO: handle reset values of PHB_LSI_SRC_ID */
+>>       if (!lsi_base) {
+>> @@ -1944,6 +1945,12 @@ static void pnv_phb4_ro_mask_init(PnvPHB4 *phb)
+>>       /* TODO: Add more RO-masks as regs are implemented in the model */
+>>   }
+>>   
+>> +static void pnv_phb4_xsrc_reset(PnvPHB4 *phb)
+>> +{
+>> +    phb->regs[PHB_LSI_SOURCE_ID >> 3] = PPC_BITMASK(4, 12);
+>> +    pnv_phb4_update_xsrc(phb);
+>> +}
+>> +
+>>   static void pnv_phb4_err_reg_reset(PnvPHB4 *phb)
+>>   {
+>>       STICKY_RST(PHB_ERR_STATUS,       0, PPC_BITMASK(0, 33));
+>> @@ -2000,10 +2007,11 @@ static void pnv_phb4_reset(Object *obj, ResetType type)
+>>       PnvPHB4 *phb = PNV_PHB4(obj);
+>>   
+>>       pnv_phb4_pbl_core_reset(phb);
+>> +
+>> +    pnv_phb4_xsrc_reset(phb);
+>>       pnv_phb4_err_reg_reset(phb);
+>>       pnv_phb4_pcie_stack_reg_reset(phb);
+>>       pnv_phb4_regb_err_reg_reset(phb);
+>> -    phb->regs[PHB_PCIE_CRESET >> 3] = 0xE000000000000000;
+> why is resetting PHB_PCIE_CRESET removed here, is it not expected to
+> change during reset ?
 
 
-Reverted the updates that were causing the regression.
-
+PHB_PCIE_CRESET is now reset within pnv_phb4_pcie_stack_reg_reset()
 
 >
-> Meanwhile, will be reviewing the series.
->
-> Thanks,
 > - Aditya G
 
 
