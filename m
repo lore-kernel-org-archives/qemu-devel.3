@@ -4,64 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E43D0CD98E2
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jun 2026 07:56:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F659CD98ED
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jun 2026 08:10:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZl7V-000695-E4; Wed, 17 Jun 2026 03:55:33 -0400
+	id 1wZlLg-0001b6-TM; Wed, 17 Jun 2026 04:10:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wZl7T-00068u-TW
- for qemu-devel@nongnu.org; Wed, 17 Jun 2026 03:55:32 -0400
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ (Exim 4.90_1) (envelope-from <qemu_oss@crudebyte.com>)
+ id 1wZlLf-0001Yn-4O; Wed, 17 Jun 2026 04:10:11 -0400
+Received: from kylie.crudebyte.com ([5.189.157.229])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wZl7R-0006cd-W7
- for qemu-devel@nongnu.org; Wed, 17 Jun 2026 03:55:31 -0400
-Received: from [133.11.54.183] (h183.csg.ci.i.u-tokyo.ac.jp [133.11.54.183])
- (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 65H7tKnm064717
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Wed, 17 Jun 2026 16:55:20 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=1Q47Ow4RHK5IU87YBvEL/BcV9QwAml86qZHF1nWeAAY=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=From:Message-ID:To:Subject:Date;
- s=rs20250326; t=1781682920; v=1;
- b=Xl0PRD8BByCsv9QoH1IlI45b3SBmHL3b8XXzCZuMHs5Xh2IIfwUH6rJkviyIufCi
- FBKrsIM0Uv/N4xIic2uNBdgIPqAiq7S3v569A6yWtUvrXFIVqfod2F69UIqTyAA+
- hDuQlYvU2l0fJW2EM6odqu+g/eJh3DTH3sWfnVM0pvDvQ0VkpyngiPCH+moqCNRd
- 4211oOshcfFBrsBgtZ1QJkUpd4L8fGPT6s+5wzN4raq30wy0nomePC6Wek/01jVk
- 3zO/cGeXDdRKaL7udN2dXUQYRfogG03587+xzoKDVrWfAKoqeankuxFRZ/l6B/6O
- OBeDQnwBMv7ByB83z990ug==
-Message-ID: <fd8aa07d-1579-42ac-b9b4-17045b2d1e53@rsg.ci.i.u-tokyo.ac.jp>
-Date: Wed, 17 Jun 2026 16:55:19 +0900
+ (Exim 4.90_1) (envelope-from <qemu_oss@crudebyte.com>)
+ id 1wZlLd-0001sj-F4; Wed, 17 Jun 2026 04:10:10 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=crudebyte.com; s=kylie; h=Content-Type:Content-Transfer-Encoding:
+ MIME-Version:References:In-Reply-To:Message-ID:Date:Subject:Cc:To:From:
+ Content-ID:Content-Description;
+ bh=Vjb8kcQ579DVw2LGRp6Thwua9v24wEAc4wb6Tl4xdRE=; b=vVZt1Tok68d4yMYpGh9lariYlX
+ eyLdDLPulMiU5vuQV3KdE2KIkRfdxCZ+r8cPBh7msNRV3St5fFVEKSLaPQAREubp///605qp1eZ7V
+ pP1/yZeIkjmgUf3ha7ilrKgqVDjOAywkPszlGgb62p4ozaaD8w6DzNkOulCYBviqFkvHO+577vCMc
+ h/U3LxvBG9CKQvHPL41MMKpFDVJYW3LDxSHFNsdRqk/AnbtZzyPFhSCSU2L99CjJmiObrJ/JWAgR/
+ NDdZ6anpgr+ohoOiqV614D3/uEw/AYAw0ZZorjP50Z839RDGSB1zVCQETqHZnxenViktfbIXKbaab
+ 3SRdo3Q7pXph46kVNR/iAma5fz0t1MZ90OdknefMXKXgiUo39UpAceZvQ+z+ljETYRjrWhD6M7+OV
+ deUJkTuxcwMy6u6EnBV6JpTLQd2eeeD1N/M2DXhg7V6gnZ6AyQK2fnMM6FQ+0MM7grHeV2ue625P4
+ IJ42ZV2eDnjQiO21KorufqJCaIxrL0dnKyn9vdD3b0Wo8wmd2g43ZFmp4k8P84PECvObmVbtnU+aH
+ O75WiEj4bSLR5G3vujstAM830q+hoLK3VCfyCe76532m378GNVqJIbi7ds96axu05pnefYuUl49Op
+ 15Lu+oYQRomenRvOnRBKzhDiiLrBN4BBddlmkXydU=;
+From: Christian Schoenebeck <qemu_oss@crudebyte.com>
+To: qemu-devel@nongnu.org, qemu-stable@nongnu.org
+Cc: Greg Kurz <groug@kaod.org>, Feifan Qian <bea1e@proton.me>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: Re: [PATCH 0/3] 9pfs: fix invalid union V9fsFidOpenState access
+Date: Wed, 17 Jun 2026 10:10:02 +0200
+Message-ID: <5079251.GXAFRqVoOG@weasel>
+In-Reply-To: <d5724c37-9e03-40cf-9679-0c0ed783be2d@tls.msk.ru>
+References: <cover.1781621428.git.qemu_oss@crudebyte.com>
+ <d5724c37-9e03-40cf-9679-0c0ed783be2d@tls.msk.ru>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 3/7] igb: Implement TRL register write and configuration
-To: Josh Hilke <jrhilke@google.com>, qemu-devel@nongnu.org
-Cc: Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
- Jason Wang <jasowang@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- David Matlack <dmatlack@google.com>,
- Alex Williamson <alex.williamson@nvidia.com>
-References: <20260616-igb-trl-v5-0-1183e3635e06@google.com>
- <20260616-igb-trl-v5-3-1183e3635e06@google.com>
-Content-Language: en-US
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <20260616-igb-trl-v5-3-1183e3635e06@google.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="utf-8"
+Received-SPF: pass client-ip=5.189.157.229;
+ envelope-from=qemu_oss@crudebyte.com; helo=kylie.crudebyte.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -77,99 +68,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026/06/17 7:35, Josh Hilke wrote:
-> Implement write handlers for TLDQSEL and TRLRC registers to allow the
-> guest to configure Transmit Rate Limiting. Translate the register Rate
-> Factor into a physical target rate (bytes/sec) per queue.  Disable TRL
-> and clear timers when the link status changes or when TRL is disabled by
-> the guest.
+On Wednesday, 17 June 2026 09:27:31 CEST Michael Tokarev wrote:
+> On 16.06.2026 18:00, Christian Schoenebeck wrote:
+> > The individual FID types (P9_FID_NONE, P9_FID_FILE, P9_FID_DIR,
+> > P9_FID_XATTR) share union V9fsFidOpenState with FID-type specific fields.
+> > Accessing any of the union fields must comply with the FID-type to avoid
+> > undefined behaviour or information disclosure.
 > 
-> Signed-off-by: Josh Hilke <jrhilke@google.com>
-> ---
->   hw/net/igb_core.c | 38 +++++++++++++++++++++++++++++++++++++-
->   1 file changed, 37 insertions(+), 1 deletion(-)
+> ..
 > 
-> diff --git a/hw/net/igb_core.c b/hw/net/igb_core.c
-> index 44e8e58..fb31e37 100644
-> --- a/hw/net/igb_core.c
-> +++ b/hw/net/igb_core.c
-> @@ -2145,11 +2145,21 @@ static void igb_trl_reset(IGBCore *core)
->       }
->   }
->   
-> +static void igb_trl_disable(IGBTrlQueue *q)
-> +{
-> +    q->trlrc &= ~E1000_TRLRC_RS_ENA;
-> +    timer_del(q->timer);
-
-Don't do timer_del(q->timer) here; it will dismiss the pending request.
-
-Regards,
-Akihiko Odaki
-
-> +}
-> +
->   void igb_core_set_link_status(IGBCore *core)
->   {
->       NetClientState *nc = qemu_get_queue(core->owner_nic);
->       uint32_t old_status = core->mac[STATUS];
->   
-> +    for (int i = 0; i < IGB_NUM_QUEUES; i++) {
-> +        igb_trl_disable(&core->trl[i]);
-> +    }
-> +
->       trace_e1000e_link_status_changed(nc->link_down ? false : true);
->   
->       if (nc->link_down) {
-> @@ -2632,6 +2642,29 @@ static void igb_set_vtivar(IGBCore *core, int index, uint32_t val)
->        */
->   }
->   
-> +static uint32_t igb_get_trlrc(IGBCore *core, int index)
-> +{
-> +    const unsigned int qidx = core->mac[TRLDQSEL];
-> +
-> +    return core->trl[qidx].trlrc;
-> +}
-> +
-> +static void igb_set_trldqsel(IGBCore *core, int index, uint32_t val)
-> +{
-> +    core->mac[index] = extract32(val, 0, 4);
-> +}
-> +
-> +static void igb_set_trlrc(IGBCore *core, int index, uint32_t val)
-> +{
-> +    const unsigned int qidx = core->mac[TRLDQSEL];
-> +
-> +    core->trl[qidx].trlrc = val;
-> +
-> +    if (!igb_trl_enabled(&core->trl[qidx])) {
-> +        igb_trl_disable(&core->trl[qidx]);
-> +    }
-> +}
-> +
->   static inline void
->   igb_autoneg_timer(void *opaque)
->   {
-> @@ -3687,6 +3720,7 @@ static const readops igb_macreg_readops[] = {
->       [RQDPC15] = igb_mac_read_clr4,
->       [VTIVAR ... VTIVAR + 7] = igb_mac_readreg,
->       [VTIVAR_MISC ... VTIVAR_MISC + 7] = igb_mac_readreg,
-> +    [TRLRC] = igb_get_trlrc,
->   };
->   enum { IGB_NREADOPS = ARRAY_SIZE(igb_macreg_readops) };
->   
-> @@ -4135,7 +4169,9 @@ static const writeops igb_macreg_writeops[] = {
->       [PVTEICR6] = igb_set_vteicr,
->       [PVTEICR7] = igb_set_vteicr,
->       [VTIVAR ... VTIVAR + 7] = igb_set_vtivar,
-> -    [VTIVAR_MISC ... VTIVAR_MISC + 7] = igb_mac_writereg
-> +    [VTIVAR_MISC ... VTIVAR_MISC + 7] = igb_mac_writereg,
-> +    [TRLDQSEL] = igb_set_trldqsel,
-> +    [TRLRC]    = igb_set_trlrc,
->   };
->   enum { IGB_NWRITEOPS = ARRAY_SIZE(igb_macreg_writeops) };
->   
+> Hi!
 > 
+> Next batch of qemu stable series is scheduled for Jun-25 (patch freeze at
+> Jun-23).  It would be great if this and other 9pfs fixes landed in the
+> master branch before the freeze.  As far as I can see, we've several
+> issues in there.
+
+Oh, that's quite close! What would be the next window?
+
+This fix is already queued on my end:
+https://lore.kernel.org/qemu-devel/cover.1780072238.git.qemu_oss@crudebyte.com/
+https://github.com/cschoenebeck/qemu/commits/9p.next
+
+And these fixes are yet to be queued:
+https://lore.kernel.org/qemu-devel/cover.1781287774.git.qemu_oss@crudebyte.com/
+https://lore.kernel.org/qemu-devel/cover.1781361555.git.qemu_oss@crudebyte.com/
+
+And of course this series here:
+https://lore.kernel.org/qemu-devel/cover.1781621428.git.qemu_oss@crudebyte.com/
+
+At least I currently don't have further reports to work on. So all bugfix
+patches are posted.
+
+/Christian
+
 
 
