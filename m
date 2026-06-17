@@ -4,118 +4,142 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D239CD98F0
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jun 2026 12:50:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E947CCD98E4
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jun 2026 12:55:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZpj1-0000pg-QG; Wed, 17 Jun 2026 08:50:36 -0400
+	id 1wZpnJ-0001fa-TW; Wed, 17 Jun 2026 08:55:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wZpiy-0000m2-KK
- for qemu-devel@nongnu.org; Wed, 17 Jun 2026 08:50:32 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
+ id 1wZpnI-0001fE-TQ
+ for qemu-devel@nongnu.org; Wed, 17 Jun 2026 08:55:00 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wZpit-0002Ud-Ff
- for qemu-devel@nongnu.org; Wed, 17 Jun 2026 08:50:29 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781700611;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=r/XVIjnzUj2rdxPxUi2XC/sQAriMEucXvJh1LRzJm24=;
- b=EoliIFNSnRQXd4hPKBPUEszDVGqe0VbeJIxXo735NniQ5OdFxCvrT3z6DcezmInyHhHOAf
- NOQV4yarewu1dqJfUnC8blBlGLRne9kis17GfxUOEkzbF+lwkrfrUvdLMjc1V5vLHqNPzk
- dMFJ9p7hec33ZTgPTYHGBos3ZHa5Cyg=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-244-3cfO1NRrPF6p98C8D5yukw-1; Wed,
- 17 Jun 2026 08:50:08 -0400
-X-MC-Unique: 3cfO1NRrPF6p98C8D5yukw-1
-X-Mimecast-MFC-AGG-ID: 3cfO1NRrPF6p98C8D5yukw_1781700606
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6D778180131A; Wed, 17 Jun 2026 12:50:05 +0000 (UTC)
-Received: from [10.44.49.177] (unknown [10.44.49.177])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 9809218005B3; Wed, 17 Jun 2026 12:49:59 +0000 (UTC)
-Message-ID: <aa4d417e-2e61-44ef-a695-31bc19dbafd1@redhat.com>
-Date: Wed, 17 Jun 2026 14:49:57 +0200
+ (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
+ id 1wZpnH-0003o5-46
+ for qemu-devel@nongnu.org; Wed, 17 Jun 2026 08:55:00 -0400
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 65H8UEUN1735068
+ for <qemu-devel@nongnu.org>; Wed, 17 Jun 2026 12:54:56 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ h6y+BJ/cQMMyqhId7tuAY56wbONoXd7cForu4LUQMRI=; b=TmUMifBywmpyAHW6
+ YNgH3Xme51a9jW6WZ5BgHHabyr+5WY2Zmcap92fjqQCV1wGRhl2znqA5nLg5IHkL
+ saq2taPgDd9BpWy8AvdrJjEwAUDGYKBQGb8RxslkSGROQUPhJP6rS5njel+OBSur
+ BIHQ8FShONye0JJrYjF8Lt286osrroMSvJ9Zzu90tEMva2WRS+0Bg00p8oSMkV05
+ NqBsbxV4UsoaDe6jD9e6VCtr6Ayv2rjRMjcDyNzmU2Gr0jr37NuZnhcySBkWqkSX
+ uC0LaLU2H8cBdae8OZ6W/lU9Lkje3tZEwsp2i03Pt1iNt8Nw6PfmMQwCBZec7G0R
+ IrcL2Q==
+Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
+ [209.85.160.200])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4eueemk6rm-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Wed, 17 Jun 2026 12:54:55 +0000 (GMT)
+Received: by mail-qt1-f200.google.com with SMTP id
+ d75a77b69052e-519c01e3b88so3593531cf.2
+ for <qemu-devel@nongnu.org>; Wed, 17 Jun 2026 05:54:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1781700895; x=1782305695; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=h6y+BJ/cQMMyqhId7tuAY56wbONoXd7cForu4LUQMRI=;
+ b=bcb0j3erO3IA6bDZKU3iOGSMZCQbZlbGfih6kTos3dnLJnt9H5qxz8qCl8i6a4J3jv
+ Md073LgFej7NR3pKB9s3NONQv2Djr1CghNfzLwF4TXRYITXZtioksx+lNmvM7mOlRcDu
+ zsGwadChwCT93GnDPdiCMCjEviGhjkv4M6VU5Ha3JTdf2JrGetnCu8DSX7CB+eSnVqoa
+ KcYyWzTlyGP3IiXaZKXVs15fNbHBjct9fXbFqCkMYwZGUeZsAn2hrlgIH5Yfo6XDewKf
+ n2EsRIIhPgORP8pU1d0V8LuFZXJUnpHuech3NjIHB1lVcltB1SvLyVWSE5AIzfwy7bVl
+ 4C+w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1781700895; x=1782305695;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=h6y+BJ/cQMMyqhId7tuAY56wbONoXd7cForu4LUQMRI=;
+ b=GsXqlDYrQvM8VpxrIdLYpSyxTYmiBHlFhl754758jXeDHkLYc/qVRgjn6up1GG9c6k
+ 5mr/aNknnk1ZYec7HSMbnIewvDT8aFPT6qzLAuCiIDHraC98kpezhd/ijs/5dCHNhJNN
+ FxGIc/Xl0Ti8T69Q6rzFOR6IGzhC84KGRMwM9pnA79SK5pd4b/dCo9JCnCXntq1jE/8p
+ 02P+HHsriqRQ12hdBrAn7j2D1089D+nEvnotOR3jXYhBh6CNj3c4LuGmIsN1VCqzoZVD
+ UVBMsfJF/M/iWfZR+P8RcQr0i01jKbrr25nGYSLy8pSAO2w/4qUL7JpP0bZOuCbrWHws
+ rB1A==
+X-Gm-Message-State: AOJu0Yxn2JeR6Em5zG/vvr8+FsmfLSACejn69Jmh2qjmUYDAcUyMU3nG
+ lreWR+BspqpyLghyWZ0rgPkDRwgBEqSL6mVFUL0Nh16ZlnGxFsG160qmQvqfar0nT/vZHUXw/Iz
+ AQJdoma7olF51WAUuKNSmFGgWsvkcUk+D0czhkltxWVSVXW8tF5eAA0zX7w==
+X-Gm-Gg: Acq92OHuVsf68rgtFDJIjdkUaAY2mTxbPzJP7awnwHvF90xu+npbJAeUOAETK5bnLkz
+ ARvvIxmo0YgqmL9dayYGbPnm1q8tQPKXJxpkCMKbiwUentq5c0MoKJ0ON/grnKYgNxa7I9Tn6/o
+ F++DMHcCwiu8lU/UJpumyLxo+1SFaScfAQbMk5h8/Z7XcRcUU5AgDu8JXZAIgdhlC1cWc2kTWqp
+ JZLSoaW3XKdJHLIjMN87MVxmktccdyTZ3eI25LG2CNPzyVRyzOCrkiV5xUfYnN/SPnmZtouFAQY
+ 3fh2/Bdz9TBmpw8l1ll2rAe/sT6Eg6iQ7Kf2P+qyyfjhNOE9H4sOcmGf79g11u5pTqjJ8bj7ZsF
+ 9iYf87mb0j/RBRGLuxnb8F2iPPgtyAXJTXNioRiSYNX23O/8=
+X-Received: by 2002:a05:622a:4a0c:b0:517:599d:ce19 with SMTP id
+ d75a77b69052e-519a901afa0mr52113471cf.48.1781700895023; 
+ Wed, 17 Jun 2026 05:54:55 -0700 (PDT)
+X-Received: by 2002:a05:622a:4a0c:b0:517:599d:ce19 with SMTP id
+ d75a77b69052e-519a901afa0mr52113211cf.48.1781700894681; 
+ Wed, 17 Jun 2026 05:54:54 -0700 (PDT)
+Received: from [192.168.68.103] ([177.170.117.62])
+ by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-517fb7a00desm180182361cf.19.2026.06.17.05.54.52
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 17 Jun 2026 05:54:54 -0700 (PDT)
+Message-ID: <a7eb3b7f-1fa6-47f2-bbac-49316db5f2d9@oss.qualcomm.com>
+Date: Wed, 17 Jun 2026 09:54:50 -0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC 4/7] system: add memory_region_new / memory_region_new_io
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Peter Xu <peterx@redhat.com>, =?UTF-8?Q?Herv=C3=A9_Poussineau?=
- <hpoussin@reactos.org>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, "Michael S. Tsirkin" <mst@redhat.com>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Aurelien Jarno <aurelien@aurel32.net>, Fabiano Rosas <farosas@suse.de>,
- BALATON Zoltan <balaton@eik.bme.hu>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-References: <20260616155554.264412-1-berrange@redhat.com>
- <20260616155554.264412-5-berrange@redhat.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: [PATCH v3 0/3] target/riscv: parametrize debug trigger number
+To: Alistair Francis <alistair23@gmail.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com,
+ liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com,
+ chao.liu.zevorn@gmail.com, philmd@oss.qualcomm.com
+References: <20260611123412.2135600-1-daniel.barboza@oss.qualcomm.com>
+ <CAKmqyKMUN-iDhhAF176eZsVsdDd7_-soL4CYL0vYfxGHkFEKhw@mail.gmail.com>
+From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 Content-Language: en-US
-Autocrypt: addr=pbonzini@redhat.com; keydata=
- xsEhBFRCcBIBDqDGsz4K0zZun3jh+U6Z9wNGLKQ0kSFyjN38gMqU1SfP+TUNQepFHb/Gc0E2
- CxXPkIBTvYY+ZPkoTh5xF9oS1jqI8iRLzouzF8yXs3QjQIZ2SfuCxSVwlV65jotcjD2FTN04
- hVopm9llFijNZpVIOGUTqzM4U55sdsCcZUluWM6x4HSOdw5F5Utxfp1wOjD/v92Lrax0hjiX
- DResHSt48q+8FrZzY+AUbkUS+Jm34qjswdrgsC5uxeVcLkBgWLmov2kMaMROT0YmFY6A3m1S
- P/kXmHDXxhe23gKb3dgwxUTpENDBGcfEzrzilWueOeUWiOcWuFOed/C3SyijBx3Av/lbCsHU
- Vx6pMycNTdzU1BuAroB+Y3mNEuW56Yd44jlInzG2UOwt9XjjdKkJZ1g0P9dwptwLEgTEd3Fo
- UdhAQyRXGYO8oROiuh+RZ1lXp6AQ4ZjoyH8WLfTLf5g1EKCTc4C1sy1vQSdzIRu3rBIjAvnC
- tGZADei1IExLqB3uzXKzZ1BZ+Z8hnt2og9hb7H0y8diYfEk2w3R7wEr+Ehk5NQsT2MPI2QBd
- wEv1/Aj1DgUHZAHzG1QN9S8wNWQ6K9DqHZTBnI1hUlkp22zCSHK/6FwUCuYp1zcAEQEAAc0j
- UGFvbG8gQm9uemluaSA8cGJvbnppbmlAcmVkaGF0LmNvbT7CwU0EEwECACMFAlRCcBICGwMH
- CwkIBwMCAQYVCAIJCgsEFgIDAQIeAQIXgAAKCRB+FRAMzTZpsbceDp9IIN6BIA0Ol7MoB15E
- 11kRz/ewzryFY54tQlMnd4xxfH8MTQ/mm9I482YoSwPMdcWFAKnUX6Yo30tbLiNB8hzaHeRj
- jx12K+ptqYbg+cevgOtbLAlL9kNgLLcsGqC2829jBCUTVeMSZDrzS97ole/YEez2qFpPnTV0
- VrRWClWVfYh+JfzpXmgyhbkuwUxNFk421s4Ajp3d8nPPFUGgBG5HOxzkAm7xb1cjAuJ+oi/K
- CHfkuN+fLZl/u3E/fw7vvOESApLU5o0icVXeakfSz0LsygEnekDbxPnE5af/9FEkXJD5EoYG
- SEahaEtgNrR4qsyxyAGYgZlS70vkSSYJ+iT2rrwEiDlo31MzRo6Ba2FfHBSJ7lcYdPT7bbk9
- AO3hlNMhNdUhoQv7M5HsnqZ6unvSHOKmReNaS9egAGdRN0/GPDWr9wroyJ65ZNQsHl9nXBqE
- AukZNr5oJO5vxrYiAuuTSd6UI/xFkjtkzltG3mw5ao2bBpk/V/YuePrJsnPFHG7NhizrxttB
- nTuOSCMo45pfHQ+XYd5K1+Cv/NzZFNWscm5htJ0HznY+oOsZvHTyGz3v91pn51dkRYN0otqr
- bQ4tlFFuVjArBZcapSIe6NV8C4cEiSTOwE0EVEJx7gEIAMeHcVzuv2bp9HlWDp6+RkZe+vtl
- KwAHplb/WH59j2wyG8V6i33+6MlSSJMOFnYUCCL77bucx9uImI5nX24PIlqT+zasVEEVGSRF
- m8dgkcJDB7Tps0IkNrUi4yof3B3shR+vMY3i3Ip0e41zKx0CvlAhMOo6otaHmcxr35sWq1Jk
- tLkbn3wG+fPQCVudJJECvVQ//UAthSSEklA50QtD2sBkmQ14ZryEyTHQ+E42K3j2IUmOLriF
- dNr9NvE1QGmGyIcbw2NIVEBOK/GWxkS5+dmxM2iD4Jdaf2nSn3jlHjEXoPwpMs0KZsgdU0pP
- JQzMUMwmB1wM8JxovFlPYrhNT9MAEQEAAcLBMwQYAQIACQUCVEJx7gIbDAAKCRB+FRAMzTZp
- sadRDqCctLmYICZu4GSnie4lKXl+HqlLanpVMOoFNnWs9oRP47MbE2wv8OaYh5pNR9VVgyhD
- OG0AU7oidG36OeUlrFDTfnPYYSF/mPCxHttosyt8O5kabxnIPv2URuAxDByz+iVbL+RjKaGM
- GDph56ZTswlx75nZVtIukqzLAQ5fa8OALSGum0cFi4ptZUOhDNz1onz61klD6z3MODi0sBZN
- Aj6guB2L/+2ZwElZEeRBERRd/uommlYuToAXfNRdUwrwl9gRMiA0WSyTb190zneRRDfpSK5d
- usXnM/O+kr3Dm+Ui+UioPf6wgbn3T0o6I5BhVhs4h4hWmIW7iNhPjX1iybXfmb1gAFfjtHfL
- xRUr64svXpyfJMScIQtBAm0ihWPltXkyITA92ngCmPdHa6M1hMh4RDX+Jf1fiWubzp1voAg0
- JBrdmNZSQDz0iKmSrx8xkoXYfA3bgtFN8WJH2xgFL28XnqY4M6dLhJwV3z08tPSRqYFm4NMP
- dRsn0/7oymhneL8RthIvjDDQ5ktUjMe8LtHr70OZE/TT88qvEdhiIVUogHdo4qBrk41+gGQh
- b906Dudw5YhTJFU3nC6bbF2nrLlB4C/XSiH76ZvqzV0Z/cAMBo5NF/w=
-In-Reply-To: <20260616155554.264412-5-berrange@redhat.com>
+In-Reply-To: <CAKmqyKMUN-iDhhAF176eZsVsdDd7_-soL4CYL0vYfxGHkFEKhw@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjE3MDEyMyBTYWx0ZWRfXyc5vDacWkgBl
+ 90FRsXXIN62tfTJu8oEbDipVj7tOlcG5v4PNOzraci+8MotdjF5dvu7AQEAYYQMbC9HKNpAt+++
+ O3l7Ey71RoipUgbBzVH5e3mx/I0FdIQ=
+X-Authority-Analysis: v=2.4 cv=D4d37PRj c=1 sm=1 tr=0 ts=6a329920 cx=c_pps
+ a=JbAStetqSzwMeJznSMzCyw==:117 a=gdiugJE53z4H+vvYeRBHqw==:17
+ a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
+ a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=6xgfUjCFO5uoiGiy0l4A:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=uxP6HrT_eTzRwkO_Te1X:22
+X-Proofpoint-GUID: aROgzOqvEgzkVrA1zziMLs5U0_RF-5_g
+X-Proofpoint-ORIG-GUID: aROgzOqvEgzkVrA1zziMLs5U0_RF-5_g
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjE3MDEyMyBTYWx0ZWRfX0w+HgddBA2ON
+ T5fV3Yk+7VC8FXB2qYA0i68ZEm1D0b9w+k9BgXnRQgB54zOU/bpLS0mVUmJDq69Ksy5cnDM/eDI
+ MVL354hhJbq3zYQgmppgPf9k4upE/+z7NhGIfo6WtPaMYhUDjy7kW7EWauLlnyEfaITA8Z7pUHC
+ hKc4ZMoi/huj0zPOD8NUD193rbJd9FM1Hw7BTbs5XA0/J1UBcPNGNXARTitQXo5A1NorkM+LGCx
+ 3bOSEUEYGkATvlyYQoXzL8XO2UWad06R9y46V7ttIPHkk1fy/k9Sm2TNhKVXlUFqh5H5CoYSIck
+ Mp/pgJelnNff5dOsr0w+i+YPIdKSI3LTfmiiBCAO2JWkKuEHJ/2lAOnQudwToxDXaqFbNCQ6gRz
+ aO/64ttv3+/jq8z5+Msue1f8urQG8zDsOVmSKmeU8sTB5uJDK0VntjZxCwrUW64hPskU3PjawBG
+ h8Ut/moDCxOv8ZSGh6A==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-17_01,2026-06-16_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 bulkscore=0 spamscore=0 adultscore=0 clxscore=1015
+ impostorscore=0 malwarescore=0 lowpriorityscore=0 suspectscore=0
+ priorityscore=1501 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2606170123
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -131,59 +155,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/16/26 17:55, Daniel P. Berrangé wrote:
-> Prepare for the move to dynamically allocated memory regions by
-> introducing memory_region_new and memory_region_new_io functions
-> which call through to object_new instead of object_initialize.
+
+
+On 6/16/2026 2:37 AM, Alistair Francis wrote:
+> On Thu, Jun 11, 2026 at 10:34 PM Daniel Henrique Barboza
+> <daniel.barboza@oss.qualcomm.com> wrote:
+>>
+>> Hi,
+>>
+>> In this new version we're adding Phil's comments in v2, in particular
+>> the need for an unrealize() callback to free the stuff we're now
+>> allocating.
+>>
+>> Patches based on alistair/riscv-to-apply.next.
 > 
-> TBD: add "new" variants for all the other memory_region_init
-> variants.
+> Hmm... I can't get this to apply. Mind resending?
+
+Sure thing.  I'll rebase and send a v4.
+
+Cheers,
+Daniel
+
 > 
-> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-
-Zoltan already proposed this, but I really think it's a bad idea.
-
-MemoryRegionOps callback will certainly access fields in the parent. 
-Having a separate object gives you no benefit because you still have the 
-same use-after-free if the MemoryRegion outlives the device.  Likewise 
-for buses.
-
-For buses, the fact that the parent and child live at the same time is 
-explicitly tracked with mutual refcount and unparent.  If it's not, we 
-have the hack that Akihiko mentioned 
-(https://lists.gnu.org/archive/html/qemu-devel/2026-06/msg03459.html):
-
-> However, this is insufficient to avoid calling object_ref() for all
-> embedded objects. For example, consider an embedded Device that has a
-> MemoryRegion. When referencing a MemoryRegion for guest memory access,
-> QEMU automatically references the owning Device to keep the MemoryRegion
-> alive. However, that reference is ineffective if the Device itself is
-> embedded, because object_ref() does not keep the containing storage
-> alive.
-
-If the device itself is embedded, then all the invariants must hold 
-recursively:
-
-- the device must be kept alive by mutual references between the device 
-itself and its parent;
-
-- unparent for the device should wait for all guest memory accesses to 
-be either completed or cancelled.
-
-So, the problem is that "QEMU automatically references the owning Device 
-to keep the MemoryRegion alive" is a hack that should die.  I added it, 
-mea culpa.
-
-The model is that if it makes sense to have B outlive A, you use new. If 
-it doesn't, you use init.  For MemoryRegions or anything that has 
-callbacks, it makes no sense to outlive the implementor of the 
-callbacks.  There are exceptions if the number of objects is dynamic but 
-they're very rare.
-
-I agree that there's extra complexity added by embedding; but I disagree 
-that removing embedding will fix any bugs, and because it will hide a 
-relationship between objects, I believe the complexity is not accidental.
-
-Paolo
+> Alistair
+> 
+>>
+>> Changes from v2:
+>> - patch 1 (new):
+>>    - add RISC-V CPU unrealize callback
+>> - patch 2 (former 1):
+>>    - free allocated debug trigger arrays during unrealize()
+>>    - change version_id and minimum_version from vmstate_debug
+>> - patch 3 (former 2):
+>>    - do not touch vmstate_debug version_id/minimum_version_id
+>>    - added Phil's R-b
+>> - v2 link: https://lore.kernel.org/qemu-devel/20260610205457.1868701-1-daniel.barboza@oss.qualcomm.com/
+>>
+>>
+>> Daniel Henrique Barboza (3):
+>>    target/riscv/cpu: add CPU unrealize callback
+>>    target/riscv: dynamic alloc of debug trigger arrays
+>>    target/riscv: add 'num-triggers' debug property
+>>
+>>   target/riscv/cpu.c     | 26 ++++++++++++++++++++++++
+>>   target/riscv/cpu.h     | 39 ++++++++++++++++++++++++++++-------
+>>   target/riscv/csr.c     |  2 +-
+>>   target/riscv/debug.c   | 46 ++++++++++++++++++++++++++++++++++--------
+>>   target/riscv/debug.h   |  1 +
+>>   target/riscv/machine.c | 16 ++++++++++-----
+>>   6 files changed, 109 insertions(+), 21 deletions(-)
+>>
+>> --
+>> 2.43.0
+>>
+>>
 
 
