@@ -4,129 +4,128 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 735BECD98E2
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jun 2026 17:16:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9066BCD98E2
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jun 2026 17:16:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZtrV-0000Va-Qg; Wed, 17 Jun 2026 13:15:38 -0400
+	id 1wZts9-0000nm-Ri; Wed, 17 Jun 2026 13:16:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wZtqp-0000G9-FZ
- for qemu-devel@nongnu.org; Wed, 17 Jun 2026 13:15:02 -0400
+ id 1wZtrv-0000gs-Qm
+ for qemu-devel@nongnu.org; Wed, 17 Jun 2026 13:16:09 -0400
 Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wZtql-0006XK-MA
- for qemu-devel@nongnu.org; Wed, 17 Jun 2026 13:14:54 -0400
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+ id 1wZtrt-0007A3-1D
+ for qemu-devel@nongnu.org; Wed, 17 Jun 2026 13:16:02 -0400
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65HHEmJC3454428
- for <qemu-devel@nongnu.org>; Wed, 17 Jun 2026 17:14:48 GMT
+ 65HFpISL3183584
+ for <qemu-devel@nongnu.org>; Wed, 17 Jun 2026 17:16:00 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- c+3G9y9VW8KkifcodrN6+Q0v5CUyAJXSbHbCsBp8pt0=; b=O6Fm56bvHUChbXhS
- 1eDs8o80IV+A3MlAJb5IyHeS1I7SLAGBT7QUeu48FMINszlA8knR1c4yzvX97O/0
- zlIWmTWnkh9qzA6rnUe1gCNFbsxTjXrVLsuZ8QXfvskndKANHGBmWhx0NWNjJfIV
- oTkoDoiEfjyye019RdKs/Mmkc9YCGKWhoimf7PDWH1Rqw34QjjOA079puNqGyoCp
- yvPVMTCY3ucKibZ3SHw1uDk0GJ/1UkpoyW0SUXS7oZJm5JIRh5MbFEYFX5PT/2Pf
- BIb4xWu82I9cSATW4c1uYddTBFv6/sCJMj5a+zkr9fKMe6GKLMKIR6d7Iu0RD8jW
- LGirQQ==
-Received: from mail-vs1-f72.google.com (mail-vs1-f72.google.com
- [209.85.217.72])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4eux2jrppm-1
+ frllTOIREw6t9n6KjTsVt5BvKxKXWu4RRQZ/uSPHVqM=; b=hro8dLhPHC7sITHM
+ fI1DKQ9jm1JqL86FbiqqvO4VyfYC7P+BbGMVqfNPfXcDhzBXUXx/h6bRyDrkECgt
+ AQdEba7s9uiQQ4SQqZpCIZNpJx9Ot7X22yOdfi41QmQELKH69ZBquEANPFDgbgFB
+ JUXRAe0SkPiWKI0yjVchnlgUHAiyY1AGcY6m2Mm2xUacejZx2/ycpw9ZtHDnC6Wj
+ qufKH2zAGdYHj90uDE6QKSWeWrz1m+Z+tqtKngdXZRzmC4NL1Yjh6pwtaKqW2m7L
+ nV2Olp1GA6sCA4jIs4VE7TgMx3duenHSj7xlnWy7Blz0uz9ybuQagtNwv0/z8PzE
+ AVLHHw==
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
+ [209.85.222.198])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4eueesmkbg-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 17 Jun 2026 17:14:48 +0000 (GMT)
-Received: by mail-vs1-f72.google.com with SMTP id
- ada2fe7eead31-726a0352f82so21543137.3
- for <qemu-devel@nongnu.org>; Wed, 17 Jun 2026 10:14:48 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Wed, 17 Jun 2026 17:16:00 +0000 (GMT)
+Received: by mail-qk1-f198.google.com with SMTP id
+ af79cd13be357-9181f3cc5ecso230408985a.1
+ for <qemu-devel@nongnu.org>; Wed, 17 Jun 2026 10:15:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1781716488; x=1782321288; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1781716559; x=1782321359; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=c+3G9y9VW8KkifcodrN6+Q0v5CUyAJXSbHbCsBp8pt0=;
- b=AVAK2rmOW3e4qTqHjHoa6YpNLboq5EAcQmHnH6WdgEauT7sWw5QP20HWckACkxeFip
- xPAEOjVCcYxvDAtGPRdYIAPSUG8XumYW+KFUPpXgUOZV/K5HmjNtOAsVwT/G3F4txxkz
- /gt/jeMbMpC07V9gE7CoQs8+o24ikWp3p25Ew5M2sXrcxWs3DXWRfykE+y7G5vNBN33X
- 0sAN7t4djOtL7YaZFjhHmHjunoTboCWcoH7eytzYHGHhCjr9nQfX2M3xTtEVejklCFK1
- 3wYBCfBi+yHjtWwDyh+5q/48sm8dd8g4+3CdigxAFJiCQrSZvRwEQTA3J1Y9ky3vS6U9
- MlvA==
+ bh=frllTOIREw6t9n6KjTsVt5BvKxKXWu4RRQZ/uSPHVqM=;
+ b=QP2zXBdhmjqAjsvRW4tjTOWOp1++uCoWHtpb28aE+IswcxNj94Kwm0wzopGY/ww9jN
+ QHnyAHvlBg8ccXBgXARnEAur/HDJgZ6NM3ancrB+wAJeBfE8UKJsFjFWG6aniZnvO440
+ n5E1aOE+BfU44OYJnIiNYVuEc3VuQDsqaLJG4H5Y46IuNR7xOmcgzXJvoQukRvDON7rs
+ ko16a9XNKwv+DBAOR5URveGZD5tXFrF/GD4z1/1QoshbLlwzOaj4pWdKrABUmKcJ+Caa
+ 382guA+ftZ4XwIcu0XvsID2poP/3KrDDBSdUZP11iI0Fkve5CjBWwhybXIGY4NcMHzKg
+ xi2A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781716488; x=1782321288;
+ d=1e100.net; s=20251104; t=1781716559; x=1782321359;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=c+3G9y9VW8KkifcodrN6+Q0v5CUyAJXSbHbCsBp8pt0=;
- b=MXSDqNScq24IYRiU2W178Q+QuOX3KzJFAttD9G/cNCwz9GdqHlTvikRPc5xb/lZMb/
- LC+rBJ4snK2Eucev+SEcEVMKBV07mGPLGsEYzXLZkuI24Fa18+nmEQhsi+jG5NGcISmq
- QIZE5KWktNubvzYKTnj1E/D3zyB7RQuexyCKfBzxJI+AtLSTwxwfh2L2Q7O7YogfsKLZ
- FUhXyeSJjcl19UUz7Eivg9FDei3S/xEaJbBYVCdgSqukfWB0ZAJikTAHZnF7ipSrZ+a3
- wASwcSxM54WzQkVfuhPSEdWwMMdbfJyZqqgd8/fupACUhYEYNQd2v+PfJvN45Zsredv0
- M1bQ==
-X-Gm-Message-State: AOJu0Yzrwm3X8Sag2mMNBP1tB8XWWepmgP6U8p2ufxgAp9AD9y9G3mBQ
- 0u0+uusnxziUJaVJc77NhBl2S0JcrgD7AekwMKVnKaW+DeN0Jr7LVgIPPR3NDk0e4MKrNUNzf2W
- rneP1qdoxOWWk1J0VlEVm+nqcURC14BlD9FUTpETu5EL1RAmPChyIrvPxD2G/sf7gNg==
-X-Gm-Gg: AfdE7cntnMRBp3at8+QyMSIcS3Ema0QZWMYnqf7x5cZBGDtHNx49EQc8aZQ8Lb60lgv
- QEb4LK+XzwvddVZspKpbpPo6k30lNuhZTvkQ+e2tjZHDXZNOTT6qhyrsz5IOqi7FI736iIh5UkG
- 4MWZ92XWGcx50LtcYwzpCavfmpvELcUmhd+W5fG4iAdQizbVbU/xYTjK8GynrBNMA8bAqIsSfQq
- 0IsRTg92R8wXb8UMwHTUjyvz7nptx7EoHNuhDi1YvKwC1i6q3SxX3z/hmRnd6NKEJOomOy8Lr70
- yi7Dpzhu5uOO7VvpNhpjyDqoBZXAaL9u08AZ8dyZRE3KT3gROybUBee+YITNxxN+X1A9OsPuWVm
- evgAqagXj5U8h8Ed3vbi02KjJjsmPBKDWmHRhKCQ1Ra648UYkuO4usqih/6qR4gl1M7L3
-X-Received: by 2002:a05:6102:390a:b0:726:ec78:94fd with SMTP id
- ada2fe7eead31-727c51d656bmr384487137.9.1781716487787; 
- Wed, 17 Jun 2026 10:14:47 -0700 (PDT)
-X-Received: by 2002:a05:6102:390a:b0:726:ec78:94fd with SMTP id
- ada2fe7eead31-727c51d656bmr384468137.9.1781716487442; 
- Wed, 17 Jun 2026 10:14:47 -0700 (PDT)
+ bh=frllTOIREw6t9n6KjTsVt5BvKxKXWu4RRQZ/uSPHVqM=;
+ b=QfTMw6rtuCqqUiNFUd6MVpmjAntH173cVHCiRXltY2iHggxNtInH+0JArlo20yMiBl
+ JEDdXl6tsUX+8znv7sFrbpfsoVcQEvzy8IyOr6gIEUluqE5IlD4q3dH/aCOWMNP4TmZJ
+ ZAxcY/riob8c4FIGxlP9uOjETTNsLZ0uhbKYZ3TWe8OrLqLUi49guELLAgFRV+hsnEk5
+ PFI/4JM1MMN4YrUUpDzj8s60l6zjObDdFKXA0vr6vdg+N8KYQW/425db62sOFxDG9LH+
+ LPv/jjzwpiFG3kD9sX8qjyFQoE0yAQYAbpWr9VzFc2mAEgWYs3rl+rOcmoV5KEu9kj6P
+ bsOQ==
+X-Gm-Message-State: AOJu0YwFfRqgo2KgPdn7UOiJdO5jjfwKd16nvk/Hc0FSyuHLNtsmGeeu
+ YKh3cUmzYeGPzizCjxGABQwF8N+LxU9wKZe9hmnaGZObViwl1AX0ReTpTFHgYMnpk0/6YHI/vah
+ RJps/HYdGgXGE1RgGWWhfeNt3f5fC8lEcdcY60uHL8sMn2vbgQEaqoUEvP3KuufOfjQ==
+X-Gm-Gg: Acq92OGCCAxiYjkrhQpEVsT1G+k28qphAccMKaeuWa1bNdW1tPSE6fovVPz3kiMLXR7
+ R/86DvtOMXQEGImUXDknj1JZAKN/Fm9yWSEZaMnZpCh9brBjD5yomhpc6Gdofj0ADVq4aHzbqlw
+ HTydN/L8wj7i/0uwrfPY9voC/BJO4luUPB9mkiBNlE9PubZolQWQ4SNxII9Yz1Q93SD6NT1unOz
+ DaGmGz/StR81+yNhSCuQ4oly1oCVtH+r9d5Qnjee9sn5MgAKkURSjyLJyLS8H93FDEJ8xo20jEp
+ 9uFU823W7OUZfZtsCfKpsiI/FG3Voo533jbHGmoE+AaWJgoRYIL8AVgANruvnUgeCxJU+yFwaPh
+ Sm0UoTulfQvdqgIpY9N5jZPHrlCnALC8xcDx9OgEpRZY4RQdIBqygkBbjnNPOaKdMZrdC
+X-Received: by 2002:a05:620a:170c:b0:915:8e2b:e5de with SMTP id
+ af79cd13be357-91f07a26a76mr67772685a.7.1781716559445; 
+ Wed, 17 Jun 2026 10:15:59 -0700 (PDT)
+X-Received: by 2002:a05:620a:170c:b0:915:8e2b:e5de with SMTP id
+ af79cd13be357-91f07a26a76mr67768685a.7.1781716558841; 
+ Wed, 17 Jun 2026 10:15:58 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4922fa3abd0sm201075925e9.1.2026.06.17.10.14.46
+ ffacd0b85a97d-4606f2b1056sm55055481f8f.18.2026.06.17.10.15.57
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 17 Jun 2026 10:14:46 -0700 (PDT)
+ Wed, 17 Jun 2026 10:15:58 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>
-Subject: [PATCH v2 01/11] target/arm: Restrict TCG specific headers
-Date: Wed, 17 Jun 2026 19:14:28 +0200
-Message-ID: <20260617171438.75914-2-philmd@oss.qualcomm.com>
+Subject: [PATCH v2 11/11] accel/tcg: Restrict headers being TCG specific
+Date: Wed, 17 Jun 2026 19:14:38 +0200
+Message-ID: <20260617171438.75914-12-philmd@oss.qualcomm.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260617171438.75914-1-philmd@oss.qualcomm.com>
 References: <20260617171438.75914-1-philmd@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjE3MDE2NiBTYWx0ZWRfX13BCdFs2RsKp
- kEFZRZQU/Qa2snYwdTSvLZpYcDGP2ek7qHSvG/sfL7Ku5b0CifM4lhoj1IOe3MyqKkbP1LZ8FIQ
- d6htPX/floky5tIsSBNlGlxKWNTR2qa6FulqyluK2Dw7iBlOdFMO/DyX7NK5Kd2xSibVa/CbbkV
- IcVsh26yjijmKp97xuXWO+8kHqVqGwu3YJuEzIYPO7hHsb+Lzzld0B+NtCpCtW/2ygoOnQwhkcv
- br8hUS3JMStBRGrNNDPSy/0HYO5N0stj84FfwrmuVsXVw7AeomiJoWuQEfYMm7x9HUG6CxKU+0A
- s1VIWjTjgAM/0nrF3kAuinlRj2AYBVC23u3aOQ+LQxaI5eXqQrMEhKmnD6bZs6+Wtv81m+Jy8eS
- eNtKYgHGRCEllTbrBeVG6J4hNPwDnLp0l6A/pCdmW+H0UEXmzmpjmHNj4yLSc0eiiqAuZYV5sje
- SfqDxJYtT0QttB4l00g==
-X-Authority-Analysis: v=2.4 cv=Fsg1OWrq c=1 sm=1 tr=0 ts=6a32d608 cx=c_pps
- a=DUEm7b3gzWu7BqY5nP7+9g==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjE3MDE2NiBTYWx0ZWRfX3OoYc9oU/h8K
+ 2NMLkJ4zlFZroCWSDlHLHND40XXN9Kvy0/nU0upzQzkKhGmIukQ9vmL9d+TAqtRHAmW9zkQqtQ9
+ v37gaR+TTbuJH8XnDf1N8CT39kaOFw60wbqdLnzkWBhfOVn7RrfLC8FGLLzVkO2fL02V3bwHuxz
+ LJW2FUG8MX65vVnLpIvf5D47q4smEOaY6CdS+QP/cWJDcfB222Gn9kryOWe07n18IZmmceLDtBx
+ FzKcM4oMMWeBDBFKwOd2qlywd9/QTt29Qlx/rWYj7XcQnyAW00CNt/t46M5nmRKqKz4jtAkFvFp
+ x8JsQ5vHFXAk6TS0a26qnhgt4jvRbqMIuCa1T+sVRu08iNy923sNWLjZERvs/6V3xHld92Euwxo
+ B4UELR9q1wemhnDXaueJNmLy8hQscKTiM3XlGRtP2WRp11t/du3DKMC5ee9Y1nkFh/idmYLO/Px
+ VOjstnxVgux9S7ml88A==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjE3MDE2NiBTYWx0ZWRfX91Jt+btyvkPN
+ DBk1yartSAwL7UHZYmRTe30I30RwkkzU9z49XJtFfrbAYTZ67yNBkDVJS//Xw9v4Dmu2Ww6DjCw
+ P9gjcKB8E7GoQpvBk4o4mwdRPsBQhFQ=
+X-Proofpoint-ORIG-GUID: WHW527Qc3J8FanPaDtxKM3P30oan1Cir
+X-Proofpoint-GUID: WHW527Qc3J8FanPaDtxKM3P30oan1Cir
+X-Authority-Analysis: v=2.4 cv=ePojSnp1 c=1 sm=1 tr=0 ts=6a32d650 cx=c_pps
+ a=qKBjSQ1v91RyAK45QCPf5w==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
  a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22
- a=EUspDBNiAAAA:8 a=KKAkSRfTAAAA:8 a=snbnvTbt-5-dSQZ-83gA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=-aSRE8QhW-JAV6biHavz:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-ORIG-GUID: 34rdIYnbjbH-KR7YQdS70z8CyNggc_yZ
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjE3MDE2NiBTYWx0ZWRfX88wv8WQNrfoU
- qTfVbAyCr4mFvKyjr1MGZv/qw5muO1mEB0gs9WdFXBvGBcK3kb1zIYVN2WXGjiAXpYw4T3H1JNK
- nAmCKhLlCWl6TTwh59Hn9GQA2FVupxQ=
-X-Proofpoint-GUID: 34rdIYnbjbH-KR7YQdS70z8CyNggc_yZ
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
+ a=EUspDBNiAAAA:8 a=KKAkSRfTAAAA:8 a=-SUpAgEnhvh4vktFIKIA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=NFOGd7dJGGMPyQGDc5-O:22 a=cvBusfyB2V15izCimMoJ:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-06-17_02,2026-06-17_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 bulkscore=0 suspectscore=0 spamscore=0 phishscore=0
- lowpriorityscore=0 malwarescore=0 adultscore=0 priorityscore=1501
- impostorscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2606170166
+ phishscore=0 spamscore=0 adultscore=0 priorityscore=1501 lowpriorityscore=0
+ malwarescore=0 bulkscore=0 clxscore=1015 impostorscore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606170166
 Received-SPF: pass client-ip=205.220.180.131;
  envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
 X-Spam_score_int: -27
@@ -151,49 +150,109 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Avoid including TCG-specific headers in non-TCG builds.
+Forbid including TCG-specific headers in non-TCG builds.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/arm/internals.h | 4 +++-
- target/arm/cpu-irq.c   | 3 ++-
- 2 files changed, 5 insertions(+), 2 deletions(-)
+ include/accel/tcg/cpu-mmu-index.h  | 4 ++++
+ include/accel/tcg/cpu-ops.h        | 4 ++++
+ include/accel/tcg/getpc.h          | 4 ++++
+ include/accel/tcg/helper-retaddr.h | 4 ++++
+ include/accel/tcg/probe.h          | 4 ++++
+ include/accel/tcg/tb-cpu-state.h   | 4 ++++
+ 6 files changed, 24 insertions(+)
 
-diff --git a/target/arm/internals.h b/target/arm/internals.h
-index f7a57d3ea70..fcce3804f34 100644
---- a/target/arm/internals.h
-+++ b/target/arm/internals.h
-@@ -29,9 +29,11 @@
- #include "exec/vaddr.h"
- #include "exec/breakpoint.h"
- #include "exec/memop.h"
-+#ifdef CONFIG_TCG
- #include "accel/tcg/tb-cpu-state.h"
--#include "hw/core/registerfields.h"
- #include "tcg/tcg-gvec-desc.h"
+diff --git a/include/accel/tcg/cpu-mmu-index.h b/include/accel/tcg/cpu-mmu-index.h
+index e681a90844c..e0fb6ef91c8 100644
+--- a/include/accel/tcg/cpu-mmu-index.h
++++ b/include/accel/tcg/cpu-mmu-index.h
+@@ -9,6 +9,10 @@
+ #ifndef ACCEL_TCG_CPU_MMU_INDEX_H
+ #define ACCEL_TCG_CPU_MMU_INDEX_H
+ 
++#ifndef CONFIG_TCG
++#error Can only include this header with TCG
 +#endif
-+#include "hw/core/registerfields.h"
- #include "system/memory.h"
- #include "syndrome.h"
- #include "cpu-features.h"
-diff --git a/target/arm/cpu-irq.c b/target/arm/cpu-irq.c
-index fe514cc93af..883e8a176c3 100644
---- a/target/arm/cpu-irq.c
-+++ b/target/arm/cpu-irq.c
-@@ -8,10 +8,11 @@
- 
- #include "qemu/osdep.h"
- #include "cpu.h"
--#include "accel/tcg/cpu-ops.h"
- #include "internals.h"
- 
- #ifdef CONFIG_TCG
-+#include "accel/tcg/cpu-ops.h"
 +
- static inline bool arm_excp_unmasked(CPUState *cs, unsigned int excp_idx,
-                                      unsigned int target_el,
-                                      unsigned int cur_el, bool secure,
+ #include "hw/core/cpu.h"
+ #include "accel/tcg/cpu-ops.h"
+ #include "tcg/debug-assert.h"
+diff --git a/include/accel/tcg/cpu-ops.h b/include/accel/tcg/cpu-ops.h
+index 5950cdcaab1..710da12b828 100644
+--- a/include/accel/tcg/cpu-ops.h
++++ b/include/accel/tcg/cpu-ops.h
+@@ -10,6 +10,10 @@
+ #ifndef TCG_CPU_OPS_H
+ #define TCG_CPU_OPS_H
+ 
++#ifndef CONFIG_TCG
++#error Can only include this header with TCG
++#endif
++
+ #include "exec/breakpoint.h"
+ #include "exec/hwaddr.h"
+ #include "exec/memattrs.h"
+diff --git a/include/accel/tcg/getpc.h b/include/accel/tcg/getpc.h
+index 0fc08addcf3..8a97ce34e76 100644
+--- a/include/accel/tcg/getpc.h
++++ b/include/accel/tcg/getpc.h
+@@ -8,6 +8,10 @@
+ #ifndef ACCEL_TCG_GETPC_H
+ #define ACCEL_TCG_GETPC_H
+ 
++#ifndef CONFIG_TCG
++#error Can only include this header with TCG
++#endif
++
+ /* GETPC is the true target of the return instruction that we'll execute.  */
+ #ifdef CONFIG_TCG_INTERPRETER
+ extern __thread uintptr_t tci_tb_ptr;
+diff --git a/include/accel/tcg/helper-retaddr.h b/include/accel/tcg/helper-retaddr.h
+index 037fda2b83d..ebdc8b378d4 100644
+--- a/include/accel/tcg/helper-retaddr.h
++++ b/include/accel/tcg/helper-retaddr.h
+@@ -6,6 +6,10 @@
+ #ifndef ACCEL_TCG_HELPER_RETADDR_H
+ #define ACCEL_TCG_HELPER_RETADDR_H
+ 
++#ifndef CONFIG_TCG
++#error Can only include this header with TCG
++#endif
++
+ /*
+  * For user-only, helpers that use guest to host address translation
+  * must protect the actual host memory access by recording 'retaddr'
+diff --git a/include/accel/tcg/probe.h b/include/accel/tcg/probe.h
+index dd9ecbbdf11..0b788901ba0 100644
+--- a/include/accel/tcg/probe.h
++++ b/include/accel/tcg/probe.h
+@@ -7,6 +7,10 @@
+ #ifndef ACCEL_TCG_PROBE_H
+ #define ACCEL_TCG_PROBE_H
+ 
++#ifndef CONFIG_TCG
++#error Can only include this header with TCG
++#endif
++
+ #include "exec/mmu-access-type.h"
+ #include "exec/vaddr.h"
+ 
+diff --git a/include/accel/tcg/tb-cpu-state.h b/include/accel/tcg/tb-cpu-state.h
+index 8f912900ca6..1903af4c2a2 100644
+--- a/include/accel/tcg/tb-cpu-state.h
++++ b/include/accel/tcg/tb-cpu-state.h
+@@ -6,6 +6,10 @@
+ #ifndef EXEC_TB_CPU_STATE_H
+ #define EXEC_TB_CPU_STATE_H
+ 
++#ifndef CONFIG_TCG
++#error Can only include this header with TCG
++#endif
++
+ #include "exec/vaddr.h"
+ 
+ typedef struct TCGTBCPUState {
 -- 
 2.53.0
 
