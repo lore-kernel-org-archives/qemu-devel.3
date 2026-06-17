@@ -4,110 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24535CD98E2
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jun 2026 19:17:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6F79CD98E2
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jun 2026 19:29:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZvkV-0006kp-0T; Wed, 17 Jun 2026 15:16:31 -0400
+	id 1wZvwR-0000q6-Lq; Wed, 17 Jun 2026 15:28:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1wZvkA-0006j8-Vx
- for qemu-devel@nongnu.org; Wed, 17 Jun 2026 15:16:16 -0400
-Received: from mail-dy1-x1336.google.com ([2607:f8b0:4864:20::1336])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1wZvk8-0006pX-GE
- for qemu-devel@nongnu.org; Wed, 17 Jun 2026 15:16:10 -0400
-Received: by mail-dy1-x1336.google.com with SMTP id
- 5a478bee46e88-30bbe98c3f0so523236eec.0
- for <qemu-devel@nongnu.org>; Wed, 17 Jun 2026 12:16:07 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1781723766; cv=none;
- d=google.com; s=arc-20240605;
- b=dv7Kd3KRzmu6Musa/R7zxnT/bhCSqxuqHfC8TLRDj/GAt4/bFJVa/Hc5Nt9ngYWFZB
- tj6ak/1SNOgtjiwrlbSHg9NCh6VKzKQttF1SELIP2Z8CokefLDWqMohbBS08D4ndPvMv
- 6QyBrl3I98Ec+nJjmTXFCWo4MSZ4Qx0PsSxVaRN9WP4ASdJOJgM5CZuFqj1Z1tazRk+2
- KhoijoZPNAlGpEqTMaBGWBin2k3sKTCNpNe+EkMqXz5yqGEYOyXDn4zIl92aQ7M4sWsP
- cY1dYpdv7iXbSZRxBOYJ7LYmFPT//Pug1Smiwp/5gOBa5sdzScIffMEU2YCvW5YqqXLU
- Thlg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=KNYsDO8RavXOfAfkFFJV2yxJGbgScI4+vbAIXXFlQsw=;
- fh=/I1gSr7aVPS0xsTkFZ6v2ERtrmTjbPJzIY7Fn7S0DvU=;
- b=KOPsLU38/Nb+QoxcsS+3M6SogRE3gexklwvR9E6eA/nVEUveV0yDk1ChqyX7g2H8EM
- pv/FsPLY08vEuwotGMcSQmVeNcGS4JQ+OcXVrnqw6UeON7B6fEAX6gSA1YdiYeAsdsSX
- p+U4PMqO9+LnkXIwqDO2WU3itO0EksdHmmKIgtBEOkl8UBcwOqhNzVWXSy6QHbdi8U5p
- joGeBe7u3RrDrG72L7lmmN4LkaPDHxSC7aytUiT/8ecxb6yBQTKSd1aAhE324Oa8cXxG
- Xo0A5vyShHU8fv7ObRlGHuIZFQ2Cd+Uq6qW62s2obSOtv7rr1cxD4aC3EM3wC78cjO/B
- 6fyQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1781723766; x=1782328566; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=KNYsDO8RavXOfAfkFFJV2yxJGbgScI4+vbAIXXFlQsw=;
- b=pI4yqbScW74BtAPMea4d8f5KCUvB6SKsALp3QHjCf4VTvANFLCDoPOzTbUFNdXWGiT
- GZk97wMZrbA92G3KQvrRyjwBswi39jIacxVSCyoytKha1CK9vdlLOrfl8N/XDjizUHCT
- ouMpySauCI+YRowTGcLwEF9sl/gpDb9D+hMFxaKZ+KY2PqCPVEw16IaZH9jgQ2iygoT7
- gY3f3ocdyOU2QQbXuYHRVBn3v907n4OAC5Uwo/iFPn7CqxAIlxgtAAzmbpa1PNP6eAWD
- Cm81jb0MTsPamPtBTb4Jjn8H9TQVLFuSSXJqZAduHIrToD6BlGD6EawAGM74sC7AYPxP
- A2gA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781723766; x=1782328566;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=KNYsDO8RavXOfAfkFFJV2yxJGbgScI4+vbAIXXFlQsw=;
- b=BDpoWpph/gzGa2lU5r8mS2VuMtp78RPQPlJ3eeONUwvgw6N5SbrBvrzNwYBQ3JJXi0
- Fp1Y9fCCJyOPelyc2DSPPDWOVXtL/Zv9SSDvZOZPwPEBWToO0FMpMPmOcfFuUdaBLce9
- 2pGbQQriTLd2vI6SdfGeji3Byq4SFwvmadrqWtOSCZj4Da60uZIpeQL3LqHYVpgaJr6q
- akJVIfcvi/C6/n0tC+dt63Le9fn7m42IhR83XQGK3Z5XouMqLTyAXEQ0/vl2a03Uevcr
- QE++GecJ/WTSiqj5TwM1ArHW7lRLsXn2qpIEOwMe6z3boJqqgVH7GMwaiNSJOrmMejCj
- Hykg==
-X-Gm-Message-State: AOJu0Yx66G8o+l+BR5dG65GHr0MKrLC/KO3xBd1yCuZ2CQbajlZ4v+0U
- kksLfMoqeXSWhcmLiHpYG9eneppl/nNiiYdJHtirJusa7MZdwAXULt4dTb6kr5BsY3Z2vYRsOp2
- aw4FG+vsJqwC5bdxxaoz1EfkqogJKB9k=
-X-Gm-Gg: AfdE7cldufCaUHLN8ClWS/k4vQoq7kz7BJ8oLVpbHpqpUpwK8x09sicdcKPKt9Dl1hQ
- dhanFdJz3VkMjrG76dKMQfZr3Evffip/e3tExYwzN32vQFzjOdh0JPgAH618/pMmZ+W1a2qJQkt
- iyLNqA4jgLC+DpNdYHIQxLmSrT7NHMcz2ZU3WOEZ4Gp5YWPDOpxbw9Dlcg4lre3vZevISH2JDR+
- R7FtrQeRAERePlh7Op+hIIeoFqDtVyOtBjbcZjceB+WIgHgkWYvA9FVJr9PeUt+c2PDx4Jj
-X-Received: by 2002:a05:693c:3105:b0:30a:e531:3141 with SMTP id
- 5a478bee46e88-30bca0a1628mr2987541eec.17.1781723765786; Wed, 17 Jun 2026
- 12:16:05 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1wZvwP-0000pl-07
+ for qemu-devel@nongnu.org; Wed, 17 Jun 2026 15:28:50 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1wZvwL-0002IC-1N
+ for qemu-devel@nongnu.org; Wed, 17 Jun 2026 15:28:47 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1781724522;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=pXxWYnpftjGlu/EfOpDFzJwyeI+ox4tzzzhn4adT2mI=;
+ b=OJSsZdWi1ey0R7GHhtcWICx/z3NGQ9N3tmeoJSuzK1lZExVmPBYbMo1qTQ1q50i2JAd+Lf
+ Cp67q4MTzy8EGxMb7JgLSfBasFeGGIvf1GoEibjHiB9rMiEnCZnvPsg7RPn7VVJojHkyXQ
+ 805zs5DXqVTjFlRKUwDv2FPWtCTaDhc=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-633-Dpfdw0C7OueB8fULAR6cVw-1; Wed,
+ 17 Jun 2026 15:28:41 -0400
+X-MC-Unique: Dpfdw0C7OueB8fULAR6cVw-1
+X-Mimecast-MFC-AGG-ID: Dpfdw0C7OueB8fULAR6cVw_1781724520
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4E3781954B2A
+ for <qemu-devel@nongnu.org>; Wed, 17 Jun 2026 19:28:40 +0000 (UTC)
+Received: from localhost (unknown [10.2.16.131])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id B2DAB19560A2; Wed, 17 Jun 2026 19:28:39 +0000 (UTC)
+Date: Wed, 17 Jun 2026 15:28:38 -0400
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, stefanha@redhat.com
+Subject: Re: [PULL 00/14] QAPI patches for 2026-06-16
+Message-ID: <20260617192838.GA694041@fedora>
+References: <20260616141715.2974467-1-armbru@redhat.com>
 MIME-Version: 1.0
-References: <20260611-b4-ui-v3-0-72bcbbea0fae@redhat.com>
- <20260611-b4-ui-v3-6-72bcbbea0fae@redhat.com>
- <2f6725d5-3b35-4a12-9f18-2812fe6bed27@redhat.com>
-In-Reply-To: <2f6725d5-3b35-4a12-9f18-2812fe6bed27@redhat.com>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Date: Wed, 17 Jun 2026 23:15:53 +0400
-X-Gm-Features: AVVi8CeAm5ESCK7ID1-FGghUuqA5-EW9tTIJamOJWVKWV8SoWNc_UrH4cglP3OY
-Message-ID: <CAJ+F1CLK98bGTPYJ4V8GAmJ9-L8t4=baWYg8m7oqtta5TYFtvw@mail.gmail.com>
-Subject: Re: [PATCH v3 06/35] docs: start a vfio-pci document
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@mailo.com>, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Fabiano Rosas <farosas@suse.de>, 
- Laurent Vivier <lvivier@redhat.com>, Alex Williamson <alex@shazbot.org>, 
- Peter Maydell <peter.maydell@linaro.org>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1336;
- envelope-from=marcandre.lureau@gmail.com; helo=mail-dy1-x1336.google.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, FREEMAIL_FORGED_FROMDOMAIN=0.001,
- FREEMAIL_FROM=0.001, HEADER_FROM_DIFFERENT_DOMAINS=0.249,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="GD8gPJ4tEulmP6EI"
+Content-Disposition: inline
+In-Reply-To: <20260616141715.2974467-1-armbru@redhat.com>
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 8
+X-Spam_score: 0.8
+X-Spam_bar: /
+X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -124,165 +85,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi
 
-On Tue, Jun 16, 2026 at 8:29=E2=80=AFPM C=C3=A9dric Le Goater <clg@redhat.c=
-om> wrote:
->
-> Hello,
->
-> Subject could be :
->
->    docs: add mdpy mdev vfio display testing guide ?
+--GD8gPJ4tEulmP6EI
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-yes, I was too ambitious at first :)
+Applied, thanks.
 
->
-> On 6/11/26 11:03, Marc-Andr=C3=A9 Lureau wrote:
-> > Add a section to help me remember how to test vfio display hotplug.
->
-> May be :
->
-> Document how to test VFIO display hotplug using the kernel mdpy mdev
-> sample
->
-> > Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-> > ---
-> >   docs/devel/index-internals.rst |  1 +
-> >   docs/devel/vfio-mdpy.rst       | 83 +++++++++++++++++++++++++++++++++=
-+++++++++
-> >   2 files changed, 84 insertions(+)
-> >
-> > diff --git a/docs/devel/index-internals.rst b/docs/devel/index-internal=
-s.rst
-> > index 7a0678cbdd3..198f155247a 100644
-> > --- a/docs/devel/index-internals.rst
-> > +++ b/docs/devel/index-internals.rst
-> > @@ -22,6 +22,7 @@ Details about QEMU's various subsystems including how=
- to add features to them.
-> >      tracing
-> >      uefi-vars
-> >      vfio-iommufd
-> > +   vfio-mdpy
-> >      writing-monitor-commands
-> >      virtio-backends
-> >      crypto
-> > diff --git a/docs/devel/vfio-mdpy.rst b/docs/devel/vfio-mdpy.rst
-> > new file mode 100644
-> > index 00000000000..14cddd11d81
-> > --- /dev/null
-> > +++ b/docs/devel/vfio-mdpy.rst
-> > @@ -0,0 +1,83 @@
-> > +.. SPDX-License-Identifier: GPL-2.0-or-later
-> > +
-> > +=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-> > +Testing VFIO display with mdev mdpy
-> > +=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-> > +
-> > +.. contents:: Table of Contents
-> > +
-> > +The kernel provides a sample mediated device driver, ``mdpy``
-> > +(``samples/vfio-mdev/mdpy.c``), that exposes a fake framebuffer throug=
-h the VFIO
-> > +display region interface. It can be used to test VFIO display support,=
- including
-> > +hotplug, without any real GPU hardware.
-> > +
-> > +The kernel modules
-> > +=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-> > +
-> > +The ``mdpy`` driver depends on the ``mdev`` subsystem. Enable, build a=
-nd load
-> > +the modules.
->
-> The minimal set is:
->
->      CONFIG_SAMPLE_VFIO_MDEV_MDPY=3Dm
->      CONFIG_SAMPLE_VFIO_MDEV_MDPY_FB=3Dm   # guest framebuffer driver
->
-> CONFIG_VFIO_MDEV is selected automatically.
->
+Please update the changelog at https://wiki.qemu.org/ChangeLog/11.1 for any user-visible changes.
 
-ok
+--GD8gPJ4tEulmP6EI
+Content-Type: application/pgp-signature; name=signature.asc
 
->
-> > +
-> > +Verify that the driver registered successfully:
-> > +
-> > +.. code-block:: bash
-> > +
-> > +    ls /sys/devices/virtual/mdpy/mdpy/mdev_supported_types/
-> > +
-> > +Creating an mdev instance
-> > +=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D
-> > +
-> > +Available types correspond to different resolutions (e.g. ``mdpy-vga``
-> > +for 640x480, ``mdpy-xga`` for 1024x768, ``mdpy-hd`` for 1920x1080).
-> > +
-> > +Each mdev instance is identified by a UUID:
-> > +
-> > +.. code-block:: bash
-> > +
-> > +    uuid=3D$(uuidgen)
-> > +    echo "$uuid" > /sys/devices/virtual/mdpy/mdpy/mdev_supported_types=
-/mdpy-xga/create
-> > +
-> > +To remove the instance later:
-> > +
-> > +.. code-block:: bash
-> > +
-> > +    echo 1 > /sys/bus/mdev/devices/$uuid/remove
-> > +
-> > +Make sure your user has the necessary permissions to access the vfio g=
-roup.
-> > +(ex: chmod 666 /dev/vfio/16)
-> > +
-> > +Starting QEMU
-> > +=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-> > +
-> > +Boot-time attachment
-> > +--------------------
-> > +
-> > +.. code-block:: bash
-> > +
-> > +    qemu-system-x86_64 -machine q35 -m 1G \
-> > +        -device vfio-pci,sysfsdev=3D/sys/bus/mdev/devices/$uuid,displa=
-y=3Don \
-> > +        -display gtk,gl=3Don
-> > +
-> > +Hotplug via HMP
-> > +---------------
-> > +
-> > +Start QEMU with a PCIe root port (required for PCIe hotplug) and a
-> > +monitor:
-> > +
-> > +.. code-block:: bash
-> > +
-> > +    qemu-system-x86_64 -machine q35 -m 1G \
-> > +        -device pcie-root-port,id=3Drp0,slot=3D1 \
-> > +        -display gtk,gl=3Don \
-> > +        -monitor stdio
-> > +
-> > +Then at the ``(qemu)`` prompt:
-> > +
-> > +.. code-block:: none
-> > +
-> > +    device_add vfio-pci,sysfsdev=3D/sys/bus/mdev/devices/<uuid>,displa=
-y=3Don,bus=3Drp0,id=3Dmdpy0
-> > +
-> > +To hot-unplug:
-> > +
-> > +.. code-block:: none
-> > +
-> > +    device_del mdpy0
-> >
->
-> Thanks,
->
-> C.
->
->
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmoy9WYACgkQnKSrs4Gr
+c8gHMgf/d4xF8a3HE4WoX4DeA+1D0qzl/IwBprUhtCVlCvee6uXUwzLbzLqcX/xV
+P/YNU8Fc7XtLspYDcOSdJb7GMis35VHj7RMIPdoa48OKCHuU/yTr2f8NoCtee7tv
+JcrG8dst59PxQqiojh4evdDSEfiH0kmGKwgRxEPAFAsGgmG4HQRNwju8xQddBOXk
+aY6aB7hH0qzxOj3N84E44cv2+wnRyYOGUcrOmrV8b2SoZs35sT2D52nWoWdzvQrn
+j1fN7srnDDHiiZuwb1L4DbKS6AXIUnkWbXQ05ebLd/NxagGQm1DLIW7+nRJ4BAs3
+c2ftW7CuOldJu/OQ8B4Wj/IaL5fipQ==
+=mcNo
+-----END PGP SIGNATURE-----
+
+--GD8gPJ4tEulmP6EI--
+
 
