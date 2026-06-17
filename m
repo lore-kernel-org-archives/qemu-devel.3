@@ -4,104 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE72ACD98E1
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jun 2026 02:41:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07932CD98E1
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jun 2026 04:28:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZgCz-00062c-20; Tue, 16 Jun 2026 22:40:53 -0400
+	id 1wZhsN-0006TM-5G; Wed, 17 Jun 2026 00:27:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <joel.stan@gmail.com>)
- id 1wZgCx-000629-4x
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 22:40:51 -0400
-Received: from mail-yw1-x112a.google.com ([2607:f8b0:4864:20::112a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <joel.stan@gmail.com>)
- id 1wZgCv-0002F4-28
- for qemu-devel@nongnu.org; Tue, 16 Jun 2026 22:40:50 -0400
-Received: by mail-yw1-x112a.google.com with SMTP id
- 00721157ae682-7dd5a8dc8a2so32514777b3.0
- for <qemu-devel@nongnu.org>; Tue, 16 Jun 2026 19:40:48 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1781664048; cv=none;
- d=google.com; s=arc-20240605;
- b=L6c7pzkjsRZ2vu3B4dNJFAORxHxyISnqFq0KclR0lywWRoc96FAKpSFYNEu13nSBL7
- hja9sZM68GtDA3xWGymrZcOl1SqlA4iWfCsgRaKWXGfHvO5lsnfyx50lwkqCTU5TKh3u
- EUClUM35Re2xSpb4kNYSsllLSNYpRFP+SJc9y/TnPCJEUK+SgNx2m1aa4Td19cDXbTL1
- Eavq29EMaUhYnKuEt2oW4Sa0gVhZYOwmztoUOD48VMp+1iK/q1W2PZ6qCPlASacapoZv
- e8Qcj2HTSWcTTtFEcbXee8TEmFgFug1TwtZhQnoT9FmSxeXO6oQzRHpM5psSpotxAS1z
- FVCw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=ki+tQbmsrw6Ylm0o1sjml5MOnRY8/qYyCKJzfB4soxA=;
- fh=PoAwrGxG0ksViGPk6BU8l+zs3La3sU3NDYGHuylDZV4=;
- b=hmQNaYLYnwaTLYV3ebnqWEYhwxINA4yf8iLIg2RFLBgXV8CcnCqvd47giTNLbQ/YRo
- SEuVfBAwlYAhesB8xTOEDp3GBQMD6NK4EFKYbOs2WTWOJb0z42uUJLDm12ATNv6N1AJ0
- dU55Nq7FkqwYMQgMTe2KeZFBfSXmjCQqMnarxCvUwsOCXM8Ps4hN+DH5MhQfgd+difgt
- P2+2MGo+T8Emg87SKj/jQIILPb+lCNVSaKo/VhTzcVfKiFwdOxbwHxrvdXvXAwaFBzGl
- XrRiPKo6+fQP/kn3vqiaxHbbc97zW+MHXZyOSSjqDNJHw/JhhNPYMCdRVi0aDsS/rEW3
- OhYQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=jms.id.au; s=google; t=1781664048; x=1782268848; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=ki+tQbmsrw6Ylm0o1sjml5MOnRY8/qYyCKJzfB4soxA=;
- b=KakuuWWzV+utpx+ZUBD+hro0fCFfXch7MFvnfXZ5hLPEeutdWcLoJIcB0OnYeVSc9Z
- d7XkBsQwA7GnZPxzgaoy4PLeFFQXpwXC3dN85uMKOObgyc46wlhSTCLnZxOPOHy3tFP2
- rho8MmDjnJYwnBpqG2IazWTF+psHM+CJxPf94=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781664048; x=1782268848;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=ki+tQbmsrw6Ylm0o1sjml5MOnRY8/qYyCKJzfB4soxA=;
- b=BXvE3T6akoVxCI+OJHus8RLoEPlyhTjiDsQd1jUzk8LvIVKQQhlyHjBASyyawI0Lte
- Hbd69rJ2MIWIPd1rtBFr1APdjB4U0sjzfvydh9NuQ4YcavVZ2wep2sgcDIFZndqxPKTn
- BumsXgWZ44/Y/V9I807Qt688DQJ81MzeoUm1t9kb5QXd5zhza8AIX0J4JeDfKmMrFN6u
- HysBZOqk5r16CLsm355sn9ViCvB4LQcxWsVnNYsgKxXmcCPUdD48AXhJTyTwFFc6ccBd
- 9/Zq1ularoX273dGN+tBBhYqI9KoQbgo7FLifH5VNawmkuCk6/nXC9hCfxr+xkoIxNLi
- oRlA==
-X-Gm-Message-State: AOJu0Yw3cDplaPtmuyixKRE/5qTzrJFUGQ4ehoO6YyUIeOtp0lMHTR2y
- PlM+shOVOQQkpXDfUqJ3zOHQtl56PxYD1KVCjnCF3lyx+QQOp82tOyYOUgois3K/JHKxfIJH+R9
- welXVq4eylHpv5U3c8TCDNDomNQx+bbs=
-X-Gm-Gg: AfdE7clmXVpP1p7sJaioybYkxgJL6TK67zaUZL2BjQElC1k62CwZOPB3/CWyxmrTKoW
- wPPY7HLnNqdEQiDXXVTeC+OrJCVxeItiWRZkIWlzLtXV5NiX+EryL6QMs45Ct5sk4KGlecAlruC
- 5OL1jvPiD1z5MwLnll6pr9SZx5olOUu1UfNq4nOB1A0fXMmZ8GfcqNLlLFz3jc6Xmesl/omdF/3
- R/+26VlaOoGvJUGR4e8OOWy1sagiuv29wSiCxGZcwbiDCJu0INqR4XkL2r8Ggj4HycOqf50M9xC
- RlzPfIsZsgmXHN/h6pi+OWWMxqLA0Y751zKT4RwfixVVxGR/e96gGVyUJukVAn05Rdb15hFVesI
- 8oQg8CrrmGynm4g==
-X-Received: by 2002:a05:690c:9b0a:b0:7dc:9693:57b0 with SMTP id
- 00721157ae682-7fe5ff70384mr17848287b3.42.1781664047707; Tue, 16 Jun 2026
- 19:40:47 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wZhsJ-0006Rq-Uk
+ for qemu-devel@nongnu.org; Wed, 17 Jun 2026 00:27:40 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wZhsI-0005Rb-23
+ for qemu-devel@nongnu.org; Wed, 17 Jun 2026 00:27:39 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1781670456;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=7q24IsbnVnsPbpSCzz9iU9JIwxZKEzkpoQDJvRozthY=;
+ b=OtxGD/JiRPdyNL3bYIjUmh+Va3G6XpKrjrIno/jHvO7eKj88BuCxoagd9i6BNpYIvOJWbs
+ YT+PWLVEWLko+RN/vL2ZNmLj07Chr6mE2GdAaDIjqjX0CSc5VP4/tFOZ18l2lsNT5RSVVf
+ q7dXc86JElq1GoAmcWI/HMmgCQvxP38=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-78-b9P7qOZbNo6AQWMMXUY-5A-1; Wed,
+ 17 Jun 2026 00:27:30 -0400
+X-MC-Unique: b9P7qOZbNo6AQWMMXUY-5A-1
+X-Mimecast-MFC-AGG-ID: b9P7qOZbNo6AQWMMXUY-5A_1781670448
+Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1DCAA1955F28; Wed, 17 Jun 2026 04:27:28 +0000 (UTC)
+Received: from corto.redhat.com (unknown [10.44.32.7])
+ by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 04A581771; Wed, 17 Jun 2026 04:27:22 +0000 (UTC)
+From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+To: qemu-devel@nongnu.org,
+	qemu-arm@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
+ Jamin Lin <jamin_lin@aspeedtech.com>, kane_chen@aspeedtech.com,
+ Andrew Jeffery <andrew@codeconstruct.com.au>,
+ Joel Stanley <joel@jms.id.au>, Ed Tanous <etanous@nvidia.com>,
+ William de Abreu Pinho <williamdapinho@gmail.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Subject: [PATCH] tests/functional/aspeed: unify boot completion detection on
+ 'login:' prompt
+Date: Wed, 17 Jun 2026 06:27:18 +0200
+Message-ID: <20260617042718.2883655-1-clg@redhat.com>
 MIME-Version: 1.0
-References: <20260520125406.28693-1-anjo@rev.ng>
- <20260520125406.28693-16-anjo@rev.ng>
- <6633f78c-2291-4f6e-9ef0-9d3198cd30a6@oss.qualcomm.com>
- <aiAc8ZZtYhJ5hJ-7@hive.localdomain>
-In-Reply-To: <aiAc8ZZtYhJ5hJ-7@hive.localdomain>
-From: Joel Stanley <joel@jms.id.au>
-Date: Wed, 17 Jun 2026 12:10:36 +0930
-X-Gm-Features: AVVi8CcSIM56Ko_AT2ccLcq7kob5LvXphbV3UCG4mWf0MwgO5s5Dn0AyNcPR4Sk
-Message-ID: <CACPK8XeM5HAjfUJ4t_crwB_wLfmYfigm_=d0qPPXNDVyFTECSw@mail.gmail.com>
-Subject: Re: [PATCH v7 15/27] target/riscv: Fix arguments to board IMSIC
- emulation callbacks
-To: Anton Johansson <anjo@rev.ng>, alistair.francis@wdc.com, 
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, pierrick.bouvier@linaro.org, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@mailo.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112a;
- envelope-from=joel.stan@gmail.com; helo=mail-yw1-x112a.google.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, FREEMAIL_FORGED_FROMDOMAIN=0.001,
- FREEMAIL_FROM=0.001, HEADER_FROM_DIFFERENT_DOMAINS=0.249,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 8
+X-Spam_score: 0.8
+X-Spam_bar: /
+X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -118,70 +87,158 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello Alistair,
+The boot completion check in AspeedTest waits for the systemd
+"Hostname set to" message, which occasionally causes intermittent test
+timeouts, e.g. on ast2500 SoC machines. The root cause seems to be
+console output interleaving of both systemd and the getty login
+process. This results in the expected pattern string being broken up.
 
-On Wed, 3 Jun 2026 at 21:59, Anton Johansson via <qemu-riscv@nongnu.org> wrote:
->
-> On 03/06/26, Daniel Henrique Barboza wrote:
-> > Hi,
-> >
-> > This patch is causing a seg fault in rmw_xireg_aia():
+Unify and simplify all boot completion checks by looking for the
+generic 'login:' substring in AspeedTest.wait_for_boot_complete().
+With the override gone, remove the redundant FacebookAspeedTest class
+and update the Anacapa, Bletchley, and Catalina tests to inherit
+directly from AspeedTest. Also drop the now-dead image_hostname
+parameter from do_test_arm_aspeed_openbmc().
 
-It looks like this version of the patch made it into master in your
-latest pull request.
+Reported-by: Peter Maydell <peter.maydell@linaro.org>
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3117
+Signed-off-by: Cédric Le Goater <clg@redhat.com>
+---
+ tests/functional/arm/test_aspeed_anacapa.py   |  6 +++---
+ tests/functional/arm/test_aspeed_bletchley.py |  6 +++---
+ tests/functional/arm/test_aspeed_catalina.py  |  6 +++---
+ .../arm/test_aspeed_gb200nvl_bmc.py           |  3 +--
+ tests/functional/aspeed.py                    | 21 ++++---------------
+ 5 files changed, 14 insertions(+), 28 deletions(-)
 
-We don't have any boot tests that set aia=aplic-imsic, so none of the
-in-tree tests caught it.
+diff --git a/tests/functional/arm/test_aspeed_anacapa.py b/tests/functional/arm/test_aspeed_anacapa.py
+index 27f8bd8b56a8..809afeaeb8f5 100644
+--- a/tests/functional/arm/test_aspeed_anacapa.py
++++ b/tests/functional/arm/test_aspeed_anacapa.py
+@@ -5,10 +5,10 @@
+ # SPDX-License-Identifier: GPL-2.0-or-later
+ 
+ from qemu_test import Asset
+-from aspeed import FacebookAspeedTest
++from aspeed import AspeedTest
+ 
+ 
+-class AnacapaMachine(FacebookAspeedTest):
++class AnacapaMachine(AspeedTest):
+ 
+     ASSET_ANACAPA_FLASH = Asset(
+         'https://github.com/legoater/qemu-aspeed-boot/raw/3fa3212827b04be4034d43b5adeef57c27d6ab18/images/anacapa-bmc/openbmc-20260512025228/obmc-phosphor-image-anacapa-20260512025228.static.mtd.xz',
+@@ -22,4 +22,4 @@ def test_arm_ast2600_anacapa_openbmc(self):
+                                         soc='AST2600 rev A3')
+ 
+ if __name__ == '__main__':
+-    FacebookAspeedTest.main()
++    AspeedTest.main()
+diff --git a/tests/functional/arm/test_aspeed_bletchley.py b/tests/functional/arm/test_aspeed_bletchley.py
+index 3000d0c302b1..5a60b24b3d2c 100755
+--- a/tests/functional/arm/test_aspeed_bletchley.py
++++ b/tests/functional/arm/test_aspeed_bletchley.py
+@@ -5,10 +5,10 @@
+ # SPDX-License-Identifier: GPL-2.0-or-later
+ 
+ from qemu_test import Asset
+-from aspeed import FacebookAspeedTest
++from aspeed import AspeedTest
+ 
+ 
+-class BletchleyMachine(FacebookAspeedTest):
++class BletchleyMachine(AspeedTest):
+ 
+     ASSET_BLETCHLEY_FLASH = Asset(
+         'https://github.com/legoater/qemu-aspeed-boot/raw/master/images/bletchley-bmc/openbmc-20250128071329/obmc-phosphor-image-bletchley-20250128071329.static.mtd.xz',
+@@ -22,4 +22,4 @@ def test_arm_ast2600_bletchley_openbmc(self):
+                                         soc='AST2600 rev A3')
+ 
+ if __name__ == '__main__':
+-    FacebookAspeedTest.main()
++    AspeedTest.main()
+diff --git a/tests/functional/arm/test_aspeed_catalina.py b/tests/functional/arm/test_aspeed_catalina.py
+index 2694e4b005b7..dc2f24e7b43c 100755
+--- a/tests/functional/arm/test_aspeed_catalina.py
++++ b/tests/functional/arm/test_aspeed_catalina.py
+@@ -5,10 +5,10 @@
+ # SPDX-License-Identifier: GPL-2.0-or-later
+ 
+ from qemu_test import Asset
+-from aspeed import FacebookAspeedTest
++from aspeed import AspeedTest
+ 
+ 
+-class CatalinaMachine(FacebookAspeedTest):
++class CatalinaMachine(AspeedTest):
+ 
+     ASSET_CATALINA_FLASH = Asset(
+         'https://github.com/legoater/qemu-aspeed-boot/raw/a866feb5ef81245b4827a214584bf6bcc72939f6/images/catalina-bmc/obmc-phosphor-image-catalina-20250619123021.static.mtd.xz',
+@@ -22,4 +22,4 @@ def test_arm_ast2600_catalina_openbmc(self):
+                                         soc='AST2600 rev A3')
+ 
+ if __name__ == '__main__':
+-    FacebookAspeedTest.main()
++    AspeedTest.main()
+diff --git a/tests/functional/arm/test_aspeed_gb200nvl_bmc.py b/tests/functional/arm/test_aspeed_gb200nvl_bmc.py
+index e5f2dce0f569..f9e736d04712 100755
+--- a/tests/functional/arm/test_aspeed_gb200nvl_bmc.py
++++ b/tests/functional/arm/test_aspeed_gb200nvl_bmc.py
+@@ -19,8 +19,7 @@ def test_arm_aspeed_gb200_openbmc(self):
+ 
+         self.do_test_arm_aspeed_openbmc('gb200nvl-bmc', image=image_path,
+                                         uboot='2019.04', cpu_id='0xf00',
+-                                        soc='AST2600 rev A3',
+-                                        image_hostname='gb200nvl-obmc')
++                                        soc='AST2600 rev A3')
+ 
+ if __name__ == '__main__':
+     AspeedTest.main()
+diff --git a/tests/functional/aspeed.py b/tests/functional/aspeed.py
+index 88b659093467..076da1036cfd 100644
+--- a/tests/functional/aspeed.py
++++ b/tests/functional/aspeed.py
+@@ -8,14 +8,7 @@
+ class AspeedTest(LinuxKernelTest):
+ 
+     def do_test_arm_aspeed_openbmc(self, machine, image, uboot='2019.04',
+-                                   cpu_id='0x0', soc='AST2500 rev A1',
+-                                   image_hostname=None):
+-        # Allow for the image hostname to not end in "-bmc"
+-        if image_hostname is not None:
+-            hostname = image_hostname
+-        else:
+-            hostname = machine.removesuffix('-bmc')
+-
++                                   cpu_id='0x0', soc='AST2500 rev A1'):
+         self.set_machine(machine)
+         self.vm.set_console()
+         self.vm.add_args('-drive', f'file={image},if=mtd,format=raw',
+@@ -28,10 +21,10 @@ def do_test_arm_aspeed_openbmc(self, machine, image, uboot='2019.04',
+         self.wait_for_console_pattern(f'Booting Linux on physical CPU {cpu_id}')
+         self.wait_for_console_pattern(f'ASPEED {soc}')
+         self.wait_for_console_pattern('/init as init process')
+-        self.wait_for_boot_complete(hostname)
++        self.wait_for_boot_complete()
+ 
+-    def wait_for_boot_complete(self, hostname):
+-        self.wait_for_console_pattern(f'systemd[1]: Hostname set to <{hostname}>.')
++    def wait_for_boot_complete(self):
++        self.wait_for_console_pattern('login:')
+ 
+     def do_test_arm_aspeed_buildroot_start(self, image, cpu_id, pattern='Aspeed EVB'):
+         self.require_netdev('user')
+@@ -71,9 +64,3 @@ def generate_otpmem_image(self):
+         with open(path, "wb") as f:
+             f.write(pattern)
+         return path
+-
+-
+-class FacebookAspeedTest(AspeedTest):
+-
+-    def wait_for_boot_complete(self, hostname):
+-        self.wait_for_console_pattern(f'{hostname} login:')
+-- 
+2.54.0
 
-I'll send a patch and a new test.
-
-Cheers,
-
-Joel
-
-> > #0  0x0000aaaaab3bda20 in rmw_xireg_aia
-> >     (env=0xaaaaac194d80, csrno=849, isel=114, val=0x0, new_val=0, wr_mask=18446744073709551615)
-> >     at ../target/riscv/csr.c:2735
-> > #1  0x0000aaaaab3be320 in rmw_xireg (env=0xaaaaac194d80, csrno=849, val=0x0, new_val=0, wr_mask=18446744073709551615)
-> >     at ../target/riscv/csr.c:2950
-> > #2  0x0000aaaaab3c5628 in riscv_csrrw_do64
-> >     (env=0xaaaaac194d80, csrno=849, ret_value=0x0, new_value=0, write_mask=18446744073709551615, ra=281472560986724)
-> >     at ../target/riscv/csr.c:5813
-> > #3  0x0000aaaaab3c5884 in riscv_csrrw
-> >     (env=0xaaaaac194d80, csrno=849, ret_value=0x0, new_value=0, write_mask=18446744073709551615, ra=281472560986724)
-> >     at ../target/riscv/csr.c:5871
-> > #4  0x0000aaaaab3cb670 in helper_csrw (env=0xaaaaac194d80, csr=849, src=0) at ../target/riscv/op_helper.c:75
-
-> > >               /* Call machine specific IMSIC register emulation */
-> > > -            ret = env->aia_ireg_rmw_fn[priv](env->aia_ireg_rmw_fn_arg[priv],
-> > > +            ret = env->aia_ireg_rmw_cb[priv](env->aia_ireg_rmw_cb_arg[priv],
-> > >                                       AIA_MAKE_IREG(isel, priv, virt, vgein,
-> > >                                                     riscv_cpu_mxl_bits(env)),
-> > > -                                    val, new_val, wr_mask);
-> > > +                                    &wide_val, new_val, wr_mask);
-> > > +            *val = wide_val;
-> >
-> > Here.  We can't just do *val = wide_val because there's no guarantee that *val,
-> > i.e. the 'ret_value' of riscv_csr_op_fn(), is not NULL:
-> >
-> > typedef RISCVException (*riscv_csr_op_fn)(CPURISCVState *env, int csrno,
-> >                                           target_ulong *ret_value,  <--------
-> >                                           target_ulong new_value,
-> >                                           target_ulong write_mask);
-> >
-> > This fixes it:
-> >
-> >    if (val) {
-> >        *val = wide_val;
-> >    }
-> >
->
-> Agh, good catch and thank you Daniel! I'll address this in a v8.
-> Alistair, if it's easier for you to do this change on your end, feel
-> free to do so and ignore my v8. Unsure of the praxis in this situation.
->
-> --
-> Anton Johansson
-> rev.ng Labs Srl.
->
 
