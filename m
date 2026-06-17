@@ -4,130 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92C81CD98E2
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jun 2026 19:54:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A5B8CD98F2
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jun 2026 20:16:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZwL4-0007Mc-C0; Wed, 17 Jun 2026 15:54:18 -0400
+	id 1wZwgF-0002af-M4; Wed, 17 Jun 2026 16:16:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dma@nebius.com>) id 1wZvlY-000794-9d
- for qemu-devel@nongnu.org; Wed, 17 Jun 2026 15:17:36 -0400
-Received: from mail-francesouthazon11021140.outbound.protection.outlook.com
- ([40.107.130.140] helo=MRWPR03CU001.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dma@nebius.com>) id 1wZvlW-0007DV-Gt
- for qemu-devel@nongnu.org; Wed, 17 Jun 2026 15:17:36 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=bm4ecqO3yj4sftCHuEwGWIOXP8Su6FYDbHMxs2DNxmK5GaACR1Z/Zdhgz8scdcAiZ/bgkWOpCE/LFnZjFc0Jow2J/qhr40vD9yJ/tCJ4acniM3iCNMuHyeSHCEjdiLMOXcWHFeS7VRMNMLoeJ12VvCNbYFiC5lnJtqFsm0NIXBHxvxi23PzOOLHhu15pyxI4itqNEdq0ommz8dYy9qoO0Xax3+4pM8d4xXszssh8DIRObyY9At7K5vwrk2gtExdSAMVfhjSmyiB8D09KfnV7+dHXc5RCQFllMkElvu34r1KmgTTzcTLRA+NRGbRnCO236vjKClWqVxGpWTvsDMPSUA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=xLfLTymAf2yqPsVrhguys2a9r5DP+1u0H6VhvI7/umA=;
- b=vKNSse7f+ANoTOaESeUzjyrAKbSEdhb8ZuRjyWh35w0CSMEzKL6qgx5LXYxxB7nv/jhAaJCXNBOsayQqLE57FdwNqblNoFSa92Ah3O3lLuKkVeb7rSD0iCnZLqhun9SXFcxi30O5oN9MUPqjLUomFtWLYu7WDixAgElnhqNppL4B6gCvgwtbLpZHcpRatz+mzJ0IFv7kv18B+QuM8IHNj3tkQuZCnzL8iWRNPlTXDN0Ihuw4yVLO47LVfAhNvU/b8IcmehafhtlAZSl4XOuIwD819gQz22FyuhmQSesa5XLWUmhJ0LO+GL5hEsMUSFmtD/+wuHqfTvt2gwIwDG3ErQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nebius.com; dmarc=pass action=none header.from=nebius.com;
- dkim=pass header.d=nebius.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nebius.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=xLfLTymAf2yqPsVrhguys2a9r5DP+1u0H6VhvI7/umA=;
- b=UDF4PpAJOsrjKz9A0UYn0eQ71ZFhOGc+ldiJl/VFEvlW0t01hhApMaEHqwgk5PUSL3Gc+DJ4mGRD6ySLldFntu76M5Dpbyc/vdzvMg2bT7muNP6IhOxKmiomvDQrY7ZRS3VNHuJRtoJAFyhQL+pHH86QYbKF7CJdVmIjvg7I1mmj9KGMtqu2TUV5WRcZu9gLQoXll4BKj6G1/QB9vxFcudVZvV96sb3wvng6IS0fn+ZZ5eMj+aBDcxpAYEit6uf46ET9CqT6WgZG+AEKBYwUgdt+NsV90ReNjrT+1n211NdfIYws8wRvReaEUh/0DTAUiw5De+fhxlGoJ0JoKYfYEA==
-Received: from PA1P190MB2557.EURP190.PROD.OUTLOOK.COM (2603:10a6:102:4fb::18)
- by GV1P190MB1874.EURP190.PROD.OUTLOOK.COM (2603:10a6:150:61::16) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.139.13; Wed, 17 Jun
- 2026 19:12:25 +0000
-Received: from PA1P190MB2557.EURP190.PROD.OUTLOOK.COM
- ([fe80::d0eb:eb62:7779:c6f0]) by PA1P190MB2557.EURP190.PROD.OUTLOOK.COM
- ([fe80::d0eb:eb62:7779:c6f0%5]) with mapi id 15.21.0113.015; Wed, 17 Jun 2026
- 19:12:25 +0000
-From: Dmitry Malkin <dma@nebius.com>
-To: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-CC: Dmitry Malkin <dma@nebius.com>, NB-Core Team <NB-CoreTeam@nebius.com>
-Subject: arm-smmuv3/iommufd nested: should S1/S2 nesting require singleton
- host IOMMU groups?
-Thread-Topic: arm-smmuv3/iommufd nested: should S1/S2 nesting require
- singleton host IOMMU groups?
-Thread-Index: AQHc/oyVoSij5AB+d0q25ixCOUb6sg==
-Date: Wed, 17 Jun 2026 19:12:24 +0000
-Message-ID: <PA1P190MB25570FC9C98571680CFB55ADDBE42@PA1P190MB2557.EURP190.PROD.OUTLOOK.COM>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-msip_labels: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nebius.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: PA1P190MB2557:EE_|GV1P190MB1874:EE_
-x-ms-office365-filtering-correlation-id: 2c986a17-daa0-4d4a-6261-08decca45d9a
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230040|366016|10070799003|1800799024|376014|23010399003|38070700021|18002099003|11063799006|56012099006|6133799003;
-x-microsoft-antispam-message-info: T8uXLOuF7IRitIL2VZUt8KQoyTN/ovT9P/dF4MEuDbTQJKuArYSQjpuUXVM0ks05KViGAVfys6jz9plmYHOy6AVuFJlfm224qFxSMTwliIO+4VUR3ZAUAmGUyrF0PvQuBbwKniukzDEaGZUMS/4kPRRAV5c6xzHINTtsm+BGWCCI6IQFkXrRbx+tuli9mS4mj/1IFxXxPyMsDta2bTpSo+Gwh1chnggJqGFxIn8Dhgb/7S944LQ0mmcG5eYVdrJhBAfF91ZKLVy6ynnyjTx3rdugnUmG9GsK4C5I8GPFKE7OlC2bZ0F0A0M7+PF8Y07gRfog+xmEY2fKYULMHUmaGdFNaEv8uLj5JorcZDgVfLlBZD++svyIySHKEvanACGlAXZv6+fNXQA0I/UI7pFMm89S2skjizmK4K6lUUX86hIaSUxDxcxkze7uGCfxhDOC+goMgBBtG6MdUhYmXRYSPQD+9b5ANiT9jUU641XXWrAgwKzn+uk3wx+zhsdAZm/54oRWBCSXRqB/9nho1sf2mWAbfUkxAu7BGNqkl91RkUxGv2QUjOVt9IPl0MPYyT2VOEGMJpsybpMj/XHhupFcvij/kugm9zAdfkbmZmFastyRlvFNckVDDjuFJ1GguzyUET44ulgj4klqCq6Cy72gGIO3WgKrNn7qreRRv/Ojk0PPV8k9I9JT/ffQeW7vPBwzM/8p4WwYak2rr3eJUk87dylVwUtseznqXlkF0e959P7NA6zxoSDZ2uF3O3L408Yt
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:PA1P190MB2557.EURP190.PROD.OUTLOOK.COM; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(10070799003)(1800799024)(376014)(23010399003)(38070700021)(18002099003)(11063799006)(56012099006)(6133799003);
- DIR:OUT; SFP:1102; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?FamQ1g6u10pRpZVxhFq8CoxKzHJKtKH2sAStcGT6ztouUcba1Ta1mlgFtn?=
- =?iso-8859-1?Q?uOMGdEjjUCu8W2pOQZgKNAp4gOr6qBNKjkoBSc8atLAkDJfEWy3ca6sAjy?=
- =?iso-8859-1?Q?LhO2119NJYyGf6+jy334KG3sGBi6rxBM9tcODD4E6znOmXH0WnBDCEaRqd?=
- =?iso-8859-1?Q?b7RNe16kIa7o0bk6+FnJzr8j48SM00NiQMCIAo3C4NW5UpdxmL8q0KnR2/?=
- =?iso-8859-1?Q?uloD2AKbSpSRaxB9QyJVTy76CYY4CWhUw7cIZTIMcWthRmf58dcKrjzvqH?=
- =?iso-8859-1?Q?xtp6+2rEGLFgQK39YYk3kJRzjuc6UpQqQN18+2U9n9w4KzLkcPNNr4pXtG?=
- =?iso-8859-1?Q?766tMV2A6A9KXdScQ9h1oUuSvP5Hc87KBPpM2Dp+vmDGqjZ47UB7BPYyvw?=
- =?iso-8859-1?Q?z3ICQhUMy/kQ2XI2PSXLYpfAOZnpRCLNoehS4Q6AyVo68E7ZSdy1+7z324?=
- =?iso-8859-1?Q?MnN+J6fI+ZZ4xGZtngAxZXkObFKxWFvAPsB/htr00KLCIY52jXD3APkaaq?=
- =?iso-8859-1?Q?DWi0gbbnrgv1ZFzHSICksrdjcfj3WNlQq5BUZamxgMdLiDN1REWRtHcJNx?=
- =?iso-8859-1?Q?UtxUr3iyeJv99Ls2en19fW1Jek4SNFMfIcklcXA0Qwkq+7/GCDsZmuPDMK?=
- =?iso-8859-1?Q?Dnv52y0Ln2IC3aFurRE4/U3Ig5JkdNTj2GaP9D9Uz2F32WDwsFuPXrR2uE?=
- =?iso-8859-1?Q?rh14adzowhhWvEjMPCHmYmJ4cdo3yOGA3ZgNdrhhjxRBaHgrJ1K3KFd3Zz?=
- =?iso-8859-1?Q?eOBKIZvyFFCTT2HVzMGKBMO8P7RO37bFHEhPO3fCObIqtqQD9qdDmY0PKd?=
- =?iso-8859-1?Q?0rabdnS2nmjdm6lWMne8aynhS4ox7DPixYNRqYmen44FR3eyttU+MHRrSI?=
- =?iso-8859-1?Q?y6V4w3Su4Y36hCBHMDxZ3DKTDikj62rRZqiPmQlXvkaK4HR9CxFjeSFP1b?=
- =?iso-8859-1?Q?T/zTOJlMWNXFuhqiAZdEdWgL0QLvCRxD9VSmKD+2iEpkk3AzYuCyq/QDXL?=
- =?iso-8859-1?Q?7XPkfgWEcFntQW6DrNZtij1MTaTiLmJrN/qg1Lefti02X+JEuoMEvwZtiP?=
- =?iso-8859-1?Q?tlSP1YfCbclrcbN8XzQrqvcmCZriqs4CxB8WHyxmKxXsg4+RQE7ZRJ+WUq?=
- =?iso-8859-1?Q?PiMX4qJsyXxzrq5afHdlyf8uQm6ngIer+v8ikfJeXYN/znaVBq/Clevna+?=
- =?iso-8859-1?Q?9Lg2wBLDXVuKGofHRqJGBN+qXQwPglxtdBLoXb3yJ3Sil6rejIdf/gTNZw?=
- =?iso-8859-1?Q?c0X5TS2e6gP+BjWl550qwO8ldeOFE5raTqwdivzTbEXisV/WGGUdTQAtPl?=
- =?iso-8859-1?Q?92I/ZdQWdHOA5lC7oSVwoYa2bi2XJNvPEvemdyXAPROvZ9itfNZhAtlQP1?=
- =?iso-8859-1?Q?Fi4Gh9/V4RDrN5kOlFGJ+xvMl8C9LSUKi7OjoMce7T7u7tPF9fIkgwgGTS?=
- =?iso-8859-1?Q?C1JTl0RAC1u0uxqkiCmxzv+ZvKmrXtenrPnRyM1KJjzBMhrWT+iSCYij/p?=
- =?iso-8859-1?Q?edBiq2sGm8ruzuZDmwPqmtgGsPxu/5teiTwI4DSU6HZ9uXRviDyhmuhAwg?=
- =?iso-8859-1?Q?Il7QzIQiaIj6bwKorEvlOvc6iBLDRDOsonzOulZxAv2+K+1/uxczzr1iAt?=
- =?iso-8859-1?Q?jFr4OJaZazTuwogYYgYtN/YZHSIQELaCmUUBxfcTatdXrDdJh+0s1o8ifC?=
- =?iso-8859-1?Q?2wWmMvthlIUEozLHEbI0o+Mr4sfPf4wmOUZ9XY/jFjChQk+0rHJKHY+qfJ?=
- =?iso-8859-1?Q?Doz8kZv6lgmCjQogN7JHM6A5+GtPd4TMm/SuRjh1/wzEL3kAj58qeVEnk6?=
- =?iso-8859-1?Q?+xWw1oqKNBGhSA1D05lhZ6ACXY6tHjKINtUMMu9U8nIuouR7XYlI?=
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
-MIME-Version: 1.0
-X-OriginatorOrg: nebius.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: PA1P190MB2557.EURP190.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-Network-Message-Id: 2c986a17-daa0-4d4a-6261-08decca45d9a
-X-MS-Exchange-CrossTenant-originalarrivaltime: 17 Jun 2026 19:12:24.9818 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 4eb23c52-f3a5-49bc-b555-0b061267a984
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: B4crhCOpxuWD6O5feaBWDsAufdyOGwmKnyTBoHtaL3uNPnCGq3jnd1jFIJO5mLpx
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: GV1P190MB1874
-Received-SPF: pass client-ip=40.107.130.140; envelope-from=dma@nebius.com;
- helo=MRWPR03CU001.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ (Exim 4.90_1) (envelope-from
+ <3hQAzagcKCqoTbRSVUOQYYQVO.MYWaOWe-NOfOVXYXQXe.YbQ@flex--jrhilke.bounces.google.com>)
+ id 1wZwgD-0002Zv-Jx
+ for qemu-devel@nongnu.org; Wed, 17 Jun 2026 16:16:09 -0400
+Received: from mail-pj1-x104a.google.com ([2607:f8b0:4864:20::104a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from
+ <3hQAzagcKCqoTbRSVUOQYYQVO.MYWaOWe-NOfOVXYXQXe.YbQ@flex--jrhilke.bounces.google.com>)
+ id 1wZwgB-0002ol-VY
+ for qemu-devel@nongnu.org; Wed, 17 Jun 2026 16:16:09 -0400
+Received: by mail-pj1-x104a.google.com with SMTP id
+ 98e67ed59e1d1-36bbcd40642so67739a91.0
+ for <qemu-devel@nongnu.org>; Wed, 17 Jun 2026 13:16:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=google.com; s=20251104; t=1781727366; x=1782332166; darn=nongnu.org;
+ h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+ :date:from:to:cc:subject:date:message-id:reply-to;
+ bh=FEvtWj3r4LW5e8S8uhN/YmsaM6S2vyKxTPj8HfvAaYg=;
+ b=Ll4YZZ1/nIDj2d2RskMr+lU0DYVMEi/rurq4XnEEpZgbGLnQZerC2bxXrf/sc3eKTN
+ 97g9QrIc4MiFJL6wnWbP67CEPirK3ZlqciGudgA2d1cxlUiXH3ZOc4vmEOS+HRG07iIp
+ 9kRnufoLoV+rxLYhW+GyrGLyvE+9QiUPvoruqLpfA+ZbThoGx89NND//C6RcDccn527F
+ cUBrQ6y8Ghapa3FwCiCl89538iMmI3xRWFRIcGpoRXGvp76VbW8KzGM+saxQ+nP6XeKM
+ wjDpq8qNHo6GN8qd7Nax25yJ+X97o0l6Qefrz/+iClLYAi7n5nsH5E33iheW3f78kZEz
+ 8Oig==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1781727366; x=1782332166;
+ h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+ :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=FEvtWj3r4LW5e8S8uhN/YmsaM6S2vyKxTPj8HfvAaYg=;
+ b=NimRQh/1fcgADOd/41IzDw4eCfEpkXOoiuTOUeQJ/i4Iv9xJc7F68n8yAdRIWkFl/0
+ k8wyB1vh5MQk1cppJ4a2Kja9qs3lNmb7pt/c48jYu1JQCFPu5YMyy63WbdzAT9Rsq8iC
+ Q03QUuLOeT2iWq7LWGv6VWjqUcNXehFm90iTD6DOyAAcQM6Obvz7jN5On/4o50Fd+KX3
+ C0BhlOh6FZDVr1irUigcDhgO5WHzZCxpedElynvp+v0IYxg8qzpFZjwa2y0mmsZHXB34
+ RZhyJ66KxSfWkCACWwJ45liATcCkNsUo8/zTbFLIP4HZDdoFpvXrIkzeyYT52PM0AQZf
+ RgqQ==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ9aKzULkhLBBhw9tRF+KwRGvTrTWctcnfDqOUxfSpot6sLVyJy2SUH10uyK31PHsk4vlX+AgizavYJn@nongnu.org
+X-Gm-Message-State: AOJu0Yw1kng8GTYu1GPt5yP5wHz3zI/+/yUr8Gos1OS2yXWj0OBAgQN/
+ m/n8LooxyBKF0ZMrTx3uLPg7nlJudKY5LdQ+pZ1zO7vKjhbGZGyz9eft4Y+YqVI0SIUmnK86oGY
+ 9Y3dZtLC8
+X-Received: from pjug23.prod.google.com ([2002:a17:90a:ce97:b0:365:d4d8:94c3])
+ (user=jrhilke job=prod-delivery.src-stubby-dispatcher) by
+ 2002:a17:90b:558c:b0:36d:81b3:61a1
+ with SMTP id 98e67ed59e1d1-37c930d223cmr5343082a91.7.1781727365805; Wed, 17
+ Jun 2026 13:16:05 -0700 (PDT)
+Date: Wed, 17 Jun 2026 20:15:46 +0000
+In-Reply-To: <20260617-igb-trl-v6-0-bbdfcadb81e2@google.com>
+Mime-Version: 1.0
+References: <20260617-igb-trl-v6-0-bbdfcadb81e2@google.com>
+X-Mailer: b4 0.14.3
+Message-ID: <20260617-igb-trl-v6-1-bbdfcadb81e2@google.com>
+Subject: [PATCH v6 1/7] igb: Define TRL registers and core state
+From: Josh Hilke <jrhilke@google.com>
+To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, qemu-devel@nongnu.org
+Cc: Josh Hilke <jrhilke@google.com>,
+ Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>, 
+ Jason Wang <jasowang@redhat.com>, Fabiano Rosas <farosas@suse.de>, 
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
+ David Matlack <dmatlack@google.com>,
+ Alex Williamson <alex.williamson@nvidia.com>
+Content-Type: text/plain; charset="utf-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::104a;
+ envelope-from=3hQAzagcKCqoTbRSVUOQYYQVO.MYWaOWe-NOfOVXYXQXe.YbQ@flex--jrhilke.bounces.google.com;
+ helo=mail-pj1-x104a.google.com
+X-Spam_score_int: -95
+X-Spam_score: -9.6
+X-Spam_bar: ---------
+X-Spam_report: (-9.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ USER_IN_DEF_DKIM_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Wed, 17 Jun 2026 15:54:14 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -142,93 +98,164 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,=0A=
-=0A=
-I am debugging an arm-smmuv3 + iommufd nested translation issue with VFIO=
-=0A=
-passthrough devices.=0A=
-=0A=
-Setup:=0A=
-=0A=
-- QEMU uses `-device arm-smmuv3,accel=3Don,ats=3Don,pasid=3Don,cmdqv=3Doff`=
-=0A=
-- Devices are passed through with `vfio-pci,...,iommufd=3Diommufd0`=0A=
-- Guest programs translated SMMUv3 STEs/CDs, so QEMU allocates nested HWPTs=
-=0A=
-  from guest S1 state on top of the host S2 parent.=0A=
-=0A=
-The failure only happens when two assigned host devices are in the same hos=
-t=0A=
-IOMMU group (done via pci=3Dconfig_acs):=0A=
-=0A=
-  0009:03:00.0 -> same host IOMMU group as 0009:06:00.0=0A=
-  0000:03:00.0 -> separate host IOMMU group=0A=
-=0A=
-QEMU creates vDEVICEs like:=0A=
-=0A=
-  0009:03:00.0 -> virt SID 0x400=0A=
-  0009:06:00.0 -> virt SID 0x500=0A=
-=0A=
-Both share the same vIOMMU/S2 parent, but they may have different guest S1=
-=0A=
-state because the guest STE/CD is per virtual SID.=0A=
-=0A=
-The failing sequence is:=0A=
-=0A=
-  guest programs translated STE for SID 0x400=0A=
-  QEMU allocates nested HWPT for that STE/CD=0A=
-  QEMU attaches the nested HWPT to VFIO device 0009:03:00.0=0A=
-  kernel returns ENOENT from VFIO_DEVICE_ATTACH_IOMMUFD_PT=0A=
-=0A=
-A shortened log:=0A=
-=0A=
-  smmuv3-accel: nested CD sid=3D0x400 host=3D0009:03:00.0 ...=0A=
-  iommufd_backend_alloc_hwpt ... pt_id=3D<viommu> ... out_hwpt=3D17 (0)=0A=
-  VFIO_DEVICE_ATTACH_IOMMUFD_PT failed for device 0009:03:00.0 to id=3D17: =
-errno=3D2 (No such file or directory)=0A=
-=0A=
-If I change host ACS/grouping so that 0009:03:00.0 and 0009:06:00.0 are in=
-=0A=
-separate host IOMMU groups, the problem does not reproduce.=0A=
-(i.e. by removing pci=3Dconfig_acs from kernel command line)=0A=
-=0A=
-My current understanding is:=0A=
-=0A=
-- VFIO/iommufd RID/no-PASID attach is host-IOMMU-group based.=0A=
-- SMMUv3 nested S1 state is selected per guest SID/STE.=0A=
-- A nested HWPT allocated from one guest STE/CD represents one S1 context o=
-n=0A=
-  top of the common S2 parent.=0A=
-- If a host IOMMU group contains multiple devices/masters, replacing the gr=
-oup=0A=
-  domain with one nested HWPT cannot represent different S1 contexts for ea=
-ch=0A=
-  RID/SID.=0A=
-- Linux 6.17 also requires a vDEVICE/vSID for translated nested attach via =
-the=0A=
-  SMMUv3 vmaster path, so group members without a matching vDEVICE can fail=
-=0A=
-  with ENOENT.=0A=
-=0A=
-Questions:=0A=
-=0A=
-1. Is arm-smmuv3 nested S1+S2 acceleration expected to work only when each=
-=0A=
-   passed-through RID is isolated in its own host IOMMU group?=0A=
-=0A=
-2. Should QEMU detect that the VFIO device's host IOMMU group contains mult=
-iple=0A=
-   devices, or devices not represented in the same vIOMMU, and reject/disab=
-le=0A=
-   nested S1 acceleration for that configuration?=0A=
-=0A=
-3. Is there any intended QEMU model where multiple host devices in the same=
-=0A=
-   host IOMMU group can have separate guest S1 STE/CD state while sharing o=
-ne=0A=
-   S2 parent?=0A=
-=0A=
-=0A=
-Thanks,=0A=
-Dmitry=0A=
+Introduce register offsets and bitmask constants for the Transmit Rate
+Limiter (TRL). Add the IGBTrlQueue structure and corresponding fields to
+IGBCore to track TRL state (timers, throttling status, and target rates)
+per queue. Initialize and free these timers during the device
+realize/uninit lifecycle, and reset them on device reset.
+
+Signed-off-by: Josh Hilke <jrhilke@google.com>
+---
+ hw/net/igb_common.h |  1 +
+ hw/net/igb_core.c   | 41 +++++++++++++++++++++++++++++++++++++++++
+ hw/net/igb_core.h   | 12 ++++++++++++
+ hw/net/igb_regs.h   |  6 ++++++
+ 4 files changed, 60 insertions(+)
+
+diff --git a/hw/net/igb_common.h b/hw/net/igb_common.h
+index b316a5b..8c0a0cf 100644
+--- a/hw/net/igb_common.h
++++ b/hw/net/igb_common.h
+@@ -148,6 +148,7 @@ enum {
+     defreg(MTA_A),
+ 
+     defreg(VTIVAR), defreg(VTIVAR_MISC),
++    defreg(TRLDQSEL), defreg(TRLRC),
+ };
+ 
+ uint64_t igb_mmio_read(void *opaque, hwaddr addr, unsigned size);
+diff --git a/hw/net/igb_core.c b/hw/net/igb_core.c
+index 45d8fd7..44e8e58 100644
+--- a/hw/net/igb_core.c
++++ b/hw/net/igb_core.c
+@@ -2136,6 +2136,15 @@ igb_set_phy_ctrl(IGBCore *core, uint16_t val)
+     }
+ }
+ 
++
++static void igb_trl_reset(IGBCore *core)
++{
++    for (int i = 0; i < IGB_NUM_QUEUES; i++) {
++        core->trl[i].trlrc = 0;
++        timer_del(core->trl[i].timer);
++    }
++}
++
+ void igb_core_set_link_status(IGBCore *core)
+ {
+     NetClientState *nc = qemu_get_queue(core->owner_nic);
+@@ -4282,6 +4291,33 @@ igb_autoneg_resume(IGBCore *core)
+     }
+ }
+ 
++bool igb_trl_enabled(const IGBTrlQueue *q)
++{
++    return q->trlrc & E1000_TRLRC_RS_ENA;
++}
++
++static void igb_trl_timer_cb(void *opaque)
++{
++    /* Stub */
++}
++
++static void igb_trl_init(IGBCore *core)
++{
++    for (int i = 0; i < IGB_NUM_QUEUES; i++) {
++        IGBTrlQueue *q = &core->trl[i];
++        q->timer = timer_new_ns(QEMU_CLOCK_VIRTUAL, igb_trl_timer_cb, q);
++        q->core = core;
++        q->qidx = i;
++    }
++}
++
++static void igb_trl_uninit(IGBCore *core)
++{
++    for (int i = 0; i < IGB_NUM_QUEUES; i++) {
++        timer_free(core->trl[i].timer);
++    }
++}
++
+ void
+ igb_core_pci_realize(IGBCore        *core,
+                      const uint16_t *eeprom_templ,
+@@ -4297,6 +4333,7 @@ igb_core_pci_realize(IGBCore        *core,
+     for (i = 0; i < IGB_NUM_QUEUES; i++) {
+         net_tx_pkt_init(&core->tx[i].tx_pkt, E1000E_MAX_TX_FRAGS);
+     }
++    igb_trl_init(core);
+ 
+     net_rx_pkt_init(&core->rx_pkt);
+ 
+@@ -4321,6 +4358,8 @@ igb_core_pci_uninit(IGBCore *core)
+         net_tx_pkt_uninit(core->tx[i].tx_pkt);
+     }
+ 
++    igb_trl_uninit(core);
++
+     net_rx_pkt_uninit(core->rx_pkt);
+ }
+ 
+@@ -4469,6 +4508,8 @@ static void igb_reset(IGBCore *core, bool sw)
+ 
+     igb_intrmgr_reset(core);
+ 
++    igb_trl_reset(core);
++
+     memset(core->phy, 0, sizeof core->phy);
+     memcpy(core->phy, igb_phy_reg_init, sizeof igb_phy_reg_init);
+ 
+diff --git a/hw/net/igb_core.h b/hw/net/igb_core.h
+index d70b54e..922d8cd 100644
+--- a/hw/net/igb_core.h
++++ b/hw/net/igb_core.h
+@@ -63,6 +63,13 @@ typedef struct IGBIntrDelayTimer_st {
+     IGBCore *core;
+ } IGBIntrDelayTimer;
+ 
++typedef struct IGBTrlQueue_st {
++    QEMUTimer *timer;
++    IGBCore *core;
++    uint32_t qidx;
++    uint32_t trlrc;
++} IGBTrlQueue;
++
+ struct IGBCore {
+     uint32_t mac[E1000E_MAC_SIZE];
+     uint16_t phy[MAX_PHY_REG_ADDRESS + 1];
+@@ -99,6 +106,9 @@ struct IGBCore {
+     void (*owner_start_recv)(PCIDevice *d);
+ 
+     int64_t timadj;
++
++    /* Transmit Rate Limiting */
++    IGBTrlQueue trl[IGB_NUM_QUEUES];
+ };
+ 
+ void
+@@ -143,4 +153,6 @@ igb_receive_iov(IGBCore *core, const struct iovec *iov, int iovcnt);
+ void
+ igb_start_recv(IGBCore *core);
+ 
++bool igb_trl_enabled(const IGBTrlQueue *q);
++
+ #endif
+diff --git a/hw/net/igb_regs.h b/hw/net/igb_regs.h
+index 4dc4c31..9ef628b 100644
+--- a/hw/net/igb_regs.h
++++ b/hw/net/igb_regs.h
+@@ -718,4 +718,10 @@ static inline uint8_t igb_ivar_entry_tx(uint8_t i)
+     return i < 8 ? i * 4 + 1 : (i - 8) * 4 + 3;
+ }
+ 
++/* Transmit Rate Limiting */
++#define E1000_TRLDQSEL 0x03604
++#define E1000_TRLRC 0x036B0
++#define E1000_TRLRC_RS_ENA BIT(31)
++#define E1000_LINK_RATE_1GBPS (1000000000ULL / BITS_PER_BYTE)
++
+ #endif
+
+-- 
+2.55.0.rc0.738.g0c8ab3ebcc-goog
+
 
