@@ -4,92 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4938ACD98F2
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jun 2026 17:41:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05224CD98F2
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jun 2026 17:49:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZuFi-0001xT-Kz; Wed, 17 Jun 2026 13:40:39 -0400
+	id 1wZuNY-0003oi-HE; Wed, 17 Jun 2026 13:48:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wZuFc-0001ww-Jq
- for qemu-devel@nongnu.org; Wed, 17 Jun 2026 13:40:32 -0400
-Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
+ (Exim 4.90_1) (envelope-from <valium7171@gmail.com>)
+ id 1wZuNT-0003o9-Vm
+ for qemu-devel@nongnu.org; Wed, 17 Jun 2026 13:48:40 -0400
+Received: from mail-pj1-x1043.google.com ([2607:f8b0:4864:20::1043])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wZuFa-0006AS-DR
- for qemu-devel@nongnu.org; Wed, 17 Jun 2026 13:40:32 -0400
-Received: by mail-pl1-x62f.google.com with SMTP id
- d9443c01a7336-2c0c1e0d00bso918665ad.0
- for <qemu-devel@nongnu.org>; Wed, 17 Jun 2026 10:40:29 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <valium7171@gmail.com>)
+ id 1wZuNR-0008FT-UP
+ for qemu-devel@nongnu.org; Wed, 17 Jun 2026 13:48:39 -0400
+Received: by mail-pj1-x1043.google.com with SMTP id
+ 98e67ed59e1d1-36b8d414666so3757636a91.3
+ for <qemu-devel@nongnu.org>; Wed, 17 Jun 2026 10:48:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1781718029; x=1782322829; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=UwxtA9br3csfxKC7JIJGabh7qk5/h8UQp5sFR3C2XQE=;
- b=E3CJoudql0fmQDIISm5zcYNRCEL+k7jQGiBgtMTEOG4jCc4L/54iAZgCo8Zkuk5ump
- k7PFRzSFxf1QMKeSPVsb84q9iF4GjIKdEZDY+K7+MKvcD/XuIvaf7VzuPvAsiL+GaKVQ
- eY7vUMN+t5kvrIvxbXfgVETYHPKV12Qii1d3zYsQKM484Q7jZbZU6SjolgsEFXCzlGea
- RudVRS9dSxsS1cDbxTmCpOQ2RpetJ4DWSC652NsDvKLPErtSDbpE941d1qxf78eTM7PW
- u7Ewll+qpZPT7gg1p/3yb0HpzKxxLNNMsjleiyWrQaZT+RJ5DLbF5F0M6XvT5m7slpNK
- hE3Q==
+ d=gmail.com; s=20251104; t=1781718516; x=1782323316; darn=nongnu.org;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
+ :content-transfer-encoding:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=8NMF/OoF6fBI7za8JTW/EHaXghj3hC5UwNWhq9oXKKo=;
+ b=Sj7NIDralVjz+8Mt0PsjE8Y9i9WS2Jt2xkfydZEnUufmbVvRTEBLHnrSnh2vTuL0pE
+ 57J1c/YJ588R+Ndgp5gc1EAbNt6sFkouyMBbtoh0WpEbJhJ545rRQEpDtbt+nFCYOaTV
+ HchYzFaLV2bNgA9X5CNobGk1MxX/Mrmx0o7rVyCUHadJUQ2zgM5aXwJFFoplUHLsTAs0
+ 0DO8e83Uf6hmKvSGsXR5YaKKDPABhu1CaUyD2qI10ZjB0L9wjmQxs7YTF2qjEKKoKGUg
+ 9NMR4PcF7D4/B/4KrcrKmWWVEa0TB5UzMH7NwnRpP75IrbhoQSkCYqWlAmKTOqyAXn2f
+ h9dw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781718029; x=1782322829;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=UwxtA9br3csfxKC7JIJGabh7qk5/h8UQp5sFR3C2XQE=;
- b=flicZu64qXRER6cQo7xmBmPUS3k2XX9cELlNWNaF1WC7zdr6PNQ3tnbtZJvO100QuS
- 53JdsMfIzgFzb7qcL4X0N/bPO+2vQujZSUSVZGGZnmPwA6Dif0Jg4b4yIKBC0h8Bf4Aj
- 7ETAfvkk6qO0CdCNuTTVr9CY3KFPKQW/PxRifImj7sdC7CVjl0ydNZT5i/sGADuZq/Bq
- Sro8nCFLg6nzktsDUF/rMaA3lh122C0PXDicNs4FJV0ImMCZzObPzkmoPkg1dagCavLN
- 8LgDi0r3KIk/AJKxkvA2chAh3Dmb7HbZjyvOTnCuXoYtxSn/PP/rY/7/sw1sHzjzOykX
- 2fnQ==
+ d=1e100.net; s=20251104; t=1781718516; x=1782323316;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
+ :content-transfer-encoding:mime-version:x-gm-gg:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=8NMF/OoF6fBI7za8JTW/EHaXghj3hC5UwNWhq9oXKKo=;
+ b=JCuZt/e3xhHrdex6ZlBDxqBM0nh0ycGadf9EoT7T7E7RUgb8jiJ+IPGV4IgcYFcnn1
+ zOwWvBFXdr3z0XdUld76y/JXuLSS4GbPWK+jbPdXHRwniEZoeKQC9I7zWcipmSj+LtOC
+ 9iJ9LjuUwya/ID+A7gYdLpmW78D0r9Y4A3MymoyqhiWiorVejwfm5QODfI28TyNcILbC
+ 4K4/vOK1NdXnAEoS9pWnrQKIBEqTHQOunjm59VQXU1fI73dDUqzY/6mEYRx3JcgvIICU
+ f+RCtg+3PbcTULXhfyA2r373RODwOg/cxWD9eJ2dg24ngZU/V26SHclRI+8cEjge6u1a
+ WZxg==
 X-Forwarded-Encrypted: i=1;
- AFNElJ/QObeVfBHMLplXzuAtrTDbmIr7elIIOy2w/JTMzGPygU6WLPx1zMFNzIqSRqZJzVDINOiCoBubrpWE@nongnu.org
-X-Gm-Message-State: AOJu0YyHqQOVDEIvsAjM8zf35sDzmPUw+UnX3sMSECw7O+CRh5+y8gVc
- qVQohWLcGTW7DmjB1XvXunGvekyG3iFzApyz5liBx/ZVTtSmlGyjNjBaR4yB65IM3yA=
-X-Gm-Gg: AfdE7cmO6oJKMIa3R5ZHap4IqUba71vmOaXmlFgtN+wIJODSuD64OdbGkSptukkR/fQ
- Mi9mUnh3F2LOvpzgG8h6OFoc73QxV43pR9D3lgPgvGd6Cyity2vOhx/599ROehdsBOnTBHdwzfr
- Zj9lwctKDgw0hK729mVDCSmFTdmQOHtkv+uJ5o6pn22miZfYtMOjvWocekjPFWUGE4csF4indid
- x2hdzg2ZZ/L7j1D6S13YOJoQsfcsLkxFh9xpdoOaqZsKre2zMXqgkE28GWW1fmHKRKSVJ/XkbHx
- QkQT1aj0UMDlIz6IO7zkRVidNJKzKA1VTKle+IOmGD18S3A8md6bQfGqhthHDdZNCEe0enT3MRX
- oik9UjZBBN74eFKcr7fMjw6COg7s6MQ18opVGH6sxOMQfuPq7nOWbTd7Cx79RNI2j6yIkzJEOV5
- BicCSOyoBxD0hvbjUTK/2fudxK3qxm2g/f7tJcNKmT8q7wiD2X5aqLJsOF+A==
-X-Received: by 2002:a17:903:2f82:b0:2c0:cf44:3b3b with SMTP id
- d9443c01a7336-2c6bc20b7e5mr46778555ad.24.1781718028607; 
- Wed, 17 Jun 2026 10:40:28 -0700 (PDT)
-Received: from [192.168.0.4] (174-21-129-215.tukw.qwest.net. [174.21.129.215])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2c433558449sm178154875ad.78.2026.06.17.10.40.27
+ AFNElJ946c/xx4VPrOK6/gCAOxt/pFDHQZzMoh9qPeeL+5t/zl8g4nACD+pvu3Bh1yh6M7Lrnoc/ZT1MPwbq@nongnu.org
+X-Gm-Message-State: AOJu0Yy1ywxkmMmnobj0ha+nlpYEfZqY4tn0dwp32pUPgvrA3EI26CMw
+ 1p2YW0rJZc6gVt3+EdmEz7STT1iQkBcjQ145bLVAZSirn03PIEk1dpwI
+X-Gm-Gg: AfdE7clXVcisezn5Xcy9Lazuo/5dZe3f341WXgI1W9BUm+aOjCGENdaesmTjysGs0zj
+ dqqfeWCxHKuzVM63ZIKTL2o8/OyszSpBeybN5r+wocXWSxV0x0groU+7RK03fUusm1DbGJfnapX
+ DBtAVjJTwyIMhm7Cu5CUGkzynH3u2TblFPPr512r7ohC5nWA+Il+kj3X8GaFzf0czknHIqHmbi1
+ X9GMwPDGPmXNWJaGTq9fpxmfNGvd9X5A82DLXZgOwpS0OeVOlZve9N7fZF+hNTybq5O/0A9Yun7
+ VrRop86XBYX+YU2iwpyM+EDJ279iMvLFXt9zT1Gkwj5VneEkAH+Spk6jB2iD85An2cBPcuKrAFD
+ SBMLL0hfyNseSgBc2SPLZyDqRJ/vlQUULtaZHjAEilXRgRWGq+0Q4KXxx34gtNQ/Z8L/mCW4mtR
+ og1WdT985fAmpE0Q==
+X-Received: by 2002:a17:90b:224a:b0:36a:d6dd:9fee with SMTP id
+ 98e67ed59e1d1-37c9392a7bfmr4843214a91.12.1781718516279; 
+ Wed, 17 Jun 2026 10:48:36 -0700 (PDT)
+Received: from localhost ([157.49.125.56]) by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-37c5df3588dsm4956481a91.8.2026.06.17.10.48.31
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 17 Jun 2026 10:40:28 -0700 (PDT)
-Message-ID: <1f8e7a36-e236-4849-8882-476c749beb93@linaro.org>
-Date: Wed, 17 Jun 2026 10:40:26 -0700
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 09/11] accel/tcg: Move cpu_loop_exit_requested() out of
- 'exec/cpu-common.h'
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>
-References: <20260617171438.75914-1-philmd@oss.qualcomm.com>
- <20260617171438.75914-10-philmd@oss.qualcomm.com>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20260617171438.75914-10-philmd@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ Wed, 17 Jun 2026 10:48:35 -0700 (PDT)
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Wed, 17 Jun 2026 23:18:21 +0530
+Message-Id: <DJBIHVW6VRRY.3DGG8P9IB8SKL@gmail.com>
+Cc: <laurent@vivier.eu>, <pierrick.bouvier@oss.qualcomm.com>
+Subject: Re: [PATCH] linux-user: Fix AT_PHDR when program headers are
+ relocated into their own segment
+From: "valium" <valium7171@gmail.com>
+To: "Helge Deller" <deller@gmx.de>, "valium" <valium7171@gmail.com>,
+ <qemu-devel@nongnu.org>
+X-Mailer: aerc 0.21.0
+References: <20260613152156.41147-1-valium7171@gmail.com>
+ <7d65e071-ca12-4d48-88df-9ff08c70fa75@gmx.de>
+ <DJBBZ2BGKC09.1PYR052VO8LCK@gmail.com>
+ <b68ba255-8f8c-4c46-8090-5a7c73b4b46f@gmx.de>
+In-Reply-To: <b68ba255-8f8c-4c46-8090-5a7c73b4b46f@gmx.de>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1043;
+ envelope-from=valium7171@gmail.com; helo=mail-pj1-x1043.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -107,93 +107,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/17/26 10:14, Philippe Mathieu-Daudé wrote:
-> cpu_loop_exit_requested() is part of the TCG cpu-loop API,
-> defined in "accel/tcg/cpu-loop.h". Ideally we'd move it
-> declaration there, but it is defined inlined and access
-> CPUState internal fields, itself defined in "hw/core/cpu.h".
-> Since keeping it inlined in the 3 call sites is important,
-> move the definition to "hw/core/cpu.h" and call it a day.
-> 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-> ---
->   include/exec/cpu-common.h     | 19 -------------------
->   include/hw/core/cpu.h         | 20 ++++++++++++++++++++
->   target/arm/tcg/helper-a64.c   |  1 +
->   target/s390x/tcg/mem_helper.c |  1 +
->   4 files changed, 22 insertions(+), 19 deletions(-)
-> 
-> diff --git a/include/exec/cpu-common.h b/include/exec/cpu-common.h
-> index 9919ffb1838..aedd60a6986 100644
-> --- a/include/exec/cpu-common.h
-> +++ b/include/exec/cpu-common.h
-> @@ -62,25 +62,6 @@ void cpu_destroy_address_spaces(CPUState *cpu);
->   void list_cpus(void);
->   
->   #ifdef CONFIG_TCG
-> -#include "qemu/atomic.h"
-> -
-> -/**
-> - * cpu_loop_exit_requested:
-> - * @cpu: The CPU state to be tested
-> - *
-> - * Indicate if somebody asked for a return of the CPU to the main loop
-> - * (e.g., via cpu_exit() or cpu_interrupt()).
-> - *
-> - * This is helpful for architectures that support interruptible
-> - * instructions. After writing back all state to registers/memory, this
-> - * call can be used to check if it makes sense to return to the main loop
-> - * or to continue executing the interruptible instruction.
-> - */
-> -static inline bool cpu_loop_exit_requested(const CPUState *cpu)
-> -{
-> -    return (int32_t)qatomic_read(&cpu->neg.icount_decr.u32) < 0;
-> -}
-> -
->   G_NORETURN void cpu_loop_exit_noexc(CPUState *cpu);
->   G_NORETURN void cpu_loop_exit_atomic(CPUState *cpu, uintptr_t pc);
->   G_NORETURN void cpu_loop_exit_restore(CPUState *cpu, uintptr_t pc);
-> diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
-> index 72666189774..eaf30d13e8e 100644
-> --- a/include/hw/core/cpu.h
-> +++ b/include/hw/core/cpu.h
-> @@ -612,6 +612,26 @@ static inline CPUTLBDescFast *cpu_tlb_fast(CPUState *cpu, int mmu_idx)
->   {
->       return &cpu->neg.tlb.f[mmuidx_to_fast_index(mmu_idx)];
->   }
-> +
-> +#include "qemu/atomic.h"
+On Wed Jun 17, 2026 at 10:18 PM IST, Helge Deller wrote:
+> It's sufficient if you let us know what it should be.
 
-We already use qatomic_load_acquire within this header (without including atomic.h).
-Just put the include properly at the top of the file.
-
-> diff --git a/target/arm/tcg/helper-a64.c b/target/arm/tcg/helper-a64.c
-> index a0f9215f1c9..cdac560d086 100644
-> --- a/target/arm/tcg/helper-a64.c
-> +++ b/target/arm/tcg/helper-a64.c
-> @@ -43,6 +43,7 @@
->   #include "user/page-protection.h"
->   #endif
->   #include "vec_internal.h"
-> +#include "hw/core/cpu.h">
->   #define HELPER_H "tcg/helper-a64-defs.h"
->   #include "exec/helper-info.c.inc"
-> diff --git a/target/s390x/tcg/mem_helper.c b/target/s390x/tcg/mem_helper.c
-> index 8474a694110..bfe0208324c 100644
-> --- a/target/s390x/tcg/mem_helper.c
-> +++ b/target/s390x/tcg/mem_helper.c
-> @@ -43,6 +43,7 @@
->   #include "hw/core/boards.h"
->   #include "system/memory.h"
->   #endif
-> +#include "hw/core/cpu.h"
->   
->   #ifdef CONFIG_USER_ONLY
->   # define user_or_likely(X)    true
-
-Do we honestly need these?  This *must* have been done by target/arch/cpu.h.
-
-
-r~
+My real name is Akshit Yadav.
+>>=20
+>>>> ---
+>>>>    linux-user/elfload.c | 21 ++++++++++++++++++++-
+>>>>    linux-user/qemu.h    |  1 +
+>>>>    2 files changed, 21 insertions(+), 1 deletion(-)
+>>>>
+>>>> diff --git a/linux-user/elfload.c b/linux-user/elfload.c
+>>>> index b05b8b0..8049c8a 100644
+>>>> --- a/linux-user/elfload.c
+>>>> +++ b/linux-user/elfload.c
+>>>> @@ -699,7 +699,7 @@ static abi_ulong create_elf_tables(abi_ulong p, in=
+t argc, int envc,
+>>>>        /* There must be exactly DLINFO_ITEMS entries here, or the asse=
+rt
+>>>>         * on info->auxv_len will trigger.
+>>>>         */
+>>>> -    NEW_AUX_ENT(AT_PHDR, (abi_ulong)(info->load_addr + exec->e_phoff)=
+);
+>>>> +    NEW_AUX_ENT(AT_PHDR, (abi_ulong)(info->phdr_addr));
+>>>>        NEW_AUX_ENT(AT_PHENT, (abi_ulong)(sizeof (struct elf_phdr)));
+>>>>        NEW_AUX_ENT(AT_PHNUM, (abi_ulong)(exec->e_phnum));
+>>>>        NEW_AUX_ENT(AT_PAGESZ, (abi_ulong)(TARGET_PAGE_SIZE));
+>>>> @@ -1469,6 +1469,12 @@ static void load_elf_image(const char *image_na=
+me, const ImageSource *src,
+>>>>        info->data_offset =3D load_bias;
+>>>>        info->load_addr =3D load_addr;
+>>>>        info->entry =3D ehdr->e_entry + load_bias;
+>>>> +    /*
+>>>> +     * Fallback for AT_PHDR if the program headers do not fall within
+>>>> +     * any PT_LOAD segment (see the loop below, which overrides this =
+with
+>>>> +     * the correct in-memory address when a containing segment is fou=
+nd).
+>>>> +     */
+>>>> +    info->phdr_addr =3D load_addr + ehdr->e_phoff;
+>>>>        info->start_code =3D -1;
+>>>>        info->end_code =3D 0;
+>>>>        info->start_data =3D -1;
+>>>> @@ -1523,6 +1529,19 @@ static void load_elf_image(const char *image_na=
+me, const ImageSource *src,
+>>>>                vaddr_ef =3D vaddr + eppnt->p_filesz;
+>>>>                vaddr_em =3D vaddr + eppnt->p_memsz;
+>>>>   =20
+>>>> +            /*
+>>>> +             * If this segment contains the program headers, record t=
+heir
+>>>> +             * in-memory address for AT_PHDR. This matches the kernel=
+, which
+>>>> +             * locates the headers via the containing PT_LOAD rather =
+than
+>>>> +             * assuming load_addr + e_phoff (false when the phdrs are=
+ not
+>>>> +             * mapped 1:1 from file offset 0, e.g. relocated into the=
+ir own
+>>>> +             * segment by a binary patcher).
+>>>> +             */
+>>>> +            if (eppnt->p_offset <=3D ehdr->e_phoff &&
+>>>> +                ehdr->e_phoff < eppnt->p_offset + eppnt->p_filesz) {
+>>>> +                info->phdr_addr =3D vaddr + (ehdr->e_phoff - eppnt->p=
+_offset);
+>>>> +            }
+>>>> +
+>>>>                /*
+>>>>                 * Some segments may be completely empty, with a non-ze=
+ro p_memsz
+>>>>                 * but no backing file segment.
+>>>> diff --git a/linux-user/qemu.h b/linux-user/qemu.h
+>>>> index 07fe801..2268493 100644
+>>>> --- a/linux-user/qemu.h
+>>>> +++ b/linux-user/qemu.h
+>>>> @@ -26,6 +26,7 @@
+>>>>    struct image_info {
+>>>>            abi_ulong       load_bias;
+>>>>            abi_ulong       load_addr;
+>>>> +        abi_ulong       phdr_addr;
+>>>>            abi_ulong       start_code;
+>>>>            abi_ulong       end_code;
+>>>>            abi_ulong       start_data;
+>>=20
+>>=20
 
 
