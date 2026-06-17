@@ -4,94 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49C75CD98F7
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jun 2026 14:33:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73698CD98E4
+	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jun 2026 14:33:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wZrJ6-0007di-Ea; Wed, 17 Jun 2026 10:31:56 -0400
+	id 1wZrIi-0006mL-Mo; Wed, 17 Jun 2026 10:31:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wZrJ5-0007cv-AC
- for qemu-devel@nongnu.org; Wed, 17 Jun 2026 10:31:55 -0400
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1wZrIg-0006lk-Ne
+ for qemu-devel@nongnu.org; Wed, 17 Jun 2026 10:31:31 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wZrJ3-00080P-KF
- for qemu-devel@nongnu.org; Wed, 17 Jun 2026 10:31:54 -0400
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1wZrIf-0007qm-6t
+ for qemu-devel@nongnu.org; Wed, 17 Jun 2026 10:31:30 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781706713;
+ s=mimecast20190719; t=1781706688;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=63AVX9elybGqlyEe7A6i6EhwT3SY8xT2KmCtYBxb3S4=;
- b=bpFMxbU/qUiizfDpnWzGPCb6wKY6s80z5FiojelEuBozAupem2xiZkpknH3UiqpcEdkEvg
- TRnCZMMly8xSJqPjEDrAWN1kpxJSGu/DQ9zRrnK0Pmbu+SEUlxpcjWD+FnmCCxZcKhJmCX
- paMg2dYLbg486dovKT//O/r9l0IeWlo=
-Received: from mail-vs1-f71.google.com (mail-vs1-f71.google.com
- [209.85.217.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=dDZ1OdkIiyHF5KZgWfQEW3DvNfJw9/KjqZP8Dvi8i6o=;
+ b=EVBgR0S6ZReMKFKuTrA+ubnxViB1y/Qn2b5AF73c3udrOpqEqu1rd9NCxRMSEd1mgl8tZL
+ B1Ulo7O5K7wB7cxlbrX/K7qteBaAHLZ5U8ItLGj9P2SrGmRvWoYYn/R0n9RfzPKKX+xOLm
+ w2CdAzVpTidiAD18fvmcNU8yiN7n8Pc=
+Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
+ [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-602-uiOrzR57O8a9O71uxBrKzw-1; Wed, 17 Jun 2026 10:31:51 -0400
-X-MC-Unique: uiOrzR57O8a9O71uxBrKzw-1
-X-Mimecast-MFC-AGG-ID: uiOrzR57O8a9O71uxBrKzw_1781706711
-Received: by mail-vs1-f71.google.com with SMTP id
- ada2fe7eead31-726eb357779so194802137.0
- for <qemu-devel@nongnu.org>; Wed, 17 Jun 2026 07:31:51 -0700 (PDT)
+ us-mta-696-zMVv5aVmOGSQI81ky-bwog-1; Wed, 17 Jun 2026 10:31:27 -0400
+X-MC-Unique: zMVv5aVmOGSQI81ky-bwog-1
+X-Mimecast-MFC-AGG-ID: zMVv5aVmOGSQI81ky-bwog_1781706686
+Received: by mail-ej1-f70.google.com with SMTP id
+ a640c23a62f3a-c04a3ebafd2so226925566b.3
+ for <qemu-devel@nongnu.org>; Wed, 17 Jun 2026 07:31:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1781706711; x=1782311511; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=63AVX9elybGqlyEe7A6i6EhwT3SY8xT2KmCtYBxb3S4=;
- b=ccYHIbTHoo10fEtBZoPPmeBGXa50sLagYTP768IABz7ibT3h2AT6s3W0CsoIKgbBwr
- H5mM3w4ue0FQUNVVIJj1v3YoIZHY3Nqn2+G5ePIS+PBczU9/Vt9+wFxAT7hc4ZT0i1r7
- Iej4TafrkR6fzHLHWKXItVxNEwFpSqCVt3zT5MurqdCtal2bKVB8ucbTLC+NKipV1oBX
- wvamkCIJjx7pvhT1/8xfgd3hi5hkInPXFBtOen2ahBQvlovvFfRY+GMY/gMzdJWxNn0+
- yZ19Pr8dP80nsyefcC7VV0D4NnMsYe+U29FD7MRXyWwJo1l6zVCae35R0gn8i5idbt5m
- LRhQ==
+ d=redhat.com; s=google; t=1781706686; x=1782311486; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=dDZ1OdkIiyHF5KZgWfQEW3DvNfJw9/KjqZP8Dvi8i6o=;
+ b=HgwBKDqbns5djTF8Colwsl5INI6R6315uzLKtZo471CmZN79jtb0ae+DA8ehm06FBv
+ JIp+rDxMb71MKtMRHOCHH0yJMkR9ZkWxjsAzytj24g/t+nXVfOz5u/xnUBWis+likBUG
+ fDr7Sg4CMykrFKtmOmg1NO/FQYI2LwS2nuk3ODG3ul1MwYBMOI5/tCyVGjUT+n9YHx2x
+ s2POTi2vxovd6+eMv9Zh9zJLzDlGalMa2jnBiVu02PhzP8wPOeGPrU2izyeu45TABziT
+ NIgktGqLmexclRx88G7l9n96SiOt5mlcOYuI9cAiUALLUmNmmvwxLO9VbD70zidnSwby
+ g0dQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781706711; x=1782311511;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=63AVX9elybGqlyEe7A6i6EhwT3SY8xT2KmCtYBxb3S4=;
- b=kSzbNDgtl4LzD92zOp5nheuJfft/9iWwfzf4gAiKxhAZkXtG5Zibxrc0vH+fYZIMLH
- cGquDHHdrcCk3O55RjvHyG27np4yjQ04LUUXcX1QWxsBRF6mXvDMYysmU1c7E2JL0tkk
- unabPDtcSM+ecpJRELo7oVyE9qFv1hJnJF72MdcSGoNaj0D6hMiv7dJzLge0CntozEqz
- VAa3dJhnMIlSa/ml8uhCabwPFuyhnDdgVtgdNRqCIMEcqZuHilw0DsBaUbtmhpjPkrsu
- snLShp70+nVAez7dxfV/TU6Urh7lTBHvtWpZLZx3F+2avWmdvCRw7HZ79znV8QH7bGpm
- kRAQ==
-X-Gm-Message-State: AOJu0YwWVXB1wibYACu97xifdBR/0MC3WKV6FT2bKCY/0Ow+U+uLrby7
- QbVbbaaN7tBu3WRlexUmJ5YiFc8yNJShBncYhtexMDP/N2hCNhIORQZgVO2NiBNriV37q2D6531
- ggrPE8W/eZUb6ZlK3R4nHSnukiC8fht39P2YMKNDGIKlTWb6rmLD0ivsF
-X-Gm-Gg: AfdE7cmQ5p8/nQ4DpAkmrG/lawzneDgUc9nVQwmV8fQHxDMVCjI6qbfxkNYAFtCV7El
- k5oiPX0B6ixgmJs5nNqA4KL7phWm2aawlObJVeP+M/Am9Yd43eRSeQlHdTlPBhqz03qAsP3zY+g
- nW1/VBY5E69TuJH9MsIwQEKww8TTUH8jGGfEy0se+zMpFoSBn18Beozlyw1quJpXwWIQTvz9JOT
- 6u2G65AuDtg2EzATuoBqbg0DdOPbQfV3z9t9C8odl4ZW6mwUV4jSR6hmlrxW1YmUrU3BeFD42BU
- fU1G7UL0ixowDxK9KIEGFzDd/KcCBzYZHzCJOO6/vDut5jDOyUKMStyvM4yhAhdlSHRxa39B6IB
- G4VI=
-X-Received: by 2002:a05:6102:38c8:b0:660:d26b:506e with SMTP id
- ada2fe7eead31-7245d531807mr2969197137.1.1781706711270; 
- Wed, 17 Jun 2026 07:31:51 -0700 (PDT)
-X-Received: by 2002:a05:6102:38c8:b0:660:d26b:506e with SMTP id
- ada2fe7eead31-7245d531807mr2969090137.1.1781706710611; 
- Wed, 17 Jun 2026 07:31:50 -0700 (PDT)
-Received: from x1.local ([174.91.116.48]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-91619ed8c83sm1739043285a.5.2026.06.17.07.31.49
+ d=1e100.net; s=20251104; t=1781706686; x=1782311486;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=dDZ1OdkIiyHF5KZgWfQEW3DvNfJw9/KjqZP8Dvi8i6o=;
+ b=TQYbghkFL/+JdpcMrlFV5NI6yFEVoXmG/Srr2WMWqnug9XCwMSMcUtOIiSH75nwyua
+ taslZ5eQYbsuXwMnUuIycnI7fcxKgD9e7hYR9zpL2dd8VXKcCF7Bh5Z1wzcejBdKMZ3Z
+ wtviW6bEkiW0upjAItbx3W90n/IsLSr1DHKmFBuAqhcE2slbEvM6r76gX+OnjwLFlY6a
+ +Q+I8iITnyv0L9XbeI8JPvSk61gkzzOJdkbHkzCGohiAPftbjQGNgU8ptP3rSh0T/m2W
+ J15lHHgzZ5kWbnNFFUXl5qDyCaCiemZFODp5RlspDBi4gvyh2M4Wy/T6LxyINxcmAiYX
+ L9TA==
+X-Gm-Message-State: AOJu0Yz+tz2DrxtD5I3dBmsfCBRDYf4rdgqi5JyhHaN4bCLLmY2oujoE
+ S9T6vqKbDSj9PYb4Kk2yUHS9yeZuIm72rm9e+c1eGl7iM06nvhidq/l7tdEla+WX4Dlf5quTsPM
+ AfDUFyKbzRfXF/YAwYTWYVcN8jZ2UsH+76ExfsATAotaqK8A+9DE3g0RyNO3HjFW2hKAxbktFHs
+ D/XnrCnNcRPR088/e/vIavHSwQa7Hr7RBFb8TyvCiG
+X-Gm-Gg: Acq92OFq6Tr2NZat+4Y82xI/rBy87GZ9iJq3tWFhY+614vF5ZcdGTE7xFnPa8O2jJKw
+ A7UsRiaskRZZnrStof5mBCkkkHYHrM2NosTKmpd+wGZCicmRLeIAtdxQ1dRuPAz5mXpaS489XC5
+ QrZfR8MVEBRN2KM6+wTMHTzF/R3RsBoV3kavz7SjhSfd3hTyP+8PsH0PpZivLhH93S6kJUfvYB2
+ 5qglSJlKElJNT8kUp9kJql9Le5TLREAZelHaAcsp7PBfaZVUybA6qtay1/BZvXbSKDKJicWbQ7Y
+ FzuUtm+BxoqRc3Vm5II0ljsmP1KLaUAdpbgK4SN57seibYqtqVQ5YSxwdDvO24vkLShzNO5PeFT
+ e37cbpmY+pi22vKfTkNMIvKcjmB4SpFVOszkJPAmXyL/omAu/9hh9AkTo2TtwhFAH/dlj56ePwS
+ woN3qjQUh7hpLYXqEj
+X-Received: by 2002:a17:906:ef0e:b0:bec:ab0c:243c with SMTP id
+ a640c23a62f3a-c05a2d38dd1mr272074866b.21.1781706685800; 
+ Wed, 17 Jun 2026 07:31:25 -0700 (PDT)
+X-Received: by 2002:a17:906:ef0e:b0:bec:ab0c:243c with SMTP id
+ a640c23a62f3a-c05a2d38dd1mr272070466b.21.1781706685117; 
+ Wed, 17 Jun 2026 07:31:25 -0700 (PDT)
+Received: from [192.168.10.48] ([151.95.156.160])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-462e7fc53fasm4335146f8f.33.2026.06.17.07.31.24
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 17 Jun 2026 07:31:50 -0700 (PDT)
-Date: Wed, 17 Jun 2026 10:31:02 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Bin Guo <guobin@linux.alibaba.com>
-Cc: qemu-devel@nongnu.org, lizhijian@fujitsu.com, farosas@suse.de,
- Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-Subject: Re: [PATCH v2 1/2] migration/rdma: honor blocking mode in
- QIOChannelRDMA readv
-Message-ID: <ajKvputk1JI0tPAY@x1.local>
-References: <20260617064332.75618-1-guobin@linux.alibaba.com>
+ Wed, 17 Jun 2026 07:31:24 -0700 (PDT)
+From: Paolo Bonzini <pbonzini@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Kostiantyn Kostiuk <kkostiuk@redhat.com>
+Subject: [PULL 14/16] qga/vss: Use MAX_PATH instead of PATH_MAX
+Date: Wed, 17 Jun 2026 16:30:44 +0200
+Message-ID: <20260617143046.445322-15-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.54.0
+In-Reply-To: <20260617143046.445322-1-pbonzini@redhat.com>
+References: <20260617143046.445322-1-pbonzini@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260617064332.75618-1-guobin@linux.alibaba.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
@@ -115,128 +120,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jun 17, 2026 at 02:43:31PM +0800, Bin Guo wrote:
-> QIOChannelRDMA's readv already blocks inside qemu_rdma_exchange_recv()
-> when waiting for the next RDMA SEND message.  What it did not do was
-> keep blocking when the bytes from a single receive were insufficient
-> to satisfy the full request -- it returned partial data (or EAGAIN)
-> instead of waiting for more.
+From: Kostiantyn Kostiuk <kkostiuk@redhat.com>
 
-Sorry if I wasn't clear when commenting, but what I meant is, this is
-correct behavior for blocking/nonblocking.
+MAX_PATH defined in windows.h
+This is more correct way for Windows.
 
-If io_readv() reads partial, IIUC returning how much it reads is the
-correct behavior.  You can refer to qio_channel_socket_readv().
+Signed-off-by: Kostiantyn Kostiuk <kkostiuk@redhat.com>
+Link: https://lore.kernel.org/r/20260330113906.168002-6-kkostiuk@redhat.com
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+---
+ qga/vss-win32/requester.cpp | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Here, RDMA doesn't respect blocking is because it _always_ blocks.  That
-is, qemu_rdma_exchange_recv() always will block even if blocking=false.
-
-I believe it will normally stop working when it's used in a coroutine,
-because normally we rely on non-blocking to allow it fallback to caller
-then things like qio_channel_wait_cond() will yield if it's coroutine.
-
-I recall RDMA still works only because it has some internal hack to yield,
-maybe that's qemu_rdma_wait_comp_channel(), but I really don't know RDMA
-well, at least so far.. maybe I should try to improve at some point.
-Before that, it would be good Zhijian can have another look on this.
-
-Let me loop in Dan too.
-
-Thanks,
-
-> 
-> Loop on qemu_rdma_exchange_recv() when the channel is blocking and
-> the receive buffer cannot satisfy the request.  This matches the
-> behaviour of other QIOChannel implementations, which block until
-> the full request is satisfied (or an error occurs).
-> 
-> Also remove the stale XXX comments about unimplemented blocking support.
-> 
-> Reviewed-by: Li Zhijian <lizhijian@fujitsu.com>
-> Signed-off-by: Bin Guo <guobin@linux.alibaba.com>
-> ---
->  migration/rdma.c | 46 +++++++++++++++++++++-------------------------
->  1 file changed, 21 insertions(+), 25 deletions(-)
-> 
-> diff --git a/migration/rdma.c b/migration/rdma.c
-> index 3e37a1d440..201cb9eb12 100644
-> --- a/migration/rdma.c
-> +++ b/migration/rdma.c
-> @@ -388,7 +388,7 @@ struct QIOChannelRDMA {
->      QIOChannel parent;
->      RDMAContext *rdmain;
->      RDMAContext *rdmaout;
-> -    bool blocking; /* XXX we don't actually honour this yet */
-> +    bool blocking;
->  };
->  
->  /*
-> @@ -2710,32 +2710,29 @@ static ssize_t qio_channel_rdma_readv(QIOChannel *ioc,
->              break;
->          }
->  
-> -
-> -        /* We've got nothing at all, so lets wait for
-> -         * more to arrive
-> -         */
-> -        ret = qemu_rdma_exchange_recv(rdma, &head, RDMA_CONTROL_QEMU_FILE,
-> -                                      errp);
-> -
-> -        if (ret < 0) {
-> -            rdma->errored = true;
-> -            return -1;
-> -        }
-> -
->          /*
-> -         * SEND was received with new bytes, now try again.
-> +         * We've got nothing at all, so lets wait for
-> +         * more to arrive.
->           */
-> -        len = qemu_rdma_fill(rdma, data, want, 0);
-> -        done += len;
-> -        want -= len;
-> -
-> -        /* Still didn't get enough, so lets just return */
-> -        if (want) {
-> -            if (done == 0) {
-> -                return QIO_CHANNEL_ERR_BLOCK;
-> -            } else {
-> -                break;
-> +        do {
-> +            ret = qemu_rdma_exchange_recv(rdma, &head,
-> +                                          RDMA_CONTROL_QEMU_FILE, errp);
-> +            if (ret < 0) {
-> +                rdma->errored = true;
-> +                return -1;
->              }
-> +
-> +            /*
-> +             * SEND was received with new bytes, now try again.
-> +             */
-> +            len = qemu_rdma_fill(rdma, data, want, 0);
-> +            done += len;
-> +            want -= len;
-> +            data += len;
-> +        } while (want && rioc->blocking);
-> +
-> +        if (want && done == 0) {
-> +            return QIO_CHANNEL_ERR_BLOCK;
->          }
->      }
->      return done;
-> @@ -2771,7 +2768,6 @@ static int qio_channel_rdma_set_blocking(QIOChannel *ioc,
->                                           Error **errp)
->  {
->      QIOChannelRDMA *rioc = QIO_CHANNEL_RDMA(ioc);
-> -    /* XXX we should make readv/writev actually honour this :-) */
->      rioc->blocking = blocking;
->      return 0;
->  }
-> -- 
-> 2.50.1 (Apple Git-155)
-> 
-
+diff --git a/qga/vss-win32/requester.cpp b/qga/vss-win32/requester.cpp
+index 626d6ab1ff4..493ecd57172 100644
+--- a/qga/vss-win32/requester.cpp
++++ b/qga/vss-win32/requester.cpp
+@@ -444,7 +444,7 @@ void requester_freeze(int *num_vols, void *mountpoints, ErrorSet *errset)
+                 hr = vss_ctx.pVssbc->AddToSnapshotSet(short_volume_name,
+                                                       g_gProviderId, &pid);
+                 if (FAILED(hr)) {
+-                    WCHAR volume_path_name[PATH_MAX];
++                    WCHAR volume_path_name[MAX_PATH];
+                     if (GetVolumePathNamesForVolumeNameW(
+                             short_volume_name, volume_path_name,
+                             sizeof(volume_path_name), NULL) &&
 -- 
-Peter Xu
+2.54.0
 
 
