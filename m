@@ -4,141 +4,155 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04EA3CD98F0
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jun 2026 08:34:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D7B9CD98ED
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jun 2026 08:35:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wa8Bs-0000kg-Bd; Thu, 18 Jun 2026 04:33:36 -0400
+	id 1wa8DK-0001mK-6c; Thu, 18 Jun 2026 04:35:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wa8Bo-0000kB-IX
- for qemu-devel@nongnu.org; Thu, 18 Jun 2026 04:33:33 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wa8DI-0001lh-IZ
+ for qemu-devel@nongnu.org; Thu, 18 Jun 2026 04:35:05 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wa8Bk-0002h4-0r
- for qemu-devel@nongnu.org; Thu, 18 Jun 2026 04:33:29 -0400
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65I8Uikv1278549
- for <qemu-devel@nongnu.org>; Thu, 18 Jun 2026 08:33:25 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- iQotpPyCSFUONpcIBr7HyJtYMcRvPdmgonY3fv39pQY=; b=N3P9Nnpdq6aH0kfc
- Gm6FkCrx5bgP6mDy+zXkZ12w+zB3P32DZzITwOE/3+T83MweFJrtBt1WWDBVE6RV
- CdSvn1EbhvZ3ArnAaEgRkDMW/RwUUD3ipcycR3P9QN1mHhXyNBPkn9/osS0yVP7L
- Wa8RqpLQW9u60mkumca4/57gEfy5ghjbTCldrZohIDiq1QYdOCetWxIj8fXWdEGZ
- 5PvOD64S/+Iqg50M6YKe4KtWQYBnizNO9idXfZYUmLSX5DeGTcQ8dpuFljvvxOu1
- bbTY81DueRXIiD4AG9oDDtqWHQe/VPqjTqaW+GspdNCeR7sQB2l0LIjC0giBmLb4
- pceZpg==
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
- [209.85.222.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4eux2juq4h-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 18 Jun 2026 08:33:25 +0000 (GMT)
-Received: by mail-qk1-f200.google.com with SMTP id
- af79cd13be357-9158f2c4b55so142836485a.0
- for <qemu-devel@nongnu.org>; Thu, 18 Jun 2026 01:33:25 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wa8DG-0003K9-Ae
+ for qemu-devel@nongnu.org; Thu, 18 Jun 2026 04:35:04 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1781771700;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=fFnHcI1F8cbtT+efTjYgEEp5Lz4UBfLqhlI1aYUrIIQ=;
+ b=SjYI9Qc7L3U3+jmd0XKZz39MISDuFWGtZ3mYqGn96kzqMkVQYNDP5NN5tmhogRK1wuFcrA
+ iZpJDEvjYmxhmAPdG093/Pek+hTFkO50rCDGhMMcIJ1qaXeKuF4765cqKLGz+ArIXa59P6
+ QPDhMiU/HPe5qnBhPYTNwcu8BRGTsnw=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-490-ZxjdwLB5PAqmVNS7aVF0hg-1; Thu, 18 Jun 2026 04:34:59 -0400
+X-MC-Unique: ZxjdwLB5PAqmVNS7aVF0hg-1
+X-Mimecast-MFC-AGG-ID: ZxjdwLB5PAqmVNS7aVF0hg_1781771698
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-461a159d77aso233334f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 18 Jun 2026 01:34:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1781771604; x=1782376404; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=iQotpPyCSFUONpcIBr7HyJtYMcRvPdmgonY3fv39pQY=;
- b=GRNfUZAHKu7s6sJFJ7MCswKYeFM8EiIV9nyLieJf1zaqyhXXlxJg7D4xd+s7/7jiV5
- qMvLv4FtO9UQhvAkv0DwyZ5B1Uqd+5/Co+84ImxLWUA7jYtjJ3jfJ5vd8OZVUmVJCiHX
- XsfEsmriz1ePdwoPvBKs3hSPt00AX9HyMe0T+H4A/msQQqPjNYyU7WQ1I1UWS3iaEJd9
- vlUjQPixqrfN11kbHDXaLzCGX7igM5pPlUXV6w6SZLZaMbL4NYBdWXDKLobxk94CT7et
- 8Pib5jjBVnrYlltkWescivClH2xJ/+Y3baEMj+mJXHnVWQurwHAIbvrb0zBj3gUdy6zJ
- 9zhg==
+ d=redhat.com; s=google; t=1781771698; x=1782376498; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+ bh=fFnHcI1F8cbtT+efTjYgEEp5Lz4UBfLqhlI1aYUrIIQ=;
+ b=XawAp+Qz1ebc7WlQs85FDfGFqPHGdCuIVrHM5v4uVgxtCZ9ZNoUTKyoWId5qrGcoie
+ vl1KZHQynSEsp/EqgGS1gCLo0dEaa7+Mb3ZDbNxxpTe/Ow4NTcVq7iE+u23lqPRyyDDM
+ wvGaFPhBi8BdGOiMQLZezEmtQL9qxlsbNm2PKKqhPIvCO6+h6oVznXxddL0pOhAZxQWq
+ VNWnl8EBONU3Ld0ED+g7g3phJU63MCfrhNoTvos09pkFoQxKarDMeVH3NujINaXDpJTg
+ 93VqXgeVeZkPZyptwNz/S/O7FCQ1KKD7UO38zyabJjzYyjwXiFw0xWUxGve4RzYeNJUv
+ H/QQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781771604; x=1782376404;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=iQotpPyCSFUONpcIBr7HyJtYMcRvPdmgonY3fv39pQY=;
- b=QRcXGXs7eWST83VQrDMvtB3o+AMvONs6qQrI8vXg9dBvM1Hm335ildkYFcPjA5j9w7
- 4/3kFQB81zvWHDBH9IYqWEl3XRkrXi3d04rb+vkCNofWsjsBWNcvqVoinACfnFC2VANx
- hOtmQF3yqVO0HTIbmkXjEn9teFe/+MkSVIjJC3XG8bzF1Hgdv9Y4QsWBwCPwpBclWGtj
- WqKvBrX+a7+mTKLhMLYpzY8VgepE+GT5xI5tvzvXw3ea6MsoivxECanCsLy4IeJnDoQl
- lec6CwWTcHbt2BbMhpAVzaW3arWjwuPmmFtS3hQJZX99BHlmn6btCD4w+gqclAi6b4pd
- A4/g==
-X-Gm-Message-State: AOJu0YwQBhHyMyWpxxnc+qi0YiV25uIJng1apdE9a91Rc0jnA9BFAdh8
- SQ4Zrq4igSUv26mE2RCAwa+caHSSYGAhSzL7nf0Rrz8gRNlObNSV4lOMGm6hJBfXJnNinSViyPw
- iouQNqsZSOKf60O4MofppffmjiWsPaMDqnGpA1NIZETaYoxSzNpIxvgYvVQ==
-X-Gm-Gg: Acq92OFQa8QOKOxv4tS9/Fl2CvzPqE1dfgiXkOKPIKK/awhb9lvVwvQ28zRrIcuM3TG
- epwNjGgexgJNY9OB9ggmO+m5LSg6asnSZi+0FMRJZFXc6bJehhZoQMaaHAyZ0DI3aNPa20EyBHx
- zQZ/HDYpfRUu76mAth9mohFyE7gZKDx97imbnzctz7DzN4PHbZRj8+bH+7UmEDaQfxgQOkQwSAb
- E/ESCJTLa9GuMw6lMuUUjup0URcCkV6d3AdPlWK1kWCSuMJsCPgMOwLLfEkFBf+5nJsA2/W/yHo
- pJpr0JRey0trV2iz3lTGDaJTzftSP6xK72Mf3ECMZD42nVMIVnAZyHqqKcy/oohURubnOXwHzAY
- BQ41SkxivlRjNk5zOXgmSeXcpHNczpnE=
-X-Received: by 2002:a05:620a:6885:b0:917:fcec:cfe0 with SMTP id
- af79cd13be357-91f8de8ad0fmr165002285a.33.1781771604632; 
- Thu, 18 Jun 2026 01:33:24 -0700 (PDT)
-X-Received: by 2002:a05:620a:6885:b0:917:fcec:cfe0 with SMTP id
- af79cd13be357-91f8de8ad0fmr164999185a.33.1781771604201; 
- Thu, 18 Jun 2026 01:33:24 -0700 (PDT)
-Received: from [192.168.69.213] ([88.187.86.199])
+ d=1e100.net; s=20251104; t=1781771698; x=1782376498;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=fFnHcI1F8cbtT+efTjYgEEp5Lz4UBfLqhlI1aYUrIIQ=;
+ b=CuPyRcPT09TfmYX0GUCRTNYLVk7wt4LNPo60mxP+5buqJ5qhlWqieYrnznKjDBtbxs
+ 68GRGBrazuGDHKvPZF8D05A+yqO0XCFwmrvTuwiLpW332haQmL0Xwrnlztwihqtt1OBK
+ W0vbJUsk00NGtd3frAv+b+iOsJazE+nz/JQ9oCiI24uUN3A2vb/yRavY2ufqF5/fwAxg
+ +ZRMWRHwPgmcRRXCnhU/xrw/z0pyHA4mObBs2ByLoO6spagikZ4Hnm+NLUffDvc4xkdU
+ j4XaTRLILuSPzeHDsZIKluapqwtZ2HLbp3ulXfSDgZ4vw6kG5wL/GK1zbu9rBhn2u/Wn
+ 2bdA==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ++AWnTES0qo534dTwMkghgaaTssj69v/IV5o6+FFq/hqqTp+7gOoYLUivg5me0ZzgIpjH9wZJsoCqf@nongnu.org
+X-Gm-Message-State: AOJu0Yzak8iEFoLePvGbM1pT/cyMLnnnWyUJEdRlwnWCPc3MbI9tOonD
+ k8+qrbYmfqnv9tt67/BzovfrFqcwrW1Ve4WqLpmrV6XWzOou3Uhozg9wldEbsQrgo8AzOFR1XYL
+ /UeDZe+UzdMLCuP0nnVe8fV6YKMnbhR9W32g20IjTwYeXXp3fQjIQxBBm
+X-Gm-Gg: AfdE7cneuMjoCEba3v1ZYupHsK823gFa+V6Aa5vqjoOrsVt9OktV107vJOMAWqO7rfO
+ Y5bQrQ21UkuBF5lpmqY271DcryA9KUzNtBrbpI9N850b3Ae1f34KTWh3yyvsIOE5/CJAzhltgn7
+ CrsRxYVFk7y/fdwVodLTlDkW4PDZRqDaSAyjSJ8OwWC00RJ6dMAjzWZEbnL62+HNug8b/rXinNW
+ o6Y2AvEiBOtEIz4T0lEgKn5y4q2VaPEozollPOp/3tdexNVypirm4dBwBH8hB2QcFSVXhLmMjQB
+ UmuFSc3Ny+bcTJVNcGZUU0YWq3doVQZj/N/EKva4WIoOljZR9y7ayNaF76/d+Zr+O3EJ1KA3zzH
+ mbdk1Hv1Zclz/FPyvvmxtHJIMKHzlIU/DfY35JjB46sNLqW5r4g==
+X-Received: by 2002:a05:6000:22c1:b0:45e:f073:d2fd with SMTP id
+ ffacd0b85a97d-463ab043b63mr3933948f8f.9.1781771697703; 
+ Thu, 18 Jun 2026 01:34:57 -0700 (PDT)
+X-Received: by 2002:a05:6000:22c1:b0:45e:f073:d2fd with SMTP id
+ ffacd0b85a97d-463ab043b63mr3933822f8f.9.1781771696280; 
+ Thu, 18 Jun 2026 01:34:56 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:280:24f0:576b:abc6:6396:ed4a?
+ ([2a01:e0a:280:24f0:576b:abc6:6396:ed4a])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4923a1d9d87sm23179175e9.2.2026.06.18.01.33.22
+ ffacd0b85a97d-4640144c021sm3765452f8f.32.2026.06.18.01.34.55
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 18 Jun 2026 01:33:23 -0700 (PDT)
-Message-ID: <977b7644-2511-4ded-9f7c-81dd610b6f04@oss.qualcomm.com>
-Date: Thu, 18 Jun 2026 10:33:20 +0200
+ Thu, 18 Jun 2026 01:34:55 -0700 (PDT)
+Message-ID: <e4c5461f-3bc6-4796-a142-ac4a2ce7f719@redhat.com>
+Date: Thu, 18 Jun 2026 10:34:54 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 0/5 qemu] GNU/Hurd support
-To: Damien Zammit <damien@zamaudio.com>, bug-hurd@gnu.org
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, manolodemedici@gmail.com,
- pbonzini@redhat.com, stefanb@linux.ibm.com, peter.maydell@linaro.org,
- kwolf@redhat.com, berrange@redhat.com, eblake@redhat.com, bugaevc@gmail.com
-References: <20260208055858.2166524-1-damien@zamaudio.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <20260208055858.2166524-1-damien@zamaudio.com>
+Subject: Re: [PATCH v3 0/7] vfio/igd: Fix garbled screen on IGD passthrough
+ with legacy VBIOS
+To: K S Maan <kirandeepmaan45@gmail.com>, Tomita Moeko
+ <tomitamoeko@gmail.com>, qemu-devel@nongnu.org
+Cc: Alex Williamson <alex@shazbot.org>, "Michael S. Tsirkin" <mst@redhat.com>
+References: <20260617100646.28326-1-tomitamoeko@gmail.com>
+ <9268e0d9-c62b-4b9e-9d7b-d15bb4ecbdde@gmail.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Autocrypt: addr=clg@redhat.com; keydata=
+ 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
+ uVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <9268e0d9-c62b-4b9e-9d7b-d15bb4ecbdde@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjE4MDA3OCBTYWx0ZWRfX1XfF9NKuzuNk
- 70lJcvbfQ9zA0Hr+G7hSrVUiUr6/9lMOmAHmLjIURetXPjqwa3U+KY+y0PVKveY2emliAsJhZfG
- CAjTREI7YSNyMkv6huT69UMdfeGjGhh7rhAOp2hbh+u8HgLM+p2DBh58ug+N3ZYX3h8p68iSyKq
- hRse1E7XlgdebVzNXL3SkkZREYArBnrXIFd4Z9nOBDc+UXU/mp7kvn1hbsTP14+jX8vsbhfd3A3
- p7T0nIDgJEcTJykVcgvMJ8CHUgAel+ebwcvPNxX8nYRCsxvJijxcY4I7Fb4F6gZsdsie8NyGLAj
- +laq7g7LYY6IjSQBxM88XV8kNfsCxfUb/EeQP9+HH2GOIq6zaXBn+7TnISYBXVy6sHiWaxdDUIb
- DYOd/+cJThRipB9r+WSTKBeq0nYduqXhgtW5qYKN72RibvgptRGLUrTKcOeCAWtSw4g426YKeiV
- xWTDnGLZu1aU7CvHjlA==
-X-Authority-Analysis: v=2.4 cv=Fsg1OWrq c=1 sm=1 tr=0 ts=6a33ad55 cx=c_pps
- a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
- a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22
- a=KvG6bqRRxy8NK_BgXPsA:9 a=QEXdDO2ut3YA:10 a=ZXulRonScM0A:10
- a=zZCYzV9kfG8A:10 a=PEH46H7Ffwr30OY-TuGO:22
-X-Proofpoint-ORIG-GUID: 7JTRqeDya_4jroqYJ420RzwUhL066aDL
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjE4MDA3OCBTYWx0ZWRfX+NsLKtFZWjB7
- yjx5coVGYR9rzy3jZWDqmiOlFRloohrsMhilE2LzLm7ExSv5aEDrIcs2uaOZf2pUVxTy9Zkbg74
- hw8oLey8mwt1hjiy+hgwakjnuONjplY=
-X-Proofpoint-GUID: 7JTRqeDya_4jroqYJ420RzwUhL066aDL
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-18_01,2026-06-17_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 bulkscore=0 suspectscore=0 spamscore=0 phishscore=0
- lowpriorityscore=0 malwarescore=0 adultscore=0 priorityscore=1501
- impostorscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2606180078
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -154,35 +168,112 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Damien,
+On 6/18/26 09:02, K S Maan wrote:
+> Tested-by: K S Maan<kirandeepmaan45@gmail.com>
 
-On 8/2/26 06:59, Damien Zammit wrote:
-> Hi,
-> 
-> This patchset is hopefully my final attempt to upstream qemu support for GNU/Hurd.
-> All review comments have been considered and addressed in the patches.
-> Some people want minimal diff to tpm header, others want me to delete code.
-> I went with the reduced diff because it's only one line of code change to fix it,
-> and passed review originally in other attempts.
-> 
-> This has been rebased onto:
-> * cd5a79dc98 (origin/master, origin/HEAD) Merge tag 'for_upstream' of ...
-> 
-> TESTED: Compiles on GNU/Hurd using:
-> 	../configure --target-list=i386-softmmu,x86_64-softmmu
-> 	ninja
-> 
-> Executed qemu-system-{i386,x86_64} on GNU/Hurd x86_64 successfully.
-
-Could we get this configuration integrated in our CI to be sure
-it won't bitrot?
-
-See how we test OpenBSD or Haiku for example:
-
-tests/vm/Makefile.include:28:X86_IMAGES := freebsd netbsd openbsd 
-haiku.x86_64
 
 Thanks,
 
-Phil.
+
+Shouldn't this series include a Resolves trailer for :
+
+   https://gitlab.com/qemu-project/qemu/-/work_items/3093
+
+
+
+What about :
+
+   https://gitlab.com/qemu-project/qemu/-/work_items/3535
+
+Should it be closed ?
+
+C.
+
+> 
+> On 6/17/26 3:36 PM, Tomita Moeko wrote:
+>> This series fixes the regression that on IGD passthrough with legacy
+>> BIOS boot and VBIOS, the screen is garbled during BIOS POST and GRUB
+>> (which uses standard VGA output routines), starting from QEMU 10.0.
+>> Though the kernel i915 driver still works, it reports an error about
+>> the initial GTT programmed by VBIOS is using invalid address.
+>>
+>> i915 0000:00:02.0: [drm] *ERROR* Initial plane programming using invalid range, dma_addr=0x00000000db200000 ((null) [0x00000000baf00000-0x00000000beefffff])
+>>
+>> With the help of AI disassembling the VBIOS image dumped from host, it
+>> is found that the VBIOS itself implements a routine like:
+>>
+>>      uint32_t get_BDSM() {
+>>          static uint32_t saved = 0;
+>>          if (saved != 0) {
+>>              return saved;
+>>          }
+>>          return read_pci_config(BDSM_REG);
+>>      }
+>>
+>> And the saved value is not cleared after initialization. Given that IGD
+>> devices don't have a real ROM BAR, the VBIOS image read by default from
+>> host is actually the VBIOS shadow RAM region, containing host-side
+>> modifications like the saved BDSM value above during POST. When the
+>> image is executed in guest, it still uses the saved host BDSM (HPA)
+>> instead of the value programmed by SeaBIOS in config space (GPA). This
+>> address mismatch leads to the garbled screen and i915 error.
+>>
+>> The previous solution, c4c45e943e51 ("vfio/pci: Intel graphics legacy
+>> mode assignment"), adjusts GTT entry addresses to (addr - host BDSM +
+>> guest BDSM) to workaround that. But it is removed in 5aed8b0f0be2
+>> ("vfio/igd: Remove GTT write quirk in IO BAR 4") due to inconsistent
+>> values in MMIO BAR0 and IO BAR4. Considering it's unsafe to expose HPA
+>> to guest, a ROM quirk clearing the saved value in VBIOS image is
+>> introduced to fix the issue.
+>>
+>> During debugging, it is also found that IGD VBIOS ROM doesn't always
+>> match the actual IGD device ID, due to the fact that IGD of the same
+>> CPU family has multiple device IDs but shares the same ROM image.
+>> However, SeaBIOS checks the device ID strictly and refuses to run if
+>> IDs does not match. Currently only the default path, reading ROM from
+>> kernel patches the device ID, but the romfile path doesn't. So the ROM
+>> ID patching logic is also refactored in this patch series to also handle
+>> the romfile path.
+>>
+>> These changes are tested on Haswell platform with legacy BIOS boot, by
+>> K S Maan. Thanks to K S Maan for continuous help on locating and testing
+>> the issue!
+>>
+>> Resolves:https://gitlab.com/qemu-project/qemu/-/work_items/3093
+>> Reported-by: K S Maan<kirandeepmaan45@gmail.com>
+>>
+>> Changelog:
+>> v3:
+>> * Refactor ROM checksum calculation and patching logic as Alex's comment
+>> * Fix boundary checks as comments in v2.
+>> Link:https://lore.kernel.org/all/20260608134559.23971-1-tomitamoeko@gmail.com/t
+>>
+>> v2:
+>> * New patch 2/7 to fix regression with EFI option ROMs
+>> * Refine logic in ROM ID and checksum patching
+>> * Reorder patch 4 and 5 for cleaner bisection
+>> * Address comments from v1
+>> Link:https://lore.kernel.org/all/20260603173355.36121-1-tomitamoeko@gmail.com/t
+>>
+>> Tomita Moeko (7):
+>>    hw/pci: Recalculate option ROM checksum before patching ID
+>>    hw/pci: Skip EFI option ROM in pci_patch_ids()
+>>    hw/pci: Introduce rom_need_patch_id flag in PCIDevice
+>>    hw/pci: Promote pci_patch_ids() to public pci_rom_patch_ids()
+>>    vfio/igd: Toggle rom_need_patch_id flag on IGD devices
+>>    vfio/pci: Use pci_rom_patch_ids() for IGD ROM ID patching
+>>    vfio/igd: Clear saved BDSM in legacy VBIOS ROM at load time
+>>
+>>   hw/pci/pci.c                |  57 ++++++++++------
+>>   hw/vfio/igd-stubs.c         |   5 ++
+>>   hw/vfio/igd.c               | 132 ++++++++++++++++++++++++++++++++++--
+>>   hw/vfio/pci-quirks.c        |   5 ++
+>>   hw/vfio/pci.c               |  33 ++-------
+>>   hw/vfio/pci.h               |   3 +
+>>   hw/vfio/trace-events        |   1 +
+>>   include/hw/pci/pci.h        |   3 +
+>>   include/hw/pci/pci_device.h |   1 +
+>>   9 files changed, 186 insertions(+), 54 deletions(-)
+>>
+
 
