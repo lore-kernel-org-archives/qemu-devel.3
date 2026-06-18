@@ -4,141 +4,117 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55562CD98ED
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jun 2026 20:12:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A084CCD98ED
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jun 2026 20:12:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1waJ5O-0003g0-Rz; Thu, 18 Jun 2026 16:11:39 -0400
+	id 1waJ5q-0003iq-Ta; Thu, 18 Jun 2026 16:12:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1waJ5M-0003fp-Nl
- for qemu-devel@nongnu.org; Thu, 18 Jun 2026 16:11:36 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1waJ5L-0004mP-3l
- for qemu-devel@nongnu.org; Thu, 18 Jun 2026 16:11:36 -0400
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65IHrovK1922251
- for <qemu-devel@nongnu.org>; Thu, 18 Jun 2026 20:11:32 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- RI01ee7RIk669aLwjrox6PhV2s7RayDJB7pR4DzMRjo=; b=kfl2tKuUJmDy6Wfu
- xr6pzTXwQ8s1Y/wjkGyfDD5bsNI5+2zbjbXF1MTJRKcwiXW+oHYagCkR0QyCszzB
- 0SPaX5p4YuAEDOFbT3HmFYRRtHMQg7nbZQeMTXN0oKiYaFteuRq2/15IwOYeoY6M
- SrRVwV1F6zBbwWC0uZ5LJncbdiirGAPNWze3gB1cBSQzFoHkGL3t+tZHh4VSuO6w
- jGdi+Ka3WdP3GP08dCJ2E+hYvam25MMFOptA4wyRZtLkKY5ILGd+0F8uJF+e80ik
- SkzmqEp7odAoa9btrZSEyWBm9fAY9aa81Tfn+0spy++lqt+Qwkl476QdKIe9C9GZ
- EAWhpA==
-Received: from mail-ua1-f71.google.com (mail-ua1-f71.google.com
- [209.85.222.71])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4evdn42q70-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 18 Jun 2026 20:11:32 +0000 (GMT)
-Received: by mail-ua1-f71.google.com with SMTP id
- a1e0cc1a2514c-9639158a44dso388121241.3
- for <qemu-devel@nongnu.org>; Thu, 18 Jun 2026 13:11:32 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1waJ5p-0003iE-DI
+ for qemu-devel@nongnu.org; Thu, 18 Jun 2026 16:12:05 -0400
+Received: from mail-dy1-x132c.google.com ([2607:f8b0:4864:20::132c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1waJ5n-0004rz-Jn
+ for qemu-devel@nongnu.org; Thu, 18 Jun 2026 16:12:05 -0400
+Received: by mail-dy1-x132c.google.com with SMTP id
+ 5a478bee46e88-30bcdf8232fso3345665eec.0
+ for <qemu-devel@nongnu.org>; Thu, 18 Jun 2026 13:12:02 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1781813521; cv=none;
+ d=google.com; s=arc-20240605;
+ b=hFhNW0X5mYBtHSY/r5AU9k8bCFTbfzK449dvDQT5ow6yV7iTZwUKOAV43UPmn1vZXs
+ rjqEfTAI3uy5zbCrxTqO61lQkjRKAE7QWPPFvxUn94A/bQq3QwZ2itYipS9ft8KCop12
+ vPpjj/KOGMqjk7sBmIDDrcuXe8AMaHxWOyikpWV5GKm3vwZJIbG+ZsumeWP4bSKKQoYs
+ fp9TLGMJUI2HRTjpnIg2xC0/+aHgBxT3JsTg089gmSva/4j1JBjpOwRNdDx8AxWSEumO
+ gtzJHY0W0S8PzjlJ5e692bAYFL4FA+7kSBUu6CBwRacwVrE+7vlvQZ9wdrZDy8DSVRwe
+ 9dxg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=5kYopXboz5kqOzIBlpvq52lfuCitZ+UkaPqUgkNm8aw=;
+ fh=3PJHRQWfhkk5zFXeQo3FPCsdwGbwrXmFRxtQ+X2RTnw=;
+ b=QLoCYu1s8+1OHuLwCmEkMDKLx/OrdccxFAjfxeLRySZaRIpA1NlpnsrwTqixjgfymF
+ ozCoBQ6ac1M0a9Zv3vqk+/e3H21yZZ2AaaJBUyc6Q2S2iXMPX0HXjMgN5Ooqyr3m1cb8
+ Iu1EbS3szlB/SOacoJRYHbUp6EcbwM/lAUz4mGJ7sQmk+GAw8jzEofiWvvKAcDd4gTGY
+ lpx83uhmRGjyaYcKK1e2zDbHyDyjVOveiL5pISvqo3+q67W44Q5nPczmaKqNMVuKXgaV
+ U2LMYcthNolGNc+AEQU3AYICiGJlRpqNx+XQpdoS/BULoqk/hosDJfIQmgJ33cWgzb7J
+ fLhg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1781813491; x=1782418291; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=RI01ee7RIk669aLwjrox6PhV2s7RayDJB7pR4DzMRjo=;
- b=RZen3mgAVu6/L0+VMmMHxHIGKuhCmqkn5fs91kiV6E7ALI6+D7q06UeUInL5APPqRi
- xIHgr7iYpb1zTDvCyuBfmbIB1Id5tt/b2hOdTMMl0T0+TESlQ88kvGvyR/3dW+JmWQbA
- ++kRkm7Q1mWRtHcOFX0m2jqNCsQUAc79hB7gvY59364dadkKthxOErzJOOWrJhA5mMri
- VyXm6B2DW6t/oD2EQoSW3ktsRxoJz7gzcXMVTYu2wfZEoGpT639+qHsyaZ2/w/p/tLD3
- AbOKXMCEr1WQPXnLL4TzrSOoL5sCRBsZ/VtyMSM+7D63rk/RGuPvmwupkeUYYZo9cRk8
- xlsA==
+ d=redhat.com; s=google; t=1781813521; x=1782418321; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=5kYopXboz5kqOzIBlpvq52lfuCitZ+UkaPqUgkNm8aw=;
+ b=pMZ2Nw1fkjljCjRR+nVTd+6kmyfc9F0mPeLGff45IBOslO0WwMcDksVhh9bSBVNZGw
+ qpj6SusduG/vZPJTrjUBfLoxTNa/mVHCis4R9PnHhncvMLvU39D0MLugslD542lXa2r/
+ o/18k9mZdO2HpVRreJrEZPFIuQuutyVuYIsrcQZ+lHvLm9jvLnIOzjctOQX9MOdevq4O
+ TWWaFE6OYpM2Zjl1n6A1NphMqwIK1FPB9cuaDBCcmzHYYh4G+2+bIfg1Xi3Jl3uVNmtr
+ y/33X3euPLD6vAoJ4Na4NFtpnnXlEEJZrhny3npMVk/TWIrfJDLuGzST9GeR2lX2MbbC
+ Anvg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781813491; x=1782418291;
- h=content-transfer-encoding:in-reply-to:from:references:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=RI01ee7RIk669aLwjrox6PhV2s7RayDJB7pR4DzMRjo=;
- b=qFDGWk++C+uvnITfDClxtp5Ylb2ngfYouepYWs0Mqhic4sdWiX4mjIIxXUQAtJqynD
- CNVkik6VgXGvMP7pZZLJvFivYz1cNBPtdTwLEcpbUmAONatarJYiVAp/HwJTXgsJv/v8
- cWiyF1ERwric81pT3HvptGKkWCt5JRchKkrwvrthzLasNlg8k7WY2HBgGWskOh3h0jp0
- U0R7OZyjwCQ363gAOpreFaU/TIOSSNGHKUpOmXj359vefYpye/QbfPT2/pOGlAfmgEho
- 6dQMtZ1fWklXgkzqtz8qq/zP7PfTGFWDmgExKaGsutaecVuK8s6urkh9JCBmHyqQGzhk
- JewA==
-X-Forwarded-Encrypted: i=1;
- AFNElJ9VZ70bIV8A6a5Bd/06SyXlgXOkBgARlOZKUmBcHJm1/lLC4vmZepIaf59klCobyI4umPJiqMorTC3h@nongnu.org
-X-Gm-Message-State: AOJu0YyTrqRiFPm2+Y/8u3+6wy1dDmHtj1W1aWuevMEeCkLuWIh1x7GD
- Y8qxQ6/COZ7LAl1nyr+eL5qoLn4E/kbSHE2TheSpZBB08LlEfjXnEJt+HLXMAkOAutBTV7p2ggI
- G49pY0bpqiWLCM75/x9FDHEMVwmxMOoYR+hBnYukRMpduBLOedR6634dyhg==
-X-Gm-Gg: AfdE7cmbiUKPrKV9o5eW5p5HfjyIIcf7AkpUOq6UdSyno141XFtw/nnPfBZ7vRwc+rZ
- RXLEUTOpeqWk0dhoAIDUJwqjatxqQ/XtrcaWRDRy2QM4i6UAh74H/hSJqE1dBxuuITWnhk2FqOs
- fMnSGxK+2CSLzjNkWHUXGZ/ToMFyJmGbRO1z/8r7OUh5k2J8UvKFQvxV7gj0ASy0xLXByQB8mVA
- DBZf4A6Bw9pxqN/BsjSSH5A6hvXVtw/z7cOMy896EBcc2xAN3WOThmTjx0CRWyP2RvwjCc0hAJz
- SvURDGHT6ELDstanjgPmDUnypZpr4uJUa42mp5RaX+3wUwUqVFo+KbWRj/a12GpiufDHMYyOHbs
- u/D2HU285sNDhrhSLxMjPrVwn3zHgF0f1ItlO6B8OYrAEqlywPxCoNf+dgE9opA==
-X-Received: by 2002:a05:6102:5e84:b0:6ac:c0ab:5dc7 with SMTP id
- ada2fe7eead31-72a0168eaccmr1176408137.5.1781813491255; 
- Thu, 18 Jun 2026 13:11:31 -0700 (PDT)
-X-Received: by 2002:a05:6102:5e84:b0:6ac:c0ab:5dc7 with SMTP id
- ada2fe7eead31-72a0168eaccmr1176402137.5.1781813490734; 
- Thu, 18 Jun 2026 13:11:30 -0700 (PDT)
-Received: from [192.168.69.213] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4650c114e22sm1242614f8f.34.2026.06.18.13.11.29
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 18 Jun 2026 13:11:30 -0700 (PDT)
-Message-ID: <7d9acb4e-d1da-45da-a42a-60340d0dfb58@oss.qualcomm.com>
-Date: Thu, 18 Jun 2026 22:11:29 +0200
+ d=1e100.net; s=20251104; t=1781813521; x=1782418321;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=5kYopXboz5kqOzIBlpvq52lfuCitZ+UkaPqUgkNm8aw=;
+ b=RDX9E/TA4hUPkvv7UQZncoaIogXK0ScxXTsvB0Rckg6dTBFuBYYuu5Vy/bKlKR+vTC
+ FEq6UC3kGStzm8mbUsrHla55UAJrmMlhqIXf/EpnFaHt+Yeoz/2gcX1nKvxA7arJFSfD
+ CsFAmFntE6Misp7PfamuKXabHyC4R7/RHmE3lOiq8tDNbZA0eQC86QrlT8CTNcJsEhtV
+ RcMDYQhxMjh6ABhNl1ldbXMF8nglKD0PkcArAQtf6yqqXEz/GQKsxpYHgqEAVPToz0ET
+ tJSRa0entIf5jHGWXEuV10xkxr12Y9CUEmu49YcmrbWD0F6MQz/4jWSWnbOzLyR6JFkU
+ 3sJw==
+X-Gm-Message-State: AOJu0YwczmWmOi+Uz0bOO1GaEtYfJmRhcQHSzGwOJzp2XxKYs8pzNeMy
+ 5TxXeDJsaY55EZ5a3kOrEPTzaq/7+udZTyZuxAtfMB3260YS/gxVJUrjwMoxm2z9WdGTOrOuPLq
+ 15s5Cgf2NdZrkwDWPwhYLEgPh9qmmw1JPxZZ+
+X-Gm-Gg: AfdE7cn9NGhtM3PaQn2YxaHyu9rKhzL6y2gQGTPxf7GUyT5YLPdojnrNH/T+0SjNwAu
+ kBXmcMrerxxlnxsW6jYR0xQ4SIFeMcW1cQZNeD2PWcopZFcQyq1hpk9kDZUakjaViT5sivLdfRs
+ g8ZKXsQeC+PtzFmh418oZBd6Q3xZx7cw4m3Fz3b2h5Qxp/9bwSLbj8LyWKjdbunYU1ORdWAyUXT
+ VH+/FaT49eTxE7qdZvBqkicVelDv8ed8YY12Kn5PCYxlYzP7kp9ta7s0DAotDIoKkLcDenPbfzw
+ Ylpqt/PNwOGT7VyvRNprBDngB1jg
+X-Received: by 2002:a05:7301:678c:b0:304:2176:a871 with SMTP id
+ 5a478bee46e88-30c06bfca99mr761091eec.0.1781813520818; Thu, 18 Jun 2026
+ 13:12:00 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 12/13] bsd-user: Use probe_guest_base
-Content-Language: en-US
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-References: <20260618195520.589907-1-richard.henderson@linaro.org>
- <20260618195520.589907-13-richard.henderson@linaro.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <20260618195520.589907-13-richard.henderson@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjE4MDE4NSBTYWx0ZWRfX1SowOXrMh/fi
- HF+PgWSC8p466XtevX3jDgR1J7cMBBnCAUgouII9P1XjvzehL3z9euI6cN9yjpkv6oIIiQx9iYt
- tMhEP3C01ImKbtijyq/fivkpIcsx4Xp13Fi+PpekvyIvgPe4eE7fwRz7IXGyWallrI7t82aiCgY
- /qp2WM8Jkigxm4i2X6DkmeNrLpO+Vs1RzyD9RTz00RsaCq96QAFUkYkFMAaBYVz7VCLUWOnOMki
- MdWypd7ylpePLGaWa+AzcJc7pR1Nf0pK+mZXALnDFi/s/fsvW2+zaVg4lfMZZuQhcBlZ9YycguX
- /8n9B0k/vs6phNp2LI3HAs7S0esTWfVzRtTp7sqDiH8KPzhTSVrTgKMwcdiFfK60fTo4y7GPgTs
- p2buzqrV5XWCCyLga458rkCCxpkeNWvXJwOWmL3kfOC0spNtUV7To4dHSn1Axi4D5jvU6UZN9oX
- TxU+GETSJ4JB4TwyQgg==
-X-Proofpoint-ORIG-GUID: kGLFcAEOA0gIchpOtrRjcG_v-upZf70Q
-X-Authority-Analysis: v=2.4 cv=FN4rAeos c=1 sm=1 tr=0 ts=6a3450f4 cx=c_pps
- a=KB4UBwrhAZV1kjiGHFQexw==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
- a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22
- a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=1tSEMpTH9XP_W59IOagA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=o1xkdb1NAhiiM49bd1HK:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-GUID: kGLFcAEOA0gIchpOtrRjcG_v-upZf70Q
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjE4MDE4NSBTYWx0ZWRfX8EpgG6H9XaRF
- +ozPRDhXWfAywyJnJQR05/Q9kJbZSUn/KGCmPhzpFdO3VuW60S/WK5tyv+ioPqfRcHmN34Y+qNX
- TvNCwDVHzO7cQTSQXxe1Q03ye/cxPsc=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-18_03,2026-06-18_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 malwarescore=0 bulkscore=0 lowpriorityscore=0
- impostorscore=0 adultscore=0 phishscore=0 suspectscore=0 clxscore=1015
- spamscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2606180185
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20260604-rdm5-v5-0-5768e6a0943d@redhat.com>
+In-Reply-To: <20260604-rdm5-v5-0-5768e6a0943d@redhat.com>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
+Date: Fri, 19 Jun 2026 00:11:48 +0400
+X-Gm-Features: AVVi8CegESbR6ZUD8SxLZ5ge_fQXIzH6szCQH4muF2WdxFR38w89t5-t2aW9E34
+Message-ID: <CAJ+F1CKRvSWDOvKC98e_7uyjgJMuXfhOHP83H0s7a=+ZrYxA1g@mail.gmail.com>
+Subject: Re: [PATCH v5 00/12] Make RamDiscardManager work with multiple
+ sources & virtio-mem
+To: qemu-devel@nongnu.org
+Cc: Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, 
+ David Hildenbrand <david@kernel.org>, Paolo Bonzini <pbonzini@redhat.com>,
+ Peter Xu <peterx@redhat.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@mailo.com>, 
+ qemu-rust@nongnu.org, Alex Williamson <alex@shazbot.org>, 
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, 
+ "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>,
+ Fabiano Rosas <farosas@suse.de>, 
+ Mark Kanda <mark.kanda@oracle.com>, Ben Chaney <bchaney@akamai.com>, 
+ Marcelo Tosatti <mtosatti@redhat.com>, kvm@vger.kernel.org, 
+ "Dr. David Alan Gilbert" <dave@treblig.org>, Zhao Liu <zhao1.liu@intel.com>,
+ Eric Blake <eblake@redhat.com>, 
+ Markus Armbruster <armbru@redhat.com>, Xiaoyao Li <xiaoyao.li@intel.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::132c;
+ envelope-from=marcandre.lureau@gmail.com; helo=mail-dy1-x132c.google.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, FREEMAIL_FORGED_FROMDOMAIN=0.001,
+ FREEMAIL_FROM=0.001, HEADER_FROM_DIFFERENT_DOMAINS=0.249,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -154,28 +130,126 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 18/6/26 21:55, Richard Henderson wrote:
-> Merge the PT_LOAD loop with the PT_INTERP loop, as the XXX
-> comment suggests.  Pass the probed range to probe_guest_base.
-> 
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Hi
+
+On Thu, Jun 4, 2026 at 5:46=E2=80=AFPM Marc-Andr=C3=A9 Lureau
+<marcandre.lureau@redhat.com> wrote:
+>
+> Hi,
+>
+> This is an attempt to fix the incompatibility of virtio-mem with confiden=
+tial
+> VMs. The solution implements what was discussed earlier with D. Hildenbra=
+nd:
+> https://patchwork.ozlabs.org/project/qemu-devel/patch/20250407074939.1865=
+7-5-chenyi.qiang@intel.com/#3502238
+>
+> The first patches are misc cleanups. Then some code refactoring to have s=
+plit a
+> manager/source. And finally, the manager learns to deal with multiple sou=
+rces.
+>
+> This has been tested together with the Linux kernel series from
+> Zhenzhong Duan [1] for TDX guests.
+>
+> (help fix https://issues.redhat.com/browse/RHEL-131968)
+
+Can the patch 1-11 be queued or are we missing something?
+(RFC patch 12 can be dropped for now)
+
+thanks
+
+>
+> v5:
+> - explain why InterfaceClass in rust binding is not needed after
+>   moving RamDiscardSource
+> - drop extraneous added blank line
+> - replaced a runtime "if (has_rdm)"" with an assert()
+> - dropped "RFC: hw/virtio: start virtio-mem guest_memfd regions as
+>   shared", in favour of start-private memory approach from "[RFC PATCH
+>   0/6] Support virtio-mem memory hotplug in TDX guests" [1]
+> - demote "monitor: add 'info ramblock-attributes'" as RFC
+> - rebased and collected trailers
+>
+> v4:
+>  - added "system/physmem: make ram_block_discard_range() handle guest_mem=
+fd"
+>  - added "monitor: add 'info ramblock-attributes' command"
+>  - added "RFC: hw/virtio: start virtio-mem guest_memfd regions as shared"
+>  - skip calling source in notify_populate (it may not have updated its
+>    internal state)
+>  - rebased, collected trailer tags
+>
+> v3: issues found by C=C3=A9dric
+>  - fix assertion error on shutdown, due to rcu-defer cleanup
+>  - fix API doc warnings
+>
+> v2:
+>  - drop replay_{populated,discarded} from source, suggested by Peter Xu
+>  - add extra manager cleanup
+>  - add r-b tags for preliminary patches
+>
+> - Link to v4: https://lore.kernel.org/qemu-devel/20260504-rdm5-v4-0-bdf61=
+e57c1e1@redhat.com
+>
+> [1]: https://lore.kernel.org/lkml/20260604093551.1511079-1-zhenzhong.duan=
+@intel.com/
+>
 > ---
->   bsd-user/elfload.c | 37 +++++++++++++++++++------------------
->   bsd-user/main.c    | 39 ++++-----------------------------------
->   2 files changed, 23 insertions(+), 53 deletions(-)
-
-
-> +    /* Ensure that mmap_next_start is within range. */
-> +    if (reserved_va && reserved_va <= mmap_next_start) {
-> +        mmap_next_start = ((reserved_va / 4 * 3)
-
-Is that ROUND_DOWN(reserved_va, 4)?
-
-> +                           & TARGET_PAGE_MASK & qemu_host_page_mask);
->       }
-
-Rest LGTM AFAICT :)
-
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-
+> Marc-Andr=C3=A9 Lureau (12):
+>       system/memory: split RamDiscardManager into source and manager
+>       system/memory: move RamDiscardManager to separate compilation unit
+>       system/memory: constify section arguments
+>       system/ram-discard-manager: implement replay via is_populated itera=
+tion
+>       virtio-mem: remove replay_populated/replay_discarded implementation
+>       system/ram-discard-manager: drop replay from source interface
+>       system/memory: implement RamDiscardManager multi-source aggregation
+>       system/physmem: destroy ram block attributes before RCU-deferred re=
+claim
+>       system/memory: add RamDiscardManager reference counting and cleanup
+>       tests: add unit tests for RamDiscardManager multi-source aggregatio=
+n
+>       system/physmem: make ram_block_discard_range() handle guest_memfd
+>       RFC: monitor: add 'info ramblock-attributes' command
+>
+>  MAINTAINERS                                 |    4 +
+>  qapi/machine.json                           |   56 ++
+>  include/hw/vfio/vfio-container.h            |    2 +-
+>  include/hw/vfio/vfio-cpr.h                  |    2 +-
+>  include/hw/virtio/virtio-mem.h              |    3 -
+>  include/monitor/hmp.h                       |    1 +
+>  include/system/memory.h                     |  279 +-----
+>  include/system/ram-discard-manager.h        |  358 ++++++++
+>  include/system/ramblock.h                   |    5 +-
+>  accel/kvm/kvm-all.c                         |    2 +-
+>  hw/core/machine-hmp-cmds.c                  |   32 +
+>  hw/vfio/cpr-legacy.c                        |    4 +-
+>  hw/vfio/listener.c                          |   10 +-
+>  hw/virtio/virtio-mem.c                      |  259 +-----
+>  migration/ram.c                             |    6 +-
+>  system/memory.c                             |   88 +-
+>  system/memory_mapping.c                     |    4 +-
+>  system/physmem.c                            |   27 +-
+>  system/ram-block-attributes.c               |  328 +++----
+>  system/ram-discard-manager.c                |  612 +++++++++++++
+>  target/i386/kvm/tdx.c                       |    2 +-
+>  tests/unit/test-ram-discard-manager-stubs.c |   48 ++
+>  tests/unit/test-ram-discard-manager.c       | 1235 +++++++++++++++++++++=
+++++++
+>  hmp-commands-info.hx                        |   13 +
+>  rust/bindings/system-sys/lib.rs             |    2 +-
+>  system/meson.build                          |    1 +
+>  system/trace-events                         |    2 +-
+>  tests/unit/meson.build                      |    8 +-
+>  28 files changed, 2569 insertions(+), 824 deletions(-)
+> ---
+> base-commit: 405c32d2b18a683ba36301351af75125d9afda08
+> change-id: 20260414-rdm5-b6df2366d603
+>
+> Best regards,
+> --
+> Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+>
+>
 
