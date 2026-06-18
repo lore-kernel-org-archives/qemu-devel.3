@@ -4,129 +4,126 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D63F8CD98F2
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jun 2026 12:34:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0D90CD98F2
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jun 2026 12:34:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1waBwK-0003JP-Um; Thu, 18 Jun 2026 08:33:48 -0400
+	id 1waBwv-0005Vf-FZ; Thu, 18 Jun 2026 08:34:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1waBwK-0003FF-0k
- for qemu-devel@nongnu.org; Thu, 18 Jun 2026 08:33:48 -0400
+ id 1waBwu-0005Qa-49
+ for qemu-devel@nongnu.org; Thu, 18 Jun 2026 08:34:24 -0400
 Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1waBwI-0001WF-7R
- for qemu-devel@nongnu.org; Thu, 18 Jun 2026 08:33:47 -0400
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+ id 1waBws-0001qr-Be
+ for qemu-devel@nongnu.org; Thu, 18 Jun 2026 08:34:23 -0400
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65IAs0Nj1030375
- for <qemu-devel@nongnu.org>; Thu, 18 Jun 2026 12:33:44 GMT
+ 65IArhtK2611781
+ for <qemu-devel@nongnu.org>; Thu, 18 Jun 2026 12:34:21 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- woqS5Ld4n4jpaDbyLAKEQyLJdPphWOZDc2wWv+58LW0=; b=j3MkVJnslW/0ET1/
- YDlgNJYeDBZ8180op7Uo8/mCjP1C4CBXm90nwkcH0HQCLfs+p/6F5lbQ14D6Qvh+
- ey4XuaitwrvW8IC3CgMfOHrh8dGH5KJHlhq03nbyvt8DVv6CZlW1NONqmBNlCxvR
- SUuFRkQpnv1v38945dU7kD+YdmcHaacxcXY2kJZa6BX4OoijRWVvK9txi2tPKRA4
- LR23HutTTI89BNldrrretjSIWBNLPMXuDDCI50/7eAJZy2h4+OvZwEEOenssAikZ
- PPvyhDOyQppjYRJooU3VBAqIjVtBL6n8w7Vsl0r0jESGnXK6ITsAnXgZO4pEDNjD
- Qq39yw==
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
- [209.85.222.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ev0vm3cyk-1
+ NFbaCLSy5+AZ85esJqaVPEbG7dVdvQ8YPRsNSgPsDbA=; b=DdkkrVHIiRLPPI83
+ 2O7JO27ZPpmRMDfppCmCt9PVa16RE+ptarzg16JabsYmmCToTTEvyt6VvpFEivNi
+ R05JqPYnc9Y1IWrwrAdBHzktxw0X5W+Dd7udrVOhERx7cAKW6DqfVRUwFqQy1l/+
+ YV09mebFvXBjVIkU3rAXToYn6SFvIfecyAN+E5svOUD8vl2GH5zXsi2Nmn2qqdYd
+ Z+80oAiqMiRA9j1XsamlhT1kxl1BTsT8MLr/O9Zl+sYumO4Qkoo58s8JiCZCva3p
+ bjNaykt1z5NYdi9uKLpsRSnnWQmV1jzIfFjX54tCT7hI74r1pmNHY+G5d9r2Qr36
+ tsr9og==
+Received: from mail-ua1-f69.google.com (mail-ua1-f69.google.com
+ [209.85.222.69])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4euw9vmv0h-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 18 Jun 2026 12:33:44 +0000 (GMT)
-Received: by mail-qk1-f197.google.com with SMTP id
- af79cd13be357-9158f2c4b55so178553585a.0
- for <qemu-devel@nongnu.org>; Thu, 18 Jun 2026 05:33:44 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Thu, 18 Jun 2026 12:34:20 +0000 (GMT)
+Received: by mail-ua1-f69.google.com with SMTP id
+ a1e0cc1a2514c-963bc9a24f0so996260241.3
+ for <qemu-devel@nongnu.org>; Thu, 18 Jun 2026 05:34:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1781786023; x=1782390823; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1781786060; x=1782390860; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=woqS5Ld4n4jpaDbyLAKEQyLJdPphWOZDc2wWv+58LW0=;
- b=Ltppa2wWwBMnQy7s+Ty1wjPgi2f5432OJHQkK+Yr1YtENbdceAI74aupNVmVbTt4UQ
- AALW+ExAz6NwPATPVphsI5t9D78rR12tTGJrOJitT5c8OkwzqTxt/AlOzes53Sk1ogyQ
- +fFCQaKz4rftSKpEMd4LIs5y3cszbnWkPES2PYJHSFX4+Hl2he9aGw06+wE65SzglHWB
- U2Qw4TXALLLo6a0GJ6rK8yXKWKAz/rar3pLzfpc9S4GGswQYy94B2vCduloDhg5YZjlu
- WPY4RvtPGnRJyE3+Jm+WVsWZDSTeuSuzmVvXGuaWUNlohFs7JpXQKlWsGan9m3Jq9hpC
- CatA==
+ :reply-to; bh=NFbaCLSy5+AZ85esJqaVPEbG7dVdvQ8YPRsNSgPsDbA=;
+ b=Q+zMgr5LieWVgn4zXTqnv/0LI0EienZJ63/SBSUdyPjuYosfLZW9zPVRp2r5P4bFlD
+ X3YaMQLlme5ZgRnCDGza4Rgref7g90X7abd1eb0tQn7+xIchKh4X+j2G6i5qzycG1PL6
+ gUTafOFs3hU7Xbx3yKtAOsD+wYoEl0k6x/aLxdE3vjn4OymRzsona01k8li/btzNZhd4
+ FNqp+yNqQWim83ICnVK2F7GjNogvdBpe/mCraTX2rmFLnwC+BZXYjO1N9Aisnc8a+4EY
+ p14E79g7cG6J4ZiDa0eUkENBt66MZU0Hh6/MqSRaSAXfam6CS/JfO4poIGyUnnnn1az7
+ BLlw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781786023; x=1782390823;
+ d=1e100.net; s=20251104; t=1781786060; x=1782390860;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=woqS5Ld4n4jpaDbyLAKEQyLJdPphWOZDc2wWv+58LW0=;
- b=PQLAbegyaQMzU9G2uu+rWqdTb/9wE90SaTvVM0C8nJnWIV0PZ/NcPBL1Be6ELjlUkh
- s3sEirDJ0CxCU7RBXJz4QhTOMH+xfqt50whzLwaAYP03cJBnK3stLqao6ZjoVe15bl0c
- MwetSUlM5n70SNUDkRbex9F4fkTf2/5rH8ptR9PbWaotzPt725F+S0NNucIVsFC5OJEe
- N5/Y3j2LTvcMpEatxeY7GmH7QrRrl3My7uzBL0vNUsKNYcv6OU7ff/7hbeuy6L5YmPVE
- y945tx+CxD8LA6Hs6yJnVDPqdu5/bEKtfGpz0GaokzAJEPjy3N9DOA2h/UpHbCJJptWm
- d1dg==
-X-Gm-Message-State: AOJu0Yz+pG40Go99Hejj6bb2Q4pj4AUVvtVjjCUD/EP+lAfDTJSePBSN
- mY2GpXMI3C9AmMSXLNUoAQs12kyKt8Z3Jd0O+r3Splh/37uqEwfzdOMmRXDozwe/VHPkQz/5cyf
- nTx54my0DImj1sSL4iEBUld8gJdELMzyxWCnAtL15VP1uL3WjNaIXIzP1MRzwnDOT1g==
-X-Gm-Gg: Acq92OEji2PZrAAWtX/OSRG7mp8sXxC3+Qji8ILfB5j7gsKTTHSgGUs61u7b4s9Jagp
- rVkQuOtvLb5dnjqj14xdEnql0xoO/Z4ClVqL79xotJY0YZMRz9dhukfsvUMTcw3LmbzqABnj48i
- ixbviVCmRwZB/qxwsBZtLQRkUjQYSpyPbSrsgmFBYiqeJ/bH3hxFVsgsbEKxhcvVtnnTvL3Ph1d
- n6Scon9iLrgGLfBLpp67ft+3rSRWz+w/V9MBBMJzZEtwUTIySjRRkTYu0eXiWjPYvmnM0ItTQv5
- dib/GQ/h2yaNGYYumLWZwYr1FocRlE3qcLlncyT3b3KMosTbrJkjxOalnMzssBYfrir96URKuc3
- kCYhFR+uMxugdxtx39Kzkrb9ixo0kPmhQ5xoyFVxerDOQHXeBUM30neNicDZn3YJgxgYE
-X-Received: by 2002:a05:620a:3952:b0:915:2aef:428b with SMTP id
- af79cd13be357-91f8e75f607mr307709485a.39.1781786023397; 
- Thu, 18 Jun 2026 05:33:43 -0700 (PDT)
-X-Received: by 2002:a05:620a:3952:b0:915:2aef:428b with SMTP id
- af79cd13be357-91f8e75f607mr307702385a.39.1781786022865; 
- Thu, 18 Jun 2026 05:33:42 -0700 (PDT)
+ bh=NFbaCLSy5+AZ85esJqaVPEbG7dVdvQ8YPRsNSgPsDbA=;
+ b=pWHLZ3gB24EKGakeyPjIvkB5732iKvSclmLZAZv7fboyiUOlsmbUtqXp/lQwmGP1rr
+ yylveqDQl8z/RP8bNeD7QIchg0U7Dprk8oVDpMrZyWh4KPYrOA15mYMuUXNGXMFBu7gP
+ 5hyoH4TkXvOzcQ3R+YCM1vXQc7L4pcbxKNF3tnPRsq4FOdcJVlX7+C46yDJJXv0lb14z
+ a1RcWuSKJqYa2I/r29ju1JhPawaEUmur6KiCvm+45Tb2RrTd6nqPQrv0i9woEWJdh/4f
+ jA3MBrVGJEVXtLefj3EwDrvo4mlrjVNKidp9c3y2Z3/F+pzyyKAN7zlZIn0OpUB0+657
+ VUBg==
+X-Gm-Message-State: AOJu0Yx7FVM+eRnB/2gkTaU+T4sw4LQATs/WVXcq80aXn72hlsHmF4zK
+ EEdswDC27KEnVywhLC9H3SQuO9afswabPg4xU+nSPEstJ4VxAEGqh6ifoGyNY+yB5aPuFT171qW
+ fn8bSqwXlfm4NOFU7JKR9BoRfcKkUISAuDrwhsn5HzBVWzzVzGnbz1JSpGVR4iy2UGA==
+X-Gm-Gg: AfdE7ck6M11KxL5xYBUIqgsn3BD3MyJTNQM9WTi9Cs43bIczBc4QXhJLswz3FCU0NqF
+ z2WLefbEpGBeIecyJtYh1cAqS9B0xJzim4ivfEAK9E0HPUMbPay1/D5bhVNFjmISBL44Rwk2z22
+ BVaJTDHnwia3P6NlFjWZAgaxuzjqc9uH7YvmrvKwGWUPz8CgGMwiWXWSThOZ2B/IaB4PuHa579R
+ UILmdkTswbybZ80XJayJzflHn1b5fCR9lj0UEU1lwWv/5J5Rt9pZO0VlInAWpxBeHXjZKpCtkq0
+ MeC/x0KTg+/eSRk01x2NUSrKG5txdiVmmyj+Ihacpq+Nlst4Ys7Bf3Oh5SvKvFwcAYd/d7324Ej
+ GwSIOMtSnvfGM02oh0Og1aK2ym4sNBGawu+skx+0glQ+jSPnqGyBTQQjAPYkeylUH0ms/
+X-Received: by 2002:a05:6102:4421:b0:65b:47:2c8 with SMTP id
+ ada2fe7eead31-727c52cb963mr2053706137.10.1781786059923; 
+ Thu, 18 Jun 2026 05:34:19 -0700 (PDT)
+X-Received: by 2002:a05:6102:4421:b0:65b:47:2c8 with SMTP id
+ ada2fe7eead31-727c52cb963mr2053696137.10.1781786059480; 
+ Thu, 18 Jun 2026 05:34:19 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4923a1d6d1csm29914695e9.2.2026.06.18.05.33.40
+ 5b1f17b1804b1-4923a1c3c4esm34179245e9.1.2026.06.18.05.34.18
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 18 Jun 2026 05:33:41 -0700 (PDT)
+ Thu, 18 Jun 2026 05:34:18 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL 43/48] accel/tcg: Move cpu_exec_step_atomic() out of
- 'exec/cpu-common.h'
-Date: Thu, 18 Jun 2026 14:28:20 +0200
-Message-ID: <20260618122825.90331-44-philmd@oss.qualcomm.com>
+Subject: [PULL 48/48] accel/tcg: Restrict headers being TCG specific
+Date: Thu, 18 Jun 2026 14:28:25 +0200
+Message-ID: <20260618122825.90331-49-philmd@oss.qualcomm.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260618122825.90331-1-philmd@oss.qualcomm.com>
 References: <20260618122825.90331-1-philmd@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjE4MDExNiBTYWx0ZWRfXylfmafaBvJE/
- OXbRuiasnc5a0Cb7ZPBUk8M07PkqaMiFEEZqlpK8Ou76rtpyPCsKacXv5Xc2U3CDQJyapBCCeuo
- TSqkcy7CQubVs4muVZUzfzCeVlAQsaS4zI6fgREUicYA0ysVS4nvjkZyf7D+H+z13hOajdUlU4O
- i6llfxhCcmlPMqZf4TRHSKgEKmtIRnwj9csBBTD0b0ZrXeIyf4HGHrjgBHAcpbbmk+EAALxoVmS
- 57Bq/rTHWajBJu+Rf93iZ0Px1lAk03GG/mC1MPqdcjLDoCNAQFu8eLnsW3W4vV9plbPhDBLZgBa
- rGD1zpuHBDUNSYT+4apvkt8WZ3nfRwSebVypJputz/8MQxv0bUGiu8xAOWlC1qdhLARtTOAeWy1
- I1rVoXL+BUVcEJBtVqAaY4nthqQxDh1dNrqD3RZXm+S0Qmkpy79wCd1yQNAaIa+OL4fH7VmcD9s
- hr7P3X0qN/mLLKvRoMw==
-X-Proofpoint-ORIG-GUID: JfCXsUCJj9QI2gdOnraQxlLt84SEZ7ZB
-X-Authority-Analysis: v=2.4 cv=UrRT8ewB c=1 sm=1 tr=0 ts=6a33e5a8 cx=c_pps
- a=50t2pK5VMbmlHzFWWp8p/g==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+X-Proofpoint-ORIG-GUID: V077wcpcE_TkOFCVchhCg8P-yUpWm1fg
+X-Proofpoint-GUID: V077wcpcE_TkOFCVchhCg8P-yUpWm1fg
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjE4MDExNiBTYWx0ZWRfX40L/+enL+5Ju
+ jAml1y3qveMQ8T7x8CwkRA3R59wkTYxvTXUuNBuS3QL2wOLI8gfFVJUKU/oXxzgegcmp7QuSvHu
+ T/O2ubepvSxgRguOkLhhdgHTPcbxetzmh6Oqb9Bz6RylG+SmX1kfLMk1tXEUDKl3xoEMu7Miml4
+ FQ/OM1uSVfEduYP3ZGCLbjjvs/SiCVWMVz8OsxLOvWjF4g8c0j3QHVbi1wJKkLXbhrnRFVhXttI
+ QE6qWptOfQNRZKDwcu6mtZI+dDI8vd6RGW6VqRcn4KH/FpxfJJMaVcFNwyb7eGNwvpzmq3FdGze
+ beSvZYF90/8Mux/x4lg3KHqlN7QQ1AbxCPWylLcSTSvGWV668tnXFjHLh9+5t0vsbaiXaN3WE45
+ TMLPzZ5uXo9/B9DFhjatR6mrRm3PHfZAFm7rBy58qEd9uKprMXC/DbuOI5m6aWlbRHwxQUJjAxD
+ f4d/7Dcb7SaftT4FyWg==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjE4MDExNiBTYWx0ZWRfXymft51TiZPY1
+ sLlDHnJAf3wZ74vj8/iawBgAaXNEA/gIB6XMqlA4r7LKPvHiy9HC1f0IA/+lAq2YoDQKOxW9RAg
+ UkGfZV4vbnMUXgOBBBt9mjhI0jr54sA=
+X-Authority-Analysis: v=2.4 cv=YJKvDxGx c=1 sm=1 tr=0 ts=6a33e5cc cx=c_pps
+ a=UbhLPJ621ZpgOD2l3yZY1w==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
  a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22
- a=EUspDBNiAAAA:8 a=KKAkSRfTAAAA:8 a=xWu8-Agft_6X_INOG6MA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=O8hF6Hzn-FEA:10 a=IoWCM6iH3mJn3m4BftBB:22
- a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-GUID: JfCXsUCJj9QI2gdOnraQxlLt84SEZ7ZB
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjE4MDExNiBTYWx0ZWRfX+cQPv2lcvQfY
- 7Lpjco6Ppo+iFQphdtEut1GF5cVjKDBKxDWXVfl5qKCVdJ4ZzGbCv6fokb2V6B3JSD/AOvpa93b
- FLiQNoFIyC2FmD6oP59OMNo4GzB6j8U=
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22
+ a=EUspDBNiAAAA:8 a=KKAkSRfTAAAA:8 a=-SUpAgEnhvh4vktFIKIA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=TOPH6uDL9cOC6tEoww4z:22 a=cvBusfyB2V15izCimMoJ:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-06-18_01,2026-06-18_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 lowpriorityscore=0 priorityscore=1501 phishscore=0
- bulkscore=0 spamscore=0 suspectscore=0 adultscore=0 malwarescore=0
- clxscore=1015 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2606180116
+ malwarescore=0 phishscore=0 adultscore=0 impostorscore=0 clxscore=1015
+ suspectscore=0 bulkscore=0 lowpriorityscore=0 spamscore=0 priorityscore=1501
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606180116
 Received-SPF: pass client-ip=205.220.168.131;
  envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
 X-Spam_score_int: -27
@@ -151,70 +148,110 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Move the TCG-specific cpu_exec_step_atomic() declaration out
-of the generic "exec/cpu-common.h" header, to the recently
-created "accel/tcg/cpu-loop.h" one.
-
-Include "accel/tcg/cpu-loop.h" where appropriate.
+Forbid including TCG-specific headers in non-TCG builds.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20260617171438.75914-6-philmd@oss.qualcomm.com>
+Message-Id: <20260617171438.75914-12-philmd@oss.qualcomm.com>
 ---
- include/accel/tcg/cpu-loop.h    | 2 ++
- include/exec/cpu-common.h       | 2 --
- accel/tcg/tcg-accel-ops-mttcg.c | 1 +
- accel/tcg/tcg-accel-ops-rr.c    | 1 +
- 4 files changed, 4 insertions(+), 2 deletions(-)
+ include/accel/tcg/cpu-mmu-index.h  | 4 ++++
+ include/accel/tcg/cpu-ops.h        | 4 ++++
+ include/accel/tcg/getpc.h          | 4 ++++
+ include/accel/tcg/helper-retaddr.h | 4 ++++
+ include/accel/tcg/probe.h          | 4 ++++
+ include/accel/tcg/tb-cpu-state.h   | 4 ++++
+ 6 files changed, 24 insertions(+)
 
-diff --git a/include/accel/tcg/cpu-loop.h b/include/accel/tcg/cpu-loop.h
-index 6a3c8ed48b2..94e91eb9a36 100644
---- a/include/accel/tcg/cpu-loop.h
-+++ b/include/accel/tcg/cpu-loop.h
-@@ -18,4 +18,6 @@
-  */
- int cpu_exec(CPUState *cpu);
+diff --git a/include/accel/tcg/cpu-mmu-index.h b/include/accel/tcg/cpu-mmu-index.h
+index e681a90844c..e0fb6ef91c8 100644
+--- a/include/accel/tcg/cpu-mmu-index.h
++++ b/include/accel/tcg/cpu-mmu-index.h
+@@ -9,6 +9,10 @@
+ #ifndef ACCEL_TCG_CPU_MMU_INDEX_H
+ #define ACCEL_TCG_CPU_MMU_INDEX_H
  
-+void cpu_exec_step_atomic(CPUState *cpu);
++#ifndef CONFIG_TCG
++#error Can only include this header with TCG
++#endif
 +
- #endif
-diff --git a/include/exec/cpu-common.h b/include/exec/cpu-common.h
-index 09915dc4c44..a97bb6faf42 100644
---- a/include/exec/cpu-common.h
-+++ b/include/exec/cpu-common.h
-@@ -18,8 +18,6 @@
- #define EXCP_YIELD      0x10004 /* cpu wants to yield timeslice to another */
- #define EXCP_ATOMIC     0x10005 /* stop-the-world and emulate atomic */
+ #include "hw/core/cpu.h"
+ #include "accel/tcg/cpu-ops.h"
+ #include "tcg/debug-assert.h"
+diff --git a/include/accel/tcg/cpu-ops.h b/include/accel/tcg/cpu-ops.h
+index 5950cdcaab1..710da12b828 100644
+--- a/include/accel/tcg/cpu-ops.h
++++ b/include/accel/tcg/cpu-ops.h
+@@ -10,6 +10,10 @@
+ #ifndef TCG_CPU_OPS_H
+ #define TCG_CPU_OPS_H
  
--void cpu_exec_step_atomic(CPUState *cpu);
--
- #define REAL_HOST_PAGE_ALIGN(addr) ROUND_UP((addr), qemu_real_host_page_size())
++#ifndef CONFIG_TCG
++#error Can only include this header with TCG
++#endif
++
+ #include "exec/breakpoint.h"
+ #include "exec/hwaddr.h"
+ #include "exec/memattrs.h"
+diff --git a/include/accel/tcg/getpc.h b/include/accel/tcg/getpc.h
+index 0fc08addcf3..8a97ce34e76 100644
+--- a/include/accel/tcg/getpc.h
++++ b/include/accel/tcg/getpc.h
+@@ -8,6 +8,10 @@
+ #ifndef ACCEL_TCG_GETPC_H
+ #define ACCEL_TCG_GETPC_H
  
- /* The CPU list lock nests outside page_(un)lock or mmap_(un)lock */
-diff --git a/accel/tcg/tcg-accel-ops-mttcg.c b/accel/tcg/tcg-accel-ops-mttcg.c
-index 4160e2ba947..69560fdb9d8 100644
---- a/accel/tcg/tcg-accel-ops-mttcg.c
-+++ b/accel/tcg/tcg-accel-ops-mttcg.c
-@@ -32,6 +32,7 @@
- #include "qemu/notify.h"
- #include "qemu/guest-random.h"
- #include "hw/core/boards.h"
-+#include "accel/tcg/cpu-loop.h"
- #include "tcg/startup.h"
- #include "tcg-accel-ops.h"
- #include "tcg-accel-ops-mttcg.h"
-diff --git a/accel/tcg/tcg-accel-ops-rr.c b/accel/tcg/tcg-accel-ops-rr.c
-index f84342e0449..5b132d3d5d8 100644
---- a/accel/tcg/tcg-accel-ops-rr.c
-+++ b/accel/tcg/tcg-accel-ops-rr.c
-@@ -32,6 +32,7 @@
- #include "qemu/notify.h"
- #include "qemu/guest-random.h"
- #include "exec/cpu-common.h"
-+#include "accel/tcg/cpu-loop.h"
- #include "tcg/startup.h"
- #include "tcg-accel-ops.h"
- #include "tcg-accel-ops-rr.h"
++#ifndef CONFIG_TCG
++#error Can only include this header with TCG
++#endif
++
+ /* GETPC is the true target of the return instruction that we'll execute.  */
+ #ifdef CONFIG_TCG_INTERPRETER
+ extern __thread uintptr_t tci_tb_ptr;
+diff --git a/include/accel/tcg/helper-retaddr.h b/include/accel/tcg/helper-retaddr.h
+index 037fda2b83d..ebdc8b378d4 100644
+--- a/include/accel/tcg/helper-retaddr.h
++++ b/include/accel/tcg/helper-retaddr.h
+@@ -6,6 +6,10 @@
+ #ifndef ACCEL_TCG_HELPER_RETADDR_H
+ #define ACCEL_TCG_HELPER_RETADDR_H
+ 
++#ifndef CONFIG_TCG
++#error Can only include this header with TCG
++#endif
++
+ /*
+  * For user-only, helpers that use guest to host address translation
+  * must protect the actual host memory access by recording 'retaddr'
+diff --git a/include/accel/tcg/probe.h b/include/accel/tcg/probe.h
+index dd9ecbbdf11..0b788901ba0 100644
+--- a/include/accel/tcg/probe.h
++++ b/include/accel/tcg/probe.h
+@@ -7,6 +7,10 @@
+ #ifndef ACCEL_TCG_PROBE_H
+ #define ACCEL_TCG_PROBE_H
+ 
++#ifndef CONFIG_TCG
++#error Can only include this header with TCG
++#endif
++
+ #include "exec/mmu-access-type.h"
+ #include "exec/vaddr.h"
+ 
+diff --git a/include/accel/tcg/tb-cpu-state.h b/include/accel/tcg/tb-cpu-state.h
+index 8f912900ca6..1903af4c2a2 100644
+--- a/include/accel/tcg/tb-cpu-state.h
++++ b/include/accel/tcg/tb-cpu-state.h
+@@ -6,6 +6,10 @@
+ #ifndef EXEC_TB_CPU_STATE_H
+ #define EXEC_TB_CPU_STATE_H
+ 
++#ifndef CONFIG_TCG
++#error Can only include this header with TCG
++#endif
++
+ #include "exec/vaddr.h"
+ 
+ typedef struct TCGTBCPUState {
 -- 
 2.53.0
 
