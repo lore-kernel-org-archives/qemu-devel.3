@@ -4,67 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7402CD98E4
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jun 2026 02:42:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE07CCD98E4
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jun 2026 03:21:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wa2hX-0003BP-Ue; Wed, 17 Jun 2026 22:41:55 -0400
+	id 1wa3JH-00082S-LJ; Wed, 17 Jun 2026 23:20:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <junjie.cao@intel.com>)
- id 1wa2hV-0003AT-8M; Wed, 17 Jun 2026 22:41:53 -0400
-Received: from mgamail.intel.com ([192.198.163.9])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <junjie.cao@intel.com>)
- id 1wa2hR-0002aC-82; Wed, 17 Jun 2026 22:41:52 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1781750509; x=1813286509;
- h=from:to:cc:subject:date:message-id:mime-version:
- content-transfer-encoding;
- bh=YrwcpQ0WvBz/1+z3tCzmFwH0nCWHbcXLoQuFZ9YQf+Y=;
- b=XpkMHSTgZ6DZHQSTVD57iarsv+9tM3IsNOBR0AOLg7aTQHjyUo9K6K7a
- rkY+BLwTQdJk7sun627eL1aNjHJXGSDiYvcubv5zOPRrCxBiK0RlnrC+c
- VXTxPtSOKDyfGuG/TNdd4l4SWYaFKsAeM7fulISOYNsIX0nGn1lUHxe4/
- 796iKDwKiFm71eOZ1OVhDypKIlZwNoX3JAf3mwRQiakiLu4TNVCkHhLp5
- Zbiwq15g8dZ42sr6NtkwtZHKM4X4MStSZ4U+5LUmxmbwx7wp/SZJF2gg/
- 6DyfRZxvlGQqMSmOtLVJOjOn29J//1N+PnIb0Z45uMNIVkOZx9lfGUpOB Q==;
-X-CSE-ConnectionGUID: 9G+J9P1qQpSHJKP7xwaaUw==
-X-CSE-MsgGUID: vg9FeIwGRASWt8Ivceshew==
-X-IronPort-AV: E=McAfee;i="6800,10657,11820"; a="93229261"
-X-IronPort-AV: E=Sophos;i="6.24,210,1774335600"; d="scan'208";a="93229261"
-Received: from fmviesa007.fm.intel.com ([10.60.135.147])
- by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 17 Jun 2026 19:41:45 -0700
-X-CSE-ConnectionGUID: U2DXYIQjTNO4ofBf2UTmfQ==
-X-CSE-MsgGUID: SF09PBIgR5OaK1yi3UvOuA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.24,210,1774335600"; d="scan'208";a="245302087"
-Received: from junjie-optiplex-micro-plus-7010.bj.intel.com ([10.238.152.98])
- by fmviesa007-auth.fm.intel.com with
- ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 Jun 2026 19:41:43 -0700
-From: Junjie Cao <junjie.cao@intel.com>
-To: Jonathan Cameron <jic23@kernel.org>
-Cc: "Michael S . Tsirkin" <mst@redhat.com>, qemu-devel@nongnu.org,
- qemu-stable@nongnu.org, linux-cxl@vger.kernel.org,
- Junjie Cao <junjie.cao@intel.com>
-Subject: [PATCH] hw/cxl: Fix guest-triggerable QEMU exit on reserved
- interleave ways
-Date: Thu, 18 Jun 2026 18:43:16 +0800
-Message-ID: <20260618104316.557306-1-junjie.cao@intel.com>
-X-Mailer: git-send-email 2.43.0
+ (Exim 4.90_1) (envelope-from <aadeshveer07@gmail.com>)
+ id 1wa3JF-00082K-4s
+ for qemu-devel@nongnu.org; Wed, 17 Jun 2026 23:20:53 -0400
+Received: from mail-pg1-x532.google.com ([2607:f8b0:4864:20::532])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <aadeshveer07@gmail.com>)
+ id 1wa3JC-0002AY-4I
+ for qemu-devel@nongnu.org; Wed, 17 Jun 2026 23:20:52 -0400
+Received: by mail-pg1-x532.google.com with SMTP id
+ 41be03b00d2f7-c8584e80d59so194951a12.2
+ for <qemu-devel@nongnu.org>; Wed, 17 Jun 2026 20:20:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1781752846; x=1782357646; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=8PVACd2NJYYaipN9t07swcHm/mNe7Hk4LaX5UyIuo6Y=;
+ b=GI9rbZo3Uxeg5rm4Rd415mIBHnbW8UGjhgwVcNZuCNEXvyoIn5sorFa+o2BXE5UhbG
+ TNlXU5KHWP0pROxQrWmW+2OlqYNVladoDDgQGR5OcyGYk1rA5hiAppOScY5OXNeIUskZ
+ OumTkNRYhNnoPr1e+d3g9T8+VGS7mGYEHFkeGtQEeEvYyPIu3PeahtOd3eH5JKXfEMb3
+ JyhsAzppTLPf3hqC112FYiOuACMoZgWqqjMStZz6MGmj7gbhgniypLZVDjM5RFkpBh1d
+ ZUHDDtSeYC4ldey89uGrgcycj4cJyBAGJuRuq5wg2j2Bx2tkxmVVs7N958Gbi+RvLEzd
+ cXTA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1781752846; x=1782357646;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=8PVACd2NJYYaipN9t07swcHm/mNe7Hk4LaX5UyIuo6Y=;
+ b=ZRXKW2NsVJ7aHGtktuseRTnBI1RjCJNXE0s5i/WOvTC1G1flTTMtTWWf5rXzm4E8s4
+ y8wVCA3es44nCps+jSG9PE8l30P8PMUfIFQB7dxg/A8R4v0nSg2hCijhINwxE7AUydaj
+ itDDPJfhYXVvbRApus1Ype+4bmq7vLZg09XHq69GS/63xOYu1LzvRb+qauMo5ciH50y7
+ vLFQv0Kliinbve+tyY7Bic27ovk5xQBzax6+sFw631gNBJ40iCIsA56B5OKmEC88y8DL
+ /wCwGnmeOwNZNVKVxWmtFkYs2ipKByamb5Y+mm3YorSpaGgSA4I68EKpjWGBm/TCSBbj
+ bszA==
+X-Gm-Message-State: AOJu0YxtwbZnMlkmAsPybHpXwl1Uic4JUtjjm7TTpvw0CO88n+L4Eaac
+ OQJFbcCQJCjcecxTchfYzBpfUlWisxpVa+sgHBD6Q+w8A8b7YdPCQI0mghOQdNJU
+X-Gm-Gg: Acq92OGkJz/qmaxyyTaxhIpqO+7qzyA32kHlDob8qCHnB4remF6kkCeEBe3rn7H8z8E
+ 3SvC3G7t/v4K1yNvtsbqH/wf/iIQ7TTxXKCyNNgmmXNJ0TTGrKeKtKlZjImkRcog/ztgD33p8Yr
+ 6dxwzG012ZSw8BhfpVHyUbouNUIZkZfeXxnYLYb+Hp7+pymQBud6aOvq4EbWbUn+6sRc0DTjuRb
+ CMl7EUXZxZejhC2UwdGO5BeYpRiogBw+7uFMB+qfl7OywpROEhSj5V536SRf6dCvMUrffVr59ay
+ V/3G0wQvtUggOGKQG5VCDsI08BVrMxOcI0IcI29ZE3wkOa6A/f2hCAPP4cjfYjB/RIQftuTiXEj
+ ssUGcNJ762vuW95cKNE6RIDj1c+6fG8qubvjuME4xooArKQB+KM2oANRTdjG5yMnIIV29vKdGV3
+ Np6PGOwE7ERaTFcC2L9po1QfFdzBEdsL6JXsQFn6VxyA==
+X-Received: by 2002:a05:6a20:ce4c:b0:3b2:86c9:baa5 with SMTP id
+ adf61e73a8af0-3b8bf0ba4cfmr7528128637.38.1781752845903; 
+ Wed, 17 Jun 2026 20:20:45 -0700 (PDT)
+Received: from setun ([2405:201:502b:3014:cc0c:536:1b1e:6def])
+ by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-c88c6c2b2easm1534623a12.27.2026.06.17.20.20.42
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 17 Jun 2026 20:20:45 -0700 (PDT)
+From: Aadeshveer Singh <aadeshveer07@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: peterx@redhat.com, farosas@suse.de, pbonzini@redhat.com, philmd@mailo.com,
+ lvivier@redhat.com, ayoub@saferwall.com,
+ Aadeshveer Singh <aadeshveer07@gmail.com>
+Subject: [RFC PATCH 0/5] migration: fast snapshot load
+Date: Thu, 18 Jun 2026 08:50:05 +0530
+Message-ID: <20260618032010.88755-1-aadeshveer07@gmail.com>
+X-Mailer: git-send-email 2.54.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=192.198.163.9; envelope-from=junjie.cao@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -28
-X-Spam_score: -2.9
-X-Spam_bar: --
-X-Spam_report: (-2.9 / 5.0 requ) BAYES_00=-1.9, DATE_IN_FUTURE_06_12=1.947,
- DKIMWL_WL_HIGH=-0.445, DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1,
- DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::532;
+ envelope-from=aadeshveer07@gmail.com; helo=mail-pg1-x532.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -80,66 +99,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-A buggy or malicious guest can program a committed HDM decoder with a
-reserved Interleave Ways encoding (e.g. 0x5-0x7, 0xb-0xf).  Two call
-sites pass &error_fatal to cxl_interleave_ways_dec(), which calls
-exit(1) on the reserved encoding before the subsequent decoded_iw == 0
-guards can run:
+This RFC implements a "fast snapshot load" mechanism to significantly
+reduce the perceived resume time of a VM from a snapshot file.
 
-  - cxl-host.c update_non_interleaved(): called at commit time from
-    hdm_decoder_commit() via cfmws_update_non_interleaved(), so a guest
-    writing COMMIT with a reserved IW terminates QEMU immediately.  This
-    is the primary trigger on the current tree.
+Currently, resuming a VM from a snapshot file requires loading all RAM
+pages into the QEMU instance before execution begins. This extension
+allows the user to run the VM nearly instantly by loading only the
+required device states up front and loading RAM pages lazily, by
+trapping access to pages that have not yet been loaded.
 
-  - cxl_type3.c cxl_type3_dpa(): called on memory access while iterating
-    past committed decoders to accumulate dpa_base.  Once the commit-time
-    exit is removed, the decoder stays committed with the reserved
-    encoding, so a later guest access outside that decoder's range would
-    otherwise hit this second &error_fatal; both are fixed here.
+Using the Linux userfaultfd syscall, a fault thread catches all page
+faults caused by the guest and loads in the pages required to keep
+the VM running. Concurrently, an eager background thread iteratively
+loads all remaining pages into RAM so the guest does not have to
+depend on the fault thread indefinitely.
 
-Pass NULL instead of &error_fatal at both sites so that the reserved
-encoding returns zero and the existing guards handle it gracefully.
+Much of code is reused from postcopy for fault handling and precopy
+for reading mapped ram file. Implementation revolves around two
+threads named the fault thread and eager load thread. Fault thread as
+name suggests catches page faults by the guest and serves them using
+userfaultfd. Postcopy fault thread is reused but instead of requesting
+source for a page it loads the page directly by reading form file. In
+order to remove the dependency of guest on fault thread indefinitely
+the eager load thread loads in the entire RAM sequentially, and after
+iterating through the entire RAM signals fault thread to exit and
+calls cleanup.
 
-This can be reproduced by writing the HDM Decoder 0 Control register
-with a reserved IW encoding and the COMMIT bit set (e.g. IW=0x5,
-COMMIT=1).
+In order to prevent the case of a page being loaded twice(in the
+case when eager load thread is loading it and fault thread also
+tries to serve fault on same page) a bitmap called pending_bmap is
+used to track pages which are pending and not being loaded by any
+thread. Atomic operations on this bitmap allows coordination between
+threads to prevent any unwanted behaviours
 
-Cc: qemu-stable@nongnu.org
-Fixes: 680935c9a6ff ("hw/cxl: Add a performant (and correct) path for the non interleaved cases")
-Fixes: 48461825af1b ("hw/mem/cxl_type3: Fix potential divide by zero reported by coverity")
-Signed-off-by: Junjie Cao <junjie.cao@intel.com>
----
- hw/cxl/cxl-host.c  | 2 +-
- hw/mem/cxl_type3.c | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+This patch was tested using a Debian 13 bare minimum system and Fedora
+44 KDE, snapshots for both are loaded successfully with no error.
 
-diff --git a/hw/cxl/cxl-host.c b/hw/cxl/cxl-host.c
-index 7e744312f1..768fdadc29 100644
---- a/hw/cxl/cxl-host.c
-+++ b/hw/cxl/cxl-host.c
-@@ -442,7 +442,7 @@ static int update_non_interleaved(Object *obj, void *opaque)
-             }
-         }
- 
--        interleave_ways_dec = cxl_interleave_ways_dec(iw, &error_fatal);
-+        interleave_ways_dec = cxl_interleave_ways_dec(iw, NULL);
-         if (interleave_ways_dec == 0) {
-             return 0;
-         }
-diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
-index cba05ec57d..102afa1a19 100644
---- a/hw/mem/cxl_type3.c
-+++ b/hw/mem/cxl_type3.c
-@@ -1197,7 +1197,7 @@ static bool cxl_type3_dpa(CXLType3Dev *ct3d, hwaddr host_addr, uint64_t *dpa)
-         }
-         if (((uint64_t)host_addr < decoder_base) ||
-             (hpa_offset >= decoder_size)) {
--            int decoded_iw = cxl_interleave_ways_dec(iw, &error_fatal);
-+            int decoded_iw = cxl_interleave_ways_dec(iw, NULL);
- 
-             if (decoded_iw == 0) {
-                 return false;
+Next Steps:
+- Add testing framework, in qtest and unit tests
+- Add support for postcopy-blocktime
+- Update documentation
+
+Future direction:
+- Add support for hugepages
+- Add support for multifd
+- Add support for vhost-user
+
+Aadeshveer Singh (5):
+  migration: add RAM Block fields and helpers for fast snapshot load
+  migration: add support for fault thread to load pages from disk
+  migration: add eager load thread for fast snapshot load
+  migration: write up code to run fast snapshot load in
+    qemu_loadvm_state
+  migration/tests: remove capability conflict test
+    postcopy-ram+mapped-ram
+
+ include/system/ramblock.h          |   8 ++
+ migration/migration.c              |  10 +-
+ migration/migration.h              |   5 +
+ migration/options.c                |  11 +-
+ migration/options.h                |   1 +
+ migration/postcopy-ram.c           | 167 ++++++++++++++++++++++++++---
+ migration/postcopy-ram.h           |   2 +
+ migration/qemu-file.c              |  10 +-
+ migration/ram.c                    |  61 +++++++++--
+ migration/savevm.c                 |  52 ++++++++-
+ migration/savevm.h                 |   2 +
+ migration/trace-events             |   2 +
+ tests/qtest/migration/misc-tests.c |  52 ---------
+ 13 files changed, 283 insertions(+), 100 deletions(-)
+
 -- 
-2.43.0
+2.54.0
 
 
