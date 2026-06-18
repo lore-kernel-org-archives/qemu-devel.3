@@ -4,135 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2A9FCD98F3
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jun 2026 12:34:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5036DCD98F2
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jun 2026 12:41:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1waBsO-0000T5-Lg; Thu, 18 Jun 2026 08:29:44 -0400
+	id 1waC36-0000BG-TR; Thu, 18 Jun 2026 08:40:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1waBsK-00005x-LZ
- for qemu-devel@nongnu.org; Thu, 18 Jun 2026 08:29:42 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <heinrich.schuchardt@canonical.com>)
+ id 1waC34-0000Ay-LW
+ for qemu-devel@nongnu.org; Thu, 18 Jun 2026 08:40:46 -0400
+Received: from smtp-relay-internal-0.canonical.com ([185.125.188.122])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1waBsH-0007uU-0x
- for qemu-devel@nongnu.org; Thu, 18 Jun 2026 08:29:39 -0400
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65IArg1J936388
- for <qemu-devel@nongnu.org>; Thu, 18 Jun 2026 12:29:27 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- K7zSoOStIl7IIfcOC5k1dkMhcKXnAaFY4ub9+VP6h80=; b=XACwrCRcGTidoE1k
- Nt47g4SOQBZguEdfHUw56oyQch8gNRu1bq44+TAPGt/eACuMGh6+gfDGEPnMyKT9
- 4jRQiinFydM4zmBphwZHKkhUUzMZ73VRESR3qMVuuL5TFnLTFmJV5MuNZgm1JKlo
- uwRroC1wGowU27jKXTxCZKzcJWgTXSjCADaswUS427uDENbQ/gaw5pTqWbGYiFpI
- TUyquz7EFYi2FPSeC7fO/9xwXRGcSSZIVv/Ewj55JAId2YSQUzNhgHEuP01dXxHz
- 38LBETFgfdXc3xc+sk3HnMdTvbyODsXpygndfH6FBKZdaqDAxl7rOUr4IqalCZbr
- mlB1/g==
-Received: from mail-vs1-f72.google.com (mail-vs1-f72.google.com
- [209.85.217.72])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4euxt546a1-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 18 Jun 2026 12:29:27 +0000 (GMT)
-Received: by mail-vs1-f72.google.com with SMTP id
- ada2fe7eead31-6c89de84f33so1380460137.0
- for <qemu-devel@nongnu.org>; Thu, 18 Jun 2026 05:29:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1781785766; x=1782390566; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=K7zSoOStIl7IIfcOC5k1dkMhcKXnAaFY4ub9+VP6h80=;
- b=bXDysEMHLXPA+9vnk5D3nS/Secn19JkSbd53SumSXqOW7XMuV3c2NOGWysiUvMHKDt
- 8y2P6as677zBUQqEG0Vo+Jw/erAE+ECTHUC2UeFzMP0koexJP44YNyV8MHjtDGJfNfvh
- FcBtf+qsxOUqolswwa9SrghKf439YZs+GJDNogknqOB4820fnk+xuQ7A6uPSHcxUc9Uo
- 0gbjim/Au0JLvIyv0PjlMneFmPqD3qEt1JOzlLyMmxG7OFXN9aPJD6YdrZz/k6tjVtJt
- mrY0sd1SNo4yB7RcbAkR+4A/2igF3THs158tZYv+0Eg+RryTqBh108cibdNcycd0LivB
- PUBw==
+ (Exim 4.90_1) (envelope-from <heinrich.schuchardt@canonical.com>)
+ id 1waC32-0004fn-Dm
+ for qemu-devel@nongnu.org; Thu, 18 Jun 2026 08:40:46 -0400
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-relay-internal-0.canonical.com (Postfix) with ESMTPS id 0CAE33FA6E
+ for <qemu-devel@nongnu.org>; Thu, 18 Jun 2026 12:40:38 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
+ s=20251003; t=1781786438;
+ bh=h/dll5m2ZlmmcFRmjOO08xtsyIvO7hQLHQZVFkqhTZo=;
+ h=From:To:Cc:Subject:Date:Message-ID:MIME-Version;
+ b=BNHX0gf/kS2LQtXKWlVHV26Y9U3XVUXLAycQAdvwSsKF4+E3A6A2k9T/fG/+KbjDI
+ BxnpmmbDhpbLodCPWd7ssbPzJC1EA0ZxLWbM97+RlrElhfBVqnwogVL2iaZ4iu3VPd
+ hX1hBdezpB31FGkYCUDStFpvMtJO4ANZMPzaOxeg4Nf7ENDS6YzuPCjF4r2Y4udWDC
+ mSbE7gL+KOrhDJ0rI5nDzuQDjt2caiWzVmTmIAuQ22QFLRkEPMeBYF0QDyE829fKlo
+ QpdlsQsqlpJRtcA5dq/cU/087x66RUSBxsRL8Pp11bMPmbUSeQnjQtoAmujMn32bpq
+ hdUBoRLApPqdfIy1LsPRcF60sLJ4MaTtA/ZrcB4fhpEw4crwhWhVq/RlG/FemdLbIM
+ jW9zDMvRdn2LdhJVErRt+b5Vm/XCWaojwwDNDCBSSXCwg7pmIPSM03s5+C69JaruWm
+ PtSXT0komnu9OKnbcbW2axN6XndMBl0hPSwuqQkxDHjkeV9/nsvvS0E4IO1hJVdQ+l
+ VtFVdeXT0r2wTkPt9AvbYo8Lp2OIlXadd13IGWrz6uGBgNXOSFOgyBYaUOyipxFOyU
+ YcsbwnAegJZ1G8dpLLmi+I1a1P+Bs8IeT7qwtQdSaHwROcJK6Z/BCJa8mhRdwIrSDG
+ 6ZO7YsF97ugCuxEoDCu7fdjw=
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-45efa2f7009so488254f8f.3
+ for <qemu-devel@nongnu.org>; Thu, 18 Jun 2026 05:40:38 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781785766; x=1782390566;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=K7zSoOStIl7IIfcOC5k1dkMhcKXnAaFY4ub9+VP6h80=;
- b=EY+GTmpghclcM5+ohNKlAuypwsSj8h2firdWrDbFL2OO2I0vBKOB5/4/GSxl1fqXZ4
- byywf1RajZeMBPj4OpT6k4jxf/qEPO1oUdqtHOvsWC7wcTBMef6E/73075QNUSSzZ9Nk
- ZSjCtpYCuON6RwsrxkU2RTdlfNQMZFO9A8jDAAPdk+AA7BXJX1QLQLcy0tfHDTgnsVZc
- /r6LCw9aK+rQMcEzDH+1Q++/ujasdlj6yQ6kDmNulRgpW/4BGM1jxMZsYgwHLiVUgPmV
- 0Le4JKmU0qCyeLnG8/YP2Dhj/nBlDzLygoZqOoAuhui5c0yD9IlJ+13FiIMLuB27Osp8
- +4vg==
-X-Gm-Message-State: AOJu0Yx+nYSomAfBCX+dlhsDSiSHU6s7BJJvrqXMSuVlo1T1ZbrY8yPJ
- ZZVxJS9prMPsqP6gn548QyIiOokKM4jPH+OMfs2hiY1BDF2A6r7KWztXfm/GWkVJ42ldzVh9oZg
- xEA20ZJ9AN85RIX9nwpZhYgsUunF1oiEocXy46DUQNB7PGCdME3B/IKMuvB4KrGQ5BA==
-X-Gm-Gg: AfdE7cnceyShu8CNXIq84DWbYWGDJqEaIURTPu/P6XP8l5EjFzoe25uf0KHBtCB/BWN
- bd0y7kOFojtIk1jDbg1TcGqtcF5aJg1Ob0E3PFUBDdFiysaFSYzBKgPJVjHSMq2QiFrmA5lkW3O
- QB0eZv08b4NxxRZgsQx/w9AHn177lHAdigZAMx4N/UQrGMEfBSd72cOKIB/NCEzpw7lEyI8wWe/
- hj8gPRtuL7AZiSPrW9xxSmb3NoQtNGH1OCZ3vUpiJ95k9YrLY3+w6jVFBCFubdUWkl1DtSMH0wQ
- 7ej6EQmDXld0GGRGPP/dSwNkYTtcNMpqUlMQwZtgEfxDXZnWcKOdYOpEklbyLX71N8pRC5xULYg
- Lb6Swjue1SXHvAZZ69jg3BoCAr3OJfP2WV3YgZxJnoYnNQO/J+3WZvUmrXdYUtYqtOiq4
-X-Received: by 2002:a05:6102:c54:b0:636:984a:1e5d with SMTP id
- ada2fe7eead31-727c51d101cmr2056582137.11.1781785765901; 
- Thu, 18 Jun 2026 05:29:25 -0700 (PDT)
-X-Received: by 2002:a05:6102:c54:b0:636:984a:1e5d with SMTP id
- ada2fe7eead31-727c51d101cmr2056573137.11.1781785765460; 
- Thu, 18 Jun 2026 05:29:25 -0700 (PDT)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4922fa9f2c0sm292657955e9.15.2026.06.18.05.29.24
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 18 Jun 2026 05:29:24 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-To: qemu-devel@nongnu.org
-Subject: [PULL 08/48] system: Document cpu_physical_memory_*() declarations
-Date: Thu, 18 Jun 2026 14:27:45 +0200
-Message-ID: <20260618122825.90331-9-philmd@oss.qualcomm.com>
+ d=1e100.net; s=20251104; t=1781786437; x=1782391237;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=h/dll5m2ZlmmcFRmjOO08xtsyIvO7hQLHQZVFkqhTZo=;
+ b=J9PMRHli+6O/ymmvf6A/EXstaVuNsobFh9cGsDcQw9AjCDVwMY3kC2RfPLllWph2yB
+ Nx2AXdzF1lvQqkGQr6rF+Aov5vOiAxxAMStG5efglPEqLHL620gKQpT3j8rXsmRU1tjF
+ egUquv33FCWUdCVY+uwOHhKmKQaR33/ozThDc3NpvoMODJzeBXJElOC4Az+o9zcOri1t
+ hkqWAu7+OD8MVIUh+sOBtWUHimh6esWBq16yJxA4o9tOhN33ghOeijIUe2VwtGlHoCmB
+ fA5r60qnyWI7IHdDLwCQM23tdrC7Cs6737fME4CfTUvx7n94fzHFvLHxqwCyLZptZ+++
+ xr7g==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ+DalYSQg1C0fVFsA54XtN5GtM1KBlhagYk1P6UpTw3NLP+YP6hHcq/WvZ8GvC8u8gbNQkaHVWFTkNv@nongnu.org
+X-Gm-Message-State: AOJu0Yx8O2P8k28hKMyG2vmHhU4P/mEh/s0QEH7y2FID05juc3DFPElA
+ DyYVL9C1GM2jKXCrFgrxabW3Of7vhEDGMJ5zIOqq/JsifrKZ2uwhPuU3TSEBZZ5of737HnqO+VB
+ v8zxOfYjX2JADBzAIDAwrvk09YKcwpIdmAPoLpFTxhvLussR5MlzPmtLuNxr6n36SnU1cxHMP
+X-Gm-Gg: AfdE7cmDaaekTZM6CJ+mlzuGyYFYfR1qBtii8iAsp9qOI324nKp/zT1YC5t0GpnlaqA
+ 4cBZzPp4jWQSAjuMDILOvTFRjWYsmcJc5HBp8PeYfOpFn10Kv16mTnprN7SjW8CVesX6nE2ike7
+ 63xfT37B2WshPTvbez134vcjfrv438q0/qab5tR3HkX2Ynjo2DdMfRYz7GxuGXw4dPeq2HUlt+D
+ A8/UOw7TJRbMi0X3D/fQHhWSIbpSrZFCCYXrU6PcUn5LiAul+NhihJuoTzhOqnBvtvENFdboGDf
+ yzmJJ5FS4YTAqwrgKrETsVWFZKTPuSz2MgoKy55mC/tp2Acv4Ui5tgnYeSU8eG7GIlpFxORZx/r
+ OeUULlp3kh7EaFsPZ2Kfcdb+WJbf4OEGju+QPeqq7s8XA/yXTn5nu8Jsne/fHVYDsDQ==
+X-Received: by 2002:a05:6000:310f:b0:463:d9:5b35 with SMTP id
+ ffacd0b85a97d-463ab328c3cmr5550940f8f.1.1781786437635; 
+ Thu, 18 Jun 2026 05:40:37 -0700 (PDT)
+X-Received: by 2002:a05:6000:310f:b0:463:d9:5b35 with SMTP id
+ ffacd0b85a97d-463ab328c3cmr5550886f8f.1.1781786437212; 
+ Thu, 18 Jun 2026 05:40:37 -0700 (PDT)
+Received: from workstation5 ([2a02:3035:61d:4f84:7003:6a6a:d834:66f5])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-4606f26393asm66366755f8f.5.2026.06.18.05.40.34
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 18 Jun 2026 05:40:36 -0700 (PDT)
+From: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
+To: "Michael S . Tsirkin" <mst@redhat.com>,
+ Igor Mammedov <imammedo@redhat.com>, Ani Sinha <anisinha@redhat.com>
+Cc: Alistair Francis <alistair23@gmail.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ qemu-devel@nongnu.org,
+ Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
+Subject: [PATCH v3 1/1] hw/acpi: correct field sequence in SPCR table
+Date: Thu, 18 Jun 2026 14:40:20 +0200
+Message-ID: <20260618124020.640794-1-heinrich.schuchardt@canonical.com>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260618122825.90331-1-philmd@oss.qualcomm.com>
-References: <20260618122825.90331-1-philmd@oss.qualcomm.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: F5IKC7J5Yc7jZqmzwn4rrGRIB3VX0TyM
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjE4MDExNiBTYWx0ZWRfX+TxhUK0cAki4
- zxDr7Pch80sF7iXnQLINJP4NV11Cj85Lc22FcCUHPhu54dFjmS96yooPxoSk1cIUmwjx11gARcp
- AwB7XBz+HJP+0KzVqWStxcf8AEzYuRM=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjE4MDExNiBTYWx0ZWRfXy2Wu+doTs3Hq
- mrYcikENKjQci1gZriYBxDIGyMUpq2dC8+aFtgTw8sOi+jmJ4gI5YWp0AopceGF/ul0gwPzxRkN
- z3brMjU7cieyYo2er7+hs3+LBGaoOe2NdlvXAMyS/5Zj2fSZ/1w7XghCw6qyTRUVIo9sDzeVLFI
- IUi1HoyN0xlUQpnm+lJf7HDkwigrRfRxgmbpnjrJ76DEnuC+VuiKKr2Nx46S/xr/PmBeVeTzUba
- R6XC9Tutx+6Geji6ChkAbd3XgSooNhPLW/hMY0NqL3BazC0qUmncmR7KWzG7ej/IeqMybf5Hb4x
- iYmT4NErLXgSETpfE+YY0y2P7uamGGUnlOtpFiFA5UVb3Shxt1TLXhB6djeVq3zHKoBunvIr84Y
- 89824c1/ponQSRyaKWZYX5+l8uzyJurOof9DrW/U8S+fatVm9BPoDKdl4yoyAJs3kXVysBPqbXe
- S4xgkxThHK1YMdoEaXA==
-X-Authority-Analysis: v=2.4 cv=PMw/P/qC c=1 sm=1 tr=0 ts=6a33e4a7 cx=c_pps
- a=DUEm7b3gzWu7BqY5nP7+9g==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
- a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22
- a=EUspDBNiAAAA:8 a=KKAkSRfTAAAA:8 a=ur4Lqk0a5foQtgUicssA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=-aSRE8QhW-JAV6biHavz:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-ORIG-GUID: F5IKC7J5Yc7jZqmzwn4rrGRIB3VX0TyM
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-18_01,2026-06-18_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 clxscore=1015 suspectscore=0 priorityscore=1501 bulkscore=0
- malwarescore=0 impostorscore=0 spamscore=0 lowpriorityscore=0 adultscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606180116
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=185.125.188.122;
+ envelope-from=heinrich.schuchardt@canonical.com;
+ helo=smtp-relay-internal-0.canonical.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ URI_TRY_3LD=0.645 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -148,105 +117,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Document the following methods use the global address space
-and discard success/failure access information:
+On LoongArch and RISC-V invalid SPCR tables are created:
 
-     - cpu_physical_memory_read()
-     - cpu_physical_memory_write()
-     - cpu_physical_memory_map()
-     - cpu_physical_memory_unmap()
+Terminal Type : 00
+Language : 03
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20260616020839.19104-2-philmd@oss.qualcomm.com>
+The correct values are:
+
+Terminal Type : 03
+Language : 00
+
+This is due to commit 7dd0b070fa09 ("hw/arm/virt-acpi-build.c: Migrate
+SPCR creation to common location") that swapped the fields.
+
+See the specification of the table in
+https://learn.microsoft.com/en-us/windows-hardware/drivers/bringup/serial-port-console-redirection-table
+
+This page shows version 1.10. But the sequence of the fields was not changed
+since version 1.0.
+
+Our LoongArch and ARM code uses version 1.07 of the specification.
+Our RISC-V code uses version 1.10 of the specification.
+
+Fixes: 7dd0b070fa09 ("hw/arm/virt-acpi-build.c: Migrate SPCR creation to common location")
+Origin: https://lore.kernel.org/qemu-devel/20260326121947.51200-1-heinrich.schuchardt@canonical.com/T/#u
+Bug-Ubuntu: https://bugs.launchpad.net/ubuntu/+source/qemu/+bug/2146419
+Signed-off-by: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
 ---
- docs/devel/loads-stores.rst | 10 +++++----
- include/exec/cpu-common.h   | 41 +++++++++++++++++++++++++++++++++++++
- 2 files changed, 47 insertions(+), 4 deletions(-)
+v3:
+	update test data
+v2:
+	Mention the different specification versions used by our code
+	https://lore.kernel.org/qemu-devel/20260326144835.67911-1-heinrich.schuchardt@canonical.com/
+v1:
+	https://lore.kernel.org/qemu-devel/20260326121947.51200-1-heinrich.schuchardt@canonical.com/T/#u
+---
+ hw/acpi/aml-build.c                   |   4 ++--
+ tests/data/acpi/loongarch64/virt/SPCR | Bin 80 -> 80 bytes
+ tests/data/acpi/riscv64/virt/SPCR     | Bin 90 -> 90 bytes
+ 3 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/docs/devel/loads-stores.rst b/docs/devel/loads-stores.rst
-index c719241a7f5..f2c66e44454 100644
---- a/docs/devel/loads-stores.rst
-+++ b/docs/devel/loads-stores.rst
-@@ -443,15 +443,17 @@ Regexes for git grep:
- ~~~~~~~~~~~~~~~~~~~~~~~~~
- 
- These are convenience functions which are identical to
--``address_space_*`` but operate specifically on the system address space,
--always pass a ``MEMTXATTRS_UNSPECIFIED`` set of memory attributes and
--ignore whether the memory transaction succeeded or failed.
--For new code they are better avoided:
-+``address_space_*`` but operate specifically on the legacy global
-+``&address_space_memory`` address space (which might not be used by all
-+machines), always pass a ``MEMTXATTRS_UNSPECIFIED`` set of memory attributes
-+and ignore whether the memory transaction succeeded or failed. Expected
-+users are hardware device models. For new code they are better avoided:
- 
- * there is likely to be behaviour you need to model correctly for a
-   failed read or write operation
- * a device should usually perform operations on its own AddressSpace
-   rather than using the system address space
-+* some machines do not use this global address space at all
- 
- ``cpu_physical_memory_read``
- 
-diff --git a/include/exec/cpu-common.h b/include/exec/cpu-common.h
-index 1eb28734601..9cd67d3ef9d 100644
---- a/include/exec/cpu-common.h
-+++ b/include/exec/cpu-common.h
-@@ -64,11 +64,52 @@ void cpu_address_space_init(CPUState *cpu, int asidx,
-  */
- void cpu_destroy_address_spaces(CPUState *cpu);
- 
-+/**
-+ * cpu_physical_memory_read: Read from the legacy global address space.
-+ *
-+ * This function access the legacy global #address_space_memory address
-+ * space and does not say whether the operation succeeded or failed.
-+ *
-+ * @addr: address within the legacy global address space
-+ * @buf: buffer with the data transferred
-+ * @len: length of the data transferred
-+ */
- void cpu_physical_memory_read(hwaddr addr, void *buf, hwaddr len);
-+/**
-+ * cpu_physical_memory_write: Write to the legacy global address space.
-+ *
-+ * This function access the legacy global #address_space_memory address
-+ * space and does not say whether the operation succeeded or failed.
-+ *
-+ * @addr: address within the legacy global address space
-+ * @buf: buffer with the data transferred
-+ * @len: the number of bytes to write
-+ */
- void cpu_physical_memory_write(hwaddr addr, const void *buf, hwaddr len);
-+/**
-+ * cpu_physical_memory_map: Map guest physical memory region into host virtual
-+ *                          address.
-+ *
-+ * Map a memory region from the legacy global #address_space_memory address
-+ * space. May return %NULL and set *@plen to zero(0), if resources needed to
-+ * perform the mapping are exhausted.
-+ *
-+ * @addr: address within that address space
-+ * @len: pointer to length of buffer; updated on return
-+ * @is_write: whether the translation operation is for write
-+ */
- void *cpu_physical_memory_map(hwaddr addr,
-                               hwaddr *plen,
-                               bool is_write);
-+/**
-+ * cpu_physical_memory_unmap: Unmaps a memory region previously mapped by
-+ *                            cpu_physical_memory_map()
-+ *
-+ * @buffer: host pointer as returned by cpu_physical_memory_map()
-+ * @len: buffer length as returned by cpu_physical_memory_map()
-+ * @is_write: whether the translation operation is for write
-+ * @access_len: amount of data actually transferred
-+ */
- void cpu_physical_memory_unmap(void *buffer, hwaddr len,
-                                bool is_write, hwaddr access_len);
- 
+diff --git a/hw/acpi/aml-build.c b/hw/acpi/aml-build.c
+index 9b3cdd3781..990abc64cd 100644
+--- a/hw/acpi/aml-build.c
++++ b/hw/acpi/aml-build.c
+@@ -2144,10 +2144,10 @@ void build_spcr(GArray *table_data, BIOSLinker *linker,
+     build_append_int_noprefix(table_data, f->stop_bits, 1);
+     /* Flow Control */
+     build_append_int_noprefix(table_data, f->flow_control, 1);
+-    /* Language */
+-    build_append_int_noprefix(table_data, f->language, 1);
+     /* Terminal Type */
+     build_append_int_noprefix(table_data, f->terminal_type, 1);
++    /* Language */
++    build_append_int_noprefix(table_data, f->language, 1);
+     /* PCI Device ID  */
+     build_append_int_noprefix(table_data, f->pci_device_id, 2);
+     /* PCI Vendor ID */
+diff --git a/tests/data/acpi/loongarch64/virt/SPCR b/tests/data/acpi/loongarch64/virt/SPCR
+index 3cc9bbcfb8051e632592d9db0fe3dba0af53ed8d..7bb819cd0d2ad20269e40e4a738709a45260cbb2 100644
+GIT binary patch
+delta 23
+TcmWFtm|!Qw%<vxw7?1z}S|J61
+
+delta 23
+TcmWFtm|!Qw!2BNw7?1z}S{?;}
+
+diff --git a/tests/data/acpi/riscv64/virt/SPCR b/tests/data/acpi/riscv64/virt/SPCR
+index 09617f8793a6f7b1f08172f735b58aa748671540..59d2c8f7f215a604612cbd0294c18bc6301e208a 100644
+GIT binary patch
+delta 10
+Rcma!wnqbGo%rMbG3IGpM0&@TW
+
+delta 10
+Rcma!wnqbGoz&z1G3IGpJ0&@TW
+
 -- 
 2.53.0
 
