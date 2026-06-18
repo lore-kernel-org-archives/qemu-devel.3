@@ -4,58 +4,150 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AFFF7CD98F0
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jun 2026 21:55:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4D9BCD98F0
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jun 2026 23:34:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1waKgv-0003gS-Qu; Thu, 18 Jun 2026 17:54:29 -0400
+	id 1waMEv-0005lu-7y; Thu, 18 Jun 2026 19:33:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1waKgu-0003fp-Gt
- for qemu-devel@nongnu.org; Thu, 18 Jun 2026 17:54:28 -0400
-Received: from sea.source.kernel.org ([172.234.252.31])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1waMEs-0005ll-IY
+ for qemu-devel@nongnu.org; Thu, 18 Jun 2026 19:33:38 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1waKgs-0002KE-OM
- for qemu-devel@nongnu.org; Thu, 18 Jun 2026 17:54:28 -0400
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by sea.source.kernel.org (Postfix) with ESMTP id 4327443CD9;
- Thu, 18 Jun 2026 21:54:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 520081F000E9;
- Thu, 18 Jun 2026 21:54:17 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1781819659;
- bh=Il/D/59EcDGFMbeKx110OhFMLzw22+Wm+90eKW+Hs6k=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=UNeHbB6w1oKKdo3zLf8BWamjxmDnlyhF5y8YKMj8pT3qN/Kqg1VaW0f4dBFvU0o8X
- 5i2QDhn+AzEU73A/lHQtLD99RlQ+nW8asnM4SY9YUKA1o/gGcpxdet2a5b4B3zuxHy
- d/fC/H/O1ZsQVme61N/93g2TaE8ZiFt5MfnaKml6QNvtldDDYOBqJsg4YMu2ABRN1X
- Ojy4fv/pqaZ/Gj9/UcjPebLVIWJkoOgHb/TQPO/ed2DppSqwGTxxJ9VUpaWUMzOxSa
- iCnxPrOcuXS9/nJbGcu/tDtQdXhh66EvE8RmpU7WFd9suZ3iIz3nqFZA0+z8naFjCO
- 6cBSpv32DTMxQ==
-From: Helge Deller <deller@kernel.org>
-To: qemu-devel@nongnu.org,
-	Stefan Hajnoczi <stefanha@gmail.com>
-Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Laurent Vivier <laurent@vivier.eu>, deller@gmx.de,
- Song Gao <gaosong@loongson.cn>, Bibo Mao <maobibo@loongson.cn>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>
-Subject: [PULL 2/4] linux-user: Implement /proc/cpuinfo for loongarch cpus
-Date: Thu, 18 Jun 2026 23:54:09 +0200
-Message-ID: <20260618215411.22057-3-deller@kernel.org>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260618215411.22057-1-deller@kernel.org>
-References: <20260618215411.22057-1-deller@kernel.org>
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1waMEr-0004WL-29
+ for qemu-devel@nongnu.org; Thu, 18 Jun 2026 19:33:38 -0400
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 65ILsI243060238
+ for <qemu-devel@nongnu.org>; Thu, 18 Jun 2026 23:33:34 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ 9cfFdYROfSOZUWgkKFQCFcneJqG4ler9yQrwyiDyuHg=; b=D6pNsjclpK8PkVEp
+ RZ1QnQL3VvE8lZjhE2bo5YNI8tNHem7S+enYnEo2w3kJG3yYcrCEB4M1sD9Bxgfy
+ 0URvXSosjOBQEXuLjvn2Q0Hs9adLgO97yI0N3u7k/xMKaHr9YmoyRKA4x1xamkDt
+ NLYIFPiarJs9NOs5Ms0wr0IyWkK4YjOeRNJVxxQI+JHcfMx1AssmXHZJWLjh5t/A
+ nIaEBOoXtdyveH8Rkw9KThVFMLkmCUcmGb1Ua93Njd5BMZmRrQpADJYo5gU9kpAm
+ u3RWhDUMX53RH2XKmqpt/zwqJzEOZ/LgO2nFwZasEti7KgaiUFWJpECSBFK6SpFH
+ uriYyA==
+Received: from mail-dy1-f200.google.com (mail-dy1-f200.google.com
+ [74.125.82.200])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4evmtj9gx6-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Thu, 18 Jun 2026 23:33:33 +0000 (GMT)
+Received: by mail-dy1-f200.google.com with SMTP id
+ 5a478bee46e88-30bc5f826f2so2929137eec.1
+ for <qemu-devel@nongnu.org>; Thu, 18 Jun 2026 16:33:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1781825613; x=1782430413; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=9cfFdYROfSOZUWgkKFQCFcneJqG4ler9yQrwyiDyuHg=;
+ b=UyfdxKNs+4TK4Ms9WXLB6SZsQNKis8YHddpZbLmmZbFpKPW+joxU+CiMkIx5HBZ7Eo
+ Ao+iyGPZ9gAqLZpRpXJUA46H/DNHp2blYWs1BoyqACcyydSb8M9rmO+wVz9nGJ+PeTGt
+ 2jDsPdcmqsUdNgOtRUDiSKOJ1uauSkZhWzvZRoiLgtURwFi/bRJR0Li77wmIe/uWVx2T
+ yyKm73rU17Hn3zWFyw/gpwOGg9tdVSUU0TJ+tCVCqUAJcgvRdsGnZdTNj8skgVymCeQG
+ oTpZQVW5nQaN2wFNluWn+Lv2ylN2sRH2qGur+rP6wtIcpPaH0EPnaJ1p2YCQGE/FcwaR
+ DZJQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1781825613; x=1782430413;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=9cfFdYROfSOZUWgkKFQCFcneJqG4ler9yQrwyiDyuHg=;
+ b=oKOqF/jDAgMrn6uGWegSrHoRHbfqoUEuTp63sQcrftDsdYEKFm4lEqmsyNv2Ue9Uqc
+ utPB58wrsuVGrdmcQRDYaMPHQdH3JAGTGyv4k8P+7OGwnok9h9rDoFH29lf/vzbecPYs
+ slfJvpe9qIndeQQK43FDeH9z2XvdDTdBLMQF3ko7ANO1aCoRbhuQjoND+VVlqd27qw6J
+ 5wX4dZUd9GU+pmgTxnQzDpKB18Rt2vtFoslUIlufD9fZIsK9lZFm4SaMQvmexS5g8k27
+ fOwspfxE8i30n66KWNGgXt1HUPDdHQxK0X03h9bPtQq0CsXPD2NaPXZFS1y4QzUClVux
+ A3dQ==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ/lr8Y3YRG5HQrTv1MDCfqYbJfpWcEnZFI372Yks5o13+yFJVF3BbIPpgyLMenjwLVHW0co6Wawpduo@nongnu.org
+X-Gm-Message-State: AOJu0YwuK3yWYMgPSsXPynAj73UFLaoifl54TryVN7AbCHAo9tQNTUZs
+ Oi2fPRixOXRKodU91aSg/KXUlOTW+Mg6eBUxFE1SAS64IxHIeLEQCVTdnzjdoECziTisHMMxBlY
+ FQve7Ww+6XeFifjKHPvde0mnmosnloGTLX61S0opblFjOeJ2FTF+nym96EA==
+X-Gm-Gg: AfdE7ckeGbEoQ0LLFU0oX+3C6YNxqNW5q9joNtjPqajl4TvOQf2dt5f1+UWsHGSinAn
+ w/FCW954KcBwvqFlvf4jCNco82j3B0tc8wXZqJ6q7Y1FRYE/a9ZFyHyXNFsfH6CoOoLOXEGj2Kl
+ I3H5gL0k7P9ydz/dRZxHqppX2e0CwH/RNTjit7nu0Ma+DkH4BPadGaRySTknk7Xi+QJHOJZRpmF
+ YUVLMTIL0glwsKkqmoRLwviPAIwOgh30OqUmYepjRfgO7b9AUaZGcdMQzyG5go8n1ckoNvkgUu4
+ frlzdmLCdnwqyji8QG1NpZh/APCJY7iwezdmKIURcgTShZaw2MyN5Zaip4MH+6EAVmOe+iywTxH
+ HcCdpkN7QJpN3y9qZVfTrBdF0O5HTzTAZOOJ/4sP2zpkegus93sWSJZr6UDmTfCdFOn8T+5Rh0c
+ 1MvoE=
+X-Received: by 2002:a05:7022:f68e:b0:139:8172:8371 with SMTP id
+ a92af1059eb24-139a4eadd4amr84065c88.14.1781825612962; 
+ Thu, 18 Jun 2026 16:33:32 -0700 (PDT)
+X-Received: by 2002:a05:7022:f68e:b0:139:8172:8371 with SMTP id
+ a92af1059eb24-139a4eadd4amr84042c88.14.1781825612479; 
+ Thu, 18 Jun 2026 16:33:32 -0700 (PDT)
+Received: from [192.168.1.170] (216-71-219-44.dyn.novuscom.net.
+ [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
+ a92af1059eb24-139a364a83csm381965c88.11.2026.06.18.16.33.30
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 18 Jun 2026 16:33:31 -0700 (PDT)
+Message-ID: <cb5c388b-fbf7-409d-b1bd-bbf0033426c6@oss.qualcomm.com>
+Date: Thu, 18 Jun 2026 16:33:29 -0700
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=172.234.252.31; envelope-from=deller@kernel.org;
- helo=sea.source.kernel.org
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/1] plugins: use int64_t for the syscall filter return
+ value
+To: Ziyang Zhang <functioner@sjtu.edu.cn>, qemu-devel <qemu-devel@nongnu.org>
+Cc: Riku Voipio <riku.voipio@iki.fi>, Laurent Vivier <laurent@vivier.eu>,
+ Alex Bennee <alex.bennee@linaro.org>, Alexandre Iooss <erdnaxe@crans.org>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Zhengwei Qi <qizhwei@sjtu.edu.cn>, Yun Wang <yunwang94@sjtu.edu.cn>,
+ Mingyuan Xia <xiamy@ultrarisc.com>, Kailiang Xu <xukl2019@sjtu.edu.cn>
+References: <20260618082426.790315-1-functioner@sjtu.edu.cn>
+ <20260618082426.790315-2-functioner@sjtu.edu.cn>
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <20260618082426.790315-2-functioner@sjtu.edu.cn>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjE4MDIxNSBTYWx0ZWRfXwkiMENKKefIW
+ kPZFfd7Hi5uM4rfu27b1+/yq5sFHHqEasSEtEFsBEULqXnvDGRysXzDJ/mnwfDrpMA0xUTarHL1
+ ioJCrXYoFV2OUe9rfeXWL5macIQTyi8=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjE4MDIxNSBTYWx0ZWRfXzgnIpHBP50DZ
+ WItdALiiqUpi58IqP5ue9Pae9Y0XnSfTGC4pulEmJHGuTU7NW3nksqNfYSVIobCW+dDEd9sT/GO
+ wxZHHE2Zgnsu/EJ4h7MjfjkTAFaRlddxKBeDw9ybYzuXZ8DEVkNXxp5V5CpYlupBOd3BJuL535s
+ FaOi+iVn14clnROtkOZZCtakxHw8jtRe/CW1EX1ZdIkFWgTScRGmoUKmgIcKqijyqBtztQy+lFb
+ yTPKWG2g28bM+qYWY8sCcdFvoIsB8ZG6YU8gTSHZkobbzxZ6/dpkgMCkM8/zGb44V1657nMS6KE
+ /wmuJWzFU+twj7aWlgIHHgyi7DYV5rCauP2bGL3rl9rIe7dxCO1KM4ikfVF4Gc1lDDRAZ/aO044
+ pLQWFSF3bB44uOmrkeVB0/HDszN+WzuoT8TyeDglKJDT6YXGaAFFCfPTsekzGgd0gDmt+ZQwKTe
+ wEs9X1SG7kuelhj+FBw==
+X-Proofpoint-GUID: 7XHcj-TcnajN28I9E5HyIF38hC7zBtjp
+X-Proofpoint-ORIG-GUID: 7XHcj-TcnajN28I9E5HyIF38hC7zBtjp
+X-Authority-Analysis: v=2.4 cv=OM8XGyaB c=1 sm=1 tr=0 ts=6a34804d cx=c_pps
+ a=PfFC4Oe2JQzmKTvty2cRDw==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
+ a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
+ a=EUspDBNiAAAA:8 a=Vf1TyO4ObYaWejyBN_0A:9 a=QEXdDO2ut3YA:10
+ a=6Ab_bkdmUrQuMsNx7PHu:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-18_04,2026-06-18_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 malwarescore=0 adultscore=0 clxscore=1015 priorityscore=1501
+ lowpriorityscore=0 impostorscore=0 bulkscore=0 suspectscore=0 spamscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606180215
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=pierrick.bouvier@oss.qualcomm.com;
+ helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -71,136 +163,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Helge Deller <deller@gmx.de>
+On 6/18/2026 1:24 AM, Ziyang Zhang wrote:
+> The syscall return value passed back through the syscall filter
+> callback is semantically signed: negative values encode errno codes.
+> Declaring the sysret pointer as uint64_t * is therefore misleading and
+> forces callers to launder the value through an unsigned temporary.
+> 
+> Change the sysret pointer to int64_t * across the public plugin API
+> typedef (qemu_plugin_vcpu_syscall_filter_cb_t), the internal
+> qemu_plugin_vcpu_syscall_filter() prototypes and stub, its
+> implementation in plugins/core.c, the linux-user caller, and the
+> in-tree example plugins.
+> 
+> Signed-off-by: Ziyang Zhang <functioner@sjtu.edu.cn>
+> ---
+> v2: rebased onto current master. The syscall callbacks now take a
+>     userdata argument, so the filter signatures were adjusted to keep
+>     that while changing only the sysret type. No functional change.
+> ---
+>  include/plugins/qemu-plugin.h | 2 +-
+>  include/qemu/plugin.h         | 4 ++--
+>  linux-user/syscall.c          | 2 +-
+>  plugins/core.c                | 2 +-
+>  tests/tcg/plugins/setpc.c     | 2 +-
+>  tests/tcg/plugins/syscall.c   | 2 +-
+>  6 files changed, 7 insertions(+), 7 deletions(-)
+> 
 
-Mimic the entries for /proc/cpuinfo to what can be seen on the debian
-porterbox loomis.debian.org.
-
-Cc: Song Gao <gaosong@loongson.cn>
-Cc: Bibo Mao <maobibo@loongson.cn>
-Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>
-Signed-off-by: Helge Deller <deller@gmx.de>
----
- linux-user/loongarch64/elfload.c     | 20 +++++++
- linux-user/loongarch64/target_proc.h | 79 +++++++++++++++++++++++++++-
- 2 files changed, 98 insertions(+), 1 deletion(-)
-
-diff --git a/linux-user/loongarch64/elfload.c b/linux-user/loongarch64/elfload.c
-index e53957e36d..2242f20202 100644
---- a/linux-user/loongarch64/elfload.c
-+++ b/linux-user/loongarch64/elfload.c
-@@ -28,6 +28,26 @@ enum {
-     HWCAP_LOONGARCH_LBT_MIPS = (1 << 12),
- };
- 
-+const char *elf_hwcap_str(uint32_t bit)
-+{
-+    static const char *hwcap_str[] = {
-+    [__builtin_ctz(HWCAP_LOONGARCH_CPUCFG  )] = "cpucfg",
-+    [__builtin_ctz(HWCAP_LOONGARCH_LAM     )] = "lam",
-+    [__builtin_ctz(HWCAP_LOONGARCH_UAL     )] = "lam_bh",
-+    [__builtin_ctz(HWCAP_LOONGARCH_FPU     )] = "fpu",
-+    [__builtin_ctz(HWCAP_LOONGARCH_LSX     )] = "lsx",
-+    [__builtin_ctz(HWCAP_LOONGARCH_LASX    )] = "lasx",
-+    [__builtin_ctz(HWCAP_LOONGARCH_CRC32   )] = "crc32",
-+    [__builtin_ctz(HWCAP_LOONGARCH_COMPLEX )] = "complex",
-+    [__builtin_ctz(HWCAP_LOONGARCH_CRYPTO  )] = "crypto",
-+    [__builtin_ctz(HWCAP_LOONGARCH_LVZ     )] = "lvz",
-+    [__builtin_ctz(HWCAP_LOONGARCH_LBT_X86 )] = "lbt_x86",
-+    [__builtin_ctz(HWCAP_LOONGARCH_LBT_ARM )] = "lbt_arm",
-+    [__builtin_ctz(HWCAP_LOONGARCH_LBT_MIPS)] = "lbt_mips",
-+    };
-+
-+    return bit < ARRAY_SIZE(hwcap_str) ? hwcap_str[bit] : NULL;
-+}
- abi_ulong get_elf_hwcap(CPUState *cs)
- {
-     LoongArchCPU *cpu = LOONGARCH_CPU(cs);
-diff --git a/linux-user/loongarch64/target_proc.h b/linux-user/loongarch64/target_proc.h
-index 43fe29ca72..f739520fab 100644
---- a/linux-user/loongarch64/target_proc.h
-+++ b/linux-user/loongarch64/target_proc.h
-@@ -1 +1,78 @@
--/* No target-specific /proc support */
-+/*
-+ * Loongson specific proc functions for linux-user
-+ *
-+ * Copyright (c) 2026 Helge Deller
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+#ifndef LOONGARCH_TARGET_PROC_H
-+#define LOONGARCH_TARGET_PROC_H
-+
-+static int open_cpuinfo(CPUArchState *cpu_env, int fd)
-+{
-+    uint32_t elf_hwcap = get_elf_hwcap(env_cpu(cpu_env));
-+    uint32_t prid, ser_id, pabits, vabits, i, n, num_cpus;
-+    bool is_64bit = is_la64(cpu_env);
-+    const char *hwcap_str;
-+    struct timespec res;
-+    double freq_mhz;
-+
-+#if TARGET_LONG_BITS == 32
-+    pabits = 31;
-+    vabits = 31;
-+#else
-+    pabits = FIELD_EX32(cpu_env->cpucfg[1], CPUCFG1, PALEN);
-+    vabits = FIELD_EX32(cpu_env->cpucfg[1], CPUCFG1, VALEN);
-+#endif
-+
-+    if (clock_getres(CLOCK_REALTIME, &res) == -1) {
-+        res.tv_nsec = 1;
-+    }
-+    freq_mhz = 1000.0 / res.tv_nsec;
-+
-+    ser_id = FIELD_EX32(cpu_env->cpucfg[0], CPUCFG0, SERID);
-+    prid   = FIELD_EX32(cpu_env->cpucfg[0], CPUCFG0, PRID);
-+
-+    dprintf(fd, "system type\t\t: generic-loongson-machine\n");
-+
-+    num_cpus = sysconf(_SC_NPROCESSORS_ONLN);
-+    for (n = 0; n < num_cpus; n++) {
-+        dprintf(fd, "\nprocessor\t\t: %d\n", n);
-+        dprintf(fd, "package\t\t\t: 0\n");
-+        dprintf(fd, "core\t\t\t: %d\n", n);
-+        dprintf(fd, "global_id\t\t: %d\n", n);
-+        dprintf(fd, "CPU Family\t\t: Loongson-%dbit\n", is_64bit ? 64 : 32);
-+        dprintf(fd, "Model Name\t\t: QEMU_user-v" QEMU_VERSION "\n");
-+        dprintf(fd, "PRID\t\t\t: %s (%08x)\n",
-+                    ser_id == PRID_SERIES_LA464 ? "LA464" :
-+                    ser_id == PRID_SERIES_LA132 ? "LA132" : "Unknown",
-+                    cpu_env->cpucfg[0]);
-+        dprintf(fd, "CPU Revision\t\t: 0x%02x\n", prid);
-+        dprintf(fd, "FPU Revision\t\t: 0x%02x\n",
-+                    FIELD_EX32(cpu_env->cpucfg[2], CPUCFG2, FP_VER));
-+        dprintf(fd, "CPU MHz\t\t\t: %.2f\n", freq_mhz);
-+        dprintf(fd, "Address Sizes\t\t: %d bits physical, %d bits virtual\n",
-+                    pabits + 1, vabits + 1);
-+
-+        dprintf(fd, "ISA\t\t\t:%s", " loongarch32r loongarch32s");
-+        if (is_64bit) {
-+            dprintf(fd, " loongarch64");
-+        }
-+
-+        dprintf(fd, "\nFeatures\t\t:");
-+        for (i = 0; i < sizeof(elf_hwcap) * 8; i++) {
-+            if (!(elf_hwcap & (1 << i))) {
-+                continue;
-+            }
-+            hwcap_str = elf_hwcap_str(i);
-+            if (hwcap_str) {
-+                dprintf(fd, " %s", hwcap_str);
-+            }
-+        }
-+        dprintf(fd, "\nHardware Watchpoint\t: no\n");
-+    }
-+    return 0;
-+}
-+#define HAVE_ARCH_PROC_CPUINFO
-+
-+#endif /* LOONGARCH_TARGET_PROC_H */
--- 
-2.54.0
-
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 
