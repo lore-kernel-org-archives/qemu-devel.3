@@ -4,51 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A464CD98FE
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0EE1CD98ED
 	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jun 2026 21:55:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1waKgx-0003gq-8e; Thu, 18 Jun 2026 17:54:31 -0400
+	id 1waKgt-0003f6-Uj; Thu, 18 Jun 2026 17:54:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1waKgw-0003gT-64
- for qemu-devel@nongnu.org; Thu, 18 Jun 2026 17:54:30 -0400
-Received: from tor.source.kernel.org ([172.105.4.254])
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1waKgs-0003ei-GE
+ for qemu-devel@nongnu.org; Thu, 18 Jun 2026 17:54:26 -0400
+Received: from sea.source.kernel.org ([172.234.252.31])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1waKgu-0002Kd-MQ
- for qemu-devel@nongnu.org; Thu, 18 Jun 2026 17:54:29 -0400
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1waKgq-0002Jk-Nb
+ for qemu-devel@nongnu.org; Thu, 18 Jun 2026 17:54:26 -0400
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by tor.source.kernel.org (Postfix) with ESMTP id 4699E601E1;
- Thu, 18 Jun 2026 21:54:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93C401F000E9;
- Thu, 18 Jun 2026 21:54:19 +0000 (UTC)
+ by sea.source.kernel.org (Postfix) with ESMTP id 36C6E43430;
+ Thu, 18 Jun 2026 21:54:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B5581F000E9;
+ Thu, 18 Jun 2026 21:54:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1781819661;
- bh=PEnXMMVv9dWFj8YPlqBxVILE7oewYr7Nm0uK+8bv6uo=;
+ s=k20260515; t=1781819656;
+ bh=+/z2gsMFDguQ4ik1vH3gPJhI22TKOIejE07Hin8CMOU=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=bNtoS5pNY+z5l3l5leKVZQcE7g5fsytNv9ZU51MgfBKEzUpj4LYi3dckOy6IJYeTl
- e/j8BojoGxUbFXEcuyKeRbwRrLqIg9qHeDoE8nZwjVqptfGECg8yiasN4MRgy/kNbB
- fPOTmw3AbzDUZsmY/sOn0IvA0sFhbbuTsO+nj3zm5qQStt7D8IiI/t9P/H56bkEnaE
- TI459BBbiQ/E3XqRMhcOtd+qtnTyjahuQNcLfRCrm2iQV1mOvT39N/cQBzY9pvz3AI
- UQxKXDoaHZag0HXwcrfdOxGC/AuB54vpzKSwNQNKj7YzyMbt6xYExn5anWCloW3xyB
- xjALnlZ6/hX9A==
+ b=edEsvv4CFf0l5/HdrtEFUGhb6xsZ3b4p2evjCeGJuq9yU72F1hvInJFZnM9x6W6sI
+ b3sBbGZNi2VUgJZw4SEuGtz/mB6Bi05rEjTb7kdr7gcV1gax2Ar0Q3CYtGIjNup8EO
+ VqDX0nuod03xM47fhi+tmFi3OZsmd0vZz1NkEinI2iqKvsU8D6LHMl1a2+gMBjK3bh
+ xBTDYUFLVuuNEkYJKisJEIpRkjtqGrT1dlJ2SDqr9HwQwosGR5cX+Z9Rln2l/Ir4+H
+ A3yb/XDHHak9rpzxzhJe2alOOL43fExSSLms9d953RY6sZ9B5EPpq45lfLWy2LBnly
+ lkHU+SetWC/Og==
 From: Helge Deller <deller@kernel.org>
 To: qemu-devel@nongnu.org,
 	Stefan Hajnoczi <stefanha@gmail.com>
 Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  Laurent Vivier <laurent@vivier.eu>, deller@gmx.de,
- Thomas Huth <th.huth+qemu@posteo.eu>
-Subject: [PULL 3/4] linux-user: Implement /proc/cpuinfo for m68k CPU
-Date: Thu, 18 Jun 2026 23:54:10 +0200
-Message-ID: <20260618215411.22057-4-deller@kernel.org>
+ Akshit Yadav <valium7171@gmail.com>
+Subject: [PULL 1/4] linux-user: Fix AT_PHDR when program headers are relocated
+ into their own segment
+Date: Thu, 18 Jun 2026 23:54:08 +0200
+Message-ID: <20260618215411.22057-2-deller@kernel.org>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260618215411.22057-1-deller@kernel.org>
 References: <20260618215411.22057-1-deller@kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=172.105.4.254; envelope-from=deller@kernel.org;
- helo=tor.source.kernel.org
+Received-SPF: pass client-ip=172.234.252.31; envelope-from=deller@kernel.org;
+ helo=sea.source.kernel.org
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
@@ -70,80 +71,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Helge Deller <deller@gmx.de>
+From: Akshit Yadav <valium7171@gmail.com>
 
-Mimic the entries for /proc/cpuinfo to what can be seen on the debian
-porterbox mitchy.debian.org.
+When a binary is patched or relocated such that the program header table is
+moved into a separate PT_LOAD segment (rather than sitting at the start of the
+first loadable segment), QEMU's AT_PHDR auxv entry becomes incorrect. The
+loader was computing AT_PHDR as load_addr + e_phoff, which assumes the headers
+are mapped 1:1 from file offset 0. This breaks when the headers are elsewhere.
 
-Cc: Thomas Huth <th.huth+qemu@posteo.eu>
-Cc: Laurent Vivier <laurent@vivier.eu>
-Signed-off-by: Helge Deller <deller@gmx.de>
+The Linux kernel instead locates the PT_LOAD segment that contains e_phoff,
+then computes the in-memory address as p_vaddr + (e_phoff - p_offset). This
+correctly handles relocated headers.
+
+Fix by:
+1. Add phdr_addr field to image_info to cache the resolved address.
+2. Initialize to load_addr + e_phoff (fallback for headers outside any PT_LOAD).
+3. In the PT_LOAD mapping loop, detect if the segment contains e_phoff and
+   override with the segment-relative address.
+4. Use info->phdr_addr for AT_PHDR instead of the incorrect formula.
+
+Signed-off-by: Akshit Yadav <valium7171@gmail.com>
+Reviewed-by: Helge Deller <deller@gmx.de>
 ---
- linux-user/m68k/target_proc.h | 46 +++++++++++++++++++++++++++++++++++
- 1 file changed, 46 insertions(+)
+ linux-user/elfload.c | 21 ++++++++++++++++++++-
+ linux-user/qemu.h    |  1 +
+ 2 files changed, 21 insertions(+), 1 deletion(-)
 
-diff --git a/linux-user/m68k/target_proc.h b/linux-user/m68k/target_proc.h
-index 3df8f28e22..dca77d8483 100644
---- a/linux-user/m68k/target_proc.h
-+++ b/linux-user/m68k/target_proc.h
-@@ -1,6 +1,8 @@
- /*
-  * M68K specific proc functions for linux-user
-  *
-+ * Copyright (c) 2026 Helge Deller
-+ *
-  * SPDX-License-Identifier: GPL-2.0-or-later
-  */
- #ifndef M68K_TARGET_PROC_H
-@@ -13,4 +15,48 @@ static int open_hardware(CPUArchState *cpu_env, int fd)
- }
- #define HAVE_ARCH_PROC_HARDWARE
+diff --git a/linux-user/elfload.c b/linux-user/elfload.c
+index b05b8b0c6b..8049c8ae62 100644
+--- a/linux-user/elfload.c
++++ b/linux-user/elfload.c
+@@ -699,7 +699,7 @@ static abi_ulong create_elf_tables(abi_ulong p, int argc, int envc,
+     /* There must be exactly DLINFO_ITEMS entries here, or the assert
+      * on info->auxv_len will trigger.
+      */
+-    NEW_AUX_ENT(AT_PHDR, (abi_ulong)(info->load_addr + exec->e_phoff));
++    NEW_AUX_ENT(AT_PHDR, (abi_ulong)(info->phdr_addr));
+     NEW_AUX_ENT(AT_PHENT, (abi_ulong)(sizeof (struct elf_phdr)));
+     NEW_AUX_ENT(AT_PHNUM, (abi_ulong)(exec->e_phnum));
+     NEW_AUX_ENT(AT_PAGESZ, (abi_ulong)(TARGET_PAGE_SIZE));
+@@ -1469,6 +1469,12 @@ static void load_elf_image(const char *image_name, const ImageSource *src,
+     info->data_offset = load_bias;
+     info->load_addr = load_addr;
+     info->entry = ehdr->e_entry + load_bias;
++    /*
++     * Fallback for AT_PHDR if the program headers do not fall within
++     * any PT_LOAD segment (see the loop below, which overrides this with
++     * the correct in-memory address when a containing segment is found).
++     */
++    info->phdr_addr = load_addr + ehdr->e_phoff;
+     info->start_code = -1;
+     info->end_code = 0;
+     info->start_data = -1;
+@@ -1523,6 +1529,19 @@ static void load_elf_image(const char *image_name, const ImageSource *src,
+             vaddr_ef = vaddr + eppnt->p_filesz;
+             vaddr_em = vaddr + eppnt->p_memsz;
  
++            /*
++             * If this segment contains the program headers, record their
++             * in-memory address for AT_PHDR. This matches the kernel, which
++             * locates the headers via the containing PT_LOAD rather than
++             * assuming load_addr + e_phoff (false when the phdrs are not
++             * mapped 1:1 from file offset 0, e.g. relocated into their own
++             * segment by a binary patcher).
++             */
++            if (eppnt->p_offset <= ehdr->e_phoff &&
++                ehdr->e_phoff < eppnt->p_offset + eppnt->p_filesz) {
++                info->phdr_addr = vaddr + (ehdr->e_phoff - eppnt->p_offset);
++            }
 +
-+static int open_cpuinfo(CPUArchState *cpu_env, int fd)
-+{
-+    const char *cpu, *fpu;
-+    struct timespec res;
-+    double freq_mhz;
-+
-+    if (clock_getres(CLOCK_REALTIME, &res) == -1) {
-+        res.tv_nsec = 1;
-+    }
-+    freq_mhz = 1000.0 / res.tv_nsec;
-+
-+    if (m68k_feature(cpu_env, M68K_FEATURE_M68010)) {
-+        cpu = "68010";
-+    } else if (m68k_feature(cpu_env, M68K_FEATURE_M68020)) {
-+        cpu = "68020";
-+    } else if (m68k_feature(cpu_env, M68K_FEATURE_M68030)) {
-+        cpu = "68030";
-+    } else if (m68k_feature(cpu_env, M68K_FEATURE_M68040)) {
-+        cpu = "68040";
-+    } else if (m68k_feature(cpu_env, M68K_FEATURE_M68060)) {
-+        cpu = "68060";
-+    } else {
-+        cpu = "680x0";
-+    }
-+
-+    if (m68k_feature(cpu_env, M68K_FEATURE_FPU)) {
-+        fpu = cpu;
-+    } else {
-+	fpu = "none(soft float)";
-+    }
-+
-+    dprintf(fd, "CPU:\t\t%s\n"
-+                "MMU:\t\t%s\n"
-+                "FPU:\t\t%s\n"
-+                "Clocking:\t%.1fMHz\n"
-+                "Model:\t\tQEMU user v" QEMU_VERSION "\n",
-+                cpu, cpu, fpu, freq_mhz);
-+    /* dropped BogoMips and Calibration for now */
-+
-+    return 0;
-+}
-+#define HAVE_ARCH_PROC_CPUINFO
-+
- #endif /* M68K_TARGET_PROC_H */
+             /*
+              * Some segments may be completely empty, with a non-zero p_memsz
+              * but no backing file segment.
+diff --git a/linux-user/qemu.h b/linux-user/qemu.h
+index 07fe801628..2268493141 100644
+--- a/linux-user/qemu.h
++++ b/linux-user/qemu.h
+@@ -26,6 +26,7 @@
+ struct image_info {
+         abi_ulong       load_bias;
+         abi_ulong       load_addr;
++        abi_ulong       phdr_addr;
+         abi_ulong       start_code;
+         abi_ulong       end_code;
+         abi_ulong       start_data;
 -- 
 2.54.0
 
