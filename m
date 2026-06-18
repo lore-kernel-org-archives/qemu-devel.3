@@ -4,68 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F346CD98F8
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jun 2026 17:53:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD03FCD98F2
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jun 2026 17:54:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1waGvA-0008LD-8w; Thu, 18 Jun 2026 13:52:56 -0400
+	id 1waGwG-0001Q9-Bx; Thu, 18 Jun 2026 13:54:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1waGv8-0008KK-Lt
- for qemu-devel@nongnu.org; Thu, 18 Jun 2026 13:52:54 -0400
+ id 1waGwE-0001Ms-KB
+ for qemu-devel@nongnu.org; Thu, 18 Jun 2026 13:54:02 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1waGv7-0007wN-7V
- for qemu-devel@nongnu.org; Thu, 18 Jun 2026 13:52:54 -0400
+ id 1waGwD-0008LV-3J
+ for qemu-devel@nongnu.org; Thu, 18 Jun 2026 13:54:02 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781805171;
+ s=mimecast20190719; t=1781805240;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=m4Lm+vnaSn4OjdvukTPa4DFRZvHOA1jkM5W02p03veg=;
- b=VkhTZnPfFooqUmy8dg1Ibl60f/uvI0XrjVVPgSUbCIpG/xwMFB7hLjYmIh+SOJQ1WRDYrG
- zh8PL8vV+yIaRYw969hRUgIJlruYQxv2Ax1eophaEF6iBOuEKdFL6ZN5xLRTTkyJiHyb/L
- qH2eH7DkkddRQwCntFTtRUQV7zdHobc=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ in-reply-to:in-reply-to:references:references;
+ bh=rVzoAVFzIMSUjjW8eVKBW7irLeTm7tbYm3rlr66kM6g=;
+ b=HVh9VOmgiv24P1FHIRx/Bt8czwtdYOzyQiKsxleU9JYRN9eydf+ClgmyOWYFZ8ohimaJI1
+ qgPbjUNJS9QdoKB4cbR2SGpDypwixSCZ7DRRoK/3YnUu6fuTPmt84mm3lzT7RuX66dw6ew
+ FmaLl2FG+cu032LcgIO4ae6AoQYyvks=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-543-kfwaTNuON1ul_3YOsgo71A-1; Thu,
- 18 Jun 2026 13:52:50 -0400
-X-MC-Unique: kfwaTNuON1ul_3YOsgo71A-1
-X-Mimecast-MFC-AGG-ID: kfwaTNuON1ul_3YOsgo71A_1781805169
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-577-FA4ELVKVO0aJv_zSJmY-JQ-1; Thu,
+ 18 Jun 2026 13:53:56 -0400
+X-MC-Unique: FA4ELVKVO0aJv_zSJmY-JQ-1
+X-Mimecast-MFC-AGG-ID: FA4ELVKVO0aJv_zSJmY-JQ_1781805235
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 610CC180058A
- for <qemu-devel@nongnu.org>; Thu, 18 Jun 2026 17:52:49 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D5A121956053; Thu, 18 Jun 2026 17:53:54 +0000 (UTC)
 Received: from localhost (unknown [10.2.16.120])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id E653E180056E; Thu, 18 Jun 2026 17:52:48 +0000 (UTC)
+ id 884501800598; Thu, 18 Jun 2026 17:53:54 +0000 (UTC)
+Date: Thu, 18 Jun 2026 13:53:53 -0400
 From: Stefan Hajnoczi <stefanha@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Stefan Hajnoczi <stefanha@redhat.com>
-Subject: [PULL 0/1] Tracing patches
-Date: Thu, 18 Jun 2026 13:52:46 -0400
-Message-ID: <20260618175247.748320-1-stefanha@redhat.com>
+To: Thomas Huth <th.huth@posteo.eu>
+Cc: Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
+ qemu-devel@nongnu.org
+Subject: Re: [PULL SUBSYSTEM pseries 0/1] pseries: Update SLOF firmware image
+ to release 20260618
+Message-ID: <20260618175353.GA748600@fedora>
+References: <20260618082623.345255-1-th.huth@posteo.eu>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="k5aj8BxVdAoM9iCi"
+Content-Disposition: inline
+In-Reply-To: <20260618082623.345255-1-th.huth@posteo.eu>
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+X-Spam_score_int: 8
+X-Spam_score: 0.8
+X-Spam_bar: /
+X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -81,30 +87,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit c7cf7c810153d6f5f31aa2d5c0dee9087f6b4dff:
 
-  Merge tag 'firmware-20260617-pull-request' of https://gitlab.com/kraxel/qemu into staging (2026-06-17 10:17:29 -0400)
+--k5aj8BxVdAoM9iCi
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-are available in the Git repository at:
+Applied, thanks.
 
-  https://gitlab.com/stefanha/qemu.git tags/tracing-pull-request
+Please update the changelog at https://wiki.qemu.org/ChangeLog/11.1 for any user-visible changes.
 
-for you to fetch changes up to c0f8130a31759f75335466074f80dba6de2b1a16:
+--k5aj8BxVdAoM9iCi
+Content-Type: application/pgp-signature; name=signature.asc
 
-  trace/control: Fix -Wunused-but-set-global warning with clang 23+ (2026-06-18 11:01:40 -0400)
+-----BEGIN PGP SIGNATURE-----
 
-----------------------------------------------------------------
-Pull request
+iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmo0MLEACgkQnKSrs4Gr
+c8jYrAgArvvzAXQ2BYQzW4PMtoKJIpI4AnqKC9nDb5w8mGJwewMgAgmltM9DWjGU
+hvMkBn1N7Qz8JTxCa29tpKzzT/ojERI8TCOReiUW6ayWpBa+dgmACDTl8SsLYNia
+m90yj4ZmW69ZOA0eDbSS9TQ+BPro6S1nhZdx/1eCkowxM3/MDrXL0Yy06IIax7b+
+xt8WVCmCz5F1V+I++b3bHAplxRugfAvsRmTX0/VrFHpFMNsrPOsk/CJa/M9Cy00p
+nZOilkRzoRNwdXqi3e72uq/P+aRcsfZqlrMakPxrdBMdnGB1brdYWc0cDsommhix
+F08mcW/k0k0N9uyRbcTUaxxjWc01KQ==
+=SSZp
+-----END PGP SIGNATURE-----
 
-----------------------------------------------------------------
-
-Tom Stellard (1):
-  trace/control: Fix -Wunused-but-set-global warning with clang 23+
-
- trace/control.c | 4 ++++
- 1 file changed, 4 insertions(+)
-
--- 
-2.54.0
+--k5aj8BxVdAoM9iCi--
 
 
