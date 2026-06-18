@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 299F9CD98ED
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jun 2026 11:03:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B417CD98F7
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jun 2026 11:03:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1waATG-0006XU-K1; Thu, 18 Jun 2026 06:59:42 -0400
+	id 1waATG-0006XX-Ly; Thu, 18 Jun 2026 06:59:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1waATB-0006Va-2O
- for qemu-devel@nongnu.org; Thu, 18 Jun 2026 06:59:37 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1waASz-0006SR-0T
+ for qemu-devel@nongnu.org; Thu, 18 Jun 2026 06:59:26 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1waAT6-000265-Ob
- for qemu-devel@nongnu.org; Thu, 18 Jun 2026 06:59:35 -0400
+ id 1waASx-00025B-BT
+ for qemu-devel@nongnu.org; Thu, 18 Jun 2026 06:59:24 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781780372;
+ s=mimecast20190719; t=1781780361;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=GaZRS6kP11If+aWj61dmpl8rRVDzTEa+hA64LShi8ho=;
- b=cJvtU2wCWvXUJXnhsHrLfOU7gV+MktsTK8Dhvk2GbULVAaamV4e26NjWdokU19qDymVwWn
- 4cGNdGRcIayAkArRLBFZIfQ5eIKwXhjOsrc44u4e6f3wdu1nHzhtCCNptsVoK/DnFlH5+K
- N5/3pMIEz74Iw3y+36hOgv8TkOfUyU4=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=KmimI47nQ6qKsuSsw8Wt1fXJdxy8LoAqdc0xiFquuQ8=;
+ b=ftCGe0cydmWzEI/IDU/VWiwjuAQr+vBNxluGW0O3RV8aaeyXWLx6cg/LaAovidXnHqyccM
+ sD2nBlvF5GbWWaMbOoOrvvIcwLde6hEbyNmnCNmhARCUlQfBgqGW4ZjHEt5o6nzhRetZEq
+ yee1WHNW+nf2L9tiYa/bdS0YMkTYgwo=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-401-TnR1s86FOnOOiKWSND63bg-1; Thu,
- 18 Jun 2026 06:59:28 -0400
-X-MC-Unique: TnR1s86FOnOOiKWSND63bg-1
-X-Mimecast-MFC-AGG-ID: TnR1s86FOnOOiKWSND63bg_1781780367
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-580-1cR8oRP6Obm-EayGns6R1g-1; Thu,
+ 18 Jun 2026 06:59:18 -0400
+X-MC-Unique: 1cR8oRP6Obm-EayGns6R1g-1
+X-Mimecast-MFC-AGG-ID: 1cR8oRP6Obm-EayGns6R1g_1781780356
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6569E19560A1; Thu, 18 Jun 2026 10:59:27 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6BF341800581; Thu, 18 Jun 2026 10:59:16 +0000 (UTC)
 Received: from berrange.com (unknown [10.44.49.28])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 41A171956087; Thu, 18 Jun 2026 10:59:24 +0000 (UTC)
+ id 2A97C1956087; Thu, 18 Jun 2026 10:59:12 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: devel@lists.libvirt.org,
@@ -58,26 +58,24 @@ Cc: devel@lists.libvirt.org,
  Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH v3 12/35] monitor: use class methods for
- monitor_qapi_event_emit
-Date: Thu, 18 Jun 2026 11:58:13 +0100
-Message-ID: <20260618105836.991609-13-berrange@redhat.com>
+Subject: [PATCH v3 09/35] monitor: remove 'skip_flush' field
+Date: Thu, 18 Jun 2026 11:58:10 +0100
+Message-ID: <20260618105836.991609-10-berrange@redhat.com>
 In-Reply-To: <20260618105836.991609-1-berrange@redhat.com>
 References: <20260618105836.991609-1-berrange@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 8
-X-Spam_score: 0.8
-X-Spam_bar: /
-X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,119 +91,122 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This removes the need for using monitor_is_qmp() to check the
-subclass type, which is an anti-pattern.
+The 'skip_flush' field is set on the dummy throwaway HMP monitor
+object created by QMP's  'human-monitor-command', as an indication
+not to try to write data to the chardev. Instead the QMP command
+impl will grab the data straight out of the in-memory buffer.
+
+The flag is redundant, however, as the monitor code could instead
+simply check the 'fe_is_open' field on the CharFrontend, which
+will be false in the same scenarios that 'skip_flush' is true.
 
 Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- include/monitor/monitor.h  |  1 +
- monitor/monitor-internal.h |  5 +++++
- monitor/monitor.c          | 15 +++------------
- monitor/qmp.c              | 20 ++++++++++++++++++++
- 4 files changed, 29 insertions(+), 12 deletions(-)
+ monitor/hmp.c              |  2 +-
+ monitor/monitor-internal.h |  4 +---
+ monitor/monitor.c          | 11 +++++++----
+ monitor/qmp-cmds.c         |  2 +-
+ monitor/qmp.c              |  2 +-
+ 5 files changed, 11 insertions(+), 10 deletions(-)
 
-diff --git a/include/monitor/monitor.h b/include/monitor/monitor.h
-index a135b3a590..8cb3db677b 100644
---- a/include/monitor/monitor.h
-+++ b/include/monitor/monitor.h
-@@ -3,6 +3,7 @@
+diff --git a/monitor/hmp.c b/monitor/hmp.c
+index d5905e2279..516aa25d4c 100644
+--- a/monitor/hmp.c
++++ b/monitor/hmp.c
+@@ -1590,7 +1590,7 @@ void monitor_new_hmp(const char *chardev_id, bool use_readline, Error **errp)
+         return;
+     }
  
- #include "block/block.h"
- #include "qapi/qapi-types-misc.h"
-+#include "qapi/qapi-emit-events.h"
- #include "qemu/readline.h"
- #include "exec/hwaddr.h"
- #include "qom/object.h"
+-    monitor_data_init(&mon->parent_obj, false, false, false);
++    monitor_data_init(&mon->parent_obj, false, false);
+ 
+     if (mon->use_readline) {
+         mon->rs = readline_init(monitor_readline_printf,
 diff --git a/monitor/monitor-internal.h b/monitor/monitor-internal.h
-index 23cef68153..763b5c9625 100644
+index 145d52fd71..d34f9be139 100644
 --- a/monitor/monitor-internal.h
 +++ b/monitor/monitor-internal.h
-@@ -111,6 +111,11 @@ struct MonitorClass {
-      */
-     int (*vprintf)(Monitor *mon, const char *fmt, va_list ap)
-         G_GNUC_PRINTF(2, 0);
-+    /*
-+     * If non-NULL, the monitor is able to send event
-+     * notifications back to the client
-+     */
-+    void (*emit_event)(Monitor *mon, QAPIEvent event, QDict *qdict);
- };
+@@ -112,7 +112,6 @@ struct Monitor {
+     CharFrontend chr;
+     int suspend_cnt;            /* Needs to be accessed atomically */
+     bool is_qmp;
+-    bool skip_flush;
+     bool use_io_thread;
  
- struct Monitor {
+     char *mon_cpu_path;
+@@ -194,8 +193,7 @@ extern QemuMutex monitor_lock;
+ extern MonitorList mon_list;
+ 
+ void monitor_complete(Monitor *mon, Error **errp);
+-void monitor_data_init(Monitor *mon, bool is_qmp, bool skip_flush,
+-                       bool use_io_thread);
++void monitor_data_init(Monitor *mon, bool is_qmp, bool use_io_thread);
+ void monitor_data_destroy(Monitor *mon);
+ int monitor_can_read(void *opaque);
+ void monitor_list_append(Monitor *mon);
 diff --git a/monitor/monitor.c b/monitor/monitor.c
-index 8b70380d64..6f0353d9f1 100644
+index 747ca27fd5..e3e5623a4b 100644
 --- a/monitor/monitor.c
 +++ b/monitor/monitor.c
-@@ -346,22 +346,13 @@ static inline QEMUClockType monitor_get_event_clock(void)
- static void monitor_qapi_event_emit(QAPIEvent event, QDict *qdict)
- {
-     Monitor *mon;
--    MonitorQMP *qmp_mon;
+@@ -188,7 +188,12 @@ void monitor_flush_locked(Monitor *mon)
+     size_t len;
+     const char *buf;
  
-     trace_monitor_protocol_event_emit(event, qdict);
-     QTAILQ_FOREACH(mon, &mon_list, entry) {
--        if (!monitor_is_qmp(mon)) {
--            continue;
-+        MonitorClass *cls = MONITOR_GET_CLASS(mon);
-+        if (cls->emit_event) {
-+            cls->emit_event(mon, event, qdict);
-         }
--
--        qmp_mon = container_of(mon, MonitorQMP, parent_obj);
--        {
--            QEMU_LOCK_GUARD(&mon->mon_lock);
--            if (qmp_mon->commands == &qmp_cap_negotiation_commands) {
--                continue;
--            }
--        }
--        qmp_send_response(qmp_mon, qdict);
+-    if (mon->skip_flush) {
++    /*
++     * When used by QMP human-monitor-command, no chardev
++     * will be connected, as we want to just collect the
++     * output in the buffer
++     */
++    if (!mon->chr.fe_is_open) {
+         return;
      }
+ 
+@@ -642,8 +647,7 @@ static void monitor_iothread_init(void)
+     mon_iothread = iothread_create("mon_iothread", &error_abort);
  }
  
+-void monitor_data_init(Monitor *mon, bool is_qmp, bool skip_flush,
+-                       bool use_io_thread)
++void monitor_data_init(Monitor *mon, bool is_qmp, bool use_io_thread)
+ {
+     if (use_io_thread && !mon_iothread) {
+         monitor_iothread_init();
+@@ -651,7 +655,6 @@ void monitor_data_init(Monitor *mon, bool is_qmp, bool skip_flush,
+     qemu_mutex_init(&mon->mon_lock);
+     mon->is_qmp = is_qmp;
+     mon->outbuf = g_string_new(NULL);
+-    mon->skip_flush = skip_flush;
+     mon->use_io_thread = use_io_thread;
+ }
+ 
+diff --git a/monitor/qmp-cmds.c b/monitor/qmp-cmds.c
+index bfde769ef0..0d9adad288 100644
+--- a/monitor/qmp-cmds.c
++++ b/monitor/qmp-cmds.c
+@@ -168,7 +168,7 @@ char *qmp_human_monitor_command(const char *command_line, bool has_cpu_index,
+     char *output = NULL;
+     MonitorHMP *hmp = MONITOR_HMP(object_new(TYPE_MONITOR_HMP));
+ 
+-    monitor_data_init(&hmp->parent_obj, false, true, false);
++    monitor_data_init(&hmp->parent_obj, false, false);
+ 
+     if (has_cpu_index) {
+         int ret = monitor_set_cpu(&hmp->parent_obj, cpu_index);
 diff --git a/monitor/qmp.c b/monitor/qmp.c
-index 694d303215..ec17050a70 100644
+index 2a8532ef96..e3318b57db 100644
 --- a/monitor/qmp.c
 +++ b/monitor/qmp.c
-@@ -99,11 +99,17 @@ static void monitor_qmp_set_pretty(Object *obj, bool val, Error **errp)
-     mon->pretty = val;
- }
+@@ -572,7 +572,7 @@ void monitor_new_qmp(const char *chardev_id, bool pretty, Error **errp)
+     qemu_chr_fe_set_echo(&mon->parent_obj.chr, true);
  
-+static void monitor_qmp_emit_event(Monitor *mon, QAPIEvent event, QDict *qdict);
-+
- static void monitor_qmp_class_init(ObjectClass *cls, const void *data)
- {
-+    MonitorClass *moncls = MONITOR_CLASS(cls);
-+
-     object_class_property_add_bool(cls, "pretty",
-                                    monitor_qmp_get_pretty,
-                                    monitor_qmp_set_pretty);
-+
-+    moncls->emit_event = monitor_qmp_emit_event;
- }
+     /* Note: we run QMP monitor in I/O thread when @chr supports that */
+-    monitor_data_init(&mon->parent_obj, true, false,
++    monitor_data_init(&mon->parent_obj, true,
+                       qemu_chr_has_feature(mon->parent_obj.chr.chr,
+                                            QEMU_CHAR_FEATURE_GCONTEXT));
  
- static void handle_qmp_command(void *opaque, QObject *req, Error *err);
-@@ -117,6 +123,20 @@ static void monitor_qmp_init(Object *obj)
-     json_message_parser_init(&mon->parser, handle_qmp_command, mon, NULL);
- }
- 
-+static void monitor_qmp_emit_event(Monitor *mon, QAPIEvent event, QDict *qdict)
-+{
-+    MonitorQMP *qmp = MONITOR_QMP(mon);
-+
-+    WITH_QEMU_LOCK_GUARD(&mon->mon_lock) {
-+        if (qmp->commands == &qmp_cap_negotiation_commands) {
-+            return;
-+        }
-+    }
-+
-+    qmp_send_response(qmp, qdict);
-+}
-+
-+
- static bool qmp_oob_enabled(MonitorQMP *mon)
- {
-     return mon->capab[QMP_CAPABILITY_OOB];
 -- 
 2.54.0
 
