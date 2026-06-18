@@ -4,128 +4,128 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BDAC0CD98F2
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BDB01CD98F3
 	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jun 2026 12:34:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1waBvr-00013K-S5; Thu, 18 Jun 2026 08:33:19 -0400
+	id 1waBwT-0003ox-HB; Thu, 18 Jun 2026 08:33:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1waBvp-0000oY-I4
- for qemu-devel@nongnu.org; Thu, 18 Jun 2026 08:33:17 -0400
+ id 1waBwR-0003j0-PN
+ for qemu-devel@nongnu.org; Thu, 18 Jun 2026 08:33:55 -0400
 Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1waBvn-0001Ll-SR
- for qemu-devel@nongnu.org; Thu, 18 Jun 2026 08:33:17 -0400
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+ id 1waBwP-0001as-Sb
+ for qemu-devel@nongnu.org; Thu, 18 Jun 2026 08:33:55 -0400
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65IAs0Nc1030375
- for <qemu-devel@nongnu.org>; Thu, 18 Jun 2026 12:33:14 GMT
+ 65IArhpT936405
+ for <qemu-devel@nongnu.org>; Thu, 18 Jun 2026 12:33:52 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- 5yHXzaYJvyUjrT32bfQgx2x8sTz0bFal6uJwPNkFygU=; b=iM76KZKaGRztQdlA
- 3jK5s1TipoQnVOt8jISs0WXaiT+AOKDTv73JyKPTAQh6bWVBAQbNX54w1csRBtNe
- FuhkqvNgdMzBqO0dNgLZtroxxb+FdlijS/tJs1ZvTeA0PIIk/WInQxsi1LIJOxI6
- BimQBY6YjZ/lQZK849//zeu7BGdI9QlTZIxmUx55gM7POFHYmPqyp7fqVGkt8QvG
- AtrbLz3Pz03vkB2aF20X2eR10kwxltAq65nyA4XD/cL4Bt9sQ8bnajnwu6QclisF
- paFwzebgjrnYEz+xv2cWq06SGmPCAMsHQkWIrUxRKpd0u+yn1Qaj76MOmbJM9p1O
- sQzRxg==
-Received: from mail-ua1-f71.google.com (mail-ua1-f71.google.com
- [209.85.222.71])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ev0vm3cwc-1
+ DC3BSaFtFB6SAIxW6IFL5cbKK0McN8PDE54PlOkMhbk=; b=FBJbTG430qBM8bDB
+ A7zGCtjXc2bKn9kkw9eMEB/OEpXQsaFtzmtV6uYTluq8zRQcYH/nmzFTxSCQtRAN
+ 4lNMIl6q5KSo8UPSpwHCGPhXkkKY3C0ZjvdBheO9c1oM941AoxG7BOutOQ9eT0ZM
+ 8JkF/I3nUPcKHPv/pynMhFIFb+iPRrhl28b3pj1APUOzBSakmpCvWMtCPdCajhe4
+ Jl2fygkXPsNR1z+ep3vrYp4FoRCmEe2vaPpASH6Wqchs+4mILe/5/tyvzdo5AvQQ
+ uCU9ecdJeFcb7+m03T9Pc6jQySR6BPsgIhDm1xyHQmaswRGM9KVrgxuniP/k6vbs
+ UFi1UQ==
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
+ [209.85.222.200])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4euxt546qf-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 18 Jun 2026 12:33:14 +0000 (GMT)
-Received: by mail-ua1-f71.google.com with SMTP id
- a1e0cc1a2514c-966a61478ceso274608241.2
- for <qemu-devel@nongnu.org>; Thu, 18 Jun 2026 05:33:14 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Thu, 18 Jun 2026 12:33:52 +0000 (GMT)
+Received: by mail-qk1-f200.google.com with SMTP id
+ af79cd13be357-9181f3cc5ecso414189985a.1
+ for <qemu-devel@nongnu.org>; Thu, 18 Jun 2026 05:33:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1781785993; x=1782390793; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1781786031; x=1782390831; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=5yHXzaYJvyUjrT32bfQgx2x8sTz0bFal6uJwPNkFygU=;
- b=BAhsf1oCj6EmQaeHyxC/sVAIakRCROscC0hQcz5C0WGpAEGZ88Po+30uH1mfqgjq+W
- +uNcZuQuKkbO5cX4PRFYeXFvxnYOW1yY54Ypyw8dYeAOqzsvaz9dQyGIoEmwe9BDgUc3
- x1tHVOEsw456m9dY2KIvY1TigpbmZH+/5wo7gBipWIAaWIcEAcCEwoDfBBjhppa1MMgY
- 4pc1LMar1oXty8/wMaFs5mCPL3cVHqACSsmE5Dy6UD/mUf1cvHJRqWxAxPT+YJL7TfnR
- 97F09ILYz3RtXc3IJjlgQNEnKAV4hgivMfHgfeJthiRqohfX9A/ptPIKjZTJeoubud5b
- +5yg==
+ :reply-to; bh=DC3BSaFtFB6SAIxW6IFL5cbKK0McN8PDE54PlOkMhbk=;
+ b=XhOhwZE0/I5TMxUFhHTqWaUDxFfhvhnJTTtVGuFU8TbGr8d0xuDZCBLSeahVyABc/q
+ TJKmkqS+DrOW9oQ2Irf1vxU6eie7DC6C9mibV1K6OvVEVHcH8sIy87Oj5FGMD3QJZDby
+ zawr99kniOdM+lPDtVe6rJI4AQQK9c0ok/pS7r24MVqBYRDcdoLd0s4Gvnu+1fndMUW8
+ 1SAFwnrE1teZ6oGmEF9dsX2p2DPjrWW+53HcdkFi2DSCgFMYqyHVlercizzw/zrrVqIS
+ TVMAIlXLkogAQ+CnQLgvMdfMklA23Z9jndULWitHYHIGpQ/vtDS9RE0vic47aZXqycw5
+ 6rqQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781785993; x=1782390793;
+ d=1e100.net; s=20251104; t=1781786031; x=1782390831;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=5yHXzaYJvyUjrT32bfQgx2x8sTz0bFal6uJwPNkFygU=;
- b=lmSbaW8O1UGts1UqqGQBgFD/O2f8iWAWy82hEXzIAq5mKebkyCvVHFalmB9llu+9rM
- YXftEURsYzfcSwSdkJm7D8ptQQptt0zQFyh6J8ws8aiBINS/DW8q/vOQQUGWgaMRIvRv
- nXARIAoof9dYFFOsxzkY2eRik/zCcw2XNGJebR62VNGhgw+i1VfpwenKmSj2BQCxUnIV
- cg+bT7JGyeJVUO7WX/txuWgbPdAaj5mCGkvaT8xDqAZdidMaltsQ06PbAw7PmsuJ1Waf
- MovXKkhCX1EprXUYMm3ft9GID5SivDPKuPptMuap/RZke497YtluPYEVD1LTOgb7wjI6
- LEOw==
-X-Gm-Message-State: AOJu0YxCxrHzoCcLxEPojBTquGbSZ4kTjmvrePc4FLV9RS4znY/INOTW
- 1qp/gPSFf4rzLrrQ50oR2C+uZMJtKbM2ClAhGjmammfUXhEHWM9M/d0I0RpU0ry18xakM5hezDP
- 4yI0dzMcb864mUMYbAwMGkkH5OJ1AyGEZzJviTfrCfEik9a4+cHG4LZoFG6JBsd9gRA==
-X-Gm-Gg: AfdE7clObcXby/E5v3HmypC6qCX7LLFkuW9eibL5uRo8KOOYenPiuX6UW4nIqsuOo3F
- po7FxJfo+zxi4sFCjNh6UaVRc8P7PVzWRRm8v3pfRAlUhibBgDY39qphdYNviiCtU3NJvqwk5ye
- f4IOA/svLX6xVLGmoUQRfsPtZTqPUdItH2EjpRQMV7otvMKgu60Brk9C9XWErJr1ZnMB1dLZ6oX
- vH5y99j/KKxuFsWiJtK3As7t3Ad7tdYIR252bWW3+puVC44hTWic8VLLS5+Na471tF5y5QfVMSh
- 4L9II3idm6pA0wr5OdSDNXHq9oLswxvVLtQbxzW3mzfcVvhbvzOIdjEOapMTbwGSe03i8g1a0bL
- VNYv3CHIcc94gRbsYA//fN6MtZA3l2keKJsxohiL8qIq28OUAE+8jfl7rW5fyDrG096ve
-X-Received: by 2002:a05:6102:2b98:b0:71e:1c56:e792 with SMTP id
- ada2fe7eead31-727c4cbd51dmr2076758137.8.1781785993467; 
- Thu, 18 Jun 2026 05:33:13 -0700 (PDT)
-X-Received: by 2002:a05:6102:2b98:b0:71e:1c56:e792 with SMTP id
- ada2fe7eead31-727c4cbd51dmr2076736137.8.1781785992929; 
- Thu, 18 Jun 2026 05:33:12 -0700 (PDT)
+ bh=DC3BSaFtFB6SAIxW6IFL5cbKK0McN8PDE54PlOkMhbk=;
+ b=PykdYnB28vyhosQOnbkPB8LEdhQ8Xq4DfKTRGhQPUxe+N3ms1WZ77BJK4+4KT1ufaq
+ 1p3urdBOGGqAbKZJqOmGI9yMBM/pxXJePIvUs94odgaeKFKnHJPsqKjyJR53Kfgd9dyv
+ /N++/iEEwBRQZH5QEScxnmdIug5xse3fLNExfEk/4xIbcZnPv+LY0Wcx6zPTpnVURCSf
+ PqeZ+X7+0In33wqRlawJ6zo58v+AgsqsWXooMRbQ32HLkqe4cV1K/PtCSyhV4GsPyPDR
+ 8FmgxKdpwDxIvG7ITi7TY9s+8LC0WVV9uPspg3ptnrmY5+6B3UQ4opfeO5+L8Idas9eB
+ CAVg==
+X-Gm-Message-State: AOJu0YwlTQ2TZZf72ye8cIN+eCCJwVOlNsKgpwnh6yxJZisfWEglkJbc
+ yax2LLfUOICdz+BE7/ffQRouOm5GlXynw7StLjsDy3kb3DAt0Q7+RTR/llXhrXcqvsCB/+E07Za
+ 8miXeHv/Df+PhCY0AuCI5K7GqvC7rSFYnQF7TZOKgKqnX/yYiMVpO7FcHsYc6odsvVw==
+X-Gm-Gg: AfdE7ckW3LZaFPK6oLb9VPYnH9ihEpSM7BYs1vhCGcEeojwUonj02jMq0InyLMXmNsI
+ tjn//Dhk1RQgy2UtirpbbS598vKa/ZTQiY9m095K/yUZiagS4WUAHMYckEiylP6J1YVz1LxDRqr
+ j5JTqpOUW+G/zlB8Yyi81i/Hqle0qRewQlzbgZh0xS25PUXkjYXXGfbrbEwV/EegU4l2cwsZtnd
+ 4pUNlCHIMizLHGVeajuRPMYeGg7B9t9KBJzNtg4yuUXnmGHqLaAkT2WlyK7O+ILWoUvLM8j/v3o
+ Wb83+8OdLvKplm5ktI56b1EB5hDyzcLaX2BvHzOYev/mV3ppT+qOnon7P9pnH6/LfqRSvZJlyUc
+ PNCR75r2a2zTxpvmXIAHkk9qxUpZKZXawYIRbM+vUp1m+M/RLd0LC6MCPEplqt/q7by6H
+X-Received: by 2002:a05:620a:294f:b0:918:7e9e:de74 with SMTP id
+ af79cd13be357-91f083f7790mr505349185a.17.1781786031400; 
+ Thu, 18 Jun 2026 05:33:51 -0700 (PDT)
+X-Received: by 2002:a05:620a:294f:b0:918:7e9e:de74 with SMTP id
+ af79cd13be357-91f083f7790mr505342085a.17.1781786030854; 
+ Thu, 18 Jun 2026 05:33:50 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4640144c021sm5382769f8f.32.2026.06.18.05.33.11
+ 5b1f17b1804b1-4923a1d9d87sm33602025e9.2.2026.06.18.05.33.48
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 18 Jun 2026 05:33:11 -0700 (PDT)
+ Thu, 18 Jun 2026 05:33:49 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL 39/48] system/memory: Rename cpu_exec_init_all() ->
- machine_memory_init()
-Date: Thu, 18 Jun 2026 14:28:16 +0200
-Message-ID: <20260618122825.90331-40-philmd@oss.qualcomm.com>
+Subject: [PULL 44/48] accel/tcg: Move cpu_unwind_state_data() out of
+ 'exec/cpu-common.h'
+Date: Thu, 18 Jun 2026 14:28:21 +0200
+Message-ID: <20260618122825.90331-45-philmd@oss.qualcomm.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260618122825.90331-1-philmd@oss.qualcomm.com>
 References: <20260618122825.90331-1-philmd@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjE4MDExNiBTYWx0ZWRfXxrL78xruSBZE
- TAgKtKtnr9/MpxZAHxZ555JGqQzH/aIzPjrR1wNICJ1s6CwsVMecm6vEPf9LoocxqDSRl9fIwNK
- r4qgo08HnhX3vXOWCvMzdJ5K1V0Zdnrg2hB+a2eoGMJuJPsrbvXbyAVxlhODOjjUtk3L2SIPf/s
- PJKi3lfTisLil4M6pSVjsUJIelThpN5d1FghsiVY237MZwnQORd1kIwi04ZgPC3HvX6QzRVEI8m
- A5HJnLOzeuyP+91cMRCQIjzbF1XmKS/T+O+KmxdSksJiM+FdiC77gcJ68gFlhdODyoC7h/6l7tS
- 2SJ0AcfWW1zdfh2Mcvq56zZpq9s8EQHDtfEHOSMUmxUQARMoltfsGsao7QyNfYQp8Xnh0P+quml
- X5Py7+9NQyW+qTwUP1qMfV+YZxSpWTzlZTCDFJHafOBvGbdlM5XdMQcRVaEjDibzl58gYxAcT2j
- g8o4FCjJarWkAbXROhg==
-X-Proofpoint-ORIG-GUID: 7Xif4O_jKvxirBHl8MVT-owSfXecmcz_
-X-Authority-Analysis: v=2.4 cv=UrRT8ewB c=1 sm=1 tr=0 ts=6a33e58a cx=c_pps
- a=KB4UBwrhAZV1kjiGHFQexw==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+X-Proofpoint-GUID: PyIyScZKnnfZJiYp_3WLYx2MOZMWwNjY
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjE4MDExNiBTYWx0ZWRfX0GvYWnYfd36M
+ SG/kOG0i+/LqRWQgPQEkeLZaljLntc4S3YmrQr+clm3rpUVcPxh5U2dXmTj33J2oGv2DMr9VEDZ
+ ur6quvw72IVsc0Rr2H9VjTCOoJ9dAtA=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjE4MDExNiBTYWx0ZWRfX96vgnt3W8krw
+ 6Y1HKdtr7PneJHCEu/ebsQ0wwJZBkD8mTCx1nge1qgxIBuKgxbItzQKiG8SZ7J2LSbCjQlbveXN
+ r4dzogTEddppyVVzl9x0g79vhU7cK/AO3Rogu9VkIZnoV99HlZo0UnnApO4UUOPUPNw7A9U3izB
+ v/eCTovDo8sAmwU01C8hcxOMBSqm9bMEZpixaLJBGGWO/+gqt8qZzO9xypMwhNd7O/dCQ4lfgDR
+ aXC2Uy3V2JxfEOn+Il6dnKYTBVT35c/DLuLUuftB/iswURomjAYb2IbXsUqsOrRI6h0JHQ5hkPC
+ y1Rf2acOkQ+ee8ZKGXKWM8a4YaIsY3v1DtW5RTWQaDJbvOg0RrynxvYQR5kP0jXWDR5ot19D9F/
+ X8RTprnk3cXg2Gj/es5qZWUkt6UPtN6DOYUmspL8pR8+qGHhEAb7uoiqghvqr7HrYAmWfMsJAzX
+ wSWCdvpcdfDVf6H/7Eg==
+X-Authority-Analysis: v=2.4 cv=PMw/P/qC c=1 sm=1 tr=0 ts=6a33e5b0 cx=c_pps
+ a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
  a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22
- a=EUspDBNiAAAA:8 a=KKAkSRfTAAAA:8 a=4N88G4Qxp0CkUPUmdhAA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=o1xkdb1NAhiiM49bd1HK:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-GUID: 7Xif4O_jKvxirBHl8MVT-owSfXecmcz_
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjE4MDExNiBTYWx0ZWRfX6z1bs2kzL3O2
- bwRIVrS4JwM6jpJPb0sMjykqD8vRws2ijUxtRU+gLJRuql19XSr3Q1yWVu4DG8LYG2uHy3KMlJp
- 818m+Gcf0QElJoLC9RKZVwDjCh8iwhk=
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22
+ a=EUspDBNiAAAA:8 a=KKAkSRfTAAAA:8 a=yZywUPRysb3OgPdCrAMA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=O8hF6Hzn-FEA:10 a=PEH46H7Ffwr30OY-TuGO:22
+ a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-ORIG-GUID: PyIyScZKnnfZJiYp_3WLYx2MOZMWwNjY
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-06-18_01,2026-06-18_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 lowpriorityscore=0 priorityscore=1501 phishscore=0
- bulkscore=0 spamscore=0 suspectscore=0 adultscore=0 malwarescore=0
- clxscore=1015 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2606180116
+ phishscore=0 clxscore=1015 suspectscore=0 priorityscore=1501 bulkscore=0
+ malwarescore=0 impostorscore=0 spamscore=0 lowpriorityscore=0 adultscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606180116
 Received-SPF: pass client-ip=205.220.168.131;
  envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
 X-Spam_score_int: -27
@@ -150,79 +150,118 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-cpu_exec_init_all() is system specific: it initializes globals
-for the memory subsystem. Rename it as machine_memory_init()
-and restrict its declaration to 'system/' namespace.
+Move the TCG-specific cpu_unwind_state_data() declaration out
+of the generic "exec/cpu-common.h" header, to the recently
+created "accel/tcg/cpu-loop.h" one.
+
+Include "accel/tcg/cpu-loop.h" where appropriate.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20260616153754.93545-3-philmd@oss.qualcomm.com>
+Message-Id: <20260617171438.75914-7-philmd@oss.qualcomm.com>
 ---
- include/exec/cpu-common.h | 1 -
- system/memory-internal.h  | 2 ++
- system/physmem.c          | 2 +-
- system/vl.c               | 3 ++-
- 4 files changed, 5 insertions(+), 3 deletions(-)
+ include/accel/tcg/cpu-loop.h | 13 +++++++++++++
+ include/exec/cpu-common.h    | 13 -------------
+ accel/tcg/translate-all.c    |  1 +
+ target/i386/helper.c         |  1 +
+ target/or1k/sys_helper.c     |  1 +
+ target/riscv/csr.c           |  1 +
+ 6 files changed, 17 insertions(+), 13 deletions(-)
 
-diff --git a/include/exec/cpu-common.h b/include/exec/cpu-common.h
-index 7eb45a95b6c..a781dba770b 100644
---- a/include/exec/cpu-common.h
-+++ b/include/exec/cpu-common.h
-@@ -18,7 +18,6 @@
- #define EXCP_YIELD      0x10004 /* cpu wants to yield timeslice to another */
- #define EXCP_ATOMIC     0x10005 /* stop-the-world and emulate atomic */
+diff --git a/include/accel/tcg/cpu-loop.h b/include/accel/tcg/cpu-loop.h
+index 94e91eb9a36..88333d39200 100644
+--- a/include/accel/tcg/cpu-loop.h
++++ b/include/accel/tcg/cpu-loop.h
+@@ -20,4 +20,17 @@ int cpu_exec(CPUState *cpu);
  
--void cpu_exec_init_all(void);
  void cpu_exec_step_atomic(CPUState *cpu);
  
- #define REAL_HOST_PAGE_ALIGN(addr) ROUND_UP((addr), qemu_real_host_page_size())
-diff --git a/system/memory-internal.h b/system/memory-internal.h
-index c7573a68b5e..b2b9b5b0c5e 100644
---- a/system/memory-internal.h
-+++ b/system/memory-internal.h
-@@ -14,6 +14,8 @@
- #ifndef MEMORY_INTERNAL_H
- #define MEMORY_INTERNAL_H
- 
-+void machine_memory_init(void);
++/**
++ * cpu_unwind_state_data:
++ * @cpu: the cpu context
++ * @host_pc: the host pc within the translation
++ * @data: output data
++ *
++ * Attempt to load the unwind state for a host pc occurring in
++ * translated code.  If @host_pc is not in translated code, the
++ * function returns false; otherwise @data is loaded.
++ * This is the same unwind info as given to restore_state_to_opc.
++ */
++bool cpu_unwind_state_data(CPUState *cpu, uintptr_t host_pc, uint64_t *data);
 +
- static inline AddressSpaceDispatch *flatview_to_dispatch(FlatView *fv)
- {
-     return fv->dispatch;
-diff --git a/system/physmem.c b/system/physmem.c
-index 883ac0f314b..9e5b50c5b1c 100644
---- a/system/physmem.c
-+++ b/system/physmem.c
-@@ -3592,7 +3592,7 @@ void address_space_register_map_client(AddressSpace *as, QEMUBH *bh)
-     }
- }
+ #endif
+diff --git a/include/exec/cpu-common.h b/include/exec/cpu-common.h
+index a97bb6faf42..7c9631efb06 100644
+--- a/include/exec/cpu-common.h
++++ b/include/exec/cpu-common.h
+@@ -61,19 +61,6 @@ void list_cpus(void);
+ #ifdef CONFIG_TCG
+ #include "qemu/atomic.h"
  
--void cpu_exec_init_all(void)
-+void machine_memory_init(void)
- {
-     qemu_mutex_init(&ram_list.mutex);
-     /* The data structures we set up here depend on knowing the page size,
-diff --git a/system/vl.c b/system/vl.c
-index dbdd4f22572..1c0da7df293 100644
---- a/system/vl.c
-+++ b/system/vl.c
-@@ -143,6 +143,7 @@
- #include "system/iothread.h"
+-/**
+- * cpu_unwind_state_data:
+- * @cpu: the cpu context
+- * @host_pc: the host pc within the translation
+- * @data: output data
+- *
+- * Attempt to load the unwind state for a host pc occurring in
+- * translated code.  If @host_pc is not in translated code, the
+- * function returns false; otherwise @data is loaded.
+- * This is the same unwind info as given to restore_state_to_opc.
+- */
+-bool cpu_unwind_state_data(CPUState *cpu, uintptr_t host_pc, uint64_t *data);
+-
+ /**
+  * cpu_restore_state:
+  * @cpu: the cpu context
+diff --git a/accel/tcg/translate-all.c b/accel/tcg/translate-all.c
+index 5235c73bc26..3f1a3a28438 100644
+--- a/accel/tcg/translate-all.c
++++ b/accel/tcg/translate-all.c
+@@ -29,6 +29,7 @@
+ #include "qemu/target-info.h"
+ #include "exec/log.h"
+ #include "exec/icount.h"
++#include "accel/tcg/cpu-loop.h"
+ #include "accel/tcg/cpu-ops.h"
+ #include "tb-jmp-cache.h"
+ #include "tb-hash.h"
+diff --git a/target/i386/helper.c b/target/i386/helper.c
+index c3cba04e142..68362141621 100644
+--- a/target/i386/helper.c
++++ b/target/i386/helper.c
+@@ -32,6 +32,7 @@
+ #endif
+ #include "qemu/log.h"
+ #ifdef CONFIG_TCG
++#include "accel/tcg/cpu-loop.h"
+ #include "tcg/insn-start-words.h"
+ #endif
+ 
+diff --git a/target/or1k/sys_helper.c b/target/or1k/sys_helper.c
+index ca627bd7194..8ffa31b84fd 100644
+--- a/target/or1k/sys_helper.c
++++ b/target/or1k/sys_helper.c
+@@ -23,6 +23,7 @@
+ #include "exec/cputlb.h"
+ #include "exec/target_page.h"
+ #include "exec/helper-proto.h"
++#include "accel/tcg/cpu-loop.h"
+ #include "exception.h"
+ #ifndef CONFIG_USER_ONLY
+ #include "hw/core/boards.h"
+diff --git a/target/riscv/csr.c b/target/riscv/csr.c
+index ec931a8c3dd..dd9726fcf4c 100644
+--- a/target/riscv/csr.c
++++ b/target/riscv/csr.c
+@@ -27,6 +27,7 @@
+ #include "time_helper.h"
+ #include "exec/cputlb.h"
+ #include "exec/icount.h"
++#include "accel/tcg/cpu-loop.h"
+ #include "accel/tcg/getpc.h"
  #include "qemu/guest-random.h"
- #include "qemu/keyval.h"
-+#include "memory-internal.h"
- 
- #define MAX_VIRTIO_CONSOLES 1
- 
-@@ -2217,7 +2218,7 @@ static void qemu_create_machine(QDict *qdict)
-         }
-     }
- 
--    cpu_exec_init_all();
-+    machine_memory_init();
- 
-     /*
-      * Get the default machine options from the machine if it is not already
+ #include "qapi/error.h"
 -- 
 2.53.0
 
