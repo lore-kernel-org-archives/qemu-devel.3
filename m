@@ -4,97 +4,124 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BCAA2CD98ED
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jun 2026 11:21:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7DAE0CD98ED
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jun 2026 11:31:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1waAnx-0007mR-Mm; Thu, 18 Jun 2026 07:21:05 -0400
+	id 1waAxZ-0001mB-6b; Thu, 18 Jun 2026 07:31:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <filip.hejsek@gmail.com>)
- id 1waAnw-0007lv-OL
- for qemu-devel@nongnu.org; Thu, 18 Jun 2026 07:21:04 -0400
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <filip.hejsek@gmail.com>)
- id 1waAnv-000100-2k
- for qemu-devel@nongnu.org; Thu, 18 Jun 2026 07:21:04 -0400
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-4921e4dd62dso6645045e9.0
- for <qemu-devel@nongnu.org>; Thu, 18 Jun 2026 04:21:02 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
+ id 1waAxW-0001lW-90
+ for qemu-devel@nongnu.org; Thu, 18 Jun 2026 07:30:58 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
+ id 1waAxU-0007nb-TA
+ for qemu-devel@nongnu.org; Thu, 18 Jun 2026 07:30:58 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1781782255;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=GLifyH9wwKhXmZr0mH4q7xbzpvzt1kDkLGA8uGgC+KI=;
+ b=WDJT00+E6Hfo5BSHrcb3eDw0ApkRb13ks9UX1cN0BiVFtc/ByOf3gGSoiZG65bZKgBzQgR
+ 5nfBNNWg1p/QgLAimv4Qn1JuJSEuZOPpEigkOQMukZmBhorZkG8ZIG5kAz9tFwp+qfUo/b
+ CFUHWwucG2YdtsKILmvJHwQpLtx/3qs=
+Received: from mail-pg1-f197.google.com (mail-pg1-f197.google.com
+ [209.85.215.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-324-dF48XnSyNeyoYLkB_8mxbw-1; Thu, 18 Jun 2026 07:30:53 -0400
+X-MC-Unique: dF48XnSyNeyoYLkB_8mxbw-1
+X-Mimecast-MFC-AGG-ID: dF48XnSyNeyoYLkB_8mxbw_1781782253
+Received: by mail-pg1-f197.google.com with SMTP id
+ 41be03b00d2f7-c88da04b71dso590808a12.3
+ for <qemu-devel@nongnu.org>; Thu, 18 Jun 2026 04:30:53 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1781782253; cv=none;
+ d=google.com; s=arc-20240605;
+ b=cQbP32UZ00vFaiO1UhUn6180n2ST0uN4BsYupWrVWDdRuwdIhsEexK167TBUhHbrMK
+ Cap9uVzfwm9peKRM/IKqmAq7lifWgtAhMUdyRmIrpuKosJLLejbcu5tZ1lcMvDlpW098
+ 1WnGr5tSuz8L+lK1kGjHWwvlixT5PVIxfwVzBA0ESD6VQlxL75eOXnSCkHG7QX+2Ypm3
+ f6cGwQHtDuVqN1nhdBedsVI2LhLPiIr70boKUyLmhCp2EtFyuzGW3uE4rsCIZKVLUNCh
+ k/7BFl5W0c78w5Aa3CJQDybnx/wpPMfCUDFpWDjDQe849Ts3HkG4Yi0Ca6a1hSPDG9iF
+ tF1g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=GLifyH9wwKhXmZr0mH4q7xbzpvzt1kDkLGA8uGgC+KI=;
+ fh=w+VAXIwO0btySx+RJ+E+w4s5PR/wdBxtmklBKOkx3oE=;
+ b=KG8oTw3XT4x8ao2AdLhUzAoEd6h7Fx3ecfM6jW8nCjbt2ocsAPh2wJaNbnvfiWkB+K
+ OfWcsWmQ6rOAfMZud4r2qbk5j8KnbZC4sMHw1+pqH2wqTe17XoDgxgfUwMB0BfwVdzjD
+ 8C2xva1aeGGuHLhTqHHdYwQiAonSA+ATfYRHp20twYZuKuLZha8dyjsjChfLwWU6EAWc
+ tfOBgNkHC3juTMoLwEVnKS2sbfNPqopNIvqYVdrdl/9iOwIcmXJp527q+aWkMwVJ9/7J
+ 9nPC78kwr/KjPXhtHNyHRTKJScwV86T/N+fPwzBiv3L0PtacPWMmpaF7Zp46/ejetmWZ
+ jDqg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1781781661; x=1782386461; darn=nongnu.org;
- h=cc:to:message-id:content-transfer-encoding:mime-version:subject
- :date:from:from:to:cc:subject:date:message-id:reply-to;
- bh=CZoNIBLpa4H4HVf3Cf2OZcXdi5J8raXPzj1RjxLRdoA=;
- b=Sk+aXpU7wgCCs2iRAP+Ub9t204SKL8zFqBpJdsEe1W3hHwHMjY7CIrHxzQSC7dzInX
- WwJg7XnNSNTktlFtUxXakLFYY0hFWVyG/+0zZXYNIUhP4oOwxm3T9axO8XRJZ4KTi6QG
- /zWPlazxUZhczAm/lYc5/iLle8W2gLbGuG6t16fiBL8vnO30uSACIix+zTxaM4xB7Lu+
- 6Iqq/Dzsf6hTduoD9dDYIPcdXCW2fYlH3klhsRqPJRapWvp29CMcyxfaq/gGvCE9vyXB
- e4g7RQEsGSxBg343Ufzq2I+Ff1KgfAAawogR0eYemJ5v2NJSSlyBTDFYSZEfvaiZGlqx
- F03g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781781661; x=1782386461;
- h=cc:to:message-id:content-transfer-encoding:mime-version:subject
- :date:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=redhat.com; s=google; t=1781782253; x=1782387053; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=CZoNIBLpa4H4HVf3Cf2OZcXdi5J8raXPzj1RjxLRdoA=;
- b=O6k0fzOZllzT+rM/sC4YWepG9jgYwfoa7ZyebDJn96aZply4SvAjHm+DPRjC4lPogP
- bcvPMfnc1ERoMbTuYn4PweyjIloKvJ9UOI6rxYXX+qzQmwP5k+2NuF88EHjFsQN9082G
- 7Kh+3BfdcDmRSB7hwV2OT81t0GW2yp3qin9fAcs89KCAY77zS01QxvRlWLEXKs3BgI+K
- i6nBOaX43lr2sgZ7Q/Le1mf7yLQAhSlYlNLIqfaGw1bmjiaC8X9TV6rNccm9UKIjWnlI
- K07P4teDT8akx8F1QKKJtI59bzC9ZUAl8d0MzOmLGeyUuhRKdqlYNxvv7nVPNsnRBwF+
- gzNA==
-X-Gm-Message-State: AOJu0YzaWDxdDRwetvuvVwfAqTOkiRo4h1bIRsT380pI9OTa1a0kIle6
- 8IlXO457nArzW0/xEMYliqAPL8I+OdPE7J3sh0bG9WJ/5KKketifH6+d
-X-Gm-Gg: AfdE7clxEwuXZjvVhzKu+DChD2yRLlQj9lr1yQfzQTv/3/Sx2FzL5zgsZIoSUEKCidP
- 8FWdW0r90Hv7vxB98YU1jenKzlAx9BPTns9V9WLimou8M8MpbWDgFNlXfqeXZzldZENaHS47JbQ
- 96ZqgVYQk5pClAT67eTfQdx08liQGUnYfxPHII+TsM/VngxVJbLU4ggJk1GmWFJ3oFKz2q9rdI4
- GSYzmRJKxLsdbl1tFir6yhfD3gNMFvmpPywSqirvAbQYkxtnMKNDTMWmpktSBY9IC1pdOKZauG/
- C1VpdBwENKDLwtxBCGpDuScebV63aFIIEnLJNlVeVnAaiJuGIPUPsrwo9UJX2ZG1Zv+dI3Mb8oy
- vCOqsqbkkqyh7axtzhpuDSHsklRbouTeTT6RcozsX9J+pTGZpx3Q5sU/nA3N0xZrEOfKRqpjQK+
- 9vYuUn1jRnjqoRrd/JKllBRMUoMXk+OySF9Wm/gQ==
-X-Received: by 2002:a05:600c:4593:b0:490:4b89:5372 with SMTP id
- 5b1f17b1804b1-4923817fef2mr43674495e9.11.1781781660829; 
- Thu, 18 Jun 2026 04:21:00 -0700 (PDT)
-Received: from localhost (89-24-32-97.nat.epc.tmcz.cz. [89.24.32.97])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4923a1d9d87sm30380855e9.2.2026.06.18.04.20.59
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 18 Jun 2026 04:20:59 -0700 (PDT)
-From: Filip Hejsek <filip.hejsek@gmail.com>
-Date: Thu, 18 Jun 2026 13:20:18 +0200
-Subject: [PATCH TRIVIAL] char-win-stdio: fix typo in spelling of 'stdio'
+ bh=GLifyH9wwKhXmZr0mH4q7xbzpvzt1kDkLGA8uGgC+KI=;
+ b=WCZvFT3vPliRhSbEvLPCKF5pdwV64/fJ43IU2578j3L1aMBKKCyOL/O7Hl7+dmH1f1
+ jjg3pmFJWHQENozI9NRPamVvhy8czvTgKqsqynlc4bHBkEQ+b3y4dMjOkmwEYkWAgnzY
+ 4Y6lazIzFraO3Nb5APwEHRruauRgfn4UFvb5kuYCSVirh4N/ntA/ekv7p5OtfReE7KrV
+ RkcPNPD00vE7IApqKWrCGz87mU/+N5L4HVPFyzpEZxQaCdOjAfjPjTpb0DzqBxGBAXK1
+ lptknXnJz2FB0UYHi9YHIq9RoqLi2eNrrLOQNm9uLuSdoXZnbTRaU84VDSlF9Pyt1kIu
+ nGIA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1781782253; x=1782387053;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=GLifyH9wwKhXmZr0mH4q7xbzpvzt1kDkLGA8uGgC+KI=;
+ b=BedHU9vNwCFLuLje8kXp4LJPhV43d7o4xltWpbB+06UrccrbZuJSTDROck7BmpX0y8
+ GZmDtmugTnFCsWeKkBgj0Gj8jqTKFHy+GXLQLDCKnohYy2nZQeyT+dBGNLqPtwJ4zvVy
+ 6BvLM6Kjf4EVqrcWp+2Azz/oNWf8SpPzEz+Xk67C+npBQ8yMBf5ALPSawStnA4qBZMzo
+ 4kBnUZ/PaLTkFW/4MbgUctovbVODgBeVHo9p2kNuS+VSm//pvbv5lskmVemZkG4JwzM6
+ fK3F5DziX8kpAnKj3/HPjMlrETQH3Pw9adaH8s8fAXONTvFcG0/lZc+hAAiuUI2alxoz
+ nxIQ==
+X-Gm-Message-State: AOJu0Yyfj0IypRRoGMeZKOiqrEdFnw3C1y77eEIpFJEk0V9eY9mtN+I5
+ 2wKEIcQfs2TBMc6ys7+XAuZxYDDoeR0aQmJ1CWaY7vYZDc9wmwwnoVzHk28L54FetDa08Sv3E/c
+ bW8Lx9JDqwFxUENYtUo/noqJUn5zGYMy9xUlfGZb4KPVkYuzLEfV6ikg9sqSRXCLjJL931Y07LB
+ dzbyeWDD2V9SLw63JaPd4NuAJkvC3lshY=
+X-Gm-Gg: AfdE7ckmybXcK00KzzExR2KIM9fPkVGnaWVadwweKiefKkdI04xij3O+p3eIT9AsT1J
+ i+ZiVw9yTQNNTvwaKw8ANSKGgcaLRTlOHB4IqqxY55Vy9gp7jAiVu06Vw2Kxhc81gnWkYXNKbZK
+ ayRFBbdBcphpYGrtVUo4uhtdELM4YkDMuEY7VP0szC5Fta6Hd3Ivb+pvWCZkuacYeTTDnX1Rhfl
+ GQ3HYJfmHc+TDrXKx5iocIAOu233+2xevSRbLHeDV3oJpMs7WfDLrxGwxuS6FSTI+55Kf6vY4/i
+ gqDiRupCyWgS
+X-Received: by 2002:a17:902:d542:b0:2be:3434:4e28 with SMTP id
+ d9443c01a7336-2c6f3465e4amr24726635ad.19.1781782252552; 
+ Thu, 18 Jun 2026 04:30:52 -0700 (PDT)
+X-Received: by 2002:a17:902:d542:b0:2be:3434:4e28 with SMTP id
+ d9443c01a7336-2c6f3465e4amr24726115ad.19.1781782252063; Thu, 18 Jun 2026
+ 04:30:52 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260618-char-win-stdio-typo-v1-1-05086b1b326b@gmail.com>
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
- vPSU3UzU4B8JSMDIzMDM0MLXaBokW55Zp5ucUlKZr5uSWVBvq5pYlKSoaV5SqpJqpESUGdBUWp
- aZgXY1GilkCDPME9HH6VYiERxaVJWanIJyEyl2loAcGNHtIAAAAA=
-X-Change-ID: 20260618-char-win-stdio-typo-5abb197de4e2
-To: qemu-devel@nongnu.org
-Cc: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>, 
- Laurent Vivier <laurent@vivier.eu>, qemu-trivial@nongnu.org
-X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1781781657; l=1445;
- i=filip.hejsek@gmail.com; s=20250912; h=from:subject:message-id;
- bh=B6InDpCOU3A0aCAEVqyNbL45ugtsncYezEz8HpVlh0M=;
- b=tvLVxWGAEl4Il2ukVnENwvavQWktZ04oDjoiLLHlvnqFx4DgYek71Pp5FGMqfm8upJwLvnohA
- GH1PZTNygTsCCvUU1vimvtwVEre1AO7e+sXf00Y/yjT5M6OKNkYG1qg
-X-Developer-Key: i=filip.hejsek@gmail.com; a=ed25519;
- pk=nakB8gEK3oi+Q/5dBTMCy/LgZL47NP60z1jeDR6O/WU=
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=filip.hejsek@gmail.com; helo=mail-wm1-x32c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+References: <20260618-char-win-stdio-typo-v1-1-05086b1b326b@gmail.com>
+In-Reply-To: <20260618-char-win-stdio-typo-v1-1-05086b1b326b@gmail.com>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
+Date: Thu, 18 Jun 2026 15:30:40 +0400
+X-Gm-Features: AVVi8CcbsqQWhcDF1h72udzseGsRD5QOyH8jb0jf1pkg9kQpTTxO0QlCdOydFDQ
+Message-ID: <CAMxuvawA-fGRAu25dL9Q=C2jqxTJkhibqrJtu6y8NsDy8P7rrA@mail.gmail.com>
+Subject: Re: [PATCH TRIVIAL] char-win-stdio: fix typo in spelling of 'stdio'
+To: Filip Hejsek <filip.hejsek@gmail.com>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
+ Michael Tokarev <mjt@tls.msk.ru>, Laurent Vivier <laurent@vivier.eu>,
+ qemu-trivial@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mlureau@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,49 +137,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Filip Hejsek <filip.hejsek@gmail.com>
----
- chardev/char-win-stdio.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+On Thu, Jun 18, 2026 at 3:21=E2=80=AFPM Filip Hejsek <filip.hejsek@gmail.co=
+m> wrote:
+>
+> Signed-off-by: Filip Hejsek <filip.hejsek@gmail.com>
 
-diff --git a/chardev/char-win-stdio.c b/chardev/char-win-stdio.c
-index bb9c195a8b..0deba3bffb 100644
---- a/chardev/char-win-stdio.c
-+++ b/chardev/char-win-stdio.c
-@@ -128,7 +128,7 @@ static void win_stdio_thread_wait_func(void *opaque)
-     SetEvent(stdio->hInputDoneEvent);
- }
- 
--static void win_stiod_chr_set_echo(Chardev *chr, bool echo)
-+static void win_stdio_chr_set_echo(Chardev *chr, bool echo)
- {
-     WinStdioChardev *stdio = WIN_STDIO_CHARDEV(chr);
-     DWORD              dwMode = 0;
-@@ -205,7 +205,7 @@ static bool win_stdio_chr_open(Chardev *chr,
- 
-     SetConsoleMode(stdio->hStdIn, dwMode);
- 
--    win_stiod_chr_set_echo(chr, false);
-+    win_stdio_chr_set_echo(chr, false);
- 
-     qemu_chr_be_event(chr, CHR_EVENT_OPENED);
-     return true;
-@@ -263,7 +263,7 @@ static void char_win_stdio_class_init(ObjectClass *oc, const void *data)
- 
-     cc->chr_open = win_stdio_chr_open;
-     cc->chr_write = win_stdio_chr_write;
--    cc->chr_set_echo = win_stiod_chr_set_echo;
-+    cc->chr_set_echo = win_stdio_chr_set_echo;
- }
- 
- static const TypeInfo char_win_stdio_type_info = {
+Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
 
----
-base-commit: c7cf7c810153d6f5f31aa2d5c0dee9087f6b4dff
-change-id: 20260618-char-win-stdio-typo-5abb197de4e2
-
-Best regards,
---  
-Filip Hejsek <filip.hejsek@gmail.com>
+> ---
+>  chardev/char-win-stdio.c | 6 +++---
+>  1 file changed, 3 insertions(+), 3 deletions(-)
+>
+> diff --git a/chardev/char-win-stdio.c b/chardev/char-win-stdio.c
+> index bb9c195a8b..0deba3bffb 100644
+> --- a/chardev/char-win-stdio.c
+> +++ b/chardev/char-win-stdio.c
+> @@ -128,7 +128,7 @@ static void win_stdio_thread_wait_func(void *opaque)
+>      SetEvent(stdio->hInputDoneEvent);
+>  }
+>
+> -static void win_stiod_chr_set_echo(Chardev *chr, bool echo)
+> +static void win_stdio_chr_set_echo(Chardev *chr, bool echo)
+>  {
+>      WinStdioChardev *stdio =3D WIN_STDIO_CHARDEV(chr);
+>      DWORD              dwMode =3D 0;
+> @@ -205,7 +205,7 @@ static bool win_stdio_chr_open(Chardev *chr,
+>
+>      SetConsoleMode(stdio->hStdIn, dwMode);
+>
+> -    win_stiod_chr_set_echo(chr, false);
+> +    win_stdio_chr_set_echo(chr, false);
+>
+>      qemu_chr_be_event(chr, CHR_EVENT_OPENED);
+>      return true;
+> @@ -263,7 +263,7 @@ static void char_win_stdio_class_init(ObjectClass *oc=
+, const void *data)
+>
+>      cc->chr_open =3D win_stdio_chr_open;
+>      cc->chr_write =3D win_stdio_chr_write;
+> -    cc->chr_set_echo =3D win_stiod_chr_set_echo;
+> +    cc->chr_set_echo =3D win_stdio_chr_set_echo;
+>  }
+>
+>  static const TypeInfo char_win_stdio_type_info =3D {
+>
+> ---
+> base-commit: c7cf7c810153d6f5f31aa2d5c0dee9087f6b4dff
+> change-id: 20260618-char-win-stdio-typo-5abb197de4e2
+>
+> Best regards,
+> --
+> Filip Hejsek <filip.hejsek@gmail.com>
+>
 
 
