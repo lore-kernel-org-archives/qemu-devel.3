@@ -4,126 +4,129 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0CA62CD98F9
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jun 2026 12:29:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8CFFACD98ED
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jun 2026 12:29:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1waBrI-0007tx-4T; Thu, 18 Jun 2026 08:28:36 -0400
+	id 1waBrn-0007zu-Oz; Thu, 18 Jun 2026 08:29:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1waBrG-0007tn-SK
- for qemu-devel@nongnu.org; Thu, 18 Jun 2026 08:28:34 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ id 1waBrm-0007zW-4o
+ for qemu-devel@nongnu.org; Thu, 18 Jun 2026 08:29:06 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1waBrE-0007UY-7s
- for qemu-devel@nongnu.org; Thu, 18 Jun 2026 08:28:34 -0400
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+ id 1waBrk-0007Xs-G5
+ for qemu-devel@nongnu.org; Thu, 18 Jun 2026 08:29:05 -0400
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65IArt2b1536469
- for <qemu-devel@nongnu.org>; Thu, 18 Jun 2026 12:28:30 GMT
+ 65IAriIq3763792
+ for <qemu-devel@nongnu.org>; Thu, 18 Jun 2026 12:28:58 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- content-transfer-encoding:content-type:date:from:message-id
- :mime-version:subject:to; s=qcppdkim1; bh=2zLLbblEn0ynOdyIMz5Q57
- MBBGGrGwEkDzirZ71dPiU=; b=Ssbz1X5ko9g9OHbEJv3LpJms22qJYpZ4CNmnSy
- H/giVfTa/NR0j6eRvnZdvtXbmZ6LmZG0mHoGnRMpmDyI3NTZkGV+foXi3b9WcZ25
- JsTDIWY5BmaiMvL4dzDb2nvKwNyVvMS6kHawtJkgRJurDHst/tPZnxRl02pxdoMB
- 3oAPXcNeHnc91canDGBmbcB6fRmYUDQ6vNb37nLI28M5l9H/+HKAu0ui5vp/rBq9
- fqX6RgwU1uGeHgexJCZPkN6GpI8ZxrVi12CgNYE2NK0mfHDo1rZ1m8HI+NcDPSv9
- GZ2wlju8AlWHXUDAlS+PPl2OS6i/9MwCvVFZmLShVJhkixrg==
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
- [209.85.222.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ev12kkcp3-1
+ content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ HDXqqZ40gMOjetGP947qwpAyTFvS5rl4u1GZMvX9fQI=; b=OiDYXLkfZ2soZ459
+ b/2gk2qEjSRGlnQhA63zBWoF5+ARHgQ04P4Pzvi1eNewChQ9Dw4k6EmApplQ81Mv
+ kLxbSgYTSNVbnSUGblSEXEb45nPyNKyBKUItrqR1NDsyDVUW4LCvdCKtvTfQL45z
+ TjfG/asug4U5Zc5rrAGkwho0h32HKfoHaRzn2Oomkr/JtfzP0S38w/+OmoC7KkO7
+ Rumic3m5sgjdnzMb/x8BXpBCbwgJ1/Lj0ZvCc1vqF/rNlOOuEkj42CeP/zokF169
+ QUtOvBrjsiMT3xCB05IP5jTq2rRY7kEPsZW1Rd5RxxmVpjaRTvRbD5wRRRM/ctc6
+ QyAYYg==
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
+ [209.85.219.72])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ev0vk3apu-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 18 Jun 2026 12:28:29 +0000 (GMT)
-Received: by mail-qk1-f200.google.com with SMTP id
- af79cd13be357-915b3587972so100808985a.2
- for <qemu-devel@nongnu.org>; Thu, 18 Jun 2026 05:28:29 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Thu, 18 Jun 2026 12:28:58 +0000 (GMT)
+Received: by mail-qv1-f72.google.com with SMTP id
+ 6a1803df08f44-8ccd3213beaso913456d6.0
+ for <qemu-devel@nongnu.org>; Thu, 18 Jun 2026 05:28:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1781785709; x=1782390509; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:from:to:cc:subject:date:message-id:reply-to;
- bh=2zLLbblEn0ynOdyIMz5Q57MBBGGrGwEkDzirZ71dPiU=;
- b=FyrgUuZVWmwk/DNZEhK9WEcoHhM/86zxwOL6h/M1uNPxQYUzocmvA7fuFoiKNJ5p+V
- PCR14lUs7sm74wpY5n2K6pqINNnzH43Veylj+mDgxXA+PMDB4MCTViMhbFgdkD9Wj9BU
- iZBWHYgX9bRV/FSUzBKYSl+ihpYCwH1Qf8G/HmUnIaiFF8ilyhDEkAKCdbMiIG4ot9kj
- x8iv6rWDDrfxWSafHIylWQzjMJpkLutk496YYzn6AdScy7L/EqpjVx2lmK9zKqy/xVjY
- 8YdgPU+hyKfHu/aoNOKcJCheFfTsSNX8y/IbYixjYmbJ38uG2U1s9a/i4gy2mRTqj7vw
- 10wQ==
+ d=oss.qualcomm.com; s=google; t=1781785737; x=1782390537; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=HDXqqZ40gMOjetGP947qwpAyTFvS5rl4u1GZMvX9fQI=;
+ b=OIcMbWp3QjpZlK1HTMKZwZWt6Z8/FGoI3zPEB0yZuzHOhSZGsIFRgWAm8M42Wm4/j8
+ nozla9BbnRR6m5rVCZxNMsyY2k8vXovTE1E/8M7cK2Y+AwsMQ0cwyJKkSgrOFKBEo4gP
+ biCtXC3ZwYVsca2nTs6onX9rFAKfjJ7Oar8/s3v019dEc8qVDDUSJ92PC/YEKgrOWMBP
+ y1rUHSoS7PrfC4kzQHFYv9HbtNrnSsht2mjiqauEF24MIbVUcseM6nlxgDoYX/umh482
+ sb6SxTNL1x5XrfsXaDDpisUFfxdgy2bbL83VW/XGbn0xf+iRPrGkIX6hY2zf49cNeqiR
+ GSlg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781785709; x=1782390509;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=2zLLbblEn0ynOdyIMz5Q57MBBGGrGwEkDzirZ71dPiU=;
- b=Mi6TIV2IzKAbskDcXY9Cg9izpEZOUxhWKq7m9NAfgdzjLAfn5psCQL8FsDYuoMjQMC
- yHgRvtIMnyQdI5g0kfVvcEqhW7P6B3KeXkChNZ1OIR+PHCVLh4LK708KoaRCgxpXokrC
- uqies1eYBKuZyCxqs5VledMfv2E+TqNM+7hpFWD0quNhVlIIKReK4mA007eFew9jG/h5
- SlCjMxO4k6b/Sr9AoZg861JeGP5f20tcxELjPlmxIhsWXheu0LzJWB/P2cdc5AdDN04p
- 6p6rc6JiQqu/RYPaUsELEQM8fK0g2kW53FCJ3+mWehTwiqJOWUmPjD6LNco8Fi2ojA/q
- L62Q==
-X-Gm-Message-State: AOJu0YwgebQdgy9dxjh2sNyBqsPVIyOs2H+E5Jnn38BvMzHTK/40Xu8x
- dyIgIJPZYcdfw4CstlfTcUTsis+S/wvtJpXDwiu8Jio3hEU6tNzM92rbULg6b95Qw5Rcyq1cW/u
- hb/Y8CWCCy21/VaOUj+VGDXMKuFCOluOYqVgLxuYOKa7mUqb369YVEPE4LeYDOmGCrQ==
-X-Gm-Gg: AfdE7cnG82W35qOLkF0ySn2d99e0I5t3fdJOBTFmTWbCXBAGMtRrItdtRURsTY0etF9
- /E8ZSvjKPbyG5mqIP3A7RZXx6tOXmMtZBidZ7zyTsBcPKWh+eur3EDDmjc7pO6EqsyLCQTxNSA3
- vFU7hhWamd41JHoIm8QH2xvr+Gc/vKmL0bCBSC4yyKipxkTO7LlGddEW/1YioHTTUTEQxNyUF3P
- yuhV6y5VpJUVheNJXyEG/ZqBeLV7FwPbnkPiInJmGdbbHj3MBBZHa/HrVukWG0ThDJgtNsgo3nS
- mI3GeAvZS10iwIolGXdX+DBD61pvOnG1I7ebHMx7fwxulz5h7An+G/GnZUu9Yott9w7B2cNbgcb
- MoU4e6UHFvimRdQpftjWZ0XDr8hQBb5cIEazstghhdT5It1pPAz9xrbzc6nntdpn49QSe
-X-Received: by 2002:a05:620a:4056:b0:915:675d:a2d with SMTP id
- af79cd13be357-91d8deae9f0mr1453609785a.51.1781785708875; 
- Thu, 18 Jun 2026 05:28:28 -0700 (PDT)
-X-Received: by 2002:a05:620a:4056:b0:915:675d:a2d with SMTP id
- af79cd13be357-91d8deae9f0mr1453599885a.51.1781785708126; 
- Thu, 18 Jun 2026 05:28:28 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1781785737; x=1782390537;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=HDXqqZ40gMOjetGP947qwpAyTFvS5rl4u1GZMvX9fQI=;
+ b=Y659wXhf4XVSsJP0xSZxMWN+k2ECsb4bWq25LWfre6vtU64nKQfSHqW4Yuugj7Rj1a
+ JrEv9MDPri/Y3XNfsS+R/Bz9YhdXOhGgCaRsThwI/LPyEc8hl/gZPFjbh9ajSLZOHao4
+ s0562nR8t7wGuh0mjE6hrnbFZ6bfYSlA5H4lrJUnTLABXrDBqyL07xO2xRJMmi+z6oTL
+ QHX2N7lYK8ZfAfqhCTkXQsj8O2QwP/7HzgnpecAXVfBeqNGz7uZk9ZTId8Ge6XjMKSc6
+ TdG/HoqRmY3ND2NpnrDdSKCsLpJw8noLdK95IT9uSkuh6fteWv905C3c+hXzJ5B4bGCq
+ sEvg==
+X-Gm-Message-State: AOJu0YwZcC3A6OdXdFDC+zsMhSIRzsmZDMBZBv0HI+4QXSC+ibL4EDMx
+ vkVlu2qnoiFRqHaybaauPtFdw+5ItfeIiK7JpQuidaAFJLGQAkjM08w1NPCgVZJW9NL8ZETLQpD
+ uPP+d5oSDHAOmoSosTOOdTrE5jD4D7+cSoJOvQa8OH1Yv5zsa0LaTHtR5vO+0r2g0Sw==
+X-Gm-Gg: AfdE7cmey6jVjXsajOyxrem1IdwJ0BQ75Rwylwou35OEtjAFKg9/mEVMCeVlAKZOHLd
+ hUL591ZwuG5ANZXgtZKkKFWzqMUz4KBBAfNZKtDgaP+27FGRoHP9CfjqLrHfkqFwW0j1lugZi+J
+ +ybQAc+CGH2EI++h+rgOFSXDHblT/JEr7agmXfgBAoRrIsl0UCGZe9r4ddHFlattTNMN43Pq55x
+ /5AUPhoXmlMPT32jJrlVY7m5XplyJ0cm4vT6zpLbrLVA4sxTn5Fg+83BF6M5c3B0QWGOmmZx9TM
+ OGerP1M+WW1Nw4Ayw6U82hCDbz6BGMW79wxdJq3PEipRhNp68PGUvt2RbUKS2Lnp2W/DRsT733N
+ z2zl2oe9eb853W4KF3RgWGoMcpVSyHb/+Vwrrz9rLrGSC7BS8LWLDVrzOAI1CUz7a9E7c
+X-Received: by 2002:a05:620a:25d2:b0:915:d5d6:f1fa with SMTP id
+ af79cd13be357-91dbb9489aamr1228003485a.31.1781785737334; 
+ Thu, 18 Jun 2026 05:28:57 -0700 (PDT)
+X-Received: by 2002:a05:620a:25d2:b0:915:d5d6:f1fa with SMTP id
+ af79cd13be357-91dbb9489aamr1227997785a.31.1781785736720; 
+ Thu, 18 Jun 2026 05:28:56 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-461eaa0d275sm19066905f8f.2.2026.06.18.05.28.26
+ 5b1f17b1804b1-49230a96d14sm224951325e9.12.2026.06.18.05.28.55
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 18 Jun 2026 05:28:27 -0700 (PDT)
+ Thu, 18 Jun 2026 05:28:55 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL 00/48] Accel patches for 2026-06-18
-Date: Thu, 18 Jun 2026 14:27:37 +0200
-Message-ID: <20260618122825.90331-1-philmd@oss.qualcomm.com>
+Subject: [PULL 04/48] system/memory: Constify various AddressSpace arguments
+ (notify)
+Date: Thu, 18 Jun 2026 14:27:41 +0200
+Message-ID: <20260618122825.90331-5-philmd@oss.qualcomm.com>
 X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260618122825.90331-1-philmd@oss.qualcomm.com>
+References: <20260618122825.90331-1-philmd@oss.qualcomm.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjE4MDExNiBTYWx0ZWRfX0Ak08rlE+2eS
- qB3XEXcs4aq4q0x/B/eI3VM3HQvWKTx9Z8rooRQiqvn8jWTPnyPdm590nqDWXWxtDBS4u9XY/pE
- lkweRAeuBGwxYzT6VGEIa+0VZxhJYKuA1wX3HCVBtx+jWDMAqhPH3yuhD1Vkg38xwPDaf7mac7m
- celpO7zEGyakiPOMnhLAOe5DmtVRlpq3vg4Hyl06QM24Ztmotf62XipQ77mVwUC0LLkMtjHHc9N
- C5hGP1TuYrkvcKkcTWTVgWuYK+jqt8fZV1t2j+fX6qijZFtDzqb00rQd1gIeiuzslb1ECr/aTnP
- fn3NvjvsEUomX2QHS+CVI0jIpP9UUtutuboR9sKxYka4AGToIR6LVoyf4MLexC8qVB4KSnCHgSd
- t+sCMZ5vlYtI1rhqfc1Mhn8oaVt06+HqD39eV+Le6ithLJmiMIOjUZEitRA0Vz8+pB1vhBXaBaL
- K43yhn/k3IagVFp/CeQ==
-X-Proofpoint-GUID: CpE7c92J1nYXcQX8ZyKHh6398xaanqj9
-X-Authority-Analysis: v=2.4 cv=HpVG3UTS c=1 sm=1 tr=0 ts=6a33e46d cx=c_pps
- a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+X-Proofpoint-ORIG-GUID: 7bYw_G256jNXCqSSdyKzkog3XWU7TbqQ
+X-Authority-Analysis: v=2.4 cv=DNy/JSNb c=1 sm=1 tr=0 ts=6a33e48a cx=c_pps
+ a=7E5Bxpl4vBhpaufnMqZlrw==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
  a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22
- a=p0WdMEafAAAA:8 a=NEAV23lmAAAA:8 a=i8uBmrCkF7p27xy_faIA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=O8hF6Hzn-FEA:10 a=PEH46H7Ffwr30OY-TuGO:22
-X-Proofpoint-ORIG-GUID: CpE7c92J1nYXcQX8ZyKHh6398xaanqj9
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjE4MDExNiBTYWx0ZWRfX2d64XZ6D9eh2
- pntth7xv2sCaEqH7oKSQQiwEnWvqjAN+Z+D47n41xbbGPfVF4wUPEsjm6VI4RF+owF6G/08N5d1
- oqcOXu2wJPJ+KArLY5SZtuI0g7zlw/U=
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
+ a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=nR6OtcKYjoWMIbXoh8MA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=pJ04lnu7RYOZP9TFuWaZ:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-GUID: 7bYw_G256jNXCqSSdyKzkog3XWU7TbqQ
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjE4MDExNiBTYWx0ZWRfXzEuC8x5pkgNG
+ 1f/YaxWmmlpQVRdr7b4qvAsc+tn6QrPzZNrZa4ArnjJjdDUPDh+3ShQo3GGhmlthQ/OyCjMCoD6
+ waEtvp26BiPAjAWGJ7oaU5xXtKgaY+o=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjE4MDExNiBTYWx0ZWRfX17SXo/qdQqpk
+ OM6zL1X2UY1sw8y15brJL0jW1bMovM0oL+hal1eUP4xJgoNRruVR9+z+ml4+XcvZ9ECYDdnwwbJ
+ qZpZJ2Pw817INYD5PQKr/uFqJVMUB7pD0HoOUP8pmzmJcfX6CXNDoiyOknsG4gEszVugPM2qX4a
+ mWqWB8pk0nxNxruYK+e1PeisVZyG40UPAw0VDQZQNJklYIe3hwYDmngv66rP0M6cU1hsRwj8CxY
+ I0ZwU0HtwcS4mFuIHo5cbmlNTQ6Gv//Me8d0zHZxHVTn8srl+d2rda42YDNKiUmJ4WReqGTVWu9
+ 6l9CBMjc4xPIMu6exE1mCqj1Dqlkkrw7IwOQfSWysD3PekOxqWGLc5wuK9FML9XZ+ycghxtiTaH
+ VSKAE2GfpJW74p+TgWa+OJKq1vE+fDbqhv9hHPjswcANqaKsVNkxeJM0mw01AgsUKPntyuSrUO7
+ gTyey0oYdQP0YruBqug==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-06-18_01,2026-06-18_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 suspectscore=0 priorityscore=1501 malwarescore=0
- clxscore=1015 adultscore=0 phishscore=0 bulkscore=0 spamscore=0
- impostorscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2606180116
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+ clxscore=1015 spamscore=0 phishscore=0 priorityscore=1501 impostorscore=0
+ lowpriorityscore=0 bulkscore=0 suspectscore=0 malwarescore=0 adultscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606180116
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -146,276 +149,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit c7cf7c810153d6f5f31aa2d5c0dee9087f6b4dff:
+From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-  Merge tag 'firmware-20260617-pull-request' of https://gitlab.com/kraxel/qemu into staging (2026-06-17 10:17:29 -0400)
+Mark the AddressSpace structure const when it is only accessed
+read-only.
 
-are available in the Git repository at:
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-Id: <20260616020359.18627-4-philmd@oss.qualcomm.com>
+---
+ include/system/memory.h | 2 +-
+ system/memory.c         | 6 +++---
+ system/physmem.c        | 2 +-
+ 3 files changed, 5 insertions(+), 5 deletions(-)
 
-  https://github.com/philmd/qemu.git tags/accel-20260618
-
-for you to fetch changes up to 1eaae985d4dec2aa0b187e362db50be46968d117:
-
-  accel/tcg: Restrict headers being TCG specific (2026-06-18 14:27:21 +0200)
-
-----------------------------------------------------------------
-Accelerators patches queue
-
-- Avoid double hv_vcpu_destroy() call during teardown on HVF ARM
-- Constify various AddressSpace/MemoryRegionCache arguments
-- Clarify physical_memory_*() API in "system/physmem.h"
-- Extract "accel/tcg/cpu-loop.h" out of "exec/cpu-common.h"
-- Restrict few TCG-specific code
-- Remove pre-C11 check
-- Various header cleanups
-----------------------------------------------------------------
-
-Akihiko Odaki (1):
-  ui/cocoa: Use qemu_input_map_osx_to_linux
-
-Bin Guo (1):
-  util/cutils: drop qemu_strnlen() in favor of strnlen()
-
-Emmanuel Blot (1):
-  meson: build macOS signed binary as part of the default target
-
-Matheus Tavares Bernardino (1):
-  accel/hvf: fix double hv_vcpu_destroy() causing teardown error on ARM
-
-Matt Jacobson (1):
-  configure: honor --extra-ldflags when forced to use objc_LINKER
-
-Osama Abdelkader (1):
-  accel/tcg: remove duplicate include
-
-Philippe Mathieu-Daudé (42):
-  system/cpu: Reset vCPU %exception_index before resuming it
-  system/memory: Constify various AddressSpace arguments (checks)
-  system/memory: Constify various AddressSpace arguments (flat-range)
-  system/memory: Constify various AddressSpace arguments (notify)
-  system/memory: Constify various AddressSpace arguments (cache)
-  system/memory: Constify various AddressSpace arguments (access)
-  system/memory: Constify various MemoryRegionCache arguments
-  system: Document cpu_physical_memory_*() declarations
-  accel/kvm: Replace legacy cpu_physical_memory_write() call
-  gdbstub/system: Replace legacy cpu_physical_memory_read/write() calls
-  target/s390x: Factor common s390_ipl_read/write() helpers
-  target/s390x: Replace legacy cpu_physical_memory_read/write() calls
-  system: Move cpu_physical_memory_*() declarations to
-    'system/physmem.h'
-  hw/xen/interface: Remove pre-C99 checks
-  qom/object: Remove pre-C11 check
-  tcg: Include missing 'qemu/bitops.h' header in tcg-gvec-desc.h
-  target/i386: Report TPR accesses to HVF
-  target/arm: Only set CPU_INTERRUPT_EXITTB for TCG
-  target/arm: Remove vcpu_dirty=true assigments in
-    hvf_handle_exception()
-  target/arm: Better describe PMU depends on TCG or HVF
-  target/arm/ptw: Restrict PMSAv8 code to TCG
-  target/arm: Restrict TCG specific headers
-  target/ppc: Restrict TCGTBCPUState to TCG
-  target/loongarch: Remove unused 'accel/accel-cpu-target.h' header
-  target/sparc: Include missing 'accel/tcg/cpu-ops.h' header in cpu.c
-  accel/hvf: Reduce hvf_kernel_irqchip_override scope
-  accel/tcg: Restrict IOMMU declarations
-  exec/cpu-common.h: Include missing 'qemu/thread.h' header
-  exec/cpu-common.h: Avoid including unused 'exec/vaddr.h' header
-  exec/cpu-common.h: Avoid including unused 'tcg/debug-assert.h' header
-  exec/cpu-common.h: Avoid including unused exec/page-protection.h
-    header
-  system/memory: Remove unnecessary CONFIG_USER_ONLY guards
-  system/memory: Rename cpu_exec_init_all() -> machine_memory_init()
-  hw/s390x/ipl: Remove TCG dependency in handle_diag_308()
-  accel/tcg: Remove cpu_loop_exit() stub
-  accel/tcg: Move cpu_exec() out of 'exec/cpu-common.h'
-  accel/tcg: Move cpu_exec_step_atomic() out of 'exec/cpu-common.h'
-  accel/tcg: Move cpu_unwind_state_data() out of 'exec/cpu-common.h'
-  accel/tcg: Move cpu_restore_state() out of 'exec/cpu-common.h'
-  accel/tcg: Have cpu_loop_exit_requested() take const @cpu argument
-  accel/tcg: Move cpu_loop_exit_*() out of 'exec/cpu-common.h'
-  accel/tcg: Restrict headers being TCG specific
-
- docs/devel/loads-stores.rst             |  18 ++--
- docs/devel/style.rst                    |   1 -
- configure                               |   1 +
- meson.build                             |   1 +
- scripts/coccinelle/exec_rw_const.cocci  |  16 +--
- bsd-user/freebsd/os-proc.h              |   1 +
- hw/xtensa/bootparam.h                   |   6 +-
- include/accel/tcg/cpu-loop.h            |  76 ++++++++++++++
- include/accel/tcg/cpu-mmu-index.h       |   4 +
- include/accel/tcg/cpu-ops.h             |   4 +
- include/accel/tcg/getpc.h               |   4 +
- include/accel/tcg/helper-retaddr.h      |   4 +
- include/accel/tcg/iommu.h               |   7 ++
- include/accel/tcg/probe.h               |   4 +
- include/accel/tcg/tb-cpu-state.h        |   4 +
- include/exec/cpu-common.h               |  54 +---------
- include/hw/xen/interface/physdev.h      |   2 +-
- include/hw/xen/interface/version.h      |   5 +-
- include/hw/xen/interface/xen-compat.h   |   2 -
- include/hw/xen/interface/xen.h          |  14 ---
- include/qemu/cutils.h                   |  17 +--
- include/system/hvf_int.h                |   1 -
- include/system/memory.h                 |  18 ++--
- include/system/memory_cached.h          |  20 ++--
- include/system/physmem.h                |  50 +++++++++
- include/tcg/tcg-gvec-desc.h             |   2 +
- include/user/cpu_loop.h                 |   2 +-
- linux-user/qemu.h                       |   1 +
- system/memory-internal.h                |   4 +-
- target/arm/internals.h                  |   4 +-
- target/ppc/internal.h                   |   5 +-
- target/ppc/mmu-hash32.h                 |   1 +
- target/s390x/s390x-internal.h           |   3 +-
- include/system/memory_ldst_cached.h.inc |  15 +--
- accel/hvf/hvf-all.c                     |   2 +-
- accel/kvm/kvm-all.c                     |  12 +--
- accel/stubs/tcg-stub.c                  |  19 ----
- accel/tcg/cpu-exec-common.c             |   1 +
- accel/tcg/cpu-exec.c                    |   5 +-
- accel/tcg/cputlb.c                      |   2 +-
- accel/tcg/tb-maint.c                    |   2 +-
- accel/tcg/tcg-accel-ops-mttcg.c         |   1 +
- accel/tcg/tcg-accel-ops-rr.c            |   1 +
- accel/tcg/tcg-accel-ops.c               |   1 +
- accel/tcg/tcg-runtime.c                 |   1 +
- accel/tcg/translate-all.c               |   2 +-
- accel/tcg/user-exec.c                   |   1 +
- accel/tcg/watchpoint.c                  |   1 +
- bsd-user/main.c                         |   1 +
- bsd-user/uaccess.c                      |   4 +-
- dump/dump.c                             |   3 +-
- dump/win_dump-x86.c                     |   5 +-
- gdbstub/system.c                        |  11 +-
- hw/acpi/ghes.c                          |  24 ++---
- hw/acpi/nvdimm.c                        |  13 +--
- hw/acpi/vmgenid.c                       |   3 +-
- hw/audio/marvell_88w8618.c              |   3 +-
- hw/char/riscv_htif.c                    |   5 +-
- hw/display/exynos4210_fimd.c            |   7 +-
- hw/display/omap_lcdc.c                  |   5 +-
- hw/display/ramfb.c                      |   7 +-
- hw/dma/i8257.c                          |   9 +-
- hw/dma/omap_dma.c                       |   6 +-
- hw/dma/rc4030.c                         |   3 +-
- hw/dma/sifive_pdma.c                    |   9 +-
- hw/hyperv/hyperv.c                      |  25 ++---
- hw/hyperv/syndbg.c                      |  13 +--
- hw/hyperv/vmbus.c                       |   9 +-
- hw/i386/kvm/clock.c                     |   3 +-
- hw/i386/vapic.c                         |  21 ++--
- hw/intc/apic.c                          |   3 +-
- hw/intc/xive2.c                         |   3 +-
- hw/m68k/next-cube.c                     |   3 +-
- hw/microblaze/boot.c                    |   3 +-
- hw/misc/mips_itu.c                      |   1 +
- hw/misc/pc-testdev.c                    |   5 +-
- hw/net/fsl_etsec/rings.c                |  13 +--
- hw/net/mcf_fec.c                        |  11 +-
- hw/net/opencores_eth.c                  |   9 +-
- hw/nvram/spapr_nvram.c                  |   9 +-
- hw/ppc/amigaone.c                       |   5 +-
- hw/ppc/e500.c                           |   3 +-
- hw/ppc/pegasos.c                        |  11 +-
- hw/ppc/pnv.c                            |   5 +-
- hw/ppc/ppc440_uc.c                      |   9 +-
- hw/ppc/ppc_booke.c                      |   1 +
- hw/ppc/spapr.c                          |   3 +-
- hw/ppc/spapr_drc.c                      |   3 +-
- hw/ppc/spapr_events.c                   |   9 +-
- hw/ppc/spapr_hcall.c                    |  17 +--
- hw/ppc/spapr_rtas.c                     |   5 +-
- hw/ppc/spapr_tpm_proxy.c                |   5 +-
- hw/ppc/virtex_ml507.c                   |   3 +-
- hw/s390x/css.c                          |   5 +-
- hw/s390x/ipl.c                          |  14 +--
- hw/s390x/s390-pci-bus.c                 |   5 +-
- hw/s390x/virtio-ccw.c                   |   5 +-
- hw/scsi/vmw_pvscsi.c                    |  12 +--
- hw/xen/xen_pt_graphics.c                |   4 +-
- hw/xtensa/xtfpga.c                      |   5 +-
- linux-user/arm/elfload.c                |   1 +
- linux-user/hppa/elfload.c               |   1 +
- linux-user/uaccess.c                    |   2 +-
- linux-user/x86_64/elfload.c             |   1 +
- plugins/api.c                           |   1 +
- qom/object.c                            |  14 +--
- semihosting/console.c                   |   1 +
- system/cpus.c                           |   4 +-
- system/memory.c                         |  16 +--
- system/physmem.c                        |  44 ++++----
- system/vl.c                             |   3 +-
- target/alpha/helper.c                   |   1 +
- target/alpha/mem_helper.c               |   1 +
- target/arm/cpu-irq.c                    |   3 +-
- target/arm/cpu.c                        |   2 +-
- target/arm/helper.c                     |   2 +-
- target/arm/hvf/hvf.c                    |  11 +-
- target/arm/machine.c                    |  10 +-
- target/arm/ptw.c                        |  20 +++-
- target/arm/tcg/cpregs-at.c              |   1 +
- target/arm/tcg/helper-a64.c             |   1 +
- target/arm/tcg/op_helper.c              |   1 +
- target/arm/tcg/tlb_helper.c             |   1 +
- target/avr/helper.c                     |   1 +
- target/hexagon/op_helper.c              |   1 +
- target/hppa/cpu.c                       |   1 +
- target/hppa/mem_helper.c                |   1 +
- target/hppa/op_helper.c                 |   1 +
- target/i386/helper.c                    |   3 +-
- target/i386/tcg/excp_helper.c           |   1 +
- target/i386/tcg/misc_helper.c           |   1 +
- target/i386/tcg/system/bpt_helper.c     |   1 +
- target/i386/tcg/system/misc_helper.c    |   1 +
- target/i386/tcg/system/svm_helper.c     |   1 +
- target/i386/tcg/user/excp_helper.c      |   1 +
- target/i386/tcg/user/seg_helper.c       |   1 +
- target/loongarch/cpu_helper.c           |   1 +
- target/loongarch/tcg/tcg_cpu.c          |   3 +-
- target/loongarch/tcg/tlb_helper.c       |   1 +
- target/m68k/helper.c                    |   1 +
- target/m68k/op_helper.c                 |   1 +
- target/microblaze/helper.c              |   1 +
- target/microblaze/op_helper.c           |   1 +
- target/mips/tcg/exception.c             |   1 +
- target/mips/tcg/system/tlb_helper.c     |   1 +
- target/or1k/exception.c                 |   1 +
- target/or1k/exception_helper.c          |   1 +
- target/or1k/fpu_helper.c                |   1 +
- target/or1k/mmu.c                       |   1 +
- target/or1k/sys_helper.c                |   1 +
- target/ppc/cpu_init.c                   |   1 +
- target/ppc/helper_regs.c                |   3 +-
- target/ppc/tcg-excp_helper.c            |   1 +
- target/ppc/user_only_helper.c           |   1 +
- target/riscv/cpu_helper.c               |   1 +
- target/riscv/csr.c                      |   1 +
- target/riscv/op_helper.c                |   1 +
- target/rx/op_helper.c                   |   1 +
- target/s390x/diag.c                     |  75 ++++++++------
- target/s390x/mmu_helper.c               |   3 +
- target/s390x/tcg/cc_helper.c            |   1 +
- target/s390x/tcg/debug.c                |   1 +
- target/s390x/tcg/excp_helper.c          |   1 +
- target/s390x/tcg/mem_helper.c           |   1 +
- target/s390x/tcg/misc_helper.c          |   6 +-
- target/sh4/helper.c                     |   1 +
- target/sh4/op_helper.c                  |   1 +
- target/sparc/cpu.c                      |   1 +
- target/sparc/helper.c                   |   1 +
- target/sparc/mmu_helper.c               |   1 +
- target/tricore/helper.c                 |   1 +
- target/tricore/op_helper.c              |   1 +
- target/xtensa/exc_helper.c              |   1 +
- target/xtensa/helper.c                  |   1 +
- util/cutils.c                           |  15 +--
- accel/stubs/meson.build                 |   1 -
- ui/cocoa.m                              | 131 +-----------------------
- 177 files changed, 644 insertions(+), 583 deletions(-)
- create mode 100644 include/accel/tcg/cpu-loop.h
- delete mode 100644 accel/stubs/tcg-stub.c
-
+diff --git a/include/system/memory.h b/include/system/memory.h
+index 3acaa309755..7ecad33130c 100644
+--- a/include/system/memory.h
++++ b/include/system/memory.h
+@@ -2703,7 +2703,7 @@ void address_space_destroy_free(AddressSpace *as);
+  *
+  * @as: an initialized #AddressSpace
+  */
+-void address_space_remove_listeners(AddressSpace *as);
++void address_space_remove_listeners(const AddressSpace *as);
+ 
+ /**
+  * address_space_rw: read from or write to an address space.
+diff --git a/system/memory.c b/system/memory.c
+index 93c714104b2..8436668c181 100644
+--- a/system/memory.c
++++ b/system/memory.c
+@@ -3009,7 +3009,7 @@ void memory_global_dirty_log_stop(unsigned int flags)
+ }
+ 
+ static void listener_add_address_space(MemoryListener *listener,
+-                                       AddressSpace *as)
++                                       const AddressSpace *as)
+ {
+     unsigned i;
+     FlatView *view;
+@@ -3074,7 +3074,7 @@ static void listener_add_address_space(MemoryListener *listener,
+ }
+ 
+ static void listener_del_address_space(MemoryListener *listener,
+-                                       AddressSpace *as)
++                                       const AddressSpace *as)
+ {
+     unsigned i;
+     FlatView *view;
+@@ -3179,7 +3179,7 @@ void memory_listener_unregister(MemoryListener *listener)
+     listener->address_space = NULL;
+ }
+ 
+-void address_space_remove_listeners(AddressSpace *as)
++void address_space_remove_listeners(const AddressSpace *as)
+ {
+     while (!QTAILQ_EMPTY(&as->listeners)) {
+         memory_listener_unregister(QTAILQ_FIRST(&as->listeners));
+diff --git a/system/physmem.c b/system/physmem.c
+index a0561177afd..e8a2c438c7d 100644
+--- a/system/physmem.c
++++ b/system/physmem.c
+@@ -3565,7 +3565,7 @@ address_space_unregister_map_client_do(AddressSpaceMapClient *client)
+     g_free(client);
+ }
+ 
+-static void address_space_notify_map_clients_locked(AddressSpace *as)
++static void address_space_notify_map_clients_locked(const AddressSpace *as)
+ {
+     AddressSpaceMapClient *client;
+ 
 -- 
 2.53.0
 
