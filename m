@@ -4,62 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B095CD98ED
-	for <qemu-devel@archiver.kernel.org>; Wed, 17 Jun 2026 23:52:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9176ACD98ED
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jun 2026 01:00:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wa02A-0004R3-PE; Wed, 17 Jun 2026 19:51:02 -0400
+	id 1wa166-0006PQ-4R; Wed, 17 Jun 2026 20:59:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mhjacobson@me.com>) id 1wa022-0004Pd-Pl
- for qemu-devel@nongnu.org; Wed, 17 Jun 2026 19:50:54 -0400
-Received: from p-east2-cluster1-host1-snip4-1.eps.apple.com ([57.103.76.24]
- helo=outbound.st.icloud.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mhjacobson@me.com>) id 1wa01x-0003vD-Sj
- for qemu-devel@nongnu.org; Wed, 17 Jun 2026 19:50:54 -0400
-Received: from outbound.st.icloud.com (unknown [127.0.0.2])
- by p00-icloudmta-asmtp-us-east-1a-60-percent-11 (Postfix) with ESMTPS id
- BDAF41800CD7; Wed, 17 Jun 2026 23:50:41 +0000 (UTC)
-X-ICL-Out-Info: HUtFAUMHWwJACUgBTUQeDx5WFlZNRAJCTQ5JHVoHRQNGD1YCWgZLVxQEFVsHVghdEkoXXS1aDhwTVhUTC1NWXxUXG1wAFxlRTQ5YWwhbBA8fTAxRAkIFVl5KDB0EVAddBV1WUAJaS0IES0VoXAVcHEAXSB1faktWFAQVVkNUBF9QVBFXUAtZAkIPSAVcAFkBRQlLAUMFWgZJCFUHQFoDWBFaF1EeWAVyHVxWUAJaVRIEQAhWUF4IXh9MHA==
-Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=me.com; s=1a1hai;
- t=1781740244; x=1784332244; bh=vqknWSCXo8rTtStPNXeiJWu6Ye6zpoLG396fQ+u8jtI=;
- h=From:To:Subject:Date:Message-ID:MIME-Version:x-icloud-hme;
- b=MQvWCVR9BLiw7kGJq1jK3jWe5/LfBF2v6vvmBRktTyPOP1/n3TSYcJZom7nFQvpUsBYCORmSppFLpHS9kvRdPYhVXeZnsudtIR6mxrGNr5t8iUYmGLAt8pGyOs1t0gI5LRe0hmlnAcrikY2qzWAHD3bTJGzOPkwPf4N6gtYzndBkh0zpB0F+Qo+DTIgENkrY1aR+z2uFfV45Uqwkg++KZvNXGstB5U6eJDYSr9Xdg6VB7kCKFS0DEnaqgcYkgL/a4seqi1bUPCCxfds62m6wGeFH9AVENdoiiTA+LjfGAj5u5qmYs3JtrfeCNzXQ8cS7s52FCuXWt2OHFKyNmHUyDw==
-Received: from localhost.localdomain (unknown [17.42.251.67])
- by p00-icloudmta-asmtp-us-east-1a-60-percent-11 (Postfix) with ESMTPSA id
- 9AFA41800150; Wed, 17 Jun 2026 23:50:40 +0000 (UTC)
-From: Matt Jacobson <mhjacobson@me.com>
-To: qemu-devel@nongnu.org
-Cc: Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- qemu-block@nongnu.org, Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Laurent Vivier <laurent@vivier.eu>, Matt Jacobson <mhjacobson@me.com>
-Subject: [PATCH v2 3/5] hw/block: add SWIM2 floppy controller for q800
-Date: Wed, 17 Jun 2026 19:50:30 -0400
-Message-ID: <20260617235032.21491-4-mhjacobson@me.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260617235032.21491-1-mhjacobson@me.com>
-References: <20260617235032.21491-1-mhjacobson@me.com>
+ (Exim 4.90_1) (envelope-from <infra.ai.cloud@bitdeer.com>)
+ id 1wa15w-0006MB-1f
+ for qemu-devel@nongnu.org; Wed, 17 Jun 2026 20:59:00 -0400
+Received: from mail-lf1-x12c.google.com ([2a00:1450:4864:20::12c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <infra.ai.cloud@bitdeer.com>)
+ id 1wa15s-0008K3-E2
+ for qemu-devel@nongnu.org; Wed, 17 Jun 2026 20:58:59 -0400
+Received: by mail-lf1-x12c.google.com with SMTP id
+ 2adb3069b0e04-5aa68d7d757so465498e87.0
+ for <qemu-devel@nongnu.org>; Wed, 17 Jun 2026 17:58:30 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1781744308; cv=none;
+ d=google.com; s=arc-20240605;
+ b=azlWB2UyYqRKY8MeUrxNNzpouMr7XT8edXvoefyG6WeiGNtxTmKAkMrkaNomTPGGHs
+ q+In9dXgdtWp7KpekPxvB4X8eEGcK5HJYq950gIs4D8LOGQmpSP0mMceZza0sH20Dj6W
+ J1KgvooDMuiiiFWrb15R5kbvetiNSHOcJbmkT2NaUamc3wVqMrfqfxeJXh1MqN+vMBy5
+ 08v2gxIXTitxQchzdUAuuok71Olwii9bZE1TTpecada1ZOEBTyFYylJKP3HdH4h1NSnr
+ gLiCiNX1NEX+nWGuvboGYpIlPqsv49pyHgJjRPyIlUzLNpyalvNi4knsJlulWvQD4Asb
+ 39Mw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=6Kca6haeo+bA5ndGmY6EX+BgtmeyApAqd1+b+zpsD3M=;
+ fh=C2vyTixf302xLSsVV+DS2smT68SiXz17rN9IM9N6nEI=;
+ b=QLCQVWAsnZuvYOvTYi1tjVrS4YmKifSzqVX0n72kVLNjgC+k2UWecODAHq9UDNbYnt
+ mj/NmbyatgddOl4qxpcwB1AU5kCcaAdxTiAd+vEIY1LcnEHOkyTLoxLurM3wUnwKWbA1
+ Yh0y32w4SK/tEdAC7fZMWjDHfDtXqc4HIM7E+0KMnfOnQbBkbQV5b5YnPtbWsjxuk1Yf
+ +mIBqZcy4yFw+jNz2cseKZHdWkpmZG0goFRYNkvyedm+t7W8JbZ2KSnav2w5O1QXJSi1
+ R6w0reIA6akwB9NsCjoZseMp+2bcV+eeFwzSYhjZzuWNNln9X5QaDobCNrMOrOvWXe2j
+ AbSQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=bitdeer.com; s=google; t=1781744308; x=1782349108; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=6Kca6haeo+bA5ndGmY6EX+BgtmeyApAqd1+b+zpsD3M=;
+ b=YcL16yzolihResLKV3ZWxHaA45EQMe7Um8ysFM3baiPV6jffxJ+iXck1eI0WMKzQR9
+ YNAuWTfSGQdiKVxpdHaJIARdWLOlmS90/XEqutWCgngDRMxYwbRXhj8hdV0B+yr1MGNz
+ sw1+hMB9E+k3frndx8Nnp5SLProUFSgCUoHI8lJvpiggR31De6EKRVV3Vp9DlowkiNdC
+ eIGVPt+yrqyUAQ9F9SY6EX26P8B2AaiHQlDzjAQ50SJozZUPDA7p4DPbD879ELvNe6RZ
+ uq3l888RqqQO3hZFZNLV5n3Avy6+h1DR9fT+ka0LucIUdHaFCeMq3jNGQt8ORrlUEfcl
+ I4yQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1781744308; x=1782349108;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=6Kca6haeo+bA5ndGmY6EX+BgtmeyApAqd1+b+zpsD3M=;
+ b=IR+UkVsj8f3lYy22Qkxqjzj19p1RqnzpO2NMBb9zBI+eOAnOOr3/9I3kpuursc5/M5
+ 5SiETg+8VQePlDaGr5++alNKjOfvV3VjS6sVS90r0l7OrLW5V090q4O1BhxDTBNe9z6y
+ Qp2X0Qfy0wg4HJiwBqN87D8o8iT6NH2bIfJbpnnWudxPqYBHwVdRdP6fnwJzkw75CIR5
+ PMbRmCkP9LG/n3K/d7jLD8JQDkSBBYjnovhUtkV81kRvCsd/13ZD4LsNZIR63+4ZUjRt
+ 7op4E21ZXLKvVuVEb1TDOZpD7kqGUMH/dY2zHsqcRTe50NaEJm/wgp0qferI1HJpES9j
+ UJCQ==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ+F2/6ivuC4IJIfwaZ3vQdAZmUTHxFZ76SS9AI6t5vp+AiLbNHEVQBZFEM5iOCCBsA0p1ImjJbYfUdA@nongnu.org
+X-Gm-Message-State: AOJu0YzkiW/XbTIuqnh0mcHlj1y8c2x3+u6auxr1Oad1GtEBH2celMmg
+ GTXpypQjXrHdBB0xMYx+gA1X86Eu9uUTNFipfuJwChkH9fi+arf3hbxV31Pst+6z9KoMFHdO8uA
+ YwF6HEmOWvrhRJNfTS4gtIHzNsDKfWMJKXPHt6YCB2w==
+X-Gm-Gg: AfdE7cnnJvmTpNT6LFcolFKMYNuB7fDpxP0Wr9CDqBjVUt68IlBjYiRCa3LlpnH1kTs
+ I6gOFQTyJcDrDArMgRRLbE4tEo5PCgY0C7NhiXr8SrBtrwFxOkyJlvgpSnwDlo7MsB3JA92ja9M
+ SVrRfdKaRaMZtvwOQA1gNWQacwQfL6NVbWBrlY5gqHQBOQFNwFlN4C+ZALNqqmHtOGdNX2w4802
+ 8mscRQ0wT939kT2ZJr9SgLBbHTdKJwyF4euPsyYIZO+uWKo+B/KWUXXHsXarXbGIjcm3jJf
+X-Received: by 2002:a05:6512:4505:b0:5a2:c4f1:2635 with SMTP id
+ 2adb3069b0e04-5ad4dac9004mr356478e87.41.1781744308586; Wed, 17 Jun 2026
+ 17:58:28 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: xLjML2NAr8GdfDEJqd6xDHAKPhJ7hr8v
-X-Proofpoint-GUID: xLjML2NAr8GdfDEJqd6xDHAKPhJ7hr8v
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjE3MDIyOCBTYWx0ZWRfX5ndMIWmrTU+o
- uioEamMQx0YmO89e7NgFEeThMHbwGncRWqRYHLHqsuEWuABf/0ZJsTsROhit7QXI70dO7bS/D0R
- rEqqpwixeG1hjPpS+uCHCjx7BYq8HxfZtWafzhGCRL/Z2tkv1eVeJCuuQeDMfd6T7zi8bnvQj+K
- Sn34MBQxWBOp3tgL8gZGod2oOfXSuwhkj4dDTuwgH2hXBizIe6XJystHh2m8d0VdoZbQs3NS3H4
- ISLAeyX6No5SSlIx9Yd9u4Oky+BKIXNWAp0pvOK8U77GdoWKeoT1bd6PSvj/D615RBxXzskp9Lk
- I4N/65ruSnHtndTut0M
-Received-SPF: pass client-ip=57.103.76.24; envelope-from=mhjacobson@me.com;
- helo=outbound.st.icloud.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+References: <20260604070029.34982-1-guobin@linux.alibaba.com>
+ <CAFWXh4w==tF6VA1QyHWRqBX0hBE2R1Ko7u2Expwn+xv7=Fed2w@mail.gmail.com>
+In-Reply-To: <CAFWXh4w==tF6VA1QyHWRqBX0hBE2R1Ko7u2Expwn+xv7=Fed2w@mail.gmail.com>
+From: Hy Man <infra.ai.cloud@bitdeer.com>
+Date: Thu, 18 Jun 2026 08:58:16 +0800
+X-Gm-Features: AVVi8Cfm8jUtP1ZNvxp4Kd7bFS0JLkQTUW1aXsGc10fTA5ejVxAM2Xi7bj8wZ_w
+Message-ID: <CAFWXh4x7sP-r6i9n-X7-gzkNNNqE5OegYkJZ=6TQvzhtgFLPdg@mail.gmail.com>
+Subject: Re: [PATCH v2] accel/kvm: event-driven wakeup for dirty ring reaper
+ thread
+To: Bin Guo <guobin@linux.alibaba.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, kvm@vger.kernel.org,
+ qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::12c;
+ envelope-from=infra.ai.cloud@bitdeer.com; helo=mail-lf1-x12c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -75,849 +119,219 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The Quadra 800 contains a SWIM2 floppy controller, which is a
-simplified revision of the original SWIM controller.  Implement it
-based on publicly available specs; a future commit will connect it
-to q800.
+Ping=E3=80=82
 
-Signed-off-by: Matt Jacobson <mhjacobson@me.com>
----
- hw/block/meson.build     |   2 +-
- hw/block/swim2.c         | 722 +++++++++++++++++++++++++++++++++++++++
- hw/block/trace-events    |   9 +
- include/hw/block/swim2.h |  60 ++++
- 4 files changed, 792 insertions(+), 1 deletion(-)
- create mode 100644 hw/block/swim2.c
- create mode 100644 include/hw/block/swim2.h
+Hi Paolo, could you please take a look at this patch, I=E2=80=99d appreciat=
+e
+your feedback on this patch.
 
-diff --git a/hw/block/meson.build b/hw/block/meson.build
-index c4b873a906..733e9ffb47 100644
---- a/hw/block/meson.build
-+++ b/hw/block/meson.build
-@@ -10,7 +10,7 @@ system_ss.add(when: 'CONFIG_PFLASH_CFI01', if_true: files('pflash_cfi01.c'))
- system_ss.add(when: 'CONFIG_PFLASH_CFI02', if_true: files('pflash_cfi02.c'))
- system_ss.add(when: 'CONFIG_SSI_M25P80', if_true: files('m25p80.c'))
- system_ss.add(when: 'CONFIG_SSI_M25P80', if_true: files('m25p80_sfdp.c'))
--system_ss.add(when: 'CONFIG_SWIM', if_true: files('swim.c', 'sony_superdrive.c'))
-+system_ss.add(when: 'CONFIG_SWIM', if_true: files('swim.c', 'swim2.c', 'sony_superdrive.c'))
- system_ss.add(when: 'CONFIG_XEN_BUS', if_true: files('xen-block.c'))
- 
- system_ss.add(when: 'CONFIG_VIRTIO_BLK', if_true: files('virtio-blk.c'))
-diff --git a/hw/block/swim2.c b/hw/block/swim2.c
-new file mode 100644
-index 0000000000..f10be40678
---- /dev/null
-+++ b/hw/block/swim2.c
-@@ -0,0 +1,722 @@
-+/*
-+ * QEMU Macintosh floppy disk controller emulator (SWIM2)
-+ *
-+ * Copyright (c) 2025 Matt Jacobson <mhjacobson@me.com>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+#include <assert.h>
-+#include <stdbool.h>
-+#include <stdint.h>
-+#include "qemu/log.h"
-+#include "qapi/error.h"
-+#include "hw/core/qdev-properties.h"
-+#include "hw/core/qdev.h"
-+#include "hw/core/sysbus.h"
-+#include "hw/block/sony_superdrive.h"
-+#include "hw/block/swim2.h"
-+#include "system/block-backend.h"
-+#include "system/blockdev.h"
-+#include "trace.h"
-+
-+#define SWIM2_MMIO_SIZE            0x2000
-+#define SWIM2_REG_SHIFT            9
-+
-+#define SWIM2_FIFO_FLAG_MARK       0x01
-+
-+#define SWIM2_SETUP_INVERT_WRDATA  BIT(0)
-+#define SWIM2_SETUP_3_5_OUTPUT     BIT(1)
-+#define SWIM2_SETUP_GCR_MODE       BIT(2)
-+#define SWIM2_SETUP_CLOCK_DIV_2    BIT(3)
-+#define SWIM2_SETUP_TEST_MODE      BIT(4)
-+#define SWIM2_SETUP_IBM_DATA_MODE  BIT(5)
-+#define SWIM2_SETUP_GCR_WRITES     BIT(6)
-+#define SWIM2_SETUP_RESERVED       BIT(7)
-+
-+#define SWIM2_MODE_CLR_FIFO        BIT(0)
-+#define SWIM2_MODE_ENBL1           BIT(1)
-+#define SWIM2_MODE_ENBL2           BIT(2)
-+#define SWIM2_MODE_ACTION          BIT(3)
-+#define SWIM2_MODE_WRITE           BIT(4)
-+#define SWIM2_MODE_SIDE            BIT(5)
-+#define SWIM2_MODE_ALWAYS1         BIT(6)
-+#define SWIM2_MODE_MOTORON         BIT(7)
-+
-+#define SWIM2_ERROR_UNDERRUN       BIT(0)
-+#define SWIM2_ERROR_MARK_IN_DATA   BIT(1)
-+#define SWIM2_ERROR_OVERRUN        BIT(2)
-+#define SWIM2_ERROR_SHORT          BIT(3)
-+#define SWIM2_ERROR_LONG           BIT(4)
-+
-+/*
-+ * These are shifted versions of the "SWIM offsets" in HardwareEqu.a in the
-+ * System 7.1 source.
-+ */
-+typedef enum {
-+    SWIM2_REG_DATA = 0,
-+    SWIM2_REG_MARK = 1,
-+    SWIM2_REG_ERROR = 2,
-+    SWIM2_REG_PARAMETER = 3,
-+    SWIM2_REG_PHASE = 4,
-+    SWIM2_REG_SETUP = 5,
-+    SWIM2_REG_WRITE_ZEROES = 6,
-+    SWIM2_REG_WRITE_ONES = 7,
-+} SWIM2Register;
-+
-+#define SWIM2_REG_WRITE_CRC  SWIM2_REG_ERROR
-+#define SWIM2_REG_STATUS     SWIM2_REG_WRITE_ZEROES
-+#define SWIM2_REG_HANDSHAKE  SWIM2_REG_WRITE_ONES
-+
-+static const char *const swim2_read_reg_names[] = {
-+    [SWIM2_REG_DATA] = "DATA",
-+    [SWIM2_REG_MARK] = "MARK",
-+    [SWIM2_REG_ERROR] = "ERROR",
-+    [SWIM2_REG_PARAMETER] = "PARAM",
-+    [SWIM2_REG_PHASE] = "PHASE",
-+    [SWIM2_REG_SETUP] = "SETUP",
-+    [SWIM2_REG_STATUS] = "STATUS",
-+    [SWIM2_REG_HANDSHAKE] = "HANDSHAKE",
-+};
-+
-+static const char *const swim2_write_reg_names[] = {
-+    [SWIM2_REG_DATA] = "DATA",
-+    [SWIM2_REG_MARK] = "MARK",
-+    [SWIM2_REG_WRITE_CRC] = "WRITE_CRC",
-+    [SWIM2_REG_PARAMETER] = "PARAM",
-+    [SWIM2_REG_PHASE] = "PHASE",
-+    [SWIM2_REG_SETUP] = "SETUP",
-+    [SWIM2_REG_WRITE_ZEROES] = "WRITE0",
-+    [SWIM2_REG_WRITE_ONES] = "WRITE1",
-+};
-+
-+static inline const char *swim2_reg_name(const uint8_t reg,
-+                                         const bool write)
-+{
-+    assert(reg < 8);
-+    const char *const *table = write ? swim2_write_reg_names :
-+                                       swim2_read_reg_names;
-+    return table[reg];
-+}
-+
-+static uint32_t swim2_fifo_pack(const uint8_t data, const bool is_mark)
-+{
-+    return data | (is_mark ? BIT(8) : 0);
-+}
-+
-+static uint8_t swim2_fifo_data(const uint32_t entry)
-+{
-+    return entry & 0xff;
-+}
-+
-+static bool swim2_fifo_is_mark(const uint32_t entry)
-+{
-+    return (entry & BIT(8)) != 0;
-+}
-+
-+static void swim2_set_error(SWIM2State *const ctrl, const uint8_t err)
-+{
-+    const uint8_t prev = ctrl->error_reg;
-+    ctrl->error_reg |= err;
-+    trace_swim2_error_set(prev, ctrl->error_reg, err, ctrl->mode_reg,
-+                          (ctrl->mode_reg & SWIM2_MODE_WRITE) != 0,
-+                          fifo32_num_used(&ctrl->fifo));
-+}
-+
-+static void swim2_fifo_clear(SWIM2State *const ctrl)
-+{
-+    fifo32_reset(&ctrl->fifo);
-+    trace_swim2_fifo_clear();
-+}
-+
-+static bool swim2_fifo_push(SWIM2State *const ctrl, const uint8_t data,
-+                            const bool is_mark)
-+{
-+    if (fifo32_is_full(&ctrl->fifo)) {
-+        return false;
-+    } else {
-+        fifo32_push(&ctrl->fifo, swim2_fifo_pack(data, is_mark));
-+        trace_swim2_fifo_push(fifo32_num_used(&ctrl->fifo), data, is_mark);
-+        return true;
-+    }
-+}
-+
-+static bool swim2_fifo_pop(SWIM2State *const ctrl, uint8_t *const data,
-+                           bool *const is_mark)
-+{
-+    if (fifo32_is_empty(&ctrl->fifo)) {
-+        trace_swim2_fifo_pop(fifo32_num_used(&ctrl->fifo), 0, false, false);
-+        return false;
-+    } else {
-+        const uint32_t entry = fifo32_pop(&ctrl->fifo);
-+        const uint8_t value = swim2_fifo_data(entry);
-+        const bool entry_is_mark = swim2_fifo_is_mark(entry);
-+
-+        *data = value;
-+        if (is_mark) {
-+            *is_mark = entry_is_mark;
-+        }
-+
-+        trace_swim2_fifo_pop(fifo32_num_used(&ctrl->fifo), value,
-+                             entry_is_mark, true);
-+        return true;
-+    }
-+}
-+
-+static SonyDrive *swim2_active_drive(SWIM2State *const ctrl)
-+{
-+    uint8_t selected;
-+
-+    if (ctrl->mode_reg & SWIM2_MODE_ENBL1) {
-+        selected = 0;
-+    } else if (ctrl->mode_reg & SWIM2_MODE_ENBL2) {
-+        selected = 1;
-+    } else {
-+        return NULL;
-+    }
-+
-+    if (ctrl->drives[selected]) {
-+        return &ctrl->drives[selected]->sony;
-+    } else {
-+        return NULL;
-+    }
-+}
-+
-+static void swim2_apply_drive_lines(SWIM2State *const ctrl)
-+{
-+    SonyDrive *const active = swim2_active_drive(ctrl);
-+
-+    for (uint8_t i = 0; i < SWIM2_MAX_FD; i++) {
-+        SWIM2Drive *const entry = ctrl->drives[i];
-+
-+        if (!entry) {
-+            continue;
-+        }
-+
-+        SonyDrive *const drive = &entry->sony;
-+
-+        const uint8_t phases = (ctrl->phase_reg & 0xF) &
-+                                    (ctrl->phase_reg >> 4);
-+        const bool head = (ctrl->mode_reg & SWIM2_MODE_SIDE);
-+        const bool enabled = (drive == active) &&
-+                             ((ctrl->mode_reg & SWIM2_MODE_MOTORON) != 0);
-+
-+        sony_drive_set_inputs(drive, phases, head, enabled);
-+    }
-+}
-+
-+static void swim2_fill_fifo_from_drive(SWIM2State *const ctrl)
-+{
-+    SonyDrive *const drive = swim2_active_drive(ctrl);
-+
-+    if (!drive) {
-+        return;
-+    }
-+
-+    /*
-+     * Don't wait for a mark byte if the drive is in GCR mode.
-+     * A/UX hits this codepath, because it tries to read in MFM mode before
-+     * falling back to GCR.
-+     */
-+    /* TODO: encapsulate drive->gcr_encode better */
-+    if (ctrl->wait_for_mark && drive->gcr_encode) {
-+        return;
-+    }
-+
-+    while (!fifo32_is_full(&ctrl->fifo)) {
-+        uint8_t data;
-+        bool is_mark;
-+
-+        if (!sony_drive_read_byte(drive, &data, &is_mark)) {
-+            break;
-+        } else if (!ctrl->wait_for_mark || is_mark) {
-+            ctrl->wait_for_mark = false;
-+            const bool did_push = swim2_fifo_push(ctrl, data, is_mark);
-+            assert(did_push);
-+        }
-+    }
-+}
-+
-+static void swim2_push_fifo_to_drive(SWIM2State *const ctrl)
-+{
-+    SonyDrive *const drive = swim2_active_drive(ctrl);
-+
-+    if (!drive) {
-+        /*
-+         * The Mac ROM does this to measure how quickly we can spit bytes out
-+         * to a drive.  Just consume the FIFO without error.
-+         */
-+        swim2_fifo_clear(ctrl);
-+    } else {
-+        uint8_t data;
-+        bool is_mark;
-+
-+        while (swim2_fifo_pop(ctrl, &data, &is_mark)) {
-+            if (ctrl->wait_for_mark && is_mark) {
-+                ctrl->wait_for_mark = false;
-+            } else if (!ctrl->wait_for_mark && !is_mark) {
-+                sony_drive_write_byte(drive, data);
-+            }
-+        }
-+    }
-+}
-+
-+static void swim2_update_mode(SWIM2State *const ctrl, const uint8_t mask,
-+                              const bool set_bits)
-+{
-+    const uint8_t prev_mode = ctrl->mode_reg;
-+
-+    if (set_bits) {
-+        ctrl->mode_reg |= mask;
-+    } else {
-+        ctrl->mode_reg &= ~mask;
-+        ctrl->mode_reg |= SWIM2_MODE_ALWAYS1;
-+    }
-+
-+    if (!set_bits) {
-+        ctrl->parameter_index = 0;
-+    }
-+
-+    if ((mask & SWIM2_MODE_CLR_FIFO) && set_bits) {
-+        swim2_fifo_clear(ctrl);
-+    }
-+
-+    swim2_apply_drive_lines(ctrl);
-+
-+    const bool prev_action = prev_mode & SWIM2_MODE_ACTION;
-+    const bool action = ctrl->mode_reg & SWIM2_MODE_ACTION;
-+
-+    if (!prev_action && action) {
-+        ctrl->did_handshake = false;
-+        ctrl->wait_for_mark = !(ctrl->setup_reg & SWIM2_SETUP_GCR_MODE);
-+
-+        if (ctrl->mode_reg & SWIM2_MODE_WRITE) {
-+            swim2_push_fifo_to_drive(ctrl);
-+        } else {
-+            swim2_fill_fifo_from_drive(ctrl);
-+        }
-+    }
-+}
-+
-+static void swim2_handle_phase_write(SWIM2State *const ctrl,
-+                                     const uint8_t value)
-+{
-+    ctrl->phase_reg = value;
-+    swim2_apply_drive_lines(ctrl);
-+}
-+
-+static void swim2_handle_setup_write(SWIM2State *const ctrl,
-+                                     const uint8_t value)
-+{
-+    ctrl->setup_reg = value;
-+}
-+
-+/*
-+ * We don't actually do anything with these parameter values other than store
-+ * them.
-+ */
-+static void swim2_handle_parameter_write(SWIM2State *const ctrl,
-+                                         const uint8_t value)
-+{
-+    ctrl->parameter_data[ctrl->parameter_index] = value;
-+    ctrl->parameter_index = (ctrl->parameter_index + 1) & 0x3;
-+}
-+
-+static uint8_t swim2_handle_parameter_read(SWIM2State *const ctrl)
-+{
-+    uint8_t value;
-+
-+    /* Return 0 for parameters 1 and 3, as A/UX expects for a SWIM2. */
-+    if (ctrl->parameter_index == 1 || ctrl->parameter_index == 3) {
-+        value = 0;
-+    } else {
-+        value = ctrl->parameter_data[ctrl->parameter_index];
-+    }
-+
-+    ctrl->parameter_index = (ctrl->parameter_index + 1) & 0x3;
-+    return value;
-+}
-+
-+static uint8_t swim2_handle_handshake_read(SWIM2State *const ctrl)
-+{
-+    SonyDrive *const drive = swim2_active_drive(ctrl);
-+
-+    ctrl->did_handshake = true;
-+
-+    const bool empty = fifo32_is_empty(&ctrl->fifo);
-+    const bool full = fifo32_is_full(&ctrl->fifo);
-+    const bool error = ctrl->error_reg != 0;
-+    const bool sense = drive ? sony_drive_read_sense(drive) : true;
-+    const bool mark_next = !empty &&
-+                           swim2_fifo_is_mark(fifo32_peek(&ctrl->fifo));
-+
-+    uint8_t value = 0;
-+    if (mark_next) {
-+        value |= BIT(0);
-+    }
-+    /* bit 1: 1 when invalid CRC (i.e., never, for us) */
-+    /* bit 2: rddata, not emulated */
-+    if (sense) {
-+        value |= BIT(3);
-+    }
-+    /* bit 4: unused */
-+    if (error) {
-+        value |= BIT(5);
-+    }
-+
-+    if ((ctrl->mode_reg & SWIM2_MODE_WRITE) != 0) {
-+        if (empty) {
-+            value |= BIT(6);
-+        }
-+
-+        if (!full || error) {
-+            value |= BIT(7);
-+        }
-+    } else {
-+        if (full) {
-+            value |= BIT(6);
-+        }
-+
-+        if (!empty) {
-+            value |= BIT(7);
-+        }
-+    }
-+
-+    return value;
-+}
-+
-+static uint64_t swim2_read(void *const opaque, const hwaddr addr,
-+                           const unsigned int size)
-+{
-+    SWIM2State *const ctrl = SWIM2(opaque);
-+    const uint8_t reg = (addr >> SWIM2_REG_SHIFT) & 0x7;
-+    uint8_t value = 0xff;
-+
-+    switch (reg) {
-+    case SWIM2_REG_DATA: {
-+        bool is_mark;
-+
-+        if (!swim2_fifo_pop(ctrl, &value, &is_mark)) {
-+            value = 0xff;
-+            swim2_set_error(ctrl, SWIM2_ERROR_OVERRUN);
-+        } else {
-+            if (is_mark) {
-+                swim2_set_error(ctrl, SWIM2_ERROR_MARK_IN_DATA);
-+            }
-+
-+            swim2_fill_fifo_from_drive(ctrl);
-+        }
-+
-+        break;
-+    }
-+    case SWIM2_REG_MARK: {
-+        /*
-+         * Allow reading data bytes from here; the specs seem unclear on whether
-+         * this is allowed, but the Mac Sony driver does so.
-+         */
-+
-+        if (!ctrl->did_handshake) {
-+            /*
-+             * The Mac ROM does something weird when reading an MFM disk.
-+             * Immediately after setting ACTION, it pulls and discards two bytes
-+             * from MARK.  To avoid needing to emulate this with timing,
-+             * simply detect the reads that are not preceded by a HANDSHAKE
-+             * and give back the garbage they seem to expect.
-+             */
-+            value = 0xff;
-+        } else if (!swim2_fifo_pop(ctrl, &value, NULL)) {
-+            value = 0xff;
-+            swim2_set_error(ctrl, SWIM2_ERROR_OVERRUN);
-+        } else {
-+            swim2_fill_fifo_from_drive(ctrl);
-+        }
-+
-+        break;
-+    }
-+    case SWIM2_REG_ERROR:
-+        value = ctrl->error_reg;
-+        ctrl->error_reg = 0;
-+        break;
-+    case SWIM2_REG_PARAMETER:
-+        value = swim2_handle_parameter_read(ctrl);
-+        break;
-+    case SWIM2_REG_PHASE:
-+        value = ctrl->phase_reg;
-+        break;
-+    case SWIM2_REG_SETUP:
-+        value = ctrl->setup_reg;
-+        break;
-+    case SWIM2_REG_STATUS:
-+        value = ctrl->mode_reg;
-+        break;
-+    case SWIM2_REG_HANDSHAKE:
-+        value = swim2_handle_handshake_read(ctrl);
-+        break;
-+    default:
-+        value = 0xff;
-+        break;
-+    }
-+
-+    trace_swim2_mmio_read(addr, size, reg, swim2_reg_name(reg, false), value,
-+                          ctrl->mode_reg, ctrl->setup_reg, ctrl->phase_reg,
-+                          fifo32_num_used(&ctrl->fifo));
-+    return value;
-+}
-+
-+static void swim2_write(void *const opaque, const hwaddr addr,
-+                        const uint64_t data, const unsigned int size)
-+{
-+    SWIM2State *const ctrl = SWIM2(opaque);
-+    const uint8_t reg = (addr >> SWIM2_REG_SHIFT) & 0x7;
-+    const uint8_t value = data & 0xff;
-+
-+    switch (reg) {
-+    case SWIM2_REG_DATA:
-+        if (!swim2_fifo_push(ctrl, value, 0)) {
-+            swim2_set_error(ctrl, SWIM2_ERROR_OVERRUN);
-+        } else if ((ctrl->mode_reg & SWIM2_MODE_ACTION)) {
-+            swim2_push_fifo_to_drive(ctrl);
-+        }
-+        break;
-+    case SWIM2_REG_MARK:
-+        if (!swim2_fifo_push(ctrl, value, SWIM2_FIFO_FLAG_MARK)) {
-+            swim2_set_error(ctrl, SWIM2_ERROR_OVERRUN);
-+        } else if ((ctrl->mode_reg & SWIM2_MODE_ACTION)) {
-+            swim2_push_fifo_to_drive(ctrl);
-+        }
-+        break;
-+    case SWIM2_REG_WRITE_CRC:
-+        /* Nothing to do. */
-+        break;
-+    case SWIM2_REG_PARAMETER:
-+        swim2_handle_parameter_write(ctrl, value);
-+        break;
-+    case SWIM2_REG_PHASE:
-+        swim2_handle_phase_write(ctrl, value);
-+        break;
-+    case SWIM2_REG_SETUP:
-+        swim2_handle_setup_write(ctrl, value);
-+        break;
-+    case SWIM2_REG_WRITE_ZEROES:
-+        swim2_update_mode(ctrl, value, false);
-+        break;
-+    case SWIM2_REG_WRITE_ONES:
-+        swim2_update_mode(ctrl, value, true);
-+        break;
-+    default:
-+        break;
-+    }
-+
-+    trace_swim2_mmio_write(addr, size, reg, swim2_reg_name(reg, true), value,
-+                           ctrl->mode_reg, ctrl->setup_reg, ctrl->phase_reg,
-+                           fifo32_num_used(&ctrl->fifo));
-+}
-+
-+void swim2_set_sel(SWIM2State *ctrl, bool sel)
-+{
-+    trace_swim2_set_sel(sel);
-+    if (sel) {
-+        ctrl->mode_reg |= SWIM2_MODE_SIDE;
-+    } else {
-+        ctrl->mode_reg &= ~SWIM2_MODE_SIDE;
-+    }
-+    swim2_apply_drive_lines(ctrl);
-+}
-+
-+static const MemoryRegionOps swim2_mmio_ops = {
-+    .read = swim2_read,
-+    .write = swim2_write,
-+    .endianness = DEVICE_BIG_ENDIAN,
-+};
-+
-+static void swim2_change_cb(void *const opaque, const bool load,
-+                            Error **const errp)
-+{
-+    SWIM2Drive *const drive = opaque;
-+
-+    if (!load) {
-+        blk_set_perm(drive->conf.blk, 0, BLK_PERM_ALL, &error_abort);
-+    } else if (!blkconf_apply_backend_options(&drive->conf,
-+                 !blk_supports_write_perm(drive->conf.blk), false, errp)) {
-+        return;
-+    }
-+
-+    sony_drive_set_block_backend(&drive->sony, drive->conf.blk);
-+}
-+
-+static void swim2_drive_realize(DeviceState *const dev, Error **const errp)
-+{
-+    SWIM2Drive *const drive = SWIM2_DRIVE(dev);
-+    SWIM2State *const ctrl = SWIM2(dev->parent_bus->parent);
-+
-+    if (!drive->conf.blk) {
-+        drive->conf.blk = blk_new(qemu_get_aio_context(), 0, BLK_PERM_ALL);
-+        const int ret = blk_attach_dev(drive->conf.blk, dev);
-+        assert(ret == 0);
-+    }
-+
-+    if (drive->unit < 0 || drive->unit >= SWIM2_MAX_FD) {
-+        error_setg(errp, "unit %d out of range (0-%d)", drive->unit,
-+                   SWIM2_MAX_FD - 1);
-+        return;
-+    }
-+
-+    if (ctrl->drives[drive->unit]) {
-+        error_setg(errp, "floppy unit %d already in use", drive->unit);
-+        return;
-+    }
-+
-+    if (!blkconf_blocksizes(&drive->conf, errp)) {
-+        /* errp set by blkconf_blocksizes(). */
-+        return;
-+    }
-+
-+    if (drive->conf.logical_block_size  != 512 ||
-+        drive->conf.physical_block_size != 512) {
-+        error_setg(errp, "physical and logical block size must be 512 for"
-+                   " floppy");
-+        return;
-+    }
-+
-+    drive->conf.rerror = BLOCKDEV_ON_ERROR_AUTO;
-+    drive->conf.werror = BLOCKDEV_ON_ERROR_AUTO;
-+
-+    if (!blkconf_apply_backend_options(&drive->conf,
-+          !blk_supports_write_perm(drive->conf.blk), false, errp)) {
-+        /* errp set by blkconf_apply_backend_options(). */
-+        return;
-+    }
-+
-+    if (blk_get_on_error(drive->conf.blk, 0) != BLOCKDEV_ON_ERROR_ENOSPC &&
-+        blk_get_on_error(drive->conf.blk, 0) != BLOCKDEV_ON_ERROR_REPORT) {
-+        error_setg(errp, "SWIM2 doesn't support drive option werror");
-+        return;
-+    }
-+
-+    if (blk_get_on_error(drive->conf.blk, 1) != BLOCKDEV_ON_ERROR_REPORT) {
-+        error_setg(errp, "SWIM2 doesn't support drive option rerror");
-+        return;
-+    }
-+
-+    ctrl->drives[drive->unit] = drive;
-+    sony_drive_set_block_backend(&drive->sony, drive->conf.blk);
-+
-+    static const BlockDevOps swim2_block_ops = {
-+        .change_media_cb = swim2_change_cb,
-+    };
-+    blk_set_dev_ops(drive->conf.blk, &swim2_block_ops, drive);
-+}
-+
-+static void swim2_init(Object *const obj)
-+{
-+    SWIM2State *const ctrl = SWIM2(obj);
-+
-+    memory_region_init_io(&ctrl->mmio, obj, &swim2_mmio_ops, ctrl,
-+                          "swim2", SWIM2_MMIO_SIZE);
-+    sysbus_init_mmio(&ctrl->parent_obj, &ctrl->mmio);
-+
-+    for (int i = 0; i < SWIM2_MAX_FD; i++) {
-+        ctrl->drives[i] = NULL;
-+    }
-+
-+    memset(ctrl->parameter_data, 0, sizeof ctrl->parameter_data);
-+    ctrl->parameter_index = 0;
-+    ctrl->phase_reg = 0;
-+    ctrl->setup_reg = 0;
-+    ctrl->mode_reg = SWIM2_MODE_ALWAYS1;
-+    ctrl->error_reg = 0;
-+    ctrl->wait_for_mark = false;
-+    fifo32_create(&ctrl->fifo, 2);
-+    swim2_fifo_clear(ctrl);
-+}
-+
-+static void swim2_finalize(Object *const obj)
-+{
-+    SWIM2State *const ctrl = SWIM2(obj);
-+
-+    fifo32_destroy(&ctrl->fifo);
-+}
-+
-+static void swim2_realize(DeviceState *const dev, Error **const errp)
-+{
-+    SWIM2State *const ctrl = SWIM2(dev);
-+    ctrl->bus = qbus_new(TYPE_SWIM2_BUS, dev, "SWIM2 dummy bus");
-+
-+    for (int unit = 0; unit < SWIM2_MAX_FD; unit++) {
-+        DriveInfo *const dinfo = drive_get(IF_FLOPPY, 0, unit);
-+
-+        if (dinfo) {
-+            DeviceState *const drive = qdev_new(TYPE_SWIM2_DRIVE);
-+            qdev_prop_set_int32(drive, "unit", unit);
-+            qdev_prop_set_drive_err(drive, "drive",
-+                                    blk_by_legacy_dinfo(dinfo), &error_abort);
-+            qdev_realize_and_unref(drive, ctrl->bus, &error_abort);
-+        }
-+    }
-+}
-+
-+/* TODO: support migration */
-+static void swim2_class_init(ObjectClass *const oc, const void *const opaque)
-+{
-+    DeviceClass *const dc = DEVICE_CLASS(oc);
-+    dc->realize = swim2_realize;
-+    dc->desc = "Apple Macintosh SWIM2 floppy diskette drive controller";
-+}
-+
-+static void swim2_bus_class_init(ObjectClass *const oc,
-+                                 const void *const opaque)
-+{
-+    BusClass *const bc = BUS_CLASS(oc);
-+    bc->max_dev = 2;
-+}
-+
-+/* TODO: support migration */
-+static void swim2_drive_class_init(ObjectClass *const oc,
-+                                   const void *const opaque)
-+{
-+    DeviceClass *const dc = DEVICE_CLASS(oc);
-+    dc->bus_type = TYPE_SWIM2_BUS;
-+    dc->realize = swim2_drive_realize;
-+    set_bit(DEVICE_CATEGORY_STORAGE, dc->categories);
-+
-+    static const Property swim2_drive_properties[] = {
-+        DEFINE_BLOCK_PROPERTIES(SWIM2Drive, conf),
-+        DEFINE_PROP_INT32("unit", SWIM2Drive, unit, -1),
-+    };
-+    device_class_set_props(dc, swim2_drive_properties);
-+
-+    dc->desc = "Apple Macintosh SuperDrive floppy diskette drive";
-+}
-+
-+static const TypeInfo swim2_info = {
-+    .name = TYPE_SWIM2,
-+    .parent = TYPE_SYS_BUS_DEVICE,
-+    .instance_size = sizeof(SWIM2State),
-+    .instance_init = swim2_init,
-+    .instance_finalize = swim2_finalize,
-+    .class_init = swim2_class_init,
-+};
-+
-+static const TypeInfo swim2_bus_info = {
-+    .name = TYPE_SWIM2_BUS,
-+    .parent = TYPE_BUS,
-+    .instance_size = 0,
-+    .class_init = swim2_bus_class_init,
-+};
-+
-+static const TypeInfo swim2_drive_info = {
-+    .name = TYPE_SWIM2_DRIVE,
-+    .parent = TYPE_DEVICE,
-+    .instance_size = sizeof(SWIM2Drive),
-+    .class_init = swim2_drive_class_init,
-+};
-+
-+static void swim2_register_types(void)
-+{
-+    type_register_static(&swim2_info);
-+    type_register_static(&swim2_bus_info);
-+    type_register_static(&swim2_drive_info);
-+}
-+
-+type_init(swim2_register_types)
-diff --git a/hw/block/trace-events b/hw/block/trace-events
-index c9eb62bcaa..92d4bd9f17 100644
---- a/hw/block/trace-events
-+++ b/hw/block/trace-events
-@@ -102,6 +102,15 @@ swim_iwmctrl_write(int reg, const char *name, unsigned size, uint64_t value) "re
- swim_switch_to_ism(void) "switch from IWM to ISM mode"
- swim_switch_to_iwm(void) "switch from ISM to IWM mode"
- 
-+# swim2.c
-+swim2_mmio_read(uint64_t addr, unsigned size, int reg, const char *name, uint64_t value, uint8_t mode, uint8_t setup, uint8_t phase, uint32_t fifo_count) "addr=0x%"PRIx64" size=%u reg=%d [%s] value=0x%"PRIx64" mode=0x%02x setup=0x%02x phase=0x%02x fifo=%u"
-+swim2_mmio_write(uint64_t addr, unsigned size, int reg, const char *name, uint64_t value, uint8_t mode, uint8_t setup, uint8_t phase, uint32_t fifo_count) "addr=0x%"PRIx64" size=%u reg=%d [%s] value=0x%"PRIx64" mode=0x%02x setup=0x%02x phase=0x%02x fifo=%u"
-+swim2_fifo_push(uint32_t count, uint8_t data, uint8_t flags) "fifo=%u data=0x%02x flags=0x%02x"
-+swim2_fifo_pop(uint32_t count, uint8_t data, uint8_t flags, bool success) "fifo=%u data=0x%02x flags=0x%02x success=%d"
-+swim2_fifo_clear(void) "clear FIFO"
-+swim2_set_sel(bool sel) "set sel=%d"
-+swim2_error_set(uint8_t prev, uint8_t curr, uint8_t new_err, uint8_t mode, bool write_mode, uint32_t fifo_count) "prev=0x%02x curr=0x%02x new=0x%02x mode=0x%02x write=%d fifo=%u"
-+
- # sony_superdrive.c
- sony_drive_prepare(void *drive, uint8_t track, uint8_t head, uint8_t sector, bool gcr, uint16_t payload_len) "drive=%p track=%"PRIu8" head=%"PRIu8" sector=%"PRIu8" gcr=%d length=%"PRIu16
- sony_drive_persist(void *drive, uint64_t lba) "drive=%p lba=0x%"PRIx64
-diff --git a/include/hw/block/swim2.h b/include/hw/block/swim2.h
-new file mode 100644
-index 0000000000..72be21ea4e
---- /dev/null
-+++ b/include/hw/block/swim2.h
-@@ -0,0 +1,60 @@
-+/*
-+ * QEMU Macintosh floppy disk controller emulator (SWIM2)
-+ *
-+ * Copyright (c) 2025 Matt Jacobson <mhjacobson@me.com>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#ifndef HW_BLOCK_SWIM2_H
-+#define HW_BLOCK_SWIM2_H
-+
-+#include <stdbool.h>
-+#include <stdint.h>
-+#include "hw/core/qdev.h"
-+#include "hw/core/sysbus.h"
-+#include "hw/block/block.h"
-+#include "hw/block/sony_superdrive.h"
-+#include "qemu/fifo32.h"
-+#include "qom/object.h"
-+
-+#define TYPE_SWIM2 "swim2"
-+#define TYPE_SWIM2_BUS "swim2-bus"
-+#define TYPE_SWIM2_DRIVE "swim2-drive"
-+
-+OBJECT_DECLARE_SIMPLE_TYPE(SWIM2State, SWIM2)
-+OBJECT_DECLARE_SIMPLE_TYPE(SWIM2Drive, SWIM2_DRIVE)
-+
-+#define SWIM2_MAX_FD 2
-+
-+struct SWIM2Drive {
-+    DeviceState parent_obj;
-+
-+    BlockConf conf;
-+    SonyDrive sony;
-+    int32_t unit;
-+};
-+
-+struct SWIM2State {
-+    SysBusDevice parent_obj;
-+
-+    MemoryRegion mmio;
-+    BusState *bus;
-+
-+    SWIM2Drive *drives[SWIM2_MAX_FD];
-+
-+    uint8_t parameter_data[4];
-+    uint8_t parameter_index;
-+    uint8_t phase_reg;
-+    uint8_t setup_reg;
-+    uint8_t mode_reg;
-+    uint8_t error_reg;
-+    bool did_handshake;
-+    bool wait_for_mark;
-+
-+    Fifo32 fifo;
-+};
-+
-+void swim2_set_sel(SWIM2State *ctrl, bool sel);
-+
-+#endif /* HW_BLOCK_SWIM2_H */
--- 
-2.53.0
-
+On Fri, Jun 5, 2026 at 4:22=E2=80=AFPM Hy Man <infra.ai.cloud@bitdeer.com> =
+wrote:
+>
+> Reviewed-by: Hyman Huang <infra.ai.cloud@bitdeer.com>
+>
+> On Thu, Jun 4, 2026 at 3:00=E2=80=AFPM Bin Guo <guobin@linux.alibaba.com>=
+ wrote:
+> >
+> > The reaper polls with sleep(1) (TODO in the code) and only notices
+> > dirty-limit teardown at the next 1s tick.
+> >
+> > Replace the sleep with qemu_poll_ns() on an EventNotifier, kicked
+> > from dirtylimit_state_finalize() after dirtylimit_state has been
+> > cleared.  The kick must follow the NULL assignment: kicking earlier
+> > wakes the reaper while dirtylimit_in_service() still returns true,
+> > so it just loops back to wait.  A 1s fallback timeout remains as a
+> > liveness backstop.
+> >
+> > 20 set-/cancel-vcpu-dirty-limit cycles via QMP, |reaper-wake -
+> > cancel-ack| measured with strace on the reaper TID:
+> >
+> >     before: median 255 ms, max 502 ms
+> >     after:  median 0.6 ms, max  27 ms
+> >
+> > kvm_dirty_ring_reaper_init() returns int again (was made void in
+> > commit 43a5e377f4) to propagate event_notifier_init() failure.
+> >
+> > Signed-off-by: Bin Guo <guobin@linux.alibaba.com>
+> > ---
+> > Changes in v2:
+> > - Fix compilation error: kvm_init() has no Error **errp parameter, so
+> >   kvm_dirty_ring_reaper_init() now uses error_report() directly and
+> >   no longer accepts an errp argument.
+> > - Remove the kick from kvm_cpu_exec() KVM_EXIT_DIRTY_RING_FULL handler:
+> >   it already reaps synchronously (all vCPUs or the ring-full one), so
+> >   a background reaper kick would only be redundant or a no-op.
+> > - Move kick site from dirtylimit_change(false) to
+> >   dirtylimit_state_finalize() after dirtylimit_state =3D NULL, ensuring
+> >   the reaper actually proceeds past the dirtylimit_in_service() check.
+> >
+> >  accel/kvm/kvm-all.c      | 42 ++++++++++++++++++++++++++++++++++------
+> >  accel/stubs/kvm-stub.c   |  4 ++++
+> >  include/system/kvm.h     |  7 +++++++
+> >  include/system/kvm_int.h |  3 +++
+> >  system/dirtylimit.c      |  2 ++
+> >  5 files changed, 52 insertions(+), 6 deletions(-)
+> >
+> > diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
+> > index 96f90ebb24..be005832bc 100644
+> > --- a/accel/kvm/kvm-all.c
+> > +++ b/accel/kvm/kvm-all.c
+> > @@ -1754,6 +1754,8 @@ static void kvm_set_phys_mem(KVMMemoryListener *k=
+ml,
+> >      } while (size);
+> >  }
+> >
+> > +#define KVM_DIRTY_RING_REAPER_FALLBACK_NS  (1 * NANOSECONDS_PER_SECOND=
+)
+> > +
+> >  static void *kvm_dirty_ring_reaper_thread(void *data)
+> >  {
+> >      KVMState *s =3D data;
+> > @@ -1764,12 +1766,18 @@ static void *kvm_dirty_ring_reaper_thread(void =
+*data)
+> >      trace_kvm_dirty_ring_reaper("init");
+> >
+> >      while (true) {
+> > +        GPollFD pfd =3D {
+> > +            .fd =3D event_notifier_get_fd(&r->reaper_notifier),
+> > +            .events =3D G_IO_IN,
+> > +        };
+> > +
+> >          r->reaper_state =3D KVM_DIRTY_RING_REAPER_WAIT;
+> >          trace_kvm_dirty_ring_reaper("wait");
+> > -        /*
+> > -         * TODO: provide a smarter timeout rather than a constant?
+> > -         */
+> > -        sleep(1);
+> > +
+> > +        qemu_poll_ns(&pfd, 1, KVM_DIRTY_RING_REAPER_FALLBACK_NS);
+> > +
+> > +        /* Drain unconditionally so a stale event can't spin the next =
+loop. */
+> > +        event_notifier_test_and_clear(&r->reaper_notifier);
+> >
+> >          /* keep sleeping so that dirtylimit not be interfered by reape=
+r */
+> >          if (dirtylimit_in_service()) {
+> > @@ -1789,13 +1797,32 @@ static void *kvm_dirty_ring_reaper_thread(void =
+*data)
+> >      g_assert_not_reached();
+> >  }
+> >
+> > -static void kvm_dirty_ring_reaper_init(KVMState *s)
+> > +static int kvm_dirty_ring_reaper_init(KVMState *s)
+> >  {
+> >      struct KVMDirtyRingReaper *r =3D &s->reaper;
+> > +    int ret;
+> > +
+> > +    ret =3D event_notifier_init(&r->reaper_notifier, 0);
+> > +    if (ret < 0) {
+> > +        error_report("Failed to initialize dirty ring reaper notifier:=
+ %s",
+> > +                     strerror(-ret));
+> > +        return ret;
+> > +    }
+> >
+> >      qemu_thread_create(&r->reaper_thr, "kvm-reaper",
+> >                         kvm_dirty_ring_reaper_thread,
+> >                         s, QEMU_THREAD_JOINABLE);
+> > +    return 0;
+> > +}
+> > +
+> > +void kvm_dirty_ring_reaper_kick(void)
+> > +{
+> > +    KVMState *s =3D kvm_state;
+> > +
+> > +    if (!s || !s->kvm_dirty_ring_size) {
+> > +        return;
+> > +    }
+> > +    event_notifier_set(&s->reaper.reaper_notifier);
+> >  }
+> >
+> >  static int kvm_dirty_ring_init(KVMState *s)
+> > @@ -3097,7 +3124,10 @@ static int kvm_init(AccelState *as, MachineState=
+ *ms)
+> >      }
+> >
+> >      if (s->kvm_dirty_ring_size) {
+> > -        kvm_dirty_ring_reaper_init(s);
+> > +        ret =3D kvm_dirty_ring_reaper_init(s);
+> > +        if (ret < 0) {
+> > +            goto err;
+> > +        }
+> >      }
+> >
+> >      if (kvm_check_extension(kvm_state, KVM_CAP_BINARY_STATS_FD)) {
+> > diff --git a/accel/stubs/kvm-stub.c b/accel/stubs/kvm-stub.c
+> > index c4617caac6..b878598552 100644
+> > --- a/accel/stubs/kvm-stub.c
+> > +++ b/accel/stubs/kvm-stub.c
+> > @@ -134,6 +134,10 @@ uint32_t kvm_dirty_ring_size(void)
+> >      return 0;
+> >  }
+> >
+> > +void kvm_dirty_ring_reaper_kick(void)
+> > +{
+> > +}
+> > +
+> >  bool kvm_hwpoisoned_mem(void)
+> >  {
+> >      return false;
+> > diff --git a/include/system/kvm.h b/include/system/kvm.h
+> > index 5fa33eddda..e127a5eb37 100644
+> > --- a/include/system/kvm.h
+> > +++ b/include/system/kvm.h
+> > @@ -553,6 +553,13 @@ bool kvm_dirty_ring_enabled(void);
+> >
+> >  uint32_t kvm_dirty_ring_size(void);
+> >
+> > +/**
+> > + * kvm_dirty_ring_reaper_kick - wake the background dirty ring reaper.
+> > + *
+> > + * Safe from any thread; no-op when the dirty ring is not in use.
+> > + */
+> > +void kvm_dirty_ring_reaper_kick(void);
+> > +
+> >  void kvm_mark_guest_state_protected(void);
+> >
+> >  /**
+> > diff --git a/include/system/kvm_int.h b/include/system/kvm_int.h
+> > index 0876aac938..c14ebc927f 100644
+> > --- a/include/system/kvm_int.h
+> > +++ b/include/system/kvm_int.h
+> > @@ -12,6 +12,7 @@
+> >  #include "system/memory.h"
+> >  #include "qapi/qapi-types-common.h"
+> >  #include "qemu/accel.h"
+> > +#include "qemu/event_notifier.h"
+> >  #include "qemu/queue.h"
+> >  #include "system/kvm.h"
+> >  #include "accel/accel-ops.h"
+> > @@ -100,6 +101,8 @@ struct KVMDirtyRingReaper {
+> >      QemuThread reaper_thr;
+> >      volatile uint64_t reaper_iteration; /* iteration number of reaper =
+thr */
+> >      volatile enum KVMDirtyRingReaperState reaper_state; /* reap thr st=
+ate */
+> > +    /* Wakeup channel: kicked when dirty-limit is torn down. */
+> > +    EventNotifier reaper_notifier;
+> >  };
+> >  struct KVMState
+> >  {
+> > diff --git a/system/dirtylimit.c b/system/dirtylimit.c
+> > index c934ceb0de..a33256ade7 100644
+> > --- a/system/dirtylimit.c
+> > +++ b/system/dirtylimit.c
+> > @@ -239,6 +239,8 @@ void dirtylimit_state_finalize(void)
+> >      g_free(dirtylimit_state);
+> >      dirtylimit_state =3D NULL;
+> >
+> > +    kvm_dirty_ring_reaper_kick();
+> > +
+> >      trace_dirtylimit_state_finalize();
+> >  }
+> >
+> > --
+> > 2.50.1 (Apple Git-155)
+> >
 
