@@ -4,79 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A4F7CD98ED
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jun 2026 19:58:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E518CD98ED
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jun 2026 19:58:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1waIso-0000Sl-7J; Thu, 18 Jun 2026 15:58:38 -0400
+	id 1waIsn-0000SV-3c; Thu, 18 Jun 2026 15:58:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1waIsm-0000SM-Fn
- for qemu-devel@nongnu.org; Thu, 18 Jun 2026 15:58:36 -0400
-Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
+ id 1waIsl-0000S5-M9
+ for qemu-devel@nongnu.org; Thu, 18 Jun 2026 15:58:35 -0400
+Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1waIsk-0000MR-V3
- for qemu-devel@nongnu.org; Thu, 18 Jun 2026 15:58:36 -0400
-Received: by mail-pl1-x62c.google.com with SMTP id
- d9443c01a7336-2c6d31bfc70so9033945ad.3
- for <qemu-devel@nongnu.org>; Thu, 18 Jun 2026 12:58:34 -0700 (PDT)
+ id 1waIsj-0000Lz-AX
+ for qemu-devel@nongnu.org; Thu, 18 Jun 2026 15:58:35 -0400
+Received: by mail-pl1-x629.google.com with SMTP id
+ d9443c01a7336-2c6ec0af575so8277475ad.1
+ for <qemu-devel@nongnu.org>; Thu, 18 Jun 2026 12:58:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1781812713; x=1782417513; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=iAXbBFVKIe8fCwdUITV3KmDYWZwayTbI3PUyT91PmE8=;
- b=Tw+Cz5CAcKOj0UTMqKln1sPyT/gX1xJRRTYMLWtAMvtjKaI426Lab+af5YOSozaGjk
- GEjY8jaCwpjml8XMyGokQ4eEoEGY5doLe4zMQ5vuO7+h+Tft2VWpsRizfnmw2mN+VEHO
- oOh3+w0XoL6SKnrB6uZ3W10mmAleooJaV9qW6q58VPM1m/D/ZVbGd+xhkY48qfVbStXT
- 6nNHZlGhsSoajGqVGlBygbVbdK8T+8KRFuF2FFYg0OVuFLBOoNxqVhbfil9vaAgLn+3b
- w9LdLhp3T9Kyel+gKn40SKGOsf+MuQbOWdvAtrU355UDpY35G7al6JeE1AT7E0Uy7cde
- wz3w==
+ d=linaro.org; s=google; t=1781812712; x=1782417512; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:from:to:cc:subject:date:message-id:reply-to;
+ bh=rLgx65tFsFfblyNJf9+3CEqUiej5TmumNRZKANQrI48=;
+ b=CKVZZJTAizIwVe71P0K9Q0cO+UvM8p+b/deCIRYmPmYQdKYo1nxaj+ExNh9jERapZI
+ aTxKi0id46WRqaT1qWYVqwGLL+NItAHfC9+ONxc6SdB3KWIY6wZIxhDwqR9ybs3bnqz1
+ 8QSn/wwB6e/hMLIvdv7yhAy7SUIFjTWC5VBM+4mszPynQpL1sxl/akXbqbaeghFDH5O0
+ PE3aaHr98XVXRUtN/j/vffWlrOK8zZeVVOREi0VMUwyRPsPpMmrYdafi77o5ky8L325p
+ +p8IWzwxON1hlGW1hoQja0T/vjKeVpemlCC56YI1xQfIKRmEQ8/1JOV3Ui0fyHiFlsAU
+ lvfw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781812713; x=1782417513;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=iAXbBFVKIe8fCwdUITV3KmDYWZwayTbI3PUyT91PmE8=;
- b=A7oTKdzImfXjO5vfeToj8HJmX5lOGgjyAjA5JtqfUuwgAVydYGnebh8xeaK9GBySD9
- szzizw05UCgu1xZqmdoYc9i5WKhidwZwSXRc9yhcRWBX7QDvt+NbDWnr/vRXteEulHAm
- 0u9gAFWmOFXgm23Vd+1dQVQQwfyjkZlchUqSM6WGGHWeb1u0aoNn1myf6z/kIe/FP/kU
- wtOFZ0thE1vMV+THXq7TiTD5BfOUT2epk6h1caav6UXbloOborvBaBMY5YtO3o9dWfjz
- 8lIE5hzMcjeQP1eF3whTfNEDMyMU6d0PJDBBX8tVVQmIeFq022XZ9SzMLUtA9Ar55gZF
- 3iKQ==
-X-Gm-Message-State: AOJu0YwJ8PcRiUlACBHDTxXKWOWLNrxJ/HGxhKSnSozq0o/QvcLJdmd9
- uwKxOyd9q2Tl6PZ3+sz97AWy7AFBVUkiYi35erxaf2X/thTwTvW91wkfjEJTFgfKwksFHrWj6Jr
- we35+
-X-Gm-Gg: AfdE7cnwceoxOHqLvW9KKm4or9t+TINE9BdniYZ5mwNe5J2v/1QACWACCTgGR7MCQlD
- iKn9+l7Eyytk0TZeG9qOYOepVP+QjbrROvGDZAZ+tNyRZY9F21KMsr1C2dW29yaQ3jOFeUmbZLO
- oLGo2vY35vGFOChw7cpBlC75A6zLqjyhsS0PwBFHzTg1XU4zd/oLpB1HhCrWrANepN7is+KArcR
- PIxbGdz19zgmKj8HoPr/6i8VeHuVhBMxAoD+1hHpW0Kfu4G7FfRFsAgvcE/rLrafZ4wuc0RKl53
- zGBwobC5Vvk3cQFjOnxJ4nj/9OTMsA0P/SRV4lmn+fKDqJaT/Vj9hPq5BtgZAKBS9rj3MbCj6q3
- JIsK8tPKw7gGNbTsuB5c2Ri61E9wRZQH+4Fdq17bPmjxmCWAe/0P+++s2K9H//efDB0Fwvas+It
- e5/jS8l5GjvLpCZXYeBa1jxELXxYS1Zpr28NTTlNhCKwRBxVj0tQ==
-X-Received: by 2002:a17:902:d541:b0:2c6:cbcb:bc77 with SMTP id
- d9443c01a7336-2c71900a21dmr5932365ad.28.1781812713410; 
- Thu, 18 Jun 2026 12:58:33 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1781812712; x=1782417512;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=rLgx65tFsFfblyNJf9+3CEqUiej5TmumNRZKANQrI48=;
+ b=gk/sIBs9c53pYR+54SXpFYyt623hNW2oWiWZpeB1ZFeTONHKFLvwjvX7wdx5PyFa/7
+ 0JTJXfsrW4D2TDAHxnp+ca+kQFznpcORl1wSJXQ+OSOqo6sC11Q2Gpk1X9tLsrEykKkL
+ BXhw7jIBjTDiM8padw8toZaBByZjBZqLXXaqPPNQwBEq6KduL24y97MxXEf8IXE72fCh
+ b41djigHNGZM5R8Y7abwjxTxBj+cQ/bdcXnFy6Y5/FsABucEBUQUvEOXujIXbyt7605o
+ XdvyL0iBmEl62s/rOUwc7X9sAGqNhqB3Ddn6oNVWB+1K/imQFJ5v3NAvJnoVYCX+wdGP
+ isyA==
+X-Gm-Message-State: AOJu0YziR2L+ijfWQXXER5bTwKawA5YNozUToCtbZfJn+aDZKZOVqYJx
+ p7a+Xpm2R5yUOXpzUyBQtnECHnZhltshv+usgMkFW6ToP+TTSdHgk18jEXMtctSIOp5nnTQzFIa
+ rDsyG
+X-Gm-Gg: AfdE7clL/XDa+tQH1cHR6zFcwCDMpC62p+tpzVioSvKV/AwM1gEY86JQekdJImCpoJ7
+ +obgWIbVF8Fm1vY6wlxuphDlVSQ7w2hrR9P3xXEXSBc5nXLqJwYRt23b2P7VpDxb/gKTVXhYY6m
+ ZGsnmTMuuv/XOO+NJhiXbqrKGTS7BXDsCxfeWxu20/HWIzEvChJn8d7c5Rfhu+/yzunU30gE7UB
+ EZW9Oi8AhtDR/9VH6gym2JGOZ34PQRw1H64MbrD6z8YLlHTclxDdrFRspXR+/vReqPudgyWtGo9
+ ZpH61iAc10xvh/jIZye0HmBtb1x7VZiNoY4CWMwp2sHb+LQkbR4+ibiRA6MadiFBOoxGa3sSJQ3
+ DAqH+St7TkgOX2LqgGDAkGFfA/Vdwea4eA5UpSHiRxSpi38CVD1OeWb96ltOqn9gzh96cP5Py9U
+ I1ap/8k5cYV+GfYTewF8aiCsUl4HdK/svKTHgJUIKSlm4wWZCHDnR2llXvPHOJ
+X-Received: by 2002:a17:902:d489:b0:2be:22cc:e227 with SMTP id
+ d9443c01a7336-2c718c87b90mr8232025ad.4.1781812711691; 
+ Thu, 18 Jun 2026 12:58:31 -0700 (PDT)
 Received: from stoup.. (174-21-129-215.tukw.qwest.net. [174.21.129.215])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2c432c8ca31sm205776395ad.55.2026.06.18.12.58.31
+ d9443c01a7336-2c432c8ca31sm205776395ad.55.2026.06.18.12.58.30
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 18 Jun 2026 12:58:32 -0700 (PDT)
+ Thu, 18 Jun 2026 12:58:30 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PATCH v4 10/13] common-user: Implement read_self_maps for FreeBSD
-Date: Thu, 18 Jun 2026 12:58:29 -0700
-Message-ID: <20260618195829.590072-2-richard.henderson@linaro.org>
+Subject: [PATCH v4 00/13] *-user: probe_guest_base improvments
+Date: Thu, 18 Jun 2026 12:58:28 -0700
+Message-ID: <20260618195829.590072-1-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260618195829.590072-1-richard.henderson@linaro.org>
-References: <20260618195829.590072-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x629.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,78 +98,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Use sysctl to fetch the vm map of the current process.
+OMG.
 
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- common-user/selfmap.c | 45 ++++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 44 insertions(+), 1 deletion(-)
+Changes for v4:
+  - Really, really include the read_self_maps rewrite from Warner.
 
-diff --git a/common-user/selfmap.c b/common-user/selfmap.c
-index a1b88dee66..139dae15e8 100644
---- a/common-user/selfmap.c
-+++ b/common-user/selfmap.c
-@@ -9,6 +9,10 @@
- #include "qemu/osdep.h"
- #include "qemu/cutils.h"
- #include "user/selfmap.h"
-+#ifdef __FreeBSD__
-+#include <sys/sysctl.h>
-+#include <sys/user.h>
-+#endif
- 
- IntervalTreeRoot *read_self_maps(void)
- {
-@@ -80,9 +84,48 @@ IntervalTreeRoot *read_self_maps(void)
-     g_strfreev(lines);
-     g_free(maps);
- 
-+    return root;
-+#elif defined(__FreeBSD__)
-+    int mib[] = { CTL_KERN, KERN_PROC, KERN_PROC_VMMAP, getpid() };
-+    size_t len = 0;
-+    g_autofree void *buf = NULL;
-+    IntervalTreeRoot *root;
-+
-+    /* Probe for buffer size. */
-+    if (sysctl(mib, ARRAY_SIZE(mib), NULL, &len, NULL, 0) < 0) {
-+        return NULL;
-+    }
-+
-+    buf = g_malloc(len);
-+    if (sysctl(mib, ARRAY_SIZE(mib), buf, &len, NULL, 0) < 0) {
-+        return NULL;
-+    }
-+
-+    root = g_new0(IntervalTreeRoot, 1);
-+
-+    for (size_t i = 0; i < len; ) {
-+        struct kinfo_vmentry *k = buf + i;
-+        MapInfo *e = g_new0(MapInfo, 1);
-+
-+        e->itree.start = k->kve_start;
-+        e->itree.last = k->kve_end - 1;
-+
-+        /*
-+         * TODO: The rest of the fields in MapInfo are used by linux-user
-+         * for the implementation of open_self_maps().  These fields are
-+         * quite specific to the textual format of /proc/self/maps.
-+         *
-+         * We may need something different to emulate KERN_PROC_VMMAP
-+         * in bsd-user, but so far they're unused -- leave them zeroed.
-+         */
-+
-+        interval_tree_insert(&e->itree, root);
-+        i += k->kve_structsize;
-+    }
-+
-     return root;
- #else
--    return NULL;
-+# error
- #endif
- }
- 
+Only sending patch 10 this time.  :-(
+
+r~
+
+
+Richard Henderson (13):
+  linux-user: Introduce PGBRange
+  linux-user: Use PGBRange in load_elf_image
+  linux-user: Drop hiaddr out-of-range check in probe_guest_base
+  linux-user: Pass image_range to probe_guest_base
+  linux-user: Use PGBRange for commpage
+  common-user: Move mmap_min_addr from linux-user
+  common-user: Initialize mmap_min_addr for FreeBSD
+  include/user/guest-host: Include missing cpu.h
+  common-user: Move selfmap from util
+  common-user: Implement read_self_maps for FreeBSD
+  common-user: Move probe_guest_base from linux-user
+  bsd-user: Use probe_guest_base
+  common-user: Move guest_base, have_guest_base to probe-guest-base.c
+
+ include/user/guest-host.h        |   1 +
+ include/user/mmap-min-addr.h     |  12 +
+ include/user/probe-guest-base.h  |  37 +++
+ include/{qemu => user}/selfmap.h |   0
+ linux-user/arm/target_elf.h      |   2 +-
+ linux-user/hppa/target_elf.h     |   2 +-
+ linux-user/user-internals.h      |  17 +-
+ bsd-user/elfload.c               |  37 +--
+ bsd-user/main.c                  |  42 +---
+ common-user/mmap-min-addr.c      |  50 ++++
+ common-user/probe-guest-base.c   | 347 +++++++++++++++++++++++++++
+ {util => common-user}/selfmap.c  |  49 +++-
+ linux-user/arm/elfload.c         |   2 +-
+ linux-user/elfload.c             | 400 ++-----------------------------
+ linux-user/flatload.c            |   3 +-
+ linux-user/hppa/elfload.c        |   4 +-
+ linux-user/main.c                |  35 +--
+ linux-user/mmap.c                |   1 +
+ linux-user/syscall.c             |   2 +-
+ common-user/meson.build          |   3 +
+ util/meson.build                 |   4 -
+ 21 files changed, 564 insertions(+), 486 deletions(-)
+ create mode 100644 include/user/mmap-min-addr.h
+ create mode 100644 include/user/probe-guest-base.h
+ rename include/{qemu => user}/selfmap.h (100%)
+ create mode 100644 common-user/mmap-min-addr.c
+ create mode 100644 common-user/probe-guest-base.c
+ rename {util => common-user}/selfmap.c (68%)
+
 -- 
 2.43.0
 
