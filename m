@@ -4,38 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6DAAACD98F0
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jun 2026 08:24:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44B27CD98F0
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jun 2026 08:25:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wa83J-0007MS-EM; Thu, 18 Jun 2026 04:24:45 -0400
+	id 1wa83S-0007NM-5G; Thu, 18 Jun 2026 04:24:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <functioner@sjtu.edu.cn>)
- id 1wa83G-0007MF-PI
- for qemu-devel@nongnu.org; Thu, 18 Jun 2026 04:24:42 -0400
+ id 1wa83Q-0007N7-K7
+ for qemu-devel@nongnu.org; Thu, 18 Jun 2026 04:24:52 -0400
 Received: from smtp186.sjtu.edu.cn ([202.120.2.186])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <functioner@sjtu.edu.cn>)
- id 1wa83D-0007ID-AM
- for qemu-devel@nongnu.org; Thu, 18 Jun 2026 04:24:42 -0400
+ id 1wa83O-0007Jx-PU
+ for qemu-devel@nongnu.org; Thu, 18 Jun 2026 04:24:52 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=sjtu.edu.cn;
- s=default; t=1781771069;
- bh=JAp5FcGz5D+jAHVu+b2vzKzsbqtxmsLmp2LUrDvGCdM=;
- h=From:To:Cc:Subject:Date;
- b=YmsGSepSjekdxJV9zDnweFLXKr5THqzjP79aiS9IQiCYSMlEjOAzoB+06UyUpvcXP
- CCavVfDGmDACoolmi9TalajT61o3CO8/zYCcFgwXJUiJqPDX/uax3twu9L2Ez+Cze3
- NZeP2MisRPUCEyILbR8bxDPAO6cPCrQhLamvIH2bMN1ROIZ2w1XkKeTUshInpq08fn
- 2gPKy68aldN+JjJ3FeuNklE0N4LkJGMkrRJVFRysujzqQsmAQ5IZ6cU540FzRh6/99
- g0UwgU9jvSpY4KSCaZPn++R62AKeUxosvbU4GAAQkG2Wij8807yBRyhEgl1aQBSBWD
- qVp5n9vEvnXsw==
+ s=default; t=1781771070;
+ bh=BQwNv/IW6Xp9zpFDvysADuQmwzDnxneMEJ6If4fKsxg=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References;
+ b=JzB7koNNm12f5CSoUPm1r3HrnHijMdYi6rERZKkvdjv+OBh0tocMM7ByN3srpjl4P
+ 7EQm3a0ZE05TukfWSHDfgDRMT0zmh4onPMuWVqdu+S3b8dETClWuqpPFppU24taY3j
+ Dl7gv8EzgoMnbcFJkwLfA6Y1TqisRHsqtBHuL9K9zjqLhvGkCo8cdp1Wc+A5B1R3st
+ /DjaBK+NJvf4VjEco8VglchwX453r9UuScoMCLPXtTPG2fWcpf65rJkOp0OPFqJuMC
+ 9w5m3zhsNWNMluohooSsrp8x8bHj94rNU64Tvv+3NeAEYrrcPZT4LyIIDpGmBadhtw
+ g3cfFqAidXplg==
 Received: from proxy188.sjtu.edu.cn (smtp188.sjtu.edu.cn [202.120.2.188])
- by smtp186.sjtu.edu.cn (Postfix) with ESMTPS id AADA5300110;
- Thu, 18 Jun 2026 08:24:29 +0000 (UTC)
+ by smtp186.sjtu.edu.cn (Postfix) with ESMTPS id 8AA832FF557;
+ Thu, 18 Jun 2026 08:24:30 +0000 (UTC)
 Received: from pc.. (unknown [202.120.40.100])
- by proxy188.sjtu.edu.cn (Postfix) with ESMTPSA id 384E037C951;
- Thu, 18 Jun 2026 16:24:28 +0800 (CST)
+ by proxy188.sjtu.edu.cn (Postfix) with ESMTPSA id 59D1C37C969;
+ Thu, 18 Jun 2026 16:24:29 +0800 (CST)
 From: Ziyang Zhang <functioner@sjtu.edu.cn>
 To: qemu-devel <qemu-devel@nongnu.org>
 Cc: Riku Voipio <riku.voipio@iki.fi>, Laurent Vivier <laurent@vivier.eu>,
@@ -46,10 +46,13 @@ Cc: Riku Voipio <riku.voipio@iki.fi>, Laurent Vivier <laurent@vivier.eu>,
  Zhengwei Qi <qizhwei@sjtu.edu.cn>, Yun Wang <yunwang94@sjtu.edu.cn>,
  Mingyuan Xia <xiamy@ultrarisc.com>, Kailiang Xu <xukl2019@sjtu.edu.cn>,
  Ziyang Zhang <functioner@sjtu.edu.cn>
-Subject: [PATCH v2 0/1] plugins: fix syscall filter return value type
-Date: Thu, 18 Jun 2026 16:24:25 +0800
-Message-Id: <20260618082426.790315-1-functioner@sjtu.edu.cn>
+Subject: [PATCH v2 1/1] plugins: use int64_t for the syscall filter return
+ value
+Date: Thu, 18 Jun 2026 16:24:26 +0800
+Message-Id: <20260618082426.790315-2-functioner@sjtu.edu.cn>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20260618082426.790315-1-functioner@sjtu.edu.cn>
+References: <20260618082426.790315-1-functioner@sjtu.edu.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=202.120.2.186;
@@ -75,34 +78,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+The syscall return value passed back through the syscall filter
+callback is semantically signed: negative values encode errno codes.
+Declaring the sysret pointer as uint64_t * is therefore misleading and
+forces callers to launder the value through an unsigned temporary.
 
-The sysret value of the syscall filter callback is declared as uint64_t,
-but it is semantically signed: the negative range encodes errno. This
-makes it int64_t, matching the ret parameter of
-qemu_plugin_vcpu_syscall_ret_cb_t, which already uses int64_t for the
-same syscall return value.
+Change the sysret pointer to int64_t * across the public plugin API
+typedef (qemu_plugin_vcpu_syscall_filter_cb_t), the internal
+qemu_plugin_vcpu_syscall_filter() prototypes and stub, its
+implementation in plugins/core.c, the linux-user caller, and the
+in-tree example plugins.
 
-As discussed on v1, this is not a correctness fix (the filter only sets
-sysret, so the bit pattern is the same either way); it is a consistency
-and readability improvement, so that the same syscall return value is
-typed the same way on the read side and the write side.
-
-I did not bump QEMU_PLUGIN_VERSION, since this only changes the
-signedness of an existing argument.
-
-v1: https://lore.kernel.org/qemu-devel/20260612054800.587419-1-functioner@sjtu.edu.cn/
-
-Changes since v1:
-- rebased onto current master, where the syscall callbacks now take a
-  userdata argument; the filter signatures were adjusted to keep that
-  while changing only the sysret type. No functional change otherwise.
-
-Thanks for your review.
-
-Ziyang Zhang (1):
-  plugins: use int64_t for the syscall filter return value
-
+Signed-off-by: Ziyang Zhang <functioner@sjtu.edu.cn>
+---
+v2: rebased onto current master. The syscall callbacks now take a
+    userdata argument, so the filter signatures were adjusted to keep
+    that while changing only the sysret type. No functional change.
+---
  include/plugins/qemu-plugin.h | 2 +-
  include/qemu/plugin.h         | 4 ++--
  linux-user/syscall.c          | 2 +-
@@ -111,6 +103,93 @@ Ziyang Zhang (1):
  tests/tcg/plugins/syscall.c   | 2 +-
  6 files changed, 7 insertions(+), 7 deletions(-)
 
+diff --git a/include/plugins/qemu-plugin.h b/include/plugins/qemu-plugin.h
+index d8d4b37384..3e913cd89c 100644
+--- a/include/plugins/qemu-plugin.h
++++ b/include/plugins/qemu-plugin.h
+@@ -871,7 +871,7 @@ typedef bool
+                                         int64_t num, uint64_t a1, uint64_t a2,
+                                         uint64_t a3, uint64_t a4, uint64_t a5,
+                                         uint64_t a6, uint64_t a7, uint64_t a8,
+-                                        uint64_t *sysret,
++                                        int64_t *sysret,
+                                         void *userdata);
+ 
+ /**
+diff --git a/include/qemu/plugin.h b/include/qemu/plugin.h
+index 9356ee836a..9c2ec8ceae 100644
+--- a/include/qemu/plugin.h
++++ b/include/qemu/plugin.h
+@@ -172,7 +172,7 @@ bool
+ qemu_plugin_vcpu_syscall_filter(CPUState *cpu, int64_t num, uint64_t a1,
+                                 uint64_t a2, uint64_t a3, uint64_t a4,
+                                 uint64_t a5, uint64_t a6, uint64_t a7,
+-                                uint64_t a8, uint64_t *sysret);
++                                uint64_t a8, int64_t *sysret);
+ 
+ void qemu_plugin_vcpu_mem_cb(CPUState *cpu, uint64_t vaddr,
+                              uint64_t value_low,
+@@ -288,7 +288,7 @@ static inline bool
+ qemu_plugin_vcpu_syscall_filter(CPUState *cpu, int64_t num, uint64_t a1,
+                                 uint64_t a2, uint64_t a3, uint64_t a4,
+                                 uint64_t a5, uint64_t a6, uint64_t a7,
+-                                uint64_t a8, uint64_t *sysret)
++                                uint64_t a8, int64_t *sysret)
+ {
+     return false;
+ }
+diff --git a/linux-user/syscall.c b/linux-user/syscall.c
+index fbe357b7e0..d257fb9ca9 100644
+--- a/linux-user/syscall.c
++++ b/linux-user/syscall.c
+@@ -14619,7 +14619,7 @@ static bool send_through_syscall_filters(CPUState *cpu, int num,
+                                          abi_long arg7, abi_long arg8,
+                                          abi_long *sysret)
+ {
+-    uint64_t sysret64 = 0;
++    int64_t sysret64 = 0;
+     bool filtered = qemu_plugin_vcpu_syscall_filter(cpu, num, arg1, arg2,
+                                                     arg3, arg4, arg5, arg6,
+                                                     arg7, arg8, &sysret64);
+diff --git a/plugins/core.c b/plugins/core.c
+index 4b55aacd2d..1113bfe567 100644
+--- a/plugins/core.c
++++ b/plugins/core.c
+@@ -573,7 +573,7 @@ bool
+ qemu_plugin_vcpu_syscall_filter(CPUState *cpu, int64_t num, uint64_t a1,
+                                 uint64_t a2, uint64_t a3, uint64_t a4,
+                                 uint64_t a5, uint64_t a6, uint64_t a7,
+-                                uint64_t a8, uint64_t *sysret)
++                                uint64_t a8, int64_t *sysret)
+ {
+     struct qemu_plugin_cb *cb, *next;
+     enum qemu_plugin_event ev = QEMU_PLUGIN_EV_VCPU_SYSCALL_FILTER;
+diff --git a/tests/tcg/plugins/setpc.c b/tests/tcg/plugins/setpc.c
+index 7c78f182f0..76b2efc61b 100644
+--- a/tests/tcg/plugins/setpc.c
++++ b/tests/tcg/plugins/setpc.c
+@@ -27,7 +27,7 @@ static bool vcpu_syscall_filter(unsigned int vcpu_index,
+                                 int64_t num, uint64_t a1, uint64_t a2,
+                                 uint64_t a3, uint64_t a4, uint64_t a5,
+                                 uint64_t a6, uint64_t a7, uint64_t a8,
+-                                uint64_t *sysret, void *userdata)
++                                int64_t *sysret, void *userdata)
+ {
+     if (num == MAGIC_SYSCALL) {
+         if (a1 == SETPC) {
+diff --git a/tests/tcg/plugins/syscall.c b/tests/tcg/plugins/syscall.c
+index a28d108784..debec9f09b 100644
+--- a/tests/tcg/plugins/syscall.c
++++ b/tests/tcg/plugins/syscall.c
+@@ -176,7 +176,7 @@ static bool vcpu_syscall_filter(unsigned int vcpu_index,
+                                 int64_t num, uint64_t a1, uint64_t a2,
+                                 uint64_t a3, uint64_t a4, uint64_t a5,
+                                 uint64_t a6, uint64_t a7, uint64_t a8,
+-                                uint64_t *sysret, void *userdata)
++                                int64_t *sysret, void *userdata)
+ {
+     /* Special syscall to test the filter functionality. */
+     if (num == 4096 && a1 == 0x66CCFF) {
 -- 
 2.34.1
 
