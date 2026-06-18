@@ -4,91 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17AA8CD98F6
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jun 2026 14:59:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58636CD98F6
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jun 2026 15:01:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1waECy-0004Sb-Hf; Thu, 18 Jun 2026 10:59:08 -0400
+	id 1waEEU-0005QY-IZ; Thu, 18 Jun 2026 11:00:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1waECw-0004SB-OA
- for qemu-devel@nongnu.org; Thu, 18 Jun 2026 10:59:06 -0400
-Received: from mail-pj1-x102b.google.com ([2607:f8b0:4864:20::102b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1waECv-0001PM-0l
- for qemu-devel@nongnu.org; Thu, 18 Jun 2026 10:59:06 -0400
-Received: by mail-pj1-x102b.google.com with SMTP id
- 98e67ed59e1d1-36b8d414666so571031a91.3
- for <qemu-devel@nongnu.org>; Thu, 18 Jun 2026 07:59:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1781794743; x=1782399543; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=PRUQcQhnQAI6zAyrr69hwMqSPPZ9s3F8m4p8vIly/wY=;
- b=ogpyqVHSWwtJBUT2eK8JqdXnTzYLMeAXR+cxm0VWYnvtNRnqEo4Ys/ZH1evuB2MNWd
- PQHOV+VB6zWOWPDJY7f7Nat/E1+iseTJhSkEBouTQ6MvIKnS0gsrTjoiTiom9YfnCSJI
- tV4GUevQTBLtWhHN4y0cK0O4+CL7aWfu5ZxKA4LN4dIcPZarsydzUfphBo9vraMYymTv
- HFl5fcL82q/mqMe3hM0o71vuG9F0olxdOL3DsmD+OJqsq1CwirwDzNLV2o8QwsftmYzf
- yp7aqCacHzon31na0GKA7C+9+4hKHh8hYmgngyqNsxknEFbAy/G5Iked+S3D05vEtnR8
- iPWA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781794743; x=1782399543;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=PRUQcQhnQAI6zAyrr69hwMqSPPZ9s3F8m4p8vIly/wY=;
- b=s5HC0YOtHVWoV6FcEZSn47dm+Ka8BDvAEbJU48IUhIwxqNLepAdwBjvW0QFpcEU8Sc
- hFqjxsSy2pppqclMi/o4hraG5TE7fMKuWQQBuxTcwj5IqqOfQ3uIx9weFrKtpXRIynk6
- BQP4p7bHnJMN7YW2etxnlGQG4CbaIEZcOCvrZgYc2iJIDmb64Isv7/YVAEF6sMeb7b4x
- 3UKp9phMTTvAX9+kPyqUtY2n2MDnj5B9cDbbGOMpohTsT8fK/ElHgG0b0gy8rlMvPB4Z
- gnRgnydLodVklOcb3gckKyT+DJOEQ+x2AQxeHgphgWZWlbQFpqD54sBb00q+b9Hanrqn
- bN9w==
-X-Gm-Message-State: AOJu0YwrED2tW14NoPNQuRaXnJ0yLwfNeJaoFbEvCiabvLHRHULj4jHe
- FxcQixVyr1GRFprgteEM3ETa4m2uIK3XBJw7iphCfWX7WZ16B4jsc66jt+ys7i0fBlM0ICI8yzV
- bgNtH
-X-Gm-Gg: AfdE7ckMFnL7xYHFJgH0EUjLtlZHB71XyfdN7pCyz7c6xX1u/fGMCXyER5gK5FCSqgJ
- aaW2yuXa90MeS7qZaZT4QbBq/nc5fnJO82hXCGFn2TiZ9hebu56GEG4NafagdYg9Pi2ldScXAS2
- tVC7pfPf/fnzvtt9OdbVuOZN1AOW77VNjeFtf1TIm0cwCb2Sk0YitfrBuwmNRYbkbKJKsx21Ivc
- oRJxCwkp1dLFdy4zhaA8Ushx58tetlM94wxl1mLrgDczR4YCGztb2LjSEGoR16eSIqiojTl4CxE
- RFSc1zw3QvRH403nqPGlz0NV3Hcfd2z8TOeVVL2HX5SOVra+rjyWBn9fmCuvwzguAqS9h866R9z
- OTkIGENMNFFNcd9lnBaLGzgo5qtAYgkd9CFNiB9cVE4/XMdAEuI+cVS0WwUYQC3+2C7PPE7B1cA
- 74SgilelrYzVkv2DtF7Na/0mwuL9GB67qBco8Ppq7XLu7aeuC5Rd3hb3sqkg==
-X-Received: by 2002:a17:902:d542:b0:2be:3434:4e28 with SMTP id
- d9443c01a7336-2c6f3465e4amr33942175ad.19.1781794743375; 
- Thu, 18 Jun 2026 07:59:03 -0700 (PDT)
-Received: from [192.168.0.4] (174-21-129-215.tukw.qwest.net. [174.21.129.215])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2c6bb1297ebsm66524985ad.33.2026.06.18.07.59.02
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 18 Jun 2026 07:59:02 -0700 (PDT)
-Message-ID: <33b05999-4f43-4bb4-b73d-1be62d116e8d@linaro.org>
-Date: Thu, 18 Jun 2026 07:59:01 -0700
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1waEEP-0005OX-LG
+ for qemu-devel@nongnu.org; Thu, 18 Jun 2026 11:00:39 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1waEEN-0002u0-Oo
+ for qemu-devel@nongnu.org; Thu, 18 Jun 2026 11:00:37 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1781794833;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=Oi41gOxQCV/Bs2v6VNgLBVFj2ZFYAyA0BXhpsaW4evk=;
+ b=R2v3vSZvM4oD7S+sq4BGZO0/XSuSn/mDNRakULy5d6Ij166nxVP2ntC1IuWwUfAZz0RSXp
+ 7Syj/8EAb394ETjapxthClTMShyotaehXmqFzbcnvauI2wsLurE7uUUKKfLPy4Ugd4tv9S
+ F3HwI8a8QhoCUEYEva/rUmJX9QIvgLs=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-425-LEsVmTaMOnOwnyuNwfM5vg-1; Thu,
+ 18 Jun 2026 11:00:29 -0400
+X-MC-Unique: LEsVmTaMOnOwnyuNwfM5vg-1
+X-Mimecast-MFC-AGG-ID: LEsVmTaMOnOwnyuNwfM5vg_1781794827
+Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 510D4180065A; Thu, 18 Jun 2026 15:00:27 +0000 (UTC)
+Received: from localhost (unknown [10.2.16.120])
+ by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 9AA8236916; Thu, 18 Jun 2026 15:00:26 +0000 (UTC)
+Date: Thu, 18 Jun 2026 11:00:25 -0400
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: Niklas Cassel <cassel@kernel.org>
+Cc: Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ qemu-block@nongnu.org, qemu-devel@nongnu.org,
+ Sam Li <faithilikerun@gmail.com>,
+ Dmitry Fomichev <dmitry.fomichev@wdc.com>,
+ Damien Le Moal <dlemoal@kernel.org>,
+ Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Subject: Re: [PATCH v2] file-posix: fix cache.direct=on check for zoned block
+ devices
+Message-ID: <20260618150025.GC720244@fedora>
+References: <20260617133658.2022750-1-cassel@kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/3] target/arm/tcg: Implement new instructions for FPRCVT
-To: qemu-devel@nongnu.org
-References: <20260618-jmac-fprcvt-v1-0-1b4475bacf51@linaro.org>
- <20260618-jmac-fprcvt-v1-1-1b4475bacf51@linaro.org>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20260618-jmac-fprcvt-v1-1-1b4475bacf51@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102b;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="rVxGWJnIINmhXS7t"
+Content-Disposition: inline
+In-Reply-To: <20260617133658.2022750-1-cassel@kernel.org>
+X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,99 +89,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/18/26 01:20, Jim MacArthur wrote:
-> +/*
-> + * [US]CVTF, scalar SIMD & FP version.
-> + * Converts an integer value in a SIMD/FP register to a float
-> + * in another FP register.
-> + */
-> +static bool do_cvtf_simd(DisasContext *s, arg_fcvt *a, bool is_signed)
-> +{
-> +    TCGv_i64 tcg_int;
-> +    int check = fp_access_check_scalar_hsd(s, a->esz);
-> +
-> +    if (check <= 0) {
-> +        return check == 0;
-> +    }
-> +
-> +    tcg_int = tcg_temp_new_i64();
-> +    /*
-> +     * a->sf should specify source size (64 bit or 32 bit)
-> +     * a->esz specifies destination size
-> +     */
-> +    read_vec_element(s, tcg_int, a->rn, 0,
-> +                     (a->sf ? MO_64 : MO_32) | (is_signed ? MO_SIGN : 0));
-> +    return do_cvtf_scalar(s, a->esz, a->rd, 0, tcg_int, is_signed);
-> +}
 
-It would be better to refactor do_cvtf_f slightly.  E.g.
+--rVxGWJnIINmhXS7t
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-static bool do_cvtf_f(DisasContext *s, arg_fcvt *a, MemOp mop_int)
-{
-     TCGv_i64 tcg_int;
-     int check = fp_access_check_scalar_hsd(s, a->esz);
+On Wed, Jun 17, 2026 at 03:36:58PM +0200, Niklas Cassel wrote:
+> For zoned block devices with SWR zones, the order of the writes must be
+> maintained to avoid write not at write pointer errors.
+> Thus, cache.direct=3Don must be used to bypass the page cache, since the
+> page cache uses write-back caching, where the physical order of the writes
+> is not guaranteed.
+>=20
+> There is already a check for cache.direct=3Don in raw_open_common(),
+> however, this check is done before raw_refresh_zoned_limits() has been
+> called (which initializes bs->bl.zoned), so it is currently dead code.
+>=20
+> Fix this by moving the check to raw_refresh_zoned_limits(), such that the
+> check is done after bs->bl.zoned has been initialized.
+>=20
+> Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+> Reviewed-by: Dmitry Fomichev <dmitry.fomichev@wdc.com>
+> Fixes: 774c726ceb2a ("block: add zoned BlockDriver check to block layer")
+> Signed-off-by: Niklas Cassel <cassel@kernel.org>
+> ---
+> Changes since v1:
+> -Picked up tags from Damien and Dmitry
+> -Modified existing code comment to use plural instead of singular
+>=20
+>  block/file-posix.c | 22 ++++++++++------------
+>  1 file changed, 10 insertions(+), 12 deletions(-)
 
-     if (check <= 0) {
-         return check == 0;
-     }
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
 
-     tcg_int = tcg_temp_new_i64();
-     read_vec_element(s, tcg_int, a->rn, 0, mop_int);
-     return do_cvtf_scalar(s, a->esz, a->rd, a->shift, tcg_int, is_signed);
-}
+--rVxGWJnIINmhXS7t
+Content-Type: application/pgp-signature; name=signature.asc
 
-TRANS(SCVTF_f, do_cvtf_f, a, a->esz | MO_SIGN)
-TRANS(UCVTF_f, do_cvtf_f, a, a->esz)
+-----BEGIN PGP SIGNATURE-----
 
-> +TRANS(SCVTF_simd, do_cvtf_simd, a, true)
-> +TRANS(UCVTF_simd, do_cvtf_simd, a, false)
+iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmo0CAkACgkQnKSrs4Gr
+c8huKwf/fXrNWm8XUeJ/bqiZlXknfejuPvyxe4uJpUiQkNQibr3a82nz6Z1KrQ2D
+9rm+DFjaByth5cllDB3p7FquvLqpcJElGs2f6vT5RFBcBD3DV3jY2vPbY6+Ej0zX
+/VW+VoyGhFskzzPswZ0mwizoa8hXf7vljw55tuOMAgnTPHB+NL/DdjnFEGLFcMVY
+ix9EfA1e90w1y/v+Y4LtSTATt07BlyP/M6yYvnSHfolJEBXSYLkNA1bNNy11a37m
+wOjaKNNEXANVH1NQpmZL3FYO1XOEavrYDD401ZG3Ruzmc/HogPi6tgMkhjXqjYI5
+WxdJZfXBV8CvLS70nXfAaCT5QUJRxw==
+=95y8
+-----END PGP SIGNATURE-----
 
-Missing feature check.  Combining with the above you need
+--rVxGWJnIINmhXS7t--
 
-TRANS_FEAT(SCVTF_simd, aa64_fprcvt, do_cvtf_f, a, (a->sf + MO_32) | MO_SIGN)
-TRANS_FEAT(UCVTF_simd, aa64_fprcvt, do_cvtf_f, a, a->sf + MO_32)
-
-> +static bool do_fcvt_simd(DisasContext *s, arg_fcvt *a,
-> +                      ARMFPRounding rmode, bool is_signed)
-> +{
-> +    TCGv_i64 tcg_int;
-> +    int check = fp_access_check_scalar_hsd(s, a->esz);
-> +
-> +    if (check <= 0) {
-> +        return check == 0;
-> +    }
-> +    /*
-> +     * a->sf should specify destination size (64 bit or 32 bit)
-> +     * a->esz specifies source size
-> +     */
-> +    tcg_int = tcg_temp_new_i64();
-> +    do_fcvt_scalar(s, (a->sf ? MO_64 : MO_32) | (is_signed ? MO_SIGN : 0),
-> +                   a->esz, tcg_int, a->shift, a->rn, rmode);
-> +
-> +    if (!s->fpcr_nep) {
-> +        clear_vec(s, a->rd);
-> +    }
-> +    write_vec_element(s, tcg_int, a->rd, 0, (a->sf ? MO_64 : MO_32));
-> +    return true;
-> +}
-
-Likewise, better to generalize do_fcvt_f with mop_int.
-
-> +TRANS(FCVTNS_g_simd, do_fcvt_simd, a, FPROUNDING_TIEEVEN, true)
-> +TRANS(FCVTNU_g_simd, do_fcvt_simd, a, FPROUNDING_TIEEVEN, false)
-> +TRANS(FCVTPS_g_simd, do_fcvt_simd, a, FPROUNDING_POSINF, true)
-> +TRANS(FCVTPU_g_simd, do_fcvt_simd, a, FPROUNDING_POSINF, false)
-> +TRANS(FCVTMS_g_simd, do_fcvt_simd, a, FPROUNDING_NEGINF, true)
-> +TRANS(FCVTMU_g_simd, do_fcvt_simd, a, FPROUNDING_NEGINF, false)
-> +TRANS(FCVTZS_g_simd, do_fcvt_simd, a, FPROUNDING_ZERO, true)
-> +TRANS(FCVTZU_g_simd, do_fcvt_simd, a, FPROUNDING_ZERO, false)
-> +TRANS(FCVTAS_g_simd, do_fcvt_simd, a, FPROUNDING_TIEAWAY, true)
-> +TRANS(FCVTAU_g_simd, do_fcvt_simd, a, FPROUNDING_TIEAWAY, false)
-
-Likewise missing feature check.
-
-This could plausibly be split into two patches.
-
-
-r~
 
