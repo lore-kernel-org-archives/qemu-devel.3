@@ -4,62 +4,151 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC428CD98ED
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jun 2026 09:39:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9FA7CD98ED
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jun 2026 09:39:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wa9DJ-00052L-Mj; Thu, 18 Jun 2026 05:39:09 -0400
+	id 1wa9DU-00056S-LZ; Thu, 18 Jun 2026 05:39:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cp0613@linux.alibaba.com>)
- id 1wa9DG-000509-6K; Thu, 18 Jun 2026 05:39:07 -0400
-Received: from [115.124.30.100] (helo=out30-100.freemail.mail.aliyun.com)
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wa9DT-00055j-6y
+ for qemu-devel@nongnu.org; Thu, 18 Jun 2026 05:39:19 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cp0613@linux.alibaba.com>)
- id 1wa9DA-0007Em-Vb; Thu, 18 Jun 2026 05:39:05 -0400
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wa9DR-0007bN-6E
+ for qemu-devel@nongnu.org; Thu, 18 Jun 2026 05:39:18 -0400
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 65I9Yg7s1424194
+ for <qemu-devel@nongnu.org>; Thu, 18 Jun 2026 09:39:15 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ Q/02FjgiSWxfq6+yFcT3iy3L6YQav6jkJNu4ZY4j2bQ=; b=NFyPFftgCMoECh3K
+ DoI8I4DYtOyWiuEbCHpx3FzsWkNmKFxai28hEf3DAkrQ2TOE7Sff0RxxhClL/32n
+ 3jE7xfhsIOuMSte2k+3K5WpvOEhJISqHviinZpmowIdM7bVdWOqDCNae/JAvl9Ej
+ SIpf+73fmxcVSUr5EOX+W7L+Qi862jw4iWLY06PVoKP9sF294Zaal5Q6SyaGA6RP
+ gl1ViJzQt2ygS4dlfzDQAVsKZ2SZCXAdy7zkgsxMUGEzeisk+nhsFSU6Omeq2DtU
+ XmPvHMnVSlFAjUf+IZESz+PW+1k6LNYcnaKVZ2onsaQXWnvQ5SEcZKzFBYBU3XLP
+ OKPtKw==
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
+ [209.85.222.198])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4eux2juxqg-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Thu, 18 Jun 2026 09:39:15 +0000 (GMT)
+Received: by mail-qk1-f198.google.com with SMTP id
+ af79cd13be357-9156cb14b1cso131937985a.1
+ for <qemu-devel@nongnu.org>; Thu, 18 Jun 2026 02:39:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linux.alibaba.com; s=default;
- t=1781775515; h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type;
- bh=97ymu4KBxBp/OQDwgYUMqaKqMzm8RdydWTCp6VQPG4w=;
- b=Xmcr3Sssg7gzeHTCcg9V5i2LmSOraggon0qS86//XUqJ7WnXuKpC+dYb9RqDO1fWNYTwqop39TO9iO/f8vdBGnZVV9MF6vBI4CaF7IxYGc+Di5lVvhS38Z8bs35JOTCUGA04hqH8dhTQZtq9J5Sc7ScOGU/LjFZv+Rt7AxgnAio=
-X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R411e4; CH=green; DM=||false|;
- DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033037009110;
- MF=cp0613@linux.alibaba.com; NM=1; PH=DS; RN=17; SR=0;
- TI=SMTPD_---0X56RwJP_1781775507; 
-Received: from DESKTOP-S9E58SO.localdomain(mailfrom:cp0613@linux.alibaba.com
- fp:SMTPD_---0X56RwJP_1781775507 cluster:ay36) by smtp.aliyun-inc.com;
- Thu, 18 Jun 2026 17:38:34 +0800
-From: Chen Pei <cp0613@linux.alibaba.com>
-To: jic23@kernel.org, pbonzini@redhat.com, palmer@dabbelt.com,
- alistair.francis@wdc.com, liwei1518@gmail.com,
- daniel.barboza@oss.qualcomm.com, zhiwei_liu@linux.alibaba.com,
- chao.liu.zevorn@gmail.com, sunilvl@ventanamicro.com, dave.jiang@intel.com,
- alison.schofield@intel.com, imammedo@redhat.com, mst@redhat.com,
- guoren@kernel.org
-Cc: qemu-riscv@nongnu.org,
-	qemu-devel@nongnu.org,
-	linux-cxl@vger.kernel.org
-Subject: [PATCH v2 0/4] hw/riscv/virt: Add CXL support to the RISC-V virt
- machine
-Date: Thu, 18 Jun 2026 17:38:22 +0800
-Message-ID: <20260618093827.3507-1-cp0613@linux.alibaba.com>
-X-Mailer: git-send-email 2.43.0
+ d=oss.qualcomm.com; s=google; t=1781775555; x=1782380355; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=Q/02FjgiSWxfq6+yFcT3iy3L6YQav6jkJNu4ZY4j2bQ=;
+ b=YDA5B1rD0rflO+c7CUZnQnTmcsKygKhOei9Lw+KRYYj4YcssgdvX84qK78j6q7RXZP
+ DthEVRTm0p6qbtmBATl5beCpJWuONAMy+bRTF+fWBduaOZG/FAkTd4Ggn4QZ95+x3lHq
+ DA0ZHEY48KGqbcjC117Rptdg4Xj3SifgrhWdSEFt9gR7jie0l5zgIfDDw4viUPPSZtHg
+ auGJwlEteuwv+DGjX8cWC2ra3chGJsZmlJKNBrZGfJz7CuwgRpAsE6X9TvcltosROc3I
+ RV2641m7XCfXYeE/IQER/UqbXW3HqwXwUfEIMEKQd0vNDn4mzh1x+w93WxV+PlcNelrn
+ 3YZQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1781775555; x=1782380355;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=Q/02FjgiSWxfq6+yFcT3iy3L6YQav6jkJNu4ZY4j2bQ=;
+ b=s29mp4jQU1wY5ZIQgYwmBP/2PD2PdZsoXIC5CFAeITdVNnfRRZaQWuMbYzlBHCFKZd
+ xTNRM3LAkNzzkRxYyQIbG32LsHOpQIf2wnwHfXUrea2kdJ7teFajQ4lneIldNWa/WSQy
+ blUEigvkR8q1e7KZLHfVLDaHWgX+JJBjhxhJ9YHsib8QMfpXLsb9CmSJREnMGC5Jmt35
+ x8zrbDdlgrVWsabYlwgigSc4nj6f814aZXMMbRLtoDZTo6IGrsVOSMCAjiTDX1bz0vUj
+ TnhFvVAwlgMrNnwRFLcYYEZiMqlIGU50TPKBlQ2E/3XpEe3HK2fXgv7/2WELkXapDEuU
+ 2lsw==
+X-Gm-Message-State: AOJu0YxLhglQ6KqowV3o3OnGQFxh6WvxmjhELARTbModivQwUBfM9n7W
+ itLPajc+MlNFR4jONSWpGH09KGOtNKKpWnhLtR/1PZvm6HDI53IW+l4LxfbVxfrH3hQqTcH/JDO
+ hNf7cfgD7s2JbFexYpArKI9BUHBxyA9YVwH7O6vK01v8JCX86ymMfL2tkfO0ZDPERgA==
+X-Gm-Gg: Acq92OH+iPT0CFtVLkT5sClIcsFsfrZc/gsL7CyUtJEM3h/P51tzpiR0Hk/N+80oirS
+ zDZ+5FNGJFmavY81NMC+Em0smXWvMdR65dj0AQtbLIIaQCP47TSmg0CqLI2KgbJytkmBVjqJoNr
+ yBZ0wbzjyvWmnOisU7cZlihUWCzV26RwaJyDntWWUxs/amXk09+o3Vyi1EvvOtA5KskNdkz2eGW
+ tpjGxud2gPTXx5oSoMhlT+FXc4wLRMxcIvy5ejYGFYEfCHFWfxvbvRnQN8Bi7LH0elR1SHgeBuF
+ Zzchn9XLPbvC3HKU1KHhGdo4hbp4Xy9O6S1SJl1eViasyYRhQY5aolqQpmLmSjoxpn5Nu9Bh8uv
+ 0PvZOHWHEKg7EKBg0TtOs4HtDGGWvYTeQmTJ0IUeJ3U/Sf/xY1LYB1DxHtEatBw==
+X-Received: by 2002:a05:620a:480c:b0:914:e3dd:17ea with SMTP id
+ af79cd13be357-91f25f9351dmr455483585a.12.1781775554874; 
+ Thu, 18 Jun 2026 02:39:14 -0700 (PDT)
+X-Received: by 2002:a05:620a:480c:b0:914:e3dd:17ea with SMTP id
+ af79cd13be357-91f25f9351dmr455477885a.12.1781775554151; 
+ Thu, 18 Jun 2026 02:39:14 -0700 (PDT)
+Received: from [192.168.69.213] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-49234daafc7sm114457865e9.10.2026.06.18.02.39.12
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 18 Jun 2026 02:39:13 -0700 (PDT)
+Message-ID: <f67389ae-4b0e-46f5-a122-d83464f192f4@oss.qualcomm.com>
+Date: Thu, 18 Jun 2026 11:39:11 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.30.100 (deferred)
-Received-SPF: pass client-ip=115.124.30.100;
- envelope-from=cp0613@linux.alibaba.com;
- helo=out30-100.freemail.mail.aliyun.com
-X-Spam_score_int: -166
-X-Spam_score: -16.7
-X-Spam_bar: ----------------
-X-Spam_report: (-16.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
- RCVD_IN_DNSWL_NONE=-0.0001, RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
- USER_IN_DEF_SPF_WL=-7.5 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v7 09/13] device-core: use atomic_set on .realized property
+Content-Language: en-US
+To: qemu-devel@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Igor Mammedov <imammedo@redhat.com>
+Cc: Fam Zheng <fam@euphon.net>, Laurent Vivier <lvivier@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>,
+ Eduardo Habkost <ehabkost@redhat.com>, qemu-block@nongnu.org,
+ Maxim Levitsky <mlevitsk@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Jason Wang <jasowang@redhat.com>, John Snow <jsnow@redhat.com>,
+ Stefan Berger <stefanb@linux.ibm.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+References: <20201006123904.610658-1-mlevitsk@redhat.com>
+ <20201006123904.610658-10-mlevitsk@redhat.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+In-Reply-To: <20201006123904.610658-10-mlevitsk@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjE4MDA4OSBTYWx0ZWRfX6ZMJxc4t5E9k
+ lAVdhw1haEJiLDBhAUD7psDcMXpfJpkP0iDnQo9aK9V54eBxMXJVNHOnv1m023/I2I+szbd4XPq
+ qBZJsGKrZPja49i0ofdDchIf2LXD24bcloDc3oNj7/RQtxV+IgPZ/vBRBfPlJzsCrFyY1lXYdEj
+ jgy6zF94TRNaUk+hfMBcR6bOrDn8OmbBPLniUh4uXItMARV9hkmbgSol89cXn9drNVS+6VyIV6m
+ N+Z735OVYyA2Wdic6j+cyoOn+PxiZxyN3QR7iB0roVUEVZFs9Ik1SGZ4Fc7B5PAnXVMsqiaadKl
+ GKHnET8Cd+4a6TBbmbrjz2XeFDngcByoS+3YdsB8fAuD0Vm4y113jFaV3MKsOOxy8hk1AmNhlbX
+ zvDVPsC4AUq2y2LBcbIVsDMf3E05UK92cyV3PS/JzTMwo4iYlE4stc9T+50ccAQcUTB/9m3YMTe
+ 0Qk/DVi02pyUVvxrNEQ==
+X-Authority-Analysis: v=2.4 cv=Fsg1OWrq c=1 sm=1 tr=0 ts=6a33bcc3 cx=c_pps
+ a=qKBjSQ1v91RyAK45QCPf5w==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+ a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22
+ a=VwQbUJbxAAAA:8 a=KKAkSRfTAAAA:8 a=20KFwNOVAAAA:8 a=32-H8ij_xs7o3GReVWsA:9
+ a=QEXdDO2ut3YA:10 a=NFOGd7dJGGMPyQGDc5-O:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-ORIG-GUID: DA_wE6bmocxMLhImwgprgUUvOLh0wrHw
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjE4MDA4OSBTYWx0ZWRfX3WyJ7frrngd4
+ EPGNHEkRIYELE2kIZSWm5QocrHkWC4O0O7n1rPEfoVJsaorPGs1uaEr7F3VLB1OWpEli23kRnEy
+ 1vXqhm3LdSWAkVRalscbqAGbMZi1Vtw=
+X-Proofpoint-GUID: DA_wE6bmocxMLhImwgprgUUvOLh0wrHw
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-18_01,2026-06-17_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 bulkscore=0 suspectscore=0 spamscore=0 phishscore=0
+ lowpriorityscore=0 malwarescore=0 adultscore=0 priorityscore=1501
+ impostorscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2606180089
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -75,122 +164,114 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This series adds CXL (Compute Express Link) support to the RISC-V virt
-machine in QEMU, following the same approach as the ARM virt machine.
+Hi,
 
-Prerequisite
-------------
-This series depends on Alireza Sanaee's v8 series [1]:
+Old patch committed as a23151e8cc8 (Oct 2020).
+I'm revisiting it in the context of dynamic heterogeneous machines.
 
-  [1/3] hw/cxl: Use HPA in cxl_cfmws_find_device() rather than offset
-        in window
-  [2/3] hw/cxl: Allow cxl_cfmws_find_device() to filter on whether
-        interleaved paths are accepted
-  [3/3] hw/cxl: Add a performant (and correct) path for the non
-        interleaved cases
+On 6/10/20 14:39, Maxim Levitsky wrote:
+> Some code might race with placement of new devices on a bus.
 
-Patch [1/3] is already in the tree. Patches [2/3] and [3/3] have been
-tested and verified functional on RISC-V QEMU with CXL enabled.  They
-are not included in this posting; please apply them before this series.
+So IIUC at least 2 vCPUs plug distinct devices on the same bus,
+and the problem is the bus slot assigned for the device. What is
+deciding the free slot, the guest code or QEMU?
 
-Series overview
----------------
-  [1/4] (hw/riscv/virt): Wires up the core CXL machine support --
-  Kconfig selects, CXLState, PCIBus pointer (pci_bus), cxl_machine_init(),
-  CXL host register region, FMW mapping, and machine_done hooks.
+> We currently first place a (unrealized) device on the bus
+> and then realize it.
 
-  [2/4] (hw/riscv/virt-acpi-build): Adds ACPI0017 (CXLM) to the
-  DSDT with a _DEP on every ACPI0016 CXL host bridge device.  The _DEP
-  ensures the OS defers ACPI0017 enumeration until acpi_pci_root has
-  attached all CXL host bridges, fixing a probe-ordering race that
-  leaves the CXL port topology incomplete.  A corresponding kernel
-  change to call acpi_dev_clear_dependencies() in acpi_pci_root_add()
-  is required on the Linux side. That kernel patch has merged:
-  https://lore.kernel.org/linux-pci/20260526025118.38935-1-cp0613@linux.alibaba.com/
+Sound like ill design. Maybe resulting from the unclear definition
+on what "realized" means. "Guest visible"? "Wired on some bus"?
 
-  [3/4] (hw/riscv/virt, gpex): Reserves the top 256 MiB of the
-  32-bit MMIO window for CXL host bridges.  CXL component-register
-  BARs are 64-bit non-prefetchable; per PCI-to-PCI Bridge Architecture
-  Specification Rev 1.2 §3.2.5.8-10, only the prefetchable window can
-  be 64-bit, so Linux places these BARs in the 32-bit non-prefetchable
-  bridge window.  Without this reservation PCI0 consumes the entire
-  1 GiB 32-bit range and CXL bridges get an empty _CRS, preventing
-  BAR assignment.
+Something I tried to clarify once (now outdated):
+https://lore.kernel.org/qemu-devel/20240209123226.32576-1-philmd@linaro.org/
 
-  [4/4] (tests/qtest): Adds a RISC-V bios-tables test for the CXL
-  variant.  Expected AML golden files (DSDT.cxl, CEDT.cxl) are
-  generated and included.
+A vCPU thread shouldn't poke at QOM/QDev internals. When it accesses
+a device (to check "is it out of reset?"), this is already existing
+realized.
 
-Changes from v1
----------------
-  - hw/riscv/virt: PCIBus *bus renamed to PCIBus *pci_bus (Jonathan).
-  - hw/riscv/virt: Dropped outer if (s->pci_bus) guard around
-    cxl_hook_up_pxb_registers(); the function already handles a NULL
-    bus internally (Jonathan).
-  - hw/riscv/virt-acpi-build: All s->bus references updated to
-    s->pci_bus; iasl -d decompiled DSDT fragment added to commit
-    message.
-  - hw/riscv/virt,gpex: Commit message expanded with PCI-to-PCI Bridge
-    Spec §3.2.5.8/9/10 citations (Jonathan).
-  - Original patch 4 ("Map committed HDM decoder ranges as RAM for
-    direct DMA") dropped; superseded by Alireza Sanaee's v8 series [1],
-    which correctly handles the interleaved/non-interleaved split and
-    supports KVM.
-  - New patch 4: RISC-V ACPI bios-tables test for CXL, with golden AML
-    files generated and included.
+Actually, when the guest asks to assign the device to the bus, the
+device is already existing (from guest PoV), so must be realized.
 
-[1] https://lore.kernel.org/qemu-devel/20260318171918.146-1-alireza.sanaee@huawei.com/
+> As a workaround, users that scan the child device list, can
+> check the realized property to see if it is safe to access such a device.
+> Use an atomic write here too to aid with this.
 
-Test
----------------
-Tested on the RISC-V virt machine with EDK2 firmware and a buildroot
-guest carrying the kernel patches above.
+I'd appreciate to be pointed at real use case we fixed here, to
+better figure what could be reworked on the QBus / QDev layer in
+order to not depend anymore on this workaround.
 
-QEMU invocation (CXL-relevant options shown; EDK2 pflash, -bios,
--kernel, -append and the virtio-blk rootfs are as usual):
+> A separate discussion is what to do with devices that are unrealized:
+> It looks like for this case we only call the hotplug handler's unplug
+> callback and its up to it to unrealize the device.
 
-    qemu-system-riscv64 \
-        -M virt,aia=aplic-imsic,acpi=on,cxl=on \
-        -cpu rv64 -smp 2 -m 4G,maxmem=8G,slots=8 \
-        -object memory-backend-ram,id=vmem0,share=on,size=4G \
-        -device pxb-cxl,bus_nr=12,bus=pcie.0,id=cxl.1 \
-        -device cxl-rp,port=0,bus=cxl.1,id=rp0,chassis=0,slot=2 \
-        -device cxl-type3,bus=rp0,volatile-memdev=vmem0,id=cxl-vmem0 \
-        -M cxl-fmw.0.targets.0=cxl.1,cxl-fmw.0.size=4G \
-        ...   # EDK2 pflash + -bios fw_dynamic.bin + -kernel Image
-              # + virtio-blk rootfs + -append "root=/dev/vda ..."
+Likely the hotplugging path is what needs to be improved (I'm seeing
+a similar problem with vCPU hotplug).
 
-Verification (compare the two `free -h` outputs: total system memory
-grows by 4 GiB after onlining):
+Thanks,
 
-    # free -h
-    # cxl list
-    # cxl enable-memdev mem0
-    # cxl create-region -m -t ram -d decoder0.0 -w 1 mem0 -s 4G
-    # daxctl online-memory dax0.0
-    # free -h
+Phil.
 
-Chen Pei (4):
-  hw/riscv/virt: Add CXL support to the RISC-V virt machine
-  hw/riscv/virt-acpi-build: Add _DEP to ACPI0017 for CXL host bridge
-    dependency
-  hw/riscv/virt,gpex: Provide 32-bit MMIO window for CXL host bridges
-  tests/qtest: Add RISC-V ACPI bios tables test for CXL
-
- hw/pci-host/gpex-acpi.c               |  36 +++++++++-
- hw/riscv/Kconfig                      |   2 +
- hw/riscv/virt-acpi-build.c            |  52 ++++++++++++++
- hw/riscv/virt.c                       |  98 +++++++++++++++++++++++---
- include/hw/pci-host/gpex.h            |   1 +
- include/hw/riscv/virt.h               |   3 +
- tests/data/acpi/riscv64/virt/CEDT.cxl | Bin 0 -> 108 bytes
- tests/data/acpi/riscv64/virt/DSDT.cxl | Bin 0 -> 6212 bytes
- tests/qtest/bios-tables-test.c        |  54 ++++++++++++++
- 9 files changed, 234 insertions(+), 12 deletions(-)
- create mode 100644 tests/data/acpi/riscv64/virt/CEDT.cxl
- create mode 100644 tests/data/acpi/riscv64/virt/DSDT.cxl
-
--- 
-2.50.1
+> An atomic operation doesn't cause harm for this code path though.
+> 
+> Signed-off-by: Maxim Levitsky <mlevitsk@redhat.com>
+> Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+> Message-Id: <20200913160259.32145-6-mlevitsk@redhat.com>
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> ---
+>   hw/core/qdev.c         | 19 ++++++++++++++++++-
+>   include/hw/qdev-core.h |  2 ++
+>   2 files changed, 20 insertions(+), 1 deletion(-)
+> 
+> diff --git a/hw/core/qdev.c b/hw/core/qdev.c
+> index 59e5e710b7..fc4daa36fa 100644
+> --- a/hw/core/qdev.c
+> +++ b/hw/core/qdev.c
+> @@ -946,7 +946,25 @@ static void device_set_realized(Object *obj, bool value, Error **errp)
+>               }
+>          }
+>   
+> +       qatomic_store_release(&dev->realized, value);
+> +
+>       } else if (!value && dev->realized) {
+> +
+> +        /*
+> +         * Change the value so that any concurrent users are aware
+> +         * that the device is going to be unrealized
+> +         *
+> +         * TODO: change .realized property to enum that states
+> +         * each phase of the device realization/unrealization
+> +         */
+> +
+> +        qatomic_set(&dev->realized, value);
+> +        /*
+> +         * Ensure that concurrent users see this update prior to
+> +         * any other changes done by unrealize.
+> +         */
+> +        smp_wmb();
+> +
+>           QLIST_FOREACH(bus, &dev->child_bus, sibling) {
+>               qbus_unrealize(bus);
+>           }
+> @@ -961,7 +979,6 @@ static void device_set_realized(Object *obj, bool value, Error **errp)
+>       }
+>   
+>       assert(local_err == NULL);
+> -    dev->realized = value;
+>       return;
+>   
+>   child_realize_fail:
+> diff --git a/include/hw/qdev-core.h b/include/hw/qdev-core.h
+> index 2c6307e3ed..868973319e 100644
+> --- a/include/hw/qdev-core.h
+> +++ b/include/hw/qdev-core.h
+> @@ -163,6 +163,8 @@ struct NamedClockList {
+>   /**
+>    * DeviceState:
+>    * @realized: Indicates whether the device has been fully constructed.
+> + *            When accessed outsize big qemu lock, must be accessed with
+> + *            atomic_load_acquire()
+>    * @reset: ResettableState for the device; handled by Resettable interface.
+>    *
+>    * This structure should not be accessed directly.  We declare it here
 
 
