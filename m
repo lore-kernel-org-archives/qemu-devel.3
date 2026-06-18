@@ -4,84 +4,140 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E518CD98ED
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jun 2026 19:58:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55562CD98ED
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jun 2026 20:12:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1waIsn-0000SV-3c; Thu, 18 Jun 2026 15:58:37 -0400
+	id 1waJ5O-0003g0-Rz; Thu, 18 Jun 2026 16:11:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1waIsl-0000S5-M9
- for qemu-devel@nongnu.org; Thu, 18 Jun 2026 15:58:35 -0400
-Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1waIsj-0000Lz-AX
- for qemu-devel@nongnu.org; Thu, 18 Jun 2026 15:58:35 -0400
-Received: by mail-pl1-x629.google.com with SMTP id
- d9443c01a7336-2c6ec0af575so8277475ad.1
- for <qemu-devel@nongnu.org>; Thu, 18 Jun 2026 12:58:32 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1waJ5M-0003fp-Nl
+ for qemu-devel@nongnu.org; Thu, 18 Jun 2026 16:11:36 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1waJ5L-0004mP-3l
+ for qemu-devel@nongnu.org; Thu, 18 Jun 2026 16:11:36 -0400
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 65IHrovK1922251
+ for <qemu-devel@nongnu.org>; Thu, 18 Jun 2026 20:11:32 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ RI01ee7RIk669aLwjrox6PhV2s7RayDJB7pR4DzMRjo=; b=kfl2tKuUJmDy6Wfu
+ xr6pzTXwQ8s1Y/wjkGyfDD5bsNI5+2zbjbXF1MTJRKcwiXW+oHYagCkR0QyCszzB
+ 0SPaX5p4YuAEDOFbT3HmFYRRtHMQg7nbZQeMTXN0oKiYaFteuRq2/15IwOYeoY6M
+ SrRVwV1F6zBbwWC0uZ5LJncbdiirGAPNWze3gB1cBSQzFoHkGL3t+tZHh4VSuO6w
+ jGdi+Ka3WdP3GP08dCJ2E+hYvam25MMFOptA4wyRZtLkKY5ILGd+0F8uJF+e80ik
+ SkzmqEp7odAoa9btrZSEyWBm9fAY9aa81Tfn+0spy++lqt+Qwkl476QdKIe9C9GZ
+ EAWhpA==
+Received: from mail-ua1-f71.google.com (mail-ua1-f71.google.com
+ [209.85.222.71])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4evdn42q70-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Thu, 18 Jun 2026 20:11:32 +0000 (GMT)
+Received: by mail-ua1-f71.google.com with SMTP id
+ a1e0cc1a2514c-9639158a44dso388121241.3
+ for <qemu-devel@nongnu.org>; Thu, 18 Jun 2026 13:11:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1781812712; x=1782417512; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:from:to:cc:subject:date:message-id:reply-to;
- bh=rLgx65tFsFfblyNJf9+3CEqUiej5TmumNRZKANQrI48=;
- b=CKVZZJTAizIwVe71P0K9Q0cO+UvM8p+b/deCIRYmPmYQdKYo1nxaj+ExNh9jERapZI
- aTxKi0id46WRqaT1qWYVqwGLL+NItAHfC9+ONxc6SdB3KWIY6wZIxhDwqR9ybs3bnqz1
- 8QSn/wwB6e/hMLIvdv7yhAy7SUIFjTWC5VBM+4mszPynQpL1sxl/akXbqbaeghFDH5O0
- PE3aaHr98XVXRUtN/j/vffWlrOK8zZeVVOREi0VMUwyRPsPpMmrYdafi77o5ky8L325p
- +p8IWzwxON1hlGW1hoQja0T/vjKeVpemlCC56YI1xQfIKRmEQ8/1JOV3Ui0fyHiFlsAU
- lvfw==
+ d=oss.qualcomm.com; s=google; t=1781813491; x=1782418291; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=RI01ee7RIk669aLwjrox6PhV2s7RayDJB7pR4DzMRjo=;
+ b=RZen3mgAVu6/L0+VMmMHxHIGKuhCmqkn5fs91kiV6E7ALI6+D7q06UeUInL5APPqRi
+ xIHgr7iYpb1zTDvCyuBfmbIB1Id5tt/b2hOdTMMl0T0+TESlQ88kvGvyR/3dW+JmWQbA
+ ++kRkm7Q1mWRtHcOFX0m2jqNCsQUAc79hB7gvY59364dadkKthxOErzJOOWrJhA5mMri
+ VyXm6B2DW6t/oD2EQoSW3ktsRxoJz7gzcXMVTYu2wfZEoGpT639+qHsyaZ2/w/p/tLD3
+ AbOKXMCEr1WQPXnLL4TzrSOoL5sCRBsZ/VtyMSM+7D63rk/RGuPvmwupkeUYYZo9cRk8
+ xlsA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781812712; x=1782417512;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=1e100.net; s=20251104; t=1781813491; x=1782418291;
+ h=content-transfer-encoding:in-reply-to:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=rLgx65tFsFfblyNJf9+3CEqUiej5TmumNRZKANQrI48=;
- b=gk/sIBs9c53pYR+54SXpFYyt623hNW2oWiWZpeB1ZFeTONHKFLvwjvX7wdx5PyFa/7
- 0JTJXfsrW4D2TDAHxnp+ca+kQFznpcORl1wSJXQ+OSOqo6sC11Q2Gpk1X9tLsrEykKkL
- BXhw7jIBjTDiM8padw8toZaBByZjBZqLXXaqPPNQwBEq6KduL24y97MxXEf8IXE72fCh
- b41djigHNGZM5R8Y7abwjxTxBj+cQ/bdcXnFy6Y5/FsABucEBUQUvEOXujIXbyt7605o
- XdvyL0iBmEl62s/rOUwc7X9sAGqNhqB3Ddn6oNVWB+1K/imQFJ5v3NAvJnoVYCX+wdGP
- isyA==
-X-Gm-Message-State: AOJu0YziR2L+ijfWQXXER5bTwKawA5YNozUToCtbZfJn+aDZKZOVqYJx
- p7a+Xpm2R5yUOXpzUyBQtnECHnZhltshv+usgMkFW6ToP+TTSdHgk18jEXMtctSIOp5nnTQzFIa
- rDsyG
-X-Gm-Gg: AfdE7clL/XDa+tQH1cHR6zFcwCDMpC62p+tpzVioSvKV/AwM1gEY86JQekdJImCpoJ7
- +obgWIbVF8Fm1vY6wlxuphDlVSQ7w2hrR9P3xXEXSBc5nXLqJwYRt23b2P7VpDxb/gKTVXhYY6m
- ZGsnmTMuuv/XOO+NJhiXbqrKGTS7BXDsCxfeWxu20/HWIzEvChJn8d7c5Rfhu+/yzunU30gE7UB
- EZW9Oi8AhtDR/9VH6gym2JGOZ34PQRw1H64MbrD6z8YLlHTclxDdrFRspXR+/vReqPudgyWtGo9
- ZpH61iAc10xvh/jIZye0HmBtb1x7VZiNoY4CWMwp2sHb+LQkbR4+ibiRA6MadiFBOoxGa3sSJQ3
- DAqH+St7TkgOX2LqgGDAkGFfA/Vdwea4eA5UpSHiRxSpi38CVD1OeWb96ltOqn9gzh96cP5Py9U
- I1ap/8k5cYV+GfYTewF8aiCsUl4HdK/svKTHgJUIKSlm4wWZCHDnR2llXvPHOJ
-X-Received: by 2002:a17:902:d489:b0:2be:22cc:e227 with SMTP id
- d9443c01a7336-2c718c87b90mr8232025ad.4.1781812711691; 
- Thu, 18 Jun 2026 12:58:31 -0700 (PDT)
-Received: from stoup.. (174-21-129-215.tukw.qwest.net. [174.21.129.215])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2c432c8ca31sm205776395ad.55.2026.06.18.12.58.30
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 18 Jun 2026 12:58:30 -0700 (PDT)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Subject: [PATCH v4 00/13] *-user: probe_guest_base improvments
-Date: Thu, 18 Jun 2026 12:58:28 -0700
-Message-ID: <20260618195829.590072-1-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.43.0
+ bh=RI01ee7RIk669aLwjrox6PhV2s7RayDJB7pR4DzMRjo=;
+ b=qFDGWk++C+uvnITfDClxtp5Ylb2ngfYouepYWs0Mqhic4sdWiX4mjIIxXUQAtJqynD
+ CNVkik6VgXGvMP7pZZLJvFivYz1cNBPtdTwLEcpbUmAONatarJYiVAp/HwJTXgsJv/v8
+ cWiyF1ERwric81pT3HvptGKkWCt5JRchKkrwvrthzLasNlg8k7WY2HBgGWskOh3h0jp0
+ U0R7OZyjwCQ363gAOpreFaU/TIOSSNGHKUpOmXj359vefYpye/QbfPT2/pOGlAfmgEho
+ 6dQMtZ1fWklXgkzqtz8qq/zP7PfTGFWDmgExKaGsutaecVuK8s6urkh9JCBmHyqQGzhk
+ JewA==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ9VZ70bIV8A6a5Bd/06SyXlgXOkBgARlOZKUmBcHJm1/lLC4vmZepIaf59klCobyI4umPJiqMorTC3h@nongnu.org
+X-Gm-Message-State: AOJu0YyTrqRiFPm2+Y/8u3+6wy1dDmHtj1W1aWuevMEeCkLuWIh1x7GD
+ Y8qxQ6/COZ7LAl1nyr+eL5qoLn4E/kbSHE2TheSpZBB08LlEfjXnEJt+HLXMAkOAutBTV7p2ggI
+ G49pY0bpqiWLCM75/x9FDHEMVwmxMOoYR+hBnYukRMpduBLOedR6634dyhg==
+X-Gm-Gg: AfdE7cmbiUKPrKV9o5eW5p5HfjyIIcf7AkpUOq6UdSyno141XFtw/nnPfBZ7vRwc+rZ
+ RXLEUTOpeqWk0dhoAIDUJwqjatxqQ/XtrcaWRDRy2QM4i6UAh74H/hSJqE1dBxuuITWnhk2FqOs
+ fMnSGxK+2CSLzjNkWHUXGZ/ToMFyJmGbRO1z/8r7OUh5k2J8UvKFQvxV7gj0ASy0xLXByQB8mVA
+ DBZf4A6Bw9pxqN/BsjSSH5A6hvXVtw/z7cOMy896EBcc2xAN3WOThmTjx0CRWyP2RvwjCc0hAJz
+ SvURDGHT6ELDstanjgPmDUnypZpr4uJUa42mp5RaX+3wUwUqVFo+KbWRj/a12GpiufDHMYyOHbs
+ u/D2HU285sNDhrhSLxMjPrVwn3zHgF0f1ItlO6B8OYrAEqlywPxCoNf+dgE9opA==
+X-Received: by 2002:a05:6102:5e84:b0:6ac:c0ab:5dc7 with SMTP id
+ ada2fe7eead31-72a0168eaccmr1176408137.5.1781813491255; 
+ Thu, 18 Jun 2026 13:11:31 -0700 (PDT)
+X-Received: by 2002:a05:6102:5e84:b0:6ac:c0ab:5dc7 with SMTP id
+ ada2fe7eead31-72a0168eaccmr1176402137.5.1781813490734; 
+ Thu, 18 Jun 2026 13:11:30 -0700 (PDT)
+Received: from [192.168.69.213] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-4650c114e22sm1242614f8f.34.2026.06.18.13.11.29
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 18 Jun 2026 13:11:30 -0700 (PDT)
+Message-ID: <7d9acb4e-d1da-45da-a42a-60340d0dfb58@oss.qualcomm.com>
+Date: Thu, 18 Jun 2026 22:11:29 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 12/13] bsd-user: Use probe_guest_base
+Content-Language: en-US
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+References: <20260618195520.589907-1-richard.henderson@linaro.org>
+ <20260618195520.589907-13-richard.henderson@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+In-Reply-To: <20260618195520.589907-13-richard.henderson@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x629.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjE4MDE4NSBTYWx0ZWRfX1SowOXrMh/fi
+ HF+PgWSC8p466XtevX3jDgR1J7cMBBnCAUgouII9P1XjvzehL3z9euI6cN9yjpkv6oIIiQx9iYt
+ tMhEP3C01ImKbtijyq/fivkpIcsx4Xp13Fi+PpekvyIvgPe4eE7fwRz7IXGyWallrI7t82aiCgY
+ /qp2WM8Jkigxm4i2X6DkmeNrLpO+Vs1RzyD9RTz00RsaCq96QAFUkYkFMAaBYVz7VCLUWOnOMki
+ MdWypd7ylpePLGaWa+AzcJc7pR1Nf0pK+mZXALnDFi/s/fsvW2+zaVg4lfMZZuQhcBlZ9YycguX
+ /8n9B0k/vs6phNp2LI3HAs7S0esTWfVzRtTp7sqDiH8KPzhTSVrTgKMwcdiFfK60fTo4y7GPgTs
+ p2buzqrV5XWCCyLga458rkCCxpkeNWvXJwOWmL3kfOC0spNtUV7To4dHSn1Axi4D5jvU6UZN9oX
+ TxU+GETSJ4JB4TwyQgg==
+X-Proofpoint-ORIG-GUID: kGLFcAEOA0gIchpOtrRjcG_v-upZf70Q
+X-Authority-Analysis: v=2.4 cv=FN4rAeos c=1 sm=1 tr=0 ts=6a3450f4 cx=c_pps
+ a=KB4UBwrhAZV1kjiGHFQexw==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+ a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22
+ a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=1tSEMpTH9XP_W59IOagA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=o1xkdb1NAhiiM49bd1HK:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-GUID: kGLFcAEOA0gIchpOtrRjcG_v-upZf70Q
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjE4MDE4NSBTYWx0ZWRfX8EpgG6H9XaRF
+ +ozPRDhXWfAywyJnJQR05/Q9kJbZSUn/KGCmPhzpFdO3VuW60S/WK5tyv+ioPqfRcHmN34Y+qNX
+ TvNCwDVHzO7cQTSQXxe1Q03ye/cxPsc=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-18_03,2026-06-18_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 malwarescore=0 bulkscore=0 lowpriorityscore=0
+ impostorscore=0 adultscore=0 phishscore=0 suspectscore=0 clxscore=1015
+ spamscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2606180185
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -98,61 +154,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-OMG.
+On 18/6/26 21:55, Richard Henderson wrote:
+> Merge the PT_LOAD loop with the PT_INTERP loop, as the XXX
+> comment suggests.  Pass the probed range to probe_guest_base.
+> 
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>   bsd-user/elfload.c | 37 +++++++++++++++++++------------------
+>   bsd-user/main.c    | 39 ++++-----------------------------------
+>   2 files changed, 23 insertions(+), 53 deletions(-)
 
-Changes for v4:
-  - Really, really include the read_self_maps rewrite from Warner.
 
-Only sending patch 10 this time.  :-(
+> +    /* Ensure that mmap_next_start is within range. */
+> +    if (reserved_va && reserved_va <= mmap_next_start) {
+> +        mmap_next_start = ((reserved_va / 4 * 3)
 
-r~
+Is that ROUND_DOWN(reserved_va, 4)?
 
+> +                           & TARGET_PAGE_MASK & qemu_host_page_mask);
+>       }
 
-Richard Henderson (13):
-  linux-user: Introduce PGBRange
-  linux-user: Use PGBRange in load_elf_image
-  linux-user: Drop hiaddr out-of-range check in probe_guest_base
-  linux-user: Pass image_range to probe_guest_base
-  linux-user: Use PGBRange for commpage
-  common-user: Move mmap_min_addr from linux-user
-  common-user: Initialize mmap_min_addr for FreeBSD
-  include/user/guest-host: Include missing cpu.h
-  common-user: Move selfmap from util
-  common-user: Implement read_self_maps for FreeBSD
-  common-user: Move probe_guest_base from linux-user
-  bsd-user: Use probe_guest_base
-  common-user: Move guest_base, have_guest_base to probe-guest-base.c
+Rest LGTM AFAICT :)
 
- include/user/guest-host.h        |   1 +
- include/user/mmap-min-addr.h     |  12 +
- include/user/probe-guest-base.h  |  37 +++
- include/{qemu => user}/selfmap.h |   0
- linux-user/arm/target_elf.h      |   2 +-
- linux-user/hppa/target_elf.h     |   2 +-
- linux-user/user-internals.h      |  17 +-
- bsd-user/elfload.c               |  37 +--
- bsd-user/main.c                  |  42 +---
- common-user/mmap-min-addr.c      |  50 ++++
- common-user/probe-guest-base.c   | 347 +++++++++++++++++++++++++++
- {util => common-user}/selfmap.c  |  49 +++-
- linux-user/arm/elfload.c         |   2 +-
- linux-user/elfload.c             | 400 ++-----------------------------
- linux-user/flatload.c            |   3 +-
- linux-user/hppa/elfload.c        |   4 +-
- linux-user/main.c                |  35 +--
- linux-user/mmap.c                |   1 +
- linux-user/syscall.c             |   2 +-
- common-user/meson.build          |   3 +
- util/meson.build                 |   4 -
- 21 files changed, 564 insertions(+), 486 deletions(-)
- create mode 100644 include/user/mmap-min-addr.h
- create mode 100644 include/user/probe-guest-base.h
- rename include/{qemu => user}/selfmap.h (100%)
- create mode 100644 common-user/mmap-min-addr.c
- create mode 100644 common-user/probe-guest-base.c
- rename {util => common-user}/selfmap.c (68%)
-
--- 
-2.43.0
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 
 
