@@ -4,107 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98461CD98F2
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jun 2026 17:49:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00D25CD98ED
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jun 2026 17:53:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1waGrf-0007Mh-3n; Thu, 18 Jun 2026 13:49:19 -0400
+	id 1waGvB-0008MV-QK; Thu, 18 Jun 2026 13:52:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <michael.bommarito@gmail.com>)
- id 1waGre-0007MP-1T
- for qemu-devel@nongnu.org; Thu, 18 Jun 2026 13:49:18 -0400
-Received: from mail-yw1-x1132.google.com ([2607:f8b0:4864:20::1132])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <michael.bommarito@gmail.com>)
- id 1waGrc-0006NY-H1
- for qemu-devel@nongnu.org; Thu, 18 Jun 2026 13:49:17 -0400
-Received: by mail-yw1-x1132.google.com with SMTP id
- 00721157ae682-7fd5346b5e2so21975407b3.0
- for <qemu-devel@nongnu.org>; Thu, 18 Jun 2026 10:49:16 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1781804955; cv=none;
- d=google.com; s=arc-20240605;
- b=hhVUrowzzb+2m/f+3c83slxZlPwx7BlM7HkU5h30utRCBLe60Gtf1hqAIj3yZihxZf
- 7mAuJms2EvYM2IoJIcCdUSekuEu25jdlcVhejTw7W6C35UGA/kmdVcyiMffMffIx28gg
- iSKA7D3O5hvNu3kGgcUOdeXSHcDjlWbz6fDcJAYD9QJiOd5YE8EOdjw1zuQEGd0l57hC
- Dj3WJMRnyjj7nZ9WVUy57IO0PymZOz/9I9/CxHv2XIgUHGvSglkxbjeshoeCSXvVH0cM
- v6Warl1zQoIqHqvdfmb6YY6CJjKLKmvEs1jmsGpMe1kAypm7T0xYkIEiKThca2p42USG
- NLig==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=W3QFLVLX/LaY9CDtPpsHKUKBbekqzThkjUkLBZSOcsA=;
- fh=aIGRJeX88Guh3rQMlKWa8ulQxGF7zrcHMj1vvcRoZWo=;
- b=Ao5JnJZw1CGm0+5yc2BLQ9SpO45Ir52hEHTVRTJysL5B9Q8c3E/Mz7r4WvBgjtVy1g
- w3kAJKzywiCKwByMkTnWU3Yji8/djyRABAN131itr1iie3JWd8Ekq5JOl9Mw2N2cZdfC
- 4CmUOMveifxHUQG8r4RbFHfX2QNrio4aaDecqKMNMF4/2bNx1WxtnqQTtv1lry+XBpdb
- IEkKD8MDMYmzAnIRD9KnU9m+ufH00ZhRmpFPbCZVdIKqsTTXW9Hkp7fu9ecx+KDMLG+s
- pS5/aXJyK+pKaPIz9QgmlLD1Z5Dpc3g0xjsm/VWObb8IgNQy3JexWlvJJYU6bddmwW8B
- LSWg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1781804955; x=1782409755; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=W3QFLVLX/LaY9CDtPpsHKUKBbekqzThkjUkLBZSOcsA=;
- b=EzqLbucaSybOicUkhn+KNzwpePxZTolU0+pauXLX3KWTBVpdko31P5gM8IlgffoPqa
- ZANvV9rPUIgaOLxDP9+XpOpUx3GC4Bs124Rlb3r9qaK82Mi1PGowf6wmMO3MZ5lzxmo5
- fVGzw0c6blSPwAq2z/f+/z+BCAPsqtw+sFj6h267XcSAqD7Oxe2P+kbEfRtP1DFN9Kxn
- E1uxIbH9kM06//0fJJd/owEpq3viq36DWyxQt3HzVYEycp6s0It6HjhMRWW3h61hbiwi
- 7IBxfZDkiR+qWCP2i4LZIniEOtJcfZD3EbUL+wALHQGigD1Aa6YDlpvbyRdbYGQqMO/D
- 5ZnA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781804955; x=1782409755;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=W3QFLVLX/LaY9CDtPpsHKUKBbekqzThkjUkLBZSOcsA=;
- b=hzWoK6tgaGi6QrpjIZlOv2vv3y1oe+XSEurcJDKlYMAN4mC5fTQMwDccVVnQYSKUYR
- Q5VwOhlj+lHVbs4y+y7iYtUPCBfpXJZWsU/Z8QfMVPa6LLEv0RdsKgCSVruBSBVMZF3a
- ugwnpX60jhkXgEq3fmdnTFANqdwzhLIV7IVx/UKYMHS8y0de42YE8L4856NQlR/aK+aB
- lEEeU5/F3g1ZUEdJqcOxjNGxUutkiqPRNmZgvtDOWqN7GXqqwtv+vMkaEegt0qbpAgLH
- Zr0fi2+wqZMbitGQgCGaYJp27aGf1wym781KamZtyqz7K+bOhk7kVWz32IPuySqf7UXZ
- mmzw==
-X-Forwarded-Encrypted: i=1;
- AFNElJ8MWJGlD3YuNKo9gHGKHcJ1dNMPqp9huomVlHzoP5xDd3wndEJiO6T4s4mqBycZykyJ1YfxkL/7z8nn@nongnu.org
-X-Gm-Message-State: AOJu0YyDtyX9NL+8xN3JyEcMQXEjxxMs+Ft5AsTBrRuNrVVNOcQDjKDC
- a2X2hfpaLngT1fmXsnnEiVV4okxwmm8jNDPE1yjQvzznBLlY7FHM/3qB1NewBeFGex3t76RlRoC
- 3FCjzoqveBo7vYhKje9cBWnhUtr6RDso=
-X-Gm-Gg: AfdE7cn3AMxkn6/m4geICSwaatyNaTOBGxUVax9ZjLqGk8OalDZidcrpaJ7rNh8gdLU
- gk9OHuJtWfmsKZRqzl5AeOGFS2HyCWBrF1u8MbabatfHMdpuHSmnSkcBDM5/iE7Msr0vYvR6JPI
- Rm0SeOphS24JDTm7PmNoWnv6ao0Syll5K8DwFiB3WeJeku+U8kiU7YDL/phk/YhATWnaVvkbqSP
- 26K7ct8GKVxIgZCjZSxLbDQ8nvv+ZSJMfHTErOhHMHAwyW188EvnGuVR0PuVkFzXxLPIouWYs0q
- 7i8m3I2pb/WyInOTdETS+ZwSsaiNq4VZMckM
-X-Received: by 2002:a05:690c:39c:b0:7bd:73f3:7a58 with SMTP id
- 00721157ae682-801216280e6mr387247b3.11.1781804954802; Thu, 18 Jun 2026
- 10:49:14 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1waGvA-0008LC-63
+ for qemu-devel@nongnu.org; Thu, 18 Jun 2026 13:52:56 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1waGv8-0007wp-MH
+ for qemu-devel@nongnu.org; Thu, 18 Jun 2026 13:52:55 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1781805173;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=YkyHemMsuNTr89VtBokmxFdi2g1Xneh1sXw01D7UGgI=;
+ b=YWNTnzUjzPsSDJUJenhbpkmAZ4emhfBNASnpn1Jp5dASP03z7LqvOCC+wcOFphsBh6dAKx
+ kLn2iQpTxLyFYS0BM04wQvzd3qsw1B0Nfeq9mMVuUbrs26rMR95u/cRZQ1qE6p6JfwQptJ
+ DcKCZSDVjLXgfjjpWusOVvkZL7elIsY=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-528-nR5SQwviObm_2vJYntBePg-1; Thu,
+ 18 Jun 2026 13:52:52 -0400
+X-MC-Unique: nR5SQwviObm_2vJYntBePg-1
+X-Mimecast-MFC-AGG-ID: nR5SQwviObm_2vJYntBePg_1781805171
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 14C50195607B
+ for <qemu-devel@nongnu.org>; Thu, 18 Jun 2026 17:52:51 +0000 (UTC)
+Received: from localhost (unknown [10.2.16.120])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id A1EB630000DB; Thu, 18 Jun 2026 17:52:50 +0000 (UTC)
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Stefan Hajnoczi <stefanha@redhat.com>, Tom Stellard <tstellar@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PULL 1/1] trace/control: Fix -Wunused-but-set-global warning with
+ clang 23+
+Date: Thu, 18 Jun 2026 13:52:47 -0400
+Message-ID: <20260618175247.748320-2-stefanha@redhat.com>
+In-Reply-To: <20260618175247.748320-1-stefanha@redhat.com>
+References: <20260618175247.748320-1-stefanha@redhat.com>
 MIME-Version: 1.0
-References: <20260617151739.4072252-1-michael.bommarito@gmail.com>
- <20260618152059.GF720244@fedora> <ajQbkHFIMcuA6r-Y@redhat.com>
-In-Reply-To: <ajQbkHFIMcuA6r-Y@redhat.com>
-From: Michael Bommarito <michael.bommarito@gmail.com>
-Date: Thu, 18 Jun 2026 13:49:03 -0400
-X-Gm-Features: AVVi8CddqOTgUJb8jHmeIo3sh1SymAvFs9HSklnBGXtR7N2KKi-FWYaNu-FPGyk
-Message-ID: <CAJJ9bXxokyYTkoToTs6D1Jud=gg0zyR7_5-15VucSAtTO8+EpA@mail.gmail.com>
-Subject: Re: [PATCH] virtio-blk: store the zone-append sector as little-endian
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: Stefan Hajnoczi <stefanha@redhat.com>,
- "Michael S . Tsirkin" <mst@redhat.com>, Kevin Wolf <kwolf@redhat.com>, 
- Hanna Reitz <hreitz@redhat.com>, qemu-block@nongnu.org, qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1132;
- envelope-from=michael.bommarito@gmail.com; helo=mail-yw1-x1132.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 8
+X-Spam_score: 0.8
+X-Spam_bar: /
+X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,22 +87,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jun 18, 2026 at 12:23=E2=80=AFPM Daniel P. Berrang=C3=A9 <berrange@=
-redhat.com> wrote:
-> If it did write the patch, we could make an exception on the
-> basis that there is only a single way to write this trivial fix.
->
-> None the less the Assisted-by advertizing hoarding should be
-> removed before merging, as even our new proposed looser policy,
-> rejects use of Assisted-by.
+From: Tom Stellard <tstellar@redhat.com>
 
-FWIW, the patch is pretty mechanical and basically consisted of sed on
-a single function based on conversation with MST.  I told Claude to
-make the change, and then it ran the rest of the testing and patch
-setup.
+../trace/control.c:41:13: error: variable 'init_trace_on_startup' set but not used [-Werror,-Wunused-but-set-global]
+   41 | static bool init_trace_on_startup;
+      |             ^
+1 error generated.
 
-Appreciate the policy is in flux and sorry for not flagging that before.
+Signed-off-by: Tom Stellard <tstellar@redhat.com>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Message-id: 20260617224145.1419961-1-tstellar@redhat.com
+Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
+---
+ trace/control.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-Thanks,
-Mike
+diff --git a/trace/control.c b/trace/control.c
+index 1c8c50064a..49f0a4c5cd 100644
+--- a/trace/control.c
++++ b/trace/control.c
+@@ -38,7 +38,9 @@ static TraceEventGroup *event_groups;
+ static size_t nevent_groups;
+ static uint32_t next_id;
+ static uint32_t next_vcpu_id;
++#ifdef CONFIG_TRACE_SIMPLE
+ static bool init_trace_on_startup;
++#endif
+ static char *trace_opts_file;
+ 
+ QemuOptsList qemu_trace_opts = {
+@@ -295,7 +297,9 @@ void trace_opt_parse(const char *optstr)
+         trace_enable_events(qemu_opt_get(opts, "enable"));
+     }
+     trace_init_events(qemu_opt_get(opts, "events"));
++#ifdef CONFIG_TRACE_SIMPLE
+     init_trace_on_startup = true;
++#endif
+     g_free(trace_opts_file);
+     trace_opts_file = g_strdup(qemu_opt_get(opts, "file"));
+     qemu_opts_del(opts);
+-- 
+2.54.0
+
 
