@@ -4,53 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF911CD98F2
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jun 2026 12:51:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07870CD98ED
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jun 2026 12:51:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1waCAG-0001mL-V3; Thu, 18 Jun 2026 08:48:13 -0400
+	id 1waCAA-0001jw-PV; Thu, 18 Jun 2026 08:48:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <caixiangfeng@bytedance.com>)
- id 1waAW7-0000FS-SL
- for qemu-devel@nongnu.org; Thu, 18 Jun 2026 07:02:40 -0400
-Received: from va-2-111.ptr.blmpb.com ([209.127.231.111])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <caixiangfeng@bytedance.com>)
- id 1waAW2-0003k3-Sz
- for qemu-devel@nongnu.org; Thu, 18 Jun 2026 07:02:39 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- s=2212171451; d=bytedance.com; t=1781780542; h=from:subject:
- mime-version:from:date:message-id:subject:to:cc:reply-to:content-type:
- mime-version:in-reply-to:message-id;
- bh=plykjydmcTvYtBKCoMjR+fOzNxD+AhqHdlHc+poZiJs=;
- b=iF9RZ0N0AppioSRY1g2QxvFz5pFJlddXE4ikJr5GW4gOKELrF4BYQ6pmi1ov6nrvcWSHR1
- UkM9WUjE5Uc+7DdhUmRAD/18lf+9mfZpAZB1A+gBc7AWa1AkmyYKOo9531fMG5uqx+pv7c
- xMSEO11wBrVJ5gObtTprLkZ4ok4D7OjdcljdCE+tDA8TGLIs62wsOO3ho7X56bEouGWL/d
- XI2h9Rs6znERHoep4hzaInEnQhGymRJOqvHgIHVTj7BLKGjIDP1URZnlKAvXJsOzxklPLC
- DNwpxo3azxk1UDO4MIWmat5KSilB2mlBM7FSnKJHARJ4QaYy2I6eLRXxGGWF/Q==
-Subject: [PATCH 0/2] xHCI PCI has a QOM reference-cycle bug on hot-unplug
-Date: Thu, 18 Jun 2026 19:01:17 +0800
+ (Exim 4.90_1) (envelope-from <fcallies@linux.ibm.com>)
+ id 1wa6MB-0000vm-4x; Thu, 18 Jun 2026 02:36:07 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <fcallies@linux.ibm.com>)
+ id 1wa6M9-0007Jr-HL; Thu, 18 Jun 2026 02:36:06 -0400
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 65HHmDkT1106562; Thu, 18 Jun 2026 06:36:01 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=tgCjdl
+ yGnsCQcxuHwZ8S+HXp/ymtrYmszQ6/864AR30=; b=tVoDzHxjFWSYyUFwUNfPv2
+ v8EWnrOi6pm/WYWP2tusCSYaDM1+1x1No9FmVEjMkVpaCySgPwluE24ebnF3FnAe
+ 5uEmzdLdo5In8uXLqC9DXFj4/HR1Q2UAxBY0eZslScOJFJTeR/ukm12loTfr++xc
+ DmV6la6LjXXhOFkACheMbs1yZxPAUWZ5BhOfb78JjcUsGAi+VcpDIP6LztUv6IGV
+ kr9ScJH2CzNrifVCtg44R2lpBQllMGbX3tFsYPLKuEMKg7D3FNgnqb9lBxxyw8lW
+ 35zIywzz1hvV0s/DZbNtKcUo29XkZG+SfN1Yi/Lau3wQrPNJN7Q8WTBFnbSWtR8g
+ ==
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4eueqtpqew-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 18 Jun 2026 06:36:01 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 65I6YZ1c000627;
+ Thu, 18 Jun 2026 06:36:00 GMT
+Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4ev1722ct6-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 18 Jun 2026 06:36:00 +0000 (GMT)
+Received: from smtpav04.fra02v.mail.ibm.com (smtpav04.fra02v.mail.ibm.com
+ [10.20.54.103])
+ by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 65I6Zvin42402254
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 18 Jun 2026 06:35:57 GMT
+Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 1EC2120043;
+ Thu, 18 Jun 2026 06:35:57 +0000 (GMT)
+Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id E06F220040;
+ Thu, 18 Jun 2026 06:35:56 +0000 (GMT)
+Received: from [9.224.89.241] (unknown [9.224.89.241])
+ by smtpav04.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Thu, 18 Jun 2026 06:35:56 +0000 (GMT)
+Message-ID: <5687001a-95db-40b4-af59-b2cb8c42ee4a@linux.ibm.com>
+Date: Thu, 18 Jun 2026 08:35:56 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v7 17/17] target/s390x: Use generic AES helper functions
+Content-Language: en-GB
+To: Harald Freudenberger <freude@linux.ibm.com>, richard.henderson@linaro.org, 
+ iii@linux.ibm.com, david@kernel.org, thuth@redhat.com, berrange@redhat.com
+Cc: qemu-s390x@nongnu.org, qemu-devel@nongnu.org,
+ linux390-list@tuxmaker.boeblingen.de.ibm.com,
+ linux-s390@vger.kernel.org, dengler@linux.ibm.com,
+ borntraeger@linux.ibm.com, cohuck@redhat.com
+References: <20260617094820.34402-1-freude@linux.ibm.com>
+ <20260617094820.34402-18-freude@linux.ibm.com>
+From: Finn Callies <fcallies@linux.ibm.com>
+In-Reply-To: <20260617094820.34402-18-freude@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: <caixiangfeng@bytedance.com>, <yanfei.xu@bytedance.com>, 
- "Fabiano Rosas" <farosas@suse.de>, "Laurent Vivier" <lvivier@redhat.com>, 
- "Paolo Bonzini" <pbonzini@redhat.com>
-From: "Xiangfeng Cai" <caixiangfeng@bytedance.com>
-Message-Id: <20260618110119.3084296-1-caixiangfeng@bytedance.com>
-X-Original-From: Xiangfeng Cai <caixiangfeng@bytedance.com>
-X-Lms-Return-Path: <lba+26a33d03c+f56d1d+nongnu.org+caixiangfeng@bytedance.com>
-To: <qemu-devel@nongnu.org>
-X-Mailer: git-send-email 2.55.0.rc1
-Content-Type: text/plain; charset=UTF-8
-Mime-Version: 1.0
-Received-SPF: pass client-ip=209.127.231.111;
- envelope-from=caixiangfeng@bytedance.com; helo=va-2-111.ptr.blmpb.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: 1vP0oAzXlu56HmjE2Qwm-uK3VXcmC621
+X-Proofpoint-GUID: 1vP0oAzXlu56HmjE2Qwm-uK3VXcmC621
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjE4MDA1NSBTYWx0ZWRfX0P0g6y4nogM0
+ XfNGYRRV1QZypQBMcMFJiA37mLnDZCW6XdQD46eC9eNeNS2DD+9RMbOK+o3Y3TWEQYnhoPH609E
+ LBVydBYj49jOfeP7lfYXcSTCMb59AfnuAV1NySrtgZma92um+yFGq6NwCanQGT7al+6zK0UOut0
+ OtrAoCUX12lXMFjT4vwdwN6XcyKPWYdCW2jMRG5+nD1xJ6a1t66j0KykjNG6CaWVUgOaQ11l0mr
+ 9dY1ygIbpiwDsDXh/f4P7vmNy7oSstxtZ+/fbvNFmvEIOTIC1buocWrxFYongwTBFmEh/L97vOt
+ YoValBE2T743/qzKKIOSs6gH1isE1wymEBKJL0EsChsqsMi9j79jEBrEHTDmWyTzx0CxISgd9+0
+ Ed0UE99UHYD5ZJq1Gmew6M1VTBSMBuEcljE6Os1ujIOpsglyQHcJuQ2fGN3y6+ou1M3q/Bkjlos
+ HHauX1a5oaYlYJ1jkkQ==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjE4MDA1NSBTYWx0ZWRfX4S2/PiCYtkd8
+ KlVJP73NBNV44dK21nrvEMH2md/OmoEtecOOOSqB41sPmPkI0vXiAoR10H/IKsLKAer8mp4jUrd
+ Tv+vN0+6eLQehTgpvNZWOumcrE8Gv/8=
+X-Authority-Analysis: v=2.4 cv=B4KJFutM c=1 sm=1 tr=0 ts=6a3391d1 cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+ a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=VnNF1IyMAAAA:8
+ a=5tY82SRV8Fo6CFT2nY0A:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-17_02,2026-06-17_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 adultscore=0 lowpriorityscore=0 suspectscore=0
+ priorityscore=1501 clxscore=1015 phishscore=0 spamscore=0 bulkscore=0
+ impostorscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2606180055
+Received-SPF: pass client-ip=148.163.156.1;
+ envelope-from=fcallies@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-Mailman-Approved-At: Thu, 18 Jun 2026 08:48:01 -0400
@@ -68,34 +129,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The xHCI PCI wrapper owns an embedded xhci-core child via
-object_initialize_child(), while the child's strong host link points back to the
-PCI wrapper. On hot-unplug, usb_xhci_pci_exit() does not unrealize the embedded
-child or clear the host link, so the strong back-reference keeps the PCI
-device's QOM refcount from reaching zero.
 
-As a result, the xHCI PCI device is unrealized and unparented, but it is never
-finalized. This leaks the controller object and prevents finalization-side
-cleanup from running, including DEVICE_DELETED emission from device_finalize().
 
-This is independently an upstream QEMU object-lifetime bug. It can also have
-latent higher-level effects for CPR orchestration: CPR relies on the new or
-re-executed QEMU being launched with a command line that matches the current
-source VM topology. If management relies on hot-unplug completion/finalization
-signals to update that topology, the missing finalization/DEVICE_DELETED event
-can leave a stale -device qemu-xhci or -device nec-usb-xhci entry in the CPR
-restart command, causing a previously unplugged controller to be recreated after
-cpr-reboot, cpr-transfer, or cpr-exec.
+On 17.06.26 11:48, Harald Freudenberger wrote:
+> Rewrite the cpacf implementations to use the generic
+> AES helper functions from crypto/aes-helpers.c
+> 
+> Signed-off-by: Harald Freudenberger <freude@linux.ibm.com>
 
-Xiangfeng Cai (2):
-  hw/usb/hcd-xhci-pci: break host link cycle so device_finalize() runs
-    on unplug
-  tests/qtest: add xhci-pci unplug finalize regression test
+LGTM
 
- hw/usb/hcd-xhci-pci.c           | 12 ++++++
- tests/qtest/usb-hcd-xhci-test.c | 67 +++++++++++++++++++++++++++++++++
- 2 files changed, 79 insertions(+)
+Reviewed-by: Finn Callies <fcallies@linux.ibm.com>
 
--- 
-2.55.0.rc1
+> ---
+>   target/s390x/tcg/cpacf_aes.c | 124 ++++++++++-------------------------
+>   1 file changed, 36 insertions(+), 88 deletions(-)
+[ snip ]
 
