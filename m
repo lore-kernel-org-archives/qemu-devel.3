@@ -4,64 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED10FCD98ED
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jun 2026 07:24:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89AAFCD98ED
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jun 2026 07:56:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wa76f-0003mU-1F; Thu, 18 Jun 2026 03:24:09 -0400
+	id 1wa7aw-0000hE-IT; Thu, 18 Jun 2026 03:55:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wa76d-0003m8-HH
- for qemu-devel@nongnu.org; Thu, 18 Jun 2026 03:24:07 -0400
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wa7as-0000Zt-Pi
+ for qemu-devel@nongnu.org; Thu, 18 Jun 2026 03:55:24 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wa76b-0000pW-7X
- for qemu-devel@nongnu.org; Thu, 18 Jun 2026 03:24:07 -0400
-Received: from [133.11.54.183] (h183.csg.ci.i.u-tokyo.ac.jp [133.11.54.183])
- (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 65I7NosD009657
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Thu, 18 Jun 2026 16:23:55 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=xfcKFReTtH2gxZxx3WZdA5B3KjFi9To0mpqZfFG2vaU=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=From:Message-ID:To:Subject:Date;
- s=rs20250326; t=1781767436; v=1;
- b=QKtvbKgLRmB8GINT7Yf1zHRk71iov519GUUGFYAvc1JJeio0cxNNzge0D5pNXAL3
- r3jBq88aWzDKV6YhkwViBA3s/KKuG40N9Mn5YuyC4Yv1OiIF0Hq1FyDYHq/10mgt
- LtwNEBs7PPGWq30wTfKczOVr03fAIO635q9XdL1c+vPh8tAYYVUjOQSA5Ob/Soz2
- Du6ndXmJ5xsKVAKTTEYhPmwdnoMx+JR3Jr/X3F0k6FOxbclQXIpiju0atm4G6Ak6
- NiQjB1vS3uGuXdURf9kUnKphatG34OyaKkuvuQRM37Om+0IMlXJ72B4IbXWFpehc
- E/LWhy5aUTMVQXidiQnm3Q==
-Message-ID: <7cc2904c-3ae6-444d-bed0-a60a3369370e@rsg.ci.i.u-tokyo.ac.jp>
-Date: Thu, 18 Jun 2026 16:23:55 +0900
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wa7aq-00056r-Hq
+ for qemu-devel@nongnu.org; Thu, 18 Jun 2026 03:55:22 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1781769316;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=rGW17PWev+DoOhgJsh5gDijaj2K0a5VvrCwka0hiDEg=;
+ b=dvnKoEsMjYrD/8arsUY0MZoryP7JptVAWP+kOFjiXekqwQU+r19PRLGXqHuxar0krdblTZ
+ YMLVwyx3a0jOYqwwR6mO2aWssnY9HAZzn1kpkWQXG+oM7ZyRnm9JOALy2uq9sa1weTJOeL
+ +hIC12PRPf8gL4wsVR7CXIFx3RT1dgA=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-486-ZaTMTS8nM-68NJwkzN-nPg-1; Thu,
+ 18 Jun 2026 03:55:13 -0400
+X-MC-Unique: ZaTMTS8nM-68NJwkzN-nPg-1
+X-Mimecast-MFC-AGG-ID: ZaTMTS8nM-68NJwkzN-nPg_1781769312
+Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6B0C519560A1
+ for <qemu-devel@nongnu.org>; Thu, 18 Jun 2026 07:55:12 +0000 (UTC)
+Received: from redhat.com (unknown [10.44.49.28])
+ by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E1DB1175F; Thu, 18 Jun 2026 07:55:10 +0000 (UTC)
+Date: Thu, 18 Jun 2026 08:55:07 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Tom Stellard <tstellar@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>
+Cc: qemu-devel@nongnu.org
+Subject: Re: [PATCH] trace/control: Fix -Wunused-but-set-global warning with
+ clang 23+
+Message-ID: <ajOi79XcRVVMTzah@redhat.com>
+References: <20260617224145.1419961-1-tstellar@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 7/7] igb: Add QTest for Transmit Rate Limiter traffic
- throttling
-To: Josh Hilke <jrhilke@google.com>, qemu-devel@nongnu.org
-Cc: Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
- Jason Wang <jasowang@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- David Matlack <dmatlack@google.com>,
- Alex Williamson <alex.williamson@nvidia.com>
-References: <20260617-igb-trl-v6-0-bbdfcadb81e2@google.com>
- <20260617-igb-trl-v6-7-bbdfcadb81e2@google.com>
-Content-Language: en-US
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <20260617-igb-trl-v6-7-bbdfcadb81e2@google.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260617224145.1419961-1-tstellar@redhat.com>
+User-Agent: Mutt/2.3.2 (2026-04-26)
+X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 8
+X-Spam_score: 0.8
+X-Spam_bar: /
+X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -75,237 +86,60 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026/06/18 5:15, Josh Hilke wrote:
-> Add a test for the IGB transmit rate limiting functionality. The test
-> verifies that TRL is enabled by setting the appropriate registers and
-> that data is transmitted at the appropriate rate based on chosen
-> target rate.
+CC trace maintainer.
+
+On Wed, Jun 17, 2026 at 03:41:45PM -0700, Tom Stellard wrote:
+> ../trace/control.c:41:13: error: variable 'init_trace_on_startup' set but not used [-Werror,-Wunused-but-set-global]
+>    41 | static bool init_trace_on_startup;
+>       |             ^
+> 1 error generated.
 > 
-> Signed-off-by: Josh Hilke <jrhilke@google.com>
+> Signed-off-by: Tom Stellard <tstellar@redhat.com>
 > ---
->   tests/qtest/igb-test.c | 158 +++++++++++++++++++++++++++++++++++++++++++++++++
->   1 file changed, 158 insertions(+)
+>  trace/control.c | 4 ++++
+>  1 file changed, 4 insertions(+)
+
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+
 > 
-> diff --git a/tests/qtest/igb-test.c b/tests/qtest/igb-test.c
-> index 119be6a..153f5fb 100644
-> --- a/tests/qtest/igb-test.c
-> +++ b/tests/qtest/igb-test.c
-> @@ -34,9 +34,11 @@
->   #include "qemu/iov.h"
->   #include "qemu/module.h"
->   #include "qemu/bitops.h"
-> +#include "qemu/timer.h"
->   #include "libqos/libqos-malloc.h"
->   #include "libqos/e1000e.h"
->   #include "hw/net/igb_regs.h"
-> +#include "hw/pci/pci_regs.h"
->   
->   #ifndef _WIN32
->   
-> @@ -59,6 +61,58 @@ static uint32_t igb_trl_get_rate_factor(uint64_t rate_bytes_s)
->       return (E1000_LINK_RATE_1GBPS << 14) / rate_bytes_s;
->   }
->   
-> +static void igb_trl_enable(QE1000E *d, uint64_t rate_bytes_s)
-> +{
-> +    /* Select Queue 0 */
-> +    e1000e_macreg_write(d, E1000_TRLDQSEL, 0);
-> +    /* Enable TRL with target rate */
-> +    e1000e_macreg_write(d, E1000_TRLRC,
-> +                        E1000_TRLRC_RS_ENA |
-> +                        igb_trl_get_rate_factor(rate_bytes_s));
-> +}
-> +
-> +static void igb_trl_disable(QE1000E *d)
-> +{
-> +    /* Select Queue 0 */
-> +    e1000e_macreg_write(d, E1000_TRLDQSEL, 0);
-> +    /* Disable TRL */
-> +    e1000e_macreg_write(d, E1000_TRLRC, 0);
-> +}
-> +
-> +static void igb_msix_clear_pending(QPCIDevice *dev, uint16_t entry)
-> +{
-> +    uint64_t vector_offset =
-> +        dev->msix_table_off + (entry * PCI_MSIX_ENTRY_SIZE);
-> +    uint32_t val = qpci_io_readl(dev, dev->msix_table_bar,
-> +                                 vector_offset + PCI_MSIX_ENTRY_VECTOR_CTRL);
-> +
-> +    /* Unmask (clears pending bit in QEMU) */
-> +    qpci_io_writel(dev, dev->msix_table_bar,
-> +                    vector_offset + PCI_MSIX_ENTRY_VECTOR_CTRL,
-> +                    val & ~PCI_MSIX_ENTRY_CTRL_MASKBIT);
-> +
-> +    /* Mask again */
-> +    qpci_io_writel(dev, dev->msix_table_bar,
-> +                    vector_offset + PCI_MSIX_ENTRY_VECTOR_CTRL,
-> +                    val | PCI_MSIX_ENTRY_CTRL_MASKBIT);
-
-"| PCI_MSIX_ENTRY_CTRL_MASKBIT" is unnecessary to clear pending 
-interrupts; restoring val should be sufficient. It causes an extraneous 
-side effect.
-
-Also indents are off here though the other indents seems to have been fixed.
-
-Regards,
-Akihiko Odaki
-
-> +}
-> +
-> +static void igb_read_tx_tail(QE1000E *d, void *descr)
-> +{
-> +    QE1000E_PCI *d_pci = container_of(d, QE1000E_PCI, e1000e);
-> +    uint32_t last_entry;
-> +    uint32_t tail;
-> +    uint32_t len;
-> +
-> +    tail = e1000e_macreg_read(d, E1000_TDT_A(0));
-> +    len = e1000e_macreg_read(d, E1000_TDLEN_A(0)) / E1000_RING_DESC_LEN;
-> +    last_entry = (tail + len - 1) % len;
-> +
-> +    qtest_memread(d_pci->pci_dev.bus->qts,
-> +                  d->tx_ring + last_entry * E1000_RING_DESC_LEN, descr,
-> +                  E1000_RING_DESC_LEN);
-> +}
-> +
->   static void igb_send_verify(QE1000E *d, int *test_sockets, QGuestAllocator *alloc)
->   {
->       union e1000_adv_tx_desc descr;
-> @@ -84,6 +138,14 @@ static void igb_send_verify(QE1000E *d, int *test_sockets, QGuestAllocator *allo
->       /* Wait for TX WB interrupt */
->       e1000e_wait_isr(d, E1000E_TX0_MSG_ID);
->   
-> +    /*
-> +     * Read the descriptor back from guest memory again, now that WB has
-> +     * occurred. This is required because if the packet was delayed by the
-> +     * trasmit rate limiter, e1000e_tx_ring_push read it back before QEMU
-> +     * actually processed it.
-> +     */
-> +    igb_read_tx_tail(d, &descr);
-> +
->       /* Check DD bit */
->       g_assert_cmphex(le32_to_cpu(descr.wb.status) & E1000_TXD_STAT_DD, ==,
->                       E1000_TXD_STAT_DD);
-> @@ -147,6 +209,29 @@ static void igb_receive_verify(QE1000E *d, int *test_sockets, QGuestAllocator *a
->       guest_free(alloc, data);
->   }
->   
-> +/* Returns the amount of microseconds it takes to transmit a 64-byte packet.*/
-> +static uint64_t igb_send_and_measure(QE1000E *d, int *test_sockets,
-> +                                     QGuestAllocator *alloc)
-> +{
-> +    QE1000E_PCI *d_pci = container_of(d, QE1000E_PCI, e1000e);
-> +    QPCIDevice *pdev = &d_pci->pci_dev;
-> +    QTestState *qts = global_qtest;
-> +    uint64_t start_time, end_time;
-> +
-> +    /* Clear any stale pending interrupt for this vector before we start */
-> +    igb_msix_clear_pending(pdev, E1000E_TX0_MSG_ID);
-> +
-> +    /* Clear EICR to allow new interrupts to be raised in MSI-X mode */
-> +    e1000e_macreg_write(d, E1000_EICR, 0xFFFFFFFF);
-> +
-> +    /* Send a test packet and measure the time it takes. */
-> +    start_time = qtest_clock_step(qts, 1);
-> +    igb_send_verify(d, test_sockets, alloc);
-> +    end_time = qtest_clock_step(qts, 1);
-> +
-> +    return end_time - start_time;
-> +}
-> +
->   static void test_e1000e_init(void *obj, void *data, QGuestAllocator * alloc)
->   {
->       /* init does nothing */
-> @@ -240,6 +325,77 @@ static void test_igb_transmit_rate_limiter_regs(void *obj, void *data,
->       g_assert_cmphex(e1000e_macreg_read(d, E1000_TRLRC), ==, val1);
->   }
->   
-> +/*
-> + * Test for Transmit Rate Limiter (TRL) traffic throttling.
-> + *
-> + * Verifies that:
-> + * 1. Packets are transmitted without delay when TRL is disabled.
-> + * 2. Enabling TRL on a queue throttles subsequent transmissions.
-> + * 3. The delay matches the expected transmission time calculated from the
-> + *    packet size and the configured target rate.
-> + * 4. Disabling TRL restores normal (unthrottled) transmission behavior.
-> + */
-> +static void test_igb_transmit_rate_limiter(void *obj, void *data,
-> +                                           QGuestAllocator *alloc)
-> +{
-> +    QOSGraphObject *e_object = obj;
-> +    QE1000E_PCI *e1000e = obj;
-> +    QPCIDevice *dev = e_object->get_driver(e_object, "pci-device");
-> +    QE1000E *d = &e1000e->e1000e;
-> +    const uint64_t expected_baseline_elapsed = 10 * SCALE_US;
-> +    const uint64_t expected_max_elapsed = 530 * SCALE_US;
-> +    const uint64_t expected_min_elapsed = 500 * SCALE_US;
-> +    uint64_t elapsed;
-> +
-> +    if (qpci_check_buggy_msi(dev)) {
-> +        return;
-> +    }
-> +
-> +    /* Send a test packet to verify there's no rate limit. */
-> +    elapsed = igb_send_and_measure(d, data, alloc);
-> +
-> +    /*
-> +     * QEMU doesn't emulate the hardware line rate of the device, so the packet
-> +     * is processed instantly (requiring 0 clock steps in wait_isr, which steps
-> +     * by 10us). Give a 10us margin for error.
-> +     */
-> +    g_assert_cmpint(elapsed, <, expected_baseline_elapsed);
-> +
-> +    /*
-> +     * Enable TRL and set the target rate to:
-> +     * (E1000_LINK_RATE_1GBPS / 1000) = 125 KB/s.
-> +     */
-> +    igb_trl_enable(d, E1000_LINK_RATE_1GBPS / 1000);
-> +
-> +    /*
-> +     * Send Packet 1 (no delay)
-> +     * The first packet triggers rate limiting for subsequent transmissions.
-> +     */
-> +    elapsed = igb_send_and_measure(d, data, alloc);
-> +    g_assert_cmpint(elapsed, <, expected_baseline_elapsed);
-> +
-> +    /* Send Packet 2 (should be delayed) */
-> +    elapsed = igb_send_and_measure(d, data, alloc);
-> +    /*
-> +     * Expected delay: 64 byte packet / 125 KB/s = 512 us.
-> +     * Since QEMU steps the clock by 10 us on each wait_isr iteration,
-> +     * the delay is rounded up to the next 10 us step, which is 520 us.
-> +     */
-> +    g_assert_cmpint(elapsed, >=, expected_min_elapsed);
-> +    g_assert_cmpint(elapsed, <=, expected_max_elapsed);
-> +
-> +    /* Send Packet 3 (should also be delayed) */
-> +    elapsed = igb_send_and_measure(d, data, alloc);
-> +    g_assert_cmpint(elapsed, >=, expected_min_elapsed);
-> +    g_assert_cmpint(elapsed, <=, expected_max_elapsed);
-> +
-> +    igb_trl_disable(d);
-> +
-> +    /* Send Packet 4 (no delay since TRL is disabled) */
-> +    elapsed = igb_send_and_measure(d, data, alloc);
-> +    g_assert_cmpint(elapsed, <, expected_baseline_elapsed);
-> +}
-> +
->   static void data_test_clear(void *sockets)
->   {
->       int *test_sockets = sockets;
-> @@ -298,6 +454,8 @@ static void register_igb_test(void)
->                    test_igb_multiple_transfers, &opts);
->       qos_add_test("transmit_rate_limiter_regs", "igb",
->                    test_igb_transmit_rate_limiter_regs, &opts);
-> +    qos_add_test("transmit_rate_limiter", "igb",
-> +                 test_igb_transmit_rate_limiter, &opts);
->   #endif
->   
->       opts.before = data_test_init_no_socket;
+> diff --git a/trace/control.c b/trace/control.c
+> index 1c8c50064a..49f0a4c5cd 100644
+> --- a/trace/control.c
+> +++ b/trace/control.c
+> @@ -38,7 +38,9 @@ static TraceEventGroup *event_groups;
+>  static size_t nevent_groups;
+>  static uint32_t next_id;
+>  static uint32_t next_vcpu_id;
+> +#ifdef CONFIG_TRACE_SIMPLE
+>  static bool init_trace_on_startup;
+> +#endif
+>  static char *trace_opts_file;
+>  
+>  QemuOptsList qemu_trace_opts = {
+> @@ -295,7 +297,9 @@ void trace_opt_parse(const char *optstr)
+>          trace_enable_events(qemu_opt_get(opts, "enable"));
+>      }
+>      trace_init_events(qemu_opt_get(opts, "events"));
+> +#ifdef CONFIG_TRACE_SIMPLE
+>      init_trace_on_startup = true;
+> +#endif
+>      g_free(trace_opts_file);
+>      trace_opts_file = g_strdup(qemu_opt_get(opts, "file"));
+>      qemu_opts_del(opts);
+> -- 
+> 2.51.0
 > 
+> 
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+|: https://libvirt.org          ~~          https://entangle-photo.org :|
+|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
 
 
