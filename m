@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1B68CD98F3
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jun 2026 03:21:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7F1ECD98F3
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jun 2026 03:21:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wa3JS-00087i-6y; Wed, 17 Jun 2026 23:21:06 -0400
+	id 1wa3Jq-0008BZ-RC; Wed, 17 Jun 2026 23:21:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <aadeshveer07@gmail.com>)
- id 1wa3JQ-00086R-0b
- for qemu-devel@nongnu.org; Wed, 17 Jun 2026 23:21:04 -0400
-Received: from mail-pg1-x533.google.com ([2607:f8b0:4864:20::533])
+ id 1wa3Jo-0008BR-CH
+ for qemu-devel@nongnu.org; Wed, 17 Jun 2026 23:21:28 -0400
+Received: from mail-pg1-x536.google.com ([2607:f8b0:4864:20::536])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <aadeshveer07@gmail.com>)
- id 1wa3JN-0002FF-PZ
- for qemu-devel@nongnu.org; Wed, 17 Jun 2026 23:21:03 -0400
-Received: by mail-pg1-x533.google.com with SMTP id
- 41be03b00d2f7-c858961a8efso199179a12.2
- for <qemu-devel@nongnu.org>; Wed, 17 Jun 2026 20:21:01 -0700 (PDT)
+ id 1wa3Jm-0002Ji-QS
+ for qemu-devel@nongnu.org; Wed, 17 Jun 2026 23:21:28 -0400
+Received: by mail-pg1-x536.google.com with SMTP id
+ 41be03b00d2f7-c8897045525so281699a12.0
+ for <qemu-devel@nongnu.org>; Wed, 17 Jun 2026 20:21:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1781752860; x=1782357660; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1781752885; x=1782357685; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=5UuQ1fcG6Nvpe6RYZ8HgiP4tWeblSoX4zuvVb8Lrw5U=;
- b=OOafGZ4qezB72cfkn0O+V7CGmNXCqKxq2jsdD79eyKqx8S6Blq/3WuIdcnVW5CKUhz
- KAZCfujbdA7ETyadj3kLzlod9TRi7lZ6/ax2/BpB7DO/69FHLCz6KjiPDidmT3+K8682
- ATRzuYVE8XUQrtOrGuvty6FynWliyqvuyK7gDWstTO1ZdBbZtWhP17LNc/43ElZ4oFRe
- 8uqioFew/ffJSHxl9/sAK5jQ+tOoe3KtwmescqNnxjREIX/7W9+tX2cjspGGiuHw0V+q
- YZw3KiyVdZjIb3NwfR8gjdy64zRxcbTro7XwUxD1n0cSGYqrg7XSdkmOlkfZV7NyQ/+x
- rVpg==
+ bh=goi3dasaBf+1cFBZYCdvkL7YmSmIDj5gtvrwJACDgTs=;
+ b=Fpa9EmktUCZe7x2pDysjXixklxaN+Qzm/Dp3Wmr2eCT61rlqCaL0NwD8VwlJ4LMScg
+ DjiT2mQhCr1G1BRjzYzNhlm8cDUm0X73uUX5wDK1o54+6PpM7g2m+UdFIUzZ/OvgXqJm
+ 6lP4s+s3a5YiDZgz0S7KxBZd1b1nloU5EUeiFhKosU6LelpOUtrFfDBmf2/X716ygD8f
+ 888tQ9cWpcn0l678pfX9ZbKbjYErnO4qdLw6neQGAdilSC0gwuf0wSTjVT+KO/qSw3qW
+ zeIx0pzChG984LEr5evJJRmxu7s8lIu9jhSlBrH80LwG3g3srfE77uNPPmeSHQd7gtGZ
+ 7Vnw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781752860; x=1782357660;
+ d=1e100.net; s=20251104; t=1781752885; x=1782357685;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=5UuQ1fcG6Nvpe6RYZ8HgiP4tWeblSoX4zuvVb8Lrw5U=;
- b=Q1TM/lVHcIFbAWOrtIIJy2AvJjaJA5GbHa6J4j00KVYx2XzfG0AdipOFnIKDHj0AvX
- shmLSXkZbjJqeq+BWytRfVOZULHJF+fO65dLgvA6x8meqPXFxgExJ+gl226khpnTdz++
- umtwcnVVgWYULrs3pJPRqiupRalbq/+5UBv2LkNg2NqZd5Ijj1zN2XkI6Sryg5Bu8ey/
- PXGYqQRMWIB96UDEKhNV1Lthsxmf10HQ+0VKmZzNsMziC5fqPg3SDQQDVOMxkSAqA/Y2
- Rrosc79RE24HypjTvDLQiWZspN7bwssxyylXT5cnCZmpyykqO22dCCo939OOZU1iyQhS
- UPSQ==
-X-Gm-Message-State: AOJu0Yz49GwtVmHJHjjIUxmnK0OTO9XMSdncspB61dUVoau/dMfO9YDL
- 2JdtfOzWH7iCNxExXU0gOCfdHFfSexeIts3JRtEPE0hGJV7C+ecM8Rs6jZSkM5hW
-X-Gm-Gg: Acq92OHKxWdWxKSyvZGJXhHHlQuJulMFEGSB/t5Hs5ksrB6TmbdgMcwbSxngAweCuC7
- +68qO0HUvq80pr8Xq+oeffu3Fup6HsQTUyxPlAjGzEMrcha4RFgmC2h6ypkVYaBEYvNC8PDbhVH
- Fh5Ig7hNbAQ3JlBOogxDEJzKfMHMFj0/EyxATPYKsIMnylIv11nE51zqM3RVsJmU+Y7nkIlc+iO
- 4sALGptcLExhZ9+mSQqDlTFutQUAvZKvnnTaOe7rfVXU0BJ45+YSDqW/so9Fh7hYRzPz4iLswIc
- DNrbYq5nci1p40nmljvuFz08iC+UfMybQv4dSedOAPOzSg8Tjp2Q8uYtx5JqO31bJWnJukVpA/p
- i+maLOO5euagkaIASEZms8rvnIE7S6BMUbfb6fCF55ETphTLEInI9Ha7MbWgcSIHUTKvzZOV5pG
- F6is2YcRsKkQQ7lLLbNlgAExZ4Y9cCSHxzLOqjpuKElA==
-X-Received: by 2002:a05:6a20:3ca7:b0:3b3:fc6:622d with SMTP id
- adf61e73a8af0-3b8b7eef8e2mr7251409637.38.1781752859965; 
- Wed, 17 Jun 2026 20:20:59 -0700 (PDT)
+ bh=goi3dasaBf+1cFBZYCdvkL7YmSmIDj5gtvrwJACDgTs=;
+ b=dbAlAFsT8imPr08UHZdPX9oPKZmteyNHgIrsYCEm41IudmRSq71CpaUlgnykHoHTg7
+ PLIXhSyPCW0N1r06EDMHKcedenH3zJ3QIgKi78TCjTMd+ieUZxm8YGXgKJbEt0XjYQHz
+ j/Ho7K9mrn86idkeLOqH1ZiSRjPguD32EPnVKrCSl1Nn4A64yBre+IKc/vMVPyJJoRXE
+ H2ucY/H8MFjYQfK1Wygh6/inKqhtKCcadmCPjLRJGje8+m/ofsabgZBZafVLGqiNjNAX
+ OWknt4RSCrhv8/lPaFsttbFkLdrRCxY0LRhCqyRLit72Nas3HqcOqQ0KsTKMexI/JC9I
+ RhhA==
+X-Gm-Message-State: AOJu0YxWh3yQrZu8wg19tXBnNoXnrdKX54zGL507ZXo/oGcAhIWX4ouJ
+ 9vEGMbVi1CLAqgPJawb36l/nn4LpDaP0uUNWXUEqF2S5BqUg928dR0LN8ogJqFze
+X-Gm-Gg: Acq92OF+ixEgj34wItevva1YSJ3hf3mhtyjsWgdu9Cx4IjLWFI2AinoD1UoT4ElB+Zm
+ PifkM+Dz5dZBN5JWBmLna0EfodysPGKrBR6Ru56Neak4gL8nKE+Om4mVmi6QbqZL3hgFIdjXycD
+ o46LAMkQAVjwdc5VXagNITPVEe34NQDsZZOsXtXbpQOikRXslZz7ekv8BHmfXwELYWLO1zoMNss
+ V4SrdiXyDQn9VJ9PmhBW2ThPeJKKs5i/HgtjKOVw+ROApzz2IqsbOfsGBTYLZV1vVo9YLRzkImW
+ jAAHf+Xl9kXJ1uzpPTuNw8MeDWWg04EZg/YP24OlyRW/OxbzAVkjInfFhwfHqw5BMawy7OYNVQy
+ VbImXMGhGa/oajcWsc5lcgMWSyxmMfJPNO03tJl5HFL3I9DfdxkJeimVaHzKbeIPtUWqOOwgWYf
+ 4S5UdOe8M1UnGEj6wEkEfJF8bfzvF41nAp/E4GlKNqWQ==
+X-Received: by 2002:a05:6a21:1645:b0:398:90e5:a9b9 with SMTP id
+ adf61e73a8af0-3b8be9aead5mr7505071637.27.1781752885499; 
+ Wed, 17 Jun 2026 20:21:25 -0700 (PDT)
 Received: from setun ([2405:201:502b:3014:cc0c:536:1b1e:6def])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-c88c6c2b2easm1534623a12.27.2026.06.17.20.20.56
+ 41be03b00d2f7-c88c6c2b2easm1534623a12.27.2026.06.17.20.21.21
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 17 Jun 2026 20:20:59 -0700 (PDT)
+ Wed, 17 Jun 2026 20:21:25 -0700 (PDT)
 From: Aadeshveer Singh <aadeshveer07@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: peterx@redhat.com, farosas@suse.de, pbonzini@redhat.com, philmd@mailo.com,
  lvivier@redhat.com, ayoub@saferwall.com,
  Aadeshveer Singh <aadeshveer07@gmail.com>
-Subject: [RFC PATCH 1/5] migration: add RAM Block fields and helpers for fast
- snapshot load
-Date: Thu, 18 Jun 2026 08:50:06 +0530
-Message-ID: <20260618032010.88755-2-aadeshveer07@gmail.com>
+Subject: [RFC PATCH 5/5] migration/tests: remove capability conflict test
+ postcopy-ram+mapped-ram
+Date: Thu, 18 Jun 2026 08:50:10 +0530
+Message-ID: <20260618032010.88755-6-aadeshveer07@gmail.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260618032010.88755-1-aadeshveer07@gmail.com>
 References: <20260618032010.88755-1-aadeshveer07@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::533;
- envelope-from=aadeshveer07@gmail.com; helo=mail-pg1-x533.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::536;
+ envelope-from=aadeshveer07@gmail.com; helo=mail-pg1-x536.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -103,241 +103,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add two fields per RAMBlock:
+Remove the test test_validate_caps_pair, which asserted postcopy-ram
+and mapped-ram capabilities cannot be active together. The new fast
+snapshot load feature is exactly this pair of capabilities active
+together, with the previous patches in this series, this combination
+is now supported and functional.
 
-- nonzeropages: Mirrors the mapped-ram bitmap for storing which pages
-  are present in file and which are zero.
-- pending_bmap: Bitmap to store internal state of which pages have been
-  read by some thread to ensure coordination between threads.
-
-Both fields are allocated and initialized in ram_load_setup and freed in
-ram_load_cleanup. nonzeropages is populated in parse_ramblock_mapped_ram
-eliminating the use of a temporary bitmap.
-
-Change ram_load() to load using ram_load_precopy() in case of fast
-snapshot load.
-
-Also add migrate_fast_snapshot_load() returning true when both
-postcopy-ram and mapped-ram capabilities are set.
-
-Update qemu_get_buffer_at() to not set error to make it thread safe. All
-the callers of qemu_get_buffer_at(), take care of error handling.
+No replacement test for fast snapshot load is included in this RFC. A
+test exercising the full save/load flow will be added in a follow-up.
 
 Signed-off-by: Aadeshveer Singh <aadeshveer07@gmail.com>
 ---
- include/system/ramblock.h |  8 +++++
- migration/options.c       |  5 ++++
- migration/options.h       |  1 +
- migration/qemu-file.c     | 10 +------
- migration/ram.c           | 61 ++++++++++++++++++++++++++++++++-------
- 5 files changed, 65 insertions(+), 20 deletions(-)
+ tests/qtest/migration/misc-tests.c | 52 ------------------------------
+ 1 file changed, 52 deletions(-)
 
-diff --git a/include/system/ramblock.h b/include/system/ramblock.h
-index 4435f8d55f..73275d0459 100644
---- a/include/system/ramblock.h
-+++ b/include/system/ramblock.h
-@@ -60,6 +60,14 @@ struct RAMBlock {
- 
-     /* Bitmap of already received pages.  Only used on destination side. */
-     unsigned long *receivedmap;
-+    /* Bitmap of zero pages. Used for fast snapshot load. */
-+    unsigned long *nonzeropages;
-+    /*
-+     * Bitmap for pages that are yet to be read from disk. It is required for
-+     * fault thread and eager thread to keep note of which pages are currently
-+     * being read. Used by fast snapshot load.
-+     */
-+    unsigned long *pending_bmap;
- 
-     /*
-      * bitmap to track already cleared dirty bitmap.  When the bit is
-diff --git a/migration/options.c b/migration/options.c
-index 5cbfd29099..5f80dd5b42 100644
---- a/migration/options.c
-+++ b/migration/options.c
-@@ -467,6 +467,11 @@ bool migrate_rdma(void)
-     return s->rdma_migration;
+diff --git a/tests/qtest/migration/misc-tests.c b/tests/qtest/migration/misc-tests.c
+index ec6d438cdc..4e0deb7f18 100644
+--- a/tests/qtest/migration/misc-tests.c
++++ b/tests/qtest/migration/misc-tests.c
+@@ -201,55 +201,6 @@ static void do_test_validate_uri_channel(MigrateCommon *args)
+     migrate_end(from, to, false);
  }
  
-+bool migrate_fast_snapshot_load(void)
-+{
-+    return migrate_mapped_ram() && migrate_postcopy_ram();
-+}
-+
- typedef enum WriteTrackingSupport {
-     WT_SUPPORT_UNKNOWN = 0,
-     WT_SUPPORT_ABSENT,
-diff --git a/migration/options.h b/migration/options.h
-index b46221998a..a81ca40d23 100644
---- a/migration/options.h
-+++ b/migration/options.h
-@@ -54,6 +54,7 @@ bool migrate_multifd_flush_after_each_section(void);
- bool migrate_postcopy(void);
- bool migrate_rdma(void);
- bool migrate_tls(void);
-+bool migrate_fast_snapshot_load(void);
- 
- /* capabilities helpers */
- 
-diff --git a/migration/qemu-file.c b/migration/qemu-file.c
-index d5a48115bd..602ece1b74 100644
---- a/migration/qemu-file.c
-+++ b/migration/qemu-file.c
-@@ -553,17 +553,9 @@ void qemu_put_buffer_at(QEMUFile *f, const uint8_t *buf, size_t buflen,
- size_t qemu_get_buffer_at(QEMUFile *f, uint8_t *buf, size_t buflen,
-                           off_t pos)
- {
--    Error *err = NULL;
+-static void validate_caps_pair(QTestState *from,
+-                               const char *first_capability,
+-                               const char *second_capability,
+-                               const char *expected_error)
+-{
+-    QDict *rsp;
+-    const char *error_desc;
 -
--    if (f->last_error) {
--        return 0;
+-    migrate_set_capability(from, first_capability, true);
+-
+-    rsp = qtest_qmp_assert_failure_ref(
+-        from,
+-        "{ 'execute': 'migrate-set-capabilities',"
+-        "  'arguments': { 'capabilities': [ { "
+-        "      'capability': %s, 'state': true } ] } }",
+-        second_capability);
+-
+-    error_desc = qdict_get_str(rsp, "desc");
+-    g_assert_cmpstr(error_desc, ==, expected_error);
+-    qobject_unref(rsp);
+-
+-    migrate_set_capability(from, first_capability, false);
+-}
+-
+-static void test_validate_caps_pair(char *test_path, MigrateCommon *args)
+-{
+-    g_autofree char *serial_path = g_strconcat(tmpfs, "/src_serial", NULL);
+-    g_autofree char *cap_pair = g_path_get_basename(test_path);
+-    QTestState *from, *to;
+-
+-    args->start.hide_stderr = true;
+-    args->start.only_source = true;
+-
+-    if (migrate_start(&from, &to, &args->start)) {
+-        return;
 -    }
 -
--    if (qio_channel_pread_all(f->ioc, buf, buflen, pos, &err) < 0) {
--        qemu_file_set_error_obj(f, -EIO, err);
-+    if (qio_channel_pread_all(f->ioc, buf, buflen, pos, NULL) < 0) {
-         return 0;
-     }
+-    if (g_str_equal(cap_pair, "mapped_ram_postcopy")) {
+-        const char *error =
+-            "Mapped-ram migration is incompatible with postcopy";
 -
-     return buflen;
- }
- 
-diff --git a/migration/ram.c b/migration/ram.c
-index fc38ffbf8a..c2bacf3dfc 100644
---- a/migration/ram.c
-+++ b/migration/ram.c
-@@ -252,6 +252,31 @@ int foreach_not_ignored_block(RAMBlockIterFunc func, void *opaque)
-     return ret;
- }
- 
-+static void ramblock_non_zero_map_init(void)
-+{
-+    RAMBlock *rb;
-+
-+    RAMBLOCK_FOREACH_NOT_IGNORED(rb)
-+    {
-+        assert(!rb->nonzeropages);
-+        size_t size = rb->max_length >> qemu_target_page_bits();
-+        rb->nonzeropages = bitmap_new(size);
-+    }
-+}
-+
-+static void ramblock_pending_bmap_init(void)
-+{
-+    RAMBlock *rb;
-+
-+    RAMBLOCK_FOREACH_NOT_IGNORED(rb)
-+    {
-+        assert(!rb->pending_bmap);
-+        size_t size = rb->max_length >> qemu_target_page_bits();
-+        rb->pending_bmap = bitmap_new(size);
-+        bitmap_set(rb->pending_bmap, 0, size);
-+    }
-+}
-+
- static void ramblock_recv_map_init(void)
+-        validate_caps_pair(from, "mapped-ram", "postcopy-ram", error);
+-        validate_caps_pair(from, "postcopy-ram", "mapped-ram", error);
+-    }
+-
+-    qtest_quit(from);
+-    unlink(serial_path);
+-}
+-
+ static void test_validate_uri_channels_both_set(char *name, MigrateCommon *args)
  {
-     RAMBlock *rb;
-@@ -3749,6 +3774,12 @@ static int ram_load_setup(QEMUFile *f, void *opaque, Error **errp)
- {
-     xbzrle_load_setup();
-     ramblock_recv_map_init();
-+    if (migrate_mapped_ram()) {
-+        ramblock_non_zero_map_init();
-+    }
-+    if (migrate_fast_snapshot_load()) {
-+        ramblock_pending_bmap_init();
-+    }
- 
-     return 0;
+     args->uri = "tcp:127.0.0.1:0",
+@@ -309,7 +260,4 @@ void migration_test_add_misc(MigrationTestEnv *env)
+                        test_validate_uri_channels_both_set);
+     migration_test_add("/migration/validate_uri/channels/none_set",
+                        test_validate_uri_channels_none_set);
+-    migration_test_add_suffix("/migration/validate_caps/",
+-                              "mapped_ram_postcopy",
+-                              test_validate_caps_pair);
  }
-@@ -3768,6 +3799,10 @@ static int ram_load_cleanup(void *opaque)
-     RAMBLOCK_FOREACH_NOT_IGNORED(rb) {
-         g_free(rb->receivedmap);
-         rb->receivedmap = NULL;
-+        g_free(rb->pending_bmap);
-+        rb->pending_bmap = NULL;
-+        g_free(rb->nonzeropages);
-+        rb->nonzeropages = NULL;
-     }
- 
-     return 0;
-@@ -4102,7 +4137,7 @@ static bool read_ramblock_mapped_ram(QEMUFile *f, RAMBlock *block,
-             host = host_from_ram_block_offset(block, offset);
-             if (!host) {
-                 error_setg(errp, "page outside of ramblock %s range",
--                           block->idstr);
-+                            block->idstr);
-                 return false;
-             }
- 
-@@ -4110,10 +4145,10 @@ static bool read_ramblock_mapped_ram(QEMUFile *f, RAMBlock *block,
- 
-             if (migrate_multifd()) {
-                 read = ram_load_multifd_pages(host, size,
--                                              block->pages_offset + offset);
-+                                                block->pages_offset + offset);
-             } else {
-                 read = qemu_get_buffer_at(f, host, size,
--                                          block->pages_offset + offset);
-+                                            block->pages_offset + offset);
-             }
- 
-             if (!read) {
-@@ -4142,7 +4177,6 @@ err:
- static void parse_ramblock_mapped_ram(QEMUFile *f, RAMBlock *block,
-                                       ram_addr_t length, Error **errp)
- {
--    g_autofree unsigned long *bitmap = NULL;
-     MappedRamHeader header;
-     size_t bitmap_size;
-     long num_pages;
-@@ -4174,15 +4208,18 @@ static void parse_ramblock_mapped_ram(QEMUFile *f, RAMBlock *block,
-     num_pages = length / header.page_size;
-     bitmap_size = BITS_TO_LONGS(num_pages) * sizeof(unsigned long);
- 
--    bitmap = g_malloc0(bitmap_size);
--    if (qemu_get_buffer_at(f, (uint8_t *)bitmap, bitmap_size,
-+    if (qemu_get_buffer_at(f, (uint8_t *)block->nonzeropages, bitmap_size,
-                            header.bitmap_offset) != bitmap_size) {
-         error_setg(errp, "Error reading dirty bitmap");
-         return;
-     }
- 
--    if (!read_ramblock_mapped_ram(f, block, num_pages, bitmap, errp)) {
--        return;
-+    if (!migrate_fast_snapshot_load()) {
-+        /* Do not load RAM during setup for fast snapshot load */
-+        if (!read_ramblock_mapped_ram(f, block, num_pages, block->nonzeropages,
-+                                      errp)) {
-+            return;
-+        }
-     }
- 
-     /* Skip pages array */
-@@ -4460,9 +4497,11 @@ static int ram_load(QEMUFile *f, void *opaque, int version_id)
-     static uint64_t seq_iter;
-     /*
-      * If system is running in postcopy mode, page inserts to host memory must
--     * be atomic
-+     * be atomic. However, fast snapshot load uses the mapped ram precopy like
-+     * path to read block headers and populating bitmaps.
-      */
--    bool postcopy_running = postcopy_is_running();
-+    bool load_using_postcopy =
-+        postcopy_is_running() && !migrate_fast_snapshot_load();
- 
-     seq_iter++;
- 
-@@ -4478,7 +4517,7 @@ static int ram_load(QEMUFile *f, void *opaque, int version_id)
-      */
-     trace_ram_load_start();
-     WITH_RCU_READ_LOCK_GUARD() {
--        if (postcopy_running) {
-+        if (load_using_postcopy) {
-             /*
-              * Note!  Here RAM_CHANNEL_PRECOPY is the precopy channel of
-              * postcopy migration, we have another RAM_CHANNEL_POSTCOPY to
 -- 
 2.54.0
 
