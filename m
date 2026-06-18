@@ -4,126 +4,126 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4DDBFCD98F7
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jun 2026 12:33:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A208CCD98F2
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jun 2026 12:33:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1waBvA-0006g4-LA; Thu, 18 Jun 2026 08:32:36 -0400
+	id 1waBwD-0002bj-1u; Thu, 18 Jun 2026 08:33:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1waBv6-0006ZE-U2
- for qemu-devel@nongnu.org; Thu, 18 Jun 2026 08:32:33 -0400
+ id 1waBwB-0002Xr-O5
+ for qemu-devel@nongnu.org; Thu, 18 Jun 2026 08:33:39 -0400
 Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1waBv5-0001BW-1k
- for qemu-devel@nongnu.org; Thu, 18 Jun 2026 08:32:32 -0400
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+ id 1waBwA-0001U8-1F
+ for qemu-devel@nongnu.org; Thu, 18 Jun 2026 08:33:39 -0400
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65ICV2BB1814189
- for <qemu-devel@nongnu.org>; Thu, 18 Jun 2026 12:32:30 GMT
+ 65IArkdE1608939
+ for <qemu-devel@nongnu.org>; Thu, 18 Jun 2026 12:33:36 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- zkfR8veePb/Px6zo7DvuTaT6t9EWBe81grmTNxfGyZk=; b=PitS9RJDT/KkAuei
- 4zjjGAiUj0G/msEK1zhJxbYRGyvqXjnoKdo56MUDNBVmvlhQVepy1risOlzwmRsU
- maXyaj1oVAkeCSXArlxj4HohJUHclFMfORSailkr2YBFLLO1NWF9CEQtf5IrnY0r
- kYgVzrPjh1AtP86940UA+OdbGdu26TKXcUv3TepcBYyFPUeTDlF2pCeb5RDagCEA
- 4wVAbBc6MBTWkk5M3K+deXce8t8bR93MZ7SvZl4b7xEDkg+UrLqoBVXxIFrgqywR
- vBZ76Gao86c+9DwTXeHOZU9/qUcKhsAs3DntL9LhkexqAhDU4S1jC8zb8CProcgm
- gJaYyw==
-Received: from mail-oi1-f199.google.com (mail-oi1-f199.google.com
- [209.85.167.199])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4eux2jvg10-1
+ OtiPS78G+VPXO7O3XPuKRCNU39oloyqSTIkwRcGKQwM=; b=ilK7P8a/EXQn5QNC
+ KgvN4AVhtld5uqvPnkw+MImyYYOoZWlEnXTUA021tfPNx0+RDC2dGzaDkFzii1vE
+ WjVLSVEfCsMSkBkZR7xH7MWaOBKROdy3xiGdAb7QJV3AqGt+DPHEcu4HZx7JScQi
+ HgCU9LT7BrY2WjmV7xo4QUTyJrhA7OqMhrrC+bBq2H+aM0EBnp6h9jg7QezeXY7F
+ yqbrbCyst9lFWXRviZwnt0D/KljWEkFOuyRL5Vil3AFRkZFlkUOelRZNaE2jI5Nl
+ +Sb+mWjK9feGCBsB4J7+AlxqkmQ4RfkeAZurtpW86e5LZULUzCwOACyu0i/oOyV1
+ w1XwQg==
+Received: from mail-vs1-f72.google.com (mail-vs1-f72.google.com
+ [209.85.217.72])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ev0g7kk7j-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 18 Jun 2026 12:32:29 +0000 (GMT)
-Received: by mail-oi1-f199.google.com with SMTP id
- 5614622812f47-48656ba24fdso1469516b6e.2
- for <qemu-devel@nongnu.org>; Thu, 18 Jun 2026 05:32:29 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Thu, 18 Jun 2026 12:33:35 +0000 (GMT)
+Received: by mail-vs1-f72.google.com with SMTP id
+ ada2fe7eead31-6c554284973so1094791137.2
+ for <qemu-devel@nongnu.org>; Thu, 18 Jun 2026 05:33:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1781785949; x=1782390749; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1781786015; x=1782390815; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=zkfR8veePb/Px6zo7DvuTaT6t9EWBe81grmTNxfGyZk=;
- b=E7okyKK9avT4Ido+65izK9i3IxMKtWX/RS8TJ6T05I+WVINfxgxtAsgaJFiD0ETjBk
- bdIZvK01jtJdsQXnR0k0nBRiMU8kVSFA58kur3Ma6f+ekcgCwMw5p6owjVDQ2sO4hPv7
- jqINUaCaZGH66lP/kxwRrH3NI2NjxIVrahmMUIc8QixOnB3PyQ7mRhQE2yfBJV663QA/
- h3ewPheWB0bofv5tRTQ8Q+KF1Doc7WLvU1wV09FSWnQm/Uf1ULRkcQ7CqVHfjK6aqr75
- rLorfLSHPPVKcBK5UcHWN6gFy2FsTOHL7pJ4BooL3kkiglAL4ihqd9hH/P+7EXdwVxdH
- W+gg==
+ :reply-to; bh=OtiPS78G+VPXO7O3XPuKRCNU39oloyqSTIkwRcGKQwM=;
+ b=Cb6H55L2qLZlNqzdpRFE2SKp1A4G9ucz0nTJGDazZpqfs6I+8FLOv3V6YM4ct2Pj+9
+ 0Cyc/fzfTvzpW6Kuwizv3tDVseBbZOO6HJkviaxIOlJZFpJ6M+VkkIOafqguaFjDB1Fz
+ jTRyZIxNXxPabCcS/KwKhnyy1CLxsZ86jO9dnTzGb9945GjnXe2R5dhQz8Sff6FOj5qh
+ XkiIdw4mbTmqsNsD1PKyK2+gm56LlAEg4xpkd4a+GI6IhfgqCPvaytHZHEJZzV26bYd+
+ vLBazy7t9fjfGLzcqZTFO7Y8MHHc+DVngrHlgd1Rv8flkBxv2Mnc9kyhEZI7oRKND6PA
+ 9khQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781785949; x=1782390749;
+ d=1e100.net; s=20251104; t=1781786015; x=1782390815;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=zkfR8veePb/Px6zo7DvuTaT6t9EWBe81grmTNxfGyZk=;
- b=MS3ltc6KzPjCSJ0SN3dyGgcFlnLLvwMGSDQo+GN1NCMa5BCqY1J2csaA/R9+DrnJL7
- IACEFvmoLrsa092sPv8MhfIpQ8ft5tZ7WhuIPZlX4bV498kToNEkU+QszrZcdxZBF8l5
- T1N2CxlMa+Q9n046E2mXlZGeSYKH4PbKFJekEWf272a2IN+QMWBdmhWJb852wahp+LNK
- 9vSpKmHZzyWjGgetX7HOZhIfZcScGcywzh95lR8fscsDN+TyOFcXzXSFRfXPUSrQMdo1
- gCEKZ5LfACH373q5mnBUh88rbRCw9Gw+NxP444MNRdTi/yTljX6dKN5ZVvAL7vNUmvj9
- EpTA==
-X-Gm-Message-State: AOJu0Yym+KVc7zOEEh8/NT1h3POhLkHOvh/A5Aki/K+4CIWbKh7p+yEn
- 06jsMRZaaA4ntqw3Glzx9WttXwmvgIFM8N+KamMFkxyB7N6efGz5eqhG4ngaXtVR/7nPi3bcGNZ
- bFJO182rQsvzEu51ZG2uftyRxZ+6rq3/wXapMMgJQklcOYKXPOcHIhqLLsIElPPYAnA==
-X-Gm-Gg: Acq92OEqEpb8Oj0/MtOXLfm8ZwWOawBCAsfBJm62gSS851Z/h3R+QniAhkka4yY9/7K
- JtbZ+tIYbovlaiRO8qZk6Bb8VdkdLFgjgD2f4ZcLlGxPIB5eudCKWQ8FNE+0hA9qVNpMAapGhW7
- Jg9b68VjF5SZHkZq6KK61WZi85NLhMcm6bRoXuaO9wiC0dJ1ENa9mUQ+u7oKowV/T36hvh8YcPw
- hukStmN0Kb2t1ynch9cYTRH15OOEolo5NAb+Cardt0rUoGshCIdeQXeXAo7LAHHONbW+j+rE1Zo
- QkrKjvmLwaXaImwqQ9yXHIv7yo1Lk0C9CvNn6WNiRhvvJnMnR7IZrrG7w554LeIkzwqaXUHRvoc
- p2Fh9Il1lR0iXQSIawcV89EzoqsRpQNRjMySE68ZVDxIb9K2qUXb9GzUZUPHr8JtjVz6z
-X-Received: by 2002:a05:6808:1785:b0:479:da60:7dd4 with SMTP id
- 5614622812f47-48942a745c2mr6545153b6e.30.1781785949248; 
- Thu, 18 Jun 2026 05:32:29 -0700 (PDT)
-X-Received: by 2002:a05:6808:1785:b0:479:da60:7dd4 with SMTP id
- 5614622812f47-48942a745c2mr6545081b6e.30.1781785948238; 
- Thu, 18 Jun 2026 05:32:28 -0700 (PDT)
+ bh=OtiPS78G+VPXO7O3XPuKRCNU39oloyqSTIkwRcGKQwM=;
+ b=M1SXpuI+LEbHCe4Nj+tJlguR9lB1gFHs5LIV21SLy2DZvgBSlGhgTk1/Icn0hzvZQ2
+ GScLus66o/jKjYKJHFF0OP7KtLxnMyxKjaJhlF6AhFICrl5ugp8Fdvr7sGQHMIrCY7e/
+ 3NL4se+6M0z42cNB7qg+eEx8ne+zrg4evJ9ec0pSYQIJNhUmuebB+cOqgKWV3kxmrrYy
+ pWDoeQhiN1UFQGc+ulu8pqvNG9noTrIOhyTXhPMbJO/fia5bo2iySRS8SdymNWq4muEV
+ 5jfT+R50LRn1xCCcymbVuCdgobAk5+2UxxSCwgCcwjjojc4ygT4DCL2BtEI37Gk01KZf
+ AuCA==
+X-Gm-Message-State: AOJu0Yz9o4GcdhcIrDSLKeUjXcBM3qB9mnyOB4HY/bXonLQoe3H26/LO
+ bSW6YFS3Gj6j2EjCcyLDmv1Br+AmjH9oF6fG40yK6mYBdK/kDz7EXgOuBYnMNnEghxrY8ynBWH0
+ w0vALlx75aopH101NN710CX0KsXpD+diMxTiIgJyVdTZSWQv+MndhJ268/Vbz9QkM7g==
+X-Gm-Gg: AfdE7cmJYSUL7tcob/+RLU0WNJIPQpAw8itBkuXf0GdvmGrhOFilER6SRxZlqgWwZs0
+ kT+fX/UQHUwlezbIhHbTIJXPC4zf/fRt4HJBL+oN/TbrbzsgWFUVps5o2OyaYpo9CZCKmyIKvxl
+ Zi3P3lLrfvTraIxOR/YiNYIqwtwGBr5jyj/krnybel+ZOy1QHo1QPsOh95p+SWEKdZb82zrqyxw
+ tlTiZghk7+tsGMvmTHoFa8Wqyd4/m1SSrJw2PQe3lUok5Nzesx3B/bxAJV+RAKpKavENjHv6ph0
+ L+Og0euLvnuqRpMosYnirQ7R7gipcBCUtmrjTq/W4+o+V5XnTFUXJRd2SHmIgscY1d8xJNb1xEp
+ th9U5j9u6xIDLZ+FY94fLo3azLFR33GHWG2rxGJHafelePx8HeXjbez3ZcBrnNoFZpoHg
+X-Received: by 2002:a05:6102:3e1f:b0:631:4e9a:bab with SMTP id
+ ada2fe7eead31-7246c67f247mr5428183137.18.1781786015319; 
+ Thu, 18 Jun 2026 05:33:35 -0700 (PDT)
+X-Received: by 2002:a05:6102:3e1f:b0:631:4e9a:bab with SMTP id
+ ada2fe7eead31-7246c67f247mr5428175137.18.1781786014901; 
+ Thu, 18 Jun 2026 05:33:34 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-462236047c8sm18690657f8f.10.2026.06.18.05.32.26
+ ffacd0b85a97d-4606f2b0d70sm63231214f8f.19.2026.06.18.05.33.33
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 18 Jun 2026 05:32:27 -0700 (PDT)
+ Thu, 18 Jun 2026 05:33:33 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL 33/48] ui/cocoa: Use qemu_input_map_osx_to_linux
-Date: Thu, 18 Jun 2026 14:28:10 +0200
-Message-ID: <20260618122825.90331-34-philmd@oss.qualcomm.com>
+Subject: [PULL 42/48] accel/tcg: Move cpu_exec() out of 'exec/cpu-common.h'
+Date: Thu, 18 Jun 2026 14:28:19 +0200
+Message-ID: <20260618122825.90331-43-philmd@oss.qualcomm.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260618122825.90331-1-philmd@oss.qualcomm.com>
 References: <20260618122825.90331-1-philmd@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjE4MDExNiBTYWx0ZWRfXxEupgJ3tBZth
- QUwj/+TfVXYd/RTGpdp/6EVoZfmsofchBc4EknPlYPG+VKH7Kouk0j8L9+FntOH6HugkzNNWVGE
- 1xI4KuWX/gPj2FZjwcYvSA/od8Lg8Nzrx/7pDnaOt32CIXH3sZb/58Dv/EenBr0O2gRkvxZj0W8
- snt9aPNxnisMPmOlved0xF/vcR0i7mS3QtsDhWplJOEdl73ZydV9kd0IOhUuetDrr6mnYYpGOaG
- ClNuNL2JDkF2al0rPuymK2UFCA6vScoH5tEBnV5fvfzPGXMzt61ksNynNT+Xqvqm3IStUZFEUQS
- CS5UkTuETw8vQbVicuFOVu1ixgDoQczhK0WzRi8SHnAl0dnNyf6nee5DcYFInHMz0KmYp6/q9PY
- 2Px59S2d6951KtvVUAFOabqf/NLg0HVHyo6Ka1gXK7bYIvxgF7YfZPEIAJymZJaeQQYVXvkHfjW
- ACAhegB9E9o7Q0B6SNw==
-X-Authority-Analysis: v=2.4 cv=Fsg1OWrq c=1 sm=1 tr=0 ts=6a33e55e cx=c_pps
- a=yymyAM/LQ7lj/HqAiIiKTw==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjE4MDExNiBTYWx0ZWRfX33kAxJsIeRQc
+ skUiWNgv7QaHkDfpcwocjOUxcv9TMxhslXkDvPmr5SZFh9UJG4Gj8D1MnL8rBHvrQ9Sn6RN6Y6X
+ gm6/MJzmIb0kSvyINqArGvvDjNUjjc2QBXn1q8eqg/mwyCVKw18miDxCBoZnS2/NLQdwm5DFtuU
+ Qebz8Q3KytvdjVq58NstO4JwX8QSt7QQ7BddUIOfH5we7kUKVdRzOgzOgReYeAcJp1dNa+dUOT/
+ Y+Nf8qo6IhqtlORKKzLYzGc/DTj7ZTqbNT/k8padxiYS/83NOtrHP6WiDP3k+9wZMezm5PHJS/z
+ XBjudL6Jliis/XlqgDNdN0oy3ULxRWmlXMM445azGedQHHw9OqbHlCaROa32TZjTSw57rYKx9Vl
+ 56n0fqHFwWC5eAgWLOzDs65dfUEMLAO2MShlBqwLeZwhanXyn2E+9d1YpYPbtFWmWUQ+CvbFrDp
+ YZdiVagFlD1GvQT3ldg==
+X-Proofpoint-GUID: 9yel3RkI_w0ehgfU48-TpHgoNVb4q7SD
+X-Proofpoint-ORIG-GUID: 9yel3RkI_w0ehgfU48-TpHgoNVb4q7SD
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjE4MDExNiBTYWx0ZWRfX/ZSrZuRZdo9g
+ LGEkPGtnE/2f7/ubT1K0Ni8cOKmyeH8WrAvOvvvx9ErmgNZ7pxL+ED5NzRS/MGHrHP4ooqN5f/C
+ h8UORS+hcvDwt/BUYJmgEJTilk+5/hU=
+X-Authority-Analysis: v=2.4 cv=YrI/gYYX c=1 sm=1 tr=0 ts=6a33e59f cx=c_pps
+ a=DUEm7b3gzWu7BqY5nP7+9g==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
  a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22
- a=t-IPkPogAAAA:8 a=yMhMjlubAAAA:8 a=S56xvJB5AAAA:8 a=EUspDBNiAAAA:8
- a=8pla2JGJaMdYiOrBke0A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=efpaJB4zofY2dbm2aIRb:22 a=MH9Ivq0PDQRhlrFuIVvX:22
-X-Proofpoint-ORIG-GUID: 21_ACvYbDeBJyBYpylbjq-4MCc4ZI9bx
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjE4MDExNiBTYWx0ZWRfXw2rF95paYx4x
- D39n5KjxrYBQlxk5IoAF57rUx8Hu7qGz4T7xJ6k0uoiOp4sNvuLY8vDV370PQxtJfyS96w0kzLZ
- 5/+rfD2blox1IWqhYN1qIFBUhbmvLlQ=
-X-Proofpoint-GUID: 21_ACvYbDeBJyBYpylbjq-4MCc4ZI9bx
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
+ a=EUspDBNiAAAA:8 a=KKAkSRfTAAAA:8 a=D6UqOzzrtHFSm9VVf0MA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=O8hF6Hzn-FEA:10 a=-aSRE8QhW-JAV6biHavz:22
+ a=cvBusfyB2V15izCimMoJ:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-06-18_01,2026-06-18_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 bulkscore=0 suspectscore=0 spamscore=0 phishscore=0
- lowpriorityscore=0 malwarescore=0 adultscore=0 priorityscore=1501
- impostorscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ adultscore=0 clxscore=1015 malwarescore=0 bulkscore=0 suspectscore=0
+ priorityscore=1501 impostorscore=0 phishscore=0 spamscore=0
+ lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
  route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
  definitions=main-2606180116
 Received-SPF: pass client-ip=205.220.180.131;
@@ -150,178 +150,129 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+In order to keep TCG-specific functions under a TCG
+API namespace, add the "accel/tcg/cpu-loop.h" header
+and move cpu_exec() declaration to it. Add a bit of
+documentation.
 
-ui/cocoa used to have a conversion table from macOS keycode to Linux
-key code. It is an unnecessary redundancy as ui/input-keymap.c already
-has such a table. Worse, I added an incorrect mapping of kVK_JIS_Eisu and
-kVK_JIS_Kana with commit 708b72557ff5 ("ui/cocoa: Support unique keys of
-JIS keyboards").
+Include "accel/tcg/cpu-loop.h" where appropriate.
 
-According to the following documentations, the definitions in
-ui/keycodemapdb/keymaps.csv, which ui/input-keymap.c uses, are correct:
-https://developer.apple.com/documentation/uikit/uikeyboardhidusage/uikeyboardhidusagekeyboardlang1?language=objc
-https://developer.apple.com/documentation/uikit/uikeyboardhidusage/uikeyboardhidusagekeyboardlang2?language=objc
-https://docs.microsoft.com/en-us/windows-hardware/design/component-guidelines/keyboard-japan-ime
-
-Use qemu_input_map_osx_to_linux to eliminate the redundancy and
-incorrect mappings.
-
-Fixes: 708b72557ff5 ("ui/cocoa: Support unique keys of JIS keyboards")
-Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@mailo.com>
-Message-ID: <20260604-osx-v3-1-453b4ee0e072@rsg.ci.i.u-tokyo.ac.jp>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-Id: <20260617171438.75914-5-philmd@oss.qualcomm.com>
 ---
- ui/cocoa.m | 131 ++---------------------------------------------------
- 1 file changed, 3 insertions(+), 128 deletions(-)
+ bsd-user/freebsd/os-proc.h   |  1 +
+ include/accel/tcg/cpu-loop.h | 21 +++++++++++++++++++++
+ include/exec/cpu-common.h    |  3 ---
+ include/user/cpu_loop.h      |  2 +-
+ accel/tcg/cpu-exec.c         |  1 +
+ accel/tcg/tcg-accel-ops.c    |  1 +
+ bsd-user/main.c              |  1 +
+ 7 files changed, 26 insertions(+), 4 deletions(-)
+ create mode 100644 include/accel/tcg/cpu-loop.h
 
-diff --git a/ui/cocoa.m b/ui/cocoa.m
-index c5e639ab98d..e157ad01d85 100644
---- a/ui/cocoa.m
-+++ b/ui/cocoa.m
-@@ -141,138 +141,13 @@ static bool bool_with_bql(BoolCodeBlock block)
-     return val;
- }
+diff --git a/bsd-user/freebsd/os-proc.h b/bsd-user/freebsd/os-proc.h
+index 72ccf23e17e..1cf3c43de34 100644
+--- a/bsd-user/freebsd/os-proc.h
++++ b/bsd-user/freebsd/os-proc.h
+@@ -14,6 +14,7 @@
+ #include <sys/procdesc.h>
+ #include <sys/wait.h>
  
--// Mac to Linux conversion
--static const unsigned int mac_to_linux_map[] = {
--    [kVK_ANSI_A] = KEY_A,
--    [kVK_ANSI_B] = KEY_B,
--    [kVK_ANSI_C] = KEY_C,
--    [kVK_ANSI_D] = KEY_D,
--    [kVK_ANSI_E] = KEY_E,
--    [kVK_ANSI_F] = KEY_F,
--    [kVK_ANSI_G] = KEY_G,
--    [kVK_ANSI_H] = KEY_H,
--    [kVK_ANSI_I] = KEY_I,
--    [kVK_ANSI_J] = KEY_J,
--    [kVK_ANSI_K] = KEY_K,
--    [kVK_ANSI_L] = KEY_L,
--    [kVK_ANSI_M] = KEY_M,
--    [kVK_ANSI_N] = KEY_N,
--    [kVK_ANSI_O] = KEY_O,
--    [kVK_ANSI_P] = KEY_P,
--    [kVK_ANSI_Q] = KEY_Q,
--    [kVK_ANSI_R] = KEY_R,
--    [kVK_ANSI_S] = KEY_S,
--    [kVK_ANSI_T] = KEY_T,
--    [kVK_ANSI_U] = KEY_U,
--    [kVK_ANSI_V] = KEY_V,
--    [kVK_ANSI_W] = KEY_W,
--    [kVK_ANSI_X] = KEY_X,
--    [kVK_ANSI_Y] = KEY_Y,
--    [kVK_ANSI_Z] = KEY_Z,
--
--    [kVK_ANSI_0] = KEY_0,
--    [kVK_ANSI_1] = KEY_1,
--    [kVK_ANSI_2] = KEY_2,
--    [kVK_ANSI_3] = KEY_3,
--    [kVK_ANSI_4] = KEY_4,
--    [kVK_ANSI_5] = KEY_5,
--    [kVK_ANSI_6] = KEY_6,
--    [kVK_ANSI_7] = KEY_7,
--    [kVK_ANSI_8] = KEY_8,
--    [kVK_ANSI_9] = KEY_9,
--
--    [kVK_ANSI_Grave] = KEY_GRAVE,
--    [kVK_ANSI_Minus] = KEY_MINUS,
--    [kVK_ANSI_Equal] = KEY_EQUAL,
--    [kVK_Delete] = KEY_BACKSPACE,
--    [kVK_CapsLock] = KEY_CAPSLOCK,
--    [kVK_Tab] = KEY_TAB,
--    [kVK_Return] = KEY_ENTER,
--    [kVK_ANSI_LeftBracket] = KEY_LEFTBRACE,
--    [kVK_ANSI_RightBracket] = KEY_RIGHTBRACE,
--    [kVK_ANSI_Backslash] = KEY_BACKSLASH,
--    [kVK_ANSI_Semicolon] = KEY_SEMICOLON,
--    [kVK_ANSI_Quote] = KEY_APOSTROPHE,
--    [kVK_ANSI_Comma] = KEY_COMMA,
--    [kVK_ANSI_Period] = KEY_DOT,
--    [kVK_ANSI_Slash] = KEY_SLASH,
--    [kVK_Space] = KEY_SPACE,
--
--    [kVK_ANSI_Keypad0] = KEY_KP0,
--    [kVK_ANSI_Keypad1] = KEY_KP1,
--    [kVK_ANSI_Keypad2] = KEY_KP2,
--    [kVK_ANSI_Keypad3] = KEY_KP3,
--    [kVK_ANSI_Keypad4] = KEY_KP4,
--    [kVK_ANSI_Keypad5] = KEY_KP5,
--    [kVK_ANSI_Keypad6] = KEY_KP6,
--    [kVK_ANSI_Keypad7] = KEY_KP7,
--    [kVK_ANSI_Keypad8] = KEY_KP8,
--    [kVK_ANSI_Keypad9] = KEY_KP9,
--    [kVK_ANSI_KeypadDecimal] = KEY_KPDOT,
--    [kVK_ANSI_KeypadEnter] = KEY_KPENTER,
--    [kVK_ANSI_KeypadPlus] = KEY_KPPLUS,
--    [kVK_ANSI_KeypadMinus] = KEY_KPMINUS,
--    [kVK_ANSI_KeypadMultiply] = KEY_KPASTERISK,
--    [kVK_ANSI_KeypadDivide] = KEY_KPSLASH,
--    [kVK_ANSI_KeypadEquals] = KEY_KPEQUAL,
--    [kVK_ANSI_KeypadClear] = KEY_NUMLOCK,
--
--    [kVK_UpArrow] = KEY_UP,
--    [kVK_DownArrow] = KEY_DOWN,
--    [kVK_LeftArrow] = KEY_LEFT,
--    [kVK_RightArrow] = KEY_RIGHT,
--
--    [kVK_Help] = KEY_INSERT,
--    [kVK_Home] = KEY_HOME,
--    [kVK_PageUp] = KEY_PAGEUP,
--    [kVK_PageDown] = KEY_PAGEDOWN,
--    [kVK_End] = KEY_END,
--    [kVK_ForwardDelete] = KEY_DELETE,
--
--    [kVK_Escape] = KEY_ESC,
--
--    /* The Power key can't be used directly because the operating system uses
--     * it. This key can be emulated by using it in place of another key such as
--     * F1. Don't forget to disable the real key binding.
--     */
--    /* [kVK_F1] = KEY_POWER, */
--
--    [kVK_F1] = KEY_F1,
--    [kVK_F2] = KEY_F2,
--    [kVK_F3] = KEY_F3,
--    [kVK_F4] = KEY_F4,
--    [kVK_F5] = KEY_F5,
--    [kVK_F6] = KEY_F6,
--    [kVK_F7] = KEY_F7,
--    [kVK_F8] = KEY_F8,
--    [kVK_F9] = KEY_F9,
--    [kVK_F10] = KEY_F10,
--    [kVK_F11] = KEY_F11,
--    [kVK_F12] = KEY_F12,
--    [kVK_F13] = KEY_SYSRQ,
--    [kVK_F14] = KEY_SCROLLLOCK,
--    [kVK_F15] = KEY_PAUSE,
--
--    // JIS keyboards only
--    [kVK_JIS_Yen] = KEY_YEN,
--    [kVK_JIS_Underscore] = KEY_RO,
--    [kVK_JIS_KeypadComma] = KEY_KPCOMMA,
--    [kVK_JIS_Eisu] = KEY_MUHENKAN,
--    [kVK_JIS_Kana] = KEY_HENKAN,
--
--    /*
--     * The eject and volume keys can't be used here because they are handled at
--     * a lower level than what an Application can see.
--     */
--};
--
--static unsigned int cocoa_keycode_to_linux(int keycode)
-+static int cocoa_keycode_to_linux(int keycode)
- {
--    if (ARRAY_SIZE(mac_to_linux_map) <= keycode) {
-+    if (qemu_input_map_osx_to_linux_len <= keycode) {
-         error_report("(cocoa) warning unknown keycode 0x%x", keycode);
-         return 0;
-     }
--    return mac_to_linux_map[keycode];
-+    return qemu_input_map_osx_to_linux[keycode];
- }
++#include "accel/tcg/cpu-loop.h"
+ #include "target_arch_cpu.h"
  
- /* Displays an alert dialog box with the specified message */
+ pid_t safe_wait4(pid_t wpid, int *status, int options, struct rusage *rusage);
+diff --git a/include/accel/tcg/cpu-loop.h b/include/accel/tcg/cpu-loop.h
+new file mode 100644
+index 00000000000..6a3c8ed48b2
+--- /dev/null
++++ b/include/accel/tcg/cpu-loop.h
+@@ -0,0 +1,21 @@
++/*
++ * QEMU TCG CPU loop API
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++#ifndef ACCEL_TCG_CPU_LOOP_COMMON_H
++#define ACCEL_TCG_CPU_LOOP_COMMON_H
++
++#ifndef CONFIG_TCG
++#error Can only include this header with TCG
++#endif
++
++/**
++ * cpu_exec:
++ * @cpu: the cpu context
++ *
++ * Returns one of the EXCP_* definitions (see "exec/cpu-common.h").
++ */
++int cpu_exec(CPUState *cpu);
++
++#endif
+diff --git a/include/exec/cpu-common.h b/include/exec/cpu-common.h
+index a781dba770b..09915dc4c44 100644
+--- a/include/exec/cpu-common.h
++++ b/include/exec/cpu-common.h
+@@ -111,9 +111,6 @@ G_NORETURN void cpu_loop_exit_restore(CPUState *cpu, uintptr_t pc);
+ #endif /* CONFIG_TCG */
+ G_NORETURN void cpu_loop_exit(CPUState *cpu);
+ 
+-/* accel/tcg/cpu-exec.c */
+-int cpu_exec(CPUState *cpu);
+-
+ /**
+  * env_archcpu(env)
+  * @env: The architecture environment
+diff --git a/include/user/cpu_loop.h b/include/user/cpu_loop.h
+index 346e37ede8b..c9d49398f01 100644
+--- a/include/user/cpu_loop.h
++++ b/include/user/cpu_loop.h
+@@ -22,7 +22,7 @@
+ 
+ #include "exec/vaddr.h"
+ #include "exec/mmu-access-type.h"
+-
++#include "accel/tcg/cpu-loop.h"
+ 
+ /**
+  * adjust_signal_pc:
+diff --git a/accel/tcg/cpu-exec.c b/accel/tcg/cpu-exec.c
+index 7292ff15060..9c754b03656 100644
+--- a/accel/tcg/cpu-exec.c
++++ b/accel/tcg/cpu-exec.c
+@@ -22,6 +22,7 @@
+ #include "qapi/error.h"
+ #include "qapi/type-helpers.h"
+ #include "hw/core/cpu.h"
++#include "accel/tcg/cpu-loop.h"
+ #include "accel/tcg/cpu-ops.h"
+ #include "accel/tcg/helper-retaddr.h"
+ #include "trace.h"
+diff --git a/accel/tcg/tcg-accel-ops.c b/accel/tcg/tcg-accel-ops.c
+index 3bd98005042..c179cd4adeb 100644
+--- a/accel/tcg/tcg-accel-ops.c
++++ b/accel/tcg/tcg-accel-ops.c
+@@ -28,6 +28,7 @@
+ #include "qemu/osdep.h"
+ #include "accel/accel-ops.h"
+ #include "accel/accel-cpu-ops.h"
++#include "accel/tcg/cpu-loop.h"
+ #include "system/tcg.h"
+ #include "system/replay.h"
+ #include "exec/icount.h"
+diff --git a/bsd-user/main.c b/bsd-user/main.c
+index 73aae8c3274..4f1544342eb 100644
+--- a/bsd-user/main.c
++++ b/bsd-user/main.c
+@@ -39,6 +39,7 @@
+ #include "user/guest-base.h"
+ #include "user/page-protection.h"
+ #include "accel/accel-ops.h"
++#include "accel/tcg/cpu-loop.h"
+ #include "tcg/startup.h"
+ #include "qemu/timer.h"
+ #include "qemu/envlist.h"
 -- 
 2.53.0
 
