@@ -4,105 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5036DCD98F2
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jun 2026 12:41:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9FBE0CD98F3
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jun 2026 12:48:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1waC36-0000BG-TR; Thu, 18 Jun 2026 08:40:48 -0400
+	id 1waCAQ-0001px-I5; Thu, 18 Jun 2026 08:48:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <heinrich.schuchardt@canonical.com>)
- id 1waC34-0000Ay-LW
- for qemu-devel@nongnu.org; Thu, 18 Jun 2026 08:40:46 -0400
-Received: from smtp-relay-internal-0.canonical.com ([185.125.188.122])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <heinrich.schuchardt@canonical.com>)
- id 1waC32-0004fn-Dm
- for qemu-devel@nongnu.org; Thu, 18 Jun 2026 08:40:46 -0400
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-relay-internal-0.canonical.com (Postfix) with ESMTPS id 0CAE33FA6E
- for <qemu-devel@nongnu.org>; Thu, 18 Jun 2026 12:40:38 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
- s=20251003; t=1781786438;
- bh=h/dll5m2ZlmmcFRmjOO08xtsyIvO7hQLHQZVFkqhTZo=;
- h=From:To:Cc:Subject:Date:Message-ID:MIME-Version;
- b=BNHX0gf/kS2LQtXKWlVHV26Y9U3XVUXLAycQAdvwSsKF4+E3A6A2k9T/fG/+KbjDI
- BxnpmmbDhpbLodCPWd7ssbPzJC1EA0ZxLWbM97+RlrElhfBVqnwogVL2iaZ4iu3VPd
- hX1hBdezpB31FGkYCUDStFpvMtJO4ANZMPzaOxeg4Nf7ENDS6YzuPCjF4r2Y4udWDC
- mSbE7gL+KOrhDJ0rI5nDzuQDjt2caiWzVmTmIAuQ22QFLRkEPMeBYF0QDyE829fKlo
- QpdlsQsqlpJRtcA5dq/cU/087x66RUSBxsRL8Pp11bMPmbUSeQnjQtoAmujMn32bpq
- hdUBoRLApPqdfIy1LsPRcF60sLJ4MaTtA/ZrcB4fhpEw4crwhWhVq/RlG/FemdLbIM
- jW9zDMvRdn2LdhJVErRt+b5Vm/XCWaojwwDNDCBSSXCwg7pmIPSM03s5+C69JaruWm
- PtSXT0komnu9OKnbcbW2axN6XndMBl0hPSwuqQkxDHjkeV9/nsvvS0E4IO1hJVdQ+l
- VtFVdeXT0r2wTkPt9AvbYo8Lp2OIlXadd13IGWrz6uGBgNXOSFOgyBYaUOyipxFOyU
- YcsbwnAegJZ1G8dpLLmi+I1a1P+Bs8IeT7qwtQdSaHwROcJK6Z/BCJa8mhRdwIrSDG
- 6ZO7YsF97ugCuxEoDCu7fdjw=
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-45efa2f7009so488254f8f.3
- for <qemu-devel@nongnu.org>; Thu, 18 Jun 2026 05:40:38 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781786437; x=1782391237;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=h/dll5m2ZlmmcFRmjOO08xtsyIvO7hQLHQZVFkqhTZo=;
- b=J9PMRHli+6O/ymmvf6A/EXstaVuNsobFh9cGsDcQw9AjCDVwMY3kC2RfPLllWph2yB
- Nx2AXdzF1lvQqkGQr6rF+Aov5vOiAxxAMStG5efglPEqLHL620gKQpT3j8rXsmRU1tjF
- egUquv33FCWUdCVY+uwOHhKmKQaR33/ozThDc3NpvoMODJzeBXJElOC4Az+o9zcOri1t
- hkqWAu7+OD8MVIUh+sOBtWUHimh6esWBq16yJxA4o9tOhN33ghOeijIUe2VwtGlHoCmB
- fA5r60qnyWI7IHdDLwCQM23tdrC7Cs6737fME4CfTUvx7n94fzHFvLHxqwCyLZptZ+++
- xr7g==
-X-Forwarded-Encrypted: i=1;
- AFNElJ+DalYSQg1C0fVFsA54XtN5GtM1KBlhagYk1P6UpTw3NLP+YP6hHcq/WvZ8GvC8u8gbNQkaHVWFTkNv@nongnu.org
-X-Gm-Message-State: AOJu0Yx8O2P8k28hKMyG2vmHhU4P/mEh/s0QEH7y2FID05juc3DFPElA
- DyYVL9C1GM2jKXCrFgrxabW3Of7vhEDGMJ5zIOqq/JsifrKZ2uwhPuU3TSEBZZ5of737HnqO+VB
- v8zxOfYjX2JADBzAIDAwrvk09YKcwpIdmAPoLpFTxhvLussR5MlzPmtLuNxr6n36SnU1cxHMP
-X-Gm-Gg: AfdE7cmDaaekTZM6CJ+mlzuGyYFYfR1qBtii8iAsp9qOI324nKp/zT1YC5t0GpnlaqA
- 4cBZzPp4jWQSAjuMDILOvTFRjWYsmcJc5HBp8PeYfOpFn10Kv16mTnprN7SjW8CVesX6nE2ike7
- 63xfT37B2WshPTvbez134vcjfrv438q0/qab5tR3HkX2Ynjo2DdMfRYz7GxuGXw4dPeq2HUlt+D
- A8/UOw7TJRbMi0X3D/fQHhWSIbpSrZFCCYXrU6PcUn5LiAul+NhihJuoTzhOqnBvtvENFdboGDf
- yzmJJ5FS4YTAqwrgKrETsVWFZKTPuSz2MgoKy55mC/tp2Acv4Ui5tgnYeSU8eG7GIlpFxORZx/r
- OeUULlp3kh7EaFsPZ2Kfcdb+WJbf4OEGju+QPeqq7s8XA/yXTn5nu8Jsne/fHVYDsDQ==
-X-Received: by 2002:a05:6000:310f:b0:463:d9:5b35 with SMTP id
- ffacd0b85a97d-463ab328c3cmr5550940f8f.1.1781786437635; 
- Thu, 18 Jun 2026 05:40:37 -0700 (PDT)
-X-Received: by 2002:a05:6000:310f:b0:463:d9:5b35 with SMTP id
- ffacd0b85a97d-463ab328c3cmr5550886f8f.1.1781786437212; 
- Thu, 18 Jun 2026 05:40:37 -0700 (PDT)
-Received: from workstation5 ([2a02:3035:61d:4f84:7003:6a6a:d834:66f5])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4606f26393asm66366755f8f.5.2026.06.18.05.40.34
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 18 Jun 2026 05:40:36 -0700 (PDT)
-From: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
-To: "Michael S . Tsirkin" <mst@redhat.com>,
- Igor Mammedov <imammedo@redhat.com>, Ani Sinha <anisinha@redhat.com>
-Cc: Alistair Francis <alistair23@gmail.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- qemu-devel@nongnu.org,
- Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
-Subject: [PATCH v3 1/1] hw/acpi: correct field sequence in SPCR table
-Date: Thu, 18 Jun 2026 14:40:20 +0200
-Message-ID: <20260618124020.640794-1-heinrich.schuchardt@canonical.com>
-X-Mailer: git-send-email 2.53.0
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=185.125.188.122;
- envelope-from=heinrich.schuchardt@canonical.com;
- helo=smtp-relay-internal-0.canonical.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- URI_TRY_3LD=0.645 autolearn=ham autolearn_force=no
+ (Exim 4.90_1) (envelope-from <caixiangfeng@bytedance.com>)
+ id 1waAWM-0000zp-OF
+ for qemu-devel@nongnu.org; Thu, 18 Jun 2026 07:02:58 -0400
+Received: from va-1-114.ptr.blmpb.com ([209.127.230.114])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <caixiangfeng@bytedance.com>)
+ id 1waAWL-00048F-2C
+ for qemu-devel@nongnu.org; Thu, 18 Jun 2026 07:02:54 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ s=2212171451; d=bytedance.com; t=1781780565; h=from:subject:
+ mime-version:from:date:message-id:subject:to:cc:reply-to:content-type:
+ mime-version:in-reply-to:message-id;
+ bh=3npWah6PK9X89Q87/+arVCTPuG7yXO4k/Ki/KNmHuao=;
+ b=BqBABcjU/DvpD1SntNsPyj2EPnwxtk/DG8zaQsd6qydfkVNEfDILDTtDlajRaFHeYtkrhh
+ JHmwwo70iYoxFxP5xLdqAh92BBbGiATSVdjU7ifHyfpjG/DImwoXBY8p1QBgWn13jv/EBI
+ VKyblCzdvQhiQdziQuMOu4mf2k6KMbY3gBPFQVdrL16pSyP0WpMkDiJNd1sQeq5nYbQoNW
+ YGMljWDaW0I48bISLUSfAhJP/BxthhlL/QacENCnjlel5PX0ISiC7qNzyoinTV/GuSe/0l
+ HXCVIiPrOyY0e+q5BQwg131YXuHv3hE5hbmBBOIcnMlHkxSHCmzfIs29UMlZig==
+X-Lms-Return-Path: <lba+26a33d054+ffe197+nongnu.org+caixiangfeng@bytedance.com>
+From: "Xiangfeng Cai" <caixiangfeng@bytedance.com>
+Date: Thu, 18 Jun 2026 19:01:18 +0800
+In-Reply-To: <20260618110119.3084296-1-caixiangfeng@bytedance.com>
+X-Original-From: Xiangfeng Cai <caixiangfeng@bytedance.com>
+Content-Type: text/plain; charset=UTF-8
+Subject: [PATCH 1/2] hw/usb/hcd-xhci-pci: break host link cycle so
+ device_finalize() runs on unplug
+X-Mailer: git-send-email 2.55.0.rc1
+Cc: <caixiangfeng@bytedance.com>, <yanfei.xu@bytedance.com>, 
+ "Fabiano Rosas" <farosas@suse.de>, "Laurent Vivier" <lvivier@redhat.com>, 
+ "Paolo Bonzini" <pbonzini@redhat.com>
+Content-Transfer-Encoding: 7bit
+Mime-Version: 1.0
+References: <20260618110119.3084296-1-caixiangfeng@bytedance.com>
+To: <qemu-devel@nongnu.org>
+Message-Id: <20260618110119.3084296-2-caixiangfeng@bytedance.com>
+Received-SPF: pass client-ip=209.127.230.114;
+ envelope-from=caixiangfeng@bytedance.com; helo=va-1-114.ptr.blmpb.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Thu, 18 Jun 2026 08:48:01 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -117,82 +71,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On LoongArch and RISC-V invalid SPCR tables are created:
+The xHCI PCI wrapper embeds an xhci-core child via object_initialize_child()
+and, in usb_xhci_pci_realize(), points the child's "host" link back at the PCI
+device:
 
-Terminal Type : 00
-Language : 03
+    object_property_set_link(OBJECT(&s->xhci), "host", OBJECT(s), NULL);
 
-The correct values are:
+"host" is a DEFINE_PROP_LINK property, which qdev registers as an
+OBJ_PROP_LINK_STRONG link. A strong link takes a reference on its target, so
+this creates a refcount cycle: the PCI device owns the child, and the child's
+strong link pins the PCI device.
 
-Terminal Type : 03
-Language : 00
+On unplug (guest ACPI eject or QMP device_del), pci_qdev_unrealize() calls
+pc->exit() but never unrealizes the no-bus child. object_unparent() then drops
+only the parent/bus references, leaving the link reference in place. The PCI
+device stays at refcount 1 forever, so object_finalize()/device_finalize() is
+never reached. Symptom observed under gdb after eject:
 
-This is due to commit 7dd0b070fa09 ("hw/arm/virt-acpi-build.c: Migrate
-SPCR creation to common location") that swapped the fields.
+    p *((Object *)dev)  =>  ref = 1, parent = 0x0, realized = false
+    p ((XHCIPciState *)dev)->xhci.hostOpaque  =>  points back at dev
 
-See the specification of the table in
-https://learn.microsoft.com/en-us/windows-hardware/drivers/bringup/serial-port-console-redirection-table
+Fix usb_xhci_pci_exit() to tear down the embedded child explicitly: unrealize
+it first (so the set-link-before-realize check passes), then clear the "host"
+link. This releases the strong reference, lets the PCI device refcount reach 0,
+and allows device_finalize() to run.
 
-This page shows version 1.10. But the sequence of the fields was not changed
-since version 1.0.
-
-Our LoongArch and ARM code uses version 1.07 of the specification.
-Our RISC-V code uses version 1.10 of the specification.
-
-Fixes: 7dd0b070fa09 ("hw/arm/virt-acpi-build.c: Migrate SPCR creation to common location")
-Origin: https://lore.kernel.org/qemu-devel/20260326121947.51200-1-heinrich.schuchardt@canonical.com/T/#u
-Bug-Ubuntu: https://bugs.launchpad.net/ubuntu/+source/qemu/+bug/2146419
-Signed-off-by: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
+Fixes: 8ddab8dd3d81 ("usb/hcd-xhci: Split pci wrapper for xhci base model")
+Signed-off-by: Xiangfeng Cai <caixiangfeng@bytedance.com>
 ---
-v3:
-	update test data
-v2:
-	Mention the different specification versions used by our code
-	https://lore.kernel.org/qemu-devel/20260326144835.67911-1-heinrich.schuchardt@canonical.com/
-v1:
-	https://lore.kernel.org/qemu-devel/20260326121947.51200-1-heinrich.schuchardt@canonical.com/T/#u
----
- hw/acpi/aml-build.c                   |   4 ++--
- tests/data/acpi/loongarch64/virt/SPCR | Bin 80 -> 80 bytes
- tests/data/acpi/riscv64/virt/SPCR     | Bin 90 -> 90 bytes
- 3 files changed, 2 insertions(+), 2 deletions(-)
+ hw/usb/hcd-xhci-pci.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/hw/acpi/aml-build.c b/hw/acpi/aml-build.c
-index 9b3cdd3781..990abc64cd 100644
---- a/hw/acpi/aml-build.c
-+++ b/hw/acpi/aml-build.c
-@@ -2144,10 +2144,10 @@ void build_spcr(GArray *table_data, BIOSLinker *linker,
-     build_append_int_noprefix(table_data, f->stop_bits, 1);
-     /* Flow Control */
-     build_append_int_noprefix(table_data, f->flow_control, 1);
--    /* Language */
--    build_append_int_noprefix(table_data, f->language, 1);
-     /* Terminal Type */
-     build_append_int_noprefix(table_data, f->terminal_type, 1);
-+    /* Language */
-+    build_append_int_noprefix(table_data, f->language, 1);
-     /* PCI Device ID  */
-     build_append_int_noprefix(table_data, f->pci_device_id, 2);
-     /* PCI Vendor ID */
-diff --git a/tests/data/acpi/loongarch64/virt/SPCR b/tests/data/acpi/loongarch64/virt/SPCR
-index 3cc9bbcfb8051e632592d9db0fe3dba0af53ed8d..7bb819cd0d2ad20269e40e4a738709a45260cbb2 100644
-GIT binary patch
-delta 23
-TcmWFtm|!Qw%<vxw7?1z}S|J61
-
-delta 23
-TcmWFtm|!Qw!2BNw7?1z}S{?;}
-
-diff --git a/tests/data/acpi/riscv64/virt/SPCR b/tests/data/acpi/riscv64/virt/SPCR
-index 09617f8793a6f7b1f08172f735b58aa748671540..59d2c8f7f215a604612cbd0294c18bc6301e208a 100644
-GIT binary patch
-delta 10
-Rcma!wnqbGo%rMbG3IGpM0&@TW
-
-delta 10
-Rcma!wnqbGoz&z1G3IGpJ0&@TW
-
+diff --git a/hw/usb/hcd-xhci-pci.c b/hw/usb/hcd-xhci-pci.c
+index c5446a4a5e..b124251ae3 100644
+--- a/hw/usb/hcd-xhci-pci.c
++++ b/hw/usb/hcd-xhci-pci.c
+@@ -196,6 +196,18 @@ static void usb_xhci_pci_exit(PCIDevice *dev)
+         && dev->msix_entry_used) {
+         msix_uninit(dev, &s->xhci.mem, &s->xhci.mem);
+     }
++    /*
++     * The embedded xhci-core child holds a strong "host" link back to this
++     * PCI device (set in usb_xhci_pci_realize()), forming a refcount cycle:
++     * the PCI device owns the child, and the child's strong link pins the PCI
++     * device. On unplug, object_unparent() only drops the parent/bus refs, so
++     * the link ref keeps this device at refcount 1 forever and
++     * device_finalize() never runs. Unrealize the child first (so the
++     * realized-check in set_link passes), then clear the link to break the
++     * cycle.
++     */
++    qdev_unrealize(DEVICE(&s->xhci));
++    object_property_set_link(OBJECT(&s->xhci), "host", NULL, &error_abort);
+ }
+ 
+ static const VMStateDescription vmstate_xhci_pci = {
 -- 
-2.53.0
-
+2.55.0.rc1
 
