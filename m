@@ -4,119 +4,118 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C6C2CD98F2
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jun 2026 12:33:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2282FCD98F2
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jun 2026 12:33:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1waBv2-0006RM-UB; Thu, 18 Jun 2026 08:32:29 -0400
+	id 1waBth-0003W3-Az; Thu, 18 Jun 2026 08:31:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1waBuz-0006Mo-B4
- for qemu-devel@nongnu.org; Thu, 18 Jun 2026 08:32:26 -0400
+ id 1waBtg-0003UJ-0J
+ for qemu-devel@nongnu.org; Thu, 18 Jun 2026 08:31:04 -0400
 Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1waBux-0001AK-5a
- for qemu-devel@nongnu.org; Thu, 18 Jun 2026 08:32:24 -0400
+ id 1waBte-0000jO-IL
+ for qemu-devel@nongnu.org; Thu, 18 Jun 2026 08:31:03 -0400
 Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65IArtAS1536484
- for <qemu-devel@nongnu.org>; Thu, 18 Jun 2026 12:32:22 GMT
+ 65IArtA61536484
+ for <qemu-devel@nongnu.org>; Thu, 18 Jun 2026 12:31:01 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- ZLd8YVfy9awyQdAa594INoAeCEgmcGu7zFRRGOcoeXA=; b=WuDKpuh1neDIU+XB
- jO0L6SxrEzY2E4DNtDtaG6Gj92rgywujyKOc6bFdUbctPPrmak/tvNNamkIFWqJl
- 3PVeLugW157qM9ao+5n9RNmNL5POkJV4+srOFw5D9JqHBwhIlhijukBYfa2O2woq
- tuZvq1AUReffAxBV3cTgzDs7HrLlv1kuypyOhO7cr8jblb/sZUMa/LEioTL+xbaS
- iwp69i4y+o9i+oF4d2eGnHjxgXx4ePApiYNx8GYfFDyQHVBf27ub0LSwPfwPCJ3m
- tvTt6A3dMc+IfBHmtYEAFcIrrF+8p27XEIyOdrtbJWRzVYTcsZKm8CBXQvjALNY/
- bn47bQ==
-Received: from mail-oi1-f200.google.com (mail-oi1-f200.google.com
- [209.85.167.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ev12kkd3u-1
+ SkWy2cCfro5fILwyqdNmMjKTti2o3MLCOXnHNIeSWv8=; b=m4MjwBK+PA8JwurS
+ nIyho/bir2DjqOnYedyeBaSBhhtV5CEQWduhMWGhRIUvgP0iKNsaTfV1plotV63O
+ IYuGp2ZsZ44P1qh+2ZXbvggqsRQAGXy52D4nrYzqxGfVlFoEZRjGttyULS37qJpp
+ IURl7xPe4nHl9yRTGZsUQ+keTfpuTHS+FjRqiqhCPet78KqFKX9CnGqion0p/XDh
+ y1chgusHjw6Vx4XRfgwiF5MBhj6nLQUTA5aUzgM8duKewhybztVo5InVwwhPuX9d
+ 0ETHdqVkmUePFKaJ6NhtotOwDmcT61CebkZZFeosLGIOIXkOC+Yt1K2CrBj1WpMb
+ He9wgw==
+Received: from mail-vs1-f70.google.com (mail-vs1-f70.google.com
+ [209.85.217.70])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ev12kkcya-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 18 Jun 2026 12:32:22 +0000 (GMT)
-Received: by mail-oi1-f200.google.com with SMTP id
- 5614622812f47-48687e7f161so1882448b6e.2
- for <qemu-devel@nongnu.org>; Thu, 18 Jun 2026 05:32:22 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Thu, 18 Jun 2026 12:31:01 +0000 (GMT)
+Received: by mail-vs1-f70.google.com with SMTP id
+ ada2fe7eead31-6cfd2462acbso1147930137.2
+ for <qemu-devel@nongnu.org>; Thu, 18 Jun 2026 05:31:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1781785941; x=1782390741; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1781785861; x=1782390661; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=ZLd8YVfy9awyQdAa594INoAeCEgmcGu7zFRRGOcoeXA=;
- b=OjGGgvDadft/qJYyk27/+z1mMGVhZooq7ZS4N98q5zBJym6+c45+r0Iz0yDvfX1SYI
- apNZhowKlJ/GBXhi2glqkfhbX/S1b9bZfiyvacIj/nsibT+HFWjyqW9GPlZcRJLJZmaS
- kOZIac0tw2byr3T8GFlHgTN4cFLfjqpn1wqG+2Taek/pNYA9nAaL6oWRSfzzVRrbJRVb
- S875ws/g/A6LKBtRw2ovdPPkXP656SLIgA1A574wCNGkN7/vl8cIZ8dCJffr0UfTJ/Hs
- PwzYQPg+cynmIx91gAftQQ8Hf1tU4iLeBCEBfqNJ9lDSeATQn830AR+voIaLQNAj/5el
- awuA==
+ :reply-to; bh=SkWy2cCfro5fILwyqdNmMjKTti2o3MLCOXnHNIeSWv8=;
+ b=a5wn74xbadu5ei12Af6S4W7rL8pCSi7UV9Bc1iyyCKBVRjKo/d0cdgcPstOl72ceBc
+ nysWB5ixmTS6IHJQ/Rb8avRg2D7GK2RmPSfobhj8o+23T/fHNRyx/gUJkmGQo/w/KdxJ
+ i0vfz247crWvd0aIkIUfB8PDfxsBw9OlvSv6SzkVs4GyLW1yre49w0AE4QxVWf0Yc7EK
+ u1gBUMJ58xIL1xhycMS9e3Gp95tmNtocuc5PiMzZ4Rhh4pdEl44InodOZ0op10dKi5VD
+ OWpbTOd66dCb3CZYCSc2gJ1i5bnrLQnExI/RKwVqnO6v41AFXcDlQP+JC3uDvu5xL2o0
+ Hmxg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781785941; x=1782390741;
+ d=1e100.net; s=20251104; t=1781785861; x=1782390661;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=ZLd8YVfy9awyQdAa594INoAeCEgmcGu7zFRRGOcoeXA=;
- b=Ah/r62EqERm8yfGcLXidqZ+rOZ+FFo1v1EMm5eXPjR6nlfFZAct/P2nvNJ6+9v+lRK
- PujltU+99Fzaa4Ax+Yk34a+n/YEIveO9JFyiid0yj+ulaFk1b9lRe2BHsV/Hg1IC6jeF
- GYRohNfWztpvzT4+qOamjn6fqIATy2QRnMaPl9v7Pgmp1iTaiing72I5qqHoQTmT/ML9
- BANNd9IME9GSkUFhQT9G6RC/jE0WNxPQhnnRg6mVM5DQPXEIJd2JF7459MBEM6nrq0Dn
- C8pDvIUDmhP2QxqKyTamJ1m+t/Eo+hRPUAjUu4NBYLPgjn0PXNdbl7ppmxIRKAyS212K
- 4lFA==
-X-Gm-Message-State: AOJu0YznuJnV6U4Jg/l204Iixu+Y9gv7PmtfTVAw2kZoHYk15a1WX7ik
- kA3XC8OXBJlXQBbvKtmM2Z5afQR3aE/ol6F3MQoLd0TEgctdr59iG45zjUfhPmisitz7NGN3Uwl
- ja9JCmdeol4/4cGzUV5BMCA4l/N0708tNplKRUzBkbPdGyWNhknl/cu3UExSQ4+WIOA==
-X-Gm-Gg: Acq92OFjxU0iTSeSxqZoap2qajRBecc9gggW2KQpDDS2YQZlgM51MnEyhqWnRotgVPH
- 3a83Vk9mZjIAbT7Bw7sQgnL9GvilVoQJ7inTdueFtxX9NXF7P9LXhPM6o7JQXWPMd3jL9ygBsEz
- BGQX8Xk5xHt4uGSuIbb4ElA8tPdHKS3shfToPNI+qM3onkF2CRBT5cDYF3CFKcs0phCimWOHUm0
- yfjt6ApOC4528vyGC0KzEROIbJwJPFM/Q8BfW8E7KmdahkNuEdxKsiLH1kmmYDuAll3qfIO4TfX
- wL4t2yXCxAre9Igw6AO1bQ/yEMqm0fZc4BiTH6a1DqSathA0XxINDrl2sXPyuAdqqAS/Lmks4Sl
- ONvcz5NH38sdo2vfRCaDelftsBBQ6iWN4NvyvOYub9kTeM2L/ctMziU0FuYvPfI0xip56
-X-Received: by 2002:a05:6808:2007:20b0:489:5cc2:4d5f with SMTP id
- 5614622812f47-4895cc24e27mr1204311b6e.26.1781785941194; 
- Thu, 18 Jun 2026 05:32:21 -0700 (PDT)
-X-Received: by 2002:a05:6808:2007:20b0:489:5cc2:4d5f with SMTP id
- 5614622812f47-4895cc24e27mr1204300b6e.26.1781785940691; 
- Thu, 18 Jun 2026 05:32:20 -0700 (PDT)
+ bh=SkWy2cCfro5fILwyqdNmMjKTti2o3MLCOXnHNIeSWv8=;
+ b=U2D1G4AR7OhIkVfBEsbOydUBmlaFZljmLb3GKcHLer8rNroZ7aB27YeMUPOK9wglk2
+ 7Pi3fhE+Aqh76oV+/Qy2xZ948PFaPKNlTt45xLvGPyBnesB4KdzQiZjQum6ICaLXxOLW
+ dQJ0V/GhuHFC/vwDP5BRgTb2128vFX1ugZU/aU6qTn8ffI5kwILVgwiOvKsI5vvQKgZI
+ aWDdyQC6yi+MzagmZ65TV8DL0XxTv2jYreybz2fkedLvdbboPd+jN6mkpVaCao/tWtCR
+ 0YDTCAeKizTbfFzr6HAtiijsoN+jRYMaoGP1P/i/QJEcFW/ledDR6nyYpXLdf3nKPkas
+ DdRQ==
+X-Gm-Message-State: AOJu0YwqTsic0OrSuCa3ppRXy4VJuEP1FD6We4uW5aPj3XIzJ6MpRYiP
+ SJ7bWLbum4Y4VN6OUOl7fVDQZNTyuCP053ob24vM8+o5ON6UFGL5u/I6UE+8ueNqRPFT6XotJHh
+ 4WaxrXkKEF75bpJGZ50KULyBxvhszNl/63iECgmSCWQFplr32zHB1qGnC6W66i6NzQQ==
+X-Gm-Gg: AfdE7ckOcVeI1Qv1QbH4EP6eTWQrobslKpqGCZ8/Yw7fh4r8wsgBblttaWpMvoZlO5j
+ vkBOywmS0Nx38RVHEivqfXoZ4QHMoRkuWiY3iPtFTT0DcZHdaPfDEfanpSu+og9sL4OeQwLE3QM
+ RHj2gR1JupeGczasDUPDeWXQLbcDzPBYrRAyVo6r9h9VYo7hhjcEPd6Pwbo8931g0OzyGyg8b63
+ SGCb8zVPMoa6pAPwPWnZNuc4vxA1jIkgCOGOkcU+XHBnDEK6vctHrhXmWCwAn6+9tmBXw4VSz2l
+ mqrPI85K3zrMiXzJf1henClMmsbt8kh0Z8K+TKRbQz9hI8AzhUrueHJyCXi+bTyXVegFJ4M+nWx
+ Tk2EyzzbGiDDW/HXWjLLe1wRDVBARQXtZYys9nK+GFuPgU2h/EwsZEstM1i6hNkEYZFqs
+X-Received: by 2002:a05:6102:443:b0:727:48aa:f604 with SMTP id
+ ada2fe7eead31-72748ab1fbdmr2139617137.28.1781785861014; 
+ Thu, 18 Jun 2026 05:31:01 -0700 (PDT)
+X-Received: by 2002:a05:6102:443:b0:727:48aa:f604 with SMTP id
+ ada2fe7eead31-72748ab1fbdmr2139576137.28.1781785860551; 
+ Thu, 18 Jun 2026 05:31:00 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4619b9b7750sm35005285f8f.6.2026.06.18.05.32.19
+ 5b1f17b1804b1-49230a4ff67sm253214545e9.6.2026.06.18.05.30.59
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 18 Jun 2026 05:32:19 -0700 (PDT)
+ Thu, 18 Jun 2026 05:30:59 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL 32/48] util/cutils: drop qemu_strnlen() in favor of strnlen()
-Date: Thu, 18 Jun 2026 14:28:09 +0200
-Message-ID: <20260618122825.90331-33-philmd@oss.qualcomm.com>
+Subject: [PULL 21/48] target/arm/ptw: Restrict PMSAv8 code to TCG
+Date: Thu, 18 Jun 2026 14:27:58 +0200
+Message-ID: <20260618122825.90331-22-philmd@oss.qualcomm.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260618122825.90331-1-philmd@oss.qualcomm.com>
 References: <20260618122825.90331-1-philmd@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjE4MDExNiBTYWx0ZWRfX9R3FO/Ij7KNs
- ZK3CfufZ1Qs6uLJEuGgCc/uEVVPrqQB4u5U0KiNdI0U4Dt77wonfv61/ujZVKnQPUFANU/6aeUM
- Ed55qN0eCLe5gJg8T4+m43mnn648ZBKDfmVw/WApHokKdLYEvpGMBo4X4RIWtxICUOFeJzSVi6i
- oi4uMQX75eDunaUOoO5NlBboQWLO/I5APSvLwNWp1zMdAKvfsSXbTHOQGaBVjjaxRacFeH9YPcZ
- gptC6cncFSGHUWc/+wY1koTNTFJb4b1FX4lQ2l0+6/PhyZfPpYpiOsWWqgeDKEgEKbllzoaDbrw
- Rlpg/YN2vh3f5TBG0zav7jllvmon7cZ6tDbZMxF+EDseGN7eXY3elXTihnYZ4f8PlEM/+9IoZLU
- CaqO0Cjgtl9Qnk9/VOPKgHx62Jwa3HgtdawNqMnZYMHfdptcBkvyR212N7RpzuAtpwONAJ0XnOX
- AD/fz4kdCh219YbYrIw==
-X-Proofpoint-GUID: chjPrEAC9T6WCgXhipd6p253IgXvBw9z
-X-Authority-Analysis: v=2.4 cv=HpVG3UTS c=1 sm=1 tr=0 ts=6a33e556 cx=c_pps
- a=AKZTfHrQPB8q3CcvmcIuDA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjE4MDExNiBTYWx0ZWRfX3PxPRNm6cCzS
+ SoEIYpIYCTJRgzrLAv0M6FAbeZtiZ64MhLvOU1CDGsZeIqJxlCgryQJoH+EegDY4+Sk5OkfhROv
+ TBXs62MehE1ZPHy0OGDx012sbwWq2MfM/iHtbdlFU2JcUvYIEm4aj+abKvxiXzXTBMC5ntyhiy7
+ fFgSQ2iq498EOJMf/FJBjZI3tSh+LvPcV5GgcZ0v5cfRrdrgrbqKlgQ04gFBKfhbyzheAgiSf9/
+ 7nbRhIP/bgJyNkGVZ2b5RqA4VNhS68mV/WlgQl7lOUj5hITczu6TugvcEKyUUDCWxZlUzef2Z4m
+ kq8QSo8GbDX6ntk1ZLqexlQ4rnwZLzfMKIpf+yUl9e3uAcckSr5BrQ3BmzZuWOI9H3uDCHvX3Vi
+ z/r5aza8aTQcxmsILCrBQKXo/2rKpTyGvOTGD5XrtJCcCM/OS9AF/sNRQ/kwlcTo+e3PYfJp20m
+ GJpLv10ZAfBZGxBJNnw==
+X-Proofpoint-GUID: 3DBNcMUGlxrEqxOAiWVYTY_7g8y9LCJ9
+X-Authority-Analysis: v=2.4 cv=HpVG3UTS c=1 sm=1 tr=0 ts=6a33e505 cx=c_pps
+ a=N1BjEkVkxJi3uNfLdpvX3g==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
  a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
  a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22
- a=SRrdq9N9AAAA:8 a=KKAkSRfTAAAA:8 a=7Qk2ozbKAAAA:8 a=EUspDBNiAAAA:8
- a=Q5y4zV9Sly_M5p4mRAcA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=pF_qn-MSjDawc0seGVz6:22 a=cvBusfyB2V15izCimMoJ:22 a=1lyxoWkJIXJV6VJUPhuM:22
-X-Proofpoint-ORIG-GUID: chjPrEAC9T6WCgXhipd6p253IgXvBw9z
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjE4MDExNiBTYWx0ZWRfX+42/Axc3WbxE
- IGsLA4LHfsgCFpOa9d9Hi0wOdAoclrwNweTfOshjKwHm1J4WFAHQ5B/e0caAUgou2PPCeOWyeaW
- ec1Osvkustl48MVF3mw41MI9EliBmgY=
+ a=EUspDBNiAAAA:8 a=KKAkSRfTAAAA:8 a=wSUaFbrerrTpWb88fUQA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=crWF4MFLhNY0qMRaF8an:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-ORIG-GUID: 3DBNcMUGlxrEqxOAiWVYTY_7g8y9LCJ9
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjE4MDExNiBTYWx0ZWRfX5xw3eBo8iK08
+ gkX70ONG5HlMGIS3CRBEoglQCtl26o/8O5DkMu8/H/pCSUIkTXOnDLqhJJUZllvTHR182wlrF6s
+ Vp2tIbFeE0n9G4/opcMci1NkMBEZUfQ=
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-06-18_01,2026-06-18_01,2025-10-01_01
@@ -150,140 +149,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Bin Guo <guobin@linux.alibaba.com>
+Armv8-M Protected Memory System Architecture can only be emulated,
+therefore restrict it to TCG to avoid compiling it on hardware
+accelerators.
 
-There are only three call sites, and strnlen() is available on all
-supported platforms (POSIX.1-2008, Windows via UCRT, MinGW).  Remove
-the hand-rolled wrapper and use the standard function directly.
-
-While here, align bsd-user/uaccess.c to use size_t for max_len/len,
-matching linux-user/uaccess.c and eliminating a signed/unsigned mismatch.
-
-Also remove the stale qemu_strnlen() entry from docs/devel/style.rst.
-
-Suggested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Bin Guo <guobin@linux.alibaba.com>
-Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
-Reviewed-by: Warner Losh <imp@bsdimp.com>
-Message-ID: <20260530062816.59206-1-guobin@linux.alibaba.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Message-Id: <20260616153432.92939-3-philmd@oss.qualcomm.com>
 ---
- docs/devel/style.rst  |  1 -
- include/qemu/cutils.h | 17 +----------------
- bsd-user/uaccess.c    |  4 ++--
- linux-user/uaccess.c  |  2 +-
- util/cutils.c         | 15 +--------------
- 5 files changed, 5 insertions(+), 34 deletions(-)
+ target/arm/ptw.c | 20 +++++++++++++++++++-
+ 1 file changed, 19 insertions(+), 1 deletion(-)
 
-diff --git a/docs/devel/style.rst b/docs/devel/style.rst
-index f4da16a0e83..6c5f94cc509 100644
---- a/docs/devel/style.rst
-+++ b/docs/devel/style.rst
-@@ -519,7 +519,6 @@ QEMU provides other useful string functions:
+diff --git a/target/arm/ptw.c b/target/arm/ptw.c
+index 8b54018c988..1470de30108 100644
+--- a/target/arm/ptw.c
++++ b/target/arm/ptw.c
+@@ -13,11 +13,13 @@
+ #include "exec/page-protection.h"
+ #include "exec/target_page.h"
+ #include "exec/tlb-flags.h"
++#ifdef CONFIG_TCG
+ #include "accel/tcg/probe.h"
++#include "target/arm/tcg/idau.h"
++#endif
+ #include "cpu.h"
+ #include "internals.h"
+ #include "cpu-features.h"
+-#include "target/arm/tcg/idau.h"
  
-     int strstart(const char *str, const char *val, const char **ptr)
-     int stristart(const char *str, const char *val, const char **ptr)
--    int qemu_strnlen(const char *s, int max_len)
+ typedef struct S1Translate {
+     /*
+@@ -2818,6 +2820,8 @@ static bool get_phys_addr_pmsav7(CPUARMState *env,
+     return (ptw->in_prot_check & ~result->f.prot) == 0;
+ }
  
- There are also replacement character processing macros for isxyz and toxyz,
- so instead of e.g. isalnum you should use qemu_isalnum.
-diff --git a/include/qemu/cutils.h b/include/qemu/cutils.h
-index 36c68ce86c5..d249f226766 100644
---- a/include/qemu/cutils.h
-+++ b/include/qemu/cutils.h
-@@ -101,22 +101,7 @@ int strstart(const char *str, const char *val, const char **ptr);
-  *          false otherwise.
-  */
- int stristart(const char *str, const char *val, const char **ptr);
--/**
-- * qemu_strnlen:
-- * @s: string
-- * @max_len: maximum number of bytes in @s to scan
-- *
-- * Return the length of the string @s, like strlen(), but do not
-- * examine more than @max_len bytes of the memory pointed to by @s.
-- * If no NUL terminator is found within @max_len bytes, then return
-- * @max_len instead.
-- *
-- * This function has the same behaviour as the POSIX strnlen()
-- * function.
-- *
-- * Returns: length of @s in bytes, or @max_len, whichever is smaller.
-- */
--int qemu_strnlen(const char *s, int max_len);
++#ifdef CONFIG_TCG
 +
- /**
-  * qemu_strsep:
-  * @input: pointer to string to parse
-diff --git a/bsd-user/uaccess.c b/bsd-user/uaccess.c
-index 89163257f4a..7ad4b580f44 100644
---- a/bsd-user/uaccess.c
-+++ b/bsd-user/uaccess.c
-@@ -43,7 +43,7 @@ abi_long target_strlen(abi_ulong guest_addr1)
+ static uint32_t *regime_rbar(CPUARMState *env, ARMMMUIdx mmu_idx,
+                              uint32_t secure)
  {
-     uint8_t *ptr;
-     abi_ulong guest_addr;
--    int max_len, len;
-+    size_t max_len, len;
- 
-     guest_addr = guest_addr1;
-     for (;;) {
-@@ -51,7 +51,7 @@ abi_long target_strlen(abi_ulong guest_addr1)
-         ptr = lock_user(VERIFY_READ, guest_addr, max_len, 1);
-         if (!ptr)
-             return -TARGET_EFAULT;
--        len = qemu_strnlen((const char *)ptr, max_len);
-+        len = strnlen((const char *)ptr, max_len);
-         unlock_user(ptr, guest_addr, 0);
-         guest_addr += len;
-         /* we don't allow wrapping or integer overflow */
-diff --git a/linux-user/uaccess.c b/linux-user/uaccess.c
-index 27e841e6510..f9bd713edd7 100644
---- a/linux-user/uaccess.c
-+++ b/linux-user/uaccess.c
-@@ -99,7 +99,7 @@ ssize_t target_strlen(abi_ulong guest_addr1)
-         ptr = lock_user(VERIFY_READ, guest_addr, max_len, 1);
-         if (!ptr)
-             return -TARGET_EFAULT;
--        len = qemu_strnlen((const char *)ptr, max_len);
-+        len = strnlen((const char *)ptr, max_len);
-         unlock_user(ptr, guest_addr, 0);
-         guest_addr += len;
-         /* we don't allow wrapping or integer overflow */
-diff --git a/util/cutils.c b/util/cutils.c
-index 76a94420859..96c80d4d429 100644
---- a/util/cutils.c
-+++ b/util/cutils.c
-@@ -54,7 +54,7 @@
- 
- void strpadcpy(char *buf, int buf_size, const char *str, char pad)
- {
--    int len = qemu_strnlen(str, buf_size);
-+    size_t len = strnlen(str, buf_size);
-     memcpy(buf, str, len);
-     memset(buf + len, pad, buf_size - len);
- }
-@@ -118,19 +118,6 @@ int stristart(const char *str, const char *val, const char **ptr)
-     return 1;
+@@ -3247,6 +3251,20 @@ static bool get_phys_addr_pmsav8(CPUARMState *env,
+     return ret;
  }
  
--/* XXX: use host strnlen if available ? */
--int qemu_strnlen(const char *s, int max_len)
--{
--    int i;
--
--    for(i = 0; i < max_len; i++) {
--        if (s[i] == '\0') {
--            break;
--        }
--    }
--    return i;
--}
--
- char *qemu_strsep(char **input, const char *delim)
- {
-     char *result = *input;
++#else /* !CONFIG_TCG */
++
++static bool get_phys_addr_pmsav8(CPUARMState *env,
++                                 S1Translate *ptw,
++                                 uint32_t address,
++                                 MMUAccessType access_type,
++                                 GetPhysAddrResult *result,
++                                 ARMMMUFaultInfo *fi)
++{
++    g_assert_not_reached();
++}
++
++#endif /* !CONFIG_TCG */
++
+ /*
+  * Translate from the 4-bit stage 2 representation of
+  * memory attributes (without cache-allocation hints) to
 -- 
 2.53.0
 
