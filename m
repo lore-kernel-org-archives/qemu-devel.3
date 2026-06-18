@@ -4,91 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 377F2CD98F2
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jun 2026 15:26:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7FA6CD98F2
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jun 2026 15:31:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1waEd5-0004xe-Bc; Thu, 18 Jun 2026 11:26:07 -0400
+	id 1waEhk-0006LK-NY; Thu, 18 Jun 2026 11:30:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1waEd3-0004x2-AL
- for qemu-devel@nongnu.org; Thu, 18 Jun 2026 11:26:05 -0400
-Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1waEd1-0004UT-F2
- for qemu-devel@nongnu.org; Thu, 18 Jun 2026 11:26:05 -0400
-Received: by mail-pl1-x62e.google.com with SMTP id
- d9443c01a7336-2c168baac83so5351805ad.2
- for <qemu-devel@nongnu.org>; Thu, 18 Jun 2026 08:26:02 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1waEhW-0006Jw-M8
+ for qemu-devel@nongnu.org; Thu, 18 Jun 2026 11:30:50 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1waEhU-00087G-8a
+ for qemu-devel@nongnu.org; Thu, 18 Jun 2026 11:30:42 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1781796638;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=61hWwuBh5pCtH87sGeavuORS8Xg60T66frUqAc+ByEw=;
+ b=DhOHfL3TxspLYQKjrTmEsPMToYs5A7/bsKtap0g8VDgD1w4UgvC2KXKwo9IGz1Y5mleLrp
+ EqZTncgQGzCAX3z85I8QSIy1kXUYx8hVNE6kl7PascnFXsTBjBisAppaTAN63+8f1qDkTa
+ XV+1K01rs/lihHhQNQ2aXF5Z/8PgW04=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-310-9IoTblpmNC-xZLvcKrUAZg-1; Thu, 18 Jun 2026 11:30:37 -0400
+X-MC-Unique: 9IoTblpmNC-xZLvcKrUAZg-1
+X-Mimecast-MFC-AGG-ID: 9IoTblpmNC-xZLvcKrUAZg_1781796636
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-460153ce644so732468f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 18 Jun 2026 08:30:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1781796361; x=1782401161; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=tsNL/WSDPFzBkOnsOQ56FdT2foaULZpm3r7OX9+Wifk=;
- b=WNPlF/pbZlmpCKsboCZFCMJbdSpAsKw+P2P1BzbKyqMLf0HJHQZx+VRW7nmcr3J6Ts
- Iq+UiUM6xixJYo96HdF09KnIEam8U7G1rDkIIWjLjd0B5hvJqlmk6gk0yaBMTSICrjgx
- TInX/Up83iDvyxTHK9GMlK565Fzfi1MxfsDSiZ1ZhxKCAdbRmN97471k7qMmcS/RGQPE
- snlWEPY+D42PC6jY099eTkalJARVoqfojnw84uxL93PyUG7V57Y8Fa3j1hD+GhYpBw15
- eCvzoUgWj1Ltd/SK+PJGtb83C7AUlnSTn/A2Hu6BgwwgLJqmT7tuOqyt5Cwv+sGdyDy3
- x3iA==
+ d=redhat.com; s=google; t=1781796636; x=1782401436; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=61hWwuBh5pCtH87sGeavuORS8Xg60T66frUqAc+ByEw=;
+ b=GZuP3FT+m60EROjOAC92NY3n6eCFdfUrJ7cKZjO+lypCuU6ZU6V04svFAPYUqoP1pN
+ qc8GnKcc++xNDs+OUq/JVZpv8y8bXOaUxbJOkVuFyLCsANhP6q3S6O+uuOKt/CEcsbKx
+ SLo443aezCGGNLrGA2YJQYXk85hp7WI9fO5hkt7dPKBzm7V4DXnxpoQZwUGdMcVMP5j2
+ WiKo3BMtn9Gq72w9gdgYvSf+8g1Os05Luj824gHo6xhywlLwJesOEZYzNLLzhTnTog2U
+ rs34ywW4bRdj7WsrfH3fPfI+n8p8XHD56wTcLM3BNO6vGxW8WNDvSPp1WiYGkCVXjp4Y
+ MD+Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781796361; x=1782401161;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=tsNL/WSDPFzBkOnsOQ56FdT2foaULZpm3r7OX9+Wifk=;
- b=aYVwQOKdSU7Nt+clkSDnK2rt9FJGU2rR2tb97sZbcmRSQX3uQN/rzOYUMFEv3JnocF
- 0oRxqG2/7OfoV24mMTeJrSaeOV4vDTnhnZeVM+zmyseoy7tIFJGjYQzoun6m7PZ5JLMg
- fdkoOSoYEvKE1aL929GHZyc+17B12yE1RsVz9JCRnEJNObAKA/BGdKh2cwOG1XLEoKqM
- TuBR7271eKlAFbIxk9YEGTJrehtfvzm/GmuuyNjtc2l+Abxphqeri+/XERjV1adTggFt
- rHgTd0gk9b0/lpWELNpko9KkmzXPmiqK3wYf59kbfLZ49rinKPPS/6kjBPm0Z20n8ouQ
- M7sw==
-X-Gm-Message-State: AOJu0Yw8Gn3NKtuKgO3HOZXyqZOmAHdDTy8nx9iRMl8E1PFpEE9qClsi
- BdfOrPXisXV8l0goKnw+cYFrd3oe8V2RNePyTMM7zXlZyOYHd+k5ZmdDe2I0RbprD/DkadFxHbd
- SDimZ
-X-Gm-Gg: AfdE7ck9lpmJqHA52Xuo3hxWUzZW1Curu1CUECSok3R3Ll1zOBPWlbwhC4MH972EEuB
- LDz9oAkL86jl+iet5yc/cBji/ChdcOH0Vw65P156R9880VsV+YfKBknGAMwMOASe+YIyUb1jeMt
- gIaqe+JsnCUUQEZMJYmVAuGJF2wUryCqY+WsQ0MycKG0OmYn4i9bvcuftplxS9SUjk8PTo15TVY
- gbtlbL4pmp9cJ3R7nCbePCGAlHzveH30mFiuBQuQoDEb0xemiwAzXtrD1Ewqa9cT+bsdoEqG7ex
- rE64dYEnlSL1Gg7ngg+/UPokz9vNcPa8qPUs08MqD+BGY0Nst8UeGyLQLTAxfKe2MMXXmTwR9Vn
- EI64AkJ13MwI6jvYh/Kquc8ZIFqcbNUYl1D/BJ3W1U2vRPNsp8YYiLZxeS/TGB516b0VCDq8rFu
- IdA5s/MRnG76B9dCHNBHYcRPNg9emCWZcFdqNVwU640dMM+aYVtRD8YpSIHA==
-X-Received: by 2002:a17:903:2a8b:b0:2bf:1486:e6ca with SMTP id
- d9443c01a7336-2c6bc0bce71mr100974695ad.12.1781796361194; 
- Thu, 18 Jun 2026 08:26:01 -0700 (PDT)
-Received: from [192.168.0.4] (174-21-129-215.tukw.qwest.net. [174.21.129.215])
+ d=1e100.net; s=20251104; t=1781796636; x=1782401436;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=61hWwuBh5pCtH87sGeavuORS8Xg60T66frUqAc+ByEw=;
+ b=GJ5xt5u748OyGeCcDvempoWRqYpoOQSjx3QRfNS5cCpT0R7YNUMJEdsl6/DQnZqmdA
+ v+ZdhWsrGx1BBdwG5QJuoDD6jTUNwz28sv/JGrGD5BKkVpnECtQGA7t42qPYLya2wbqZ
+ AnGgxrmn/shuljVAZON7eYIw00cKpcJt1usyAvwJRZlDUg8jg6c7E82fv+uHu9+XC9FX
+ byWxDfXnzomoij/udfW9ogdYwqxajRdV6juig0EqA5lu0KWBbN13wRDJwdbCkkXrkIqR
+ 895kzF9AZbLZ3oHIQ/ScyT6MOsllpAmrclbslomxrSXn1LN94EhnHZPkZb2qVZIwmbri
+ 2mig==
+X-Gm-Message-State: AOJu0Yym0zS0Szf3fTWDg10cudaicmPgjFlmbCKJidB9qtFCOC3UsQLN
+ TYcnSeW3Kv+K+31InO5v0sZXh6tWO0qpg1XVHL7h7oFlEpI+sFzAimiGNve2RhYyrSySPnAj5MP
+ EGp4O1N6UwKvAOLr1bgwXne9uQm78TLom4ov7OYNCfgHOsw3RhWXaMmPi
+X-Gm-Gg: AfdE7cmrrlp7chX2Cgw7geplHck2UU8NWSwcwP+goQeJhLLNQEJ2uXvJtBR2MA3FHRQ
+ KBiKAV3ykQVn5RtFIZ8JlN15dgwQubcOWNY+5Y0/amcd1BH9Ud8jpP/iz8T1WSdbNeX8xzEde4+
+ GDb6GN6GNfGTnlJ6nQ3fXW90dul/eyalTUCe2VknRW1g68Fe1sOgmyRVEmw9KL1FfVJZF/OIDAl
+ okOIl/53hSfsiauwx0NKxQb7AJvnfq57OsRdPo4UNbBtQhy0Kox8l9D/A7DwsGpG8hsUbvG3m7m
+ VrolFTNeXWUdjBiRrANFXxCK13701FPctomGaKbavfEGYqd+hsNT6+GKL9KAO0gZf3dOTsVmHXd
+ Y+IC0nfRBuFA8mjlE9lnJ+efDydA55x+1
+X-Received: by 2002:adf:fc09:0:b0:45f:f142:d55a with SMTP id
+ ffacd0b85a97d-4623f8b3005mr12508434f8f.14.1781796633902; 
+ Thu, 18 Jun 2026 08:30:33 -0700 (PDT)
+X-Received: by 2002:adf:fc09:0:b0:45f:f142:d55a with SMTP id
+ ffacd0b85a97d-4623f8b3005mr12508305f8f.14.1781796632834; 
+ Thu, 18 Jun 2026 08:30:32 -0700 (PDT)
+Received: from redhat.com (IGLD-80-230-85-71.inter.net.il. [80.230.85.71])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2c433460a60sm244023275ad.76.2026.06.18.08.26.00
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 18 Jun 2026 08:26:00 -0700 (PDT)
-Message-ID: <8c0cdc46-aaee-4188-9596-92f32b22058f@linaro.org>
-Date: Thu, 18 Jun 2026 08:25:58 -0700
+ ffacd0b85a97d-4606f26434dsm66063223f8f.1.2026.06.18.08.30.31
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 18 Jun 2026 08:30:31 -0700 (PDT)
+Date: Thu, 18 Jun 2026 11:30:29 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org,
+ Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Thomas Huth <thuth@redhat.com>, Mauro Matteo Cascella <mcascell@redhat.com>
+Subject: Re: [qemu-web PATCH v2 3/3] contribute: switch security process to
+ gitlab confidential issues
+Message-ID: <20260618112415-mutt-send-email-mst@kernel.org>
+References: <20260618132058.1044341-1-berrange@redhat.com>
+ <20260618132058.1044341-4-berrange@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/3] target/arm/tcg/cpu64.c: Add FEAT_FPRCVT to cpu_max
-To: qemu-devel@nongnu.org
-References: <20260618-jmac-fprcvt-v1-0-1b4475bacf51@linaro.org>
- <20260618-jmac-fprcvt-v1-3-1b4475bacf51@linaro.org>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20260618-jmac-fprcvt-v1-3-1b4475bacf51@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260618132058.1044341-4-berrange@redhat.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,50 +120,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/18/26 01:20, Jim MacArthur wrote:
-> Signed-off-by: Jim MacArthur <jim.macarthur@linaro.org>
-> ---
->   target/arm/tcg/cpu64.c | 1 +
->   1 file changed, 1 insertion(+)
-> 
-> diff --git a/target/arm/tcg/cpu64.c b/target/arm/tcg/cpu64.c
-> index f7a920a202..f259e82dd3 100644
-> --- a/target/arm/tcg/cpu64.c
-> +++ b/target/arm/tcg/cpu64.c
-> @@ -1269,6 +1269,7 @@ void aarch64_max_tcg_initfn(Object *obj)
->   
->       t = GET_IDREG(isar, ID_AA64ISAR3);
->       t = FIELD_DP64(t, ID_AA64ISAR3, FAMINMAX, 1); /* FEAT_FAMINMAX */
-> +    t = FIELD_DP64(t, ID_AA64ISAR3, FPRCVT, 1);   /* FEAT_FPRCVT */
->       SET_IDREG(isar, ID_AA64ISAR3, t);
->   
->       t = GET_IDREG(isar, ID_AA64PFR0);
-> 
+> + * The maintainer(s) will develop and/or review patch(es)
+> +   for the issue privately, optionally attaching work in
+> +   progress fixes to the GitLab issues.
 
-Missing update to docs/system/arm/emulation.rst.
-Missing update to linux-user/aarch64/elfload.c, get_elf_hwcap().
+attaching how? how do i ask reported to test the fix?
+was easy in the email flow.
 
-The other part of the feature that has been missed is
+> All patches must
+> +   include the issue URL in the commit message(s).
 
-if elements == 1 && IsFeatureImplemented(FEAT_FPRCVT) then
-    AArch64_CheckFPEnabled();
-else
-    AArch64_CheckFPAdvSIMDEnabled();
-end;
-
-within all of the v8.0 vector instructions.
-
-Practically speaking, this means adjusting s->non_streaming before the 
-fp_access_check_scalar_hsd call in do_fcvt_f and do_cvtf_f:
-
-     if (dc_isar_feature(aa64_fprcvt, s)) {
-         s->is_nonstreaming = false;
-     }
-
-This would of course be a separate patch.
+you mean the commit message of the patches I presume?
+there's no commit at that point.
 
 
-r~
+> The
+> +   **"Workflow::In Progress"** label should be assigned when
+> +   a maintainer starts working on a fix.
 
+That's a bit heavy, and what is "working" anyway.
+It's an issue tracker not a planning app.
+Don't try to make it one.
+
+
+> + * When a CVE is allocated, it must be recorded as a comment on
+> +   the GitLab issue, and the **"CVE::Required"** label replaced by
+> +   the **"CVE::Assigned"** label.
+
+Recorded as a comment how exactly, in what format?
+
+> + * The maintainer(s) will update the commit message(s)
+
+what does it mean to "update the commit message"?
+
+> to include
+> +   the assigned CVE and issue URL. If multiple commits are required
+> +   to fix an issue the CVE must be included in the final commit in
+> +   the series, and may optionally be included in all prior commits.
+
+And here, included in what format?
 
 
