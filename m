@@ -4,59 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E157CD98ED
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jun 2026 12:55:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 095ACCD98ED
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jun 2026 12:55:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1waCGs-0002oL-I5; Thu, 18 Jun 2026 08:55:02 -0400
+	id 1waCGo-0002ng-7d; Thu, 18 Jun 2026 08:54:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mbawa@redhat.com>) id 1waCGr-0002o4-HW
- for qemu-devel@nongnu.org; Thu, 18 Jun 2026 08:55:01 -0400
+ (Exim 4.90_1) (envelope-from <mbawa@redhat.com>) id 1waCGl-0002ms-UT
+ for qemu-devel@nongnu.org; Thu, 18 Jun 2026 08:54:55 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mbawa@redhat.com>) id 1waCGq-0004ln-7Y
- for qemu-devel@nongnu.org; Thu, 18 Jun 2026 08:55:01 -0400
+ (Exim 4.90_1) (envelope-from <mbawa@redhat.com>) id 1waCGk-0004ce-Go
+ for qemu-devel@nongnu.org; Thu, 18 Jun 2026 08:54:55 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781787299;
+ s=mimecast20190719; t=1781787292;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=gQ2HpR0WFgqm8qJgydfubSQlOn0F80nDU3NQ+9sYN1k=;
- b=LI6EGqSB9blCshCjli10Xq3+jAAqUBJHeFKdoZ2YbNcvNfDlBf1GvXZfisPihT93lBgjoU
- S+N9MA0L7eKCCTFQGAZefbSvWXHwJ/jVGhF6ZAa6659dh/yguJs83gmwGPhmB0aE7AybqR
- sflcjSrzvVhItChUlqgoJveRM+pDzaA=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ content-transfer-encoding:content-transfer-encoding;
+ bh=Zx17pLBn58vKiWXw5HtSN+9VzQnBxInTbUdZxIwwmhA=;
+ b=EfjENrf0iXqNJr807Y6f9DL7DYajJEIzPs397vmgSbPJFLh5hrx9Cwlp6a5DgL+qVxCm2r
+ ZSFrsTuoOs5R9NP56AYaNQW/+MgUv0Zrbklq0znNy6KG75P1MtsYbjoBp6r+99EMNx9uJm
+ 03bE7w/h0i50jsLudVMkOV3GBN+7O4Q=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-391-TRbDBkV2ONSK72AHABP-yQ-1; Thu,
- 18 Jun 2026 08:54:54 -0400
-X-MC-Unique: TRbDBkV2ONSK72AHABP-yQ-1
-X-Mimecast-MFC-AGG-ID: TRbDBkV2ONSK72AHABP-yQ_1781787293
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-537-iV-x_05KOniTzPsUexBWgw-1; Thu,
+ 18 Jun 2026 08:54:48 -0400
+X-MC-Unique: iV-x_05KOniTzPsUexBWgw-1
+X-Mimecast-MFC-AGG-ID: iV-x_05KOniTzPsUexBWgw_1781787287
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B38511956064; Thu, 18 Jun 2026 12:54:52 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 480DD195608E; Thu, 18 Jun 2026 12:54:47 +0000 (UTC)
 Received: from mbawa-thinkpadt14gen5.bengluru.csb
  (headnet05.pony-001.prod.iad2.dc.redhat.com [10.2.32.117])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 84F441956087; Thu, 18 Jun 2026 12:54:50 +0000 (UTC)
+ id C63151956087; Thu, 18 Jun 2026 12:54:44 +0000 (UTC)
 From: Mohammadfaiz Bawa <mbawa@redhat.com>
 To: Stefan Berger <stefanb@linux.vnet.ibm.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>
 Cc: qemu-devel@nongnu.org,
 	Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH 2/2] hw/core/machine: disable tpm-tis-device PPI for machine
- type <= 11.0
-Date: Thu, 18 Jun 2026 18:24:42 +0530
-Message-ID: <20260618125442.641532-3-mbawa@redhat.com>
-In-Reply-To: <20260618125442.641532-1-mbawa@redhat.com>
-References: <20260618125442.641532-1-mbawa@redhat.com>
+Subject: [PATCH 0/2] hw/tpm: fix tpm-tis-device backward migration on aarch64
+Date: Thu, 18 Jun 2026 18:24:40 +0530
+Message-ID: <20260618125442.641532-1-mbawa@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
@@ -85,26 +81,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Set ppi=off in hw_compat_11_0[] so that older machine types do not
-register the "tpm-ppi" RAMBlock, restoring backward migration.
+46cd2c1050f0 ("hw/tpm: add PPI support to tpm-tis-device for ARM64
+virt") unconditionally registers a "tpm-ppi" RAMBlock when the TPM
+TIS sysbus device is realized.  This breaks backward migration: a
+QEMU with PPI support cannot migrate to an older QEMU without it:
 
-Signed-off-by: Mohammadfaiz Bawa <mbawa@redhat.com>
----
- hw/core/machine.c | 1 +
- 1 file changed, 1 insertion(+)
+  Unknown ramblock "tpm-ppi", cannot accept migration
 
-diff --git a/hw/core/machine.c b/hw/core/machine.c
-index 9a10e45aab..92cf5e1ca1 100644
---- a/hw/core/machine.c
-+++ b/hw/core/machine.c
-@@ -44,6 +44,7 @@ GlobalProperty hw_compat_11_0[] = {
-     { "chardev-vc", "encoding", "cp437" },
-     { "tpm-crb", "cap-chunk", "off" },
-     { "tpm-crb", "x-allow-chunk-migration", "off" },
-+    { "tpm-tis-device", "ppi", "off" },
-     { TYPE_ARM_SMMUV3, "ats", "off" },
-     { TYPE_ARM_SMMUV3, "ril", "on" },
-     { TYPE_ARM_SMMUV3, "ssidsize", "0" },
+The failure is 100% reproducible on any aarch64 guest that uses
+tpm-tis-device when migrating to a host whose QEMU predates the PPI
+commit.
+
+Fix by gating the PPI memory region behind a new "ppi" device
+property, and disabling it via hw_compat_11_0[] for machine types
+<= virt-11.0.
+
+Mohammadfaiz Bawa (2):
+  hw/tpm: gate PPI support on tpm-tis-device behind a device property
+  hw/core/machine: disable tpm-tis-device PPI for machine type <= 11.0
+
+ hw/core/machine.c       |  1 +
+ hw/tpm/tpm_tis.h        |  1 +
+ hw/tpm/tpm_tis_sysbus.c | 16 +++++++++++-----
+ 3 files changed, 13 insertions(+), 5 deletions(-)
+
 -- 
 2.54.0
 
