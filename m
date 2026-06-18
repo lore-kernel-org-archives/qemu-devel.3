@@ -4,158 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C842DCD98F0
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jun 2026 08:38:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AAF4ECD98ED
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jun 2026 08:44:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wa8GT-0002Z5-P9; Thu, 18 Jun 2026 04:38:21 -0400
+	id 1wa8MC-0003Kp-Qa; Thu, 18 Jun 2026 04:44:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wa8GS-0002Yx-KB
- for qemu-devel@nongnu.org; Thu, 18 Jun 2026 04:38:20 -0400
+ (Exim 4.90_1) (envelope-from <leonardi@redhat.com>)
+ id 1wa8M8-0003K1-R8
+ for qemu-devel@nongnu.org; Thu, 18 Jun 2026 04:44:13 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wa8GR-0005ND-6b
- for qemu-devel@nongnu.org; Thu, 18 Jun 2026 04:38:20 -0400
+ (Exim 4.90_1) (envelope-from <leonardi@redhat.com>)
+ id 1wa8M6-0007WT-Vl
+ for qemu-devel@nongnu.org; Thu, 18 Jun 2026 04:44:12 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781771898;
+ s=mimecast20190719; t=1781772248;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=KwHyiyBt0SHfx7Bm/NO2ouQKWdz7vxLroWR8DpDWZyY=;
- b=W40B/iDUAKdV7Cu+q+QW9eb5rjKg/MPTqzPD9/eCGcvcWOyrXqxqGBw/Tk5479LqFYeByR
- KeL/U3hhn9+7iAxR1rYOHNwXP0c8bVr4PQPgBsbFaN4jRm2zjBQGGAPeCjlxunK2kSGj08
- fDCU8jk0QpcNI3VbJqFzV+2nYCEARe0=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ content-transfer-encoding:content-transfer-encoding;
+ bh=eW1aQ6d+d/YjuMOtUGsQVyMATqTCGa+bJywT3OB5bJ4=;
+ b=ZiR6FaL5JHwLSM3+r+pjXQEz0MXOtGDd6Rxw1cbWywbIjNlS5R/6PzHQkaPiPM46nkgbkf
+ wTPALNJjCCPu/9xbCPoQCdVfc4oo/rZoQiSLed8yebOIV5QjSseYpWdcfdVSU2nIweRq/4
+ Mn6GqC3KehZGpvKQrtAaesn30j+L0qk=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-278-yAc17wauPQaj4IqruMnECA-1; Thu, 18 Jun 2026 04:38:15 -0400
-X-MC-Unique: yAc17wauPQaj4IqruMnECA-1
-X-Mimecast-MFC-AGG-ID: yAc17wauPQaj4IqruMnECA_1781771894
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-490a060eb84so3996005e9.0
- for <qemu-devel@nongnu.org>; Thu, 18 Jun 2026 01:38:15 -0700 (PDT)
+ us-mta-614-whQCnSyMM1CBSe6RxRizSA-1; Thu, 18 Jun 2026 04:44:06 -0400
+X-MC-Unique: whQCnSyMM1CBSe6RxRizSA-1
+X-Mimecast-MFC-AGG-ID: whQCnSyMM1CBSe6RxRizSA_1781772245
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-490c840efe6so16182625e9.1
+ for <qemu-devel@nongnu.org>; Thu, 18 Jun 2026 01:44:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1781771894; x=1782376694; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=KwHyiyBt0SHfx7Bm/NO2ouQKWdz7vxLroWR8DpDWZyY=;
- b=dnoPd6KY92xgMNuwU3AmmLg5+slPXryCwyD1VshBzTu5S28bXITQ62dwadK7UcOOmy
- 7pC5uvl2t+mn3QcItykwOAz+W3+xhrOyO409zFHyVKUS1CvelYK3hVqaUokdJQI+/Cyk
- EjachBf7gC7a0p5tcfoHenld0pOtY0i6q0hWHn5Qp5IxstUavZ4yCL19NQ3dE2EEGWWY
- 1e7+Bg2+esyfvPhQGCh1NEtGktd+DviRvcRkPQVGOJMdlnuORrdTDXoNmY+R95YMt7Jj
- nH9derjOfy02I0mLGDF5ik2w/wwvAD0difCxKIM1NF/yQMiLcw7WHp9mHeVoPhUzWhWk
- AmLQ==
+ d=redhat.com; s=google; t=1781772245; x=1782377045; darn=nongnu.org;
+ h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+ :date:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=eW1aQ6d+d/YjuMOtUGsQVyMATqTCGa+bJywT3OB5bJ4=;
+ b=CUUBrmsYZH6CU+Vm/R6mYFfguA4kaDEVLYw4ONSP14iRrzNd44+mrVp2oDUBnolOdm
+ mv2R02djCowysvxdQ8qWqaugHX/buMyPDZThhe7PvahQakkc0CX1/jWkRGI8NQJhBoFq
+ Q9FLn/wBRX7ctMKyyz9QXMDGDuCqBhdwsAL1McQOpUu71wjpwhh80uaLVUVLIu3+LEjO
+ oigdvXTl2agHi9jxgLj9YoChvqGvGFmQtFb8AgdxccbRWeq77IWIlgNFO3mELYTrVL8a
+ DieM8SHGJCwKlHVSd09WMIpTx2fKoKpKpQeeTti8ig444F5OHkj9cGC1Wxecn+L/F5Vi
+ j3lw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781771894; x=1782376694;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=1e100.net; s=20251104; t=1781772245; x=1782377045;
+ h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+ :date:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=KwHyiyBt0SHfx7Bm/NO2ouQKWdz7vxLroWR8DpDWZyY=;
- b=TdhcmwE5V7C0d4JoRiVKtqEV1DTet/PDjI91BAGZBQ/9kgGQXWdxKaqRLvhvfD0vym
- vA1Bofv/k2WxbUrVbMYypnp9y15BMgRvNniRygg/taRmjl/U+wpZ9xyX4B1MBGL7IrFb
- JsOEBudVzOxUzSvWAeWlhhuIfCg1+Vz4ih7yWX0STHY+MOpwBeIHRkzM+PMCZfB3Y9zg
- j/x/mnuOvBwf69oNx25MbNhi2mHI5/ukQiRP0B7K7+iESbB34LnCsABP8dIvxBcBIoup
- EywYBg87XsrFSdkBAyywvGg0SD4WCr/aUzsX3TL0wW76atcjIDLfIt53ewLRzsrrfwe3
- Y8mg==
-X-Gm-Message-State: AOJu0Ywx/D8x2Yvutm25qG4j7uewTWeCnxsEQQJvDZY39EvMZJKNrqdQ
- 91G8QqNx9JL87r96qC7wQ27+3bo+a2d90mhuxkemzlrFyOjeDSZGXlKGKnQVsJ5ngZpEGO8pZ2h
- aBycwE7aUdWjuhxbKGgOYK45aq/2+zRHYvH44T8gOnkpW7Mie32G0TxgM
-X-Gm-Gg: AfdE7cn+En/+QyRdsX87cRzk4kfkxA0hZc4aoMS/8GRN5v1S64RVUOc6t1OBL4gfEJL
- xEuKgV8J47mrQ9LZNxjZSOEbM4IQDcw0BCrZ/0ToHE/6VxAYfVt16uagxZZ9ixC+6TDaniINSQ7
- g1DUS+zQKhCVD+4f6W6S+fFOGi6zorU1rznTwT3mft2dZEpO1QouB52IR/ji8x0ohqNpjAJD5nA
- dXPWzR4apk1XSfLJaz5Sca49r9JSqzZoA+4gLzNzQXLm4T9osQGDuS7ACJXHrNQSY3JlT2gpHpr
- KQNjbSuDyf1xxLUEhmh9xlBmRLeu0hpQcMeVPlfnxydhD8ATu4WOoQ7vN0Q28MpPfOZdXd1tq2V
- eVlehujMulVlhWmglnBph4bEV554WlVRBruzifF+i4G9FnRklwQ==
-X-Received: by 2002:a05:600c:4e54:b0:490:d32b:39d6 with SMTP id
- 5b1f17b1804b1-4923412f17amr117379835e9.19.1781771894069; 
- Thu, 18 Jun 2026 01:38:14 -0700 (PDT)
-X-Received: by 2002:a05:600c:4e54:b0:490:d32b:39d6 with SMTP id
- 5b1f17b1804b1-4923412f17amr117379205e9.19.1781771893491; 
- Thu, 18 Jun 2026 01:38:13 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:280:24f0:576b:abc6:6396:ed4a?
- ([2a01:e0a:280:24f0:576b:abc6:6396:ed4a])
+ bh=eW1aQ6d+d/YjuMOtUGsQVyMATqTCGa+bJywT3OB5bJ4=;
+ b=fiGPN8nGCvR21QtYkP0gF4NzUq6DE40IdZKu16mmkRe4NT8cFDf6fmMWueDOZo/p8Q
+ XQ7r9eLTA4XfZeA3ZK/fCDBGRANqJYuIB9dCn2HBzDXx5Ix8Q7URZmKItXSYBUaLjhaj
+ O8wuR5lDLkOCvC+BSHPs4i+CDaOZw38hPc7s4ohQhUQenBW35FJn3T3iii9pWTvVxHlV
+ xe3XblyFD1HNUry4+4jmxQJ5M4xZ+mUR9P+13mVk3FUY2grRHai/ms8L4otXt8vldzzA
+ b5bzazxNZDSAdiv6IB3vq1uzbobUr9pT/XsULPfCfES7np+YslSoggSzu5PRWvQwOMgd
+ eYpQ==
+X-Gm-Message-State: AOJu0YzLv6G750FWiSNjLDzLPeNFyVqjXYtqy4TLZUGMW58GfL/zhGGC
+ G4oiiYTE3D3dmO8aBq7AWUYjy+DKxc+Fk2RqggPd1EBqqn4WiJ/3x6XSSE0e7o9X72GSVedRfFg
+ Je+fIKFgHgOGerso+pC17lDBNMRsId1reCxE2Dfx1WwXQFbmc5wq+T7Jt
+X-Gm-Gg: Acq92OH8Vr73r5jNvbrxUnyI8CS+trAkeBNs9kAr9TXw2ck7ob8ZcUwhtilXGHC5BiF
+ cCqA/cPnP7xe/713YHyljhaDVoIszsAsxRO8gIzdHIMB+vPZaYMRFsdUZLSnY96cNo5iHR1Zchy
+ qGaOE5oVilOGXlsNPNPfTKu0MFOzK9dYdJRWDftVI1yQVF9MBGUBnAqad+MIIQQBvqnN2K4nprh
+ Nc2HPVTp2S9Rf0X0QmEZzwcSZb8ocJfU6ZPddK7L36WcfNKSV3rPUyipVWLdhCX5yY9e3uIoYUj
+ xINCZsL/mI/UV9q7QVSJVc79zvvZFLXhrQMJLJko2fSfkCxICFEiqbxQtfSy8CTEU96eGY352EI
+ NezZGbhOfA9D6xWRgj5isLlpyXPUnx/8HdWtYaW9CPviL5zlJ0q+2fTpT5eKvjGLgHV3nnVgPCs
+ RBD2H7eQ==
+X-Received: by 2002:a05:600c:5492:b0:490:b4a8:e031 with SMTP id
+ 5b1f17b1804b1-49238154445mr40495485e9.4.1781772245322; 
+ Thu, 18 Jun 2026 01:44:05 -0700 (PDT)
+X-Received: by 2002:a05:600c:5492:b0:490:b4a8:e031 with SMTP id
+ 5b1f17b1804b1-49238154445mr40495125e9.4.1781772244906; 
+ Thu, 18 Jun 2026 01:44:04 -0700 (PDT)
+Received: from lleonard-thinkpadx1carbongen13.rmtit.csb ([176.206.21.116])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4923a1d585esm33693675e9.2.2026.06.18.01.38.11
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 18 Jun 2026 01:38:12 -0700 (PDT)
-Message-ID: <61fefad6-af44-42db-8913-14bd274b4833@redhat.com>
-Date: Thu, 18 Jun 2026 10:38:11 +0200
+ 5b1f17b1804b1-49230a58becsm218217365e9.7.2026.06.18.01.44.03
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 18 Jun 2026 01:44:04 -0700 (PDT)
+From: Luigi Leonardi <leonardi@redhat.com>
+Date: Thu, 18 Jun 2026 10:44:02 +0200
+Subject: [PATCH v2] igvm: Report error on missing parameter area in
+ directive handlers
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 07/14] migration: Make switchover-ack re-usable
-To: Avihai Horon <avihaih@nvidia.com>, Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, Alex Williamson <alex@shazbot.org>,
- Fabiano Rosas <farosas@suse.de>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- Zhao Liu <zhao1.liu@intel.com>, Halil Pasic <pasic@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Jason Herne <jjherne@linux.ibm.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Ilya Leoshkevich <iii@linux.ibm.com>, David Hildenbrand <david@kernel.org>,
- Eric Farman <farman@linux.ibm.com>, Matthew Rosato <mjrosato@linux.ibm.com>,
- Cornelia Huck <cohuck@redhat.com>, Eric Blake <eblake@redhat.com>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- John Snow <jsnow@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Maor Gottlieb <maorg@nvidia.com>
-References: <20260609075812.32067-1-avihaih@nvidia.com>
- <20260609075812.32067-8-avihaih@nvidia.com> <aiww8tN6dRLA3t_R@x1.local>
- <e4d00894-990b-44b3-b89c-7cd1b0398a0a@nvidia.com> <ai__gjsVcZs_ecLc@x1.local>
- <9605d542-f797-4ac4-bb62-966a77ffd361@nvidia.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Autocrypt: addr=clg@redhat.com; keydata=
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <9605d542-f797-4ac4-bb62-966a77ffd361@nvidia.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+Message-Id: <20260618-igvm_error-v2-1-2b03f4790e4f@redhat.com>
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/23MQQ7CIBCF4as0sxYDNGLrynuYxiAM7SxamqEhm
+ oa7i127/F/yvh0SMmGCW7MDY6ZEcamhTw24yS4jCvK1QUttpFFS0JjnJzJHFg477F4aw1Ui1MP
+ KGOh9YI+h9kRpi/w57Kx+618mK6HEpfeqba3pgw53Rj/Z7eziDEMp5QtbnR0ZpQAAAA==
+X-Change-ID: 20260610-igvm_error-ce8e8b2ef70e
+To: qemu-devel@nongnu.org
+Cc: Gerd Hoffmann <kraxel@redhat.com>, 
+ Stefano Garzarella <sgarzare@redhat.com>, Ani Sinha <anisinha@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Zhao Liu <zhao1.liu@intel.com>, 
+ Oliver Steffen <osteffen@redhat.com>, Luigi Leonardi <leonardi@redhat.com>
+X-Mailer: b4 0.14.3
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=leonardi@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
@@ -179,43 +124,149 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
->>>>> diff --git a/hw/core/machine.c b/hw/core/machine.c
->>>>> index 4d8b15d99e..8219f13779 100644
->>>>> --- a/hw/core/machine.c
->>>>> +++ b/hw/core/machine.c
->>>>> @@ -43,6 +43,7 @@ GlobalProperty hw_compat_11_0[] = {
->>>>>        { "chardev-vc", "encoding", "cp437" },
->>>>>        { "tpm-crb", "cap-chunk", "off" },
->>>>>        { "tpm-crb", "x-allow-chunk-migration", "off" },
->>>>> +    { "migration", "switchover-ack-legacy", "on" },
->>>>>    };
->>>> This line needs to be moved to the last patch, or people will get very
->>>> confused on last patch flipping default without caring about old behavior..
->>> This patch Implements the compatibility flows for legacy switchover-ack
->>> which use this property, so moving this line to last patch sounds even more
->>> confusing IMHO.
->> My comment only applies to this one line to change hw_compat_11_0[], not
->> the property itself.  It won't affect this patch.  It's common pattern to
->> do this in one patch to "update default value, but let's keep the old
->> machines unaffected".
->>
->> Btw, since this value still has a default value ON in this patch, moving
->> this line to the last patch won't change anything except making last patch
->> clearer.
-> 
-> Alright, I'll move it to last patch.
-> 
-> Cedric, would you like me to send v4 for this?
+Parameter areas are how an IGVM file tells QEMU to allocate buffers
+for runtime information the guest needs — VP count, memory map,
+MADT and so on. Usage directives reference a parameter area by index
+to tell QEMU where to write each piece of data. If the index doesn't
+match any declared parameter area, the data has nowhere to go and
+should be treated as an error.
 
-Yes please.
+The directive handlers that look up a parameter area all return 0
+(success) when `qigvm_find_param_entry()` can't find it. Therefore,
+the load succeeds but the guest never gets the expected parameters.
 
-I think this series is ready for merge. So I have asked our QE
-to test it a bit. Should be done next week. Once done, I will
-send a vfio MR.
+Note that the IGVM library already validates parameter area indices
+when the file is loaded, so this path should only be reachable with
+a malformed file that bypassed library validation. This is defensive
+programming against that case.
 
-Thanks,
+Report the error with error_setg() and return -1 instead.
 
-C.
+Signed-off-by: Luigi Leonardi <leonardi@redhat.com>
+---
+Changes in v2:
+- Moved error_setg to qigvm_find_param_entry [Gerd]
+- Rebased to latest upstream
+- Link to v1: https://lore.kernel.org/qemu-devel/20260610-igvm_error-v1-1-59d133a69f2f@redhat.com
+---
+ backends/igvm.c                | 26 ++++++++++++++++----------
+ include/system/igvm-internal.h |  3 ++-
+ target/i386/igvm.c             |  5 +++--
+ 3 files changed, 21 insertions(+), 13 deletions(-)
 
+diff --git a/backends/igvm.c b/backends/igvm.c
+index 3f4b97a5d4..a5a2a4eccc 100644
+--- a/backends/igvm.c
++++ b/backends/igvm.c
+@@ -81,7 +81,8 @@ struct QEMU_PACKED sev_id_authentication {
+ #define IGVM_SEV_ID_BLOCK_VERSION 1
+ 
+ QIgvmParameterData*
+-qigvm_find_param_entry(QIgvm *igvm, uint32_t parameter_area_index)
++qigvm_find_param_entry(QIgvm *igvm, uint32_t parameter_area_index,
++                       Error **errp)
+ {
+     QIgvmParameterData *param_entry;
+     QTAILQ_FOREACH(param_entry, &igvm->parameter_data, next)
+@@ -90,7 +91,8 @@ qigvm_find_param_entry(QIgvm *igvm, uint32_t parameter_area_index)
+             return param_entry;
+         }
+     }
+-    warn_report("IGVM: No parameter area for index %u", parameter_area_index);
++    error_setg(errp, "IGVM: parameter area index %u not found",
++                   parameter_area_index);
+     return NULL;
+ }
+ 
+@@ -528,9 +530,10 @@ static int qigvm_directive_parameter_insert(QIgvm *ctx,
+         return 0;
+     }
+ 
+-    param_entry = qigvm_find_param_entry(ctx, param->parameter_area_index);
++    param_entry = qigvm_find_param_entry(ctx,
++                                         param->parameter_area_index, errp);
+     if (param_entry == NULL) {
+-        return 0;
++        return -1;
+     }
+ 
+     region = qigvm_prepare_memory(ctx, param->gpa, param_entry->size,
+@@ -601,9 +604,10 @@ static int qigvm_directive_memory_map(QIgvm *ctx, const uint8_t *header_data,
+     }
+ 
+     /* Find the parameter area that should hold the memory map */
+-    param_entry = qigvm_find_param_entry(ctx, param->parameter_area_index);
++    param_entry = qigvm_find_param_entry(ctx,
++                                         param->parameter_area_index, errp);
+     if (param_entry == NULL) {
+-        return 0;
++        return -1;
+     }
+ 
+     max_entry_count = param_entry->size / sizeof(IGVM_VHS_MEMORY_MAP_ENTRY);
+@@ -660,9 +664,10 @@ static int qigvm_directive_vp_count(QIgvm *ctx, const uint8_t *header_data,
+     uint32_t *vp_count;
+     CPUState *cpu;
+ 
+-    param_entry = qigvm_find_param_entry(ctx, param->parameter_area_index);
++    param_entry = qigvm_find_param_entry(ctx,
++                                         param->parameter_area_index, errp);
+     if (param_entry == NULL) {
+-        return 0;
++        return -1;
+     }
+ 
+     vp_count = (uint32_t *)(param_entry->data + param->byte_offset);
+@@ -683,9 +688,10 @@ static int qigvm_directive_environment_info(QIgvm *ctx,
+     QIgvmParameterData *param_entry;
+     IgvmEnvironmentInfo *environmental_state;
+ 
+-    param_entry = qigvm_find_param_entry(ctx, param->parameter_area_index);
++    param_entry = qigvm_find_param_entry(ctx,
++                                         param->parameter_area_index, errp);
+     if (param_entry == NULL) {
+-        return 0;
++        return -1;
+     }
+ 
+     environmental_state =
+diff --git a/include/system/igvm-internal.h b/include/system/igvm-internal.h
+index 7f131c4d03..7eb3792ed8 100644
+--- a/include/system/igvm-internal.h
++++ b/include/system/igvm-internal.h
+@@ -72,6 +72,7 @@ struct QIgvm {
+ IgvmHandle qigvm_file_init(char *filename, Error **errp);
+ 
+ QIgvmParameterData*
+-qigvm_find_param_entry(QIgvm *igvm, uint32_t parameter_area_index);
++qigvm_find_param_entry(QIgvm *igvm, uint32_t parameter_area_index,
++                       Error **errp);
+ 
+ #endif
+diff --git a/target/i386/igvm.c b/target/i386/igvm.c
+index f41b498b89..ad9bf87761 100644
+--- a/target/i386/igvm.c
++++ b/target/i386/igvm.c
+@@ -191,9 +191,10 @@ int qigvm_directive_madt(QIgvm *ctx, const uint8_t *header_data, Error **errp)
+     int result = 0;
+ 
+     /* Find the parameter area that should hold the MADT data */
+-    param_entry = qigvm_find_param_entry(ctx, param->parameter_area_index);
++    param_entry = qigvm_find_param_entry(ctx,
++                                         param->parameter_area_index, errp);
+     if (param_entry == NULL) {
+-        return 0;
++        return -1;
+     }
+ 
+     GArray *madt = acpi_build_madt_standalone(ctx->machine_state);
+
+---
+base-commit: c7cf7c810153d6f5f31aa2d5c0dee9087f6b4dff
+change-id: 20260610-igvm_error-ce8e8b2ef70e
+
+Best regards,
+-- 
+Luigi Leonardi <leonardi@redhat.com>
 
 
