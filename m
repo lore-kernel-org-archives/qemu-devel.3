@@ -4,146 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0CA7CD98F6
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jun 2026 14:37:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8E7ACD98F2
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jun 2026 14:39:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1waDrR-0006Ym-BB; Thu, 18 Jun 2026 10:36:53 -0400
+	id 1waDtK-0007Rq-Jo; Thu, 18 Jun 2026 10:38:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1waDrP-0006YV-Be
- for qemu-devel@nongnu.org; Thu, 18 Jun 2026 10:36:51 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1waDtI-0007RC-Uc
+ for qemu-devel@nongnu.org; Thu, 18 Jun 2026 10:38:48 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1waDrM-0008Ey-NF
- for qemu-devel@nongnu.org; Thu, 18 Jun 2026 10:36:51 -0400
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65IDrN951453079
- for <qemu-devel@nongnu.org>; Thu, 18 Jun 2026 14:36:47 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- oiIzWgo2ACmGpLKfLueCD8cX1zsKt1grMXbORVio9w8=; b=cSDIWSMMm9NM5V6S
- YcMn3SBWIViGsddcpHntgXFrJcmvPqjo5CX1hI5HcPOMz7fdZp7H79T+kv8C7cnB
- 8gTMLpkj2ybepvO9Sgb2QUcGF/lmjJH4o9SrvR52aVJn32PxXPFGh5d/1YQtxcDM
- 8F9pP4xXHdYMYH7TPFMWEeRmFGBpjS1pzVgdFqFjtT7VKd2n1ChzdJqt63jkg5ao
- mH1dQg+2Z0vVifua0gUCE7w8v6RK553qhHVWoZI4QfZcv1kDqI1on17sfDJgXVnc
- IL0xtQPU+dOJ3tHi8kRDQgjCBHf17xvhQ0u+cNTDa9yoaEXdqiFJxidHOq8X3b4Z
- YLDZ+g==
-Received: from mail-vs1-f71.google.com (mail-vs1-f71.google.com
- [209.85.217.71])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4eux2ccx7s-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 18 Jun 2026 14:36:46 +0000 (GMT)
-Received: by mail-vs1-f71.google.com with SMTP id
- ada2fe7eead31-6c89de84f33so1559528137.0
- for <qemu-devel@nongnu.org>; Thu, 18 Jun 2026 07:36:46 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1waDtH-0001lc-1L
+ for qemu-devel@nongnu.org; Thu, 18 Jun 2026 10:38:48 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1781793524;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=q2yPqyWkhbfSXDTz9k5/9EE4gcZLN6Hs73Q5udSvqf0=;
+ b=Tg1KadAUYi+7EDumLGUSaykwE3/Uzy6IytOiq4b9VUI7GjPFqj4e4QuuuCLysk+lvJbyVv
+ tNPYAvJh71k5qfCfWvj/6Qkn6EPsOnjbOGddEiFL/JZqtbVuI6EcSAc5M6NtA7P6jh1rfN
+ H8yRArMyLd81fXcmVaR6JPtAx14zl/s=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-556-cJfYm1XIPwyFZsOgCHtYDw-1; Thu, 18 Jun 2026 10:38:42 -0400
+X-MC-Unique: cJfYm1XIPwyFZsOgCHtYDw-1
+X-Mimecast-MFC-AGG-ID: cJfYm1XIPwyFZsOgCHtYDw_1781793521
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-46010bc0f1eso713770f8f.3
+ for <qemu-devel@nongnu.org>; Thu, 18 Jun 2026 07:38:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1781793406; x=1782398206; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=oiIzWgo2ACmGpLKfLueCD8cX1zsKt1grMXbORVio9w8=;
- b=TvPJ0tEXiUl/YrBYtnosooRBEFDs7WNyLplt7zPzJZ1FzMR864OJXCMHSoTk8RtZq2
- wGsqEeUenN7iflwTokow8Rvr2CLidcJOOhNh//gRsKS1ITOmM86s/Jfd9lP1KTy4Gy5h
- xaABLk2Ac1cb3YHPLAPw9/ihY/MogQNS9kPqt5iLhSH+ww5xkJt/E2YVTt9Uq/io/pLn
- DIU6GQXEZm51uafIf8Mnj39acrJowzB7PIsWgAoobeFfhUA0/Wy+Msjvi7v6vc7jp9J9
- ZsdCjJXXNMj5yr66TuWOl3MOasMKY8Zp5VZQzPNt+tL+HKVnAELYFuX6SqIOxg67OSOR
- KGyg==
+ d=redhat.com; s=google; t=1781793521; x=1782398321; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=q2yPqyWkhbfSXDTz9k5/9EE4gcZLN6Hs73Q5udSvqf0=;
+ b=hCIlkx9dvvvbuPQy+k1+tj5F8kVD60KYOVANwqJ/ZtiZ6re8HlVnqBEMBPcociar0i
+ 56t/46YtdAY4DhNY13e1+mIJSbDvrruURPGiR9GV4LH6igvunh/6g0qNavAh56DZTjqL
+ bAPMDqNcqPb2Bwu2LoPvMovMV8jcW3XFgz6wWuD/MhDBE1qmTRnQSQ5Rq8lfQ18RMtN3
+ tBWzSX8x9YCv0/+lpEOoLe/7pocsz0xs3xOX1Uuexhw5J0+AtOkqOgGR0g9UFvhN7fPD
+ FjfFDumHEQ+BcdOIiHGCaRT+NjIjKIh3OJGYtrtUoWXNQ5OTh//Q28l9ntCrK4+gVCme
+ UaMA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781793406; x=1782398206;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=oiIzWgo2ACmGpLKfLueCD8cX1zsKt1grMXbORVio9w8=;
- b=kD9yOQY93kgNkiDXQutptfHzD99bkvI7mDOOB4lFzPlp3ts6pXUkDwaDjHALYSUqSv
- Fqd26lSOGnA4Cta5k+a8pIfi66wlgevGpzCTqJrDxOljY2tN0J7GWbXoVOhDmHCntL96
- PAY19mYaWr5+GP15bI3g2YMCU7hmq3g5DJnAKxSOcdMpHxDJAbukh9VFk3t8L7puZoXu
- /M9a5fShSSOYNwjptamFIhF2BapoPUg4Ljr/fzX6E5PaWo8Mu1QOJrIrpcGUo6xhl1Rk
- so1yjMsIcNvaBqZK19HWtOOkVQ1tELUnl8nm4bn2CeVhlZX+WKANOaidglgn7/NHQXDO
- NkmA==
-X-Forwarded-Encrypted: i=1;
- AFNElJ8Mi3INwK7tjQR21xoCcwqUaJ39+E9e5rx4EmNse4vsdOM8YXkWdh7S10vYpmIB0A3DXBTv7YxQEzR1@nongnu.org
-X-Gm-Message-State: AOJu0Yw+hFGNx+sG2+DiRxEuVTyBqCptssPMaVJxv4+Ww8wl7Ebqm5TF
- /+PwH9DvI4Wh3CqYDt7Ct25y4QrizoaGqEdDgns1Ty2ZsftaiuuA/cPgORwLC2YfXNWK0rlKB/N
- j3RnEasOqafoBrRtPHtezjnc+CQ5cqnj04QEqrEC+5qIlhZqRSpx8/6e/kA==
-X-Gm-Gg: AfdE7cnjLsZVvw70W4w073fXGvoOBIKmH54bvl399ybGN7+Q/VcUC3mKC8W/bfJwRUH
- wocXTUJKx8ljDXOX+0exWrkJUM/46pha7M4otCZ4gqG0vGhzutTlSSNCm5/F3hWC0CVd3rA1slX
- d4RimKY93s5PHwSQUagXB4aVA2u/GjIFsy2o1CvqvqBwIKM04XdnAgt60O3GM8HCKwJdfEMF7eK
- LwXBHZSuyqa2Wq0JnbiOll7dxm0WDmoLWW6lDAA7KyfnyI/cKQGf2m5/pr/T+Vt3DCK3VKKfxk2
- A6VINk/5Lp5Dafc7E4pztJCM2aOZAMsIIfVTIXBDsjD3tRS10kmig6PACxaTHwlY+GR03JoVQ/T
- fERX+aw4QD6kexjEST+FMaXewrsht+CIYdNLL43Bz9LBZwMVpAojzAb8mkaY62g==
-X-Received: by 2002:a05:6102:50a8:b0:6d9:5eaa:6d9c with SMTP id
- ada2fe7eead31-727c51cec36mr2652367137.12.1781793405968; 
- Thu, 18 Jun 2026 07:36:45 -0700 (PDT)
-X-Received: by 2002:a05:6102:50a8:b0:6d9:5eaa:6d9c with SMTP id
- ada2fe7eead31-727c51cec36mr2652341137.12.1781793405561; 
- Thu, 18 Jun 2026 07:36:45 -0700 (PDT)
-Received: from [192.168.69.213] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4922fa96f0esm284654915e9.12.2026.06.18.07.36.44
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 18 Jun 2026 07:36:44 -0700 (PDT)
-Message-ID: <f174b13c-2678-42d8-b59b-b14d7e9177cd@oss.qualcomm.com>
-Date: Thu, 18 Jun 2026 16:36:43 +0200
+ d=1e100.net; s=20251104; t=1781793521; x=1782398321;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=q2yPqyWkhbfSXDTz9k5/9EE4gcZLN6Hs73Q5udSvqf0=;
+ b=XLKgClOcbBdB1r0OqmBhv7+cL0rBWR1EBQqaE5LhU6GSs25AWV5yY2JRd4ONMxZkjC
+ 73B5u4B/w07VxXnPtuGU2jN2Ta0vfkV5Er801BUdPWkIcEHqN6pvC5h8zZ5CDABaV5Dn
+ L1uK2KtwaTrsjLzllIHOmbGwUuf0H1rJD9SmJm1u6huQ5fzXRR82zWlOxvPtNmwITMNH
+ iaDexQI3OY9WRuz7xVqlnA/6GU8lGw1g7pQ+0knEoY1eCOLQZheW0cWRWLqS2K4A+NJU
+ fK83WS/ePpMCKqk8EYz8o8C/fJQAwub1L7rhQ1VoiqsgH5cEiXasR3TuMO3IMyve5Ibb
+ DRNA==
+X-Gm-Message-State: AOJu0YwtOAFbq9Tr1zQMZxL4ifQI2wCi6ET93xG2+h2rqGjK44zVB/K2
+ stTIkRe9Jopf42IrNCNOWiO7BOZwpLsxUT7/cL2XEyIcfa3YOXjlPDts1vYhDHQbF+n+L0dHxQz
+ djzNTKJZOiW1NlsrcPIORNVbOHAPwa16JgDIcw4fLWA+pJKG6IogJZ3Pc
+X-Gm-Gg: AfdE7clWkwYma+htIGkEKbtsbndLTuRHSCkVCDwgc/kPvTo9jBUFNn7P9mWZ/3YUAcB
+ s4BKxzGQ1eOMvDOB5Kn2YhZ6iYmH9cBebuzJOidXqhNBe2n00mlhEv7KdfqUlaDVCO6JUYsSrE7
+ yZViY4JXVGmktvEpg+scusZgoqH/25qHeuZLKpxIGc4lUKAmxxvtfeysGeohqfhfcSSKgXI9Nhj
+ fQDnB6+SmneMBwO3JOvQz9mLQecXZGz20DHT3njQy446EYPaoi1uZiWI3eh/88iTg1UzpKB2Zj/
+ tEJhhBkIte02gdJv9t2I4CNkQh1yMqZMd8ZhtIpGDDWHSDz1x2qNOXX9rMgw7B7NvQGD2U4=
+X-Received: by 2002:a05:600c:1395:b0:490:e5c1:b8b9 with SMTP id
+ 5b1f17b1804b1-4923a8c402emr42325635e9.0.1781793521433; 
+ Thu, 18 Jun 2026 07:38:41 -0700 (PDT)
+X-Received: by 2002:a05:600c:1395:b0:490:e5c1:b8b9 with SMTP id
+ 5b1f17b1804b1-4923a8c402emr42324935e9.0.1781793520972; 
+ Thu, 18 Jun 2026 07:38:40 -0700 (PDT)
+Received: from imammedo ([213.175.46.86]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4923a1d3fcdsm46310425e9.1.2026.06.18.07.38.40
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 18 Jun 2026 07:38:40 -0700 (PDT)
+Date: Thu, 18 Jun 2026 16:38:38 +0200
+From: Igor Mammedov <imammedo@redhat.com>
+To: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: qemu-devel@nongnu.org, anisinha@redhat.com, pbonzini@redhat.com,
+ peter.maydell@linaro.org, shannon.zhaosl@gmail.com, philmd@linaro.org,
+ zhao1.liu@intel.com, rad@semihalf.com, leif.lindholm@oss.qualcomm.com,
+ qemu-arm@nongnu.org
+Subject: Re: [PATCH v2 07/21] arm: sbsa_gwdt: fixup default "clock-frequency"
+Message-ID: <20260618163838.5586e18d@imammedo>
+In-Reply-To: <20260603021313-mutt-send-email-mst@kernel.org>
+References: <20260303092532.2410177-1-imammedo@redhat.com>
+ <20260303092532.2410177-8-imammedo@redhat.com>
+ <20260603021313-mutt-send-email-mst@kernel.org>
+X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] target/riscv: raise access fault for Zicbom MMIO-like
- accesses
-Content-Language: en-US
-To: ZhengXiang Qin <qinzhengxiang@foxmail.com>, qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Chao Liu <chao.liu.zevorn@gmail.com>, Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, Weiwei Li
- <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
-References: <tencent_4EF8937D817B836D3D911B9B05491B02950A@qq.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <tencent_4EF8937D817B836D3D911B9B05491B02950A@qq.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjE4MDEzNSBTYWx0ZWRfX9SFS3FvQAigi
- +IdzA5Inub74Zlwc63NTHAHivx7RF4sEOznW9vOpHKkPqXaYN+aOo6sKwyQm7QYVY0m89RtOtzB
- 4Qch3u8TJEbxSFkUBy1e9DUqWjUI6a5el6nfuNxpyfZB4wHdT2bgg48v34GxRkveilFFc2aZh0y
- Nhh4nMXFqiFtkmizd/JpJZwwIF7djq25o9TR9wDqHISrEPx8XNQkQ3wNOa2Hl8Y8NsgRt+RVUTZ
- qkQ4LH+MpgDwqrAyS40rXEHyfg13/wIhbypdJKiTe4Khf9/3l3wbvIZd3SruXMMPbSQNuI5OC5h
- 248ML017+NG81iTRk5ryzyVsQf6bGQm4hrshaZXbYjWfDvFIxWUwCr0yeSQ76//BBqa9Sp+fZgU
- iibqe2Tbo+7z2wGzkjosufksy1QvuBnq6tEzIgcv6gLnmLuuTOBuo12E3Ewv2BXyKKPgUipNySx
- zvBRK7ud6UYTUYpzaMA==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjE4MDEzNSBTYWx0ZWRfX5g+Veu0reNza
- 8heXZxJgeYX26oJszhXBHL3LxiOOdU01lNyPgx4ytyWnLBkdUjXsalP8bvHdVYWGyL+kYQFRkY+
- O92t2S176DuEkqcNKeg7c080YaNhSYg=
-X-Proofpoint-GUID: iq818NXIp7-jZnYPbogyToEV9mT1aUFA
-X-Proofpoint-ORIG-GUID: iq818NXIp7-jZnYPbogyToEV9mT1aUFA
-X-Authority-Analysis: v=2.4 cv=WN1PmHsR c=1 sm=1 tr=0 ts=6a34027e cx=c_pps
- a=P2rfLEam3zuxRRdjJWA2cw==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
- a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
- a=p0WdMEafAAAA:8 a=EUspDBNiAAAA:8 a=pGLkceISAAAA:8 a=bDN84i_9AAAA:8
- a=Wo38fnyJPC63dEFqrDAA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=ODZdjJIeia2B_SHc_B0f:22 a=J2PsDwZO0S0EpbpLmD-j:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-18_02,2026-06-18_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 malwarescore=0 lowpriorityscore=0 impostorscore=0 phishscore=0
- spamscore=0 priorityscore=1501 adultscore=0 clxscore=1015 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606180135
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -159,61 +122,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 18/6/26 16:06, ZhengXiang Qin wrote:
-> check_zicbom_access() currently treats any probe_access_flags() result
-> other than TLB_INVALID_MASK as a successful access. However, a result
-> with TLB_MMIO means that the target is MMIO-like and should not be
-> treated as a normal cache block management target.
+On Wed, 3 Jun 2026 02:15:01 -0400
+"Michael S. Tsirkin" <mst@redhat.com> wrote:
+
+> On Tue, Mar 03, 2026 at 10:25:18AM +0100, Igor Mammedov wrote:
+> > Comment about keeping legacy freq, is wrong to begin with
+> > (should be 62.5MHz), but that value also doesn't make
+> > sense anymore as the watchdog is used only by un-versioned
+> > SBSA board and the later has hard-coded it to 1GHz.
+> > 
+> > Other potential user (arm/virt) also has system clock at 1GHz.
+> > 
+> > Drop misleading comment about legacy and set default to 1GHz
+> > to match both boards.
+> > 
+> > Signed-off-by: Igor Mammedov <imammedo@redhat.com>  
 > 
-> Raise a store/AMO access fault for Zicbom accesses to MMIO-like regions
-> so that cbo.clean, cbo.flush and cbo.inval do not silently succeed on
-> non-cacheable/MMIO-like memory.
 > 
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3501
-> Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-> Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
-> Signed-off-by: ZhengXiang Qin <qinzhengxiang@foxmail.com>
-> ---
-> Changes since v1:
-> - Use a bit test for TLB_MMIO since probe_access_flags() returns a bitmask.
-> - Keep Reviewed-by tags from v1.
+> if I take this in isolation then make check seems to fail
+> on qemu:qtest-arm/aspeed_smc-test.
+
+it works over here,
+
+it must have been a glitch,
+gwdt isn't used by this board,
+the sole user of it is hw/arm/sbsa-ref.c at this point
+
 > 
->   target/riscv/op_helper.c | 5 +++++
->   1 file changed, 5 insertions(+)
+> follow up patches fix it, but I think it has to be reordered
+> to avoid breaking bisect.
 > 
-> diff --git a/target/riscv/op_helper.c b/target/riscv/op_helper.c
-> index 81873014cb..f23b060585 100644
-> --- a/target/riscv/op_helper.c
-> +++ b/target/riscv/op_helper.c
-> @@ -218,6 +218,7 @@ static void check_zicbom_access(CPURISCVState *env,
->       void *phost;
->       int ret;
->   
-> +    target_ulong fault_addr = address;
-
-CPURISCVState::badaddr is of type uint64_t, can we use that here instead
-of target_ulong?
-
->       /* Mask off low-bits to align-down to the cache-block. */
->       address &= ~(cbomlen - 1);
->   
-> @@ -235,6 +236,10 @@ static void check_zicbom_access(CPURISCVState *env,
->        */
->       ret = probe_access_flags(env, address, cbomlen, MMU_DATA_LOAD,
->                                mmu_idx, true, &phost, ra);
-> +    if (ret & TLB_MMIO) {
-> +        env->badaddr = fault_addr;
-> +        riscv_raise_exception(env, RISCV_EXCP_STORE_AMO_ACCESS_FAULT, ra);
-> +    }
-
-Maybe adding 'else' make this code path more readable.
-
->       if (ret != TLB_INVALID_MASK) {
->           /* Success: readable */
->           return;
-
-Feel free to ignore these nitpicking comments.
-
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+> 
+> 
+> > ---
+> >  hw/watchdog/sbsa_gwdt.c | 5 ++---
+> >  1 file changed, 2 insertions(+), 3 deletions(-)
+> > 
+> > diff --git a/hw/watchdog/sbsa_gwdt.c b/hw/watchdog/sbsa_gwdt.c
+> > index 7ade5c6f18..b739a3ce3c 100644
+> > --- a/hw/watchdog/sbsa_gwdt.c
+> > +++ b/hw/watchdog/sbsa_gwdt.c
+> > @@ -264,11 +264,10 @@ static void wdt_sbsa_gwdt_realize(DeviceState *dev, Error **errp)
+> >  static const Property wdt_sbsa_gwdt_props[] = {
+> >      /*
+> >       * Timer frequency in Hz. This must match the frequency used by
+> > -     * the CPU's generic timer. Default 62.5Hz matches QEMU's legacy
+> > -     * CPU timer frequency default.
+> > +     * the CPU's generic timer.
+> >       */
+> >      DEFINE_PROP_UINT64("clock-frequency", struct SBSA_GWDTState, freq,
+> > -                       62500000),
+> > +                       1000000000),
+> >  };
+> >  
+> >  static void wdt_sbsa_gwdt_class_init(ObjectClass *klass, const void *data)
+> > -- 
+> > 2.47.3  
+> 
 
 
