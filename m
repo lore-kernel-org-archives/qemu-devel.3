@@ -4,82 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4C6ACD98F2
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jun 2026 19:56:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0E97CD98ED
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jun 2026 19:56:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1waIqE-0003vS-3l; Thu, 18 Jun 2026 15:55:58 -0400
+	id 1waIqN-0003zZ-VA; Thu, 18 Jun 2026 15:56:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1waIq2-0003sS-Bg
- for qemu-devel@nongnu.org; Thu, 18 Jun 2026 15:55:46 -0400
-Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
+ id 1waIq5-0003tZ-Lc
+ for qemu-devel@nongnu.org; Thu, 18 Jun 2026 15:55:50 -0400
+Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1waIpv-0007rR-Lk
- for qemu-devel@nongnu.org; Thu, 18 Jun 2026 15:55:46 -0400
-Received: by mail-pl1-x62c.google.com with SMTP id
- d9443c01a7336-2c0b9328c4aso10252405ad.0
- for <qemu-devel@nongnu.org>; Thu, 18 Jun 2026 12:55:33 -0700 (PDT)
+ id 1waIq1-0007wY-1w
+ for qemu-devel@nongnu.org; Thu, 18 Jun 2026 15:55:49 -0400
+Received: by mail-pl1-x62e.google.com with SMTP id
+ d9443c01a7336-2c6bdb8a8bdso8665815ad.1
+ for <qemu-devel@nongnu.org>; Thu, 18 Jun 2026 12:55:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1781812532; x=1782417332; darn=nongnu.org;
+ d=linaro.org; s=google; t=1781812542; x=1782417342; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ZwD+09xFgdMoZuAKSWmp8VsuyM0k0eLL68nRKXSEm94=;
- b=d2j33pXZnz/E5qpRJvUXHofxzv89lz1gPWfKdIt60EghP09Dsw6te2slyCmgYpjpXr
- eRBjDyUDUnIfcgdH8VuI7+zVIFNKc3I04b63wX1aTsP+YY0OT7L/BgCKDOaSNBaCNqRR
- OPrt1sBF8wRUR3SayITI0OL0ciERf+DcvRThmxUerpJlQ4Ms8qio1D3mRE9OPpHA1VD/
- MUyz+ydV5IfWzbpnIfZ+k0LkMkqCjjkXnvJlP0z75aMeMqUwSQ4afkQHkX3Nof3O4MMr
- cChiKoUZL0pdRHOfucVSsnl4hMsLnJBkOdv6vpNgehJgF5RC8wYZPI4qiaA5FVpcsZUB
- JusA==
+ bh=mXnvKcZP9AChKOwVNmnhtyA36iu2kjvikfZ1oQO3isc=;
+ b=gSvlO/Dyvge2Z0ZLfd8rIiOFSKl6UD1VZUW9kMWBOMchnleRsMiqWRmnivPU1PIYkS
+ bWhppxnj+HIDutu3yjxSDpEEjCSMCb7uctK4Gs0h3DRK/ufZepAuRUDCuBHsRwuQEZtm
+ QMpmONyMotdpbmFA5yjAn8aoZYekhyQ7XUY2QnHVcaYAU013Zze6Gd/DUty127e9E8DY
+ 5LJdnVRAHmMh2aiZXyUat7YqjDQ8FswfC0xPRYXgdhRoIfnWVR5nuFFSDjLLb9ddVvYF
+ Ck3a69Vlvifwr8anLEeqmHiJJ4KidVXz1wKYBPQsmbSG+TEWCPR87ohHGKzZrTzZnZUd
+ VTDQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781812532; x=1782417332;
+ d=1e100.net; s=20251104; t=1781812542; x=1782417342;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=ZwD+09xFgdMoZuAKSWmp8VsuyM0k0eLL68nRKXSEm94=;
- b=qxkFWG7KIKrWp7UICTN8n8dUOcYCJ33ud9qcn8Wf9rPYVhtedpBQ2+LT1f7HFfPV0k
- 52XYha0NmlHS5S0Nwh5xd3kf8L/Zii9i3USUnp3+hNbXmqjKaNqGpqIkLqiaOfZTKrP3
- y7+hzR+M2BdENqwgc7Mi4GzWVDreXjosS5j4XrEzUHY1wQ6Kb3h5zlftwzASGi9aiPkP
- X4mrublvtWW0czisBVfxqzJiRpDRKFmTa4qpo4kp09XS4cAmr228XffFQ9bVQeLqmMai
- 7RWEQOi7IFfwr9FC6vHuqpyn0BVHe59+azLui/jOSrrocqaW85yNjJmM+782OTaadsUi
- 2RHg==
-X-Gm-Message-State: AOJu0Yz3H3Ucl96iFF66OsPCtzTmjh6gWZmsxBSXkKkU1l0EGGTQhh4W
- IAkEZA2rsKRGFZ9a08byuF4DRxn8jbve+xgxOLm9V22gM9j3qsO52GwyI7m5DQQZjJkY70BcWTa
- 0xcpe
-X-Gm-Gg: AfdE7cnZoZ0iUJ8co0d8F4QnrdFzq0TFN9poRQM2mYLkkSdm0zNwASs7nSj606N+Fsx
- yuPcRFzKI+14nEvg3gvp68dbcYSl/6P5+lvGcmoxNnKoRuSRl/FsTBniAX9T8ySGndQwkjauTW2
- dxf+VO0NhvKchMlH6VaKyR/ReoeS/LRBop5bHxZhlo1sjcTHwuc4GPQ+T1KXXal+2qVVjhRUvHk
- PuRl+xL25S0LgC6xQuqfv9KZwzXjnbmtzv63oDOzW+DoVan1r83QeB8FLUDv41JqlcSyePOi7sB
- vLhoy0+JJ8VXQ8JQIIHeBgGNY+r08qirTIyngfsiT2YcKo8wSe8tNADHy6j1bM39/28WKRxH7Xj
- pjEqmvGg7DPNZzxzqrjIWKA2Pmsw0LIubPTljmv/N6WUoLI/7NR5MZjXKT5wVHd6gEDt+6XKnBX
- zFjU0zJz8uYGMW7k0OpfNrkYwEiR+/4MTTlbfCehjH5aohxxaSWQ==
-X-Received: by 2002:a17:903:2347:b0:2c6:9358:3ad5 with SMTP id
- d9443c01a7336-2c718fc45fbmr6291135ad.17.1781812532446; 
- Thu, 18 Jun 2026 12:55:32 -0700 (PDT)
+ bh=mXnvKcZP9AChKOwVNmnhtyA36iu2kjvikfZ1oQO3isc=;
+ b=aEocUaNUsnCbKtTRDvZGqGUhH9Pc6O3MQFRtugknCn3e+Vq7CR1jFklh2uSmxjzbvQ
+ V8WVS1kJYbAo+9iuL+rTBAkyxrQMbzL7eRm2QEdF8U4PiszSi5srY/RzmqDAMaPkQuJ2
+ rup0apXgd2YTl0vJO8tVn6RaHbXNKLMHWj3LTI33oJIPHkZ3e71UTI4baQttGEehR5wD
+ FQepI6G4FmGZl1GVbsiRP4op+F8S4OKfMfNObsUrFXorpxfuEwRojeZzhSwQlzBib9K7
+ /kp1UWFRcNp2dNUccD5IQLryrVJrRXRpUpSI/WH1jt6Ls/cGW+4oxnki7hPpXIokOkT3
+ lTDA==
+X-Gm-Message-State: AOJu0YwI6hr7sExwuNQZEccFz5o7MgPBlHIVOV96EDKWUbPyvnFzvpxg
+ 6PZ7NFFKyZiJX2GwVg9Pbh3iiuX7RTwNu9SMDaUWuFnyVRK77kN1bXV3obrix7xu5v+xjlZ6S6n
+ TzPrw
+X-Gm-Gg: AfdE7ckfEK+WMPaFcR4o+TtE7EO1O8GMpieW3mWnP95Q6SPFEVr3ddn5ytgkhB0WGGh
+ GXoH/kinFumzJppe/Ue8BDC3WRi2Z3TZS76O3lwX3jt1iMk76pgTSIsMyvi64qBtuj+3WtO1si5
+ SdeDOukuiIaSuLG182Jfuy8+2YCRjB+u9K3y9JMaD6NyEgEHwuyM5/OL7KA9JIN4cGY8aTzwPk1
+ qk5F/kM5xCAF56BxF1SK2dVTwNRthTxIWZanVfioRwhd8vqo9pZaM8xdcGojX5wqL+8ALHtTjrb
+ NVxWIizMr7eNt8OHEVsPEG1q7GkM0Ne15KDELsQCifcRU/LCUVOdxEt7liOErkp43LErIDq6C0w
+ tirLr8rGkuKmkLoIxutsVy+8FJeM6cF93KwW7VFipa9AxYp42rcsguSYkckALh3vjAl+Fzc/xoJ
+ vgpEOSo1s21F3YZkGbPmbfRjRnh4nPdm4X+A33A7VXc270tnx90Q==
+X-Received: by 2002:a17:902:f552:b0:2c1:69cb:4423 with SMTP id
+ d9443c01a7336-2c718f61657mr7121835ad.14.1781812542162; 
+ Thu, 18 Jun 2026 12:55:42 -0700 (PDT)
 Received: from stoup.. (174-21-129-215.tukw.qwest.net. [174.21.129.215])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2c432c8ca31sm205732965ad.55.2026.06.18.12.55.29
+ d9443c01a7336-2c432c8ca31sm205732965ad.55.2026.06.18.12.55.38
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 18 Jun 2026 12:55:30 -0700 (PDT)
+ Thu, 18 Jun 2026 12:55:39 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Warner Losh <imp@bsdimp.com>,
-	Helge Deller <deller@gmx.de>
-Subject: [PATCH v3 03/13] linux-user: Drop hiaddr out-of-range check in
- probe_guest_base
-Date: Thu, 18 Jun 2026 12:55:09 -0700
-Message-ID: <20260618195520.589907-4-richard.henderson@linaro.org>
+Cc: Helge Deller <deller@gmx.de>,
+	Warner Losh <imp@bsdimp.com>
+Subject: [PATCH v3 07/13] common-user: Initialize mmap_min_addr for FreeBSD
+Date: Thu, 18 Jun 2026 12:55:13 -0700
+Message-ID: <20260618195520.589907-8-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260618195520.589907-1-richard.henderson@linaro.org>
 References: <20260618195520.589907-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,76 +101,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Since dropping 32-bit host support, a guest address cannot
-overflow a host pointer.  This means guest_hiaddr is unused
-for relocatable images, so don't pass guest_hiaddr as size.
+Use sysctl to fetch the vm layout of the current process.
 
-Reviewed-by: Warner Losh <imp@bsdimp.com>
 Reviewed-by: Helge Deller <deller@gmx.de>
+Reviewed-by: Warner Losh <imp@bsdimp.com>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- linux-user/elfload.c  | 26 +++++++-------------------
- linux-user/flatload.c |  3 +--
- 2 files changed, 8 insertions(+), 21 deletions(-)
+ common-user/mmap-min-addr.c | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
-diff --git a/linux-user/elfload.c b/linux-user/elfload.c
-index b32abd569f..960847fda7 100644
---- a/linux-user/elfload.c
-+++ b/linux-user/elfload.c
-@@ -1092,20 +1092,11 @@ void probe_guest_base(const char *image_name, abi_ulong guest_loaddr,
-     uintptr_t align = MAX(SHMLBA, TARGET_PAGE_SIZE);
+diff --git a/common-user/mmap-min-addr.c b/common-user/mmap-min-addr.c
+index b2b3762386..830c6f66a0 100644
+--- a/common-user/mmap-min-addr.c
++++ b/common-user/mmap-min-addr.c
+@@ -5,6 +5,10 @@
  
-     /* Sanity check the guest binary. */
--    if (reserved_va) {
--        if (guest_hiaddr > reserved_va) {
--            error_report("%s: requires more than reserved virtual "
--                         "address space (0x%" PRIx64 " > 0x%lx)",
--                         image_name, (uint64_t)guest_hiaddr, reserved_va);
--            exit(EXIT_FAILURE);
--        }
--    } else {
--        if (guest_hiaddr != (uintptr_t)guest_hiaddr) {
--            error_report("%s: requires more virtual address space "
--                         "than the host can provide (0x%" PRIx64 ")",
--                         image_name, (uint64_t)guest_hiaddr + 1);
--            exit(EXIT_FAILURE);
--        }
-+    if (reserved_va && guest_hiaddr > reserved_va) {
-+        error_report("%s: requires more than reserved virtual "
-+                     "address space (0x%" PRIx64 " > 0x%lx)",
-+                     image_name, (uint64_t)guest_hiaddr, reserved_va);
-+        exit(EXIT_FAILURE);
+ #include "qemu/osdep.h"
+ #include "user/mmap-min-addr.h"
++#ifdef __FreeBSD__
++#include <sys/sysctl.h>
++#include <sys/user.h>
++#endif
+ 
+ uintptr_t mmap_min_addr;
+ 
+@@ -31,6 +35,15 @@ static void __attribute__((constructor)) init(void)
+         fclose(fp);
      }
- 
-     if (have_guest_base) {
-@@ -1373,11 +1364,8 @@ static void load_elf_image(const char *image_name, const ImageSource *src,
-              */
-             probe_guest_base(image_name, range.lo, range.hi);
-         } else {
--            /*
--             * The binary is dynamic, but we still need to
--             * select guest_base.  In this case we pass a size.
--             */
--            probe_guest_base(image_name, 0, range.hi - range.lo);
-+            /* The binary is dynamic; we still need to select guest_base. */
-+            probe_guest_base(image_name, 0, 0);
- 
-             /*
-              * Avoid collision with the loader by providing a different
-diff --git a/linux-user/flatload.c b/linux-user/flatload.c
-index 4beb3ed1b9..8abdd2aef2 100644
---- a/linux-user/flatload.c
-+++ b/linux-user/flatload.c
-@@ -261,8 +261,7 @@ static int load_flat_file(struct linux_binprm * bprm,
-     /*
-      * Allocate the address space.
-      */
--    probe_guest_base(bprm->filename, 0,
--                     text_len + data_len + extra + indx_len - 1);
-+    probe_guest_base(bprm->filename, 0, 0);
- 
-     /*
-      * there are a couple of cases here,  the separate code/data
+     mmap_min_addr = min_addr;
++#elif defined(__FreeBSD__)
++    int mib[] = { CTL_KERN, KERN_PROC, KERN_PROC_VM_LAYOUT, getpid() };
++    struct kinfo_vm_layout info;
++    size_t info_len = sizeof(info);
++
++    mmap_min_addr =
++        (sysctl(mib, ARRAY_SIZE(mib), &info, &info_len, NULL, 0) < 0
++         ? qemu_real_host_page_size()
++         : info.kvm_min_user_addr);
+ #else
+ # error
+ #endif
 -- 
 2.43.0
 
