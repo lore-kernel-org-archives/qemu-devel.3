@@ -4,101 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB5D5CD98ED
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jun 2026 10:14:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 129E4CD98ED
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jun 2026 10:18:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wa9kO-0005dN-HF; Thu, 18 Jun 2026 06:13:20 -0400
+	id 1wa9p7-0000OC-9t; Thu, 18 Jun 2026 06:18:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kchiu@axiado.com>) id 1wa9kH-0005c7-9A
- for qemu-devel@nongnu.org; Thu, 18 Jun 2026 06:13:15 -0400
-Received: from mail-eastusazlp170120007.outbound.protection.outlook.com
- ([2a01:111:f403:c101::7] helo=BL0PR03CU003.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kchiu@axiado.com>) id 1wa9kF-0006D3-19
- for qemu-devel@nongnu.org; Thu, 18 Jun 2026 06:13:12 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=dyXbyaCj19iibIwfB9PYrsAT8pQEAYI73pUKDGiuvncqYNoME7gssEkL/tjWgsG9TltJGXgH0cehguYGlROoTJpFoB5+Hytm51VWAnSl8owYQkG8mg8T1fASHjOkFfF3HMM2Za+8VZy2WnM+9QWA38NpVwVe0lTHVE9oOWJzZZ0Tn0fC2xOd3vHO8z3reCb5pz5Vn0U0xHwv62Hwbm2ZlpBv3N9GbPwho/Fi64e9JofON9k6vCY4W9Xv7qYiPLGZKzPSQEzXZ5bqVlu8cyyu/P8VeKvJ23u323I+0iqVUVcm98Ls+HjiwmYRgE3jCGyNedvIvC6T6F2omSKtRNcnwA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=V5UMqwes+9OLk6NjQnycuKTc2aB4CYFQMfad4h4Wqt8=;
- b=k6R0K014rrWRZ7oTlAJemdhWkt1+44ZncyCTZNNOvICWviVhElfIfnf5izZsWcbSC+mnOesMEKhZh69CWid8oYs9XexiXXuckjS2V+q5XCHnjuzlC4mX/DB1GcD4+2ipH3JTDr/gy6Xa21pyeIsfVnB92rgFzq2rAvJXQyQiodD0bXF1WnBOjTW7gv+Wifhk5oznmb2FpfHVpjsIqwqrNbIVNMxcVA8f7J5Me5/YYak10oVzUXAHP6qQczOcyo5LyFcNvj5h2fBBzX1Cyk6eMwdUfY/DeJdZVUdUHish4Yzh6cyrLU1ODYVdUY4Berq13t3jJ5mCrTD+E49xQc/qKw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=fail (sender ip is
- 64.62.143.114) smtp.rcpttodomain=axiado.com smtp.mailfrom=axiado.com;
- dmarc=none action=none header.from=axiado.com; dkim=none (message not
- signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=axiado.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=V5UMqwes+9OLk6NjQnycuKTc2aB4CYFQMfad4h4Wqt8=;
- b=SvOG0Eh61q5H+ih4XhqFj27KPyizhnoA+i5LnCCFzyoaRunRJflOUvtwwMexVz60bl0U2aksnKOFIpvQRFC6heRdzaSSYTRGOD7UZx9Dcgh+Lv7coc2DnbNzwnuaRU+cqc11DcOOk2mP7GHUWFbEnKoV1H0zDfAknxbTC00h9ixiHTvV0doAth+gBiyqYAlu3O/Dd58/rGlp+SBUQ9A8LQEjVkU2hq80DpXATfSqtI4wovnnlqaAB0S15Z/jpvt0HOnOcTo1lvdwmZgwi3aUgordi1D6sWgjOiyAo/Sx/thS9DDbBrafaOd2Jdr7QP4x3+NXDJgXPVlR2Cuzfu4Siw==
-Received: from MN2PR15CA0046.namprd15.prod.outlook.com (2603:10b6:208:237::15)
- by SN7PR18MB3981.namprd18.prod.outlook.com (2603:10b6:806:108::11)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.139.11; Thu, 18 Jun
- 2026 10:13:04 +0000
-Received: from BL02EPF0001A0FA.namprd03.prod.outlook.com
- (2603:10b6:208:237:cafe::53) by MN2PR15CA0046.outlook.office365.com
- (2603:10b6:208:237::15) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.21.139.11 via Frontend Transport; Thu,
- 18 Jun 2026 10:13:04 +0000
-X-MS-Exchange-Authentication-Results: spf=fail (sender IP is 64.62.143.114)
- smtp.mailfrom=axiado.com; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=axiado.com;
-Received-SPF: Fail (protection.outlook.com: domain of axiado.com does not
- designate 64.62.143.114 as permitted sender) receiver=protection.outlook.com; 
- client-ip=64.62.143.114; helo=smtp.corp.axiado.com;
-Received: from smtp.corp.axiado.com (64.62.143.114) by
- BL02EPF0001A0FA.mail.protection.outlook.com (10.167.242.101) with Microsoft
- SMTP Server (version=TLS1_3, cipher=TLS_AES_256_GCM_SHA384) id 15.21.139.8
- via Frontend Transport; Thu, 18 Jun 2026 10:13:03 +0000
-Received: from axiado.com (unknown [10.4.1.181])
- by smtp.corp.axiado.com (Postfix) with ESMTP id 37C3B4186B5B;
- Thu, 18 Jun 2026 03:10:23 -0700 (PDT)
-From: Kuan-Jui Chiu <kchiu@axiado.com>
-To: qemu-devel@nongnu.org,
-	peter.maydell@linaro.org
-Cc: Kuan-Jui Chiu <kchiu@axiado.com>
-Subject: [PATCH v5 2/8] hw/misc: Add AX3000 clock control
-Date: Thu, 18 Jun 2026 03:12:43 -0700
-Message-Id: <20260618101249.2926976-3-kchiu@axiado.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20260618101249.2926976-1-kchiu@axiado.com>
-References: <20260618101249.2926976-1-kchiu@axiado.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wa9p4-0000Nr-Su
+ for qemu-devel@nongnu.org; Thu, 18 Jun 2026 06:18:12 -0400
+Received: from mail-yx1-xb135.google.com ([2607:f8b0:4864:20::b135])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wa9p0-0008OK-Jp
+ for qemu-devel@nongnu.org; Thu, 18 Jun 2026 06:18:10 -0400
+Received: by mail-yx1-xb135.google.com with SMTP id
+ 956f58d0204a3-662d484ff3bso906519d50.1
+ for <qemu-devel@nongnu.org>; Thu, 18 Jun 2026 03:18:04 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1781777883; cv=none;
+ d=google.com; s=arc-20240605;
+ b=a5Va7A6vSgO4EIKxr3m4RSczRssT2dCFUC2fwcwplpsKkQqGVJ/EqpOFJTExrI53Ra
+ URocmummFwEmO/6sH0y6+YmMTA4a+bvmalNcNahEMtmsGBWtCEqVIjOIHK9q59Vu5nm9
+ W6gvhHzyjqEZ/hByZ/QrULcePM+DmcnBp05XhnapHWc0D2MvpkW+X8OooRKQL0P+eoBy
+ uUQLOjJAWHNlbOUx9E4RfVPVzjsPbjBGK0pNscqaD/yF03h/f3/KuQKS1uSu9/bX7D7m
+ yWOj7KGsf2CUXfclTCQW/E44edc0hsRtnw8LSf4+uxdGenwjRqNyDj/rWqyYY+IA2JOR
+ H44Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=4biI3e+H+eEjnFRRNElJ478o9TT58k6Cx6ZjjZcCIIQ=;
+ fh=8vnd/QvVSFmWnnfwwYhiTGJs/61BtskuRGZOYIDAZkU=;
+ b=bLMlMHk3KH6m8cLiTT9cWVDYbG1ileyyrY5lSp1JOulQSK+ZNHaozIazm9sSn4esnC
+ yPQZcU99LeaaNg8jWT8XPonjHvxh2cqYjocIJ4DJeUXuV0yCueZXhpKzfxc37XXqtA6m
+ zsPbePGIibgxKIIjfkUTHO0WknZMfxqEBW9HpAk1EGRtgLGomAnalhkG7JK1BJk6TJEK
+ 9U6w9H5Nrbf0fvnlbOqfGZyPBfs2E9NuGPWN5HVUgf5yF0lzVAG2bKf5FVEDDYR+MaGX
+ Zjn0EBcTCxLjMf/1CZseea7NV0ymA/Z7XBFqte8r1+9zIumHZCOV/tadlEksS1qYBG34
+ xIug==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1781777883; x=1782382683; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=4biI3e+H+eEjnFRRNElJ478o9TT58k6Cx6ZjjZcCIIQ=;
+ b=bH4l5dej04QhrLUPcxhHIOdkUbJj36OaUGrWfT2le6E1OTcvbCU9GtdQ0pm/8VrDVj
+ xrnnnFtTUhedha2P4mZH6/dAK0oAYB2ZcMhVsNfTumG7V1fYqvVemQTf0Kb7+LX2ho9d
+ wCzknQ881XZXrM6SyySh0uDN55/XiwfW2caaxodzsqp0INM26cWomzbVN07D5laXv4mK
+ tjszl28S8YcP2uTQN5OeRI7sYo3Px7fvUTeNu7zYD1AhkSfrCPbCpZxRLzmnJ/flO6Qq
+ UqPSLUJzQQN7KqUk3L8taa6MyiwVFGU9NpKhY+s/L8fqi/KW6PSFNTSBCYEEO/bArYYb
+ A5nA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1781777883; x=1782382683;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=4biI3e+H+eEjnFRRNElJ478o9TT58k6Cx6ZjjZcCIIQ=;
+ b=plpBF7AL9oN59B/3Ycv4X653waXN8zBsxbilIwT5Twcmae5LQe7y7k75AEjHYuopn9
+ tQTQEx3Zy3raQ78jY8KMfXEJqPFSiemtyJqu1EtcNZw+M4FY4rPj5eJuJ+36v4gdXaR6
+ nSssd1MIcDb5M2+VTcUTwM9OoIHITuwjtJr547bCghg4F0fdXXj6QgHPRn37oZTxTc3L
+ aCmT8dXkzjt6zBCGFW8L1wzERYS5pYXmdBVyGUsdd3b3UBexyN9WfIZyongfRKXPzkLx
+ qnYdZgPq5yw1PaI+2LImT0edb3TPJSICh+TDoeY38hjnTIUDJMXOdhxXrMwMpvE5Ha+j
+ xspQ==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ/ktPdpHtGmCKw8qMKJwf9g2HMUfFKK7D7ZGc5kmyyBZ/ItFd8Ryjrcwc6WM/5MQC/iO4nW+6m6HRIJ@nongnu.org
+X-Gm-Message-State: AOJu0YxSj9B4RtENBsQfLjYvUjhE0Tg5kJiaTQuy4LTV8Y/XsKJW6opM
+ IIyirmREaIs7f3tLKuVd3i7YHNmmmT8YxH4uzUYTO3c+eQcOKxC59f9THvf4heloMomIYGLKFUE
+ f0T+XiYQ+tn8iDfI2vZgBwztpyWze7BhfiP9q73PSCg==
+X-Gm-Gg: AfdE7cmxhcbTYbJ3DexYE6tNF2EydzFDLcQXQm3ld7k5pNf5wMYp6nSStiCflMUxQ6C
+ VeKn2qWcYB+V/cRYPTVS9sOmzZ+19wlBLu2TDZntjpb1QGevd/vNOMzkc0bwYYTdVI7aRK/nIPB
+ f/TK+NIUxqbwNZ2QPhoAeGDihgSaj0Y63WhDMWMVgqMGHAYgOBF1WvL28JYYkgaEsv/J3fbgmO2
+ pWPrAY7L5kUVJBJFbM2oBGLHWOmSDG06h+w8cwZhAZssJ4YVYTsru14jJ+8Pm2r/0Q7RDTQQvon
+ Oj6vrQI4CP9Q28LqMpvGfjbJPPLZpZbXa+4lIrTVHXPfQGfarT1XGi4/tziOz+1nVoo=
+X-Received: by 2002:a53:930e:0:b0:660:8253:b836 with SMTP id
+ 956f58d0204a3-662cb92ae75mr6480129d50.5.1781777883081; Thu, 18 Jun 2026
+ 03:18:03 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BL02EPF0001A0FA:EE_|SN7PR18MB3981:EE_
-Content-Type: text/plain
-X-MS-Office365-Filtering-Correlation-Id: e0a88d46-fa41-4e65-7322-08decd222f67
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|36860700016|376014|1800799024|82310400026|23010399003|18002099003|22082099003|56012099006;
-X-Microsoft-Antispam-Message-Info: a8QzBs6ZqQMImu9Sy1B3QjRT1fF9VwrS3ZLaBqND7xGoTml2lnkTdxWl7G5NVGEJ7CcmZ4Pj/zgD6YH1sp5gtsa2w1IdYLxJgLKR+xAblsFkGie3IwPYRft/QptCS8hEGzWHJePeblwe7pQ+ufK9SBH25dlq2+E/Ryl3Z+pQqYRe1b89t92fpLam1jMT7LMRj/Uziig+DuUvyarzfZ7btQs1xASqhkVHS1/ofXKk9t46veg0yd/2wXb76kfbNyUCxXLhoRr4AEjFnnWQbkp/8Er6QRzWuA27lzOdsjWNZfyQAZ1Rw5mKQgAXWk93dV9aN5pPqyIkUh8PjdeiFQJTAE7F0+Ai79kDCi1VVtlMmJxYd3/2w1j0CBHhD8rk7rF3jbhmCQv9ChGndpz9M0hpyIWZtSkd4JC7jJPjysz6ngxbynmbkbKCGDqt/EgVYjWyuldoXIqN3kHkU3jLUFpNgcTqqp9eVKJzhjQOJNFPXRMpplFrVnK2Pd0EjKJkWE3ogCXBPw4JMNAhEptybP89CSBYKj9zlJ/ZVQV9iwxwsrhvi+XLYygN9kQWYd3KXX5VCeiuVc7A5ojAuJM2fNEmNxcEyV7RdElJNvkpG8TyC17HhwvTDTfK9xF5C6fx4CRhvWGQbMX5k/vBf9pG2M4AMfyNkZOFgxnAPJY49U+yLp3IK0YB5eUMwnc1Ed1UFRobtQAjMTXXDeQBk+Dytn7Dw+S+tnFxWgJUCMJKGQ6Omi0=
-X-Forefront-Antispam-Report: CIP:64.62.143.114; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:smtp.corp.axiado.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230040)(36860700016)(376014)(1800799024)(82310400026)(23010399003)(18002099003)(22082099003)(56012099006);
- DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: 80qkHC7oA79oytU0D8wATbKko8oXmG9u7+y9tpdxu89nxT02xwk6F23Zt/v7awOdlyz9urqpmY15QmxuqkppIbZn9V/A/7ORwtxUer6XTR94u16MXQEK2Wyz/AgXm2OfEIZsvmROYDwGfLgyrBESB5YEDMOBepwcO9Nk/du6P2CHAAuHWjo0iA169GmuOnAh/3iLg6dvyrlpgts/ED0jklIjRpAH1JR7l6MmJdEKQuBtDrOP8a4ghoglua6+MVWSTK11iBCeDl51+WfR2O6NlTDDdq1l0ekQUj6zBO4kTN0cUOLzyxnnDhbxfpxd4tK2F6JDKpimYidVdPSWpBYpWwZjGq71YUoAsGHKAx5bGiWQOhbIYB9gc/0pY1ClKzsN8aQW1Agj1OvREFq+NEzA2fk+n5LYPWqfk4fz1rZn0lReWhAurVYPCfh4PkSS3AMM
-X-OriginatorOrg: axiado.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 18 Jun 2026 10:13:03.9313 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: e0a88d46-fa41-4e65-7322-08decd222f67
-X-MS-Exchange-CrossTenant-Id: ff2db17c-4338-408e-9036-2dee8e3e17d7
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=ff2db17c-4338-408e-9036-2dee8e3e17d7; Ip=[64.62.143.114];
- Helo=[smtp.corp.axiado.com]
-X-MS-Exchange-CrossTenant-AuthSource: BL02EPF0001A0FA.namprd03.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN7PR18MB3981
-Received-SPF: pass client-ip=2a01:111:f403:c101::7;
- envelope-from=kchiu@axiado.com;
- helo=BL0PR03CU003.outbound.protection.outlook.com
+References: <20260618093615.3793919-1-alex.bennee@linaro.org>
+ <42927637-2e5b-46eb-9d25-8315cd36fda8@oss.qualcomm.com>
+In-Reply-To: <42927637-2e5b-46eb-9d25-8315cd36fda8@oss.qualcomm.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 18 Jun 2026 11:17:51 +0100
+X-Gm-Features: AVVi8CcjOb5gM5JtLwhaMA192aJScDhhojp0M1r9Bb6c9w5kj2WFlmtWIzlpqV8
+Message-ID: <CAFEAcA9EUJrmdjee2PiLzObN0JagR2swd5x_fydDf6PVvD64Hw@mail.gmail.com>
+Subject: Re: [RFC PATCH] hw/arm: use correct base address when setting CBAR
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>
+Cc: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ qemu-devel@nongnu.org, Arnd Bergmann <arnd@linaro.org>,
+ Tyrone Ting <kfting@nuvoton.com>, 
+ Hao Wu <wuhaotsh@google.com>, "open list:Nuvoton NPCM7xx" <qemu-arm@nongnu.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b135;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb135.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -121,159 +121,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patch adds a new model for Axiado AX3000 clock control which supports
-to read ID and status
+On Thu, 18 Jun 2026 at 11:07, Philippe Mathieu-Daud=C3=A9
+<philmd@oss.qualcomm.com> wrote:
+>
+> On 18/6/26 11:36, Alex Benn=C3=83=C2=A9e wrote:
+> > This should point at the base of the Cortex-A9 MPCore private address
+> > space. If it doesn't we will confuse the Linux kernel as it probes the
+> > SCU registers and erroneously assumes the system is a buggy Aegis SOC
+> > and nerf the emission of SEV instructions, deadlocking any WFE's in
+> > the kernel (or QEMU smpboot code).
+>
+> I'm confused...
+>
+>    The Configuration Base Address Register holds the physical base
+>    address of the memory-mapped GIC CPU interface registers.
 
-Signed-off-by: Kuan-Jui Chiu <kchiu@axiado.com>
----
- hw/misc/Kconfig              |  3 ++
- hw/misc/axiado_clk.c         | 73 ++++++++++++++++++++++++++++++++++++
- hw/misc/meson.build          |  3 ++
- include/hw/misc/axiado_clk.h | 26 +++++++++++++
- 4 files changed, 105 insertions(+)
- create mode 100644 hw/misc/axiado_clk.c
- create mode 100644 include/hw/misc/axiado_clk.h
+Where did this quote come from? Note that the CBAR is an IMPDEF
+sysreg, so its exact behaviour varies depending on the CPU model.
 
-diff --git a/hw/misc/Kconfig b/hw/misc/Kconfig
-index 1543ee66531..b8860dd3e77 100644
---- a/hw/misc/Kconfig
-+++ b/hw/misc/Kconfig
-@@ -257,4 +257,7 @@ config XLNX_VERSAL_TRNG
- config XLNX_ZYNQ_DDRC
-     bool
- 
-+config AXIADO_CLK
-+    bool
-+
- source macio/Kconfig
-diff --git a/hw/misc/axiado_clk.c b/hw/misc/axiado_clk.c
-new file mode 100644
-index 00000000000..6967a5995c5
---- /dev/null
-+++ b/hw/misc/axiado_clk.c
-@@ -0,0 +1,73 @@
-+/*
-+ * Axiado Clock Control
-+ *
-+ * Author: Kuan-Jui Chiu <kchiu@axiado.com>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "hw/misc/axiado_clk.h"
-+
-+#define CLKRST_CPU_PLL_POSTDIV_OFFSET   0x0C
-+#define CLKRST_CPU_PLL_STS_OFFSET       0x14
-+
-+static uint64_t pll_read(void *opaque, hwaddr offset, unsigned size)
-+{
-+    switch (offset) {
-+    case CLKRST_CPU_PLL_POSTDIV_OFFSET:
-+        return 0x20891b;
-+    case CLKRST_CPU_PLL_STS_OFFSET:
-+        return 0x01;
-+    default:
-+        return 0x00;
-+    }
-+}
-+
-+static void pll_write(void *opaque, hwaddr offset, uint64_t val, unsigned size)
-+{
-+}
-+
-+static const MemoryRegionOps pll_ops = {
-+    .read = pll_read,
-+    .write = pll_write,
-+    .endianness = DEVICE_LITTLE_ENDIAN,
-+    .impl = {
-+        .min_access_size = 4,
-+        .max_access_size = 4,
-+    },
-+    .valid = {
-+        .min_access_size = 4,
-+        .max_access_size = 4,
-+    }
-+};
-+
-+static void ax3000_clk_init(Object *obj)
-+{
-+    Ax3000ClkState *s = AX3000_CLK(obj);
-+
-+    memory_region_init_io(&s->pll_ctrl, obj, &pll_ops, s,
-+                          TYPE_AX3000_CLK, AX3000_CLK_PLL_CTRL_SIZE);
-+    sysbus_init_mmio(SYS_BUS_DEVICE(obj), &s->pll_ctrl);
-+}
-+
-+static void ax3000_clk_class_init(ObjectClass *klass, const void *data)
-+{
-+    DeviceClass *dc = DEVICE_CLASS(klass);
-+
-+    dc->desc = "Axiado AX3000 Clock Control";
-+}
-+
-+static const TypeInfo ax3000_clk_info = {
-+    .parent             = TYPE_SYS_BUS_DEVICE,
-+    .name               = TYPE_AX3000_CLK,
-+    .instance_size      = sizeof(Ax3000ClkState),
-+    .instance_init      = ax3000_clk_init,
-+    .class_init         = ax3000_clk_class_init,
-+};
-+
-+static void axiado_clk_register_type(void)
-+{
-+    type_register_static(&ax3000_clk_info);
-+}
-+type_init(axiado_clk_register_type);
-diff --git a/hw/misc/meson.build b/hw/misc/meson.build
-index 23265f6035b..e86d9ad6b39 100644
---- a/hw/misc/meson.build
-+++ b/hw/misc/meson.build
-@@ -1,4 +1,5 @@
- system_ss.add(when: 'CONFIG_APPLESMC', if_true: files('applesmc.c'))
-+
- system_ss.add(when: 'CONFIG_EDU', if_true: files('edu.c'))
- system_ss.add(when: 'CONFIG_FW_CFG_DMA', if_true: files('vmcoreinfo.c'))
- system_ss.add(when: 'CONFIG_ISA_DEBUG', if_true: files('debugexit.c'))
-@@ -168,3 +169,5 @@ system_ss.add(when: 'CONFIG_SBSA_REF', if_true: files('sbsa_ec.c'))
- 
- # HPPA devices
- system_ss.add(when: 'CONFIG_LASI', if_true: files('lasi.c'))
-+
-+system_ss.add(when: 'CONFIG_AXIADO_CLK', if_true: files('axiado_clk.c'))
-diff --git a/include/hw/misc/axiado_clk.h b/include/hw/misc/axiado_clk.h
-new file mode 100644
-index 00000000000..6e12a509d72
---- /dev/null
-+++ b/include/hw/misc/axiado_clk.h
-@@ -0,0 +1,26 @@
-+/*
-+ * Axiado AX3000 Clock Control
-+ *
-+ * Author: Kuan-Jui Chiu <kchiu@axiado.com>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#ifndef AXIADO_AX3000_CLK_H
-+#define AXIADO_AX3000_CLK_H
-+
-+#include "hw/core/sysbus.h"
-+#include "qom/object.h"
-+
-+#define TYPE_AX3000_CLK "ax3000-clk"
-+OBJECT_DECLARE_SIMPLE_TYPE(Ax3000ClkState, AX3000_CLK)
-+
-+#define AX3000_CLK_PLL_CTRL_SIZE    0x1000
-+
-+typedef struct Ax3000ClkState {
-+    SysBusDevice        parent;
-+
-+    MemoryRegion        pll_ctrl;
-+} Ax3000ClkState;
-+
-+#endif /* AXIADO_AX3000_CLK_H */
--- 
-2.34.1
+The A9 TRM says:
 
+https://developer.arm.com/documentation/ddi0388/i/system-control/register-d=
+escriptions/configuration-base-address-register?lang=3Den
+
+In Cortex-A9 MPCore implementations, the base address is reset to
+PERIPHBASE[31:13] so that software can determine the location of the
+private memory region.
+
+and then in the A9 MPCore TRM
+https://developer.arm.com/documentation/ddi0407/g/Introduction/Private-Memo=
+ry-Region
+
+you can see that the private memory region has all the per-core
+devices; the SCU happens to be the one at the start.
+
+-- PMM
 
