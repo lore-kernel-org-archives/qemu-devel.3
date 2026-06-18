@@ -4,191 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4822CD98ED
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jun 2026 17:13:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43CAACD98ED
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jun 2026 17:13:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1waGHV-0003zf-TU; Thu, 18 Jun 2026 13:11:57 -0400
+	id 1waGIY-0004a9-9i; Thu, 18 Jun 2026 13:13:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1waGGw-0003uE-GW
- for qemu-devel@nongnu.org; Thu, 18 Jun 2026 13:11:33 -0400
-Received: from mout.gmx.net ([212.227.17.21])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1waGGu-0002j8-W0
- for qemu-devel@nongnu.org; Thu, 18 Jun 2026 13:11:22 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
- s=s31663417; t=1781802677; x=1782407477; i=deller@gmx.de;
- bh=rHYM75VCPkiokkBMnY+3W7bElcJQrS85t1TRvyOMD8s=;
- h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
- References:From:In-Reply-To:Content-Type:
- Content-Transfer-Encoding:cc:content-transfer-encoding:
- content-type:date:from:message-id:mime-version:reply-to:subject:
- to;
- b=Q85M6rTiZl3g1uAxRcUxpu+0BB3hcPRGZZ6mE4ao1tnwwCyuHvbdTnLXZ7R0J0Xo
- J5DRLW6nhhnNblij/orrNAC6zuxOXSc/kYeVmyFaV/xE/0Dtr3wJboW49dqsNuCTv
- xof4kpvVyvrXzGA8sYMiLs8mvy0AJhnfU3C2t+l5c7bN4dEs/Jhs7qUvG91y1Rl/o
- MwX8cmglkc96uY3wQen/2bCfhj/KIiZHTVRqObaTlhD+0z44s0AzgZSIuhTuaAbt0
- 0Cb9fSv/rV7veTWTO3AepP2noM9yk2IiIxdN+w/XqAiGxdrwb1vxttz9WkbTQjVyo
- tkX9KAi5XjXwBEteKw==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from client.hidden.invalid by mail.gmx.net (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1N5VD8-1xGntf18n4-00xPEX; Thu, 18
- Jun 2026 19:11:17 +0200
-Message-ID: <9d5bdf73-6e61-4aa6-abf5-b682db58a17d@gmx.de>
-Date: Thu, 18 Jun 2026 19:11:14 +0200
+ (Exim 4.90_1) (envelope-from <stojkovicdusan555@gmail.com>)
+ id 1waEsd-0000u5-Kb
+ for qemu-devel@nongnu.org; Thu, 18 Jun 2026 11:42:11 -0400
+Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <stojkovicdusan555@gmail.com>)
+ id 1waEsb-0006IO-F7
+ for qemu-devel@nongnu.org; Thu, 18 Jun 2026 11:42:11 -0400
+Received: by mail-wr1-x432.google.com with SMTP id
+ ffacd0b85a97d-45f3cf907ceso601133f8f.2
+ for <qemu-devel@nongnu.org>; Thu, 18 Jun 2026 08:42:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1781797327; x=1782402127; darn=nongnu.org;
+ h=cc:to:content-transfer-encoding:mime-version:message-id:date
+ :subject:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=5OyJqBkAzAjyDPdkHar1t9BiEBSy+RR+rbYVavGE65s=;
+ b=ijq5eb4nGIIYd4nqC+eiK36tcVBTBCCew4XtUg++v7hnlqRb1x+m6sgh+V5jJiNUvp
+ Z722HSSbqdACPv4FMUD/PxHydGRnz4hs+RWgpVXSTUDzPzmweokxREvUDAz+kL1nX3rI
+ A+buc3bKKShW0gkJ+iQgjSAz8VxWQHeetyXwOwd1tlsWd3wNN7KTQFDWmzcoNVpG0xqP
+ eNelXx4FHp6QzLriEGN9A0g1pzRxCNkOxB6MpyfPVXSOQb9WwGlzryeMXIIuuutdcmKe
+ U3hag+O55t5Q42oGZ9D9QQ+nv3TL+SJPrV9QAzELG/MlbEmZEeYA45IB+JNj8kdZKF7l
+ fl1w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1781797327; x=1782402127;
+ h=cc:to:content-transfer-encoding:mime-version:message-id:date
+ :subject:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=5OyJqBkAzAjyDPdkHar1t9BiEBSy+RR+rbYVavGE65s=;
+ b=gYNnPXhyLcPS5X2siIeLtcLp6KHWxlOnsrjhTWLY1GzD3/ejyivzCvltwJ4+S8sIkn
+ 11oFKtAAzc3Uc44Sn7XUn9dsUePSHjb3+4zCejjCm894VNNGolmTZkW7FNDSciu8Tk5L
+ GK7LlBqQgTMwysNG7wEUzTDaPEgJi6VjVRK6zPL+lVuw3qeGUS8ehNwXz7lf2FGsoHl6
+ VYrhFse3LMj5bdzF/QXieowh5VtkvC7pKwirLxvskGp/REV8OTGuMaNtYAeGZ2++nEQq
+ BsemvTy8jaq4wkLQpSLxhjgj4FjpS6NfOCzAR46Focfqsijf+1R4EwpvVwPb7ntczjXx
+ cwLQ==
+X-Gm-Message-State: AOJu0YzMq189Ec2dYaWWfPB1iMsu8zx+k5MF9HgmIrc3Wdv7BS/tvO5X
+ 65SJXPMfSZc8/zdNfp7qftycfDCB12Esk5IR5L2ELVpgBNy8/qX4IBlS
+X-Gm-Gg: AfdE7cne3KYS+N8E3M8oEFJSBJI0xiSnIzMKqS2GIAQxfRdHfVJRNp5TviP6/UVyw6V
+ MhulZKjekaI/RTzt7xBjduAjDsjrCYDojlAJBTemju+/L/zFCtTlmG2e4rrqQzDQ8YLk+EZbAzK
+ j52YE3ORZ02jd/Ss4ADf9ninWYjhOru1Yzk+hqbZsYj/qEcqsSzyCO7kRFCFvykDmTQM4Fh5ziF
+ 18m5ktNcum+LBR9UddBVtE4TmoUmx+vLpnMhTG1pCn2lic1PmPVVeJ5CQXIPsOy83fj0ZM3q3y4
+ cj8TCtftiQ+6yetP2YCm5S5nFRQxCiJX+MPYn/IU2WxH5QWULG9NOvn32Yjt8wn8Scwv/7Ffx5a
+ xiX66SvuPrP5b/U+O5xQlN8UUrZxDH2Bjp1i3+BXN9NZbdoQIhq7zPE+YkGr6sryTcYFUyjixDV
+ zs8hxeY74eNWaRdiADHebFZ4XT+7Q3y/d6CAurSnYLAA==
+X-Received: by 2002:a05:600c:3b29:b0:490:b724:dbd6 with SMTP id
+ 5b1f17b1804b1-4923ef51a52mr2168455e9.6.1781797327006; 
+ Thu, 18 Jun 2026 08:42:07 -0700 (PDT)
+Received: from RTRKN1313-LIN.domain.local ([89.216.37.146])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-4606f2c473bsm69038581f8f.28.2026.06.18.08.42.05
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 18 Jun 2026 08:42:06 -0700 (PDT)
+From: Dusan Stojkovic <stojkovicdusan555@gmail.com>
+Subject: [PATCH RFC 0/2] vhost-user: support Xen foreign memory mappings
+Date: Thu, 18 Jun 2026 17:39:35 +0200
+Message-Id: <20260618-vhost-xen-foreign-mapping-v1-0-7f60a6241971@rt-rk.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] linux-user/xtensa: fix unlock of uninitialized frame
- pointer on sigreturn
-To: Matt Turner <mattst88@gmail.com>, qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Laurent Vivier <laurent@vivier.eu>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Max Filippov <jcmvbkbc@gmail.com>
-References: <20260618133354.3369437-1-mattst88@gmail.com>
-Content-Language: en-US
-From: Helge Deller <deller@gmx.de>
-Autocrypt: addr=deller@gmx.de; keydata=
- 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
-In-Reply-To: <20260618133354.3369437-1-mattst88@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:LpBDLM2dejZVHy0j3rQFvmkvCkgWBfly/UxfGaRqdCeoOPPRQWd
- CRwSJ0iQb4UCfY17v9+8TjKFtw6Goe2XtfNqXp+i9VCTn6GHQ3tfxl2iJhSGUcxI16j/5ZM
- cMr3dhi5MuURjQXvCCMQxmTh15zULnLq7vPkksE7l3rIaLVpgL/iljXoIxf1AwXiT7TtUns
- I/+wulFJY4XmOT5n2ZWkQ==
-UI-OutboundReport: notjunk:1;M01:P0:z7+X97JfTTs=;ZD5I4bJcqrjtu1RFvCGYpmfNkB+
- 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
-Received-SPF: pass client-ip=212.227.17.21; envelope-from=deller@gmx.de;
- helo=mout.gmx.net
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIADcRNGoC/x3MPQqEMBBA4avI1A7ELEaxFTyA7bKFP2OcwklIJ
+ Aji3TdYfsV7N0QKTBG64oZAiSM7yajKApZ9EkvIazZopY0yVYtpd/HEiwQ3F4it4DF5z2JxVfq
+ ztPU8N8pA7n2gja/3/YVx6OH3PH83XneGcAAAAA==
+To: qemu-devel@nongnu.org
+Cc: "Michael S. Tsirkin" <mst@redhat.com>, 
+ Stefano Garzarella <sgarzare@redhat.com>, 
+ Stefano Stabellini <sstabellini@kernel.org>, 
+ Anthony PERARD <anthony@xenproject.org>, 
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, 
+ xen-devel@lists.xenproject.org, Viresh Kumar <viresh.kumar@linaro.org>, 
+ Dusan Stojkovic <Dusan.Stojkovic@rt-rk.com>, 
+ Nikola Jelic <Nikola.Jelic@rt-rk.com>
+X-Mailer: b4 0.13.0
+Received-SPF: pass client-ip=2a00:1450:4864:20::432;
+ envelope-from=stojkovicdusan555@gmail.com; helo=mail-wr1-x432.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Thu, 18 Jun 2026 13:12:59 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -203,17 +109,192 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/18/26 15:33, Matt Turner wrote:
-> If lock_user_struct fails, frame is uninitialized but the badframe
-> label unconditionally calls unlock_user_struct on it. Handle the
-> lock failure inline so badframe is only reached with a valid lock.
->=20
-> Signed-off-by: Matt Turner <mattst88@gmail.com>
+This series lets QEMU, when running as a Xen device model, drive
+vhost-user backends that map guest memory through the Xen foreign
+mapping interface, implementing the front-end side of
+VHOST_USER_PROTOCOL_F_XEN_MMAP. The protocol extension itself is
+already documented in docs/interop/vhost-user.rst (feature bit 17,
+extended memory region description) and implemented by rust-vmm's
+vhost / vm-memory crates and the vhost-device backends built on them.
+ 
+The problem this solves: under Xen the guest's RAM is not allocated by
+QEMU and is not backed by a file descriptor. memory_region_get_fd()
+returns -1, so vhost_section() filters out every RAM section, the vhost
+memory listener registers no regions, and starting any vhost-user
+device fails with "Failed initializing vhost-user memory map". With
+F_XEN_MMAP the backend maps guest memory itself.
 
-Reviewed-by: Helge Deller <deller@gmx.de>
+The protocol requires one file descriptor per region in SET_MEM_TABLE.
+Guest RAM under Xen has no backing fd, so the front-end opens
+/dev/xen/privcmd per region purely to satisfy that requirement; the
+backend derives the mapping from guest_phys_addr + domid and never
+reads the fd. Each fd is closed once the message has been sent.
 
-applied to linux-user-next git tree.
+This patchset was rebased onto the new vhost_phys_vring_addr infrastructure 
+and extends vhost_user_gpa_addresses() so that negotiated
+F_XEN_MMAP (bit 17), not F_GPA_ADDRESSES (bit 21, which the backend doesn't 
+advertise), drives GPA addressing for both rings and userspace_addr.
 
-Thanks!
-Helge
+The two patches:
+  1/2  accept the Xen RAM section in vhost_section()
+  2/2  negotiate F_XEN_MMAP and build SET_MEM_TABLE from the extended
+       region layout. 
+Testing:
+Tested on Xen/ARM64 with a DomU using virtio-mmio transports created
+by the xenpvh machine, running vhost-device-sound (rust-vmm, built
+with the "xen" feature) as the backend in dom0. The device negotiates,
+receives the memory table and ring addresses, and the guest's
+virtio-snd driver probes and operates.
+
+Non-Xen / x86 KVM: vhost-user-snd backed by
+vhost-device-sound (null backend) on a q35/KVM guest. The device
+negotiates, the guest virtio-snd driver probes and runs the control and
+PCM paths, and the SET_MEM_TABLE and vring-address traffic is identical
+to a build without this series confirming the
+non-Xen path is unchanged.
+
+The control message exchange between the frontend and backend was
+tracked using sockdump as was described in:
+Making VirtIO sing - implementing virtio-sound in rust-vmm project
+|-> at FOSDEM 2024
+
+Setup:
+The main part of the xl config this enables:
+virtio = [
+ 'backend=0,type=virtio,device,transport=mmio,grant_usage=false'
+]
+
+device_model_args = [
+ ...
+ '-chardev', 'socket,id=snd_chardev,path=/tmp/snd.sock',
+ '-device', 'vhost-user-snd,chardev=snd_chardev,id=snd,iommu_platform=true',
+ ...
+]
+
+Xen 4.22-unstable was used with:
+ -enable-IOREQ_SERVER 
+ -enable-EXPERT
+
+An extra patch was added to xen-tools.
+Namely, xen tools will request a pv device drive type for ARM64 but 
+qemu expects pvh. This is a known issue:
+github.com/Xilinx/xen/commit/5f669949c9ffdb1947cb47038956b5fb8eeb072a
+
+Qemu master was used configured with the following flags:
+    --target-list=aarch64-softmmu \
+    --cross-prefix=aarch64-linux-gnu- \
+    --enable-xen \
+    --enable-vhost-user \
+    --extra-cflags="-I$XEN-TOOLS/usr/local/include" \
+    --extra-ldflags="-L$XEN-TOOLS/usr/local/lib -Wl,
+        -rpath-link,$XEN-TOOLS/usr/local/lib" \
+
+Likewise for x86:
+    --target-list=aarch64-softmmu \
+    --enable-slirp \
+    --enable-xen \
+    --enable-vhost-user \
+    --enable-virtfs \
+
+Linux version 6.11.7 was used with extra configuration flags:
+* For enabling Xen Dom0/DomU support
+* For enabling virtio (mmio, snd, etc.)
+* For enabling sockdump features (BPF, IKHEADERS, KPROBE, etc.)
+* Extra debug flags (DEBUG_FS, etc.)
+
+vhost-device commit-id:
+    c3bb658ef4fe20a2f264dbbbbc6fa19f1c08c0c5
+    
+    Was used built with:
+    --features alsa-backend,xen
+
+Importantly in vhost-device-scmi/src/vhu_scmi.rs:
+
+// QUEUE_SIZE must be apparently at least 1024 for MMIO.
+// There is probably a maximum size per descriptor defined in the kernel.
+const QUEUE_SIZE: usize = 1024;
+
+A similar change was made to make mmio work in vhost-user-sound device:
+
+```
+diff --git a/vhost-device-sound/src/device.rs b/vhost-device-sound/src/device.rs
+index 99e1a8f..1397076 100644
+--- a/vhost-device-sound/src/device.rs
++++ b/vhost-device-sound/src/device.rs
+@@ -603,7 +603,7 @@ impl VhostUserBackend for VhostUserSoundBackend {
+         // a queue is filled up. In this case, adding an element to the queue
+         // returns ENOSPC and the element is not queued for a later attempt and
+         // is lost. `64` is a "good enough" value from our observations.
+-        64
++        1024
+     }
+
+     fn features(&self) -> u64 {
+```
+
+Without this frontend and backend will fail to negotiate queue size.
+
+Scope and known limitations:
+* Foreign mappings only. Grant mappings are not supported: vhost's
+  section tracking derives a host pointer for each region, which is
+  invalid for the grant pseudo-region, and per-access grant mapping
+  needs a different region description (GRANT | no-advance-map). Patch
+  1 rejects the xen.grants region explicitly. Setting grant_usage=true
+  does not change the qemu<->backend vhost-user exchange.
+ 
+* VHOST_USER_PROTOCOL_F_CONFIGURE_MEM_SLOTS is suppressed under Xen:
+  the ADD/REM_MEM_REG path has not been converted to the extended
+  region format, and Xen guests currently expose a single RAM region,
+  so SET_MEM_TABLE is sufficient. Multiple RAM regions are not yet
+  exercised. Postcopy is refused.
+
+* Spec vs reference implementation: docs/interop/vhost-user.rst
+  describes the "can not be mapped in advance" xen-mmap flag as Bit 8
+  (value 0x100), whereas rust-vmm's vm-memory uses 0x8 (bit 3,
+  MmapXenFlags::NO_ADVANCE_MAP). This series uses neither, but the
+  discrepancy probably wants resolving in the spec. Viresh, which is
+  intended -- bit position 8 or value 0x8?
+
+* userspace_addr is carried unchanged in the region descriptor; under
+  Xen it does not correspond to a mapping and backends do not
+  interpret it. An alternative would be to define it (e.g. mirror
+  guest_phys_addr).
+
+Open questions:
+- userspace_addr semantics under Xen: leave it unchanged, or define it?
+- Multi-region support: convert ADD/REM_MEM_REG to the extended layout
+  rather than suppressing CONFIGURE_MEM_SLOTS?
+- Grant-mapping support: worth pursuing, and what region-description
+  shape do backends expect?
+- Updating vhost-device-sound to reflect the mmio support.
+
+References:
+- vhost-user spec, F_XEN_MMAP / extended memory region / xen mmap flags:
+  docs/interop/vhost-user.rst
+- rust-vmm vm-memory MmapXenFlags (FOREIGN=0x1, GRANT=0x2,
+  NO_ADVANCE_MAP=0x8): src/mmap/xen.rs
+- Making VirtIO sing - implementing virtio-sound in rust-vmm project
+|-> at FOSDEM 2024
+
+Signed-off-by: Dusan Stojkovic <Dusan.Stojkovic@rt-rk.com>
+Signed-off-by: Nikola Jelic <Nikola.Jelic@rt-rk.com>
+---
+Dusan Stojkovic (2):
+      vhost: accept Xen guest RAM sections for vhost-user
+      vhost-user: implement VHOST_USER_PROTOCOL_F_XEN_MMAP
+
+ hw/virtio/trace-events         |   2 +
+ hw/virtio/vhost-user.c         | 120 +++++++++++++++++++++++++++++++++++++++--
+ hw/virtio/vhost.c              |  18 +++++++
+ hw/xen/xen_stubs.c             |   5 ++
+ include/hw/virtio/vhost-user.h |   2 +-
+ 5 files changed, 143 insertions(+), 4 deletions(-)
+---
+base-commit: c7cf7c810153d6f5f31aa2d5c0dee9087f6b4dff
+change-id: 20260618-vhost-xen-foreign-mapping-d023c85bb706
+
+Best regards,
+-- 
+Dusan Stojkovic <Dusan.Stojkovic@rt-rk.com>
+
 
