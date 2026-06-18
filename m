@@ -4,137 +4,144 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 474CCCD98F2
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jun 2026 20:37:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35604CD98ED
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jun 2026 20:43:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1waJU8-0003o4-Cp; Thu, 18 Jun 2026 16:37:12 -0400
+	id 1waJZF-0006Be-NF; Thu, 18 Jun 2026 16:42:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1waJU6-0003nW-Vx
- for qemu-devel@nongnu.org; Thu, 18 Jun 2026 16:37:11 -0400
+ id 1waJZD-0006B8-LH
+ for qemu-devel@nongnu.org; Thu, 18 Jun 2026 16:42:27 -0400
 Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1waJU5-0006Mc-9l
- for qemu-devel@nongnu.org; Thu, 18 Jun 2026 16:37:10 -0400
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+ id 1waJZA-000856-Dh
+ for qemu-devel@nongnu.org; Thu, 18 Jun 2026 16:42:25 -0400
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65IHrjnm1878939
- for <qemu-devel@nongnu.org>; Thu, 18 Jun 2026 20:37:07 GMT
+ 65IIg5Pt2081301
+ for <qemu-devel@nongnu.org>; Thu, 18 Jun 2026 20:42:22 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- qHB2KuHvt6vlOaIaABKJsUhtBUvkySgT5V4y3KoAu5E=; b=Y0C2Vtd9npRhWyRI
- qHdZye/NN0GS1jRogmGBfzaFeMuQBldYefu4mD2AdIbTFgBTZU4+Lfnsg7Z7/Gib
- iMe3pdq3QzNyfN6TcKQ0jBemiom4tmQW7rUDVHdhPpe4vlIZ5rnkqIdXeBI5EElX
- K+YQ8Lhme2ZG/qLBFP/5k7fE/K1zJVbTlBfiQIDS25IBjg5XOnB5kcYvY993BZ+V
- OcpjdHRTcvfg5TTeyh4VyYRwh1OAaPPo9bQpjJPUFyq71so8sObpazHyVK7sqkOA
- fBFvQmqdC42E5Meg6uOP86jl52XEEMo6fovCtKPPw73oUSK+gJ74L1evhA/DPv6K
- Es9hng==
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4evkvf16ug-1
+ bXiO34ZMw2zmryac+H2m7MzM+RESmcCs0p7xyNTLFbg=; b=m3j8H6T3xSHDlP05
+ DsOXnhVYgdQkaXMAbD+dyRy+AFMOxcYEyyreXKq3pvh2a6TG65skdIExkk69fEaM
+ EVDIoONshs45w32883LhC9w8I89lO4oL64ceYvqcYHYi34C5ldR31fdJhW6CF5BA
+ TpEEVgPucOfEYC1r0Y7wk5N72/YU1dqrkpjDLtiO35HLprybZa0bi2ps3CIx/Y3g
+ B8ZxGrJbdNVt4/9xmZEKX8AYE/Fx2ionhnYeMB7nB8ePqv5yeHKYn14BxThV6fNw
+ WPkUn5lR+aOoiW158xMUl5Ke6sa70X0PHk+0UbK6JIpT1ZRWN/SwaMjBRThFwqcL
+ wuDGUw==
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
+ [209.85.222.197])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4evp670j5s-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 18 Jun 2026 20:37:06 +0000 (GMT)
-Received: by mail-qk1-f199.google.com with SMTP id
- af79cd13be357-915d1d4fc5aso268369285a.3
- for <qemu-devel@nongnu.org>; Thu, 18 Jun 2026 13:37:06 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Thu, 18 Jun 2026 20:42:21 +0000 (GMT)
+Received: by mail-qk1-f197.google.com with SMTP id
+ af79cd13be357-9157f453a27so258565085a.1
+ for <qemu-devel@nongnu.org>; Thu, 18 Jun 2026 13:42:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1781815026; x=1782419826; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1781815341; x=1782420141; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=qHB2KuHvt6vlOaIaABKJsUhtBUvkySgT5V4y3KoAu5E=;
- b=Y3ecSCYkCkNGOG7PohjAY6VzNHxLzgKg1deqPT5LHM91BvFSLw5EFBmhywtmMP2xIj
- 1UKQLDBwq8ZP4E1j4x8mAT4rObdMy2MHroalbF4HVZBG304uCSa1aFVLrdloL+/nxg82
- PvrENBy7QYt+mJL6VdWxHVGO+8UrcFFQUhOO5mkNtVk5ixDXuIguHcd6YRVgLo1btZnP
- g45fLYpKHBIoPblmy1U+TXTFY4/JwILFo/TuqeA2EUDTIAxuYiHLIT7BkRvRcvyxcz00
- 9sz3r8daTZLR8RW3rncEMZbbGLjlO0J7y6reI6cjuv596R9iXesj7zKfV5BqQmBZejQC
- tB8Q==
+ bh=bXiO34ZMw2zmryac+H2m7MzM+RESmcCs0p7xyNTLFbg=;
+ b=QJEedISdgY1HbY+EZ6TizOPtFTtbWX7SjXMdDaRTvVLSlLdpe85QVu9p8MU7oL5AQE
+ wEqbRoVRTHYnYKrc8Q5xUxBTTWlKquDuklmWKOaD9KQ22U/xxzPw9unI2HSBsluxbVM3
+ bU5+xHq3WBtdemGZspaU8rttBUls4f2eL5skKtya+DV5eL0CGBJaIzEX+Dge1WZ98JUv
+ Y3+yzMvvQYahCm/QjQsoxLClNSO/79Ske6sttVi0aT1Fw7fAQkmsEzF4QljxRH+CKqsX
+ j+8W5M5U+bE7SwIEnvObt1YzKCC5ZolFvV6fFhtVhm54EStCbXOzlogtC+y7TJp8ZkaB
+ ggnQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781815026; x=1782419826;
+ d=1e100.net; s=20251104; t=1781815341; x=1782420141;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=qHB2KuHvt6vlOaIaABKJsUhtBUvkySgT5V4y3KoAu5E=;
- b=oSUPo0fC2VCatMeQ3J/608/qT+9S3uoY3MvEaoKsFYIwL4ENa+gnM7UbXuFPspS0Sw
- Eip1QRKz3+ls/6TEpEru9LJC6FgsmdNGJR3ywcJDpcC2nJe8c1TxvVDh2C6QzYoPN4Hl
- M6kLOLRWWOCmxVmz9BUDMhullJLRlVDBU+DuS8iCHW6Ql1kYuPuNRfTIKbirFMuL+AOy
- FEDPWr/0D+Vpi4UxRXu9p7dAQTp9YCB2/lGYmuynj2glj+vKqtQ3+4U7dtGUGxiDAyeP
- JzRKjgNUhSPS8C3nN3+EQeDsiRw1OY9ff1jC2R54FvPjp+BGaNLdzznRrCpCWT+Ri0ij
- u6JQ==
+ bh=bXiO34ZMw2zmryac+H2m7MzM+RESmcCs0p7xyNTLFbg=;
+ b=qzu9PAqyXlmikvJFsTpVueZtrR2WILYHrPYfMjTtm2YhhjbH3wOL/Fql50xp8QrdSq
+ MhlSebLyI6OWb2AgieNC2GXcvB5YmENYFEqe4Lby1rOrcMseKMVjZ4J1yrm8ohPFfHBO
+ GsrFTQaP/qf1OB6FD12oXPDNP0+wNN+blw+AmM2iS11mqU6qn2QHtqPGnz0ouhhmU75Y
+ 3oV1nG64JrwKUrj3YN4qqvb3B4d6HrcDxyFNgRkd0glst1CayW6efz1BwDw/4mMpaTfb
+ XcsvTyAOEEvtJafte4tF12A67G4AM4XnmyCA0nW8hdr55wciT6KEXYwxUq7LhraLAZn1
+ eXXQ==
 X-Forwarded-Encrypted: i=1;
- AFNElJ9hawpbKmwgDT1ebHBKtodOEUCIwkeSJWaiNo3Q/1JLACmC5rBQAZfR6ps5xKRb/qwbFEFYH3aQzS//@nongnu.org
-X-Gm-Message-State: AOJu0YyY6F+xedTEya69p3WqlS8sT+w1BDerxlQ9cRm1pCcDaaBoyRoW
- vaEw/ncVodtrtpR0Iw8y5JOTgD0naXwishQaVJDNG23gTeSlaya68wagy6JVcSQ+wHk+bgsbc/q
- MKNRluiUbdcHLH7cN3IQXKhy6Yymi+MhtI7lXMNvmB8EqCrwGIwcAXCI2vg==
-X-Gm-Gg: AfdE7cmJ9KdkBH2cvLhJ3ZzYvV/c3T15tiG0NtNU8DqHcrzZEZAIBPsFA49BPlq3+ac
- AKHdhFcfJdayxWvpHsptdMymd0iNifzZFLw/PwP6aKsPdMc71nUwZcWNLCxqmx0PXlSSjagEglz
- uXKWb3THju082rIgtKRHMBghUrIyKRUOKgEPsNPqb9NwonB3iD8C77WmQySR4Bu7VfcX2M+M9C6
- jJkABBhf6xjvAFYdTxAElkDolasBlOhpuiwnwfhryZlZZ5aKdP8mz7ECPeO/YkHx9/LN6Gtp5h4
- ptOzsG7ArCec6oSAbd24WuCduSVug9r0cz/ypvMmzd9iAGN3FqI925vx++Oq4y1aqZotAmLWkr7
- 7paORzgP+AyRDMkYyYaHT2ozN1RroMr+UnMmQ9t/qpBea6/IP2XX9kKLByvy5Gw==
-X-Received: by 2002:a05:620a:3185:b0:915:8076:9e65 with SMTP id
- af79cd13be357-92093138f6amr100999985a.53.1781815025620; 
- Thu, 18 Jun 2026 13:37:05 -0700 (PDT)
-X-Received: by 2002:a05:620a:3185:b0:915:8076:9e65 with SMTP id
- af79cd13be357-92093138f6amr100994185a.53.1781815025180; 
- Thu, 18 Jun 2026 13:37:05 -0700 (PDT)
+ AFNElJ8BUyMh8ptANIKBIp9s9qSJMkMzLSWZ0TnIffj3hUbbB6JRXHP1uyuAjLGj/wv4uFvNAPfeyVi5XMsr@nongnu.org
+X-Gm-Message-State: AOJu0YzCkgkRz9ORWe4SYXiVXoC4EkhqFYxv4jzik9jnVhiGIYV4xxC7
+ CNzq5qykXW9Js7iQAVtqTYq7CvZub1yNsXfkw+Zl5e/cPxi+XYCLCq+T75Qn2H1S1pr4hJunpFD
+ yPUM3P0zxknnW9OfPg2HnwO4o+3rROrHdAu3f53S2dmL7W0ZULhZ6xRdvZg==
+X-Gm-Gg: AfdE7cnAUHiVUFGX/vJrFy+suA4HQrJbm4gEXZjRJUhHLIcDAHffBlAOukGlzTnKW80
+ So0hEx3hgGS8j590wnCyjBfRC3omBHbN5IUnRVMpYCuPeu653aKP30F2gUQ+x9r0CpgQMMv8wYW
+ 63Dj7SbRUuAgRtAZDzRfV8NwvNdvJiftPJ85Lm9DwX6d0/pHR9IDhFUqDPej/rcyz+3Dxj+OZjA
+ oN7y96Ifli2UAS+aximLghEDW38qwk32NiwPl18ubISnbEdNmklWZWbh7C0jMz+hpNID/TqNuaw
+ NaonXVjzz4fIvMPXjtO+OUjP4ZbmSF4bXYwe64Qmq9IgO1VhtSzQ654Zglu2D4IwIKc6yjNNeiM
+ +Iu0cT5B5iq6vgeMd/hgFPfmWH1nHOYWYPcdsXoqkeq0psVO7fTJqRIA5jBxOWw==
+X-Received: by 2002:a05:620a:6499:b0:915:92bf:560f with SMTP id
+ af79cd13be357-9208d8e4241mr111208585a.36.1781815340932; 
+ Thu, 18 Jun 2026 13:42:20 -0700 (PDT)
+X-Received: by 2002:a05:620a:6499:b0:915:92bf:560f with SMTP id
+ af79cd13be357-9208d8e4241mr111202485a.36.1781815340478; 
+ Thu, 18 Jun 2026 13:42:20 -0700 (PDT)
 Received: from [192.168.69.213] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4650bc422c0sm1434403f8f.26.2026.06.18.13.37.04
+ ffacd0b85a97d-4650bc42a3asm1586883f8f.31.2026.06.18.13.42.19
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 18 Jun 2026 13:37:04 -0700 (PDT)
-Message-ID: <386a6b2f-6764-4e9a-b6cd-a19b9b032e66@oss.qualcomm.com>
-Date: Thu, 18 Jun 2026 22:37:03 +0200
+ Thu, 18 Jun 2026 13:42:19 -0700 (PDT)
+Message-ID: <afe3e819-b36d-4e9b-b9bb-1c978a5b0f8a@oss.qualcomm.com>
+Date: Thu, 18 Jun 2026 22:42:18 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 10/13] common-user: Implement read_self_maps for FreeBSD
+Subject: Re: [PATCH v5 03/12] system/memory: constify section arguments
 Content-Language: en-US
-To: Warner Losh <imp@bsdimp.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-Cc: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org,
- Helge Deller <deller@gmx.de>
-References: <20260618195520.589907-1-richard.henderson@linaro.org>
- <20260618195520.589907-11-richard.henderson@linaro.org>
- <768aa959-290f-46c8-aa6f-e724592831c9@oss.qualcomm.com>
- <CANCZdfrT3-C7s4jTDYBircgjiEexRdw4_txGedB9b55G27j90g@mail.gmail.com>
+To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ qemu-devel@nongnu.org
+Cc: Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ David Hildenbrand <david@kernel.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
+ qemu-rust@nongnu.org, Alex Williamson <alex@shazbot.org>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>,
+ Fabiano Rosas <farosas@suse.de>, Mark Kanda <mark.kanda@oracle.com>,
+ Ben Chaney <bchaney@akamai.com>, Marcelo Tosatti <mtosatti@redhat.com>,
+ kvm@vger.kernel.org, "Dr. David Alan Gilbert" <dave@treblig.org>,
+ Zhao Liu <zhao1.liu@intel.com>, Eric Blake <eblake@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>
+References: <20260604-rdm5-v5-0-5768e6a0943d@redhat.com>
+ <20260604-rdm5-v5-3-5768e6a0943d@redhat.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <CANCZdfrT3-C7s4jTDYBircgjiEexRdw4_txGedB9b55G27j90g@mail.gmail.com>
+In-Reply-To: <20260604-rdm5-v5-3-5768e6a0943d@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjE4MDE4OCBTYWx0ZWRfX7XXtrHXuYrjf
- +3qN4m1UXSNKtvzFzWNtc4GzAKDY1Rt0IM9ItCRSJOGHJQsT3GQgOIUCgNzZnogf07INYBr2rGM
- bHDvMAmcvK7uJ99PJhmNW9FTNcbr8LI=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjE4MDE4OCBTYWx0ZWRfX3JbIN+wuAgSi
- ihFw9WBjyQq2I8EUyNaNhPbE0XTUvgvP77KfxDAk/4Rt7lfVvW0fOorLk+R3xFZCQ6UPMW54ZNR
- xYjipK5Ck9TMc8OFIARcbIMc8wPKOYdlHaVnIbnPAbSooc5tk4GvR8fELwBG90L2e37pqjmhbgh
- GiLWhi2WNsus6S98DOPe+4ExmdHTUALWl3m0SeNCWsxipDSq/k2i/x2UZDoix24u9Ltkwv/wCjU
- g0P3eG0rN2EIq+h32VlalqNkP8+6Xuf13uIQcpHoWybeeCVxsni+kY8IUUHCXAKNbX1UwdbPKeo
- y2XprbG29OaKGTRSvm/PpAsqKvgdQkenjvUkF36POovnNpEmQlW97Pw3W938LKwhnepKS14bjOR
- KkjZy4iCQRTopNLoS/T1kzoIWjWi+1FT3cjZuQdKIl77u2w7XciqwjuH/pKaBbUZ1NRYBYKLe7j
- FxRAH2mqeldlQXl4cew==
-X-Authority-Analysis: v=2.4 cv=H/3rBeYi c=1 sm=1 tr=0 ts=6a3456f2 cx=c_pps
- a=HLyN3IcIa5EE8TELMZ618Q==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+X-Proofpoint-ORIG-GUID: Y1qF5fI545jhvc1s9Q7ujQ6ngKe4ijKn
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjE4MDE4OSBTYWx0ZWRfX+/aj7eLY129U
+ kGAQmRvYNksC2oz3DdZoCTOz08EVo7sQDIuGmhGReJq62cV1+uRSsER7BD0z1Te1MiHjRy3Glfb
+ XFONufIP6m502wEyjHxHXmW8A6xKCxRUK427nTgA5MHTIQFmzDT7jAC/L0o42IcCsNzmAr926SN
+ Y2QrsqSrAolxuDa+7r532LFKGuVP11n69Qb1mgaRJu6ZlLnklSgtfBLdakiUGN8wqX1Fayfm6vn
+ a/j0VAUXVszUVbM1Cl4wLRjCMDW9ti817RhsGwPvORtUUQ2mbUzyF6dGO3PEiR9Uyr4zXHD+VF/
+ CLLM8GAcmVZWFnv0hWMRbJRxkhnecfLa4xpOiblJd7r7lxw2qNk+o7yO5hc4Nt2Eoiw9KwWTFdn
+ XQvxag8P32UOFvd0s9PezHq7r1UtZNMy4+y4n6sCzSAe4FqY0S15u/bxjm7EhpZsO2hmYJYA1Om
+ CJ7suTZFN/STy9blwwA==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjE4MDE4OSBTYWx0ZWRfX8Ipyl2rqg5lW
+ 6lBo7hoSj1JoXsTw91BiIPeBOOS05gfW5wng1FK6sir8/yNLmYbKopLfRlNhVZK8JifQUnZI2ta
+ fKuJCx3lPrgsvjsgeAxyiMNnKSg62BI=
+X-Proofpoint-GUID: Y1qF5fI545jhvc1s9Q7ujQ6ngKe4ijKn
+X-Authority-Analysis: v=2.4 cv=TdOmcxQh c=1 sm=1 tr=0 ts=6a34582d cx=c_pps
+ a=50t2pK5VMbmlHzFWWp8p/g==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
  a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22
- a=EUspDBNiAAAA:8 a=7Qk2ozbKAAAA:8 a=KKAkSRfTAAAA:8 a=WnmgIi-qiaUKfe5zevQA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=bTQJ7kPSJx9SKPbeHEYW:22
- a=1lyxoWkJIXJV6VJUPhuM:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-ORIG-GUID: Cc4U6O2nIU6H12UYhcmA5TdDfFAPzp7l
-X-Proofpoint-GUID: Cc4U6O2nIU6H12UYhcmA5TdDfFAPzp7l
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22
+ a=20KFwNOVAAAA:8 a=EUspDBNiAAAA:8 a=1tSEMpTH9XP_W59IOagA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=IoWCM6iH3mJn3m4BftBB:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-06-18_03,2026-06-18_03,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 malwarescore=0 clxscore=1015 impostorscore=0 spamscore=0
- suspectscore=0 phishscore=0 bulkscore=0 adultscore=0 priorityscore=1501
+ lowpriorityscore=0 impostorscore=0 spamscore=0 phishscore=0 malwarescore=0
+ clxscore=1015 suspectscore=0 bulkscore=0 priorityscore=1501 adultscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606180188
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606180189
 Received-SPF: pass client-ip=205.220.168.131;
  envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
 X-Spam_score_int: -27
@@ -159,40 +166,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 18/6/26 22:23, Warner Losh wrote:
-> On Thu, Jun 18, 2026 at 4:22 PM Philippe Mathieu-Daudé <
-> philmd@oss.qualcomm.com> wrote:
+On 4/6/26 15:43, Marc-AndrÃ© Lureau wrote:
+> The sections shouldn't be modified.
 > 
->> On 18/6/26 21:55, Richard Henderson wrote:
->>> Reviewed-by: Helge Deller <deller@gmx.de>
->>> Reviewed-by: Warner Losh <imp@bsdimp.com>
->>> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
->>> ---
->>>    common-user/selfmap.c   | 41 ++++++++++++++++++++++++++++++++++++++++-
->>>    common-user/meson.build |  5 +++++
->>>    2 files changed, 45 insertions(+), 1 deletion(-)
->>>
->>> diff --git a/common-user/selfmap.c b/common-user/selfmap.c
->>> index a1b88dee66..151d066801 100644
->>> --- a/common-user/selfmap.c
->>> +++ b/common-user/selfmap.c
->>> @@ -9,6 +9,10 @@
->>>    #include "qemu/osdep.h"
->>>    #include "qemu/cutils.h"
->>>    #include "user/selfmap.h"
->>> +#ifdef __FreeBSD__
->>> +#include <libutil.h>
->>
->> Out of curiosity, what is libutil for?
->>
-> 
-> kinfo_getvmmap
+> Reviewed-by: Peter Xu <peterx@redhat.com>
+> Reviewed-by: Cédric Le Goater <clg@redhat.com>
+> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+> ---
+>   include/hw/vfio/vfio-container.h     |  2 +-
+>   include/hw/vfio/vfio-cpr.h           |  2 +-
+>   include/system/ram-discard-manager.h | 14 +++++++-------
+>   hw/vfio/cpr-legacy.c                 |  4 ++--
+>   hw/vfio/listener.c                   | 10 +++++-----
+>   hw/virtio/virtio-mem.c               | 10 +++++-----
+>   migration/ram.c                      |  6 +++---
+>   system/memory_mapping.c              |  4 ++--
+>   system/ram-block-attributes.c        |  8 ++++----
+>   system/ram-discard-manager.c         | 10 +++++-----
+>   10 files changed, 35 insertions(+), 35 deletions(-)
 
-Indeed. I was looking at an outdated manpage.
-
-> 
-> My rewrite grabbed the data from the sysctl directly and didn't need this
-> wrapper.
-
-Yep, saw in v4 :)
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 
