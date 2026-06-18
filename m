@@ -4,34 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88E1FCD98F5
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jun 2026 09:49:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6FB14CD98F2
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jun 2026 09:50:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wa9N3-0000Zh-Mp; Thu, 18 Jun 2026 05:49:13 -0400
+	id 1wa9Ni-0000l7-QU; Thu, 18 Jun 2026 05:49:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wa9N1-0000ZL-B1; Thu, 18 Jun 2026 05:49:11 -0400
+ id 1wa9Ng-0000ge-ED; Thu, 18 Jun 2026 05:49:52 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wa9My-0004Al-UP; Thu, 18 Jun 2026 05:49:11 -0400
+ id 1wa9Ne-0004VQ-V3; Thu, 18 Jun 2026 05:49:52 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1781776131; bh=aYiHyvQaiplOZ7i7KVsdnjinCc22US618doJHYvt7Dk=;
+ t=1781776183; bh=EJvHJZ3AUmADMmsP+Zfm2Yjk10zTS1I0a5QpccvJYjw=;
  h=Date:Subject:To:Cc:References:From:In-Reply-To;
- b=vBEkRRjAoFhtann3rSbXhVaP6sVFsfmhwm58ORNprTykbMGrwZQeEzbnz3wNmgiH2
- Jb8rdRZAh5quDolfHFK3t4h264F1yCuGyM0m6SeYQx0l9jKPFvVY+8logL+y+JC5En
- NxauA7DTpMXZlSKx8QHc7MaJcoxfRwOqEKc1kjzNtMETqqnRIK0iRN5bkao20/8Okr
- H9FMW+8VTCA/QE632mmCbQtxEPhRJ/iAGf+dgDYwXwpv8VZDsCpi7+7nezta/4WsM/
- u/1wkVGnXZSJL+5NwLwHrpq0gSHjDjxZ1lLPyDkAzzkMPmk1xzqzwMAZ5FwtocmoyX
- n9xLFO1BFZFzg==
+ b=wwYQsZJkLEJpQZZtklTgH3gvK0iwcYYtagql5XysLQckQNZcoHGSvPcMnT+BUiuiB
+ JeXRm4otx+x/nm9k2FvsHCsBDFmqSf9Ig94VkpfVW3r9o9Juqogrr+VAgj35dGF1JW
+ tbz2zTVuE7a6PULo2OyHo8izdWwtBrFN78Q4aDBHOsEhQtePYI6RIG5DUABo+yE9BH
+ otGV9ZLFVo9/zi788znfw792CHbnJgJfSREIUB6NLbe6FPRB6fuPRKqUvLdGG+mMMq
+ uvLa6JiLWJmMvhkSMoUSYDMkY8pwI9ynOu6n4ylkJY6og/NB3HmnFv9+jOrRrxw2hi
+ IMagIr345sS2g==
 Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by isrv.corpit.ru (Postfix) with ESMTP id 794EA1B889C;
- Thu, 18 Jun 2026 12:48:51 +0300 (MSK)
-Message-ID: <61ee7c29-0222-4091-95ce-8156d35cffb9@tls.msk.ru>
-Date: Thu, 18 Jun 2026 12:48:54 +0300
+ by isrv.corpit.ru (Postfix) with ESMTP id 80D7F1B889F;
+ Thu, 18 Jun 2026 12:49:43 +0300 (MSK)
+Message-ID: <8a12b351-25ea-4e7f-8730-2a053279d269@tls.msk.ru>
+Date: Thu, 18 Jun 2026 12:49:46 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v5] hw/timer/imx_epit: Replace DPRINTF with trace events
@@ -132,36 +132,8 @@ On 18.06.2026 11:04, Jack wang wrote:
 > To be honest,I am quite new to qemu and it is my first time to use git send emall to contribute so I am little confused about exact routing process
 > Last time I submitted a small patch to Peter and he kindly reviewed for me, and he still give me some advice.After I change according to his advice I tried to deliver the updated version to him.Since this patch is just change the #define macros with modern trace so I thought is may also fall under trivial category so I cc'd you as well. I apologize for the confusion and any noise this caused Thanks for your time
 
-Heh.
-
-I weren't complaining, I just asked for your reasons.
-
-Speaking of trivial patches, I'm not, but qemu-trivial@nongnu.org is,
-and you Cc'ed it too.  Right now I'm receiving 3 copies of every your
-email - sent to me directly, to qemu-devel@, and to qemu-trivial@.
-I can step out of qemu-trivial maintenance any time, or someone can
-help me, - they'll watch qemu-trivial@, not my own email.
-
-I don't know why did you send to Peter directly, either, - well, ok,
-you can if he is listed in the MAINTAINERS file for the file you're
-editing.  But generally it's not him but the output of get_maintainer.pl
-which should be used as the source for where to send emails.
-
-Or if you reply to someone's patch, that too warrants a personal email.
-Or in a few other similar situations.
-
-But I *think* (and I usually do that myself when sending emails) - the
-mailing list (qemu-devel and maybe qemu-trivial) is THE thing,
-get_maintainer.pl is THE thing, and that's about it.  Unless there's a
-special reason to get an attention of particular person.  And this is
-definitely not qemu-specific (the mailing lists are, but every other
-project has one or another mailing list/forum/etc).
-
-Personally I try to not overload other people's mailboxes and instead
-try to make their mail sorting rules work (usually mailing list emails
-gets sorted to a specific folder, and people free to work on their
-projects when they see fit, keeping their inbox free of stuff which is
-also available elsewhere).
+Also please note I sent you a personal email with a single question, but
+you added two mailing lists back.  I consider this to be rude.
 
 Thanks,
 
