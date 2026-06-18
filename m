@@ -4,73 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7CAD8CD98ED
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jun 2026 03:50:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44249CD98DE
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jun 2026 04:08:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wa3kW-0004rl-1I; Wed, 17 Jun 2026 23:49:04 -0400
+	id 1wa42L-0000s4-Kf; Thu, 18 Jun 2026 00:07:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1wa3kV-0004rW-28
- for qemu-devel@nongnu.org; Wed, 17 Jun 2026 23:49:03 -0400
-Received: from mgamail.intel.com ([198.175.65.16])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1wa3kT-0008OK-54
- for qemu-devel@nongnu.org; Wed, 17 Jun 2026 23:49:02 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1781754541; x=1813290541;
- h=from:to:cc:subject:date:message-id:in-reply-to:
- references:mime-version:content-transfer-encoding;
- bh=dBgCqtONCptyZXJ2k+3tDlSp+lfxKq17l6cUqH3J2Q0=;
- b=g+n2OppFN/aNDEVnbzN/Ma6Co1mVvx9SIdR/8BfRmVvxy/29KDjKS7Gs
- G/D3xKXua7p4BvBS8ehPJy+agYd74zmyUM7nybUcZYwPy7iHwb2FEXKDk
- EjqgpEgov91us0BzTMomvVApfCBjJEaYcmme5mopNbVDzhAgPuz+65pvJ
- CYNFngmW5g8FxvpvES3Y/9SKcIKiEhQtXqbQWsKWmRJK3LPAw+QbVNhl9
- MNXrlT1q4ukSbuTjLE/m/lF3tVYHHz/JoIW/ZgAvxIdSws2GRytCDbKu9
- cM6A5fy5RtRUkaDXjsB1rx3Dy4C3U6M+OB3iWyRA4+sZfmyOoWO/rbmEq A==;
-X-CSE-ConnectionGUID: DlYOoQuvQk6/w6W3M7qFdQ==
-X-CSE-MsgGUID: kE1I7UoDT46Q96sQa7Wi5A==
-X-IronPort-AV: E=McAfee;i="6800,10657,11820"; a="82776826"
-X-IronPort-AV: E=Sophos;i="6.24,210,1774335600"; d="scan'208";a="82776826"
-Received: from fmviesa005.fm.intel.com ([10.60.135.145])
- by orvoesa108.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 17 Jun 2026 20:48:59 -0700
-X-CSE-ConnectionGUID: CTngwMwpT4CPQfG9BWq6rg==
-X-CSE-MsgGUID: A37hcDYiTm6l1KqQ8uc6lg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.24,210,1774335600"; d="scan'208";a="253352574"
-Received: from unknown (HELO gnr-sp-2s-612.sh.intel.com) ([10.112.230.229])
- by fmviesa005-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 17 Jun 2026 20:48:55 -0700
-From: Zhenzhong Duan <zhenzhong.duan@intel.com>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wa42G-0000qf-1b
+ for qemu-devel@nongnu.org; Thu, 18 Jun 2026 00:07:25 -0400
+Received: from mail-pj1-x1032.google.com ([2607:f8b0:4864:20::1032])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wa42E-00044R-JA
+ for qemu-devel@nongnu.org; Thu, 18 Jun 2026 00:07:23 -0400
+Received: by mail-pj1-x1032.google.com with SMTP id
+ 98e67ed59e1d1-36baeec21dcso219377a91.3
+ for <qemu-devel@nongnu.org>; Wed, 17 Jun 2026 21:07:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1781755640; x=1782360440; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=4Q2VUV0l7hwzaun46dVIEJHwiUnFL2anc4WfanKbEJk=;
+ b=Ius4oUuIUq5FMOYwQADSTogukLpuwM2c7PDEGoVQGDKGYGXKY8PcP62QeSqdDEHKmX
+ 6So5s7d16YKAQdgHeIU1sPEK8HnpmB58CILPerIvlj18+31jcWy5eP1m1+8hZXsxGSn5
+ 4WKHjMHbUPFaytX0N09F1LE9fKEdM0yl9upuZXVjD7Cf2/HL69ZsFnwZXl0FvLWZSlJz
+ gxl3hynX02As3eQ9UcFTLtBQoavoO17r5ef6/DB2zzznfhjKmCNWCugJ8Hgpyhfcl85L
+ CmFSKxryl/7GEJsGgL8aFAgiSsfg+DPF4yCmWfaSrG17LctKkMM3em+V0gIBIojTfJsU
+ kIgg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1781755640; x=1782360440;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=4Q2VUV0l7hwzaun46dVIEJHwiUnFL2anc4WfanKbEJk=;
+ b=VcIO1iWfAyKZ3of4kEa4xqjmGo+6Nbp7gbkDUF4BxWCRH2git+bSOSz/FKrGSTeUmq
+ y+k4O48MnVnewd0dkgPOL0o9HLYQ41jU/CuhjBtYuru2sLGoOPgzLEYOm9VkWwCnnuJP
+ wSVb5hLYsHoybafFAQLyrCP69e/TCXigSeMaYfDWFJ267FJesU0HkLJprfMDiv6tX/kI
+ RUTTEXZCxv/dBLOYYFzkrA2sY6EDVspISznIXFxSRfSn9lF6RzFXnlUJDaDjpMwfyloz
+ d5x+hOUTKGfzVY2lUEcZnu8jHdTJkcYkyv9y8NAkF/5eZ5eYjzGwp9NwcUjbCvDHgbQ3
+ yXNA==
+X-Gm-Message-State: AOJu0YxJXEuRLxs+gmSEKdGgJs9qgunALwbYqrfMTm6WqosU5tYzTImo
+ ypCifVR+ZBLFP1Lc6+IGTAIvqTukOlspbnVN3w83rlHLqnPKKda3jYHmTzsQu2K4TzTmFikmMtz
+ Rr58r
+X-Gm-Gg: AfdE7cmh1pOtsoskF/EE4JNtM/KWMdO5r+lS1itFTVHWwZKqEBdpRUrfcWywa/FSnUt
+ O8KjtHlPY4En0rwueUN9vL8ivd35SNrg4Yx2Erx4h/K6midBKnjDuHYJskIJ9IYdy/uESzLDOsU
+ BsQzZaBOOhQYEPqHbylUKVNAaXCvPnQCFlXcTb9GFGxjoS9YcJLNhSgdRe6rGSJ1aXwdBsBY+3l
+ wjlTxBIX1siFuh0/uGdmxNYPoXZGs1rs7s5J7gQj3yBJfengnGsPIEXasRPaU3bDEwx4wqzqUTh
+ 7CaTmX3d/Dxjs9RN5qSL3HwxVJc3dbkYu+LnfExdfJKJkUb1mOyC32NUMXfvqkXNzDUfBOqPqvg
+ VRXTuIfw/6Goddb1pQj5R8vOyzASa5HNkRddVkU2wOxcwhbiThXNyqeFYsp7zSeyb5RpJ1dbWfs
+ MfayFXwGjcmEO52nwZQkMq1lR8Pl6BhNxYxKgTn/s3i/xtylefPw==
+X-Received: by 2002:a17:90b:3c52:b0:36b:9835:cf96 with SMTP id
+ 98e67ed59e1d1-37c9da78e74mr6111230a91.2.1781755640124; 
+ Wed, 17 Jun 2026 21:07:20 -0700 (PDT)
+Received: from stoup.. (174-21-129-215.tukw.qwest.net. [174.21.129.215])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-37c5222e042sm8830476a91.16.2026.06.17.21.07.19
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 17 Jun 2026 21:07:19 -0700 (PDT)
+From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: alex@shazbot.org, clg@redhat.com, eric.auger@redhat.com, mst@redhat.com,
- jasowang@redhat.com, jgg@nvidia.com, nicolinc@nvidia.com,
- skolothumtho@nvidia.com, joao.m.martins@oracle.com,
- clement.mathieu--drif@bull.com, kevin.tian@intel.com, yi.l.liu@intel.com,
- xudong.hao@intel.com, Zhenzhong Duan <zhenzhong.duan@intel.com>
-Subject: [PATCH v2 1/5] backends/iommufd: Introduce
- iommufd_backend_alloc_faultq
-Date: Wed, 17 Jun 2026 23:48:39 -0400
-Message-ID: <20260618034844.618011-2-zhenzhong.duan@intel.com>
-X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20260618034844.618011-1-zhenzhong.duan@intel.com>
-References: <20260618034844.618011-1-zhenzhong.duan@intel.com>
+Cc: qemu-arm@nongnu.org
+Subject: [PATCH v2 0/8] target/arm: Implement FEAT_SVE2p2
+Date: Wed, 17 Jun 2026 21:07:10 -0700
+Message-ID: <20260618040718.572950-1-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=198.175.65.16;
- envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -47
-X-Spam_score: -4.8
-X-Spam_bar: ----
-X-Spam_report: (-4.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1032;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1032.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,76 +97,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a new helper for IOMMU_FAULT_QUEUE_ALLOC ioctl to allocate a fault
-handling object which will be used in hwpt allocation.
+Changes for v2:
+  - 18 patches merged
+  - Enablement of the feature for -cpu max is deferred until
+    FEAT_SME2p2 is complete as well.
+  - Dropped sve2p2 helper prefixes.
+  - Renamed sve2_aes to sve_aes; there are more isar functions
+    that want renaming, but this one touches the same lines as
+    FEAT_SSVE_AES.
+  - Other minor tweaks to helpers per review.
+  - Unrelated bug fix for FEAT_FPMR.
 
-Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
-Tested-by: Xudong Hao <xudong.hao@intel.com>
----
- include/system/iommufd.h |  3 +++
- backends/iommufd.c       | 21 +++++++++++++++++++++
- backends/trace-events    |  1 +
- 3 files changed, 25 insertions(+)
 
-diff --git a/include/system/iommufd.h b/include/system/iommufd.h
-index 17bf1a3727..c287767b11 100644
---- a/include/system/iommufd.h
-+++ b/include/system/iommufd.h
-@@ -106,6 +106,9 @@ bool iommufd_backend_alloc_veventq(IOMMUFDBackend *be, uint32_t viommu_id,
-                                    uint32_t *out_veventq_id,
-                                    uint32_t *out_veventq_fd, Error **errp);
- 
-+bool iommufd_backend_alloc_faultq(IOMMUFDBackend *be, uint32_t *fault_id,
-+                                  int *fault_fd, Error **errp);
-+
- bool iommufd_backend_alloc_hw_queue(IOMMUFDBackend *be, uint32_t viommu_id,
-                                     uint32_t queue_type, uint32_t index,
-                                     uint64_t addr, uint64_t length,
-diff --git a/backends/iommufd.c b/backends/iommufd.c
-index 09624cd652..9c56a7bcd6 100644
---- a/backends/iommufd.c
-+++ b/backends/iommufd.c
-@@ -549,6 +549,27 @@ bool iommufd_backend_alloc_veventq(IOMMUFDBackend *be, uint32_t viommu_id,
-     return true;
- }
- 
-+bool iommufd_backend_alloc_faultq(IOMMUFDBackend *be, uint32_t *fault_id,
-+                                  int *fault_fd, Error **errp)
-+{
-+    int ret, fd = be->fd;
-+    struct iommu_fault_alloc cmd = {
-+        .size = sizeof(cmd),
-+    };
-+
-+    ret = ioctl(fd, IOMMU_FAULT_QUEUE_ALLOC, &cmd);
-+    trace_iommufd_backend_alloc_faultq(fd, cmd.out_fault_id, cmd.out_fault_fd,
-+                                       ret);
-+    if (ret) {
-+        error_setg_errno(errp, errno, "Failed to allocate fault queue");
-+        return false;
-+    }
-+
-+    *fault_id = cmd.out_fault_id;
-+    *fault_fd = cmd.out_fault_fd;
-+    return true;
-+}
-+
- bool iommufd_backend_alloc_hw_queue(IOMMUFDBackend *be, uint32_t viommu_id,
-                                     uint32_t queue_type, uint32_t index,
-                                     uint64_t addr, uint64_t length,
-diff --git a/backends/trace-events b/backends/trace-events
-index b63420b73e..1df3efb353 100644
---- a/backends/trace-events
-+++ b/backends/trace-events
-@@ -17,6 +17,7 @@ iommufd_backend_unmap_dma_non_exist(int iommufd, uint32_t ioas, uint64_t iova, u
- iommufd_backend_unmap_dma(int iommufd, uint32_t ioas, uint64_t iova, uint64_t size, int ret) " iommufd=%d ioas=%d iova=0x%"PRIx64" size=0x%"PRIx64" (%d)"
- iommufd_backend_alloc_ioas(int iommufd, uint32_t ioas) " iommufd=%d ioas=%d"
- iommufd_backend_alloc_hwpt(int iommufd, uint32_t dev_id, uint32_t pt_id, uint32_t flags, uint32_t hwpt_type, uint32_t len, uint64_t data_ptr, uint32_t out_hwpt_id, int ret) " iommufd=%d dev_id=%u pt_id=%u flags=0x%x hwpt_type=%u len=%u data_ptr=0x%"PRIx64" out_hwpt=%u (%d)"
-+iommufd_backend_alloc_faultq(int iommufd, uint32_t fault_id, int fault_fd, int ret) " iommufd=%d fault_id=%u fault_fd=%d (%d)"
- iommufd_backend_free_id(int iommufd, uint32_t id, int ret) " iommufd=%d id=%d (%d)"
- iommufd_backend_set_dirty(int iommufd, uint32_t hwpt_id, bool start, int ret) " iommufd=%d hwpt=%u enable=%d (%d)"
- iommufd_backend_get_dirty_bitmap(int iommufd, uint32_t hwpt_id, uint64_t iova, uint64_t size, uint64_t flags, uint64_t page_size, int ret) " iommufd=%d hwpt=%u iova=0x%"PRIx64" size=0x%"PRIx64" flags=0x%"PRIx64" page_size=0x%"PRIx64" (%d)"
+r~
+
+
+Richard Henderson (8):
+  target/arm: Enable SCTLR_EL1.EnFPM for user-only
+  target/arm: Implement EXPAND
+  target/arm: Generalize sve_compact_[sd]
+  target/arm: Implement COMPACT for byte/halfword
+  target/arm: Implement FIRSTP, LASTP
+  target/arm: Rename isar_feature_aa64_sve_aes
+  target/arm: Implement FEAT_SSVE_AES
+  target/arm: Use expand_pred_N for helper_sve_not_zpz_N
+
+ bsd-user/aarch64/target_arch_elf.h |   2 +-
+ target/arm/cpu-features.h          |   7 +-
+ target/arm/tcg/helper-sve-defs.h   |  10 ++
+ linux-user/aarch64/elfload.c       |   3 +-
+ target/arm/cpu.c                   |   4 +
+ target/arm/tcg/cpu64.c             |   1 +
+ target/arm/tcg/sve_helper.c        | 150 ++++++++++++++++++++++-------
+ target/arm/tcg/translate-sve.c     | 105 +++++++++++++++++---
+ docs/system/arm/emulation.rst      |   1 +
+ target/arm/tcg/sve.decode          |   6 +-
+ 10 files changed, 237 insertions(+), 52 deletions(-)
+
 -- 
-2.52.0
+2.43.0
 
 
