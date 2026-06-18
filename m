@@ -4,104 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81B85CD98F2
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17AA8CD98F6
 	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jun 2026 14:59:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1waECm-0004R6-Do; Thu, 18 Jun 2026 10:58:56 -0400
+	id 1waECy-0004Sb-Hf; Thu, 18 Jun 2026 10:59:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1waECk-0004QV-Qu
- for qemu-devel@nongnu.org; Thu, 18 Jun 2026 10:58:54 -0400
-Received: from mail-yx1-xb133.google.com ([2607:f8b0:4864:20::b133])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1waECw-0004SB-OA
+ for qemu-devel@nongnu.org; Thu, 18 Jun 2026 10:59:06 -0400
+Received: from mail-pj1-x102b.google.com ([2607:f8b0:4864:20::102b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1waECi-0001Mq-9o
- for qemu-devel@nongnu.org; Thu, 18 Jun 2026 10:58:54 -0400
-Received: by mail-yx1-xb133.google.com with SMTP id
- 956f58d0204a3-662df6a4fe4so1384564d50.2
- for <qemu-devel@nongnu.org>; Thu, 18 Jun 2026 07:58:51 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1781794731; cv=none;
- d=google.com; s=arc-20240605;
- b=MpBicjK8OCT6B9m97s8RHr+Mt/o8yxS7rUtiskPYblR6APeRT02Oj7GYUrMu4ychdx
- HV76V3Uy03rih4dIAscrIyPN+6gWLmKepRdhzlDeoRXmZJFpzcvF8YrgPq5KiyOJipsu
- z0nZF20Qf+UdeaPg8SMxzLms5c1VeAYHoBbuBAPRVnJ8JoLpolfxiT6533wNkOIrNrPk
- NeWEYfsIMvQKR7p8WBt/yJ+QdAR4FdBTLFKO4CpWouLt+mJ6LtnPw7FcPiGXs6rgCiKF
- t7d6w07geyZoraH+GyAYojxriXfq534+IoTse5qZkVGLM2InhN0RODyZMm+RmYftU0FG
- UatA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=tUPIscPmndmx5i525GhyoosCIvCSVXyRVhSDHgGvlUg=;
- fh=tCjhYXo1P/fTiS6prP1L86yLrd3qP6xCeSMcNtIhTkY=;
- b=a06zAvv01fw3P4O/MXJ4pi+h+bBn5gjFE4S5zMmKzHSvqnfxGPNHB6FssdqxaLYHYG
- bZN/veyosSPlQjRWDPbV22U2drcHOmSilKkmDEX2AsmUtdulflwzuO4CQUDnTXUIz8m+
- uJhG1BF567zXCFPd06kB0e2v134FnR4I+At/Bc15VVfhk2L5GBZgvuYcTpG5igEGr4X3
- MJfuOXDFdO94sKQkvmL8mISzAjELTpguIM40KJS1ern7CLFnodDGTv0XQeizNZQ9YWa7
- Ej9kt6B5M2UAs+S+XlYxH04xH4ZkcUpde1W7DEeTWco+I+4MIjYzgcCfSZn/TuJKzNRf
- HSIg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1waECv-0001PM-0l
+ for qemu-devel@nongnu.org; Thu, 18 Jun 2026 10:59:06 -0400
+Received: by mail-pj1-x102b.google.com with SMTP id
+ 98e67ed59e1d1-36b8d414666so571031a91.3
+ for <qemu-devel@nongnu.org>; Thu, 18 Jun 2026 07:59:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1781794731; x=1782399531; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=tUPIscPmndmx5i525GhyoosCIvCSVXyRVhSDHgGvlUg=;
- b=hfzxlS6KG5KQ4TkbN9cgQwJhQHXckX1MSVN0LAD5AS/xfoorsTItScABG82xdJ+/Dt
- 0Pf3bgSqx10oAOf0MFY20FCYKsmXJ02NYrAAiH8URIVNRTqhcjnCkjPvs0YsXTG9G9Zv
- DPu+gGF4PVpI0zCEri00GH5h5INU0+e61uGhdAkC7TTNJQv7+XWMUDovczt0TmYb5ZoA
- tiXBWLwFjCQfdrtGseZnotZscmGtgYSFtoHKxSFVSeJQlVXfWIE3/nLl/R8m4iYHXrkJ
- OzrGRp4Iwu9vBqInpGTuAO7F2BJYw1sjzMNGY8dbKJ+DkzX7+Zr86a9MG8SoOibSV9/N
- uPTw==
+ d=linaro.org; s=google; t=1781794743; x=1782399543; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=PRUQcQhnQAI6zAyrr69hwMqSPPZ9s3F8m4p8vIly/wY=;
+ b=ogpyqVHSWwtJBUT2eK8JqdXnTzYLMeAXR+cxm0VWYnvtNRnqEo4Ys/ZH1evuB2MNWd
+ PQHOV+VB6zWOWPDJY7f7Nat/E1+iseTJhSkEBouTQ6MvIKnS0gsrTjoiTiom9YfnCSJI
+ tV4GUevQTBLtWhHN4y0cK0O4+CL7aWfu5ZxKA4LN4dIcPZarsydzUfphBo9vraMYymTv
+ HFl5fcL82q/mqMe3hM0o71vuG9F0olxdOL3DsmD+OJqsq1CwirwDzNLV2o8QwsftmYzf
+ yp7aqCacHzon31na0GKA7C+9+4hKHh8hYmgngyqNsxknEFbAy/G5Iked+S3D05vEtnR8
+ iPWA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781794731; x=1782399531;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=tUPIscPmndmx5i525GhyoosCIvCSVXyRVhSDHgGvlUg=;
- b=lAzCeA2IgBUT4PvqqBTmBXxDPdWHqAjOfI+R9QJj/idwnX7zHNsB8m7YFC8c4lYA2N
- KPLX+qppg/YfLCI5Ie3c8uG8pGiSaow60RUhP3pUSVhx4OKqlVR/fv9qR+FeD7NSywDu
- WEfJ3FmtGu8tLomJNa4DJxIPKf7VT98x5CsqYPqjDl/cBRTX5OB9UU2nvijKK6M80PQk
- aJjjY5UWp8q5pqgNa2ra3sMD1huRbPH9ejU6hf1fpSL987VKvn/th7a3Pvfk2CO8ecef
- HeulKO/4nqyrk5xmS9QG1nORKxbI7KRObBI3iq2f4Ht5vAT6nHKOf81sbbzFHU7Qixr7
- FPNQ==
-X-Gm-Message-State: AOJu0Yzps0OHYvBie9HSeyU3Sj/PnrMHOv5OSdNCQF1mLtBf3SHu7rdb
- tEHGkmll/QEZF3Gq9gSQY2iuIx1ZhMH6f9A5oqkDstJ+LYg5z8ZFDW/Nt8rRD5Qll+PvETklHve
- aC35LZikEzAFhdjz8iMilrEnIehhrSNwl0hJfZYaicA==
-X-Gm-Gg: AfdE7cmWgTswlVXbv9BfaIseFnY/ZIOG6O4YbikbKxN93lWJiXuO2zamTQBOtkwTYuM
- w0prAUTX35VboaG/x/mya0hB719h06bg1qgzeH33mK9nsEYIsRgPAUg/eqn4omSXN0ey5Ebmqh0
- u9MpJJQYZ03nkXInD1LZ32BfCwwdkS0AgnhQjc3E3j8krIW0jVOqfxoqJwdBxQf9YYlKcnEN5+G
- fC4Bw7WOfBPavivy69LjqtRjGIGk/h484o8sIyclA+3xSzXRUZnzjtB6P7PhiVX0kuUporFjRL8
- ew048oXLVyJ0c8E8oF9hRDqzqfMckI7uFduy0wD1sKCq7HiW1rt5pJs5
-X-Received: by 2002:a53:c091:0:b0:662:bd61:f818 with SMTP id
- 956f58d0204a3-662cbd2263bmr6648189d50.52.1781794730707; Thu, 18 Jun 2026
- 07:58:50 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1781794743; x=1782399543;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=PRUQcQhnQAI6zAyrr69hwMqSPPZ9s3F8m4p8vIly/wY=;
+ b=s5HC0YOtHVWoV6FcEZSn47dm+Ka8BDvAEbJU48IUhIwxqNLepAdwBjvW0QFpcEU8Sc
+ hFqjxsSy2pppqclMi/o4hraG5TE7fMKuWQQBuxTcwj5IqqOfQ3uIx9weFrKtpXRIynk6
+ BQP4p7bHnJMN7YW2etxnlGQG4CbaIEZcOCvrZgYc2iJIDmb64Isv7/YVAEF6sMeb7b4x
+ 3UKp9phMTTvAX9+kPyqUtY2n2MDnj5B9cDbbGOMpohTsT8fK/ElHgG0b0gy8rlMvPB4Z
+ gnRgnydLodVklOcb3gckKyT+DJOEQ+x2AQxeHgphgWZWlbQFpqD54sBb00q+b9Hanrqn
+ bN9w==
+X-Gm-Message-State: AOJu0YwrED2tW14NoPNQuRaXnJ0yLwfNeJaoFbEvCiabvLHRHULj4jHe
+ FxcQixVyr1GRFprgteEM3ETa4m2uIK3XBJw7iphCfWX7WZ16B4jsc66jt+ys7i0fBlM0ICI8yzV
+ bgNtH
+X-Gm-Gg: AfdE7ckMFnL7xYHFJgH0EUjLtlZHB71XyfdN7pCyz7c6xX1u/fGMCXyER5gK5FCSqgJ
+ aaW2yuXa90MeS7qZaZT4QbBq/nc5fnJO82hXCGFn2TiZ9hebu56GEG4NafagdYg9Pi2ldScXAS2
+ tVC7pfPf/fnzvtt9OdbVuOZN1AOW77VNjeFtf1TIm0cwCb2Sk0YitfrBuwmNRYbkbKJKsx21Ivc
+ oRJxCwkp1dLFdy4zhaA8Ushx58tetlM94wxl1mLrgDczR4YCGztb2LjSEGoR16eSIqiojTl4CxE
+ RFSc1zw3QvRH403nqPGlz0NV3Hcfd2z8TOeVVL2HX5SOVra+rjyWBn9fmCuvwzguAqS9h866R9z
+ OTkIGENMNFFNcd9lnBaLGzgo5qtAYgkd9CFNiB9cVE4/XMdAEuI+cVS0WwUYQC3+2C7PPE7B1cA
+ 74SgilelrYzVkv2DtF7Na/0mwuL9GB67qBco8Ppq7XLu7aeuC5Rd3hb3sqkg==
+X-Received: by 2002:a17:902:d542:b0:2be:3434:4e28 with SMTP id
+ d9443c01a7336-2c6f3465e4amr33942175ad.19.1781794743375; 
+ Thu, 18 Jun 2026 07:59:03 -0700 (PDT)
+Received: from [192.168.0.4] (174-21-129-215.tukw.qwest.net. [174.21.129.215])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2c6bb1297ebsm66524985ad.33.2026.06.18.07.59.02
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 18 Jun 2026 07:59:02 -0700 (PDT)
+Message-ID: <33b05999-4f43-4bb4-b73d-1be62d116e8d@linaro.org>
+Date: Thu, 18 Jun 2026 07:59:01 -0700
 MIME-Version: 1.0
-References: <20260303092532.2410177-1-imammedo@redhat.com>
- <20260303092532.2410177-8-imammedo@redhat.com>
-In-Reply-To: <20260303092532.2410177-8-imammedo@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 18 Jun 2026 15:58:38 +0100
-X-Gm-Features: AVVi8CePXzKJX-IjgBl9ocCe6xzRqZ5o2_2oIUuWx0lOKwgI1zZN8DzP69qeu6E
-Message-ID: <CAFEAcA_KjOEBduVcop_T6-aH_DKy_4=QwTKa04kvKR51S79UQw@mail.gmail.com>
-Subject: Re: [PATCH v2 07/21] arm: sbsa_gwdt: fixup default "clock-frequency"
-To: Igor Mammedov <imammedo@redhat.com>
-Cc: qemu-devel@nongnu.org, mst@redhat.com, anisinha@redhat.com, 
- pbonzini@redhat.com, shannon.zhaosl@gmail.com, philmd@linaro.org, 
- zhao1.liu@intel.com, rad@semihalf.com, leif.lindholm@oss.qualcomm.com, 
- qemu-arm@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b133;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb133.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/3] target/arm/tcg: Implement new instructions for FPRCVT
+To: qemu-devel@nongnu.org
+References: <20260618-jmac-fprcvt-v1-0-1b4475bacf51@linaro.org>
+ <20260618-jmac-fprcvt-v1-1-1b4475bacf51@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20260618-jmac-fprcvt-v1-1-1b4475bacf51@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,32 +104,99 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 3 Mar 2026 at 09:26, Igor Mammedov <imammedo@redhat.com> wrote:
->
-> Comment about keeping legacy freq, is wrong to begin with
-> (should be 62.5MHz), but that value also doesn't make
-> sense anymore as the watchdog is used only by un-versioned
-> SBSA board and the later has hard-coded it to 1GHz.
->
-> Other potential user (arm/virt) also has system clock at 1GHz.
+On 6/18/26 01:20, Jim MacArthur wrote:
+> +/*
+> + * [US]CVTF, scalar SIMD & FP version.
+> + * Converts an integer value in a SIMD/FP register to a float
+> + * in another FP register.
+> + */
+> +static bool do_cvtf_simd(DisasContext *s, arg_fcvt *a, bool is_signed)
+> +{
+> +    TCGv_i64 tcg_int;
+> +    int check = fp_access_check_scalar_hsd(s, a->esz);
+> +
+> +    if (check <= 0) {
+> +        return check == 0;
+> +    }
+> +
+> +    tcg_int = tcg_temp_new_i64();
+> +    /*
+> +     * a->sf should specify source size (64 bit or 32 bit)
+> +     * a->esz specifies destination size
+> +     */
+> +    read_vec_element(s, tcg_int, a->rn, 0,
+> +                     (a->sf ? MO_64 : MO_32) | (is_signed ? MO_SIGN : 0));
+> +    return do_cvtf_scalar(s, a->esz, a->rd, 0, tcg_int, is_signed);
+> +}
 
-It's not quite that simple. We use the back-compat 62.5MHz:
+It would be better to refactor do_cvtf_f slightly.  E.g.
 
-   *  - for QEMU CPU types added before we standardized on 1GHz
-   *  - for versioned machine types with a version of 9.0 or earlier
+static bool do_cvtf_f(DisasContext *s, arg_fcvt *a, MemOp mop_int)
+{
+     TCGv_i64 tcg_int;
+     int check = fp_access_check_scalar_hsd(s, a->esz);
 
-sbsa-ref sets the same 1GHz frequency on both the wdt device
-and also on the CPU objects it creates (because it doesn't have
-to care about back-compat, so we were able to update it).
-The virt board doesn't set the cpu cntfrq property, so it gets
-62.5MHz in the above situations.
+     if (check <= 0) {
+         return check == 0;
+     }
 
-Changing the default value here is fine, though.
+     tcg_int = tcg_temp_new_i64();
+     read_vec_element(s, tcg_int, a->rn, 0, mop_int);
+     return do_cvtf_scalar(s, a->esz, a->rd, a->shift, tcg_int, is_signed);
+}
 
-(I haven't checked whether the subsequent patches in this
-set make sure that when the virt board creates a watchdog
-that it sets the clock-frequency here to match what the
-CPU is is using.)
+TRANS(SCVTF_f, do_cvtf_f, a, a->esz | MO_SIGN)
+TRANS(UCVTF_f, do_cvtf_f, a, a->esz)
 
--- PMM
+> +TRANS(SCVTF_simd, do_cvtf_simd, a, true)
+> +TRANS(UCVTF_simd, do_cvtf_simd, a, false)
+
+Missing feature check.  Combining with the above you need
+
+TRANS_FEAT(SCVTF_simd, aa64_fprcvt, do_cvtf_f, a, (a->sf + MO_32) | MO_SIGN)
+TRANS_FEAT(UCVTF_simd, aa64_fprcvt, do_cvtf_f, a, a->sf + MO_32)
+
+> +static bool do_fcvt_simd(DisasContext *s, arg_fcvt *a,
+> +                      ARMFPRounding rmode, bool is_signed)
+> +{
+> +    TCGv_i64 tcg_int;
+> +    int check = fp_access_check_scalar_hsd(s, a->esz);
+> +
+> +    if (check <= 0) {
+> +        return check == 0;
+> +    }
+> +    /*
+> +     * a->sf should specify destination size (64 bit or 32 bit)
+> +     * a->esz specifies source size
+> +     */
+> +    tcg_int = tcg_temp_new_i64();
+> +    do_fcvt_scalar(s, (a->sf ? MO_64 : MO_32) | (is_signed ? MO_SIGN : 0),
+> +                   a->esz, tcg_int, a->shift, a->rn, rmode);
+> +
+> +    if (!s->fpcr_nep) {
+> +        clear_vec(s, a->rd);
+> +    }
+> +    write_vec_element(s, tcg_int, a->rd, 0, (a->sf ? MO_64 : MO_32));
+> +    return true;
+> +}
+
+Likewise, better to generalize do_fcvt_f with mop_int.
+
+> +TRANS(FCVTNS_g_simd, do_fcvt_simd, a, FPROUNDING_TIEEVEN, true)
+> +TRANS(FCVTNU_g_simd, do_fcvt_simd, a, FPROUNDING_TIEEVEN, false)
+> +TRANS(FCVTPS_g_simd, do_fcvt_simd, a, FPROUNDING_POSINF, true)
+> +TRANS(FCVTPU_g_simd, do_fcvt_simd, a, FPROUNDING_POSINF, false)
+> +TRANS(FCVTMS_g_simd, do_fcvt_simd, a, FPROUNDING_NEGINF, true)
+> +TRANS(FCVTMU_g_simd, do_fcvt_simd, a, FPROUNDING_NEGINF, false)
+> +TRANS(FCVTZS_g_simd, do_fcvt_simd, a, FPROUNDING_ZERO, true)
+> +TRANS(FCVTZU_g_simd, do_fcvt_simd, a, FPROUNDING_ZERO, false)
+> +TRANS(FCVTAS_g_simd, do_fcvt_simd, a, FPROUNDING_TIEAWAY, true)
+> +TRANS(FCVTAU_g_simd, do_fcvt_simd, a, FPROUNDING_TIEAWAY, false)
+
+Likewise missing feature check.
+
+This could plausibly be split into two patches.
+
+
+r~
 
