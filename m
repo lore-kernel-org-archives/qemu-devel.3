@@ -4,119 +4,119 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B18A6CD98F3
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE9B5CD98F2
 	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jun 2026 12:29:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1waBrY-0007wh-JJ; Thu, 18 Jun 2026 08:28:52 -0400
+	id 1waBrd-0007zL-OS; Thu, 18 Jun 2026 08:28:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1waBrT-0007v7-E6
- for qemu-devel@nongnu.org; Thu, 18 Jun 2026 08:28:48 -0400
+ id 1waBrb-0007yp-DX
+ for qemu-devel@nongnu.org; Thu, 18 Jun 2026 08:28:55 -0400
 Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1waBrR-0007WO-Ow
- for qemu-devel@nongnu.org; Thu, 18 Jun 2026 08:28:47 -0400
+ id 1waBrZ-0007X1-QN
+ for qemu-devel@nongnu.org; Thu, 18 Jun 2026 08:28:55 -0400
 Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65IAraEw1054825
- for <qemu-devel@nongnu.org>; Thu, 18 Jun 2026 12:28:44 GMT
+ 65IArgTX1054960
+ for <qemu-devel@nongnu.org>; Thu, 18 Jun 2026 12:28:51 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- lZGINRaxXIxDHDRwC/5u4ZiaZsPNVShYO4DeqkNE1wY=; b=WcnNJFE9qSCas+uz
- km1+p/+1pXqSnLL0433KJFqQlDfICsZEtELUCJ/23cmOqfGNjBiIBcBm7wQuZ+h3
- Keyjv5IdbCIo40OB3X5i3xYJbuR35alULkQ7hoSLi4kwa2XxFoOqZqqnhLkf9IEy
- CgKourv8ZiaP6rWxy+1EuttEF/Ytpoyw2rqclrifa5STic+7erG06petj3yxp/X/
- lSk9wucajmoeLqr4svo5wsVzwkTOfvvC2eNm+Y0FdPmBy3QBesykpu8SZ+R3uRa+
- j4GJ4IMDuOZnEa7d4vQgc0xP3QmWWvJYusqXcETIvXmez/eK64ngmrc8u99VaY16
- f424ng==
-Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
- [209.85.219.70])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4eux2ccf7q-1
+ 82dFeWG41NySdoeq2EmNII48adA0h4g+cc+/YSVjXaw=; b=px1Prf9VE1i6Q0wS
+ IZqHz89mOf0/ZKxKMdBeX7f49u8fzuYexN0NLTJPEp4ty1tp4Y3lEKqAn8HaZILu
+ JJLPvY4K81JgplIbw9llao4QUXflCG7NxZ77e/5FlsrnXh8boDLXEO0WwyThcH2f
+ N7hnAHrw71xYMtGjAZ+BJNwf5xI890L945q/7br+M/tUf/0PytNfhlkmm+yWakP6
+ 9PcHkhEL7HkQlWGCn6uPmdx9dJ+cByd2mtwhLaNpTszE4iH0uoz+tLBAjWYP/0BH
+ olQAiArSYLIvMG3nkojx5nCom7vFUOntZQX0az8DXeJL8Si0TsyRAXR7RUPsYUra
+ bbU7Cg==
+Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
+ [209.85.219.69])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4eux2ccf8c-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 18 Jun 2026 12:28:44 +0000 (GMT)
-Received: by mail-qv1-f70.google.com with SMTP id
- 6a1803df08f44-8dbdf24d47bso20294766d6.1
- for <qemu-devel@nongnu.org>; Thu, 18 Jun 2026 05:28:43 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Thu, 18 Jun 2026 12:28:51 +0000 (GMT)
+Received: by mail-qv1-f69.google.com with SMTP id
+ 6a1803df08f44-8cebec24b12so669096d6.3
+ for <qemu-devel@nongnu.org>; Thu, 18 Jun 2026 05:28:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1781785723; x=1782390523; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1781785730; x=1782390530; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=lZGINRaxXIxDHDRwC/5u4ZiaZsPNVShYO4DeqkNE1wY=;
- b=elaD4J7VQL/kWAT3DqSXCNrVAdtgE9DgZDecO3zr/NunUvqr4UW6cDX5W9ycU6sKVM
- ksLYKs09P8mRhk/qpWOBVPBcYkdGAYnxUlYL8bCYHktDEAEEQ2/y3vIOSnwrRQJl63kg
- 6JADuqD+4DbeMa2W6wAAaXPR5u1jlnCEAZN8cYz6NfvwbmEW/i9M1mUwT8S9lhIuHuUO
- 6IfX680qmue6bZyTbT82yGtT7Ae8TI/WBdg7B3butJGNjOP60BXxYpZ0SXy1v4lE41R5
- Yg/yNVw/FqSoFBa6kZjbGkm2S+41FCJioUojMWojtr92znt7YtxIWfWksXou8ceeu2oA
- YV+w==
+ :reply-to; bh=82dFeWG41NySdoeq2EmNII48adA0h4g+cc+/YSVjXaw=;
+ b=VbzSWILkNQycJKfQsuSJN0tAZK2pHNSEfTCuDTGPnXPyKZ2FkeiJIUlKKyOTgn72Mn
+ YqiVI00U/EUh03UGuHN5MWNywjYq5NJnCSOoy+rfJB3Wl3DOsqb3t64VhgbqgkqG7PPd
+ 3Pgz+MUHUYQLyet5Zyb/1j+OSwWtz2qUQNqdZqgXKd4MLYigECZGch8B5x43nptamXCd
+ Kaob3yimJFih0zpeoP1Ruogq03gaFt40flwUcBFFa3egRfdhzTFIwGo+Dn1ik7ravDf/
+ BASwMkNESAbNEoF0SRdmuxPVMBxzrt6hgn8RIBGoNXLcZ4JxF/WlSrQVrgvUHodHgaLZ
+ rGtg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781785723; x=1782390523;
+ d=1e100.net; s=20251104; t=1781785730; x=1782390530;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=lZGINRaxXIxDHDRwC/5u4ZiaZsPNVShYO4DeqkNE1wY=;
- b=k9YbgVYuYS3MIALTgdyht7h9gepTAMLZBIbLU+xW5mV9h66bKUSDV8hpMenSv1AocB
- VjzGeoPMw7lVGbl/Tf02hbQ8DlyJxvs0GtGP7ElC4b7txfZI6bd0X7EJ0BfJ7+PgU/sb
- ktgg5H/k+k0F9duog6s0VLSjiPyExXe9HDtEhdtc9KskRHemVksMxZiCdcZvugOYO8UF
- CpbNrRo5qSat7Y413l2uOB/eIuEvVWyDyLEbBp9Nx5LMS+9ZA4T1H6Qx4tqB+p8sCcft
- 0yCn9+TsCPck4mwtFiEef2GWm3sqt3b7uOEVgJwvBxLb+VYKYlZ3b7iXNKLMarseqUUZ
- P+gw==
-X-Gm-Message-State: AOJu0YyORm6FJ+Or0+vghXNSYkl1FpB2w3QPVWMygO7JQsXaQZGoxYa3
- jKegZj/SfFkWXLszMW3LpkHVvX8LV1ydkK53zd5rdb9qKERINulqhgAYn7DWMedXGCwyDsDs31z
- vEqGQayqsqROfji3x63T5/dNp1xT1WhmBNjDusKzGS//1JOhKcIcZjEAZDPSVGX3c0Q==
-X-Gm-Gg: AfdE7cm1TqKuBmLKVrbn0WZBj4uvquuQGuQe1srUcGZ3ilxCBsyDIsQZV7FqrWyHTFd
- SdR8TrzAKyfBAi2FFm/tthVbaYufharywDWejlUSe1SGEcHELaER1q2MDR3sUSNKsMTZ6pacfVL
- e+pk4emJeyIYk78PtqK4O9iykisgG5GZxkUpqLOtvhrVhkhJ3cpvCpEBAGHIJB0IeVWTolejYmR
- /P46Gd0CKbKcYEx5p/2/A41JW9ILzz7oYIN/3zvtCDWU/XshRA8915Rf/h7gMxXc9/ntx7YdDS+
- BbMMAz2KRTzTbqgN2pioMj6Fcr/SXvHArpl5XdD5EBzSvwlR2mFj2sEdwxJW+SD2zt65SvMnTLG
- yc2zj0vwI8bnOOjWbHQZLg+kGAh4vFIj0nz7aF0mvRIrqNmBnw+clvNM50NY2Mz8H1EYA
-X-Received: by 2002:a05:620a:4003:b0:916:4a9:f35a with SMTP id
- af79cd13be357-91dbb949c9dmr1221473585a.30.1781785722965; 
- Thu, 18 Jun 2026 05:28:42 -0700 (PDT)
-X-Received: by 2002:a05:620a:4003:b0:916:4a9:f35a with SMTP id
- af79cd13be357-91dbb949c9dmr1221468585a.30.1781785722465; 
- Thu, 18 Jun 2026 05:28:42 -0700 (PDT)
+ bh=82dFeWG41NySdoeq2EmNII48adA0h4g+cc+/YSVjXaw=;
+ b=AmVxbmaLSIJYLHTR/E3rEN3sFgDqSY2j6J3yg3PoipxhOt11vPsGzeHnB4owvG0duP
+ p3XfV8LuU/fxpQBvd4M2KyUna0U5YdZwA9usb07HCSR5K0w2UUgFbgUTSN8F8vDXM60v
+ foqvhJumZVoUwM5Y28WDJkiltayW6zFFSJKMv+ypoN5E3RpI1hDTXiHbUuxpOIa+p4Nz
+ WfitFJJtsD54PPL7XTFzpBSOWnZE7plWA4JTqxRiQDXZAyaLAKWjmWf2QCYhL++XDzI8
+ t9nvVcJ/31yg8Y/lh5t6/VEzrqzrrGRDY1slLYOAojyWRWAnoSBmEvZHUjo9+hrihvEm
+ 58mA==
+X-Gm-Message-State: AOJu0Yz3hlEQdwv6ichYezHxH1Oqx5Qr7fjXwR4uy9nfUZBiI4JW0I2S
+ /914CKq5k9CXlz27C/0WSeH/i9yW9XHfUy5R4wdvsd0gRFHCPrx4Wv3BUGORVQhrMwd+WFlFLgX
+ f8YFGRcRAg9Uu0i0VgxOTd1szbJvHvmjiNVbOZlON4bW5LDFiD9D/NH0LcyWI3wSVNA==
+X-Gm-Gg: AfdE7cmUsADbKosWurMrIceIO+0/hc2TewGHJ3DD9NCeOvfLyTDi0xwOv0e1XLD0Lbl
+ CfygfOec0qob63CBKqW3KyTHmh1k0WG3ixv1n9sQgKzSJUPQaPG4NYhajnR7hrlLxG1c1lgZmyO
+ H9rt2AdtABGe1AjlmzTSsSaFRWL4433K/GSq426V74tFWak+We3sbYT78WsVhc0WIq2D9opQSG5
+ BBPHWS5YDbmNfdF37/0snRmRYzs4MCCtHyNEHwkq3l4VK949n2xZBpbwH8c0R5oXHMmJuAEhv4m
+ li5sqNyYRBV5UMwrJNAMKQS9yM82h+8fajDpQCxxx4BvQ5ix8RUZifAd5uUfpNuK7QZZBOcLNIR
+ XMGu0bIop6vgRWxAJFzdhVpcRegkGUMuSCOmzxpoeZUfpik8iZ8V6XeeRj8vI3ywtoylg
+X-Received: by 2002:a05:620a:45a2:b0:916:1612:17c8 with SMTP id
+ af79cd13be357-91db9c8d5ffmr1161071585a.17.1781785730321; 
+ Thu, 18 Jun 2026 05:28:50 -0700 (PDT)
+X-Received: by 2002:a05:620a:45a2:b0:916:1612:17c8 with SMTP id
+ af79cd13be357-91db9c8d5ffmr1161065485a.17.1781785729717; 
+ Thu, 18 Jun 2026 05:28:49 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4923a1d2d9esm38948675e9.1.2026.06.18.05.28.41
+ 5b1f17b1804b1-4923a154446sm30219185e9.0.2026.06.18.05.28.48
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 18 Jun 2026 05:28:41 -0700 (PDT)
+ Thu, 18 Jun 2026 05:28:48 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL 02/48] system/memory: Constify various AddressSpace arguments
- (checks)
-Date: Thu, 18 Jun 2026 14:27:39 +0200
-Message-ID: <20260618122825.90331-3-philmd@oss.qualcomm.com>
+Subject: [PULL 03/48] system/memory: Constify various AddressSpace arguments
+ (flat-range)
+Date: Thu, 18 Jun 2026 14:27:40 +0200
+Message-ID: <20260618122825.90331-4-philmd@oss.qualcomm.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260618122825.90331-1-philmd@oss.qualcomm.com>
 References: <20260618122825.90331-1-philmd@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjE4MDExNiBTYWx0ZWRfXyCWRVMTWK5tj
- 9Y4nGygTIudUOzMZTBq3NP6aXJMRk4kklnRzgTMPMtbglKv4X1yCODrcQc0AdWVtLxhM1pnXSRe
- nbtBrJmA9r8gc7n/H5zmO36U2tFSDth84D5mg560oPuqLsMzs0TZHSboHhYf/Akweaox7Us7PVk
- Oo3RlLMc2XXu6wzS1TCu9QaX4ABpBimiVuN+LERR2cWeSp/nbv+uWiYCj3GS+oos+BjKkfbVsMF
- 2HdR9oSfDmaN0EEkFpox54XtrZqamM6VrCTAv5R92StSVF9EmD/bf+pq3f7YunMQ4wi5sgWWB8K
- 3rO8S+Jf+tZM1RhccX9b+tPjvgdf75khqSM/UQOduJSCXc5ASnG63DjTQvbTXVyJ4MTdMpH6z/X
- kjrel9vC+vy/YLY0gTq+HGFIG6Vpd1lILAdNfi2tODXzaNHTEa9fA/6RTazw/aIf8EbN1a5IR6U
- VDDYpxtRdNQperRS3jg==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjE4MDExNiBTYWx0ZWRfXyeWJNN3wsVfw
- oSTDjnHBejj9kV8DKuzTXtpKKXdRnQUkP9cb23UNUKlBKwB+AiYtfAre2fctGTiIhf56HMz+bBm
- RNrcSa7VMsoHMxBvTBNK9bBkL1g1zXQ=
-X-Proofpoint-GUID: 00qJVPnDIFDRVNAL9RDDqvbJLC-O9HFx
-X-Proofpoint-ORIG-GUID: 00qJVPnDIFDRVNAL9RDDqvbJLC-O9HFx
-X-Authority-Analysis: v=2.4 cv=WN1PmHsR c=1 sm=1 tr=0 ts=6a33e47c cx=c_pps
- a=oc9J++0uMp73DTRD5QyR2A==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjE4MDExNiBTYWx0ZWRfX4TooV40sL/tH
+ 413EdhE5WsNMgTW8JK/MtBK0oZVRLHJuobrAv4lOhTiRe90XOv9Fad8XaLfuEuC+wgfFqV2UJQj
+ 7rZqn/K10GIaP4fQP5CBwPbP0npHUEYuiRCL/JenGNgI9UDhCQdLWF63vR4rbyb66cczxZ74AER
+ H07Nx3a4ap8+UbsvImhu0vKVmepG41bcryaOyOSNQjph6cfUoyYWSPgqeA7RJlCdGBV/t3vEP1L
+ s/6iX9fB9JsGbd8q8VOpqi9BNORD5PRK7tqlDzqoMe2AtG4TF12c0E47JgHnG+ktY55n5xQnKNg
+ 6EjWopWtBh9Kd32uMLS77BC8LHvj2u7oLE588oy3kBDQ7EKMuGduX2f+upz4WVgxfxRhH6Nv1v9
+ VAZAz6f3mN/UjSBsm6DsEU+nbX3TUySZhnGveFna8WAX6CSVyRt3IYgBVxVzVApdGKrtJmm1b96
+ j4EbDBrUXxcQWcfCTjw==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjE4MDExNiBTYWx0ZWRfX3Ouk6JpivReh
+ EujgoV/SnjogqQL4GY65b2+u3misD14/MiKCLnr6pR+yPqt3zSNLWsfPBd0nsx3+5RRLNGSm5xB
+ abPWjhef+CoLg3rVHHWhNoC0H5Irkz8=
+X-Proofpoint-GUID: OpQMR3vjo6V7teMd58eDnNnUfuB9PRjd
+X-Proofpoint-ORIG-GUID: OpQMR3vjo6V7teMd58eDnNnUfuB9PRjd
+X-Authority-Analysis: v=2.4 cv=WN1PmHsR c=1 sm=1 tr=0 ts=6a33e483 cx=c_pps
+ a=wEM5vcRIz55oU/E2lInRtA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
  a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
  a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
- a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=e-NtlPoBfifz4Kb8xpcA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=iYH6xdkBrDN1Jqds4HTS:22 a=cvBusfyB2V15izCimMoJ:22
+ a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=PVUNuLZfzPDvKcjOmkIA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=OIgjcC2v60KrkQgK7BGD:22 a=cvBusfyB2V15izCimMoJ:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-06-18_01,2026-06-18_01,2025-10-01_01
@@ -158,39 +158,53 @@ Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20260616020359.18627-2-philmd@oss.qualcomm.com>
+Message-Id: <20260616020359.18627-3-philmd@oss.qualcomm.com>
 ---
- include/system/memory.h | 3 ++-
- system/physmem.c        | 2 +-
- 2 files changed, 3 insertions(+), 2 deletions(-)
+ system/memory.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/include/system/memory.h b/include/system/memory.h
-index 9cd17847ab0..3acaa309755 100644
---- a/include/system/memory.h
-+++ b/include/system/memory.h
-@@ -2850,7 +2850,8 @@ static inline MemoryRegion *address_space_translate(AddressSpace *as,
-  * @is_write: indicates the transfer direction
-  * @attrs: memory attributes
+diff --git a/system/memory.c b/system/memory.c
+index 28807cf0519..93c714104b2 100644
+--- a/system/memory.c
++++ b/system/memory.c
+@@ -889,7 +889,8 @@ static void address_space_update_ioeventfds(AddressSpace *as)
+  * range `cmr'.  Only the part that has intersection of the specified
+  * FlatRange will be sent.
   */
--bool address_space_access_valid(AddressSpace *as, hwaddr addr, hwaddr len,
-+bool address_space_access_valid(const AddressSpace *as,
-+                                hwaddr addr, hwaddr len,
-                                 bool is_write, MemTxAttrs attrs);
- 
- /**
-diff --git a/system/physmem.c b/system/physmem.c
-index 7bcbf875736..a0561177afd 100644
---- a/system/physmem.c
-+++ b/system/physmem.c
-@@ -3646,7 +3646,7 @@ static bool flatview_access_valid(FlatView *fv, hwaddr addr, hwaddr len,
-     return true;
+-static void flat_range_coalesced_io_notify(FlatRange *fr, AddressSpace *as,
++static void flat_range_coalesced_io_notify(FlatRange *fr,
++                                           const AddressSpace *as,
+                                            CoalescedMemoryRange *cmr, bool add)
+ {
+     AddrRange tmp;
+@@ -913,7 +914,7 @@ static void flat_range_coalesced_io_notify(FlatRange *fr, AddressSpace *as,
+     }
  }
  
--bool address_space_access_valid(AddressSpace *as, hwaddr addr,
-+bool address_space_access_valid(const AddressSpace *as, hwaddr addr,
-                                 hwaddr len, bool is_write,
-                                 MemTxAttrs attrs)
+-static void flat_range_coalesced_io_del(FlatRange *fr, AddressSpace *as)
++static void flat_range_coalesced_io_del(FlatRange *fr, const AddressSpace *as)
  {
+     CoalescedMemoryRange *cmr;
+ 
+@@ -922,7 +923,7 @@ static void flat_range_coalesced_io_del(FlatRange *fr, AddressSpace *as)
+     }
+ }
+ 
+-static void flat_range_coalesced_io_add(FlatRange *fr, AddressSpace *as)
++static void flat_range_coalesced_io_add(FlatRange *fr, const AddressSpace *as)
+ {
+     MemoryRegion *mr = fr->mr;
+     CoalescedMemoryRange *cmr;
+@@ -940,7 +941,8 @@ static void
+ flat_range_coalesced_io_notify_listener_add_del(FlatRange *fr,
+                                                 MemoryRegionSection *mrs,
+                                                 MemoryListener *listener,
+-                                                AddressSpace *as, bool add)
++                                                const AddressSpace *as,
++                                                bool add)
+ {
+     CoalescedMemoryRange *cmr;
+     MemoryRegion *mr = fr->mr;
 -- 
 2.53.0
 
