@@ -4,83 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5E0CCD98F2
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jun 2026 16:34:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1908ECD98F2
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jun 2026 16:34:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1waFh1-0007Cs-My; Thu, 18 Jun 2026 12:34:15 -0400
+	id 1waFgF-0006hN-CM; Thu, 18 Jun 2026 12:33:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1waFgu-000793-Ua
- for qemu-devel@nongnu.org; Thu, 18 Jun 2026 12:34:10 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1waFgs-0006hF-RN
- for qemu-devel@nongnu.org; Thu, 18 Jun 2026 12:34:08 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781800444;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=491OP5/4QE4OXGmTBj+1bWYZumrZ3zi2Pq9ZNWnUtvc=;
- b=JAcDSSjci15Cy5sCU0OfEF5plp6U72lEbOjq7kFaNv2+o7JRzcY+mwmpzJGhLMgy7XPGlm
- 24G/nCNgyCoIpXcnoJozpzDRyzNZk+1Thi1fc1yEXi7k0UeaK3T6in1B8uYmawoFExhfGd
- gd1w+52G7/QSejJ4tpa+WwLUPULpgZs=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-692-rVplfEKzNR-yumbBVfB1aQ-1; Thu,
- 18 Jun 2026 12:34:01 -0400
-X-MC-Unique: rVplfEKzNR-yumbBVfB1aQ-1
-X-Mimecast-MFC-AGG-ID: rVplfEKzNR-yumbBVfB1aQ_1781800440
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 91ED2195604D; Thu, 18 Jun 2026 16:34:00 +0000 (UTC)
-Received: from redhat.com (unknown [10.44.49.28])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1865430000DB; Thu, 18 Jun 2026 16:33:57 +0000 (UTC)
-Date: Thu, 18 Jun 2026 17:33:54 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: qemu-devel@nongnu.org,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Thomas Huth <thuth@redhat.com>, Mauro Matteo Cascella <mcascell@redhat.com>
-Subject: Re: [qemu-web PATCH v2 3/3] contribute: switch security process to
- gitlab confidential issues
-Message-ID: <ajQd8nRuYau2xVcY@redhat.com>
-References: <20260618132058.1044341-1-berrange@redhat.com>
- <20260618132058.1044341-4-berrange@redhat.com>
- <20260618112415-mutt-send-email-mst@kernel.org>
- <ajQXrpKNx4NnhUKa@redhat.com>
- <20260618121520-mutt-send-email-mst@kernel.org>
+ (Exim 4.90_1) (envelope-from <jim.macarthur@linaro.org>)
+ id 1waFg3-0006cw-Sn
+ for qemu-devel@nongnu.org; Thu, 18 Jun 2026 12:33:15 -0400
+Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <jim.macarthur@linaro.org>)
+ id 1waFg1-0006Kz-FK
+ for qemu-devel@nongnu.org; Thu, 18 Jun 2026 12:33:15 -0400
+Received: by mail-wr1-x434.google.com with SMTP id
+ ffacd0b85a97d-45ef6565cfdso623361f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 18 Jun 2026 09:33:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1781800392; x=1782405192; darn=nongnu.org;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=4hX01wxKGw3BuQr74QeKdveuBzAtu1koRwZnMOTRaN4=;
+ b=an3QwisRzIbc1VaBEx51sXKZ9JLQZF02z04heHTaRzdh93XAvLV08+Rn8WQgc0l863
+ aHQ9SJXYNOhdDPX9geO9DziO2hyZz2StSwyP8XexQolMT03UZaW+KLNOaFAeXsKybBsH
+ FxhLcl5Ykr0S+cX1c84FUj/b6+SNdEZsCMZ+PS4hcfn6xSzLmH/HQOQ3LMX9dT2ASxnM
+ E0fZE62GUy8ynd//FTzLmikVEan9g2zdzmKdDlG74/p8stGyOJvMiwAjFRk/nSGrVdus
+ 3FKddB6/G2R4jpMocXgl9g5FMBhw5u7FFz4PZvqQhdXoEds8elH8eQI5xpIv/2hZCY6e
+ OJ7A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1781800392; x=1782405192;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=4hX01wxKGw3BuQr74QeKdveuBzAtu1koRwZnMOTRaN4=;
+ b=T2S+swm5R+/te0g/2DDhgdNLw43Ovp3njNjb/w2s/JbxoOEMQq9+WeWqz0q2oK4rVu
+ 1w6J/7/FJImdGWfwm1rDN5KjivAZpKV1W6wchfs3m1qaknVcg9w3jmk1CYHekwqrmgWK
+ QR9Omw1zomXkfh2UQdDoRupHf2xwAMgvqxM9L07rnanuJRkz734AHB72rjEjOA7XUlZR
+ 3P5uslL03b//Du+yJ8mB9R66+l8Dn8nd9zcy64rmhEKBTm4zPUWptfnvboGDnoP+fd2+
+ 7pI4ZDnmLFERilUoeow4yiYffIVhtR++GcGtt5lFkFrcas44xSpmJKTiJgsuMVOpKHuI
+ BqIQ==
+X-Gm-Message-State: AOJu0YwmERbKbPHEFBnMfUTiQKeVgklJf6BqzkgiCnpBphKIRzD+r/t6
+ GiEkBEvmtlqjy3fprp0zb1XCi3S60iYQjO5lctPCbggphgG8JpV5WB9V0wbblxSs2VU=
+X-Gm-Gg: AfdE7cn2fzWhSaprkWzgRYH4XF8EnNtm3bFXh/LGX+AKPKoDcs7hyj+73nfelwIxmLS
+ RNwuZlFn3SZw0Wwgsdljy8bTFKTBr5R+S2fjlJybT/wdHHryhMBQw+f9x8JyCHL/fIXKMhJwKCX
+ 3aKEZ4mFmLSxUz2BhNzMf0fljT6UT+CNj00vgM3TOcge15r4WKHdGzfnrAtTZflTiqVDdgPpG3h
+ S4Sg2ieT2BA6kxgVHqetboLQ7JwgOBcDC91hqHaBwHaMkODSSgT9SF2ZPDsJuX2qoDnZEWdluPg
+ TkPXcnUzkzU1tlcLPBN0YEjr4jp71/0RlMMoX+u7crBJ4a1swp7gKZWY1ZEQVr+yrbOf35u0fQ9
+ iwgCmexzDJZAG//47ZTMewXHVa77YWI4tVxRhtLONKpeayHuJLt1jeFydHafpLRLinYzoGNFg/0
+ Fh4qu7ptPASUJADg==
+X-Received: by 2002:a05:6000:1865:b0:461:9fc7:7d01 with SMTP id
+ ffacd0b85a97d-46501685f0emr358890f8f.23.1781800391974; 
+ Thu, 18 Jun 2026 09:33:11 -0700 (PDT)
+Received: from [127.0.1.1] ([2a10:d582:31e:0:b52:6a9:569d:e33e])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-4650bc426e1sm26942f8f.29.2026.06.18.09.33.11
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 18 Jun 2026 09:33:11 -0700 (PDT)
+From: Jim MacArthur <jim.macarthur@linaro.org>
+Date: Thu, 18 Jun 2026 17:33:04 +0100
+Subject: [PATCH v3 1/6] target/arm/tcg/cpu64.c: Extra test for GPC3.
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260618121520-mutt-send-email-mst@kernel.org>
-User-Agent: Mutt/2.3.2 (2026-04-26)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 8
-X-Spam_score: 0.8
-X-Spam_bar: /
-X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260618-jmac-gpc3b-v3-1-353e546067e7@linaro.org>
+References: <20260618-jmac-gpc3b-v3-0-353e546067e7@linaro.org>
+In-Reply-To: <20260618-jmac-gpc3b-v3-0-353e546067e7@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org, 
+ Jim MacArthur <jim.macarthur@linaro.org>, 
+ Richard Henderson <richard.henderson@linaro.org>
+X-Mailer: b4 0.13.0
+Received-SPF: pass client-ip=2a00:1450:4864:20::434;
+ envelope-from=jim.macarthur@linaro.org; helo=mail-wr1-x434.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,122 +98,33 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jun 18, 2026 at 12:23:46PM -0400, Michael S. Tsirkin wrote:
-> thanks! sorry probably just me being dense but some things
-> here I don't get. might be worth clarifying:
-> 
-> On Thu, Jun 18, 2026 at 05:07:10PM +0100, Daniel P. Berrangé wrote:
-> > On Thu, Jun 18, 2026 at 11:30:29AM -0400, Michael S. Tsirkin wrote:
-> > > > + * The maintainer(s) will develop and/or review patch(es)
-> > > > +   for the issue privately, optionally attaching work in
-> > > > +   progress fixes to the GitLab issues.
-> > > 
-> > > attaching how? how do i ask reported to test the fix?
-> > > was easy in the email flow.
-> > 
-> > You can add arbitrary attachments in gitlab issue comments.
-> > 
-> > > > All patches must
-> > > > +   include the issue URL in the commit message(s).
-> > > 
-> > > you mean the commit message of the patches I presume?
-> > > there's no commit at that point.
-> > 
-> > Well I presume the maintainer will have a local git tree
-> > with a work-in-progress commit.
-> 
-> sorry I don't get it.
-> 
-> what does it have to do with patches then?
-> 
-> 
-> who cares about my local tree?
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Jim MacArthur <jim.macarthur@linaro.org>
+---
+ target/arm/cpu-features.h | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-If you fix a gitlab issue, the commit must contain the issue URL.
-That's normal practice we've followed forever and would now apply
-to security fixes too.
+diff --git a/target/arm/cpu-features.h b/target/arm/cpu-features.h
+index 9e70d30964..26099f4c83 100644
+--- a/target/arm/cpu-features.h
++++ b/target/arm/cpu-features.h
+@@ -1159,6 +1159,11 @@ static inline bool isar_feature_aa64_rme_gpc2(const ARMISARegisters *id)
+     return FIELD_EX64_IDREG(id, ID_AA64PFR0, RME) >= 2;
+ }
+ 
++static inline bool isar_feature_aa64_rme_gpc3(const ARMISARegisters *id)
++{
++    return FIELD_EX64_IDREG(id, ID_AA64PFR0, RME) >= 3;
++}
++
+ static inline bool isar_feature_aa64_dit(const ARMISARegisters *id)
+ {
+     return FIELD_EX64_IDREG(id, ID_AA64PFR0, DIT) != 0;
 
-> 
-> and why is this mentioned twice?
-
-Mentioning twice is a mistake
-
-
-> > > > The
-> > > > +   **"Workflow::In Progress"** label should be assigned when
-> > > > +   a maintainer starts working on a fix.
-> > > 
-> > > That's a bit heavy, and what is "working" anyway.
-> > > It's an issue tracker not a planning app.
-> > > Don't try to make it one.
-> > 
-> > Various "Workflow::" labels are already present in our gitlab
-> > instance. We don't use them consistently - this text is just
-> > a pointer that the're there.
-> > 
-> 
-> maybe "can be assigned" then?
-
-Ok.
-
-> 
-> > 
-> > > 
-> > > 
-> > > > + * When a CVE is allocated, it must be recorded as a comment on
-> > > > +   the GitLab issue, and the **"CVE::Required"** label replaced by
-> > > > +   the **"CVE::Assigned"** label.
-> > > 
-> > > Recorded as a comment how exactly, in what format?
-> > 
-> > In plain text.
-> 
-> yes but in what format?
-
-Literally just  "CVE-2026-1234" anywhere in the commit message as we've
-been donig for years.
-
-> > > > + * The maintainer(s) will update the commit message(s)
-> > > 
-> > > what does it mean to "update the commit message"?
-> > 
-> > The commit message for the patch the maintainer has in their
-> > tree.
-> 
-> then you mean "before sending a pull request"?
-
-Sure if you want it to be that specific.
-
-> > > > to include
-> > > > +   the assigned CVE and issue URL. If multiple commits are required
-> > > > +   to fix an issue the CVE must be included in the final commit in
-> > > > +   the series, and may optionally be included in all prior commits.
-> > > 
-> > > And here, included in what format?
-> > 
-> > The CVE just needs to exist somewhere/anywhere in the commit message.
-> > It is common to put it in the first line, or with tags before SoB
-> > but it doesn't really matter as long as we have a record of it in
-> > the patch.
-> 
-> Will be really annoying if any tools try to consume this e.g.
-> to decide what to backport.
-> I suggest deciding on something for these free text fields,
-> how important is it to be able to write ❤️❤️❤️CVE-1234💰🔥🎯 really?
-
-I don't think we need to document every single little detail
-here, just carry on with what we've already been doing for
-commits.
-
-With regards,
-Daniel
 -- 
-|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-|: https://libvirt.org          ~~          https://entangle-photo.org :|
-|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+2.43.0
 
 
