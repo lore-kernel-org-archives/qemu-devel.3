@@ -4,60 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51ED4CD98ED
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5888CCD98F2
 	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jun 2026 05:24:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wa5Er-0001sD-NQ; Thu, 18 Jun 2026 01:24:29 -0400
+	id 1wa5F0-00021V-Ve; Thu, 18 Jun 2026 01:24:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wa5Eq-0001rh-2R
- for qemu-devel@nongnu.org; Thu, 18 Jun 2026 01:24:28 -0400
+ id 1wa5Ez-00021E-GF
+ for qemu-devel@nongnu.org; Thu, 18 Jun 2026 01:24:37 -0400
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wa5Eo-0006wH-2G
- for qemu-devel@nongnu.org; Thu, 18 Jun 2026 01:24:27 -0400
+ id 1wa5Ex-00070a-E7
+ for qemu-devel@nongnu.org; Thu, 18 Jun 2026 01:24:37 -0400
 Received: from [133.11.54.183] (h183.csg.ci.i.u-tokyo.ac.jp [133.11.54.183])
  (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 65I5Nu6A053612
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 65I5O8Nk053708
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Thu, 18 Jun 2026 14:23:56 +0900 (JST)
+ Thu, 18 Jun 2026 14:24:08 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=RcnykiOf2Atn3CFqXrlSpKczPD9BjliucD6OzoFsM48=; 
+DKIM-Signature: a=rsa-sha256; bh=y4BvBI8UPWBoU2ceh6yFXqUwb4Otv8Qb1TDyOX9Vh1M=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=From:Message-ID:To:Subject:Date;
- s=rs20250326; t=1781760236; v=1;
- b=UfX64Uy5IOKEGjlYsZTm1MLeH/if2z5WGXK1DsupgWfF1xdRT10LiP6ggkJiJnqg
- ILpTy37VE9CfPmXmbnYbvekfuXuq1IuQJd7W2zhJTemTTITp1ZEBUk1a/24XWebF
- pRS/QFsq0OJVJ29qHvFPJ2mvtd3Ke+AycJVcSbz0I4USKDe30mLEoxwHmj8wJFBX
- 6O90yIk+iaU1aPDdT2gGA8rpjp1S3nXm7F8IMaM9k0vrBd6VXeAGcaB3t4njYCP3
- JrZWGQ6uqfUCSZ9D8xXx0yTcBRUdFifo3ZEAVCX/Eq7gCRQk9rIuL32vn4C/CiUj
- 6st4bMT+BnvdocjdVIGwag==
-Message-ID: <3890f5e8-6bf8-42fb-8f86-91d512130e5e@rsg.ci.i.u-tokyo.ac.jp>
-Date: Thu, 18 Jun 2026 14:23:55 +0900
+ s=rs20250326; t=1781760249; v=1;
+ b=bmX8mN8hoxRoR9ByKYklfaDA85S162n2MTA2A62d3hwBGCWDS/xNd+YAMk/ScSek
+ lj2mzh0BKd5z4tE14cCGnD71oWW71XL4dTRntOChXTROtIFkSzyrCUt9Klk4m8/P
+ UK4bUgLORwnT938DNo7yhb9I2R5CXULMiefXi2g6WgE2gcJLlCY2CARrlz8ArXmd
+ MoUNMazzPM0lT/gE+BLPO82Aujj/Jmv6nKWa0tjPkVHMCj6divt1UX3dN8idm4a2
+ XM2trAlucmI5GcOL51J2vwsgzl14ccbNl+XJ77M2sOksNVRuXWBUUY/ynAUS/s6x
+ erG0cHvOyhWyvyxvZReqxw==
+Message-ID: <0fa87239-9213-4c54-a72f-652aef1360a4@rsg.ci.i.u-tokyo.ac.jp>
+Date: Thu, 18 Jun 2026 14:24:08 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC 4/7] system: add memory_region_new / memory_region_new_io
-To: BALATON Zoltan <balaton@eik.bme.hu>, Paolo Bonzini <pbonzini@redhat.com>
-Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- qemu-devel@nongnu.org, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@mailo.com>, Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+Subject: Re: [RFC 5/7] system: add qemu_irq_new / qemu_irq_new_child /
+ qemu_irq_new_array
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  Peter Xu <peterx@redhat.com>, =?UTF-8?Q?Herv=C3=A9_Poussineau?=
  <hpoussin@reactos.org>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
  <alex.bennee@linaro.org>, "Michael S. Tsirkin" <mst@redhat.com>,
  Aurelien Jarno <aurelien@aurel32.net>, Fabiano Rosas <farosas@suse.de>,
+ Paolo Bonzini <pbonzini@redhat.com>, BALATON Zoltan <balaton@eik.bme.hu>,
  Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
  =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
 References: <20260616155554.264412-1-berrange@redhat.com>
- <20260616155554.264412-5-berrange@redhat.com>
- <aa4d417e-2e61-44ef-a695-31bc19dbafd1@redhat.com>
- <9976f829-7c33-7dce-b38e-aa6f04d6ec9d@eik.bme.hu>
+ <20260616155554.264412-6-berrange@redhat.com>
 Content-Language: en-US
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <9976f829-7c33-7dce-b38e-aa6f04d6ec9d@eik.bme.hu>
+In-Reply-To: <20260616155554.264412-6-berrange@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=49.212.243.89;
@@ -83,91 +83,197 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026/06/18 7:44, BALATON Zoltan wrote:
-> On Wed, 17 Jun 2026, Paolo Bonzini wrote:
->> On 6/16/26 17:55, Daniel P. Berrangé wrote:
->>> Prepare for the move to dynamically allocated memory regions by
->>> introducing memory_region_new and memory_region_new_io functions
->>> which call through to object_new instead of object_initialize.
->>>
->>> TBD: add "new" variants for all the other memory_region_init
->>> variants.
->>>
->>> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
->>
->> Zoltan already proposed this, but I really think it's a bad idea.
->>
->> MemoryRegionOps callback will certainly access fields in the parent. 
->> Having a separate object gives you no benefit because you still have 
->> the same use-after-free if the MemoryRegion outlives the device.  
->> Likewise for buses.
->>
->> For buses, the fact that the parent and child live at the same time is 
->> explicitly tracked with mutual refcount and unparent.  If it's not, we 
->> have the hack that Akihiko mentioned (https://lists.gnu.org/archive/ 
->> html/qemu-devel/2026-06/msg03459.html):
->>
->>> However, this is insufficient to avoid calling object_ref() for all
->>> embedded objects. For example, consider an embedded Device that has a
->>> MemoryRegion. When referencing a MemoryRegion for guest memory access,
->>> QEMU automatically references the owning Device to keep the MemoryRegion
->>> alive. However, that reference is ineffective if the Device itself is
->>> embedded, because object_ref() does not keep the containing storage
->>> alive.
->>
->> If the device itself is embedded, then all the invariants must hold 
->> recursively:
->>
->> - the device must be kept alive by mutual references between the 
->> device itself and its parent;
->>
->> - unparent for the device should wait for all guest memory accesses to 
->> be either completed or cancelled.
->>
->> So, the problem is that "QEMU automatically references the owning 
->> Device to keep the MemoryRegion alive" is a hack that should die.  I 
->> added it, mea culpa.
->>
->> The model is that if it makes sense to have B outlive A, you use new. 
->> If it doesn't, you use init.  For MemoryRegions or anything that has 
->> callbacks, it makes no sense to outlive the implementor of the 
->> callbacks.  There are exceptions if the number of objects is dynamic 
->> but they're very rare.
->>
->> I agree that there's extra complexity added by embedding; but I 
->> disagree that removing embedding will fix any bugs, and because it 
->> will hide a relationship between objects, I believe the complexity is 
->> not accidental.
+On 2026/06/17 0:55, Daniel P. Berrangé wrote:
+> Prepare for the move to dynamically allocated IRQ objects by
+> introducing qemu_irq_new / qemu_irq_new_child / qemu_irq_new_array
+> functions which call through to object_new instead of object_initialize.
 > 
-> I'm trying to understand this better. The way it originally meant to 
-> work according to the memory region docs and implementation is that 
-> memory region is added to an owner as a child which takes a reference 
-> and when the owner is freed it will unparent its children which will 
-> then get unrefed and freed as well if nothing else increased their ref 
-> count. The problem is that when something accesses the memory region it 
-> has to keep the owner alive as well so instead of referencing the memory 
-> region it references the owner (not directly but using memory_region_ref 
-> which does this). This is OK but I don't see how this mandates that the 
-> memory region cannot be freed by the above ref counting together with 
-> the owner and why it must be embedded? All this ref count hack does is 
-> that it passes references of the memory region to the owner so the only 
-> reference to the memory region itself would be from the owner and when 
-> everything unrefs the owner (either directly or through any memory 
-> region) they would be freed together as above. But this is now prevented 
-> by memory_region_init having hard coded object_initialize which can only 
-> be used with embedded objects. The problem is not referencing the owner 
-> but that memory regions are not created with object_new so cannot be 
-> freed by QOM. So embedding seems unrelated to this passing refs on 
-> memory regions to owner and could be fixed separately that my patches 
-> attempted. Where the referencing the owner hack may fail is when the 
-> owner is also owned by something else and this does not pass refs 
-> further up the chain but that's a separate issue which embedding does 
-> not fix either so that could be handled and fixed separately.
+> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+> ---
+>   hw/core/irq.c         | 35 ++++++++++++++++++++
+>   include/hw/core/irq.h | 75 ++++++++++++++++++++++++++++++++++++++++---
+>   2 files changed, 106 insertions(+), 4 deletions(-)
+> 
+> diff --git a/hw/core/irq.c b/hw/core/irq.c
+> index 106805e241..e943c87b81 100644
+> --- a/hw/core/irq.c
+> +++ b/hw/core/irq.c
+> @@ -49,6 +49,13 @@ void qemu_init_irq(IRQState *irq, qemu_irq_handler handler, void *opaque,
+>       init_irq_fields(irq, handler, opaque, n);
+>   }
+>   
+> +IRQState *qemu_irq_new(qemu_irq_handler handler, void *opaque, int n)
+> +{
+> +    IRQState *irq = IRQ(object_new(TYPE_IRQ));
+> +    init_irq_fields(irq, handler, opaque, n);
+> +    return irq;
+> +}
+> +
+>   void qemu_init_irq_child(Object *parent, const char *propname,
+>                            IRQState *irq, qemu_irq_handler handler,
+>                            void *opaque, int n)
+> @@ -57,14 +64,42 @@ void qemu_init_irq_child(Object *parent, const char *propname,
+>       init_irq_fields(irq, handler, opaque, n);
+>   }
+>   
+> +IRQState *qemu_irq_new_child(Object *parent, const char *propname,
+> +                             qemu_irq_handler handler,
+> +                             void *opaque, int n,
+> +                             Error **errp)
+> +{
+> +    IRQState *irq = IRQ(object_new_with_props(TYPE_IRQ, parent, propname,
+> +                                              errp, NULL));
 
-I agree with your analysis. That's also what I pointed out in another 
-thread:
-http://lore.kernel.org/qemu-devel/48a2ec70-8995-40c5-8224-aa82f267e9dc@rsg.ci.i.u-tokyo.ac.jp/
+object_new_with_props() rejects a property name including [*]. 
+hw/char/serial-pci-multi.c passes "irq[*]" to qemu_init_irq_child() so 
+this prevents simply replacing it.
 
 Regards,
 Akihiko Odaki
+
+> +    if (!irq) {
+> +        return NULL;
+> +    }
+> +    init_irq_fields(irq, handler, opaque, n);
+> +    return irq;
+> +}
+> +
+> +
+>   void qemu_init_irqs(IRQState irq[], size_t count,
+>                       qemu_irq_handler handler, void *opaque)
+>   {
+>       for (size_t i = 0; i < count; i++) {
+> +        QEMU_DEPRECATIONS_OFF;
+>           qemu_init_irq(&irq[i], handler, opaque, i);
+> +        QEMU_DEPRECATIONS_ON;
+>       }
+>   }
+>   
+> +IRQState **qemu_irq_new_array(size_t count,
+> +                              qemu_irq_handler handler, void *opaque)
+> +{
+> +    IRQState **irqs = g_new0(IRQState *, count);
+> +    for (size_t i = 0; i < count; i++) {
+> +        irqs[i] = qemu_irq_new(handler, opaque, i);
+> +    }
+> +    return irqs;
+> +}
+> +
+> +
+>   qemu_irq *qemu_extend_irqs(qemu_irq *old, int n_old, qemu_irq_handler handler,
+>                              void *opaque, int n)
+>   {
+> diff --git a/include/hw/core/irq.h b/include/hw/core/irq.h
+> index 291fdd67df..af9bf6fb12 100644
+> --- a/include/hw/core/irq.h
+> +++ b/include/hw/core/irq.h
+> @@ -34,7 +34,12 @@ static inline void qemu_irq_pulse(qemu_irq irq)
+>       qemu_set_irq(irq, 0);
+>   }
+>   
+> -/*
+> +/**
+> + * qemu_init_irq: Initialize IRQ
+> + * @handler: handler function for incoming interrupts
+> + * @opaque: opaque data to pass to @handler
+> + * @n: interrupt number to pass to @handler
+> + *
+>    * Init a single IRQ. The irq is assigned with a handler, an opaque data
+>    * and the interrupt number. The caller must free this with qemu_free_irq().
+>    * If you are using this inside a device's init or realize method, then
+> @@ -42,7 +47,21 @@ static inline void qemu_irq_pulse(qemu_irq irq)
+>    * to manually clean up the IRQ.
+>    */
+>   void qemu_init_irq(IRQState *irq, qemu_irq_handler handler, void *opaque,
+> -                   int n);
+> +                   int n)
+> +    QEMU_DEPRECATED;
+> +/**
+> + * qemu_new_irq: Allocate IRQ
+> + * @handler: handler function for incoming interrupts
+> + * @opaque: opaque data to pass to @handler
+> + * @n: interrupt number to pass to @handler
+> + *
+> + * The returned IRQ will have a single reference, which is held by the
+> + * caller and must be released to free the returned IRQ object when
+> + * no longer required.
+> + *
+> + * Returns: the newly allocated IRQ
+> + */
+> +IRQState *qemu_irq_new(qemu_irq_handler handler, void *opaque, int n);
+>   
+>   /**
+>    * qemu_init_irq_child: Initialize IRQ and make it a QOM child
+> @@ -56,10 +75,38 @@ void qemu_init_irq(IRQState *irq, qemu_irq_handler handler, void *opaque,
+>    * Init a single IRQ and make the IRQ object a child of @parent with
+>    * the child-property name @propname. The IRQ object will thus be
+>    * automatically freed when @parent is destroyed.
+> + *
+> + * Use of this function is now deprecated. All IRQs must be
+> + * allocated using the qemu_irq_new() family of functions and not
+> + * statically embedded in a larger struct.
+>    */
+>   void qemu_init_irq_child(Object *parent, const char *propname,
+>                            IRQState *irq, qemu_irq_handler handler,
+> -                         void *opaque, int n);
+> +                         void *opaque, int n)
+> +    QEMU_DEPRECATED;
+> +
+> +/**
+> + * qemu_init_irq_child: Allocate IRQ and make it a QOM child
+> + * @parent: QOM object which owns this IRQ
+> + * @propname: child property name
+> + * @handler: handler function for incoming interrupts
+> + * @opaque: opaque data to pass to @handler
+> + * @n: interrupt number to pass to @handler
+> + *
+> + * Allocate a single IRQ and make the IRQ object a child of @parent with
+> + * the child-property name @propname.
+> + *
+> + * The returned IRQ will have a single reference, which is held by the
+> + * @owner object in the QOM composition tree. Thus in the absence of
+> + * any further references being acquired, the IRQ will be freed when
+> + * @owner is freed
+> + *
+> + * Returns: the newly allocated IRQ
+> + */
+> +IRQState *qemu_irq_new_child(Object *parent, const char *propname,
+> +                             qemu_irq_handler handler,
+> +                             void *opaque, int n,
+> +                             Error **errp);
+>   
+>   
+>   /**
+> @@ -69,9 +116,29 @@ void qemu_init_irq_child(Object *parent, const char *propname,
+>    * @count: number of IRQs to initialize
+>    * @handler: handler to assign to each IRQ
+>    * @opaque: opaque data to pass to @handler
+> + *
+> + * Use of this function is now deprecated. All IRQs must be
+> + * allocated using the qemu_irq_new() family of functions and not
+> + * statically embedded in a larger struct.
+>    */
+>   void qemu_init_irqs(IRQState irq[], size_t count,
+> -                    qemu_irq_handler handler, void *opaque);
+> +                    qemu_irq_handler handler, void *opaque)
+> +    QEMU_DEPRECATED;
+> +/**
+> + * qemu_irq_new_array: Allocate an array of IRQs.
+> + * @count: number of IRQs to initialize
+> + * @handler: handler to assign to each IRQ
+> + * @opaque: opaque data to pass to @handler
+> + *
+> + * The returned IRQs will have a single reference, which is held by the
+> + * caller and must be released to free the returned IRQs object when
+> + * no longer required. The return array memory must also be freed by
+> + * the caller.
+> + *
+> + * Returns: an array of IRQ objects
+> + */
+> +IRQState **qemu_irq_new_array(size_t count,
+> +                              qemu_irq_handler handler, void *opaque);
+>   
+>   /* Returns an array of N IRQs. Each IRQ is assigned the argument handler and
+>    * opaque data.
+
 
