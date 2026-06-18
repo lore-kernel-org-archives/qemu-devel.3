@@ -4,87 +4,126 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 215FBCD98F2
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C0F8CD98F8
 	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jun 2026 14:49:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1waE31-0000z7-UX; Thu, 18 Jun 2026 10:48:51 -0400
+	id 1waE3a-0001CN-PK; Thu, 18 Jun 2026 10:49:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jim.macarthur@linaro.org>)
- id 1waE2t-0000yn-GJ
- for qemu-devel@nongnu.org; Thu, 18 Jun 2026 10:48:45 -0400
-Received: from mail-lj1-x22e.google.com ([2a00:1450:4864:20::22e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jim.macarthur@linaro.org>)
- id 1waE2r-0001tm-94
- for qemu-devel@nongnu.org; Thu, 18 Jun 2026 10:48:42 -0400
-Received: by mail-lj1-x22e.google.com with SMTP id
- 38308e7fff4ca-396bed274b9so11348951fa.0
- for <qemu-devel@nongnu.org>; Thu, 18 Jun 2026 07:48:40 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <mcascell@redhat.com>)
+ id 1waE3Z-0001Bl-67
+ for qemu-devel@nongnu.org; Thu, 18 Jun 2026 10:49:25 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mcascell@redhat.com>)
+ id 1waE3X-0002bL-OB
+ for qemu-devel@nongnu.org; Thu, 18 Jun 2026 10:49:24 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1781794162;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=CnicVFvfolWU5ASsZe0xlhAi6HzOML3cTzXjnCc3Ovs=;
+ b=atDSLlQHLkkpyHvAtQrkxUWV5l2jWzBodACSrFSXd5zNdOC78qF79NJIDmCVOa+ItH2T/s
+ NBVID4aLuisNkTFGG3hhyDtZ2afEHOSWLj/BTRwqbiN+TnCsZJ6OcX95qEL28YIvLPRDDG
+ bpv00Q5q+O3WtxJkbqsL+5pv1/WDn0A=
+Received: from mail-pg1-f200.google.com (mail-pg1-f200.google.com
+ [209.85.215.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-235-3x74mkd5M7iymRxgCUnR5w-1; Thu, 18 Jun 2026 10:49:20 -0400
+X-MC-Unique: 3x74mkd5M7iymRxgCUnR5w-1
+X-Mimecast-MFC-AGG-ID: 3x74mkd5M7iymRxgCUnR5w_1781794160
+Received: by mail-pg1-f200.google.com with SMTP id
+ 41be03b00d2f7-c8924f4d0a4so1368884a12.2
+ for <qemu-devel@nongnu.org>; Thu, 18 Jun 2026 07:49:20 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1781794160; cv=none;
+ d=google.com; s=arc-20240605;
+ b=KtywC29FrcyPwH+sw3cayquXVxn8fRg7ny6PCvbRSmg262a6omrp3ICvcK+fjPgvGY
+ 7fpchFrDzpkImvD3sxTd0PAHNrLKRi725BYdNbbektj2/OLNwzLD6tH8sODSOxzJrgKv
+ I3J2qvYEl7DaNQMpg6GYhEAxL/3dC7s4Bc7PGDpcm89bY9LN1H6SV7Nc82e1MH9AN0N1
+ iSnl1RAn2MORJOeYJgAZ8QoVWSSxOpGuWEkXS1e56CjzRjwMOy5WH8ABuWy0mMPOzFOt
+ 8ai0NTZ+vHqXZjrgxqiQL5x20hZLyWJufaqOdxwq7kBe78Lj6kL/ZSIcN4UxTiZ1m6zE
+ fXqw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=CnicVFvfolWU5ASsZe0xlhAi6HzOML3cTzXjnCc3Ovs=;
+ fh=z98T1OafDend9cTt+HRd9jcDMICFJhgMbFBEwxbd3bo=;
+ b=UdkeVIr5QuOFqqO0YrnOFV7HeN9Kdh3yL6m9PKEKWU1iZemzoa4KpFuyKnB7t5iQeL
+ r6WmCtcRZQepVb/a+BpyuXa/xOA1JLqLHC52tAXg9CV3iIMRO1p0UJSNW/mbjR5oHGE7
+ q6NLIfVMd6rAyj88e61O9WSctVjNVrSD3mlslNGSi11AWnY0nELuyxeSM70zZhnNxDI+
+ 26gAuLVTld0t23PJoo26tj4+6Lk8xRoJ5KP1qRpewqPY5JwtEdtWGGox3NiVNxOnmDT4
+ 8WM68eUYBikFab7D1tcxpftJ7a4UDr+ZrwYsiOTMIftrtUoTMdcghDwO53T6D48F8h7H
+ 4l8A==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1781794118; x=1782398918; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=JylW0ndBs0YdeweZT+xeoVYe9FvKh8ulu50mJ6Un6xs=;
- b=zkakgCysZ1fmRY1CImyry1N+ipNbUo5C3qNG6EyfPZ27evBmiKWqpWW7+/XCciF5KP
- yV3U9pkYsP5x+2TFICXW0TWwNVkBZJQ6x2czV+NyumfWm1YCux7dyf/zusavWhwGwDCq
- fi6IV3ijL11qqtBeYp2kGvg/RwSbOis3JNe+v8T9LXilngBnSG7N7gt+JOr6SBehKNbF
- KLUkGfvIRcGrFg56/4aJXZeJHj9gMyzTUIwnmkMbfpLo6OPkD5v1waBs4k/P3Gth+Ogy
- johYQTzciAFdwDAKy4JmD7f7KXq+SHsJ215ZpG6Al2mwQAJgQcI9+y40ZtoBjjuv5FsC
- IRoQ==
+ d=redhat.com; s=google; t=1781794160; x=1782398960; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=CnicVFvfolWU5ASsZe0xlhAi6HzOML3cTzXjnCc3Ovs=;
+ b=FNaf4PcAoGhmsiK2R/5aF09pYg3BXTre0Z6Q+CSyCFweeGZ6ZBJYlf5ae9isdJWn7U
+ q4gQbvLtgEWZ+oW1DmsGtx0gsW3lM9+H8ldZP7McuJeINo+xoQ+k3avIrMZG+zJlzoay
+ 0ZKIjeaA5/Wr+y0aCsE6d7VcNYr8NCAsVql5gm3Xco7LcQChI0Nv+iTDRLRUGtlFrqPv
+ F0sEjgMeNamvhJScj+lbx27T6VCzriEM/vLmUrzw3DGIAGhsEeWA1WB/QMEP8g6pLnj5
+ iyrrb5/EUr6nMONI3DrQkRnDNm5RQi0hhIJcQBEB7tR/jcVQd0p9fj41qCLfLB5YyRBU
+ QNlg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781794118; x=1782398918;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=JylW0ndBs0YdeweZT+xeoVYe9FvKh8ulu50mJ6Un6xs=;
- b=M94Ulh10SDYD72HA1pMGLEuYgDwPqwW86wSzatbR096zJQEe1sta2Kky0pZuJx+Cnd
- 9wwl9vWTpOoxI+0CeDZafi2LmdToXSaNi6Yahc1tkClZv3MFpXVOrZz7VgSEsdZC3lxH
- fx2jjpjzqFlaIL57EDiTemos5nhTTWKs5ul90s3graA4ZKSvjAdTMrGDH7Ue8kBGpaNS
- +QDCTIpboG3ID+jlZ5aD3uXqEPiOqqqKkE58IrtPJZi7jFVEQdgmwLaPRFbxvfUjQbe6
- g8lKTANuyrCp/rQDJXGg/hRmkKJiFYeKSyMgJWfJQ5p6bS5KtCo6UfAW1lnASLbCvrBT
- jqmg==
-X-Gm-Message-State: AOJu0YyW3HP1jpbuygTIsJ1UcHDW+vFttROU+6hjL9ns9R2KaVCzGskG
- 5VLMo0wo5/Cvy1/YSXmTIm4k2W3LF8TdrfSEkKdWikP/0Vw731Ed4yi4qF7cPiHvXJw=
-X-Gm-Gg: AfdE7cnPWZQl8DAlQJuki8hH6hg7vwK4TtbF4kqE+jZ5LW/GgvsqwV43yEHrVKyIOy2
- aZ5F/RN4t086V7hdCmrpeWVpixANmys4vYItCHVebrHDR8vDs2qTvwfsfJTOVRkxhy+heuXoBsn
- hUVyUH8XRYJwQ7MGvFBz6PT6iPPRWOymEFHWV9uaznad+3RmG/GjV27O81Zu8A2b/J7QK+mf7at
- oi9QMvG9q+tBsPMGsqcBtiqUyAXnu8VnuUopkO+FuHYgvjtTAUEW3M1viSpjli9l4CHq7qbXeeJ
- X2rGSqDxQmWQ/2gF10iS9Y0druXwcWkhqtN7nDPGk4KX+Wgn9URnhADi4HezKiwpwKau91RMu/u
- rF09+FRaGQyoRHR4ewV5/+iBXUAmDGN1h9e3Sc58o7hyb5PqyjQyoXHfAzPnq1kdzfXF5gJfV9g
- +AW9fv/n6hjYI=
-X-Received: by 2002:ac2:4f06:0:b0:5aa:b6a:6028 with SMTP id
- 2adb3069b0e04-5ad4dac97b2mr1350517e87.45.1781794117808; 
- Thu, 18 Jun 2026 07:48:37 -0700 (PDT)
-Received: from linaro.org ([2a10:d582:31e:0:b52:6a9:569d:e33e])
- by smtp.gmail.com with ESMTPSA id
- 2adb3069b0e04-5ad4baab437sm1317173e87.81.2026.06.18.07.48.37
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 18 Jun 2026 07:48:37 -0700 (PDT)
-Date: Thu, 18 Jun 2026 15:48:35 +0100
-From: Jim MacArthur <jim.macarthur@linaro.org>
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org
-Subject: Re: [PATCH v2 3/6] target/arm/ptw.c: Add Granule Bypass Windows
-Message-ID: <ajQFQ1RY_JfYooNH@linaro.org>
-References: <20260603-jmac-gpc3b-v2-0-115c51936962@linaro.org>
- <20260603-jmac-gpc3b-v2-3-115c51936962@linaro.org>
- <7615fda1-4052-4696-b477-6eacc057c4a5@linaro.org>
+ d=1e100.net; s=20251104; t=1781794160; x=1782398960;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=CnicVFvfolWU5ASsZe0xlhAi6HzOML3cTzXjnCc3Ovs=;
+ b=GTOVS8asuDp2RL9wHN3Phf0DPZtU0ZzR0Es83+gaeQEkEFTmJSTB2WBwUr2aNGRX/P
+ qg2j6uTgWZWncU2ON6mPBPPhmGRdBc7OrPULzfXmbE8Ez7jiIpTxpj8J3mtxobFwb2nj
+ LjkLA2QiauydM7KzwOMoA3eCa/8npzFD3ndTMAwKRI9gUygx7xXcfjMpOD7sJdus+vWd
+ uhfSYfxDSCDuXj3kXLksaNIySCaUuum4wmXXKy2s4T8Ww/8IMwPBwqMLoudoFwSAMSTZ
+ XhzhlxDADMrVkMTHc/sUpoHHvbV4BaPjSVH8YYp9jgNS14YeXH62v+B0ZTpr2zyYIv7w
+ 477w==
+X-Gm-Message-State: AOJu0YyH6qfPScxq3WOeaAAUG6oVZ4ETHyWDgh0yqUfmfl6gsHW/0F6E
+ 3RINguvkmaQ95P5RbgT6Mhdc34Qp+CqVBYxBOfo49vFKlbgjEc+7VmFP6zZYdKHZtQ7Sw3QqF1v
+ 2C0pNJghBbPDeKkHcdsqYC1mxBKX4SPxj2rKLyxWaH9p9NRmWQhmTqeiT/fXlmYknQvvqJZRrqs
+ iSJZOBYJ7yxzwj0Buooj6PiUw1uMcGD3k=
+X-Gm-Gg: AfdE7cl/0GVR4OTGb8rRBaZrN6TC3ivgz8rC28b1QGCzBm23T7ewL/bOnkpK8VcGlYy
+ axOMb+gRN4s0MCAugEdha/6prm+H72ll8jBWLxxar4pdziOoDBcfH0yQUT3LCSzqEGiRXAncbkK
+ kskM2hxa1xZ1AjnJOUWEpG1WDX1+XcJaHL9jOFEJCaIeyJPUeLwfXDKagISd5TINPw3w==
+X-Received: by 2002:a05:6a21:9203:b0:398:7ed3:a001 with SMTP id
+ adf61e73a8af0-3b9e5b252b0mr5628507637.2.1781794159785; 
+ Thu, 18 Jun 2026 07:49:19 -0700 (PDT)
+X-Received: by 2002:a05:6a21:9203:b0:398:7ed3:a001 with SMTP id
+ adf61e73a8af0-3b9e5b252b0mr5628471637.2.1781794159293; Thu, 18 Jun 2026
+ 07:49:19 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <7615fda1-4052-4696-b477-6eacc057c4a5@linaro.org>
-Received-SPF: pass client-ip=2a00:1450:4864:20::22e;
- envelope-from=jim.macarthur@linaro.org; helo=mail-lj1-x22e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+References: <20260618132058.1044341-1-berrange@redhat.com>
+ <20260618132058.1044341-4-berrange@redhat.com>
+In-Reply-To: <20260618132058.1044341-4-berrange@redhat.com>
+From: Mauro Matteo Cascella <mcascell@redhat.com>
+Date: Thu, 18 Jun 2026 16:49:08 +0200
+X-Gm-Features: AVVi8CcNN94ErlcrKxt5Z3tjU29vFgvC0rkmBb3x5q53qtZldVbkhzLmeBY14gc
+Message-ID: <CAA8xKjXU1ga6tAQnQK_kLD7jpNOaRcH6Yzg76_t7FOLi0VMOVg@mail.gmail.com>
+Subject: Re: [qemu-web PATCH v2 3/3] contribute: switch security process to
+ gitlab confidential issues
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
+ Thomas Huth <thuth@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mcascell@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,32 +139,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jun 10, 2026 at 09:41:56AM -0700, Richard Henderson wrote:
-> On 6/3/26 11:26, Jim MacArthur wrote:
-> > +    const uint64_t BW_STRIDE_SHIFT = 40;
-> ...
-> > +        switch (bw_stride_field) {
-> > +        case 0b00000:
-> > +        case 0b00010:
-> > +        case 0b00100:
-> > +        case 0b00110:
-> > +        case 0b00111:
-> > +        case 0b01000:
-> > +        case 0b01001:
-> > +        case 0b01010:
-> > +        case 0b10000:
-> > +            bw_stride = 1ULL << (bw_stride_field + BW_STRIDE_SHIFT);
-> 
-> BW_STRIDE_SHIFT should be 39 not 40.
-> 
-> Everything else is correct.
-> 
+On Thu, Jun 18, 2026 at 3:21=E2=80=AFPM Daniel P. Berrang=C3=A9 <berrange@r=
+edhat.com> wrote:
+>
+> It is no longer viable to handle the incredible volumes of
+> AI assisted security disclosures via email, nor are extended
+> embargos practical or useful.
+>
+> Remove all information about the current security process and
+> instruct reporters to use 'confidential' issues. In contrast
+> to the old highly restrictive "need to know" approach, the
+> new approach makes all security issues visible to all QEMU
+> maintainers immediately.
+>
+> The focus is on making issues public as soon as possible with
+> a viable patch. Co-ordinated disclosure will no longer be
+> attempted and nor will requests to embargoes be accepted.
+>
+> Signed-off-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
 
-Agree with the simplification, but BW_STRIDE_SHIFT should be 40. As per D24.2.54, a BWSTRIDE field of 0 gives a stride size of 1TB or 1<<40 bytes.
-(gpcbwu, the highest bit set in the mask, is indeed 39+BWSTRIDE, but the subtraction of bw_size from bw_stride has the same effect.)
-There was an error in a later use of bw_stride which might have made it look like something else was intended.
+Reviewed-by: Mauro Matteo Cascella <mcascell@redhat.com>
 
-I'll respin with the simplification suggested; thank you.
+--=20
+Mauro Matteo Cascella
+Red Hat Product Security
+PGP-Key ID: BB3410B0
 
-Jim
 
