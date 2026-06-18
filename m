@@ -4,90 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ADB6ECD98E4
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jun 2026 03:21:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32094CD98ED
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jun 2026 03:49:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wa3Jg-0008AN-0r; Wed, 17 Jun 2026 23:21:20 -0400
+	id 1wa3kk-0004v6-AA; Wed, 17 Jun 2026 23:49:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <aadeshveer07@gmail.com>)
- id 1wa3Je-0008A1-PS
- for qemu-devel@nongnu.org; Wed, 17 Jun 2026 23:21:18 -0400
-Received: from mail-pg1-x534.google.com ([2607:f8b0:4864:20::534])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <aadeshveer07@gmail.com>)
- id 1wa3Jb-0002IV-Gn
- for qemu-devel@nongnu.org; Wed, 17 Jun 2026 23:21:18 -0400
-Received: by mail-pg1-x534.google.com with SMTP id
- 41be03b00d2f7-c86307c4e6bso233405a12.0
- for <qemu-devel@nongnu.org>; Wed, 17 Jun 2026 20:21:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1781752873; x=1782357673; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=BZAhkoUSVHRSAGY2Ipy3MCJxg2YtSmIGz0dtg14WcYo=;
- b=AESvt/kCF6ham3aZl6hwi3Gn9meL2ynKYN+7c8s8+cfmJhKqRgN50/3wrxw8axxFX2
- +y6at1rYIwyC5uMKkhi3cGWTCs5nI9LOxYv2ewh/Gx35OGIiWmz673MqX9oJrwLsZoSn
- Sw3gQ3Y4uOdJ1zEqWrHnLG9Seku535swsaiBkk6Eimruw2yPNptii0R420mp2u9eFw2H
- hunFJRBBza7rV02zBUbgivE4ufYZKaYrQpQlUs7JerRxfh4x061xV/srop491dohe3ve
- SgPFZd/0by3hkK/ugvD0VhNwGngNTTgByy5gEgGer4p0PCkXN0p3aywfndUOAxVzPAKv
- 8kdg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781752873; x=1782357673;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=BZAhkoUSVHRSAGY2Ipy3MCJxg2YtSmIGz0dtg14WcYo=;
- b=EKymVdG02ZYJbyaBk593rcj+vmKtLd0lhc08yfaa9ImeA7jFpyhmMENH1DeXtQfmRy
- +pNI3MukhjOxkjebud9LNlQDtDJbBaSbMgx2ohK48/p3BwYkrOGLjbcZ3WccOSvzKkuY
- 8ZKBElrEZUUZLHi8tSycwfhexU7G3ljwPg9yin0PrDBTcfleGBj6bKf/aFNwTLh1GuZA
- pVFC0hTIs+4a+mz3EB28UFWwMhBcjXifgHYYNgHRftCqTziRpjLzoKKr9aRAiGWeo7T+
- ehHHNPRpRmeIKZcEfjE5QyNK7LmiP9thRu9ZvKRNhSNO//RpZrfzDIaO8cw4ObSLNVsC
- IZzA==
-X-Gm-Message-State: AOJu0YwCXJJq+KLwqTJGOtjpILfFhFiFs98euYamtGB9ZA7E3xWdqeAZ
- /yFJpZ49fEvx+OQdJYixSiO98uX3ozh8YISeDXvCWgEx3SUblSVs4qn8998pu6Yy
-X-Gm-Gg: Acq92OG2r9PfsXCLI6+b1qgo+hP/GP4ek2bio86KzB/nLoi7tJtwyYw6WJwxVhJoBS/
- KkaH9jsG8/aRcgvVEv6qM/V69Rv2VvR2r8YFOMn2d6MuxwwchIu47NuOrnZT5qbrJpmNUbpOb6F
- 8JKOmaFjPgcdr7U7RFA3+jtlM8kbiQi4B7GHPIUq/mxtAqjKkRaBno/CkSz6h3Mw2M38SVi6qI4
- K66trnIBDLIl+rcuHBuJszMlI8J604x0Rmh/1Mw7gs7ybAEBDRy3ABHiEh9ANMXmsQLDTihMuiQ
- ARmT01Z2EKfiQ+FpkM+f5rlVrRrLSthYr2rVM/UBRVxMpQIL1aFbWC+maxyj5+uXV28uhgrPr83
- 0VZKwzObB4Gkiwqf+gfYEWMz9eHbJiDMsET2kGMmKScbfmn5TJo4sjTOjL70HJKHxG29COmR8Hr
- dpgZXMyVGS9fZY54LTDlZFJv5fHypEnQKYWtvMkyMpbQ==
-X-Received: by 2002:a05:6a20:2d23:b0:3b2:8685:13e4 with SMTP id
- adf61e73a8af0-3ba4d7fe75fmr809874637.15.1781752873495; 
- Wed, 17 Jun 2026 20:21:13 -0700 (PDT)
-Received: from setun ([2405:201:502b:3014:cc0c:536:1b1e:6def])
- by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-c88c6c2b2easm1534623a12.27.2026.06.17.20.21.09
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 17 Jun 2026 20:21:13 -0700 (PDT)
-From: Aadeshveer Singh <aadeshveer07@gmail.com>
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1wa3ki-0004uK-Bd
+ for qemu-devel@nongnu.org; Wed, 17 Jun 2026 23:49:16 -0400
+Received: from mgamail.intel.com ([198.175.65.16])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1wa3kg-0008Ok-Nj
+ for qemu-devel@nongnu.org; Wed, 17 Jun 2026 23:49:16 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1781754555; x=1813290555;
+ h=from:to:cc:subject:date:message-id:in-reply-to:
+ references:mime-version:content-transfer-encoding;
+ bh=TMSLeJtOy+jPr3vQZCHYiOP6JY5Ioq6Z33pxMq++iN4=;
+ b=crd9ClLFki7zRm4Eux9E7AuLzNOwIqJOyIA06rEbZC3IK2FJ33MMt3KE
+ 4ZCuRP+wrU3UJeM007Fn1wqZiZUnpc5mkatvUS3KagrwlQpsSCV8v3ttp
+ 9Fx+XqZszYqL+pu7m9jSQ9yXnL2y76MRdXXiT0epJrDWz48Wo9OMEuxI+
+ PMHo5yXuDB+gXf2W1ABAZ0ULXoUAa4ComKcu1A29sp1geMjsRoRKiN7US
+ iiOdPRYDrY4GHnmvIbztpFfqJu+SW8KMapuJEPoPmWjREvxwV3orQsaXr
+ IvXu4C/5SZu6z5sQWCs20EVyOWytRDw8W/sn0jEU4XCsqUjShlBUudcol g==;
+X-CSE-ConnectionGUID: 1u4WJv2sRXCsnXuARC8jPg==
+X-CSE-MsgGUID: uuNqA+/wR3CQ6/OJgmrmWA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11820"; a="82776859"
+X-IronPort-AV: E=Sophos;i="6.24,210,1774335600"; d="scan'208";a="82776859"
+Received: from fmviesa005.fm.intel.com ([10.60.135.145])
+ by orvoesa108.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 17 Jun 2026 20:49:14 -0700
+X-CSE-ConnectionGUID: MkK1UpkbT0CfiztApv6ORA==
+X-CSE-MsgGUID: cfzU51jeTLCyVwNEipWiFg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.24,210,1774335600"; d="scan'208";a="253352777"
+Received: from unknown (HELO gnr-sp-2s-612.sh.intel.com) ([10.112.230.229])
+ by fmviesa005-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 17 Jun 2026 20:49:10 -0700
+From: Zhenzhong Duan <zhenzhong.duan@intel.com>
 To: qemu-devel@nongnu.org
-Cc: peterx@redhat.com, farosas@suse.de, pbonzini@redhat.com, philmd@mailo.com,
- lvivier@redhat.com, ayoub@saferwall.com,
- Aadeshveer Singh <aadeshveer07@gmail.com>
-Subject: [RFC PATCH 3/5] migration: add eager load thread for fast snapshot
- load
-Date: Thu, 18 Jun 2026 08:50:08 +0530
-Message-ID: <20260618032010.88755-4-aadeshveer07@gmail.com>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260618032010.88755-1-aadeshveer07@gmail.com>
-References: <20260618032010.88755-1-aadeshveer07@gmail.com>
+Cc: alex@shazbot.org, clg@redhat.com, eric.auger@redhat.com, mst@redhat.com,
+ jasowang@redhat.com, jgg@nvidia.com, nicolinc@nvidia.com,
+ skolothumtho@nvidia.com, joao.m.martins@oracle.com,
+ clement.mathieu--drif@bull.com, kevin.tian@intel.com, yi.l.liu@intel.com,
+ xudong.hao@intel.com, Zhenzhong Duan <zhenzhong.duan@intel.com>
+Subject: [PATCH v2 5/5] intel_iommu_accel: teardown FAULTQ resources in bottom
+ half
+Date: Wed, 17 Jun 2026 23:48:43 -0400
+Message-ID: <20260618034844.618011-6-zhenzhong.duan@intel.com>
+X-Mailer: git-send-email 2.52.0
+In-Reply-To: <20260618034844.618011-1-zhenzhong.duan@intel.com>
+References: <20260618034844.618011-1-zhenzhong.duan@intel.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::534;
- envelope-from=aadeshveer07@gmail.com; helo=mail-pg1-x534.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=198.175.65.16;
+ envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -47
+X-Spam_score: -4.8
+X-Spam_bar: ----
+X-Spam_report: (-4.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,168 +86,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In fast snapshot load a thread is needed for actively loading in pages
-along with the fault path so that the guest is not dependent on fault
-thread indefinitely.
+When a pasid entry becomes invalid, we need to release all resources
+allocated for that entry including FAULTQ object and fault_fd.
 
-Add postcopy_ram_eager_load_thread(), for the eager thread which
-iterates over all non ignored blocks calling ram_block_load_eager()
-each. ram_block_load_eager then iterates to load in all pages using
-postcopy_mapped_ram_load_page(), with a different channel, which takes
-care of not loading in pages already loaded by fault thread. On
-completion the thread schedules postcopy_ram_eager_load_bh() to destroy
-the incoming migration state and set states to completed/end.
+We call qemu_set_fd_handler() to detach fault_fd's io_read handler and
+wakes up main thread from poll(), but there could still be a small
+window we call iommufd_backend_free_id(fault_id) before poll() exit
+and release fault_id file reference. In this rare case, FAULTQ object
+free return -EBUSY because opened fault_id file keeps reference of
+FAULTQ object.
 
-Add postcopy_ram_eager_load_setup() to create the thread. Added joining
-logic in postcopy_incoming_cleanup().
+Teardown FAULTQ resources in bottom half to ensure poll() has released
+fault_id file reference.
 
-Add tracepoints for entry and exit to eager load thread.
-
-Signed-off-by: Aadeshveer Singh <aadeshveer07@gmail.com>
+Suggested-by: Shameer Kolothum <skolothumtho@nvidia.com>
+Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+Tested-by: Xudong Hao <xudong.hao@intel.com>
 ---
- migration/migration.h    |  5 +++
- migration/postcopy-ram.c | 75 ++++++++++++++++++++++++++++++++++++++++
- migration/postcopy-ram.h |  2 ++
- migration/trace-events   |  2 ++
- 4 files changed, 84 insertions(+)
+ hw/i386/intel_iommu_accel.c | 31 ++++++++++++++++++++++++++++---
+ 1 file changed, 28 insertions(+), 3 deletions(-)
 
-diff --git a/migration/migration.h b/migration/migration.h
-index 841f49b215..7bb54a6584 100644
---- a/migration/migration.h
-+++ b/migration/migration.h
-@@ -42,6 +42,7 @@
- #define  MIGRATION_THREAD_DST_FAULT         "mig/dst/fault"
- #define  MIGRATION_THREAD_DST_LISTEN        "mig/dst/listen"
- #define  MIGRATION_THREAD_DST_PREEMPT       "mig/dst/preempt"
-+#define  MIGRATION_THREAD_DST_EAGER         "mig/dst/eager"
- 
- struct PostcopyBlocktimeContext;
- typedef struct ThreadPool ThreadPool;
-@@ -120,6 +121,10 @@ struct MigrationIncomingState {
-     bool           have_listen_thread;
-     QemuThread     listen_thread;
- 
-+    /* Thread to load pages eagerly in fast snapshot load case */
-+    bool have_eager_load_thread;
-+    QemuThread eager_load_thread;
-+
-     /* For the kernel to send us notifications */
-     int       userfault_fd;
-     /* To notify the fault_thread to wake, e.g., when need to quit */
-diff --git a/migration/postcopy-ram.c b/migration/postcopy-ram.c
-index 1ec20a07dd..0ee294a381 100644
---- a/migration/postcopy-ram.c
-+++ b/migration/postcopy-ram.c
-@@ -2289,9 +2289,84 @@ int postcopy_incoming_cleanup(MigrationIncomingState *mis)
-         mis->have_listen_thread = false;
-     }
- 
-+    if (mis->have_eager_load_thread) {
-+        qemu_thread_join(&mis->eager_load_thread);
-+        mis->have_eager_load_thread = false;
-+    }
-+
-     if (migrate_postcopy_ram()) {
-         rc = postcopy_ram_incoming_cleanup(mis);
-     }
- 
-     return rc;
+diff --git a/hw/i386/intel_iommu_accel.c b/hw/i386/intel_iommu_accel.c
+index 9746355cd6..4857edbcce 100644
+--- a/hw/i386/intel_iommu_accel.c
++++ b/hw/i386/intel_iommu_accel.c
+@@ -245,15 +245,40 @@ free_faultq:
+     return false;
  }
-+
-+/*
-+ * Called by postcopy_ram_eager_load_thread over all blocks to load in all the
-+ * pending pages of given ram block
-+ */
-+static int ram_block_load_eager(RAMBlock *rb, void *opaque)
-+{
-+    MigrationIncomingState *mis = opaque;
-+    void *host = qemu_ram_get_host_addr(rb);
-+    void *target;
-+    int ret = 0;
-+
-+    for (ram_addr_t page_loc = 0; page_loc < rb->used_length;
-+         page_loc += TARGET_PAGE_SIZE) {
-+        target = (uint8_t *)host + page_loc;
-+        ret = postcopy_mapped_ram_load_page(mis, rb, page_loc, (uint64_t)target,
-+                                            0);
-+        if (ret) {
-+            break;
-+        }
-+    }
-+    return ret;
-+}
-+
-+/*
-+ * Bottom half for fast snapshot load, scheduled by eager load thread
-+ */
-+static void postcopy_ram_eager_load_bh(void *opaque)
-+{
-+    MigrationIncomingState *mis = opaque;
-+    postcopy_state_set(POSTCOPY_INCOMING_END);
-+    migrate_set_state(&mis->state, MIGRATION_STATUS_POSTCOPY_ACTIVE,
-+                      MIGRATION_STATUS_COMPLETED);
-+    migration_incoming_state_destroy();
-+}
-+
-+/*
-+ * Used by fast snapshot load to eagerly load in all pages of RAM and schedule
-+ * cleanup after entire RAM is loaded
-+ */
-+static void *postcopy_ram_eager_load_thread(void *opaque)
-+{
-+    MigrationIncomingState *mis = opaque;
-+
-+    trace_postcopy_ram_eager_load_thread_entry();
-+    rcu_register_thread();
-+    qemu_event_set(&mis->thread_sync_event);
-+
-+    if (foreach_not_ignored_block(ram_block_load_eager, mis)) {
-+        error_report("ram_block_load_eager failed");
-+    }
-+
-+    migration_bh_schedule(postcopy_ram_eager_load_bh, mis);
-+
-+    rcu_unregister_thread();
-+    trace_postcopy_ram_eager_load_thread_exit();
-+    return NULL;
-+}
-+
-+/*
-+ * Create thread for eager loading in fast snapshot load case
-+ */
-+int postcopy_ram_eager_load_setup(MigrationIncomingState *mis)
-+{
-+    postcopy_thread_create(
-+        mis, &mis->eager_load_thread, MIGRATION_THREAD_DST_EAGER,
-+        postcopy_ram_eager_load_thread, QEMU_THREAD_JOINABLE);
-+    mis->have_eager_load_thread = true;
-+    return 0;
-+}
-diff --git a/migration/postcopy-ram.h b/migration/postcopy-ram.h
-index a080dd65a7..b3ba42e447 100644
---- a/migration/postcopy-ram.h
-+++ b/migration/postcopy-ram.h
-@@ -202,4 +202,6 @@ void mark_postcopy_blocktime_begin(uintptr_t addr, uint32_t ptid,
- int postcopy_incoming_setup(MigrationIncomingState *mis, Error **errp);
- int postcopy_incoming_cleanup(MigrationIncomingState *mis);
  
-+int postcopy_ram_eager_load_setup(MigrationIncomingState *mis);
++typedef struct IOMMUFaultQueue {
++    IOMMUFDBackend *iommufd;
++    uint32_t id;
++    int fd;
++} IOMMUFaultQueue;
 +
- #endif
-diff --git a/migration/trace-events b/migration/trace-events
-index de99d976ab..38f11e1e9f 100644
---- a/migration/trace-events
-+++ b/migration/trace-events
-@@ -314,6 +314,8 @@ postcopy_blocktime_tid_cpu_map(int cpu, uint32_t tid) "cpu: %d, tid: %u"
- postcopy_blocktime_begin(uint64_t addr, uint64_t time, int cpu, bool exists) "addr: 0x%" PRIx64 ", time: %" PRIu64 ", cpu: %d, exist: %d"
- postcopy_blocktime_end(uint64_t addr, uint64_t time, int affected_cpu, int affected_non_cpus) "addr: 0x%" PRIx64 ", time: %" PRIu64 ", affected_cpus: %d, affected_non_cpus: %d"
- postcopy_blocktime_end_one(int cpu, uint8_t left_faults) "cpu: %d, left_faults: %" PRIu8
-+postcopy_ram_eager_load_thread_entry(void) ""
-+postcopy_ram_eager_load_thread_exit(void) ""
++static void faultq_teardown_bh(void *opaque)
++{
++    IOMMUFaultQueue *fq = opaque;
++
++    qemu_set_fd_handler(fq->fd, NULL, NULL, NULL);
++    close(fq->fd);
++    iommufd_backend_free_id(fq->iommufd, fq->id);
++
++    g_free(fq);
++}
++
+ static void vtd_destroy_old_fs_faultq(VTDAccelPASIDCacheEntry *vtd_pce)
+ {
++    HostIOMMUDeviceIOMMUFD *idev =
++        HOST_IOMMU_DEVICE_IOMMUFD(vtd_pce->vtd_hiod->hiod);
++
+     if (vtd_pce->fault_fd < 0) {
+         return;
+     }
  
- # exec.c
- migration_exec_outgoing(const char *cmd) "cmd=%s"
+-    qemu_set_fd_handler(vtd_pce->fault_fd, NULL, NULL, NULL);
+-    vtd_destroy_fs_faultq(vtd_pce->vtd_hiod, vtd_pce->fault_id,
+-                          vtd_pce->fault_fd);
++    IOMMUFaultQueue *fq = g_malloc(sizeof(IOMMUFaultQueue));
++    fq->iommufd = idev->iommufd;
++    fq->fd = vtd_pce->fault_fd;
++    fq->id = vtd_pce->fault_id;
++
++    aio_bh_schedule_oneshot(iohandler_get_aio_context(),
++                            faultq_teardown_bh, fq);
++
+     vtd_pce->fault_id = 0;
+     vtd_pce->fault_fd = -1;
+ }
 -- 
-2.54.0
+2.52.0
 
 
