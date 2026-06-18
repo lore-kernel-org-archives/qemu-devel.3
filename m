@@ -4,76 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58636CD98F6
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jun 2026 15:01:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34FF9CD98F6
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jun 2026 15:05:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1waEEU-0005QY-IZ; Thu, 18 Jun 2026 11:00:42 -0400
+	id 1waEIH-0006Nf-0k; Thu, 18 Jun 2026 11:04:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1waEEP-0005OX-LG
- for qemu-devel@nongnu.org; Thu, 18 Jun 2026 11:00:39 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1waEEN-0002u0-Oo
- for qemu-devel@nongnu.org; Thu, 18 Jun 2026 11:00:37 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781794833;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=Oi41gOxQCV/Bs2v6VNgLBVFj2ZFYAyA0BXhpsaW4evk=;
- b=R2v3vSZvM4oD7S+sq4BGZO0/XSuSn/mDNRakULy5d6Ij166nxVP2ntC1IuWwUfAZz0RSXp
- 7Syj/8EAb394ETjapxthClTMShyotaehXmqFzbcnvauI2wsLurE7uUUKKfLPy4Ugd4tv9S
- F3HwI8a8QhoCUEYEva/rUmJX9QIvgLs=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-425-LEsVmTaMOnOwnyuNwfM5vg-1; Thu,
- 18 Jun 2026 11:00:29 -0400
-X-MC-Unique: LEsVmTaMOnOwnyuNwfM5vg-1
-X-Mimecast-MFC-AGG-ID: LEsVmTaMOnOwnyuNwfM5vg_1781794827
-Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 510D4180065A; Thu, 18 Jun 2026 15:00:27 +0000 (UTC)
-Received: from localhost (unknown [10.2.16.120])
- by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 9AA8236916; Thu, 18 Jun 2026 15:00:26 +0000 (UTC)
-Date: Thu, 18 Jun 2026 11:00:25 -0400
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: Niklas Cassel <cassel@kernel.org>
-Cc: Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- qemu-block@nongnu.org, qemu-devel@nongnu.org,
- Sam Li <faithilikerun@gmail.com>,
- Dmitry Fomichev <dmitry.fomichev@wdc.com>,
- Damien Le Moal <dlemoal@kernel.org>,
- Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Subject: Re: [PATCH v2] file-posix: fix cache.direct=on check for zoned block
- devices
-Message-ID: <20260618150025.GC720244@fedora>
-References: <20260617133658.2022750-1-cassel@kernel.org>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1waEIF-0006N5-9R
+ for qemu-devel@nongnu.org; Thu, 18 Jun 2026 11:04:35 -0400
+Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1waEID-0005MZ-ED
+ for qemu-devel@nongnu.org; Thu, 18 Jun 2026 11:04:35 -0400
+Received: by mail-pf1-x430.google.com with SMTP id
+ d2e1a72fcca58-8419ab3a297so540361b3a.2
+ for <qemu-devel@nongnu.org>; Thu, 18 Jun 2026 08:04:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1781795070; x=1782399870; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=Ynw5GC9X+lD2FA7opH+nuZTWCvvSpjKPtuDQc6GDCEU=;
+ b=LSnj3qZS/ar9vmpp5GkBkjKgeRNNxnOvulbvmBpupJYcDdOfkRRm2Hh9vMgHSTr/VV
+ ODOoim7SgFxwWDXqZBQuAKyye9R/xmi1nA72AXLI1j1Xpte6Kk2xAjYWVPfr1aUgJfgu
+ RRE4RX9LUVCx3GfUehRL9E2XaAj2u/PH0qcp1/ifXOfK+jxph+LH3Cbh8wPC9I315J6Z
+ hemcJp3vQG2tT1c/3r04I9JfYZapQ/Bo8TrizfmKS9riTBVNbAV1/TGjPpXJ5co3Pe2C
+ npTDS9MCwsVuJNT+2EEs5JzVhcyslCpaGrvTEmvRPKn4YNRJ7eutkjhSKYkRqVr92DVk
+ Tdog==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1781795070; x=1782399870;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=Ynw5GC9X+lD2FA7opH+nuZTWCvvSpjKPtuDQc6GDCEU=;
+ b=DtuzateD3PfMlGFSzDgcNYPKN4il+qK/YxKPBn281c5MWRifBIPPbG1DxwNK1byV/h
+ cC3tDcdunLeA0eqrY0hcHqEckG60mz2YV39X3UsRBO+MQ0xFi0nvmi3Kok1DkBHKk8xH
+ aXjTba8FOO3s0xX+9vkwD8iXtXK1dzE6fX1m/lqBF2xIeHJ51rsPXYDHBix6JMxEh/Dc
+ 92aOA+RkDjDYzam0ilwpxC5thwx0dFDiynRX09BUJ4/PmozbnlNjSVGYFdvS2YlXzwuO
+ nVLcL+a9YMWiKSIOM0dS+b+V6eDlShNp0D2J+Qad6uKauEOP/oaQjLSVDtqGIkQZN3v7
+ 045A==
+X-Gm-Message-State: AOJu0YwJRPRbfdYJxKbp8yePhMOCzTJaOn8RluDsmDQPPxW3C/E5J5v+
+ 6f2WSkJhdatdi4+FKyxcXI+PibbcaPxVF/aR5I6JRDsloq7VO26r4j6WNiH5rFnONrUtBtjckV2
+ fG+AH
+X-Gm-Gg: AfdE7clZuR43pEMsr6F6mnCmtbBGHr8ABG3dqcOfRzzdPx/1z5lyH3Jt97K24VAPT8t
+ ZzxGf53LpJ0lzATGvW8Jv9s/tKNosDQL3HHJHagr9hFqImrrZenkrNtWooJ/KY1yGGyTu5q8C/+
+ B2UW7u0di+xU0BptGfwwJg+0Z/99TYgxlSUZ/aZ44vgOhyOfhW6tP89wYiswGnudMkAXSDLN2RW
+ PAJo7PbcA10a0b8mkyJG7pFCvlNTg5ItsZ79oJ+7TvxXjb3yASMczjr9JxlF8Tr/fWAbJJ4Inz8
+ uN1zPwWag7KO7faPdOdPzUJZik59DrJOUDzLEJlpti8og/3v/TXyik4tZc0clhLBvQIEdV6xcsw
+ WcAqg42yy7C2v9SKv4AIjw2WuipZ+hBfYp0rQ5DXGDPuUKu5LuIm1p0uw/prFzrb8rqIEC/MvyN
+ cd/aRE96RzKPh0obOU0UQ90ZpcN9s7E/hnJ4E1Et4kZmSnIV9PfomTwiL1XQ==
+X-Received: by 2002:a05:6300:6702:b0:3b7:b328:4c8f with SMTP id
+ adf61e73a8af0-3b8b582e3c6mr10449230637.8.1781795069759; 
+ Thu, 18 Jun 2026 08:04:29 -0700 (PDT)
+Received: from [192.168.0.4] (174-21-129-215.tukw.qwest.net. [174.21.129.215])
+ by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-c889356266dsm4620341a12.6.2026.06.18.08.04.28
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 18 Jun 2026 08:04:28 -0700 (PDT)
+Message-ID: <16d97ff2-7e12-49ee-be1f-315f1387ba71@linaro.org>
+Date: Thu, 18 Jun 2026 08:04:27 -0700
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="rVxGWJnIINmhXS7t"
-Content-Disposition: inline
-In-Reply-To: <20260617133658.2022750-1-cassel@kernel.org>
-X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/3] tests/tcg/arm: Tests for new FPRCVT instructions
+To: qemu-devel@nongnu.org
+References: <20260618-jmac-fprcvt-v1-0-1b4475bacf51@linaro.org>
+ <20260618-jmac-fprcvt-v1-2-1b4475bacf51@linaro.org>
+ <878q8cgeux.fsf@draig.linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <878q8cgeux.fsf@draig.linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x430.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,55 +105,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 6/18/26 06:25, Alex Bennée wrote:
+> Jim MacArthur <jim.macarthur@linaro.org> writes:
+> 
+>> We autodetect the presence of FPRCVT in the test cross compiler,
+>> which is a recent feature in GCC and not supported by many distros
+>> yet. If this is in place, add extra tests; these just use FMOV to
+>> move to/from general registers and use the existing test cases.
+>>
+>> The existing [US]CVTF instructions do not have a test, so no new
+>> tests are added for the SIMD versions. They have been tested manually
+>> to check the new SIMD versions produce the same numerical results as
+>> the existing versions.
+>>
+>> Signed-off-by: Jim MacArthur <jim.macarthur@linaro.org>
+>> ---
+>>   tests/tcg/aarch64/Makefile.target |   25 +-
+>>   tests/tcg/aarch64/fcvt-fprcvt.ref | 3331 +++++++++++++++++++++++++++++++++++++
+>>   tests/tcg/arm/fcvt.c              |   26 +
+>>   3 files changed, 3376 insertions(+), 6 deletions(-)
+>>
+>> diff --git a/tests/tcg/aarch64/Makefile.target b/tests/tcg/aarch64/Makefile.target
+>> index 6203ac9b51..fb68fb4810 100644
+>> --- a/tests/tcg/aarch64/Makefile.target
+>> +++ b/tests/tcg/aarch64/Makefile.target
+>> @@ -12,11 +12,6 @@ VPATH 		+= $(AARCH64_SRC)
+>>   AARCH64_TESTS=fcvt pcalign-a64 lse2-fault
+>>   AARCH64_TESTS += test-2248 test-2150
+>>   
+>> -fcvt: LDFLAGS+=-lm
+>> -
+>> -run-fcvt: fcvt
+>> -	$(call run-test,$<,$(QEMU) $<)
+>> -	$(call diff-out,$<,$(AARCH64_SRC)/fcvt.ref)
+>>   
+>>   config-cc.mak: Makefile
+>>   	$(quiet-@)( \
+>> @@ -28,9 +23,20 @@ config-cc.mak: Makefile
+>>   	    $(call cc-option,-march=armv8.5-a,              CROSS_CC_HAS_ARMV8_5); \
+>>   	    $(call cc-option,-mbranch-protection=standard,  CROSS_CC_HAS_ARMV8_BTI); \
+>>   	    $(call cc-option,-march=armv8.5-a+memtag,       CROSS_CC_HAS_ARMV8_MTE); \
+>> -	    $(call cc-option,-Wa$(COMMA)-march=armv9-a+sme $$fnia, CROSS_AS_HAS_ARMV9_SME)) 3> config-cc.mak
+>> +	    $(call cc-option,-Wa$(COMMA)-march=armv9-a+sme $$fnia, CROSS_AS_HAS_ARMV9_SME); \
+>> +	    $(call cc-option,-march=armv9-a+fprcvt,         CROSS_CC_HAS_ARMV9_FPRCVT)) 3> config-cc.mak
+>>   -include config-cc.mak
+>>   
+>> +ifneq ($(CROSS_CC_HAS_ARMV9_FPRCVT),)
+>> +run-fcvt: fcvt
+>> +	$(call run-test,$<,$(QEMU) $<)
+>> +	$(call diff-out,$<,$(AARCH64_SRC)/fcvt-fprcvt.ref)
+>> +else
+>> +run-fcvt: fcvt
+>> +	$(call run-test,$<,$(QEMU) $<)
+>> +	$(call diff-out,$<,$(AARCH64_SRC)/fcvt.ref)
+>> +endif
+>> +
+> 
+> I'm not sure about this as now we have one test with two modes. Can we
+> not just create a new binary (fcvt-fprcvt) and keep running the original
+> test either way.
+> 
+> See how we do that for the sha512 and it's various vector variants.
 
---rVxGWJnIINmhXS7t
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+You certainly don't want to be duplicating the reference file.
 
-On Wed, Jun 17, 2026 at 03:36:58PM +0200, Niklas Cassel wrote:
-> For zoned block devices with SWR zones, the order of the writes must be
-> maintained to avoid write not at write pointer errors.
-> Thus, cache.direct=3Don must be used to bypass the page cache, since the
-> page cache uses write-back caching, where the physical order of the writes
-> is not guaranteed.
->=20
-> There is already a check for cache.direct=3Don in raw_open_common(),
-> however, this check is done before raw_refresh_zoned_limits() has been
-> called (which initializes bs->bl.zoned), so it is currently dead code.
->=20
-> Fix this by moving the check to raw_refresh_zoned_limits(), such that the
-> check is done after bs->bl.zoned has been initialized.
->=20
-> Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-> Reviewed-by: Dmitry Fomichev <dmitry.fomichev@wdc.com>
-> Fixes: 774c726ceb2a ("block: add zoned BlockDriver check to block layer")
-> Signed-off-by: Niklas Cassel <cassel@kernel.org>
-> ---
-> Changes since v1:
-> -Picked up tags from Damien and Dmitry
-> -Modified existing code comment to use plural instead of singular
->=20
->  block/file-posix.c | 22 ++++++++++------------
->  1 file changed, 10 insertions(+), 12 deletions(-)
+Perhaps test the v8.0 convert insn output vs the FEAT_FPRCVT insn output directly?
 
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+Also, this patch is ordered incorrectly.  With the instruction feature test properly in 
+place, it will fail without the final patch to enable the feature.
 
---rVxGWJnIINmhXS7t
-Content-Type: application/pgp-signature; name=signature.asc
 
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmo0CAkACgkQnKSrs4Gr
-c8huKwf/fXrNWm8XUeJ/bqiZlXknfejuPvyxe4uJpUiQkNQibr3a82nz6Z1KrQ2D
-9rm+DFjaByth5cllDB3p7FquvLqpcJElGs2f6vT5RFBcBD3DV3jY2vPbY6+Ej0zX
-/VW+VoyGhFskzzPswZ0mwizoa8hXf7vljw55tuOMAgnTPHB+NL/DdjnFEGLFcMVY
-ix9EfA1e90w1y/v+Y4LtSTATt07BlyP/M6yYvnSHfolJEBXSYLkNA1bNNy11a37m
-wOjaKNNEXANVH1NQpmZL3FYO1XOEavrYDD401ZG3Ruzmc/HogPi6tgMkhjXqjYI5
-WxdJZfXBV8CvLS70nXfAaCT5QUJRxw==
-=95y8
------END PGP SIGNATURE-----
-
---rVxGWJnIINmhXS7t--
-
+r~
 
