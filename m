@@ -4,87 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5A70CD98F8
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jun 2026 04:17:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51ED4CD98ED
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jun 2026 05:24:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wa4Aa-0005ls-KU; Thu, 18 Jun 2026 00:16:00 -0400
+	id 1wa5Er-0001sD-NQ; Thu, 18 Jun 2026 01:24:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wa4A3-0005TS-T1
- for qemu-devel@nongnu.org; Thu, 18 Jun 2026 00:15:27 -0400
-Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wa4A2-0005aT-2N
- for qemu-devel@nongnu.org; Thu, 18 Jun 2026 00:15:27 -0400
-Received: by mail-pl1-x629.google.com with SMTP id
- d9443c01a7336-2c6c57c5bcfso4558995ad.1
- for <qemu-devel@nongnu.org>; Wed, 17 Jun 2026 21:15:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1781756124; x=1782360924; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Lo1SvQDZ7bTY6IMwdvD6UkdlbGJhlUGXDrYODR1SRVA=;
- b=ZUlw0cZ8NQ/8OlQaTLha3KOUw7L2QI+200XzQUnawIDDorLsQY731B72lUN5pY+cmU
- wbELQquVk779ZtnffaPLj0aJez5UasY8nTKlEZ0XwhlEHn0ALK4qRd4qfd4hhzDIMoBD
- DbMBjQQVsdtZIQVcEXX0hoWG736mdC9xceCvXxgyfje5SBnVwxu6MenlmDKmBk0/DyDt
- 3LsSOvPrjlfnm+CQfkC9jRvDrwALrZ7HLD+qEEtAAJ1JxNnzqybqbtqB7h9Ejp7A7bLo
- ztcOAAJ8PIZ/4iobxTu8C5SVnIkDeoD3HpoWT9K+s/vq5Z8GVYBKhZwkaYBdcaowgmaX
- hDdg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781756124; x=1782360924;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=Lo1SvQDZ7bTY6IMwdvD6UkdlbGJhlUGXDrYODR1SRVA=;
- b=mH2C13mF5Zh8b85VwDZUcJfjxJxXA2nOvvsFPWb80RsCygtFOSbB2B/u6e1rGajU6f
- pknKBrgddeZQAbpM+5EKVTyOWCZCR4rcWyg48mTUSx2H8gmockIyOGEanETV0DfJh635
- hELPZt9g8fEhAKDA4gcGEg5VZHz81+n4t6gZqqNz2U0deE3QpAbAfedeprQuWBnOdr+k
- zXPjtjGefLvgTpreOgOnyGHvQAEsm5pMBVDqicBTAhXJxXhR4AYk5aDlZk6S2o5KNQfn
- AfpFUfmkeawCyw/pH/SAfGVfD3f7p6hePxxlpj49xpLV48ADLMsH/YbR5CHPgGV1CECs
- Q68A==
-X-Gm-Message-State: AOJu0Yx2uOOz4+oPMfhBykw4Zn9NSlBK81uh+Ic/hRuiledNchmTk1/i
- tkGICDFVRWOJCBe1Dd15GGclI6V2aQJ6RbX6FW7ndmeZb7BrvMZ6AVyDPRXEgduYarkHdZO0xl4
- 5KJyz
-X-Gm-Gg: AfdE7cmCC1DEH0dR7JYVIaP8Bz1UOWJC4govp+qT2p86EikCJFIFxKQuZRAut854uOX
- Szn7GmcL78jjoS7FhGkzQH0u3dtC6azmW57mfF+aGocugupOwUu/js0hqSzT1yDZjNUvYnZOeZ6
- b1Wz6/EebN4wbymxf2K49SXWNa8izuikNKUf0I28XwgwEC6zq16kWNnSZd6H4S2Fi56xRU+Z9Ku
- 9Y9nw50dc8QRbNMgLpJMjJohte0XkHFzNrFX6jO+XtJW92+1Hv+mHXWLDcsrCOYpfIIg3Yomu+r
- rgh7x4obtS9uy+rBdEqXBQHlmxGJnk2FRXluKc8T3IK3E/22+wfKhq79+2GsZ59DEJF5YuRqDcY
- TcONHfKmRi9XO1R+oPTbdAefWKgpynzztkbj7gAOSevTjoFOrZJODlbhwt8b9PJ2hRwLI7+TC02
- Vwh0mSCzAZ+dNfG7CGcOf7s64jA5nX2BqlZ/etTgUd254Dvc60WA==
-X-Received: by 2002:a17:903:2306:b0:2c2:75c4:4b0f with SMTP id
- d9443c01a7336-2c6bbf99275mr81442515ad.2.1781756124446; 
- Wed, 17 Jun 2026 21:15:24 -0700 (PDT)
-Received: from stoup.. (174-21-129-215.tukw.qwest.net. [174.21.129.215])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2c42f2e535csm173905935ad.6.2026.06.17.21.15.23
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 17 Jun 2026 21:15:23 -0700 (PDT)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org
-Subject: [PATCH 04/10] target/arm: Implement FMLALL (multiple vector)
-Date: Wed, 17 Jun 2026 21:15:11 -0700
-Message-ID: <20260618041517.573469-5-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260618041517.573469-1-richard.henderson@linaro.org>
-References: <20260618041517.573469-1-richard.henderson@linaro.org>
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1wa5Eq-0001rh-2R
+ for qemu-devel@nongnu.org; Thu, 18 Jun 2026 01:24:28 -0400
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1wa5Eo-0006wH-2G
+ for qemu-devel@nongnu.org; Thu, 18 Jun 2026 01:24:27 -0400
+Received: from [133.11.54.183] (h183.csg.ci.i.u-tokyo.ac.jp [133.11.54.183])
+ (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 65I5Nu6A053612
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Thu, 18 Jun 2026 14:23:56 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=RcnykiOf2Atn3CFqXrlSpKczPD9BjliucD6OzoFsM48=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=From:Message-ID:To:Subject:Date;
+ s=rs20250326; t=1781760236; v=1;
+ b=UfX64Uy5IOKEGjlYsZTm1MLeH/if2z5WGXK1DsupgWfF1xdRT10LiP6ggkJiJnqg
+ ILpTy37VE9CfPmXmbnYbvekfuXuq1IuQJd7W2zhJTemTTITp1ZEBUk1a/24XWebF
+ pRS/QFsq0OJVJ29qHvFPJ2mvtd3Ke+AycJVcSbz0I4USKDe30mLEoxwHmj8wJFBX
+ 6O90yIk+iaU1aPDdT2gGA8rpjp1S3nXm7F8IMaM9k0vrBd6VXeAGcaB3t4njYCP3
+ JrZWGQ6uqfUCSZ9D8xXx0yTcBRUdFifo3ZEAVCX/Eq7gCRQk9rIuL32vn4C/CiUj
+ 6st4bMT+BnvdocjdVIGwag==
+Message-ID: <3890f5e8-6bf8-42fb-8f86-91d512130e5e@rsg.ci.i.u-tokyo.ac.jp>
+Date: Thu, 18 Jun 2026 14:23:55 +0900
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC 4/7] system: add memory_region_new / memory_region_new_io
+To: BALATON Zoltan <balaton@eik.bme.hu>, Paolo Bonzini <pbonzini@redhat.com>
+Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ qemu-devel@nongnu.org, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@mailo.com>, Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Peter Xu <peterx@redhat.com>, =?UTF-8?Q?Herv=C3=A9_Poussineau?=
+ <hpoussin@reactos.org>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Aurelien Jarno <aurelien@aurel32.net>, Fabiano Rosas <farosas@suse.de>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
+References: <20260616155554.264412-1-berrange@redhat.com>
+ <20260616155554.264412-5-berrange@redhat.com>
+ <aa4d417e-2e61-44ef-a695-31bc19dbafd1@redhat.com>
+ <9976f829-7c33-7dce-b38e-aa6f04d6ec9d@eik.bme.hu>
+Content-Language: en-US
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <9976f829-7c33-7dce-b38e-aa6f04d6ec9d@eik.bme.hu>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x629.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,39 +83,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- target/arm/tcg/translate-sme.c | 1 +
- target/arm/tcg/sme.decode      | 3 +++
- 2 files changed, 4 insertions(+)
+On 2026/06/18 7:44, BALATON Zoltan wrote:
+> On Wed, 17 Jun 2026, Paolo Bonzini wrote:
+>> On 6/16/26 17:55, Daniel P. Berrangé wrote:
+>>> Prepare for the move to dynamically allocated memory regions by
+>>> introducing memory_region_new and memory_region_new_io functions
+>>> which call through to object_new instead of object_initialize.
+>>>
+>>> TBD: add "new" variants for all the other memory_region_init
+>>> variants.
+>>>
+>>> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+>>
+>> Zoltan already proposed this, but I really think it's a bad idea.
+>>
+>> MemoryRegionOps callback will certainly access fields in the parent. 
+>> Having a separate object gives you no benefit because you still have 
+>> the same use-after-free if the MemoryRegion outlives the device.  
+>> Likewise for buses.
+>>
+>> For buses, the fact that the parent and child live at the same time is 
+>> explicitly tracked with mutual refcount and unparent.  If it's not, we 
+>> have the hack that Akihiko mentioned (https://lists.gnu.org/archive/ 
+>> html/qemu-devel/2026-06/msg03459.html):
+>>
+>>> However, this is insufficient to avoid calling object_ref() for all
+>>> embedded objects. For example, consider an embedded Device that has a
+>>> MemoryRegion. When referencing a MemoryRegion for guest memory access,
+>>> QEMU automatically references the owning Device to keep the MemoryRegion
+>>> alive. However, that reference is ineffective if the Device itself is
+>>> embedded, because object_ref() does not keep the containing storage
+>>> alive.
+>>
+>> If the device itself is embedded, then all the invariants must hold 
+>> recursively:
+>>
+>> - the device must be kept alive by mutual references between the 
+>> device itself and its parent;
+>>
+>> - unparent for the device should wait for all guest memory accesses to 
+>> be either completed or cancelled.
+>>
+>> So, the problem is that "QEMU automatically references the owning 
+>> Device to keep the MemoryRegion alive" is a hack that should die.  I 
+>> added it, mea culpa.
+>>
+>> The model is that if it makes sense to have B outlive A, you use new. 
+>> If it doesn't, you use init.  For MemoryRegions or anything that has 
+>> callbacks, it makes no sense to outlive the implementor of the 
+>> callbacks.  There are exceptions if the number of objects is dynamic 
+>> but they're very rare.
+>>
+>> I agree that there's extra complexity added by embedding; but I 
+>> disagree that removing embedding will fix any bugs, and because it 
+>> will hide a relationship between objects, I believe the complexity is 
+>> not accidental.
+> 
+> I'm trying to understand this better. The way it originally meant to 
+> work according to the memory region docs and implementation is that 
+> memory region is added to an owner as a child which takes a reference 
+> and when the owner is freed it will unparent its children which will 
+> then get unrefed and freed as well if nothing else increased their ref 
+> count. The problem is that when something accesses the memory region it 
+> has to keep the owner alive as well so instead of referencing the memory 
+> region it references the owner (not directly but using memory_region_ref 
+> which does this). This is OK but I don't see how this mandates that the 
+> memory region cannot be freed by the above ref counting together with 
+> the owner and why it must be embedded? All this ref count hack does is 
+> that it passes references of the memory region to the owner so the only 
+> reference to the memory region itself would be from the owner and when 
+> everything unrefs the owner (either directly or through any memory 
+> region) they would be freed together as above. But this is now prevented 
+> by memory_region_init having hard coded object_initialize which can only 
+> be used with embedded objects. The problem is not referencing the owner 
+> but that memory regions are not created with object_new so cannot be 
+> freed by QOM. So embedding seems unrelated to this passing refs on 
+> memory regions to owner and could be fixed separately that my patches 
+> attempted. Where the referencing the owner hack may fail is when the 
+> owner is also owned by something else and this does not pass refs 
+> further up the chain but that's a separate issue which embedding does 
+> not fix either so that could be handled and fixed separately.
 
-diff --git a/target/arm/tcg/translate-sme.c b/target/arm/tcg/translate-sme.c
-index 30487c34a0..ae1dbd0528 100644
---- a/target/arm/tcg/translate-sme.c
-+++ b/target/arm/tcg/translate-sme.c
-@@ -1119,6 +1119,7 @@ static bool do_fmlall_fp8(DisasContext *s, arg_azz_n *a, bool multi)
- }
- 
- TRANS_FEAT(FMLALL_n1_b, aa64_sme_f8f32, do_fmlall_fp8, a, false)
-+TRANS_FEAT(FMLALL_nn_b, aa64_sme_f8f32, do_fmlall_fp8, a, true)
- 
- static bool do_fmlal_nx(DisasContext *s, arg_azx_n *a, bool sub)
- {
-diff --git a/target/arm/tcg/sme.decode b/target/arm/tcg/sme.decode
-index 4956995924..ccc33463c2 100644
---- a/target/arm/tcg/sme.decode
-+++ b/target/arm/tcg/sme.decode
-@@ -569,6 +569,9 @@ FMLS_nn_h       11000001 101 ...01 0 .. 100 ...00 11 ...    @azz_4x4_o3
- FMLS_nn_s       11000001 101 ...01 0 .. 110 ...00 01 ...    @azz_4x4_o3
- FMLS_nn_d       11000001 111 ...01 0 .. 110 ...00 01 ...    @azz_4x4_o3
- 
-+FMLALL_nn_b     11000001 101 ....0 0 .. 000 ....1 0000 .    @azz_2x2_o1x4
-+FMLALL_nn_b     11000001 101 ...01 0 .. 000 ...01 0000 .    @azz_4x4_o1x4
-+
- &az_n           n off rv zm
- @az_2x2_o3      ........ ... ..... . .. ... ..... .. off:3  \
-                 &az_n n=2 rv=%mova_rv zm=%zn_ax2
--- 
-2.43.0
+I agree with your analysis. That's also what I pointed out in another 
+thread:
+http://lore.kernel.org/qemu-devel/48a2ec70-8995-40c5-8224-aa82f267e9dc@rsg.ci.i.u-tokyo.ac.jp/
 
+Regards,
+Akihiko Odaki
 
