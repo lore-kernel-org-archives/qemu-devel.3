@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37018CD98F2
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jun 2026 16:34:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 303D1CD98F8
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jun 2026 16:34:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1waFgL-0006k9-UP; Thu, 18 Jun 2026 12:33:33 -0400
+	id 1waFgL-0006k7-UI; Thu, 18 Jun 2026 12:33:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jim.macarthur@linaro.org>)
- id 1waFg5-0006eW-8Q
- for qemu-devel@nongnu.org; Thu, 18 Jun 2026 12:33:17 -0400
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ id 1waFg4-0006dJ-AV
+ for qemu-devel@nongnu.org; Thu, 18 Jun 2026 12:33:16 -0400
+Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <jim.macarthur@linaro.org>)
- id 1waFg3-0006Mb-1e
+ id 1waFg2-0006Lr-G2
  for qemu-devel@nongnu.org; Thu, 18 Jun 2026 12:33:16 -0400
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-4903d730b1fso13636915e9.2
+Received: by mail-wr1-x434.google.com with SMTP id
+ ffacd0b85a97d-4629d80fa08so1163520f8f.3
  for <qemu-devel@nongnu.org>; Thu, 18 Jun 2026 09:33:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=linaro.org; s=google; t=1781800393; x=1782405193; darn=nongnu.org;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=DFZBT8LvMlXH9tb/dA5m2Omj2BFyYAOCQ6rYsyJrFYc=;
- b=pfnoUw58Gvkh31Ahg7TEu4T1t7ogaLHmD3KEoNxFn9Dggag70QrrJ+M4PXzvfEZ9Zh
- LWTkdZQLo0p9mfzb1akry75geYJ4Y951abm5tf73/phSPev2s4pNZJkunngoqqQN4AaD
- /Vh/LS7EdgSLyUiTl9WwMc6e3fyFJo5vKzbdwTpp7zuZJYkVGFdOK105ZE7KaSxDlmxA
- UryO+MLQqAR8K9axDeNwePpZB/JXDIm3o+uNUhbj3pkXpxdsew5ZXDMuMy3byuCfOaen
- iYHGTfIv2rd49qX/jl2FZKr4nbl2ZCoHRykwGC2dIg3TYJESF9nfebIZOz4YsNup4F46
- 3Kfg==
+ :reply-to; bh=kea4dc/isoBx6rpEUTWsbHn6iNysu9QKjGPmvqVX+qw=;
+ b=yoDeb5v3OUKQfkubIRHaH244Ch5UYQeqgScWNgtQTMdrGlaEXUyfJkJDt97G9Vtpq1
+ zaxwofOKSOFRNln+L+4imwLaFTwuZaI+lJxRukHR5w3uW6m98KXfMHr9fqi7LuqHT3We
+ foTbMCPGOUXGEOwLukqTH0IGgbvKayWnLrr6vQpdLus5OhjSx1HVJaMlWL2inWbTymsy
+ MrERgHKAGUWopEImBRT3K+xNygmUssCiTfpu04g6OqfpuW029+c6dLtnO3ovspAkzrfF
+ ptUkIYG+Va23pQQonDI9s1hbUhu1c9Pz9IypkA2T8ta3NAXsvjevpU8Xeb73hK1MC9dN
+ OYSg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20251104; t=1781800393; x=1782405193;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=DFZBT8LvMlXH9tb/dA5m2Omj2BFyYAOCQ6rYsyJrFYc=;
- b=a8Efffg88QY8v+WJMIvKuwFUhORGcF7FHSV1xAVchzCa4iExTOW6bDxemGwRsWOS5n
- lAgA9EZjb6vNPG63qvP9ny+nnreP5gbGlc1OBD6hD1xo8SV04lOZ+bVcaksUZvUTi/Bv
- /jBPomzFV9N7f7SA/19jDKJF9yXe7nUPlIv9r43HwNYRM11RuGh877JKQaIPQsN6uBTg
- MRVGwz9+mW/qV7kwnRi9cWPQbXH1mw4C227GauP+lFHow75sCTgACJvR1raQWs6rz0fV
- baw9cH9g8P8uIx0hCvAp2vcRnt3OVSBqQRY5D54ngHqlsPvWf1OsSN1E02cOx9OS29VC
- fvyw==
-X-Gm-Message-State: AOJu0YxXJNON6qORG1O6GZHqL7wBQqcbIXHZiiFwkZ5lLoX6T+kSmSkO
- mzWfITgfmRy+j4OUgE8qURzBygTVgiR3171a/eonFPatcc/3KpSM1zECnl0wddUz224Lhw4Se/a
- HXuBnG9g=
-X-Gm-Gg: AfdE7cnVp75xx7J0kjfmeMySU9pvF5ZB5ZyIsYIfSGp5rr4IB8rhCDXJYgLx/F7xT4Y
- Icewi8C7olEK1fua6qJHJH+fOcP6GC5X7zob3Q16wDiDCsxCdWzfu3Wb88HY4vAQ6po8UhDsMQ6
- cRuFWyMhaAY/pnoE63WRlQFdO9X9ypdYcj/t8j+Ja0XLW4yII1pYureE6qijtk90DIFj4SwMIJf
- ybNNTeXQq+kXJY/uWfCvGP9vuJF/2ooHf4N4X/Bezo05kagCgPIpd+TyNFqRQFelqaQovyuGChf
- K1GMikAt3k2Gu8nEu1WPgqca4zKr9TSsrGm8Z1xbojSFlMSa7gqCI+vZAKR/Aysue2noRjUP220
- YKouyiKke1A+8sxJ19MhofLqiKmOtLJOe7qKDG0mNzAjjeIgnXsepoK1DRPnCzfRwsLM2earchT
- O6p7Nt/1X5kAAVzQ==
-X-Received: by 2002:a05:600c:6386:b0:492:3763:aeb9 with SMTP id
- 5b1f17b1804b1-4923f6d2ff1mr4258645e9.21.1781800393457; 
- Thu, 18 Jun 2026 09:33:13 -0700 (PDT)
+ bh=kea4dc/isoBx6rpEUTWsbHn6iNysu9QKjGPmvqVX+qw=;
+ b=Adf6C5hRvUewjuDHlnVMwc7CZdzCqpSmtwXh8JWRohU9wrCCPcmjXEZ5ctO8sBU49y
+ 942xp7yVjaF+DzY5F0mXXhbP1HJdLSgBNmJcR2k9Z3MlmFIHzC1xQXuBxs9+vCelA9cw
+ LZKl94Z9BfaeSuoyPtZEjGHbGL6CosdByjQhHF0w/W9meHgxjpoAxla5/tnLGowxPlxy
+ CRJFbGW02qs2TYro+/MIrBKkuaY97C/POOQINRzROcHac1UYBwH4ry4RApPJ+urLG0YY
+ 0I39pwK6PsemVX56yTZ3VUgsjVjbeKvmtDIMLFW/ylFd0HilypS2CMaGd2mbtSyB2Kky
+ h6Aw==
+X-Gm-Message-State: AOJu0YxCelB3CgzZw44Hq4ZQiTeLEdcBigdZ+NX4PfSjsStCS9RT8DG/
+ DV1UVG5p+dpI5+7rfhPsV6xctep0sSlChZcYAfKDzVcsYGwWjFzvLCBpnhPBzaFcwpY=
+X-Gm-Gg: AfdE7cnc2zbbMhmAWuKJU2NdvFA3s4pRWw9YlMMaLpamx5l5oOjrKZiqmMEsNbfqful
+ Cq3tRMpgf9dRXu8C/Gpvw7DSg0ABCUV41kxcgknnlIcIiSN7cq1dQsrAgpE3HeITesGEOJxRcKQ
+ kL5zyBmiApWzedj7ecNlB5WGjU0EZC/9TGTGJ14150mFITdbwttNUHMz9zojGP8s7nNKT86EVAP
+ b1LuL+WpDPPks+OAIpEQ6HLayjC5KHCWv8kbclExCodCRD9pJglsRyE0+C+CWU21nR3XamWwt4u
+ 01uJV0Zq5ebmi0huy8jOEfSApqOj478dvPOamk5+zsxcFFOYntHXH4AoCHkYcnaFO473xotWLbB
+ uoGEEGL6GMo2ffwEVHknn7TyRB0s130yyOLzNXSfPKtw/QC/CX7rAVpxurpifbGvpjZm96hWONo
+ 1JxFLoW9zJzq6isg==
+X-Received: by 2002:a5d:5f82:0:b0:45e:f2bd:2b17 with SMTP id
+ ffacd0b85a97d-4650853517amr133653f8f.21.1781800392723; 
+ Thu, 18 Jun 2026 09:33:12 -0700 (PDT)
 Received: from [127.0.1.1] ([2a10:d582:31e:0:b52:6a9:569d:e33e])
  by smtp.gmail.com with ESMTPSA id
  ffacd0b85a97d-4650bc426e1sm26942f8f.29.2026.06.18.09.33.12
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 18 Jun 2026 09:33:13 -0700 (PDT)
+ Thu, 18 Jun 2026 09:33:12 -0700 (PDT)
 From: Jim MacArthur <jim.macarthur@linaro.org>
-Date: Thu, 18 Jun 2026 17:33:06 +0100
-Subject: [PATCH v3 3/6] target/arm/ptw.c: Add Granule Bypass Windows
+Date: Thu, 18 Jun 2026 17:33:05 +0100
+Subject: [PATCH v3 2/6] target/arm: Setup new registers for GPC3
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260618-jmac-gpc3b-v3-3-353e546067e7@linaro.org>
+Message-Id: <20260618-jmac-gpc3b-v3-2-353e546067e7@linaro.org>
 References: <20260618-jmac-gpc3b-v3-0-353e546067e7@linaro.org>
 In-Reply-To: <20260618-jmac-gpc3b-v3-0-353e546067e7@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org, 
- Jim MacArthur <jim.macarthur@linaro.org>
+ Jim MacArthur <jim.macarthur@linaro.org>, 
+ Richard Henderson <richard.henderson@linaro.org>
 X-Mailer: b4 0.13.0
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=jim.macarthur@linaro.org; helo=mail-wm1-x32f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::434;
+ envelope-from=jim.macarthur@linaro.org; helo=mail-wr1-x434.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,125 +101,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Adds GPCBW_EL3. A custom write function is necessary to flush TLBs
+when this register is written. Also allows write to the GPCBW bit of
+GPCCR_EL3.
+
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Jim MacArthur <jim.macarthur@linaro.org>
 ---
- target/arm/ptw.c | 77 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 77 insertions(+)
+ target/arm/cpu.h    |  7 +++++++
+ target/arm/helper.c | 19 +++++++++++++++++++
+ 2 files changed, 26 insertions(+)
 
-diff --git a/target/arm/ptw.c b/target/arm/ptw.c
-index 8b54018c98..493e198da7 100644
---- a/target/arm/ptw.c
-+++ b/target/arm/ptw.c
-@@ -341,11 +341,21 @@ bool arm_granule_protection_check(ARMGranuleProtectionConfig config,
-         .space = ARMSS_Root,
-     };
-     const uint64_t gpccr = config.gpccr;
-+    const uint64_t gpcbw = config.gpcbw;
-     unsigned pps, pgs, l0gptsz, level = 0;
-     uint64_t tableaddr, pps_mask, align, entry, index;
-     MemTxResult result;
-     int gpi;
+diff --git a/target/arm/cpu.h b/target/arm/cpu.h
+index 31a5567c95..84d33e87dc 100644
+--- a/target/arm/cpu.h
++++ b/target/arm/cpu.h
+@@ -559,6 +559,7 @@ typedef struct CPUArchState {
+         /* RME registers */
+         uint64_t gpccr_el3;
+         uint64_t gptbr_el3;
++        uint64_t gpcbw_el3;
+         uint64_t mfar_el3;
  
-+    const uint64_t BW_ADDR_SHIFT = 30;
-+    const uint64_t BW_SIZE_SHIFT = 30;
-+    const uint64_t BW_STRIDE_SHIFT = 40;
+         /* NV2 register */
+@@ -1244,6 +1245,8 @@ void arm_v7m_cpu_do_interrupt(CPUState *cpu);
+ typedef struct ARMGranuleProtectionConfig {
+     /* GPCCR_EL3 */
+     uint64_t gpccr;
++    /* GPCBW_EL3 */
++    uint64_t gpcbw;
+     /* GPTBR_EL3 */
+     uint64_t gptbr;
+     /* ID_AA64MMFR0_EL1.PARange */
+@@ -2116,6 +2119,10 @@ FIELD(GPCCR, NA6, 27, 1)
+ FIELD(GPCCR, NA7, 28, 1)
+ FIELD(GPCCR, GPCBW, 29, 1)
+ 
++FIELD(GPCBW, BWSIZE, 37, 2)
++FIELD(GPCBW, BWSTRIDE, 32, 5)
++FIELD(GPCBW, BWADDR, 0, 25)
 +
-+    uint64_t bw_size_field = FIELD_EX64(gpcbw, GPCBW, BWSIZE);
-+    uint64_t bw_stride_field = FIELD_EX64(gpcbw, GPCBW, BWSTRIDE);
-+    uint64_t bw_addr = FIELD_EX64(gpcbw, GPCBW, BWADDR) << BW_ADDR_SHIFT;
-+    uint64_t bw_mask = 0;
-+
-     /*
-      * We assume Granule Protection Check is enabled when
-      * calling this function (GPCCR.GPC == 1).
-@@ -397,6 +407,58 @@ bool arm_granule_protection_check(ARMGranuleProtectionConfig config,
-         goto fault_walk;
+ FIELD(MFAR, FPA, 12, 40)
+ FIELD(MFAR, NSE, 62, 1)
+ FIELD(MFAR, NS, 63, 1)
+diff --git a/target/arm/helper.c b/target/arm/helper.c
+index 22e71a2804..8538a28ce6 100644
+--- a/target/arm/helper.c
++++ b/target/arm/helper.c
+@@ -5001,6 +5001,10 @@ static void gpccr_write(CPUARMState *env, const ARMCPRegInfo *ri,
+                    R_GPCCR_SPAD_MASK | R_GPCCR_NSPAD_MASK | R_GPCCR_RLPAD_MASK;
      }
  
-+    /* At this point, GPCCR_EL3 is valid */
-+
-+    /*
-+     * GPC Priority 1 (R_GMGRR):
-+     * If GPCCR_EL3.GPCBW is 1 and the configuration GPCBW
-+     * is invalid, the access fails as GPT walk fault at level 0.
-+     */
-+    if (FIELD_EX64(gpccr, GPCCR, GPCBW)) {
-+        uint64_t bw_size = 0;
-+        uint64_t bw_stride = 0;
-+
-+        /* BWSIZE, BWSTRIDE have a limited number of acceptable values. */
-+        switch (bw_size_field) {
-+        case 0b000:
-+        case 0b001:
-+        case 0b010:
-+        case 0b100:
-+        case 0b110:
-+            bw_size = 1ULL << (bw_size_field + BW_SIZE_SHIFT);
-+            break;
-+        default: /* Reserved value */
-+            goto fault_walk;
-+        }
-+        switch (bw_stride_field) {
-+        case 0b00000:
-+        case 0b00010:
-+        case 0b00100:
-+        case 0b00110:
-+        case 0b00111:
-+        case 0b01000:
-+        case 0b01001:
-+        case 0b01010:
-+        case 0b10000:
-+            bw_stride = 1ULL << (bw_stride_field + BW_STRIDE_SHIFT);
-+            break;
-+        default: /* Reserved value */
-+            goto fault_walk;
-+        }
-+        /*
-+         * GPCBW is invalid if the base address is:
-+         * not aligned to the size programmed in BWSIZE, or
-+         * greater than or equal to the stride value configured by BWSTRIDE.
-+         * We can make bw_mask which marks exactly which bits in bw_addr may
-+         * be set (gpcbwu:gpcbwl).
-+         */
-+        bw_mask = bw_stride - bw_size;
-+
-+        if (bw_addr & ~bw_mask) {
-+            goto fault_walk;
-+        }
++    if (cpu_isar_feature(aa64_rme_gpc3, env_archcpu(env))) {
++        rw_mask |= R_GPCCR_GPCBW_MASK;
 +    }
 +
-     /* Note this field is read-only and fixed at reset. */
-     l0gptsz = 30 + FIELD_EX64(gpccr, GPCCR, L0GPTSZ);
+     env->cp15.gpccr_el3 = (value & rw_mask) | (env->cp15.gpccr_el3 & ~rw_mask);
+ }
  
-@@ -431,6 +493,20 @@ bool arm_granule_protection_check(ARMGranuleProtectionConfig config,
-         goto fault_fail;
-     }
+@@ -5010,11 +5014,26 @@ static void gpccr_reset(CPUARMState *env, const ARMCPRegInfo *ri)
+                                      env_archcpu(env)->reset_l0gptsz);
+ }
  
-+    /*
-+     * Bypass window check.
-+     * I_JJLRM: Granule Protection Table (GPT) lookups can be skipped
-+     * in portions of the memory map by using GPC bypass windows.
-+     * I_XNHTX: The GPC bypass window check (...) is performed
-+     * immediately after priority 3.
-+     * bw_mask from earlier makes this check for us.
-+     */
-+    if (FIELD_EX64(gpccr, GPCCR, GPCBW)) {
-+        if ((paddress & bw_mask) == bw_addr) {
-+            return true;
-+        }
-+    }
++static void gpcbw_write(CPUARMState *env, const ARMCPRegInfo *ri,
++                        uint64_t value)
++{
++    uint64_t rw_mask = R_GPCBW_BWADDR_MASK | R_GPCBW_BWSTRIDE_MASK |
++                       R_GPCBW_BWSIZE_MASK;
++    ARMCPU *cpu = env_archcpu(env);
 +
-     /* GPC Priority 4: the base address of GPTBR_EL3 exceeds PPS. */
-     tableaddr = config.gptbr << 12;
-     if (tableaddr & ~pps_mask) {
-@@ -3861,6 +3937,7 @@ static bool get_phys_addr_gpc(CPUARMState *env, S1Translate *ptw,
-         };
-         struct ARMGranuleProtectionConfig config = {
-             .gpccr = env->cp15.gpccr_el3,
-+            .gpcbw = env->cp15.gpcbw_el3,
-             .gptbr = env->cp15.gptbr_el3,
-             .parange = FIELD_EX64_IDREG(&cpu->isar, ID_AA64MMFR0, PARANGE),
-             .support_sel2 = cpu_isar_feature(aa64_sel2, cpu),
++    tlb_flush(CPU(cpu));
++    env->cp15.gpcbw_el3 = (value & rw_mask);
++}
++
+ static const ARMCPRegInfo rme_reginfo[] = {
+     { .name = "GPCCR_EL3", .state = ARM_CP_STATE_AA64,
+       .opc0 = 3, .opc1 = 6, .crn = 2, .crm = 1, .opc2 = 6,
+       .access = PL3_RW, .writefn = gpccr_write, .resetfn = gpccr_reset,
+       .fieldoffset = offsetof(CPUARMState, cp15.gpccr_el3) },
++    { .name = "GPCBW_EL3", .state = ARM_CP_STATE_AA64,
++      .opc0 = 3, .opc1 = 6, .crn = 2, .crm = 1, .opc2 = 5,
++      .access = PL3_RW, .writefn = gpcbw_write,
++      .fieldoffset = offsetof(CPUARMState, cp15.gpcbw_el3) },
+     { .name = "GPTBR_EL3", .state = ARM_CP_STATE_AA64,
+       .opc0 = 3, .opc1 = 6, .crn = 2, .crm = 1, .opc2 = 4,
+       .access = PL3_RW, .fieldoffset = offsetof(CPUARMState, cp15.gptbr_el3) },
 
 -- 
 2.43.0
