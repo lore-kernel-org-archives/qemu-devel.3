@@ -4,49 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96500CD98F9
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A464CD98FE
 	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jun 2026 21:55:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1waKgt-0003ex-In; Thu, 18 Jun 2026 17:54:27 -0400
+	id 1waKgx-0003gq-8e; Thu, 18 Jun 2026 17:54:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1waKgs-0003ea-39
- for qemu-devel@nongnu.org; Thu, 18 Jun 2026 17:54:26 -0400
-Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1waKgw-0003gT-64
+ for qemu-devel@nongnu.org; Thu, 18 Jun 2026 17:54:30 -0400
+Received: from tor.source.kernel.org ([172.105.4.254])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1waKgq-0002JW-Db
- for qemu-devel@nongnu.org; Thu, 18 Jun 2026 17:54:25 -0400
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1waKgu-0002Kd-MQ
+ for qemu-devel@nongnu.org; Thu, 18 Jun 2026 17:54:29 -0400
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
- by sea.source.kernel.org (Postfix) with ESMTP id 2D1BF41917;
- Thu, 18 Jun 2026 21:54:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D82841F000E9;
- Thu, 18 Jun 2026 21:54:13 +0000 (UTC)
+ by tor.source.kernel.org (Postfix) with ESMTP id 4699E601E1;
+ Thu, 18 Jun 2026 21:54:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93C401F000E9;
+ Thu, 18 Jun 2026 21:54:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
- s=k20260515; t=1781819655;
- bh=W0KbvSXa0ZAkEKS9cQhP8Bp14oV+KyPfN4WHoByCE4k=;
- h=From:To:Cc:Subject:Date;
- b=HYjxnXrBQYjtjvnY6ecdWXvyUCi968sJHWhZOKD8EcCsriqmE1S0IgZl7+xD37j5Q
- nHvCTY+P/CCx/7Xx0sJlpgtMB1ugdnqjpALw6Xg0+8GmqcOirFscoLXtOHzYfb1WH0
- qPlMa70f2iN6qbX6WHrhWzbLmwNTLBtrSMF2xsPzHb8xsOiVw9f1+oqVxV11BDT3KK
- rliVzxmFmhISwA+CEnCerSuhtxfHJl34WNrnibqlZm4K267alEcuaSbV0yu7laTHV2
- wubUVb4bfs47WD/IGgQv0nl6bQrpp0sRPm7Q3ZOQeE0o96xohOPUGEqNk7rAx2uujb
- aDQ6Ijagz0G3w==
+ s=k20260515; t=1781819661;
+ bh=PEnXMMVv9dWFj8YPlqBxVILE7oewYr7Nm0uK+8bv6uo=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References;
+ b=bNtoS5pNY+z5l3l5leKVZQcE7g5fsytNv9ZU51MgfBKEzUpj4LYi3dckOy6IJYeTl
+ e/j8BojoGxUbFXEcuyKeRbwRrLqIg9qHeDoE8nZwjVqptfGECg8yiasN4MRgy/kNbB
+ fPOTmw3AbzDUZsmY/sOn0IvA0sFhbbuTsO+nj3zm5qQStt7D8IiI/t9P/H56bkEnaE
+ TI459BBbiQ/E3XqRMhcOtd+qtnTyjahuQNcLfRCrm2iQV1mOvT39N/cQBzY9pvz3AI
+ UQxKXDoaHZag0HXwcrfdOxGC/AuB54vpzKSwNQNKj7YzyMbt6xYExn5anWCloW3xyB
+ xjALnlZ6/hX9A==
 From: Helge Deller <deller@kernel.org>
 To: qemu-devel@nongnu.org,
 	Stefan Hajnoczi <stefanha@gmail.com>
 Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Laurent Vivier <laurent@vivier.eu>, deller@gmx.de
-Subject: [PULL 0/4] Linux user patches
-Date: Thu, 18 Jun 2026 23:54:07 +0200
-Message-ID: <20260618215411.22057-1-deller@kernel.org>
+ Laurent Vivier <laurent@vivier.eu>, deller@gmx.de,
+ Thomas Huth <th.huth+qemu@posteo.eu>
+Subject: [PULL 3/4] linux-user: Implement /proc/cpuinfo for m68k CPU
+Date: Thu, 18 Jun 2026 23:54:10 +0200
+Message-ID: <20260618215411.22057-4-deller@kernel.org>
 X-Mailer: git-send-email 2.54.0
-Content-Type: text/plain; charset="utf-8"
+In-Reply-To: <20260618215411.22057-1-deller@kernel.org>
+References: <20260618215411.22057-1-deller@kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
- envelope-from=deller@kernel.org; helo=sea.source.kernel.org
+Received-SPF: pass client-ip=172.105.4.254; envelope-from=deller@kernel.org;
+ helo=tor.source.kernel.org
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
@@ -70,47 +72,78 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Helge Deller <deller@gmx.de>
 
-The following changes since commit c7cf7c810153d6f5f31aa2d5c0dee9087f6b4dff:
+Mimic the entries for /proc/cpuinfo to what can be seen on the debian
+porterbox mitchy.debian.org.
 
-  Merge tag 'firmware-20260617-pull-request' of https://gitlab.com/kraxel/qemu into staging (2026-06-17 10:17:29 -0400)
+Cc: Thomas Huth <th.huth+qemu@posteo.eu>
+Cc: Laurent Vivier <laurent@vivier.eu>
+Signed-off-by: Helge Deller <deller@gmx.de>
+---
+ linux-user/m68k/target_proc.h | 46 +++++++++++++++++++++++++++++++++++
+ 1 file changed, 46 insertions(+)
 
-are available in the Git repository at:
-
-  https://github.com/hdeller/qemu-hppa.git tags/linux-user-pull-request
-
-for you to fetch changes up to 54e08dbe8f2aeca57e3b1a5eab09a9fec88c1c67:
-
-  linux-user/xtensa: fix unlock of uninitialized frame pointer on sigreturn (2026-06-18 23:43:35 +0200)
-
-----------------------------------------------------------------
-linux-user patches
-
-One frame pointer memory locking fix for the xtensa architecture, a generic
-loader fix for programs with modified headers, and two patches to emulate
-/proc/cpuinfo for loogarch and m68k CPUs.
-
-----------------------------------------------------------------
-
-Akshit Yadav (1):
-  linux-user: Fix AT_PHDR when program headers are relocated into their
-    own segment
-
-Helge Deller (2):
-  linux-user: Implement /proc/cpuinfo for loongarch cpus
-  linux-user: Implement /proc/cpuinfo for m68k CPU
-
-Matt Turner (1):
-  linux-user/xtensa: fix unlock of uninitialized frame pointer on
-    sigreturn
-
- linux-user/elfload.c                 | 21 +++++++-
- linux-user/loongarch64/elfload.c     | 20 +++++++
- linux-user/loongarch64/target_proc.h | 79 +++++++++++++++++++++++++++-
- linux-user/m68k/target_proc.h        | 46 ++++++++++++++++
- linux-user/qemu.h                    |  1 +
- linux-user/xtensa/signal.c           |  3 +-
- 6 files changed, 167 insertions(+), 3 deletions(-)
-
+diff --git a/linux-user/m68k/target_proc.h b/linux-user/m68k/target_proc.h
+index 3df8f28e22..dca77d8483 100644
+--- a/linux-user/m68k/target_proc.h
++++ b/linux-user/m68k/target_proc.h
+@@ -1,6 +1,8 @@
+ /*
+  * M68K specific proc functions for linux-user
+  *
++ * Copyright (c) 2026 Helge Deller
++ *
+  * SPDX-License-Identifier: GPL-2.0-or-later
+  */
+ #ifndef M68K_TARGET_PROC_H
+@@ -13,4 +15,48 @@ static int open_hardware(CPUArchState *cpu_env, int fd)
+ }
+ #define HAVE_ARCH_PROC_HARDWARE
+ 
++
++static int open_cpuinfo(CPUArchState *cpu_env, int fd)
++{
++    const char *cpu, *fpu;
++    struct timespec res;
++    double freq_mhz;
++
++    if (clock_getres(CLOCK_REALTIME, &res) == -1) {
++        res.tv_nsec = 1;
++    }
++    freq_mhz = 1000.0 / res.tv_nsec;
++
++    if (m68k_feature(cpu_env, M68K_FEATURE_M68010)) {
++        cpu = "68010";
++    } else if (m68k_feature(cpu_env, M68K_FEATURE_M68020)) {
++        cpu = "68020";
++    } else if (m68k_feature(cpu_env, M68K_FEATURE_M68030)) {
++        cpu = "68030";
++    } else if (m68k_feature(cpu_env, M68K_FEATURE_M68040)) {
++        cpu = "68040";
++    } else if (m68k_feature(cpu_env, M68K_FEATURE_M68060)) {
++        cpu = "68060";
++    } else {
++        cpu = "680x0";
++    }
++
++    if (m68k_feature(cpu_env, M68K_FEATURE_FPU)) {
++        fpu = cpu;
++    } else {
++	fpu = "none(soft float)";
++    }
++
++    dprintf(fd, "CPU:\t\t%s\n"
++                "MMU:\t\t%s\n"
++                "FPU:\t\t%s\n"
++                "Clocking:\t%.1fMHz\n"
++                "Model:\t\tQEMU user v" QEMU_VERSION "\n",
++                cpu, cpu, fpu, freq_mhz);
++    /* dropped BogoMips and Calibration for now */
++
++    return 0;
++}
++#define HAVE_ARCH_PROC_CPUINFO
++
+ #endif /* M68K_TARGET_PROC_H */
 -- 
 2.54.0
 
