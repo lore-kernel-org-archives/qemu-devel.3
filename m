@@ -4,140 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7DC70CD98ED
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jun 2026 10:37:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85E10CD98F3
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jun 2026 10:38:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1waA7g-0006kK-Bi; Thu, 18 Jun 2026 06:37:24 -0400
+	id 1waA87-0007Ab-Ba; Thu, 18 Jun 2026 06:37:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1waA7e-0006bL-Fy
- for qemu-devel@nongnu.org; Thu, 18 Jun 2026 06:37:22 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1waA7d-0008TP-49
- for qemu-devel@nongnu.org; Thu, 18 Jun 2026 06:37:22 -0400
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65IAZ1581558550
- for <qemu-devel@nongnu.org>; Thu, 18 Jun 2026 10:37:20 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- qcGw3eKLsUB8CymFI7JbvdfADEU4gCd308j/9Vmyt0A=; b=V3a1wldBIIBFGhnb
- Wyekb757iy/raOcfw76Xxm/lp7TtmSPJU1UE5WMQSYzhbIAzctJ7u+MLLpLLpgu+
- QWnxWkfxnXiduIi4AcELk56dtav4K3hj/GqAWULihkSkcSBi8QB1o6u4oJT8luZ2
- 3o34EQh1ftZgPGswSdOONLfd4WyIM/YWFGXK60SJmSGy3lpi3+Va2fPdB+K70vRB
- h4CbFgXsEBkF3V8LAnW5sMHp6Mt71Q6g4BxOf7CTN+Oj5jmmyRWk0nglGCYxJPuE
- Ciecv/+dIo5BX5rJDqR3N0zgJRJok/EO7sZrI3KK/hWBXEjqcWS04D5arr1KBbz2
- Ff9GDw==
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
- [209.85.222.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4eux2jv539-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 18 Jun 2026 10:37:20 +0000 (GMT)
-Received: by mail-qk1-f200.google.com with SMTP id
- af79cd13be357-9157db42dd8so204698685a.2
- for <qemu-devel@nongnu.org>; Thu, 18 Jun 2026 03:37:19 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1waA86-0007AL-5o
+ for qemu-devel@nongnu.org; Thu, 18 Jun 2026 06:37:50 -0400
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1waA84-0000Hg-6v
+ for qemu-devel@nongnu.org; Thu, 18 Jun 2026 06:37:49 -0400
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-490b613a17bso5620655e9.3
+ for <qemu-devel@nongnu.org>; Thu, 18 Jun 2026 03:37:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1781779039; x=1782383839; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:references:cc:to:from
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=qcGw3eKLsUB8CymFI7JbvdfADEU4gCd308j/9Vmyt0A=;
- b=J3A2R6m1EDLDt55uipTDHTstYP9XgMf5Mzls2Yki5Q2v09ZWCWMFxxr3nOSb6y0aJc
- cqxnnWu9n2A/Re7TKz7J2Rew4j9PiG9SJ+7YVZtHx9NYO5s9m1ZDmg0yc9i8HBEp+Bz4
- 4ACeVRutizqQEp7QdE2314uwJTwvCZxeYMZCN7KxK0QdDt3/G2gdzPAGPYtpr/Oo6rIq
- KeTAGed4wdlfwGQ0WBmOlnnp+kaoDiPXpugL166qR8eHvB390f0sMMtI3/FLoMOS05zv
- tmo8SnsQXzoqNtgbczuVrkf86jYCuc52F0nnzXVgdLKqVgg8KVj/CnMJ2iY/xrMFX5Uj
- /I1g==
+ d=linaro.org; s=google; t=1781779066; x=1782383866; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=VDxznsl/6Uo/ITlkR7IfOweSjgQg0yr1ktlstQMVMkw=;
+ b=HXLsguZ5jQ3b74GWgaw8TolLeSfILhDgirs4wk1u8edSWgXjZgM6wNuddywg5N6LPq
+ L2gS0qOPN59PJRRRZFM8ILoNQ1+w7tkorKk0WJMZKdYQCAqVEv7jyeB5gIAH8EM0bqPM
+ q/hHOPzDkkc9uncSsJRoeIyBnMQvnSt/IK+4lL2QxMNHciaCejaXLyga/ceqgjWLCliP
+ KWNab9KmCHAh8tz/kNvBKReJFkNZx85dOx3DU2T1JywYW5sbs8b13vQZ/yfsGvXeDUc0
+ 7/7bCsEp+lVVa4l/z1gda8GN5ZjrThSTO8AKDM3/F03lLTTBA/JMZDBKSeEcG41D3udu
+ PMxA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781779039; x=1782383839;
- h=content-transfer-encoding:in-reply-to:references:cc:to:from
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=qcGw3eKLsUB8CymFI7JbvdfADEU4gCd308j/9Vmyt0A=;
- b=dbVAofWPDl8nATLIEQsW74IrFwC4MPuvAYv/bnDFiF7xBotH6BjsaPtqQZpZjHVAFN
- Za6r3uZX95+f5h4DiFEm85cF7NL3cQS0mNrUuE8ayeGE/CoITIQVq9LnHmYiPiEgkAH9
- 9rYbA4hvrhX8qgaDKLjIPe+ixiy/n3Phl9ez2LaIw+omwb+tH8dPwqHiu/mjVTW3bMez
- dtwMDvn++FZZXZXirknYWhXL0n/uCyk3DdGpdt3Iqi9EC2dZLLJj59mG8qqJj8WKjddT
- SjCWdnz0DUOoqKBsMyxJ/mTW3Z7s7HU8R2pbqWDp6DpmH0HCsx7UerSYpVs+k8sxva5+
- dF5A==
-X-Gm-Message-State: AOJu0YzBr6PF4+yI67hmM/LyNchP045mU8x65nFlxpru9+mmXgssprMQ
- JOfi4YMHpSqHD2UCmHhP4QCy8Wp66fDg3lOKLBqqJkDITxo9GWd4Q2IyOYqbWZtlkuIfuJ+Zgyq
- PWHjJOkMya80rfsoi+sTdRImczKJVjIza5+PE44jsUiTHRZ3GUWyrGEWs5Q+5q9XI+w==
-X-Gm-Gg: Acq92OEp3H3NUToUaqJ8os69kqyixnTLzaLDGPZZCPe6k9Il9cTuFh46BGGnqwaOmEC
- QPhGD01LUfLUt1iawxbDvLjUx5b5pfO5RcmGYB4ynhgUJjKrK+Rn8i3uD5wqOppnptk2bDyiogo
- 44VXa8bdnDtwrrsNIZzJWA6W63diJmY5MMlVYHZIPRqsnY5Lx2Oh8W+RQaJPjog8VDHS3XehGWz
- hhNaun3AHBbjZ+jNRP5pfztsyBP1cWb4RrYlt4D5O+rjeoM8NsMZClt6qFIhd12/06HognaxPDz
- YcLTyLrdObX+fWqhtXjm5kt5BCh/lUmym6EoH0lSsXEAMNLZngcVMjKlWtuUBpPQZn+pJgWqcKy
- MAtHtykohHyXsrilmMd/aI2T9yb8urxxXJHwBKX5LARrnBulGIKpW2WmkXaqL4g==
-X-Received: by 2002:a05:620a:6893:b0:915:9efe:6de8 with SMTP id
- af79cd13be357-91f2a4ce2c8mr452645785a.58.1781779039582; 
- Thu, 18 Jun 2026 03:37:19 -0700 (PDT)
-X-Received: by 2002:a05:620a:6893:b0:915:9efe:6de8 with SMTP id
- af79cd13be357-91f2a4ce2c8mr452642185a.58.1781779039185; 
- Thu, 18 Jun 2026 03:37:19 -0700 (PDT)
-Received: from [192.168.69.213] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4606f2c4240sm56792743f8f.27.2026.06.18.03.37.17
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 18 Jun 2026 03:37:18 -0700 (PDT)
-Message-ID: <75333211-7af1-4278-9610-53b5586d3450@oss.qualcomm.com>
-Date: Thu, 18 Jun 2026 12:37:17 +0200
+ d=1e100.net; s=20251104; t=1781779066; x=1782383866;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=VDxznsl/6Uo/ITlkR7IfOweSjgQg0yr1ktlstQMVMkw=;
+ b=g+Pwk/Q/UOBJCObkMWC6Z2LWhCf5ddcfQXxfR3R7zse8eXC1Q4AWTHT84ZXyuSq1wZ
+ ZWOg9Nhq4E4hwNI+HNYl5eHisoHDFxPYl/6AVHH3KBjCPB7ju+esI1cHL6iyioz4J4SX
+ zvqDs5wdowY0ndwfkQU1bim90duCSKEM+ABVZnrh4nHMiYX7U7/UCwK0TQ6ILejJfAtP
+ eOYg4Y2Zen4UbnBCrRtrNf5pyo0mUlwJLbNDG2RicQ6l98CmnCjvft2idr2XTGhSKia2
+ w2szI06rS76HumUn0+jBDqRAaUAQRYkNVqk+D/ys+MtMbfF+jDosjQjVXyjOVp8uIS8R
+ 37dQ==
+X-Gm-Message-State: AOJu0Yzav2fADEjdiihw2uHh3r1jQsPL6+sMottXK0SEYZDC0kkdHs+D
+ yeajqn9JxreR+UTL4UQjea/xPYeQOumrqb9XJCvDuvjTH5bkaeRJwwbvwnjQjkpOq7E=
+X-Gm-Gg: AfdE7ckF0l200xyvMJTJus49bd3Ogzq/sYzF+nm62HrzuJ2DRX5KCB2sjhwhlDC1M9c
+ EgIbYvVsyoRMpfOoyckXcrY77DbWtGbV7Wdm4h5bulYDiPoznSL2BCibr426pU6l00WpANakLsY
+ vEta7uwFapPETUIBzpHVsCo1GXpe1kkSSl3SAFtJEYuzPaopYYXZ2N+EnUY377j8L/4O09fDzXS
+ wtvpq5m+NQIGNfbWWfpu+Wh6KSkL14DkfMI/lkfHXsWu0dtCOJXd6f2AjrZevFHRVusAs5i4qP6
+ ssmWu/Gtb2CKGHr48IRAMpaDD7gVnZTP9QeKg5cYteVz+xsLUYQkfvWZM9SjwpHkYfWbMQ+xCe3
+ kKa6JdRRIKw9Ez3TFC38ZVSsUtgRvxzQ0JKMYoemObonY0hGH+VQY5Ijn9xiKHe3nSGy7dXsNDT
+ WV1OuvjNk4dWBT
+X-Received: by 2002:a05:600c:1395:b0:490:e5c1:b8b9 with SMTP id
+ 5b1f17b1804b1-4923a8c402emr25812765e9.0.1781779066259; 
+ Thu, 18 Jun 2026 03:37:46 -0700 (PDT)
+Received: from draig.lan ([185.124.0.195]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4922fa96f0esm265073355e9.12.2026.06.18.03.37.45
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 18 Jun 2026 03:37:45 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id AF69A5F905;
+ Thu, 18 Jun 2026 11:37:44 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org,  Arnd Bergmann <arnd@linaro.org>,  Tyrone Ting
+ <kfting@nuvoton.com>,  Hao Wu <wuhaotsh@google.com>,  Peter Maydell
+ <peter.maydell@linaro.org>,  "open list:Nuvoton NPCM7xx"
+ <qemu-arm@nongnu.org>
+Subject: Re: [RFC PATCH] hw/arm: use correct base address when setting CBAR
+In-Reply-To: <42927637-2e5b-46eb-9d25-8315cd36fda8@oss.qualcomm.com>
+ ("Philippe =?utf-8?Q?Mathieu-Daud=C3=A9=22's?= message of "Thu, 18 Jun 2026
+ 12:07:19 +0200")
+References: <20260618093615.3793919-1-alex.bennee@linaro.org>
+ <42927637-2e5b-46eb-9d25-8315cd36fda8@oss.qualcomm.com>
+User-Agent: mu4e 1.14.2-pre1; emacs 30.1
+Date: Thu, 18 Jun 2026 11:37:44 +0100
+Message-ID: <87pl1ogmmf.fsf@draig.linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/6] system: Clarify legacy
- physical_memory_read/write/map/unmap API
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-To: qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>
-References: <20260616020839.19104-1-philmd@oss.qualcomm.com>
-In-Reply-To: <20260616020839.19104-1-philmd@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjE4MDA5OCBTYWx0ZWRfX86kBbqNj2Jt3
- +SVJN2kAlsar+JGDtn4p2hZJLVGyfa/Yiv8GGTF+AvNma3turiZUamHsCF5HtPee5as8ZEdzy1Q
- /GlQFi41gWpf6bwVqDnHgRHglo0Tz4D33uSQAKkSJmLOO3/iWekc5+BcbPuzXEz6q0NV5sSs5oK
- YY/g2aqq+03TPPxCfzLroFRrOkdG0jePn5TkEmch7aDsnvCnMikA3UluiBtVgxgKsZrTApgaKzK
- r1wytdVEYngo0uGr7pbdYvg7046QHNgLmqupoLi22Z3/IMePJhFcYlNgBLOXHLtNyCDhsGzQmu6
- cRCMOIKm6n8r+eXj+Nlf6s1Ij/XnUlMw/HStDFcInT2jARgTgU8iEdaW+0cZs+bVLVUCAUrnzep
- muGNMaRo2MSqEa5Q7z+zXW5rC1Tx89LG+9YUfg4puyhj6uam8P9wHlbScaUyoyciz8bqvZKxwXj
- VxUzHQOAeJNVUOpB1Rg==
-X-Authority-Analysis: v=2.4 cv=Fsg1OWrq c=1 sm=1 tr=0 ts=6a33ca60 cx=c_pps
- a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
- a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22
- a=ZZ4eqRJCog10WMeL758A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=PEH46H7Ffwr30OY-TuGO:22
-X-Proofpoint-ORIG-GUID: rsfSnEUi_6_Ab4BQKebpUSRXm8_D7sEq
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjE4MDA5OCBTYWx0ZWRfX2godgOmqnPmT
- sVZ3uCANDMjxfV1AsQbTLWfGdE+PmNNPhl5NG3Y0HdfVSjso35t0Bg9SCDRdBo7xtJD+Yj7Fqs7
- vgPyIqgxwIjkH0Ky3E5EpLSVwCK8c9M=
-X-Proofpoint-GUID: rsfSnEUi_6_Ab4BQKebpUSRXm8_D7sEq
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-18_01,2026-06-17_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 bulkscore=0 suspectscore=0 spamscore=0 phishscore=0
- lowpriorityscore=0 malwarescore=0 adultscore=0 priorityscore=1501
- impostorscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2606180098
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x331.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -154,14 +108,122 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-> Philippe Mathieu-Daudé (6):
->    system: Document cpu_physical_memory_*() declarations
->    accel/kvm: Replace legacy cpu_physical_memory_write() call
->    gdbstub/system: Replace legacy cpu_physical_memory_read/write() calls
->    target/s390x: Factor common s390_ipl_read/write() helpers
->    target/s390x: Replace legacy cpu_physical_memory_read/write() calls
->    system: Move cpu_physical_memory_*() declarations to
->      'system/physmem.h'
+Philippe Mathieu-Daud=C3=A9 <philmd@oss.qualcomm.com> writes:
 
-Queued, thanks.
+> On 18/6/26 11:36, Alex Benn=C3=83=C2=A9e wrote:
+>> This should point at the base of the Cortex-A9 MPCore private address
+>> space. If it doesn't we will confuse the Linux kernel as it probes the
+>> SCU registers and erroneously assumes the system is a buggy Aegis SOC
+>> and nerf the emission of SEV instructions, deadlocking any WFE's in
+>> the kernel (or QEMU smpboot code).
+>
+> I'm confused...
+>
+>   The Configuration Base Address Register holds the physical base
+>   address of the memory-mapped GIC CPU interface registers.
+
+For which CPU? These are cortex-a9's not a57's and the behaviour is
+IMPDEF.
+
+See:
+
+  https://developer.arm.com/documentation/ddi0407/i/introduction/private-me=
+mory-region
+
+>
+> NPCM7XX_GIC_CPU_IF_ADDR is the correct address of "the memory-mapped
+> GIC CPU interface", NPCM7XX_CPUP_BA is the A9MPCORE SCU MMIO address.
+> AFAIU the modelling looks correct.
+>
+> Per your description, the Linux guest tries to access GIC_CPU_IF_ADDR
+> but ends up accessing SCU_ADDR? Maybe the issue is with the
+> arm_boot_info::gic_cpu_if_addr address we pass to the guest? Maybe
+> the secondary reset code is corrupted?
+>
+> static const ARMInsnFixup smpboot[] =3D {
+>     { 0xe59f2028 }, /* ldr r2, gic_cpu_if */
+>     { 0xe59f0028 }, /* ldr r0, bootreg_addr */
+>     { 0xe3a01001 }, /* mov r1, #1 */
+>     { 0xe5821000 }, /* str r1, [r2] - set GICC_CTLR.Enable */
+>     { 0xe3a010ff }, /* mov r1, #0xff */
+>     { 0xe5821004 }, /* str r1, [r2, 4] - set GIC_PMR.Priority to 0xff */
+>     { 0, FIXUP_DSB },   /* dsb */
+>     { 0xe320f003 }, /* wfi */
+>     { 0xe5901000 }, /* ldr     r1, [r0] */
+>     { 0xe1110001 }, /* tst     r1, r1 */
+>     { 0x0afffffb }, /* beq     <wfi> */
+>     { 0xe12fff11 }, /* bx      r1 */
+>     { 0, FIXUP_GIC_CPU_IF }, /* gic_cpu_if: .word 0x.... */
+>
+> Can you check ^^^ this value?
+
+I don't think we use this for npcm7xx:
+
+  static void npcm7xx_write_secondary_boot(ARMCPU *cpu,
+                                           const struct arm_boot_info *info)
+  {
+      /*
+       * The default smpboot stub halts the secondary CPU with a 'wfi'
+       * instruction, but the arch/arm/mach-npcm/platsmp.c in the Linux ker=
+nel
+       * does not send an IPI to wake it up, so the second CPU fails to boo=
+t. So
+       * we need to provide our own smpboot stub that can not use 'wfi', it=
+ has
+       * to spin the secondary CPU until the first CPU writes to the SCRPAD=
+ reg.
+       */
+      uint32_t smpboot[] =3D {
+          0xe59f2018,     /* ldr r2, bootreg_addr */
+          0xe3a00000,     /* mov r0, #0 */
+          0xe5820000,     /* str r0, [r2] */
+          0xe320f002,     /* wfe */
+          0xe5921000,     /* ldr r1, [r2] */
+          0xe1110001,     /* tst r1, r1 */
+          0x0afffffb,     /* beq <wfe> */
+          0xe12fff11,     /* bx r1 */
+          NPCM7XX_SMP_BOOTREG_ADDR,
+      };
+      int i;
+
+      for (i =3D 0; i < ARRAY_SIZE(smpboot); i++) {
+          smpboot[i] =3D tswap32(smpboot[i]);
+      }
+
+      rom_add_blob_fixed("smpboot", smpboot, sizeof(smpboot),
+                         NPCM7XX_SMP_LOADER_START);
+  }
+
+
+>
+> Maybe this code has to be updated for your WFE use case?
+
+In earlier attempts I did drop the wfe in favour of a NOP until I
+figured out why the SEV's were not flowing.
+
+>
+>> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+>> Suggested-by: Arnd Bergmann <arnd@linaro.org>
+>> ---
+>>   hw/arm/npcm7xx.c | 2 +-
+>>   1 file changed, 1 insertion(+), 1 deletion(-)
+>> diff --git a/hw/arm/npcm7xx.c b/hw/arm/npcm7xx.c
+>> index c2bbcd89dbc..c27f149c04a 100644
+>> --- a/hw/arm/npcm7xx.c
+>> +++ b/hw/arm/npcm7xx.c
+>> @@ -492,7 +492,7 @@ static void npcm7xx_realize(DeviceState *dev, Error =
+**errp)
+>>       /* CPUs */
+>>       for (i =3D 0; i < nc->num_cpus; i++) {
+>>           object_property_set_int(OBJECT(&s->cpu[i]), "reset-cbar",
+>> -                                NPCM7XX_GIC_CPU_IF_ADDR, &error_abort);
+>> +                                NPCM7XX_CPUP_BA, &error_abort);
+>>           object_property_set_bool(OBJECT(&s->cpu[i]), "reset-hivecs", t=
+rue,
+>>                                    &error_abort);
+>>=20=20=20
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
