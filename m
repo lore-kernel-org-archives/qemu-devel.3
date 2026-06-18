@@ -4,63 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 142A1CD98E2
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jun 2026 09:40:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88E1FCD98F5
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jun 2026 09:49:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wa9DL-000537-0V; Thu, 18 Jun 2026 05:39:11 -0400
+	id 1wa9N3-0000Zh-Mp; Thu, 18 Jun 2026 05:49:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cp0613@linux.alibaba.com>)
- id 1wa9DG-000506-5r; Thu, 18 Jun 2026 05:39:07 -0400
-Received: from [115.124.30.132] (helo=out30-132.freemail.mail.aliyun.com)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1wa9N1-0000ZL-B1; Thu, 18 Jun 2026 05:49:11 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cp0613@linux.alibaba.com>)
- id 1wa9D8-0007FM-GY; Thu, 18 Jun 2026 05:39:03 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linux.alibaba.com; s=default;
- t=1781775516; h=From:To:Subject:Date:Message-ID:MIME-Version;
- bh=XL9ehYAlIK5xBXPqBRCJ62qfknRHEuXN3NuX5sOY1Uo=;
- b=yc4x5MXFh14hGaSJ62duT3ubJQ+kyqqLM+oAjKRDpUlsQVni5qWXy0FJT2BOFrF0xkfn/jjaE/8EEWlq3Z07XIN7bAdABNmrwxm8mXVVeWgorksERHETShiYuj/f7dkoC8G3k11aTg7jotl0VenedPqdM/MMw+3TedmqXh3ckiE=
-X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R131e4; CH=green; DM=||false|;
- DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033045098064;
- MF=cp0613@linux.alibaba.com; NM=1; PH=DS; RN=17; SR=0;
- TI=SMTPD_---0X56RwMW_1781775515; 
-Received: from DESKTOP-S9E58SO.localdomain(mailfrom:cp0613@linux.alibaba.com
- fp:SMTPD_---0X56RwMW_1781775515 cluster:ay36) by smtp.aliyun-inc.com;
- Thu, 18 Jun 2026 17:38:35 +0800
-From: Chen Pei <cp0613@linux.alibaba.com>
-To: jic23@kernel.org, pbonzini@redhat.com, palmer@dabbelt.com,
- alistair.francis@wdc.com, liwei1518@gmail.com,
- daniel.barboza@oss.qualcomm.com, zhiwei_liu@linux.alibaba.com,
- chao.liu.zevorn@gmail.com, sunilvl@ventanamicro.com, dave.jiang@intel.com,
- alison.schofield@intel.com, imammedo@redhat.com, mst@redhat.com,
- guoren@kernel.org
-Cc: qemu-riscv@nongnu.org,
-	qemu-devel@nongnu.org,
-	linux-cxl@vger.kernel.org
-Subject: [PATCH v2 1/4] hw/riscv/virt: Add CXL support to the RISC-V virt
- machine
-Date: Thu, 18 Jun 2026 17:38:23 +0800
-Message-ID: <20260618093827.3507-2-cp0613@linux.alibaba.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260618093827.3507-1-cp0613@linux.alibaba.com>
-References: <20260618093827.3507-1-cp0613@linux.alibaba.com>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1wa9My-0004Al-UP; Thu, 18 Jun 2026 05:49:11 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
+ t=1781776131; bh=aYiHyvQaiplOZ7i7KVsdnjinCc22US618doJHYvt7Dk=;
+ h=Date:Subject:To:Cc:References:From:In-Reply-To;
+ b=vBEkRRjAoFhtann3rSbXhVaP6sVFsfmhwm58ORNprTykbMGrwZQeEzbnz3wNmgiH2
+ Jb8rdRZAh5quDolfHFK3t4h264F1yCuGyM0m6SeYQx0l9jKPFvVY+8logL+y+JC5En
+ NxauA7DTpMXZlSKx8QHc7MaJcoxfRwOqEKc1kjzNtMETqqnRIK0iRN5bkao20/8Okr
+ H9FMW+8VTCA/QE632mmCbQtxEPhRJ/iAGf+dgDYwXwpv8VZDsCpi7+7nezta/4WsM/
+ u/1wkVGnXZSJL+5NwLwHrpq0gSHjDjxZ1lLPyDkAzzkMPmk1xzqzwMAZ5FwtocmoyX
+ n9xLFO1BFZFzg==
+Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by isrv.corpit.ru (Postfix) with ESMTP id 794EA1B889C;
+ Thu, 18 Jun 2026 12:48:51 +0300 (MSK)
+Message-ID: <61ee7c29-0222-4091-95ce-8156d35cffb9@tls.msk.ru>
+Date: Thu, 18 Jun 2026 12:48:54 +0300
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5] hw/timer/imx_epit: Replace DPRINTF with trace events
+To: Jack wang <163wangjack@gmail.com>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, peter.maydell@linaro.org
+References: <20260617161406.14705-1-163wangjack@gmail.com>
+ <667b7388-0a56-4eca-9590-748039dd2a4a@tls.msk.ru>
+ <F581D203-AACC-48F5-BD00-2C642E198980@gmail.com>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ xsFNBGYpLkcBEACsajkUXU2lngbm6RyZuCljo19q/XjZTMikctzMoJnBGVSmFV66kylUghxs
+ HDQQF2YZJbnhSVt/mP6+V7gG6MKR5gYXYxLmypgu2lJdqelrtGf1XtMrobG6kuKFiD8OqV6l
+ 2M5iyOZT3ydIFOUX0WB/B9Lz9WcQ6zYO9Ohm92tiWWORCqhAnwZy4ua/nMZW3RgO7bM6GZKt
+ /SFIorK9rVqzv40D6KNnSyeWfqf4WN3EvEOozMfWrXbEqA7kvd6ShjJoe1FzCEQ71Fj9dQHL
+ DZG+44QXvN650DqEtQ4RW9ozFk3Du9u8lbrXC5cqaCIO4dx4E3zxIddqf6xFfu4Oa5cotCM6
+ /4dgxDoF9udvmC36qYta+zuDsnAXrYSrut5RBb0moez/AR8HD/cs/dS360CLMrl67dpmA+XD
+ 7KKF+6g0RH46CD4cbj9c2egfoBOc+N5XYyr+6ejzeZNf40yjMZ9SFLrcWp4yQ7cpLsSz08lk
+ a0RBKTpNWJdblviPQaLW5gair3tyJR+J1ER1UWRmKErm+Uq0VgLDBDQoFd9eqfJjCwuWZECp
+ z2JUO+zBuGoKDzrDIZH2ErdcPx3oSlVC2VYOk6H4cH1CWr9Ri8i91ClivRAyVTbs67ha295B
+ y4XnxIVaZU+jJzNgLvrXrkI1fTg4FJSQfN4W5BLCxT4sq8BDtwARAQABzSBNaWNoYWVsIFRv
+ a2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLBlAQTAQoAPhYhBJ2L4U4/Kp3XkZko8WGtPZjs3yyO
+ BQJmKS5HAhsDBQkSzAMABQsJCAcCBhUKCQgLAgQWAgMBAh4BAheAAAoJEGGtPZjs3yyOZSAP
+ /ibilK1gbHqEI2zR2J59Dc0tjtbByVmQ8IMh0SYU3j1jeUoku2UCgdnGKpwvLXtwZINgdl6Q
+ cEaDBRX6drHLJFAi/sdgwVgdnDxaWVJO/ZIN/uJI0Tx7+FSAk8CWSa4IWUOzPNmtrDfb4z6v
+ G36rppY8bTNKbX6nWFXuv2LXQr7g6+kKnbwv4QFpD+UFF1CrLm3byMq4ikdBXpZx030qBL61
+ b7PrfXcBLao0357kWGH6C2Zu4wBnDUJwGi68pI5rzSRAFyAQsE89sjLdR1yFoBH8NiFnAQXP
+ LA8Am9FMsC7D/bi/kwKTJdcZvzdGU1HG6tJvXLWC+nqGpJNBzRdDpjqtxNuL76vVd/JbsFMS
+ JchLN+01fNQ5FHglvkd6md7vO+ULq+r9An5hMiDoRbYVUOBN8uiYNk+qKbdgSfbhsgPURqHi
+ 1bXkgMeMasqWbGMe7iBW/YH2ePfZ6HuKLNQDCkiWZYPQZvyXHvQHjuJJ5+US81tkqM+Q6Snq
+ 0L/O/LD0qLlbinHrcx0abg06VXBoYmGICJpf/3hhWQM4f+B/5w4vpl8q0B6Osz01pBUBfYak
+ CiYCNHMWWVZkW9ZnY7FWiiPOu8iE1s5oPYqBljk3FNUk04SDKMF5TxL87I2nMBnVnvp0ZAuY
+ k9ojiLqlhaKnZ1+zwmwmPmXzFSwlyMczPUMSzsFNBGYpLkcBEAC0mxV2j5M1x7GiXqxNVyWy
+ OnlWqJkbkoyMlWFSErf+RUYlC9qVGwUihgsgEhQMg0nJiSISmU3vsNEx5j0T13pTEyWXWBdS
+ XtZpNEW1lZ2DptoGg+6unpvxd2wn+dqzJqlpr4AY3vc95q4Za/NptWtSCsyJebZ7DxCCkzET
+ tzbbnCjW1souCETrMy+G916w1gJkz4V1jLlRMEEoJHLrr1XKDdJRk/34AqXPKOzILlWRFK6s
+ zOWa80/FNQV5cvjc2eN1HsTMFY5hjG3zOZb60WqwTisJwArjQbWKF49NLHp/6MpiSXIxF/FU
+ jcVYrEk9sKHN+pERnLqIjHA8023whDWvJide7f1V9lrVcFt0zRIhZOp0IAE86E3stSJhZRhY
+ xyIAx4dpDrw7EURLOhu+IXLeEJbtW89tp2Ydm7TVAt5iqBubpHpGTWV7hwPRQX2w2MBq1hCn
+ K5Xx79omukJisbLqG5xUCR1RZBUfBlYnArssIZSOpdJ9wWMK+fl5gn54cs+yziUYU3Tgk0fJ
+ t0DzQsgfd2JkxOEzJACjJWti2Gh3szmdgdoPEJH1Og7KeqbOu2mVCJm+2PrNlzCybOZuHOV5
+ +vSarkb69qg9nU+4ZGX1m+EFLDqVUt1g0SjY6QmM5yjGBA46G3dwTEV0/u5Wh7idNT0mRg8R
+ eP/62iTL55AM6QARAQABwsF8BBgBCgAmFiEEnYvhTj8qndeRmSjxYa09mOzfLI4FAmYpLkcC
+ GwwFCRLMAwAACgkQYa09mOzfLI53ag/+ITb3WW9iqvbjDueV1ZHwUXYvebUEyQV7BFofaJbJ
+ Sr7ek46iYdV4Jdosvq1FW+mzuzrhT+QzadEfYmLKrQV4EK7oYTyQ5hcch55eX00o+hyBHqM2
+ RR/B5HGLYsuyQNv7a08dAUmmi9eAktQ29IfJi+2Y+S1okAEkWFxCUs4EE8YinCrVergB/MG5
+ S7lN3XxITIaW00faKbqGtNqij3vNxua7UenN8NHNXTkrCgA+65clqYI3MGwpqkPnXIpTLGl+
+ wBI5S540sIjhgrmWB0trjtUNxe9QcTGHoHtLeGX9QV5KgzNKoUNZsyqh++CPXHyvcN3OFJXm
+ VUNRs/O3/b1capLdrVu+LPd6Zi7KAyWUqByPkK18+kwNUZvGsAt8WuVQF5telJ6TutfO8xqT
+ FUzuTAHE+IaRU8DEnBpqv0LJ4wqqQ2MeEtodT1icXQ/5EDtM7OTH231lJCR5JxXOnWPuG6el
+ YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
+ ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
+ 3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
+In-Reply-To: <F581D203-AACC-48F5-BD00-2C642E198980@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.30.132 (deferred)
-Received-SPF: pass client-ip=115.124.30.132;
- envelope-from=cp0613@linux.alibaba.com;
- helo=out30-132.freemail.mail.aliyun.com
-X-Spam_score_int: -166
-X-Spam_score: -16.7
-X-Spam_bar: ----------------
-X-Spam_report: (-16.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
- RCVD_IN_DNSWL_NONE=-0.0001, RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
- USER_IN_DEF_SPF_WL=-7.5 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -19
+X-Spam_score: -2.0
+X-Spam_bar: --
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -76,195 +111,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Enable CXL support on the RISC-V virt machine following the same
-approach used by the ARM virt machine:
-- Add PXB and ACPI_CXL Kconfig selections
-- Add CXLState and PCIBus pointer to RISCVVirtState
-- Register CXL machine properties via cxl_machine_init()
-- Create CXL host register region above the PCIe high MMIO region
-- Call cxl_hook_up_pxb_registers() and cxl_fmws_link_targets() at
-  machine_done time
-- Map Fixed Memory Windows above the CXL host register region
-- Add ACPI0017 device in DSDT and build CEDT table in virt-acpi-build.c
+On 18.06.2026 11:04, Jack wang wrote:
+> 
+> 
+>> 2026年6月18日 15:15，Michael Tokarev <mjt@tls.msk.ru> 写道：
+>>
+>> On 17.06.2026 19:14, jack wang wrote:
+>>> Clean up the codebase by removing the outdated DEBUG_IMX_EPIT
+>>> and DPRINTF macros, replacing them with modern QEMU trace events.
+>>
+>> Hi!
+>>
+>> I'm curious, why do you send these patches to me?
+>>
+>> Thanks,
+>>
+>> /mjt
+> 
+> 
+> To be honest,I am quite new to qemu and it is my first time to use git send emall to contribute so I am little confused about exact routing process
+> Last time I submitted a small patch to Peter and he kindly reviewed for me, and he still give me some advice.After I change according to his advice I tried to deliver the updated version to him.Since this patch is just change the #define macros with modern trace so I thought is may also fall under trivial category so I cc'd you as well. I apologize for the confusion and any noise this caused Thanks for your time
 
-Signed-off-by: Chen Pei <cp0613@linux.alibaba.com>
----
- hw/riscv/Kconfig           |  2 ++
- hw/riscv/virt-acpi-build.c | 20 +++++++++++++++++++
- hw/riscv/virt.c            | 40 ++++++++++++++++++++++++++++++++++++++
- include/hw/riscv/virt.h    |  3 +++
- 4 files changed, 65 insertions(+)
+Heh.
 
-diff --git a/hw/riscv/Kconfig b/hw/riscv/Kconfig
-index 2518b04175..ebd0355f09 100644
---- a/hw/riscv/Kconfig
-+++ b/hw/riscv/Kconfig
-@@ -66,8 +66,10 @@ config RISCV_VIRT
-     select VIRTIO_MMIO
-     select FW_CFG_DMA
-     select PLATFORM_BUS
-+    select PXB
-     select ACPI
-     select ACPI_PCI
-+    select ACPI_CXL
- 
- config SHAKTI_C
-     bool
-diff --git a/hw/riscv/virt-acpi-build.c b/hw/riscv/virt-acpi-build.c
-index 413d47d70e..309d64b322 100644
---- a/hw/riscv/virt-acpi-build.c
-+++ b/hw/riscv/virt-acpi-build.c
-@@ -29,12 +29,16 @@
- #include "hw/acpi/aml-build.h"
- #include "hw/acpi/pci.h"
- #include "hw/acpi/utils.h"
-+#include "hw/acpi/cxl.h"
- #include "hw/intc/riscv_aclint.h"
- #include "hw/nvram/fw_cfg_acpi.h"
- #include "hw/pci-host/gpex.h"
-+#include "hw/pci/pci_bus.h"
- #include "hw/riscv/virt.h"
- #include "hw/riscv/numa.h"
- #include "hw/virtio/virtio-acpi.h"
-+#include "hw/cxl/cxl.h"
-+#include "hw/cxl/cxl_host.h"
- #include "kvm/kvm_riscv.h"
- #include "migration/vmstate.h"
- #include "qapi/error.h"
-@@ -503,6 +507,17 @@ static void build_dsdt(GArray *table_data,
-         acpi_dsdt_add_gpex_host(scope, PCIE_IRQ + VIRT_IRQCHIP_NUM_SOURCES * 2);
-     }
- 
-+    if (s->cxl_devices_state.is_enabled) {
-+        Aml *cxl_dev = aml_device("CXLM");
-+        aml_append(cxl_dev, aml_name_decl("_HID", aml_string("ACPI0017")));
-+        Aml *method = aml_method("_STA", 0, AML_NOTSERIALIZED);
-+        aml_append(method, aml_return(aml_int(0x0B)));
-+        aml_append(cxl_dev, method);
-+        build_cxl_dsm_method(cxl_dev);
-+
-+        aml_append(scope, cxl_dev);
-+    }
-+
-     aml_append(dsdt, scope);
- 
-     /* copy AML table into ACPI tables blob and patch header there */
-@@ -910,6 +925,11 @@ static void virt_acpi_build(RISCVVirtState *s, AcpiBuildTables *tables)
-                    s->oem_table_id);
-     }
- 
-+    if (s->cxl_devices_state.is_enabled) {
-+        cxl_build_cedt(table_offsets, tables_blob, tables->linker,
-+                       s->oem_id, s->oem_table_id, &s->cxl_devices_state);
-+    }
-+
-     if (ms->numa_state->num_nodes > 0) {
-         acpi_add_table(table_offsets, tables_blob);
-         build_srat(tables_blob, tables->linker, s);
-diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
-index ce64eaaef7..84b91b4322 100644
---- a/hw/riscv/virt.c
-+++ b/hw/riscv/virt.c
-@@ -55,6 +55,8 @@
- #include "hw/pci/pci.h"
- #include "hw/pci-host/gpex.h"
- #include "hw/display/ramfb.h"
-+#include "hw/cxl/cxl.h"
-+#include "hw/cxl/cxl_host.h"
- #include "hw/acpi/aml-build.h"
- #include "qapi/qapi-visit-common.h"
- #include "hw/virtio/virtio-iommu.h"
-@@ -1259,9 +1261,27 @@ static inline DeviceState *gpex_pcie_init(MemoryRegion *sys_mem,
-     }
- 
-     GPEX_HOST(dev)->gpex_cfg.bus = PCI_HOST_BRIDGE(dev)->bus;
-+    s->pci_bus = PCI_HOST_BRIDGE(dev)->bus;
-     return dev;
- }
- 
-+static void create_cxl_host_reg_region(RISCVVirtState *s)
-+{
-+    MemoryRegion *sysmem = get_system_memory();
-+    MemoryRegion *mr = &s->cxl_devices_state.host_mr;
-+    hwaddr base;
-+
-+    if (!s->cxl_devices_state.is_enabled) {
-+        return;
-+    }
-+
-+    base = virt_high_pcie_memmap.base + virt_high_pcie_memmap.size;
-+    base = ROUND_UP(base, 64 * KiB);
-+
-+    memory_region_init(mr, OBJECT(s), "cxl_host_reg", 64 * KiB * 16);
-+    memory_region_add_subregion(sysmem, base, mr);
-+}
-+
- static FWCfgState *create_fw_cfg(const MachineState *ms, hwaddr base)
- {
-     FWCfgState *fw_cfg;
-@@ -1426,6 +1446,13 @@ static void virt_machine_done(Notifier *notifier, void *data)
-                                      machine_done);
-     MachineState *machine = MACHINE(s);
-     hwaddr start_addr = s->memmap[VIRT_DRAM].base;
-+
-+    cxl_hook_up_pxb_registers(s->pci_bus, &s->cxl_devices_state,
-+                              &error_fatal);
-+
-+    if (s->cxl_devices_state.is_enabled) {
-+        cxl_fmws_link_targets(&error_fatal);
-+    }
-     hwaddr firmware_end_addr;
-     vaddr kernel_start_addr;
-     const char *firmware_name = riscv_default_firmware_name(&s->soc[0]);
-@@ -1663,6 +1690,17 @@ static void virt_machine_init(MachineState *machine)
-             ROUND_UP(virt_high_pcie_memmap.base, virt_high_pcie_memmap.size);
-     }
- 
-+    create_cxl_host_reg_region(s);
-+
-+    if (s->cxl_devices_state.is_enabled) {
-+        hwaddr cxl_base = virt_high_pcie_memmap.base +
-+                          virt_high_pcie_memmap.size;
-+        cxl_base += memory_region_size(&s->cxl_devices_state.host_mr);
-+        cxl_base = ROUND_UP(cxl_base, 256 * MiB);
-+        cxl_fmws_set_memmap(cxl_base, UINT64_MAX);
-+        cxl_fmws_update_mmio();
-+    }
-+
-     /* register system main memory (actual RAM) */
-     memory_region_add_subregion(system_memory, s->memmap[VIRT_DRAM].base,
-                                 machine->ram);
-@@ -1769,6 +1807,8 @@ static void virt_machine_instance_init(Object *obj)
-     s->oem_table_id = g_strndup(ACPI_BUILD_APPNAME8, 8);
-     s->acpi = ON_OFF_AUTO_AUTO;
-     s->iommu_sys = ON_OFF_AUTO_AUTO;
-+
-+    cxl_machine_init(obj, &s->cxl_devices_state);
- }
- 
- static char *virt_get_aia_guests(Object *obj, Error **errp)
-diff --git a/include/hw/riscv/virt.h b/include/hw/riscv/virt.h
-index 18a2a323a3..7d559ac610 100644
---- a/include/hw/riscv/virt.h
-+++ b/include/hw/riscv/virt.h
-@@ -24,6 +24,7 @@
- #include "hw/core/sysbus.h"
- #include "hw/block/flash.h"
- #include "hw/intc/riscv_imsic.h"
-+#include "hw/cxl/cxl.h"
- 
- #define VIRT_CPUS_MAX_BITS             9
- #define VIRT_CPUS_MAX                  (1 << VIRT_CPUS_MAX_BITS)
-@@ -64,6 +65,8 @@ struct RISCVVirtState {
-     struct GPEXHost *gpex_host;
-     OnOffAuto iommu_sys;
-     uint16_t pci_iommu_bdf;
-+    CXLState cxl_devices_state;
-+    PCIBus *pci_bus;
- };
- 
- enum {
--- 
-2.50.1
+I weren't complaining, I just asked for your reasons.
 
+Speaking of trivial patches, I'm not, but qemu-trivial@nongnu.org is,
+and you Cc'ed it too.  Right now I'm receiving 3 copies of every your
+email - sent to me directly, to qemu-devel@, and to qemu-trivial@.
+I can step out of qemu-trivial maintenance any time, or someone can
+help me, - they'll watch qemu-trivial@, not my own email.
+
+I don't know why did you send to Peter directly, either, - well, ok,
+you can if he is listed in the MAINTAINERS file for the file you're
+editing.  But generally it's not him but the output of get_maintainer.pl
+which should be used as the source for where to send emails.
+
+Or if you reply to someone's patch, that too warrants a personal email.
+Or in a few other similar situations.
+
+But I *think* (and I usually do that myself when sending emails) - the
+mailing list (qemu-devel and maybe qemu-trivial) is THE thing,
+get_maintainer.pl is THE thing, and that's about it.  Unless there's a
+special reason to get an attention of particular person.  And this is
+definitely not qemu-specific (the mailing lists are, but every other
+project has one or another mailing list/forum/etc).
+
+Personally I try to not overload other people's mailboxes and instead
+try to make their mail sorting rules work (usually mailing list emails
+gets sorted to a specific folder, and people free to work on their
+projects when they see fit, keeping their inbox free of stuff which is
+also available elsewhere).
+
+Thanks,
+
+/mjt
 
