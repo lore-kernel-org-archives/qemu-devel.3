@@ -4,119 +4,119 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1EEDECD98F2
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jun 2026 12:33:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 440C1CD98F3
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jun 2026 12:33:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1waBvj-0000O0-Qa; Thu, 18 Jun 2026 08:33:11 -0400
+	id 1waBve-0000CK-3T; Thu, 18 Jun 2026 08:33:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1waBvi-0000MK-67
- for qemu-devel@nongnu.org; Thu, 18 Jun 2026 08:33:10 -0400
+ id 1waBvb-0008Tm-Pe
+ for qemu-devel@nongnu.org; Thu, 18 Jun 2026 08:33:04 -0400
 Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1waBvg-0001L2-J0
- for qemu-devel@nongnu.org; Thu, 18 Jun 2026 08:33:09 -0400
+ id 1waBvZ-0001KQ-Jb
+ for qemu-devel@nongnu.org; Thu, 18 Jun 2026 08:33:03 -0400
 Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65IAs23a981802
- for <qemu-devel@nongnu.org>; Thu, 18 Jun 2026 12:33:07 GMT
+ 65IAsMA6982637
+ for <qemu-devel@nongnu.org>; Thu, 18 Jun 2026 12:33:00 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- tI76ZOFfGfMfuGkqeKd1jiLUAC2Yrw/29F+iU+dP5ko=; b=PnggpUEdT/aEV/Vh
- LKXP4az1x578rjbu+70vyn2GJGPNmrYHlslZWfzJrJSUCFZHpIX3m60QolzNdmJO
- NiHz4JhoYLo2BbaUOLUC2lC3LxqGVnPCd41DBwJFAwUOhE1Tq6LAjSZaACH8aWJD
- YauhPwl+edFEAPaEr11HTrMSgFY3A5pZRS1HT06hYduRjxRCb4IA96PE1A/NlkGw
- N7409cc51ENrzLzp86zUyvhygUZdsV0L7GA4MwOxDb8Rf2EcCyd3/0jCXYSGD5ub
- kh6K4rqOiPAHBfVBb2Cmy7/uTSYEK4hn+fIDBv1VuG6tYWTCihmPqhwqQ9s5+b3S
- K/q7Lw==
-Received: from mail-ua1-f70.google.com (mail-ua1-f70.google.com
- [209.85.222.70])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4evdn40p5r-1
+ vUQPzZ/J+oQ2/ytcVfR8rbnQ6dB73FWmxgUq4+klSOI=; b=MyC4qnE7ELWSaYJ/
+ kLUlJA1w+bdGA3PgEcUkpVWivCZZNl9sl4xVg/lovbB3iD5+Hs3gb0TkAG7vNGEh
+ 4+Ny5uLP4Cuz36v7/xuobOWtuhRK3H4+PLrv83Thp42zT6zYEeel2K0XWCtC7p/0
+ 0S9JplScpej3F34xrspCTA5k5wZ8mOhXRRU0GqLIzaynMJWK9PYM8/yBNI0zx/EJ
+ 5PiweTMR5hnohDlZz9C3ahXxVWd2hSdr9HvQ23MVplZAEO+njJu6yISEtbn9fopA
+ 0VfZqwpwTVwN41gAeaYQy3tiSn3r9dMEL/o1NL7e+dGE2jZ5CFCWdlxyBunnApUB
+ 0Wqgng==
+Received: from mail-vs1-f69.google.com (mail-vs1-f69.google.com
+ [209.85.217.69])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4evdn40p5b-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 18 Jun 2026 12:33:07 +0000 (GMT)
-Received: by mail-ua1-f70.google.com with SMTP id
- a1e0cc1a2514c-963eeb6f2baso747866241.0
- for <qemu-devel@nongnu.org>; Thu, 18 Jun 2026 05:33:06 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Thu, 18 Jun 2026 12:33:00 +0000 (GMT)
+Received: by mail-vs1-f69.google.com with SMTP id
+ ada2fe7eead31-6c89de84f33so1384404137.0
+ for <qemu-devel@nongnu.org>; Thu, 18 Jun 2026 05:32:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1781785986; x=1782390786; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1781785979; x=1782390779; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=tI76ZOFfGfMfuGkqeKd1jiLUAC2Yrw/29F+iU+dP5ko=;
- b=Ig2o/iqDwEZ7AU10i8CyNWXLvelAqXmfHS1dkxAqE2WLUNJguHDmPWpyk3pFyN0XJL
- UWU/pMWlzoh5NeAD/Cu0FdZM2uAKD0FhozLTsfDz+T86j9mJ4Qrl0dj4nB4shGuYlZe6
- uQwozOQJYvlCYe4hzUp2R8gyAROH7ldoKfk2BWgk/kKmpe04RmZobcSXYdTzDHGyoPeD
- wkrjYju2qvlGdYS8f9AbI4C/ORuYIIcEq8XSC9USeu6c/CSuy6VAb/JoY4zSKIMXQiQo
- xxeEfs/4cDYOaIT5tCXSjtGh41v+21T91waPrB8Ml+J52S0/hLsrz/WMUv+T2kV4usB1
- UCmA==
+ :reply-to; bh=vUQPzZ/J+oQ2/ytcVfR8rbnQ6dB73FWmxgUq4+klSOI=;
+ b=D6WQKkCghgAn1C9Lv33DZKSkOWOXTKHtoJpA2fJD6MRASQJO9Uc+Aa70FMoZi5FpE6
+ 3J+YUY5dq73NH64+qLTBC6zJ6JgmmL9Q/j1oxQ3uuEKIGq2ofopk8p6Y1lFymgDM9Ejd
+ 38BDX4lZw+NHoLEPdM9PfBG/pQWGIndMJeFSQaOSnbV7TU/LKQYYLBhUFvf8Ifc8rngU
+ vKRFBoqgQbQiz6c4SI+iAhRyD6oHGcUUh52yP+yRGnvhn33I0U5+oSG8ZhVLyhI66Mfe
+ LHTE2MaIFolnU1JJV9SpWXgSFHjO/tK05CJ+bHapvKzfKKf/V19MWVw62d2M9Ze3R3n/
+ hApw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781785986; x=1782390786;
+ d=1e100.net; s=20251104; t=1781785979; x=1782390779;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=tI76ZOFfGfMfuGkqeKd1jiLUAC2Yrw/29F+iU+dP5ko=;
- b=Aq+kEwYuEAjqXj1PcNjOORvaVupqTjrw4Y+RWYe2Olmhw/gby5GFYJNRgo9dWtIDWe
- vMZphMa377AIegMxFS3aogHVzDUdEJ3ATjdnJ+RCj75fx8HKKs7hH9207ySsAnO2I7uM
- A3hqq6cqhXZmgczAwQoOL5stqHynX/pjrp6JsAa514Lw65Rx6F2UOy3whslo/D8H5V9q
- Lonmi5dz5c+uwAvavKJzo+k8/iyjVUBFpl3MAvz/WIOjt5jDVjLHO//u6ZFt6X3KUXrZ
- kX/spgBhPBUlCyqGbuEx7CizE/2tVdd8gaYcgicGrsLizLqM2zUHGxvtiDzm3LRRBY65
- dgng==
-X-Gm-Message-State: AOJu0Yy9TpzrLxuHceXvxInPBi6nv/aNWvVFARgQ3O0weyap8vNQab2G
- kn+oBpyPPOi1tY6P0PADPTrEBeS6X90OsuAMjruRfGDaDDhaveKaoXYUzEg57bu8r9gnTMS3k2+
- aUhtkFeR7FWs1DE6KRXIxjnFDHPKgcIUbcxiimr5GSuVXAiRiRpMFavOoNchcb2Y6rw==
-X-Gm-Gg: AfdE7ckEQasxyOgP8vxa6c2didUjKgrWztfrZBkkLD+pohr/rwww1oGeH0OZY+kZzBw
- LnocBVmUmXgbr5gy3N2lXUOeljsQsPoAb5BCEwxjcdhlFkYSVMjRzl68aX+JJutiEq2Y94nYz3l
- JuA71IKRoAbBH4nCRwiqTpzzEedGf7UhbUBhrB7V0Ua0xeHV5JPLkqI28Dvy86Q/+VT2tqU7bXB
- Dl7RBjkRy02pipTxvN+f6WcVVAd52tjp8dXlGDJffPBxGyOOQvVr58TYXUvEpgpIR64W2qazENO
- 4QZeZ95rqwg0tJy453yfcVVVaZTmmLXrpD0awllYJxflzfyxCjvl9xyCgw8osR5Xx736/yEMK7s
- IFPiGNFPx0I3Lrtf6Jt76qXQbESsq6yzx2ql8Ihn9RAOgOd8Mqqjlgk7kon2AEIOO31Vj
-X-Received: by 2002:a05:6102:50a7:b0:728:89af:8edf with SMTP id
- ada2fe7eead31-72889af9af2mr1370635137.11.1781785985998; 
- Thu, 18 Jun 2026 05:33:05 -0700 (PDT)
-X-Received: by 2002:a05:6102:50a7:b0:728:89af:8edf with SMTP id
- ada2fe7eead31-72889af9af2mr1370610137.11.1781785985624; 
- Thu, 18 Jun 2026 05:33:05 -0700 (PDT)
+ bh=vUQPzZ/J+oQ2/ytcVfR8rbnQ6dB73FWmxgUq4+klSOI=;
+ b=Bjb9AlT/IjiWfSU1VHa0q4da/uo3jOKL5lrw6dXo89jUath4zVVUIqjYOUg5Q5tUiI
+ rGJuk8c7KP4qA1/RB0MOsWAEpTIhLbwroOiDRBtbk4lI3aMOOqphK8ZAsIgG3rIl5g6Y
+ HpkQRfwPXpAM57Ji1nuvH6MVOZG51Kv+SoQuebuCknXagKAw3nlC6BIklzszH1ty4h2K
+ JmoSe0QdLFZKlddGs0ZTzMUU6L9cEhTV0kMZ8xjACrT9oWuh5i9cK+TPXv8/q/4nrT1y
+ RMOFtS7dpfeSu/VPFFmjqr4gpl2KJt3yWmO7CcScF5DdlhXAGiBJzkfBrsHj3pk+C9gZ
+ vTyQ==
+X-Gm-Message-State: AOJu0YxE+NWN41dU5pdP7i9tQzt7jcyqRlH/PBvozMx0sMe+kyTKnqvK
+ ayutg/jkEt3NeN1pS1lVHsbOoJj80v1I8p3EPcv8rmxErh2WeFB3DPgBx6IptoGCDtFASi+T0C7
+ 1TYOjxKw5gCjZud+dnx53ykfwkwKPURVVnaOw48TGG0OyMomG5hWRU+Dw6rz7i+QIjA==
+X-Gm-Gg: AfdE7ckg0tMZqPMHdkDfnJFvj7RQwTuRN4Hw100IDuGYwpZIXG2O8MredkLUVo182k3
+ hJDWzsyJaT95xvTJA34oTBaf7jQ5CW8olORjaiCZYQeGb5l0wMoMvB4lDR5xHb0Eq2SqcnY+vak
+ 68n7g6olcMsi6hR0EncxNAZ+je3dNLYQsNKrsd9G6KmIjWyyHBrdm5eQle6Gffck8Ts2Te2djhP
+ jU/Q1CJO4ZKA6IvB4p7YkUEehz7J7p63O09+peE/rpZ8MF+X0y1vz15e77mnhHBEY/mIPAaH/+6
+ s9lJozJ66pCaLPeNB85VNTMybKMl37dx2QYb68m8jwxTapJceRmqXlXVkKXqhLq1uskgIeG0JpD
+ pBI0iRaaInfo5MO9DXVnr1XHT7CChDLRmMPsoQdBw0CBtOjoBEx+xBzApcr6Ihu8nmSKh
+X-Received: by 2002:a05:6102:2ac4:b0:633:c6c4:b321 with SMTP id
+ ada2fe7eead31-727c6a40c5fmr1927362137.18.1781785979048; 
+ Thu, 18 Jun 2026 05:32:59 -0700 (PDT)
+X-Received: by 2002:a05:6102:2ac4:b0:633:c6c4:b321 with SMTP id
+ ada2fe7eead31-727c6a40c5fmr1927342137.18.1781785978540; 
+ Thu, 18 Jun 2026 05:32:58 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4619fb12edbsm26411723f8f.17.2026.06.18.05.33.04
+ 5b1f17b1804b1-4922fa5120esm255500895e9.8.2026.06.18.05.32.55
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 18 Jun 2026 05:33:04 -0700 (PDT)
+ Thu, 18 Jun 2026 05:32:55 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL 38/48] system/memory: Remove unnecessary CONFIG_USER_ONLY guards
-Date: Thu, 18 Jun 2026 14:28:15 +0200
-Message-ID: <20260618122825.90331-39-philmd@oss.qualcomm.com>
+Subject: [PULL 37/48] exec/cpu-common.h: Avoid including unused
+ exec/page-protection.h header
+Date: Thu, 18 Jun 2026 14:28:14 +0200
+Message-ID: <20260618122825.90331-38-philmd@oss.qualcomm.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260618122825.90331-1-philmd@oss.qualcomm.com>
 References: <20260618122825.90331-1-philmd@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjE4MDExNiBTYWx0ZWRfX8/iCoP0AyBhB
- CGNX2uJuS7uFMDs165VmtLMRnSsJ0gp7vJnq6AbDMoyCYl0TatOs7/8pmJX6NmKHpcJzX5RnqmL
- tCHnidDHt3ur4Oi+lkLz1E/+RRqQRgdSDbTJlbErr+JM+sE0JETpoMjKw9RAPe7TmQetk58q+nn
- JxV4dD2l0CiyEePKrHTuapn2jSvzKLJiZT65DR0/dvgAMlNFlSfu2c4Gh5GIPPCc7qIJdx55NzD
- egco5OAspwTUs4BwHK6mTIEIfHT6KqkVYDUxNrlM2XKpIGK4C3TCIbC2fMSL7/3K5DKtPPj9URI
- PexSDvwixAUbs9RW3eEjE6el1C35qJZEhE+KFSlnXXgJwqswb1BdclhNFbd68cf4WLSWuFs9DqW
- Yk4x5UYWi58eY1do3q5iv0Mg3noWcWusHskb/8GCRSipHimrVNg+/LfRsDXWpYYOFr3eL5WhIjN
- cR6uGQyHuucW/BS4NbQ==
-X-Proofpoint-ORIG-GUID: MryfzSUJ4LHEUmQdcONZU-RoCgs1neqk
-X-Authority-Analysis: v=2.4 cv=FN4rAeos c=1 sm=1 tr=0 ts=6a33e583 cx=c_pps
- a=R6oCqFB+Yf/t2GF8e0/dFg==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjE4MDExNiBTYWx0ZWRfX1HwupbEK/cCp
+ kJKfbnW9vpit+CjdzqijG+BcPGhO/4w6Jdae8pFLPEqkOX6uOmZJ7GV/br8+VqUjua0KObILkxj
+ 3iMnLPXVwBvkN0uq3okvCk7gJdrrADXpMaLDrUlDZ9XFErWK7eMTRYL/JAflu1Ivabn0e8mU12b
+ Lc/IJftvIpvLF0w4Fo5ESlt2CLheOREEx2yJo2Tje0Dmy/VQlOOzgiFPz/8rmEhnRzsULw8Qh+p
+ qzVErzaj24yEDr52GRrsJtD66uSjoh7C/TqQNdr36WW4eyz/8xy7Fi4YDgs9MiVbBQjZ4I3xTQo
+ 6vARcRTkyccFxn4hYo9C2PtpNaQ0k/lTtc1ycIbfiI9nZ/Ie+exErRQqovlFIEnGR55kMIPC7nC
+ zA9gezZvbJG1Bb9652J0PKyBNjUXs8NyHnZvCSWR54sqSfaNmxo2X/9EUts3vAlIvrEMwhU/gl1
+ bIUgH5AeDInHyAHNUvA==
+X-Proofpoint-ORIG-GUID: PFxThUTpxaFuXkGVqdJVEeLXJ9Xr1Nvz
+X-Authority-Analysis: v=2.4 cv=FN4rAeos c=1 sm=1 tr=0 ts=6a33e57c cx=c_pps
+ a=5HAIKLe1ejAbszaTRHs9Ug==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
  a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
  a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22
- a=EUspDBNiAAAA:8 a=KKAkSRfTAAAA:8 a=Cu_OB6cER5A0ZMY7a4UA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=zgiPjhLxNE0A:10 a=TD8TdBvy0hsOASGTdmB-:22
- a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-GUID: MryfzSUJ4LHEUmQdcONZU-RoCgs1neqk
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjE4MDExNiBTYWx0ZWRfXyIzH+5CA7+to
- Ufa7iQSAiLpIiYr22AKWtSNy7Wdyzcl6ZICqnaTg+veS1tw0+xRK7sO98q/eyo9+Tz/HPgSvUCs
- 8MrMhYm9hhNfetUPNAZRu+Pp4DfPkmA=
+ a=EUspDBNiAAAA:8 a=KKAkSRfTAAAA:8 a=9HOtloT3Mt6GOow7qMAA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=gYDTvv6II1OnSo0itH1n:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-GUID: PFxThUTpxaFuXkGVqdJVEeLXJ9Xr1Nvz
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjE4MDExNiBTYWx0ZWRfXxXPvlAH6M9An
+ /8/B6XQdzC39SafXQnU74NHmhe8/1OeFdi6X0tdfoxYkHR7hyu7Fthb6bGMYQzKT6Pi0urMk6WY
+ M3Qc0TmDAd+1jFJkrVKOnMk8dYuAD1o=
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-06-18_01,2026-06-18_01,2025-10-01_01
@@ -150,33 +150,174 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This header is only used when building system units,
-checking for CONFIG_USER_ONLY is pointless.
+Since commit e74781c0888e ("exec/cpu: Extract page-protection
+definitions to page-protection.h") the "exec/cpu-common.h" isn't
+using anything defined in "exec/page-protection.h"; remove it.
+
+Include it in few files where it is currently pulled in indirectly,
+otherwise we'd get:
+
+  linux-user/qemu.h:182:22: error: ‘PAGE_READ’ undeclared
+    182 | #define VERIFY_READ  PAGE_READ
+        |                      ^~~~~~~~~
+  target/loongarch/cpu_helper.c:329:25: error: use of undeclared identifier 'PAGE_READ'
+    329 |         context->prot = PAGE_READ | PAGE_WRITE | PAGE_EXEC;
+        |                         ^
+  target/loongarch/cpu_helper.c:329:37: error: use of undeclared identifier 'PAGE_WRITE'
+    329 |         context->prot = PAGE_READ | PAGE_WRITE | PAGE_EXEC;
+        |                                     ^
+  target/loongarch/cpu_helper.c:329:50: error: use of undeclared identifier 'PAGE_EXEC'
+    329 |         context->prot = PAGE_READ | PAGE_WRITE | PAGE_EXEC;
+        |                                                  ^
+  target/ppc/mmu-hash32.h:98:20: error: use of undeclared identifier 'PAGE_READ'
+     98 |             prot = PAGE_READ | PAGE_WRITE;
+        |                    ^
+  target/ppc/mmu-hash32.h:98:32: error: use of undeclared identifier 'PAGE_WRITE'
+     98 |             prot = PAGE_READ | PAGE_WRITE;
+        |                                ^
+  hw/ppc/ppc_booke.c:39:17: error: use of undeclared identifier 'PAGE_RWX'
+     39 |     tlb->prot = PAGE_RWX << 4 | PAGE_VALID;
+        |                 ^
+  hw/ppc/ppc_booke.c:39:33: error: use of undeclared identifier 'PAGE_VALID'
+     39 |     tlb->prot = PAGE_RWX << 4 | PAGE_VALID;
+        |                                 ^
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20260616153754.93545-2-philmd@oss.qualcomm.com>
+Message-Id: <20260617160426.64461-6-philmd@oss.qualcomm.com>
 ---
- system/memory-internal.h | 2 --
- 1 file changed, 2 deletions(-)
+ include/exec/cpu-common.h     | 1 -
+ linux-user/qemu.h             | 1 +
+ target/ppc/mmu-hash32.h       | 1 +
+ hw/ppc/ppc_booke.c            | 1 +
+ linux-user/arm/elfload.c      | 1 +
+ linux-user/hppa/elfload.c     | 1 +
+ linux-user/x86_64/elfload.c   | 1 +
+ target/arm/tcg/cpregs-at.c    | 1 +
+ target/loongarch/cpu_helper.c | 1 +
+ target/ppc/cpu_init.c         | 1 +
+ 10 files changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/system/memory-internal.h b/system/memory-internal.h
-index 0066ffdffb6..c7573a68b5e 100644
---- a/system/memory-internal.h
-+++ b/system/memory-internal.h
-@@ -14,7 +14,6 @@
- #ifndef MEMORY_INTERNAL_H
- #define MEMORY_INTERNAL_H
+diff --git a/include/exec/cpu-common.h b/include/exec/cpu-common.h
+index d1a04025363..7eb45a95b6c 100644
+--- a/include/exec/cpu-common.h
++++ b/include/exec/cpu-common.h
+@@ -10,7 +10,6 @@
  
--#ifndef CONFIG_USER_ONLY
- static inline AddressSpaceDispatch *flatview_to_dispatch(FlatView *fv)
- {
-     return fv->dispatch;
-@@ -57,4 +56,3 @@ static inline MemOp devend_memop(enum device_endian end)
- }
+ #include "qemu/thread.h"
+ #include "hw/core/cpu.h"
+-#include "exec/page-protection.h"
  
- #endif
--#endif
+ #define EXCP_INTERRUPT  0x10000 /* async interruption */
+ #define EXCP_HLT        0x10001 /* hlt instruction reached */
+diff --git a/linux-user/qemu.h b/linux-user/qemu.h
+index 07fe8016282..fc5d7973021 100644
+--- a/linux-user/qemu.h
++++ b/linux-user/qemu.h
+@@ -6,6 +6,7 @@
+ 
+ #include "user/abitypes.h"
+ #include "user/page-protection.h"
++#include "exec/page-protection.h"
+ 
+ #include "syscall_defs.h"
+ #include "target_syscall.h"
+diff --git a/target/ppc/mmu-hash32.h b/target/ppc/mmu-hash32.h
+index bfea03ea872..c6e2c60db19 100644
+--- a/target/ppc/mmu-hash32.h
++++ b/target/ppc/mmu-hash32.h
+@@ -3,6 +3,7 @@
+ 
+ #ifndef CONFIG_USER_ONLY
+ 
++#include "exec/page-protection.h"
+ #include "system/memory.h"
+ 
+ bool ppc_hash32_xlate(PowerPCCPU *cpu, vaddr eaddr, MMUAccessType access_type,
+diff --git a/hw/ppc/ppc_booke.c b/hw/ppc/ppc_booke.c
+index 052c8c931ae..6f0cad1c752 100644
+--- a/hw/ppc/ppc_booke.c
++++ b/hw/ppc/ppc_booke.c
+@@ -24,6 +24,7 @@
+ 
+ #include "qemu/osdep.h"
+ #include "target/ppc/cpu.h"
++#include "exec/page-protection.h"
+ #include "exec/target_page.h"
+ #include "hw/ppc/ppc.h"
+ #include "qemu/timer.h"
+diff --git a/linux-user/arm/elfload.c b/linux-user/arm/elfload.c
+index fef61022a3d..13b589ea2c5 100644
+--- a/linux-user/arm/elfload.c
++++ b/linux-user/arm/elfload.c
+@@ -2,6 +2,7 @@
+ 
+ #include "qemu/osdep.h"
+ #include "qemu.h"
++#include "exec/page-protection.h"
+ #include "loader.h"
+ #include "user-internals.h"
+ #include "target_elf.h"
+diff --git a/linux-user/hppa/elfload.c b/linux-user/hppa/elfload.c
+index 3354e1b840d..2ebb9924f19 100644
+--- a/linux-user/hppa/elfload.c
++++ b/linux-user/hppa/elfload.c
+@@ -1,6 +1,7 @@
+ /* SPDX-License-Identifier: GPL-2.0-or-later */
+ 
+ #include "qemu/osdep.h"
++#include "exec/page-protection.h"
+ #include "qemu.h"
+ #include "loader.h"
+ #include "target_elf.h"
+diff --git a/linux-user/x86_64/elfload.c b/linux-user/x86_64/elfload.c
+index 5914f76e833..49a6f6180e0 100644
+--- a/linux-user/x86_64/elfload.c
++++ b/linux-user/x86_64/elfload.c
+@@ -2,6 +2,7 @@
+ 
+ #include "qemu/osdep.h"
+ #include "qemu/error-report.h"
++#include "exec/page-protection.h"
+ #include "qemu.h"
+ #include "loader.h"
+ #include "target_elf.h"
+diff --git a/target/arm/tcg/cpregs-at.c b/target/arm/tcg/cpregs-at.c
+index 1c819c1cdb2..d6d5b73430a 100644
+--- a/target/arm/tcg/cpregs-at.c
++++ b/target/arm/tcg/cpregs-at.c
+@@ -4,6 +4,7 @@
+  */
+ 
+ #include "qemu/osdep.h"
++#include "exec/page-protection.h"
+ #include "cpu.h"
+ #include "cpu-features.h"
+ #include "internals.h"
+diff --git a/target/loongarch/cpu_helper.c b/target/loongarch/cpu_helper.c
+index 7f0e64a8739..123cad3d930 100644
+--- a/target/loongarch/cpu_helper.c
++++ b/target/loongarch/cpu_helper.c
+@@ -11,6 +11,7 @@
+ #include "system/tcg.h"
+ #include "cpu.h"
+ #include "accel/tcg/cpu-mmu-index.h"
++#include "exec/page-protection.h"
+ #include "exec/target_page.h"
+ #include "internals.h"
+ #include "cpu-csr.h"
+diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
+index d25f69f13ba..a02187ce5af 100644
+--- a/target/ppc/cpu_init.c
++++ b/target/ppc/cpu_init.c
+@@ -40,6 +40,7 @@
+ #include "qemu/cutils.h"
+ #include "disas/capstone.h"
+ #include "fpu/softfloat.h"
++#include "exec/page-protection.h"
+ #include "exec/watchpoint.h"
+ #include "helper_regs.h"
+ #include "internal.h"
 -- 
 2.53.0
 
