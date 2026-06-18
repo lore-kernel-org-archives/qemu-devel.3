@@ -4,90 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0169CD98F0
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jun 2026 08:05:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA345CD98ED
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jun 2026 08:19:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wa7jh-0002j9-Ly; Thu, 18 Jun 2026 04:04:29 -0400
+	id 1wa7xD-0004PO-A9; Thu, 18 Jun 2026 04:18:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <163wangjack@gmail.com>)
- id 1wa7jf-0002ho-Cp
- for qemu-devel@nongnu.org; Thu, 18 Jun 2026 04:04:27 -0400
-Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <163wangjack@gmail.com>)
- id 1wa7je-0000XY-10
- for qemu-devel@nongnu.org; Thu, 18 Jun 2026 04:04:27 -0400
-Received: by mail-pl1-x62b.google.com with SMTP id
- d9443c01a7336-2c6b3f71648so8779295ad.2
- for <qemu-devel@nongnu.org>; Thu, 18 Jun 2026 01:04:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1781769864; x=1782374664; darn=nongnu.org;
- h=to:references:message-id:content-transfer-encoding:cc:date
- :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=bLAhpCXb8CR70BZayKJv189+g663L+Sf0BEOB19GJfg=;
- b=SCA0m+yStDdFa+XflFXIY8WiKT+BNnpyyzmNvdgUB2uRIEwQ4pd4BeT8ZSy9Xsu/lj
- w8j7cxmV1OYHHS6fSNI1iiuiVHGdR7LF6KSHqQFEGnkQAb52fc0eGKqzHnHwY8HzuZEZ
- SLRd5zGlofRiEDg8/vjAHA6+XgJmoEwfPjf6PZ2i7LFtJKZ1sWQ0jCe76+fyGRlcU5cH
- A3CdUUidg8sLyhYTVAYeAO/hQ/85phK5P/J6roe+/SUn/LAD1dhzcAL+hWCe52+jKj1M
- UPtSafbxXNcThRKSXh57e0ZpFS8bygnhmayYRwdHK/0QP7cXmK8aXiWh2LEalD6zUhVF
- 622w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781769864; x=1782374664;
- h=to:references:message-id:content-transfer-encoding:cc:date
- :in-reply-to:from:subject:mime-version:x-gm-gg:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=bLAhpCXb8CR70BZayKJv189+g663L+Sf0BEOB19GJfg=;
- b=ExqtnrRFBo+Wo8U5grAhHj+ONOGjC690FZ/pMeiL39JFWvHdMHmdbKO29cOiAKRvPQ
- 52GSeUQnCuVQiNkBO8zTZK+BIi7g3ly4DWwG3SE+nkFpS0yD0K5Iy80cJdVAZIL7OC1P
- HOwsC89d/oaOWXxYXoxTtfaZ6zGd00n+SianDQscmP/yjg4XLWyWXPHb/EOf8wUqsEOF
- r2xEQCz4M4l/WcOCgdmzmsYaQfg63s6+AsdKSIni0HqGkZxUjCRxhZyGnPDBKrET3U6B
- 6T3FolAG/PGy0crCcT1nlVbr5bhGQXDWlYxQprpSmJI9YZZKJ5bhhhQA5hKM3pYwhvGD
- 0laA==
-X-Gm-Message-State: AOJu0YyPUKGfSoININUpXJZwyaWMlACRfydovY7kgOkeYFsqqLODRi6r
- /3DqNZJpo6NW2tZnVd6cDLOH/tDEDrk2uA7ebzOz5NnFov17S6ghtbKg
-X-Gm-Gg: AfdE7clnPzNjqxU6d8psThMUEAKj4BLxkteiAcPdLuwzCmVJI6+bYVN+neLfVjKGEmw
- LuKNvlksEKIDVWhw+nuzEao93YzlY2AsQ2eMeD62KUx1yJrjT69LI7y5QC1TMMIhufup/AC+5xJ
- T0Wwbo44reYGw4xjCSfqe2zHTGj+1eRVFKWIj8Ubsul6SOxH0qp6C0vDtqMw6CIAVT6L/EJ1dmG
- 8Xhzu2Ko7uYzc96G2VkiT7DK06X4EX4GCT9JE+GPImYCtSAfgdE2ckAFjDPXWeNCz/HKGUK78qz
- elX1g9noFnZYdUR4qjDIFk7HQQIYIzYJTzR5XtZxdi9EhPOBa/0mePTISWLrIdmOYFhDIk2bMTq
- KUG5PYNZwf4kkwFlVdOIUtig7CjlrFbN2o+qxDJHRkkYiNAXP2ABGt8l1LJsseVtNIfKkVqFMrr
- U/BrB8xVTJOZ0S6Luf6llh
-X-Received: by 2002:a17:903:950:b0:2c6:b816:43ba with SMTP id
- d9443c01a7336-2c6bc21ee45mr77387985ad.21.1781769864406; 
- Thu, 18 Jun 2026 01:04:24 -0700 (PDT)
-Received: from smtpclient.apple ([212.135.211.99])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2c433557c47sm191794745ad.79.2026.06.18.01.04.21
- (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Thu, 18 Jun 2026 01:04:23 -0700 (PDT)
-Content-Type: text/plain;
-	charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.600.51.1.1\))
-Subject: Re: [PATCH v5] hw/timer/imx_epit: Replace DPRINTF with trace events
-From: Jack wang <163wangjack@gmail.com>
-In-Reply-To: <667b7388-0a56-4eca-9590-748039dd2a4a@tls.msk.ru>
-Date: Thu, 18 Jun 2026 16:04:03 +0800
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wa7xA-0004PG-S6
+ for qemu-devel@nongnu.org; Thu, 18 Jun 2026 04:18:24 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wa7x9-0005f7-DY
+ for qemu-devel@nongnu.org; Thu, 18 Jun 2026 04:18:24 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1781770701;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=9Mje5Jy9zIGSCFWg5m9wY2cI1SZhzyP+oMyLjT7eImE=;
+ b=br6ovlMG2giijzrhESTGwBnv53rmnkWP18pRKrxd7PwSKeLC9KA5/cbTCNigydV7eWrciS
+ +wXCcCGViwzubXXSCOZ414GjBcPXzgxWj3ScoZiBm37YAigPvD3710Wsroek+eABPyoJbf
+ 9ejCR8z/9B2P8yyfKDQWrkZKoRAZt3I=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-586-spM73e0QMVe0dj_hNZsDYQ-1; Thu,
+ 18 Jun 2026 04:18:16 -0400
+X-MC-Unique: spM73e0QMVe0dj_hNZsDYQ-1
+X-Mimecast-MFC-AGG-ID: spM73e0QMVe0dj_hNZsDYQ_1781770695
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9C34E1956096; Thu, 18 Jun 2026 08:18:14 +0000 (UTC)
+Received: from redhat.com (unknown [10.44.49.28])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 71113180058D; Thu, 18 Jun 2026 08:18:11 +0000 (UTC)
+Date: Thu, 18 Jun 2026 09:18:07 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: marcandre.lureau@redhat.com
 Cc: qemu-devel@nongnu.org,
- qemu-arm@nongnu.org,
- peter.maydell@linaro.org
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <F581D203-AACC-48F5-BD00-2C642E198980@gmail.com>
-References: <20260617161406.14705-1-163wangjack@gmail.com>
- <667b7388-0a56-4eca-9590-748039dd2a4a@tls.msk.ru>
-To: Michael Tokarev <mjt@tls.msk.ru>
-X-Mailer: Apple Mail (2.3864.600.51.1.1)
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
- envelope-from=163wangjack@gmail.com; helo=mail-pl1-x62b.google.com
-X-Spam_score_int: -13
-X-Spam_score: -1.4
-X-Spam_bar: -
-X-Spam_report: (-1.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- FROM_STARTS_WITH_NUMS=0.738, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Christian Brauner <brauner@kernel.org>, devel@lists.libvirt.org,
+ Markus Armbruster <armbru@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ "Dr. David Alan Gilbert" <dave@treblig.org>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@mailo.com>
+Subject: Re: [PATCH v2 23/35] qemu-options: document new monitor-hmp and
+ monitor-qmp objects
+Message-ID: <ajOpv-0AMLozKHUL@redhat.com>
+References: <20260610123415.2883603-1-berrange@redhat.com>
+ <20260610123415.2883603-24-berrange@redhat.com>
+ <178112600376.209622.16416561470304910231.b4-review@b4>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <178112600376.209622.16416561470304910231.b4-review@b4>
+User-Agent: Mutt/2.3.2 (2026-04-26)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 8
+X-Spam_score: 0.8
+X-Spam_bar: /
+X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -101,36 +92,69 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Thu, Jun 11, 2026 at 01:13:23AM +0400, marcandre.lureau@redhat.com wrote:
+> On Wed, 10 Jun 2026 13:34:03 +0100, Daniel P. Berrangé <berrange@redhat.com> wrote:
+> > diff --git a/qemu-options.hx b/qemu-options.hx
+> > index 96ae41f787b..031417b79d2 100644
+> > --- a/qemu-options.hx
+> > +++ b/qemu-options.hx
+> > @@ -5709,6 +5719,34 @@ SRST
+> >      they are specified. Note that the 'id' property must be set. These
+> >      objects are placed in the '/objects' path.
+> >  
+> > +    ``-object monitor-hmp,id=id,chardev=chardv_id,readline=on|off``
+> 
+> chardev_id
+> 
+> > +        Set up a monitor running the Human Monitor Protocol,
+> > +        connected to the chardev ``chrid``.
+> 
+> chardev_id
+> 
+> > +
+> > +        The ``id`` parameter is a unique ID that can be used
+> > +        to dynamically delete the monitor at runtime.
+> 
+> Maybe update the doc at last patch of the series?
 
+Yes, I'll move it to the end.
 
-> 2026=E5=B9=B46=E6=9C=8818=E6=97=A5 15:15=EF=BC=8CMichael Tokarev =
-<mjt@tls.msk.ru> =E5=86=99=E9=81=93=EF=BC=9A
->=20
-> On 17.06.2026 19:14, jack wang wrote:
->> Clean up the codebase by removing the outdated DEBUG_IMX_EPIT
->> and DPRINTF macros, replacing them with modern QEMU trace events.
->=20
-> Hi!
->=20
-> I'm curious, why do you send these patches to me?
->=20
-> Thanks,
->=20
-> /mjt
+> 
+> > +
+> > +        The ``readline`` parameter, which defaults to ``on``,
+> > +        controls whether the monitor provides interactive
+> > +        prompts
+> 
+> .
+> 
+> > +
+> > +    ``-object monitor-qmp,id=id,chardev=chardev_id,pretty=on|off``
+> > +        Set up a monitor running the QEMU Monitor Protocol,
+> > +        connected to the chardev ``chrid``.
+> 
+> chardev_id
+> 
+> > +
+> > +        The ``id`` parameter is a unique ID that can be used
+> > +        to dynamically delete the monitor at runtime. Note
+> > +        that monitors created using the historical syntax
+> > +        will be allocated IDs following the pattern ``monNN``.
+> 
+> "qmpcompatN" and "hmpcompatN"
+> 
+> -- 
+> Marc-André Lureau <marcandre.lureau@redhat.com>
+> 
 
-
-To be honest,I am quite new to qemu and it is my first time to use git =
-send emall to contribute so I am little confused about exact routing =
-process
-Last time I submitted a small patch to Peter and he kindly reviewed for =
-me, and he still give me some advice.After I change according to his =
-advice I tried to deliver the updated version to him.Since this patch is =
-just change the #define macros with modern trace so I thought is may =
-also fall under trivial category so I cc'd you as well. I apologize for =
-the confusion and any noise this caused Thanks for your time
-Wang
+With regards,
+Daniel
+-- 
+|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+|: https://libvirt.org          ~~          https://entangle-photo.org :|
+|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
 
 
