@@ -4,139 +4,155 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4EA92CD98ED
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jun 2026 17:58:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D168CD98F2
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jun 2026 18:06:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1waGzu-0003I9-Pr; Thu, 18 Jun 2026 13:57:50 -0400
+	id 1waH83-0006ES-QB; Thu, 18 Jun 2026 14:06:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@virtuozzo.com>)
- id 1waGzt-0003HC-21; Thu, 18 Jun 2026 13:57:49 -0400
-Received: from mail-norwayeastazlp170130007.outbound.protection.outlook.com
- ([2a01:111:f403:c20f::7] helo=OSPPR02CU001.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1waH7v-0006DV-OG
+ for qemu-devel@nongnu.org; Thu, 18 Jun 2026 14:06:10 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@virtuozzo.com>)
- id 1waGzq-0001A5-U6; Thu, 18 Jun 2026 13:57:48 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=g76YpKV14qF45AbiwM0w/s9PMxwgrzs0e/UWVd10vfuphwZaPWcE2Vgda1GFMLrA1DgNfTsr1GApy2Jv1YxLKkCwjih6db7C+sZn457dJnSdc98slUxSfxZkmhN6JQXV8to0nm8Ha77O8uQe5GeoFrCZvLxpNsFAawOPX9f8bSJHP4SrN4O9DCbQYgJHLn7/SBP82ccTsUc69rAf7/dDtJReo+MSEgXmgZvazK+nIlL4ACtewMryyQjAEblQooHaBRRSdkyPbla4+c7IY2B/nVXemaE4h+YKrSH1XKZYbS9BvRnh5vn2ecf1HRk/wD423p96w//4qVRkEvADU9znAQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=8LQN3trPcR9WP19RW9bcVm+AEzDktiei8K3aECTMp0U=;
- b=OAF6IMpT2pTrU0BGT1TVMwUTzhb+/kvDsY5y83xqOPMUnmxrA7O/EC88xcvyhMexrr9LuB13ssJNw3Tn+fwY/w78UAsIzWm5yMbYbza4iixeHFv73dZkLiWt44WzUgYEd4ygUNA+w/GBo6Tv+rSelj9i7zpGBfCmyTtWAQJ5EMrN2RfekWpLlJUl/e4Jcivv4LKHNmCma4DfVu3hIpIChHDAGCgw0EoBCGF0oYwC/b3lPGFpdDBHtpJoXrsxm/pXFcPlCoBuXIp/nV8cuJ+vxzXhWXyI6zgwPW7jzK3E9PVy+uW0i3yux9ZN3Q9yN0PLuD4QuE47U4Do83b+deIyQg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=virtuozzo.com; dmarc=pass action=none
- header.from=virtuozzo.com; dkim=pass header.d=virtuozzo.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=virtuozzo.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=8LQN3trPcR9WP19RW9bcVm+AEzDktiei8K3aECTMp0U=;
- b=viM3o05nKkqvFLV1PX1m4PYhhC21j3ua2OzMnJ7UPV3I4PvMal4U88H/Oj4bgp1m+H/6iuqB/eqbaY7w9oTjiy117gca4ZVQ3sG9YTxrKIZtyB/bb88HrfB2lrlIxvICIxhdZ9hxGjSyHvp5ov4y77ldETpytjUUpyO9+9lnb+hHrw5I/Vagx869jsRSyb0yr3ZNjrHJPNbweN0M/n4jNZN54fzAYFfxfmao023zuLJTRECYqLit1OE0o77rE9cTjb2FXgXo4jKkhtwKxM+83Kb2BFBRPv0YX9baD3ZZXQOyMKm9dEXZSfMutXQpPcBS98Ce3pcdcyn4MVgJQHSFwA==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=virtuozzo.com;
-Received: from AM9PR08MB5892.eurprd08.prod.outlook.com (2603:10a6:20b:2dd::16)
- by AS8PR08MB6232.eurprd08.prod.outlook.com (2603:10a6:20b:296::21)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.139.11; Thu, 18 Jun
- 2026 17:57:40 +0000
-Received: from AM9PR08MB5892.eurprd08.prod.outlook.com
- ([fe80::94bb:633f:1f55:4bbd]) by AM9PR08MB5892.eurprd08.prod.outlook.com
- ([fe80::94bb:633f:1f55:4bbd%2]) with mapi id 15.21.0139.009; Thu, 18 Jun 2026
- 17:57:40 +0000
-Message-ID: <39dcf93e-7c83-477f-8676-f9f44f7974ed@virtuozzo.com>
-Date: Thu, 18 Jun 2026 19:57:39 +0200
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 0/1] coroutine: fix lost wakeup in qemu_co_sleep_wake()
-To: "Denis V. Lunev" <den@openvz.org>, qemu-devel@nongnu.org
-Cc: qemu-block@nongnu.org, qemu-stable@nongnu.org,
- Kevin Wolf <kwolf@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>
-References: <20260610115850.2410566-1-den@openvz.org>
-Content-Language: en-US
-From: "Denis V. Lunev" <den@virtuozzo.com>
-In-Reply-To: <20260610115850.2410566-1-den@openvz.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: VIUP296CA0021.AUTP296.PROD.OUTLOOK.COM
- (2603:10a6:800:34e::13) To AM9PR08MB5892.eurprd08.prod.outlook.com
- (2603:10a6:20b:2dd::16)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1waH7u-0004GN-5V
+ for qemu-devel@nongnu.org; Thu, 18 Jun 2026 14:06:07 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1781805964;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=cq4K4fxUQWoZMHVBA/HfN09drEgut7BXBhEr/ahJZqc=;
+ b=DhoS40tV+xVT1lT+OkWramLxmS7L8gq5P8jKlU0pRVjNa+ZV3htLfrslS9aYSG3stAaKY6
+ BFviu84naHWA46R9gThJNO91j2n15j+DbI4yEzNOk8kG9unjrLTEPMbYB/Cxat+xagVXhc
+ c0RObH3w8BbGy9uBkANDMqI/3E3hRRc=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-424-JIdZLBwoNumK7_PbAAOiBQ-1; Thu, 18 Jun 2026 14:06:02 -0400
+X-MC-Unique: JIdZLBwoNumK7_PbAAOiBQ-1
+X-Mimecast-MFC-AGG-ID: JIdZLBwoNumK7_PbAAOiBQ_1781805962
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-490b0682d2fso10657365e9.0
+ for <qemu-devel@nongnu.org>; Thu, 18 Jun 2026 11:06:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1781805961; x=1782410761; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+ bh=cq4K4fxUQWoZMHVBA/HfN09drEgut7BXBhEr/ahJZqc=;
+ b=IJwlIOnRxlVP3N/C7UMx/plhXqP8Upm10VLp97vKDPDXLALfvo+lmfaf1ZdwpKyffI
+ G6+9at2ROvlWP3uXGk1H3bohj04ZsANULvOJEoADE9yZ2tlVjPOnqCRhcvV0WUKEtKTa
+ 93kav6lf+A+v3Af2woBLim5TCw5nqZCbLvd463skfK7hOas7v9HEnQMb8/jauedvY0sH
+ KLigLdkrifDdCVvIXs0xSB7DfXu76i+RI+VeWU/Liq5COWQ6LeQzMofWZBPOcMR23psZ
+ G2XE2xHsSJrKAoRAfTU5V+weO14zfZezAOEnL2oYlcTgde8kuu2XpPEv0FAumSzpycwv
+ tcUw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1781805961; x=1782410761;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=cq4K4fxUQWoZMHVBA/HfN09drEgut7BXBhEr/ahJZqc=;
+ b=gAOPpn/YXX2olaY3IzGT4dtcfp+gjgyMZLvASKTcEkEQ7ip32gPIJNKTq99AvQUJnU
+ yxEkrnWwDSso/U/6Lioz8lFu9nGHKHWu27q79R7krQ9q8PlZ04F/96TjTEURNK8wmWE/
+ 45L0xSnc52LtIFtSmWwK7nVXono/B5krww6wrsboZz2rU/eCkAxL4lNUJpKHpUrwZTdr
+ bGh6v24x+BI9PSx50hVz7dAnQY3AXSKwy36wrsgnbLzCZULKjmoFHJhrjIP/KnAcFANm
+ s1/pZJaULO/x031okJzaz06//Ix3/rU9WmNWRgBSTjuRnAYT9cnYXRVCCx0vy7upzOix
+ 795g==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ+tY+pssmVRrDfaGhjS+tSZxkWW81yj4aon2q6qME9ZeZ8xIye1Eoj+7JBYpHtem1j4S7VpkSVmdrB1@nongnu.org
+X-Gm-Message-State: AOJu0YxhArbpunLAr8hyYE4+PwIJSZrT98SXW8wOeS0HqNA/WRBUqrZH
+ Z1cCoOt5+Y2p6NAsNFjbfOH4M+9wnSi2JZ0GNuECba0DChHuFlj/7OPJNCC3fbJ49zomFyicOri
+ kcfj0IeNQv39qljem4vk30vbb0kHqYMeztHVQguM7K21rLx/70IiWR+z1
+X-Gm-Gg: AfdE7clMgWJZ6QDShZqzv5M7QwWjV+TBqoniqz7S44TKaPUsbVMhW52D20dBHrxli51
+ b+QxPmeR5b0Xq2pNh4/23lCmGE+PIGerguXDKJIxrxuG1nJUsXP7P2ChMcw31XL4GqrkXfqSOyL
+ D3C5XQ56AOJapg4SiDbyMlbeaiMNR1GUOTEeNmFkfax0zHf7qTfV+LHT/jPt6I8VqKSXeStvKX+
+ S3kBBbyS3a2jusg+5n62VvsuC6BRVlbjSri7e53PimoOc5mqqMuxSGYRPAw3QZnTO74vvoEcBlU
+ 2XQf8LPcMuY36rQ9akdbhvT68xuC/MeuvzOhVkZATp6E2pqn+62wPf9N/NXKxPJpRuMTFffiPwz
+ TMW9yVbA=
+X-Received: by 2002:a05:600c:5588:b0:490:58ef:cea7 with SMTP id
+ 5b1f17b1804b1-4923f578dffmr7974525e9.22.1781805961703; 
+ Thu, 18 Jun 2026 11:06:01 -0700 (PDT)
+X-Received: by 2002:a05:600c:5588:b0:490:58ef:cea7 with SMTP id
+ 5b1f17b1804b1-4923f578dffmr7974165e9.22.1781805961297; 
+ Thu, 18 Jun 2026 11:06:01 -0700 (PDT)
+Received: from [192.168.0.9] ([47.64.114.89]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4923fc47720sm12441445e9.0.2026.06.18.11.05.59
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 18 Jun 2026 11:06:00 -0700 (PDT)
+Message-ID: <dd2ce90e-0969-4b58-bf92-22a7a822cd10@redhat.com>
+Date: Thu, 18 Jun 2026 20:05:58 +0200
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: AM9PR08MB5892:EE_|AS8PR08MB6232:EE_
-X-MS-Office365-Filtering-Correlation-Id: 1a1c5868-087f-4ada-ffa0-08decd6316f5
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|366016|376014|10070799003|23010399003|1800799024|18002099003|22082099003|56012099006|6133799003;
-X-Microsoft-Antispam-Message-Info: yw1xR+r8046jrxTLrfnZVIV7lcqOXE+26CppPBeFi78bsg0VXkXRntxHZarTLgYB8ZNUFdwH/aJ106t6Ydy/duPklBvLgYleXGc+ymFo/TjKBWpKV84aTbcG9DuEPknZNk2xVQVsP41qLwM5x4v7DvyGPcwQ6B2J3y9mBvvCbUUNDhtWQO72Wrx26V3q7zH05IAYWJLDw/cOy/KSsj+ZFvLu9s3Iq8gkeTrL8Pr27BV2wG/tRHxwXcZGdPfLjtL8hyQGEAkQsxddX0o4xwCqChKv4mkmqrUeGaJsPMV5yoJAJMa5EBeHjrNNZgqwcAlAVNkZYz0rUoW2TrkQcO6j8Y0l4W6cWYqjM00JNJf0ahAAB/gy4rpEjGf4tTdzXuIfbFUKWcPtJaZM9i0P2yZDNjXlNhtZs4TMhr9cUKqPbJB0+vr0GgvnMESXY0PMFy5I49tqtI0irPd1bsq4M/RqQCZHxychm3KN3ENDxA9fwa6qRvF99gpKFxVz7LO/8UNOgRk0Ii4Jc4NEixGzXMmGmuzDRbqj0KrF6KDGScGdWlUJuPBbTyFaiY5Banfice0B7SVRZDdTohkc3gblawu/frD2Bj4htIrvAURICqOvGZbQiNqpf2rdGK6lKxqOUpAjvH7tKGhvr2ARSqmerGEHli2BOWKKm4OodStyf15BN0tGvhtnc1vUXlTPDloirrx6
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:AM9PR08MB5892.eurprd08.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(376014)(10070799003)(23010399003)(1800799024)(18002099003)(22082099003)(56012099006)(6133799003);
- DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 2
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?cEdneC9lSk9aMHIzd2MrTjlLbVFuTFhTRk9ZQVVuVUpiMmh2NFJIZFVoM2hT?=
- =?utf-8?B?dWdDYTN5cHQwcDVFNEZzUmpMWm5RVWtqdmFlQVVsUk5YSEYrWE9YVzVuK0tx?=
- =?utf-8?B?RFZmb1ZCRmVnTXgrS2RObUxia2N3ZFc0NXBjTkFxVEtrcmpVN3NLeGp6TnV4?=
- =?utf-8?B?bzFud20wYVBnaEVUSTdrL2tQQWxPSnllemxTeUZvVzgyMWdiZ2N1enVHSE9O?=
- =?utf-8?B?MFR3dVBiS09JWkNTU01QcGNCcnllVDZacWNEeUFaTEE5K3hYVmpWRC9SK3do?=
- =?utf-8?B?bFlvdlA2cEVVYXZ4eWZBT3hON09XY3h4ZDhGSDF5TXgva1V0alBwQjZvRk9j?=
- =?utf-8?B?WG00cVNxUlNuYzRUb2JidFB0Q0tkOE1SQUZBQ1Z5Y3Q0eDMvOC9SUEM1emJU?=
- =?utf-8?B?Qk4wb1VOTUt1Tnk0ZmFEazhxMnZSWS9BTTdEcTZ2aHJvblhhNkQyUGpOL01R?=
- =?utf-8?B?RHk0bEhQZlMyS1dXczdKdXUrK1F0SWdydm42K1p0SmdEeEJwbzhOZDlLalZO?=
- =?utf-8?B?WkRoR3AyNE0xRm43dUNGUHFhWnp1MXU3OVowK25tVFFSZjd1cjFtc1UvRmRE?=
- =?utf-8?B?bWliUDhTajROZ1l4dXYzdmhCYVNMYmc1TVRoQnY0YzBSWjJZWFJ2akh2a0Q1?=
- =?utf-8?B?VHRNS1BBeXNsLys2RzhRc3k0UjhwM0lES1NWcUJHZHB6T1RhM0NaKzU0cXpx?=
- =?utf-8?B?SFNxcXIyTnZndi8rL2tGWDd3Q2lOVDBIdThlVXh2ZHVjZk9jNDZ3N1ZQdUZ3?=
- =?utf-8?B?RkhoREFMcFNKSE9TVGdhS2dpNlUvdGlhRWU1UW16ZWt1K1hmcDRBWmJmUmY2?=
- =?utf-8?B?YU5La2FMdFhLS0c0VDFNT2JDTDk3WWsrc2VESHl5SGpNaWxuU05GTXl0b3Qw?=
- =?utf-8?B?WmNVazFobjZRRmh1cXZxbGw1ZU5sWHU5UVF2SDRzdnRHSXg5UWF0T2V5cEpq?=
- =?utf-8?B?T3pBT3RHZ1FUKzduYUp5Umt2bXppbzlBbUV0MkljMUorQnVJd2dJZXV1eTZh?=
- =?utf-8?B?M3B0Mm10dGlTL21uMkpJUUJRcDdLcFBsay8yMnp6bTBNVXVJcTBlTzNBTm1R?=
- =?utf-8?B?cFAxM2Nhb3lPYk9UdTNQUEVDdTR5VDFNNjhOSEhNZCtCTDUxdzRIODQ5RWNK?=
- =?utf-8?B?b3djdzQyNDgzTDYySG5uNWg4OVBXd3NqTDBSZjRoZlZMaGxCOG85SUdTd0Fu?=
- =?utf-8?B?YXBOczFoYWl3aC9JQ1ZZeTNwTjhnMzNHYWE3cC9EZjBFejhKS1QySEpJZmRW?=
- =?utf-8?B?dFRwOTN6c01mK3F0MVN1VDlaSmNqSmZ5ajl3UHdzZ24wU1hYc0tLOUhaaVQ5?=
- =?utf-8?B?ck5ZenNRK0dNUUt4OUxacG9JSTlRVFBMTGtkV3FZczVKbHZpbm0wbkhMME9z?=
- =?utf-8?B?OTEwVCtsbE5ZTEt5eW1JT2FkMElhM2ZJNFlTQVc1Q2xXTUo1T3g0Y2VWT2xP?=
- =?utf-8?B?ZkovQWJoVGE5aU5KU0s2NW5IMDcrbGw1TjdMb1ZrcVVCUlExUW15ejBrd1R1?=
- =?utf-8?B?STR5aVV0amk3WUN1c1F6dVhPWGQ4M3BaSnNNTXNobm1scUxPNHBaUnZyc3Vq?=
- =?utf-8?B?cVVQTytjMVBJQnc5Q0JhY05SQ3YxN25KcU5abHNGQ0ZJMmVTQit1VHgvZmph?=
- =?utf-8?B?dzJYdHdvK0VlRU9QNXc3YTF3bnJOLzB5dndGb09wbVN6SWhldjZOQnUzc2FI?=
- =?utf-8?B?ZExPSTBLZE5Gd3NkejZWYzF3Ulh2MnNPYmNhb2ZKR0dLR2RWM0xsaHhodXNh?=
- =?utf-8?B?Q0xsNDlyYVlRVHVLd09NeGphelRiUm5pWDV1Y0pPM043UnNBekt5TEtNVUJZ?=
- =?utf-8?B?RGRydXFjZFZzYkNGMWNRaGFXYXVGckNYOXVYeE9CL00zUHBWMnJvemFFaWZD?=
- =?utf-8?B?VHF5cnVrTUdFUDJGOUNWNTJWWDkxeFNUOG9tQVk4TVNKQlEvaUQ1bE0xVHJh?=
- =?utf-8?B?aHc4QmFXU0VqYVFCbHRaOUw3NWRtTlZvTmhIc2VCenZiK0FlTkJhYXUySzZa?=
- =?utf-8?B?Z0V0QzBQQlkwS0pBVFRQeFkxcEszRGpJTnZkRldqZXd2a1FDT1B1ZUZOUTUv?=
- =?utf-8?B?bmVSYlZZbVA4cVdnUnR6cUdINXFVUitpVDNGLzVGRXB3bGtZd3ZDTzFnd3hi?=
- =?utf-8?B?SC9ua1MrcmRVa3VSNkt0QUdLSy9lNmhzLzc4bjVPeUlOYWJaMWVLci9jcGgy?=
- =?utf-8?B?a21KOXZPTVN3V29JdC96TWpDcFJ4UjJ0aTJTR3Jtcm1VU3doVitDcEJ2Z2d3?=
- =?utf-8?B?dysyY0ZSaWZxZnZNMUc3b1JvMWwxUncweTNqa2ZFSnJqTXNpaVBQUys4YVJh?=
- =?utf-8?B?WDIwaGh6ZHQ2N2FpQlBsbjRyMFVVT3g4bFdkY1ZvYmRsMFlEYi9heWJEb2RI?=
- =?utf-8?Q?KvFb5Bkc8nevG6eC8n+y7Pa+x5hK2OwVJzwSd8K+bX0DC?=
-X-MS-Exchange-AntiSpam-MessageData-1: rRpi/eMquAegaA==
-X-OriginatorOrg: virtuozzo.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 1a1c5868-087f-4ada-ffa0-08decd6316f5
-X-MS-Exchange-CrossTenant-AuthSource: AM9PR08MB5892.eurprd08.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 18 Jun 2026 17:57:40.5963 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 0bc7f26d-0264-416e-a6fc-8352af79c58f
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: koKKMeuZMzdcfR4qpGs41OH1mrxOfRGBbiS4YMQ5+x4jLpYflkc4T1xqsNbqU9RFTpyfrHEEKwlDjHIFdM6Eug==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: AS8PR08MB6232
-Received-SPF: pass client-ip=2a01:111:f403:c20f::7;
- envelope-from=den@virtuozzo.com;
- helo=OSPPR02CU001.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [qemu-web PATCH v2 0/3] switch to GitLab confidential issues for
+ security disclosure
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Mauro Matteo Cascella <mcascell@redhat.com>
+References: <20260618132058.1044341-1-berrange@redhat.com>
+Content-Language: en-US
+From: Thomas Huth <thuth@redhat.com>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20260618132058.1044341-1-berrange@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -152,77 +168,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/10/26 13:58, Denis V. Lunev wrote:
-> Changes since v2
-> ----------------
->   * Drop the redundant fast-path check in qemu_co_sleep(); the publish
->     cmpxchg already consumes a pending wake (Kevin).
->   * Add a deterministic regression test, no threads or timers needed.
->
-> Changes since v1
-> ----------------
->   * Patch 1 (graph-lock) applied as e3082ab3b3, dropped here.
->   * Fix the qemu_co_sleep_wake() primitive instead of working around
->     it in qcow2 (Kevin).
->
-> Problem
-> -------
->
-> The qemu shutdown / blockdev-close path can deadlock permanently on
-> upstream master. The main thread enters ppoll(timeout=-1) holding
-> BQL, no other thread has a wake source that points back at it, and
-> qemu has to be SIGKILLed. The hang has no timeout -- it is a hard
-> deadlock, not a slow operation; behind BQL, RCU, VCPUs and every
-> iothread path that needs BQL stall with it.
->
-> The race exposed in qcow2's cache_clean_timer cancellation path:
->
->   ppoll -> aio_poll -> cache_clean_timer_del_and_wait -> qcow2_close
->
-> The race diagram and the exact stale-state read are in the patch's
-> commit message.
->
-> Reproducer
-> ----------
->
-> Environment: 4-vCPU VM guest, kernel 6.12.x, upstream master at
-> de5d8bfd61. On modern bare-metal the window is narrow enough that the
-> hang rarely reproduces without a VM -- a VM guest under full CPU
-> saturation is what makes the timing reliable.
->
->     # reproducer
->     stress-ng --cpu "$(nproc)" --timeout 0 &
->     for r in $(seq 20); do
->         timeout 120 ./build/tests/qemu-iotests/check -qcow2 iothreads-create
->     done
->     kill %1
->
-> With `stress-ng --cpu $(nproc)` the race surfaces. With
-> `stress-ng --cpu $(($(nproc) - 1))` or without a stressor it does
-> not reproduce reliably across 20 iterations.
->
-> The new unit test reproduces the same lost wakeup deterministically,
-> without a VM or a stressor.
->
-> Results
-> -------
->
-> Same guest, 20 iterations of the loop above, master at de5d8bfd61:
->
->   without this patch:  reproduces reliably (qcow2_close in ppoll)
->   with this patch:     20/20 PASS
->
-> Signed-off-by: Denis V. Lunev <den@openvz.org>
-> Cc: Kevin Wolf <kwolf@redhat.com>
-> Cc: Hanna Reitz <hreitz@redhat.com>
->
-> Denis V. Lunev (1):
->   coroutine: fix lost wakeup in qemu_co_sleep_wake()
->
->  include/qemu/coroutine.h    | 17 +++++++++---
->  tests/unit/test-coroutine.c | 53 +++++++++++++++++++++++++++++++++++++
->  util/qemu-coroutine-sleep.c | 53 ++++++++++++++++++++++++++-----------
->  3 files changed, 104 insertions(+), 19 deletions(-)
->
-ping
+On 18/06/2026 15.20, Daniel P. Berrangé wrote:
+> I previously raised the idea of using GitLab issues for security
+> disclosures:
+> 
+>    https://lists.gnu.org/archive/html/qemu-devel/2026-05/msg04582.html
+> 
+> This patch proposal formalizes that into a concrete proposal:
+> 
+>   * qemu-security is entirely discontinued
+> 
+>   * "confidential" GitLab issues are to be used
+
+Thanks, pushed now.
+
+(if there are more refinements needed, please provide patches on top)
+
+  Thomas
+
 
