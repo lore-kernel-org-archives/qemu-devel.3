@@ -4,142 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10EC3CD98F2
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jun 2026 20:23:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B88ECCD98ED
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jun 2026 20:23:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1waJFs-0007FF-A9; Thu, 18 Jun 2026 16:22:28 -0400
+	id 1waJGG-0007K9-79; Thu, 18 Jun 2026 16:22:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1waJFr-0007F7-8r
- for qemu-devel@nongnu.org; Thu, 18 Jun 2026 16:22:27 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1waJFo-0000Un-EZ
- for qemu-devel@nongnu.org; Thu, 18 Jun 2026 16:22:27 -0400
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65IIgmPW2558862
- for <qemu-devel@nongnu.org>; Thu, 18 Jun 2026 20:22:21 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- xyp6pwAlOeQrB4xOenV+lka09rPZhRa8esgiIGykv9Y=; b=S7pT2Fn/I62dWCd7
- SFrA74U07GzOIm0MEuDuL5/x0CJGT935BGtHvaokQJPzRd1xqn1X/Z69vQq8bKdZ
- fv9ERsJlcM/odlIwWLp/YB4Fc09do7tZi0mGYn41EYCiLIi1ZO8Ifb99s9SKqkE0
- Ldz/k22B3z5L1cRtLY6qSJC2luStcmAkUgD8lhBRUjygiHahJfUqJC9NUsSVkRSC
- W1JjRzPGynZpWZcIi88ZjqkwsAYGn3PnLXLZ9j4F3PY9125uDUPFIdt2sVqdGK8I
- xZ23teYJ3KzJVyVVUyOJeDN1V6CjMNXOdGU6WYiW4Ux5isNLzZ0vxAOlqDP1mOBX
- gKAG4w==
-Received: from mail-vk1-f197.google.com (mail-vk1-f197.google.com
- [209.85.221.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4evp6s8gwn-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 18 Jun 2026 20:22:21 +0000 (GMT)
-Received: by mail-vk1-f197.google.com with SMTP id
- 71dfb90a1353d-5bbdeb06f62so979932e0c.3
- for <qemu-devel@nongnu.org>; Thu, 18 Jun 2026 13:22:21 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1waJGD-0007J4-PQ
+ for qemu-devel@nongnu.org; Thu, 18 Jun 2026 16:22:49 -0400
+Received: from mail-pj1-x1034.google.com ([2607:f8b0:4864:20::1034])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1waJGB-0000dn-ED
+ for qemu-devel@nongnu.org; Thu, 18 Jun 2026 16:22:49 -0400
+Received: by mail-pj1-x1034.google.com with SMTP id
+ 98e67ed59e1d1-36d98b68d68so870251a91.2
+ for <qemu-devel@nongnu.org>; Thu, 18 Jun 2026 13:22:46 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1781814165; cv=none;
+ d=google.com; s=arc-20240605;
+ b=VbvrzGUFJpmGnf0LC5YEKXAPGwi1xG2R71dV74o5HmhX3GuRfbuz0hhB3JGxhclX/M
+ LQ1H2x7KBtahPpEZT+eb3Bgp6R/VRPUwweOYrJUD7vwYocDALye7IiImPoT1kMyk/yoh
+ 7+4rCN1subBjSHN6fO4GoI0mZZLuOHR7NYRrkCkGD8oA6yo2X4xZ74LRQNGCGP4Yvy/p
+ MCcsuQ4s48f2pANN8cv7KtI1HBnUOCKLXK9o6gxp0Q9hmSDZcXUwvhgUjulxVgMGVCM3
+ pcnaZiBc+YSTh2wqtb/KDxb3NaI6oChIG/XNL9sn0jtboIdTOAP/ymUFgQLvIuVFspfl
+ oxwQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=UfNuH5pJVizuzKvyZGBlvIKwaqygf6p+GwN+r09o/os=;
+ fh=WHHJyMq/rBQXPpelCo1tKk6BX4mpcsLXFtKgbYR63yI=;
+ b=YwPwGrB8+lwQybOX4K7rk+4wb1Bp3P/ERWgEV9j4/auDa2H+Ln1ReLG76wTondXqop
+ dG9XXipMTD4qFiqg/xJeU5chSgh/0tBJF7ui2/n4J0GKKvAZaxq2lbVUiq5/q1VpWVm2
+ XrTOXFrc+j7FNR8NE/EfBR6BmFKxJ6XAzppXKTXENgsn8qWCcnNJEFlidQrly/4a24aG
+ lsPGQC42TPZuLBSyaJ9ImL1J0E9dOD6TZLQYPsoVxP6iXakj7qvFo1vWhQZbz3PzrPEL
+ CroJ+sqbneg4v2HXP54D7hi87FmmHI1oRR6j03W1yFZhLzER4D6+JziPR8stIhw7eZ24
+ IoOw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1781814141; x=1782418941; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=xyp6pwAlOeQrB4xOenV+lka09rPZhRa8esgiIGykv9Y=;
- b=Vwv3kAc54Tze9H514OjkRhKVL1rJvHlyKzKDiOUWZp4nj/PkVK5SROxTjafg4M2PGO
- PuOH8OWKByzdD+/5uYwIv2QsuzIlCpt3zzA3qKVTxQwQnQ/C060AuLQVWdPkS61Joxpt
- 3WeL0KlHhVc1o0iU/cFgsG4no++uJrBwveQWuxq7wpnYdvF7AKjzD8CXIGcSquGDaoIr
- +L4swy7tbNG0/97OG3okMXE/t9vDhklyVFr4kbv2BZa8f48Z7u0mIQN9l58Qqt3OZvqA
- 6cRhoWfHF0ncdiVonO+OPsRw7iejJV3wv3Goc+sqknnCEGCWhly/ihEoTu6x1K0rN5Vh
- xvtg==
+ d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1781814165; x=1782418965;
+ darn=nongnu.org; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=UfNuH5pJVizuzKvyZGBlvIKwaqygf6p+GwN+r09o/os=;
+ b=sWnxkj2TsKcVK1UIfPkYK04HUHsESoLuU+ETV5Iaj/Pfb6DFuKwJYrGH2qNF7es+24
+ 5d1fft7qFL4AZ3hJC3an078eFQyFO+hNaDIZOgbUuDyQ3D6++5Kp1881vJbwRikkjIdA
+ 7bh3PPC9nEVVfv1YHV2bkPU+0O2c4YmWEXnO95Z5ReSn+nFYk4Ite09DHdih79aCY4nW
+ 52ezGg1M2oi4ywVA8S/qK6c1OaM9Gjg4/v7sA9seKO9fPbuE9Csrk2PcR+pXfCgNKLMo
+ QvYo9zKGVR+jRgLEx4K7b8wsPBBHPegEKhY6MPFqHoiJl/J/zoqZNYTw10UAc/ZRPXtv
+ hSqA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781814141; x=1782418941;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=xyp6pwAlOeQrB4xOenV+lka09rPZhRa8esgiIGykv9Y=;
- b=j4L+YDsnLbRPOvRAer2aJdSd1WglL+u5Av0Nv7rPI9Lwow9jA1qRNMYsWg+M1MHmeD
- /s5QGhKTpFgl3lr4ANYvssPpRpAZhikA8oO2QDk1j0hbvXtBXRTcjU/9z1AoUot/hxwT
- K8tSMGTTOACC7U2Id0aY4lW8aGDcoQdklD+M4F6YrMX82T2NSWQKKouXTQoVetchrPz4
- emY60XLliZSJsv1o4XACfdqehPdmNiXcugze9kulVipssLiSJnz4MPddW4l8Q9+hYF/f
- cC5irn0uUBPFMsqN5zWYHeDkIeeexOZi6ddVRoMkf3Matd63NI82Jg+SpquDCZ0qbZ3E
- qbhQ==
+ d=1e100.net; s=20251104; t=1781814165; x=1782418965;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=UfNuH5pJVizuzKvyZGBlvIKwaqygf6p+GwN+r09o/os=;
+ b=hw2xzjqf8RxsAPqN0z6P1isC5hHYEbD55NubrQ8Z9qrl7Nkp93ji1rqxhlMrJ5AAXm
+ uxUF2ULpZS62erAwkM9fp6wQ7JtcTnSQ2mC3JjIcic0nmMluXbTc6ZXOCqXeUfltrCYJ
+ P2AjPKLXryg8QBRWRBb4sASYfvG4eVwqzSXjhjjEFPRavDWlJUo+/kmktOYzsggTVdG8
+ lw/VYTTusKEsmzbxC3uMyqeJwN4ZMsemhAdo4z3CMxqoE+1eVx9SRYrWKqnfYCLHb4kG
+ yTNoZAf4pmEN33VE2JbAsW+Uvo6m689xExxOos3PdD23cYWyv3YiNg041WzY2a1rpRt8
+ ZdEQ==
 X-Forwarded-Encrypted: i=1;
- AFNElJ/koWf6JI0mPw03++GhVfKIxeTjBGFaw3628JI2VtKnnEtZSIJBan/mPmz4q2s9q873HdS9KbxqcIhV@nongnu.org
-X-Gm-Message-State: AOJu0YxURYSxD6E3Vw8NzPFXB59IQtU3iOlgv6M/Srjo5jKUk/6V/WdW
- 2nWrXKcWGltOHF2jSbz/NP1uVPk9mDJkl0q2ZhNr/OivvCuG00IMFfbrgkIzreQLbQdURi4ZDoO
- sWaWdExwN6Xlp054hgZcIg51epS4GdfN1A0YfgdeGenuzOYpoJj9ZoUmSmg==
-X-Gm-Gg: AfdE7ckYGvbDdp5wbkQ1nXh4pLNb/TZY+9I9UWDxne+mNoTb9dhQzgdre8usbvGgeij
- HUomu1QBou8eJEB3YBQ67JNXUA8WuU1GEs5TNNbrVmHRwiI+Yzur3ijO7f4Nm3wZaq6YH2knW+l
- u44L/TwY+3tmgSP9CdugZ3vyP5TmixcLPXpi75QDt/2yAjfNQXdljhMagnW9x6g+Vv4XZRdIEvM
- DchMoxqkQY4htzXG0JBP5/L78fms3pp0mCStC/J0ydPbGmai2VjVhK28s2wLDK9cFnxXKuC2EAf
- DtIbi6FKadQ7BVMY+f7lYAInqRdFeE25HUsYuDiE+Jt3yKdyaaQUM1yXSKBvvgULI5mXu0XeRJG
- J1jW76ymO7zMFqM2SOS/MBc6qx432n19fMxt+gHKn3lfCmQaKyDO/jBgyvAQhHg==
-X-Received: by 2002:a05:6122:922:b0:55b:d85:5073 with SMTP id
- 71dfb90a1353d-5bbebbcf5f0mr218184e0c.4.1781814140885; 
- Thu, 18 Jun 2026 13:22:20 -0700 (PDT)
-X-Received: by 2002:a05:6122:922:b0:55b:d85:5073 with SMTP id
- 71dfb90a1353d-5bbebbcf5f0mr218173e0c.4.1781814140415; 
- Thu, 18 Jun 2026 13:22:20 -0700 (PDT)
-Received: from [192.168.69.213] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49240084928sm12251825e9.15.2026.06.18.13.22.19
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 18 Jun 2026 13:22:19 -0700 (PDT)
-Message-ID: <768aa959-290f-46c8-aa6f-e724592831c9@oss.qualcomm.com>
-Date: Thu, 18 Jun 2026 22:22:19 +0200
+ AFNElJ9qQusjUNdIRsLZZdrZ9O8Z7xfVGPOvgFmTkcd5nlxhIlhVy9RAf//Y9Ds6G/26gK7jTREyjLifC8aS@nongnu.org
+X-Gm-Message-State: AOJu0Yw01003HuuLVjkZ9liZzKOxEN3YOLrNxQJawwRnQzIiuXU6XHs7
+ T09Qm03tFqggnKMItFKtxlhIJoDofmQsVuuewaWDtJJpnJ57pRiYmymH3/gr+522a2PrjfMD2+M
+ H6PGIq7vH8EJl5FXmkI2yP0A61nV2+fVrNCnQkp5Syg==
+X-Gm-Gg: AfdE7cmA2MYZY7kCipDPlnebIgNoxZYQA+cNUhwJ5d6nUcIJB7NqQUXrQZ+MmBjrYmH
+ no2jI0NKnOL0P3WMD6RaNhQopajl2nAM83QwuYQXqPKXbNJ17+r1R3UV7FvQxOdZRO5vsxhwv8P
+ mkUT5OizeiNcUD1MgtZdlEjpClz7ruuY388DhZ3uSVvL+WlQVm7xEtMliE+ICngN1UaCpUhGKpU
+ OYg3fNFvRaoD6XzI/PZp1LbpAOS92ypwaUPe1GI54u3C5cg1xFETbrDg0DvydO1znFda2J4cb4=
+X-Received: by 2002:a17:90b:2692:b0:372:b4a1:21d8 with SMTP id
+ 98e67ed59e1d1-37d15de28a7mr1260503a91.13.1781814165236; Thu, 18 Jun 2026
+ 13:22:45 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 10/13] common-user: Implement read_self_maps for FreeBSD
-Content-Language: en-US
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: Helge Deller <deller@gmx.de>, Warner Losh <imp@bsdimp.com>
 References: <20260618195520.589907-1-richard.henderson@linaro.org>
- <20260618195520.589907-11-richard.henderson@linaro.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <20260618195520.589907-11-richard.henderson@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-GUID: 0v3dyH8fmESn_0Cqr7pW53PwWAddkofS
-X-Proofpoint-ORIG-GUID: 0v3dyH8fmESn_0Cqr7pW53PwWAddkofS
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjE4MDE4NiBTYWx0ZWRfX91cO+9tkwTPm
- L3HZ2xm9+z318iIdNxmySeiSIumDWZSqn7Yjgay/wrTu7nxLNkNqbHc4Wi8D0fqJzsc0SnxvXQe
- dTPerb7rVNOjJ5MWLdTu97pZH+8Qg+JMoYKC2RZFxZUrHqg41TGVLrPx1JwRfPfXYLsy41TsmB7
- 9GgZv8Qv21egr0aQZZ5qMGqFnukOWFkx0qbMRP4gS0zXgj9VynKcaxe/9u2Q0WKmXeYF5urKZc6
- VOVwTqiPG2Y5tQ1atjiv35RHyLML7xdA11EWHKKZMypovX0xOwFsZhU+keGy3YBYYSZkJAw29es
- YyjfN+sjgtn9/GqYMs62ZKb0iV7CpFjz6IelxgJg/yRCDs5InBnzMP8ea6k+3t5UPffcVUSuBw8
- foV6Wf+N5HaHwa7tUhd8CHYVR6FFNfhBJbOt9OzV3XrmW/ndnl0gphYNk/zSb7iL2tdHM5Cc9Jx
- AjfMMdRHPz4BZfINJ+A==
-X-Authority-Analysis: v=2.4 cv=H6LrBeYi c=1 sm=1 tr=0 ts=6a34537d cx=c_pps
- a=JIY1xp/sjQ9K5JH4t62bdg==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
- a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
- a=7Qk2ozbKAAAA:8 a=KKAkSRfTAAAA:8 a=4ab70ZgC3rs_dxIxScAA:9 a=QEXdDO2ut3YA:10
- a=tNoRWFLymzeba-QzToBc:22 a=1lyxoWkJIXJV6VJUPhuM:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjE4MDE4NiBTYWx0ZWRfXypGkU1gAkQdV
- 6JH43gAxdQgsGpan81E6bymALZsk7rzQmwZzcC0Dc9Mbn0C4+MIFFyG+iJWPNEAtkpC0UZryLHF
- 93vANy3BRJbHdCPbeUh6yoUgJIiAe30=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-18_03,2026-06-18_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 priorityscore=1501 phishscore=0 lowpriorityscore=0
- impostorscore=0 spamscore=0 suspectscore=0 malwarescore=0 clxscore=1015
- bulkscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2606180186
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ <20260618195520.589907-13-richard.henderson@linaro.org>
+ <7d9acb4e-d1da-45da-a42a-60340d0dfb58@oss.qualcomm.com>
+In-Reply-To: <7d9acb4e-d1da-45da-a42a-60340d0dfb58@oss.qualcomm.com>
+From: Warner Losh <imp@bsdimp.com>
+Date: Thu, 18 Jun 2026 16:22:34 -0400
+X-Gm-Features: AVVi8Ccjxw7m5BksqB1MVTplva6qyKph8jBfVcwn3nwEzDAyG8JQCrOvw-UXOGk
+Message-ID: <CANCZdfpW9JNemJVDXEt2+h_XDfBv8wFDR68GNf0xkxzZHn9Aow@mail.gmail.com>
+Subject: Re: [PATCH v3 12/13] bsd-user: Use probe_guest_base
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>
+Cc: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Content-Type: multipart/alternative; boundary="0000000000005ffe3906548cf037"
+Received-SPF: none client-ip=2607:f8b0:4864:20::1034;
+ envelope-from=wlosh@bsdimp.com; helo=mail-pj1-x1034.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -155,91 +114,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 18/6/26 21:55, Richard Henderson wrote:
-> Reviewed-by: Helge Deller <deller@gmx.de>
-> Reviewed-by: Warner Losh <imp@bsdimp.com>
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->   common-user/selfmap.c   | 41 ++++++++++++++++++++++++++++++++++++++++-
->   common-user/meson.build |  5 +++++
->   2 files changed, 45 insertions(+), 1 deletion(-)
-> 
-> diff --git a/common-user/selfmap.c b/common-user/selfmap.c
-> index a1b88dee66..151d066801 100644
-> --- a/common-user/selfmap.c
-> +++ b/common-user/selfmap.c
-> @@ -9,6 +9,10 @@
->   #include "qemu/osdep.h"
->   #include "qemu/cutils.h"
->   #include "user/selfmap.h"
-> +#ifdef __FreeBSD__
-> +#include <libutil.h>
+--0000000000005ffe3906548cf037
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Out of curiosity, what is libutil for?
+On Thu, Jun 18, 2026 at 4:12=E2=80=AFPM Philippe Mathieu-Daud=C3=A9 <
+philmd@oss.qualcomm.com> wrote:
 
-> +#include <sys/user.h>
-> +#endif
->   
->   IntervalTreeRoot *read_self_maps(void)
->   {
-> @@ -80,9 +84,44 @@ IntervalTreeRoot *read_self_maps(void)
->       g_strfreev(lines);
->       g_free(maps);
->   
-> +    return root;
-> +#elif defined(__FreeBSD__)
-> +    int n = 0;
-> +    struct kinfo_vmentry *entries = kinfo_getvmmap(getpid(), &n);
-> +    IntervalTreeRoot *root;
-> +
-> +    if (!entries) {
-> +        return NULL;
-> +    }
-> +    root = g_new0(IntervalTreeRoot, 1);
-> +
-> +    for (int i = 0; i < n; ++i) {
-> +        struct kinfo_vmentry *k = &entries[i];
-> +        size_t path_len = strnlen(k->kve_path, sizeof(k->kve_path)) + 1;
-> +        MapInfo *e = g_malloc0(sizeof(*e) + path_len);
-> +
-> +        e->itree.start = k->kve_start;
-> +        e->itree.last = k->kve_end - 1;
-> +
-> +        /* ??? The rest of these fields are only used in linux-user. */
-> +        e->dev = k->kve_vn_fsid_freebsd11;
-> +        e->inode = k->kve_vn_fileid;
-> +        e->offset = k->kve_offset;
-> +        e->is_read = k->kve_protection & KVME_PROT_READ;
-> +        e->is_write = k->kve_protection & KVME_PROT_WRITE;
-> +        e->is_exec = k->kve_protection & KVME_PROT_EXEC;
-> +        e->is_priv = k->kve_flags & KVME_FLAG_COW;
-> +        if (path_len) {
-> +            e->path = memcpy(e + 1, k->kve_path, path_len);
-> +        }
-> +
-> +        interval_tree_insert(&e->itree, root);
-> +    }
-> +
-> +    free(entries);
->       return root;
->   #else
-> -    return NULL;
-> +# error
->   #endif
->   }
->   
-> diff --git a/common-user/meson.build b/common-user/meson.build
-> index 831a7273fb..5e041de55e 100644
-> --- a/common-user/meson.build
-> +++ b/common-user/meson.build
-> @@ -10,3 +10,8 @@ user_ss.add(files(
->     'safe-syscall-error.c',
->     'selfmap.c',
->   ))
-> +
-> +if host_os == 'freebsd'
-> +  libutil = cc.find_library('util', required: true)
-> +  user_ss.add(libutil)
-> +endif
+> On 18/6/26 21:55, Richard Henderson wrote:
+> > Merge the PT_LOAD loop with the PT_INTERP loop, as the XXX
+> > comment suggests.  Pass the probed range to probe_guest_base.
+> >
+> > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> > ---
+> >   bsd-user/elfload.c | 37 +++++++++++++++++++------------------
+> >   bsd-user/main.c    | 39 ++++-----------------------------------
+> >   2 files changed, 23 insertions(+), 53 deletions(-)
+>
+>
+> > +    /* Ensure that mmap_next_start is within range. */
+> > +    if (reserved_va && reserved_va <=3D mmap_next_start) {
+> > +        mmap_next_start =3D ((reserved_va / 4 * 3)
+>
+> Is that ROUND_DOWN(reserved_va, 4)?
+>
+> > +                           & TARGET_PAGE_MASK & qemu_host_page_mask);
+> >       }
+>
+> Rest LGTM AFAICT :)
+>
+> Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@oss.qualcomm.com>
+>
 
+Same comment
+
+Reviewed-by: Warner Losh <imp@bsdimp.com>
+
+--0000000000005ffe3906548cf037
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
+mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Thu, Jun 18,=
+ 2026 at 4:12=E2=80=AFPM Philippe Mathieu-Daud=C3=A9 &lt;<a href=3D"mailto:=
+philmd@oss.qualcomm.com">philmd@oss.qualcomm.com</a>&gt; wrote:<br></div><b=
+lockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-le=
+ft:1px solid rgb(204,204,204);padding-left:1ex">On 18/6/26 21:55, Richard H=
+enderson wrote:<br>
+&gt; Merge the PT_LOAD loop with the PT_INTERP loop, as the XXX<br>
+&gt; comment suggests.=C2=A0 Pass the probed range to probe_guest_base.<br>
+&gt; <br>
+&gt; Signed-off-by: Richard Henderson &lt;<a href=3D"mailto:richard.henders=
+on@linaro.org" target=3D"_blank">richard.henderson@linaro.org</a>&gt;<br>
+&gt; ---<br>
+&gt;=C2=A0 =C2=A0bsd-user/elfload.c | 37 +++++++++++++++++++---------------=
+---<br>
+&gt;=C2=A0 =C2=A0bsd-user/main.c=C2=A0 =C2=A0 | 39 ++++--------------------=
+---------------<br>
+&gt;=C2=A0 =C2=A02 files changed, 23 insertions(+), 53 deletions(-)<br>
+<br>
+<br>
+&gt; +=C2=A0 =C2=A0 /* Ensure that mmap_next_start is within range. */<br>
+&gt; +=C2=A0 =C2=A0 if (reserved_va &amp;&amp; reserved_va &lt;=3D mmap_nex=
+t_start) {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 mmap_next_start =3D ((reserved_va / 4 * 3=
+)<br>
+<br>
+Is that ROUND_DOWN(reserved_va, 4)?<br>
+<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0&amp; TARGET_PAGE_MASK &amp; qemu_host_page_mas=
+k);<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
+<br>
+Rest LGTM AFAICT :)<br>
+<br>
+Reviewed-by: Philippe Mathieu-Daud=C3=A9 &lt;<a href=3D"mailto:philmd@oss.q=
+ualcomm.com" target=3D"_blank">philmd@oss.qualcomm.com</a>&gt;<br></blockqu=
+ote><div><br></div><div>Same comment</div><div><br></div><div>Reviewed-by: =
+Warner Losh &lt;<a href=3D"mailto:imp@bsdimp.com">imp@bsdimp.com</a>&gt;</d=
+iv><div><br></div></div></div>
+
+--0000000000005ffe3906548cf037--
 
