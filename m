@@ -4,167 +4,115 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B26EDCD98F7
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA339CD98F9
 	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jun 2026 12:48:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1waCA9-0001jr-Rh; Thu, 18 Jun 2026 08:48:05 -0400
+	id 1waCA6-0001iK-CO; Thu, 18 Jun 2026 08:48:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1)
- (envelope-from <prvs=6223d7685=Johannes.Thumshirn@wdc.com>)
- id 1wa7rD-0003rm-O0; Thu, 18 Jun 2026 04:12:17 -0400
-Received: from esa1.hgst.iphmx.com ([68.232.141.245])
+ (Exim 4.90_1) (envelope-from <fcallies@linux.ibm.com>)
+ id 1wa5RK-0006C1-H3; Thu, 18 Jun 2026 01:37:22 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1)
- (envelope-from <prvs=6223d7685=Johannes.Thumshirn@wdc.com>)
- id 1wa7rB-0003VD-01; Thu, 18 Jun 2026 04:12:14 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
- d=wdc.com; i=@wdc.com; q=dns/txt; s=dkim.wdc.com;
- t=1781770332; x=1813306332;
- h=message-id:date:subject:to:cc:references:from:
- in-reply-to:content-transfer-encoding:mime-version;
- bh=0hFm4yO+V2KgeQG0ik8lLOHczCQdLX2syeEcd394fgI=;
- b=kZP0hMvilXcu59uUZ6SMBbwMdYoanTr+nwjR70NggdFQxBdM1ObotgZs
- tgg5h7y8z3COtZicg05Yon6RYMlWmoxEbMaaZEqAxT14nqBIqFE289gW1
- 6L6ZwbKdATZiTMfKkQW8c1V8P7zCIPR9EdkFcD6s1RK/dGk+E0r2M+yUa
- ZK3hiZsny6r+eU6O3G2GpeX6LhvqHLQS6YROxyXMZjSVaxQI+MUEqVl4u
- SUZlR2hlM3KYYLQS7EACfYuOqVWzhnR4Xrf8e/jYS7MxvDsw1K9VtB2ms
- zlp3Sa/cYPzC7wGwgJPz88PlLcfWxE2MC9NfvAKxJUvQapGYn+wUWdyPh g==;
-X-CSE-ConnectionGUID: kZzVRSN3SCWOPhSaYvwgVA==
-X-CSE-MsgGUID: bAE1GXV4Rmyh3ZazdfgAIQ==
-X-IronPort-AV: E=Sophos;i="6.24,211,1774281600"; d="scan'208";a="149047417"
-Received: from mail-eastus2azon11010036.outbound.protection.outlook.com (HELO
- BN1PR04CU002.outbound.protection.outlook.com) ([52.101.56.36])
- by ob1.hgst.iphmx.com with ESMTP/TLS/ECDHE-RSA-AES128-GCM-SHA256;
- 18 Jun 2026 16:12:07 +0800
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=K9Lp+3AbWc0PAU1sH3WJj3mHiYZPkxN63GhhobVUYj36ZkbtHpCOmrWjhFo+mmdrIFYJ9sBhlCpMxqNAEmTQUKu41YJ5JsHgyp3zTzsQtCkeeaG55KMPumNBkJm5+6jxDPlQBdxPnR6d03f+BqDm+C9nG9oqulAqo6kutbl2zTshxEX8ZK+DxjPkhs3BbOy23p9A0fca6xcVzUZZlg1vjTBXkJPdShKPjjbuFrKCpjjyJ6pQAwj7G224BclmrawRtAaZY4B7jijnDqw/cvqzsOSggzwgdaK3xNjF8s5qdI9OaUNVkSj7mMUtVfaRZP4MiEHd7QRAp3jEhWKzSUO67Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=0hFm4yO+V2KgeQG0ik8lLOHczCQdLX2syeEcd394fgI=;
- b=JpBOscOOCh4cEHiKyuTzuU/LpnCQf/mn4HuUXhbKtie+cVKi59VGjqHdjFjzidNKTRgq7lZ+L41ciBXGVTwnzANyDCCKnm729Pn3rX79dDodkhYa9pCCvpweupUJNilOkUnl7YMX/gslI1x6Nm501O5wkDR0u70yvdskGkRG08tY0uF27Zo/6p9y1nJf5ano6AXdUH18Qz6ZU95/TaS73r171VMYCtQyaEJOmvKI0OdCWmMnyLh6FKvg0jags9sm3u0NAvv2JvgT5w0bXllehsfrf3I/SHZHrYYPK5Ps7BwYGkT9YST55mBjTjZxkN6UV2v2y/RUFh2YFZ8F5lbriw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=wdc.com; dmarc=pass action=none header.from=wdc.com; dkim=pass
- header.d=wdc.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sharedspace.onmicrosoft.com; s=selector2-sharedspace-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=0hFm4yO+V2KgeQG0ik8lLOHczCQdLX2syeEcd394fgI=;
- b=Ht1yt3q+HlzDP46t8IkfQGbr35tMG+k2PycOGuxgRPEKNUIwEI1ea3014vpyLNAgAG9oUGw2dPW1xvoAnCfR1KMr7/kS0iNoZD/ChzGbHWabU99uJIbZsy5jHRfCJbBrqsq1PahA0fWG389z9dRjzDuzfy2umMOn1Jy7iViemJw=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=wdc.com;
-Received: from SA6PR04MB9447.namprd04.prod.outlook.com (2603:10b6:806:436::21)
- by DM6PR04MB6542.namprd04.prod.outlook.com (2603:10b6:5:1bc::9) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.139.11; Thu, 18 Jun
- 2026 08:12:05 +0000
-Received: from SA6PR04MB9447.namprd04.prod.outlook.com
- ([fe80::14c6:1c14:485f:1825]) by SA6PR04MB9447.namprd04.prod.outlook.com
- ([fe80::14c6:1c14:485f:1825%6]) with mapi id 15.21.0139.009; Thu, 18 Jun 2026
- 08:12:05 +0000
-Message-ID: <f12efec6-89bf-4f58-81bd-6b28fa98cea6@wdc.com>
-Date: Thu, 18 Jun 2026 10:12:00 +0200
+ (Exim 4.90_1) (envelope-from <fcallies@linux.ibm.com>)
+ id 1wa5RI-0002j3-3G; Thu, 18 Jun 2026 01:37:21 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 65HHmIm61016438; Thu, 18 Jun 2026 05:37:16 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=O6FF+0
+ A0eEPHVO7BGID+ZGx1gI6S8LqbGz0YVf0YjRI=; b=S57SXCOrDZO5FKmjFLtFQI
+ 84arBeQ3sLCnLt9r3twE5+PrtbMs3W+d8p+EFykrRczfqbDK15Jie2Q+DPVaj7uG
+ IvbVKFJXwkqcstTBK9zpUT55Wy5Col1YvkYnf3oRMFMfdoLwr2cmIydFWdrBK8bL
+ XjRt6ZUE5ah2hw1nJ034NcpehT4CehxVZplhGa7TeLP2BThL//Kkq8Er/wXhKtMU
+ VqqJLQW+1nbgPGyLNJ1lYBxzaZK5uoX5eOECqLx33a9dhG5lXkiCpADZdIj/eKkC
+ 7LFfNeSGyv9qzhY7yBv8RkEAXk8rBexsdhqhNItKaFbjNKaTerzDPcQIBgjF/1qQ
+ ==
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4eueqxecxc-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 18 Jun 2026 05:37:16 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 65I5Z1nZ031083;
+ Thu, 18 Jun 2026 05:37:15 GMT
+Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4ev172a630-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 18 Jun 2026 05:37:15 +0000 (GMT)
+Received: from smtpav04.fra02v.mail.ibm.com (smtpav04.fra02v.mail.ibm.com
+ [10.20.54.103])
+ by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 65I5bB0f30802248
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 18 Jun 2026 05:37:11 GMT
+Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 9B4852004D;
+ Thu, 18 Jun 2026 05:37:11 +0000 (GMT)
+Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 6B21C2004B;
+ Thu, 18 Jun 2026 05:37:11 +0000 (GMT)
+Received: from [9.224.89.241] (unknown [9.224.89.241])
+ by smtpav04.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Thu, 18 Jun 2026 05:37:11 +0000 (GMT)
+Message-ID: <6655e1cb-4259-49fa-ab83-06a0544f4632@linux.ibm.com>
+Date: Thu, 18 Jun 2026 07:37:11 +0200
+MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] file-posix: fix cache.direct=on check for zoned block
- devices
-To: Niklas Cassel <cassel@kernel.org>, Kevin Wolf <kwolf@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>
-Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org,
- Sam Li <faithilikerun@gmail.com>, Dmitry Fomichev <dmitry.fomichev@wdc.com>,
- Stefan Hajnoczi <stefanha@redhat.com>, Damien Le Moal <dlemoal@kernel.org>
-References: <20260617133658.2022750-1-cassel@kernel.org>
-Content-Language: en-US
-From: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-In-Reply-To: <20260617133658.2022750-1-cassel@kernel.org>
+Subject: Re: [PATCH v7 00/17] target/s390x: Extend qemu CPACF support
+Content-Language: en-GB
+To: Harald Freudenberger <freude@linux.ibm.com>, richard.henderson@linaro.org, 
+ iii@linux.ibm.com, david@kernel.org, thuth@redhat.com, berrange@redhat.com
+Cc: qemu-s390x@nongnu.org, qemu-devel@nongnu.org,
+ linux390-list@tuxmaker.boeblingen.de.ibm.com,
+ linux-s390@vger.kernel.org, dengler@linux.ibm.com,
+ borntraeger@linux.ibm.com, cohuck@redhat.com
+References: <20260617094820.34402-1-freude@linux.ibm.com>
+From: Finn Callies <fcallies@linux.ibm.com>
+In-Reply-To: <20260617094820.34402-1-freude@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: FR3P281CA0142.DEUP281.PROD.OUTLOOK.COM
- (2603:10a6:d10:95::16) To SA6PR04MB9447.namprd04.prod.outlook.com
- (2603:10b6:806:436::21)
-MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SA6PR04MB9447:EE_|DM6PR04MB6542:EE_
-X-MS-Office365-Filtering-Correlation-Id: 0b6e2437-a9fb-4c42-fea4-08decd11489a
-WDCIPOUTBOUND: EOP-TRUE
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|376014|23010399003|10070799003|1800799024|19092799006|366016|56012099006|11063799006|22082099003|18002099003;
-X-Microsoft-Antispam-Message-Info: ojzbesGzWW0/v8MFZKGF3t05Mdf2x+FG7WzH01WhM3YMh2NFgtvo7A9H3xnfQZEfKlFlqKrnrwUL7iAI9KKEdaQbIVOBfxTqPJrt2zeFjR3gZciy0+s4zTJ902th1LbiO2oZKouMuYXhWOCNey04ANI+rlEEoar76sItI6Tsn/FEZp5ifIQb9mnBbQ703Mm0eRt551+VjI5y8pJd6DnPLeQ9Q3Uzv85uMbPX/dtQADIVkcC+j1TWuIgEz2TGSvkeTOkH7eFl+NhKA+sTPba1oHirfWwZ2k93O32T0y/7wcK/obursxoLVaImPUOrRK+ALqUBiDVjw05kBkH3NwUKOID/eeKeG6SKaDZ2c32bTmIvVLoMn9p8aVC3KOqYHDsel9+3yBXezPIMXPrGEX/j30Af5e5+Gy5P5S34zKG7AO77IYo5rBl9wPLB3weulQPJr9GyNacrh0kqkeNDU4mS1MOOnfpm28h7vfnvSqHeWrmmhGoL2qDALx/iYcCefoolSHTDfctPhdoJyMkq6uIxPbKb2bFYpwhf4Z+32AoYiIcg11yYPiSOM3HYaKQxzZNAj7vO5BCvT3KUsam1t6E9BWQu8thObeUeJX7dW9LfHJC5ORsyoILlb6cgtJiJYLPyXq3VAg0Zd8v92IGmgxr9GkkqSylDtEzPGVvKQuYgHu8qW5ZSnNXhuSlViui1SsS8
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:SA6PR04MB9447.namprd04.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(23010399003)(10070799003)(1800799024)(19092799006)(366016)(56012099006)(11063799006)(22082099003)(18002099003);
- DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 2
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?NWE2VDdEcFBpRkM1TjU1azM0cXEyQTJBT1BVaTNnMi9tUlJqTW9oTTE1U3Ux?=
- =?utf-8?B?ZjUzc1l1bGFCN2QzMGd2NmU3ZVJnOHhuenhIbktlRzdLS3NscndhVXZsYTFj?=
- =?utf-8?B?TEFVVTMyTzVmRnc5WmFGcWNFak11ODc0RXpOMEkxQUpWakpEM0xNeHc0aDJj?=
- =?utf-8?B?RnA5NDRLdFB5UEMwM2pxUHBra1FsZE9kSVhJVGFsTWx0SW9FSXBuYzJPK2FQ?=
- =?utf-8?B?bTdvWEtJdENsT0RtZVpSQjdYNzArU1RDcTN3eUtlQVFHWGpZS0NyaWpqZmIz?=
- =?utf-8?B?RWtRbENINGp1MzJOSlRjVFhoazViN3QrQWNmclZzajMySG41dHZUaXREeGYw?=
- =?utf-8?B?SHE2c3ZQenBtYUZtb09VdDVibVdhUXB6c2F0RDI4N29mMXNhamIwR2xQOCtr?=
- =?utf-8?B?OUwzZHZCZERnN25TY0xPRGp2L2R3djBJcjE0VUxmeUVqbDhaejBzSzBySnNV?=
- =?utf-8?B?d014akVhczVvMENEckxPS1dvYUZDaUtTcjI5RjJ2Mi9laE81QWhwL2NJMTNT?=
- =?utf-8?B?bkI2eTJqWnFHdXhDQndRbGtMQlR6VVNsZ2RkU24rSVpVT0ZzKzIvQ1dwcHdE?=
- =?utf-8?B?T1Axb0JtVGhpQTdsMlFlR1B6Q0JCVklKWTR6dkJ4TWJBTytKV0JZRmV5Zzhw?=
- =?utf-8?B?WDhsSm1xRXRYUzZaaXJ6UVRucjliUWM3d2xsQTlnNTJZOGl4aWlmdkJIK2V1?=
- =?utf-8?B?Z0xhdzlyWVJNTVFXTjAvQWZIOCs2dEtCQ2o2RVlYdzE1Rlk2dnUwUjh0cUZG?=
- =?utf-8?B?bkwyOGdIRDV6R2dxeHFnV3hFbktYRWpRNDRtWmwvU09BdjdmSjF0UmtmMTNZ?=
- =?utf-8?B?cUV6a0FVaVRQOTdkYlBubFdtS0dmU3hjVTdsV3dFRVpabW0wNENrQzJUUFQ3?=
- =?utf-8?B?MG45emFwenhrdG1CQUQ4a2R0SmVXL2lIMlp6aHRtVGYwaFNsd3JML2txQWp2?=
- =?utf-8?B?b2pEOTM3NkRUdVZNeUhyZFFQN2tUUWtpNVNWazVicnVYTVhLSitjSXNLWHg4?=
- =?utf-8?B?U0FEcklVRUxZK0RXNE5GRTFpME5UaGg3NWpLZ09jbEFDWHVhZnhOaVpGUy9U?=
- =?utf-8?B?RGVIZFZLeW1ySUdFYVFFK1owZk1mVnFkZm9xbXFKVXlRQzRvUWZQQkxkNUtO?=
- =?utf-8?B?YWpRVCtKbXphMDYyL1BUNFpYeXFGTW5DWFE1NEhmam9VM29hWXlNR0FhQTRO?=
- =?utf-8?B?VDdGY0dtMThIdjBUd2N2TWdkZnlTNUVaSDBqdkxyVmNWVGtmVzc0dCtZVzZ1?=
- =?utf-8?B?d2liclhWeDFWMFZhVWJMVDdCNzhRZEFyMnhSd09OcXBhYnRWajVhV0hITStl?=
- =?utf-8?B?SmVoNDVhRlpQcWpKSjVyd25ZckltTXN1Q3NnSUhsTHFpN3NJTmEvOXhjU3NC?=
- =?utf-8?B?RjRPSUIxWFFHeHRMcmlGa1Z4dEgvZ3l0aTBSa1BvVWZNYWwvV2I1MUduLzhV?=
- =?utf-8?B?SG5MTWpUNUZSK0IzOWVZVnlzLyttVzdPQVdkS3daTWJ1TTRzaWxEd1ZXN2o1?=
- =?utf-8?B?RUxaaHFDb1NhbUtxa2Vua3l2TmNLakt5ZXVKT2VOd21hQmlDOVBjaUsvd3NK?=
- =?utf-8?B?ZHdKUy9vNFhxMFRER0RQeVBXRDlKRVRqZHBGV1RTdUhGVWlKVlJla2VQNG9W?=
- =?utf-8?B?QlNJUjl4ejFPWU1pcHIwT1ZIaUJ2NTg3ZEluZERHZHZiUVZpaG8yNWxWak8w?=
- =?utf-8?B?ZHFiR2RtaW5hVGIwWnpydGw4SkNaMzlqWVFvNHZVTWRZNFM3U3oxaDYxcGZx?=
- =?utf-8?B?TlhoUlU2UVVVMzQxdUdCaDllWW9BNkVVUjFEbGc4NGI0OGpHOXhjaWtsQjhv?=
- =?utf-8?B?U2FLWndwbHd2dVNKUGR3Z2Zxa1o0bnh1VkRvVXFuRkhiK1lEM3phR2Y0Q01u?=
- =?utf-8?B?bEl5YlRFU0VrajU4eWd3YmRBZWdVeUFIcGNXS3NZV0NuVnVuZ3Bnb2tKcEhj?=
- =?utf-8?B?emRCRnJoOTJ4QzkwVDZYVFZmbXBhQlV5cWJYcjBnbFh1UjNUSGR5UDlHYjdv?=
- =?utf-8?B?QzJtUU8rSC80UmNrUHgwUDhGV0VpbVNNTFFYK0RQajRMR1hwMkd3N2xERFdt?=
- =?utf-8?B?ME1tWnhHb2VrWEIxOEtEL1UralhubVdSK21WNEpSc3ZlTmlnVHpIYWFMRG00?=
- =?utf-8?B?d3R3cXJBcnZyeURubHdpMmlpTzNQbVR1V3U1MVptenF4UGc1WnZuNFZKYm5M?=
- =?utf-8?B?U3Y2OVgzaXlINlEyNDViS1VSWStvaUYxRTJzSXIzY0JxUWVtR29EY21ML3o3?=
- =?utf-8?B?Y3A0MngyVk5yT1U0cmkrbk9tSTFOUG9hcFJvUEVPVUJRSzZ6M01xTktaWng1?=
- =?utf-8?B?a01iTCt4dGFiQW1rSjlJTThFRWxudjhnVTNjK1ZuQjFnRTRJWm9tYWkvcHZF?=
- =?utf-8?Q?fxMl+buUwUsG6tHPK7Ly7VmDWhxOMi69CJrnzPml1i7x1?=
-X-MS-Exchange-AntiSpam-MessageData-1: G4ZHBRa+4urexw==
-X-Exchange-RoutingPolicyChecked: cdNYqtoEM0f0hVxpMMLRmOlIr+2fNYJBk0ERFRiwItVLGDxkcJJa5VghTd8ExGD/jaXSKofGVbbqsAeuOddbFHSepuJ9dGufrWK74AQYsN3Dr9zTHN2n8o1n/gjaVB0wN8vEDuCZnrqDFD7UfXXGAJUkC69gFB6X7VC80eGpKSxXJJGYziTxqYfKXFJmJkIdRIm0WalxRQ5LQeIhOKB/bR6R2XGKpT1G2DWsFf3agvsZuei1DXa+dYKyS3TRONw9+7fYkTMyufrYEIYqMeJk7ncbi9n9xOymXxZE0KFJ+zvl6L2yv5rLMdOr9bIxTRpTSJH7nnbZnF2auDkKm1Hbiw==
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: ATGdPZPgIp3cpbR+FoEhGjFV+sGTHJ053+5mRw/onUkvXlwY8BKHCa0fgGQmOeFfjRW1rrOd1BpY1MsGPGRQE4WUqkYoNF53uUWkCvz7xAbenlTgbZfbe23/AxCBt2j5i0OYpuD147Ek9GRxEnYQRNmkSLqSRQ+bIhkKAFIqQiYIlcjzGuAW8ybeM5FFhY8DyqexUk5+iPZmJw46aF9I7U0SqNJBxwPCVJUuzrpSaDYffaUM1/3/iIm5w9sOpkqmBVxB/H9+hkOZ7MKGG2F/NS/o26qzHarJCkWX4eQP6JiVjHoh8Kl99pJpzQJdmQ7xFjf37mg9cEPE6UxAYdTwKDzViNY5paMAdELxoMlWJ6ZAY4lMFJihkakbNgQNk8MZl03HffiESXn83jmwUm6J6OtkTpU6AZAJuOzZsXd3uM4XRNC94ksUhOmiL+8kKBr3JlxuSjCRbc2x/oELovLZKyK9+Rf+gmAtKqcpZVTmkHAm7J5buLyP+BLTWBYf7lpeNbJyKBKMH6g1m3VBCwsiSZD8FPla5jxeevpjZC2Uc7GlRKuCGQ5ICPcEsyagP0ehp7TqIFY9Kn/zK1S2TT/Dl/q8RK4xUYuvap4rtu7vbJjO9lWOvVDN+qKFtfIo5Att
-X-OriginatorOrg: wdc.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 0b6e2437-a9fb-4c42-fea4-08decd11489a
-X-MS-Exchange-CrossTenant-AuthSource: SA6PR04MB9447.namprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 18 Jun 2026 08:12:05.1974 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: b61c8803-16f3-4c35-9b17-6f65f441df86
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: lYG4E92ceWK7mNPxzLsKN0d+DJucJlOyfm5cHyu17oAk3TCU9ExGx8u2f05iUHvMnCDYBi+Qa40GxBwAH1abl6mbsy5izU9+G5p5DMwWkfg=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR04MB6542
-Received-SPF: pass client-ip=68.232.141.245;
- envelope-from=prvs=6223d7685=Johannes.Thumshirn@wdc.com;
- helo=esa1.hgst.iphmx.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_PASS=-0.001,
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=OcSoyBTY c=1 sm=1 tr=0 ts=6a33840c cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+ a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=QNs_BIYjvnKcn3kyA4IA:9
+ a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjE4MDA0NSBTYWx0ZWRfX0yo8fqY0JEzd
+ gMF0I088+/ZSrvvu3ulfDHh+JXXhvwhT5Td/2KSfdEl3Ic8/DMIxOyZbWwXl2GPlYZBTrRGqDXm
+ 9t/kWx3eyRErarBwYdqTbN0lYROQytqUCFskgdiVs8BPWhKxcqcPqIUEJf5fsNgpIF2+yetWDq0
+ oIpphU4qoJEFiPysrKxHqkzdG0ft7eOIdxzTRaRQDDpRGYgsHt/tUnIMTO5k9w5ZYsJvXBKIbH8
+ GGfhMfwYdIWbVoMsFpj7LedC8wNqdNPYVHsqfLse4YTJE5Plz1+TR1zFJK3DRmFmbyb46OPELTu
+ 5Hn64f4IQb6kBH4f+9agDhXx+u/UQHCTupzHA4o0XfblEcDSsr2banAiMnSsyFbICGff6upj53F
+ 8/FyBs7HGqBY5Mhl5gJNp2BVprI/YS9rzEEq8Id4nMg+bCbgumfeXKwr27YMgf+GkWexr6y9+yK
+ H90EPBbEHOucRgzBl1w==
+X-Proofpoint-GUID: 2OrA_MQomVIEl6UUcjjxOWiAK3fiiWjx
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjE4MDA0NSBTYWx0ZWRfX3bvdD6uKF0vc
+ 3T/Gng80DnrsUKM9yJRkVYux/lVQHPDB/Y+CVEeeXSlRGJBu0dGUiLuIrJB1g2YjDD1E6cIHzg+
+ mSqTvdo840rXCxMI3Ph4TxpT/Ca8N9g=
+X-Proofpoint-ORIG-GUID: 2OrA_MQomVIEl6UUcjjxOWiAK3fiiWjx
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-17_02,2026-06-17_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 phishscore=0 bulkscore=0 suspectscore=0 lowpriorityscore=0
+ impostorscore=0 malwarescore=0 spamscore=0 adultscore=0 clxscore=1015
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606180045
+Received-SPF: pass client-ip=148.163.158.5;
+ envelope-from=fcallies@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Thu, 18 Jun 2026 08:48:00 -0400
+X-Mailman-Approved-At: Thu, 18 Jun 2026 08:48:01 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -179,8 +127,124 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Looks good,
 
-Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+
+On 17.06.26 11:48, Harald Freudenberger wrote:
+> This patch series extends the s390 qemu CPACF support to be able to
+> run a subset of the CPACF instruction cross platform. There have been
+> requests on the kernel crypto mailing list about a way to test
+> s390 specific crypto implementations. For example a way to test
+> s390 CPACF exploitation code like the s390_aes.ko kernel module.
+> 
+> So here now is a set of patches verified on x86 and s390 which
+> over (slow but working) support for a subset of the subfunctions of
+> some of the CPACF instructions.
+> 
+> Test: As this series is more or less complete, a full blown linux
+> can be run and the 'usual' in-kernel crpyto modules will be
+> automatically loaded which run a bunch of test cases. So there
+> is now support for these kernel modules:
+> * sha256_s390x (autoloaded, sha256)
+> * sha512_s390x (autoloaded, sha512)
+> * aes_s390x (autoloaded, clear key aes ecb, cbc, ctr, xts)
+> * pkey_pckmo (autoloaded, derive AES protected key from clear key)
+> * paes_s390x (not autoloaded, protected key aes ecb, cbc, ctr, xts)
+> All these modules run selftests if configured by the kernel (which is
+> enabled by default). Failures are reported via syslog. Additionally
+> the aes testcases from libica can be run either inside such an qemu
+> environment or with a static build executed with the qemu tcg
+> application qemu-s390x --cpu max <static-build-libica-test>.
+> 
+> Changelog:
+> v1: Initial version with
+>      - Related code restructured
+>      - Support KIMD SHA512 and thus SHA256
+>      - Support KMC AES-128, AES-192 and AES-256 and thus have basic AES
+>        support (ECB mode) enabled.
+>      - Support PCC Compute-XTS-Parameter-AES-128 and
+>        Compute-XTS-Parameter-AES-256 but only for block sequence number
+>        0. This is a requirement for the next step:
+>      - Support KM XTS-AES-128 and KM XTS-AES-256. Together with the
+>        minimal PCC support this enables AES-XTS CPACF acceleration.
+> v2: - Basic PCKMO support to be able to 'derive' an AES protected key
+>        from clear key. See header details.
+>      - Support protected key AES-ECB.
+>      - Support protected key AES-CBC.
+>      - Minimal protected key AES-XTS support for CPACF PCC.
+>      - Support protected key AES-XTS.
+>      - Support AES-CTR.
+>      - Support protected key AES-CTR.
+> v3: - Reordered patches as suggested by Finn.
+>      - One small bug fix in CPACF_aes.c related to address translation.
+> v4: - Rename of the parameters based on feedback from Janosch to
+>        make clear these are registers or ptrs to registers.
+>        Added Tested by from Holger. Fixed typo "face" -> "fake".
+> v5: - Add documentation file docs/system/s390x/cpacf.rst which
+>        describes the state of the CPACF instructions and which
+>        functions are covered when this series is applied.
+>        First version sent to public mailing list qemu-s390x.
+> v6: - Rebase/rework to build on current qemu head.
+>      - Add docs/system/s390x/cpacf.rst to target-s390x.rst
+>      - New file crypto/aes-helpers.c with some simple
+>        functions to support AES modes CBC, CTR and XTS.
+>      - Slight rewrite of the s390x CPACF implementations to
+>        use these generic AES mode implementations.
+> v7: - Update on docs/system/s390x/cpacf.rst to mention
+>        the zArchicteture Principles of Operation document
+>        which describes all these CPAC instructions.
+> 
+> Harald Freudenberger (17):
+>    target/s390x: Rework s390 cpacf implementations
+>    target/s390x: Move cpacf sha512 code into a new file
+>    target/s390x: Support cpacf sha256
+>    target/s390x: Support AES ECB for cpacf km instruction
+>    target/s390x: Support AES CBC for cpacf kmc instruction
+>    target/s390x: Support AES CTR for cpacf kmctr instruction
+>    target/s390x: Minimal AES XTS support for cpacf pcc instruction
+>    target/s390x: Support AES XTS for cpacf km instruction
+>    target/s390x: Support pckmo encrypt AES subfunctions
+>    target/s390x: Support protected key AES ECB for cpacf km instruction
+>    target/s390x: Support protected key AES CBC for cpacf kmc instruction
+>    target/s390x: Support protected key AES CTR for cpacf kmctr
+>      instruction
+>    target/s390x: Minimal protected key AES XTS support for cpacf pcc
+>      instruction
+>    target/s390x: Support protected key AES XTS for cpacf km instruction
+>    docs/s390: Document CPACF instructions support
+>    crypto: Add aes-helpers file to support some AES modes
+>    target/s390x: Use generic AES helper functions
+> 
+>   crypto/aes-helpers.c             | 101 ++++
+>   crypto/meson.build               |   1 +
+>   docs/system/s390x/cpacf.rst      | 116 ++++
+>   docs/system/target-s390x.rst     |   1 +
+>   include/crypto/aes.h             |  14 +
+>   target/s390x/gen-features.c      |  31 +
+>   target/s390x/tcg/cpacf.h         |  63 ++
+>   target/s390x/tcg/cpacf_aes.c     | 955 +++++++++++++++++++++++++++++++
+>   target/s390x/tcg/cpacf_sha256.c  | 232 ++++++++
+>   target/s390x/tcg/cpacf_sha512.c  | 245 ++++++++
+
+Since you implemented all aes related stuff into cpacf_aes.c maybe think 
+about putting all sha related stuff into cpacf_sha.c instead of singular 
+files. Or go the singular way with the aes stuff as well.
+
+>   target/s390x/tcg/crypto_helper.c | 423 +++++++-------
+>   target/s390x/tcg/insn-data.h.inc |   1 +
+>   target/s390x/tcg/meson.build     |   3 +
+>   target/s390x/tcg/translate.c     |   2 +
+>   14 files changed, 1972 insertions(+), 216 deletions(-)
+>   create mode 100644 crypto/aes-helpers.c
+>   create mode 100644 docs/system/s390x/cpacf.rst
+>   create mode 100644 target/s390x/tcg/cpacf.h
+>   create mode 100644 target/s390x/tcg/cpacf_aes.c
+>   create mode 100644 target/s390x/tcg/cpacf_sha256.c
+>   create mode 100644 target/s390x/tcg/cpacf_sha512.c
+> 
+> 
+> base-commit: e89049b3ba5f1f0468bc0d294173345597514a1b
+> --
+> 2.43.0
+> 
 
 
