@@ -4,143 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3B4CCD98F2
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jun 2026 10:08:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC659CD98F2
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jun 2026 10:13:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wa9et-000436-8U; Thu, 18 Jun 2026 06:07:39 -0400
+	id 1wa9kN-0005d0-P9; Thu, 18 Jun 2026 06:13:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wa9eh-00041C-Hd
- for qemu-devel@nongnu.org; Thu, 18 Jun 2026 06:07:29 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <kchiu@axiado.com>) id 1wa9kH-0005c6-92
+ for qemu-devel@nongnu.org; Thu, 18 Jun 2026 06:13:14 -0400
+Received: from mail-eastus2azlp170100001.outbound.protection.outlook.com
+ ([2a01:111:f403:c110::1] helo=BN1PR04CU002.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wa9ef-0004A1-Uz
- for qemu-devel@nongnu.org; Thu, 18 Jun 2026 06:07:27 -0400
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65I8FPti1177670
- for <qemu-devel@nongnu.org>; Thu, 18 Jun 2026 10:07:22 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- B5sV73HY89E3gthBCl1awOSOckzxHbC8vr4R7GgapnM=; b=lxs0GmlJhwj6E+Tv
- BC28F2nc50rYeiF6m6PFQW7nUu092ok7fbD0ZyRz3JGoKVOH93RvfF8lPZ7qnH7O
- B840EJV1gDr9DHFI3ZqRTy6UYYp22ot5gFicsSVlHlhyoDbeegouOxXnDccVgURZ
- 4F+d3LC5uWOd8rAZbXM2UOm+EScBtXQ92MOf13Ldrf8KyqAmvgxwqU1VdzfpUhnM
- zDAirqMJ0/7ae2yPRPsiepIwCmWt3S04+K6u5IHdvgH+fl1+1wvZueToVvXdeLLy
- iSyAmYWwHArE8MyVcilkM0bRlDug+408oB6WnQ9In4KfzQ4OFYmQKd0u9xkYD0Qx
- z8imlA==
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ev12kjy5b-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 18 Jun 2026 10:07:22 +0000 (GMT)
-Received: by mail-qk1-f199.google.com with SMTP id
- af79cd13be357-91598af506cso93407585a.0
- for <qemu-devel@nongnu.org>; Thu, 18 Jun 2026 03:07:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1781777242; x=1782382042; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=B5sV73HY89E3gthBCl1awOSOckzxHbC8vr4R7GgapnM=;
- b=O1oLAUta9ZbKVEzEYC1grLJB4eVAXROjYYPdyJBhYqoK3uqEEcqMLmWsEDuNueJ4vY
- gTiqMGlr+PxVdnXESFC5k1KBIOSyT1v5zE3jFjsqxji7MnvTp0lDhCDEX6UNmk5LX7Vn
- bHRk6MWu0bSvLjQhqYQ6e+SPOXRwTWqUvlAGy8zyNSSiez852gf1pZy/uK9F4rEqd6DQ
- hnYr/BcXAB6aY3g6NkIo9kQhJ4vAlSBYhw/wObXwgzHe+9+Omhs0jqVDtyA+/mwrXvg1
- IjGCIdmpINh8tsoYUA+QNXgrss+lFj6UV/0y5bZ8/tLuBuBnYIOefznhaH7WwYZBoZA+
- RqSA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781777242; x=1782382042;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=B5sV73HY89E3gthBCl1awOSOckzxHbC8vr4R7GgapnM=;
- b=Z9JVTgewkSO6F7IPQOvDrXXG/CAXytXD7kQo9QfX5KIkQwJ2ljvBP/auhWAAhNLq9D
- vulz+CpSFmDbWiaNu9QDsK63nTXdqJF75ChII6fghTipEF4yv3ZNRgTwQUSGlDXom8KW
- Hb9RaYjBR3cNTWOd+91up+0vMGNXvAtHthr46A7mkcu8WLgev+d6tMlC5U1k8933pNHH
- TBp7Uayqw/NNXSM1BNyHsOFw+hDUiP6Uvh5z7Nt868DaGCsKouojPKyyZZyAPcfM8K9l
- NVQkm25ZxMsF2UGttoDwNLNCNWPj8NdwWFG12Y+K6G+ep6eCfGfbPWrRhmAlesqDwY2D
- kWfg==
-X-Forwarded-Encrypted: i=1;
- AFNElJ9Qom3q4pjKK/8t1+yqG0BN4kS741uwypYdi8xFSuvEq2YUsgsPH1Zhf307Tp0vjK0JlVPVul+53UhG@nongnu.org
-X-Gm-Message-State: AOJu0Yy0ZwfOB8gyYQUrtah9bw1VGZP0owySqxobvfix1SJT6yVqQyms
- jtfTXak4uEXWw4JSs83jRLd/sqxQc70FqHRQkQ11fwBkueKxr3mUIUlhMAL7N723AsJ3gPSLSBS
- +i78J7Dsw89fzF1l9c740sAi/JyT8KlQbbr/AGhV66BzJqL4za2wq/hN2fQ==
-X-Gm-Gg: AfdE7ckg0sxhYDNJ4pMH3Td++/JeC1h+Z2awjyP+WDFS910aHRP0pTU9enfaLunITY2
- yFgc/7uOZIbBB1INqwNXbXWRvANQn4Gk1/ZYsip30gD/fnifKltpjqMSMK4DmT8u36KcOAHqhHq
- j8KX/e449zUAREVPrsTZHWGAzGKuMefB9tIEWqQDDy0/DW+jXNDZOUnjy3gAjVcLA4TY6bOm2Xs
- 0LiDAibi1bGmHMMLXPyahrmYtm0N8brAaPk9cIbeH33XWrcNZhEXfevKwkDSbmxpEvfZubCyXmo
- 3SPMJ4kLaiGlhUKOYEyFh0Rsm1lHwg/ZrzjWHNSXcDy+6iKeixe5BUBh62AQ6qqbX2w2e4nY3Nx
- WpJWpiFocmNI+/frM/xLjba4B5u3oSmRs8SuyZF/jwmo8tcHspKrbzyQMqaLfjA==
-X-Received: by 2002:a05:620a:454a:b0:914:bb8e:915c with SMTP id
- af79cd13be357-91d8b8ba1f8mr1302846985a.22.1781777241741; 
- Thu, 18 Jun 2026 03:07:21 -0700 (PDT)
-X-Received: by 2002:a05:620a:454a:b0:914:bb8e:915c with SMTP id
- af79cd13be357-91d8b8ba1f8mr1302842285a.22.1781777241261; 
- Thu, 18 Jun 2026 03:07:21 -0700 (PDT)
-Received: from [192.168.69.213] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49230a4601esm257100965e9.1.2026.06.18.03.07.19
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 18 Jun 2026 03:07:20 -0700 (PDT)
-Message-ID: <42927637-2e5b-46eb-9d25-8315cd36fda8@oss.qualcomm.com>
-Date: Thu, 18 Jun 2026 12:07:19 +0200
+ (Exim 4.90_1) (envelope-from <kchiu@axiado.com>) id 1wa9kE-0006Bv-Vs
+ for qemu-devel@nongnu.org; Thu, 18 Jun 2026 06:13:12 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=MyStBuIAxxJy2uIOMwDOdyenr8OyvpmYHBh8FDb0YTVFA8bYFSvWOW+lkeFBfWLo0OqBu01FmTeGYn/QjSP+/l362jU0HFMcPEJjNPpOLwlVyDF6D1Wtn6D8syj15tzaZDhCnbJWNYDGz7xFaS1nfFbkSpTgbfdJu863cCQB74Jj2yeDjEw4Eo+7zO6kLDCAa8CYDyMyk+BSGZ3d/X3fjyRBp1IrLGtMcBHPNa0+qrhiXyWuZDMdRpVR4bh/ZU3ABQFMY6l6hTul14abT3ypYtL+zet/kTrYmxKlooW/6B5KqY/6K9mrmg3D7WlR72M6fPm51fC4LVIa10HSR6Zfxw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=di6xXB4q0ZamLQf6EcwMIC/esOgAswlfGEUL3kBir1M=;
+ b=J/953SYYJi51vyzwgCa43G59sqpt+ThKIxKrntny823nCAiZJ11LoaGxEjN5dq7ic/HRxq7H2njqmLzmMU8i8xfwkne3MSz+4IEQinKsc1hpiWyjOl7o+WwBhq9QcJMskyxEl+SgoQ9Zpz9+MKbvzGiJvA+vh4XFR4QFH6EsVTH1s0RpJpjRKc3zwKvgL22MXd8ru/lTfjjyfnuPz8XOt7uCgrI1Lp6oZIpQvysjFM5U37x4YWpKF7sfaE7w36gKQ+UUzKCdimuXlizYk8MmGHkM2HUbYV8JSeYDzd2nbaW2x78VcKUfSPJb0Z3mSgcuRIoeokmv6ijC9XTJc6rqxQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=fail (sender ip is
+ 64.62.143.114) smtp.rcpttodomain=axiado.com smtp.mailfrom=axiado.com;
+ dmarc=none action=none header.from=axiado.com; dkim=none (message not
+ signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=axiado.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=di6xXB4q0ZamLQf6EcwMIC/esOgAswlfGEUL3kBir1M=;
+ b=g+Z/H0gsbTm62KFMPbkxxRFtb7VVXkm+OCzfVTL6BCm/H8sKhNYao1onS8rySfE8t7mwNbww87CAMAgCz7V/t0AIXfgqD1o1hnMWAaMgj9yQBbinyrMH3/8myvcE3nzGTRQ79us7b2fj24ou25cfJ38tavEr+8Z7FCqAcHOXZwBVqwx/nrgW4MuCQBIZvnQjrmttylfIYBiagYeVoFG7Cx3ob0uz4f1xrp13rerhkd2aDX1dr5/2fBICENO/yyy/wLSsR9jyvFfL/2AZ4TKT9JvkVVz4dg6jNKhoIbxt0NtH2TzNbtObSEl8tTBiBduazwAWRciO2spo6oL+SefDtA==
+Received: from BL1PR13CA0204.namprd13.prod.outlook.com (2603:10b6:208:2be::29)
+ by MN0PR18MB6093.namprd18.prod.outlook.com (2603:10b6:208:4be::14)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.113.18; Thu, 18 Jun
+ 2026 10:13:05 +0000
+Received: from BN3PEPF0000B06F.namprd21.prod.outlook.com
+ (2603:10b6:208:2be:cafe::63) by BL1PR13CA0204.outlook.office365.com
+ (2603:10b6:208:2be::29) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.139.13 via Frontend Transport; Thu,
+ 18 Jun 2026 10:13:05 +0000
+X-MS-Exchange-Authentication-Results: spf=fail (sender IP is 64.62.143.114)
+ smtp.mailfrom=axiado.com; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=axiado.com;
+Received-SPF: Fail (protection.outlook.com: domain of axiado.com does not
+ designate 64.62.143.114 as permitted sender) receiver=protection.outlook.com; 
+ client-ip=64.62.143.114; helo=smtp.corp.axiado.com;
+Received: from smtp.corp.axiado.com (64.62.143.114) by
+ BN3PEPF0000B06F.mail.protection.outlook.com (10.167.243.74) with Microsoft
+ SMTP Server (version=TLS1_3, cipher=TLS_AES_256_GCM_SHA384) id 15.21.159.0
+ via Frontend Transport; Thu, 18 Jun 2026 10:13:05 +0000
+Received: from axiado.com (unknown [10.4.1.181])
+ by smtp.corp.axiado.com (Postfix) with ESMTP id B0B8640BFE15;
+ Thu, 18 Jun 2026 03:10:23 -0700 (PDT)
+From: Kuan-Jui Chiu <kchiu@axiado.com>
+To: qemu-devel@nongnu.org,
+	peter.maydell@linaro.org
+Cc: Kuan-Jui Chiu <kchiu@axiado.com>
+Subject: [PATCH v5 8/8] hw/arm: ax3000-soc: Enable Cadence GPIO controllers
+Date: Thu, 18 Jun 2026 03:12:49 -0700
+Message-Id: <20260618101249.2926976-9-kchiu@axiado.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20260618101249.2926976-1-kchiu@axiado.com>
+References: <20260618101249.2926976-1-kchiu@axiado.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH] hw/arm: use correct base address when setting CBAR
-Content-Language: en-US
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Arnd Bergmann <arnd@linaro.org>, Tyrone Ting <kfting@nuvoton.com>,
- Hao Wu <wuhaotsh@google.com>, Peter Maydell <peter.maydell@linaro.org>,
- "open list:Nuvoton NPCM7xx" <qemu-arm@nongnu.org>
-References: <20260618093615.3793919-1-alex.bennee@linaro.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <20260618093615.3793919-1-alex.bennee@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjE4MDA5MyBTYWx0ZWRfX12OyDvhLaiEw
- InwWpa2ROKy4I9vSHSVYdGQGJs8vRSWeCmWJyTpPzuARaGHcpVkb/D7kLTLJg1t1v0ygOsketRy
- 2v9DKOZYGTVF7gX0piTkn4olXfIDoOjkrp0DngD77J1uKwB10Z1tLGDWVxk7Qx5WNDPYeHjNekA
- TV0sASVkJdHat3Gy8sZS8AR/FP45ZfvlFdzKFmR5nk91Yr8to4eR23UhADxlSuTvGrlhGJs4cPj
- Ga0/rn0fvUGgCRWxX0HaM3HWXM/7W1WPa0L3a0BHi6Q20D+BSylFdkJYSDdpQAUmwl2NmMCsGYr
- fDxqwnBRIrwgIdCARLdxGhJeKco5+9X92a1sYXhxTEFr75mKm7Hp8nPEyPzO2PLR+ZtKaGhSpnp
- UMqNpNmOWW8HGTvMkGFpksm5CemlFENHtVXdgra+bbL1bxm8+k9vXAcTOoY8ZY7TksM71ZGAvFm
- 23lyJ1UbDulCMRsOd5A==
-X-Proofpoint-GUID: dZ-hsaJ9Qo-YVjxN-sRS7MH6CksynB3w
-X-Authority-Analysis: v=2.4 cv=HpVG3UTS c=1 sm=1 tr=0 ts=6a33c35a cx=c_pps
- a=HLyN3IcIa5EE8TELMZ618Q==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
- a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22
- a=KKAkSRfTAAAA:8 a=Sw7cnfgtHNjO5mK55CcA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=bTQJ7kPSJx9SKPbeHEYW:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-ORIG-GUID: dZ-hsaJ9Qo-YVjxN-sRS7MH6CksynB3w
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjE4MDA5MyBTYWx0ZWRfX2M/p/2M3yRQf
- shwiFur4aiGfqQO1/O59WOrD4fvcj83tQXGXKtuBBJki/mHiwKDvBDOvnOioahe3KKTzWfT2825
- cHj4+3DyGTsqE//g/piVgxC/aIVnil4=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-18_01,2026-06-17_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 suspectscore=0 priorityscore=1501 malwarescore=0
- clxscore=1015 adultscore=0 phishscore=0 bulkscore=0 spamscore=0
- impostorscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2606180093
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BN3PEPF0000B06F:EE_|MN0PR18MB6093:EE_
+Content-Type: text/plain
+X-MS-Office365-Filtering-Correlation-Id: 3df6097c-c905-49b1-6567-08decd22305e
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|36860700016|23010399003|82310400026|376014|1800799024|56012099006|6133799003|22082099003|18002099003;
+X-Microsoft-Antispam-Message-Info: R5hMvsa2UaS2XWviAZRoATl6hTI9M67zCY7Izncav+vhOO0FfM1u+HnXJib86MMfcPiGDu6hXVzwAXybk/R/2/n6BeZgPd6ES7wu3cKxZ5lHqLzpCj/ftUg/FZtoEZO1ln5SU01SZWnwr+QPcZBCmfsNylnknOzPYdKxa8sz1CXQx5hCPg+NJ/XoKUQId0qN/IED0TFoetQhpJ/Su+WfYtZv+flJqAfmTs6usJSAUi6+FavLivmOOtjE/sqZToE+VSYDzbfICmyT02AIoTpFZrBSh0MSPV/zbTFg0As2mKeaf1ER5dDMJBc5i+3v0c7w4F33iY9W5D2wbcsdzjh1vzdPg4nZjsON5l001B2zLrs5JqGo9dqAKDVOgHdy5EQgaNKiT5HCIOn/4moSXrd9GIiNotQtPOClL2np55OMZ6vGW1+4yn9pCzcsa+sID1x4QzigLy3tYfNMPsky6r/mXi5/pyGekyhTDmV5bNYk+nznR0bpO1ATornBCXBsklpk6gEJoGAQIh5z1+Kc1olki9YkfVrW87HuMckl0UfAPHFv+4ROt0tL2qxecocPr/8T6PhhhWaBUKxHFrCZYa2h+5sATyD4PGWC/F7/+UaVtxChzt6TB156XGzo4SYxLVsVwMJXdxjv24AdrNgjeTbgTde33mV5GoQKA+j4nKWskRk0sgsG2OqfgJQIWJQ1OTC85DwW331C/NZK4sWcXcOoFPiU2bulyXu907xKgC0lTTM=
+X-Forefront-Antispam-Report: CIP:64.62.143.114; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:smtp.corp.axiado.com; PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(13230040)(36860700016)(23010399003)(82310400026)(376014)(1800799024)(56012099006)(6133799003)(22082099003)(18002099003);
+ DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: gPNJ90pOR/Mnl7nhiR4K3qRdMOK04WxEMUf7jkmajxEUwAV9jlJRt+2UdJKby33IVWgX0zkCB8nGDLk+W55W70RwByxG8vq+lCu/Fr4DT6BeUxaDMv64vAMgbXQNexv5Znb6Or+iLQAiAtnZCMArgRoU5OHX/LzcblUXOj8k61QBznNqfP5mKB/IYTd6dC2Nqm2wuFbEROuJrNfqCGYAPYta6L+bB2YCtnz5aYTJcOK9TwsgWYYpSUmIiJwGjJcg0d0+NdlFhGvbi9mt8q7aGI2UGYhuB0lkx7lTtJje5wCIKmUSgEUKDmfX304N3Aw7fydV0ZRg7Ac6FYnPzp5AZeIi9i0NIYlSnG2fviLFXMiULPoHDL3A+I7PLCzk4s3QY8QBbRWX7F7bZUqJ0zSvsJVUAVAAugNLU89RoKSRg6eLB/NOvNNYnWsYDsbOk1uy
+X-OriginatorOrg: axiado.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 18 Jun 2026 10:13:05.5511 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 3df6097c-c905-49b1-6567-08decd22305e
+X-MS-Exchange-CrossTenant-Id: ff2db17c-4338-408e-9036-2dee8e3e17d7
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=ff2db17c-4338-408e-9036-2dee8e3e17d7; Ip=[64.62.143.114];
+ Helo=[smtp.corp.axiado.com]
+X-MS-Exchange-CrossTenant-AuthSource: BN3PEPF0000B06F.namprd21.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN0PR18MB6093
+Received-SPF: pass client-ip=2a01:111:f403:c110::1;
+ envelope-from=kchiu@axiado.com;
+ helo=BN1PR04CU002.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -157,64 +121,137 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 18/6/26 11:36, Alex BennÃ©e wrote:
-> This should point at the base of the Cortex-A9 MPCore private address
-> space. If it doesn't we will confuse the Linux kernel as it probes the
-> SCU registers and erroneously assumes the system is a buggy Aegis SOC
-> and nerf the emission of SEV instructions, deadlocking any WFE's in
-> the kernel (or QEMU smpboot code).
+Enable 8 Cadence GPIO controllers into Axiado AX3000 SoC
 
-I'm confused...
+Signed-off-by: Kuan-Jui Chiu <kchiu@axiado.com>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+---
+ hw/arm/Kconfig              |  1 +
+ hw/arm/ax3000-soc.c         | 30 ++++++++++++++++++++++++++++++
+ include/hw/arm/ax3000-soc.h | 21 +++++++++++++++++++++
+ 3 files changed, 52 insertions(+)
 
-   The Configuration Base Address Register holds the physical base
-   address of the memory-mapped GIC CPU interface registers.
-
-NPCM7XX_GIC_CPU_IF_ADDR is the correct address of "the memory-mapped
-GIC CPU interface", NPCM7XX_CPUP_BA is the A9MPCORE SCU MMIO address.
-AFAIU the modelling looks correct.
-
-Per your description, the Linux guest tries to access GIC_CPU_IF_ADDR
-but ends up accessing SCU_ADDR? Maybe the issue is with the
-arm_boot_info::gic_cpu_if_addr address we pass to the guest? Maybe
-the secondary reset code is corrupted?
-
-static const ARMInsnFixup smpboot[] = {
-     { 0xe59f2028 }, /* ldr r2, gic_cpu_if */
-     { 0xe59f0028 }, /* ldr r0, bootreg_addr */
-     { 0xe3a01001 }, /* mov r1, #1 */
-     { 0xe5821000 }, /* str r1, [r2] - set GICC_CTLR.Enable */
-     { 0xe3a010ff }, /* mov r1, #0xff */
-     { 0xe5821004 }, /* str r1, [r2, 4] - set GIC_PMR.Priority to 0xff */
-     { 0, FIXUP_DSB },   /* dsb */
-     { 0xe320f003 }, /* wfi */
-     { 0xe5901000 }, /* ldr     r1, [r0] */
-     { 0xe1110001 }, /* tst     r1, r1 */
-     { 0x0afffffb }, /* beq     <wfi> */
-     { 0xe12fff11 }, /* bx      r1 */
-     { 0, FIXUP_GIC_CPU_IF }, /* gic_cpu_if: .word 0x.... */
-
-Can you check ^^^ this value?
-
-Maybe this code has to be updated for your WFE use case?
-
-> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-> Suggested-by: Arnd Bergmann <arnd@linaro.org>
-> ---
->   hw/arm/npcm7xx.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/hw/arm/npcm7xx.c b/hw/arm/npcm7xx.c
-> index c2bbcd89dbc..c27f149c04a 100644
-> --- a/hw/arm/npcm7xx.c
-> +++ b/hw/arm/npcm7xx.c
-> @@ -492,7 +492,7 @@ static void npcm7xx_realize(DeviceState *dev, Error **errp)
->       /* CPUs */
->       for (i = 0; i < nc->num_cpus; i++) {
->           object_property_set_int(OBJECT(&s->cpu[i]), "reset-cbar",
-> -                                NPCM7XX_GIC_CPU_IF_ADDR, &error_abort);
-> +                                NPCM7XX_CPUP_BA, &error_abort);
->           object_property_set_bool(OBJECT(&s->cpu[i]), "reset-hivecs", true,
->                                    &error_abort);
->   
+diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
+index 7fc6fae9673..84810b0eadd 100644
+--- a/hw/arm/Kconfig
++++ b/hw/arm/Kconfig
+@@ -724,6 +724,7 @@ config AXIADO_SOC
+     select ARM_GIC
+     select CADENCE # UART
+     select AXIADO_CLK
++    select CADENCE_GPIO
+     select AXIADO_SDHCI
+     select UNIMP
+ 
+diff --git a/hw/arm/ax3000-soc.c b/hw/arm/ax3000-soc.c
+index 159385cf913..98b4f1697ce 100644
+--- a/hw/arm/ax3000-soc.c
++++ b/hw/arm/ax3000-soc.c
+@@ -36,6 +36,11 @@ static void ax3000_init(Object *obj)
+ 
+     object_initialize_child(obj, "clk", &s->ax3000_clk, TYPE_AX3000_CLK);
+     object_initialize_child(obj, "sdhci0", &s->sdhci0, TYPE_AXIADO_SDHCI);
++
++    for (int i = 0; i < AX3000_NUM_GPIOS; i++) {
++        g_autofree char *name = g_strdup_printf("gpio%d", i);
++        object_initialize_child(obj, name, &s->gpio[i], TYPE_CADENCE_GPIO);
++    }
+ }
+ 
+ static void ax3000_realize(DeviceState *dev, Error **errp)
+@@ -183,6 +188,31 @@ static void ax3000_realize(DeviceState *dev, Error **errp)
+                             blk_by_legacy_dinfo((drive_get(IF_SD, 0, 0))),
+                             &error_fatal);
+     qdev_realize_and_unref(card, s->sdhci0.sd_bus, &error_fatal);
++
++    /* GPIOs */
++    for (int i = 0; i < AX3000_NUM_GPIOS; i++) {
++        struct {
++            hwaddr addr;
++            unsigned int irq;
++        } gpio_table[] = {
++            { AX3000_GPIO0_BASE, AX3000_GPIO0_IRQ },
++            { AX3000_GPIO1_BASE, AX3000_GPIO1_IRQ },
++            { AX3000_GPIO2_BASE, AX3000_GPIO2_IRQ },
++            { AX3000_GPIO3_BASE, AX3000_GPIO3_IRQ },
++            { AX3000_GPIO4_BASE, AX3000_GPIO4_IRQ },
++            { AX3000_GPIO5_BASE, AX3000_GPIO5_IRQ },
++            { AX3000_GPIO6_BASE, AX3000_GPIO6_IRQ },
++            { AX3000_GPIO7_BASE, AX3000_GPIO7_IRQ }
++        };
++
++        if (!sysbus_realize(SYS_BUS_DEVICE(&s->gpio[i]), errp)) {
++            return;
++        }
++
++        sysbus_mmio_map(SYS_BUS_DEVICE(&s->gpio[i]), 0, gpio_table[i].addr);
++        sysbus_connect_irq(SYS_BUS_DEVICE(&s->gpio[i]), 0,
++                           qdev_get_gpio_in(gic_dev, gpio_table[i].irq));
++    }
+ }
+ 
+ static void ax3000_class_init(ObjectClass *oc, const void *data)
+diff --git a/include/hw/arm/ax3000-soc.h b/include/hw/arm/ax3000-soc.h
+index 52b47aa8294..344fcb6f3c2 100644
+--- a/include/hw/arm/ax3000-soc.h
++++ b/include/hw/arm/ax3000-soc.h
+@@ -13,6 +13,7 @@
+ #include "hw/intc/arm_gicv3_common.h"
+ #include "hw/char/cadence_uart.h"
+ #include "hw/misc/axiado_clk.h"
++#include "hw/gpio/cadence_gpio.h"
+ #include "hw/sd/axiado_sdhci.h"
+ #include "hw/core/sysbus.h"
+ #include "qemu/units.h"
+@@ -38,6 +39,15 @@ OBJECT_DECLARE_TYPE(Ax3000SoCState, Ax3000SoCClass, AX3000_SOC)
+ #define AX3000_SDHCI0_BASE      0x86000000
+ #define AX3000_EMMC_PHY_BASE    0x80801C00
+ 
++#define AX3000_GPIO0_BASE       0x80500000
++#define AX3000_GPIO1_BASE       0x80580000
++#define AX3000_GPIO2_BASE       0x80600000
++#define AX3000_GPIO3_BASE       0x80680000
++#define AX3000_GPIO4_BASE       0x80700000
++#define AX3000_GPIO5_BASE       0x80780000
++#define AX3000_GPIO6_BASE       0x80800000
++#define AX3000_GPIO7_BASE       0x80880000
++
+ #define AX3000_TIMER_CTRL       0x8A020000
+ #define AX3000_PLL_BASE         0x80000000
+ 
+@@ -46,6 +56,7 @@ enum Ax3000Configuration {
+     AX3000_NUM_IRQS     = 224,
+     AX3000_NUM_BANKS    = 2,
+     AX3000_NUM_UARTS    = 4,
++    AX3000_NUM_GPIOS    = 8,
+ };
+ 
+ typedef struct Ax3000SoCState {
+@@ -56,6 +67,7 @@ typedef struct Ax3000SoCState {
+     MemoryRegion        dram[AX3000_NUM_BANKS];
+     Ax3000ClkState      ax3000_clk;
+     CadenceUARTState    uart[AX3000_NUM_UARTS];
++    CadenceGPIOState    gpio[AX3000_NUM_GPIOS];
+     AxiadoSDHCIState    sdhci0;
+ } Ax3000SoCState;
+ 
+@@ -72,6 +84,15 @@ enum Ax3000Irqs {
+     AX3000_UART3_IRQ    = 170,
+ 
+     AX3000_SDHCI0_IRQ   = 123,
++
++    AX3000_GPIO0_IRQ    = 183,
++    AX3000_GPIO1_IRQ    = 184,
++    AX3000_GPIO2_IRQ    = 185,
++    AX3000_GPIO3_IRQ    = 186,
++    AX3000_GPIO4_IRQ    = 187,
++    AX3000_GPIO5_IRQ    = 188,
++    AX3000_GPIO6_IRQ    = 189,
++    AX3000_GPIO7_IRQ    = 190,
+ };
+ 
+ #endif /* AXIADO_AX3000_H */
+-- 
+2.34.1
 
 
