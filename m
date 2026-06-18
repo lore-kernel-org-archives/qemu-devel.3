@@ -4,98 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D7B9CD98ED
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jun 2026 08:35:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C842DCD98F0
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jun 2026 08:38:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wa8DK-0001mK-6c; Thu, 18 Jun 2026 04:35:06 -0400
+	id 1wa8GT-0002Z5-P9; Thu, 18 Jun 2026 04:38:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wa8DI-0001lh-IZ
- for qemu-devel@nongnu.org; Thu, 18 Jun 2026 04:35:05 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wa8GS-0002Yx-KB
+ for qemu-devel@nongnu.org; Thu, 18 Jun 2026 04:38:20 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wa8DG-0003K9-Ae
- for qemu-devel@nongnu.org; Thu, 18 Jun 2026 04:35:04 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wa8GR-0005ND-6b
+ for qemu-devel@nongnu.org; Thu, 18 Jun 2026 04:38:20 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781771700;
+ s=mimecast20190719; t=1781771898;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=fFnHcI1F8cbtT+efTjYgEEp5Lz4UBfLqhlI1aYUrIIQ=;
- b=SjYI9Qc7L3U3+jmd0XKZz39MISDuFWGtZ3mYqGn96kzqMkVQYNDP5NN5tmhogRK1wuFcrA
- iZpJDEvjYmxhmAPdG093/Pek+hTFkO50rCDGhMMcIJ1qaXeKuF4765cqKLGz+ArIXa59P6
- QPDhMiU/HPe5qnBhPYTNwcu8BRGTsnw=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=KwHyiyBt0SHfx7Bm/NO2ouQKWdz7vxLroWR8DpDWZyY=;
+ b=W40B/iDUAKdV7Cu+q+QW9eb5rjKg/MPTqzPD9/eCGcvcWOyrXqxqGBw/Tk5479LqFYeByR
+ KeL/U3hhn9+7iAxR1rYOHNwXP0c8bVr4PQPgBsbFaN4jRm2zjBQGGAPeCjlxunK2kSGj08
+ fDCU8jk0QpcNI3VbJqFzV+2nYCEARe0=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-490-ZxjdwLB5PAqmVNS7aVF0hg-1; Thu, 18 Jun 2026 04:34:59 -0400
-X-MC-Unique: ZxjdwLB5PAqmVNS7aVF0hg-1
-X-Mimecast-MFC-AGG-ID: ZxjdwLB5PAqmVNS7aVF0hg_1781771698
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-461a159d77aso233334f8f.0
- for <qemu-devel@nongnu.org>; Thu, 18 Jun 2026 01:34:58 -0700 (PDT)
+ us-mta-278-yAc17wauPQaj4IqruMnECA-1; Thu, 18 Jun 2026 04:38:15 -0400
+X-MC-Unique: yAc17wauPQaj4IqruMnECA-1
+X-Mimecast-MFC-AGG-ID: yAc17wauPQaj4IqruMnECA_1781771894
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-490a060eb84so3996005e9.0
+ for <qemu-devel@nongnu.org>; Thu, 18 Jun 2026 01:38:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1781771698; x=1782376498; darn=nongnu.org;
+ d=redhat.com; s=google; t=1781771894; x=1782376694; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=fFnHcI1F8cbtT+efTjYgEEp5Lz4UBfLqhlI1aYUrIIQ=;
- b=XawAp+Qz1ebc7WlQs85FDfGFqPHGdCuIVrHM5v4uVgxtCZ9ZNoUTKyoWId5qrGcoie
- vl1KZHQynSEsp/EqgGS1gCLo0dEaa7+Mb3ZDbNxxpTe/Ow4NTcVq7iE+u23lqPRyyDDM
- wvGaFPhBi8BdGOiMQLZezEmtQL9qxlsbNm2PKKqhPIvCO6+h6oVznXxddL0pOhAZxQWq
- VNWnl8EBONU3Ld0ED+g7g3phJU63MCfrhNoTvos09pkFoQxKarDMeVH3NujINaXDpJTg
- 93VqXgeVeZkPZyptwNz/S/O7FCQ1KKD7UO38zyabJjzYyjwXiFw0xWUxGve4RzYeNJUv
- H/QQ==
+ bh=KwHyiyBt0SHfx7Bm/NO2ouQKWdz7vxLroWR8DpDWZyY=;
+ b=dnoPd6KY92xgMNuwU3AmmLg5+slPXryCwyD1VshBzTu5S28bXITQ62dwadK7UcOOmy
+ 7pC5uvl2t+mn3QcItykwOAz+W3+xhrOyO409zFHyVKUS1CvelYK3hVqaUokdJQI+/Cyk
+ EjachBf7gC7a0p5tcfoHenld0pOtY0i6q0hWHn5Qp5IxstUavZ4yCL19NQ3dE2EEGWWY
+ 1e7+Bg2+esyfvPhQGCh1NEtGktd+DviRvcRkPQVGOJMdlnuORrdTDXoNmY+R95YMt7Jj
+ nH9derjOfy02I0mLGDF5ik2w/wwvAD0difCxKIM1NF/yQMiLcw7WHp9mHeVoPhUzWhWk
+ AmLQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781771698; x=1782376498;
+ d=1e100.net; s=20251104; t=1781771894; x=1782376694;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=fFnHcI1F8cbtT+efTjYgEEp5Lz4UBfLqhlI1aYUrIIQ=;
- b=CuPyRcPT09TfmYX0GUCRTNYLVk7wt4LNPo60mxP+5buqJ5qhlWqieYrnznKjDBtbxs
- 68GRGBrazuGDHKvPZF8D05A+yqO0XCFwmrvTuwiLpW332haQmL0Xwrnlztwihqtt1OBK
- W0vbJUsk00NGtd3frAv+b+iOsJazE+nz/JQ9oCiI24uUN3A2vb/yRavY2ufqF5/fwAxg
- +ZRMWRHwPgmcRRXCnhU/xrw/z0pyHA4mObBs2ByLoO6spagikZ4Hnm+NLUffDvc4xkdU
- j4XaTRLILuSPzeHDsZIKluapqwtZ2HLbp3ulXfSDgZ4vw6kG5wL/GK1zbu9rBhn2u/Wn
- 2bdA==
-X-Forwarded-Encrypted: i=1;
- AFNElJ++AWnTES0qo534dTwMkghgaaTssj69v/IV5o6+FFq/hqqTp+7gOoYLUivg5me0ZzgIpjH9wZJsoCqf@nongnu.org
-X-Gm-Message-State: AOJu0Yzak8iEFoLePvGbM1pT/cyMLnnnWyUJEdRlwnWCPc3MbI9tOonD
- k8+qrbYmfqnv9tt67/BzovfrFqcwrW1Ve4WqLpmrV6XWzOou3Uhozg9wldEbsQrgo8AzOFR1XYL
- /UeDZe+UzdMLCuP0nnVe8fV6YKMnbhR9W32g20IjTwYeXXp3fQjIQxBBm
-X-Gm-Gg: AfdE7cneuMjoCEba3v1ZYupHsK823gFa+V6Aa5vqjoOrsVt9OktV107vJOMAWqO7rfO
- Y5bQrQ21UkuBF5lpmqY271DcryA9KUzNtBrbpI9N850b3Ae1f34KTWh3yyvsIOE5/CJAzhltgn7
- CrsRxYVFk7y/fdwVodLTlDkW4PDZRqDaSAyjSJ8OwWC00RJ6dMAjzWZEbnL62+HNug8b/rXinNW
- o6Y2AvEiBOtEIz4T0lEgKn5y4q2VaPEozollPOp/3tdexNVypirm4dBwBH8hB2QcFSVXhLmMjQB
- UmuFSc3Ny+bcTJVNcGZUU0YWq3doVQZj/N/EKva4WIoOljZR9y7ayNaF76/d+Zr+O3EJ1KA3zzH
- mbdk1Hv1Zclz/FPyvvmxtHJIMKHzlIU/DfY35JjB46sNLqW5r4g==
-X-Received: by 2002:a05:6000:22c1:b0:45e:f073:d2fd with SMTP id
- ffacd0b85a97d-463ab043b63mr3933948f8f.9.1781771697703; 
- Thu, 18 Jun 2026 01:34:57 -0700 (PDT)
-X-Received: by 2002:a05:6000:22c1:b0:45e:f073:d2fd with SMTP id
- ffacd0b85a97d-463ab043b63mr3933822f8f.9.1781771696280; 
- Thu, 18 Jun 2026 01:34:56 -0700 (PDT)
+ bh=KwHyiyBt0SHfx7Bm/NO2ouQKWdz7vxLroWR8DpDWZyY=;
+ b=TdhcmwE5V7C0d4JoRiVKtqEV1DTet/PDjI91BAGZBQ/9kgGQXWdxKaqRLvhvfD0vym
+ vA1Bofv/k2WxbUrVbMYypnp9y15BMgRvNniRygg/taRmjl/U+wpZ9xyX4B1MBGL7IrFb
+ JsOEBudVzOxUzSvWAeWlhhuIfCg1+Vz4ih7yWX0STHY+MOpwBeIHRkzM+PMCZfB3Y9zg
+ j/x/mnuOvBwf69oNx25MbNhi2mHI5/ukQiRP0B7K7+iESbB34LnCsABP8dIvxBcBIoup
+ EywYBg87XsrFSdkBAyywvGg0SD4WCr/aUzsX3TL0wW76atcjIDLfIt53ewLRzsrrfwe3
+ Y8mg==
+X-Gm-Message-State: AOJu0Ywx/D8x2Yvutm25qG4j7uewTWeCnxsEQQJvDZY39EvMZJKNrqdQ
+ 91G8QqNx9JL87r96qC7wQ27+3bo+a2d90mhuxkemzlrFyOjeDSZGXlKGKnQVsJ5ngZpEGO8pZ2h
+ aBycwE7aUdWjuhxbKGgOYK45aq/2+zRHYvH44T8gOnkpW7Mie32G0TxgM
+X-Gm-Gg: AfdE7cn+En/+QyRdsX87cRzk4kfkxA0hZc4aoMS/8GRN5v1S64RVUOc6t1OBL4gfEJL
+ xEuKgV8J47mrQ9LZNxjZSOEbM4IQDcw0BCrZ/0ToHE/6VxAYfVt16uagxZZ9ixC+6TDaniINSQ7
+ g1DUS+zQKhCVD+4f6W6S+fFOGi6zorU1rznTwT3mft2dZEpO1QouB52IR/ji8x0ohqNpjAJD5nA
+ dXPWzR4apk1XSfLJaz5Sca49r9JSqzZoA+4gLzNzQXLm4T9osQGDuS7ACJXHrNQSY3JlT2gpHpr
+ KQNjbSuDyf1xxLUEhmh9xlBmRLeu0hpQcMeVPlfnxydhD8ATu4WOoQ7vN0Q28MpPfOZdXd1tq2V
+ eVlehujMulVlhWmglnBph4bEV554WlVRBruzifF+i4G9FnRklwQ==
+X-Received: by 2002:a05:600c:4e54:b0:490:d32b:39d6 with SMTP id
+ 5b1f17b1804b1-4923412f17amr117379835e9.19.1781771894069; 
+ Thu, 18 Jun 2026 01:38:14 -0700 (PDT)
+X-Received: by 2002:a05:600c:4e54:b0:490:d32b:39d6 with SMTP id
+ 5b1f17b1804b1-4923412f17amr117379205e9.19.1781771893491; 
+ Thu, 18 Jun 2026 01:38:13 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:280:24f0:576b:abc6:6396:ed4a?
  ([2a01:e0a:280:24f0:576b:abc6:6396:ed4a])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4640144c021sm3765452f8f.32.2026.06.18.01.34.55
+ 5b1f17b1804b1-4923a1d585esm33693675e9.2.2026.06.18.01.38.11
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 18 Jun 2026 01:34:55 -0700 (PDT)
-Message-ID: <e4c5461f-3bc6-4796-a142-ac4a2ce7f719@redhat.com>
-Date: Thu, 18 Jun 2026 10:34:54 +0200
+ Thu, 18 Jun 2026 01:38:12 -0700 (PDT)
+Message-ID: <61fefad6-af44-42db-8913-14bd274b4833@redhat.com>
+Date: Thu, 18 Jun 2026 10:38:11 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 0/7] vfio/igd: Fix garbled screen on IGD passthrough
- with legacy VBIOS
-To: K S Maan <kirandeepmaan45@gmail.com>, Tomita Moeko
- <tomitamoeko@gmail.com>, qemu-devel@nongnu.org
-Cc: Alex Williamson <alex@shazbot.org>, "Michael S. Tsirkin" <mst@redhat.com>
-References: <20260617100646.28326-1-tomitamoeko@gmail.com>
- <9268e0d9-c62b-4b9e-9d7b-d15bb4ecbdde@gmail.com>
+Subject: Re: [PATCH v3 07/14] migration: Make switchover-ack re-usable
+To: Avihai Horon <avihaih@nvidia.com>, Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, Alex Williamson <alex@shazbot.org>,
+ Fabiano Rosas <farosas@suse.de>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
+ Zhao Liu <zhao1.liu@intel.com>, Halil Pasic <pasic@linux.ibm.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Jason Herne <jjherne@linux.ibm.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Ilya Leoshkevich <iii@linux.ibm.com>, David Hildenbrand <david@kernel.org>,
+ Eric Farman <farman@linux.ibm.com>, Matthew Rosato <mjrosato@linux.ibm.com>,
+ Cornelia Huck <cohuck@redhat.com>, Eric Blake <eblake@redhat.com>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ John Snow <jsnow@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Maor Gottlieb <maorg@nvidia.com>
+References: <20260609075812.32067-1-avihaih@nvidia.com>
+ <20260609075812.32067-8-avihaih@nvidia.com> <aiww8tN6dRLA3t_R@x1.local>
+ <e4d00894-990b-44b3-b89c-7cd1b0398a0a@nvidia.com> <ai__gjsVcZs_ecLc@x1.local>
+ <9605d542-f797-4ac4-bb62-966a77ffd361@nvidia.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Autocrypt: addr=clg@redhat.com; keydata=
@@ -141,9 +152,9 @@ Autocrypt: addr=clg@redhat.com; keydata=
  HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
  izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
  uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <9268e0d9-c62b-4b9e-9d7b-d15bb4ecbdde@gmail.com>
+In-Reply-To: <9605d542-f797-4ac4-bb62-966a77ffd361@nvidia.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
@@ -168,112 +179,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/18/26 09:02, K S Maan wrote:
-> Tested-by: K S Maan<kirandeepmaan45@gmail.com>
+>>>>> diff --git a/hw/core/machine.c b/hw/core/machine.c
+>>>>> index 4d8b15d99e..8219f13779 100644
+>>>>> --- a/hw/core/machine.c
+>>>>> +++ b/hw/core/machine.c
+>>>>> @@ -43,6 +43,7 @@ GlobalProperty hw_compat_11_0[] = {
+>>>>>        { "chardev-vc", "encoding", "cp437" },
+>>>>>        { "tpm-crb", "cap-chunk", "off" },
+>>>>>        { "tpm-crb", "x-allow-chunk-migration", "off" },
+>>>>> +    { "migration", "switchover-ack-legacy", "on" },
+>>>>>    };
+>>>> This line needs to be moved to the last patch, or people will get very
+>>>> confused on last patch flipping default without caring about old behavior..
+>>> This patch Implements the compatibility flows for legacy switchover-ack
+>>> which use this property, so moving this line to last patch sounds even more
+>>> confusing IMHO.
+>> My comment only applies to this one line to change hw_compat_11_0[], not
+>> the property itself.  It won't affect this patch.  It's common pattern to
+>> do this in one patch to "update default value, but let's keep the old
+>> machines unaffected".
+>>
+>> Btw, since this value still has a default value ON in this patch, moving
+>> this line to the last patch won't change anything except making last patch
+>> clearer.
+> 
+> Alright, I'll move it to last patch.
+> 
+> Cedric, would you like me to send v4 for this?
 
+Yes please.
+
+I think this series is ready for merge. So I have asked our QE
+to test it a bit. Should be done next week. Once done, I will
+send a vfio MR.
 
 Thanks,
 
-
-Shouldn't this series include a Resolves trailer for :
-
-   https://gitlab.com/qemu-project/qemu/-/work_items/3093
-
-
-
-What about :
-
-   https://gitlab.com/qemu-project/qemu/-/work_items/3535
-
-Should it be closed ?
-
 C.
 
-> 
-> On 6/17/26 3:36 PM, Tomita Moeko wrote:
->> This series fixes the regression that on IGD passthrough with legacy
->> BIOS boot and VBIOS, the screen is garbled during BIOS POST and GRUB
->> (which uses standard VGA output routines), starting from QEMU 10.0.
->> Though the kernel i915 driver still works, it reports an error about
->> the initial GTT programmed by VBIOS is using invalid address.
->>
->> i915 0000:00:02.0: [drm] *ERROR* Initial plane programming using invalid range, dma_addr=0x00000000db200000 ((null) [0x00000000baf00000-0x00000000beefffff])
->>
->> With the help of AI disassembling the VBIOS image dumped from host, it
->> is found that the VBIOS itself implements a routine like:
->>
->>      uint32_t get_BDSM() {
->>          static uint32_t saved = 0;
->>          if (saved != 0) {
->>              return saved;
->>          }
->>          return read_pci_config(BDSM_REG);
->>      }
->>
->> And the saved value is not cleared after initialization. Given that IGD
->> devices don't have a real ROM BAR, the VBIOS image read by default from
->> host is actually the VBIOS shadow RAM region, containing host-side
->> modifications like the saved BDSM value above during POST. When the
->> image is executed in guest, it still uses the saved host BDSM (HPA)
->> instead of the value programmed by SeaBIOS in config space (GPA). This
->> address mismatch leads to the garbled screen and i915 error.
->>
->> The previous solution, c4c45e943e51 ("vfio/pci: Intel graphics legacy
->> mode assignment"), adjusts GTT entry addresses to (addr - host BDSM +
->> guest BDSM) to workaround that. But it is removed in 5aed8b0f0be2
->> ("vfio/igd: Remove GTT write quirk in IO BAR 4") due to inconsistent
->> values in MMIO BAR0 and IO BAR4. Considering it's unsafe to expose HPA
->> to guest, a ROM quirk clearing the saved value in VBIOS image is
->> introduced to fix the issue.
->>
->> During debugging, it is also found that IGD VBIOS ROM doesn't always
->> match the actual IGD device ID, due to the fact that IGD of the same
->> CPU family has multiple device IDs but shares the same ROM image.
->> However, SeaBIOS checks the device ID strictly and refuses to run if
->> IDs does not match. Currently only the default path, reading ROM from
->> kernel patches the device ID, but the romfile path doesn't. So the ROM
->> ID patching logic is also refactored in this patch series to also handle
->> the romfile path.
->>
->> These changes are tested on Haswell platform with legacy BIOS boot, by
->> K S Maan. Thanks to K S Maan for continuous help on locating and testing
->> the issue!
->>
->> Resolves:https://gitlab.com/qemu-project/qemu/-/work_items/3093
->> Reported-by: K S Maan<kirandeepmaan45@gmail.com>
->>
->> Changelog:
->> v3:
->> * Refactor ROM checksum calculation and patching logic as Alex's comment
->> * Fix boundary checks as comments in v2.
->> Link:https://lore.kernel.org/all/20260608134559.23971-1-tomitamoeko@gmail.com/t
->>
->> v2:
->> * New patch 2/7 to fix regression with EFI option ROMs
->> * Refine logic in ROM ID and checksum patching
->> * Reorder patch 4 and 5 for cleaner bisection
->> * Address comments from v1
->> Link:https://lore.kernel.org/all/20260603173355.36121-1-tomitamoeko@gmail.com/t
->>
->> Tomita Moeko (7):
->>    hw/pci: Recalculate option ROM checksum before patching ID
->>    hw/pci: Skip EFI option ROM in pci_patch_ids()
->>    hw/pci: Introduce rom_need_patch_id flag in PCIDevice
->>    hw/pci: Promote pci_patch_ids() to public pci_rom_patch_ids()
->>    vfio/igd: Toggle rom_need_patch_id flag on IGD devices
->>    vfio/pci: Use pci_rom_patch_ids() for IGD ROM ID patching
->>    vfio/igd: Clear saved BDSM in legacy VBIOS ROM at load time
->>
->>   hw/pci/pci.c                |  57 ++++++++++------
->>   hw/vfio/igd-stubs.c         |   5 ++
->>   hw/vfio/igd.c               | 132 ++++++++++++++++++++++++++++++++++--
->>   hw/vfio/pci-quirks.c        |   5 ++
->>   hw/vfio/pci.c               |  33 ++-------
->>   hw/vfio/pci.h               |   3 +
->>   hw/vfio/trace-events        |   1 +
->>   include/hw/pci/pci.h        |   3 +
->>   include/hw/pci/pci_device.h |   1 +
->>   9 files changed, 186 insertions(+), 54 deletions(-)
->>
 
 
