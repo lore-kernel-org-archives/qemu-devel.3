@@ -4,114 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD4F3CD98ED
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jun 2026 16:39:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E843FCD98ED
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jun 2026 16:41:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1waFmJ-0003GF-Sc; Thu, 18 Jun 2026 12:39:43 -0400
+	id 1waFnD-0003wl-RB; Thu, 18 Jun 2026 12:40:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1waFmI-0003Eg-Bg
- for qemu-devel@nongnu.org; Thu, 18 Jun 2026 12:39:42 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1waFmG-0000Ke-DD
- for qemu-devel@nongnu.org; Thu, 18 Jun 2026 12:39:42 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781800778;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=0HU149pILsYFHp+w/r1Omz+v+aCGxUy6qZnDW1qXOmw=;
- b=djhPLL1BB2cT3qDEg3R9Mlgz+bYPr5IMLTXKiD2SR3NdUA+phQ7mvmt0frNW8xIvJ+KNSY
- 59EbDJ/1xacywdLRyvCbZeLrBYU11P6axgG+wha+/bRaJDqKY1exJhWXQT2BlCFj1KPkAs
- 0pk1IEh3krQGG69l12yI+9eyctmB6Jc=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-439-r_uiq78-Oce6I5G87EZd6g-1; Thu, 18 Jun 2026 12:39:36 -0400
-X-MC-Unique: r_uiq78-Oce6I5G87EZd6g-1
-X-Mimecast-MFC-AGG-ID: r_uiq78-Oce6I5G87EZd6g_1781800776
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-490b93debc8so8207845e9.1
- for <qemu-devel@nongnu.org>; Thu, 18 Jun 2026 09:39:36 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1waFn5-0003wZ-6z
+ for qemu-devel@nongnu.org; Thu, 18 Jun 2026 12:40:31 -0400
+Received: from mail-pg1-x529.google.com ([2607:f8b0:4864:20::529])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1waFn3-0000sd-LI
+ for qemu-devel@nongnu.org; Thu, 18 Jun 2026 12:40:30 -0400
+Received: by mail-pg1-x529.google.com with SMTP id
+ 41be03b00d2f7-c855599a77aso603226a12.0
+ for <qemu-devel@nongnu.org>; Thu, 18 Jun 2026 09:40:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1781800775; x=1782405575; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:from:to
- :cc:subject:date:message-id:reply-to;
- bh=0HU149pILsYFHp+w/r1Omz+v+aCGxUy6qZnDW1qXOmw=;
- b=KCph7IFPrJROf39EhvxUAZFk9YmF210JA/yt9KPMA1LObQeP1iYoc6hRJlH2JSdryX
- ekK/lGsKqSvLz1yoj21Tb9iKXuo7H8pZ3yS0bmacuNfnZS+ja2bJEw8StV6h+KZubmLh
- pPmbeEFXmrZ1hueGaQWzWAlRtq7wk3B6ng/aAk00X5Dh013LzT/49RoSi07q2WUMoPi0
- whb8AMKN+TCNT1pgnbnD1Ou6gq7uXhLkI7t1SO9vn8zr6Li0fnpiIFFsrjQeiWVkXZVi
- BRf5TnX8o1ViDi5GiSQpja86LPvRFr7YEXLXzT5lN26L9dEwW5ftFedwuD0XcDAv2nkS
- bIdQ==
+ d=linaro.org; s=google; t=1781800827; x=1782405627; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=aj4Rs4VF3vyG1MUFWZRlfYSO8RUHcZIrumLmSbNWmCU=;
+ b=A0yVTGGTpm2w+SnWgPQw/UByUaxVkfrD+K/X1dLwa8I4Xe/I2jh/vGuNP+daRX145C
+ WD8bhA41zCl8Y+MowHD6p/nNCeNAPRL2L4vEhUuU7tbmcebAZitv6LnrqGpXO/DYRy56
+ wnC+dVAFig1og5Z7Fx7gJPbnkPfJxuKv3+DxcYdTxB2zbW4f4reNILVIuG4grwDt1SEX
+ LbOZAhuWP0AwwvgSwP5c+cK92e/LfHXhEjjWeqVQXR6ceI4DdLe26D4FJQL70TrqH2E0
+ SXZCTwIYDOD+0kOEka42Lpcmr12F8V9A5S5/Ed9LJffsmJLcI6N0RM0J+ZJcoir1LuJE
+ fZ5g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781800775; x=1782405575;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=0HU149pILsYFHp+w/r1Omz+v+aCGxUy6qZnDW1qXOmw=;
- b=NNqiVsLsawI/MdafFFr4UQilirnRinvbvy66RlO2QZou6O5OMnDg2OiCp/sknWxtkl
- M7VqYxgKWZ8oXxRqc2PHQ0rOTRtUsJf2vPxcFXINmzFwNcTqd3RRFOWaKRj5jGkR/lvG
- oSuAzpSgR/YPuoyOhxs4Ew4MVOy5Wd+PlKvXc3j8/aIaM36iGIj+iHVAUOWNMppZotMp
- 78wRMV1Gz0qNZ20/Akl5ArDDJv+TbpSRrxr9PdnumBBehgvqT2n768e2GoXoVtvnCNq3
- fbDqH4Rjl1PNKlQmau1yuHJf5+C3r8+Nxu4FS9KBSgr6CklFl+cOV5Ie8pxMPS6FBliC
- d/dw==
-X-Gm-Message-State: AOJu0Yy6JMk56jPQ0pNCmIg7GKPqLnmFIo0jNo7ztRI2AD5NZ/jkBB41
- viipPTZlcrqkgIBaaunTGVRb0yCx7gHkUrDwQ15WNu+EJZmA6Vf6bbIsS34DWo8UmtYeg1MdUAS
- xMppDDASclL5jFLe4nXXGwc8U3IjuLC7BjFYYVY66i/i2qgVPMCMnBuqF
-X-Gm-Gg: AfdE7cmlWqTyHo5GRkxuJpGpZ4kQ2oH/m/0h1cZdE8U8GQZsoZ3BeIgs4x+UONu4XrI
- +Lp7R8GsbwTKQoEjwwx8Lx7WB7Io5xJ2bNT3VXpHHQ+nXzFq6cItHWdI1W8C6wuLqBvO1BC+pca
- sp5FyqSizBUCBFI99sV4yx8lJ2mols/0AdjZlBre+wiAwuOb8er4sE5NPUEtnODpMqXHGhJoK7+
- Qt3kLXXqaxIk/DpXTZyaEcjQfZQ/g6tndtLbjqgVhV+s5VccU0tFUrp4XRO89JkrHN0pCH8RdTC
- WNs65hhlRiHfYJWvLoQlx5Y2iTrSJY0wGBnBWqiSa7JZWxIzrK+ZCVZ7+WXLcdLHNZBxd996s7i
- nlgLXZktJgWpyrFsqy9yClVpQ/17WGB1n
-X-Received: by 2002:a05:600c:8b24:b0:48a:93f8:dd02 with SMTP id
- 5b1f17b1804b1-4923f439be6mr5772605e9.14.1781800775382; 
- Thu, 18 Jun 2026 09:39:35 -0700 (PDT)
-X-Received: by 2002:a05:600c:8b24:b0:48a:93f8:dd02 with SMTP id
- 5b1f17b1804b1-4923f439be6mr5772065e9.14.1781800774865; 
- Thu, 18 Jun 2026 09:39:34 -0700 (PDT)
-Received: from redhat.com (IGLD-80-230-85-71.inter.net.il. [80.230.85.71])
+ d=1e100.net; s=20251104; t=1781800827; x=1782405627;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=aj4Rs4VF3vyG1MUFWZRlfYSO8RUHcZIrumLmSbNWmCU=;
+ b=ojm5NInnisi7SVVTTMbzYcIsxM1Cw99wJx59VuU5AMawmzTjRtQ8mM/DkwrMRMWHU0
+ Sw5pxiEXtFdbmhz0fOU9HsmrVijQOCh9Uo7N1BFz2y1BsylymeuQ43LbwyHLUgAN7jf/
+ gfcXKV49F/6NJ3PWEIE0GOeLVq1QUWUM9g2mbZBTtju5JT1lbEx1SSLlp3BkT2cNNmea
+ M4KD3MNjn3+Ks/WXSbOXFr5DzHYthgswezP5XK+6LT3TR0bNFmj90UOK1Z65XV73jMay
+ 2h+4gvDT1f03lwXEqxwmWzaYq0663nAJ23RRfr9BjqJu1eezbaQScLYoAKUkLcdLG/ZM
+ f7Gw==
+X-Gm-Message-State: AOJu0YzuIf4xS3+BA6QNIO86qt4+PP47vAg4AbvwBZuPH6u0kr2vamUh
+ nH2D8/4kCKdG1ynaKFovPndA7Jm+Lte+ItiUgqlr7bdlNEG0PzSPtrdoorSb1ALDqNY=
+X-Gm-Gg: AfdE7ckCtS0IMsH5KOgg1okPeUJe2yaD0agY4C3UWHSxtIFjNNiUe08mb6gmF6SvVms
+ WJn6wAIf9JIDIg4yu2+4PqX3kO6ZV9+qXnMgqkmNGuR8iOo7dHLEe4p3pA4IK3fVNZEn/pKNGKc
+ +9sAJKaMM/z53xMAg0YZHBtjZO3fD8bk6DXZoy0v6uygzgQBZZJQcPImHBfsH4Zb9DKPvsdaW46
+ ErzjmsBL0TZdl7Z94Yz0Tet89hLE7NxwBlUVNWDpF4lhhyi3sFwV71CQDAaEiOBJA20/EwOHGKc
+ FuQC+cdRtWpRL+UaKkRFESrcrTUOcVSmm7T4s5XEk9ZtOjv8ybNTdWhi5+MZsawL2UzpmAlY+gO
+ 8ZpolvF6fJMEdKBX/FP0X778hYKMvJIDMixqG9tYBM9hhWxBg887351taaHwiCeEFVqTOQKcyaS
+ U9MVaUg+nG0rZLdVZ1RMxPF3txnr1AnV2QcvbYTFIwOSZdl7cffsG1UWAf5Q==
+X-Received: by 2002:a17:903:38cc:b0:2c0:d9b7:b7b0 with SMTP id
+ d9443c01a7336-2c6bc24e17fmr101710075ad.31.1781800827443; 
+ Thu, 18 Jun 2026 09:40:27 -0700 (PDT)
+Received: from [192.168.0.4] (174-21-129-215.tukw.qwest.net. [174.21.129.215])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4650b76e7c9sm73355f8f.21.2026.06.18.09.39.33
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 18 Jun 2026 09:39:34 -0700 (PDT)
-Date: Thu, 18 Jun 2026 12:39:31 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org,
- Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Thomas Huth <thuth@redhat.com>, Mauro Matteo Cascella <mcascell@redhat.com>
-Subject: Re: [qemu-web PATCH v2 3/3] contribute: switch security process to
- gitlab confidential issues
-Message-ID: <20260618123451-mutt-send-email-mst@kernel.org>
-References: <20260618132058.1044341-1-berrange@redhat.com>
- <20260618132058.1044341-4-berrange@redhat.com>
- <20260618112415-mutt-send-email-mst@kernel.org>
- <ajQXrpKNx4NnhUKa@redhat.com>
- <20260618121520-mutt-send-email-mst@kernel.org>
- <ajQd8nRuYau2xVcY@redhat.com>
+ d9443c01a7336-2c6a403b242sm84587795ad.31.2026.06.18.09.40.25
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 18 Jun 2026 09:40:26 -0700 (PDT)
+Message-ID: <1947c117-3a1c-46fe-8a6a-95f9e81433ce@linaro.org>
+Date: Thu, 18 Jun 2026 09:40:24 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <ajQd8nRuYau2xVcY@redhat.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 3/6] target/arm/ptw.c: Add Granule Bypass Windows
+To: Jim MacArthur <jim.macarthur@linaro.org>
+Cc: qemu-devel@nongnu.org
+References: <20260603-jmac-gpc3b-v2-0-115c51936962@linaro.org>
+ <20260603-jmac-gpc3b-v2-3-115c51936962@linaro.org>
+ <7615fda1-4052-4696-b477-6eacc057c4a5@linaro.org>
+ <ajQFQ1RY_JfYooNH@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <ajQFQ1RY_JfYooNH@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::529;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x529.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -127,136 +105,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jun 18, 2026 at 05:33:54PM +0100, Daniel P. Berrangé wrote:
-> On Thu, Jun 18, 2026 at 12:23:46PM -0400, Michael S. Tsirkin wrote:
-> > thanks! sorry probably just me being dense but some things
-> > here I don't get. might be worth clarifying:
-> > 
-> > On Thu, Jun 18, 2026 at 05:07:10PM +0100, Daniel P. Berrangé wrote:
-> > > On Thu, Jun 18, 2026 at 11:30:29AM -0400, Michael S. Tsirkin wrote:
-> > > > > + * The maintainer(s) will develop and/or review patch(es)
-> > > > > +   for the issue privately, optionally attaching work in
-> > > > > +   progress fixes to the GitLab issues.
-> > > > 
-> > > > attaching how? how do i ask reported to test the fix?
-> > > > was easy in the email flow.
-> > > 
-> > > You can add arbitrary attachments in gitlab issue comments.
-> > > 
-> > > > > All patches must
-> > > > > +   include the issue URL in the commit message(s).
-> > > > 
-> > > > you mean the commit message of the patches I presume?
-> > > > there's no commit at that point.
-> > > 
-> > > Well I presume the maintainer will have a local git tree
-> > > with a work-in-progress commit.
-> > 
-> > sorry I don't get it.
-> > 
-> > what does it have to do with patches then?
-> > 
-> > 
-> > who cares about my local tree?
+On 6/18/26 07:48, Jim MacArthur wrote:
+> On Wed, Jun 10, 2026 at 09:41:56AM -0700, Richard Henderson wrote:
+>> On 6/3/26 11:26, Jim MacArthur wrote:
+>>> +    const uint64_t BW_STRIDE_SHIFT = 40;
+>> ...
+>>> +        switch (bw_stride_field) {
+>>> +        case 0b00000:
+>>> +        case 0b00010:
+>>> +        case 0b00100:
+>>> +        case 0b00110:
+>>> +        case 0b00111:
+>>> +        case 0b01000:
+>>> +        case 0b01001:
+>>> +        case 0b01010:
+>>> +        case 0b10000:
+>>> +            bw_stride = 1ULL << (bw_stride_field + BW_STRIDE_SHIFT);
+>>
+>> BW_STRIDE_SHIFT should be 39 not 40.
+>>
+>> Everything else is correct.
+>>
 > 
-> If you fix a gitlab issue, the commit must contain the issue URL.
-> That's normal practice we've followed forever and would now apply
-> to security fixes too.
+> Agree with the simplification, but BW_STRIDE_SHIFT should be 40. As per D24.2.54, a BWSTRIDE field of 0 gives a stride size of 1TB or 1<<40 bytes.
+> (gpcbwu, the highest bit set in the mask, is indeed 39+BWSTRIDE, but the subtraction of bw_size from bw_stride has the same effect.)
+> There was an error in a later use of bw_stride which might have made it look like something else was intended.
 
-Ah. You want a Fixes: tag maybe? Let's say so pls then.
-
-> > 
-> > and why is this mentioned twice?
-> 
-> Mentioning twice is a mistake
-> 
-> 
-> > > > > The
-> > > > > +   **"Workflow::In Progress"** label should be assigned when
-> > > > > +   a maintainer starts working on a fix.
-> > > > 
-> > > > That's a bit heavy, and what is "working" anyway.
-> > > > It's an issue tracker not a planning app.
-> > > > Don't try to make it one.
-> > > 
-> > > Various "Workflow::" labels are already present in our gitlab
-> > > instance. We don't use them consistently - this text is just
-> > > a pointer that the're there.
-> > > 
-> > 
-> > maybe "can be assigned" then?
-> 
-> Ok.
-> 
-> > 
-> > > 
-> > > > 
-> > > > 
-> > > > > + * When a CVE is allocated, it must be recorded as a comment on
-> > > > > +   the GitLab issue, and the **"CVE::Required"** label replaced by
-> > > > > +   the **"CVE::Assigned"** label.
-> > > > 
-> > > > Recorded as a comment how exactly, in what format?
-> > > 
-> > > In plain text.
-> > 
-> > yes but in what format?
-> 
-> Literally just  "CVE-2026-1234" anywhere in the commit message as we've
-> been donig for years.
-
-I suspect what we've been doing for years no longer scales or
-we'd keep doing what we've been doing?
+Ah yes.  Thanks for double checking.
 
 
-We desperately need something that is consumable by tooling,
-and I just do not see how is a tool going to figure out
-"this seems to be unrelated CVE-123" is irrelevant.
-
-Unless we'll feed it to some LLM and hope it's right.
-
-> 
-> > > > > + * The maintainer(s) will update the commit message(s)
-> > > > 
-> > > > what does it mean to "update the commit message"?
-> > > 
-> > > The commit message for the patch the maintainer has in their
-> > > tree.
-> > 
-> > then you mean "before sending a pull request"?
-> 
-> Sure if you want it to be that specific.
-> 
-> > > > > to include
-> > > > > +   the assigned CVE and issue URL. If multiple commits are required
-> > > > > +   to fix an issue the CVE must be included in the final commit in
-> > > > > +   the series, and may optionally be included in all prior commits.
-> > > > 
-> > > > And here, included in what format?
-> > > 
-> > > The CVE just needs to exist somewhere/anywhere in the commit message.
-> > > It is common to put it in the first line, or with tags before SoB
-> > > but it doesn't really matter as long as we have a record of it in
-> > > the patch.
-> > 
-> > Will be really annoying if any tools try to consume this e.g.
-> > to decide what to backport.
-> > I suggest deciding on something for these free text fields,
-> > how important is it to be able to write ❤️❤️❤️CVE-1234💰🔥🎯 really?
-> 
-> I don't think we need to document every single little detail
-> here, just carry on with what we've already been doing for
-> commits.
->
-> With regards,
-> Daniel
-
-If commits are linked to CVEs through issues that's fine. Need to
-make that link robust then.
-
-> -- 
-> |: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-> |: https://libvirt.org          ~~          https://entangle-photo.org :|
-> |: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
-
+r~
 
