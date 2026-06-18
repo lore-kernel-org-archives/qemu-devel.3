@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EDDBBCD98F6
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jun 2026 19:57:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D321CD98F8
+	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jun 2026 19:57:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1waIqM-0003yK-01; Thu, 18 Jun 2026 15:56:06 -0400
+	id 1waIqT-000416-SK; Thu, 18 Jun 2026 15:56:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1waIq6-0003tl-CU
- for qemu-devel@nongnu.org; Thu, 18 Jun 2026 15:55:50 -0400
-Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
+ id 1waIqG-0003w1-Ac
+ for qemu-devel@nongnu.org; Thu, 18 Jun 2026 15:56:01 -0400
+Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1waIq2-0007yB-E9
- for qemu-devel@nongnu.org; Thu, 18 Jun 2026 15:55:50 -0400
-Received: by mail-pl1-x630.google.com with SMTP id
- d9443c01a7336-2c6bdb8a8bdso8665885ad.1
- for <qemu-devel@nongnu.org>; Thu, 18 Jun 2026 12:55:46 -0700 (PDT)
+ id 1waIqE-00082Y-2m
+ for qemu-devel@nongnu.org; Thu, 18 Jun 2026 15:55:59 -0400
+Received: by mail-pl1-x62e.google.com with SMTP id
+ d9443c01a7336-2c6ec0af575so8266725ad.1
+ for <qemu-devel@nongnu.org>; Thu, 18 Jun 2026 12:55:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1781812545; x=1782417345; darn=nongnu.org;
+ d=linaro.org; s=google; t=1781812557; x=1782417357; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=tmlZevgFhXIJJdsn/GrE/B6w1KsZRwMA3LkvTnWXOzc=;
- b=CWwhrWqk21RAPCHQpjBtYLI23fzWmWUC0rrcCp/pq+b/X9qc3elbJZVU/GzGk11xSm
- OVdlbFn+gL6xJFwg7OH1lSWuMUAQjgP4XqYO7adQQFKjI7Mmpcm7nyvDXBVtjH/UpOLE
- Uooe4LiuZJtMGvhao0DW0XCUENOQt+A/3xBTiHFdLC3bFXMY8R+1AxRPvsP71WXHv/PZ
- SZyPj7oXc0OaqAT38byeg9l62MmsoMTHk5bZ/diVCsnaSCfnDA0H+LLVUHh+zgHu/7CV
- pVvv6jQhodbJf672XM9abU4O/2781k+ly6jou3qqxmR3/HqHwpxKzqPzdN6YtRR5u+0n
- 2+Hg==
+ bh=T01hsQsKs98UkflLhLrhZujUy9/6glB8JiaSx+gv5C8=;
+ b=HSBqKS06SZiDwkkRpFvxzKcXko/JkKAeqyI1hEts68VtvwBCDgJHIR9qInDQhLlz3D
+ Vc3ppnSKONyr4w9wMPyrBkly6+doZ61nFcDezeY0k00Ne6IgNaM5AWoc+l+sD0+nKDqJ
+ uIKYIoH5SJeOQdgsgjMfojnlez7CQd3S0sbHYDPES/2azbcYqD3eIlZ3ESwnPfBpgQxS
+ Zj06KqWhGpphIH8tMW93z3HytXeSwC2DpPEj6+19X41dGsru0p4FdAPdDnF2bPo9+7QT
+ cg6XgE/rlumZ/eDF1Vwmz5ixU+jLZ/+KiLo97Y6hlu24zhf6JznrWH0RXzmXFsYy4CLM
+ K+Qw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781812545; x=1782417345;
+ d=1e100.net; s=20251104; t=1781812557; x=1782417357;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=tmlZevgFhXIJJdsn/GrE/B6w1KsZRwMA3LkvTnWXOzc=;
- b=nLoU6OHTCApCn/U3KrqF26xGigNh/otqwfUbFE6iXVZE+5G3Px8oZCI19bPe3U3Xi2
- smptLPH2ug+o+lVBIuqWTgBylxbU3ew2HLTbi+4DaVF5bHvTuOh5bx/qYHfFSXFh4bkG
- GGjFJRBSh5XiyAhMnwcx1I60dCFSG9i+yeQaDfpYCIXyQ3YuzuNEGzLA3i5XsFChAFoe
- S2LCQFNcbT1piyJIZdLolOO+Qgv5lc2XBOzSEGmezR5HLxe4WjPiwfhLV51VPylIABvQ
- sQHAwuN5Vv3+iVBLtphaa+SKJove0ve4zDDxNuzFZEPvhdjicMv/aF4VesgGJMCuZqQH
- JppA==
-X-Gm-Message-State: AOJu0YyiPpPdnluHXyIaAE+rvMXA1aurhGlc0nKPknCZkOyZXmo6xPKR
- bm6sF6EVVNXiQZI3FqMThOQwjp+R6OIdfGiKqKJIrU/NzpukcnipkVO5f5mPE9o/hSg6r5Wd9lP
- uTGQ9
-X-Gm-Gg: AfdE7cl9RDL/PkjJCHYgM58IxxgfnqWOsth6bDOAE0ozMY01e8dhDbAqUxJYQV6g4Gb
- PfV1AJ3xVHMsWrK9PLZQuetSAQ5wwHcbef/qKVsRUHmqH+ofLZA0ryPPK4QLU2wKMPvr/0msyZ0
- qu//XxU6N+rNyMC3YE04xaqPIlIZZzObm/Tmfy9yRUbLKEJYKyKuOfaPQTNbvwYdOHCfGEmQkjd
- +e2b2Z04KFeAHjX0jgD6ulh9ejJV/gvJYVOkBJJKGZ4sD6H5vSStHaX8PGPrlH+o69XJbTn8TOv
- NSd598vDSZu3RIBeU1xNRfzYgQA24qGd1ex0hHFGlSAGl8GqfCU3Pbf3QdPjHEaB+LGR5H5Hcll
- pTExCsiBpNZwca3cp+8M6WsT3rwZZ8pQYVDkzDIs7YB8K3AYZfyd0vm5Dp076WfpcAD3Th4HPyK
- TSMDxREo3l6TvxSwb3kZvot1hnWdadbpM+eXSBD6LBX1x92vdiBA==
-X-Received: by 2002:a17:903:90d:b0:2c6:b3dc:b82a with SMTP id
- d9443c01a7336-2c718fe4c07mr6635575ad.24.1781812544965; 
- Thu, 18 Jun 2026 12:55:44 -0700 (PDT)
+ bh=T01hsQsKs98UkflLhLrhZujUy9/6glB8JiaSx+gv5C8=;
+ b=LlSQjTBxzvIp+5zQ2lfZC2m582+tO31HK6xvL9FUueum2+F4TmUu46s4w7V3e0q7f5
+ I0hAXeySTMceFzIdAi5XHJQHe7276KFVyIVEQq3H0YPT6H/oi+ERjyRxzL8kHINx4SK3
+ 3BUvMkIePaTX43BF0Fg+p0WSANdIs2CkRanIdWNJDQDylVi4NhphKRxpricE1VDThrXM
+ nsnVYzTtIfY6e4+tk+OKZp+b2d8/YeInZGs/BMZdVnGLMy0E1ISG8DSqh/OnLpsF7OXt
+ 1qSUDVpojVYcl8SieH1TO1OZrJsKuHFIOpovPDccYmIO1V6HECT6JWfhIoqfnuJfZ8wR
+ cKyw==
+X-Gm-Message-State: AOJu0Ywv4CH4HsaUzVuDezSsAahZkq9mbAin/3PYcqmvLyJRABdJ8CvS
+ vGn356h0F7fnIHtl+yjBjK96MkZie7ICXqTu0pvxgSsSG7WGDizmNQO5utYSx/3jEazGk3NszUs
+ TkfIH
+X-Gm-Gg: AfdE7ckRZwxkrLZ2OG+LYM1b09n96UPMeg945KCUFpAKu1/52qEWtVytJ/MiYZT6JiY
+ IhGlv0P6XBRKmSlQAZYNwLcepHpOjyUletpe0mtS6PwsXW2a6wrH4bdeB0YvwYWnemeoO9InM5K
+ QiznMRY4kElnmmXr9MQW3LwxG6ikSd4rwTAEfjDCGbUSdSSB0cOv5yk9B56JcAOmAormll2fd91
+ pJ1FnyG0onjmdLyBor7XJjfT5Brkj/ZdxdtjicewytgFWb3I4vRuJNTSW0ZqY8K57D+n2Bny8/r
+ oIpTQLZW7vQULT4tzrXj3kg4c72zJKdnyUXxutQRvgqkA4o+ntX9YMMG9HXa6YK3EuA7yERoDcL
+ 6Al0RP9er9Vcad0/vojjoDq40X5Bq0x8WIR9rk2Erq2put3KV+btpRDMLHA5larlUrf/Dz4lqx0
+ MmfQbV+QM6SYs6UmxXptZCycfPw9mfgQKm8dxEH2oNtzS9vV3jIoMDNFBTNuTz
+X-Received: by 2002:a17:903:2ec7:b0:2c0:3400:5c34 with SMTP id
+ d9443c01a7336-2c718c879fbmr7348815ad.3.1781812556454; 
+ Thu, 18 Jun 2026 12:55:56 -0700 (PDT)
 Received: from stoup.. (174-21-129-215.tukw.qwest.net. [174.21.129.215])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2c432c8ca31sm205732965ad.55.2026.06.18.12.55.42
+ d9443c01a7336-2c432c8ca31sm205732965ad.55.2026.06.18.12.55.55
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 18 Jun 2026 12:55:43 -0700 (PDT)
+ Thu, 18 Jun 2026 12:55:55 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Helge Deller <deller@gmx.de>, Warner Losh <imp@bsdimp.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v3 08/13] include/user/guest-host: Include missing cpu.h
-Date: Thu, 18 Jun 2026 12:55:14 -0700
-Message-ID: <20260618195520.589907-9-richard.henderson@linaro.org>
+Cc: Helge Deller <deller@gmx.de>,
+	Warner Losh <imp@bsdimp.com>
+Subject: [PATCH v3 13/13] common-user: Move guest_base,
+ have_guest_base to probe-guest-base.c
+Date: Thu, 18 Jun 2026 12:55:19 -0700
+Message-ID: <20260618195520.589907-14-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260618195520.589907-1-richard.henderson@linaro.org>
 References: <20260618195520.589907-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x630.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,28 +102,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This file dereferences CPUState without including the required header.
+Unify the definitions of guest_base and have_guest_base.
 
 Reviewed-by: Helge Deller <deller@gmx.de>
 Reviewed-by: Warner Losh <imp@bsdimp.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- include/user/guest-host.h | 1 +
- 1 file changed, 1 insertion(+)
+ bsd-user/main.c                | 3 +--
+ common-user/probe-guest-base.c | 4 ++++
+ linux-user/main.c              | 2 --
+ 3 files changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/include/user/guest-host.h b/include/user/guest-host.h
-index ef83ad8a18..506efc097e 100644
---- a/include/user/guest-host.h
-+++ b/include/user/guest-host.h
-@@ -10,6 +10,7 @@
+diff --git a/bsd-user/main.c b/bsd-user/main.c
+index 772a26199b..3201da2318 100644
+--- a/bsd-user/main.c
++++ b/bsd-user/main.c
+@@ -62,8 +62,7 @@ intptr_t qemu_host_page_mask;
  
- #include "exec/vaddr.h"
+ static bool opt_one_insn_per_tb;
+ static unsigned long opt_tb_size;
+-uintptr_t guest_base;
+-bool have_guest_base;
++
+ /*
+  * When running 32-on-64 we should make sure we can fit all of the possible
+  * guest address space into a contiguous chunk of virtual host memory.
+diff --git a/common-user/probe-guest-base.c b/common-user/probe-guest-base.c
+index 77722fe63f..6f1247cf1a 100644
+--- a/common-user/probe-guest-base.c
++++ b/common-user/probe-guest-base.c
+@@ -7,6 +7,7 @@
+ #include "qemu/log.h"
  #include "user/guest-base.h"
-+#include "hw/core/cpu.h"
- #include "accel/tcg/cpu-ops.h"
+ #include "user/mmap-min-addr.h"
++#include "user/guest-base.h"
+ #include "user/guest-host.h"
+ #include "user/probe-guest-base.h"
+ #include "user/selfmap.h"
+@@ -18,6 +19,9 @@
+ #define MAP_FIXED_NOREPLACE  (MAP_FIXED | MAP_EXCL)
+ #endif
+ 
++uintptr_t guest_base;
++bool have_guest_base;
++
+ /**
+  * pgb_try_mmap:
+  * @addr: host start address
+diff --git a/linux-user/main.c b/linux-user/main.c
+index 01cf5bf079..60a695b7ca 100644
+--- a/linux-user/main.c
++++ b/linux-user/main.c
+@@ -79,8 +79,6 @@ static envlist_t *envlist;
+ static const char *cpu_model;
+ static const char *cpu_type;
+ static const char *seed_optarg;
+-uintptr_t guest_base;
+-bool have_guest_base;
  
  /*
+  * Used to implement backwards-compatibility for the `-strace`, and
 -- 
 2.43.0
 
