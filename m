@@ -4,38 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5DF23CD98F2
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75F80CD98FA
 	for <qemu-devel@archiver.kernel.org>; Fri, 19 Jun 2026 10:19:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1waWJ9-0006Ip-1d; Fri, 19 Jun 2026 06:18:43 -0400
+	id 1waWJ8-0006Ik-Pt; Fri, 19 Jun 2026 06:18:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1waWJ6-0006Hu-Qe
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1waWJ6-0006Ht-P4
  for qemu-devel@nongnu.org; Fri, 19 Jun 2026 06:18:40 -0400
 Received: from relay.virtuozzo.com ([130.117.225.111])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1waWJ5-0000ex-8N
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1waWJ5-0000ev-8J
  for qemu-devel@nongnu.org; Fri, 19 Jun 2026 06:18:40 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=virtuozzo.com; s=relay; h=MIME-Version:Message-ID:Date:Subject:From:
- Content-Type; bh=z0+VW17wfJS3shuNYwL5tr2zZ2QgOCrT0q6hQjfLvuU=; b=q1dMBvR/kBfF
- uVeBVTh/ETQHx73+BEoAXaYAp5zZ25w/xLcfMMFncdXoy122gBWuSQoYdVG4ruW43eURuIEwdynZy
- X6/q4BO99grG7w3N3uQo44vKsf0jqu4MKgPikkK8WzoOuiPCP8RAYPYsEfBz7qrsTfWjYsGLpW1xT
- jRH45lzNXUS67lcH9BCfCcKg0mWMTBJJ25C3eTatZqqXabzTEyCd7i+0V2fKFrSEwoBuufCyRlGnp
- PI8OYK+90ssAy9pIdGML1kn5y7GtcYk58pi5JXOtYjQlyd59YWNkSx2JVrxMTNJjkV9pv4sFeQB+3
- 09MfOgmsNR4FHWgEjh7MfQ==;
+ Content-Type; bh=vmcI1yCY/hkP/Riq4PLX8+i18bQHuqsqu1lFUgZj4/w=; b=rmUyYue+pxAY
+ HMOHzMjcBStFALywTqNQMaSFIoK38VDeWOlNWqFbAvO1eePv6Dn90f+HqBDUmHssaBNQl2s1RTbPP
+ xA7xzp0AIhJorEyg8XdNySDaeIl82Y3wvhgY5ysXuTttfGuXLlNglBfCDJ+sFakcFa7G6W68elLMJ
+ rx2IpI7i7DgCOG0ZRZ2p6URdPhX0URVLZ6P3a3g017qcFiZlAzDoo0XZwtvPsg9sFsggL0spvZUBV
+ H0ljuVrzgQ0/U4lhfBtlZJwECD9OtgBI2u4KSBt1al1ZGkEuS7EhaQm04GLNB71rOIz61G1ppncBT
+ pf+jctjXcIiyQQI8ClXPVg==;
 Received: from ch-demo-asa.virtuozzo.com ([130.117.225.8] helo=athena.sw.ru)
  by relay.virtuozzo.com with esmtp (Exim 4.96)
- (envelope-from <den@openvz.org>) id 1waWIS-006QLJ-2q;
- Fri, 19 Jun 2026 12:18:32 +0200
+ (envelope-from <den@openvz.org>) id 1waWIT-006QLJ-1M;
+ Fri, 19 Jun 2026 12:18:33 +0200
 To: qemu-devel@nongnu.org
 Cc: marcandre.lureau@redhat.com, anisinha@redhat.com, berrange@redhat.com,
  peterx@redhat.com, farosas@suse.de, "Denis V. Lunev" <den@openvz.org>
-Subject: [PATCH v5 1/7] migration: add migration_guest_ram_loading() helper
-Date: Fri, 19 Jun 2026 12:18:28 +0200
-Message-ID: <20260619101834.228432-2-den@openvz.org>
+Subject: [PATCH v5 2/7] dump: refuse dump-guest-memory while guest RAM is
+ being migrated
+Date: Fri, 19 Jun 2026 12:18:29 +0200
+Message-ID: <20260619101834.228432-3-den@openvz.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260619101834.228432-1-den@openvz.org>
 References: <20260619101834.228432-1-den@openvz.org>
@@ -66,49 +67,48 @@ From:  "Denis V. Lunev" via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Operations that read guest RAM (dump-guest-memory, memsave, pmemsave)
-must refuse to run while the destination of a migration is still
-receiving that RAM: during precopy it is incomplete, and during postcopy
-a read faults the page in from the source. Provide a single predicate
-they can share instead of open-coding the runstate and postcopy checks.
+dump-guest-memory reads all of guest RAM. The existing guard only rejects
+the dump in RUN_STATE_INMIGRATE, i.e. the precopy load phase. On a
+postcopy destination the guest already runs (RUN_STATE_RUNNING) while its
+pages are pulled from the source on demand.
+
+A non-detached dump reads that RAM on the main thread with the BQL held.
+Touching a not-yet-received page blocks on the userfault, and because the
+postcopy incoming path itself takes the BQL to install pages, the
+transfer that would satisfy the fault cannot progress: the VM deadlocks.
+
+Use migration_guest_ram_loading(), which also covers postcopy, so the
+dump is refused for the whole time the destination is still receiving
+guest RAM.
 
 Signed-off-by: Denis V. Lunev <den@openvz.org>
 ---
- include/migration/misc.h | 3 +++
- migration/migration.c    | 6 ++++++
- 2 files changed, 9 insertions(+)
+ dump/dump.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/include/migration/misc.h b/include/migration/misc.h
-index 3159a5e53c..d3d6e1f50d 100644
---- a/include/migration/misc.h
-+++ b/include/migration/misc.h
-@@ -117,6 +117,9 @@ void migration_file_set_error(int ret, Error *err);
- /* True if incoming migration entered POSTCOPY_INCOMING_DISCARD */
- bool migration_in_incoming_postcopy(void);
+diff --git a/dump/dump.c b/dump/dump.c
+index 1f216e74f5..47ea27f716 100644
+--- a/dump/dump.c
++++ b/dump/dump.c
+@@ -29,6 +29,7 @@
+ #include "qemu/main-loop.h"
+ #include "hw/misc/vmcoreinfo.h"
+ #include "migration/blocker.h"
++#include "migration/misc.h"
+ #include "hw/core/cpu.h"
+ #include "win_dump.h"
+ #include "qemu/range.h"
+@@ -2079,8 +2080,8 @@ void qmp_dump_guest_memory(bool paging, const char *protocol,
+     bool detach_p = false;
+     bool kdump_raw = false;
  
-+/* True while the destination still receives guest RAM (precopy or postcopy) */
-+bool migration_guest_ram_loading(void);
-+
- /* True if incoming migration entered POSTCOPY_INCOMING_ADVISE */
- bool migration_incoming_postcopy_advised(void);
+-    if (runstate_check(RUN_STATE_INMIGRATE)) {
+-        error_setg(errp, "Dump not allowed during incoming migration.");
++    if (migration_guest_ram_loading()) {
++        error_setg(errp, "Dump not allowed during migration.");
+         return;
+     }
  
-diff --git a/migration/migration.c b/migration/migration.c
-index 074d3f2c69..095c55fdae 100644
---- a/migration/migration.c
-+++ b/migration/migration.c
-@@ -1643,6 +1643,12 @@ bool migration_in_incoming_postcopy(void)
-     return ps >= POSTCOPY_INCOMING_DISCARD && ps < POSTCOPY_INCOMING_END;
- }
- 
-+bool migration_guest_ram_loading(void)
-+{
-+    return runstate_check(RUN_STATE_INMIGRATE) ||
-+           migration_in_incoming_postcopy();
-+}
-+
- bool migration_incoming_postcopy_advised(void)
- {
-     PostcopyState ps = postcopy_state_get();
 -- 
 2.53.0
 
