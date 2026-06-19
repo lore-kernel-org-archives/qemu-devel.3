@@ -4,112 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E974CD98F2
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Jun 2026 17:40:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 469DECD98F2
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Jun 2026 18:02:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wadBy-0004zV-Ac; Fri, 19 Jun 2026 13:39:46 -0400
+	id 1wadXj-0000Zt-OW; Fri, 19 Jun 2026 14:02:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
- id 1wadBg-0004y8-Ak; Fri, 19 Jun 2026 13:39:29 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <polina.vishneva@virtuozzo.com>)
+ id 1wadXh-0000Zi-Mc
+ for qemu-devel@nongnu.org; Fri, 19 Jun 2026 14:02:14 -0400
+Received: from relay.virtuozzo.com ([130.117.225.111])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
- id 1wadBe-0004M7-EN; Fri, 19 Jun 2026 13:39:28 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65JDISUa2320852; Fri, 19 Jun 2026 17:39:21 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=48ITVt
- DQ+Pnh//0cHTVuhBE6bqj+EyOxTeA4bvTr6n0=; b=sGUNI/urmlVIPkxAto4YFH
- iS/mkNkMfH5k+kX+NWVaaEbvYjUk/3Cxj03mNZU7Nwkc0KyyG+G8XIf8upWTIOeU
- iBYPixfx1suEOVZbST9e5h6g+XbIztmgiG5PlNvfzYConxTYsXwL1bC8IUbmc1kF
- kxLNpKlDw+qaHxQPc7l1/P6OZlgNqvZspNgwghtkfeYAD6osilXztoT0Mtsb7Yfw
- QtiuZCWvPTmtPfNgFYhh4mG04ho3MfdNYZNn4SkwRoIYc2LjLgy+NJ8nEp9YeC7y
- 0dk/jPKJJkbHkYfWm9Dt9RLB+JX0XhmmU997TyTFsvM483AbnwOg3MfE0xxVhZUg
- ==
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4eueqxpmh7-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 19 Jun 2026 17:39:21 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 65JHZ1ml000943;
- Fri, 19 Jun 2026 17:39:20 GMT
-Received: from smtprelay07.wdc07v.mail.ibm.com ([172.16.1.74])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4ev172hw7y-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 19 Jun 2026 17:39:20 +0000 (GMT)
-Received: from smtpav05.wdc07v.mail.ibm.com (smtpav05.wdc07v.mail.ibm.com
- [10.39.53.232])
- by smtprelay07.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 65JHdJn321168890
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 19 Jun 2026 17:39:19 GMT
-Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 38E925805F;
- Fri, 19 Jun 2026 17:39:19 +0000 (GMT)
-Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 2A4B958053;
- Fri, 19 Jun 2026 17:39:18 +0000 (GMT)
-Received: from [9.61.19.86] (unknown [9.61.19.86])
- by smtpav05.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Fri, 19 Jun 2026 17:39:18 +0000 (GMT)
-Message-ID: <1db93e1b-b7a6-4aa4-8432-fa7f114b9985@linux.ibm.com>
-Date: Fri, 19 Jun 2026 13:39:17 -0400
+ (Exim 4.90_1) (envelope-from <polina.vishneva@virtuozzo.com>)
+ id 1wadXg-00043v-3g
+ for qemu-devel@nongnu.org; Fri, 19 Jun 2026 14:02:13 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=virtuozzo.com; s=relay; h=MIME-Version:Message-ID:Date:Subject:From:
+ Content-Type; bh=zR0/Pr6K9hRY8EgWjK7cQ5mccChJkum7ALRzOfw/1DE=; b=EJrQodWr3i8W
+ f30F0YC+dRg9Geo6N0xiXPSTE4LEXnSbiluEEdmWquN7udHmjONhEo68Q1U2mwJSVg2LVMMcAopm2
+ BALX93PHaKsO+6/weWzD8bEDvsX0Z+fzaf2UFz2GhZJjRh+JcjONUWq/ublKLMu/0/Tsc4bA1nd5f
+ parVhpIMw5r/kq3c5I0E2MpTiRrW25HsSrty4BadSSnIBbQIeE+Mil4z3Ik00P9IuCtDghdYOogyQ
+ BimJpdtyjJU6PF0eW5XcAStuX5hzIwMfwI2SVTRbbLqdiiu7VtVS/CzHYlBWiZFrf/vW/e9OgpPdm
+ oQ26AnFNt/5OgHn+0mMHoA==;
+Received: from ch-vpn.virtuozzo.com ([130.117.225.6] helo=mami)
+ by relay.virtuozzo.com with esmtp (Exim 4.96)
+ (envelope-from <polina.vishneva@virtuozzo.com>) id 1wadWz-001Gyc-16;
+ Fri, 19 Jun 2026 20:02:01 +0200
+From: Polina Vishneva <polina.vishneva@virtuozzo.com>
+To: qemu-devel@nongnu.org
+Cc: Polina Vishneva <polina.vishneva@virtuozzo.com>,
+ Michael Roth <michael.roth@amd.com>,
+ Kostiantyn Kostiuk <kkostiuk@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ "Denis V . Lunev" <den@virtuozzo.com>,
+ Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+Subject: [PATCH 0/4] qga: Add vsock-listen support on Windows
+Date: Fri, 19 Jun 2026 20:00:18 +0200
+Message-ID: <20260619180121.2982356-1-polina.vishneva@virtuozzo.com>
+X-Mailer: git-send-email 2.54.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 13/15] s390x/pci: Add a comment explaining S390PCIIOMMU
- purpose
-To: Konstantin Shkolnyy <kshk@linux.ibm.com>
-Cc: alifm@linux.ibm.com, richard.henderson@linaro.org, iii@linux.ibm.com,
- david@kernel.org, cohuck@redhat.com, pasic@linux.ibm.com,
- borntraeger@linux.ibm.com, qemu-s390x@nongnu.org, qemu-devel@nongnu.org
-References: <20260605021728.1125090-1-kshk@linux.ibm.com>
- <20260605021728.1125090-14-kshk@linux.ibm.com>
-Content-Language: en-US
-From: Matthew Rosato <mjrosato@linux.ibm.com>
-In-Reply-To: <20260605021728.1125090-14-kshk@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=OcSoyBTY c=1 sm=1 tr=0 ts=6a357ec9 cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
- a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=VnNF1IyMAAAA:8
- a=BXDEjGdoi0IGRwZHYXQA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjE5MDE2NCBTYWx0ZWRfX2dDlrEi0uTXL
- OJO65TACohTDIHUkcqHHKBKi/zBJtrT2TTHDrXd+z1pb0vgcS4VKGkdUCn4kbi6I6HxUPI4yw2L
- y0H5UD8Zl2xCuzrZAqHqb1JW4QkTK2959tbOOm2zPbuHa5hq5wUw+FuMhjlMK9CajSVCx7UjOv/
- uRmSHtcxPCmp9ydY0BNLdOChlhHoXkrwbpQbldFd7udr1rSe1/M7cJkfXCy/H7Ye9HcZ8odssUd
- wvRPRd4m4eN31B8njzB9zbGLf6E5vk9phAjSNa9hT7PmAwoKM3Op9VDK4oMg3gs7ppLtoN0NhQk
- Sjfx+FM/0dwIXcV58hnDbiJEcXCKVFwR4CGLm20ci7ZK4pNNbRuD7FBVALAGabygZzGe9k/9RRs
- Ugt/zAZrepkGgmgsJ0vJiBHi3Sc0oHnI33v56aMAqrGDnsrt9rKPiOipM1B08JFm4TJFTeBNb2v
- wedCkIgpFEhBY2qgz8Q==
-X-Proofpoint-GUID: fn2ZOme4eUdyEtvoGZD48gKaY3ZDQcvv
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjE5MDE2NCBTYWx0ZWRfXyHnz8Pw40LxM
- 4tA040/TE8KnLgBCtMFcX0GdP+uevnpYDwAvH2H1qeU3zbFkoseo6O5LW+/9VgTkPzrNMhGdIDM
- auQQaEP9W+NTU6wsQypK37VtxVjBbSo=
-X-Proofpoint-ORIG-GUID: fn2ZOme4eUdyEtvoGZD48gKaY3ZDQcvv
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-19_03,2026-06-18_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 phishscore=0 bulkscore=0 suspectscore=0 lowpriorityscore=0
- impostorscore=0 malwarescore=0 spamscore=0 adultscore=0 clxscore=1015
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606190164
-Received-SPF: pass client-ip=148.163.158.5;
- envelope-from=mjrosato@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=130.117.225.111;
+ envelope-from=polina.vishneva@virtuozzo.com; helo=relay.virtuozzo.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -126,47 +74,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/4/26 10:17 PM, Konstantin Shkolnyy wrote:
-> Signed-off-by: Konstantin Shkolnyy <kshk@linux.ibm.com>
+This patch series add AF_VSOCK channel support to QGA on Windows.
 
-Commit message needs something here -- You don't need to include the
-explanation of the structure (that's in the commit itself) but maybe
-describe the context (e.g. you're adding the comment because you just
-moved most of the contents of the structure out in support of migration
-and are now describing the remaining purpose)
+For that purpose, all common channel logic that can be reused was
+extracted from channel-posix.c into channel-common.[ch].
 
-> ---
->  include/hw/s390x/s390-pci-bus.h | 8 ++++++++
->  1 file changed, 8 insertions(+)
-> 
-> diff --git a/include/hw/s390x/s390-pci-bus.h b/include/hw/s390x/s390-pci-bus.h
-> index e3cbee2695..2fab28e6e0 100644
-> --- a/include/hw/s390x/s390-pci-bus.h
-> +++ b/include/hw/s390x/s390-pci-bus.h
-> @@ -271,6 +271,14 @@ typedef struct S390PCIDMACount {
->      QTAILQ_ENTRY(S390PCIDMACount) link;
->  } S390PCIDMACount;
->  
-> +/*
-> + * This structure holds the PCI device AddressSpace that QEMU needs to link
-> + * into its internal structures before the zPCI and PCI devices are fully
-> + * initialized. It's a QEMU requirement to provide this "root" AddressSpace
-> + * early. The AddressSpace is only actually used for I/O while the PCI
-> + * device is plugged in and configured by the guest, at which time it gets
-> + * additional memory subregions from zPCI device, that can do real work.
-> + */
+Also, a header from kvm-guest-drivers-windows was vendored (and trimmed
+and adjusted to pass checkpatch).
 
-To be more clear, it's not that it is required 'early' so much as that
-it is required to be there at the time the PCI device is plugged.
+Most importantly, for vsock-listen to actually work on Windows, the
+viosock driver from a very recent kvm-guest-drivers-windows build (not
+released yet) is required: the 687c776 commit can be used as a support
+marker.
 
-The lifecycle has always been a bit odd here; it is an attribute of the
-zPCI device, but is required by the PCI device in order to function and
-the necessary linkage between the 2 (PCI->zPCI) is established via the
-iommu_table in the S390pciState.  Would be good to work some of that
-into this explanation.
+Polina Vishneva (4):
+  include/system: Add vio_sockets.h with AF_VSOCK support on Windows
+  util/qemu-sockets: Enable AF_VSOCK on Windows
+  qga: Move common channel routines to channel-common
+  qga: Add AF_VSOCK channel support on Windows
 
->  struct S390PCIIOMMU {
->      Object parent_obj;
->      AddressSpace as;
+ MAINTAINERS                  |   1 +
+ docs/interop/qemu-ga.rst     |   4 +
+ include/system/vio_sockets.h |  57 ++++++++
+ meson.build                  |  15 +-
+ qga/channel-common.c         | 115 +++++++++++++++
+ qga/channel-common.h         |  44 ++++++
+ qga/channel-posix.c          | 179 +++++++-----------------
+ qga/channel-win32.c          | 263 ++++++++++++++++++++++++++++-------
+ qga/main.c                   |   6 +
+ qga/meson.build              |   3 +-
+ util/qemu-sockets.c          |   4 +
+ 11 files changed, 514 insertions(+), 177 deletions(-)
+ create mode 100644 include/system/vio_sockets.h
+ create mode 100644 qga/channel-common.c
+ create mode 100644 qga/channel-common.h
+
+-- 
+2.54.0
 
 
