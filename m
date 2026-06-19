@@ -4,41 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0023ECD98F6
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Jun 2026 05:42:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 471B6CD98F6
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Jun 2026 05:44:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1waRzY-0000KB-MR; Fri, 19 Jun 2026 01:42:13 -0400
+	id 1waS1R-0000wK-3g; Fri, 19 Jun 2026 01:44:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1waRzX-0000Jk-4X
- for qemu-devel@nongnu.org; Fri, 19 Jun 2026 01:42:11 -0400
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1waS1P-0000w5-H7; Fri, 19 Jun 2026 01:44:07 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1waRzV-00055N-1o
- for qemu-devel@nongnu.org; Fri, 19 Jun 2026 01:42:10 -0400
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1waS1N-0005fw-Uk; Fri, 19 Jun 2026 01:44:07 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1781847718; bh=PPGjAIryiMLdG8P0+AYJAFpF20RsKe6Y5f8IJ97mWcc=;
- h=Date:Subject:To:References:From:In-Reply-To;
- b=KcmUupmYNgHy4Ixo5nk0qXvPKKWC9P53OyCyywpw8FJ20wPbgsTIyZthd17Y+wKn1
- +ZVz0njr/qwtPc6r9oJgY3fOh7sN3VO9kPR63rW6VVL7tfWURWcGburDCA8KuGsDmX
- hMeaXwu4CFvwRvJrPBE9olmQ91Ay80B4qdqnPkuK+M6zVUNy3KAgkjPeAasijHLMhw
- IQKzZG6+8oWh6aMnEowAVpD4LIFtaHxDnGXt56q7UNatrUkEZl8K2nP/dCmkxeHYKa
- mAx40A2gATzV4+axbjvS1amrjM/Ix4h0mvaBJppZD4L9tdJLWmZZWsqtODFCU4kY7J
- teyzdGMSWbOiQ==
+ t=1781847837; bh=krJlWfaf4tIf0yQErzFhnpBYQ/IeyKhQ6OZ9rXFx4hI=;
+ h=Date:Subject:To:Cc:References:From:In-Reply-To;
+ b=wTNHqmCRszrHLuJxPzLfCnyKT7Kr4hcj2wV78b+P3iXEoY9G7qKBC8l5w5xfWM7Z1
+ rveKbYA8UcPfrQ8z0EqJsq/H+NtKd0bU8UMw9bg/tJkpz+BcwQR5KQQRoMzgWV3r0Z
+ l2Q9iXgfdADIlXD7DtmuULSQoALPSiOIuc0KDFYpNF8iVDCYhuJ+QBEr4HFiFlTZfv
+ cwWCOluTisYXJNguY+b+xJpwlG/Zy7kiqw2k3xC7dEDyhmGz2u7UXl5qHz88qgOEW8
+ RIPuyOFDNfjWy6yhVRtRak6Z18XacXsjzLYXBtj1itYG9OOzZZHjAL2QNsiW6oX/Ub
+ ltAUFQP1MdRUw==
 Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by isrv.corpit.ru (Postfix) with ESMTP id 546161B8C31;
- Fri, 19 Jun 2026 08:41:58 +0300 (MSK)
-Message-ID: <5d0cdc13-e81c-4245-9463-cbf5baac1f86@tls.msk.ru>
-Date: Fri, 19 Jun 2026 08:42:04 +0300
+ by isrv.corpit.ru (Postfix) with ESMTP id 55E311B8C36;
+ Fri, 19 Jun 2026 08:43:57 +0300 (MSK)
+Message-ID: <94b4dd4d-9a11-43d2-8e12-bb5e0f46701e@tls.msk.ru>
+Date: Fri, 19 Jun 2026 08:44:03 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 02/16] target/i386: apply mod to immediate count of an
- RCL/RCR operation
-To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
-References: <20260617143046.445322-1-pbonzini@redhat.com>
- <20260617143046.445322-3-pbonzini@redhat.com>
+Subject: Re: [PATCH] gdbstub: Update x86 control register bits
+To: Mathias Krause <minipli@grsecurity.net>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-stable <qemu-stable@nongnu.org>
+References: <20260327143413.254227-1-minipli@grsecurity.net>
 Content-Language: en-US, ru-RU
 From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
@@ -84,7 +85,7 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
  ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
  3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-In-Reply-To: <20260617143046.445322-3-pbonzini@redhat.com>
+In-Reply-To: <20260327143413.254227-1-minipli@grsecurity.net>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
@@ -110,22 +111,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 17.06.2026 17:30, Paolo Bonzini wrote:
-> RCR and RCL instructions with a count of 9 are the same as if the
-> count was 0, but they generated incorrect code because the can_be_zero
-> flag is false.  This causes 0 to underflow into -1 at
-> tcg_gen_subi_tl(count, count, 1).
+On 27.03.2026 17:34, Mathias Krause wrote:
+> The control register bits haven't been updated in a few years, making
+> them lack behind features QEMU ganied in these years.
 > 
-> Fix by absorbing the modulo computation into gen_shift_count(), now
-> renamed gen_shift_count_1(), so that it can handle both reductions.
+> Update them to the current version of the SDM and sort the 32bit version
+> to be in line with all the other definitions (descending order).
 > 
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3452
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-> ---
->   target/i386/tcg/emit.c.inc | 64 +++++++++++++++++++++-----------------
->   1 file changed, 35 insertions(+), 29 deletions(-)
+> This should remove confusion when debugging, for example, CET-enabled
+> guests:
+> 
+> - before the change:
+>    (gdb) info registers cr4
+>    cr4            0x8000f0            [ PGE MCE PAE PSE ]
+> 
+> - after the change:
+>    (gdb) info registers cr4
+>    cr4            0x8000f0            [ CET PGE MCE PAE PSE ]
+> 
+> Signed-off-by: Mathias Krause <minipli@grsecurity.net>
 
-This feels like qemu-stable material, is it not?
+This feels like a qemu-stable material, is it not?
 
 Thanks,
 
