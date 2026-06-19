@@ -4,55 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B63F2CD98F6
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Jun 2026 11:43:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15691CD4F26
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Jun 2026 11:47:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1waXc3-00019B-De; Fri, 19 Jun 2026 07:42:19 -0400
+	id 1waXgO-00023q-V2; Fri, 19 Jun 2026 07:46:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1waXc2-00018v-0c; Fri, 19 Jun 2026 07:42:18 -0400
-Received: from zero.eik.bme.hu ([152.66.115.2])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1waXbz-0008OK-Vh; Fri, 19 Jun 2026 07:42:17 -0400
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 7BE1F59697D;
- Fri, 19 Jun 2026 13:42:10 +0200 (CEST)
-X-Virus-Scanned: amavis at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id bzSNrKpeChb8; Fri, 19 Jun 2026 13:42:08 +0200 (CEST)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 4BDD559694F; Fri, 19 Jun 2026 13:42:08 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 4A2AC596948;
- Fri, 19 Jun 2026 13:42:08 +0200 (CEST)
-Date: Fri, 19 Jun 2026 13:42:08 +0200 (CEST)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: Matt Jacobson <mhjacobson@me.com>
-cc: qemu-devel@nongnu.org, Kevin Wolf <kwolf@redhat.com>, 
- Hanna Reitz <hreitz@redhat.com>, qemu-block@nongnu.org, 
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, 
- Laurent Vivier <laurent@vivier.eu>
-Subject: Re: [PATCH v2 1/5] hw/block: add Sony/Apple "SuperDrive" diskette
- drive
-In-Reply-To: <4E248F07-5231-4B3B-B79C-4B482FDD62AE@me.com>
-Message-ID: <4271f69f-f14e-18e5-8a36-4a19f736cdff@eik.bme.hu>
-References: <20260617235032.21491-1-mhjacobson@me.com>
- <20260617235032.21491-2-mhjacobson@me.com>
- <758dd5cb-ebdc-325c-37c1-e9120883f468@eik.bme.hu>
- <4E248F07-5231-4B3B-B79C-4B482FDD62AE@me.com>
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1waXgN-00023F-L9
+ for qemu-devel@nongnu.org; Fri, 19 Jun 2026 07:46:47 -0400
+Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1waXgM-0002A2-6c
+ for qemu-devel@nongnu.org; Fri, 19 Jun 2026 07:46:47 -0400
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-46066e640easo1256201f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 19 Jun 2026 04:46:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1781869604; x=1782474404; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=1jCXqjMIfTL9SpkiXIR8q9zvAP0noQkzfpusx/rSbEA=;
+ b=sEM5rMj65T1vDKnXesFRO/a42StERRuK8t3CrygLeWTUyZR2Q7vhvMx6N0D3DYSDyV
+ qepW2nwyLeplD8KhEtAtTEViyz/AwqhavdNBs+L26xz2ws4oy1C2+uXR2X0x9QIEhzHK
+ /H+GLFECJwzlDYf5Q1U+hY+nyZ5Jvm0t4FCaWavnNZCADqG51n5ZCBvYAOliUxRwaOOI
+ LwsNtYOViV5nk1v2v0AceKKUjbJNiwSxPxRODArI3bZy+k+jMEZ3E1McRBn5dovjxEY4
+ vVP/YB+azZEMFKsILQGX/Ptte84bOJ0hyhJB2KF9cYV2PzcBUC03pz0OZR6QhXGkCVA7
+ apNA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1781869604; x=1782474404;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=1jCXqjMIfTL9SpkiXIR8q9zvAP0noQkzfpusx/rSbEA=;
+ b=HbpPPUoukyAP+tv3QAdMpFfuIN2Bgm5I24dQAWNm9ig15F4Yp43ymNMbvfR/0MCPM4
+ exENgWAo0vPvowgNLzmf/8Mcb9Vi+Y3E4GHd3BDKEwVaJ6TwUIVcC9MSq62CokAfU4Lu
+ +THBPkXPS+ointtVXLN+KWU/itZ4zwzfSuLRSQJ0g7tqwKAjc6S8dDqQfL61pgW8Jqu2
+ ZifarcVqB8iYPYqp7XhQXtbZzA5Hycyc4MmNq5dFptPDTnY1T+ESSiXMtvzmlXFlES2r
+ KZdKBtaoWvksmRBpN12ORmu8/1PsA65DqlgVOZk7SoXdoornRJ83h4nR4EfovPvf35xS
+ sxrA==
+X-Gm-Message-State: AOJu0YxUFtyBPzm4DSVpBBiWldyEFzOzQFu0QjLGJH3xgYZNe7XGqq3L
+ VhPepajdhKsRt1T3FISIRKMlN/fzGPZAuo2T0c42fE5uOUaCU4+2DEUcboGcTkMnyH0=
+X-Gm-Gg: AfdE7ck6gv3jB8w5DPO05EHfnCj/vTglhYab1fmCEI1zFndngN4KVk1wgegAs2VQEE8
+ d3uhnrOgADZ8JHCHGxdGxriK0rIBC+U24gdpPb7oQEvIUPhi6ZElatNGDoRYZ+vg4HzEaCyWmYJ
+ LJ+Jg1zqdkaKY/KTyjoWssa8c839K41aJfNsLC3Q9r2dmAmcJ8YXar69ChLMhmpcls/x/jGqjLV
+ thM3Xgd3o28ySz8WEeF9voCGNzrMc+52eMaAsEOXbwbZQyAEGRuDeXjcGcgn9n/+Np9DdRlLfRe
+ U2iWrU8UF1LZIl/NIsT3Je++v2kyGpJviPdwpJ2yPIPE9j0UBhiCo4IjRU49n6KhTQWHkIL+dzp
+ BjyWN9H0nA6hFo+nLKbXQIoCEc8JRGsQ9feFhpevISbhv+37jJu8RvLDqGftvYURneR+eElGbQt
+ ZxcbXYHqlQybTUL1Nn1uQWcdw=
+X-Received: by 2002:a5d:5f82:0:b0:45e:b99d:dad with SMTP id
+ ffacd0b85a97d-4650a32ad1amr5771364f8f.38.1781869603614; 
+ Fri, 19 Jun 2026 04:46:43 -0700 (PDT)
+Received: from draig.lan ([185.124.0.195]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-4650b67a3f3sm8248787f8f.20.2026.06.19.04.46.42
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 19 Jun 2026 04:46:42 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id CBD135F7FA;
+ Fri, 19 Jun 2026 12:46:41 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Jim MacArthur <jim.macarthur@linaro.org>
+Cc: qemu-devel@nongnu.org,  richard.henderson@linaro.org
+Subject: Re: [PATCH 2/3] tests/tcg/arm: Tests for new FPRCVT instructions
+In-Reply-To: <ajUg9sIsy9if_JM0@linaro.org> (Jim MacArthur's message of "Fri,
+ 19 Jun 2026 11:59:02 +0100")
+References: <20260618-jmac-fprcvt-v1-0-1b4475bacf51@linaro.org>
+ <20260618-jmac-fprcvt-v1-2-1b4475bacf51@linaro.org>
+ <878q8cgeux.fsf@draig.linaro.org>
+ <16d97ff2-7e12-49ee-be1f-315f1387ba71@linaro.org>
+ <ajUg9sIsy9if_JM0@linaro.org>
+User-Agent: mu4e 1.14.2-pre1; emacs 30.1
+Date: Fri, 19 Jun 2026 12:46:41 +0100
+Message-ID: <87ldcag3by.fsf@draig.linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
- helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::435;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x435.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -69,77 +107,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello Matt,
+Jim MacArthur <jim.macarthur@linaro.org> writes:
 
-On Fri, 19 Jun 2026, Matt Jacobson wrote:
-> Hi Zoltan,
+> On Thu, Jun 18, 2026 at 08:04:27AM -0700, Richard Henderson wrote:
+>> On 6/18/26 06:25, Alex Benn=C3=A9e wrote:
+>> > I'm not sure about this as now we have one test with two modes. Can we
+>> > not just create a new binary (fcvt-fprcvt) and keep running the origin=
+al
+>> > test either way.
+>> >=20
+>> > See how we do that for the sha512 and it's various vector variants.
+>>=20
+>> You certainly don't want to be duplicating the reference file.
+>>=20
+>> Perhaps test the v8.0 convert insn output vs the FEAT_FPRCVT insn output=
+ directly?
+>>=20
+>> Also, this patch is ordered incorrectly.  With the instruction feature t=
+est
+>> properly in place, it will fail without the final patch to enable the
+>> feature.
 >
-> Many thanks for taking the time to review.
-
-Thanks for taking the time to implement this and improve QEMU.
-
->> On Jun 18, 2026, at 7:11 AM, BALATON Zoltan <balaton@eik.bme.hu> wrote:
->>
->> On Wed, 17 Jun 2026, Matt Jacobson wrote:
->>> The Mac Quadra 800 contains a "SuperDrive" floppy drive that supports
->>> both GCR (400 kB and 800 kB) and MFM (1440 kB) diskettes.  Implement
->>> an emulated version, to be controlled by a forthcoming SWIM2 device.
->>
->> A bit more explanation could be useful here. In the cover letter it's 
->> mentioned that GCR/MFM encoding is generated by this emulation. Maybe 
->> that should be mentioned here. But I don't see what it's needed for. I 
->> thought maybe for single bit reads but those are not emulated. So is 
->> encoded data needed at all or could be added later when emulating 
->> single bit reads making this a simpler patch?
+> I would rather not duplicate the reference file, but the other options in=
+clude significant changes to the existing fcvt.c test.
 >
-> Apologies for the misunderstanding.
+> We could:
 >
-> The GCR-encoded data is filled into xfer_buffer, and from there it's 
-> accessed through sony_drive_read_byte().  In fact, the Macintosh does 
-> the GCR decoding *in software* (in the ".Sony" driver), so the encoding 
-> is definitely required for the I/O to work correctly.
+> 1) Make a separate fcvt-fprcvt.c test which compiles with the fcvt.c test=
+, needing a header file for functions - requiring a much smaller separate f=
+cvt-fprcvt.ref file, but information would still be duplicated in it
+> 2) As you suggest, do a direct comparison between the general register
+> and SIMD/FP regs, but since the current tests just output strings, it
+> would require a significant change to how the current fcvt.c works.
 
-This could be explained in the commit message so those not familiar with 
-it (like me) get the basic theory of operation. That's what I meant by 
-more explanation. It should not need to be too detailed, something like 
-the above paragraph is enough detail just to note the tricky parts that 
-are not obvious from first look at the code.
+We'd still keep the reference file to validate the main case though
+right? We would just be inlining the SIMD into convert_single_to_integer
+and validating it got the same result as the main conversion function.
+It would be quiet unless it got something wrong.
 
-> In real hardware, the SWIM2 floppy controller reads the data bit-by-bit 
-> via the RDDATA0/RDDATA1 sense bits, but it seemed like overkill to force 
-> the emulated controller and emulated drive to deal in individual bits. 
-> So that's why I left that unimplemented (though it could be added later 
-> if needed).
-
-I see, yes bit-by-bit is not needed unless something in the guest wants to 
-use that but that can be added later if needed. Generally the approach in 
-QEMU is to emulate things at a level that the guest code needs and parts 
-can skipped that are not used by the guest to keep emulation simple.
-
->> My original question that lead to to above was if the asserts in GCR 
->> encoding and elsewhere could be caused by the user supplying invalid 
->> data (i.e. bad disk image file) and thus crashing QEMU but I think if 
->> the disk images contain decoded data not raw GCR/MFM encoded images 
->> then these asserts would only be caused by errors in encoding functions 
->> in this file but I'm not completely sure.
 >
-> I don't think there are any situations where a bad disk image would 
-> cause an assert.  The asserts are for internal consistency only.
-
-Asserts for internal consistency are OK to catch programming errors. I'm 
-not sure if we now prefer g_assert which gives more detailed log when it 
-fires, we still have a mix of older asserts so it may depend on the 
-maintainer's preference. To me either is fine.
-
-> However, your comment made me realize that there are cases where bad 
-> input *from the guest* (on the write path) could cause a crash.  That's 
-> a bug, and I will amend the patch to defend against that.
+> I will probably do the second option, but if anyone has any other ideas I=
+'ll listen.
 >
-> Happy to answer any other questions.  Thanks again,
+> Jim
 
-I'm not familiar with the rest of the series so maybe somebody else can 
-review those.
-
-Regards,
-BALATON Zoltan
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
