@@ -4,84 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 091CACD98F2
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Jun 2026 15:52:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B32DCD4F26
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Jun 2026 15:57:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wabUr-0005Vk-Fj; Fri, 19 Jun 2026 11:51:09 -0400
+	id 1wabab-0007FM-2G; Fri, 19 Jun 2026 11:57:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wabUp-0005Uz-Fs
- for qemu-devel@nongnu.org; Fri, 19 Jun 2026 11:51:07 -0400
-Received: from mail-pg1-x529.google.com ([2607:f8b0:4864:20::529])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1wabaZ-0007EN-Qg
+ for qemu-devel@nongnu.org; Fri, 19 Jun 2026 11:57:03 -0400
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wabUn-0007EY-06
- for qemu-devel@nongnu.org; Fri, 19 Jun 2026 11:51:07 -0400
-Received: by mail-pg1-x529.google.com with SMTP id
- 41be03b00d2f7-c859878eb48so976326a12.0
- for <qemu-devel@nongnu.org>; Fri, 19 Jun 2026 08:51:04 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1wabaX-0001Ff-G7
+ for qemu-devel@nongnu.org; Fri, 19 Jun 2026 11:57:03 -0400
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-49222b6e871so19267415e9.3
+ for <qemu-devel@nongnu.org>; Fri, 19 Jun 2026 08:57:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1781884263; x=1782489063; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=K/drO9pGnXreGVKeGJ1egyIXtLTEMK/m3v6zLvc5Crg=;
- b=T/bG8L9LLL5bpKAu64ZUaTqA90z54CxWtArKw+WdK5q4GLBxbYIO8goXXOso1NVj18
- REsYM5Mt9kEVfiXYroE28abip6+JH/FwEwnFDe81xLZgFS2U8+SirIrndaIgn4LUIPd3
- gEDsry9ZOLt+0M9dNSKZvmOFzNF3BxE/3gqurGiqLXo06EErWy4Xdl6C0Zxv/a/qYe5d
- savof4jEa/qgQIga8HK1cQph92MuKBtPNWMOL8V6SZByUbGyYaGsS9M/T/h/lFMGxmFg
- K4pSRxpysT2RsmSC6YWYe+lUURj2B2B+nnGJdWDulm1qAk+FEE6QYC5WErkqfXKDWtTH
- IkOw==
+ d=linaro.org; s=google; t=1781884620; x=1782489420; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=XAcK458fLut29YrBXX4JA0FS5UqQPCx1uFviFFxfcaE=;
+ b=ujhe+ROWrYTNwX0zPu+PKHVBOGsES+p7j29ltjalzel3080gGkHTPiCHt5+ulhOUoM
+ p2pj/irap0x/Zjk34lkf9Fpwl+ow1jzuEgM8Gc6iMGloDrQfkoIa5wTCvnvbpj4jaObp
+ 0rUSyzK5g4iiAIPxvv7InlDilHTsy7VJ6gW9WOQ7uJdJcoGBppxL4pfEUXbh8bRTDEpa
+ eLxS98ssO8tZp7h+lnZD47AViZJZ1uFspMLvU6GxeykCMmX/KG/WJRysK3pbdiKNvTQj
+ 5N4F/XlPpY9x+JdVUuSM58KFPlLdJ1GsoIPR68oRK2hSi5qB880QCAiRERBZnqrH5JSr
+ 20Cw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781884263; x=1782489063;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=K/drO9pGnXreGVKeGJ1egyIXtLTEMK/m3v6zLvc5Crg=;
- b=QIpOhN30RxnelhQEwqTn32m2KXqEGoX0/ubC/wyeIzjgWq4JxIJaLm11Wy7+GdZi0M
- cA2MTGMGk5lAjf34WdRsLWwxPKrXPvt6EjwbKBNkU//v8rmcUPADlcaZcKvc6K8k+tWy
- vtR+0XJzJi6Qixvf689vsT82ufD1u9bltUrVCupYmqLEEvwgIhAiHwLEvetQjLIi6Zly
- X19SfIyA0gnDuM5W8WZvtPyyKdH5LIYsSLd7gLyepKYWwy3RMzraSYiI9hejV6b0uNS9
- NBoxkfdM4lJ9TeBhA7Csu0nmNoVwbTavKBwlSYUfB7Y3YckYDwFxqwNSR2KLsiytS9YB
- aE8Q==
-X-Gm-Message-State: AOJu0Yy5YoSvAJNVlD/+ffO3FSn68FrcQvdNRQqBpgV4zRzC4v4WnfTq
- SHP1I3Pqs0484v+Y2AZYNS2qrDaKALLP7efRhod+q/mBPtKkwOjzw8+oAaRapaaV0cw=
-X-Gm-Gg: AfdE7cnkPp2MBU6aESnXyuF/hKOxtTD3ohdQqwWv3ENVq38RKJ6QRhbFUKRuDBaJ4jN
- 0/yKgsu8dDMqGTjaxL2R00257bGbVX54AeaTnrzw1OOvbBMwHO/lj0+Kc4qMw7fHJnFzWtqCTOX
- kiOqVhxPJzsdxrMfiooFAAYifMKu/NvpPvAPwWSZZnHWiLHEnzhZK4PauHXrQqUfP8chXA3hvsy
- QAzXEBBqeWjRyCF3B3K9e6JBlzrjCDers/qcXVQQfQ4QGfHF4MmHEzHMILr45337NIgf6uIlnsD
- 5mG40JLcj97oBW4D8ZwcedRfH5+fw3bRFjOaKdoT1YQQznJ/l920dxR9CnU1nW3DilObm2q+DKD
- 1JD/JIV3DqYXBUAySgbIGaOBeX3pMJJ72XDXbHALerj/6a2yEPgQrrjsqQez+oLVR4WT2s+HWxj
- /EziockSBcEK4mjDeSbF3NTgr3qIxbpazabUfOKRvepH1sUiLO2s631m+W9A==
-X-Received: by 2002:a05:6a00:339a:b0:842:83d1:ee6d with SMTP id
- d2e1a72fcca58-84550aff364mr4294744b3a.45.1781884262628; 
- Fri, 19 Jun 2026 08:51:02 -0700 (PDT)
-Received: from [192.168.0.4] (174-21-129-215.tukw.qwest.net. [174.21.129.215])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-8455384df1csm2733091b3a.52.2026.06.19.08.51.00
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 19 Jun 2026 08:51:00 -0700 (PDT)
-Message-ID: <f818fd19-93c3-4d43-bcc3-fa11ea92947d@linaro.org>
-Date: Fri, 19 Jun 2026 08:50:57 -0700
+ d=1e100.net; s=20251104; t=1781884620; x=1782489420;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=XAcK458fLut29YrBXX4JA0FS5UqQPCx1uFviFFxfcaE=;
+ b=kMgxsmkedj8FVDgi6cvKUvpefj1rDDoJE1JdEi7+fTOYiMck4s8PSH8WPHeaLv8n2L
+ 3fS8Euf98Po23THRQK3Pb9nMm8/PX3+EcwtttpP0fvoHUdqai1FOm72GklVegZSJ7xfP
+ S+xDvzmLt62Ohbh3wDO7ryVtkuVeLJ8KqstSNvlWqcEhyno4pnb+GO1jC7dAYsccIVza
+ 70WQMsfFhnDhFNJxW/0H3/mFd4YB+fKmfntz/7jo4mnoEc2jsnjXbwaJ9AudyOmdc2ae
+ C6ebCWbHWglA7+ueDjn6qvs+YMVYRzdMAbMDwdsaQSXhgtctKD14bs3MkgEKU/d/KzIo
+ Bx9g==
+X-Gm-Message-State: AOJu0YwZSUS4Y4tkOKX+/PZoZNfCZ5HBKIqCNb//ZjSHxd9BSXurZ2Mi
+ zCIEeB1XKLSIaf1MTp6RNVIUh6Dor8p91Q5rQshSd/NgdSruZiUFdsuDQ3XzEZyVzrs=
+X-Gm-Gg: AfdE7cmWZiG5xg8tXms7ii4JlLmWxx1LkRu3nwHdMeDmnSbBO6Yzy7h6kR3kz2sGeh0
+ WpUHkIkU14K2oM2s7I3JhUbPrdgRDR0Yy/CYhTR/i3mD31ns7Y2h2FkIrIGWhnDXcesoPTySSzJ
+ hOmN6KzQRMh93Rnk438aMHD+zWVINdiOcAvFlTIaHus/OYQtExnhE8MkTbX3VwpxGxE8EGMIPQ2
+ On9eLZmKU28VKToTwc8FVM8s6zA7FHSZOt1KJINUZKidJ/a2HSk08AWt5oWWl1ZQZlOHO5IAXJw
+ sb+B3aH59YfUCKomMeLcrC01j/YecVK2idUrJcOg0vhvuRRYhPeukbabP34NCTyRGp43kpXr8Cn
+ kNE7ox1xvPES7/6FVly96OPchk0hPDccbPuCEhpXsVCygTixAG8RZ2MMLcY7rXSwXHVeC6nVyBG
+ BVUsls1h0bzzAX
+X-Received: by 2002:a05:600c:a07:b0:492:2c87:3d34 with SMTP id
+ 5b1f17b1804b1-4924233ef9dmr50085455e9.15.1781884620009; 
+ Fri, 19 Jun 2026 08:57:00 -0700 (PDT)
+Received: from draig.lan ([185.124.0.195]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4923fce9590sm80114075e9.4.2026.06.19.08.56.58
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 19 Jun 2026 08:56:58 -0700 (PDT)
+Received: from draig.lan (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id AB1425F94E;
+ Fri, 19 Jun 2026 16:56:57 +0100 (BST)
+From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Brian Cain <brian.cain@oss.qualcomm.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Cornelia Huck <cohuck@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ John Snow <jsnow@redhat.com>, Thomas Huth <th.huth+qemu@posteo.eu>,
+ Cleber Rosa <crosa@redhat.com>, Kyle Evans <kevans@freebsd.org>,
+ Fabiano Rosas <farosas@suse.de>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>, Warner Losh <imp@bsdimp.com>,
+ Brad Smith <brad@comstyle.com>, qemu-arm@nongnu.org,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Song Gao <gaosong@loongson.cn>, Thomas Huth <thuth@redhat.com>
+Subject: [PATCH 4/7] tests/functional: tell pylint not to check c-modules
+Date: Fri, 19 Jun 2026 16:56:53 +0100
+Message-ID: <20260619155657.944220-5-alex.bennee@linaro.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260619155657.944220-1-alex.bennee@linaro.org>
+References: <20260619155657.944220-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 10/10] target/arm: Enable FEAT_SME_F8F32 for -cpu max
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
-References: <20260618041517.573469-1-richard.henderson@linaro.org>
- <20260618041517.573469-11-richard.henderson@linaro.org>
- <CAFEAcA_K8C4x7jCy3afb-NFH==38a7-KoiwmwDTAUXY8qxfeJQ@mail.gmail.com>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <CAFEAcA_K8C4x7jCy3afb-NFH==38a7-KoiwmwDTAUXY8qxfeJQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::529;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x529.google.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,21 +115,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/19/26 06:54, Peter Maydell wrote:
-> On Thu, 18 Jun 2026 at 05:16, Richard Henderson
-> <richard.henderson@linaro.org> wrote:
->>
->> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
->> ---
-> 
-> Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-> 
-> Are you going to do SME_F8F16 next? That seems to be something
-> of a pair with SME_F8F32: each feature implies the presence
-> of the other.
+To fix:
 
-Yes.
+  qemu-test.test_pylint "/home/alex/lsrc/qemu.git/tests/functional/arm/test_integratorcp.py:83: I1101: Module 'cv2' has no 'imread' member, but source is unavailable. Consider adding this module to extension-pkg-allow-list if you want to perform analysis based on run-time introspection of living objects. (c-extension-no-member)"
 
+Manually running python3 showed I could indeed import cv2 and call
+those functions. Rather than allowing pylint to introspect lets just
+tell it to skip c modules.
 
-r~
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Message-ID: <20260612140531.3530387-1-alex.bennee@linaro.org>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Message-ID: <20260614100902.885698-5-alex.bennee@linaro.org>
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+---
+ tests/functional/pylintrc | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/tests/functional/pylintrc b/tests/functional/pylintrc
+index 049c3e76f12..949bea611fe 100644
+--- a/tests/functional/pylintrc
++++ b/tests/functional/pylintrc
+@@ -58,6 +58,7 @@ confidence=HIGH,
+ # no Warning level messages displayed, use "--disable=all --enable=classes
+ # --disable=W".
+ disable=bad-inline-option,
++        c-extension-no-member,
+         consider-using-f-string,
+         file-ignored,
+         fixme,
+-- 
+2.47.3
+
 
