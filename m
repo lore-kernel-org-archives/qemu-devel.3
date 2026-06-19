@@ -4,93 +4,117 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D79E1CD4F26
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Jun 2026 14:52:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9161CD98F2
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Jun 2026 15:14:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1waaZl-0000hl-H3; Fri, 19 Jun 2026 10:52:09 -0400
+	id 1waauu-0007qf-MP; Fri, 19 Jun 2026 11:14:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1waaZk-0000hY-3u
- for qemu-devel@nongnu.org; Fri, 19 Jun 2026 10:52:08 -0400
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1waaZi-0001ZB-I3
- for qemu-devel@nongnu.org; Fri, 19 Jun 2026 10:52:07 -0400
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-4905529b933so21079675e9.0
- for <qemu-devel@nongnu.org>; Fri, 19 Jun 2026 07:52:05 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1waaus-0007pv-G1
+ for qemu-devel@nongnu.org; Fri, 19 Jun 2026 11:13:58 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1waauq-0001Qg-Th
+ for qemu-devel@nongnu.org; Fri, 19 Jun 2026 11:13:58 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1781882034;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=WY9zXhKzVITuA8MGsWDx4DYJSZbSzt5qLXb4eP7myuY=;
+ b=eucRzzTlWOFG/C+0mOnNjTeeKYK/Ad+HaldJ3obqIBoqQ/FvPXFCLO7SrDrixkrKcwVBAP
+ 6+uYA9XWIIZxWPIakF8wfRe8Iaq0Yds5GQOWlOURgsov+f2taqCd7xmcIG5hm6ohzbiJ1z
+ vmpN6VXSvEsJGFiNQob5GXjwxAM83cc=
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
+ [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-582-2a7mgSTtNCGxdRU4Yjep3g-1; Fri, 19 Jun 2026 11:13:52 -0400
+X-MC-Unique: 2a7mgSTtNCGxdRU4Yjep3g-1
+X-Mimecast-MFC-AGG-ID: 2a7mgSTtNCGxdRU4Yjep3g_1781882032
+Received: by mail-qv1-f72.google.com with SMTP id
+ 6a1803df08f44-8dcfdbe9da2so59568316d6.0
+ for <qemu-devel@nongnu.org>; Fri, 19 Jun 2026 08:13:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1781880725; x=1782485525; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=/Z2PHbar6lZWZ63N8YG+oGxYu9rZ1FIGdAIhphQ1vLU=;
- b=KrcbaZqnZb7HB/cyPozUHaERl7RV0GAzIPvwz4kxyNbkDVGWWNYCNk+gWB3BCsRCYG
- EQCpf0PFHo2F549YHzDosvgkBStY6UGLstJnhyDGNtmJN2kp53wMsUix0HeWA/6WJsD1
- A47IdOtsSWEgDYX/tvWHrqHk8SVbNrhHbG6sBA0RUCnP7psuKwDKz/AckTadwKQJQ2/i
- 8f2PlN9eDQeUmCUAY8jXoyCLqyPUwEmzcdmfTqFL9uNZvMoteNYQttNTsA088RTuGDDV
- 83PAKb6fv0R9hG1gOOIIU4R6ycR5d6jxVpanSAQw6qMeCPIalDpTx6aquwamFtoClNpE
- 73zg==
+ d=redhat.com; s=google; t=1781882032; x=1782486832; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=WY9zXhKzVITuA8MGsWDx4DYJSZbSzt5qLXb4eP7myuY=;
+ b=TsllGiqELucoWIbm5AywZqoTkefRy5+r/Q3IA1zABA7URIr8qamSeJZAjs31CIUeHi
+ cdWVv82IMBwAN17tYiGGSOzNKln9WMW7bOIhp6y/jdykrePOBELwsKx4Uze2BL7nbL4G
+ cUTlO5tD9R9e7Qu/U3ioF0nIGoCrq4436UK6ISXwaKT+1uvY1dK/KOF8VOCG9woAhzyB
+ mJyqluimS5heiVg1MJqaLaXA6A5jnDt26jb/HlkjFkjmLOIipPFDXb7Jh9s5VFpufc9S
+ tMu/DlD0qNRzO92cLhaV088w0T+bK6qzSYXwXQmmMISlmzNQx4/d4VzTHIBH3C0E7oev
+ QAFw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781880725; x=1782485525;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-gg
+ d=1e100.net; s=20251104; t=1781882032; x=1782486832;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=/Z2PHbar6lZWZ63N8YG+oGxYu9rZ1FIGdAIhphQ1vLU=;
- b=aaiMqSSbA5A7n2FXMfS/e+XvqZywQPUBDyxRuM+GZR7ruSHu7vXuNzPOgQSwpvRS+5
- DHKjR7gu0nn8Qs8JW9hhZJkAdaas0/t2p7LBW+irshdib8AhqJmBsFA8z7zNezpk8tht
- RSURg1em0P9w6io9JF4P4hcqnBTxXJgSi9+i8f6qlDUbF33R1UTGISZ51d7hYv3hUPrC
- W4+sqVUcq9WDjSk5MAKeGkytID110T5+c13r02cZfj740YX83/TyD0pHpX8iNiBQhYZV
- Sa33ocVcJc6NRoccA+2RXV5jSSKvUBTdlUgkIysdvUr16bBwWZDqcYh8hmFN97ejGSe+
- jQLw==
-X-Gm-Message-State: AOJu0YyWszu3l3WQsUIPG7fp31ELn2HT1MG53k3YiXPoK49S4SGit54p
- 3hAvGCVlP6wrIL8vSQsH5qZ3Z9CDXqLYO75OPTXNLRGOvRVwo/02l/Px+i/birkr+RHxjBEUSEa
- hlH/FpbE=
-X-Gm-Gg: AfdE7ckBj82CsgGdGJi0PQeQhwVIAU9s8plQHnxQA64/XSrVRBsBMApgZQ7gEIU3c5x
- yrEYX8vKEYqbJ6A0OUq4m0dqu20ggZaHgORr3pU5eVixtOtHSE60pEYSt7dLvLCO7YM2JBau0N4
- QVapCSgCWdXdtzvFpUlSn3rwy1pAG48nuZpfTm2N6L373/Rj+exMkOtNgWKJllwb0KcZAp+NCPL
- o9ScS+VIokXXojSOkITXXydECdbm1bSplz204wLQ+PXI0wl1lAzZKTJ8Lhb58w8ZkfDcyGhINkH
- 19m6R3QQS88J58c/YGhE0xhecJNwXIpQVkQ/fHRMuEojYwyFe3tpoCi7tbvzYKErRjLTZBWv+GN
- xT1y3CyQfbWw60+ecvFembnHF0v1Rf5dtmRXSoUl+FnPL0zFicusXd0M9ws2h1mODmpRcbQfVSA
- 8l6kWfF1H5wjSK
-X-Received: by 2002:a05:600c:5493:b0:492:33a8:5499 with SMTP id
- 5b1f17b1804b1-49240e85b41mr60772825e9.17.1781880724650; 
- Fri, 19 Jun 2026 07:52:04 -0700 (PDT)
-Received: from draig.lan ([185.124.0.195]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49245bba787sm14339115e9.1.2026.06.19.07.52.02
+ bh=WY9zXhKzVITuA8MGsWDx4DYJSZbSzt5qLXb4eP7myuY=;
+ b=oQqDI4WKrLWZl4KxtDNV6e3zj9eFvUTJg8MXjKLb+QWFOp2SuDO9s2gg3B4LjIJvLh
+ 7yWXqcGjaYsZh40tDoEnq/I+Tb/WR3cNTHmk7meQdjmm1zU3oEGUvH1UnxVqzEvPTJFb
+ VhPTeYWaooK/adCJJDEOk6qr6ptP1cjWBcHhB5C/PkYEwCyqPzMuJLYWfd5UpkGmbVcX
+ 0n/Xwx4ngxd4/RY5qFhmHd/3QA0bTW7klDErPV4o825PGYzXnD4cTTYhDhUzFGxD5mCP
+ BYpCnmPlVtVI72la2CV6yHwjxRiyzcPn97s76c2YFhB6w4um+fqlAaSVyp1y5T2PxKz4
+ wr/g==
+X-Gm-Message-State: AOJu0Yzwk+dlG6p/D+qRqLLLWuI5Kzbo9WsnNothXk4pjPkecr0dalFL
+ A6p7wcm/0VLEig0aLbhGdfK5QoLjE3T7HD1Wq6AQhvo7tYzq8xOPcYMyIJ0BoKe+Ek9L/MjW7Oa
+ VgznYkqXqsLHECASp+um+YQuOjlILyJFZDHASXL1cqkhdaLhhOM0NrytU
+X-Gm-Gg: AfdE7cmY9/FrHbVW5Jv7sx+fTSBFWTFPmuvl4ArDYEygApzWUIkh8P1vKc49eGPWsfO
+ YuxlfJLjzebOevArJx4qd4CIWpQmFgZguzL69NccP9NIThyLffl82gKx2K/BsmjbZCHF/vapO2A
+ EadI+E5/2d4MtV/qKrYaaU3kp6uQr+JyutSwrpUy75NSBHQiAg/BVicPeA2+Servugq7uK864xd
+ UeGzCaB23leLX5n1cUKGWkj1BUHOzSVyClccniVQZ0A3bLdpck8EDy3xEcfSpFRadSkpj8AfeY2
+ XuFtahW7kUnQ2eivultoIKwwxA+IynSlce2CA/ib7sttbkjTPtV9g8azYel4lk5o0eW60eFmyjm
+ qxGJO
+X-Received: by 2002:a05:622a:4c0a:b0:517:6afc:b644 with SMTP id
+ d75a77b69052e-519e4db674amr55150331cf.47.1781882031965; 
+ Fri, 19 Jun 2026 08:13:51 -0700 (PDT)
+X-Received: by 2002:a05:622a:4c0a:b0:517:6afc:b644 with SMTP id
+ d75a77b69052e-519e4db674amr55149761cf.47.1781882031416; 
+ Fri, 19 Jun 2026 08:13:51 -0700 (PDT)
+Received: from x1.local ([174.91.117.157]) by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-519e60ede74sm22190141cf.25.2026.06.19.08.13.50
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 19 Jun 2026 07:52:02 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id BD8705F814;
- Fri, 19 Jun 2026 15:52:01 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org
-Subject: Re: [PATCH] gitlab: update bug template for sec issues & tool
- assistance
-In-Reply-To: <20260619123632.1276476-1-berrange@redhat.com> ("Daniel P.
- =?utf-8?Q?Berrang=C3=A9=22's?= message of "Fri, 19 Jun 2026 13:36:32
- +0100")
-References: <20260619123632.1276476-1-berrange@redhat.com>
-User-Agent: mu4e 1.14.2-pre1; emacs 30.1
-Date: Fri, 19 Jun 2026 15:52:01 +0100
-Message-ID: <87pl1meg6m.fsf@draig.linaro.org>
+ Fri, 19 Jun 2026 08:13:50 -0700 (PDT)
+Date: Fri, 19 Jun 2026 11:13:39 -0400
+From: Peter Xu <peterx@redhat.com>
+To: =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>
+Cc: qemu-devel@nongnu.org, Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ David Hildenbrand <david@kernel.org>, Paolo Bonzini <pbonzini@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
+ qemu-rust@nongnu.org, Alex Williamson <alex@shazbot.org>,
+ =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
+ "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>,
+ Fabiano Rosas <farosas@suse.de>, Mark Kanda <mark.kanda@oracle.com>,
+ Ben Chaney <bchaney@akamai.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>, kvm@vger.kernel.org,
+ "Dr. David Alan Gilbert" <dave@treblig.org>,
+ Zhao Liu <zhao1.liu@intel.com>, Eric Blake <eblake@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>, Xiaoyao Li <xiaoyao.li@intel.com>
+Subject: Re: [PATCH v5 00/12] Make RamDiscardManager work with multiple
+ sources & virtio-mem
+Message-ID: <ajVco512NDPKDPTr@x1.local>
+References: <20260604-rdm5-v5-0-5768e6a0943d@redhat.com>
+ <CAJ+F1CKRvSWDOvKC98e_7uyjgJMuXfhOHP83H0s7a=+ZrYxA1g@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAJ+F1CKRvSWDOvKC98e_7uyjgJMuXfhOHP83H0s7a=+ZrYxA1g@mail.gmail.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,18 +130,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
+On Fri, Jun 19, 2026 at 12:11:48AM +0400, Marc-André Lureau wrote:
+> Hi
+> 
+> On Thu, Jun 4, 2026 at 5:46 PM Marc-André Lureau
+> <marcandre.lureau@redhat.com> wrote:
+> >
+> > Hi,
+> >
+> > This is an attempt to fix the incompatibility of virtio-mem with confidential
+> > VMs. The solution implements what was discussed earlier with D. Hildenbrand:
+> > https://patchwork.ozlabs.org/project/qemu-devel/patch/20250407074939.18657-5-chenyi.qiang@intel.com/#3502238
+> >
+> > The first patches are misc cleanups. Then some code refactoring to have split a
+> > manager/source. And finally, the manager learns to deal with multiple sources.
+> >
+> > This has been tested together with the Linux kernel series from
+> > Zhenzhong Duan [1] for TDX guests.
+> >
+> > (help fix https://issues.redhat.com/browse/RHEL-131968)
+> 
+> Can the patch 1-11 be queued or are we missing something?
+> (RFC patch 12 can be dropped for now)
 
-> Warn that a security issue must have the "confidential" flag
-> set and that any findings from automated tools must be validated
-> before submission.
->
-> Signed-off-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
+Likely yes.. one thing to double check with you before I do: We don't need
+the kernel series, do we?  Since when unplug, I expect with the truncation
+approach that this series proposed, KVM will emit TDH.MEM.PAGE.REMOVE then
+unaccept is done (?).
 
-Queued to testing/next, thanks.
-<snip>
+Say, what happens if we run QEMU with this series applied, but without the
+kernel series?
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+What confused me a bit is the dependency of this series v.s. the kernel
+one.  It seems to use different approaches, but then I don't understand why
+this series was tested with the kernel change.
+
+Thanks,
+
+-- 
+Peter Xu
+
 
