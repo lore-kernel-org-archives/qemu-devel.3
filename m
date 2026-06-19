@@ -4,99 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78190CDB46B
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Jun 2026 14:00:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A36ADCD98F2
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Jun 2026 14:05:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1waZl3-0007jn-Nk; Fri, 19 Jun 2026 09:59:45 -0400
+	id 1waZpU-00021b-1N; Fri, 19 Jun 2026 10:04:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1waZl1-0007j3-Rd
- for qemu-devel@nongnu.org; Fri, 19 Jun 2026 09:59:43 -0400
-Received: from mail-yx1-xb12a.google.com ([2607:f8b0:4864:20::b12a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1waZkz-0007iF-DR
- for qemu-devel@nongnu.org; Fri, 19 Jun 2026 09:59:43 -0400
-Received: by mail-yx1-xb12a.google.com with SMTP id
- 956f58d0204a3-6611669cd16so2860740d50.0
- for <qemu-devel@nongnu.org>; Fri, 19 Jun 2026 06:59:40 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1781877580; cv=none;
- d=google.com; s=arc-20240605;
- b=WXGXFZYRjf6rF+Ty7VO26c3dng4CHHy7zkCRTk3O/HcbmuxxCg0eBl4J5fUS+qxEDT
- Z/6FpPkwTJHRAKG9eBuLOS2OUebGtzHQN/xeYz2t7nY4mxT6ihaxCnmsY6VsBWnKcssB
- Vh5I6M4k/H0GmvqOQv3V1J79ZzwrZG/c6RUwMctKENoY2NDh7fmTWZBxe/K9JXuNaX8m
- F8V8lmzt+N6LnHLqoCtHF1GHd5w6inovh4l1P2LyqvEzkXJLydNDgg7c7VcqEamyov6M
- iHKOHTUhu99NpDwFXpR2qL2eAK2ewuTKJNnwraIxD0MHOA6G+GJhUbp+lngEdbefdohj
- 6xuA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=ShBdqytcLSe2HRNr4jnUDwhsOQrfs6ccbcrDZnIBUP8=;
- fh=/ftcwOPYeEIhzseC7WF42kR+xVR/IJiWpLC1+A7SOWQ=;
- b=J52bEHpy/E0/piORcwo7awiTWdQak5rccrQd3ISfUOjewNb8nSbTiEewbTlDdrMcfk
- dUV8RU2mZbReIMowsiydtT/o+3JrILp3AfNtQFDZ16riqqdk1WQV977ecri0n2kN5hin
- A2gIkVznSC1LLGReEQPn0xKihsBRhYYMxjvCQntKsRSSPx/f3dVU9KuOyYc2URjhUrw4
- KzD6/I/bFiiXejVsdmsjpm/QTEpbASLl8VZqPmsFwHgyHkAw6NhFrk2gww4brLPvjVTV
- 7UEKVmB3RuzFcxyhvSbOTPTLZHxTkgCMAiaDwH7J+j+JBqvxCPo8Sq3f/4RC8CYhU5og
- wFLw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1781877580; x=1782482380; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=ShBdqytcLSe2HRNr4jnUDwhsOQrfs6ccbcrDZnIBUP8=;
- b=d2b1mp+qqF30GOksiBiSWgJqs2eGWkV6VJHiTyniQWTU1DhPvu6nNkmJUVVdHwrreT
- +0Ku8k0Ni5PFdmzMMzqnAWmcH0RElVIPcpLG5415h4zDj+afFHKRDdXislHEd130uXRp
- ghNklnYd+eOBZ3D2KnzF46pqgP5DPFAeL153seb8/wT4KLYsqe05yFwo+OXhuQXLAIuv
- aaMp+mQRv7rQ9i06VbUfPpH7jy8nVmaxn8b0lQLdVbI2Asqf7ecRsP7j0hB7oRzilVYH
- Y/FKBNq+fDrEKXN3I01qyVLQ1dhnCLXYn5h7qd566E1KAAtJaWlU+k3ms6kpG8VfLgLc
- 2dxg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781877580; x=1782482380;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=ShBdqytcLSe2HRNr4jnUDwhsOQrfs6ccbcrDZnIBUP8=;
- b=bAx1JbJnyABd8k3B0QkEo6bijIrrYxfvoPk1DEC3P8wqRAy4GvLUdTAO7LDPwEMzJ0
- vAAzjvj8cFYTj2Wzr6GECSG0TPlwLjUGiI1feP1izHQvMqllincSwYuRRSGCJnk9Yk+j
- DRgrSNnOZdWrtXRTQa1Kr1gAwBRPyTjtHDJesjZShqXLr3DwO2INa5h+zNg1WcD0dTOb
- bI83QlUk65980Or16QY0YEZO45nteWUWhv0kVaIsyLNgWvFpxQIq1NsfKeQeUQWbVdeC
- 6d6zW7FLdDzDTuQT2ItVWwWMWxI+XiO444oAa0fXSsJDmjJF0Ohz1trt1R8ndVeQ6Z6F
- XYGg==
-X-Gm-Message-State: AOJu0YzreXmhFE6ThkrvjLLk/r+z4V51VoPcWT9j5FpGNbk+BqYpW0zK
- bSeRBahed5SLCcrN5EOWGZO5onLNSTU9frJOkeD/S73b2Lc2026uzwQLc2HEzKxc7HeQ3Ps049C
- O/kF++XG6CAznfgnmakACAc++l0AaRTmfkCNb3eAo6Q==
-X-Gm-Gg: AfdE7clkUz8UbxGanxJLIuXgaqRxzJYwL+XGxZySS3ilkqhe0nHbcUbkp0E3i6TP8Sf
- 4oqREPi1qAKZ8CNxfmi+s4dJyEvVoL679mPxZJI3BOYYCzBXycS+IkpYon0sCeSIF04xxSpPWR7
- hJat8rxmdqVUiCnv3YgiAdcliZRZehUDo23TfjbbGykODQgka9uVfbceD7kfNPfJpMUyB+stKcA
- SRyJ9+n4TtYWIwbyLZwjIfKH1+O7XJ9jH5NWaW1BMmJRoH3ULXeMiZkvhNKgBSgL2jSH15oU1V7
- K2DF8xl8ea24oqqN9fHVFa8Zj2zQU0wPI9OhE3HKNOsHB5FLrEC5vLCU
-X-Received: by 2002:a05:690e:d0e:b0:65c:c744:36d4 with SMTP id
- 956f58d0204a3-662fffc2126mr2957866d50.59.1781877579619; Fri, 19 Jun 2026
- 06:59:39 -0700 (PDT)
-MIME-Version: 1.0
-References: <20260618040718.572950-1-richard.henderson@linaro.org>
-In-Reply-To: <20260618040718.572950-1-richard.henderson@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 19 Jun 2026 14:59:28 +0100
-X-Gm-Features: AVVi8CfpkOUxP_ydqGvm5VJr8kr87gqEy9M30_cQ0lVRo8UW2ovAgpS7yB34Vow
-Message-ID: <CAFEAcA8puxCrNjZgUC0qM=McpOPYvk1AaX4ckO+ir6RK32C7+A@mail.gmail.com>
-Subject: Re: [PATCH v2 0/8] target/arm: Implement FEAT_SVE2p2
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12a;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1waZpR-00020t-Le
+ for qemu-devel@nongnu.org; Fri, 19 Jun 2026 10:04:18 -0400
+Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1waZpP-0000x7-Be
+ for qemu-devel@nongnu.org; Fri, 19 Jun 2026 10:04:17 -0400
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id AB52A59694F;
+ Fri, 19 Jun 2026 16:04:10 +0200 (CEST)
+X-Virus-Scanned: amavis at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
+ id p0kbqH-Joi5e; Fri, 19 Jun 2026 16:04:08 +0200 (CEST)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id 6CF98596948; Fri, 19 Jun 2026 16:04:08 +0200 (CEST)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+Subject: [PATCH] ati-vga: Include vga state in the blit context
+To: qemu-devel@nongnu.org
+Cc: Gerd Hoffmann <kraxel@redhat.com>, marcandre.lureau@redhat.com,
+ Chad Jablonski <chad@jablonski.xyz>
+Message-Id: <20260619140408.6CF98596948@zero.eik.bme.hu>
+Date: Fri, 19 Jun 2026 16:04:08 +0200 (CEST)
+Received-SPF: pass client-ip=2001:738:2001:2001::2001;
+ envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -113,23 +58,150 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 18 Jun 2026 at 05:07, Richard Henderson
-<richard.henderson@linaro.org> wrote:
->
-> Changes for v2:
->   - 18 patches merged
->   - Enablement of the feature for -cpu max is deferred until
->     FEAT_SME2p2 is complete as well.
->   - Dropped sve2p2 helper prefixes.
->   - Renamed sve2_aes to sve_aes; there are more isar functions
->     that want renaming, but this one touches the same lines as
->     FEAT_SSVE_AES.
->   - Other minor tweaks to helpers per review.
->   - Unrelated bug fix for FEAT_FPMR.
+The vga state is needed by several functions using the blit context so
+just include it in the context instead of passing it separately.
 
+Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+---
+ hw/display/ati_2d.c | 38 ++++++++++++++++++--------------------
+ 1 file changed, 18 insertions(+), 20 deletions(-)
 
+diff --git a/hw/display/ati_2d.c b/hw/display/ati_2d.c
+index 48498677c7..ce62b470ab 100644
+--- a/hw/display/ati_2d.c
++++ b/hw/display/ati_2d.c
+@@ -45,6 +45,7 @@ static int ati_bpp_from_datatype(const ATIVGAState *s)
+ }
+ 
+ typedef struct {
++    VGACommonState *vga;
+     int bpp;
+     uint32_t rop3;
+     bool host_data_active;
+@@ -52,8 +53,6 @@ typedef struct {
+     bool top_to_bottom;
+     bool need_swap;
+     uint32_t frgd_clr;
+-    const uint8_t *palette;
+-    const uint8_t *vram_end;
+     QemuRect scissor;
+ 
+     QemuRect dst;
+@@ -66,8 +65,9 @@ typedef struct {
+     const uint8_t *src_bits;
+ } ATI2DCtx;
+ 
+-static void ati_set_dirty(VGACommonState *vga, const ATI2DCtx *ctx)
++static void ati_set_dirty(const ATI2DCtx *ctx)
+ {
++    VGACommonState *vga = ctx->vga;
+     DisplaySurface *ds = qemu_console_surface(vga->con);
+     unsigned int bypp = ctx->bpp / 8;
+     hwaddr dirty_start = ctx->dst_offset + ctx->dst.x * bypp +
+@@ -94,8 +94,9 @@ static void ati_set_dirty(VGACommonState *vga, const ATI2DCtx *ctx)
+     }
+ }
+ 
+-static void setup_2d_blt_ctx(const ATIVGAState *s, ATI2DCtx *ctx)
++static void setup_2d_blt_ctx(ATIVGAState *s, ATI2DCtx *ctx)
+ {
++    ctx->vga = &s->vga;
+     ctx->bpp = ati_bpp_from_datatype(s);
+     ctx->rop3 = s->regs.dp_mix & GMC_ROP3_MASK;
+     ctx->host_data_active = s->host_data.active;
+@@ -103,9 +104,7 @@ static void setup_2d_blt_ctx(const ATIVGAState *s, ATI2DCtx *ctx)
+     ctx->top_to_bottom = s->regs.dp_cntl & DST_Y_TOP_TO_BOTTOM;
+     ctx->need_swap = (HOST_BIG_ENDIAN != s->vga.big_endian_fb);
+     ctx->frgd_clr = s->regs.dp_brush_frgd_clr;
+-    ctx->palette = s->vga.palette;
+     ctx->dst_offset = s->regs.dst_offset;
+-    ctx->vram_end = s->vga.vram_ptr + s->vga.vram_size;
+ 
+     ctx->scissor.width = s->regs.sc_right - s->regs.sc_left + 1;
+     ctx->scissor.height = s->regs.sc_bottom - s->regs.sc_top + 1;
+@@ -153,10 +152,11 @@ static uint32_t make_filler(int bpp, uint32_t color)
+     return color;
+ }
+ 
+-static bool ati_2d_do_blt(ATI2DCtx *ctx, uint8_t use_pixman)
++static bool ati_2d_do_blt(const ATI2DCtx *ctx, uint8_t use_pixman)
+ {
+     QemuRect vis_src, vis_dst;
+     unsigned int x, y, i, j, bypp = ctx->bpp / 8;
++    const uint8_t *vram_end = ctx->vga->vram_ptr + ctx->vga->vram_size;
+ 
+     if (!ctx->bpp) {
+         qemu_log_mask(LOG_GUEST_ERROR, "Invalid bpp\n");
+@@ -167,9 +167,8 @@ static bool ati_2d_do_blt(ATI2DCtx *ctx, uint8_t use_pixman)
+         return false;
+     }
+     if (ctx->dst.x > 0x3fff || ctx->dst.y > 0x3fff ||
+-        ctx->dst_bits >= ctx->vram_end - bypp ||
+-        ctx->dst_bits + ctx->dst.x * bypp + (ctx->dst.y + ctx->dst.height) *
+-        ctx->dst_stride >= ctx->vram_end - bypp) {
++        ctx->dst_bits >= vram_end - bypp || ctx->dst_bits + ctx->dst.x * bypp +
++        (ctx->dst.y + ctx->dst.height) * ctx->dst_stride >= vram_end - bypp) {
+         qemu_log_mask(LOG_UNIMP, "blt outside vram not implemented\n");
+         return false;
+     }
+@@ -206,9 +205,9 @@ static bool ati_2d_do_blt(ATI2DCtx *ctx, uint8_t use_pixman)
+         }
+         if (!ctx->host_data_active &&
+             (vis_src.x > 0x3fff || vis_src.y > 0x3fff ||
+-            ctx->src_bits >= ctx->vram_end - bypp ||
++            ctx->src_bits >= vram_end - bypp ||
+             ctx->src_bits + vis_src.x * bypp + (vis_src.y + vis_dst.height) *
+-            ctx->src_stride >= ctx->vram_end - bypp)) {
++            ctx->src_stride >= vram_end - bypp)) {
+             qemu_log_mask(LOG_UNIMP, "blt outside vram not implemented\n");
+             return false;
+         }
+@@ -275,6 +274,7 @@ static bool ati_2d_do_blt(ATI2DCtx *ctx, uint8_t use_pixman)
+     case ROP3_BLACKNESS:
+     case ROP3_WHITENESS:
+     {
++        const uint8_t *palette = ctx->vga->palette;
+         uint32_t filler = 0;
+ 
+         if (ctx->bpp == 24) {
+@@ -286,14 +286,12 @@ static bool ati_2d_do_blt(ATI2DCtx *ctx, uint8_t use_pixman)
+             filler = make_filler(ctx->bpp, ctx->frgd_clr);
+             break;
+         case ROP3_BLACKNESS:
+-            filler = 0xffUL << 24 | rgb_to_pixel32(ctx->palette[0],
+-                                                   ctx->palette[1],
+-                                                   ctx->palette[2]);
++            filler = 0xffUL << 24 | rgb_to_pixel32(palette[0], palette[1],
++                                                   palette[2]);
+             break;
+         case ROP3_WHITENESS:
+-            filler = 0xffUL << 24 | rgb_to_pixel32(ctx->palette[3],
+-                                                   ctx->palette[4],
+-                                                   ctx->palette[5]);
++            filler = 0xffUL << 24 | rgb_to_pixel32(palette[3], palette[4],
++                                                   palette[5]);
+             break;
+         }
+         DPRINTF("pixman_fill(%p, %ld, %d, %d, %d, %d, %d, %x)\n",
+@@ -347,7 +345,7 @@ void ati_2d_blt(ATIVGAState *s)
+     }
+     setup_2d_blt_ctx(s, &ctx);
+     if (ati_2d_do_blt(&ctx, s->use_pixman)) {
+-        ati_set_dirty(&s->vga, &ctx);
++        ati_set_dirty(&ctx);
+     }
+ }
+ 
+@@ -441,7 +439,7 @@ bool ati_host_data_flush(ATIVGAState *s)
+         DPRINTF("blt %dpx span @ row: %d, col: %d to dst (%d,%d)\n",
+                 pix_in_scanline, row, col, chunk.dst.x, chunk.dst.y);
+         if (ati_2d_do_blt(&chunk, s->use_pixman)) {
+-            ati_set_dirty(&s->vga, &chunk);
++            ati_set_dirty(&chunk);
+         }
+         idx += pix_in_scanline;
+         col += pix_in_scanline;
+-- 
+2.41.3
 
-Applied to target-arm.next, thanks.
-
--- PMM
 
