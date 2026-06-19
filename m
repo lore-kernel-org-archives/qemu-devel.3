@@ -4,90 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07609CD98E6
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A498ACD98F6
 	for <qemu-devel@archiver.kernel.org>; Fri, 19 Jun 2026 04:49:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1waRAc-0008RI-Lv; Fri, 19 Jun 2026 00:49:34 -0400
+	id 1waRAW-0008NO-Dk; Fri, 19 Jun 2026 00:49:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <joel.stan@gmail.com>)
- id 1waRAY-0008Pa-QC
- for qemu-devel@nongnu.org; Fri, 19 Jun 2026 00:49:31 -0400
-Received: from mail-pg1-x533.google.com ([2607:f8b0:4864:20::533])
+ id 1waRAF-0008LV-KR
+ for qemu-devel@nongnu.org; Fri, 19 Jun 2026 00:49:14 -0400
+Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <joel.stan@gmail.com>)
- id 1waRAV-0005SV-SE
- for qemu-devel@nongnu.org; Fri, 19 Jun 2026 00:49:30 -0400
-Received: by mail-pg1-x533.google.com with SMTP id
- 41be03b00d2f7-c8857a27041so798155a12.1
- for <qemu-devel@nongnu.org>; Thu, 18 Jun 2026 21:49:26 -0700 (PDT)
+ id 1waRAB-0005GC-5V
+ for qemu-devel@nongnu.org; Fri, 19 Jun 2026 00:49:08 -0400
+Received: by mail-pf1-x432.google.com with SMTP id
+ d2e1a72fcca58-8454c5a280aso496174b3a.1
+ for <qemu-devel@nongnu.org>; Thu, 18 Jun 2026 21:49:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1781844566; x=1782449366; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1781844545; x=1782449345; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:sender:from:to:cc:subject:date
  :message-id:reply-to;
- bh=KUuEtyKtFhfXIoCph6bUYAge9pOaOKkGGobDBDNgwZk=;
- b=EzXHAZcL4JuGYFfgI7igb1+gN7CARIGHZLpT/EjgDqZTm6tTXNejsWjzEtBPe/HZCh
- 6i/rF9UHO8fb28RQUTzBncbZjWDrG7POB2gr4fLIS4B2q+wT0MStC2qI3KhO3cd11gOe
- cnax4VCcEPNSRR8Y4/ukjrP+HBSmxsaA+2L5BXzsIB9UKP9nxMsEUs8Wl2zDJqooCrGU
- YFhZ4ompQRdL1GP1UpVNFezWKQZXzE4H/k1YVMAIAB6x0cIiul1FwbzGfaFVtANeTcxG
- dugBaw6UKGrQPfj0HfJkl+b62/1d3wTVSnESaZhZurJEOD3ggMUwOwvk1oS50ObY5ZWT
- zQTg==
+ bh=WsWbPE3Bt2Gd8XbRXKbewV3tBI1M4bc8RRw0T8jY90g=;
+ b=O0EtpxNlhvmyI9WuvjAENATHQe6OwzFtJ0Ewiu/XVV8ly5O28YdS2iIem+GxQlCnRw
+ ZwdYyrndskMvP0L520yUSbDIclX8n6FPjapbLtmXxPcHEQYQvxQSsYKjMBWo41xf52og
+ J7PfRfPDUKlWdjaMa2v0lJAlCcWE7TrylN1u3VCvxi9gPiaQq2F5R2TGKkd7rYIR2HXP
+ Zrcu7VYxfAxW+LD4Urm0Wk6ZxZ+OPG9czsmJjRuoicOyiYvt1bEiomDf94AZPXtwNIE3
+ CZR94KfQif6ZkqK2uJ8UFeWe5jCvRSgsKDyHXlYgVjxOTaijiwiv5q1+cfHJrMpvd5Pj
+ 2/LQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781844566; x=1782449366;
+ d=1e100.net; s=20251104; t=1781844545; x=1782449345;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:sender:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=KUuEtyKtFhfXIoCph6bUYAge9pOaOKkGGobDBDNgwZk=;
- b=Xyy1Um7SouGkmoM4i4Pk/zkffMW1U1ZxMgbC8xcQAxm9R+TNIGBL3WIQuc0Xal0R0v
- x9zZ/LkrLbnbjb9tG4n3z9Pwtu66IpoGOkMqWphtR8Hp+6OFaAo61q5DRyh2h3KILXrG
- uD30msG4C7HP1YmtKvfHjhgpj8DWPTzSWTiR7k9bjcHQ2P2r2kOkiAZJvxW8US/NNpm8
- Sbku8I+CcPZeoiQjN8g64gEKluKEMJxDRQgtbiLN8t+1eEnhJPx3HgfimZ8I9owpxlko
- D58bB2uUARbgEIOm3RBI+uSLJ39hm4v54952Jg/Fq4Wj4I6Mtn0Bm23m2/ORJV4KHH52
- uRXw==
+ bh=WsWbPE3Bt2Gd8XbRXKbewV3tBI1M4bc8RRw0T8jY90g=;
+ b=XipICkEtTpPetRRBJdB2gT6U+d5zfzT317ZbHu/QZdQMlHoEeW1hJEcBnL05tPb985
+ +f9nCJhjiTS+l+J8emLlA7Z1dbcS2/lc/0nbLEzgMUJ9suP+FutTQN2YNne2pc2Xju/H
+ HNk7HnSwpbAMF26sKcICLBZ2eYSgG05Yq7KeWj4NcXF03HMoltExKtlqbtGrMeMmQch/
+ GzSzkfTmS2RCO1HGhGLsFeKfyNk6bqYPThox8xeZQBCe/HPrChYSGg4w9x8DM/PXFyYO
+ ZYIYt9qx5XnDcE2d3oRuI6Kd1FlcRUXeyLb8YkN8eeU6mU19T+fdQ4cqJyq24rkCj0bB
+ 9gUQ==
 X-Forwarded-Encrypted: i=1;
- AFNElJ9prF2FlqiO9J0p/x8BFeqJWcNhr69pqQGmBd694ud2xBvhAvA/6asyTmuhaRkkqrsIxU8Rot0I9k0L@nongnu.org
-X-Gm-Message-State: AOJu0Yxw8kJiOp1Es7ydcNvl0NpjLn+d/9JD+h/a5Ht+BItanbyBvEdp
- TpFdfjwavszOviCH3h35TVnj6i5avMdwq6WeBXyFRiNijpmyldBljAWz
-X-Gm-Gg: AfdE7claoMPJh94NxfeB1HO2oV/pYpxxqkZbYll2MYAIyX+0TlCq7OWVIu8N2EvbNHD
- wOAiajkSgFGR73rzTWiTuheO3R9HwVnpbvO8wqxY98a6P1DTqOKwX2/GBcCs8BCMSTPwLU1Zb32
- m/Ca+KvncDskQJ643E5XH+8+LRruzM0hz1scrZb770RxOwsiptnvuwILB4VRDsHqkmhfque4kW6
- WRKdI66bVqsh5C7HIlAltOw9FZqa9wTUdGvXs1MzNOS9cCKqlzTceq7anaO1eX8ZaoIypkZVXzA
- hjO4hng1CvwJfnGL2c97qrg/DFz6gOrhME8V45JKjiz3VHapyUmvl7CGzBRT/ERrx6fCi/mmKq5
- REXXQ0oi7IDl+/cjVbo0S6EbCauTcn9S/eGo65XbjtlRRiZonjomCB9RmT8gXwy78g76et12XWT
- ePswZ2NxCmOiRHGvhZMsjLD/l9vmlga3N+J0RUUCk7iJUOXtFcFA0TFmQsds3DgrUJn843VTJ+m
- V7QRy2JVZijDawlxPXw78iA+IoR0QBi+Aqx2dHhzHowcx32NniZ
-X-Received: by 2002:a05:6a00:339a:b0:842:83d1:ee6d with SMTP id
- d2e1a72fcca58-84550aff364mr2034918b3a.45.1781844565863; 
- Thu, 18 Jun 2026 21:49:25 -0700 (PDT)
+ AFNElJ/krqhiJymV8hqqOW39IcWnuco4nT0PjKBprbGQOUqMZhfwm7bhDBJWjsaC6lL/jOZakyEIYykpygb0@nongnu.org
+X-Gm-Message-State: AOJu0Yxo2wV8OJ2sIR8uzGO0YcaypopWEwL4khcYIHl5w2u986WWixiD
+ IklICMlK7xdLYXVMr2JVEMnNMltiEOJnm6L/7C173uc/f7MrF0Wfh0cZ
+X-Gm-Gg: AfdE7clt5GhZt+SwAa0qX7horBavCUg9YMO0mGOUa+FNFX6wwVN7rdqlsVTp7Wead8w
+ CtNR7HMg6d4TH6icfGObtfbmMXxSSY9Cesx9Iaq8sisfWDwU+HMbmvh5FOotfBGhGDNQzVJ+QHs
+ 5JrO0lLLy1c7aPtvl3zw0oEYkqgE2KGH9I+ZaEXf5IGPHW6DsRpPf/zVuWyMPaUGsfM5Gq5ELWu
+ kpQeylP979vjXf3a1hC0k6SM8PECuE9JO+ODkt0ofJMN5BviWBgc0xNkyAx4uiz+6eAuzCvwoRj
+ LJzuGKkcrUQA8V9FIxwJkYUCZHss/e15kGaE4UPNI3pRovXtCVKGv60T3JAUkzGxC2+F+du/YZZ
+ UztYZB0oFP+6EgFR06nWYPNbqj9wUP8+L6QBTs9FCiinzhs1wOu/co7pCgGVFDeCEpfeVnvUDIS
+ AyztztCoFf+g+tC+00EuRv2mfidibM2DBy3r/JQn7iQI07jFtVTkJOPeccw1iOXzkuTKvaKwVfG
+ Yt1yPdEnHYdV2DPaHe5s7fZJ9Y3hWuYaznLZPXcnA==
+X-Received: by 2002:a05:6a00:2d82:b0:842:4982:825 with SMTP id
+ d2e1a72fcca58-8455011462fmr1665478b3a.1.1781844544350; 
+ Thu, 18 Jun 2026 21:49:04 -0700 (PDT)
 Received: from donnager-debian.. ([144.6.172.18])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-8455363da44sm870141b3a.8.2026.06.18.21.49.21
+ d2e1a72fcca58-8455363da44sm870141b3a.8.2026.06.18.21.48.59
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 18 Jun 2026 21:49:25 -0700 (PDT)
+ Thu, 18 Jun 2026 21:49:03 -0700 (PDT)
 From: Joel Stanley <joel@jms.id.au>
 To: Alistair Francis <alistair.francis@wdc.com>,
 	qemu-devel@nongnu.org
-Cc: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+Cc: Nicholas Piggin <npiggin@gmail.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
  Chris Rauer <crauer@google.com>, Alano Song <alanosong@163.com>,
  Michael Ellerman <mpe@kernel.org>, Joel Stanley <jms@oss.tenstorrent.com>,
- Nick Piggin <npiggin@gmail.com>,
  Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>,
  Portia Stephens <portias@oss.tenstorrent.com>, qemu-riscv@nongnu.org
-Subject: [PATCH v9 05/12] hw/riscv/aia: Configure stride for the M-mode IMSIC
-Date: Fri, 19 Jun 2026 14:18:29 +0930
-Message-ID: <20260619044838.1054677-6-joel@jms.id.au>
+Subject: [PATCH v9 01/12] hw/riscv/boot: Describe discontiguous memory in
+ boot_info
+Date: Fri, 19 Jun 2026 14:18:25 +0930
+Message-ID: <20260619044838.1054677-2-joel@jms.id.au>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260619044838.1054677-1-joel@jms.id.au>
 References: <20260619044838.1054677-1-joel@jms.id.au>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::533;
- envelope-from=joel.stan@gmail.com; helo=mail-pg1-x533.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
+ envelope-from=joel.stan@gmail.com; helo=mail-pf1-x432.google.com
 X-Spam_score_int: -16
 X-Spam_score: -1.7
 X-Spam_bar: -
@@ -111,71 +111,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-riscv_create_aia() currently hard-codes the M-IMSIC at one 4 KiB page
-per hart and gives callers no way to widen it.
+From: Nicholas Piggin <npiggin@gmail.com>
 
-Add an m_imsic_stride parameter that supplies the per hart byte
-stride directly. The virt machine passes IMSIC_HART_SIZE(0)
-(= 4 KiB), preserving its existing compact layout.
+Machines that have discontiguous memory may need to adjust where
+firmware and images are loaded at boot. Provide an interface for
+machines to describe a discontiguous low/high RAM scheme for this
+purpose.
 
-The parameter only changes how the slots are spaced, with the rest of
-each slot reserved. This allows future platforms that have different
-layouts to control the stride.
-
-Reviewed-by: Philippe Mathieu-Daudé <philmd@mailo.com>
+Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 Signed-off-by: Joel Stanley <joel@jms.id.au>
 ---
- hw/riscv/aia.h  | 1 +
- hw/riscv/aia.c  | 3 ++-
- hw/riscv/virt.c | 1 +
- 3 files changed, 4 insertions(+), 1 deletion(-)
+ include/hw/riscv/boot.h |  7 +++++++
+ hw/riscv/boot.c         | 16 ++++++++++++++++
+ 2 files changed, 23 insertions(+)
 
-diff --git a/hw/riscv/aia.h b/hw/riscv/aia.h
-index 5ad0a902be0d..565f91accc09 100644
---- a/hw/riscv/aia.h
-+++ b/hw/riscv/aia.h
-@@ -14,6 +14,7 @@
- uint32_t imsic_num_bits(uint32_t count);
+diff --git a/include/hw/riscv/boot.h b/include/hw/riscv/boot.h
+index f00b3ca12245..69c99a149613 100644
+--- a/include/hw/riscv/boot.h
++++ b/include/hw/riscv/boot.h
+@@ -28,6 +28,10 @@
+ #define RISCV64_BIOS_BIN    "opensbi-riscv64-generic-fw_dynamic.bin"
  
- DeviceState *riscv_create_aia(bool msimode, int aia_guests,
-+                             uint32_t m_imsic_stride,
-                              uint16_t num_sources,
-                              const MemMapEntry *aplic_m,
-                              const MemMapEntry *aplic_s,
-diff --git a/hw/riscv/aia.c b/hw/riscv/aia.c
-index 82ea9d48ea75..ed8916002945 100644
---- a/hw/riscv/aia.c
-+++ b/hw/riscv/aia.c
-@@ -25,6 +25,7 @@ uint32_t imsic_num_bits(uint32_t count)
+ typedef struct RISCVBootInfo {
++    /* First contiguous RAM region. If size is zero then assume entire RAM */
++    hwaddr ram_low_start;
++    hwaddr ram_low_size;
++
+     ssize_t kernel_size;
+     hwaddr image_low_addr;
+     hwaddr image_high_addr;
+@@ -43,6 +47,9 @@ bool riscv_is_32bit(RISCVHartArrayState *harts);
+ char *riscv_plic_hart_config_string(int hart_count);
+ 
+ void riscv_boot_info_init(RISCVBootInfo *info, RISCVHartArrayState *harts);
++void riscv_boot_info_init_discontig_mem(RISCVBootInfo *info,
++                                        RISCVHartArrayState *harts,
++                                        hwaddr low_start, hwaddr low_size);
+ vaddr riscv_calc_kernel_start_addr(RISCVBootInfo *info,
+                                    hwaddr firmware_end_addr);
+ hwaddr riscv_find_and_load_firmware(MachineState *machine,
+diff --git a/hw/riscv/boot.c b/hw/riscv/boot.c
+index 7c9cd6146815..c8418f83f480 100644
+--- a/hw/riscv/boot.c
++++ b/hw/riscv/boot.c
+@@ -70,11 +70,27 @@ char *riscv_plic_hart_config_string(int hart_count)
+ 
+ void riscv_boot_info_init(RISCVBootInfo *info, RISCVHartArrayState *harts)
+ {
++    info->ram_low_start = 0;
++    info->ram_low_size = 0;
+     info->kernel_size = 0;
+     info->initrd_size = 0;
+     info->is_32bit = riscv_is_32bit(harts);
  }
  
- DeviceState *riscv_create_aia(bool msimode, int aia_guests,
-+                             uint32_t m_imsic_stride,
-                              uint16_t num_sources,
-                              const MemMapEntry *aplic_m,
-                              const MemMapEntry *aplic_s,
-@@ -47,7 +48,7 @@ DeviceState *riscv_create_aia(bool msimode, int aia_guests,
-             /* Per-socket M-level IMSICs */
-             addr = imsic_m->base + socket * (1U << IMSIC_MMIO_GROUP_MIN_SHIFT);
-             for (i = 0; i < hart_count; i++) {
--                riscv_imsic_create(addr + i * IMSIC_HART_SIZE(0),
-+                riscv_imsic_create(addr + i * m_imsic_stride,
-                                    base_hartid + i, true, 1,
-                                    num_msis);
-             }
-diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
-index b62864559f57..b10f347a5cbf 100644
---- a/hw/riscv/virt.c
-+++ b/hw/riscv/virt.c
-@@ -1418,6 +1418,7 @@ static void virt_machine_init(MachineState *machine)
-         } else {
-             s->irqchip[i] = riscv_create_aia(s->aia_type == VIRT_AIA_TYPE_APLIC_IMSIC,
-                                              s->aia_guests,
-+                                             IMSIC_HART_SIZE(0),
-                                              s->num_sources,
-                                              &s->memmap[VIRT_APLIC_M],
-                                              &s->memmap[VIRT_APLIC_S],
++/*
++ * This can be used instead of riscv_boot_info_init() if the machine has
++ * discontiguous physical memory. The low memory range specified will be
++ * used to place firmware images.
++ */
++void riscv_boot_info_init_discontig_mem(RISCVBootInfo *info,
++                                        RISCVHartArrayState *harts,
++                                        hwaddr low_start, hwaddr low_size)
++{
++    riscv_boot_info_init(info, harts);
++    info->ram_low_start = low_start;
++    info->ram_low_size = low_size;
++}
++
+ vaddr riscv_calc_kernel_start_addr(RISCVBootInfo *info,
+                                    hwaddr firmware_end_addr) {
+     if (info->is_32bit) {
 -- 
 2.47.3
 
