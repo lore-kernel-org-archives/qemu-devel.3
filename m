@@ -4,66 +4,142 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B50DCD98F2
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Jun 2026 20:01:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C53BCD98F2
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Jun 2026 21:12:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wafOE-00013H-4k; Fri, 19 Jun 2026 16:00:34 -0400
+	id 1wagV8-0006HA-Lj; Fri, 19 Jun 2026 17:11:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1wafOB-000132-SU
- for qemu-devel@nongnu.org; Fri, 19 Jun 2026 16:00:32 -0400
-Received: from zero.eik.bme.hu ([152.66.115.2])
+ (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
+ id 1wagV0-0006Fz-Fx
+ for qemu-devel@nongnu.org; Fri, 19 Jun 2026 17:11:40 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1wafO9-0001FQ-BK
- for qemu-devel@nongnu.org; Fri, 19 Jun 2026 16:00:31 -0400
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id DBFD159694F;
- Fri, 19 Jun 2026 22:00:25 +0200 (CEST)
-X-Virus-Scanned: amavis at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id 7EdzfkSgkOPA; Fri, 19 Jun 2026 22:00:22 +0200 (CEST)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 44D9E596944; Fri, 19 Jun 2026 22:00:22 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 425F8596941;
- Fri, 19 Jun 2026 22:00:22 +0200 (CEST)
-Date: Fri, 19 Jun 2026 22:00:22 +0200 (CEST)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: Paolo Bonzini <pbonzini@redhat.com>
-cc: =?ISO-8859-15?Q?Daniel_P=2E_Berrang=E9?= <berrange@redhat.com>, 
- qemu-devel@nongnu.org, 
- =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@mailo.com>, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
- Peter Xu <peterx@redhat.com>, 
- =?ISO-8859-15?Q?Herv=E9_Poussineau?= <hpoussin@reactos.org>, 
- =?ISO-8859-15?Q?Alex_Benn=E9e?= <alex.bennee@linaro.org>, 
- "Michael S. Tsirkin" <mst@redhat.com>, 
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
- Aurelien Jarno <aurelien@aurel32.net>, Fabiano Rosas <farosas@suse.de>, 
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, 
- =?ISO-8859-15?Q?Marc-Andr=E9_Lureau?= <marcandre.lureau@redhat.com>
-Subject: Re: [RFC 4/7] system: add memory_region_new / memory_region_new_io
-In-Reply-To: <78798c63-5ca9-4acc-a878-8638724d487c@redhat.com>
-Message-ID: <3ad6b24d-5554-ab58-2d8a-ea5e3a07be35@eik.bme.hu>
-References: <20260616155554.264412-1-berrange@redhat.com>
- <20260616155554.264412-5-berrange@redhat.com>
- <aa4d417e-2e61-44ef-a695-31bc19dbafd1@redhat.com>
- <9976f829-7c33-7dce-b38e-aa6f04d6ec9d@eik.bme.hu>
- <78798c63-5ca9-4acc-a878-8638724d487c@redhat.com>
+ (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
+ id 1wagUx-0007Sa-C4
+ for qemu-devel@nongnu.org; Fri, 19 Jun 2026 17:11:38 -0400
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 65JKtibV1830447
+ for <qemu-devel@nongnu.org>; Fri, 19 Jun 2026 21:11:31 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ GtEZTcvT5cvV2TBjCMmXK9EfcDG+PoUm6gcmIfhw4fs=; b=Jc4xhRmIKxWBEqhH
+ Cq8Zh2KNBukuPIaj+s1bmBoyVNMbqtuzJqCSbmVOY7KYhI+3jauiG70w4eb4R4Rf
+ 2bhduBLNohfop6UOlsb26qPycojEl2ByfVtzouB+fwKmp+6wahugxEUG5cKZ1+Tn
+ fbpZalin/AojLMKWIQLXb8BcYAm9zsFsONX5z7AXNZqDDHMUD3BsosowNHPv/c2j
+ Y8Pm5a1B1Qzu6RN83U+kXWYM+ksStvffLVCO2RKrqdhtXvEUUNHeM9s9skFH2NLD
+ r8OpI3KqOmGOFYx1zP6RQU7mUUiA/irKuaW0UBxQh7lpwvb/Byn92LkLKx4r90H6
+ ogZt+A==
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
+ [209.85.222.197])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4evm22dqmk-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Fri, 19 Jun 2026 21:11:31 +0000 (GMT)
+Received: by mail-qk1-f197.google.com with SMTP id
+ af79cd13be357-9157de5360fso739284585a.0
+ for <qemu-devel@nongnu.org>; Fri, 19 Jun 2026 14:11:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1781903491; x=1782508291; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=GtEZTcvT5cvV2TBjCMmXK9EfcDG+PoUm6gcmIfhw4fs=;
+ b=kd/NM7Uh3qo7M/xHRhbeIAOndJktoaFJ8XSkARSINfezIMnuTUNNYVJYRiwnFxQiX5
+ nEhmpdaBVSxR3wSHgJehw8N8y7dYuW+KdPigrOOkZZyrdZ2buzWro4KJyZxwySn/HPN1
+ cqKLhAuhZyTxGIN6R4PwMONIYa4iAmiEUVkKpSQFWS24xwKWbH4xjNDW4ztcNQ6WFUAE
+ 9auvfZh2FAmk5wd5MtzVN0zedv43GqNXTrRWGbkGqsjCZyoM2a8BZ9rQgE8J3talNp7T
+ 6RHJqAsbX7J2DV9DC1z7aBYerR55gSg7d9AdcSmNEekn+UPkvJO8Xfqyi4Duy9Zxts06
+ GP2Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1781903491; x=1782508291;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=GtEZTcvT5cvV2TBjCMmXK9EfcDG+PoUm6gcmIfhw4fs=;
+ b=g89pHoSxK1RfbOV9YZKapBv91Ye7839nq5W4BTibgTX1BBhi0Hku6IUupvcew+FH8+
+ hoqz4yO476CQU4+a9C2/Bu04WIY7nbAQRHR4vGOIq/LgD0CugXUp7ez4bFqCrjdwnohu
+ P0wndnO6HgvspdvlWawgOQ9u5wAhhJvQjgiMl2Kgl8pCff/U3XhJiTbZy8hAPG4G8RQW
+ Js0wamc+cMC2AkD9Y+eAXf/NqJbEKfqlCT3qvPnLIVn4qXp7dGmmOlWqGxj7jablJSAk
+ KkKtRUtErMKdAjRqS7xl9jX54K6QAaaMB5Au34Av0dwFkHReEXH+ONhbhxGR6a48iY2N
+ jXqA==
+X-Gm-Message-State: AOJu0Yy5WA5WkHca0PoIj/MKaUt/0XuIvdT9UPRz8iGWuJxbcmm4wJA7
+ jIRwfxM46TJJ5Oyi4dmJ7bFBp9INdKMk6a9x8nn9TiXXBw2JXsIJB3DCQb0T76CN/1BWpcJBOUm
+ DSvzBI3ovwo3+h6RgAJGfnx+JuPwCNVu8qMMb5r+m00/0jK6auvt0ebk2eg==
+X-Gm-Gg: AfdE7ck/3RRSSgzYiOYasUK1jPhJi9C7CaRl93ovtM2RRDBbo1KcaacT32kYMiF+dBw
+ QYg9II/WjjOs86jIOXzKbUHs/Q8N1M+IF7IcR5MmSzdI42sUJfnEJN5GwEz75maoOVKDvsRzWxC
+ ijxPcu6GZ+q9nFAuhboas/568xrxdXJnHas0EU4CSfMy6FMaqqn5vG6vPPXMl7hstiudFHle35j
+ Lni8eRL3EWc3c1S6R94grAnA69hnVX1AEsYo0sS3x6HcPeXk2B+3pAZWXUCOjFTHQpJ1LXPZezz
+ W6WA2SA4BnBpg4WFdZe5xjbFerMCSQSFXVnIxhKjvo1HFl0LJFE81X2acF/fHmGUzb+8qI8RhID
+ ImGkDSQqdQ2q66+Pc3HZAIKuat//WbTtD+sDQEdH+xaLZEOGp/Yz+PWJyhIxBEHRzlnoliQiSvt
+ 2CblUKpCMzTOfeUXs=
+X-Received: by 2002:a05:620a:4586:b0:915:4c9b:4120 with SMTP id
+ af79cd13be357-9208d1f3de5mr710533985a.37.1781903491076; 
+ Fri, 19 Jun 2026 14:11:31 -0700 (PDT)
+X-Received: by 2002:a05:620a:4586:b0:915:4c9b:4120 with SMTP id
+ af79cd13be357-9208d1f3de5mr710529585a.37.1781903490614; 
+ Fri, 19 Jun 2026 14:11:30 -0700 (PDT)
+Received: from [192.168.1.157] (104-54-226-75.lightspeed.austtx.sbcglobal.net.
+ [104.54.226.75]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-921d7965d70sm107285185a.9.2026.06.19.14.11.29
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 19 Jun 2026 14:11:29 -0700 (PDT)
+Message-ID: <96d23459-495a-4c42-b6a4-d01f58de28ed@oss.qualcomm.com>
+Date: Fri, 19 Jun 2026 16:11:28 -0500
 MIME-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="3866299591-997753258-1781899222=:46357"
-Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
- helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] tests/docker: tolerate chmod EPERM when unpacking hexagon
+ toolchain
+To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Matheus Tavares Bernardino <matheus.bernardino@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org, alex.bennee@linaro.org
+References: <20260619043159.2174062-1-brian.cain@oss.qualcomm.com>
+ <20260619135326.1248896-1-matheus.bernardino@oss.qualcomm.com>
+ <624606ae-4557-4289-b3a0-d612c9682cba@oss.qualcomm.com>
+Content-Language: en-US
+From: Brian Cain <brian.cain@oss.qualcomm.com>
+In-Reply-To: <624606ae-4557-4289-b3a0-d612c9682cba@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Authority-Analysis: v=2.4 cv=YN+vDxGx c=1 sm=1 tr=0 ts=6a35b083 cx=c_pps
+ a=50t2pK5VMbmlHzFWWp8p/g==:117 a=x6rl1zRT+JsLSO7OGbGBKQ==:17
+ a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22
+ a=qC_FGOx9AAAA:8 a=EUspDBNiAAAA:8 a=kxkpSQQAEukOxNruim0A:9 a=QEXdDO2ut3YA:10
+ a=IoWCM6iH3mJn3m4BftBB:22 a=fsdK_YakeE02zTmptMdW:22
+X-Proofpoint-GUID: m2WbeucUnxzTFxDMZ32LYESIFU6_wkYO
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjE5MDIwMyBTYWx0ZWRfX1Td5NHD2TVKO
+ 7P9nvDq5sGXHlEbNDqCNTYq0+UVL/gesAvNRB0iWVBZwruJ3J49l+qISeq44OSogU+xJlJaEeCl
+ I1y/YkTQOMd5khH8ig708mLb+fnoLLc=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjE5MDIwMyBTYWx0ZWRfX3d0PG4ZT2Yis
+ 5K1a7TrIQsZFoX3uylL8K3fhDWNBzCfZWef3tPdTHK2KrVNfnjwXcuGqBVxkhcSHPFJhC49UgBl
+ 5yPf/NuwJxN0F9hymvYlrF/c2uOoGB8JnU8djESNZXvSLMpvnfAiSGuwPNYEArr8OHW7zHgXplk
+ j1tg7TFaq696FAHDFMfrUJuH6glFfI7b1hWKYAKp+vSTB9OAfqzpmhghbyXwPt2zp9WGZkJW2r7
+ rygYzRlLRK+08zZzkAdXCunkqH31CDIJYd6aa+cL8wcRoVHRqaKt2b30KvQ3N5qmkK5DVRBRxZX
+ 0Ro/cOZ+EWO8lYUy/vibRUS8uX8fRsKO2vlLWnWdIOMNLtLbSSaiNUhzfWLuHf+DaMv1Olcj2r+
+ XR3i6hDttJsKjADaYaecpfV7fLNHoIwAPtKP8Tk05mIZ8qs13vPhy7aEznmw59JDwJihHcUL155
+ jJCConDpfu4okxfutjg==
+X-Proofpoint-ORIG-GUID: m2WbeucUnxzTFxDMZ32LYESIFU6_wkYO
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-19_04,2026-06-18_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 bulkscore=0 adultscore=0 clxscore=1015 impostorscore=0
+ phishscore=0 lowpriorityscore=0 malwarescore=0 spamscore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606190203
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=brian.cain@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -80,143 +156,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
 
---3866299591-997753258-1781899222=:46357
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8BIT
-
-On Fri, 19 Jun 2026, Paolo Bonzini wrote:
-> On 6/18/26 00:44, BALATON Zoltan wrote:
->> On Wed, 17 Jun 2026, Paolo Bonzini wrote:
->>> On 6/16/26 17:55, Daniel P. Berrangé wrote:
->>>> Prepare for the move to dynamically allocated memory regions by
->>>> introducing memory_region_new and memory_region_new_io functions
->>>> which call through to object_new instead of object_initialize.
->>> 
->>> MemoryRegionOps callback will certainly access fields in the parent. 
->>> Having a separate object gives you no benefit because you still have the 
->>> same use-after-free if the MemoryRegion outlives the device.  Likewise for 
->>> buses.
->>> 
->>> If the device itself is embedded, then all the invariants must hold 
->>> recursively:
->>> 
->>> - the device must be kept alive by mutual references between the device 
->>> itself and its parent;
->>> 
->>> - unparent for the device should wait for all guest memory accesses to be 
->>> either completed or cancelled.
->>> 
->>> So, the problem is that "QEMU automatically references the owning Device 
->>> to keep the MemoryRegion alive" is a hack that should die.
->>> [...] I disagree that removing embedding will fix any bugs
->> 
->> I'm trying to understand this better. The way it originally meant to work 
->> according to the memory region docs and implementation is that memory 
->> region is added to an owner as a child which takes a reference and when the 
->> owner is freed it will unparent its children which will then get unrefed 
->> and freed as well if nothing else increased their ref count.
+On 6/19/2026 11:41 AM, Pierrick Bouvier wrote:
+> On 6/19/2026 6:53 AM, Matheus Tavares Bernardino wrote:
+>> On Thu, 18 Jun 2026 21:31:59 -0700 Brian Cain <brian.cain@oss.qualcomm.com> wrote:
+>> ...
+>>> Download the tarball to a file and ignore tar errors during extraction
+>>> with --no-same-owner and --no-same-permissions.
+>> tar's man page says --no-same-owner and --no-same-permissions are "default for
+>> ordinary users". Isn't that the case for rootless podman?
+>>
+> By default, you're still root in the container, even though id 0 is
+> mapped to your original user in the kernel. So from tar point of view,
+> it's not an ordinary user.
 >
-> Yes, and that's broken.
+> The side effect is that tar will try to apply the original user id,
+> which gets mapped in the range configured by /set/subuid, which ends up
+> being different from yours, and thus results in a
+> 'Cannot change ownership: Operation not permitted'.
 
-Your replies are too brief to understand what you mean so I have to keep 
-guessing. What breakage do you mean? The idea itself is not broken and 
-would work and can be fixed to work as intended. It's just not working 
-currently because memory regions are not allocated in a way that ref 
-counting could free them. That's broken in QEMU currently but the 
-above described way is not fundamentally broken. Or do you mean something 
-else?
 
->> The problem is that when something accesses the memory region it has to 
->> keep the owner alive as well so instead of referencing the memory region it 
->> references the owner (not directly but using memory_region_ref which does 
->> this).
+Yeah - so apparently I can't seem to live without the `|| true`. But 
+Matheus recommended `--fail` for the curl, which makes a lot of sense to 
+me regardless of the behavior of `tar`.
+
+So, I'll send a v2 with that change.
+
+
 >
-> A mechanism to keep the owner alive exists, and it is mutual references (so 
-> that neither owner nor MR die) + unparent of owner (which should wait for 
-> pending users to complete before returning).
->
-> The fact that this mechanism is not used, i.e. unparent of a PCIDevice does 
-> not wait for pending BAR accesses to complete, is a bug.
-
-I don't know this part but I think ref counting is meant to be the way to 
-track if there are pending accesses. How else would PCI code know if there 
-are pending accesses from other unrelated parts of QEMU? I don't think PCI 
-code could track all accesses itself which may come from a CPU or another 
-device doing DMA. Even after registering as a BAR a memory region is just 
-used as any other memory region so the PCI code does not know what 
-accesses it without some tracking such as ref counts.
-
-I think the current way of passing reference to the owner could work for a 
-chain of owners too. All that would be needed is to add an owner field to 
-QOM object and if that is non-NULL ref/unref is passed to the owner. I.e. 
-just generalising what memory_region_ref/unref does. (Or do this for all 
-prarent/child where children increase their parents' ref when they get a 
-ref, but I'm not sure what exactly parent/child stands for in QOM so a 
-separate owner relation may be needed as parent/child may be for 
-qom-tree or not even well defined.)
-
->> So embedding seems unrelated to this passing refs on
->> memory regions to owner and could be fixed separately that my patches 
->> attempted.
->
-> Your patches add the possibility of not embedding; I don't like having two 
-> separate API, but I think we only have a disagreement on aesthetics.
-
-OK so at least we've arrived at that there's no other problem than 
-aesthetics. It's hard to argue about that but QOM already has two ways. 
-From https://www.qemu.org/docs/master/devel/qom-api.html#qom-api
-
-object_new:
-This function will initialize a new object using heap allocated memory. 
-The returned object has a reference count of 1, and will be freed when the 
-last reference is dropped.
-
-object_initialize:
-This function will initialize an object. The memory for the object should 
-have already been allocated. The returned object has a reference count of 
-1, and will be finalized when the last reference is dropped.
-
-So we should have corresponding API for memory_region too to support both 
-allocated memory regions and ones managed by some other way. Currently the 
-memory region API does not allow QOM managed memory regions so we're 
-causing ourselves problems having to somehow manage the lifetime of these 
-memory regions instead of just relying on the solution QOM already 
-provides for this. Having both APIs would be consistent with QOM and allow 
-to chose the way that fits each case better. I don't want to convert 
-everything to object_new but I want to be able to allocate memory regions 
-that are then managed by QOM so I can avoid the complexity of keeping 
-track and managing them separately when this is already there and would 
-work well for a lot of cases.
-
-> This is different for Daniel's patches, which try to fix something by not 
-> embedding, and I don't think they do.  Currently, if the owner dies, the 
-> MemoryRegion dies with it while it shouldn't (which is a problem, 
-> absolutely).  But these patches, while preventing the MR from dying, still 
-> leave around a dangling pointer to the owner from the MR, so there's not much 
-> gained if anything.
-
-I'm not sure I understand all the problems but I don't think embedding 
-solves anything other than not leaking memory regions that QOM does not 
-free due to using object_initialize which means you're on your own 
-managing your storage. I think a solution could be passing refs up in a 
-chain of owners as I described above which is unrelated to embedding. This 
-way works for a single owner with memory_region_ref/unref and could work 
-for multiple owners while keeping the memory regions and owners separate 
-objects. I'm not sure what you have in mind but if you say that owners 
-would have to embed their children that alone does not solve that they are 
-still separate objects and have to be finalized separately so we still 
-need ref counting to know how long to keep alive owners when one of the 
-children is accessed. Embedding does not solve that and just unnecessarily 
-ties storage of separte objects together but we still need to fix ref 
-counting and then we can also use that to free objects when no more 
-references are there so we also don't need to embed them but keeping both 
-_new and _init APIs would allow to chose either way whichever fits a 
-given problem.
-
-Regards.
-BALATON Zoltan
---3866299591-997753258-1781899222=:46357--
+>>> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
+>>> ---
+>>>   tests/docker/dockerfiles/debian-hexagon-cross.docker | 7 ++++++-
+>>>   1 file changed, 6 insertions(+), 1 deletion(-)
+>>>
+>>> diff --git a/tests/docker/dockerfiles/debian-hexagon-cross.docker b/tests/docker/dockerfiles/debian-hexagon-cross.docker
+>>> index 23e8bb2fb26..817c903246a 100644
+>>> --- a/tests/docker/dockerfiles/debian-hexagon-cross.docker
+>>> +++ b/tests/docker/dockerfiles/debian-hexagon-cross.docker
+>>> @@ -49,7 +49,12 @@ ENV TOOLCHAIN_BASENAME=clang+llvm-${TOOLCHAIN_RELEASE}-cross-hexagon-unknown-lin
+>>>   ENV TOOLCHAIN_URL=https://artifacts.codelinaro.org/artifactory/codelinaro-toolchain-for-hexagon/${TOOLCHAIN_RELEASE}_/${TOOLCHAIN_BASENAME}.tar.zst
+>>>   ENV CCACHE_WRAPPERSDIR=/usr/libexec/ccache-wrappers
+>>>   
+>>> -RUN curl -#SL "$TOOLCHAIN_URL" | tar --zstd -xC "$TOOLCHAIN_INSTALL"
+>>> +# Ignore tar's chmod/lchmod EPERM on the toolchain symlinks and directories,
+>>> +# which rootless podman's overlay storage rejects (harmless mode metadata).
+>>> +RUN curl -#SLo /tmp/toolchain.tar.zst "$TOOLCHAIN_URL" && \
+>>> +    { tar --zstd --no-same-owner --no-same-permissions \
+>>> +          -xf /tmp/toolchain.tar.zst -C "$TOOLCHAIN_INSTALL" || true; } && \
+>>> +    rm -f /tmp/toolchain.tar.zst
+>> Hmm, I think the "|| true" may mask some real failures. For example, if
+>> the URL is invalid, curl would still exit with no error code, but the output
+>> file would contain something like "errors" : [ { "status" : 404 } ]. Then,
+>> tar would fail to unpack that but || true would mask it.
+>>
+>>>   ENV PATH=$PATH:${TOOLCHAIN_INSTALL}/${TOOLCHAIN_BASENAME}/x86_64-linux-gnu/bin
+>>>   ENV MAKE=/usr/bin/make
+>>>   # As a final step configure the user (if env is defined)
+>>> -- 
+>>> 2.34.1
+>>>
 
