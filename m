@@ -4,129 +4,137 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B185CCD4F26
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Jun 2026 21:12:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4AB30CD98F2
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Jun 2026 21:47:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wagVk-0006Jh-4b; Fri, 19 Jun 2026 17:12:24 -0400
+	id 1wah2i-000563-9f; Fri, 19 Jun 2026 17:46:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1wagVE-0006HM-HU
- for qemu-devel@nongnu.org; Fri, 19 Jun 2026 17:12:01 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wah2g-00055d-U7
+ for qemu-devel@nongnu.org; Fri, 19 Jun 2026 17:46:26 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1wagVB-0007VR-R4
- for qemu-devel@nongnu.org; Fri, 19 Jun 2026 17:11:51 -0400
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wah2e-0007gf-R7
+ for qemu-devel@nongnu.org; Fri, 19 Jun 2026 17:46:26 -0400
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65JHUu4X1322474
- for <qemu-devel@nongnu.org>; Fri, 19 Jun 2026 21:11:46 GMT
+ 65JLXeVO2932941
+ for <qemu-devel@nongnu.org>; Fri, 19 Jun 2026 21:46:21 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:message-id
- :mime-version:subject:to; s=qcppdkim1; bh=5euFBx+KVSvekG+T2gBFxS
- urqjkqdt6wEypF46KGW68=; b=aWzSQDXwWfc6iujdyqI/tnj3TciVt9KFmjqHWW
- G9swwSlQXxE1yqX2yA8rQ0oMBoPztilqw/RZIHN/SX8XY3NlKnaG1bgGtMhkPi6j
- 37yhsdM9WqHc+vMb2peFaMcaSpb8eYRk+IkKcoqsml9cLbrpSl3J3r9DVKAhlymX
- EUC/jPwerm/tXDn8DcBtmsEMtzRb+kvOWy16Y7ARsp1enRpAaTfm/RO0cnebSBHl
- +zWX1EFIhrjdFOBxrmZxNM8cDqoZUgEsva0s6TgibSzimuY5ZEyKA25Dwrvc4FNF
- aOixhOqH5BaOHL62i/XO3PfK4SpCyMFnFOSgAp0mc/0wfUMA==
-Received: from mail-dy1-f199.google.com (mail-dy1-f199.google.com
- [74.125.82.199])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ew5hp9u3a-1
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ cU3D1obbnsJSzp4DnULDvAoSRD9K9Y/cd5ObJiMIVt4=; b=CnltL0A3gubIaJkQ
+ /xEEw65rcljWDRSbyDGsc2BNwNjcgwHLwZjb/KR6cYjFE0SKY2b7FWmcF+DS6ufA
+ f4OgzC0jLfVO/I5354I6QOKXie5Xj79jVNPitGvddBoDALJfqANza5idmfAgh7Xw
+ OTj3POlqXzUtBO01miUO5+ysvRSbR3v0qmYaU/AQ3p/mHzjJYSZTmIowz/l/07EK
+ X57dSXzSAkr9xSHl24LbkFHQD5StM4gzlQz3k40OpWxyhjheHR+LRbZ9QxcpZa87
+ 5+wBkSlPMiSSRlr6zGqkx8u1Af0lkeePDlR0u5JmjJohzHtZsvDfk8BIiqTsZM5F
+ AA7+hw==
+Received: from mail-dl1-f69.google.com (mail-dl1-f69.google.com [74.125.82.69])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ew5qs9w9y-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Fri, 19 Jun 2026 21:11:45 +0000 (GMT)
-Received: by mail-dy1-f199.google.com with SMTP id
- 5a478bee46e88-30c1f6c5559so400587eec.0
- for <qemu-devel@nongnu.org>; Fri, 19 Jun 2026 14:11:45 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Fri, 19 Jun 2026 21:46:21 +0000 (GMT)
+Received: by mail-dl1-f69.google.com with SMTP id
+ a92af1059eb24-139553dd8acso9818189c88.0
+ for <qemu-devel@nongnu.org>; Fri, 19 Jun 2026 14:46:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1781903505; x=1782508305; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=5euFBx+KVSvekG+T2gBFxSurqjkqdt6wEypF46KGW68=;
- b=jJ5MEXh5XSHfMdC3tsJVFsppimcje1iyB04t92wT9RxaCh98oIestGKS5x+eDvFi/o
- yja6V9XY7T0pVOo3ioipNX6oyl6LTsM9smUvQHExi5fc5bYGZ/NrRZxE7XVJ5elyp696
- p7OvxFq6oIZb3/SADtnt+uHQvK9qy7+oFVcoZJMQxWVSRrrGiAlXXME1ZLWfi/BM0Gco
- hRID5xGqh6HtIrBCLLshHDsc53gFKcQ3aWl/YEhMZei8AXkMYnhTM9yvl4474pAo++hj
- fepbaHrkXIQHxwFyNv3hisQ7/qSugImrgfm0o/hdGrsFBPtm0de2idPVi6LeTM9pZKJ2
- FxRw==
+ d=oss.qualcomm.com; s=google; t=1781905581; x=1782510381; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=cU3D1obbnsJSzp4DnULDvAoSRD9K9Y/cd5ObJiMIVt4=;
+ b=FvqX26ysgN9pfBecWYEyyL8Eag5O9IEyBefj9KrXGpOivopVzCCK09rPA/U+GotnPU
+ iumJL8ZW4f5Y2wmByVDL3Zb/XLh5szkj6GwWrOvohxumR0vA/mI4gH/Yr/YhrGpKfSax
+ k9vNbwYD7xntwR/JQ+RWfEfyy60kUlsyHobcOBMHz1GQwnkxk9op6fbn4gLUzDq4xlFa
+ PafIDO37S0eo7LmZjfGPfTgzmKP+6TQ5ukjxFKpJalZv+l6eSfG3lpwmoFkjR9WF8I2C
+ RmApPDjgxYZO6LkCVIPG/p2++5bej7T4/21l40YqtD8DfNBT6t81Wu9AVGdSwNi+gdOy
+ jqXA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781903505; x=1782508305;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=5euFBx+KVSvekG+T2gBFxSurqjkqdt6wEypF46KGW68=;
- b=E1Xc8cpnyAEI+rfLdwiGIlC5U5BzFKz+E7AqShhFIupGrQhbLTqmpoTijPkbeR3qfQ
- 1/wEzjXCOSukF9rqYshGiMbMgo9Y6K/bRMJ8ofqLM8gnMmaKbYLp3m+oAYB5C+bUBaOe
- DVCnpCnfqJpudiW78q8PnzuCN3aIdLJx+Mr3C+AseoxR0d0oPuj0xXq2i+LHBz2vQ8Jw
- CWThT5+iAQeQWrq+XuFbdJlXTkSOHB+HPW2H8Us4CdUxDyyv75i/6UqmyuJcbz8nU2Ea
- TRyw/Oid5ZvXOKQ2ipxQIMsMgb9fHizU+lsgnjsxhKVeYI4dQkjbDZB02Ut+HXlX9B4+
- 04cA==
-X-Gm-Message-State: AOJu0YybeWa4cE0IpczKHqLxNjG2w3V8HeF98wuhUk62iq6Fss0CWJJR
- hlj3FNiWjcZshPLRx7QPjgpk+pr8EY8lMTdmoSku/7UU1LZkklpsyDHBVZ6ns+SaWxMuhl9S9Au
- o+OGqR82UCBt6b+OELLEhGbApxDamK5TpY3jGYMDEepp/ylGcpighkQGYqckdfBh5hw==
-X-Gm-Gg: AfdE7clibbCk6Ygtu1g/bQcfwwNRAvd+ITcUkgI80gPLeaudK3iHpIlWAd8kfDsqyrd
- 3yd3+HN6yw+Z2zrkvwu2514BFtBGEjyDArVQnO3ynIyFt2mWOT+LL1Cy25VDCpBJ2XUa8iKmhun
- HHj2EBVWs6RmIhnARj0E78wH8ikt8V5eJjVF8d8f7GEOFgHHDyEXc5Y+yWNP36aJgT0HUGZk2aj
- JcGntvivIPE2wNl3n5Hyl/hJDM4F5VMLN+mby9E165/76uxWVAy8n4IREVD2WAh6DWbAtHhX7ip
- M9bREiHRoUHr/hsNuVex1Ukpv6UWSyy1kIdaH/NTRVbUWFyz/dgYbVTrwFTTy8wlN126foX3aqx
- vIEAsgwm1E1tO66VA548mBK6xb4cIzd3jAO3qZ7gxkDH62N/psBfXl4pCMx4=
-X-Received: by 2002:a05:7300:5b89:b0:307:393a:8f1d with SMTP id
- 5a478bee46e88-30c07056474mr3192065eec.14.1781903504580; 
- Fri, 19 Jun 2026 14:11:44 -0700 (PDT)
-X-Received: by 2002:a05:7300:5b89:b0:307:393a:8f1d with SMTP id
- 5a478bee46e88-30c07056474mr3192043eec.14.1781903504039; 
- Fri, 19 Jun 2026 14:11:44 -0700 (PDT)
-Received: from hu-bcain-lv.qualcomm.com (Global_NAT1.qualcomm.com.
- [129.46.96.20]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-30c1ba91120sm1028528eec.13.2026.06.19.14.11.43
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 19 Jun 2026 14:11:43 -0700 (PDT)
-From: Brian Cain <brian.cain@oss.qualcomm.com>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Brian Cain <brian.cain@oss.qualcomm.com>,
- matheus.bernardino@oss.qualcomm.com
-Subject: [PATCH v2] tests/docker: tolerate chmod EPERM when unpacking hexagon
- toolchain
-Date: Fri, 19 Jun 2026 14:11:42 -0700
-Message-Id: <20260619211142.4126199-1-brian.cain@oss.qualcomm.com>
-X-Mailer: git-send-email 2.34.1
+ d=1e100.net; s=20251104; t=1781905581; x=1782510381;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=cU3D1obbnsJSzp4DnULDvAoSRD9K9Y/cd5ObJiMIVt4=;
+ b=jPaYVAnizXAuaOaOjGFkbrDY49Vk7LeWR7QY9xJ6CQrDJiCkhgQXlkWsgHdNKxTUrk
+ x3dvVlVwwZsxcl5Va7321Mygzp8TwG5/7JnTuGaJYCo2iAoJ3DtMg2rc71NHbXYCFu43
+ Psu5yIO224g2jl4k6VByjvv9RUD1yOrCCCc81A1htQuyGNazbdFFs3OAwDWnSGGkv9Vg
+ LVetNqlrMfB+lQhBrgw1kL9lBWgMg7FOGS1CjteTTl/l0QgrRIk1s6VQKkIuuipx/xUD
+ MoC2Jx9UFELbsGZC3PVYkr6d77VETWKo4Cqi/0je5owlWHwCVSU6zPMnoGf+6+SphFZQ
+ bK/A==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ+zcR8uEJLwoUYXNMTMkypWLfs8ddOxc6lnsaWkbmnfyBRu2qEByrZ15hdKTErsJznwYa1/JmvRDE8U@nongnu.org
+X-Gm-Message-State: AOJu0Yxldh6zQrNUf4PbBTOlSiZR6bm1jTzJxWTY6Kl44tnRf72+P8rK
+ I7T+eUZR1BbJekF+2wzkPY0nqH8imZgkhDjZOt5ViABVWyOfBo5nqY9IrW/7FvZ8sYWyPdQRGS2
+ r47/PEuXWjYZLTdIkau5WbgsUF88jjkW75ZddgLMmYmrZ+8xwB1LW5AWdkbNNGa3qCQ==
+X-Gm-Gg: AfdE7ckvh6HmdtBGqQQlVqm08tYhIjWdfPtMpSqSNcLAfIdEraBb3Iy2iqbZ9DZlg7I
+ IrhQj/IsFinpRQqZuxWvyBJXP7AoJ3mfbLPwia92RCRNTSf1dbtJI0RNe/o9IIvORiglZvlghQ7
+ Q2eJcDSkivBaV3tcktPsV76pILggIYMiQaPBejQ6KsgG5NdmloUGTKWC038qbJGpppw9PT9vzyc
+ bWfZZo7hXSMuEveACk4TvAfALGYdY67gyGMdensIw1c4p9Df4Z086whwzxNOMgTQYTxriu6zNSQ
+ OlPsko5TTkX3WsZ+PaIrPfARf3f8P5Trg3GPY/sZGb5v25aLPahz7Zer4zzQhZm093bixGegQV0
+ 5dzpILGk3nvy/FtDDkTG1KfjP0euwmxtmpxje4xJzLtTSfb6Rjyl64+4Umunm9p2xFOmhcWxe/E
+ kH00k=
+X-Received: by 2002:a05:7022:2201:b0:137:ed4b:c9b4 with SMTP id
+ a92af1059eb24-139a3686b4dmr2740555c88.28.1781905580576; 
+ Fri, 19 Jun 2026 14:46:20 -0700 (PDT)
+X-Received: by 2002:a05:7022:2201:b0:137:ed4b:c9b4 with SMTP id
+ a92af1059eb24-139a3686b4dmr2740537c88.28.1781905579982; 
+ Fri, 19 Jun 2026 14:46:19 -0700 (PDT)
+Received: from [192.168.1.170] (216-71-219-44.dyn.novuscom.net.
+ [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
+ a92af1059eb24-139adca1b18sm542078c88.3.2026.06.19.14.46.18
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 19 Jun 2026 14:46:19 -0700 (PDT)
+Message-ID: <dd9efa6a-2824-4cfa-a4b6-4b0201b76aff@oss.qualcomm.com>
+Date: Fri, 19 Jun 2026 14:46:18 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
-X-Proofpoint-GUID: hXHLEIuA2ueKPDpgqT4KT4x9bgJ033wU
-X-Authority-Analysis: v=2.4 cv=aOHAb79m c=1 sm=1 tr=0 ts=6a35b091 cx=c_pps
- a=cFYjgdjTJScbgFmBucgdfQ==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] tests/docker: tolerate chmod EPERM when unpacking
+ hexagon toolchain
+To: Brian Cain <brian.cain@oss.qualcomm.com>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ matheus.bernardino@oss.qualcomm.com
+References: <20260619211142.4126199-1-brian.cain@oss.qualcomm.com>
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <20260619211142.4126199-1-brian.cain@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjE5MDIwOSBTYWx0ZWRfX4FVd+ic/g99g
+ Xgr+eVWrNwkcmZ7/OymtttoK7otJQhv+j+mM2all7A43c8nvfnbGwuLE4LJZHw6X/LZk1nyAqV7
+ HHMGivi/JWthFNjXsj+8plA2hK2DYb+ErOp6Vc8/LypzHHBHnrC/E7KOGlukMqkiYz9RU0Ixcem
+ O3GndVz7iNWK3Ln82zvf9bJgTCzYNn3jU2xrhr79dR/MsSlYJXq/i1b2prk8Bq+AXRE/sHlYTEo
+ a2w678WRyfg2LlH5wkhtmBNVoFt5ug25HMJvxhyJrkCR2UOhAhMNwKTDMlZT8MtvHFYCyNVFU82
+ ntghh7DvCKXpHuEsVTpV/eWoUiHcePhFWREk/i3SmGeMtEKEUMLfkwh1rPeQP/3oYMQrR3hKM0T
+ KPvNE3Q7ciAVsi0lHrqus+kAtvBbrqHeVGOGI30yesRQ9xOSEMHEexT7TvwrUYiBE+WR2jG9Joe
+ AFHcvtVSciguzNQMRXA==
+X-Authority-Analysis: v=2.4 cv=M9R97Sws c=1 sm=1 tr=0 ts=6a35b8ad cx=c_pps
+ a=kVLUcbK0zfr7ocalXnG1qA==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
  a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22
- a=qC_FGOx9AAAA:8 a=EUspDBNiAAAA:8 a=t8GXQkb_Q_UzE3FaIXAA:9 a=QEXdDO2ut3YA:10
- a=scEy_gLbYbu1JhEsrz4S:22 a=fsdK_YakeE02zTmptMdW:22
-X-Proofpoint-ORIG-GUID: hXHLEIuA2ueKPDpgqT4KT4x9bgJ033wU
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjE5MDIwMyBTYWx0ZWRfX7mJ59xCotwhO
- 78caf92nldZNq4+3LzaW8AYc9CtyAlPAOPE6lsYzzuD81Km8xvMik2MXXzqUhXKb6xCP25R0f0H
- kW0tqr/shvWD7NJyDrChKgxl+fPyhDs=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjE5MDIwMyBTYWx0ZWRfX3NHOCn718FAd
- hfHtqVVQ4W9AP18mn0kJZxDtyHCW4+Bdgzdy0q6gkoYStdXwjc8v9c/T4FUxo5fujbEFdaUhTJA
- dP8xCIwtyiCcBJrZHvnMMr3avpYOmxaiXNxyNj1PtMasQ9E7YHdOa4rdzBdg197pkujnSp8njih
- ZAunx+ltcBDAIdtJX25UTdEmn+yZt4B+qs4aZKuTwSeTwhjsJxRXGtQxj6ovgLU+pk5ob3QLMLJ
- +UA4Y0J7bC6TgdDqsegwZVEABnDOtWXhb5uBs02wgeSRnBGeUD9rt9xD21a6pHrGT06zZD8S3ZW
- vH5GMtwqv8Z6Lc0G/pOLLBpNo6gksM38k8u8gnMeflRi3opgb/JDQFyddtYFPPUEI0ev3m3Lc54
- F82/pzvho3iVKcjPzzXG53HJuMXGop+YonUMJeNg2mu1ybbHj/VrfZfemnHJHeX9Ye67oL+VsGQ
- wq0sh9h/gwnqKQCMjiA==
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22
+ a=qC_FGOx9AAAA:8 a=EUspDBNiAAAA:8 a=5Pc6o7UY1IG8TtlQ0ZUA:9 a=QEXdDO2ut3YA:10
+ a=vr4QvYf-bLy2KjpDp97w:22 a=fsdK_YakeE02zTmptMdW:22
+X-Proofpoint-ORIG-GUID: BjaidjrgsvLuKp6DheipN_wZNdgG93cg
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjE5MDIwOSBTYWx0ZWRfX+7GqrSqKIBc7
+ kIbFfiJu6Qp5VPoHRqSr/hsgVd94rT2jUodNX47wqo/dReXQp4WiNLzYe6i4E5q45KNUQKXNPHA
+ nQau7byIRKfT8sPGS42LNwHxnwGUoAM=
+X-Proofpoint-GUID: BjaidjrgsvLuKp6DheipN_wZNdgG93cg
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-19_04,2026-06-18_03,2025-10-01_01
+ definitions=2026-06-19_05,2026-06-18_03,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 bulkscore=0 spamscore=0 clxscore=1015 impostorscore=0
- adultscore=0 lowpriorityscore=0 malwarescore=0 suspectscore=0 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606190203
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=brian.cain@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+ phishscore=0 impostorscore=0 malwarescore=0 bulkscore=0 adultscore=0
+ lowpriorityscore=0 clxscore=1015 priorityscore=1501 suspectscore=0
+ spamscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2606190209
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=pierrick.bouvier@oss.qualcomm.com;
+ helo=mx0a-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -149,60 +157,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-VGhlIGRlYmlhbi1oZXhhZ29uLWNyb3NzIGltYWdlIHVucGFja3MgdGhlIGNvZGVsaW5hcm8gY2xh
-bmcrbGx2bSBoZXhhZ29uCnRvb2xjaGFpbiB0YXJiYWxsIGludG8gL29wdC4gVGhlIGFyY2hpdmUg
-Y29udGFpbnMgc3ltbGlua3MgKHRoZSAuc28vLmEKbGlicmFyeSBhbGlhc2VzKSBhbmQgZGlyZWN0
-b3JpZXMgd2hvc2Ugc3RvcmVkIG1vZGVzIEdOVSB0YXIgcmVzdG9yZXMgdmlhCmNobW9kKCkvbGNo
-bW9kKCkuIFVuZGVyIGRvY2tlciwgd2hlcmUgdGhlIGJ1aWxkIHJ1bnMgYXMgcmVhbCByb290LCB0
-aG9zZQpjYWxscyBzdWNjZWVkLiBVbmRlciByb290bGVzcyBwb2RtYW4gdGhlIGJ1aWxkIHJ1bnMg
-aW4gYSB1c2VyIG5hbWVzcGFjZQpvbiBvdmVybGF5IHN0b3JhZ2UsIHdoaWNoIHJlamVjdHMgdGhl
-IGNobW9kKCkvbGNobW9kKCkgY2FsbHMgd2l0aCBFUEVSTToKCiAgdGFyOiAuLi4vbGliY2xhbmdf
-cnQuYnVpbHRpbnMuYTogQ2Fubm90IGNoYW5nZSBtb2RlIHRvIHJ3eHJ3eHJ3eDogXAogICAgICAg
-T3BlcmF0aW9uIG5vdCBwZXJtaXR0ZWQKICB0YXI6IC4uLi94ODZfNjQtbGludXgtZ251OiBDYW5u
-b3QgY2hhbmdlIG1vZGUgdG8gcnd4ci14ci14OiBcCiAgICAgICBPcGVyYXRpb24gbm90IHBlcm1p
-dHRlZAogIHRhcjogRXhpdGluZyB3aXRoIGZhaWx1cmUgc3RhdHVzIGR1ZSB0byBwcmV2aW91cyBl
-cnJvcnMKCnRhciB0aGVuIGV4aXRzIG5vbi16ZXJvIGFuZCBhYm9ydHMgdGhlIGJ1aWxkLiBUaGUg
-bW9kZSBtZXRhZGF0YSBvbiB0aGVzZQpzeW1saW5rcyBhbmQgZGlyZWN0b3JpZXMgaXMgaXJyZWxl
-dmFudCBmb3Igb3VyIHVzZSwgYW5kIG5laXRoZXIKLS1uby1zYW1lLXBlcm1pc3Npb25zIG5vciBl
-eHRyYWN0aW5nIGFzIGEgbm9uLXJvb3QgdXNlciBzdG9wcyBHTlUgdGFyCjEuMzUgZnJvbSBhdHRl
-bXB0aW5nIHRoZSBsY2htb2Qgb24gdGhlIHN5bWxpbmtzLgoKRG93bmxvYWQgdGhlIHRhcmJhbGwg
-dG8gYSBmaWxlIGFuZCBpZ25vcmUgdGFyJ3MgZXhpdCBzdGF0dXMgZHVyaW5nCmV4dHJhY3Rpb24g
-d2l0aCAtLW5vLXNhbWUtb3duZXIgYW5kIC0tbm8tc2FtZS1wZXJtaXNzaW9ucy4gUmF0aGVyIHRo
-YW4KdHJ5aW5nIHRvIGRpc3Rpbmd1aXNoIHRoYXQga25vd24tYmVuaWduIGZhaWx1cmUgZnJvbSBh
-IGdlbnVpbmVseSBicm9rZW4KZG93bmxvYWQgb3IgZXh0cmFjdGlvbiBieSBwYXR0ZXJuLW1hdGNo
-aW5nIHRhcidzIHN0ZGVyciB0ZXh0IChmcmFnaWxlCmFjcm9zcyB0YXIgdmVyc2lvbnMgYW5kIGxv
-Y2FsZXMpLCB2ZXJpZnkgdGhlIHRvb2xjaGFpbiBhY3R1YWxseSB3b3JrcyBieQpydW5uaW5nIGhl
-eGFnb24tY2xhbmcgLS12ZXJzaW9uIGFmdGVyd2FyZHMsIGFuZCBwYXNzIGN1cmwgLS1mYWlsIHNv
-IGEKZmFpbGVkIGRvd25sb2FkIHN1cmZhY2VzIGltbWVkaWF0ZWx5IGluc3RlYWQgb2Ygd3JpdGlu
-ZyBhbiBlcnJvciBwYWdlCmludG8gdGhlIHRhcmJhbGwuCgpTaWduZWQtb2ZmLWJ5OiBCcmlhbiBD
-YWluIDxicmlhbi5jYWluQG9zcy5xdWFsY29tbS5jb20+Ci0tLQogdGVzdHMvZG9ja2VyL2RvY2tl
-cmZpbGVzL2RlYmlhbi1oZXhhZ29uLWNyb3NzLmRvY2tlciB8IDExICsrKysrKysrKystCiAxIGZp
-bGUgY2hhbmdlZCwgMTAgaW5zZXJ0aW9ucygrKSwgMSBkZWxldGlvbigtKQoKZGlmZiAtLWdpdCBh
-L3Rlc3RzL2RvY2tlci9kb2NrZXJmaWxlcy9kZWJpYW4taGV4YWdvbi1jcm9zcy5kb2NrZXIgYi90
-ZXN0cy9kb2NrZXIvZG9ja2VyZmlsZXMvZGViaWFuLWhleGFnb24tY3Jvc3MuZG9ja2VyCmluZGV4
-IDIzZThiYjJmYjI2Li5mYzFlM2VmNGUzNyAxMDA2NDQKLS0tIGEvdGVzdHMvZG9ja2VyL2RvY2tl
-cmZpbGVzL2RlYmlhbi1oZXhhZ29uLWNyb3NzLmRvY2tlcgorKysgYi90ZXN0cy9kb2NrZXIvZG9j
-a2VyZmlsZXMvZGViaWFuLWhleGFnb24tY3Jvc3MuZG9ja2VyCkBAIC00OSw3ICs0OSwxNiBAQCBF
-TlYgVE9PTENIQUlOX0JBU0VOQU1FPWNsYW5nK2xsdm0tJHtUT09MQ0hBSU5fUkVMRUFTRX0tY3Jv
-c3MtaGV4YWdvbi11bmtub3duLWxpbgogRU5WIFRPT0xDSEFJTl9VUkw9aHR0cHM6Ly9hcnRpZmFj
-dHMuY29kZWxpbmFyby5vcmcvYXJ0aWZhY3RvcnkvY29kZWxpbmFyby10b29sY2hhaW4tZm9yLWhl
-eGFnb24vJHtUT09MQ0hBSU5fUkVMRUFTRX1fLyR7VE9PTENIQUlOX0JBU0VOQU1FfS50YXIuenN0
-CiBFTlYgQ0NBQ0hFX1dSQVBQRVJTRElSPS91c3IvbGliZXhlYy9jY2FjaGUtd3JhcHBlcnMKIAot
-UlVOIGN1cmwgLSNTTCAiJFRPT0xDSEFJTl9VUkwiIHwgdGFyIC0tenN0ZCAteEMgIiRUT09MQ0hB
-SU5fSU5TVEFMTCIKKyMgUm9vdGxlc3MgcG9kbWFuJ3Mgb3ZlcmxheSBzdG9yYWdlIHJlamVjdHMg
-dGhlIGNobW9kKCkvbGNobW9kKCkgY2FsbHMgR05VCisjIHRhciBtYWtlcyB3aGlsZSByZXN0b3Jp
-bmcgdGhlIHRvb2xjaGFpbiBzeW1saW5rcycgYW5kIGRpcmVjdG9yaWVzJyBzdG9yZWQKKyMgbW9k
-ZXMsIHdpdGggRVBFUk0gKHRoZSBtb2RlIG1ldGFkYXRhIGl0c2VsZiBpcyBoYXJtbGVzcyBhbmQg
-dW51c2VkIGhlcmUpLgorIyBJZ25vcmUgdGFyJ3MgZXhpdCBzdGF0dXMsIGJ1dCB2ZXJpZnkgdGhl
-IHRvb2xjaGFpbiBhY3R1YWxseSBleHRyYWN0ZWQgYW5kCisjIHJ1bnMsIHNvIGEgZ2VudWluZWx5
-IGJyb2tlbiBkb3dubG9hZCBvciBleHRyYWN0aW9uIHN0aWxsIGZhaWxzIHRoZSBidWlsZC4KK1JV
-TiBjdXJsIC0tZmFpbCAtI1NMbyAvdG1wL3Rvb2xjaGFpbi50YXIuenN0ICIkVE9PTENIQUlOX1VS
-TCIgJiYgXAorICAgIHsgdGFyIC0tenN0ZCAtLW5vLXNhbWUtb3duZXIgLS1uby1zYW1lLXBlcm1p
-c3Npb25zIFwKKyAgICAgICAgICAteGYgL3RtcC90b29sY2hhaW4udGFyLnpzdCAtQyAiJFRPT0xD
-SEFJTl9JTlNUQUxMIiB8fCB0cnVlOyB9ICYmIFwKKyAgICBybSAtZiAvdG1wL3Rvb2xjaGFpbi50
-YXIuenN0ICYmIFwKKyAgICAiJFRPT0xDSEFJTl9JTlNUQUxMLyRUT09MQ0hBSU5fQkFTRU5BTUUv
-eDg2XzY0LWxpbnV4LWdudS9iaW4vaGV4YWdvbi1jbGFuZyIgLS12ZXJzaW9uCiBFTlYgUEFUSD0k
-UEFUSDoke1RPT0xDSEFJTl9JTlNUQUxMfS8ke1RPT0xDSEFJTl9CQVNFTkFNRX0veDg2XzY0LWxp
-bnV4LWdudS9iaW4KIEVOViBNQUtFPS91c3IvYmluL21ha2UKICMgQXMgYSBmaW5hbCBzdGVwIGNv
-bmZpZ3VyZSB0aGUgdXNlciAoaWYgZW52IGlzIGRlZmluZWQpCi0tIAoyLjM0LjEKCg==
+On 6/19/2026 2:11 PM, Brian Cain wrote:
+> The debian-hexagon-cross image unpacks the codelinaro clang+llvm hexagon
+> toolchain tarball into /opt. The archive contains symlinks (the .so/.a
+> library aliases) and directories whose stored modes GNU tar restores via
+> chmod()/lchmod(). Under docker, where the build runs as real root, those
+> calls succeed. Under rootless podman the build runs in a user namespace
+> on overlay storage, which rejects the chmod()/lchmod() calls with EPERM:
+> 
+>   tar: .../libclang_rt.builtins.a: Cannot change mode to rwxrwxrwx: \
+>        Operation not permitted
+>   tar: .../x86_64-linux-gnu: Cannot change mode to rwxr-xr-x: \
+>        Operation not permitted
+>   tar: Exiting with failure status due to previous errors
+> 
+> tar then exits non-zero and aborts the build. The mode metadata on these
+> symlinks and directories is irrelevant for our use, and neither
+> --no-same-permissions nor extracting as a non-root user stops GNU tar
+> 1.35 from attempting the lchmod on the symlinks.
+> 
+> Download the tarball to a file and ignore tar's exit status during
+> extraction with --no-same-owner and --no-same-permissions. Rather than
+> trying to distinguish that known-benign failure from a genuinely broken
+> download or extraction by pattern-matching tar's stderr text (fragile
+> across tar versions and locales), verify the toolchain actually works by
+> running hexagon-clang --version afterwards, and pass curl --fail so a
+> failed download surfaces immediately instead of writing an error page
+> into the tarball.
+>
+
+With those options, I don't think there is any reason for tar to fail.
+Also, as Matheus mentions, it can cover some other issues (disk full,
+process killed). So it would be better to remove || true.
+You can leave the hexagon-clang check anyway.
+
+> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
+> ---
+>  tests/docker/dockerfiles/debian-hexagon-cross.docker | 11 ++++++++++-
+>  1 file changed, 10 insertions(+), 1 deletion(-)
+> 
+> diff --git a/tests/docker/dockerfiles/debian-hexagon-cross.docker b/tests/docker/dockerfiles/debian-hexagon-cross.docker
+> index 23e8bb2fb26..fc1e3ef4e37 100644
+> --- a/tests/docker/dockerfiles/debian-hexagon-cross.docker
+> +++ b/tests/docker/dockerfiles/debian-hexagon-cross.docker
+> @@ -49,7 +49,16 @@ ENV TOOLCHAIN_BASENAME=clang+llvm-${TOOLCHAIN_RELEASE}-cross-hexagon-unknown-lin
+>  ENV TOOLCHAIN_URL=https://artifacts.codelinaro.org/artifactory/codelinaro-toolchain-for-hexagon/${TOOLCHAIN_RELEASE}_/${TOOLCHAIN_BASENAME}.tar.zst
+>  ENV CCACHE_WRAPPERSDIR=/usr/libexec/ccache-wrappers
+>  
+> -RUN curl -#SL "$TOOLCHAIN_URL" | tar --zstd -xC "$TOOLCHAIN_INSTALL"
+> +# Rootless podman's overlay storage rejects the chmod()/lchmod() calls GNU
+> +# tar makes while restoring the toolchain symlinks' and directories' stored
+> +# modes, with EPERM (the mode metadata itself is harmless and unused here).
+> +# Ignore tar's exit status, but verify the toolchain actually extracted and
+> +# runs, so a genuinely broken download or extraction still fails the build.
+> +RUN curl --fail -#SLo /tmp/toolchain.tar.zst "$TOOLCHAIN_URL" && \
+> +    { tar --zstd --no-same-owner --no-same-permissions \
+> +          -xf /tmp/toolchain.tar.zst -C "$TOOLCHAIN_INSTALL" || true; } && \
+> +    rm -f /tmp/toolchain.tar.zst && \
+> +    "$TOOLCHAIN_INSTALL/$TOOLCHAIN_BASENAME/x86_64-linux-gnu/bin/hexagon-clang" --version
+>  ENV PATH=$PATH:${TOOLCHAIN_INSTALL}/${TOOLCHAIN_BASENAME}/x86_64-linux-gnu/bin
+>  ENV MAKE=/usr/bin/make
+>  # As a final step configure the user (if env is defined)
+
 
