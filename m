@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42631CD4F26
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Jun 2026 11:12:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F2EACD4F26
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Jun 2026 11:12:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1waX8x-0004ix-DJ; Fri, 19 Jun 2026 07:12:15 -0400
+	id 1waX90-0004mN-C7; Fri, 19 Jun 2026 07:12:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <FangSheng.Huang@amd.com>)
- id 1waX8v-0004im-Oc
- for qemu-devel@nongnu.org; Fri, 19 Jun 2026 07:12:13 -0400
-Received: from mail-eastusazlp17011000f.outbound.protection.outlook.com
- ([2a01:111:f403:c100::f] helo=BL2PR02CU003.outbound.protection.outlook.com)
+ id 1waX8y-0004ky-FG
+ for qemu-devel@nongnu.org; Fri, 19 Jun 2026 07:12:16 -0400
+Received: from mail-westusazlp170100005.outbound.protection.outlook.com
+ ([2a01:111:f403:c001::5] helo=BYAPR05CU005.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <FangSheng.Huang@amd.com>)
- id 1waX8t-0001rp-Qa
- for qemu-devel@nongnu.org; Fri, 19 Jun 2026 07:12:13 -0400
+ id 1waX8w-0001sf-NT
+ for qemu-devel@nongnu.org; Fri, 19 Jun 2026 07:12:16 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=lQXoJmow1toGEJincmVPMO2Y5wA2WLHeM0q9/ki6jiFoGTYIiQ3w3cBDikwUvGVmXbe51u3r62QldZhGlkU17tIeve5EfM+BgHcLTTMR9E6zVPkgHe8DO4euTAnYr+Igg5KYkjz37ddbsFyLczDQDenbQMg8GeHJqeH9cpBkrl+ye++n2FJ5irOiHgqx6eccVh6rbFemhsxkca3rM4N85H0iTQxAjfaKAXnEZ28bcFm6nJSjOv09bla6DJVicdrB93Q6VsjzoSZ5EDP7Y7DQGHmtzmQWnAVuNsfvAqf62eFPmrUUEag2km9bbRTSZjpBOTUtAhy3X0CVtyGwtdjeLw==
+ b=uUfyuPOoqzv3oE8t+E34glvylbnTgEI3jE0P6lfWhEhOT1BsqRRZsqPjERJlh2YUARqZIH7NwTRumUzLejcGfnSoH/Bf1Vdadh3NniYKZ1ZJxkNE5ISI/tKWsu3fA7zksk+AqHpZWLOstvVZvjms6zGNkYO6iNPwW0NllG6OkpScw5A1WkeDY2nN+HaOwE+vyCiPwGIA7LtwIIA/J7iDikuVwCnw3t6YXJ52j7OqZj9WmqC/l2ozBYVTXsHCnq/xc4cXUUSE0hI2ALSyBolJQS8zPIbztvSTV5wVgL6uhBYoqnevvWyscyN6yTvm5XVIiNc37dnA9GKm8cNqTvkSoQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=gLr26veEEN6L5LsbtaQLzbD1Y8Kev6iUaUeI+r4jQ8E=;
- b=DDktKPVil6FLN1dH3NTU8DUReYP2/tIiTgL3zNNRT4zCmTU1dtdQLav6pHFBspaTWU67NCftCpNs5NvDfHFOjlMKBolg/EU17b7gJVZiRxNbwo2ZuU0FcU1NJxZABc2PMQq9+UT1og6nqBNTrofOxjigak1Vxq3GCbvQ0YoUIGreZcbzrKTrJEPxERlIkg8guiaDOXQco4ElEWPOkAi4oTvVXrelh1GRZZwXl8uJExZpU0tcfETLYO5oOjnVr//fB4uDNK/d2oxthMYcXOoPiwpW8SaTmJZQHSUAht6lOI4QyyHgTE2ioj58/PX6o2nDKETWJruh+iq00X2NS+3VnA==
+ bh=uI5ScM+oJRFbfYfZjtlPlPXO6mvy8/mwyn0hWf88JaQ=;
+ b=UrDkKbD9XllPDkp4yPDLpaBAi6+VsDBxPFeDl4tStYOx2LwXIWlhqm++qkDN0odnHtjfXVtLdYehnzEYp365fLkIQVinpOxFgQ00OIkMbd7a0ZR204h/aJ9tk/OkuN/TtT8UIYZ/VvtG3yOZETzW82O5yEGlWP+3DnOtGpcm2GzzHu4b0ziGTZv8MAPgpPb6PfEGNEmNtUN6N6jt3DJvzfbYmRJ8pEvnsYKtpjHlzsCoQHY1CwtYLUzzVUEpTWmYaF6BJN80dOnsx51D43P4CGeJXwbvMScCibPp6hndMmtoUPUU6dhOPyJ18ERiAeLCDu/BQLAjP9Cva3A90W//gg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
  165.204.84.17) smtp.rcpttodomain=nongnu.org smtp.mailfrom=amd.com; dmarc=pass
  (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
  dkim=none (message not signed); arc=none (0)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=gLr26veEEN6L5LsbtaQLzbD1Y8Kev6iUaUeI+r4jQ8E=;
- b=AvwGHAOCElTt4sxgQsfAFXaEX7hGVxbecUc7pqpLSpBQ+mp6ua8+hx4+ZTIrmxaO6BHqT9Lu91IA2nVr2N7tS3GS5zflbmTDMw4dkqw04mECv8T7GKhH8YFuCVGEo+lMe/Gdif0j+feEpuz648x2WIPtR3H9sjZszDEDfU0LRSY=
-Received: from BY3PR10CA0003.namprd10.prod.outlook.com (2603:10b6:a03:255::8)
- by DM4PR12MB6038.namprd12.prod.outlook.com (2603:10b6:8:ab::12) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.139.11; Fri, 19 Jun
- 2026 11:12:05 +0000
+ bh=uI5ScM+oJRFbfYfZjtlPlPXO6mvy8/mwyn0hWf88JaQ=;
+ b=vKnfBMwQwwIhnC5B/ND1STqD9n1WhYagaX9wJFBS4HKThXcf5CQmbQxSBbXfbxg9FMXQsVxlDO1GA+fGvGnTKNHTouH97EwNwka+CqKi7n4LZbxLQ/Tgj+RyPyTGUpm4t2zhx/JwT4gc+amQkfWtxEc7YqF2uVQGu0VOVLL8ks8=
+Received: from BY3PR10CA0010.namprd10.prod.outlook.com (2603:10b6:a03:255::15)
+ by MW4PR12MB5666.namprd12.prod.outlook.com (2603:10b6:303:188::20)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.139.12; Fri, 19 Jun
+ 2026 11:12:09 +0000
 Received: from SJ5PEPF00000203.namprd05.prod.outlook.com
- (2603:10b6:a03:255:cafe::1b) by BY3PR10CA0003.outlook.office365.com
- (2603:10b6:a03:255::8) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.21.139.14 via Frontend Transport; Fri,
- 19 Jun 2026 11:12:05 +0000
+ (2603:10b6:a03:255:cafe::af) by BY3PR10CA0010.outlook.office365.com
+ (2603:10b6:a03:255::15) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.139.13 via Frontend Transport; Fri,
+ 19 Jun 2026 11:12:09 +0000
 X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
  smtp.mailfrom=amd.com; dkim=none (message not signed)
  header.d=none;dmarc=pass action=none header.from=amd.com;
@@ -55,20 +55,20 @@ Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
 Received: from satlexmb07.amd.com (165.204.84.17) by
  SJ5PEPF00000203.mail.protection.outlook.com (10.167.244.36) with Microsoft
  SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.21.139.8 via Frontend Transport; Fri, 19 Jun 2026 11:12:05 +0000
+ 15.21.139.8 via Frontend Transport; Fri, 19 Jun 2026 11:12:09 +0000
 Received: from k-Super-Server.amd.com (10.180.168.240) by satlexmb07.amd.com
  (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.41; Fri, 19 Jun
- 2026 06:12:01 -0500
+ 2026 06:12:06 -0500
 From: fanhuang <FangSheng.Huang@amd.com>
 To: <qemu-devel@nongnu.org>, <david@kernel.org>, <imammedo@redhat.com>,
  <mst@redhat.com>, <gourry@gourry.net>, <philmd@mailo.com>
 CC: <peterx@redhat.com>, <Zhigang.Luo@amd.com>, <Lianjie.Shi@amd.com>,
  fanhuang <FangSheng.Huang@amd.com>
-Subject: [PATCH v13 03/10] i386/acpi-build: partition device_memory SRAT
- umbrella for sp-mem
-Date: Fri, 19 Jun 2026 19:11:29 +0800
-Message-ID: <20260619111136.3481329-4-FangSheng.Huang@amd.com>
+Subject: [PATCH v13 05/10] MAINTAINERS: cover sp-mem under Memory devices,
+ add R: tag
+Date: Fri, 19 Jun 2026 19:11:31 +0800
+Message-ID: <20260619111136.3481329-6-FangSheng.Huang@amd.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20260619111136.3481329-1-FangSheng.Huang@amd.com>
 References: <20260619111136.3481329-1-FangSheng.Huang@amd.com>
@@ -80,38 +80,39 @@ X-ClientProxiedBy: satlexmb07.amd.com (10.181.42.216) To satlexmb07.amd.com
  (10.181.42.216)
 X-EOPAttributedMessage: 0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SJ5PEPF00000203:EE_|DM4PR12MB6038:EE_
-X-MS-Office365-Filtering-Correlation-Id: d0bc0705-7984-4e44-aea2-08decdf398cc
+X-MS-TrafficTypeDiagnostic: SJ5PEPF00000203:EE_|MW4PR12MB5666:EE_
+X-MS-Office365-Filtering-Correlation-Id: 4147c695-0a02-484a-1004-08decdf39af6
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|23010399003|376014|36860700016|82310400026|1800799024|56012099006|11063799006|6133799003|22082099003|18002099003|43062017;
-X-Microsoft-Antispam-Message-Info: elRqE4PZ9C1BNNa7p1j0bcZkGHY1jqC3WL6BdrfYNizsnkWCBEG5ZLlILjSSsW++IRi/5A3WRc79hPl1C0p31SKeEwDYYRhQQSmeIZSQviZHMcDNLAGP3rlrIodgHI4S5v7nOua5InXgYVuzgABIUoQ94FSf/HH8kF2JSA4izM2ihAYKi2r0TbJgtNh/LDW9odJV3lfhkPOsF6WdlP2NmDxsgYJkSvm2NJzffItAnApBJOLA/lCeWO2DpFNjnOUMVP5tL5YAD4zdaskVpsXvAzthpH72U7RvTpl3kHScR+k78AZ0pG5+Su4Oq7vYl3+UEeWpv88GI/oiKavUYCrmDfJGgV+d9XRFyziSd0X3KcJyG/pbFFQILh7SzE0RPGOqricdqSpFDwExcyrN/Tw92A6U26LUHyvudDOVIUQ9Kvt8YAwy8YW+rWvnZgLR1ETj05M+pa01YnWqg2alelXmfhqw2pqS8Ot6PprQRdXqP33U5ZUB4DEZIt3jcPGfo3bsxLZZ6OBShlFxUhom1x3b448EZBHyZEnQo+n3b8S30tphaDssC1X47/rQrXQFdx9Bj8agKFU+R8VtTbBwTkb62H8akAkSgvtDRWG6s5zWS8AtvHNSRiI6SoxZXLXhXIRt7mK0yHlK/zlzAqGXhX6c+fgnH26C3WiVBcU7/srEva4QD6e6mqcFvTRTLZ0xnxR6lItrbpjABwGJ6WWFe/QKMyeYmtEl+6PVdz9Tbmxx6bK5OEib4CvQA/YT54kOYoOc
+ ARA:13230040|36860700016|1800799024|82310400026|376014|23010399003|22082099003|18002099003|11063799006|56012099006|43062017;
+X-Microsoft-Antispam-Message-Info: /EpCal9ad5s91Mf4FZsFTg0so1vsXUFwXZHwPmA54QkJBlWGywJ6CKU5gJPLJLre6k3bw04VHDjuUkp62SI14sWY4dHBvzFwVc/qn2pGW7osw/UTX0pT6Km55PpflEue7yXKxkvboL+hqaZkqCzR8AHapZqVdZdkE48odJANUoxMbECdOMYhLSWROPWWM3fLx2NZ9pGeTiWcOZ118V9hyS6TDWieXd6rdj0rj59M/J4GPXwT0HA/A53Xwj7UrxuJEd/7uaQ5AI3bfEeeQE8o5Rrd1k6t66E6Npph2/rPqYzD/gwIoJrY1u6yyJ7fb4iNs6u2WvyndQHsfmIl0M78ld52hJo3hmDOOK6teDGGT77lJXrONt+GPVPgnUF/7zmus9zRP95UzCTuQ+p9DZYEWMNige3qLTsPSF5KE+OZ0H55PZkd0X9sxMISxX9bfW3G25Z8VZovGYWHtAglsb1SEInE+0qvFlFjInvC6Ncb3+B3e7EH4CmZ9+ToAMuXcMe39AcbR8Qs3bB6blqoig0TDWnCY9k3/OoVM4UjgMXPkT8pl6xY/Z8lOdCprFxpMWf0C+am1Au2Nqtab+oqhJ1lVr9n9DxofVOH2DpQY8sWVE+4ta/mxK+Zb4vnKMn9zu0TZHTH+O19gWWw08RkCtkyNDYYnUWy8eSDkPNUuRyF8NpYCUw46JBug99JdcxE6+ZsdQiicgFGa1ZMUKiHtgUkLzSAY39BYsbf7QSGOVTBzI7LXshMkSD+/k4QTMPubh4B
 X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:satlexmb07.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230040)(23010399003)(376014)(36860700016)(82310400026)(1800799024)(56012099006)(11063799006)(6133799003)(22082099003)(18002099003)(43062017);
+ SFS:(13230040)(36860700016)(1800799024)(82310400026)(376014)(23010399003)(22082099003)(18002099003)(11063799006)(56012099006)(43062017);
  DIR:OUT; SFP:1101; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: NyPhLpTzqejYzcPW96kaoH22H3Gk9pyrn/X6K2+MjvE/a4gnK1+IWWU1wSA8Y3Czn7mX/RoWoS9pfPf2NlcYQflW3VgLLXQ5CIJ1TvXMQ2aB3k4vj76ZMg2ziBsvhd4jiLkYp0hgjffu3FmTvQ5D8Vdi38BY9pbrIdUQId01qcwPMnyg70qlTzx1WCVZMN4/TsMCa8awE25AF+mcFecF5MTFqh85e3G1YxQfbWiN+Rsrev2mTl3JCFLYOvcB/Xbz0DCc+BKgOb3PLT+wjmVgrE9wZZCxmyPQVdzVWEqwADzWkk8GDdN4we2BwfXps2fP2M3HD3K0gTQyacnOnLp2npc1dXV91TeRKcx2Llrmn8QV3tE9+ajJYOEJfF26qcOiFQmuRoBtcojTwJcTjyYlSWFXamSwe1NsRSdE2/jh20aG3SKTr0eDdB+D6X6bThpP
+X-MS-Exchange-AntiSpam-MessageData-0: QJAJzYpItgG1TZ9Vo4oG8IH0VIXwDiAOqhhaIydFssMrHBh2Vhjj/ORXaEl3JKqT0e+lIQFJF9MwTMhhbEWDYgVRrM9kLUFxy7u2Dm18W2yagrEuhZerNr7p8PZQs10b5iUI67e/56B6d8YvCgP6NFt3slAzKhuYATPZj2LyY2QWuDl4EOcf5ZHgcTx8Umm5BDiNof2H6f1sRwfOHkkqNahJRHEmB5fM0muJ3SXV/uWxP3yWca/GDvCqHaHog8hbEBAVdnUhtXGBTzPKnuBPE5fLR+ODVjXWzWcVBetf7OUuvSVZHCKORbNYe9F+/wIkBehJcYQY6nqe0Adda1EbSZz6Bb+JmLKzDZJqnwtcGppAU0XjoWYksMhX3Lbij7YVLohHU0yFfDonH2v5tADJvL9ftSz7rYpB18WwJekG146FXfzlqdQxwjjelyQwttI0
 X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 19 Jun 2026 11:12:05.6783 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: d0bc0705-7984-4e44-aea2-08decdf398cc
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 19 Jun 2026 11:12:09.3073 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 4147c695-0a02-484a-1004-08decdf39af6
 X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
 X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
  Helo=[satlexmb07.amd.com]
 X-MS-Exchange-CrossTenant-AuthSource: SJ5PEPF00000203.namprd05.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Anonymous
 X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM4PR12MB6038
-Received-SPF: permerror client-ip=2a01:111:f403:c100::f;
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW4PR12MB5666
+Received-SPF: permerror client-ip=2a01:111:f403:c001::5;
  envelope-from=FangSheng.Huang@amd.com;
- helo=BL2PR02CU003.outbound.protection.outlook.com
+ helo=BYAPR05CU005.outbound.protection.outlook.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -127,139 +128,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Restructure the device_memory SRAT umbrella entry into a per-kind
-partition: each TYPE_SP_MEM device gets an ENABLED entry at its own
-proximity_domain; the remaining sub-ranges get HOTPLUGGABLE | ENABLED
-placeholders at the highest PXM, preserving the existing umbrella
-convention.
-
 Signed-off-by: FangSheng Huang <FangSheng.Huang@amd.com>
-Reviewed-by: Igor Mammedov <imammedo@redhat.com>
+Acked-by: Igor Mammedov <imammedo@redhat.com>
+Acked-by: David Hildenbrand <david@kernel.org>
 ---
- hw/i386/acpi-build.c | 96 ++++++++++++++++++++++++++++++++++++++++++--
- 1 file changed, 92 insertions(+), 4 deletions(-)
+ MAINTAINERS | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/hw/i386/acpi-build.c b/hw/i386/acpi-build.c
-index 2ee061558c..8837b69687 100644
---- a/hw/i386/acpi-build.c
-+++ b/hw/i386/acpi-build.c
-@@ -52,6 +52,7 @@
- #include "migration/vmstate.h"
- #include "hw/mem/memory-device.h"
- #include "hw/mem/nvdimm.h"
-+#include "hw/mem/sp-mem.h"
- #include "system/numa.h"
- #include "system/reset.h"
- #include "hw/hyperv/vmbus-bridge.h"
-@@ -1351,6 +1352,96 @@ build_tpm_tcpa(GArray *table_data, BIOSLinker *linker, GArray *tcpalog,
- }
- #endif
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 93df53d87f..08f0d11a74 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -3364,13 +3364,16 @@ F: scripts/coccinelle/memory-region-housekeeping.cocci
+ Memory devices
+ M: David Hildenbrand <david@kernel.org>
+ M: Igor Mammedov <imammedo@redhat.com>
++R: FangSheng Huang <FangSheng.Huang@amd.com>
+ S: Supported
+ F: hw/mem/memory-device*.c
+ F: hw/mem/nvdimm.c
+ F: hw/mem/pc-dimm.c
++F: hw/mem/sp-mem.c
+ F: include/hw/mem/memory-device.h
+ F: include/hw/mem/nvdimm.h
+ F: include/hw/mem/pc-dimm.h
++F: include/hw/mem/sp-mem.h
+ F: docs/nvdimm.txt
  
-+typedef struct {
-+    uint64_t addr;
-+    uint64_t size;
-+    uint32_t node;
-+} SpMemRange;
-+
-+static int sp_mem_collect_ranges_cb(Object *obj, void *opaque)
-+{
-+    GArray *ranges = opaque;
-+    SpMemDevice *spm;
-+    MemoryDeviceClass *mdc;
-+    SpMemRange r;
-+
-+    if (!object_dynamic_cast(obj, TYPE_SP_MEM)) {
-+        return 0;
-+    }
-+    spm = SP_MEM(obj);
-+    mdc = MEMORY_DEVICE_GET_CLASS(MEMORY_DEVICE(spm));
-+    r.addr = mdc->get_addr(MEMORY_DEVICE(spm));
-+    r.size = memory_region_size(
-+                 host_memory_backend_get_memory(spm->hostmem));
-+    r.node = spm->node;
-+    g_array_append_val(ranges, r);
-+    return 0;
-+}
-+
-+static gint sp_mem_range_compare(gconstpointer a, gconstpointer b)
-+{
-+    const SpMemRange *range_a = a;
-+    const SpMemRange *range_b = b;
-+
-+    if (range_a->addr < range_b->addr) {
-+        return -1;
-+    }
-+    if (range_a->addr > range_b->addr) {
-+        return 1;
-+    }
-+    return 0;
-+}
-+
-+/*
-+ * Emit SRAT memory-affinity entries covering the device_memory region.
-+ *
-+ * For each plugged TYPE_SP_MEM device, emit an ENABLED entry at the
-+ * device's own proximity_domain.  All remaining sub-ranges (gaps
-+ * between sp-mem devices, leading and trailing padding, and ranges
-+ * occupied by other memory devices) are covered by HOTPLUGGABLE |
-+ * ENABLED placeholder entries at PXM = nb_numa_nodes - 1.
-+ */
-+static void build_srat_device_memory(GArray *table_data, MachineState *ms)
-+{
-+    g_autoptr(GArray) ranges = g_array_new(FALSE, TRUE, sizeof(SpMemRange));
-+    uint32_t hotplug_pxm = ms->numa_state->num_nodes - 1;
-+    uint64_t region_start, region_end;
-+    guint i;
-+
-+    region_start = ms->device_memory->base;
-+    region_end = region_start + memory_region_size(&ms->device_memory->mr);
-+
-+    object_child_foreach_recursive(qdev_get_machine(),
-+                                   sp_mem_collect_ranges_cb, ranges);
-+    g_array_sort(ranges, sp_mem_range_compare);
-+
-+    for (i = 0; i < ranges->len; i++) {
-+        SpMemRange *r = &g_array_index(ranges, SpMemRange, i);
-+
-+        if (region_start < r->addr) {
-+            build_srat_memory(table_data, region_start, r->addr - region_start,
-+                              hotplug_pxm,
-+                              MEM_AFFINITY_HOTPLUGGABLE |
-+                              MEM_AFFINITY_ENABLED);
-+        }
-+        build_srat_memory(table_data, r->addr, r->size, r->node,
-+                          MEM_AFFINITY_ENABLED);
-+        region_start = r->addr + r->size;
-+    }
-+
-+    /*
-+     * Cover the rest of the device_memory window that no sp-mem device
-+     * occupies. Keeping it HOTPLUGGABLE preserves the umbrella entry's
-+     * role for future pc-dimm / virtio-mem hot-add into this window.
-+     */
-+    if (region_start < region_end) {
-+        build_srat_memory(table_data, region_start, region_end - region_start,
-+                          hotplug_pxm,
-+                          MEM_AFFINITY_HOTPLUGGABLE |
-+                          MEM_AFFINITY_ENABLED);
-+    }
-+}
-+
- #define HOLE_640K_START  (640 * KiB)
- #define HOLE_640K_END   (1 * MiB)
- 
-@@ -1487,10 +1578,7 @@ build_srat(GArray *table_data, BIOSLinker *linker, MachineState *machine)
-      * providing _PXM method if necessary.
-      */
-     if (machine->device_memory) {
--        build_srat_memory(table_data, machine->device_memory->base,
--                          memory_region_size(&machine->device_memory->mr),
--                          nb_numa_nodes - 1,
--                          MEM_AFFINITY_HOTPLUGGABLE | MEM_AFFINITY_ENABLED);
-+        build_srat_device_memory(table_data, machine);
-     }
- 
-     acpi_table_end(linker, &table);
+ SPICE
 -- 
 2.34.1
 
