@@ -4,102 +4,120 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F11FCD4F26
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Jun 2026 15:59:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31B7ACD98F2
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Jun 2026 16:33:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wabad-0007IJ-Nn; Fri, 19 Jun 2026 11:57:07 -0400
+	id 1wac98-0001JJ-RK; Fri, 19 Jun 2026 12:32:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wabac-0007Gr-Hu
- for qemu-devel@nongnu.org; Fri, 19 Jun 2026 11:57:06 -0400
-Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wabaa-0001HY-Vq
- for qemu-devel@nongnu.org; Fri, 19 Jun 2026 11:57:06 -0400
-Received: by mail-wr1-x430.google.com with SMTP id
- ffacd0b85a97d-45ef41adbc1so1870880f8f.0
- for <qemu-devel@nongnu.org>; Fri, 19 Jun 2026 08:57:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1781884623; x=1782489423; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=WQ0mCK9OBs7IJHUAjQclNgTtgQfnuHREMin9AW2vkCY=;
- b=l+qYL8kialigA/wgqVFu5cio0RdrbvPq0qZ2DiOEuvMkyHjRA5MlhAmH/tS+nNEkK0
- 4Hjo7oI4KJG8w1IYBrxYp2CA83odsEcLo/7HxJKShCs6miVAldkHtHxi0GR/4t+RdZxF
- NQ9PYi3MR/HyhPFkpQFHB1XhC2gSGYdCl8Vvibpr90DGEbtl1YHu2nrHQSpZmA4RPngL
- s21PM1CBvdtBq1G03A7eQp3HFwxHl3BpVDWMVlJ900X7LBnBAVYfVbMK5jZS+DvAyXUb
- ixTX2rpnFCKWk2PDLSjkHVXn+f8Gk2NLhY67ZjIhfjrJEkzKCaijeUlSpPOaBbN2Ob26
- Du0A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781884623; x=1782489423;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=WQ0mCK9OBs7IJHUAjQclNgTtgQfnuHREMin9AW2vkCY=;
- b=of9EzvYHvjqiarXzu1MNIdbKBDWV74TQfKjLjApBUt1OF3Y0NE9EmLZwz3elYwg3hT
- bJtyyFGB7AWHJB7DClovyyKh2y1sCCFUB+RHOS/cNqZHDtPGPmonJQ3ibp0OWLJtT27i
- nyqN7cvvBSLO5E3iBWV8eeRJ03HeBeHf6S2FGfDtahl0BFU40vRC2I2OYIEffTMw9iDu
- abPhXGYGIEoyL2GwO8YPvUq+qghvkCR6hmh2zbCIZRaE87GzesmdYXaDGqg0XFVXp5Xx
- w+a7QWoUuL/LHTtq00DbVAvfNdhLSeiCNtRbb0BE6eTx4EbSq09XdFn5/jUhlp2wEhim
- 4lOA==
-X-Gm-Message-State: AOJu0YxbJ/mKR+9AqATmQtvfUQKvnnK+EZzeIN4asPEl4QFOnZRRpRvl
- L9ySZVS9wioY8rTEh2oGMVkxLSnbWCiExUfWCNrCQiy9ArXoKXePXwYgxnkGUuCU/kg=
-X-Gm-Gg: AfdE7ck469DsXCHFctecR+NS6NZ1CwhYyxCN+jgC98z8dxGA0Fbe4zGby+2e+LlfXKV
- Daob7Lv8rbYvHEQc7B8HItyyN6mG4e61v1903S+FkrOebtQ5P6U9Aa11nx6SqVWIn2ubI2LPCtP
- XBQLTADZwEXtz8KqQJnpI2G/27vpnJC/A7aMw/W/GBqFqwiaFgWALIsx/GsLtjX6x1SwGDEzwme
- BRz9qvBBYDGCY/N+IV0XRx+alUvCpyQvZzxpY4mbhTe+wsVB9uIjMw9VZKbSI9SqattSTMv9Jy/
- QizFzpYMH8jVrGFZ09CBAcLDtptQptawcrf5+mnvGYoMRCiYoUUlEnA48DUxI/Yagn5ReqJ7k0S
- FHaFYfhVfv1p94nGDENJQiFMMVb6WGDnayFwX66QoVudA1U6aYC7JTXDXXLcOtARfDT43lh1QH4
- 4/6p2OtnZMIPAt
-X-Received: by 2002:a5d:5885:0:b0:464:7fc2:d9f0 with SMTP id
- ffacd0b85a97d-464fff62bd4mr7465486f8f.3.1781884623528; 
- Fri, 19 Jun 2026 08:57:03 -0700 (PDT)
-Received: from draig.lan ([185.124.0.195]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-466648c5413sm63989f8f.11.2026.06.19.08.57.00
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 19 Jun 2026 08:57:02 -0700 (PDT)
-Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id D6F9D6000E;
- Fri, 19 Jun 2026 16:56:57 +0100 (BST)
-From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Brian Cain <brian.cain@oss.qualcomm.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Cornelia Huck <cohuck@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- John Snow <jsnow@redhat.com>, Thomas Huth <th.huth+qemu@posteo.eu>,
- Cleber Rosa <crosa@redhat.com>, Kyle Evans <kevans@freebsd.org>,
- Fabiano Rosas <farosas@suse.de>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>, Warner Losh <imp@bsdimp.com>,
- Brad Smith <brad@comstyle.com>, qemu-arm@nongnu.org,
- Richard Henderson <richard.henderson@linaro.org>,
- Song Gao <gaosong@loongson.cn>
-Subject: [PATCH 6/7] gitlab: remove build target hacks
-Date: Fri, 19 Jun 2026 16:56:55 +0100
-Message-ID: <20260619155657.944220-7-alex.bennee@linaro.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260619155657.944220-1-alex.bennee@linaro.org>
-References: <20260619155657.944220-1-alex.bennee@linaro.org>
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1wac97-0001I7-AC
+ for qemu-devel@nongnu.org; Fri, 19 Jun 2026 12:32:45 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1wac95-0006l4-OZ
+ for qemu-devel@nongnu.org; Fri, 19 Jun 2026 12:32:45 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1781886762;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=X30kmTydP4OaD+6AWlUdb2Mw3GDLMOCTowUIEARxgpU=;
+ b=LyQU26vbATFAU9IfVIuPz1xYVQy4sr5VuDVLwu7m1aN5pKMJhFEvBaF8abFMU+WqpfJRjK
+ q25Ou9L75x5V+rsNbuWWfiZ3B+3eiCuuwntamr3f5FPM+BvvvGtRMGoTEIk1cuoltQXW70
+ q5bfNNFMlASM0ehurci0uH5d092ghP4=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-654-nUs4l5iHOle1I4ILNylNaA-1; Fri,
+ 19 Jun 2026 12:32:39 -0400
+X-MC-Unique: nUs4l5iHOle1I4ILNylNaA-1
+X-Mimecast-MFC-AGG-ID: nUs4l5iHOle1I4ILNylNaA_1781886757
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3271A1955DA6; Fri, 19 Jun 2026 16:32:36 +0000 (UTC)
+Received: from [10.44.32.26] (unknown [10.44.32.26])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 32F18180058F; Fri, 19 Jun 2026 16:32:29 +0000 (UTC)
+Message-ID: <78798c63-5ca9-4acc-a878-8638724d487c@redhat.com>
+Date: Fri, 19 Jun 2026 18:32:27 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC 4/7] system: add memory_region_new / memory_region_new_io
+To: BALATON Zoltan <balaton@eik.bme.hu>
+Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ qemu-devel@nongnu.org, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@mailo.com>, Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Peter Xu <peterx@redhat.com>, =?UTF-8?Q?Herv=C3=A9_Poussineau?=
+ <hpoussin@reactos.org>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Aurelien Jarno <aurelien@aurel32.net>, Fabiano Rosas <farosas@suse.de>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
+References: <20260616155554.264412-1-berrange@redhat.com>
+ <20260616155554.264412-5-berrange@redhat.com>
+ <aa4d417e-2e61-44ef-a695-31bc19dbafd1@redhat.com>
+ <9976f829-7c33-7dce-b38e-aa6f04d6ec9d@eik.bme.hu>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=pbonzini@redhat.com; keydata=
+ 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
+In-Reply-To: <9976f829-7c33-7dce-b38e-aa6f04d6ec9d@eik.bme.hu>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::430;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x430.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 8
+X-Spam_score: 0.8
+X-Spam_bar: /
+X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,45 +133,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Since eef29e060dc (meson: build macOS signed binary as part of the
-default target) we should be able to do a plain build and everything
-just work.
+On 6/18/26 00:44, BALATON Zoltan wrote:
+> On Wed, 17 Jun 2026, Paolo Bonzini wrote:
+>> On 6/16/26 17:55, Daniel P. Berrangé wrote:
+>>> Prepare for the move to dynamically allocated memory regions by
+>>> introducing memory_region_new and memory_region_new_io functions
+>>> which call through to object_new instead of object_initialize.
+>>
+>> MemoryRegionOps callback will certainly access fields in the parent. 
+>> Having a separate object gives you no benefit because you still have 
+>> the same use-after-free if the MemoryRegion outlives the device.  
+>> Likewise for buses.
+>>
+>> If the device itself is embedded, then all the invariants must hold 
+>> recursively:
+>>
+>> - the device must be kept alive by mutual references between the 
+>> device itself and its parent;
+>>
+>> - unparent for the device should wait for all guest memory accesses to 
+>> be either completed or cancelled.
+>>
+>> So, the problem is that "QEMU automatically references the owning 
+>> Device to keep the MemoryRegion alive" is a hack that should die.
+>> [...] I disagree that removing embedding will fix any bugs
+> 
+> I'm trying to understand this better. The way it originally meant to 
+> work according to the memory region docs and implementation is that 
+> memory region is added to an owner as a child which takes a reference 
+> and when the owner is freed it will unparent its children which will 
+> then get unrefed and freed as well if nothing else increased their ref 
+> count.
 
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
----
- .gitlab-ci.d/macos.yml | 7 ++-----
- 1 file changed, 2 insertions(+), 5 deletions(-)
+Yes, and that's broken.
 
-diff --git a/.gitlab-ci.d/macos.yml b/.gitlab-ci.d/macos.yml
-index 8366b4ad564..efa0fb666e2 100644
---- a/.gitlab-ci.d/macos.yml
-+++ b/.gitlab-ci.d/macos.yml
-@@ -29,7 +29,6 @@
-     - cd build
-     - ../configure --enable-werror $CONFIGURE_ARGS || { cat config.log meson-logs/meson-log.txt; exit 1; }
-     - $MAKE -j$(sysctl -n hw.ncpu)
--    - for TARGET in $TEST_BINARIES ; do $MAKE $TARGET ; done
-     - for TARGET in $TEST_TARGETS ; do $MAKE $TARGET ; done
- 
- aarch64-macos-15-build:
-@@ -45,8 +44,7 @@ aarch64-macos-15-build:
-         --cross-prefix-i386=i686-elf-
-         --cross-prefix-x86_64=x86_64-elf-
-         --disable-plugins
--    TEST_BINARIES: qemu-system-aarch64 qemu-system-i386 qemu-system-x86_64
--    TEST_TARGETS: check-unit run-tcg-tests-aarch64-softmmu run-tcg-tests-i386-softmmu run-tcg-tests-x86_64-softmmu
-+    TEST_TARGETS: check-unit check-tcg
- 
- aarch64-macos-26-build:
-   extends: .macos_job_template
-@@ -62,5 +60,4 @@ aarch64-macos-26-build:
-         --cross-prefix-i386=i686-elf-
-         --cross-prefix-x86_64=x86_64-elf-
-         --disable-plugins
--    TEST_BINARIES: qemu-system-aarch64 qemu-system-i386 qemu-system-x86_64
--    TEST_TARGETS: check-unit run-tcg-tests-aarch64-softmmu run-tcg-tests-i386-softmmu run-tcg-tests-x86_64-softmmu
-+    TEST_TARGETS: check-unit check-tcg
--- 
-2.47.3
+> The problem is that when something accesses the memory region it 
+> has to keep the owner alive as well so instead of referencing the memory 
+> region it references the owner (not directly but using memory_region_ref 
+> which does this).
+
+A mechanism to keep the owner alive exists, and it is mutual references 
+(so that neither owner nor MR die) + unparent of owner (which should 
+wait for pending users to complete before returning).
+
+The fact that this mechanism is not used, i.e. unparent of a PCIDevice 
+does not wait for pending BAR accesses to complete, is a bug.
+
+> So embedding seems unrelated to this passing refs on
+> memory regions to owner and could be fixed separately that my patches 
+> attempted.
+
+Your patches add the possibility of not embedding; I don't like having 
+two separate API, but I think we only have a disagreement on aesthetics.
+
+This is different for Daniel's patches, which try to fix something by 
+not embedding, and I don't think they do.  Currently, if the owner dies, 
+the MemoryRegion dies with it while it shouldn't (which is a problem, 
+absolutely).  But these patches, while preventing the MR from dying, 
+still leave around a dangling pointer to the owner from the MR, so 
+there's not much gained if anything.
+
+Paolo
 
 
