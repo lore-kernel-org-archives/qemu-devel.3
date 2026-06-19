@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B32DCD4F26
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Jun 2026 15:57:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67D21CDB466
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Jun 2026 15:57:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wabab-0007FM-2G; Fri, 19 Jun 2026 11:57:05 -0400
+	id 1wabaf-0007K2-PF; Fri, 19 Jun 2026 11:57:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wabaZ-0007EN-Qg
- for qemu-devel@nongnu.org; Fri, 19 Jun 2026 11:57:03 -0400
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ id 1wabad-0007IW-P1
+ for qemu-devel@nongnu.org; Fri, 19 Jun 2026 11:57:07 -0400
+Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wabaX-0001Ff-G7
- for qemu-devel@nongnu.org; Fri, 19 Jun 2026 11:57:03 -0400
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-49222b6e871so19267415e9.3
- for <qemu-devel@nongnu.org>; Fri, 19 Jun 2026 08:57:01 -0700 (PDT)
+ id 1wabac-0001IT-30
+ for qemu-devel@nongnu.org; Fri, 19 Jun 2026 11:57:07 -0400
+Received: by mail-wr1-x430.google.com with SMTP id
+ ffacd0b85a97d-464192ab2e1so1386446f8f.0
+ for <qemu-devel@nongnu.org>; Fri, 19 Jun 2026 08:57:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1781884620; x=1782489420; darn=nongnu.org;
+ d=linaro.org; s=google; t=1781884625; x=1782489425; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=XAcK458fLut29YrBXX4JA0FS5UqQPCx1uFviFFxfcaE=;
- b=ujhe+ROWrYTNwX0zPu+PKHVBOGsES+p7j29ltjalzel3080gGkHTPiCHt5+ulhOUoM
- p2pj/irap0x/Zjk34lkf9Fpwl+ow1jzuEgM8Gc6iMGloDrQfkoIa5wTCvnvbpj4jaObp
- 0rUSyzK5g4iiAIPxvv7InlDilHTsy7VJ6gW9WOQ7uJdJcoGBppxL4pfEUXbh8bRTDEpa
- eLxS98ssO8tZp7h+lnZD47AViZJZ1uFspMLvU6GxeykCMmX/KG/WJRysK3pbdiKNvTQj
- 5N4F/XlPpY9x+JdVUuSM58KFPlLdJ1GsoIPR68oRK2hSi5qB880QCAiRERBZnqrH5JSr
- 20Cw==
+ bh=I/w0e+35WQwMdGgvrVQ6ookznor3U6z7jkLjp6mxTL4=;
+ b=vv9imfEg57W6W6txRvKo/H9znBFvFob83k5e7vbZheFc2WPnX5EyJVf9br+U2yxD0H
+ MB2FVODoBu4g0Cbndg9CrQIjB60U+pSZQkReZOoVIV5yPr+fOSGWOQR1NGJJ2WehyWRf
+ WJ2aMq2+hN/GYouZTfp4y50qm7XFEz0XCxaXQDusYWBPNxzfCr0Z+PZEU9EdfT/U1zuf
+ qs2/6GySGxUPXrdrgCWiGjMJ+VYTXA8AqfVYAeLf9a9RhlrO+pZHK4QNCpUohp+cQDzD
+ sqZ/c6lk7D+jCW6Lg5+mkcDR1nyI61p6os1nDqk+uzMJmyqUJkRj2ftyDe77PuGoE4LZ
+ +Q/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781884620; x=1782489420;
+ d=1e100.net; s=20251104; t=1781884625; x=1782489425;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=XAcK458fLut29YrBXX4JA0FS5UqQPCx1uFviFFxfcaE=;
- b=kMgxsmkedj8FVDgi6cvKUvpefj1rDDoJE1JdEi7+fTOYiMck4s8PSH8WPHeaLv8n2L
- 3fS8Euf98Po23THRQK3Pb9nMm8/PX3+EcwtttpP0fvoHUdqai1FOm72GklVegZSJ7xfP
- S+xDvzmLt62Ohbh3wDO7ryVtkuVeLJ8KqstSNvlWqcEhyno4pnb+GO1jC7dAYsccIVza
- 70WQMsfFhnDhFNJxW/0H3/mFd4YB+fKmfntz/7jo4mnoEc2jsnjXbwaJ9AudyOmdc2ae
- C6ebCWbHWglA7+ueDjn6qvs+YMVYRzdMAbMDwdsaQSXhgtctKD14bs3MkgEKU/d/KzIo
- Bx9g==
-X-Gm-Message-State: AOJu0YwZSUS4Y4tkOKX+/PZoZNfCZ5HBKIqCNb//ZjSHxd9BSXurZ2Mi
- zCIEeB1XKLSIaf1MTp6RNVIUh6Dor8p91Q5rQshSd/NgdSruZiUFdsuDQ3XzEZyVzrs=
-X-Gm-Gg: AfdE7cmWZiG5xg8tXms7ii4JlLmWxx1LkRu3nwHdMeDmnSbBO6Yzy7h6kR3kz2sGeh0
- WpUHkIkU14K2oM2s7I3JhUbPrdgRDR0Yy/CYhTR/i3mD31ns7Y2h2FkIrIGWhnDXcesoPTySSzJ
- hOmN6KzQRMh93Rnk438aMHD+zWVINdiOcAvFlTIaHus/OYQtExnhE8MkTbX3VwpxGxE8EGMIPQ2
- On9eLZmKU28VKToTwc8FVM8s6zA7FHSZOt1KJINUZKidJ/a2HSk08AWt5oWWl1ZQZlOHO5IAXJw
- sb+B3aH59YfUCKomMeLcrC01j/YecVK2idUrJcOg0vhvuRRYhPeukbabP34NCTyRGp43kpXr8Cn
- kNE7ox1xvPES7/6FVly96OPchk0hPDccbPuCEhpXsVCygTixAG8RZ2MMLcY7rXSwXHVeC6nVyBG
- BVUsls1h0bzzAX
-X-Received: by 2002:a05:600c:a07:b0:492:2c87:3d34 with SMTP id
- 5b1f17b1804b1-4924233ef9dmr50085455e9.15.1781884620009; 
- Fri, 19 Jun 2026 08:57:00 -0700 (PDT)
+ bh=I/w0e+35WQwMdGgvrVQ6ookznor3U6z7jkLjp6mxTL4=;
+ b=sL60/p8Cypk6VLPfZPRYrgeuaqHvvO9MZsOlYzFaKN/iZfeqZ24RDikUwiRax3p8iL
+ Vnj455iB35HEMNFXFXQ4mK4w61Io+5UDQtZXBXkOeVryCo8XJyRj8geeWiI89BwMBeV5
+ HioX0LppnrT9YCoKIaPM5Rx8h2H0AG+ldguNm3Vp7Mv5KO6JX5ZCtehoCUG85OXEieUA
+ WNsJCGUSg5WVFMEFL5kN33O5eiIoM+P9+SNKEWPgQD3vB8h5PxeDhUbP/9btDSulawH+
+ RovxX6koNdFyxBnG5aAI4Ueps7BiHmkZiXCYBCD6dxz74+ysCd7B8OtzP2SfQSohyPzd
+ XI6A==
+X-Gm-Message-State: AOJu0YxLJOlIaS4RnlTdnS9d42Pw4bLKgjdytDsmb1feLT++BmVfBgxP
+ Koe5NilBb+l2ArDQQwViV3oszyVwtDaEx7+/sJwHwdZnM9sRy41nlMaMr7BM1EE2TOQ=
+X-Gm-Gg: AfdE7cnsNbRayKPuIT6lC5bkG4XJ1z7aMwLp+tsBr7oMorsyPn7oxnbM3tqV6NUUWZm
+ ayRhx8f7zbPrwwZheRB6iuZ3SqGwR9Fnk/C2td8He3KjXkg3cbXXrIJixD2+Aq8oRWbTYTf6kdm
+ wNx1RdiErpCijWlcicF7/pp5vAFUX14KUO2zBdkz3Heg2A5cD6KGIEOBIUXyXQ8zCp7TK/SqUHW
+ ZyDVM1OuYvEjA8HfFAi5yX88eVGvgadTrwKv9wuNAliefLKaFt3vWxRbyYq5kWvL6HW0CGHkBGj
+ 3geCX3zvVTiosLD1LqbNN6TpJwfZLhnuUuaZWMNUM6xz6D4cGeiwJoFrvB6FpDD7K82BSEgX5jB
+ mgnzYUY/J8V8Q/fiSfZMEyp/tQe7t5dAZ0x1UNUBzTj/Ieu9q3FhWU/cKf+M7VmWIWKXfXaUfzA
+ csEB9rJa0a9G7J
+X-Received: by 2002:a5d:5249:0:b0:45e:f5b6:7bf9 with SMTP id
+ ffacd0b85a97d-465024021d2mr6422512f8f.31.1781884624716; 
+ Fri, 19 Jun 2026 08:57:04 -0700 (PDT)
 Received: from draig.lan ([185.124.0.195]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4923fce9590sm80114075e9.4.2026.06.19.08.56.58
+ ffacd0b85a97d-466643f4e3esm66531f8f.8.2026.06.19.08.57.00
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 19 Jun 2026 08:56:58 -0700 (PDT)
+ Fri, 19 Jun 2026 08:57:02 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id AB1425F94E;
+ by draig.lan (Postfix) with ESMTP id C0CDF5FAF9;
  Fri, 19 Jun 2026 16:56:57 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
@@ -81,25 +81,26 @@ Cc: Brian Cain <brian.cain@oss.qualcomm.com>,
  Jiaxun Yang <jiaxun.yang@flygoat.com>, Warner Losh <imp@bsdimp.com>,
  Brad Smith <brad@comstyle.com>, qemu-arm@nongnu.org,
  Richard Henderson <richard.henderson@linaro.org>,
- Song Gao <gaosong@loongson.cn>, Thomas Huth <thuth@redhat.com>
-Subject: [PATCH 4/7] tests/functional: tell pylint not to check c-modules
-Date: Fri, 19 Jun 2026 16:56:53 +0100
-Message-ID: <20260619155657.944220-5-alex.bennee@linaro.org>
+ Song Gao <gaosong@loongson.cn>
+Subject: [PATCH 5/7] gitlab: ensure "check-XXX' jobs capture functional test
+ logs
+Date: Fri, 19 Jun 2026 16:56:54 +0100
+Message-ID: <20260619155657.944220-6-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260619155657.944220-1-alex.bennee@linaro.org>
 References: <20260619155657.944220-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::430;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x430.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,35 +116,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-To fix:
+From: Daniel P. Berrangé <berrange@redhat.com>
 
-  qemu-test.test_pylint "/home/alex/lsrc/qemu.git/tests/functional/arm/test_integratorcp.py:83: I1101: Module 'cv2' has no 'imread' member, but source is unavailable. Consider adding this module to extension-pkg-allow-list if you want to perform analysis based on run-time introspection of living objects. (c-extension-no-member)"
+A small subset of functional tests are run by default with
+'make check', and so run in the context of 'check-XXX' CI
+jobs, rather than 'functional-XXX' CI jobs.  Thus we need
+to capture the functional test logs unconditionally for all
+test jobs.
 
-Manually running python3 showed I could indeed import cv2 and call
-those functions. Rather than allowing pylint to introspect lets just
-tell it to skip c modules.
-
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Message-ID: <20260612140531.3530387-1-alex.bennee@linaro.org>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Message-ID: <20260614100902.885698-5-alex.bennee@linaro.org>
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Message-ID: <20260610121254.2870259-1-berrange@redhat.com>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 ---
- tests/functional/pylintrc | 1 +
- 1 file changed, 1 insertion(+)
+ .gitlab-ci.d/buildtest-template.yml | 18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
-diff --git a/tests/functional/pylintrc b/tests/functional/pylintrc
-index 049c3e76f12..949bea611fe 100644
---- a/tests/functional/pylintrc
-+++ b/tests/functional/pylintrc
-@@ -58,6 +58,7 @@ confidence=HIGH,
- # no Warning level messages displayed, use "--disable=all --enable=classes
- # --disable=W".
- disable=bad-inline-option,
-+        c-extension-no-member,
-         consider-using-f-string,
-         file-ignored,
-         fixme,
+diff --git a/.gitlab-ci.d/buildtest-template.yml b/.gitlab-ci.d/buildtest-template.yml
+index 005058625eb..3b003abc999 100644
+--- a/.gitlab-ci.d/buildtest-template.yml
++++ b/.gitlab-ci.d/buildtest-template.yml
+@@ -78,6 +78,15 @@
+   extends: .meson_job_template
+   stage: test
+   image: $CI_REGISTRY_IMAGE/qemu/$IMAGE:$QEMU_CI_CONTAINER_TAG
++  artifacts:
++    name: "$CI_JOB_NAME-$CI_COMMIT_REF_SLUG"
++    when: always
++    expire_in: 7 days
++    paths:
++      - build/meson-logs
++      - build/tests/functional/*/*/*.log
++    reports:
++      junit: build/meson-logs/*.junit.xml
+   script:
+     - source scripts/ci/gitlab-ci-section
+     - section_start buildenv "Setting up to run tests"
+@@ -111,15 +120,6 @@
+     paths:
+       - ${CI_PROJECT_DIR}/functional-cache
+     policy: pull-push
+-  artifacts:
+-    name: "$CI_JOB_NAME-$CI_COMMIT_REF_SLUG"
+-    when: always
+-    expire_in: 7 days
+-    paths:
+-      - build/meson-logs
+-      - build/tests/functional/*/*/*.log
+-    reports:
+-      junit: build/meson-logs/*.junit.xml
+   before_script:
+     - export QEMU_TEST_ALLOW_UNTRUSTED_CODE=1
+     - export QEMU_TEST_CACHE_DIR=${CI_PROJECT_DIR}/functional-cache
 -- 
 2.47.3
 
