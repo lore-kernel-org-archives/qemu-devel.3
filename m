@@ -4,91 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3B3CCD98F6
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Jun 2026 04:52:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5AA6CDB46B
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Jun 2026 04:52:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1waRAs-0008Up-Vo; Fri, 19 Jun 2026 00:49:53 -0400
+	id 1waRAT-0008MR-88; Fri, 19 Jun 2026 00:49:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <joel.stan@gmail.com>)
- id 1waRAn-0008Tt-2Z
- for qemu-devel@nongnu.org; Fri, 19 Jun 2026 00:49:45 -0400
-Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
+ id 1waRAB-0008LM-M0
+ for qemu-devel@nongnu.org; Fri, 19 Jun 2026 00:49:12 -0400
+Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <joel.stan@gmail.com>)
- id 1waRAl-0005aA-He
- for qemu-devel@nongnu.org; Fri, 19 Jun 2026 00:49:44 -0400
-Received: by mail-pf1-x434.google.com with SMTP id
- d2e1a72fcca58-8453f568e84so1556178b3a.0
- for <qemu-devel@nongnu.org>; Thu, 18 Jun 2026 21:49:43 -0700 (PDT)
+ id 1waRA6-0005Ft-SP
+ for qemu-devel@nongnu.org; Fri, 19 Jun 2026 00:49:04 -0400
+Received: by mail-pf1-x42a.google.com with SMTP id
+ d2e1a72fcca58-845438a46d4so791321b3a.3
+ for <qemu-devel@nongnu.org>; Thu, 18 Jun 2026 21:49:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1781844582; x=1782449382; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:sender:from:to:cc:subject:date
- :message-id:reply-to;
- bh=h/4gPFTvEOiA6bvBc5b2RKGBkvJS7RvJu6EipcSXEpI=;
- b=qKxhYi5CxIsmD/2SXjY2yJoJ26ZHx42ZRsE9u6ekLhAfmCQFIWrWxY+hsXkDFyVm+e
- EbocD+hJT+JKGDrXUIu2hxt8lynVCpm/aT0EgKv5ppHycY4cyX4KTXg1GqRccAiTxFNV
- TXomXSNbA3UblmyxtIjtUybNl2vQ0EWkaD70OHM8YBSKWdR3SxV0d90bFkRrlwy4juah
- aK4CKo8Obny4hFn57vW5sBPmbCmpxiMDjIzJHvGoixXIt0sWUbGy+U2GmroZ88C6ca+m
- ZhUWLoJwLAj8YnSR5NBuZk8T9kRaZESAB9TLqef1O0r+tQZXpQf5VtwhU4LwqRmEykoA
- x8JQ==
+ d=gmail.com; s=20251104; t=1781844539; x=1782449339; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:sender:from:to:cc:subject:date:message-id:reply-to;
+ bh=30hGgoPrHRyAt5aIu0xhOcmwM3yeZQ1gOMqUkh60lMk=;
+ b=nMZCn7CkV3dY9J+jH2kIj/a+05wSC/HOAPAFwcAhtwanSHSoxFkdzKzGEhC6mT8qtk
+ RAlXJCs0iLV/w9bIeyskuEdXxkTo7RrkS5uBiX52Dm4qZfm7n6ngG094i+TuYeoZ4tfa
+ m69dKpuXzwPVC9nyQiAqRCDnvSsWYX2dASG2Lp92XmxsrOilBdpaYpbPT2565ci6+mTW
+ pggo3sAGZbo7eKOkU0LgEpUQVIQG26WkyuR9zNB5sjvpgtKIuESRFoQ8FV9Aft38bVFJ
+ eHKk5n1s0Ps1+wWQjldNaggbK7Lwik8FpnODs6VxpRBt9Rb788XQqZDW5X8v665tijmh
+ ZfAw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781844582; x=1782449382;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:sender:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=h/4gPFTvEOiA6bvBc5b2RKGBkvJS7RvJu6EipcSXEpI=;
- b=NjD48mI2RNddBOhIMT4dCiB/GOpY4NJNP/gos9N4gQNPJINxf04w0/IWeRpyQoggFc
- FcAupZtAG5VTmVd2x/C83Zi08k1Ab6Ez47oJoPJPIR2YLWcf76MWxILKW37pii58qmKh
- HXIfZKZkgldpX3HZDKWsb2+q+sqKF64zmNOTb3AIjGK2RAMEZaUUvVZ8w0a0h4xaU2m1
- nnF3iLx/hJ0j9BK7CEVFJR258Zw4Uy/nYtn8pAGtOE2PBVJOKSQecDmIamPSMJzEC7GT
- uqTIBpSblb5dNvyV82lX+PDZrFEzsWaUmMBSw+9KNyZw5Qo8FOO/M86CqvTAJxC+Vb/m
- Ek7g==
+ d=1e100.net; s=20251104; t=1781844539; x=1782449339;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:sender:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=30hGgoPrHRyAt5aIu0xhOcmwM3yeZQ1gOMqUkh60lMk=;
+ b=harULYOTW8Tf/tDXZTCe2jvgMbe4PQBhV70M3dbfQbr6ehEN4hRYpxvwdfXHzV8gS8
+ YJrIbCTKsbcqVLgwhSDM3HhHNV1+4C4CqxPXAx/mQgD75b3H1Go32+poZdwxfdwokJE0
+ gZji1AYyWfy/pgrPgfLXqUutCS5xsCj+jCZ8M/7mQ1/nXdSsSm3ajpTfdMnkO1BhL4L5
+ eWH9Zcu/0IbFyIjVlaEJX1lTTDrEEKc0/NdhbMsS77IVHC0ZPnuz1fxh8g3A8rzSd8iH
+ CHqAwp/cSgjEXDLPwEAC6QGfhmTSb6AJYkIi2G2Hw6DeRYCNbPF3zZv1LFBhPM8B9ott
+ jRpA==
 X-Forwarded-Encrypted: i=1;
- AFNElJ+iPYVdthMTECMTSO9LPIiKsgiTXG1Bb4UgExcx/QpbhpFrWnth58EdmCdhS7M1xAKWJTRvkeHSpCFa@nongnu.org
-X-Gm-Message-State: AOJu0YyzGqjfs74Z83JrZxUdrmNTmrIqkmwYaOjt4uc4nMK+KOrK3xz4
- 29CvKtWGwTRzix2VamtqemRwRl4A/LBahXlvKCN5jGP2Cj9r1b6QYv8j
-X-Gm-Gg: AfdE7cnLOK1Aw+O226v+VqFnPRO0SUhRznA67FIF/DSR8TDJZ7DKL2G1xhU4bckaE5u
- OODZ96EeKdSi5r6UwvLQxFAe18r9z9pCYEwxpyBzXzK+7pCut+eKlj8hwTHceIblAwTIwPTPUoR
- xEd6Issinj5XGuxUwWCK1l9oYKIEDXiypYJ2t+uUM88XhXoBPV0PjRWycgYO7XTmJXucBLRXnV7
- LDhvZzbcj2zm8wZoQAhnU5nsO/RFLuLKiWUWa0qxbyiuUVQWrPa/WDZIlW5yvfMgP6eyrtuAbVu
- 9hlvrs7+bZhmBolAmEUa2JcnoDRsEmZwa4GFwKzZl3WSLcDosaE83R+eJWq5wqm/D2kvBa/zl8K
- CwuQi+xQi9l6ezUUS+89KunEL71C8lCDhgEEzFRvP9l6kM/kfm/fKO8QsRQowtQjZo/edjuz+NB
- q5b488TKYKqheidUmRC61LB1WZcJJP3lVVl1cp0yKKNetqZNN/XbA3Oq4no48+5kQv08oP/FY4j
- DwU+Kj49+RazTMTSyudCurIAE91Gj22+/fIuyhQWw==
-X-Received: by 2002:a05:6a00:18a3:b0:845:4888:74c5 with SMTP id
- d2e1a72fcca58-8455612ed04mr1166726b3a.23.1781844582268; 
- Thu, 18 Jun 2026 21:49:42 -0700 (PDT)
+ AFNElJ/WVpHb9jCEcV32BXoxMG+QeuqznJ7+vchpTXr2eB2l75JG25JGxw/hiCn0N0IQbt7sOE07Ojg2sUWr@nongnu.org
+X-Gm-Message-State: AOJu0YwwYgGn50cpXZ2EGZ/tisV3qiurPUVSHfYhes/Ueay6PgGGJufI
+ 1LYzOM00TRG55rQ6xDbFf3n83Dy/tPQ1nhMqhJAbUFOEvGbrNP4YI1Cb
+X-Gm-Gg: AfdE7cnQXfqh+At8PN8zXij9okbmpaymIEHpQRpqM9GOD3oAbmfqe8Hz5Xcs5b3iZxL
+ YumorRK9PltCirH3njYR0p+Zyo0hF0WWf53+tjPQ6f/UeZgu+FOch3ETOkv3dxPAmZbFGDUudY5
+ /LoQ6saWfsn+P4OfOZMUDXUFIaCWBFEVsLsNUkHivYWePAT88Q61EjaCcssTmYu3yFZD6IQAOXS
+ 0T40VBGNf7er/piF9Vo5GWRLCQFoLKz589y3I/4L5rsZOHwHg/qEb0uDON6T9UCUfsFQdkULPav
+ hhJXUGU9XNYJPola0MTvGflw3CadjfyzY6AUbktyY1DrnWe6S2tR7Qf0S9TdWua2oDdZU6LKNkw
+ G9NxwIv+l0raP7XrSG1zwyXQcrBWeZzhcXRePes4TXhvineT4bBch4qAnPSRi7GyW7AVBl2Y0O7
+ bPgcnHMfZxk8VfdFdvKj5VOhLMf9RFXD1khZcwztLpIb2h4EOuw3ZEwJa8o6/YvAyshuHvLaUhc
+ 08cTMWi3GYV3yqsEU4A2lJX/Fot2+mlzm8HAPCP9Q==
+X-Received: by 2002:a05:6a00:a257:b0:842:7fc8:eba with SMTP id
+ d2e1a72fcca58-845507bbd87mr2179181b3a.11.1781844539371; 
+ Thu, 18 Jun 2026 21:48:59 -0700 (PDT)
 Received: from donnager-debian.. ([144.6.172.18])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-8455363da44sm870141b3a.8.2026.06.18.21.49.37
+ d2e1a72fcca58-8455363da44sm870141b3a.8.2026.06.18.21.48.54
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 18 Jun 2026 21:49:41 -0700 (PDT)
+ Thu, 18 Jun 2026 21:48:58 -0700 (PDT)
 From: Joel Stanley <joel@jms.id.au>
 To: Alistair Francis <alistair.francis@wdc.com>,
 	qemu-devel@nongnu.org
-Cc: Nicholas Piggin <npiggin@gmail.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+Cc: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
  Chris Rauer <crauer@google.com>, Alano Song <alanosong@163.com>,
  Michael Ellerman <mpe@kernel.org>, Joel Stanley <jms@oss.tenstorrent.com>,
+ Nick Piggin <npiggin@gmail.com>,
  Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>,
- Portia Stephens <portias@oss.tenstorrent.com>, qemu-riscv@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v9 08/12] hw/riscv/atlantis: Provide a simple halting payload
-Date: Fri, 19 Jun 2026 14:18:32 +0930
-Message-ID: <20260619044838.1054677-9-joel@jms.id.au>
+ Portia Stephens <portias@oss.tenstorrent.com>, qemu-riscv@nongnu.org
+Subject: [PATCH v9 00/12] hw/riscv: Add the Tenstorrent Atlantis machine
+Date: Fri, 19 Jun 2026 14:18:24 +0930
+Message-ID: <20260619044838.1054677-1-joel@jms.id.au>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260619044838.1054677-1-joel@jms.id.au>
-References: <20260619044838.1054677-1-joel@jms.id.au>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
- envelope-from=joel.stan@gmail.com; helo=mail-pf1-x434.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
+ envelope-from=joel.stan@gmail.com; helo=mail-pf1-x42a.google.com
 X-Spam_score_int: -16
 X-Spam_score: -1.7
 X-Spam_bar: -
@@ -112,76 +108,87 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Nicholas Piggin <npiggin@gmail.com>
+Introducing Tenstorrent Atlantis!
 
-OpenSBI hangs before any console output if the domain init code sees the
-next stage is not in an executable region.
+ The Tenstorrent Atlantis platform is a collaboration between Tenstorrent
+ and CoreLab Technology. It is based on the Atlantis SoC, which includes
+ the Ascalon-X CPU and other IP from Tenstorrent and CoreLab Technology.
 
-If no kernel payload is provided to QEMU, the next stage address is
-NULL, and the riscv virt machine memory map ends up covering the 0
-address with the catch all S-mode RWX region and so OpenSBI prints
-console messages and does not hang until the next stage boot.
+ The Tenstorrent Ascalon-X is a high performance 64-bit RVA23 compliant
+ RISC-V CPU.
 
-The Tenstorrent Atlantis machine address map has RAM starting at 0 and
-it loads OpenSBI there, so it is M-mode and not accessible by S-mode,
-tripping the early check and hang.
+Thanks to Alistair and Phil for the reviews.
 
-Add a helper to set up a simple payload that gets OpenSBI messages to
-console, until OpenSBI can be fixed.
+v8: https://lore.kernel.org/qemu-riscv/20260603065859.592063-1-joel@jms.id.au/
 
-Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
-Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Joel Stanley <joel@jms.id.au>
----
- hw/riscv/tt_atlantis.c | 27 +++++++++++++++++++++++++++
- 1 file changed, 27 insertions(+)
+Changes since v8:
+ - Use uint32_t for imsic stride
+ - Rebase on Daniel's upstream fdt helpers and use them
+ - Fix dram memory layout and handle < 2GB case 
+ - Warn when modifying provided device tree memory node 
+ - Add experimental to machine description so users who haven't read the
+   docs know the machine is WIP
+ - Minor dw i2c fixes: avoid guest_error at reset time, fix DW_IC_CON
+   valid mask
+ - Add Portia and Anirudh as Reviewers for Tenstorrent machines
 
-diff --git a/hw/riscv/tt_atlantis.c b/hw/riscv/tt_atlantis.c
-index 1f0cd08ac959..c3016d6d4c9e 100644
---- a/hw/riscv/tt_atlantis.c
-+++ b/hw/riscv/tt_atlantis.c
-@@ -340,6 +340,30 @@ static void load_fdt(TTAtlantisState *s)
-     create_fdt_memory(s);
- }
- 
-+/*
-+ * This works around a problem with OpenSBI hanging with no console output if
-+ * no payload is provided. By chance, machines with memory at 0x80000000 do get
-+ * output, but Atlantis memory begins at 0x0 which takes a different OpenSBI
-+ * error path.
-+ *
-+ * This can be removed when OpenSBI is fixed in QEMU.
-+ */
-+static void tt_atlantis_setup_halting_payload_opensbi_fixup(
-+                                        RISCVBootInfo *info, hwaddr addr)
-+{
-+    /* Store the payload vector in little_endian byte order */
-+    static const uint32_t payload_vec[] = {
-+        const_le32(0x10500073),         /* 1: wfi           */
-+        const_le32(0xffdff06f),         /* j       1b       */
-+    };
-+    rom_add_blob_fixed_as("mrom.payload", payload_vec, sizeof(payload_vec),
-+                          addr, &address_space_memory);
-+
-+    info->kernel_size = sizeof(payload_vec);
-+    info->image_low_addr = addr;
-+    info->image_high_addr = info->image_low_addr + info->kernel_size;
-+}
-+
- static void tt_atlantis_machine_done(Notifier *notifier, void *data)
- {
-     TTAtlantisState *s = container_of(notifier, TTAtlantisState, machine_done);
-@@ -377,6 +401,9 @@ static void tt_atlantis_machine_done(Notifier *notifier, void *data)
-     if (machine->kernel_filename) {
-         riscv_load_kernel(machine, &boot_info, kernel_start_addr,
-                           true, NULL);
-+    } else {
-+        tt_atlantis_setup_halting_payload_opensbi_fixup(&boot_info,
-+                                                        kernel_start_addr);
-     }
-     kernel_entry = boot_info.image_low_addr;
- 
+Chris Rauer (1):
+  hw/i2c: Add DesignWare I2C Controller
+
+Joel Stanley (6):
+  hw/riscv/virt: Move AIA initialisation to helper file
+  hw/riscv/aia: Provide number of irq sources
+  hw/riscv/aia: Configure stride for the M-mode IMSIC
+  hw/riscv: Add Tenstorrent Atlantis machine
+  hw/riscv/atlantis: Integrate i2c controllers
+  hw/riscv/atlantis: Add some i2c peripherals
+
+Nicholas Piggin (5):
+  hw/riscv/boot: Describe discontiguous memory in boot_info
+  hw/riscv/boot: Account for discontiguous memory when loading firmware
+  target/riscv: tt-ascalon: Enable Zkr extension
+  hw/riscv/atlantis: Provide a simple halting payload
+  tests/functional/riscv64: Add tt-atlantis tests
+
+ MAINTAINERS                                  |  21 +
+ docs/system/riscv/tt_atlantis.rst            |  41 +
+ docs/system/target-riscv.rst                 |   1 +
+ hw/riscv/aia.h                               |  26 +
+ include/hw/i2c/designware_i2c.h              |  56 ++
+ include/hw/riscv/boot.h                      |  12 +-
+ include/hw/riscv/tt_atlantis.h               |  64 ++
+ include/hw/riscv/virt.h                      |   2 +-
+ hw/i2c/designware_i2c.c                      | 745 +++++++++++++++++++
+ hw/riscv/aia.c                               |  94 +++
+ hw/riscv/boot.c                              |  34 +-
+ hw/riscv/k230.c                              |   8 +-
+ hw/riscv/microchip_pfsoc.c                   |   8 +-
+ hw/riscv/opentitan.c                         |   6 +-
+ hw/riscv/shakti_c.c                          |   6 +-
+ hw/riscv/sifive_u.c                          |   6 +-
+ hw/riscv/spike.c                             |   6 +-
+ hw/riscv/tt_atlantis.c                       | 636 ++++++++++++++++
+ hw/riscv/virt-acpi-build.c                   |  27 +-
+ hw/riscv/virt.c                              |  97 +--
+ hw/riscv/xiangshan_kmh.c                     |   6 +-
+ target/riscv/cpu.c                           |   1 +
+ hw/i2c/Kconfig                               |   5 +
+ hw/i2c/meson.build                           |   1 +
+ hw/riscv/Kconfig                             |  13 +
+ hw/riscv/meson.build                         |   2 +
+ tests/functional/riscv64/meson.build         |   1 +
+ tests/functional/riscv64/test_opensbi.py     |   4 +
+ tests/functional/riscv64/test_tt_atlantis.py |  57 ++
+ 29 files changed, 1878 insertions(+), 108 deletions(-)
+ create mode 100644 docs/system/riscv/tt_atlantis.rst
+ create mode 100644 hw/riscv/aia.h
+ create mode 100644 include/hw/i2c/designware_i2c.h
+ create mode 100644 include/hw/riscv/tt_atlantis.h
+ create mode 100644 hw/i2c/designware_i2c.c
+ create mode 100644 hw/riscv/aia.c
+ create mode 100644 hw/riscv/tt_atlantis.c
+ create mode 100755 tests/functional/riscv64/test_tt_atlantis.py
+
 -- 
 2.47.3
 
