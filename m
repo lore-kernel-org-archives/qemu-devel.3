@@ -4,137 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 390C0CD98ED
-	for <qemu-devel@archiver.kernel.org>; Thu, 18 Jun 2026 23:48:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6229FCD98F0
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Jun 2026 00:45:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1waMSt-00005h-S1; Thu, 18 Jun 2026 19:48:07 -0400
+	id 1waNLZ-0001Ul-Pz; Thu, 18 Jun 2026 20:44:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1waMSs-00005Z-JA
- for qemu-devel@nongnu.org; Thu, 18 Jun 2026 19:48:06 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1waNLX-0001UI-Mj
+ for qemu-devel@nongnu.org; Thu, 18 Jun 2026 20:44:35 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1waMSq-0000jG-O7
- for qemu-devel@nongnu.org; Thu, 18 Jun 2026 19:48:06 -0400
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65ILt1Ds2521423
- for <qemu-devel@nongnu.org>; Thu, 18 Jun 2026 23:48:02 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=qcppdkim1; bh=btT9jzBYc31
- z9LBTtcVQuaTxbbrFJH7KpothfEkpQws=; b=l7Y2O4ZLviQu95CqZ5hHYWuy+WU
- xvWMYAoA6GLB3M26kzssV8i5FFnix65RPJXO5bB5XA+jDgmamu70+4XsWwo0WdUb
- /xNX+Ub4s2T/YAc5Y1gVtuGMAvoVxz1DzZmrZLNY+ZnWO156sxiXFxui9+Qayq+I
- 2diuvIltr8Q+WBNLIaaZQsBdem1DtmDC1LIcVn2I+fFg3dBm/qzGwelbKtbSqRCw
- pu5aHlyYF6lVymlDRAR+PYSz5LlEgqQiQl2chvh0yikLffdggRo2i1uZzxxnPcmN
- HQQCvD4C4f0w33meQJ+eJv7tT8T/6eAomuhTMuY/a8CQspl5kV5m8u5Mj4Q==
-Received: from mail-dy1-f199.google.com (mail-dy1-f199.google.com
- [74.125.82.199])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4evm269tp4-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 18 Jun 2026 23:48:02 +0000 (GMT)
-Received: by mail-dy1-f199.google.com with SMTP id
- 5a478bee46e88-30bcbb34e57so2455520eec.1
- for <qemu-devel@nongnu.org>; Thu, 18 Jun 2026 16:48:02 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <gshan@redhat.com>) id 1waNLV-0008AB-Es
+ for qemu-devel@nongnu.org; Thu, 18 Jun 2026 20:44:35 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1781829871;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=sl1UNpj+ejCFgKeCe6e8ZAxYZdC9B1NasXIXjmmKJxs=;
+ b=QyTmU8WX8xWKlEZ+gnCeiQjNNTPwYUAEMO2XTJ59B9Tp1TLfgC/BaRkiFEFWaF9E0+psie
+ xmLHbsuOOM9WP+Ve++GB/uiB8e7byRhWZ+Pn55xfL6RUBmLKSfqHWD+91MizUocGHWrsqo
+ UxdEbc+qgG3k6bQdUYRCdj4ps/2QHzs=
+Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com
+ [209.85.216.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-652-NwgtSXPCN4CmiVfB_QGrMQ-1; Thu, 18 Jun 2026 20:44:30 -0400
+X-MC-Unique: NwgtSXPCN4CmiVfB_QGrMQ-1
+X-Mimecast-MFC-AGG-ID: NwgtSXPCN4CmiVfB_QGrMQ_1781829869
+Received: by mail-pj1-f72.google.com with SMTP id
+ 98e67ed59e1d1-36bba9b849dso1521049a91.1
+ for <qemu-devel@nongnu.org>; Thu, 18 Jun 2026 17:44:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1781826482; x=1782431282; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=btT9jzBYc31z9LBTtcVQuaTxbbrFJH7KpothfEkpQws=;
- b=MbFhHowbi33BidBd1port8NUqjuA+O8yThJumOAtbWHXh6MJeFG96qDNstTYU0bBmC
- fOWBumYCu6w/YO+/mrqSDCGj/6ZuwGNS1hoH+OAt4ajQ3WpAa3Wyw+vO64+gPhkMipw2
- GnNd3rJqjAZDLaguVjIr/IYAMrUi4im8nqjfO4PUNCUJ67OBBUnuq0w2E9/nv7hAEe/v
- Qn30a45Sxbg6gkNaZkLE0er3N4r0mLKKlhGqyn8X9EwUWY+d92lPRgD4SnmChMUt6bgz
- GVALTGfd8/dA13IMxmett6LibWx1igiO8ZVJggoBKZs+b5SBmGCJG1ZVl+VVwZWqnDq4
- E0KQ==
+ d=redhat.com; s=google; t=1781829869; x=1782434669; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=sl1UNpj+ejCFgKeCe6e8ZAxYZdC9B1NasXIXjmmKJxs=;
+ b=RIAlz1Jp7NTIqbOQpT1NW+XtPs5QglFu74Sbd555xrgCWf6brPJL71L6aVMbjyecUL
+ koiO86VkUuDkK0AxhgnrTzlhlzeHxMY2d405tEm+41fLgFJ15r7X4RPtapy2ZmuuIV4/
+ L8SCb0r0pEqNho5e89rkcHVFOjmy2CyotHXLhPePF0BHFjdZsNNUkB70lvG4MyTc2oxb
+ /lL0mFWH0LGPZ28Xm+7OWg8IM8l8aDNnnj35NAzg8w45Z7KpRk2LwoMHq3K1UK1coNbf
+ BPl5IXGXwrdGTIjDrkQBvybB5DvW4lxiGv47eifcjRWvm3belAApR7d7HOCH02ZEFt7n
+ ssIA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781826482; x=1782431282;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=btT9jzBYc31z9LBTtcVQuaTxbbrFJH7KpothfEkpQws=;
- b=FPZsbNR2dgBP2DNA75FxwnfmoFucJShIDsKKkIGKttHUPxA8wPOSSnrUq/7zSoyczo
- SaWX5i9haQ8ndMoZBU6sZDVg9H9CQ/y2BAVko5CXQd0q7mI63flMy6VLm4XBNuk+Otrb
- sTF7XSCsbUjY+Nm3GCq/hOJkt9ca83bISUm5ymiHa1Quu0Zx+OfWI0uPEcmaD33unuX6
- TLV/32/VPT3mIh+/GLUoR3wq3ihLzSfYpdpHvR37nEh3UCeoDJtm1hg+MN9GTCc2NIwW
- 0aY3S1WHjBlzQE6DeSNVJ/8Y49uqRXNlGsFGdNxbwfaqBGpSRzE6V1vVlHLWtYdJw6Du
- g7iA==
-X-Gm-Message-State: AOJu0YzyWLVX55ZnVepsu+dOdKAsOHm9c/47V1/EwR1EC0EY6iEPRvrq
- V8zDPKyHlfUn24MGc+UGvv1i5U74gz9DXJu1HdKHwRZ0m32UVxbkbajPyP8jkrnbBsayjhr4fZA
- HfSxOtioK206mAVIy/UAhjBPwumF9SAK9j7/Eq1MfkZiMGSS0ECcDTPpTaF5afT+MJw==
-X-Gm-Gg: AfdE7cnSj2AeIXEiSfj9RgvB37wSv9ftsJlSUIFz/KFD1E51/1sc9vuItwLHUl/ZDvS
- GBZ5MBmkz+aLs7KojqFWB9ZPV7liOhw8c8JCSn0t/WNl11GOzx114rF4AHnJHxY8GKpLmbaOXjS
- Dzwt6aDyJ9SdIq1kfI+BfkFcwpM4vOZwPZW7fSYcdTaFQoGubrhnSkhCITOW6TFrdAlfYLI3Jso
- z4BI9g7tAABAGfdJNFI+guyosTZnRdd7IrUJkXjyu4jvBzDrbF7qGwttBw4ckbhvW5osq/33VUO
- NBoewriZQNw0jAd/tMH3w04CmrS5ozV6ln3ciI63o8/PHuvnaj/yZ3ayLBH4LqW39RIOKXIp7ed
- o/kkll8tbf9CF0pgax2SlXZkPwk+WBSKa5AF3XRWSTqs7/avQz2eLLwasfkZiqVlHXvhxjhGkOI
- ivL6DERA==
-X-Received: by 2002:a05:7300:f10a:b0:30b:fc05:a18c with SMTP id
- 5a478bee46e88-30c071d1c6dmr850888eec.24.1781826481670; 
- Thu, 18 Jun 2026 16:48:01 -0700 (PDT)
-X-Received: by 2002:a05:7300:f10a:b0:30b:fc05:a18c with SMTP id
- 5a478bee46e88-30c071d1c6dmr850875eec.24.1781826481142; 
- Thu, 18 Jun 2026 16:48:01 -0700 (PDT)
-Received: from QCOM-qjMf8PBlDw.qualcomm.com (216-71-219-44.dyn.novuscom.net.
- [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-30c06c307fdsm829917eec.18.2026.06.18.16.47.59
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 18 Jun 2026 16:48:00 -0700 (PDT)
-From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-To: qemu-devel@nongnu.org, peter.maydell@linaro.org,
- richard.henderson@linaro.org, pbonzini@redhat.com, stefanha@redhat.com
-Cc: pierrick.bouvier@oss.qualcomm.com
-Subject: [PULL 1/1] plugins: use int64_t for the syscall filter return value
-Date: Thu, 18 Jun 2026 16:47:49 -0700
-Message-ID: <20260618234749.1659878-2-pierrick.bouvier@oss.qualcomm.com>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260618234749.1659878-1-pierrick.bouvier@oss.qualcomm.com>
-References: <20260618234749.1659878-1-pierrick.bouvier@oss.qualcomm.com>
+ d=1e100.net; s=20251104; t=1781829869; x=1782434669;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=sl1UNpj+ejCFgKeCe6e8ZAxYZdC9B1NasXIXjmmKJxs=;
+ b=QJKZZOHiM5jSuJLi9xLTVZ8irfPbxsJEaXkSBxSXBpMFzA2SpgsZx7ZK9PbjGNGDVY
+ meCJu9ZB4kXnhlWKyS6CYWPp48yme4ydlylfXrwMpJd1CXDywNVHgFD3Tq/Jk7Sxx7nJ
+ B+joWD5FRVFJDQH7NuIrShTdQ2ekpUNLtXoKX0SDOT6YZd13NhZUZS/yJnaYiMQ71x9m
+ 4YQzL8odQPHYcMLglbg+ROEfuwMEvFWouC4f8eVAmmgeC93SxcTZzVQWa5oAxnMA5DdK
+ xkuidzVledhwEVtpAtKBendnI6+Cxc8RjQT/PBjK/Y1Qra9nuedRbdALcCCwXTavvD2i
+ FQpg==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ+sxJYuSpVUdTy5xPPGfH5sM4TD/8dTASxScQ3KQco+em7+cgy/75Os0mQn9wqP4YNh5GOj6Q/9VVy3@nongnu.org
+X-Gm-Message-State: AOJu0YzXBcy+c/KM9fjNAFQSNA9xs6rFQWbaPEDdB3LEroEkTjNhcwKv
+ 6Ih5mGTiQuY+WHH4f6T80w5dbgUkVmViD6to08j48IUaKWDKIajbYl0ECyTVXaANrTcB8xbmFUL
+ Ri1XItkH60WMt3psYZzKPP6x2vxlhniXIEw400tERzj3FOyABioe+7VD9
+X-Gm-Gg: AfdE7cn6boC0x0no79zTRxMRWlrBuES1olKdBe93emUFg+1DkeWndyGpFuwN/Owyo6O
+ 91qUdGaEmj7HmnMRArQzz//KV7YT82FieX9uzGQwO94+J2LxTtegW5Hl1lQQGFYfx+JIj0jhVor
+ OE7JVz0T0ahv1FZ6G/TmaC/DjiXzi3qq7+jvPu7xjranWIixuaXTn7B4ALAK0DIypos7tTMNywW
+ pPakBFZx1TtdRfH73ePRO+WK08sgF+GOeVrUb33Bj9ZKWgEEY4nP1+6V0oCVrRD9VYVx1Q4tC6w
+ t+nrz3epUwATL8Z1oL13AOUseCVJxl3LrbmGANlwI3zCAw6ZaFaTEiBui0II6m0a3HcbznKvvf3
+ ZIaxf5WFRBGvwzR8S2/JReQWX3y9jXR6MRMtcn717EnjlWDMVdyPUJQ==
+X-Received: by 2002:a17:90b:5886:b0:369:e4d4:79c6 with SMTP id
+ 98e67ed59e1d1-37d160e0b15mr1596136a91.20.1781829868770; 
+ Thu, 18 Jun 2026 17:44:28 -0700 (PDT)
+X-Received: by 2002:a17:90b:5886:b0:369:e4d4:79c6 with SMTP id
+ 98e67ed59e1d1-37d160e0b15mr1596102a91.20.1781829868223; 
+ Thu, 18 Jun 2026 17:44:28 -0700 (PDT)
+Received: from [192.168.68.51] (n175-34-8-244.mrk21.qld.optusnet.com.au.
+ [175.34.8.244]) by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-37d158d97a5sm914661a91.16.2026.06.18.17.44.20
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 18 Jun 2026 17:44:27 -0700 (PDT)
+Message-ID: <3f58de99-74a2-4ccc-b800-d254bbd40931@redhat.com>
+Date: Fri, 19 Jun 2026 10:44:17 +1000
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjE4MDIxNiBTYWx0ZWRfX+omT2uTIj+Gz
- T/UCgObSo406nPHmiUPP9c0P3CSNEzJj2HkiPc0dRknQD8dRXgS6BgEmTuoDfi+c47XXmr1ZIMA
- f0VRwwVP5/TErLcY1pYsTinUzzxSwYI=
-X-Proofpoint-ORIG-GUID: 7CMO_IN9ExVddMF_B4r_aDp0qEDwKbzz
-X-Authority-Analysis: v=2.4 cv=dL2WXuZb c=1 sm=1 tr=0 ts=6a3483b2 cx=c_pps
- a=cFYjgdjTJScbgFmBucgdfQ==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
- a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22 a=VwQbUJbxAAAA:8
- a=EUspDBNiAAAA:8 a=D_0KSDsig3WiY-C2LT0A:9 a=scEy_gLbYbu1JhEsrz4S:22
-X-Proofpoint-GUID: 7CMO_IN9ExVddMF_B4r_aDp0qEDwKbzz
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjE4MDIxNiBTYWx0ZWRfX0knAAZU83LSt
- TBqwcrUEgfiSBK0vZYQkMrvBGfa4F0OM4fEZA+AtqqWrpaNgXd7EN5e7vpU2UQtDH3m+mGlIvKB
- 7YEo35DvvOgkFkuxWQtSShdCtXP2Bg6u7lv5qxkEXl/7oh7DZBLT5TOMkL/YgrPij7mA5g8sHZq
- nQlWVknw+Y38nXjEQ1T9L/E/wui4cEoe+GYNb2tG27ooxwo+sSpZ6mqJpThn7HvzbCIYlDFunsN
- ZoMXH0PfOcdzJmoYj1noleKgKolHIfVcvRlzXs7LSApvmCQIlEbEvTfIL2KcjY1vdWqBUzAaqmk
- +26reeKTpi141qXVNr995nmBYSa0gNGgILibW28yp4xQo4kg4ynVh8wWIUV7I345TfOgMnEdJ1O
- FqTvEC6kKrouQ5EkixK4KKLHBZSN1opBj2g7BLYs3BAMQfoXuj4u1w1rzDkEZ3H9cIRahmp5fhO
- WHyY2RdtqsS5LQd5eYQ==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-18_04,2026-06-18_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 phishscore=0 bulkscore=0 adultscore=0 spamscore=0
- clxscore=1015 priorityscore=1501 impostorscore=0 malwarescore=0
- lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2606180216
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+User-Agent: Mozilla Thunderbird
+Subject: Re: list of memory/memcpy access issues
+To: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, peterx@redhat.com,
+ alex@shazbot.org, richard.henderson@linaro.org, peter.maydell@linaro.org,
+ berrange@redhat.com, philmd@oss.qualcomm.com, philmd@mailo.com,
+ david@kernel.org, clg@redhat.com, pbonzini@redhat.com, phrdina@redhat.com,
+ jugraham@redhat.com, liugang24219@sangfor.com.cn, dinghui@sangfor.com.cn,
+ shan.gavin@gmail.com
+References: <20260617022330-mutt-send-email-mst@kernel.org>
+Content-Language: en-US
+From: Gavin Shan <gshan@redhat.com>
+In-Reply-To: <20260617022330-mutt-send-email-mst@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=gshan@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -150,120 +126,291 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Ziyang Zhang <functioner@sjtu.edu.cn>
+On 6/17/26 5:14 PM, Michael S. Tsirkin wrote:> This is a top post attempting to summarize some findings related to
+> emulating DMA and MMIO existing in QEMU memory core
+> using memcpy/memmove.
+> 
+> Hopefully, this will help inform discussion about multiple
+> changes currently proposed for QEMU.
+> 
+> At a high level, and in a variety of configurations, QEMU gets
+> DMA requests from a virtual device, or MMIO requests from
+> a VCPU, and wants to execute them either on guest ram or
+> passhtrough device memory.
+> 
+> Down the road this almost always (virtio ring implementation seems to be
+> a notable exception) translates to memcpy/memmove calls
+> (glibc e.g. on x86 currently implements memcpy through memmove).
+> 
+> However, memcpy's signature is:
+>         void *memcpy(void *dest, const void *src, size_t n);
+> note how neither src not more importantly dest are volatile.
+> Thus it was never designed either for a concurrent access
+> by another CPU, or for accessing devices.
+> (Mis)using it for that gives good performance but has issues,
+> some of which I am trying to enumerate below.
+> 
+> In the below I say memcpy but same applies to memmove just as well.
+> 
 
-The syscall return value passed back through the syscall filter
-callback is semantically signed: negative values encode errno codes.
-Declaring the sysret pointer as uint64_t * is therefore misleading and
-forces callers to launder the value through an unsigned temporary.
+Firstly, thanks to Michael for the summary and helps to lead the discussions.
 
-Change the sysret pointer to int64_t * across the public plugin API
-typedef (qemu_plugin_vcpu_syscall_filter_cb_t), the internal
-qemu_plugin_vcpu_syscall_filter() prototypes and stub, its
-implementation in plugins/core.c, the linux-user caller, and the
-in-tree example plugins.
+I went through the listed questions and suggestions, but I'm not sure if
+I understood every question and suggestion. Figured out that we probably
+need to something as below. Please take a look when you get a chance to
+check if there are any gaps.
 
-Signed-off-by: Ziyang Zhang <functioner@sjtu.edu.cn>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Link: https://lore.kernel.org/qemu-devel/20260618082426.790315-2-functioner@sjtu.edu.cn
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
----
- include/plugins/qemu-plugin.h | 2 +-
- include/qemu/plugin.h         | 4 ++--
- linux-user/syscall.c          | 2 +-
- plugins/core.c                | 2 +-
- tests/tcg/plugins/setpc.c     | 2 +-
- tests/tcg/plugins/syscall.c   | 2 +-
- 6 files changed, 7 insertions(+), 7 deletions(-)
+S1: New field MemoryRegion::cache_mode to indicate how it has been mapped
+     for those directly accessible regions: cache_{normal, writecombine, no}
+     corrresponding to pgprot_{normal, writecombine, noncached}.
 
-diff --git a/include/plugins/qemu-plugin.h b/include/plugins/qemu-plugin.h
-index d8d4b373842..3e913cd89ce 100644
---- a/include/plugins/qemu-plugin.h
-+++ b/include/plugins/qemu-plugin.h
-@@ -871,7 +871,7 @@ typedef bool
-                                         int64_t num, uint64_t a1, uint64_t a2,
-                                         uint64_t a3, uint64_t a4, uint64_t a5,
-                                         uint64_t a6, uint64_t a7, uint64_t a8,
--                                        uint64_t *sysret,
-+                                        int64_t *sysret,
-                                         void *userdata);
- 
- /**
-diff --git a/include/qemu/plugin.h b/include/qemu/plugin.h
-index 9356ee836ac..9c2ec8ceaeb 100644
---- a/include/qemu/plugin.h
-+++ b/include/qemu/plugin.h
-@@ -172,7 +172,7 @@ bool
- qemu_plugin_vcpu_syscall_filter(CPUState *cpu, int64_t num, uint64_t a1,
-                                 uint64_t a2, uint64_t a3, uint64_t a4,
-                                 uint64_t a5, uint64_t a6, uint64_t a7,
--                                uint64_t a8, uint64_t *sysret);
-+                                uint64_t a8, int64_t *sysret);
- 
- void qemu_plugin_vcpu_mem_cb(CPUState *cpu, uint64_t vaddr,
-                              uint64_t value_low,
-@@ -288,7 +288,7 @@ static inline bool
- qemu_plugin_vcpu_syscall_filter(CPUState *cpu, int64_t num, uint64_t a1,
-                                 uint64_t a2, uint64_t a3, uint64_t a4,
-                                 uint64_t a5, uint64_t a6, uint64_t a7,
--                                uint64_t a8, uint64_t *sysret)
-+                                uint64_t a8, int64_t *sysret)
- {
-     return false;
- }
-diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-index fbe357b7e0f..d257fb9ca90 100644
---- a/linux-user/syscall.c
-+++ b/linux-user/syscall.c
-@@ -14619,7 +14619,7 @@ static bool send_through_syscall_filters(CPUState *cpu, int num,
-                                          abi_long arg7, abi_long arg8,
-                                          abi_long *sysret)
- {
--    uint64_t sysret64 = 0;
-+    int64_t sysret64 = 0;
-     bool filtered = qemu_plugin_vcpu_syscall_filter(cpu, num, arg1, arg2,
-                                                     arg3, arg4, arg5, arg6,
-                                                     arg7, arg8, &sysret64);
-diff --git a/plugins/core.c b/plugins/core.c
-index 4b55aacd2d7..1113bfe5673 100644
---- a/plugins/core.c
-+++ b/plugins/core.c
-@@ -573,7 +573,7 @@ bool
- qemu_plugin_vcpu_syscall_filter(CPUState *cpu, int64_t num, uint64_t a1,
-                                 uint64_t a2, uint64_t a3, uint64_t a4,
-                                 uint64_t a5, uint64_t a6, uint64_t a7,
--                                uint64_t a8, uint64_t *sysret)
-+                                uint64_t a8, int64_t *sysret)
- {
-     struct qemu_plugin_cb *cb, *next;
-     enum qemu_plugin_event ev = QEMU_PLUGIN_EV_VCPU_SYSCALL_FILTER;
-diff --git a/tests/tcg/plugins/setpc.c b/tests/tcg/plugins/setpc.c
-index 7c78f182f01..76b2efc61b2 100644
---- a/tests/tcg/plugins/setpc.c
-+++ b/tests/tcg/plugins/setpc.c
-@@ -27,7 +27,7 @@ static bool vcpu_syscall_filter(unsigned int vcpu_index,
-                                 int64_t num, uint64_t a1, uint64_t a2,
-                                 uint64_t a3, uint64_t a4, uint64_t a5,
-                                 uint64_t a6, uint64_t a7, uint64_t a8,
--                                uint64_t *sysret, void *userdata)
-+                                int64_t *sysret, void *userdata)
- {
-     if (num == MAGIC_SYSCALL) {
-         if (a1 == SETPC) {
-diff --git a/tests/tcg/plugins/syscall.c b/tests/tcg/plugins/syscall.c
-index a28d1087840..debec9f09b5 100644
---- a/tests/tcg/plugins/syscall.c
-+++ b/tests/tcg/plugins/syscall.c
-@@ -176,7 +176,7 @@ static bool vcpu_syscall_filter(unsigned int vcpu_index,
-                                 int64_t num, uint64_t a1, uint64_t a2,
-                                 uint64_t a3, uint64_t a4, uint64_t a5,
-                                 uint64_t a6, uint64_t a7, uint64_t a8,
--                                uint64_t *sysret, void *userdata)
-+                                int64_t *sysret, void *userdata)
- {
-     /* Special syscall to test the filter functionality. */
-     if (num == 4096 && a1 == 0x66CCFF) {
--- 
-2.47.3
+     S1.1 MemoryRegion::cache_mode is meaningful to those directly accessible
+          regions like ram, ram device and rom device regions
+     S1.2 MemoryRegion::cache_mode should be set when those directly accessible
+          regions are created
+     S1.3 Only cache_{normal, writecombine} regions can be directly accessible
+
+S2: qemu_ram_{copy, move}() which are our private implementations of memcpy()
+     and memmove(). They're going to replace memcpy/memove() in the memory
+     region directly access paths like flatview_{read, write}_continue_step()
+
+     S2.1 Small fixed length (1/2/4/8 bytes) accesses shouldn't be either
+          split or reordered
+     S2.2 Arcitectural optimization based on the MemoryRegion::cache_mode,
+          unaligned accesses and vector instructions may be allowed
+
+S3: Support VFIO_REGION_INFO_CAP_MMAP_CACHE_MODE where cache_{normal,
+     writecombine, no} is provided for every mmapable region or all
+     sparse mmaps on the region
+
+     S2.1 The capability is only meaningful when VFIO_REGION_INFO_FLAG_MMAP
+          is absent
+     S2.2 All sparse mmaps for one specific region should have unified cache
+          mode
+
+> 
+> ------------------
+> 
+> 1. On x86, memcpy is different from __builtin_memcpy if
+> one uses old 1.0 force-headers from 2019. Thus, QEMU
+> sometimes uses __builtin sometimes it does not, inconsitently.
+> Likely no longer relevant and should be cleaned up.
+> 
+
+S2. old 1.0 force-headers won't be used with S2?
+
+> 
+> 2. variable length memcpy can translate 2,4,8 byte guest access
+> into multiple byte accesses. doing this for mmio is
+> guaranteed to break devices.
+> 
+
+S2.1. However, is it still a problem when the MMIO region is mapped with
+pgprot_{normal, writecombine}?
+
+> 
+> 3. (theoretical concern) also on x86, unaligned accesses are possible on guest and host,
+> so converting an unaligned access to a series of aligned ones can
+> in theory break devices.
+> 
+
+S1.3, the directly accessible regions have attribute cache_{normal, writecombine}
+where unaligned access is allowed. The question is unaligned access on those
+regions are always safe on all architectures?
+
+> 4. also on x86, vector instructions for large (>16 byte) writes
+> into pgprot_noncached memory are safe and faster than multiple 8 byte
+> ones.
+> 
+
+S1.3, region with pgprot_noncached is indirectly accessible.
+
+> 5. also on x86 it so happens that if you write a fixed-size memcpy this
+> gets optimized to a single store/load and it works for aligned and
+> unaligned addresses on that architecture. How to ensure this keeps being
+> correct is left as an excerise for the reader. But qemu already relies
+> on this and did for years.
+> 
+
+Sorry, Not fully understood. It's perhaps covered by S2 if we're talking
+about address_space_{read,write}. If we're talking about address_space_{ldl, stl}(),
+we perhaps need to replace __builtin_{memcpy, memmove}() with those private
+functions introduced in S2.
+
+
+> 6. on non-x86 both unaligned accesses and vector instructions
+> for accessing  UC memory are illegal.
+> 
+
+Assume UC is equivalent to pgprot_noncached. In that case, it's true on aarch64
+at least. With S1.3 applied, this kind of region becomes indirectly accessible.
+
+> 7. standard vfio gives KVM VM_ALLOW_ANY_UNCACHED, so even on non x86
+> guest can
+> map the memory as as pgprot_noncached/ioremap or pgprot_writecombine/ioremap_uc.
+> If it does the second then it can use unaligned or vector for access.
+> This is why normal passthrough tends to work - it never traps to qemu at
+> all.
+> 
+> 
+> But for qemu, vfio uses  pgprot_noncached unconditionally so qemu
+> can't use unaligned or vector instructions on non-x86.
+> 
+
+VM_ALLOW_ANY_UNCACHED is exclusively to arm64 since commit 8c47ce3e1d2c ("KVM:
+arm64: Set io memory s2 pte as normalnc for vfio pci device). After that, all
+VFIO PCI BARs have pgprot_writecombine attribute on arm64, thus unaligned or
+vector accesses are safe on those BARs from guest POV instead of host. I maybe
+wrong and Alex can correct me.
+
+S1.3 only cache_{normal, writecombine} regions can be directly accessible.
+A region with pgprot_noncached attribute is indirectly accessible.
+
+> 
+> 8. But for nvgrace RAM, vfio has a driver that uses pgprot_writecombine/ioremap_uc.
+> so qemu could safely use unaligned/vector instructioons even on non-x86.
+> 
+
+For my specific case related to GH100 card, Region-0/2 have pgprot_writecombine
+while Region-4 has pgprot_normal attribute.
+
+   Region 0: Memory at 44080000000 (64-bit, prefetchable) [size=16M]
+   Region 2: Memory at 44000000000 (64-bit, prefetchable) [size=2G]
+   Region 4: Memory at 42000000000 (64-bit, prefetchable) [size=128G]
+
+
+> 9. Except sadly, vfio currently does not tell qemu how it maps
+> the memory, so qemu can not know what is safe on non-x86.
+> 
+
+S3. Host VFIO driver needs ABI changes to expose the cache mode.
+
+> 10. on x86 memcpy will sometimes do multiple overlapping stores when
+> size is not a power of 2. for example, a 15 byte write is done with
+> 2 8-byte stores. This is theoretically an issue
+> if guest does something super clever with ordering,
+> but does not seem to be in practice.
+> 
+
+S2. This should be avoided in qemu_ram_{copy, move}() which are going to replace
+the standard memcpy() and memmove().
+
+
+> 11. on non-x86 memcpy will do multiple overlapping stores even
+> for single byte writes. E.g. it does it to avoid extra branches.
+> This is causing issues in practice.
+> 
+
+S2, This should be avoided in qemu_ram_{copy, move}().
+
+
+> 12. PCI writes are in order, last byte is written last.
+> memmove especially writes last byte first sometimes.
+> Violating that theoretically can break guests.
+> 
+
+S2, the reordering should be avoided in qemu_ram_{copy, move}(). However,
+I would think this region becomes indirectly accessible with S1.3 applied?
+
+
+> 13. but if we are copying between 2 addresses that are overlapping,
+> the standard trick (used by memmove) is to compare dst and src and copy
+> backwards if dst < src, so last byte is written first.
+> 
+
+Backwards copying happens on (dst > src) not on (dst < src). We potentially
+convert this to a forwards copying by moving the data in the overlapped area
+to somewhere else, and then take that as the src in the subsequent forwards
+copying.
+
+I think it's unliekly to be a directly accessible region with S1.3 applied.
+
+
+> -------------
+> 
+> 
+> 
+> Some conclusions:
+> 
+> A. on x86, we must avoid converting 2,4,8 byte accesses into byte accesses.
+> At least for aligned, perferably for unaligned accesses too.
+> Fixed width memcpy seems to work for this. Whether we should bother with
+> __builtin to work around broken old fortify headers, I donnu.
+> I do not have any answer how to check that compiler does this correctly.
+> If anyone is motivated enough, adding a GCC builtin could be possible.
+> Given qemu did this for years, I think we can leave solving this for
+> another day.
+> 
+
+Covered by S2.1
+
+> B. Also on many architectures, memcpy is much faster for large transfers
+> than iterating over 8 byte chunks in C.
+> When we can get away with doing that (e.g. for emulated devices where
+> we know the concurrency rules, writing into guest RAM), we should.
+> 
+
+S2.2, something related to performance optimization for the future
+
+> C. on non-x86, we currently must not memcpy into host devices
+> since we do not know if it is pgprot_noncached. yes, performance will be
+> bad for DMA into device RAM.
+> 
+
+S1.3. This specific region becomes indirectly accessible after S1.3 is applied.
+
+> 
+> D.  It goes without saying that casting an unaligned address to unint32_t
+> (be it for qatomic_set or whatever) is undefined behaviour in C
+> and so a bad idea on any architecture.
+> 
+
+S1.3. The directly accessible region always have cache_{normal, writecombine}
+attribute.
+
+> 
+> E. also for non-x86, we really should teach vfio to tell qemu whether
+> it maps device pgprot_noncached or pgprot_writecombine.
+> we will then be able to do things like use vector ops
+> (through memcpy or not) for >8 accesses.
+> 
+
+S3. pgprot_normal is also needed. In my case related to GH100 card, the PCI
+BAR-4 is mapped with pgprot_normal.
+
+Yes, with those information fed to MemoryRegion::cache_mode in S1, it's
+possible to optimize qemu_ram_{copy, move}() in S2.2 for the performance sake.
+
+
+> F. Arbitrary device passthrough with drivers doing unalined accesses and
+> when working cross architectures basically is a best effort thing.  It
+> can't be 100% perfect for all devices.
+> 
+
+Yes. For the first step, we perhaps need to gurantee the directly accessible region
+have pgprot_{normal, writecombine} in S1.3 if you agree.
+
+> 
+> --------------------
+> 
+> Links:
+> 
+> 
+> example of a fix for a bug caused by memcpy to overlapping addresses:
+> 4a73aee881 - "softmmu: Use memmove in flatview_write_continue"
+> https://lore.kernel.org/qemu-devel/20230131030155.18932-1-akihiko.odaki@daynix.com
+> 
+> 
+> example of a bug caused by memcpy as result of DMA:
+> https://lore.kernel.org/qemu-devel/20260527091711.3901-1-liugang24219@sangfor.com.cn
+> 
+> an attempt to fix bugs caused by memcpy to device memory in response to
+> MMIO:
+> 4a2e242bbb "memory: Don't use memcpy for ram_device regions"
+> https://lists.gnu.org/archive/html/qemu-devel/2016-10/msg08129.html
+> 
+
+Thanks,
+Gavin
 
 
