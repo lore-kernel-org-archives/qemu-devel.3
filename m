@@ -4,57 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21589CD4F26
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Jun 2026 09:32:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8212CD98F2
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Jun 2026 09:32:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1waVa0-00060Z-UM; Fri, 19 Jun 2026 05:32:05 -0400
+	id 1waVaC-00066L-MJ; Fri, 19 Jun 2026 05:32:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mbawa@redhat.com>) id 1waVZr-0005zY-K2
- for qemu-devel@nongnu.org; Fri, 19 Jun 2026 05:31:55 -0400
+ (Exim 4.90_1) (envelope-from <mbawa@redhat.com>) id 1waVZw-00060a-Va
+ for qemu-devel@nongnu.org; Fri, 19 Jun 2026 05:32:04 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mbawa@redhat.com>) id 1waVZq-0003Kr-5C
- for qemu-devel@nongnu.org; Fri, 19 Jun 2026 05:31:55 -0400
+ (Exim 4.90_1) (envelope-from <mbawa@redhat.com>) id 1waVZv-0003MR-IA
+ for qemu-devel@nongnu.org; Fri, 19 Jun 2026 05:32:00 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781861512;
+ s=mimecast20190719; t=1781861518;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=H7d3hejmPS8Cty7Wq2vvEVZx9APcf+hzhdVW5f8yQ/Y=;
- b=Kb7utZkovFuuDPVXDFWovkJ9zeRtxpUVE9EF17+KfSgeDhckAP7LrBH0U/DiqdT8U3aUtQ
- FmM+iTHlgFux8gzTP9TGFM5hvQ9I+xNo3Kj2N7gDvZ8Q1UkwvF9pS/v2egoQaJQnH1w7YG
- q05WvXSv9/MKuDWb911vV6Jve+q6ioU=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=rzpoEAPFv5OA3Buau/xvvnFoyBxxiJ4N44RYgjM+t/o=;
+ b=IqOWcxYSs3jE4YT2iEZTcJfaRwSB8zfK4K0m1+AhF1UMfrTENejR830qy8TS00qARwR/nU
+ NtpkBN4VRJtkQL77q74cxDo0LkhiEFzkXlizi0QN+8p1dyjjSiwQb2Jbyq3gd6OOwro4ch
+ WVeMrlO1nJk+AVjMq2m9qWLwfQR6YhE=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-437-odXh5Tl0Os2Cj_RzpdblTw-1; Fri,
- 19 Jun 2026 05:31:50 -0400
-X-MC-Unique: odXh5Tl0Os2Cj_RzpdblTw-1
-X-Mimecast-MFC-AGG-ID: odXh5Tl0Os2Cj_RzpdblTw_1781861509
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-245-YpmCX8jaOfajQ3VdbjCOVA-1; Fri,
+ 19 Jun 2026 05:31:54 -0400
+X-MC-Unique: YpmCX8jaOfajQ3VdbjCOVA-1
+X-Mimecast-MFC-AGG-ID: YpmCX8jaOfajQ3VdbjCOVA_1781861513
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 43CD7195605B; Fri, 19 Jun 2026 09:31:49 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id CAA9719540FE; Fri, 19 Jun 2026 09:31:52 +0000 (UTC)
 Received: from mbawa-thinkpadt14gen5.redhat.corp
  (headnet04.pony-001.prod.iad2.dc.redhat.com [10.2.32.116])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 6529C1956088; Fri, 19 Jun 2026 09:31:46 +0000 (UTC)
+ id DAB921956088; Fri, 19 Jun 2026 09:31:49 +0000 (UTC)
 From: Mohammadfaiz Bawa <mbawa@redhat.com>
 To: Stefan Berger <stefanb@linux.vnet.ibm.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
  qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>
 Cc: Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH v3 1/3] hw/core/platform-bus: guard
- platform_bus_get_mmio_addr() against NULL
-Date: Fri, 19 Jun 2026 15:01:38 +0530
-Message-ID: <20260619093140.832136-2-mbawa@redhat.com>
+Subject: [PATCH v3 2/3] hw/tpm: gate PPI support on tpm-tis-device behind a
+ device property
+Date: Fri, 19 Jun 2026 15:01:39 +0530
+Message-ID: <20260619093140.832136-3-mbawa@redhat.com>
 In-Reply-To: <20260619093140.832136-1-mbawa@redhat.com>
 References: <20260619093140.832136-1-mbawa@redhat.com>
 MIME-Version: 1.0
@@ -85,34 +85,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-sysbus_mmio_get_region() returns NULL when a device has fewer MMIO
-regions than the requested slot index.  platform_bus_get_mmio_addr()
-passes the result directly to memory_region_is_mapped() without a
-NULL check, causing a SIGSEGV.
+Add a "ppi" boolean property (default: true) to tpm-tis-device.
+When ppi=off the RAMBlock is never registered and the migration
+stream omits "tpm-ppi", restoring backward compatibility.
 
-Return -1 early when the region pointer is NULL, consistent with the
-existing "not mapped" path.
+Move sysbus_init_mmio() calls from instance_init to realizefn so
+the memory regions are initialized before being registered.  When
+ppi=off, the PPI MMIO region is simply not exposed.
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Fixes: 46cd2c1050f0 ("hw/tpm: add PPI support to tpm-tis-device for ARM64 virt")
 Signed-off-by: Mohammadfaiz Bawa <mbawa@redhat.com>
 ---
- hw/core/platform-bus.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ hw/tpm/tpm_tis.h        |  1 +
+ hw/tpm/tpm_tis_sysbus.c | 18 +++++++++++-------
+ 2 files changed, 12 insertions(+), 7 deletions(-)
 
-diff --git a/hw/core/platform-bus.c b/hw/core/platform-bus.c
-index a2217a2dee..16d0ecc0f3 100644
---- a/hw/core/platform-bus.c
-+++ b/hw/core/platform-bus.c
-@@ -59,8 +59,7 @@ hwaddr platform_bus_get_mmio_addr(PlatformBusDevice *pbus, SysBusDevice *sbdev,
-     Object *pbus_mr_obj = OBJECT(pbus_mr);
-     Object *parent_mr;
+diff --git a/hw/tpm/tpm_tis.h b/hw/tpm/tpm_tis.h
+index 1531620bf9..6ac9804050 100644
+--- a/hw/tpm/tpm_tis.h
++++ b/hw/tpm/tpm_tis.h
+@@ -76,6 +76,7 @@ typedef struct TPMState {
+     size_t be_buffer_size;
  
--    if (!memory_region_is_mapped(sbdev_mr)) {
--        /* Region is not mapped? */
-+    if (!sbdev_mr || !memory_region_is_mapped(sbdev_mr)) {
-         return -1;
+     TPMPPI ppi;
++    bool ppi_enabled;
+ } TPMState;
+ 
+ extern const VMStateDescription vmstate_locty;
+diff --git a/hw/tpm/tpm_tis_sysbus.c b/hw/tpm/tpm_tis_sysbus.c
+index 16bb17874b..a7b0002d82 100644
+--- a/hw/tpm/tpm_tis_sysbus.c
++++ b/hw/tpm/tpm_tis_sysbus.c
+@@ -94,6 +94,7 @@ static void tpm_tis_sysbus_reset(DeviceState *dev)
+ static const Property tpm_tis_sysbus_properties[] = {
+     DEFINE_PROP_UINT32("irq", TPMStateSysBus, state.irq_num, TPM_TIS_IRQ),
+     DEFINE_PROP_TPMBE("tpmdev", TPMStateSysBus, state.be_driver),
++    DEFINE_PROP_BOOL("ppi", TPMStateSysBus, state.ppi_enabled, true),
+ };
+ 
+ static void tpm_tis_sysbus_initfn(Object *obj)
+@@ -101,9 +102,7 @@ static void tpm_tis_sysbus_initfn(Object *obj)
+     TPMStateSysBus *sbdev = TPM_TIS_SYSBUS(obj);
+     TPMState *s = &sbdev->state;
+ 
+-    sysbus_init_mmio(SYS_BUS_DEVICE(obj), &s->mmio);
+     sysbus_init_irq(SYS_BUS_DEVICE(obj), &s->irq);
+-    sysbus_init_mmio(SYS_BUS_DEVICE(obj), &s->ppi.ram);
+ }
+ 
+ static void tpm_tis_sysbus_realizefn(DeviceState *dev, Error **errp)
+@@ -122,14 +121,19 @@ static void tpm_tis_sysbus_realizefn(DeviceState *dev, Error **errp)
+         return;
      }
  
+-    s->ppi.buf = qemu_memalign(host_page_size,
+-                               ROUND_UP(TPM_PPI_ADDR_SIZE, host_page_size));
+     memory_region_init_io(&s->mmio, OBJECT(dev), &tpm_tis_memory_ops,
+                           s, "tpm-tis-mmio",
+                           TPM_TIS_NUM_LOCALITIES << TPM_TIS_LOCALITY_SHIFT);
+-    memory_region_init_ram_device_ptr(&s->ppi.ram, OBJECT(dev), "tpm-ppi",
+-                                      TPM_PPI_ADDR_SIZE, s->ppi.buf);
+-    vmstate_register_ram(&s->ppi.ram, dev);
++    sysbus_init_mmio(SYS_BUS_DEVICE(dev), &s->mmio);
++
++    if (s->ppi_enabled) {
++        s->ppi.buf = qemu_memalign(host_page_size,
++                                   ROUND_UP(TPM_PPI_ADDR_SIZE, host_page_size));
++        memory_region_init_ram_device_ptr(&s->ppi.ram, OBJECT(dev), "tpm-ppi",
++                                          TPM_PPI_ADDR_SIZE, s->ppi.buf);
++        sysbus_init_mmio(SYS_BUS_DEVICE(dev), &s->ppi.ram);
++        vmstate_register_ram(&s->ppi.ram, dev);
++    }
+ }
+ 
+ static void tpm_tis_sysbus_class_init(ObjectClass *klass, const void *data)
 -- 
 2.54.0
 
