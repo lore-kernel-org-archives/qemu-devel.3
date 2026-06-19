@@ -4,99 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B3C4CD98F2
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Jun 2026 09:17:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89D8CCD98F2
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Jun 2026 09:23:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1waVLf-0002i2-PD; Fri, 19 Jun 2026 05:17:15 -0400
+	id 1waVR5-0003d2-Uo; Fri, 19 Jun 2026 05:22:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1waVLd-0002hZ-K0
- for qemu-devel@nongnu.org; Fri, 19 Jun 2026 05:17:14 -0400
-Received: from mail-yx1-xb12f.google.com ([2607:f8b0:4864:20::b12f])
+ id 1waVR3-0003cX-Ev
+ for qemu-devel@nongnu.org; Fri, 19 Jun 2026 05:22:49 -0400
+Received: from mail-yw1-x1130.google.com ([2607:f8b0:4864:20::1130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1waVLc-00081F-3s
- for qemu-devel@nongnu.org; Fri, 19 Jun 2026 05:17:13 -0400
-Received: by mail-yx1-xb12f.google.com with SMTP id
- 956f58d0204a3-6607048fa62so1963708d50.1
- for <qemu-devel@nongnu.org>; Fri, 19 Jun 2026 02:17:11 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1781860631; cv=none;
+ id 1waVR1-0001Bi-W2
+ for qemu-devel@nongnu.org; Fri, 19 Jun 2026 05:22:49 -0400
+Received: by mail-yw1-x1130.google.com with SMTP id
+ 00721157ae682-7fedf0e99bbso23240837b3.3
+ for <qemu-devel@nongnu.org>; Fri, 19 Jun 2026 02:22:47 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1781860966; cv=none;
  d=google.com; s=arc-20240605;
- b=SGndz8uzlpV8nWBmb4DhRcxzcukyITRObo+VTeP0SgU/jW2Z7UmSOoiTJFeDx7KuTU
- /vppZM08zU3EiZkGd0v3vhA4xs6/sDwqaAx3nBD10HtZPGWKVf2BzVnM4zbBmOahgxLH
- 6RAOUtkYsY9WY5oRhYvzFPE7h1lFLOstMIoSrPsd+H853EeMXiFcu/GmqgRAlsGk/XeI
- pXOQYRzDvL2V39f2vl9WKxjgWHQvFYNjL4/uWLghdGPZHXAQYgQScYp2vxxAK8Qr+Kn8
- va3GVptbBUBp2ORoVZgc7rBceQMPGa7uaN+2Txvz8HzmzUx30Ci4I8Y6AupJTk6C+VO1
- duew==
+ b=JgnlCTPv7txZpUX59hOMh4oHzUGwvXKpw66DnWn0NqUyd4pU+/v9YO3Z55qnx/4sda
+ yvt6+8dO1P0ffFlJKDQLGIP2pRCTJDbED1ergPIyQ+PNoe8u5EeK5CE5V1quS2PqJXzP
+ 1M9zdDlBLt1o2TkvEaN4JG0CdKsWtC0J6chIcURSas3SyF6kOy22yfv+JoWcHB9NDFlq
+ eekqqpkbpSpH5PhGShlF9svzgWfJOxumlKpXiGBk6f84B23fzlZO6iuWntiqRTqePd5j
+ kN30vd929Kb7IzN7zJosttTSArRcsaN8YyReL+IgqV9TUx8mA16WThcfdPJdYYFps4jB
+ ieJg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:dkim-signature;
- bh=ir+X3o+p3SvMPw3fPkA7lK/W7Q0zUG060dT+0pu9phk=;
- fh=qzrdB5IQyowe7EbfRlEVs4SGpLZknxYW6q70E6ohjJs=;
- b=NELWTKc6v45WHX9wR9O7l9iwFu1lTHpDIr3ocT+f43JMhaPaKJ/5Y9DM/N5Vqhz0rA
- nb2WG8cpddC5V6o66qrfuUPug8FGYBkAUzJnIJnpE2iUSr0jJe7xERNoz0+g+cyQatfF
- HczAXtznmYU/sPvyGkeE6KJtJt9Gf01+eZTvUw75LJDoEmXqZLkga0IcdUjlo16n3QqI
- OLzEllJZjuWQjrOH5u5TffIyuCF/8gNNB5egK04LtPlAssJ8V1WGyPEGc06F3sXP0KcN
- OLmo7gW1hCNoY/j8aKsD0PRX/MNL1H/EAE9de2mvNCiwK1uAseZLrsXHDFZBu4uOajx/
- jcQg==; darn=nongnu.org
+ bh=mL1U0s31dQTdtCCEyAaZj0ifb+OPR+IPq8pciKUx0lk=;
+ fh=dyXUG63CgbyaPc/fac7FxJ3H9TbAYXMnk3EgI2o4tdI=;
+ b=aEjZ7ZpXPxwgqb2zqUIC2Xyhuvbq4wuc++FrX1dP9Q1gLHyUe9CZJVxaxnEPCzkGm4
+ ZhLAcIwOYYwixdMT3TVh1sKhIrCC1B86f8dwECybTbObSeFvPzkmbpaOMQsErHFWnkS8
+ vTD7G0pnXZwAdoy6KM2GtWgs9s97gePmhzrYVUiJpo5aLqkAK3GeTIJgPQRAvnhHxFVN
+ 8udJHADzDkRn7xCjEuUlDXfNqEh+G8z2Isxyy7PYSHcCdPIdEDmCk+wTAVczP56wvuje
+ OXmwIpD91NlpBYH3Fx8mygQWKKBTtoAVouRhT0WlAmmyPyLzybuumuCpFF7Z/KAJFeMI
+ /X7Q==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1781860631; x=1782465431; darn=nongnu.org;
+ d=linaro.org; s=google; t=1781860966; x=1782465766; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=ir+X3o+p3SvMPw3fPkA7lK/W7Q0zUG060dT+0pu9phk=;
- b=N7yYnZuEKcvDyoZHyage/7rp351Hf3tGQTvEpLIO1FBoki5RDIFQUNzI9hlViSKlgN
- gjWDZ5BW81WntS5kdvJxbgH+8YavRn7xAb/pua/fLfsc7pv8nLQS9UkxcblzCUhTUOvP
- 807a2NVkSXq5KImr1LAMMy+mL/Wp4sIE7j26W8Li8Tx38CWBapfR8Ybra3TTEoPAyOJg
- FF75M2VD5VbQ+/j3zAatekSmiXKQwoQ0JjN/5yGRfREMjPn+mVdtTUP79zOYzEBuklp0
- HFQBs8VDc+R2QUqWwBsHTamBF1unOlbAtBGvD5+AbVf/gTzC74SbtemXuIDcSUBHBGIQ
- 29DA==
+ bh=mL1U0s31dQTdtCCEyAaZj0ifb+OPR+IPq8pciKUx0lk=;
+ b=sOBKcgAh/DoJsbnUq1tayn43N4H3xjvCZA5xmdGXm8GZ52r+foNTeXsbGxNaNEhRtz
+ YuEd+iggE7xTpAyISpMFfFn/Y3IIX50dREPhrw58UhZsmQREoOMIl4idqi0uFvxheSzf
+ cjGCzJHeR8sVMpJJkI5y9jYltn6QZ8k1pkhHGZkpmOirDNgs1O0DMYbOJe0xwWUcZ2cC
+ Kd9wDeyNWdOQOKNdcz8u4XU3t/8ea9AancH8bprRbV5ChkmQgyLU5WMNZxDdLhJM1ky4
+ YkYZmZMAEF+8KrWIS7WWjE1u9Dj1XhbuThoEmag7b+5pRl+aQ26G+lcxf8vPvVT2vHje
+ H5HA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781860631; x=1782465431;
+ d=1e100.net; s=20251104; t=1781860966; x=1782465766;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ir+X3o+p3SvMPw3fPkA7lK/W7Q0zUG060dT+0pu9phk=;
- b=Ra8OGUqnG7FKRoEH3H85XpCpp+XT3U1VcC9NEP+GE2z0Nv8Mxc7bMN2MvjXVb6tdZh
- Jog4jqVAzhrSPyxWQ9bw8xSL9umP2tiGezHMLAItWpdxAWn9Urdcp6nYI7HkvKFF1p9t
- OAABAmu7NQPRgP0N2/HxDwXHP9qh4KU/ix7YoqNSx0H12U84CWrnTD0F4sJ1/yPetDSL
- ZZJxIfUuLnjxolZBP4QKRs7+iqoOS5G515f09A9eEoXtrbnuo7gpinjFn+r+/u1EsJnh
- 1YJFVTIu699xhSUPESE12AcvDSk5cWZZFo0nFtinqByM/7BG+rDQXBtuumYyogUXfrMe
- 050Q==
-X-Forwarded-Encrypted: i=1;
- AFNElJ/3gsU4UR3PtlmvW88zBmLt01z9Iy5mePCQjDApHAXQvOEhtScZt3WFE1k32hQM3llnycVZStcU5/Zy@nongnu.org
-X-Gm-Message-State: AOJu0YyqydjE8HzCux01CmcjNc4u+3wlSHS+qVO9/J40KYaNrESuwVU2
- UHnpu0tmOeTT4koCAUwBFOow66HNlwl9cLdUxWx/5x8dmNszbMKMluDtBgnIvrrdFvqbiSikSvk
- GXoAGYfxMUcX7qU7sJQScrXi8n29vryN63UFYZf4aQg==
-X-Gm-Gg: AfdE7cmWx2ZDSILDzClqbvGmYhRlMhDp0mGviqPUR3/dDiZa1wuudL4Wb9QlvSNM6XG
- dyEmTGnH5vIejL2Wnvq0ZAZPH9GA3XS0j2UYpfi3SoYJsdV9lIZBR3YeXEMlxag8Z5mD+HiVmA/
- MTnSNqA780AojJadifXAOfV4Ny1d26UlD+ouif69/8gxSl22jYTvcsc2HhRuRdT+P/v1vauC2dY
- gV7eatBIHbwWVQ+eryddwslMSD5hKpXSo1GF5iWj0zRLpIwyOndD5Tz6wys3Y6eCBEfmaLJPIkN
- akWOMl9Rns2/g3sVUrolhP7HOTMeJnO8r5IbGlvKeNZXeRVcvUj61ld3
-X-Received: by 2002:a53:cb8f:0:b0:662:bb5d:35a5 with SMTP id
- 956f58d0204a3-662fcba5aedmr2741396d50.31.1781860630802; Fri, 19 Jun 2026
- 02:17:10 -0700 (PDT)
+ bh=mL1U0s31dQTdtCCEyAaZj0ifb+OPR+IPq8pciKUx0lk=;
+ b=CWMPwiPDH1uLExh90POR12XyAXRcEsm1eOq0NcYZJQxzpbVsxiH16zBUQMZBLLir1W
+ UFcsu3LUX68lHCLxLQtVVgj5ewuECA6ksQqjVAD8GZ7pRismMcYosMJukWpdgvMLZaL4
+ YNDxgDkOdZCIWCs68lylfLTmipp3jK9WrWeNWM8IsXscdoRhfZ6rqQauW/L3G550Wtws
+ Gy5V09h3j87NHTb+ywAQNIOwnyeObzo50rV4G0nqndQa4YzW84INMFLQyj5ITOKxGFYV
+ trGkTB7u7gT2oBNm6EvBUW4J5j6Jc1Nye290PvyWXzjsK+76Bg0eZjLqwSM5XYkuWYq1
+ rG9Q==
+X-Gm-Message-State: AOJu0YxYDEnihXg0EtfO/KmYWu2EbFH94odKEzViDRJDiw8XTA/GTPK3
+ sbe7hG9BDNpQeh9W9daFNkUAv71ToR99FcYPPInLkFAFjPgDD5eso7o4fCFl107NU8zp7guZ0UF
+ VPuzloXY18uYhxa1y6wtrzW94ZeZHrpFCzcJDNM+opw==
+X-Gm-Gg: AfdE7cmiR/L65JAHARnV/QDg02TBv6+nHr9VXGU72gTPapISyPRo2JCLnW2+bLKh6HV
+ p4wq/WUMCsuwuBHEaF5kaYpIOeFqK3Ggdra3mHD4kCLNduXSIUGme0HgldrzOafpJspIPzJahfo
+ DiSus0vRY6jKOpnRwBSvu/eeB5Rk+EtFs/ZIHnrofjkzUmZEiOi4VR9IjVVHhfvWfHfpqImi02h
+ WjlOXRILNgJJnjJ9KnL2NJj3W4pqs3y83emyrqjztTrWSRbeR+F2v6aZHxQViqxeuDXiqlgSUpm
+ O/y5jqKoDzRqGmIKNPIzyzmR58+PyKj9cJHGFCcpSTTUUhV4BQjL2WTD
+X-Received: by 2002:a05:690e:d45:b0:660:5dc3:3fc9 with SMTP id
+ 956f58d0204a3-662ffd21e3fmr1952835d50.19.1781860966378; Fri, 19 Jun 2026
+ 02:22:46 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260619053623.756021-1-mbawa@redhat.com>
- <20260619053623.756021-4-mbawa@redhat.com>
-In-Reply-To: <20260619053623.756021-4-mbawa@redhat.com>
+References: <20260619080934.237834-1-christianslima@proton.me>
+In-Reply-To: <20260619080934.237834-1-christianslima@proton.me>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 19 Jun 2026 10:16:57 +0100
-X-Gm-Features: AVVi8CfQtjwUQ6en2BB9rI88GsK_jF_ak8GCQBWmfZFNj5lPnBhTpbHJPs6VBgw
-Message-ID: <CAFEAcA_5d+_miPKpUf7Zo=B=XwCF=vcNZMsv9jQa258pF26nRA@mail.gmail.com>
-Subject: Re: [PATCH v2 3/3] hw/core/platform-bus: guard
- platform_bus_get_mmio_addr() against NULL
-To: Mohammadfaiz Bawa <mbawa@redhat.com>
-Cc: Stefan Berger <stefanb@linux.vnet.ibm.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@mailo.com>, 
- qemu-devel@nongnu.org, Zhao Liu <zhao1.liu@intel.com>
+Date: Fri, 19 Jun 2026 10:22:32 +0100
+X-Gm-Features: AVVi8CcwWkOZ1ewkvoH5AruyWOYB9hkXoD2B5uIY5zH_xf6qt12wj6XLc1qt0pM
+Message-ID: <CAFEAcA9bzM19ny_wGKahRETFEp2_Od=O_TdPFxAkXnr=9Xvwiw@mail.gmail.com>
+Subject: Re: [PATCH] audio: converts malloc to g_new and free to g_free
+To: "Christian S. Lima" <christianslima@proton.me>
+Cc: qemu-devel@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12f;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1130;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1130.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -119,41 +113,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 19 Jun 2026 at 06:36, Mohammadfaiz Bawa <mbawa@redhat.com> wrote:
+On Fri, 19 Jun 2026 at 09:10, Christian S. Lima
+<christianslima@proton.me> wrote:
 >
-> sysbus_mmio_get_region() returns NULL when a device has fewer MMIO
-> regions than the requested slot index.  platform_bus_get_mmio_addr()
-> passes the result directly to memory_region_is_mapped() without a
-> NULL check, causing a SIGSEGV.
+> Following the qemu coding style change malloc to g_new, the advantage
+> are that g_new can catch multiplication overflowing size_t and allow
+> catch more type errors because it returns the type itself.
 >
-> Return -1 early when the region pointer is NULL, consistent with the
-> existing "not mapped" path.
->
-> Signed-off-by: Mohammadfaiz Bawa <mbawa@redhat.com>
+> Signed-off-by: Christian S. Lima <christianslima@proton.me>
 > ---
->  hw/core/platform-bus.c | 3 +--
->  1 file changed, 1 insertion(+), 2 deletions(-)
->
-> diff --git a/hw/core/platform-bus.c b/hw/core/platform-bus.c
-> index a2217a2dee..16d0ecc0f3 100644
-> --- a/hw/core/platform-bus.c
-> +++ b/hw/core/platform-bus.c
-> @@ -59,8 +59,7 @@ hwaddr platform_bus_get_mmio_addr(PlatformBusDevice *pbus, SysBusDevice *sbdev,
->      Object *pbus_mr_obj = OBJECT(pbus_mr);
->      Object *parent_mr;
->
-> -    if (!memory_region_is_mapped(sbdev_mr)) {
-> -        /* Region is not mapped? */
-> +    if (!sbdev_mr || !memory_region_is_mapped(sbdev_mr)) {
->          return -1;
->      }
+>  hw/audio/fmopl.c | 20 ++++++++++----------
+>  1 file changed, 10 insertions(+), 10 deletions(-)
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
-but doesn't this need to come earlier in the series, so
-that the code can handle the NULL pointer before we
-change the device/machine to not expose the 2nd MR?
+Hi; we already have somebody working on updating this
+set of malloc/free calls:
 
+https://lore.kernel.org/qemu-devel/20260428162048.2995097-1-luc.fast2004@gmail.com/
 
 thanks
 -- PMM
