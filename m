@@ -4,44 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6351CD98F8
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Jun 2026 07:16:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D458BCD98E6
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Jun 2026 07:20:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1waTSG-0008CK-7Z; Fri, 19 Jun 2026 03:15:56 -0400
+	id 1waTWO-0001HK-3T; Fri, 19 Jun 2026 03:20:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1waTS6-00089d-Uu; Fri, 19 Jun 2026 03:15:50 -0400
+ id 1waTWM-0001FW-DW; Fri, 19 Jun 2026 03:20:10 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1waTS5-0003pQ-FZ; Fri, 19 Jun 2026 03:15:46 -0400
+ id 1waTWK-0004xx-RD; Fri, 19 Jun 2026 03:20:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1781853337; bh=i8RMW1+0uff1sk5pdCwKaDiuUbuuqRubL1+I4oKtu2s=;
- h=Date:Subject:To:Cc:References:From:In-Reply-To;
- b=u9JpW3+xmQ2nk8lNe6fwrWW55eGy5QGLIm5uGCUszkJAA3niBfB6xAszvqQ8HhyMV
- fLdN3EPrTRiHvKAjVnqyp0U2ow9mDlvTkbQGdZeAsBCz90aFSpTA5txLND98NXEpm3
- ofQYcrGhhclPKq2Fq7ZQtHKsPC2k1TlbJJpL4V/7T4qT4P6FgLV8wfOjiQ1OCQHwFC
- CQAyQcp54aNiRVDFhXWYvh8jk3jpr5KZQGptLGwKwhzbPMQnCpjEf6MmtFS9T2SS6H
- dXAehnLVQjwSaKqQ33fMOUFeVWUPXfm68GG5/yvrkITfABGhIDtwL0WAK9pXUMEdnk
- X9cNn7qi+YLQQ==
+ t=1781853600; bh=Wg9dnbMc8bMREzdyiGT12cIy7IeNI2BltBcPmYO9e0w=;
+ h=Date:Subject:To:References:From:In-Reply-To;
+ b=ISYk6UmJAQw+MQNyRv6DMCoatb99CUXv02KKZT0HFyI+NII2YyzB90fBImjriJ2to
+ RHSOjjjnHa+sGUjVbm8GIiWFPqMRidPfbwu1ibzYE8pgpPOjTM3iGYSQu2P7JwiwYP
+ MnNZ2PuZtmX08dduMWh69yRwJzAbWhfeC9cLNdFtUtymHgAVbVljr8GyiveEqMuTlW
+ xEczPXPdUP5abbuPC/VWmExZgU8eK6lhP2muqMTw/ktxGfdIb1SPOHf7pb9OoaZmrB
+ aM6ZGzMmJwAv2IckO9p+ORqOFfYldfMpqveGWRR6/5s9HHYCQe0Zaj6pnSk5CoAPEm
+ hsEZsmrUw5n5A==
 Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by isrv.corpit.ru (Postfix) with ESMTP id 2F5621B8D5A;
- Fri, 19 Jun 2026 10:15:37 +0300 (MSK)
-Message-ID: <eab9f7f9-0f24-4df4-9892-96db02b231ff@tls.msk.ru>
-Date: Fri, 19 Jun 2026 10:15:43 +0300
+ by isrv.corpit.ru (Postfix) with ESMTP id D44DB1B8D66;
+ Fri, 19 Jun 2026 10:20:00 +0300 (MSK)
+Message-ID: <25ef5db4-385c-4522-b3da-f26c9ae757f0@tls.msk.ru>
+Date: Fri, 19 Jun 2026 10:20:07 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] gdbstub: Update x86 control register bits
-To: Mathias Krause <minipli@grsecurity.net>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-stable <qemu-stable@nongnu.org>, Paolo Bonzini <pbonzini@redhat.com>
-References: <20260327143413.254227-1-minipli@grsecurity.net>
- <94b4dd4d-9a11-43d2-8e12-bb5e0f46701e@tls.msk.ru>
- <b3f10a9f-513e-42c6-8141-e4d5616242df@grsecurity.net>
+Subject: Re: [PULL 06/23] target/arm/hvf: Stop pre-allocating cpreg_vmstate
+ arrays
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org,
+ qemu-stable <qemu-stable@nongnu.org>
+References: <20260515104945.4145203-1-peter.maydell@linaro.org>
+ <20260515104945.4145203-7-peter.maydell@linaro.org>
+ <CAFEAcA8OraFxZ+S+892aKwBXG=Ycbb0btXK0zvHpbwz327KXqg@mail.gmail.com>
 Content-Language: en-US, ru-RU
 From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
@@ -87,9 +86,9 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
  ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
  3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-In-Reply-To: <b3f10a9f-513e-42c6-8141-e4d5616242df@grsecurity.net>
+In-Reply-To: <CAFEAcA8OraFxZ+S+892aKwBXG=Ycbb0btXK0zvHpbwz327KXqg@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
 X-Spam_score_int: -19
@@ -113,19 +112,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 19.06.2026 10:12, Mathias Krause wrote:
+On 18.06.2026 18:38, Peter Maydell wrote:
+> This change (now commit 06fd39e4) fixes a bug in a commit that
+> is in the 11.0.0 release. Unfortunately I forgot to mark it
+> as Cc: stable when committing it.
+> 
+> Could we cherry-pick 06fd39e4 into the 11.0.x stable branch,
+> please?
+> 
+> (This just got re-reported as
+> https://gitlab.com/qemu-project/qemu/-/work_items/3565 )
 
->>> - after the change:
->>>     (gdb) info registers cr4
->>>     cr4            0x8000f0            [ CET PGE MCE PAE PSE ]
-
-> Would be nice if it could be included in a 11.x release, as that's the
-> first with CET virtualization support.
-
-Hmm.  So it looks like this change is wrong for previous releases
-(10.0, 10.2), and should not be picked up there, right?
-
-Thanks,
+Sure, done.  Thank you for having stable series in mind!
 
 /mjt
 
