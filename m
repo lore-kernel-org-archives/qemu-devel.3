@@ -4,38 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30926CD98F6
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Jun 2026 10:19:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5DF23CD98F2
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Jun 2026 10:19:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1waWJB-0006K6-6o; Fri, 19 Jun 2026 06:18:45 -0400
+	id 1waWJ9-0006Ip-1d; Fri, 19 Jun 2026 06:18:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1waWJ9-0006J2-Bb
- for qemu-devel@nongnu.org; Fri, 19 Jun 2026 06:18:43 -0400
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1waWJ6-0006Hu-Qe
+ for qemu-devel@nongnu.org; Fri, 19 Jun 2026 06:18:40 -0400
 Received: from relay.virtuozzo.com ([130.117.225.111])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1waWJ6-0000fH-6V
- for qemu-devel@nongnu.org; Fri, 19 Jun 2026 06:18:43 -0400
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1waWJ5-0000ex-8N
+ for qemu-devel@nongnu.org; Fri, 19 Jun 2026 06:18:40 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=virtuozzo.com; s=relay; h=MIME-Version:Message-ID:Date:Subject:From:
- Content-Type; bh=dZVtOxE/JVhOT97T/jzFqUWxYYdVhLADxvY1qb5kBMg=; b=g3Xb2rV2l5LR
- FqRkQu3wR3pN+gL3EZzWdrhdrH3NQ5UAuX1h5I0vl+KhmmXfX22+F1pX5cbB1cWhCONqXjq69NmaU
- xaB4nF7qdAOQLXPrj/tvq+whvxf7tWYsKnITRlMIMpRU/SBOrwh6aLtjNcA2qT1R3Z1Sa8bs7RLXk
- b1KYFgqQtLsD4ScFmM92lCt7iovoos58sL4h2SxER5sUumZP3ea3kVAj5yWJsTvOyvMbFVHBneXU5
- DuDU987wfQHKeWVQZJUw11xlug/Cfyq/J61Yq9Tv1l0MvVg9VHZmi1RRF6hS4umWqybPE29PHvWLa
- wEUzelkXFPmCOWTaTJx1gQ==;
+ Content-Type; bh=z0+VW17wfJS3shuNYwL5tr2zZ2QgOCrT0q6hQjfLvuU=; b=q1dMBvR/kBfF
+ uVeBVTh/ETQHx73+BEoAXaYAp5zZ25w/xLcfMMFncdXoy122gBWuSQoYdVG4ruW43eURuIEwdynZy
+ X6/q4BO99grG7w3N3uQo44vKsf0jqu4MKgPikkK8WzoOuiPCP8RAYPYsEfBz7qrsTfWjYsGLpW1xT
+ jRH45lzNXUS67lcH9BCfCcKg0mWMTBJJ25C3eTatZqqXabzTEyCd7i+0V2fKFrSEwoBuufCyRlGnp
+ PI8OYK+90ssAy9pIdGML1kn5y7GtcYk58pi5JXOtYjQlyd59YWNkSx2JVrxMTNJjkV9pv4sFeQB+3
+ 09MfOgmsNR4FHWgEjh7MfQ==;
 Received: from ch-demo-asa.virtuozzo.com ([130.117.225.8] helo=athena.sw.ru)
  by relay.virtuozzo.com with esmtp (Exim 4.96)
- (envelope-from <den@openvz.org>) id 1waWIV-006QLJ-1W;
- Fri, 19 Jun 2026 12:18:35 +0200
+ (envelope-from <den@openvz.org>) id 1waWIS-006QLJ-2q;
+ Fri, 19 Jun 2026 12:18:32 +0200
 To: qemu-devel@nongnu.org
 Cc: marcandre.lureau@redhat.com, anisinha@redhat.com, berrange@redhat.com,
  peterx@redhat.com, farosas@suse.de, "Denis V. Lunev" <den@openvz.org>
-Subject: [PATCH v5 6/7] tests/qtest/dump: reject win-dmp without vmcoreinfo
-Date: Fri, 19 Jun 2026 12:18:33 +0200
-Message-ID: <20260619101834.228432-7-den@openvz.org>
+Subject: [PATCH v5 1/7] migration: add migration_guest_ram_loading() helper
+Date: Fri, 19 Jun 2026 12:18:28 +0200
+Message-ID: <20260619101834.228432-2-den@openvz.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260619101834.228432-1-den@openvz.org>
 References: <20260619101834.228432-1-den@openvz.org>
@@ -66,87 +66,49 @@ From:  "Denis V. Lunev" via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Requesting the Windows crashdump format (win-dmp) on a guest that does not
-expose a Windows dump header through vmcoreinfo must be rejected, not
-silently turned into a bogus dump. Add a test that asks for win-dmp on a
-plain VM and checks the request fails with "invalid vmcoreinfo note size"
-and that the VM stays usable afterwards (a subsequent ELF dump succeeds).
-
-The test is x86_64 only, where win_dump_available() performs this check.
+Operations that read guest RAM (dump-guest-memory, memsave, pmemsave)
+must refuse to run while the destination of a migration is still
+receiving that RAM: during precopy it is incomplete, and during postcopy
+a read faults the page in from the source. Provide a single predicate
+they can share instead of open-coding the runstate and postcopy checks.
 
 Signed-off-by: Denis V. Lunev <den@openvz.org>
 ---
- tests/qtest/dump-test.c | 49 +++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 49 insertions(+)
+ include/migration/misc.h | 3 +++
+ migration/migration.c    | 6 ++++++
+ 2 files changed, 9 insertions(+)
 
-diff --git a/tests/qtest/dump-test.c b/tests/qtest/dump-test.c
-index eb188c9ccb..6afaa2c2ea 100644
---- a/tests/qtest/dump-test.c
-+++ b/tests/qtest/dump-test.c
-@@ -174,8 +174,51 @@ static void test_dump_invalid_protocol(void)
-     qtest_quit(qts);
+diff --git a/include/migration/misc.h b/include/migration/misc.h
+index 3159a5e53c..d3d6e1f50d 100644
+--- a/include/migration/misc.h
++++ b/include/migration/misc.h
+@@ -117,6 +117,9 @@ void migration_file_set_error(int ret, Error *err);
+ /* True if incoming migration entered POSTCOPY_INCOMING_DISCARD */
+ bool migration_in_incoming_postcopy(void);
+ 
++/* True while the destination still receives guest RAM (precopy or postcopy) */
++bool migration_guest_ram_loading(void);
++
+ /* True if incoming migration entered POSTCOPY_INCOMING_ADVISE */
+ bool migration_incoming_postcopy_advised(void);
+ 
+diff --git a/migration/migration.c b/migration/migration.c
+index 074d3f2c69..095c55fdae 100644
+--- a/migration/migration.c
++++ b/migration/migration.c
+@@ -1643,6 +1643,12 @@ bool migration_in_incoming_postcopy(void)
+     return ps >= POSTCOPY_INCOMING_DISCARD && ps < POSTCOPY_INCOMING_END;
  }
  
-+/*
-+ * Requesting win-dmp without a Windows dump header in vmcoreinfo must be
-+ * rejected with a clear error -- and must leave the VM usable, rather than
-+ * produce a bogus dump.
-+ */
-+static void test_dump_win_dmp_unavailable(void)
++bool migration_guest_ram_loading(void)
 +{
-+    QTestState *qts = dump_test_start();
-+    g_autofree char *tmp = NULL;
-+    g_autofree char *proto = NULL;
-+    g_autofree char *path = NULL;
-+    GError *err = NULL;
-+    QDict *resp, *error;
-+    const char *desc;
-+    int fd;
-+
-+    fd = g_file_open_tmp("dump-test-XXXXXX", &tmp, &err);
-+    g_assert_no_error(err);
-+    close(fd);
-+    proto = g_strdup_printf("file:%s", tmp);
-+
-+    resp = qtest_qmp(qts,
-+        "{ 'execute': 'dump-guest-memory',"
-+        "  'arguments': { 'paging': false, 'protocol': %s,"
-+        "                 'format': 'win-dmp' } }", proto);
-+    error = qdict_get_qdict(resp, "error");
-+    g_assert_nonnull(error);
-+    desc = qdict_get_try_str(error, "desc");
-+    g_assert_nonnull(desc);
-+    g_assert_nonnull(strstr(desc, "vmcoreinfo"));
-+    qobject_unref(resp);
-+    unlink(tmp);
-+
-+    /* the failed request must not wedge the VM: a plain dump still works */
-+    path = do_dump(qts, NULL);
-+    assert_valid_elf_core(path);
-+    unlink(path);
-+
-+    qtest_quit(qts);
++    return runstate_check(RUN_STATE_INMIGRATE) ||
++           migration_in_incoming_postcopy();
 +}
 +
- int main(int argc, char **argv)
+ bool migration_incoming_postcopy_advised(void)
  {
-+    const char *arch = qtest_get_arch();
-+
-     g_test_init(&argc, &argv, NULL);
- 
-     qtest_add_func("/dump/query-capability", test_query_capability);
-@@ -184,5 +227,11 @@ int main(int argc, char **argv)
-     qtest_add_func("/dump/kdump-raw-zlib", test_dump_kdump_raw_zlib);
-     qtest_add_func("/dump/invalid-protocol", test_dump_invalid_protocol);
- 
-+    /* win-dmp is an x86_64-only format */
-+    if (g_str_equal(arch, "x86_64")) {
-+        qtest_add_func("/dump/win-dmp-unavailable",
-+                       test_dump_win_dmp_unavailable);
-+    }
-+
-     return g_test_run();
- }
+     PostcopyState ps = postcopy_state_get();
 -- 
 2.53.0
 
