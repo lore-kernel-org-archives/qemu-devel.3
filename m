@@ -4,44 +4,152 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A36ADCD98F2
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Jun 2026 14:05:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9540CCD4F26
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Jun 2026 14:13:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1waZpU-00021b-1N; Fri, 19 Jun 2026 10:04:20 -0400
+	id 1waZxl-0003yW-VM; Fri, 19 Jun 2026 10:12:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1waZpR-00020t-Le
- for qemu-devel@nongnu.org; Fri, 19 Jun 2026 10:04:18 -0400
-Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
+ (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
+ id 1waZxk-0003yO-Lc
+ for qemu-devel@nongnu.org; Fri, 19 Jun 2026 10:12:52 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1waZpP-0000x7-Be
- for qemu-devel@nongnu.org; Fri, 19 Jun 2026 10:04:17 -0400
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id AB52A59694F;
- Fri, 19 Jun 2026 16:04:10 +0200 (CEST)
-X-Virus-Scanned: amavis at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id p0kbqH-Joi5e; Fri, 19 Jun 2026 16:04:08 +0200 (CEST)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 6CF98596948; Fri, 19 Jun 2026 16:04:08 +0200 (CEST)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PATCH] ati-vga: Include vga state in the blit context
-To: qemu-devel@nongnu.org
-Cc: Gerd Hoffmann <kraxel@redhat.com>, marcandre.lureau@redhat.com,
- Chad Jablonski <chad@jablonski.xyz>
-Message-Id: <20260619140408.6CF98596948@zero.eik.bme.hu>
-Date: Fri, 19 Jun 2026 16:04:08 +0200 (CEST)
-Received-SPF: pass client-ip=2001:738:2001:2001::2001;
- envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
+ id 1waZxi-0004v9-Np
+ for qemu-devel@nongnu.org; Fri, 19 Jun 2026 10:12:52 -0400
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 65JDCJbJ746386
+ for <qemu-devel@nongnu.org>; Fri, 19 Jun 2026 14:12:48 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ 1DNFpWuRhUabXaf2FAU1lRhifdCKLRsE8nK3q2fqo/g=; b=nHUuOKGusv6ZsKw9
+ oKwxj0olihcKadV0Enn6gkmUn+zr+eekEuHU3kOcSwA0dAzcGniW+JZAEQdVZ4hZ
+ gG6uoE/+WhN8bflEbOpykss55vnh+i34SfejFB4QUR1QLvOGAVP/0WiQnsU7zh+x
+ 0Tkatj5IMxxXg7BSuIleVItFIBGzcmqIRUu//1NWFl4ZSeaE2ITpqfxPhd8NL77P
+ EmTXDJHuUvwPivt1uIJcynvuHYlfCJ4slTv0ANWHtkiFj+PZyXNDvGvhp8CKfLOV
+ wyoOSK2h18RrltOav7MTg57AsLVOHdA46kOUIsoMqBq+H/lAfyiyyW1tOO038NAK
+ LTV08A==
+Received: from mail-dl1-f69.google.com (mail-dl1-f69.google.com [74.125.82.69])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4evp6sbjj5-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Fri, 19 Jun 2026 14:12:48 +0000 (GMT)
+Received: by mail-dl1-f69.google.com with SMTP id
+ a92af1059eb24-137fc6f8e9fso731522c88.1
+ for <qemu-devel@nongnu.org>; Fri, 19 Jun 2026 07:12:48 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1781878367; cv=none;
+ d=google.com; s=arc-20240605;
+ b=ifBfAJJ8IXJttdxAyE0JrbMPRQ6n6YeLL0rUc23qBif76SVhFcrQmWfrlJp17JAK2l
+ P5y3FykREM4IQWbc4jVPXc5BzKjzU86DRp6XE6Aref6HF04HnXOZPgb521EviRoLP3bk
+ uaHBYeguDCRNhI+FsPa29yo7U3hCKPmjG8rZNxH3P6cuGPmFgKGeLpGNOnAXrCm7iUaa
+ BkbQWO5taZQkNlZtCuhkIGBJKWb3hWohh9Bq43u2sQ/a33gRHWzoXHv3UA1DI3akK2fS
+ pspPtiO0Sd0xc64aRRYZjgWT6lHL8L1dwd/ja8Li+4Vh/Gt2C50H0KxWarGuP4xVXwPK
+ WA1A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=1DNFpWuRhUabXaf2FAU1lRhifdCKLRsE8nK3q2fqo/g=;
+ fh=Lf2W3xo7mc+DVh/Qx7PkXuNkpaTX4UNAB575nde0PtI=;
+ b=VMabkSuEctGpnHzVQ8toQUFiDxVS/fOfoK8qkhe/j48loj/rlUIox+Ur00NXHKYhnM
+ fCueKm37NK4sDKGr6kSWf5JVfhEAu5DGxPDqCcCS1JhsGol9WQ8uxKvjSmi0HOMdqNrY
+ v11SYReNCawMKVOMXNzY2PuknFs7zxM052o3Lt5LLx05L1d7V/nfkLKgXrAGEjhqWimh
+ Yw0lH4BqbVrGRW7qQImOJFF/nVWw3KXkmIgDxg4wYDsTrVnuiJQ3BtF+yAjTLt7mxmpD
+ dqwwR77YRSdWsyAVrNcpaN4dXGD3qK/MXhIjyCUEYTQ+vFocveK9MJkDmxrZVCzLNZYQ
+ yg0w==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1781878367; x=1782483167; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=1DNFpWuRhUabXaf2FAU1lRhifdCKLRsE8nK3q2fqo/g=;
+ b=Uuucsd9nSaxdinuNvQPLXt1OhRVJlGHXK4NidTNO3FktaLP0eHnCuptwITvdOL1VSa
+ dbtnOtwRWkjOqlrp9UG7lg2LZ/pjpAkRIjicwyIlED6BP4/zejkUxvTf3dJTYOzozqOH
+ duOoI2AZubfG6ryxRRGK2gHYAYZwwXxn0EhJLmORDqNO/HYPUAPdtA/IacFBiV+lUat+
+ Raospjuq+JCbOLHocV2eiuSopqK4QssMn/7KjPMEAH384rW9GVBpQisS6megWkGDaMGq
+ oX68wXkomNp5H+XnCReB3HRUyAO0IygM8YArFKo8VaQrU3HHDAf+7xm/PWUXT5erFtdp
+ YPhQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1781878367; x=1782483167;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=1DNFpWuRhUabXaf2FAU1lRhifdCKLRsE8nK3q2fqo/g=;
+ b=dWW1Ah/+U3Skklp13zphOAqBhfsKVlqQaxXzK+9NYnf91HMUpQO44o1BwH1qAr+ASg
+ DQyDUPjZnq0bGufjQRbpwXhjKBt7z+QbcpnSJm3dm8/gkgHmgqqJ/zB6gAmz+nHATvFP
+ tANMhpFe1Od7ZkDxRMPlBmL66dyTiOgiyoOyVJ7pdJL/ADuDS8OrfXsIJdPWGFgcku8A
+ 776qar/72iwOzCyZLHyT/p0K/iaep7+Fgv9tvDQfBsP8nBD+uxP34vH3iQArBSSGStP1
+ 5n8+yctwXrWQEqaCGn1fln1/33hnLqoKOzdp9Izy2wlHHIInyM2NDWcz8sbDKxbfEb91
+ As4g==
+X-Gm-Message-State: AOJu0YxqxFp2u/mcdYknbedQS7TZpSqlMSGS/0nxoQ46DXR+iWc8gTEt
+ RO/noLQwQh2vJZwnecx1zbqXe7uGrQFOmwCI8mRFxTA0A2TKj4kGYzFQ3132arolGGVshKYhmIZ
+ bmJCda1XUJ2DMdJfR4D6+N8OPGUMxnEYNXsVQImTXK938jl9aYSc6Aa3deiECj6BUwjzjOnxLPS
+ PN/MeiDGW6cGmJDRVnM8hdtF39TlOQwkjF
+X-Gm-Gg: AfdE7ckVGb3s2IyuV3jA3UorYNUHn73r74i6daScVbCkZx9GsXJgHjJZKstq0/6hhID
+ 2wxXbjFY+SSkm42e23QBgYmqdQjr/gxMwE6zGICeenJTtcL6Ir6oNG18vmYVKDfH+AdE7t2AyvH
+ 59jFzRFN7xWIjUAoGz48LFp9qOY7jZwokba640lfmmQH0cKXgb+Cwf4XMlsCU1NKT5STYv
+X-Received: by 2002:a05:7022:609a:b0:138:51c:c5aa with SMTP id
+ a92af1059eb24-139a367c994mr1629442c88.27.1781878367046; 
+ Fri, 19 Jun 2026 07:12:47 -0700 (PDT)
+X-Received: by 2002:a05:7022:609a:b0:138:51c:c5aa with SMTP id
+ a92af1059eb24-139a367c994mr1629425c88.27.1781878366552; Fri, 19 Jun 2026
+ 07:12:46 -0700 (PDT)
+MIME-Version: 1.0
+References: <20260619043159.2174062-1-brian.cain@oss.qualcomm.com>
+ <20260619135326.1248896-1-matheus.bernardino@oss.qualcomm.com>
+In-Reply-To: <20260619135326.1248896-1-matheus.bernardino@oss.qualcomm.com>
+From: Brian Cain <brian.cain@oss.qualcomm.com>
+Date: Fri, 19 Jun 2026 09:12:30 -0500
+X-Gm-Features: AVVi8Ccs5d-psvJHWKTfmzeNyhG2TTB6WDZrlDacjLwDN0f74RDukMSQR6al_KI
+Message-ID: <CAEqNhNaa9mfy94QGz2vf2EdGSM8iPxZh5w1-wwq5LHaHCEWvew@mail.gmail.com>
+Subject: Re: [PATCH] tests/docker: tolerate chmod EPERM when unpacking hexagon
+ toolchain
+To: Matheus Tavares Bernardino <matheus.bernardino@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org, pierrick.bouvier@oss.qualcomm.com,
+ alex.bennee@linaro.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Proofpoint-GUID: t28XlmN8w-UWW5wBqQHXUnU5l9hYGE_w
+X-Proofpoint-ORIG-GUID: t28XlmN8w-UWW5wBqQHXUnU5l9hYGE_w
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjE5MDEzNCBTYWx0ZWRfX+WLw6+Trfc4/
+ thvJQEB06Lu6arFmVEr8nkvb+Tfh5TZlyfnOP4qtV9xzoJpFmy/7gP9ZAd1r6GVAgZ6DqE0Kz8d
+ SiDII+pOJMm+j40Fp5yIBY7dKI31XitJrHUEPK080ncRJyX2bgaSJNX1BXApBCA+na1YDxei1nn
+ K4zfXID0WqbEzf9Tk1G67IAYgLjHzyaJvJi2fSZAHi0kNzPiYP5IaGcQldVYHdCNA6bv5TaKMTs
+ C3yM+6+5VNzoF3p4CrHisdVUjY/bo+9qtqbqAz/qUUXF+HuTdY5nltFr3PQtr2z51sFSV7nxtYn
+ 07vNOuNjxfM0uiK5ClhUYD0Miw8eHtLSPiEqawhEVOtJuuQ7K+lNXeP29XCckSbNiZTQ6CNYSA1
+ igjwfZ61iOb4ypx7Cce4RMIUOmNBlVUG6nyRB79h/8F+QPQETiLmqgnnTa+kkx4A3ta6EvA/m5j
+ m3vr1VbEpgOE9jMI9zA==
+X-Authority-Analysis: v=2.4 cv=H6LrBeYi c=1 sm=1 tr=0 ts=6a354e60 cx=c_pps
+ a=kVLUcbK0zfr7ocalXnG1qA==:117 a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10
+ a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22
+ a=3WHJM1ZQz_JShphwDgj5:22 a=qC_FGOx9AAAA:8 a=EUspDBNiAAAA:8
+ a=hFKQHaFbY6gXYoHRevwA:9 a=QEXdDO2ut3YA:10 a=vr4QvYf-bLy2KjpDp97w:22
+ a=fsdK_YakeE02zTmptMdW:22
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjE5MDEzNCBTYWx0ZWRfX/0spYWX0yovH
+ QgtDAC75XU0uL3VO2uQVdwTHZHn1DR6oDeVAGpdE4pGsT2T9ZpMKuu4/r0hUeqTOLDmG+MFrCw4
+ GcDC/wbGEwYhLdHmU3HKMzpgGfFJb/M=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-19_03,2026-06-18_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0 priorityscore=1501 phishscore=0 lowpriorityscore=0
+ impostorscore=0 spamscore=0 suspectscore=0 malwarescore=0 clxscore=1015
+ bulkscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2606190134
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=brian.cain@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -58,150 +166,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The vga state is needed by several functions using the blit context so
-just include it in the context instead of passing it separately.
+On Fri, Jun 19, 2026 at 8:53=E2=80=AFAM Matheus Tavares Bernardino
+<matheus.bernardino@oss.qualcomm.com> wrote:
+>
+> On Thu, 18 Jun 2026 21:31:59 -0700 Brian Cain <brian.cain@oss.qualcomm.co=
+m> wrote:
+> >
+> ...
+> >
+> > Download the tarball to a file and ignore tar errors during extraction
+> > with --no-same-owner and --no-same-permissions.
+>
+> tar's man page says --no-same-owner and --no-same-permissions are "defaul=
+t for
+> ordinary users". Isn't that the case for rootless podman?
+>
+> > Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
+> > ---
+> >  tests/docker/dockerfiles/debian-hexagon-cross.docker | 7 ++++++-
+> >  1 file changed, 6 insertions(+), 1 deletion(-)
+> >
+> > diff --git a/tests/docker/dockerfiles/debian-hexagon-cross.docker b/tes=
+ts/docker/dockerfiles/debian-hexagon-cross.docker
+> > index 23e8bb2fb26..817c903246a 100644
+> > --- a/tests/docker/dockerfiles/debian-hexagon-cross.docker
+> > +++ b/tests/docker/dockerfiles/debian-hexagon-cross.docker
+> > @@ -49,7 +49,12 @@ ENV TOOLCHAIN_BASENAME=3Dclang+llvm-${TOOLCHAIN_RELE=
+ASE}-cross-hexagon-unknown-lin
+> >  ENV TOOLCHAIN_URL=3Dhttps://artifacts.codelinaro.org/artifactory/codel=
+inaro-toolchain-for-hexagon/${TOOLCHAIN_RELEASE}_/${TOOLCHAIN_BASENAME}.tar=
+.zst
+> >  ENV CCACHE_WRAPPERSDIR=3D/usr/libexec/ccache-wrappers
+> >
+> > -RUN curl -#SL "$TOOLCHAIN_URL" | tar --zstd -xC "$TOOLCHAIN_INSTALL"
+> > +# Ignore tar's chmod/lchmod EPERM on the toolchain symlinks and direct=
+ories,
+> > +# which rootless podman's overlay storage rejects (harmless mode metad=
+ata).
+> > +RUN curl -#SLo /tmp/toolchain.tar.zst "$TOOLCHAIN_URL" && \
+> > +    { tar --zstd --no-same-owner --no-same-permissions \
+> > +          -xf /tmp/toolchain.tar.zst -C "$TOOLCHAIN_INSTALL" || true; =
+} && \
+> > +    rm -f /tmp/toolchain.tar.zst
+>
+> Hmm, I think the "|| true" may mask some real failures. For example, if
+> the URL is invalid, curl would still exit with no error code, but the out=
+put
+> file would contain something like "errors" : [ { "status" : 404 } ]. Then=
+,
+> tar would fail to unpack that but || true would mask it.
 
-Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
----
- hw/display/ati_2d.c | 38 ++++++++++++++++++--------------------
- 1 file changed, 18 insertions(+), 20 deletions(-)
+Hmm - good point.  I'll rethink it.
 
-diff --git a/hw/display/ati_2d.c b/hw/display/ati_2d.c
-index 48498677c7..ce62b470ab 100644
---- a/hw/display/ati_2d.c
-+++ b/hw/display/ati_2d.c
-@@ -45,6 +45,7 @@ static int ati_bpp_from_datatype(const ATIVGAState *s)
- }
- 
- typedef struct {
-+    VGACommonState *vga;
-     int bpp;
-     uint32_t rop3;
-     bool host_data_active;
-@@ -52,8 +53,6 @@ typedef struct {
-     bool top_to_bottom;
-     bool need_swap;
-     uint32_t frgd_clr;
--    const uint8_t *palette;
--    const uint8_t *vram_end;
-     QemuRect scissor;
- 
-     QemuRect dst;
-@@ -66,8 +65,9 @@ typedef struct {
-     const uint8_t *src_bits;
- } ATI2DCtx;
- 
--static void ati_set_dirty(VGACommonState *vga, const ATI2DCtx *ctx)
-+static void ati_set_dirty(const ATI2DCtx *ctx)
- {
-+    VGACommonState *vga = ctx->vga;
-     DisplaySurface *ds = qemu_console_surface(vga->con);
-     unsigned int bypp = ctx->bpp / 8;
-     hwaddr dirty_start = ctx->dst_offset + ctx->dst.x * bypp +
-@@ -94,8 +94,9 @@ static void ati_set_dirty(VGACommonState *vga, const ATI2DCtx *ctx)
-     }
- }
- 
--static void setup_2d_blt_ctx(const ATIVGAState *s, ATI2DCtx *ctx)
-+static void setup_2d_blt_ctx(ATIVGAState *s, ATI2DCtx *ctx)
- {
-+    ctx->vga = &s->vga;
-     ctx->bpp = ati_bpp_from_datatype(s);
-     ctx->rop3 = s->regs.dp_mix & GMC_ROP3_MASK;
-     ctx->host_data_active = s->host_data.active;
-@@ -103,9 +104,7 @@ static void setup_2d_blt_ctx(const ATIVGAState *s, ATI2DCtx *ctx)
-     ctx->top_to_bottom = s->regs.dp_cntl & DST_Y_TOP_TO_BOTTOM;
-     ctx->need_swap = (HOST_BIG_ENDIAN != s->vga.big_endian_fb);
-     ctx->frgd_clr = s->regs.dp_brush_frgd_clr;
--    ctx->palette = s->vga.palette;
-     ctx->dst_offset = s->regs.dst_offset;
--    ctx->vram_end = s->vga.vram_ptr + s->vga.vram_size;
- 
-     ctx->scissor.width = s->regs.sc_right - s->regs.sc_left + 1;
-     ctx->scissor.height = s->regs.sc_bottom - s->regs.sc_top + 1;
-@@ -153,10 +152,11 @@ static uint32_t make_filler(int bpp, uint32_t color)
-     return color;
- }
- 
--static bool ati_2d_do_blt(ATI2DCtx *ctx, uint8_t use_pixman)
-+static bool ati_2d_do_blt(const ATI2DCtx *ctx, uint8_t use_pixman)
- {
-     QemuRect vis_src, vis_dst;
-     unsigned int x, y, i, j, bypp = ctx->bpp / 8;
-+    const uint8_t *vram_end = ctx->vga->vram_ptr + ctx->vga->vram_size;
- 
-     if (!ctx->bpp) {
-         qemu_log_mask(LOG_GUEST_ERROR, "Invalid bpp\n");
-@@ -167,9 +167,8 @@ static bool ati_2d_do_blt(ATI2DCtx *ctx, uint8_t use_pixman)
-         return false;
-     }
-     if (ctx->dst.x > 0x3fff || ctx->dst.y > 0x3fff ||
--        ctx->dst_bits >= ctx->vram_end - bypp ||
--        ctx->dst_bits + ctx->dst.x * bypp + (ctx->dst.y + ctx->dst.height) *
--        ctx->dst_stride >= ctx->vram_end - bypp) {
-+        ctx->dst_bits >= vram_end - bypp || ctx->dst_bits + ctx->dst.x * bypp +
-+        (ctx->dst.y + ctx->dst.height) * ctx->dst_stride >= vram_end - bypp) {
-         qemu_log_mask(LOG_UNIMP, "blt outside vram not implemented\n");
-         return false;
-     }
-@@ -206,9 +205,9 @@ static bool ati_2d_do_blt(ATI2DCtx *ctx, uint8_t use_pixman)
-         }
-         if (!ctx->host_data_active &&
-             (vis_src.x > 0x3fff || vis_src.y > 0x3fff ||
--            ctx->src_bits >= ctx->vram_end - bypp ||
-+            ctx->src_bits >= vram_end - bypp ||
-             ctx->src_bits + vis_src.x * bypp + (vis_src.y + vis_dst.height) *
--            ctx->src_stride >= ctx->vram_end - bypp)) {
-+            ctx->src_stride >= vram_end - bypp)) {
-             qemu_log_mask(LOG_UNIMP, "blt outside vram not implemented\n");
-             return false;
-         }
-@@ -275,6 +274,7 @@ static bool ati_2d_do_blt(ATI2DCtx *ctx, uint8_t use_pixman)
-     case ROP3_BLACKNESS:
-     case ROP3_WHITENESS:
-     {
-+        const uint8_t *palette = ctx->vga->palette;
-         uint32_t filler = 0;
- 
-         if (ctx->bpp == 24) {
-@@ -286,14 +286,12 @@ static bool ati_2d_do_blt(ATI2DCtx *ctx, uint8_t use_pixman)
-             filler = make_filler(ctx->bpp, ctx->frgd_clr);
-             break;
-         case ROP3_BLACKNESS:
--            filler = 0xffUL << 24 | rgb_to_pixel32(ctx->palette[0],
--                                                   ctx->palette[1],
--                                                   ctx->palette[2]);
-+            filler = 0xffUL << 24 | rgb_to_pixel32(palette[0], palette[1],
-+                                                   palette[2]);
-             break;
-         case ROP3_WHITENESS:
--            filler = 0xffUL << 24 | rgb_to_pixel32(ctx->palette[3],
--                                                   ctx->palette[4],
--                                                   ctx->palette[5]);
-+            filler = 0xffUL << 24 | rgb_to_pixel32(palette[3], palette[4],
-+                                                   palette[5]);
-             break;
-         }
-         DPRINTF("pixman_fill(%p, %ld, %d, %d, %d, %d, %d, %x)\n",
-@@ -347,7 +345,7 @@ void ati_2d_blt(ATIVGAState *s)
-     }
-     setup_2d_blt_ctx(s, &ctx);
-     if (ati_2d_do_blt(&ctx, s->use_pixman)) {
--        ati_set_dirty(&s->vga, &ctx);
-+        ati_set_dirty(&ctx);
-     }
- }
- 
-@@ -441,7 +439,7 @@ bool ati_host_data_flush(ATIVGAState *s)
-         DPRINTF("blt %dpx span @ row: %d, col: %d to dst (%d,%d)\n",
-                 pix_in_scanline, row, col, chunk.dst.x, chunk.dst.y);
-         if (ati_2d_do_blt(&chunk, s->use_pixman)) {
--            ati_set_dirty(&s->vga, &chunk);
-+            ati_set_dirty(&chunk);
-         }
-         idx += pix_in_scanline;
-         col += pix_in_scanline;
--- 
-2.41.3
-
+> >  ENV PATH=3D$PATH:${TOOLCHAIN_INSTALL}/${TOOLCHAIN_BASENAME}/x86_64-lin=
+ux-gnu/bin
+> >  ENV MAKE=3D/usr/bin/make
+> >  # As a final step configure the user (if env is defined)
+> > --
+> > 2.34.1
+> >
 
