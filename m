@@ -4,114 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2CCECD4F26
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Jun 2026 11:11:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF800CD98F6
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Jun 2026 11:12:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1waX8Q-0004aI-FR; Fri, 19 Jun 2026 07:11:42 -0400
+	id 1waX8s-0004hK-65; Fri, 19 Jun 2026 07:12:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vaibhav@linux.ibm.com>)
- id 1waX8P-0004a5-4D; Fri, 19 Jun 2026 07:11:41 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <FangSheng.Huang@amd.com>)
+ id 1waX8r-0004h3-8y
+ for qemu-devel@nongnu.org; Fri, 19 Jun 2026 07:12:09 -0400
+Received: from mail-southcentralusazlp170110003.outbound.protection.outlook.com
+ ([2a01:111:f403:c10d::3] helo=SN4PR0501CU005.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vaibhav@linux.ibm.com>)
- id 1waX8N-0001er-7v; Fri, 19 Jun 2026 07:11:40 -0400
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65J7n6mS1588810; Fri, 19 Jun 2026 11:11:35 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-type:date:from:in-reply-to:message-id:mime-version
- :references:subject:to; s=pp1; bh=3O6KvS5VBSq83b9tn3tShktu/pYRkt
- U3XtfsJi2KHvs=; b=Pf26cu3EDs+fQOuHA2gc9/UXCiTf3LBjSsAJq7FPpIkfcY
- W0rdQlQEHOhTAy57HFwj2OzqO94MqngiJMMWuRwKBROGTC5k1UycBRLtuxmVDS20
- Si3rA8rIwvBYfsn6YZZZP6xoNg//KDvh2AhJGRc+0n2WC9B8mz424UM0M4PQ2zxM
- ES5FYDqxep2wa9gq7B70+KjNbG4K04sMAGa82tMac3DSot1HtYQEUZzz+IA4K71B
- xen7NQjZ6FWtRwhlouen0Ye2uA8eg/SWYqhwt+zD9ld2QiUnyqTT0hr3hz0r0cpa
- 6HkPY5b60gJLdvpzkG4P0y5ytXofKUu+cP9FHWXw==
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4eueqxd00t-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 19 Jun 2026 11:11:35 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 65JB4vX6011195;
- Fri, 19 Jun 2026 11:11:34 GMT
-Received: from smtprelay07.dal12v.mail.ibm.com ([172.16.1.9])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4ev172gg65-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 19 Jun 2026 11:11:34 +0000 (GMT)
-Received: from smtpav03.wdc07v.mail.ibm.com (smtpav03.wdc07v.mail.ibm.com
- [10.39.53.230])
- by smtprelay07.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 65JBBXnX14484210
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 19 Jun 2026 11:11:33 GMT
-Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 1D8C058054;
- Fri, 19 Jun 2026 11:11:33 +0000 (GMT)
-Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 5E3E958062;
- Fri, 19 Jun 2026 11:11:28 +0000 (GMT)
-Received: from vaibhav?linux.ibm.com (unknown [9.39.17.1])
- by smtpav03.wdc07v.mail.ibm.com (Postfix) with SMTP;
- Fri, 19 Jun 2026 11:11:28 +0000 (GMT)
-Received: by vaibhav@linux.ibm.com (sSMTP sendmail emulation);
- Fri, 19 Jun 2026 16:41:26 +0530
-From: Vaibhav Jain <vaibhav@linux.ibm.com>
-To: Amit Machhiwal <amachhiw@linux.ibm.com>, qemu-ppc@nongnu.org, Harsh
- Prateek Bora <harshpb@linux.ibm.com>
-Cc: Amit Machhiwal <amachhiw@linux.ibm.com>, Nicholas Piggin
- <npiggin@gmail.com>, Chinmay Rath <rathc@linux.ibm.com>, Glenn Miles
- <milesg@linux.ibm.com>,
- Paolo Bonzini <pbonzini@redhat.com>, kvm@vger.kernel.org,
- qemu-devel@nongnu.org
-Subject: Re: [PATCH v3 2/3] target/ppc/kvm: Add support for querying host
- compatibility mode
-In-Reply-To: <20260616113915.25589-3-amachhiw@linux.ibm.com>
-References: <20260616113915.25589-1-amachhiw@linux.ibm.com>
- <20260616113915.25589-3-amachhiw@linux.ibm.com>
-Date: Fri, 19 Jun 2026 16:41:26 +0530
-Message-ID: <87wlvubx9d.fsf@vajain21.in.ibm.com>
+ (Exim 4.90_1) (envelope-from <FangSheng.Huang@amd.com>)
+ id 1waX8p-0001r0-Ac
+ for qemu-devel@nongnu.org; Fri, 19 Jun 2026 07:12:08 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=x1aD14EaVOqP7QeOZjtbXLw7oT8X9JyZoPiToOaAvZpZxey3rPABap9hGONzFdv33iFK4lYhKtQYq9vJLMw3ZUufhLODC5fcf1btrSkRzIZTiekF0buFfzZzZdTjOFIqWCVKcISnDSNVsfkrhXc9pvdXdXgm75GA1MmuXiI8UJueRj0m/L+sMNt/aO8157sO/dUARpqFSU8kes9Bx2MGWWazmHe9YNgUGOzbpCmTYongvWhuMKEBmnIDel2yfm+qzelbkPmAKdIgupXOvMGTMEI2u3ohLRfTT6C411dBSTRKGfglxkM1VRCTeQ4KHObhXamM5YSYBep7ETUBOcI1Fw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=+KjiEYTq7erG3vowZH3jNUk29SVAoXUz+Fu47PzG4FM=;
+ b=O7EWv2qk1jYe2QvSZhcJ/WBIFRu2gs1P852BO6qOrH+SS/ooRi5Up85XfCfW9gD3CLmmKUmtloNzrHm/7SEb5XdBCLiqKbVlV8Fa+9CCE7fbsJKN4qWqyWN8yPrFhLEHjcncGpYzTYnCNkFsBUWcekYIXrnul+uVpbd3DXGnQc+BPEooRLR0Xptj+Xn+ov/OtY7KrEDkC24ShCELENWSnPoiKGQ1j1BCtaXrR2CBNQ0UUrybfzzjIPrjbBCBMD7FRCha4aBeXcZuMoI0pps9qh3mwg9eOvgA40OFmHUEHcC4Z69wL9+cUiKvtrjO8AvoC/hQB13HEgeJB6i1pWgSEA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=nongnu.org smtp.mailfrom=amd.com; dmarc=pass
+ (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=+KjiEYTq7erG3vowZH3jNUk29SVAoXUz+Fu47PzG4FM=;
+ b=z///XkcMpp8bdGO9+1F6M0cn2ttxg04RoWJOqNgavNaSS3TpHlqLYeqm5steblGKCmDPfT6icOTLFQ7//ER6WUVWCo/TZbULdcwTDyW1UQzUoMlCyvX1uAiA1o2/A8gXK6NoR/mlrv4VShkiYAeOJOX3wiPcXJIB660zYueoKKA=
+Received: from BY3PR10CA0009.namprd10.prod.outlook.com (2603:10b6:a03:255::14)
+ by SA3PR12MB7829.namprd12.prod.outlook.com (2603:10b6:806:316::13)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.139.11; Fri, 19 Jun
+ 2026 11:12:01 +0000
+Received: from SJ5PEPF00000203.namprd05.prod.outlook.com
+ (2603:10b6:a03:255:cafe::44) by BY3PR10CA0009.outlook.office365.com
+ (2603:10b6:a03:255::14) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.139.14 via Frontend Transport; Fri,
+ 19 Jun 2026 11:12:01 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
+Received: from satlexmb07.amd.com (165.204.84.17) by
+ SJ5PEPF00000203.mail.protection.outlook.com (10.167.244.36) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.21.139.8 via Frontend Transport; Fri, 19 Jun 2026 11:12:01 +0000
+Received: from k-Super-Server.amd.com (10.180.168.240) by satlexmb07.amd.com
+ (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.41; Fri, 19 Jun
+ 2026 06:11:58 -0500
+From: fanhuang <FangSheng.Huang@amd.com>
+To: <qemu-devel@nongnu.org>, <david@kernel.org>, <imammedo@redhat.com>,
+ <mst@redhat.com>, <gourry@gourry.net>, <philmd@mailo.com>
+CC: <peterx@redhat.com>, <Zhigang.Luo@amd.com>, <Lianjie.Shi@amd.com>,
+ fanhuang <FangSheng.Huang@amd.com>
+Subject: [PATCH v13 02/10] qapi, hmp: introspection for the sp-mem device
+Date: Fri, 19 Jun 2026 19:11:28 +0800
+Message-ID: <20260619111136.3481329-3-FangSheng.Huang@amd.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20260619111136.3481329-1-FangSheng.Huang@amd.com>
+References: <20260619111136.3481329-1-FangSheng.Huang@amd.com>
 MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-GUID: 3iQ2suw8ESLnz7w_zGJshIPtghpOaiu_
-X-Authority-Analysis: v=2.4 cv=Le0MLDfi c=1 sm=1 tr=0 ts=6a3523e7 cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
- a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=RzCfie-kr_QcCd8fBx8p:22 a=VnNF1IyMAAAA:8 a=Ef3TOmN8yebebzy0SdIA:9
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjE5MDEwMCBTYWx0ZWRfX31sOnWwsUNxg
- /zfh3YrPsU62xOrYTRK6QX0hDwHMt5Oje5p9cCSayCbE4skt6U+QpFHGivTqxEmz3Eo9Nys6l3P
- dxGsIfSnhqqgn7eRtxFvX2nJPzP+6kc=
-X-Proofpoint-ORIG-GUID: QcZ0WYPSy0C1ZBvosydUDPtvimOSZwis
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjE5MDEwMCBTYWx0ZWRfX+R9NWE9Wlq92
- pEUrdXPjT7JuNsBuZJZhRBEsdUDqURm8gNogBwRXzGBCHqFtvgS4hQ6Fr/NPEvkkRrIypLXiwza
- 8wG/XMnr/jJMG3JXdQ+83Sc6soQgvx0hyOiE3HuBJ1WS4J2DnTVRcegZei9J7wxPiPBl9kwtfKR
- tENfTvkt/LdzxKCQyD6UkwGtVsw2mEvHV0f9oEmRiz7gBx2UR+ta2gUcy73uPjzeao9w4SDIDLW
- XglmnaEzUL3jwAxY39HPej2U+dm6B1TtrmbOT2PHEywl6wLuYuSvwXUkSrQzAG3ml3CnuBTtW29
- DLtbkWX+0ZYNw+sasU8WZsND9y7qXW8CqdpsT20wvqE0v8I4r5p2pqF2/P+A/tNRpCdDXIkiAhb
- KOSXQlcePghIWAOo5M/KyHB0ZLpJKaHAXz+fGNxdOmC5e7GC7X9KrCNSzgPDVnzEaFyrgAubdkl
- n0hlr8t/1w/hmEsl8rQ==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-19_02,2026-06-18_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 priorityscore=1501 malwarescore=0 spamscore=0 suspectscore=0
- impostorscore=0 phishscore=0 lowpriorityscore=0 bulkscore=0 adultscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606190100
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=vaibhav@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+X-Originating-IP: [10.180.168.240]
+X-ClientProxiedBy: satlexmb07.amd.com (10.181.42.216) To satlexmb07.amd.com
+ (10.181.42.216)
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SJ5PEPF00000203:EE_|SA3PR12MB7829:EE_
+X-MS-Office365-Filtering-Correlation-Id: e39939b5-95f9-44ad-55da-08decdf39629
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|82310400026|23010399003|1800799024|36860700016|376014|22082099003|18002099003|56012099006|11063799006|43062017;
+X-Microsoft-Antispam-Message-Info: 6EKR9JcRp6VKRhtIOOV8GG+H1P4cQWJLQ7xe9Rhh/BtYKXnd3JoLjKeylGJTEuqewONDLxgAbP/MtITV+zYskLYIdfUK8cB/CHUR1fG+aLTb4gDu4cwKbUy5Af7Rj1tVx2c3XJkWItQxPtvr6xzC1R+aJDsDQMKsK1Z3u4wMGutgT+gNWHrF3J6BVvJankdg9ex2ih0i03q2V0zNXENMf7pK6ofQ/ZAqSEYfBi/iIBa3K5AxpbwCpgOXF0kgCMcwWvkrPJ+KauWzJSqt1KaUrhlh62EXbYe3J4lzTtPYbxVqOr1utVkHm66daXNW4/zrGZdG1B+O1WWzd5JN64FK1t0N3+2DtpLar+4+2Jk96SFY8vavHoVpPBUIkeYy/wGE6uUDDu67AOtRZecd0V2TKeZGawuTexWjjuds3+bFdd6Carc7fEWE42d68xvMfkS4uXVyW4Fwc9ZOYRcLsGNik5QqcwI7QS6QCxCbT7xLhpIS1yy45AsIHrGNc36cW0yeYf+RMSL+2aDvu2zhpiIN0vEAYNs+vdUP5FxR+yVx+WC7fIF3pSBvvHJpN5PFmey7HwvcdwDPRPkt3Qt5Vn2BspLioveOJOibT813bjUZYCG36CEuO6gKjJcgUW4q9U2sIZmwuyf/aZPXJFtxhI46CWXI2Tba3RE8KYCrqy3r/gWMnhzzUwYSJFyz+yIip9l8LzOdJ06qn92+W0rC1GJuOLaM6JmhHdrBYB1I61I5YLNP92aiNCkDmYL4hNBZrKPP
+X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:satlexmb07.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(13230040)(82310400026)(23010399003)(1800799024)(36860700016)(376014)(22082099003)(18002099003)(56012099006)(11063799006)(43062017);
+ DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: 5WnPftL4M/oiYTqA/KWJeWJQR718GZk+Wv3NMldp0aVnTZFbFGfOru808A1N7FbNRLa2bKZXJE7Z5dzPqZf/zRlWltBUaBQRU2M09ACLCDJfZ1hqA/Dq2siqiKWdly8AiO3A2piIlwGMB4DqrZkYiHy8BjD2Ua+zpYQxrKHULtAT5BVXH2age3TGQjhcydb8kLAbg+mG1k7/AAHTRwSmLaTaz5iCHLX56iYUwpOh0tf/MwUnSJArOzrGNYp6nocQREXCev1uEOieE8zGk6M8d+qzirZcBjhFZ3FqJ+LN/IsHXxaZmFD1ezlvLUjd5Al5CyR3fobEfVeDsRSkEshfLuDx5IBAfg1OgJ5OBKC4ZKmYe9k82X0Tj0J9I1XjUjB2z2Sg0CF0RH+gi8OHPJlmEQWxwUgyYtwIe1ko5anvT8AkjrqI3UzhE14E8U7DQAEI
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 19 Jun 2026 11:12:01.2495 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: e39939b5-95f9-44ad-55da-08decdf39629
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
+ Helo=[satlexmb07.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource: SJ5PEPF00000203.namprd05.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA3PR12MB7829
+Received-SPF: permerror client-ip=2a01:111:f403:c10d::3;
+ envelope-from=FangSheng.Huang@amd.com;
+ helo=SN4PR0501CU005.outbound.protection.outlook.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -127,199 +126,163 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Amit Machhiwal <amachhiw@linux.ibm.com> writes:
+Add a SpMemDeviceInfo variant to MemoryDeviceInfo so `query-memory-devices`
+reports each sp-mem instance (id, addr, size, node, memdev), and print it
+from HMP `info memory-devices`.
 
-> Add infrastructure to query the host CPU compatibility mode via the
-> KVM_PPC_GET_COMPAT_CAPS ioctl. This allows QEMU to determine if the
-> host is running in a compatibility mode (e.g., a Power11 processor
-> operating in Power10 compatibility mode).
->
-> The kvmppc_get_compat_caps() function queries KVM for host compatibility
-> capabilities with size field validation for ABI compatibility between
-> QEMU and the kernel. The kvm_ppc_host_compat_pvr() function derives the
-> effective PVR based on the compatibility mode reported by KVM.
->
-> Additionally, cas_check_pvr() in hw/ppc/spapr_hcall.c is updated to
-> prevent fallback to raw mode when the host is running in compatibility
-> mode. This ensures that nested guests cannot exceed the host's
-> compatibility level.
->
-> If the capability is not supported or the query fails, the functions
-> return 0, allowing fallback to existing behavior.
->
-> Signed-off-by: Amit Machhiwal <amachhiw@linux.ibm.com>
-> ---
->  hw/ppc/spapr_hcall.c | 14 ++++++++++
->  target/ppc/kvm.c     | 65 ++++++++++++++++++++++++++++++++++++++++++++
->  target/ppc/kvm_ppc.h | 16 +++++++++++
->  3 files changed, 95 insertions(+)
->
-> diff --git a/hw/ppc/spapr_hcall.c b/hw/ppc/spapr_hcall.c
-> index 60ba215e8611..68c29fbe141b 100644
-> --- a/hw/ppc/spapr_hcall.c
-> +++ b/hw/ppc/spapr_hcall.c
-> @@ -1135,6 +1135,7 @@ static uint32_t cas_check_pvr(PowerPCCPU *cpu, uint32_t max_compat,
->  {
->      bool explicit_match = false; /* Matched the CPU's real PVR */
->      uint32_t best_compat = 0;
-> +    uint32_t compat_host_pvr = 0;
->      int i;
->  
->      /*
-> @@ -1162,6 +1163,19 @@ static uint32_t cas_check_pvr(PowerPCCPU *cpu, uint32_t max_compat,
->          }
->      }
->  
-> +    if (explicit_match) {
-> +        compat_host_pvr = kvm_ppc_host_compat_pvr();
-> +        /*
-> +         * If the host is booted in a compatibility mode, do not try booting in
-> +         * the raw mode as it may allow KVM guests to boot with a higher CPU
-> +         * version compared to what host was booted with; which should not be
-> +         * allowed.
-> +         */
-> +        if (compat_host_pvr) {
-> +            explicit_match = false;
-> +        }
-> +    }
-> +
->      *raw_mode_supported = explicit_match;
->  
->      /* Parsing finished */
-> diff --git a/target/ppc/kvm.c b/target/ppc/kvm.c
-> index b94c2997a07f..9e5006e0c2cd 100644
-> --- a/target/ppc/kvm.c
-> +++ b/target/ppc/kvm.c
-> @@ -2602,6 +2602,71 @@ bool kvmppc_supports_ail_3(void)
->      return cap_ail_mode_3;
->  }
->  
-> +#if defined(TARGET_PPC64)
-This define would be implicit for this file. I think you should target
-these functions for CONFIG_KVM. Otherwise you will have multiple
-definitions of kvm_ppc_host_compat_pvr()
+Signed-off-by: FangSheng Huang <FangSheng.Huang@amd.com>
+---
+ qapi/machine.json          | 43 ++++++++++++++++++++++++++++++++++++--
+ hw/core/machine-hmp-cmds.c | 11 ++++++++++
+ hw/mem/sp-mem.c            | 19 +++++++++++++++++
+ 3 files changed, 71 insertions(+), 2 deletions(-)
 
-> +static target_ulong kvmppc_get_compat_caps(void)
-> +{
-> +    struct kvm_ppc_compat_caps host_compat;
-> +    target_ulong host_caps;
-> +    int ret;
-> +
-> +    if (!kvm_check_extension(kvm_state, KVM_CAP_PPC_COMPAT_CAPS)) {
-> +        return 0;
-> +    }
-> +
-> +    /* Initialize the structure with size field for forward compatibility */
-> +    memset(&host_compat, 0, sizeof(host_compat));
-> +    host_compat.size = sizeof(host_compat);
-> +
-> +    ret = kvm_vm_ioctl(kvm_state, KVM_PPC_GET_COMPAT_CAPS, &host_compat);
-> +    if (ret < 0) {
-> +        fprintf(stderr, "KVM: failed to get host capabilities\n");
-Should use error_report instead of fprintf(stderr,..
-> +        return 0;
-> +    }
-> +
-> +    /*
-> +     * Validate the returned size matches our structure size.
-> +     * The kernel validates that userspace provides sufficient size before
-> +     * the ioctl, and returns its own structure size. A mismatch indicates
-> +     * a version incompatibility between QEMU and the kernel.
-> +     */
-> +    if (host_compat.size != sizeof(host_compat)) 
-This error handling differs from the kernel code which can indeed return
-host_compat.size < sizeof(host_compat).
-> +        fprintf(stderr, "KVM: host_compat size mismatch (expected %zu, got %lu)\n",
-> +                sizeof(host_compat), host_compat.size);
-Error message can be more user friendly. Also your should use
-error_report instead of fprintf(stderr,..
-> +        return 0;
-> +    }
-
-> +
-> +    host_caps = host_compat.compat_capabilities;
-> +    return host_caps;
-Minor: Why not just return host_compat.compat_capabilities instead of
-this extra store
-> +}
-> +
-Minor: Minor comment about this function would be nice to have
-> +uint32_t kvm_ppc_host_compat_pvr(void)
-> +{
-> +    uint32_t compat_host_pvr = 0;
-> +    int cap_idx = 0;
-> +    target_ulong host_caps = kvmppc_get_compat_caps();
-> +
-> +    host_caps = host_caps & KVM_PPC_COMPAT_BITMASK;
-> +    if (host_caps) {
-> +        cap_idx = 63 - __builtin_ctzll(host_caps);
-you probably need to use clz64() instead of this.
-
-> +        switch (cap_idx) {
-> +        case KVM_PPC_COMPAT_CAP_P9_IDX:
-> +            compat_host_pvr = CPU_POWERPC_POWER9_DD22;
-> +            break;
-> +        case KVM_PPC_COMPAT_CAP_P10_IDX:
-> +            compat_host_pvr = CPU_POWERPC_POWER10_DD20;
-> +            break;
-> +        case KVM_PPC_COMPAT_CAP_P11_IDX:
-> +            compat_host_pvr = CPU_POWERPC_POWER11_DD20;
-> +            break;
-> +        default:
-> +            break;
-> +        }
-> +    }
-> +
-> +    return compat_host_pvr;
-> +}
-> +#endif /* TARGET_PPC64 */
-> +
->  PowerPCCPUClass *kvm_ppc_get_host_cpu_class(void)
->  {
->      uint32_t host_pvr = mfpvr();
-> diff --git a/target/ppc/kvm_ppc.h b/target/ppc/kvm_ppc.h
-> index 742881231e16..5970e7383740 100644
-> --- a/target/ppc/kvm_ppc.h
-> +++ b/target/ppc/kvm_ppc.h
-> @@ -81,6 +81,17 @@ bool kvmppc_supports_ail_3(void);
->  int kvmppc_enable_hwrng(void);
->  int kvmppc_put_books_sregs(PowerPCCPU *cpu);
->  PowerPCCPUClass *kvm_ppc_get_host_cpu_class(void);
-> +
-> +/*
-> + * Bit position indices for KVM_PPC_COMPAT_CAP_* capabilities.
-> + * These represent the result of (63 - bit_number) for each capability bit.
-> + * Used for identifying which compatibility mode is supported by the host.
-> + */
-> +#define KVM_PPC_COMPAT_CAP_P9_IDX   1  /* 63 - 62 */
-> +#define KVM_PPC_COMPAT_CAP_P10_IDX  2  /* 63 - 61 */
-> +#define KVM_PPC_COMPAT_CAP_P11_IDX  3  /* 63 - 60 */
-Can these be derived from KVM_PPC_COMPAT_CAP_POWERXX
-Also if these defines are only used in kvm_ppc_host_compat_pvr() then
-should be defined near to it.
-
-> +
-> +uint32_t kvm_ppc_host_compat_pvr(void);
->  void kvmppc_check_papr_resize_hpt(Error **errp);
->  int kvmppc_resize_hpt_prepare(PowerPCCPU *cpu, target_ulong flags, int shift);
->  int kvmppc_resize_hpt_commit(PowerPCCPU *cpu, target_ulong flags, int shift);
-> @@ -440,6 +451,11 @@ static inline PowerPCCPUClass *kvm_ppc_get_host_cpu_class(void)
->      return NULL;
->  }
->  
-> +static inline uint32_t kvm_ppc_host_compat_pvr(void)
-> +{
-> +    return 0;
-> +}
-> +
->  static inline void kvmppc_check_papr_resize_hpt(Error **errp)
->  {
->  }
-> -- 
-> 2.50.1 (Apple Git-155)
->
-
+diff --git a/qapi/machine.json b/qapi/machine.json
+index 685e4e29b8..777cfc81e1 100644
+--- a/qapi/machine.json
++++ b/qapi/machine.json
+@@ -1413,6 +1413,32 @@
+           }
+ }
+ 
++##
++# @SpMemDeviceInfo:
++#
++# sp-mem device state information
++#
++# @id: device's ID
++#
++# @addr: physical address, where device is mapped
++#
++# @size: size of memory that the device provides
++#
++# @node: NUMA proximity domain to which the device is assigned
++#
++# @memdev: memory backend linked with device
++#
++# Since: 11.1
++##
++{ 'struct': 'SpMemDeviceInfo',
++  'data': { '*id': 'str',
++            'addr': 'size',
++            'size': 'size',
++            'node': 'int',
++            'memdev': 'str'
++          }
++}
++
+ ##
+ # @MemoryDeviceInfoKind:
+ #
+@@ -1426,11 +1452,13 @@
+ #
+ # @hv-balloon: since 8.2.
+ #
++# @sp-mem: since 11.1.
++#
+ # Since: 2.1
+ ##
+ { 'enum': 'MemoryDeviceInfoKind',
+   'data': [ 'dimm', 'nvdimm', 'virtio-pmem', 'virtio-mem', 'sgx-epc',
+-            'hv-balloon' ] }
++            'hv-balloon', 'sp-mem' ] }
+ 
+ ##
+ # @PCDIMMDeviceInfoWrapper:
+@@ -1482,6 +1510,16 @@
+ { 'struct': 'HvBalloonDeviceInfoWrapper',
+   'data': { 'data': 'HvBalloonDeviceInfo' } }
+ 
++##
++# @SpMemDeviceInfoWrapper:
++#
++# @data: sp-mem device state information
++#
++# Since: 11.1
++##
++{ 'struct': 'SpMemDeviceInfoWrapper',
++  'data': { 'data': 'SpMemDeviceInfo' } }
++
+ ##
+ # @MemoryDeviceInfo:
+ #
+@@ -1499,7 +1537,8 @@
+             'virtio-pmem': 'VirtioPMEMDeviceInfoWrapper',
+             'virtio-mem': 'VirtioMEMDeviceInfoWrapper',
+             'sgx-epc': 'SgxEPCDeviceInfoWrapper',
+-            'hv-balloon': 'HvBalloonDeviceInfoWrapper'
++            'hv-balloon': 'HvBalloonDeviceInfoWrapper',
++            'sp-mem': 'SpMemDeviceInfoWrapper'
+           }
+ }
+ 
+diff --git a/hw/core/machine-hmp-cmds.c b/hw/core/machine-hmp-cmds.c
+index 46846f741a..686304bafa 100644
+--- a/hw/core/machine-hmp-cmds.c
++++ b/hw/core/machine-hmp-cmds.c
+@@ -279,6 +279,7 @@ void hmp_info_memory_devices(Monitor *mon, const QDict *qdict)
+     PCDIMMDeviceInfo *di;
+     SgxEPCDeviceInfo *se;
+     HvBalloonDeviceInfo *hi;
++    SpMemDeviceInfo *spmi;
+ 
+     for (info = info_list; info; info = info->next) {
+         value = info->value;
+@@ -350,6 +351,16 @@ void hmp_info_memory_devices(Monitor *mon, const QDict *qdict)
+                     monitor_printf(mon, "  memdev: %s\n", hi->memdev);
+                 }
+                 break;
++            case MEMORY_DEVICE_INFO_KIND_SP_MEM:
++                spmi = value->u.sp_mem.data;
++                monitor_printf(mon, "Memory device [%s]: \"%s\"\n",
++                               MemoryDeviceInfoKind_str(value->type),
++                               spmi->id ? spmi->id : "");
++                monitor_printf(mon, "  addr: 0x%" PRIx64 "\n", spmi->addr);
++                monitor_printf(mon, "  node: %" PRId64 "\n", spmi->node);
++                monitor_printf(mon, "  size: %" PRIu64 "\n", spmi->size);
++                monitor_printf(mon, "  memdev: %s\n", spmi->memdev);
++                break;
+             default:
+                 g_assert_not_reached();
+             }
+diff --git a/hw/mem/sp-mem.c b/hw/mem/sp-mem.c
+index d088222f54..962d0f937e 100644
+--- a/hw/mem/sp-mem.c
++++ b/hw/mem/sp-mem.c
+@@ -53,6 +53,24 @@ static MemoryRegion *sp_mem_get_memory_region(MemoryDeviceState *md,
+     return host_memory_backend_get_memory(spm->hostmem);
+ }
+ 
++static void sp_mem_fill_device_info(const MemoryDeviceState *md,
++                                    MemoryDeviceInfo *info)
++{
++    SpMemDeviceInfo *di = g_new0(SpMemDeviceInfo, 1);
++    SpMemDevice *spm = SP_MEM(md);
++    DeviceState *dev = DEVICE(md);
++
++    di->id = dev->id ? g_strdup(dev->id) : NULL;
++    di->addr = spm->addr;
++    di->size = memory_region_size(
++                   host_memory_backend_get_memory(spm->hostmem));
++    di->node = spm->node;
++    di->memdev = object_get_canonical_path(OBJECT(spm->hostmem));
++
++    info->u.sp_mem.data = di;
++    info->type = MEMORY_DEVICE_INFO_KIND_SP_MEM;
++}
++
+ static void sp_mem_realize(DeviceState *dev, Error **errp)
+ {
+     SpMemDevice *spm = SP_MEM(dev);
+@@ -91,6 +109,7 @@ static void sp_mem_class_init(ObjectClass *oc, const void *data)
+     mdc->set_addr            = sp_mem_set_addr;
+     mdc->get_memory_region   = sp_mem_get_memory_region;
+     mdc->get_plugged_size    = memory_device_get_region_size;
++    mdc->fill_device_info    = sp_mem_fill_device_info;
+ }
+ 
+ static const TypeInfo sp_mem_types[] = {
 -- 
-Cheers
-~ Vaibhav
+2.34.1
+
 
