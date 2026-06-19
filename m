@@ -4,101 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D2B0CD4F26
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Jun 2026 13:05:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B67F3CD98F2
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Jun 2026 13:05:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1waYuH-0003TJ-Ow; Fri, 19 Jun 2026 09:05:13 -0400
+	id 1waYup-0003wq-9V; Fri, 19 Jun 2026 09:05:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1waYuD-0003LC-88
- for qemu-devel@nongnu.org; Fri, 19 Jun 2026 09:05:09 -0400
-Received: from mail-yx1-xb12b.google.com ([2607:f8b0:4864:20::b12b])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1waYun-0003um-HQ
+ for qemu-devel@nongnu.org; Fri, 19 Jun 2026 09:05:45 -0400
+Received: from mail-ej1-x62b.google.com ([2a00:1450:4864:20::62b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1waYuA-0003Mo-Iu
- for qemu-devel@nongnu.org; Fri, 19 Jun 2026 09:05:08 -0400
-Received: by mail-yx1-xb12b.google.com with SMTP id
- 956f58d0204a3-660e9fef1d4so2206912d50.1
- for <qemu-devel@nongnu.org>; Fri, 19 Jun 2026 06:05:06 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1781874305; cv=none;
- d=google.com; s=arc-20240605;
- b=XW1OvwOnj4Sf6CqYJS9X0zBEaDnPBbf0fcT//6b0ItU6/i91srnWf8xtl6ywb226TR
- Q4Qob09FTLdSx1ynfuwobIjDN6CMlQHIsGQ6ilzmAWnTq6o3K19W6WQlSaTXnQL/6mK4
- vx8awgLXQlnoFNIjQXjTfLw6JDUinIGIt3arwWj91CoG3/T5Y2Y3sx2p1qc9hzPdzWsc
- Du9MP4iAj4xcs9s+pb50mCiucZwVeqHeKEIvuNM/GoydTk/OXPU8Esn7y8cFmd8LDKg3
- +PE4rYO9NUPA4k/esXCsbmIVkA62qw6ZzQsS6efZnpVuIPFoZy2ji/De9XHVpKl1nHbE
- mRIA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=RqlRoDWHmLfvS9rD6ZtcTX1mUk0I/tN/zqNz77rFEVo=;
- fh=/ftcwOPYeEIhzseC7WF42kR+xVR/IJiWpLC1+A7SOWQ=;
- b=eQ6W4m0MCVx4Ion15uDsttKditl/rWvY89EinPhayVVnEIcxGg76lKX/tq9FMjYZHX
- k02CjCEFh6bmUkP/0xGqoO5pB3Kpl9RZvWydr84SjltCG9v5jhBVpKtbj0BpjliOw04+
- tcAqyyzqMbgw2vW44fi0Kx+i/3U0zoXmy+eXUdsQ6m0xtlLZFgHS09BoKYnh2Jqs5yLC
- 0hVoWw4eLcVongZWdK/NwD9Irk3JYO4zLFQwYTfU75TEro2k7dz+Vy+1dQinAZByNnRo
- Ox1kZEW4/OeT1X+tBC4MYORsrw7VWi6Ui9AF/cD1FGtdXKbExC3RAZ3lPoSp+Kj8Z/DL
- mzew==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1waYuj-0003PC-Te
+ for qemu-devel@nongnu.org; Fri, 19 Jun 2026 09:05:45 -0400
+Received: by mail-ej1-x62b.google.com with SMTP id
+ a640c23a62f3a-c07a6527453so239835966b.0
+ for <qemu-devel@nongnu.org>; Fri, 19 Jun 2026 06:05:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1781874305; x=1782479105; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=RqlRoDWHmLfvS9rD6ZtcTX1mUk0I/tN/zqNz77rFEVo=;
- b=CxVB90Ak/KpaAt3KwXjS9CRJQRtbBM98MdBvVfNWwrAdLKXRS5p+GvAC/oUpalNC5B
- TV5NzYCzYlLrRg0Vu0hZCNj+Tcj4kb9Tq/jdgkIDulPk/vSj77+QIH4iVnbpCMEKpquk
- mMOYHZI28zL8OBS20d8+CoL+iEk7LDz56I32dRacYF83OK9yDveRm+37D4f2lCSKwu0H
- 6wfZR4w6288HHJzA/fXJz7PV7J6w7ZPN/iW0sHoYoVAz+0LTZ546p6tN548Kcw60Ngpi
- fEr77iMA7hZ1PBh90NeXbBfUEBlV3Ti83TlLvKr3WzdLnCXNZlRqSOmQjJV+jvt5jusS
- fl9A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781874305; x=1782479105;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1781874340; x=1782479140; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=RqlRoDWHmLfvS9rD6ZtcTX1mUk0I/tN/zqNz77rFEVo=;
- b=mys9raOLVwOMsgWJ2M0N61wmWRh5EqTAKHaTQqunLqYKS7O86Bw5IM6t41zFFKTvZs
- DMgR+ag3uu2BcmKA8DWmSTlFHYKCcPFAq1Pq1djWcqo4VL7JzmtDrcR5oiVh8mZ7BjWT
- CgsCMxZFHd5KQURdu3ykKnio7/M89Pa4xuTK+oyNvBIB3dgnp1Rn6Pmxx9sL9sEFjw7y
- skdOjT33onjEw75QPGu+cT0Kejv1KKRWEG2B68kayv/xk+VSYoYQDRbd6whR0ZdVgDm4
- OY+cA8kLytXJxEA5h25+DizSwgoEsvXI5eyEdRju/8Ta+VN3GGVbrldmz7DnN9S+m8Th
- bdFg==
-X-Gm-Message-State: AOJu0YziF7t0WLrfLic2qVVjiFRN4wX67aIS2O94YhKEaFMlpN+MLfHh
- o5WbpwU/cWQo+bbOkWimPg/GQXc60/BEfltxZ/+cy9d+8CtwGTUtfBXH3lOtsbVZba4AuyLeLdS
- GG2M8bDv/dAphIvVsP9UvCiHITRFeCmeP0UfiPSQoHg==
-X-Gm-Gg: AfdE7cnNduwTh4UONhx5gU1LbbCCKG+cibD42NLHXzEgLf5YG9LkmGUrkdM9Cyv05V0
- imlUTViDVrIiZOTNLzG468Hs64W4wPIbjO5Gxii/n3MJJ/TGhI03rjgp+bwYas+Nk3Shc8Gon0I
- xhnuEQ5wttP4TwUEyawSYIggeq/yhaL611GHCyEhFYniok9BP7A6eelnoB2B4iPUn9POohCjx9K
- Vk8CL+rINFGybiWlmidJXK7g313HH/R+jmI1Y3ntqoCssABbFiDROLv3m5JUl/LmWAee/JCiNPs
- PWxD/GaRdNNk8OOS7QqVLKlEA9eAVYjz67vs7irgtQuUpfRZm4A/PaCQ
-X-Received: by 2002:a05:690e:43c5:b0:660:a41d:d156 with SMTP id
- 956f58d0204a3-662fca03b57mr2625501d50.35.1781874304907; Fri, 19 Jun 2026
- 06:05:04 -0700 (PDT)
+ bh=SE+r4wGFd7f55RWtkYqXbt9/MkUiYQSeM/Vm+Litt3k=;
+ b=NpNxy9in3sEultNtVNsnxkYIhnoxAyCUM3Z7k1EyyNUzfuh3pbakoca+0b+smB+Pwh
+ mfmOPEd/myxbmQfm7Jljw5QftLNqjJ2/IhJgikefcTc7LbXCQiGMfurXh8FIjZamflmK
+ O8lK8rWOHyxh97t0ogXyOBNMleezN8pBJEDEyHwfBT/nqFmuyveJAyiJyXTyd2YhT0/7
+ DlLGQAVpPODWd2L/j2cN3KJ+I/rWh6cty04HXIYvQtgct5f6Rmeb+PX8he2tMYxPCoKL
+ p4pCzNQYZrO7PPWpg2Z7ZOUf+9aAGIOOjwLTAC8+1emNHv2Xc2kdpBuhlYq+qnKFApKu
+ 6QLA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1781874340; x=1782479140;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=SE+r4wGFd7f55RWtkYqXbt9/MkUiYQSeM/Vm+Litt3k=;
+ b=gNPixfuoZDmdD/vkCNkvr0GzbCgpJoeT9DeBAWkYSRxajnc5h1XkXccnl029bQt5LS
+ oBCUn4iYbjmKhLpXH59OW5nwUEg+t4V+DwX0pQsJREMHoZJRTczYkfgssxltIDXYfYXp
+ MT80n14pngs9gr6W4sNhqy/mVc8lZq7uDVKhroLTUrspBm1ddYNm2C9gN6PhBfK3GyBK
+ 5i6/0S354SluJskTo//KkKLOEW0VR+Ibfc1N0Pelm4/UmsyHLMIUCRjnS1z+O1zPSZek
+ /8MQgtk8J9kHbSmzpI6UnoMTCAVOkbFsqYbWrrgZipTgA3NP05PgGVGVNFFlDKaoflB1
+ FLAw==
+X-Gm-Message-State: AOJu0Yw1nPa8KEX29UydamDQI6r4TAGsaZ9nSvaZBQRhF/1Fl39QnYDD
+ A8R/3muWdOsyFGOeLvLnBHv1bufYQ0VM5KiK27ZgrGhD/wC4WWSp6jriqzDrbSaHh0U=
+X-Gm-Gg: AfdE7cn/UItnaqOvELc19SDjB5e5QdBYQCAKPxmEz2jM3kbjR7zfZm8mMN2FFq0cnYU
+ eKjFsgHCzlAtrbmcY5RyaN1cxRoXpdKA8gM+vRxRIunUrPYDuk/4Pjjn4tUSnREW884zxUsdzvO
+ PTIPMCXEgiO90s0Taphv0lJP/H2vrh44cKFJ7q+a0RhEYkC1us7h/K1xfr0eMHHv+uJtR1awnOW
+ skGl37Eotgckd52EXBDMLYu8t6yA3aA/8C/5BV+5vn/mycTjUxFjMPRS6+ZN+bi+TQfJYgtxvCh
+ MOoxKzpp3NQzh4QuFZtypc07lUrsXJbZ/MNL++wspJ+7GDG8KCJmonZ+pDJ9p5tkobKlreWtfKR
+ y5ai6elu8q2erdzTFCFcGTVGOevjt74mU9K6qemfiomG9v9UZaYYI8D3F1QZMQ2hRc6qHdbWZ7A
+ dEQ+Ecit3sKeZbWo65NkxMeYg=
+X-Received: by 2002:a17:907:94c2:b0:c05:84b7:550d with SMTP id
+ a640c23a62f3a-c097ceba8f0mr182145466b.43.1781874340116; 
+ Fri, 19 Jun 2026 06:05:40 -0700 (PDT)
+Received: from draig.lan ([185.124.0.195]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-4650b67a253sm8064924f8f.23.2026.06.19.06.05.38
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 19 Jun 2026 06:05:38 -0700 (PDT)
+Received: from draig.lan (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id A1FC85F94E;
+ Fri, 19 Jun 2026 14:05:37 +0100 (BST)
+From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Alexander Graf <agraf@csgraf.de>,
+ Mohamed Mediouni <mohamed@unpredictable.fr>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Pedro Barbuda <pbarbuda@microsoft.com>,
+ Jamin Lin <jamin_lin@aspeedtech.com>,
+ Steven Lee <steven_lee@aspeedtech.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>,
+ Joel Stanley <joel@jms.id.au>, qemu-arm@nongnu.org,
+ Troy Lee <leetroy@gmail.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
+ Kane Chen <kane_chen@aspeedtech.com>, Tyrone Ting <kfting@nuvoton.com>,
+ Peter Maydell <peter.maydell@linaro.org>, kvm@vger.kernel.org,
+ Hao Wu <wuhaotsh@google.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+Subject: [PATCH v8 4/7] target/arm: ensure we create the wxft_timer for all
+ modes
+Date: Fri, 19 Jun 2026 14:05:33 +0100
+Message-ID: <20260619130537.820184-5-alex.bennee@linaro.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260619130537.820184-1-alex.bennee@linaro.org>
+References: <20260619130537.820184-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
-References: <20260618040718.572950-1-richard.henderson@linaro.org>
- <20260618040718.572950-7-richard.henderson@linaro.org>
-In-Reply-To: <20260618040718.572950-7-richard.henderson@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 19 Jun 2026 14:04:52 +0100
-X-Gm-Features: AVVi8Ccwq7_qgOIYmBDgx1ADH5-ZqL-Rl0iAFLFGx0rj7ZVwLPBhfzWMPlfEK2Q
-Message-ID: <CAFEAcA9n63_5MVVx=QRkryrS+FQW3hiQd78yD_0MWEXfC17S+A@mail.gmail.com>
-Subject: Re: [PATCH v2 6/8] target/arm: Rename isar_feature_aa64_sve_aes
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12b;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12b.google.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::62b;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,17 +116,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 18 Jun 2026 at 05:07, Richard Henderson
-<richard.henderson@linaro.org> wrote:
->
-> Rename from isar_feature_aa64_sve2_aes to match
-> the feature name: FEAT_SVE_AES.
->
-> Suggested-by: Peter Maydell <peter.maydell@linaro.org>
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+We don't want to just use it for timeouts as we will calculate which
+will comes first. Remove the wxft feature test in favour of the
+broader architecture checks.
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 
-thanks
--- PMM
+---
+v8
+  - new commit
+---
+ target/arm/cpu.h | 2 +-
+ target/arm/cpu.c | 9 ++++++++-
+ 2 files changed, 9 insertions(+), 2 deletions(-)
+
+diff --git a/target/arm/cpu.h b/target/arm/cpu.h
+index 31a5567c951..8aa7437a397 100644
+--- a/target/arm/cpu.h
++++ b/target/arm/cpu.h
+@@ -966,7 +966,7 @@ struct ArchCPU {
+      * pmu_op_finish() - it does not need other handling during migration
+      */
+     QEMUTimer *pmu_timer;
+-    /* Timer used for WFxT timeouts */
++    /* Timer used for WFxT timeouts OR event stream events */
+     QEMUTimer *wfxt_timer;
+ 
+     /* GPIO outputs for generic timer */
+diff --git a/target/arm/cpu.c b/target/arm/cpu.c
+index 597e0626e7f..61945b6e6cc 100644
+--- a/target/arm/cpu.c
++++ b/target/arm/cpu.c
+@@ -2269,7 +2269,14 @@ static void arm_cpu_realizefn(DeviceState *dev, Error **errp)
+     }
+ 
+ #ifndef CONFIG_USER_ONLY
+-    if (tcg_enabled() && cpu_isar_feature(aa64_wfxt, cpu)) {
++    /*
++     * We use the wfxt_timer for timeouts and event stream so we
++     * enable from V6K up. There is no event stream on M-profile.
++     */
++    if (tcg_enabled() &&
++        (arm_feature(env, ARM_FEATURE_V6K) ||
++         arm_feature(env, ARM_FEATURE_V7) ||
++         arm_feature(env, ARM_FEATURE_V8))) {
+         cpu->wfxt_timer = timer_new_ns(QEMU_CLOCK_VIRTUAL,
+                                        arm_wfxt_timer_cb, cpu);
+     }
+-- 
+2.47.3
+
 
