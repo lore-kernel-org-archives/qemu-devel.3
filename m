@@ -4,91 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC46ACD4F26
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Jun 2026 13:15:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7C6CCD4F26
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Jun 2026 13:19:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1waZ3c-0000ph-EZ; Fri, 19 Jun 2026 09:14:52 -0400
+	id 1waZ7I-0002gk-PK; Fri, 19 Jun 2026 09:18:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1waZ3X-0000pI-Ql
- for qemu-devel@nongnu.org; Fri, 19 Jun 2026 09:14:47 -0400
-Received: from mail-yx1-xb134.google.com ([2607:f8b0:4864:20::b134])
+ id 1waZ7H-0002gN-ON
+ for qemu-devel@nongnu.org; Fri, 19 Jun 2026 09:18:39 -0400
+Received: from mail-yx1-xb12f.google.com ([2607:f8b0:4864:20::b12f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1waZ3W-0006EJ-EY
- for qemu-devel@nongnu.org; Fri, 19 Jun 2026 09:14:47 -0400
-Received: by mail-yx1-xb134.google.com with SMTP id
- 956f58d0204a3-662bb8b1f93so2065642d50.1
- for <qemu-devel@nongnu.org>; Fri, 19 Jun 2026 06:14:45 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1781874885; cv=none;
+ id 1waZ7F-00080Z-5P
+ for qemu-devel@nongnu.org; Fri, 19 Jun 2026 09:18:39 -0400
+Received: by mail-yx1-xb12f.google.com with SMTP id
+ 956f58d0204a3-662bf1dab83so2557360d50.3
+ for <qemu-devel@nongnu.org>; Fri, 19 Jun 2026 06:18:36 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1781875116; cv=none;
  d=google.com; s=arc-20240605;
- b=Hg5aGdRKa7wslNTBa4cVN8p6L5HwSEnFJTz/PcKOGVOxS0me8/u4uFt+atz2zEgxhy
- EIeqm56dj3d8A9TFBHO2Eq2ZYaPqqWnMo1nPGiwUPQJQJYgOmCj7c8Gdp0FozsTFG1qv
- urwPIlJjdbP6Ozn83N7EJUAtSlMDhCnedne+r0JmR0WfiZbV3Ez5QMarj0UkKywB3n5X
- wGn2KYEUqHhzIZPjJUyX5WAXuHMaHKEwemCZOq5Gax5qiRfHpYsUcQ5MHtpjjS3B3T+i
- GLy/0jWuUI6OKvyXksEcdenaDVGE0oVuYr1OsWAghaQ2PnpGhhRipfWNduFT5AyEVrIl
- Vv4A==
+ b=AFngmXDRNdVTAyCdE7VR/i5DuC9mtYLHflIPMf4pE9fK5UtrfToubueFcdQCo/wEl8
+ UgosLR7i24alUScInm4qJ6C8sHa4LrYc9YTqLxRKQ6sgEMRs2vgEvJOfw1bxrr5cnvTE
+ 7Zzx0JvM/3sF7DRXbM5FkLfpoYaiJSplxvJCTmjH35aNlfcG7GJD5rtlqzvMxlXVFubi
+ MEiixt+ZNH/uPRI74aTfAZWS9FKV4fLFBTQLalzJdWVeGtIjprrZgeYbReWvHBw5pF64
+ G2ZSngNB/QvqnBrEA+m2KtBHNBfqHmSURGp0OJBKy0TGM0Ho6XU0dWkcWCMIWE3OT+43
+ aeEA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=JjEqOBx4XBRQmpZWps6rk9/oRg3CowveChr0GB1L2fs=;
+ bh=EmEY+cjbJNIBkK9rxxbzV7Ux6b6JpIZ3d2sXR3Gm4OQ=;
  fh=xI+f3cV0+eCVjWmeQZ75vTRDgvX17Dd5Ehccp5/eVJY=;
- b=EJuskLGrvM3dbx5q2DkGweLB2t0J17TrxdfhTBPKEKzDrEIc+CFggMsu6BmAeT/CS+
- DA7x7ke+Jvg4B1tKil63tvxoctrFH/dVMjpABXoGsmcV15DFx6Acz6iyZXg0F54HkkvY
- FpHMEe8a0E7/9c1J+4yM+eEf8jMJ3of0oh7lhcnQxDDH5wKlMP6/oVF3ivYfcnAKS19T
- eRr6wrHQ+IPzZ/7m7jYTVFOqBqYq12JFGe3egqkb5+4aGMmPxcM0S36U9LmuqOKT8SZ2
- aj+Evo5M42Vk+gC4DdXYiwRcfjwrjq3hDkgGctbW0NYsf/BIMRG7TAQu7ORqj5bhI6e5
- Iwdw==; darn=nongnu.org
+ b=JT0PGDWeSUAArmcuEI1RRbnZLa/m6WkG3WsxTVzjBPyGmgGz2OejFDhhQMBUW0IOZZ
+ Anz7TftX4YLsMBYnvbmwI/du5yrrO6ptJxvH0guXMQeNLiAzIqMuaR6sY45iod6WtA5N
+ ZxM+nzeIo1fMK1wqpUkP0KQM+ChvyJdnyi42Hh8wkS+I8DXe63n5rhdTiGbVRL54cCrk
+ n9Q6Y5Eg7dyCSsY9zVhKJB8PN5RkeY2eLyv9LfQMEHXa6nYh+cq/5RK75G25lWd7jld5
+ OfhkaHXMqSlPY7vsep5GabOtOYbDrn895wiABqpVzc6CI72mLUsLEYHYttvZggiB/yQt
+ IySA==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1781874885; x=1782479685; darn=nongnu.org;
+ d=linaro.org; s=google; t=1781875116; x=1782479916; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=JjEqOBx4XBRQmpZWps6rk9/oRg3CowveChr0GB1L2fs=;
- b=nb6qDi81L2pKt+RpRRHOyyuXyag1X/eE3yPmormzyelk7xWigNUNahq0SUOX8A/xbr
- lWaYC8mi7PdZ1ushPqjQPj2S0GN0yhslH99EJtZOMCaCw+EYdcHcVh97VyMXKZ5OLd9f
- tpdPMOfYZc9aqoyztUewJ2NnPOsbiazLoCuxGqe9Y+G1vUaknHDQZMG6OWbQVqE0fbzR
- 5+WBPyktFBGHKynlBo/yPmtRTJ6binpty5Jdwq0E5vzGTKaithQwX7gbjyIuy42y9G1o
- J7TL7s8Xxp+3GUg/PBugS2wN6XvGbYHYxpE632+jOyaAd8lPluh0yF4y7m8BLlRrU5Ka
- W5Uw==
+ bh=EmEY+cjbJNIBkK9rxxbzV7Ux6b6JpIZ3d2sXR3Gm4OQ=;
+ b=EtorxWMBeWwR9o0NiesfehG1x+7IogrxwNr7hOVJUinVzWnoj5r4vVVbVqYhjarCQa
+ o6GQ9s9+ExLVn+7+WZ02gA7z3JeLF3nat8sXSI+eW+WwS5LYU9CuVt5i6ARvOQzYgIh4
+ 6deCJao6IqhL9DfXprxmQnSqifrcPotaDa1kBfmGpOPmK1I58nrRdjJJ8SHBMeSzR/e4
+ qAwOlzAI4DvjIsBGZ2rxiyewnHVfowekmS1Hta1gqv0wg18V4ViNd7KNg6E3CTRIQK63
+ PMTLDRebEh0eV/EiLo8woHIWTcG20TEzxoaWm3rV1x/4W5c+iSxRcZaF67Z2R0yTAYx6
+ gKMA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781874885; x=1782479685;
+ d=1e100.net; s=20251104; t=1781875116; x=1782479916;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=JjEqOBx4XBRQmpZWps6rk9/oRg3CowveChr0GB1L2fs=;
- b=fSTRI+K/GPTFsUP7Sb8GIaVyCmukNiWV00CThew+bZM5OjVho/JMgoNJjYz/geHuLm
- To+6+dSlxthLBRYSt1ot1cjOdbGzcoskppFR8tprmDjog7F10bmoC5Af+q/6FJukHnbi
- 8sKmIOA/SlVOaw+oaFV62XsYLqKC9UBml+EPAq/xdm/ZCuWLooJgUHYsTgOkm4dEdF6R
- fXz29CP8mQOFL7Po1TQp8jEdnnsAU9V2r3mDNlWryjJAfTdJWfsm7yGA3zV5baKNwaCe
- AJa/MSjEN8Y8xeiAT5nBSQOaub45X4cr3OTH/7PMKiwsZM3OmGKYHqtZkVLtHEB8GFqG
- wyqg==
-X-Gm-Message-State: AOJu0YxPE0+BPPpFt3RSnNcnWdYXGelH1+mu+PF4g/3CUyEmhClTnXi5
- DFHtZSBmzqWA1FmFwc1cV0HinA/ViwfqCf9qh2jOm1oooEgIsM/nYKodER/cYl/1G/xCGoDZUKV
- GDe49XAz0R5MWojGhns1vjoFIPGgAqFivRfPJkDb1kQ==
-X-Gm-Gg: AfdE7cn1ddGDNn/1PC9xg71h6hKqao7panPQFHDmbx5K8fY2OCpnJI6AyjZ+EjcEwsJ
- Lcexrnqu7HoU3zltn25rV5HSQ9s8dgpWJIN/MKFxNhy42T/tz9pq1fEJyMJXNMvgvhFgUQPoXcS
- ZjmURTQr4Wag8yRQRRlLumHeJsQkG9ae1QHiHj6mH4DGs42DXNILBKJL+Y3i91ef6nigTFlMVDj
- YA0gqvI9fwBRfril665xWBY8bZIcK64xN+zbOHu7prdEu25EFTob0nqAiRp6EUPPJKLTnjamm83
- irBJCTvVupizDq8jdJ8OtOjHMWUaLThhQyC55i2sWzvXWg8zQcaZSDS1
-X-Received: by 2002:a05:690e:12c9:b0:660:4090:90e8 with SMTP id
- 956f58d0204a3-663030d63cdmr1999344d50.29.1781874885105; Fri, 19 Jun 2026
- 06:14:45 -0700 (PDT)
+ bh=EmEY+cjbJNIBkK9rxxbzV7Ux6b6JpIZ3d2sXR3Gm4OQ=;
+ b=ZZ9ehbBqUA3aDzwelfybm5BV5cMroh+CKcghppm766GqLdOK/YcFUfTyV6KIb7ZIhY
+ nZNiVOk76Y1YD2z02FA9FxpKsr2GcK30cWwMteTQOKwKC3sQ83KZ/w73BMuRla9XVNUI
+ b+YTm289XVy11LLq9dfVF2i60BejHL3G/L8WQwvCD0Yytzqr3U0R29Knl06pUy1WWeD9
+ zRYEqc8qYG4RdEn5kM7qRITW2GFWIdDY9eekfLpNc6QVSxQafwMiS/3zQpK9LWdbsfQp
+ cWPpqUazMgmmdJoYFroiUvenZLCWIi0I6lHEK4rZJVMrExBnrOjiaSvJr5sigNJ/hSvd
+ DNoA==
+X-Gm-Message-State: AOJu0YyU/Z/fI8TbRvEghXDr0HFEPK7l/g6r0ow3+RU8y4V7hTDk4mRR
+ Ogv77U32120yCke0Enqs5aUUhK90h7UbY0sD9/2afiuUBwxc75MfIY0W13YAIo72BTl2Atyuogb
+ vB8q3+4EzHBn1lvCfY0RdIHRI3sa3rv+UPCGpZsNCqQ==
+X-Gm-Gg: AfdE7ckZmZ7rXDuGpaxWSDL123s9IFS477/LCRg16SHqb/OkZayxJVYoqdlN6NUUxRp
+ Q8/MkiffZUa12N6xc+rauqKRYatWecRnws9efb8tQMsmaIFVmBB+fQCH+AZpHy20B9eFF+22tBY
+ x+3eHzX9e8/OfkSAJ2JrW0rxIoZPXj1jmx37cbjIQ5tHe9BNovvMKKHF3bzlfTKcVg81U+Y33/j
+ HrHJXK312yH5L8F4zj4CoubNtG9az1wnhrEDgyJ9RNt5xroaMF60wocMtvP5Mwx2HiS1QYNloQz
+ msgZsNCPEofiZgxDRnUNqHnKbFW92lzFABbP/JqvTxU4C4ZX6Q0mMO5I
+X-Received: by 2002:a05:690e:11ce:b0:660:d512:46dc with SMTP id
+ 956f58d0204a3-662fcbb0086mr4092145d50.57.1781875115603; Fri, 19 Jun 2026
+ 06:18:35 -0700 (PDT)
 MIME-Version: 1.0
 References: <20260619130537.820184-1-alex.bennee@linaro.org>
- <20260619130537.820184-4-alex.bennee@linaro.org>
-In-Reply-To: <20260619130537.820184-4-alex.bennee@linaro.org>
+ <20260619130537.820184-5-alex.bennee@linaro.org>
+In-Reply-To: <20260619130537.820184-5-alex.bennee@linaro.org>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 19 Jun 2026 14:14:32 +0100
-X-Gm-Features: AVVi8Cdq18FzEkc_gHexW-klQUyn9uNvwzjyRrER_rbWwczZhnhBDP5u_klSlxY
-Message-ID: <CAFEAcA_rnV3Fq0Qp_XfNRn9p970iAXzeNMD9VJiE3sW+PQ6vVA@mail.gmail.com>
-Subject: Re: [PATCH v8 3/7] target/arm: do not clear halting reason in
- has_work helper
+Date: Fri, 19 Jun 2026 14:18:23 +0100
+X-Gm-Features: AVVi8Cf-7SRrv9WiiLBvbBYNyVc4TY8I_uOR2bV6pZJYEsQtlTzN9wdxrxv20oA
+Message-ID: <CAFEAcA8QWor1P210Td1wHeot2npzga5_XfonNMpPSZeviYCTOQ@mail.gmail.com>
+Subject: Re: [PATCH v8 4/7] target/arm: ensure we create the wxft_timer for
+ all modes
 To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
 Cc: qemu-devel@nongnu.org, Alexander Graf <agraf@csgraf.de>, 
  Mohamed Mediouni <mohamed@unpredictable.fr>,
@@ -103,15 +103,15 @@ Cc: qemu-devel@nongnu.org, Alexander Graf <agraf@csgraf.de>,
  kvm@vger.kernel.org, Hao Wu <wuhaotsh@google.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b134;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb134.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -130,21 +130,64 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On Fri, 19 Jun 2026 at 14:05, Alex Benn=C3=A9e <alex.bennee@linaro.org> wro=
 te:
 >
-> The helper will be called multiple times as we exit a loop and until
-> we actually restart (via arm_cpu_exec_halt) we should leave the
-> condition the same.
+> We don't want to just use it for timeouts as we will calculate which
+> will comes first. Remove the wxft feature test in favour of the
+> broader architecture checks.
 >
-> Fixes: 6fd2fcdc61b (target/arm: teach arm_cpu_has_work about halting reas=
-ons)
 > Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
-> ---
->  include/hw/core/sysemu-cpu-ops.h | 3 +++
->  target/arm/cpu.c                 | 4 ++--
->  2 files changed, 5 insertions(+), 2 deletions(-)
 >
+> ---
+> v8
+>   - new commit
+> ---
+>  target/arm/cpu.h | 2 +-
+>  target/arm/cpu.c | 9 ++++++++-
+>  2 files changed, 9 insertions(+), 2 deletions(-)
+>
+> diff --git a/target/arm/cpu.h b/target/arm/cpu.h
+> index 31a5567c951..8aa7437a397 100644
+> --- a/target/arm/cpu.h
+> +++ b/target/arm/cpu.h
+> @@ -966,7 +966,7 @@ struct ArchCPU {
+>       * pmu_op_finish() - it does not need other handling during migratio=
+n
+>       */
+>      QEMUTimer *pmu_timer;
+> -    /* Timer used for WFxT timeouts */
+> +    /* Timer used for WFxT timeouts OR event stream events */
+>      QEMUTimer *wfxt_timer;
+>
+>      /* GPIO outputs for generic timer */
+> diff --git a/target/arm/cpu.c b/target/arm/cpu.c
+> index 597e0626e7f..61945b6e6cc 100644
+> --- a/target/arm/cpu.c
+> +++ b/target/arm/cpu.c
+> @@ -2269,7 +2269,14 @@ static void arm_cpu_realizefn(DeviceState *dev, Er=
+ror **errp)
+>      }
+>
+>  #ifndef CONFIG_USER_ONLY
+> -    if (tcg_enabled() && cpu_isar_feature(aa64_wfxt, cpu)) {
+> +    /*
+> +     * We use the wfxt_timer for timeouts and event stream so we
+> +     * enable from V6K up. There is no event stream on M-profile.
+> +     */
+> +    if (tcg_enabled() &&
+> +        (arm_feature(env, ARM_FEATURE_V6K) ||
+> +         arm_feature(env, ARM_FEATURE_V7) ||
+> +         arm_feature(env, ARM_FEATURE_V8))) {
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+This code runs after arm_cpu_propagate_feature_implications()
+(which happens at end of instance-init), so you can rely on
+the usual "feature X implies feature Y" stuff being true, and
+just check ARM_FEATURE_V6K -- that is set for anything A or R
+profile that's v6k and up.
 
-thanks
+>          cpu->wfxt_timer =3D timer_new_ns(QEMU_CLOCK_VIRTUAL,
+>                                         arm_wfxt_timer_cb, cpu);
+>      }
+> --
+> 2.47.3
+
 -- PMM
 
