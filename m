@@ -4,34 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 469DECD98F2
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Jun 2026 18:02:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D09B2CD98F2
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Jun 2026 18:03:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wadXj-0000Zt-OW; Fri, 19 Jun 2026 14:02:15 -0400
+	id 1wadY3-0000bn-E8; Fri, 19 Jun 2026 14:02:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <polina.vishneva@virtuozzo.com>)
- id 1wadXh-0000Zi-Mc
- for qemu-devel@nongnu.org; Fri, 19 Jun 2026 14:02:14 -0400
+ id 1wadY0-0000bV-V9
+ for qemu-devel@nongnu.org; Fri, 19 Jun 2026 14:02:32 -0400
 Received: from relay.virtuozzo.com ([130.117.225.111])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <polina.vishneva@virtuozzo.com>)
- id 1wadXg-00043v-3g
- for qemu-devel@nongnu.org; Fri, 19 Jun 2026 14:02:13 -0400
+ id 1wadXz-0004Ab-7N
+ for qemu-devel@nongnu.org; Fri, 19 Jun 2026 14:02:32 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=virtuozzo.com; s=relay; h=MIME-Version:Message-ID:Date:Subject:From:
- Content-Type; bh=zR0/Pr6K9hRY8EgWjK7cQ5mccChJkum7ALRzOfw/1DE=; b=EJrQodWr3i8W
- f30F0YC+dRg9Geo6N0xiXPSTE4LEXnSbiluEEdmWquN7udHmjONhEo68Q1U2mwJSVg2LVMMcAopm2
- BALX93PHaKsO+6/weWzD8bEDvsX0Z+fzaf2UFz2GhZJjRh+JcjONUWq/ublKLMu/0/Tsc4bA1nd5f
- parVhpIMw5r/kq3c5I0E2MpTiRrW25HsSrty4BadSSnIBbQIeE+Mil4z3Ik00P9IuCtDghdYOogyQ
- BimJpdtyjJU6PF0eW5XcAStuX5hzIwMfwI2SVTRbbLqdiiu7VtVS/CzHYlBWiZFrf/vW/e9OgpPdm
- oQ26AnFNt/5OgHn+0mMHoA==;
+ Content-Type; bh=DjOyqQnJ6RMF1XS8ej1SAjvRTDMFV0LbW14WnnJ9zz4=; b=TkZS0R/4A7W9
+ zAmcGichE1hZL5uof+TzczCsNCc15E9H9d9vef7sSh99nFns0uQOYA0sn8qD0fUQx8eSrSXoY0Pbp
+ ck86GxsuUxd0wzDQrK7AxmqsY+3NAmzR1eddoelHiN+XbAIjXxRIoLJYeK98pJ5PqGzIPMjBaVJVU
+ VZaIxldl/W1uwN2rthjjX6ChD8nSj1XmsmDFLGKlCPTBrG4WUBgiLKdzmHeFRdS9CzzKm/Yek29Wz
+ bn/vB0cnejuAOTN3mvVlhjGQe6yR7QsxuAjMgP0Ty9RIO+YTL8i5LJSP/I5Ssg/y3vmDablyBLbTE
+ ZMENYNmyt8HzhI6HL4ZSQQ==;
 Received: from ch-vpn.virtuozzo.com ([130.117.225.6] helo=mami)
  by relay.virtuozzo.com with esmtp (Exim 4.96)
- (envelope-from <polina.vishneva@virtuozzo.com>) id 1wadWz-001Gyc-16;
- Fri, 19 Jun 2026 20:02:01 +0200
+ (envelope-from <polina.vishneva@virtuozzo.com>) id 1wadXM-001Gyc-2U;
+ Fri, 19 Jun 2026 20:02:24 +0200
 From: Polina Vishneva <polina.vishneva@virtuozzo.com>
 To: qemu-devel@nongnu.org
 Cc: Polina Vishneva <polina.vishneva@virtuozzo.com>,
@@ -44,10 +44,13 @@ Cc: Polina Vishneva <polina.vishneva@virtuozzo.com>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  "Denis V . Lunev" <den@virtuozzo.com>,
  Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
-Subject: [PATCH 0/4] qga: Add vsock-listen support on Windows
-Date: Fri, 19 Jun 2026 20:00:18 +0200
-Message-ID: <20260619180121.2982356-1-polina.vishneva@virtuozzo.com>
+Subject: [PATCH 1/4] include/system: Add vio_sockets.h with AF_VSOCK support
+ on Windows
+Date: Fri, 19 Jun 2026 20:00:19 +0200
+Message-ID: <20260619180121.2982356-2-polina.vishneva@virtuozzo.com>
 X-Mailer: git-send-email 2.54.0
+In-Reply-To: <20260619180121.2982356-1-polina.vishneva@virtuozzo.com>
+References: <20260619180121.2982356-1-polina.vishneva@virtuozzo.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=130.117.225.111;
@@ -74,41 +77,95 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patch series add AF_VSOCK channel support to QGA on Windows.
+Vendored from viosock/inc/vio_sockets.h in kvm-guest-drivers-windows
+(d76a29c1), reformatted to QEMU coding style (SPDX tag, comment
+rewrapping, brace placement, include guard).
 
-For that purpose, all common channel logic that can be reused was
-extracted from channel-posix.c into channel-common.[ch].
+The upstream BSD-3-Clause license was retained because no significant
+changes were made.
 
-Also, a header from kvm-guest-drivers-windows was vendored (and trimmed
-and adjusted to pass checkpatch).
-
-Most importantly, for vsock-listen to actually work on Windows, the
-viosock driver from a very recent kvm-guest-drivers-windows build (not
-released yet) is required: the 687c776 commit can be used as a support
-marker.
-
-Polina Vishneva (4):
-  include/system: Add vio_sockets.h with AF_VSOCK support on Windows
-  util/qemu-sockets: Enable AF_VSOCK on Windows
-  qga: Move common channel routines to channel-common
-  qga: Add AF_VSOCK channel support on Windows
-
- MAINTAINERS                  |   1 +
- docs/interop/qemu-ga.rst     |   4 +
- include/system/vio_sockets.h |  57 ++++++++
- meson.build                  |  15 +-
- qga/channel-common.c         | 115 +++++++++++++++
- qga/channel-common.h         |  44 ++++++
- qga/channel-posix.c          | 179 +++++++-----------------
- qga/channel-win32.c          | 263 ++++++++++++++++++++++++++++-------
- qga/main.c                   |   6 +
- qga/meson.build              |   3 +-
- util/qemu-sockets.c          |   4 +
- 11 files changed, 514 insertions(+), 177 deletions(-)
+Signed-off-by: Polina Vishneva <polina.vishneva@virtuozzo.com>
+---
+ MAINTAINERS                  |  1 +
+ include/system/vio_sockets.h | 57 ++++++++++++++++++++++++++++++++++++
+ 2 files changed, 58 insertions(+)
  create mode 100644 include/system/vio_sockets.h
- create mode 100644 qga/channel-common.c
- create mode 100644 qga/channel-common.h
 
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 93df53d87f..3ff59ec0a7 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -3868,6 +3868,7 @@ Sockets
+ M: Daniel P. Berrange <berrange@redhat.com>
+ S: Maintained
+ F: include/qemu/sockets.h
++F: include/system/vio_sockets.h
+ F: util/qemu-sockets.c
+ F: qapi/sockets.json
+ 
+diff --git a/include/system/vio_sockets.h b/include/system/vio_sockets.h
+new file mode 100644
+index 0000000000..480df24d37
+--- /dev/null
++++ b/include/system/vio_sockets.h
+@@ -0,0 +1,57 @@
++/*
++ * SPDX-License-Identifier: BSD-3-Clause
++ * Core definitions for virtio VSOCK address family, based on
++ * linux/vm_sockets.h and kvm-guest-drivers-windows (d76a29c1).
++ *
++ * Copyright (c) 2019 Virtuozzo International GmbH
++ *
++ * Redistribution and use in source and binary forms, with or without
++ * modification, are permitted provided that the following conditions
++ * are met :
++ * 1. Redistributions of source code must retain the above copyright
++ *    notice, this list of conditions and the following disclaimer.
++ * 2. Redistributions in binary form must reproduce the above copyright
++ *    notice, this list of conditions and the following disclaimer in the
++ *    documentation and / or other materials provided with the distribution.
++ * 3. Neither the names of the copyright holders nor the names of their
++ *    contributors may be used to endorse or promote products derived from
++ *    this software without specific prior written permission.
++ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
++ * ``AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
++ * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
++ * PARTICULAR PURPOSE ARE DISCLAIMED.IN NO EVENT SHALL THE COPYRIGHT HOLDERS
++ * OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
++ * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
++ * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
++ * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
++ * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
++ * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
++ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
++ */
++
++#ifndef VIO_SOCKETS_H
++#define VIO_SOCKETS_H
++
++#include <ws2def.h>
++
++#ifndef AF_VSOCK
++#define AF_VSOCK 40
++#endif
++
++#ifndef PF_VSOCK
++#define PF_VSOCK AF_VSOCK
++#endif
++
++/*
++ * Address structure for virtio vsockets. The address family should be set to
++ * AF_VSOCK.  The structure members should all align on their natural
++ * boundaries without resorting to compiler packing directives.
++ */
++typedef struct sockaddr_vm {
++    ADDRESS_FAMILY svm_family; /* Address family: AF_VSOCK */
++    USHORT svm_reserved1;
++    UINT svm_port; /* Port # in host byte order */
++    UINT svm_cid;  /* Address in host byte order */
++} SOCKADDR_VM, *PSOCKADDR_VM;
++
++#endif /* VIO_SOCKETS_H */
 -- 
 2.54.0
 
