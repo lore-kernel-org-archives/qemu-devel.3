@@ -4,71 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0CF50CD98F8
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Jun 2026 08:13:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E319CD98F8
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Jun 2026 08:23:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1waULW-0000Bp-OI; Fri, 19 Jun 2026 04:13:02 -0400
+	id 1waUV5-0002Cq-40; Fri, 19 Jun 2026 04:22:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1waULT-0000Bb-Uj
- for qemu-devel@nongnu.org; Fri, 19 Jun 2026 04:13:00 -0400
+ id 1waUV1-0002CX-PO
+ for qemu-devel@nongnu.org; Fri, 19 Jun 2026 04:22:52 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1waULR-0005Qa-Gl
- for qemu-devel@nongnu.org; Fri, 19 Jun 2026 04:12:59 -0400
+ id 1waUUy-00081F-Bo
+ for qemu-devel@nongnu.org; Fri, 19 Jun 2026 04:22:51 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781856775;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=wdJSNClyAXmJ9Ql1r7cDQ9lvOhNCTs/j/80y9M2GP3I=;
- b=eWWcCJicyT4ZDiHblAdkYv4KiRMurMMzqgdgwCVH1B731vUhKUNgG2HZL5l2qIL1ONy4se
- e7oTXw6oPKkvZJiZRIW4SbMY7LTalbiyuX6boEmkCaY9aj9aInKjj2f5xN1ZnStbwus0oe
- /5ifCCa1qei0BWUOubjZwj0cwT3dJyY=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ s=mimecast20190719; t=1781857365;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=Oh297qYyOnnSzn5+XP/FXe1+kL0N8jJpLltbJYhqLyo=;
+ b=ZZS2UsAjLss98640c6kz9wJHj6iATf1OqCxFsppJ63csgrPFbOWL9nLFF5K+lxK3W5VZy/
+ ga0dwjrow9O7VV6HO/UQmoigw/aq9rNuAHn8vjbwYf7J+UG3JQ+0b23hqufP9getlM54E7
+ M4TwM2OY8gbzsUgiF+cQ3tMGpvEw+g8=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-317-V6VWaTCGPJSlz2adC3FjWg-1; Fri,
- 19 Jun 2026 04:12:53 -0400
-X-MC-Unique: V6VWaTCGPJSlz2adC3FjWg-1
-X-Mimecast-MFC-AGG-ID: V6VWaTCGPJSlz2adC3FjWg_1781856772
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-433-Asbcn_k-PXmu6cOzdQmPSA-1; Fri,
+ 19 Jun 2026 04:22:41 -0400
+X-MC-Unique: Asbcn_k-PXmu6cOzdQmPSA-1
+X-Mimecast-MFC-AGG-ID: Asbcn_k-PXmu6cOzdQmPSA_1781857360
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 386E919560BD; Fri, 19 Jun 2026 08:12:52 +0000 (UTC)
-Received: from redhat.com (unknown [10.44.49.122])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 92FA6180035F; Fri, 19 Jun 2026 08:12:50 +0000 (UTC)
-Date: Fri, 19 Jun 2026 09:12:47 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: "Christian S. Lima" <christianslima@proton.me>
-Cc: qemu-devel@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>
-Subject: Re: [PATCH] audio: converts malloc to g_new and free to g_free
-Message-ID: <ajT5_xu7JtzGINWD@redhat.com>
-References: <20260619080934.237834-1-christianslima@proton.me>
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9920B1801BEA
+ for <qemu-devel@nongnu.org>; Fri, 19 Jun 2026 08:22:40 +0000 (UTC)
+Received: from berrange.com (unknown [10.44.49.122])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 8DDCF18005A9; Fri, 19 Jun 2026 08:22:38 +0000 (UTC)
+From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Thomas Huth <thuth@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [qemu-web PATCH] security: rework guideline about issue URL / CVE
+ references
+Date: Fri, 19 Jun 2026 09:22:36 +0100
+Message-ID: <20260619082236.1175764-1-berrange@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260619080934.237834-1-christianslima@proton.me>
-User-Agent: Mutt/2.3.2 (2026-04-26)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 8
-X-Spam_score: 0.8
-X-Spam_bar: /
-X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -81,76 +81,59 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jun 19, 2026 at 08:09:42AM +0000, Christian S. Lima wrote:
-> Following the qemu coding style change malloc to g_new, the advantage
-> are that g_new can catch multiplication overflowing size_t and allow
-> catch more type errors because it returns the type itself.
-> 
-> Signed-off-by: Christian S. Lima <christianslima@proton.me>
-> ---
->  hw/audio/fmopl.c | 20 ++++++++++----------
->  1 file changed, 10 insertions(+), 10 deletions(-)
-> 
-> diff --git a/hw/audio/fmopl.c b/hw/audio/fmopl.c
-> index a63ad0f04d..19c4b388f3 100644
-> --- a/hw/audio/fmopl.c
-> +++ b/hw/audio/fmopl.c
-> @@ -607,24 +607,24 @@ static int OPLOpenTable( void )
->  	double pom;
->  
->  	/* allocate dynamic tables */
-> -	if( (TL_TABLE = malloc(TL_MAX*2*sizeof(int32_t))) == NULL)
-> +	if( (TL_TABLE = g_new(int32_t, TL_MAX * 2)) == NULL)
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+---
 
-g_new cannot fail, so all checks for NULL must be removed too.
+This incorporates the feedback that Michael provided on the
+just merged security process changes.
 
-Unless this is a performance critical path, we'll also prefer
-g_new0 over g_new, so that all memory is guaranteed zero-initialized
+ contribute/security-process.md | 23 ++++++++++++++++-------
+ 1 file changed, 16 insertions(+), 7 deletions(-)
 
->  		return 0;
-> -	if( (SIN_TABLE = malloc(SIN_ENT*4 *sizeof(int32_t *))) == NULL)
-> +	if( (SIN_TABLE = g_new(int32_t *, SIN_ENT * 4)) == NULL)
->  	{
-> -		free(TL_TABLE);
-> +		g_free(TL_TABLE);
->  		return 0;
->  	}
-> -	if( (AMS_TABLE = malloc(AMS_ENT*2 *sizeof(int32_t))) == NULL)
-> +	if( (AMS_TABLE = g_new(int32_t, AMS_ENT * 2)) == NULL)
->  	{
-> -		free(TL_TABLE);
-> -		free(SIN_TABLE);
-> +		g_free(TL_TABLE);
-> +		g_free(SIN_TABLE);
->  		return 0;
->  	}
-> -	if( (VIB_TABLE = malloc(VIB_ENT*2 *sizeof(int32_t))) == NULL)
-> +	if( (VIB_TABLE = g_new(int32_t, VIB_ENT * 2)) == NULL)
->  	{
-> -		free(TL_TABLE);
-> -		free(SIN_TABLE);
-> -		free(AMS_TABLE);
-> +		g_free(TL_TABLE);
-> +		g_free(SIN_TABLE);
-> +		g_free(AMS_TABLE);
->  		return 0;
->  	}
->      ENV_CURVE = g_new(int32_t, 2 * EG_ENT + 1);
-> -- 
-> 2.53.0
-> 
-> 
-> 
-
-With regards,
-Daniel
+diff --git a/contribute/security-process.md b/contribute/security-process.md
+index c091fa1..146e9cd 100644
+--- a/contribute/security-process.md
++++ b/contribute/security-process.md
+@@ -92,19 +92,28 @@ be scrubbed before disclosure.
+ 
+  * The maintainer(s) will develop and/or review patch(es)
+    for the issue privately, optionally attaching work in
+-   progress fixes to the GitLab issues. All patches must
+-   include the issue URL in the commit message(s). The
+-   **"Workflow::In Progress"** label should be assigned when
++   progress fixes to the GitLab issues. The
++   **"Workflow::In Progress"** label can be assigned when
+    a maintainer starts working on a fix.
+ 
+  * When a CVE is allocated, it must be recorded as a comment on
+    the GitLab issue, and the **"CVE::Required"** label replaced by
+    the **"CVE::Assigned"** label.
+ 
+- * The maintainer(s) will update the commit message(s) to include
+-   the assigned CVE and issue URL. If multiple commits are required
+-   to fix an issue the CVE must be included in the final commit in
+-   the series, and may optionally be included in all prior commits.
++ * The maintainer(s) will update the commit message(s) before
++   sending a pull request to include the assigned CVE and issue
++   URL in the following format:
++
++     ```
++     Fixes: CVE-1980-12345
++     Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/75
++     Reviewed-by: Not Me <notme@elsewhere.com>
++     Signed-off-by: Some One <someone@somewhere.com>
++     ```
++
++   If multiple commits are required to fix an issue the CVE must
++   be included in the final commit in the series, and may optionally
++   be included in all prior commits.
+ 
+  * When the maintainer(s) are satisfied that the patch(es) are
+    suitable to propose for merge, they must be submitted to
 -- 
-|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-|: https://libvirt.org          ~~          https://entangle-photo.org :|
-|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+2.54.0
 
 
