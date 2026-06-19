@@ -4,100 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89D8CCD98F2
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Jun 2026 09:23:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A3B0CD98F2
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Jun 2026 09:26:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1waVR5-0003d2-Uo; Fri, 19 Jun 2026 05:22:52 -0400
+	id 1waVTw-0004RA-Nj; Fri, 19 Jun 2026 05:25:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1waVR3-0003cX-Ev
- for qemu-devel@nongnu.org; Fri, 19 Jun 2026 05:22:49 -0400
-Received: from mail-yw1-x1130.google.com ([2607:f8b0:4864:20::1130])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1waVR1-0001Bi-W2
- for qemu-devel@nongnu.org; Fri, 19 Jun 2026 05:22:49 -0400
-Received: by mail-yw1-x1130.google.com with SMTP id
- 00721157ae682-7fedf0e99bbso23240837b3.3
- for <qemu-devel@nongnu.org>; Fri, 19 Jun 2026 02:22:47 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1781860966; cv=none;
- d=google.com; s=arc-20240605;
- b=JgnlCTPv7txZpUX59hOMh4oHzUGwvXKpw66DnWn0NqUyd4pU+/v9YO3Z55qnx/4sda
- yvt6+8dO1P0ffFlJKDQLGIP2pRCTJDbED1ergPIyQ+PNoe8u5EeK5CE5V1quS2PqJXzP
- 1M9zdDlBLt1o2TkvEaN4JG0CdKsWtC0J6chIcURSas3SyF6kOy22yfv+JoWcHB9NDFlq
- eekqqpkbpSpH5PhGShlF9svzgWfJOxumlKpXiGBk6f84B23fzlZO6iuWntiqRTqePd5j
- kN30vd929Kb7IzN7zJosttTSArRcsaN8YyReL+IgqV9TUx8mA16WThcfdPJdYYFps4jB
- ieJg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=mL1U0s31dQTdtCCEyAaZj0ifb+OPR+IPq8pciKUx0lk=;
- fh=dyXUG63CgbyaPc/fac7FxJ3H9TbAYXMnk3EgI2o4tdI=;
- b=aEjZ7ZpXPxwgqb2zqUIC2Xyhuvbq4wuc++FrX1dP9Q1gLHyUe9CZJVxaxnEPCzkGm4
- ZhLAcIwOYYwixdMT3TVh1sKhIrCC1B86f8dwECybTbObSeFvPzkmbpaOMQsErHFWnkS8
- vTD7G0pnXZwAdoy6KM2GtWgs9s97gePmhzrYVUiJpo5aLqkAK3GeTIJgPQRAvnhHxFVN
- 8udJHADzDkRn7xCjEuUlDXfNqEh+G8z2Isxyy7PYSHcCdPIdEDmCk+wTAVczP56wvuje
- OXmwIpD91NlpBYH3Fx8mygQWKKBTtoAVouRhT0WlAmmyPyLzybuumuCpFF7Z/KAJFeMI
- /X7Q==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1781860966; x=1782465766; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=mL1U0s31dQTdtCCEyAaZj0ifb+OPR+IPq8pciKUx0lk=;
- b=sOBKcgAh/DoJsbnUq1tayn43N4H3xjvCZA5xmdGXm8GZ52r+foNTeXsbGxNaNEhRtz
- YuEd+iggE7xTpAyISpMFfFn/Y3IIX50dREPhrw58UhZsmQREoOMIl4idqi0uFvxheSzf
- cjGCzJHeR8sVMpJJkI5y9jYltn6QZ8k1pkhHGZkpmOirDNgs1O0DMYbOJe0xwWUcZ2cC
- Kd9wDeyNWdOQOKNdcz8u4XU3t/8ea9AancH8bprRbV5ChkmQgyLU5WMNZxDdLhJM1ky4
- YkYZmZMAEF+8KrWIS7WWjE1u9Dj1XhbuThoEmag7b+5pRl+aQ26G+lcxf8vPvVT2vHje
- H5HA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781860966; x=1782465766;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=mL1U0s31dQTdtCCEyAaZj0ifb+OPR+IPq8pciKUx0lk=;
- b=CWMPwiPDH1uLExh90POR12XyAXRcEsm1eOq0NcYZJQxzpbVsxiH16zBUQMZBLLir1W
- UFcsu3LUX68lHCLxLQtVVgj5ewuECA6ksQqjVAD8GZ7pRismMcYosMJukWpdgvMLZaL4
- YNDxgDkOdZCIWCs68lylfLTmipp3jK9WrWeNWM8IsXscdoRhfZ6rqQauW/L3G550Wtws
- Gy5V09h3j87NHTb+ywAQNIOwnyeObzo50rV4G0nqndQa4YzW84INMFLQyj5ITOKxGFYV
- trGkTB7u7gT2oBNm6EvBUW4J5j6Jc1Nye290PvyWXzjsK+76Bg0eZjLqwSM5XYkuWYq1
- rG9Q==
-X-Gm-Message-State: AOJu0YxYDEnihXg0EtfO/KmYWu2EbFH94odKEzViDRJDiw8XTA/GTPK3
- sbe7hG9BDNpQeh9W9daFNkUAv71ToR99FcYPPInLkFAFjPgDD5eso7o4fCFl107NU8zp7guZ0UF
- VPuzloXY18uYhxa1y6wtrzW94ZeZHrpFCzcJDNM+opw==
-X-Gm-Gg: AfdE7cmiR/L65JAHARnV/QDg02TBv6+nHr9VXGU72gTPapISyPRo2JCLnW2+bLKh6HV
- p4wq/WUMCsuwuBHEaF5kaYpIOeFqK3Ggdra3mHD4kCLNduXSIUGme0HgldrzOafpJspIPzJahfo
- DiSus0vRY6jKOpnRwBSvu/eeB5Rk+EtFs/ZIHnrofjkzUmZEiOi4VR9IjVVHhfvWfHfpqImi02h
- WjlOXRILNgJJnjJ9KnL2NJj3W4pqs3y83emyrqjztTrWSRbeR+F2v6aZHxQViqxeuDXiqlgSUpm
- O/y5jqKoDzRqGmIKNPIzyzmR58+PyKj9cJHGFCcpSTTUUhV4BQjL2WTD
-X-Received: by 2002:a05:690e:d45:b0:660:5dc3:3fc9 with SMTP id
- 956f58d0204a3-662ffd21e3fmr1952835d50.19.1781860966378; Fri, 19 Jun 2026
- 02:22:46 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1waVTu-0004Qe-RB
+ for qemu-devel@nongnu.org; Fri, 19 Jun 2026 05:25:46 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1waVTt-0001mw-6n
+ for qemu-devel@nongnu.org; Fri, 19 Jun 2026 05:25:46 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1781861143;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=zMlqmyyFgUF8NnVSUFxygt+NxV37HopokOxz2jLoL8w=;
+ b=gIoFVDPuShC+TowlTk7SNeAaCvglboVO2jTbpOfij3QEVGuZdEWeszRG3/S3wdzoalK6uF
+ /REEzBXiToFLIbZyEn2gOsLimSwRUv1RxqJAd0XNLipHilJzF67c6C0iqth0xHHzJdeZ91
+ nkMsoOTVeB1b/7bMHoe8u6+7UBk8OV4=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-433-SRX2vnCHOjOXGTdULzwoTg-1; Fri,
+ 19 Jun 2026 05:25:39 -0400
+X-MC-Unique: SRX2vnCHOjOXGTdULzwoTg-1
+X-Mimecast-MFC-AGG-ID: SRX2vnCHOjOXGTdULzwoTg_1781861137
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 44BE61955F26; Fri, 19 Jun 2026 09:25:37 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.44.22.4])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 528331956088; Fri, 19 Jun 2026 09:25:36 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id CF91921E6A01; Fri, 19 Jun 2026 11:25:33 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Khushit Shah <khushit.shah@nutanix.com>
+Cc: qemu-devel@nongnu.org,  qemu-arm@nongnu.org,  kvmarm@lists.linux.dev,
+ Eric Auger <eric.auger@redhat.com>,  Cornelia Huck <cohuck@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,  Richard Henderson
+ <richard.henderson@linaro.org>,  Marc Zyngier <maz@kernel.org>,  Oliver
+ Upton <oliver.upton@linux.dev>,  Daniel P . =?utf-8?Q?Berrang=C3=A9?=
+ <berrange@redhat.com>,  Andrea Bolognani <abologna@redhat.com>,  Jiri
+ Denemark <jdenemar@redhat.com>,  Gavin Shan <gshan@redhat.com>,  Shameer
+ Kolothum <skolothumtho@nvidia.com>,  Sebastian Ott <sebott@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Jinqian Yang
+ <yangjinqian1@huawei.com>,  Shaju Abraham <shaju.abraham@nutanix.com>,
+ Mark Cave-Ayland <mark.caveayland@nutanix.com>
+Subject: Re: [RFC PATCH v2 23/29] target/arm/qmp: add query-arm-cpu-props-info
+In-Reply-To: <20260605083358.1320563-24-khushit.shah@nutanix.com> (Khushit
+ Shah's message of "Fri, 5 Jun 2026 08:33:52 +0000")
+References: <20260605083358.1320563-1-khushit.shah@nutanix.com>
+ <20260605083358.1320563-24-khushit.shah@nutanix.com>
+Date: Fri, 19 Jun 2026 11:25:33 +0200
+Message-ID: <87o6h6hofm.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-References: <20260619080934.237834-1-christianslima@proton.me>
-In-Reply-To: <20260619080934.237834-1-christianslima@proton.me>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 19 Jun 2026 10:22:32 +0100
-X-Gm-Features: AVVi8CcwWkOZ1ewkvoH5AruyWOYB9hkXoD2B5uIY5zH_xf6qt12wj6XLc1qt0pM
-Message-ID: <CAFEAcA9bzM19ny_wGKahRETFEp2_Od=O_TdPFxAkXnr=9Xvwiw@mail.gmail.com>
-Subject: Re: [PATCH] audio: converts malloc to g_new and free to g_free
-To: "Christian S. Lima" <christianslima@proton.me>
-Cc: qemu-devel@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1130;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1130.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 8
+X-Spam_score: 0.8
+X-Spam_bar: /
+X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,24 +95,109 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 19 Jun 2026 at 09:10, Christian S. Lima
-<christianslima@proton.me> wrote:
+Khushit Shah <khushit.shah@nutanix.com> writes:
+
+> Introduce 'query-arm-cpu-props-info' QMP command. This command returns
+> information about ARM CPU model properties, including their name, type,
+> supported values on the given host, and composite parent if any.
 >
-> Following the qemu coding style change malloc to g_new, the advantage
-> are that g_new can catch multiplication overflowing size_t and allow
-> catch more type errors because it returns the type itself.
+> This provides management layer necessary information to determine
+> migration compatibility off a VM on different host.
 >
-> Signed-off-by: Christian S. Lima <christianslima@proton.me>
+> Signed-off-by: Khushit Shah <khushit.shah@nutanix.com>
 > ---
->  hw/audio/fmopl.c | 20 ++++++++++----------
->  1 file changed, 10 insertions(+), 10 deletions(-)
+>  qapi/misc-arm.json              | 41 ++++++++++++++++
+>  stubs/qmp-arm-gic.c             |  6 +++
+>  target/arm/arm-cpu-props-stub.c | 13 +++++
+>  target/arm/arm-cpu-props.c      | 85 +++++++++++++++++++++++++++++++++
+>  target/arm/arm-cpu-props.h      |  5 ++
+>  target/arm/arm-qmp-cmds.c       | 44 +++++++++++++++++
+>  target/arm/cpu-idregs.c         | 71 +++++++++++++++++++++++++++
+>  target/arm/cpu-idregs.h         |  8 ++++
+>  8 files changed, 273 insertions(+)
+>
+> diff --git a/qapi/misc-arm.json b/qapi/misc-arm.json
+> index 4dc66d00e5..1a3fb140c4 100644
+> --- a/qapi/misc-arm.json
+> +++ b/qapi/misc-arm.json
+> @@ -46,6 +46,47 @@
+>  ##
+>  { 'command': 'query-gic-capabilities', 'returns': ['GICCapability'] }
+>  
+> +##
+> +# @CpuPropInfo:
 
+CpuPropertyInfo for consistency with type names such as ObjectPropertyInfo.
 
-Hi; we already have somebody working on updating this
-set of malloc/free calls:
+> +#
+> +# Information about a specific ARM CPU model property.
+> +#
+> +# @name: the name of the property
+> +#
+> +# @type: the type of the property, any of ('string', 'boolean',
+> +#     'number').
+> +#
+> +# @supported-values: the set of values the host hardware supports
+> +#     for the property, a list of strings.
 
-https://lore.kernel.org/qemu-devel/20260428162048.2995097-1-luc.fast2004@gmail.com/
+I figure the set of values depends on the host, i.e. it isn't known at
+compile time.  Correct?
 
-thanks
--- PMM
+Are the possible property names known at compile time?
+
+List of strings is fine when the values are strings.  When they're not,
+the interface requires its users to parse strings, which is something we
+try hard to avoid in QAPI/QMP.
+
+> +#
+> +# @composite: name of the encapsulating composite property if any.
+> +#
+> +# Since: 11.1
+> +##
+> +{ 'struct': 'CpuPropInfo',
+> +  'data': { 'name': 'str',
+> +            'type': 'str',
+> +            'supported-values': 'any',
+
+Description above claims "list of strings".  If that's accurate, it
+should be ['str'] here.  Else, the description needs fixing.
+
+> +            '*composite': 'str' } }
+> +
+> +##
+> +# @query-arm-cpu-props-info:
+> +#
+> +# Returns information about most of ARM CPU named model properties.
+
+Imperative mood, please: Return information ...
+
+> +# This does not include composite properties or properties already
+> +# defined by QEMU like (sveNNNN, pmu, etc), This only returns all
+> +# the newly defined properties like ('feat_*', 'hw_prop_*', etc).
+
+"newly defined" compared to what?
+
+> +#
+> +# With this upper management layers can find out what property values
+
+Comma after this, I think.
+
+> +# are supported on the given host.
+> +#
+> +# Requires KVM to be enabled.
+
+What happens when it isn't?
+
+> +#
+> +# Since: 11.1
+> +##
+> +{ 'command': 'query-arm-cpu-props-info',
+> +  'returns': ['CpuPropInfo'] }
+> +
+>  ##
+>  # @SsidSizeMode:
+>  #
+
+[...]
+
 
