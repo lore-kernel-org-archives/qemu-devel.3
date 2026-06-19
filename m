@@ -4,138 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E55BCD4F26
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Jun 2026 11:08:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2CCECD4F26
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Jun 2026 11:11:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1waX4v-0003qY-Hd; Fri, 19 Jun 2026 07:08:05 -0400
+	id 1waX8Q-0004aI-FR; Fri, 19 Jun 2026 07:11:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <abologna@redhat.com>)
- id 1waX4u-0003pf-48
- for qemu-devel@nongnu.org; Fri, 19 Jun 2026 07:08:04 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <vaibhav@linux.ibm.com>)
+ id 1waX8P-0004a5-4D; Fri, 19 Jun 2026 07:11:41 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <abologna@redhat.com>)
- id 1waX4s-0007sX-M7
- for qemu-devel@nongnu.org; Fri, 19 Jun 2026 07:08:03 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781867281;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=6Ftuz/YeU1BrVwtz+GOmCT6y76opWKn1nUdh59yxKwg=;
- b=hordkYLx4oJ8Sgod22JBsukjt2pEnvH0LLyX05ESoHGTiBisyzc7zQDUWemErPTmbWbsbO
- YJYZZ7ikfv4ho5Tzr6Bx+2ch66g1rdUr0+a62P8UPvsNtOeGes09lp/+deBSF8X8laP6Ll
- 0OUd2bB2LTh2NerI/aFN/rQQ7Ixfw1Q=
-Received: from mail-dy1-f200.google.com (mail-dy1-f200.google.com
- [74.125.82.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-484-sb2JJOziMWaLmUiwCjo4aw-1; Fri, 19 Jun 2026 07:06:41 -0400
-X-MC-Unique: sb2JJOziMWaLmUiwCjo4aw-1
-X-Mimecast-MFC-AGG-ID: sb2JJOziMWaLmUiwCjo4aw_1781867200
-Received: by mail-dy1-f200.google.com with SMTP id
- 5a478bee46e88-30bc5f826f2so3718139eec.1
- for <qemu-devel@nongnu.org>; Fri, 19 Jun 2026 04:06:41 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1781867200; cv=none;
- d=google.com; s=arc-20240605;
- b=M0gJHWL2ivZt5/NQLDb2/gLzl3r/WPVAyny0CDih1ZbPeFtXajRzVA9GStBZmjjZcV
- D1uQDTxPczdJYsMwNvFDMtmScnBsG9Vt+jliRhEjj201JdIUkc1LXu2iggGdt2PdgnI3
- FAsQ5orq4ZT10ad9K1BuvwjKUyGXUbIsgNu7r8jabQ1Tk39/N3cWMFd8Nnh0nyPLRtAt
- fgt0IbNsdE/rM8gy25Qc64tPLM+ytU0jkizwc2t9o9xn40MrmFjewZAvOyeqBxPf3nzb
- OgSnFU+CSADCMOCjaFc2c3/K18VdAJPAHk//K5M2B+A2kPmULwK7njHh4j1LKSmBuAQk
- H3Yw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:in-reply-to
- :mime-version:references:from:dkim-signature;
- bh=6Ftuz/YeU1BrVwtz+GOmCT6y76opWKn1nUdh59yxKwg=;
- fh=p+TtVNE8BnszM6+G7Y69JvEyDoMj0rDrDF5oJZ/4I48=;
- b=j13hWNJlVKaN0WEKp1jrgQcMClZReacbYwayzfQF+/xeodCakdY2kreWTBLxDIUJN6
- zwnVp/b+FaWGtlrtjsArTSlsc87p3XjQdrAdaEheGtUjRNmq/kpdCij8NeqZvJsw9AG0
- d09IeYTQ0+9jO6iyzP54d4/8vuL6ib5+5esQ5F0mSHNoLmM4Y6ibrM2Lsyk/6g0cK/pN
- cuU1WHJCKtMbfGYMuEv7yd8PH5k2oxcYX1JXBOU04htUH6cEUHUdSqQcuU5wOabvSKY+
- 2H5PybY68C0D6C4zKZGcBjv1lMsmnhBV7gcLvxZbcS6e2F+etjcj5UTPw66MBlYA01E5
- ORHQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1781867200; x=1782472000; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:in-reply-to
- :mime-version:references:from:from:to:cc:subject:date:message-id
- :reply-to; bh=6Ftuz/YeU1BrVwtz+GOmCT6y76opWKn1nUdh59yxKwg=;
- b=ZGvd+j9L0f2GQqTpeYUaFqVq/sI0Nxp5jwAdVe/Q0EKqk1hLHC5UNvQ8rD9pnUKlmk
- v8VjvGgacseVqnmdDBSxkhkgzmMeZqLsIYq4dGU8fjB9SmdxD9QN2j2TmPzGJVvpWjR0
- ohD34EGCnQkZKJsfPbULvUMSeqepyjS96IoCeFTB/aTds4IkbSFUA3UNW/8PO+QVq2Fd
- FqnSfvQSwuK5bg/4evWfIfWqBJQuF6VHrjy8Qf7Jn6tazG8QyUiBi1+nOSuXM4KppHNE
- MWUlM5O1I4n4qEmwaSyA0ndwKjdJIBRkAKdtr+Fmd0sRzL6hagRFID4cHtg3EVUd4Wgx
- ebOg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781867200; x=1782472000;
- h=content-transfer-encoding:cc:to:subject:message-id:date:in-reply-to
- :mime-version:references:from:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=6Ftuz/YeU1BrVwtz+GOmCT6y76opWKn1nUdh59yxKwg=;
- b=GzT2DpAVEHi+vn/k/impL7rARiCHZUa1asU/vnyT5zjv+5GotQ4eQu/mCu9ySRybly
- Juzke9wdD3au+B/RMltfA10f+4cAAiDBOwoVpHvUQrjdlIGfY1mYhmdc5nJ+V2c3B5Fs
- wpco2hBrGK6nNv6BZwUawpaCZ07l4WThMO+irt9ROwO7feyP/BJu1ujuQGm6LIwJoohZ
- dWdQoWNavDHzi6jpykizb4aRuvawbFXNDCxvTLDhi6+pt8qPcv8Jzwd/4i017iysnM07
- gAZLJ6jF4yScx09Z6vXoES4gDomomnKOFA9MTQbmHu0pPCoHSax0bkIC+cgQbVXZrmtX
- h7fg==
-X-Forwarded-Encrypted: i=1;
- AFNElJ+ryvrqHuKkAJss8vPZWbzaCGmtuGn7ooD5bXGX6vVK8e5l9IMVpK1//iJZpHT7K68R7C3ywpLMPYRD@nongnu.org
-X-Gm-Message-State: AOJu0YyW8S41O9xtTNm0ooObtlJFLUIys/3d8JSM7BqEOJkvTp2gcjuE
- i8vczAphRSSfmf/ldvbyle53I8DhBXGIWQ/kSDTHx5q7iy+tJdYkoiKYHKf91WdFjkO1tt6G2Sj
- HDpVROxNnYD8KIymfvDp0bSvWj42uaiIaQKMY5aOI+T2vxYuf4MocRuB79LzfAY4Zgnu2Gi7RFK
- uyZLikS3J1GI+mt/VQGcH2a1VNqu7Kajg=
-X-Gm-Gg: AfdE7cmV1ZFROQT/oiie1zAPYpaKUo4PZFUze+RxjQpePyEN1laAbBKv+qjSrACTeEl
- sujyjheaQrQLo6Pc8JrKwPTsDZhtfiUdOXMmieB3zeOj11mGehpXfLQ1sXtypZ7TG0ssb3Cfvqz
- MmeoNp8rMF/Vn+PW4kMJpitNwQKUwoZAOiWTKb+eQ7Ml1TloXE3J53A0dJF9xD3dF6
-X-Received: by 2002:a05:7300:6c84:b0:304:e587:5063 with SMTP id
- 5a478bee46e88-30c0cff485dmr989884eec.12.1781867200327; 
- Fri, 19 Jun 2026 04:06:40 -0700 (PDT)
-X-Received: by 2002:a05:7300:6c84:b0:304:e587:5063 with SMTP id
- 5a478bee46e88-30c0cff485dmr989854eec.12.1781867199837; Fri, 19 Jun 2026
- 04:06:39 -0700 (PDT)
-Received: from 744723338238 named unknown by gmailapi.google.com with
- HTTPREST; Fri, 19 Jun 2026 04:06:37 -0700
-Received: from 744723338238 named unknown by gmailapi.google.com with
- HTTPREST; Fri, 19 Jun 2026 04:06:37 -0700
-From: Andrea Bolognani <abologna@redhat.com>
-References: <20260605083358.1320563-1-khushit.shah@nutanix.com>
- <20260605083358.1320563-24-khushit.shah@nutanix.com>
- <ajURCGaS94gwV_px@redhat.com>
+ (Exim 4.90_1) (envelope-from <vaibhav@linux.ibm.com>)
+ id 1waX8N-0001er-7v; Fri, 19 Jun 2026 07:11:40 -0400
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 65J7n6mS1588810; Fri, 19 Jun 2026 11:11:35 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-type:date:from:in-reply-to:message-id:mime-version
+ :references:subject:to; s=pp1; bh=3O6KvS5VBSq83b9tn3tShktu/pYRkt
+ U3XtfsJi2KHvs=; b=Pf26cu3EDs+fQOuHA2gc9/UXCiTf3LBjSsAJq7FPpIkfcY
+ W0rdQlQEHOhTAy57HFwj2OzqO94MqngiJMMWuRwKBROGTC5k1UycBRLtuxmVDS20
+ Si3rA8rIwvBYfsn6YZZZP6xoNg//KDvh2AhJGRc+0n2WC9B8mz424UM0M4PQ2zxM
+ ES5FYDqxep2wa9gq7B70+KjNbG4K04sMAGa82tMac3DSot1HtYQEUZzz+IA4K71B
+ xen7NQjZ6FWtRwhlouen0Ye2uA8eg/SWYqhwt+zD9ld2QiUnyqTT0hr3hz0r0cpa
+ 6HkPY5b60gJLdvpzkG4P0y5ytXofKUu+cP9FHWXw==
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4eueqxd00t-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 19 Jun 2026 11:11:35 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 65JB4vX6011195;
+ Fri, 19 Jun 2026 11:11:34 GMT
+Received: from smtprelay07.dal12v.mail.ibm.com ([172.16.1.9])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4ev172gg65-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 19 Jun 2026 11:11:34 +0000 (GMT)
+Received: from smtpav03.wdc07v.mail.ibm.com (smtpav03.wdc07v.mail.ibm.com
+ [10.39.53.230])
+ by smtprelay07.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 65JBBXnX14484210
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 19 Jun 2026 11:11:33 GMT
+Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 1D8C058054;
+ Fri, 19 Jun 2026 11:11:33 +0000 (GMT)
+Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 5E3E958062;
+ Fri, 19 Jun 2026 11:11:28 +0000 (GMT)
+Received: from vaibhav?linux.ibm.com (unknown [9.39.17.1])
+ by smtpav03.wdc07v.mail.ibm.com (Postfix) with SMTP;
+ Fri, 19 Jun 2026 11:11:28 +0000 (GMT)
+Received: by vaibhav@linux.ibm.com (sSMTP sendmail emulation);
+ Fri, 19 Jun 2026 16:41:26 +0530
+From: Vaibhav Jain <vaibhav@linux.ibm.com>
+To: Amit Machhiwal <amachhiw@linux.ibm.com>, qemu-ppc@nongnu.org, Harsh
+ Prateek Bora <harshpb@linux.ibm.com>
+Cc: Amit Machhiwal <amachhiw@linux.ibm.com>, Nicholas Piggin
+ <npiggin@gmail.com>, Chinmay Rath <rathc@linux.ibm.com>, Glenn Miles
+ <milesg@linux.ibm.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, kvm@vger.kernel.org,
+ qemu-devel@nongnu.org
+Subject: Re: [PATCH v3 2/3] target/ppc/kvm: Add support for querying host
+ compatibility mode
+In-Reply-To: <20260616113915.25589-3-amachhiw@linux.ibm.com>
+References: <20260616113915.25589-1-amachhiw@linux.ibm.com>
+ <20260616113915.25589-3-amachhiw@linux.ibm.com>
+Date: Fri, 19 Jun 2026 16:41:26 +0530
+Message-ID: <87wlvubx9d.fsf@vajain21.in.ibm.com>
 MIME-Version: 1.0
-In-Reply-To: <ajURCGaS94gwV_px@redhat.com>
-Date: Fri, 19 Jun 2026 04:06:37 -0700
-X-Gm-Features: AVVi8CcvxopmE1LAhLJ_P5FoKxGosYvlKzKbEpZomnc1BklIe0Caltb9vqbh-Ec
-Message-ID: <CABJz62PatHBE1pvgqw=asZgugOE3L5oMsEgj==Qp4ZnyHWhLkw@mail.gmail.com>
-Subject: Re: [RFC PATCH v2 23/29] target/arm/qmp: add query-arm-cpu-props-info
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: Khushit Shah <khushit.shah@nutanix.com>, qemu-devel@nongnu.org,
- qemu-arm@nongnu.org, 
- kvmarm@lists.linux.dev, Eric Auger <eric.auger@redhat.com>, 
- Cornelia Huck <cohuck@redhat.com>, Peter Maydell <peter.maydell@linaro.org>, 
- Richard Henderson <richard.henderson@linaro.org>, Marc Zyngier <maz@kernel.org>,
- Oliver Upton <oliver.upton@linux.dev>, Jiri Denemark <jdenemar@redhat.com>, 
- Gavin Shan <gshan@redhat.com>, Shameer Kolothum <skolothumtho@nvidia.com>, 
- Sebastian Ott <sebott@redhat.com>, Markus Armbruster <armbru@redhat.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Jinqian Yang <yangjinqian1@huawei.com>,
- Shaju Abraham <shaju.abraham@nutanix.com>, 
- Mark Cave-Ayland <mark.caveayland@nutanix.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=abologna@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+Content-Type: text/plain
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Proofpoint-GUID: 3iQ2suw8ESLnz7w_zGJshIPtghpOaiu_
+X-Authority-Analysis: v=2.4 cv=Le0MLDfi c=1 sm=1 tr=0 ts=6a3523e7 cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+ a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
+ a=RzCfie-kr_QcCd8fBx8p:22 a=VnNF1IyMAAAA:8 a=Ef3TOmN8yebebzy0SdIA:9
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjE5MDEwMCBTYWx0ZWRfX31sOnWwsUNxg
+ /zfh3YrPsU62xOrYTRK6QX0hDwHMt5Oje5p9cCSayCbE4skt6U+QpFHGivTqxEmz3Eo9Nys6l3P
+ dxGsIfSnhqqgn7eRtxFvX2nJPzP+6kc=
+X-Proofpoint-ORIG-GUID: QcZ0WYPSy0C1ZBvosydUDPtvimOSZwis
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjE5MDEwMCBTYWx0ZWRfX+R9NWE9Wlq92
+ pEUrdXPjT7JuNsBuZJZhRBEsdUDqURm8gNogBwRXzGBCHqFtvgS4hQ6Fr/NPEvkkRrIypLXiwza
+ 8wG/XMnr/jJMG3JXdQ+83Sc6soQgvx0hyOiE3HuBJ1WS4J2DnTVRcegZei9J7wxPiPBl9kwtfKR
+ tENfTvkt/LdzxKCQyD6UkwGtVsw2mEvHV0f9oEmRiz7gBx2UR+ta2gUcy73uPjzeao9w4SDIDLW
+ XglmnaEzUL3jwAxY39HPej2U+dm6B1TtrmbOT2PHEywl6wLuYuSvwXUkSrQzAG3ml3CnuBTtW29
+ DLtbkWX+0ZYNw+sasU8WZsND9y7qXW8CqdpsT20wvqE0v8I4r5p2pqF2/P+A/tNRpCdDXIkiAhb
+ KOSXQlcePghIWAOo5M/KyHB0ZLpJKaHAXz+fGNxdOmC5e7GC7X9KrCNSzgPDVnzEaFyrgAubdkl
+ n0hlr8t/1w/hmEsl8rQ==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-19_02,2026-06-18_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 priorityscore=1501 malwarescore=0 spamscore=0 suspectscore=0
+ impostorscore=0 phishscore=0 lowpriorityscore=0 bulkscore=0 adultscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606190100
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=vaibhav@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -151,23 +127,199 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jun 19, 2026 at 10:51:04AM +0100, Daniel P. Berrang=C3=A9 wrote:
-> On Fri, Jun 05, 2026 at 08:33:52AM +0000, Khushit Shah wrote:
-> > Introduce 'query-arm-cpu-props-info' QMP command. This command returns
-> > information about ARM CPU model properties, including their name, type,
-> > supported values on the given host, and composite parent if any.
+Amit Machhiwal <amachhiw@linux.ibm.com> writes:
+
+> Add infrastructure to query the host CPU compatibility mode via the
+> KVM_PPC_GET_COMPAT_CAPS ioctl. This allows QEMU to determine if the
+> host is running in a compatibility mode (e.g., a Power11 processor
+> operating in Power10 compatibility mode).
 >
-> Do we have to make this ARM only ?
+> The kvmppc_get_compat_caps() function queries KVM for host compatibility
+> capabilities with size field validation for ABI compatibility between
+> QEMU and the kernel. The kvm_ppc_host_compat_pvr() function derives the
+> effective PVR based on the compatibility mode reported by KVM.
 >
-> x86 has named CPU properties too. They are all basically
-> booleans so this API offers a superset of functionality
-> needed for x86, and thus I'd expect x86 to be folded into
-> this new API too.
+> Additionally, cas_check_pvr() in hw/ppc/spapr_hcall.c is updated to
+> prevent fallback to raw mode when the host is running in compatibility
+> mode. This ensures that nested guests cannot exceed the host's
+> compatibility level.
+>
+> If the capability is not supported or the query fails, the functions
+> return 0, allowing fallback to existing behavior.
+>
+> Signed-off-by: Amit Machhiwal <amachhiw@linux.ibm.com>
+> ---
+>  hw/ppc/spapr_hcall.c | 14 ++++++++++
+>  target/ppc/kvm.c     | 65 ++++++++++++++++++++++++++++++++++++++++++++
+>  target/ppc/kvm_ppc.h | 16 +++++++++++
+>  3 files changed, 95 insertions(+)
+>
+> diff --git a/hw/ppc/spapr_hcall.c b/hw/ppc/spapr_hcall.c
+> index 60ba215e8611..68c29fbe141b 100644
+> --- a/hw/ppc/spapr_hcall.c
+> +++ b/hw/ppc/spapr_hcall.c
+> @@ -1135,6 +1135,7 @@ static uint32_t cas_check_pvr(PowerPCCPU *cpu, uint32_t max_compat,
+>  {
+>      bool explicit_match = false; /* Matched the CPU's real PVR */
+>      uint32_t best_compat = 0;
+> +    uint32_t compat_host_pvr = 0;
+>      int i;
+>  
+>      /*
+> @@ -1162,6 +1163,19 @@ static uint32_t cas_check_pvr(PowerPCCPU *cpu, uint32_t max_compat,
+>          }
+>      }
+>  
+> +    if (explicit_match) {
+> +        compat_host_pvr = kvm_ppc_host_compat_pvr();
+> +        /*
+> +         * If the host is booted in a compatibility mode, do not try booting in
+> +         * the raw mode as it may allow KVM guests to boot with a higher CPU
+> +         * version compared to what host was booted with; which should not be
+> +         * allowed.
+> +         */
+> +        if (compat_host_pvr) {
+> +            explicit_match = false;
+> +        }
+> +    }
+> +
+>      *raw_mode_supported = explicit_match;
+>  
+>      /* Parsing finished */
+> diff --git a/target/ppc/kvm.c b/target/ppc/kvm.c
+> index b94c2997a07f..9e5006e0c2cd 100644
+> --- a/target/ppc/kvm.c
+> +++ b/target/ppc/kvm.c
+> @@ -2602,6 +2602,71 @@ bool kvmppc_supports_ail_3(void)
+>      return cap_ail_mode_3;
+>  }
+>  
+> +#if defined(TARGET_PPC64)
+This define would be implicit for this file. I think you should target
+these functions for CONFIG_KVM. Otherwise you will have multiple
+definitions of kvm_ppc_host_compat_pvr()
 
-riscv64 will certainly need something like this too in due time.
-So +1 to making it architecture-agnostic.
+> +static target_ulong kvmppc_get_compat_caps(void)
+> +{
+> +    struct kvm_ppc_compat_caps host_compat;
+> +    target_ulong host_caps;
+> +    int ret;
+> +
+> +    if (!kvm_check_extension(kvm_state, KVM_CAP_PPC_COMPAT_CAPS)) {
+> +        return 0;
+> +    }
+> +
+> +    /* Initialize the structure with size field for forward compatibility */
+> +    memset(&host_compat, 0, sizeof(host_compat));
+> +    host_compat.size = sizeof(host_compat);
+> +
+> +    ret = kvm_vm_ioctl(kvm_state, KVM_PPC_GET_COMPAT_CAPS, &host_compat);
+> +    if (ret < 0) {
+> +        fprintf(stderr, "KVM: failed to get host capabilities\n");
+Should use error_report instead of fprintf(stderr,..
+> +        return 0;
+> +    }
+> +
+> +    /*
+> +     * Validate the returned size matches our structure size.
+> +     * The kernel validates that userspace provides sufficient size before
+> +     * the ioctl, and returns its own structure size. A mismatch indicates
+> +     * a version incompatibility between QEMU and the kernel.
+> +     */
+> +    if (host_compat.size != sizeof(host_compat)) 
+This error handling differs from the kernel code which can indeed return
+host_compat.size < sizeof(host_compat).
+> +        fprintf(stderr, "KVM: host_compat size mismatch (expected %zu, got %lu)\n",
+> +                sizeof(host_compat), host_compat.size);
+Error message can be more user friendly. Also your should use
+error_report instead of fprintf(stderr,..
+> +        return 0;
+> +    }
 
---=20
-Andrea Bolognani / Red Hat / Virtualization
+> +
+> +    host_caps = host_compat.compat_capabilities;
+> +    return host_caps;
+Minor: Why not just return host_compat.compat_capabilities instead of
+this extra store
+> +}
+> +
+Minor: Minor comment about this function would be nice to have
+> +uint32_t kvm_ppc_host_compat_pvr(void)
+> +{
+> +    uint32_t compat_host_pvr = 0;
+> +    int cap_idx = 0;
+> +    target_ulong host_caps = kvmppc_get_compat_caps();
+> +
+> +    host_caps = host_caps & KVM_PPC_COMPAT_BITMASK;
+> +    if (host_caps) {
+> +        cap_idx = 63 - __builtin_ctzll(host_caps);
+you probably need to use clz64() instead of this.
 
+> +        switch (cap_idx) {
+> +        case KVM_PPC_COMPAT_CAP_P9_IDX:
+> +            compat_host_pvr = CPU_POWERPC_POWER9_DD22;
+> +            break;
+> +        case KVM_PPC_COMPAT_CAP_P10_IDX:
+> +            compat_host_pvr = CPU_POWERPC_POWER10_DD20;
+> +            break;
+> +        case KVM_PPC_COMPAT_CAP_P11_IDX:
+> +            compat_host_pvr = CPU_POWERPC_POWER11_DD20;
+> +            break;
+> +        default:
+> +            break;
+> +        }
+> +    }
+> +
+> +    return compat_host_pvr;
+> +}
+> +#endif /* TARGET_PPC64 */
+> +
+>  PowerPCCPUClass *kvm_ppc_get_host_cpu_class(void)
+>  {
+>      uint32_t host_pvr = mfpvr();
+> diff --git a/target/ppc/kvm_ppc.h b/target/ppc/kvm_ppc.h
+> index 742881231e16..5970e7383740 100644
+> --- a/target/ppc/kvm_ppc.h
+> +++ b/target/ppc/kvm_ppc.h
+> @@ -81,6 +81,17 @@ bool kvmppc_supports_ail_3(void);
+>  int kvmppc_enable_hwrng(void);
+>  int kvmppc_put_books_sregs(PowerPCCPU *cpu);
+>  PowerPCCPUClass *kvm_ppc_get_host_cpu_class(void);
+> +
+> +/*
+> + * Bit position indices for KVM_PPC_COMPAT_CAP_* capabilities.
+> + * These represent the result of (63 - bit_number) for each capability bit.
+> + * Used for identifying which compatibility mode is supported by the host.
+> + */
+> +#define KVM_PPC_COMPAT_CAP_P9_IDX   1  /* 63 - 62 */
+> +#define KVM_PPC_COMPAT_CAP_P10_IDX  2  /* 63 - 61 */
+> +#define KVM_PPC_COMPAT_CAP_P11_IDX  3  /* 63 - 60 */
+Can these be derived from KVM_PPC_COMPAT_CAP_POWERXX
+Also if these defines are only used in kvm_ppc_host_compat_pvr() then
+should be defined near to it.
+
+> +
+> +uint32_t kvm_ppc_host_compat_pvr(void);
+>  void kvmppc_check_papr_resize_hpt(Error **errp);
+>  int kvmppc_resize_hpt_prepare(PowerPCCPU *cpu, target_ulong flags, int shift);
+>  int kvmppc_resize_hpt_commit(PowerPCCPU *cpu, target_ulong flags, int shift);
+> @@ -440,6 +451,11 @@ static inline PowerPCCPUClass *kvm_ppc_get_host_cpu_class(void)
+>      return NULL;
+>  }
+>  
+> +static inline uint32_t kvm_ppc_host_compat_pvr(void)
+> +{
+> +    return 0;
+> +}
+> +
+>  static inline void kvmppc_check_papr_resize_hpt(Error **errp)
+>  {
+>  }
+> -- 
+> 2.50.1 (Apple Git-155)
+>
+
+-- 
+Cheers
+~ Vaibhav
 
