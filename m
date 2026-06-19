@@ -4,102 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0FFE9CD4F26
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Jun 2026 13:34:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26179CD98F2
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Jun 2026 13:35:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1waZLj-00088P-0w; Fri, 19 Jun 2026 09:33:35 -0400
+	id 1waZNQ-0000oo-Dn; Fri, 19 Jun 2026 09:35:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1waZLg-00083t-L5
- for qemu-devel@nongnu.org; Fri, 19 Jun 2026 09:33:32 -0400
-Received: from mail-yx1-xb12e.google.com ([2607:f8b0:4864:20::b12e])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1waZNO-0000o8-6Z
+ for qemu-devel@nongnu.org; Fri, 19 Jun 2026 09:35:18 -0400
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1waZLe-0004Jr-32
- for qemu-devel@nongnu.org; Fri, 19 Jun 2026 09:33:32 -0400
-Received: by mail-yx1-xb12e.google.com with SMTP id
- 956f58d0204a3-662fa4a4470so1450515d50.0
- for <qemu-devel@nongnu.org>; Fri, 19 Jun 2026 06:33:29 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1781876008; cv=none;
- d=google.com; s=arc-20240605;
- b=KaO8JnDKZDq/VPiu8cDyduaoQKtPjvJHMtK2gqkAsv1a5XcGHLxIPv3Sin0ybV909L
- REVN/nAEU3hqRX7NFUsNN4l4ZDZrobyYmdqkgANLCVjb+1ZFMuk7URWekyAxgXzOrr7f
- UoqFxRJn+npYWPIsH88mL7cwHTQPC+sl6WVjuqQkP+O1Fe1P3ygxrOM6oJQ5+yppYx6i
- PS/+3iw7kFUIzZXaOIEFOXqtiaWpmYu6qy+l3k7hh+kcaTtt3agk3/UAIgXgN0AJDezJ
- r0Q+jzZSmOlukYjnqeeRm562Tc/DL70DJVZaL4xq6LJnCkoLFTSKKgdmVxsl3iXEk38x
- mzYA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=nn+EQsgoSzTw5w+961jb6+lbuHvg7FauP87mFpheBP4=;
- fh=/ftcwOPYeEIhzseC7WF42kR+xVR/IJiWpLC1+A7SOWQ=;
- b=UnkEdWstqc2vmsFB0dZ5Q5Kdb15FPcS4gTQgWT4C4cawBn/URwvytrltO/UKqEDgcF
- 0YrV3fjjIbe+70DW/Bd/YsVKiR9gi+Tf7NuJZEaQAdtm83+XmiVxI20MoJDqSm0FYCzy
- GtWhgovpnbsBk/0zoqu3sfV3KDXtnf1M6iTuqg174bsFp8zaZ5OLhCuZT9Igl+BSOHbm
- UIQZXgD+3xGIT10/cjWE8BGRekw6SkzIy0aQitKOg9EzVcF1dkxr9hxA7TZzcZsuDAS6
- Pg0qjkbqiDutTrIXBYfdMZtIoDn+aWYxgClBHw+23ROYDjmZT+Cs/8Re2sq27l3zkZln
- sAnQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1waZNM-0004vy-Lx
+ for qemu-devel@nongnu.org; Fri, 19 Jun 2026 09:35:17 -0400
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-49222b6e871so18085535e9.3
+ for <qemu-devel@nongnu.org>; Fri, 19 Jun 2026 06:35:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1781876008; x=1782480808; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=nn+EQsgoSzTw5w+961jb6+lbuHvg7FauP87mFpheBP4=;
- b=zOWukc361y/ZjslURwC0gDVuQ/VUQ8oXEEkUGusrhwhxkO80JN3WsWvbhEYxMZO3ew
- xreKCzcmdXttwGiqpRUeuzZ248eTtELSRFqJf3QpSP4sizZJ5DSfF2MVzFDA7oLxzCwN
- RIbm7rBeNSamYYCMY5h+DK8Rcf/mvVyTi02x1KvkadtIvUC0PDIHIB3bNOL9g0Ygu7ln
- 3VKw/qL6zt7A32P9X1rrfQUm0djEWekkaeQetYWFHCeA6ceKLfXD1nBzYTHIU9yrj6bb
- FyQvbkOFYc60giq/VvorD3Py9sevBSR4P3Ic5sIYX0fs0gvmh5fG7Kv0HVoX7vq+A1oQ
- nXLA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781876008; x=1782480808;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1781876113; x=1782480913; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=nn+EQsgoSzTw5w+961jb6+lbuHvg7FauP87mFpheBP4=;
- b=OG5hgFZ/GSRMKTebTQ66KSChyqBuEIJ2rpefr74QerBPMitJu4yKQYbvui6BaBHC6G
- CuC0gI8qY4sCy5YAko+AN0cBckJ+1PG7wxA+AoXFhCfk2IJ5oTfg2sn5cbk8+9NQXdVT
- aK8S+H9MaTkBtKFgGYKoMl/Z2kn6Y6uWimuMSfK9DDtc01QtZOIs5W+3esX7s/QdNt7e
- DcfDG/B6hPY7raidAg4dCM5VHf5t5dX3N/ZmUeLhgJi0rkhcblgX/ZWR+DBnsRxMQTEG
- hWQKNfIX90fLQgInJebubSGuW7lhEeFyW2btSTAFnp6YUb3vlgNG7aBPwK3pCjiul5hL
- jjqg==
-X-Gm-Message-State: AOJu0Yx4BZ90itHmf8XoI+Y79Qr5cEgBVlZFl+XhAYr7vAE7/0AJEss2
- ZdTdsabHliLbKcxvGAsOW7VD4gkmdG1NkUs91PeIjf6teh/VsOt3796LfKY82s+1WQS5rSYEK1P
- w4XG08RFFsm6Py70hCTSv+3TcxVGhCSWeHv+L6DibnubFI7yAsAc9
-X-Gm-Gg: AfdE7clJJk+UCUJfEF5HvSWjk/EbWClZEILo69UuE5I02QGv7K6ethcLbNb2U0nVJJm
- uAFaRL7Df2rUPv0TDIIDHYAuM+gpIy85uaOkd5BfjFCMWEeiweCgg1Hv8aGJ9CZhsHWf4BETTpS
- pDeHFVeaZNcRZlqZ667p6NJlt7s6DmEeKlO7Pf6lMq0wO0SkZT4el/kjqIFswSoYvTpWodm9Ry9
- ApV3lk0rJOrkPWAQIXIKFMxiUyu060PqAjSMvrqqxX/gO29QxltcwEzf87TAxOt3dA+KI91QjOZ
- iZBUrNbjNQlImTLUR7ebJObbXW5Bp+FUiHMc3bzQ5elQm/u/IdtRg/36
-X-Received: by 2002:a05:690e:e83:b0:660:62e5:92c9 with SMTP id
- 956f58d0204a3-662fccd3261mr4313947d50.63.1781876007233; Fri, 19 Jun 2026
- 06:33:27 -0700 (PDT)
+ bh=sRccQtMM4wDRft7V1ayAUzMdUAZaqB2JxRVUulG5evI=;
+ b=gXZevICURrrlV5tsjjWW6ZXuvx5hDu0cBdnpwlrFeQvNbtvNgtye/myRwp9w8zrFmA
+ 9erBS98/hUgyek222M1cfKwgHuBS5H9wNUpePqogku5uj8ZRfyCkJw+B1V/JwbS4CbUE
+ txNryfxNcpixrxd+WR8o3syoqNFDCJKK2ulV3OiUFEi6QaObB+1Dg2npUR/iyxIrm1zt
+ 9iqPXZgqj5ucGQT51PjN5r9sZfCOAL8a4Gvp7GRysGsy5lsXkh/OixHVcEfMFX0jxW9d
+ 43Ucnl+41i52vYpJJW86vkp5m26Gr7MDlMuKmPJObAOsdIxKFOpht/yPMroKtKF9YICK
+ i3Sw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1781876113; x=1782480913;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=sRccQtMM4wDRft7V1ayAUzMdUAZaqB2JxRVUulG5evI=;
+ b=ZziaOn6Loz6kbFpKbRxBwsV6iCJxuc5H7ImNOeyzxN1MdzaS3cX2uWjfR+VabYgfL+
+ hECXDrHXVru2p+6fA0pKG9RpDkrte7Av8MiL7uJPzsefFVrxMKpSl8FGgg+6yAv86yIj
+ xEULCYjKZSVImxZNZwX0W3K4ggPSeUlUxnRZCKT3n3WxjyTUluKNFVnxE8B9XvEOfzlr
+ RvZiyjXZf01F93RLQGcQ2Y3oXXPPrFknHCV+aEF1CIkrZMmZebfWJUB4BUDkA1ZLJ6r7
+ HTRKstAIMHpOg4doDvnLgPijq2y1YFXo2xq8Hg7sYSJ8891vpTJjzsCmvYK+FCajJb9o
+ gWGA==
+X-Gm-Message-State: AOJu0YwWi/54ZdzI3zdGcSAojOjKKqZLr4f0Elm+Umq5lMWw5RNrfi/H
+ 7VaWWk11x7Gs/8ZWwLBb10YIFZ8SlKiubwBoe+FMLNwUw2d0ePOCxMaEtqXhDxuGyIM=
+X-Gm-Gg: AfdE7cms/dTarmih8Z2sIhdU/wtqC0+I1hvuo4RTr2rN0wsb+9I2bsctb7LzqLIwR7h
+ qXSmjA+ZK3B4G3obLvMEx5QOcRTWg9YOGFI4ykKVo3Z9sbsuUBYI6zeci4vx4+jnjfy2W/m3SHC
+ yFiTmYD0rmfla64QfgrhLXUs9qB2k7XAgGqlmKkuIA+hedxkBLn04GCmkpouy8RLbNpKMzqPK/f
+ YUVrJ4XpFEBj0sG45xOU4Q3gjSlZrA13JAF36qP3ZKdpcV6FIXj0jFGAFJDy8JxYtKPB6tO9Dja
+ 9iSBWCbE4F5zXjtoy+B7YNb+1+9HJS1EpanW3fA8tllACD6inq8xWqYQ6h7a0T1uoDQv8DXYFGP
+ yKXyQJCCU1SlLU9Nw2NAgux/pHU5U6JyA8rbAM3E4oaHV4qVMDQc0N2aItXqdGNYCW9RrR2vm6k
+ uw0EnGDbDw9W9b
+X-Received: by 2002:a05:600c:4713:b0:492:4667:8c40 with SMTP id
+ 5b1f17b1804b1-49246678e86mr10379435e9.8.1781876113462; 
+ Fri, 19 Jun 2026 06:35:13 -0700 (PDT)
+Received: from draig.lan ([185.124.0.195]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4923fd30078sm70094885e9.7.2026.06.19.06.35.12
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 19 Jun 2026 06:35:12 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id DCFEA5F7FA;
+ Fri, 19 Jun 2026 14:35:11 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Cleber Rosa <crosa@redhat.com>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
+ <philmd@mailo.com>,  Daniel P. =?utf-8?Q?Berrang=C3=A9?=
+ <berrange@redhat.com>,  John Snow
+ <jsnow@redhat.com>,  Thomas Huth <th.huth+qemu@posteo.eu>
+Subject: Re: [PATCH 0/4] testing: some minor QoL changes for functional tests
+In-Reply-To: <20260614100902.885698-1-alex.bennee@linaro.org> ("Alex
+ =?utf-8?Q?Benn=C3=A9e=22's?=
+ message of "Sun, 14 Jun 2026 11:08:58 +0100")
+References: <20260614100902.885698-1-alex.bennee@linaro.org>
+User-Agent: mu4e 1.14.2-pre1; emacs 30.1
+Date: Fri, 19 Jun 2026 14:35:11 +0100
+Message-ID: <87a4sqfyb4.fsf@draig.linaro.org>
 MIME-Version: 1.0
-References: <20260618041517.573469-1-richard.henderson@linaro.org>
- <20260618041517.573469-6-richard.henderson@linaro.org>
-In-Reply-To: <20260618041517.573469-6-richard.henderson@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 19 Jun 2026 14:33:15 +0100
-X-Gm-Features: AVVi8CdaW9p9A0UWgM2lxZHQN18suuRaBg__cTEiT6qcpfUunOCj-Jemb6i28P4
-Message-ID: <CAFEAcA_wh1mC_bFU15m4B_aJriBqKbrCfpXxOXYj74Oy=53NCQ@mail.gmail.com>
-Subject: Re: [PATCH 05/10] target/arm: Implement FMLALL (multiple and indexed
- vector)
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12e;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12e.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,17 +107,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 18 Jun 2026 at 05:16, Richard Henderson
-<richard.henderson@linaro.org> wrote:
+Alex Benn=C3=A9e <alex.bennee@linaro.org> writes:
+
+> I spend a lot of time trying to recreate functional test failures on
+> the command line where I can add gdbstub or run under rr. Invariably
+> this involves running the test with "env QEMU_TEST_KEEP_SCRATCH=3D1" and
+> then extracting the command line and tweaking it.
 >
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->  target/arm/tcg/translate-sme.c | 4 ++++
->  target/arm/tcg/sme.decode      | 4 ++++
->  2 files changed, 8 insertions(+)
+> I finally got annoyed enough to look at the command line code and see
+> if I could do this a better way. Ideally I could just do something
+> like:
+>
+>   ./pyvenv/bin/meson test --suite thorough func-arm-aspeed_anacapa --cmdl=
+ine
+>
+> but for now I'll stick with copy and pasting a line from the logs and
+> saving a few seconds removing all the QMP and console sockets.
+>
+> I've also included the pylint change which is now reviewed and can be
+> picked up. If not I'll grab it next time I do a testing/next sweep.
+>
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Queued to testing/next, thanks.
 
-thanks
--- PMM
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
