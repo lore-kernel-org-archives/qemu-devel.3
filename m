@@ -4,42 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9533CD98F2
-	for <qemu-devel@archiver.kernel.org>; Fri, 19 Jun 2026 10:19:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25611CD98F6
+	for <qemu-devel@archiver.kernel.org>; Fri, 19 Jun 2026 10:19:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1waWJ9-0006JB-My; Fri, 19 Jun 2026 06:18:43 -0400
+	id 1waWJA-0006K2-I5; Fri, 19 Jun 2026 06:18:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1waWJ8-0006I9-0H
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1waWJ8-0006IH-9E
  for qemu-devel@nongnu.org; Fri, 19 Jun 2026 06:18:42 -0400
 Received: from relay.virtuozzo.com ([130.117.225.111])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1waWJ5-0000ew-E6
- for qemu-devel@nongnu.org; Fri, 19 Jun 2026 06:18:41 -0400
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1waWJ5-0000ey-EB
+ for qemu-devel@nongnu.org; Fri, 19 Jun 2026 06:18:42 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=virtuozzo.com; s=relay; h=MIME-Version:Message-ID:Date:Subject:From:
- Content-Type; bh=wBrE6v3lVOCEPIWG8+1Ll7UvgIVXe4mtnOov3hTw8o4=; b=H8RXn7yqXEU9
- be4SEGfn6lmKXpOojIK1KB2MEWqV+TPb+XueD8qvSbCz+3zhw4zr0PZQUxyQLrC8zVw9GVqeRnOis
- yeDAmH+bpXUq31fh76UNkJ07nsvBA/qoNYEjxeHJ5z7EAlNyQjBFRnZwIUwGUpHOlhfh2atqy25DX
- HdYLJMMo/+3CNmsybiJCWTsM/U1sDLdPxm8plI5D9tyyluLekLlQIwjAQmsd6Y0g5g+F/1RB318AJ
- dGS+Uuhg0Sl9RwCXBJLaVAWneBFxN2msbCJAQwle4Lv1hV5ae8tcVtKzf+EfgncJgUWxbJCK09U4W
- vWYCU++GeOqf3LMZE6e7Wg==;
+ Content-Type; bh=Mm/znqLMjbKJQBKADZsQW4DEKGoSk2pjV2IwdgPHUis=; b=Fin5O+srtWYd
+ u2NFFYp4ozMjv1DXH2LiQf+IWxCD+mJvSDWTW+/0jXTFlotb+6fix/v7i3nI9bssiDGGLIqyk+9/A
+ RaC9FRjva0YdSi/A65oF6eq+0nDq5AVPLZqFzF+vAh96KffQdtIBb4nsb4lAtwONnBTmfsYRcN5CB
+ pF++mBxzwwiop7m28jwZ3ppM3Cu6PTR5KLGsokTOr6I5XwZz4f8RYVUjcRboYVKxuYUt+SlIP/5Lx
+ wjW9Ezok72V5SA+S3W6gnOD2x1UCqpuGtgo2dKw/1dW2GBIMrsAaRHkfkAXwTZ3j7O0m/L9LOubRm
+ +Mw4NiWHUVhQ4zokb2mW1A==;
 Received: from ch-demo-asa.virtuozzo.com ([130.117.225.8] helo=athena.sw.ru)
  by relay.virtuozzo.com with esmtp (Exim 4.96)
- (envelope-from <den@openvz.org>) id 1waWIT-006QLJ-39;
- Fri, 19 Jun 2026 12:18:33 +0200
+ (envelope-from <den@openvz.org>) id 1waWIS-006QLJ-1D;
+ Fri, 19 Jun 2026 12:18:32 +0200
 To: qemu-devel@nongnu.org
 Cc: marcandre.lureau@redhat.com, anisinha@redhat.com, berrange@redhat.com,
  peterx@redhat.com, farosas@suse.de, "Denis V. Lunev" <den@openvz.org>
-Subject: [PATCH v5 3/7] system/cpus: refuse memsave/pmemsave while guest RAM
- is being migrated
-Date: Fri, 19 Jun 2026 12:18:30 +0200
-Message-ID: <20260619101834.228432-4-den@openvz.org>
+Subject: [PATCH v5 0/7] dump: report win-dmp via vmcoreinfo,
+ guard guest-RAM reads during migration
+Date: Fri, 19 Jun 2026 12:18:27 +0200
+Message-ID: <20260619101834.228432-1-den@openvz.org>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260619101834.228432-1-den@openvz.org>
-References: <20260619101834.228432-1-den@openvz.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: softfail client-ip=130.117.225.111; envelope-from=den@openvz.org;
@@ -67,57 +65,78 @@ From:  "Denis V. Lunev" via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-memsave and pmemsave read guest memory and write it to a file, with no
-guard at all. They run on the main thread with the BQL held, so on a
-postcopy destination touching a not-yet-received page deadlocks: the
-thread blocks on the userfault while the postcopy incoming path waits for
-the BQL to install that page. During precopy the read returns incomplete
-state instead.
+This series fixes Windows-dump (win-dmp) availability reporting and closes
+a related hole found while doing so: several commands read guest RAM and
+must not run while a migration destination is still receiving it.
 
-Refuse both while guest RAM is still being received, using the same
-migration_guest_ram_loading() check as dump-guest-memory.
+dump-guest-memory, memsave and pmemsave all read guest RAM on the main
+thread with the BQL held. On a migration destination that RAM is either
+still being loaded (precopy) or pulled from the source on demand
+(postcopy, where the guest already runs). During precopy the read returns
+incomplete data; during postcopy it deadlocks, as the read faults on a
+not-yet-received page while the postcopy incoming path needs the BQL the
+reader holds to install it. dump-guest-memory only guarded the precopy
+phase and memsave/pmemsave had no guard at all, so a new
+migration_guest_ram_loading() predicate captures both phases and all
+three commands now use it.
 
-Signed-off-by: Denis V. Lunev <den@openvz.org>
----
- system/cpus.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+query-dump-guest-memory-capability also advertised win-dmp for every x86
+VM, and dump-guest-memory accepted it unconditionally; win-dmp only works
+when the guest has published a Windows dump header through vmcoreinfo.
+win_dump_available() now reads that note back from the vmcoreinfo device
+and validates it, keeping its original signature, so the dump.c call sites
+are unchanged.
 
-diff --git a/system/cpus.c b/system/cpus.c
-index bded87feb1..ba9da4ee06 100644
---- a/system/cpus.c
-+++ b/system/cpus.c
-@@ -42,6 +42,7 @@
- #include "hw/core/nmi.h"
- #include "system/replay.h"
- #include "system/runstate.h"
-+#include "migration/misc.h"
- #include "system/cpu-timers.h"
- #include "system/whpx.h"
- #include "hw/core/boards.h"
-@@ -841,6 +842,11 @@ void qmp_memsave(uint64_t addr, uint64_t size, const char *filename,
-     uint8_t buf[1024];
-     uint64_t orig_addr = addr, orig_size = size;
- 
-+    if (migration_guest_ram_loading()) {
-+        error_setg(errp, "Guest memory access not allowed during migration");
-+        return;
-+    }
-+
-     if (!has_cpu) {
-         cpu_index = 0;
-     }
-@@ -887,6 +893,11 @@ void qmp_pmemsave(uint64_t addr, uint64_t size, const char *filename,
-     uint64_t l;
-     uint8_t buf[1024];
- 
-+    if (migration_guest_ram_loading()) {
-+        error_setg(errp, "Guest memory access not allowed during migration");
-+        return;
-+    }
-+
-     f = fopen(filename, "wb");
-     if (!f) {
-         error_setg_file_open(errp, errno, filename);
+The series also adds the first qtest coverage for dump-guest-memory:
+capability list, ELF and kdump output, protocol errors, and win-dmp
+reporting in both directions (the positive case forges a vmcoreinfo note,
+so no Windows guest is needed).
+
+Tested:
+ - Linux guest: win-dmp not advertised; an explicit win-dmp request is
+   rejected without stopping the guest; elf/kdump dumps work.
+ - Windows Server 2022 guest: win-dmp advertised once vmcoreinfo is
+   populated; dump-guest-memory format=win-dmp produces a valid (PAGEDU64)
+   crashdump.
+ - Live postcopy migration: on the destination, dump-guest-memory, memsave
+   and pmemsave are all refused immediately, without faulting a page.
+
+This supersedes the earlier "dump: enhance win_dump_available to report
+properly" series, which obtained the note by reusing the dump setup path
+(splitting dump_init() and stopping the vCPUs). Reading vmcoreinfo
+directly is much smaller.
+
+Changes since v4:
+ - Refuse guest-RAM reads (dump-guest-memory, memsave, pmemsave) while a
+   migration destination is still receiving RAM, via a shared
+   migration_guest_ram_loading() helper.
+ - Decide win-dmp availability by reading vmcoreinfo directly instead of
+   splitting dump_init()/dump_preinit() and stopping the vCPUs.
+ - Add dump-guest-memory qtests.
+
+Denis V. Lunev (7):
+  migration: add migration_guest_ram_loading() helper
+  dump: refuse dump-guest-memory while guest RAM is being migrated
+  system/cpus: refuse memsave/pmemsave while guest RAM is being migrated
+  dump: make win_dump_available() check vmcoreinfo for a Windows dump
+    header
+  tests/qtest: add dump-guest-memory test
+  tests/qtest/dump: reject win-dmp without vmcoreinfo
+  tests/qtest/dump: cover win-dmp availability via vmcoreinfo
+
+ MAINTAINERS              |   1 +
+ dump/dump.c              |   5 +-
+ dump/win_dump-x86.c      |  42 +++++
+ include/migration/misc.h |   3 +
+ migration/migration.c    |   6 +
+ system/cpus.c            |  11 ++
+ tests/qtest/dump-test.c  | 331 +++++++++++++++++++++++++++++++++++++++
+ tests/qtest/meson.build  |   1 +
+ 8 files changed, 398 insertions(+), 2 deletions(-)
+ create mode 100644 tests/qtest/dump-test.c
+
+
+base-commit: c7cf7c810153d6f5f31aa2d5c0dee9087f6b4dff
 -- 
 2.53.0
 
