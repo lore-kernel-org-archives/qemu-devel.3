@@ -4,73 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70B38CDB46B
-	for <qemu-devel@archiver.kernel.org>; Sat, 20 Jun 2026 13:55:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B32ECD4F26
+	for <qemu-devel@archiver.kernel.org>; Sat, 20 Jun 2026 13:56:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1waw9n-0000M2-5Y; Sat, 20 Jun 2026 09:54:47 -0400
+	id 1wawAv-0001OV-Hl; Sat, 20 Jun 2026 09:55:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1waw9g-0000LE-JU
- for qemu-devel@nongnu.org; Sat, 20 Jun 2026 09:54:41 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1waw9f-0007ZU-Ah
- for qemu-devel@nongnu.org; Sat, 20 Jun 2026 09:54:40 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1781963678;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=vFqTnjWUrOsUauEKaiY/KdLrZIQf/63N7QHq3InDHI4=;
- b=hAKVL0CXzTCCPSktikB3znXB6KM+bkEbLXQkn2ZGgJS9gj77BPp2VdC/gp9aWnpK3mwJx3
- uZVKjttTJevNXOQnEvzRjW9ImWGyscZnOiMjyTP1Jt2OTAhAa8C8HyoBDrxSU/X+b6HxEu
- en6Y+KtdmJhUsm380rYaqAkc3/yuH6U=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-176-5ZpwF0E7NsOuaopmwytKfg-1; Sat,
- 20 Jun 2026 09:54:35 -0400
-X-MC-Unique: 5ZpwF0E7NsOuaopmwytKfg-1
-X-Mimecast-MFC-AGG-ID: 5ZpwF0E7NsOuaopmwytKfg_1781963674
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id DC644195608C; Sat, 20 Jun 2026 13:54:33 +0000 (UTC)
-Received: from localhost (unknown [10.2.16.21])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 29D1518005B0; Sat, 20 Jun 2026 13:54:33 +0000 (UTC)
-Date: Sat, 20 Jun 2026 08:40:48 -0400
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org, peter.maydell@linaro.org,
- richard.henderson@linaro.org, pbonzini@redhat.com,
- stefanha@redhat.com, pierrick.bouvier@oss.qualcomm.com
-Subject: Re: [PULL 0/1] Plugins update for 2026-06-18
-Message-ID: <20260620124048.GA74461@fedora>
-References: <20260618234749.1659878-1-pierrick.bouvier@oss.qualcomm.com>
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1wawAn-0001EN-EO
+ for qemu-devel@nongnu.org; Sat, 20 Jun 2026 09:55:52 -0400
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1wawAl-0000Hz-U5
+ for qemu-devel@nongnu.org; Sat, 20 Jun 2026 09:55:49 -0400
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-4903d730b1fso42162005e9.2
+ for <qemu-devel@nongnu.org>; Sat, 20 Jun 2026 06:55:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1781963746; x=1782568546; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=uwt3b/P70uRIbEUCyiTiXc2RdDQvL55U/TceROkjDVc=;
+ b=Mb9omusXUVWDX3Hjks7+lD/VVdEPn5wAtiQkQ3TDFM9GgLhe3qNYbh8Ar2xKtV+5gL
+ T4+FQANF5jydJ/7/7dqVvSdQiySNL86/9BJqJCBuCQ4InDT5KODX6WQNglvakH7AWSSM
+ Cr6+fXyYjEWxwH3Cy64MfDPnHu9Q9K5Yd8I5glHoVCTNHAySf+WxdyIt/vUZZY06cpCc
+ nBitjzz7U6RvfUQ4zOYplW4Qcvo1KVzxdkRm13SffVn/tnRwti8/UbcJkFO8lpoBmCK7
+ UwstKJ7ERDo7Ppz5zSqkE2Xw1pLhCHb/sfRVzY6keYZ+NvxGV23ZOZgfbnL7tHn9wwqF
+ 3HUw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1781963746; x=1782568546;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=uwt3b/P70uRIbEUCyiTiXc2RdDQvL55U/TceROkjDVc=;
+ b=do7QnkyaH4wRoJntgc6og/B3TarRm6d7G2Ab5/SBZO382QiaFcOje5cLibdpGaGLDl
+ zwEgEpUY4s145jUos5fSSZlXUyhnwsLXmlWebXH7GzhbGhvkQe+UGxwCrZiYI7/wzZAq
+ A5gK2HOehyLoV/TkqgPrTu4497s5dcMurHNwDtrfYixiDIKqOvXh6smrNeevDxn7XTDy
+ a7sKZjgQlP/oqJmYUnud+P6JwKJFgPKOQrzFz5Nzc7NIEoLsBNghCUaWSWIpp3MLgrTY
+ IuWWvnOxjoSOAuuFVjgpPCUiuDKOxFHkFsESwNkeTduTI21vLTpacnILmrXm+ckP1mNo
+ zGmg==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ922ONeZZl3NxSY16/3SwbiaBVbzDoCMhshQH85NkLEv2G2GLaRXf6EgaWNhkFUCqrZLMdL8Fgy9YAU@nongnu.org
+X-Gm-Message-State: AOJu0YxX3dYoWjOQdsT/NooijzmYzp6JnB+w72rhfByqTQJf5RpmPU+C
+ t9ncHJAUlBbfWqILMHQ/HAIy+0qBeybbPn06t4w1GE5Iww9Ho36mLXD5SaBHXQRqZWo=
+X-Gm-Gg: AfdE7clif9f8kulmWAUE7RSakeNlr9SNrGLlUQkNBmkfCOpfzsaT3RHqPKz0u61UuA6
+ AxgQkvlAUDlEdjUyWLiUMC3MtMo/N86kGAGLvW78r6/plz9xXUrECtNxnq7Y6W8J8V17EsLWATx
+ j8ONWtYCsQXTauixoDsXH6Lv2s7Qb3u6kcTKFBRh2ptoNagwYLFKoIvidlEGaTOffn8XMEd6Y2x
+ PuiQhGFJCpzrzn88+VyHEqH64ZGroDUDg3875hJN/N2vVppuDXUs5EvB3J0AZrRYr9oN6temPiB
+ mf51C6p5A+xbl9FxP1JdkgDloPuBL4ZR+8Rmb1n3QEuXzTn4ySkUZJ5IbYbBmh0bxAuT0VwYbMQ
+ M/BnlKupUSUSF0R79r6UMOeS0tTSKeCrgcKnQfJKA7AwcsyimjwcnXODmkOmIWQBE452XBpeRqe
+ A5czI9+hB2o11c
+X-Received: by 2002:a05:600c:a315:b0:490:b629:286c with SMTP id
+ 5b1f17b1804b1-4923f33cb1emr109243845e9.12.1781963745767; 
+ Sat, 20 Jun 2026 06:55:45 -0700 (PDT)
+Received: from draig.lan ([185.124.0.195]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-466648c5de7sm8020663f8f.15.2026.06.20.06.55.44
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sat, 20 Jun 2026 06:55:45 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 222CA5F80A;
+ Sat, 20 Jun 2026 14:55:44 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Damien Zammit <damien@zamaudio.com>
+Cc: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ bug-hurd@gnu.org, qemu-devel@nongnu.org,  qemu-block@nongnu.org
+Subject: Re: [PATCH v5 0/5 qemu] GNU/Hurd support
+In-Reply-To: <a612eb6b-8e42-42e0-a6c8-4f09b33fdcab@zamaudio.com> (Damien
+ Zammit's message of "Sat, 20 Jun 2026 08:34:31 +0000")
+References: <20260208055858.2166524-1-damien@zamaudio.com>
+ <977b7644-2511-4ded-9f7c-81dd610b6f04@oss.qualcomm.com>
+ <a612eb6b-8e42-42e0-a6c8-4f09b33fdcab@zamaudio.com>
+User-Agent: mu4e 1.14.2; emacs 30.1
+Date: Sat, 20 Jun 2026 14:55:44 +0100
+Message-ID: <87ldc9b9jz.fsf@draig.linaro.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="i4qOSGbBBo9Byaxe"
-Content-Disposition: inline
-In-Reply-To: <20260618234749.1659878-1-pierrick.bouvier@oss.qualcomm.com>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 8
-X-Spam_score: 0.8
-X-Spam_bar: /
-X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x334.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,30 +108,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Damien Zammit <damien@zamaudio.com> writes:
 
---i4qOSGbBBo9Byaxe
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+> Hi Phil,
+>
+> On 18/6/26 6:33 pm, Philippe Mathieu-Daud=C3=A9 wrote:=20
+>
+>  On 8/2/26 06:59, Damien Zammit wrote:
+>
+>  ...
+> Executed qemu-system-{i386,x86_64} on GNU/Hurd x86_64 successfully.
+>
+>  Could we get this configuration integrated in our CI to be sure
+> it won't bitrot?
+>
+> See how we test OpenBSD or Haiku for example:
+>
+> tests/vm/Makefile.include:28:X86_IMAGES :=3D freebsd netbsd openbsd
+> haiku.x86_64
+>
+> I took a quick look, it appears virtio-blk and virtio-net are both requir=
+ed
+> to automate the building of the test vm, but GNU/Hurd does not have
+> drivers for these yet.
 
-Applied, thanks.
+What block and network devices does it understand. We do emulate some of
+the more common ones and I think the old school IDE/ATAPI interfaces as
+well.
 
-Please update the changelog at https://wiki.qemu.org/ChangeLog/11.1 for any user-visible changes.
+>
+> I can take another look at this when virtio is working in Hurd with rump =
+framework.
+>
+> Thanks,
+> Damien
 
---i4qOSGbBBo9Byaxe
-Content-Type: application/pgp-signature; name=signature.asc
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmo2ilAACgkQnKSrs4Gr
-c8jgNwgAti2yirrRpk8atndK6OIul3VwXFvH4Ff3EyhkRTzrnis2qeCH3iQEAAJA
-JXax5qIf8+juL/STUTzo5s91txxOoYyETRbZw82xYLCf9F8Npnoa3khbDxwF0YF0
-e8wTolq9b6e+88fumvhDOfSWgtUhctL29htM5bS7gXLfGdQEcWffouUBhykQEbbp
-wTYP5S2t81xGZYtBN54azo4HZhZJtEs2wJGfqmMq2M8SmDfDncCIyMLS7wRQCq8A
-3iPaCOc5QbE/IDCUCT3m928g+rqQca+WN5WG2pXoPTAUvvuve4AE2jTSZYEqn9fH
-r1YUdCHlTv3izBxnZJc17RG1/XVwyA==
-=j6rA
------END PGP SIGNATURE-----
-
---i4qOSGbBBo9Byaxe--
-
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
