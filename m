@@ -4,83 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4FFE4CDB46B
-	for <qemu-devel@archiver.kernel.org>; Sat, 20 Jun 2026 07:16:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3853CDB466
+	for <qemu-devel@archiver.kernel.org>; Sat, 20 Jun 2026 08:35:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wapvT-0007rL-Cr; Sat, 20 Jun 2026 03:15:35 -0400
+	id 1warA4-0007jb-8g; Sat, 20 Jun 2026 04:34:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <bogorodskiy@gmail.com>)
- id 1wapvS-0007rD-0y
- for qemu-devel@nongnu.org; Sat, 20 Jun 2026 03:15:34 -0400
-Received: from mail-ej1-x632.google.com ([2a00:1450:4864:20::632])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <bogorodskiy@gmail.com>)
- id 1wapvO-0007HS-1I
- for qemu-devel@nongnu.org; Sat, 20 Jun 2026 03:15:32 -0400
-Received: by mail-ej1-x632.google.com with SMTP id
- a640c23a62f3a-bec4639953dso479965566b.1
- for <qemu-devel@nongnu.org>; Sat, 20 Jun 2026 00:15:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1781939725; x=1782544525; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=0jkUB5ihzKCoeH8C1/e7M+7vhcvxR+AEEQnUIiHrAqA=;
- b=BR1HCTr1Za2QkGxfYeMP+hnWnBOTDa8mv6gw1cHMOvFqBJN4JJFFTMe+nY06SF+Xwt
- xyyleC9MKko8NgZ7/0P6OWG4Qj1e0Ll5GxJ2P2GTeg+A2WCyjCpttJH76eCq+LoFt3rk
- YSZZAB33hPTd2cFUaOYq0FF0hy6XdtySF0UhCqHzmjHsdi6wKOHL9z9+o0QhtF5KjJMt
- d7LCJ4BmZWD1Cb8b0Tu45FlyAAufNSgdK3r3kumYGvVU1xPlgufEqzaFf3a/dUSzpVJE
- jq2ZFCY9UR40iJeSx9/pdKWzrF/aI9SfhqczptBkmo3njM+MGYBVT2E/wwC67LKpPOi4
- PwDg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781939725; x=1782544525;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=0jkUB5ihzKCoeH8C1/e7M+7vhcvxR+AEEQnUIiHrAqA=;
- b=AGOubiJbx57NKNIcwaKzyqUJGVqU5xJFWqJcvsp5O7hm4wFWl/bq0AD/YW7N3cuquv
- z21BLtqENvT5yooNYf5PEdMGoTNMiOQkWyh7T6SrbproJ/WppwRLR7K9y56t6ySQ7k50
- e87wdKpAg++zKQ5SDkONz9zkKMQGecuUnaKS5HvWQWGLEEjyE7biJZHB5x+KDZQ6y3fz
- faCIbV3P9EwtNFQHXUF2G7S0utRl/NEZRd6rpq6KEx+K0HsF1huqjSt6IPFstkOB2cDK
- w1CHLtwlMbHwdWxzuyXw2RNLEmJvpnJJtEqbVRZZobZzyeKJzHI1WMnMVDRrHCciLJrl
- wwAw==
-X-Gm-Message-State: AOJu0Yy/UU3qSBjhcjZo2cPSNTS8v1C8V91SyvSkFx6K2jT83K8cDYvo
- DHlog7CkbO2w90pu59MrgTp329Rn+IqcG+0OGjYc5qXWXYvcqlKAVGDzQFZGTaje
-X-Gm-Gg: AfdE7cl8frbkvXD9rDRqzbuYKUX5Dyf48HlPttZNMCzJoayxMlTPcuc+MPXrZovbkq+
- TOn637LsO7TKsG6HBOXQ0k8qI5q8921kgN+4Ykf8vU52gMBdKsWu1fiVPLasrESwbpVXJUTp189
- v5W50N4Kcl92zU6F/5q5Jm69jEXSqI4/GsDwoq1j0jAROM4W4vLVSj7Mt6xUcbM/CTnBxXzkcAP
- hk4FXh5S6atoekt0yLreJOihICWPC8MMBB0CUjbX4mPBLY9Tuk+A0v7mMS5OLMNXcMkKiwfLEox
- HGrf1BKmrrbj+Yc9BFEdZrSKS6nCv8NHIG9Ef+l1NoG5U33DlB95AJyh5wHwYdxe0aJoIkpg3Ng
- QNBpci/QnCPuIiRVcnoHdztdpGNb9QL+Uv+o7D1z5dM2SLefroL+i/VcJFZMUmGzWJsNUmqAqkh
- oob0bYvhmntCds1mKMqLJ+
-X-Received: by 2002:a17:907:6c10:b0:bed:83ee:922b with SMTP id
- a640c23a62f3a-c0c63db98d1mr97613366b.7.1781939725201; 
- Sat, 20 Jun 2026 00:15:25 -0700 (PDT)
-Received: from tulp.my.domain ([2001:1c02:1a15:3000:ee82:4536:a8f2:9e22])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-c0c60bc01d2sm69508566b.31.2026.06.20.00.15.24
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 20 Jun 2026 00:15:24 -0700 (PDT)
-From: Roman Bogorodskiy <bogorodskiy@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: Roman Bogorodskiy <bogorodskiy@gmail.com>
-Subject: [PATCH] qga: implement 'guest-get-fsinfo' for FreeBSD
-Date: Sat, 20 Jun 2026 09:14:33 +0200
-Message-ID: <20260620071433.16830-1-bogorodskiy@gmail.com>
-X-Mailer: git-send-email 2.52.0
+ (Exim 4.90_1) (envelope-from <damien@zamaudio.com>)
+ id 1warA1-0007iN-T9
+ for qemu-devel@nongnu.org; Sat, 20 Jun 2026 04:34:41 -0400
+Received: from mail-4317.protonmail.ch ([185.70.43.17])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <damien@zamaudio.com>)
+ id 1war9z-0002y7-Cj
+ for qemu-devel@nongnu.org; Sat, 20 Jun 2026 04:34:41 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zamaudio.com;
+ s=protonmail3; t=1781944477; x=1782203677;
+ bh=dL8eWft9febIY00ubN4SVI87eyqnrRB7N7GpG5iYwCg=;
+ h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+ Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+ Message-ID:BIMI-Selector;
+ b=gbj00d/Nv5TJqz5/Y1xYVSYgNgJqg6V/NOuhYFidUyHsrFJjjpsDvwWjP6kdbUU8X
+ de34c3or2zDpVWspz8Xs05pmujPn3AcmaJkrcQBws5r97WU3vJSibpbLvFFJg5nUOH
+ zoI0yX3nd5ysnOJZU8WTwPDhJ5R9qztaAxzrLaPDsOi6pjtRJVGBUmmGm76UcvXl+r
+ AtNnrIfYYm9PaUbysl0ddbKD2f0BctMvbX1RZjkd3kQxs3myXB7KnVsPWIVzDQcu98
+ DIJPG1E0avdFwW8UWYJ9xyEM8CqdK76Igp01QhSwRHGK3Fb+cygnlzX/A6Wj/3mKEt
+ 2/Cu/YK6Ixo1Q==
+Date: Sat, 20 Jun 2026 08:34:31 +0000
+To: =?utf-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ bug-hurd@gnu.org
+From: Damien Zammit <damien@zamaudio.com>
+Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org
+Subject: Re: [PATCH v5 0/5 qemu] GNU/Hurd support
+Message-ID: <a612eb6b-8e42-42e0-a6c8-4f09b33fdcab@zamaudio.com>
+In-Reply-To: <977b7644-2511-4ded-9f7c-81dd610b6f04@oss.qualcomm.com>
+References: <20260208055858.2166524-1-damien@zamaudio.com>
+ <977b7644-2511-4ded-9f7c-81dd610b6f04@oss.qualcomm.com>
+Feedback-ID: 43209410:user:proton
+X-Pm-Message-ID: d3fe9b8efa6f637fd191be4c51600282d9416151
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::632;
- envelope-from=bogorodskiy@gmail.com; helo=mail-ej1-x632.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: multipart/alternative;
+ boundary="b1=_jElOVuhMh05H2UPFUM5oZ5pDGQ3NhnOX5aj7R7nxw"
+Received-SPF: pass client-ip=185.70.43.17; envelope-from=damien@zamaudio.com;
+ helo=mail-4317.protonmail.ch
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,197 +71,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Implement the qmp_guest_get_fsinfo() API for FreeBSD.
-To implement it, reuse build_fs_mount_list() which is already
-implemented for FreeBSD. Extend the FsMount type to include
-a string "fromname" attribute to store the disk the FS is mounted from.
+--b1=_jElOVuhMh05H2UPFUM5oZ5pDGQ3NhnOX5aj7R7nxw
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: base64
 
-Disk mapping info is not covered by this implementation.
+SGkgUGhpbCwKCk9uIDE4LzYvMjYgNjozMyBwbSwgUGhpbGlwcGUgTWF0aGlldS1EYXVkw6kgd3Jv
+dGU6Cgo+IE9uIDgvMi8yNiAwNjo1OSwgRGFtaWVuIFphbW1pdCB3cm90ZToKPgo+PiAuLi4KPj4g
+RXhlY3V0ZWQgcWVtdS1zeXN0ZW0te2kzODYseDg2XzY0fSBvbiBHTlUvSHVyZCB4ODZfNjQgc3Vj
+Y2Vzc2Z1bGx5LgoKPiBDb3VsZCB3ZSBnZXQgdGhpcyBjb25maWd1cmF0aW9uIGludGVncmF0ZWQg
+aW4gb3VyIENJIHRvIGJlIHN1cmUKPiBpdCB3b24ndCBiaXRyb3Q/Cj4KPiBTZWUgaG93IHdlIHRl
+c3QgT3BlbkJTRCBvciBIYWlrdSBmb3IgZXhhbXBsZToKPgo+IHRlc3RzL3ZtL01ha2VmaWxlLmlu
+Y2x1ZGU6Mjg6WDg2X0lNQUdFUyA6PSBmcmVlYnNkIG5ldGJzZCBvcGVuYnNkCj4gaGFpa3UueDg2
+XzY0CgpJIHRvb2sgYSBxdWljayBsb29rLCBpdCBhcHBlYXJzIHZpcnRpby1ibGsgYW5kIHZpcnRp
+by1uZXQgYXJlIGJvdGggcmVxdWlyZWQKdG8gYXV0b21hdGUgdGhlIGJ1aWxkaW5nIG9mIHRoZSB0
+ZXN0IHZtLCBidXQgR05VL0h1cmQgZG9lcyBub3QgaGF2ZSBkcml2ZXJzIGZvciB0aGVzZSB5ZXQu
+CgpJIGNhbiB0YWtlIGFub3RoZXIgbG9vayBhdCB0aGlzIHdoZW4gdmlydGlvIGlzIHdvcmtpbmcg
+aW4gSHVyZCB3aXRoIHJ1bXAgZnJhbWV3b3JrLgoKVGhhbmtzLApEYW1pZW4=
 
-Signed-off-by: Roman Bogorodskiy <bogorodskiy@gmail.com>
----
- qga/commands-bsd.c    | 62 ++++++++++++++++++++++++++++++++++++++++++-
- qga/commands-common.h |  1 +
- qga/commands-posix.c  |  3 +++
- qga/qapi-schema.json  | 12 ++++-----
- 4 files changed, 71 insertions(+), 7 deletions(-)
+--b1=_jElOVuhMh05H2UPFUM5oZ5pDGQ3NhnOX5aj7R7nxw
+Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: base64
 
-diff --git a/qga/commands-bsd.c b/qga/commands-bsd.c
-index 94ff6fee6a..a258133918 100644
---- a/qga/commands-bsd.c
-+++ b/qga/commands-bsd.c
-@@ -20,6 +20,7 @@
- #include <sys/ucred.h>
- #include <sys/mount.h>
- #include <net/if_dl.h>
-+#include <sys/statvfs.h>
- #if defined(__NetBSD__) || defined(__OpenBSD__)
- #include <net/if_arp.h>
- #include <netinet/if_ether.h>
-@@ -28,7 +29,7 @@
- #endif
- #include <paths.h>
- 
--#if defined(CONFIG_FSFREEZE) || defined(CONFIG_FSTRIM)
-+#if defined(CONFIG_FSFREEZE) || defined(CONFIG_FSTRIM) || defined(__FreeBSD__)
- bool build_fs_mount_list(FsMountList *mounts, Error **errp)
- {
-     FsMount *mount;
-@@ -55,6 +56,7 @@ bool build_fs_mount_list(FsMountList *mounts, Error **errp)
- 
-         mount->dirname = g_strdup(mntp->f_mntonname);
-         mount->devtype = g_strdup(mntp->f_fstypename);
-+        mount->fromname = g_strdup(mntp->f_mntfromname);
-         mount->devmajor = major(mount->dev);
-         mount->devminor = minor(mount->dev);
-         mount->fsid = mntp->f_fsid;
-@@ -178,3 +180,61 @@ bool guest_get_hw_addr(struct ifaddrs *ifa, unsigned char *buf,
-     return true;
- }
- #endif /* HAVE_GETIFADDRS */
-+
-+#if defined(__FreeBSD__)
-+static GuestFilesystemInfo *build_guest_fsinfo(struct FsMount *mount,
-+                                               Error **errp)
-+{
-+    GuestFilesystemInfo *fs = g_malloc0(sizeof(*fs));
-+    struct statvfs buf;
-+    unsigned long used, nonroot_total, fr_size;
-+
-+    fs->mountpoint = g_strdup(mount->dirname);
-+    fs->type = g_strdup(mount->devtype);
-+    fs->name = g_strdup(g_path_get_basename(mount->fromname));
-+
-+    if (statvfs(fs->mountpoint, &buf) == 0) {
-+        fr_size = buf.f_frsize;
-+        used = buf.f_blocks - buf.f_bfree;
-+        nonroot_total = used + buf.f_bavail;
-+        fs->used_bytes = used * fr_size;
-+        fs->total_bytes = nonroot_total * fr_size;
-+        fs->total_bytes_privileged = buf.f_blocks * fr_size;
-+
-+        fs->has_total_bytes = true;
-+        fs->has_total_bytes_privileged = true;
-+        fs->has_used_bytes = true;
-+    }
-+
-+    return fs;
-+}
-+
-+GuestFilesystemInfoList *qmp_guest_get_fsinfo(Error **errp)
-+{
-+    FsMountList mounts;
-+    struct FsMount *mount;
-+    GuestFilesystemInfoList *ret = NULL;
-+    Error *local_err = NULL;
-+
-+    QTAILQ_INIT(&mounts);
-+    if (!build_fs_mount_list(&mounts, &local_err)) {
-+        error_propagate(errp, local_err);
-+        return NULL;
-+    }
-+
-+    QTAILQ_FOREACH(mount, &mounts, next) {
-+        g_debug("Building guest fsinfo for '%s'", mount->dirname);
-+
-+        QAPI_LIST_PREPEND(ret, build_guest_fsinfo(mount, &local_err));
-+        if (local_err) {
-+            error_propagate(errp, local_err);
-+            qapi_free_GuestFilesystemInfoList(ret);
-+            ret = NULL;
-+            break;
-+        }
-+    }
-+
-+    free_fs_mount_list(&mounts);
-+    return ret;
-+}
-+#endif /* __FreeBSD__ */
-diff --git a/qga/commands-common.h b/qga/commands-common.h
-index 263e7c0525..a07d0885f5 100644
---- a/qga/commands-common.h
-+++ b/qga/commands-common.h
-@@ -29,6 +29,7 @@ typedef struct FsMount {
- #if defined(__FreeBSD__)
-     dev_t dev;
-     fsid_t fsid;
-+    char *fromname;
- #endif
-     QTAILQ_ENTRY(FsMount) next;
- } FsMount;
-diff --git a/qga/commands-posix.c b/qga/commands-posix.c
-index 837be51c40..837e285b6d 100644
---- a/qga/commands-posix.c
-+++ b/qga/commands-posix.c
-@@ -731,6 +731,9 @@ void free_fs_mount_list(FsMountList *mounts)
-          QTAILQ_REMOVE(mounts, mount, next);
-          g_free(mount->dirname);
-          g_free(mount->devtype);
-+#if defined(__FreeBSD__)
-+         g_free(mount->fromname);
-+#endif
-          g_free(mount);
-      }
- }
-diff --git a/qga/qapi-schema.json b/qga/qapi-schema.json
-index c57bc9a02f..8cd0ba048b 100644
---- a/qga/qapi-schema.json
-+++ b/qga/qapi-schema.json
-@@ -874,7 +874,7 @@
-   'data': [ 'ide', 'fdc', 'scsi', 'virtio', 'xen', 'usb', 'uml', 'sata',
-             'sd', 'unknown', 'ieee1394', 'ssa', 'fibre', 'raid', 'iscsi',
-             'sas', 'mmc', 'virtual', 'file-backed-virtual', 'nvme' ],
--  'if': { 'any': [ 'CONFIG_WIN32', 'CONFIG_LINUX' ] } }
-+  'if': { 'any': [ 'CONFIG_WIN32', 'CONFIG_LINUX', 'CONFIG_FREEBSD' ] } }
- 
- ##
- # @GuestPCIAddress:
-@@ -892,7 +892,7 @@
- { 'struct': 'GuestPCIAddress',
-   'data': {'domain': 'int', 'bus': 'int',
-            'slot': 'int', 'function': 'int'},
--  'if': { 'any': [ 'CONFIG_WIN32', 'CONFIG_LINUX' ] } }
-+  'if': { 'any': [ 'CONFIG_WIN32', 'CONFIG_LINUX', 'CONFIG_FREEBSD' ] } }
- 
- ##
- # @GuestCCWAddress:
-@@ -912,7 +912,7 @@
-            'ssid': 'int',
-            'subchno': 'int',
-            'devno': 'int'},
--  'if': { 'any': [ 'CONFIG_WIN32', 'CONFIG_LINUX' ] } }
-+  'if': { 'any': [ 'CONFIG_WIN32', 'CONFIG_LINUX', 'CONFIG_FREEBSD' ] } }
- 
- ##
- # @GuestDiskAddress:
-@@ -942,7 +942,7 @@
-            'bus': 'int', 'target': 'int', 'unit': 'int',
-            '*serial': 'str', '*dev': 'str',
-            '*ccw-address': 'GuestCCWAddress'},
--  'if': { 'any': [ 'CONFIG_WIN32', 'CONFIG_LINUX' ] } }
-+  'if': { 'any': [ 'CONFIG_WIN32', 'CONFIG_LINUX', 'CONFIG_FREEBSD' ] } }
- 
- ##
- # @GuestNVMeSmart:
-@@ -1063,7 +1063,7 @@
-   'data': {'name': 'str', 'mountpoint': 'str', 'type': 'str',
-            '*used-bytes': 'uint64', '*total-bytes': 'uint64',
-            '*total-bytes-privileged': 'uint64', 'disk': ['GuestDiskAddress']},
--  'if': { 'any': [ 'CONFIG_WIN32', 'CONFIG_LINUX' ] } }
-+  'if': { 'any': [ 'CONFIG_WIN32', 'CONFIG_LINUX', 'CONFIG_FREEBSD' ] } }
- 
- ##
- # @guest-get-fsinfo:
-@@ -1077,7 +1077,7 @@
- ##
- { 'command': 'guest-get-fsinfo',
-   'returns': ['GuestFilesystemInfo'],
--  'if': { 'any': [ 'CONFIG_WIN32', 'CONFIG_LINUX' ] } }
-+  'if': { 'any': [ 'CONFIG_WIN32', 'CONFIG_LINUX', 'CONFIG_FREEBSD' ] } }
- 
- ##
- # @guest-set-user-password:
--- 
-2.52.0
+PCFET0NUWVBFIGh0bWw+DQo8aHRtbD4NCiAgPGhlYWQ+DQogICAgPG1ldGEgaHR0cC1lcXVpdj0i
+Q29udGVudC1UeXBlIiBjb250ZW50PSJ0ZXh0L2h0bWw7IGNoYXJzZXQ9VVRGLTgiPg0KICA8L2hl
+YWQ+DQogIDxib2R5Pg0KICAgIDxwPjxmb250IGZhY2U9Im1vbm9zcGFjZSI+SGkgUGhpbCw8L2Zv
+bnQ+PC9wPg0KICAgIDxkaXYgY2xhc3M9Im1vei1jaXRlLXByZWZpeCI+PGZvbnQgZmFjZT0ibW9u
+b3NwYWNlIj5PbiAxOC82LzI2IDY6MzMNCiAgICAgICAgcG0sIFBoaWxpcHBlIE1hdGhpZXUtRGF1
+ZMOpIHdyb3RlOjxzcGFuDQogICAgICAgIHN0eWxlPSJ3aGl0ZS1zcGFjZTogcHJlLXdyYXAiPg0K
+PC9zcGFuPjwvZm9udD48L2Rpdj4NCiAgICA8YmxvY2txdW90ZSB0eXBlPSJjaXRlIg0KICAgICAg
+Y2l0ZT0ibWlkOjk3N2I3NjQ0LTI1MTEtNGRlZC05ZjdjLTgxZGQ2MTBiNmYwNEBvc3MucXVhbGNv
+bW0uY29tIj4NCiAgICAgIDxwcmUgd3JhcD0iIiBjbGFzcz0ibW96LXF1b3RlLXByZSI+T24gOC8y
+LzI2IDA2OjU5LCBEYW1pZW4gWmFtbWl0IHdyb3RlOg0KPC9wcmU+DQogICAgICA8YmxvY2txdW90
+ZSB0eXBlPSJjaXRlIj4NCiAgICAgICAgPHByZSB3cmFwPSIiIGNsYXNzPSJtb3otcXVvdGUtcHJl
+Ij4uLi4NCkV4ZWN1dGVkIHFlbXUtc3lzdGVtLXtpMzg2LHg4Nl82NH0gb24gR05VL0h1cmQgeDg2
+XzY0IHN1Y2Nlc3NmdWxseS48L3ByZT4NCiAgICAgIDwvYmxvY2txdW90ZT4NCiAgICA8L2Jsb2Nr
+cXVvdGU+DQogICAgPGJsb2NrcXVvdGUgdHlwZT0iY2l0ZSINCiAgICAgIGNpdGU9Im1pZDo5Nzdi
+NzY0NC0yNTExLTRkZWQtOWY3Yy04MWRkNjEwYjZmMDRAb3NzLnF1YWxjb21tLmNvbSI+DQogICAg
+ICA8cHJlIHdyYXA9IiIgY2xhc3M9Im1vei1xdW90ZS1wcmUiPkNvdWxkIHdlIGdldCB0aGlzIGNv
+bmZpZ3VyYXRpb24gaW50ZWdyYXRlZCBpbiBvdXIgQ0kgdG8gYmUgc3VyZQ0KaXQgd29uJ3QgYml0
+cm90Pw0KDQpTZWUgaG93IHdlIHRlc3QgT3BlbkJTRCBvciBIYWlrdSBmb3IgZXhhbXBsZToNCg0K
+dGVzdHMvdm0vTWFrZWZpbGUuaW5jbHVkZToyODpYODZfSU1BR0VTIDo9IGZyZWVic2QgbmV0YnNk
+IG9wZW5ic2QNCmhhaWt1Lng4Nl82NA0KDQo8L3ByZT4NCiAgICA8L2Jsb2NrcXVvdGU+DQogICAg
+PHA+PGZvbnQgZmFjZT0ibW9ub3NwYWNlIj5JIHRvb2sgYSBxdWljayBsb29rLCBpdCBhcHBlYXJz
+IHZpcnRpby1ibGsNCiAgICAgICAgYW5kIHZpcnRpby1uZXQgYXJlIGJvdGggcmVxdWlyZWQ8YnI+
+DQogICAgICAgIHRvIGF1dG9tYXRlIHRoZSBidWlsZGluZyBvZiB0aGUgdGVzdCB2bSwgYnV0IEdO
+VS9IdXJkIGRvZXMgbm90DQogICAgICAgIGhhdmUgZHJpdmVycyBmb3IgdGhlc2UgeWV0Ljxicj4N
+CiAgICAgIDwvZm9udD48L3A+DQogICAgPHA+PGZvbnQgZmFjZT0ibW9ub3NwYWNlIj5JIGNhbiB0
+YWtlIGFub3RoZXIgbG9vayBhdCB0aGlzIHdoZW4NCiAgICAgICAgdmlydGlvIGlzIHdvcmtpbmcg
+aW4gSHVyZCB3aXRoIHJ1bXAgZnJhbWV3b3JrLjwvZm9udD48L3A+DQogICAgPHA+PGZvbnQgZmFj
+ZT0ibW9ub3NwYWNlIj5UaGFua3MsPGJyPg0KICAgICAgICBEYW1pZW48L2ZvbnQ+PC9wPg0KICA8
+L2JvZHk+DQo8L2h0bWw+DQo=
+
+
+--b1=_jElOVuhMh05H2UPFUM5oZ5pDGQ3NhnOX5aj7R7nxw--
 
 
