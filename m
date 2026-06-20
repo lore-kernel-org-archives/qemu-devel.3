@@ -4,67 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A287CDB466
-	for <qemu-devel@archiver.kernel.org>; Sat, 20 Jun 2026 09:31:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3CF2CD4F26
+	for <qemu-devel@archiver.kernel.org>; Sat, 20 Jun 2026 12:32:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1was2A-0000iU-2A; Sat, 20 Jun 2026 05:30:38 -0400
+	id 1waur7-0007sB-0f; Sat, 20 Jun 2026 08:31:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <functioner@sjtu.edu.cn>)
- id 1was1y-0000cA-Dj
- for qemu-devel@nongnu.org; Sat, 20 Jun 2026 05:30:26 -0400
-Received: from smtp186.sjtu.edu.cn ([202.120.2.186])
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1waur2-0007lc-7Z
+ for qemu-devel@nongnu.org; Sat, 20 Jun 2026 08:31:20 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <functioner@sjtu.edu.cn>)
- id 1was1u-0007hc-Hq
- for qemu-devel@nongnu.org; Sat, 20 Jun 2026 05:30:25 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=sjtu.edu.cn;
- s=default; t=1781947808;
- bh=IWMx93kfpTOlj4W3gWHZphkQHug17j77qhHq9kbM+gU=;
- h=Date:Subject:To:Cc:References:From:In-Reply-To;
- b=cOtAouYYRjfgJl20Cp+RT4t6rrgymd/r4GQFAoPXajsJ1dXigW1/9fHS9hbTzwRfj
- Wnp5dz3dO4/Pkvu9b4EraAU0H11SF3ARdNEnapZAHNDIzO/IlxGhU27nNpnP41L8C1
- nMIKl8h2gelNEYuGu3SjZC5ieik4SfFQDO7hSqv/GFujJK/K6U1b//0oJX937J5G9s
- BmvJr2xjM0zPXMMofb68n1zrNGKaOw8xOu4sntKxRtCDSsTzn1h9Csm77l4s/wQQH0
- i351VfQ5mlgN8xI+tJWtNgNuyZZywn9EgPXPKU9YDeJc2kwn3jKVU4/lMdhdnj4hVg
- eX76E6MPIIubQ==
-Received: from proxy188.sjtu.edu.cn (smtp188.sjtu.edu.cn [202.120.2.188])
- by smtp186.sjtu.edu.cn (Postfix) with ESMTPS id 5E9B32FF379;
- Sat, 20 Jun 2026 09:30:08 +0000 (UTC)
-Received: from [10.0.1.62] (unknown [202.120.40.100])
- by proxy188.sjtu.edu.cn (Postfix) with ESMTPSA id 3C21D37C951;
- Sat, 20 Jun 2026 17:30:07 +0800 (CST)
-Message-ID: <92e1f282-2044-43bc-bf83-f172ed019af3@sjtu.edu.cn>
-Date: Sat, 20 Jun 2026 17:30:06 +0800
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1waur0-0007O9-9R
+ for qemu-devel@nongnu.org; Sat, 20 Jun 2026 08:31:19 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1781958676;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=R7di4haFXasmjlYnXR1K1HgWKAF9SPZDb5eqM1XWFNo=;
+ b=essSD1qwdLcj3t0z/A/tPuP2C7HR7j2rzldG03Y8TaC5No6NEvuyuAcGQ4+neD3B7M05xk
+ i3wUkThd76xDfotuDw/s/6x8/bOBcfehKSiEf0I2YflQeiDXnWjHP/FO5jlmAogCuczq20
+ CRcIl6Jym0MCwCVQJ3lnGrys7oKtFZ4=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-195-1o6Qap6_P-WnkHgS9fkIMw-1; Sat,
+ 20 Jun 2026 08:31:12 -0400
+X-MC-Unique: 1o6Qap6_P-WnkHgS9fkIMw-1
+X-Mimecast-MFC-AGG-ID: 1o6Qap6_P-WnkHgS9fkIMw_1781958671
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5118C18005A9; Sat, 20 Jun 2026 12:31:11 +0000 (UTC)
+Received: from localhost (unknown [10.44.22.6])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 0A8D5180028B; Sat, 20 Jun 2026 12:31:08 +0000 (UTC)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v2 0/1] contrib/plugins: add a minimal dlcall plugin
-To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- qemu-devel <qemu-devel@nongnu.org>
-Cc: Riku Voipio <riku.voipio@iki.fi>, Laurent Vivier <laurent@vivier.eu>,
- Alex Bennee <alex.bennee@linaro.org>, Alexandre Iooss <erdnaxe@crans.org>,
- Mahmoud Mandour <ma.mandourr@gmail.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Zhengwei Qi <qizhwei@sjtu.edu.cn>, Yun Wang <yunwang94@sjtu.edu.cn>,
- Mingyuan Xia <xiamy@ultrarisc.com>, Kailiang Xu <xukl2019@sjtu.edu.cn>
-References: <20260617130742.769234-1-functioner@sjtu.edu.cn>
- <20260619045404.820960-1-functioner@sjtu.edu.cn>
- <ef66ef33-22fc-495b-ab2b-dd4db88c3d8c@oss.qualcomm.com>
-From: Ziyang Zhang <functioner@sjtu.edu.cn>
-In-Reply-To: <ef66ef33-22fc-495b-ab2b-dd4db88c3d8c@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=202.120.2.186;
- envelope-from=functioner@sjtu.edu.cn; helo=smtp186.sjtu.edu.cn
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+Subject: Re: [PATCH 3/4] qga: Move common channel routines to
+ channel-common
+From: marcandre.lureau@redhat.com
+To: Polina Vishneva <polina.vishneva@virtuozzo.com>
+Cc: qemu-devel@nongnu.org, Michael Roth <michael.roth@amd.com>, 
+ Kostiantyn Kostiuk <kkostiuk@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, 
+ =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
+ =?utf-8?q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>, 
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
+ "Denis V . Lunev" <den@virtuozzo.com>, 
+ Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+In-Reply-To: <20260619180121.2982356-4-polina.vishneva@virtuozzo.com>
+References: <20260619180121.2982356-1-polina.vishneva@virtuozzo.com>
+ <20260619180121.2982356-4-polina.vishneva@virtuozzo.com>
+Date: Sat, 20 Jun 2026 16:31:03 +0400
+Message-Id: <178195866300.3446841.8157198213641714853.b4-review@b4>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=5242;
+ i=marcandre.lureau@redhat.com; h=from:subject:message-id;
+ bh=ZRlgbm/QKZGbzovqrlx3M0UDJpZfu7WpNpYxf49JWPI=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqNogJZBTnQuXTxAoSPR9nyjo+72kN6ZyuXqtbC
+ fJviuUskOGJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCajaICQAKCRDa6OEJdZac
+ 5YzcEAC7Js490eQd3AAIZJoXZ8h2T4uB2UKYqPTNZk7MsIdizn8lQ8QBf49Kxu96mJS39dXl6W2
+ rGK5qVXKQENdWqOkh8jIjUyqb7pquoCMV8PeYF9z+8HpQtJhuoia3grU3PwKVQnKLtAeXjpJGPm
+ ajjWjCnXI1JM6y1w/cwT83x1RoBxdRVdx4SUx0DgWLhTpV9Lokwoje5uNskEJtT86R1cCOM9gHO
+ 0E7QT39dPZiBoQuSsuCH/2VY/Zu08+cXegb2QzNdKdKj67r37/SqXTfZlpjc6Q9F1Nh0FdHhGPr
+ mlgMfytDdPlUcug6ineb50OGVjO3UNcB39+2w2echSxKofSwOrhLTvZTaynnPEIBUDihjz65Mwp
+ uBahkQOId/uAfzTTZSF3mVnIbZEC+L7af1h2sxCGgn++rXNNw23rZwMotfOazm5vlq5KgjZrgxO
+ NbdgDLKTWsxkBlystH2t43ItGQSlUYvqPDsQ5XHTd5pfYPVAXzCwvbHkx8ZbfCp/WK4VRV6+ZBQ
+ K0FMAJgt3d1TZA1dGLzmtH0FHmD3X1rz4Dik7sMP3m0Lv3BMYqPeZCPggqIiZcRCoUIZ0L0/bxc
+ sJ+M88D64d7lPt67WqzIG5A3sHwJBb23tGsCNHgDQAQckCrN2oajMDTY8Hcogs7muQW9c1Zd1BD
+ fkEyU+VGxVnApUg==
+X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
+ fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=marcandre.lureau@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -80,35 +111,162 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Pierrick,
-
-On Fri, 19 Jun 2026 09:44:37 -0700, Pierrick Bouvier wrote:
+> Required to use them later in the Windows vsock path.
 > 
-> Makes sense, thanks for your answer.
+> ga_channel_common_client_add() now takes ownership of client_ch on
+> success only; on failure the caller keeps it and disposes of it via the
+> new ga_channel_common_gio_destroy() helper.
+> The Windows vsock path needs this: it has to release the CRT fd wrapper
+> with qemu_close_socket_osfhandle() before channel teardown closes the
+> SOCKET, so the caller must still own the channel on the error path.
 > 
+> Signed-off-by: Polina Vishneva <polina.vishneva@virtuozzo.com>
+> Message-ID: <20260619180121.2982356-4-polina.vishneva@virtuozzo.com>
+>
+> diff --git a/qga/channel-common.h b/qga/channel-common.h
+> new file mode 100644
+> index 00000000000..8e82bf09099
+> --- /dev/null
+> +++ b/qga/channel-common.h
+> @@ -0,0 +1,44 @@
+> +/*
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + *
+> + * QEMU Guest Agent common GIOChannel lifecycle
+> + *
+> + * Copyright (c) 2026 Virtuozzo International GmbH.
+> + */
+> +#ifndef QGA_CHANNEL_COMMON_H
+> +#define QGA_CHANNEL_COMMON_H
+> +
+> +#include "channel.h"
+> +
+> +typedef struct GAChannelCommon {
+> +    GIOChannel *listen_channel;
+> +    GIOChannel *client_channel;
+> +    GAChannelMethod method;
+> +    GAChannelCallback event_cb;
+> +    gpointer user_data;
+> +} GAChannelCommon;
+> +
+> +/* Common GIOChannel lifecycle (channel-common.c) */
+> +void ga_channel_common_listen_close(GAChannelCommon *c);
+> +
+> +/* Start listening on a vsock "cid:port" path; returns an fd or -1. */
+> +int ga_channel_common_vsock_listen(const char *path, Error **errp);
+> +
+> +/* Shut down and unref a GIOChannel not tracked by a GAChannelCommon. */
+> +void ga_channel_common_gio_destroy(GIOChannel *ch);
+> +
+> +/*
+> + * Takes ownership of client_ch on success only; on failure the caller keeps
+> + * it and must dispose of it via ga_channel_common_gio_destroy().
+> + */
+> +int ga_channel_common_client_add(GAChannelCommon *c,
+> +                                 GIOChannel *client_ch,
+> +                                 GIOFunc event_fn, gpointer data);
+> +void ga_channel_common_client_close(GAChannelCommon *c);
+> +GIOStatus ga_channel_common_read(GAChannelCommon *c, gchar *buf,
+> +                                 gsize size, gsize *count);
+> +GIOStatus ga_channel_common_write_all(GAChannelCommon *c,
+> +                                      const gchar *buf, gsize size);
+> +void ga_channel_common_free(GAChannelCommon *c);
+> +
+> +#endif /* QGA_CHANNEL_COMMON_H */
+> diff --git a/qga/channel-common.c b/qga/channel-common.c
+> new file mode 100644
+> index 00000000000..9732a194776
+> --- /dev/null
+> +++ b/qga/channel-common.c
+> @@ -0,0 +1,115 @@
+> +/*
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + *
+> + * QEMU Guest Agent common GIOChannel lifecycle
+> + *
+> + * Copyright (c) 2026 Virtuozzo International GmbH.
+> + */
+> +
+> +#include "qemu/osdep.h"
+> +#include "qapi/error.h"
+> +#include "qemu/sockets.h"
+> +#include "channel-common.h"
+> +
+> +void ga_channel_common_gio_destroy(GIOChannel *ch)
+> +{
+> +    g_io_channel_shutdown(ch, true, NULL);
+> +    g_io_channel_unref(ch);
+> +}
+> +
+> +/* The vsock analogue of unix_listen(): returns a listening fd or -1. */
+> +int ga_channel_common_vsock_listen(const char *path, Error **errp)
+> +{
+> +    SocketAddress *addr;
+> +    char *addr_str;
+> +    int fd;
+> +
+> +    addr_str = g_strdup_printf("vsock:%s", path);
+> +    addr = socket_parse(addr_str, errp);
+> +    g_free(addr_str);
 
-Thanks, glad it makes sense.
+Could use g_autofree here too
 
-While I'm here, a question about a convention I noticed: most of the
-QEMU code that loads external modules goes through GModule
-(g_module_open() / g_module_symbol()) rather than the libdl functions
-directly. Is there a specific reason for preferring GModule?
+> +    if (!addr) {
+> +        return -1;
+> +    }
+> +
+> +    fd = socket_listen(addr, 1, errp);
+> +    qapi_free_SocketAddress(addr);
+> +    return fd;
+> +}
+> +
+> +void ga_channel_common_listen_close(GAChannelCommon *c)
+> +{
+> +    g_assert(c->listen_channel);
+> +    ga_channel_common_gio_destroy(c->listen_channel);
+> +    c->listen_channel = NULL;
+> +}
+> +
+> +int ga_channel_common_client_add(GAChannelCommon *c, GIOChannel *client_ch,
+> +                                 GIOFunc event_fn, gpointer data)
+> +{
+> +    GError *err = NULL;
+> +
+> +    g_assert(c && !c->client_channel);
+> +    g_io_channel_set_encoding(client_ch, NULL, &err);
+> +    if (err != NULL) {
+> +        g_warning("error setting channel encoding to binary");
+> +        g_error_free(err);
+> +        return -1;
+> +    }
+> +    g_io_add_watch(client_ch, G_IO_IN | G_IO_HUP, event_fn, data);
+> +    c->client_channel = client_ch;
+> +    return 0;
+> +}
+> +
+> +void ga_channel_common_client_close(GAChannelCommon *c)
+> +{
+> +    g_assert(c->client_channel);
+> +    ga_channel_common_gio_destroy(c->client_channel);
+> +    c->client_channel = NULL;
+> +}
+> +
+> +GIOStatus ga_channel_common_read(GAChannelCommon *c, gchar *buf,
+> +                                 gsize size, gsize *count)
+> +{
+> +    return g_io_channel_read_chars(c->client_channel, buf, size, count, NULL);
+> +}
+> +
+> +GIOStatus ga_channel_common_write_all(GAChannelCommon *c,
+> +                                      const gchar *buf, gsize size)
+> +{
+> +    GError *err = NULL;
 
-https://github.com/qemu/qemu/blob/3b50303f9563a42538a1fd5c0ea7f952e23016e1/plugins/loader.c#L190
+g_error_free() is missing in this function.
 
-https://github.com/qemu/qemu/blob/3b50303f9563a42538a1fd5c0ea7f952e23016e1/util/module.c#L171
+Use g_auto?
 
-In the plugin I used dlopen()/dlsym() directly, because their interface
-is more standard and more flexible for this use case. For example,
-g_module_open() does not expose RTLD_DEFAULT, which I rely on. And since
-recent glibc (2.34+) folds libdl into libc, no explicit -ldl is needed,
-so simply adding the file to meson.build builds cleanly.
-
-Does using libdl directly in a plugin violate any convention I should be
-aware of? If GModule is preferred for portability or some other reason,
-I'm happy to switch where feasible.
-
-Thanks,
-Ziyang Zhang
+-- 
+Marc-André Lureau <marcandre.lureau@redhat.com>
 
 
