@@ -4,99 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2BBB3CD98E4
-	for <qemu-devel@archiver.kernel.org>; Sat, 20 Jun 2026 20:34:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF8F4CD4F26
+	for <qemu-devel@archiver.kernel.org>; Sun, 21 Jun 2026 00:00:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wb2OC-0000UM-0O; Sat, 20 Jun 2026 16:34:04 -0400
+	id 1wb5ay-0006uM-LV; Sat, 20 Jun 2026 19:59:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <randomjack94dev@gmail.com>)
- id 1wb2OA-0000Tc-9m
- for qemu-devel@nongnu.org; Sat, 20 Jun 2026 16:34:02 -0400
-Received: from mail-yx1-xb130.google.com ([2607:f8b0:4864:20::b130])
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1wb5av-0006u8-JK
+ for qemu-devel@nongnu.org; Sat, 20 Jun 2026 19:59:25 -0400
+Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <randomjack94dev@gmail.com>)
- id 1wb2O8-0002If-Pi
- for qemu-devel@nongnu.org; Sat, 20 Jun 2026 16:34:02 -0400
-Received: by mail-yx1-xb130.google.com with SMTP id
- 956f58d0204a3-663271f8694so186485d50.0
- for <qemu-devel@nongnu.org>; Sat, 20 Jun 2026 13:34:00 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1781987639; cv=none;
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1wb5au-0000sJ-24
+ for qemu-devel@nongnu.org; Sat, 20 Jun 2026 19:59:25 -0400
+Received: by mail-ed1-x52b.google.com with SMTP id
+ 4fb4d7f45d1cf-697573b16ccso3009455a12.1
+ for <qemu-devel@nongnu.org>; Sat, 20 Jun 2026 16:59:23 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1781999961; cv=none;
  d=google.com; s=arc-20240605;
- b=SOi2H994lCtTmtKLzCPZhJ6wKGjZm2lCiyXLAC+YhFBKO8bndC56Tk2r/PLY5cHPOq
- HFFHNAQhimNYYUiJNNVGx1UFr3u3BKSpAIAJPyQAyMm5SsYTs81sxUFsZQ7Tefs2gXaa
- oW2C+5yXf7H7zKgi4COGM7y+ExJdhcN82WhmvtEihMyLT1jCZJ5N14H2RSluWUFydRqU
- Ocjy7JduDHgKU+QmO0TRjsc1/UgjkHP+B8EIqHjuiZ9zQnCrdV1T0P2nQ140DJrKBYgZ
- ZF9cEZabEFVk2O8RXs7Qh78plAQQPBEvPKWAIKJOZOl05gbiYtF1SGiTxvIpZ/ZfXW1s
- ek2g==
+ b=cb+UWGm7xxxEztMR6hVTMTXymu6db4X0p6AEyzkO3p1lrG5EJzT5b3bzcixUo7zWQA
+ UYUCMLyv5TRTfktCgmY/b4SedKxj8QeMjYLsrd/ZKpSCPeAw1ozFf01EZmavpPHvcBQm
+ l5nmP7UqOl9D4hoijCps8M2CmhOE2AB5/DPkmZ/eq5ZKdpjXYPHSZea1P2iEQ4Jm/Htl
+ D+YHG5rTdWlaDcImqcMU5pms815BqRLj38GF4QZ5KlmlJkhph7fRFpbfyyi7+U5aRC83
+ uYhl0k+bYSS5R4Lope3txG2Of/kBpOfYWOz7/m2kTgDF6PMl8/oD7VZL6J6kMTtIsdDI
+ pg+g==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=1EbwOv8yj9dwK8UApjDfStz2RWrwDBklKn1BxxruFww=;
- fh=8JaUFgOhG+zB5v+lnCXwCeucgOe3HYCKIF2UinhTRLQ=;
- b=cSLLFR2bVg9Uc2rr+OVerXHKzE4wPuvC1MsJAdaOGItAzCfyw1OneCkw5zH6Hwn+qc
- wqZz1j/kxZlKzaWE2unSnBsJ/yalwHsGa1s3JXHVNb1h1aUIdsNWKXmfCOaCMhulMw72
- RCiBj9x2vlg0B9mdacNvO1W5j/xMeDedIsouPMVe4k2b+IDT+RCwbc0iCEhPGVj9BhyG
- yNV1OlZkLEJk+RuLy8ryHogqldCcY4Eui3pDU5uIR6vf/wpCzKzLkh9Jf43OpLa++FS7
- +lK2vGVh4m/2iMV4AD0RRqrxIkDTQ2u92Jf3Wl9rS2GeI3Wc07JlHCQ2cri//rBVR6df
- 4eWA==; darn=nongnu.org
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=H6JljcWaltISPM9t7+fODsflj3U9N+i6jCNhNjL7rUQ=;
+ fh=MRZUNMWuv1kFuqQ9+hXt1nBjxFVEdkK9q0n91tRksII=;
+ b=AKI65KShI/9JDj8RU58jYzCDBxIEulv25XUbqfPT+mtwvhToGF7neQ0fcUWQc+uuCl
+ jV74bCXy4iHjb8wmPm5M1e+lQqH+end4NqCuqr00w754HRTVsjAI62ddEopxZlSoRUKC
+ yMHv1F4O+983JUoulzT9REsv4BCao6b6vleWpMUPnsBygK0JCSejsKDFG7sB+mesrMBm
+ KNjwa2kErY6BnMC2WMwtshJE6HwSkL3990u9SiP6jAHbGsTSZUiK7SxZH0hrjebqhZ5Q
+ bQGsjDfD5Revlb4AONcxMZwjHZMX7UN63A5RacK7WCIURQbYj6qHmpewYeuEx1aNmHUM
+ tfew==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1781987639; x=1782592439; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=1EbwOv8yj9dwK8UApjDfStz2RWrwDBklKn1BxxruFww=;
- b=h7ONv8/oJYGPs9P8h8dVd4swC3ylEZvaDMtf6MGtZ1oCORBpdSwf0QsnGDuERNBzBT
- uwmiCzowGy505qePG8nn6voh8TgwiC1xI+QF7NA7d+9aOj0UMkAkY6zQtSDbPxxuEDrT
- WeFn5wIFi4N9Vdji56eDmIcWT2etqNP1x3H5pjjT8zmvKcGLhJdUKHWLLAw3hmbplAAM
- esuXsFQ3D0CnQuPVb0Bp97KLzjkD3YZTP+kP9I2kfN3dbBS59rwX/psHpDkJVkWR9nqP
- ebYxRL3GZCbNk5k+8X5N+5B1IoWWpZ2jL54pfk6/6qPjWY+AH2JaFgz+9cCvGAEr3+ID
- 5Ejg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781987639; x=1782592439;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=gmail.com; s=20251104; t=1781999961; x=1782604761; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=1EbwOv8yj9dwK8UApjDfStz2RWrwDBklKn1BxxruFww=;
- b=fnvX2gqz74JsPzF4H6gQQ+U5tJDugOdZbxRnj1lTYdcFAW8K0aXBQYtHOuzB524gS6
- 4Q4Y2P+H9SEUKvGesXXxVN6TmWzNY50Npd79E0OSO1qdmZ71gLTKPbVIGD496gUjDz8X
- p+eIVXO6q9RESDoFzmM0eEZBIhhjwbigHKb0a6ksszmDxfdw1BnVdB98+xjYV+jdSMDt
- DNur+nvedRPMTy7PZ+ich/mvKMt/7C1B14coI1ZkYzVUadONI89tWSCm0wNJXU4QMazj
- U49UuL3VjLBiAWLPn324inpRXN2oAxFmVZqTi3Veivg9BxAZs4EpRH6C7O5OEJuNeAqf
- dMQg==
-X-Gm-Message-State: AOJu0YzPYAGcKkPUF48Q9PlqqYjFJWOZPgc2zmmVQWkCqt02pGZmgu5x
- 2ctVhOavu0OuqxTE6tL/s4vSdL2ouOS33v3bV3cZOzI8uZF7RLvjSl0C+n4uaPy/GhoP+5kdLAd
- p2dXmSEihTnU7Ar8JBTL2kMvEc7rpcBk=
-X-Gm-Gg: AfdE7clr62sS5E2oWQiQxJ/kN3AMe5yLsW/MNn55zMvS/609gWlGXT6m9OyFWY4m8Xm
- Uh4kkHhkBSDjznZJzkDrxOJhiBzLZisxPhdxe/8wrpyrOFDzveKRMWK7TCumPSf4H4ZkHVcPlsD
- M2OQ3ct8q9dopyel7AVk5GyhmrmlXVURw8rVv7ExOP8PMIj43Do8xpzEY8TtsK1isSAjDUgLSR6
- MoGiSBvTnh4aqkaTATgdkHPei7dSo27ljpJAf0lmMHqOyyxFWhusUhHZUPOsDEb4LYxXEyMPg==
-X-Received: by 2002:a53:d017:0:b0:662:dfb5:bac7 with SMTP id
- 956f58d0204a3-662ffea4ed8mr6728692d50.58.1781987639453; Sat, 20 Jun 2026
- 13:33:59 -0700 (PDT)
+ bh=H6JljcWaltISPM9t7+fODsflj3U9N+i6jCNhNjL7rUQ=;
+ b=BPAQIMp9LclUCmjHRF3M6O5t3pJ2u7Uq8gSa6rDwBKdzm4APoou4YY02JK9kS4oYP9
+ AXIqqGm1+1EYlPKihAqp7WLw2e33J2cBhq6qQntQJPK5yfYfMIPMgWiGZ4Nmfzt1Wh2B
+ /STpK6V5bJbHxEhAe1xOqZg5Klt102eZmoNrie/7CQIshqYInAmHbAuUzwW7KZnZ789x
+ yadiIp7YsrdrZhnMIY31KGETPsSBI5RrOuoGy3opCiF+oEFsB4cDahU2ujv0JUwJgKGs
+ dEiywsWPElezRJalPWaSNnP6tWTKEFT8IAzW0pdedOf6pplvGomSIf0rpH2ZPHzKqH/A
+ R4Rw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1781999961; x=1782604761;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=H6JljcWaltISPM9t7+fODsflj3U9N+i6jCNhNjL7rUQ=;
+ b=JQ8YrnuOG5DKVETlq0gNO+OFPsq0JDP17ivkdvDzrmVHAVU2jwEJjvmklWdOqU2Uj/
+ XRY7oj0VVjApxLW7/39gPgwJ/WOpIClEmZ2LM8WhQDyBqgOyH2L+dtpc0HRBVdg6+goN
+ imEwwH4jQsPlKOmA6FQ8KMLcl91/GtbD5pQzd+IYFZMEGduqPbz7UnpuVKDuc+Dlrvvy
+ CXuQH5fD680Z55qbSANNXxQimEka13zm5XZnP20BcplwjJyEWqyAs8Qlr6l/oFfPntM7
+ pO/oWUQKHIYNZM5bC2+vbQT/lb6nvMcbfTbWWmNMnT74y6iTJlo/b4XohvahqzlFtpzT
+ 4VPQ==
+X-Gm-Message-State: AOJu0Yze7Q/gOuIxj2SAFZl6PSftguY7f5LHcqLTZLIe0sfv1wSViD33
+ tZPmkSknoRE3xEcDRk8lxM5cL7UTtRUolLv+s+wz1ht4pXD4hl4nlknY/ga/+hVlBNGNT7KMhOf
+ ZMy/aC4uyOsynyQFZYgdzDIi3olenDME=
+X-Gm-Gg: AfdE7cm08soYv7EJxCdrq8tHmwr4AHmrzEtdEQK+9Ty2YsgVAty/R8Kob+pWN26+Bb+
+ qfaWsK/ija9ysI70zrFA2PWanX4R3hkPymFKW5moK1eTcEC/H5EPTOAm+HBFw9jyLMzybRjDydN
+ YbPNx9HKQqk2Bnn7IcKsPiBiFRTQD2cLW3Vyvv5ntVc7I/+bQT4DL2mhw5A8PC+8kRsUVwPk/bT
+ G7Cif4G7VfxvTBEsb1xN6Cr97dyQM65HXuWT1XRBLhHHrqkqE2c6qM9mVivNEE4UuhnDSuylWjj
+ FvMLt3qvkNsCUG+s7VXLoBfskN92g6g=
+X-Received: by 2002:a05:6402:1599:b0:67b:cd1f:9cc1 with SMTP id
+ 4fb4d7f45d1cf-696edc5a4ecmr4265724a12.6.1781999961605; Sat, 20 Jun 2026
+ 16:59:21 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260620171318.24189-1-randomjack94dev@gmail.com>
- <CAFEAcA9_Cy1x46YQSawzmF_fc4GVq_77vyRF7TWwruBND9eCGg@mail.gmail.com>
-In-Reply-To: <CAFEAcA9_Cy1x46YQSawzmF_fc4GVq_77vyRF7TWwruBND9eCGg@mail.gmail.com>
-From: Evgeny <randomjack94dev@gmail.com>
-Date: Sat, 20 Jun 2026 23:33:48 +0300
-X-Gm-Features: AVVi8Cc4QBnUlljz6fudyhiag9f0BZdgszf4Wx1nqcRxHPF1v17FstSnfrNbhm0
-Message-ID: <CAFvcSaQ4R7oQ9KMrEb81mZOaqZaR5XqCLn8-DJn-OX7GQuSSCQ@mail.gmail.com>
-Subject: Re: [PATCH] hw/dma/soc_dma: Replace if-else chain with array lookup
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-trivial@nongnu.org
-Content-Type: multipart/alternative; boundary="0000000000003e6aa40654b55498"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b130;
- envelope-from=randomjack94dev@gmail.com; helo=mail-yx1-xb130.google.com
+References: <20260619225911.159473-1-brian.cain@oss.qualcomm.com>
+In-Reply-To: <20260619225911.159473-1-brian.cain@oss.qualcomm.com>
+From: Stefan Hajnoczi <stefanha@gmail.com>
+Date: Sat, 20 Jun 2026 19:59:07 -0400
+X-Gm-Features: AVVi8CemEpmCL8DP5A_xMETluebgY1AswrOr8raXL3sg5cg5AJnDPxshnRoQ9Zo
+Message-ID: <CAJSP0QWzQEgoYMCgZX+9jCvrV6O3RqnA+df1DpT2R6MZvVXiNg@mail.gmail.com>
+Subject: Re: [PULL 00/74] hex queue - sysemu
+To: Brian Cain <brian.cain@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org, stefanha@redhat.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
+ envelope-from=stefanha@gmail.com; helo=mail-ed1-x52b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -113,75 +115,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000003e6aa40654b55498
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-Dear Peter,
-
-No particular reason.
-
-Just found a small refactor-like TODO comment.
-Did not think about this code being ancient.
-Feel free to discard the patch then.
-
-Thank you for your time!
-
-Best regards,
-Evgeny
-
-On Sat, Jun 20, 2026 at 11:23=E2=80=AFPM Peter Maydell <peter.maydell@linar=
-o.org>
-wrote:
-
-> On Sat, 20 Jun 2026 at 18:20, Evgeny Kolmakov <randomjack94dev@gmail.com>
-> wrote:
-> >
-> > Refactor transfer_fn assignment in soc_dma_ch_update()
-> > via array lookup as suggested by the TODO comment.
-> >
-> > Signed-off-by: Evgeny Kolmakov <randomjack94dev@gmail.com>
+On Fri, Jun 19, 2026 at 7:00=E2=80=AFPM Brian Cain <brian.cain@oss.qualcomm=
+.com> wrote:
 >
-> Any particular reason why you're looking at this ancient
-> code? It's used only by the omap SoC -- if we care enough
-> to do anything to it then converting it to qdev is fairly
-> high up the list...
+> The following changes since commit 3b50303f9563a42538a1fd5c0ea7f952e23016=
+e1:
 >
-> thanks
-> -- PMM
+>   Merge tag 'accel-20260618' of https://github.com/philmd/qemu into stagi=
+ng (2026-06-18 16:28:12 -0400)
 >
+> are available in the Git repository at:
+>
+>   https://github.com/qualcomm/qemu tags/pull-hex-20260619
+>
+> for you to fetch changes up to ffa57dc3389a85263a3a7c4890d01b501a33ec97:
+>
+>   target/hexagon/idef-parser: open input file in binary mode (2026-06-19 =
+15:39:11 -0700)
+>
+> ----------------------------------------------------------------
+> Add initial hexagon system emulation support
 
---0000000000003e6aa40654b55498
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Hi Brian,
+Please take a look at the following CI failure and send a v2 pull
+request that includes a fix:
 
-<div dir=3D"ltr"><div><div><div>Dear Peter,</div><div><br>No particular rea=
-son.<br><br></div>Just found a small refactor-like TODO=C2=A0comment.<br>Di=
-d not think about this code being ancient.<br></div><div>Feel free to disca=
-rd the patch then.<br><br></div><div>Thank you for your time!</div><div><br=
-></div>Best regards,<br>Evgeny</div></div><br><div class=3D"gmail_quote gma=
-il_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Sat, Jun 20, 2=
-026 at 11:23=E2=80=AFPM Peter Maydell &lt;<a href=3D"mailto:peter.maydell@l=
-inaro.org">peter.maydell@linaro.org</a>&gt; wrote:<br></div><blockquote cla=
-ss=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid =
-rgb(204,204,204);padding-left:1ex">On Sat, 20 Jun 2026 at 18:20, Evgeny Kol=
-makov &lt;<a href=3D"mailto:randomjack94dev@gmail.com" target=3D"_blank">ra=
-ndomjack94dev@gmail.com</a>&gt; wrote:<br>
-&gt;<br>
-&gt; Refactor transfer_fn assignment in soc_dma_ch_update()<br>
-&gt; via array lookup as suggested by the TODO comment.<br>
-&gt;<br>
-&gt; Signed-off-by: Evgeny Kolmakov &lt;<a href=3D"mailto:randomjack94dev@g=
-mail.com" target=3D"_blank">randomjack94dev@gmail.com</a>&gt;<br>
-<br>
-Any particular reason why you&#39;re looking at this ancient<br>
-code? It&#39;s used only by the omap SoC -- if we care enough<br>
-to do anything to it then converting it to qdev is fairly<br>
-high up the list...<br>
-<br>
-thanks<br>
--- PMM<br>
-</blockquote></div>
+../target/hexagon/meson.build:285:47: ERROR: Program 'emscripten' not
+found or not executable
 
---0000000000003e6aa40654b55498--
+https://gitlab.com/qemu-project/qemu/-/jobs/14953356226
+
+Thanks,
+Stefan
 
