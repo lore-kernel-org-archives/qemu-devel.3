@@ -4,72 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BEAC4CD98F0
-	for <qemu-devel@archiver.kernel.org>; Sun, 21 Jun 2026 04:23:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F97DCDB466
+	for <qemu-devel@archiver.kernel.org>; Sun, 21 Jun 2026 04:23:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wb9hb-00039N-VG; Sun, 21 Jun 2026 00:22:36 -0400
+	id 1wb9hd-0003Bj-QG; Sun, 21 Jun 2026 00:22:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wb9hO-00033w-Vw
- for qemu-devel@nongnu.org; Sun, 21 Jun 2026 00:22:25 -0400
-Received: from mail-oo1-xc2e.google.com ([2607:f8b0:4864:20::c2e])
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wb9ha-0003AM-Ko
+ for qemu-devel@nongnu.org; Sun, 21 Jun 2026 00:22:35 -0400
+Received: from mail-oo1-xc2d.google.com ([2607:f8b0:4864:20::c2d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wb9hM-0005HI-IE
- for qemu-devel@nongnu.org; Sun, 21 Jun 2026 00:22:22 -0400
-Received: by mail-oo1-xc2e.google.com with SMTP id
- 006d021491bc7-69e8aa31e9fso1620712eaf.2
- for <qemu-devel@nongnu.org>; Sat, 20 Jun 2026 21:22:20 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wb9hZ-0005P2-2S
+ for qemu-devel@nongnu.org; Sun, 21 Jun 2026 00:22:34 -0400
+Received: by mail-oo1-xc2d.google.com with SMTP id
+ 006d021491bc7-69dead44101so2845179eaf.3
+ for <qemu-devel@nongnu.org>; Sat, 20 Jun 2026 21:22:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1782015739; x=1782620539;
+ d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1782015752; x=1782620552;
  darn=nongnu.org; 
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=LlKlNKCcfcg7uKfhDKsp+7NtoCqHPRF95hiLVxo7EAM=;
- b=vdeGR2DlCqTkSOrxsVLuYO4qEk5fYn6tB7VKf/l2gtmRkS2v9ex7bLrvADWTNoYyh1
- QS4VdcQ5NArxWtcGRJ3O0Yj5SG/kcUCWkOS0j7LYYTnJsfmuIlVo4mevaIh+rJo9zBQq
- qv57rFMKXWgUDl0QTgQHr08MhXmLjbL+PxmD/q1zGAw4krXVHwO7xmN+xfL4nH/JMidZ
- yJ1YfkLAvJeiDEPGUI8bYAv3az0sJkK8RNkIhzced3t0u1Yb5LlpReLMomSq/D49O74+
- Mp9cRqu6sqTWXJ/yR9uRtg5L1o90lGENXBNEwdeECBNohqr5ZL6RFlKf1jVihidxZQSt
- WAWw==
+ :reply-to; bh=07NCnQNKcY2tu2P/671mwrwbXA8HIGbGh2vpGFWag8s=;
+ b=N0xuUT8TSp5ygQqtaAKWKPBsoizQCZngOYBet+nT3Wg764g6sGZQP/giOrj9k7Nr+b
+ R+m9b5UEHoxIqxUFedE9tAL+qRx5+nyyjxpdp9YMt2ofKoQNNsPWUihmHyDsJtuz+B58
+ OlusCb5CTV5YWQnoAT+coq/VCW7Q/fR5QoQNAmCHtysbt/fMKwjj3KLbCKil/EWnbJr/
+ Rne/8+JcswbKZ9rep2c0Kccyd1RRDrFqDCYhNqnGzI9i0RrKvbhG6duzfE56oKRVn0Ic
+ glyqz6QtfBSv1Rtd+2Voa56CbyRAPxIRIIkJrXAK6WL0FNs9VJkQVXaGEMeLYkPcOaB3
+ 6DCw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782015739; x=1782620539;
+ d=1e100.net; s=20251104; t=1782015752; x=1782620552;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=LlKlNKCcfcg7uKfhDKsp+7NtoCqHPRF95hiLVxo7EAM=;
- b=BBBtegqmXKX25xRxQBu774RBImWrY+CDoyLuptwN/zp9lo8uiKZSFevNDTfV0LcMnl
- PQmENaG+2fOQBGdeyuvluUD2zbskd1lEjZc2ZoQbChiab/lEiRfy/NV1yY08Hpcfn7QQ
- O4zWhmEu4C+vDYolRxzeWqzWHD4OZa1sqsvMPmxaXIQVwRgHBpn04hZiWbQ8wYcLUGlb
- X09ZX64ouZdbV8NBAu4iOlezbhmuylXPZ+wWzhE3Z4aZUpw5AVb+1biem45PFoe0RW4Z
- KhRRHDNFmD4+FPXB71JMje4VbYujiNv/nsc+XpzqXezxTFSgtn2Q+8LI0sRZ0+O9f2gX
- D+Ng==
-X-Gm-Message-State: AOJu0Yw9BYd83N8kp7DIKWdulHdNtoYkHf/he/CXP9VpzOHT7WjHB3+X
- YNYVGmx5EMUWGJa2cd0doV72x0x4Gm7x3lKITL7ztnpcG2TFJZnKETf3TWg0pzUyaTs=
-X-Gm-Gg: AfdE7clSUhzMR+oa7H0ABpqCCveligPh+YndIqClCEGxP/wWxsVHQ1BYtzGV6zZJ3+0
- E8XPkAgPKo9GaKz/byJu5os1gFSPVsHz++i/eHNi4FpUbQ5ohM9wJCbIbYFD8cDiGxQC2jx9ztG
- dL3v+8apjdXFcLtbZA7hwCcKIKPp+9pQs8hSw70pAlmTg8R4anx5ch/kwtr4pDhQIndE2YbRrx4
- D0KE6xOWVjlJceEBKlgssuPqWKoQMax9lQXJ6SCmw7ijG66wPxMxGwXUL+7X+BZVHLp6sD1JcPp
- iRw4zkZHRY8GDJZt7PXdGH1Qs6s+ZB5xG74ni7YzLnUxfzgP+DcNysKHAVUQV0qbv6LfjhL3N1/
- fL0XhrUo3HT0/0rLTsoAJIdSHtE8R/CD/z65JVSH1cg5M8iptz4iY0sReMyifPwIX8xRwN2LiNU
- Y=
-X-Received: by 2002:a05:6820:81cd:b0:69e:89dd:175a with SMTP id
- 006d021491bc7-6a0ddef3fb9mr6288024eaf.20.1782015739317; 
- Sat, 20 Jun 2026 21:22:19 -0700 (PDT)
+ bh=07NCnQNKcY2tu2P/671mwrwbXA8HIGbGh2vpGFWag8s=;
+ b=n1nkVSZ1rfcLmCDEzZ/icH4YtqQyo6EPxdkzXEeBtiaMnLJbIClMOc2xhvCplcbWuc
+ E0PsnWSn4BNpFCtY3ESsJLu4OYdmAsSf8QTho5vGC9p5al7hEr2LBhm2VHrDY1e3zLey
+ HBYQrxLHZrX8HbsXDbJ0dOa9Mj3fR1eu0lVWQOTHp0eMf7u6NEsdX97tyXn7H4n55XQm
+ MqXGMQGVdcHfP9ImgZ2SNe32e91hcqWgWhi/UBYoCi4X+/KzS6VeUUNtSxYiDOlN0Nkx
+ 7Fc39uV/LJKSV58fc3DiUSlDjwDFZgE18d6Nunj/aTCcaQrH50jKyk8LDSazoMdSa1au
+ kXaQ==
+X-Gm-Message-State: AOJu0YxjYYG8vi4JSKwDyP3LRF8hu9Ndd8ylTABfaCBKO1E861ZFvenb
+ eEjsfjDGAaJQugJ7ZHlp0zo+J0kLzl5r5c4AeHFGrgfFIDHj/X7w36v9BS8XJ4r2l6uZ0sgzPS5
+ x3JDev7TOEg==
+X-Gm-Gg: AfdE7clBCsE7A71aFAdpSN85ncCk1ObKvUgntzpOtzhmBerUjFS8TIh5lW10Lm72jJ6
+ fVKci+3sgwJSO6vWqB2/zul4JyMOc1khlYchdehvIofJOHsNnnIynJgbLtIxg+8gmURwIQkwtA4
+ daO5lJHFdNphJumfL6HsboS/gw3aHq7DEdGPQ/0WWJfKqUR+a176JxhdsLb/C/+P60R24j5qxy/
+ /5kiTypZwHW0ntRRpS07mPICcgDwbhwZjQzEFBBGBTwyPxwjW9JwpKDg73RGcbUhuQW9KxzRHBe
+ X/K9nx+GFcutdSNVq5dpzMM1zlYHjZVb+janVVhV3YiOEKLtths6qZafhgK/X2PbaXItXEan9If
+ KRvG7Q6GonurzrXZFBoKbf9ADTcNPTiYgIHqgvbVTj7tH/WtmFEBbeHhZHRI43yljWJRNSOpvTA
+ U=
+X-Received: by 2002:a05:6820:1c96:b0:6a0:b429:443d with SMTP id
+ 006d021491bc7-6a0d886f688mr8123269eaf.12.1782015752027; 
+ Sat, 20 Jun 2026 21:22:32 -0700 (PDT)
 Received: from rebo.bsdimp.com ([50.253.99.174])
  by smtp.gmail.com with ESMTPSA id
- 006d021491bc7-6a0e9f698ccsm2828648eaf.4.2026.06.20.21.22.17
+ 006d021491bc7-6a0e9f698ccsm2828648eaf.4.2026.06.20.21.22.30
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 20 Jun 2026 21:22:18 -0700 (PDT)
+ Sat, 20 Jun 2026 21:22:31 -0700 (PDT)
 From: Warner Losh <imp@bsdimp.com>
-Date: Sat, 20 Jun 2026 22:20:14 -0600
-Subject: [PATCH v3 27/40] bsd-user: Add cpu_copy and make init_task_state
- non-static
+Date: Sat, 20 Jun 2026 22:20:22 -0600
+Subject: [PATCH v3 35/40] bsd-user: Add extended attribute and ACL system
+ call dispatch
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260620-misc-2026q2-v3-27-f6ce23ad8dda@bsdimp.com>
+Message-Id: <20260620-misc-2026q2-v3-35-f6ce23ad8dda@bsdimp.com>
 References: <20260620-misc-2026q2-v3-0-f6ce23ad8dda@bsdimp.com>
 In-Reply-To: <20260620-misc-2026q2-v3-0-f6ce23ad8dda@bsdimp.com>
 To: qemu-devel@nongnu.org
@@ -78,24 +79,24 @@ Cc: Kyle Evans <kevans@freebsd.org>,
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>, 
  Warner Losh <imp@bsdimp.com>, Stacey Son <sson@FreeBSD.org>
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2812; i=imp@bsdimp.com;
- h=from:subject:message-id; bh=WlR6Q9GQWWWUTxlkqv6eVWPHCyQJru+tkKYNMUnnttg=;
- b=owEBbQKS/ZANAwAKAWwc0Sh9sBEAAcsmYgBqN2aASMqYbslykVIN/Ltv/uw6YOx7dqTd1xxnd
- VVmWeL9riqJAjMEAAEKAB0WIQQgNfiUsAqjz3zN4bdsHNEofbARAAUCajdmgAAKCRBsHNEofbAR
- AGSOD/9zGr/xitovDTtpfuBTB2o/Ne4yZaVL+Elt2gv918sixNlFsgg4wyBk8Ik5WTJ/xFsIg04
- ZvXtgwiIgLUU2KEA5xtC2z5LJWmuwwO1qB9jeRXNTQ52GNoTuhkTfo8fwxaPKLYSAsV/R3oWdKF
- Ity5iADYxaadchUkTsGxt+QZYONzhgujj2mrhj4b3eHzpzejRHihH0Sgrn7uuoOlnqNvT1CvgbW
- wKIDMVVvTr9p+d/8srmkHex3LgjEBCnGhL7S1Qn7ayoUZqTv9ru9l3OobZpmjGl1nD97apZh/r9
- 996A51WxgjOAdNaWWTbAtgCs4ytd0XGraFbkGgajRCLS5kc0536pDr58HeSB3SgwJED55Vfvw1J
- UpPA5Y70VMQVkgAHflutBDAoZU3qTkFWHrRCH2xVxksPWNC/te8Jg5e/1MsCfp4BSYpAfpTZDbN
- sDAKYrMlSQUzE7RhyZTuIpEzLB8EoseZv+Voh/15wnSUaGJtIN/qEZ2au2bLNSzGbPjggf3k0qu
- k2RlvjHmzG3K0t1agb7ZLaSi0R8UyLiIYcac6sLK0oOsR541b6jwqcuR7NdGeT7ZrQW6Ts+hcm3
- WFbrb2I1dFCX+ogiaLThlHCC5JAEw/4ukImfzzxife/xNTGb3QMRMBwSXxxGjC9sZaGXzWzHInC
- 1mFFOY2eOfMD6BQ==
+X-Developer-Signature: v=1; a=openpgp-sha256; l=5000; i=imp@bsdimp.com;
+ h=from:subject:message-id; bh=MTZxyxDjJ7bYe3mkPtrZ1xyzRZYw3H9BwtM2c07H+30=;
+ b=owEBbQKS/ZANAwAKAWwc0Sh9sBEAAcsmYgBqN2aBzf9jeP/qx4lHz4KT0zeAXOsRbJEnFY53k
+ HqDAUNVmf+JAjMEAAEKAB0WIQQgNfiUsAqjz3zN4bdsHNEofbARAAUCajdmgQAKCRBsHNEofbAR
+ ADIFEAC3L/zMTIP4BGaR3FGiflPeQE3OhDvdotzvA6OclMKcAyuchaa5ui5hzilMcPj3TvH/tJr
+ hUX5oz/wg2FvpyNhhEnQflFOFelq/0BUkhb28ECwFgqknb6wHd0Is6w+hTwGNOsb09nLWCFg8P0
+ LI258F3JTfHF5Gf49Yxt1v/JKrn77LYLkTw/AtxKxmSVs8tBpLCKanzcogyJA66Dg8DUKA/q2m8
+ n0drhumTHBcH1t5xLo1o+oWQxpNdhp1zLKoFuYbf4V9tcvoVtGbDQ9O6O/Ux6cRWQ2CCmSJPoTJ
+ hoaVulgMY76JAX7fYJD0BiTbH/sUyeXnhhs+kBX1Wdias9G+/O4rdDwTxFY/HhSALJ5OTIRnKxT
+ freCOymcYWrscsXzO0nwoBNZ0If5n7AdssITIf+93Ls3OajEOZx8RzyzEtB7NzuIruXdUCyJ0Pn
+ mwEZlX/xjc9feXcpVSwtYf7VVCJiXTweAjLiWDX9c5vppCZEZHkSQ5Lcw4l68GhiFy48gSsQjgF
+ uNo6O3ihZoi1CvCZCEEs18p+/BumanMOhesmDeMX5MXQnrkWgA/2BuAMVXn4KANMCuySM2GRgu8
+ fXjTnUoZ9DnW+8NWSy+UYFbn5faaZwketFnODJt88pJyva8KfAdn9YGVSi/1wzVw7IvRxxXd2OU
+ ziKkzoaUVfroFBQ==
 X-Developer-Key: i=imp@bsdimp.com; a=openpgp;
  fpr=2035F894B00AA3CF7CCDE1B76C1CD1287DB01100
-Received-SPF: none client-ip=2607:f8b0:4864:20::c2e;
- envelope-from=imp@bsdimp.com; helo=mail-oo1-xc2e.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::c2d;
+ envelope-from=imp@bsdimp.com; helo=mail-oo1-xc2d.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -117,95 +118,132 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add cpu_copy() function for thread creation support and make
-init_task_state() non-static so it can be called from os-thread.c.
-Move cpu_type to file scope so cpu_copy() can access it.
+Wire up extended attribute and ACL system calls: extattrctl,
+extattr_set/get/delete for file, fd, and link variants,
+extattr_list for fd, file, and link, and all __acl_* operations
+(aclcheck, delete, get, set for fd, file, and link).
 
 Signed-off-by: Stacey Son <sson@FreeBSD.org>
-Assisted-by: Claude Opus 4.6 (1M context)
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 Signed-off-by: Warner Losh <imp@bsdimp.com>
+Assisted-by: Claude Opus 4.6 (1M context)
 ---
- bsd-user/main.c | 32 ++++++++++++++++++++++++++++++--
- bsd-user/qemu.h |  1 +
- 2 files changed, 31 insertions(+), 2 deletions(-)
+ bsd-user/freebsd/os-syscall.c | 103 ++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 103 insertions(+)
 
-diff --git a/bsd-user/main.c b/bsd-user/main.c
-index 4f1544342e..9dff2cbcb7 100644
---- a/bsd-user/main.c
-+++ b/bsd-user/main.c
-@@ -50,6 +50,7 @@
- #include "qemu/guest-random.h"
- #include "gdbstub/user.h"
- #include "exec/page-vary.h"
-+#include "exec/watchpoint.h"
+diff --git a/bsd-user/freebsd/os-syscall.c b/bsd-user/freebsd/os-syscall.c
+index f385034a53..a14efd3fd4 100644
+--- a/bsd-user/freebsd/os-syscall.c
++++ b/bsd-user/freebsd/os-syscall.c
+@@ -1365,6 +1365,109 @@ static abi_long freebsd_syscall(CPUArchState *env, int num, abi_long arg1,
+         ret = do_freebsd_sysarch(env, arg1, arg2);
+         break;
  
- #include "host-os.h"
- #include "target_arch_cpu.h"
-@@ -216,7 +217,7 @@ bool qemu_cpu_is_self(CPUState *cpu)
- }
- 
- /* Assumes contents are already zeroed.  */
--static void init_task_state(TaskState *ts)
-+void init_task_state(TaskState *ts)
- {
-     ts->sigaltstack_used = (struct target_sigaltstack) {
-         .ss_sp = 0,
-@@ -225,6 +226,34 @@ static void init_task_state(TaskState *ts)
-     };
- }
- 
-+static const char *cpu_type;
++        /*
++         * extended attributes and ACL system calls
++         */
++    case TARGET_FREEBSD_NR_extattrctl: /* extattrctl() */
++        ret = do_freebsd_extattrctl(arg1, arg2, arg3, arg4, arg5);
++        break;
 +
-+CPUArchState *cpu_copy(CPUArchState *env)
-+{
-+    CPUState *cpu = env_cpu(env);
-+    CPUState *new_cpu = cpu_create(cpu_type);
-+    CPUArchState *new_env = cpu_env(new_cpu);
-+    CPUBreakpoint *bp;
++    case TARGET_FREEBSD_NR_extattr_set_file: /* extattr_set_file(2) */
++        ret = do_freebsd_extattr_set_file(arg1, arg2, arg3, arg4, arg5);
++        break;
 +
-+    /* Reset non arch specific state */
-+    cpu_reset(new_cpu);
++    case TARGET_FREEBSD_NR_extattr_get_file: /* extattr_get_file(2) */
++        ret = do_freebsd_extattr_get_file(arg1, arg2, arg3, arg4, arg5);
++        break;
 +
-+    new_cpu->tcg_cflags = cpu->tcg_cflags;
-+    memcpy(new_env, env, sizeof(CPUArchState));
++    case TARGET_FREEBSD_NR_extattr_delete_file: /* extattr_delete_file(2) */
++        ret = do_freebsd_extattr_delete_file(arg1, arg2, arg3);
++        break;
 +
-+    /*
-+     * Clone all break/watchpoints.
-+     * Note: Once we support ptrace with hw-debug register access, make sure
-+     * BP_CPU break/watchpoints are handled correctly on clone.
-+     */
-+    QTAILQ_INIT(&new_cpu->breakpoints);
-+    QTAILQ_FOREACH(bp, &cpu->breakpoints, entry) {
-+        cpu_breakpoint_insert(new_cpu, bp->pc, bp->flags, NULL);
-+    }
++    case TARGET_FREEBSD_NR_extattr_set_fd: /* extattr_set_fd(2) */
++        ret = do_freebsd_extattr_set_fd(arg1, arg2, arg3, arg4, arg5);
++        break;
 +
-+    return new_env;
-+}
++    case TARGET_FREEBSD_NR_extattr_get_fd: /* extattr_get_fd(2) */
++        ret = do_freebsd_extattr_get_fd(arg1, arg2, arg3, arg4, arg5);
++        break;
 +
- static QemuPluginList plugins = QTAILQ_HEAD_INITIALIZER(plugins);
- 
- void gemu_log(const char *fmt, ...)
-@@ -257,7 +286,6 @@ int main(int argc, char **argv)
- {
-     const char *filename;
-     const char *cpu_model;
--    const char *cpu_type;
-     const char *log_file = NULL;
-     const char *log_mask = NULL;
-     const char *seed_optarg = NULL;
-diff --git a/bsd-user/qemu.h b/bsd-user/qemu.h
-index 069baa7011..d2dd8c2ee8 100644
---- a/bsd-user/qemu.h
-+++ b/bsd-user/qemu.h
-@@ -122,6 +122,7 @@ struct TaskState {
-     struct target_sigaltstack sigaltstack_used;
- } __attribute__((aligned(16)));
- 
-+void init_task_state(TaskState *ts);
- void stop_all_tasks(void);
- extern const char *interp_prefix;
- extern const char *qemu_uname_release;
++    case TARGET_FREEBSD_NR_extattr_delete_fd: /* extattr_delete_fd(2) */
++        ret = do_freebsd_extattr_delete_fd(arg1, arg2, arg3);
++        break;
++
++    case TARGET_FREEBSD_NR_extattr_get_link: /* extattr_get_link(2) */
++        ret = do_freebsd_extattr_get_link(arg1, arg2, arg3, arg4, arg5);
++        break;
++
++    case TARGET_FREEBSD_NR_extattr_set_link: /* extattr_set_link(2) */
++        ret = do_freebsd_extattr_set_link(arg1, arg2, arg3, arg4, arg5);
++        break;
++
++    case TARGET_FREEBSD_NR_extattr_delete_link: /* extattr_delete_link(2) */
++        ret = do_freebsd_extattr_delete_link(arg1, arg2, arg3);
++        break;
++
++    case TARGET_FREEBSD_NR_extattr_list_fd: /* extattr_list_fd(2) */
++        ret = do_freebsd_extattr_list_fd(arg1, arg2, arg3, arg4);
++        break;
++
++    case TARGET_FREEBSD_NR_extattr_list_file: /* extattr_list_file(2) */
++        ret = do_freebsd_extattr_list_file(arg1, arg2, arg3, arg4);
++        break;
++
++    case TARGET_FREEBSD_NR_extattr_list_link: /* extattr_list_link(2) */
++        ret = do_freebsd_extattr_list_link(arg1, arg2, arg3, arg4);
++        break;
++
++    case TARGET_FREEBSD_NR___acl_aclcheck_fd: /* __acl_aclcheck_fd() */
++        ret = do_freebsd__acl_aclcheck_fd(arg1, arg2, arg3);
++        break;
++
++    case TARGET_FREEBSD_NR___acl_aclcheck_file: /* __acl_aclcheck_file() */
++        ret = do_freebsd__acl_aclcheck_file(arg1, arg2, arg3);
++        break;
++
++    case TARGET_FREEBSD_NR___acl_aclcheck_link: /* __acl_aclcheck_link() */
++        ret = do_freebsd__acl_aclcheck_link(arg1, arg2, arg3);
++        break;
++
++    case TARGET_FREEBSD_NR___acl_delete_fd: /* __acl_delete_fd() */
++        ret = do_freebsd__acl_delete_fd(arg1, arg2);
++        break;
++
++    case TARGET_FREEBSD_NR___acl_delete_file: /* __acl_delete_file() */
++        ret = do_freebsd__acl_delete_file(arg1, arg2);
++        break;
++
++    case TARGET_FREEBSD_NR___acl_delete_link: /* __acl_delete_link() */
++        ret = do_freebsd__acl_delete_link(arg1, arg2);
++        break;
++
++    case TARGET_FREEBSD_NR___acl_get_fd: /* __acl_get_fd() */
++        ret = do_freebsd__acl_get_fd(arg1, arg2, arg3);
++        break;
++
++    case TARGET_FREEBSD_NR___acl_get_file: /* __acl_get_file() */
++        ret = do_freebsd__acl_get_file(arg1, arg2, arg3);
++        break;
++
++    case TARGET_FREEBSD_NR___acl_get_link: /* __acl_get_link() */
++        ret = do_freebsd__acl_get_link(arg1, arg2, arg3);
++        break;
++
++    case TARGET_FREEBSD_NR___acl_set_fd: /* __acl_set_fd() */
++        ret = do_freebsd__acl_set_fd(arg1, arg2, arg3);
++        break;
++
++    case TARGET_FREEBSD_NR___acl_set_file: /* __acl_set_file() */
++        ret = do_freebsd__acl_set_file(arg1, arg2, arg3);
++        break;
++
++    case TARGET_FREEBSD_NR___acl_set_link: /* __acl_set_link() */
++        ret = do_freebsd__acl_set_link(arg1, arg2, arg3);
++        break;
++
+     default:
+         qemu_log_mask(LOG_UNIMP, "Unsupported syscall: %d\n", num);
+         ret = -TARGET_ENOSYS;
 
 -- 
 2.52.0
