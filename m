@@ -4,71 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9258BCDB46F
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D9F9CDB471
 	for <qemu-devel@archiver.kernel.org>; Sun, 21 Jun 2026 04:23:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wb9hS-00034Z-GE; Sun, 21 Jun 2026 00:22:27 -0400
+	id 1wb9hG-00030u-4J; Sun, 21 Jun 2026 00:22:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wb9hM-00033H-9G
- for qemu-devel@nongnu.org; Sun, 21 Jun 2026 00:22:20 -0400
-Received: from mail-oo1-xc30.google.com ([2607:f8b0:4864:20::c30])
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wb9hD-0002zP-3L
+ for qemu-devel@nongnu.org; Sun, 21 Jun 2026 00:22:12 -0400
+Received: from mail-oo1-xc2c.google.com ([2607:f8b0:4864:20::c2c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wb9hJ-0005GR-JO
- for qemu-devel@nongnu.org; Sun, 21 Jun 2026 00:22:20 -0400
-Received: by mail-oo1-xc30.google.com with SMTP id
- 006d021491bc7-6a0a38a013eso2732365eaf.0
- for <qemu-devel@nongnu.org>; Sat, 20 Jun 2026 21:22:17 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wb9hB-0005ER-DO
+ for qemu-devel@nongnu.org; Sun, 21 Jun 2026 00:22:10 -0400
+Received: by mail-oo1-xc2c.google.com with SMTP id
+ 006d021491bc7-69e1f777bcaso2930231eaf.1
+ for <qemu-devel@nongnu.org>; Sat, 20 Jun 2026 21:22:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1782015736; x=1782620536;
+ d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1782015728; x=1782620528;
  darn=nongnu.org; 
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=qJdpcnA/pubOSjeaUNEhasCsXKeN7JqeeghV9uwvoN0=;
- b=KYrj40PnBbnWeoRJPy5pjQs4TAa3+3O+2jAMiMfWtPW7Lp/yMPjFWtgYfDconOxsWI
- FNMG+UutjoRRFWZlkcMJepaHtj4mztaN307T1Ppm9G22i5HSWbYmgRdmP8MV7n6FHZnx
- lmWPGcXK2LNXsE3rNtyY17qBzJKIShg9ONVk3xiddpkd10CcGee8AxGJ4BlM71LwRJSE
- pLeNJPS07HUygYl2Go/DlBdkAX8sieh8B+PlSnN3VT3LFbmU8bNsU0HrfKk7Yj7evBih
- naXUvW7VP0saEk1MbAJsLRwE9q3WcZGh3SsE2+xZJd1D1CaEpykpLoKMPPkwp+kITQWg
- t71g==
+ :reply-to; bh=nd668SF+lm2kq08PKi7pg1iSuAwXi3sSQJZZ4SwfLHE=;
+ b=w86ISdq0Fjh9Ct4+fiRhFdoH3ac2JPU2gbPCtymrZ3+2l+gyWFywdCI3+h7nizdSxh
+ 5DZK+fUIOWzzQRMfCYnz9EThdGrrO+duNWtSezLDJpRLFT0fYjBOyfhmDEVP3f4Mpnff
+ HkO2BCLikMSTHe35hFCH1VuBzTzvSxaYm5ZjcX2qQF0A+CP+MkUAlHWDCKam5t63ffOv
+ pTZVgE3+uKdLoUEH7PdnFbrpBr8cDD1cujdR42N6MB24fS3w47SQW5t94B01bZy/wP67
+ yQ8TcfLYUxOoZGG4lIbtg0F02IbChWEDVMsDxSBY8mtqKnJpxCJQL7H76w6IvMnXp8KJ
+ s4Vw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782015736; x=1782620536;
+ d=1e100.net; s=20251104; t=1782015728; x=1782620528;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=qJdpcnA/pubOSjeaUNEhasCsXKeN7JqeeghV9uwvoN0=;
- b=BX6/qnd9iNUd+ZaNRHidtOvK3aD4puzdVzIg0pN7BBlQjN/6qo3OP+BzWXgnqj+eDD
- xBCzpXHpGfm25usTjYZS3js6r9sbq3Z9BHhwbFNMELFgc/y1rudcTrZpPlw37Thf/L4B
- nCULF9/jeMBVviyIPOxNwQX4H/bEHZ4aGsn3CMm9OuhoW7t/K8jqayfr0wKDy358Jjmw
- cNOhBAmHp6bJJegEB9/qiO5DlTzTFdZpwiNWfAipSyUyTIQlHph/LQmOSbooAUCGrS6l
- dMLgKYVtVI2iQnrmitwo7UUvynApqTJMuXKY9hm6mjuu9rwa4v1gbCFMKD3KpEsRtncH
- joKQ==
-X-Gm-Message-State: AOJu0YxUfYa29NecSbKpwwX0hAlwg9yqTSWWfITUsKsLN55fXK6iYJFe
- ajURQc2w7Ut9cR5wxoz+bnHLxh5Jd0JHkQhV02ijJxEtdhcjWpAWorn4diHgrNg/y9Q=
-X-Gm-Gg: AfdE7cn6gmA/gWEsb41vUr7Pa8FDvGZ49EP6cXKchBdlzNj4wqRYpU1AYDSXIRActU7
- H6QmSF1/PpuHtXXYBSvHVgBRj0f/6TG6w4G6G1LmncUQre3PBhLbwkDu97wAufls0N9Bwc++Xsy
- XkxcpX/KNREkNxodWjxZKqjmSMrlj+DYkxbdaMvIcJS06noSnrG0dLiOQsXZ212DqPsEds5DBZs
- i5bU/mmx6IMrXFu9Radue2z7ARrPmoHkjK/eomX97fJSIXMNA37SZV3bhVPfSw2D/CcTAd2KsxF
- c/L+OXVP+wpc1q4ZFcwFVAhka4Al0KGoJzTO52lSoY/cYJTeqgyyj6QiEihvWAoJGrbr7V956+m
- v5e7AFV0p7iIt/8mZ0JLSaBXLbLAoXz4uklhfVrrElo6CNaOk6QfhBKFEpkiscuN1t+Ljlsae9G
- o=
-X-Received: by 2002:a05:6820:81d3:b0:69e:3360:6338 with SMTP id
- 006d021491bc7-6a0da0c155bmr5704070eaf.13.1782015736275; 
- Sat, 20 Jun 2026 21:22:16 -0700 (PDT)
+ bh=nd668SF+lm2kq08PKi7pg1iSuAwXi3sSQJZZ4SwfLHE=;
+ b=ARasOyWpT17t9iI/EZy31w5Ka3grHB8GaJ9oIpzT3FLHgiEyE6s1+MUUUBeHWyyqT6
+ mrNjMw5ZPFfL6uRYe6hyvL54X0/duF2anLLB+vPlLe7SVo1W4F1rTlcGqzZvhXnGDvDM
+ qq32RaDnYO//NBVrZTA0E8jj6XLjfRe3Bqgpoe0GkrnH5xqWWvJNz369eK4qFbEnsF8N
+ K+xgPbKCwyqFJSZU671k7RUHzivk7K3NRciMvIysRMVgAkgt/rQpm4E3nedjEvUzMoA6
+ 4QxnezTkycwcQEssACvIdAqNCsNdpBivHbP85pXXMUEyiQMrcKsuzKW0E3JpbPvLzbVn
+ qnew==
+X-Gm-Message-State: AOJu0Yy5Q92lN4sSFAz88cmO3NLQyzlTnycRfF0SiTbgN3xQ4zlSm5ex
+ cphrIzgqYSSOq0qaqatNGtKjXya8kgpafUkDNuOL+lnRkbUExU9kWx8It5lVBBhfldfbpabGix2
+ up7Hk9OIWcg==
+X-Gm-Gg: AfdE7cnfQ5sIM8vWRq3g8J9G4IkMP67KQR5R2NHH+ByR8yoVqQ03tj1BJPwcpYrno/5
+ iv2kIAv03py+ipiQIWDOfE0HzSOxUKu3loDe8G737v61/cAPnq8CWArohzPexASrNn3upOfOEdH
+ qCa8Ou4MpBOwQ9i/JDwxE628MwMwu8dG21TYvBzyZw57cbCmjGzp6xxQVWaNLJUUQFhHzxF94gq
+ EPASImJ05wZPJqJRzJzgFCC4EKyzu5pL/E1Ttk34WLDM4cLfoIEl+/V6i1dTrQS2pWVWJr+fhNG
+ maDyAAajYDQR6+5dX0k+MxvrLyCGkfCswBk1GKYuGEbV1hFQqtRojz1RM6jtmN9X/SDsT68Pf8t
+ btIt4bC5GHcbldBrKbGWOtFIb7RaX61Ggy2wGUsZeqMjHEXA/cV1v6LVBJYPjJ+S7btMLfDASXz
+ Q=
+X-Received: by 2002:a05:6820:2229:b0:696:13e9:6863 with SMTP id
+ 006d021491bc7-6a0d9fb7a6emr5251545eaf.2.1782015728418; 
+ Sat, 20 Jun 2026 21:22:08 -0700 (PDT)
 Received: from rebo.bsdimp.com ([50.253.99.174])
  by smtp.gmail.com with ESMTPSA id
- 006d021491bc7-6a0e9f698ccsm2828648eaf.4.2026.06.20.21.22.15
+ 006d021491bc7-6a0e9f698ccsm2828648eaf.4.2026.06.20.21.22.06
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 20 Jun 2026 21:22:15 -0700 (PDT)
+ Sat, 20 Jun 2026 21:22:07 -0700 (PDT)
 From: Warner Losh <imp@bsdimp.com>
-Date: Sat, 20 Jun 2026 22:20:12 -0600
-Subject: [PATCH v3 25/40] bsd-user: Add time system call dispatch
+Date: Sat, 20 Jun 2026 22:20:07 -0600
+Subject: [PATCH v3 20/40] bsd-user: Add utimes, futimes, and ktimer
+ functions to os-time.h
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260620-misc-2026q2-v3-25-f6ce23ad8dda@bsdimp.com>
+Content-Transfer-Encoding: 8bit
+Message-Id: <20260620-misc-2026q2-v3-20-f6ce23ad8dda@bsdimp.com>
 References: <20260620-misc-2026q2-v3-0-f6ce23ad8dda@bsdimp.com>
 In-Reply-To: <20260620-misc-2026q2-v3-0-f6ce23ad8dda@bsdimp.com>
 To: qemu-devel@nongnu.org
@@ -76,26 +78,27 @@ Cc: Kyle Evans <kevans@freebsd.org>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>, 
  Warner Losh <imp@bsdimp.com>, Stacey Son <sson@FreeBSD.org>, 
+ =?utf-8?q?Mika=C3=ABl_Urankar?= <mikael.urankar@gmail.com>, 
  Kyle Evans <kevans@FreeBSD.org>
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=5728; i=imp@bsdimp.com;
- h=from:subject:message-id; bh=y3Vuu7lK1MqMZYO2mhPEDp/h9PnmLtrlbeRS6fMLxGc=;
- b=owEBbQKS/ZANAwAKAWwc0Sh9sBEAAcsmYgBqN2Z/ZzFAEz+l2ztNNvfOEk/3vXnJOO9EgVtBk
- TBRWKpxgjqJAjMEAAEKAB0WIQQgNfiUsAqjz3zN4bdsHNEofbARAAUCajdmfwAKCRBsHNEofbAR
- AKBwD/97NQqFj5diIIfG4Lb4Cr0wSoO7XgoxucI3OoXfVar+31R8N4GbrCYpPzyT4GHnhwsH+ca
- 8Bpt1BMfL7b5Kvc1LScOXeHy53jJM/akyOYywdD7WPzYnl1FUnF559kk3B4O9Vw0Bk8ONx563CU
- j+J/BMiD8JPMjM3lUCJNN7739SJyCeUWer2S++1M9AxJKiPDhP8IjBd/c5iLBm7HgrV8WPDsZbb
- nJXoINYJ76KwHr7T1ZhwuGZ9LGRdCSY+W1Jpu6Kl0UwxjkjVkWauvWuBu8Lau51EIjXK28sYmv2
- bEQDkEwgIHm/eFlsGaMHB5scpYT94yXhtfrkRmjd18bL0f2hNvsKbfJE5aGhAHhtA3+vWyvHafd
- BM7qxfeJuMSg9awVW20dlw+RwcCfL97ojEZOQn3Y3ni+rwPaFLrnyxfxKxIShChtPpyrS7iK068
- kdeTYV2cGgtF+FtK84B7exQMBx1CBSoT5nEHgTHoLUrv+Uw/DYDl+GDXw/I8stUn8Hu6YQW19nJ
- nTlm8DPveya1kyJpJ1We0x0BxPariP9XQ/0x+1RIDq+kpcnVwm1PUdLDpbumjnM38xaUE4ma7Hg
- O0hzM1xM/BTDzRWAtHDp2iKfks4yoZ+Xsjot19QfT6aHZ0jCc4WqSWlhrYa0SVfY4pYHNfFR1um
- JEi8VPMqglkzOpQ==
+X-Developer-Signature: v=1; a=openpgp-sha256; l=6639; i=imp@bsdimp.com;
+ h=from:subject:message-id; bh=9GsekxgX59ibndkwRpMW3vsambWIIfF/h5FULyJCcSY=;
+ b=owEBbQKS/ZANAwAKAWwc0Sh9sBEAAcsmYgBqN2Z/JsnMXKIhwHeW0Gt7jmihrB5Y/LnbEH193
+ 3kSYQ5zxpiJAjMEAAEKAB0WIQQgNfiUsAqjz3zN4bdsHNEofbARAAUCajdmfwAKCRBsHNEofbAR
+ AM7ZD/wKr3YL9BXiKiPoWV4EPwpE2xktMSnzg/mOmqjOEsWrB84LCSM9ls48EiJenVmp6E04DTu
+ rlN6VKp7OC8dnUL2CUQdvDE5xG75ppDHj7CM7ZBukkjGOd/5/o4Za3Qu1VmSCB2vSxKF57AZEP+
+ XgACqAFVdCtjwxKnNTnmvP4BApDGZdDWO3dEBSVbwrpVzFBdAHU2pNEf6VW3H00J/IJaecYyIw7
+ 6bQ8KIKFqo3KDvAI484Cv5dp5F//VL60Vr70nPPEWB4PSvatD02LMS5m0veoMk/SGmDQYYoPTAU
+ qx8tI+Wz4sh3E7950jNOryRrjTRhJYuFeO/vuCYJJ8zHTCTNy0eaahBJ5zcIon0xlLs52mKtR3G
+ 0BJrAmfuaHAHqYS2EW8HzzRM7QJDIkogLPXvPf3OWqp/oNvyMdsjxKcXA7aV4iM2yF+kQ31QqcB
+ chTzqZGQEVz06rzToIBJPrv5/BDPSU40ygOiOeP2vCqP7qp/+jTmNKATnSn5mR7xTwagyLXq6we
+ 781tFIDCPyyCo38F4dJyTO9K1VTWawuGGOWTMV4nIfq2Rf5gMCSnUSDU+wz67cDis6jdeLcEpWC
+ gMErQySbwbCvMKF5I2fNmR3GInVlVcvvIynMBV7HIphuB/hrzKbgEvPIlsHHcdQEpiTzGEosB6q
+ Gi9fWKV2QHs940A==
 X-Developer-Key: i=imp@bsdimp.com; a=openpgp;
  fpr=2035F894B00AA3CF7CCDE1B76C1CD1287DB01100
-Received-SPF: none client-ip=2607:f8b0:4864:20::c30;
- envelope-from=imp@bsdimp.com; helo=mail-oo1-xc30.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::c2c;
+ envelope-from=imp@bsdimp.com; helo=mail-oo1-xc2c.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -117,168 +120,241 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Wire up time-related system calls in the FreeBSD syscall dispatcher:
-nanosleep, clock_nanosleep, clock_gettime, clock_settime, clock_getres,
-gettimeofday, settimeofday, adjtime, ntp_adjtime, ntp_gettime,
-clock_getcpuclockid2, utimes, lutimes, futimes, futimesat,
-ktimer_create, ktimer_delete, ktimer_settime, ktimer_gettime,
-select, pselect, ppoll, kqueue, freebsd11_kevent, kevent,
-setitimer, getitimer, futimens, utimensat, and sigtimedwait.
+Add time-related system call shims: utimes, lutimes, futimes,
+futimesat, ktimer_create, ktimer_delete, ktimer_settime, and
+ktimer_gettime.
 
 Signed-off-by: Stacey Son <sson@FreeBSD.org>
+Signed-off-by: Mikaël Urankar <mikael.urankar@gmail.com>
 Signed-off-by: Kyle Evans <kevans@FreeBSD.org>
-Assisted-by: Claude Opus 4.6 (1M context)
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 Signed-off-by: Warner Losh <imp@bsdimp.com>
+Assisted-by: Claude Opus 4.6 (1M context)
 ---
- bsd-user/freebsd/os-syscall.c | 124 ++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 124 insertions(+)
+ bsd-user/freebsd/os-time.h | 212 +++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 212 insertions(+)
 
-diff --git a/bsd-user/freebsd/os-syscall.c b/bsd-user/freebsd/os-syscall.c
-index 020d16fda3..cc66be3b7c 100644
---- a/bsd-user/freebsd/os-syscall.c
-+++ b/bsd-user/freebsd/os-syscall.c
-@@ -48,6 +48,7 @@
- #include "os-signal.h"
- #include "os-file.h"
- #include "os-socket.h"
-+#include "os-time.h"
- #include "os-misc.h"
+diff --git a/bsd-user/freebsd/os-time.h b/bsd-user/freebsd/os-time.h
+index e387441d86..06104a5b7d 100644
+--- a/bsd-user/freebsd/os-time.h
++++ b/bsd-user/freebsd/os-time.h
+@@ -221,5 +221,217 @@ static inline abi_long do_freebsd_ntp_gettime(abi_ulong target_ntv_addr)
+ }
  
- /* I/O */
-@@ -1037,9 +1038,132 @@ static abi_long freebsd_syscall(CPUArchState *env, int num, abi_long arg1,
-         ret = do_bsd_getdtablesize();
-         break;
  
-+        /*
-+         * time related system calls.
-+         */
-+    case TARGET_FREEBSD_NR_nanosleep: /* nanosleep(2) */
-+        ret = do_freebsd_nanosleep(arg1, arg2);
-+        break;
++/* utimes(2) */
++static inline abi_long do_freebsd_utimes(abi_long arg1, abi_long arg2)
++{
++    abi_long ret;
++    void *p;
++    struct timeval *tvp, tv[2];
 +
-+    case TARGET_FREEBSD_NR_clock_nanosleep: /* clock_nanosleep(2) */
-+        ret = do_freebsd_clock_nanosleep(arg1, arg2, arg3, arg4);
-+        break;
++    if (arg2 != 0) {
++        if (t2h_freebsd_timeval(&tv[0], arg2) ||
++                t2h_freebsd_timeval(&tv[1], arg2 +
++                        sizeof(struct target_freebsd_timeval))) {
++            return -TARGET_EFAULT;
++        }
++        tvp = tv;
++    } else {
++        tvp = NULL;
++    }
++    p = lock_user_string(arg1);
++    if (p == NULL) {
++        return -TARGET_EFAULT;
++    }
++    ret = get_errno(utimes(p, tvp));
++    unlock_user(p, arg1, 0);
 +
-+    case TARGET_FREEBSD_NR_clock_gettime: /* clock_gettime(2) */
-+        ret = do_freebsd_clock_gettime(arg1, arg2);
-+        break;
++    return ret;
++}
 +
-+    case TARGET_FREEBSD_NR_clock_settime: /* clock_settime(2) */
-+        ret = do_freebsd_clock_settime(arg1, arg2);
-+        break;
++/* lutimes(2) */
++static inline abi_long do_freebsd_lutimes(abi_long arg1, abi_long arg2)
++{
++    abi_long ret;
++    void *p;
++    struct timeval *tvp, tv[2];
 +
-+    case TARGET_FREEBSD_NR_clock_getres: /* clock_getres(2) */
-+        ret = do_freebsd_clock_getres(arg1, arg2);
-+        break;
++    if (arg2 != 0) {
++        if (t2h_freebsd_timeval(&tv[0], arg2) ||
++                t2h_freebsd_timeval(&tv[1], arg2 +
++                        sizeof(struct target_freebsd_timeval))) {
++            return -TARGET_EFAULT;
++        }
++        tvp = tv;
++    } else {
++        tvp = NULL;
++    }
++    p = lock_user_string(arg1);
++    if (p == NULL) {
++        return -TARGET_EFAULT;
++    }
++    ret = get_errno(lutimes(p, tvp));
++    unlock_user(p, arg1, 0);
 +
-+    case TARGET_FREEBSD_NR_gettimeofday: /* gettimeofday(2) */
-+        ret = do_freebsd_gettimeofday(arg1, arg2);
-+        break;
++    return ret;
++}
 +
-+    case TARGET_FREEBSD_NR_settimeofday: /* settimeofday(2) */
-+        ret = do_freebsd_settimeofday(arg1, arg2);
-+        break;
++/* futimes(2) */
++static inline abi_long do_freebsd_futimes(abi_long arg1, abi_long arg2)
++{
++    struct timeval *tvp, tv[2];
 +
-+    case TARGET_FREEBSD_NR_adjtime: /* adjtime(2) */
-+        ret = do_freebsd_adjtime(arg1, arg2);
-+        break;
++    if (arg2 != 0) {
++        if (t2h_freebsd_timeval(&tv[0], arg2) ||
++                t2h_freebsd_timeval(&tv[1], arg2 +
++                        sizeof(struct target_freebsd_timeval))) {
++            return -TARGET_EFAULT;
++        }
++        tvp = tv;
++    } else {
++        tvp = NULL;
++    }
 +
-+    case TARGET_FREEBSD_NR_ntp_adjtime: /* ntp_adjtime(2) */
-+        ret = do_freebsd_ntp_adjtime(arg1);
-+        break;
++    return get_errno(futimes(arg1, tvp));
++}
 +
-+    case TARGET_FREEBSD_NR_clock_getcpuclockid2: /* Not documented. */
-+        ret = do_freebsd_clock_getcpuclockid2(arg1, arg2, arg3, arg4);
-+        break;
++/* futimesat(2) */
++static inline abi_long do_freebsd_futimesat(abi_long arg1, abi_long arg2,
++        abi_long arg3)
++{
++    abi_long ret;
++    void *p;
++    struct timeval *tvp, tv[2];
 +
-+    case TARGET_FREEBSD_NR_ntp_gettime: /* ntp_gettime(2) */
-+        ret = do_freebsd_ntp_gettime(arg1);
-+        break;
++    if (arg3 != 0) {
++        if (t2h_freebsd_timeval(&tv[0], arg3) ||
++                t2h_freebsd_timeval(&tv[1], arg3 +
++                        sizeof(struct target_freebsd_timeval))) {
++            return -TARGET_EFAULT;
++        }
++        tvp = tv;
++    } else {
++        tvp = NULL;
++    }
 +
-+    case TARGET_FREEBSD_NR_utimes: /* utimes(2) */
-+        ret = do_freebsd_utimes(arg1, arg2);
-+        break;
++    p = lock_user_string(arg2);
++    if (p == NULL) {
++        return -TARGET_EFAULT;
++    }
++    ret = get_errno(futimesat(arg1, p, tvp));
++    unlock_user(p, arg2, 0);
 +
-+    case TARGET_FREEBSD_NR_lutimes: /* lutimes(2) */
-+        ret = do_freebsd_lutimes(arg1, arg2);
-+        break;
++    return ret;
++}
 +
-+    case TARGET_FREEBSD_NR_futimes: /* futimes(2) */
-+        ret = do_freebsd_futimes(arg1, arg2);
-+        break;
++/* timer_create(2) */
++static inline abi_long do_freebsd_ktimer_create(abi_long arg1, abi_long arg2,
++        abi_long arg3)
++{
++    /* args: clockid_t clockid, struct sigevent *sevp, int *timerid */
++    abi_long ret;
 +
-+    case TARGET_FREEBSD_NR_futimesat: /* futimesat(2) */
-+        ret = do_freebsd_futimesat(arg1, arg2, arg3);
-+        break;
++    struct sigevent host_sevp = { 0 }, *phost_sevp = NULL;
 +
-+    case TARGET_FREEBSD_NR_ktimer_create: /* timer_create(2) */
-+        ret = do_freebsd_ktimer_create(arg1, arg2, arg3);
-+        break;
++    int clkid = arg1;
++    int timer_index = next_free_host_timer();
 +
-+    case TARGET_FREEBSD_NR_ktimer_delete: /* timer_delete(2) */
-+        ret = do_freebsd_ktimer_delete(arg1);
-+        break;
++    if (timer_index < 0) {
++        ret = -TARGET_EAGAIN;
++    } else {
++        int *phtimer = g_posix_timers  + timer_index;
 +
-+    case TARGET_FREEBSD_NR_ktimer_settime: /* timer_settime(2) */
-+        ret = do_freebsd_ktimer_settime(arg1, arg2, arg3, arg4);
-+        break;
++        if (arg2) {
++            phost_sevp = &host_sevp;
++            ret = target_to_host_sigevent(phost_sevp, arg2);
++            if (ret != 0) {
++                g_posix_timers[timer_index] = 0;
++                return -TARGET_EFAULT;
++            }
++        }
 +
-+    case TARGET_FREEBSD_NR_ktimer_gettime: /* timer_gettime(2) */
-+        ret = do_freebsd_ktimer_gettime(arg1, arg2);
-+        break;
++        ret = get_errno(__sys_ktimer_create(clkid, phost_sevp, phtimer));
++        if (ret) {
++            phtimer = NULL;
++        } else {
++            if (put_user(TIMER_MAGIC | timer_index, arg3, int)) {
++                __sys_ktimer_delete(g_posix_timers[timer_index]);
++                g_posix_timers[timer_index] = 0;
++                ret = -TARGET_EFAULT;
++            }
++        }
++    }
++    return ret;
++}
 +
-+    case TARGET_FREEBSD_NR_select: /* select(2) */
-+        ret = do_freebsd_select(env, arg1, arg2, arg3, arg4, arg5);
-+        break;
++/* timer_delete(2) */
++static inline abi_long do_freebsd_ktimer_delete(abi_long arg1)
++{
++    /* args: int timerid */
++    abi_long ret;
++    int timerid = get_timer_id(arg1);
 +
-+    case TARGET_FREEBSD_NR_pselect: /* pselect(2) */
-+        ret = do_freebsd_pselect(env, arg1, arg2, arg3, arg4, arg5, arg6);
-+        break;
++    if (timerid < 0) {
++        ret = timerid;
++    } else {
++        int htimer = g_posix_timers[timerid];
++        ret = get_errno(__sys_ktimer_delete(htimer));
++        g_posix_timers[timerid] = 0;
++    }
++    return ret;
++}
 +
-+    case TARGET_FREEBSD_NR_ppoll: /* ppoll(2) */
-+        ret = do_freebsd_ppoll(env, arg1, arg2, arg3, arg4);
-+        break;
++/* timer_settime(2) */
++static inline abi_long do_freebsd_ktimer_settime(abi_long arg1, abi_long arg2,
++        abi_long arg3, abi_long arg4)
++{
++    /*
++     * args: int timerid, int flags, const struct itimerspec *new_value,
++     * struct itimerspec * old_value
++     */
++    abi_long ret;
++    int timerid = get_timer_id(arg1);
 +
-+    case TARGET_FREEBSD_NR_kqueue: /* kqueue(2) */
-+        ret = do_freebsd_kqueue();
-+        break;
++    if (timerid < 0) {
++        ret = timerid;
++    } else if (arg3 == 0) {
++        ret = -TARGET_EINVAL;
++    } else {
++        int htimer = g_posix_timers[timerid];
++        struct itimerspec hspec_new = {{0},}, hspec_old = {{0},};
 +
-+    case TARGET_FREEBSD_NR_freebsd11_kevent: /* kevent(2) */
-+        ret = do_freebsd_freebsd11_kevent(arg1, arg2, arg3, arg4, arg5, arg6);
-+        break;
++        if (target_to_host_itimerspec(&hspec_new, arg3)) {
++            return -TARGET_EFAULT;
++        }
++        ret = get_errno(
++            __sys_ktimer_settime(htimer, arg2, &hspec_new, &hspec_old));
++        if (arg4 && host_to_target_itimerspec(arg4, &hspec_old)) {
++            return -TARGET_EFAULT;
++        }
++    }
++    return ret;
++}
 +
-+    case TARGET_FREEBSD_NR_kevent: /* kevent(2) */
-+        ret = do_freebsd_kevent(arg1, arg2, arg3, arg4, arg5, arg6);
-+        break;
++/* timer_gettime(2) */
++static inline abi_long do_freebsd_ktimer_gettime(abi_long arg1, abi_long arg2)
++{
++    /* args: int timerid, struct itimerspec *curr_value */
++    abi_long ret;
++    int timerid = get_timer_id(arg1);
 +
-+    case TARGET_FREEBSD_NR_setitimer: /* setitimer(2) */
-+        ret = do_freebsd_setitimer(arg1, arg2, arg3);
-+        break;
++    if (timerid < 0) {
++        ret = timerid;
++    } else if (!arg2) {
++        ret = -TARGET_EFAULT;
++    } else {
++        int htimer = g_posix_timers[timerid];
++        struct itimerspec hspec;
++        ret = get_errno(__sys_ktimer_gettime(htimer, &hspec));
++        if (!is_error(ret)) {
++            ret = host_to_target_itimerspec(arg2, &hspec);
++        }
++    }
++    return ret;
++}
 +
-+    case TARGET_FREEBSD_NR_getitimer: /* getitimer(2) */
-+        ret = do_freebsd_getitimer(arg1, arg2);
-+        break;
-+
-+    case TARGET_FREEBSD_NR_futimens: /* futimens(2) */
-+        ret = do_freebsd_futimens(arg1, arg2);
-+        break;
-+
-+    case TARGET_FREEBSD_NR_utimensat: /* utimensat(2) */
-+        ret = do_freebsd_utimensat(arg1, arg2, arg3, arg4);
-+        break;
-+
-         /*
-          * signal system calls
-          */
-+    case TARGET_FREEBSD_NR_sigtimedwait: /* sigtimedwait(2) */
-+        ret = do_freebsd_sigtimedwait(arg1, arg2, arg3);
-+        break;
-+
-     case TARGET_FREEBSD_NR_sigaction: /* sigaction(2) */
-         ret = do_bsd_sigaction(arg1, arg2, arg3);
-         break;
+ 
+ #endif /* FREEBSD_OS_TIME_H */
 
 -- 
 2.52.0
