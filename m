@@ -4,139 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6EF21CD98F0
-	for <qemu-devel@archiver.kernel.org>; Sun, 21 Jun 2026 14:23:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4CDC1CD98F0
+	for <qemu-devel@archiver.kernel.org>; Sun, 21 Jun 2026 23:58:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wbJ4o-0004VK-GJ; Sun, 21 Jun 2026 10:23:10 -0400
+	id 1wbS2i-0001aM-KD; Sun, 21 Jun 2026 19:57:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1wbJ4l-0004Uc-OB
- for qemu-devel@nongnu.org; Sun, 21 Jun 2026 10:23:08 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1wbJ4k-0004ee-4e
- for qemu-devel@nongnu.org; Sun, 21 Jun 2026 10:23:07 -0400
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65LDtCEM1991140
- for <qemu-devel@nongnu.org>; Sun, 21 Jun 2026 14:23:01 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- ZxNckIRXPeR8iBbCETl9VJQw/2t2ky2qAzNeKRi42nQ=; b=iQ5fZKnOYGzK1beK
- eWFax9JErpnlvGfriWRcsLEtWlspHvmQdzhZnLgv/h0TSXs32LVH+NfCWpQoDrKb
- LRePvyy42gYejybQ9XeRR74+iMn/MkxGfWpVUMf2Iu3tb2U7zHWA0Ew9vQVtO7m5
- xvdqyXA+npRYax53IM3nazazsp0RpCzDcUWyMLFxcB0/e2Ncnlf5fLRuWw0kw3zQ
- B4ivkL7MB4EkdeKC7/oGJFT6y4164SAj1+6/NDrqcpJ15jRC+1o6tsDHAckaZUOE
- LfQgqlyYqH49r58R/pfaRajPNsEtqNfuk6DTxNM2LAgXZwjP9T6FF0YzW7mwXnIZ
- WWRiUg==
-Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
- [209.85.160.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ewm5831ku-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Sun, 21 Jun 2026 14:23:01 +0000 (GMT)
-Received: by mail-qt1-f197.google.com with SMTP id
- d75a77b69052e-5178aed25baso70313851cf.1
- for <qemu-devel@nongnu.org>; Sun, 21 Jun 2026 07:23:01 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1wbS2h-0001a5-Dh
+ for qemu-devel@nongnu.org; Sun, 21 Jun 2026 19:57:35 -0400
+Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1wbS2f-0004UQ-TC
+ for qemu-devel@nongnu.org; Sun, 21 Jun 2026 19:57:35 -0400
+Received: by mail-ed1-x532.google.com with SMTP id
+ 4fb4d7f45d1cf-6978f0870c9so1332674a12.3
+ for <qemu-devel@nongnu.org>; Sun, 21 Jun 2026 16:57:33 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1782086252; cv=none;
+ d=google.com; s=arc-20240605;
+ b=TOZ2HeoCS+HW0V58w+BfMH8xVH0RgoRywnFyn43EBJMxPotaOirs02vq3fE5UqqdAI
+ XMO8uRxn6xHmUZ53hEo6t88uTHJ3U9+0h+zA0QOK4RqNXQanVjZbtgCvkgCFiq3zQziW
+ Pau8Sfn8PVILkZzvt0uVmwuEQ9PfurQP1J6YnlVsRzm4ys4OMXuO1MtOAVjGzNk8q9F0
+ VGWFu1sJB5CgVhRMVihQfa0BT1mOX4Gk9d6cXoTcbPjWDt5Y4opS/hFWZvoj9WwltYYO
+ u413jCxJRWSlqFpwD2zU6v0xegEDDLIifgg/XpSA2FQ7AwnNyLPrGWojyBkOgvjcT9zF
+ UB6Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=LDMAoyM4aclkV3vCbjNWWErpW3ALnmEMfaOuJwiY/Qo=;
+ fh=0PBKHgIskmm1L7ONMYOvSpwZKdMLVmwojJbXj83/ApQ=;
+ b=HPdBD76b9paGcT+TlyL5kl2fgn6jGJi47EsjoC4Gj0G+uM7XznOiXDJ8tqWLgS7sV6
+ MSyyKfk1qV0foSuHHCgEBoJNmHB4fnnK5bQIol0R+fkUgXW1Z5tG9NVFCbZk/IDG0KWa
+ saQF59nDyzQsWTeCR0TfN7ZENNJmvkea6bNC4Z/Mhpopoc7aA6/64Sel22XQypUr06de
+ OXNFa3cdccsjplM1GLpGbKAGr2W65JGKsyzU/wv6BwRluffSzBSe7yBAH6s2QSrASlI1
+ z3I3nlb6swGsyJdEp6mo+tsnkuvToEO2yQnuanD02PzCvQgQZy76Qd4Qwic3Pm+V91t+
+ nUkg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1782051780; x=1782656580; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=ZxNckIRXPeR8iBbCETl9VJQw/2t2ky2qAzNeKRi42nQ=;
- b=FM+tZBSuhr8pITfCiOXb3Aie/zCbMgGbdrrM60zPcJp53DRHzoov0e6TeyNykScrnl
- AABxP7ZTs/NBC/xXcbXeBNDCBF0SYtmMY1K/lybdXVTaYBDWJQHyfjaLZtWgQWnt+MN8
- bHZX+wyfIf1eCPcSdAChDRkU0J42ekdpxSpAlje/JJnrVafbdxArc5VF4pJeFZtObZ8Q
- 2Ti3l3/PONEgImA202/uVXPLl37cq8MHQVB4BM9xDRIxfOD9HIrdWIcwwQtfCW3oSjLM
- w2bENVNF1vCqRMhepHyxCMlVA4Za7gXRamYvcmxNw0dXws23vXfOz9Mg+9fyZXDCSYcG
- LLiA==
+ d=gmail.com; s=20251104; t=1782086252; x=1782691052; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=LDMAoyM4aclkV3vCbjNWWErpW3ALnmEMfaOuJwiY/Qo=;
+ b=iCQffeqNHEjJSLN21fmXtOEVoseCKtyAaHE6MQEKt4XRNZQQ1Rr8u53tBzMHrXIAeb
+ GXFylN5G2SwkvsMoKqkJGOVNZKPvAe8p9I8LYggDDBgz7YY4zAxZGosCY4wG+Fy8eM0V
+ RSWWo+e8kdOBzaUwy+J3WD2hUxYZanuqYWsvLaGOTBRtly965j2SNGdA90oWWZPFMeyr
+ ilTSLszlWDCUOx/YNOuLQzF8HJMQ11UXVT9T2maw7uO0UwMelGNHpwsJ7XpnqpckkhLS
+ 89iXm1xu0dqrlm2onw1HcMkUXaOMwqgQa2xo8N1KFu+uIgnT3bUuuqc4/uk6BY8Ok4xL
+ zaPw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782051780; x=1782656580;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=ZxNckIRXPeR8iBbCETl9VJQw/2t2ky2qAzNeKRi42nQ=;
- b=SQRjXJTY1vZaa/LnzBR+4TtWlPUWbrWOEvqCBpq7guUo9aIF6Fc2QJh6yD+Omz/vM+
- 9IKPQLNgiRs+xqJnt4ZG6kkvH0docYyuVkj9nN8j973YtG5TSNe3F9h7zWpij1lzkiN/
- laJivLIV2RyedtF2XTQhv9FsYqSHOECiatPqPCHC0GYMgjvFU31pW+l0bIrGmt+Vmeti
- WpAUg6jSeqyliZyKnNVytr6QjqIYvKRuh54WmIdxMdaE4K9bqnF/9L8z3RlYZQbsLhs3
- 1dqu644g3n5AOMrbbwPDuEak0yGUXC8vzcHW0hrDyilcziO45aVUJcYndOfgd4HYd5Zw
- oH6g==
-X-Gm-Message-State: AOJu0YwRnNCKGwZvJyyZT6PdCOQwrmeaf834brLy0UzaCndulVvPu7V9
- nR70YuW9pV5v11Vf+hrOekNnslBx9Od373MKh1MLvmsMxmlQC3PshSFkgOAonwg3oxToNRCiHGX
- ERGu9qvpP8yfbUZ6gNVp8F3C/oicWvf5jIjAZtCUGSw7KkzjPMiMTR9Ezkw==
-X-Gm-Gg: AfdE7cnXz+gMkTj0i6OEOUfT5e+9reP1K+4OZMuNkMQHuTjimdh2yIHU6Vmr2ua9KAB
- azbzTc9ak/ZYe5n09RVlTJljajmKEITz+lRLYBU+3hTOnUAXB52Mws+oiWUOUm1/MYznNuSLWLb
- YNwl97T2I/XmQFHPhjZ3/hB5+UZ7J+mWcPDSXSdH54+M09VPfETsFvwOhHXodNPI7pEXZnsndmw
- NavEAcQcIKpv2pBG1USWSsh9c+anEr96Ddjl0Cd2kzqSR0WN2kDD3S/Vi1vG/j1nRhTa9Ol2FAq
- FePWnzwmDBc+jCcb1t6r2uVCHRG5wG9arCXB8Wwr0RymiIJCcbA195+o9hygOlsBboyINqTSMNm
- BNn7hnlYu0uVY1L5mr2rwLMPdiPqH1yzxy9ch0ph8UaGNRxHmwTrTmmvlK2ruhWI43OB3yfQTVB
- otGz6vmzawmf+WgeY=
-X-Received: by 2002:ac8:7c50:0:b0:516:d84a:9f54 with SMTP id
- d75a77b69052e-519f04d4ffbmr150860341cf.38.1782051780405; 
- Sun, 21 Jun 2026 07:23:00 -0700 (PDT)
-X-Received: by 2002:ac8:7c50:0:b0:516:d84a:9f54 with SMTP id
- d75a77b69052e-519f04d4ffbmr150859981cf.38.1782051779960; 
- Sun, 21 Jun 2026 07:22:59 -0700 (PDT)
-Received: from [192.168.1.199] (104-54-226-75.lightspeed.austtx.sbcglobal.net.
- [104.54.226.75]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-51a09895ac9sm44025871cf.21.2026.06.21.07.22.58
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 21 Jun 2026 07:22:59 -0700 (PDT)
-Message-ID: <773d96e3-1702-4a69-b9fe-a543334fcd48@oss.qualcomm.com>
-Date: Sun, 21 Jun 2026 09:22:57 -0500
+ d=1e100.net; s=20251104; t=1782086252; x=1782691052;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=LDMAoyM4aclkV3vCbjNWWErpW3ALnmEMfaOuJwiY/Qo=;
+ b=QmaMKn+Ybm2/9edhnl5xhOGuiwBLOZ4vUdZWG28BlsVB54jBQjjwyjitPSsZYYIMqY
+ bZ4dHygNtWDX9oLytEikG/O/2j9arRbIYJD9GJ8sAmYmLubW9eyu48FYQjmTRgGVVfYB
+ ex54/qqqlWqW4upE622u4mGL8ZnkInuZj68qHulZD1qrtIxCzeMWIWh53BP3/qSWHf5r
+ NX2Xs86HY/R/o2u0bHKwh8PewRGcKO38CplN1TYgmBBBQyurw12+COvR1MasoMhD7rTS
+ XBRbmVnzbzrAgDzxMlsJhCfej8wWMsRuWfnE5GN8NKdRwzRZ5kyqLhX+VI3xubMCIiz4
+ JSgw==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ84vmfPUnm4iGG1XcX9x9onvu32JeYV+EVPB8QAy1sLXlM2alw2p6wR10noZrtdfsjvvEAaedcI92KY@nongnu.org
+X-Gm-Message-State: AOJu0Yz8LS9gIiXTqQ2IEcEUbpD3hs3Eyrz46FAX6aYFCQBmYhdoT+OV
+ aqNQBzp4SImrD8mip5zw2N4ei9IgIQc8cKFECHYZZV7TR8a6h/a87yKSqWO2JuHTucMZUEOLX1G
+ ubXY1Zi53mlkqpdoHjb9VnwQ8jXYl+C0=
+X-Gm-Gg: AfdE7clScPMsLlqToYzph5n16wEud22p+WA7VVE5vBt2vsr8piu4n9pToVNjFGqx1/2
+ 78ZBlKPzHw/H2yKQpJ+9Y4BJHvyXBc65Zo2ufi4RleAvgeL+EJa4UPR68bTFMz3cPQfiVaWAiEo
+ 1NB4cEfR9ks0HCYCTSz0ChzBT1Sx14+/mZI+bj9f4swZ6vsG8BxP1kpbh5qrCufm98GvbQHThOJ
+ HtpSljXU68RrPJmP4Oz2VbAC9L2r1+3fuKn/nmStgdckGLvAiC8CsgnVSR43T1pxpS4PWQi8BtF
+ u971gMOKr3tJJpJbrs0QrrnDsVmLHWUN+Sh+DA==
+X-Received: by 2002:a05:6402:a51b:10b0:697:7fe4:c3db with SMTP id
+ 4fb4d7f45d1cf-6977fe4c47emr1657897a12.3.1782086251764; Sun, 21 Jun 2026
+ 16:57:31 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 00/74] hex queue - sysemu
-To: Stefan Hajnoczi <stefanha@gmail.com>
-Cc: qemu-devel@nongnu.org, stefanha@redhat.com
-References: <20260619225911.159473-1-brian.cain@oss.qualcomm.com>
- <CAJSP0QWzQEgoYMCgZX+9jCvrV6O3RqnA+df1DpT2R6MZvVXiNg@mail.gmail.com>
-Content-Language: en-US
-From: Brian Cain <brian.cain@oss.qualcomm.com>
-In-Reply-To: <CAJSP0QWzQEgoYMCgZX+9jCvrV6O3RqnA+df1DpT2R6MZvVXiNg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: bfm0mMkmNnEAWcpjLzrXAMlybvgwkjB9
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjIxMDE0NSBTYWx0ZWRfX8A4spS3v4vNm
- 15cSVoK+JsfpX/EDHCk3LsidpvvDLi6L0U7J4L0O10fLZhP0t4TO3Ofq/PrJYS7pBvp+1F3my5i
- IMf1KLhBN7N3Er00oG7U/Cf7gcD+rjo=
-X-Proofpoint-GUID: bfm0mMkmNnEAWcpjLzrXAMlybvgwkjB9
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjIxMDE0NSBTYWx0ZWRfX13w9pIh4CHBh
- dNiG2qyXSwROfjAHW1+9NJuXte6LsN0h0bXsWbdKrCY/hJYziEzrtNHpi3qS0HCafn5FKZKWsNl
- Ag3szEZRP6MY1RBbw+HVDXzU32Cb/n1HQmMbSVlX+zmGD6f3KxzTwNysodcEplM5cIPJPe+t7Rs
- JPk9k5upd5UmupNnViBL2XCKeeiSLVhlxMBPoX1niQA9ezYMnOsHu4W/2XWcc+qAxaD9vSoiHQI
- r1Jf5WPZWX35o1SjiVhJ8hOxjbjnq50zmdsA93q5cKwQm66151kBkETAT5KC2hENi844PhixNum
- i0/HySNbtartL4A4NsApYO1l8lWFBJLIkQT87RZvwl9akeXi6sO6IgZ+3FKgZ6c+9AWDNVl8G/K
- KdqpUzC5NrpIF1USPMz75ksfNbW5vxYq5l9EC6vrVkDLJnIZe4MJ2VMHoCHZ3tBGb2sp1JBOnSe
- cS8948F9JjijytX9LGw==
-X-Authority-Analysis: v=2.4 cv=FOQrAeos c=1 sm=1 tr=0 ts=6a37f3c5 cx=c_pps
- a=EVbN6Ke/fEF3bsl7X48z0g==:117 a=x6rl1zRT+JsLSO7OGbGBKQ==:17
- a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22
- a=NEAV23lmAAAA:8 a=p0WdMEafAAAA:8 a=EUspDBNiAAAA:8 a=6F6Z8z8l5zDi8Hb5yd0A:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=a_PwQJl-kcHnX1M80qC6:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-21_02,2026-06-18_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 lowpriorityscore=0 bulkscore=0 clxscore=1015 adultscore=0
- phishscore=0 spamscore=0 priorityscore=1501 impostorscore=0 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606210145
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=brian.cain@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+References: <20260617054034.1020724-1-joel@jms.id.au>
+ <20260617054034.1020724-2-joel@jms.id.au>
+In-Reply-To: <20260617054034.1020724-2-joel@jms.id.au>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Mon, 22 Jun 2026 09:57:05 +1000
+X-Gm-Features: AVVi8CeFRjDUtF1P3XaXPENhSrSjNzL7ZqQP7cSQd8IfA334o05s3ipaoFlhYOI
+Message-ID: <CAKmqyKM0pWWTzubMZqKB8k3hdZpPki2wszsmp6OJrfWE8mL7Qw@mail.gmail.com>
+Subject: Re: [PATCH 1/3] target/riscv: Avoid NULL deref in IMSIC CSR write
+To: Joel Stanley <joel@jms.id.au>
+Cc: alistair.francis@wdc.com, 
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Anton Johansson <anjo@rev.ng>, qemu-riscv@nongnu.org, 
+ qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::532;
+ envelope-from=alistair23@gmail.com; helo=mail-ed1-x532.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -153,36 +122,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-On 6/20/2026 6:59 PM, Stefan Hajnoczi wrote:
-> On Fri, Jun 19, 2026 at 7:00 PM Brian Cain <brian.cain@oss.qualcomm.com> wrote:
->> The following changes since commit 3b50303f9563a42538a1fd5c0ea7f952e23016e1:
->>
->>    Merge tag 'accel-20260618' of https://github.com/philmd/qemu into staging (2026-06-18 16:28:12 -0400)
->>
->> are available in the Git repository at:
->>
->>    https://github.com/qualcomm/qemu tags/pull-hex-20260619
->>
->> for you to fetch changes up to ffa57dc3389a85263a3a7c4890d01b501a33ec97:
->>
->>    target/hexagon/idef-parser: open input file in binary mode (2026-06-19 15:39:11 -0700)
->>
->> ----------------------------------------------------------------
->> Add initial hexagon system emulation support
-> Hi Brian,
-> Please take a look at the following CI failure and send a v2 pull
-> request that includes a fix:
-
-
-Will do!
-
-
-> ../target/hexagon/meson.build:285:47: ERROR: Program 'emscripten' not
-> found or not executable
+On Wed, Jun 17, 2026 at 3:42=E2=80=AFPM Joel Stanley <joel@jms.id.au> wrote=
+:
 >
-> https://gitlab.com/qemu-project/qemu/-/jobs/14953356226
+> rmw_xireg_aia() and rmw_xtopei() were changed to store the IMSIC
+> callback's value in a local before passing it back to the caller.
+> For write only CSR accesses that pointer is NULL, causing a crash when
+> guest programs write to xireg or xtopei, such as when the guest sets up
+> the IMSIC.
 >
-> Thanks,
-> Stefan
+> This only happens when setting aia=3Daplic-imsic so none of the existing
+> boot tests caught it.
+>
+> Fix it by guarding the pointer dereference as done for other CSRs.
+>
+> Fixes: 63469ad75dcc ("target/riscv: Fix arguments to board IMSIC emulatio=
+n callbacks")
+> Signed-off-by: Joel Stanley <joel@jms.id.au>
+
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+
+Alistair
+
+> ---
+>  target/riscv/csr.c | 8 ++++++--
+>  1 file changed, 6 insertions(+), 2 deletions(-)
+>
+> diff --git a/target/riscv/csr.c b/target/riscv/csr.c
+> index ec931a8c3ddf..4502f2ab4788 100644
+> --- a/target/riscv/csr.c
+> +++ b/target/riscv/csr.c
+> @@ -2732,7 +2732,9 @@ static RISCVException rmw_xireg_aia(CPURISCVState *=
+env, int csrno,
+>                                      AIA_MAKE_IREG(isel, priv, virt, vgei=
+n,
+>                                                    riscv_cpu_mxl_bits(env=
+)),
+>                                      &wide_val, new_val, wr_mask);
+> -            *val =3D wide_val;
+> +            if (val) {
+> +                *val =3D wide_val;
+> +            }
+>          }
+>      } else {
+>          isel_reserved =3D true;
+> @@ -3008,7 +3010,9 @@ static RISCVException rmw_xtopei(CPURISCVState *env=
+, int csrno,
+>                      AIA_MAKE_IREG(ISELECT_IMSIC_TOPEI, priv, virt, vgein=
+,
+>                                    riscv_cpu_mxl_bits(env)),
+>                      &wide_val, new_val, wr_mask);
+> -    *val =3D wide_val;
+> +    if (val) {
+> +        *val =3D wide_val;
+> +    }
+>
+>  done:
+>      if (ret) {
+> --
+> 2.47.3
+>
+>
 
