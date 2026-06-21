@@ -4,100 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF8F4CD4F26
-	for <qemu-devel@archiver.kernel.org>; Sun, 21 Jun 2026 00:00:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DBB9CCD4F26
+	for <qemu-devel@archiver.kernel.org>; Sun, 21 Jun 2026 03:26:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wb5ay-0006uM-LV; Sat, 20 Jun 2026 19:59:28 -0400
+	id 1wb8oS-0002eR-Eo; Sat, 20 Jun 2026 23:25:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1wb5av-0006u8-JK
- for qemu-devel@nongnu.org; Sat, 20 Jun 2026 19:59:25 -0400
-Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
+ (Exim 4.90_1) (envelope-from <apolivodaa433@gmail.com>)
+ id 1wb8oQ-0002eI-Uz
+ for qemu-devel@nongnu.org; Sat, 20 Jun 2026 23:25:34 -0400
+Received: from mail-lj1-x22b.google.com ([2a00:1450:4864:20::22b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1wb5au-0000sJ-24
- for qemu-devel@nongnu.org; Sat, 20 Jun 2026 19:59:25 -0400
-Received: by mail-ed1-x52b.google.com with SMTP id
- 4fb4d7f45d1cf-697573b16ccso3009455a12.1
- for <qemu-devel@nongnu.org>; Sat, 20 Jun 2026 16:59:23 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1781999961; cv=none;
- d=google.com; s=arc-20240605;
- b=cb+UWGm7xxxEztMR6hVTMTXymu6db4X0p6AEyzkO3p1lrG5EJzT5b3bzcixUo7zWQA
- UYUCMLyv5TRTfktCgmY/b4SedKxj8QeMjYLsrd/ZKpSCPeAw1ozFf01EZmavpPHvcBQm
- l5nmP7UqOl9D4hoijCps8M2CmhOE2AB5/DPkmZ/eq5ZKdpjXYPHSZea1P2iEQ4Jm/Htl
- D+YHG5rTdWlaDcImqcMU5pms815BqRLj38GF4QZ5KlmlJkhph7fRFpbfyyi7+U5aRC83
- uYhl0k+bYSS5R4Lope3txG2Of/kBpOfYWOz7/m2kTgDF6PMl8/oD7VZL6J6kMTtIsdDI
- pg+g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=H6JljcWaltISPM9t7+fODsflj3U9N+i6jCNhNjL7rUQ=;
- fh=MRZUNMWuv1kFuqQ9+hXt1nBjxFVEdkK9q0n91tRksII=;
- b=AKI65KShI/9JDj8RU58jYzCDBxIEulv25XUbqfPT+mtwvhToGF7neQ0fcUWQc+uuCl
- jV74bCXy4iHjb8wmPm5M1e+lQqH+end4NqCuqr00w754HRTVsjAI62ddEopxZlSoRUKC
- yMHv1F4O+983JUoulzT9REsv4BCao6b6vleWpMUPnsBygK0JCSejsKDFG7sB+mesrMBm
- KNjwa2kErY6BnMC2WMwtshJE6HwSkL3990u9SiP6jAHbGsTSZUiK7SxZH0hrjebqhZ5Q
- bQGsjDfD5Revlb4AONcxMZwjHZMX7UN63A5RacK7WCIURQbYj6qHmpewYeuEx1aNmHUM
- tfew==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <apolivodaa433@gmail.com>)
+ id 1wb8oP-0006QO-3p
+ for qemu-devel@nongnu.org; Sat, 20 Jun 2026 23:25:34 -0400
+Received: by mail-lj1-x22b.google.com with SMTP id
+ 38308e7fff4ca-396775c26e0so31339751fa.2
+ for <qemu-devel@nongnu.org>; Sat, 20 Jun 2026 20:25:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1781999961; x=1782604761; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=H6JljcWaltISPM9t7+fODsflj3U9N+i6jCNhNjL7rUQ=;
- b=BPAQIMp9LclUCmjHRF3M6O5t3pJ2u7Uq8gSa6rDwBKdzm4APoou4YY02JK9kS4oYP9
- AXIqqGm1+1EYlPKihAqp7WLw2e33J2cBhq6qQntQJPK5yfYfMIPMgWiGZ4Nmfzt1Wh2B
- /STpK6V5bJbHxEhAe1xOqZg5Klt102eZmoNrie/7CQIshqYInAmHbAuUzwW7KZnZ789x
- yadiIp7YsrdrZhnMIY31KGETPsSBI5RrOuoGy3opCiF+oEFsB4cDahU2ujv0JUwJgKGs
- dEiywsWPElezRJalPWaSNnP6tWTKEFT8IAzW0pdedOf6pplvGomSIf0rpH2ZPHzKqH/A
- R4Rw==
+ d=gmail.com; s=20251104; t=1782012331; x=1782617131; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=SSGRwV7Qm1wdTBg0K2WsmwKZJNmRMrJAI8KnlYeSuEM=;
+ b=senwjmCc9RRxTxZXOttv2zJr8WHNF4TQc1Cm2NttqTCtrYd3aWsxPxa6ZqjtCZtt3Y
+ RiWYGc0VofgLknS+guuBPOceVj6yxo0iYaa7KtWM1i2APqJvs9kUJ3u+K0eHfjWlzgeI
+ hdQNqVoTyQE250cucO9zOtd95mffAyKh5mpjPU48a4VBC7XPfKStkt7jQi0f+XbybTmy
+ /HIC5bfQo6nOehqX6TjgOvPwUUBE4a3Z/3V32nB0C6fUiRZvWvkzokhuMqmeQZZQu+4b
+ Gk8S6K0kvzDgv2TuFt8BosNJOdUMO1pi/Ns7Aef0mmBRoOTCgwRTqESJYa9XOb7pryVL
+ /RsQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1781999961; x=1782604761;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=H6JljcWaltISPM9t7+fODsflj3U9N+i6jCNhNjL7rUQ=;
- b=JQ8YrnuOG5DKVETlq0gNO+OFPsq0JDP17ivkdvDzrmVHAVU2jwEJjvmklWdOqU2Uj/
- XRY7oj0VVjApxLW7/39gPgwJ/WOpIClEmZ2LM8WhQDyBqgOyH2L+dtpc0HRBVdg6+goN
- imEwwH4jQsPlKOmA6FQ8KMLcl91/GtbD5pQzd+IYFZMEGduqPbz7UnpuVKDuc+Dlrvvy
- CXuQH5fD680Z55qbSANNXxQimEka13zm5XZnP20BcplwjJyEWqyAs8Qlr6l/oFfPntM7
- pO/oWUQKHIYNZM5bC2+vbQT/lb6nvMcbfTbWWmNMnT74y6iTJlo/b4XohvahqzlFtpzT
- 4VPQ==
-X-Gm-Message-State: AOJu0Yze7Q/gOuIxj2SAFZl6PSftguY7f5LHcqLTZLIe0sfv1wSViD33
- tZPmkSknoRE3xEcDRk8lxM5cL7UTtRUolLv+s+wz1ht4pXD4hl4nlknY/ga/+hVlBNGNT7KMhOf
- ZMy/aC4uyOsynyQFZYgdzDIi3olenDME=
-X-Gm-Gg: AfdE7cm08soYv7EJxCdrq8tHmwr4AHmrzEtdEQK+9Ty2YsgVAty/R8Kob+pWN26+Bb+
- qfaWsK/ija9ysI70zrFA2PWanX4R3hkPymFKW5moK1eTcEC/H5EPTOAm+HBFw9jyLMzybRjDydN
- YbPNx9HKQqk2Bnn7IcKsPiBiFRTQD2cLW3Vyvv5ntVc7I/+bQT4DL2mhw5A8PC+8kRsUVwPk/bT
- G7Cif4G7VfxvTBEsb1xN6Cr97dyQM65HXuWT1XRBLhHHrqkqE2c6qM9mVivNEE4UuhnDSuylWjj
- FvMLt3qvkNsCUG+s7VXLoBfskN92g6g=
-X-Received: by 2002:a05:6402:1599:b0:67b:cd1f:9cc1 with SMTP id
- 4fb4d7f45d1cf-696edc5a4ecmr4265724a12.6.1781999961605; Sat, 20 Jun 2026
- 16:59:21 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1782012331; x=1782617131;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=SSGRwV7Qm1wdTBg0K2WsmwKZJNmRMrJAI8KnlYeSuEM=;
+ b=CfWLi2Rn7F/ifAz6UZPXE+g0gAg8VU6WWMgkBaP9ypktaFX5iBX83brMTJlAHDZd5/
+ zrjLoJ9C0ArNB9ciMZQyH1NaZrmQaWsYczoNorBxn9l7BCF1SevkNsHNkhw0saEqKUEG
+ i6lZLE0k67h2pDB06/wb8sesqGEiIb+Te5T+AV/31TRmssV+mWY4bcd+T3gl8rZN8yOJ
+ Y32/TZNxeJQ5/DiGDTKmWx2pjXOzyNWkLDADMYbCS8HYtUmjgS9QXMNbIugZVa4l/7up
+ 1GR9nKN98j+UvPOpY/pJyxLb1ZcHsxFAPNbpEAR9TRU29d31HJ2FQfXwSjOvMqtMEcBc
+ GJFQ==
+X-Gm-Message-State: AOJu0YytbqVuXAhSjk8fFNfZO9UiiL6eyBSk/Xz7VvhTj/TqIHKjxjmD
+ IX4x5ZYUdUzL8RkX/glRiZZz0K5R21fY+7+UgWQ/eluGcGPTR2rLD/KTVloJsKDjIws=
+X-Gm-Gg: AfdE7cnC8YcTxGqG2oh+eAJECos5KKfBHaBLOc6U0ceR7kvuulIInyrdMKcgcSPZaBL
+ V3xgtLr7/829tT3APs3l8CrmrMy9noG85tazm4HUtgA0cvL+TSryOgpVEP0z6tg03bHymMaYSev
+ u6oL1ro+kl0DF7Zi95Mos3/Bg8iQ9UJgkzn7SwOP0jh/8dHi5l0GJIHdpoi8uHYhMTAlp4izh5Y
+ OSk+YomdQl/+EvVR6Xc63223bdriQcvc8X0wN1vJxRlOwfNb/j/q+pijBHOEVzG8hA11bQFhqFV
+ bL8UKpR4j2hxGyyrWuqhfZbi5UFTR0M93ZB+ytAJ322nnLf/YWt4yxuwlVsPXJ4svI+d/bjHKid
+ lxfFzQ+QLPf+HsJHChroj2YNm8aPRenMuhT6nEsZFK0FOR/6coaKD9lB1CtzhcNZC3n8DButuiK
+ 9uReCmgg==
+X-Received: by 2002:a05:651c:199f:b0:399:745a:ff72 with SMTP id
+ 38308e7fff4ca-3998e4094cbmr19329751fa.9.1782012330646; 
+ Sat, 20 Jun 2026 20:25:30 -0700 (PDT)
+Received: from kali ([82.162.57.219]) by smtp.gmail.com with ESMTPSA id
+ 38308e7fff4ca-3999b1ad987sm8593971fa.38.2026.06.20.20.25.26
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sat, 20 Jun 2026 20:25:28 -0700 (PDT)
+From: Andrey Polivoda <apolivodaa433@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [PATCH] target/i386: decode opcode extensions group 3 /1 as TEST
+Date: Sun, 21 Jun 2026 13:25:23 +1000
+Message-ID: <20260621032524.1138213-1-apolivodaa433@gmail.com>
+X-Mailer: git-send-email 2.53.0
 MIME-Version: 1.0
-References: <20260619225911.159473-1-brian.cain@oss.qualcomm.com>
-In-Reply-To: <20260619225911.159473-1-brian.cain@oss.qualcomm.com>
-From: Stefan Hajnoczi <stefanha@gmail.com>
-Date: Sat, 20 Jun 2026 19:59:07 -0400
-X-Gm-Features: AVVi8CemEpmCL8DP5A_xMETluebgY1AswrOr8raXL3sg5cg5AJnDPxshnRoQ9Zo
-Message-ID: <CAJSP0QWzQEgoYMCgZX+9jCvrV6O3RqnA+df1DpT2R6MZvVXiNg@mail.gmail.com>
-Subject: Re: [PULL 00/74] hex queue - sysemu
-To: Brian Cain <brian.cain@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org, stefanha@redhat.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
- envelope-from=stefanha@gmail.com; helo=mail-ed1-x52b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::22b;
+ envelope-from=apolivodaa433@gmail.com; helo=mail-lj1-x22b.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -115,36 +97,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jun 19, 2026 at 7:00=E2=80=AFPM Brian Cain <brian.cain@oss.qualcomm=
-.com> wrote:
->
-> The following changes since commit 3b50303f9563a42538a1fd5c0ea7f952e23016=
-e1:
->
->   Merge tag 'accel-20260618' of https://github.com/philmd/qemu into stagi=
-ng (2026-06-18 16:28:12 -0400)
->
-> are available in the Git repository at:
->
->   https://github.com/qualcomm/qemu tags/pull-hex-20260619
->
-> for you to fetch changes up to ffa57dc3389a85263a3a7c4890d01b501a33ec97:
->
->   target/hexagon/idef-parser: open input file in binary mode (2026-06-19 =
-15:39:11 -0700)
->
-> ----------------------------------------------------------------
-> Add initial hexagon system emulation support
+According to Table A-6 in Volume 3 of AMD64 Architecture Programmer's Manual,
+opcodes F6 and F7 (opcode extensions group 3) with ModRM's reg field values
+of 0 and 1 can be used to encode a TEST instruction.
 
-Hi Brian,
-Please take a look at the following CI failure and send a v2 pull
-request that includes a fix:
+Although Intel 64 and IA-32 Architectures Software Developer's Manual leaves
+the cell 1 of opcode extensions group 3 blank in the opcode table 
+(Table A-6, Volume 2D), the instruction in a group 3 with reg field of ModRM
+byte set to 1 actually behaves like TEST instruction on Intel CPUs.
 
-../target/hexagon/meson.build:285:47: ERROR: Program 'emscripten' not
-found or not executable
+Currently, QEMU decodes group 3 instruction as TEST only if reg field of ModRM
+byte is 0. When the reg field is 1, QEMU raises a #UD exception.
+This behavior does not match real Intel and AMD hardware.
 
-https://gitlab.com/qemu-project/qemu/-/jobs/14953356226
+This patch fixes this issue by duplicating the existing [0x00] and [0x08]
+X86_OP_ENTRYrr(AND, ...) entries into slots [0x01] and [0x09] in the
+opcodes_grp3 table.
 
-Thanks,
-Stefan
+Fixes: d7c41a60d0c5 ("target/i386: move C0-FF opcodes to new decoder (except for x87)")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3580 
+Signed-off-by: Andrey Polivoda <apolivodaa433@gmail.com>
+Cc: qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>
+Cc: Richard Henderson <richard.henderson@linaro.org>
+---
+Note: checkpatch.pl reports style errors regarding spaces after commas.
+These are false positives, as the patch intentionally matches the formatting
+of the surrounding macro table.
+
+ target/i386/tcg/decode-new.c.inc | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/target/i386/tcg/decode-new.c.inc b/target/i386/tcg/decode-new.c.inc
+index ac181308ca..a0bc6d1901 100644
+--- a/target/i386/tcg/decode-new.c.inc
++++ b/target/i386/tcg/decode-new.c.inc
+@@ -1614,6 +1614,7 @@ static void decode_group3(DisasContext *s, CPUX86State *env, X86OpEntry *entry,
+     static const X86OpEntry opcodes_grp3[16] = {
+         /* 0xf6 */
+         [0x00] = X86_OP_ENTRYrr(AND, E,b, I,b),
++        [0x01] = X86_OP_ENTRYrr(AND, E,b, I,b),
+         [0x02] = X86_OP_ENTRY1(NOT,  E,b,      lock),
+         [0x03] = X86_OP_ENTRY1(NEG,  E,b,      lock),
+         [0x04] = X86_OP_ENTRYrr(MUL, E,b, 0,b, zextT0),
+@@ -1623,6 +1624,7 @@ static void decode_group3(DisasContext *s, CPUX86State *env, X86OpEntry *entry,
+ 
+         /* 0xf7 */
+         [0x08] = X86_OP_ENTRYrr(AND, E,v, I,z),
++        [0x09] = X86_OP_ENTRYrr(AND, E,v, I,z),
+         [0x0a] = X86_OP_ENTRY1(NOT,  E,v,      lock),
+         [0x0b] = X86_OP_ENTRY1(NEG,  E,v,      lock),
+         [0x0c] = X86_OP_ENTRYrr(MUL, E,v, 0,v, zextT0),
+-- 
+2.53.0
+
 
