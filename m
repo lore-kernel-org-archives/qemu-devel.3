@@ -4,98 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11F6BCDB466
-	for <qemu-devel@archiver.kernel.org>; Sun, 21 Jun 2026 07:35:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85E50CD98F2
+	for <qemu-devel@archiver.kernel.org>; Sun, 21 Jun 2026 12:48:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wbChe-0003dc-Jr; Sun, 21 Jun 2026 03:34:50 -0400
+	id 1wbHZv-0008MF-D1; Sun, 21 Jun 2026 08:47:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dongli.zhang@oracle.com>)
- id 1wbChc-0003bV-Mj
- for qemu-devel@nongnu.org; Sun, 21 Jun 2026 03:34:48 -0400
-Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
+ (Exim 4.90_1) (envelope-from <qinzhengxiang@foxmail.com>)
+ id 1wbHZm-0008Lo-UT; Sun, 21 Jun 2026 08:47:04 -0400
+Received: from out203-205-221-239.mail.qq.com ([203.205.221.239])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dongli.zhang@oracle.com>)
- id 1wbCha-0005ZB-Qz
- for qemu-devel@nongnu.org; Sun, 21 Jun 2026 03:34:48 -0400
-Received: from pps.filterd (m0246631.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65L7BgPa2863150; Sun, 21 Jun 2026 07:34:41 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
- :content-transfer-encoding:date:from:message-id:mime-version
- :subject:to; s=corp-2025-04-25; bh=cfsFzKbIG808Hv12s4q5hF7RHxD3H
- 67mJ2Vb+Lqg5FM=; b=dVt25GTH6dgZ0laew1j+ylFIrQeqyBO4klgrK5w1mssK1
- DDOsgPPaxJNSWXv+jQsXnGhciXKj+rvfv7MV9ZDQUwnJq+t1nRUQnp9qgUp9O/3t
- PdyjiaM7gOPSGQz+2KmsC12Cu3aair++5ye9GGWW7b2c0hSvVeOHp3mChk8RJA6Y
- lDX65cnbnIi5PNjT0sLYt9/EmC0dZoTZiqQx5z3we5lQkMyR2NnldBURlGqGmHnj
- Bfj0zdJONw4cAvbCb2feRGp4r/Z9GJXCRwoboMxa7CsTZZutiMa4pssHcKyJ+pNh
- izvw+3VMlKOm8gBsP//vLfIk1MWmH9cIJtbHcHyDg==
-Received: from phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com
- (phxpaimrmta02.appoci.oracle.com [147.154.114.232])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 4ewhn2rn8h-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Sun, 21 Jun 2026 07:34:40 +0000 (GMT)
-Received: from pps.filterd
- (phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.7/8.18.1.7)
- with ESMTP id 65L7X830017951; Sun, 21 Jun 2026 07:34:39 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
- by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
- 4ewha9r38c-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Sun, 21 Jun 2026 07:34:39 +0000 (GMT)
-Received: from phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com
- (phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.18.1.12/8.18.1.12) with ESMTP id 65L7Yd51020160;
- Sun, 21 Jun 2026 07:34:39 GMT
-Received: from localhost.localdomain (ca-dev80.us.oracle.com [10.211.9.80])
- by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTP id
- 4ewha9r389-1; Sun, 21 Jun 2026 07:34:39 +0000 (GMT)
-From: Dongli Zhang <dongli.zhang@oracle.com>
+ (Exim 4.90_1) (envelope-from <qinzhengxiang@foxmail.com>)
+ id 1wbHZj-0001jt-WE; Sun, 21 Jun 2026 08:47:02 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=foxmail.com;
+ s=s201512; t=1782046005;
+ bh=hQAsJ+7y36xamJk5U9WYMNrhORFmFFXnHfR7QC7l+vs=;
+ h=From:To:Cc:Subject:Date;
+ b=RheXp3KNhZ2DpN8PINl5USvP/tTjcio5oMMBOlll3VdtsjZSeAxa2881athc4PZwz
+ XExO4cHZ9mQ3P9ncZa7RV8cULv5BGHjpT7V/Lo5n7xHU9Td7vTn7SImiUZ8RfPZ1fr
+ XjDnH2LZBRoJfkwBbQ5kzQQUpYCpXNK4pFsAy0DI=
+Received: from GavinQin-Ubuntu24.. ([117.147.32.38])
+ by newxmesmtplogicsvrszc50-0.qq.com (NewEsmtp) with SMTP
+ id B8BB3048; Sun, 21 Jun 2026 20:46:11 +0800
+X-QQ-mid: xmsmtpt1782045971tbvqpbib1
+Message-ID: <tencent_CA380CBF4A98C990C07BC04A9E748C438309@qq.com>
+X-QQ-XMAILINFO: MqswyhUqVe0CQv34ZXQ9fF2UjVvd6sXR5w29X0YAT/hb0zlGs+8ob9Rk9PjQ7Y
+ Q9oOs2oGk3dmGNtF8tqqwrOG3Boh2+Qi4bzc9bU05YtNNpxEf38KIjEIRnoRXKQlCIwCfKf+rPWn
+ ZzfUx5l5c+lk5vdXmRMWXMdgbHjs8fJYVTCEz1Nj65zbJ+crz5l45eIx1JA3A9aOzQKQFz9vevhd
+ GKitxW7hSRaRJyxYVobPM9wQPG25e0m+GAAw6f46uqtqtw4zvLSHJt9aJQzNI8m/emJDAzjOi5BX
+ iTCvjgmrQthJRKaFH0Q/Olo++3ZRfK/zsWtocWaNiRpuAwaTh1BD02y2gWnxBnYDiux7Wnb42T/q
+ b8whza0KoH3ju3phxb0U7cKg4a22wqjGMNPiUcDyHepF+safL5CvdyF3U4iUNX7bxwitEeHfK1tC
+ 1+pZtcWZuuR0i8bUF4NFP1SkNhVzA/EY3RHG711GgZt5tLbpPy5ckiyq/ZhfaNbQUq9a7Ju83TCM
+ Xk9+1aNgh5WuIawL77Cxan9WGPTraewns4txqWYTOWJjWZRxf/8NeUr4b6FIfWOKVIP3SZ0Z7X+0
+ SUrXi1OXZXCRwLeW242dOHU03pp31kRF8tLd642SY0oWLpodPl9pa1PNJAFHQFVMtsaUj1UQn5Zm
+ CQMx6vBmVTor3rMvfgsiXDa0kfn/M/S9O3ksMeP/VyIIQm2/mIzqjvyKJRJqrScmTDBIageTnDsQ
+ XuiyBkvYSu9rH/TYAAw6UbzFcsBYLxxEgFuP9D0doI0lo24/pTwEB1kGddGPC0YFokpyCh7ThnjQ
+ 0Q3UmZit3SeV0BBcpZ9yfSoafPT910AcOtyYWQJfmmOFtKXeRhUM/ozoLsKlNgobMhcGcinaRMLH
+ nVapAxPNGN+QK+eLajlIEa7OoKjOCTiHoKwsZiPMTMYotWNvf0gldOO+vky/ayCx5Y+Kdm9avTaI
+ Ap2DglKMWd+PdWyAnKajW4K/+J/eA2Mt+4NtW0kN63JfiyxecbNkX9QTHOJvK0Le3cErbfLSaeEE
+ k3OEuKcN5tEse7oI45qlBYDLPfLqJj/dvL55DOdHKANjJ652Gq+sCv/k00tn3RuWhjMmHnCHGK3V
+ oiP1ATe2uitlmHK9a5NuguxOUNmC9/07mhfduNxVDhy33NRqk=
+X-QQ-XMRINFO: M/715EihBoGS47X28/vv4NpnfpeBLnr4Qg==
+From: ZhengXiang Qin <qinzhengxiang@foxmail.com>
 To: qemu-devel@nongnu.org
-Cc: dave@treblig.org, peterx@redhat.com, farosas@suse.de,
- maciej.szmigiero@oracle.com, mark.kanda@oracle.com, bchaney@akamai.com
-Subject: [PATCH 1/1] migration/cpr: Add HMP support for cpr-transfer
-Date: Sun, 21 Jun 2026 00:26:46 -0700
-Message-ID: <20260621072646.517545-1-dongli.zhang@oracle.com>
-X-Mailer: git-send-email 2.43.5
+Cc: qemu-riscv@nongnu.org, ZhengXiang Qin <qinzhengxiang@foxmail.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Chao Liu <chao.liu.zevorn@gmail.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
+Subject: [PATCH v3] target/riscv: raise access fault for Zicbom MMIO-like
+ accesses
+Date: Sun, 21 Jun 2026 20:46:09 +0800
+X-OQ-MSGID: <20260621124609.11754-1-qinzhengxiang@foxmail.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-20_04,2026-06-18_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0
- phishscore=0 adultscore=0 mlxscore=0 lowpriorityscore=0 spamscore=0
- mlxlogscore=999 suspectscore=0 malwarescore=0 classifier=spam adjust=0
- reason=mlx scancount=1 engine=8.19.0-2606160000 definitions=main-2606210075
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjIxMDA3NSBTYWx0ZWRfX5PoeqToURUBx
- BnuVI3JQG6ftzpr0RnI8wzeMj8Y1GGoDlUWWP++1KGNopJbTFIZGWFOT2XPfoWEU9LxhO0uOl9u
- 4Gkf2ipAxCiBX34M24jX2/K5F9TA6G1F9I5aDngtrmlNXo+Rk0+sf0HA4pgqn4tGhG1YLOFH20v
- wOlmNrcyFtj37TX39YihPNUmiSiJ+agm2EseLXOR9qaCXIOFpVve6jzJr6qPUEJvi+IRBE+KfbI
- CWSVMQb9UegIvClyqfD6cy16NOXS9gIIXfMUqOqASk+bP8uDmLqEbxDlCH2b77UpiNnsjbzZzu6
- LhJYa0ySO8R36htxZea2f+QKfl2FiPuZRp26agDnIX6icnpyLaYn4rTDxCS7lPif5gLZLs+8GTV
- YG8dbBA7Seq4uN+5ZfnXh2Cu/R8AT/YUcvh27D6XWLx7QeHQwBv4hxQk4GhM8I1rUClwXxwGJZ3
- baV2xmJJT9UaYp5/PKA==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjIxMDA3NSBTYWx0ZWRfXyYJAT5ssmEFN
- +8z/A3Pz041+SpmVooFOhl9X1Arn8YdLsBufndb75oR8zF71mAnQ8+h/9DJQwPukKnvEFnvws16
- qyuaeCS9E0d9H/u2Rru5wReFHUm4O4DqSTgQATvjPAaWqEk965zs
-X-Proofpoint-GUID: UYAtitZQkbDiTbL_2-Ah-3_uyFyP7QTn
-X-Authority-Analysis: v=2.4 cv=E479Y6dl c=1 sm=1 tr=0 ts=6a379410 cx=c_pps
- a=OOZaFjgC48PWsiFpTAqLcw==:117 a=OOZaFjgC48PWsiFpTAqLcw==:17
- a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22 a=jiCTI4zE5U7BLdzWsZGv:22
- a=o5oIOnhZENCTenyL_yNV:22 a=yPCof4ZbAAAA:8 a=4f9o9nRBQE7R8TUuHmkA:9
-X-Proofpoint-ORIG-GUID: UYAtitZQkbDiTbL_2-Ah-3_uyFyP7QTn
-Received-SPF: pass client-ip=205.220.177.32;
- envelope-from=dongli.zhang@oracle.com; helo=mx0b-00069f02.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Received-SPF: pass client-ip=203.205.221.239;
+ envelope-from=qinzhengxiang@foxmail.com; helo=out203-205-221-239.mail.qq.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ HELO_STATIC_HOST=-0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,103 +88,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently the cpr-transfer source QEMU instance cannot be driven entirely
-via HMP.  The source must use QMP in order to specify both the
-main migration channel and the CPR channel.
+check_zicbom_access() currently treats any probe_access_flags() result
+other than TLB_INVALID_MASK as a successful access. However, a result
+with TLB_MMIO means that the target is MMIO-like and should not be
+treated as a normal cache block management target.
 
-Extend the HMP migrate command with an optional CPR channel URI. When the
-migration mode is cpr-transfer, HMP uses this URI to build a
-CPR MigrationChannel in addition to the main migration channel. The new
-argument is rejected unless the migration mode is cpr-transfer, so existing
-HMP migrate usage is unchanged.
+Raise a store/AMO access fault for Zicbom accesses to MMIO-like regions
+so that cbo.clean, cbo.flush and cbo.inval do not silently succeed on
+non-cacheable/MMIO-like memory.
 
-For example, source QEMU HMP commands can be something like below. The
-"unix:/tmp/cpr.sock" is for CPR URI.
-
-(qemu) migrate_set_parameter mode cpr-transfer
-(qemu) migrate tcp:0:50002 unix:/tmp/cpr.sock
-
-Signed-off-by: Dongli Zhang <dongli.zhang@oracle.com>
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3501
+Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Signed-off-by: ZhengXiang Qin <qinzhengxiang@foxmail.com>
 ---
- hmp-commands.hx                | 11 +++++++----
- migration/migration-hmp-cmds.c | 18 ++++++++++++++++++
- 2 files changed, 25 insertions(+), 4 deletions(-)
+Changes since v2:
+- Add else before the success path for readability.
+- Keep fault_addr as target_ulong since CPURISCVState::badaddr is target_ulong.
+- Add Philippe's Reviewed-by tag.
 
-diff --git a/hmp-commands.hx b/hmp-commands.hx
-index 7ae2468a3d..021e51b142 100644
---- a/hmp-commands.hx
-+++ b/hmp-commands.hx
-@@ -928,16 +928,17 @@ ERST
+Changes since v1:
+- Use a bit test for TLB_MMIO since probe_access_flags() returns a bitmask.
+- Keep Reviewed-by tags from v1.
+
+ target/riscv/op_helper.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
+
+diff --git a/target/riscv/op_helper.c b/target/riscv/op_helper.c
+index 81873014cb..50fd1b73ea 100644
+--- a/target/riscv/op_helper.c
++++ b/target/riscv/op_helper.c
+@@ -218,6 +218,7 @@ static void check_zicbom_access(CPURISCVState *env,
+     void *phost;
+     int ret;
  
-     {
-         .name       = "migrate",
--        .args_type  = "detach:-d,resume:-r,uri:s",
--        .params     = "[-d] [-r] uri",
-+        .args_type  = "detach:-d,resume:-r,uri:s,uri-cpr:s?",
-+        .params     = "[-d] [-r] uri [uri-cpr]",
-         .help       = "migrate to URI (using -d to not wait for completion)"
--		      "\n\t\t\t -r to resume a paused postcopy migration",
-+		      "\n\t\t\t -r to resume a paused postcopy migration"
-+		      "\n\t\t\t uri-cpr specifies CPR URI for cpr-transfer mode",
-         .cmd        = hmp_migrate,
-     },
++    target_ulong fault_addr = address;
+     /* Mask off low-bits to align-down to the cache-block. */
+     address &= ~(cbomlen - 1);
  
- 
- SRST
--``migrate [-d] [-r]`` *uri*
-+``migrate [-d] [-r]`` *uri* [*uri-cpr*]
-   Migrate the VM to *uri*.
- 
-   ``-d``
-@@ -945,6 +946,8 @@ SRST
-     query an ongoing migration process, use "info migrate".
-   ``-r``
-     Resume a paused postcopy migration.
-+  ``uri-cpr``
-+    Specify CPR URI for cpr-transfer mode. It must be a UNIX domain socket.
- ERST
- 
-     {
-diff --git a/migration/migration-hmp-cmds.c b/migration/migration-hmp-cmds.c
-index 8b385f560e..42ca652bb3 100644
---- a/migration/migration-hmp-cmds.c
-+++ b/migration/migration-hmp-cmds.c
-@@ -836,9 +836,11 @@ void hmp_migrate(Monitor *mon, const QDict *qdict)
-     bool detach = qdict_get_try_bool(qdict, "detach", false);
-     bool resume = qdict_get_try_bool(qdict, "resume", false);
-     const char *uri = qdict_get_str(qdict, "uri");
-+    const char *uri_cpr = qdict_get_try_str(qdict, "uri-cpr");
-     Error *err = NULL;
-     g_autoptr(MigrationChannelList) caps = NULL;
-     g_autoptr(MigrationChannel) channel = NULL;
-+    g_autoptr(MigrationChannel) channel_cpr = NULL;
- 
-     if (!migrate_uri_parse(uri, &channel, &err)) {
-         hmp_handle_error(mon, err);
-@@ -846,6 +848,22 @@ void hmp_migrate(Monitor *mon, const QDict *qdict)
-     }
-     QAPI_LIST_PREPEND(caps, g_steal_pointer(&channel));
- 
-+    if (uri_cpr) {
-+        if (migrate_mode() != MIG_MODE_CPR_TRANSFER) {
-+            error_setg(&err, "uri-cpr requires cpr-transfer mode");
-+            hmp_handle_error(mon, err);
-+            return;
-+        }
-+
-+        if (!migrate_uri_parse(uri_cpr, &channel_cpr, &err)) {
-+            hmp_handle_error(mon, err);
-+            return;
-+        }
-+
-+        channel_cpr->channel_type = MIGRATION_CHANNEL_TYPE_CPR;
-+        QAPI_LIST_PREPEND(caps, g_steal_pointer(&channel_cpr));
-+    }
-+
-     qmp_migrate(NULL, true, caps, true, resume, &err);
-     if (hmp_handle_error(mon, err)) {
+@@ -235,7 +236,10 @@ static void check_zicbom_access(CPURISCVState *env,
+      */
+     ret = probe_access_flags(env, address, cbomlen, MMU_DATA_LOAD,
+                              mmu_idx, true, &phost, ra);
+-    if (ret != TLB_INVALID_MASK) {
++    if (ret & TLB_MMIO) {
++        env->badaddr = fault_addr;
++        riscv_raise_exception(env, RISCV_EXCP_STORE_AMO_ACCESS_FAULT, ra);
++    } else if (ret != TLB_INVALID_MASK) {
+         /* Success: readable */
          return;
+     }
 -- 
-2.43.7
+2.43.0
 
 
