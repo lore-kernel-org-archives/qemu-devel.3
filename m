@@ -4,98 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C419CDB466
-	for <qemu-devel@archiver.kernel.org>; Sun, 21 Jun 2026 04:26:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15EC4CDB46B
+	for <qemu-devel@archiver.kernel.org>; Sun, 21 Jun 2026 04:26:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wb9hE-0002zO-Jy; Sun, 21 Jun 2026 00:22:12 -0400
+	id 1wb9hp-0003XR-RO; Sun, 21 Jun 2026 00:22:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wb9h7-0002yV-6y
- for qemu-devel@nongnu.org; Sun, 21 Jun 2026 00:22:05 -0400
-Received: from mail-oo1-xc29.google.com ([2607:f8b0:4864:20::c29])
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wb9hg-0003Ej-Sd
+ for qemu-devel@nongnu.org; Sun, 21 Jun 2026 00:22:40 -0400
+Received: from mail-oo1-xc2e.google.com ([2607:f8b0:4864:20::c2e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wb9h5-0005CA-9n
- for qemu-devel@nongnu.org; Sun, 21 Jun 2026 00:22:04 -0400
-Received: by mail-oo1-xc29.google.com with SMTP id
- 006d021491bc7-69de16f5f79so1792932eaf.0
- for <qemu-devel@nongnu.org>; Sat, 20 Jun 2026 21:22:02 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wb9hf-0005Ql-HK
+ for qemu-devel@nongnu.org; Sun, 21 Jun 2026 00:22:40 -0400
+Received: by mail-oo1-xc2e.google.com with SMTP id
+ 006d021491bc7-6a0eb19ff49so820148eaf.1
+ for <qemu-devel@nongnu.org>; Sat, 20 Jun 2026 21:22:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1782015722; x=1782620522;
+ d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1782015758; x=1782620558;
  darn=nongnu.org; 
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=5AEqQNr8VLxyEg30sVvmd/ilyg9Zn0MVds35QNF1zw4=;
- b=UUc3tRZ0NQpoHCX7/IwCmw/+dGGjm+y1/83f92/Sn6VBcwcZa21hU7LXUOHz7D0jd+
- qna9BHaFL8ud0HJcPiXvzNz2sqonkJYIc+7ts9YO2Wm8ZdsatVXOQX2pHW9lbDtOfBCB
- 0gyMsJWw0SRVBS8yBuyr0URBZoyjLzT6tHLlCOedEPEOjB1MOkS04ZVFozVTSQMtm6B7
- NmgcNNVJWpxfcWgpqdhrOm/4sxMc6UhO10ZLxjkXUUdy7S+jCwRjOMAFSRlsTEbR8RFC
- kAXX+okXY1IUM94L1pKRV5T1Oq6UYhHtL7oyqdmX+xVljWzCoFfZ640B8CltgGSHnl0L
- q9EA==
+ :reply-to; bh=LR9lFk+mxAxbjJU5Z9czAKz/et2kSY91hVXwWMWBddM=;
+ b=Y/24n0ed9khuThEjDbLeSMEmy6DCT/NUSKl53CPs4ex982oZYw8m+HAqlWWp9/ptp0
+ GbY+5/LU283sCI1FJH6Fq3Bwg7EzMmcQAY0ANrHeTxgtc5tO3V7nA5yzKaMk9tB78kGd
+ lBE6VZ+dHqS6ohAEeA7ekCjf+g19CtbjQKVgV4ETcuDNqSR5iwYje4OU31wmS1EGBMhI
+ dplV44BmoILXCRIjHTdCPR1vABqJyGiwxnEds5orgPEV+uqT7z18Z11IVrtodEwwqICt
+ 0UYdW1QA1nQv1w86TbaEmlvzVs2ivfEKCbYhjT+GGa3nh6ZsDCtZYzl6U9X1WX2pwKRj
+ c4aQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782015722; x=1782620522;
+ d=1e100.net; s=20251104; t=1782015758; x=1782620558;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=5AEqQNr8VLxyEg30sVvmd/ilyg9Zn0MVds35QNF1zw4=;
- b=l2RrTBIlwpGgfirtpStp9N9O84ww2GLCJcGssdfNmgsmSukVcchaWhgQIDQOfss0Y+
- BSRtQtHmGeVAeu2NQhqCrZdmVfHlhl8ilZUip8nwOevEyYIu3f6E12wgG0LpjRLyPS0Y
- OFBeQiHt4eVaLoLNyg16BzSNLSSUGdjc9QzKFLmfr6GMjyFRr3Wb/0Rvj1WPa0ARYAj2
- qTPIUEqGZtgV9MHv8Zc7tQmZOFi8JnBwzQ/LdFu49v4ap4Up6U+H9MUV8U+b8tYmE8tP
- lqVAnVDCedQ0dv6o28trn0FCRaMXJCERqtYSeUwcJS7ojwSunNdYxPV54FzC8An4s3ql
- 9cYg==
-X-Gm-Message-State: AOJu0YxFogDiUKIzFgVFTcJJ7IwmGMGr0tdUJx3LAfza0E4/azjT83Hy
- 761yG12ZFMTYc94FbOkIJfdLUG+7tsyNP4YQ9O4LcucjW2sxx2vzp3sa7DkUjNFscq0=
-X-Gm-Gg: AfdE7cnlKnY8Mns/nNHbrvOrGiTP2q7io7EntNVPTEx5JhmUG+g+eko3KrnaAnoEmOX
- Bx4iJE0PyQ5f8agTNAAuJOsHQ922U97lkJ11I5QoKUZXlCxt8gfvgpmGcdOGy4Up5cdCOJaPJBj
- krM14E2TgA7wiXruRkvMbiDt5qf5ruV0ri4mWfIfoFl+8NSVxUSP+ttqxnlManZ86VGtoHXGtnN
- 3+0IJdPm+Ljb7coYXaW9Ust3nzgpV4mDmQbcSbW8IAntRZ2D1qvcVzRqbehL4WKIPFTxVMCni5m
- NvcQ+7aMt5AAmWmeJcjLTmg2+v/gcBYLCD5UySJq6DtZNuZfTowJ/TUUEmUHHJZqxPAj4qXLDNZ
- ysHVsStXsbVeG2YLzmPWkYGKTOfVcJAem1ZiprIUTO6cDBnuengbBM9vWrWLVb5Be6zoQnE/v6h
- M=
-X-Received: by 2002:a05:6820:4dfa:b0:6a0:b186:2bd3 with SMTP id
- 006d021491bc7-6a0ddedf035mr6636387eaf.12.1782015722046; 
- Sat, 20 Jun 2026 21:22:02 -0700 (PDT)
+ bh=LR9lFk+mxAxbjJU5Z9czAKz/et2kSY91hVXwWMWBddM=;
+ b=dv4YgRlun7edDKV+BdfnZUF/VcF2eXCPZAi4n6iqmVdgLFL1cqSEG290qyvpWdSRsx
+ lK7m34vitAB1dYC8f1pgRabGwJajSX+x4xvH245OZI4IbRrxp9qMPk6AfjtXw3gBCrrY
+ YNRwNcePWp4wovj0Sx+qJmcQDeaPRe4qSC6epxDJSgSfMXFEuLb8teonBWUoLytuWnKq
+ 82PPe5bmOQ4xS+YHAEF5hubroc1tIJgDCKAtsL9lQ49u63JPgiYZnFtqe0tpUtfZroLx
+ /VC5gqN/E41tDHY2lHd9G9a2qms2W4FiDRNJfFemJoQP3QqEqAlUnff56W+detijXjEz
+ 52iw==
+X-Gm-Message-State: AOJu0Yzi/Nw3uf4bbDrboXFG4GoT/bIZLXRO7MTLnhi9FwOF/UXTDENz
+ nFyFDIcaqOcKH0qhoVgjgzw4kn1ysn09tTF+CCQJUis5pQv3Mw4gIXu47+dyXxhW+rs=
+X-Gm-Gg: AfdE7cnTwlA74naz6E9+WIQJrtUpD9/yAjT3DJyut6kAeD4BCa92wVIWdnI8UKd4g3L
+ j0rYxQvAH+MX4KJDByDvGN93xL/8KU4YyIihZavygSWS4MTH+/5xDIfpTSp+KFUnABjERzI7LMh
+ ny76Cwxz9i9QB2azq8kqxGcUzTZvAml7+PV5cxH5iYYvXxl9f8xmzZwVW4QB+zaDz7pwBtfsHqc
+ SdI7yAG7w0vSmblUttkTiAHi7j70OdfWwKOKJfi7TmFzddLOd8PckSuLvm/OmQXavfBaugTHGxg
+ yh7TYvvZ2foWvkewUbUwe+YYtC5KI9+cLVVtG8KNJw3L9PPB0lj+Ypqw06E5ZWreMSN5rJxp0nW
+ A5LPmlJv025bMmebkRbj5P4KvBpvOinuUcoDQ8ObIYEx4JPWQYHOlHHKYCCCPneeoSYCygNAFRB
+ ikzCw8R4Ku1g==
+X-Received: by 2002:a05:6820:1a0a:b0:69e:428d:136d with SMTP id
+ 006d021491bc7-6a0d8887828mr8463886eaf.19.1782015758555; 
+ Sat, 20 Jun 2026 21:22:38 -0700 (PDT)
 Received: from rebo.bsdimp.com ([50.253.99.174])
  by smtp.gmail.com with ESMTPSA id
- 006d021491bc7-6a0e9f698ccsm2828648eaf.4.2026.06.20.21.22.00
+ 006d021491bc7-6a0e9f698ccsm2828648eaf.4.2026.06.20.21.22.37
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 20 Jun 2026 21:22:01 -0700 (PDT)
+ Sat, 20 Jun 2026 21:22:37 -0700 (PDT)
 From: Warner Losh <imp@bsdimp.com>
-Date: Sat, 20 Jun 2026 22:20:03 -0600
-Subject: [PATCH v3 16/40] bsd-user: Add FreeBSD socket helpers and sockaddr
- conversion
+Date: Sat, 20 Jun 2026 22:20:26 -0600
+Subject: [PATCH v3 39/40] bsd-user: Move qemu_guest_random_seed_main to
+ same as linux-user
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260620-misc-2026q2-v3-16-f6ce23ad8dda@bsdimp.com>
+Message-Id: <20260620-misc-2026q2-v3-39-f6ce23ad8dda@bsdimp.com>
 References: <20260620-misc-2026q2-v3-0-f6ce23ad8dda@bsdimp.com>
 In-Reply-To: <20260620-misc-2026q2-v3-0-f6ce23ad8dda@bsdimp.com>
 To: qemu-devel@nongnu.org
 Cc: Kyle Evans <kevans@freebsd.org>, 
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>, 
- Warner Losh <imp@bsdimp.com>, Stacey Son <sson@FreeBSD.org>
+ Warner Losh <imp@bsdimp.com>
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=7369; i=imp@bsdimp.com;
- h=from:subject:message-id; bh=lFg4vCIs68uCUNNZmKVN2eYOr/5K1QflLLCgwRfYb3I=;
- b=owEBbQKS/ZANAwAKAWwc0Sh9sBEAAcsmYgBqN2Z+6E6h6nlMVdUw48XnjlhG7Fk5arnfsLjh3
- Zrg9YKhaI6JAjMEAAEKAB0WIQQgNfiUsAqjz3zN4bdsHNEofbARAAUCajdmfgAKCRBsHNEofbAR
- ALo3EADKAYCUSt/tXgmMWEZfOHmPO6y1AT9/zFCm4T+o002CLUyyW6pwzupd7NlikH5W50ggjt2
- V8celQ9LYpbBC6rwdqTYcqQ622JV5VQk5yuWw6lZn5ZmtlpUg0vdmnC/Nr1RBGpE6yUkMNmj1yk
- mptzhJBkOAAunrDzhtqRBGiQUSzvQjrCh6yBY6dIl8SD5sT6QIVJKAmy2PNHvXykVvPCEh9Y3Hq
- FPTpLYVJrbazU1o73nDBcLrunyCKDa2dgw3tR6d0ndWUhakdog2u37bWmtWrfWWIhTq8vR8Qu+d
- aW5XfSIKX0XzpFGxInE721WhkhuPgLnsCHcQ/iw6wH4Kq3BBvDZV/GSjLl6t1XgwtDw8uweWNRg
- gUF2x+jExq33Lit9BtDrZKavjK8fUaMjaKwXsx7q34wbJyTFSY2/EiSy+pWtx+dmmMWPck11uEz
- xHsrcey+WpYuUMm3VkVMhMPBXNJ9pifpN+Roey/OYsr5safdq4Y++EwEhSyH4FQNv/NCq/pA+80
- 3h8rTqChc/+9I/VuaLY5Wb6Dz9p5mHHss3ZrRUiDhawb9G79sErik5XKvKDG2w8LPkvH7jfWpQS
- a1axJzcy6kFF9skkeO4q3hZTJf98Jge/wN5goAgP7YumnebFo1FLVMWU/st8ZySvemqRdyyIDeT
- 2/1j9NvprVVkNvg==
+X-Developer-Signature: v=1; a=openpgp-sha256; l=979; i=imp@bsdimp.com;
+ h=from:subject:message-id; bh=vAHbZWc3zpEl4d8agZA4APlWismbA5dNWh1VfyToEe4=;
+ b=owEBbQKS/ZANAwAKAWwc0Sh9sBEAAcsmYgBqN2aB6mrKGm2n1ZKDwLQ/Yhyww4yORxv4zsaXI
+ /z/aAQiFiCJAjMEAAEKAB0WIQQgNfiUsAqjz3zN4bdsHNEofbARAAUCajdmgQAKCRBsHNEofbAR
+ AIwKEAC3sJApN1xIwtKnm3ksE7Tnt/7oqOrBFiAjNtLw/QVo+zieRjXIgSYWsDQujJ67EGayXxz
+ VDZ2vvT7T74pvAORCVrtPDEvs2tTnb3CYGhadzeb9WjGrVzLu1T3sV4LsPKw4PQ8z2OEZBvp9mw
+ 8CXuguBjJSqZwIAC/nYj2AmFlsIqHKxU21bbfXLMnMiNmMCWqk24V1Sq0HijVXDzFQyFxTgRsOT
+ HYupX1IKZRfq12T3mXkSQfU08KHQlCoUAzG6WCAfeoXsvwIVyNJQ631OJsKqmuntEi+jy7o8SvQ
+ 5CXsfaZbC31vN9pdcWJa80/h7Tt+HD0ioBawk1YnNeOQS6Z2pGVSVbvdcFnYttizSdzMXGKuH4w
+ cgCAs+S22gV2eUc1rzuzqMFOpNdpjq8l5U4Y7OKhK/pSRErK7XfnEK63DydLVUoVwQyuvE+S+k6
+ X97G+YzD4H99qHFIidfPq3uS9n+YzYxpDP7WeJMGYlvhm5fv3qcj6NR6f17JWStD3JrFXUQnuXx
+ k09Hd5GcRaKEvsw/qxbI3aO/d+g8ZgSFzyD6EKOUtvqAbdO7htNXUxKqoAE4mJfK71yk1RLc/ae
+ IBGqwtbwOkzsfMqdsO8cSouobhFq90M2gxhjJU2ma/r1xIU6VyZ5gkfnbHKeJEyfJwjA6CO/rtW
+ eOwhgiqm/u4jDSA==
 X-Developer-Key: i=imp@bsdimp.com; a=openpgp;
  fpr=2035F894B00AA3CF7CCDE1B76C1CD1287DB01100
-Received-SPF: none client-ip=2607:f8b0:4864:20::c29;
- envelope-from=imp@bsdimp.com; helo=mail-oo1-xc29.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::c2e;
+ envelope-from=imp@bsdimp.com; helo=mail-oo1-xc2e.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -117,249 +117,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Complete os-socket.h with setfib, bindat, connectat, and accept4.
-Add bsd-socket.c with target_to_host_sockaddr, host_to_target_sockaddr,
-and target_to_host_ip_mreq helper functions, and add it to the build.
+Linux-user initializes this before doing the environment stuff. Go ahead
+and move it there for consistency, though it doesn't matter since we
+don't use it until later.
 
-Signed-off-by: Stacey Son <sson@FreeBSD.org>
-Assisted-by: Claude Opus 4.6 (1M context)
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 Signed-off-by: Warner Losh <imp@bsdimp.com>
 ---
- bsd-user/bsd-socket.c        | 98 ++++++++++++++++++++++++++++++++++++++++++++
- bsd-user/freebsd/os-socket.h | 83 +++++++++++++++++++++++++++++++++++++
- bsd-user/meson.build         |  1 +
- bsd-user/qemu-bsd.h          |  8 ++++
- 4 files changed, 190 insertions(+)
+ bsd-user/main.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/bsd-user/bsd-socket.c b/bsd-user/bsd-socket.c
-new file mode 100644
-index 0000000000..cc45400e4c
---- /dev/null
-+++ b/bsd-user/bsd-socket.c
-@@ -0,0 +1,98 @@
-+/*
-+ * BSD socket system call related helpers
-+ *
-+ * Copyright (c) 2013 Stacey D. Son
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+#include "qemu/osdep.h"
-+
-+#include <sys/types.h>
-+#include <sys/socket.h>
-+#include <sys/un.h>
-+#include <netinet/in.h>
-+
-+#include "qemu.h"
-+#include "qemu-bsd.h"
-+
-+/*
-+ * socket conversion
-+ */
-+abi_long target_to_host_sockaddr(struct sockaddr *addr, abi_ulong target_addr,
-+                                 socklen_t len)
-+{
-+    const socklen_t unix_maxlen = sizeof(struct sockaddr_un);
-+    sa_family_t sa_family;
-+    struct target_sockaddr *target_saddr;
-+
-+    target_saddr = lock_user(VERIFY_READ, target_addr, len, 1);
-+    if (target_saddr == 0) {
-+        return -TARGET_EFAULT;
-+    }
-+
-+    sa_family = target_saddr->sa_family;
-+
-+    /*
-+     * Oops. The caller might send a incomplete sun_path; sun_path
-+     * must be terminated by \0 (see the manual page), but unfortunately
-+     * it is quite common to specify sockaddr_un length as
-+     * "strlen(x->sun_path)" while it should be "strlen(...) + 1". We will
-+     * fix that here if needed.
-+     */
-+    if (target_saddr->sa_family == AF_UNIX) {
-+        if (len < unix_maxlen && len > 0) {
-+            char *cp = (char *)target_saddr;
-+
-+            if (cp[len - 1] && !cp[len]) {
-+                len++;
-+            }
-+        }
-+        if (len > unix_maxlen) {
-+            len = unix_maxlen;
-+        }
-+    }
-+
-+    memcpy(addr, target_saddr, len);
-+    addr->sa_family = sa_family;        /* type uint8_t */
-+    addr->sa_len = target_saddr->sa_len;    /* type uint8_t */
-+    unlock_user(target_saddr, target_addr, 0);
-+
-+    return 0;
-+}
-+
-+abi_long host_to_target_sockaddr(abi_ulong target_addr, struct sockaddr *addr,
-+                                 socklen_t len)
-+{
-+    struct target_sockaddr *target_saddr;
-+
-+    target_saddr = lock_user(VERIFY_WRITE, target_addr, len, 0);
-+    if (target_saddr == 0) {
-+        return -TARGET_EFAULT;
-+    }
-+    memcpy(target_saddr, addr, len);
-+    target_saddr->sa_family = addr->sa_family;  /* type uint8_t */
-+    target_saddr->sa_len = addr->sa_len;        /* type uint8_t */
-+    unlock_user(target_saddr, target_addr, len);
-+
-+    return 0;
-+}
-+
-+abi_long target_to_host_ip_mreq(struct ip_mreqn *mreqn, abi_ulong target_addr,
-+                                socklen_t len)
-+{
-+    struct target_ip_mreqn *target_smreqn;
-+
-+    target_smreqn = lock_user(VERIFY_READ, target_addr, len, 1);
-+    if (target_smreqn == 0) {
-+        return -TARGET_EFAULT;
-+    }
-+    mreqn->imr_multiaddr.s_addr = target_smreqn->imr_multiaddr.s_addr;
-+    mreqn->imr_address.s_addr = target_smreqn->imr_address.s_addr;
-+    if (len == sizeof(struct target_ip_mreqn)) {
-+        mreqn->imr_ifindex = tswap32(target_smreqn->imr_ifindex);
-+    }
-+    unlock_user(target_smreqn, target_addr, 0);
-+
-+    return 0;
-+}
-+
-diff --git a/bsd-user/freebsd/os-socket.h b/bsd-user/freebsd/os-socket.h
-index 30d62ebaf1..0b41e87b68 100644
---- a/bsd-user/freebsd/os-socket.h
-+++ b/bsd-user/freebsd/os-socket.h
-@@ -337,5 +337,88 @@ done:
-     return ret;
- }
+diff --git a/bsd-user/main.c b/bsd-user/main.c
+index 9dff2cbcb7..6541ed2608 100644
+--- a/bsd-user/main.c
++++ b/bsd-user/main.c
+@@ -542,9 +542,6 @@ int main(int argc, char **argv)
+         do_strace = 1;
+     }
  
-+/* setfib(2) */
-+static inline abi_long do_freebsd_setfib(abi_long fib)
-+{
-+
-+    return get_errno(setfib(fib));
-+}
-+
-+/* bindat(2) */
-+static inline abi_long do_freebsd_bindat(int fd, int sockfd,
-+        abi_ulong target_addr, socklen_t addrlen)
-+{
-+    abi_long ret;
-+    void *addr;
-+
-+    if ((int)addrlen < 0) {
-+        return -TARGET_EINVAL;
-+    }
-+
-+    addr = alloca(addrlen + 1);
-+    ret = target_to_host_sockaddr(addr, target_addr, addrlen);
-+    if (is_error(ret)) {
-+        return ret;
-+    }
-+
-+    return get_errno(bindat(fd, sockfd, addr, addrlen));
-+}
-+
-+/* connectat(2) */
-+static inline abi_long do_freebsd_connectat(int fd, int sockfd,
-+        abi_ulong target_addr, socklen_t addrlen)
-+{
-+    abi_long ret;
-+    void *addr;
-+
-+    if ((int)addrlen < 0) {
-+        return -TARGET_EINVAL;
-+    }
-+    addr = alloca(addrlen + 1);
-+
-+    ret = target_to_host_sockaddr(addr, target_addr, addrlen);
-+
-+    if (is_error(ret)) {
-+        return ret;
-+    }
-+
-+    return get_errno(connectat(fd, sockfd, addr, addrlen));
-+}
-+
-+/* accept4(2) */
-+static inline abi_long do_freebsd_accept4(int fd, abi_ulong target_addr,
-+        abi_ulong target_addrlen_addr, int flags)
-+{
-+    socklen_t addrlen;
-+    void *addr;
-+    abi_long ret;
-+
-+    if (target_addr == 0) {
-+        return get_errno(accept(fd, NULL, NULL));
-+    }
-+    /* return EINVAL if addrlen pointer is invalid */
-+    if (get_user_u32(addrlen, target_addrlen_addr)) {
-+        return -TARGET_EINVAL;
-+    }
-+    if ((int)addrlen < 0) {
-+        return -TARGET_EINVAL;
-+    }
-+    if (!access_ok(VERIFY_WRITE, target_addr, addrlen)) {
-+        return -TARGET_EINVAL;
-+    }
-+    addr = alloca(addrlen);
-+
-+    ret = get_errno(accept4(fd, addr, &addrlen, flags));
-+    if (!is_error(ret)) {
-+        if (is_error(host_to_target_sockaddr(target_addr, addr, addrlen))) {
-+            close(ret);
-+            ret = -TARGET_EFAULT;
-+        } else if (put_user_u32(addrlen, target_addrlen_addr)) {
-+            close(ret);
-+            ret = -TARGET_EFAULT;
-+        }
-+    }
-+    return ret;
-+}
+-    target_environ = envlist_to_environ(envlist, NULL);
+-    envlist_free(envlist);
+-
+     {
+         Error *err = NULL;
+         if (seed_optarg != NULL) {
+@@ -558,6 +555,9 @@ int main(int argc, char **argv)
+         }
+     }
  
- #endif /* BSD_USER_FREEBSD_OS_SOCKET_H */
-diff --git a/bsd-user/meson.build b/bsd-user/meson.build
-index 2abcae5122..ab6ddf2e9f 100644
---- a/bsd-user/meson.build
-+++ b/bsd-user/meson.build
-@@ -11,6 +11,7 @@ bsd_user_ss.add(files(
-   'bsd-mem.c',
-   'bsd-misc.c',
-   'bsd-proc.c',
-+  'bsd-socket.c',
-   'bsdload.c',
-   'elfload.c',
-   'main.c',
-diff --git a/bsd-user/qemu-bsd.h b/bsd-user/qemu-bsd.h
-index cdd27b44b4..253e32500e 100644
---- a/bsd-user/qemu-bsd.h
-+++ b/bsd-user/qemu-bsd.h
-@@ -32,6 +32,14 @@ int host_to_target_waitstatus(int status);
- void h2g_rusage(const struct rusage *rusage,
-         struct target_freebsd_rusage *target_rusage);
- 
-+/* bsd-socket.c */
-+abi_long target_to_host_sockaddr(struct sockaddr *addr, abi_ulong target_addr,
-+        socklen_t len);
-+abi_long host_to_target_sockaddr(abi_ulong target_addr, struct sockaddr *addr,
-+        socklen_t len);
-+abi_long target_to_host_ip_mreq(struct ip_mreqn *mreqn, abi_ulong target_addr,
-+        socklen_t len);
++    target_environ = envlist_to_environ(envlist, NULL);
++    envlist_free(envlist);
 +
- /* bsd-misc.c */
- abi_long host_to_target_uuid(abi_ulong target_addr, struct uuid *host_uuid);
- 
+     /*
+      * Now that page sizes are configured we can do
+      * proper page alignment for guest_base.
 
 -- 
 2.52.0
