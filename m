@@ -4,96 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E53FCDB46F
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jun 2026 15:29:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31779CD98F2
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jun 2026 15:35:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wbgZS-0000O5-TN; Mon, 22 Jun 2026 11:28:22 -0400
+	id 1wbggE-0003ci-4d; Mon, 22 Jun 2026 11:35:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wbgZP-0000Nd-85
- for qemu-devel@nongnu.org; Mon, 22 Jun 2026 11:28:20 -0400
-Received: from mail-yx1-xb12d.google.com ([2607:f8b0:4864:20::b12d])
+ id 1wbgfx-0003U0-9H
+ for qemu-devel@nongnu.org; Mon, 22 Jun 2026 11:35:05 -0400
+Received: from mail-yx1-xb131.google.com ([2607:f8b0:4864:20::b131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wbgZN-0002lU-JE
- for qemu-devel@nongnu.org; Mon, 22 Jun 2026 11:28:18 -0400
-Received: by mail-yx1-xb12d.google.com with SMTP id
- 956f58d0204a3-66058b880e9so4303505d50.2
- for <qemu-devel@nongnu.org>; Mon, 22 Jun 2026 08:28:17 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1782142096; cv=none;
+ id 1wbgfv-0004Pl-HL
+ for qemu-devel@nongnu.org; Mon, 22 Jun 2026 11:35:05 -0400
+Received: by mail-yx1-xb131.google.com with SMTP id
+ 956f58d0204a3-660e9ff0587so2462695d50.0
+ for <qemu-devel@nongnu.org>; Mon, 22 Jun 2026 08:35:02 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1782142502; cv=none;
  d=google.com; s=arc-20240605;
- b=eyu6Ovkkg9QlGphcu1gOo3QXu/ai4uopUXNmXZi/SPRezwqvolAQ3qS1oHXEHlHOLE
- 90WNSicJ5F3cSQAtarhvKM8Wo3QVJpoW7L+E2OlYQmgIfzO/slXb9DGBatNzkeP4WH0I
- /Pkdp1WTnXEDkBkLqnkWBKJBa1eTdnHSahUBMmGw3KLswxI8QQeDC+Nyg6m2RWmrR8TJ
- mOVVAku0RhLHAet1mvxfxhky2HUczP8x9kxBC6QtnhHmcVaJZxxen7kDKGNuDCgnQ2oc
- FViPV0rlyj+n0nEwxolL8rLmjQ1Hurc97ZNcudZI+uVMXwl1eBYrMV/Frwcl/zVhzUPI
- QJHg==
+ b=VNBDX0eT97i4A/N3rCbdadW77GG/3lmZqcaAKBFqb87SuKjsZqbdHZdy0ndMBJ4bzz
+ bvRTUuDhCe39QvOb3KnnGnIgBBdE4oEtrLE3eYPul15qUpOJYhthsKnxUZckIO9x3jC8
+ tohEwNl7vpvU270KE/Q8Go08EGLKBrm9jSVcHkxzzdx1KDqaFdJvihJrStax/YhdbMAT
+ jtr8qBYE0wvO9KQ/UnpgzOTfvjD9rv7xoAK0V/XhAjptXhH4frCNjXYZ2/VU12obHzs2
+ 6tJ+lsHm+4hOpEqypqNY5k1PrP+VSjjNA/MQoDoL5ChAZH7cxdxmMfad1ghBOWnAOb1K
+ RYKg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:dkim-signature;
- bh=YgY71jmEy523WMOXI3xfJbJyzaQDf9J4mOIspMa2IPE=;
- fh=SfZs/aFWZf65gPOALFTveYTSccEi7xdfl90u9mId6+g=;
- b=gugec9coCUJArKCxiq8xfqBoSIll2dE/isIpDbBwTvnGrSxxHqMIOstty1Ac1nj3oN
- dT+WXt05Lq6TwoRCGhxpvsy5vV40/K1yHRPJyN4WckDcH5THrQTjqIpK4THDDk9/6hZV
- 9aoqUlVifJ0YC8ab0yN7K7+ooU5NqyzH6rw1KLpKc/YgiJQIfLwOvDmdLRpkO1KKaMBl
- 95Sx98ckVj/rGElijmh+GZzxGIIFLfV/YFbZ6PnTRb8BkCZjPRQ27V7mLGX2VXO1sgCJ
- 6zGJw2eGRKNGknNYVV+Z753XxTyMHtwM7SB4zgnAXzd3VEGP57NlVpvvH2iZF11hxX3e
- Cb8g==; darn=nongnu.org
+ bh=XnJFClG0+ifr/1YPJ413D2fJmer+mNxQYv7QXDhif/k=;
+ fh=E4+ktKk/Irnu4jYXTzXXyfaxzHVWXmRvGxiRnTEcMes=;
+ b=EONRgf+eo7G2efy8q1vyGX+d7CzhaSz5cnlvVd3Fm5RUzJBq02WBAWOijH4/i+2lM+
+ ibOgfjLgPdloo8CRgaD6eoJxE11L/okc6EgtZt+62+jkSh5r+nt6FSwofMsHh2XW/F+v
+ l9YtjPJ7arcAGrgdLc9dCc73Gdd1VILxN22+UzWMkn1IzF/9AxzPyuOh7V/rV/uwZNMB
+ Kes15YJOs/jf5O5efCefCN6WDg1TehBOOWbi3nxsonlofWwQIUd6M2JBddRA1OuEBD6i
+ NT10uP+naT+l4HSc0E6dS/2JNwJuuBpwjnoSNwbGB6PH+Ft2c6jfRnq//tAWziwhC3D/
+ GJww==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1782142096; x=1782746896; darn=nongnu.org;
+ d=linaro.org; s=google; t=1782142502; x=1782747302; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=YgY71jmEy523WMOXI3xfJbJyzaQDf9J4mOIspMa2IPE=;
- b=nOAGMj+6eRk0Mkl2eHiNKvCt/ZQhvyLrZdL2XKnwZXkJKwJNH09okFJPLCeUlxftHY
- POWHvcfcUuC4h3tinuPUnNeNMeSFpp+fTnPg6ejok6SSAsCB0qjPjvaabMworDtZq8xc
- Uq2wg7hlfbxAq7IhRhZx3/QC7inRSg2U87WUUTHj0q4iXCpc1Ibifmn2deA/X0yW6nM7
- kHGlUftvvb16ViXEXAa84EuB2p04zHQsEd+gDy2RB7lU9a7/SR29Ue6cobffHmZyH50L
- pz3USc/2cW5CCRGrgPpbn7wU0lfFgCra+BqWQlaPP9H4yg9aI2qC8et2f0sFZ/nX8mTm
- lvkA==
+ bh=XnJFClG0+ifr/1YPJ413D2fJmer+mNxQYv7QXDhif/k=;
+ b=rtTsNBXZCzekmYluBRcmo4Ers6lPStPm9Gng8G6jNjTIXTXmr9iySX+jCIWWndHq63
+ xHNmJWkhBtGRyv/cpjeW+vMNR8FwvxQVfTncTGmv5UdTne8xdZ6LJDtJy/7D0ecyECxs
+ P4abnQWiapcqwhQS6e7z3h2MyzPFBBjQxYx1ypF07AtXtXnvxorWNLx2qncpnvAtd0ak
+ SPcWMoBLLGkKaBfC2hIJRjK/rUxK1CIc2kZWqz6ihKk2EwtmhSXYSrdoLKhtUBA/Nb0s
+ VBCyilGHcLQpd7kGipijb9ovz4cx0EWTKKAjDm4a5eBlfujEiVt67caRhCukjzq2T4fV
+ xVrQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782142096; x=1782746896;
+ d=1e100.net; s=20251104; t=1782142502; x=1782747302;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=YgY71jmEy523WMOXI3xfJbJyzaQDf9J4mOIspMa2IPE=;
- b=dbhKp5L8tcR248sa8vgyLt5DSfgeu96LO1cAsGaAXoML4EOJhjo80F/eDOuGfckSEg
- MFQURnjB1Z/izwP7TvVdhepOuVBFWi8VQfHqe8NNp5yTp5t4fp5JhA0YUML4gq7IvzpV
- U/fwJAkOfUXH7/Ebq5XK1b12YeyV0QMDYtCm+ltAl778II3mhTyhzXOWqkFsTYTXx/Sp
- Q9eCYG33aol5iRoY8/nbW4x1XNVZeUAF2mnK9Uopay939hdTEe9A4jv4VI6OCPUOROfg
- uOJie1FuF6gqEG0H6YOUdkQcROdVWY4OPR1AO4mzY66Iq6TTTZV1YiQdVMFUH9H8o5Q3
- t9WA==
-X-Gm-Message-State: AOJu0YwNGjnixUCe6Gx2g/ape4EJgEqSqkoo2sS+HVra3Yqx4l2fiKJ/
- qbAsoiYidt4i8jFVStiLX1skWs3BfnTBf1TiVxtWl7k3gH9CX2s6gkMkLi/f90Y8HQOB3n24Rs5
- iEAc6ViUk3EZaxBBn/RNkojFkn0UT5vkwwDVgpyMEDu5C3jv1ixMhDrQ=
-X-Gm-Gg: AfdE7cm249vY5Az5db0xsQ+SNVYGugmvkSfzfTZXrTJY/gPNn+g0xZy1GPyCu0rE9kR
- xqaYDyrkWiqBD21hCyFNliAQLHP7N906TRdbeZkqxqM2gH94IGLgod38rtCqi9pQmCxEzvfBM9H
- bDmnnUEChLOn5IOPzzZf1PPtIo5dJ6muiSLsVS9A81nliOSsti9vl0qo2P0YQyadCOQ+ce2eitp
- Hjn+LeVwiOz/QZcHo3od6Ha1Zu7dafWefk1kXiQZX7IVt2kSHpKGbWCEP8L1XPvoEUXx4aj6Bn1
- FFcOcnKGaPgy5hfFepnBs1Tkg9O4r/Beq1SEgQiPFqCXSQztUdTscn1O
-X-Received: by 2002:a05:690e:e83:b0:660:4ae6:9638 with SMTP id
- 956f58d0204a3-662fcb7d02amr15424653d50.54.1782142096087; Mon, 22 Jun 2026
- 08:28:16 -0700 (PDT)
+ bh=XnJFClG0+ifr/1YPJ413D2fJmer+mNxQYv7QXDhif/k=;
+ b=X9UyGkfJ498orh+J25K3cZlB7rR/d95mvmfIEnhIIEdS619DKcVBn19gtGyHYvFef3
+ q+tWzn3enbuH840KAsF5Sw2y+wlL4EMxD8UoXD3uOfxjA/BlJDjJ+CLm5l6BTTDvWfsb
+ RAU2hLy5xg7lwf+wJZxfjJCdtR/gbh+2f99OdcoMjr1AqdaKxJGhmmcGCmUYskM58/lG
+ 2IWRmu3bDEJET55YU53vx37Mcm6AAoq88WmwOITx06EKKtu+8t0EqQ6QboJ7UUWxMsdv
+ iqtBgsAoOwKCrL360joopHa/m4EzXt8KbmLB3TlQp/VW6zXtl5Eh86qzyrkLIkOO2BwM
+ /A2Q==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RocXky11A+WCBAUdIEPWuVKktOjkxG2kwNmgNCjlAghwvSG53XwYMtKRCL6kL/AlLDhtRWRDKyiWDrV@nongnu.org
+X-Gm-Message-State: AOJu0YzoJyqt7jIemnsnROZpM64RMZgNYcFQva94ThyFlrMyhBQFH/jd
+ t4C16oTykz8jfZr6VxRr4SP9lApMKlAgE8W3D4XpaRGdUBbmBxwA0HDONB8zGdH2SPyKTjvgMfr
+ eUb4ngehn5BzlZqC5OVmvxEe/6NUK21uwx05/I2jbfw==
+X-Gm-Gg: AfdE7clU5i99GydOpf6glRzR3vzQ+YptkHFMuK3OPCNFSspZIP6x/EH8i7fgL6R7V8s
+ NeltQvay0IqN/3ou3GM9qV7wD/jSv8SCG3mMQrcSGAYZQHKWXz9+nhgSpPV039LKllWGBvebyT2
+ 7wKNwWoXaGLGj/+fmSbrb4fBf8l+9LA77tnQhWTi+130WQOF1LHwANMPM75o1a5fZnNmmoaYcK3
+ iCKHe6Ri+zgt/hVRp19pUVFYHHcJiq4qdtVhMtxfwK7iHzvFCnh+2ThfITe0o93LdUpSr7qaylw
+ 6sEd4rWltyX42gNR56y34Tk6QMkANkd9arW3T6v1+DifSSCx0a+kHn9d
+X-Received: by 2002:a05:690e:11c4:b0:663:1161:cf49 with SMTP id
+ 956f58d0204a3-6631162052emr10979888d50.46.1782142501690; Mon, 22 Jun 2026
+ 08:35:01 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260616190639.3462006-1-peter.maydell@linaro.org>
- <20260616190639.3462006-33-peter.maydell@linaro.org>
-In-Reply-To: <20260616190639.3462006-33-peter.maydell@linaro.org>
+References: <20260610164549.5699-1-deller@kernel.org>
+ <20260610164549.5699-7-deller@kernel.org>
+In-Reply-To: <20260610164549.5699-7-deller@kernel.org>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 22 Jun 2026 16:28:04 +0100
-X-Gm-Features: AVVi8CdpvkwiQ9irFdUQZCkQQHgC9pl_jnQcezvZPvRzQLIkrJqhxxJ0FQdqs3E
-Message-ID: <CAFEAcA8pxFUnqAxa-ngjQ2ALDkJ-cjXsA66HgfisvRU_sMiwCQ@mail.gmail.com>
-Subject: Re: [PULL 32/61] hw/arm/smmuv3-accel: Introduce common helper for
- veventq read
-To: qemu-devel@nongnu.org
-Cc: Shameer Kolothum <skolothumtho@nvidia.com>,
- Nicolin Chen <nicolinc@nvidia.com>, Eric Auger <eric.auger@redhat.com>
+Date: Mon, 22 Jun 2026 16:34:50 +0100
+X-Gm-Features: AVVi8CeN6gK2IKQmoSJjWCEbUGcK25E_W_NWXS_YNxA9xJ8TXaQ6SQNUVQ5ccX0
+Message-ID: <CAFEAcA9To_qhKCF7ebsrDRgB5yQkmRdSZG+x=e+_-0C=XDYLCg@mail.gmail.com>
+Subject: Re: [PULL v3 6/8] linux-user/sparc: call block_signals() before
+ set_sigmask() in setcontext
+To: Helge Deller <deller@kernel.org>
+Cc: Stefan Hajnoczi <stefanha@gmail.com>, qemu-devel@nongnu.org, 
+ Yoshinori Sato <yoshinori.sato@nifty.com>, 
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Laurent Vivier <laurent@vivier.eu>, 
+ Helge Deller <deller@gmx.de>, Max Filippov <jcmvbkbc@gmail.com>,
+ Matt Turner <mattst88@gmail.com>, 
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12d;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b131;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb131.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -116,134 +123,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 16 Jun 2026 at 20:07, Peter Maydell <peter.maydell@linaro.org> wrote:
+On Wed, 10 Jun 2026 at 17:46, Helge Deller <deller@kernel.org> wrote:
 >
-> From: Shameer Kolothum <skolothumtho@nvidia.com>
+> From: Matt Turner <mattst88@gmail.com>
 >
-> Move the vEVENTQ read and validation logic into a common helper
-> smmuv3_accel_event_read_validate(). The helper performs the read(),
-> checks for overflow and short reads, validates the sequence number,
-> and updates the sequence state.
+> sparc64_set_context() emulates the kernel's `ta 0x6f` trap by calling
+> set_sigmask() to install the mask supplied via the user's ucontext_t.
+> The contract of set_sigmask() (see its comment in linux-user/signal.c)
+> is that the caller must have first called block_signals(), which sets
+> TaskState::signal_pending.
 >
-> This helper can be reused for Tegra241 CMDQV vEVENTQ support in a
-> subsequent patch.
+> Without block_signals(), if a guest signal is pending-and-blocked at
+> the time setcontext is invoked and the new mask unblocks it,
+> signal_pending stays 0 and the post-trap process_pending_signals()
+> call in linux-user/sparc/cpu_loop.c never enters its while loop, so
+> the now-deliverable signal is left undelivered indefinitely.
 >
-> Error handling is slightly adjusted: instead of reporting errors
-> directly in the read handler, the helper now returns errors via
-> Error **. Sequence gaps are reported as warnings.
-
-Hi; Coverity spots what looks like an error here (CID 1660057);
-could you have a look and send a fix, please?
-
-> Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
-
-> +bool smmuv3_accel_event_read_validate(IOMMUFDVeventq *veventq, uint32_t type,
-> +                                      void *buf, size_t size, Error **errp)
-> +{
-> +    uint32_t last_seq = veventq->last_event_seq;
-> +    uint32_t id = veventq->veventq_id;
-> +    struct iommufd_vevent_header *hdr;
-> +    ssize_t bytes;
-> +
-> +    bytes = read(veventq->veventq_fd, buf, size);
-> +    if (bytes <= 0) {
-> +        if (errno == EAGAIN || errno == EINTR) {
-> +            return true;
-> +        }
-> +        error_setg(errp, "vEVENTQ(type %u id %u): read failed (%m)", type, id);
-> +        return false;
-> +    }
-> +    hdr = (struct iommufd_vevent_header *)buf;
-> +    if (bytes == sizeof(*hdr) &&
-> +        (hdr->flags & IOMMU_VEVENTQ_FLAG_LOST_EVENTS)) {
-> +        error_setg(errp, "vEVENTQ(type %u id %u): overflowed", type, id);
-> +        veventq->event_start = false;
-> +        return false;
-> +    }
-> +    if (bytes < size) {
-> +        error_setg(errp, "vEVENTQ(type %u id %u): short read(%zd/%zd bytes)",
-> +                          type, id, bytes, size);
-> +        return false;
-> +    }
-> +    /* Check sequence in hdr for lost events if any */
-> +    if (veventq->event_start && (hdr->sequence - last_seq != 1)) {
-> +        warn_report("vEVENTQ(type %u id %u): lost %u event(s)",
-> +                    type, id, hdr->sequence - last_seq - 1);
-> +    }
-> +    veventq->last_event_seq = hdr->sequence;
-> +    veventq->event_start = true;
-> +    return true;
-
-This function takes a buf and size that it will read into. It returns
-falso on various error cases, and true on success. In particular,
-"didn't read exactly the requested number of bytes" is an error case.
-However, it also returns true for EAGAIN and EINTR, having not read
-any data into the buffer.  The API provides no way for the caller
-to tell the difference between "successfully read the data" and
-"you need to try again later".
-
-> +}
-> +
->  static void smmuv3_accel_event_read(void *opaque)
->  {
->      SMMUv3State *s = opaque;
-> @@ -448,39 +486,14 @@ static void smmuv3_accel_event_read(void *opaque)
->          struct iommufd_vevent_header hdr;
->          struct iommu_vevent_arm_smmuv3 vevent;
->      } buf;
-> -    enum iommu_veventq_type type = IOMMU_VEVENTQ_TYPE_ARM_SMMUV3;
-> -    uint32_t id = veventq->veventq_id;
-> -    uint32_t last_seq = veventq->last_event_seq;
-> -    ssize_t bytes;
-> +    Error *local_err = NULL;
+> This affects programs that use getcontext/setcontext to swap signal
+> masks, including libunwind's unw_resume() out of a signal handler:
+> without this fix, the test program below loops forever printing
+> "calling setcontext" instead of delivering the pending SIGUSR2.
 >
-> -    bytes = read(veventq->veventq_fd, &buf, sizeof(buf));
-> -    if (bytes <= 0) {
-> -        if (errno == EAGAIN || errno == EINTR) {
-> -            return;
-> -        }
-> -        error_report_once("vEVENTQ(type %u id %u): read failed (%m)", type, id);
+>   #define _GNU_SOURCE
+>   #include <ucontext.h>
+>   #include <signal.h>
+>   #include <stdio.h>
+>   #include <unistd.h>
+>   static int got;
+>   static void h(int s) { got = 1; }
+>   int main(void) {
+>       signal(SIGUSR2, h);
+>       sigset_t m; sigemptyset(&m); sigaddset(&m, SIGUSR2);
+>       sigprocmask(SIG_BLOCK, &m, NULL);
+>       kill(getpid(), SIGUSR2);
+>       ucontext_t uc;
+>       getcontext(&uc);
+>       if (got) return 0;
+>       uc.uc_sigmask.__val[0] = 0;
+>       setcontext(&uc);
+>       return 1;
+>   }
+>
+> The 32-bit sparc do_sigreturn / do_rt_sigreturn paths already get
+> block_signals() from the rt_sigreturn syscall wrapper in
+> linux-user/syscall.c, so only sparc64_set_context (invoked directly
+> from cpu_loop) needs the addition.
+>
+> Signed-off-by: Matt Turner <mattst88@gmail.com>
+> Cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+> Signed-off-by: Helge Deller <deller@gmx.de>
+> ---
+>  linux-user/sparc/signal.c | 9 +++++++++
+>  1 file changed, 9 insertions(+)
+>
+> diff --git a/linux-user/sparc/signal.c b/linux-user/sparc/signal.c
+> index fda5508c48..ba692c3123 100644
+> --- a/linux-user/sparc/signal.c
+> +++ b/linux-user/sparc/signal.c
+> @@ -619,6 +619,15 @@ void sparc64_set_context(CPUSPARCState *env)
+>              }
+>          }
+>          target_to_host_sigset_internal(&set, &target_set);
+> +        /*
+> +         * set_sigmask() requires the caller to have first called
+> +         * block_signals() so that process_pending_signals() is guaranteed
+> +         * to run after the mask change.  Without this, a guest signal that
+> +         * is pending-and-blocked at setcontext time is left undelivered
+> +         * even after its mask bit is cleared, because signal_pending stays
+> +         * 0 and the post-trap process_pending_signals() loop never enters.
+> +         */
+> +        block_signals();
+>          set_sigmask(&set);
 
-Here at the callsite, we used to return from smmuv3_accel_event_read()
-without doing anything for the EAGAIN/EINTR case, report the error
-in other error cases, and continue to smmuv3_propagate_event() only
-for the success case.
-
-
-> +    if (!smmuv3_accel_event_read_validate(veventq,
-> +                                          IOMMU_VEVENTQ_TYPE_ARM_SMMUV3, &buf,
-> +                                          sizeof(buf), &local_err)) {
-> +        warn_report_err_once(local_err);
->          return;
->      }
-
-In the new code, we report the failures (good), proceed for the
-success case (also good), but we now continue to call
-smmuv3_propagate_event() with an uninitialized buf struct if
-the read call returned EAGAIN/EINTR...
-
-> -
-> -    if (bytes == sizeof(buf.hdr) &&
-> -        (buf.hdr.flags & IOMMU_VEVENTQ_FLAG_LOST_EVENTS)) {
-> -        error_report_once("vEVENTQ(type %u id %u): overflowed", type, id);
-> -        veventq->event_start = false;
-> -        return;
-> -    }
-> -    if (bytes < sizeof(buf)) {
-> -        error_report_once("vEVENTQ(type %u id %u): short read(%zd/%zd bytes)",
-> -                          type, id, bytes, sizeof(buf));
-> -        return;
-> -    }
-> -
-> -    /* Check sequence in hdr for lost events if any */
-> -    if (veventq->event_start && (buf.hdr.sequence - last_seq != 1)) {
-> -        error_report_once("vEVENTQ(type %u id %u): lost %u event(s)",
-> -                          type, id, buf.hdr.sequence - last_seq - 1);
-> -    }
-> -    veventq->last_event_seq = buf.hdr.sequence;
-> -    veventq->event_start = true;
->      smmuv3_propagate_event(s, (Evt *)&buf.vevent);
->  }
+Hi; Coverity points out (CID 1660058) that every other callsite of
+block_signals() checks its return value and does something if it
+returns non-zero (indicating that a signal is pending and typically
+that we should return -TARGET_ERESTARTSYS to take the pending signal).
+Is it OK to ignore the return value here? If so, saying why in
+the comment would probably be useful.
 
 thanks
 -- PMM
