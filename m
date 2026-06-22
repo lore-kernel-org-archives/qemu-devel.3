@@ -4,152 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49738CD98F2
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jun 2026 16:19:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54550CD98F2
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jun 2026 16:24:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wbhMV-0003xA-K2; Mon, 22 Jun 2026 12:19:03 -0400
+	id 1wbhRG-0006Vg-Gq; Mon, 22 Jun 2026 12:23:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wbhMM-0003wn-OE
- for qemu-devel@nongnu.org; Mon, 22 Jun 2026 12:18:56 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wbhRF-0006VX-AL
+ for qemu-devel@nongnu.org; Mon, 22 Jun 2026 12:23:57 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wbhMK-0003Pu-T1
- for qemu-devel@nongnu.org; Mon, 22 Jun 2026 12:18:54 -0400
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65MFVnQQ3842514
- for <qemu-devel@nongnu.org>; Mon, 22 Jun 2026 16:18:50 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- uvOjtSPBcrz/Hem07Zd7dMc6hhJvk4L/yoUtR36kktA=; b=GHivFOj0ovjYKEtd
- kfBjZV3GYuNpoN/NwYjOheFngJYkNLWxfp2jkPOU9U82wECfPb7YPpBUTmVSr+2a
- b+1z5Lq7RnNbKHpPlsz69c8WlChlIbod3Itr+LGeMBSa+D+Iec/pEx2w86IpuVGN
- hz5aAZY9ljwSMMg8pWxfh8PoSSvDXfadfIKYQI3LmknxNK2VPCJPIWlrNq7wh1HB
- Mor1tbO+A0gW5jJwwQN/0FFs2QWZEeHSqCi+A7SYVb4ET0xCknJ26yvNiRoWKr1w
- quWzGPJxjz+Ghy0aM9Kx7W7QTpb6U5kLnTTZyKk7P/4KNzJL8zBGaeWAeUyoT5af
- 6srB/A==
-Received: from mail-dy1-f198.google.com (mail-dy1-f198.google.com
- [74.125.82.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ey2yhsba4-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 22 Jun 2026 16:18:50 +0000 (GMT)
-Received: by mail-dy1-f198.google.com with SMTP id
- 5a478bee46e88-30ba395b047so2419057eec.0
- for <qemu-devel@nongnu.org>; Mon, 22 Jun 2026 09:18:50 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wbhRC-0005ls-TV
+ for qemu-devel@nongnu.org; Mon, 22 Jun 2026 12:23:57 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1782145432;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=xUf8Xg3Wl1nfER5KGL1ai1vi87qQ099gttOsuTRPKhw=;
+ b=QrIxYmmjE4Pixk4ntYAtnHQtKkKULfYj8I/X/sYqUY3R0dzaWuM0GW+0hCh/G6KBwIEBOM
+ /25oI9UVcViz9a+ekQ2/1oQo5FNIbu5s39lWs20PV7eOEJZV6wxeiHvCxR7eX3ld7mFl5b
+ D+vYAXZ2683QMoPBznMYnmyAqlQu7PM=
+Received: from mail-yw1-f200.google.com (mail-yw1-f200.google.com
+ [209.85.128.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-695-38oaEeIePqWMJT-gx4IOqg-1; Mon, 22 Jun 2026 12:23:51 -0400
+X-MC-Unique: 38oaEeIePqWMJT-gx4IOqg-1
+X-Mimecast-MFC-AGG-ID: 38oaEeIePqWMJT-gx4IOqg_1782145431
+Received: by mail-yw1-f200.google.com with SMTP id
+ 00721157ae682-7e9dbc4039bso1151347b3.1
+ for <qemu-devel@nongnu.org>; Mon, 22 Jun 2026 09:23:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1782145130; x=1782749930; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=uvOjtSPBcrz/Hem07Zd7dMc6hhJvk4L/yoUtR36kktA=;
- b=P9OgJLmG+rcqFS0nOYPEiAE8fq4OdrWT9DHrW3jHta4I2NNGql+lDEJlSBQ5P9u/HL
- JWEUzv5xoK6Qbo7KeWvzhrjdG8sROfdmhAV8LVhFR0l6bLJ1XzM26Q6tQ6x2bDFKLmOE
- gjKCC2IQkNLC3rlrgQrAhCJAlHd3g0AoTNargL2yZ+urzB82G7bPiASDZazxznry9kCx
- /sQKSKG9tSLg3sCkXTg+toqx1JUPQn3JDCINOJy2FC9kunys6mTAjAnowPZkQDa9q1Ky
- 2h94lMh2COp9Um1kiG72e8S0PtVni8xaWH9/dSyrqFUyZaG/5UqdZKRA5/Q61hl0FYLt
- mxNg==
+ d=redhat.com; s=google; t=1782145431; x=1782750231; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=xUf8Xg3Wl1nfER5KGL1ai1vi87qQ099gttOsuTRPKhw=;
+ b=UbrUlrauOv5nKRq1Uc/P1E4f7kFhDiOlQQTst2qX0CD2YdWcDJwl+ej67POPnya3E0
+ 4SFUPcx5et6a6rs+MZsZiVkHMxx6008ii7iPtjLcH11o6f6JsqxZEd0Fs0Erp6r/4T7g
+ 6+qwFuznO9PS/ub/uIE2WeTJHToXSvrw1Bxg1Vz167MxuuTKeoCqIJG6H+sbIrEm54Ts
+ u4l09c7dQnhkSn7e/CWeM9igNoY50XX4SyEpT7S6lBunnnv/fLhzqqWixMxXHPYlFc2j
+ uYVWMWTOdX0LG1URSy6usJZ0tmobpIm1zURzk+93bXf0y3yUAEpA6VGfHqi91Ari3Ztf
+ tVhQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782145130; x=1782749930;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=uvOjtSPBcrz/Hem07Zd7dMc6hhJvk4L/yoUtR36kktA=;
- b=ShDvKGet1bscMXRz+k0UfYS9pF6tCRNO2CmwjgUJTYJkkjsBehJG7BsdRtCi/2C4J0
- EjnRUi/Ga820TkqPGu7nbkD4PU5jic1sCldW0guUhl2Uf0byntaqt/6jhp1u9MZxYunT
- PDYpI6QQ9V8C0D1RJEJBplc/09QaGICFfRVfHNdu5YksAzUTNxL4LB6JpHtGyx6UHlM9
- vsQisG8AXpzSw1Uo/er12y+jx2tyZoBPXQXI4DLDaPxDfwYOtSOaPiZWet2kcRRLHZZh
- p4y/mU+tpD5a9wrJ/zlUV1b0324aKt5KZlSL1M3ivp0xnajv8ljvOxOj+Of+BeF6oL0R
- zWGA==
-X-Forwarded-Encrypted: i=1;
- AHgh+Rr3HUhcvrT6eiRw56E90xd4BsJ2/HwMlpWt2LgA2pWq99ue1mUhKDNm/o8QFrQxiAcInD1FmX4FJkTk@nongnu.org
-X-Gm-Message-State: AOJu0YzYS69myRQD3fLiXRH5/1wh3RJZdHdHd9IlL1d1oHr3PPX2x3G4
- /lYlffLOIXjkuDzgLKFi7dCN+YuUSSgHZco6AkTh7S/7up6hhMZpsV+ENsJdlScsZ2ZHM/7cUQQ
- 1jWOvRmpsStpl+kK8YrXpeeVU/v6/yQWY3DDSMzg0qgJP0fbD/nXKfDplRA==
-X-Gm-Gg: AfdE7clQin66Qoh4mJnlxE2cLvGB2enUi6M9TlsoyAi4r3iYPJ26ecZpH95B1h1qvPl
- Y0RqzsZS7fMKKivgHku066TcJn23Aeg3XjyPXd0GN0nMdgXQAi74p6ST+ScNb3Q905pyVjcnisk
- aq+NYEdrlhLQJkLQTrOoDOXw4sIiZ9U+tONjj9LWOuCBSGe2SaybCoYyd+tGrbaaeQd3kwFDCV0
- mX6wLa7q/g/tEbwP8vu/tw5m+ci21IKaAp0VtYO7tCjz2Q/M87NUAPeonOs/geKLrkt5gvBG+H1
- +csoshrr1yKaYwGBjxf0Hc7H3rH89Vy/cW4USKpt4vJblKcjTR/4O+TJ3AxQybJhJeYf/ryIAOn
- +CsNbUHjCe0gv5jmcHpExB9izgkKlhyKphaKXEQ9WaEw5UxYIfiblRp0bH0qEn3Pioa19/iIK6n
- hGxaA=
-X-Received: by 2002:a05:7300:6d2c:b0:304:ab8:f899 with SMTP id
- 5a478bee46e88-30c0701f009mr11800686eec.8.1782145129585; 
- Mon, 22 Jun 2026 09:18:49 -0700 (PDT)
-X-Received: by 2002:a05:7300:6d2c:b0:304:ab8:f899 with SMTP id
- 5a478bee46e88-30c0701f009mr11800638eec.8.1782145129086; 
- Mon, 22 Jun 2026 09:18:49 -0700 (PDT)
-Received: from [192.168.1.170] (216-71-219-44.dyn.novuscom.net.
- [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-30c52daf89dsm645984eec.31.2026.06.22.09.18.47
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 22 Jun 2026 09:18:48 -0700 (PDT)
-Message-ID: <c556f3af-2281-465e-9b54-3bae723850c8@oss.qualcomm.com>
-Date: Mon, 22 Jun 2026 09:18:47 -0700
+ d=1e100.net; s=20251104; t=1782145431; x=1782750231;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=xUf8Xg3Wl1nfER5KGL1ai1vi87qQ099gttOsuTRPKhw=;
+ b=oFRzeSXAlTubpQh8O9AKRwpvae58PggXN+opEhRy5kEC5scpPAS79RK4/vGNTX1ONl
+ xSKp4xFG9HvUyX2QdVNslHfc1tRi0dgb4FfXDLyhIphrPldOAyAEwsWvcyfOp71zrlXW
+ 4khbux3NeMdG/qJw4i5wbYCN8ifKotkitk53GxGnfQdFtPk7QEyLprI6H1NGSr+FFgKm
+ Fm80+KpxKX+Ri81rhUxKE4xwbqkuTLGXLqH+38SypCnHc8X2p2yXUb2pUlyABXjLOqWB
+ zBxaQw2tGB06cp0xfd9LrjJrAriy4GkDNTJRQe1a2TeCibqoJuo/NiOmMkY5USHSmSyU
+ DhAw==
+X-Gm-Message-State: AOJu0Yw5aCVF7XwJSLT3G+R6tCryCa7W3B8Cra7EnLcRDNjs47FbMMrN
+ QOwzeUnn2P6oVDduLhoZemieAi7CCIMdNjrDn9i2IBMFFzV0n5E9ErMm2slChIgMZxDQPwFWXZZ
+ H+ea2ZwPVV1ifqt/sg5LNFSsza7rhDUG7bcTnmnLF+XLwQnYdLSeGCH+T
+X-Gm-Gg: AfdE7cm/VQSq+9RYCMpmOclZfUmNkL8hjemjXllCDrhi/aaS8LQgNzmS0Fuc5cU/DG3
+ PTxoSSEKj6PMHUX/PDFJt6KctsNzObnSu6iL6a4c1pTZr2aI3rEtkAu8v/ZG4kknpTAXbRL0GUn
+ TsexxB7FSNZuf7Lj+u0NjtqYTPwH2ZuYiyDsnRLPbYiOBRPXlyMBMfX5jTDQFlvoxOh56tvMMLl
+ 4lSajDW2J/v8O4pne7wZgzekZfVO8/x3fXM6Km4OKj7XcMCZz8IaAtLTcXRD09zzC9Psh4diQBH
+ oOGU1ZWRStzmJvglk3Czq9KS7VdYpc6VmJtoJLhM/IuCCb2GMOHRzg/u+KFZDtzWuwQSAxDZ77O
+ VSZhU
+X-Received: by 2002:a05:690c:288:b0:7e1:e496:ad86 with SMTP id
+ 00721157ae682-80671832828mr2526957b3.12.1782145430545; 
+ Mon, 22 Jun 2026 09:23:50 -0700 (PDT)
+X-Received: by 2002:a05:690c:288:b0:7e1:e496:ad86 with SMTP id
+ 00721157ae682-80671832828mr2526297b3.12.1782145429850; 
+ Mon, 22 Jun 2026 09:23:49 -0700 (PDT)
+Received: from x1.local ([174.91.117.157]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-8df823ab84esm98799516d6.37.2026.06.22.09.23.47
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 22 Jun 2026 09:23:48 -0700 (PDT)
+Date: Mon, 22 Jun 2026 12:23:36 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Aadeshveer Singh <aadeshveer07@gmail.com>
+Cc: qemu-devel@nongnu.org, farosas@suse.de, pbonzini@redhat.com,
+ philmd@mailo.com, lvivier@redhat.com, ayoub@saferwall.com
+Subject: Re: [RFC PATCH 1/5] migration: add RAM Block fields and helpers for
+ fast snapshot load
+Message-ID: <ajlhiEZ4TdBFvdMu@x1.local>
+References: <20260618032010.88755-1-aadeshveer07@gmail.com>
+ <20260618032010.88755-2-aadeshveer07@gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v2 0/1] contrib/plugins: add a minimal dlcall plugin
-To: Ziyang Zhang <functioner@sjtu.edu.cn>, qemu-devel <qemu-devel@nongnu.org>
-Cc: Riku Voipio <riku.voipio@iki.fi>, Laurent Vivier <laurent@vivier.eu>,
- Alex Bennee <alex.bennee@linaro.org>, Alexandre Iooss <erdnaxe@crans.org>,
- Mahmoud Mandour <ma.mandourr@gmail.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Zhengwei Qi <qizhwei@sjtu.edu.cn>, Yun Wang <yunwang94@sjtu.edu.cn>,
- Mingyuan Xia <xiamy@ultrarisc.com>, Kailiang Xu <xukl2019@sjtu.edu.cn>
-References: <20260617130742.769234-1-functioner@sjtu.edu.cn>
- <20260619045404.820960-1-functioner@sjtu.edu.cn>
- <ef66ef33-22fc-495b-ab2b-dd4db88c3d8c@oss.qualcomm.com>
- <92e1f282-2044-43bc-bf83-f172ed019af3@sjtu.edu.cn>
-From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <92e1f282-2044-43bc-bf83-f172ed019af3@sjtu.edu.cn>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjIyMDE2MCBTYWx0ZWRfX5NAIeOKAGaVS
- /GCuEle8mN87JCy+vLBxel8E5i4qB3t47nTkd3efGSlqBOi8NPsShnd2sznTTCfKNjuhu3913z+
- u9piQaR7v14/UIlcQQgShXHrJTMPawg=
-X-Proofpoint-ORIG-GUID: UvrUcxrlmFmNkRWoK63Mo-J5FUaiWopz
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjIyMDE2MCBTYWx0ZWRfX1wQYUo9ic31C
- 6DtccqdrZk3aa5UyP2Tq419fLUryNPY4ciqnpwfGazyXNnVD2VvyehI3Ka4CByN2zTiP4lnONSt
- qqvHJ6yfNGxJmdMylF50X37eVPHgW8TqWRMUsqpg+zgjhlpTOd6bcty7w98ruSl5YNWT70hOY1m
- lSdVpYDZAJ9oXgyGF3QQVrJWgHoL/0/Klx5qxcuDRU0p9/NYy3HFhgUDlhQ62jVSq/7vjubvbq4
- U8qo/vXiveqb4/abYbnBMJqNftjLY31X2b3hHTgqJ0HXPPplRvQmAGkUwTJh8rFYA0O1vNopnNh
- 7mz99TrsNJe8hera87DXjbvmr0k1605N0qSy8CK4X+buc5ogwbIJF+hO+QIqvOCgZ0a6vjfKqld
- KMO+PjhDHDgl/+UrrHjFr+EFy0nsXk3BHo4iIcFLbm0+7gvkM2hlqSK2IFWwbjHKj5HiBFG7gpY
- DUQ4+ak+0hm7hREsaOQ==
-X-Proofpoint-GUID: UvrUcxrlmFmNkRWoK63Mo-J5FUaiWopz
-X-Authority-Analysis: v=2.4 cv=cKbQdFeN c=1 sm=1 tr=0 ts=6a39606a cx=c_pps
- a=wEP8DlPgTf/vqF+yE6f9lg==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
- a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
- a=NEAV23lmAAAA:8 a=Jgy5DngZKV4YicOefRkA:9 a=QEXdDO2ut3YA:10
- a=bBxd6f-gb0O0v-kibOvt:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-22_03,2026-06-22_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 bulkscore=0 adultscore=0 phishscore=0 spamscore=0
- lowpriorityscore=0 malwarescore=0 impostorscore=0 suspectscore=0
- clxscore=1015 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2606220160
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260618032010.88755-2-aadeshveer07@gmail.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -165,54 +116,361 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/20/2026 2:30 AM, Ziyang Zhang wrote:
-> Hi Pierrick,
+On Thu, Jun 18, 2026 at 08:50:06AM +0530, Aadeshveer Singh wrote:
+> Add two fields per RAMBlock:
 > 
-> On Fri, 19 Jun 2026 09:44:37 -0700, Pierrick Bouvier wrote:
->>
->> Makes sense, thanks for your answer.
->>
+> - nonzeropages: Mirrors the mapped-ram bitmap for storing which pages
+>   are present in file and which are zero.
+> - pending_bmap: Bitmap to store internal state of which pages have been
+>   read by some thread to ensure coordination between threads.
 > 
-> Thanks, glad it makes sense.
+> Both fields are allocated and initialized in ram_load_setup and freed in
+> ram_load_cleanup. nonzeropages is populated in parse_ramblock_mapped_ram
+> eliminating the use of a temporary bitmap.
 > 
-> While I'm here, a question about a convention I noticed: most of the
-> QEMU code that loads external modules goes through GModule
-> (g_module_open() / g_module_symbol()) rather than the libdl functions
-> directly. Is there a specific reason for preferring GModule?
->
-
-Mostly for portabilty reasons I would say, since Windows does not expose
-this. Not sure if MacOS/BDSs have their own quirks compared to Linux also.
-
-> https://github.com/qemu/qemu/
-> blob/3b50303f9563a42538a1fd5c0ea7f952e23016e1/plugins/loader.c#L190
+> Change ram_load() to load using ram_load_precopy() in case of fast
+> snapshot load.
 > 
-> https://github.com/qemu/qemu/
-> blob/3b50303f9563a42538a1fd5c0ea7f952e23016e1/util/module.c#L171
+> Also add migrate_fast_snapshot_load() returning true when both
+> postcopy-ram and mapped-ram capabilities are set.
 > 
-> In the plugin I used dlopen()/dlsym() directly, because their interface
-> is more standard and more flexible for this use case. For example,
-> g_module_open() does not expose RTLD_DEFAULT, which I rely on. And since
-> recent glibc (2.34+) folds libdl into libc, no explicit -ldl is needed,
-> so simply adding the file to meson.build builds cleanly.
->
-
-Windows does not have a semantic like RTLD_DEFAULT, since all symbols
-are solved from a specific library (import are symbol name + dll name),
-and not globally, like on Linux.
-
-> Does using libdl directly in a plugin violate any convention I should be
-> aware of? If GModule is preferred for portability or some other reason,
-> I'm happy to switch where feasible.
->
-
-As long as it compiles on all platforms, I don't mind too much if it's
-written this way, since ultimately, it's a plugin written only for
-linux-user. We could deactivate it conditionally in meson.build if no
-linux-user target is built.
-
-> Thanks,
-> Ziyang Zhang
+> Update qemu_get_buffer_at() to not set error to make it thread safe. All
+> the callers of qemu_get_buffer_at(), take care of error handling.
 > 
+> Signed-off-by: Aadeshveer Singh <aadeshveer07@gmail.com>
+> ---
+>  include/system/ramblock.h |  8 +++++
+>  migration/options.c       |  5 ++++
+>  migration/options.h       |  1 +
+>  migration/qemu-file.c     | 10 +------
+>  migration/ram.c           | 61 ++++++++++++++++++++++++++++++++-------
+>  5 files changed, 65 insertions(+), 20 deletions(-)
+> 
+> diff --git a/include/system/ramblock.h b/include/system/ramblock.h
+> index 4435f8d55f..73275d0459 100644
+> --- a/include/system/ramblock.h
+> +++ b/include/system/ramblock.h
+> @@ -60,6 +60,14 @@ struct RAMBlock {
+>  
+>      /* Bitmap of already received pages.  Only used on destination side. */
+>      unsigned long *receivedmap;
+> +    /* Bitmap of zero pages. Used for fast snapshot load. */
+> +    unsigned long *nonzeropages;
+
+We have file_bmap, only used on source for now.  I think we can safely
+reuse it by caching the pointer allocated.
+
+> +    /*
+> +     * Bitmap for pages that are yet to be read from disk. It is required for
+> +     * fault thread and eager thread to keep note of which pages are currently
+> +     * being read. Used by fast snapshot load.
+> +     */
+> +    unsigned long *pending_bmap;
+
+We have receivedmap right above, and it's always allocated on dest.  IIUC
+we can directly use it.
+
+It's also already set by uffd helpers, see qemu_ufd_copy_ioctl().
+Currently it's a bit ugly put under a "if (!ret)"..  if you want you can
+clean it up a bit.
+
+There, we may want to skip page_requested or page_request_mutex operations
+for file load because they're not necessary.
+
+>  
+>      /*
+>       * bitmap to track already cleared dirty bitmap.  When the bit is
+> diff --git a/migration/options.c b/migration/options.c
+> index 5cbfd29099..5f80dd5b42 100644
+> --- a/migration/options.c
+> +++ b/migration/options.c
+> @@ -467,6 +467,11 @@ bool migrate_rdma(void)
+>      return s->rdma_migration;
+>  }
+>  
+> +bool migrate_fast_snapshot_load(void)
+> +{
+> +    return migrate_mapped_ram() && migrate_postcopy_ram();
+> +}
+> +
+>  typedef enum WriteTrackingSupport {
+>      WT_SUPPORT_UNKNOWN = 0,
+>      WT_SUPPORT_ABSENT,
+> diff --git a/migration/options.h b/migration/options.h
+> index b46221998a..a81ca40d23 100644
+> --- a/migration/options.h
+> +++ b/migration/options.h
+> @@ -54,6 +54,7 @@ bool migrate_multifd_flush_after_each_section(void);
+>  bool migrate_postcopy(void);
+>  bool migrate_rdma(void);
+>  bool migrate_tls(void);
+> +bool migrate_fast_snapshot_load(void);
+>  
+>  /* capabilities helpers */
+>  
+> diff --git a/migration/qemu-file.c b/migration/qemu-file.c
+> index d5a48115bd..602ece1b74 100644
+> --- a/migration/qemu-file.c
+> +++ b/migration/qemu-file.c
+> @@ -553,17 +553,9 @@ void qemu_put_buffer_at(QEMUFile *f, const uint8_t *buf, size_t buflen,
+>  size_t qemu_get_buffer_at(QEMUFile *f, uint8_t *buf, size_t buflen,
+>                            off_t pos)
+>  {
+> -    Error *err = NULL;
+> -
+> -    if (f->last_error) {
+> -        return 0;
+> -    }
+
+Let's keep this line, this is thread-safe and if we have a prior error it
+seems still reasonable to return immediately.  Then leave below one line
+change to be a small separate patch would be nicer.
+
+> -
+> -    if (qio_channel_pread_all(f->ioc, buf, buflen, pos, &err) < 0) {
+> -        qemu_file_set_error_obj(f, -EIO, err);
+> +    if (qio_channel_pread_all(f->ioc, buf, buflen, pos, NULL) < 0) {
+>          return 0;
+>      }
+> -
+>      return buflen;
+>  }
+>  
+> diff --git a/migration/ram.c b/migration/ram.c
+> index fc38ffbf8a..c2bacf3dfc 100644
+> --- a/migration/ram.c
+> +++ b/migration/ram.c
+> @@ -252,6 +252,31 @@ int foreach_not_ignored_block(RAMBlockIterFunc func, void *opaque)
+>      return ret;
+>  }
+>  
+> +static void ramblock_non_zero_map_init(void)
+> +{
+> +    RAMBlock *rb;
+> +
+> +    RAMBLOCK_FOREACH_NOT_IGNORED(rb)
+> +    {
+
+Let's follow QEMU's coding style, see:
+
+https://qemu-project.gitlab.io/qemu/devel/style.html#block-structure
+
+So:
+
+    RAMBLOCK_FOREACH_NOT_IGNORED(rb) {
+        ...
+    }
+
+The other thing is, if we pre-allocate this bmap, then it might be wise to
+double check this size suites what to be read later in the snapshot file
+header, in parse_ramblock_mapped_ram().  We can fail the load immediately
+if we found the size requested in header is larger than what is allocated
+here (aka, max_length).
+
+We have some length checks, like:
+
+    if (length != block->used_length) {
+        ret = qemu_ram_resize(block, length, &local_err);
+        if (local_err) {
+            error_report_err(local_err);
+            return ret;
+        }
+    }
+
+But I think that != isn't as safe.. we should likely check max_length
+first.  This can also be a separate patch just to introduce the file_bmap
+to RAMBlock, so that sync mapped-ram can already use it.
+
+> +        assert(!rb->nonzeropages);
+> +        size_t size = rb->max_length >> qemu_target_page_bits();
+> +        rb->nonzeropages = bitmap_new(size);
+> +    }
+> +}
+> +
+> +static void ramblock_pending_bmap_init(void)
+> +{
+> +    RAMBlock *rb;
+> +
+> +    RAMBLOCK_FOREACH_NOT_IGNORED(rb)
+> +    {
+
+Similar indent issue, IIUC this function can be dropped after reusing
+receivedmap.
+
+> +        assert(!rb->pending_bmap);
+> +        size_t size = rb->max_length >> qemu_target_page_bits();
+> +        rb->pending_bmap = bitmap_new(size);
+> +        bitmap_set(rb->pending_bmap, 0, size);
+> +    }
+> +}
+> +
+>  static void ramblock_recv_map_init(void)
+>  {
+>      RAMBlock *rb;
+> @@ -3749,6 +3774,12 @@ static int ram_load_setup(QEMUFile *f, void *opaque, Error **errp)
+>  {
+>      xbzrle_load_setup();
+>      ramblock_recv_map_init();
+> +    if (migrate_mapped_ram()) {
+> +        ramblock_non_zero_map_init();
+> +    }
+> +    if (migrate_fast_snapshot_load()) {
+> +        ramblock_pending_bmap_init();
+> +    }
+>  
+>      return 0;
+>  }
+> @@ -3768,6 +3799,10 @@ static int ram_load_cleanup(void *opaque)
+>      RAMBLOCK_FOREACH_NOT_IGNORED(rb) {
+>          g_free(rb->receivedmap);
+>          rb->receivedmap = NULL;
+> +        g_free(rb->pending_bmap);
+> +        rb->pending_bmap = NULL;
+> +        g_free(rb->nonzeropages);
+> +        rb->nonzeropages = NULL;
+
+For new code, IMHO we can use g_clear_pointer().
+
+>      }
+>  
+>      return 0;
+> @@ -4102,7 +4137,7 @@ static bool read_ramblock_mapped_ram(QEMUFile *f, RAMBlock *block,
+>              host = host_from_ram_block_offset(block, offset);
+>              if (!host) {
+>                  error_setg(errp, "page outside of ramblock %s range",
+> -                           block->idstr);
+> +                            block->idstr);
+
+Looks like irrelevant line changes, let's try to not touch them if they're
+not needed.
+
+>                  return false;
+>              }
+>  
+> @@ -4110,10 +4145,10 @@ static bool read_ramblock_mapped_ram(QEMUFile *f, RAMBlock *block,
+>  
+>              if (migrate_multifd()) {
+>                  read = ram_load_multifd_pages(host, size,
+> -                                              block->pages_offset + offset);
+> +                                                block->pages_offset + offset);
+>              } else {
+>                  read = qemu_get_buffer_at(f, host, size,
+> -                                          block->pages_offset + offset);
+> +                                            block->pages_offset + offset);
+
+Same here.
+
+>              }
+>  
+>              if (!read) {
+> @@ -4142,7 +4177,6 @@ err:
+>  static void parse_ramblock_mapped_ram(QEMUFile *f, RAMBlock *block,
+>                                        ram_addr_t length, Error **errp)
+>  {
+> -    g_autofree unsigned long *bitmap = NULL;
+>      MappedRamHeader header;
+>      size_t bitmap_size;
+>      long num_pages;
+> @@ -4174,15 +4208,18 @@ static void parse_ramblock_mapped_ram(QEMUFile *f, RAMBlock *block,
+>      num_pages = length / header.page_size;
+>      bitmap_size = BITS_TO_LONGS(num_pages) * sizeof(unsigned long);
+>  
+> -    bitmap = g_malloc0(bitmap_size);
+> -    if (qemu_get_buffer_at(f, (uint8_t *)bitmap, bitmap_size,
+> +    if (qemu_get_buffer_at(f, (uint8_t *)block->nonzeropages, bitmap_size,
+>                             header.bitmap_offset) != bitmap_size) {
+>          error_setg(errp, "Error reading dirty bitmap");
+>          return;
+>      }
+>  
+> -    if (!read_ramblock_mapped_ram(f, block, num_pages, bitmap, errp)) {
+> -        return;
+> +    if (!migrate_fast_snapshot_load()) {
+
+Nitpick: when reaching here it must have mapped-ram enabled, we can
+directly check migrate_postcopy_ram() here.
+
+> +        /* Do not load RAM during setup for fast snapshot load */
+> +        if (!read_ramblock_mapped_ram(f, block, num_pages, block->nonzeropages,
+> +                                      errp)) {
+> +            return;
+> +        }
+>      }
+>  
+>      /* Skip pages array */
+> @@ -4460,9 +4497,11 @@ static int ram_load(QEMUFile *f, void *opaque, int version_id)
+>      static uint64_t seq_iter;
+>      /*
+>       * If system is running in postcopy mode, page inserts to host memory must
+> -     * be atomic
+> +     * be atomic. However, fast snapshot load uses the mapped ram precopy like
+> +     * path to read block headers and populating bitmaps.
+>       */
+> -    bool postcopy_running = postcopy_is_running();
+> +    bool load_using_postcopy =
+> +        postcopy_is_running() && !migrate_fast_snapshot_load();
+
+I think this change is correct, it's just that I believe it'll be hard to
+follow for most readers.
+
+Here, what you really need is to parse the ramblock headers only, it's just
+that we used to have both steps (RAM setup + precopy) all processed in the
+same ram_load_precopy() function, and here you want to leverage the "RAM
+setup" phase only.
+
+Maybe rename the bool to load_postcopy_pages?  That may help to explain why
+in your case postcopy-ram=on but you don't set this bool to true: it's
+because your case doesn't need to load any page in postcopy way.
+
+Maybe something like this to be slightly more verbose:
+
+  bool ram_should_load_postcopy_pages(void)
+  {
+      /* This is pure precopy, we don't need to load pages in postcopy way */
+      if (!postcopy_is_running()) {
+          return false;
+      }
+
+      /*
+       * This is postcopy, but when with mapped-ram, pages are not loaded
+       * in the migration stream here, but done separately in a thread eagerly
+       * reading pages from the snapshot.  Here, we only need to read the
+       * ram headers, reusing the precopy code.  TODO: when we have separate 
+       * function to parse RAM headers we should switch to that.
+       */
+       if (migrate_mapped_ram()) {
+           return false;
+       }
+
+       /*
+        * Genuine network postcopy, we will load pages in this current stream
+        * and they need to be done in postcopy way.
+        */
+       return true;
+  }
+
+  ...
+  bool load_postcopy_pages = ram_expects_postcopy_pages();
+
+Thanks,
+
+>  
+>      seq_iter++;
+>  
+> @@ -4478,7 +4517,7 @@ static int ram_load(QEMUFile *f, void *opaque, int version_id)
+>       */
+>      trace_ram_load_start();
+>      WITH_RCU_READ_LOCK_GUARD() {
+> -        if (postcopy_running) {
+> +        if (load_using_postcopy) {
+>              /*
+>               * Note!  Here RAM_CHANNEL_PRECOPY is the precopy channel of
+>               * postcopy migration, we have another RAM_CHANNEL_POSTCOPY to
+> -- 
+> 2.54.0
+> 
+
+-- 
+Peter Xu
 
 
