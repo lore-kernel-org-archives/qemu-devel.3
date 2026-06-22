@@ -4,98 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ADF51CD98F6
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jun 2026 04:58:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB9DACDB46B
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jun 2026 05:00:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wbWje-0003ew-H4; Mon, 22 Jun 2026 00:58:14 -0400
+	id 1wbWlB-0004K5-8J; Mon, 22 Jun 2026 00:59:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wbWjc-0003e7-Vc
- for qemu-devel@nongnu.org; Mon, 22 Jun 2026 00:58:12 -0400
-Received: from mail-ej1-x62f.google.com ([2a00:1450:4864:20::62f])
+ id 1wbWl7-0004JP-Sz
+ for qemu-devel@nongnu.org; Mon, 22 Jun 2026 00:59:45 -0400
+Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wbWjb-0007nG-Ab
- for qemu-devel@nongnu.org; Mon, 22 Jun 2026 00:58:12 -0400
-Received: by mail-ej1-x62f.google.com with SMTP id
- a640c23a62f3a-c0c5d170ad4so185844666b.3
- for <qemu-devel@nongnu.org>; Sun, 21 Jun 2026 21:58:10 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1782104290; cv=none;
+ id 1wbWl6-00081S-4C
+ for qemu-devel@nongnu.org; Mon, 22 Jun 2026 00:59:45 -0400
+Received: by mail-ed1-x52a.google.com with SMTP id
+ 4fb4d7f45d1cf-697b8540279so483323a12.0
+ for <qemu-devel@nongnu.org>; Sun, 21 Jun 2026 21:59:43 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1782104382; cv=none;
  d=google.com; s=arc-20240605;
- b=SuB5DgKSZ75nC7NoFXD3lma/NCnZexg7zWXd6dmrJsga0sH0qLqH3K0m7WuQfewAfH
- KGYv/YdNnUiw7YPI5lfVsIl0IImncRxKsGNWfh8M7RgvI/+YlJo7S/D2iXNnogYZn5PL
- RAZ5afqsqiGoaDhKyefb5b0E/ykCuHip6oyV/tfmVcO4QKZVtqbceOUb2PMVd7DZMFrd
- pSJzQR0f5T6ZyWCelB1pNFMKje1O57NfXb8jJxP6cgSP2Fk4sxF4eXGy9YeCjWoFEsb+
- 4mJSGO2gCyILWnV5eW5SqjCGFwnz+EHEWwXYAWf0l5YK9Aufs4LUlbovuXlAI1SfaiIm
- zv3w==
+ b=aEqWksVAAANLboQXSnP9u01+Hnyed7qDFwWFAyd/bRHERUcrJ7amfWJpeLo7mZFZnU
+ fBm49PW4ttWBIQdndmTgzBDjTATxRBxQdahVrQ3mrzonnYc1QjiasJZ2VluEj3UI9qrW
+ 2ZgtAu4RxLAsoobJl7QDlLEiRRSq8vePUz7fA05ni58kRPCRy+/dzHeKPmzV2ZRXpkWy
+ L6AM70rpMP8QrVYEbq3Dx9EX55YZP8h56wxvHlgEvhx8YaVyfT1oJpLBeK0xE8MshzZ4
+ kqJWn5QA63whGrxauqu2E+d9xao5BmcwdZtIHZVTK58k1wjVMK3AnV0bdRaLGOd3L4L9
+ vvVw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=+rD8PZlTieOsJ6M0PjZbHuh4t2iX6CqsGlrKs8H6rcE=;
+ bh=h5eRS3JBtzTis1RyBjwRpM8b3wRmaXjyAApR0YSW3GY=;
  fh=y/39rxWsHsSIhiCgFyox46bvYsAfNaBS3wRFv9pkMrs=;
- b=j7pVTiJfJiJuE2sgA3lDS9CNE7mc/hwf25oOgnlBAZrL373AQKHZBgRNPbJwVAk37e
- 9R525FJt9KDn4tN7UQglntCyMvSDp34ZesjDc2nyKjPqt6WMdOhxsQjoKkgBsS7igZV5
- k83bdpU/w6ZpENfqt0ekWXvptkQ7ZTXAG+GNjKAcR0ajvyptRR2O2ozO4AkeRvGcXRLQ
- shVxj09QtdMNOpu0M5jh/Je6dY3LMnH8/EdyxxoUyowYzCDpW3CzSdAEurfJJk/Wc2XG
- 762cSWbBohLNiT86gf/S+yQsMHwxzzkaMKEc1duaHztvBao5zaslD4bsTbfrhLVQr0hD
- vaPw==; darn=nongnu.org
+ b=M+rV4Ahf50Ms2GdgrgMMPjMBIh9Z062yQDXMCuAEXqAOXIxzj6Dm3ABGsIXiILIcWT
+ JcEz+KEmsU9KIIGXPdRHUtwqO5VW/CA0k0FeQq5uApK5toeioG4GoVX6Pt6ZvnLp4bxv
+ t4hxtNw/IzwZGuxm9g5PFhuUFiyaDfQoTTq8yFADZkRM1gj/NcR8KPGWu4z2gyR3I2zT
+ jLhnpG+tUeHiM6bvMP+ROeOP2hpZom0eyGRcQV7DhIcRcMZ9t8RYqMJDcVlASOT7x0n7
+ KJ+ZXuI6pyMjsZEQYXbV5PyAP8ZPHoIsTNAo5f66aTqwMKPvfFEx+iPRyo3TCzts8UYO
+ wpWQ==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1782104290; x=1782709090; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1782104382; x=1782709182; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=+rD8PZlTieOsJ6M0PjZbHuh4t2iX6CqsGlrKs8H6rcE=;
- b=goC1xwdu0CuLpUFWQzLxYmBzU3p06+fBHrT7nNggpC0wARS5NmZX/UYZe5E19SPIXh
- 7Dh+OWyAu87SZHwzQw4z/AsuBvULQ/uiOz+pxnI1q/12mLQ+jNapSmyBoKUm18IsSJFw
- mhSRYUzp80P4V/Sxyx/iRbJ8GK3EJbrvccIYcK0Y9rwhOCrtk6v8yfT+gii+JInTP0sU
- VjyNlIngSKZy6AeSIZHWjhzUA/XIudhRPRVz87e3eD+6Oyzi0ZLaBHBsVuowxmHxPpbO
- eHBh7koNoRQEwG584qxNDVO0BN5RUnQn+5zn4VSQBAoyXNB1yNfnhCvdzWz+LLnRzl4g
- P3wg==
+ bh=h5eRS3JBtzTis1RyBjwRpM8b3wRmaXjyAApR0YSW3GY=;
+ b=OcTJfgDMGP5N48SexuBMC125quFErITZ5N0NonQMe+1yDWnZtjKMY1MzUzvh8y8j/8
+ aPr2TLkXz7H/9wCa51TKYtNFihFGTicLtJOjXZvjI4bM9I4B1rY/9JZ0PSFgOqT0+3kV
+ 7qMvDpb0SsGEtCg9Z3B7oi3amPoCSq7FMlL5yyKTBk0agyxJn5F0eBNBupMwSDDD+bp0
+ 4o0mDBu1/h6lrMOX9DmmlCMl1+p8tzqHnZUUopV71qZ5mAPTFrLwDGAKAGlSgGS2gP2N
+ Uo3/k4cWkbaWE/8d0wyGT+QWiLJkAqbghac2SeRpdv1FTH6hGODtujI26oYZVOS1IGWr
+ xd0A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782104290; x=1782709090;
+ d=1e100.net; s=20251104; t=1782104382; x=1782709182;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=+rD8PZlTieOsJ6M0PjZbHuh4t2iX6CqsGlrKs8H6rcE=;
- b=DST5JV1q9Y/Ol5knQ4T7y41rjDcQ5bqZySbLfySV1oMbKSGIDb3LwjoXlT3+bXaOfp
- yuvAb2SxGWL0G3Ca5jodPEEi6qptF6N/cEYzeXtipMxLlJUhrT+Lz+LUbD9qI8vS69Qs
- 7Hk0pP2/woVFMj1/36yacHZVJdUAZbVAtNrh+DPy/P5zI88GfAHGDaU+NuCHx++mRJ6Q
- zYzgsbPEeGv8AICeJhkyOxdAvy3GJ9iVI7O3kw712dsqXO4gdjWOmIDJo61geg+zRieo
- ersyhYo4MYAVgmXqJ0hiAsrwuTE763POP113Kt1QIXTkY3rbbmNkZLrM8arf9+kteoci
- n9gQ==
-X-Gm-Message-State: AOJu0YwAod+cQYzYp4cZXX6ajBupHVb94+coiKqov7PgsthInlgkbkew
- ANg5cCDh8i5HJSLzGNoIewhtNgiyLCTiWWNKOlp2q/dwrZctMsH9jAy/bBpnSQ5OWKnmUjYMANI
- z5Pvr9Px/w9V4xgD7JZ4fNcXmNNeGMo57IYFpm0s=
-X-Gm-Gg: AfdE7clMbrMg62OK9YPk5hePbJvjnV1Y5vHy591uFQDzmNHhUFCeSQSA9gYrw6wD3gZ
- a/e5lxOt7GsCosVU6iLbvo7fVopDEfJCRVqqkhaOKftgll+HhcZ6i7DNyAmP+OyTI02lTDG0NNM
- SzD/6O06xB0LT+cVKcu+D031GScAXrzLQj4IKjh5xAok6vRetSISZkxT0WtJ8b2CWIQ2dCaxmI/
- 9DfBvaPVWozrLipo0I3B4QqFbe/T/iquRaZ702lWUOGSfcFDzINPzLv6kT7PUk/KlK2DZ1FR/dp
- mFa0hSEfuhYl6FUVLrjzfjTBk/Q=
-X-Received: by 2002:a17:907:720a:b0:bb7:eb68:514e with SMTP id
- a640c23a62f3a-c097c5bafcbmr587833466b.36.1782104289554; Sun, 21 Jun 2026
- 21:58:09 -0700 (PDT)
+ bh=h5eRS3JBtzTis1RyBjwRpM8b3wRmaXjyAApR0YSW3GY=;
+ b=JnlqqZK98d54t2fTWQQxjjSLhYq2eFeziG/2Ee5eFcpvsIAEOE5omi0ioDcZttjXlw
+ X4ZHiF2zRCr7E5ZoA4CrJqPsoc/9QYTvarzOWPfb510DVsJPPzp44Dsgg6oIGNpWC8BK
+ 2MgqkbialrNmUUgxltnwqZXcN8s2cBYfHkKKedcJc2tYD7lMSuOf/iVV+pKgpGDerJ8S
+ KBEVXfbqYP2Mnnu+RykQy8Hhu3lWPnkVIfo3BETu8KR/8NWSm1EyfIynZN9HefuVvvFv
+ T5EQnhPe7jfCke7Ieoc0xROw+KpAtYBJOHkTM1v9SA/3reUokH8saaiOZgPycvV+RT4n
+ p7pg==
+X-Gm-Message-State: AOJu0YxD93d6AnfEEW+n4PR4LHPbRmAP8URV6D7WB4RTl7jpG1DSLtb0
+ T8mIJQzYVXmIeHDp97LPZrJZtSciB8O9HAHqVOG2wHalUhcl4KSeyHmB7f1CiN3xiLYw9FnLva5
+ UgSjBdUlPusQe2divhjIsLJYbHd4kFIk=
+X-Gm-Gg: AfdE7ckBpNlhUMD2VuWcMBd3NjNO1qIHADuWxP1hJAHaUedfIntHhuD1oOkkGoA8ga6
+ n7gdi4gkvIHtlRVrN7iQ2E994Zzvz9KWGR68BcRqYp0E19GEXjJbfAe0pgPzv91wjlBMzdTcHIA
+ Wbb+88NuzN+yPIR+AZrK0zczPrudOvB3sKqdHsB7Nw+Suv6JLc0MTH/UT1Ux66sdQ9gBcJ7WN7Z
+ GS2WOXKn2w4+dc+OhfQ5jWIjAx+mME+4EJ2Nbln17ZaBdTryVUFFoL8V7LJ5YTlTAE+IH6pb1ZW
+ JNSRZGB3+iQoFTAobPNitquFpH8=
+X-Received: by 2002:a05:6402:5309:b0:696:9973:5cdb with SMTP id
+ 4fb4d7f45d1cf-697569b97d2mr4566333a12.28.1782104382592; Sun, 21 Jun 2026
+ 21:59:42 -0700 (PDT)
 MIME-Version: 1.0
 References: <20260616235939.1358663-1-daniel.barboza@oss.qualcomm.com>
- <20260616235939.1358663-3-daniel.barboza@oss.qualcomm.com>
-In-Reply-To: <20260616235939.1358663-3-daniel.barboza@oss.qualcomm.com>
+ <20260616235939.1358663-4-daniel.barboza@oss.qualcomm.com>
+In-Reply-To: <20260616235939.1358663-4-daniel.barboza@oss.qualcomm.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Mon, 22 Jun 2026 14:57:42 +1000
-X-Gm-Features: AVVi8Cdq425k-q15zk7DLzxZFbZFt2XupHICSBakgtXTinvUdckC8c3k-C32EqQ
-Message-ID: <CAKmqyKNZ-EJNP1f=uxjFj39M38MhukphL8mvUH2w53Ou41aqtA@mail.gmail.com>
-Subject: Re: [PATCH 2/5] hw/riscv/sifive_u.c: use intc_phandle in plic creation
+Date: Mon, 22 Jun 2026 14:59:16 +1000
+X-Gm-Features: AVVi8CfyR0wIO0mWHwCEQdiwUG0QlsfDr3_nBqjEsU_eZMNBfMsA9lBY0BWt4W4
+Message-ID: <CAKmqyKNFAq27dm1iKUFWHwNHCftiNKp9vKjW=BcXmnEfjxzW8w@mail.gmail.com>
+Subject: Re: [PATCH 3/5] hw/riscv/sifive_u: add #address-cells in PLIC FDT
 To: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
  liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, chao.liu.zevorn@gmail.com, 
  Palmer Dabbelt <palmer@dabbelt.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::62f;
- envelope-from=alistair23@gmail.com; helo=mail-ej1-x62f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
+ envelope-from=alistair23@gmail.com; helo=mail-ed1-x52a.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -122,9 +122,14 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On Wed, Jun 17, 2026 at 10:01=E2=80=AFAM Daniel Henrique Barboza
 <daniel.barboza@oss.qualcomm.com> wrote:
 >
-> The info about intc_phandles for each CPU is already stored in the
-> intc_phandles array.  We don't need to fetch them again using
-> qemu_fdt_get_phandle().
+> By Linux FDT docs in [1] the "address-cells" property is mandatory.  Set
+> it to zero.
+>
+> While we're at it let's also put this new value and the interrupt-cells
+> value in macros, like the 'virt' board is doing.
+>
+> [1] https://www.kernel.org/doc/Documentation/devicetree/bindings/interrup=
+t-controller/sifive%2Cplic-1.0.0.txt
 >
 > Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 
@@ -133,38 +138,40 @@ Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 Alistair
 
 > ---
->  hw/riscv/sifive_u.c | 10 +++-------
->  1 file changed, 3 insertions(+), 7 deletions(-)
+>  hw/riscv/sifive_u.c         | 5 ++++-
+>  include/hw/riscv/sifive_u.h | 2 ++
+>  2 files changed, 6 insertions(+), 1 deletion(-)
 >
 > diff --git a/hw/riscv/sifive_u.c b/hw/riscv/sifive_u.c
-> index fda9a09f06..b3468254f5 100644
+> index b3468254f5..7dfc18d3ec 100644
 > --- a/hw/riscv/sifive_u.c
 > +++ b/hw/riscv/sifive_u.c
-> @@ -199,20 +199,16 @@ static void create_fdt(SiFiveUState *s, const MemMa=
-pEntry *memmap,
->      plic_phandle =3D phandle++;
->      cells =3D  g_new0(uint32_t, ms->smp.cpus * 4 - 2);
->      for (cpu =3D 0; cpu < ms->smp.cpus; cpu++) {
-> -        nodename =3D
-> -            g_strdup_printf("/cpus/cpu@%d/interrupt-controller", cpu);
-> -        uint32_t intc_phandle =3D qemu_fdt_get_phandle(fdt, nodename);
->          /* cpu 0 is the management hart that does not have S-mode */
->          if (cpu =3D=3D 0) {
-> -            cells[0] =3D cpu_to_be32(intc_phandle);
-> +            cells[0] =3D cpu_to_be32(intc_phandles[cpu]);
->              cells[1] =3D cpu_to_be32(IRQ_M_EXT);
->          } else {
-> -            cells[cpu * 4 - 2] =3D cpu_to_be32(intc_phandle);
-> +            cells[cpu * 4 - 2] =3D cpu_to_be32(intc_phandles[cpu]);
->              cells[cpu * 4 - 1] =3D cpu_to_be32(IRQ_M_EXT);
-> -            cells[cpu * 4 + 0] =3D cpu_to_be32(intc_phandle);
-> +            cells[cpu * 4 + 0] =3D cpu_to_be32(intc_phandles[cpu]);
->              cells[cpu * 4 + 1] =3D cpu_to_be32(IRQ_S_EXT);
->          }
-> -        g_free(nodename);
->      }
+> @@ -213,7 +213,10 @@ static void create_fdt(SiFiveUState *s, const MemMap=
+Entry *memmap,
 >      nodename =3D g_strdup_printf("/soc/interrupt-controller@%lx",
 >          (long)memmap[SIFIVE_U_DEV_PLIC].base);
+>      qemu_fdt_add_subnode(fdt, nodename);
+> -    qemu_fdt_setprop_cell(fdt, nodename, "#interrupt-cells", 1);
+> +    qemu_fdt_setprop_cell(fdt, nodename, "#interrupt-cells",
+> +                          SIFIVE_U_PLIC_INT_CELLS);
+> +    qemu_fdt_setprop_cell(fdt, nodename, "#address-cells",
+> +                          SIFIVE_U_PLIC_ADDR_CELLS);
+>      qemu_fdt_setprop_string_array(fdt, nodename, "compatible",
+>          (char **)&plic_compat, ARRAY_SIZE(plic_compat));
+>      qemu_fdt_setprop(fdt, nodename, "interrupt-controller", NULL, 0);
+> diff --git a/include/hw/riscv/sifive_u.h b/include/hw/riscv/sifive_u.h
+> index e4c9860d50..aed966a62d 100644
+> --- a/include/hw/riscv/sifive_u.h
+> +++ b/include/hw/riscv/sifive_u.h
+> @@ -156,6 +156,8 @@ enum {
+>  #define SIFIVE_U_MANAGEMENT_CPU_COUNT   1
+>  #define SIFIVE_U_COMPUTE_CPU_COUNT      4
+>
+> +#define SIFIVE_U_PLIC_ADDR_CELLS   0
+> +#define SIFIVE_U_PLIC_INT_CELLS    1
+>  #define SIFIVE_U_PLIC_NUM_SOURCES 54
+>  #define SIFIVE_U_PLIC_NUM_PRIORITIES 7
+>  #define SIFIVE_U_PLIC_PRIORITY_BASE 0x00
 > --
 > 2.43.0
 >
