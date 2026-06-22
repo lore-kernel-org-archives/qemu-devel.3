@@ -4,141 +4,145 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 297D6CD98F2
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jun 2026 20:47:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A68F6CD98F2
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jun 2026 20:50:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wblXM-0002Y8-P6; Mon, 22 Jun 2026 16:46:32 -0400
+	id 1wblb2-0003DN-5y; Mon, 22 Jun 2026 16:50:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wblXJ-0002Xb-Mr
- for qemu-devel@nongnu.org; Mon, 22 Jun 2026 16:46:29 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ id 1wblb0-0003DF-6r
+ for qemu-devel@nongnu.org; Mon, 22 Jun 2026 16:50:18 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wblXH-0005iB-VU
- for qemu-devel@nongnu.org; Mon, 22 Jun 2026 16:46:29 -0400
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+ id 1wblay-0006j6-9E
+ for qemu-devel@nongnu.org; Mon, 22 Jun 2026 16:50:17 -0400
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65MJZciG178944
- for <qemu-devel@nongnu.org>; Mon, 22 Jun 2026 20:46:25 GMT
+ 65MJb9Nf2122402
+ for <qemu-devel@nongnu.org>; Mon, 22 Jun 2026 20:50:14 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- FQSDqfodZxSuovx12aCEkY78NKTosQqgTYYIDNeLDHQ=; b=FGkL9XLTXlUMkEfm
- xc8N0iZ56X6YDcSP7wRMPRs6ZkHklWFrHC2cPJXb5trTR0pORzXK3wspoq9QU2DI
- 8hRm5zbvGBTYnXXVAPwrenSrAnAMts+kvWpafT7ABSybuDUWMaunIwc0iMlBr8CD
- GohNqUzPNzI/taM+o5O3ots7nFNqlEApW5e/SIF3tXcXj5/t9RcjbUDq/vSH+uEi
- L+MKatCXCIPZrdOCTe7Qv8kesmOCvJFZHHLZfUi0BReznLW86z1B+MjV1vNuQwfk
- Bfn4PvtVrdhrDtpidjdAusUHspd3H7SoLhU8OmIQr4rFmD0auFJIQ8eHKKN9Qr2i
- hp5haw==
-Received: from mail-ua1-f72.google.com (mail-ua1-f72.google.com
- [209.85.222.72])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ey2yht8vc-1
+ h9fprs1GwXg+KvxE9riT8aO9T9+bplN4BckEciczOtM=; b=Jo5/KBCfq5cKvmGX
+ fXYUsyUKNPPEF3y0oj1C5UQrD/lNFJ5iRK9Ot10bxb7qmytDQTOuBCDPgdyEtl0C
+ NDAKyy3Wvs8qo7P11rGCYQ8NlItOVIC+JoNeGm6Sb80HoDr6BMyUxw7YDVLmbuyg
+ JHd/ATZuCKdiRMUS82IJX8Q1dvGgYIAfCrla3WItv0RC1tseilwGwQ/LgmaqKILR
+ Pg2NvAVV1L6jI0ItdjYvOmPoxSTYarSiHtehAgggQtRBFpJv9/jsb3jb2IZbkO22
+ boMILAK3QgHWWF1zuIye74JepVxZM5JiPMUlE2yeLORoTu3+1jSIlfJ+2ayx65zj
+ JbnrbA==
+Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
+ [209.85.219.70])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ey5n41nky-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 22 Jun 2026 20:46:25 +0000 (GMT)
-Received: by mail-ua1-f72.google.com with SMTP id
- a1e0cc1a2514c-9673c274512so111016241.1
- for <qemu-devel@nongnu.org>; Mon, 22 Jun 2026 13:46:25 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Mon, 22 Jun 2026 20:50:14 +0000 (GMT)
+Received: by mail-qv1-f70.google.com with SMTP id
+ 6a1803df08f44-8dbe3bd27d8so90400926d6.2
+ for <qemu-devel@nongnu.org>; Mon, 22 Jun 2026 13:50:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1782161184; x=1782765984; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1782161414; x=1782766214; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=FQSDqfodZxSuovx12aCEkY78NKTosQqgTYYIDNeLDHQ=;
- b=VN+VVoqMl29ou0LJubDtds9yo/hzAylr8O1Wok2fEQm8x1qmzC6T4aK4fdEFrbpSCc
- gsZyWdhZ8qtNON/I0FM3HJflzHOa8ZPYl/2KzR879lzsn1/Ava8tJSxWc6vTJNkCAi5/
- lzYPSpSSUlGFEd2mG8U8XTLsnxdXgGw5WcODOO2ozvyIXxF9PfDII/thF1L4FhjjREie
- enIULgdgoeb85KBF/SlRzeKeH9mMCn34JKb+LOE933hLisWYpEJXK26ddPuHWOE9GTNm
- 2DMb5BpR+GJYV8EgjqkAhIi0U+P2kE07EGcMfIdo4J21qfOlA+KELbDAvWqul5WLT1VR
- QLGg==
+ bh=h9fprs1GwXg+KvxE9riT8aO9T9+bplN4BckEciczOtM=;
+ b=L0iqMDjJ0etiv1fYzM3z19omH5jXkSiqP1sffvj/62TyYBIvwWhNoiuqLJu8Fpa59T
+ SXOBdrmT+G8bAtHztLMBH+jm6AewBMnfTGgKYrYijnW4VuNZl6MtiCeLh1M4iDmv41RW
+ vb99ChsKAuVfi917Q1+KL/XRDIdrldOtXx9W6Rc6OBmmCTwnw+9pdd5umerwYT5mAvdM
+ fZMOV3CUlruU70DXyqyP1w/H7aWT2CymbrCB+JsXFssl59nzjbiTOEMs01z6Ed8tCYNK
+ j7en08qrYDWUQnTslL63R6Nzq5orrlv+pDu5RTi9Q3g+t0uJWdpysXGkpzmKJR/f9t5+
+ pdbg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782161184; x=1782765984;
+ d=1e100.net; s=20251104; t=1782161414; x=1782766214;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=FQSDqfodZxSuovx12aCEkY78NKTosQqgTYYIDNeLDHQ=;
- b=tPEX4m7Hvs5DPGnXWVS4bK0txld0r+ZE0s832e7bgnlEUvPHu7a+WchBNeYfsoGiFG
- ocyJA8eF14hNptJML1YCU37KduSugL1d19naDrQQNeoGLXIU15Rl511PMblUsPwHAIic
- iiWL7HM16aezjvGbWhYg1oeoLdPMpOgYU4R9YVXJ/H4D4BreUckX/SQ14sj08M/aDeMx
- mMR87TNl0tXqi2dxXAXKEvB8GGnBXzUpeDTkEVDcTGabyk88Kqn8uigNhWp9MSh2Ilq9
- rVBxHObbF4b8Ego7z8DKCarfxML/02904TWgTdz87gQDwXhbDU1p/u4KUEUOiew4yOvj
- eSEA==
+ bh=h9fprs1GwXg+KvxE9riT8aO9T9+bplN4BckEciczOtM=;
+ b=dmityQldjGL/nDF1T1zKcQrIUrwAy9gCMD8/671LNGCwRVeUb1snoSRwmiVLbGDddH
+ Z/SDRayJtZuxZZJAYyJX4E7eYm+v/mTqec5BiOajcP0nQLrHFWvnvoGEVaEdIcMv/u08
+ nCKG43ZMvPIBBNc0TQ0Tv8eSABeSUBut5l/sRY41LVbUCLqMBN4w0o4LXyGjC87qFhmC
+ LORFd0ZcrYko4SwUCNJ6vWUlz7QretOGs35dYgX4iewVDMEifb8QWjcQErpQHrDp9a7R
+ IuwryO7A3FZUjmRV/gYDV61vdP8i2qQlGtW5p+GxnJWo6uDwNDniizJ5auqcQnn8WSJm
+ HE0w==
 X-Forwarded-Encrypted: i=1;
- AFNElJ/TmZ72y7SfutkEEVNL3N6m/3taH+HGJbwT7Bip/ONiuczGxBIyuENlZEF6hwDlXkRHr553mCNRE0sy@nongnu.org
-X-Gm-Message-State: AOJu0YweXtYxXlPc6tTEXTyyn3dMBRNjpnT4VsASJvD+PUcPg4/EiFHo
- tTV+Ic1L6tITL24bh2mnR5IEhehFQEU2QqpczwOLI/CMN7g9ZgJYEy1nd+8+F6VGxBL/rO2LFh7
- FFXAQ0dplfYl07pmuJ4sqTroEqHRJorjNJY1JERacY6RxJrsPvI+h5vx5Uw==
-X-Gm-Gg: AfdE7clQ/h3aXutDWRkkGipfPTXNt4Zsi8ht3doFfTI3TmRi8JzKPXK5YUZwsntM0tW
- Jc0q1dVs5mX0aWut+uTmmiAthPojUcITfIdt/pdmltI4ZDCV+WQozDvg2CZ8aIvEfboPNlUCVeG
- tYeT3YVfWPsQu6WEItk0Miu16QH8VHQ3edVVTe4weJCWfauyMUoTqzz7h8CzEZWScVV6KyoODB2
- z/aj75LraBLsvrzKIOuZ9O3/85+A9NJdqHhkaTHTj5lvyrvta67N/Q0o6a0i/i4oN0wQ0a5HQuP
- bYHrjKIzfZ65xnh0rmN/9OoySa6y846s9pKYH+ppNsaarOEV3NlspxcLqlYa3SIoQU4orhFj9Mf
- lB/D65oDvbndKVZY/JNwHVeJah51AvEzlQjLYmBCHNQjNfM7cGzUGkBrc1MjATg==
-X-Received: by 2002:a05:6102:ccb:b0:631:2624:e5e7 with SMTP id
- ada2fe7eead31-72a788642b3mr9932260137.14.1782161184004; 
- Mon, 22 Jun 2026 13:46:24 -0700 (PDT)
-X-Received: by 2002:a05:6102:ccb:b0:631:2624:e5e7 with SMTP id
- ada2fe7eead31-72a788642b3mr9932219137.14.1782161183601; 
- Mon, 22 Jun 2026 13:46:23 -0700 (PDT)
+ AFNElJ8bU8bzdivQGM3fYK2Ayhim03B2nayS0FnjslFvBE1PIfgnJODicQZsRlh/k6R3CBHtNRU004GrUc95@nongnu.org
+X-Gm-Message-State: AOJu0Ywj3K7z5dmGeUKtl6O1fJeZ85d6MjhLxXkcJvYWQqR/R5G5dXaS
+ oJdUILLEwJZ9+4J/d6WNgBNFb0j8JVU6DBCmJ+r6XY3muxRtGK41dp0BPXa0hXwFDHxGEoXoa3u
+ AO+RwuyUB2kbTCbyJoehWwKc7lV5aw1hGRFgCStgCfTnXOd6mN9rEjZDDgQ==
+X-Gm-Gg: AfdE7cmd5op+5RBxrmyABPBTRndDt7DuBjjCuBaNGmv9Na1Trfs7EdnPjgxO/PXuC7W
+ bmBxE7YfHH1iif1hLTJYVgZPtzsC7cWhxSiB9V+LC8SBfKxfgWZaMQYVPMF13T2/0L59gLJFBjS
+ gk0ArTT5hze0I+X/ELGJRCt2YLQLmfpVEHjG1z38K/+k3vCOyeW53JpG+HsU0PNmbAlCBSzTSys
+ FTYV4eORhyJu3dZAZUsxBxMgy/G+bECAMcIHTujsd54QRuZbQRONaxBofg8HWLFrnWXuO9lG69a
+ rGvArHWfcvFTs37x8WC3N3EuIaQ1+Fk2uRBYoxwNaUTVCUcl9+W1gLVYUP4gOdqEKxim+7CT44N
+ unmL/pY/UO047+j9+DAY+vBTAYuRjs630AMXO8nas+NbvHUFxf84TaIaCSK4YkQ==
+X-Received: by 2002:a05:620a:290e:b0:911:ddfd:634a with SMTP id
+ af79cd13be357-9208f15dfcamr2521665185a.4.1782161413799; 
+ Mon, 22 Jun 2026 13:50:13 -0700 (PDT)
+X-Received: by 2002:a05:620a:290e:b0:911:ddfd:634a with SMTP id
+ af79cd13be357-9208f15dfcamr2521658885a.4.1782161413260; 
+ Mon, 22 Jun 2026 13:50:13 -0700 (PDT)
 Received: from [192.168.69.212] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-466667881bfsm30798261f8f.22.2026.06.22.13.46.22
+ ffacd0b85a97d-46667221de7sm28471703f8f.33.2026.06.22.13.50.12
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 22 Jun 2026 13:46:22 -0700 (PDT)
-Message-ID: <96ae9ccb-6889-4c21-b6c3-b112b522d5ae@oss.qualcomm.com>
-Date: Mon, 22 Jun 2026 22:46:21 +0200
+ Mon, 22 Jun 2026 13:50:12 -0700 (PDT)
+Message-ID: <033dc4c3-6398-49c0-aaec-487927cd549c@oss.qualcomm.com>
+Date: Mon, 22 Jun 2026 22:50:11 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3] vfio/pci: Propagate errors in vfio_pci_load_rom()
- using Error API
+Subject: Re: [PATCH v7 0/7] igb: Implement Transmit Rate Limiting (TRL)
 Content-Language: en-US
-To: Mario Casquero <mcasquer@redhat.com>, qemu-devel@nongnu.org
-Cc: clg@redhat.com, alex@shazbot.org, philmd@mailo.com
-References: <20260622120904.72378-1-mcasquer@redhat.com>
+To: Josh Hilke <jrhilke@google.com>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, qemu-devel@nongnu.org
+Cc: Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
+ Jason Wang <jasowang@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ David Matlack <dmatlack@google.com>,
+ Alex Williamson <alex.williamson@nvidia.com>
+References: <20260622-igb-trl-v7-0-abb960e767ac@google.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <20260622120904.72378-1-mcasquer@redhat.com>
+In-Reply-To: <20260622-igb-trl-v7-0-abb960e767ac@google.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjIyMDIwMCBTYWx0ZWRfX8dtlu5ITqLEq
- ia+VOcCf3OJv/qsno73Mqluzj9OWCl5M18gULsUZC/s5psouONfI2goTiasY7DwIMiezbWizdDC
- 12MZmNjGg29Zg0mu2eaUu3s399lkpS4=
-X-Proofpoint-ORIG-GUID: xza0lU2RxQKbLv68-qw8PhcPEXJIz8Wn
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjIyMDIwMCBTYWx0ZWRfX8oD15WGf6Ec2
- tc/T3TRxSGcVh4ge/WEW0svSx86nL05X5L5XI8ihlkdL9ihehpG6qYp1Krqk87idFga4y3dJWLQ
- 7JHd2/q5sZ51mNxcjKclVI3S7oNMERHezf38JomvgOXH/q1uVHuN4sps4NYj0+N1eo8c9VvwJF9
- WN2Vf8y2wiluRiq05nQhNjfRxVJsYEDk58IziZlaexL0XL5Ti2eSIgu/1ZN01dpIQd8Wi4CqBnr
- ba9npxofmSjtIBlO/Mysdte3R+yPgKxrRFmrvnB7FHVnkJqoyn3qMDBvxp7yywA9PjPJ8pdXyGt
- fZH6bU/sn5esMRnudjG4mw5xoyz7JM96WSMylXnWCyo8dY3ZAIHa+Vv6xGwBGye1rh2r97Q6QCh
- AM0TGjrwsL0/M+TEdlR3fVStgrk+zKTVrHIm0PTIbLjOvQy25X2wKVeyWP/XsB3hZUZruIfajkt
- VLE5r2Q9owXlHTyMaIg==
-X-Proofpoint-GUID: xza0lU2RxQKbLv68-qw8PhcPEXJIz8Wn
-X-Authority-Analysis: v=2.4 cv=cKbQdFeN c=1 sm=1 tr=0 ts=6a399f21 cx=c_pps
- a=ULNsgckmlI/WJG3HAyAuOQ==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjIyMDIwMSBTYWx0ZWRfX+RNLkzqlp9Z9
+ 9A7yd8sD6r3H1qhwvDNFVl8a1Xwxj7fZdRub8vrkHZkR1rgGI0LAidWe0vCVKKJWj99OoOMeluB
+ /tGeGY9zTpQDN9POU0gjgD0t90D7JyQ=
+X-Authority-Analysis: v=2.4 cv=R8Uz39RX c=1 sm=1 tr=0 ts=6a39a006 cx=c_pps
+ a=oc9J++0uMp73DTRD5QyR2A==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
  a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
- a=20KFwNOVAAAA:8 a=fsJhM2AEymiuGlh_OJwA:9 a=QEXdDO2ut3YA:10
- a=1WsBpfsz9X-RYQiigVTh:22
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
+ a=mDV3o1hIAAAA:8 a=1XWaLZrsAAAA:8 a=aPRP8MHun3OBjw6ZgZAA:9 a=QEXdDO2ut3YA:10
+ a=iYH6xdkBrDN1Jqds4HTS:22
+X-Proofpoint-ORIG-GUID: KtGOug9VCbteRlDEe5Plx9gCcff6QMoq
+X-Proofpoint-GUID: KtGOug9VCbteRlDEe5Plx9gCcff6QMoq
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjIyMDIwMSBTYWx0ZWRfXzqLuwQfn7wMZ
+ +vVWioY5rOrGWbulo/okq+DXT8fCQ+2aWbB1BrvcRqAk1LHCA1JGmHYHukVKFgbpJOZntxudNAa
+ Vg2j3uYmF+KtidBA7Je7uLwV0nhyhHQ+x/JidO1nSbpNESOM6s/q7u6a12MAcpFzBwwpQK8POR1
+ Px3yu3t2Dn7OxIxbM5MJXMywIvGIhj6KF+j71u9PKLTM7DspGM3d6hRoKhfknCCxceQw80zhLss
+ 9xv7ylWUlh+3XKtJ6tb306sPenppaSnpffM2QUdbM1yVNHs/CO7C+gxdwVGf3SqFNpvfZ5h73Su
+ jBYFMIw2XaADA/drDdAdjvLxVd70JBOP2vPLqojbwWSs1CSncTnMsWgMkYdsmcxRtq+CZgL9pGJ
+ msJzdulKN0QSKkf+ykbYAppedxWgYFSq0RIsip7CO20fyQut7+mCiPXizpwptj4JD6sxYhavFsU
+ 5Hssz7k/zW9G4IwPJrA==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-06-22_04,2026-06-22_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 bulkscore=0 adultscore=0 phishscore=0 spamscore=0
- lowpriorityscore=0 malwarescore=0 impostorscore=0 suspectscore=0
- clxscore=1015 classifier=typeunknown authscore=0 authtc= authcc=
+ spamscore=0 clxscore=1015 impostorscore=0 priorityscore=1501
+ lowpriorityscore=0 bulkscore=0 suspectscore=0 adultscore=0 malwarescore=0
+ phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
  route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2606220200
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+ definitions=main-2606220201
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -155,72 +159,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 22/6/26 14:09, Mario Casquero wrote:
-> Updates vfio_pci_load_rom() to use Error API for error propagation
-> instead of error_report(), improving error handling consistency.
+Hi Josh,
+
+On 22/6/26 21:05, Josh Hilke wrote:
+> This is v7 of a patch series implementing the Transmit Rate Limiter (TRL) feature for
+> the Intel 82576 (igb) network device emulation in QEMU.
 > 
-> Signed-off-by: Mario Casquero <mcasquer@redhat.com>
+> v6: https://lists.gnu.org/archive/html/qemu-devel/2026-06/msg04562.html
+> 
+> Changelog:
+> 
+> v7:
+>    - Inline igb_trl_disable() since it's only needed in one location,
+>      igb_core_set_link_status().
+>    - Fix indentation in QTest.
+>    - Don't set PCI_MSIX_ENTRY_CTRL_MASKBIT when clearing pending
+>      interrupts in Qtest.
+>    - Fold calculations igb_trl_calculate_delay() to simplify logic.
+
+I already reviewed some of these in your v4, should I review
+the patches again?
+
+> 
+> Signed-off-by: Josh Hilke <jrhilke@google.com>
 > ---
->   hw/vfio/pci.c | 24 ++++++++++++++++--------
->   1 file changed, 16 insertions(+), 8 deletions(-)
+> Josh Hilke (7):
+>        igb: Define TRL registers and core state
+>        igb: Add VMState support for TRL state
+>        igb: Implement TRL register write and configuration
+>        igb: Refactor TX path to return processed byte count
+>        igb: Implement TRL throttling and timer resumption
+>        igb: Add QTest for Transmit Rate Limiter register multiplexing
+>        igb: Add QTest for Transmit Rate Limiter traffic throttling
 > 
-> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-> index 9df04fa2d7..e7afcc0a1a 100644
-> --- a/hw/vfio/pci.c
-> +++ b/hw/vfio/pci.c
-> @@ -1027,7 +1027,7 @@ static void vfio_update_msi(VFIOPCIDevice *vdev)
->       }
->   }
->   
-> -static bool vfio_pci_load_rom(VFIOPCIDevice *vdev)
-> +static bool vfio_pci_load_rom(VFIOPCIDevice *vdev, Error **errp)
->   {
->       VFIODevice *vbasedev = &vdev->vbasedev;
->       struct vfio_region_info *reg_info = NULL;
-> @@ -1040,7 +1040,7 @@ static bool vfio_pci_load_rom(VFIOPCIDevice *vdev)
->                                         &reg_info);
->   
->       if (ret != 0) {
-> -        error_report("vfio: Error getting ROM info: %s", strerror(-ret));
-> +        error_setg_errno(errp, -ret, "vfio: Error getting ROM info");
->           return false;
->       }
->   
-> @@ -1052,7 +1052,8 @@ static bool vfio_pci_load_rom(VFIOPCIDevice *vdev)
->       vdev->rom_offset = reg_info->offset;
->   
->       if (!vdev->rom_size) {
-> -        error_report("vfio-pci: Cannot read device rom at %s", vbasedev->name);
-> +        error_setg(errp, "vfio-pci: Cannot read device rom at %s",
-> +                   vbasedev->name);
-
-Pre-existing but is it possible to get vfio_device_get_region_info()
-returning no error but the get_region_info() handler filled
-vfio_region_info::size as 0? I'd expect
-   1/ "Can not read device" -> -errno
-   2/ errno=0 && size=0 -> error msg distinct than "can not read device"
-
->           error_printf("Device option ROM contents are probably invalid "
->                       "(check dmesg).\nSkip option ROM probe with rombar=0, "
->                       "or load from file with romfile=\n");
-
-While here, let's replace error_printf() by error_append_hint().
-
-> @@ -1076,10 +1077,12 @@ static bool vfio_pci_load_rom(VFIOPCIDevice *vdev)
->               if (bytes == -EINTR || bytes == -EAGAIN) {
->                   continue;
->               }
-> -            error_report("vfio: Error reading device ROM: %s",
-> -                         strreaderror(bytes));
-> -
-> -            break;
-> +            error_setg_errno(errp, -bytes, "vfio: Error reading device ROM");
-> +            g_free(vdev->rom);
-> +            vdev->rom = NULL;
-> +            vdev->rom_size = 0;
-> +            vdev->rom_offset = 0;
-> +            return false;
->           }
->       }
+>   hw/net/igb.c           |  43 +++++++++++
+>   hw/net/igb_common.h    |   1 +
+>   hw/net/igb_core.c      | 142 ++++++++++++++++++++++++++++++++--
+>   hw/net/igb_core.h      |  12 +++
+>   hw/net/igb_regs.h      |   5 ++
+>   tests/qtest/igb-test.c | 206 +++++++++++++++++++++++++++++++++++++++++++++++++
+>   6 files changed, 404 insertions(+), 5 deletions(-)
+> ---
+> base-commit: 98b060da3a4f92b2a994ead5b16a87e783baf77c
+> change-id: 20260608-igb-trl-19be198da6f2
+> 
+> Best regards,
 
 
