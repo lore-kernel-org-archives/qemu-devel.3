@@ -4,82 +4,141 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE6C9CDB46B
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jun 2026 07:37:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 371C5CDB471
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jun 2026 07:40:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wbZDJ-0004wB-2g; Mon, 22 Jun 2026 03:37:01 -0400
+	id 1wbZGa-0005h5-71; Mon, 22 Jun 2026 03:40:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <randomjack94dev@gmail.com>)
- id 1wbZDF-0004vc-Oe
- for qemu-devel@nongnu.org; Mon, 22 Jun 2026 03:36:58 -0400
-Received: from mail-ej1-x634.google.com ([2a00:1450:4864:20::634])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <randomjack94dev@gmail.com>)
- id 1wbZDE-0000qP-6m
- for qemu-devel@nongnu.org; Mon, 22 Jun 2026 03:36:57 -0400
-Received: by mail-ej1-x634.google.com with SMTP id
- a640c23a62f3a-c0c41ff84a6so250939766b.1
- for <qemu-devel@nongnu.org>; Mon, 22 Jun 2026 00:36:55 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wbZGR-0005gZ-8g
+ for qemu-devel@nongnu.org; Mon, 22 Jun 2026 03:40:16 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wbZGP-0001TY-JU
+ for qemu-devel@nongnu.org; Mon, 22 Jun 2026 03:40:14 -0400
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 65M5BXAc4183477
+ for <qemu-devel@nongnu.org>; Mon, 22 Jun 2026 07:40:11 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ eXTU52eVJRb+cjcM0nE7/I0paAH5hdZTk066vT7Q52U=; b=dDnAYkllnpu3+qFS
+ X2j8RnYnxewmIHALG6SkG4/IGBG4Bckm0Jj8qwr72giFP1PzZvjqMLo4dFuoF3Jz
+ 4sumDRdfoEg1ou+YSTPc2fO4TTvXjDfnEProRjsRxVluHAiG+7/xceyudkq0TXFq
+ KXS8PRygRuAtBLyYc86jBJosM9BV6/rEuNMunQdBGSPRDWDKFmPw7TQJxY+O9a49
+ 2Eocyo1OOsFv45SlVCPs8NQiVhvxS6Z5qZqXXAdQzle4PuXKs0CWW6/AZzfmmTR5
+ DtDB7gLXXTYOXtKJrmbelIlRDWuO9zwZdMXPI3dKqFZpaSnhxTLJZBNOjHOGC7Fe
+ q1Z//w==
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
+ [209.85.222.197])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ewj6h5cwe-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Mon, 22 Jun 2026 07:40:11 +0000 (GMT)
+Received: by mail-qk1-f197.google.com with SMTP id
+ af79cd13be357-9254309dfd4so31277485a.2
+ for <qemu-devel@nongnu.org>; Mon, 22 Jun 2026 00:40:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1782113814; x=1782718614; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=saIQ4DchUtqXUcglD5meLYr7HCQgbtL46j6H8F1dSwU=;
- b=CtFKCE0Yk1fQefoRDPyeyBRHymE2/dDzrMk7Xp9wGSooU5ScczusqGBAbzPWz2IWlE
- 0k3Mcyl8VvZ3z4jZNwOA6MuvwBHOXRAx5E8L8YJ3aW9jJ5KWnQ/G907xsKpzyaV6HBVo
- 2HibIqZ1HGy0CMoEs2gyq9ZrD4VvNsfkh+dTYgDyFkCLWzsTjrULEosV4OTVBtD7xQ8o
- X3L6bJNzxN6a7b63qzgjPi59RZrcwVuOzxPh1ZPK4ZA5yaXaTOxZM8E/0W3nW26XfaNh
- jUixhzDiPPOSgtPjb7wjtky5gPyiU3Wkv4PTKRx3lJp4A/jVfaJy6Nj2njvBfiZrfHtO
- DQ3A==
+ d=oss.qualcomm.com; s=google; t=1782114011; x=1782718811; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=eXTU52eVJRb+cjcM0nE7/I0paAH5hdZTk066vT7Q52U=;
+ b=B/REluBLf0wulr96AZw6g00RmjGWOfChEwqjAn/7cNZ1WHeR0ll+qcgbKYVy6vIVJe
+ nGOf2GH/ZNNdid0lhZLaqSRR1F7R6b4ROOOeW5+6hINv1fBL9LNX4VXwrR9klStSX268
+ aF0jAx6CeRGJYejIGcrkR3EukrFqReBgsi3FAWMURHiSRybaz4ddgxUr53MJHwH20VKk
+ Azt9Q+AK2mYslF6egCCafYfdhAauDPIjDboQE0NpSvBgxth1xugGI3NTOZejfbqzvqKw
+ Uv/z70q1wN9Y0ufASObYV7934SnSWQTsd+V/GVdX5FVSB8FRv+VHCCgYzG+DMwBbprIl
+ lcGA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782113814; x=1782718614;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=saIQ4DchUtqXUcglD5meLYr7HCQgbtL46j6H8F1dSwU=;
- b=cSuM5FdDWIds0y/1T9JYdwjY7PqynGesfbvf6P6wzeD8JPxBsnkQASx/8M0JsEQUt4
- udlagt38OPQiR/yFpLdXoItHXB1FjUOzbI8eKXBIk0xE2wSD1AREb3luxWqUnn53Dfz7
- Z29+SEovAZBmS3qX1p7vUHkUtyr8zz55KoRVhk6pYE2Ny0uswxBg2n3bNEgdWmwMBmZL
- E2mMJB40fojrrIIm4MZAUnwrVuqNuJ1uCSU+YQOVQ84Rarw9VcSjdaAnullBiv/3H58z
- T+97eUDiiDPhetKYQkPneN2ZwsxAyaD/wIMX4H2TSmMV0UG2htcBDSWNwIKyQWhkfLhz
- IDNQ==
-X-Gm-Message-State: AOJu0YxmMCQnhxO6dWox6hqfsx0q/aBUaNuQR6T6kTlEUtsNbBrfdrtH
- +D9P3YUvrCM8b4HTaXtp6qofYqsX2LRAm5fQy5sWx40fR0TT/qxwNOCDRgrVeg==
-X-Gm-Gg: AfdE7cmaOWViKxaN9MvmtjnT5DFnvvDkDVfcpUlUMwpCwV1JvY1NW0lA5LmHeQdzkqR
- YdnDMN0J9sQaugb+qvU83qALqA+AHGmQBCTaL/dEOBvRvSLS2EpuGOQLCrru08KUq8H/EL37HEc
- eH/znyBniQR/rx2kWFFwNu2+5tewsfW+PCpcuLzDryk6NzhxYP8TYagenYcknIe9/D0YXr7V6K0
- pxmxYklNiwsH1Zxi6tUbVMaFdJStRWVGA7o6W8dmsgN9SmnVZhYFYqdIrAOSYF6ICMCKzeTbLLz
- pjSRX9FtwFjn0cUzgzfLTR48B65duYzge033UU2SUeOK2+DrjpbvhxMVg1oXMZy85/luP45JVX+
- 6UovypCoMiWSr6y9lMj0PbcB1DQrpQgDeREl+Jz09V7HyiqJUAlhERcC8tRReFDX1J8yL+EN17R
- 64ohvfrji1WYQ39dBL
-X-Received: by 2002:a17:907:3e0b:b0:c06:c347:e7c7 with SMTP id
- a640c23a62f3a-c097ade1ea5mr638813466b.12.1782113813914; 
- Mon, 22 Jun 2026 00:36:53 -0700 (PDT)
-Received: from machine.. ([37.113.214.163]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-c0c5e99977fsm305347866b.20.2026.06.22.00.36.52
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 22 Jun 2026 00:36:53 -0700 (PDT)
-From: Evgeny Kolmakov <randomjack94dev@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-trivial@nongnu.org, berrange@redhat.com,
- Evgeny Kolmakov <randomjack94dev@gmail.com>
-Subject: [PATCH] util/filemonitor-inotify: Use QEMU_LOCK_GUARD()
-Date: Mon, 22 Jun 2026 10:36:47 +0300
-Message-ID: <20260622073647.3721-1-randomjack94dev@gmail.com>
-X-Mailer: git-send-email 2.43.0
+ d=1e100.net; s=20251104; t=1782114011; x=1782718811;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=eXTU52eVJRb+cjcM0nE7/I0paAH5hdZTk066vT7Q52U=;
+ b=JDRSDFCEfX1VTCMnM/mXCMHu0hJuGEYblXzmZpeYTAb/51DzOpqiW1w/s+190ugjHX
+ A6qpVdscQkdcZW/33oSM89S3PJGJuX0vGDgU3JhnHfdev7k5wnpdWvJr/hmNer7D40uM
+ 8KDozi3baZpR8eCXm3ayZ+o5VnFBMQj3l2is2fJwTPx58ylGE4Vg3IBR9dcXuWnav93p
+ mH9T5YAW0iGn0XBvARHil8wXzDm+jWQpFuaUgI9OLZRD4fUV10zsjZPIccOaDHd7NUIZ
+ Rq6a5FpOnOpKO3ftCfe1bKN/ulF+GWfvNkFjrTU3UcTCRrOoQMtYbrRipgyKzTwi6ZBo
+ EPrQ==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ9Dy+hXPY/t4KUin1O15BN3z2DuMGWIkEXIbwmaJG9uaMtQqPOZj1VAD9oZkqmUm98yLqhiff/0s4r0@nongnu.org
+X-Gm-Message-State: AOJu0YwYqjNQaS8CjfjgLQxIhklwud1Hp2O6p3O5bIvxKNqfl87cK5JS
+ QcOqmzmHQ3FerLD9Hx74aS8XZkC2i8RUMukjmjV0RBDDOHFcrJ1/si9jOFN8UaLlqGM19B3JoBK
+ 0uNNw6qXG5eZ6nGr/nEthKTwrMb2SuSY/UjEeaJdJFKjESRKqbD2RVZpsDBVsH9hj2g==
+X-Gm-Gg: AfdE7cmreU8BvDUgW2pznted9RhNa119KN5yyOiTNMUludrwJfP5e0aSR4fmWEu3zvv
+ MNkIOIiDTN62Fv/I1NHdVXw58P3jspq1YWfFLtnSuTpbpOeoKEdFgnSbtmGYMYhg7gGj6HFRTEx
+ ka5kIrRBc38U64XSSMT3I6jxhvIbWuwaW1fLJ9q9gVbrnRVeVnWQIhA8h3kzX11MALK2SI9/33S
+ 5Ycmthf2OqhdjY31hM+U9r82GK7dLCriuISyOgAMranWzONGr/f2tUn2qtHXQ+Gx0wFxY8c1OAg
+ 6v5qEh4EOpEtLBSofg/7N9mEV5nIaJ087osAKTB9yUm+Krh5CQs34xmAACnLVB1bJjL3uxLrRPI
+ LmUcHJV+0tfMyvLtjIfmppdtaRbDRoXKvHOrouJMHJsCHjgSh3a/lwVKAAOhwOsy5e+A=
+X-Received: by 2002:a05:620a:2b97:b0:915:b9f6:7191 with SMTP id
+ af79cd13be357-920d337665dmr1560085085a.32.1782114010920; 
+ Mon, 22 Jun 2026 00:40:10 -0700 (PDT)
+X-Received: by 2002:a05:620a:2b97:b0:915:b9f6:7191 with SMTP id
+ af79cd13be357-920d337665dmr1560083885a.32.1782114010530; 
+ Mon, 22 Jun 2026 00:40:10 -0700 (PDT)
+Received: from [192.168.69.212] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-49249207dabsm325535055e9.0.2026.06.22.00.40.09
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 22 Jun 2026 00:40:09 -0700 (PDT)
+Message-ID: <9015744f-9736-447d-8728-e5991dbb5643@oss.qualcomm.com>
+Date: Mon, 22 Jun 2026 09:40:09 +0200
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] target/hexagon: use cmd_array() instead of get_id()
+Content-Language: en-US
+To: Brian Cain <brian.cain@oss.qualcomm.com>, qemu-devel@nongnu.org
+Cc: stefanha@redhat.com, Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ anjo@rev.ng, ale@rev.ng
+References: <20260622052120.2626472-1-brian.cain@oss.qualcomm.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+In-Reply-To: <20260622052120.2626472-1-brian.cain@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::634;
- envelope-from=randomjack94dev@gmail.com; helo=mail-ej1-x634.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjIyMDA3NCBTYWx0ZWRfXyfU4zVM9ZjVE
+ w9Omai/sns8b9HH5JexLVXxlyABXV+cFmtRfUwzw9+Kr41fPbxu997JvfbbxmveGXN0qB1IUWID
+ /3a39XHcP9G1CVSg9MTHi5oODjPrh15/sXgiAuvbqAM2PqKm77yOZp0PJQ33vYlhGAdmjxuGUgX
+ yfwGF0aJh4Am2UaEO8reWIHwGm++6wdCmJFKEUH6GNxUrHUhmo8swUIuH5WyDK4fyIyyigkAiqJ
+ jA6MoCAANXQ78VIbmQ6MSetNE7uClyv/noAzaYbU8UdBG4ViOwFOHs3cjlrZ7soFi6sqwayC/Zy
+ TmN5ysKaARNVgeKoIlZFGP/gJwc/1Sm4gcD7FfgMItZ6u5SLHwua3MUNaHhfB2gpR0gszutuEXc
+ BWOSvmbKAcu5wi+7jn/qKcBWBO1nTWkP4d7qLyjWsYlOfeCL9X8tVxLcZJV6amQahVi2/eMdH5U
+ PLMDF4d7qMZvT+bz/vQ==
+X-Proofpoint-ORIG-GUID: V1Uae-tjrbjOc0XBBOpEeDPrDQqrHxi4
+X-Authority-Analysis: v=2.4 cv=E7P9Y6dl c=1 sm=1 tr=0 ts=6a38e6db cx=c_pps
+ a=50t2pK5VMbmlHzFWWp8p/g==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+ a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
+ a=VwQbUJbxAAAA:8 a=pGLkceISAAAA:8 a=EUspDBNiAAAA:8 a=YHtCQz03u7GMxPCSFBkA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=IoWCM6iH3mJn3m4BftBB:22
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjIyMDA3NCBTYWx0ZWRfX1jwjb54pgDZw
+ FzGuWeI9bZ+eWxCNmQ2tkZBvuXeTj053GCzAdcG5gEtGA9+11hd+Giwajv3G89hgZmR5mXFfR+a
+ LZxG1g5nUxElF/uXTqo0CpwrHDZPUJA=
+X-Proofpoint-GUID: V1Uae-tjrbjOc0XBBOpEeDPrDQqrHxi4
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-22_01,2026-06-18_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0 clxscore=1015 suspectscore=0 priorityscore=1501
+ impostorscore=0 spamscore=0 phishscore=0 bulkscore=0 adultscore=0
+ malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2606220074
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -96,119 +155,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Replace manual qemu_mutex_(un)lock() calls with
-QEMU_LOCK_GUARD() to remove 'goto cleanup' code
+On 22/6/26 07:21, Brian Cain wrote:
+> get_id() returns the compiler's short name not a program.
+> Passing it directly as the command for the idef-parser preprocessing
+> custom_target happened to work for native gcc/clang builds but
+> breaks under cross compilers such as emcc or any ccache-wrapped compiler.
+> 
+> Link: https://lore.kernel.org/qemu-devel/CAJSP0QWzQEgoYMCgZX+9jCvrV6O3RqnA+df1DpT2R6MZvVXiNg@mail.gmail.com/
+> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
+> ---
+>   target/hexagon/meson.build | 4 ++--
+>   1 file changed, 2 insertions(+), 2 deletions(-)
 
-Signed-off-by: Evgeny Kolmakov <randomjack94dev@gmail.com>
----
- util/filemonitor-inotify.c | 28 ++++++++--------------------
- 1 file changed, 8 insertions(+), 20 deletions(-)
-
-diff --git a/util/filemonitor-inotify.c b/util/filemonitor-inotify.c
-index 7352b9fe53..fe2057f820 100644
---- a/util/filemonitor-inotify.c
-+++ b/util/filemonitor-inotify.c
-@@ -21,6 +21,7 @@
- #include "qemu/osdep.h"
- #include "qemu/filemonitor.h"
- #include "qemu/main-loop.h"
-+#include "qemu/lockable.h"
- #include "qemu/error-report.h"
- #include "qapi/error.h"
- #include "trace.h"
-@@ -59,10 +60,9 @@ static void qemu_file_monitor_watch(void *arg)
-     int used = 0;
-     int len;
- 
--    qemu_mutex_lock(&mon->lock);
-+    QEMU_LOCK_GUARD(&mon->lock);
- 
-     if (mon->fd == -1) {
--        qemu_mutex_unlock(&mon->lock);
-         return;
-     }
- 
-@@ -72,11 +72,10 @@ static void qemu_file_monitor_watch(void *arg)
-         if (errno != EAGAIN) {
-             error_report("Failure monitoring inotify FD '%s',"
-                          "disabling events", strerror(errno));
--            goto cleanup;
-         }
- 
-         /* no more events right now */
--        goto cleanup;
-+        return;
-     }
- 
-     /* Loop over all events in the buffer */
-@@ -151,9 +150,6 @@ static void qemu_file_monitor_watch(void *arg)
-             }
-         }
-     }
--
-- cleanup:
--    qemu_mutex_unlock(&mon->lock);
- }
- 
- 
-@@ -257,9 +253,8 @@ qemu_file_monitor_add_watch(QFileMonitor *mon,
- {
-     QFileMonitorDir *dir;
-     QFileMonitorWatch watch;
--    int64_t ret = -1;
- 
--    qemu_mutex_lock(&mon->lock);
-+    QEMU_LOCK_GUARD(&mon->lock);
-     dir = g_hash_table_lookup(mon->dirs, dirpath);
-     if (!dir) {
-         int rv = inotify_add_watch(mon->fd, dirpath,
-@@ -268,7 +263,7 @@ qemu_file_monitor_add_watch(QFileMonitor *mon,
- 
-         if (rv < 0) {
-             error_setg_errno(errp, errno, "Unable to watch '%s'", dirpath);
--            goto cleanup;
-+            return -1;
-         }
- 
-         trace_qemu_file_monitor_enable_watch(mon, dirpath, rv);
-@@ -297,11 +292,7 @@ qemu_file_monitor_add_watch(QFileMonitor *mon,
-                                       filename ? filename : "<none>",
-                                       cb, opaque, watch.id);
- 
--    ret = watch.id;
--
-- cleanup:
--    qemu_mutex_unlock(&mon->lock);
--    return ret;
-+    return watch.id;
- }
- 
- 
-@@ -312,13 +303,13 @@ void qemu_file_monitor_remove_watch(QFileMonitor *mon,
-     QFileMonitorDir *dir;
-     gsize i;
- 
--    qemu_mutex_lock(&mon->lock);
-+    QEMU_LOCK_GUARD(&mon->lock);
- 
-     trace_qemu_file_monitor_remove_watch(mon, dirpath, id);
- 
-     dir = g_hash_table_lookup(mon->dirs, dirpath);
-     if (!dir) {
--        goto cleanup;
-+        return;
-     }
- 
-     for (i = 0; i < dir->watches->len; i++) {
-@@ -342,7 +333,4 @@ void qemu_file_monitor_remove_watch(QFileMonitor *mon,
-             qemu_set_fd_handler(mon->fd, NULL, NULL, NULL);
-         }
-     }
--
-- cleanup:
--    qemu_mutex_unlock(&mon->lock);
- }
--- 
-2.43.0
-
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 
