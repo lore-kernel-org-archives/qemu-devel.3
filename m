@@ -4,106 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D5DCCDB46B
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jun 2026 09:21:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27030CDB46F
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jun 2026 10:03:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wbapp-0005KT-NG; Mon, 22 Jun 2026 05:20:53 -0400
+	id 1wbbUB-0001vc-Pg; Mon, 22 Jun 2026 06:02:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <borntraeger@linux.ibm.com>)
- id 1wbapn-0005Jx-Or; Mon, 22 Jun 2026 05:20:51 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <borntraeger@linux.ibm.com>)
- id 1wbapm-0003Hn-1T; Mon, 22 Jun 2026 05:20:51 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65M5IVaA1602673; Mon, 22 Jun 2026 09:20:47 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:message-id:mime-version
- :subject:to; s=pp1; bh=hkbW0eHSV8gBVq1aeSo6vFvh7L2GT4SfaVKcCjiTh
- 7E=; b=W33oNh/rt9e5iInty0IcLXBRW1lD8oWWjwitd2X1yRHWkh9XGoA9FP2pv
- jZYtLGgV1cSbwdqdmEevDWTr925yYF4nVaMpyh/25SpCpK7OSr7zlmpRsS60J9Un
- 2i+BrEpe5QGvoWaydou/puRbmA3chSYdb3C/eMiFfSf4Tz6nx/g85PXUNF7mcAHA
- fCHpgcEruT+h48MtTlTd24dHax8R+0MpwLz961h7CK2zpZZ9AONJYmIr0oUBrUd+
- f8oaVTGdgguISFAuAiEOAbVrFzSU7fOAPfQ9ebQS60VRMMEAVs/g+Hee7EESD+DN
- BBHl8SLJc+FUd3l45zvvJ1G6GP2wg==
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4ewh9g8bm0-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 22 Jun 2026 09:20:46 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 65M9Jb0g004545;
- Mon, 22 Jun 2026 09:20:46 GMT
-Received: from smtprelay07.dal12v.mail.ibm.com ([172.16.1.9])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4ex66jweku-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 22 Jun 2026 09:20:46 +0000 (GMT)
-Received: from smtpav03.dal12v.mail.ibm.com (smtpav03.dal12v.mail.ibm.com
- [10.241.53.102])
- by smtprelay07.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 65M9KjWV3932774
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 22 Jun 2026 09:20:45 GMT
-Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 3ABB05803F;
- Mon, 22 Jun 2026 09:20:45 +0000 (GMT)
-Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id C837358056;
- Mon, 22 Jun 2026 09:20:43 +0000 (GMT)
-Received: from b35lp69.lnxne.boe (unknown [9.87.84.240])
- by smtpav03.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Mon, 22 Jun 2026 09:20:43 +0000 (GMT)
-From: Christian Borntraeger <borntraeger@linux.ibm.com>
-To: qemu-devel <qemu-devel@nongnu.org>, Cornelia Huck <cohuck@redhat.com>
-Cc: qemu-s390x <qemu-s390x@nongnu.org>, Halil Pasic <pasic@linux.ibm.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>,
- Eric Farman <farman@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>, qemu-stable@nongnu.org
-Subject: [PATCH] s390x/kvm: clamp stsi 3.2.2 size
-Date: Mon, 22 Jun 2026 11:20:35 +0200
-Message-ID: <20260622092035.400959-1-borntraeger@linux.ibm.com>
-X-Mailer: git-send-email 2.53.0
+ (Exim 4.90_1)
+ (envelope-from <prvs=md16272BC2AF=lizhaoxin04@baidu.com>)
+ id 1wbbTt-0001uo-B5; Mon, 22 Jun 2026 06:02:19 -0400
+Received: from mx21.baidu.com ([220.181.3.85] helo=outbound.baidu.com)
+ by eggs.gnu.org with smtp (Exim 4.90_1)
+ (envelope-from <prvs=md16272BC2AF=lizhaoxin04@baidu.com>)
+ id 1wbbTo-0003PL-Tp; Mon, 22 Jun 2026 06:02:16 -0400
+X-MD-Sfrom: lizhaoxin04@baidu.com
+X-MD-SrcIP: 172.31.4.16
+From: Li Zhaoxin <lizhaoxin04@baidu.com>
+To: "Michael S . Tsirkin" <mst@redhat.com>, <qemu-devel@nongnu.org>
+CC: <qemu-stable@nongnu.org>, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Eugenio=20P=C3=A9rez?= <eperezma@redhat.com>, Longpeng
+ <longpeng2@huawei.com>, miaokezhan <miaokezhan@baidu.com>, lizhaoxin04
+ <lizhaoxin04@baidu.com>
+Subject: [PATCH] vdpa: fix use-after-free of vqs in vhost_vdpa_device_unrealize
+Date: Mon, 22 Jun 2026 18:01:45 +0800
+Message-ID: <20260622100145.18924-1-lizhaoxin04@baidu.com>
+X-Mailer: git-send-email 2.39.5 (Apple Git-154)
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: mP1WVK6LfXFtCv7ClVBnJ13D2kAQl0um
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjIyMDA5MSBTYWx0ZWRfX2swHsqFXoTGG
- drNL1XHQMOCg7bnNZm+ZqtHxE8AWMfJz+yRtFVz+ZYRY4MTnCGud6XlD7/z3K8DW7Av+fn+mOUl
- b8bQ8XdyakBfTC3go9LF33MTlGEwK0I=
-X-Authority-Analysis: v=2.4 cv=c62bhx9l c=1 sm=1 tr=0 ts=6a38fe6f cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
- a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=V8glGbnc2Ofi9Qvn3v5h:22 a=69wJf7TsAAAA:8 a=VnNF1IyMAAAA:8
- a=Sg5gpWOPNxpWzqQs3-0A:9 a=Fg1AiH1G6rFz08G2ETeA:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjIyMDA5MSBTYWx0ZWRfXwZ3ph/fB/Hbn
- CBIwWQ9eNwwzDA/zwQa1sgNtjtTZ0PPL0QftrqUWIOVUiCgJPn4FQg3eIxeI5SiORCO6phJZafN
- 4JqFOfkPb7Dk6oHUo6rr/orJnCe+9oIBVuf4CRb/SLIV2VyAA3JjmSRmsX9MUCNA8/7uK9HZg17
- gTem1AXRzP+VmIDDb3w2/rANImUOJu4f0L/qIXDcyfuQ0jtU3CQdgGXChTUYfc6XjfAYt4T/Dm4
- P3oOb4os6wXxP6RCOWHA+YA6eHXlYN/fIWGDVbvrU4WSGgGeJDPB2JlWU3V/ugpb5+eKH/51epn
- bAZjkYuboqFfjLZxaPiLSzl+blweR1PR5C8SRcqCBOP/kp4waKujR/0RrFe5AI5LYb9RjWJz2pT
- b6yiYdtOj5XJMf63tGFhBf9IfYaMqkG00oKGeOQA8MKK39QI6HK+wvi+YBQzVDDJY37TODZLuVp
- rMu2GpCNHsZQnkEWh8Q==
-X-Proofpoint-ORIG-GUID: mP1WVK6LfXFtCv7ClVBnJ13D2kAQl0um
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-22_01,2026-06-18_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 impostorscore=0 adultscore=0 clxscore=1015 suspectscore=0
- priorityscore=1501 phishscore=0 spamscore=0 bulkscore=0 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606220091
-Received-SPF: pass client-ip=148.163.158.5;
- envelope-from=borntraeger@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Type: text/plain
+X-Originating-IP: [172.31.63.8]
+X-ClientProxiedBy: bjkjy-exc8.internal.baidu.com (172.31.50.52) To
+ bjhj-exc18.internal.baidu.com (172.31.4.16)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=baidu.com;
+ s=selector1; t=1782122522;
+ bh=crwQ1DMzva9qW+D1ZNuZR9rfJakIT7qqCBbUd0xzbCI=;
+ h=From:To:CC:Subject:Date:Message-ID:Content-Type;
+ b=F8dDeFvgdyVN8gNohOf8C9U4RAnnqqATEpz1Knq4lRJ03sXdjuLyYOfT/yRar0Mx+
+ sI/gEoYll5Hya0pkYfTVVE4JDlvPWdFsQGMabauAgJlnm5YTCIsoV/27h2wBKYNWMq
+ E2sZK7Eub5jpsgvG0iPd4C/ewkmv4PccGVDQqkbKmdSitL/2HMUUSl0pOSI2aMQ0Kw
+ Fn6gc+msDCKMA/MGJjB6duDSnuiDXkeNAh0pnWVoZSEhtHCBEZ/4lZ5sHQ6nGhFq7B
+ G2wn/eShKKyTyvNb1q1gJ5JNx5560Db5956bA3ovtwr7UAjc9j8EkPMSisIqcambc1
+ i7gT///Cny0Ig==
+Received-SPF: pass client-ip=220.181.3.85;
+ envelope-from=prvs=md16272BC2AF=lizhaoxin04@baidu.com; helo=outbound.baidu.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -120,38 +71,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The stsi 3.2.2 page is being prepared by the kvm module and the size is
-clamped by the kernel. As the memory is mapped in the guest, another
-guest VCPU could race and overwrite the count and messing up the move
-operation. For any out of bound count, fall back to the kernel buffer.
+From: lizhaoxin04 <lizhaoxin04@baidu.com>
 
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Christian Borntraeger <borntraeger@linux.ibm.com>
+vhost_vdpa_device_unrealize() frees s->dev.vqs before
+vhost_dev_cleanup(), but vhost_dev_cleanup() still accesses hdev->vqs
+while tearing down virtqueues. This leads to a use-after-free and may
+crash QEMU with SIGSEGV during vDPA hot-unplug.
+
+Save the vqs pointer in a local variable, call vhost_dev_cleanup(),
+and free it afterward. This matches the cleanup pattern used by
+vhost-scsi.
+
+Fixes: b430a2bd23 ("vdpa: add vdpa-dev support")
+Co-developed-by: Miao Kezhan <miaokezhan@baidu.com>
+Signed-off-by: Li Zhaoxin <lizhaoxin04@baidu.com>
 ---
- target/s390x/kvm/kvm.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ hw/virtio/vdpa-dev.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/target/s390x/kvm/kvm.c b/target/s390x/kvm/kvm.c
-index ed8cd6b410..a3835573bb 100644
---- a/target/s390x/kvm/kvm.c
-+++ b/target/s390x/kvm/kvm.c
-@@ -1791,6 +1791,15 @@ static void insert_stsi_3_2_2(S390CPU *cpu, __u64 addr, uint8_t ar)
-     } else if (s390_cpu_virt_mem_read(cpu, addr, ar, &sysib, sizeof(sysib))) {
-         return;
-     }
-+
-+    /*
-+     * The memory was filled by the kernel but mapped into the guest.
-+     * If something is fishy, do not touch the buffer.
-+     */
-+    if (sysib.count == 0 || sysib.count > ARRAY_SIZE(sysib.ext_names)) {
-+        return;
-+    }
-+
-     /* Shift the stack of Extended Names to prepare for our own data */
-     memmove(&sysib.ext_names[1], &sysib.ext_names[0],
-             sizeof(sysib.ext_names[0]) * (sysib.count - 1));
+diff --git a/hw/virtio/vdpa-dev.c b/hw/virtio/vdpa-dev.c
+index 94188d37bb..089a77f4d0 100644
+--- a/hw/virtio/vdpa-dev.c
++++ b/hw/virtio/vdpa-dev.c
+@@ -172,6 +172,7 @@ static void vhost_vdpa_device_unrealize(DeviceState *dev)
+ {
+     VirtIODevice *vdev = VIRTIO_DEVICE(dev);
+     VhostVdpaDevice *s = VHOST_VDPA_DEVICE(vdev);
++    struct vhost_virtqueue *vqs = s->dev.vqs;
+     int i;
+ 
+     virtio_set_status(vdev, 0);
+@@ -183,8 +184,8 @@ static void vhost_vdpa_device_unrealize(DeviceState *dev)
+     virtio_cleanup(vdev);
+ 
+     g_free(s->config);
+-    g_free(s->dev.vqs);
+     vhost_dev_cleanup(&s->dev);
++    g_free(vqs);
+     g_free(s->vdpa.shared);
+     qemu_close(s->vhostfd);
+     s->vhostfd = -1;
 -- 
-2.53.0
+2.17.1
 
 
