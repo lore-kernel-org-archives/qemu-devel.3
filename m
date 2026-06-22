@@ -4,79 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D9E7CDB471
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A0FFCDB46F
 	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jun 2026 15:42:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wbgmJ-0004fR-OX; Mon, 22 Jun 2026 11:41:39 -0400
+	id 1wbgmK-0004fp-77; Mon, 22 Jun 2026 11:41:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wbgmI-0004es-1T
- for qemu-devel@nongnu.org; Mon, 22 Jun 2026 11:41:38 -0400
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ id 1wbgmJ-0004f2-6P
+ for qemu-devel@nongnu.org; Mon, 22 Jun 2026 11:41:39 -0400
+Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wbgmF-000675-VC
- for qemu-devel@nongnu.org; Mon, 22 Jun 2026 11:41:37 -0400
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-490b1bbcf3aso29943385e9.1
- for <qemu-devel@nongnu.org>; Mon, 22 Jun 2026 08:41:35 -0700 (PDT)
+ id 1wbgmG-00067M-EX
+ for qemu-devel@nongnu.org; Mon, 22 Jun 2026 11:41:38 -0400
+Received: by mail-wr1-x432.google.com with SMTP id
+ ffacd0b85a97d-45ef41adbc1so3585240f8f.0
+ for <qemu-devel@nongnu.org>; Mon, 22 Jun 2026 08:41:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1782142894; x=1782747694; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=Tr4nNCMfEdYg3OpwgAYSto+OH+ELbVaaMVgUsi3GVGo=;
- b=UbMXLxhCcIPpQrlGLbjId3oqNKGGJsTpgWHbdPOoLT0X18ZSyFA+oLjpxkMiqiHozp
- 5L7hVKW39azZPb/yTdsfbVUMNsUmNNmrEG3QQ+fVP4A9rwVfD6q0X6yrr3bk7RczAw55
- dMW6FYLXsS1ZoWqoU5h5QGAmns4HXbbRtT5sCnt5jwPLm363ok4M5mQsWd/rosFtDfRY
- 2zVRZ9/asOp5SpKahkoQ+3j9f+U2cwBWzKJ/4cwMrPXBdynwtvoFsvrX8HWE66bkoDwE
- CaPrXJj0EL1GiLZ9sDXpMgiA4iZz+cTnC6sB2v2shSWGwbtE0oEhLE9f4RIeQvUaY0/l
- KgDA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782142894; x=1782747694;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1782142895; x=1782747695; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Tr4nNCMfEdYg3OpwgAYSto+OH+ELbVaaMVgUsi3GVGo=;
- b=nptwBuhfLlVi+CTIO1qJu5WJkc6bW1oOIjyNXkukP5mnQs1ywOtKNTBOMqzt7J237K
- KJ84+arker4c6kf4hfzb4uNOJi4OMnUh8/46yw//2MmX1SiUVOKkWqlW5WZpLxGwR1Fr
- Z5m0BigzCvcva/ikYLevwdyY1539jTvxMVgZwXpyPft5AtUtO12yH8nS303RL0hwclqj
- bmrPQ8Kgf69dd179MfwtXajg6zquStaqJhJHaReWRKpx+AHECZsaXSoHMHqPD0Ae3q8B
- xfBEU4oSXWOS955zy/NSSnoPl893aj4DSSAKa63TAmmZEOU2N7N953yfcIgvB8I27pmJ
- 7nng==
-X-Gm-Message-State: AOJu0YzqD2QX0+7w16p9762pSPZS1tntzzBUjbjfgmjC9L/E6Py05Gwi
- tRhnzp6d7qhluMUqn2fYNrYZks2y4nG5zm64NmNEP/Z6DeRQb/lji9/Hga52n6dHfaQ=
-X-Gm-Gg: AfdE7ckjafOzwSW7mD4d3aVZ3UV64GAdPf9zI5R3GwB8xjz2XCZ0FYGy3uTSHfBbUIq
- jpWw2n4NdUN6RhZ3KmU+rPcIXRryzAR61AMdLP9rLBKm7cTIM8CfnRmaFQcQgec1/2FMga8r4l/
- rPy5wLhohEicdvLlwWYydGJAWMjpBSYydry66+F6Hm9PNKjMm9F5nhe4iIe9wZqi0FtAilZNIRv
- iKAkOy381pTGf1awpYkqY1yPh7bjyHeQmzBJnCkxGoG6KHM2Mu2kH3H/Ry4y9wFOdFCiiKy7HPi
- CB8BlBfw8w58wXNsKUUygyKpc4UqiGwVjRUA34K1yrWy4NU7It51rk2hpkPJ6qEV2+O9qFfaUqg
- 73DTMDtbJK4V0sFuF1kYizUHhWRmpYhWhz749Vrbq51+BqcvYg0My0v1+76WeLBOzF8l6eBeDJ6
- OWcRrpjXOAa9O+
-X-Received: by 2002:a05:600c:c3c1:20b0:492:4948:bfce with SMTP id
- 5b1f17b1804b1-4924948c088mr118500085e9.16.1782142893886; 
- Mon, 22 Jun 2026 08:41:33 -0700 (PDT)
+ bh=W3Yi9+MPHMQjD4aJnRDYATn1twRvsUXBItVVQx5bTo0=;
+ b=OCRi3JvZuFxCy1tjKuU3Dibmw/2GS1SdMNmD5f8hQnEEkp5N9QwhIYX8psnw4q6bLO
+ qpvg1YkJsbgsYN8S0hi1qL1zbQTIBW57Eq0uNy8iZGs3ZXhqH7v2TVf+WYBf8xShCi3t
+ aXIo2KsgBFOCJLk0V6zQqeZrpITXsC11eRReJPZSte9vTRLV9ox/7EIBynHrZYZamifC
+ aTErRTZgFL9Up0RNJaNqKNapMQztERuTybE8OnreT8eCtk+vr19C1saZC9W4r9lStLt6
+ UH5kWlo/r++YVDFbOghmXyp43t0KFcWh4HrgD3lGH2ha/2F9F0YLufCjUMq65BoCPv6A
+ i7NQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1782142895; x=1782747695;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=W3Yi9+MPHMQjD4aJnRDYATn1twRvsUXBItVVQx5bTo0=;
+ b=U2zpL9uelMULNAf/Jo2NosjQwOVF2Plh932SjqHsCd5Do9l3DtSPmqSWxa3BEFfM2T
+ Qh82zSEYaUu4wrlJ0SOBhvSJv3L3BsxLzheKS/gf9yy+eAjJLE6fviM4ttVpF27vRSab
+ h4Vz5dRQX8jvSfOjt6JdVDme24V/XSqeiPTqV4jL0XFHTkz6NF+H4OFkr1Rv97EXicCf
+ vwRnPtS3rJvwuxzDvHVi/GWW9rQmu2/hw7jjWvPFUgeVK1YA5y2IfMucgSo4kWxiTeSM
+ +0SuzlEO8OoyasqPsvQGkYtEdoF0MizGafBGqgYDfxiwiFbU9ruiFEKqCU4L3hS9WorP
+ ta1Q==
+X-Gm-Message-State: AOJu0YzUv6/0zdSu8CxrZqjNfW4ogp+wEvzu372cLwGJqLknPzorDVOa
+ bSAWBwo4fc0XD4YSEbju9KjWH0UIkxtl7dqkzHHf9egPL3bAwBNrcTsBUleGEX6Bel8=
+X-Gm-Gg: AfdE7cl9L9XYfGlKCGzbCB33cx4+3CLIqgs03N2LVLViysdURqd5I+YmfPTlGTxei7y
+ /K+owdxw/oTaRgztB1fd2Cfa0Nd1hZm+9p+uHW5+RnZsinlDjSIlu7hdk2xZZBgybbHdhAWUZaB
+ 8SVe5Y8bTa5F3zjeRQJQ3DOMNyHfQfYN28ZapyUDlfLL3HE+YaQW2X1RELtOiUEzSHep+jAr0cE
+ 3HMwDzoxapiG4bS696wKpYlRBZxrruGo8Vscqv9rz7hDDOcoN9prU2u6AqDPxQrq5fI3qHkO7uv
+ 3Umade7dt0EmDGSzXTJkxEEKRuFECcw1AjM85ptNZ4hK639hYuGo40ExbvATvjfeYRszZywMFOQ
+ MhJvElVPGlLS/r/vP/VwJzoKRWXmCUTqydDVRdGUG1sWQnTdG+rK9sZj1JSTIQWH93RDtlPJBDL
+ 8DxGsl7FPG9wiQ
+X-Received: by 2002:adf:fc8c:0:b0:43f:e934:50ac with SMTP id
+ ffacd0b85a97d-464fff62e1emr21036428f8f.7.1782142894999; 
+ Mon, 22 Jun 2026 08:41:34 -0700 (PDT)
 Received: from draig.lan ([185.124.0.195]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-492494496cdsm204412955e9.10.2026.06.22.08.41.33
+ ffacd0b85a97d-46666788547sm28720822f8f.18.2026.06.22.08.41.33
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
  Mon, 22 Jun 2026 08:41:33 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 415475F811;
+ by draig.lan (Postfix) with ESMTP id 572055F845;
  Mon, 22 Jun 2026 16:41:32 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PULL 0/7] testing and gitlab updates
-Date: Mon, 22 Jun 2026 16:41:24 +0100
-Message-ID: <20260622154132.3166748-1-alex.bennee@linaro.org>
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Thomas Huth <thuth@redhat.com>, John Snow <jsnow@redhat.com>,
+ Cleber Rosa <crosa@redhat.com>
+Subject: [PULL 1/7] python/qemu: split arg between base and harness lists
+Date: Mon, 22 Jun 2026 16:41:25 +0100
+Message-ID: <20260622154132.3166748-2-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260622154132.3166748-1-alex.bennee@linaro.org>
+References: <20260622154132.3166748-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x332.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::432;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x432.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,46 +105,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit b83371668192a705b878e909c5ae9c1233cbd5fb:
+There are argument we add because we want the test harness to control
+QEMU and arguments we default for handling the display and machine
+type. Split the obvious ones between base_args and a new list called
+harness_args.
 
-  Merge tag 'pbouvier/pr/plugins-20260618' of https://gitlab.com/p-b-o/qemu into staging (2026-06-19 15:00:01 -0400)
+We will leave the complexity of the serial ports for now.
 
-are available in the Git repository at:
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Message-ID: <20260619155657.944220-2-alex.bennee@linaro.org>
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 
-  https://gitlab.com/stsquad/qemu.git tags/pull-11.1-testing-updates-220626-1
-
-for you to fetch changes up to 2e020310e15d8452407c438271f3c06d4fa0c416:
-
-  gitlab: update bug template for sec issues & tool assistance (2026-06-22 13:45:37 +0100)
-
-----------------------------------------------------------------
-testing and gitlab updates:
-
-  - present a dev friendly cmd line in functional test logs
-  - tell pylint to skip c-modules
-  - widen the capture of functional tests logs in gitlab
-  - remove workaround for MacOS build targets
-  - update the gitlab bug template for security process
-
-----------------------------------------------------------------
-Alex Bennée (5):
-      python/qemu: split arg between base and harness lists
-      python/qemu: split console from harness args
-      python/qemu: dump a developer friendly version of cmdline to logs
-      tests/functional: tell pylint not to check c-modules
-      gitlab: remove build target hacks
-
-Daniel P. Berrangé (2):
-      gitlab: ensure "check-XXX' jobs capture functional test logs
-      gitlab: update bug template for sec issues & tool assistance
-
- .gitlab-ci.d/buildtest-template.yml | 18 +++++++++---------
- .gitlab-ci.d/macos.yml              |  7 ++-----
- .gitlab/issue_templates/bug.md      | 11 +++++++++--
- python/qemu/machine/machine.py      | 29 ++++++++++++++++++++++++-----
- tests/functional/pylintrc           |  1 +
- 5 files changed, 45 insertions(+), 21 deletions(-)
-
+diff --git a/python/qemu/machine/machine.py b/python/qemu/machine/machine.py
+index ebb58d5b68c..e8973a87394 100644
+--- a/python/qemu/machine/machine.py
++++ b/python/qemu/machine/machine.py
+@@ -292,8 +292,8 @@ def _load_io_log(self) -> None:
+                 self._iolog = iolog.read()
+ 
+     @property
+-    def _base_args(self) -> List[str]:
+-        args = ['-display', 'none', '-vga', 'none']
++    def _harness_args(self) -> List[str]:
++        args: List[str] = []
+ 
+         if self._qmp_set:
+             if self._sock_pair:
+@@ -307,8 +307,6 @@ def _base_args(self) -> List[str]:
+             args.extend(['-chardev', moncdev, '-mon',
+                          'chardev=mon,mode=control'])
+ 
+-        if self._machine is not None:
+-            args.extend(['-machine', self._machine])
+         for _ in range(self._console_index):
+             args.extend(['-serial', 'null'])
+         if self._console_set:
+@@ -323,6 +321,13 @@ def _base_args(self) -> List[str]:
+                 args.extend(['-device', device])
+         return args
+ 
++    @property
++    def _base_args(self) -> List[str]:
++        args: List[str] = ['-display', 'none', '-vga', 'none']
++        if self._machine is not None:
++            args.extend(['-machine', self._machine])
++        return args
++
+     @property
+     def args(self) -> List[str]:
+         """Returns the list of arguments given to the QEMU binary."""
+@@ -366,6 +371,7 @@ def _pre_launch(self) -> None:
+         self._qemu_full_args = tuple(chain(
+             self._wrapper,
+             [self._binary],
++            self._harness_args,
+             self._base_args,
+             self._args
+         ))
 -- 
 2.47.3
 
