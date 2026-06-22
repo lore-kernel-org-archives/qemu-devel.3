@@ -4,138 +4,118 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0BDB8CDB466
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jun 2026 20:01:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F122DCDB466
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jun 2026 20:12:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wbkot-0008Md-Ht; Mon, 22 Jun 2026 16:00:39 -0400
+	id 1wbkzd-00031h-2F; Mon, 22 Jun 2026 16:11:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1wbkog-0008MD-4U
- for qemu-devel@nongnu.org; Mon, 22 Jun 2026 16:00:22 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1wbkzW-0002zV-95; Mon, 22 Jun 2026 16:11:34 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1wbkoe-0000Ar-D6
- for qemu-devel@nongnu.org; Mon, 22 Jun 2026 16:00:21 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1782158419;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=aAS3SRJgEsG/sXLm+WPk6enBbGWkMZFXlLvUcIRtis8=;
- b=A81kJq4lpCCtXHDxAUCwW6a+BN0GFe2RdkLynfxxZwrJGgnTQF6wcu6RapCcWYe0ej2YAC
- oNTHjlxNXGZEZg/N8K0anAI1L/ejsSsS4SQoW3YhhuNZpJAJ0Uh6AfxDajSSvYn/mNiNgL
- 8b795KPdeuIqLVZ07NBl66Q5lIn3kFU=
-Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com
- [209.85.214.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-47-jvKD_YpzOdm1VdxguxzmGg-1; Mon, 22 Jun 2026 16:00:17 -0400
-X-MC-Unique: jvKD_YpzOdm1VdxguxzmGg-1
-X-Mimecast-MFC-AGG-ID: jvKD_YpzOdm1VdxguxzmGg_1782158416
-Received: by mail-pl1-f197.google.com with SMTP id
- d9443c01a7336-2c6a9bbcc53so49963235ad.2
- for <qemu-devel@nongnu.org>; Mon, 22 Jun 2026 13:00:17 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1782158416; cv=none;
- d=google.com; s=arc-20240605;
- b=aT6K+qU9W2ag9Rltuvfn2NfOuy9JFuQ8B7yXAOrp8heg2pAJRkrOa8l6Jv/rgSl3Vg
- bUjbhUKRIy15RGzIr4olzdUmsDpncFvViaxIfibQ8c5Y0pFdiRH8bw2PAwAd4F621Y54
- uGWXqb9ONE8JlKoM2C4ETclqfFuTkdC/T4jRYv17OI168/OT/PzUp6Oyp4gjT+tN8QoF
- 5DYxcQpMpSuUZudYuF8ZjcnDJ0+W8+CKPUDt4dVx6szkXLOkyqO4rok191HZoKXhXtNX
- hmP3TDXl6emAHQmrL/JmJxolgwCvq1e/lpMIk5IXYQ/mA+0th8NLTpxLoTKCeHt1AZF1
- dXlA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=aAS3SRJgEsG/sXLm+WPk6enBbGWkMZFXlLvUcIRtis8=;
- fh=x4FnHbQ5/QO5F4gZumj5fxJuOQf86UdD4oCcpQQyQ04=;
- b=KP0vZt949XtUWVyFWZWA06i6/Kz87aC+rl3PILo0hgFSkgUDoj1bPGulRZEDZ/Ibkr
- Ac8vIWxxdlMyIr5k2bM0WJjMQnm9xZf1bSTKOU1GxTPaUs8l6BkqpOl0Y/FnC/V69pnd
- OtnBUNqRM9GlrBWiFbqRu9lHJx2LFEX748MGiEEBmGYVhBMdUJXNIegjk5gxZC3+Aiss
- b2WR4SNu5BN33Pkaxe2LZa9tlG7E/mOzuG0JVzFoHspEYpp4iJdSFFTpT4UB3Dwnx6N1
- etdxLZrq5Wb6ZYYTazYjG4ncotzL+jjaQYA1vUEOcmez6w3sPyvWoPX6pzTc00tNX1po
- iQvg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1782158416; x=1782763216; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=aAS3SRJgEsG/sXLm+WPk6enBbGWkMZFXlLvUcIRtis8=;
- b=TgROXrC3ETNxB0M+AyuRwtXUA3C5jh2FfM7EEYgTUGd1SOlSDuAcOOzdh98L4Pe6nW
- anOeOzMi8/tRQnvX8/Am9c3iTSh/JtExEYDcXZoKao4gcYpAF6lFXw4+n+3Mfb2Y8HAL
- O5/d/W1aFVsePfxu/i7By2J3dpLs+eDDbva+kb3bLhFEE6ERFARehjW3AuwCsuLNoyFc
- juiMEMAfHUdmgefZkIMVRjp8yXmDnewwtAWpj9ZHR8sHGrL+Zg5jBuTRxwegwoTlybNS
- 59vLyDCxSItz49nR65546lxBn5dW5uXGdkyIEnniE0/stA48V16c2uWUxh5yWwfx6/DR
- 3g3Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782158416; x=1782763216;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=aAS3SRJgEsG/sXLm+WPk6enBbGWkMZFXlLvUcIRtis8=;
- b=GdQ7niNl+GLx09JSufkKWQoT4w3J0h3QcOpWknNqgLtZ3NanMBRfBqSiOTAVd1NHvw
- wMxoDyAWng4j0xcPWzbpJmnqvkCjI3vu53ZtswEobVzCDplnfb98obWZCOUGMe2yR1XW
- F0iLDS0xe7Apgge27B9LmeW0XBLu+XGMOxqJdaypt/zM4np9xxzApD1chAC0F4cG2CMh
- VO12ifcJbgaU+oy1jm09BIykERfTFDixzFWx/rF7WLg6OPQOdGkp+TFF74gx8CwoRlCd
- Xgq6QxMH/adYzgd9do5ABI1VqkYMOAMEo/kLopcNH7URtMz/Xx4cnhbFNacJfDAMbkjT
- Q3eA==
-X-Gm-Message-State: AOJu0YweM0F36TvM7xL+XMouqvgFvkO9C+XR5shCV6/IpMXccJG3rGg8
- nF51a167rwwqc+cuJVPuX2bW1DGMcJLbz4O1oVm4RTg4qY/vZdYVWiNnwmUsh5f4w3LC6kGUFH4
- i2UzRenAy7ApOH5LIL22gjUGfYTO4pw0yW1bGocNaHClOkG62ltvb+qz2ZAviMkrDaZZDZ10cGC
- jLpaPmrNMZJp/S7u9SeyyoMxSeSIMaRIE=
-X-Gm-Gg: AfdE7ckfd9BmXbR9mDpm6bH+rcT2MpbLWDYnkm6cOutVJ55WnjpQCwJMF1f4yYLb/hW
- m1QX9GIZK3LLl9WilLVDwh+Urn1YmzHMF6HfYmF2dIEVk/xFfqwjlEtM04p25D4Gk8dpmfetTke
- xoAx73e90QSTJkbV0Jm0iBQWXrSRTA0OMaQe0v8TmZKxoQJZwnQj/KS/Pc9d/H1TjnMD6BjspZq
- UtnEESo2Ea7UC7jNWLyvzrlWGtrf+0EEVOjI328vk/6YVoBAMcXFH9j/qtW+C+ZW2SG5B73jq4g
- 0fPanWGwwHW1
-X-Received: by 2002:a17:902:d489:b0:2be:22cc:e227 with SMTP id
- d9443c01a7336-2c718c87b90mr172936525ad.4.1782158416336; 
- Mon, 22 Jun 2026 13:00:16 -0700 (PDT)
-X-Received: by 2002:a17:902:d489:b0:2be:22cc:e227 with SMTP id
- d9443c01a7336-2c718c87b90mr172936045ad.4.1782158415799; Mon, 22 Jun 2026
- 13:00:15 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1wbkzU-0003l4-Ck; Mon, 22 Jun 2026 16:11:34 -0400
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 65MJmZPI3938281; Mon, 22 Jun 2026 20:11:29 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=HPQgA/
+ /pdBW5NM+qaYWBQa9uywZgcO2UpXU9t7YmKzM=; b=ZpoZp+AOr7cf8ZpCXp6Den
+ l3j0Rb8PQnefrhkE8ICSEuwYCFOYODeFDKDMl8lBw523srT20EVJyuitmrB97mts
+ c5UM/2OHI/6XuKFYa6GKIZ2OOb51ZwqVwjcOREhi/7QbDVBmjRqJTQ23oXNTCq7J
+ sLEU4s8Vb2Fc2IPmLt64HVQ8Xv28EfK7SHuecyCINaJaMjeAUoQpVo2PybqjTdar
+ tVV2wcpzAnUsL1ozJkurctOpdSTbA0Ql0uM7/IboaHZaPgmZEGyIWzKUJKccYFfL
+ h3AsFJ0GgYMTiU7Co2cyhlB/pLgi31JUkeVnhbif6uoXhLpxbuJ9hKlfRYi4Ddag
+ ==
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4ewjk4b5ne-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 22 Jun 2026 20:11:28 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 65MK4dfk021055;
+ Mon, 22 Jun 2026 20:11:28 GMT
+Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4ex7dfyqpd-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 22 Jun 2026 20:11:27 +0000 (GMT)
+Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
+ [10.20.54.100])
+ by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 65MKBOJT47710506
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 22 Jun 2026 20:11:24 GMT
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 0E2EE2004D;
+ Mon, 22 Jun 2026 20:11:24 +0000 (GMT)
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 6E1F220040;
+ Mon, 22 Jun 2026 20:11:19 +0000 (GMT)
+Received: from [9.124.219.133] (unknown [9.124.219.133])
+ by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Mon, 22 Jun 2026 20:11:19 +0000 (GMT)
+Message-ID: <b5f2adcb-2c58-431d-aa16-87f299f8c880@linux.ibm.com>
+Date: Tue, 23 Jun 2026 01:41:18 +0530
 MIME-Version: 1.0
-References: <20260604-rdm5-v5-0-5768e6a0943d@redhat.com>
- <CAJ+F1CKRvSWDOvKC98e_7uyjgJMuXfhOHP83H0s7a=+ZrYxA1g@mail.gmail.com>
- <ajVco512NDPKDPTr@x1.local>
- <CAMxuvazRnZw4PEsdKCEBD8X1ua5LMj5K-k+-oh-J_uvXm5vT1w@mail.gmail.com>
- <ajmMzMAXay65Sl7U@x1.local>
-In-Reply-To: <ajmMzMAXay65Sl7U@x1.local>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Date: Tue, 23 Jun 2026 00:00:04 +0400
-X-Gm-Features: AVVi8CcALnaUygDfXipA9K5Q53AEsopz0M20qNoO-DAXE4d6r2kmvEKjyvCr0e4
-Message-ID: <CAMxuvawvb-oueGsgXQsPzAtB8_ArAM+SOtpacrvOGq=4d1F2Bg@mail.gmail.com>
-Subject: Re: [PATCH v5 00/12] Make RamDiscardManager work with multiple
- sources & virtio-mem
-To: Peter Xu <peterx@redhat.com>, Zhenzhong Duan <zhenzhong.duan@intel.com>
-Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>, 
- David Hildenbrand <david@kernel.org>, Paolo Bonzini <pbonzini@redhat.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@mailo.com>, 
- qemu-rust@nongnu.org, Alex Williamson <alex@shazbot.org>, 
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, 
- "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>,
- Fabiano Rosas <farosas@suse.de>, 
- Mark Kanda <mark.kanda@oracle.com>, Ben Chaney <bchaney@akamai.com>, 
- Marcelo Tosatti <mtosatti@redhat.com>, kvm@vger.kernel.org, 
- "Dr. David Alan Gilbert" <dave@treblig.org>, Zhao Liu <zhao1.liu@intel.com>,
- Eric Blake <eblake@redhat.com>, 
- Markus Armbruster <armbru@redhat.com>, Xiaoyao Li <xiaoyao.li@intel.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mlureau@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/4] tests/functional: Add remote interrupts test for
+ PowerNV
+To: Shivang Upadhyay <shivangu@linux.ibm.com>, qemu-devel@nongnu.org,
+ qemu-ppc@nongnu.org, Harsh Prateek Bora <harshpb@linux.ibm.com>
+Cc: Sourabh Jain <sourabhjain@linux.ibm.com>,
+ Hari Bathini <hbathini@linux.ibm.com>, Nicholas Piggin <npiggin@gmail.com>,
+ Miles Glenn <milesg@linux.ibm.com>, Fabiano Rosas <farosas@suse.de>,
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Misbah Anjum N <misanjum@linux.ibm.com>
+References: <20260610090235.3665904-1-adityag@linux.ibm.com>
+ <20260610090235.3665904-2-adityag@linux.ibm.com>
+ <1493ce3f9eb33b680bcc41fcd433af3e2098d725.camel@linux.ibm.com>
+Content-Language: en-US
+From: Aditya Gupta <adityag@linux.ibm.com>
+In-Reply-To: <1493ce3f9eb33b680bcc41fcd433af3e2098d725.camel@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjIyMDE5MiBTYWx0ZWRfXzigcLDvbab/j
+ RwdJEMlp1XVZBLBaqo9uuJCTe6U8BFVuvDOmAFGSRqcDec//Po2Ja8khmBfsPRMkBx3HjuhPxVf
+ fRvaJKM5N0ec446Ybefh/B+8++9EtNA=
+X-Proofpoint-ORIG-GUID: 9EU0KWoRKMQsIBgsCVEaITo30Z2k1kvG
+X-Authority-Analysis: v=2.4 cv=Oph/DS/t c=1 sm=1 tr=0 ts=6a3996f1 cx=c_pps
+ a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
+ a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=_pTC7v-JNlh9ycCcCLAA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjIyMDE5MiBTYWx0ZWRfXwAzza66EY9T1
+ EKZZzulQy6KL7H80nZEY538fweERjKmQDhTr5LZYaEoNpx971gvcnpNH2e6aO25C1fld6CACHPC
+ uEB+GCys2BuhCcXHQ3eWvCjg32ed/SqOZyk4Ytf0+6MC6b3iKG7HULQ5ENLaqKSU4AGDcozF/+2
+ /oyoH1uzaKXgbu6vRdu8UEYldEMGEq6cGWcQ9KXHU21cSWMFvT9VIirGSRRMDwRhFnzJp3pmX8i
+ o9kzQX+BJbZMqIOQ5QYTKbjfPMHRSti76zqU3wwWhZaUqHXOIKSdFPgXSM0tk2BzKehSrrIQvJ9
+ L9h0qwBt68xbiklnRgngQc0BfKqD1/9IbWxJD1R4zvs2m/HQLff7PnL4WR6oQWFWKiCXHhIBnpC
+ 1TvVUTUWf25dUfuqY4WxQISineYwau+dgejNkfP5vPc1rCx8aNQt+AyUpHrrpeQCMf04HnmsKmw
+ x6wcTGu4lkszeFsJOkw==
+X-Proofpoint-GUID: Sulg4wWO65wbWJlxyH_X_xFi2OnANhG1
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-22_04,2026-06-22_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 lowpriorityscore=0 bulkscore=0 spamscore=0 priorityscore=1501
+ clxscore=1015 impostorscore=0 malwarescore=0 adultscore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606220192
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=adityag@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -151,105 +131,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Peter
 
-On Mon, Jun 22, 2026 at 11:28=E2=80=AFPM Peter Xu <peterx@redhat.com> wrote=
-:
+On 12/06/26 13:11, Shivang Upadhyay wrote:
+> On Wed, 2026-06-10 at 14:32 +0530, Aditya Gupta wrote:
+>> +            '#', self.panic_message)
+>> +        exec_command_and_wait_for_pattern(self,
+>> +             "CTL_IRQ=$(grep 'eth0$' /proc/interrupts | awk '{print
+>> $1}' | tr -d ':')",
+>> +            '#', self.panic_message)
+>> +        exec_command_and_wait_for_pattern(self,
+>> +            "echo 1 > /proc/irq/$RX_IRQ/smp_affinity_list",
+>> +            '#', self.panic_message)
+>> +        exec_command_and_wait_for_pattern(self,
+>> +            "echo 2 > /proc/irq/$TX_IRQ/smp_affinity_list",
+>> +            '#', self.panic_message)
+>> +        exec_command_and_wait_for_pattern(self,
+>> +            "echo 3 > /proc/irq/$CTL_IRQ/smp_affinity_list",
+>> +            '#', self.panic_message)
+>> +
+>> +        # Generate network traffic to trigger remote interrupts
+>> +        # Ping QEMU's user-mode network gateway (10.0.2.2)
+>> +        exec_command_and_wait_for_pattern(self,
+>> +            "ping -W2 -c5 10.0.2.2",
+>> +            '#', self.panic_message)
+> Hi Aditya,
 >
-> On Mon, Jun 22, 2026 at 03:53:33PM +0400, Marc-Andr=C3=A9 Lureau wrote:
-> > Hi Peter
-> >
-> > On Fri, Jun 19, 2026 at 7:13=E2=80=AFPM Peter Xu <peterx@redhat.com> wr=
-ote:
-> > >
-> > > On Fri, Jun 19, 2026 at 12:11:48AM +0400, Marc-Andr=C3=A9 Lureau wrot=
-e:
-> > > > Hi
-> > > >
-> > > > On Thu, Jun 4, 2026 at 5:46=E2=80=AFPM Marc-Andr=C3=A9 Lureau
-> > > > <marcandre.lureau@redhat.com> wrote:
-> > > > >
-> > > > > Hi,
-> > > > >
-> > > > > This is an attempt to fix the incompatibility of virtio-mem with =
-confidential
-> > > > > VMs. The solution implements what was discussed earlier with D. H=
-ildenbrand:
-> > > > > https://patchwork.ozlabs.org/project/qemu-devel/patch/20250407074=
-939.18657-5-chenyi.qiang@intel.com/#3502238
-> > > > >
-> > > > > The first patches are misc cleanups. Then some code refactoring t=
-o have split a
-> > > > > manager/source. And finally, the manager learns to deal with mult=
-iple sources.
-> > > > >
-> > > > > This has been tested together with the Linux kernel series from
-> > > > > Zhenzhong Duan [1] for TDX guests.
-> > > > >
-> > > > > (help fix https://issues.redhat.com/browse/RHEL-131968)
-> > > >
-> > > > Can the patch 1-11 be queued or are we missing something?
-> > > > (RFC patch 12 can be dropped for now)
-> > >
-> > > Likely yes.. one thing to double check with you before I do: We don't=
- need
-> > > the kernel series, do we?  Since when unplug, I expect with the trunc=
-ation
-> > > approach that this series proposed, KVM will emit TDH.MEM.PAGE.REMOVE=
- then
-> > > unaccept is done (?).
-> >
-> > > Say, what happens if we run QEMU with this series applied, but withou=
-t the
-> > > kernel series?
-> >
-> > The kernel series is needed at least for PAGE.ACCEPT. Without it, QEMU
-> > will have KVM_RUN return EIO, and finish into assert (while tearing
-> > down ioeventfd).
+> Thanks for this amazing test. But when I was tinkering with this test
+> case, Even if i changed command to "asdf" it seemed to pass. Also, in
+> the logs, sometime ping sometime it might fail.
+The testcase wasn't that good, I had explicitly written it to just see 
+if qemu keeps running, and doesn't crash on remote interrupts, as has 
+been seen in the past. But yes, it's better if we actually check if ping 
+caused any remote interrupts at all, since it wasn't checking that hence 
+the testcase was passing.
+Planning to have a check in v2.
+> pasta:review-aditya-qtests$ ./build/run python3
+> ./tests/functional/ppc64/test_powernv.py
+> PowernvMachine.test_linux_remote_interrupts -v
+> TAP version 13
+> ok 1 test_powernv.PowernvMachine.test_linux_remote_interrupts
+> 1..1
+> pasta:review-aditya-qtests$ cat
+> build/tests/functional/ppc64/test_powernv.PowernvMachine.test_linux_rem
+> ote_interrupts/console.log | grep -C5 "ping"
+> ...
+> 2026-06-12 12:59:26,316: ping -W2 -c5 10.0.2.2
+> 2026-06-12 12:59:26,340: PING 10.0.2.2 (10.0.2.2): 56 data bytes
+> 2026-06-12 12:59:26,343: ping: sendto: Network is unreachable
+> ...
+> pasta:review-aditya-qtests$
+This can happen if eth0 is not up yet, will handle it.
 >
-> Could you elaborate a bit more on why ACCEPT would fail?
->
-> I used to ask the event flow here:
->
-> https://lore.kernel.org/qemu-devel/agTjb3M8ElUAlfp1@x1.local/
->
-> If AUG existed, then why ACCEPT would fail?
->
-> PS: I didn't read a lot of what a Linux guest would do; I know there're
-> some lazy accept approach, but IIUC it's only a matter of time to ACCEPT,
-> not correctness.  My understanding is if we properly notify these new slo=
-ts
-> with AUG, then it should be able to ACCEPT?
+> Also the interrupt counters, I think we need to verify the cpu where
+> the intrrupt is actually triggering.
+Sure, will add it in v2.
 
-Yes, it will, but it needs the kernel patches to do it (or virtio-mem
-will let the guest access un-accepted pages and qemu will crash). I
-submitted a few proposals before Zhenzhong Duan proposed the last
-iteration.
+Thanks for reviewing shivang !
 
-> >
-> > > What confused me a bit is the dependency of this series v.s. the kern=
-el
-> > > one.  It seems to use different approaches, but then I don't understa=
-nd why
-> > > this series was tested with the kernel change.
-> >
-> > My understanding is that the kernel may perform TDG.MEM.PAGE.RELEASE.
-> > That depends on TDX config TDCS_CONFIG_PAGE_RELEASE which qemu/kvm
-> > doesnt currently control. I don't know whether this is then
-> > redundant/needless with qemu doing discard on the guest_memfd..
->
-> The problem is if this series depends on the kernel series, should we the=
-n
-> wait for the kernel solution be accepted first in case it'll change?
 
-I don't think qemu needs to wait for the kernel to be fixed.
-Furthermore, this series is not tdx/sev/etc specific
+- Aditya G
 
->
-> But obviously I still don't yet fully understand how this whole thing
-> works.. :(
-
-I am also slow, because I don't focus on this most of the time.
-Someone with more experience and dedication would handle it better.
-
+> ~Shivang.
 
