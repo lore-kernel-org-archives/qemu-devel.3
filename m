@@ -4,99 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A26FCD98F0
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jun 2026 03:07:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0DF9CCD98F0
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jun 2026 03:09:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wbUzz-00060b-5V; Sun, 21 Jun 2026 23:06:59 -0400
+	id 1wbV1U-0006fc-Mk; Sun, 21 Jun 2026 23:08:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wbUzx-0005zZ-Ac
- for qemu-devel@nongnu.org; Sun, 21 Jun 2026 23:06:57 -0400
-Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
+ id 1wbV1T-0006fL-CU
+ for qemu-devel@nongnu.org; Sun, 21 Jun 2026 23:08:31 -0400
+Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wbUzv-00075K-Ls
- for qemu-devel@nongnu.org; Sun, 21 Jun 2026 23:06:56 -0400
-Received: by mail-ed1-x531.google.com with SMTP id
- 4fb4d7f45d1cf-6974ef0c3b1so3488130a12.1
- for <qemu-devel@nongnu.org>; Sun, 21 Jun 2026 20:06:55 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1782097614; cv=none;
+ id 1wbV1Q-0007iw-Lq
+ for qemu-devel@nongnu.org; Sun, 21 Jun 2026 23:08:30 -0400
+Received: by mail-ed1-x535.google.com with SMTP id
+ 4fb4d7f45d1cf-6974f511dd3so3414514a12.1
+ for <qemu-devel@nongnu.org>; Sun, 21 Jun 2026 20:08:28 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1782097707; cv=none;
  d=google.com; s=arc-20240605;
- b=Lopl86Yn4Ki7S7RDHwo8l0hu2L/DYplS51/UudtO5NynKjq79Fi14CRfWAdr6NxiSo
- D7zTHjeELjEBjPUQ+C/a5uRs9b0V+h67x0ziozCJhZIZjiY+XFsdKHsoT9iq3Vt4kbZU
- 6cXssDoAesgkJ9xms51LFT7n6XVV3va3hKhcX9N40bu/jp7nforvNSAgfkbh0rXl89DL
- sXUam2Lt/b+h62VsVutvfn2H2vrq3uqwsQz8IBBTtEktBAGBYWFK8UoMh+cRbFwAIRBg
- riw3REfNDOG/CyESoCnP1OnWJ7egtcrVOR2RMyBYXL5fZMl8RnhrHfUa22ykCTYj8b1q
- jinQ==
+ b=hhVT7/WdmxMVLRQVoOyVKgcwUocYybYtr/x55KxwCLKN4d2avcOmvijfeURPcN5uIC
+ IYaQVGD7w0FNfkh59PoEdeN6+OPqeQGm9zIJ/lR9uOKrr/r/Cv3o06zJpep8q9BvAqAW
+ OMjca0B9Rh2YRdsLYd67Lsnex8soHXZQQSHlMHkpEVjidDYKAm+MLkfve8uu3FH6Sqc6
+ dNMC2QpTtdmzyIvhy4t49qE5nBKA71NfvhwAt6GuoTt2DGGxvyRgLCENliZPzss3Flfi
+ yHKl5SYUixovCXu58yLNVKmhBukSfcFQGnUP0qUWt+fqHJl2SMNVvn6SoVj06npBzy3L
+ nOZg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=9lBpFvQgke2vv5Ml8b+qHrO31bIE4gs/UA33vAzhX5c=;
- fh=M8a7lnvwUIhzfmVXoF9CbZI/0WMj9cykP7fp5FCiUsU=;
- b=cfRTYNz5FG9KqI6iwpR5QdUzjnI8uoSWBb2V1JPwN/0GNMvO+YyvDn6opsAr+ZTLG8
- O4FxaT2ie+OCn1YqAab/efSXTepnoJpRzHzKJlhsU4DJGzJhNV8hzGuY8mxlU0UHQJc8
- kFKLYxsJ3MitqE2y49On/0XmV8W5o6noMyRe0/PCrZLOuquCLuJEEECAAPe8YmaHGECm
- rvKVZMZbakIITkg0q0UPu6kWuKY7lonA8SY/78q0juPby/MZ3luSQBif+DJM829vzVO8
- WNoj3+sE8eicZItnPBuxt4lIrdZS40yzJde1G8FCehj/HpCaSLJwTd0w3LIn1I0jPUSF
- KXSQ==; darn=nongnu.org
+ bh=pncSQEIlLQ0Rj1BcORGRv8Fy/DL6CzOrlm0xwdvMkGQ=;
+ fh=nU544uBc/ikjX1M15pFgUX8Kvv9LD3PvtwnY2ZQq1f0=;
+ b=eInUPRH8Y9zWXe3aNP3AgYcqrCFbn/iAf45BR9caOUxn1Kmv4O3OxxcYOTmP8PSkmL
+ 3dubCZRYYkPtmno+4zRHm0mgGrOuvtOzTfRblg6zn6u+X06Uw+6ICeE1b0k5SwGGLn7J
+ 2gLVcBwtvkfYEP795X/lKNa3IMXBJvB4Y21vNaGn5Fvz2AJk3zVViSec76oKLqMMMe8x
+ JOCjfAkLUmhn6UHdA9Vli2A+8xR+0MVTBAisBRT2SBDN11y1CKQugRJ+bzt1oTtQjfNM
+ N4IsO7i8999oVGBdqpOWPeikm+ob0wGkBGuC2d7q0SHGGdEqdjLivXG0AylezvkofNtn
+ eNkg==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1782097614; x=1782702414; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1782097707; x=1782702507; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=9lBpFvQgke2vv5Ml8b+qHrO31bIE4gs/UA33vAzhX5c=;
- b=UvRib+XvpH8YMTDRnnZInZu1GmB+4k5zCMidAk5BwMhpaXC+9dnII/khZMG3ZZPmvr
- PPsKA2Ui0HQw2mu7AOKL47dp34/Y1rNmWTRTql6IPFYp45H8UVfExV1L419WZx52kE+3
- RDmxfJzLp2eFd7lXACoFH8lX0rR/WwIHomBYasGpKRkk8M7OICRvQSL4UqxI4AYysfgJ
- MSEaOOg+npmkHdfR9lHrM2ZV4IoYlNj49b51GH0Wsg3VGf/ATwsJbn09bu2RKcC5fd/9
- a9x+K9TBTLhBCJLsHuZNSzheINQZDbmRqzwEpV6NtNazrgKpHG+q8uebnIVcTFxls8VF
- l3/w==
+ bh=pncSQEIlLQ0Rj1BcORGRv8Fy/DL6CzOrlm0xwdvMkGQ=;
+ b=CHqM/Uj5bCuOW0KiTiSfbFU4BZhkNzUWeLGZOevzt5fJzv6JjKWS4dQObyUiBBo138
+ NVopZpSHObQcfNnYvfP7Wf9IeCabZHAYtRiizmgX6sgSd3+IZkOzhRxD/onVuysprmlZ
+ YAhVaCMKmwAtZbAWtdkVq53v71uYcZD0r5jbkwkaLy9LXKJPfp+9x7DQyoMmEF7To2Tc
+ TJFS2Mmp3SQv1TWJhSVRCOEWo68P2s+yi6GTQzcW2okr7Jx3a7TnpR+OSDn1QjYhSdXz
+ sbPYFClhHzDZZg20qZBNeQTd7yWXX6z3v14VC0I6uKl1PK0HHcLVViO2yzYoJ5oVQ8sZ
+ EueQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782097614; x=1782702414;
+ d=1e100.net; s=20251104; t=1782097707; x=1782702507;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=9lBpFvQgke2vv5Ml8b+qHrO31bIE4gs/UA33vAzhX5c=;
- b=irAX/kSAEME67wVvziLe9Vt4mjb0Bb3YcJCEwNiHgDW+SCxPu0pX6QFXs5jZD0mMmL
- /F+NjrpUHCJCH6yc80gG/fsDLA0wqzevK7qD33Pm5MVYSD9aID8aheGJD3FgQOw4ReOR
- hEiE5+Y4gW5pbsbBH+IVIxmWEJjsTU66t9wKSStgekmKUooug2n/67HTz6YdKRinT1DE
- 1+FX+OZONrAxFCYNedF9hTl/HpR6K/YvRSihp9oZur9Fkm/e8zj0PJ1vfkP6ae38LNj9
- vjiVoZr6e8KckStqt8IjCLVC44eHBKmcUxjh+pdDJjsdOeSafuIg4LIb9GWxRBfQWYiK
- aqpw==
-X-Gm-Message-State: AOJu0Yy715wWHQTGwZhFT6B3pWn8hbniYIaNmlIfzpnqvuTCf0gQoUAZ
- K4gik945p0I5fpYSagHf6ZEftQz9CwFpCD/Vj3fdIHu7QUn2BQ1RgpHj/vDEYMcOxAPSXItU0YT
- n67nn8J79WECwmZMlgN9822InP3hh19Y=
-X-Gm-Gg: AfdE7ck3jC3h8tYn8GLf+O0R/B/yKEAKcyJ0W1krshKtIOYOGgvdWqqKhEj4wmE7Cue
- jZ/Lp0pPzLzB2gAuJtCnKgB4YPsMoW/+anTdQDGe+oe6swiadDsrzohj3k9cKW4AJpnYFI/qmKE
- PEnRE8vESISFI2hmIMXq2QZVyMJS8AsL20EGy6ul/ccJg/KsLqdAK5Dmi7q4Do2BJJxM6Ry2OBt
- GO99jnrEvbRPcOdbuq2ryXyOoLS9+2w/ZwI0gywNp3u0irZM//CjhKOL+xD1vtrxrrU6nmDYYGd
- O0dldifoTExYp5DRu7N/VX9y/dQ=
-X-Received: by 2002:a05:6402:a295:10b0:697:6415:1186 with SMTP id
- 4fb4d7f45d1cf-697641513cfmr3035622a12.26.1782097613573; Sun, 21 Jun 2026
- 20:06:53 -0700 (PDT)
+ bh=pncSQEIlLQ0Rj1BcORGRv8Fy/DL6CzOrlm0xwdvMkGQ=;
+ b=C0FxWuQ4rBNJqJwAcWBrEm4hoXi+BZCmj4GLaPdyX1qGKnSyNV3qTsfghRvWDjB1nk
+ xN3Aju8uoRu78ajdeUn2eQ6qbr8GSrMtkrzZP+3FC2TX6xOYXG/qzbrz6InVgHBgob5c
+ MnxAKthnCvRklLvvQ8NiJaPRD9b0z5sw2E282WZYgFOd+oHBYyS9tGbRfjIhW8Htqly8
+ +Onex2svLO/kVnUmxnBXIvlqpPHniniG+287J3Le7/O+TR5aHhDVbDFzQvOxjCQ6/l6g
+ 1w3ad18TS08mofm82wU5gVA686am2HodA/tc7uwyhtWRJXhfn/RiCx/KfhM2si+wYINk
+ QzUg==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ97ov3uchkAQ5DHo+YVShukxc2l5mGIqEHnF+2+IOisPhLr1k69iAAYCdwxMH3LXhUMZ4tKxg15CMf2@nongnu.org
+X-Gm-Message-State: AOJu0YwsN6eaazy18iIYrn1n7LCkQ+K7a3/YvIoOPdXvs/1Qor315Zni
+ q8WpedpEpFMtd6vuOGO3r8NTzsy2h/8tOODJlI54IbyKw2LTbqUygrpnusE/WaTxPWerJRCcxqN
+ GaZTu/10HO/ESrb9TKBQ61AZfCynzefg=
+X-Gm-Gg: AfdE7cn+7pW9nz5hh2y0RpUacRPYNql+4ohA9xnYQV7huO1Mbb1y4Tn3PMKOfaJ0t1i
+ MDNEOFp5BjhQ5zFD6R39DWufVyUbBmk7O1oOdv0YCsa0HMONFUR65x3AvxHRLVYGRbApOmvqvVv
+ YaNjvDfojv80gPdV2ZDfUG2Zbb+vT9WFdUWAObQ0MVBuj9AZq1ejaKSaElwhy7LHRK52AziOH0P
+ wSkopYv9txn3D8vs+ri19agxgFWxhMTg/uiCYHkGHOsBVZX3tpV2QJh3QJJw4TcxKHgbNjy467Z
+ sPYeoT2ht1mDKZOn0Rqfb1Uu6kw=
+X-Received: by 2002:a05:6402:5253:b0:697:96c2:b591 with SMTP id
+ 4fb4d7f45d1cf-69796c2c000mr1608348a12.11.1782097706663; Sun, 21 Jun 2026
+ 20:08:26 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260604120017.398890-1-qingwei.hu@bytedance.com>
-In-Reply-To: <20260604120017.398890-1-qingwei.hu@bytedance.com>
+References: <20260619044838.1054677-1-joel@jms.id.au>
+ <20260619044838.1054677-13-joel@jms.id.au>
+In-Reply-To: <20260619044838.1054677-13-joel@jms.id.au>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Mon, 22 Jun 2026 13:06:26 +1000
-X-Gm-Features: AVVi8CdBPOQoFr1d7XH5ICUzI2Z-aKswEjlDkpU5HQho1LJgM9hOzLdk6MdWgLU
-Message-ID: <CAKmqyKNpHNmrPOJqS_1Mzaf=evvxvuO_kosFHnLN6=bP55ZFyw@mail.gmail.com>
-Subject: Re: [PATCH] hw/riscv/virt-acpi-build: Fix RINTC PLIC context ID for
- KVM
-To: Qingwei Hu <qingwei.hu@bytedance.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, sunilvl@ventanamicro.com, 
- palmer@dabbelt.com, alistair.francis@wdc.com, liwei1518@gmail.com, 
- daniel.barboza@oss.qualcomm.com, zhiwei_liu@linux.alibaba.com, 
- chao.liu.zevorn@gmail.com
+Date: Mon, 22 Jun 2026 13:08:00 +1000
+X-Gm-Features: AVVi8CcTWzDnxdFOlNJCJHOy-hAGrK7CZiUGHT7Mpa3kl_vql1fp9BoIRDaa43U
+Message-ID: <CAKmqyKNzcHh9emJdL7dSO2OhnMHoMqSUKJja-p+SLpqJoYJcFQ@mail.gmail.com>
+Subject: Re: [PATCH v9 12/12] hw/riscv/atlantis: Add some i2c peripherals
+To: Joel Stanley <joel@jms.id.au>
+Cc: Alistair Francis <alistair.francis@wdc.com>, qemu-devel@nongnu.org, 
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@mailo.com>, 
+ Chris Rauer <crauer@google.com>, Alano Song <alanosong@163.com>,
+ Michael Ellerman <mpe@kernel.org>, 
+ Joel Stanley <jms@oss.tenstorrent.com>, Nick Piggin <npiggin@gmail.com>, 
+ Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>, 
+ Portia Stephens <portias@oss.tenstorrent.com>, qemu-riscv@nongnu.org, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::531;
- envelope-from=alistair23@gmail.com; helo=mail-ed1-x531.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::535;
+ envelope-from=alistair23@gmail.com; helo=mail-ed1-x535.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -120,55 +127,109 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jun 4, 2026 at 10:44=E2=80=AFPM Qingwei Hu <qingwei.hu@bytedance.co=
-m> wrote:
+On Fri, Jun 19, 2026 at 2:52=E2=80=AFPM Joel Stanley <joel@jms.id.au> wrote=
+:
 >
-> Each RISC-V MADT RINTC entry contains an External Interrupt Controller
-> ID field. On the virt machine without AIA, this field identifies the
-> S-mode PLIC context associated with the hart.
+> Add an I2C RTC device and a temperature sensor. These are not present
+> on the board but help for testing.
 >
-> TCG virt has both M-mode and S-mode PLIC contexts, so the S-mode context
-> ID is odd and 2 * local_cpu_id + 1 is correct. KVM virt exposes only
-> S-mode PLIC contexts, and those contexts are numbered contiguously from
-> 0. Reporting the TCG context ID for KVM makes the guest enable a
-> different PLIC context from the one used by QEMU.
+> The tmp105 is a lm75 compatible temperature sensor used by the
+> SENSORS_LM75 Linux kernel driver.
 >
-> With ACPI enabled, this can leave PCI INTx interrupts pending in QEMU
-> while the guest-programmed PLIC context remains disabled. A virtio-blk
-> root disk can then stall during boot because its first interrupt is never
-> delivered.
+> The ds1338 is a RTC device that is used by the RTC_DRV_DS1307 Linux
+> kernel driver.
 >
-> Use local_cpu_id for KVM and keep the existing odd S-mode context ID for
-> TCG.
->
-> Fixes: d641da6ed43 ("hw/riscv/virt-acpi-build.c: Add PLIC in MADT")
-> Signed-off-by: Qingwei Hu <qingwei.hu@bytedance.com>
+> Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+> Signed-off-by: Joel Stanley <joel@jms.id.au>
 
-Thanks!
-
-Applied to riscv-to-apply.next
+Acked-by: Alistair Francis <alistair.francis@wdc.com>
 
 Alistair
 
 > ---
->  hw/riscv/virt-acpi-build.c | 2 ++
->  1 file changed, 2 insertions(+)
+>  hw/riscv/tt_atlantis.c | 27 +++++++++++++++++++++++++++
+>  hw/riscv/Kconfig       |  2 ++
+>  2 files changed, 29 insertions(+)
 >
-> diff --git a/hw/riscv/virt-acpi-build.c b/hw/riscv/virt-acpi-build.c
-> index 413d47d70e..6b06d9aa87 100644
-> --- a/hw/riscv/virt-acpi-build.c
-> +++ b/hw/riscv/virt-acpi-build.c
-> @@ -100,6 +100,8 @@ static void riscv_acpi_madt_add_rintc(uint32_t uid,
->          build_append_int_noprefix(entry,
->                                    ACPI_BUILD_INTC_ID(
->                                        arch_ids->cpus[uid].props.node_id,
-> +                                      kvm_enabled() ?
-> +                                      local_cpu_id :
->                                        2 * local_cpu_id + 1),
->                                    4);
->      } else {
+> diff --git a/hw/riscv/tt_atlantis.c b/hw/riscv/tt_atlantis.c
+> index e6afd7627da8..9b64f26d2f76 100644
+> --- a/hw/riscv/tt_atlantis.c
+> +++ b/hw/riscv/tt_atlantis.c
+> @@ -64,6 +64,13 @@ static const MemMapEntry tt_atlantis_memmap[] =3D {
+>      [TT_ATL_DDR_HI] =3D          { 0x100000000,  0x1000000000 },
+>  };
+>
+> +static I2CBus *i2c_get_bus(TTAtlantisState *s, unsigned busnr)
+> +{
+> +    assert(busnr < TT_ATL_NUM_I2C);
+> +
+> +    return s->i2c[busnr].bus;
+> +}
+> +
+>  static uint32_t fdt_phandle =3D 1;
+>  static uint32_t next_phandle(void)
+>  {
+> @@ -309,6 +316,19 @@ static void create_fdt_i2c(void *fdt, const MemMapEn=
+try *mem, uint32_t irq,
+>      qemu_fdt_setprop_cell(fdt, name, "#size-cells", 0);
+>  }
+>
+> +static void create_fdt_i2c_device(TTAtlantisState *s, int bus,
+> +                                  const char *compat, int addr)
+> +{
+> +    void *fdt =3D MACHINE(s)->fdt;
+> +    hwaddr base =3D s->memmap[TT_ATL_I2C0 + bus].base;
+> +    g_autofree char *name =3D g_strdup_printf("/soc/i2c@%"HWADDR_PRIX"/s=
+ensor@%x",
+> +                                            base, addr);
+> +
+> +    qemu_fdt_add_subnode(fdt, name);
+> +    qemu_fdt_setprop_string(fdt, name, "compatible", compat);
+> +    qemu_fdt_setprop_cell(fdt, name, "reg", addr);
+> +}
+> +
+>  static void finalize_fdt(TTAtlantisState *s)
+>  {
+>      uint32_t aplic_s_phandle =3D next_phandle();
+> @@ -336,6 +356,9 @@ static void finalize_fdt(TTAtlantisState *s)
+>                         TT_ATL_I2C0_IRQ + i,
+>                         aplic_s_phandle, periph_clk_phandle);
+>      }
+> +
+> +    create_fdt_i2c_device(s, 0, "dallas,ds1338", 0x6f);
+> +    create_fdt_i2c_device(s, 4, "ti,tmp105", 0x48);
+>  }
+>
+>  static void create_fdt(TTAtlantisState *s)
+> @@ -570,6 +593,10 @@ static void tt_atlantis_machine_init(MachineState *m=
+achine)
+>                             qdev_get_gpio_in(s->irqchip, TT_ATL_I2C0_IRQ =
++ i));
+>      }
+>
+> +    /* I2C peripherals: qemu specific */
+> +    i2c_slave_create_simple(i2c_get_bus(s, 0), "ds1338", 0x6f);
+> +    i2c_slave_create_simple(i2c_get_bus(s, 4), "tmp105", 0x48);
+> +
+>      /* Load or create device tree */
+>      if (machine->dtb) {
+>          load_fdt(s);
+> diff --git a/hw/riscv/Kconfig b/hw/riscv/Kconfig
+> index dcce819bf6e9..de37c08caece 100644
+> --- a/hw/riscv/Kconfig
+> +++ b/hw/riscv/Kconfig
+> @@ -130,6 +130,8 @@ config TENSTORRENT
+>      select SERIAL_MM
+>      select DEVICE_TREE
+>      select DESIGNWARE_I2C
+> +    select DS1338
+> +    select TMP105
+>
+>  config XIANGSHAN_KUNMINGHU
+>      bool
 > --
-> 2.39.5
+> 2.47.3
 >
 >
 
