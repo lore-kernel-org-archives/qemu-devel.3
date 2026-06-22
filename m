@@ -4,111 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55581CDB46F
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jun 2026 15:51:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38865CD98F2
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jun 2026 16:08:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wbgvI-0001H1-ND; Mon, 22 Jun 2026 11:50:56 -0400
+	id 1wbhBZ-00066g-Au; Mon, 22 Jun 2026 12:07:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1wbgv9-0001G6-10; Mon, 22 Jun 2026 11:50:48 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1wbgv7-0000BJ-0J; Mon, 22 Jun 2026 11:50:46 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65MFmEoY3591590; Mon, 22 Jun 2026 15:50:40 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=hJ80Cb
- sv1XchP4Aktb6kOpovSj4iolLUCpDFnHMibnI=; b=S2v3oU/wc4TGzE98Y6Wyik
- 9rOf6DbuyAKL738XhC4dcP4jRhFoCaIHEmCKRCfb8iQ/k5PXsm4+fZlbtf00Qo5b
- COvsDMwELNYWwvcg5kWEMojhcDyL6adhGnzucbAGkPCZstiy8tZxIiNjAxJoLx4r
- q5WC8UMFnlm/udZZHMzlBGkp8guUkVuHoO1PHQ0sVMfFZGm6JPb09lNjIOVOPImQ
- UztfEcEzopgsObwOq1KG9S2bnzzPmPAGSFWOOpwpyQvtMJsjbZng/Yt0c36hV2oc
- nhVMm3GmOXPIbguUr75zxG4dBI05wWkF1wf43aQ5bZbG8ed0Q1Vwd2Nq5lxMU5Gg
- ==
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4ewjhqj1j2-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 22 Jun 2026 15:50:39 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 65MFnlVk025320;
- Mon, 22 Jun 2026 15:50:39 GMT
-Received: from smtprelay07.wdc07v.mail.ibm.com ([172.16.1.74])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4ex7vyem47-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 22 Jun 2026 15:50:39 +0000 (GMT)
-Received: from smtpav02.dal12v.mail.ibm.com (smtpav02.dal12v.mail.ibm.com
- [10.241.53.101])
- by smtprelay07.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 65MFob2E24969790
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 22 Jun 2026 15:50:37 GMT
-Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 164E95805F;
- Mon, 22 Jun 2026 15:50:37 +0000 (GMT)
-Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 7B5C05805C;
- Mon, 22 Jun 2026 15:50:36 +0000 (GMT)
-Received: from li-479af74c-31f9-11b2-a85c-e4ddee11713b.ibm.com (unknown
- [9.61.119.138]) by smtpav02.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Mon, 22 Jun 2026 15:50:36 +0000 (GMT)
-Message-ID: <0e3faa9f95c042f1a614b056a6b82bd94abf83ca.camel@linux.ibm.com>
-Subject: Re: [PATCH] s390x/kvm: clamp stsi 3.2.2 size
-From: Eric Farman <farman@linux.ibm.com>
-To: Christian Borntraeger <borntraeger@linux.ibm.com>, qemu-devel
- <qemu-devel@nongnu.org>, Cornelia Huck <cohuck@redhat.com>
-Cc: qemu-s390x <qemu-s390x@nongnu.org>, Halil Pasic <pasic@linux.ibm.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>, qemu-stable@nongnu.org
-Date: Mon, 22 Jun 2026 11:50:36 -0400
-In-Reply-To: <20260622092035.400959-1-borntraeger@linux.ibm.com>
-References: <20260622092035.400959-1-borntraeger@linux.ibm.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.58.3 (3.58.3-1.fc43) 
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wbhBV-000661-Hv
+ for qemu-devel@nongnu.org; Mon, 22 Jun 2026 12:07:41 -0400
+Received: from mail-yx1-xb129.google.com ([2607:f8b0:4864:20::b129])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wbhBU-0006In-2u
+ for qemu-devel@nongnu.org; Mon, 22 Jun 2026 12:07:41 -0400
+Received: by mail-yx1-xb129.google.com with SMTP id
+ 956f58d0204a3-66310a69f65so2456570d50.2
+ for <qemu-devel@nongnu.org>; Mon, 22 Jun 2026 09:07:39 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1782144459; cv=none;
+ d=google.com; s=arc-20240605;
+ b=JVJEK62rmscJios/iXdpVtsDDue4PfFzXBRiOcUp7mRrTFjpmK7sbQAMoiTFkYJoYd
+ MlJDducoB1Xo5bDUl6G8t4YjYHJM+g56uqTW/2KllkdMVKfVtOUKUzi3esJCbPnfuSMs
+ HDREx8J8tmdrm0lRXVyUySlktFlB7Z+nOJZv4v1kMkpPg1VUEuxlEJgwKZBvHBEFXjRF
+ b+97tyP4pMS8FfEBxo78xxEUV/AQVlgsvfb/+8Dm+pyrFvQ9ypscYGN9wzmdMTBizLA8
+ 30T2UKYz6j7U9QXjYJEQQNc29TFA8AUIDiD2ohNqhu/Y8j8IAY5P8V5cWArpmO9MyaKq
+ lHPA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=XFXBYQvR1B9AsvIycYAgg9wXLkRe3WQ47h1nYEBLwjM=;
+ fh=Q3krpAQIA0wAxp6tS0EmfBAbNCwv1IVxVd0z2YXKEao=;
+ b=IqPreFHuy6q0CeOph3u+Hzi4VnL+lr4nT6+e36UMrkgiqDzI8bWjNnaclmofTpbbUM
+ zT6hgp0BEstAeCsavMhmNEB+F0NNhgoy22HvI//PplHXhQx0MX+9LN/fajmT0sO3SvNO
+ fM2qpQc/sKmYNAmM/G+QXPXvEH0kv4G1N2/BEJf9CzT8U96TTCN0XHGInxaHHJjKwiAu
+ 0aUZ0Ast9FHb/OLH7K07gjb53bjXuLh2SjmDh3lvtHJYZYODPB1FSoNO1u0GWYxW72ef
+ SeeGpXyONJminCeDIdQsApvsVYw7pMhbl+KhcehdP58/U+clxwhlxiaMz9bRoM3y95RC
+ IIRQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1782144459; x=1782749259; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=XFXBYQvR1B9AsvIycYAgg9wXLkRe3WQ47h1nYEBLwjM=;
+ b=QUcAq8FKhWKW85D3x/l7KQAymnl4BKaCLEVBlREBXyJpou3q7D7NN6p5ejhPirijtD
+ 2Tfd0FJwDcF0Ao+ALDlbnd7Bl9Kn0iAoMZy/3WLMf7WnIwReqLiVu6XpM0Rye2WALDJS
+ Lq9G/QWyisAjRI4/4J/iLwkBwStP7yHvzFiWKiZRxMsxCasNPiJQ0U7QsO/II07zUF/z
+ 4/xUCi1RnFVafvRqDXhLIaH74ZbrDTjWljmWuqAFDTNHRO5rkqUhfTX+3wdBrZj4bTqX
+ wq4zRv9LpnQ/lsit7N2l+3NfI0Ktr/nSxhS9MzYq/DNfBfDxrXB1uf2klu7bfb7QlAZe
+ TYrA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1782144459; x=1782749259;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=XFXBYQvR1B9AsvIycYAgg9wXLkRe3WQ47h1nYEBLwjM=;
+ b=ekiemAOX4vc1aLwr8pqrmbEphD+BQSzJUXZ6uXgUMonzauphd7iUdQqMpBnrM6ea1a
+ XnUZ5lViWlEkQVvJp6Rs98qpTnCGrzbtCSBau1fYJnRU3qY2xEEqIFCHAI7WpHTPr42K
+ EQynNuyqgxZsyPgHFVxgYWXMvKO6/eXoC+J+gm514XECp+6sGlNThUfe2yiqpz8ujoRC
+ ptLcbIronblBn9aFZnbEDK57yExOum5XoapkkzKzQQ8G/A5nYX4sRf1Bb0zBivvWXmpU
+ MS26IcG6YesoNWLiKBrRGcy1IpLj0jv0mAhx1Crgoxts3qM8KuWgXrMl/ShbViNIVeNc
+ VNFg==
+X-Gm-Message-State: AOJu0YyRT4U6c+x0AuXWMQy77j0kswRvh+Awt+nEFibhNTpaZJ+U+IeK
+ Em+edsF3JoqQpnQjJ7VQgouFiXU7ipwxycdfl+QKTFAQF5+YW9WB6VeO00lNrOP7hhWIa1byhOp
+ jY838cickF44+C59rkHHJBGbp5+YCCbjpEUhKezBAFQ==
+X-Gm-Gg: AfdE7ckAWaeH0LY9XNaZ04v+wMgms8xMXNdVPcst6v+uj3p2hu7Y6zAVUPtXcLnLgEA
+ 9UqInKx9/uS7EHjESpxuZ/bqh68F1YQ5/ejRxG/BWbF8dwu6NTETReGu+XhfQeDUKW68+lmRQQ/
+ uuZ9bi86mGNgMKrqqat/XBtvYmXAe52sXJiR2zlApsiTkUvc2PDEVo4MkCaNEDkruP1Sx54zJCz
+ jbGFOkX3IvgrUGrKGQ3GV27rdCc2h8kL50r0L3Nx74qAjdJ5yux40i6fPDAQOsqKk8bAq5h0eNV
+ 2WoF7Z3TVke26SZsT3PAbuml2fYC1ymMK02AIt/2QVtB16oeBpudgIR0
+X-Received: by 2002:a05:690e:e81:b0:662:dcac:7a52 with SMTP id
+ 956f58d0204a3-663032f5ee5mr12483256d50.39.1782144458590; Mon, 22 Jun 2026
+ 09:07:38 -0700 (PDT)
 MIME-Version: 1.0
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=I4VVgtgg c=1 sm=1 tr=0 ts=6a3959cf cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
- a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=69wJf7TsAAAA:8
- a=VnNF1IyMAAAA:8 a=p45afdTvkiPx-vbwLScA:9 a=QEXdDO2ut3YA:10
- a=Fg1AiH1G6rFz08G2ETeA:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjIyMDE1NyBTYWx0ZWRfX42Kg5+igMRd2
- tCq5cmQfSEbub9fC3wJC3ezAJgQYdT0XNPdb/HogU7LqDPs4CII+Sj7m+t6u21sXSXuSHFZXXbx
- qSGehRyC4DjVRhVM4PKMZ6Z5wjI9AjRE0SWdr7NJP6ra6ZXC8C56N9NEPicNgbM/ZsQU8CZ4aC/
- RP+Szvynp9FXv6nPDt1ByG3Ttj2nCEmLMTGprH7YhHEMqXmTYH3DZdv94T0pf42QJdxZ4EqKcI3
- kLbwkyHB7Bo6AUVxOmQn+xjFe+TGBrcHy+qKjEMqB7DnTy3Vere/WKB0kdpwvmBXdfWfTHg3cj9
- cDsDKIF++UxCjhjh9LdvxZmBAPrd8f28WZW6HGZa/oyB+7b3Ng/eTVoh83YgEUGHusPnXtZ/eS3
- K08U8KHJhMH0ICDJGRvMbPTb0yedn2KDa6Ukq+nVPIlnYLQa2GnPTQo4aNwfvD0ireeDsb9wKwC
- ZyKqBxhq0U50sGrq2bQ==
-X-Proofpoint-GUID: RcIQ5dsgDHwEvJQrJL5L1nzQbUDeKAui
-X-Proofpoint-ORIG-GUID: RcIQ5dsgDHwEvJQrJL5L1nzQbUDeKAui
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjIyMDE1NyBTYWx0ZWRfX8P7amHE5Ku6r
- Xj2KjfpRv15BqaBFxVdo3L03NxMSq7OEmPSveoCvTCc3cOuGELb1tq6OBro/HI5vex63IAxZBUE
- +mZbGNemP6sBrZrG+GTDLfJNGoOo4OE=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-22_03,2026-06-22_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 malwarescore=0 clxscore=1011 impostorscore=0
- suspectscore=0 phishscore=0 bulkscore=0 spamscore=0 priorityscore=1501
- adultscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2606220157
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=farman@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+References: <20260529-feat-mte4-v7-0-ccbd3c14eb3c@gmail.com>
+In-Reply-To: <20260529-feat-mte4-v7-0-ccbd3c14eb3c@gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 22 Jun 2026 17:07:26 +0100
+X-Gm-Features: AVVi8CdQFZcZe9qHP4nGo_qucpQD1VPolgeNGwX947UE4Cv122fXpI5UTm5dl_4
+Message-ID: <CAFEAcA8R1RXrGo2xov-4gKLQXX=FTVKoK1rGuxuYmBo9e8SN_g@mail.gmail.com>
+Subject: Re: [PATCH v7 00/15] target/arm: add support for MTE4
+To: Gabriel Brookman <brookmangabriel@gmail.com>
+Cc: qemu-devel@nongnu.org, Gustavo Romero <gustavo.romero@linaro.org>, 
+ Richard Henderson <richard.henderson@linaro.org>, qemu-arm@nongnu.org, 
+ Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>, 
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b129;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb129.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -125,44 +116,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 2026-06-22 at 11:20 +0200, Christian Borntraeger wrote:
-> The stsi 3.2.2 page is being prepared by the kvm module and the size is
-> clamped by the kernel. As the memory is mapped in the guest, another
-> guest VCPU could race and overwrite the count and messing up the move
-> operation. For any out of bound count, fall back to the kernel buffer.
->=20
-> Cc: qemu-stable@nongnu.org
-> Signed-off-by: Christian Borntraeger <borntraeger@linux.ibm.com>
-> ---
->  target/s390x/kvm/kvm.c | 9 +++++++++
->  1 file changed, 9 insertions(+)
+On Fri, 29 May 2026 at 20:52, Gabriel Brookman
+<brookmangabriel@gmail.com> wrote:
+>
+> This series implements ARM's Enhanced Memory Tagging Extension
+> (MTE4). MTE4 implies the presence of several subfeatures:
+> FEAT_MTE_CANONICAL_TAGS, FEAT_MTE_TAGGED_FAR, FEAT_MTE_STORE_ONLY,
+> FEAT_MTE_NO_ADDRESS_TAGS, and FEAT_MTE_PERM, none of which are
+> currently implemented in QEMU. This patch implements all five.
 
-Looks right to me.
+I just noticed that this patchset didn't add FEAT_MTE4 to the
+list of implemented features in docs/system/arm/emulation.rst.
+Are we missing anything to be able to call MTE4 complete
+and close https://gitlab.com/qemu-project/qemu/-/work_items/3116 ?
 
-Reviewed-by: Eric Farman <farman@linux.ibm.com>
-
->=20
-> diff --git a/target/s390x/kvm/kvm.c b/target/s390x/kvm/kvm.c
-> index ed8cd6b410..a3835573bb 100644
-> --- a/target/s390x/kvm/kvm.c
-> +++ b/target/s390x/kvm/kvm.c
-> @@ -1791,6 +1791,15 @@ static void insert_stsi_3_2_2(S390CPU *cpu, __u64 =
-addr, uint8_t ar)
->      } else if (s390_cpu_virt_mem_read(cpu, addr, ar, &sysib, sizeof(sysi=
-b))) {
->          return;
->      }
-> +
-> +    /*
-> +     * The memory was filled by the kernel but mapped into the guest.
-> +     * If something is fishy, do not touch the buffer.
-> +     */
-> +    if (sysib.count =3D=3D 0 || sysib.count > ARRAY_SIZE(sysib.ext_names=
-)) {
-> +        return;
-> +    }
-> +
->      /* Shift the stack of Extended Names to prepare for our own data */
->      memmove(&sysib.ext_names[1], &sysib.ext_names[0],
->              sizeof(sysib.ext_names[0]) * (sysib.count - 1));
+thanks
+-- PMM
 
