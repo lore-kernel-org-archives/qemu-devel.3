@@ -4,105 +4,132 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE7ACCDB46B
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jun 2026 05:03:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00E28CDB46B
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jun 2026 05:22:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wbWoT-0005U6-Nq; Mon, 22 Jun 2026 01:03:13 -0400
+	id 1wbX6C-0007KJ-8b; Mon, 22 Jun 2026 01:21:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wbWoR-0005TV-2X
- for qemu-devel@nongnu.org; Mon, 22 Jun 2026 01:03:11 -0400
-Received: from mail-ej1-x62a.google.com ([2a00:1450:4864:20::62a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wbWoP-0000P6-0V
- for qemu-devel@nongnu.org; Mon, 22 Jun 2026 01:03:10 -0400
-Received: by mail-ej1-x62a.google.com with SMTP id
- a640c23a62f3a-c07ea058c0cso627900066b.2
- for <qemu-devel@nongnu.org>; Sun, 21 Jun 2026 22:03:08 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1782104587; cv=none;
- d=google.com; s=arc-20240605;
- b=D5XK5/A0A65Ko2q72XR9a+/KzOBxFLxkohTLRFpLolzSEjoMy1SmmvaryojWuwHm5p
- RmhwGYDeUxcknj6V65mXHT644En0FdkhdhtUPGjDzdLBuPAdQLJu6cJh2cy2nEZTuSf9
- R29Kl7DpCzcmaSelK6tr2gyEDilF10cSp+gAJjdJC9ODFnJTXpp09J9hJ4XPcp4Uzuhq
- S0Qp0ulIJtBzG++UfKSZsHazrkaqviKmAlBnhLl2t515UqLd8TJDf4rR6LUF6WKkrR1v
- iOizoGgw7UPSJZm/oN0My+pUTm8viMfBMtZePbTS8Qc1VwPNq+e3nMQ0tJD9RFBpyvR4
- 1X6A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=LZ/pK/qrosauCgvZFW7TUEv2Sjon1rM1h6qrA9dYw70=;
- fh=y/39rxWsHsSIhiCgFyox46bvYsAfNaBS3wRFv9pkMrs=;
- b=CaVhdCH5wpupKF9a7cf6rGo7YzYHiz38Z45WEob60ubGhGu9zD3fARyGF5olrdIIPD
- ugfG6SpOLxT/v9A5cC3B+z4yOzGR9gz3f9OScmmLkP+ug63SO8X1w3BgwMi7NuDFoxfy
- tkvMac1RD53fFI8XX5IbhZQ/0Jetr2+fNm5kW70DiS5IX6+p34h6dfhRGusHa7gaX2oV
- LVthtOrBc5xpTMNUsT/cRzmaxIXyvEZog7q8d+HjYAirUy37lQ+HdAIS3Bi1MIkppWAm
- diBl2jx+KHV0nGKEapIozILM7pJt4FX6SptKK5jRuM14D3xxmZicF4vVF9jqRoYZmvY/
- Fflg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
+ id 1wbX67-0007K2-Gp
+ for qemu-devel@nongnu.org; Mon, 22 Jun 2026 01:21:28 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
+ id 1wbX65-00076P-I5
+ for qemu-devel@nongnu.org; Mon, 22 Jun 2026 01:21:27 -0400
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 65M59Uft3850880
+ for <qemu-devel@nongnu.org>; Mon, 22 Jun 2026 05:21:22 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:message-id
+ :mime-version:subject:to; s=qcppdkim1; bh=lTKh+mG/xcQ1yhy7EEvNBk
+ LBq3AA/NhfPOCilESLCW8=; b=oZ8GYXNzGvrnRkHAR5nAknbGSD8uiYqgCUc3W9
+ YIwWsniEdSNH9B3tRTBxLcY1gsmhyc2DLeSSh70ZVR0N42G3Bf7BfXIjaz7VsDzK
+ SfBETfS2TSVS2b5rQQv6qD9ankIx/IyqdXBbNeVIhSNaAlaQd46KiJgFgKGUEnt9
+ 09/Pw1czI0Zz84s03l/uQ/LYwgMa7QPs+Mz7TAxU5+e7dPDuRIgMkEJ1b3Yi8aEa
+ VV+925GXB2pUYENOGeTf9tFtA6h0l6PwZOT/JJrDcynwIV5emwm8qOqIYfmndL02
+ vhBW9cnQQ0mdLdutrNeDHG45LSO5InUdU+XXyESCSwgFY5ng==
+Received: from mail-dl1-f71.google.com (mail-dl1-f71.google.com [74.125.82.71])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ewm584p5g-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Mon, 22 Jun 2026 05:21:22 +0000 (GMT)
+Received: by mail-dl1-f71.google.com with SMTP id
+ a92af1059eb24-1384427c3efso2140453c88.0
+ for <qemu-devel@nongnu.org>; Sun, 21 Jun 2026 22:21:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1782104587; x=1782709387; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=LZ/pK/qrosauCgvZFW7TUEv2Sjon1rM1h6qrA9dYw70=;
- b=USQmSVPMNyNOkzHcns6w09698GRadM+OsMMZHanhnn+A6VV9FJM8CyRACJfCoxQpFW
- lmsVt/ImiJ6xHlhfVw9xjGbXNX6xXuau/EvnowfbRpR0bPIEuCh/S0ZKYCwDzd98WgBC
- WH7n3nZUSd2AbW/mEIvJ8sNz//ry5GOX8y8uOjb2jExfr5NcV3Lx9n42J6iO7lUVfCMA
- FpMYJDnybZEw2xiNOL2yUzwXezCN/cgGBsuDrqY9IGx6OLAC9HI+lHfwgGgFM9vF6sL+
- 5tneltx8osOA2rlcsSMerpsMZZOiqFUVFr16UXixZsh3vJqguKg8OK3dFXRPovLv7yH/
- qW5Q==
+ d=oss.qualcomm.com; s=google; t=1782105682; x=1782710482; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=lTKh+mG/xcQ1yhy7EEvNBkLBq3AA/NhfPOCilESLCW8=;
+ b=L4QxvSK0TY2NIXpz9+tZnAAnHA8DSXGgqYSkPn02Lt/ES74Iu7fNZOcRbfXvHjkVRC
+ qc6sLas24V/FuP08iYjlljR41iNuamiorXLzXbzyc41E+NC++rABdjdp1KL8gmatMaaK
+ kfcfjZWexzUCL4m73KOQyyHggBwKwEXR3qT45vPHQKnB/ldq42QQjc6lOARZ8lS7hPcc
+ 7YDuxjsXrCYS9elCUfVx41EP8LHSS/NuycJ/q/qniN0oIpSDnrprcetHNyZfevZTG6BX
+ DMc9b+a3qN77zr/zQ2McZNgpbp11I5UckSsRecSxVv9W26Y+KlilatxsYVTFBLHCjl0V
+ ZUvw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782104587; x=1782709387;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=LZ/pK/qrosauCgvZFW7TUEv2Sjon1rM1h6qrA9dYw70=;
- b=Vq1HRh4yCYJWuPRC3tLBs67t8R/dP+8xqCniWCp2ETjxP7Fokk7IPwmh0kuuysl9L/
- vmMlL6wvSzUs3dd5RfUIx2sTnRPro9dV7B4LvBREQB4Xh8cBf0ck4+1GElbsFuVh2kim
- uAsPb0+Mz+YFx4slR3dzvF73a55LDXshK6zDHe/Xt7eSpZTzBvEVJM5EYZNsD4+Yr93Y
- 3josOMKQPJGzUkFDB0hRGdrGlXiIocl9C5aSzE0RQsvSwzms/6Et9+mW6YIc2fDQf+Mb
- 2wDmHr5ee7g20RX4a+GLIGj15o89rUdwGpnr5/BF8S6o8orzG6jTA9gHbOtauManhMAT
- 4JRg==
-X-Gm-Message-State: AOJu0YyxL9IZgPBfyhRdVc73GrV6DfsphnnRgNfiW1+jUSR+YCfRGJMr
- mH3UqfBF8YZO3OButOU/0SDpV3S+N5SRFvT8SUCsoOHd40hnbo5r9GlIbezK7GaW5txgRl0+Flp
- 0GG2lrHwTUJmZV0KDivNsC3MW5+1XSa0H7mBWAsY=
-X-Gm-Gg: AfdE7cmi3BX+KOnG8ArHqFPtrw89jvZrQ14ZoUKvylY5L8WOPXfP2H36tTFlhr+Mr8N
- 8405kXB+bLQhQpwfI/5mUuLuJ/6PDAfE/5RpWKxzEvMFwlR2kbGxrwsGO2YR22iYsKh5CKmBQiu
- xW7EEanodk+DEocgXVKbQpDgFjARnYdeAImVGKmLYLMEzs0CtqhgblHOea+pMmqwmQ2/ZDQ7AnG
- F3yyhxYUa7PE1C60fvMM4j38by4V+0fCrLcMsBqXSpVk+vMOWGpaYk/rFXHXrjFTXWh4QzenNsm
- CwlmsQBDb0uvALz4jb4ALrfIeBw=
-X-Received: by 2002:a17:907:8b8a:b0:bd3:cb24:ae61 with SMTP id
- a640c23a62f3a-c0b601eaa1cmr503084366b.6.1782104586573; Sun, 21 Jun 2026
- 22:03:06 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1782105682; x=1782710482;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=lTKh+mG/xcQ1yhy7EEvNBkLBq3AA/NhfPOCilESLCW8=;
+ b=hh6vLFMGe3lzX/0XihFOc/yy/TNGSi8f+h5lconlshgUnxwgCoDaOL086G19hdGfPo
+ h1c9Pb/29nQqi5PZVso0UWfhc6XGu/y7XZqPEIomaziLOJ1i7lgB2wMJ7/QLlJcyqy2d
+ zrjKLp2lwSoPyqSsHM4PrH2AWktbaIj4EzsIDE5qifE5ry6ULRARCM3bRb/M7OOcXYm2
+ +/75jNbb1xoXiMd3ws5LOQOjp3uoAtW2E6rnmhIZ6lronTmBhaeeaB/MdCoi5hknHYkx
+ xUF+wqSkPTp1HQo9mIsfT/4ymA4eWVadZPDpoqU8T0izBOc6yc9OAr1GEpn6aNnF+Zqq
+ Mr7Q==
+X-Gm-Message-State: AOJu0YypsVKZEEaEOYg2/osHBLpPQbudLWVO+jji1l+d4bsN0CzUPU+J
+ 18zZ7TCh5xvUheRg4HZtRSwBsP4IgHPt9hBShtAK52hF7tsBya5b8aehhPMm6IaLXg+BwoNv6Mn
+ qIbSIKp2x3jd2pdAPhb96qBZdVSSVn2QIzcZYD+HaPZJdFhI2UshZZ+O51q8Ldj+pig==
+X-Gm-Gg: AfdE7cn18hfV7QXjLesD1EJlZwVYpdVOSD4tFQKDIy6GHn938il0gkfW0o9ykkCcB1c
+ JH3E3HLxLcO7UPszENtLam8lhs3f6efqv9ju3ieZ3FhJPfAuF7yHWznnZ6wcc3WYJKkm17XMs6M
+ a7cCdPHM9sHbSEH1Q8ZNab/zIjF9iyOfZSMEmMV2TSiDszXmN3jk+b0uS76+2Lyls/d9pq2oEYa
+ S9Wu6/4FQPGr50eu41X8DRyDJwLy3YfwmGivfxRWzx8ypDp1Ih3NREJheeygqFT8gTMt+BfElJx
+ hfzjXsibrV/d7n8tL3tTyIEhcpZuiX66SUOaUjBNldcvy8DjdP5MDU7u+ZadRmnWqXDLMACvjZx
+ aLfou0M2/rCvyqC6dZ/1s1iGAkJKW9xa47kbU1B32OdCSIMOOCNnTjAz0dtE=
+X-Received: by 2002:a05:7022:101:b0:12d:ff1b:92f5 with SMTP id
+ a92af1059eb24-139a504ea4fmr8137154c88.28.1782105681967; 
+ Sun, 21 Jun 2026 22:21:21 -0700 (PDT)
+X-Received: by 2002:a05:7022:101:b0:12d:ff1b:92f5 with SMTP id
+ a92af1059eb24-139a504ea4fmr8137143c88.28.1782105681486; 
+ Sun, 21 Jun 2026 22:21:21 -0700 (PDT)
+Received: from hu-bcain-lv.qualcomm.com (Global_NAT1.qualcomm.com.
+ [129.46.96.20]) by smtp.gmail.com with ESMTPSA id
+ a92af1059eb24-139adcb7aabsm8028933c88.5.2026.06.21.22.21.20
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sun, 21 Jun 2026 22:21:21 -0700 (PDT)
+From: Brian Cain <brian.cain@oss.qualcomm.com>
+To: qemu-devel@nongnu.org
+Cc: Brian Cain <brian.cain@oss.qualcomm.com>, stefanha@redhat.com,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, anjo@rev.ng,
+ ale@rev.ng
+Subject: [PATCH] target/hexagon: use cmd_array() instead of get_id()
+Date: Sun, 21 Jun 2026 22:21:20 -0700
+Message-Id: <20260622052120.2626472-1-brian.cain@oss.qualcomm.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-References: <20260616235939.1358663-1-daniel.barboza@oss.qualcomm.com>
- <20260616235939.1358663-6-daniel.barboza@oss.qualcomm.com>
-In-Reply-To: <20260616235939.1358663-6-daniel.barboza@oss.qualcomm.com>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Mon, 22 Jun 2026 15:02:39 +1000
-X-Gm-Features: AVVi8CeMYzaLvzlFdXpH3IVCZYMDzLxyndXnJtF0DWbXJ0Gj3S0Ehjg64-BKmTc
-Message-ID: <CAKmqyKP_CuDeoTYyz73jM_UiQGsUW06yLTEJsnMRSnuCQYWbxw@mail.gmail.com>
-Subject: Re: [PATCH 5/5] hw/riscv: add create_fdt_plic() helper
-To: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
- liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, chao.liu.zevorn@gmail.com, 
- Palmer Dabbelt <palmer@dabbelt.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::62a;
- envelope-from=alistair23@gmail.com; helo=mail-ej1-x62a.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
+X-Proofpoint-ORIG-GUID: oE5Kb6ZvbPnNfLiEXuJLj_zLMge5Fv2U
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjIyMDA0OSBTYWx0ZWRfX8SxY02xKyllo
+ vnL2QCA9orRlwgm7Tr31FhQ+YN0by54FNz3rU06HmXhXhY9NkjdtsPLIuQDYdB3vSYnAtZjEs5f
+ k+yOhCdFvxZVmoF96gQTjMTNif+BRVc=
+X-Proofpoint-GUID: oE5Kb6ZvbPnNfLiEXuJLj_zLMge5Fv2U
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjIyMDA0OSBTYWx0ZWRfX+tzzIPmoPBAU
+ b060rv/A4JT6AnXGgS/cRlrs14qXaGVVYOjRW0OqVZFbW7IvCXS7BBvWxFai9HGcXuqo+0ifD/5
+ 7RtCuXdnLTRNvjZ09fgH6vLwqbhQpFNSGPP99DX0zqn+nhXUMrH8mT6QgVOTRHbKxKc/m8nJAo7
+ yooMOP0GulMa3s7IKTfAMt8DqQb1JVvNdEgbLmUZR/WYZm79oOD9MPzTZWBIYz8pRyrJAVoE7Nv
+ fbYIZE/silB0mPwixc19+qrm4EsDvccela319BSqARcev7rjRLpkeN8P9yhQo4zKskIRY2hvZH5
+ 69tvnulcwownkyEUI//25257C0SrRlYSYXDIb0aq06D/pnV5fxS/ytg8BLGhVS44ngGymB4xe/J
+ 2QJLno7LafDp8xocEwvQffzW4aCaoJC05pFwFkYtRSAAZG5K26mp1c8ch67gacX441pDpKSt3vv
+ QBi7R5Fk3BdeUUjaJIw==
+X-Authority-Analysis: v=2.4 cv=FOQrAeos c=1 sm=1 tr=0 ts=6a38c652 cx=c_pps
+ a=JYo30EpNSr/tUYqK9jHPoA==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22
+ a=VwQbUJbxAAAA:8 a=pGLkceISAAAA:8 a=EUspDBNiAAAA:8 a=SrZkeIdwbWuKvdoqoQQA:9
+ a=QEXdDO2ut3YA:10 a=Fk4IpSoW4aLDllm1B1p-:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-22_01,2026-06-18_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 lowpriorityscore=0 bulkscore=0 clxscore=1015 adultscore=0
+ phishscore=0 spamscore=0 priorityscore=1501 impostorscore=0 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606220049
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=brian.cain@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -119,240 +146,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jun 17, 2026 at 10:01=E2=80=AFAM Daniel Henrique Barboza
-<daniel.barboza@oss.qualcomm.com> wrote:
->
-> Consolidate the common plic FDT code between 'virt' and sifive_u boards
-> into a single place.
->
-> Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-
-Alistair
-
-> ---
->  hw/riscv/fdt-common.c         | 30 +++++++++++++++++++++
->  hw/riscv/sifive_u.c           | 34 +++++++-----------------
->  hw/riscv/virt.c               | 49 ++++++++++++-----------------------
->  include/hw/riscv/fdt-common.h |  5 ++++
->  4 files changed, 61 insertions(+), 57 deletions(-)
->
-> diff --git a/hw/riscv/fdt-common.c b/hw/riscv/fdt-common.c
-> index b27ff13bca..e0e31af09b 100644
-> --- a/hw/riscv/fdt-common.c
-> +++ b/hw/riscv/fdt-common.c
-> @@ -200,3 +200,33 @@ create_fdt_socket_cpu_sifive(void *fdt, char *clust_=
-name,
->                                     socket_id, socket_hartid_base,
->                                     phandle, intc_phandles, false, false)=
-;
->  }
-> +
-> +void create_fdt_plic(void *fdt, hwaddr addr, uint64_t size,
-> +                     uint32_t plic_phandle, uint32_t int_cells,
-> +                     uint32_t addr_cells, uint32_t *plic_cells,
-> +                     uint32_t cells_size, uint32_t ndev_sources,
-> +                     bool numa_enabled, int socket_id)
-> +{
-> +    g_autofree char *nodename =3D NULL;
-> +    static const char * const plic_compat[2] =3D {
-> +        "sifive,plic-1.0.0", "riscv,plic0"
-> +    };
-> +
-> +    nodename =3D g_strdup_printf("/soc/interrupt-controller@%"HWADDR_PRI=
-x, addr);
-> +
-> +    qemu_fdt_add_subnode(fdt, nodename);
-> +    qemu_fdt_setprop_cell(fdt, nodename, "#interrupt-cells", int_cells);
-> +    qemu_fdt_setprop_cell(fdt, nodename, "#address-cells", addr_cells);
-> +    qemu_fdt_setprop_string_array(fdt, nodename, "compatible",
-> +        (char **)&plic_compat, ARRAY_SIZE(plic_compat));
-> +    qemu_fdt_setprop(fdt, nodename, "interrupt-controller", NULL, 0);
-> +    qemu_fdt_setprop(fdt, nodename, "interrupts-extended",
-> +                     plic_cells, cells_size);
-> +    qemu_fdt_setprop_sized_cells(fdt, nodename, "reg",
-> +                                 2, addr, 2, size);
-> +    qemu_fdt_setprop_cell(fdt, nodename, "riscv,ndev", ndev_sources);
-> +    if (numa_enabled) {
-> +        qemu_fdt_setprop_cell(fdt, nodename, "numa-node-id", socket_id);
-> +    }
-> +    qemu_fdt_setprop_cell(fdt, nodename, "phandle", plic_phandle);
-> +}
-> diff --git a/hw/riscv/sifive_u.c b/hw/riscv/sifive_u.c
-> index 7dfc18d3ec..d923f041e0 100644
-> --- a/hw/riscv/sifive_u.c
-> +++ b/hw/riscv/sifive_u.c
-> @@ -100,14 +100,11 @@ static void create_fdt(SiFiveUState *s, const MemMa=
-pEntry *memmap,
->      MachineState *ms =3D MACHINE(s);
->      void *fdt;
->      int cpu;
-> -    uint32_t *cells;
-> +    uint32_t *cells, cells_length;
->      char *nodename;
->      uint32_t plic_phandle, prci_phandle, gpio_phandle, phandle =3D 1;
->      uint32_t hfclk_phandle, rtcclk_phandle, phy_phandle;
->      static const char * const ethclk_names[2] =3D { "pclk", "hclk" };
-> -    static const char * const plic_compat[2] =3D {
-> -        "sifive,plic-1.0.0", "riscv,plic0"
-> -    };
->      g_autofree uint32_t *intc_phandles =3D g_new0(uint32_t, ms->smp.cpus=
-);
->      g_autofree char *clust_name =3D NULL;
->
-> @@ -197,7 +194,8 @@ static void create_fdt(SiFiveUState *s, const MemMapE=
-ntry *memmap,
->      g_free(nodename);
->
->      plic_phandle =3D phandle++;
-> -    cells =3D  g_new0(uint32_t, ms->smp.cpus * 4 - 2);
-> +    cells_length =3D ms->smp.cpus * 4 - 2;
-> +    cells =3D  g_new0(uint32_t, cells_length);
->      for (cpu =3D 0; cpu < ms->smp.cpus; cpu++) {
->          /* cpu 0 is the management hart that does not have S-mode */
->          if (cpu =3D=3D 0) {
-> @@ -210,26 +208,14 @@ static void create_fdt(SiFiveUState *s, const MemMa=
-pEntry *memmap,
->              cells[cpu * 4 + 1] =3D cpu_to_be32(IRQ_S_EXT);
->          }
->      }
-> -    nodename =3D g_strdup_printf("/soc/interrupt-controller@%lx",
-> -        (long)memmap[SIFIVE_U_DEV_PLIC].base);
-> -    qemu_fdt_add_subnode(fdt, nodename);
-> -    qemu_fdt_setprop_cell(fdt, nodename, "#interrupt-cells",
-> -                          SIFIVE_U_PLIC_INT_CELLS);
-> -    qemu_fdt_setprop_cell(fdt, nodename, "#address-cells",
-> -                          SIFIVE_U_PLIC_ADDR_CELLS);
-> -    qemu_fdt_setprop_string_array(fdt, nodename, "compatible",
-> -        (char **)&plic_compat, ARRAY_SIZE(plic_compat));
-> -    qemu_fdt_setprop(fdt, nodename, "interrupt-controller", NULL, 0);
-> -    qemu_fdt_setprop(fdt, nodename, "interrupts-extended",
-> -        cells, (ms->smp.cpus * 4 - 2) * sizeof(uint32_t));
-> -    qemu_fdt_setprop_cells(fdt, nodename, "reg",
-> -        0x0, memmap[SIFIVE_U_DEV_PLIC].base,
-> -        0x0, memmap[SIFIVE_U_DEV_PLIC].size);
-> -    qemu_fdt_setprop_cell(fdt, nodename, "riscv,ndev",
-> -                          SIFIVE_U_PLIC_NUM_SOURCES - 1);
-> -    qemu_fdt_setprop_cell(fdt, nodename, "phandle", plic_phandle);
-> +
-> +    create_fdt_plic(fdt, memmap[SIFIVE_U_DEV_PLIC].base,
-> +                    memmap[SIFIVE_U_DEV_PLIC].size,
-> +                    plic_phandle, SIFIVE_U_PLIC_INT_CELLS,
-> +                    SIFIVE_U_PLIC_ADDR_CELLS, cells,
-> +                    cells_length * sizeof(uint32_t),
-> +                    SIFIVE_U_PLIC_NUM_SOURCES - 1, false, 0);
->      g_free(cells);
-> -    g_free(nodename);
->
->      gpio_phandle =3D phandle++;
->      nodename =3D g_strdup_printf("/soc/gpio@%lx",
-> diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
-> index fa464e644f..92c30a6f4c 100644
-> --- a/hw/riscv/virt.c
-> +++ b/hw/riscv/virt.c
-> @@ -326,39 +326,25 @@ static void create_fdt_socket_plic(RISCVVirtState *=
-s,
->      int cpu;
->      g_autofree char *plic_name =3D NULL;
->      g_autofree uint32_t *plic_cells;
-> -    unsigned long plic_addr;
->      MachineState *ms =3D MACHINE(s);
-> -    static const char * const plic_compat[2] =3D {
-> -        "sifive,plic-1.0.0", "riscv,plic0"
-> -    };
-> +    unsigned long plic_addr =3D s->memmap[VIRT_PLIC].base +
-> +                              (s->memmap[VIRT_PLIC].size * socket);
-> +    bool numa_enabled =3D riscv_numa_enabled(MACHINE(s));
-> +    uint32_t cells_length;
->
-> -    plic_phandles[socket] =3D (*phandle)++;
-> -    plic_addr =3D s->memmap[VIRT_PLIC].base +
-> -                (s->memmap[VIRT_PLIC].size * socket);
->      plic_name =3D g_strdup_printf("/soc/interrupt-controller@%lx", plic_=
-addr);
-> -    qemu_fdt_add_subnode(ms->fdt, plic_name);
-> -    qemu_fdt_setprop_cell(ms->fdt, plic_name,
-> -        "#interrupt-cells", FDT_PLIC_INT_CELLS);
-> -    qemu_fdt_setprop_cell(ms->fdt, plic_name,
-> -        "#address-cells", FDT_PLIC_ADDR_CELLS);
-> -    qemu_fdt_setprop_string_array(ms->fdt, plic_name, "compatible",
-> -                                  (char **)&plic_compat,
-> -                                  ARRAY_SIZE(plic_compat));
-> -    qemu_fdt_setprop(ms->fdt, plic_name, "interrupt-controller", NULL, 0=
-);
->
->      if (kvm_enabled()) {
-> -        plic_cells =3D g_new0(uint32_t, s->soc[socket].num_harts * 2);
-> +        cells_length =3D s->soc[socket].num_harts * 2;
-> +        plic_cells =3D g_new0(uint32_t, cells_length);
->
->          for (cpu =3D 0; cpu < s->soc[socket].num_harts; cpu++) {
->              plic_cells[cpu * 2 + 0] =3D cpu_to_be32(intc_phandles[cpu]);
->              plic_cells[cpu * 2 + 1] =3D cpu_to_be32(IRQ_S_EXT);
->          }
-> -
-> -        qemu_fdt_setprop(ms->fdt, plic_name, "interrupts-extended",
-> -                         plic_cells,
-> -                         s->soc[socket].num_harts * sizeof(uint32_t) * 2=
-);
->     } else {
-> -        plic_cells =3D g_new0(uint32_t, s->soc[socket].num_harts * 4);
-> +        cells_length =3D s->soc[socket].num_harts * 4;
-> +        plic_cells =3D g_new0(uint32_t, cells_length);
->
->          for (cpu =3D 0; cpu < s->soc[socket].num_harts; cpu++) {
->              plic_cells[cpu * 4 + 0] =3D cpu_to_be32(intc_phandles[cpu]);
-> @@ -366,19 +352,16 @@ static void create_fdt_socket_plic(RISCVVirtState *=
-s,
->              plic_cells[cpu * 4 + 2] =3D cpu_to_be32(intc_phandles[cpu]);
->              plic_cells[cpu * 4 + 3] =3D cpu_to_be32(IRQ_S_EXT);
->          }
-> -
-> -        qemu_fdt_setprop(ms->fdt, plic_name, "interrupts-extended",
-> -                         plic_cells,
-> -                         s->soc[socket].num_harts * sizeof(uint32_t) * 4=
-);
->      }
->
-> -    qemu_fdt_setprop_sized_cells(ms->fdt, plic_name, "reg",
-> -                                 2, plic_addr, 2, s->memmap[VIRT_PLIC].s=
-ize);
-> -    qemu_fdt_setprop_cell(ms->fdt, plic_name, "riscv,ndev",
-> -                          VIRT_IRQCHIP_NUM_SOURCES - 1);
-> -    riscv_socket_fdt_write_id(ms, plic_name, socket);
-> -    qemu_fdt_setprop_cell(ms->fdt, plic_name, "phandle",
-> -        plic_phandles[socket]);
-> +    plic_phandles[socket] =3D (*phandle)++;
-> +
-> +    create_fdt_plic(ms->fdt, plic_addr, s->memmap[VIRT_PLIC].size,
-> +                    plic_phandles[socket], FDT_PLIC_INT_CELLS,
-> +                    FDT_PLIC_ADDR_CELLS, plic_cells,
-> +                    cells_length * sizeof(uint32_t),
-> +                    VIRT_IRQCHIP_NUM_SOURCES - 1,
-> +                    numa_enabled, socket);
->
->      if (!socket) {
->          platform_bus_add_all_fdt_nodes(ms->fdt, plic_name,
-> diff --git a/include/hw/riscv/fdt-common.h b/include/hw/riscv/fdt-common.=
-h
-> index 2d6b9a5d03..017278b611 100644
-> --- a/include/hw/riscv/fdt-common.h
-> +++ b/include/hw/riscv/fdt-common.h
-> @@ -30,4 +30,9 @@ void create_fdt_socket_cpu_sifive(void *fdt, char *clus=
-t_name,
->                                    int cpu_id, int socket_id,
->                                    int socket_hartid_base, uint32_t *phan=
-dle,
->                                    uint32_t *intc_phandles);
-> +void create_fdt_plic(void *fdt, hwaddr addr, uint64_t size,
-> +                     uint32_t plic_phandle, uint32_t int_cells,
-> +                     uint32_t addr_cells, uint32_t *plic_cells,
-> +                     uint32_t cells_size, uint32_t ndev_sources,
-> +                     bool numa_enabled, int socket);
->  #endif
-> --
-> 2.43.0
->
->
+Z2V0X2lkKCkgcmV0dXJucyB0aGUgY29tcGlsZXIncyBzaG9ydCBuYW1lIG5vdCBhIHByb2dyYW0u
+ClBhc3NpbmcgaXQgZGlyZWN0bHkgYXMgdGhlIGNvbW1hbmQgZm9yIHRoZSBpZGVmLXBhcnNlciBw
+cmVwcm9jZXNzaW5nCmN1c3RvbV90YXJnZXQgaGFwcGVuZWQgdG8gd29yayBmb3IgbmF0aXZlIGdj
+Yy9jbGFuZyBidWlsZHMgYnV0CmJyZWFrcyB1bmRlciBjcm9zcyBjb21waWxlcnMgc3VjaCBhcyBl
+bWNjIG9yIGFueSBjY2FjaGUtd3JhcHBlZCBjb21waWxlci4KCkxpbms6IGh0dHBzOi8vbG9yZS5r
+ZXJuZWwub3JnL3FlbXUtZGV2ZWwvQ0FKU1AwUVd6UUVnb1lNQ2daWCs5akN2clY2TzNScW5BK2Rm
+MURwVDJSNk1adlZYaU5nQG1haWwuZ21haWwuY29tLwpTaWduZWQtb2ZmLWJ5OiBCcmlhbiBDYWlu
+IDxicmlhbi5jYWluQG9zcy5xdWFsY29tbS5jb20+Ci0tLQogdGFyZ2V0L2hleGFnb24vbWVzb24u
+YnVpbGQgfCA0ICsrLS0KIDEgZmlsZSBjaGFuZ2VkLCAyIGluc2VydGlvbnMoKyksIDIgZGVsZXRp
+b25zKC0pCgpkaWZmIC0tZ2l0IGEvdGFyZ2V0L2hleGFnb24vbWVzb24uYnVpbGQgYi90YXJnZXQv
+aGV4YWdvbi9tZXNvbi5idWlsZAppbmRleCBkMTY5Y2Y3MWIyZi4uZmYyMmI0ZTQ3MDYgMTAwNjQ0
+Ci0tLSBhL3RhcmdldC9oZXhhZ29uL21lc29uLmJ1aWxkCisrKyBiL3RhcmdldC9oZXhhZ29uL21l
+c29uLmJ1aWxkCkBAIC0yNzAsMTMgKzI3MCwxMyBAQCBpZiBpZGVmX3BhcnNlcl9lbmFibGVkIGFu
+ZCAnaGV4YWdvbi1saW51eC11c2VyJyBpbiB0YXJnZXRfZGlycwogICAgICAgICBjb21tYW5kOiBb
+cHl0aG9uLCBmaWxlcygnZ2VuX2lkZWZfcGFyc2VyX2Z1bmNzLnB5JyksIHNlbWFudGljc19nZW5l
+cmF0ZWQsICdAT1VUUFVUQCddLAogICAgICkKIAotICAgIGNvbXBpbGVyID0gbWVzb24uZ2V0X2Nv
+bXBpbGVyKCdjJykuZ2V0X2lkKCkKKyAgICBjb21waWxlciA9IG1lc29uLmdldF9jb21waWxlcign
+YycpLmNtZF9hcnJheSgpCiAgICAgcHJlcHJvY2Vzc2VkX2lkZWZfcGFyc2VyX2lucHV0X2dlbmVy
+YXRlZCA9IGN1c3RvbV90YXJnZXQoCiAgICAgICAgICdpZGVmX3BhcnNlcl9pbnB1dC5wcmVwcm9j
+ZXNzZWQuaC5pbmMnLAogICAgICAgICBvdXRwdXQ6ICdpZGVmX3BhcnNlcl9pbnB1dC5wcmVwcm9j
+ZXNzZWQuaC5pbmMnLAogICAgICAgICBpbnB1dDogaWRlZl9wYXJzZXJfaW5wdXRfZ2VuZXJhdGVk
+LAogICAgICAgICBkZXBlbmRfZmlsZXM6IFtpZGVmX3BhcnNlcl9kaXIgLyAnbWFjcm9zLmguaW5j
+J10sCi0gICAgICAgIGNvbW1hbmQ6IFtjb21waWxlciwgJy14JywgJ2MnLCAnLUUnLCAnLUknLCBp
+ZGVmX3BhcnNlcl9kaXIsICctbycsICdAT1VUUFVUQCcsICdASU5QVVRAJ10sCisgICAgICAgIGNv
+bW1hbmQ6IGNvbXBpbGVyICsgWycteCcsICdjJywgJy1FJywgJy1JJywgaWRlZl9wYXJzZXJfZGly
+LCAnLW8nLCAnQE9VVFBVVEAnLCAnQElOUFVUQCddLAogICAgICkKIAogICAgIGZsZXggPSBnZW5l
+cmF0b3IoCi0tIAoyLjM0LjEKCg==
 
