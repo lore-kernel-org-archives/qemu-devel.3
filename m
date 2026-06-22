@@ -4,72 +4,149 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00AC6CDB46F
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jun 2026 16:12:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3B99CDB46F
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jun 2026 16:12:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wbhFg-0001sK-6B; Mon, 22 Jun 2026 12:12:00 -0400
+	id 1wbhG1-0002BB-Kw; Mon, 22 Jun 2026 12:12:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lvivier@redhat.com>)
- id 1wbhFa-0001rn-M0
- for qemu-devel@nongnu.org; Mon, 22 Jun 2026 12:11:54 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wbhFz-00025X-S7
+ for qemu-devel@nongnu.org; Mon, 22 Jun 2026 12:12:20 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lvivier@redhat.com>)
- id 1wbhFY-0000Be-GA
- for qemu-devel@nongnu.org; Mon, 22 Jun 2026 12:11:53 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1782144710;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=ma6dsYdCVPYfWQWDqH3DZDdyXl9n2kbNGsk9i4sYk1c=;
- b=KCO/o47F3JAELNADONxV3MjMkXnKaTZbOy0syE0tI0+SOTZX4rKtv2GhT8V6WU4jgwjpKv
- +xyyg6bVApuIJQKxcs/hlz0Ukc8EP/SqSp7XmaMlQmN5uR2/sW5gw3GJgIhvvcn27UuIZ4
- kiTa2YTykcU8AcKQd48g1ENdd4Lai8o=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-180-9QDKfWYaM7OyNSkuhEYAyg-1; Mon,
- 22 Jun 2026 12:11:48 -0400
-X-MC-Unique: 9QDKfWYaM7OyNSkuhEYAyg-1
-X-Mimecast-MFC-AGG-ID: 9QDKfWYaM7OyNSkuhEYAyg_1782144708
-Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id CDC73195604A; Mon, 22 Jun 2026 16:11:47 +0000 (UTC)
-Received: from lenovo-t14s.redhat.corp
- (headnet04.pony-001.prod.iad2.dc.redhat.com [10.2.32.116])
- by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id D023536512; Mon, 22 Jun 2026 16:11:45 +0000 (UTC)
-From: Laurent Vivier <lvivier@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Laurent Vivier <lvivier@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Amit Shah <amit@kernel.org>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- qemu-stable@nongnu.org
-Subject: [PATCH] hw/char/virtio-serial-bus: fix guest-triggerable OOM in
- control_out()
-Date: Mon, 22 Jun 2026 18:11:44 +0200
-Message-ID: <20260622161144.2883799-1-lvivier@redhat.com>
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wbhFy-0000Ks-7r
+ for qemu-devel@nongnu.org; Mon, 22 Jun 2026 12:12:19 -0400
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 65MFX7561591648
+ for <qemu-devel@nongnu.org>; Mon, 22 Jun 2026 16:12:16 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ kozxeXefiWovWAvXq0D8VtvvN+D8AJMNn1fluYdyE3I=; b=GuQGNmih6lETKpVu
+ SyfGTc9KC4OS2Bs2mbuCIr/wR8loVEf4o3Ix8jeerz1LK7axbdYX8qFbKIQCg0s2
+ q/boqnb1iwbyRGi1bAwzn8eIgDQnMS24HQZTUctGV2BsOv7nHbDcbvTc3mKO1Hxs
+ RdoiBOpob9paEwHma4Dn1VveiqprLbS/otn8YaZJ+K6kU+OKbzT6DwoDZSmPlv6K
+ fXjcvMhdrE/VOxC3prBx0ZiOdRhLHxiO1/Huidh3CG+1z69836O38AacYNdWaYZt
+ UMulmCtREFdCkzLzGaGHHxXCugeifIeEeoeRfb2yWeOToTrovIvb0hs3oHGWhVEt
+ NJTdQQ==
+Received: from mail-dy1-f200.google.com (mail-dy1-f200.google.com
+ [74.125.82.200])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ey5n40pwf-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Mon, 22 Jun 2026 16:12:15 +0000 (GMT)
+Received: by mail-dy1-f200.google.com with SMTP id
+ 5a478bee46e88-30c17f62afdso54874eec.0
+ for <qemu-devel@nongnu.org>; Mon, 22 Jun 2026 09:12:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1782144735; x=1782749535; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=kozxeXefiWovWAvXq0D8VtvvN+D8AJMNn1fluYdyE3I=;
+ b=jjR38Rlj6gfAUk9H2p0jfBgz5mh+LlA8CuI4Qgi+DJHJEuxEgb0fC8cAzE+q7FRUrE
+ zjl/HoWQlw/fYcIT299+VF533fSiBRWJKvW0aQ938bTw3ml8syf4M5LUGWl7Hrairw4R
+ YrYL6MQWW7d86XUGtC61HM7YCfbMLKNOPAm+QOqKQ63kNAhP1IkqV3BvO+jPUsHroGUG
+ iyRkmpKsNrflTVIr7j+lTKbVsH2hTp6goTdXlA6EUVzqiss/u8CUZqoerxs6NfswlX9Y
+ VggvimuBdUtzff7pFhF29Ay48NPkDxd/WsaWyoZCddewag4CU/kWbKCA5SJ3iESFitS1
+ Vcmw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1782144735; x=1782749535;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=kozxeXefiWovWAvXq0D8VtvvN+D8AJMNn1fluYdyE3I=;
+ b=Ah+7TJI8HhqikCOmwsD4G/Dsu+gD6pPgN5rGU1+TL4ve9rVE8arU6M7QrNDE7Plr0J
+ r7zPN/K7P++7GLdbaslyRfOEN98YfceWBJtzXooXkW9DeSA40D747iN3uwQIsCudxELL
+ HDX44szFH3cKet/SrOA5waxqrQQArhUWwMpQmxSYgserl17N+bYVBcRmjVoKZJbeMUt7
+ qQoTbnQfrRLKgiuz7UOls164EvwTZoeIg8T7Jf28Mlsbq7Ox5e8SFSI04gq3YPPHKU4s
+ NoxaPAWfrboGlYzQIqDb+STYn5HV6PBd0S/SLm6TXYhjrxe9bejA13UvdkmUE5O6jpHJ
+ Ncsw==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RrBK0VN+DPYEAj/2xWacHGpViNWvPT2mO0qD6HDIYVceED3TtjRZCt4NlHKF+m1YJj6aLsHIUMtZTyE@nongnu.org
+X-Gm-Message-State: AOJu0Ywu6gZPTLnkeM8LXGCDEjVBW7WW3humO6kFbE2IX4/uuJoMR8qY
+ HzFTsv/ZlYWAIEImkWdP52Pp1w30Adz7y1k9O/P8LjueCHMf+ca5f2vUlgA83CJW7Sh5kfBGJBc
+ rau7tUF+3ybn6pe8z4Bcztr4ibCwPbpg3r5ZCLNXAhyDbYKo1ryfb+Ixlog==
+X-Gm-Gg: AfdE7cnFk4Bc08hX0Y/rBQBQKzfh3DBP+0AMWpHoA4y/V6D/xh6vB5Vg7etmJ5OpmVY
+ bUU7pFHGGHM5nM9kTg8+9n/BiNtWCMeMwvxK8HiodkdTnXBztBV0pJJZGbVUT59DWgWMIY+MwxZ
+ 2NnMdppJ/U8N2dLCgsHA+zzihv0Thxq6al4XI+FNx3B/aSAplNd5FtB/J2FCiENnPEgVRhMSnBj
+ 73e3Z5TwgiZBKLGBk5FZ4StXLEwMq38f1BVzqxVszEdxI3XzfvNi5F0TcDrgnoOk44vZui6kjq3
+ rDuVVtUreBRUg6/Sazj3P9f9zcZDGjRl5chpuwYmZS1JytSetl4n3SuiDpCFWYZvJHJVNwvfF75
+ mS6xmM29zwCW2KcyTM3nf+df87whvMytXQFafICMUmhJ5aZ6ozY59gBWYj8JhTtYoGYfIskXNUh
+ FPdy4=
+X-Received: by 2002:a05:7300:724d:b0:30b:c0b4:db42 with SMTP id
+ 5a478bee46e88-30c555b86a0mr110310eec.11.1782144734735; 
+ Mon, 22 Jun 2026 09:12:14 -0700 (PDT)
+X-Received: by 2002:a05:7300:724d:b0:30b:c0b4:db42 with SMTP id
+ 5a478bee46e88-30c555b86a0mr110269eec.11.1782144734263; 
+ Mon, 22 Jun 2026 09:12:14 -0700 (PDT)
+Received: from [192.168.1.170] (216-71-219-44.dyn.novuscom.net.
+ [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-30c1bd8d75csm9894127eec.15.2026.06.22.09.12.12
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 22 Jun 2026 09:12:13 -0700 (PDT)
+Message-ID: <99ada24c-ead3-4ecb-bc40-e01d084f55fa@oss.qualcomm.com>
+Date: Mon, 22 Jun 2026 09:12:11 -0700
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=lvivier@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 8
-X-Spam_score: 0.8
-X-Spam_bar: /
-X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 0/1] plugins: fix syscall filter return value type
+To: Ziyang Zhang <functioner@sjtu.edu.cn>, qemu-devel <qemu-devel@nongnu.org>
+Cc: Riku Voipio <riku.voipio@iki.fi>, Laurent Vivier <laurent@vivier.eu>,
+ Alex Bennee <alex.bennee@linaro.org>, Alexandre Iooss <erdnaxe@crans.org>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Zhengwei Qi <qizhwei@sjtu.edu.cn>, Yun Wang <yunwang94@sjtu.edu.cn>,
+ Mingyuan Xia <xiamy@ultrarisc.com>, Kailiang Xu <xukl2019@sjtu.edu.cn>
+References: <20260618082426.790315-1-functioner@sjtu.edu.cn>
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <20260618082426.790315-1-functioner@sjtu.edu.cn>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjIyMDE2MCBTYWx0ZWRfX4ARONJQdK6cw
+ AKMVClkRfkndLWvBSPF85m+t3eWoCYHPOz6dgU2co2hDr/ChPkd6jI7hWa2mYs3rEcqVgmVsE01
+ MtoaI2AFh6jCyTSFT0WTN7kS5AN7uAU=
+X-Authority-Analysis: v=2.4 cv=R8Uz39RX c=1 sm=1 tr=0 ts=6a395edf cx=c_pps
+ a=PfFC4Oe2JQzmKTvty2cRDw==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
+ a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
+ a=VwQbUJbxAAAA:8 a=EGNn8dKErvrxVkJEOSoA:9 a=QEXdDO2ut3YA:10
+ a=6Ab_bkdmUrQuMsNx7PHu:22
+X-Proofpoint-ORIG-GUID: yxwrXLI0YD3sm6RXMOkPssuFJL3uvNrZ
+X-Proofpoint-GUID: yxwrXLI0YD3sm6RXMOkPssuFJL3uvNrZ
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjIyMDE2MCBTYWx0ZWRfX05Gq7I882HxV
+ irttIKfTyQd0AzCB0JAlHij7tqtZoYtWRiQKMsQDEPGTWSyRhjHCluXQDinqTBCwbr/v+VVk8/5
+ TgxtHjZSggdV8VAF0QLsnci+ghNR5/nr1VJVt2w25ghZoBA7XRhCrHBqSIFHr+IKPkdiHxRzjEs
+ pMDOjvPbExVzvmd+PmvQ0UIK1YIl9ZysrW41pFrcMGSy4O++ph9pp3nX3ekoKSR0G5u9JMyr5vw
+ 9n/kn7CC654lKfabaKYodvnqDt2gdyTnN4zi71BHUnvNhen27l6ajo1iopTsMzN2NR+r9OWe8Rt
+ gVaPjgo1BID92ypSe+7aB/jOZ66s2dbAs+EqNaUQKH4h8Xe+lbADQohArNj2VKmbM+ESrGGKpr+
+ 9ooZGZi5KOG++exOhsu+hqW8fb9KlPzZuc/BzKjG3eUxOLegP4gaJqh5nIUHHyo/NIFH6yFa1VH
+ eVJ2mxy21ik0feA9/VQ==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-22_03,2026-06-22_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 clxscore=1015 impostorscore=0 priorityscore=1501
+ lowpriorityscore=0 bulkscore=0 suspectscore=0 adultscore=0 malwarescore=0
+ phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2606220160
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=pierrick.bouvier@oss.qualcomm.com;
+ helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,100 +162,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-A malicious guest can craft virtqueue descriptors with arbitrary lengths.
-control_out() calls iov_size() on the guest-supplied scatter-gather list
-and passes the result directly to g_malloc(), allowing a guest to force
-QEMU to attempt multi-gigabyte allocations and crash the host process.
+On 6/18/2026 1:24 AM, Ziyang Zhang wrote:
+> Hi,
+> 
+> The sysret value of the syscall filter callback is declared as uint64_t,
+> but it is semantically signed: the negative range encodes errno. This
+> makes it int64_t, matching the ret parameter of
+> qemu_plugin_vcpu_syscall_ret_cb_t, which already uses int64_t for the
+> same syscall return value.
+> 
+> As discussed on v1, this is not a correctness fix (the filter only sets
+> sysret, so the bit pattern is the same either way); it is a consistency
+> and readability improvement, so that the same syscall return value is
+> typed the same way on the read side and the write side.
+> 
+> I did not bump QEMU_PLUGIN_VERSION, since this only changes the
+> signedness of an existing argument.
+> 
+> v1: https://lore.kernel.org/qemu-devel/20260612054800.587419-1-functioner@sjtu.edu.cn/
+> 
+> Changes since v1:
+> - rebased onto current master, where the syscall callbacks now take a
+>   userdata argument; the filter signatures were adjusted to keep that
+>   while changing only the sysret type. No functional change otherwise.
+> 
+> Thanks for your review.
+> 
+> Ziyang Zhang (1):
+>   plugins: use int64_t for the syscall filter return value
+> 
+>  include/plugins/qemu-plugin.h | 2 +-
+>  include/qemu/plugin.h         | 4 ++--
+>  linux-user/syscall.c          | 2 +-
+>  plugins/core.c                | 2 +-
+>  tests/tcg/plugins/setpc.c     | 2 +-
+>  tests/tcg/plugins/syscall.c   | 2 +-
+>  6 files changed, 7 insertions(+), 7 deletions(-)
+> 
 
-Fix this by copying at most sizeof(struct virtio_console_control) into a
-stack-local variable instead of allocating a buffer sized by the guest.
-handle_control_message() only accesses the fixed-size id, event, and
-value fields, so no data beyond the struct was ever needed.
+This was merged into master (b83371668192a705b878e909c5ae9c1233cbd5fb).
+Thank you for your contribution!
 
-Cc: qemu-stable@nongnu.org
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3585
-Signed-off-by: Laurent Vivier <lvivier@redhat.com>
----
- hw/char/virtio-serial-bus.c | 34 +++++++---------------------------
- 1 file changed, 7 insertions(+), 27 deletions(-)
-
-diff --git a/hw/char/virtio-serial-bus.c b/hw/char/virtio-serial-bus.c
-index cd234dc6db1d..c1973f0248fc 100644
---- a/hw/char/virtio-serial-bus.c
-+++ b/hw/char/virtio-serial-bus.c
-@@ -344,22 +344,16 @@ void virtio_serial_throttle_port(VirtIOSerialPort *port, bool throttle)
- }
- 
- /* Guest wants to notify us of some event */
--static void handle_control_message(VirtIOSerial *vser, void *buf, size_t len)
-+static void handle_control_message(VirtIOSerial *vser,
-+                                   struct virtio_console_control *gcpkt)
- {
-     VirtIODevice *vdev = VIRTIO_DEVICE(vser);
-     struct VirtIOSerialPort *port;
-     VirtIOSerialPortClass *vsc;
--    struct virtio_console_control cpkt, *gcpkt;
-+    struct virtio_console_control cpkt;
-     uint8_t *buffer;
-     size_t buffer_len;
- 
--    gcpkt = buf;
--
--    if (len < sizeof(cpkt)) {
--        /* The guest sent an invalid control packet */
--        return;
--    }
--
-     cpkt.event = virtio_lduw_p(vdev, &gcpkt->event);
-     cpkt.value = virtio_lduw_p(vdev, &gcpkt->value);
- 
-@@ -457,41 +451,27 @@ static void control_in(VirtIODevice *vdev, VirtQueue *vq)
- 
- static void control_out(VirtIODevice *vdev, VirtQueue *vq)
- {
-+    struct virtio_console_control cpkt;
-     VirtQueueElement *elem;
-     VirtIOSerial *vser;
--    uint8_t *buf;
-     size_t len;
- 
-     vser = VIRTIO_SERIAL(vdev);
- 
--    len = 0;
--    buf = NULL;
-     for (;;) {
--        size_t cur_len;
--
-         elem = virtqueue_pop(vq, sizeof(VirtQueueElement));
-         if (!elem) {
-             break;
-         }
- 
--        cur_len = iov_size(elem->out_sg, elem->out_num);
--        /*
--         * Allocate a new buf only if we didn't have one previously or
--         * if the size of the buf differs
--         */
--        if (cur_len > len) {
--            g_free(buf);
--
--            buf = g_malloc(cur_len);
--            len = cur_len;
-+        len = iov_to_buf(elem->out_sg, elem->out_num, 0, &cpkt, sizeof(cpkt));
-+        if (len == sizeof(cpkt)) {
-+            handle_control_message(vser, &cpkt);
-         }
--        iov_to_buf(elem->out_sg, elem->out_num, 0, buf, cur_len);
- 
--        handle_control_message(vser, buf, cur_len);
-         virtqueue_push(vq, elem, 0);
-         g_free(elem);
-     }
--    g_free(buf);
-     virtio_notify(vdev, vq);
- }
- 
--- 
-2.54.0
-
+Regards,
+Pierrick
 
