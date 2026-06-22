@@ -4,71 +4,126 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53CE3CDB46B
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jun 2026 09:00:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41EE5CDB46B
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jun 2026 09:02:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wbaVb-0001jL-C2; Mon, 22 Jun 2026 04:59:59 -0400
+	id 1wbaXE-00027t-HZ; Mon, 22 Jun 2026 05:01:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1wbaVY-0001jA-OL
- for qemu-devel@nongnu.org; Mon, 22 Jun 2026 04:59:56 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1wbaVU-0004rZ-0n
- for qemu-devel@nongnu.org; Mon, 22 Jun 2026 04:59:56 -0400
-Received: from loongson.cn (unknown [10.20.42.62])
- by gateway (Coremail) with SMTP id _____8DxBOl6+ThqGYsWAA--.52275S3;
- Mon, 22 Jun 2026 16:59:38 +0800 (CST)
-Received: from [10.20.42.62] (unknown [10.20.42.62])
- by front1 (Coremail) with SMTP id qMiowJCxWeB0+ThqR9CuAA--.4364S3;
- Mon, 22 Jun 2026 16:59:34 +0800 (CST)
-Subject: Re: [PATCH 3/4] target/loongarch: translate LVZ CSR and trap
- instructions
-To: SignKirigami <prcups@krgm.moe>, qemu-devel@nongnu.org
-Cc: Hengyu Yu <yuhengyu25@mails.ucas.ac.cn>
-References: <cover.1779171125.git.prcups@krgm.moe>
- <QcvEHw3eQdWKrgUEx8sb2A@krgm.moe>
- <a2c3c1e6-ea1d-e889-808c-d7cb95de150d@loongson.cn>
- <PpT5ef17QAWEJFKjwZZgyQ@krgm.moe>
-From: Bibo Mao <maobibo@loongson.cn>
-Message-ID: <2a55567c-9cae-e54d-0835-6f88e751275b@loongson.cn>
-Date: Mon, 22 Jun 2026 16:56:20 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
+ id 1wbaX0-00026A-Ia
+ for qemu-devel@nongnu.org; Mon, 22 Jun 2026 05:01:29 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
+ id 1wbaWs-0005gE-Mw
+ for qemu-devel@nongnu.org; Mon, 22 Jun 2026 05:01:22 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1782118876;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=ks8YaxAhZntV2SyGiPyq2+7OH3iYT/0pqHmPytF6J1s=;
+ b=Q2nKNf4Bv0tNc7n4zhSIeVx8/V7mah2CpVCjXudEYr+FXxt1aaAdmf76ITrC5PrnLPThdE
+ jrGIoY/Ct9KZC4fKJbUPAo/y3B7mFr5Y+dqlKMQVY/wh0iDnbXYxu7WHoapzep9IpDpwWI
+ k/R2CTT1QkOt5l3RvM3llBGzPqtxUKM=
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
+ [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-81-RT4mm2a0PJuW4Po9DEbvgw-1; Mon, 22 Jun 2026 05:01:14 -0400
+X-MC-Unique: RT4mm2a0PJuW4Po9DEbvgw-1
+X-Mimecast-MFC-AGG-ID: RT4mm2a0PJuW4Po9DEbvgw_1782118873
+Received: by mail-qv1-f71.google.com with SMTP id
+ 6a1803df08f44-8dbe3bd27d8so78203726d6.2
+ for <qemu-devel@nongnu.org>; Mon, 22 Jun 2026 02:01:14 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1782118873; cv=none;
+ d=google.com; s=arc-20240605;
+ b=j8By42Pkg/Nih9rpjqlNP2I1G/8biLsIX08BDaUzk5E+VLNfXREQhr9qjN3UpJyoDr
+ RHPzfuLPfCFg3gJjGWENQPzmFH6a/E4zEVLJJet2h/noOnGUbwei3PPFu6P6jaqXT5kA
+ xcx+/MTn11GrKzovxnLxXvg3hgw4KXNWDfAUHmTFkau/PNxCM1DK9mZQxV75cRZ4MhaS
+ Sp2sIMdjwzMa3n2QB2yvNlXouUSP0xw0QfQaM/D9CuexHFfTjPQg4wgoS2VW41xF43IK
+ X4CrJX7wC9wKsGhpfd31HiniczRryqS+6Jm5g9GJSQZLFwFETahAZc3Bfe2BWeikICyJ
+ kCqg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=ks8YaxAhZntV2SyGiPyq2+7OH3iYT/0pqHmPytF6J1s=;
+ fh=4gsGMJvv74SxDF4GRX2co7LD4pvMv7KcqSMFinEHD28=;
+ b=ArdFPfP3qA85K/rW2nlqnCDWdXsDKHG5D80OKT6M97Bcp8kYXJp9rwpvNYTN0DnwEH
+ X1iG/nh2HLtZCl5rdrSG4sPvelPWWc5xDxT5RmjD1IjNrdAhtrFUK5n7dQzhVVw1rTid
+ wu02/jxBCj8wGVQw/0eqizOozy/Lat8KpnDniMfjdbrUZvqtRv9G138xPabwSwu+L7RS
+ Lofjpd6VgEVyhw2rp9hEWfPCcZ/LSKcIye5bWV1lrulZ2x8sY6DIzJfpBjQQaGkIHJFe
+ 5VXcwl6UvoYbfFt73uKYnbs3gUlBRdM3quq/hpNBZz8IKPKCp9JM7CkLZRxOLJXsM+sx
+ Fjqg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1782118873; x=1782723673; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=ks8YaxAhZntV2SyGiPyq2+7OH3iYT/0pqHmPytF6J1s=;
+ b=ZBGNUo1Qbs36VWMcKncuUJ52DnW/898s4FTKMl9iF8URsD4a9LQGbBB76czgoKsxwe
+ PtDhPtpnNae+lrDiOGzXgkTn7NegebVQ4BMSPo7kIFY5PqBygO2nfwhfnYyr4mQCTCQt
+ 1zZRECrfQRj36Mcb1hgU3ljcIgCRLvMxTq5TC7NivHY7lNw/TBBaKMkGCuapN/fJyzRm
+ EiRIZhz0PtjeekGDOrZv7FqHnBGYoUQSE2lwSxUICQLZu7upXGeD7jt04P9bGCr8mG9i
+ QGQYS3TN0RUzu21K9k5roKtgGO3tZ2b0SrlVO1c+jCwWZv+TwFXAOmvxcaF9xxuaLYkd
+ SyWg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1782118873; x=1782723673;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=ks8YaxAhZntV2SyGiPyq2+7OH3iYT/0pqHmPytF6J1s=;
+ b=kzxkX5/EnLTLJp+xJ0o93V5pG1knb+Kj2QuEOg9cUBoKTZvpJKnwd9Q8MPi+TOcf6Y
+ Al4n8fF6k7TdhEmelemhqs4yBK51Jmn9Oz6IlR9HtXGcSfGkBqdrQsSbZ+YN7ujEwMik
+ 1gCDGCpOr+oojqJEoP0F8Fx5YggNYyKcpJcQ1dB/MDz6XazjFOy0ngCFdbXCgPORiZcv
+ Mazb0Gp7hlRxcyUSbwj/mlpKG7EoJ0wn0uvuyeZc4YMcx0mAxzQn9NXP0eu4D2Wb+RZ8
+ 9808EGZrQggk+gDtydIfVAeua4eD+MfgjbJfS5eGX1nSyTYMKO6mpMdkWB5DHFB2XtuA
+ 4HqQ==
+X-Gm-Message-State: AOJu0YyJGvx9UUYAm4q9omMJErcww+chKY7o+zX9t1QcTG+ZP2/Sn3YD
+ 0qVIVrvFA5YibLPZMxCdDPYcdKu/dgXiMYc/Qq03BV4NtRJ6UMEx35BDyj/8GTEWTs/h1sKySZI
+ 9w/3Y823z/p+MiYwQkOM+I6qbzI2lqA6PWTmhgr1b18QsXK21SV2f7UYmamEeWcKL42KvoiO83Y
+ Bg5F7kfSAN6y4FIUiaWcEZQcRULmq4QsU=
+X-Gm-Gg: AfdE7ck4CKAh/nbalDln6EeZnzTk+WLj+qa3AnFtMroEjDMX2lObTjls190mgCtiupq
+ L2RfDydpsZlPWBfKid3QtsW4ShfYNuF9ZioY9u6xVM5zr6ik7R/iJ5AyLtYEfNSf+heJaV5PuUF
+ PrVJmG1DOI18KQcHIQqIudAs0q/JfD499M3iNco7vl4rybDDyB+vrYri1Oc1SQKCI8VxVe+Q==
+X-Received: by 2002:a05:6214:62a:b0:8e1:6c6e:9612 with SMTP id
+ 6a1803df08f44-8e16c7ddf9amr80893836d6.22.1782118873297; 
+ Mon, 22 Jun 2026 02:01:13 -0700 (PDT)
+X-Received: by 2002:a05:6214:62a:b0:8e1:6c6e:9612 with SMTP id
+ 6a1803df08f44-8e16c7ddf9amr80891546d6.22.1782118869226; Mon, 22 Jun 2026
+ 02:01:09 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <PpT5ef17QAWEJFKjwZZgyQ@krgm.moe>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJCxWeB0+ThqR9CuAA--.4364S3
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj9fXoW3KF13ZryktF4rXw4UKrW7trc_yoW8AF15to
- WUGr17JF4rJr15AF1DG34qqw4jv34UCr47GFyDZw1DZF4Ut342yr15Jrn5Za1fGF1jgry8
- GFyxJ3WruFW3Wwnxl-sFpf9Il3svdjkaLaAFLSUrUUUUUb8apTn2vfkv8UJUUUU8wcxFpf
- 9Il3svdxBIdaVrn0xqx4xG64xvF2IEw4CE5I8CrVC2j2Jv73VFW2AGmfu7bjvjm3AaLaJ3
- UjIYCTnIWjp_UUUY47kC6x804xWl14x267AKxVWUJVW8JwAFc2x0x2IEx4CE42xK8VAvwI
- 8IcIk0rVWrJVCq3wAFIxvE14AKwVWUXVWUAwA2ocxC64kIII0Yj41l84x0c7CEw4AK67xG
- Y2AK021l84ACjcxK6xIIjxv20xvE14v26r1I6r4UM28EF7xvwVC0I7IYx2IY6xkF7I0E14
- v26r4j6F4UM28EF7xvwVC2z280aVAFwI0_Cr0_Gr1UM28EF7xvwVC2z280aVCY1x0267AK
- xVW8Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx
- 1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r106r15McIj6I8E87Iv
- 67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07
- AlzVAYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02
- F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_Jrv_JF
- 1lIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7Cj
- xVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r
- 1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU8j-
- e5UUUUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -48
-X-Spam_score: -4.9
-X-Spam_bar: ----
-X-Spam_report: (-4.9 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-2.97,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20260619180121.2982356-1-polina.vishneva@virtuozzo.com>
+ <20260619180121.2982356-5-polina.vishneva@virtuozzo.com>
+In-Reply-To: <20260619180121.2982356-5-polina.vishneva@virtuozzo.com>
+From: Kostiantyn Kostiuk <kkostiuk@redhat.com>
+Date: Mon, 22 Jun 2026 12:00:57 +0300
+X-Gm-Features: AVVi8CcrJS7gW0iTYxuVjWxakIRNO1G8Nspat79Bwjjq6V_6LRfSFL2N1azzNt8
+Message-ID: <CAPMcbCphbipUTQm5d+A3hPJMLXVo3jBVxxzCii8axjTyQtBGSQ@mail.gmail.com>
+Subject: Re: [PATCH 4/4] qga: Add AF_VSOCK channel support on Windows
+To: Polina Vishneva <polina.vishneva@virtuozzo.com>
+Cc: qemu-devel@nongnu.org, Michael Roth <michael.roth@amd.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@mailo.com>, 
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ "Denis V . Lunev" <den@virtuozzo.com>, 
+ Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+Content-Type: multipart/alternative; boundary="00000000000025ec2a0654d3e269"
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=kkostiuk@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,510 +139,1017 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+--00000000000025ec2a0654d3e269
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+Hi Polina,
+
+First of all, thanks for your patches.
+
+Before reviewing this patch, I want to ask: why is it needed?
+
+I understand the patch "qemu-sockets: Enable AF_VSOCK on Windows",
+but AF_VSOCK has the same behavior on Linux and Windows.
+I expected that we could totally reuse the POSIX part, so just move it to
+common with
+some defines like:
+```
+#ifdef G_OS_WIN32
+        in_ch =3D g_io_channel_win32_new_fd(in_fd);
+#else
+        in_ch =3D g_io_channel_unix_new(in_fd);
+#endif
+```
+
+We tested our driver with SSH over VSOCK, and standard Linux SSH works
+well.
+So, what is the difference in this case that you add win32-specific code
+for VSOCK?
+
+Best Regards,
+Kostiantyn Kostiuk.
 
 
-On 2026/6/22 下午4:39, SignKirigami wrote:
-> On 2026年5月26日星期二 中国标准时间 12:07:35，Bibo Mao wrote：
->>
->> On 2026/5/26 上午11:50, SignKirigami wrote:
->>> 在 2026年5月22日星期五 中国标准时间 11:16:39，Bibo Mao 写道：
->>>>
->>>> On 2026/5/19 下午2:30, SignKirigami wrote:
->>>>> Signed-off-by: SignKirigami <prcups@krgm.moe>
->>>>> Signed-off-by: Hengyu Yu <yuhengyu25@mails.ucas.ac.cn>
->>>>> ---
->>>>>     target/loongarch/disas.c                      |   4 +
->>>>>     target/loongarch/insns.decode                 |  11 +
->>>>>     .../tcg/insn_trans/trans_privileged.c.inc     | 225 +++++++++++++++++-
->>>>>     target/loongarch/tcg/translate.c              |   6 +-
->>>>>     target/loongarch/translate.h                  |   2 +
->>>>>     5 files changed, 240 insertions(+), 8 deletions(-)
->>>>>
->>>>> diff --git a/target/loongarch/disas.c b/target/loongarch/disas.c
->>>>> index 3249ab7ac6..cae416266b 100644
->>>>> --- a/target/loongarch/disas.c
->>>>> +++ b/target/loongarch/disas.c
->>>>> @@ -698,6 +698,10 @@ INSN(tlbfill,      empty)
->>>>>     INSN(tlbclr,       empty)
->>>>>     INSN(tlbflush,     empty)
->>>>>     INSN(invtlb,       i_rr)
->>>>> +INSN(gcsrrd,       r_csr)
->>>>> +INSN(gcsrwr,       r_csr)
->>>>> +INSN(gcsrxchg,     rr_csr)
->>>>> +INSN(hvcl,         i)
->>>>>     INSN(cacop,        cop_r_i)
->>>>>     INSN(lddir,        rr_i)
->>>>>     INSN(ldpte,        j_i)
->>>>> diff --git a/target/loongarch/insns.decode b/target/loongarch/insns.decode
->>>>> index 3089d42044..2ade384081 100644
->>>>> --- a/target/loongarch/insns.decode
->>>>> +++ b/target/loongarch/insns.decode
->>>>> @@ -493,6 +493,17 @@ bgeu            0110 11 ................ ..... .....     @rr_offs16
->>>>>       csrxchg           0000 0100 .............. ..... .....     @rr_csr
->>>>>     }
->>>>>     
->>>>> +#
->>>>> +# LVZ (LoongArch Virtualization) instructions
->>>>> +#
->>>>> +{
->>>>> +  gcsrrd            0000 0101 .............. 00000 .....     @r_csr
->>>>> +  gcsrwr            0000 0101 .............. 00001 .....     @r_csr
->>>>> +  gcsrxchg          0000 0101 .............. ..... .....     @rr_csr
->>>>> +}
->>>>> +
->>>>> +hvcl             0000 0000 0010 1011 1 ...............    @i15
->>>>> +
->>>>>     iocsrrd_b        0000 01100100 10000 00000 ..... .....    @rr
->>>>>     iocsrrd_h        0000 01100100 10000 00001 ..... .....    @rr
->>>>>     iocsrrd_w        0000 01100100 10000 00010 ..... .....    @rr
->>>>> diff --git a/target/loongarch/tcg/insn_trans/trans_privileged.c.inc b/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
->>>>> index 2094d182ac..0cb629e5d7 100644
->>>>> --- a/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
->>>>> +++ b/target/loongarch/tcg/insn_trans/trans_privileged.c.inc
->>>>> @@ -39,6 +39,10 @@ GEN_FALSE_TRANS(lddir)
->>>>>     GEN_FALSE_TRANS(ertn)
->>>>>     GEN_FALSE_TRANS(dbcl)
->>>>>     GEN_FALSE_TRANS(idle)
->>>>> +GEN_FALSE_TRANS(gcsrrd)
->>>>> +GEN_FALSE_TRANS(gcsrwr)
->>>>> +GEN_FALSE_TRANS(gcsrxchg)
->>>>> +GEN_FALSE_TRANS(hvcl)
->>>>>     
->>>>>     #else
->>>>>     
->>>>> @@ -69,8 +73,25 @@ static bool set_csr_trans_func(unsigned int csr_num, GenCSRRead readfn,
->>>>>         return true;
->>>>>     }
->>>>>     
->>>>> +static bool set_gcsr_trans_func(unsigned int csr_num, GenCSRRead readfn,
->>>>> +                                GenCSRWrite writefn)
->>>>> +{
->>>>> +    CSRInfo *csr;
->>>>> +
->>>>> +    csr = get_gcsr(csr_num);
->>>>> +    if (!csr) {
->>>>> +        return false;
->>>>> +    }
->>>>> +
->>>>> +    csr->readfn = (GenCSRFunc)readfn;
->>>>> +    csr->writefn = (GenCSRFunc)writefn;
->>>>> +    return true;
->>>>> +}
->>>>> +
->>>>>     #define SET_CSR_FUNC(NAME, read, write)                 \
->>>>>             set_csr_trans_func(LOONGARCH_CSR_##NAME, read, write)
->>>>> +#define SET_GCSR_FUNC(NAME, read, write)                \
->>>>> +        set_gcsr_trans_func(LOONGARCH_CSR_##NAME, read, write)
->>>>>     
->>>>>     void loongarch_csr_translate_init(void)
->>>>>     {
->>>>> @@ -85,14 +106,28 @@ void loongarch_csr_translate_init(void)
->>>>>         SET_CSR_FUNC(TVAL,  gen_helper_csrrd_tval, NULL);
->>>>>         SET_CSR_FUNC(TICLR, NULL, gen_helper_csrwr_ticlr);
->>>>>         SET_CSR_FUNC(MSGIR, gen_helper_csrrd_msgir, NULL);
->>>>> +    SET_CSR_FUNC(GSTAT, NULL, gen_helper_csrwr_gstat);
->>>>> +    SET_CSR_FUNC(GTLBC, NULL, gen_helper_csrwr_gtlbc);
->>>>> +    SET_CSR_FUNC(GINTC, NULL, gen_helper_csrwr_gintc);
->>>>> +
->>>>> +    SET_GCSR_FUNC(ESTAT, NULL, gen_helper_gcsrwr_estat);
->>>>> +    SET_GCSR_FUNC(ASID, NULL, gen_helper_gcsrwr_asid);
->>>>> +    SET_GCSR_FUNC(PGD, gen_helper_gcsrrd_pgd, NULL);
->>>>> +    SET_GCSR_FUNC(TCFG, NULL, gen_helper_gcsrwr_tcfg);
->>>>> +    SET_GCSR_FUNC(TVAL, gen_helper_gcsrrd_tval, NULL);
->>>>> +    SET_GCSR_FUNC(TICLR, NULL, gen_helper_gcsrwr_ticlr);
->>>>>     }
->>>>>     #undef SET_CSR_FUNC
->>>>> +#undef SET_GCSR_FUNC
->>>>>     
->>>>>     static bool check_csr_flags(DisasContext *ctx, const CSRInfo *csr, bool write)
->>>>>     {
->>>>>         if ((csr->flags & CSRFL_READONLY) && write) {
->>>>>             return false;
->>>>>         }
->>>>> +    if ((csr->flags & CSRFL_GUEST_READONLY) && ctx->guest_mode && write) {
->>>>> +        return false;
->>>>> +    }
->>>>>         if ((csr->flags & CSRFL_IO) && translator_io_start(&ctx->base)) {
->>>>>             ctx->base.is_jmp = DISAS_EXIT_UPDATE;
->>>>>         } else if ((csr->flags & CSRFL_EXITTB) && write) {
->>>>> @@ -110,12 +145,17 @@ static bool trans_csrrd(DisasContext *ctx, arg_csrrd *a)
->>>>>         if (check_plv(ctx)) {
->>>>>             return false;
->>>>>         }
->>>>> -    csr = get_csr(a->csr);
->>>>> +    csr = ctx->guest_mode ? get_gcsr(a->csr) : get_csr(a->csr);
->>>>>         if (csr == NULL) {
->>>>>             /* CSR is undefined: read as 0. */
->>>>>             dest = tcg_constant_tl(0);
->>>>>         } else {
->>>>>             check_csr_flags(ctx, csr, false);
->>>>> +        if (ctx->guest_mode && (csr->flags & CSRFL_GSPR)) {
->>>>> +            gen_helper_gspr(tcg_env);
->>>>> +            gen_set_gpr(a->rd, tcg_constant_tl(0), EXT_NONE);
->>>>> +            return true;
->>>>> +        }
->>>>>             dest = gpr_dst(ctx, a->rd, EXT_NONE);
->>>>>             readfn = (GenCSRRead)csr->readfn;
->>>>>             if (readfn) {
->>>>> @@ -137,12 +177,17 @@ static bool trans_csrwr(DisasContext *ctx, arg_csrwr *a)
->>>>>         if (check_plv(ctx)) {
->>>>>             return false;
->>>>>         }
->>>>> -    csr = get_csr(a->csr);
->>>>> +    csr = ctx->guest_mode ? get_gcsr(a->csr) : get_csr(a->csr);
->>>>>         if (csr == NULL) {
->>>>>             /* CSR is undefined: write ignored, read old_value as 0. */
->>>>>             gen_set_gpr(a->rd, tcg_constant_tl(0), EXT_NONE);
->>>>>             return true;
->>>>>         }
->>>>> +    if (ctx->guest_mode && (csr->flags & CSRFL_GSPR)) {
->>>>> +        gen_helper_gspr(tcg_env);
->>>>> +        gen_set_gpr(a->rd, tcg_constant_tl(0), EXT_NONE);
->>>>> +        return true;
->>>>> +    }
->>>>>         if (!check_csr_flags(ctx, csr, true)) {
->>>>>             /* CSR is readonly: trap. */
->>>>>             return false;
->>>>> @@ -170,28 +215,35 @@ static bool trans_csrxchg(DisasContext *ctx, arg_csrxchg *a)
->>>>>         if (check_plv(ctx)) {
->>>>>             return false;
->>>>>         }
->>>>> -    csr = get_csr(a->csr);
->>>>> +    csr = ctx->guest_mode ? get_gcsr(a->csr) : get_csr(a->csr);
->>>>>         if (csr == NULL) {
->>>>>             /* CSR is undefined: write ignored, read old_value as 0. */
->>>>>             gen_set_gpr(a->rd, tcg_constant_tl(0), EXT_NONE);
->>>>>             return true;
->>>>>         }
->>>>> +    if (ctx->guest_mode && (csr->flags & CSRFL_GSPR)) {
->>>>> +        gen_helper_gspr(tcg_env);
->>>>> +        gen_set_gpr(a->rd, tcg_constant_tl(0), EXT_NONE);
->>>>> +        return true;
->>>>> +    }
->>>>>     
->>>>>         if (!check_csr_flags(ctx, csr, true)) {
->>>>>             /* CSR is readonly: trap. */
->>>>>             return false;
->>>>>         }
->>>>>     
->>>>> -    /* So far only readonly csrs have readfn. */
->>>>> -    assert(csr->readfn == NULL);
->>>>> -
->>>>>         src1 = gpr_src(ctx, a->rd, EXT_NONE);
->>>>>         mask = gpr_src(ctx, a->rj, EXT_NONE);
->>>>>         oldv = tcg_temp_new();
->>>>>         newv = tcg_temp_new();
->>>>>         temp = tcg_temp_new();
->>>>>     
->>>>> -    tcg_gen_ld_tl(oldv, tcg_env, csr->offset);
->>>>> +    if (csr->readfn) {
->>>>> +        GenCSRRead readfn = (GenCSRRead)csr->readfn;
->>>>> +        readfn(oldv, tcg_env);
->>>>> +    } else {
->>>>> +        tcg_gen_ld_tl(oldv, tcg_env, csr->offset);
->>>>> +    }
->>>>>         tcg_gen_and_tl(newv, src1, mask);
->>>>>         tcg_gen_andc_tl(temp, oldv, mask);
->>>>>         tcg_gen_or_tl(newv, newv, temp);
->>>>> @@ -212,6 +264,11 @@ static bool gen_iocsrrd(DisasContext *ctx, arg_rr *a,
->>>>>         TCGv dest = gpr_dst(ctx, a->rd, EXT_NONE);
->>>>>         TCGv src1 = gpr_src(ctx, a->rj, EXT_NONE);
->>>>>     
->>>>> +    if (ctx->guest_mode) {
->>>>> +        gen_helper_gspr(tcg_env);
->>>>> +        return true;
->>>>> +    }
->>>>> +
->>>>>         if (check_plv(ctx)) {
->>>>>             return false;
->>>>>         }
->>>>> @@ -225,6 +282,11 @@ static bool gen_iocsrwr(DisasContext *ctx, arg_rr *a,
->>>>>         TCGv val = gpr_src(ctx, a->rd, EXT_NONE);
->>>>>         TCGv addr = gpr_src(ctx, a->rj, EXT_NONE);
->>>>>     
->>>>> +    if (ctx->guest_mode) {
->>>>> +        gen_helper_gspr(tcg_env);
->>>>> +        return true;
->>>>> +    }
->>>>> +
->>>>>         if (check_plv(ctx)) {
->>>>>             return false;
->>>>>         }
->>>>> @@ -400,6 +462,10 @@ static bool trans_dbcl(DisasContext *ctx, arg_dbcl *a)
->>>>>         if (check_plv(ctx)) {
->>>>>             return false;
->>>>>         }
->>>>> +    if (ctx->guest_mode) {
->>>>> +        gen_helper_gspr(tcg_env);
->>>>> +        return true;
->>>>> +    }
->>>>>         generate_exception(ctx, EXCCODE_DBP);
->>>>>         return true;
->>>>>     }
->>>>> @@ -410,9 +476,154 @@ static bool trans_idle(DisasContext *ctx, arg_idle *a)
->>>>>             return false;
->>>>>         }
->>>>>     
->>>>> +    if (ctx->guest_mode) {
->>>>> +        gen_helper_gspr(tcg_env);
->>>>> +        return true;
->>>>> +    }
->>>>> +
->>>>>         tcg_gen_movi_tl(cpu_pc, ctx->base.pc_next + 4);
->>>>>         gen_helper_idle(tcg_env);
->>>>>         ctx->base.is_jmp = DISAS_NORETURN;
->>>>>         return true;
->>>>>     }
->>>>> +
->>>>> +static bool trans_gcsrrd(DisasContext *ctx, arg_gcsrrd *a)
->>>>> +{
->>>>> +    TCGv dest;
->>>>> +    const CSRInfo *csr;
->>>>> +    GenCSRRead readfn;
->>>>> +
->>>>> +    if (check_plv(ctx)) {
->>>>> +        return false;
->>>>> +    }
->>>>> +    if (!avail_LVZ(ctx) || ctx->guest_mode) {
->>>>> +        return false;
->>>>> +    }
->>>>> +
->>>>> +    csr = get_gcsr(a->csr);
->>>>> +    if (csr == NULL) {
->>>>> +        dest = tcg_constant_tl(0);
->>>>> +    } else {
->>>>> +        dest = gpr_dst(ctx, a->rd, EXT_NONE);
->>>>> +        if (csr->flags & CSRFL_GSPR) {
->>>>> +            tcg_gen_movi_tl(dest, 0);
->>>>> +        } else {
->>>>> +            readfn = (GenCSRRead)csr->readfn;
->>>>> +            if (readfn) {
->>>>> +                readfn(dest, tcg_env);
->>>>> +            } else {
->>>>> +                tcg_gen_ld_tl(dest, tcg_env, csr->offset);
->>>>> +            }
->>>>> +        }
->>>>> +    }
->>>>> +    gen_set_gpr(a->rd, dest, EXT_NONE);
->>>>> +    return true;
->>>>> +}
->>>>> +
->>>>> +static bool trans_gcsrwr(DisasContext *ctx, arg_gcsrwr *a)
->>>>> +{
->>>>> +    TCGv dest, src1;
->>>>> +    const CSRInfo *csr;
->>>>> +    GenCSRWrite writefn;
->>>>> +
->>>>> +    if (check_plv(ctx)) {
->>>>> +        return false;
->>>>> +    }
->>>>> +    if (!avail_LVZ(ctx) || ctx->guest_mode) {
->>>>> +        return false;
->>>>> +    }
->>>>> +
->>>>> +    csr = get_gcsr(a->csr);
->>>>> +    if (csr == NULL) {
->>>>> +        gen_set_gpr(a->rd, tcg_constant_tl(0), EXT_NONE);
->>>>> +        return true;
->>>>> +    }
->>>>> +    if (!check_csr_flags(ctx, csr, true)) {
->>>>> +        return false;
->>>>> +    }
->>>>> +    if (csr->flags & CSRFL_GSPR) {
->>>>> +        gen_set_gpr(a->rd, tcg_constant_tl(0), EXT_NONE);
->>>>> +        return true;
->>>>> +    }
->>>>> +
->>>>> +    src1 = gpr_src(ctx, a->rd, EXT_NONE);
->>>>> +    writefn = (GenCSRWrite)csr->writefn;
->>>>> +    if (writefn) {
->>>>> +        dest = gpr_dst(ctx, a->rd, EXT_NONE);
->>>>> +        writefn(dest, tcg_env, src1);
->>>>> +    } else {
->>>>> +        dest = tcg_temp_new();
->>>>> +        tcg_gen_ld_tl(dest, tcg_env, csr->offset);
->>>>> +        tcg_gen_st_tl(src1, tcg_env, csr->offset);
->>>>> +    }
->>>>> +    gen_set_gpr(a->rd, dest, EXT_NONE);
->>>>> +    return true;
->>>>> +}
->>>>> +
->>>>> +static bool trans_gcsrxchg(DisasContext *ctx, arg_gcsrxchg *a)
->>>>> +{
->>>>> +    TCGv src1, mask, oldv, newv, temp;
->>>>> +    const CSRInfo *csr;
->>>>> +    GenCSRRead readfn;
->>>>> +    GenCSRWrite writefn;
->>>>> +
->>>>> +    if (check_plv(ctx)) {
->>>>> +        return false;
->>>>> +    }
->>>>> +    if (!avail_LVZ(ctx) || ctx->guest_mode) {
->>>>> +        return false;
->>>>> +    }
->>>>> +
->>>>> +    csr = get_gcsr(a->csr);
->>>>> +    if (csr == NULL) {
->>>>> +        gen_set_gpr(a->rd, tcg_constant_tl(0), EXT_NONE);
->>>>> +        return true;
->>>>> +    }
->>>>> +    if (!check_csr_flags(ctx, csr, true)) {
->>>>> +        return false;
->>>>> +    }
->>>>> +    if (csr->flags & CSRFL_GSPR) {
->>>>> +        gen_set_gpr(a->rd, tcg_constant_tl(0), EXT_NONE);
->>>>> +        return true;
->>>>> +    }
->>>>> +
->>>>> +    src1 = gpr_src(ctx, a->rd, EXT_NONE);
->>>>> +    mask = gpr_src(ctx, a->rj, EXT_NONE);
->>>>> +    oldv = tcg_temp_new();
->>>>> +    newv = tcg_temp_new();
->>>>> +    temp = tcg_temp_new();
->>>>> +
->>>>> +    readfn = (GenCSRRead)csr->readfn;
->>>>> +    if (readfn) {
->>>>> +        readfn(oldv, tcg_env);
->>>>> +    } else {
->>>>> +        tcg_gen_ld_tl(oldv, tcg_env, csr->offset);
->>>>> +    }
->>>>> +    tcg_gen_and_tl(newv, src1, mask);
->>>>> +    tcg_gen_andc_tl(temp, oldv, mask);
->>>>> +    tcg_gen_or_tl(newv, newv, temp);
->>>>> +
->>>>> +    writefn = (GenCSRWrite)csr->writefn;
->>>>> +    if (writefn) {
->>>>> +        writefn(oldv, tcg_env, newv);
->>>>> +    } else {
->>>>> +        tcg_gen_st_tl(newv, tcg_env, csr->offset);
->>>>> +    }
->>>>> +    gen_set_gpr(a->rd, oldv, EXT_NONE);
->>>>> +    return true;
->>>>> +}
->>>>> +
->>>>> +static bool trans_hvcl(DisasContext *ctx, arg_hvcl *a)
->>>>> +{
->>>>> +    if (!avail_LVZ(ctx)) {
->>>>> +        return false;
->>>>> +    }
->>>>> +    if (!ctx->guest_mode) {
->>>>> +        return false;
->>>>> +    }
->>>>> +    tcg_gen_movi_tl(cpu_pc, ctx->base.pc_next);
->>>>> +    gen_helper_hvcl(tcg_env, tcg_constant_i32(a->imm));
->>>>> +    ctx->base.is_jmp = DISAS_NORETURN;
->>>>> +    return true;
->>>>> +}
->>>>>     #endif
->>>>> diff --git a/target/loongarch/tcg/translate.c b/target/loongarch/tcg/translate.c
->>>>> index 124dce6269..15c83ef72d 100644
->>>>> --- a/target/loongarch/tcg/translate.c
->>>>> +++ b/target/loongarch/tcg/translate.c
->>>>> @@ -122,12 +122,16 @@ static void loongarch_tr_init_disas_context(DisasContextBase *dcbase,
->>>>>         CPULoongArchState *env = cpu_env(cs);
->>>>>         DisasContext *ctx = container_of(dcbase, DisasContext, base);
->>>>>     
->>>>> +    ctx->guest_mode = (ctx->base.tb->flags & HW_FLAGS_GUEST_MODE) != 0;
->>>>>         ctx->page_start = ctx->base.pc_first & TARGET_PAGE_MASK;
->>>>>         ctx->plv = ctx->base.tb->flags & HW_FLAGS_PLV_MASK;
->>>>>         if (ctx->base.tb->flags & HW_FLAGS_CRMD_PG) {
->>>>>             ctx->mem_idx = ctx->plv;
->>>>> +        if (ctx->guest_mode) {
->>>>> +            ctx->mem_idx += MMU_GUEST_IDX;
->>>>> +        }
->>>>>         } else {
->>>>> -        ctx->mem_idx = MMU_DA_IDX;
->>>>> +        ctx->mem_idx = ctx->guest_mode ? MMU_GUEST_DA_IDX : MMU_DA_IDX;
->>>>>         }
->>>>>     
->>>>>         /* Bound the number of insns to execute to those left on the page.  */
->>>>> diff --git a/target/loongarch/translate.h b/target/loongarch/translate.h
->>>>> index 8aa8325dc6..db0650e713 100644
->>>>> --- a/target/loongarch/translate.h
->>>>> +++ b/target/loongarch/translate.h
->>>>> @@ -26,6 +26,7 @@
->>>>>     #define avail_FP_DP(C)  (FIELD_EX32((C)->cpucfg2, CPUCFG2, FP_DP))
->>>>>     #define avail_LSPW(C)   (FIELD_EX32((C)->cpucfg2, CPUCFG2, LSPW))
->>>>>     #define avail_LAM(C)    (FIELD_EX32((C)->cpucfg2, CPUCFG2, LAM))
->>>>> +#define avail_LVZ(C)    (FIELD_EX32((C)->cpucfg2, CPUCFG2, LVZ))
->>>>>     #define avail_LAM_BH(C) (FIELD_EX32((C)->cpucfg2, CPUCFG2, LAM_BH))
->>>>>     #define avail_LAMCAS(C) (FIELD_EX32((C)->cpucfg2, CPUCFG2, LAMCAS))
->>>>>     #define avail_LSX(C)    (FIELD_EX32((C)->cpucfg2, CPUCFG2, LSX))
->>>>
->>>> static void loongarch_tr_init_disas_context(DisasContextBase *dcbase,
->>>>                                                CPUState *cs)
->>>> {
->>>>
->>>>        if (FIELD_EX64(env->cpucfg[2], CPUCFG2, LSX)) {
->>>>            ctx->vl = LSX_LEN;
->>>>        }
->>>>        if (FIELD_EX64(env->cpucfg[2], CPUCFG2, LASX)) {
->>>>            ctx->vl = LASX_LEN;
->>>>        ctx->cpucfg1 = env->cpucfg[1];
->>>>        ctx->cpucfg2 = env->cpucfg[2];
->>>>        ctx->cpucfg3 = env->cpucfg[3];
->>>> }
->>>>
->>>> There may be some problem with cpucfg configuration, for example host
->>>> has LASX/LSX feature, however vCPU is configured with LASX/LSX feature
->>>> disabled. With the upper piece of code, ctx->cpucfg1 comes from host
->>>> feature setting instead.
->>>>
->>>> Regards
->>>> Bibo Mao
->>>>
->>> When in guest mode, executing cpucfg will cause a gspr exception and exit to
->>> host mode, so these data may not be used.
->> It influences resules of avail_LASX(c), macro avail_LASX(c) of
->> host/guest should be different.
->>
->> #define avail_LASX(C)   (FIELD_EX32((C)->cpucfg2, CPUCFG2, LASX))
->>
->> Here ctx->cpucfg2 = env->cpucfg[2]; they comes from env->cpucfg[2] both.
->> so that avail_LASX(C) will be the same for both host/guest.
->>
->> Regards
->> Bibo Mao
-> cpucfg value of L2 guest is set by L1 vmm and saved by L1 kernel, and it's hard
-> to get the value when not executing cpucfg command and trigger a gspr
-> exception. So, you may regard ctx->cpucfg as an ability to support these
-> function by L0 host.
-yes, it is, you can discard this issue. With LoongArch HW LVZ design, 
-there is only FPU capability display from cpucfg, however no FPU 
-enabling with hypervisor.
+On Fri, Jun 19, 2026 at 9:03=E2=80=AFPM Polina Vishneva <
+polina.vishneva@virtuozzo.com> wrote:
 
-When executing instruction without hw LASX/LSX supported, illegal FPU 
-instruction comes from HW in host mode. And if host supports LASX/LSX 
-however VM does not support, it is SW hypervisor to inject illegal FPU 
-instruction exception. HW will not inject such exception if it runs in 
-VM mode.
+> Add vsock-listen channel mode to the Windows guest agent.
+>
+> The listen/accept path uses the standard QEMU socket helpers
+> (socket_parse(), socket_listen(), qemu_accept()) and plugs the resulting
+> SOCKET into the GMainLoop via g_io_channel_win32_new_socket().
+>
+> Signed-off-by: Polina Vishneva <polina.vishneva@virtuozzo.com>
+> ---
+>  docs/interop/qemu-ga.rst |   4 +
+>  qga/channel-win32.c      | 257 ++++++++++++++++++++++++++++++++-------
+>  qga/main.c               |   6 +
+>  3 files changed, 222 insertions(+), 45 deletions(-)
+>
+> diff --git a/docs/interop/qemu-ga.rst b/docs/interop/qemu-ga.rst
+> index d16cc1b9f0..9c415fc8f8 100644
+> --- a/docs/interop/qemu-ga.rst
+> +++ b/docs/interop/qemu-ga.rst
+> @@ -59,6 +59,10 @@ Options
+>    Transport method: one of ``unix-listen``, ``virtio-serial``, or
+>    ``isa-serial``, or ``vsock-listen`` (``virtio-serial`` is the default)=
+.
+>
+> +  .. note::
+> +     On Windows, ``vsock-listen`` requires the viosock driver from
+> +     kvm-guest-drivers-windows recent enough to include commit
+> ``687c776``.
+> +
+>  .. option:: -p, --path=3DPATH
+>
+>    Device/socket path (the default for virtio-serial is
+> diff --git a/qga/channel-win32.c b/qga/channel-win32.c
+> index 2bd6fc1538..257576815a 100644
+> --- a/qga/channel-win32.c
+> +++ b/qga/channel-win32.c
+> @@ -1,6 +1,8 @@
+>  #include "qemu/osdep.h"
+>  #include <windows.h>
+>  #include <io.h>
+> +#include "qapi/error.h"
+> +#include "qemu/sockets.h"
+>  #include "guest-agent-core.h"
+>  #include "channel-common.h"
+>
+> @@ -17,6 +19,9 @@ typedef struct GAChannelReadState {
+>  struct GAChannel {
+>      GAChannelCommon common;
+>
+> +    int listen_fd;
+> +    int client_fd;
+> +
+>      HANDLE handle;
+>      GAChannelReadState rstate;
+>      GIOCondition pending_events; /* TODO: use GAWatch.pollfd.revents */
+> @@ -198,7 +203,116 @@ static GSource *ga_channel_create_watch(GAChannel *=
+c)
+>      return source;
+>  }
+>
+> -GIOStatus ga_channel_read(GAChannel *c, char *buf, size_t size, gsize
+> *count)
+> +/*
+> + * Socket mode: GIOChannel-based listen/accept/client helpers
+> + */
+> +
+> +static gboolean ga_channel_socket_client_event(GIOChannel *channel,
+> +                                               GIOCondition condition,
+> +                                               gpointer data);
+> +static gboolean ga_channel_socket_listen_accept(GIOChannel *channel,
+> +                                                GIOCondition condition,
+> +                                                gpointer data);
+> +
+> +static void ga_channel_socket_listen_add(GAChannel *c, bool create)
+> +{
+> +    if (create) {
+> +        c->common.listen_channel =3D
+> +            g_io_channel_win32_new_socket(_get_osfhandle(c->listen_fd));
+> +        g_assert(c->common.listen_channel);
+> +    }
+> +    g_io_add_watch(c->common.listen_channel, G_IO_IN,
+> +                   ga_channel_socket_listen_accept, c);
+> +}
+> +
+> +static gboolean ga_channel_socket_client_close(GAChannel *c)
+> +{
+> +    /* Free the CRT fd wrapper while the SOCKET is still valid. */
+> +    if (c->client_fd >=3D 0) {
+> +        qemu_close_socket_osfhandle(c->client_fd);
+> +        c->client_fd =3D -1;
+> +    }
+> +    ga_channel_common_client_close(&c->common);
+> +    if (c->common.listen_channel) {
+> +        ga_channel_socket_listen_add(c, false);
+> +    }
+> +    return false;
+> +}
+> +
+> +static gboolean ga_channel_socket_listen_accept(GIOChannel *channel,
+> +                                                GIOCondition condition,
+> +                                                gpointer data)
+> +{
+> +    GAChannel *c =3D data;
+> +    int client_fd;
+> +    GIOChannel *client_ch;
+> +    bool accepted =3D false;
+> +
+> +    client_fd =3D qemu_accept(c->listen_fd, NULL, NULL);
+> +    if (client_fd < 0) {
+> +        g_warning("error accepting connection: %s", strerror(errno));
+> +        goto out;
+> +    }
+> +
+> +    /*
+> +     * g_io_channel_win32_new_socket() makes the socket nonblocking via
+> +     * WSAEventSelect.
+> +     */
+> +    client_ch =3D g_io_channel_win32_new_socket(_get_osfhandle(client_fd=
+));
+> +    g_assert(client_ch);
+> +
+> +    if (ga_channel_common_client_add(&c->common, client_ch,
+> +                                     ga_channel_socket_client_event, c))=
+ {
+> +        g_warning("error setting up connection");
+> +        /*
+> +         * Release the CRT fd wrapper while its SOCKET is still open -
+> only
+> +         * then qemu_close_socket_osfhandle() can detach the fd and let
+> the
+> +         * channel teardown perform the single closesocket().
+> +         */
+> +        qemu_close_socket_osfhandle(client_fd);
+> +        ga_channel_common_gio_destroy(client_ch);
+> +        goto out;
+> +    }
+> +    c->client_fd =3D client_fd;
+> +    accepted =3D true;
+> +
+> +out:
+> +    /* only accept 1 connection at a time */
+> +    return !accepted;
+> +}
+> +
+> +static gboolean ga_channel_socket_client_event(GIOChannel *channel,
+> +                                               GIOCondition condition,
+> +                                               gpointer data)
+> +{
+> +    GAChannel *c =3D data;
+> +
+> +    g_assert(c);
+> +    if (!c->common.event_cb(condition, c->common.user_data)) {
+> +        return ga_channel_socket_client_close(c);
+> +    }
+> +    /*
+> +     * A peer that sends data and disconnects at once is never reported:
+> +     * GLib turns the coalesced FD_READ|FD_CLOSE into a plain G_IO_IN,
+> +     * and Winsock records FD_CLOSE only once, so no later event follows=
+.
+> +     * Peek after each event to detect the disconnect.
+> +     */
+> +    if (c->client_fd >=3D 0) {
+> +        char peek;
+> +        ssize_t r =3D recv(c->client_fd, &peek, 1, MSG_PEEK);
+> +        if (r =3D=3D 0 || (r < 0 && errno !=3D EAGAIN)) {
+> +            return ga_channel_socket_client_close(c);
+> +        }
+> +    }
+> +    return true;
+> +}
+> +
+> +/*
+> + * Handle mode: overlapped I/O read/write
+> + */
+> +
+> +static GIOStatus ga_channel_handle_read(GAChannel *c, char *buf, size_t
+> size,
+> +                                        gsize *count)
+>  {
+>      GAChannelReadState *rs =3D &c->rstate;
+>      GIOStatus status;
+> @@ -221,8 +335,8 @@ GIOStatus ga_channel_read(GAChannel *c, char *buf,
+> size_t size, gsize *count)
+>      return status;
+>  }
+>
+> -static GIOStatus ga_channel_write(GAChannel *c, const char *buf, size_t
+> size,
+> -                                  size_t *count)
+> +static GIOStatus ga_channel_handle_write(GAChannel *c, const char *buf,
+> +                                         size_t size, size_t *count)
+>  {
+>      GIOStatus status;
+>      OVERLAPPED ov =3D {0};
+> @@ -262,13 +376,25 @@ static GIOStatus ga_channel_write(GAChannel *c,
+> const char *buf, size_t size,
+>      return status;
+>  }
+>
+> +GIOStatus ga_channel_read(GAChannel *c, char *buf, size_t size, gsize
+> *count)
+> +{
+> +    if (c->common.method =3D=3D GA_CHANNEL_VSOCK_LISTEN) {
+> +        return ga_channel_common_read(&c->common, buf, size, count);
+> +    }
+> +    return ga_channel_handle_read(c, buf, size, count);
+> +}
+> +
+>  GIOStatus ga_channel_write_all(GAChannel *c, const char *buf, size_t siz=
+e)
+>  {
+>      GIOStatus status =3D G_IO_STATUS_NORMAL;
+>      size_t count =3D 0;
+>
+> +    if (c->common.method =3D=3D GA_CHANNEL_VSOCK_LISTEN) {
+> +        return ga_channel_common_write_all(&c->common, buf, size);
+> +    }
+> +
+>      while (size) {
+> -        status =3D ga_channel_write(c, buf, size, &count);
+> +        status =3D ga_channel_handle_write(c, buf, size, &count);
+>          if (status =3D=3D G_IO_STATUS_NORMAL) {
+>              size -=3D count;
+>              buf +=3D count;
+> @@ -276,86 +402,127 @@ GIOStatus ga_channel_write_all(GAChannel *c, const
+> char *buf, size_t size)
+>              break;
+>          }
+>      }
+> -
+>      return status;
+>  }
+>
+>  static gboolean ga_channel_open(GAChannel *c, GAChannelMethod method,
+> -                                const gchar *path)
+> +                                const gchar *path, Error **errp)
+>  {
+>      COMMTIMEOUTS comTimeOut =3D {0};
+>      gchar newpath[MAXPATHLEN] =3D {0};
+>      comTimeOut.ReadIntervalTimeout =3D 1;
+>
+> -    if (method !=3D GA_CHANNEL_VIRTIO_SERIAL && method !=3D
+> GA_CHANNEL_ISA_SERIAL) {
+> -        g_critical("unsupported communication method");
+> -        return false;
+> -    }
+> +    c->common.method =3D method;
+>
+> -    if (method =3D=3D GA_CHANNEL_ISA_SERIAL) {
+> -        snprintf(newpath, sizeof(newpath), "\\\\.\\%s", path);
+> -    } else {
+> -        g_strlcpy(newpath, path, sizeof(newpath));
+> -    }
+> +    switch (method) {
+> +    case GA_CHANNEL_VIRTIO_SERIAL:
+> +    case GA_CHANNEL_ISA_SERIAL:
+> +        if (method =3D=3D GA_CHANNEL_ISA_SERIAL) {
+> +            snprintf(newpath, sizeof(newpath), "\\\\.\\%s", path);
+> +        } else {
+> +            g_strlcpy(newpath, path, sizeof(newpath));
+> +        }
+>
+> -    c->handle =3D CreateFile(newpath, GENERIC_READ | GENERIC_WRITE, 0, N=
+ULL,
+> -                           OPEN_EXISTING,
+> -                           FILE_FLAG_NO_BUFFERING | FILE_FLAG_OVERLAPPED=
+,
+> NULL);
+> -    if (c->handle =3D=3D INVALID_HANDLE_VALUE) {
+> -        g_autofree gchar *emsg =3D g_win32_error_message(GetLastError())=
+;
+> -        g_critical("error opening path %s: %s", newpath, emsg);
+> -        return false;
+> +        c->handle =3D CreateFile(newpath, GENERIC_READ | GENERIC_WRITE, =
+0,
+> NULL,
+> +                               OPEN_EXISTING,
+> +                               FILE_FLAG_NO_BUFFERING |
+> FILE_FLAG_OVERLAPPED,
+> +                               NULL);
+> +        if (c->handle =3D=3D INVALID_HANDLE_VALUE) {
+> +            g_autofree gchar *emsg =3D
+> g_win32_error_message(GetLastError());
+> +            error_setg(errp, "error opening path %s: %s", newpath, emsg)=
+;
+> +            c->handle =3D NULL;
+> +            return false;
+> +        }
+> +
+> +        if (method =3D=3D GA_CHANNEL_ISA_SERIAL
+> +                && !SetCommTimeouts(c->handle, &comTimeOut)) {
+> +            g_autofree gchar *emsg =3D
+> g_win32_error_message(GetLastError());
+> +            error_setg(errp, "error setting timeout for com port: %s",
+> emsg);
+> +            CloseHandle(c->handle);
+> +            c->handle =3D NULL;
+> +            return false;
+> +        }
+> +        return true;
+> +
+> +#ifdef CONFIG_AF_VSOCK
+> +    case GA_CHANNEL_VSOCK_LISTEN: {
+> +        int fd =3D ga_channel_common_vsock_listen(path, errp);
+> +        if (fd < 0) {
+> +            return false;
+> +        }
+> +
+> +        c->listen_fd =3D fd;
+> +        ga_channel_socket_listen_add(c, true);
+> +        return true;
+>      }
+> +#endif
+>
+> -    if (method =3D=3D GA_CHANNEL_ISA_SERIAL
+> -            && !SetCommTimeouts(c->handle, &comTimeOut)) {
+> -        g_autofree gchar *emsg =3D g_win32_error_message(GetLastError())=
+;
+> -        g_critical("error setting timeout for com port: %s", emsg);
+> -        CloseHandle(c->handle);
+> +    default:
+> +        error_setg(errp, "unsupported communication method");
+>          return false;
+>      }
+> -
+> -    return true;
+>  }
+>
+>  GAChannel *ga_channel_new(GAChannelMethod method, const gchar *path,
+>                            int listen_fd, GAChannelCallback cb, gpointer
+> opaque)
+>  {
+> +    Error *err =3D NULL;
+>      GAChannel *c =3D g_new0(GAChannel, 1);
+> -    SECURITY_ATTRIBUTES sec_attrs;
+>
+> -    if (!ga_channel_open(c, method, path)) {
+> -        g_critical("error opening channel");
+> -        g_free(c);
+> +    /* listen_fd is for systemd socket activation; not applicable on
+> Windows. */
+> +    (void)listen_fd;
+> +    c->listen_fd =3D -1;
+> +    c->client_fd =3D -1;
+> +    c->common.event_cb =3D cb;
+> +    c->common.user_data =3D opaque;
+> +
+> +    if (!ga_channel_open(c, method, path, &err)) {
+> +        g_critical("%s", error_get_pretty(err));
+> +        error_free(err);
+> +        ga_channel_free(c);
+>          return NULL;
+>      }
+>
+> -    c->common.event_cb =3D cb;
+> -    c->common.user_data =3D opaque;
+> +    if (c->common.method !=3D GA_CHANNEL_VSOCK_LISTEN) {
+> +        SECURITY_ATTRIBUTES sec_attrs;
+> +
+> +        sec_attrs.nLength =3D sizeof(SECURITY_ATTRIBUTES);
+> +        sec_attrs.lpSecurityDescriptor =3D NULL;
+> +        sec_attrs.bInheritHandle =3D false;
+>
+> -    sec_attrs.nLength =3D sizeof(SECURITY_ATTRIBUTES);
+> -    sec_attrs.lpSecurityDescriptor =3D NULL;
+> -    sec_attrs.bInheritHandle =3D false;
+> +        c->rstate.buf_size =3D QGA_READ_COUNT_DEFAULT;
+> +        c->rstate.buf =3D g_malloc(QGA_READ_COUNT_DEFAULT);
+> +        c->rstate.ov.hEvent =3D CreateEvent(&sec_attrs, FALSE, FALSE, NU=
+LL);
+>
+> -    c->rstate.buf_size =3D QGA_READ_COUNT_DEFAULT;
+> -    c->rstate.buf =3D g_malloc(QGA_READ_COUNT_DEFAULT);
+> -    c->rstate.ov.hEvent =3D CreateEvent(&sec_attrs, FALSE, FALSE, NULL);
+> +        c->source =3D ga_channel_create_watch(c);
+> +        g_source_attach(c->source, NULL);
+> +    }
+>
+> -    c->source =3D ga_channel_create_watch(c);
+> -    g_source_attach(c->source, NULL);
+>      return c;
+>  }
+>
+>  void ga_channel_free(GAChannel *c)
+>  {
+> +    if (c->common.method =3D=3D GA_CHANNEL_VSOCK_LISTEN) {
+> +        /* Free the CRT fd wrappers before the GIOChannels close the
+> SOCKETs. */
+> +        if (c->listen_fd >=3D 0) {
+> +            qemu_close_socket_osfhandle(c->listen_fd);
+> +        }
+> +        if (c->client_fd >=3D 0) {
+> +            qemu_close_socket_osfhandle(c->client_fd);
+> +        }
+> +        ga_channel_common_free(&c->common);
+> +        g_free(c);
+> +        return;
+> +    }
+> +
+> +    /* Handle mode */
+>      if (c->source) {
+>          g_source_destroy(c->source);
+>      }
+>      if (c->rstate.ov.hEvent) {
+>          CloseHandle(c->rstate.ov.hEvent);
+>      }
+> -
+> -    ga_channel_common_free(&c->common);
+>      g_free(c->rstate.buf);
+>      g_free(c);
+>  }
+> diff --git a/qga/main.c b/qga/main.c
+> index fd19c7037d..35068ac7bb 100644
+> --- a/qga/main.c
+> +++ b/qga/main.c
+> @@ -1675,6 +1675,12 @@ int main(int argc, char **argv)
+>
+>      config->log_level =3D G_LOG_LEVEL_ERROR | G_LOG_LEVEL_CRITICAL;
+>
+> +    /* Required for Windows, harmless otherwise. */
+> +    if (socket_init() < 0) {
+> +        g_critical("failed to initialize sockets");
+> +        goto end;
+> +    }
+> +
+>      qemu_init_exec_dir(argv[0]);
+>      qga_qmp_init_marshal(&ga_commands);
+>
+> --
+> 2.54.0
+>
+>
+>
 
-Regards
-Bibo Mao
-> 
-> Regards
-> SignKirigami
->>>
->>> Regards
->>> SignKirigami
->>>>> @@ -66,6 +67,7 @@ typedef struct DisasContext {
->>>>>         TCGv zero;
->>>>>         bool la64; /* LoongArch64 mode */
->>>>>         bool va32; /* 32-bit virtual address */
->>>>> +    bool guest_mode;
->>>>>         uint32_t cpucfg1;
->>>>>         uint32_t cpucfg2;
->>>>>         uint32_t cpucfg3;
->>>>>
->>>>
->>>>
->>>
->>>
->>>
->>
->>
-> 
-> 
-> 
+--00000000000025ec2a0654d3e269
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div>Hi=C2=A0Polina,</div><div><br></div><div><span class=
+=3D"Asgive ng" style=3D"border-style:none;background:none">First of all,</s=
+pan> thanks for your patches.=C2=A0</div><div><br></div><div>Before reviewi=
+ng this patch, I want to ask: why is it needed? <br><br>I understand the pa=
+tch &quot;qemu-sockets: Enable AF_VSOCK on <span class=3D"Q6ibn ng" style=
+=3D"border-style:none;background:none">Windows&quot;,</span>=C2=A0</div><di=
+v>but AF_VSOCK has the same behavior on Linux and Windows.=C2=A0<div>I expe=
+cted that we could totally reuse the POSIX part, so <span class=3D"gmail-As=
+give gmail-ng" style=3D"border-style:none;background:none">just</span> move=
+ it to common with=C2=A0</div><div>some defines like: <br>```<br>#ifdef G_O=
+S_WIN32<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 in_ch =3D g_io_channel_win32_new_fd(=
+in_fd);<br>#else<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 in_ch =3D g_io_channel_unix=
+_new(in_fd);<br>#endif</div><div>```</div><div><br></div></div><div>We test=
+ed our driver with SSH over VSOCK, and standard Linux SSH works well.=C2=A0=
+<br>So, what is the difference in this case <span class=3D"Asgive ng" style=
+=3D"border-style:none;background:none">that you</span> add <span class=3D"Q=
+6ibn ng" style=3D"border-style:none;background:none">win32</span>-specific =
+code for VSOCK?</div><div><br></div><div><div dir=3D"ltr" class=3D"gmail_si=
+gnature" data-smartmail=3D"gmail_signature"><div dir=3D"ltr"><div>Best Rega=
+rds,</div><div>Kostiantyn Kostiuk.</div></div></div></div><br></div><br><di=
+v class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Fri, Jun 1=
+9, 2026 at 9:03=E2=80=AFPM Polina Vishneva &lt;<a href=3D"mailto:polina.vis=
+hneva@virtuozzo.com" target=3D"_blank">polina.vishneva@virtuozzo.com</a>&gt=
+; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px=
+ 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">Add vso=
+ck-listen channel mode to the Windows guest agent.<br>
+<br>
+The listen/accept path uses the standard QEMU socket helpers<br>
+(socket_parse(), socket_listen(), qemu_accept()) and plugs the resulting<br=
+>
+SOCKET into the GMainLoop via g_io_channel_win32_new_socket().<br>
+<br>
+Signed-off-by: Polina Vishneva &lt;<a href=3D"mailto:polina.vishneva@virtuo=
+zzo.com" target=3D"_blank">polina.vishneva@virtuozzo.com</a>&gt;<br>
+---<br>
+=C2=A0docs/interop/qemu-ga.rst |=C2=A0 =C2=A04 +<br>
+=C2=A0qga/channel-win32.c=C2=A0 =C2=A0 =C2=A0 | 257 +++++++++++++++++++++++=
++++++++++-------<br>
+=C2=A0qga/main.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0|=C2=
+=A0 =C2=A06 +<br>
+=C2=A03 files changed, 222 insertions(+), 45 deletions(-)<br>
+<br>
+diff --git a/docs/interop/qemu-ga.rst b/docs/interop/qemu-ga.rst<br>
+index d16cc1b9f0..9c415fc8f8 100644<br>
+--- a/docs/interop/qemu-ga.rst<br>
++++ b/docs/interop/qemu-ga.rst<br>
+@@ -59,6 +59,10 @@ Options<br>
+=C2=A0 =C2=A0Transport method: one of ``unix-listen``, ``virtio-serial``, o=
+r<br>
+=C2=A0 =C2=A0``isa-serial``, or ``vsock-listen`` (``virtio-serial`` is the =
+default).<br>
+<br>
++=C2=A0 .. note::<br>
++=C2=A0 =C2=A0 =C2=A0On Windows, ``vsock-listen`` requires the viosock driv=
+er from<br>
++=C2=A0 =C2=A0 =C2=A0kvm-guest-drivers-windows recent enough to include com=
+mit ``687c776``.<br>
++<br>
+=C2=A0.. option:: -p, --path=3DPATH<br>
+<br>
+=C2=A0 =C2=A0Device/socket path (the default for virtio-serial is<br>
+diff --git a/qga/channel-win32.c b/qga/channel-win32.c<br>
+index 2bd6fc1538..257576815a 100644<br>
+--- a/qga/channel-win32.c<br>
++++ b/qga/channel-win32.c<br>
+@@ -1,6 +1,8 @@<br>
+=C2=A0#include &quot;qemu/osdep.h&quot;<br>
+=C2=A0#include &lt;windows.h&gt;<br>
+=C2=A0#include &lt;io.h&gt;<br>
++#include &quot;qapi/error.h&quot;<br>
++#include &quot;qemu/sockets.h&quot;<br>
+=C2=A0#include &quot;guest-agent-core.h&quot;<br>
+=C2=A0#include &quot;channel-common.h&quot;<br>
+<br>
+@@ -17,6 +19,9 @@ typedef struct GAChannelReadState {<br>
+=C2=A0struct GAChannel {<br>
+=C2=A0 =C2=A0 =C2=A0GAChannelCommon common;<br>
+<br>
++=C2=A0 =C2=A0 int listen_fd;<br>
++=C2=A0 =C2=A0 int client_fd;<br>
++<br>
+=C2=A0 =C2=A0 =C2=A0HANDLE handle;<br>
+=C2=A0 =C2=A0 =C2=A0GAChannelReadState rstate;<br>
+=C2=A0 =C2=A0 =C2=A0GIOCondition pending_events; /* TODO: use GAWatch.pollf=
+d.revents */<br>
+@@ -198,7 +203,116 @@ static GSource *ga_channel_create_watch(GAChannel *c)=
+<br>
+=C2=A0 =C2=A0 =C2=A0return source;<br>
+=C2=A0}<br>
+<br>
+-GIOStatus ga_channel_read(GAChannel *c, char *buf, size_t size, gsize *cou=
+nt)<br>
++/*<br>
++ * Socket mode: GIOChannel-based listen/accept/client helpers<br>
++ */<br>
++<br>
++static gboolean ga_channel_socket_client_event(GIOChannel *channel,<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0GIOCondition condition,<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0gpointer data);<br>
++static gboolean ga_channel_socket_listen_accept(GIOChannel *channel,<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 GIOCondition condition,<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 gpointer data);<br>
++<br>
++static void ga_channel_socket_listen_add(GAChannel *c, bool create)<br>
++{<br>
++=C2=A0 =C2=A0 if (create) {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 c-&gt;common.listen_channel =3D<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 g_io_channel_win32_new_socket(_g=
+et_osfhandle(c-&gt;listen_fd));<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 g_assert(c-&gt;common.listen_channel);<br>
++=C2=A0 =C2=A0 }<br>
++=C2=A0 =C2=A0 g_io_add_watch(c-&gt;common.listen_channel, G_IO_IN,<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0ga_ch=
+annel_socket_listen_accept, c);<br>
++}<br>
++<br>
++static gboolean ga_channel_socket_client_close(GAChannel *c)<br>
++{<br>
++=C2=A0 =C2=A0 /* Free the CRT fd wrapper while the SOCKET is still valid. =
+*/<br>
++=C2=A0 =C2=A0 if (c-&gt;client_fd &gt;=3D 0) {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 qemu_close_socket_osfhandle(c-&gt;client_fd);<=
+br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 c-&gt;client_fd =3D -1;<br>
++=C2=A0 =C2=A0 }<br>
++=C2=A0 =C2=A0 ga_channel_common_client_close(&amp;c-&gt;common);<br>
++=C2=A0 =C2=A0 if (c-&gt;common.listen_channel) {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 ga_channel_socket_listen_add(c, false);<br>
++=C2=A0 =C2=A0 }<br>
++=C2=A0 =C2=A0 return false;<br>
++}<br>
++<br>
++static gboolean ga_channel_socket_listen_accept(GIOChannel *channel,<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 GIOCondition condition,<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 gpointer data)<br>
++{<br>
++=C2=A0 =C2=A0 GAChannel *c =3D data;<br>
++=C2=A0 =C2=A0 int client_fd;<br>
++=C2=A0 =C2=A0 GIOChannel *client_ch;<br>
++=C2=A0 =C2=A0 bool accepted =3D false;<br>
++<br>
++=C2=A0 =C2=A0 client_fd =3D qemu_accept(c-&gt;listen_fd, NULL, NULL);<br>
++=C2=A0 =C2=A0 if (client_fd &lt; 0) {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 g_warning(&quot;error accepting connection: %s=
+&quot;, strerror(errno));<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 goto out;<br>
++=C2=A0 =C2=A0 }<br>
++<br>
++=C2=A0 =C2=A0 /*<br>
++=C2=A0 =C2=A0 =C2=A0* g_io_channel_win32_new_socket() makes the socket non=
+blocking via<br>
++=C2=A0 =C2=A0 =C2=A0* WSAEventSelect.<br>
++=C2=A0 =C2=A0 =C2=A0*/<br>
++=C2=A0 =C2=A0 client_ch =3D g_io_channel_win32_new_socket(_get_osfhandle(c=
+lient_fd));<br>
++=C2=A0 =C2=A0 g_assert(client_ch);<br>
++<br>
++=C2=A0 =C2=A0 if (ga_channel_common_client_add(&amp;c-&gt;common, client_c=
+h,<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0ga_channel_socke=
+t_client_event, c)) {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 g_warning(&quot;error setting up connection&qu=
+ot;);<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 /*<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0* Release the CRT fd wrapper while its S=
+OCKET is still open - only<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0* then qemu_close_socket_osfhandle() can=
+ detach the fd and let the<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0* channel teardown perform the single cl=
+osesocket().<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0*/<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 qemu_close_socket_osfhandle(client_fd);<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 ga_channel_common_gio_destroy(client_ch);<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 goto out;<br>
++=C2=A0 =C2=A0 }<br>
++=C2=A0 =C2=A0 c-&gt;client_fd =3D client_fd;<br>
++=C2=A0 =C2=A0 accepted =3D true;<br>
++<br>
++out:<br>
++=C2=A0 =C2=A0 /* only accept 1 connection at a time */<br>
++=C2=A0 =C2=A0 return !accepted;<br>
++}<br>
++<br>
++static gboolean ga_channel_socket_client_event(GIOChannel *channel,<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0GIOCondition condition,<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0gpointer data)<br>
++{<br>
++=C2=A0 =C2=A0 GAChannel *c =3D data;<br>
++<br>
++=C2=A0 =C2=A0 g_assert(c);<br>
++=C2=A0 =C2=A0 if (!c-&gt;common.event_cb(condition, c-&gt;common.user_data=
+)) {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 return ga_channel_socket_client_close(c);<br>
++=C2=A0 =C2=A0 }<br>
++=C2=A0 =C2=A0 /*<br>
++=C2=A0 =C2=A0 =C2=A0* A peer that sends data and disconnects at once is ne=
+ver reported:<br>
++=C2=A0 =C2=A0 =C2=A0* GLib turns the coalesced FD_READ|FD_CLOSE into a pla=
+in G_IO_IN,<br>
++=C2=A0 =C2=A0 =C2=A0* and Winsock records FD_CLOSE only once, so no later =
+event follows.<br>
++=C2=A0 =C2=A0 =C2=A0* Peek after each event to detect the disconnect.<br>
++=C2=A0 =C2=A0 =C2=A0*/<br>
++=C2=A0 =C2=A0 if (c-&gt;client_fd &gt;=3D 0) {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 char peek;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 ssize_t r =3D recv(c-&gt;client_fd, &amp;peek,=
+ 1, MSG_PEEK);<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (r =3D=3D 0 || (r &lt; 0 &amp;&amp; errno !=
+=3D EAGAIN)) {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return ga_channel_socket_client_=
+close(c);<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
++=C2=A0 =C2=A0 }<br>
++=C2=A0 =C2=A0 return true;<br>
++}<br>
++<br>
++/*<br>
++ * Handle mode: overlapped I/O read/write<br>
++ */<br>
++<br>
++static GIOStatus ga_channel_handle_read(GAChannel *c, char *buf, size_t si=
+ze,<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 gsize *c=
+ount)<br>
+=C2=A0{<br>
+=C2=A0 =C2=A0 =C2=A0GAChannelReadState *rs =3D &amp;c-&gt;rstate;<br>
+=C2=A0 =C2=A0 =C2=A0GIOStatus status;<br>
+@@ -221,8 +335,8 @@ GIOStatus ga_channel_read(GAChannel *c, char *buf, size=
+_t size, gsize *count)<br>
+=C2=A0 =C2=A0 =C2=A0return status;<br>
+=C2=A0}<br>
+<br>
+-static GIOStatus ga_channel_write(GAChannel *c, const char *buf, size_t si=
+ze,<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 size_t *count)<br>
++static GIOStatus ga_channel_handle_write(GAChannel *c, const char *buf,<br=
+>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0si=
+ze_t size, size_t *count)<br>
+=C2=A0{<br>
+=C2=A0 =C2=A0 =C2=A0GIOStatus status;<br>
+=C2=A0 =C2=A0 =C2=A0OVERLAPPED ov =3D {0};<br>
+@@ -262,13 +376,25 @@ static GIOStatus ga_channel_write(GAChannel *c, const=
+ char *buf, size_t size,<br>
+=C2=A0 =C2=A0 =C2=A0return status;<br>
+=C2=A0}<br>
+<br>
++GIOStatus ga_channel_read(GAChannel *c, char *buf, size_t size, gsize *cou=
+nt)<br>
++{<br>
++=C2=A0 =C2=A0 if (c-&gt;common.method =3D=3D GA_CHANNEL_VSOCK_LISTEN) {<br=
+>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 return ga_channel_common_read(&amp;c-&gt;commo=
+n, buf, size, count);<br>
++=C2=A0 =C2=A0 }<br>
++=C2=A0 =C2=A0 return ga_channel_handle_read(c, buf, size, count);<br>
++}<br>
++<br>
+=C2=A0GIOStatus ga_channel_write_all(GAChannel *c, const char *buf, size_t =
+size)<br>
+=C2=A0{<br>
+=C2=A0 =C2=A0 =C2=A0GIOStatus status =3D G_IO_STATUS_NORMAL;<br>
+=C2=A0 =C2=A0 =C2=A0size_t count =3D 0;<br>
+<br>
++=C2=A0 =C2=A0 if (c-&gt;common.method =3D=3D GA_CHANNEL_VSOCK_LISTEN) {<br=
+>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 return ga_channel_common_write_all(&amp;c-&gt;=
+common, buf, size);<br>
++=C2=A0 =C2=A0 }<br>
++<br>
+=C2=A0 =C2=A0 =C2=A0while (size) {<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 status =3D ga_channel_write(c, buf, size, &amp=
+;count);<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 status =3D ga_channel_handle_write(c, buf, siz=
+e, &amp;count);<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0if (status =3D=3D G_IO_STATUS_NORMAL) {<b=
+r>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0size -=3D count;<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0buf +=3D count;<br>
+@@ -276,86 +402,127 @@ GIOStatus ga_channel_write_all(GAChannel *c, const c=
+har *buf, size_t size)<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0break;<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
+=C2=A0 =C2=A0 =C2=A0}<br>
+-<br>
+=C2=A0 =C2=A0 =C2=A0return status;<br>
+=C2=A0}<br>
+<br>
+=C2=A0static gboolean ga_channel_open(GAChannel *c, GAChannelMethod method,=
+<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 const gchar *path)<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 const gchar *path, Error **errp)<br>
+=C2=A0{<br>
+=C2=A0 =C2=A0 =C2=A0COMMTIMEOUTS comTimeOut =3D {0};<br>
+=C2=A0 =C2=A0 =C2=A0gchar newpath[MAXPATHLEN] =3D {0};<br>
+=C2=A0 =C2=A0 =C2=A0comTimeOut.ReadIntervalTimeout =3D 1;<br>
+<br>
+-=C2=A0 =C2=A0 if (method !=3D GA_CHANNEL_VIRTIO_SERIAL &amp;&amp; method !=
+=3D GA_CHANNEL_ISA_SERIAL) {<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 g_critical(&quot;unsupported communication met=
+hod&quot;);<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 return false;<br>
+-=C2=A0 =C2=A0 }<br>
++=C2=A0 =C2=A0 c-&gt;common.method =3D method;<br>
+<br>
+-=C2=A0 =C2=A0 if (method =3D=3D GA_CHANNEL_ISA_SERIAL) {<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 snprintf(newpath, sizeof(newpath), &quot;\\\\.=
+\\%s&quot;, path);<br>
+-=C2=A0 =C2=A0 } else {<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 g_strlcpy(newpath, path, sizeof(newpath));<br>
+-=C2=A0 =C2=A0 }<br>
++=C2=A0 =C2=A0 switch (method) {<br>
++=C2=A0 =C2=A0 case GA_CHANNEL_VIRTIO_SERIAL:<br>
++=C2=A0 =C2=A0 case GA_CHANNEL_ISA_SERIAL:<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (method =3D=3D GA_CHANNEL_ISA_SERIAL) {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 snprintf(newpath, sizeof(newpath=
+), &quot;\\\\.\\%s&quot;, path);<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 } else {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 g_strlcpy(newpath, path, sizeof(=
+newpath));<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
+<br>
+-=C2=A0 =C2=A0 c-&gt;handle =3D CreateFile(newpath, GENERIC_READ | GENERIC_=
+WRITE, 0, NULL,<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0OPEN_EXISTING,<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0FILE_FLAG_NO_BUFFERING | FILE_FLAG_OVERLAPPED, NULL=
+);<br>
+-=C2=A0 =C2=A0 if (c-&gt;handle =3D=3D INVALID_HANDLE_VALUE) {<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 g_autofree gchar *emsg =3D g_win32_error_messa=
+ge(GetLastError());<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 g_critical(&quot;error opening path %s: %s&quo=
+t;, newpath, emsg);<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 return false;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 c-&gt;handle =3D CreateFile(newpath, GENERIC_R=
+EAD | GENERIC_WRITE, 0, NULL,<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0OPEN_EXISTING,<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0FILE_FLAG_NO_BUFFERING | FILE_FLAG_OV=
+ERLAPPED,<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0NULL);<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (c-&gt;handle =3D=3D INVALID_HANDLE_VALUE) =
+{<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 g_autofree gchar *emsg =3D g_win=
+32_error_message(GetLastError());<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 error_setg(errp, &quot;error ope=
+ning path %s: %s&quot;, newpath, emsg);<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 c-&gt;handle =3D NULL;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return false;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
++<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (method =3D=3D GA_CHANNEL_ISA_SERIAL<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &amp;&amp; !SetCom=
+mTimeouts(c-&gt;handle, &amp;comTimeOut)) {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 g_autofree gchar *emsg =3D g_win=
+32_error_message(GetLastError());<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 error_setg(errp, &quot;error set=
+ting timeout for com port: %s&quot;, emsg);<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 CloseHandle(c-&gt;handle);<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 c-&gt;handle =3D NULL;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return false;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 return true;<br>
++<br>
++#ifdef CONFIG_AF_VSOCK<br>
++=C2=A0 =C2=A0 case GA_CHANNEL_VSOCK_LISTEN: {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 int fd =3D ga_channel_common_vsock_listen(path=
+, errp);<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (fd &lt; 0) {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return false;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
++<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 c-&gt;listen_fd =3D fd;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 ga_channel_socket_listen_add(c, true);<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 return true;<br>
+=C2=A0 =C2=A0 =C2=A0}<br>
++#endif<br>
+<br>
+-=C2=A0 =C2=A0 if (method =3D=3D GA_CHANNEL_ISA_SERIAL<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &amp;&amp; !SetCommTimeouts(c-&g=
+t;handle, &amp;comTimeOut)) {<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 g_autofree gchar *emsg =3D g_win32_error_messa=
+ge(GetLastError());<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 g_critical(&quot;error setting timeout for com=
+ port: %s&quot;, emsg);<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 CloseHandle(c-&gt;handle);<br>
++=C2=A0 =C2=A0 default:<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 error_setg(errp, &quot;unsupported communicati=
+on method&quot;);<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0return false;<br>
+=C2=A0 =C2=A0 =C2=A0}<br>
+-<br>
+-=C2=A0 =C2=A0 return true;<br>
+=C2=A0}<br>
+<br>
+=C2=A0GAChannel *ga_channel_new(GAChannelMethod method, const gchar *path,<=
+br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0int listen_fd, GAChannelCallback cb, gpointer opaqu=
+e)<br>
+=C2=A0{<br>
++=C2=A0 =C2=A0 Error *err =3D NULL;<br>
+=C2=A0 =C2=A0 =C2=A0GAChannel *c =3D g_new0(GAChannel, 1);<br>
+-=C2=A0 =C2=A0 SECURITY_ATTRIBUTES sec_attrs;<br>
+<br>
+-=C2=A0 =C2=A0 if (!ga_channel_open(c, method, path)) {<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 g_critical(&quot;error opening channel&quot;);=
+<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 g_free(c);<br>
++=C2=A0 =C2=A0 /* listen_fd is for systemd socket activation; not applicabl=
+e on Windows. */<br>
++=C2=A0 =C2=A0 (void)listen_fd;<br>
++=C2=A0 =C2=A0 c-&gt;listen_fd =3D -1;<br>
++=C2=A0 =C2=A0 c-&gt;client_fd =3D -1;<br>
++=C2=A0 =C2=A0 c-&gt;common.event_cb =3D cb;<br>
++=C2=A0 =C2=A0 c-&gt;common.user_data =3D opaque;<br>
++<br>
++=C2=A0 =C2=A0 if (!ga_channel_open(c, method, path, &amp;err)) {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 g_critical(&quot;%s&quot;, error_get_pretty(er=
+r));<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 error_free(err);<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 ga_channel_free(c);<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0return NULL;<br>
+=C2=A0 =C2=A0 =C2=A0}<br>
+<br>
+-=C2=A0 =C2=A0 c-&gt;common.event_cb =3D cb;<br>
+-=C2=A0 =C2=A0 c-&gt;common.user_data =3D opaque;<br>
++=C2=A0 =C2=A0 if (c-&gt;common.method !=3D GA_CHANNEL_VSOCK_LISTEN) {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 SECURITY_ATTRIBUTES sec_attrs;<br>
++<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 sec_attrs.nLength =3D sizeof(SECURITY_ATTRIBUT=
+ES);<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 sec_attrs.lpSecurityDescriptor =3D NULL;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 sec_attrs.bInheritHandle =3D false;<br>
+<br>
+-=C2=A0 =C2=A0 sec_attrs.nLength =3D sizeof(SECURITY_ATTRIBUTES);<br>
+-=C2=A0 =C2=A0 sec_attrs.lpSecurityDescriptor =3D NULL;<br>
+-=C2=A0 =C2=A0 sec_attrs.bInheritHandle =3D false;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 c-&gt;rstate.buf_size =3D QGA_READ_COUNT_DEFAU=
+LT;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 c-&gt;rstate.buf =3D g_malloc(QGA_READ_COUNT_D=
+EFAULT);<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 c-&gt;rstate.ov.hEvent =3D CreateEvent(&amp;se=
+c_attrs, FALSE, FALSE, NULL);<br>
+<br>
+-=C2=A0 =C2=A0 c-&gt;rstate.buf_size =3D QGA_READ_COUNT_DEFAULT;<br>
+-=C2=A0 =C2=A0 c-&gt;rstate.buf =3D g_malloc(QGA_READ_COUNT_DEFAULT);<br>
+-=C2=A0 =C2=A0 c-&gt;rstate.ov.hEvent =3D CreateEvent(&amp;sec_attrs, FALSE=
+, FALSE, NULL);<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 c-&gt;source =3D ga_channel_create_watch(c);<b=
+r>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 g_source_attach(c-&gt;source, NULL);<br>
++=C2=A0 =C2=A0 }<br>
+<br>
+-=C2=A0 =C2=A0 c-&gt;source =3D ga_channel_create_watch(c);<br>
+-=C2=A0 =C2=A0 g_source_attach(c-&gt;source, NULL);<br>
+=C2=A0 =C2=A0 =C2=A0return c;<br>
+=C2=A0}<br>
+<br>
+=C2=A0void ga_channel_free(GAChannel *c)<br>
+=C2=A0{<br>
++=C2=A0 =C2=A0 if (c-&gt;common.method =3D=3D GA_CHANNEL_VSOCK_LISTEN) {<br=
+>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 /* Free the CRT fd wrappers before the GIOChan=
+nels close the SOCKETs. */<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (c-&gt;listen_fd &gt;=3D 0) {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 qemu_close_socket_osfhandle(c-&g=
+t;listen_fd);<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (c-&gt;client_fd &gt;=3D 0) {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 qemu_close_socket_osfhandle(c-&g=
+t;client_fd);<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 ga_channel_common_free(&amp;c-&gt;common);<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 g_free(c);<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 return;<br>
++=C2=A0 =C2=A0 }<br>
++<br>
++=C2=A0 =C2=A0 /* Handle mode */<br>
+=C2=A0 =C2=A0 =C2=A0if (c-&gt;source) {<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0g_source_destroy(c-&gt;source);<br>
+=C2=A0 =C2=A0 =C2=A0}<br>
+=C2=A0 =C2=A0 =C2=A0if (c-&gt;rstate.ov.hEvent) {<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0CloseHandle(c-&gt;rstate.ov.hEvent);<br>
+=C2=A0 =C2=A0 =C2=A0}<br>
+-<br>
+-=C2=A0 =C2=A0 ga_channel_common_free(&amp;c-&gt;common);<br>
+=C2=A0 =C2=A0 =C2=A0g_free(c-&gt;rstate.buf);<br>
+=C2=A0 =C2=A0 =C2=A0g_free(c);<br>
+=C2=A0}<br>
+diff --git a/qga/main.c b/qga/main.c<br>
+index fd19c7037d..35068ac7bb 100644<br>
+--- a/qga/main.c<br>
++++ b/qga/main.c<br>
+@@ -1675,6 +1675,12 @@ int main(int argc, char **argv)<br>
+<br>
+=C2=A0 =C2=A0 =C2=A0config-&gt;log_level =3D G_LOG_LEVEL_ERROR | G_LOG_LEVE=
+L_CRITICAL;<br>
+<br>
++=C2=A0 =C2=A0 /* Required for Windows, harmless otherwise. */<br>
++=C2=A0 =C2=A0 if (socket_init() &lt; 0) {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 g_critical(&quot;failed to initialize sockets&=
+quot;);<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 goto end;<br>
++=C2=A0 =C2=A0 }<br>
++<br>
+=C2=A0 =C2=A0 =C2=A0qemu_init_exec_dir(argv[0]);<br>
+=C2=A0 =C2=A0 =C2=A0qga_qmp_init_marshal(&amp;ga_commands);<br>
+<br>
+-- <br>
+2.54.0<br>
+<br>
+<br>
+</blockquote></div>
+
+--00000000000025ec2a0654d3e269--
 
 
