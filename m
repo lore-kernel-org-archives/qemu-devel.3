@@ -4,143 +4,152 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06903CDB471
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jun 2026 08:05:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C69ABCDB47B
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jun 2026 08:06:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wbZeL-0001Q0-2Q; Mon, 22 Jun 2026 04:04:57 -0400
+	id 1wbZft-00024d-5m; Mon, 22 Jun 2026 04:06:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wbZeK-0001Ph-3T
- for qemu-devel@nongnu.org; Mon, 22 Jun 2026 04:04:56 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1wbZfl-00024P-OH
+ for qemu-devel@nongnu.org; Mon, 22 Jun 2026 04:06:27 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wbZeI-0006US-49
- for qemu-devel@nongnu.org; Mon, 22 Jun 2026 04:04:55 -0400
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65M59Q2f3800850
- for <qemu-devel@nongnu.org>; Mon, 22 Jun 2026 08:04:51 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- 8pxC8uySDUu3vPuTVcIE2LHiRoUPrC08f5/xg7GC4bo=; b=b9YQpbLh4w47qABS
- YwkwDTe2iY/Hp6DaqA1n4CXzj/mgF2kpihdTwhuE644D0qpYWdS3rrZ3ZKQTjlhj
- MONCVSkrlpaAyROpe7hYiDcG9Zjnp0ytr0du5FzfZWgXib8DzpZf6RoaBze7VPr8
- n7BE4YSvypSkSFX3eOQ5bZJ5XS1X90C8YGUirqWc7VBeenD5C/9mS/CvGMsBu6MJ
- tdfXncZH8zDgI6GsyAAMAoxge4qoJtS5au2QF8FEe/cpe0EVmUjm40n4Nk57OcIg
- SyC4pUGly/dC5+LvZVkK3N+Fspw7uX8yJIIKkO00mmqhu6T+cyTWI1IT9zl1lnkc
- 124spw==
-Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
- [209.85.219.69])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ewm1k58qw-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 22 Jun 2026 08:04:51 +0000 (GMT)
-Received: by mail-qv1-f69.google.com with SMTP id
- 6a1803df08f44-8dba00e17b5so53130696d6.3
- for <qemu-devel@nongnu.org>; Mon, 22 Jun 2026 01:04:51 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1wbZfk-0006rq-53
+ for qemu-devel@nongnu.org; Mon, 22 Jun 2026 04:06:25 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1782115580;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=OUupwX9QM8Q74Thn0WQCCHi6Qm19LflNdouuc4KwwYg=;
+ b=PHmxzeiLagKCcHobuCZMjs8wQlGbB35sT8Sguy3PYFawO/SuLh73i32/wcWv14b/XgoJfK
+ ET9kpkFwg8I8YXxo5OZsvxEGZ35w5fUG96v+jKgK7tV5jmCUOWxgWBPYLIpFT0o+5Gpxz9
+ EI17HToVDTL4m9/PcPaKbAM4HTN3NYs=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-139-5UYPj19kOsWnMGc92Orplg-1; Mon, 22 Jun 2026 04:06:17 -0400
+X-MC-Unique: 5UYPj19kOsWnMGc92Orplg-1
+X-Mimecast-MFC-AGG-ID: 5UYPj19kOsWnMGc92Orplg_1782115576
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-49221de4ed4so26211545e9.0
+ for <qemu-devel@nongnu.org>; Mon, 22 Jun 2026 01:06:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1782115490; x=1782720290; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=8pxC8uySDUu3vPuTVcIE2LHiRoUPrC08f5/xg7GC4bo=;
- b=kvuEZ252sdrSfISUgSwmq95c05Zr2+n8baawgPvw0Lv0flziAKFcyJxI+axcRTnA6+
- +05PQkZSL0LPiyA6FWNyVLetYrH03jxiMRviTBzGWpj7qJw1cEyhXldx9TIbUmsARMCu
- IyAzp8MRM5XA+sSx2TYy67K/B2D1x/JWpIzhf7h195icJsR4nntX9tAQEDUMESER4+Yp
- C4h9l48W4Ioft/XiaThazraC9smSdZzKebM8BTmpvozbMoa+aknfYQa588VylTA1wSJx
- d2BdGktx2H/Z+cENXwERa+sf24/IbxUJtlGW0Blq/LZlcznMXf5dJJX8or+3Ly5G1yod
- HXnA==
+ d=redhat.com; s=google; t=1782115576; x=1782720376; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to;
+ bh=OUupwX9QM8Q74Thn0WQCCHi6Qm19LflNdouuc4KwwYg=;
+ b=b5b5Igz1HPUMSajWjfb0wjWoWDjTNMCYNF4iUQcTCt/c5mIhxAZsmcerWnepoCzoMZ
+ m6hU0gBRd1tsR+kw49J1hp0wCa+sw1n6uETT/EdcAYEWsxQ5KHdFgGHpJdfmd2Zgxbec
+ JcX8FjzfQADb3IT3AqsBYObjZdT+eYdL+KDB0ghrEnn+eVzgnv6lUyHHA891xhAs6Ptd
+ MQOfwhZ9cr0nwUgrMth6GHKvPWHql9XlQhmiIv0l2OYFq1BGUUo74sOsYSVs8AVRnviS
+ dcjBrnA92Xrv7ELrJ+1w4jyALAW8RwCmWn5Tg4M6eW/Zr6GHplGebyVlCuw2iYKuo3TN
+ 1OvQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782115490; x=1782720290;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=8pxC8uySDUu3vPuTVcIE2LHiRoUPrC08f5/xg7GC4bo=;
- b=QsC+pwWZYnkCzMue+pfYQjS/JCr/5fFJF3eKTAmbDw37gnqcGlfFBi4/CTh6HdxKTm
- zivCvP2uEHdTch167j6fQhvwTTjkgl1MZ3lS0aRe4HBeJq9BABDA+gdyBq9n/nXanV68
- zKwapN5mkukVfMaZBjtlNuKC3KuD6eU74MkoKfJ7MbYjj+ORJK4DPjQjsdrUOzoKmiDh
- GhrN+4mVTf5QNsGkazkAHvEiSruBCls3QsrTeaQEUvNb2+p1e9udgGFa2/whoPealoYG
- G+HJ7QJIYp+65r8y0AOcAe3S8V36/6OwfE3Xwm4iN634URnfwB8p+cagN2AvaPAmB9i8
- purg==
+ d=1e100.net; s=20251104; t=1782115576; x=1782720376;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=OUupwX9QM8Q74Thn0WQCCHi6Qm19LflNdouuc4KwwYg=;
+ b=q9ERU4CbsqHyQWRkSF5ixdPfruSgsd44u6r7hxcb6jVPN60ss5GvoZmxyfv1YgxIj4
+ 5wqPtmFBfHPTOS+dAOSyd+UF2vxsGx/xeZuZjCDlG4VZui0yc3SPoB1wlfdHKyFssaN0
+ xlPJgsrYuLdqdQLJekizz0Mzu9AMO/Wty1r5/DD9VnMWjiV++7/3DHYz83HJ5Pi+lvu+
+ aFSyeToGYgUfNt/wwgIYtzME1bf2ZnrqhVfYxk6SmeTUNRy8m1e9E9WFmGYQDVBK9+h3
+ odXvQhU3SW9FiBP66bacn20snHUjEt8cyj21dJZCmM7bUhrfJOhgSBQU2w0PvrAV/KPL
+ Ienw==
 X-Forwarded-Encrypted: i=1;
- AFNElJ8p9SM6C2n3OoKe0AQ4HDsAQ+xFRidXI78jH2uzTvaWL7Ey/SWta13OPbfg5jI+ygfAQ39Wbti5/qHC@nongnu.org
-X-Gm-Message-State: AOJu0YyN8qq9PPZzqaI+fdIWCqZnYLKbit51koqa58/AAon9uD4J7+eH
- urIbE4kv3euAcgQ1rOeyemnypj9FtMPqcEvvjkyHorf8Oa1ezlZrPq7JUDADAqzOxFq1cdnvw+A
- JOMGOzJLWfYyVfY3FyDiJ6hiUhYF6gBa7TzkqGyh+b83s320kdGo+4XOvHQ==
-X-Gm-Gg: AfdE7clHW5Eh1ud0Off7eTDwGMNCOh/00qEOfi/VfqbQWBOdM4Pz7AD5BRZxGUJHaZx
- kjszAEFfAvwW8c72DfRp1WzG98uKH/dIvmMTAAPE3wC3eb1oQVeAFdZxdO7oJkefjKcqeMGfUMX
- TqNEzN/Zr17OV0xWtmMu8wsWqysJjlShZYxFiB5LanALF1YGLreLlyRp8hKHf+Pl6EDd4ltaE0S
- UvE93VjQvp0F5vrfOxoi6vwJo8T0R32AFyY52smBtuVVEF/axZAiHYMViZVV+QEu46nhXDfa9tS
- QlIAi1SFHi3y8Xc/kJCfpIsh1qy+MRG6LsVTfkNOuaMeiQnnmiCQk3+Lj1xgH8d+SazZjn9+MDK
- A5qoq8VAtJsgOqI0uvpZYgmpKXrJcAUlQcVKTVOjUsLzfF5HIixLeEStLzmgB3NWKXhE=
-X-Received: by 2002:a05:620a:470e:b0:914:c0e8:242 with SMTP id
- af79cd13be357-9208ccfe1ebmr2118123385a.30.1782115490060; 
- Mon, 22 Jun 2026 01:04:50 -0700 (PDT)
-X-Received: by 2002:a05:620a:470e:b0:914:c0e8:242 with SMTP id
- af79cd13be357-9208ccfe1ebmr2118118785a.30.1782115489479; 
- Mon, 22 Jun 2026 01:04:49 -0700 (PDT)
-Received: from [192.168.69.212] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-492494496d8sm195433715e9.9.2026.06.22.01.04.48
+ AFNElJ8Az4PUo8gudWfTxPi1goXQu0V/GiXmnLETVYLnau6EjMHxgy6XQ8SNFUB86y3Kbe0L2qd+uEGMZAnt@nongnu.org
+X-Gm-Message-State: AOJu0YzBocr7kCHmmQaHaSBTxwNVAquinNWxCGoPEntSP823OwVcMd3d
+ mRuJ5zH9pHU3tVcgFt4QbyO/XIuOWo4tbtyNXRerOe7weQzEV/4dtGrv8M4Hd9G3ARzA4QlDm8L
+ nVIAQ9wfyHdSStBJyeYyu4W1Gevqxhp50PYdEfnkcIF/Jo+lFksEoXTuc
+X-Gm-Gg: AfdE7clUXBQrZ5Ga+KtQVDTbaExoY2qQ+nWumEOAN9zSZ3NPVQWnZSHt0IMDPdov/KD
+ +dkTOJ+3shNiRTsMEIQd8nv5CNVHlcShPvXLxw12LuBWxQfVS+Ch7dkrye4bKJgUiSUyZt1dmJs
+ bc8HDqis4xOZNmyES7dOLnLR3+45P48fr9mUZeS38Koljrn926xcFq71dXuZvhOeckiSqvmKS4Q
+ SxK/gsUJfPhu59N+6hMsR87Q7ztXJLJxjpHWIiaF/fGV18DDDIaTxZvOPjHtIILGSqFlF74gAE3
+ 5MuyZP83/B/KklBKGgD/JDcyJWgiwbRbCcNXbbGI+z8lfsKreQkmNeQwPHz4lUKMNTewzOmeq6s
+ s/MhLCk3v
+X-Received: by 2002:a05:600c:3ba9:b0:490:48df:2793 with SMTP id
+ 5b1f17b1804b1-49240e93196mr231217895e9.26.1782115576497; 
+ Mon, 22 Jun 2026 01:06:16 -0700 (PDT)
+X-Received: by 2002:a05:600c:3ba9:b0:490:48df:2793 with SMTP id
+ 5b1f17b1804b1-49240e93196mr231217455e9.26.1782115576148; 
+ Mon, 22 Jun 2026 01:06:16 -0700 (PDT)
+Received: from [192.168.0.9] ([47.64.112.107])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4923fd33dafsm307462995e9.8.2026.06.22.01.06.14
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 22 Jun 2026 01:04:48 -0700 (PDT)
-Message-ID: <83222104-c88d-4ed5-ad11-1dd4fbd2b11f@oss.qualcomm.com>
-Date: Mon, 22 Jun 2026 10:04:47 +0200
+ Mon, 22 Jun 2026 01:06:15 -0700 (PDT)
+Message-ID: <54334ba9-d44d-452d-8ee1-11c40063275d@redhat.com>
+Date: Mon, 22 Jun 2026 10:06:14 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/5] hw/block: add SWIM2 floppy controller for q800
+Subject: Re: [qemu-web PATCH v2] security: rework guideline about issue URL /
+ CVE references
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ qemu-devel@nongnu.org
+Cc: "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
+References: <20260619091508.1194994-1-berrange@redhat.com>
+From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
-To: Matt Jacobson <mhjacobson@me.com>, qemu-devel@nongnu.org
-Cc: Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- qemu-block@nongnu.org, Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Laurent Vivier <laurent@vivier.eu>
-References: <20260617235032.21491-1-mhjacobson@me.com>
- <20260617235032.21491-4-mhjacobson@me.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <20260617235032.21491-4-mhjacobson@me.com>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20260619091508.1194994-1-berrange@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-GUID: eW8mercC7LyNG5HWidVG9osnUvSl4VlG
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjIyMDA3OCBTYWx0ZWRfXx01gMU2SVV4D
- Ui310I3YRsjR3BQW0UbqfVhnCof8bvWLkAIoxQzyvNOUQsUU4BX8O9WH35L2sC23Mv+Jmd3qsUj
- w5BCImiCJ5ovs0rN33UFzIuUlT/Sw5s=
-X-Authority-Analysis: v=2.4 cv=T6S8ifKQ c=1 sm=1 tr=0 ts=6a38eca3 cx=c_pps
- a=wEM5vcRIz55oU/E2lInRtA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
- a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22
- a=HHGDD-5mAAAA:8 a=KPJqd5kihLInaK8Iy9sA:9 a=QEXdDO2ut3YA:10
- a=OIgjcC2v60KrkQgK7BGD:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjIyMDA3OCBTYWx0ZWRfXyL0OVinoWVCv
- c8u5JW2Zx1y8oxEfx4uXm4NILzYbyyrL7GPZREewD9zK9Mgsko/oAQDLRFhzf134FKW1vZxjnl3
- yGIdVi8oqy53tLyEQj+4SHqcCSCmHVEb6nqEIuIjh0Qq93SPEOJVXvKksldhX2kvi8+aUVeHYhv
- RRCacAMSTwXgdT5VwS/0hs5PED29/L3iEB9AJcGalPkM4YvPiaw3byLlSGNELmM4uGfUJFNSlxn
- d+gHI2MNvcIpXe+8HdrSmRvAmH57hlsGsgamKFlBcdwodQMUoOoGEgH0/YP36M92Vgezdx/K7Ro
- KkDl/jpLbqLu8lYzClgM9CA1dOLlGf4FLhqXN8xQZMgJXVpbjs006vijMml+vjK3znA83YL6q3V
- d/C6Hbb0nlnprTQ7q0RZ9cGmoWvqGu310Ao1A6WHdMMNTMfbnkjHZLVosKRGhmd3tyJjzS2hIkO
- xYeM1aV3/0qqf6dK+LQ==
-X-Proofpoint-ORIG-GUID: eW8mercC7LyNG5HWidVG9osnUvSl4VlG
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-22_01,2026-06-18_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 phishscore=0 malwarescore=0 adultscore=0 bulkscore=0
- impostorscore=0 lowpriorityscore=0 spamscore=0 suspectscore=0 clxscore=1015
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606220078
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -156,159 +165,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 18/6/26 01:50, Matt Jacobson wrote:
-> The Quadra 800 contains a SWIM2 floppy controller, which is a
-> simplified revision of the original SWIM controller.  Implement it
-> based on publicly available specs; a future commit will connect it
-> to q800.
-> 
-> Signed-off-by: Matt Jacobson <mhjacobson@me.com>
+On 19/06/2026 11.15, Daniel P. Berrangé wrote:
+> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 > ---
->   hw/block/meson.build     |   2 +-
->   hw/block/swim2.c         | 722 +++++++++++++++++++++++++++++++++++++++
->   hw/block/trace-events    |   9 +
->   include/hw/block/swim2.h |  60 ++++
->   4 files changed, 792 insertions(+), 1 deletion(-)
->   create mode 100644 hw/block/swim2.c
->   create mode 100644 include/hw/block/swim2.h
+> 
+> In v2:
+> 
+>   - Use non-existing issue number as example
+>   - Mention both issue URL and CVE to be optionally included
+>     in all commit messages in a series
+> 
+>   contribute/security-process.md | 23 ++++++++++++++++-------
+>   1 file changed, 16 insertions(+), 7 deletions(-)
+Thanks, applied!
 
-> diff --git a/hw/block/swim2.c b/hw/block/swim2.c
-> new file mode 100644
-> index 0000000000..f10be40678
-> --- /dev/null
-> +++ b/hw/block/swim2.c
-> @@ -0,0 +1,722 @@
-> +/*
-> + * QEMU Macintosh floppy disk controller emulator (SWIM2)
-> + *
-> + * Copyright (c) 2025 Matt Jacobson <mhjacobson@me.com>
-> + *
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + */
-> +
-> +#include "qemu/osdep.h"
-> +#include <assert.h>
-> +#include <stdbool.h>
-> +#include <stdint.h>
-
-These 3 system headers are already provided by "qemu/osdep.h".
-
-> +#include "qemu/log.h"
-> +#include "qapi/error.h"
-> +#include "hw/core/qdev-properties.h"
-> +#include "hw/core/qdev.h"
-> +#include "hw/core/sysbus.h"
-> +#include "hw/block/sony_superdrive.h"
-> +#include "hw/block/swim2.h"
-> +#include "system/block-backend.h"
-> +#include "system/blockdev.h"
-> +#include "trace.h"
-
-
-> +static const TypeInfo swim2_info = {
-> +    .name = TYPE_SWIM2,
-> +    .parent = TYPE_SYS_BUS_DEVICE,
-> +    .instance_size = sizeof(SWIM2State),
-> +    .instance_init = swim2_init,
-> +    .instance_finalize = swim2_finalize,
-> +    .class_init = swim2_class_init,
-> +};
-> +
-> +static const TypeInfo swim2_bus_info = {
-> +    .name = TYPE_SWIM2_BUS,
-> +    .parent = TYPE_BUS,
-> +    .instance_size = 0,
-> +    .class_init = swim2_bus_class_init,
-> +};
-> +
-> +static const TypeInfo swim2_drive_info = {
-> +    .name = TYPE_SWIM2_DRIVE,
-> +    .parent = TYPE_DEVICE,
-> +    .instance_size = sizeof(SWIM2Drive),
-> +    .class_init = swim2_drive_class_init,
-> +};
-> +
-> +static void swim2_register_types(void)
-> +{
-> +    type_register_static(&swim2_info);
-> +    type_register_static(&swim2_bus_info);
-> +    type_register_static(&swim2_drive_info);
-> +}
-
-Preferably DEFINE_TYPES().
-
-> +
-> +type_init(swim2_register_types)
-
-
-> diff --git a/include/hw/block/swim2.h b/include/hw/block/swim2.h
-> new file mode 100644
-> index 0000000000..72be21ea4e
-> --- /dev/null
-> +++ b/include/hw/block/swim2.h
-> @@ -0,0 +1,60 @@
-> +/*
-> + * QEMU Macintosh floppy disk controller emulator (SWIM2)
-> + *
-> + * Copyright (c) 2025 Matt Jacobson <mhjacobson@me.com>
-> + *
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + */
-> +
-> +#ifndef HW_BLOCK_SWIM2_H
-> +#define HW_BLOCK_SWIM2_H
-> +
-> +#include <stdbool.h>
-> +#include <stdint.h>
-
-No need to include these system headers.
-
-> +#include "hw/core/qdev.h"
-> +#include "hw/core/sysbus.h"
-> +#include "hw/block/block.h"
-> +#include "hw/block/sony_superdrive.h"
-> +#include "qemu/fifo32.h"
-> +#include "qom/object.h"
-> +
-> +#define TYPE_SWIM2 "swim2"
-> +#define TYPE_SWIM2_BUS "swim2-bus"
-> +#define TYPE_SWIM2_DRIVE "swim2-drive"
-> +
-> +OBJECT_DECLARE_SIMPLE_TYPE(SWIM2State, SWIM2)
-> +OBJECT_DECLARE_SIMPLE_TYPE(SWIM2Drive, SWIM2_DRIVE)
-> +
-> +#define SWIM2_MAX_FD 2
-> +
-> +struct SWIM2Drive {
-> +    DeviceState parent_obj;
-> +
-> +    BlockConf conf;
-> +    SonyDrive sony;
-> +    int32_t unit;
-> +};
-> +
-> +struct SWIM2State {
-> +    SysBusDevice parent_obj;
-> +
-> +    MemoryRegion mmio;
-> +    BusState *bus;
-> +
-> +    SWIM2Drive *drives[SWIM2_MAX_FD];
-> +
-> +    uint8_t parameter_data[4];
-> +    uint8_t parameter_index;
-> +    uint8_t phase_reg;
-> +    uint8_t setup_reg;
-> +    uint8_t mode_reg;
-> +    uint8_t error_reg;
-> +    bool did_handshake;
-> +    bool wait_for_mark;
-> +
-> +    Fifo32 fifo;
-> +};
-> +
-> +void swim2_set_sel(SWIM2State *ctrl, bool sel);
-> +
-> +#endif /* HW_BLOCK_SWIM2_H */
+  Thomas
 
 
