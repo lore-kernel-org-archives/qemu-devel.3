@@ -4,91 +4,128 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 460B9CDB46F
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jun 2026 11:34:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A32DCDB46F
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jun 2026 11:37:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wbcv5-0001fn-KY; Mon, 22 Jun 2026 07:34:27 -0400
+	id 1wbcxx-0002Uv-4b; Mon, 22 Jun 2026 07:37:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <inochiama@gmail.com>)
- id 1wbcv3-0001fE-ES
- for qemu-devel@nongnu.org; Mon, 22 Jun 2026 07:34:25 -0400
-Received: from mail-pg1-x52c.google.com ([2607:f8b0:4864:20::52c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <inochiama@gmail.com>)
- id 1wbcv1-00049o-Sg
- for qemu-devel@nongnu.org; Mon, 22 Jun 2026 07:34:25 -0400
-Received: by mail-pg1-x52c.google.com with SMTP id
- 41be03b00d2f7-c8b49639fbaso1630145a12.0
- for <qemu-devel@nongnu.org>; Mon, 22 Jun 2026 04:34:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1782128062; x=1782732862; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=3d1w/Ecvpo9SAU0olHhh8kvv0qpHefNp4PB+eSWQeIU=;
- b=FgAhdWOFtjE8YMS0yNZEg9c5sizhnslTHKQRCBoo11PU/O0gfcCpxgcgcjgtXwzg9P
- 3IiiV6RffIxr3TP/La4DZWhxLwWQuB3Z0HOhxMq/DjxFNbLUKJgzcHVArT7nQIWAoiMG
- 8Cd2xIaQ2/9RkgslLd3nBip0GZRwyN+fDzfQGlwkDo5Aq1xi25+vjgbUnfg3rRX1XfbZ
- T02c+A5UwzRKxLrGCcOV5PpAvk7ol7BOSbCw8DYWJJFpAnP9aaKqUpxCES0IjNcGmyDb
- o21n+KJrPU6w4CyUQ46qtePUSUX+BA1xq/oTP2su75o4f0EGUMnyQ1u90TrNivIwfU5o
- YrIA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782128062; x=1782732862;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=3d1w/Ecvpo9SAU0olHhh8kvv0qpHefNp4PB+eSWQeIU=;
- b=qIw3maK/aCfkj5h8UmEJa2UcsM+xrFRh6yEgGIlfZPfY123mHH7nPWdn8ZiiiqOLg4
- DqrjyDHUcKW2ifa7ig9v+PK6e+igkB3YmScSJ5Gw3LNFfMRdbO0fyz1LlmQkOs7aP92D
- J0ZY3Fr6GZfsgYGeeKeEGm21Sjn65Z72/tBufGyDldZpYirBdR9GRK8gOBTNuGLyzfRB
- ZmzsTWeXUFscFd0JpidA33BZqdg1ehFdIJBdJCAqcDAqn5F+z7MkmHw3dgJ+pv6MfQg4
- 4KX58OE/6poShbd0leA68Hd56DrSBWMk1gv9zfzbNVvRbpuKWfndnZ8vT9UcS5HXBPKe
- 2jNA==
-X-Forwarded-Encrypted: i=1;
- AFNElJ/Zqn24XwH8/ukTQxUyTJLDcbNjU62ptc3UnC0MPCjBrwLFoQDGaTs4HOuJbeU/s6NMwDSehWIFEIwy@nongnu.org
-X-Gm-Message-State: AOJu0YxS+SkCx89SpJWeQam3Mt+YEB+MGoPWUfL439Yakk3W8plebut/
- 0FX2aLzs9IQvsalG9T2b7F4SCzZhQzE4loSYEycP/39dC7TpYOyZZ7Nh
-X-Gm-Gg: AfdE7ckGRsetyZr02e1MTGUsBCeyi50JxG+4e663iC+fcFYasfMZUED8HMPbXdjL88w
- Z6Si7k1KoCdzU4KbFAI3W3X5HuNh7XNrNLNNOEId1tU/kmPXWHnQK0Hbq/bkNGxHGjkkCAxObH9
- gnN9lO9aJHxqzYRLV+FI4euhJPXgQwz2jqal7D5V8uevqnR/TK03rqatmybycqetRpqgrSUzsjR
- 8A1oVqNSl7LGAA/ECEedr8j/E86C6uXoCywybdolqjUepKJiaqTjwxoSwnSrU+Itwea4LckWCFU
- HM8OUyJ829/jPuBebIkUhhgZ5FSDlOBdrIL02o16YNLcXkJO7bHou8kYg8LuIVSAAVoKFNObbGR
- SgyTay4LxDK0ABPbRLRTeHImmHwR6C4nOP+1qAnmtm7tCSepdRpIEIUFXlYkWjEqS+ixdB7VmmG
- +SiUwin+WN0z8=
-X-Received: by 2002:a05:6a21:4684:b0:3b3:f46:1eea with SMTP id
- adf61e73a8af0-3bb69ca4180mr14911100637.7.1782128062170; 
- Mon, 22 Jun 2026 04:34:22 -0700 (PDT)
-Received: from localhost ([2001:19f0:8000:3e6e:5400:6ff:fe38:3d01])
- by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-c8bc5a1d583sm6634124a12.25.2026.06.22.04.34.21
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 22 Jun 2026 04:34:21 -0700 (PDT)
-From: Inochi Amaoto <inochiama@gmail.com>
-To: Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Chao Liu <chao.liu.zevorn@gmail.com>
-Cc: Inochi Amaoto <inochiama@gmail.com>, qemu-riscv@nongnu.org,
- qemu-devel@nongnu.org
-Subject: [PATCH v2] target/riscv: Check PMP before updating PTE
-Date: Mon, 22 Jun 2026 19:34:01 +0800
-Message-ID: <20260622113402.563196-1-inochiama@gmail.com>
-X-Mailer: git-send-email 2.54.0
+ (Exim 4.90_1) (envelope-from <jjherne@linux.ibm.com>)
+ id 1wbcxt-0002Th-OQ
+ for qemu-devel@nongnu.org; Mon, 22 Jun 2026 07:37:21 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jjherne@linux.ibm.com>)
+ id 1wbcxs-0004wk-13
+ for qemu-devel@nongnu.org; Mon, 22 Jun 2026 07:37:21 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 65MAnEEZ2712749; Mon, 22 Jun 2026 11:37:12 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=JrSJm8
+ vr2E4OUu6mgMCm61CK48lr6jO1pcJaF6z8ZFE=; b=eGFLsmLKxyEyhfzkPk8lnb
+ E3bTE6AiQbkBBGvyGOKy4/uPsYjdWL3tr3LkXAJhtSHqnajaBWOnl1tV3RrE7acZ
+ wgQWZH6CETF8uqm8Z6iP6iDAhUdChyngyk096lKlxjEv6WzRgA1J2Fdjm9hKZIyf
+ V8SqhG+sdhIsEfXtnb7J9lku8Xasg0uTN5ctzWyRyVzDE1Y9y1RAOBIl/z1Din/i
+ Efqd6JuIaIX/axYVNL6mI0KcnQD2mmCu7Qb6r7NG9GVaNelQ+MeGZbuFkdSmJLkD
+ cG3rSaBN6dp0gyHt/GROJtqSG0kO4yMQa2xoLcsFlGO8ePisicD28Gp5gLu3ew1w
+ ==
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4ewjhqgu1b-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 22 Jun 2026 11:37:11 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 65MBYZgL024589;
+ Mon, 22 Jun 2026 11:37:10 GMT
+Received: from smtprelay06.wdc07v.mail.ibm.com ([172.16.1.73])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4ex56q65t1-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 22 Jun 2026 11:37:10 +0000 (GMT)
+Received: from smtpav03.dal12v.mail.ibm.com (smtpav03.dal12v.mail.ibm.com
+ [10.241.53.102])
+ by smtprelay06.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 65MBb8BI26870360
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 22 Jun 2026 11:37:09 GMT
+Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id A839E58056;
+ Mon, 22 Jun 2026 11:37:08 +0000 (GMT)
+Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id F2EFE5805A;
+ Mon, 22 Jun 2026 11:37:06 +0000 (GMT)
+Received: from [9.61.143.217] (unknown [9.61.143.217])
+ by smtpav03.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Mon, 22 Jun 2026 11:37:06 +0000 (GMT)
+Message-ID: <a20da0b9-a698-4f1b-930a-1e6c15fec819@linux.ibm.com>
+Date: Mon, 22 Jun 2026 07:37:06 -0400
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52c;
- envelope-from=inochiama@gmail.com; helo=mail-pg1-x52c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 03/14] migration: Run final save_query_pending at
+ switchover
+To: Avihai Horon <avihaih@nvidia.com>, qemu-devel@nongnu.org
+Cc: Alex Williamson <alex@shazbot.org>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
+ <clg@redhat.com>,
+ Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
+ Zhao Liu <zhao1.liu@intel.com>, Halil Pasic <pasic@linux.ibm.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Ilya Leoshkevich <iii@linux.ibm.com>, David Hildenbrand <david@kernel.org>,
+ Eric Farman <farman@linux.ibm.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>,
+ Cornelia Huck <cohuck@redhat.com>, Eric Blake <eblake@redhat.com>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ John Snow <jsnow@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Maor Gottlieb <maorg@nvidia.com>
+References: <20260622101214.25770-1-avihaih@nvidia.com>
+ <20260622101214.25770-4-avihaih@nvidia.com>
+Content-Language: en-US
+From: "Jason J. Herne" <jjherne@linux.ibm.com>
+In-Reply-To: <20260622101214.25770-4-avihaih@nvidia.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=I4VVgtgg c=1 sm=1 tr=0 ts=6a391e67 cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+ a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=20KFwNOVAAAA:8
+ a=Ikd4Dj_1AAAA:8 a=VnNF1IyMAAAA:8 a=K2Trgu7Bcb2n33MZADgA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjIyMDExMiBTYWx0ZWRfX2SA85SV2K+MO
+ 3Iqmu15z5ay9pNboBngVJMAu23SIIl5xsyAqrZwjISEBHf3msP/3gC3EdCAkM7xWh+MJJFKhFmN
+ nq4ImHYr1jy2Rh6gkxsYePIbf7kpXwv5dWX5x3xzdkex8Y+pxQdk10u7rlkBjzQZIucPlhjUiV5
+ t3AYO/WS1yPLrWXliEmxLMxIQtiKQxb8jnJjzimRxtft8dPP/Z+wQz7G/z+NilMO0EmT1brX9wr
+ ut5Ox721a4bMX0EcNrTkGs4CiAmKTszFeDRDq2JHF3icNOM5xXmPaow7amHefsDRPu/gI3of/eB
+ OWaFWCqLZ/kr1rn7A8JBZ3FcVEvCCfB4ObVW76cgCzVA+DOksT1CuqvFf+UN+D7mm4VH6kPXZIz
+ 8Kc6UgZeW/PM6BGt/Bl9jQfD3t/8xDhDFPDzSkAgSgdYhusO7wySDs+/XbseHAM4W4F5cUzi5rs
+ wlKf4T68aoM4g/CSxSQ==
+X-Proofpoint-GUID: GBJj_BvP1CPpghAjGdDkRc6hWEioIqFp
+X-Proofpoint-ORIG-GUID: GBJj_BvP1CPpghAjGdDkRc6hWEioIqFp
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjIyMDExMiBTYWx0ZWRfX7Iu1feva33SR
+ Yd0tUv9xFBFLgi1NgiIGvC9odM5R/mPkxu3d1JvYLVXjSlBhf97u6BzJ9Q0XbIRO3GETvSgXoCF
+ Q1O5zNVh8oZn7YbGBOd4Yk/1coM0EBI=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-22_02,2026-06-18_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0 malwarescore=0 clxscore=1011 impostorscore=0
+ suspectscore=0 phishscore=0 bulkscore=0 spamscore=0 priorityscore=1501
+ adultscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2606220112
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=jjherne@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,42 +141,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-According to the RISC-V spec, the PTE update is a supervisor write
-operations, and it should also follow the CPU PMP configuration like
-the PTE read.
+On 6/22/26 6:12 AM, Avihai Horon wrote:
+> Before switchover, the source needs one last exact pending query so
+> modules can flush dirty state. This is currently done ad hoc in modules
+> handlers. For example, RAM syncs its dirty bitmap in its save_complete
+> handler.
+> 
+> This should be a general concept relevant for any module, so extract it
+> to migration core instead by running a final save_query_pending before
+> switchover.
+> 
+> The final query requires special handling by modules (e.g., it's called
+> with BQL locked, during VM stop), so extend save_query_pending
+> SaveVMHandlers callback and qemu_savevm_query_pending() with a "final"
+> flag so migration modules can tell the last pending query during
+> switchover from periodic iteration queries.
+> 
+> Reviewed-by: Peter Xu <peterx@redhat.com>
+> Signed-off-by: Avihai Horon <avihaih@nvidia.com>
+> ---
+...
+> diff --git a/hw/s390x/s390-stattrib.c b/hw/s390x/s390-stattrib.c
+> index c334714b31..b0f04eb30c 100644
+> --- a/hw/s390x/s390-stattrib.c
+> +++ b/hw/s390x/s390-stattrib.c
+> @@ -190,7 +190,7 @@ static int cmma_save_setup(QEMUFile *f, void *opaque, Error **errp)
+>   }
+>   
+>   static void cmma_state_pending(void *opaque, MigPendingData *pending,
+> -                               bool exact)
+> +                               bool exact, bool final)
+>   {
+>       S390StAttribState *sas = S390_STATTRIB(opaque);
+>       S390StAttribClass *sac = S390_STATTRIB_GET_CLASS(sas);
+Reviewed-by: Jason J. Herne <jjhern@linux.ibm.com>
 
-Signed-off-by: Inochi Amaoto <inochiama@gmail.com>
----
-Changed from v1:
-1. Separate code statements and declarations.
----
- target/riscv/cpu_helper.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
-
-diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
-index 59edcdd370..2db07f5dfb 100644
---- a/target/riscv/cpu_helper.c
-+++ b/target/riscv/cpu_helper.c
-@@ -1655,10 +1655,18 @@ static int get_physical_address(CPURISCVState *env, hwaddr *physical,
-
-     /* Page table updates need to be atomic with MTTCG enabled */
-     if (updated_pte != pte && !is_debug) {
-+        int pmp_prot, pmp_ret;
-+
-         if (!adue) {
-             return TRANSLATE_FAIL;
-         }
-
-+        pmp_ret = get_physical_address_pmp(env, &pmp_prot, pte_addr,
-+                                           sxlen_bytes, MMU_DATA_STORE, PRV_S);
-+        if (pmp_ret != TRANSLATE_SUCCESS) {
-+            return TRANSLATE_PMP_FAIL;
-+        }
-+
-         /*
-          * - if accessed or dirty bits need updating, and the PTE is
-          *   in RAM, then we do so atomically with a compare and swap.
---
-2.54.0
-
+fwiw :)
 
