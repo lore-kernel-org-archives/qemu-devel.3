@@ -4,104 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8EDAACDB475
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jun 2026 19:45:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08BA1CD98F2
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jun 2026 20:01:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wbka5-0005if-KY; Mon, 22 Jun 2026 15:45:17 -0400
+	id 1wbkp4-0008OA-NN; Mon, 22 Jun 2026 16:00:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wbka4-0005iP-BC
- for qemu-devel@nongnu.org; Mon, 22 Jun 2026 15:45:16 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wbkok-0008MW-OZ
+ for qemu-devel@nongnu.org; Mon, 22 Jun 2026 16:00:28 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wbkZs-0004Ug-Ec
- for qemu-devel@nongnu.org; Mon, 22 Jun 2026 15:45:07 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wbkoj-0000Be-0M
+ for qemu-devel@nongnu.org; Mon, 22 Jun 2026 16:00:26 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1782157502;
+ s=mimecast20190719; t=1782158424;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=/r0zybNsLAP35GUJj9NU9qaV2oxViFxnkPWdhaAlQcU=;
- b=PLjjzhi5vceq15jiAbUrvs8HosoVJE/Hlgrt3s2x8A0yaHB2H+3YZo3ts/Cj6geMm37cwk
- CfQWJ9odSBNUpLS6DOcqiS+h7oKnVFyk5ekKXQ0L4qJErz0tpSXQ7R7VvFTaCybQDuslKZ
- ORmKMpCuAdBVOEdzGySLShd9scj08O0=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=9isACaP9VFg2o8NuepGElq1JkBXhzmmqPpstXjs4boo=;
+ b=QyBJznPbuH+1x/felHvi1iNJ+Yix2rc3nSKXXNQTrWFg3kcPOLyoPHSMqcjqZNW4GkSnrU
+ bnr7vn+8b9rxTGQbY0GYrWABfK3jz15tk21FYDJxsX0h67rN1eKQueweHiiWxXsBWZRRLG
+ gtnflUlNNCIa8Nub86nebkZe7wiVWYs=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-17-M6wF9TDVPPCtDU9Y-QJnqQ-1; Mon, 22 Jun 2026 15:45:00 -0400
-X-MC-Unique: M6wF9TDVPPCtDU9Y-QJnqQ-1
-X-Mimecast-MFC-AGG-ID: M6wF9TDVPPCtDU9Y-QJnqQ_1782157499
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-492488f8583so24626105e9.2
- for <qemu-devel@nongnu.org>; Mon, 22 Jun 2026 12:45:00 -0700 (PDT)
+ us-mta-505-FQjpVooaMwW4d-JENLhZDQ-1; Mon, 22 Jun 2026 16:00:22 -0400
+X-MC-Unique: FQjpVooaMwW4d-JENLhZDQ-1
+X-Mimecast-MFC-AGG-ID: FQjpVooaMwW4d-JENLhZDQ_1782158421
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-461e0dad8easo2906049f8f.0
+ for <qemu-devel@nongnu.org>; Mon, 22 Jun 2026 13:00:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1782157499; x=1782762299; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:from:to
- :cc:subject:date:message-id:reply-to;
- bh=/r0zybNsLAP35GUJj9NU9qaV2oxViFxnkPWdhaAlQcU=;
- b=k9YM3FF5eUwfMfSkDciQm9M06H29JMzz+YobxRd8dgg3zDlpfIG7LTKzMrdbKFve9H
- 8OfH68OPjD+SIq0dgzdTvobC2lkdxZylBMx+PXi07eLpBq+qLC70sP6am/Gp2DfnihsD
- hnJZv+zNESXk45DI3gRtzJ0+AG968fO02XDKd5Lbe7z8h6nBUhbPDhrHHv0DprUsaTjZ
- 6Pk8tIhJNtS35bJ27XrlrG4CA/Z+dqc3bgaUnyW7iUOH5tZSmYgFco33iuCGcWBTuBS1
- A80vYq6/M0KjhwEzC16qRmE/CeM2MWJvAcIIaSDqHhCEXQoNb8IOKzzQkwaPiRTWB6Pm
- 3oLw==
+ d=redhat.com; s=google; t=1782158421; x=1782763221; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=9isACaP9VFg2o8NuepGElq1JkBXhzmmqPpstXjs4boo=;
+ b=Laf9azYeOssOe90Cy9v9298LnHvhiRc3eE2BQVpQUBRrRM3hgUpYWRuYvA+sZJySro
+ uZabTFam0I9dzGZSWxgczNxZ2j333pMN/gpSPLClZVDswdxBKXhefkOA9ONBTkqKP9uM
+ aUuzTJWcuWzjrG5pehGqGBDDIfLqBK09nJ454E5wKUOUiK8vb85UFWDGTjt2yrvXV8pj
+ ngW+B0fFrhR4X+yKXq/Ct9pGiE6SfMJHwS/mVtstssWMC2+sJ/7GgFPIBkbS74XV7xHN
+ xZGdmXxckOuxKvEke9aS9ufhz64BQeIkuEH78AU1etpWFBnsxnVq1LCKJdxGtZkKj1nr
+ jyhg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782157499; x=1782762299;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=/r0zybNsLAP35GUJj9NU9qaV2oxViFxnkPWdhaAlQcU=;
- b=NmH+GjiXk+vlPQgIrEodmFEcS4b0cTMMyOT3YpDe05eHe8pH5QDoVc4H0y12aFmI11
- InDEBYoVj1lomcINElK4US9Vs6LVYXHZGV/vdFWt3QfoN6GC1L5CgdpOPo1Z9o6Pejwh
- xOpxA//yi7gH8epEhLKIboYx05LqS6G9+0GO82CFCqbFl9wlp3qiacRlWGtmnf9tFQ8T
- eZ5NA9+bXjSApBmcroQlYanuV8zC4+dz3p0PGMa4+CR3XZVYCdocXmL+Lzf7RiZ3ny1V
- OTv0fzRlSrprk0ppkvSwt4JRey3SwN8zGu6FPJfOP/wQBR+NUTVh5Mca10nroUjd+kF/
- iTFQ==
-X-Forwarded-Encrypted: i=1;
- AFNElJ+lrWK7Qg5kJOExNCzTudXvfkBM64KprGcEGcZnsyRsBdefUPxRrcTtjR5u7NkvOegtOZgmVsSUjRNN@nongnu.org
-X-Gm-Message-State: AOJu0YwbqUEbdnifv8ASoA45zF/fJqzgHerHnuA8wSIF7Opuxkfrb4uP
- qS+n/mUJp3j3yzKxRTIije0WddnGqoNA8oHlYyAdTlzY5wLHN/9CrWg5JeYpmtFB2lb8ffeMRMp
- xrI2C49BC6ZEUUN9J+3aOjMMNZhY20B0XF+RWg60KL6giZ+Sqoy932IVJDW/O8eAR
-X-Gm-Gg: AfdE7cmzwDZBOjs0655qcFbE45Fbs8/FPYAX8kczFD75q111bvG7qK7jb4tyaQ84KIl
- bBYR2a3+0lG5dO6DIGQjK3HjDyrgs/Hy3XzxdqePM6Phb6vnk8PS0S0OM81BA9GDs+NoWl9j44I
- owWzJ8cSCm10HKpRWujYvRWBi1UKr8pG1CJ3/3u0Zpi/oGMe1jjScEjVqMMdOQQG4xxbEqF/kUW
- q1OmmhqgiUE3xCClsEQbL2aFWnHpBm3ASrvKisGp5YHZoUfuvuAmKB4oxDNYCnaN4EgDGB64XCZ
- Presr4AtYD3WjVlCHOnPISF/KdpvjL23hy4RR1rluDPSyrXGKRBdCGWydA7rbkladuasu9iaW3E
- adTJVPVnJkxdRvbRFq6qn+Rt281xUzE/J
-X-Received: by 2002:a05:600c:a40f:b0:492:432b:d78b with SMTP id
- 5b1f17b1804b1-492432bdad3mr193558475e9.15.1782157499300; 
- Mon, 22 Jun 2026 12:44:59 -0700 (PDT)
-X-Received: by 2002:a05:600c:a40f:b0:492:432b:d78b with SMTP id
- 5b1f17b1804b1-492432bdad3mr193558315e9.15.1782157498788; 
- Mon, 22 Jun 2026 12:44:58 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1782158421; x=1782763221;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=9isACaP9VFg2o8NuepGElq1JkBXhzmmqPpstXjs4boo=;
+ b=jBKRHCQsYRmA/T4bFmKLEe+/qLFUu20RPQPtx3ZFE64OQCISJRv4nFK06aJ7AEWEbI
+ dXmph1nLPnYxXsFihA5tKaxGubLI6BD0h6X/m+S+qvMwp0P5KSZ8xpYoAd7WenZNXErt
+ Ud3LO3g96YCJEaOc/lysbCK8CvuDy34aOnpm/c1rYbqYh2D03nuCUujejF/emcL74dSr
+ qQqIt3ZQFBgRynW5cuOlv8BC9ZMUtopPSBJScCCAJUpAxWoyRDtubd7aWAbr5aKejOHF
+ Hh2z2MPUaBYknxTl6vXemmYnyK8XqdSY73sZcfl4anor0fY+j77jELqX4AXde7mBFd4I
+ d8Tg==
+X-Gm-Message-State: AOJu0YzyU9MwYVDI3u6sbP6TqMz6HBnQTjkD12jMr9sEBdSeR6m8tmhT
+ awnqcNYkD5OUFEV0RbfIFr94ClY5yaNFVbH6P5erGmapUbgzSNut/9FBGDQVMSjOt8SjYnbNzy4
+ qZq/qo5AT2GepgCkCjuiHMizad+ASply3KbdcCCqnDJjPCE/DnrqssQmG
+X-Gm-Gg: AfdE7cln6zLpAX0qFmYNvAnGHHYKf+x2VeHlzSZTPzSle133niAyb5yJBBGFYYo0PcN
+ SgncNacY1Uz8NfPeV2UM9LmrGNeuWjIoNsraSNCMDy3EUEDa4+meQjXwBK4r56S27fgo55K9Gnm
+ ItTdrHFCSDKmSR7tfSBpRdPyAnPEhQVCI8yWEdPwwtvH0TFgn+/ReStXKRw/JjZ5aeh23FEpvQP
+ 6E7jab9gVEyJSv4n6ulQwBG1koyb2V/03zTVFgEiAp3Xo0a1Yk/5ml3mx0AOlkI5MVz5+52rDh7
+ aTEQ2ZM+FyAYq23P2Pw2REKllqnmHstebzYVWiYmHWKVbbVEHHNO2m4jOtvXKjx3VrTJFfH1tof
+ 1KnL8vJKOS23DoIc9ukh2wITxLYDIZ+7r
+X-Received: by 2002:a5d:6f1d:0:b0:45e:edcc:f6dc with SMTP id
+ ffacd0b85a97d-4656bcc97d6mr22191240f8f.6.1782158421217; 
+ Mon, 22 Jun 2026 13:00:21 -0700 (PDT)
+X-Received: by 2002:a5d:6f1d:0:b0:45e:edcc:f6dc with SMTP id
+ ffacd0b85a97d-4656bcc97d6mr22191173f8f.6.1782158420593; 
+ Mon, 22 Jun 2026 13:00:20 -0700 (PDT)
 Received: from redhat.com (IGLD-80-230-85-71.inter.net.il. [80.230.85.71])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4666678828dsm28453274f8f.19.2026.06.22.12.44.57
+ ffacd0b85a97d-466667881bfsm30516259f8f.22.2026.06.22.13.00.19
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 22 Jun 2026 12:44:58 -0700 (PDT)
-Date: Mon, 22 Jun 2026 15:44:55 -0400
+ Mon, 22 Jun 2026 13:00:20 -0700 (PDT)
+Date: Mon, 22 Jun 2026 16:00:17 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
-To: =?iso-8859-1?Q?Cl=E9ment?= MATHIEU--DRIF <clement.mathieu--drif@bull.com>
-Cc: no92 <leo@managarm.org>, "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "qemu-trivial@nongnu.org" <qemu-trivial@nongnu.org>,
- "qemu-stable@nongnu.org" <qemu-stable@nongnu.org>,
- Jason Wang <jasowang@redhat.com>, Yi Liu <yi.l.liu@intel.com>,
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, Sairaj Kodilkar <sarunkod@amd.com>,
+ Vasant Hegde <vasant.hegde@amd.com>,
+ Alejandro Jimenez <alejandro.j.jimenez@oracle.com>,
  Paolo Bonzini <pbonzini@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>
-Subject: Re: [PATCH] hw/i386/x86-iommu: Correctly set pt bit in extended
- capability register
-Message-ID: <20260622154210-mutt-send-email-mst@kernel.org>
-References: <20260622162138.1045170-1-leo@managarm.org>
- <0b93c0b06c39f7dc6faa7ab21f57034081df83dd.camel@bull.com>
+Subject: Re: [PULL 081/106] amd_iommu: Generate XT interrupts when xt support
+ is enabled
+Message-ID: <20260622155957-mutt-send-email-mst@kernel.org>
+References: <cover.1781463125.git.mst@redhat.com>
+ <cf0210df65aa4f582e444b910c950e2b4a80b194.1781463125.git.mst@redhat.com>
+ <CAFEAcA8sZSNr5N8ri6SCok2aWLED9+OGvy0qA7A83SuwXg9xKA@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <0b93c0b06c39f7dc6faa7ab21f57034081df83dd.camel@bull.com>
+In-Reply-To: <CAFEAcA8sZSNr5N8ri6SCok2aWLED9+OGvy0qA7A83SuwXg9xKA@mail.gmail.com>
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
@@ -110,7 +105,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -126,63 +121,108 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jun 22, 2026 at 05:31:01PM +0000, Clément MATHIEU--DRIF wrote:
-> Hi,
+On Mon, Jun 22, 2026 at 04:19:50PM +0100, Peter Maydell wrote:
+> On Sun, 14 Jun 2026 at 20:09, Michael S. Tsirkin <mst@redhat.com> wrote:
+> >
+> > From: Sairaj Kodilkar <sarunkod@amd.com>
+> >
+> > When MMIO 0x18[IntCapXTEn]=1, interrupts originating from the IOMMU itself are
+> > sent based on the programming in XT IOMMU Interrupt Control Registers in MMIO
+> > 0x170-0x180 instead of the programming in the IOMMU's MSI capability registers.
+> > The guest programs these registers with appropriate vector and destination
+> > ID instead of writing to PCI MSI capability.
+> >
+> > Current AMD vIOMMU is capable of generating interrupts only through PCI
+> > MSI capability and does not care about xt mode. Because of this AMD
+> > vIOMMU cannot generate event log interrupts when the guest has enabled
+> > xt mode.
+> >
+> > Introduce a new flag "intcapxten" which is set when guest writes control
+> > register [IntCapXTEn] (bit 51) and use vector and destination field in
+> > the XT MMIO register (0x170) to support XT mode.
 > 
-> I think I have seen this patch at least twice in the list o.O
+> Hi; Coverity points out a use of an uninitialized struct field here
+> (CID 1660056):
 > 
-> It seems it has not been merged into master yet (@Michael, do you want me to send a rebased version?).
-
-rebased or not, I was not CC'd.
-
-
-> https://patchew.org/QEMU/CAFFE2avrHDKZd5m7j3E3x5=F=pzn-3c9vzGWP3+9-AVPwQng7w@mail.gmail.com/
+> > +static void amdvi_build_xt_msi_msg(AMDVIState *s, MSIMessage *msg)
+> > +{
+> > +    union mmio_xt_intr xt_reg;
+> > +    struct X86IOMMUIrq irq;
 > 
-> Thanks for the effort though ;)  
+> Here we declare irq, without a struct initializer...
 > 
-> cmd
-
-i can pick this one or wait for your patch.
-
+> > +
+> > +    xt_reg.val = amdvi_readq(s, AMDVI_MMIO_XT_GEN_INTR);
+> > +
+> > +    irq.vector = xt_reg.vector;
+> > +    irq.delivery_mode = xt_reg.delivery_mode;
+> > +    irq.dest_mode = xt_reg.destination_mode;
+> > +    irq.dest = (xt_reg.destination_hi << 24) | xt_reg.destination_lo;
+> > +    irq.trigger_mode = 0;
+> > +    irq.redir_hint = 0;
 > 
-> On Mon, 2026-06-22 at 18:21 +0200, no92 wrote:
-> > Caution: External email. Do not open attachments or click links, unless this email comes from a known sender and you know the content is safe.
-> > 
-> > 
-> > With the changes in c7b2e22bd957, the `pt` bit was set in the (wrong)  
-> > capability register, instead of the (correct) extended capability  
-> > register.
-> > 
-> > Fixes: c7b2e22bd95710e404c393e9f563cfe7404220c1 ("hw/i386/x86-iommu: Remove X86IOMMUState::pt_supported field")  
-> > Signed-off-by: no92 <[leo@managarm.org](mailto:leo@managarm.org)>  
-> > ---  
-> >  hw/i386/intel_iommu.c | 4 ++--  
-> >  1 file changed, 2 insertions(+), 2 deletions(-)
-> > 
-> > diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c  
-> > index 744cdfd2e6..d1af7a3135 100644  
-> > --- a/hw/i386/intel_iommu.c  
-> > +++ b/hw/i386/intel_iommu.c  
-> > @@ -4988,7 +4988,7 @@ static void vtd_cap_init(IntelIOMMUState *s)  
-> >  {  
-> >      X86IOMMUState *x86_iommu = X86_IOMMU_DEVICE(s);
-> > 
-> > -    s->cap = VTD_CAP_FRO | VTD_CAP_NFR | VTD_CAP_ND | VTD_ECAP_PT |  
-> > +    s->cap = VTD_CAP_FRO | VTD_CAP_NFR | VTD_CAP_ND |  
-> >               VTD_CAP_MAMV | VTD_CAP_PSI | VTD_CAP_SSLPS | VTD_CAP_DRAIN |  
-> >               VTD_CAP_ESRTPS | VTD_CAP_MGAW(s->aw_bits);  
-> >      if (x86_iommu->dma_translation) {  
-> > @@ -4999,7 +4999,7 @@ static void vtd_cap_init(IntelIOMMUState *s)  
-> >                      s->cap |= VTD_CAP_SAGAW_48bit;  
-> >              }  
-> >      }  
-> > -    s->ecap = VTD_ECAP_QI | VTD_ECAP_IRO;  
-> > +    s->ecap = VTD_ECAP_QI | VTD_ECAP_IRO | VTD_ECAP_PT;
-> > 
-> >      if (x86_iommu_ir_supported(x86_iommu)) {  
-> >          s->ecap |= VTD_ECAP_IR | VTD_ECAP_MHMV;  
-> > --  
-> > 2.54.0
-> > 
+> ...and here we fill in some but not all of its fields...
+> 
+> > +
+> > +    x86_iommu_irq_to_msi_message(&irq, msg);
+> 
+> ...and here we call a function which (among other things) does this:
+>    msg.__not_used = irq->msi_addr_last_bits;
+> 
+> which will read the uninitialized msi_addr_last_bits field.
+> 
+> Bonus extra bug report:
+> 
+> +union mmio_xt_intr {
+> +    uint64_t val;
+> +    struct {
+> +        uint64_t rsvd_1:2,
+> +                 destination_mode:1,
+> +                 rsvd_2:5,
+> +                 destination_lo:24,
+> +                 vector:8,
+> +                 delivery_mode:1,
+> +                 rsvd_3:15,
+> +                 destination_hi:8;
+> +    };
+> +};
+> 
+> Please don't use bitfields like this -- this is not portable to big
+> endian hosts. Use the extract64() function instead, or the FIELD macros.
+> 
+> I suggest something like (untested):
+> 
+> (at top level in a source file or header; the numbers are
+> start-bit and length, check these as I may have made typos)
+> 
+> FIELD(XT_GEN_INTR, DEST_MODE, 2, 1)
+> FIELD(XT_GEN_INTR, DEST_LO, 24, 8)
+> FIELD(XT_GEN_INTR, VECTOR, 32, 8)
+> FIELD(XT_GEN_INTR, DELIVERY_MODE, 33, 1)
+> FIELD(XT_GEN_INTR, DEST_HI, 49, 8)
+> 
+> and then in the function you can do:
+> 
+>    uint64_t xtreg = amdvi_readq(s, AMDVI_MMIO_XT_GEN_INTR);
+>    X86IOMMUIrq irq = {
+>        .vector = FIELD_EX64(xtreg, XT_GEN_INTR, VECTOR),
+>        .delivery_mode = FIELD_EX64(xtreg, XT_GEN_INTR, DELIVERY_MODE),
+>        .dest_mode = FIELD_EX64(xtreg, XT_GEN_INTR, DEST_MODE),
+>        .dest = (FIELD_X64(xtreg, XT_GEN_INTR, DEST_HI) << 24) |
+> FIELD_EX64(xtreg, XT_GEN_INTR, DEST_LO),
+>    };
+> 
+> which gives you a struct initializer and you can rely on the
+> whole struct being initialized.
+> 
+> > +}
+> 
+> thanks
+> -- PMM
+
+Indeed. Alejandro should we revert or fix up?
+
+-- 
+MST
 
 
