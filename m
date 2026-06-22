@@ -4,103 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31779CD98F2
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jun 2026 15:35:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D9E7CDB471
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jun 2026 15:42:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wbggE-0003ci-4d; Mon, 22 Jun 2026 11:35:23 -0400
+	id 1wbgmJ-0004fR-OX; Mon, 22 Jun 2026 11:41:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wbgfx-0003U0-9H
- for qemu-devel@nongnu.org; Mon, 22 Jun 2026 11:35:05 -0400
-Received: from mail-yx1-xb131.google.com ([2607:f8b0:4864:20::b131])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1wbgmI-0004es-1T
+ for qemu-devel@nongnu.org; Mon, 22 Jun 2026 11:41:38 -0400
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wbgfv-0004Pl-HL
- for qemu-devel@nongnu.org; Mon, 22 Jun 2026 11:35:05 -0400
-Received: by mail-yx1-xb131.google.com with SMTP id
- 956f58d0204a3-660e9ff0587so2462695d50.0
- for <qemu-devel@nongnu.org>; Mon, 22 Jun 2026 08:35:02 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1782142502; cv=none;
- d=google.com; s=arc-20240605;
- b=VNBDX0eT97i4A/N3rCbdadW77GG/3lmZqcaAKBFqb87SuKjsZqbdHZdy0ndMBJ4bzz
- bvRTUuDhCe39QvOb3KnnGnIgBBdE4oEtrLE3eYPul15qUpOJYhthsKnxUZckIO9x3jC8
- tohEwNl7vpvU270KE/Q8Go08EGLKBrm9jSVcHkxzzdx1KDqaFdJvihJrStax/YhdbMAT
- jtr8qBYE0wvO9KQ/UnpgzOTfvjD9rv7xoAK0V/XhAjptXhH4frCNjXYZ2/VU12obHzs2
- 6tJ+lsHm+4hOpEqypqNY5k1PrP+VSjjNA/MQoDoL5ChAZH7cxdxmMfad1ghBOWnAOb1K
- RYKg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=XnJFClG0+ifr/1YPJ413D2fJmer+mNxQYv7QXDhif/k=;
- fh=E4+ktKk/Irnu4jYXTzXXyfaxzHVWXmRvGxiRnTEcMes=;
- b=EONRgf+eo7G2efy8q1vyGX+d7CzhaSz5cnlvVd3Fm5RUzJBq02WBAWOijH4/i+2lM+
- ibOgfjLgPdloo8CRgaD6eoJxE11L/okc6EgtZt+62+jkSh5r+nt6FSwofMsHh2XW/F+v
- l9YtjPJ7arcAGrgdLc9dCc73Gdd1VILxN22+UzWMkn1IzF/9AxzPyuOh7V/rV/uwZNMB
- Kes15YJOs/jf5O5efCefCN6WDg1TehBOOWbi3nxsonlofWwQIUd6M2JBddRA1OuEBD6i
- NT10uP+naT+l4HSc0E6dS/2JNwJuuBpwjnoSNwbGB6PH+Ft2c6jfRnq//tAWziwhC3D/
- GJww==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1wbgmF-000675-VC
+ for qemu-devel@nongnu.org; Mon, 22 Jun 2026 11:41:37 -0400
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-490b1bbcf3aso29943385e9.1
+ for <qemu-devel@nongnu.org>; Mon, 22 Jun 2026 08:41:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1782142502; x=1782747302; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=XnJFClG0+ifr/1YPJ413D2fJmer+mNxQYv7QXDhif/k=;
- b=rtTsNBXZCzekmYluBRcmo4Ers6lPStPm9Gng8G6jNjTIXTXmr9iySX+jCIWWndHq63
- xHNmJWkhBtGRyv/cpjeW+vMNR8FwvxQVfTncTGmv5UdTne8xdZ6LJDtJy/7D0ecyECxs
- P4abnQWiapcqwhQS6e7z3h2MyzPFBBjQxYx1ypF07AtXtXnvxorWNLx2qncpnvAtd0ak
- SPcWMoBLLGkKaBfC2hIJRjK/rUxK1CIc2kZWqz6ihKk2EwtmhSXYSrdoLKhtUBA/Nb0s
- VBCyilGHcLQpd7kGipijb9ovz4cx0EWTKKAjDm4a5eBlfujEiVt67caRhCukjzq2T4fV
- xVrQ==
+ d=linaro.org; s=google; t=1782142894; x=1782747694; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=Tr4nNCMfEdYg3OpwgAYSto+OH+ELbVaaMVgUsi3GVGo=;
+ b=UbMXLxhCcIPpQrlGLbjId3oqNKGGJsTpgWHbdPOoLT0X18ZSyFA+oLjpxkMiqiHozp
+ 5L7hVKW39azZPb/yTdsfbVUMNsUmNNmrEG3QQ+fVP4A9rwVfD6q0X6yrr3bk7RczAw55
+ dMW6FYLXsS1ZoWqoU5h5QGAmns4HXbbRtT5sCnt5jwPLm363ok4M5mQsWd/rosFtDfRY
+ 2zVRZ9/asOp5SpKahkoQ+3j9f+U2cwBWzKJ/4cwMrPXBdynwtvoFsvrX8HWE66bkoDwE
+ CaPrXJj0EL1GiLZ9sDXpMgiA4iZz+cTnC6sB2v2shSWGwbtE0oEhLE9f4RIeQvUaY0/l
+ KgDA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782142502; x=1782747302;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=1e100.net; s=20251104; t=1782142894; x=1782747694;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=XnJFClG0+ifr/1YPJ413D2fJmer+mNxQYv7QXDhif/k=;
- b=X9UyGkfJ498orh+J25K3cZlB7rR/d95mvmfIEnhIIEdS619DKcVBn19gtGyHYvFef3
- q+tWzn3enbuH840KAsF5Sw2y+wlL4EMxD8UoXD3uOfxjA/BlJDjJ+CLm5l6BTTDvWfsb
- RAU2hLy5xg7lwf+wJZxfjJCdtR/gbh+2f99OdcoMjr1AqdaKxJGhmmcGCmUYskM58/lG
- 2IWRmu3bDEJET55YU53vx37Mcm6AAoq88WmwOITx06EKKtu+8t0EqQ6QboJ7UUWxMsdv
- iqtBgsAoOwKCrL360joopHa/m4EzXt8KbmLB3TlQp/VW6zXtl5Eh86qzyrkLIkOO2BwM
- /A2Q==
-X-Forwarded-Encrypted: i=1;
- AHgh+RocXky11A+WCBAUdIEPWuVKktOjkxG2kwNmgNCjlAghwvSG53XwYMtKRCL6kL/AlLDhtRWRDKyiWDrV@nongnu.org
-X-Gm-Message-State: AOJu0YzoJyqt7jIemnsnROZpM64RMZgNYcFQva94ThyFlrMyhBQFH/jd
- t4C16oTykz8jfZr6VxRr4SP9lApMKlAgE8W3D4XpaRGdUBbmBxwA0HDONB8zGdH2SPyKTjvgMfr
- eUb4ngehn5BzlZqC5OVmvxEe/6NUK21uwx05/I2jbfw==
-X-Gm-Gg: AfdE7clU5i99GydOpf6glRzR3vzQ+YptkHFMuK3OPCNFSspZIP6x/EH8i7fgL6R7V8s
- NeltQvay0IqN/3ou3GM9qV7wD/jSv8SCG3mMQrcSGAYZQHKWXz9+nhgSpPV039LKllWGBvebyT2
- 7wKNwWoXaGLGj/+fmSbrb4fBf8l+9LA77tnQhWTi+130WQOF1LHwANMPM75o1a5fZnNmmoaYcK3
- iCKHe6Ri+zgt/hVRp19pUVFYHHcJiq4qdtVhMtxfwK7iHzvFCnh+2ThfITe0o93LdUpSr7qaylw
- 6sEd4rWltyX42gNR56y34Tk6QMkANkd9arW3T6v1+DifSSCx0a+kHn9d
-X-Received: by 2002:a05:690e:11c4:b0:663:1161:cf49 with SMTP id
- 956f58d0204a3-6631162052emr10979888d50.46.1782142501690; Mon, 22 Jun 2026
- 08:35:01 -0700 (PDT)
+ bh=Tr4nNCMfEdYg3OpwgAYSto+OH+ELbVaaMVgUsi3GVGo=;
+ b=nptwBuhfLlVi+CTIO1qJu5WJkc6bW1oOIjyNXkukP5mnQs1ywOtKNTBOMqzt7J237K
+ KJ84+arker4c6kf4hfzb4uNOJi4OMnUh8/46yw//2MmX1SiUVOKkWqlW5WZpLxGwR1Fr
+ Z5m0BigzCvcva/ikYLevwdyY1539jTvxMVgZwXpyPft5AtUtO12yH8nS303RL0hwclqj
+ bmrPQ8Kgf69dd179MfwtXajg6zquStaqJhJHaReWRKpx+AHECZsaXSoHMHqPD0Ae3q8B
+ xfBEU4oSXWOS955zy/NSSnoPl893aj4DSSAKa63TAmmZEOU2N7N953yfcIgvB8I27pmJ
+ 7nng==
+X-Gm-Message-State: AOJu0YzqD2QX0+7w16p9762pSPZS1tntzzBUjbjfgmjC9L/E6Py05Gwi
+ tRhnzp6d7qhluMUqn2fYNrYZks2y4nG5zm64NmNEP/Z6DeRQb/lji9/Hga52n6dHfaQ=
+X-Gm-Gg: AfdE7ckjafOzwSW7mD4d3aVZ3UV64GAdPf9zI5R3GwB8xjz2XCZ0FYGy3uTSHfBbUIq
+ jpWw2n4NdUN6RhZ3KmU+rPcIXRryzAR61AMdLP9rLBKm7cTIM8CfnRmaFQcQgec1/2FMga8r4l/
+ rPy5wLhohEicdvLlwWYydGJAWMjpBSYydry66+F6Hm9PNKjMm9F5nhe4iIe9wZqi0FtAilZNIRv
+ iKAkOy381pTGf1awpYkqY1yPh7bjyHeQmzBJnCkxGoG6KHM2Mu2kH3H/Ry4y9wFOdFCiiKy7HPi
+ CB8BlBfw8w58wXNsKUUygyKpc4UqiGwVjRUA34K1yrWy4NU7It51rk2hpkPJ6qEV2+O9qFfaUqg
+ 73DTMDtbJK4V0sFuF1kYizUHhWRmpYhWhz749Vrbq51+BqcvYg0My0v1+76WeLBOzF8l6eBeDJ6
+ OWcRrpjXOAa9O+
+X-Received: by 2002:a05:600c:c3c1:20b0:492:4948:bfce with SMTP id
+ 5b1f17b1804b1-4924948c088mr118500085e9.16.1782142893886; 
+ Mon, 22 Jun 2026 08:41:33 -0700 (PDT)
+Received: from draig.lan ([185.124.0.195]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-492494496cdsm204412955e9.10.2026.06.22.08.41.33
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 22 Jun 2026 08:41:33 -0700 (PDT)
+Received: from draig.lan (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 415475F811;
+ Mon, 22 Jun 2026 16:41:32 +0100 (BST)
+From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+Subject: [PULL 0/7] testing and gitlab updates
+Date: Mon, 22 Jun 2026 16:41:24 +0100
+Message-ID: <20260622154132.3166748-1-alex.bennee@linaro.org>
+X-Mailer: git-send-email 2.47.3
 MIME-Version: 1.0
-References: <20260610164549.5699-1-deller@kernel.org>
- <20260610164549.5699-7-deller@kernel.org>
-In-Reply-To: <20260610164549.5699-7-deller@kernel.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 22 Jun 2026 16:34:50 +0100
-X-Gm-Features: AVVi8CeN6gK2IKQmoSJjWCEbUGcK25E_W_NWXS_YNxA9xJ8TXaQ6SQNUVQ5ccX0
-Message-ID: <CAFEAcA9To_qhKCF7ebsrDRgB5yQkmRdSZG+x=e+_-0C=XDYLCg@mail.gmail.com>
-Subject: Re: [PULL v3 6/8] linux-user/sparc: call block_signals() before
- set_sigmask() in setcontext
-To: Helge Deller <deller@kernel.org>
-Cc: Stefan Hajnoczi <stefanha@gmail.com>, qemu-devel@nongnu.org, 
- Yoshinori Sato <yoshinori.sato@nifty.com>, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Laurent Vivier <laurent@vivier.eu>, 
- Helge Deller <deller@gmx.de>, Max Filippov <jcmvbkbc@gmail.com>,
- Matt Turner <mattst88@gmail.com>, 
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b131;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb131.google.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -123,85 +99,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 10 Jun 2026 at 17:46, Helge Deller <deller@kernel.org> wrote:
->
-> From: Matt Turner <mattst88@gmail.com>
->
-> sparc64_set_context() emulates the kernel's `ta 0x6f` trap by calling
-> set_sigmask() to install the mask supplied via the user's ucontext_t.
-> The contract of set_sigmask() (see its comment in linux-user/signal.c)
-> is that the caller must have first called block_signals(), which sets
-> TaskState::signal_pending.
->
-> Without block_signals(), if a guest signal is pending-and-blocked at
-> the time setcontext is invoked and the new mask unblocks it,
-> signal_pending stays 0 and the post-trap process_pending_signals()
-> call in linux-user/sparc/cpu_loop.c never enters its while loop, so
-> the now-deliverable signal is left undelivered indefinitely.
->
-> This affects programs that use getcontext/setcontext to swap signal
-> masks, including libunwind's unw_resume() out of a signal handler:
-> without this fix, the test program below loops forever printing
-> "calling setcontext" instead of delivering the pending SIGUSR2.
->
->   #define _GNU_SOURCE
->   #include <ucontext.h>
->   #include <signal.h>
->   #include <stdio.h>
->   #include <unistd.h>
->   static int got;
->   static void h(int s) { got = 1; }
->   int main(void) {
->       signal(SIGUSR2, h);
->       sigset_t m; sigemptyset(&m); sigaddset(&m, SIGUSR2);
->       sigprocmask(SIG_BLOCK, &m, NULL);
->       kill(getpid(), SIGUSR2);
->       ucontext_t uc;
->       getcontext(&uc);
->       if (got) return 0;
->       uc.uc_sigmask.__val[0] = 0;
->       setcontext(&uc);
->       return 1;
->   }
->
-> The 32-bit sparc do_sigreturn / do_rt_sigreturn paths already get
-> block_signals() from the rt_sigreturn syscall wrapper in
-> linux-user/syscall.c, so only sparc64_set_context (invoked directly
-> from cpu_loop) needs the addition.
->
-> Signed-off-by: Matt Turner <mattst88@gmail.com>
-> Cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-> Signed-off-by: Helge Deller <deller@gmx.de>
-> ---
->  linux-user/sparc/signal.c | 9 +++++++++
->  1 file changed, 9 insertions(+)
->
-> diff --git a/linux-user/sparc/signal.c b/linux-user/sparc/signal.c
-> index fda5508c48..ba692c3123 100644
-> --- a/linux-user/sparc/signal.c
-> +++ b/linux-user/sparc/signal.c
-> @@ -619,6 +619,15 @@ void sparc64_set_context(CPUSPARCState *env)
->              }
->          }
->          target_to_host_sigset_internal(&set, &target_set);
-> +        /*
-> +         * set_sigmask() requires the caller to have first called
-> +         * block_signals() so that process_pending_signals() is guaranteed
-> +         * to run after the mask change.  Without this, a guest signal that
-> +         * is pending-and-blocked at setcontext time is left undelivered
-> +         * even after its mask bit is cleared, because signal_pending stays
-> +         * 0 and the post-trap process_pending_signals() loop never enters.
-> +         */
-> +        block_signals();
->          set_sigmask(&set);
+The following changes since commit b83371668192a705b878e909c5ae9c1233cbd5fb:
 
-Hi; Coverity points out (CID 1660058) that every other callsite of
-block_signals() checks its return value and does something if it
-returns non-zero (indicating that a signal is pending and typically
-that we should return -TARGET_ERESTARTSYS to take the pending signal).
-Is it OK to ignore the return value here? If so, saying why in
-the comment would probably be useful.
+  Merge tag 'pbouvier/pr/plugins-20260618' of https://gitlab.com/p-b-o/qemu into staging (2026-06-19 15:00:01 -0400)
 
-thanks
--- PMM
+are available in the Git repository at:
+
+  https://gitlab.com/stsquad/qemu.git tags/pull-11.1-testing-updates-220626-1
+
+for you to fetch changes up to 2e020310e15d8452407c438271f3c06d4fa0c416:
+
+  gitlab: update bug template for sec issues & tool assistance (2026-06-22 13:45:37 +0100)
+
+----------------------------------------------------------------
+testing and gitlab updates:
+
+  - present a dev friendly cmd line in functional test logs
+  - tell pylint to skip c-modules
+  - widen the capture of functional tests logs in gitlab
+  - remove workaround for MacOS build targets
+  - update the gitlab bug template for security process
+
+----------------------------------------------------------------
+Alex Bennée (5):
+      python/qemu: split arg between base and harness lists
+      python/qemu: split console from harness args
+      python/qemu: dump a developer friendly version of cmdline to logs
+      tests/functional: tell pylint not to check c-modules
+      gitlab: remove build target hacks
+
+Daniel P. Berrangé (2):
+      gitlab: ensure "check-XXX' jobs capture functional test logs
+      gitlab: update bug template for sec issues & tool assistance
+
+ .gitlab-ci.d/buildtest-template.yml | 18 +++++++++---------
+ .gitlab-ci.d/macos.yml              |  7 ++-----
+ .gitlab/issue_templates/bug.md      | 11 +++++++++--
+ python/qemu/machine/machine.py      | 29 ++++++++++++++++++++++++-----
+ tests/functional/pylintrc           |  1 +
+ 5 files changed, 45 insertions(+), 21 deletions(-)
+
+-- 
+2.47.3
+
 
