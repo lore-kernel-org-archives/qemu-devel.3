@@ -4,112 +4,145 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6A08CD98F2
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jun 2026 20:24:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 478A9CDB466
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jun 2026 20:37:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wblBG-0005oB-I8; Mon, 22 Jun 2026 16:23:42 -0400
+	id 1wblO1-0000Ts-WB; Mon, 22 Jun 2026 16:36:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wblB7-0005nP-MH
- for qemu-devel@nongnu.org; Mon, 22 Jun 2026 16:23:35 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wblNx-0000Rj-TI
+ for qemu-devel@nongnu.org; Mon, 22 Jun 2026 16:36:50 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wblB2-0006py-5R
- for qemu-devel@nongnu.org; Mon, 22 Jun 2026 16:23:31 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1782159805;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=CPEP6gHhqNKJhrtW+PUpBGCpELK13U8EoAVNjsbwg7M=;
- b=JJVrD8Q5h+WXaNKrDwaIJowiiOHyZogvlsk6pqYF4morRfnWYXWdoE/jtt8euGAinCIzRj
- qrluyu1JlPxR0c3IPcXK3tMFqdcPtJp0dL3XZ8giOO8kwSfVyN4J/2KGsP3dgNZEWDF65i
- abgcEkpfPLp3ePoQcce16Um0UFvVkiU=
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
- [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-130-Xrd7O2W6Oo6nJT-5qBQp3w-1; Mon, 22 Jun 2026 16:23:22 -0400
-X-MC-Unique: Xrd7O2W6Oo6nJT-5qBQp3w-1
-X-Mimecast-MFC-AGG-ID: Xrd7O2W6Oo6nJT-5qBQp3w_1782159802
-Received: by mail-qv1-f72.google.com with SMTP id
- 6a1803df08f44-8ddad618405so109157316d6.0
- for <qemu-devel@nongnu.org>; Mon, 22 Jun 2026 13:23:22 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wblNw-0002b4-7j
+ for qemu-devel@nongnu.org; Mon, 22 Jun 2026 16:36:49 -0400
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 65MJaDUg2101410
+ for <qemu-devel@nongnu.org>; Mon, 22 Jun 2026 20:36:46 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ sS7nnWBpxw4wPxwmJtSD9Q5CteSE5Q45qdQa9zKP5Ng=; b=E4+voFBwnCNxNSuY
+ mF0b2LS5iQAQ2Z8ZH4pqZnR9EY0S8v8E9tjSHORzS6a7AmTmzVC5B0Cepyyw8aVj
+ Tp2F7Un7KQZHoeiMtTpLR8V5GFUuvPlA5ccOcwaBPQBYJvFyG51jwQE+I9uhQpsj
+ ONci9SkMjpFuPoGKzwTb8KNJs7sxxrNsUB45ex2hD+i02hJ3rmnyuPQ8eK9BjBlh
+ X1GyhU6RcGuXbpz4EvYP34cqzMPq96CExRr0p9n5/6VDAIoHJMSDfq6d0axUkec6
+ HMvTfppAxTqLp1g/TviDkjBrjMGGfIBJ/6KyAQh7H+ynWmB+a16UIqiZ69vMvj1O
+ QW+Tew==
+Received: from mail-vs1-f70.google.com (mail-vs1-f70.google.com
+ [209.85.217.70])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ey3eba3x0-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Mon, 22 Jun 2026 20:36:46 +0000 (GMT)
+Received: by mail-vs1-f70.google.com with SMTP id
+ ada2fe7eead31-6cfe512e871so3654779137.2
+ for <qemu-devel@nongnu.org>; Mon, 22 Jun 2026 13:36:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1782159802; x=1782764602; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=CPEP6gHhqNKJhrtW+PUpBGCpELK13U8EoAVNjsbwg7M=;
- b=clzG1fSG+NiCqy/pCh1oVYQSHKD0Wtimuf5Yq4sqN4/aecnfW74i4kQansU74fndLV
- kIidMo6iZMaNNiwbWSqCUGELxIST5WpwEazSLWt2+6UKuEi1n+pF6LNxkJmInL+EUZ00
- +WyR4M9UvoWTojTkkbvNrnj5s07qM2AQBq9vte691b5Omcp79Np2rVxJrlj0KcrPRtBY
- ZWETGDziRgtYtpkl1EuHwd2itI97kEzxErbGIy+UqhJ/mnJJErN3SLAkbfWiLAAOk2rh
- NV+BiKuLvyPfQP35U6YMe7scZidzrgZQtN13DAPG5758DO/enHc0zuDnUgw6bsimbZvL
- XfTg==
+ d=oss.qualcomm.com; s=google; t=1782160605; x=1782765405; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=sS7nnWBpxw4wPxwmJtSD9Q5CteSE5Q45qdQa9zKP5Ng=;
+ b=TfY3YIIal/fy4bIONQv3gS70mVxcHyORKb0716RE7Q7QLsTtCHJeyvfG5+xAbjgG4c
+ 87gPymhkjGhDeJhmugFNNwqOIu6EYvZuCbOEwhXh6oyYR1BsMIQY5XjiuyE9E+n4Lq5X
+ JhipFdRm+VLEFA8Z3gdk2LAvzx6ffFmeDoghTbUnfR2Rq6gTDG94UNc49ykvWadeRKj7
+ 3J6/fSjSFcr4aXwMgGYXA5fIevwBCoMn5LGKn3Y4xIe7Ntt+ttQYqvAiKm4miIj3a412
+ 3B4oZwmD6Gy6HcVNhhafnGCkmUMEMD2kCu6RHoSxljGVUOXvFFxN0KxlXG+nEl1mizgX
+ 4AiQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782159802; x=1782764602;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=CPEP6gHhqNKJhrtW+PUpBGCpELK13U8EoAVNjsbwg7M=;
- b=Uq2DcCgCurLRp/Bov7e5ByJxJMxsY3hqPiTXPSGJNs0venYYUk1Kk2jJ0gmmvqVm6z
- X9XLOOQoQwHZLRs/hsmcd0ydD5u4jticj5xZUKrAYetuyCCLlRr8n7lAn75jxYsVm4P4
- yPmtifl8vi6piKqvK28LRX6B5Knitz6spnovy2gkkAxqQvB+WrUyWuMw5RBDAzY12Sps
- eQmebiHzacNsoqVZadXPDdpL5oWNp5bRrS+BUlTWJoohFub0slg3fVmrlrTTiz3fSaXj
- ursWMtaRzl3zyNkgSqYEJQvvyMVaXeF7pQtWhelqii9TpkrrFT0p8X4sDwbsdG2Bb6XM
- 8uGw==
-X-Gm-Message-State: AOJu0Yz9UZN9SSoeyDJzc33popqeF6DA0sxQ78iFMGdEPJmhDOG/mbdN
- tc31ObHWZH3y0c92fugmyTaIn5OwqN4XjVHRKOxK+b730uTjzO9/yx54zm0QwqeKI18dSIgyMA7
- Vg3eDDqpTyoHr72R3DH9TfpZlMXUVX4eNZph1HigbzjbeCQqN6+S+UHSv
-X-Gm-Gg: AfdE7clQSktZ0PPk8IvzOqobaWi8Stu4ok+xt4ZuagUZY6RyZOD5sdkOM9DP2n+LqNY
- 2Vl8MhNmoJJyp54wFrZIR++fkeRuV2TGK7vwTHOb19I/hXCvmyw6w6Xe05DxKQipd4ueiKUwFSq
- jF9GvZN5HaTdbuO5J92S8XiJcpQsao2qM2/YPq5WL5SVSreWoO3Z9UtglnKvC7HNz6XOAjLsJmN
- 7/UubB3nI1f/ZMEeIXkGODs8Yoy5civesGKPqgP8IDVvwEdBHhN+stfshIB0btjlioj5W2CgMld
- WcjkMW4OPhO8CmPWyPkFyWA0b0KHBDcjhpSMqpU2kIMlaxCl6Oe9RDdGbTRzhv2/F5yB22D0AiE
- w+o1S
-X-Received: by 2002:a05:6214:e6f:b0:8ce:f1b:74ea with SMTP id
- 6a1803df08f44-8dea3ae3fe8mr249639486d6.24.1782159802132; 
- Mon, 22 Jun 2026 13:23:22 -0700 (PDT)
-X-Received: by 2002:a05:6214:e6f:b0:8ce:f1b:74ea with SMTP id
- 6a1803df08f44-8dea3ae3fe8mr249638636d6.24.1782159801550; 
- Mon, 22 Jun 2026 13:23:21 -0700 (PDT)
-Received: from x1.local ([174.91.117.157]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-8df81cde303sm105884836d6.25.2026.06.22.13.23.20
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 22 Jun 2026 13:23:21 -0700 (PDT)
-Date: Mon, 22 Jun 2026 16:23:09 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Cc: qemu-devel@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- Zhao Liu <zhao1.liu@intel.com>,
- Stefano Stabellini <sstabellini@kernel.org>,
- Anthony PERARD <anthony@xenproject.org>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>,
- Reinoud Zandijk <reinoud@netbsd.org>,
- Marcelo Tosatti <mtosatti@redhat.com>, Alex Williamson <alex@shazbot.org>,
- =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
- qemu-block@nongnu.org, xen-devel@lists.xenproject.org, kvm@vger.kernel.org
-Subject: Re: [PATCH 0/3] migration/ram: Abort on unsupported migratable RAM
- changes
-Message-ID: <ajmZrT1d0QXCWTNq@x1.local>
-References: <20260611-ram-v1-0-a2dacf699718@rsg.ci.i.u-tokyo.ac.jp>
+ d=1e100.net; s=20251104; t=1782160605; x=1782765405;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=sS7nnWBpxw4wPxwmJtSD9Q5CteSE5Q45qdQa9zKP5Ng=;
+ b=ZD1F6299tpomy347iBfM2ehEQOjlaomDrXii02/iTFaHdTi4phLjAPJO/cuwOk/sbf
+ 9CL7RUOBglFZ+SEy5JnJdCC8wOo0JjYmb7MDzNfB2JkYN96YTsefrMPX+5zOVpmrf0xb
+ TdqV6R8WeuAO9Ydjq0NFNUw7SKYCVRDq1BN47j/YKq9H5kvyS5QLT1Lvvh7mWhLPlVVc
+ tcfMgHdNbDF3p1igbVUgyru+88mlPIKOypA7GCCbuvNDPT7oEtkKID+F8JY1OzB4wefL
+ GH578VUFKnhn7A71b/UDTh3eK0OqOaJEqkmE9WhTq4lzlRazNB1DGQhUlI6F8fxu8lQG
+ MDzg==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ/YhPSc5PcDNGFFF0bTodeYofhPafe7ktGcM1Jl7hJwdks0bRm6KQztkggIeXcaa3G/vVJepn49e+R5@nongnu.org
+X-Gm-Message-State: AOJu0Yxliur4PuxYGbiZhBgTd5vHEWDIsB7TsZQ8s4M227o29i5FTG6r
+ MpXAdL8ja4gQeiCiO5Mx/hYQd6JoGzk66pJoy5gxorgVEUFotSCjkDZRu1Sxw2J7joAO7A8zPU2
+ GFt2b5vvRe5Bnh379++U5tmGDWb54j2M6BhxfIOXQsYxEOMlKlZWAM0NB/w==
+X-Gm-Gg: AfdE7ckfukfMwvmJW5P4WiBZjlgNu3WgKNfMVNeeGnM7Lh4tQrgEIPWPY3t7kfU53jL
+ wBaDh21uDtleU9w2Tn3Z6eeYBIQeS0gVqjAO16CTQ0M26DaFNIt7RzI+Re1W3wdpTW3YspLJ4zd
+ JcOKOy1XrDHq4QbQGrfWvbv8TXzteLRLpvgqQ4W0tRXseS5gOmHoRQo/lduame9nPq95KNhI+VY
+ 3hwUd9z7Jjq1jEfuP9o2bwUC7nP2hDS1JjZw5FidS7aYHjfDOvyJiZBFEnKhmfhY/zHH1hjTLJ/
+ mOIQYaGpj+B9BOdDM8Y/xTwup0Hb9aCVFTuoyw0pPUJyigIBTUAiGO0LLNAD3arQDC4dUsTZwTi
+ VQxpFoqNJ+lCxc33/MBxAHsDuK4ZTSqPsqJ4vDZ+kSOUriu3r2cpVbEbhnQ1nMA==
+X-Received: by 2002:a05:6102:358e:b0:6e0:3d72:3044 with SMTP id
+ ada2fe7eead31-72a791d459emr9480230137.28.1782160605478; 
+ Mon, 22 Jun 2026 13:36:45 -0700 (PDT)
+X-Received: by 2002:a05:6102:358e:b0:6e0:3d72:3044 with SMTP id
+ ada2fe7eead31-72a791d459emr9480205137.28.1782160604938; 
+ Mon, 22 Jun 2026 13:36:44 -0700 (PDT)
+Received: from [192.168.69.212] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-46666c57b95sm26340486f8f.30.2026.06.22.13.36.43
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 22 Jun 2026 13:36:44 -0700 (PDT)
+Message-ID: <55d966a8-7698-421a-8265-2235d5fe104a@oss.qualcomm.com>
+Date: Mon, 22 Jun 2026 22:36:43 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260611-ram-v1-0-a2dacf699718@rsg.ci.i.u-tokyo.ac.jp>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/3] MAINTAINERS: record known Git Lab handles for all
+ maintainers
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ qemu-devel@nongnu.org
+References: <20260622113152.1710585-1-berrange@redhat.com>
+ <20260622113152.1710585-3-berrange@redhat.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <20260622113152.1710585-3-berrange@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjIyMDE5OSBTYWx0ZWRfX2BaPFJ7rbXsF
+ dDD0DWS8YWdEJNOCOWXiFKDn2xT1ikRgi4YnOZ2wDpMCecXmVem0aChx4VrvjeZeJ8TIvOOLJoM
+ 5SjG7tK19cnyr26R2BssoIps313VhVY=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjIyMDE5OSBTYWx0ZWRfXyK62zc4DRXPa
+ zM1T32H2azPhmkz6bfj3Fdi7l5xxCbfYfJ66mKRsCDjTzHk93NSRh0yM802Sn4/VkpXByJ4C2aG
+ GNzVz+k0RdletAHsQJBqRkO6fkGBqjlUytrKaCCnJ6qVuGsxtdIItMJnXHY7PqmvBcq6h+SfoRX
+ g5uIPhPkwbao9iEmYfVwTgcTs9mSyClIcNYXJcs2hNqt9Eb0X3mk1z3yutRtWX9Ocs6bTkRo8fZ
+ zIUmkyer/kvmfMVOPxexuvkoXT3ZTfal1hZR31WUCE++iRvVKJorL/fnKlPdfi3RJNlNofeoJDD
+ mlcXQtyCoi00d0/W1jLqgwo/RqtRQeQBxL5o6VqFCraa5KfZ35KkWO52ynjyokmQGQoQwyPNage
+ TM9zSVCh6RpOwHmGB7YL9jJj+sP+xVLyiMd/Rgtr7/qhOfXAilekrHEGG/I9ICJnvt3TUSZ8EUd
+ sbcuL7Uzz+OCYjp1F2Q==
+X-Authority-Analysis: v=2.4 cv=ILIyzAvG c=1 sm=1 tr=0 ts=6a399cde cx=c_pps
+ a=N1BjEkVkxJi3uNfLdpvX3g==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+ a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22
+ a=p0WdMEafAAAA:8 a=ID6ng7r3AAAA:8 a=20KFwNOVAAAA:8 a=KKAkSRfTAAAA:8
+ a=69wJf7TsAAAA:8 a=9qUTvQc-AAAA:8 a=cplnpDx6AAAA:8 a=UpeuL96urPyQuuX98vsA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=crWF4MFLhNY0qMRaF8an:22
+ a=AkheI1RvQwOzcTXhi5f4:22 a=cvBusfyB2V15izCimMoJ:22 a=Fg1AiH1G6rFz08G2ETeA:22
+ a=axOgMmt4Ejcwn1cqzmsR:22 a=bHwCOBSOUrNypjIvOSWD:22
+X-Proofpoint-GUID: oBYIL25YqP8mGHhxTLjJlE6urxJB3AkG
+X-Proofpoint-ORIG-GUID: oBYIL25YqP8mGHhxTLjJlE6urxJB3AkG
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-22_04,2026-06-22_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 priorityscore=1501 bulkscore=0 clxscore=1015 adultscore=0
+ suspectscore=0 malwarescore=0 spamscore=0 impostorscore=0 lowpriorityscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606220199
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -125,50 +158,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jun 11, 2026 at 03:35:47PM +0900, Akihiko Odaki wrote:
-> Supersedes: <20260604-migration-v1-1-cef4a5b1bbdd@rsg.ci.i.u-tokyo.ac.jp>
-> ("[PATCH] system/physmem: Assert migration invariants")
+Hi Daniel,
+
+On 22/6/26 13:31, Daniel P. BerrangÃ© wrote:
+> This updates MAINTAINERS with a "G:" line corresponding to every
+> "M:" line that can be identified with a match against
 > 
-> ram_mig_ram_block_resized() already aborts migration when migratable RAM
-> is resized. Extend the same handling to other unsupported changes to the
-> migratable RAMBlock set, such as removing a migratable RAMBlock or
-> changing a RAMBlock's migratable state.
+>    https://gitlab.com/qemu-project/qemu/-/project_members
 > 
-> Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+> This update was done using a largely automated process based on
+> the data extracted with
+> 
+>    $ glab api --paginate /projects/qemu-project%2fqemu/members | jq -c '.[] | {username, name}'
+>    $ glab api --paginate /groups/qemu-project/members | jq -c '.[] | {username, name}'
+> 
+> Some Git Lab accounts had real names that didn't have an exact
+> match in MAINTAINERS so the glab api data was manually pre-processed
+> to change those names.
+> 
+> A Perl script was then used to insert "G:" lines for every "M:"
+> lines.
+> 
+> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 > ---
-> Akihiko Odaki (3):
->       system/physmem: Pass RAMBlock to RAMBlockNotifier callbacks
->       system/physmem: Notify RAMBlock migratable and idstr changes
->       migration/ram: Abort on unsupported migratable RAM changes
+>   MAINTAINERS | 332 ++++++++++++++++++++++++++++++++++++++++++++++++++++
+>   1 file changed, 332 insertions(+)
+> 
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index 93df53d87f..9a62fe0e81 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -18,6 +18,13 @@ Descriptions of section entries:
+>   	   These reviewers should be CCed on patches.
+>   	   Reviewers are familiar with the subject matter and provide feedback
+>   	   even though they are not maintainers.
+> +	G: Git Lab handle to assign issues to: @GitLabHandle
 
-Thanks for looking at this, Akihiko.
+"GitLab"
 
-I understand this is a protection to the system to trap error use cases.
-The question I have is do we have any possible way to trigger these.
+> +	   Maintainers must have a Git Lab handle listed. The handle will
+> +	   be invited to be a member of https://gitlab.com/qemu-project/qemu
+> +	   with the "Reporter" role. This will enable triage actions, issue
+> +	   assignment, and visibilityof confidential security disclosures.
 
-I worry we add a bunch of code and notifiers, and then there's zero way to
-trigger, essentially add dead code.
+"visibility of"
 
-Logically we could already add assert() on things we don't expect to
-happen.  This case might be slightly risky, but still I think we can also
-consider things like error_report_once() instead of introducing slightly
-complex notifiers just to cover what we think shouldn't happen.
+> +	   Designated reviewers may also be listed at the discretion of the
+> +	   maintainer.
+>   	L: Mailing list that is relevant to this area
+>   	   These lists should be CCed on patches.
+>   	W: Web-page with status/info
+> @@ -58,6 +65,7 @@ Descriptions of section entries:
+>   General Project Administration
+>   ------------------------------
+>   M: Peter Maydell <peter.maydell@linaro.org>
+> +G: @pm215
+>   
+>   All patches CC here
+>   L: qemu-devel@nongnu.org
+> @@ -84,13 +92,16 @@ Responsible Disclosure, Reporting Security Issues
+>   -------------------------------------------------
+>   W: https://wiki.qemu.org/SecurityProcess
+>   M: Michael S. Tsirkin <mst@redhat.com>
+> +G: @mstredhat
+>   L: qemu-security@nongnu.org
+>   
+>   Trivial patches
+>   ---------------
+>   Trivial patches
+>   M: Michael Tokarev <mjt@tls.msk.ru>
+> +G: @mjt0k
+>   M: Laurent Vivier <laurent@vivier.eu>
+> +G: @lvivier
+>   S: Maintained
+>   L: qemu-trivial@nongnu.org
+>   K: ^Subject:.*(?i)trivial
 
-Or do you have way to trigger any of these notifiers?
-
-PS: today I went back and I wanted to try how the existing resize()
-notifier would trigger, I can't even reproduce it with David's example
-here:
-
-https://lore.kernel.org/qemu-devel/20210429112708.12291-1-david@redhat.com/#t
-
-I can trap a qemu_ram_resize(), but that's invoked with newsize==rb->size,
-so it didn't really notify a thing.  I don't really know how to trigger
-ram_block_notify_resize().  If you know, please share.
-
-Thanks,
-
--- 
-Peter Xu
+This is an approach, and it does the job, but I'm worried about its
+maintainability. Since there is 1 handle per email, what about a
+.gitlabmap similar to .mailmap, a key:value mail:gitlab handle?
 
 
