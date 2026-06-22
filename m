@@ -4,177 +4,138 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 337CDCD98F2
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jun 2026 11:05:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0965ECD98F2
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jun 2026 11:08:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wbcSb-0008HL-8i; Mon, 22 Jun 2026 07:05:01 -0400
+	id 1wbcVW-0000gh-LF; Mon, 22 Jun 2026 07:08:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.caveayland@nutanix.com>)
- id 1wbcSY-0008Gl-Ik
- for qemu-devel@nongnu.org; Mon, 22 Jun 2026 07:04:59 -0400
-Received: from mx0a-002c1b01.pphosted.com ([148.163.151.68])
+ (Exim 4.90_1) (envelope-from <kchiu@axiado.com>) id 1wbcVI-0000g0-Lv
+ for qemu-devel@nongnu.org; Mon, 22 Jun 2026 07:07:49 -0400
+Received: from mail-westus2azlp170100005.outbound.protection.outlook.com
+ ([2a01:111:f403:c005::5] helo=CO1PR03CU002.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.caveayland@nutanix.com>)
- id 1wbcSW-0003tC-6g
- for qemu-devel@nongnu.org; Mon, 22 Jun 2026 07:04:58 -0400
-Received: from pps.filterd (m0127838.ppops.net [127.0.0.1])
- by mx0a-002c1b01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65MAp1jE4151192; Mon, 22 Jun 2026 04:04:52 -0700
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com; h=
- content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=
- proofpoint20171006; bh=cDM8gguHn9PrETAnJtGRq69r0EtiS+5i3WweH20uN
- RE=; b=b4YlaZFykJUZ6o6oLrLrVFDBUiOLb1BLD5inDAXAb58Pz2aw2jL28W3tV
- mE3Dedhx9767DEhZzAX3nzOkB6I9AR0cjAw4tXyfyCmQUV8HH/hvREbfnlq9bn4h
- BRhLQAgPAq1BeDsrFgEk8z1DNYNTkk074xHnLg9MTrRPZyqCWjhv2Inb/6gj1Eu2
- e8wKlOWnecH9bnJpp9n5c0GqqC5zazSYoSi8H7+SFvGcYu938k3dFDoLOiKk1iy+
- O3lRhbL/rd1OWBLUnildTnquvqQQCoAbASaIcmRJkw1UlBeEiy7Yl20Vxjfy1JgX
- 1VZS9qyMuc7rF02Y31nI+PmhxwdJA==
-Received: from bn8pr05cu002.outbound.protection.outlook.com
- (mail-eastus2azon11021119.outbound.protection.outlook.com [52.101.57.119])
- by mx0a-002c1b01.pphosted.com (PPS) with ESMTPS id 4ewtdukck4-1
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Mon, 22 Jun 2026 04:04:51 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <kchiu@axiado.com>) id 1wbcVE-0004ik-OG
+ for qemu-devel@nongnu.org; Mon, 22 Jun 2026 07:07:47 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=lnX0/gXQLdqMqEcbK94V1KMwzuAfDiAZSoavOYwBxW4aJbEVU5eq6QMM162tLjYhyebw38+DtBsrYB4XZ2phatb01Mma4q7MhvNXPuO1JSw2f8M5kI9TOVfJRRtS2Q+Zgs+J6mUxbeGHGVUpQ7cvSXKMZUksqgmtkhIkZmeG3vdLt1mXFTx7fzaoqfTxX7ZOh4/rbbnuLrZH7r4V+pYgCFVgBxiIVA298s5ukhWf+ii4r4eTCN+4BNNdIkMuvlB7iARyTS5fqRXkgH2n6jlbjYM5pHuYm4SHMgPDzmpMhrgzE8O4JEo37GDrpO0PYbtKm8Z9WeGREAoIZEypAHJ34A==
+ b=yRwq9wlyA75k+LaqBrKI8kXNlByQvhw4ZVc14HYetLEIeIwYQkur6pLjy109/+ygPejcW5N1LvXMSirpMoH/lvGRUyOsDFreEvn/cpyAb7yTxbKETY+hGR1E3fekmrT0lgZP4+B1G+u4DUHIzXQpBxSIsDpWXHkmdwerefavPNdTP45CefL0xiKmaboiSJM22REZe6XRhwHApxCwgSGsVUhe7gFhvM9gssp57jfuJpy8K63MmVc0V3DfV71ACU0sBN+Hs8YFAlHuPPPMb9PiRhlqwbvz/lUL9jv7WQGNBncqX3dEMqwTuRwezVZpGE/YE8X4c39teIdHQy9XRKEVGA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=cDM8gguHn9PrETAnJtGRq69r0EtiS+5i3WweH20uNRE=;
- b=Gfqepq4i1sC1KXL2l95U3qCv39x717e/ZB5B+0dy1wAwZBolWbLXCkX4NsgQWkDZhKSRGZ5TzbI2PNln3bj3Y9OIisn+/TftlE//C9xqxwYnMsOTaP7hglh76QFv3dCWf59YIAaYBZe8dnOBL21bBqizMRFmWtjcSrcIpp5ldB5Mw80YGtH7MAbssVtgrymjKAyDNNYJB1Jc2fA9AylfIebR5Oy0GwpullHILWseP5kE7iU9yHGeuNE0EcRPg6QPA0nP+x+JXJRWngLgCRHvz1VY2qeMUzXPqZ2ASS9OEr5aVyc2abxVndSWsPTbdBzSwnW5TdzdKxiGl5O3P3o8JQ==
+ bh=jVCkuEeU/4kls7WNhUw/U8yY90x+oBiY9AyNjZFnPJw=;
+ b=W64UOoXeWHxFObtToeE4ypotl4EuhOqwYqrH7EYmNIm3Ddp5D0xmHwpshxu7MrMXSgAttsqwAh8U+5PkJZIWh5h7S2LUaGXWftvj0pcJ3hKREBxMbn6BjLpfFx3bOgTgFM3VhuH59CkNV8dmNRkHyDcB2i9ibmlkqvJOfNlQTbbdMiqNF7Vdh2syO9FT3Lay151T+qfHx2h9WNU0qIQYiVKJ94k52eQHsvOCNpQXo4kVl4TwpPo0mqYTlimO12qGB1ODwtIx4Bot3Z0t1Z5a2nhXC5oTeTkhmdk9ZhAtxF+lFmmO2uHfqsMwZvLwdMo483ELhuZw2/f9tG7mf7A4RQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nutanix.com; dmarc=pass action=none header.from=nutanix.com;
- dkim=pass header.d=nutanix.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com;
+ smtp.mailfrom=axiado.com; dmarc=pass action=none header.from=axiado.com;
+ dkim=pass header.d=axiado.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=axiado.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=cDM8gguHn9PrETAnJtGRq69r0EtiS+5i3WweH20uNRE=;
- b=dmc740KgOmReHAXi/W99nb0SWI7Vze7r9yiuMuVdIoI7YdvcnDWr6wgvg5ojNf5VCylMlgMkFGzn/QVMim5GoC+V76MgRxZ8RfSj/RYUs4693Rd4DO4LKbgMYWo7Rh+QRNUTNEsMuGl21aSn+Tyb0RdSfYeWP6nXnrdxJkkU9Fnlh0l2y3gPm09KHqGh9ZiUZ9xgT54Sfzc58fnO/LnJhubbgGHplTBnRaRsh18FTVoxwjc+wxd2qwyEcCjBCuq9qjDicDq6QDtyd2So25LuK1bTi6obYhL+iD+SaQ30mqWFCOLlrzai8+NRm6wgdNZ929eOE1raAyEZvWzGknGDVw==
-Received: from PH0PR02MB7159.namprd02.prod.outlook.com (2603:10b6:510:16::8)
- by SAWPR02MB11414.namprd02.prod.outlook.com (2603:10b6:806:4c8::14) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.139.11; Mon, 22 Jun
- 2026 11:04:50 +0000
-Received: from PH0PR02MB7159.namprd02.prod.outlook.com
- ([fe80::8e97:bc32:822c:b250]) by PH0PR02MB7159.namprd02.prod.outlook.com
- ([fe80::8e97:bc32:822c:b250%3]) with mapi id 15.21.0139.009; Mon, 22 Jun 2026
- 11:04:49 +0000
-Message-ID: <4bdaa322-60ff-4d08-b714-85d48ea131b2@nutanix.com>
-Date: Mon, 22 Jun 2026 12:04:44 +0100
+ bh=jVCkuEeU/4kls7WNhUw/U8yY90x+oBiY9AyNjZFnPJw=;
+ b=v7WIBMpnFmvpqpEeHQBswXrcjWszbos0J/aHnVxaEiHu7LXM0rMkMVDFnRrkri0UObmRK/ckkrFOWJdMzlVSceHPvSrEMorFKPkXt2EFUsF5e09otmsUm6LkGwG1ctloChR8lmZZEWVKLq7MSZB2wjXmH0viqTlS9x8Y5+QvPVuetSt+FfQlJQlNG+WEjKENnzpfv7yY1SDIflEJweLtVkzdlWzQ48MHjeSICTItF29MQvfex9yGokiFikaEeMrHVReWmEdUHB4sJ+zj71MDL3QJVgTqLStpCTxlwEKza+P6sWpmmJgO6AtOzP/swwg5q+248iQlzzb3HMQYGzKl1w==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=axiado.com;
+Received: from SJ0PR18MB4479.namprd18.prod.outlook.com (2603:10b6:a03:37f::19)
+ by LV3PR18MB6220.namprd18.prod.outlook.com (2603:10b6:408:278::22)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.139.20; Mon, 22 Jun
+ 2026 11:07:40 +0000
+Received: from SJ0PR18MB4479.namprd18.prod.outlook.com
+ ([fe80::eaf4:3aec:73e:d5ba]) by SJ0PR18MB4479.namprd18.prod.outlook.com
+ ([fe80::eaf4:3aec:73e:d5ba%3]) with mapi id 15.21.0139.018; Mon, 22 Jun 2026
+ 11:07:38 +0000
+Message-ID: <3153f768-13e0-4d84-955b-946c1596d009@axiado.com>
+Date: Mon, 22 Jun 2026 19:07:34 +0800
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 0/4] isa-serial: acpi: declare shared IRQs for COM1/3
- and COM2/4
-From: Mark Cave-Ayland <mark.caveayland@nutanix.com>
-To: mst@redhat.com, imammedo@redhat.com, anisinha@redhat.com,
- pbonzini@redhat.com, marcandre.lureau@redhat.com, qemu-devel@nongnu.org
-References: <20260515150634.2637533-1-mark.caveayland@nutanix.com>
+Subject: Re: [PATCH v5 5/8] hw/arm: ax3000-soc: Enable Axiado SD host
+ controller
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ qemu-devel@nongnu.org, peter.maydell@linaro.org
+References: <20260618101249.2926976-1-kchiu@axiado.com>
+ <20260618101249.2926976-6-kchiu@axiado.com>
+ <41ffebd9-00fd-4a1a-a281-1e8bc475fa9f@oss.qualcomm.com>
+ <8beb5c51-04f2-4e96-ae7d-a015d16b0ec3@axiado.com>
+ <27203775-0a47-4758-90e5-f74cd8ef36e8@oss.qualcomm.com>
 Content-Language: en-US
-In-Reply-To: <20260515150634.2637533-1-mark.caveayland@nutanix.com>
+From: Kuan-Jui Chiu <kchiu@axiado.com>
+In-Reply-To: <27203775-0a47-4758-90e5-f74cd8ef36e8@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: CY5PR15CA0034.namprd15.prod.outlook.com
- (2603:10b6:930:1b::15) To PH0PR02MB7159.namprd02.prod.outlook.com
- (2603:10b6:510:16::8)
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: TPYP295CA0044.TWNP295.PROD.OUTLOOK.COM
+ (2603:1096:7d0:7::18) To SJ0PR18MB4479.namprd18.prod.outlook.com
+ (2603:10b6:a03:37f::19)
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: PH0PR02MB7159:EE_|SAWPR02MB11414:EE_
-X-MS-Office365-Filtering-Correlation-Id: 52ebd93c-0ccf-4126-9434-08ded04e13e5
-x-proofpoint-crosstenant: true
+X-MS-TrafficTypeDiagnostic: SJ0PR18MB4479:EE_|LV3PR18MB6220:EE_
+X-MS-Office365-Filtering-Correlation-Id: d0879885-3b96-4cac-8d6e-08ded04e78c8
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|376014|23010399003|1800799024|366016|56012099006|22082099003|18002099003|6133799003;
-X-Microsoft-Antispam-Message-Info: zFEffeJHitgU0uIHWknB7i6tmNVK0l2UgigxuDSz9q2Ihoxe9F3QnaS7jeOHLTVEIVAQeX/pqwB9l+birniC9lWTII66sZ1oT9nwbUMrD9gusrZTuap54OdCcVYLDK6iH3+E9US+LeL1i3LW86y1c29ikJFZcA+4sSrcijkXNaX6wKgY7RGQPEChu4jIfD3leEjBG8IWk0SwrRvbYuw4smeAXek/mjQxS9nsDpMx+XHNns2JwQhvOaNUY+YI8HnMzJiB5MlaABxkZvY0g5PMbtPdHCaXzWjotybrzzLVFUIkhsCUiBMU/hZdto/uJi7+h1y2J/DocmAsK2zGMSUYk+OFVL0V4+JGA2qki286FDQbwCTLKNxngv8gqvHRS39MgIqgf08zDTbOSKewsXCHgaADErLEQCsl7zgXP8g3UJSwmcjrFNw+M/V/K5fjLaLU831+Y3nx5LUTUqPMYhPC+T7BcYHKBgaJASxpuDn3egjYt14dkI4rqVKwgsIEa9FRYOKrMRkPRp0vuMluBUT8k4XHZPgpuu7h03hUpUBPUGvXrSih3oZgB98bUIBqhsYFUN0T8+1a99rea39Dek5VSPQIp1Yl3erzEztT8VxF0I/IyUEhBLUjGcpMyzIPhdBkymUCYUkjbnUrVe3XLFe94vI+9h3amxOGi41wn7Di7Mo=
+ ARA:13230040|376014|23010399003|1800799024|366016|56012099006|5023799004|22082099003|18002099003|4143699003|4133799003;
+X-Microsoft-Antispam-Message-Info: 77INw5yDV9jnWlqFyZEiZuw7y9rSS+wbIXWXlw0WhkOLXmUMUlJ0DpOUd/9feek+dXW9MdCFk31NO8UAUITP/HEzMjsI94JfIWRjZtXAqUKEWp8+esi1g9wQGhNI/0do76gticLTm1GgW+LaYYFWDwSYqBsNd9veT38J5y1tMyoltMii6Sv57qTw6kPmAcHp/aI4zDCej7XwrD27XnFcPXMoR+dDkGjDBJn+2azwWiCOGGZRT9FxkSXCHsLBcMEO/BbRTnjKH8jXfjqYyuxt6f5DomhYqGhmG1hkE7Zh9tlTyghb/E8LYcAMxh0ySjY8fYIOc2cryGhXtkV4pjfIA04hoRPDZYdrzGnFvoZVRZFEJlse/yG/KJHlNzCcyTELSIfsLTN86B/xiPEQ2l7KCd/uhDF3eOYK3VooevMtGlYfMXZ/ZrQwFaNvi4Gc9I53sOeF+CMwwt/UOAWc7YCSFmow+QZ6WZzA+TPoG5aJtPyUm7GbhXpd171kg46tzVbOzYQQihgTKgyJetaNawt2Gcc1kgFjSfqdWHmtxM4V9XW4rYf2oT/C+8RY7whfAIto5XD6iazwZN+QnQ/WivkMNZtQTb2U5JONIahUZzYnuPjPYlpa/C36wAtyHdln2RsENAsJIbhjeWi1oTeGk00UlYL/Dk1a1wUYjCWffwwZ9tY=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:PH0PR02MB7159.namprd02.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(23010399003)(1800799024)(366016)(56012099006)(22082099003)(18002099003)(6133799003);
+ IPV:NLI; SFV:NSPM; H:SJ0PR18MB4479.namprd18.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(376014)(23010399003)(1800799024)(366016)(56012099006)(5023799004)(22082099003)(18002099003)(4143699003)(4133799003);
  DIR:OUT; SFP:1102; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?WE1WTE9QOHUyalNYbFY4bDlDeE1HUFU1dHdNVkVpU3l6UGt1VW8vamhJaTNG?=
- =?utf-8?B?WE9BRDVCM3J1OEQ3ekhRT1FuU0cvYzRRcGxqV3VWNFNEc3YvY21EL0tBV3hH?=
- =?utf-8?B?UGJLTU1VTEUxT1pkQzZBN3VYc2V2aHV1NE1DQ01hazJrOXI5VWxHRjRIR1Bu?=
- =?utf-8?B?bmJXd3RIaTlNeWpMbXpheEltWDBtUmhVVk5oQzZnT29FNVB2NnAwWldrK25k?=
- =?utf-8?B?NkprZlJlb3VNUmhqM2I3QXgvdkIvWjhmanpheW9VSHUzVGhXeGtCODFFNVht?=
- =?utf-8?B?STZpSHVtM3JkcXdXTW4rd1dnYnJNYWVXQ0o0M2hjY3dtdGJmMmNVN2EzcmpB?=
- =?utf-8?B?bjd6QS9Vb2NkSWlOejVjSitIT2gxazlMVEZNSDhVQk16WHdxQW5XR3BKQ3lX?=
- =?utf-8?B?OG9wZzBqYnh1SnRucnNTNDdoR3ZWN01NZ3JWcTJDV3FYc29aUDdYeUtZc0k1?=
- =?utf-8?B?WG5yK2JsSEk2UVdpWWtzRjJBUStwczJXdDhlZEJjQ1V1WTFnOFVVMlB5ekVS?=
- =?utf-8?B?NU4xZnJKOE15M3FsNGdZVnJZZlB1SEY0YThYeFRHMHJad3JsWStpb05lSFRo?=
- =?utf-8?B?bW5aNzdxTTBkK3ZMZ081aTNTaFNJVHZ1NUUxSlBTZ3BENUJHakZUUUUrUzlQ?=
- =?utf-8?B?ajJQODR3VFdFMHhHQWYzSnpZbnM2bktGRVhFQnBEd1hFa292WGREV01MdjJm?=
- =?utf-8?B?amJyYUZDak1JZ0tWa1ByT0VTelBoRHNjOFhFSXVZT2ZMYm1BdE5Sa0F2M3Rn?=
- =?utf-8?B?R241b1pOUFpiOUJBenJaOVRqcXQwenNyNjk5Q0ZLT21JQkhNampxS05lQnZB?=
- =?utf-8?B?UWUxbjAwWlh3eCtDVzlSczdmSTdSVklnejl6M3ZFVlZkUkhOdE1za0gxZXlG?=
- =?utf-8?B?bFBzNE5kNUtHMFlRM29lcnNyUHYxQkI0eVNuU1d2TVVmejVQVldOd3RVUEhU?=
- =?utf-8?B?SXR2VDgyMUl6SFVPVUtCUGljZit4ZksxcExodHJ2YUVRaUlCSUtqYkFNRzFK?=
- =?utf-8?B?WkJzeGxsaU1LcWVtdnQ3MzJpbVBDUTNxUEN0bk9kZ1U0T0FVamRaTlUyY1Ax?=
- =?utf-8?B?RXE1ZDFqSFNIQXQrZXpISG93OExxRGtzVlBWcGNnVE5TMGc2LzJ2RU1CL2Mv?=
- =?utf-8?B?MTh0RDRVZytnQ1dLNVp0ak5hWW8yV1J5ZElkRGRkbkF5ZThiL2xBb29Camt6?=
- =?utf-8?B?MzdyZTVhbmlEck9KYjZTYkk1TmRINmpKNk9WYmxLZXhhTjZCUVpvZmZpUk5a?=
- =?utf-8?B?ZmpmZmpzc00zb2xPWWFvRkdlV3lMRC9XcGkrQVFsTkVjOWlJTTNQQVdVNFBF?=
- =?utf-8?B?S0JIV29HU3RjdXRUeWRmbVNuSXg5WHIrcXRKL2NoUFQzZUgxSUx4K1FkWWoz?=
- =?utf-8?B?eTZjM1FiS0RQV3YzTEZ3T3N3Zy9OOGVnTUhJRzhYeDBKL2ZMNUhrSXdxT3Jr?=
- =?utf-8?B?YUkvR0VrOWd1OGpTMitNbzlEMFVPdUxRMnBnbVpYTitDQ2FLUi9UQXRwWVBn?=
- =?utf-8?B?UzNDQXlVOGdMeml5NHJIM0xFVlNCQ25HUm1wL3NNRThxbnBjTlRWVzc4Y0JP?=
- =?utf-8?B?THFxaHJyUFR4WEtmZjFBZ2czUGNrMDRtNHVvMWlzK1ozeWZsdzNxcnNjWENN?=
- =?utf-8?B?S3BDUzNrWWxReXdyZy9ZdzRqYkRqMjBMdFdGWXFCaDRHTk1zYUNmNGx3WHc4?=
- =?utf-8?B?MUpNVEQwNlM0Z2VGeWxkaDZ0Z3MyY0s0UGpRVXR6U1JLNHFRZFZGbXppUlMr?=
- =?utf-8?B?ejJYNnpESTg1Z3lTb2w0VGZMNWRTbVVkaVNqKzd2TGQ2MnNzYXYzVEh2THVh?=
- =?utf-8?B?bSsycm1lM0NmOVN4NndGMnRSbG5QNFhEa3lWUVhkU2RmbWFUbTBMU3VLbFpo?=
- =?utf-8?B?ZUNzYzNrcHZzVUJMSmNVdmtITWUxRjRNK2R3WDNGRXhuRUxRVmhmcnF3eU5J?=
- =?utf-8?B?OTQ1dHlhTVEzcHBnL09FTld2RzZjVENVSFNmczZsM2hLYUZpZWMyMWpOWDRv?=
- =?utf-8?B?UlpjUVVHZW1TSEI5akRhOEZVTlpiMS9yZEo0bGZKVm44dC83aC8xcDhheVlO?=
- =?utf-8?B?RTBpZWlaVFFzbG9tSmlqUEw3alpweXZnQUhONG4xTCtRc3BzMFU2OG9xS3NO?=
- =?utf-8?B?cHlRVEpOSFVIUlFrRi9NRDYzS3dJai85dUVkQ253a1dTazNpZXNwdEhhL04x?=
- =?utf-8?B?N2kzeG5Qb1c2NG9HSFFWR2RXRE5DNFpLTVgxZFdtdkR0cXJVZ1BPRktNbitD?=
- =?utf-8?B?NUdyVi9WaktudUE3ZWphWVB2RlVxeHZEY0lPU1RSbUZ0bHYzSVk2TkNDckNJ?=
- =?utf-8?B?UHlTSlZ4OGZKcFY4YjZ5OVh0b1lSOHhTUG16NitMVkdXUHRESHR2L2Fkd1Rl?=
- =?utf-8?Q?gOeev6iZf3J4f8oU=3D?=
-X-Exchange-RoutingPolicyChecked: JcRTq7YysH3fYsFRA/94QcVYqj3VLktuYI9D7LFoBmBOaidBJv8ROvdq10d/TUuA/n7uNJfp6LLZbifRLsMNSaGOjz+E69qkxy5QYglX4RQb64X9WmburXGhslJ61RYJCnWrgCtU6jBDgkLOutN+lDLdE2B7tc2gnkWqGoluzLtOI1fxjqBsDAk/5wjrA3+73VZj+84r8MAJx9Zu4isIs+vhNN35ziErIU2g/2jhuFtFHFJzeemuTdIM0m0uOHGrp8RuA2wW53bNw1Ci2vLmO5db2R0lSJU1sRf6WJ7m6GMlq3uBOK1y0UT2TzImIMcaVzDNWpjuh1kXodOAYwT8Kw==
-X-OriginatorOrg: nutanix.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 52ebd93c-0ccf-4126-9434-08ded04e13e5
-X-MS-Exchange-CrossTenant-AuthSource: PH0PR02MB7159.namprd02.prod.outlook.com
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?K0ZRblY0T2o1NjJOYnhSRnJmM2t1NEs1YmFUK3hxR3lvUnJjTzNVdm14TTU5?=
+ =?utf-8?B?N1NzL2pheXpxL1JBR0V4TVFmWDkwcDlONnVIbDFOd1dwNWk3SWNqWEx0a0I1?=
+ =?utf-8?B?TGc3akFNRk1vNGZtSkVGVFQwY2diTDhXSDNkaTRSbkV1ME1SNWZwOHBBa2lG?=
+ =?utf-8?B?MHN0S0x5dXI5ZjBHZ0F5bmx6WkFXaW5tdkxLUUt0NGxqa0RRMDZnV2VVMkRp?=
+ =?utf-8?B?NDNrdk1QWWcxVzVnZWVSaENreXNnSXl4cUhFbVZWOHZMN0owM2l1NE5BYnFM?=
+ =?utf-8?B?eDAzQnlQY29NUGJMNlAyWFlEMjR6RHk2QmV5TjFuVktyVTRxOXN6T3I3S05D?=
+ =?utf-8?B?N2NQWGQ5ZDRnOFJJWFNPSVp1WXVQYzJhMjc0S3BZbnJURUxyNmRPZnViSXNx?=
+ =?utf-8?B?dFFhQ0JwdzIyYVJzZXVlVGJENzd3aXNIblVRbGt6RkNDZnB5c1JITlMzTXRn?=
+ =?utf-8?B?ZjlIcldCdTJaZGE4WWQ5enMydXBVYjB5NHdQd3pQdU5STkkzejhOcExMdldN?=
+ =?utf-8?B?OWZuT0w4UGx2cWxMUHU4b092dGs2MGVBUGdoOFg3SWVML25PU1ZKL0ZFN21r?=
+ =?utf-8?B?T2lDSkFaekZwWWtucDlyM0JZOWFMUzllVjZyb1RhK1dzV0duUGY4cjI3cWtX?=
+ =?utf-8?B?ek43ZzJ5SEhYZzJXbkxhY0FvekUzOTZ5UzRidzFydHZTL1hpZENZUDRDNHpL?=
+ =?utf-8?B?c2JmcW8rcWw3VnZjR0hFM0w0akx2U0hYaXJvMWdkaFhtT0FBUFRORUZGZWhX?=
+ =?utf-8?B?elppcmYvc3ZYSjA3aWNqNjJ1SnV5TERVa1orTWtzQkJUSGxzNis3RC9jZFRt?=
+ =?utf-8?B?RlB1OXBrME53YndFOEIrN0ZSYURSZnVUY0lYRTNNcFFzcEdGNUJGZ2c0VXFZ?=
+ =?utf-8?B?NkZHYzQ2L1ZUTFN4dldOeUZlNDRldU84ZU1VanNDMG5Ua3dqS2F6blEweVBT?=
+ =?utf-8?B?dXZXTElxdjR2V1laMGJtQ3dHaHF2UWs3QkZWVFZLR2xDNEhPc21hK1pFdDN4?=
+ =?utf-8?B?S0VBR0dWUlAyWTE2ZXQ3ck9JRDMvUzB4cE42Nm9MTG5rMWJLN3BqMEk2b2tL?=
+ =?utf-8?B?V3RWNWRKRFAzT1plTVBMU21WQzA3V3FJb0w4bFZKeXRzMDVvZkNhazl4K2E0?=
+ =?utf-8?B?RG1uVlJNYTE5Wk0vV3ZVNWxpUDAwdG13bnk4WDhubVRMY2VVQmlGbzVEWk9L?=
+ =?utf-8?B?R3I5V0l6V2RKNzk4eDBsVHZ4RUxPS283cGhHSGlQd2lFNFFQZHdGbFJRclRv?=
+ =?utf-8?B?ZUh6Uy9pdTFOS2xXUDhSc1Z1VUlvdXN2Yk5FWVNXd3piaUlOVmFIaHo3M1RZ?=
+ =?utf-8?B?NkkweDdSV1ZrSWhpMkZHRXBEbVNqS2RXKzBjTFpjTy8vSGlMS0NsZzlqL3pI?=
+ =?utf-8?B?Y0FUWVNjZk15Z2gzc0Z3UE92b0NTOTRoWVdsd3M1ZWg4L3VqU0tjU3d0bXpv?=
+ =?utf-8?B?MTVqcjNnNE03Sm93cDM1RHM3QUlBMTViUURIRVE5ZlRYTEJBUmRIeDh1Z25v?=
+ =?utf-8?B?bW1HeU42MjBkVDBRSDY4ajQ2dDBqdHRVODFsWHRDS2c5RVBGYWVUTkNVUG55?=
+ =?utf-8?B?Sk9nNXNSWXlsNFhWNHhsRHUxR0lIcUZ2Z1VOTjNVSWdRVzN6MWUwSm1IR0ZI?=
+ =?utf-8?B?N2xpU0F6elR6b3FjUEpRSkE2TnlIOUYrdjcxUjlTdWRTSGRzekFpZlV5dHEv?=
+ =?utf-8?B?dEdPa2dhbVVHdC9QWFRaR1ZQa1NEU2VPSEpjd2NFNzVHOEtBNlVXdDduN0gx?=
+ =?utf-8?B?MUd5TXc3b1hHOW8xMFRDTWYxMGZmS1JSaUYxZmNZdUQ3ZTlPL3Jvd0ZjcDBm?=
+ =?utf-8?B?K0tROTltWFJYYlJpaEp0YmMwZ0ZJaFk5azl1WTVnRXEvWG42ajlhNDlWQkV5?=
+ =?utf-8?B?SVVpTnhpaFJPM0EzTUMreTBtdVljeFByRVMxNHNyRklvdldXUXpBWWhhNlhV?=
+ =?utf-8?B?V2pEMG8waXRWTXhXaGxqaFAwSTdSdVZiK2NwdUFSaVFTZGR5NlN6RlFLMzNa?=
+ =?utf-8?B?ZldxUzhVRmVxQXdwNDVtYjFsVncrL0ZPdkc0b2VnODVRTVN0aitibVI0a1Ey?=
+ =?utf-8?B?KzNQRGRlbzNsWE10MmtyRkY4d0JqQWhKQWd5SWlLOEdaRVlVeTR3YmliZmN6?=
+ =?utf-8?B?Y1U4YWl6RHlad0tHUCsySTVaeUFPU1RYa2NTK1Vodnp1WDZsNGFIbzJ3Z3hI?=
+ =?utf-8?B?Ni9zdDVYWXpwY2doQkFnNTFWRThSOTE1ZXRCMWpWYSs5YlgxYTNycTNOWmJS?=
+ =?utf-8?B?b0ZZMk9EUDJiSEtwNXNUNEV0cndRUDVCbTVFdERjcVptVnRZbEhKVlBGdnll?=
+ =?utf-8?B?RmMzbzV1OVhqa3NCZkorOXgwdFYvQUZ0aDhGZkpYRGlBazdWQzhNZz09?=
+X-OriginatorOrg: axiado.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: d0879885-3b96-4cac-8d6e-08ded04e78c8
+X-MS-Exchange-CrossTenant-AuthSource: SJ0PR18MB4479.namprd18.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 22 Jun 2026 11:04:49.7835 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 22 Jun 2026 11:07:38.8583 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: bb047546-786f-4de1-bd75-24e5b6f79043
+X-MS-Exchange-CrossTenant-Id: ff2db17c-4338-408e-9036-2dee8e3e17d7
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: QI6QCZYxyYXVnwV1bfjv7lWKOtLHYcX9FMp3043t3DtiHFofdUVywEyptWGSmMEVC5e9jRlgEou1KZ6tvZ9XoacSuQ570u4cwb137hIB2ps=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SAWPR02MB11414
-X-Proofpoint-GUID: SPiXi25l8tQQSAwXLIdqJuqw7XNlQXob
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjIyMDEwOSBTYWx0ZWRfX5Lt60dsR3/n8
- rakdDMewG3jy0hG/33BAzqeIViGTRTyrDirIxNEiXj0nEG3cR4FK9USYYwNaysLBxfvDgkFbebc
- PPltZR00k6eHfvwwtv+6YxB2PdEgt3w=
-X-Proofpoint-ORIG-GUID: SPiXi25l8tQQSAwXLIdqJuqw7XNlQXob
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjIyMDEwOSBTYWx0ZWRfXwKZJE2V3wfmf
- WZ17CG75vT3UTQ0lt9Cc3ge84/vXY9gUb5Qr5/L4pnVgcieU+vbei3v9csKV+iu8yxFNOTHt1Jh
- z7yPEAyn8FxprEyhJDt1ArY4yNivgC4sRJuCCL1HDEMdtkxymOZ8Q7K1jjzxRNQVevqySZjsYcV
- vZNJp3NKrexD7AbKmSk2vc/932fUqoW2UNIMl7WkytEV49RzbqYsYQ86gNDSlWUvI/jU0/mlQdp
- del7A2CVor951Y855Y6Vl0+TIf/E0KT6wdEIyP6rxHfzbTXJryul0c+WvbFR/g60StDBFdGjnxw
- kh+gKA0xmeDl0nNixVmoh/g43tTzF/AcLG6s73y1CBas05CuZjrflZM4UOiIKOfGCTCObaxpcX6
- N/va4Fn2aws34zMPhULUPsjRuyTTUh67BgQB0YS487KnsyO//DGyc5A02zHkrkogO59EenxN3Bo
- icyt50E3C9kV3EqNKVA==
-X-Authority-Analysis: v=2.4 cv=VpITxe2n c=1 sm=1 tr=0 ts=6a3916d3 cx=c_pps
- a=iRxRSAF+HohKiaZghI2QEQ==:117 a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19
- a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19 a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19
- a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=0kUYKlekyDsA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=VofLwUrZ8Iiv6rRUPXIb:22 a=1L6crL_YRTbalZ11mEUO:22
- a=64Cc0HZtAAAA:8 a=z5FNgv0FQh-jA6iuoq4A:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-22_02,2026-06-18_03,2025-10-01_01
-X-Proofpoint-Spam-Reason: safe
-Received-SPF: pass client-ip=148.163.151.68;
- envelope-from=mark.caveayland@nutanix.com; helo=mx0a-002c1b01.pphosted.com
-X-Spam_score_int: -31
-X-Spam_score: -3.2
-X-Spam_bar: ---
-X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
+X-MS-Exchange-CrossTenant-UserPrincipalName: JsMtjHYlDy26GjRslMOxtBL5T8/kAqFA2TEBedgWlXEmp/OBZYLSPRWk3fOxXEFHe3a0QUlaFnA8GmCBl+FNBw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV3PR18MB6220
+Received-SPF: pass client-ip=2a01:111:f403:c005::5;
+ envelope-from=kchiu@axiado.com;
+ helo=CO1PR03CU002.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -191,125 +152,167 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 15/05/2026 16:05, Mark Cave-Ayland wrote:
 
-> From Windows 8.1 onwards ISA serial IRQs cannot be shared when ACPI Revision
-> 3.0 is used in the FACP table. The reason for this is that if a 2-byte IRQ
-> Descriptor is used then the interrupt is considered to be high true, edge
-> sensitive, non-shareable. Since legacy serial ports COM1/3 and COM2/4 share
-> an IRQ then if more than 2 serial ports are added, Windows indicates a
-> conflict in Device Manager and these combinations cannot be used together.
-> 
-> Add a new 3-byte IRQ Descriptor to the _CRS resource indicating that the
-> ISA serial IRQ is low true, level sensitive and shareable. This enables all 4
-> legacy serial ports to be used in Windows without conflict.
-> 
-> Tested on Windows 8.1 and Windows 11 with 4 instances of -serial on the command
-> line and copying data simultaneously across serial ports COM1/3 and COM2/4:
-> 
->    ./build/qemu-system-x86_64 \
->      -accel kvm \
->      -M q35,hpet=off \
->      -m 4G \
->      -cpu host \
->      -drive file=win81.iso,format=raw,if=ide,bus=2,unit=0,media=cdrom \
->      -drive file=win81.qcow2,format=qcow2,if=ide,bus=0,unit=0 \
->      -device VGA \
->      -serial tcp::4001,server=on,wait=off \
->      -serial tcp::4002,server=on,wait=off \
->      -serial tcp::4003,server=on,wait=off \
->      -serial tcp::4004,server=on,wait=off
-> 
-> Note that with this series applied, if extra ISA serial ports are added to an
-> existing VM then it is necessary to go to Device Manager, select "Add legacy
-> hardware" from the "Action" menu, and then reboot the VM for the serial ports
-> to be detected correctly without Device Manager indicating a conflict.
-> 
-> Signed-off-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
-> 
-> v4
-> - Rebase onto master
-> - Redefine IRQ as Active-Low-Level-Triggered as otherwise Windows 8.1 will detect the
->    serial ports but mark them as having a resource conflict. Retested again on both
->    Windows 8.1 and Windows 11
-> - Add R-b and A-b tags from Ani and Igor
-> 
-> v3
-> - Rebase onto master
-> - Define IRQ as Active-High-Edge-Triggered (as seen by the PIC) to ensure compliance
->    with the ACPI specification section 6.4.2.1.
-> 
-> v2
-> - Remove _PRS changes (including AML build changes that are no longer required)
->    and compatibility property as suggested by Igor
-> 
-> 
-> Mark Cave-Ayland (4):
->    hw/acpi/aml-build.c: add aml_irq() representing the 3-byte IRQ
->      descriptor
->    tests/acpi: allow DSDT acpi table changes
->    hw/char/serial-isa.c: declare IRQ as shared in ACPI IRQ descriptor
->    tests: data: update x86 ACPI tables
-> 
->   include/hw/acpi/aml-build.h                   |   2 ++
->   hw/acpi/aml-build-stub.c                      |   6 ++++
->   hw/acpi/aml-build.c                           |  27 ++++++++++++++++++
->   hw/char/serial-isa.c                          |   3 +-
->   tests/data/acpi/x86/microvm/DSDT              | Bin 365 -> 366 bytes
->   tests/data/acpi/x86/microvm/DSDT.ioapic2      | Bin 365 -> 366 bytes
->   tests/data/acpi/x86/microvm/DSDT.pcie         | Bin 2985 -> 2986 bytes
->   tests/data/acpi/x86/microvm/DSDT.rtc          | Bin 404 -> 405 bytes
->   tests/data/acpi/x86/microvm/DSDT.usb          | Bin 414 -> 415 bytes
->   tests/data/acpi/x86/pc/DSDT                   | Bin 8598 -> 8599 bytes
->   tests/data/acpi/x86/pc/DSDT.acpierst          | Bin 8509 -> 8510 bytes
->   tests/data/acpi/x86/pc/DSDT.acpihmat          | Bin 9923 -> 9924 bytes
->   tests/data/acpi/x86/pc/DSDT.bridge            | Bin 15469 -> 15470 bytes
->   tests/data/acpi/x86/pc/DSDT.cphp              | Bin 9062 -> 9063 bytes
->   tests/data/acpi/x86/pc/DSDT.dimmpxm           | Bin 10252 -> 10253 bytes
->   tests/data/acpi/x86/pc/DSDT.hpbridge          | Bin 8549 -> 8550 bytes
->   tests/data/acpi/x86/pc/DSDT.hpbrroot          | Bin 5087 -> 5088 bytes
->   tests/data/acpi/x86/pc/DSDT.ipmikcs           | Bin 8670 -> 8671 bytes
->   tests/data/acpi/x86/pc/DSDT.memhp             | Bin 9957 -> 9958 bytes
->   tests/data/acpi/x86/pc/DSDT.nohpet            | Bin 8456 -> 8457 bytes
->   tests/data/acpi/x86/pc/DSDT.numamem           | Bin 8604 -> 8605 bytes
->   tests/data/acpi/x86/pc/DSDT.roothp            | Bin 12391 -> 12392 bytes
->   tests/data/acpi/x86/q35/DSDT                  | Bin 8427 -> 8428 bytes
->   tests/data/acpi/x86/q35/DSDT.acpierst         | Bin 8444 -> 8445 bytes
->   tests/data/acpi/x86/q35/DSDT.acpihmat         | Bin 9752 -> 9753 bytes
->   .../data/acpi/x86/q35/DSDT.acpihmat-generic-x | Bin 12637 -> 12638 bytes
->   .../acpi/x86/q35/DSDT.acpihmat-noinitiator    | Bin 8706 -> 8707 bytes
->   tests/data/acpi/x86/q35/DSDT.applesmc         | Bin 8473 -> 8474 bytes
->   tests/data/acpi/x86/q35/DSDT.bridge           | Bin 12040 -> 12041 bytes
->   tests/data/acpi/x86/q35/DSDT.core-count       | Bin 12985 -> 12986 bytes
->   tests/data/acpi/x86/q35/DSDT.core-count2      | Bin 33842 -> 33843 bytes
->   tests/data/acpi/x86/q35/DSDT.cphp             | Bin 8891 -> 8892 bytes
->   tests/data/acpi/x86/q35/DSDT.cxl              | Bin 13218 -> 13219 bytes
->   tests/data/acpi/x86/q35/DSDT.dimmpxm          | Bin 10081 -> 10082 bytes
->   tests/data/acpi/x86/q35/DSDT.ipmibt           | Bin 8502 -> 8503 bytes
->   tests/data/acpi/x86/q35/DSDT.ipmismbus        | Bin 8515 -> 8516 bytes
->   tests/data/acpi/x86/q35/DSDT.ivrs             | Bin 8444 -> 8445 bytes
->   tests/data/acpi/x86/q35/DSDT.memhp            | Bin 9786 -> 9787 bytes
->   tests/data/acpi/x86/q35/DSDT.mmio64           | Bin 9557 -> 9558 bytes
->   tests/data/acpi/x86/q35/DSDT.multi-bridge     | Bin 13280 -> 13281 bytes
->   tests/data/acpi/x86/q35/DSDT.noacpihp         | Bin 8289 -> 8290 bytes
->   tests/data/acpi/x86/q35/DSDT.nohpet           | Bin 8285 -> 8286 bytes
->   tests/data/acpi/x86/q35/DSDT.numamem          | Bin 8433 -> 8434 bytes
->   tests/data/acpi/x86/q35/DSDT.pvpanic-isa      | Bin 8528 -> 8529 bytes
->   tests/data/acpi/x86/q35/DSDT.thread-count     | Bin 12985 -> 12986 bytes
->   tests/data/acpi/x86/q35/DSDT.thread-count2    | Bin 33842 -> 33843 bytes
->   tests/data/acpi/x86/q35/DSDT.tis.tpm12        | Bin 9033 -> 9034 bytes
->   tests/data/acpi/x86/q35/DSDT.tis.tpm2         | Bin 9059 -> 9060 bytes
->   tests/data/acpi/x86/q35/DSDT.type4-count      | Bin 18661 -> 18662 bytes
->   tests/data/acpi/x86/q35/DSDT.viot             | Bin 14684 -> 14685 bytes
->   tests/data/acpi/x86/q35/DSDT.xapic            | Bin 35790 -> 35791 bytes
->   51 files changed, 37 insertions(+), 1 deletion(-)
+Philippe Mathieu-Daudé 於 2026/6/22 下午 04:21 寫道:
+> CAUTION: This email originated from outside of the organization. Do 
+> not click links or open attachments unless you recognize the sender 
+> and know the content is safe.
+>
+>
+> On 22/6/26 05:34, Kuan-Jui Chiu wrote:
+>>
+>> Philippe Mathieu-Daudé 於 2026/6/18 下午 11:17 寫道:
+>>> CAUTION: This email originated from outside of the organization. Do
+>>> not click links or open attachments unless you recognize the sender
+>>> and know the content is safe.
+>>>
+>>>
+>>> Hi Kuan-Jui,
+>>>
+>>> On 18/6/26 12:12, Kuan-Jui Chiu wrote:
+>>>> Enable SD host controller into Axiado AX3000 SoC to load kernel and
+>>>> rootfs
+>>>> from eMMC.
+>>>>
+>>>> Signed-off-by: Kuan-Jui Chiu <kchiu@axiado.com>
+>>>> Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+>>>> ---
+>>>>   hw/arm/Kconfig              |  1 +
+>>>>   hw/arm/ax3000-soc.c         | 18 ++++++++++++++++++
+>>>>   include/hw/arm/ax3000-soc.h |  7 +++++++
+>>>>   3 files changed, 26 insertions(+)
+>>>>
+>>>> diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
+>>>> index 866e4b14e6f..13c0b44a180 100644
+>>>> --- a/hw/arm/Kconfig
+>>>> +++ b/hw/arm/Kconfig
+>>>> @@ -724,4 +724,5 @@ config AXIADO_SOC
+>>>>       select ARM_GIC
+>>>>       select CADENCE # UART
+>>>>       select AXIADO_CLK
+>>>> +    select AXIADO_SDHCI
+>>>>       select UNIMP
+>>>> diff --git a/hw/arm/ax3000-soc.c b/hw/arm/ax3000-soc.c
+>>>> index 9a01d23bcc6..159385cf913 100644
+>>>> --- a/hw/arm/ax3000-soc.c
+>>>> +++ b/hw/arm/ax3000-soc.c
+>>>> @@ -35,6 +35,7 @@ static void ax3000_init(Object *obj)
+>>>>       }
+>>>>
+>>>>       object_initialize_child(obj, "clk", &s->ax3000_clk,
+>>>> TYPE_AX3000_CLK);
+>>>> +    object_initialize_child(obj, "sdhci0", &s->sdhci0,
+>>>> TYPE_AXIADO_SDHCI);
+>>>>   }
+>>>>
+>>>>   static void ax3000_realize(DeviceState *dev, Error **errp)
+>>>> @@ -165,6 +166,23 @@ static void ax3000_realize(DeviceState *dev,
+>>>> Error **errp)
+>>>>           return;
+>>>>       }
+>>>>       sysbus_mmio_map(SYS_BUS_DEVICE(&s->ax3000_clk), 0,
+>>>> AX3000_PLL_BASE);
+>>>> +
+>>>> +    /* SDHCI */
+>>>> +    sdhci0_sbd = SYS_BUS_DEVICE(&s->sdhci0);
+>>>> +    if (!sysbus_realize(sdhci0_sbd, errp)) {
+>>>> +        return;
+>>>> +    }
+>>>> +
+>>>> +    sysbus_mmio_map(sdhci0_sbd, 0, AX3000_SDHCI0_BASE);
+>>>> +    sysbus_mmio_map(sdhci0_sbd, 1, AX3000_EMMC_PHY_BASE);
+>>>> +    sysbus_connect_irq(sdhci0_sbd, 0,
+>>>> +                       qdev_get_gpio_in(gic_dev, AX3000_SDHCI0_IRQ));
+>>>
+>>> So there is no link between the SDHCI and the PHY. Thus no need for a
+>>> particular AXIADO_SDHCI, simply instantiate a generic SDHCI here, and
+>>> register the MMIO region for the PHY.
+>>>
+>>> in ax3000_init():
+>>>
+>>>     object_initialize_child(obj, "sdhci[0]", &s->sdhci[0],
+>>>                             TYPE_SYSBUS_SDHCI);
+>>>
+>>> and in ax3000_realize():
+>>>
+>>>     object_property_set_uint(OBJECT(&s->sdhci[0]), 
+>>> "sd-spec-version", 3,
+>>>                              &error_abort);
+>>>     object_property_set_uint(OBJECT(&s->sdhci[0]), "capareg",
+>>>                              0x216737eed0b0, &error_abort);
+>>>
+>>>     if (!sysbus_realize(SYS_BUS_DEVICE(&s->sdhci[0]), errp)) {
+>>>         return;
+>>>     }
+>>>     sysbus_connect_irq(SYS_BUS_DEVICE(&s->sdhci[0]), 0,
+>>>                        qdev_get_gpio_in(gic_dev, AX3000_SDHCI0_IRQ));
+>>>     sysbus_mmio_map(SYS_BUS_DEVICE(&s->sdhci[0]),
+>>>                     0, AX3000_SDHCI0_BASE);
+>>>
+>>> Then you simply map the state-less eMMC PHY region:
+>>>
+>>>     memory_region_init_io(&s->emmc_phy, OBJECT(s), &emmc_phy_ops, s,
+>>>                           "axiado.emmc-phy", 0x1000);
+>>>     memory_region_add_subregion(get_system_memory(),
+>>>                                 AX3000_EMMC_PHY_BASE, &s->emmc_phy);
+>>>
+>> This is the original design in previous patch but PMM preferred to have
+>> an independent device model for this SDHC
+>
+> AFAICT nothing on v1.
+>
+> On v2 Peter said "Adding the new SDHCI controller should be its own
+> patch." This is about the code contribution process, not how to
+> structure the model in code. Is there another reference I missed?
+>
+> As it this AXIADO_SDHCI is unnecessary maintenance burden.
+>
+> v1:
+> https://lore.kernel.org/qemu-devel/20260306121511.1781020-1-kchiu@axiado.com/ 
+>
+> v2:
+> https://lore.kernel.org/qemu-devel/CAFEAcA8dRq+hqCZ+eSHdafwEccd4coqHZ12nxWAkyDOG3GEkgg@mail.gmail.com/ 
+>
 
-Ping? Is there anything else required for this patch before it can be 
-merged?
+Look like I misunderstood this
+> +static uint64_t sdhci_phy_read(void *opaque, hwaddr offset, unsigned 
+size)
+> +{
+> +    uint32_t val = 0x00;
+> +
+> +    switch (offset) {
+> +    case REG_ID:
+> +        val = 0x3dff6870;
+> +        break;
+> +    case REG_STATUS:
+> +        // Make DLL_RDY | CAL_DONE
+> +        val =  (1u << 0) | (1u << 6);
+> +        break;
+> +    default:
+> +        break;
+> +    }
+> +
+> +    return val;
+> +}
+> +
+> +static void sdhci_phy_write(void *opaque, hwaddr offset, uint64_t 
+val, unsigned size)
+> +{
+> +    /* TBD */
+> +}
+> +
+> +static const MemoryRegionOps sdhci_phy_ops = {
+> +    .read = sdhci_phy_read,
+> +    .write = sdhci_phy_write,
+> +    .endianness = DEVICE_LITTLE_ENDIAN,
+> +};
 
+Please put models of sub-devices of the SoC into their own
+source files in the appropriate subdirectory of the hw/ directory.
 
-ATB,
+I thought he was talking about the SDHC
+Now he probably just wanted me to move PHY out of ax3000-soc
 
-Mark.
+Should I remove axiado_sdhci then add misc device for eMMC PHY in v7 patch?
 
 
