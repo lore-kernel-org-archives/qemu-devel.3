@@ -4,106 +4,165 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1CABCDB46F
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jun 2026 11:19:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70536CDB46F
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jun 2026 11:25:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wbcgC-0002cd-1N; Mon, 22 Jun 2026 07:19:05 -0400
+	id 1wbclu-0004PO-CL; Mon, 22 Jun 2026 07:24:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <heinrich.schuchardt@canonical.com>)
- id 1wbcg5-0002bv-2U
- for qemu-devel@nongnu.org; Mon, 22 Jun 2026 07:18:57 -0400
-Received: from smtp-relay-internal-1.canonical.com ([185.125.188.123])
+ (Exim 4.90_1) (envelope-from <mark.caveayland@nutanix.com>)
+ id 1wbclh-0004Ii-RC; Mon, 22 Jun 2026 07:24:46 -0400
+Received: from mx0b-002c1b01.pphosted.com ([148.163.155.12])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <heinrich.schuchardt@canonical.com>)
- id 1wbcg3-0000AT-6G
- for qemu-devel@nongnu.org; Mon, 22 Jun 2026 07:18:56 -0400
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-relay-internal-1.canonical.com (Postfix) with ESMTPS id AE3213F29B
- for <qemu-devel@nongnu.org>; Mon, 22 Jun 2026 11:18:51 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
- s=20251003; t=1782127131;
- bh=BUdhaKvf5DEBkvneugNQbuoIDY1mj1OKv54YuTKP+Xs=;
- h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
- MIME-Version;
- b=JbSfYEkukUhqI8Yq5KWBm5op8CrT5n/EHV9BHkvR4Inm4jo6/0U4aVkNIPs9AqKcS
- L6HB3mMQr1mIZg+TUHrdUo/g+UdW7AZProZlHOv61A5i/xVmBkyhb+0z1HFj1DXUMO
- niYowaFzxNeUIWuJIJ/GW/sjqkfeJvN+cmEMmVOD/UXpXdnAWoYxJ4LJyLNWNEgYV5
- VE/5nSeZIZJ0MmZjIRFYB3bqm5ej1Op161rxEtKqPsKwPSyNarbVzYiiiJ0Bz9z+AT
- tyxzKWbzjvBoYldEKTPBK0OLrALditnznfUiBfml/6R0aulPMr6ijTuCB4j7bFf82O
- /BcnolUy4AQyDg/QPg2SY1x57B/4wFCq4qG7GS+46bEh5CVy3lmzfi3UFs4QgaD44J
- JPit5la+i84MH3dzPjOxKDfFM6iC/kb6O2i3/v8oHR2ss9B8+HX2ZEEqlRK299CZdR
- l3vQ3Q1FkC0pqwmcu3vm592hBq/XsCEdAsmQ2mp11pMbpqB2WyO0PXmW0xYoifg3li
- JQfWK+ws4homFyvOMiLeoeyNJsI6pRyHaYlEIYDc0ai3h94SUKo/ZSZhXhSgLzAgaM
- L2a2+h5mfI57j3s9t+ZDno+kChyy2NO8hYQ9yRVUbBgkOq2DW8ppAmpvnqMxCBj7BA
- oQ38ZjBKpFHZcZWS8qA3SRbA=
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-490b37e1f47so28048955e9.0
- for <qemu-devel@nongnu.org>; Mon, 22 Jun 2026 04:18:51 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782127131; x=1782731931;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=BUdhaKvf5DEBkvneugNQbuoIDY1mj1OKv54YuTKP+Xs=;
- b=GhyqBJ97DqnG0y8nqFb3rzKhOAaUTsdU9mSU7vh476qG5Qv7DkUN7Ynyja2nB8nGYi
- 5Y5alrX98IQX5cTP/hzjJkX8XpcudzLnuOApgbRv/+JTxvHJU3GdJw40z/rfm2GAbDx2
- oDBLtOjKhs0oDG9iaBygmt4gTN6UoAwH3MA3CN+2zmIB2KpLUrcn958APDN8LaNY1lGI
- XPxTNCQBAQ81i88dNulN2fetSYGBMLwFAhA+ZWg78r020MaA8Jn/mDlOqfPrNyd8cxVm
- QgPgYi2dNpHc0XrY90wSqq6S0gyzHrucJe3RIifPT3PXqFJysLlgD6TKAHUTBUI/7Hgx
- YtRA==
-X-Forwarded-Encrypted: i=1;
- AFNElJ+LGj5zM1AXGWtznMIdMfKsTkVj5zd7XnYfyKBYR9ldFvwJQC+lh/vjsua8o2rFOAiPGzgGCrsey/TS@nongnu.org
-X-Gm-Message-State: AOJu0YzjuDDDwFdcd8ulJk6eFc82SBjWKvqgCFNGoUqycWj5NOc3wE62
- QY3mHNpOSMkPqHNKu/6bUVLP8YfxIMva/DNFkg1cimwCpK/EFhSvgVKkPieI1uQiCmQPGr14DUU
- JJ2dSPsOt9JBigE43rPNMCXaXZ7M0m2pi36Frhfklf0VgpWA+wJ4jB91nFxAH1mAh0+gcoZrB
-X-Gm-Gg: AfdE7ckI/N969rHnYaqAI0JlPQYL4+D0ckFmrkEeWyPUZC0b7AfPOJPq9oCzPLZ5wBV
- HZZlqWfc3zYdcRrb/Vcwur4IOTxiKrAXiHZf2K3nLRqLx7fF+my8nGgKo2EYdZlNnDkS+WFOwPH
- lPk4pquTdPU72fT1zK9PTsE5xCsX8BOT2Oyp4WlvcuMB3eEc5/EJripnGIhd7zE1GkAiEFpzbqB
- XDvPK4YHtWSCc1rM78NMXSeQmsix35xUheFtf/VESAGgk3oFqNBP6tdFGZgtmkZ/n8uzvJ05Iht
- 92rEqVQMfrvk4pKOSLmyp028aj0z3gTJwnHzUz7Vvw9Eeo0fYlTAyArFJKyrUCTIFyHVzpJp7JB
- uxpu0wIjz9AQL4ObghzRNPS25OmxahnHe9z62a7R+U7QgfqPHTCG6wEED8FC5oGAzOQ==
-X-Received: by 2002:a05:600c:628f:b0:490:9804:afdc with SMTP id
- 5b1f17b1804b1-4923f56c067mr230128095e9.23.1782127131159; 
- Mon, 22 Jun 2026 04:18:51 -0700 (PDT)
-X-Received: by 2002:a05:600c:628f:b0:490:9804:afdc with SMTP id
- 5b1f17b1804b1-4923f56c067mr230127625e9.23.1782127130690; 
- Mon, 22 Jun 2026 04:18:50 -0700 (PDT)
-Received: from workstation5 ([2a02:3035:605:b91c:8708:9b24:1b42:7a43])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4923ff8a9e3sm313672525e9.14.2026.06.22.04.18.49
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 22 Jun 2026 04:18:50 -0700 (PDT)
-From: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
-To: "Michael S . Tsirkin" <mst@redhat.com>,
- Igor Mammedov <imammedo@redhat.com>, Ani Sinha <anisinha@redhat.com>
-Cc: Alistair Francis <alistair23@gmail.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- qemu-devel@nongnu.org,
- Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
-Subject: [PATCH v4 1/2] hw/acpi: correct field sequence in SPCR table
-Date: Mon, 22 Jun 2026 13:18:42 +0200
-Message-ID: <20260622111843.34056-2-heinrich.schuchardt@canonical.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260622111843.34056-1-heinrich.schuchardt@canonical.com>
-References: <20260622111843.34056-1-heinrich.schuchardt@canonical.com>
-MIME-Version: 1.0
+ (Exim 4.90_1) (envelope-from <mark.caveayland@nutanix.com>)
+ id 1wbclO-0001R5-FT; Mon, 22 Jun 2026 07:24:28 -0400
+Received: from pps.filterd (m0127842.ppops.net [127.0.0.1])
+ by mx0b-002c1b01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 65MAoDqo810657; Mon, 22 Jun 2026 04:24:15 -0700
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com; h=
+ content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=
+ proofpoint20171006; bh=uSQDPBrTTZj8Yb13NZCcgb0ZWJkLymTvIEAP5u/Wm
+ bw=; b=0rx2wokBSE47YV4pCIjQORXSFfTMEjJ5p3F4SnltGa9uSORpGAnRabA4i
+ pslE2tU+M5ZodkLi+H47HC6OBts2r4VdD3EfLUHMYNMkl1F4mnHjRWyWhSXpTqic
+ FN3WeFrU+PFoPfWqJkRm9a3MR/BHl/AiiEOkgRElKeI9QH+umwdq7HPKhOupkBxE
+ 2l15haGQS6L69t2E1JWeh/DaFS6ZIACqiFHJKzE8cWjH0S/OugMQYZtxRF1+zoCI
+ Q7e1BxgOKu6nuaAegmuVSCyOeZUqtNENlFRZFC4csbHAWi7JF9xoagsBoQ/zkWH3
+ RNUykYamIlvwB5gt/YPyIPcKCkI0A==
+Received: from bl2pr02cu003.outbound.protection.outlook.com
+ (mail-eastusazon11021106.outbound.protection.outlook.com [52.101.52.106])
+ by mx0b-002c1b01.pphosted.com (PPS) with ESMTPS id 4ewt6d3fhf-1
+ (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+ Mon, 22 Jun 2026 04:24:15 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=Q3FAVrCIiN2WRByJrw0s38GjmwhXnEDhUEZpsOu1xrwE31XNpxw0Up98ekiSMKp0H1g2l3bBsizcxLNTT9pwulQ1T4zk/+/WAr6jXs3mw8o10Bjw8/JdVvd/jYz4Zn1P2OT024ZHGyujrrgqv/uDoCv8lJFGft6DYGQnL1Mh3MNZjefOXArq1kGDcR2jViX24LSANYpqZFFpaMY2ImrmK7h7Ki2xsTJwFI2UnxTSQ00gfLQLgtUn5eqcNJLikOZyNIrZEkC07wmCRHxltWeVpCUGYpZ1goAynx1qnGRiBk/WIkNDCsGXgdHJ5oPC6PnbIQry+BHZNa2sprqzi/wIzw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=uSQDPBrTTZj8Yb13NZCcgb0ZWJkLymTvIEAP5u/Wmbw=;
+ b=XhCU8uk2Fxm3N9W2WqecKjFo7TaNgzlQm1kahwzsH38tT9AtdZ8TqzOh/tWP2Zy67kBf+ydKhw8BpiSToplb4/JYjYJlYThALcmgisafkVmFOVhMYLNdUOfuC5WRidQTHrWN1/Vwsvy4YUyfw1nIKYVQR6EsC1ta9hvyjCe77IhEjxGRFQGuP5/ho7qnSiBmJKMo0SGR8zJD7d/3s/bmJ9JVWyrRzmIG/0AjpuvNOJNyyfmFa4xZn9ZFC2GwIF7eCAlfAH2PU/Lxlxe5/woMSEmoSEbWQpaHtsRR9468FLPKJU5XH/R1onCnmXReWytUPBqcs9amYkoWfVkrIR8HFg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nutanix.com; dmarc=pass action=none header.from=nutanix.com;
+ dkim=pass header.d=nutanix.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=uSQDPBrTTZj8Yb13NZCcgb0ZWJkLymTvIEAP5u/Wmbw=;
+ b=bBvwSn7eG1ldJK7SxlRdYg1aZl17Fu3/85d+/A1vaWaTVFKbHn68SwZMb8nGqMDi4esPeyAgc4qEQYRRX9VqEtnsnXhAeUpfch8GGYjan7G1KT5cYHhGOUT/c1tqVbGZSiQPATEvPgWysja+E819uNg8hvMBY3++VzHnDIVYvTNB/m16lqx5R2i08zYiDeE8YOPtKsnAh0xQV0vyFyURZni60VpSLxycwmykmyEu6FHx3KbDTZOvocno2ZtNoLWBI8KNcNn+np0x6P4xPmTG+zBZCZIwn7EAogB1mhOyq5+f9meHNboj7b4rxGboo6lUcKHw0Y3ijYRO5Qnh0XCMWA==
+Received: from PH0PR02MB7159.namprd02.prod.outlook.com (2603:10b6:510:16::8)
+ by DS0PR02MB10661.namprd02.prod.outlook.com (2603:10b6:8:1f8::16) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.139.20; Mon, 22 Jun
+ 2026 11:24:14 +0000
+Received: from PH0PR02MB7159.namprd02.prod.outlook.com
+ ([fe80::8e97:bc32:822c:b250]) by PH0PR02MB7159.namprd02.prod.outlook.com
+ ([fe80::8e97:bc32:822c:b250%3]) with mapi id 15.21.0139.009; Mon, 22 Jun 2026
+ 11:24:14 +0000
+From: Mark Cave-Ayland <mark.caveayland@nutanix.com>
+To: mst@redhat.com, imammedo@redhat.com, anisinha@redhat.com, philmd@mailo.com,
+ aurelien@aurel32.net, peter.maydell@linaro.org, pbonzini@redhat.com,
+ richard.henderson@linaro.org, qemu-devel@nongnu.org, qemu-arm@nongnu.org
+Subject: [PATCH 2/7] hw/isa/lpc_ich9.c: convert ich9_lpc_initfn() object props
+ to class props
+Date: Mon, 22 Jun 2026 12:22:34 +0100
+Message-ID: <20260622112403.928954-3-mark.caveayland@nutanix.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260622112403.928954-1-mark.caveayland@nutanix.com>
+References: <20260622112403.928954-1-mark.caveayland@nutanix.com>
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=185.125.188.123;
- envelope-from=heinrich.schuchardt@canonical.com;
- helo=smtp-relay-internal-1.canonical.com
-X-Spam_score_int: -47
-X-Spam_score: -4.8
-X-Spam_bar: ----
-X-Spam_report: (-4.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+Content-Type: text/plain
+X-ClientProxiedBy: CYZPR14CA0024.namprd14.prod.outlook.com
+ (2603:10b6:930:8f::14) To PH0PR02MB7159.namprd02.prod.outlook.com
+ (2603:10b6:510:16::8)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: PH0PR02MB7159:EE_|DS0PR02MB10661:EE_
+X-MS-Office365-Filtering-Correlation-Id: 144c1b85-bb1c-4295-7893-08ded050ca1c
+x-proofpoint-crosstenant: true
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|366016|7416014|376014|23010399003|1800799024|22082099003|18002099003|56012099006|921020;
+X-Microsoft-Antispam-Message-Info: Q9SgPFP+xq1B2rNa+o80PYDrc87A+XEBx4tY5Eb1DivFqGjmcoA+WE1wFiLxpZrsadlgsUzfrelpXPpBEIzhIlT6rJMbpSM43IHX+4KWxH2SZEmBS6DIKRC17g2/yxlTwdD+U+AsN1VCsXOPklrEmn+KBxNwhtqW3Mp97wtyXbF0U2CeiJmJ1riOaKDS/xDr03FTyLu7K+W1MoGIbAt+3BcLaerlX0bQPqL5/r3MpV7isZtwgKZEDDawc8g8QNrXbElaaq5UzxCyHM2NFecCPA2u+DLRReXfK0X0K3DNRXBbRlko2OHgX3RROYQ9q/LsiCjN204sS+A9oLhPpAIZ4IQVm7B19rQ/xXI09KrW2WQBOm7NnXDrYh8KrM3uPKiJ1GRK+sMXnUt8nDyVjqW0Y7nNG3BzZnnc4GrIw6cP13De4xEK7I5VJy3pdSTEZF83xOGAqFT8DJxqOMjmKIduDMygkX7B9pm7h/e7gHK0OpqUbteuK2qUsi3F+U3Cf6vo0hWEjzYXNicWbvv+Ifo9FYvjTsYULB7I63xWoDYNRXYM7JaOGRkvRrY7rdKy53QV5jARRUgv2JXk9+kSgbLB2tYbzhf7H4HYJ+I8FeBafco7t3pi2LnQUz/vOBPbtxj50iq/jxzlFgGK8tmbbNlAEyTx/MaoZh1dY8jYA7MUrdp0JcV72gZYPBRqgJu71F1bPC2mDrFPaQX9fS0SAVXQJA==
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:PH0PR02MB7159.namprd02.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(366016)(7416014)(376014)(23010399003)(1800799024)(22082099003)(18002099003)(56012099006)(921020);
+ DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?9i9phkaNKJXstDGcqxlNoLdmkw6UxiMuIlUuj0FjmgLDJ+Gy01aWJTHAQf3O?=
+ =?us-ascii?Q?KDy49GtXhgkGLddT/4qJPr4mEWH7IYY6sjkISWaST5R3X4giqtnQIHNYlpQt?=
+ =?us-ascii?Q?9/+cemLu3jkVFGzw7vieiEa/Be5yI4X5FDGhz3ViPREfaT06jX+8tWkmX7ky?=
+ =?us-ascii?Q?5jEp1iYoStMDKPR1lNFIEWCgxhASG+bITGyGfJY4tnM2sY10iSv9JrvxaSzB?=
+ =?us-ascii?Q?PkmaP7yBYdstqTEG63I5Pmk5Q1Cdr5tiv3bxOHWBb2mmDwhF0XNNATTcWRbB?=
+ =?us-ascii?Q?XvCCwLww033j5eGM+0I5kquswsrTVOMokOAqG2GEcsFDtfP2Y8Yknn4zIMfz?=
+ =?us-ascii?Q?8U1TCoIXf4dOj/hZRn4dIp8Q0JZ6NPiG9hf0s5DwgjLQIQ7G25nlaqxP0qwb?=
+ =?us-ascii?Q?BV4hhotpZJ4QLUEtah60/p7HlCdIDsM1JtXsajlZ7SUjILW8SwhNxmE7YtdN?=
+ =?us-ascii?Q?M/rvu4YSZ/7rtAGu8BVanaADVE5omVrXkvMm+WhmbqX4Ek7mz5s1xSJksY5b?=
+ =?us-ascii?Q?xhFH3xGnK1+2Fpiiy1AwU5CEb2xgpECge1VXR+4Odk9LqAXF6JQK5MMX+7mL?=
+ =?us-ascii?Q?VPhXzv9pgTTHChY4c7gEroLK8e/AJ/3/8flHgXiCSon6bS2QEONDTd7STlte?=
+ =?us-ascii?Q?OtevPJKNdP5QvLz9XfxRnrQhyPscSFdLEEUzT6+C3PCJk69XK5G0rkmcAuN9?=
+ =?us-ascii?Q?IsGRpDKIp8m7PfKgwKWtJ1JY+340iX9T17OhXT1L1EoDqVECxAgKVq5p3FA0?=
+ =?us-ascii?Q?kGrfkAFaE5IWrkO+yAptoT2e4ICCvEmbHAuMdUClS9y5KHblcHcEmKdKxnqU?=
+ =?us-ascii?Q?JBZLrcQ+3zWo4de5O9IHUgASIWiz/hdhs9ys2gSWwNR1g6s05DdspnfFr9oj?=
+ =?us-ascii?Q?2kdVAmpY+q+HfiTaOMjeNiU14sY1BiPqLQ0wEhDb7ZoErpEZaI89vwZTmD5W?=
+ =?us-ascii?Q?ZMtKYNxRM94wJHXluq3C9ZO9Ah3+wSdH5RJSfC8l/whwqqbnLUDtZeOAHJOc?=
+ =?us-ascii?Q?nL6N6Rf+WzwWdC9xwl4T++1fkL+B3qgYcJohZK/zuL0DkbWc0xt0WOprd6JD?=
+ =?us-ascii?Q?2+9OV0sI4Kkwc9MKxoWnq2GuhZwKspjW9Rp2fqZvin+yyl194UZWFIV7oN4R?=
+ =?us-ascii?Q?gmkp/qsRcBILnw5AvbqxxVS4w3yqseRly6omrrEoaptA/W9IT/UuhXtndmhM?=
+ =?us-ascii?Q?1WxfpJ36S77gtPib0150E/ONr8QA54UkHAs3agfpJ+Gp1AD5+Fxx11p8qVSx?=
+ =?us-ascii?Q?v9P/zaGOGzrWMxIyG4jdp4yT5hqcu7wH55ZE5/PXAevR9/9El8meQp+TZUgb?=
+ =?us-ascii?Q?YsnQd7zwimGgq4WmPi7+KjiBq9wT57mWJGUYddoGhThmvwrXMW4e3tFC6Dzc?=
+ =?us-ascii?Q?QMBQhWSR746yujC+19X0leSwoKfew7cteeuorVDrAXoRIKuXWqoAdzofAfko?=
+ =?us-ascii?Q?18Rbogli7Ljj2WgIwv66arFymluEEBlxS8WkBvmJ2ko9dFpYxtrpwczSj1bO?=
+ =?us-ascii?Q?QbBgV+xj6sdTHg1yTUXApQUES0L4CG9Q2gyCFeVNhppctm8ffKDaobL80PoU?=
+ =?us-ascii?Q?JwmOLlO2za5V7MTQ/42bFD02vOy7mdYQLssEY73/J3iAj3kgcKkRwnHCIxPW?=
+ =?us-ascii?Q?eLKS9tCnvymd/4snqx51KBqS9DPFUbhUINbNcyvLmMQiTH/g4QVwuzthOm4c?=
+ =?us-ascii?Q?+fYJCd7RPY/pehXB+wRBzpn/gRz+me2LRVL2/AjJRelewrmy3gy6wpeyTBEp?=
+ =?us-ascii?Q?/uibgM0D0CVHggcPuIZalFX+F8CFvxU=3D?=
+X-Exchange-RoutingPolicyChecked: OLXL7TAxhy+orXHoKGe6VnflJKjIzxUbWvghiTwZMnxjakRC+8n52kr6rZ2tX1NVLt8rilywXSNBMUVYdwz7fix33Jbo4BB1npANeEOP9RjAGkmDDvBMd/Mbsh8h94Yxnf+HFpQoMrdZ1FSZNzdEu2mkKMf1OC4ceTWJl/D60zpknQT6YB/yO0BuvNueoG22B1gzTnkrQdwWNQ7tKw7aMJqjCN7iXWOJtotgNhkauuhyMKbuvUHxrc6LtGReAqLqDqXBRqarqjuAmUVXJ4OjXxXNsr+7EsULybK2CKfUOFBlrFDs2gG9Fl70izOJDQWM4LcKVgbg/x3ygRvMnpdOtQ==
+X-OriginatorOrg: nutanix.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 144c1b85-bb1c-4295-7893-08ded050ca1c
+X-MS-Exchange-CrossTenant-AuthSource: PH0PR02MB7159.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 22 Jun 2026 11:24:14.4166 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: bb047546-786f-4de1-bd75-24e5b6f79043
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: I0uV1lavPHXcOmHsq7A0HzIaL8D3psAi5DzfKaTX4BI+yFeRv5yZ7Y67DIZQp1HUd5IrUd+FpHvHDANOfQYqPuFaOd6VXx9n4DlqlQr6WRM=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR02MB10661
+X-Authority-Analysis: v=2.4 cv=T/S8ifKQ c=1 sm=1 tr=0 ts=6a391b5f cx=c_pps
+ a=8AR2Or5FcovIRbB7TUUKGA==:117 a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19
+ a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19 a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19
+ a=xqWC_Br6kY4A:10 a=FelO9ux0wxsA:10 a=0kUYKlekyDsA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=VofLwUrZ8Iiv6rRUPXIb:22 a=VUi8bpU7OL1Oj2-RSIOF:22
+ a=64Cc0HZtAAAA:8 a=1677IaiEuyO47b-9faYA:9
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjIyMDExMiBTYWx0ZWRfX876b1rceoc0l
+ qdPAuIClA9U7wMRjHV/4nyn13X4wqoIxgd7NUnfH0EQ1UafG53lRfPisbopPeXCibLtNKY6VgdP
+ 8dYVNk6L14MgqB8TGXEBGEe9GfcA7yR4GR8gwyTpVCuhTeXNwgbwH+rdm7my/pxanqsxbXpwFLq
+ gi5p1N60AMsfOmNrevFmy6Jdins/XJi2ycYMP/S/gJPTi2ikNJnHQRq+Mmazs5GbnSqFDgPbDyl
+ 33d3QvHTtxwtw1svKc1vlH6t+bjUD9dwsPbkhy9mYZLFk9L7unzdpaXs5aS2gPtQcvoEciJ58TZ
+ FHerL1F9bSAk50tLgQG5nFhx9jeZxuh3DJFx+2cV4iXbT1lU9ODrpb0RyljvajK8dIq+4rJ1BQn
+ nFy2PCdwLP2SU0Icul4K//96Mt4TuNWbmkyqHc1pFFx5Y4EVx0wvqvd+tLMurYeDcICO0cNsosY
+ 2AAzya1QX2T3oshvr7g==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjIyMDExMiBTYWx0ZWRfX6vySq6SMwtXv
+ Iy5EApp5ufIcnoxULWLLNT2VI+oTuML2OowjYbYNEP/Y6T001nKPrvKiilwT91SV2IPL5Cv1A9T
+ p1dnw8sSOJhoZb9Qm475euKxQbpMKqk=
+X-Proofpoint-ORIG-GUID: 6_xKJarlTzRfRL5cuLeIOBUeaKb60QES
+X-Proofpoint-GUID: 6_xKJarlTzRfRL5cuLeIOBUeaKb60QES
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-22_02,2026-06-18_03,2025-10-01_01
+X-Proofpoint-Spam-Reason: safe
+Received-SPF: pass client-ip=148.163.155.12;
+ envelope-from=mark.caveayland@nutanix.com; helo=mx0b-002c1b01.pphosted.com
+X-Spam_score_int: -31
+X-Spam_score: -3.2
+X-Spam_bar: ---
+X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -120,65 +179,113 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On LoongArch and RISC-V invalid SPCR tables are created:
-
-    Terminal Type : 00
-    Language : 03
-
-The correct values are:
-
-    Terminal Type : 03
-    Language : 00
-
-This is due to commit 7dd0b070fa09 ("hw/arm/virt-acpi-build.c: Migrate
-SPCR creation to common location") that swapped the fields.
-
-See the specification of the table in
-https://learn.microsoft.com/en-us/windows-hardware/drivers/bringup/serial-port-console-redirection-table
-
-This page shows version 1.10. But the sequence of the fields was not changed
-since version 1.0.
-
-Our LoongArch and ARM code uses version 1.07 of the specification.
-Our RISC-V code uses version 1.10 of the specification.
-
-Fixes: 7dd0b070fa09 ("hw/arm/virt-acpi-build.c: Migrate SPCR creation to common location")
-Origin: https://lore.kernel.org/qemu-devel/20260326121947.51200-1-heinrich.schuchardt@canonical.com/T/#u
-Bug-Ubuntu: https://bugs.launchpad.net/ubuntu/+source/qemu/+bug/2146419
-Signed-off-by: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
+Signed-off-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
 ---
-v4:
-	Reproduce the test data changes using rebuild-expected-aml.sh
-	creating the same diff as v3 but in two separate patches.
-v3:
-	Update test data
-v2:
-	Mention the different specification versions used by our code
-	https://lore.kernel.org/qemu-devel/20260326144835.67911-1-heinrich.schuchardt@canonical.com/
-v1:
-	https://lore.kernel.org/qemu-devel/20260326121947.51200-1-heinrich.schuchardt@canonical.com/T/#u
----
- hw/acpi/aml-build.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ hw/isa/lpc_ich9.c | 64 +++++++++++++++++++++++++++++++++++++----------
+ 1 file changed, 51 insertions(+), 13 deletions(-)
 
-diff --git a/hw/acpi/aml-build.c b/hw/acpi/aml-build.c
-index 9b3cdd3781..990abc64cd 100644
---- a/hw/acpi/aml-build.c
-+++ b/hw/acpi/aml-build.c
-@@ -2144,10 +2144,10 @@ void build_spcr(GArray *table_data, BIOSLinker *linker,
-     build_append_int_noprefix(table_data, f->stop_bits, 1);
-     /* Flow Control */
-     build_append_int_noprefix(table_data, f->flow_control, 1);
--    /* Language */
--    build_append_int_noprefix(table_data, f->language, 1);
-     /* Terminal Type */
-     build_append_int_noprefix(table_data, f->terminal_type, 1);
-+    /* Language */
-+    build_append_int_noprefix(table_data, f->language, 1);
-     /* PCI Device ID  */
-     build_append_int_noprefix(table_data, f->pci_device_id, 2);
-     /* PCI Vendor ID */
+diff --git a/hw/isa/lpc_ich9.c b/hw/isa/lpc_ich9.c
+index edf9783ec8..c6d31a3957 100644
+--- a/hw/isa/lpc_ich9.c
++++ b/hw/isa/lpc_ich9.c
+@@ -683,24 +683,11 @@ static void ich9_lpc_initfn(Object *obj)
+ {
+     ICH9LPCState *lpc = ICH9_LPC_DEVICE(obj);
+ 
+-    static const uint8_t acpi_enable_cmd = ICH9_APM_ACPI_ENABLE;
+-    static const uint8_t acpi_disable_cmd = ICH9_APM_ACPI_DISABLE;
+-
+     object_initialize_child(obj, "rtc", &lpc->rtc, TYPE_MC146818_RTC);
+ 
+     qdev_init_gpio_out_named(DEVICE(lpc), lpc->gsi, ICH9_GPIO_GSI,
+                              IOAPIC_NUM_PINS);
+ 
+-    object_property_add_uint8_ptr(obj, ACPI_PM_PROP_SCI_INT,
+-                                  &lpc->sci_gsi, OBJ_PROP_FLAG_READ);
+-    object_property_add_uint8_ptr(OBJECT(lpc), ACPI_PM_PROP_ACPI_ENABLE_CMD,
+-                                  &acpi_enable_cmd, OBJ_PROP_FLAG_READ);
+-    object_property_add_uint8_ptr(OBJECT(lpc), ACPI_PM_PROP_ACPI_DISABLE_CMD,
+-                                  &acpi_disable_cmd, OBJ_PROP_FLAG_READ);
+-    object_property_add_uint64_ptr(obj, ICH9_LPC_SMI_NEGOTIATED_FEAT_PROP,
+-                                   &lpc->smi_negotiated_features,
+-                                   OBJ_PROP_FLAG_READ);
+-
+     ich9_pm_reset_properties(&lpc->pm);
+     ich9_pm_add_properties(obj, &lpc->pm);
+ }
+@@ -880,6 +867,40 @@ static void build_ich9_isa_aml(AcpiDevAmlIf *adev, Aml *scope)
+     qbus_build_aml(bus, scope);
+ }
+ 
++static void ich9_lpc_get_sci_int(Object *obj, Visitor *v,
++                                 const char *name, void *opaque,
++                                 Error **errp)
++{
++    ICH9LPCState *lpc = ICH9_LPC_DEVICE(obj);
++    uint8_t sci_gsi = lpc->sci_gsi;
++
++    visit_type_uint8(v, name, &sci_gsi, errp);
++}
++
++static void ich9_lpc_get_smi_negotiated_feat(Object *obj, Visitor *v,
++                                             const char *name, void *opaque,
++                                             Error **errp)
++{
++    ICH9LPCState *lpc = ICH9_LPC_DEVICE(obj);
++    uint64_t smi_negotiated_features = lpc->smi_negotiated_features;
++
++    visit_type_uint64(v, name, &smi_negotiated_features, errp);
++}
++
++static void ich9_lpc_set_smi_negotiated_feat(Object *obj, Visitor *v,
++                                             const char *name, void *opaque,
++                                             Error **errp)
++{
++    ICH9LPCState *lpc = ICH9_LPC_DEVICE(obj);
++    uint64_t smi_negotiated_features = lpc->smi_negotiated_features;
++
++    if (!visit_type_uint64(v, name,  &smi_negotiated_features, errp)) {
++        return;
++    }
++
++    lpc->smi_negotiated_features = smi_negotiated_features;
++}
++
+ static void ich9_lpc_class_init(ObjectClass *klass, const void *data)
+ {
+     DeviceClass *dc = DEVICE_CLASS(klass);
+@@ -888,6 +909,9 @@ static void ich9_lpc_class_init(ObjectClass *klass, const void *data)
+     AcpiDeviceIfClass *adevc = ACPI_DEVICE_IF_CLASS(klass);
+     AcpiDevAmlIfClass *amldevc = ACPI_DEV_AML_IF_CLASS(klass);
+ 
++    static const uint8_t acpi_enable_cmd = ICH9_APM_ACPI_ENABLE;
++    static const uint8_t acpi_disable_cmd = ICH9_APM_ACPI_DISABLE;
++
+     set_bit(DEVICE_CATEGORY_BRIDGE, dc->categories);
+     device_class_set_legacy_reset(dc, ich9_lpc_reset);
+     k->realize = ich9_lpc_realize;
+@@ -912,6 +936,20 @@ static void ich9_lpc_class_init(ObjectClass *klass, const void *data)
+     adevc->ospm_status = ich9_pm_ospm_status;
+     adevc->send_event = ich9_send_gpe;
+     amldevc->build_dev_aml = build_ich9_isa_aml;
++
++    object_class_property_add(klass, ACPI_PM_PROP_SCI_INT, "uint8",
++                              ich9_lpc_get_sci_int,
++                              NULL,
++                              NULL, NULL);
++    object_class_property_add_uint8_ptr(klass, ACPI_PM_PROP_ACPI_ENABLE_CMD,
++                                        &acpi_enable_cmd, OBJ_PROP_FLAG_READ);
++    object_class_property_add_uint8_ptr(klass, ACPI_PM_PROP_ACPI_DISABLE_CMD,
++                                        &acpi_disable_cmd, OBJ_PROP_FLAG_READ);
++    object_class_property_add(klass, ICH9_LPC_SMI_NEGOTIATED_FEAT_PROP,
++                              "uint64",
++                              ich9_lpc_get_smi_negotiated_feat,
++                              ich9_lpc_set_smi_negotiated_feat,
++                              NULL, NULL);
+ }
+ 
+ static const TypeInfo ich9_lpc_info = {
 -- 
-2.53.0
+2.43.0
 
 
