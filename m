@@ -4,87 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A774ECDB466
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jun 2026 19:32:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D1B2CDB466
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jun 2026 19:32:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wbkNJ-0000PE-Gg; Mon, 22 Jun 2026 15:32:05 -0400
+	id 1wbkNV-0000Wt-Qp; Mon, 22 Jun 2026 15:32:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1wbkNI-0000Ow-GU
- for qemu-devel@nongnu.org; Mon, 22 Jun 2026 15:32:04 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ id 1wbkNT-0000V7-QJ
+ for qemu-devel@nongnu.org; Mon, 22 Jun 2026 15:32:15 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1wbkNF-0001kh-Hg
- for qemu-devel@nongnu.org; Mon, 22 Jun 2026 15:32:04 -0400
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+ id 1wbkNR-0001p3-9P
+ for qemu-devel@nongnu.org; Mon, 22 Jun 2026 15:32:15 -0400
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65MFXKe31571253
- for <qemu-devel@nongnu.org>; Mon, 22 Jun 2026 19:32:00 GMT
+ 65MFWGsm1098915
+ for <qemu-devel@nongnu.org>; Mon, 22 Jun 2026 19:32:12 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=qcppdkim1; bh=syl834R6TVN
- kopHzNxnL1qVcUpWq0e1+uvxqHbeNVEI=; b=m1YWPzxJwYyGpnOtketg8VDavyg
- kqtFkodOowFfGaVTlYu09tyaXCgsvi3jB012iwoY8CF2drEDaPivyh8wJ383frP8
- O5CLj0wSSXf8eK1wK+hnX3y7g2OX+Whn5ol8iOhZQ7k1xXqsg7rlXFN8f1mKmbnE
- XoeS4Z9mjoUeYOwV1GoasUZ0Y/5Pe1lxLIc6n8QZzuB8L2nntMHxl7wFZtd5pM2d
- mBZX8cFbVptC1UjRFEhlgvqhESN0U4D2FmNIc3aRyyU7D4EaoGnVvkeAQtTOIDeK
- x7l4q2YCRf6hCkX5mzH7dd2lWEvNCkACe3dmDdZEyKNoNhpNiAW88PCQLlA==
-Received: from mail-vs1-f71.google.com (mail-vs1-f71.google.com
- [209.85.217.71])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ey3eb9x3q-1
+ :mime-version:references:subject:to; s=qcppdkim1; bh=C2rMfFWTL/1
+ +5pznB7RLcCvBAec1n4x9PcUZHGb/jms=; b=NUZNSLa42gmlZzIirzNf9KkA4ih
+ oRn4d+ENuZQlCPBavmvc+jzS0Sib5Mw24ddC+FpFs10lONPIaqCnzz4XxkIX89ck
+ cRMvO8CP218wCy5qYtYwR6zJKy1v+8H7ySm8C880o6BEljP9NpTZ512NWaVW85nC
+ 77VDrUe+1z92MqPYPq47pawhIMkbqXGyv2NKy7ijnSrjkHNf+imS1B5xvHlOF1wU
+ V4PI7qDTH83ax65EZaCN1IEjkLVwa7yhit1qqkdkwLqKH9ziR1hgtn7+mfNIFM7j
+ dmYHBK/nbaliacns0VqJj7UqACVlD9w8Ylgg+qHJaugqjJqmkoWqQfocytQ==
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
+ [209.85.222.200])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ey3cq1xdt-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 22 Jun 2026 19:32:00 +0000 (GMT)
-Received: by mail-vs1-f71.google.com with SMTP id
- ada2fe7eead31-72b09f14b5fso2123245137.3
- for <qemu-devel@nongnu.org>; Mon, 22 Jun 2026 12:32:00 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Mon, 22 Jun 2026 19:32:11 +0000 (GMT)
+Received: by mail-qk1-f200.google.com with SMTP id
+ af79cd13be357-9159bc52211so792142985a.2
+ for <qemu-devel@nongnu.org>; Mon, 22 Jun 2026 12:32:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1782156720; x=1782761520; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1782156731; x=1782761531; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=syl834R6TVNkopHzNxnL1qVcUpWq0e1+uvxqHbeNVEI=;
- b=IIKRpiIku4WVMAnCH/eOZX36O8zS6UGnnqcD7dcIbEET7YTwLwNOHCqb69+gq9xEKq
- jhHdQBMK4jgC2e0JrFVklpbzozkK2M5aJDd/7nUl16KlxS+spuMQ5LB4KR1gPLIhQ1iQ
- qaNUvSn03cJSs9U9XE+Jo0fxRIiRXmWM1Ph2bzqGK4s4eRNV9STYeJEV2GD3FOL4dAo/
- q+vXCji6p4/zVGvG/df5CMDmoSNSDyvt/mysyhkrvvR+GQ2NnZwyQluGZ2Ew843R52Ke
- qIhL/2NwhBoLpbL1UuOuZOqA1b/PJ4BOYbJ0Gn5ZSOZyXYXGAUDtEMaNmx5z84dAiPM9
- G7Qg==
+ bh=C2rMfFWTL/1+5pznB7RLcCvBAec1n4x9PcUZHGb/jms=;
+ b=KXM/LbfmlJFBOU3r8pFT/jQV+U5FjXiXxyZmCC44VQI8EKWmC6qt5zXrjBYbDv0sqM
+ cd70BFikoJLFmEHwjl1rdV1z2SVOJoq0Kg5vAWYcypJsCuGRj2yW/NH4MBddBw94heM1
+ usHuBZeHyN6n+R1SYxFMsrz2CSQwWkiptpApqk8Olqj4hi/MOgfPP9WMi02kGXBtheOi
+ WEMCivPhKi3CcFZTwhGMVnZT3Ts6CV5Y9eWLEYjKrj6hU6TikM6RBgnO5nhOtIVnPbJ1
+ qgho3sy6BoKVLDVIR+QadqfwDy7D3mDW54ynBY1EyV4qzHesKrKzMwfVty6o9QVSfHzv
+ QylQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782156720; x=1782761520;
+ d=1e100.net; s=20251104; t=1782156731; x=1782761531;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=syl834R6TVNkopHzNxnL1qVcUpWq0e1+uvxqHbeNVEI=;
- b=nduDG59fMY9T8w353Otp4UlC8G5pqSqEUSjnm1zhevpWJP8CBhPwLwcgc7NGhvZ/0/
- pmo+KGt5huU1jpZqUPr23okN9kvhKE3Ozlch8QowUw5rxgQD51j75k96AUiOXKweWgXz
- lyXmLUyaD6NBJyp2wz4lH2at9Oo106tfw4UA4dHjR0QxFsEW3V2T8QofePhSqnotjTie
- apkkiDHtvzkUdhogzZrIhg8+vKpIZeIomEAkBdMjvY+ioUfoBcH+w4AtFgn5YWRiVI34
- 6JQcQ1TwuHxfD8+CO4A3owDynyL7Wjghmq6DzYkPUvmgt5khgJO9Lwt9EXiyx/y+K7n/
- 3FKQ==
-X-Gm-Message-State: AOJu0Yw3ON36akNZ33aBfqQ7x6iYIDKZTz3sxFvaGKPf1CkYeidbtjT6
- UsSB6TcKIundaptbXdOl5BXSoCprRuhXN5fxljzwdIbqqFvnWFX5wdlpexiGO3NHr04oBttFYS7
- 9DJxyhSppdMeSuabzjRVUgz55I3DHEBKaZzQCtUbBd1Q99A9TCzC+TdFtG3bMJGM5Xw==
-X-Gm-Gg: AfdE7cn6bm6oQGohzP71M6og/6I/OnCbTFRTvFPhU5HUEMtPpMJzyRG/kPtJARqJ7h3
- 9mcU9JU1Ab7SCcZK5CGw9S6i+CAVFUhCEh1SJtCGx9ZqNA4jPzQtatvDpdLDJt6A7r2tS+hmUAU
- FXh53s8Rgv8dp1+EafE4S4QrHkq0DDdtpgAWH+bSMZx4BNKvUJ8s7p3qCAfLwrID5KEcLvVlUXP
- jnVn8fyYy6A0Srsq9iiTavEv0Ppzrh4xrVMCMX53RfzY6BNzdb4UtS9I1J2S4ztNk+2kUCZsyvJ
- 58uzzgIehjHz6upjDo3A7gG7iMis+E1Jah9+C4Jnl9F0herxxBhPObGhrb3jnwLL2BNP9Bz1v3L
- /CT5Kfq73j40mQlw24FMMlnoYCqgH6tzXT85xvgz4it8yaQ==
-X-Received: by 2002:a05:6102:5121:b0:634:92c:bdd0 with SMTP id
- ada2fe7eead31-72a1ceec338mr8523175137.6.1782156719467; 
- Mon, 22 Jun 2026 12:31:59 -0700 (PDT)
-X-Received: by 2002:a05:6102:5121:b0:634:92c:bdd0 with SMTP id
- ada2fe7eead31-72a1ceec338mr8523057137.6.1782156718748; 
- Mon, 22 Jun 2026 12:31:58 -0700 (PDT)
+ bh=C2rMfFWTL/1+5pznB7RLcCvBAec1n4x9PcUZHGb/jms=;
+ b=GWGYrCF9i23/19hkoMlhjAtxVemR3dGR5acRsPrP8PhHITEIpIyWwjyyIIbm8ox5F+
+ 2fO6RmA/tBnyLEgVbovUnz/EEnZSo3Hl0fT6rZbmM13X5sFNg6MsttneFn4lyYEZ3Vlu
+ FpWcvwtWKd9zVpU/7V4Nu9iHYVa1brX6Negmv0rHuTb3nBA17TC/8oAb2K73tbGgcyqr
+ r31nSPkFQBGdC5Gu7K90g0UyX8NvHli8yMzyhoj7m1piZIt6mzz3b+iy36mwIiaYhwML
+ odArMTp/1Fss+mT4jqbFKSXcKpAb6rweeGROg4fI4YleBJD5Vr4yl71brVgJGx9sbrOf
+ AR6A==
+X-Gm-Message-State: AOJu0YxrVzexgzA6l8EoTiw7yCAguot9B3hKjKgamHD9T486y39I5apk
+ 3K6F8PXptiDoNcKHhgbgSMMdK70daNXFGW0ufPcHy54jKX1RDMozk5CD8d2b7+6WpceFqvl9ubU
+ jrsAy8xoTEAY2KFG4Nv7spbxu7XT5i2bHTuLxBYersUkxj2w63lM109gO7/CFx/ReiQ==
+X-Gm-Gg: AfdE7cl84DGEog46FJfcyKKBfOuqpfxrfrXQrYWo+QGJVQn6KiHRSORl3Ymu4MhJX5Y
+ 3KI1i3rxijMJxRLcnyO0KnqwFb3bND1RL7glcKndb5tjT9tcSGF7gX4V3mYLnqs3HQHAMZ1KZkL
+ AhFfCG/fO/B7pAWHUY58uJfVqQk6T0pXKypazygP4B5BKhSM2Rb6mTLMBY3lPAkBg/Sj2REVfVd
+ vzQxT3Tq5iC+nlOXyz9bwq1t2oCncbunQngaiCfh/2zKF+QaHL2rkys3yDtJuICa2Q+Tb6x18Qx
+ 5v7CUBOEucjMY9oQOY7p6exybk6W3lZVLWMlqPocG3t0sVkyf+vXzf6NOZjiqtqlRW2J77BEylS
+ IXlTPeC8EQnI9UU79tecIVe0A0ORZtcZhxvxkshpPQQvvvA==
+X-Received: by 2002:a05:620a:2954:b0:915:9984:5781 with SMTP id
+ af79cd13be357-92091395713mr2712042985a.51.1782156730499; 
+ Mon, 22 Jun 2026 12:32:10 -0700 (PDT)
+X-Received: by 2002:a05:620a:2954:b0:915:9984:5781 with SMTP id
+ af79cd13be357-92091395713mr2712036785a.51.1782156729863; 
+ Mon, 22 Jun 2026 12:32:09 -0700 (PDT)
 Received: from QCOM-UWl2o8bcGT.qualcomm.com ([189.79.21.40])
  by smtp.gmail.com with ESMTPSA id
- af79cd13be357-926004ab49csm61489585a.34.2026.06.22.12.31.56
+ af79cd13be357-926004ab49csm61489585a.34.2026.06.22.12.32.07
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 22 Jun 2026 12:31:58 -0700 (PDT)
+ Mon, 22 Jun 2026 12:32:09 -0700 (PDT)
 From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, liwei1518@gmail.com,
@@ -92,42 +92,42 @@ Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, liwei1518@gmail.com,
  philmd@oss.qualcomm.com, pierrick.bouvier@oss.qualcomm.com,
  Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
  Palmer Dabbelt <palmer@dabbelt.com>
-Subject: [PATCH 02/24] target/riscv: move TCG only files to tcg subdir
-Date: Mon, 22 Jun 2026 16:31:18 -0300
-Message-ID: <20260622193141.1449724-3-daniel.barboza@oss.qualcomm.com>
+Subject: [PATCH 06/24] target/riscv: move pmu.h to tcg subdir
+Date: Mon, 22 Jun 2026 16:31:22 -0300
+Message-ID: <20260622193141.1449724-7-daniel.barboza@oss.qualcomm.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260622193141.1449724-1-daniel.barboza@oss.qualcomm.com>
 References: <20260622193141.1449724-1-daniel.barboza@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjIyMDE4OSBTYWx0ZWRfXw+u6FqrVS3dP
- H/8Q/QnxVlCcTn/nyJ0EGHTVa1MiS2KtkZWR/6Pva71gRIhORf6a2VI/p7lVadVr/ZBCpbRwpHS
- sSyE4ZR7wFOy2tmcZV4NurqcG8o1byQ=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjIyMDE4OSBTYWx0ZWRfXw/ULh8jxc3sA
- RFKLQPbd6Vagx/cSU0e7r9YGTReAvGCbJVynineMMDJWRGVSFI1y8bu2ebqA9RHvxkY2fwb5PDc
- wkFPUSV8eVv0FW+qGmEK23b1ghSDwpKJVw7gEO/4kRKDBzzPZFV87v7wGML4yDA1ubm3Rq0EdH+
- dRkel0cRp6+tY8HhiOjjvgDt6lPFx8Ipg1rr26pW1+avC8NtA0VgKVthz9BVyhciutWRNAM2+9v
- PEllohab+rCzzteR484ETEX2qseOy+pR0x4MqbFRWy/PB1UPut8uq8oF5VVQoL5KTCM1WGH2aqT
- H90QAZULj/Um/gRYAgD80ek3YpmSMlyaze/KpM3xvALqtW0Gq+9UpQzpEo9gI3q3yRPFHogM+gy
- r21vDx3meLtDoOnrcZKm60Khs1cA1eBxupAINWxQx2zrDLktkS1YRfMtUFVFn7Va6yjDl8YBIex
- hAq/sA7tMnZ1kxSl5qA==
-X-Authority-Analysis: v=2.4 cv=ILIyzAvG c=1 sm=1 tr=0 ts=6a398db0 cx=c_pps
- a=P2rfLEam3zuxRRdjJWA2cw==:117 a=sHJf4AwOIoU3qjeHFPlg6Q==:17
+X-Proofpoint-GUID: CCV894BbYRUxRe7jY68XN3uFaR8ut92Z
+X-Authority-Analysis: v=2.4 cv=VKXtWdPX c=1 sm=1 tr=0 ts=6a398dbb cx=c_pps
+ a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=sHJf4AwOIoU3qjeHFPlg6Q==:17
  a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22 a=EUspDBNiAAAA:8
- a=dWVhGV5Cy5NFuyiy0EoA:9 a=ODZdjJIeia2B_SHc_B0f:22
-X-Proofpoint-GUID: N3uIrU-QFbp5qnp9_xSNyIgr2NLrqap6
-X-Proofpoint-ORIG-GUID: N3uIrU-QFbp5qnp9_xSNyIgr2NLrqap6
+ a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22 a=EUspDBNiAAAA:8
+ a=KqZ3gCmnYdtU6Ji4SLwA:9 a=PEH46H7Ffwr30OY-TuGO:22
+X-Proofpoint-ORIG-GUID: CCV894BbYRUxRe7jY68XN3uFaR8ut92Z
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjIyMDE4OSBTYWx0ZWRfXykmunKOVDP6g
+ H6nf0B2KP+kPT3UPt7n2/GNkw/E4q71VB61uhDPxbPPFjQ7tV3VXSiGt9/i90PjSL6c+FGQrrN9
+ pE1FaKTfZ2EqZE7NzRIXDWiGhQf2gjSBYHa9rM6j04o5uwEPn0wBlic6m0SEAvwU5CEv4S7ofbb
+ IeEFLn9xL5JyIY12tofi6xytFCplAj2/B8z28Prm4nyOReqblBN3wHxX/mo7u0nEc8vuyzsNOgw
+ GYBoIwMAkXiYvWzhhLuimuxHhzFf5fi1bHMGD6kzgI0GKh+FppEtrQgl1YbA/gApkE+jQBJsjVO
+ TJpbJrIg7CVEmzBUbfnUvs5Z0zZXNAgxSBPv6QPHHcvbOdF0BcKs9NMcmu+RzFONDjumLza6uo+
+ qDg4Q/E/09RAoXthZWZVskMkUxw2tI5DN7f//lIdGlPmBPkS60BHbh8HLo4DpM/V17Oc2zgHkrf
+ NRGBqObUIavYTlVSZXQ==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjIyMDE4OSBTYWx0ZWRfX7DUIsYVzJLcY
+ XYTm1DpXMbaHSICgYUx2Z9JoVxSNw92K5Z2NHt6rlBDeAWjcbp8cxEuUIPbAJA6SZAWmUjgKoLA
+ 9Gfmukzd32p5YwAm1dMgQZCFReu1ysw=
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-06-22_03,2026-06-22_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 priorityscore=1501 bulkscore=0 clxscore=1015 adultscore=0
- suspectscore=0 malwarescore=0 spamscore=0 impostorscore=0 lowpriorityscore=0
+ impostorscore=0 spamscore=0 phishscore=0 priorityscore=1501 adultscore=0
+ suspectscore=0 clxscore=1015 lowpriorityscore=0 malwarescore=0 bulkscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606220189
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -150,376 +150,182 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We have *way* too much TCG-only code hanging around in target/riscv,
-where ideally we would have things that are shared between accelerators.
+riscv_pmu_generate_fdt_node() can be moved to fdt_common.c since it has
+no PMU TCG internals.
 
-We'll follow the example of other targets like i386 and loongarch and
-move everything to the tcg subir.  This will not only cleanup target/riscv
-but it will also expose what is common code but it's buried inside a TCG
-helper.
-
-We're leaving some stuff behind because these require a little more
-case to not end up breaking KVM.  We'll take care of them next.
+With this change we can remove pmu.h from 'virt.c', which is now
+becoming a tcg header since we're moving it to the tcg subdir.
 
 Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 ---
- target/riscv/meson.build                      | 16 ----------
- target/riscv/{ => tcg}/bitmanip_helper.c      |  0
- target/riscv/{ => tcg}/cpu_helper.c           |  0
- target/riscv/{ => tcg}/crypto_helper.c        |  0
- target/riscv/{ => tcg}/csr.c                  |  0
- target/riscv/{ => tcg}/debug.c                |  0
- target/riscv/{ => tcg}/fpu_helper.c           |  0
- .../insn_trans/trans_privileged.c.inc         |  0
- .../{ => tcg}/insn_trans/trans_rva.c.inc      |  0
- .../{ => tcg}/insn_trans/trans_rvb.c.inc      |  0
- .../{ => tcg}/insn_trans/trans_rvbf16.c.inc   |  0
- .../{ => tcg}/insn_trans/trans_rvd.c.inc      |  0
- .../{ => tcg}/insn_trans/trans_rvf.c.inc      |  0
- .../{ => tcg}/insn_trans/trans_rvh.c.inc      |  0
- .../{ => tcg}/insn_trans/trans_rvi.c.inc      |  0
- .../{ => tcg}/insn_trans/trans_rvk.c.inc      |  0
- .../{ => tcg}/insn_trans/trans_rvm.c.inc      |  0
- .../{ => tcg}/insn_trans/trans_rvv.c.inc      |  0
- .../{ => tcg}/insn_trans/trans_rvvk.c.inc     |  0
- .../{ => tcg}/insn_trans/trans_rvzabha.c.inc  |  0
- .../{ => tcg}/insn_trans/trans_rvzacas.c.inc  |  0
- .../{ => tcg}/insn_trans/trans_rvzalasr.c.inc |  0
- .../{ => tcg}/insn_trans/trans_rvzawrs.c.inc  |  0
- .../{ => tcg}/insn_trans/trans_rvzce.c.inc    |  0
- .../{ => tcg}/insn_trans/trans_rvzcmop.c.inc  |  0
- .../{ => tcg}/insn_trans/trans_rvzfa.c.inc    |  0
- .../{ => tcg}/insn_trans/trans_rvzfh.c.inc    |  0
- .../{ => tcg}/insn_trans/trans_rvzicbo.c.inc  |  0
- .../insn_trans/trans_rvzicfiss.c.inc          |  0
- .../{ => tcg}/insn_trans/trans_rvzicond.c.inc |  0
- .../{ => tcg}/insn_trans/trans_rvzimop.c.inc  |  0
- .../{ => tcg}/insn_trans/trans_svinval.c.inc  |  0
- .../{ => tcg}/insn_trans/trans_xlrbr.c.inc    |  0
- .../{ => tcg}/insn_trans/trans_xmips.c.inc    |  0
- .../{ => tcg}/insn_trans/trans_xthead.c.inc   |  0
- .../insn_trans/trans_xventanacondops.c.inc    |  0
- .../{ => tcg}/insn_trans/trans_zilsd.c.inc    |  0
- target/riscv/{ => tcg}/m128_helper.c          |  0
- target/riscv/tcg/meson.build                  | 30 +++++++++++++++++--
- target/riscv/{ => tcg}/mips_csr.c             |  0
- target/riscv/{ => tcg}/op_helper.c            |  0
- target/riscv/{ => tcg}/pmu.c                  |  0
- target/riscv/{ => tcg}/th_csr.c               |  0
- target/riscv/{ => tcg}/translate.c            |  0
- target/riscv/{ => tcg}/vcrypto_helper.c       |  0
- target/riscv/{ => tcg}/vector_helper.c        |  0
- target/riscv/{ => tcg}/vector_internals.c     |  0
- target/riscv/{ => tcg}/vector_internals.h     |  0
- target/riscv/{ => tcg}/zce_helper.c           |  0
- 49 files changed, 28 insertions(+), 18 deletions(-)
- rename target/riscv/{ => tcg}/bitmanip_helper.c (100%)
- rename target/riscv/{ => tcg}/cpu_helper.c (100%)
- rename target/riscv/{ => tcg}/crypto_helper.c (100%)
- rename target/riscv/{ => tcg}/csr.c (100%)
- rename target/riscv/{ => tcg}/debug.c (100%)
- rename target/riscv/{ => tcg}/fpu_helper.c (100%)
- rename target/riscv/{ => tcg}/insn_trans/trans_privileged.c.inc (100%)
- rename target/riscv/{ => tcg}/insn_trans/trans_rva.c.inc (100%)
- rename target/riscv/{ => tcg}/insn_trans/trans_rvb.c.inc (100%)
- rename target/riscv/{ => tcg}/insn_trans/trans_rvbf16.c.inc (100%)
- rename target/riscv/{ => tcg}/insn_trans/trans_rvd.c.inc (100%)
- rename target/riscv/{ => tcg}/insn_trans/trans_rvf.c.inc (100%)
- rename target/riscv/{ => tcg}/insn_trans/trans_rvh.c.inc (100%)
- rename target/riscv/{ => tcg}/insn_trans/trans_rvi.c.inc (100%)
- rename target/riscv/{ => tcg}/insn_trans/trans_rvk.c.inc (100%)
- rename target/riscv/{ => tcg}/insn_trans/trans_rvm.c.inc (100%)
- rename target/riscv/{ => tcg}/insn_trans/trans_rvv.c.inc (100%)
- rename target/riscv/{ => tcg}/insn_trans/trans_rvvk.c.inc (100%)
- rename target/riscv/{ => tcg}/insn_trans/trans_rvzabha.c.inc (100%)
- rename target/riscv/{ => tcg}/insn_trans/trans_rvzacas.c.inc (100%)
- rename target/riscv/{ => tcg}/insn_trans/trans_rvzalasr.c.inc (100%)
- rename target/riscv/{ => tcg}/insn_trans/trans_rvzawrs.c.inc (100%)
- rename target/riscv/{ => tcg}/insn_trans/trans_rvzce.c.inc (100%)
- rename target/riscv/{ => tcg}/insn_trans/trans_rvzcmop.c.inc (100%)
- rename target/riscv/{ => tcg}/insn_trans/trans_rvzfa.c.inc (100%)
- rename target/riscv/{ => tcg}/insn_trans/trans_rvzfh.c.inc (100%)
- rename target/riscv/{ => tcg}/insn_trans/trans_rvzicbo.c.inc (100%)
- rename target/riscv/{ => tcg}/insn_trans/trans_rvzicfiss.c.inc (100%)
- rename target/riscv/{ => tcg}/insn_trans/trans_rvzicond.c.inc (100%)
- rename target/riscv/{ => tcg}/insn_trans/trans_rvzimop.c.inc (100%)
- rename target/riscv/{ => tcg}/insn_trans/trans_svinval.c.inc (100%)
- rename target/riscv/{ => tcg}/insn_trans/trans_xlrbr.c.inc (100%)
- rename target/riscv/{ => tcg}/insn_trans/trans_xmips.c.inc (100%)
- rename target/riscv/{ => tcg}/insn_trans/trans_xthead.c.inc (100%)
- rename target/riscv/{ => tcg}/insn_trans/trans_xventanacondops.c.inc (100%)
- rename target/riscv/{ => tcg}/insn_trans/trans_zilsd.c.inc (100%)
- rename target/riscv/{ => tcg}/m128_helper.c (100%)
- rename target/riscv/{ => tcg}/mips_csr.c (100%)
- rename target/riscv/{ => tcg}/op_helper.c (100%)
- rename target/riscv/{ => tcg}/pmu.c (100%)
- rename target/riscv/{ => tcg}/th_csr.c (100%)
- rename target/riscv/{ => tcg}/translate.c (100%)
- rename target/riscv/{ => tcg}/vcrypto_helper.c (100%)
- rename target/riscv/{ => tcg}/vector_helper.c (100%)
- rename target/riscv/{ => tcg}/vector_internals.c (100%)
- rename target/riscv/{ => tcg}/vector_internals.h (100%)
- rename target/riscv/{ => tcg}/zce_helper.c (100%)
+ hw/riscv/fdt-common.c         | 52 +++++++++++++++++++++++++++++++++++
+ hw/riscv/virt.c               |  1 -
+ include/hw/riscv/fdt-common.h |  1 +
+ target/riscv/tcg/pmu.c        | 52 -----------------------------------
+ target/riscv/{ => tcg}/pmu.h  |  1 -
+ 5 files changed, 53 insertions(+), 54 deletions(-)
+ rename target/riscv/{ => tcg}/pmu.h (95%)
 
-diff --git a/target/riscv/meson.build b/target/riscv/meson.build
-index 79f36abd63..61874ed0af 100644
---- a/target/riscv/meson.build
-+++ b/target/riscv/meson.build
-@@ -16,31 +16,15 @@ riscv_ss.add(when: 'CONFIG_ARM_COMPATIBLE_SEMIHOSTING',
+diff --git a/hw/riscv/fdt-common.c b/hw/riscv/fdt-common.c
+index e0e31af09b..aa143a618b 100644
+--- a/hw/riscv/fdt-common.c
++++ b/hw/riscv/fdt-common.c
+@@ -230,3 +230,55 @@ void create_fdt_plic(void *fdt, hwaddr addr, uint64_t size,
+     }
+     qemu_fdt_setprop_cell(fdt, nodename, "phandle", plic_phandle);
+ }
++
++/*
++ * To keep it simple, any event can be mapped to any programmable counters in
++ * QEMU. The generic cycle & instruction count events can also be monitored
++ * using programmable counters. In that case, mcycle & minstret must continue
++ * to provide the correct value as well. Heterogeneous PMU per hart is not
++ * supported yet. Thus, number of counters are same across all harts.
++ */
++void riscv_pmu_generate_fdt_node(void *fdt, uint32_t cmask, char *pmu_name)
++{
++    uint32_t fdt_event_ctr_map[15] = {};
++
++   /*
++    * The event encoding is specified in the SBI specification
++    * Event idx is a 20bits wide number encoded as follows:
++    * event_idx[19:16] = type
++    * event_idx[15:0] = code
++    * The code field in cache events are encoded as follows:
++    * event_idx.code[15:3] = cache_id
++    * event_idx.code[2:1] = op_id
++    * event_idx.code[0:0] = result_id
++    */
++
++   /* SBI_PMU_HW_CPU_CYCLES: 0x01 : type(0x00) */
++   fdt_event_ctr_map[0] = cpu_to_be32(0x00000001);
++   fdt_event_ctr_map[1] = cpu_to_be32(0x00000001);
++   fdt_event_ctr_map[2] = cpu_to_be32(cmask | 1 << 0);
++
++   /* SBI_PMU_HW_INSTRUCTIONS: 0x02 : type(0x00) */
++   fdt_event_ctr_map[3] = cpu_to_be32(0x00000002);
++   fdt_event_ctr_map[4] = cpu_to_be32(0x00000002);
++   fdt_event_ctr_map[5] = cpu_to_be32(cmask | 1 << 2);
++
++   /* SBI_PMU_HW_CACHE_DTLB : 0x03 READ : 0x00 MISS : 0x00 type(0x01) */
++   fdt_event_ctr_map[6] = cpu_to_be32(0x00010019);
++   fdt_event_ctr_map[7] = cpu_to_be32(0x00010019);
++   fdt_event_ctr_map[8] = cpu_to_be32(cmask);
++
++   /* SBI_PMU_HW_CACHE_DTLB : 0x03 WRITE : 0x01 MISS : 0x00 type(0x01) */
++   fdt_event_ctr_map[9] = cpu_to_be32(0x0001001B);
++   fdt_event_ctr_map[10] = cpu_to_be32(0x0001001B);
++   fdt_event_ctr_map[11] = cpu_to_be32(cmask);
++
++   /* SBI_PMU_HW_CACHE_ITLB : 0x04 READ : 0x00 MISS : 0x00 type(0x01) */
++   fdt_event_ctr_map[12] = cpu_to_be32(0x00010021);
++   fdt_event_ctr_map[13] = cpu_to_be32(0x00010021);
++   fdt_event_ctr_map[14] = cpu_to_be32(cmask);
++
++   /* This a OpenSBI specific DT property documented in OpenSBI docs */
++   qemu_fdt_setprop(fdt, pmu_name, "riscv,event-to-mhpmcounters",
++                    fdt_event_ctr_map, sizeof(fdt_event_ctr_map));
++}
+diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
+index 92c30a6f4c..a1cf8210be 100644
+--- a/hw/riscv/virt.c
++++ b/hw/riscv/virt.c
+@@ -30,7 +30,6 @@
+ #include "hw/char/serial-mm.h"
+ #include "target/riscv/cpu.h"
+ #include "hw/core/sysbus-fdt.h"
+-#include "target/riscv/pmu.h"
+ #include "hw/riscv/riscv_hart.h"
+ #include "hw/riscv/iommu.h"
+ #include "hw/riscv/riscv-iommu-bits.h"
+diff --git a/include/hw/riscv/fdt-common.h b/include/hw/riscv/fdt-common.h
+index 017278b611..1729a6abc6 100644
+--- a/include/hw/riscv/fdt-common.h
++++ b/include/hw/riscv/fdt-common.h
+@@ -35,4 +35,5 @@ void create_fdt_plic(void *fdt, hwaddr addr, uint64_t size,
+                      uint32_t addr_cells, uint32_t *plic_cells,
+                      uint32_t cells_size, uint32_t ndev_sources,
+                      bool numa_enabled, int socket);
++void riscv_pmu_generate_fdt_node(void *fdt, uint32_t cmask, char *pmu_name);
+ #endif
+diff --git a/target/riscv/tcg/pmu.c b/target/riscv/tcg/pmu.c
+index 3444400bd2..38ad2737e1 100644
+--- a/target/riscv/tcg/pmu.c
++++ b/target/riscv/tcg/pmu.c
+@@ -27,58 +27,6 @@
  
- riscv_ss.add(files(
-   'cpu.c',
--  'cpu_helper.c',
--  'csr.c',
--  'fpu_helper.c',
-   'gdbstub.c',
--  'op_helper.c',
--  'vector_helper.c',
--  'vector_internals.c',
--  'bitmanip_helper.c',
--  'translate.c',
--  'm128_helper.c',
--  'crypto_helper.c',
--  'zce_helper.c',
--  'vcrypto_helper.c'
- ))
+ #define RISCV_TIMEBASE_FREQ 1000000000 /* 1Ghz */
  
- riscv_system_ss = ss.source_set()
- riscv_system_ss.add(files(
-   'arch_dump.c',
-   'pmp.c',
--  'debug.c',
-   'monitor.c',
-   'machine.c',
--  'mips_csr.c',
--  'pmu.c',
--  'th_csr.c',
-   'time_helper.c',
-   'riscv-qmp-cmds.c',
- ))
-diff --git a/target/riscv/bitmanip_helper.c b/target/riscv/tcg/bitmanip_helper.c
-similarity index 100%
-rename from target/riscv/bitmanip_helper.c
-rename to target/riscv/tcg/bitmanip_helper.c
-diff --git a/target/riscv/cpu_helper.c b/target/riscv/tcg/cpu_helper.c
-similarity index 100%
-rename from target/riscv/cpu_helper.c
-rename to target/riscv/tcg/cpu_helper.c
-diff --git a/target/riscv/crypto_helper.c b/target/riscv/tcg/crypto_helper.c
-similarity index 100%
-rename from target/riscv/crypto_helper.c
-rename to target/riscv/tcg/crypto_helper.c
-diff --git a/target/riscv/csr.c b/target/riscv/tcg/csr.c
-similarity index 100%
-rename from target/riscv/csr.c
-rename to target/riscv/tcg/csr.c
-diff --git a/target/riscv/debug.c b/target/riscv/tcg/debug.c
-similarity index 100%
-rename from target/riscv/debug.c
-rename to target/riscv/tcg/debug.c
-diff --git a/target/riscv/fpu_helper.c b/target/riscv/tcg/fpu_helper.c
-similarity index 100%
-rename from target/riscv/fpu_helper.c
-rename to target/riscv/tcg/fpu_helper.c
-diff --git a/target/riscv/insn_trans/trans_privileged.c.inc b/target/riscv/tcg/insn_trans/trans_privileged.c.inc
-similarity index 100%
-rename from target/riscv/insn_trans/trans_privileged.c.inc
-rename to target/riscv/tcg/insn_trans/trans_privileged.c.inc
-diff --git a/target/riscv/insn_trans/trans_rva.c.inc b/target/riscv/tcg/insn_trans/trans_rva.c.inc
-similarity index 100%
-rename from target/riscv/insn_trans/trans_rva.c.inc
-rename to target/riscv/tcg/insn_trans/trans_rva.c.inc
-diff --git a/target/riscv/insn_trans/trans_rvb.c.inc b/target/riscv/tcg/insn_trans/trans_rvb.c.inc
-similarity index 100%
-rename from target/riscv/insn_trans/trans_rvb.c.inc
-rename to target/riscv/tcg/insn_trans/trans_rvb.c.inc
-diff --git a/target/riscv/insn_trans/trans_rvbf16.c.inc b/target/riscv/tcg/insn_trans/trans_rvbf16.c.inc
-similarity index 100%
-rename from target/riscv/insn_trans/trans_rvbf16.c.inc
-rename to target/riscv/tcg/insn_trans/trans_rvbf16.c.inc
-diff --git a/target/riscv/insn_trans/trans_rvd.c.inc b/target/riscv/tcg/insn_trans/trans_rvd.c.inc
-similarity index 100%
-rename from target/riscv/insn_trans/trans_rvd.c.inc
-rename to target/riscv/tcg/insn_trans/trans_rvd.c.inc
-diff --git a/target/riscv/insn_trans/trans_rvf.c.inc b/target/riscv/tcg/insn_trans/trans_rvf.c.inc
-similarity index 100%
-rename from target/riscv/insn_trans/trans_rvf.c.inc
-rename to target/riscv/tcg/insn_trans/trans_rvf.c.inc
-diff --git a/target/riscv/insn_trans/trans_rvh.c.inc b/target/riscv/tcg/insn_trans/trans_rvh.c.inc
-similarity index 100%
-rename from target/riscv/insn_trans/trans_rvh.c.inc
-rename to target/riscv/tcg/insn_trans/trans_rvh.c.inc
-diff --git a/target/riscv/insn_trans/trans_rvi.c.inc b/target/riscv/tcg/insn_trans/trans_rvi.c.inc
-similarity index 100%
-rename from target/riscv/insn_trans/trans_rvi.c.inc
-rename to target/riscv/tcg/insn_trans/trans_rvi.c.inc
-diff --git a/target/riscv/insn_trans/trans_rvk.c.inc b/target/riscv/tcg/insn_trans/trans_rvk.c.inc
-similarity index 100%
-rename from target/riscv/insn_trans/trans_rvk.c.inc
-rename to target/riscv/tcg/insn_trans/trans_rvk.c.inc
-diff --git a/target/riscv/insn_trans/trans_rvm.c.inc b/target/riscv/tcg/insn_trans/trans_rvm.c.inc
-similarity index 100%
-rename from target/riscv/insn_trans/trans_rvm.c.inc
-rename to target/riscv/tcg/insn_trans/trans_rvm.c.inc
-diff --git a/target/riscv/insn_trans/trans_rvv.c.inc b/target/riscv/tcg/insn_trans/trans_rvv.c.inc
-similarity index 100%
-rename from target/riscv/insn_trans/trans_rvv.c.inc
-rename to target/riscv/tcg/insn_trans/trans_rvv.c.inc
-diff --git a/target/riscv/insn_trans/trans_rvvk.c.inc b/target/riscv/tcg/insn_trans/trans_rvvk.c.inc
-similarity index 100%
-rename from target/riscv/insn_trans/trans_rvvk.c.inc
-rename to target/riscv/tcg/insn_trans/trans_rvvk.c.inc
-diff --git a/target/riscv/insn_trans/trans_rvzabha.c.inc b/target/riscv/tcg/insn_trans/trans_rvzabha.c.inc
-similarity index 100%
-rename from target/riscv/insn_trans/trans_rvzabha.c.inc
-rename to target/riscv/tcg/insn_trans/trans_rvzabha.c.inc
-diff --git a/target/riscv/insn_trans/trans_rvzacas.c.inc b/target/riscv/tcg/insn_trans/trans_rvzacas.c.inc
-similarity index 100%
-rename from target/riscv/insn_trans/trans_rvzacas.c.inc
-rename to target/riscv/tcg/insn_trans/trans_rvzacas.c.inc
-diff --git a/target/riscv/insn_trans/trans_rvzalasr.c.inc b/target/riscv/tcg/insn_trans/trans_rvzalasr.c.inc
-similarity index 100%
-rename from target/riscv/insn_trans/trans_rvzalasr.c.inc
-rename to target/riscv/tcg/insn_trans/trans_rvzalasr.c.inc
-diff --git a/target/riscv/insn_trans/trans_rvzawrs.c.inc b/target/riscv/tcg/insn_trans/trans_rvzawrs.c.inc
-similarity index 100%
-rename from target/riscv/insn_trans/trans_rvzawrs.c.inc
-rename to target/riscv/tcg/insn_trans/trans_rvzawrs.c.inc
-diff --git a/target/riscv/insn_trans/trans_rvzce.c.inc b/target/riscv/tcg/insn_trans/trans_rvzce.c.inc
-similarity index 100%
-rename from target/riscv/insn_trans/trans_rvzce.c.inc
-rename to target/riscv/tcg/insn_trans/trans_rvzce.c.inc
-diff --git a/target/riscv/insn_trans/trans_rvzcmop.c.inc b/target/riscv/tcg/insn_trans/trans_rvzcmop.c.inc
-similarity index 100%
-rename from target/riscv/insn_trans/trans_rvzcmop.c.inc
-rename to target/riscv/tcg/insn_trans/trans_rvzcmop.c.inc
-diff --git a/target/riscv/insn_trans/trans_rvzfa.c.inc b/target/riscv/tcg/insn_trans/trans_rvzfa.c.inc
-similarity index 100%
-rename from target/riscv/insn_trans/trans_rvzfa.c.inc
-rename to target/riscv/tcg/insn_trans/trans_rvzfa.c.inc
-diff --git a/target/riscv/insn_trans/trans_rvzfh.c.inc b/target/riscv/tcg/insn_trans/trans_rvzfh.c.inc
-similarity index 100%
-rename from target/riscv/insn_trans/trans_rvzfh.c.inc
-rename to target/riscv/tcg/insn_trans/trans_rvzfh.c.inc
-diff --git a/target/riscv/insn_trans/trans_rvzicbo.c.inc b/target/riscv/tcg/insn_trans/trans_rvzicbo.c.inc
-similarity index 100%
-rename from target/riscv/insn_trans/trans_rvzicbo.c.inc
-rename to target/riscv/tcg/insn_trans/trans_rvzicbo.c.inc
-diff --git a/target/riscv/insn_trans/trans_rvzicfiss.c.inc b/target/riscv/tcg/insn_trans/trans_rvzicfiss.c.inc
-similarity index 100%
-rename from target/riscv/insn_trans/trans_rvzicfiss.c.inc
-rename to target/riscv/tcg/insn_trans/trans_rvzicfiss.c.inc
-diff --git a/target/riscv/insn_trans/trans_rvzicond.c.inc b/target/riscv/tcg/insn_trans/trans_rvzicond.c.inc
-similarity index 100%
-rename from target/riscv/insn_trans/trans_rvzicond.c.inc
-rename to target/riscv/tcg/insn_trans/trans_rvzicond.c.inc
-diff --git a/target/riscv/insn_trans/trans_rvzimop.c.inc b/target/riscv/tcg/insn_trans/trans_rvzimop.c.inc
-similarity index 100%
-rename from target/riscv/insn_trans/trans_rvzimop.c.inc
-rename to target/riscv/tcg/insn_trans/trans_rvzimop.c.inc
-diff --git a/target/riscv/insn_trans/trans_svinval.c.inc b/target/riscv/tcg/insn_trans/trans_svinval.c.inc
-similarity index 100%
-rename from target/riscv/insn_trans/trans_svinval.c.inc
-rename to target/riscv/tcg/insn_trans/trans_svinval.c.inc
-diff --git a/target/riscv/insn_trans/trans_xlrbr.c.inc b/target/riscv/tcg/insn_trans/trans_xlrbr.c.inc
-similarity index 100%
-rename from target/riscv/insn_trans/trans_xlrbr.c.inc
-rename to target/riscv/tcg/insn_trans/trans_xlrbr.c.inc
-diff --git a/target/riscv/insn_trans/trans_xmips.c.inc b/target/riscv/tcg/insn_trans/trans_xmips.c.inc
-similarity index 100%
-rename from target/riscv/insn_trans/trans_xmips.c.inc
-rename to target/riscv/tcg/insn_trans/trans_xmips.c.inc
-diff --git a/target/riscv/insn_trans/trans_xthead.c.inc b/target/riscv/tcg/insn_trans/trans_xthead.c.inc
-similarity index 100%
-rename from target/riscv/insn_trans/trans_xthead.c.inc
-rename to target/riscv/tcg/insn_trans/trans_xthead.c.inc
-diff --git a/target/riscv/insn_trans/trans_xventanacondops.c.inc b/target/riscv/tcg/insn_trans/trans_xventanacondops.c.inc
-similarity index 100%
-rename from target/riscv/insn_trans/trans_xventanacondops.c.inc
-rename to target/riscv/tcg/insn_trans/trans_xventanacondops.c.inc
-diff --git a/target/riscv/insn_trans/trans_zilsd.c.inc b/target/riscv/tcg/insn_trans/trans_zilsd.c.inc
-similarity index 100%
-rename from target/riscv/insn_trans/trans_zilsd.c.inc
-rename to target/riscv/tcg/insn_trans/trans_zilsd.c.inc
-diff --git a/target/riscv/m128_helper.c b/target/riscv/tcg/m128_helper.c
-similarity index 100%
-rename from target/riscv/m128_helper.c
-rename to target/riscv/tcg/m128_helper.c
-diff --git a/target/riscv/tcg/meson.build b/target/riscv/tcg/meson.build
-index 061df3d74a..5684fcf985 100644
---- a/target/riscv/tcg/meson.build
-+++ b/target/riscv/tcg/meson.build
-@@ -1,2 +1,28 @@
--riscv_ss.add(when: 'CONFIG_TCG', if_true: files(
--  'tcg-cpu.c'))
-+if 'CONFIG_TCG' not in config_all_accel
-+  subdir_done()
-+endif
-+
-+riscv_ss.add(files(
-+  'bitmanip_helper.c',
-+ 'cpu_helper.c',
-+  'csr.c',
-+  'crypto_helper.c',
-+  'fpu_helper.c',
-+  'm128_helper.c',
-+  'op_helper.c',
-+  'translate.c',
-+  'tcg-cpu.c',
-+  'vcrypto_helper.c',
-+  'vector_helper.c',
-+  'vector_internals.c',
-+  'zce_helper.c'))
-+
-+
-+riscv_system_ss.add(files(
-+  'debug.c',
-+  'mips_csr.c',
-+  'pmu.c',
-+  'th_csr.c',
-+))
-+
-+
-diff --git a/target/riscv/mips_csr.c b/target/riscv/tcg/mips_csr.c
-similarity index 100%
-rename from target/riscv/mips_csr.c
-rename to target/riscv/tcg/mips_csr.c
-diff --git a/target/riscv/op_helper.c b/target/riscv/tcg/op_helper.c
-similarity index 100%
-rename from target/riscv/op_helper.c
-rename to target/riscv/tcg/op_helper.c
-diff --git a/target/riscv/pmu.c b/target/riscv/tcg/pmu.c
-similarity index 100%
-rename from target/riscv/pmu.c
-rename to target/riscv/tcg/pmu.c
-diff --git a/target/riscv/th_csr.c b/target/riscv/tcg/th_csr.c
-similarity index 100%
-rename from target/riscv/th_csr.c
-rename to target/riscv/tcg/th_csr.c
-diff --git a/target/riscv/translate.c b/target/riscv/tcg/translate.c
-similarity index 100%
-rename from target/riscv/translate.c
-rename to target/riscv/tcg/translate.c
-diff --git a/target/riscv/vcrypto_helper.c b/target/riscv/tcg/vcrypto_helper.c
-similarity index 100%
-rename from target/riscv/vcrypto_helper.c
-rename to target/riscv/tcg/vcrypto_helper.c
-diff --git a/target/riscv/vector_helper.c b/target/riscv/tcg/vector_helper.c
-similarity index 100%
-rename from target/riscv/vector_helper.c
-rename to target/riscv/tcg/vector_helper.c
-diff --git a/target/riscv/vector_internals.c b/target/riscv/tcg/vector_internals.c
-similarity index 100%
-rename from target/riscv/vector_internals.c
-rename to target/riscv/tcg/vector_internals.c
-diff --git a/target/riscv/vector_internals.h b/target/riscv/tcg/vector_internals.h
-similarity index 100%
-rename from target/riscv/vector_internals.h
-rename to target/riscv/tcg/vector_internals.h
-diff --git a/target/riscv/zce_helper.c b/target/riscv/tcg/zce_helper.c
-similarity index 100%
-rename from target/riscv/zce_helper.c
-rename to target/riscv/tcg/zce_helper.c
+-/*
+- * To keep it simple, any event can be mapped to any programmable counters in
+- * QEMU. The generic cycle & instruction count events can also be monitored
+- * using programmable counters. In that case, mcycle & minstret must continue
+- * to provide the correct value as well. Heterogeneous PMU per hart is not
+- * supported yet. Thus, number of counters are same across all harts.
+- */
+-void riscv_pmu_generate_fdt_node(void *fdt, uint32_t cmask, char *pmu_name)
+-{
+-    uint32_t fdt_event_ctr_map[15] = {};
+-
+-   /*
+-    * The event encoding is specified in the SBI specification
+-    * Event idx is a 20bits wide number encoded as follows:
+-    * event_idx[19:16] = type
+-    * event_idx[15:0] = code
+-    * The code field in cache events are encoded as follows:
+-    * event_idx.code[15:3] = cache_id
+-    * event_idx.code[2:1] = op_id
+-    * event_idx.code[0:0] = result_id
+-    */
+-
+-   /* SBI_PMU_HW_CPU_CYCLES: 0x01 : type(0x00) */
+-   fdt_event_ctr_map[0] = cpu_to_be32(0x00000001);
+-   fdt_event_ctr_map[1] = cpu_to_be32(0x00000001);
+-   fdt_event_ctr_map[2] = cpu_to_be32(cmask | 1 << 0);
+-
+-   /* SBI_PMU_HW_INSTRUCTIONS: 0x02 : type(0x00) */
+-   fdt_event_ctr_map[3] = cpu_to_be32(0x00000002);
+-   fdt_event_ctr_map[4] = cpu_to_be32(0x00000002);
+-   fdt_event_ctr_map[5] = cpu_to_be32(cmask | 1 << 2);
+-
+-   /* SBI_PMU_HW_CACHE_DTLB : 0x03 READ : 0x00 MISS : 0x00 type(0x01) */
+-   fdt_event_ctr_map[6] = cpu_to_be32(0x00010019);
+-   fdt_event_ctr_map[7] = cpu_to_be32(0x00010019);
+-   fdt_event_ctr_map[8] = cpu_to_be32(cmask);
+-
+-   /* SBI_PMU_HW_CACHE_DTLB : 0x03 WRITE : 0x01 MISS : 0x00 type(0x01) */
+-   fdt_event_ctr_map[9] = cpu_to_be32(0x0001001B);
+-   fdt_event_ctr_map[10] = cpu_to_be32(0x0001001B);
+-   fdt_event_ctr_map[11] = cpu_to_be32(cmask);
+-
+-   /* SBI_PMU_HW_CACHE_ITLB : 0x04 READ : 0x00 MISS : 0x00 type(0x01) */
+-   fdt_event_ctr_map[12] = cpu_to_be32(0x00010021);
+-   fdt_event_ctr_map[13] = cpu_to_be32(0x00010021);
+-   fdt_event_ctr_map[14] = cpu_to_be32(cmask);
+-
+-   /* This a OpenSBI specific DT property documented in OpenSBI docs */
+-   qemu_fdt_setprop(fdt, pmu_name, "riscv,event-to-mhpmcounters",
+-                    fdt_event_ctr_map, sizeof(fdt_event_ctr_map));
+-}
+-
+ static bool riscv_pmu_counter_valid(RISCVCPU *cpu, uint32_t ctr_idx)
+ {
+     if (ctr_idx < 3 || ctr_idx >= RV_MAX_MHPMCOUNTERS ||
+diff --git a/target/riscv/pmu.h b/target/riscv/tcg/pmu.h
+similarity index 95%
+rename from target/riscv/pmu.h
+rename to target/riscv/tcg/pmu.h
+index b4f1e469a2..de2fae1fb4 100644
+--- a/target/riscv/pmu.h
++++ b/target/riscv/tcg/pmu.h
+@@ -31,7 +31,6 @@ void riscv_pmu_init(RISCVCPU *cpu, Error **errp);
+ int riscv_pmu_update_event_map(CPURISCVState *env, uint64_t value,
+                                uint32_t ctr_idx);
+ int riscv_pmu_incr_ctr(RISCVCPU *cpu, enum riscv_pmu_event_idx event_idx);
+-void riscv_pmu_generate_fdt_node(void *fdt, uint32_t cmask, char *pmu_name);
+ int riscv_pmu_setup_timer(CPURISCVState *env, uint64_t value,
+                           uint32_t ctr_idx);
+ void riscv_pmu_update_fixed_ctrs(CPURISCVState *env, privilege_mode_t newpriv,
 -- 
 2.43.0
 
