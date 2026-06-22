@@ -4,106 +4,155 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70A9FCDB46B
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jun 2026 06:08:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7EF7CD98F6
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jun 2026 06:46:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wbXnR-000536-VU; Mon, 22 Jun 2026 02:06:14 -0400
+	id 1wbYPJ-0006il-Rb; Mon, 22 Jun 2026 02:45:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kchiu@axiado.com>) id 1wbXmp-0004rC-F0
- for qemu-devel@nongnu.org; Mon, 22 Jun 2026 02:05:36 -0400
-Received: from mail-westus2azlp170120002.outbound.protection.outlook.com
- ([2a01:111:f403:c007::2] helo=MW6PR02CU001.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <avihaih@nvidia.com>)
+ id 1wbYPH-0006hs-8D
+ for qemu-devel@nongnu.org; Mon, 22 Jun 2026 02:45:19 -0400
+Received: from mail-westus3azon11010055.outbound.protection.outlook.com
+ ([52.101.201.55] helo=PH7PR06CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kchiu@axiado.com>) id 1wbXmn-0006dJ-7k
- for qemu-devel@nongnu.org; Mon, 22 Jun 2026 02:05:35 -0400
+ (Exim 4.90_1) (envelope-from <avihaih@nvidia.com>)
+ id 1wbYPF-0007Ab-GO
+ for qemu-devel@nongnu.org; Mon, 22 Jun 2026 02:45:18 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=tBQ1H+ikYrgEUi6IyuDMVqyV94qfN/m9TLMW/+QedI7ugmqXwMaDHI1zWxoWeoRjpjNzpXufART/B0sIrqOI8xd/smPHVzw4/5nQylkF6s431SCKtyntdxc9o4ttYbvoMfm2MgjY5sy9l5NqzO7PK2DexHkmE5kHnyAOLTfgRp8WrfC/vZTwYlA7/atGviDE6PYR3l9If+vbn3lFI0b5Q416Ro4QQVCooBdNZ8tHiFL1GBV6SuhiD0fQE1JGsjMH0FNF9XB0X/hl9chUTyXfN61q/jTUVDybFdYv70IfSL+sAEd1Bn1emfSgi84NfXvaB/zS17QmZnE0/aFhzEqfMQ==
+ b=vG1ISLA3QJL/ttEt1XqpFr6wPvgSsott7RP6Pkunt4f4dvh3/UCP0IqiC+0OvugRDoDSzxTmKgMFtsLD6PRQ3ph0b77CGCYuH0GO+cSe7A4GUDrps1AKwhlucRH9FuPOcKV0jZUXCT6CDGyNFS207Mz5llyh/uUndSGVtLo91pjknFT4nH7cErpch6uc/bzpehu3y4ik1f3ieF5H6qgEIL/NU/fR8PN3ltD/qGvIuKHXrvKekR3ixig0C9EDHyZ/+0gjb0GpvDFI2Tybk48vdNCUkWlLCrrrabF903xJjYCYJ5K62QMJiJstOREjKhukRT/pXzy0ZWaK5tgGgFj8wg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=1EbES+qilksBHZ2iigsdfMQjchFsfS753R4MTSe1WFs=;
- b=k/JybAZTo04XRbyNCjjL2C7KSbi2dUx9LxXadZV0gfNThf2CysSxHtb4K5dF4wSCZSyshLsy1mnAVGPbAvFU969m/NGwmDb/9s7pEbNK6XIL2kdMAZqjL9K9Klj7uthKMcTceui4eNP/sejN7jyIDuGygAzPiPGB0aqTiulLF9hEraNHEZOHB4Qc1z5EY3Sm6UlLo7L4TQho3FpU6XhU4YJJhXN58UIuPU/7fkDy3fHBCwnPyxNmvWBbtprNYxfj6EVvOhC1MWKOyrgaeTRCOrOuNDRIQ8/WpTthup+hYNT+dOWb5soiThfbkYV9KZWMS/kfALnSc8rMb/+WDeUtHQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=fail (sender ip is
- 64.62.143.114) smtp.rcpttodomain=axiado.com smtp.mailfrom=axiado.com;
- dmarc=none action=none header.from=axiado.com; dkim=none (message not
- signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=axiado.com;
- s=selector1;
+ bh=t6pjHcyNMbcexbag3yP9/Zs+vFbXp93ZIqh92/3tMjQ=;
+ b=aMc1NaNUc+hT5Kdtqd5qS68BbC1dCSafV/n3Ow+WqsvjWMMutS1L7ZWPjBSgH6aodzmVp5G5BBW90P7u2OGaLEs8V6ykDam8JnYNHs17yEdKsxfF8BzPeuYO2x7FYVD7JpihXsLsYgCsnxJf48/5pguU1sMDUoDwaIgSM38Q+eqAcmmEEhd3EgOTfR7NiUvLdBPMn6Uli7gbuZoXQuNsyBJ3HIO5aryo7Um2WgvfYa8bxMitCGrQQT9/ZI01sGcZUrTmeqZS0noM4qwo+1yM2v5PUqWO7MPYzYzKXYSkwxbiCTRbpJzEp5Wd9vz6KjYeaMch1D6CAYspbq05A1ctMQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=1EbES+qilksBHZ2iigsdfMQjchFsfS753R4MTSe1WFs=;
- b=tV7ag5n6mNw4ar2JJAImehm23ilRE7mpnmwV6/D86PQ0qRx3VblLOyEwC//a2RTONA+uTeJqfKuE3zuU3nyFyQ/sHwQ3xPg+QjsnPQJwfrdVU1TZ2l/PBKWqyRrydmcsZoQ97Zqtp9wZdQ4fabwRT8UFjM0GQfamSSGwyFNbBnvPvn++UiRU8L9bkJ8mASVm3u24u59Dxa9tAGXSlcVJ98KkofKNnKkTD5SqkeMtLOce/BVhk0s6CvCcR1AKByva+aMiHyGRRAwvYYv4KY7eKIfpqCXpflgITZFsyQjD5KnpJMd00H8S/jx2awAp+L/E84cXwqFgkrHvXEEb6plI9w==
-Received: from BN9PR03CA0794.namprd03.prod.outlook.com (2603:10b6:408:13f::19)
- by CH3PR18MB5672.namprd18.prod.outlook.com (2603:10b6:610:197::18)
+ bh=t6pjHcyNMbcexbag3yP9/Zs+vFbXp93ZIqh92/3tMjQ=;
+ b=E03AWyQlcsZGVn4KHwJDA/toxppq0gjt+inQ7X4aEflBCO7rtSSVNqBBkkl383do5x9bNcKTig2t9mLtnJAulWd5jRA1FfiACVvqbT73m7zCp/mS2Xa/4vLOWmkynwjFdtVXKDnPUWL3aHOESLtdGdTt/fNUQMpOvcF3a/siNSTfyYxLvnXzd6CaU8m7cATGQeGtXmsmBa5Dhv1ERw4bOtDic05kAqlLoF8Lq/2F51f8riosDdkPpkXNNbXoGM9bvPe6XHUsomVW0LOPewfd91Wz+Q5z7wj+y79ZI7x4q13KILHlAUvPyG3OfaeNTwogUilLOP5rHVvi2ge1WXH5yQ==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from BL1PR12MB5063.namprd12.prod.outlook.com (2603:10b6:208:31a::11)
+ by MW4PR12MB7032.namprd12.prod.outlook.com (2603:10b6:303:1e9::12)
  with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.139.20; Mon, 22 Jun
- 2026 06:05:12 +0000
-Received: from BN3PEPF0000B06D.namprd21.prod.outlook.com
- (2603:10b6:408:13f:cafe::4c) by BN9PR03CA0794.outlook.office365.com
- (2603:10b6:408:13f::19) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.21.139.19 via Frontend Transport; Mon,
- 22 Jun 2026 06:05:12 +0000
-X-MS-Exchange-Authentication-Results: spf=fail (sender IP is 64.62.143.114)
- smtp.mailfrom=axiado.com; dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=axiado.com;
-Received-SPF: Fail (protection.outlook.com: domain of axiado.com does not
- designate 64.62.143.114 as permitted sender) receiver=protection.outlook.com; 
- client-ip=64.62.143.114; helo=smtp.corp.axiado.com;
-Received: from smtp.corp.axiado.com (64.62.143.114) by
- BN3PEPF0000B06D.mail.protection.outlook.com (10.167.243.72) with Microsoft
- SMTP Server (version=TLS1_3, cipher=TLS_AES_256_GCM_SHA384) id 15.21.181.0
- via Frontend Transport; Mon, 22 Jun 2026 06:05:11 +0000
-Received: from axiado.com (unknown [10.4.1.181])
- by smtp.corp.axiado.com (Postfix) with ESMTP id 5FD934186B5B;
- Sun, 21 Jun 2026 23:02:27 -0700 (PDT)
-From: Kuan-Jui Chiu <kchiu@axiado.com>
-To: qemu-devel@nongnu.org, peter.maydell@linaro.org, philmd@oss.qualcomm.com
-Cc: Kuan-Jui Chiu <kchiu@axiado.com>
-Subject: [PATCH v6 2/8] hw/misc: Add AX3000 clock control
-Date: Sun, 21 Jun 2026 23:05:00 -0700
-Message-Id: <20260622060507.83195-3-kchiu@axiado.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20260622060507.83195-1-kchiu@axiado.com>
-References: <20260622060507.83195-1-kchiu@axiado.com>
-MIME-Version: 1.0
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.139.19; Mon, 22 Jun
+ 2026 06:40:09 +0000
+Received: from BL1PR12MB5063.namprd12.prod.outlook.com
+ ([fe80::a0c2:5681:4aca:90da]) by BL1PR12MB5063.namprd12.prod.outlook.com
+ ([fe80::a0c2:5681:4aca:90da%7]) with mapi id 15.21.0139.018; Mon, 22 Jun 2026
+ 06:40:09 +0000
+Message-ID: <62aad5f0-eab9-4c93-b521-4a112ac8867b@nvidia.com>
+Date: Mon, 22 Jun 2026 09:39:58 +0300
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 07/14] migration: Make switchover-ack re-usable
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, Alex Williamson <alex@shazbot.org>,
+ Fabiano Rosas <farosas@suse.de>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
+ Zhao Liu <zhao1.liu@intel.com>, Halil Pasic <pasic@linux.ibm.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Jason Herne <jjherne@linux.ibm.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Ilya Leoshkevich <iii@linux.ibm.com>, David Hildenbrand <david@kernel.org>,
+ Eric Farman <farman@linux.ibm.com>, Matthew Rosato <mjrosato@linux.ibm.com>,
+ Cornelia Huck <cohuck@redhat.com>, Eric Blake <eblake@redhat.com>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ John Snow <jsnow@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Maor Gottlieb <maorg@nvidia.com>
+References: <20260609075812.32067-1-avihaih@nvidia.com>
+ <20260609075812.32067-8-avihaih@nvidia.com> <aiww8tN6dRLA3t_R@x1.local>
+ <e4d00894-990b-44b3-b89c-7cd1b0398a0a@nvidia.com> <ai__gjsVcZs_ecLc@x1.local>
+ <9605d542-f797-4ac4-bb62-966a77ffd361@nvidia.com>
+ <61fefad6-af44-42db-8913-14bd274b4833@redhat.com>
+Content-Language: en-US
+From: Avihai Horon <avihaih@nvidia.com>
+In-Reply-To: <61fefad6-af44-42db-8913-14bd274b4833@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-EOPAttributedMessage: 0
+X-ClientProxiedBy: TL2P290CA0026.ISRP290.PROD.OUTLOOK.COM
+ (2603:1096:950:3::13) To BL1PR12MB5063.namprd12.prod.outlook.com
+ (2603:10b6:208:31a::11)
+MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BN3PEPF0000B06D:EE_|CH3PR18MB5672:EE_
-Content-Type: text/plain
-X-MS-Office365-Filtering-Correlation-Id: 955c82af-f800-4b97-d31d-08ded02438a1
+X-MS-TrafficTypeDiagnostic: BL1PR12MB5063:EE_|MW4PR12MB7032:EE_
+X-MS-Office365-Filtering-Correlation-Id: f98f3b25-55ca-44b0-8fd8-08ded0291a71
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|36860700016|82310400026|376014|23010399003|1800799024|18002099003|22082099003|56012099006;
-X-Microsoft-Antispam-Message-Info: TwfT3y4dYmnUao70Zq2i8Yw0stL/iKeUinPq+xcB1Y8rJW6zCe5WyHMxaFJwNSuk7jwPIik3lBzSdFaml9aB8QzW9u/RU+qlhqG8Z9rdESpwHXQ064rBwv2IvJaTkLvSLjcruvcAowdIQ9cMji9jZgIsWRXJF1yZTOgg0cvVosLf99CEr6hgCuvfejnAIKaao7AqPO8K+h49e6OW5HMpyTJxU5xlR8gW8a/7Tgp+g2fv5Tevzp9HVfXmi8K4JFIBBiiog5sesvoA8PRWlkGizZHrvUrljHcoy9PC356KdXMTXuM8DflmkOzgnB2jI0aU3uKVIA2rW+oDtKPLNOkdC453SOZTA6HgXCvMni1hM+bYHz4voS/SOzrXFfFi429QURQf/QRaMmeFI3kt4HPPannDp3aMlO6WpCzaaB/4Uot/w3jB8fParb6lctZbrXUd+qE2zuUWEW4sEFOM/d0RYIrihgTlHbORS5ph13a2oSLAphrL3wNT0Si+2qOMoGKHg45vp4uSWbqn578chvYsb4Xvg9VLPEGtzL3ie/fUgnmgIBMleRQhlJ+O2/XyCuJqEUSaQ4dZTyKJe4Phb0ifeZzBlVa6bSvuymHIWLSbYkVZhtnW4b37YsL87x7Dg7pCcY6wDpYkX18j5hE75+Ev5wCjFjAtI1WBe8m2k0opFvynr9PBJj1aogpsuRz1RuJ+rn6kXD2LCD25750z6JuCaQ==
-X-Forefront-Antispam-Report: CIP:64.62.143.114; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:smtp.corp.axiado.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230040)(36860700016)(82310400026)(376014)(23010399003)(1800799024)(18002099003)(22082099003)(56012099006);
- DIR:OUT; SFP:1102; 
+ ARA:13230040|1800799024|366016|376014|7416014|23010399003|4143699003|56012099006|11063799006|18002099003|22082099003;
+X-Microsoft-Antispam-Message-Info: tW9htJY5knDE8SqeqVu4jPDeQIIv+VTM+fnWS7KtJvmkrJXuyTRU+iR9b6J9m4aXBLyvWk9yxdFsXseVoHDp3VhCOQfnPSpC2L3Q/CjlyGiv1zLdYkHVsQCRikpmqEBcYRPDeYMbkUGR1XpO18LAG09vBr4BJX/+G6pw1dzMhyWrfQrBLYg/XBh3gHqLlu8f7N3dNwQXfjuazc2XUM2K6VBu3GYWwGjaJ2Yk+XO8+BBSnNtHgWqW5dusI6SUYa02hZPnFsXvjqvWb57u8+HoBAIkKOF0uH7lqkSvG3ytKQhPmMvuy3FKYpnrFg/2+qF2quXiOk1A1+Ncj6X7JECFHzMMxDbdBqEhLycNfotSOmWOZ5YamFTfl0ryS7VIix2CkHsuycrNZ2L3gW5bcORxY3E/oD41MQvh4ES1TDUQfZRy/i/WRkdmioHpkIJqxRlUtENnM7IpQIYvObq4hwoIXDXaNcfqpnp9cPDXcO578j1lWJmscUJyFpaSs/a+ujK0up56tNOFH4fy1LDMoX8GGFffSoZlB5DdhPk4bxdaeGubuf4wjHS1tp6mSGUNVdzrNlpiNmkwhzX0bMJT1xttJtbrEoYXWqgPKmLoHvgpqJs3Fb6Nxm+pLnPTJcgjIQGTlAuj7HWovNUx4TYJ9bmihe7hWuBoUQXk7Zo0teGhPGc=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:BL1PR12MB5063.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(1800799024)(366016)(376014)(7416014)(23010399003)(4143699003)(56012099006)(11063799006)(18002099003)(22082099003);
+ DIR:OUT; SFP:1101; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: xNUpulHLV91+wBlLTlTncqZOlE9jkx5YltrXUVprB4O55LhaCXXZPJlXvvUHij+cabsjDkXdL/yQRyDryMatbYkXIDdRV3l92wV6hYxhd3GELUNLV2BR0oCHsitBwnbuaqtEQ/p78sDYs4f7DuIHnmIex7ELqKHJO70dDH6vpmY4ZCMgCFqyNLVEetTICSiwxGoEGb+ahorLh5cvYCHLeEg/djknENwnt2rkST6qyrLq+nUMx83cufLlshl8JpIPkgqPrZbg1mZUDbPKH5bLfXQecD6BrT8DwqnJg49jPizsgxxOCcqlWMKWem2KoW5SF3guGGKvV7PAJN1fzEmcJe8RYN/ez/ysYZisNKBReYHf5Gthus0Jm5Dfgz27X0e2IFpyczFdY47d8IOaPwZ5t9Vcq97ZCt7RlDvgSYwl/0yjd9gtxTq5Zt9YdHrWOiSa
-X-OriginatorOrg: axiado.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 22 Jun 2026 06:05:11.8967 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 955c82af-f800-4b97-d31d-08ded02438a1
-X-MS-Exchange-CrossTenant-Id: ff2db17c-4338-408e-9036-2dee8e3e17d7
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=ff2db17c-4338-408e-9036-2dee8e3e17d7; Ip=[64.62.143.114];
- Helo=[smtp.corp.axiado.com]
-X-MS-Exchange-CrossTenant-AuthSource: BN3PEPF0000B06D.namprd21.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH3PR18MB5672
-Received-SPF: pass client-ip=2a01:111:f403:c007::2;
- envelope-from=kchiu@axiado.com;
- helo=MW6PR02CU001.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?UWlCSmZDNFdCMy9pc29yRW9EbnpSTXVoaE5OMEgybXVxM2VrblJabFVOMXhS?=
+ =?utf-8?B?TUR0R0RGdVRld0dqZEwreXhaOTM5WG10VW5yMzlYSDBxVmFmVFhoYUR2MGV6?=
+ =?utf-8?B?Wjd4OFVQSU5Cak0yVVpBU1B0RTBuK091RjFMSm9BenNFcHAxblh4NHA3cXBo?=
+ =?utf-8?B?MElmaFFOa3IyRGt0eVl3eEZTSGd2dUtZWW1jcnFRQkw4YzBMQkFoNGk4V1Uz?=
+ =?utf-8?B?bktrbCtoblVyYlg0SE50ODNLWFdGeVU4Ymg1WmxUUDBwanRJNTdIZmN0WjBT?=
+ =?utf-8?B?aUVHYmFucE40QTNnUGpaK0pIOHVTOUFDa292TGsyR1VidUcwOGE0NHFWc1FG?=
+ =?utf-8?B?eDV3VHkrQUJTZFBKVWZhMXRXdk9ranZSTm1XVWlLdEZXM3Ewb3Evb1E1NFM4?=
+ =?utf-8?B?Z3V6VERUbXRNL0hsdXRJaG9VczJXbWNVd0t0NEswOGx5clRMTDl3bFU5Ym5i?=
+ =?utf-8?B?VGNUYUdWVDZvNmdHeHhnQ1FFOVZTOUhvSHJEZnN2elRXcmZNOUUxbm9BQkRH?=
+ =?utf-8?B?K2dJSHdpNDJaYlNOWksxaGdNYUoyMXZLd3VaNmVwWDRFK0hoYS9kN1NnQndp?=
+ =?utf-8?B?SlNCOEVYMFUzY3JTVmhxTDhudlFUMzh2NWtMdWlzQS8yaXdTTW9XdmYvS1hQ?=
+ =?utf-8?B?c2NlYlNVWUpuVmZzaWUrMVNVeDhwb0VXdU5NZnhJbkRoTUV6bEhsaGcvRFIy?=
+ =?utf-8?B?OFVlMnF6UTRXUlh2aVk4NDJZZnJZNDIyWUdTdzkzcHdLMzBEeTVyazZ4WU9Q?=
+ =?utf-8?B?cHBONzhQcjJLS3FkWVp0U1FmeERKWDZSbjQzSTE1eDcyNG9qZW9lUERHckh1?=
+ =?utf-8?B?TFFLc0ZYb1hzVk5md1lScjdBcUZhbmovcEZFM3ZRcHdRVVJRMHh4NkIxbW53?=
+ =?utf-8?B?K0QxNkVCazdvTjlkRjdJVysrT3U0SDE3Ylk2R01LckV0TVFKUVhabUkyNUQ3?=
+ =?utf-8?B?ZzJ1Qit3UzllR2lvejF4NmJJUWhCTmFDcUFYYWFKUWltM1gycFZJb0c4cVhX?=
+ =?utf-8?B?MmJKOEUydWY1cGxyWXBlWFEyTnBUZS9TbW42d2o0b0pUN0ZKWlNtOStueVFK?=
+ =?utf-8?B?cCsrTnhDUzdSc0dOSXNqWjE5MmxaMzMyM0xJb2dUVlRZSjBLL2czeXJ3QitH?=
+ =?utf-8?B?Qm1DRWVXalQ0c2xTQVZOVXZsS3RhYmZtRDBTTXpXQmtpOGl2MSszRmVFQUJO?=
+ =?utf-8?B?TTR5aUdhRUJXMXJmYVFKOXhyS1VZVU9LK0t1c1EvcFQ3Uks1WEJMSDNFditS?=
+ =?utf-8?B?S0UzNmlqNms1dExlcHhaVkFQNkpsZzhsTnhXdTNEdys0R2NaaDRMb2xKUXZF?=
+ =?utf-8?B?QUdMbXVTL08xUWQvTmlIc0hvZDc0RTBrR0ttOUY3Wk0wZ0RNUjI4VndyL1VK?=
+ =?utf-8?B?RFByQUxhb2w1d3NYUjBHNEsvQlFUa1diblUrN0dCVHlEeDFHajlsbE93R2Mv?=
+ =?utf-8?B?dVVvYUxnRTU3eUJ2Y0hlTkdJaG0ySFBLM204UFBVcXAxRVF3R2VueldBM3Fu?=
+ =?utf-8?B?N2VYUWJaYnR5RVlDMWplUjRSa1dudzZ6eGRXYi8yY1ZKdXJ0RWtPbTBCTjBD?=
+ =?utf-8?B?VXNkUmI1UDZGZDdnckluRGl1MGxrb2JRSnZ1cmZyZ2VTOVlta0pxcW90VHBM?=
+ =?utf-8?B?OWFpbzNKR21pNEpzdDR6ZFUwZWxGTDh1b1l2d25zaEFlcWJBem1vSEY4MW5L?=
+ =?utf-8?B?a1d4eS82QXZCUGpjSzI2Z08vMmhndGlKek9aUEJCcTZRWEpXU015TVEvL1Nx?=
+ =?utf-8?B?Qm1KcCtEbUt1U09KUytDMzdLVmZKU1dIVzZBaTdveEtibks3U1ZxbWQ4QUdX?=
+ =?utf-8?B?bEY2L0tJSXozSGswb2N1SVlWYUJ4RlZVYlplejA4M3NxYWVaclhXY3NhYlZN?=
+ =?utf-8?B?aVNmbVlUN3F6UWt4am5kS1dNMkF1YzlING9FZWY3UHVQZSs3bSsxUkY0bnpm?=
+ =?utf-8?B?eTJUb3Z1dUhNdG1tRXFXbytXOStJVWxRbnVSRFcrY3h0aWhMN1NZYVpSS3Fs?=
+ =?utf-8?B?bzJBL3F1QmIzVmJpTk9aVk40U2MvUlFUUTFvRDFSVWVERnY4TUEwczk2YXlk?=
+ =?utf-8?B?cG5mdjlZN3Q3U1MybzFpRUhZMlo5N0ZHZ3R1RE4wZ0tNWnI0S3RzK1Y1SmVz?=
+ =?utf-8?B?VmRuNGoyTGVSd2FBbzBManlQemZVVm1sUVFBLzJtWDBWcnZ5SGttY3lYclFa?=
+ =?utf-8?B?MFV5QmdKejVCNmpOOFdKZ2pvY1FlT2o5Y1IvYVUzbFJPZXVXd0FCdmh0VTRr?=
+ =?utf-8?B?M01SaWk1bEFFVkxSSlRuZXZmOGpaVWh1L25hQlBEd09KMS9EN0l4R0c5M21q?=
+ =?utf-8?B?SWl5d3pJbUdoQXcwWUFMOGNGMWRUTDZvanNYTHFNU2VzZHk4eUNhQT09?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: f98f3b25-55ca-44b0-8fd8-08ded0291a71
+X-MS-Exchange-CrossTenant-AuthSource: BL1PR12MB5063.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 22 Jun 2026 06:40:09.1121 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: V0SGHPLORm+GXN29eNRpaS83hSkoowpNEWDAvPtO2gwERJywt9rwyTIctnebz751e3EepvXXlgUfmyCanIfkJA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW4PR12MB7032
+Received-SPF: permerror client-ip=52.101.201.55;
+ envelope-from=avihaih@nvidia.com;
+ helo=PH7PR06CU001.outbound.protection.outlook.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,163 +168,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patch adds a new model for Axiado AX3000 clock control which supports
-to read ID and status
 
-Signed-off-by: Kuan-Jui Chiu <kchiu@axiado.com>
----
- hw/misc/Kconfig              |  3 ++
- hw/misc/axiado_clk.c         | 77 ++++++++++++++++++++++++++++++++++++
- hw/misc/meson.build          |  3 ++
- include/hw/misc/axiado_clk.h | 26 ++++++++++++
- 4 files changed, 109 insertions(+)
- create mode 100644 hw/misc/axiado_clk.c
- create mode 100644 include/hw/misc/axiado_clk.h
+On 6/18/2026 11:38 AM, Cédric Le Goater wrote:
+> External email: Use caution opening links or attachments
+>
+>
+>>>>>> diff --git a/hw/core/machine.c b/hw/core/machine.c
+>>>>>> index 4d8b15d99e..8219f13779 100644
+>>>>>> --- a/hw/core/machine.c
+>>>>>> +++ b/hw/core/machine.c
+>>>>>> @@ -43,6 +43,7 @@ GlobalProperty hw_compat_11_0[] = {
+>>>>>>        { "chardev-vc", "encoding", "cp437" },
+>>>>>>        { "tpm-crb", "cap-chunk", "off" },
+>>>>>>        { "tpm-crb", "x-allow-chunk-migration", "off" },
+>>>>>> +    { "migration", "switchover-ack-legacy", "on" },
+>>>>>>    };
+>>>>> This line needs to be moved to the last patch, or people will get 
+>>>>> very
+>>>>> confused on last patch flipping default without caring about old 
+>>>>> behavior..
+>>>> This patch Implements the compatibility flows for legacy 
+>>>> switchover-ack
+>>>> which use this property, so moving this line to last patch sounds 
+>>>> even more
+>>>> confusing IMHO.
+>>> My comment only applies to this one line to change hw_compat_11_0[], 
+>>> not
+>>> the property itself.  It won't affect this patch.  It's common 
+>>> pattern to
+>>> do this in one patch to "update default value, but let's keep the old
+>>> machines unaffected".
+>>>
+>>> Btw, since this value still has a default value ON in this patch, 
+>>> moving
+>>> this line to the last patch won't change anything except making last 
+>>> patch
+>>> clearer.
+>>
+>> Alright, I'll move it to last patch.
+>>
+>> Cedric, would you like me to send v4 for this?
+>
+> Yes please.
+>
+> I think this series is ready for merge. So I have asked our QE
+> to test it a bit. Should be done next week. Once done, I will
+> send a vfio MR.
 
-diff --git a/hw/misc/Kconfig b/hw/misc/Kconfig
-index 1543ee66531..b8860dd3e77 100644
---- a/hw/misc/Kconfig
-+++ b/hw/misc/Kconfig
-@@ -257,4 +257,7 @@ config XLNX_VERSAL_TRNG
- config XLNX_ZYNQ_DDRC
-     bool
- 
-+config AXIADO_CLK
-+    bool
-+
- source macio/Kconfig
-diff --git a/hw/misc/axiado_clk.c b/hw/misc/axiado_clk.c
-new file mode 100644
-index 00000000000..10b8012a674
---- /dev/null
-+++ b/hw/misc/axiado_clk.c
-@@ -0,0 +1,77 @@
-+/*
-+ * Axiado Clock Control
-+ *
-+ * Author: Kuan-Jui Chiu <kchiu@axiado.com>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "hw/misc/axiado_clk.h"
-+#include "qemu/log.h"
-+
-+#define CLKRST_CPU_PLL_POSTDIV_OFFSET   0x0C
-+#define CLKRST_CPU_PLL_STS_OFFSET       0x14
-+
-+static uint64_t pll_read(void *opaque, hwaddr offset, unsigned size)
-+{
-+    switch (offset) {
-+    case CLKRST_CPU_PLL_POSTDIV_OFFSET:
-+        return 0x20891b;
-+    case CLKRST_CPU_PLL_STS_OFFSET:
-+        return 0x01;
-+    default:
-+        qemu_log_mask(LOG_UNIMP, "Register 0x%lx not implemented\n", offset);
-+        break;
-+    }
-+    return 0x00;
-+}
-+
-+static void pll_write(void *opaque, hwaddr offset, uint64_t val, unsigned size)
-+{
-+    qemu_log_mask(LOG_UNIMP, "Register 0x%lx not implemented\n", offset);
-+}
-+
-+static const MemoryRegionOps pll_ops = {
-+    .read = pll_read,
-+    .write = pll_write,
-+    .endianness = DEVICE_LITTLE_ENDIAN,
-+    .impl = {
-+        .min_access_size = 4,
-+        .max_access_size = 4,
-+    },
-+    .valid = {
-+        .min_access_size = 4,
-+        .max_access_size = 4,
-+    }
-+};
-+
-+static void ax3000_clk_init(Object *obj)
-+{
-+    Ax3000ClkState *s = AX3000_CLK(obj);
-+
-+    memory_region_init_io(&s->pll_ctrl, obj, &pll_ops, s,
-+                          TYPE_AX3000_CLK, AX3000_CLK_PLL_CTRL_SIZE);
-+    sysbus_init_mmio(SYS_BUS_DEVICE(obj), &s->pll_ctrl);
-+}
-+
-+static void ax3000_clk_class_init(ObjectClass *klass, const void *data)
-+{
-+    DeviceClass *dc = DEVICE_CLASS(klass);
-+
-+    dc->desc = "Axiado AX3000 Clock Control";
-+}
-+
-+static const TypeInfo ax3000_clk_info = {
-+    .parent             = TYPE_SYS_BUS_DEVICE,
-+    .name               = TYPE_AX3000_CLK,
-+    .instance_size      = sizeof(Ax3000ClkState),
-+    .instance_init      = ax3000_clk_init,
-+    .class_init         = ax3000_clk_class_init,
-+};
-+
-+static void axiado_clk_register_type(void)
-+{
-+    type_register_static(&ax3000_clk_info);
-+}
-+type_init(axiado_clk_register_type);
-diff --git a/hw/misc/meson.build b/hw/misc/meson.build
-index 23265f6035b..e86d9ad6b39 100644
---- a/hw/misc/meson.build
-+++ b/hw/misc/meson.build
-@@ -1,4 +1,5 @@
- system_ss.add(when: 'CONFIG_APPLESMC', if_true: files('applesmc.c'))
-+
- system_ss.add(when: 'CONFIG_EDU', if_true: files('edu.c'))
- system_ss.add(when: 'CONFIG_FW_CFG_DMA', if_true: files('vmcoreinfo.c'))
- system_ss.add(when: 'CONFIG_ISA_DEBUG', if_true: files('debugexit.c'))
-@@ -168,3 +169,5 @@ system_ss.add(when: 'CONFIG_SBSA_REF', if_true: files('sbsa_ec.c'))
- 
- # HPPA devices
- system_ss.add(when: 'CONFIG_LASI', if_true: files('lasi.c'))
-+
-+system_ss.add(when: 'CONFIG_AXIADO_CLK', if_true: files('axiado_clk.c'))
-diff --git a/include/hw/misc/axiado_clk.h b/include/hw/misc/axiado_clk.h
-new file mode 100644
-index 00000000000..6e12a509d72
---- /dev/null
-+++ b/include/hw/misc/axiado_clk.h
-@@ -0,0 +1,26 @@
-+/*
-+ * Axiado AX3000 Clock Control
-+ *
-+ * Author: Kuan-Jui Chiu <kchiu@axiado.com>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#ifndef AXIADO_AX3000_CLK_H
-+#define AXIADO_AX3000_CLK_H
-+
-+#include "hw/core/sysbus.h"
-+#include "qom/object.h"
-+
-+#define TYPE_AX3000_CLK "ax3000-clk"
-+OBJECT_DECLARE_SIMPLE_TYPE(Ax3000ClkState, AX3000_CLK)
-+
-+#define AX3000_CLK_PLL_CTRL_SIZE    0x1000
-+
-+typedef struct Ax3000ClkState {
-+    SysBusDevice        parent;
-+
-+    MemoryRegion        pll_ctrl;
-+} Ax3000ClkState;
-+
-+#endif /* AXIADO_AX3000_CLK_H */
--- 
-2.34.1
+Thanks, Cedric. I will send v4 shortly.
 
 
