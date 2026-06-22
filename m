@@ -4,96 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70AFACD98F0
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jun 2026 01:08:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E61E1CD98F0
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jun 2026 02:41:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wbT93-0006vk-5c; Sun, 21 Jun 2026 21:08:13 -0400
+	id 1wbUZu-0004Pe-BJ; Sun, 21 Jun 2026 22:40:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wbT92-0006va-AD
- for qemu-devel@nongnu.org; Sun, 21 Jun 2026 21:08:12 -0400
-Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
+ id 1wbUZt-0004Oo-1i
+ for qemu-devel@nongnu.org; Sun, 21 Jun 2026 22:40:01 -0400
+Received: from mail-ed1-x52c.google.com ([2a00:1450:4864:20::52c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wbT8z-00051m-GN
- for qemu-devel@nongnu.org; Sun, 21 Jun 2026 21:08:12 -0400
-Received: by mail-ed1-x52d.google.com with SMTP id
- 4fb4d7f45d1cf-697764213d6so2905573a12.1
- for <qemu-devel@nongnu.org>; Sun, 21 Jun 2026 18:08:09 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1782090487; cv=none;
+ id 1wbUZm-0007Ad-6E
+ for qemu-devel@nongnu.org; Sun, 21 Jun 2026 22:39:55 -0400
+Received: by mail-ed1-x52c.google.com with SMTP id
+ 4fb4d7f45d1cf-691c5776f35so5275460a12.3
+ for <qemu-devel@nongnu.org>; Sun, 21 Jun 2026 19:39:53 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1782095992; cv=none;
  d=google.com; s=arc-20240605;
- b=RBPaTS43h2srDxvv34AMj8vdAnf2hdm0wcIHKAOZX6rsScPTLu/PxNvUTjFiLaEBxx
- O7YAnJmk4l/RrzDkYYFVj/3NMOT9ZBzhyhjJ8uQBiIydcjElSE1qNPahcB1LKqL3c+Mb
- /QWMCK8smt08WtyLTV8XHv18BsfCxO6foWWLi1jqCvlF+zs29Exbn6fbqmLdrCNEbqQh
- WTlqMM5kxw3w0dO0fAaDk9gSI+dPOOKEOCxeYald9Pite8Xj+1HfJX1Pfb7OLoNfecCq
- 5hPX+DldQVlz3O97Dka7f/B8e3FCNiizwrjmgrNXkSa6ofK1hozBFgra0/MWcT071Pqr
- xYvw==
+ b=Ttln+xzKkIHfMSXfHZsbCuN5ejB2JYesi7njPboqaTEVB75bxXOOB0+ArelM1EgeLH
+ +N8MfgRefDa4Iuh2sY8a84CAlJLeOLnr3/q3wMQt5i7N3Mos+DGRYiww8jS76JqrRGLb
+ kfkuPEpbja1WCGZib0F17vBTlhlg2E7EfC/bK61GXdIL7UpbkMlodJ4LFHGFeCRR7mbi
+ TEVSD1djALetW3KeT4ikRej1mZQgJ8NZZMj2kHj4dO86KEnzZpxsv0jM4dsR9YcJ/TSs
+ vMQ8wB6KjU+2x/QBId7Bshy6bJUdpZ6MVWg3D0wFfVhQuh8VJKpFfiEPwZ/LfUlXxpCV
+ o/QQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=sNodhsPSoYCVVYVH8wDldbY0IH1E8gorxJFk2aDbIRY=;
- fh=+dPXGxW3pQNYFrTSil53fSXYfdhGIs7bI6Dyql1Mx+Q=;
- b=ZpevQETpp4X7/bg4luJB7b6l5I09SrCwAEIosjC+AnMACRrgAOGmEjBhKa3jh49ca+
- apOLns3CtFKTXxjErbtWVIpkT98xAobPlAolGXpu0JkypQdo4PeNGEorRO87xhkLh3d0
- k9aIIFqGHEIkWaXPuH7/ivn75/11lcui8YCJlO/jZxEy7da9KNEV7amd38WpHVJDvUhS
- KplOka5agrihD4unhddCpln6jwEB/I2VH6CcgRVmke3yjzOW9NDleTMtus42mDu27Xlw
- NDN/VP2U89x9uS6+DUq+OI567OkppOnBP1jHEXWuJlEmjY0k09m9Mnd/exxVEF1TXls4
- 1NAA==; darn=nongnu.org
+ bh=BfBCEKNx6wiLcALwkO2rf5NF+oLg7W772NfbvvJ+zKc=;
+ fh=y/39rxWsHsSIhiCgFyox46bvYsAfNaBS3wRFv9pkMrs=;
+ b=CKr7MrI0HC2xp3xTDsEg0MZMX9DySIoJ29Fp0SSRjvT4LbIrpNtSCo4MTafBiRrUrT
+ v5K0L3PI7fc8IjMi1XtjN/kXkxxOEPrizRh8FDya1U7oh5qfxRcDbYYGpELV0H+wr+ir
+ VmOrYNv3wIPwQROevjtHDvbz2f3/zlkK7rboRpGjhiwrY6aFJ54KnZ6dAuLlt9BeFUme
+ JbUPYi9IuKDlRDESoJscHxskCUaGS88Qnnf7xEMDTWeHYCIF8Oc3fBEZlO6kG9ZuwGbO
+ sWvDcgTnlMDrd3kSbsEZBIoRDbE8p6RTEbyuKz9HHhKKYPtOUYHT47yU5bicfdaQZLZa
+ D0LQ==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1782090487; x=1782695287; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1782095992; x=1782700792; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=sNodhsPSoYCVVYVH8wDldbY0IH1E8gorxJFk2aDbIRY=;
- b=VV73X4VLyErJ84JdSk7rSodvYMeH2qLCAxthiwiKu3Rcjdpjv/jwWa68pip4ULV+7o
- j6FlTcquhzQdu8XE5fBnO6Zd+al0T6/zXP9XUGkbvcd1nIDQ6D5eEe4DPPPg2Up0xppN
- T+S5bFuEVPL0M6Azcqs1rmd2kJlOoVQ5hoRfZOZ8GjUaRWvHi3Qt0lLDl1JEnBbLlEsT
- QTcqS8PQzvnReh03KFwBqWGfdo82QdnvjVx1IIkhY94STtSbDoy9AHLcMNEUJr14lMjJ
- 5chSFKZUKysmTuJDMpL/8qS2DbD6hpyvzzNZaToOd51nvxn6CKZEzI6jHYuBMUj87H4c
- 7snA==
+ bh=BfBCEKNx6wiLcALwkO2rf5NF+oLg7W772NfbvvJ+zKc=;
+ b=X5Pw44VqRZkc3NDcfw/9NtdJEUMjgFNfIjur0kmUUS4Sh23TX1wZPViscpC8vkDvQb
+ PIfM1Ft/NV7Vl5RypEX2zuzPLp/QNzKcUApfBl3C8Osg6U4WllJqyuNH9PhBg7AJSP1H
+ xKTLCDNkJSp9V9FGmRjzi0vJOhpzxtaod+muByqeoCMDqYEXKS2OIJvmxEFBlPaHPdpP
+ mzQqm97ep5s0LC34SGnf2hsnclkBmGNEzsGvQYgjosMunEjoUTCgIew5RzDIDXgEv6lV
+ y/BxDLDG7jcvdmJdZWoWxyeQHiV/h+32TFP0Trv9EFButQ3yexSQzD5vM7Hyc5sHH9yG
+ /BcA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782090487; x=1782695287;
+ d=1e100.net; s=20251104; t=1782095992; x=1782700792;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=sNodhsPSoYCVVYVH8wDldbY0IH1E8gorxJFk2aDbIRY=;
- b=r780I1VgBfaff3iXyiB6v3a9q5uGRDi4MlgjuhxAVkVRYAFHplPPLYuXBfp6C56sYJ
- aDrJn/gxXK1jB854ovA9NxbKDXyWd05uPFa0KM7kVAZZoBAH89hoPQ+bRmumTNDTfVLL
- 17a5G+6K+5MQnSJpxAyfr5Xj3d7tlpwk2yk+hfwBOPy2zXZD1FLGzZ+Z3XCQJ9WIOITh
- he0H/N8M9YztKTeC/LCvgcIP+HGiqR3+2FCXcv5LG3uIdK3xXnmlc7p99H4V+j3y5tLb
- bOdFcF+2q/RfpZvTUDflBxtXYRXhczEMwz/+WUglawrepj6LBQD0Z/kXDOgohNNDAnQI
- zCvg==
-X-Gm-Message-State: AOJu0Yz8QOzq8whSCETAk9sxYZEXVgli9MbNr1IYcFn9erFtJa20TUwc
- pkz8MJD8mFVhwk8/qFfKigw+qP0qG6KJgIfdZeeZxHBsqGQL4YwmZi0YLthW0cDiWK5E2Xj4W30
- u9fJYrGAWlYxNpUpICMxDIwo+BI2BtVw=
-X-Gm-Gg: AfdE7clvT6edzNLktV/Muz+LC0eJblgs0BLUu6ak3ZgQmJAXEH0s1GNL1sZLS1pUZ3h
- os7prn/kbpJbon4AtyLf/53f00zD+s1/oqzirYFbhcQYkHZ3/83pNVol5fgkjA+LuT6lswqEGuL
- xsYyeQk0KLw27TWuS+cktzkLfeiPQqtncEF7GrnB/g4wuNt4Oq24T8fja6+8DM+ozC2WVWyt+Jy
- W5Rn4hNetHeUFeRD0bdw9o5Jclt5q78TU3A9uwsEJi0zBK8kox6okIcFnsi/dLwWLCNOExl74Pc
- Qye22X07RdR8Cu/nJzKxu5H+usA=
-X-Received: by 2002:a05:6402:358d:b0:697:7f6a:cf55 with SMTP id
- 4fb4d7f45d1cf-6977f6ad063mr3646439a12.26.1782090487321; Sun, 21 Jun 2026
- 18:08:07 -0700 (PDT)
+ bh=BfBCEKNx6wiLcALwkO2rf5NF+oLg7W772NfbvvJ+zKc=;
+ b=rS6MzzdgHYMvT3j2mBsRM3+NI+BUeFtgaxy3pPFsKbkqToU2BE0Zs4DyyK1vlj1y4G
+ bLaXvh5Dmg4TpBpBlGA0/EfChtqVGLGUrCH65BBA3G34Tz24wf/L3/KGmcMGu/KrngjO
+ 2BEXmoAjreuHepMdZ2nr5x2IIdWc67EfWpWlcHYtWAeHaA2P9NqO3NjIB8psEZdxsrT6
+ Af8y6QwTCqa/QCsxV3IYt6YfwExYTDRtk4G+U6MMpX/lLKm6ll8hNkFRhXKr7RYbohS4
+ UYloPa39CfKx0BluH4SUJsO6VNYGz/aWDLCqiaRgawqT/32BrCsP7ueiAF1pUGsi4B7H
+ TC8Q==
+X-Gm-Message-State: AOJu0Yxql06iw5k8+ZdE0bUnDEoHJ85qBYxrF4FkNCk94vuFO2hWTB4i
+ rDHJXZruSQUyik8HvoS60ZocnvVptAz735rjOSrf71P4sIE9VAAfDoTEWMBfnhEAV9UTqMgXNkA
+ EUNs8KlYzDGaVRQQkYkB+IJKr6C+xklE=
+X-Gm-Gg: AfdE7cmA4HAWmeuYx+M1h+X2gb3LWujXXgv+l2Ht3wc8uWLep+hxppnNz4wYn0eR3TX
+ hPWb0fLZzBqyjM8J7/TmJ+ncNHuVggfBCB8D+sY8A0ZjGMeLXE2MJD17he0Q+qPbgUmTUvv/pJM
+ 09sbA85ODeq/prpxVigY6QtmlAoIVFiaHW8N0DGFhhcBjTbgIJZdwubh8E+5ReP6LfIdjcwkdia
+ VCXaeCYI9BfTxTsxqboS38xNadO/79Se1CQOr6hGQbvXiMWBd0V5sWSWlf627nMkIB652TjaFJS
+ vMoJkaFU5/LNBytZjEnV30+PXa8=
+X-Received: by 2002:a17:907:3e18:b0:c0e:e136:5dc9 with SMTP id
+ a640c23a62f3a-c0ee145c108mr68722966b.37.1782095992306; Sun, 21 Jun 2026
+ 19:39:52 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260617131710.1855353-1-daniel.barboza@oss.qualcomm.com>
-In-Reply-To: <20260617131710.1855353-1-daniel.barboza@oss.qualcomm.com>
+References: <20260611162223.2361941-1-daniel.barboza@oss.qualcomm.com>
+ <20260611162223.2361941-2-daniel.barboza@oss.qualcomm.com>
+In-Reply-To: <20260611162223.2361941-2-daniel.barboza@oss.qualcomm.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Mon, 22 Jun 2026 11:07:40 +1000
-X-Gm-Features: AVVi8CdLeqlr5yAhh3mHUqfjdXKHsdh-lA9c9YLubCBvngSrYDuayA6j5QfA8tI
-Message-ID: <CAKmqyKPAuQhfZxjY_80AQyPMHjqrpS0soQ4cmxDaGvC5HU9YVQ@mail.gmail.com>
-Subject: Re: [PATCH v4 0/3] target/riscv: parametrize debug trigger number
+Date: Mon, 22 Jun 2026 12:39:25 +1000
+X-Gm-Features: AVVi8Ccy8TPAP1bOVGvSPAkHXWbio7X2Ttuuc6fQ9wqPh-E7ghyRlJT7Vc0zn9c
+Message-ID: <CAKmqyKM_KdpFevyDT_T_xppAcaEU7qzyzdK3SZnFrr1JhSyqeQ@mail.gmail.com>
+Subject: Re: [PATCH 1/2] target/riscv/cpu.c: add 'svbare' satp-mode
 To: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
- liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, chao.liu.zevorn@gmail.com
+ liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, chao.liu.zevorn@gmail.com, 
+ Palmer Dabbelt <palmer@dabbelt.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
- envelope-from=alistair23@gmail.com; helo=mail-ed1-x52d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52c;
+ envelope-from=alistair23@gmail.com; helo=mail-ed1-x52c.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -101,7 +103,7 @@ X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,23 +119,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jun 17, 2026 at 11:18=E2=80=AFPM Daniel Henrique Barboza
+On Fri, Jun 12, 2026 at 2:23=E2=80=AFAM Daniel Henrique Barboza
 <daniel.barboza@oss.qualcomm.com> wrote:
 >
-> Hi,
+> Seems like we forgot to add a flag to set satp-mode=3Dbare.  What we're
+> doing instead is to set the CPU default satp-mode to 'off' to set it to
+> bare ... assuming we know the default satp-mode.  Otherwise one needs to
+> do -cpu X,sv39=3Doff,sv48=3Doff,sv57=3Doff,sv64=3Doff to get a bare-mode =
+CPU.
 >
-> This is a re-send after rebase with current master after the recent
-> RISC-V PR got merged.  No other changes made.
+> Add a flag to make this process easier.  The name choice is based on the
+> fact that I didn't find many references to 'mbare' in RISC-V docs, but
+> 'svbare' is a flag name that toolchain uses to set satp-mode=3Dbare.
+> Might as well use the same name to help with cross project compat.
 >
-> Changes from v4:
-> - rebased to 'master'
-> - v3 link: https://lore.kernel.org/qemu-devel/20260611123412.2135600-1-da=
-niel.barboza@oss.qualcomm.com/
+> After this patch:
 >
-> Daniel Henrique Barboza (3):
->   target/riscv/cpu: add CPU unrealize callback
->   target/riscv: dynamic alloc of debug trigger arrays
->   target/riscv: add 'num-triggers' debug property
+> $ ./build/qemu-system-riscv64 -M virt,dumpdtb=3Dfdt.dtb -cpu rv64
+> $ dtc -I dtb -O dts fdt.dtb  | grep mmu-type
+>                         mmu-type =3D "riscv,sv57";
+> $ ./build/qemu-system-riscv64 -M virt,dumpdtb=3Dfdt.dtb -cpu rv64,svbare=
+=3Don
+> $ dtc -I dtb -O dts fdt.dtb  | grep mmu-type
+>                         mmu-type =3D "riscv,none";
+>
+> Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 
 Thanks!
 
@@ -141,15 +151,33 @@ Applied to riscv-to-apply.next
 
 Alistair
 
+> ---
+>  target/riscv/cpu.c | 5 ++++-
+>  1 file changed, 4 insertions(+), 1 deletion(-)
 >
->  target/riscv/cpu.c     | 26 ++++++++++++++++++++++++
->  target/riscv/cpu.h     | 39 ++++++++++++++++++++++++++++-------
->  target/riscv/csr.c     |  2 +-
->  target/riscv/debug.c   | 46 ++++++++++++++++++++++++++++++++++--------
->  target/riscv/debug.h   |  1 +
->  target/riscv/machine.c | 16 ++++++++++-----
->  6 files changed, 109 insertions(+), 21 deletions(-)
+> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+> index c1b10cc7ef..d968daa404 100644
+> --- a/target/riscv/cpu.c
+> +++ b/target/riscv/cpu.c
+> @@ -421,7 +421,7 @@ int riscv_cpu_max_xlen(RISCVCPUClass *mcc)
+>  #ifndef CONFIG_USER_ONLY
+>  static uint8_t satp_mode_from_str(const char *satp_mode_str)
+>  {
+> -    if (!strncmp(satp_mode_str, "mbare", 5)) {
+> +    if (!strncmp(satp_mode_str, "svbare", 6)) {
+>          return VM_1_10_MBARE;
+>      }
 >
+> @@ -1053,6 +1053,9 @@ void riscv_add_satp_mode_properties(Object *obj)
+>  {
+>      RISCVCPU *cpu =3D RISCV_CPU(obj);
+>
+> +    object_property_add(obj, "svbare", "bool", cpu_riscv_get_satp,
+> +                        cpu_riscv_set_satp, NULL, &cpu->satp_modes);
+> +
+>      if (cpu->env.misa_mxl =3D=3D MXL_RV32) {
+>          object_property_add(obj, "sv32", "bool", cpu_riscv_get_satp,
+>                              cpu_riscv_set_satp, NULL, &cpu->satp_modes);
 > --
 > 2.43.0
 >
