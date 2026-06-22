@@ -4,65 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58E13CDB471
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E7B4CD98F2
 	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jun 2026 16:09:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wbhCQ-0006PW-QJ; Mon, 22 Jun 2026 12:08:40 -0400
+	id 1wbhCn-0006VJ-8n; Mon, 22 Jun 2026 12:09:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <matyas.bobek@gmail.com>)
- id 1wbhCJ-0006J0-JI
+ id 1wbhCJ-0006IF-Cb
  for qemu-devel@nongnu.org; Mon, 22 Jun 2026 12:08:31 -0400
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <matyas.bobek@gmail.com>)
- id 1wbhCF-0006ia-MW
+ id 1wbhCF-0006j4-N8
  for qemu-devel@nongnu.org; Mon, 22 Jun 2026 12:08:30 -0400
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-4924593f45dso29353855e9.1
- for <qemu-devel@nongnu.org>; Mon, 22 Jun 2026 09:08:24 -0700 (PDT)
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-4921eed3fa2so37583695e9.0
+ for <qemu-devel@nongnu.org>; Mon, 22 Jun 2026 09:08:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1782144503; x=1782749303; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=J0EfpXJQfGVoHw5LHOqoFn3S99dQ8UghOoxA1O/4SRM=;
- b=LPkwQiKbfRD5v7gCmMqC5+iBFxjSeCGwNwuHBU3HRxf+WSq0aSnIoy6Q10L18SgZWa
- xsc5wyDJk5+4jgB7JAMXCawqCOcYggBdgjSfAMzlhq2KTlVm2SGcVjYC+Oege0+EftNk
- ZzVcr/9me3SaygyXKTgR9qSGTa5Clq7aMQayUiZ4ikNIlckpteeIdZFkftQZqY6yRTGy
- urVvihMjl1/cggSG+jGGly4vxEsDm+tjRw/2t04jmVW93Hy/qaBF/L1TsK7cPSY+4rsq
- 3CNiuAe5C05oUKHbLTaO1W4YoRz9GLad1CsZJ+3/Z9m4HWlW+sayVYPpeDWVtxCq2Xi8
- lTuA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782144503; x=1782749303;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=gmail.com; s=20251104; t=1782144506; x=1782749306; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=J0EfpXJQfGVoHw5LHOqoFn3S99dQ8UghOoxA1O/4SRM=;
- b=bZiA/2UW9UWo4H9NlTstI5iB6Qx3KaQX5RClZk58LFalJZvaqvvwNKW1Mmh7WJN9TC
- KykHgiTnaVK4jJ8rDh6xdFUEPLjCGCQvGVzgFYUjGZU2RQTatqHQy/i9WopkgEalW3OU
- hjVTsE32iiIXjnt6bbQG/MkSwvGlfLqFwp89ITkjw/KdPj1QKzQ8PI2RPf+hRm+k7BHj
- Bc+InP0KaStFefc8tUKDeN7aqd13657h7RgKxcRKl1QGqJcCNV9l1ujpq2hc9l2flu/w
- BDj1Et91BhwRJFSCVxkCU0JtvN13WTcSeur1BHi8SEDZ5BbtphFfQIxlihCpSqvV4XtQ
- U51w==
-X-Gm-Message-State: AOJu0Yx/CQfpB2bQ4v9aFkrNXk0ziZqxEev24pXLLH8wMK5JG5sWOTe+
- JlsLYcazW8ipBA9On4mskD6A7PqYiD/pka++23qhqYMqR+4Nrl3xtpDDESJUkZ/j
-X-Gm-Gg: AfdE7ckqwcRbUSk660LCWGwQLOhbffYbAzYTTlnxHaNd1XPReeouzh8P1qZlzOfvctf
- iIzgtanjzRyBJTqradvAhKtAOYexD05xMx7T3cwCAGlGVd8Jf6AduPVWQAA1NJfDC94jbZ7MHbU
- IRZDcpq7E/Zmr/vBJOinA/VihDCxTedAPXShWq4zREp1j1pU9n/GwKVW5lOlDb1VvP6XDMjEkLu
- wzDVrXu52iPEbxi+rmiMFEowO4gqaUt08hGzOsOWMkInGt/adyfC4u3tT9nI5FyMDLDvWcql1Y7
- b93NakiR+V/LKNbFx2fLtl+O27ScAi2xXy2USAI5Q6xHI0MIDiTRTJcI+40/d9QOeJ6xWlNgVW0
- hT+iBADhUk3S/Hb0tYqh2kSqlo3JdkYuxeMhH0bEiAwOvoTHWJSMiXy+wxsrUDR8YkK48/eE8Cx
- cfRUOEbrL0NJjP++O47IC+Xqc6Rq2KkAL+I+RCh9yfmNNZKAmP087TAQ==
-X-Received: by 2002:a05:600c:4f53:b0:490:6e12:542d with SMTP id
- 5b1f17b1804b1-4923f572d60mr243139625e9.19.1782144503181; 
- Mon, 22 Jun 2026 09:08:23 -0700 (PDT)
+ bh=naAjGDZPbJ67GvzkWP49qsFsJVwJRVlvC8LloXp3eNQ=;
+ b=Ktcv1NGMYhVyH2gIZkTlFVjTLBlF8j5TKrWpbDwmcXUOwF8fmBOblwGEt9LuDhBCam
+ VWwzL6WzjAgGPBlhBEmVVPVN721QGagxLr/sx/Z/hQRdN8LdzdFPs+zvdYg7MnjzY3fs
+ 8Q/4Welrjd0c52y9n09ROMpXWJxiq8aVsjaxWVelQA+NH1awvqW8m+Hv0MV+YkWs6jSR
+ /rKz4YB77OQKtNQC5klZCvLY9VV3EVA1wNcml53ViOGgVF7QoggnWU1FYu0DBLcFZWw4
+ l/Af+OMCnlZ/FSOe8g00LZ0A6gVTl6dSq+SHh0lBzSUb4JWIqOFtLQikb52yuN7YjmbB
+ 4uVg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1782144506; x=1782749306;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=naAjGDZPbJ67GvzkWP49qsFsJVwJRVlvC8LloXp3eNQ=;
+ b=D2PDdGpM6pUEIkP0pmueKgxSFLdcPP2MOKQbDMMxOGWLHP4rjGuyZPoqWOsTbVscOp
+ GVTkLc9n/C+l1RUHNVi+Lz6AmrNR8/nvIYCmTw5R3MZMFGQ/2LMnv661echSUfPP4id0
+ fRFS0JyeNYGOHHvHI4weedHaeyst9TJBEmXqLKC8SsAN6tdTf5n+oV9Hw3s9fOS15lMS
+ 2HDxjHyiXasXYQfoom1jKJEyZH7s88zBc6x7MI/GzyfJQi+hPFk3JTeDHNrD+7bK4/gM
+ QCwCcazfqIZWSR0YOXXHPXOu1m5Cs6dC7NfpyqijSjnVOmVsRUt5Yz3YGN+HwnXZez+7
+ Jslw==
+X-Gm-Message-State: AOJu0YxQOoNe1P/CqTzzrw9hsvUdViXLLUM0ZYEDieDIEf42d83SPnKR
+ vS+gJ5FM3ev+aN07c734BHcpheYBcuKv0lUMI7lfeH+h/6jR+wL/iwAgiAWNWuJH
+X-Gm-Gg: AfdE7clV5PVdRYwNnRxykdWWfax1LEgcneorDjBB+pIxttGlz/G0v5Iw8S/TcYBHheO
+ DJoh/8Wb1uz8+llSuZ8AGch77+8jRXJAZOz8MxMW81FgkuNFIWv/Ze2q1rniKkLavyY46/7DA/H
+ EhKR5rCtol9x7AmRQlcP0ZLNqd+PIc85im7trIiOX7x0UCFtClC7+wuUAGgovUoYdauGaf86/pi
+ opm6itMRl5tIYr1BuRUeBf2HMSLNmppIMt0pIJOdAJPQXPeXUVEOeJuAT86sOB79wQUoOx99Uua
+ B4wNC0t6/On8AbA54g3UcZ49ZS52+/wULS0Y0CZ/3G92iDQV3rqUNVuGAoxEauIGR+Yd5KyBNtD
+ mjP6v/lVDt03Uj1DzvrFBx2rlbBYHKlm+dzae4Uf1KtYnD+ZHAqDVAq48zK9lFByPZgh3kZn7KT
+ Yj+ezTqlYH7Gayakw65remrCASO+Vf7Q34O/nkjz7vu5Q=
+X-Received: by 2002:a05:600c:1f92:b0:490:a1dc:e542 with SMTP id
+ 5b1f17b1804b1-49242314217mr202502575e9.6.1782144505980; 
+ Mon, 22 Jun 2026 09:08:25 -0700 (PDT)
 Received: from acidburn.pod.cvut.cz (acidburn.pod.cvut.cz. [147.32.90.2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-492494496d8sm225062545e9.9.2026.06.22.09.08.21
+ 5b1f17b1804b1-492494496d8sm225062545e9.9.2026.06.22.09.08.24
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 22 Jun 2026 09:08:21 -0700 (PDT)
+ Mon, 22 Jun 2026 09:08:25 -0700 (PDT)
 From: =?UTF-8?q?Maty=C3=A1=C5=A1=20Bobek?= <matyas.bobek@gmail.com>
 To: qemu-devel@nongnu.org, Matyas Bobek <bobekmat@fel.cvut.cz>,
  Pavel Pisa <pisa@fel.cvut.cz>, Bernhard Beschow <shentey@gmail.com>
@@ -71,22 +72,24 @@ Cc: qemu-arm@nongnu.org, Marc Kleine-Budde <mkl@pengutronix.de>,
  Nikita Ostrenkov <n.ostrenkov@gmail.com>,
  Peter Maydell <peter.maydell@linaro.org>, Andrey Volkov <andrey@volkov.fr>,
  =?UTF-8?q?Maty=C3=A1=C5=A1=20Bobek?= <matyas.bobek@gmail.com>
-Subject: [PATCH v6 0/7] hw/arm/sabrelite: Add FlexCAN support
-Date: Mon, 22 Jun 2026 18:08:05 +0200
-Message-ID: <cover.1782140438.git.matyas.bobek@gmail.com>
+Subject: [PATCH v6 2/7] hw/arm/sabrelite: Introduce class SabreliteMachineState
+Date: Mon, 22 Jun 2026 18:08:07 +0200
+Message-ID: <115740db83cf2e5a5e7bb349130c9706934ec1f3.1782140438.git.matyas.bobek@gmail.com>
 X-Mailer: git-send-email 2.54.0
+In-Reply-To: <cover.1782140438.git.matyas.bobek@gmail.com>
+References: <cover.1782140438.git.matyas.bobek@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=matyas.bobek@gmail.com; helo=mail-wm1-x330.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=matyas.bobek@gmail.com; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,100 +105,109 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This series adds emulation of the FlexCAN CAN controller, version 2,
-found in NXP i.MX6 series SoCs. The controller is integrated into
-fsl-imx6 and the Sabrelite ARM board.
+Create full class SabreliteMachineState extending MachineState.
 
-The chip has two FlexCAN controllers, but the Linux Sabrelite
-device tree enables only one by default. Linux kernel with both
-controllers enabled has been tested to work properly (using a custom
-device tree).
-See docs/system/devices/can.rst for an example of QEMU command line
-invocation.
+Previously, Sabrelite board MachineState was declared indirectly by the
+DEFINE_MACHINE_ARM macro. FslIMX6State was only instantiated in the
+sabrelite_init function. For FlexCAN device, machine properties
+will be used to select QEMU CAN buses. A custom class is therefore
+required, so the CanBusState "connections" can then be added as fields.
 
-More information about the implementation can be found in my bachelor
-thesis [1].
+Signed-off-by: Matyáš Bobek <matyas.bobek@gmail.com>
+Signed-off-by: Pavel Pisa <pisa@fel.cvut.cz>
+Tested-by: Pavel Pisa <pisa@fel.cvut.cz>
+Reviewed-by: Bernhard Beschow <shentey@gmail.com>
+Reviewed-by: Pavel Pisa <pisa@fel.cvut.cz>
+---
+ hw/arm/sabrelite.c | 28 ++++++++++++++++++----------
+ 1 file changed, 18 insertions(+), 10 deletions(-)
 
-Changes from v5:
-- fixed buffer overflow due to unchecked input in
-  flexcan_enabled_mailbox_count
-- rebased onto latest master
-- Link to v5: https://lore.kernel.org/qemu-devel/cover.1781111270.git.matyas.bobek@gmail.com/
-
-Changes from v4 to v5:
-- renamed can in fsl-imx6 to flexcan
-- corrected attribution for definitions borrowed from the Linux kernel
-- rebased onto latest master
-- Link to v4: https://lore.kernel.org/qemu-devel/cover.1779986496.git.matyas.bobek@gmail.com/
-
-Changes from v3 to v4:
-- corrected attribution for definitions borrowed from the Linux kernel
-- rebased onto latest master
-- Link to v3: https://lore.kernel.org/qemu-devel/cover.1777571962.git.matyas.bobek@gmail.com/
-
-Changes from v2 to v3:
-- moved variable declarations to the top-of-the-block
-- cleanup
-- removed redundant license boilerplate
-- rebased onto latest master
-- Link to v2: https://lore.kernel.org/qemu-devel/cover.1773866323.git.matyas.bobek@gmail.com/
-
-Changes from v1 to v2:
-- removed DPRINTF (turned into traces or guest errors)
-- removed gotos and unnecessary continues
-- register memory region shortened to actual length w/o padding
-- make flexcan_* fns private
-- used DEVICE(s)->canonical_path instead of allocating new strings
-- changed DEVICE_NATIVE_ENDIAN to DEVICE_LITTLE_ENDIAN
-- removed ugly USE macro
-- used enums instead of define sequences in flexcan.c
-- fixed FlexCAN KConfig conf (fixes build on non-arm-softmmu)
-- fixed style and other issues from Bernhard's review
-- better wording in docs
-- rebased onto latest master
-- Link to v1: https://lore.kernel.org/qemu-devel/cover.1765826753.git.matyas.bobek@gmail.com
-
-Thanks Bernhard Beschow for the review and his patience.
-I borrowed some fixes from his flexcan branch at [2].
-
-[1] http://dspace.cvut.cz/bitstream/handle/10467/122654/F3-BP-2025-Bobek-Matyas-BP_Bobek_FlexCAN_final_4.pdf
-[2] https://github.com/shentok/qemu/tree/flexcan
-
-
-Matyáš Bobek (7):
-  hw/arm/sabrelite: Open code DEFINE_MACHINE_ARM
-  hw/arm/sabrelite: Introduce class SabreliteMachineState
-  hw/misc/imx6_ccm: Add PLL3 and CAN clock
-  hw/net/can/flexcan: NXP FlexCAN core emulation
-  hw/arm: Plug FlexCAN into FSL_IMX6 and Sabrelite
-  tests: Add qtests for FlexCAN
-  docs/arm/sabrelite: Mention FlexCAN support
-
- MAINTAINERS                   |    9 +
- docs/system/arm/sabrelite.rst |    1 +
- docs/system/devices/can.rst   |   24 +
- hw/arm/Kconfig                |    1 +
- hw/arm/fsl-imx6.c             |   29 +
- hw/arm/sabrelite.c            |   68 +-
- hw/misc/imx6_ccm.c            |   24 +
- hw/misc/trace-events          |    2 +
- hw/net/Kconfig                |    5 +
- hw/net/can/flexcan.c          | 1396 +++++++++++++++++++++++++++++++++
- hw/net/can/flexcan_regs.h     |  197 +++++
- hw/net/can/meson.build        |    1 +
- hw/net/can/trace-events       |   18 +
- include/hw/arm/fsl-imx6.h     |    6 +
- include/hw/misc/imx6_ccm.h    |    4 +
- include/hw/misc/imx_ccm.h     |    1 +
- include/hw/net/flexcan.h      |  145 ++++
- tests/qtest/flexcan-test.c    |  421 ++++++++++
- tests/qtest/meson.build       |    1 +
- 19 files changed, 2343 insertions(+), 10 deletions(-)
- create mode 100644 hw/net/can/flexcan.c
- create mode 100644 hw/net/can/flexcan_regs.h
- create mode 100644 include/hw/net/flexcan.h
- create mode 100644 tests/qtest/flexcan-test.c
-
+diff --git a/hw/arm/sabrelite.c b/hw/arm/sabrelite.c
+index 04484aaa14..7e036e6388 100644
+--- a/hw/arm/sabrelite.c
++++ b/hw/arm/sabrelite.c
+@@ -20,6 +20,15 @@
+ #include "qemu/error-report.h"
+ #include "system/qtest.h"
+ 
++struct SabreliteMachineState {
++    MachineState parent_obj;
++
++    FslIMX6State soc;
++};
++
++#define TYPE_SABRELITE_MACHINE MACHINE_TYPE_NAME("sabrelite")
++OBJECT_DECLARE_SIMPLE_TYPE(SabreliteMachineState, SABRELITE_MACHINE)
++
+ static struct arm_boot_info sabrelite_binfo = {
+     /* DDR memory start */
+     .loader_start = FSL_IMX6_MMDC_ADDR,
+@@ -41,7 +50,7 @@ static void sabrelite_reset_secondary(ARMCPU *cpu,
+ 
+ static void sabrelite_init(MachineState *machine)
+ {
+-    FslIMX6State *s;
++    SabreliteMachineState *s = SABRELITE_MACHINE(machine);
+ 
+     /* Check the amount of memory is compatible with the SOC */
+     if (machine->ram_size > FSL_IMX6_MMDC_SIZE) {
+@@ -50,13 +59,12 @@ static void sabrelite_init(MachineState *machine)
+         exit(1);
+     }
+ 
+-    s = FSL_IMX6(object_new(TYPE_FSL_IMX6));
+-    object_property_add_child(OBJECT(machine), "soc", OBJECT(s));
++    object_initialize_child(OBJECT(machine), "soc", &s->soc, TYPE_FSL_IMX6);
+ 
+     /* Ethernet PHY address is 6 */
+-    object_property_set_int(OBJECT(s), "fec-phy-num", 6, &error_fatal);
++    object_property_set_int(OBJECT(&s->soc), "fec-phy-num", 6, &error_fatal);
+ 
+-    qdev_realize(DEVICE(s), NULL, &error_fatal);
++    qdev_realize(DEVICE(&s->soc), NULL, &error_fatal);
+ 
+     memory_region_add_subregion(get_system_memory(), FSL_IMX6_MMDC_ADDR,
+                                 machine->ram);
+@@ -70,7 +78,7 @@ static void sabrelite_init(MachineState *machine)
+         /* Add the sst25vf016b NOR FLASH memory to first SPI */
+         Object *spi_dev;
+ 
+-        spi_dev = object_resolve_path_component(OBJECT(s), "spi1");
++        spi_dev = object_resolve_path_component(OBJECT(&s->soc), "spi1");
+         if (spi_dev) {
+             SSIBus *spi_bus;
+ 
+@@ -89,7 +97,7 @@ static void sabrelite_init(MachineState *machine)
+                 qdev_realize_and_unref(flash_dev, BUS(spi_bus), &error_fatal);
+ 
+                 cs_line = qdev_get_gpio_in_named(flash_dev, SSI_GPIO_CS, 0);
+-                qdev_connect_gpio_out(DEVICE(&s->gpio[2]), 19, cs_line);
++                qdev_connect_gpio_out(DEVICE(&s->soc.gpio[2]), 19, cs_line);
+             }
+         }
+     }
+@@ -100,7 +108,7 @@ static void sabrelite_init(MachineState *machine)
+     sabrelite_binfo.secondary_cpu_reset_hook = sabrelite_reset_secondary;
+ 
+     if (!qtest_enabled()) {
+-        arm_load_kernel(&s->cpu[0], machine, &sabrelite_binfo);
++        arm_load_kernel(&s->soc.cpu[0], machine, &sabrelite_binfo);
+     }
+ }
+ 
+@@ -117,10 +125,10 @@ static void sabrelite_machine_class_init(ObjectClass *oc, const void *data)
+ }
+ 
+ static const TypeInfo sabrelite_machine_init_typeinfo = {
+-    .name          = MACHINE_TYPE_NAME("sabrelite"),
++    .name          = TYPE_SABRELITE_MACHINE,
+     .parent        = TYPE_MACHINE,
+     .class_init    = sabrelite_machine_class_init,
+-    .instance_size = sizeof(MachineState),
++    .instance_size = sizeof(SabreliteMachineState),
+     .abstract      = false,
+     .interfaces    = arm_machine_interfaces,
+ };
 -- 
 2.54.0
 
