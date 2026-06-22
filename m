@@ -4,149 +4,130 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F50BCDB46F
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jun 2026 18:05:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41047CD98F2
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jun 2026 18:07:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wbj0v-00082Z-Lm; Mon, 22 Jun 2026 14:04:53 -0400
+	id 1wbj2m-000086-Uf; Mon, 22 Jun 2026 14:06:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wbj0u-00082C-9F
- for qemu-devel@nongnu.org; Mon, 22 Jun 2026 14:04:52 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
+ id 1wbj2l-00007T-2u
+ for qemu-devel@nongnu.org; Mon, 22 Jun 2026 14:06:47 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wbj0r-0007E6-Td
- for qemu-devel@nongnu.org; Mon, 22 Jun 2026 14:04:52 -0400
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65MFVkvS2691562
- for <qemu-devel@nongnu.org>; Mon, 22 Jun 2026 18:04:47 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- hfhoECYTGllKYv6GH8/89Tj5tH/lHsm7OczJyduzOQ4=; b=oqIiXCWJZCz2kVgI
- 8BBOD7CyCDfFFyWcNoIzH/lGP5Vw1a/LNDtnwdlnQ0XVjfvz+/EllgGcM8juca44
- pPTCsT5vgw3AOlfAbDzDB1Nr2JAO74P9OGk8VWRQCc6yosEoeJ9laKGiO5XW2uKE
- 1rercbgrLFyUhRVeKQe/mC6MMLKgRVaZqh2oVlFManrWrSXI8qGDZsjOfzYiBD19
- nuSI8nZZmPqUE76x+Fljp2JxzVCB/Qrp3wypgCvoVa8WNA4GzeZ9PkIsZ40E+WPp
- hViHwhrHWNrXe31Iapjo7DMv1Ba9OXO0J4v+UZqZDUpnkeiL5pq4sXq7OvSDfaef
- KuZoOg==
-Received: from mail-dy1-f200.google.com (mail-dy1-f200.google.com
- [74.125.82.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ey5sn13df-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 22 Jun 2026 18:04:47 +0000 (GMT)
-Received: by mail-dy1-f200.google.com with SMTP id
- 5a478bee46e88-30bfe262ef0so120718eec.1
- for <qemu-devel@nongnu.org>; Mon, 22 Jun 2026 11:04:47 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
+ id 1wbj2j-00089c-2F
+ for qemu-devel@nongnu.org; Mon, 22 Jun 2026 14:06:46 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1782151603;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=bHj7EECHHKcSOIRLXYad/7G+QxnGcNm4VS5J5qwACjc=;
+ b=BH5LSec5cnZ7esfbDIACwVHlML28ENPsSboYUft4XQLrU2Dx9cTJ8b3xn6nJ9rbFwFDBPB
+ D9ZTDJIBLnnK1g7KanCzM0CJHp/Ub2g1Jf9rHPqbzyNZeD/W1FrOocAwc5Ok3YIdGsVfHY
+ 6Ex/4TrOurnEkcjk4yeNH4TgmcN7sEU=
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
+ [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-639-MoFPZifAN_KmdiirObX7NQ-1; Mon, 22 Jun 2026 14:06:42 -0400
+X-MC-Unique: MoFPZifAN_KmdiirObX7NQ-1
+X-Mimecast-MFC-AGG-ID: MoFPZifAN_KmdiirObX7NQ_1782151602
+Received: by mail-qv1-f72.google.com with SMTP id
+ 6a1803df08f44-8dd6d58b606so105477786d6.2
+ for <qemu-devel@nongnu.org>; Mon, 22 Jun 2026 11:06:42 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1782151602; cv=none;
+ d=google.com; s=arc-20240605;
+ b=N0+C1n+kO/lz06+pGpNry427ik8SeMD7Pm1hQtKdD5+hYn22xNQ0MuJDQvs2DIeIxH
+ Y69e0otzA+JWbSab7mcpLpsDT7GD/2q+hB1YHYh7HHpIgB8bJfq62WZ3qmz+OUl7MzCb
+ T9a2AIqwcQ3NH5RDnKDZaGQBJporndhC04kBYg64Uly8O4q66BByeZRMl8H5wlJIUSCI
+ ROdBlc3WMCuBMrqbOZxNZpSl+6X+oNaUwp/kmzqBunCpL1vflF/xJp1MENItSvRRsurz
+ zz7mDQa9DXy8ouE8XLyxsMItCukNtzu9hx7xSvoh5GNzYAyQQ4TI3LRhYcAa3Ffwn4fY
+ sb7w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=bHj7EECHHKcSOIRLXYad/7G+QxnGcNm4VS5J5qwACjc=;
+ fh=KmxliCzzZRrU4tz2MTsspdQtxWXo/cgKYLm1DR6MHrI=;
+ b=lCSYVmj+08s1LQ1FzL+n0BjpyQiq27pbXFaNmPjP7Y3D4bojlF4xXP+kLiNoekhLFt
+ mZ13+EL13OFGuWQgx3qvBep934okq2WX5WDUgNWiK6OTP2l5kG/QXZoLBncodPOu0xBH
+ hf0qzbymltWVjkgGj+/fGrcoxWJgM1pDFDWkqP720H2JcRuSMMZ/jfDZ8aj7fMII+DFa
+ iuULguz1OCo5oo++4yKMz5MNCcKK4mK3p0Bz5UYSl0j2k0t2bs8D+coUimGLAaSn6oSl
+ HgG1vs42iigXViGxZMZHWErgdRgj+Ke96awZUHDRYV7YHL+FP8xtmtIZBstOhJ2rpniO
+ 6Tgg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1782151487; x=1782756287; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=hfhoECYTGllKYv6GH8/89Tj5tH/lHsm7OczJyduzOQ4=;
- b=CNA1EGv+ic1eC2Z2qdn89YAmq0Bs/uipp6oDoOPQVnIXvNutnHofdIBHPllmLdhce+
- hBeOxovtrSvffMPkWLm0P2MvkKUVZDSatL61nbSNyXxtXtTTbLzOQkpmfCXc5AmeHQIu
- 8frg8hOFFFhpgza2ynVznc3zHY9uWEXiJxDAPMF65cNiFYvFHCXQKdRm30+ZB0eIJ/IS
- E7uN9z0EpveU1AQPOBWdhbPwsxH0XxwlzStOI/pBAnYxdUNo7J208Pyn+F0VgvZN9H95
- paodEysSuzri5lYqGVlhQKcqYmAyQh4t7/DaZOqbsYTpgKCkuTxowMfOfWUVpN9tx9Iu
- HdNg==
+ d=redhat.com; s=google; t=1782151602; x=1782756402; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=bHj7EECHHKcSOIRLXYad/7G+QxnGcNm4VS5J5qwACjc=;
+ b=Zil/OdWs7Q++wW/S/8NiOzspeLjlbD6fAAX3nj06NodjKggA1rg0VR6W+ODAYd3xnn
+ iZ2Cg5xdzpt9qfF5fKeIrKDr3wZFxZwM3GNVpM4JyKovaGKUHPO6QCYRedPncJk5CFrn
+ Gm0Xm2phuvL7NAM7LXfCpQ70XuE6cr4ZRd1JbIor9zd2OFFAKpL7uWy+cgHb5FZgM4W3
+ JIqYQEJ5a7Lgz3HunNuF3vJJOTdKeY6zlkEYVrqsTBe+1ID9F8gAZdM3k3O+IDxo7LSh
+ Uw4yyAXapNetej9RdY28llkseyToXeXI6hPloXqlsDT0W3znL+gYMCZNPHOAGv5AsDpQ
+ /bdQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782151487; x=1782756287;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=hfhoECYTGllKYv6GH8/89Tj5tH/lHsm7OczJyduzOQ4=;
- b=UKcbGWN0ngfwh5b5qBoWfdYCbI7COVbM8mVvhhgp4hX1OfUtWsZQmvODX7TKE+MBxX
- C8TSlh2K543wCDJfjzGymQUfQfODha07ix32cQ48ufdzEHfRXWjI87Erysr/u1lZXzit
- fIzrrSaJkzFKAjQXIlwEiteFJQENO93fsK9NXIGJn1NKrd7n6arejdpxeySmK3L9d0e5
- S6JqfzJ17gOjLeSPTMQ9HKqxiK2Ua4vt8M/I3DxnYoVnkzakQAWcDowvHLWZapGFf/In
- 4TCcwP7bQZQbPce6fmM18yob4w5EsiEtRpGXffcUJGyfjkGS063JqLzNAQDGcaOR5kB6
- /wWg==
+ d=1e100.net; s=20251104; t=1782151602; x=1782756402;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=bHj7EECHHKcSOIRLXYad/7G+QxnGcNm4VS5J5qwACjc=;
+ b=fvX+glPPjzYKOznucYBYlA/8pb1b7DiYPU9tKRS61Xw3bDjF9QbB7pq9USxllyjlVd
+ Z+803w+MZhb9UZ2bgqistGz+NJ7ElVAGgPPH+NGAJLDaXm8AQx7GFtEsK3+wuxeWokhS
+ NzqvBSbiFKGaotE52qCSjJb6d+tSvHL2v2NQzCQ9F4jOqicZqF4xE361vNApMgDXt/VT
+ NTSUszAjasrS+Qk2SMNcijWEsNmRRi/eYPKFcm0VIpa3PcsLNIr+3RZWuWsKc2MHNIVJ
+ zX1F5QF7hLvrWcBDwWoT7RMHrlxY5knup7RtQRaCF7OpHAAMC9pw1MEbDDR52Je0w93D
+ /9xw==
 X-Forwarded-Encrypted: i=1;
- AHgh+Rol/vnMP5GFg26/zS371xwtC8BmkU7t94e0hKjM8jufaW087LvhouFcSwCowHiywkoUX/g+FAt4bwih@nongnu.org
-X-Gm-Message-State: AOJu0YwPZ+GZSLNG1DDEK3KXX2sHQWniG8NGxFdbdZS4nva9DIe72zwT
- 0ABv30cKXCpbZc743+7nQeEF4U2JxMZXpXXCeV6ARLE/CbER/tgablgQPUlyuFtKuCQIzULFmS7
- YNN3oYzl1+/kDmU8v0/JF7ClJLQg4n6ovaUsXFgY3yyjOk2B5sI6h7Lg/SA==
-X-Gm-Gg: AfdE7cnCOlDi4P08tW+Azbo8oV41xzwAXXii6pXpI/LKjHjyi0NbGzMjpHFGRNDxQb0
- wsKDVX4FK4KudBeuOUKk5tKaamuSkgcMmWdDqo9XXmwShR8i4YZLkg5TpFgfEOsN6wc+Zrzk++r
- jyA27mxbOuW0mio2/kPnps5+uzB1NHBFWJRpIIna3gmAa3wBtCXXqLueX+jqSSOgJNFfLBJsoAq
- R/LvnPeRRE/mFUeHM+6NREcaNAhurRbLndRMzT9WoTtiEcDRRE7oXXg3jtlCHq73IzIXYEwt5AX
- b8MNQM1Jf2eoicY9vyLxj01UQIhLsxG6UXeyd32LQrX3wEW9cR7pfjYRAE0xTCT6XqcviBMhOj1
- zVhRAd7JDKJX/XcXUz2Wq71dcvLTzYUr691RCqb4G3OWo+cNdkwIeBnYd+bo19J+emg1qzUn7SC
- NGxOg=
-X-Received: by 2002:a05:7300:1801:b0:2ed:a58c:942 with SMTP id
- 5a478bee46e88-30c5556303cmr432647eec.8.1782151486676; 
- Mon, 22 Jun 2026 11:04:46 -0700 (PDT)
-X-Received: by 2002:a05:7300:1801:b0:2ed:a58c:942 with SMTP id
- 5a478bee46e88-30c5556303cmr432611eec.8.1782151486074; 
- Mon, 22 Jun 2026 11:04:46 -0700 (PDT)
-Received: from [192.168.1.170] (216-71-219-44.dyn.novuscom.net.
- [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-30c5178a68dsm1148912eec.22.2026.06.22.11.04.44
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 22 Jun 2026 11:04:45 -0700 (PDT)
-Message-ID: <9cbeb740-405d-4738-90cc-fce7eca7d9ec@oss.qualcomm.com>
-Date: Mon, 22 Jun 2026 11:04:43 -0700
+ AHgh+RrtLHbHQMW30qNZ+ijI6Sorn08SVaLB3vYm3mv9KEvHAWT02lbruc2UQnKLlLrLfLwDpZwBTWFwRi7B@nongnu.org
+X-Gm-Message-State: AOJu0YxQx/9eTs+4ZX4jmHjdoZtBfJNwUmnIS8mACUuG/8ZnW+nyKStE
+ A8ZjH0EgCSTdlOaYgEWorX5aKLHaV1ajDULJSSoU1eNyoPjnT48Sy9Ba2Wa7GlttfQ6XCniZdgv
+ jbrQ19LTHL3mEXJN5m4lWdqteWPX6dLOdfs23Z8MyVyv6qDP4QBQXeTkxhwQrZq28XM3m2DjRdp
+ I4Z/7IGUlmSKrMSgVanqfCoFDlFDuIEQ8=
+X-Gm-Gg: AfdE7ckialuXtlUuHKTBY/xfVAxQEEBm85bHRd+Qjid54KfprvJ9pvJeBRzI7Rjrn74
+ 3wyuQyalXkpns3LqK9lxElUCoSHt6vB+h4hcsOCBx7vGEUdeY0h+SBkzKmnRwhLUPKSyAKKhxnk
+ f/aTG0dw0YJWU2PoCY2y9FnS2OSR5eaEVAWUqS1ikonDzSv2HVvxtOEFmqvZjMc4qROb7g0Q==
+X-Received: by 2002:a05:6214:459b:b0:8cc:dfd2:b929 with SMTP id
+ 6a1803df08f44-8dea40c6f97mr337439456d6.29.1782151601532; 
+ Mon, 22 Jun 2026 11:06:41 -0700 (PDT)
+X-Received: by 2002:a05:6214:459b:b0:8cc:dfd2:b929 with SMTP id
+ 6a1803df08f44-8dea40c6f97mr337438146d6.29.1782151600846; Mon, 22 Jun 2026
+ 11:06:40 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 0/1] contrib/plugins: add dlcall to call host functions
- from a guest
-To: Ziyang Zhang <functioner@sjtu.edu.cn>, qemu-devel <qemu-devel@nongnu.org>
-Cc: Riku Voipio <riku.voipio@iki.fi>, Laurent Vivier <laurent@vivier.eu>,
- Alex Bennee <alex.bennee@linaro.org>, Alexandre Iooss <erdnaxe@crans.org>,
- Mahmoud Mandour <ma.mandourr@gmail.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Zhengwei Qi <qizhwei@sjtu.edu.cn>, Yun Wang <yunwang94@sjtu.edu.cn>,
- Mingyuan Xia <xiamy@ultrarisc.com>, Kailiang Xu <xukl2019@sjtu.edu.cn>
-References: <20260622163438.130746-1-functioner@sjtu.edu.cn>
- <70f7c4f9-ab2d-4a5a-b440-0599b4c16242@oss.qualcomm.com>
- <06e6901f-0f45-4f01-bd06-eb1928548367@sjtu.edu.cn>
-From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <06e6901f-0f45-4f01-bd06-eb1928548367@sjtu.edu.cn>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-GUID: LfUGXJnmm5cWgl-fAreobqQrvcVA9Vot
-X-Proofpoint-ORIG-GUID: LfUGXJnmm5cWgl-fAreobqQrvcVA9Vot
-X-Authority-Analysis: v=2.4 cv=PuKjqQM3 c=1 sm=1 tr=0 ts=6a39793f cx=c_pps
- a=PfFC4Oe2JQzmKTvty2cRDw==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
- a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22
- a=ZaQgKWfZJN5dIZQ0-FIA:9 a=QEXdDO2ut3YA:10 a=6Ab_bkdmUrQuMsNx7PHu:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjIyMDE3NiBTYWx0ZWRfX3515L4ugVOog
- L3SuSRPI1L+nzKUz67qiXj4Q9OHTQu6VayuMQbF/f2A4lTvRlNlvndP+p9HoUwOYUsUTdjs064G
- p3BBsYCFhpL0dGDYhD/ZLM1IX0ES64M=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjIyMDE3NiBTYWx0ZWRfX/KxciVJmWvxf
- GbC1YaCDvTRDEmJ5Lo2YaerhFxrBpOShJnsTlX9c8NK4aJK+HYNilh0zmYgF3souy9kaZgIHbtw
- Wf3nTU2zUj4ZJ0H/8tR6RccbW7GGQGQObMsLJKOJnUpTlrLFpal7qL/cNpwEDMuQBYcAFZUYx1p
- bDt+/AVvmivJcyYvxSuWTOZsgtbL8SA9hms84oyzBxcJ5G67YW+ecLSS490wHmU6m6kXT1FWh0E
- +LdNfHLEhmevUfqJkpYGIbg/WRyMluY9a3txYXya/iBRM9HBqoeqqdr2AtV3yr56NIe5I/Jvj4E
- 3qS28XOKlHq4q5R00mjpYPvLdfCc0ifjAIfb4IntNQdHAXyIMEPg2CyB2YJnRQnBUyUKmwo8rsS
- 8BfFX/fqDxwBS5DMwEnyHQWksM5T7JKHEv8gp8RszaKN20PcYWmipB9/Wlq5z+jD2PY5oyOHgoa
- zAFaHQIVe/bVIWaqQKg==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-22_03,2026-06-22_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 suspectscore=0 priorityscore=1501 phishscore=0 impostorscore=0
- adultscore=0 clxscore=1015 bulkscore=0 spamscore=0 lowpriorityscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606220176
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+References: <20260619180121.2982356-1-polina.vishneva@virtuozzo.com>
+ <20260619180121.2982356-5-polina.vishneva@virtuozzo.com>
+ <CAPMcbCphbipUTQm5d+A3hPJMLXVo3jBVxxzCii8axjTyQtBGSQ@mail.gmail.com>
+ <3fc4bc652795f349d0f82bd30c7aaac9323fd14f.camel@virtuozzo.com>
+In-Reply-To: <3fc4bc652795f349d0f82bd30c7aaac9323fd14f.camel@virtuozzo.com>
+From: Kostiantyn Kostiuk <kkostiuk@redhat.com>
+Date: Mon, 22 Jun 2026 21:06:29 +0300
+X-Gm-Features: AVVi8CfmXSaC39Fd-X2tH-6EUSpIp4PRQaiFG9mHsP99z41XODKL244NU6tx7zw
+Message-ID: <CAPMcbCod4Pv20=Wvw+Yd=2yY3WcRLFY0LXGpdsOtF95aBaZP+w@mail.gmail.com>
+Subject: Re: [PATCH 4/4] qga: Add AF_VSOCK channel support on Windows
+To: Polina Vishneva <polina.vishneva@virtuozzo.com>
+Cc: "pierrick.bouvier@oss.qualcomm.com" <pierrick.bouvier@oss.qualcomm.com>, 
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, 
+ "marcandre.lureau@redhat.com" <marcandre.lureau@redhat.com>, 
+ Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>,
+ Den Lunev <den@virtuozzo.com>, 
+ "pbonzini@redhat.com" <pbonzini@redhat.com>,
+ "philmd@mailo.com" <philmd@mailo.com>, 
+ "berrange@redhat.com" <berrange@redhat.com>,
+ "michael.roth@amd.com" <michael.roth@amd.com>
+Content-Type: multipart/alternative; boundary="0000000000001ac9510654db81e8"
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=kkostiuk@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -163,64 +144,206 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/22/2026 10:50 AM, Ziyang Zhang wrote:
-> On Mon, 22 Jun 2026 10:16:29 -0700, Pierrick Bouvier wrote:
->> Thanks for the update.
->>
->> At this stage, even though the plugin in itself looks good, it's not
->> something we can really merge in, as it's relying on external behavior
->> that is not specified or being a standalone tool.
->>
->> For instance, if we have a public Lorelei toolchain that implements this
->> for libraries, it would definitely have it's place upstream IMHO.
->>
->> Also, the same kind of contribution can be done for other
->> instrumentation frameworks, so we can end up having a single interface
->> (and set of libraries) shared among all of them.
->>
->> What do you think?
->>
-> 
-> Hi Pierrick,
-> 
-> That makes sense.
-> 
-> A few thoughts in response:
-> 
-> The Lorelei toolchain already exists, but it will take me a little time
-> to migrate it onto this minimal plugin interface, since the ABI changed
-> somewhat over the course of the RFC.
+--0000000000001ac9510654db81e8
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+On Mon, Jun 22, 2026 at 5:17=E2=80=AFPM Polina Vishneva <
+polina.vishneva@virtuozzo.com> wrote:
+
+> On Mon, 2026-06-22 at 12:00 +0300, Kostiantyn Kostiuk wrote:
+> > Hi Polina,
+> >
+> > First of all, thanks for your patches.
+> >
+> > Before reviewing this patch, I want to ask: why is it needed?
+> >
+> > I understand the patch "qemu-sockets: Enable AF_VSOCK on Windows",
+> > but AF_VSOCK has the same behavior on Linux and Windows.
+> > I expected that we could totally reuse the POSIX part, so just move it =
+to
+> > common with
+> > some defines like:
+> > ```
+> > #ifdef G_OS_WIN32
+> >         in_ch =3D g_io_channel_win32_new_fd(in_fd);
+> > #else
+> >         in_ch =3D g_io_channel_unix_new(in_fd);
+> > #endif
+> > ```
+> >
+> > We tested our driver with SSH over VSOCK, and standard Linux SSH works
+> > well.
+> > So, what is the difference in this case that you add win32-specific cod=
+e
+> > for VSOCK?
+>
+> 1. There's no shared GIOChannel path on Windows to #ifdef into.
+> channel-posix.c is built on GIOChannels + g_io_add_watch();
+> channel-win32.c is built on overlapped I/O over a Win32 HANDLE with a
+> reader thread and a custom GSource. There's no in_ch =3D g_io_channel_*()
+> line to wrap. vsock is the first GIOChannel-based channel on Windows.
+>
+>
+I know that currently windows virtio-sock driver does not
+support overlapped I/O.
+But what if we add it and reuse the same logic with overlapped I/O over a
+Win32 HANDLE?
+What do you think?
+
+In general, my wish is to simplify new source code and reuse existing one.
+
+
+> 2. g_io_channel_win32_new_fd() is the wrong constructor, as it's for CRT
+> fds, not sockets. GLib wants g_io_channel_win32_new_socket() (it sets up
+> WSAEventSelect). And qemu_accept()/socket_listen() return a CRT fd
+> wrapping a SOCKET via _open_osfhandle(), so we recover it with
+> _get_osfhandle(), which is also why teardown needs the explicit
+> qemu_close_socket_osfhandle() ordering, to avoid a double closesocket().
+>
+> 3. Winsock disconnect detection differs: GLib passes FD_READ|FD_CLOSE as
+> one G_IO_IN and Winsock reports FD_CLOSE only once, so a peer that
+> writes-then-closes never yields G_IO_HUP and the listener hangs
+> half-open. That's why the MSG_PEEK probe logic is required on Windows,
+> while on POSIX poll()/epoll() reports POLLHUP reliably and doesn't need
+> it.
+>
+> Best regards,
+> Polina.
+>
+> >
+> > Best Regards,
+> > Kostiantyn Kostiuk.
+> >
+> >
+> > On Fri, Jun 19, 2026 at 9:03=E2=80=AFPM Polina Vishneva <
+> > polina.vishneva@virtuozzo.com> wrote:
+> >
+> > > Add vsock-listen channel mode to the Windows guest agent.
+> > >
+> > > The listen/accept path uses the standard QEMU socket helpers
+> > > (socket_parse(), socket_listen(), qemu_accept()) and plugs the
+> resulting
+> > > SOCKET into the GMainLoop via g_io_channel_win32_new_socket().
+> > >
+> > > Signed-off-by: Polina Vishneva <polina.vishneva@virtuozzo.com>
+> > > ---
+> > >  docs/interop/qemu-ga.rst |   4 +
+> > >  qga/channel-win32.c      | 257 ++++++++++++++++++++++++++++++++-----=
+--
+> > >  qga/main.c               |   6 +
+> > >  3 files changed, 222 insertions(+), 45 deletions(-)
+> > >
 >
 
-That's my point. As long as Lorelei is not a stable tool, we can't
-really integrate the current plugin upstream. However, it's great that
-you posted this as a RFC, as it shows the approach work.
+--0000000000001ac9510654db81e8
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-> I think Lorelei is better kept as a standalone repository: the thunk
-> libraries and the guest/host runtimes clearly do not belong in the QEMU
-> tree.
+<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
+mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Mon, Jun 22,=
+ 2026 at 5:17=E2=80=AFPM Polina Vishneva &lt;<a href=3D"mailto:polina.vishn=
+eva@virtuozzo.com">polina.vishneva@virtuozzo.com</a>&gt; wrote:<br></div><b=
+lockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-le=
+ft:1px solid rgb(204,204,204);padding-left:1ex">On Mon, 2026-06-22 at 12:00=
+ +0300, Kostiantyn Kostiuk wrote:<br>
+&gt; Hi Polina,<br>
+&gt; <br>
+&gt; First of all, thanks for your patches.<br>
+&gt; <br>
+&gt; Before reviewing this patch, I want to ask: why is it needed?<br>
+&gt; <br>
+&gt; I understand the patch &quot;qemu-sockets: Enable AF_VSOCK on Windows&=
+quot;,<br>
+&gt; but AF_VSOCK has the same behavior on Linux and Windows.<br>
+&gt; I expected that we could totally reuse the POSIX part, so just move it=
+ to<br>
+&gt; common with<br>
+&gt; some defines like:<br>
+&gt; ```<br>
+&gt; #ifdef G_OS_WIN32<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0in_ch =3D g_io_channel_win32_new_fd(i=
+n_fd);<br>
+&gt; #else<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0in_ch =3D g_io_channel_unix_new(in_fd=
+);<br>
+&gt; #endif<br>
+&gt; ```<br>
+&gt; <br>
+&gt; We tested our driver with SSH over VSOCK, and standard Linux SSH works=
+<br>
+&gt; well.<br>
+&gt; So, what is the difference in this case that you add win32-specific co=
+de<br>
+&gt; for VSOCK?<br>
+<br>
+1. There&#39;s no shared GIOChannel path on Windows to #ifdef into.<br>
+channel-posix.c is built on GIOChannels + g_io_add_watch();<br>
+channel-win32.c is built on overlapped I/O over a Win32 HANDLE with a<br>
+reader thread and a custom GSource. There&#39;s no in_ch =3D g_io_channel_*=
+()<br>
+line to wrap. vsock is the first GIOChannel-based channel on Windows.<br>
+<br></blockquote><div><br></div><div>I know that currently windows virtio-s=
+ock driver does not support=C2=A0overlapped I/O.</div><div>But what if=C2=
+=A0we add it and reuse the same logic with=C2=A0overlapped I/O over a Win32=
+ HANDLE?</div><div>What do you think?</div><div><br><span class=3D"Asgive n=
+g" style=3D"border-style:none;background:none">In general, my wish is</span=
+> to simplify new source code and reuse existing one. </div><div>=C2=A0</di=
+v><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;borde=
+r-left:1px solid rgb(204,204,204);padding-left:1ex">
+2. g_io_channel_win32_new_fd() is the wrong constructor, as it&#39;s for CR=
+T<br>
+fds, not sockets. GLib wants g_io_channel_win32_new_socket() (it sets up<br=
 >
-
-Agree on that part.
-
-> Since the plugin only defines the dlcall interface and says nothing
-> about how thunking is implemented, the Lorelei repo is just one
-> reference implementation of that side; a user is free to build their
-> own, with any toolchain or for any framework.
-> 
-> So, to make sure I take the right next step: would you like me to make
-> the Lorelei repository public, with CI that demonstrates the automatic
-> thunk generation? And should Lorelei be referenced from the plugin's
-> comments as a reference implementation?
+WSAEventSelect). And qemu_accept()/socket_listen() return a CRT fd<br>
+wrapping a SOCKET via _open_osfhandle(), so we recover it with<br>
+_get_osfhandle(), which is also why teardown needs the explicit<br>
+qemu_close_socket_osfhandle() ordering, to avoid a double closesocket().<br=
 >
+<br>
+3. Winsock disconnect detection differs: GLib passes FD_READ|FD_CLOSE as<br=
+>
+one G_IO_IN and Winsock reports FD_CLOSE only once, so a peer that<br>
+writes-then-closes never yields G_IO_HUP and the listener hangs<br>
+half-open. That&#39;s why the MSG_PEEK probe logic is required on Windows,<=
+br>
+while on POSIX poll()/epoll() reports POLLHUP reliably and doesn&#39;t need=
+<br>
+it.<br>
+<br>
+Best regards,<br>
+Polina.<br>
+<br>
+&gt; <br>
+&gt; Best Regards,<br>
+&gt; Kostiantyn Kostiuk.<br>
+&gt; <br>
+&gt; <br>
+&gt; On Fri, Jun 19, 2026 at 9:03=E2=80=AFPM Polina Vishneva &lt;<br>
+&gt; <a href=3D"mailto:polina.vishneva@virtuozzo.com" target=3D"_blank">pol=
+ina.vishneva@virtuozzo.com</a>&gt; wrote:<br>
+&gt; <br>
+&gt; &gt; Add vsock-listen channel mode to the Windows guest agent.<br>
+&gt; &gt; <br>
+&gt; &gt; The listen/accept path uses the standard QEMU socket helpers<br>
+&gt; &gt; (socket_parse(), socket_listen(), qemu_accept()) and plugs the re=
+sulting<br>
+&gt; &gt; SOCKET into the GMainLoop via g_io_channel_win32_new_socket().<br=
+>
+&gt; &gt; <br>
+&gt; &gt; Signed-off-by: Polina Vishneva &lt;<a href=3D"mailto:polina.vishn=
+eva@virtuozzo.com" target=3D"_blank">polina.vishneva@virtuozzo.com</a>&gt;<=
+br>
+&gt; &gt; ---<br>
+&gt; &gt;=C2=A0 docs/interop/qemu-ga.rst |=C2=A0 =C2=A04 +<br>
+&gt; &gt;=C2=A0 qga/channel-win32.c=C2=A0 =C2=A0 =C2=A0 | 257 +++++++++++++=
++++++++++++++++++++-------<br>
+&gt; &gt;=C2=A0 qga/main.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0|=C2=A0 =C2=A06 +<br>
+&gt; &gt;=C2=A0 3 files changed, 222 insertions(+), 45 deletions(-)<br>
+&gt; &gt; <br>
+</blockquote></div></div>
 
-For now, I think the current plugin should stay downstream, until
-Lorelei is officially published and people can take any library and
-compile it with it. Once we have this, it's easy to motivate integrating
-this plugin upstream, as people can do everything themselves.
-
-> Regards,
-> Ziyang
-> 
+--0000000000001ac9510654db81e8--
 
 
