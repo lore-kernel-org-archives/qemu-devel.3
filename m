@@ -4,105 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7FA8ECDB46B
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jun 2026 23:10:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01C76CDB466
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jun 2026 00:25:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wbnmA-0007eu-PM; Mon, 22 Jun 2026 19:09:58 -0400
+	id 1wbow3-00085a-NQ; Mon, 22 Jun 2026 20:24:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wbnm1-0007e0-Dk
- for qemu-devel@nongnu.org; Mon, 22 Jun 2026 19:09:50 -0400
-Received: from mail-ed1-x534.google.com ([2a00:1450:4864:20::534])
+ (Exim 4.90_1) (envelope-from <stephensportia@gmail.com>)
+ id 1wbnOk-0001PU-N3
+ for qemu-devel@nongnu.org; Mon, 22 Jun 2026 18:45:46 -0400
+Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wbnlx-0004s0-9x
- for qemu-devel@nongnu.org; Mon, 22 Jun 2026 19:09:48 -0400
-Received: by mail-ed1-x534.google.com with SMTP id
- 4fb4d7f45d1cf-6974f511dd3so5122646a12.1
- for <qemu-devel@nongnu.org>; Mon, 22 Jun 2026 16:09:40 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1782169779; cv=none;
- d=google.com; s=arc-20240605;
- b=IiqNPe7pMI5rbWZa1hdyTqVhEBmFEthf3G0xPZyHmYw4cHhQhxlD1rCDHoQEcUu5aW
- MIb9UOvxBIozPM1vAOSPWM9zu7GGXKklOKV4iCCnC3PC6OMfA12rcBKYD9OpMnCSqQtJ
- 7hlQYyZAGGcrhD8zNW4IQfMs61Ts0jr4am123Pn/zanOD2ib37rSWQmgJfgSsxmdt/yH
- Jq4iV4pAuDpKymCgOrxQeo0nF6IRYxs3EeaelcC6XVOD8VVVdbLOP0p45c+xEwWe6xid
- tMTN+nlikml3xN3DWeTKrPgioPnSCLhsaT4BN3u/Ezts6bTLfUmFlggLlpJhVARYQgar
- F0Zw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=VF3TG2gtqIyGbdIS4yQwutDPq2xLOLzvSeDXg4wDbX0=;
- fh=+dPXGxW3pQNYFrTSil53fSXYfdhGIs7bI6Dyql1Mx+Q=;
- b=hEWbjtee16LGmUHlEWQ4mlLKowl2KKOo8VHnvI41w0TnSzEuQF0+x80OAuKW1opzk3
- EmODI6eJ7Gw1EEAgem44RfoMjyDEHtZuYZaTw09zZBE7wZ7FBkp90cQqiy1h7SV6EIoO
- pEGLjDrNWGuTc6MykO/PmSakMbV+ji9EjJ8HLFYe9SCMrWAYAf6VED1PRZGGbF6pm1/Y
- FlndRXE69lbpOn9Zfx44+4UGiuafDfAnuuhwdUVH3YZFWDrBaCzjpFP8jpswremUYDZn
- jsdLP0Q2EQiwW+cTQQpIt98GzCnF1GtS+R7yRqRKmYukLrADscjYP3wQa0nL3ug91L/H
- scXA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <stephensportia@gmail.com>)
+ id 1wbnOi-0004Wb-Ft
+ for qemu-devel@nongnu.org; Mon, 22 Jun 2026 18:45:46 -0400
+Received: by mail-pl1-x634.google.com with SMTP id
+ d9443c01a7336-2c0b9328c4aso35298635ad.0
+ for <qemu-devel@nongnu.org>; Mon, 22 Jun 2026 15:45:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1782169779; x=1782774579; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=VF3TG2gtqIyGbdIS4yQwutDPq2xLOLzvSeDXg4wDbX0=;
- b=EAYvSZkP+f4dsCgGoh1M63zLrL+VWUOESR1cJfMwPXLIYHXlGwsnf1LtPfk7uMzuCo
- IIE6oSZid7b/o7lql41wOHq1m7Z1onhnA+50PFkddrC4dXigw4UkWeIcSm09b5ZPJ00T
- KgGR/f2G2o1eDqWCuvPN1rFQEzLXGWsAaQ3Lp0EuKw1Z7k2BJC37TaGCY28Sc57TJ9Jv
- xdnFLRlDsx8NOYerWEG5eM5Fr51OZGhLya33Apa7ZEWDB8E3vlAhHjwE6Nzwp0XMhukL
- 9rwlyk3gISMHCMhEraRBSbZgRftWLMPRjxsREKod41iaohdXx5Jc9SGO0xydgbu2djmi
- 4hig==
+ d=gmail.com; s=20251104; t=1782168342; x=1782773142; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=D3P9AYrpA4BY1vKyeayV+CK886D88ViD7/xJCKcwZO0=;
+ b=U5gWNMapJ2uaM/a/pFts6cC1X1J2/RVrnb2VIQQNvpveC2vKwoyZZvBaPbDbr274A4
+ EY/Wk5lqGYIy6D/q7criIT98SP71m1CaXDoiEusX/tLiL265S/TY6UQweUaf5poYSRn5
+ /ENe4y1bX8BBpJJTUhGu/5U7DBMtjEkl90ldGGde6CQapfOBcqe4Q6TllE2KazcsGKI7
+ rIm9eMMeIjsVk1Xc55PaxNjwqcVr1CMQTQdokd6/9RW6fAJ4nm942xZ3IKt+/qHU3fhB
+ 7Gu569bw/iDblK6s/cmys9ov+Xc9tXj01mdehiDLLDT/r4Vdn8qOpxiCTQ105ChNSkqC
+ WyOQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782169779; x=1782774579;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=VF3TG2gtqIyGbdIS4yQwutDPq2xLOLzvSeDXg4wDbX0=;
- b=QOgkHGLjSH96wmtp0F0tJ/ifwtLY6PNL7XxJug6qBcVc8ZsJcRsOm927/FyOfWLYta
- t2fGZ0OuiaHkpwcOM/KcxYVXIyCFKPK4McsWgH+wCJkJg6jjdFWnpBDkrSwBJFvrqaCm
- eZC7m84ZSdCcbsury9rAQxSwZ03O2jEmku0vE16lAyFA16WT229HcanXIFGARWacfTcb
- M3XUGRSDfS+dka8XGHA9O8jRVIPlVPI/yseSKCUphikSOLDS/EbgS6gNl57+dt3nE8rI
- U7CSGNsGAst17pR6lZ/cMAN+Ys7UHC0HO3t/ZIW9irQP41bmfKKZ8VuDg8AbUU6SGETa
- rkJw==
-X-Gm-Message-State: AOJu0YxojbryAaxUgfdPGwFsU58VgubQB9mTZ01V5T6ft6edLKtWAVfu
- 1JGq1m4BMdAfWDbtJLvntsLZVvw9KdVmyHGMT8Sv7+OdmlOdl1Ye+IBGg4AU8bBw3HhcQ5/e5pn
- x3Dq9p59MgvdBsnemFUCcx7+kOIJM9jo=
-X-Gm-Gg: AfdE7ckAGuMr9U9+VILFHjRrnR5Ln2CT4Jnq1MecaEMjy5lj7QW5mD/W4QTplLYD7YA
- dHgpxsPe/tOsBYAbylhB0a2GzgiCpjIgRW7l6lAHdmg1ECWqua+KAo0kwmdvbjOPx8PbnseBAS1
- v7cKQggHx+iVfZOrHXPTyC+yPqoiMz7unZQA/SzltIWseqwwu06cmEFUzpS2DemYTG/ey/B/jwP
- 1S+JylPqu39IlmqDkEbsIC84938zYd8ZYpqUV2hsQp45wxyj84EU8VqFN/Zcv6fvgmPrjpMBHn4
- zc0O+xbKLDXwI9Oi0WFGUzVBlPI=
-X-Received: by 2002:a05:6402:40c1:b0:697:dbed:d57f with SMTP id
- 4fb4d7f45d1cf-697dbedd8c9mr29144a12.1.1782169778983; Mon, 22 Jun 2026
- 16:09:38 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1782168342; x=1782773142;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=D3P9AYrpA4BY1vKyeayV+CK886D88ViD7/xJCKcwZO0=;
+ b=iPxUxZMgx6bo9FmSoYTkFvZh4i0XQNlAIqIbj7eqrRc124QZLK7BZFj7udX95Mfmfo
+ MVg7gJqVwdoxsbzmKm25qFweOvVWNSYsiqTWYu0YCpMjjCjSUKntHDusk/q4XljCX3I2
+ U2kjYW79Vd0itF1ZwSmiUt9CeaLYCUgpJeSwMzsKC5+bWHHbaJ9VlRPXQQhkaSjJsfce
+ VesnRL5XvGs5y8pVHwlqfVyDvePQ76uGpBFSsJGl3sLOGibOr1dYdHwnBc2ANeEU1hF1
+ 71CahTAChXK+fxT7+kqGzHC9+yoHuDQBj1WSDPJoRSNG10wtUJTaWsWOa48gL+E5Dado
+ AN5g==
+X-Gm-Message-State: AOJu0YxpLquP0smVo7mY42/KtMpFBO2DL5x7/yRshgR+xyt1KYuITqJW
+ B3BPTmfFyNHFq7o8FGdlYvBkB4/2tCAX0Fhqjs91KC2moNzmA4/oJMbObeLr8OWL
+X-Gm-Gg: AfdE7clzDKElgtEFMRquTlrU8yVDSsCQ3yPausu5bxhL0aqX7fUY5z6uU/s3X5uxyko
+ 8CAxMeopVYr41J+xt4bQB1k7YJRAY4zabxvzuy/KwxCF5F6ArmUQpP53p4FBQHFro+8Igv/bXn5
+ SrLMBVGqZhW6HoHRBpx8heKzaYj0Tl5g2pIWr0c5CDhHaKTvbTM5yjADO08xbfzWBSYK7JKM1cx
+ 2he/B39Zl9Cm26kzAcMDFzGH2jlaMpl1tJYX2PTyJfodtMaEsKDvuyIFHMyGPoGhtwkYGUsQ16J
+ P2m88KFgOrReH00zyGBwkt+ET01rVkx/QMgZ7JUswzGIcCViRChNBIFP/no5IpeFgLBcHCc0CQo
+ fSXWFkdysKEqRC8p57ybWrGzXb6ibY106HJ7Z0PHujVG4SN4PhT9PqkQ0ollLe3z5g/gC9ceVyY
+ Ro0pB2nSz2hwsazCS83HSgnEXDWmYuyO11nQ4zhm0GFH3APp4KdcC6U+/KWQ==
+X-Received: by 2002:a17:903:1a26:b0:2c0:f807:9bf3 with SMTP id
+ d9443c01a7336-2c7423d65cemr125205855ad.10.1782168342240; 
+ Mon, 22 Jun 2026 15:45:42 -0700 (PDT)
+Received: from lima-default.tail89d63.ts.net ([159.196.41.205])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2c7436af585sm92060885ad.5.2026.06.22.15.45.38
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 22 Jun 2026 15:45:41 -0700 (PDT)
+From: stephensportia@gmail.com
+To: qemu-devel@nongnu.org
+Cc: Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Chao Liu <chao.liu.zevorn@gmail.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>, Weiwei Li <liwei1518@gmail.com>,
+ qemu-riscv@nongnu.org, Portia Stephens <portias@oss.tenstorrent.com>
+Subject: [PATCH] target/riscv: Generate illegal exception for inval.ir and
+ w.inval in U-mode
+Date: Tue, 23 Jun 2026 08:45:34 +1000
+Message-ID: <20260622224534.1923407-1-stephensportia@gmail.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-References: <20260616235939.1358663-1-daniel.barboza@oss.qualcomm.com>
-In-Reply-To: <20260616235939.1358663-1-daniel.barboza@oss.qualcomm.com>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Tue, 23 Jun 2026 09:09:12 +1000
-X-Gm-Features: AVVi8Cdvx5HfqsWa9PRR8D-LIAUE5LmaJjxA56zqAg7XcoISteQIu4NaZYdsOaA
-Message-ID: <CAKmqyKPvAqdH6_PEJnPJOCraiq4LZ=DWsdTWUME-cdxWb9UZTQ@mail.gmail.com>
-Subject: Re: [PATCH 0/5] hw/riscv: more FDT cleanups (PLIC)
-To: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
- liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, chao.liu.zevorn@gmail.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::534;
- envelope-from=alistair23@gmail.com; helo=mail-ed1-x534.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
+ envelope-from=stephensportia@gmail.com; helo=mail-pl1-x634.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Mon, 22 Jun 2026 20:24:12 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -117,65 +103,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jun 17, 2026 at 10:00=E2=80=AFAM Daniel Henrique Barboza
-<daniel.barboza@oss.qualcomm.com> wrote:
->
-> Hello,
->
-> Here is the follow-up I talked about in the first FDT series that was
-> just merged [1].  This short series handles just the PLIC controller
-> FDT.  This time there are 2 FDT bug fixes in the mix (patches 3 and 4)
-> that we were lucky to find.
->
-> Expected changes after this series are related to patches 3 and 4 only:
->
->  $ diff virt.dts virt_patch.dts
->  189c189
->  <               rng-seed =3D (...)
->  ---
->  >               rng-seed =3D (...)
->  285c285
->  <               plic@c000000 {
->  ---
->  >               interrupt-controller@c000000 {
->  297c297
->  <               plic@c600000 {
->  ---
->  >               interrupt-controller@c600000 {
->
-> $ diff sifive.dts sifive_patch.dts
->  >                       #address-cells =3D <0x00>;
->
->
-> Patches based on master.
->
-> [1] https://lore.kernel.org/qemu-devel/20260615203734.954428-1-daniel.bar=
-boza@oss.qualcomm.com/
->
->
-> Daniel Henrique Barboza (5):
->   hw/riscv/sifive_u.c: remove unneeded qemu_fdt_get_phandle() call
->   hw/riscv/sifive_u.c: use intc_phandle in plic creation
->   hw/riscv/sifive_u: add #address-cells in PLIC FDT
->   hw/riscv/virt.c: change 'plic' nodename to 'interrupt-controller'
->   hw/riscv: add create_fdt_plic() helper
+From: Portia Stephens <portias@oss.tenstorrent.com>
 
-Thanks!
+According to the priv spec "Attempting to execute SFENCE.W.INVAL or
+SFENCE.INVAL.IR in U-mode raises an illegal-instruction exception." Fix
+the current implementation to generate exception.
 
-Applied to riscv-to-apply.next
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3543
+Signed-off-by: Portia Stephens <portias@oss.tenstorrent.com>
+---
+ target/riscv/insn_trans/trans_svinval.c.inc | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-Alistair
+diff --git a/target/riscv/insn_trans/trans_svinval.c.inc b/target/riscv/insn_trans/trans_svinval.c.inc
+index a06c3b214f..10cb9e32b6 100644
+--- a/target/riscv/insn_trans/trans_svinval.c.inc
++++ b/target/riscv/insn_trans/trans_svinval.c.inc
+@@ -39,6 +39,12 @@ static bool trans_sfence_w_inval(DisasContext *ctx, arg_sfence_w_inval *a)
+ {
+     REQUIRE_SVINVAL(ctx);
+     REQUIRE_EXT(ctx, RVS);
++    if (ctx->priv == PRV_U) {
++        /* Set the virtual exception if virt enabled */
++        ctx->virt_inst_excp = ctx->virt_enabled;
++        gen_exception_illegal(ctx);
++        return false;
++    }
+     /* Do nothing currently */
+     return true;
+ }
+@@ -47,6 +53,12 @@ static bool trans_sfence_inval_ir(DisasContext *ctx, arg_sfence_inval_ir *a)
+ {
+     REQUIRE_SVINVAL(ctx);
+     REQUIRE_EXT(ctx, RVS);
++    if (ctx->priv == PRV_U) {
++        /* Set the virtual exception if virt enabled */
++        ctx->virt_inst_excp = ctx->virt_enabled;
++        gen_exception_illegal(ctx);
++        return false;
++    }
+     /* Do nothing currently */
+     return true;
+ }
+-- 
+2.43.0
 
->
->  hw/riscv/fdt-common.c         | 30 +++++++++++++++++++++
->  hw/riscv/sifive_u.c           | 42 +++++++++--------------------
->  hw/riscv/virt.c               | 51 ++++++++++++-----------------------
->  include/hw/riscv/fdt-common.h |  5 ++++
->  include/hw/riscv/sifive_u.h   |  2 ++
->  5 files changed, 67 insertions(+), 63 deletions(-)
->
-> --
-> 2.43.0
->
->
 
