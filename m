@@ -4,145 +4,125 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EFFD5CD98F2
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jun 2026 21:08:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26A94CDB46F
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jun 2026 21:08:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wblrs-0000b6-MU; Mon, 22 Jun 2026 17:07:44 -0400
+	id 1wblsL-0000sH-M0; Mon, 22 Jun 2026 17:08:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wblrr-0000aq-6x
- for qemu-devel@nongnu.org; Mon, 22 Jun 2026 17:07:43 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wblsJ-0000rC-Rv
+ for qemu-devel@nongnu.org; Mon, 22 Jun 2026 17:08:11 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wblrn-0002iD-FI
- for qemu-devel@nongnu.org; Mon, 22 Jun 2026 17:07:41 -0400
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65MJauxF2205261
- for <qemu-devel@nongnu.org>; Mon, 22 Jun 2026 21:07:37 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- GpKGCrMRzeYPWqDUIE+qCkrV9/ROixK392W0ijbejjE=; b=jGmmfMf09N97/9t5
- Ww1gaBzL7vo3L4N6lDDS8xP7g955j+Sus6+R16ptwbZnisHFdZ23JMJiNLGAvJhA
- p1j7NrbRU+h3+jnYokHDSxEl/paqP9lYGWTvYlLXTuX7uWcb9OY1NuBnblKbLYS6
- 0Tpba4QA104xTobWtpZQvgxcPDIFN7eWmNg0LCsJGAkhp2z3jLQO7uRgADu+dIrw
- I2Rejv2ryrYhelMDB5ZNPA6OW776d2jf2GeYMyB0S7I3I2tU4DJ5noE5CQ7mC1vL
- rVTH69JOyh8CxtFk9Fxd7QzRwjb9dUsGVceh+ugkTctL9hCsaoqfe4vWezkVcV/E
- +imjlA==
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wblsF-0002l2-Vf
+ for qemu-devel@nongnu.org; Mon, 22 Jun 2026 17:08:11 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1782162486;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=ZylaYIaJyH64ZUN0GPn4U0LhKcnXEBaFTWhwpPLc03o=;
+ b=EYq33x9MQVC66Kdhow8/sJC5XHLeNzuGDmK2ZkIY7PfMQnpqhQvF2VCBSVjsGBMebku7tJ
+ 8kTmH+jCmUMI/yAybhT8MIHv7J5ybGWhMshXhyQnL78LWiu/YkhyZEv2ZSu4JRh+EOdxi5
+ SzxWTSkJ6DoKVYuUpVnlIk96lnCF6kA=
 Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
- [209.85.222.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ey6tmse67-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 22 Jun 2026 21:07:37 +0000 (GMT)
+ [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-179-yrMA6yBhP-m5w-T6Rv-3xQ-1; Mon, 22 Jun 2026 17:08:04 -0400
+X-MC-Unique: yrMA6yBhP-m5w-T6Rv-3xQ-1
+X-Mimecast-MFC-AGG-ID: yrMA6yBhP-m5w-T6Rv-3xQ_1782162484
 Received: by mail-qk1-f200.google.com with SMTP id
- af79cd13be357-91579011fd1so715914985a.1
- for <qemu-devel@nongnu.org>; Mon, 22 Jun 2026 14:07:37 -0700 (PDT)
+ af79cd13be357-9205e6b0bcaso601316185a.1
+ for <qemu-devel@nongnu.org>; Mon, 22 Jun 2026 14:08:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1782162457; x=1782767257; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=GpKGCrMRzeYPWqDUIE+qCkrV9/ROixK392W0ijbejjE=;
- b=HpN9HBWGapnUQl50VOSkaEHFCikBABBuqnBw1loim8SDMGEV3LmOZuKOv2laLxJ9IN
- EChxanQW/NxaWJDgfZ8RpvlFJmagKpYL3r2aMZoLSl8C2hqPmwD6FzPyr6WUzxIG4tXJ
- BLmvOVc3DXqx40d4ftyDROCzR83A4A37Lg1PP1S/FUd9zUs422onBwiYkT9wseIUgWh9
- SgyLzPj8Q0zshbkA9YzXH0pgZIKA0gbQjY7dCwV+V0MikQWmVOuyIxNOnbC48FB3ckaa
- Y+/fmrC41i2gynY9XG9RnmqQ+C4oza6S94QfQmGxhlqguQjlm9gw/HL6d0VzT38vN1o8
- dwdw==
+ d=redhat.com; s=google; t=1782162484; x=1782767284; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=ZylaYIaJyH64ZUN0GPn4U0LhKcnXEBaFTWhwpPLc03o=;
+ b=b1DF54EDa/JTjPVBAF8C4mCePhotV5ASkg4Whgq81yUEVH+TbboJh4P4Yv3NJAl19Q
+ +5b3kUq5MUCY5iXd7uHc8/BXj6SfiZEOTblyGDlu+3r9oDIukyICuCNZBtmSsPqNsyO0
+ WVnGB+qzyajA/vw/bXLvTInVIn50uFbJzHhKYlRSY3ZDkOyvMefRXimFYIPbgUoZ8MRT
+ aINxp/8fkSOlqKkmkbWDOGF3BPUCAgoGpTRQxDu/2k2laAc0DVROKK/2+iIE8k8EDN5S
+ 1tacRoYFkz/kNWHb2vy7vwfC6+h6TiOaefyLdfBIZGMbtyNdDVv/esvRphZhlb+Y0d7R
+ WIEg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782162457; x=1782767257;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=GpKGCrMRzeYPWqDUIE+qCkrV9/ROixK392W0ijbejjE=;
- b=id4zvOny6nNqkFdS1p3z0tyV33qaIqJA7D09QDqo5+HZdcq5DGrL2ArHGVKKj8KH0o
- j2MowRLIMfj9N7k+i1KXdaKqHS2zXslCZTMAe750JBdk/bHDvVmd14hnuJZkf6WxjuXv
- 5OiMm7Pk4m73PHs+btTsXFx9+5kjnxK8t5r9pXx53YDkprFaEIPQ2csXB7lZ/HFWViPv
- wS8WWrWs41AXdkmkwWz/+Q0j4IBTy3PUS+b6mRX2iPCW/9/p0I7V01fjsQJR3hZCpG5C
- awDGbqpj6nfRqWVo+00JEpTqxawBThgQkR9uti7PqbJRZ+v/6amUKWdaFQVazH0/sP7b
- AsHg==
+ d=1e100.net; s=20251104; t=1782162484; x=1782767284;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=ZylaYIaJyH64ZUN0GPn4U0LhKcnXEBaFTWhwpPLc03o=;
+ b=MMZoUceM+jiQG9FXqMIEsyyAuDCDT6Eu0wlvtra35SQ/CqVEpyIHcnJGK+U34SYfv0
+ CjzsJ4Ly9ue6XQNOvIXQYsfg63kSxvqgAzMz6bCoz7pmp/Ji5UKC1VIX0OU/Lu+/zunP
+ H0YMDBoRAYFRm2j/kR0NE6e3esZeaKvBeLTqVQz0ZVXbnCIHq0CKnQS2nLg/Hy2dmLFL
+ 1JE54uyLYEdjSh7MlXR0v5LiowaZF9X+8FH+gZ/tPQLT0fa0X9adXtfo7vUsFlocPb7M
+ UDdTxy8k5JTJusrCKqpNb+O4o8u/4486ujFqwb2yZPgwwQkVEFUa7EG/NUAdJBFA0i5x
+ ro0g==
 X-Forwarded-Encrypted: i=1;
- AFNElJ9sZd/+910MzhKCxBhbRjf2lJbHYja0LPKJx4OrfEWgZcjOtJoG9at3OXz8zksDcLKBxdwEcwVi8/ml@nongnu.org
-X-Gm-Message-State: AOJu0YwxVT7gLgpd8T/FyUtjuRo00oE4pXNdsmnoG2zrZXgzNUQ8yRkX
- 0K0JJDjFiWZD0B0KxyYXXkDsv9MFMOw90Jvc0aeQs3Fm0wRiBBFYeHPV+X9ZO7zy5fDvp4aN6Ja
- 7swkHo6q+X/apgcst4uBLPz4MdSjAMQ9upPxHwlYE4VeORl4l6mKW3F+qUg==
-X-Gm-Gg: AfdE7cmylmZXTALR0DtAi005DaqKLd0a04+iKT6L5MP2u+PV3gLwk12RT5VK24QPPyT
- 7LmbxAfaervVXV262/o3CunKJFoaWC5Mfrl3OIdNgOFwBIDAB+PAwLogkUK3dkErpOkyF4/xs4g
- VmYJ5wmcG1BhAr1Ye23nxy4KyEkM5czSY8oiojgtvHZkiniWui8c9vEe9gohILEK8N99d3veFfb
- QLU0RVacDlFvWeSCt30cK78ouo2QOTanN0d1HBaRivHpeKMeW3NqL0T6fwbLBFOt0oG9mglvlL6
- X6bf8XTrX9Jx2e4yZHXUduvBSkMVIGyUGkSqxkfIuvbBhSc4CKxBgzPolGvYyn8KIFU3dU035/w
- a2KL6ZExjhisLySZB4Wul3FPtv/AeR0EuFOpVM5PLsm2FdLAFnbPydxtC8nK9DQ==
-X-Received: by 2002:a05:620a:d8e:b0:915:a111:86ae with SMTP id
- af79cd13be357-9209119a689mr2750220485a.35.1782162456741; 
- Mon, 22 Jun 2026 14:07:36 -0700 (PDT)
-X-Received: by 2002:a05:620a:d8e:b0:915:a111:86ae with SMTP id
- af79cd13be357-9209119a689mr2750214685a.35.1782162456326; 
- Mon, 22 Jun 2026 14:07:36 -0700 (PDT)
-Received: from [192.168.69.212] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-46666788547sm30907727f8f.18.2026.06.22.14.07.35
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 22 Jun 2026 14:07:35 -0700 (PDT)
-Message-ID: <ba5ce5c8-8493-48cc-90b6-fe304212393a@oss.qualcomm.com>
-Date: Mon, 22 Jun 2026 23:07:34 +0200
+ AFNElJ/1AlHRA+KWHmbdA/jJpSqY611mTbMOD4LhlqtOmW6GiXrDjfqoycIFgNhyB98akZEpBYHqMKLXQ9ax@nongnu.org
+X-Gm-Message-State: AOJu0YyPZLM+dyouNg+K/9Zp4sJwIuJQQUEVo9cckCfZgqqn6SWUjRkC
+ 5ZgON7Kik/PlM+8RBcXg4fpsnE4X4hbl8pRFZvxOFyCqN1pO5/sJZzhPWmNAIfZRoFd0788BjPQ
+ H52CBMyu1lKQFZwvElb0tVc9Ew5y5JcV1sO5jkbPRRoxA/0t6FIhmDler
+X-Gm-Gg: AfdE7clkjMl5xe4/HcC71bT0nswb5OwWveXiS8sfCnlmQhI7Fli4/NPgzhN/qxkkwVb
+ MjyPeks4EiRq4gWfU6qY9Hf/MtfxFk4L8wsbj8xIvznPBM06OcwVIxwRFOHZbW9DxFZ0TOhTqu1
+ g2POaiVfEi6DmZX0dYTWMEUPirtnsTOp/K1u7Mqy/d3jFBmLdR2KG+NDJZCm/gTElDLzvmZnEFY
+ zEfuxta+K+r0MQRMqUHYmk/LOduS72L6b9PDw/aqqSHpsa8riIGL67PtrKNOHAMLGVWRbj9r38d
+ /GKyAf8a4iQ1Gu0Nb2Kko/Ahy+ABKcq25qVwD2TmOmdtGOFjpaJJcVmbnXprk8WYYEi9gHJQ12M
+ ByHyv14GTDW2paf4GBAy898jLPevRJxODl5Wz00syneE/cEOjks/doga6IiMriAIq9u8gE5Lq
+X-Received: by 2002:a05:620a:6492:b0:913:dcd2:f132 with SMTP id
+ af79cd13be357-92090db22b3mr2623430485a.40.1782162483853; 
+ Mon, 22 Jun 2026 14:08:03 -0700 (PDT)
+X-Received: by 2002:a05:620a:6492:b0:913:dcd2:f132 with SMTP id
+ af79cd13be357-92090db22b3mr2623419985a.40.1782162483170; 
+ Mon, 22 Jun 2026 14:08:03 -0700 (PDT)
+Received: from x1.local
+ (bras-vprn-aurron9134w-lp130-03-174-91-117-157.dsl.bell.ca. [174.91.117.157])
+ by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-925fd39188csm82036985a.6.2026.06.22.14.07.59
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 22 Jun 2026 14:08:01 -0700 (PDT)
+Date: Mon, 22 Jun 2026 17:07:58 -0400
+From: Peter Xu <peterx@redhat.com>
+To: =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>
+Cc: Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ David Hildenbrand <david@kernel.org>, Paolo Bonzini <pbonzini@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
+ qemu-rust@nongnu.org, Alex Williamson <alex@shazbot.org>,
+ =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
+ "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>,
+ Fabiano Rosas <farosas@suse.de>, Mark Kanda <mark.kanda@oracle.com>,
+ Ben Chaney <bchaney@akamai.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>, kvm@vger.kernel.org,
+ "Dr. David Alan Gilbert" <dave@treblig.org>,
+ Zhao Liu <zhao1.liu@intel.com>, Eric Blake <eblake@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>, Xiaoyao Li <xiaoyao.li@intel.com>
+Subject: Re: [PATCH v5 00/12] Make RamDiscardManager work with multiple
+ sources & virtio-mem
+Message-ID: <ajmkLgAqc_bz-m3A@x1.local>
+References: <20260604-rdm5-v5-0-5768e6a0943d@redhat.com>
+ <CAJ+F1CKRvSWDOvKC98e_7uyjgJMuXfhOHP83H0s7a=+ZrYxA1g@mail.gmail.com>
+ <ajVco512NDPKDPTr@x1.local>
+ <CAMxuvazRnZw4PEsdKCEBD8X1ua5LMj5K-k+-oh-J_uvXm5vT1w@mail.gmail.com>
+ <ajmMzMAXay65Sl7U@x1.local>
+ <CAMxuvawvb-oueGsgXQsPzAtB8_ArAM+SOtpacrvOGq=4d1F2Bg@mail.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 13/24] target/riscv: move some irq helpers to cpu.c
-Content-Language: en-US
-To: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, liwei1518@gmail.com,
- zhiwei_liu@linux.alibaba.com, chao.liu.zevorn@gmail.com,
- pierrick.bouvier@oss.qualcomm.com, Palmer Dabbelt <palmer@dabbelt.com>
-References: <20260622193141.1449724-1-daniel.barboza@oss.qualcomm.com>
- <20260622193141.1449724-14-daniel.barboza@oss.qualcomm.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <20260622193141.1449724-14-daniel.barboza@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjIyMDIwNCBTYWx0ZWRfX+pb2rCRW/h3Y
- qp1tEUw8pcEhqA2mSFmjgZlLB5S40W8UP6sK93snkhvsfF9lMtcQpqANEfB6hmPRjAHn4iaKfxN
- wGPevYiJL6bzXSaBV+Sz4+glBZrbJGQ=
-X-Proofpoint-GUID: ZuatKAiAvrtP2lKed9AAK9uSuw1cxKfI
-X-Proofpoint-ORIG-GUID: ZuatKAiAvrtP2lKed9AAK9uSuw1cxKfI
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjIyMDIwNCBTYWx0ZWRfX6wUrf9vD1G+R
- hlADTei1PA48bGrZPItTqMbx1KGVOrBMj+wqASfHD7wyiLydmyWFx0kr2qWQQ1szOcUxFPpw08Z
- Aaa87eKaN1SkOLUA5i9fGyIZ8q1uatMUp5MenrmThNBysvAD/K3fdRAfjCenAoDhwl83UEDoQ/W
- l7UCirPWUHb/9TLj6Dn3Azrrs1u9+JII5jMxPSQNYlv7sf86/5E9WZJ+Ku2P+Tpy4JVC34Bthjy
- x8OJNtzCEWSLBhDvVStqoTAIS/6jPuJporhD5NOM7UhO7IUbzPh2O3iN2QYLZwgeQ8E8Wnaii86
- ztJvjppzcOIelni00VGMaH73SOGR52YmiKey4sWo+ZAQxrt8kpsFnTnJ35avQr+Z6EfCOLaoxCN
- x7xRX/EdTSYa22DGWgKPOGbPOpmbQzH2Wzq1fT7t0NJNhK3Zg0mJPg2Q9B1h3/FwQ4G5xeey97O
- Gk5ARQFDQHudf5IC+fg==
-X-Authority-Analysis: v=2.4 cv=H4HrBeYi c=1 sm=1 tr=0 ts=6a39a419 cx=c_pps
- a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
- a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22
- a=EUspDBNiAAAA:8 a=31tgaIbxqbOXDk-74rYA:9 a=QEXdDO2ut3YA:10
- a=PEH46H7Ffwr30OY-TuGO:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-22_04,2026-06-22_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 suspectscore=0 clxscore=1015 phishscore=0 bulkscore=0
- priorityscore=1501 impostorscore=0 adultscore=0 malwarescore=0
- lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2606220204
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAMxuvawvb-oueGsgXQsPzAtB8_ArAM+SOtpacrvOGq=4d1F2Bg@mail.gmail.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -158,24 +138,117 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 22/6/26 21:31, Daniel Henrique Barboza wrote:
-> riscv_cpu_has_work() uses a handful of irq pending functions from
-> cpu_helper.c.  There is a very high possibility that KVM doesn't need
-> the current implermentation of has_work(), but the common accel code
-> needs an implementation of this callback (see cpu_exec_class_post_init)
-> otherwise the KVM driver won't initialize.
-
-Indeed I also noticed that recently elsewhere.
-
-> Move the relevant irq helpers to cpu.c to allow KVM to keep using the
-> current has_work implementation, allowing --disable-tcg to work.  We'll
-> circle it back to evaluate a proper KVM implementation for it in a later
-> date.
+On Tue, Jun 23, 2026 at 12:00:04AM +0400, Marc-André Lureau wrote:
+> Hi Peter
 > 
-> Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-> ---
->   target/riscv/cpu.c            | 187 ++++++++++++++++++++++++++++++++++
->   target/riscv/cpu.h            |   5 +
->   target/riscv/tcg/cpu_helper.c | 187 ----------------------------------
->   3 files changed, 192 insertions(+), 187 deletions(-)
+> On Mon, Jun 22, 2026 at 11:28 PM Peter Xu <peterx@redhat.com> wrote:
+> >
+> > On Mon, Jun 22, 2026 at 03:53:33PM +0400, Marc-André Lureau wrote:
+> > > Hi Peter
+> > >
+> > > On Fri, Jun 19, 2026 at 7:13 PM Peter Xu <peterx@redhat.com> wrote:
+> > > >
+> > > > On Fri, Jun 19, 2026 at 12:11:48AM +0400, Marc-André Lureau wrote:
+> > > > > Hi
+> > > > >
+> > > > > On Thu, Jun 4, 2026 at 5:46 PM Marc-André Lureau
+> > > > > <marcandre.lureau@redhat.com> wrote:
+> > > > > >
+> > > > > > Hi,
+> > > > > >
+> > > > > > This is an attempt to fix the incompatibility of virtio-mem with confidential
+> > > > > > VMs. The solution implements what was discussed earlier with D. Hildenbrand:
+> > > > > > https://patchwork.ozlabs.org/project/qemu-devel/patch/20250407074939.18657-5-chenyi.qiang@intel.com/#3502238
+> > > > > >
+> > > > > > The first patches are misc cleanups. Then some code refactoring to have split a
+> > > > > > manager/source. And finally, the manager learns to deal with multiple sources.
+> > > > > >
+> > > > > > This has been tested together with the Linux kernel series from
+> > > > > > Zhenzhong Duan [1] for TDX guests.
+> > > > > >
+> > > > > > (help fix https://issues.redhat.com/browse/RHEL-131968)
+> > > > >
+> > > > > Can the patch 1-11 be queued or are we missing something?
+> > > > > (RFC patch 12 can be dropped for now)
+> > > >
+> > > > Likely yes.. one thing to double check with you before I do: We don't need
+> > > > the kernel series, do we?  Since when unplug, I expect with the truncation
+> > > > approach that this series proposed, KVM will emit TDH.MEM.PAGE.REMOVE then
+> > > > unaccept is done (?).
+> > >
+> > > > Say, what happens if we run QEMU with this series applied, but without the
+> > > > kernel series?
+> > >
+> > > The kernel series is needed at least for PAGE.ACCEPT. Without it, QEMU
+> > > will have KVM_RUN return EIO, and finish into assert (while tearing
+> > > down ioeventfd).
+> >
+> > Could you elaborate a bit more on why ACCEPT would fail?
+> >
+> > I used to ask the event flow here:
+> >
+> > https://lore.kernel.org/qemu-devel/agTjb3M8ElUAlfp1@x1.local/
+> >
+> > If AUG existed, then why ACCEPT would fail?
+> >
+> > PS: I didn't read a lot of what a Linux guest would do; I know there're
+> > some lazy accept approach, but IIUC it's only a matter of time to ACCEPT,
+> > not correctness.  My understanding is if we properly notify these new slots
+> > with AUG, then it should be able to ACCEPT?
+> 
+> Yes, it will, but it needs the kernel patches to do it (or virtio-mem
+> will let the guest access un-accepted pages and qemu will crash). I
+> submitted a few proposals before Zhenzhong Duan proposed the last
+> iteration.
+
+OK, I think I misunderstood both the crash and also what Zhenzhong's series
+is trying to do.  After a closer look, it seems to be a proposal for any
+plug/unplug to work.  I'm surprised (if I get it right this time..) that TD
+didn't seem to support DIMM hotplugs besides virtio-mem.
+
+> 
+> > >
+> > > > What confused me a bit is the dependency of this series v.s. the kernel
+> > > > one.  It seems to use different approaches, but then I don't understand why
+> > > > this series was tested with the kernel change.
+> > >
+> > > My understanding is that the kernel may perform TDG.MEM.PAGE.RELEASE.
+> > > That depends on TDX config TDCS_CONFIG_PAGE_RELEASE which qemu/kvm
+> > > doesnt currently control. I don't know whether this is then
+> > > redundant/needless with qemu doing discard on the guest_memfd..
+> >
+> > The problem is if this series depends on the kernel series, should we then
+> > wait for the kernel solution be accepted first in case it'll change?
+> 
+> I don't think qemu needs to wait for the kernel to be fixed.
+> Furthermore, this series is not tdx/sev/etc specific
+
+AFAIU it is coco specific, otherwise we only always have 1 source, hence no
+need for this series to provide this function.
+
+Said that, I agree with you.. Looks like there's no major plan to add
+anything specific to QEMU.
+
+Patch 1-10 are all reviewed patches and correctly resolve the known >1 ram
+sources and it's a design problem, I don't see how we can bypass that.
+
+Patch 11 is very reasonable on its own, then I assume the guest ACCEPT
+problem will need to evolve on its own.  Looks like the direction is
+correct, and only some corner cases to think about (acpi coverage, lazy
+accept, etc.) that I saw in the discussion.
+
+> 
+> >
+> > But obviously I still don't yet fully understand how this whole thing
+> > works.. :(
+> 
+> I am also slow, because I don't focus on this most of the time.
+> Someone with more experience and dedication would handle it better.
+
+I queued patch 1-11, will send a pull this week.  Thanks for all the
+explanations.
+
+-- 
+Peter Xu
+
 
