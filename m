@@ -4,144 +4,145 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 477BBCDB46F
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jun 2026 21:05:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EFFD5CD98F2
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jun 2026 21:08:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wblpD-0007ol-Lg; Mon, 22 Jun 2026 17:04:59 -0400
+	id 1wblrs-0000b6-MU; Mon, 22 Jun 2026 17:07:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1wblpB-0007lm-Ct
- for qemu-devel@nongnu.org; Mon, 22 Jun 2026 17:04:57 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wblrr-0000aq-6x
+ for qemu-devel@nongnu.org; Mon, 22 Jun 2026 17:07:43 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1wblp8-0001jw-Tb
- for qemu-devel@nongnu.org; Mon, 22 Jun 2026 17:04:57 -0400
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wblrn-0002iD-FI
+ for qemu-devel@nongnu.org; Mon, 22 Jun 2026 17:07:41 -0400
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65MJZj4B3222608
- for <qemu-devel@nongnu.org>; Mon, 22 Jun 2026 21:04:53 GMT
+ 65MJauxF2205261
+ for <qemu-devel@nongnu.org>; Mon, 22 Jun 2026 21:07:37 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- uv/+mo6kWGoBuNYiMOYjT4/Rxzddblx8K8XEyqHNduc=; b=BBEWexW7jv2DfJa4
- GAcHr2vEweO0DmcL+LGdVMas41viClPVzh6qruhTLd9ZzghTM7S7OlvqS4ceZ0u1
- cXGbQq0Y7FaTJ/H3NP1rvM6OFjzkjI2845NpJ4U1jFoL8DNXQ+I/Qri7uk/JHfp9
- I6h6JjaAYCCtXXnFkdKiXJnX8XkEGJMEdgYtPwq3jcUhQMA3wQGipVTFq6+VELUT
- nIr4GbhbrgQP0whFAIMp6WHUKGOMy1A3X/d8Xxikegl9yRTklRjI9ovp534elj3Z
- Iv80cv8te++3bRYY21HhVUOdxeZGgeN7600dwmPgf6O3jChij6TFzeFe6NPh+/4O
- buKJOg==
-Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
- [209.85.160.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ey5sn1pjs-1
+ GpKGCrMRzeYPWqDUIE+qCkrV9/ROixK392W0ijbejjE=; b=jGmmfMf09N97/9t5
+ Ww1gaBzL7vo3L4N6lDDS8xP7g955j+Sus6+R16ptwbZnisHFdZ23JMJiNLGAvJhA
+ p1j7NrbRU+h3+jnYokHDSxEl/paqP9lYGWTvYlLXTuX7uWcb9OY1NuBnblKbLYS6
+ 0Tpba4QA104xTobWtpZQvgxcPDIFN7eWmNg0LCsJGAkhp2z3jLQO7uRgADu+dIrw
+ I2Rejv2ryrYhelMDB5ZNPA6OW776d2jf2GeYMyB0S7I3I2tU4DJ5noE5CQ7mC1vL
+ rVTH69JOyh8CxtFk9Fxd7QzRwjb9dUsGVceh+ugkTctL9hCsaoqfe4vWezkVcV/E
+ +imjlA==
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
+ [209.85.222.200])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ey6tmse67-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 22 Jun 2026 21:04:53 +0000 (GMT)
-Received: by mail-qt1-f197.google.com with SMTP id
- d75a77b69052e-517c65c019bso123508581cf.0
- for <qemu-devel@nongnu.org>; Mon, 22 Jun 2026 14:04:53 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Mon, 22 Jun 2026 21:07:37 +0000 (GMT)
+Received: by mail-qk1-f200.google.com with SMTP id
+ af79cd13be357-91579011fd1so715914985a.1
+ for <qemu-devel@nongnu.org>; Mon, 22 Jun 2026 14:07:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1782162292; x=1782767092; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=oss.qualcomm.com; s=google; t=1782162457; x=1782767257; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=uv/+mo6kWGoBuNYiMOYjT4/Rxzddblx8K8XEyqHNduc=;
- b=DsbQzGIyxr5iF2ijzx4bEUvrQTni/Si31LIrLh03VeAB6tM2S6vd83VF7pBvC2eq6/
- SYdBZ5NNitKxfiweebNsbKGIGrP3PRMDGic+f1xTrgpi4JlzU0XxC2j0sfqTWWcGKHK+
- 1uQG5Hk6J9/WNLvDhlrN2zLgMwl9EUUq+8qiS8NxvfOvcd3hhP/xzxmZlzAdCBW2hyHg
- SSutBMgS3QmyPDQMzn2AUnx13KjDDmBzVloJUIzaK4O11xTxfdCany+Gv0PJwNHLSFRk
- M9hLbh/ywx7dYHcUFElzUjeNKCHmtLG4JzhiXFByBvGprvTxWhKaKKT6dFuM5y25twIS
- vYhw==
+ bh=GpKGCrMRzeYPWqDUIE+qCkrV9/ROixK392W0ijbejjE=;
+ b=HpN9HBWGapnUQl50VOSkaEHFCikBABBuqnBw1loim8SDMGEV3LmOZuKOv2laLxJ9IN
+ EChxanQW/NxaWJDgfZ8RpvlFJmagKpYL3r2aMZoLSl8C2hqPmwD6FzPyr6WUzxIG4tXJ
+ BLmvOVc3DXqx40d4ftyDROCzR83A4A37Lg1PP1S/FUd9zUs422onBwiYkT9wseIUgWh9
+ SgyLzPj8Q0zshbkA9YzXH0pgZIKA0gbQjY7dCwV+V0MikQWmVOuyIxNOnbC48FB3ckaa
+ Y+/fmrC41i2gynY9XG9RnmqQ+C4oza6S94QfQmGxhlqguQjlm9gw/HL6d0VzT38vN1o8
+ dwdw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782162292; x=1782767092;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20251104; t=1782162457; x=1782767257;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=uv/+mo6kWGoBuNYiMOYjT4/Rxzddblx8K8XEyqHNduc=;
- b=dHMKrp1+Rr+tRNnhXalpvL9E5LYvTaYhMQesh/UqTk2y4cJLSIVVEUwgBOk38h9HZ2
- m/Uc6hGcyoYkdGleSGdbR8l2bryy2QScFt/OiKbQueaWlrVlGTO5HAfjhFaOagRZuB2r
- iXOeUC+xRG1aTvaOjkyLjIiL37NdhIxW2rPQfWW47hoHy4tOUGl08ntZxfmtts2amf5K
- Gk5o8WG2vqL9aUUP7dIawLk567M0pAvmz58qo4dRpDt3seAD0W0Dd2hs8ULtbGy39XxO
- MVn2p1Lm/8jaEtsSb9nuHTU0IU32ZDUbOqHtv+gGT2TTgX4TpTgaffR0Px+XIBE79l9F
- wNRA==
+ bh=GpKGCrMRzeYPWqDUIE+qCkrV9/ROixK392W0ijbejjE=;
+ b=id4zvOny6nNqkFdS1p3z0tyV33qaIqJA7D09QDqo5+HZdcq5DGrL2ArHGVKKj8KH0o
+ j2MowRLIMfj9N7k+i1KXdaKqHS2zXslCZTMAe750JBdk/bHDvVmd14hnuJZkf6WxjuXv
+ 5OiMm7Pk4m73PHs+btTsXFx9+5kjnxK8t5r9pXx53YDkprFaEIPQ2csXB7lZ/HFWViPv
+ wS8WWrWs41AXdkmkwWz/+Q0j4IBTy3PUS+b6mRX2iPCW/9/p0I7V01fjsQJR3hZCpG5C
+ awDGbqpj6nfRqWVo+00JEpTqxawBThgQkR9uti7PqbJRZ+v/6amUKWdaFQVazH0/sP7b
+ AsHg==
 X-Forwarded-Encrypted: i=1;
- AFNElJ8SBzqLhXiOzwuCvVCTei6gDcUaOjFV+1DS5gYj/2m5v6vDmh18YgL33XGbBHvbqOljiiEEGq+RZTD2@nongnu.org
-X-Gm-Message-State: AOJu0Yy55kWSBk/d/OZhbs9+hpSJdwEV+ijSa74d5YMNAIGFyaNSB9vC
- OxZHtijPBhEnJzcVPpUBoNIQ3hs6AJYJcAaIdf9sFWdvwSuoSMfZdC6jDc5Fmyeuu8/KKFTWXbF
- xb0iV5IH/d0xB7I2frueFAkl+4UHG9+fMd44PPVwj2Uq/4GOHyM0GeC/4Dw==
-X-Gm-Gg: AfdE7ckGFua1YXLu/my8ELcS8nklscJWP915pP4F16omxM5Hyz9xsJCY4JDFiZOLmJ5
- Z+bo7RO8Q+K5oVfah4VXBLdoXL9bvy35FEkpxdDW702irOleOMSy3/QwPzVpEGL5dkMiLikBzcz
- oztY8LHP4BcCCQSkVf3EvF7X9HY79uuNiv4kmPhmqIPBLp5ezvUSS3ojcXNGc7ut9AglDOCtKew
- SYflcOpTyoAQLwJtvV/95ZzU0zE0cgj7BYGWFU0tEmhFDYCPD+SFTqajv1FWGEYsXmncXdH1a85
- 2+ttJc+JVAfT/DPSBdulWnrwvhFtn6tyy2diWZ+9oXDF8+ktjuv9n5PPlX1+Qxb9BPbJtMViFr1
- iZoDywbkTxT01G3Pki8DOxMGWN0VIlATN+5XuJipNXolw
-X-Received: by 2002:ac8:5e0c:0:b0:517:5bc1:e1f0 with SMTP id
- d75a77b69052e-519e46cab16mr243714251cf.0.1782162292083; 
- Mon, 22 Jun 2026 14:04:52 -0700 (PDT)
-X-Received: by 2002:ac8:5e0c:0:b0:517:5bc1:e1f0 with SMTP id
- d75a77b69052e-519e46cab16mr243713701cf.0.1782162291447; 
- Mon, 22 Jun 2026 14:04:51 -0700 (PDT)
-Received: from [192.168.68.106] ([189.79.21.40])
- by smtp.gmail.com with ESMTPSA id
- af79cd13be357-92600d78c84sm77304185a.47.2026.06.22.14.04.48
+ AFNElJ9sZd/+910MzhKCxBhbRjf2lJbHYja0LPKJx4OrfEWgZcjOtJoG9at3OXz8zksDcLKBxdwEcwVi8/ml@nongnu.org
+X-Gm-Message-State: AOJu0YwxVT7gLgpd8T/FyUtjuRo00oE4pXNdsmnoG2zrZXgzNUQ8yRkX
+ 0K0JJDjFiWZD0B0KxyYXXkDsv9MFMOw90Jvc0aeQs3Fm0wRiBBFYeHPV+X9ZO7zy5fDvp4aN6Ja
+ 7swkHo6q+X/apgcst4uBLPz4MdSjAMQ9upPxHwlYE4VeORl4l6mKW3F+qUg==
+X-Gm-Gg: AfdE7cmylmZXTALR0DtAi005DaqKLd0a04+iKT6L5MP2u+PV3gLwk12RT5VK24QPPyT
+ 7LmbxAfaervVXV262/o3CunKJFoaWC5Mfrl3OIdNgOFwBIDAB+PAwLogkUK3dkErpOkyF4/xs4g
+ VmYJ5wmcG1BhAr1Ye23nxy4KyEkM5czSY8oiojgtvHZkiniWui8c9vEe9gohILEK8N99d3veFfb
+ QLU0RVacDlFvWeSCt30cK78ouo2QOTanN0d1HBaRivHpeKMeW3NqL0T6fwbLBFOt0oG9mglvlL6
+ X6bf8XTrX9Jx2e4yZHXUduvBSkMVIGyUGkSqxkfIuvbBhSc4CKxBgzPolGvYyn8KIFU3dU035/w
+ a2KL6ZExjhisLySZB4Wul3FPtv/AeR0EuFOpVM5PLsm2FdLAFnbPydxtC8nK9DQ==
+X-Received: by 2002:a05:620a:d8e:b0:915:a111:86ae with SMTP id
+ af79cd13be357-9209119a689mr2750220485a.35.1782162456741; 
+ Mon, 22 Jun 2026 14:07:36 -0700 (PDT)
+X-Received: by 2002:a05:620a:d8e:b0:915:a111:86ae with SMTP id
+ af79cd13be357-9209119a689mr2750214685a.35.1782162456326; 
+ Mon, 22 Jun 2026 14:07:36 -0700 (PDT)
+Received: from [192.168.69.212] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-46666788547sm30907727f8f.18.2026.06.22.14.07.35
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 22 Jun 2026 14:04:50 -0700 (PDT)
-Message-ID: <fb95ef34-dcdd-4e05-b929-2853247479c4@oss.qualcomm.com>
-Date: Mon, 22 Jun 2026 18:04:46 -0300
+ Mon, 22 Jun 2026 14:07:35 -0700 (PDT)
+Message-ID: <ba5ce5c8-8493-48cc-90b6-fe304212393a@oss.qualcomm.com>
+Date: Mon, 22 Jun 2026 23:07:34 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 00/24] target/riscv: move TCG files and fix --disable-tcg
-To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-devel@nongnu.org
+Subject: Re: [PATCH 13/24] target/riscv: move some irq helpers to cpu.c
+Content-Language: en-US
+To: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, liwei1518@gmail.com,
  zhiwei_liu@linux.alibaba.com, chao.liu.zevorn@gmail.com,
- philmd@oss.qualcomm.com
+ pierrick.bouvier@oss.qualcomm.com, Palmer Dabbelt <palmer@dabbelt.com>
 References: <20260622193141.1449724-1-daniel.barboza@oss.qualcomm.com>
- <52c3605c-345f-43d2-8cc6-794980c805fa@oss.qualcomm.com>
-From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <52c3605c-345f-43d2-8cc6-794980c805fa@oss.qualcomm.com>
+ <20260622193141.1449724-14-daniel.barboza@oss.qualcomm.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+In-Reply-To: <20260622193141.1449724-14-daniel.barboza@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-GUID: G31LGgWqykBSaU-hJDutdtCrNh3I1BDg
-X-Proofpoint-ORIG-GUID: G31LGgWqykBSaU-hJDutdtCrNh3I1BDg
-X-Authority-Analysis: v=2.4 cv=PuKjqQM3 c=1 sm=1 tr=0 ts=6a39a375 cx=c_pps
- a=EVbN6Ke/fEF3bsl7X48z0g==:117 a=sHJf4AwOIoU3qjeHFPlg6Q==:17
- a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22
- a=VwQbUJbxAAAA:8 a=pGLkceISAAAA:8 a=KKAkSRfTAAAA:8 a=NEAV23lmAAAA:8
- a=m-4l0abKu59XhOTcK5AA:9 a=QEXdDO2ut3YA:10 a=a_PwQJl-kcHnX1M80qC6:22
- a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjIyMDIwNCBTYWx0ZWRfX3TbbjZqBO0rL
- lbzF1buknSWr+pEPafJcsvYGvSU/4LK75yUZl2lGMoDCh6MmrjNv8ulpxoiRFZBre+h8bJu6xKC
- zhpI4gZFEDPMq1vo5AU5tVzxhubNETw=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjIyMDIwNCBTYWx0ZWRfX9bUZAn92+IUI
- QOwcylh6CvvrUNNvxyf/6ZlcpYdhaIpewHu+rzwUoKCOdCF1N6GpBE7e2IqC8qiXriqcvAq81Fl
- Y7ZO9sAuF+quchBpDAXqmr86vwil3JOoI4jCQd/wXq5BA47GinzPteUDSB7ayR4NGrwmcvjswQw
- kToNKekWNEQxR0xrpxcNJ4PtJpOHEYNcdXR8MdH6TVwAHG5UOJAWI5u9MlNHfJCsbET4evADza2
- ewGQ/lL/aEBPmyZT5yEXUIjX4F0Mv7YwpMnPfrcNdJsrJLadCXOGfNLnN13EJJH1w/3h3M1UPWR
- oIOTZnjlvB8ZUcqPwjIpjOv08dkMvf5M/3FndiI/hboIoNEh9nuFAhzTfwwgDYmii5eaB0N+CbL
- QT0Ytvtkf+S/ZEZG6dxLSAWIp2gdgB1hiHUK/htthVN01LPbCjifejfxOq7M9ZevCtFglSLPN2h
- SJHbOHExlSHTEfPM5vA==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjIyMDIwNCBTYWx0ZWRfX+pb2rCRW/h3Y
+ qp1tEUw8pcEhqA2mSFmjgZlLB5S40W8UP6sK93snkhvsfF9lMtcQpqANEfB6hmPRjAHn4iaKfxN
+ wGPevYiJL6bzXSaBV+Sz4+glBZrbJGQ=
+X-Proofpoint-GUID: ZuatKAiAvrtP2lKed9AAK9uSuw1cxKfI
+X-Proofpoint-ORIG-GUID: ZuatKAiAvrtP2lKed9AAK9uSuw1cxKfI
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjIyMDIwNCBTYWx0ZWRfX6wUrf9vD1G+R
+ hlADTei1PA48bGrZPItTqMbx1KGVOrBMj+wqASfHD7wyiLydmyWFx0kr2qWQQ1szOcUxFPpw08Z
+ Aaa87eKaN1SkOLUA5i9fGyIZ8q1uatMUp5MenrmThNBysvAD/K3fdRAfjCenAoDhwl83UEDoQ/W
+ l7UCirPWUHb/9TLj6Dn3Azrrs1u9+JII5jMxPSQNYlv7sf86/5E9WZJ+Ku2P+Tpy4JVC34Bthjy
+ x8OJNtzCEWSLBhDvVStqoTAIS/6jPuJporhD5NOM7UhO7IUbzPh2O3iN2QYLZwgeQ8E8Wnaii86
+ ztJvjppzcOIelni00VGMaH73SOGR52YmiKey4sWo+ZAQxrt8kpsFnTnJ35avQr+Z6EfCOLaoxCN
+ x7xRX/EdTSYa22DGWgKPOGbPOpmbQzH2Wzq1fT7t0NJNhK3Zg0mJPg2Q9B1h3/FwQ4G5xeey97O
+ Gk5ARQFDQHudf5IC+fg==
+X-Authority-Analysis: v=2.4 cv=H4HrBeYi c=1 sm=1 tr=0 ts=6a39a419 cx=c_pps
+ a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+ a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22
+ a=EUspDBNiAAAA:8 a=31tgaIbxqbOXDk-74rYA:9 a=QEXdDO2ut3YA:10
+ a=PEH46H7Ffwr30OY-TuGO:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-06-22_04,2026-06-22_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 suspectscore=0 priorityscore=1501 phishscore=0 impostorscore=0
- adultscore=0 clxscore=1015 bulkscore=0 spamscore=0 lowpriorityscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606220204
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+ spamscore=0 suspectscore=0 clxscore=1015 phishscore=0 bulkscore=0
+ priorityscore=1501 impostorscore=0 adultscore=0 malwarescore=0
+ lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2606220204
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -157,259 +158,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 22/6/26 21:31, Daniel Henrique Barboza wrote:
+> riscv_cpu_has_work() uses a handful of irq pending functions from
+> cpu_helper.c.  There is a very high possibility that KVM doesn't need
+> the current implermentation of has_work(), but the common accel code
+> needs an implementation of this callback (see cpu_exec_class_post_init)
+> otherwise the KVM driver won't initialize.
 
+Indeed I also noticed that recently elsewhere.
 
-On 6/22/2026 5:52 PM, Pierrick Bouvier wrote:
-> On 6/22/2026 12:31 PM, Daniel Henrique Barboza wrote:
->> Hello,
->>
->> This series looks scary but it's mostly trivial and mechanical work.
->>
->> It is yet another attempt at fixing --disable-tcg.  We have a recent
->> work sent to the ML [1] and we had Phil's attempt back in 2023 [2].
->> Phil's work didn't get merged and it's now too hard to rebase and
->> revive, the most recent attempt got misled into the 'what is common code
->> between TCG and KVM' dungeon.
->>
->> After reviewing [1] I went ahead and look what other targets were doing
->> w.r.t their directory structure and comparing to RISC-V.  In our case we
->> have a log going on in target/riscv:
->>
->> $ ls target/riscv
->> Kconfig                 cpu_cfg.h             fpu_helper.c   machine.c         sbi_ecall_interface.h  vector_internals.c
->> XVentanaCondOps.decode  cpu_cfg_fields.h.inc  gdbstub.c      meson.build       tcg                    vector_internals.h
->> arch_dump.c             cpu_helper.c          helper.h       mips_csr.c        th_csr.c               xlrbr.decode
->> bitmanip_helper.c       cpu_user.h            insn16.decode  monitor.c         time_helper.c          xmips.decode
->> common-semi-target.c    cpu_vendorid.h        insn32.decode  op_helper.c       time_helper.h          xthead.decode
->> cpu-param.h             crypto_helper.c       insn_trans     pmp.c             trace-events           zce_helper.c
->> cpu-qom.h               csr.c                 instmap.h      pmp.h             trace.h
->> cpu.c                   csr.h                 internals.h    pmu.c             translate.c
->> cpu.h                   debug.c               kvm            pmu.h             vcrypto_helper.c
->> cpu_bits.h              debug.h               m128_helper.c  riscv-qmp-cmds.c  vector_helper.c
->>
->>
->> It is non-trivial to realize that most of this stuff is TCG specific.
->> Meanwhile our 'tcg' subdir is mostly empty:
->>
->> $ ls target/riscv/tcg
->> meson.build  tcg-cpu.c  tcg-cpu.h
->>
->> If we compare it with other targets, let's say loongarch:
->>
->> $ ls target/loongarch/
->> Kconfig      cpu-csr.h    cpu-qom.h  cpu_helper.c  disas.c    insns.decode  loongarch-qmp-cmds.c  tcg           translate.h
->> README       cpu-mmu.h    cpu.c      csr.c         gdbstub.c  internals.h   machine.c             trace-events  vec.h
->> arch_dump.c  cpu-param.h  cpu.h      csr.h         helper.h   kvm           meson.build           trace.h
->> $
->> $ ls target/loongarch/tcg
->> constant_timer.c  fpu_helper.c  insn_trans      meson.build  tcg_cpu.c        tlb_helper.c  vec_helper.c
->> csr_helper.c      helper.h      iocsr_helper.c  op_helper.c  tcg_loongarch.h  translate.c
->>
->> It is straightforward to see which files are TCG exclusive and which
->> files are common to all accels.
->>
->> And this is what we did here.  The patches goes mostly as follows:
->>
->> - move stuff to 'tcg' subdir.  Most stuff is straighforward and is
->>    manageable with a single patch.  Other things required some logic to
->>    go to either cpu.c or tcg-cpu;
->> - move TCG stuff to tcg-cpu.c;
->> - move common accel stuff to cpu.c.  Usually from cpu_helper.c;
->> - filter TCG specific code in cpu.c and other files;
->> - trivial/assorted fixes in misc files that were needed to make
->>    --disable-tcg work.
->>
->> Patch 24 is taken from Zephyr Li to enable the CI for --disable-tcg.
->> Hopefully we won't break it anytime soon.
->>
->> After this series we have --disable-tcg working and the following dir
->> structure:
->>
->> $ ls target/riscv
->> Kconfig                 cpu.c                 cpu_vendorid.h  internals.h       sbi_ecall_interface.h  xlrbr.decode
->> XVentanaCondOps.decode  cpu.h                 gdbstub.c       kvm               tcg                    xmips.decode
->> arch_dump.c             cpu_bits.h            helper.h        machine.c         time_helper.c          xthead.decode
->> common-semi-target.c    cpu_cfg.h             insn16.decode   meson.build       time_helper.h
->> cpu-param.h             cpu_cfg_fields.h.inc  insn32.decode   monitor.c         trace-events
->> cpu-qom.h               cpu_user.h            instmap.h       riscv-qmp-cmds.c  trace.h
->> $
->> $ ls target/riscv/tcg
->> bitmanip_helper.c  csr.h         insn_trans     op_helper.c  pmu.h      translate.c         vector_internals.h
->> cpu_helper.c       debug.c       m128_helper.c  pmp.c        tcg-cpu.c  vcrypto_helper.c    zce_helper.c
->> crypto_helper.c    debug.h       meson.build    pmp.h        tcg-cpu.h  vector_helper.c
->> csr.c              fpu_helper.c  mips_csr.c     pmu.c        th_csr.c   vector_internals.c
->>
->>
->> [1] https://lore.kernel.org/qemu-devel/20260602091753.3209261-1-fritchleybohrer@gmail.com/
->> [2] https://lore.kernel.org/qemu-devel/20230711121453.59138-1-philmd@linaro.org/
->>
->>
->> Daniel Henrique Barboza (22):
->>    target/riscv: move TCG only files to tcg subdir
->>    target/riscv/machine.c: do not migrate pmp state with kvm
->>    target/riscv: move pmp files to tcg subdir
->>    target/riscv: make some riscv_sysemu_ops TCG only
->>    target/riscv: move pmu.h to tcg subdir
->>    target/riscv: move debug.h to tcg subdir
->>    target/riscv: remove csr.h from kvm-cpu.c
->>    target/riscv: move csr.h to tcg subdir
->>    target/riscv: move custom_csrs logic to tcg-cpu.c
->>    target/riscv: move riscv_cpu_set_nmi() to tcg-cpu.c
->>    target/riscv: move valid_vm_* satp arrays to cpu.c
->>    target/riscv: move some irq helpers to cpu.c
->>    target/riscv: move riscv_cpu_claim_interrupts to cpu.c
->>    target/riscv/cpu.c: handle TCG bits of riscv_cpu_dump_state
->>    target/riscv: gate riscv_cpu_update_mip with tcg_enabled()
->>    target/riscv/cpu.c: filter TCG only bits in riscv_cpu_reset_hold()
->>    hw/riscv/riscv_hart.c isolate tcg only bits
->>    target/riscv/gdbstub.c: isolate TCG only checks
->>    target/riscv: move riscv_cpu_set_rdtime_fn to riscv_aclint
->>    target/riscv/tcg: remove unused riscv_cpu_get_geilen()
->>    target/riscv: move riscv_cpu_set_geilen() to riscv-imsic
->>    target/riscv: move riscv_cpu_set_aia_ireg_rmw_cb() to riscv_imsic
->>
->> Zephyr Li (2):
->>    target/riscv: Remove unused tcg/tcg.h include
->>    gitlab-ci.d/crossbuilds: add riscv64 KVM-only build job
->>
->>   .gitlab-ci.d/crossbuilds.yml                  |   8 +
->>   hw/intc/riscv_aclint.c                        |   8 +
->>   hw/intc/riscv_imsic.c                         |  24 ++
->>   hw/riscv/fdt-common.c                         |  52 +++
->>   hw/riscv/riscv_hart.c                         |   4 +-
->>   hw/riscv/virt.c                               |   1 -
->>   include/hw/riscv/fdt-common.h                 |   1 +
->>   target/riscv/cpu.c                            | 316 +++++++++++++++---
->>   target/riscv/cpu.h                            |  19 +-
->>   target/riscv/gdbstub.c                        |  10 +-
->>   target/riscv/kvm/kvm-cpu.c                    |   1 -
->>   target/riscv/machine.c                        |  15 +-
->>   target/riscv/meson.build                      |  17 -
->>   target/riscv/monitor.c                        |   4 +-
->>   target/riscv/riscv-qmp-cmds.c                 |   2 +-
->>   target/riscv/{ => tcg}/bitmanip_helper.c      |   0
->>   target/riscv/{ => tcg}/cpu_helper.c           | 239 +------------
->>   target/riscv/{ => tcg}/crypto_helper.c        |   0
->>   target/riscv/{ => tcg}/csr.c                  |  45 +--
->>   target/riscv/{ => tcg}/csr.h                  |   6 +-
->>   target/riscv/{ => tcg}/debug.c                |   2 +-
->>   target/riscv/{ => tcg}/debug.h                |   0
->>   target/riscv/{ => tcg}/fpu_helper.c           |   0
->>   .../insn_trans/trans_privileged.c.inc         |   0
->>   .../{ => tcg}/insn_trans/trans_rva.c.inc      |   0
->>   .../{ => tcg}/insn_trans/trans_rvb.c.inc      |   0
->>   .../{ => tcg}/insn_trans/trans_rvbf16.c.inc   |   0
->>   .../{ => tcg}/insn_trans/trans_rvd.c.inc      |   0
->>   .../{ => tcg}/insn_trans/trans_rvf.c.inc      |   0
->>   .../{ => tcg}/insn_trans/trans_rvh.c.inc      |   0
->>   .../{ => tcg}/insn_trans/trans_rvi.c.inc      |   0
->>   .../{ => tcg}/insn_trans/trans_rvk.c.inc      |   0
->>   .../{ => tcg}/insn_trans/trans_rvm.c.inc      |   0
->>   .../{ => tcg}/insn_trans/trans_rvv.c.inc      |   0
->>   .../{ => tcg}/insn_trans/trans_rvvk.c.inc     |   0
->>   .../{ => tcg}/insn_trans/trans_rvzabha.c.inc  |   0
->>   .../{ => tcg}/insn_trans/trans_rvzacas.c.inc  |   0
->>   .../{ => tcg}/insn_trans/trans_rvzalasr.c.inc |   0
->>   .../{ => tcg}/insn_trans/trans_rvzawrs.c.inc  |   0
->>   .../{ => tcg}/insn_trans/trans_rvzce.c.inc    |   0
->>   .../{ => tcg}/insn_trans/trans_rvzcmop.c.inc  |   0
->>   .../{ => tcg}/insn_trans/trans_rvzfa.c.inc    |   0
->>   .../{ => tcg}/insn_trans/trans_rvzfh.c.inc    |   0
->>   .../{ => tcg}/insn_trans/trans_rvzicbo.c.inc  |   0
->>   .../insn_trans/trans_rvzicfiss.c.inc          |   0
->>   .../{ => tcg}/insn_trans/trans_rvzicond.c.inc |   0
->>   .../{ => tcg}/insn_trans/trans_rvzimop.c.inc  |   0
->>   .../{ => tcg}/insn_trans/trans_svinval.c.inc  |   0
->>   .../{ => tcg}/insn_trans/trans_xlrbr.c.inc    |   0
->>   .../{ => tcg}/insn_trans/trans_xmips.c.inc    |   0
->>   .../{ => tcg}/insn_trans/trans_xthead.c.inc   |   0
->>   .../insn_trans/trans_xventanacondops.c.inc    |   0
->>   .../{ => tcg}/insn_trans/trans_zilsd.c.inc    |   0
->>   target/riscv/{ => tcg}/m128_helper.c          |   0
->>   target/riscv/tcg/meson.build                  |  31 +-
->>   target/riscv/{ => tcg}/mips_csr.c             |   2 +-
->>   target/riscv/{ => tcg}/op_helper.c            |   2 +-
->>   target/riscv/{ => tcg}/pmp.c                  |   2 +-
->>   target/riscv/{ => tcg}/pmp.h                  |   0
->>   target/riscv/{ => tcg}/pmu.c                  |  52 ---
->>   target/riscv/{ => tcg}/pmu.h                  |   1 -
->>   target/riscv/tcg/tcg-cpu.c                    |  30 +-
->>   target/riscv/{ => tcg}/th_csr.c               |   2 +-
->>   target/riscv/{ => tcg}/translate.c            |   0
->>   target/riscv/{ => tcg}/vcrypto_helper.c       |   0
->>   target/riscv/{ => tcg}/vector_helper.c        |   0
->>   target/riscv/{ => tcg}/vector_internals.c     |   0
->>   target/riscv/{ => tcg}/vector_internals.h     |   0
->>   target/riscv/{ => tcg}/zce_helper.c           |   0
->>   target/riscv/time_helper.c                    |  33 +-
->>   70 files changed, 495 insertions(+), 434 deletions(-)
->>   rename target/riscv/{ => tcg}/bitmanip_helper.c (100%)
->>   rename target/riscv/{ => tcg}/cpu_helper.c (92%)
->>   rename target/riscv/{ => tcg}/crypto_helper.c (100%)
->>   rename target/riscv/{ => tcg}/csr.c (99%)
->>   rename target/riscv/{ => tcg}/csr.h (96%)
->>   rename target/riscv/{ => tcg}/debug.c (99%)
->>   rename target/riscv/{ => tcg}/debug.h (100%)
->>   rename target/riscv/{ => tcg}/fpu_helper.c (100%)
->>   rename target/riscv/{ => tcg}/insn_trans/trans_privileged.c.inc (100%)
->>   rename target/riscv/{ => tcg}/insn_trans/trans_rva.c.inc (100%)
->>   rename target/riscv/{ => tcg}/insn_trans/trans_rvb.c.inc (100%)
->>   rename target/riscv/{ => tcg}/insn_trans/trans_rvbf16.c.inc (100%)
->>   rename target/riscv/{ => tcg}/insn_trans/trans_rvd.c.inc (100%)
->>   rename target/riscv/{ => tcg}/insn_trans/trans_rvf.c.inc (100%)
->>   rename target/riscv/{ => tcg}/insn_trans/trans_rvh.c.inc (100%)
->>   rename target/riscv/{ => tcg}/insn_trans/trans_rvi.c.inc (100%)
->>   rename target/riscv/{ => tcg}/insn_trans/trans_rvk.c.inc (100%)
->>   rename target/riscv/{ => tcg}/insn_trans/trans_rvm.c.inc (100%)
->>   rename target/riscv/{ => tcg}/insn_trans/trans_rvv.c.inc (100%)
->>   rename target/riscv/{ => tcg}/insn_trans/trans_rvvk.c.inc (100%)
->>   rename target/riscv/{ => tcg}/insn_trans/trans_rvzabha.c.inc (100%)
->>   rename target/riscv/{ => tcg}/insn_trans/trans_rvzacas.c.inc (100%)
->>   rename target/riscv/{ => tcg}/insn_trans/trans_rvzalasr.c.inc (100%)
->>   rename target/riscv/{ => tcg}/insn_trans/trans_rvzawrs.c.inc (100%)
->>   rename target/riscv/{ => tcg}/insn_trans/trans_rvzce.c.inc (100%)
->>   rename target/riscv/{ => tcg}/insn_trans/trans_rvzcmop.c.inc (100%)
->>   rename target/riscv/{ => tcg}/insn_trans/trans_rvzfa.c.inc (100%)
->>   rename target/riscv/{ => tcg}/insn_trans/trans_rvzfh.c.inc (100%)
->>   rename target/riscv/{ => tcg}/insn_trans/trans_rvzicbo.c.inc (100%)
->>   rename target/riscv/{ => tcg}/insn_trans/trans_rvzicfiss.c.inc (100%)
->>   rename target/riscv/{ => tcg}/insn_trans/trans_rvzicond.c.inc (100%)
->>   rename target/riscv/{ => tcg}/insn_trans/trans_rvzimop.c.inc (100%)
->>   rename target/riscv/{ => tcg}/insn_trans/trans_svinval.c.inc (100%)
->>   rename target/riscv/{ => tcg}/insn_trans/trans_xlrbr.c.inc (100%)
->>   rename target/riscv/{ => tcg}/insn_trans/trans_xmips.c.inc (100%)
->>   rename target/riscv/{ => tcg}/insn_trans/trans_xthead.c.inc (100%)
->>   rename target/riscv/{ => tcg}/insn_trans/trans_xventanacondops.c.inc (100%)
->>   rename target/riscv/{ => tcg}/insn_trans/trans_zilsd.c.inc (100%)
->>   rename target/riscv/{ => tcg}/m128_helper.c (100%)
->>   rename target/riscv/{ => tcg}/mips_csr.c (99%)
->>   rename target/riscv/{ => tcg}/op_helper.c (99%)
->>   rename target/riscv/{ => tcg}/pmp.c (99%)
->>   rename target/riscv/{ => tcg}/pmp.h (100%)
->>   rename target/riscv/{ => tcg}/pmu.c (86%)
->>   rename target/riscv/{ => tcg}/pmu.h (95%)
->>   rename target/riscv/{ => tcg}/th_csr.c (99%)
->>   rename target/riscv/{ => tcg}/translate.c (100%)
->>   rename target/riscv/{ => tcg}/vcrypto_helper.c (100%)
->>   rename target/riscv/{ => tcg}/vector_helper.c (100%)
->>   rename target/riscv/{ => tcg}/vector_internals.c (100%)
->>   rename target/riscv/{ => tcg}/vector_internals.h (100%)
->>   rename target/riscv/{ => tcg}/zce_helper.c (100%)
->>
+> Move the relevant irq helpers to cpu.c to allow KVM to keep using the
+> current has_work implementation, allowing --disable-tcg to work.  We'll
+> circle it back to evaluate a proper KVM implementation for it in a later
+> date.
 > 
-> It seems like series does not apply on top of master, would that be
-> possible to rebase it?
-
-Oh, sorry.  I forgot to mention that patches are based on alistair's
-riscv-to-apply.next branch:
-
-https://github.com/alistair23/qemu
-
-Cheers,
-Daniel
-
-> 
-> Regards,
-> Pierrick
-
+> Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+> ---
+>   target/riscv/cpu.c            | 187 ++++++++++++++++++++++++++++++++++
+>   target/riscv/cpu.h            |   5 +
+>   target/riscv/tcg/cpu_helper.c | 187 ----------------------------------
+>   3 files changed, 192 insertions(+), 187 deletions(-)
 
