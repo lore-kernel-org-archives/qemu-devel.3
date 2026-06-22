@@ -4,142 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99075CDB471
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jun 2026 08:08:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2336FCDB471
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jun 2026 08:09:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wbZh9-0002Qy-LA; Mon, 22 Jun 2026 04:07:51 -0400
+	id 1wbZia-0002vd-V3; Mon, 22 Jun 2026 04:09:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wbZh8-0002Qc-5z
- for qemu-devel@nongnu.org; Mon, 22 Jun 2026 04:07:50 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wbZh6-0007Di-HY
- for qemu-devel@nongnu.org; Mon, 22 Jun 2026 04:07:49 -0400
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65M59FBR2427859
- for <qemu-devel@nongnu.org>; Mon, 22 Jun 2026 08:07:46 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- lhVb4kwmVsrElXKEMEdvEPXa+Y5NdJ3alJnpoqhQdtI=; b=YnH4VHUv++BXy93P
- 2h2I20+lK5yGb0OKsFCp7E5urJsQiebV+lyXO33vsG6COkJrxWInZ6fdyZKAjdnX
- md95EQQqv2TvKaJ7PvdfL7zektaZWUAByv2poW1572SquSCvx4GpeRr7Jlv2Z6JS
- EFKn2AgVPP0J6efIp8Z5m4fqd8IjagcrWd6dA0dp5ot/HZw+Le8STXPo3OD4YPpC
- cdIM2KICEjTrCx1QOZa6YGT4v40t7RqJltQXXJiMTuwNA3XKFGBGFa2HBYFIH1ka
- qzRiC1GjK+rty2MhXx0VjC6GbEzjdyEWCk/ATj47ihzY4o+0p6QCtOqG9YijIUC9
- U2OXqg==
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
- [209.85.222.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ewhtsdgd4-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 22 Jun 2026 08:07:46 +0000 (GMT)
-Received: by mail-qk1-f198.google.com with SMTP id
- af79cd13be357-9157de5360fso1090412185a.0
- for <qemu-devel@nongnu.org>; Mon, 22 Jun 2026 01:07:46 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1wbZiS-0002v4-Cc
+ for qemu-devel@nongnu.org; Mon, 22 Jun 2026 04:09:12 -0400
+Received: from mail-dy1-x1334.google.com ([2607:f8b0:4864:20::1334])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1wbZiQ-0007T7-NM
+ for qemu-devel@nongnu.org; Mon, 22 Jun 2026 04:09:12 -0400
+Received: by mail-dy1-x1334.google.com with SMTP id
+ 5a478bee46e88-30bbe98c3f0so7529901eec.0
+ for <qemu-devel@nongnu.org>; Mon, 22 Jun 2026 01:09:09 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1782115748; cv=none;
+ d=google.com; s=arc-20240605;
+ b=TMH+6AMrYIwxcAMoDylIwwuYHveAOWQlHWsnooN7vd6rMFoLb7xhIbcKgUvbja8E4+
+ pkzAf/nF+904x9uQKn2afHHKbOqOaacZbVU4w17AbkVe9SsO8JuZ5ccUBiUoea6sQ2BU
+ GUfW0C+MbP3GVrjaQ3L98stIV1s+uCAqczB5rTDMCBggjNaFSgtjIwYCgr8EYc4KhxyQ
+ yqlIXtzgnbeStuNDl1Y1lD7pf+wbUjxEcYhVPoqm3QLevxPGveLHdKTdr5IcXaaExG8H
+ D8Kj4Hi6dBJ0MS90zH5R0Vf2shgpy82hqzJVI2cExeFzNJr75gFt02TKfmkBg+qlNyUi
+ QsqA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=B0iUnjZ9VkNdo+AYrsklkEpMEbcyTC9YXNzaWrD+WNo=;
+ fh=8fSEMV7LwR1ztofgn+X+NE6SPryjtm5tDVCyKdV//4Q=;
+ b=LJwVi76uGFeogPFnRjyAGtRolvNoc3FUFyh+1hyjFSB7fBA164Q3A/CY2VbLTLFEvP
+ Nbu7GqM64C9qspPXK+C4jVVkNhLbUi9nxEfiCE43etDZnWp1JtyosltbNMAX1gPSCq+u
+ 6NdWxmX7llPA2B/P+gRdiC2rnR8lgxqsGQjDhjl6OZWRZ18WlXHXoeCP7TZCSCU9o4B6
+ 6jwxKzR+km3wT+s5wgR2egY+nUzJ2vP2e/mFK4porCyudUQRuDu1nrh6e+T9KaQ4jxcY
+ 9TWDe1VRj6bH5KN31CtbmSgzGgKZ0jCPpcsAZlj2PUiXTuk6nDfEXZH2BHiSUX1Hj83m
+ Lvyg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1782115665; x=1782720465; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=lhVb4kwmVsrElXKEMEdvEPXa+Y5NdJ3alJnpoqhQdtI=;
- b=J5amAUXUvLlItd/eYtkCI02+SNUgPbvhvkKIKh9W8aev6F1IiPO+EgW50TOi8umHSB
- YhN2vGvm+h0y0F0ED726CA+uWgmnD1DXKT9jZM5vBt5w4KJPGnGFiA2SJPuTcQcWXbFH
- Uk7gYdeHNZuIgkrm2v4zHMSpikaH2RSHiFmARuT+OjpslGEQRuGIZ2RDzpWL0VMO+n9e
- xvkkUbnIxRSD85VV1/fwCuX3/+27Zq0DCIOBQjOocsGVHyCpvCJ7VVntB2LcXVZIU1bQ
- iXC5K5a2fiHflYVFRzC5C+LDglMsUgYkleh1jxN7amAJV8tzO3WidmbSB3luprQIYf4X
- VKnw==
+ d=gmail.com; s=20251104; t=1782115748; x=1782720548; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=B0iUnjZ9VkNdo+AYrsklkEpMEbcyTC9YXNzaWrD+WNo=;
+ b=frytUrn7S5T1uw0J+6m9BbJDGL1SYP5o7QJ6Q5i+KqPaj9teHLb45FhuEgLu+k3Cfx
+ f/kHGjorcmWij1WvBuYRUJ4oZd5CwSrBYtHAiWwfQ1pvxxoZbMhji0ZBkcQ0lU8C+5Qq
+ jwvumQR0YY3q5+1NqAH9yQUA0j8PYg8YVJuJ+VONy0mfMQ3cqYIF63aH/sfKsNbot+BR
+ AdFe+WwzGBgZRoK+Ou6UGbgCHEs853hQmsfw5yY5pGB9+8MDeESQRGpMVwlsKjUdSsX/
+ tJtr06sRd6njs8KNIqA75VuA/SIBThRnwwJtzYeOPl6Hr/+22ZUlT47/LY+ksoHdg6us
+ B4tw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782115665; x=1782720465;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=lhVb4kwmVsrElXKEMEdvEPXa+Y5NdJ3alJnpoqhQdtI=;
- b=hVEodxyks6WwXEmpHgmsd97N23C9mpiFXmiXK2a5MBQZpera2amSxnC0PhjNhRARIn
- Dg2w+o/enMtEDuE1QepKnDCynYc18z6AWAP2D3v7IL2MatrRz8NpsLIbSCUG5fdAt56s
- 8GrWxE/0UYQdOBOGPEQS6+o7j+/9CuoUSZ0pdTby1A1abJIxMqbVolbXdJd2suOszYzH
- L1n1KpTwbBRFgPZ3xXmM10RrqbBAOoTzj+lK7xYwOmmrXqbi25bozAMSIXAcFjwWa+t9
- FijOcS+EDohTXKYh9PIGqbq8MnEAmK+osZOIu1gzfVJJdTJANoaz2BD+x7h6oDUkidT5
- dV0A==
-X-Forwarded-Encrypted: i=1;
- AFNElJ8AdHZW6EOf1FFF9eKdUb0pARJcUxnmq4UH7YfJ3gXfq+EMeHOQ2JcPFiRpLEYHgdCyDRy2LIO2d0yF@nongnu.org
-X-Gm-Message-State: AOJu0Yz//VvJXJXs59RlPeCii6heMHDGQMH97Nyoto2YqC215lu1L+lc
- lMmX/42cRgibNFoRqt8DosZolgMBKcDWCmXZpOilNpZ3h37mVAgRAf1SroThG2NvsqGWUQWWkU9
- 0W9oi0j7cCKN9FYq2Np5ACJqh2mOHlEDECWcC0XIcrZ8rcTWPD4Y1cGBphA==
-X-Gm-Gg: AfdE7cmj8yENnIXzB42a+9ZFz9nH6KNnDvAwclcOtN9oaDXKniUloq+D5KWueCGRbr7
- TVEl+WVFNyFPZJ802z+0G/cS93yVbbczlr5dRlrHSTYF/ypKMLR+VEUUd1C6X5G27JJ/TmUpIWO
- Gj8Dibr9tN2iyrHaSiNbmD7z0IqwKN6jLGUR01INe5fgdaz+hwxfx09baQsjSV0lY3zaS3W5A2p
- JK7jVxV8QvZRxVxxzuIIvGBjL28m9DaYrFPpeA/eHS1iYvzd91grbKHQClzVynyERM3KbnDvm3O
- WSY0OJ9Q4kbo2n3AO9NkHh6Du1uer+lxmHarFf/DCGsi2ZwrfEXn/7+8Z0jb8pM89x5tUoOqhxE
- kl5FbK3/c7OtWKLwf3eGZPpxgsQ++qIVDhXSFc2hTMwC0GtHiuFGw6G3xQ9twI0giWNI=
-X-Received: by 2002:a05:620a:4611:b0:911:c5c0:d5f2 with SMTP id
- af79cd13be357-9208a3d6637mr1581857585a.1.1782115665574; 
- Mon, 22 Jun 2026 01:07:45 -0700 (PDT)
-X-Received: by 2002:a05:620a:4611:b0:911:c5c0:d5f2 with SMTP id
- af79cd13be357-9208a3d6637mr1581856185a.1.1782115665017; 
- Mon, 22 Jun 2026 01:07:45 -0700 (PDT)
-Received: from [192.168.69.212] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49245711032sm250925005e9.0.2026.06.22.01.07.43
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 22 Jun 2026 01:07:44 -0700 (PDT)
-Message-ID: <62dc9509-3e02-4762-9de8-36499ca1e9b7@oss.qualcomm.com>
-Date: Mon, 22 Jun 2026 10:07:43 +0200
+ d=1e100.net; s=20251104; t=1782115748; x=1782720548;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=B0iUnjZ9VkNdo+AYrsklkEpMEbcyTC9YXNzaWrD+WNo=;
+ b=iA2/I1rnmLZ6ri0JKgNyYrehjjm+kqKGjHc5fJnYRhu4UGjWuihcBOATZ1LE7hH6oN
+ oHTBqqeRkWGh+8l1ZZpeAsUruVyx+WSvLAeMpgiuTRcVIcytIWtZfQYYHBH4k2LkcZLU
+ hgslS8OoRsgro2JEmI0xtk6ed4kh2uzVF264M3215JLYD/ljSx+q25sNqVz7oM34VFVy
+ Y7enUfqjTshWVzHiOUmRAxn57qaVX/VhOQx6JpuzxAG8KBcSdrobraMVQURLusoih0L0
+ 711oF/lsJGvgbFzFYcWe76dxZ3dzf61Ef0Zlc0c5urFqoNonB/46g2oukZQFOt2V/wO0
+ vePQ==
+X-Gm-Message-State: AOJu0Yxif0LYiToHZayjoBOOGnnQW7Py2vC9qordoSTnkHmZW6IWCdnp
+ lnucKvNvEf9Cv6I5FQbHAuHC8TSakuMZx+bxSJ5+RNQUsbzaZyqRn/YBG66/cUHcccySLLoKU43
+ +BlhYnC5UDEQpoOk2lMCmyIcXaFqGxwc=
+X-Gm-Gg: AfdE7ckb7Opuf5gke3QFAg++wp+jpTX1uBkjt58/W1osbcGOqvGSgx2nhpqi9uForuC
+ ZHMivwAGWsI8iZQo1NOorrqpN2phlFVTZH12PKDUxXQZnI5vAIWJT9jVSqz+Wvd2Twa54bSP1Ib
+ VuIFr1tTz1Nxp34xQuJUIF50J84MiF0GeyTboJ2faaAUXHK4mMFUimUZU69fFEfH+lk1E90QF5s
+ esMqlSV24FV/MxZJ9rOIOZ4h0gYfgDs2LyZDuE9bZLzCnJvSgwiUrJaokxpBEz7309bWhS5I84w
+ Vu9h95KuD6LbIJMw5V68GRlPIWUA
+X-Received: by 2002:a05:7300:cd96:b0:304:ba84:a0cc with SMTP id
+ 5a478bee46e88-30c0d11470bmr8970663eec.33.1782115748358; Mon, 22 Jun 2026
+ 01:09:08 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 4/5] hw/m68k: add working floppy controller for q800
-Content-Language: en-US
-To: Matt Jacobson <mhjacobson@me.com>, qemu-devel@nongnu.org
-Cc: Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- qemu-block@nongnu.org, Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Laurent Vivier <laurent@vivier.eu>
-References: <20260617235032.21491-1-mhjacobson@me.com>
- <20260617235032.21491-5-mhjacobson@me.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <20260617235032.21491-5-mhjacobson@me.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-GUID: e9KhAlC1F282Xb_Cm9JlqQ7liaYOiP8q
-X-Proofpoint-ORIG-GUID: e9KhAlC1F282Xb_Cm9JlqQ7liaYOiP8q
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjIyMDA3OCBTYWx0ZWRfX0ahvS6fK2Esu
- B2E3BJ0CoYnqT7q4Hr47XS1eOz4IkzGPou1eQq5zT92YSKyVdWGHYAxpN2pWSWJN+IhQIesoDKg
- t7P2zPBgU+5gYTDJ0Fr7/PZeAttGxIqm65NdUm0jCigR0xjtwVxEKQyRtLKg1ZuOqodCvY8uHze
- F6W7XPZddGpFmkdC+ew93cVVUgEtBMmw+ZoUGGTv6M8NLfWDTMrcRDHMeJQv6afv8HoTTKuHfMH
- xpRTM47srYlykHWRAuvnzB+wJ+eHEvZlxlcvUeAn7zWZIyKUAkZ4KifEGIZTUpFlWPOGE78uvLA
- GP7dTdIVz7fl7Ds7HvR81XKD1SOEyDfzCSE54Yb18l5e08tU3tUj0GOW5IajHo1zy+8Fhjl53iz
- /eEqrftyhqOQWDlk+uUkQXtxFSSFEuxQS57cupo2+rhnk7ugeqxUV265e3F7F8/DPxV2MaANI2P
- BxxjsXHyNfOfSodPkMw==
-X-Authority-Analysis: v=2.4 cv=bcRbluPB c=1 sm=1 tr=0 ts=6a38ed52 cx=c_pps
- a=qKBjSQ1v91RyAK45QCPf5w==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
- a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
- a=HHGDD-5mAAAA:8 a=tnFgilVEM7Pj922rt7IA:9 a=QEXdDO2ut3YA:10
- a=NFOGd7dJGGMPyQGDc5-O:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjIyMDA3OCBTYWx0ZWRfX4RSjpxhkUh+h
- yLSSFP+6+3B0SmZD1nPa2zQNgWxvDCjC1HLPMvLq7aHLpEaTww1hLElDFeY8bWhzbg2XbGMGRvQ
- TS8Y5DtoMBlMAxB9o5POMbgyCI+f0UU=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-22_01,2026-06-18_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 bulkscore=0 impostorscore=0 malwarescore=0 phishscore=0
- lowpriorityscore=0 adultscore=0 spamscore=0 suspectscore=0 clxscore=1015
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606220078
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+References: <20260618110119.3084296-1-caixiangfeng@bytedance.com>
+ <20260618110119.3084296-2-caixiangfeng@bytedance.com>
+In-Reply-To: <20260618110119.3084296-2-caixiangfeng@bytedance.com>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
+Date: Mon, 22 Jun 2026 12:08:56 +0400
+X-Gm-Features: AVVi8CeslLtwtpZjMBaBFz7G7cOB_S27CW5tcTq5cROWTbg0QH_1BrkPZunCzU4
+Message-ID: <CAJ+F1C+v_mRD5f_d+CTL_rqeOSjTXOm12yqGXLeVBYJ+vvD_tA@mail.gmail.com>
+Subject: Re: [PATCH 1/2] hw/usb/hcd-xhci-pci: break host link cycle so
+ device_finalize() runs on unplug
+To: Xiangfeng Cai <caixiangfeng@bytedance.com>
+Cc: qemu-devel@nongnu.org, yanfei.xu@bytedance.com, 
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1334;
+ envelope-from=marcandre.lureau@gmail.com; helo=mail-dy1-x1334.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -156,48 +119,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 18/6/26 01:50, Matt Jacobson wrote:
-> Switch the Quadra 800 machine to the working SWIM2 floppy controller.
-> Hook up the HeadSel bit on the VIA to control the head selection (the
-> IWM does not handle this part itself).
-> 
-> Signed-off-by: Matt Jacobson <mhjacobson@me.com>
+Hi
+
+On Thu, Jun 18, 2026 at 4:49=E2=80=AFPM Xiangfeng Cai
+<caixiangfeng@bytedance.com> wrote:
+>
+> The xHCI PCI wrapper embeds an xhci-core child via object_initialize_chil=
+d()
+> and, in usb_xhci_pci_realize(), points the child's "host" link back at th=
+e PCI
+> device:
+>
+>     object_property_set_link(OBJECT(&s->xhci), "host", OBJECT(s), NULL);
+>
+> "host" is a DEFINE_PROP_LINK property, which qdev registers as an
+> OBJ_PROP_LINK_STRONG link. A strong link takes a reference on its target,=
+ so
+> this creates a refcount cycle: the PCI device owns the child, and the chi=
+ld's
+> strong link pins the PCI device.
+>
+> On unplug (guest ACPI eject or QMP device_del), pci_qdev_unrealize() call=
+s
+> pc->exit() but never unrealizes the no-bus child. object_unparent() then =
+drops
+> only the parent/bus references, leaving the link reference in place. The =
+PCI
+> device stays at refcount 1 forever, so object_finalize()/device_finalize(=
+) is
+> never reached. Symptom observed under gdb after eject:
+>
+>     p *((Object *)dev)  =3D>  ref =3D 1, parent =3D 0x0, realized =3D fal=
+se
+>     p ((XHCIPciState *)dev)->xhci.hostOpaque  =3D>  points back at dev
+>
+> Fix usb_xhci_pci_exit() to tear down the embedded child explicitly: unrea=
+lize
+> it first (so the set-link-before-realize check passes), then clear the "h=
+ost"
+> link. This releases the strong reference, lets the PCI device refcount re=
+ach 0,
+> and allows device_finalize() to run.
+>
+> Fixes: 8ddab8dd3d81 ("usb/hcd-xhci: Split pci wrapper for xhci base model=
+")
+> Signed-off-by: Xiangfeng Cai <caixiangfeng@bytedance.com>
 > ---
->   hw/m68k/q800.c            |  5 +++--
->   hw/misc/mac_via.c         | 16 ++++++++++++++++
->   include/hw/m68k/q800.h    |  4 ++--
->   include/hw/misc/mac_via.h |  4 ++++
->   4 files changed, 25 insertions(+), 4 deletions(-)
+>  hw/usb/hcd-xhci-pci.c | 12 ++++++++++++
+>  1 file changed, 12 insertions(+)
+>
+> diff --git a/hw/usb/hcd-xhci-pci.c b/hw/usb/hcd-xhci-pci.c
+> index c5446a4a5e..b124251ae3 100644
+> --- a/hw/usb/hcd-xhci-pci.c
+> +++ b/hw/usb/hcd-xhci-pci.c
+> @@ -196,6 +196,18 @@ static void usb_xhci_pci_exit(PCIDevice *dev)
+>          && dev->msix_entry_used) {
+>          msix_uninit(dev, &s->xhci.mem, &s->xhci.mem);
+>      }
+> +    /*
+> +     * The embedded xhci-core child holds a strong "host" link back to t=
+his
+> +     * PCI device (set in usb_xhci_pci_realize()), forming a refcount cy=
+cle:
+> +     * the PCI device owns the child, and the child's strong link pins t=
+he PCI
+> +     * device. On unplug, object_unparent() only drops the parent/bus re=
+fs, so
+> +     * the link ref keeps this device at refcount 1 forever and
+> +     * device_finalize() never runs. Unrealize the child first (so the
+> +     * realized-check in set_link passes), then clear the link to break =
+the
+> +     * cycle.
+> +     */
+> +    qdev_unrealize(DEVICE(&s->xhci));
+> +    object_property_set_link(OBJECT(&s->xhci), "host", NULL, &error_abor=
+t);
 
+This reverts the set_link/realize from pci_realize, it looks correct to me.
+Could somebody else check if this is how we should handle the embedded obje=
+cts?
 
-> diff --git a/include/hw/misc/mac_via.h b/include/hw/misc/mac_via.h
-> index 114f41db4c..a25f219a25 100644
-> --- a/include/hw/misc/mac_via.h
-> +++ b/include/hw/misc/mac_via.h
-> @@ -35,6 +35,8 @@
->   #define TYPE_MOS6522_Q800_VIA1 "mos6522-q800-via1"
->   OBJECT_DECLARE_SIMPLE_TYPE(MOS6522Q800VIA1State, MOS6522_Q800_VIA1)
->   
-> +struct SWIM2State;
+Acked-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
 
-Why not include "hw/block/swim2.h"?
-
->   struct MOS6522Q800VIA1State {
->       /*< private >*/
->       MOS6522State parent_obj;
-> @@ -77,6 +79,8 @@ struct MOS6522Q800VIA1State {
->   
->       /* SETUPTIMEK hack */
->       int timer_hack_state;
-> +
-> +    struct SWIM2State *swim;
-
-QEMU coding style is:
-
-        SWIM2State *swim;
-
->   };
->   
->   
-
+--=20
+Marc-Andr=C3=A9 Lureau
 
