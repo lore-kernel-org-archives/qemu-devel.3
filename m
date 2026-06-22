@@ -4,146 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2FD4ACDB46F
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jun 2026 13:40:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57C25CDB46F
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jun 2026 13:57:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wbesH-0006tS-Fr; Mon, 22 Jun 2026 09:39:41 -0400
+	id 1wbf8r-0002PC-L2; Mon, 22 Jun 2026 09:56:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wbesB-0006sP-M4
- for qemu-devel@nongnu.org; Mon, 22 Jun 2026 09:39:35 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <sebott@redhat.com>) id 1wbf8o-0002Nv-3g
+ for qemu-devel@nongnu.org; Mon, 22 Jun 2026 09:56:46 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wbesA-0001kW-1D
- for qemu-devel@nongnu.org; Mon, 22 Jun 2026 09:39:35 -0400
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65MDGAmN1261006
- for <qemu-devel@nongnu.org>; Mon, 22 Jun 2026 13:39:31 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- ftUD0ywO6GZfk9QBb/TgWrHziVNm8tIhNJIJNDciOIw=; b=n9Pljepu+vlm9FDK
- FXliGa0V/7nA0SwEtfRH+hzDbZRX49b5zTSVVVA7j8JD9jHGKVma+bvZS5d/HmyC
- gXc8hOFSye4HGz5fKu2X7d6hyrAs+M6yId7ig9pgeWLiVa/Hs9OqdbcDrNBfSyJf
- IMP1PoGc1D15HBJgOGaH2opIcyvVnhVk+N/be3W5lnsIi4B1+ezEMloYPh2RBxYp
- /cuqHBdOgttQecDQY3oUxDsgiAvXDFjopWLiywPWgYsUmsjxojlAziDN6P2APUmz
- 1JkThXKD0cBJbMwMcRJaho2/LOi7Q79YJz7MwaqS2DvS7IiE6oMcVu2kniRS2Syd
- lSjbsA==
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ey3eb8kmc-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 22 Jun 2026 13:39:31 +0000 (GMT)
-Received: by mail-qk1-f199.google.com with SMTP id
- af79cd13be357-9159c4b210aso852911585a.1
- for <qemu-devel@nongnu.org>; Mon, 22 Jun 2026 06:39:31 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <sebott@redhat.com>) id 1wbf8m-0007wH-DR
+ for qemu-devel@nongnu.org; Mon, 22 Jun 2026 09:56:45 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1782136602;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=/URF9nfbf9hl1uNYYwQxU/heW1PoSsB716FltVdjwqg=;
+ b=PkgroGLX877tJxImvtDNe7lAekQ/xM+U9CxuFzJzbH35zUt9UMtdLcfYGMZdFJYc4oF4zR
+ AOGKHIpSEuFKkznNoPrjTu5gQNq29gxxG2W400A3ngrypzmAsgqa0rtzCi91PypiNwDydb
+ T4QvQDaiW66hqbsCq7TkxxnVIGhdkTU=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-297-HOt69wpuOA2YDCWGIqlB3w-1; Mon, 22 Jun 2026 09:56:40 -0400
+X-MC-Unique: HOt69wpuOA2YDCWGIqlB3w-1
+X-Mimecast-MFC-AGG-ID: HOt69wpuOA2YDCWGIqlB3w_1782136600
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-45ef4931de5so3197300f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 22 Jun 2026 06:56:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1782135570; x=1782740370; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=ftUD0ywO6GZfk9QBb/TgWrHziVNm8tIhNJIJNDciOIw=;
- b=EuUPJbfytZZQLMwSTmUhblorIkM13kKWydu8H6zRjfd40+hxt/WV32kubKC8WlVt7z
- FhOKuQBgqvG/77QD8bVX2oIxJpfQckFSsP6PAXL9ueLLeWOfq2LtByCWrSDVQ7vyVXe2
- gFAyjUpq414hxzWSsfI7524g8OnIttB/Ba/8YEVDZELL/yyZDXEDybvFL+73GfYI+s23
- 794+vkAPhqhFQPImY2+Q+XgW7OdTHCMHN8q/ZD2nA68a/fjAUygm9ETffzoAuel6fOU2
- qaeqJYWubxsBzwVO+9davsVjc1vccma35OHnCvY5+A7H3jaOrl0VSoyMMDLpkKTFIRIf
- M60w==
+ d=redhat.com; s=google; t=1782136599; x=1782741399; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=/URF9nfbf9hl1uNYYwQxU/heW1PoSsB716FltVdjwqg=;
+ b=flsDYqaiy/TudWu9BnJFj9fLqXXgj/83PRADEv81ak5eBWngav7u3gvyKWkFxUc7/P
+ ap1pfXvzUZPPBM0jJ0LtVyapEyQFmx+WvjKkz32l0nua4cyALP4YG+lHwadTBnzpMmji
+ KrDJ1NH+1AaMPQgwQM/TMLL1fmyOw1UIu0nW2B+GQ+B1dmdENUwEFT3sppa0JbztQ8IZ
+ UJHOGuakCJZ0KFsCJPoCQFH0zzorjZBz59rJYhtoe5wWoIDycf33Tg+jDaYgews7KbTq
+ r7CP9NnJRGhAZQ55Id/jtf5oNZoTrbgdk7ORM7D0M0Fn8VhO2JlDAkYAiepybkdQY2+S
+ lZbg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782135570; x=1782740370;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=ftUD0ywO6GZfk9QBb/TgWrHziVNm8tIhNJIJNDciOIw=;
- b=nJiuKC5yMzR6v7kHX4JGa64QxiM9CMGq/9qq7BpVm//8b/yxc3Vy95en9sC7EkPq9C
- zdhu2ETnqhcJIrWqEqOcLZY/UqBc77GRlTa70P8NQ1mkqBQieIYad/EJW82t+f+3eDT3
- +ROnn7EfXIQyV44L31vFwSPVfpfP24yzLMoECEnG227gqrnxnLWwac2Sooi90DCJdd1j
- jK550Rf0GNB0LqePKbLy+4aYDFrMPOC3PeMXLeDnHXaQKqedo/e8mUBuRzm7LJKLvT6O
- 3I+qrnNuRJ4V1wpyzgevHequjiuNJdSZlz/N7CKxrcJgrlzj3rMzJVndbqbRMjOsiBbA
- 5OzQ==
-X-Gm-Message-State: AOJu0YziKX93fgkNoAubyBIhi58DIA23L1xEkySUs3lvZRYv6C1prUNx
- nCplwMWb5xRN630JeENXc0hAjEQp2eb3dxNOQ5UlpUeBlWUHCout0RJr+2T7Bcuyo+mcSMaoVmc
- eAGBZ5FTlRUGvc9Rh4Ai9IsMq4itWUHf3CV8PaDUhWG6K5pmOD1lUHbusTg==
-X-Gm-Gg: AfdE7cnLwtX3s5tIHP8OcLbpT/RrntHzGH+4FrS9FxwImpOkSymm3k2J3dvAe893Wje
- W309zjIye/mUE1e8lHrgW6QLtoUfzmar28Vw3AT//YAsMuUfzfTHeTcfjZJUfG0NDjol5nGqXjA
- WiGL92pGk88zcFw892MaLWjN1q34d2HPnY2079DA9gYWfM0+KC/oBnau6NoqnmXAsy/vW8NkxyT
- wcMaV++Khlf10mfw/kpbTkbWzXScrTGqXjAVIXiAIIHO+7Yu/u39nycZYoeepCJgg1oA1NBDeLY
- JHGehC40jmxcZv4uLhU+BMZpea/zF/IlfFTLvf1kmjguXCCnP6wjNEd0Bf7ZM6mr5+vbzGaM5Zj
- Ph2UbPJ+6zIg9fA8dO41oUuaRtyR6YRe1LWRCZyf9yi6ZSzsVh3XymTsPOmHU5g==
-X-Received: by 2002:a05:620a:2b4c:b0:914:e9eb:573e with SMTP id
- af79cd13be357-9208718fbd2mr1757503985a.0.1782135570414; 
- Mon, 22 Jun 2026 06:39:30 -0700 (PDT)
-X-Received: by 2002:a05:620a:2b4c:b0:914:e9eb:573e with SMTP id
- af79cd13be357-9208718fbd2mr1757499785a.0.1782135569877; 
- Mon, 22 Jun 2026 06:39:29 -0700 (PDT)
-Received: from [192.168.69.212] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-c0c60ac7c1bsm360175366b.33.2026.06.22.06.39.28
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 22 Jun 2026 06:39:29 -0700 (PDT)
-Message-ID: <03156de5-9081-4b32-93ea-eaf363acf8ab@oss.qualcomm.com>
-Date: Mon, 22 Jun 2026 15:39:28 +0200
+ d=1e100.net; s=20251104; t=1782136599; x=1782741399;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=/URF9nfbf9hl1uNYYwQxU/heW1PoSsB716FltVdjwqg=;
+ b=KKccHlTVTOY4fLNs34uQHh2VExmjrebS3D0UIjf/miZZfgC+LsonaJR950zx1UMiZI
+ xunJe7G/dcKOean+4RVmkVLQvirJeaXHx0tHD4OCIcAmoIONwhaEazp4aVbdJJKW01a7
+ /9gzZtkP9TuofMNnz5hTJbw5P6LdAyhjW4Y2WXeM6hWYpMzs1Xehw9pJJRCAj6ZTp9dC
+ onPyu6rcptcb0Bd0gfhLIcJYumc091pC8IFX3sZoZDso6TnQziRP50BSfw9r43+GVUy2
+ 9pFyQR98lUhLkFzG0+vCoCP84X4MI/kYf7j95vp5+W70E/dn567GLp+1LR7dC4aziCQA
+ cLHg==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RpRl2CQvDcRDT6SGAn2c1ZkX3+sCg2X8PPYtIlDug/K84BFo73gtv2qP/ak84/gueLqQbkQMcjrNUPq@nongnu.org
+X-Gm-Message-State: AOJu0Yw5As1rIbV5VI9xGEzfhXswd7Ahgg0QuhZyDj5nIBZgdPO0hIIN
+ vG10/GEYhaxF1oPyQ2v8eBOU0qCt0m39YVbD6bhy+VtbetOCPbUz5I2+4vowhnL8mbwJlKBPPG2
+ nxv0hgxlQV8DiJVMTQga6/QbDF7a5wBc90Cun1vYRS7QY1/HtZy0Zy1g3
+X-Gm-Gg: AfdE7cllZM2ToLut4IuQWJ3aKveXOJA1VrsqU0MOO4cBWSDXnR3O0gyVQ/zvZSrq0p9
+ +IDzkbGVUIkYi4OKej/idAUkSn3KbVYj1J1SVh3qLIAQdce5TNVAqkNEPiYomTNIe7Ao3JzfquX
+ w5ab+9gh6Na84AH5XBVRaB1uWohpfl4OWEQauvLr7gnj5HD+nDA5mWRCo9NGPGwn4Rjn9xjpNOZ
+ kEJkOFgb8J43z5qTG5PFSMJQ8Y8HCefoHDOTdytdlZtXiBG75YDHQwdkDrVtVX6Hf+nBI8jmzK3
+ iOMZwbkdRGn/a0rOLXCedNOvPqgJwp5EtvKegywLCRDE6mAUs4SBoPzrFT2Xs3+bOp1A0UGNGF+
+ pnPqMg8lwiZxAV/qMSCazHTT/s0+8D01Org7XicnJXWQVHbLPvWAtJHQh2HFwcvtL7ibBWQz4tu
+ 8=
+X-Received: by 2002:a05:6000:1889:b0:460:21e7:330e with SMTP id
+ ffacd0b85a97d-4651c4275bamr21841266f8f.10.1782136599643; 
+ Mon, 22 Jun 2026 06:56:39 -0700 (PDT)
+X-Received: by 2002:a05:6000:1889:b0:460:21e7:330e with SMTP id
+ ffacd0b85a97d-4651c4275bamr21841229f8f.10.1782136599279; 
+ Mon, 22 Jun 2026 06:56:39 -0700 (PDT)
+Received: from rh.redhat.com
+ (p200300f6af2a6100f239e076bbd76784.dip0.t-ipconnect.de.
+ [2003:f6:af2a:6100:f239:e076:bbd7:6784])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-466643f4e9esm25162303f8f.1.2026.06.22.06.56.38
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 22 Jun 2026 06:56:38 -0700 (PDT)
+From: Sebastian Ott <sebott@redhat.com>
+To: Peter Maydell <peter.maydell@linaro.org>, Eric Auger <eauger@redhat.com>,
+ Jonathan Cameron <jonathan.cameron@huawei.com>,
+ Alireza Sanaee <alireza.sanaee@huawei.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Cornelia Huck <cohuck@redhat.com>
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org,
+ Sebastian Ott <sebott@redhat.com>
+Subject: [PATCH v3 3/3] arm/kvm: get demuxed ID registers from kvm
+Date: Mon, 22 Jun 2026 15:56:27 +0200
+Message-ID: <20260622135627.40573-4-sebott@redhat.com>
+X-Mailer: git-send-email 2.54.0
+In-Reply-To: <20260622135627.40573-1-sebott@redhat.com>
+References: <20260622135627.40573-1-sebott@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3] target/riscv: raise access fault for Zicbom MMIO-like
- accesses
-Content-Language: en-US
-To: Alistair Francis <alistair23@gmail.com>,
- ZhengXiang Qin <qinzhengxiang@foxmail.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Chao Liu <chao.liu.zevorn@gmail.com>, Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, Weiwei Li
- <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
-References: <tencent_CA380CBF4A98C990C07BC04A9E748C438309@qq.com>
- <CAKmqyKN09Ut3BAnUpF4Fen=DzMcT=sNpGjTHa8yPeu58H5EpDg@mail.gmail.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <CAKmqyKN09Ut3BAnUpF4Fen=DzMcT=sNpGjTHa8yPeu58H5EpDg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjIyMDEzNSBTYWx0ZWRfX7Abfu/TztXTY
- 3NkFsJw6dCOFTWs2XYslURg10XFfGOmAtv1ATu6V4zOtYjfZjYFX2qyd1dyuiCOfysE1Gpul+dO
- WzQ/j0not5MCtZwjEgqq4Slsl4IgWlI=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjIyMDEzNSBTYWx0ZWRfXzFUcN+mfgYw8
- 4ok8qF57VnHUC2FhWPoPWQjLoge8innqN+4kY+NmvdhlhGDvEPhyfhwvPEq/Ns05ARFgPQtl5U8
- drmCwwLQmbmSKNxtCDac+wXw38R4La2R4e4ZVlTp44sx6F0KVHRgI5HKiUqagrtpZG48c1eWFG/
- JgFV/djPzqoM1pC/udi3e7eW0v2yMtS1NLx0hOI4GatEOf4hCM8Mo5EQQdzuCau23mX6TX8FAJJ
- 6Ahmx7VEczocL7+yDHvybxhMsqR08zJLr6mDqL1pc6PWliiHqHTzoCZ0d9z/t3URwjgDBBtv3P/
- 8l7slOQmF2ef3H7u4RY40Easyp5jCIgg8FMqLiKoaZPA3PSrLWIE4/XDoVZgyvugr5wYN7RUsAV
- wnkx0p3jelB0HjX9CpOTNDOWa3sLQtnmOn2xoT9s9rZVHKkyAa4zx+GBt4Mdwm9dzhhjPKOsZcp
- eoyQ0coQAY8nv54DOBw==
-X-Authority-Analysis: v=2.4 cv=ILIyzAvG c=1 sm=1 tr=0 ts=6a393b13 cx=c_pps
- a=HLyN3IcIa5EE8TELMZ618Q==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
- a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22
- a=p0WdMEafAAAA:8 a=bDN84i_9AAAA:8 a=EUspDBNiAAAA:8 a=pGLkceISAAAA:8
- a=PpR6-8FN4503qITb6qEA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=bTQJ7kPSJx9SKPbeHEYW:22 a=J2PsDwZO0S0EpbpLmD-j:22
-X-Proofpoint-GUID: ktnom3T5Gm0PnONNSP3fKoD8UxvcYZna
-X-Proofpoint-ORIG-GUID: ktnom3T5Gm0PnONNSP3fKoD8UxvcYZna
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-22_02,2026-06-22_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 priorityscore=1501 bulkscore=0 clxscore=1015 adultscore=0
- suspectscore=0 malwarescore=0 spamscore=0 impostorscore=0 lowpriorityscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606220135
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=sebott@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -159,89 +126,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Alistair,
+From: Cornelia Huck <cohuck@redhat.com>
 
-On 22/6/26 05:03, Alistair Francis wrote:
-> On Sun, Jun 21, 2026 at 10:48 PM ZhengXiang Qin
-> <qinzhengxiang@foxmail.com> wrote:
->>
->> check_zicbom_access() currently treats any probe_access_flags() result
->> other than TLB_INVALID_MASK as a successful access. However, a result
->> with TLB_MMIO means that the target is MMIO-like and should not be
->> treated as a normal cache block management target.
->>
->> Raise a store/AMO access fault for Zicbom accesses to MMIO-like regions
->> so that cbo.clean, cbo.flush and cbo.inval do not silently succeed on
->> non-cacheable/MMIO-like memory.
->>
->> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3501
->> Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
->> Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
->> Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
->> Signed-off-by: ZhengXiang Qin <qinzhengxiang@foxmail.com>
-> 
-> Thanks!
-> 
-> Applied to riscv-to-apply.next
-> 
-> Alistair
-> 
->> ---
->> Changes since v2:
->> - Add else before the success path for readability.
->> - Keep fault_addr as target_ulong since CPURISCVState::badaddr is target_ulong.
+We now have the infrastructure in place to handle demuxed ID registers
+from kvm. Use it to get the values that kvm emulates for CCSIDR_EL1.
 
-This is not true, the fields is uint64_t since this commit:
+Tested-by: Alireza Sanaee <alireza.sanaee@huawei.com>
+Signed-off-by: Cornelia Huck <cohuck@redhat.com>
+Signed-off-by: Sebastian Ott <sebott@redhat.com>
+---
+ target/arm/kvm.c | 32 ++++++++++++++++++++++++++++++++
+ 1 file changed, 32 insertions(+)
 
-  commit f2287c7020f36e2f13622d9635a968d6f6fb507d
-  Author: Anton Johansson <anjo@rev.ng>
-  Date:   Wed May 20 14:53:43 2026 +0200
-
-      target/riscv: Fix size of badaddr and bins
-
-Could you update the commit, or ask the contributor to repost,
-or clean on top, please?
-
-Thanks,
-
-Phil.
-
->> - Add Philippe's Reviewed-by tag.
->>
->> Changes since v1:
->> - Use a bit test for TLB_MMIO since probe_access_flags() returns a bitmask.
->> - Keep Reviewed-by tags from v1.
->>
->>   target/riscv/op_helper.c | 6 +++++-
->>   1 file changed, 5 insertions(+), 1 deletion(-)
->>
->> diff --git a/target/riscv/op_helper.c b/target/riscv/op_helper.c
->> index 81873014cb..50fd1b73ea 100644
->> --- a/target/riscv/op_helper.c
->> +++ b/target/riscv/op_helper.c
->> @@ -218,6 +218,7 @@ static void check_zicbom_access(CPURISCVState *env,
->>       void *phost;
->>       int ret;
->>
->> +    target_ulong fault_addr = address;
->>       /* Mask off low-bits to align-down to the cache-block. */
->>       address &= ~(cbomlen - 1);
->>
->> @@ -235,7 +236,10 @@ static void check_zicbom_access(CPURISCVState *env,
->>        */
->>       ret = probe_access_flags(env, address, cbomlen, MMU_DATA_LOAD,
->>                                mmu_idx, true, &phost, ra);
->> -    if (ret != TLB_INVALID_MASK) {
->> +    if (ret & TLB_MMIO) {
->> +        env->badaddr = fault_addr;
->> +        riscv_raise_exception(env, RISCV_EXCP_STORE_AMO_ACCESS_FAULT, ra);
->> +    } else if (ret != TLB_INVALID_MASK) {
->>           /* Success: readable */
->>           return;
->>       }
->> --
->> 2.43.0
->>
->>
+diff --git a/target/arm/kvm.c b/target/arm/kvm.c
+index a54ef51ec2..059d361d88 100644
+--- a/target/arm/kvm.c
++++ b/target/arm/kvm.c
+@@ -244,6 +244,33 @@ static int get_host_cpu_reg(int fd, ARMHostCPUFeatures *ahcf,
+     return ret;
+ }
+ 
++
++/* CSSELR values; used to index KVM_REG_ARM_DEMUX_ID_CCSIDR */
++#define CSSELR_MAX 14
++
++static int get_host_cpu_reg_demux(int fd, ARMHostCPUFeatures *ahcf,
++                                  ARMIDRegisterIdx index, int subindex)
++{
++
++    struct kvm_one_reg one_reg = {
++        .id = KVM_REG_ARM64 | KVM_REG_SIZE_U32 | KVM_REG_ARM_DEMUX,
++    };
++
++    switch (index) {
++    case CCSIDR_EL1_IDX:
++        if (subindex >= CSSELR_MAX) {
++            return -EINVAL;
++        }
++        one_reg.id |= KVM_REG_ARM_DEMUX_ID_CCSIDR | subindex;
++        one_reg.addr = (uintptr_t)&ahcf->isar.idregs[index + subindex];
++        break;
++    default:
++        return -EINVAL;
++    }
++
++    return ioctl(fd, KVM_GET_ONE_REG, &one_reg);
++}
++
+ static uint32_t kvm_arm_sve_get_vls(int fd)
+ {
+     uint64_t vls[KVM_ARM64_SVE_VLS_WORDS];
+@@ -286,6 +313,7 @@ static void kvm_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
+     bool pmu_supported = false;
+     uint64_t features = 0;
+     int err;
++    int i;
+ 
+     ahcf->target = QEMU_KVM_ARM_TARGET_NONE;
+     ahcf->dtb_compatible = "arm,armv8";
+@@ -454,6 +482,10 @@ static void kvm_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
+             /* Read the set of supported vector lengths. */
+             arm_host_cpu_features.sve_vq_supported = kvm_arm_sve_get_vls(fd);
+         }
++        /* Grab demuxed registers. */
++        for (i = 0; i < CSSELR_MAX; i++) {
++            err |= get_host_cpu_reg_demux(fd, ahcf, CCSIDR_EL1_IDX, i);
++        }
+     }
+ 
+     kvm_arm_destroy_scratch_host_vcpu(fdarray);
+-- 
+2.54.0
 
 
