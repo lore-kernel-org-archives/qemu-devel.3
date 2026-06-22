@@ -4,148 +4,160 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92C62CDB46F
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jun 2026 17:16:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D5C1CD98F2
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jun 2026 17:32:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wbiGH-0001aU-Lk; Mon, 22 Jun 2026 13:16:41 -0400
+	id 1wbiUN-0003b9-PK; Mon, 22 Jun 2026 13:31:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wbiGE-0001Zy-50
- for qemu-devel@nongnu.org; Mon, 22 Jun 2026 13:16:38 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <clement.mathieu--drif@bull.com>)
+ id 1wbiUL-0003ai-UV; Mon, 22 Jun 2026 13:31:13 -0400
+Received: from smarthost3.eviden.com ([80.78.11.84])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wbiGB-00085m-P8
- for qemu-devel@nongnu.org; Mon, 22 Jun 2026 13:16:37 -0400
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65MFVn6g2691749
- for <qemu-devel@nongnu.org>; Mon, 22 Jun 2026 17:16:33 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- /znPFFrrIfogKvVfRezdIMEIEPV3TtZEeJ3S3zkBPaM=; b=S73MzxOPo8gkj/2L
- dfA9Vt4pLEt6BfQkf1L63m3eUdNQcKzq00sdSyGOBzugEITCOeHpW+/+iuCSxSfn
- UmRnVu/GxPKByT4u8UPLN/siPGktJG7V2SrFlt2s72Bfx39GsGMrJBD4RUnTkKzA
- uS4/j85v7IDBD7hSLRknJ8NQ6Y7B58o11ArAGGUt/Mm+rKDY1gG8ZTSGTK/fKrz1
- yGrcCp8IK5lZazqkGICP83cGsdqL6QC3rxCzLUJkRxUJMleTYlHStpS9fjZBH4XJ
- Ae5/CMSy4cWn1gHKJ2ST3lJi42TebLaJ7ha/BK9xAhXPq+HZLuTdDDku0OWYTTU/
- Z1ObZA==
-Received: from mail-dy1-f197.google.com (mail-dy1-f197.google.com
- [74.125.82.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ey5sn0x03-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 22 Jun 2026 17:16:33 +0000 (GMT)
-Received: by mail-dy1-f197.google.com with SMTP id
- 5a478bee46e88-30bccca5620so6341069eec.1
- for <qemu-devel@nongnu.org>; Mon, 22 Jun 2026 10:16:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1782148593; x=1782753393; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=/znPFFrrIfogKvVfRezdIMEIEPV3TtZEeJ3S3zkBPaM=;
- b=BB8IeUG1d9KPvHo7GEafEkXm94jVdtAYjyq7znbw3+9UGWhPkIarYwIQ9yoU47sFWK
- hNT2ReC/NFgwWfa/ntipbH3bQVRGleEAWXaImts3neYf2zkE9+CMoVFf+IdEFLPDtpO2
- 7U1zJM6OQsq5gkoauDGlgrvhEv+lqrmN/lp7iMQm4Rb9d0cugBnjTc59Mc6HTAWZOAG3
- /4HuY6ai9xy8MPJz0DCXwArGnOXCHBbuclkTc6G8BFq2CscbyOnG2rQOXYyfmbG+h1v2
- 0toj9NZrlMnvLI2azWFBn4ETuZVZdjRtH3GNeh2hjdKcZsnPnxDfS1CDTFVHE84qCRNs
- LLMA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782148593; x=1782753393;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=/znPFFrrIfogKvVfRezdIMEIEPV3TtZEeJ3S3zkBPaM=;
- b=iGoPDAqqvSFF2uoIR0TbcPG9eX4uWX51xwIpEpq/QQ3PwYaUydgdafdV1TIjSiWBtl
- d2/G/PQESYx+vb3SNt+7uO9nF5FHIlVdqtVTTv8DNEU6vqv0ZoMUo9c+UTc4YhrUUfkK
- ESo/HpoSiq2WEnPSGSVjt6GcTwRjZzGXWe1Wvt+sigTOoZFoBpeQNTmx0O+4aTnyQAhi
- 38D+ggadWYxikN6cC1CvgH2E4ZNJxYn266Bet6ylB+CDIFHqvkTcDsGF+ugeSed+HySR
- fyY0QqxRCekpDOkOsZomRTNAWOAah+4IT4t5dzDwEtvNnFgv7kyIIlsMsjzi20jKgXxU
- PSFA==
-X-Forwarded-Encrypted: i=1;
- AHgh+RrOmhJllgiyIKxi6LOorzYzTbST0o//tLsMOsfYAQcpcpV4oSY4ORvEZpHCE65r+jykTBP37kuFr0f8@nongnu.org
-X-Gm-Message-State: AOJu0YybVss9KGYg1VY5oF1BQEaa++f3q7Q+rP+67SBSEmURBakr2V1X
- tSeoNGpUOg5fIFKNtR5Bnwj0f6Z5cyaIqylKFMKkBCoE7PzITfRccoA+pzqWx3jSA4DrI5aiA52
- osP4t2ZFNhdXbEaqkSJaScijqspgrnopaq0peBav6w2wD3aahyif9U9fCaIfQsfbDDw==
-X-Gm-Gg: AfdE7cnJZ0Z8vAXxlrlZUWYF+6JGurRvHjvDMZL1CIQnyFAyNmEHsVtwRU/679e+icQ
- F8MtVIwcu0w0aZQq/il/MZAyxp0nObHgPDIQexQjpAKOqUJuJiwvoIaE8HXXhPZsQwujIRoXGCM
- sJzHf8763z/0JRALPnlI4WIYidjVNeU8X2XZTA6+1jlLm2P56SXcm9nfnByuhle9mGHymLuOtyV
- Re6mf/VVIuZjLYr1aNAOvLiYVwyX544VDfuz49/tYKRrRRQThaq9UqAAwYQh7eRPsOohe3vUVWT
- opSIoq7XwB7A6lcnbfc06Gxm8WADF3jLP9pfXWkeDZGoHsw6lWgPfWCg/WjCbwmLWHJNRI2d2DY
- /pI+nRIZiNoXnLDI1oCYIXHsTy3h/kJd3q+Rv6AsGVbucNAT6mJ7mNwot2Flm0mSgNIVIgT0NfG
- AdLLE=
-X-Received: by 2002:a05:7300:3c14:b0:304:d75b:f5df with SMTP id
- 5a478bee46e88-30c070018bemr10612522eec.19.1782148592626; 
- Mon, 22 Jun 2026 10:16:32 -0700 (PDT)
-X-Received: by 2002:a05:7300:3c14:b0:304:d75b:f5df with SMTP id
- 5a478bee46e88-30c070018bemr10612460eec.19.1782148591774; 
- Mon, 22 Jun 2026 10:16:31 -0700 (PDT)
-Received: from [192.168.1.170] (216-71-219-44.dyn.novuscom.net.
- [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-30c1be4967fsm10278671eec.26.2026.06.22.10.16.30
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 22 Jun 2026 10:16:31 -0700 (PDT)
-Message-ID: <70f7c4f9-ab2d-4a5a-b440-0599b4c16242@oss.qualcomm.com>
-Date: Mon, 22 Jun 2026 10:16:29 -0700
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 0/1] contrib/plugins: add dlcall to call host functions
- from a guest
-To: Ziyang Zhang <functioner@sjtu.edu.cn>, qemu-devel <qemu-devel@nongnu.org>
-Cc: Riku Voipio <riku.voipio@iki.fi>, Laurent Vivier <laurent@vivier.eu>,
- Alex Bennee <alex.bennee@linaro.org>, Alexandre Iooss <erdnaxe@crans.org>,
- Mahmoud Mandour <ma.mandourr@gmail.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Zhengwei Qi <qizhwei@sjtu.edu.cn>, Yun Wang <yunwang94@sjtu.edu.cn>,
- Mingyuan Xia <xiamy@ultrarisc.com>, Kailiang Xu <xukl2019@sjtu.edu.cn>
-References: <20260622163438.130746-1-functioner@sjtu.edu.cn>
-From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+ (Exim 4.90_1) (envelope-from <clement.mathieu--drif@bull.com>)
+ id 1wbiUJ-0003Mu-Ck; Mon, 22 Jun 2026 13:31:13 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=bull.com; i=@bull.com; q=dns/txt; s=mail;
+ t=1782149471; x=1813685471;
+ h=from:to:cc:subject:date:message-id:references:
+ in-reply-to:content-id:content-transfer-encoding: mime-version;
+ bh=ak/JiYsj3HCNPbHBUxkA1mBbhO7TFlAZUETNW9veTXI=;
+ b=o9RUQr8tovPwQKBvlje3Fr/aKbNjHk6H6qRC2EiPK+OWNyNBWjSgiGR+
+ qMuoRW7pRmKhdT35sDaGA3fzvtsGV3psBZHxSMrjR27N8bTZBv72xNnRE
+ wuykmIOG7ZQpKoFRYWkf/EmXmNJXZcRbpyFC+9TIerjLblgqEFtfhHnxm
+ /YeK8BiRPnlcvHI7dQ5E2bIZjQ7Ce9XpN+4v8/+zVTin1tZi6KtArQA13
+ PGzhsywiHoVJHS9pbm8WvQi4Dg/4BGrnd0jb/5PIh35wEoqq46l5iE9yo
+ H9H6a2ZXelkrcuCanWRsIw4RF72bQ74Wb27ja3n87q2Y520uyEVCzokLu g==;
+X-CSE-ConnectionGUID: IM/gpvljQ6+fix4CGgTcmg==
+X-CSE-MsgGUID: jPY5aqgtRGeBmIzqH80u9w==
+IronPort-SDR: 6a397159_fIcAuYHvmB/TXjP2Px2mkxCupQsh7xIo9V0kEIpcxSUFqQG
+ KXPRqw9m0hXOZ9IIHfU658KDEfVJNAJp7zuZKBQ==
+X-IronPort-AV: E=Sophos;i="6.24,219,1774306800"; d="scan'208";a="48273816"
+X-MGA-submission: =?us-ascii?q?MDFDmfTu6hwWBFiCbVnLA2XjdQqTmvADy6qHWX?=
+ =?us-ascii?q?Q4xMvxZ95MJXbKWdN8swO4VDmpq2T7ailiNvSxwOP4b3Ba2JOcO6hLM2?=
+ =?us-ascii?q?pn/p/1d/IgH6jbgwRTLgJW7pyonFsDshF3CthEsGvE/Y8/ktfcfVAd5o?=
+ =?us-ascii?q?VcYHSqPhXWRfiMxXvRU5CYUw=3D=3D?=
+Received: from mail-francesouthazon11011016.outbound.protection.outlook.com
+ (HELO MRWPR03CU001.outbound.protection.outlook.com) ([40.107.130.16])
+ by smarthost3.eviden.com with ESMTP/TLS/TLS_AES_256_GCM_SHA384;
+ 22 Jun 2026 19:31:05 +0200
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=VnTNFveVkheZU0ISSzwgOUrqOuFv3tEJnpijcnye96WuBG/2h+19YjLpC2AiUSzNRwgU2J6n70TOrcFvpeIslSPl6uIUmMzLD+HKro7+9YqQ1egcCj9Z2A5M2DHgebM9C/9QTwlE4tQQrNzhPNpsfzxTzjuuLMexD3vzIJWCB/CRU0bqyLA/W5D4t4QxP5OEcvWzgnUdM5CfBgbwOgjEEHedbZnmUxCnGGOI3ioVQWyfazE/koaDQl7j2m68+/uRiiMRuC/z7jepvpxoUNz7lNeNG/yGzzvpt3gz5BLhg09WBJ7AH3ELQAs1uxmD/UAOgy6RfD5nKzxr/2dDsylBtw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=ak/JiYsj3HCNPbHBUxkA1mBbhO7TFlAZUETNW9veTXI=;
+ b=V7Ke8dbZSFTPAf+PCeXIyvtob6CuytIXImoJJBMWa3jvoGiQry0K2ZkCoa3bDAvbugxOeOCDqe/7zQC89CGTraLb5xLteKLr6Qe33jNsgx3njzmvUSo1uUFU9YgANf8+/+9RjrXD/mmrTN2nn1lg3QUhUDtUhSP3oAQn4a8Y9HZ7kqc2+X/T63YxECZ2vdhvESz5/F0FkfGDsMdpM1AbY9oTBycF6JqYjw0/p+cyvuf8WO8dFt1HgqsOQIvaW5tmBcafXfUuebS/NkJnfVq0do9lh+vQkOaJIQZ2+A9v6/G1XsYSVVNS4CmD20VRbZcHvV1wTrptU9tpJLH/vdG0rw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=bull.com; dmarc=pass action=none header.from=bull.com;
+ dkim=pass header.d=bull.com; arc=none
+Received: from AM8PR07MB7602.eurprd07.prod.outlook.com (2603:10a6:20b:24b::7)
+ by AS1PR07MB8456.eurprd07.prod.outlook.com (2603:10a6:20b:4dc::5)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.139.20; Mon, 22 Jun
+ 2026 17:31:02 +0000
+Received: from AM8PR07MB7602.eurprd07.prod.outlook.com
+ ([fe80::4b08:9add:5e19:eaaf]) by AM8PR07MB7602.eurprd07.prod.outlook.com
+ ([fe80::4b08:9add:5e19:eaaf%6]) with mapi id 15.21.0139.018; Mon, 22 Jun 2026
+ 17:31:01 +0000
+From: =?utf-8?B?Q2zDqW1lbnQgTUFUSElFVS0tRFJJRg==?=
+ <clement.mathieu--drif@bull.com>
+To: no92 <leo@managarm.org>, "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+CC: "qemu-trivial@nongnu.org" <qemu-trivial@nongnu.org>,
+ "qemu-stable@nongnu.org" <qemu-stable@nongnu.org>, "Michael S. Tsirkin"
+ <mst@redhat.com>, Jason Wang <jasowang@redhat.com>, Yi Liu
+ <yi.l.liu@intel.com>, Paolo Bonzini <pbonzini@redhat.com>, Richard Henderson
+ <richard.henderson@linaro.org>
+Subject: Re: [PATCH] hw/i386/x86-iommu: Correctly set pt bit in extended
+ capability register
+Thread-Topic: [PATCH] hw/i386/x86-iommu: Correctly set pt bit in extended
+ capability register
+Thread-Index: AQHdAmNwkAevjAAd6025+Uh17c2vRbZK1QKA
+Date: Mon, 22 Jun 2026 17:31:01 +0000
+Message-ID: <0b93c0b06c39f7dc6faa7ab21f57034081df83dd.camel@bull.com>
+References: <20260622162138.1045170-1-leo@managarm.org>
+In-Reply-To: <20260622162138.1045170-1-leo@managarm.org>
+Accept-Language: en-GB, fr-FR, en-US
 Content-Language: en-US
-In-Reply-To: <20260622163438.130746-1-functioner@sjtu.edu.cn>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-GUID: t1OxJVPBAcM1c-ImT-tAdR6iDpO4gkqu
-X-Proofpoint-ORIG-GUID: t1OxJVPBAcM1c-ImT-tAdR6iDpO4gkqu
-X-Authority-Analysis: v=2.4 cv=PuKjqQM3 c=1 sm=1 tr=0 ts=6a396df1 cx=c_pps
- a=Uww141gWH0fZj/3QKPojxA==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
- a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22
- a=VwQbUJbxAAAA:8 a=NEAV23lmAAAA:8 a=vnREMb7VAAAA:8 a=aekswQGV7fPmxfUWnFEA:9
- a=QEXdDO2ut3YA:10 a=PxkB5W3o20Ba91AHUih5:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjIyMDE2OCBTYWx0ZWRfX2bMtEgBY33Z/
- W32Ydrd/B1eoELlztMtQSigd5X3OUvnUf/17Yq+vZbnRlUAGqh21Zpim3cGy/t3neQDbSLyizq4
- wgJF2qTqtKQKmy2qzRrgwfpGWAK2hkI=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjIyMDE2OCBTYWx0ZWRfX4voV/BDKaGEJ
- wTtXaXFl14RmPM6ajFfYihTIjc7ZtMimiix2t/CgT50vbErT4dU/3+LieMw96tV7ZI8c4cKIsxU
- zHrc1ng8mGWC+M/U6YOcwbYciuBLfK6yohaY+2Q6Xrt0klhVDKDF+aMT6f2iq3EsmejrLy/JWXV
- H30auTMsUf0aINAr2mCEQjUz3/GC9pJIVz8PZwDaXoa90vk0w+f+RNOB4uGbkd+LIwShr+IOqMK
- XKfSEefv0H3zAY1Xo+W2SEig749dY4XxC5G6O01ll1U9rMsWHWlLfoJTWU48JbyvZKttRJH2eRT
- cCamFAE2MSt73cim+6SPRiG2kvqM0Sw0WwV+R0cpDzRhcRYVF9R712J0daZ9rzXGwwmY9f5ULvI
- VQoOxxg/ItseHXCHViFAeH1uZQo/YWMzz3kCKExLmY3dDca+F0JuBURqT8IBw7OvHinwEBr271T
- f9gXtN9Wd6hhfKJxUgw==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-22_03,2026-06-22_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 suspectscore=0 priorityscore=1501 phishscore=0 impostorscore=0
- adultscore=0 clxscore=1015 bulkscore=0 spamscore=0 lowpriorityscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606220168
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: AM8PR07MB7602:EE_|AS1PR07MB8456:EE_
+x-ms-office365-filtering-correlation-id: ba543d3f-96f0-4f76-e103-08ded08407df
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|366016|376014|23010399003|1800799024|22082099003|18002099003|38070700021|11063799006|56012099006;
+x-microsoft-antispam-message-info: vcfESOEL9D//wSkGPowz5uLaMzuan5H5mH7i7AdUjrRln9mu6+qceF9q8vIXTgH0il/LnHa3gczaQ/ih6Oi2hgmAVv5D1W1YLwPEZd5zhSoBZs1yujjB/J0eyCx6IxMz14/NVOzKd+g9tl/eKHwzpIAQ5DxvoXCgfus264Tuk3nxXEcK1mn8orIsQLu2mqhCJUkZTWR/NY7YlQe32oyS2on/AltJvMFV+vhAE1dpjTy7emuqU2KOev2jIPV/2/H/1KZd1dEnM5559p5/PLzCjTSwzJ9tFMabJVKZh4VmGvwfXagwtAgA8vih/YvssKKGmTtfLvwobeMrXaDHGqAKp08syKppUC4Q+IkZbBnwHTU1q5dNv+zI3bSHIarhbh3jF57IKK9oKJ8UMPnGc8cuyvrXDrRQ5k5khwdw6sw/sSzjnQZAIycPySO5RqBOT1DzFiCCxI33wioHguhoJroleBfTj1S1E43MYe5hGaEeufCAol96SG+ZJ50ppk0Chd7riY08e/tHFR6TXGO36uKJ5XvYU9WVgc72INfEg7cn89rc48klvvdF1oWWjPddWQ6ze91nZyosV5YZoF26fsJAZu8bdnwfLUmFEfB6k2jjQqoe16qS9g77AQpB5oFmJGbpWssMeCFzvDEMfRejeud3YZLUcvXatuewW03FlGuWJME=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:AM8PR07MB7602.eurprd07.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(366016)(376014)(23010399003)(1800799024)(22082099003)(18002099003)(38070700021)(11063799006)(56012099006);
+ DIR:OUT; SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?utf-8?B?eEtDbDNPY0E4RWtPdTZtWnBwZWhDVDN3MUtodnFMVGR3bG1ER2szTHRtaUtt?=
+ =?utf-8?B?YnVSbi9pbUVHdmNFNjhnVlJJNTgvVS9Nc25qYkRjMkVWSEZFOHVPRXBsMm9V?=
+ =?utf-8?B?V1htQjRGTXBxb3padnExNnpNZVRsbkh6SHV4MXBPbDJpNWRkNHBXTksvSita?=
+ =?utf-8?B?Sko5OU5tLzNjSzhkLzIzK3ZmM3d6NktUMkVoUDRoZG54dHBxOHlyMjB1ZmJM?=
+ =?utf-8?B?REcrMFhNRXVJa0hOSnRXbVBBV0oxcVlmRy8yNm1CdC9GREVGTzVHR2gydlZP?=
+ =?utf-8?B?VHZIQzBuU0pkS1FzZUxPelRpN2poclZlYkYrNldwdmhZQlFscnFKV1lEaW53?=
+ =?utf-8?B?aDAyRGVGM2Y3N0pkbzVmclNxZVFZOHE4bXBlWEdIcFF2bUh6aGk5dnorMUFL?=
+ =?utf-8?B?VkJBNlZpS3g2YllSRC9KVVJlYUtLVVdKVUdkbFJFVGhJTWFtTkZyTngvbE9q?=
+ =?utf-8?B?b093Y09mTVY0NmhQSjd0ZURIZTFvUHRxZlJHUHVuczhlVUZtZXdkMmFnaSsz?=
+ =?utf-8?B?bkxyZUN4ZXhkQ2h2eEpCelZ1bVlRL01EcWZFcUtZYko1WkZaL1RyZDd3U3lY?=
+ =?utf-8?B?d2FVL1U2dUNrVHFhR2d0MWNwNk9UWTNPeFVyTzJtRHQvRG1kNU4rNVZKVzZH?=
+ =?utf-8?B?WkhOZGVEODJJSnhuTFBENEZ6RE5TSld3SmxsSGI2K2c0U040Q0M0Y1FBS1dX?=
+ =?utf-8?B?MU5LZXIvMk5NMnRXcW0wVTdyTWg4M0tFbVY5dzBBYXcra0ZtSkdFeVQyTkN6?=
+ =?utf-8?B?MGZhQmtlZ3lSZitOM2JQc3NZd1BnSFltYlR1S0RLdEhNTk5neHhzZURsQnhp?=
+ =?utf-8?B?VlZkM095dVVXUXRoaThGTit3UHlxSEl3ekRyaFB6OHpYZkpSMFZKUjNHRDVH?=
+ =?utf-8?B?Tm00eGl1VmJMY20vZG5DS1J2Y2VGdVRYUGNoT05RNjh1QXBSSmhUTkl2U2pw?=
+ =?utf-8?B?aWMwanVPMDZoK2phc1NBTlBOVG50QzhZbEY5b2RxVUw4NGEvTHpvTzMwWDkw?=
+ =?utf-8?B?aFRZYjdDSG9vR3IrbTIrSE5mZGRlQ2EyckE5bWRvUUxlTHVWanBpY1pvbHpz?=
+ =?utf-8?B?V0NFNXVjY1ZxeXFMU0xGV29KUm0wKy9MTFBaU2c1RTNzM2FLS2xaV0JIMnp3?=
+ =?utf-8?B?a2ZZNVJrcWVjUDFMTnJZRVlrdTA3Y0ZVckl5b0NuZW43MncwVzlzQWhuYlRI?=
+ =?utf-8?B?UVdGNXFmc1NlTDF6MWYrcFNSMDhjQUZxaHhBeWZ1ZFJpWENtSHBneUJXc3hl?=
+ =?utf-8?B?Vm5FekhzKzkwNUhoeS9uRFNpQ0cwa0ZJL216OXV2QnAvOXNQMDZxdzdJU29Y?=
+ =?utf-8?B?RVB0cHNkN0dwOE5RSEJYYkZxSmk4dkhwRW9ENVhMNllCQlJOT3NtWVY1OXBl?=
+ =?utf-8?B?aU1nbjY4Sk1KalpXWjRKbTBvc2o1VFpKOUFqaHA0SDQyY3FXaG5iUnZQZ293?=
+ =?utf-8?B?ZHozK3NqYnFWWnpPcU1kNXpKcEpQRFg5bnEwNEUvZlVXZFlOVHVHbFUvU3Vu?=
+ =?utf-8?B?TG1BOGswVU5jb3NaTzNxb01JMWJ2VG9vc3U3WnRhUlQvQUhtQ3U1ZmJiOEUv?=
+ =?utf-8?B?NExqamZad3BZSVNvTEdJKzU5T1Vzdm1id21TOXVhandjRE9CZ3dwSmF6Ukps?=
+ =?utf-8?B?UGIyQ1NCSEc4cXZHb3hjWnA2Zk10S0tNZG4zOVAxUDJwZ0pvMWJKYUJJdlly?=
+ =?utf-8?B?NFNtNDBCUVZjY1lpb2twTE5IUVBtc3RpazRGdWk4OUFHcWkyZjU3ZE9kanpy?=
+ =?utf-8?B?WVNCNjFiVGFHaTZXZUlha0k5dGk0aXYwVERXNzVWNFY0cTZBODBrVXExc1ZG?=
+ =?utf-8?B?eFdPRlpkWW1xdVJ4NFNmN1lsQ0R4UlczKzRjR2RMWFJ6TldKRkxNMkJrZVNy?=
+ =?utf-8?B?bGpaT2tmb1drVktRaWovcC80TjV3NWJHekJ3NVlQb0ZVQ001VFVyMzd1aVpz?=
+ =?utf-8?B?ZmRRZXh4TzhBZ2NERzI3RjNpUjNvaVJPbVJQMjRRc0o2OFB5QzI4QzFvUXBP?=
+ =?utf-8?B?emRRRE9qb29sWDQxNVN6cHk0M1N0ODQ3WGxlQlJxaUdCa0JUcUI1M3dXUHgw?=
+ =?utf-8?B?UFFTeGFkdU5FQmM0NEEwS2c3Y1hRbUs4MUk0OGxOeDBLbFJsUkpBczlUanBi?=
+ =?utf-8?B?U2hhMEY2UVdXa2xGUEZFQU5ubk9KaFBJdXhiK25GNDBKNVBCeFg2anlVTHpM?=
+ =?utf-8?B?TjQ0NUduTGlBTG1mdHdEMGlhcGV6d0NoYlhNVDVNVlYyTjFkL2hXdUxDWWw2?=
+ =?utf-8?B?Y1FNbEhmZEt5U1B6dllBQnRTOHcrekJvT0VKT2dmTisrN1UvbnRpT092R2RU?=
+ =?utf-8?B?VHpTdVNUQVJIUnFtVGo0MHRSMS92Vy96Q2dYcDZsY2U2bzVsa0Z5YnZrcExG?=
+ =?utf-8?Q?AjHvHg0pInURQqMJ0NL7Z3aHXBO5Y6PaSvm0T?=
+Content-Type: text/plain; charset="utf-8"
+Content-ID: <9D7B684EAD6FAB4E8ECFD14089C95DF5@eurprd07.prod.outlook.com>
+Content-Transfer-Encoding: base64
+MIME-Version: 1.0
+X-Exchange-RoutingPolicyChecked: QkC+QCROSyYtBmfvHxNLqqt30c1ULviCCszMhwYa3zfPVsMBOrE8C65qPIvnH38eSEtOg/T/Hp2eyJK3vBBsauAO2HhtOkf9MMFvmbADw+yRw7X5sJGp298vTYm0diYq2K7MZfxtmagCVWQNtXOUnnN1F3qnMmsNFrM9wLyIPfQOS/KL9cd0MblJmGTH7fX3JtFGPV4C7isrtpD3QbsrZf5bwwsY//XN76pt47fiKz7NogEg6hefJknBIw324JvATux7Z0vjqHRu4d0+cXhEVGyoFikc4HztvRRjYLn5/beCh+L9HTZVe/I9Uu83NrZC4J3oadO+2gW7zULuHJ7vZA==
+X-OriginatorOrg: bull.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: AM8PR07MB7602.eurprd07.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: ba543d3f-96f0-4f76-e103-08ded08407df
+X-MS-Exchange-CrossTenant-originalarrivaltime: 22 Jun 2026 17:31:01.9386 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 7d1c7785-2d8a-437d-b842-1ed5d8fbe00a
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: YPDz2rp94XboyHPR3EVacvFGn1K82hK7Ngfh+ZZgjYE6yLaOecxAqzZVTIHL8Vrx4YoenscsnwAG4y20QJHIikVUHKyc+6w3Ep0K3nZCZ8I=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: AS1PR07MB8456
+Received-SPF: pass client-ip=80.78.11.84;
+ envelope-from=clement.mathieu--drif@bull.com; helo=smarthost3.eviden.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -162,182 +174,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/22/2026 9:34 AM, Ziyang Zhang wrote:
-> Hi,
-> 
-> This patch adds a single plugin, contrib/plugins/dlcall.c (~240 lines,
-> no changes to QEMU core), that lets a linux-user guest call functions in the
-> host's native shared libraries instead of emulating them.
-> 
-> It is the natural next step on top of the vCPU syscall-filter callback that I
-> contributed and that was merged earlier:
-> 
->   https://lore.kernel.org/qemu-devel/20251214144620.179282-1-functioner@sjtu.edu.cn/
-> 
-> Why bother? Because it turns slow, instruction-by-instruction emulation of a
-> library into a native host call. Some results, all on completely unmodified
-> guest binaries:
-> 
->   * minizip (the stock zlib utility) compresses several times faster, because
->     the actual deflate runs natively on the host instead of being translated.
->   * Real OpenGL/Vulkan games run under qemu-user: SuperTuxKart and Hollow
->     Knight are playable, with their graphics calls going straight to the host
->     GPU.
-> 
-> You can watch the demos build, run, and report timings in CI, without checking
-> anything out:
-> 
->   https://github.com/rover2024/qemu-passthrough-test/actions/runs/27671747420
-> 
-> How it works
-> ============
-> 
-> The guest makes a system call with a reserved number (4096 by default) that no
-> real Linux ABI uses. Its first argument selects a pass-through operation; the
-> rest carry operands:
-> 
->   syscall(4096, op, arg1, arg2, ...)
->           |     |    \............ operands (pointers / values)
->           |     \................. which pass-through operation
->           \....................... the reserved "magic" number
-> 
-> The plugin registers a vCPU syscall filter: before QEMU forwards a syscall to
-> the host kernel, the filter runs, sees 4096, performs the operation on the
-> host, writes the result back, and tells QEMU the syscall is consumed, so the
-> real kernel never sees it.
-> 
-> The whole interface is just a handful of primitives:
-> 
->   * query a host attribute
->   * dlopen / dlclose a host shared library
->   * dlsym a symbol, and read the last dlerror
->   * invoke a resolved host function with a void(void *, void *) signature
-> 
-> That is all the plugin does. It knows nothing about zlib, X11 or OpenGL, or
-> about any library's calling convention.
-> 
-> The same machinery also runs in reverse: when a host function needs to call
-> back into the guest (a qsort comparator, an allocator, a GUI or game callback),
-> control re-enters the guest to run the callback and then resumes the suspended
-> host call. This reentry is what lets stateful, callback-driven APIs work, not
-> just leaf functions.
-> 
-> Why the plugin belongs in QEMU, and the rest does not
-> =====================================================
-> 
-> Only the plugin lives in the tree. Everything else is ordinary userspace:
-> 
->   --- userspace (out of tree, not tied to any DBT) -------------
->       guest: unmodified program  ->  guest runtime + thunk libs
->   --------------------------------------------------------------
->                  |  syscall(4096, op, args)   (only crossing point)
->                  v
->   === inside QEMU: THIS PATCH, ~240 lines ======================
->       dlcall plugin:  dlopen / dlsym / invoke a host fn
->   ==============================================================
->                  |
->                  v
->   --- userspace (out of tree) ----------------------------------
->       host: host runtime + thunk libs  ->  real libz / libGL ...
->   --------------------------------------------------------------
-> 
-> A complete reference implementation, with the minizip and OpenGL/X11 examples
-> above, is here:
-> 
->   https://github.com/rover2024/qemu-passthrough-test
-> 
-> The split is deliberate, and it is why only this one file is proposed for the
-> tree:
-> 
->   * This plugin defines the most general interaction interface for native
->     pass-through: the magic-syscall ABI between an emulated guest and its
->     emulator. That contract is what every pass-through implementation builds
->     on, so it belongs in a stable, shared place.
->   * It is also the only piece that is inherently QEMU-specific: it plugs into
->     QEMU's syscall-filter hook and runs inside the QEMU process. The argument
->     marshalling, calling conventions, callbacks/reentry and per-library
->     coverage are not tied to any particular DBT and behave as ordinary
->     userspace, so they should stay out of tree rather than couple QEMU to them.
-> 
-> Background: we presented this approach at KVM Forum 2025, "Lorelei: Enable QEMU
-> to Leverage Native Shared Libraries":
-> 
->   https://www.youtube.com/watch?v=_jioQFm7wyU
-> 
-> A note on automation
-> ====================
-> 
-> The userspace thunks in that reference implementation are currently
-> hand-written rather than generated by the LLVM-based toolchain from the talk.
-> That is a deliberate choice for a demo: the automated toolchain pulls in a full
-> LLVM installation, which adds substantial setup time, and the example projects
-> are slow to build and cannot be reduced to a single Makefile. Hand-writing the
-> thunks was the cheaper path to a self-contained, reproducible demo, and it was
-> already enough to get minizip working end to end.
-> 
-> For real, large-scale use I will rely on the automated toolchain. The key point
-> is that hand-written vs. generated thunks is entirely decoupled from this plugin
-> and from the magic-syscall interface it defines: the toolchain only emits
-> out-of-tree userspace code and never touches the in-tree plugin. Automation
-> becomes mandatory for complex, callback-heavy targets such as the OpenGL/Vulkan
-> games, which is the direction this work is heading next.
-> 
-> It is fully opt-in (loaded with -plugin) and targets linux-user, where the
-> guest and host already share a trust domain. The test cases use x86_64 guests
-> and run on x86_64, arm64 and riscv64 Linux hosts.
-> 
-> The changes to the documentation (docs/about/emulation.rst) will be sent as a
-> separate patch.
-> 
-> Feedback on the plugin and on the pass-through approach is welcome.
-> 
-> Changes since v2:
-> 
->   * Dropped the RFC tag; the approach was positively received on v2.
->   * Rebased on master and adjusted the syscall-filter callback to its updated
->     signature (int64_t sysret, added userdata, dropped the plugin id
->     argument).
-> 
-> Changes since v1:
-> 
->   * Renamed the plugin from "passthrough" to "dlcall" (Pierrick Bouvier).
->     The old name was too generic; "dlcall" reflects what the plugin actually
->     does (dlopen/dlsym a host symbol and call it) and avoids confusion with
->     QEMU's existing plugin hostcall concept (QEMU_PLUGIN_*_HOSTCALL).
->   * Made the magic syscall number configurable at load time via the
->     "syscall_num=N" argument, defaulting to 4096 and rejecting values low
->     enough to clash with a real syscall (Pierrick Bouvier).
-> 
-> v1: https://lore.kernel.org/qemu-devel/20260617130742.769234-1-functioner@sjtu.edu.cn/
-> v2: https://lore.kernel.org/qemu-devel/20260619045404.820960-1-functioner@sjtu.edu.cn/
-> 
-> Thanks,
-> Ziyang Zhang
-> 
-> Ziyang Zhang (1):
->   contrib/plugins: add a minimal dlcall plugin
-> 
->  contrib/plugins/dlcall.c    | 238 ++++++++++++++++++++++++++++++++++++
->  contrib/plugins/meson.build |   5 +
->  2 files changed, 243 insertions(+)
->  create mode 100644 contrib/plugins/dlcall.c
-> 
-
-Thanks for the update.
-
-At this stage, even though the plugin in itself looks good, it's not
-something we can really merge in, as it's relying on external behavior
-that is not specified or being a standalone tool.
-
-For instance, if we have a public Lorelei toolchain that implements this
-for libraries, it would definitely have it's place upstream IMHO.
-
-Also, the same kind of contribution can be done for other
-instrumentation frameworks, so we can end up having a single interface
-(and set of libraries) shared among all of them.
-
-What do you think?
-
-Regards,
-Pierrick
+SGksDQoNCkkgdGhpbmsgSSBoYXZlIHNlZW4gdGhpcyBwYXRjaCBhdCBsZWFzdCB0d2ljZSBpbiB0
+aGUgbGlzdCBvLk8NCg0KSXQgc2VlbXMgaXQgaGFzIG5vdCBiZWVuIG1lcmdlZCBpbnRvIG1hc3Rl
+ciB5ZXQgKEBNaWNoYWVsLCBkbyB5b3Ugd2FudCBtZSB0byBzZW5kIGEgcmViYXNlZCB2ZXJzaW9u
+PykuDQoNCmh0dHBzOi8vcGF0Y2hldy5vcmcvUUVNVS9DQUZGRTJhdnJIREtaZDVtN2ozRTN4NT1G
+PXB6bi0zYzl2ekdXUDMrOS1BVlB3UW5nN3dAbWFpbC5nbWFpbC5jb20vDQoNClRoYW5rcyBmb3Ig
+dGhlIGVmZm9ydCB0aG91Z2ggOykgIA0KDQpjbWQNCg0KDQpPbiBNb24sIDIwMjYtMDYtMjIgYXQg
+MTg6MjEgKzAyMDAsIG5vOTIgd3JvdGU6DQo+IENhdXRpb246IEV4dGVybmFsIGVtYWlsLiBEbyBu
+b3Qgb3BlbiBhdHRhY2htZW50cyBvciBjbGljayBsaW5rcywgdW5sZXNzIHRoaXMgZW1haWwgY29t
+ZXMgZnJvbSBhIGtub3duIHNlbmRlciBhbmQgeW91IGtub3cgdGhlIGNvbnRlbnQgaXMgc2FmZS4N
+Cj4gDQo+IA0KPiBXaXRoIHRoZSBjaGFuZ2VzIGluIGM3YjJlMjJiZDk1NywgdGhlIGBwdGAgYml0
+IHdhcyBzZXQgaW4gdGhlICh3cm9uZykgIA0KPiBjYXBhYmlsaXR5IHJlZ2lzdGVyLCBpbnN0ZWFk
+IG9mIHRoZSAoY29ycmVjdCkgZXh0ZW5kZWQgY2FwYWJpbGl0eSAgDQo+IHJlZ2lzdGVyLg0KPiAN
+Cj4gRml4ZXM6IGM3YjJlMjJiZDk1NzEwZTQwNGMzOTNlOWY1NjNjZmU3NDA0MjIwYzEgKCJody9p
+Mzg2L3g4Ni1pb21tdTogUmVtb3ZlIFg4NklPTU1VU3RhdGU6OnB0X3N1cHBvcnRlZCBmaWVsZCIp
+ICANCj4gU2lnbmVkLW9mZi1ieTogbm85MiA8W2xlb0BtYW5hZ2FybS5vcmddKG1haWx0bzpsZW9A
+bWFuYWdhcm0ub3JnKT4gIA0KPiAtLS0gIA0KPiDCoGh3L2kzODYvaW50ZWxfaW9tbXUuYyB8IDQg
+KystLSAgDQo+IMKgMSBmaWxlIGNoYW5nZWQsIDIgaW5zZXJ0aW9ucygrKSwgMiBkZWxldGlvbnMo
+LSkNCj4gDQo+IGRpZmYgLS1naXQgYS9ody9pMzg2L2ludGVsX2lvbW11LmMgYi9ody9pMzg2L2lu
+dGVsX2lvbW11LmMgIA0KPiBpbmRleCA3NDRjZGZkMmU2Li5kMWFmN2EzMTM1IDEwMDY0NCAgDQo+
+IC0tLSBhL2h3L2kzODYvaW50ZWxfaW9tbXUuYyAgDQo+ICsrKyBiL2h3L2kzODYvaW50ZWxfaW9t
+bXUuYyAgDQo+IEBAIC00OTg4LDcgKzQ5ODgsNyBAQCBzdGF0aWMgdm9pZCB2dGRfY2FwX2luaXQo
+SW50ZWxJT01NVVN0YXRlICpzKSAgDQo+IMKgeyAgDQo+IMKgwqDCoMKgIFg4NklPTU1VU3RhdGUg
+Kng4Nl9pb21tdSA9IFg4Nl9JT01NVV9ERVZJQ0Uocyk7DQo+IA0KPiAtwqDCoMKgIHMtPmNhcCA9
+IFZURF9DQVBfRlJPIHwgVlREX0NBUF9ORlIgfCBWVERfQ0FQX05EIHwgVlREX0VDQVBfUFQgfCAg
+DQo+ICvCoMKgwqAgcy0+Y2FwID0gVlREX0NBUF9GUk8gfCBWVERfQ0FQX05GUiB8IFZURF9DQVBf
+TkQgfCAgDQo+IMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIFZURF9DQVBfTUFNViB8IFZURF9D
+QVBfUFNJIHwgVlREX0NBUF9TU0xQUyB8IFZURF9DQVBfRFJBSU4gfCAgDQo+IMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgIFZURF9DQVBfRVNSVFBTIHwgVlREX0NBUF9NR0FXKHMtPmF3X2JpdHMp
+OyAgDQo+IMKgwqDCoMKgIGlmICh4ODZfaW9tbXUtPmRtYV90cmFuc2xhdGlvbikgeyAgDQo+IEBA
+IC00OTk5LDcgKzQ5OTksNyBAQCBzdGF0aWMgdm9pZCB2dGRfY2FwX2luaXQoSW50ZWxJT01NVVN0
+YXRlICpzKSAgDQo+IMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgcy0+
+Y2FwIHw9IFZURF9DQVBfU0FHQVdfNDhiaXQ7ICANCj4gwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+IH0gIA0KPiDCoMKgwqDCoCB9ICANCj4gLcKgwqDCoCBzLT5lY2FwID0gVlREX0VDQVBfUUkgfCBW
+VERfRUNBUF9JUk87ICANCj4gK8KgwqDCoCBzLT5lY2FwID0gVlREX0VDQVBfUUkgfCBWVERfRUNB
+UF9JUk8gfCBWVERfRUNBUF9QVDsNCj4gDQo+IMKgwqDCoMKgIGlmICh4ODZfaW9tbXVfaXJfc3Vw
+cG9ydGVkKHg4Nl9pb21tdSkpIHsgIA0KPiDCoMKgwqDCoMKgwqDCoMKgIHMtPmVjYXAgfD0gVlRE
+X0VDQVBfSVIgfCBWVERfRUNBUF9NSE1WOyAgDQo+IC0tICANCj4gMi41NC4wDQo+IA==
 
