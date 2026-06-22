@@ -4,109 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83C5BCDB46B
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jun 2026 10:23:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8EC5CDB46F
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jun 2026 10:59:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wbbo9-00026t-GF; Mon, 22 Jun 2026 06:23:13 -0400
+	id 1wbcMC-0006a2-1w; Mon, 22 Jun 2026 06:58:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wbbny-00025U-Nr
- for qemu-devel@nongnu.org; Mon, 22 Jun 2026 06:23:04 -0400
-Received: from mail-yx1-xb129.google.com ([2607:f8b0:4864:20::b129])
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1wbcMA-0006Ys-NK
+ for qemu-devel@nongnu.org; Mon, 22 Jun 2026 06:58:22 -0400
+Received: from mail-dy1-x1336.google.com ([2607:f8b0:4864:20::1336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wbbnu-0008Ot-Uh
- for qemu-devel@nongnu.org; Mon, 22 Jun 2026 06:23:01 -0400
-Received: by mail-yx1-xb129.google.com with SMTP id
- 956f58d0204a3-6607e80a846so4307192d50.2
- for <qemu-devel@nongnu.org>; Mon, 22 Jun 2026 03:22:57 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1782123777; cv=none;
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1wbcM8-0001uq-VX
+ for qemu-devel@nongnu.org; Mon, 22 Jun 2026 06:58:22 -0400
+Received: by mail-dy1-x1336.google.com with SMTP id
+ 5a478bee46e88-30c001b21feso3828729eec.1
+ for <qemu-devel@nongnu.org>; Mon, 22 Jun 2026 03:58:20 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1782125899; cv=none;
  d=google.com; s=arc-20240605;
- b=MAoqrVTJNMdfA1LzDpdMa+jP1P1NJUcv7UsuCib22Y0Yzi/UGizkeZz24nc1XViXNI
- r8DYdVCZv1W1HdLZb3FLfuT9KpS7TZw22J1SKDfyP49ms1MzAY8oE72xivMNHFpAYJGw
- KpMDS2n0Q9rosUBSdUaL508mkwxVG4AEzAKMjcdk4nV1cMBTjJ6RnN4nnFEPuo0qvQM+
- /IakzrY7aHtu3lu+NBcK/3z/jIgXReCIexUy4EX8oLWY+mWImOZZw589nXeneNMnhmle
- 9RYM69ULpwJ5ZoJ7wlXnT5MHcxf1FVJKSw67U03rEBrN85Tjq+TGv0eAIJ2Ym6YwarLW
- G4eg==
+ b=BMNxiCgw75PmND4BMHduj6AOIBet+AeH8EWexwJoZYxJ8+/G6BSSASCI6ay3JIwZX6
+ MoxOTzZ6a8PxiFLdR3yzXmJDRnmH095rEiyxHXnpGNSgK5OPV0sxBTASgLRCv9IxhsOk
+ IUbxDxmS0+crG7DK+IvxW9+KWXhyv9T0klZ3WR+d0PUtfsx7r7vck23Nmb2fdo3FBtee
+ xuSjv5LEangcTm1X1TR1+c7Oc8upNWAV7OANnzUyI8sj2vuLo80nWSHbZjQ3JhOJNv6a
+ c/ojgIQOjb2qeodsVPkVQhZYPi4T5IIzsiyh27EGpOksKv5o4sYdm/n7fnxGPuHaZnzn
+ RsPw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=k/HUmJlLMvc0aM+WDK4IfrdimbTRflTejHffYN89N5U=;
- fh=IXPj/8uHoGi4lVtexXZ0gMy7avf9W7sRRdI7uFrq9h4=;
- b=D9u62GzAr+0ZXai5cLSKABtlAGyYlOHoHnKJYu9euoyKuYZlUfW9NuQjow69q2B9ge
- FSWlsPWAK/7Y3RMa93qi6cLLIoecqoIJUvyMGR3je0LE/menLO33jIOxO25B0tcUmiGU
- fGWZ68nIPecXLhoudn3RiqRkhOBtP/sTcnQGGtlgIWEOIDJEVTB/n4rpniFUHa7V2wVF
- HeqoMPVM1XMOfIIVYfFGfwqV9LdlL7j4R/UYDN1ietYAPf23o52J1cV1X8Ske+JuvZoH
- cY/kF/7ZGg2tOd62Ska0RnrNHDOQixkhD3gQmM1gPCQgpa6FrSaW2LaCLaZvDpoMrqPz
- 7fCA==; darn=nongnu.org
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=0ukOZ295gE2EagRzjFi+ymatOFOzQWYPl6niSxdAdb4=;
+ fh=3CALu0jP8XVfaItjbi7irWfaZhRhDQLdU2h84eV+NaM=;
+ b=DONlsAQpP95LeHk+2zmctrSjf+pv7t9lmi57eYI1gj0jSBagD26EaBzz981QO8lmpI
+ N9s8P4eSnaKs5MOa3h9oSOqznZ/54MCQxiAbX+NE94QB1uZJENStOPkpWDyzNtTK/c0D
+ KP+O2wRp4K7ID9ddu3NZpCKypjIJrGPKQ/d7oXfadVYp1869WsCeqH9U2+k+OZf6mmAA
+ QM5x/OUr7MDrRYPf8qTtJc80PtHmvtxHswklPxFbrnILyTCaK2BC2YqMcM3Ua+v0GyGm
+ lmNjXfTBrr+vzcZtmTlBFk6AN68RFTnKXI58QHS6p3kaiJhTAl6kwB4avqMhloFT3S91
+ cMOA==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1782123777; x=1782728577; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=k/HUmJlLMvc0aM+WDK4IfrdimbTRflTejHffYN89N5U=;
- b=Ob0HU2KnArMCDDoQRJ768ArwMSjVahBTkZohQgQMTU9WPpJpm38/f83Sly5IFuc4wT
- 3SXVaUEQOZeDSb6eYDDXsQAOBVbMbg9Hnvc88WCLC7Gf4afrd7fGJTmhbIByI9yH5DC/
- NFVvFYynUWegBc36rN6aHI4yCUNW5CwKf79xGs64cw5ou/DJymciOSMvmV3HPJdtxyxD
- J9Imit4mJCsGviVPcLKsjUXSv6NTGVqomK1c7w3hGmQFw8A9fqsJG7X95jfY/bxDx+E8
- 4jS9Nuzy1LhLbjTw1gQ33+UteT9anSpvfqsfbZYd2WHlcxkFV/LeE/TyaRiQ5UjmZqb2
- AG6g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782123777; x=1782728577;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=redhat.com; s=google; t=1782125899; x=1782730699; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=k/HUmJlLMvc0aM+WDK4IfrdimbTRflTejHffYN89N5U=;
- b=fGGD8B9/oC06jkqILo4iuJ9RAlUUBXJFa0kdb1ihE3gEncW0SDvp2KpC00FzGpn6VQ
- vpUuH1neYQS5zjPYLMyFlgviCC/srHfiwTjEJTeYCCjQ/ltz+eIJp+sGfSqK6pq9KSFK
- kpnKWRlfqcCH8u5PMb/SlerYvY9PXUT9obMIJ1v1eaB6ry6cr8kw82mFp9ZtyLQmcQAO
- sbwSxCBOa1Kd5/l5+QLfPwXChS3fxwmm1IJfl7jX6v9xu93367Kjz1s60V2QreeaeKB5
- cCM20RX7FVIJycoqM1oO6MnTBldUHiOFnLelvlcLbd6C8IGncMlvkO9sTAUT3YBHgzs4
- 3l7w==
-X-Forwarded-Encrypted: i=1;
- AHgh+Rr6gJntjx7HAniqNBEcDTTHrX8/tEy3zz6G2COVh/DtPukbEzqI3XhhmEhXPy7OuI6ps4sR862Ys3aK@nongnu.org
-X-Gm-Message-State: AOJu0YwH0pXr/qAkqOLXFP80cwKMN1lNJ1Ig9c9Ef3G79UA3+kUC0ugL
- otHg//STLj3TY51nrdU6Ui6aQvecQVQ9WyoK0yT0awepkMkTLkna4H+IATCzQMYBvLG+la+TOqO
- LoajQx4WcpD9nQTuDw4RueBUsIFfe3Hto1jMZxYNqTg==
-X-Gm-Gg: AfdE7cl8SYlF+EFxS74QZZyZ84gZfLOBEQHPddrDagRGDu74Ti0JAEWFN4/hUAG+xBA
- R91J+Sab1V4uWnM2djOKkVUN8ZoAzY8/1hK57OHkepJzReMAqymlOVWat2hHbuFHoKpfYj2zrxD
- NGknJJZsxZ7rLzgga3g9hSmhUob28jYY41Hqvc4pY3CxIX/WVSygQgCHa9Y6mKMKohzk2Pt8I8y
- sp14bDj+PL1Pp6zIATfVG8VkbqGjtNV+P0VMJ9+LEshZWRby1EQNC0fHBn+hWMWhAr+0iCR3NTU
- UrQX7f2qGFQzu+gP45HkNtIdfXZ5ilx6Kq/yBI7o1A3iOunpMtq3aXeijBLRbG4qS6s=
-X-Received: by 2002:a05:690e:3cd:b0:660:ffe0:2dfe with SMTP id
- 956f58d0204a3-662fc9fcfbbmr9475639d50.37.1782123776661; Mon, 22 Jun 2026
- 03:22:56 -0700 (PDT)
+ bh=0ukOZ295gE2EagRzjFi+ymatOFOzQWYPl6niSxdAdb4=;
+ b=IVn6+TkY+4Le8KhPVdj4P7a/E8e8m1Q5FjdLC0mundfx3tqZZgfN1jLCm0KNKQncSG
+ cwrRoEfsy+fzykEMME1p+WSKMtR+6SCWEpc8eKZnuRtFFjJ3x1UFPltx58sEJCu9qORC
+ JMMNQCaP38Zyi0CiEfdAfEzCrzwe5NuJE+RubHqbKWAfXTQav+ZJvyIckvq9oZ+oV4/A
+ Vrvnp1fypczX8/yQzJOepRAavTLA4lPbhC75jRPkzIb2QporULOmKDK0mv7BQ2Ts0aFL
+ yr4C/yggRg13cWlL74Wwzx8mHG+2AX9hMIOiVt946g7uULZJTkHbMeVy7rq5zAxIoHRm
+ Njqg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1782125899; x=1782730699;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=0ukOZ295gE2EagRzjFi+ymatOFOzQWYPl6niSxdAdb4=;
+ b=nIJH/0+Z10fTmeorlsrsuuVrzXvHHNL+TNeXxBSjHFvXjb7dPnkYuCRSbwU+iHblnd
+ 5OkOC/tzHZWuB3/IvHXSmsXSuzTl8is/uHJsU3dCgM5OXSdZOnkZX1RhF+CdLLTBSyYX
+ IxOn4IH6IQGWXsvThcceJROW9ADp2d8GwURKqSz2auLSSbgSaGAKuE1M74I5iifD0Wn/
+ cnwk1MiJWsotExGYYml5YmQgROHvyF0ov+kHgoI0q8SKj/POouMeltsalwPpPCxs2aiH
+ Q/LRGFna9cR9Z5uBb2lHFVs2cqcHWnhgdom6RfqaLoFOHdEm78rOhGPgUcwFz+j4aNuQ
+ AjTQ==
+X-Gm-Message-State: AOJu0YzqCLeGiX+8c17uPNQyrE2OLSU0/vPocn5sO8bJMtQaohXi1u6/
+ UJdBl/r0MX0tIT2seMSbkUe32KHaGE6KKgRr3Lzv+MypDJTudJam2MPIOfY7LbjySiwilePYg3m
+ IlSTS8V1Rd2VAf/pJUiKFeKjhXL+uoe8=
+X-Gm-Gg: AfdE7ckUiGHR+3CuKT7GZFKvhkQH11PVAP1FH8iRBwxpBFBHf8UYIcaz8k4Qfmju0YY
+ QattePFD4TJW9qfTrX4Etq/fRqLNf/aUrDRZabgPVTGxrJxJEVagtwBh5cfHnkiYxj6ELAa9TPg
+ ySAXsAH58ZOy0NGgeGLY9UWaMVh5Ch84J8cbIdodbOEOibhib53WpgF00AQukP7lYdvjMv5gy7t
+ srZ+n3RQbcIDtcfNhve1LLiuWmnLzUEJvl3e3xZskB02aqEDjQMCF4Ry8XeHysPyr/tuCf//Zqx
+ OWgbn7IqGozR7QbvSnRxZ+s5OvQs
+X-Received: by 2002:a05:7300:8bab:b0:30b:dd58:e155 with SMTP id
+ 5a478bee46e88-30c07156edamr10716301eec.20.1782125899021; Mon, 22 Jun 2026
+ 03:58:19 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260609105626.1038690-1-thuth@redhat.com>
- <CAFEAcA9O6b02VMuto8VzaEsVi3zTqNtQKG_RcMaPnNdPXGUBhw@mail.gmail.com>
- <CAMvPwGpvpHD+Sx-HZR4FFMJB+W8Rk8LoU0256Q=vwKAdC96HSQ@mail.gmail.com>
- <CAFEAcA9N_O7RZRU+SPTfB_ePasjVZvUsFPhndfQDuHgQ+4Q-5A@mail.gmail.com>
- <CAMvPwGpzAcDxeqSvQmOjzkQn6T91CAmTO31bNs0wmSMqQKG=Qg@mail.gmail.com>
- <CAMvPwGrnh9-UMv5919bLXLF8oLcyTa=coTdqh+1ALNvCKLmOJQ@mail.gmail.com>
-In-Reply-To: <CAMvPwGrnh9-UMv5919bLXLF8oLcyTa=coTdqh+1ALNvCKLmOJQ@mail.gmail.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 22 Jun 2026 11:22:45 +0100
-X-Gm-Features: AVVi8CeuH3mh7XJlmeOdZH_8nSVPI7iYi8piPpYAqU995iKkIwQkqo8n5iqgam8
-Message-ID: <CAFEAcA-Te1aK8J-FPdpudm-3tQW9+kDdYgAa69tYXj2_TyLgVQ@mail.gmail.com>
-Subject: Re: [PATCH] hw/i2c/pmbus_device: Fix a possible crash when requesting
- too many bytes
-To: Titus Rwantare <titusr@google.com>
-Cc: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
- qemu-trivial@nongnu.org, qemu-arm@nongnu.org
+References: <20260619101834.228432-1-den@openvz.org>
+In-Reply-To: <20260619101834.228432-1-den@openvz.org>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
+Date: Mon, 22 Jun 2026 14:58:07 +0400
+X-Gm-Features: AVVi8Cc6MoZGJ1WOvDAvtSi5e7qJIvaAqv1A4GMZnoE1pkFqJfui6w6Woo3vcuU
+Message-ID: <CAJ+F1CKa5zmjo-5GCJW3BohCSBknjWsZmKRV1Oupa20A742w7w@mail.gmail.com>
+Subject: Re: [PATCH v5 0/7] dump: report win-dmp via vmcoreinfo, guard
+ guest-RAM reads during migration
+To: "Denis V. Lunev" <den@openvz.org>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org, anisinha@redhat.com, berrange@redhat.com, 
+ peterx@redhat.com, farosas@suse.de
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b129;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb129.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1336;
+ envelope-from=marcandre.lureau@gmail.com; helo=mail-dy1-x1336.google.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, FREEMAIL_FORGED_FROMDOMAIN=0.001,
+ FREEMAIL_FROM=0.001, HEADER_FROM_DIFFERENT_DOMAINS=0.249,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -122,27 +119,97 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 9 Jun 2026 at 17:00, Titus Rwantare <titusr@google.com> wrote:
+Hi
+
+On Fri, Jun 19, 2026 at 2:19=E2=80=AFPM Denis V. Lunev via qemu development
+<qemu-devel@nongnu.org> wrote:
 >
-> oops, the patch series that fixes this needs to be upstreamed.
+> This series fixes Windows-dump (win-dmp) availability reporting and close=
+s
+> a related hole found while doing so: several commands read guest RAM and
+> must not run while a migration destination is still receiving it.
+>
+> dump-guest-memory, memsave and pmemsave all read guest RAM on the main
+> thread with the BQL held. On a migration destination that RAM is either
+> still being loaded (precopy) or pulled from the source on demand
+> (postcopy, where the guest already runs). During precopy the read returns
+> incomplete data; during postcopy it deadlocks, as the read faults on a
+> not-yet-received page while the postcopy incoming path needs the BQL the
+> reader holds to install it. dump-guest-memory only guarded the precopy
+> phase and memsave/pmemsave had no guard at all, so a new
+> migration_guest_ram_loading() predicate captures both phases and all
+> three commands now use it.
+>
+> query-dump-guest-memory-capability also advertised win-dmp for every x86
+> VM, and dump-guest-memory accepted it unconditionally; win-dmp only works
+> when the guest has published a Windows dump header through vmcoreinfo.
+> win_dump_available() now reads that note back from the vmcoreinfo device
+> and validates it, keeping its original signature, so the dump.c call site=
+s
+> are unchanged.
+>
+> The series also adds the first qtest coverage for dump-guest-memory:
+> capability list, ELF and kdump output, protocol errors, and win-dmp
+> reporting in both directions (the positive case forges a vmcoreinfo note,
+> so no Windows guest is needed).
+>
+> Tested:
+>  - Linux guest: win-dmp not advertised; an explicit win-dmp request is
+>    rejected without stopping the guest; elf/kdump dumps work.
+>  - Windows Server 2022 guest: win-dmp advertised once vmcoreinfo is
+>    populated; dump-guest-memory format=3Dwin-dmp produces a valid (PAGEDU=
+64)
+>    crashdump.
+>  - Live postcopy migration: on the destination, dump-guest-memory, memsav=
+e
+>    and pmemsave are all refused immediately, without faulting a page.
+>
+> This supersedes the earlier "dump: enhance win_dump_available to report
+> properly" series, which obtained the note by reusing the dump setup path
+> (splitting dump_init() and stopping the vCPUs). Reading vmcoreinfo
+> directly is much smaller.
+>
+> Changes since v4:
+>  - Refuse guest-RAM reads (dump-guest-memory, memsave, pmemsave) while a
+>    migration destination is still receiving RAM, via a shared
+>    migration_guest_ram_loading() helper.
+>  - Decide win-dmp availability by reading vmcoreinfo directly instead of
+>    splitting dump_init()/dump_preinit() and stopping the vCPUs.
+>  - Add dump-guest-memory qtests.
+>
+> Denis V. Lunev (7):
+>   migration: add migration_guest_ram_loading() helper
+>   dump: refuse dump-guest-memory while guest RAM is being migrated
+>   system/cpus: refuse memsave/pmemsave while guest RAM is being migrated
+>   dump: make win_dump_available() check vmcoreinfo for a Windows dump
+>     header
 
-I see we have a patch that's been submitted:
-https://patchew.org/QEMU/20260614222131.5795-1-imaginos32@gmail.com/
-that fixes what the #3388 test case is actually running into
-(guest writes a 32 byte string to a device register, and so
-we lose the NUL terminator and strlen() returns a too-large
-value when the guest reads the string value back).
+Looks all good to me, except it needs
+s/cpu_physical_memory_read/physical_memory_read now. I can do that on
+MR
 
-But looking at the code it does also feel to me that there
-might be a bug in what the issue report description claimed
-it was testing, where the guest triggers multiple
-pmbus_send_string() calls without reading back the data,
-and the data piles up in the buffer and causes the assertion.
+Philippe, do you know why physical_memory_read/write() do not return
+MemTxResult?
 
-Is the patch series you want to upstream a fix to the "no NUL
-terminator" problem, or to the "multiple send_string calls
-fill the buffer" problem?
-
-thanks
--- PMM
+>   tests/qtest: add dump-guest-memory test
+>   tests/qtest/dump: reject win-dmp without vmcoreinfo
+>   tests/qtest/dump: cover win-dmp availability via vmcoreinfo
+>
+>  MAINTAINERS              |   1 +
+>  dump/dump.c              |   5 +-
+>  dump/win_dump-x86.c      |  42 +++++
+>  include/migration/misc.h |   3 +
+>  migration/migration.c    |   6 +
+>  system/cpus.c            |  11 ++
+>  tests/qtest/dump-test.c  | 331 +++++++++++++++++++++++++++++++++++++++
+>  tests/qtest/meson.build  |   1 +
+>  8 files changed, 398 insertions(+), 2 deletions(-)
+>  create mode 100644 tests/qtest/dump-test.c
+>
+>
+> base-commit: c7cf7c810153d6f5f31aa2d5c0dee9087f6b4dff
+> --
+> 2.53.0
+>
+>
 
