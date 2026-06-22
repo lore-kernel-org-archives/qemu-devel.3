@@ -4,96 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71CF1CDB466
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jun 2026 20:53:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B941BCD98F2
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jun 2026 20:54:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wbldQ-0003gN-Ek; Mon, 22 Jun 2026 16:52:48 -0400
+	id 1wblee-0004fm-CO; Mon, 22 Jun 2026 16:54:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wbldN-0003fx-Ho
- for qemu-devel@nongnu.org; Mon, 22 Jun 2026 16:52:45 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ id 1wbled-0004fN-2I
+ for qemu-devel@nongnu.org; Mon, 22 Jun 2026 16:54:03 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wbldL-0007Gs-Iv
- for qemu-devel@nongnu.org; Mon, 22 Jun 2026 16:52:45 -0400
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+ id 1wbleb-0007VY-Jo
+ for qemu-devel@nongnu.org; Mon, 22 Jun 2026 16:54:02 -0400
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65MJafPc2176425
- for <qemu-devel@nongnu.org>; Mon, 22 Jun 2026 20:52:42 GMT
+ 65MJZrxc1612646
+ for <qemu-devel@nongnu.org>; Mon, 22 Jun 2026 20:54:00 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- q04zAzd67z3/qNYdFwffqoykOLV8m1yykTVeARIonOI=; b=nymwXhlWdG3O6T+7
- p0/gtKKk6LRB6asROeunu8ntRdmlhIxfgt9JeEl0qfGjtPoCdHSgHt4nAv1nunax
- Memr7+0XOtYKwNCQajJAY/Fx3KwlF/UB0KZ+pIhfUUuiBtH7K1B2AbQu3PjFRY4W
- XpT15l6EOLunH6iwoR460zA+A7fRZRQLBTjMt2rwwVDMahindkrwGS9DiZbX/H38
- Y1d4PRwGQdrnYTFgEIGYpPhmKsSR+iy+Ma7vdsZpY5O+UoVmG4Qi+dec6ZF29Uvm
- Bcqb7b5C6iyUguMVeQECLeHLjbsZLJL8DDOvdG7Y1Lalf/1GFR+UXxW2BpOf9uoI
- CCQo/w==
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ey37ha7r5-1
+ mubbeLuNvHzWTjuopSsGGDHxdDc6q8WAh6XOPWlu+qc=; b=Y1mr09CNjuxKk10f
+ xfIBkCxTwPCGr03nkyhCl2HDAUDAW29vaukVx5rp/3xBzpdPEnvCu8AdvjyiBRr3
+ fiy/gMJ/U7bgD5PWb3PG7Ama2rj/VJ16CyV5ofAAKlpv36lryT5WCQ8Ibhwedus3
+ VAxLbv0AhQhIgJQjGSDI4ldGC3/B8jWzWALUneJIZNCNEiIYM3dqoamfioj/d6ej
+ n0Lpa7TkmQQ3SgxV4Q4G33BnARgW4OOhzNW8aBH0QPZXP5ORv4whnbsT2ASfUmXP
+ 78wsEaB55DImVRJmNbtYIVRkVvrceCcdM00jN4Gup0ze75J16jsNYMQaR7YVnbCT
+ lQTx5A==
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
+ [209.85.222.200])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ey2yjaatj-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 22 Jun 2026 20:52:42 +0000 (GMT)
-Received: by mail-qk1-f199.google.com with SMTP id
- af79cd13be357-92229624a71so477786085a.3
- for <qemu-devel@nongnu.org>; Mon, 22 Jun 2026 13:52:42 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Mon, 22 Jun 2026 20:53:59 +0000 (GMT)
+Received: by mail-qk1-f200.google.com with SMTP id
+ af79cd13be357-921634eebdbso613404885a.2
+ for <qemu-devel@nongnu.org>; Mon, 22 Jun 2026 13:53:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1782161561; x=1782766361; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1782161639; x=1782766439; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=q04zAzd67z3/qNYdFwffqoykOLV8m1yykTVeARIonOI=;
- b=CAG90aN45KHIv0zhM9NnmiAjkt4tpqZu31WRDi6CVfdKa357M2SiLuH4NcJsWqFkJk
- Aaxxs24eRp6N03d2lk8jLsZYRIa1SUqVqlh+p9yrh0JeYf0uswWpY7Q9hQJCWGN5bZLD
- vF2R1hCjy/jed5EX1wa98tRp0Ev28xUXKTay6RZSS1tt61R0IJvNvY0pSfYbN+AUGgvb
- Q5Haw5NY4rL+DCLIRYrPguYacAgOsvE5TDQCFaMETXuhjSazzmCxCprCsfc3R1pPXO98
- Mo0lUC5eKvEcjnGltTmWclTivckDISX1IrQVFcqG6JMo5s1RwWJPVgoQszFYY9bc7VeS
- GZAg==
+ bh=mubbeLuNvHzWTjuopSsGGDHxdDc6q8WAh6XOPWlu+qc=;
+ b=Qg/nnbcRm66ToF+vTvR8wygDIr0D5S6Jqs1lDN54zaXsx8KautMQPT940X2v5Vzi5G
+ b9UaEnIa7QFLvFYNKNwUOXMhJ0zzKSXnEr2UY0GROf1+WLxahv7XPa2l0F6xeN6ugKRE
+ GjNmcJSTpwBobEo9gdpdwQntFqC82Rch8CpjbX6CDLcfBLB78b/xQOyceSo0OzAcF89R
+ gm3y2SkBA2e93DRPNtn6uxvadJUKwZ4Phib+81BFg1tCT1I0FyD0Ml9L8CVLHBR8WHLW
+ FvZRahtvzv3hTKmyzD5kGkKX85qcymjM/i4L6Xl1O2mN13Jhn7lCoeINWs8JBZBIN+Lu
+ XuTQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782161561; x=1782766361;
+ d=1e100.net; s=20251104; t=1782161639; x=1782766439;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=q04zAzd67z3/qNYdFwffqoykOLV8m1yykTVeARIonOI=;
- b=noOOsxj1upncXJqwLb6Go7085cmpa23kGPjdEE/0G9V/dMQRTr6LiZTIcHPYnNyE5E
- VaS8eKgunADpGQmfR78bq145FyhyM82b8xAfqc7w/HCxbKFp2uRbfqDC5AEbwQ7HK+z5
- ld/NFFhMftFXz0IFLBQc75QUfEEL6KiLB6ALTh9Y8FdGQGjqzRwXXh2qthwEeaPi0Fza
- UrCDmMVSMhBtzioydTa+rYQZuEDEz4c6TT4CaUdAFKzqEP2kKXNhKYaUhZt+9VMjDX6I
- xXG1rg3FVSIXSgOsDCCabYbCfv8RT8s0LQjAflj0wWBEzQfzEOUEN3TbFfpB6t9G8tZg
- TYgA==
+ bh=mubbeLuNvHzWTjuopSsGGDHxdDc6q8WAh6XOPWlu+qc=;
+ b=op8L6M5QRUUuHd03fV46ObytYiKZ3e3WkfWzCl4ALHgTL8Mx6PVntOSJOUCuDj+4zJ
+ Z11LQ4j/G41q/EAhh+kIRItDx7xvunnNizwxuHJSDD+qVDg4J+zqLPsU69kGVTU2aMcV
+ 3CtR3Po5Nv3u7EAKdcWxiOLOhK14tvubNG/1RvLJOAZjb7BJ+x7HWsggMSLv+Rl7pAAp
+ vpgwBIPV/9llXIqqdbFzwhc7G/2XZiD3RgEmz0isUE/eMLeY0DscNsQpGndn4753io09
+ Kw/SWl8FUUKuqi/aR5CLMNwSjziJmsIvEeaK2BVLip8g1Xdd4E+D9kpn9CGzs4dRpWHA
+ A8fQ==
 X-Forwarded-Encrypted: i=1;
- AFNElJ/N10Rknx4FAX5Ipi9dh9LG8B9+CuEhM0bVJbyWYSqNn2SnOaV1jrqT7A85Kn6Ofznytm7y+hA2i6lB@nongnu.org
-X-Gm-Message-State: AOJu0Yxk+3KKHU/1sMtvn3XIaKeszneqKIo1sbDd1kPBLZ1ureK+qiTl
- GfdRG4/+0Lz6h88bnL3KUEgodN63DO0JDIJSS13DFGZlF60s7y/Xv9TmMFqr/WwkBDumhlhIVUa
- jPBdqkHot+oLp3hzH76QeK5L/+Zg36UAfQ7ThGkzVsCcBI8S1dm6sJ/yIQg==
-X-Gm-Gg: AfdE7cms+WFSMJkDSpU6IKSfPk8FgBB1S5Q87mb0IGv1JyMhTdSh8KunW9u/FrUOO/R
- 2170jzCHpGtYYZ64169VkiuE8Q2CN26NLIrPdxov/W+KurDOgrkZw0v3ApkzbtCH0e2fbb70wET
- PahwTFeYlnooXDOD5XGyMCq7of05tTrIIWbEAu5UZFXhIPoUv1ZlMaQtBy/Jz3Qa4bSw00miEc/
- dTdo+b228JBbs9xoxO4Ri0yvKzHZ/6gNJcREzgcxY6iswiNqmme8OrFIwt4vfmK5yMKRMWS9osB
- TqkuXArEPu/vQQAg6XoYMPKCezkrxMdV8AnDWtOgHYw9WeyjfXNbvfwvOlSOH7JSAcC2Pv5vYWt
- 3QLKl89T+1IS0iZuhDBNSURF4wtDpoNIsO3WObe++NT+1kHUVLu6+kYW7ffWWmA==
-X-Received: by 2002:a05:620a:4455:b0:915:aa7d:42c4 with SMTP id
- af79cd13be357-9208e498886mr2686122285a.8.1782161561400; 
- Mon, 22 Jun 2026 13:52:41 -0700 (PDT)
-X-Received: by 2002:a05:620a:4455:b0:915:aa7d:42c4 with SMTP id
- af79cd13be357-9208e498886mr2686115185a.8.1782161560838; 
- Mon, 22 Jun 2026 13:52:40 -0700 (PDT)
+ AFNElJ+Hp61V1Vb3IiJV3hR9uY5PJPCra6nu4tweMsdExJMsdkgoHnXnMzQ3TXs+UNzobGP0kAiUXrsAe4eP@nongnu.org
+X-Gm-Message-State: AOJu0Yxaqrmfji6ijlYzhXJZcwBGH+dNOLQkirwdtXdtio8o7DOg7x4x
+ IfxdYidEHP5UXlUy4nfmWQX6oECEwpXxRTuVOuhE0r0Esb2fLyjSFig2GCXYhfKJAbDY6aRQi70
+ ab9zSREy+a+GaLsWCYIH9a6MIvDrNvMrdW+gH/twJy/nrYnLIw22KaBSsTw==
+X-Gm-Gg: AfdE7cn2NB82JMjtjW/cLjItaeYWfCZEFe8l29Bz/ws8NJcn3Ewp4/OQlNh5yiB2G3l
+ J21iO4oTMej51QJuUuZgKtUBf1p5IEm4h9VQMZC3zYRcs2PzzkjW2bSrSywzjen+aYDAKBUHDtE
+ lE9TgCXnWGATw3tmpr6a/jTqbxLIcXInAfqa0MM1GA++WBoupdNDnFYYZkAhZqMCzB99gDlN4Fn
+ Xc5XMQ1wuPcG3WodBpLsiG7Yfin8nMCB+/usrF2Z5cgQJ8oeG9dpmxL5zR0I51avcngW9CATTJM
+ pCGtbzf99b6CuXcPhjNHMSPrh0aZtVHnLmi9PsioMH8j7E+awW7COtOJ3WP6KfqIOUQhDKi2p53
+ XrXwHeY4eSCcD3RWB3iK0obkT2xpfhxVRxZ509hsA+Sa3fTPSqr6YgrCP6Arecg==
+X-Received: by 2002:a05:620a:4720:b0:920:946c:45eb with SMTP id
+ af79cd13be357-921d0b36169mr1929513485a.3.1782161638883; 
+ Mon, 22 Jun 2026 13:53:58 -0700 (PDT)
+X-Received: by 2002:a05:620a:4720:b0:920:946c:45eb with SMTP id
+ af79cd13be357-921d0b36169mr1929507885a.3.1782161638371; 
+ Mon, 22 Jun 2026 13:53:58 -0700 (PDT)
 Received: from [192.168.69.212] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-492494497ffsm248540445e9.11.2026.06.22.13.52.39
+ 5b1f17b1804b1-49240084928sm336145105e9.15.2026.06.22.13.53.56
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 22 Jun 2026 13:52:40 -0700 (PDT)
-Message-ID: <dbb31523-ab2a-4786-b0ff-f3e70968bef4@oss.qualcomm.com>
-Date: Mon, 22 Jun 2026 22:52:38 +0200
+ Mon, 22 Jun 2026 13:53:57 -0700 (PDT)
+Message-ID: <dde1c145-3c4f-4ed7-a975-e5e154827514@oss.qualcomm.com>
+Date: Mon, 22 Jun 2026 22:53:55 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 02/24] target/riscv: move TCG only files to tcg subdir
+Subject: Re: [PATCH 04/24] target/riscv: move pmp files to tcg subdir
 Content-Language: en-US
 To: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
  qemu-devel@nongnu.org
@@ -101,46 +101,46 @@ Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, liwei1518@gmail.com,
  zhiwei_liu@linux.alibaba.com, chao.liu.zevorn@gmail.com,
  pierrick.bouvier@oss.qualcomm.com, Palmer Dabbelt <palmer@dabbelt.com>
 References: <20260622193141.1449724-1-daniel.barboza@oss.qualcomm.com>
- <20260622193141.1449724-3-daniel.barboza@oss.qualcomm.com>
+ <20260622193141.1449724-5-daniel.barboza@oss.qualcomm.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <20260622193141.1449724-3-daniel.barboza@oss.qualcomm.com>
+In-Reply-To: <20260622193141.1449724-5-daniel.barboza@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: G8tQeruN5v_DdIUoRcDM4L18JRuRW_BM
-X-Authority-Analysis: v=2.4 cv=ecANubEH c=1 sm=1 tr=0 ts=6a39a09a cx=c_pps
- a=HLyN3IcIa5EE8TELMZ618Q==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+X-Proofpoint-ORIG-GUID: irH9-3pIfFg7X7rpfkN2xr8zAWdZUJFC
+X-Proofpoint-GUID: irH9-3pIfFg7X7rpfkN2xr8zAWdZUJFC
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjIyMDIwMiBTYWx0ZWRfX59HB13skx9lI
+ 1Qg6AWVKzpwCPHb8cNGvkR2H6Q1c0HkqefGaDFJNKkSvp8f2mIhpPfQxP4+Mlhh7PPhhqXuC/zu
+ dBqbq3j33nd/epsTD5ipXzS4fSZnWxY=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjIyMDIwMiBTYWx0ZWRfX9it5P8tTUVxL
+ bt4wqP2oBBRXUPHnseS1/0gqcxi4jHFAeKMt50n+IxCbPT/bijHjNUNXbVZdwm903BZCqwM2sPm
+ VCaylFNt4qpMUQoZAZeRZ3AOqlyiTv6t4AqMbde0zB1tNtJ27dULuqRwqEQ1PQpA8DK7mDMNcg6
+ jHT/WnHuywBTYC61w+vZnxC8eZz0/yLyc2QNStC/oOZwvXIqmZTnhEcqNTQo9kzen458kwzvMsX
+ BOKmfrtmL8G2+2lY2xvpe+USgJEayz+3QlscdZBLq+A8WUMrhCGvep4EX1Y4I/UJtqks2z1orsv
+ YVHJ1kYYd1tikJ0AmtAyAE8IYakgs0xabpJY8Byq7qPoyGpuWmYbdlVVlCNB01AlvbnWBEvhHiD
+ 2EevWQN64dfvK23JqMdkk3ZedSz+aNW79QZumeImG4UPwOLpbzEweVZlIurpf22UNkNBjZynkl5
+ iRPlb15kHdcCen8dI9A==
+X-Authority-Analysis: v=2.4 cv=YLSvDxGx c=1 sm=1 tr=0 ts=6a39a0e7 cx=c_pps
+ a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
  a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
- a=EUspDBNiAAAA:8 a=YMcZpqoK_VanQ7R3mqAA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=bTQJ7kPSJx9SKPbeHEYW:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjIyMDIwMSBTYWx0ZWRfX9JSG3yfIouBc
- lLRTO7Q+MXqeSFZ9mPCrHxFTw1yTZrjtS1PeWAsdPe5s8fGezojEXCNIbMFeAdkQHI2Gvpl43nV
- iXzu/hT2fZL2Pue08XpWc1ezQnAEEZo=
-X-Proofpoint-GUID: G8tQeruN5v_DdIUoRcDM4L18JRuRW_BM
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjIyMDIwMSBTYWx0ZWRfX0Hejxk7jhXxo
- lmcZc6J6+WaGydS4bynDn/7irSsuKHe90cazp1NCoyR5D2eT8ReuKAYQJ8PFivnv3pFX53gF/wf
- WkSeFxWMlOv8mN2GnawwZJZ67O7g/kYX9wNg62LJmQAyyKmpSDDdBRYRncIxdS9TWvVcxD8twbf
- 2RtBRjTW6hcB/PwqUuEW87A+vN08ld7WVmZtmO8ZIFvAxa/z5xMlWyYAUPd75PipqREvD8ao2if
- wC70DoI8AZ0c0xQUaRYOr0HjFHXUJKWCzXqlxM8q5SPS/u+o+0RehezSxAychiWvhMHA9/g7xv0
- sdDpoFqlT0jLjLZzLmNlk43bZKPCb7lQRUH0hve5EOnS0YMmQU9f64navBMGNKVlgQYj6qVDE+w
- CNpT2rsElJNfrkEkP4YTJwKWTv3bvVFddysnMTFECeM3U4RZNoJLlu5G5tDjZk2Rd4UN0k4noGx
- oFcJX3GHJhxoVPGmw/Q==
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22
+ a=EUspDBNiAAAA:8 a=1tSEMpTH9XP_W59IOagA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=PEH46H7Ffwr30OY-TuGO:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-06-22_04,2026-06-22_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 lowpriorityscore=0 priorityscore=1501 clxscore=1015 spamscore=0
- suspectscore=0 impostorscore=0 adultscore=0 malwarescore=0 bulkscore=0
+ priorityscore=1501 malwarescore=0 bulkscore=0 clxscore=1015 phishscore=0
+ adultscore=0 spamscore=0 suspectscore=0 lowpriorityscore=0 impostorscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606220201
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606220202
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -158,116 +158,18 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 22/6/26 21:31, Daniel Henrique Barboza wrote:
-> We have *way* too much TCG-only code hanging around in target/riscv,
-> where ideally we would have things that are shared between accelerators.
-> 
-> We'll follow the example of other targets like i386 and loongarch and
-> move everything to the tcg subir.  This will not only cleanup target/riscv
-> but it will also expose what is common code but it's buried inside a TCG
-> helper.
-> 
-> We're leaving some stuff behind because these require a little more
-> case to not end up breaking KVM.  We'll take care of them next.
+> A trivial header change is required too.
 > 
 > Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 > ---
->   target/riscv/meson.build                      | 16 ----------
->   target/riscv/{ => tcg}/bitmanip_helper.c      |  0
->   target/riscv/{ => tcg}/cpu_helper.c           |  0
->   target/riscv/{ => tcg}/crypto_helper.c        |  0
->   target/riscv/{ => tcg}/csr.c                  |  0
->   target/riscv/{ => tcg}/debug.c                |  0
->   target/riscv/{ => tcg}/fpu_helper.c           |  0
->   .../insn_trans/trans_privileged.c.inc         |  0
->   .../{ => tcg}/insn_trans/trans_rva.c.inc      |  0
->   .../{ => tcg}/insn_trans/trans_rvb.c.inc      |  0
->   .../{ => tcg}/insn_trans/trans_rvbf16.c.inc   |  0
->   .../{ => tcg}/insn_trans/trans_rvd.c.inc      |  0
->   .../{ => tcg}/insn_trans/trans_rvf.c.inc      |  0
->   .../{ => tcg}/insn_trans/trans_rvh.c.inc      |  0
->   .../{ => tcg}/insn_trans/trans_rvi.c.inc      |  0
->   .../{ => tcg}/insn_trans/trans_rvk.c.inc      |  0
->   .../{ => tcg}/insn_trans/trans_rvm.c.inc      |  0
->   .../{ => tcg}/insn_trans/trans_rvv.c.inc      |  0
->   .../{ => tcg}/insn_trans/trans_rvvk.c.inc     |  0
->   .../{ => tcg}/insn_trans/trans_rvzabha.c.inc  |  0
->   .../{ => tcg}/insn_trans/trans_rvzacas.c.inc  |  0
->   .../{ => tcg}/insn_trans/trans_rvzalasr.c.inc |  0
->   .../{ => tcg}/insn_trans/trans_rvzawrs.c.inc  |  0
->   .../{ => tcg}/insn_trans/trans_rvzce.c.inc    |  0
->   .../{ => tcg}/insn_trans/trans_rvzcmop.c.inc  |  0
->   .../{ => tcg}/insn_trans/trans_rvzfa.c.inc    |  0
->   .../{ => tcg}/insn_trans/trans_rvzfh.c.inc    |  0
->   .../{ => tcg}/insn_trans/trans_rvzicbo.c.inc  |  0
->   .../insn_trans/trans_rvzicfiss.c.inc          |  0
->   .../{ => tcg}/insn_trans/trans_rvzicond.c.inc |  0
->   .../{ => tcg}/insn_trans/trans_rvzimop.c.inc  |  0
->   .../{ => tcg}/insn_trans/trans_svinval.c.inc  |  0
->   .../{ => tcg}/insn_trans/trans_xlrbr.c.inc    |  0
->   .../{ => tcg}/insn_trans/trans_xmips.c.inc    |  0
->   .../{ => tcg}/insn_trans/trans_xthead.c.inc   |  0
->   .../insn_trans/trans_xventanacondops.c.inc    |  0
->   .../{ => tcg}/insn_trans/trans_zilsd.c.inc    |  0
->   target/riscv/{ => tcg}/m128_helper.c          |  0
->   target/riscv/tcg/meson.build                  | 30 +++++++++++++++++--
->   target/riscv/{ => tcg}/mips_csr.c             |  0
->   target/riscv/{ => tcg}/op_helper.c            |  0
->   target/riscv/{ => tcg}/pmu.c                  |  0
->   target/riscv/{ => tcg}/th_csr.c               |  0
->   target/riscv/{ => tcg}/translate.c            |  0
->   target/riscv/{ => tcg}/vcrypto_helper.c       |  0
->   target/riscv/{ => tcg}/vector_helper.c        |  0
->   target/riscv/{ => tcg}/vector_internals.c     |  0
->   target/riscv/{ => tcg}/vector_internals.h     |  0
->   target/riscv/{ => tcg}/zce_helper.c           |  0
->   49 files changed, 28 insertions(+), 18 deletions(-)
->   rename target/riscv/{ => tcg}/bitmanip_helper.c (100%)
->   rename target/riscv/{ => tcg}/cpu_helper.c (100%)
->   rename target/riscv/{ => tcg}/crypto_helper.c (100%)
->   rename target/riscv/{ => tcg}/csr.c (100%)
->   rename target/riscv/{ => tcg}/debug.c (100%)
->   rename target/riscv/{ => tcg}/fpu_helper.c (100%)
->   rename target/riscv/{ => tcg}/insn_trans/trans_privileged.c.inc (100%)
->   rename target/riscv/{ => tcg}/insn_trans/trans_rva.c.inc (100%)
->   rename target/riscv/{ => tcg}/insn_trans/trans_rvb.c.inc (100%)
->   rename target/riscv/{ => tcg}/insn_trans/trans_rvbf16.c.inc (100%)
->   rename target/riscv/{ => tcg}/insn_trans/trans_rvd.c.inc (100%)
->   rename target/riscv/{ => tcg}/insn_trans/trans_rvf.c.inc (100%)
->   rename target/riscv/{ => tcg}/insn_trans/trans_rvh.c.inc (100%)
->   rename target/riscv/{ => tcg}/insn_trans/trans_rvi.c.inc (100%)
->   rename target/riscv/{ => tcg}/insn_trans/trans_rvk.c.inc (100%)
->   rename target/riscv/{ => tcg}/insn_trans/trans_rvm.c.inc (100%)
->   rename target/riscv/{ => tcg}/insn_trans/trans_rvv.c.inc (100%)
->   rename target/riscv/{ => tcg}/insn_trans/trans_rvvk.c.inc (100%)
->   rename target/riscv/{ => tcg}/insn_trans/trans_rvzabha.c.inc (100%)
->   rename target/riscv/{ => tcg}/insn_trans/trans_rvzacas.c.inc (100%)
->   rename target/riscv/{ => tcg}/insn_trans/trans_rvzalasr.c.inc (100%)
->   rename target/riscv/{ => tcg}/insn_trans/trans_rvzawrs.c.inc (100%)
->   rename target/riscv/{ => tcg}/insn_trans/trans_rvzce.c.inc (100%)
->   rename target/riscv/{ => tcg}/insn_trans/trans_rvzcmop.c.inc (100%)
->   rename target/riscv/{ => tcg}/insn_trans/trans_rvzfa.c.inc (100%)
->   rename target/riscv/{ => tcg}/insn_trans/trans_rvzfh.c.inc (100%)
->   rename target/riscv/{ => tcg}/insn_trans/trans_rvzicbo.c.inc (100%)
->   rename target/riscv/{ => tcg}/insn_trans/trans_rvzicfiss.c.inc (100%)
->   rename target/riscv/{ => tcg}/insn_trans/trans_rvzicond.c.inc (100%)
->   rename target/riscv/{ => tcg}/insn_trans/trans_rvzimop.c.inc (100%)
->   rename target/riscv/{ => tcg}/insn_trans/trans_svinval.c.inc (100%)
->   rename target/riscv/{ => tcg}/insn_trans/trans_xlrbr.c.inc (100%)
->   rename target/riscv/{ => tcg}/insn_trans/trans_xmips.c.inc (100%)
->   rename target/riscv/{ => tcg}/insn_trans/trans_xthead.c.inc (100%)
->   rename target/riscv/{ => tcg}/insn_trans/trans_xventanacondops.c.inc (100%)
->   rename target/riscv/{ => tcg}/insn_trans/trans_zilsd.c.inc (100%)
->   rename target/riscv/{ => tcg}/m128_helper.c (100%)
->   rename target/riscv/{ => tcg}/mips_csr.c (100%)
->   rename target/riscv/{ => tcg}/op_helper.c (100%)
->   rename target/riscv/{ => tcg}/pmu.c (100%)
->   rename target/riscv/{ => tcg}/th_csr.c (100%)
->   rename target/riscv/{ => tcg}/translate.c (100%)
->   rename target/riscv/{ => tcg}/vcrypto_helper.c (100%)
->   rename target/riscv/{ => tcg}/vector_helper.c (100%)
->   rename target/riscv/{ => tcg}/vector_internals.c (100%)
->   rename target/riscv/{ => tcg}/vector_internals.h (100%)
->   rename target/riscv/{ => tcg}/zce_helper.c (100%)
+>   target/riscv/cpu.h           | 2 +-
+>   target/riscv/meson.build     | 1 -
+>   target/riscv/tcg/meson.build | 1 +
+>   target/riscv/{ => tcg}/pmp.c | 0
+>   target/riscv/{ => tcg}/pmp.h | 0
+>   5 files changed, 2 insertions(+), 2 deletions(-)
+>   rename target/riscv/{ => tcg}/pmp.c (100%)
+>   rename target/riscv/{ => tcg}/pmp.h (100%)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 
