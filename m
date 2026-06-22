@@ -4,90 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63D7BCD98F2
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jun 2026 14:47:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7CF3ACD98F2
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jun 2026 14:47:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wbfvL-0007kN-EE; Mon, 22 Jun 2026 10:46:55 -0400
+	id 1wbfvo-00082n-Ru; Mon, 22 Jun 2026 10:47:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wbfun-0007gL-9j
- for qemu-devel@nongnu.org; Mon, 22 Jun 2026 10:46:23 -0400
-Received: from mail-pj1-x102b.google.com ([2607:f8b0:4864:20::102b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wbful-0003K6-Ou
- for qemu-devel@nongnu.org; Mon, 22 Jun 2026 10:46:21 -0400
-Received: by mail-pj1-x102b.google.com with SMTP id
- 98e67ed59e1d1-37ce68a54f8so2724342a91.0
- for <qemu-devel@nongnu.org>; Mon, 22 Jun 2026 07:46:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1782139578; x=1782744378; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=QVLi5CTYge//fBqjN2o7pZfat9tur3gf3XYTWYG1l3c=;
- b=Pgerqny6yEpTghcjSve1i9AJPWPmU2oLBk3iAh1UoS1oikK1BRsHsgkLyNpFJ01cb+
- SXgdtk0VBtS4tFScx7io6ANJSa4tP8wJbSPaMx3gZu3iiwt0YM5YguJB65g5m3q3B4cg
- 0SzbLYuMq8WvRZj0+fw7SxMFAxa/OG/FpzVPWIYqYNFl+hR4RF/VvQ+7NkdHn/0usbR3
- BPXQrIqeGvDKOm2Qa5FavgGZx3udtpKWnsoAPOr1XEdmGsenpYvETxZ0qUrrSuEhKuxu
- 9rNnUYIYWFcijnAgc2W/TIdAXQLcqh1Tz6+kJfi4CVbNKsxqfRGvFyygANc/+FqKQkSb
- 7wnA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782139578; x=1782744378;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=QVLi5CTYge//fBqjN2o7pZfat9tur3gf3XYTWYG1l3c=;
- b=IBWIAXf8vx9WJDVhTOdmjQ8gBWkO3/7Kv4jwLUYumY+fXItQ1mQbpAIhR0TraLRuGh
- N5gJ57RazhfFEQBCtGVvjge0tajTHSWvknBZfamNKlzCe+b7Z8ixpUFhsleSo/0h3TgZ
- y/unGAX5DyLL29wWqHnQlPuvcwUamd+JUqt+7vGulUeqVk1nanPLDHr3GRUM5dB0G0eS
- dFmxDD4JWoG9rjSkh/r2IZ6K0WmEl67OcV8AKizNnVOJi7FBfhlGoGseZLTfSN0ajLLr
- UsRgtqQsNmzm6FmiMR3pys23jhLcDhZ6/xIWnTHTAAwiXUJshOUIiBAwmBwiBy/2RRrf
- Ovjg==
-X-Forwarded-Encrypted: i=1;
- AHgh+RrwoX08nqYl6TOJZkGJ7RrNQavNJl0Jz0/I78gHiysgewmqvpbqDbe6fKUeUZKUXdRjnsLtQIUP/8Gp@nongnu.org
-X-Gm-Message-State: AOJu0YyDm5PRp9WoGNJv8BVLL7OTleFmU8DYCBuJPPUsMnKd7fZjJBYM
- uH+PzrSYFmNwkwwTXSPL+SpVxKO8ZHdpE+DqTIaC4jrKA3ZhfOgNvPoYzlwlPS4ozKE=
-X-Gm-Gg: AfdE7cnd8/XilScueLUaXo58GCnw9PaglttTAemvx0cYxkX7Czc5E/9pD8R561LXDxt
- w/YdAqL+IR0QddUGeNE7nb73fyZqF0WjtFBlUmPjnp75oGPOn5iB7ZphITBnu8lopH3pMjKFR9z
- 7ufoLK4LMIkKEQ2EtBkdotMYpEutoN0t3grkqTUCwh7rkQSwRVclo/9iyKZOc+qLp7k3J/fQGDL
- k3R1oar00UOxgGj8OkPDW/tHUHqz2iA7w+lSmEGoI2K/KqUaJh0OtDSkDhU/+g4ObF++vJifZaz
- gd/SNseur35J0LTNV0Vm3/sctIvgwt2bNcUDj5u13xETltRshMR0Ayk8Iw1ZriQs16xOdPZ1e5r
- kNQiMIJ7+3nbNlvcBEUYzpt/E/2j5BZjtPlSi4mOupxvL0KJ0a1fU+a3EVKcDzMs713XuJmVO2E
- QddO0MFDAqSH1WgkQf6/Gnj815gjUpvBzzZi4SJ43hIHD70SCpEfjC55CKEg==
-X-Received: by 2002:a17:90b:3f90:b0:35b:9894:f6f9 with SMTP id
- 98e67ed59e1d1-37d1e8d05f6mr13379831a91.18.1782139577649; 
- Mon, 22 Jun 2026 07:46:17 -0700 (PDT)
-Received: from [192.168.0.4] (174-21-129-215.tukw.qwest.net. [174.21.129.215])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-37d4f008779sm7107594a91.6.2026.06.22.07.46.17
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 22 Jun 2026 07:46:17 -0700 (PDT)
-Message-ID: <a298b575-5f2c-4a4e-b590-9da4abc22e90@linaro.org>
-Date: Mon, 22 Jun 2026 07:46:12 -0700
+ (Exim 4.90_1) (envelope-from <kshk@linux.ibm.com>)
+ id 1wbfvi-00080n-T9; Mon, 22 Jun 2026 10:47:20 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <kshk@linux.ibm.com>)
+ id 1wbfvh-0003YB-8Y; Mon, 22 Jun 2026 10:47:18 -0400
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 65MDIPnU2922011; Mon, 22 Jun 2026 14:47:11 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=si9Cut
+ SixT9ZRBFKhe2ZvR7How3QRxVcR11o+TwlH/Y=; b=e5xRpe/RhROXLiSG9ESE98
+ rERZqtoABsD2KzNagtJ1mfy1qSuJWjNpEI4JwjTZ4/TZGOmf2xd0wDYeuhGYYm84
+ 1w+Y4KIkA4NotFW163ny2K6Cd6l1t+wJ2M2oSmMfTCfPPVdlF7qfONAkgquglKq4
+ zh5lddVPGT25/U1dKR79RWuPoJZp0MwkmG9lKBBcyJlW+mghcp/XvaV13Tm+CCkO
+ maUMbB+QBJ9J5VjU5rTNuqevuoekw43BOvqD7yicTXEPhjzN/M34M/8Za7ycYlHO
+ HPqdgn6LVXTv2W/rTWp6LARPIA8vHAOfcgynNCvQW/04p2tJ9GY+mrYyhiBxj25g
+ ==
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4ewjk49sed-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 22 Jun 2026 14:47:11 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 65MEYdpM029513;
+ Mon, 22 Jun 2026 14:47:10 GMT
+Received: from smtprelay05.wdc07v.mail.ibm.com ([172.16.1.72])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4ex56q6wq8-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 22 Jun 2026 14:47:10 +0000 (GMT)
+Received: from smtpav03.dal12v.mail.ibm.com (smtpav03.dal12v.mail.ibm.com
+ [10.241.53.102])
+ by smtprelay05.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 65MEl8Qc17367800
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 22 Jun 2026 14:47:08 GMT
+Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 7019058056;
+ Mon, 22 Jun 2026 14:47:08 +0000 (GMT)
+Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 3CF825803F;
+ Mon, 22 Jun 2026 14:47:08 +0000 (GMT)
+Received: from [9.16.62.165] (unknown [9.16.62.165])
+ by smtpav03.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Mon, 22 Jun 2026 14:47:08 +0000 (GMT)
+Message-ID: <a4a7563b-2d64-4465-9cfc-a37106675745@linux.ibm.com>
+Date: Mon, 22 Jun 2026 09:47:08 -0500
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/i386: decode opcode extensions group 3 /1 as TEST
-To: Andrey Polivoda <apolivodaa433@gmail.com>, qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>
-References: <20260621032524.1138213-1-apolivodaa433@gmail.com>
-From: Richard Henderson <richard.henderson@linaro.org>
+Subject: Re: [PATCH v3 03/15] s390x/pci: Move iommu_mr from S390PCIIOMMU to
+ S390PCIBusDevice
+To: Farhan Ali <alifm@linux.ibm.com>, mjrosato@linux.ibm.com
+Cc: richard.henderson@linaro.org, iii@linux.ibm.com, david@kernel.org,
+ cohuck@redhat.com, pasic@linux.ibm.com, borntraeger@linux.ibm.com,
+ qemu-s390x@nongnu.org, qemu-devel@nongnu.org
+References: <20260605021728.1125090-1-kshk@linux.ibm.com>
+ <20260605021728.1125090-4-kshk@linux.ibm.com>
+ <1d6a9c54-c352-40f3-a132-cf60ea8ab958@linux.ibm.com>
 Content-Language: en-US
-In-Reply-To: <20260621032524.1138213-1-apolivodaa433@gmail.com>
+From: Konstantin Shkolnyy <kshk@linux.ibm.com>
+In-Reply-To: <1d6a9c54-c352-40f3-a132-cf60ea8ab958@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102b;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjIyMDE0MiBTYWx0ZWRfX2JSuRAc60/Za
+ bcbdTq8zbBaVYZhXQjRRGWsD1TRmOImY2clRIOwlT+MerupdAzd9g0LZRHAW4K7U3G9M76PjI3U
+ zbk0Cl1pYZRXKfVo8T0YmU/20/7leYI=
+X-Proofpoint-ORIG-GUID: L1midlb7HM_nuJ0oZC0qHU2bEYd2VEuR
+X-Authority-Analysis: v=2.4 cv=Oph/DS/t c=1 sm=1 tr=0 ts=6a394aef cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+ a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=GZO5g-VNeBu4E_CnEO8A:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjIyMDE0MiBTYWx0ZWRfX+jJnFF/qDKqi
+ 4FoYu9MNI/t4q6+sI8dQ+jetHpjHaPPQ/fV7db9RAShm3yh/Zaunr1pDlalyJGmtHwUVaH8+P0q
+ 4w5/hhFcLQmIRpjuCpKHyW6rtRIOq6AwNuab87/1sRNNecBgne1y8RIb6htpCerxL9xHBLltu2T
+ Pa1w57liW2/KAotNSgTLnJzGL75J5lcNpKFGlQwu9QFY5tmLpHcgSkX5iYoWacDxIUM03pc+oxq
+ ZdKDzkTF3e6PKwx5dcaylzACmOprYLkTkyYksFZzqcIBfa2oc/XO+yRIfhhN00evuB/skVppsyc
+ QpYEQpeKDz+aiSamJGUggA7+UE0DHrz2+2QIR0zNCtjWUJ5BywkASRpLxfZGZWTNF3Sn0WOhKFi
+ TRmOD/IJPQOkzd6e5ND/5/7g8VqZXQ85n/tD8taNSzch72B10wF8peciB7tn1q3CGz7RaRourtF
+ YMoqyviTz1BbjpGEtGg==
+X-Proofpoint-GUID: L1midlb7HM_nuJ0oZC0qHU2bEYd2VEuR
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-22_02,2026-06-22_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 lowpriorityscore=0 bulkscore=0 spamscore=0 priorityscore=1501
+ clxscore=1015 impostorscore=0 malwarescore=0 adultscore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606220142
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=kshk@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -104,36 +127,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/20/26 20:25, Andrey Polivoda wrote:
-> According to Table A-6 in Volume 3 of AMD64 Architecture Programmer's Manual,
-> opcodes F6 and F7 (opcode extensions group 3) with ModRM's reg field values
-> of 0 and 1 can be used to encode a TEST instruction.
+On 260619 17:16, Farhan Ali wrote:
+> <..snip..>
 > 
-> Although Intel 64 and IA-32 Architectures Software Developer's Manual leaves
-> the cell 1 of opcode extensions group 3 blank in the opcode table
-> (Table A-6, Volume 2D), the instruction in a group 3 with reg field of ModRM
-> byte set to 1 actually behaves like TEST instruction on Intel CPUs.
+> On 6/4/2026 7:17 PM, Konstantin Shkolnyy wrote:
+>> diff --git a/include/hw/s390x/s390-pci-bus.h b/include/hw/s390x/s390- 
+>> pci-bus.h
+>> index eb15cb8b2d..a71f562dfc 100644
+>> --- a/include/hw/s390x/s390-pci-bus.h
+>> +++ b/include/hw/s390x/s390-pci-bus.h
+>> @@ -276,7 +276,6 @@ struct S390PCIIOMMU {
+>>       S390PCIBusDevice *pbdev;
+>>       AddressSpace as;
+>>       MemoryRegion mr;
+>> -    IOMMUMemoryRegion iommu_mr;
+>>       MemoryRegion *dm_mr;
+>>       bool enabled;
+>>       uint64_t g_iota;
+>> @@ -354,6 +353,7 @@ struct S390PCIBusDevice {
+>>       S390MsixInfo msix;
+>>       AdapterRoutes routes;
+>>       S390PCIIOMMU *iommu;
+>> +    IOMMUMemoryRegion iommu_mr;
+>>       MemoryRegion msix_notify_mr;
+>>       IndAddr *summary_ind;
+>>       IndAddr *indicator;
 > 
-> Currently, QEMU decodes group 3 instruction as TEST only if reg field of ModRM
-> byte is 0. When the reg field is 1, QEMU raises a #UD exception.
-> This behavior does not match real Intel and AMD hardware.
-> 
-> This patch fixes this issue by duplicating the existing [0x00] and [0x08]
-> X86_OP_ENTRYrr(AND, ...) entries into slots [0x01] and [0x09] in the
-> opcodes_grp3 table.
-> 
-> Fixes: d7c41a60d0c5 ("target/i386: move C0-FF opcodes to new decoder (except for x87)")
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3580
-> Signed-off-by: Andrey Polivoda <apolivodaa433@gmail.com>
-> Cc: qemu-devel@nongnu.org
-> Cc: Paolo Bonzini <pbonzini@redhat.com>
-> Cc: Richard Henderson <richard.henderson@linaro.org>
-> ---
+> Maybe I am missing something, but why do we need to remove iommu_mr from 
+> S390PCIIOMMU? S390PCIBusDevice already has a reference to the 
+> S390PCIIOMMU in its definition. So is there something about iommu_mr 
+> defined in S390PCIIOMMU makes it difficult to migrate? Its hard to 
+> understand from the commit message.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+For migration, indeed it's not necessary to move it. It'll function 
+either way. It's purely a "cleanup" change - I want S390PCIIOMMU to only 
+contain the fields that _can't_ live in S390PCIBusDevice (as described 
+in the patch 13).
 
-AMD 24594—Rev. 3.36—March 2024 Table A-6 concurs that both /0 and /1 are TEST.
+All the patches that move fields from S390PCIIOMMU to S390PCIBusDevice 
+are aiming to simplify this code, so the reader isn't left to wonder, as 
+he's today, (1) why a field is located in one of them rather than the 
+other, and (2) whether S390PCIIOMMU can be deallocated somehow while a 
+field is being referenced by pbdev->iommu->field.
 
-
-r~
 
