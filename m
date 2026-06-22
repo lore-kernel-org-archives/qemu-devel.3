@@ -4,114 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0DF9CCD98F0
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jun 2026 03:09:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE334CD98E4
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jun 2026 03:11:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wbV1U-0006fc-Mk; Sun, 21 Jun 2026 23:08:32 -0400
+	id 1wbV4C-0007sA-5E; Sun, 21 Jun 2026 23:11:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wbV1T-0006fL-CU
- for qemu-devel@nongnu.org; Sun, 21 Jun 2026 23:08:31 -0400
-Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
+ id 1wbV44-0007r5-7K
+ for qemu-devel@nongnu.org; Sun, 21 Jun 2026 23:11:13 -0400
+Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wbV1Q-0007iw-Lq
- for qemu-devel@nongnu.org; Sun, 21 Jun 2026 23:08:30 -0400
-Received: by mail-ed1-x535.google.com with SMTP id
- 4fb4d7f45d1cf-6974f511dd3so3414514a12.1
- for <qemu-devel@nongnu.org>; Sun, 21 Jun 2026 20:08:28 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1782097707; cv=none;
+ id 1wbV42-0000RR-2Y
+ for qemu-devel@nongnu.org; Sun, 21 Jun 2026 23:11:11 -0400
+Received: by mail-ed1-x531.google.com with SMTP id
+ 4fb4d7f45d1cf-696bf0e7c9cso5985638a12.1
+ for <qemu-devel@nongnu.org>; Sun, 21 Jun 2026 20:11:09 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1782097868; cv=none;
  d=google.com; s=arc-20240605;
- b=hhVT7/WdmxMVLRQVoOyVKgcwUocYybYtr/x55KxwCLKN4d2avcOmvijfeURPcN5uIC
- IYaQVGD7w0FNfkh59PoEdeN6+OPqeQGm9zIJ/lR9uOKrr/r/Cv3o06zJpep8q9BvAqAW
- OMjca0B9Rh2YRdsLYd67Lsnex8soHXZQQSHlMHkpEVjidDYKAm+MLkfve8uu3FH6Sqc6
- dNMC2QpTtdmzyIvhy4t49qE5nBKA71NfvhwAt6GuoTt2DGGxvyRgLCENliZPzss3Flfi
- yHKl5SYUixovCXu58yLNVKmhBukSfcFQGnUP0qUWt+fqHJl2SMNVvn6SoVj06npBzy3L
- nOZg==
+ b=aWqAuEfqIzYkkNHIQUt++h6MJJvtiOQuAdR6IF7Vx7zofFl1HH3oPM+O/cuOeVLIss
+ zgFtn1nckSP/j0XNB+UKGLlD2JOLKCpagMrQ8STF4PUB3tPcaA8RxxRyMJC73LKIwKBg
+ Fe3aUZefdwBez2q+iGa7pLlVjGmizTMGT5QcsRiawnCn93i+hJtnaUNKqn6WaCboYZoS
+ R924prCC00YE0Wu6xXRhoWHi+OIsevUt+8PRXKva5/kepvR06fBW7ZDKZ3gIad3qiota
+ OLpVkVfQiLEnzRSN+92jqKDqtIzDh89moQWJywJ0cm1m/WaZ0l0wZd6hQmUmAOhFcu8p
+ 5YdQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=pncSQEIlLQ0Rj1BcORGRv8Fy/DL6CzOrlm0xwdvMkGQ=;
- fh=nU544uBc/ikjX1M15pFgUX8Kvv9LD3PvtwnY2ZQq1f0=;
- b=eInUPRH8Y9zWXe3aNP3AgYcqrCFbn/iAf45BR9caOUxn1Kmv4O3OxxcYOTmP8PSkmL
- 3dubCZRYYkPtmno+4zRHm0mgGrOuvtOzTfRblg6zn6u+X06Uw+6ICeE1b0k5SwGGLn7J
- 2gLVcBwtvkfYEP795X/lKNa3IMXBJvB4Y21vNaGn5Fvz2AJk3zVViSec76oKLqMMMe8x
- JOCjfAkLUmhn6UHdA9Vli2A+8xR+0MVTBAisBRT2SBDN11y1CKQugRJ+bzt1oTtQjfNM
- N4IsO7i8999oVGBdqpOWPeikm+ob0wGkBGuC2d7q0SHGGdEqdjLivXG0AylezvkofNtn
- eNkg==; darn=nongnu.org
+ bh=5251lJHZna8xSeEEf+SDbVoy83ed2bMtD6Z/OC+BWA4=;
+ fh=SglfmchVYcdfczLSoCSBefjtWZMKziUtZF1Tfwx67Pw=;
+ b=C8drNxIerrG1bfAyVk772P9kO4t2+VLQJY1nh7N/iNuzLAUg/71Y9TSvk+2qldds2A
+ ew5tKTrgwMcJsG63gym8tzHnKPSewtPzwOlBJwmkfwlj8FLyRRNrrTyeM1eO2s1PjDjE
+ JD5SuL33O1V0F0jK7xxBR5R0TwKQfriYEvTYmNQqo7UosgoBaFS7zzvZ+jpx3VlztvrR
+ 1sd8LvsmC9p1tuKJY3a36YGcmQdVKRLggX3MkPIAxmBiw7mN3eb92165H9JDAwjHPpzB
+ YJFwKXd0yqA6tJJ5Jb1Qu+dzv63K+6ssEzdqQNfuT3zTbuMOlzLx07gIYYRFtjAmU5dy
+ 38TQ==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1782097707; x=1782702507; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1782097868; x=1782702668; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=pncSQEIlLQ0Rj1BcORGRv8Fy/DL6CzOrlm0xwdvMkGQ=;
- b=CHqM/Uj5bCuOW0KiTiSfbFU4BZhkNzUWeLGZOevzt5fJzv6JjKWS4dQObyUiBBo138
- NVopZpSHObQcfNnYvfP7Wf9IeCabZHAYtRiizmgX6sgSd3+IZkOzhRxD/onVuysprmlZ
- YAhVaCMKmwAtZbAWtdkVq53v71uYcZD0r5jbkwkaLy9LXKJPfp+9x7DQyoMmEF7To2Tc
- TJFS2Mmp3SQv1TWJhSVRCOEWo68P2s+yi6GTQzcW2okr7Jx3a7TnpR+OSDn1QjYhSdXz
- sbPYFClhHzDZZg20qZBNeQTd7yWXX6z3v14VC0I6uKl1PK0HHcLVViO2yzYoJ5oVQ8sZ
- EueQ==
+ bh=5251lJHZna8xSeEEf+SDbVoy83ed2bMtD6Z/OC+BWA4=;
+ b=R9Wx0Qs4yYQ3om/bjHfjGWDONfC6TWFhaMw/DU+IeTIgJgVco4wQ/vYlXhIDKR71e2
+ kgbxMalBY0DsLsnIkMxG1qoE3XnGzUs9pdkcWfPhCjmq+BHjLSEUvo2vhl7giwoRxDgg
+ vMj7tHsv/PFmMCgLuJbMZ/fSmGiZ6CWTy/GLVZcEveZdNvAfZJRcX4+u+EHcL0PVzHw3
+ EXCdpiyNXlObdY4dDQPoxyUtvrPs+bx9NlpYpV+Z8wLISBDVNK3KdyUv9KUbVQs/kg9g
+ ezEZ8RmM/QRpLuvD0nW3FzDx+m7S4CWRLYaMxyKeqj/gjGiLaQ9ucE0FWmDj+6VdYl+b
+ j94Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782097707; x=1782702507;
+ d=1e100.net; s=20251104; t=1782097868; x=1782702668;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=pncSQEIlLQ0Rj1BcORGRv8Fy/DL6CzOrlm0xwdvMkGQ=;
- b=C0FxWuQ4rBNJqJwAcWBrEm4hoXi+BZCmj4GLaPdyX1qGKnSyNV3qTsfghRvWDjB1nk
- xN3Aju8uoRu78ajdeUn2eQ6qbr8GSrMtkrzZP+3FC2TX6xOYXG/qzbrz6InVgHBgob5c
- MnxAKthnCvRklLvvQ8NiJaPRD9b0z5sw2E282WZYgFOd+oHBYyS9tGbRfjIhW8Htqly8
- +Onex2svLO/kVnUmxnBXIvlqpPHniniG+287J3Le7/O+TR5aHhDVbDFzQvOxjCQ6/l6g
- 1w3ad18TS08mofm82wU5gVA686am2HodA/tc7uwyhtWRJXhfn/RiCx/KfhM2si+wYINk
- QzUg==
-X-Forwarded-Encrypted: i=1;
- AFNElJ97ov3uchkAQ5DHo+YVShukxc2l5mGIqEHnF+2+IOisPhLr1k69iAAYCdwxMH3LXhUMZ4tKxg15CMf2@nongnu.org
-X-Gm-Message-State: AOJu0YwsN6eaazy18iIYrn1n7LCkQ+K7a3/YvIoOPdXvs/1Qor315Zni
- q8WpedpEpFMtd6vuOGO3r8NTzsy2h/8tOODJlI54IbyKw2LTbqUygrpnusE/WaTxPWerJRCcxqN
- GaZTu/10HO/ESrb9TKBQ61AZfCynzefg=
-X-Gm-Gg: AfdE7cn+7pW9nz5hh2y0RpUacRPYNql+4ohA9xnYQV7huO1Mbb1y4Tn3PMKOfaJ0t1i
- MDNEOFp5BjhQ5zFD6R39DWufVyUbBmk7O1oOdv0YCsa0HMONFUR65x3AvxHRLVYGRbApOmvqvVv
- YaNjvDfojv80gPdV2ZDfUG2Zbb+vT9WFdUWAObQ0MVBuj9AZq1ejaKSaElwhy7LHRK52AziOH0P
- wSkopYv9txn3D8vs+ri19agxgFWxhMTg/uiCYHkGHOsBVZX3tpV2QJh3QJJw4TcxKHgbNjy467Z
- sPYeoT2ht1mDKZOn0Rqfb1Uu6kw=
-X-Received: by 2002:a05:6402:5253:b0:697:96c2:b591 with SMTP id
- 4fb4d7f45d1cf-69796c2c000mr1608348a12.11.1782097706663; Sun, 21 Jun 2026
- 20:08:26 -0700 (PDT)
+ bh=5251lJHZna8xSeEEf+SDbVoy83ed2bMtD6Z/OC+BWA4=;
+ b=UlICaKVFrCyuwf2QTKnqfvhV0oZOk2yofLn8zVEMKd4BXjr0gTrpse7b8HixM1Pn0E
+ 8t2HzVPo2WGs5H+/0uC5LfLN1dedTrQnBlIFhorQyiravmNQdV42H7X+XnD+q8N8wW1I
+ dqYIVlaJCjc8xXZVUwjr957C8oU6ihkgPg6ivb64DsNpeNwxwCGOw8ZoJ4wzo/6NWxVU
+ 0gSJ+ADsNoY9aO28TUGSiWE4K8vZTAfClj+NeHUd3x7U3VikRj+JJEBn9pVoLC6IJSZr
+ w5MdbASBRTFWiWgQRRY1NLDxQTUGLyouPSotsjzrqHMeE7vdWma3uqgGVlEN+PMuXpfG
+ J3ug==
+X-Gm-Message-State: AOJu0Yy3V3Db29mmvBxe0Exp2taBIOP5dBUm0FGQ7mlX/lbXy4biI9Qi
+ L7paxXkCSkusXP7eZvUMYjWW3kfr0/Qb4FsBUW+DWZUCMtB+XXTEog3GpEhrCVcfkbAIcDEmLrY
+ tI1hq2603dIO4skO3dOix52KLDKqbFh4=
+X-Gm-Gg: AfdE7cnVNhd9zSeVVA23ar61KsiEU9EP53E0z6qcXNO9HQOubTLmHQXfuMAE7aQmLIG
+ xkTTMwb9rwYF92/R9Q2lBvo2or78CoYsZpqJrY49XjMO7hQZTvAgk2SatSp5vSj7paEqh8vQ2WZ
+ GB9MPSC9jIHLo8Wcw12/s4R56Cs+8nYHuBbGJj8Hoe7T+kSrreM4xRT7S/iaF5e8FyFDsRrGxML
+ ZZDUvptaEhifsbJYMnlEQTPoJPTTEpxQTGEEVUY4Kb5GBd0RrXt1aIoD1nkM6rmEitXUkTDSQ6x
+ 5bCwqMvgbPzfNDESq+/ZbVqfZvuZsJ7aLLHzSg==
+X-Received: by 2002:aa7:c74a:0:b0:697:645b:90e5 with SMTP id
+ 4fb4d7f45d1cf-697645b9235mr3088617a12.4.1782097868438; Sun, 21 Jun 2026
+ 20:11:08 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260619044838.1054677-1-joel@jms.id.au>
- <20260619044838.1054677-13-joel@jms.id.au>
-In-Reply-To: <20260619044838.1054677-13-joel@jms.id.au>
+References: <tencent_FB929239B227F05F30D62745E38BA01D4307@qq.com>
+In-Reply-To: <tencent_FB929239B227F05F30D62745E38BA01D4307@qq.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Mon, 22 Jun 2026 13:08:00 +1000
-X-Gm-Features: AVVi8CcTWzDnxdFOlNJCJHOy-hAGrK7CZiUGHT7Mpa3kl_vql1fp9BoIRDaa43U
-Message-ID: <CAKmqyKNzcHh9emJdL7dSO2OhnMHoMqSUKJja-p+SLpqJoYJcFQ@mail.gmail.com>
-Subject: Re: [PATCH v9 12/12] hw/riscv/atlantis: Add some i2c peripherals
-To: Joel Stanley <joel@jms.id.au>
-Cc: Alistair Francis <alistair.francis@wdc.com>, qemu-devel@nongnu.org, 
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@mailo.com>, 
- Chris Rauer <crauer@google.com>, Alano Song <alanosong@163.com>,
- Michael Ellerman <mpe@kernel.org>, 
- Joel Stanley <jms@oss.tenstorrent.com>, Nick Piggin <npiggin@gmail.com>, 
- Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>, 
- Portia Stephens <portias@oss.tenstorrent.com>, qemu-riscv@nongnu.org, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Date: Mon, 22 Jun 2026 13:10:42 +1000
+X-Gm-Features: AVVi8CenqP06vFcsdLeDhxSThVRD5GK6GLikm8IbaMn4jsT07kp4jCe_daBurzM
+Message-ID: <CAKmqyKMDznn=Dg3dgkTw-9K-N=8fDetGzwR4s6fybasHbf7GSA@mail.gmail.com>
+Subject: Re: [PATCH] target/riscv: avoid abort when reading vtype before
+ env->xl is set
+To: ZhengXiang Qin <qinzhengxiang@foxmail.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, palmer@dabbelt.com, 
+ alistair.francis@wdc.com, liwei1518@gmail.com, 
+ daniel.barboza@oss.qualcomm.com, zhiwei_liu@linux.alibaba.com, 
+ chao.liu.zevorn@gmail.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::535;
- envelope-from=alistair23@gmail.com; helo=mail-ed1-x535.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+Received-SPF: pass client-ip=2a00:1450:4864:20::531;
+ envelope-from=alistair23@gmail.com; helo=mail-ed1-x531.google.com
+X-Spam_score_int: -7
+X-Spam_score: -0.8
+X-Spam_bar: /
+X-Spam_report: (-0.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FORGED_GMAIL_RCVD=1,
  FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -127,109 +120,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jun 19, 2026 at 2:52=E2=80=AFPM Joel Stanley <joel@jms.id.au> wrote=
-:
+On Tue, Jun 16, 2026 at 1:11=E2=80=AFAM ZhengXiang Qin
+<qinzhengxiang@foxmail.com> wrote:
 >
-> Add an I2C RTC device and a temperature sensor. These are not present
-> on the board but help for testing.
+> TCG plugins may read registers from the vcpu_init_cb() callback.  For
+> vtype, this reaches read_vtype() before env->xl has been initialized.
 >
-> The tmp105 is a lm75 compatible temperature sensor used by the
-> SENSORS_LM75 Linux kernel driver.
+> In that case read_vtype() currently hits g_assert_not_reached() because
+> env->xl is zero.  Fall back to the CPU's maximum XLEN only for this
+> early-init case.
 >
-> The ds1338 is a RTC device that is used by the RTC_DRV_DS1307 Linux
-> kernel driver.
->
-> Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
-> Signed-off-by: Joel Stanley <joel@jms.id.au>
+> Fixes: 638181a180bd ("core/cpu-common: initialise plugin state before thr=
+ead creation")
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3545
+> Signed-off-by: ZhengXiang Qin <qinzhengxiang@foxmail.com>
 
-Acked-by: Alistair Francis <alistair.francis@wdc.com>
+Thanks!
+
+Applied to riscv-to-apply.next
 
 Alistair
 
 > ---
->  hw/riscv/tt_atlantis.c | 27 +++++++++++++++++++++++++++
->  hw/riscv/Kconfig       |  2 ++
->  2 files changed, 29 insertions(+)
+>  target/riscv/csr.c | 11 ++++++++++-
+>  1 file changed, 10 insertions(+), 1 deletion(-)
 >
-> diff --git a/hw/riscv/tt_atlantis.c b/hw/riscv/tt_atlantis.c
-> index e6afd7627da8..9b64f26d2f76 100644
-> --- a/hw/riscv/tt_atlantis.c
-> +++ b/hw/riscv/tt_atlantis.c
-> @@ -64,6 +64,13 @@ static const MemMapEntry tt_atlantis_memmap[] =3D {
->      [TT_ATL_DDR_HI] =3D          { 0x100000000,  0x1000000000 },
->  };
->
-> +static I2CBus *i2c_get_bus(TTAtlantisState *s, unsigned busnr)
-> +{
-> +    assert(busnr < TT_ATL_NUM_I2C);
-> +
-> +    return s->i2c[busnr].bus;
-> +}
-> +
->  static uint32_t fdt_phandle =3D 1;
->  static uint32_t next_phandle(void)
+> diff --git a/target/riscv/csr.c b/target/riscv/csr.c
+> index 5514e0f455..6ade7ccb0b 100644
+> --- a/target/riscv/csr.c
+> +++ b/target/riscv/csr.c
+> @@ -936,7 +936,16 @@ static RISCVException read_vtype(CPURISCVState *env,=
+ int csrno,
+>                                   target_ulong *val)
 >  {
-> @@ -309,6 +316,19 @@ static void create_fdt_i2c(void *fdt, const MemMapEn=
-try *mem, uint32_t irq,
->      qemu_fdt_setprop_cell(fdt, name, "#size-cells", 0);
->  }
->
-> +static void create_fdt_i2c_device(TTAtlantisState *s, int bus,
-> +                                  const char *compat, int addr)
-> +{
-> +    void *fdt =3D MACHINE(s)->fdt;
-> +    hwaddr base =3D s->memmap[TT_ATL_I2C0 + bus].base;
-> +    g_autofree char *name =3D g_strdup_printf("/soc/i2c@%"HWADDR_PRIX"/s=
-ensor@%x",
-> +                                            base, addr);
+>      uint64_t vill;
+> -    switch (env->xl) {
+> +    int xl =3D env->xl;
+> +    /*
+> +     * TCG plugins can read registers before env->xl is initialized.
+> +     * Fall back to the CPU's maximum XLEN in that early-init case.
+> +     */
+> +    if (xl =3D=3D 0) {
+> +        xl =3D riscv_cpu_mxl(env);
+> +    }
 > +
-> +    qemu_fdt_add_subnode(fdt, name);
-> +    qemu_fdt_setprop_string(fdt, name, "compatible", compat);
-> +    qemu_fdt_setprop_cell(fdt, name, "reg", addr);
-> +}
-> +
->  static void finalize_fdt(TTAtlantisState *s)
->  {
->      uint32_t aplic_s_phandle =3D next_phandle();
-> @@ -336,6 +356,9 @@ static void finalize_fdt(TTAtlantisState *s)
->                         TT_ATL_I2C0_IRQ + i,
->                         aplic_s_phandle, periph_clk_phandle);
->      }
-> +
-> +    create_fdt_i2c_device(s, 0, "dallas,ds1338", 0x6f);
-> +    create_fdt_i2c_device(s, 4, "ti,tmp105", 0x48);
->  }
->
->  static void create_fdt(TTAtlantisState *s)
-> @@ -570,6 +593,10 @@ static void tt_atlantis_machine_init(MachineState *m=
-achine)
->                             qdev_get_gpio_in(s->irqchip, TT_ATL_I2C0_IRQ =
-+ i));
->      }
->
-> +    /* I2C peripherals: qemu specific */
-> +    i2c_slave_create_simple(i2c_get_bus(s, 0), "ds1338", 0x6f);
-> +    i2c_slave_create_simple(i2c_get_bus(s, 4), "tmp105", 0x48);
-> +
->      /* Load or create device tree */
->      if (machine->dtb) {
->          load_fdt(s);
-> diff --git a/hw/riscv/Kconfig b/hw/riscv/Kconfig
-> index dcce819bf6e9..de37c08caece 100644
-> --- a/hw/riscv/Kconfig
-> +++ b/hw/riscv/Kconfig
-> @@ -130,6 +130,8 @@ config TENSTORRENT
->      select SERIAL_MM
->      select DEVICE_TREE
->      select DESIGNWARE_I2C
-> +    select DS1338
-> +    select TMP105
->
->  config XIANGSHAN_KUNMINGHU
->      bool
+> +    switch (xl) {
+>      case MXL_RV32:
+>          vill =3D (uint32_t)env->vill << 31;
+>          break;
 > --
-> 2.47.3
+> 2.43.0
 >
 >
 
