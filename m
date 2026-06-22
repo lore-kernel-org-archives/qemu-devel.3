@@ -4,68 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 346DCCDB46B
-	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jun 2026 09:11:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D5DCCDB46B
+	for <qemu-devel@archiver.kernel.org>; Mon, 22 Jun 2026 09:21:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wbagc-0003ZC-QK; Mon, 22 Jun 2026 05:11:22 -0400
+	id 1wbapp-0005KT-NG; Mon, 22 Jun 2026 05:20:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mcasquer@redhat.com>)
- id 1wbaga-0003Yu-Hc
- for qemu-devel@nongnu.org; Mon, 22 Jun 2026 05:11:20 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <borntraeger@linux.ibm.com>)
+ id 1wbapn-0005Jx-Or; Mon, 22 Jun 2026 05:20:51 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mcasquer@redhat.com>)
- id 1wbagY-00029K-Ra
- for qemu-devel@nongnu.org; Mon, 22 Jun 2026 05:11:20 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1782119476;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=QPFUAq+pQysfDmB0VcZVZF7tljshfpK7DKtQ08CzUO0=;
- b=ixCEDdiuoXZFRUUrHye2npyxIySf8K9vBXQjHCVI1tKSLuAmF3n98CGIxkefTd27jbLLDn
- u9xbZe8ZNQ+9SoKc9TcWo5sD9wCbsW/W/0nvHbytgUjvUPQgqUJe+VhuGT2NRgSgravOm/
- gR+/Ap+gygJzRDZtsjAQYBhhXMpeufM=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-271-ZRAmL-ZGPRGAWs8e5kc1sw-1; Mon,
- 22 Jun 2026 05:11:12 -0400
-X-MC-Unique: ZRAmL-ZGPRGAWs8e5kc1sw-1
-X-Mimecast-MFC-AGG-ID: ZRAmL-ZGPRGAWs8e5kc1sw_1782119471
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B0E5A18005AC; Mon, 22 Jun 2026 09:11:10 +0000 (UTC)
-Received: from fedora.redhat.com (unknown [10.44.32.180])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 52F941800661; Mon, 22 Jun 2026 09:11:07 +0000 (UTC)
-From: Mario Casquero <mcasquer@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: clg@redhat.com, alex@shazbot.org, philmd@mailo.com,
- Mario Casquero <mcasquer@redhat.com>
-Subject: [PATCH v2] vfio/pci: Propagate errors in vfio_pci_load_rom() using
- Error API
-Date: Mon, 22 Jun 2026 11:10:51 +0200
-Message-ID: <20260622091051.50048-1-mcasquer@redhat.com>
+ (Exim 4.90_1) (envelope-from <borntraeger@linux.ibm.com>)
+ id 1wbapm-0003Hn-1T; Mon, 22 Jun 2026 05:20:51 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 65M5IVaA1602673; Mon, 22 Jun 2026 09:20:47 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:date:from:message-id:mime-version
+ :subject:to; s=pp1; bh=hkbW0eHSV8gBVq1aeSo6vFvh7L2GT4SfaVKcCjiTh
+ 7E=; b=W33oNh/rt9e5iInty0IcLXBRW1lD8oWWjwitd2X1yRHWkh9XGoA9FP2pv
+ jZYtLGgV1cSbwdqdmEevDWTr925yYF4nVaMpyh/25SpCpK7OSr7zlmpRsS60J9Un
+ 2i+BrEpe5QGvoWaydou/puRbmA3chSYdb3C/eMiFfSf4Tz6nx/g85PXUNF7mcAHA
+ fCHpgcEruT+h48MtTlTd24dHax8R+0MpwLz961h7CK2zpZZ9AONJYmIr0oUBrUd+
+ f8oaVTGdgguISFAuAiEOAbVrFzSU7fOAPfQ9ebQS60VRMMEAVs/g+Hee7EESD+DN
+ BBHl8SLJc+FUd3l45zvvJ1G6GP2wg==
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4ewh9g8bm0-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 22 Jun 2026 09:20:46 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 65M9Jb0g004545;
+ Mon, 22 Jun 2026 09:20:46 GMT
+Received: from smtprelay07.dal12v.mail.ibm.com ([172.16.1.9])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4ex66jweku-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 22 Jun 2026 09:20:46 +0000 (GMT)
+Received: from smtpav03.dal12v.mail.ibm.com (smtpav03.dal12v.mail.ibm.com
+ [10.241.53.102])
+ by smtprelay07.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 65M9KjWV3932774
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 22 Jun 2026 09:20:45 GMT
+Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 3ABB05803F;
+ Mon, 22 Jun 2026 09:20:45 +0000 (GMT)
+Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id C837358056;
+ Mon, 22 Jun 2026 09:20:43 +0000 (GMT)
+Received: from b35lp69.lnxne.boe (unknown [9.87.84.240])
+ by smtpav03.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Mon, 22 Jun 2026 09:20:43 +0000 (GMT)
+From: Christian Borntraeger <borntraeger@linux.ibm.com>
+To: qemu-devel <qemu-devel@nongnu.org>, Cornelia Huck <cohuck@redhat.com>
+Cc: qemu-s390x <qemu-s390x@nongnu.org>, Halil Pasic <pasic@linux.ibm.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>,
+ Eric Farman <farman@linux.ibm.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>, qemu-stable@nongnu.org
+Subject: [PATCH] s390x/kvm: clamp stsi 3.2.2 size
+Date: Mon, 22 Jun 2026 11:20:35 +0200
+Message-ID: <20260622092035.400959-1-borntraeger@linux.ibm.com>
+X-Mailer: git-send-email 2.53.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mcasquer@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: mP1WVK6LfXFtCv7ClVBnJ13D2kAQl0um
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjIyMDA5MSBTYWx0ZWRfX2swHsqFXoTGG
+ drNL1XHQMOCg7bnNZm+ZqtHxE8AWMfJz+yRtFVz+ZYRY4MTnCGud6XlD7/z3K8DW7Av+fn+mOUl
+ b8bQ8XdyakBfTC3go9LF33MTlGEwK0I=
+X-Authority-Analysis: v=2.4 cv=c62bhx9l c=1 sm=1 tr=0 ts=6a38fe6f cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+ a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
+ a=V8glGbnc2Ofi9Qvn3v5h:22 a=69wJf7TsAAAA:8 a=VnNF1IyMAAAA:8
+ a=Sg5gpWOPNxpWzqQs3-0A:9 a=Fg1AiH1G6rFz08G2ETeA:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjIyMDA5MSBTYWx0ZWRfXwZ3ph/fB/Hbn
+ CBIwWQ9eNwwzDA/zwQa1sgNtjtTZ0PPL0QftrqUWIOVUiCgJPn4FQg3eIxeI5SiORCO6phJZafN
+ 4JqFOfkPb7Dk6oHUo6rr/orJnCe+9oIBVuf4CRb/SLIV2VyAA3JjmSRmsX9MUCNA8/7uK9HZg17
+ gTem1AXRzP+VmIDDb3w2/rANImUOJu4f0L/qIXDcyfuQ0jtU3CQdgGXChTUYfc6XjfAYt4T/Dm4
+ P3oOb4os6wXxP6RCOWHA+YA6eHXlYN/fIWGDVbvrU4WSGgGeJDPB2JlWU3V/ugpb5+eKH/51epn
+ bAZjkYuboqFfjLZxaPiLSzl+blweR1PR5C8SRcqCBOP/kp4waKujR/0RrFe5AI5LYb9RjWJz2pT
+ b6yiYdtOj5XJMf63tGFhBf9IfYaMqkG00oKGeOQA8MKK39QI6HK+wvi+YBQzVDDJY37TODZLuVp
+ rMu2GpCNHsZQnkEWh8Q==
+X-Proofpoint-ORIG-GUID: mP1WVK6LfXFtCv7ClVBnJ13D2kAQl0um
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-22_01,2026-06-18_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0 impostorscore=0 adultscore=0 clxscore=1015 suspectscore=0
+ priorityscore=1501 phishscore=0 spamscore=0 bulkscore=0 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606220091
+Received-SPF: pass client-ip=148.163.158.5;
+ envelope-from=borntraeger@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -81,78 +120,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Updates vfio_pci_load_rom() to use Error API for error propagation
-instead of error_report(), improving error handling consistency.
+The stsi 3.2.2 page is being prepared by the kvm module and the size is
+clamped by the kernel. As the memory is mapped in the guest, another
+guest VCPU could race and overwrite the count and messing up the move
+operation. For any out of bound count, fall back to the kernel buffer.
 
-Signed-off-by: Mario Casquero <mcasquer@redhat.com>
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Christian Borntraeger <borntraeger@linux.ibm.com>
 ---
- hw/vfio/pci.c | 24 ++++++++++++++++--------
- 1 file changed, 16 insertions(+), 8 deletions(-)
+ target/s390x/kvm/kvm.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-index 9df04fa2d7..38ee4fc7a9 100644
---- a/hw/vfio/pci.c
-+++ b/hw/vfio/pci.c
-@@ -1027,7 +1027,7 @@ static void vfio_update_msi(VFIOPCIDevice *vdev)
+diff --git a/target/s390x/kvm/kvm.c b/target/s390x/kvm/kvm.c
+index ed8cd6b410..a3835573bb 100644
+--- a/target/s390x/kvm/kvm.c
++++ b/target/s390x/kvm/kvm.c
+@@ -1791,6 +1791,15 @@ static void insert_stsi_3_2_2(S390CPU *cpu, __u64 addr, uint8_t ar)
+     } else if (s390_cpu_virt_mem_read(cpu, addr, ar, &sysib, sizeof(sysib))) {
+         return;
      }
- }
- 
--static bool vfio_pci_load_rom(VFIOPCIDevice *vdev)
-+static bool vfio_pci_load_rom(VFIOPCIDevice *vdev, Error **errp)
- {
-     VFIODevice *vbasedev = &vdev->vbasedev;
-     struct vfio_region_info *reg_info = NULL;
-@@ -1040,7 +1040,7 @@ static bool vfio_pci_load_rom(VFIOPCIDevice *vdev)
-                                       &reg_info);
- 
-     if (ret != 0) {
--        error_report("vfio: Error getting ROM info: %s", strerror(-ret));
-+        error_setg_errno(errp, -ret, "vfio: Error getting ROM info");
-         return false;
-     }
- 
-@@ -1052,7 +1052,8 @@ static bool vfio_pci_load_rom(VFIOPCIDevice *vdev)
-     vdev->rom_offset = reg_info->offset;
- 
-     if (!vdev->rom_size) {
--        error_report("vfio-pci: Cannot read device rom at %s", vbasedev->name);
-+        error_setg(errp, "vfio-pci: Cannot read device rom at %s",
-+                   vbasedev->name);
-         error_printf("Device option ROM contents are probably invalid "
-                     "(check dmesg).\nSkip option ROM probe with rombar=0, "
-                     "or load from file with romfile=\n");
-@@ -1076,10 +1077,12 @@ static bool vfio_pci_load_rom(VFIOPCIDevice *vdev)
-             if (bytes == -EINTR || bytes == -EAGAIN) {
-                 continue;
-             }
--            error_report("vfio: Error reading device ROM: %s",
--                         strreaderror(bytes));
--
--            break;
-+            error_setg_errno(errp, -bytes, "vfio: Error reading device ROM");
-+            g_free(vdev->rom);
-+            vdev->rom = NULL;
-+            vdev->rom_size = 0;
-+            vdev->rom_offset = 0;
-+            return false;
-         }
-     }
- 
-@@ -1147,7 +1150,12 @@ static uint64_t vfio_rom_read(void *opaque, hwaddr addr, unsigned size)
- 
-     /* Load the ROM lazily when the guest tries to read it */
-     if (unlikely(!vdev->rom && !vdev->rom_read_failed)) {
--        vdev->rom_read_failed = !vfio_pci_load_rom(vdev);
-+        Error *local_err = NULL;
 +
-+        vdev->rom_read_failed = !vfio_pci_load_rom(vdev, NULL);
-+        if (vdev->rom_read_failed) {
-+            error_report_err(local_err)
-+        }
-     }
- 
-     memcpy(&val, vdev->rom + addr,
++    /*
++     * The memory was filled by the kernel but mapped into the guest.
++     * If something is fishy, do not touch the buffer.
++     */
++    if (sysib.count == 0 || sysib.count > ARRAY_SIZE(sysib.ext_names)) {
++        return;
++    }
++
+     /* Shift the stack of Extended Names to prepare for our own data */
+     memmove(&sysib.ext_names[1], &sysib.ext_names[0],
+             sizeof(sysib.ext_names[0]) * (sysib.count - 1));
 -- 
-2.54.0
+2.53.0
 
 
