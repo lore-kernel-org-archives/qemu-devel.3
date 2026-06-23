@@ -4,56 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53521CDB471
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jun 2026 07:46:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE6A8CDB470
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jun 2026 07:46:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wbvpr-0004bP-Tx; Tue, 23 Jun 2026 03:46:19 -0400
+	id 1wbvpo-00042u-7t; Tue, 23 Jun 2026 03:46:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wbvpq-0004SH-JB
- for qemu-devel@nongnu.org; Tue, 23 Jun 2026 03:46:18 -0400
+ id 1wbvpe-0003WH-Ok
+ for qemu-devel@nongnu.org; Tue, 23 Jun 2026 03:46:07 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wbvpo-0008F1-W9
- for qemu-devel@nongnu.org; Tue, 23 Jun 2026 03:46:18 -0400
+ id 1wbvpd-0008Dm-8b
+ for qemu-devel@nongnu.org; Tue, 23 Jun 2026 03:46:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1782200776;
+ s=mimecast20190719; t=1782200764;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=YU1H8GerhQVJe1FDeVzbXbc36iomtcVm20kGBrbfSSI=;
- b=XzHmuuzuRZufudBKEr3CmOK4UO9VnXGW+3ViLlqh7S7ZBDXWnrBu8b+mkcJCoh7bSQ9c+x
- uwuhAkwCXKt4AUxMVlH/WmBDB9a+T2HEOZEqPyw+4TxHtEXvxHEEUMQkIpCa9E2DqXdYrt
- Fj44sYtzR7EqtJbsGbE4b8ZXbyxcn98=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=Zx5wIEUZve5OD0OICC6YI6MtmJD+gD6PTyfWL3fJpFg=;
+ b=J7S33y/WSae9KMtHxKPOeDotDX/rUdVRYdnNcE8Q7uqoHrqvDS8W3KGcJdsEZ+IFfzUWbD
+ DYeb6uM60RSkZM/zbioYvCRvZEXCWgPBX8129LQ/UDRLk82AajvVIs8uqyIZdaIHBrovtm
+ rt9i91BQ2F5lzy9dD1phAZGiEYZKn8o=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-107-wAvyjjaNPfWYptHhLcX6IA-1; Tue,
- 23 Jun 2026 03:46:11 -0400
-X-MC-Unique: wAvyjjaNPfWYptHhLcX6IA-1
-X-Mimecast-MFC-AGG-ID: wAvyjjaNPfWYptHhLcX6IA_1782200770
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-541-TULX3XD2PUmVoqBBpqxI5A-1; Tue,
+ 23 Jun 2026 03:46:01 -0400
+X-MC-Unique: TULX3XD2PUmVoqBBpqxI5A-1
+X-Mimecast-MFC-AGG-ID: TULX3XD2PUmVoqBBpqxI5A_1782200760
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 52E8B1800598; Tue, 23 Jun 2026 07:46:10 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 106DC1956064; Tue, 23 Jun 2026 07:46:00 +0000 (UTC)
 Received: from localhost (unknown [10.44.22.10])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 18BAB1800347; Tue, 23 Jun 2026 07:46:08 +0000 (UTC)
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id ACCF2195608E; Tue, 23 Jun 2026 07:45:58 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Tue, 23 Jun 2026 11:44:32 +0400
-Subject: [PATCH v4 17/34] ui/sdl2: implement display cleanup
+Date: Tue, 23 Jun 2026 11:44:30 +0400
+Subject: [PATCH v4 15/34] ui: add display cleanup infrastructure
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260623-b4-ui-v4-17-4656aec3398d@redhat.com>
+Message-Id: <20260623-b4-ui-v4-15-4656aec3398d@redhat.com>
 References: <20260623-b4-ui-v4-0-4656aec3398d@redhat.com>
 In-Reply-To: <20260623-b4-ui-v4-0-4656aec3398d@redhat.com>
 To: qemu-devel@nongnu.org
@@ -67,34 +67,35 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>, 
  Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
  =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1871;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3294;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=7LHDaJJk+7ITAySyDwrMeiayBnDzHyMzfjsfmWGNmHE=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqOjld3NaOpBx8B7MTqtmfMZFYt2uH0QFIxkW9l
- WuF3O1Y4SqJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCajo5XQAKCRDa6OEJdZac
- 5ZWqEACV6EEHDBdOl/efp0hsNUwMKmf1iz35c6bKlxv1Fwb6YddcrTkZXitdzIIXmg4yPjP3bfF
- Jacrg5bYS8lNzfHpiMGUSjoc6zMLir6ln6Dh1uTGXYblTpMCGajlb08ivVClelJ0AGUJzBzuNqH
- Wc1RvwpV5zPdihwjvL15nEH1lr9mwSYs20iOfWhTrSwXYXqgq3O5FZqNzevOgtU+WLwfQ2WWv9I
- AiTqzP9VTtdWibUONwGfAAIicA9lm5pQcQTpQQfV52Bnx0K6iOq3caZCPUDVrdonBH87/ADs+cK
- dAxa4FATmjc+acFp0xxI/4mHx904U3GSyOr4L7Ol+z9NYLR7f/yNsL4tNH4epaYja/En/mslCI6
- yTW/pcDd4GdZXzPlpz10E61AL0thTSyNgrrTlfPdCAWpiBH9Nyb5nQ+BHyyakZ334D9BzIqscj8
- xbP4XB2bLXRUYlSsozLgBjDNRQzuCPHuFir+UUnt+kYGd5AiX83BOKiaOi+ahTpzakasSEGqhv+
- whRr5fTfQh6HSo0jXHrY8zMVsB6Bf/p+VXJ509Rua1uWtzvj2rD7pTeTAK4VRR8LGIYjMqfuPB/
- StvaEZWnY+xpdB2sSwx0di468fD3QVsi5c0+AH8+aNnBhH/a0GmgPGr61uv/5o7xb6K9f2W4/Bd
- ggfH62yAViZoFIA==
+ bh=NQdRPiTLjDY76SFhRRmFgVn9Zy6VrMKXAIUjevOm0yk=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqOjldy6PB0Y3WNOuHfplr1nHMr7AVeVb0fqa+p
+ W1YADC/ZFuJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCajo5XQAKCRDa6OEJdZac
+ 5ZmhEAC2TnAxJm98kTMNfVEVSkV4wQKdjxwcMqcwGNHDpHmRtnjwTTc1RYFUSrv+WsmdnI5GSGr
+ bLjBEwSNxMOvmKD9m0XARYjs/f0MySglgkCNRvEw8ZeKEl6k8clk4F3+bpTvtyCTvgKSTyrUhdZ
+ RpNFFt9plm8HjtDftHd+hvMtZpJRbIgIbYmOT7Vb+44O9y9K4xhW/gHa6KJW8ki52aZVu1wT6DU
+ 7Dis7Ni2a0DA9041rKKQeIJjWKWhKX6rVNRed2rXVGMR/UDq2Mheqh6AV1ehch31CKPYnP0K67o
+ hiWVU9HrB2/znc+0NuodJW3BK7ucSv6ZPyvsOZJpJGpA/iiqKT1KWtlYfnZbnDGfZjHIQS/wYas
+ rdGTF+qc05OBP88HMF+1nU1FbUyH0WmHIPTnMn0JZUWJFVpwoKnQ2LbHhm6zh6aFV/NL4BuhHdC
+ ilxOGhbqwUTqMmWoVddyuNsdFWqb9gOu3FMpYENgt/hPEZHXwVorYv9yDsQoG0w5xm/oWMfrShu
+ XbiK3B2cP4hE4l7JAv+3UuuEQQ+5aBpZstv9urv+ipbNUes9mFWff8DiLLfA+mrVdEXeRZREvot
+ RTXap0NRW0WrjOej9V0NY6NZtYq7Qb8xfTpFRQokPc67Ba9/lD6/BpwOqVnmuXycSXF0hG9dOmJ
+ m8EIZGreiASMF9g==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
 Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+X-Spam_score_int: 8
+X-Spam_score: 0.8
+X-Spam_bar: /
+X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,64 +111,116 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Replace the atexit() handler with a proper cleanup callback. Extend
-sdl_cleanup() to unregister display listeners, free keyboard state,
-destroy windows, and clean up all cursor resources.
+Add a cleanup callback to QemuDisplay and a qemu_display_cleanup()
+function that iterates all registered display types and calls their
+cleanup handler. Wire it into qemu_cleanup() in runstate.c, replacing
+the ad-hoc vnc_cleanup() call.
+
+This provides a structured alternative to atexit() handlers, giving
+deterministic teardown ordering and making resource leaks visible to
+sanitizers.
+
+The cleanup should happen before user_creatable_cleanup(), since some
+display have weak user-creatable references to cleanup before.
 
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- ui/sdl2.c | 23 +++++++++++++++++++----
- 1 file changed, 19 insertions(+), 4 deletions(-)
+ include/ui/console.h |  2 ++
+ system/runstate.c    |  8 +-------
+ ui/console.c         | 20 +++++++++++++++++++-
+ 3 files changed, 22 insertions(+), 8 deletions(-)
 
-diff --git a/ui/sdl2.c b/ui/sdl2.c
-index c75f750e00e..1c97d23a47c 100644
---- a/ui/sdl2.c
-+++ b/ui/sdl2.c
-@@ -790,9 +790,25 @@ static void sdl_mouse_define(DisplayChangeListener *dcl,
- 
- static void sdl_cleanup(void)
- {
--    if (guest_sprite) {
--        SDL_FreeCursor(guest_sprite);
-+    int i;
-+
-+    if (!sdl2_console) {
-+        return;
-     }
-+
-+    qemu_remove_mouse_mode_change_notifier(&mouse_mode_notifier);
-+
-+    for (i = 0; i < sdl2_num_outputs; i++) {
-+        qemu_console_unregister_listener(&sdl2_console[i].dcl);
-+        qkbd_state_free(sdl2_console[i].kbd);
-+        sdl2_window_destroy(&sdl2_console[i]);
-+    }
-+    g_clear_pointer(&sdl2_console, g_free);
-+    sdl2_num_outputs = 0;
-+
-+    g_clear_pointer(&guest_sprite, SDL_FreeCursor);
-+    g_clear_pointer(&guest_sprite_surface, SDL_FreeSurface);
-+    g_clear_pointer(&sdl_cursor_hidden, SDL_FreeCursor);
-     SDL_QuitSubSystem(SDL_INIT_VIDEO);
- }
- 
-@@ -998,8 +1014,6 @@ static void sdl2_display_init(DisplayState *ds, DisplayOptions *o)
-         sdl_grab_start(&sdl2_console[0]);
-     }
- 
--    atexit(sdl_cleanup);
--
-     /* SDL's event polling (in dpy_refresh) must happen on the main thread. */
-     qemu_main = NULL;
- }
-@@ -1008,6 +1022,7 @@ static QemuDisplay qemu_display_sdl2 = {
-     .type       = DISPLAY_TYPE_SDL,
-     .early_init = sdl2_display_early_init,
-     .init       = sdl2_display_init,
-+    .cleanup    = sdl_cleanup,
+diff --git a/include/ui/console.h b/include/ui/console.h
+index b7bfecb6ee9..5322c56009d 100644
+--- a/include/ui/console.h
++++ b/include/ui/console.h
+@@ -403,6 +403,7 @@ struct QemuDisplay {
+     DisplayType type;
+     void (*early_init)(DisplayOptions *opts);
+     void (*init)(DisplayState *ds, DisplayOptions *opts);
++    void (*cleanup)(void);
+     const char *vc;
  };
  
- static void register_sdl1(void)
+@@ -411,6 +412,7 @@ bool qemu_display_find_default(DisplayOptions *opts);
+ void qemu_display_early_init(DisplayOptions *opts);
+ void qemu_display_init(DisplayState *ds, DisplayOptions *opts);
+ const char *qemu_display_get_vc(DisplayOptions *opts);
++void qemu_display_cleanup(void);
+ void qemu_display_help(void);
+ 
+ /* vnc.c */
+diff --git a/system/runstate.c b/system/runstate.c
+index d35fa270bd6..18e585be47f 100644
+--- a/system/runstate.c
++++ b/system/runstate.c
+@@ -62,7 +62,6 @@
+ #include "system/system.h"
+ #include "system/tpm.h"
+ #include "ui/console.h"
+-#include "ui/qemu-spice-module.h"
+ 
+ #include "trace.h"
+ 
+@@ -1046,12 +1045,7 @@ void qemu_cleanup(int status)
+     audio_cleanup();
+     monitor_cleanup();
+     qemu_chr_cleanup();
++    qemu_display_cleanup();
+     user_creatable_cleanup();
+-#ifdef CONFIG_VNC
+-    vnc_cleanup();
+-#endif
+-#ifdef CONFIG_SPICE
+-    qemu_spice.cleanup();
+-#endif
+     /* TODO: unref root container, check all devices are ok */
+ }
+diff --git a/ui/console.c b/ui/console.c
+index 58f29e82c85..1fe3e3a3a6c 100644
+--- a/ui/console.c
++++ b/ui/console.c
+@@ -42,6 +42,7 @@
+ #include "qemu/memfd.h"
+ #include "ui/vt100.h"
+ #include "vgafont.h"
++#include "ui/qemu-spice.h"
+ 
+ #include "console-priv.h"
+ 
+@@ -575,7 +576,7 @@ void qemu_console_set_display_gl_ctx(QemuConsole *con, DisplayGLCtx *gl)
+ {
+     /* display has opengl support */
+     assert(con);
+-    if (con->gl) {
++    if (gl && con->gl) {
+         error_report("The console already has an OpenGL context.");
+         exit(1);
+     }
+@@ -1414,6 +1415,23 @@ void qemu_display_init(DisplayState *ds, DisplayOptions *opts)
+     dpys[opts->type]->init(ds, opts);
+ }
+ 
++void qemu_display_cleanup(void)
++{
++    int i;
++
++    for (i = 0; i < DISPLAY_TYPE__MAX; i++) {
++        if (dpys[i] && dpys[i]->cleanup) {
++            dpys[i]->cleanup();
++        }
++    }
++#ifdef CONFIG_VNC
++    vnc_cleanup();
++#endif
++#ifdef CONFIG_SPICE
++    qemu_spice.cleanup();
++#endif
++}
++
+ const char *qemu_display_get_vc(DisplayOptions *opts)
+ {
+ #ifdef CONFIG_PIXMAN
 
 -- 
 2.54.0
