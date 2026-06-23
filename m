@@ -4,117 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73395CDB470
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jun 2026 10:42:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BDE01CDB470
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jun 2026 10:55:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wbyZE-0000ct-75; Tue, 23 Jun 2026 06:41:20 -0400
+	id 1wbylo-00047Z-D3; Tue, 23 Jun 2026 06:54:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
- id 1wbyZC-0000cO-F6; Tue, 23 Jun 2026 06:41:18 -0400
-Received: from mail-westusazlp170100005.outbound.protection.outlook.com
- ([2a01:111:f403:c001::5] helo=BYAPR05CU005.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
- id 1wbyZA-0002Bi-Rc; Tue, 23 Jun 2026 06:41:18 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=huZmNNyNwntW9NYj67eWZ+o3AuZle+I+e4GMvF5Xmcv+rHtQarJxmWdNMub7txUiOIQcq45RCIerXMVlwWUqUNTA4lmHafqAH1FL3w9KXq/1JUD4OSGvPlJYfCEQJVeH2CxgLtXcp7D+rKmnye5tmnYhDD7TmLz6PUBMYDY2V7B9ASg7dKgEFTat6f6qVwu/AbER0oZ6tOU25djrhnwsmcxgwp/ViUNf/85MBxhKpnwe+sx11T4NnhgE9f76hQtmr2AHrZcdJZKNbNThMfG3Gb3FBv+T++O5h8vtfuQLyMuNH0Tu8FQ4lCbeHY1zDN5eMZRAbXuQitZiUsteC2RlVg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=mlvvTZUpSZ8jXhDh/gXFsvCKXG2Yp3XFRtU5TGjygUM=;
- b=Rd1/XnIsqTfWlvBMxMOml1SFce713jnK5hLYajWVFnfMdjfJam/X6N56gjK2PByob3jI4OMtxfIVMw3aY/cSn+QJeGx3J2Y3sv5+XPFEe7z5YUTkVOGaAZeGsI/6Ze3ES8EWO/3R4w9dscoSmBm+oYir23VPKsQFrw6eUjAubCB2AWyqNHuZH3Sisv3HCyIvltNHao/JP2joch3QvqKuengyUqiEJG9XD2NZ0lq2KW5EoFMQF/xEztis8S/Lgpkd9SO3XP/W4esoQ/ajKnVJb5Ni1F9kGeiU5Tw/xl1/d1h1HxMpU33toTr1i3MlTJvboB4dXQZuVyx+BVEfw38zEQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.117.161) smtp.rcpttodomain=nongnu.org smtp.mailfrom=nvidia.com;
- dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=mlvvTZUpSZ8jXhDh/gXFsvCKXG2Yp3XFRtU5TGjygUM=;
- b=qOHk4i2l6Y4Nq7yZkxQ8EtJxXTPXHrxDXOy9O+KEkyxmh+nZdwe1ZG1Fp3tKQF6P3jJJH6chFlPDRTN31NKzwC/uTzQrv2eZj1ocOgcRFPCUXUw58ByqUIpe6mAGVG6z/6y7rDyxOfZ7hnPQrQOofegDdnjQ0oUhKd0OL9f36STrRxtwXJ12S+9MIUs9twPrKdjujoDeM6ht3foZKbRRL0Td7pYvZxiDcE7zFV+CitOgxKaUaLJ8puFXsZIPhZ+zDb2K+jtJO9+5/bzusRAvy8wpWoWPJ4yT6f62MVjsCCKy3/15MycDRRdNxn7Ek5KpxnJk0dTN3VHtKe96vW2oZQ==
-Received: from BN9PR03CA0296.namprd03.prod.outlook.com (2603:10b6:408:f5::31)
- by MW4PR12MB7261.namprd12.prod.outlook.com (2603:10b6:303:229::22)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.159.12; Tue, 23 Jun
- 2026 10:41:09 +0000
-Received: from BN2PEPF00004FBE.namprd04.prod.outlook.com
- (2603:10b6:408:f5:cafe::38) by BN9PR03CA0296.outlook.office365.com
- (2603:10b6:408:f5::31) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.21.139.20 via Frontend Transport; Tue,
- 23 Jun 2026 10:41:09 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.161)
- smtp.mailfrom=nvidia.com;
- dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.117.161 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.117.161; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.117.161) by
- BN2PEPF00004FBE.mail.protection.outlook.com (10.167.243.184) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.21.159.10 via Frontend Transport; Tue, 23 Jun 2026 10:41:08 +0000
-Received: from rnnvmail201.nvidia.com (10.129.68.8) by mail.nvidia.com
- (10.129.200.67) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Tue, 23 Jun
- 2026 03:40:53 -0700
-Received: from NV-2Y5XW94.nvidia.com (10.126.231.37) by rnnvmail201.nvidia.com
- (10.129.68.8) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Tue, 23 Jun
- 2026 03:40:50 -0700
-From: Shameer Kolothum <skolothumtho@nvidia.com>
-To: <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>
-CC: <eric.auger@redhat.com>, <peter.maydell@linaro.org>,
- <nicolinc@nvidia.com>, <nathanc@nvidia.com>, <mochs@nvidia.com>,
- <jan@nvidia.com>, <skolothumtho@nvidia.com>
-Subject: [PATCH] docs/system/arm/virt: Document accelerated SMMUv3 and
- Tegra241 CMDQV
-Date: Tue, 23 Jun 2026 11:40:03 +0100
-Message-ID: <20260623104003.36590-1-skolothumtho@nvidia.com>
-X-Mailer: git-send-email 2.43.0
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1wbylm-00047P-OP
+ for qemu-devel@nongnu.org; Tue, 23 Jun 2026 06:54:18 -0400
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1wbylk-0004gn-Q6
+ for qemu-devel@nongnu.org; Tue, 23 Jun 2026 06:54:18 -0400
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-4921e4dd62dso7667315e9.0
+ for <qemu-devel@nongnu.org>; Tue, 23 Jun 2026 03:54:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1782212055; x=1782816855; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=XCw9qulh7am9/yhvutit+gAtk0gU4tMU84WOELXqs18=;
+ b=t8OPUiMLznzw+y8gkKBHug/mpmztBuloYXCgyF+CzobavI/s1pOVoukxX82ZzLEQoy
+ JIghL6pF8Zrn4AXJNbVFyoA8NNhNU9p6X29/sW9rFrX6/Gxun2pwwY/DYe48Dmu86jaX
+ 1uMu8CZQn3pqS310GqPFv4FyYJpSrrlqlnW5HDe1mwx+Xs6/zSPBArIHq4JxPdLKhjqi
+ tgF9sWz4WpIYyNOwnnBcizccgTat9F+dBFvcLbDFTOmZ3x14z6IS7B0lNvZX9H/fc1nH
+ OBFIJg4UWkFdG9J5Jjya/HjPjCwfSRLy5ZhrpGyRvuVp56d40t25uRhnK1f27daGGu85
+ oISQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1782212055; x=1782816855;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=XCw9qulh7am9/yhvutit+gAtk0gU4tMU84WOELXqs18=;
+ b=kXnf7nkBiEjtGNfvax+Ksk34eZrhGiKVbn/W6L9mMIHgOUhBB+L9RnhFCvr/GmjmsQ
+ gs1Kt7i4tSIRNpPZ50q4Al5Wriem3NmdKjaqBQwA446oh4O5BgpAaZsEmVicXjAr1enM
+ 25I08oVNKDBG2vwXZKPg0iv1yLI7DibkZwBv2h92mOmlJnXFvuyKTeP58b0BPuPwgKYK
+ adseso0Bpuew2wzCCruRQldURYuX207wc/jBPaiDQiPJZ/QzJlEaI3yLr9KDwKIMpK6D
+ AJefD9yxz4xyLuQVf3ESbELblq1E8DG/5PlrpGNaGoAFqcmkIZk5NTLG50+H60xGb0OL
+ e4Ew==
+X-Gm-Message-State: AOJu0YxcS6IDGeP6RnJGpGbntopYWctu5/DrrFlg8QxqnSE0OpAT+UeE
+ LOrMWxPGCQ8LqFhSdeNUeM1oV6EGexFSI6RxAHTGgCnNWfzYx41M6GdG0v5vpJpF+ocdPqFKtXr
+ PKSmKjrg=
+X-Gm-Gg: AfdE7cm0jeM9w6CJrWHWweZN67LyOPrFTHYRAwX/TFYQy2wTp7JL0A/OXCH5w8SpkXo
+ bWEnWqybMUxnkgBePBVd9VcoE3zjkOKtJX2MBpialWc7eR2Dhy6+VavpP2bX/HWxSruUod01xcu
+ QWFMU6ov5esC28pSoAaMtxPUKLQ4G/hlzZP7KusRFeD/u/gZ6NFXI2P4gQWSivLpYS/PsQvnEp/
+ Gwx9p3vSfrjXtHipmhVDMQXrsegXjOLtMwdXrh8hZRW9qTS4TfRFkxfpI3o80+3ZKj913lT111X
+ 7l/SfV3nzbhdo6xjZJb5xS/spVzf5ssfLFyUYBqpf88TpMIfJ0OhHuLtf4jNvN3G4d8Fqze4M3n
+ MgzjfCD4tYHj0x8vn/RrOlGooQcizxzxxxntevnvvI/2vayUl8dz9HZXeKWOgPRvdnsNA6w6Cbc
+ GDfisFo+eY7nac
+X-Received: by 2002:a05:600c:4689:b0:492:38c9:b265 with SMTP id
+ 5b1f17b1804b1-4925a0c5671mr43067215e9.15.1782212054837; 
+ Tue, 23 Jun 2026 03:54:14 -0700 (PDT)
+Received: from draig.lan ([185.124.0.195]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-466643f56aasm33985105f8f.6.2026.06.23.03.54.13
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 23 Jun 2026 03:54:13 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id F10175F80E;
+ Tue, 23 Jun 2026 11:54:12 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: marcandre.lureau@redhat.com
+Cc: qemu-devel@nongnu.org,  Gerd Hoffmann <kraxel@redhat.com>
+Subject: Re: [PATCH] vga: implement text mode character blink
+In-Reply-To: <20260525081944.1494798-1-marcandre.lureau@redhat.com> (marcandre
+ lureau's message of "Mon, 25 May 2026 12:19:44 +0400")
+References: <20260525081944.1494798-1-marcandre.lureau@redhat.com>
+User-Agent: mu4e 1.14.2; emacs 30.1
+Date: Tue, 23 Jun 2026 11:54:12 +0100
+Message-ID: <87fr2dmsrv.fsf@draig.linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.126.231.37]
-X-ClientProxiedBy: rnnvmail201.nvidia.com (10.129.68.8) To
- rnnvmail201.nvidia.com (10.129.68.8)
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BN2PEPF00004FBE:EE_|MW4PR12MB7261:EE_
-X-MS-Office365-Filtering-Correlation-Id: 16ad6906-385c-4dfa-7197-08ded113efd6
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|376014|82310400026|1800799024|23010399003|36860700016|18002099003|3023799007|6133799003|11063799006|56012099006;
-X-Microsoft-Antispam-Message-Info: 5Pb6aKHX8HviB+W+cnORLJRILW3hLKqelbGrZEWtK9lkDQrilrUx4qbKCf7iFojAY5Yy1T7daoXJ+STmiTPKYRuMgM6/75FaRKPMvpWf3eioFbi/+lOlhM8WD8awmCT9vzJOutjap+93O4VV1SzrwnpKSHBher9bgBWhN0QlTHWCY18ARfqfuTBUWWbltzI7UNhtjeSIOKajcmXMvX+aPlFh3alcCrpkRg9ShRrBTH450QOusHjY9k75vcE8M6qYi/I3aS7yE471kEKMnpwZu5jFhpfjqNHx4Fmi08nYyb276Ie7cXHkJbrOLKMFpOST8Jb2ygQCAr2amrv7FLq5XakJZqbikRzsdMEkqMD54/Bx8aHVmtf9h59IMGR4z4U1MIWwtbfIOsPKTB7Ty8H0lAuaEe48cyGeTve3wXtZCucjO5oXiU6F1w5b0mVIFLfdOhKKPX/jrVuiUF+7zdt8Ira+Fzm2tHLuODPa23ij3EvQDap+ubKfEsWCFoe4hfaHOuGLVTwxDE4jcTKoyBLfXa5xRMlVCJTb6YjxXMz1u2SyN2rIy7adv7MUV+AjbSRqFe8+dxqc7a+aeG1W3omqcPS8A2NPiOpl4GSxtaxGlilrxG/DqXOgZDq5YhW9L9MDqok6aLHGqztRrtRstZ8OpXOYiFUK49VCm3hJ6TiGVx2aB4cMEw07kVGUpyz9/YeI851uIjXAdavaMJQrkQTOJA==
-X-Forefront-Antispam-Report: CIP:216.228.117.161; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc6edge2.nvidia.com; CAT:NONE;
- SFS:(13230040)(376014)(82310400026)(1800799024)(23010399003)(36860700016)(18002099003)(3023799007)(6133799003)(11063799006)(56012099006);
- DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: nFrE9xsS2uuEQeM6in8Si6Qa57GY3nmuvxkFQM09PLn1nRS4lW1tCtSIpkQh3dYhRz0XV2o2Y/0osq/6j48KPe2rNL6263adhREIMJCQHCcVdwgH3+cPtkkCgvMLiCxdkPZsETTC6rTPOZN9oMCGqnPlT9SxPiK+R97LNdKMogrTFf4omkPMCToPCrj+CDYHwHCtDbv/4AZx/HUmSxKGb11j/GtoNeGsHhhN6FL3ePnVbo3ZAofj9ayIlQ2fls9e4TpHHYCJ9zvGT785MnMrn4Cp7WsIQU2yLI5MIIW0qMRxeYvj3fg+zZYGk1b3NM1lX1jup/Bf/9Wo7Yq0WhoRrnWLIodrgbyenED4fwRaVJOCWtuBne8c112zVaW79kXrYf+PvPsmEmx5qgnL1kHLVUj/eyuXJEf4AJRIFIO0h0evtkRMQXFimq36VcfUXHk1
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 23 Jun 2026 10:41:08.9590 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 16ad6906-385c-4dfa-7197-08ded113efd6
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.117.161];
- Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource: BN2PEPF00004FBE.namprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW4PR12MB7261
-Received-SPF: permerror client-ip=2a01:111:f403:c001::5;
- envelope-from=skolothumtho@nvidia.com;
- helo=BYAPR05CU005.outbound.protection.outlook.com
-X-Spam_score_int: -14
-X-Spam_score: -1.5
-X-Spam_bar: -
-X-Spam_report: (-1.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FORGED_SPF_HELO=1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
- SPF_NONE=0.001, WEIRD_QUOTING=0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x333.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -130,53 +104,104 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add subsections for accel=on (nested Stage-1/Stage-2 translation) and
-cmdqv (Tegra241 CMDQV hardware command queues) under "User-creatable
-SMMUv3 devices".
+marcandre.lureau@redhat.com writes:
 
-Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
----
- docs/system/arm/virt.rst | 26 ++++++++++++++++++++++++++
- 1 file changed, 26 insertions(+)
+> From: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+>
+> When bit 3 of the VGA Attribute Mode Control register is set, attribute
+> bit 7 switches from selecting bright background colors to enabling
+> character blink.
+>
+> Implement this by tracking a separate blink phase timer that toggles
+> every 32 frames (matching real VGA hardware frame counter bit 5 @60hz),
+> and rendering blinking characters by replacing their foreground with
+> background during the off phase.
+>
+> As with cursor, no VMState migration of the fields, as they are
+> transient display-side states.
+>
+> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/1585
 
-diff --git a/docs/system/arm/virt.rst b/docs/system/arm/virt.rst
-index f811e662d6..ae0be35d57 100644
---- a/docs/system/arm/virt.rst
-+++ b/docs/system/arm/virt.rst
-@@ -288,6 +288,32 @@ User-creatable SMMUv3 devices
-       -device pxb-pcie,id=pcie.1,numa_node=1
-       -device arm-smmuv3,primary-bus=pcie.1,id=smmuv3.1
- 
-+  *Accelerated SMMUv3 (nested translation)*
-+
-+  The ``accel=on`` option enables hardware-accelerated nested translation
-+  for vfio-pci passthrough devices. In this mode the guest SMMU driver
-+  programs its own Stage-1 page tables, with the host SMMUv3 handling both
-+  Stage-1 (guest) and Stage-2 (host) translations in hardware. The host
-+  SMMUv3 must support nested translation. This mode requires the iommufd
-+  backend and is only supported when booting with ACPI (not device tree).
-+
-+  When ``accel=on``, QEMU automatically derives the values for the
-+  ``ril``, ``ats``, ``oas``, ``ssidsize`` and ``cmdqv`` sub-options
-+  from the host SMMUv3 capabilities unless they are set explicitly.
-+
-+  Example::
-+
-+      -device arm-smmuv3,primary-bus=pcie.0,id=smmuv3.0,accel=on
-+
-+  *Accelerated SMMUv3 command queues (Tegra241 CMDQV)*
-+
-+  The ``cmdqv`` sub-option enables NVIDIA Tegra241 Command Queue
-+  Virtualization (CMDQV) on supported hosts. With CMDQV, each accelerated
-+  ``arm-smmuv3`` device gets dedicated hardware command queues and the
-+  guest issues SMMU invalidation commands directly to real hardware,
-+  bypassing QEMU and improving throughput for workloads that issue many
-+  invalidations. Without it, every invalidation command traps into QEMU.
-+
- Linux guest kernel configuration
- """"""""""""""""""""""""""""""""
- 
--- 
-2.43.0
+I don't think this resolves all of 1585 because I think its asking for
+the other text mode features as well.
 
+> Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+> ---
+>  hw/display/vga_int.h |  2 ++
+>  hw/display/vga.c     | 24 +++++++++++++++++++++---
+>  2 files changed, 23 insertions(+), 3 deletions(-)
+>
+> diff --git a/hw/display/vga_int.h b/hw/display/vga_int.h
+> index 747b5cc6cf8..5664317ecd6 100644
+> --- a/hw/display/vga_int.h
+> +++ b/hw/display/vga_int.h
+> @@ -130,6 +130,8 @@ typedef struct VGACommonState {
+>      uint8_t cursor_start, cursor_end;
+>      bool cursor_visible_phase;
+>      int64_t cursor_blink_time;
+> +    bool blink_visible_phase;
+> +    int64_t blink_time;
+>      uint32_t cursor_offset;
+>      const GraphicHwOps *hw_ops;
+>      bool full_update_text;
+> diff --git a/hw/display/vga.c b/hw/display/vga.c
+> index 0ac4bf37310..ea01a889f20 100644
+> --- a/hw/display/vga.c
+> +++ b/hw/display/vga.c
+> @@ -45,8 +45,10 @@
+>=20=20
+>  bool have_vga =3D true;
+>=20=20
+> -/* 16 state changes per vertical frame @60 Hz */
+> +/* frame counter bit 4: cursor blink toggles every 16 frames @60 Hz */
+>  #define VGA_TEXT_CURSOR_PERIOD_MS       (1000 * 2 * 16 / 60)
+> +/* frame counter bit 5: character blink toggles every 32 frames @60 Hz */
+> +#define VGA_TEXT_BLINK_PERIOD_MS        (1000 * 2 * 32 / 60)
+>=20=20
+>  /* Address mask for non-VESA modes.  */
+>  #define VGA_VRAM_SIZE                   (256 * KiB)
+> @@ -1286,6 +1288,13 @@ static void vga_draw_text(VGACommonState *s, int f=
+ull_update)
+>          s->cursor_blink_time =3D now + VGA_TEXT_CURSOR_PERIOD_MS / 2;
+>          s->cursor_visible_phase =3D !s->cursor_visible_phase;
+>      }
+> +    if (now >=3D s->blink_time) {
+> +        s->blink_time =3D now + VGA_TEXT_BLINK_PERIOD_MS / 2;
+> +        s->blink_visible_phase =3D !s->blink_visible_phase;
+> +        if (s->ar[VGA_ATC_MODE] & 0x08) {
+> +            full_update =3D 1;
+> +        }
+> +    }
+
+You should update the comment above vga_draw_text and remove "flashing"
+as unimplemented.
+
+>=20=20
+>      dest =3D surface_data(surface);
+>      linesize =3D surface_stride(surface);
+> @@ -1317,8 +1326,17 @@ static void vga_draw_text(VGACommonState *s, int f=
+ull_update)
+>  #endif
+>                  font_ptr =3D font_base[(cattr >> 3) & 1];
+>                  font_ptr +=3D 32 * 4 * ch;
+> -                bgcol =3D palette[cattr >> 4];
+> -                fgcol =3D palette[cattr & 0x0f];
+> +                if (s->ar[VGA_ATC_MODE] & 0x08) {
+> +                    bgcol =3D palette[(cattr >> 4) & 0x07];
+> +                    if ((cattr & 0x80) && !s->blink_visible_phase) {
+> +                        fgcol =3D bgcol;
+> +                    } else {
+> +                        fgcol =3D palette[cattr & 0x0f];
+> +                    }
+> +                } else {
+> +                    bgcol =3D palette[cattr >> 4];
+> +                    fgcol =3D palette[cattr & 0x0f];
+> +                }
+>                  if (cw =3D=3D 16) {
+>                      vga_draw_glyph16(d1, linesize,
+>                                       font_ptr, cheight, fgcol, bgcol);
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
