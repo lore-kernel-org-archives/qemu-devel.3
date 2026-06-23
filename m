@@ -4,114 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BDD03CD4F26
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jun 2026 04:39:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AEA38CD98F0
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jun 2026 04:41:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wbsub-0005cl-Vp; Tue, 23 Jun 2026 00:39:02 -0400
+	id 1wbswe-0006GB-1v; Tue, 23 Jun 2026 00:41:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <joel.stan@gmail.com>)
- id 1wbsuZ-0005c5-QZ
- for qemu-devel@nongnu.org; Tue, 23 Jun 2026 00:38:59 -0400
-Received: from mail-yx1-xb135.google.com ([2607:f8b0:4864:20::b135])
+ (Exim 4.90_1) (envelope-from <apolivodaa433@gmail.com>)
+ id 1wbswc-0006Fk-GD
+ for qemu-devel@nongnu.org; Tue, 23 Jun 2026 00:41:06 -0400
+Received: from mail-dy1-x1332.google.com ([2607:f8b0:4864:20::1332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <joel.stan@gmail.com>)
- id 1wbsuX-00059e-QO
- for qemu-devel@nongnu.org; Tue, 23 Jun 2026 00:38:59 -0400
-Received: by mail-yx1-xb135.google.com with SMTP id
- 956f58d0204a3-662d484ff3bso5167293d50.1
- for <qemu-devel@nongnu.org>; Mon, 22 Jun 2026 21:38:57 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1782189536; cv=none;
+ (Exim 4.90_1) (envelope-from <apolivodaa433@gmail.com>)
+ id 1wbswa-0005Yq-VT
+ for qemu-devel@nongnu.org; Tue, 23 Jun 2026 00:41:06 -0400
+Received: by mail-dy1-x1332.google.com with SMTP id
+ 5a478bee46e88-30c03b09e02so9349502eec.1
+ for <qemu-devel@nongnu.org>; Mon, 22 Jun 2026 21:41:04 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1782189663; cv=none;
  d=google.com; s=arc-20240605;
- b=QYNZNZepmfuma3MjvjF0QoPh98V3cUCaK4LaEEVCuyM5IntmUqgzyoGtzPbl+35tvh
- btFRDTsaGdno/tD3uMZmd+oVLAcnLLpm0ON8bTfrhO3wbk8j+1sZIoNIz8IhS+jLRDiY
- JAZOQ9kiqi+MSzaDT4KtiRsFTLu0RvR7Fe/QUX92lvdK9qWJABJeU/QV/ybK4ahrz9BN
- edzdTxrVNb/HjWw8vpytuI5uu3ZhFEylqyyQYylP9UmITazWGOlfZcTO0k5gghWrWtbt
- G70YSi2FIZr8w/tl/VHPJwqDrAFkwvlKLJGuidS40xnjSQzAHO1j4Rmg6bYEg8BBJ02a
- Krsg==
+ b=WpGhCCLh/XUImtg63oSmKaNM1z5jbJDv1QlbPjKWnzRueAnDDRRGRq/5LtU0rL2KD4
+ 6PoLYyRQtGr4GZ3NylGAHA5lOKxym65nT14T3WfInqO+jdvb7JqEaklBlieouMZIdYbq
+ AH7c2kDaerrgxkaAp/wmBWa/hLLCEZ2mq9drsF6oaBGKQeq2DSBKpkHpPshr7mP9Qelt
+ CIPyFW+okiZaMsyweffHZ+wU9MQhZvnl6aTDfznTgg+H4lwUX4E3xiOq6DWBpNjAxmIh
+ j2tJLxToHVZRATiX8c3NjJRwkmZ9on9bDQipi6xy6UEKK/tvdUVcItX91HNOmnuAyanZ
+ oCew==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=xlWKN2+eT6XlZj1EQLxlWrO6lNCSSe/KQqe2uTfyKx0=;
- fh=kdkL9dHY41m0pvZMM++Lj87qt/WKBpo8sTsBHu6s7xI=;
- b=E6heLwua9ycZrWaVN01xMmCxFR/vGROzxWA694ypfgx3Rg6uP1LTt/qUzUjhie7Cm0
- fPxr8nRyJ6jT1/mfKNAxW1IU75IZDW61i9oT3Eh0Tb4VMHrzLXjIMYOMwhwS1ecCLLPf
- 7m4OAnIAIqlUgADrH6fPzGDNu3PJjJmn+duaz+nmNFRtOrU9YotI+p1Sj2W6qn74WbuG
- oPsfJsVTF9Zm/w3OQQkzY2H9iIXxFZD+etnSEjx4sRvGqbKTch2e+MDzArcXcBIHuq1P
- pLDs4iLaAqd/oiJldXQ4dcVL/uxoFSvtGOR8/pRv6eEtMVHuteEB0sf97AvwfIRrsrR5
- tSPw==; darn=nongnu.org
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=z3BM/QQZ3WiByQI6OgMJQFbcNARaI8v1PcXIpM5OHUg=;
+ fh=yGWAaXXYYQtYW+LCE7nyqmcq5QIuKbScqyYf4NVD8c4=;
+ b=W68gVTFQETII6b3BH+R7sL4jPi4uxroG2KA01O+ElX0vhWrmi1VFLhuP+ig5ltwFv3
+ Cl02hqgAynzH1YBLeYbbogNN/MHFT7S/KsstYbg8Mx8ALatBm+QcN8sNKqr25+gKEUqp
+ G2RPlJP26ICi+WCw1GL87WeCQ0RD/bR1/6FTHKAZ12Qpeuod0qRHmpVAKfJ1LM7NARyK
+ GArqH3hIsri8/nsyq9opoVNIZKZxfxOg2ZfEWALLSISURL3648XCXBJTbuhXFw+XkpuT
+ Un5VHEo5qgNu/Pzw3Z/6neZhv0kNr00HoLRTbJ3mOw/qP+8atBU5blyFJNa+UN1dpkL8
+ 1B5Q==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=jms.id.au; s=google; t=1782189536; x=1782794336; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=xlWKN2+eT6XlZj1EQLxlWrO6lNCSSe/KQqe2uTfyKx0=;
- b=FGOmzKHRnb3G1NIHQcEmk0ffabFJxNqpfmf1mPGyup9o4jk1IlQxdetDMGZyAtM8uY
- gPeVQc+bbdlpY5ooVuFOoB3kcTUaQsp+bV1pBpZWHHaPkpmd2IPw0CZvL+RS7GMukqkw
- cwiA6vPbXx7ujJBMu7sQfmep7SNLZQ/Hl1U38=
+ d=gmail.com; s=20251104; t=1782189663; x=1782794463; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=z3BM/QQZ3WiByQI6OgMJQFbcNARaI8v1PcXIpM5OHUg=;
+ b=QaiCR/HMd1to8hzoUuRMr0VtsFFbc54xS7lGjHA0pLpKHp1fjqFjRmErHcS6VdhE08
+ zDJUAwGILGWBErDnEtvvjrx5ioxGo6UGfmpQbXLkTxj/nZSiDoUtNdWw6V2GND62oDk9
+ HB0m+NbRQ9iOKRlG9IK1kCY/+NlwLy68/rpF2AKUrPpgXD+mmqq6Y6dx7reRyXlAF++N
+ gzxJbo97ICD0JBJAXtrKf57yMF3d71fu5CpOGZwBsI0wG3WB9rtOtc+FzNrv8oDjpGNo
+ T7/E40bemiZPgmn+yTc/3Avutz6nT058UDvqW7t47AVg+ZkMhahaTeIVmKQarVRtTVPa
+ 4y+A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782189536; x=1782794336;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=xlWKN2+eT6XlZj1EQLxlWrO6lNCSSe/KQqe2uTfyKx0=;
- b=RrpeCfShCCQfJTHICwb8d/rPlDrjdWLXPDGjRdGLFF8ivoW4QzA6gvu5zQak0GMSC2
- M4/DrplaZpjPUuXboedUqrOmnyj0rRM4oxnMvlKH2e8KKJAzPgjW5mEwgrCUXh7HZ+5b
- dcJHwO1siAO5XnpfEWAIUYGgwjIOMiKHBBf+CZoQqP9vhmLPn1MAglogPSu9DVyqyZ1Q
- JNsTBZwhkSqJAaeBOzmo/ANbEVYUmpT/XTn+WgMZYoj5wTGv58SyLqks25OQaB/l/F/z
- 6p3f0dmyl0nDVUbxW/Gkxd+K0F6u+FN27KnuYvNm48B1A38zOEWjFIwRYygcAci47hcs
- hXog==
-X-Forwarded-Encrypted: i=1;
- AHgh+RprCYEFDhYnUflDXF0rWPuBMxB1ty3YbEW4/HHyWHauuS0pUuYJnQNzsqoxmkG6ghyHeBvHUAFUzllx@nongnu.org
-X-Gm-Message-State: AOJu0Ywy9grylPnnsCg3v116BQzc820mGNk9e0Eo9U7Eodq1w84ejr08
- zZo7pDNhPzeiO1wlZN5Y1iGA4ijeYEiisQPldNn7SgMs7KGqp1b2psm68PL3851Hobx/j6mj70I
- goDyEMWuO3rl4oWVPOobT8TIGya1QL/Q=
-X-Gm-Gg: AfdE7clr8Uhh9XSw/q7F01jhYYJgGNZdQJttKPwcwUEidfhDH1i8/ExcsP6FH/S16lB
- Mt7oHTjUgP641aoTjWA73tIOsJyKkxgIbrPJ1T+Sv+vgwfyEfpQL9tRduMrIuKDFRaaQjB5DelY
- 3ZfoFyZ3vW4X/B2KLJMI9TL74SJnYR3U5H4E32mijh6Vno+pGRQkEuisP/sC8/gN7NyHtMdzlof
- k2+6H7mNf+tR8woA9pi4ToxXLpnW1Rzc5/WAOUYZlVnP9TNfzUiqUd1gsHIvIdRV9QWCbn0T+Ef
- MuXrEKZr8E66xlTO2pl3kE0zvpY6op4Ve8ZYx+NaEStQiXXBL4SO6NQW1rIT8eldYV6zPWG7n5D
- HW4aN6j0K+N21qA==
-X-Received: by 2002:a05:690e:b4c:b0:661:1307:3d40 with SMTP id
- 956f58d0204a3-662ffdc4b2emr16102080d50.46.1782189536067; Mon, 22 Jun 2026
- 21:38:56 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1782189663; x=1782794463;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=z3BM/QQZ3WiByQI6OgMJQFbcNARaI8v1PcXIpM5OHUg=;
+ b=lsyRX3RzlXoeoTHFZmdwU2iV2BslE1YBwfNlD3eOqU1KEYwFZu7Zapm1YZAdLHHhn0
+ LYFN7oqrfd8YaYzdIDXnWJnZQt+0AtoLW7R0FbA3nDHgK5HYOEoi63uSTI28+CVXffsT
+ rLaltTJdpeNu+Z8YasNleSHk7MZtTSkAqWQqo9zV80JMfJyfjvgjxO4hrdZsSb1VpWbh
+ /Rq1agVmMEkhIEXD0cXA+Ztdop2bwN3/N9t3dVZzNXlZtLEuSTQCwsjq7HQ9Pki6V6Zz
+ 3XB67CKg4oSm2Ji9HD0/Ga9qHUOH/+1VGTGima6RAxIeaON74tcvqbEJUykq4Yy1CtvY
+ 0eVA==
+X-Gm-Message-State: AOJu0YyYur+3MO/CEq1S+35geQPD+ufg35bUCy5llvcvsdET6JsRFMeK
+ gmYAXVoVp3nsJQGZ25B3Ysu+F/6HPdkzrenRZJZKbtmt4F/7ghF1+JNcTJpUt9NgMUnDrajcoG8
+ bVyD+wHBFxcmXiwp7LKEu7xApzhdCEcWoJlzQ
+X-Gm-Gg: AfdE7clOEbKCpcuh81c5+hwjqELQ5co4uRn/9h/g8wp2WVZuS+DKKXaPJq1Td3oxSQU
+ J8XYGsWSikK9J18y2HD5sRhzXftl5Zu6ttD8elWJgGO21pDxAM1utjQEK4IqqoUM04zfkQTi4Se
+ LurCPnu4Q5IOQX34V9XvyqwB1Y04n5r5J5OfMG2zZY5UFFe8Byhy+WTsxSrOK9synrEjzTtHEze
+ BWHbY4nF5QSuZrs9sYaRh/y8Mx/068LuXq7Ap+Maa6XTbophbhoFp7vPDVGfr051cvlU54M
+X-Received: by 2002:a05:7300:e125:b0:30b:e4a6:1ab8 with SMTP id
+ 5a478bee46e88-30c58a984fdmr1062831eec.13.1782189663180; Mon, 22 Jun 2026
+ 21:41:03 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260619044838.1054677-1-joel@jms.id.au>
- <20260619044838.1054677-9-joel@jms.id.au>
- <CAKmqyKML0szhhJv_pb=+oNZJwZhurn9k1La+FgiAHmBCYYFW+w@mail.gmail.com>
-In-Reply-To: <CAKmqyKML0szhhJv_pb=+oNZJwZhurn9k1La+FgiAHmBCYYFW+w@mail.gmail.com>
-From: Joel Stanley <joel@jms.id.au>
-Date: Tue, 23 Jun 2026 14:08:44 +0930
-X-Gm-Features: AVVi8CdwV6gbKdwIMPses6kh7NeNJvbKiUNl5yjtCQFAoVJAKow4DPe9DqM_9_k
-Message-ID: <CACPK8XccZpBwwGQKs+CN_QGz19OMCiSnh1or8+aPewz8HRNK2g@mail.gmail.com>
-Subject: Re: [PATCH v9 08/12] hw/riscv/atlantis: Provide a simple halting
- payload
-To: Alistair Francis <alistair23@gmail.com>,
- Nicholas Piggin <npiggin@gmail.com>
-Cc: Alistair Francis <alistair.francis@wdc.com>, qemu-devel@nongnu.org, 
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@mailo.com>, 
- Chris Rauer <crauer@google.com>, Alano Song <alanosong@163.com>,
- Michael Ellerman <mpe@kernel.org>, 
- Joel Stanley <jms@oss.tenstorrent.com>, 
- Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>, 
- Portia Stephens <portias@oss.tenstorrent.com>, qemu-riscv@nongnu.org, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b135;
- envelope-from=joel.stan@gmail.com; helo=mail-yx1-xb135.google.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, FREEMAIL_FORGED_FROMDOMAIN=0.001,
- FREEMAIL_FROM=0.001, HEADER_FROM_DIFFERENT_DOMAINS=0.249,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+References: <20260608091815.31303-1-apolivodaa433@gmail.com>
+ <CAGscdFs9AaxPTDCu_bpaMpeh4yqZ1BDwZ0yjo81CAZzJuAOW2A@mail.gmail.com>
+In-Reply-To: <CAGscdFs9AaxPTDCu_bpaMpeh4yqZ1BDwZ0yjo81CAZzJuAOW2A@mail.gmail.com>
+From: Andrey Polivoda <apolivodaa433@gmail.com>
+Date: Tue, 23 Jun 2026 14:40:29 +1000
+X-Gm-Features: AVVi8CfLgANBcpVcVP6gUbFi4L1GxX00rFbMppqcImCx2YRjYC881ZGF09bDh4w
+Message-ID: <CAGscdFuH8t+5QqV3NKH4mwXBdd3M30fmbDET7nYi604fRa_dbA@mail.gmail.com>
+Subject: Re: [PATCH v2] target/i386: helper_sysret(): Check that RCX contains
+ a canonical address when emulating an Intel CPU
+To: qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+Content-Type: multipart/alternative; boundary="000000000000cbd9500654e45d0a"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1332;
+ envelope-from=apolivodaa433@gmail.com; helo=mail-dy1-x1332.google.com
+X-Spam_score_int: -4
+X-Spam_score: -0.5
+X-Spam_bar: /
+X-Spam_report: (-0.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, HTML_MESSAGE=0.001,
+ PYZOR_CHECK=1.392, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -128,114 +116,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 23 Jun 2026 at 12:11, Alistair Francis <alistair23@gmail.com> wrote=
-:
->
-> On Fri, Jun 19, 2026 at 2:52=E2=80=AFPM Joel Stanley <joel@jms.id.au> wro=
-te:
-> >
-> > From: Nicholas Piggin <npiggin@gmail.com>
-> >
-> > OpenSBI hangs before any console output if the domain init code sees th=
-e
-> > next stage is not in an executable region.
-> >
-> > If no kernel payload is provided to QEMU, the next stage address is
-> > NULL, and the riscv virt machine memory map ends up covering the 0
-> > address with the catch all S-mode RWX region and so OpenSBI prints
-> > console messages and does not hang until the next stage boot.
-> >
-> > The Tenstorrent Atlantis machine address map has RAM starting at 0 and
-> > it loads OpenSBI there, so it is M-mode and not accessible by S-mode,
-> > tripping the early check and hang.
->
-> Ok, so I looked at this today and I think this commit message and
-> approach aren't the way to go.
->
-> I do think the commit message is a bit confusing and not entirely
-> accurate. What about something like this (might need a tidy up, but
-> you should get the point):
->
-> commit aac25688634d1afe6735cb71d8dd1ea652fa90d4 (HEAD -> riscv-to-apply.n=
-ext)
-> Author: Alistair Francis <alistair.francis@wdc.com>
-> Date:   Tue Jun 23 12:37:47 2026 +1000
->
->    hw/riscv/atlantis: Ensure OpenSBI has a non-zero next_addr
->
->    When using OpenSBI fw_dynamic on the Atlantis board OpenSBI fails
->    to print any output, as it hits an error early on
->    in the boot process and gets stuck in `sbi_hart_hang()`.
->
->    The error occurs in the `sanitize_domain()` function inside OpenSBI.
->    `sanitize_domain()` is called after a M-Mode OpenSBI Firmware and a ge=
-neric
->    coverall S-Mode RWX memory region are created. `sanitize_domain()` is
->    checking that the next address is executable.
->
->    If no next address is provided (which occurs on QEMU with an empty pay=
-load),
->    then `dom->next_addr` will be 0. On most RISC-V boards address 0 will =
-fall
->    inside the coverall S-Mode RWX memory region and pass this check. On
->    Atlantis the OpenSBI firmware is running at address 0, so this address
->    falls inside the M-Mode only OpenSBI firmware region and fails the che=
-ck.
->
->    Once the check has failed OpenSBI aborts and the user doesn't see any
->    messages. This can be fixed by either supplying a payload, or just
->    manually forcing a non-zero address (actually just any address that
->    isn't the OpenSBI firmware) for next_addr.
->
->    This patch ensures that if no kernel is loaded we still specify a
->    default kernel_entry so that OpenSBI happily boots and jumps to
->    the first address in memory.
->
->    Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+--000000000000cbd9500654e45d0a
+Content-Type: text/plain; charset="UTF-8"
 
-This reads fine by me. Nick?
+ping
+https://lore.kernel.org/qemu-devel/20260608091815.31303-1-apolivodaa433@gmail.com/T/#u
 
->
-> diff --git a/hw/riscv/tt_atlantis.c b/hw/riscv/tt_atlantis.c
-> index b40a893a37..dba56ad6e1 100644
-> --- a/hw/riscv/tt_atlantis.c
-> +++ b/hw/riscv/tt_atlantis.c
-> @@ -444,8 +444,15 @@ static void tt_atlantis_machine_done(Notifier
-> *notifier, void *data)
->     if (machine->kernel_filename) {
->         riscv_load_kernel(machine, &boot_info, kernel_start_addr,
->                           true, NULL);
-> +        kernel_entry =3D boot_info.image_low_addr;
-> +    } else {
-> +        /* If we aren't loading a payload, OpenSBI thinks we are trying =
-to boot
-> +         * address 0, which fails `sbi_domain_check_addr()` as that is w=
-here
-> +         * OpenSBI is running. Let's tell OpenSBI to start running at th=
-e start
-> +         * of memory so we at least let OpenSBI complete.
+--000000000000cbd9500654e45d0a
+Content-Type: text/html; charset="UTF-8"
 
-This isn't quite true, we're pointing to just after opensbi. The start
-of the rest of memory.
+<div dir="auto">ping<div dir="auto"><a href="https://lore.kernel.org/qemu-devel/20260608091815.31303-1-apolivodaa433@gmail.com/T/#u">https://lore.kernel.org/qemu-devel/20260608091815.31303-1-apolivodaa433@gmail.com/T/#u</a></div></div>
 
-Perhaps:
-
- Instead point OpenSBI to jump to the end of the region where it
- was loaded, which avoids the early hang in OpenSBI, allowing
- the system to proceed with the OpenSBI boot output.
-
-Thanks for taking a look.
-
-Cheers,
-
-Joel
-
-> +         */
-> +        kernel_entry =3D kernel_start_addr;
->     }
-> -    kernel_entry =3D boot_info.image_low_addr;
->
->     fdt_load_addr =3D riscv_compute_fdt_addr(s->memmap[TT_ATL_DDR_LO].bas=
-e,
->                                            s->memmap[TT_ATL_DDR_LO].size,
+--000000000000cbd9500654e45d0a--
 
