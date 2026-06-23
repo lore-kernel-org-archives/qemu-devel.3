@@ -4,91 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 016FDCD98F2
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jun 2026 18:28:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28DB2CDB471
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jun 2026 18:35:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wc5qZ-0004em-35; Tue, 23 Jun 2026 14:27:43 -0400
+	id 1wc5xT-0007gE-C8; Tue, 23 Jun 2026 14:34:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1wc5qH-0004cP-Jd
- for qemu-devel@nongnu.org; Tue, 23 Jun 2026 14:27:27 -0400
-Received: from vps-ovh.mhejs.net ([145.239.82.108])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1wc5qF-0001Ls-Rp
- for qemu-devel@nongnu.org; Tue, 23 Jun 2026 14:27:25 -0400
-Received: from MUA
- by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
- (Exim 4.99.1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1wc5q5-00000004mJt-1nlD; Tue, 23 Jun 2026 20:27:13 +0200
-Message-ID: <8ea776eb-525f-4203-a1e8-35b16ad6cfa0@maciej.szmigiero.name>
-Date: Tue, 23 Jun 2026 20:27:13 +0200
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wc5xR-0007fw-Hu
+ for qemu-devel@nongnu.org; Tue, 23 Jun 2026 14:34:49 -0400
+Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wc5xQ-00053a-0p
+ for qemu-devel@nongnu.org; Tue, 23 Jun 2026 14:34:49 -0400
+Received: by mail-pl1-x636.google.com with SMTP id
+ d9443c01a7336-2c6dadfbaafso1389405ad.3
+ for <qemu-devel@nongnu.org>; Tue, 23 Jun 2026 11:34:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1782239686; x=1782844486; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=g1ILwAaJz4cbvbkdosvyIu0xUaUg5RAwnGrmz2hZas4=;
+ b=fnTPvcRaOKB6Tzv8PnAdoe4ywyTQcnRIwtkVaQ9u7K0BRJSRycGRQ4SYM8LusC0jMl
+ P5IJpTQKYwWU3Kr3vINM0eoxYRy30HQJM5AQg5Vdr/E+cw1S7wmIgjjPLtjfjmCLuVbV
+ 4bs4CZgzMCx69mj0YnNYcVf4qNp8MiJfcqmaRPfBSINy80mehm+3Tz7stjvJy9XhmSg8
+ Vdw+mAsGORngCqbP2mFy87ArgpsmZJcSXAIAO0C+Z97Yp58FNJfBXsc1FubLlc4qa5WT
+ j8eUi2gigraJamnNWb/WNmuLYCFElAAD3ozS+6/l9kSMbielSrXq5KH/MWBfkXiMdk9y
+ nc2g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1782239686; x=1782844486;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=g1ILwAaJz4cbvbkdosvyIu0xUaUg5RAwnGrmz2hZas4=;
+ b=Ehbowz+30/AcQlfodyNrnzSLoMqrT2+O6vDi0M4ryRMkRxu4kJkxGcrGu7HfHy54y0
+ hIkwVNOYyyTn0ecs9DwjUt+n7U9QVbXHLUZ2vOb+QSEtgO1oQPHBXe7TCYrpTzKyOP6r
+ YvtxUb6rQCwm/ZAxz/3h2dXdU3kS/kl15z8b2RgpX/WdnzG/WflSxq4quEnjmzsusMt6
+ WidrstZKGd5a43Clp+lKCCW92acH7aMat4oCrQrSC6oG0Q6obzjfJUcT4wyLUUcFme0B
+ IME4wklsvGoUdNXKGn18OY9ZlcqnA/NX0J/khf4Jzw/oFtyXBaJwvA0+SSbTCLOLCYLi
+ Djhw==
+X-Gm-Message-State: AOJu0YzuU0RfMJeNZtG7TgOCxJErEexmQVPvOLBj0teWr/1a3skfqqSI
+ SrKBfGkgMTmeCNS2MuYtXUwM0AIbTWkboY9ZYLWBWnyOS6XK6amGP8dtJMqMyi7J0nj9xvAhSVm
+ GnJMw
+X-Gm-Gg: AfdE7clsTRt6dDb1IMh+xtybz2W9yiQKv42CPwp51PXOWkOYBspZL8Cgy0p/x93xY/j
+ e2w4pp2U+fS9iZYaL1WQ7EbWPWBZKOO47gAUhzSs9WPXBFHpJ1wvaIgWA/l0OtvV3/+aEOOVPb+
+ o2eo+vb09UkBbgxMU5fK7GaUQ/at4F41PeYF5VEXE2fcBnx09HhtSxopBkCvoklEfg8rB/DuUrT
+ uA/Vfuk8wB46wXFavtYPi86v3YZt9FUXezmWOZVK7E69z9StPQL50uVGML4yEfY5BgMVToWnUDW
+ J2Rzqbap6h3h0xOvQyFUYvi9+4bJPu1hpbR8ibB/811sUYhpwtAJLDSJWsEG1MOZBUDLbf37vdL
+ kOyfcdJUZL3i8GtsYfrvxXjhiTDi+fhaP5gYL9mR+pK79lmcfXGDmoC3gKLfFZqEHMbglxKNx2Q
+ 1I2MMbMRmOjY6WaWpM2uRzYrNQWnvBgAe4w34VPpz8+p8hCPxe77FFDnQIaw==
+X-Received: by 2002:a17:902:ec8f:b0:2bd:907:2cf0 with SMTP id
+ d9443c01a7336-2c7e16edfd6mr343945ad.32.1782239686035; 
+ Tue, 23 Jun 2026 11:34:46 -0700 (PDT)
+Received: from [192.168.0.4] (174-21-129-215.tukw.qwest.net. [174.21.129.215])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2c7436ff3b1sm111272145ad.36.2026.06.23.11.34.45
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 23 Jun 2026 11:34:45 -0700 (PDT)
+Message-ID: <67056b03-1a3f-4963-b132-a1dd048178eb@linaro.org>
+Date: Tue, 23 Jun 2026 11:34:44 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/5] migration: emit SETUP notification before CPR
-To: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
-Cc: mst@redhat.com, sgarzare@redhat.com, farosas@suse.de,
- qemu-devel@nongnu.org, peterx@redhat.com, dongli.zhang@oracle.com,
- bchaney@akamai.com, mark.kanda@oracle.com, den@openvz.org
-References: <20260619105514.128812-1-andrey.drobyshev@virtuozzo.com>
- <20260619105514.128812-2-andrey.drobyshev@virtuozzo.com>
-From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
-Content-Language: en-US, pl-PL
-Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
- 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
-In-Reply-To: <20260619105514.128812-2-andrey.drobyshev@virtuozzo.com>
+Subject: Re: [PATCH v3 05/40] bsd-user: Add bsd-signal.h with sigaction
+ through sigreturn
+To: qemu-devel@nongnu.org
+References: <20260620-misc-2026q2-v3-0-f6ce23ad8dda@bsdimp.com>
+ <20260620-misc-2026q2-v3-5-f6ce23ad8dda@bsdimp.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20260620-misc-2026q2-v3-5-f6ce23ad8dda@bsdimp.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=145.239.82.108;
- envelope-from=mhej@vps-ovh.mhejs.net; helo=vps-ovh.mhejs.net
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.249, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x636.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,34 +105,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 19.06.2026 12:55, Andrey Drobyshev wrote:
-> Devices register their own callbacks to MIG_EVENT_* notifications and
-> process them accordingly.  But some devices, especially during CPR-style
-> migration, might need to be aware and process SETUP event earlier on.  One
-> such example is vhost-based devs, as they need to call RESET_OWNER ioctl
-> before the target (in the cpr-transfer case) tries to call SET_OWNER.
+On 6/20/26 21:19, Warner Losh wrote:
+> Add the first set of signal-related system call shims: sigaction,
+> sigprocmask, sigpending, sigsuspend, and sigreturn. Also add the
+> do_sigprocmask and target_to_host_sigevent helper functions to signal.c
+> and their declarations to signal-common.h.
 > 
-> Let's move SETUP notification to an earlier place in qmp_migrate().  Before
-> this change, SETUP was firing shortly before migration thread creation, and
-> FAILED notification balancing it was only fired from
-> migration_iteration_finish() (ran in the thread).  But now by moving SETUP
-> to earlier we widen the window.  Hence let's also add FAILED to
-> migration_connect_error_propagate() and the special CPR-related case in
-> migration_cancel(), to balance things out.
-> 
-> This patch is a rework of the change originally proposed by Steve and
-> Ben at [0].
-> 
-> [0] https://lore.kernel.org/qemu-devel/20260128-cpr-tap-v4-0-48e334d4216b@akamai.com
-> 
-> Originally-by: Steve Sistare <steven.sistare@oracle.com>
-> Originally-by: Ben Chaney <bchaney@akamai.com>
-> Signed-off-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+> Signed-off-by: Stacey Son<sson@FreeBSD.org>
+> Signed-off-by: Kyle Evans<kevans@FreeBSD.org>
+> Signed-off-by: Jessica Clarke<jrtc27@jrtc27.com>
+> Signed-off-by: Mikaël Urankar<mikael.urankar@gmail.com>
+> Assisted-by: Claude Opus 4.6 (1M context)
+> Reviewed-by: Pierrick Bouvier<pierrick.bouvier@oss.qualcomm.com>
+> Signed-off-by: Warner Losh<imp@bsdimp.com>
 > ---
-Looks okay to me, but will wait on Peter and/or Fabiano opinion here,
-since this is core migration code.
+>   bsd-user/bsd-signal.h         | 151 ++++++++++++++++++++++++++++++++++++++++++
+>   bsd-user/freebsd/os-syscall.c |   1 +
+>   bsd-user/signal-common.h      |   4 ++
+>   bsd-user/signal.c             |  67 +++++++++++++++++++
+>   4 files changed, 223 insertions(+)
 
-Thanks,
-Maciej
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
+r~
 
