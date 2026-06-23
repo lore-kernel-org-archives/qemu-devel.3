@@ -4,64 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC609CD98F2
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4741CDB46F
 	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jun 2026 12:02:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wbzpM-0005U4-6n; Tue, 23 Jun 2026 08:02:04 -0400
+	id 1wbzpH-0005NS-Ql; Tue, 23 Jun 2026 08:01:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <christian@sourceandstack.com>)
- id 1wbzpJ-0005Rc-Ud; Tue, 23 Jun 2026 08:02:02 -0400
-Received: from sourceandstack.com ([159.223.220.208])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wbzpB-0005JS-0J
+ for qemu-devel@nongnu.org; Tue, 23 Jun 2026 08:01:53 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <christian@sourceandstack.com>)
- id 1wbzpI-0007Ha-11; Tue, 23 Jun 2026 08:02:01 -0400
-Received: from fedora-3.home (apoitiers-157-1-11-96.w90-5.abo.wanadoo.fr
- [90.5.14.96])
- by sourceandstack.com (Postfix) with ESMTPSA id 6F3FD4803FA2;
- Tue, 23 Jun 2026 12:01:51 +0000 (UTC)
-DKIM-Filter: OpenDKIM Filter v2.11.0 sourceandstack.com 6F3FD4803FA2
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=sourceandstack.com;
- s=mail; t=1782216111;
- bh=BHN7atiXl2Lolm9KNQnUWkU6Bt4eukBPAbBhsUd0z6g=;
- h=From:To:Cc:Subject:Date:From;
- b=SUkhMOzXCdB475Yu+QkhCr+0lH1jPLZNMu0Ffyj53uKMWE5/zFF5SlAo2O/WVGPpO
- OLYAS8+9zrAi040GdzUWBmjYolH6YO0ROmPClO2bCSoOMIsMJDIZnlwdGhrstZyWEr
- 9kcuzh5KfggTS8P//RXpERT5yBTK08l+K5bJ/9V0=
-From: Christian Hergert <christian@sourceandstack.com>
-To: qemu-devel@nongnu.org
-Cc: Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- qemu-block@nongnu.org, Christian Hergert <christian@sourceandstack.com>
-Subject: [PATCH 0/1] [PATCH v2] block/vvfat: defer write commits to
- half-second timer
-Date: Tue, 23 Jun 2026 14:01:46 +0200
-Message-ID: <20260623120147.1626479-1-christian@sourceandstack.com>
-X-Mailer: git-send-email 2.54.0
-Content-Type: text/plain; charset="utf-8"
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wbzp8-0007CR-En
+ for qemu-devel@nongnu.org; Tue, 23 Jun 2026 08:01:52 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1782216107;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=mkhxKJro5SQObLuvdQUMX6NmA0d5lqWdHjPPE9DIWbI=;
+ b=a56B0RP3zuTmBvlGqC8aWJgDvdwVNEY42T2hnRmxY8V8kz/RH9BRaxVcJ2g6kUwQiEqK28
+ dXOaSABj99mXrtWgDbcfnLFZh+Y4ia8tnku15zswuasI/wLbjK6tXUZj6RSU20t5srSRvc
+ FV6TuDnW8vwoUVeICOjfxQmflAXMzac=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-578-ZdvVv18pM0-wI_Tgc7e3vg-1; Tue,
+ 23 Jun 2026 08:01:44 -0400
+X-MC-Unique: ZdvVv18pM0-wI_Tgc7e3vg-1
+X-Mimecast-MFC-AGG-ID: ZdvVv18pM0-wI_Tgc7e3vg_1782216103
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B1B31180066C; Tue, 23 Jun 2026 12:01:42 +0000 (UTC)
+Received: from redhat.com (unknown [10.44.34.133])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5C90518005B8; Tue, 23 Jun 2026 12:01:38 +0000 (UTC)
+Date: Tue, 23 Jun 2026 13:01:35 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>
+Cc: Peter Krempa <pkrempa@redhat.com>, qemu-devel@nongnu.org,
+ "Dr. David Alan Gilbert" <dave@treblig.org>,
+ Christian Brauner <brauner@kernel.org>, devel@lists.libvirt.org,
+ Markus Armbruster <armbru@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>
+Subject: Re: [PATCH v4 00/35] monitor: turn QMP and HMP into QOM objects
+Message-ID: <ajp1n1yo7IVM5crp@redhat.com>
+References: <20260623095551.2106712-1-berrange@redhat.com>
+ <ajpoEoUcQ5IxMJy1@angien.pipo.sk> <ajpwIvZ9qfSgE-la@redhat.com>
+ <ajpzlaz7kCKw0aPQ@redhat.com>
+ <CAMxuvaxcc65N-6MWOzkXr9rXTeZ5DnvR8o4_2qjnW_EEVWEUhQ@mail.gmail.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Rspamd-Queue-Id: 6F3FD4803FA2
-X-Spamd-Result: default: False [0.90 / 15.00]; MID_CONTAINS_FROM(1.00)[];
- MIME_GOOD(-0.10)[text/plain]; ARC_NA(0.00)[];
- RCVD_COUNT_ZERO(0.00)[0];
- ASN(0.00)[asn:3215, ipnet:90.5.0.0/17, country:FR];
- MIME_TRACE(0.00)[0:+]; TO_DN_SOME(0.00)[]; FROM_HAS_DN(0.00)[];
- TO_MATCH_ENVRCPT_ALL(0.00)[];
- URIBL_BLOCKED(0.00)[apoitiers-157-1-11-96.w90-5.abo.wanadoo.fr:rdns];
- FROM_EQ_ENVFROM(0.00)[]; LOCAL_OUTBOUND(0.00)[];
- RCPT_COUNT_FIVE(0.00)[5]
-X-Rspamd-Action: no action
-X-Rspamd-Server: sourceandstack.com
-Received-SPF: pass client-ip=159.223.220.208;
- envelope-from=christian@sourceandstack.com; helo=sourceandstack.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+In-Reply-To: <CAMxuvaxcc65N-6MWOzkXr9rXTeZ5DnvR8o4_2qjnW_EEVWEUhQ@mail.gmail.com>
+User-Agent: Mutt/2.3.2 (2026-04-26)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -74,40 +92,96 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Christian Hergert <christian@sourceandstack.com>
----
- - v2: update tests to flush before checking contents in storage
+On Tue, Jun 23, 2026 at 03:54:54PM +0400, Marc-André Lureau wrote:
+> Hi
+> 
+> On Tue, Jun 23, 2026 at 3:53 PM Daniel P. Berrangé <berrange@redhat.com> wrote:
+> >
+> > On Tue, Jun 23, 2026 at 12:38:10PM +0100, Daniel P. Berrangé wrote:
+> > > On Tue, Jun 23, 2026 at 01:03:46PM +0200, Peter Krempa wrote:
+> > > > On Tue, Jun 23, 2026 at 10:55:16 +0100, Daniel P. Berrangé via Devel wrote:
+> > > > > Conceptually -object and object_add/object_del should be sufficient
+> > > > > for essentially all QEMU configuration....if only we ported all our
+> > > > > internal custom backends/devices/etc to QOM. That is of course a big
+> > > > > job which is why it hasn't happened.
+> > > > >
+> > > > > This series started with the premise that the monitor is one of the
+> > > > > easier areas to convert since we have no more than three classes,
+> > > > > a common base, and QMP and HMP subclasses[1]. So why not give it a
+> > > > > go and thus unlock the ability to dynamically create/delete monitors
+> > > > > in QMP/HMP.
+> > > > >
+> > > > > This series does the conversion in a great many small steps to better
+> > > > > understand the implications at each stage.
+> > > > >
+> > > > > The high level outcome of this series is
+> > > > >
+> > > > >  * HMP and QMP monitors are QOM objects, 'monitor-hmp' and
+> > > > >    'monitor-qmp' respectively
+> > > > >
+> > > > >  * Both can be cold plugged and hot plugged. QMP only, can
+> > > > >    also be hot unplugged.
+> > > > >
+> > > > >  * '-mon' is obsolete, deprecated and replaced by '-object',
+> > > > >    but -monitor, -qmp and kept  as high level syntax sugar
+> > > >
+> > > > I was giving this a spin by implementing libvirt support for it. The
+> > > > basic usage seems to work well but I've encoutered a regression in
+> > > > behaviour which happens both when the QMP monitor is instantiated using
+> > > > the new syntax but also the old one
+> > > > ( -mon chardev=charmonitor,id=monitor,mode=control)
+> > > >
+> > > > When libvirt wants to re-connect to a qemu running with these patches it
+> > > > re-issues a 'qmp_capabilities' command after connecting.
+> > > >
+> > > > With these patches qemu does not respond to that command even when the
+> > > > old syntax is used. This makes libvirt stuck when re-connecting to VMs.
+> > >
+> > > Oh that's odd, thanks for the warning. I'll investigate this.
+> >
+> > /face-palm - a misplaced a line in the auto-delete code, and did not
+> > have test coverage of re-opening a monitor. Try testing libvirt with
+> > this additional change on top
+> >
+> > diff --git a/monitor/qmp.c b/monitor/qmp.c
+> > index f6b7fe65bb..10d651ca5c 100644
+> > --- a/monitor/qmp.c
+> > +++ b/monitor/qmp.c
+> > @@ -613,7 +613,6 @@ static void monitor_qmp_event(void *opaque, QEMUChrEvent event)
+> >          qobject_unref(data);
+> >          break;
+> >      case CHR_EVENT_CLOSED:
+> > -        mon->delete_pending = true;
+> >          /*
+> >           * Note: this is only useful when the output of the chardev
+> >           * backend is still open.  For example, when the backend is
+> > @@ -629,6 +628,7 @@ static void monitor_qmp_event(void *opaque, QEMUChrEvent event)
+> >          case MONITOR_QMP_CLOSE_ACTION_NONE:
+> >              break; /* nada */
+> >          case MONITOR_QMP_CLOSE_ACTION_DELETE:
+> > +            mon->delete_pending = true;
+> >              /*
+> >               * Do NOT run in the AIO context associated with the
+> >               * monitor. We need to run in the default AIO context
+> >
+> >
+> 
+> Good, I just asked the same in my review :)
+> 
+> btw, you didn't collect my r-b from v3.
 
------BEGIN SSH SIGNATURE-----
-U1NIU0lHAAAAAQAAADMAAAALc3NoLWVkMjU1MTkAAAAgn0Noijiu+xEWY4CvDD7yVv6k3T
-7J2x6bWnGCPV5Pt6sAAAADZ2l0AAAAAAAAAAZzaGE1MTIAAABTAAAAC3NzaC1lZDI1NTE5
-AAAAQN+I7C3v3pmZpDIZyAgcq5c1+4BDylqpsGbqFBhFpDLXcm/mWrZoJii3GK3Ce+qdGe
-F1dW+FOyJOYsDar+YVyQM=
------END SSH SIGNATURE-----
------BEGIN SSH SIGNATURE-----
-U1NIU0lHAAAAAQAAADMAAAALc3NoLWVkMjU1MTkAAAAgn0Noijiu+xEWY4CvDD7yVv6k3T
-7J2x6bWnGCPV5Pt6sAAAADZ2l0AAAAAAAAAAZzaGE1MTIAAABTAAAAC3NzaC1lZDI1NTE5
-AAAAQBHUGCB70DC5aAkYJdtqoTAlDS3+N6kv0bmmZ15j9QKKFpx/fN4/JTA3hPxbubdeVr
-mphBILleJBL2b565llIws=
------END SSH SIGNATURE-----
------BEGIN SSH SIGNATURE-----
-U1NIU0lHAAAAAQAAADMAAAALc3NoLWVkMjU1MTkAAAAgn0Noijiu+xEWY4CvDD7yVv6k3T
-7J2x6bWnGCPV5Pt6sAAAADZ2l0AAAAAAAAAAZzaGE1MTIAAABTAAAAC3NzaC1lZDI1NTE5
-AAAAQOnadRs4oAAVWKsCySAOhrJaSTW98aeW+2Tqb5WJR56PY5d3qcZk4I3tdAwKK9/R04
-vVwWMol8jAblAi/ijK3QQ=
------END SSH SIGNATURE-----
+Oh sorry, I will get those.
 
-Christian Hergert (1):
-  block/vvfat: defer write commits to half-second timer
 
- block/vvfat.c                  | 130 +++++++++++++++++++++++++++++++--
- tests/qemu-iotests/tests/vvfat |  15 ++++
- 2 files changed, 140 insertions(+), 5 deletions(-)
-
+With regards,
+Daniel
 -- 
-2.54.0
+|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+|: https://libvirt.org          ~~          https://entangle-photo.org :|
+|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
 
 
