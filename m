@@ -4,37 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A205CDB470
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jun 2026 18:28:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2EAF1CDB470
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jun 2026 18:28:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wc5qe-0004fl-5p; Tue, 23 Jun 2026 14:27:48 -0400
+	id 1wc5qz-00051d-LN; Tue, 23 Jun 2026 14:28:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1wc5qT-0004e7-1o
- for qemu-devel@nongnu.org; Tue, 23 Jun 2026 14:27:38 -0400
+ id 1wc5qk-0004qO-4V
+ for qemu-devel@nongnu.org; Tue, 23 Jun 2026 14:27:55 -0400
 Received: from vps-ovh.mhejs.net ([145.239.82.108])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1wc5qP-0001Ot-Vb
- for qemu-devel@nongnu.org; Tue, 23 Jun 2026 14:27:35 -0400
+ id 1wc5qi-0001RE-Dt
+ for qemu-devel@nongnu.org; Tue, 23 Jun 2026 14:27:53 -0400
 Received: from MUA
  by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
  (Exim 4.99.1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1wc5qN-00000004mKL-3e5L; Tue, 23 Jun 2026 20:27:31 +0200
-Message-ID: <d258f5fc-5c67-456a-be2e-49b0c7e1f4aa@maciej.szmigiero.name>
-Date: Tue, 23 Jun 2026 20:27:31 +0200
+ id 1wc5qf-00000004mKj-1xjF; Tue, 23 Jun 2026 20:27:49 +0200
+Message-ID: <82e01e80-f65d-4f38-b475-5f5624587868@maciej.szmigiero.name>
+Date: Tue, 23 Jun 2026 20:27:44 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/5] vhost: reset vhost devices for CPR
+Subject: Re: [PATCH v2 4/5] vhost-vsock: preserve vhost FD during CPR
 To: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
 Cc: mst@redhat.com, sgarzare@redhat.com, farosas@suse.de,
  qemu-devel@nongnu.org, peterx@redhat.com, dongli.zhang@oracle.com,
  bchaney@akamai.com, mark.kanda@oracle.com, den@openvz.org
 References: <20260619105514.128812-1-andrey.drobyshev@virtuozzo.com>
- <20260619105514.128812-4-andrey.drobyshev@virtuozzo.com>
+ <20260619105514.128812-5-andrey.drobyshev@virtuozzo.com>
 From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
 Content-Language: en-US, pl-PL
 Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
@@ -78,7 +78,7 @@ Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
  WHQjcZZbROLql/+ngphSgdthGIhVWrIMHJu1UxnRiwKc/fzDFUZ9hFL+W4ZLm+52TzMatpta
  oNdcP9rtsQjdYMNLuwysP4keDX8yBXADwJD7eQ+ryIIKh6X1lBMIWxeZG5W0DQ6/4BCUEbCe
  1DqkYRtZyUEzgAbaHliaa5t3dfCtSMz5cAbGqxarXc7bKOjA6P8hCwgP0tEypA==
-In-Reply-To: <20260619105514.128812-4-andrey.drobyshev@virtuozzo.com>
+In-Reply-To: <20260619105514.128812-5-andrey.drobyshev@virtuozzo.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=145.239.82.108;
@@ -105,100 +105,98 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 19.06.2026 12:55, Andrey Drobyshev wrote:
-> When preserving a vhost fd using CPR, call VHOST_RESET_OWNER prior to CPR
-> in old QEMU.  Otherwise, new QEMU will fail when it calls VHOST_SET_OWNER
-> during vhost_dev_init.
+> During CPR migration, instead of reopening /dev/vhost-vsock device on
+> each initialization, let's make sure the already open FD is preserved and
+> properly reused on a subsequent initialization.
 > 
-> This patch is a rework of the change originally proposed by Steve, Ben
-> and Mark at [0].
-> 
-> [0] https://lore.kernel.org/qemu-devel/20260128-cpr-tap-v4-0-48e334d4216b@akamai.com
-> 
-> Originally-by: Mark Kanda <mark.kanda@oracle.com>
-> Originally-by: Steve Sistare <steven.sistare@oracle.com>
-> Originally-by: Ben Chaney <bchaney@akamai.com>
 > Signed-off-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
 > ---
->   hw/virtio/vhost-kernel.c          |  6 ++++++
->   hw/virtio/vhost.c                 | 33 +++++++++++++++++++++++++++++++
->   include/hw/virtio/vhost-backend.h |  1 +
->   include/hw/virtio/vhost.h         |  1 +
->   4 files changed, 41 insertions(+)
+>   hw/virtio/vhost-vsock.c | 25 ++++++++++++++++++++-----
+>   1 file changed, 20 insertions(+), 5 deletions(-)
 > 
-> diff --git a/hw/virtio/vhost-kernel.c b/hw/virtio/vhost-kernel.c
-> index 3390b48c6f1..55d316b88e9 100644
-> --- a/hw/virtio/vhost-kernel.c
-> +++ b/hw/virtio/vhost-kernel.c
-> @@ -261,6 +261,11 @@ static int vhost_kernel_set_owner(struct vhost_dev *dev)
->       return vhost_kernel_call(dev, VHOST_SET_OWNER, NULL);
->   }
+> diff --git a/hw/virtio/vhost-vsock.c b/hw/virtio/vhost-vsock.c
+> index da244eb1657..ea9a7d2149d 100644
+> --- a/hw/virtio/vhost-vsock.c
+> +++ b/hw/virtio/vhost-vsock.c
+> @@ -20,6 +20,7 @@
+>   #include "hw/core/qdev-properties.h"
+>   #include "hw/virtio/vhost-vsock.h"
+>   #include "monitor/monitor.h"
+> +#include "migration/cpr.h"
 >   
-> +static int vhost_kernel_reset_owner(struct vhost_dev *dev)
-> +{
-> +    return vhost_kernel_call(dev, VHOST_RESET_OWNER, NULL);
-> +}
-> +
->   static int vhost_kernel_get_vq_index(struct vhost_dev *dev, int idx)
+>   static void vhost_vsock_get_config(VirtIODevice *vdev, uint8_t *config)
 >   {
->       assert(idx >= dev->vq_index && idx < dev->vq_index + dev->nvqs);
-> @@ -385,6 +390,7 @@ const VhostOps kernel_ops = {
->           .vhost_get_features_ex = vhost_kernel_get_features,
->           .vhost_set_backend_cap = vhost_kernel_set_backend_cap,
->           .vhost_set_owner = vhost_kernel_set_owner,
-> +        .vhost_reset_owner = vhost_kernel_reset_owner,
->           .vhost_get_vq_index = vhost_kernel_get_vq_index,
->           .vhost_vsock_set_guest_cid = vhost_kernel_vsock_set_guest_cid,
->           .vhost_vsock_set_running = vhost_kernel_vsock_set_running,
-> diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
-> index af41841b529..1521b50cbff 100644
-> --- a/hw/virtio/vhost.c
-> +++ b/hw/virtio/vhost.c
-> @@ -24,6 +24,7 @@
->   #include "standard-headers/linux/vhost_types.h"
->   #include "hw/virtio/virtio-bus.h"
->   #include "hw/mem/memory-device.h"
-> +#include "migration/misc.h"
->   #include "migration/blocker.h"
->   #include "migration/qemu-file-types.h"
->   #include "system/dma.h"
-> @@ -1667,6 +1668,32 @@ static int vhost_dev_init_features(struct vhost_dev *hdev)
->       return r;
->   }
+> @@ -126,6 +127,7 @@ static void vhost_vsock_device_realize(DeviceState *dev, Error **errp)
+>       VHostVSockCommon *vvc = VHOST_VSOCK_COMMON(dev);
+>       VirtIODevice *vdev = VIRTIO_DEVICE(dev);
+>       VHostVSock *vsock = VHOST_VSOCK(dev);
+> +    DeviceState *proxy = qdev_get_parent_bus(DEVICE(vsock))->parent;
+>       int vhostfd;
+>       int ret;
 >   
-> +static int vhost_cpr_notifier(NotifierWithReturn *notifier,
-> +                              MigrationEvent *e, Error **errp)
-> +{
-> +    struct vhost_dev *dev;
-> +    int r;
-> +
-> +    dev = container_of(notifier, struct vhost_dev, cpr_notifier);
-> +
-> +    if (dev->vhost_ops->backend_type != VHOST_BACKEND_TYPE_KERNEL) {
-> +        return 0;
-> +    }
-> +
-> +    if (e->type == MIG_EVENT_SETUP) {
-> +        r = dev->vhost_ops->vhost_reset_owner(dev);
-> +        if (r < 0) {
-> +            VHOST_OPS_DEBUG(r, "vhost_reset_owner failed");
+> @@ -141,7 +143,8 @@ static void vhost_vsock_device_realize(DeviceState *dev, Error **errp)
+>       }
+>   
+>       if (vsock->conf.vhostfd) {
+> -        vhostfd = monitor_fd_param(monitor_cur(), vsock->conf.vhostfd, errp);
+> +        vhostfd = cpr_get_fd_param(proxy->id, vsock->conf.vhostfd, 0,
 
-Shouldn't we abort the migration attempt here?
+Is this proxy->id *guaranteed* unique in a QEMU instance?
 
-> +        }
-> +    } else if (e->type == MIG_EVENT_FAILED) {
-> +        r = dev->vhost_ops->vhost_set_owner(dev);
-> +        if (r < 0) {
-> +            VHOST_OPS_DEBUG(r, "vhost_set_owner failed");
+> +                                   errp);
+>           if (vhostfd == -1) {
+>               error_prepend(errp, "vhost-vsock: unable to parse vhostfd: ");
+>               return;
+> @@ -151,10 +154,20 @@ static void vhost_vsock_device_realize(DeviceState *dev, Error **errp)
+>               return;
+>           }
+>       } else {
+> -        vhostfd = open("/dev/vhost-vsock", O_RDWR);
+> -        if (vhostfd < 0) {
+> -            error_setg_file_open(errp, errno, "/dev/vhost-vsock");
+> -            return;
+> +        if (cpr_is_incoming()) {
+> +            vhostfd = cpr_find_fd(proxy->id, 0);
+> +            if (vhostfd < 0) {
+> +                error_setg(errp, "vhost-vsock: could not restore vhost FD "
+> +                           "for %s", proxy->id);
+> +                return;
+> +            }
+> +        } else {
+> +            vhostfd = open("/dev/vhost-vsock", O_RDWR);
+> +            if (vhostfd < 0) {
+> +                error_setg_file_open(errp, errno, "/dev/vhost-vsock");
+> +                return;
+> +            }
+> +            cpr_save_fd(proxy->id, 0, vhostfd);
+>           }
+>   
+>           if (!qemu_set_blocking(vhostfd, false, errp)) {
+>              return;
+>           }
 
-What would be the impact on the guest of this failure?
+So if qemu_set_blocking() fails the FD leaks (existing bug) and now also
+CPR has this dangling FD saved?
 
-Shouldn't we *at least* unconditionally print error here?
-Maybe even more if guest would be unsafe in this condition?
-> +        }
-> +    }
-> +    return 0;
-> +}
-> +
+Furthermore, if calls further down vhost_vsock_device_realize() fail
+AFAIK vhost_vsock_device_unrealize() won't get called so this FD won't
+be removed from CPR - even in something else in vhost stack actually closes
+this FD during error cleanup.
+
+> @@ -193,10 +206,12 @@ static void vhost_vsock_device_unrealize(DeviceState *dev)
+>   {
+>       VHostVSockCommon *vvc = VHOST_VSOCK_COMMON(dev);
+>       VirtIODevice *vdev = VIRTIO_DEVICE(dev);
+> +    DeviceState *proxy = qdev_get_parent_bus(dev)->parent;
+>   
+>       /* This will stop vhost backend if appropriate. */
+>       vhost_vsock_set_status(vdev, 0);
+>   
+> +    cpr_delete_fd(proxy->id, 0);
+>       vhost_dev_cleanup(&vvc->vhost_dev);
+>       vhost_vsock_common_unrealize(vdev);
+>   }
+
 Thanks,
 Maciej
 
