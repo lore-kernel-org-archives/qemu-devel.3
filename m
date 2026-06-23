@@ -4,56 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8077CDB470
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jun 2026 07:46:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 048C3CDB470
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jun 2026 07:46:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wbvq3-00060h-7V; Tue, 23 Jun 2026 03:46:31 -0400
+	id 1wbvpH-0002fN-AM; Tue, 23 Jun 2026 03:45:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wbvq0-0005ze-RI
- for qemu-devel@nongnu.org; Tue, 23 Jun 2026 03:46:29 -0400
+ id 1wbvp2-0002Tr-1P
+ for qemu-devel@nongnu.org; Tue, 23 Jun 2026 03:45:30 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wbvpz-0008GA-8n
- for qemu-devel@nongnu.org; Tue, 23 Jun 2026 03:46:28 -0400
+ id 1wbvox-00080S-TB
+ for qemu-devel@nongnu.org; Tue, 23 Jun 2026 03:45:25 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1782200786;
+ s=mimecast20190719; t=1782200723;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=MtC3xg7PVkuJ9kMfcFi2QNSzFkAExWECStM6IcLwEMQ=;
- b=dO6JRuKdVytn3PI1uBObT1Wnci0gQ1T8jDBeyqrZesKyvPC2oSZ56tKrdJFkaEQTAFkd+9
- S0oVtNFRi0fl+IqkihipvlVowDuUyoQcOL3tpE/pW483wOvkMzcdn+lXx4PfIM2wm5UXcN
- RyAoDDA6buCRUcPZndDxsIymv4TyGcg=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=9Uq/YOD4Tyc0jQlm9DPacra4GuZK8eNHou9efZzgg2Y=;
+ b=WJ0LtNg1XkopHUo2/U8FbkdrcLeyIBrKluqK8BOoZAzivm9Zsf0pqC4w+daR/dpuQtVDGj
+ +sGU3WFktCffHh5VD61MoEQ/S3qFil5Gxq/F5iHxxVIfQODb+bZY0dDS0gCV2evR51kcgK
+ 3W8RC2AuouHMP/zqIYBOWuH5eaghLcs=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-326-RBqkFLp7NuWKpr0rD5SKPg-1; Tue,
- 23 Jun 2026 03:46:22 -0400
-X-MC-Unique: RBqkFLp7NuWKpr0rD5SKPg-1
-X-Mimecast-MFC-AGG-ID: RBqkFLp7NuWKpr0rD5SKPg_1782200781
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-96-QBeQpi2DNdy8oA_-MMJjYQ-1; Tue,
+ 23 Jun 2026 03:45:19 -0400
+X-MC-Unique: QBeQpi2DNdy8oA_-MMJjYQ-1
+X-Mimecast-MFC-AGG-ID: QBeQpi2DNdy8oA_-MMJjYQ_1782200718
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id DAE3018052E3; Tue, 23 Jun 2026 07:46:20 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2F5A01955D96; Tue, 23 Jun 2026 07:45:18 +0000 (UTC)
 Received: from localhost (unknown [10.44.22.10])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id CDEC11800661; Tue, 23 Jun 2026 07:46:19 +0000 (UTC)
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id EBDF41800480; Tue, 23 Jun 2026 07:45:16 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Tue, 23 Jun 2026 11:44:34 +0400
-Subject: [PATCH v4 19/34] ui/egl: implement display and EGL cleanup
+Date: Tue, 23 Jun 2026 11:44:22 +0400
+Subject: [PATCH v4 07/34] glib-compat: add fallback for g_clear_fd/g_autofd
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260623-b4-ui-v4-19-4656aec3398d@redhat.com>
+Message-Id: <20260623-b4-ui-v4-7-4656aec3398d@redhat.com>
 References: <20260623-b4-ui-v4-0-4656aec3398d@redhat.com>
 In-Reply-To: <20260623-b4-ui-v4-0-4656aec3398d@redhat.com>
 To: qemu-devel@nongnu.org
@@ -67,34 +67,35 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>, 
  Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
  =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3768;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1464;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=eSnDIegkQtFbOfF34T/asUHw2L2glVvdSLZyaku+jY0=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqOjle1ro2ikgTjN151e7WUPQb1z6TuLQZjc8jd
- VVAOzdsSqaJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCajo5XgAKCRDa6OEJdZac
- 5UVKD/9zkllIzyzEs0Jx2Wo8GBcdY83ZDEmfoAI3Zo+GZR+nlXtV8AAaG4GpQ9z0iswBhlt0ZH3
- YMAZYzIDaOiSqppbSh+VVBfynM+SoEum51QjyVeCZl4PwwdbljMm0DjSgAFJRh5RiDcL012xkXN
- c3mIUvnJpnrty+S+/o8VgP8VgSQDWwn/1Li6mXuTxnQi7qMbWJFjyXZhzyBZre8gu+2rmdEkYhV
- PskTLPbm6qkVNUlbct2nvG1SFPdEJyq5fSaEc4KOI824tic0ydfZqTCd8dosUvV3+23CgaaWv75
- 9bERXlq26bX8qIaEcphu1BG20b+CGVKjzsdVBignulXStzxW3VcP8yqdO3dAHUZWGd71KsdRrhm
- 9uDChXHcFeXu5TyZre6hOHk0DWKnViqvwQzitB8Uq3DWltqaEDqa1CJFTCniikTTakj+fBnVMiS
- FduXueULoT2V+BJiMYagG+XSESQBBE0N2JLFxONFXIShTRw8+Dmb8ZcE7+QunJBOETS/btOpFne
- VwaZ5u8lIqi14t9MpcJXAZR9QuCYbqMZ9oa6QRjilGpnH72EjVIJW2uuXYyXj8oLWCYdd8K48e1
- Tj61bjqLIA5JDtYqyJlH/EJAENZ4NNG8CkXS0hzapnABocDLntPRPEV1I4qSGb61hz4OgRbeZcU
- PZyM6QPyRsFsCqw==
+ bh=Oc6bYtbmoQuSGvRLMjbnGE3Qy+VIBvYlZ2fSX7bu/zw=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqOjldpptmIJyG0B78/PQZM4WHhy3VdfxfRDSQh
+ cRiYIC10KmJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCajo5XQAKCRDa6OEJdZac
+ 5dKHD/9hkF9XJzFk4j2L2r/AEsR5hOdvoJ8chWOduilIzjPEMYxcCZAd9Qd8UrA0Mz9sUR/93ES
+ +dTDz6bLe0DsKWv4JFP9cTWtz7GAOogjCjtwLG/aXZgzatLc0bJCT/xGin8iAkYNaqszmjSWdcD
+ RPxV8OokhakaCFgC5tP/x8rAsCbq/fdIm3k1HhlLuneA6S9G8nc1zeAb/M9UJsk3SBmAQH1n60O
+ 9UFe2XVFUapsIcD4eqYg9l/ShcxSy67noHNxNjv2S4KiUErWFAUKftldRunvjuvELFGqois1bAo
+ vujGLObiL4xM6y5Jdgcj1RR9mfGVleRpPa2pGAWwqAHEW3MFEFpyM81LyW7GlEuhOqNBrN5FmGj
+ GEMlE3YFgrV7f9W2ZypMqBZtLulF3VBVJTxP4M2HbnXDc/52OeSpet4c/zchNq0ZYGVeN6e64Hh
+ K6u9Y3Ud4DYMoOyTJYMX2tYhXJhQNabHahMTgn7F2WV0pZaUT42H/9RnK9hLJ47HrLIC8wwwHuW
+ qV6o4h3kamlqVCuMW17fi2N8kJQwW+kVwIqfNd0Eh3t4tOYbeChOZbNLIqEb+4GusGjtNlNI2oR
+ PXjibmPgZ0qPzdfZTwNe2L+KWEnAawJ3Qs/at1YuXU5wTitcbKBxCZzANZjdA+JzO2v/Zrasjyw
+ qNx3vYyHfMpFHmQ==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
 Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+X-Spam_score_int: 8
+X-Spam_score: 0.8
+X-Spam_bar: /
+X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,129 +111,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add egl_cleanup() to tear down the EGL render node context, GBM device,
-and EGL display. Add egl_headless_cleanup() to unregister listeners,
-destroy framebuffers, and free per-console state tracked via a new
-GPtrArray.
+Those helpers were added in glib 2.76.
 
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- include/ui/egl-helpers.h |  1 +
- ui/egl-headless.c        | 31 +++++++++++++++++++++++++++++++
- ui/egl-helpers.c         | 19 +++++++++++++++++++
- 3 files changed, 51 insertions(+)
+ include/glib-compat.h | 29 +++++++++++++++++++++++++++++
+ 1 file changed, 29 insertions(+)
 
-diff --git a/include/ui/egl-helpers.h b/include/ui/egl-helpers.h
-index c97a0d5c248..405ddd91259 100644
---- a/include/ui/egl-helpers.h
-+++ b/include/ui/egl-helpers.h
-@@ -81,6 +81,7 @@ EGLContext qemu_egl_init_ctx(void);
- bool qemu_egl_has_dmabuf(void);
+diff --git a/include/glib-compat.h b/include/glib-compat.h
+index 2e32b90f051..32ee2afdcdf 100644
+--- a/include/glib-compat.h
++++ b/include/glib-compat.h
+@@ -30,6 +30,7 @@
+ #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
  
- bool egl_init(const char *rendernode, DisplayGLMode mode, Error **errp);
-+void egl_cleanup(void);
+ #include <glib.h>
++#include <glib/gstdio.h>
+ #if defined(G_OS_UNIX)
+ #include <glib-unix.h>
+ #include <sys/types.h>
+@@ -129,6 +130,34 @@ qemu_g_test_slow(void)
+ #define g_test_thorough() qemu_g_test_slow()
+ #define g_test_quick() (!qemu_g_test_slow())
  
- const char *qemu_egl_get_error_string(void);
- 
-diff --git a/ui/egl-headless.c b/ui/egl-headless.c
-index 878bfebb40c..ba27efcf4c3 100644
---- a/ui/egl-headless.c
-+++ b/ui/egl-headless.c
-@@ -9,6 +9,7 @@
- 
- typedef struct egl_dpy {
-     DisplayChangeListener dcl;
-+    DisplayGLCtx *ctx;
-     DisplaySurface *ds;
-     QemuGLShader *gls;
-     egl_fb guest_fb;
-@@ -19,6 +20,8 @@ typedef struct egl_dpy {
-     uint32_t pos_y;
- } egl_dpy;
- 
-+static GPtrArray *egl_dpys;
++static inline gboolean g_clear_fd_qemu(int *fd_ptr, GError **error)
++{
++#if GLIB_CHECK_VERSION(2, 76, 0)
++    return g_clear_fd(fd_ptr, error);
++#else
++    int fd = *fd_ptr;
 +
- /* ------------------------------------------------------------------ */
- 
- static void egl_refresh(DisplayChangeListener *dcl)
-@@ -220,6 +223,8 @@ static void egl_headless_init(DisplayState *ds, DisplayOptions *opts)
-     egl_dpy *edpy;
-     int idx;
- 
-+    egl_dpys = g_ptr_array_new();
++    *fd_ptr = -1;
 +
-     for (idx = 0;; idx++) {
-         DisplayGLCtx *ctx;
- 
-@@ -232,15 +237,41 @@ static void egl_headless_init(DisplayState *ds, DisplayOptions *opts)
-         edpy->gls = qemu_gl_init_shader();
-         ctx = g_new0(DisplayGLCtx, 1);
-         ctx->ops = &eglctx_ops;
-+        edpy->ctx = ctx;
-         qemu_console_set_display_gl_ctx(con, ctx);
-         qemu_console_register_listener(con, &edpy->dcl, &egl_ops);
-+        g_ptr_array_add(egl_dpys, edpy);
++    if (fd < 0) {
++        return TRUE;
 +    }
++
++    return g_close(fd, error);
++#endif
 +}
++#define g_clear_fd(fd, err) g_clear_fd_qemu(fd, err)
 +
-+static void egl_headless_cleanup(void)
++#if !GLIB_CHECK_VERSION(2, 76, 0)
++static inline void _g_clear_fd_ignore_error(int *fd_ptr)
 +{
-+    if (!egl_dpys) {
-+        return;
-     }
-+
-+    for (guint i = 0; i < egl_dpys->len; i++) {
-+        egl_dpy *edpy = g_ptr_array_index(egl_dpys, i);
-+
-+        qemu_console_unregister_listener(&edpy->dcl);
-+        qemu_console_set_display_gl_ctx(edpy->dcl.con, NULL);
-+        egl_fb_destroy(&edpy->guest_fb);
-+        egl_fb_destroy(&edpy->cursor_fb);
-+        egl_fb_destroy(&edpy->blit_fb);
-+        qemu_gl_fini_shader(edpy->gls);
-+        g_free(edpy->ctx);
-+        g_free(edpy);
-+    }
-+    g_clear_pointer(&egl_dpys, g_ptr_array_unref);
-+
-+    egl_cleanup();
- }
- 
- static QemuDisplay qemu_display_egl = {
-     .type       = DISPLAY_TYPE_EGL_HEADLESS,
-     .early_init = early_egl_headless_init,
-     .init       = egl_headless_init,
-+    .cleanup    = egl_headless_cleanup,
- };
- 
- static void register_egl(void)
-diff --git a/ui/egl-helpers.c b/ui/egl-helpers.c
-index 069a5249554..d689f187c4e 100644
---- a/ui/egl-helpers.c
-+++ b/ui/egl-helpers.c
-@@ -733,3 +733,22 @@ bool egl_init(const char *rendernode, DisplayGLMode mode, Error **errp)
-     display_opengl = 1;
-     return true;
- }
-+
-+void egl_cleanup(void)
-+{
-+    if (qemu_egl_rn_ctx) {
-+        eglDestroyContext(qemu_egl_display, qemu_egl_rn_ctx);
-+        qemu_egl_rn_ctx = NULL;
-+    }
-+
-+#ifdef CONFIG_GBM
-+    g_clear_pointer(&qemu_egl_rn_gbm_dev, gbm_device_destroy);
-+    g_clear_fd(&qemu_egl_rn_fd, NULL);
++    int errsv = errno;
++    g_clear_fd(fd_ptr, NULL);
++    errno = errsv;
++}
++#define g_autofd __attribute__((cleanup(_g_clear_fd_ignore_error)))
 +#endif
 +
-+    if (qemu_egl_display) {
-+        eglReleaseThread();
-+        eglTerminate(qemu_egl_display);
-+        qemu_egl_display = NULL;
-+    }
-+}
+ #pragma GCC diagnostic pop
+ 
+ #ifndef G_NORETURN
 
 -- 
 2.54.0
