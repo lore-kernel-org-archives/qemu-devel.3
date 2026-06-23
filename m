@@ -4,145 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EEE8DCDB47C
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jun 2026 21:16:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1C78CDB470
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jun 2026 21:33:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wc8Sj-0000y1-Ok; Tue, 23 Jun 2026 17:15:17 -0400
+	id 1wc8jU-0003E2-Bb; Tue, 23 Jun 2026 17:32:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1wc8Sh-0000tm-Do
- for qemu-devel@nongnu.org; Tue, 23 Jun 2026 17:15:15 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <alex@shazbot.org>) id 1wc8jM-0003DL-LR
+ for qemu-devel@nongnu.org; Tue, 23 Jun 2026 17:32:30 -0400
+Received: from fout-a6-smtp.messagingengine.com ([103.168.172.149])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1wc8Sf-0002ZO-GL
- for qemu-devel@nongnu.org; Tue, 23 Jun 2026 17:15:15 -0400
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65NJwkUS3454664
- for <qemu-devel@nongnu.org>; Tue, 23 Jun 2026 21:15:11 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- magXe6KtTlLD03dhum2nDQzDN1jU9apHm5SsCHwrUvs=; b=OPWG6xVHB2rEjAJR
- 1wsZ/8SvF2340D7s60Wg6e9y7Hp57niszl8C4wTGOMbL/x7zdYSTH8iUp31Xdt08
- TJeIagBbgxIn61hlJ0ZoMFyf7YqfU3V65u0535xVB3iEReo7giPYqpnG8amSA099
- 6XrcsDp1tGO2uZ5vUAmDDRkxxRtCTy2iHOsxGvQMZeaBCTYNVT5miKLBRoZr5NIZ
- NgPMtgHGIyHBoltJo+fyTGppmFjOxUtJrnvM9ADzEhn9bWKSupbn/LUqlMsHct/D
- FnF0h2RJAl9KHe9KCbeigs4hOsGTIsVvKMVc3lTLwAXAYx03g4qtRVVyHvo2he9n
- ZM0VqA==
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
- [209.85.222.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4eyp1gub6t-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 23 Jun 2026 21:15:11 +0000 (GMT)
-Received: by mail-qk1-f200.google.com with SMTP id
- af79cd13be357-91598ab3a1aso25440785a.3
- for <qemu-devel@nongnu.org>; Tue, 23 Jun 2026 14:15:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1782249310; x=1782854110; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
- :cc:subject:date:message-id:reply-to;
- bh=magXe6KtTlLD03dhum2nDQzDN1jU9apHm5SsCHwrUvs=;
- b=GmHJM6EMb1+7C2tKZdAOrGOJlnwdz0KKfftx6iwDF1b62db7iuehbxwnBqr14SYfLL
- ycKWZt5hT4aLKngJI0uYkfy4T8YQEgcoTgCNwzohHg2gWnNxDxj40bh7NBmWFx9gFPgz
- /VKGxkk+Ea5cZ09uxrzXQvJMVmRPDWVCIgC34nS+2RzXVyN1z1tMAoQ+ktT3+lCWxZhp
- l0ttHIdyW/Z5I32R6t6i/M9/j5PuoNhBydPln9RQGAgJ+1bL6/BXcdqOEA9J+SQNHWTM
- gJgIDKQALwW49ZWs4Mi7UQyE43qcYcVh3F+sWV0MSSTvtmo6tnOf6ymG+R7Q8DTsvfdO
- PltQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782249310; x=1782854110;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :cc:to:from:subject:user-agent:mime-version:date:message-id:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=magXe6KtTlLD03dhum2nDQzDN1jU9apHm5SsCHwrUvs=;
- b=qukMQd7u0n3Orl6czG1dUVl38Tx87MkFB3wEYnVZLwZIS2A966VqGfySGV/NnDsPNz
- DHfYz9VBwKGV0yOi5SvUIVEKEqdfmnnWkV28opCGCeXBiuO9enJ2mCAJw+C0QJ3tB0u0
- cyH2mOcnzCji8dfsOQVCq6GbZ/79wF1lX02HtWhs+h3Sr5gc/dSijKaCn4hLOr7hgKU3
- WN5quiEgeJ7XWlkt/WncHxT1M4xmXQSQLANOsA2EXvZGi4zJ/zKBvXpPSihq5eZ2tDDX
- CNlGP1sP2rNbfIUf9Q2vm6Yc6SZr9WyZrsiSB3kxr18pRr42NuzgcqAVHl0OXl2B1/jQ
- glKA==
-X-Forwarded-Encrypted: i=1;
- AFNElJ+Gqg/PRbRmdvB9VloSifmppzMCNRs3Dn2uYMRR8kv1vQp6ETgwJdgFb0PS1elqiB+3UcDwOeTxmIkD@nongnu.org
-X-Gm-Message-State: AOJu0YwmwRCj/+jif/ufc8njPsX4xL3yhdWk1I//e9G73yB4mRgSYWDI
- g69lWHle6QY7ZaojBHQTYPuTtrzl4+Y4jbe9x097HJPYGajzNABE6vFcKNsVHbMPkQNq1NYA/LL
- x2aRPKeeFu5sOJN3KI4Z5BKzVvDtBW4+HetKmkGG72HMdZPfsaQ+E68j0Mg==
-X-Gm-Gg: AfdE7cm7n5iTs6T2FlfM75P71YqoAI/MRq6f6K+UuIo/iXiFVBfACvplY7mrPk0mcrA
- 27HyrQAZmP2UanfTwxCFRGhG1A3BxKIeB7hRZA3vgS+ZadUT3ld9rfuY1gY8JW1mXXZn7NV7iah
- mbiM/UOBmEqKbF65iijgl95+J2uztqMOms9jwRQWbUizo6y39dan187XJfqdMuCE5TkPCBn/HhU
- M1Cs0bjapNidb9utvkrv8YG9cOeh2U4ffHBylw7z/Y+BzgMjV+sauEaIRnom28NsTop58c7Unl/
- 5fx9qmAz5YqcC1BizC09eb97sCawJ0vF7ymMv6amqXxn4cBxShYmqO/80VgboMn4ZEC277EYWeb
- 8KKcbXOzBWK9auZP9RCmHuIxuCazcShfme3VSFXl0aaO6
-X-Received: by 2002:a05:620a:170f:b0:915:9e84:85d1 with SMTP id
- af79cd13be357-92645da2097mr754205885a.23.1782249309984; 
- Tue, 23 Jun 2026 14:15:09 -0700 (PDT)
-X-Received: by 2002:a05:620a:170f:b0:915:9e84:85d1 with SMTP id
- af79cd13be357-92645da2097mr754196485a.23.1782249309418; 
- Tue, 23 Jun 2026 14:15:09 -0700 (PDT)
-Received: from [192.168.68.103] ([189.79.21.40])
- by smtp.gmail.com with ESMTPSA id
- af79cd13be357-926000c0c0csm371464085a.25.2026.06.23.14.15.07
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 23 Jun 2026 14:15:08 -0700 (PDT)
-Message-ID: <daa5f524-1b44-457f-bc23-b93a281cf4f6@oss.qualcomm.com>
-Date: Tue, 23 Jun 2026 18:15:05 -0300
+ (Exim 4.90_1) (envelope-from <alex@shazbot.org>) id 1wc8jK-0005aV-BO
+ for qemu-devel@nongnu.org; Tue, 23 Jun 2026 17:32:28 -0400
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+ by mailfout.phl.internal (Postfix) with ESMTP id 9A47BEC00BD;
+ Tue, 23 Jun 2026 17:32:13 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+ by phl-compute-04.internal (MEProxy); Tue, 23 Jun 2026 17:32:13 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=shazbot.org; h=
+ cc:cc:content-transfer-encoding:content-type:content-type:date
+ :date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+ :references:reply-to:subject:subject:to:to; s=fm3; t=1782250333;
+ x=1782336733; bh=8+SsNxJkFFaz3pCVLqVcoObHgm353gOoe+kxw7v8wno=; b=
+ QU5HOLDlnGZJtvzO1bkdNJzj24eAYwT45pgtMdiJiTmEiHiX4PCK9NsguGe532LX
+ yNCOV3AXRKAH27UaSlgtlmyAYdshZg/HjT3/2rL92tYqQmH3JatDyBT4/EtqxU4b
+ WKTR/iaoYJIpSILRZdgY9B9kr66VZr6D1oFSNtLX+KWZGfWnd7S8JJEZNuR5fcL7
+ HWIer7XVkTBUx0h6M09WynX8aObzERRVI5hGcq55qIWV0TgYR9AXyZAvj6/lDaFZ
+ MmfyeBDxX5VwIwMS0z2/vtgNQct8oD1npFqyeYrpkTahxIeePE49qMrGsrYjVNaK
+ S+bPWeBrndegQzlIQKYmzg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-transfer-encoding
+ :content-type:content-type:date:date:feedback-id:feedback-id
+ :from:from:in-reply-to:in-reply-to:message-id:mime-version
+ :references:reply-to:subject:subject:to:to:x-me-proxy
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1782250333; x=
+ 1782336733; bh=8+SsNxJkFFaz3pCVLqVcoObHgm353gOoe+kxw7v8wno=; b=a
+ uJr2rlyi78b42w3nyHjFoXbJnpM4pkqowsqA+jJrvLhL9H65OwGGYzLtd+6GLyvP
+ /mRLgA12XjINxDBal5DZ+VbUVXxwyeR8A/PDqlW36wNG7rMpcR4w6Dl+dEffENg8
+ 0K24c6aROh+P/Tb3oYEiApxLanvX2rF6kCIidZh9xhSp+D4jokwacvYbL4knftvM
+ MXHsiQZ2OeHZFIoeUKSOD6qp4WXOwzJ9oltwcAtTSCIw/lAjXSfTdkNQIbRs/GTk
+ oqTwhQDbsD8i1OmEUExw1Zx7J4hSt5dfUimoPTckkb27/82MgBrWA+GbGTLhjWys
+ Nm7f72KSJX/oSwEO07+wg==
+X-ME-Sender: <xms:Xfs6aoEDJYyCUJSbKQF5RR3N3Fb42FX0TkKhJhKS3u2CGxQnAmrviQ>
+ <xme:Xfs6aqS90Alg9fTjBL-TDybtgLgnoqXRutw6oAaAqAgU02aNXiW01Pf4zyNcKmv7J
+ 34iaXcuM_jTIwDNuGuswBjjPti7-d-Y7Bq1kqyipW9MCkjDITqtag>
+X-ME-Received: <xmr:Xfs6atteqxnNFM6u1rVRs7SRZFwQz3ufxAKo_n-sM1nOep1X269BOOcnmU0>
+X-ME-Proxy-Cause: dmFkZTFXH0e1s55O3KCtpmQ1ABgEQDdbr9BlntBYQD33mBXEBUz0EfcgM/pwMDppcwlgQO
+ Ma8HoAzSROfnvty3GGOWEbQT+kKibSXb5cSIgtBXf76VSubHrMTehWqSU0vJns5JhklKAE
+ dDzyvOMxh3dL5rMPPnePIbLSIG3jFgwOcM1M5kv9Hvj4KUcZupNLSUGh+/SZvKUutMvoEh
+ c06+468DoiM/ZyQdwz+j7tMbHQq4LIbhKTWpEOirSsU/X3bpC9FvcI1xfIc9TY+XsRKM/K
+ E7dTDL9IwH4R3znPa5sCAgIj7ggnEaeQQDZPcqv/kgobftvYZkDdZt7JAr0nAsaANm8udH
+ gwwUNUNjbQKwsUYSHv1pWoRf108Eq+GHKY6qrAVaKNjhEecl6tavAR66qyITr0PN1KZ9ZB
+ vb/jTvs8MOUi4k3hx5w2Tr6kjYVwlkmpoYIwfq7W1qpJW13GgL/P3XZCgFFJGdpt4jdcTV
+ 1rCnZILIxhE2loqy9FzRGlViHIq/1QPMIXAM6xmxjfpFqtRqUNhYEK98J4FH3ZXIfr76gk
+ 9YNw0hut510ohE7HWbcmfXwlRhWCPeC794dzSDb7meckrqHdMH88X0zmIr49pj0Q/unYMz
+ GAvf9G90IFPGFT/c3euHpk9Ijts1c7IHyduu+frmQvxgD7jYSpcDQJxfTcPg
+X-ME-Proxy: <xmx:Xfs6aqJmhTju1Ce07oCe36PvzEPElSjWZiVS1UR-IqwKSMf-uVycyQ>
+ <xmx:Xfs6aqmZHU3tyOY-Li8WxCK08vkxS9G7EuVUMO-BAz2wW8eR-GJnbQ>
+ <xmx:Xfs6arKyYYf7F2VGyttt2seneKeZKIgnR6tigeblMvB980cI0N8pCQ>
+ <xmx:Xfs6av7QsumwpeUNFrP30NGpvJUfBUcgOfH8tLrth0lxUp6bRH4iBQ>
+ <xmx:Xfs6aikbL1r_OrPXIl4pWHurjQ2Q8l01gAeQW65tPal9GFAviVRoZzGb>
+Feedback-ID: i03f14258:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 23 Jun 2026 17:32:12 -0400 (EDT)
+Date: Tue, 23 Jun 2026 15:32:11 -0600
+From: Alex Williamson <alex@shazbot.org>
+To: Tomita Moeko <tomitamoeko@gmail.com>
+Cc: alex@shazbot.org, qemu-devel@nongnu.org, =?UTF-8?B?Q8OpZHJpYw==?= Le
+ Goater <clg@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>, K S Maan
+ <kirandeepmaan45@gmail.com>
+Subject: Re: [PATCH v3 0/7] vfio/igd: Fix garbled screen on IGD passthrough
+ with legacy VBIOS
+Message-ID: <20260623153211.37c6857a@shazbot.org>
+In-Reply-To: <20260617100646.28326-1-tomitamoeko@gmail.com>
+References: <20260617100646.28326-1-tomitamoeko@gmail.com>
+X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 05/24] target/riscv: make some riscv_sysemu_ops TCG only
-From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, liwei1518@gmail.com,
- zhiwei_liu@linux.alibaba.com, chao.liu.zevorn@gmail.com,
- pierrick.bouvier@oss.qualcomm.com, Palmer Dabbelt <palmer@dabbelt.com>
-References: <20260622193141.1449724-1-daniel.barboza@oss.qualcomm.com>
- <20260622193141.1449724-6-daniel.barboza@oss.qualcomm.com>
- <5bbeb7ee-2826-453d-b50c-60240df47954@oss.qualcomm.com>
- <3b91c2ad-479a-4d08-ada4-b9af24ebf697@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <3b91c2ad-479a-4d08-ada4-b9af24ebf697@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: Zs0m3_u7cTq2WuY7t1dO9dRlGRTpyyRr
-X-Proofpoint-GUID: Zs0m3_u7cTq2WuY7t1dO9dRlGRTpyyRr
-X-Authority-Analysis: v=2.4 cv=QJhYgALL c=1 sm=1 tr=0 ts=6a3af75f cx=c_pps
- a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=sHJf4AwOIoU3qjeHFPlg6Q==:17
- a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
- a=EUspDBNiAAAA:8 a=GlbM3WHAALaB_hmt5SQA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=PEH46H7Ffwr30OY-TuGO:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjIzMDE3NSBTYWx0ZWRfXwY9UPz2qqyZ4
- 6QZS5h/Ec7bW1MaUfjl5U4YA3WEr89zdwY/dF5MJfBHyFvqVf+RJSeBTdh+JemMP5vi+2uRBlAp
- m5A9IG6uSJVvVDu4uofycR/tX8Z7sqg=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjIzMDE3NSBTYWx0ZWRfX+AumllvBBBPU
- w3+Hat5fpuWYdYURmipobLoe00XJ6fEb/3qx8LnQCWhICghyV8J9LtDxwlCX1TwnzLNtJIKC7uI
- 5HoWz0filfgo8Yo4hYSBN3rsMzXtRE+VHtBwH/OlTIAq/Mm1xy8oZQtTGrmv3HYyP8ajZLLiexW
- aJ3kGmgLmE85f0BUOz9dikt1WQ91d+Le/GF1Z9qc7jnMXUOi7rjljBbm+ClrM5nSeJilgFFC98X
- AnnBFKWt5hWBk4PROn/eWNsAFR2TRoLuySROx7zIao1CiEaV5rjZ6ME1/YEA363o4ljeE4w6dIY
- YgQbLyQvovOFXrAb/65GuEy4uRO1nDtqgUBh8x/cm9QL1Fs3iHQAaYfRyWcnacPYgGSqB1CnU7S
- vDoeXFDCJZW9k2beTo/btJCrmF7oStukL7zxzbSPmVljM+WkM+vNqqJiM7kvHp5gpCckVr9vwfr
- 0j8liwn+HMDi9X1RqTg==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-23_04,2026-06-23_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 impostorscore=0 bulkscore=0 adultscore=0 suspectscore=0
- lowpriorityscore=0 phishscore=0 malwarescore=0 priorityscore=1501
- clxscore=1015 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2606230175
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=103.168.172.149; envelope-from=alex@shazbot.org;
+ helo=fout-a6-smtp.messagingengine.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -159,83 +108,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Wed, 17 Jun 2026 18:06:37 +0800
+Tomita Moeko <tomitamoeko@gmail.com> wrote:
 
+> This series fixes the regression that on IGD passthrough with legacy
+> BIOS boot and VBIOS, the screen is garbled during BIOS POST and GRUB
+> (which uses standard VGA output routines), starting from QEMU 10.0.
+> Though the kernel i915 driver still works, it reports an error about
+> the initial GTT programmed by VBIOS is using invalid address.
+> 
+> i915 0000:00:02.0: [drm] *ERROR* Initial plane programming using invalid range, dma_addr=0x00000000db200000 ((null) [0x00000000baf00000-0x00000000beefffff])
+> 
+> With the help of AI disassembling the VBIOS image dumped from host, it
+> is found that the VBIOS itself implements a routine like:
+> 
+>     uint32_t get_BDSM() {
+>         static uint32_t saved = 0;
+>         if (saved != 0) {
+>             return saved;
+>         }
+>         return read_pci_config(BDSM_REG);
+>     }
+> 
+> And the saved value is not cleared after initialization. Given that IGD
+> devices don't have a real ROM BAR, the VBIOS image read by default from
+> host is actually the VBIOS shadow RAM region, containing host-side
+> modifications like the saved BDSM value above during POST. When the
+> image is executed in guest, it still uses the saved host BDSM (HPA)
+> instead of the value programmed by SeaBIOS in config space (GPA). This
+> address mismatch leads to the garbled screen and i915 error.
+> 
+> The previous solution, c4c45e943e51 ("vfio/pci: Intel graphics legacy
+> mode assignment"), adjusts GTT entry addresses to (addr - host BDSM +
+> guest BDSM) to workaround that. But it is removed in 5aed8b0f0be2
+> ("vfio/igd: Remove GTT write quirk in IO BAR 4") due to inconsistent
+> values in MMIO BAR0 and IO BAR4. Considering it's unsafe to expose HPA
+> to guest, a ROM quirk clearing the saved value in VBIOS image is
+> introduced to fix the issue.
+> 
+> During debugging, it is also found that IGD VBIOS ROM doesn't always
+> match the actual IGD device ID, due to the fact that IGD of the same
+> CPU family has multiple device IDs but shares the same ROM image.
+> However, SeaBIOS checks the device ID strictly and refuses to run if
+> IDs does not match. Currently only the default path, reading ROM from
+> kernel patches the device ID, but the romfile path doesn't. So the ROM
+> ID patching logic is also refactored in this patch series to also handle
+> the romfile path.
+> 
+> These changes are tested on Haswell platform with legacy BIOS boot, by
+> K S Maan. Thanks to K S Maan for continuous help on locating and testing
+> the issue!
+> 
+> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3093
+> Reported-by: K S Maan <kirandeepmaan45@gmail.com>
+> 
+> Changelog:
+> v3:
+> * Refactor ROM checksum calculation and patching logic as Alex's comment
+> * Fix boundary checks as comments in v2.
+> Link: https://lore.kernel.org/all/20260608134559.23971-1-tomitamoeko@gmail.com/t
+> 
+> v2:
+> * New patch 2/7 to fix regression with EFI option ROMs
+> * Refine logic in ROM ID and checksum patching
+> * Reorder patch 4 and 5 for cleaner bisection
+> * Address comments from v1
+> Link: https://lore.kernel.org/all/20260603173355.36121-1-tomitamoeko@gmail.com/t
+> 
+> Tomita Moeko (7):
+>   hw/pci: Recalculate option ROM checksum before patching ID
+>   hw/pci: Skip EFI option ROM in pci_patch_ids()
+>   hw/pci: Introduce rom_need_patch_id flag in PCIDevice
+>   hw/pci: Promote pci_patch_ids() to public pci_rom_patch_ids()
+>   vfio/igd: Toggle rom_need_patch_id flag on IGD devices
+>   vfio/pci: Use pci_rom_patch_ids() for IGD ROM ID patching
+>   vfio/igd: Clear saved BDSM in legacy VBIOS ROM at load time
+> 
+>  hw/pci/pci.c                |  57 ++++++++++------
+>  hw/vfio/igd-stubs.c         |   5 ++
+>  hw/vfio/igd.c               | 132 ++++++++++++++++++++++++++++++++++--
+>  hw/vfio/pci-quirks.c        |   5 ++
+>  hw/vfio/pci.c               |  33 ++-------
+>  hw/vfio/pci.h               |   3 +
+>  hw/vfio/trace-events        |   1 +
+>  include/hw/pci/pci.h        |   3 +
+>  include/hw/pci/pci_device.h |   1 +
+>  9 files changed, 186 insertions(+), 54 deletions(-)
 
-On 6/23/2026 2:25 PM, Daniel Henrique Barboza wrote:
-> 
-> 
-> On 6/22/2026 6:30 PM, Philippe Mathieu-Daudé wrote:
->> On 22/6/26 21:31, Daniel Henrique Barboza wrote:
->>> monitor_get_register and phys_add_debug are TCG only.
->>
->> They aren't... And get_phys_addr_debug() seems mandatory.
->>
->> Maybe it happens the RISCV implementation only considers TCG?
-> 
-> Yeah, the wording I used is bad.  What I wanted to say is that the RISC-V
-> impls of these 2 interfaces are TCG only.
-> 
->>
->> If so, maybe this patch is heading in the right direction,
->> but its description has to be reworded IMHO.
->>
->> (while here, maybe we can convert to SysemuCPUOps::translate_for_debug?)
-> 
-> Do you have an example? maybe we could squash it in this patch or, if needed,
-> we can add a prep patch.
-
-Just found an easy example in the microblaze code.  I'll make the conversion
-in this same patch.
-
-
-Thanks,
-Daniel
-
-> 
-> 
-> Daniel
-> 
->>
->>> Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
->>> ---
->>>   target/riscv/cpu.c     | 6 ++++--
->>>   target/riscv/monitor.c | 2 ++
->>>   2 files changed, 6 insertions(+), 2 deletions(-)
->>>
->>> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
->>> index 4e96bbeb60..0a7e6f6ed0 100644
->>> --- a/target/riscv/cpu.c
->>> +++ b/target/riscv/cpu.c
->>> @@ -2669,11 +2669,13 @@ static int64_t riscv_get_arch_id(CPUState *cs)
->>>   static const struct SysemuCPUOps riscv_sysemu_ops = {
->>>       .has_work = riscv_cpu_has_work,
->>> -    .get_phys_addr_debug = riscv_cpu_get_phys_addr_debug,
->>>       .write_elf64_note = riscv_cpu_write_elf64_note,
->>>       .write_elf32_note = riscv_cpu_write_elf32_note,
->>> -    .monitor_get_register = riscv_monitor_get_register_legacy,
->>>       .legacy_vmsd = &vmstate_riscv_cpu,
->>> +#ifdef CONFIG_TCG
->>> +    .get_phys_addr_debug = riscv_cpu_get_phys_addr_debug,
->>> +    .monitor_get_register = riscv_monitor_get_register_legacy,
->>> +#endif
->>>   };
->>>   #endif
->>> diff --git a/target/riscv/monitor.c b/target/riscv/monitor.c
->>> index 3e89dcaf7c..7aacd1d89c 100644
->>> --- a/target/riscv/monitor.c
->>> +++ b/target/riscv/monitor.c
->>> @@ -245,6 +245,7 @@ void hmp_info_mem(Monitor *mon, const QDict *qdict)
->>>       mem_info_svxx(mon, env);
->>>   }
->>> +#ifdef CONFIG_TCG
->>>   static bool reg_is_ulong_integer(CPURISCVState *env, const char *name,
->>>                                    target_ulong *val, bool is_gprh)
->>>   {
->>> @@ -379,3 +380,4 @@ int riscv_monitor_get_register_legacy(CPUState *cs, const char *name,
->>>       return -EINVAL;
->>>   }
->>> +#endif
->>
-> 
-
+Reviewed-by: Alex Williamson <alex@shazbot.org>
 
