@@ -4,37 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96AA1CDB470
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jun 2026 18:28:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A205CDB470
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jun 2026 18:28:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wc5qa-0004fk-PJ; Tue, 23 Jun 2026 14:27:44 -0400
+	id 1wc5qe-0004fl-5p; Tue, 23 Jun 2026 14:27:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1wc5qP-0004cs-Jt
- for qemu-devel@nongnu.org; Tue, 23 Jun 2026 14:27:36 -0400
+ id 1wc5qT-0004e7-1o
+ for qemu-devel@nongnu.org; Tue, 23 Jun 2026 14:27:38 -0400
 Received: from vps-ovh.mhejs.net ([145.239.82.108])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1wc5qN-0001On-RM
- for qemu-devel@nongnu.org; Tue, 23 Jun 2026 14:27:33 -0400
+ id 1wc5qP-0001Ot-Vb
+ for qemu-devel@nongnu.org; Tue, 23 Jun 2026 14:27:35 -0400
 Received: from MUA
  by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
  (Exim 4.99.1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1wc5qM-00000004mKL-1Gg8; Tue, 23 Jun 2026 20:27:30 +0200
-Message-ID: <567d4d90-beea-4218-8e02-f867e10f6ffd@maciej.szmigiero.name>
-Date: Tue, 23 Jun 2026 20:27:25 +0200
+ id 1wc5qN-00000004mKL-3e5L; Tue, 23 Jun 2026 20:27:31 +0200
+Message-ID: <d258f5fc-5c67-456a-be2e-49b0c7e1f4aa@maciej.szmigiero.name>
+Date: Tue, 23 Jun 2026 20:27:31 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/5] migration: stop VM earlier for CPR
+Subject: Re: [PATCH v2 3/5] vhost: reset vhost devices for CPR
 To: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
 Cc: mst@redhat.com, sgarzare@redhat.com, farosas@suse.de,
  qemu-devel@nongnu.org, peterx@redhat.com, dongli.zhang@oracle.com,
  bchaney@akamai.com, mark.kanda@oracle.com, den@openvz.org
 References: <20260619105514.128812-1-andrey.drobyshev@virtuozzo.com>
- <20260619105514.128812-3-andrey.drobyshev@virtuozzo.com>
+ <20260619105514.128812-4-andrey.drobyshev@virtuozzo.com>
 From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
 Content-Language: en-US, pl-PL
 Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
@@ -78,7 +78,7 @@ Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
  WHQjcZZbROLql/+ngphSgdthGIhVWrIMHJu1UxnRiwKc/fzDFUZ9hFL+W4ZLm+52TzMatpta
  oNdcP9rtsQjdYMNLuwysP4keDX8yBXADwJD7eQ+ryIIKh6X1lBMIWxeZG5W0DQ6/4BCUEbCe
  1DqkYRtZyUEzgAbaHliaa5t3dfCtSMz5cAbGqxarXc7bKOjA6P8hCwgP0tEypA==
-In-Reply-To: <20260619105514.128812-3-andrey.drobyshev@virtuozzo.com>
+In-Reply-To: <20260619105514.128812-4-andrey.drobyshev@virtuozzo.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=145.239.82.108;
@@ -105,69 +105,100 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 19.06.2026 12:55, Andrey Drobyshev wrote:
-> During a CPR-style migration, we pass additional CPR state via an aux
-> migration channel (the cpr-transfer case).  That's done in cpr_state_save().
-> The main bulk of the migration is only sent afterwards - that's why we
-> call cpr_state_save() early on in qmp_migrate().
+> When preserving a vhost fd using CPR, call VHOST_RESET_OWNER prior to CPR
+> in old QEMU.  Otherwise, new QEMU will fail when it calls VHOST_SET_OWNER
+> during vhost_dev_init.
 > 
-> Previous patch placed emitting the SETUP event before cpr_state_save(),
-> since devices must be properly shut down before we send their FDs to CPR
-> target.  However, for the proper shut down to take place, we should also
-> stop operating them beforehand, i.e. stop the VM.
-> 
-> Thus the desirable order for cpr-transfer case looks as follows:
-> 
->    SOURCE                                  TARGET
->    ------                                  ------
->                                        cpr_state_load() blocks
->      |                                        |
->      |  1. migration_stop_vm()                |
->      |     VM stopped, devices quiesced       |
->      |                                        | Waiting for
->      |  2. notifiers (SETUP)                  | FDs from source
->      |     vhost_reset_owner() releases       |
->      |     device ownership                   |
->      |                                        |
->      |  3. cpr_state_save() ---- FDs -------> |
->      |                                        |
->      v                                        v
->    postmigrate                        Device init begins
->                                       - cpr_find_fd()
->                                       - vhost_dev_init()
->                                       - VHOST_SET_OWNER
-> 
-> So step 3 is the synchronization/cut-over point. Target proceeds immediately
-> upon receiving FDs, so steps 1-2 must complete successfully.  Otherwise:
-> 
->    * Target's VHOST_SET_OWNER fails with -EBUSY (source still owns)
->    * Race between source I/O and target device init
-> 
-> Let's stop the VM early (before FD transfer) to prevent this race.
-> Unlike regular migration, CPR-transfer passes memory via FD (memfd)
-> rather than copying RAM, so early VM stop should have minimal downtime.
-
-Was this "minimum downtime impact" assertion actually tested/benchmark
-with VM under some serious load?
-
-I am especially curious how this interacts with VFIO devices that
-have a lot of data.
-> Since we call migration_stop_vm() from qmp_migrate() (i.e. from the main
-> thread), we should also balance it out by fallback resume outside of the
-> migration thread - i.e. resume in migration_iteration_finish() is not
-> enough.  One good place for this resume op is migration_cleanup().
-> However, in migration_iteration_finish() resume is gated by successful
-> block activation, so we additionally traverse the block graph nodes to
-> make sure activation did take place before doing vm_resume().
-> 
-> This patch is a rework of the change originally proposed by Steve and
-> Ben at [0].
+> This patch is a rework of the change originally proposed by Steve, Ben
+> and Mark at [0].
 > 
 > [0] https://lore.kernel.org/qemu-devel/20260128-cpr-tap-v4-0-48e334d4216b@akamai.com
 > 
+> Originally-by: Mark Kanda <mark.kanda@oracle.com>
 > Originally-by: Steve Sistare <steven.sistare@oracle.com>
 > Originally-by: Ben Chaney <bchaney@akamai.com>
 > Signed-off-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
 > ---
+>   hw/virtio/vhost-kernel.c          |  6 ++++++
+>   hw/virtio/vhost.c                 | 33 +++++++++++++++++++++++++++++++
+>   include/hw/virtio/vhost-backend.h |  1 +
+>   include/hw/virtio/vhost.h         |  1 +
+>   4 files changed, 41 insertions(+)
+> 
+> diff --git a/hw/virtio/vhost-kernel.c b/hw/virtio/vhost-kernel.c
+> index 3390b48c6f1..55d316b88e9 100644
+> --- a/hw/virtio/vhost-kernel.c
+> +++ b/hw/virtio/vhost-kernel.c
+> @@ -261,6 +261,11 @@ static int vhost_kernel_set_owner(struct vhost_dev *dev)
+>       return vhost_kernel_call(dev, VHOST_SET_OWNER, NULL);
+>   }
+>   
+> +static int vhost_kernel_reset_owner(struct vhost_dev *dev)
+> +{
+> +    return vhost_kernel_call(dev, VHOST_RESET_OWNER, NULL);
+> +}
+> +
+>   static int vhost_kernel_get_vq_index(struct vhost_dev *dev, int idx)
+>   {
+>       assert(idx >= dev->vq_index && idx < dev->vq_index + dev->nvqs);
+> @@ -385,6 +390,7 @@ const VhostOps kernel_ops = {
+>           .vhost_get_features_ex = vhost_kernel_get_features,
+>           .vhost_set_backend_cap = vhost_kernel_set_backend_cap,
+>           .vhost_set_owner = vhost_kernel_set_owner,
+> +        .vhost_reset_owner = vhost_kernel_reset_owner,
+>           .vhost_get_vq_index = vhost_kernel_get_vq_index,
+>           .vhost_vsock_set_guest_cid = vhost_kernel_vsock_set_guest_cid,
+>           .vhost_vsock_set_running = vhost_kernel_vsock_set_running,
+> diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
+> index af41841b529..1521b50cbff 100644
+> --- a/hw/virtio/vhost.c
+> +++ b/hw/virtio/vhost.c
+> @@ -24,6 +24,7 @@
+>   #include "standard-headers/linux/vhost_types.h"
+>   #include "hw/virtio/virtio-bus.h"
+>   #include "hw/mem/memory-device.h"
+> +#include "migration/misc.h"
+>   #include "migration/blocker.h"
+>   #include "migration/qemu-file-types.h"
+>   #include "system/dma.h"
+> @@ -1667,6 +1668,32 @@ static int vhost_dev_init_features(struct vhost_dev *hdev)
+>       return r;
+>   }
+>   
+> +static int vhost_cpr_notifier(NotifierWithReturn *notifier,
+> +                              MigrationEvent *e, Error **errp)
+> +{
+> +    struct vhost_dev *dev;
+> +    int r;
+> +
+> +    dev = container_of(notifier, struct vhost_dev, cpr_notifier);
+> +
+> +    if (dev->vhost_ops->backend_type != VHOST_BACKEND_TYPE_KERNEL) {
+> +        return 0;
+> +    }
+> +
+> +    if (e->type == MIG_EVENT_SETUP) {
+> +        r = dev->vhost_ops->vhost_reset_owner(dev);
+> +        if (r < 0) {
+> +            VHOST_OPS_DEBUG(r, "vhost_reset_owner failed");
+
+Shouldn't we abort the migration attempt here?
+
+> +        }
+> +    } else if (e->type == MIG_EVENT_FAILED) {
+> +        r = dev->vhost_ops->vhost_set_owner(dev);
+> +        if (r < 0) {
+> +            VHOST_OPS_DEBUG(r, "vhost_set_owner failed");
+
+What would be the impact on the guest of this failure?
+
+Shouldn't we *at least* unconditionally print error here?
+Maybe even more if guest would be unsafe in this condition?
+> +        }
+> +    }
+> +    return 0;
+> +}
+> +
 Thanks,
 Maciej
 
