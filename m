@@ -4,112 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06673CDB466
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jun 2026 00:41:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27AB4CDB466
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jun 2026 00:58:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wbpCG-0004gq-2b; Mon, 22 Jun 2026 20:41:00 -0400
+	id 1wbpT7-00073W-7g; Mon, 22 Jun 2026 20:58:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
- id 1wbpCE-0004gO-7z; Mon, 22 Jun 2026 20:40:58 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <alejandro.j.jimenez@oracle.com>)
+ id 1wbpT5-00072t-5j
+ for qemu-devel@nongnu.org; Mon, 22 Jun 2026 20:58:23 -0400
+Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
- id 1wbpCC-0003iM-JF; Mon, 22 Jun 2026 20:40:58 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65MJmFSO3990915; Tue, 23 Jun 2026 00:40:54 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=13gals
- kfvIqb9KKy68EqsQwb8oFKOdDcVeuxT61uyXw=; b=O8rCEJcXeYA8bYgQ7CKAKJ
- n/IwfcngiI++CcDeH6tb0u+ykOcB/DPo1y/72DBHt4/FKcSEJy3MYHS/GxsbNhQc
- wwvC5STheaUZLWxo5YmvxzHxuWgBW3dmvVD7L/xoRC3G5x0qKpYw5iAa/IpObW5a
- XT6I+g0Txwu0jliCwtmVxeNhBIo/z/7LYc/DWlJzjRLxGuAoE/1u81YN/+0xKSbV
- TpGGNcpL6Ce13H03w91j6ssOWbyQKQ5pxahbi3ULCRGBTzKC+/wrTUqIbKByAI3P
- DxztyBIwwR22hoYFzxW9BLeUSt4nlfbPQEc16+Nw+JpVGqYPV0XFXc4ID0pga/2Q
- ==
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4ewjc3c0he-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 23 Jun 2026 00:40:54 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 65N0Yew0020225;
- Tue, 23 Jun 2026 00:40:53 GMT
-Received: from smtprelay04.dal12v.mail.ibm.com ([172.16.1.6])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4ex56q90kg-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 23 Jun 2026 00:40:53 +0000 (GMT)
-Received: from smtpav03.wdc07v.mail.ibm.com (smtpav03.wdc07v.mail.ibm.com
- [10.39.53.230])
- by smtprelay04.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 65N0eqoc2491106
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 23 Jun 2026 00:40:52 GMT
-Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 172795805C;
- Tue, 23 Jun 2026 00:40:52 +0000 (GMT)
-Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 389D75805A;
- Tue, 23 Jun 2026 00:40:51 +0000 (GMT)
-Received: from [9.61.116.241] (unknown [9.61.116.241])
- by smtpav03.wdc07v.mail.ibm.com (Postfix) with ESMTPS;
- Tue, 23 Jun 2026 00:40:51 +0000 (GMT)
-Message-ID: <88fe72e4-fff9-420c-a7e4-25514af08059@linux.ibm.com>
-Date: Mon, 22 Jun 2026 20:40:50 -0400
+ (Exim 4.90_1) (envelope-from <alejandro.j.jimenez@oracle.com>)
+ id 1wbpT3-0000G9-Do
+ for qemu-devel@nongnu.org; Mon, 22 Jun 2026 20:58:22 -0400
+Received: from pps.filterd (m0246632.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 65MEJwit1818489; Tue, 23 Jun 2026 00:58:18 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
+ :content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=corp-2025-04-25; bh=XdyZL
+ 9InpYfdWUQvoJHCmXG8ywa9eHGT1ACC3mVVO/U=; b=aa2SNSIDcHEvcrvnQxeNL
+ 3Yq9tBr+xthc2UHLn9rk+DPxy1DZpgI4tfN+lvvDc7F12eApIMSSo+oFptIQUr8F
+ ZCcr/JiFKlMaaj94JbS5iZoyOeQ8V+QiGvOGhOI9yEwTg81vyrU70qngna7HEX89
+ GEuoTqGqAdYstXz6vXKZ5NCec356ZogouGc/s0lexm9nISHGOW0YI3mjFQ7O53Te
+ rTQQozq80avIDmVjZpaMWqxhU0Q9SSd+n24fpvQxwnT+/qEnJ03A+4KnxjT8cKRP
+ wwL7ZDmW700BTAIPlxpuAvZY+gKxx/1/TBeAI7Ikk3+S4isAjBycSG0CZoc/RkuP
+ g==
+Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com
+ (phxpaimrmta01.appoci.oracle.com [138.1.114.2])
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 4ewjfuauav-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 23 Jun 2026 00:58:17 +0000 (GMT)
+Received: from pps.filterd
+ (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
+ by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.7/8.18.1.7)
+ with ESMTP id 65N0w85k019632; Tue, 23 Jun 2026 00:58:16 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+ by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
+ 4ewhabf3ts-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 23 Jun 2026 00:58:16 +0000 (GMT)
+Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com
+ (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
+ by pps.reinject (8.18.1.12/8.18.1.12) with ESMTP id 65N0wE2h020136;
+ Tue, 23 Jun 2026 00:58:16 GMT
+Received: from alaljime-e5-test-20240903-1847.osdevelopmeniad.oraclevcn.com
+ (alaljime-e5-test-20240903-1847.allregionaliads.osdevelopmeniad.oraclevcn.com
+ [100.100.250.206])
+ by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTP id
+ 4ewhabf3sw-3; Tue, 23 Jun 2026 00:58:16 +0000 (GMT)
+From: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
+To: qemu-devel@nongnu.org
+Cc: peter.maydell@linaro.org, mst@redhat.com, sarunkod@amd.com,
+ pbonzini@redhat.com, richard.henderson@linaro.org,
+ alejandro.j.jimenez@oracle.com
+Subject: [PATCH 2/2] amd_iommu: Fully initialize XT interrupt message state
+Date: Tue, 23 Jun 2026 00:58:13 +0000
+Message-ID: <20260623005813.984238-3-alejandro.j.jimenez@oracle.com>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260623005813.984238-1-alejandro.j.jimenez@oracle.com>
+References: <20260623005813.984238-1-alejandro.j.jimenez@oracle.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5/5] s390x: Enable boot menu for virtio pci device
-To: qemu-devel@nongnu.org, qemu-s390x@nongnu.org, cohuck@redhat.com,
- mjrosato@linux.ibm.com
-Cc: zycai@linux.ibm.com, jdaley@linux.ibm.com, jjherne@linux.ibm.com,
- farman@linux.ibm.com, nrb@linux.ibm.com
-References: <20260623002539.126124-1-jrossi@linux.ibm.com>
- <20260623002539.126124-6-jrossi@linux.ibm.com>
-Content-Language: en-US
-From: Jared Rossi <jrossi@linux.ibm.com>
-In-Reply-To: <20260623002539.126124-6-jrossi@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=X4Ni7mTe c=1 sm=1 tr=0 ts=6a39d616 cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
- a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=VnNF1IyMAAAA:8
- a=tEIbNsbp61D0166_-loA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjIzMDAwMCBTYWx0ZWRfX7f5Wd0irFeVz
- BVULgM7FaDYb8eAGykfhBwccnrbtwlBa+Eit8PHvqCTtFwVgL4UksdejgV/aE9D54y8Zy5rZoHJ
- tAGoR4dsE9nzqbOJNpAtprSLCO3ZCLo=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjIzMDAwMCBTYWx0ZWRfX9KU++b89n2CL
- cJH5xqKgca52ysCrJgXL1aO0lvhcFK4thW+1BAmbR7pcbRVe3dL5IrcuQ8vPyKiUOEy9hjljmsw
- aoYUFyR5XxjRUM1rQKsnW915wHtHg6c5vu2K8mR8EVaEJIcVqoQ+eIC8XosNgO1h3Vuhx83OEzi
- UXUh40qyW0htnDmRztFJ1h39qlf2ifo7ZzPwPB1+1J1JJpou+xP8RB8HeE5u2SbD5FFrcCtP3Jx
- 9AqJzbYXcefoXV0DzmpVbaorvNPrE37c4AsJenvNiaU+6yAzPofKT4edvzB46VdjmJNDQS35HOy
- okMwVeFMJjezNEPIUn6QF9cookZmC8C46Xrwa6I8VLirEDOFhAUjNL7xcmSiWRxOgMf3HmVmjl4
- lwyBh5pptiiQoza8VEeswQulsVxdOEcRpKVbJGsVmKbaJ9tl7Vb5D8dqUgJk8WRkVvyVWlroos2
- vsHvbrupZ5pXwE+Sbvg==
-X-Proofpoint-ORIG-GUID: UAa_werPjNQx1e1DYeApKi5EAhYLOOV_
-X-Proofpoint-GUID: UAa_werPjNQx1e1DYeApKi5EAhYLOOV_
+Content-Transfer-Encoding: 8bit
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-22_04,2026-06-22_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 bulkscore=0 suspectscore=0 spamscore=0 priorityscore=1501
- impostorscore=0 malwarescore=0 clxscore=1015 adultscore=0 lowpriorityscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606230000
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=jrossi@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+ definitions=2026-06-23_01,2026-06-22_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0
+ spamscore=0 malwarescore=0 mlxlogscore=999 adultscore=0 lowpriorityscore=0
+ suspectscore=0 mlxscore=0 phishscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.19.0-2606160000 definitions=main-2606230005
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjIzMDAwNSBTYWx0ZWRfX9TB7Or9CSNoD
+ 6d9JExfpF2AW/4cqG687qQZQnMRsHfnA+rGgQgDf4DgDmQItgATii1Plepxot3p6EIzN37RgfR0
+ yf+dOdARewyenF+17jGnoMKnkGTOPEd6u49cXGQfCLJhl7rW0c7x
+X-Authority-Analysis: v=2.4 cv=FtI1OWrq c=1 sm=1 tr=0 ts=6a39da29 cx=c_pps
+ a=XiAAW1AwiKB2Y8Wsi+sD2Q==:117 a=XiAAW1AwiKB2Y8Wsi+sD2Q==:17
+ a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22 a=jiCTI4zE5U7BLdzWsZGv:22
+ a=3I1J8UUJPc9JN9BFgKH3:22 a=KKAkSRfTAAAA:8 a=yPCof4ZbAAAA:8
+ a=ip2sIQfbet0upOwJyiYA:9 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-ORIG-GUID: H73TUC9U6JgLAR9w0s0LzpyNHkWZEH19
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjIzMDAwNSBTYWx0ZWRfX4V+SLNlYgfjC
+ ApEPmT3O2Ed73tteZN0WhCnvhV561XpTtZrIjiSzrikkDlhLTgOx9Vkpfgdgbm5eUplPtERlkzH
+ 2Mp1+0H3SSpR305VnU+WE2K1FL9E1NCyEoiCk16KYNrB2r2tNyThqQZkP+5vu66G1qmWGEw3JXU
+ FTrT7DXS7e3nGPDf6ynJ2cOXyJYT4yXh4g6rvj+gRtV4pLII++2SOS6rS037MQBaQWejbBZcP1s
+ srKgTVdsGgB5fI3KKKOaY+y4BsY4e3yI5lnnqIHvoVmrpPLVr0tUli5HSPhapyfzKBklgKGhnd3
+ sDTc2iCbcaCuAu5yC47P/9s2wmLV88l+2JFFALmBOQB4vmL+eIoxy7MZ2jxyLFB6ShOWDHdJz9y
+ N8Z0VBfsuQiXgiWujcxw97FXzl+1ypYwonGwi6XGixTqw7sFgrHoXGtTLUf+XErYtmBOBR7C9/Y
+ 5WtWEBa252mWbd1Rvug==
+X-Proofpoint-GUID: H73TUC9U6JgLAR9w0s0LzpyNHkWZEH19
+Received-SPF: pass client-ip=205.220.177.32;
+ envelope-from=alejandro.j.jimenez@oracle.com; helo=mx0b-00069f02.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -125,47 +118,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Please disregard <jrossi@us.ibm.com>
-It should be:
+When IOMMU x2APIC interrupts generation (IntCapXTEn) is enabled,
+amdvi_build_xt_msi_msg() builds an MSI message using the relevant values in
+the XT IOMMU General Interrupt Control Register.
 
-signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
+Initialize the local X86IOMMUIrq structure with zero for all fields. This
+ensures that X86IOMMUIrq fields not set in the XT register (e.g.
+msi_addr_last_bits) are initialized before x86_iommu_irq_to_msi_message()
+consumes them.
 
-On 6/22/26 8:25 PM, jrossi@linux.ibm.com wrote:
-> From: Zhuoying Cai <zycai@linux.ibm.com>
->
-> Add S390_IPL_TYPE_PCI to the boot menu handling logic to enable
-> interactive boot menu support for virtio PCI devices on s390x.
->
-> Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
-> signed-off-by: Jared Rossi <jrossi@us.ibm.com>
-> ---
->   hw/s390x/ipl.c          | 1 +
->   pc-bios/s390-ccw/main.c | 1 +
->   2 files changed, 2 insertions(+)
->
-> diff --git a/hw/s390x/ipl.c b/hw/s390x/ipl.c
-> index 4cca21c621..d5fdc3ea0f 100644
-> --- a/hw/s390x/ipl.c
-> +++ b/hw/s390x/ipl.c
-> @@ -315,6 +315,7 @@ static void s390_ipl_set_boot_menu(S390IPLState *ipl)
->               return;
->           }
->           break;
-> +    case S390_IPL_TYPE_PCI:
->       case S390_IPL_TYPE_QEMU_SCSI:
->           break;
->       default:
-> diff --git a/pc-bios/s390-ccw/main.c b/pc-bios/s390-ccw/main.c
-> index 567e97bf32..be83d598e2 100644
-> --- a/pc-bios/s390-ccw/main.c
-> +++ b/pc-bios/s390-ccw/main.c
-> @@ -185,6 +185,7 @@ static void menu_setup(VDev *vdev)
->   
->       switch (vdev->ipl_type) {
->       case S390_IPL_TYPE_CCW:
-> +    case S390_IPL_TYPE_PCI:
->       case S390_IPL_TYPE_QEMU_SCSI:
->           menu_set_parms(qipl.qipl_flags & BOOT_MENU_FLAG_MASK,
->                          qipl.boot_menu_timeout);
+Remove the redundant 'struct' keyword in X86IOMMUIrq irq declaration.
+
+CID: 1660056
+Fixes: cf0210df65aa ("amd_iommu: Generate XT interrupts when xt support is enabled")
+Reported-by: Peter Maydell <peter.maydell@linaro.org>
+Suggested-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
+---
+ hw/i386/amd_iommu.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/hw/i386/amd_iommu.c b/hw/i386/amd_iommu.c
+index 0d273fd33d..9005dc7aab 100644
+--- a/hw/i386/amd_iommu.c
++++ b/hw/i386/amd_iommu.c
+@@ -195,7 +195,7 @@ static void amdvi_assign_andq(AMDVIState *s, hwaddr addr, uint64_t val)
+ static void amdvi_build_xt_msi_msg(AMDVIState *s, MSIMessage *msg)
+ {
+     union mmio_xt_intr xt_reg;
+-    struct X86IOMMUIrq irq;
++    X86IOMMUIrq irq = { 0 };
+ 
+     xt_reg.val = amdvi_readq(s, AMDVI_MMIO_XT_GEN_INTR);
+ 
+-- 
+2.47.3
 
 
