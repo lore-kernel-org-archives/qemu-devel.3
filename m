@@ -4,108 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DAD1ECDB46F
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jun 2026 00:26:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4BB4CDB466
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jun 2026 00:26:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wboxf-0000JC-Nq; Mon, 22 Jun 2026 20:25:55 -0400
+	id 1wboxf-0000ID-6P; Mon, 22 Jun 2026 20:25:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
- id 1wboxe-0000HA-KO; Mon, 22 Jun 2026 20:25:54 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ id 1wboxc-0000Dg-J2; Mon, 22 Jun 2026 20:25:52 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
- id 1wboxd-0003by-0i; Mon, 22 Jun 2026 20:25:54 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ id 1wboxa-0003bL-Np; Mon, 22 Jun 2026 20:25:52 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65MJmF5T3990916; Tue, 23 Jun 2026 00:25:51 GMT
+ 65MJng0c3936483; Tue, 23 Jun 2026 00:25:49 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=oCHY057HD1t7itucA
- 0Z6jljDaCq/K++NJlo4B3KASU4=; b=JofgXcqCmcsXGXuCHHKS7gF/STdwcLrOU
- oP4jkjnI1sayrzLdCJ0j+lRp4XnCUD4/uDwwfUjgWtfZmLAA6/bOUzmkk62EXiXg
- dsdE3Le+goJCpNIW41qHHWaEVFbZ6E6z9mzGDx7Htby/at2XFIao/xDvdKw8xOep
- p8LKvNikDzN0dSmuVAIPYeWNNXGNesuTcESi2SHB7+Q6VfUdlP3aVfxYhk45BpHM
- dNi6krBgApUeRXm6fGh8P1EuyHgVSDUlBznTw0YWne72f1Xn4ZzW1ee/P1QQhPvV
- 4iQuL512Ye/e5/cd79sGu7zExJ1oeNXuSVUITR6GIuO8wTgqgNJwA==
+ :mime-version:references:subject:to; s=pp1; bh=69RnOsQUdTly/FXF4
+ 1vQrPFeDbis0AV+JFsSzfKVpcc=; b=B8Y7V679+cOB9IrhpGxTe4AgzAMFyX7gU
+ 3BiM41moW4LbX7qk2p8ftTnardvpt2B58F0yqm9s+76eud9cYKeEIP0Yxy98xBVL
+ sAlYvgiPkRuLucf90CG7dj0TJZp8m8xVmSMD4807jD7bJzZ70P/wu/QWoTh8Zdrk
+ Km78UIO5kcDy5YrgrVGihzBSYdct3K/9bsEiT4GRATaAt7RhPdyFRSeakQJZo4V6
+ WmPCh0hnBwD5JsJ+ZBjbQAORI7AqrKR318xc7d4W0yDNy5UaZMHciFhwhcxHOyNF
+ 6lMoHPFz/MVQ3aRxVOBY5nHbmskclb/CCfRJ3GF2isuqL67m9dLRA==
 Received: from ppma23.wdc07v.mail.ibm.com
  (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4ewjc3bxye-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4ewh9gbxce-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 23 Jun 2026 00:25:51 +0000 (GMT)
+ Tue, 23 Jun 2026 00:25:49 +0000 (GMT)
 Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 65N0JoCh016683;
- Tue, 23 Jun 2026 00:25:50 GMT
-Received: from smtprelay01.wdc07v.mail.ibm.com ([172.16.1.68])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4ex6ph8nyr-1
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 65N0JfDX016633;
+ Tue, 23 Jun 2026 00:25:48 GMT
+Received: from smtprelay06.dal12v.mail.ibm.com ([172.16.1.8])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4ex6ph8nym-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 23 Jun 2026 00:25:50 +0000 (GMT)
+ Tue, 23 Jun 2026 00:25:48 +0000 (GMT)
 Received: from smtpav05.wdc07v.mail.ibm.com (smtpav05.wdc07v.mail.ibm.com
  [10.39.53.232])
- by smtprelay01.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 65N0PmAK66585024
+ by smtprelay06.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 65N0PlpX24117936
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 23 Jun 2026 00:25:49 GMT
+ Tue, 23 Jun 2026 00:25:47 GMT
 Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id D584758065;
- Tue, 23 Jun 2026 00:25:48 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id E005658043;
+ Tue, 23 Jun 2026 00:25:46 +0000 (GMT)
 Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id BE44858053;
- Tue, 23 Jun 2026 00:25:47 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id E5F8A58053;
+ Tue, 23 Jun 2026 00:25:45 +0000 (GMT)
 Received: from t15.ibmuc.com (unknown [9.61.116.241])
  by smtpav05.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 23 Jun 2026 00:25:47 +0000 (GMT)
+ Tue, 23 Jun 2026 00:25:45 +0000 (GMT)
 From: jrossi@linux.ibm.com
 To: qemu-devel@nongnu.org, qemu-s390x@nongnu.org, cohuck@redhat.com,
  mjrosato@linux.ibm.com
 Cc: jrossi@linux.ibm.com, zycai@linux.ibm.com, jdaley@linux.ibm.com,
- jjherne@linux.ibm.com, farman@linux.ibm.com, nrb@linux.ibm.com,
- Jared Rossi <jrossi@us.ibm.com>
-Subject: [PATCH 3/5] pc-bios/s390-ccw: write IPLB location for virtio-blk-pci
- IPL
-Date: Mon, 22 Jun 2026 20:25:37 -0400
-Message-ID: <20260623002539.126124-4-jrossi@linux.ibm.com>
+ jjherne@linux.ibm.com, farman@linux.ibm.com, nrb@linux.ibm.com
+Subject: [PATCH 2/5] pc-bios/s390-ccw: Add per-queue notification offset for
+ multi-queue virtio configurations
+Date: Mon, 22 Jun 2026 20:25:36 -0400
+Message-ID: <20260623002539.126124-3-jrossi@linux.ibm.com>
 X-Mailer: git-send-email 2.43.5
 In-Reply-To: <20260623002539.126124-1-jrossi@linux.ibm.com>
 References: <20260623002539.126124-1-jrossi@linux.ibm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=X4Ni7mTe c=1 sm=1 tr=0 ts=6a39d28f cx=c_pps
+X-Proofpoint-GUID: iKBjkNpV0mOfgj9AbJQe1yejLOTvLTnF
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjIzMDAwMCBTYWx0ZWRfXwSWx49O85gDV
+ qPVtIbeoZwpiPNigmAMucsZyaJS7KEpVuYb9GkVmrKQ1957nPG4UpY4kFssdRSCFlPf8+mE3Tu9
+ FisiRftkv0CndewwNucgYL/x36Toqkk=
+X-Authority-Analysis: v=2.4 cv=c62bhx9l c=1 sm=1 tr=0 ts=6a39d28d cx=c_pps
  a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
  a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=iQ6ETzBq9ecOQQE5vZCe:22 a=VnNF1IyMAAAA:8 a=IniV-qTpWqY4UDjBtQYA:9
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjIzMDAwMCBTYWx0ZWRfX4B7sO5r/CCu9
- 823o9g0wmS0B+6+aQNVoqyZGUq/YiqgLjZDkxB1OHzIV7ONQ7Yjk+BOykJMQGArht+kaoqT/Izv
- bbocek+NigfPC7zU1zYqIQeUO2I8gSk=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjIzMDAwMCBTYWx0ZWRfX9sjKhD4qnIz0
- uBTSd+3GuKP05YieW31TYh+hk9qvMqdbO/K9pYOVeDjZJ/NhYimKHjdSYTx9NeEFF5GWzzOUXw1
- vFzlhASrI9GJDb0gUJyUQtyo9Ml9UM1pxN65KNxffpXLEO4O5EijOG303j9M519EsSEQMZiwAZH
- U9bqGz0PI40bgPXpjVLvyN/b9B4lmFOn/3KRX5TQX1/uENHXaQkmxc27giSfcXjVqCF1ubEwS3T
- JPz0bl75pm/hjpP86BFnfQFjIPF+748cOCNKgjqvy5eV6J+Y1BU+hBb05YbxzpJVYnuoxQ66Prj
- ZMdO1f4zWKoVcEql5uxiF78H0enG2DNhLrZIotGi75pDcNetE/dz7Wv4OCmA6vL/c9B+f0Zw4yl
- N4d2/jdIYj55tOhHWvocjO3zRSZe8pbNyVm720rK+lUbtcrv9MWQf7Adba+0ghvYa68n17YfMOb
- eCUlCL7V1qp9ig1dzTw==
-X-Proofpoint-ORIG-GUID: Itg1zi4g-85w3ObZjFfFVL6BJRL7Wd5i
-X-Proofpoint-GUID: Itg1zi4g-85w3ObZjFfFVL6BJRL7Wd5i
+ a=V8glGbnc2Ofi9Qvn3v5h:22 a=VnNF1IyMAAAA:8 a=J-uy_QIm2an7eANbOmAA:9
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjIzMDAwMCBTYWx0ZWRfXyZ+AQxWP4hSW
+ MkIJgi8AF23GRGaRuFgXRPAU8ilvtdar+J92BDtZTTKkgZllecbARCk5/MtMMDxg5UrP7/gtnFw
+ vI63ujV2ojA3XRSmLACYqUIiQIQ5DqOSY00PevgH5lfsHTdahMGiEW9IGH5CN3brYS7FZB2v7SW
+ /l2vggfN3rulHUKCTDEh2qoxYEHkBj9sWMTHdnElfcCYsIwa5RbkOHfisZy1HW9bq0q8R/doh0W
+ 7e3rRhtxSAetU7ZChJcPb1vbUbPM5jC7GAKIOGjVWrbHrgNxPiKMio3Esn3Mff5FiNC9p0nbvtj
+ 96MZ8emBardL8kelkH6j7i9KgUdrwZ67CgXO7ljmgtw+uUkNW+NCCwKg6CglJ6KIuP2B+WK6HM6
+ HcX+0nevGZu68FChKMsKV/ZCEW2eb5bkazy/GsRi3uJXvmXHv1eCr9/D0gHt4/OK4Jf6T7Bl5CI
+ nFUByhsseex5jA/hsNw==
+X-Proofpoint-ORIG-GUID: iKBjkNpV0mOfgj9AbJQe1yejLOTvLTnF
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-06-22_04,2026-06-22_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 bulkscore=0 suspectscore=0 spamscore=0 priorityscore=1501
- impostorscore=0 malwarescore=0 clxscore=1015 adultscore=0 lowpriorityscore=0
+ lowpriorityscore=0 impostorscore=0 adultscore=0 clxscore=1015 suspectscore=0
+ priorityscore=1501 phishscore=0 spamscore=0 bulkscore=0 malwarescore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606230000
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=jrossi@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=jrossi@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
 X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -122,31 +121,155 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Joshua Daley <jdaley@linux.ibm.com>
+From: Zhuoying Cai <zycai@linux.ibm.com>
 
-When IPL type is PCI, cutype is unknown, so the IPLB location does not
-get written to lowcore. Update the condition to check IPL type as well.
+The initial support for virtio-blk-pci IPL devices used a single virt-queue, but
+other device types require multiple queues, and for PCI device types this also
+requires a per-queue notification offset.
 
-Signed-off-by: Joshua Daley <jdaley@linux.ibm.com>
-signed-off-by: Jared Rossi <jrossi@us.ibm.com>
+Add a PCI notify field to the VRing struct so that each queue has a unique
+notify offset as defined in the virtio spec.
+
+Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
+Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
 ---
- pc-bios/s390-ccw/main.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ pc-bios/s390-ccw/virtio-pci.c | 38 +++++++++++++++++++++--------------
+ pc-bios/s390-ccw/virtio-pci.h |  2 +-
+ pc-bios/s390-ccw/virtio.c     |  3 ++-
+ pc-bios/s390-ccw/virtio.h     |  1 +
+ 4 files changed, 27 insertions(+), 17 deletions(-)
 
-diff --git a/pc-bios/s390-ccw/main.c b/pc-bios/s390-ccw/main.c
-index 26287cfd81..1059fda03c 100644
---- a/pc-bios/s390-ccw/main.c
-+++ b/pc-bios/s390-ccw/main.c
-@@ -52,7 +52,8 @@ void write_subsystem_identification(void)
+diff --git a/pc-bios/s390-ccw/virtio-pci.c b/pc-bios/s390-ccw/virtio-pci.c
+index 53bdb52e76..2c83ec4f13 100644
+--- a/pc-bios/s390-ccw/virtio-pci.c
++++ b/pc-bios/s390-ccw/virtio-pci.c
+@@ -21,7 +21,6 @@ VirtioPciCap c_cap; /* Common capabilities  */
+ VirtioPciCap d_cap; /* Device capabilities  */
+ VirtioPciCap n_cap; /* Notify capabilities  */
+ uint32_t notify_mult;
+-uint16_t q_notify_offset;
  
- void write_iplb_location(void)
+ static int virtio_pci_set_status(uint8_t status)
  {
--    if (cutype == CU_TYPE_VIRTIO && virtio_get_device_type() != VIRTIO_ID_NET) {
-+    if ((cutype == CU_TYPE_VIRTIO || iplb.pbt == S390_IPL_TYPE_PCI) &&
-+        virtio_get_device_type() != VIRTIO_ID_NET) {
-         lowcore->ptr_iplb = ptr2u32(&iplb);
-     }
+@@ -74,10 +73,10 @@ int virtio_pci_reset(VDev *vdev)
+     return 0;
  }
+ 
+-long virtio_pci_notify(int vq_id)
++long virtio_pci_notify(VRing *vr)
+ {
+-    uint32_t offset = n_cap.off + notify_mult * q_notify_offset;
+-    return vpci_bswap16_write(offset, n_cap.bar, (uint16_t) vq_id);
++    uint32_t offset = n_cap.off + notify_mult * vr->pci_notify;
++    return vpci_bswap16_write(offset, n_cap.bar, (uint16_t) vr->id);
+ }
+ 
+ /*
+@@ -301,8 +300,7 @@ static int virtio_pci_read_pci_cap_config(void)
+     }
+ 
+     rc = vpci_read_bswap32(pos + VPCI_N_CAP_MULT, PCI_CFGBAR, &notify_mult);
+-    if (rc || vpci_read_bswap16(c_cap.off + VPCI_C_OFFSET_Q_NOFF, c_cap.bar,
+-                                &q_notify_offset)) {
++    if (rc) {
+         puts("Failed to read notification queue configuration");
+         return -EIO;
+     }
+@@ -332,7 +330,6 @@ int virtio_pci_setup(VDev *vdev)
+     VRing *vr;
+     int rc;
+     uint8_t status;
+-    uint16_t vq_size;
+     int i = 0;
+ 
+     vdev->guessed_disk_nature = VIRTIO_GDN_NONE;
+@@ -380,28 +377,39 @@ int virtio_pci_setup(VDev *vdev)
+         return -EIO;
+     }
+ 
+-    if (vpci_read_bswap16(VPCI_C_OFFSET_Q_SIZE, c_cap.bar, &vq_size)) {
+-        puts("Failed to read virt-queue configuration");
+-        return -EIO;
+-    }
+-
+     /* Configure virt-queues for pci */
+     for (i = 0; i < vdev->nr_vqs; i++) {
++        uint16_t vq_size;
++        uint16_t vq_notify;
+         VqInfo info = {
+             .queue = (unsigned long long) virtio_get_ring_area(i),
+             .align = KVM_S390_VIRTIO_RING_ALIGN,
+             .index = i,
+-            .num = vq_size,
++            .num = 0,
+         };
+ 
+         vr = &vdev->vrings[i];
+-        vring_init(vr, &info);
+ 
+-        if (vpci_set_selected_vq(vr->id)) {
++        if (vpci_set_selected_vq(i)) {
+             puts("Failed to set selected virt-queue");
+             return -EIO;
+         }
+ 
++        if (vpci_read_bswap16(c_cap.off + VPCI_C_OFFSET_Q_SIZE, c_cap.bar, &vq_size)) {
++            printf("Failed to read virt-queue %d size\n", i);
++            return -EIO;
++        }
++
++        info.num = vq_size;
++
++        if (vpci_read_bswap16(c_cap.off + VPCI_C_OFFSET_Q_NOFF, c_cap.bar, &vq_notify)) {
++            printf("Failed to read virt-queue %d notify offset\n", i);
++            return -EIO;
++        }
++
++        vr->pci_notify = vq_notify;
++        vring_init(vr, &info);
++
+         rc = set_pci_vq_addr(VPCI_C_OFFSET_Q_DESCLO, vr->desc);
+         rc |= set_pci_vq_addr(VPCI_C_OFFSET_Q_AVAILLO, vr->avail);
+         rc |= set_pci_vq_addr(VPCI_C_OFFSET_Q_USEDLO, vr->used);
+diff --git a/pc-bios/s390-ccw/virtio-pci.h b/pc-bios/s390-ccw/virtio-pci.h
+index 90d07cb9a7..2494df1619 100644
+--- a/pc-bios/s390-ccw/virtio-pci.h
++++ b/pc-bios/s390-ccw/virtio-pci.h
+@@ -64,7 +64,7 @@ typedef struct VirtioPciCap  VirtioPciCap;
+ 
+ void virtio_pci_id2type(VDev *vdev, uint16_t device_id);
+ int virtio_pci_reset(VDev *vdev);
+-long virtio_pci_notify(int vq_id);
++long virtio_pci_notify(VRing *vr);
+ int virtio_pci_setup(VDev *vdev);
+ int virtio_pci_setup_device(void);
+ 
+diff --git a/pc-bios/s390-ccw/virtio.c b/pc-bios/s390-ccw/virtio.c
+index a448dc96e2..df04479aa6 100644
+--- a/pc-bios/s390-ccw/virtio.c
++++ b/pc-bios/s390-ccw/virtio.c
+@@ -114,7 +114,8 @@ bool vring_notify(VRing *vr)
+         vr->cookie = virtio_ccw_notify(vdev.schid, vr->id, vr->cookie);
+         break;
+     case S390_IPL_TYPE_PCI:
+-        vr->cookie = virtio_pci_notify(vr->id);
++        vr->cookie = virtio_pci_notify(vr);
++        break;
+     default:
+         return 1;
+     }
+diff --git a/pc-bios/s390-ccw/virtio.h b/pc-bios/s390-ccw/virtio.h
+index d32a4830ca..75ae5bdbc2 100644
+--- a/pc-bios/s390-ccw/virtio.h
++++ b/pc-bios/s390-ccw/virtio.h
+@@ -107,6 +107,7 @@ struct VRing {
+     VRingUsed *used;
+     long cookie;
+     int id;
++    uint16_t pci_notify;
+ };
+ typedef struct VRing VRing;
+ 
 -- 
 2.54.0
 
