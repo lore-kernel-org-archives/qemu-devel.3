@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 521A8CDB46F
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58085CDB47C
 	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jun 2026 15:07:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wc2iU-0006r6-IM; Tue, 23 Jun 2026 11:07:10 -0400
+	id 1wc2iW-0006ze-1k; Tue, 23 Jun 2026 11:07:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
- <3AqE6agcKCocu2stwvprzzrwp.nzx1px5-op6pwyzyry5.z2r@flex--jrhilke.bounces.google.com>)
- id 1wc2i9-0006lJ-3W
+ <3A6E6agcKCogv3tuxwqs00sxq.o0y2qy6-pq7qxz0zsz6.03s@flex--jrhilke.bounces.google.com>)
+ id 1wc2iA-0006lR-8x
  for qemu-devel@nongnu.org; Tue, 23 Jun 2026 11:06:52 -0400
-Received: from mail-pl1-x64a.google.com ([2607:f8b0:4864:20::64a])
+Received: from mail-pf1-x449.google.com ([2607:f8b0:4864:20::449])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from
- <3AqE6agcKCocu2stwvprzzrwp.nzx1px5-op6pwyzyry5.z2r@flex--jrhilke.bounces.google.com>)
- id 1wc2i6-0006pV-5g
- for qemu-devel@nongnu.org; Tue, 23 Jun 2026 11:06:48 -0400
-Received: by mail-pl1-x64a.google.com with SMTP id
- d9443c01a7336-2c6a48fb4d5so50608935ad.0
- for <qemu-devel@nongnu.org>; Tue, 23 Jun 2026 08:06:43 -0700 (PDT)
+ <3A6E6agcKCogv3tuxwqs00sxq.o0y2qy6-pq7qxz0zsz6.03s@flex--jrhilke.bounces.google.com>)
+ id 1wc2i7-0006pg-5V
+ for qemu-devel@nongnu.org; Tue, 23 Jun 2026 11:06:50 -0400
+Received: by mail-pf1-x449.google.com with SMTP id
+ d2e1a72fcca58-842446a3851so28324b3a.0
+ for <qemu-devel@nongnu.org>; Tue, 23 Jun 2026 08:06:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20251104; t=1782227202; x=1782832002; darn=nongnu.org;
+ d=google.com; s=20251104; t=1782227204; x=1782832004; darn=nongnu.org;
  h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
  :date:from:to:cc:subject:date:message-id:reply-to;
- bh=F2v9cyEeXLMRxY4RJyY8ilPvdLI29m6QducxNaUF4Io=;
- b=jZ5/IPALz+ZCH5wvOHQCuC9OmTe0k6ACTOXeBGUvLyiVg+gZ4YrkKW9lZz5SMFFtRu
- wcXpxzA3hWBcB6AXfHxcwjV6wbKi7+tU4bsIGL7eWtmYBQGgqG0YexS0eAZUwlowVbbw
- Pdwdwp9SiEIKT7nppn6Yy1gZNAbaq0P5I7CmbEkLoMSpKYoboD5vHItk3NiMg4ZSkZ7K
- jDBNmZEi+G/PK16L+bjXa9oqVO+yH9ULqvt6OnYn/TcKR3bVOyVzrzvJHKxfKzLR4L8j
- FDVE9EDDBubaH6l7GUjw0SedJP24SQv8xfOQN0be7NfSFET8wGR2NZrI8TWi3D0PEBW/
- b0bA==
+ bh=GOpYLqYb0m0OlIH0rl7mRp0VlvhMTNSJwAYjKLT4+U0=;
+ b=NwuRxNKgovWfBObm9EaS+5RnV9UW9n8ZaaimtUxffCbOj8gFkuz7+jl9eKz6s5ylpS
+ 00+PDP1L9lRKVv2+Z287TNkv9Nr8TC+AnBL/lP+55PydrekGZ8h/spFwvGlrjOaclKkP
+ Xx7GhA7hL7Ylen8XfggEeBvPesodyQZFcvJCbLLJTdhVaL5KceL/h01LM2UFsmilh9qk
+ Kwzp+JTs7Vdge/JmG99rtHOLZgOYTbuSyTntTLla3bGAp+hAzuzewzjffPWKR0nSp3Ih
+ cmwzUvCTSKMmh9TKjYFffofGOAEaRstdpvPnaAbo+rbSDEyUs981Eg796l1Vy0xbKwuW
+ IW5g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782227202; x=1782832002;
+ d=1e100.net; s=20251104; t=1782227204; x=1782832004;
  h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
  :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=F2v9cyEeXLMRxY4RJyY8ilPvdLI29m6QducxNaUF4Io=;
- b=mjsI9Ml2H0bonNeGxaWrk0gC4k43/6fwUZadJthMNdSqLBDUG+3XiVtOAxjo/CEvpl
- Ro+f3E82h35R4BN61MdVqKnIc9CoQyEAPQZw3lBXNA/xJqIwLwBpplABHKGGUEQHD7GP
- aM7bOBwgZLbKIiReuFmIo+mifsgvrO+DFskXoU+uqZ219IHqMr7+cQInK83EdtzrZIKk
- O9OGuKAD9jNMi8W1pVdmD4bUr8BY1/zPXbREh+V95gG13mWiXgLzR0LmbLzvKLqBc1cg
- qre7khq+hQaDsF4ZX50fGz45V4LH85+vt/sw2BrBehz5xpRLEUGU+SU8mMnQHN4Si60n
- FGMA==
+ bh=GOpYLqYb0m0OlIH0rl7mRp0VlvhMTNSJwAYjKLT4+U0=;
+ b=fnoydlHxo4ZVcMb6es63PFq2cZ719kiz8NFAGsGoLoQ9fMbpWsHGsOm2GaRRBwOlVI
+ t8NNdLDdyhv4DRhvR07PALbHVBvgVJRW++7jC/gW6xcOueagAbXlkBFr6zwTJYiKuQ95
+ +nv++x9tC0O2AeA33SILdyn3O7Q/dpd/maea0aVAPwLYnz8XJrULU/2ZMPOiIETsp7wA
+ +Hea8WPkOXxlmoSWxhEYmBHRl2x3lMabq3POkufeOBO1ui1XN2yVlfI+tv6TjQseNeWZ
+ Nieb7+5SEKy19zLZshWiRy1SjMj7U95ZmuiGJM0/EsLpsAazrIyPHV4xu1UIH0yOAfku
+ AzvA==
 X-Forwarded-Encrypted: i=1;
- AHgh+RrUdQdRwtWhGqE5jI4kGoLRIcSGIhVcQ73vpH0ZwwpPGPsiPz/UsmrU613wy+R1FPr81bHfd7to6WpD@nongnu.org
-X-Gm-Message-State: AOJu0YwIIbS301E9jl12+5LjSrRLRCTRHCY0s0JjW4/w+RyAsV+7qHyY
- QK3o6t9nxksU9sYrceT3+BUG/C+ow7hYlPbAW1w5uNXiY2PnroU9NM2KO+JL/Lm/lijGCjGORpy
- phwCQXmI2
-X-Received: from pltk5.prod.google.com ([2002:a17:902:6945:b0:2bd:9b10:8067])
+ AFNElJ8nuY6XEvN5zt0qOEBmnWDXLztKX46CGNyw/lph0RCfnG9w9ZKEVKWRw2eyLvSF1pKmMOhzIGdS3zF2@nongnu.org
+X-Gm-Message-State: AOJu0YxaPjQszcD8ptmWjKmAeY9Ns+5p+nij6DqN5gPk9mdYoL5eWacA
+ 2H5usOp14kmZDh+rL7l0V12SsHf5s5VVOz79ee0nNvDdXtWefVgJ0kFhv9iw6sjwzhRcJebcMQX
+ rkwhxOadO
+X-Received: from pfms4.prod.google.com ([2002:aa7:8284:0:b0:842:6fe1:8620])
  (user=jrhilke job=prod-delivery.src-stubby-dispatcher) by
- 2002:a17:902:e88b:b0:2c6:ab74:985e
- with SMTP id d9443c01a7336-2c7c76e9d8fmr39349895ad.25.1782227202270; Tue, 23
- Jun 2026 08:06:42 -0700 (PDT)
-Date: Tue, 23 Jun 2026 15:06:04 +0000
+ 2002:a05:6a00:4502:b0:842:2419:6c0b
+ with SMTP id d2e1a72fcca58-845970652bdmr3983634b3a.10.1782227203976; Tue, 23
+ Jun 2026 08:06:43 -0700 (PDT)
+Date: Tue, 23 Jun 2026 15:06:05 +0000
 In-Reply-To: <20260623-igb-trl-v8-0-c9b1fc6c3304@google.com>
 Mime-Version: 1.0
 References: <20260623-igb-trl-v8-0-c9b1fc6c3304@google.com>
 X-Mailer: b4 0.14.3
-Message-ID: <20260623-igb-trl-v8-6-c9b1fc6c3304@google.com>
-Subject: [PATCH v8 6/7] igb: Add QTest for Transmit Rate Limiter register
- multiplexing
+Message-ID: <20260623-igb-trl-v8-7-c9b1fc6c3304@google.com>
+Subject: [PATCH v8 7/7] igb: Add QTest for Transmit Rate Limiter traffic
+ throttling
 From: Josh Hilke <jrhilke@google.com>
 To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, qemu-devel@nongnu.org
 Cc: Josh Hilke <jrhilke@google.com>,
@@ -74,9 +74,9 @@ Cc: Josh Hilke <jrhilke@google.com>,
  David Matlack <dmatlack@google.com>,
  Alex Williamson <alex.williamson@nvidia.com>
 Content-Type: text/plain; charset="utf-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::64a;
- envelope-from=3AqE6agcKCocu2stwvprzzrwp.nzx1px5-op6pwyzyry5.z2r@flex--jrhilke.bounces.google.com;
- helo=mail-pl1-x64a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::449;
+ envelope-from=3A6E6agcKCogv3tuxwqs00sxq.o0y2qy6-pq7qxz0zsz6.03s@flex--jrhilke.bounces.google.com;
+ helo=mail-pf1-x449.google.com
 X-Spam_score_int: -95
 X-Spam_score: -9.6
 X-Spam_bar: ---------
@@ -99,88 +99,217 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a unit test to verify register writes/reads to the rate limit
-register (TRLC) return the correct value based on which queue is
-currently selected in the queue selection register (TRLDQSEL).
+Add a test for the IGB transmit rate limiting functionality. The test
+verifies that TRL is enabled by setting the appropriate registers and
+that data is transmitted at the appropriate rate based on chosen
+target rate.
 
 Signed-off-by: Josh Hilke <jrhilke@google.com>
 ---
- tests/qtest/igb-test.c | 51 ++++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 51 insertions(+)
+ tests/qtest/igb-test.c | 155 +++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 155 insertions(+)
 
 diff --git a/tests/qtest/igb-test.c b/tests/qtest/igb-test.c
-index 3d397ea..0a4d0b1 100644
+index 0a4d0b1..31f2bbe 100644
 --- a/tests/qtest/igb-test.c
 +++ b/tests/qtest/igb-test.c
-@@ -45,6 +45,20 @@ static const struct eth_header packet = {
-     .h_source = E1000E_ADDRESS,
- };
+@@ -34,9 +34,11 @@
+ #include "qemu/iov.h"
+ #include "qemu/module.h"
+ #include "qemu/bitops.h"
++#include "qemu/timer.h"
+ #include "libqos/libqos-malloc.h"
+ #include "libqos/e1000e.h"
+ #include "hw/net/igb_regs.h"
++#include "hw/pci/pci_regs.h"
  
-+/*
-+ * Calculate TRL rate factor for a given target rate.
-+ *
-+ * Rate Factor = 1 Gbps / Target Rate.
-+ *
-+ * The hardware TRLRC register stores the rate factor as a fixed-point number
-+ * with 14 fractional bits. Scale 1Gbps by 2^14 before dividing to preserve
-+ * precision in integer arithmetic.
-+ */
-+static uint32_t igb_trl_get_rate_factor(uint64_t rate_bytes_s)
+ #ifndef _WIN32
+ 
+@@ -59,6 +61,58 @@ static uint32_t igb_trl_get_rate_factor(uint64_t rate_bytes_s)
+     return ((1000000000ULL / BITS_PER_BYTE) << 14) / rate_bytes_s;
+ }
+ 
++static void igb_trl_enable(QE1000E *d, uint64_t rate_bytes_s)
 +{
-+    return ((1000000000ULL / BITS_PER_BYTE) << 14) / rate_bytes_s;
++    /* Select Queue 0 */
++    e1000e_macreg_write(d, E1000_TRLDQSEL, 0);
++    /* Enable TRL with target rate */
++    e1000e_macreg_write(d, E1000_TRLRC,
++                        E1000_TRLRC_RS_ENA |
++                        igb_trl_get_rate_factor(rate_bytes_s));
++}
++
++static void igb_trl_disable(QE1000E *d)
++{
++    /* Select Queue 0 */
++    e1000e_macreg_write(d, E1000_TRLDQSEL, 0);
++    /* Disable TRL */
++    e1000e_macreg_write(d, E1000_TRLRC, 0);
++}
++
++static void igb_msix_clear_pending(QPCIDevice *dev, uint16_t entry)
++{
++    uint64_t vector_offset =
++        dev->msix_table_off + (entry * PCI_MSIX_ENTRY_SIZE);
++    uint32_t val = qpci_io_readl(dev, dev->msix_table_bar,
++                                 vector_offset + PCI_MSIX_ENTRY_VECTOR_CTRL);
++
++    /* Unmask (clears pending bit in QEMU) */
++    qpci_io_writel(dev, dev->msix_table_bar,
++                   vector_offset + PCI_MSIX_ENTRY_VECTOR_CTRL,
++                   val & ~PCI_MSIX_ENTRY_CTRL_MASKBIT);
++
++    /* Mask again */
++    qpci_io_writel(dev, dev->msix_table_bar,
++                   vector_offset + PCI_MSIX_ENTRY_VECTOR_CTRL,
++                   val);
++}
++
++static void igb_read_tx_tail(QE1000E *d, void *descr)
++{
++    QE1000E_PCI *d_pci = container_of(d, QE1000E_PCI, e1000e);
++    uint32_t last_entry;
++    uint32_t tail;
++    uint32_t len;
++
++    tail = e1000e_macreg_read(d, E1000_TDT_A(0));
++    len = e1000e_macreg_read(d, E1000_TDLEN_A(0)) / E1000_RING_DESC_LEN;
++    last_entry = (tail + len - 1) % len;
++
++    qtest_memread(d_pci->pci_dev.bus->qts,
++                  d->tx_ring + last_entry * E1000_RING_DESC_LEN, descr,
++                  E1000_RING_DESC_LEN);
 +}
 +
  static void igb_send_verify(QE1000E *d, int *test_sockets, QGuestAllocator *alloc)
  {
      union e1000_adv_tx_desc descr;
-@@ -191,6 +205,41 @@ static void test_igb_multiple_transfers(void *obj, void *data,
+@@ -84,6 +138,14 @@ static void igb_send_verify(QE1000E *d, int *test_sockets, QGuestAllocator *allo
+     /* Wait for TX WB interrupt */
+     e1000e_wait_isr(d, E1000E_TX0_MSG_ID);
  
++    /*
++     * Read the descriptor back from guest memory again, now that WB has
++     * occurred. This is required because if the packet was delayed by the
++     * trasmit rate limiter, e1000e_tx_ring_push read it back before QEMU
++     * actually processed it.
++     */
++    igb_read_tx_tail(d, &descr);
++
+     /* Check DD bit */
+     g_assert_cmphex(le32_to_cpu(descr.wb.status) & E1000_TXD_STAT_DD, ==,
+                     E1000_TXD_STAT_DD);
+@@ -147,6 +209,29 @@ static void igb_receive_verify(QE1000E *d, int *test_sockets, QGuestAllocator *a
+     guest_free(alloc, data);
+ }
+ 
++/* Returns the amount of microseconds it takes to transmit a 64-byte packet.*/
++static uint64_t igb_send_and_measure(QE1000E *d, int *test_sockets,
++                                     QGuestAllocator *alloc)
++{
++    QE1000E_PCI *d_pci = container_of(d, QE1000E_PCI, e1000e);
++    QPCIDevice *pdev = &d_pci->pci_dev;
++    QTestState *qts = global_qtest;
++    uint64_t start_time, end_time;
++
++    /* Clear any stale pending interrupt for this vector before we start */
++    igb_msix_clear_pending(pdev, E1000E_TX0_MSG_ID);
++
++    /* Clear EICR to allow new interrupts to be raised in MSI-X mode */
++    e1000e_macreg_write(d, E1000_EICR, 0xFFFFFFFF);
++
++    /* Send a test packet and measure the time it takes. */
++    start_time = qtest_clock_step(qts, 1);
++    igb_send_verify(d, test_sockets, alloc);
++    end_time = qtest_clock_step(qts, 1);
++
++    return end_time - start_time;
++}
++
+ static void test_e1000e_init(void *obj, void *data, QGuestAllocator * alloc)
+ {
+     /* init does nothing */
+@@ -240,6 +325,74 @@ static void test_igb_transmit_rate_limiter_regs(void *obj, void *data,
+     g_assert_cmphex(e1000e_macreg_read(d, E1000_TRLRC), ==, val1);
  }
  
 +/*
-+ * Verify the rate limit value register (TRLC) returns the correct value based
-+ * on which queue is selected (TRLDQSEL).
++ * Test for Transmit Rate Limiter (TRL) traffic throttling.
++ *
++ * Verifies that:
++ * 1. Packets are transmitted without delay when TRL is disabled.
++ * 2. Enabling TRL on a queue throttles subsequent transmissions.
++ * 3. The delay matches the expected transmission time calculated from the
++ *    packet size and the configured target rate.
++ * 4. Disabling TRL restores normal (unthrottled) transmission behavior.
 + */
-+static void test_igb_transmit_rate_limiter_regs(void *obj, void *data,
-+                                                QGuestAllocator *alloc)
++static void test_igb_transmit_rate_limiter(void *obj, void *data,
++                                           QGuestAllocator *alloc)
 +{
 +    QOSGraphObject *e_object = obj;
 +    QE1000E_PCI *e1000e = obj;
 +    QPCIDevice *dev = e_object->get_driver(e_object, "pci-device");
 +    QE1000E *d = &e1000e->e1000e;
-+    const int qidx0 = 0, qidx1 = 1;
-+    uint32_t val0, val1;
++    const uint64_t expected_baseline_elapsed = 10 * SCALE_US;
++    const uint64_t expected_max_elapsed = 530 * SCALE_US;
++    const uint64_t expected_min_elapsed = 500 * SCALE_US;
++    uint64_t elapsed;
 +
 +    if (qpci_check_buggy_msi(dev)) {
 +        return;
 +    }
 +
-+    e1000e_macreg_write(d, E1000_TRLDQSEL, qidx0);
-+    val0 = E1000_TRLRC_RS_ENA |
-+           igb_trl_get_rate_factor(125000);
-+    e1000e_macreg_write(d, E1000_TRLRC, val0);
++    /* Send a test packet to verify there's no rate limit. */
++    elapsed = igb_send_and_measure(d, data, alloc);
 +
-+    e1000e_macreg_write(d, E1000_TRLDQSEL, qidx1);
-+    val1 = E1000_TRLRC_RS_ENA |
-+           igb_trl_get_rate_factor(250000);
-+    e1000e_macreg_write(d, E1000_TRLRC, val1);
++    /*
++     * QEMU doesn't emulate the hardware line rate of the device, so the packet
++     * is processed instantly (requiring 0 clock steps in wait_isr, which steps
++     * by 10us). Give a 10us margin for error.
++     */
++    g_assert_cmpint(elapsed, <, expected_baseline_elapsed);
 +
-+    e1000e_macreg_write(d, E1000_TRLDQSEL, qidx0);
-+    g_assert_cmphex(e1000e_macreg_read(d, E1000_TRLRC), ==, val0);
++    /* Enable TRL and set the target rate to 125 KB/s */
++    igb_trl_enable(d, 125000);
 +
-+    e1000e_macreg_write(d, E1000_TRLDQSEL, qidx1);
-+    g_assert_cmphex(e1000e_macreg_read(d, E1000_TRLRC), ==, val1);
++    /*
++     * Send Packet 1 (no delay)
++     * The first packet triggers rate limiting for subsequent transmissions.
++     */
++    elapsed = igb_send_and_measure(d, data, alloc);
++    g_assert_cmpint(elapsed, <, expected_baseline_elapsed);
++
++    /* Send Packet 2 (should be delayed) */
++    elapsed = igb_send_and_measure(d, data, alloc);
++    /*
++     * Expected delay: 64 byte packet / 125 KB/s = 512 us.
++     * Since QEMU steps the clock by 10 us on each wait_isr iteration,
++     * the delay is rounded up to the next 10 us step, which is 520 us.
++     */
++    g_assert_cmpint(elapsed, >=, expected_min_elapsed);
++    g_assert_cmpint(elapsed, <=, expected_max_elapsed);
++
++    /* Send Packet 3 (should also be delayed) */
++    elapsed = igb_send_and_measure(d, data, alloc);
++    g_assert_cmpint(elapsed, >=, expected_min_elapsed);
++    g_assert_cmpint(elapsed, <=, expected_max_elapsed);
++
++    igb_trl_disable(d);
++
++    /* Send Packet 4 (no delay since TRL is disabled) */
++    elapsed = igb_send_and_measure(d, data, alloc);
++    g_assert_cmpint(elapsed, <, expected_baseline_elapsed);
 +}
 +
  static void data_test_clear(void *sockets)
  {
      int *test_sockets = sockets;
-@@ -247,6 +296,8 @@ static void register_igb_test(void)
-     qos_add_test("rx", "igb", test_igb_rx, &opts);
-     qos_add_test("multiple_transfers", "igb",
+@@ -298,6 +451,8 @@ static void register_igb_test(void)
                   test_igb_multiple_transfers, &opts);
-+    qos_add_test("transmit_rate_limiter_regs", "igb",
-+                 test_igb_transmit_rate_limiter_regs, &opts);
+     qos_add_test("transmit_rate_limiter_regs", "igb",
+                  test_igb_transmit_rate_limiter_regs, &opts);
++    qos_add_test("transmit_rate_limiter", "igb",
++                 test_igb_transmit_rate_limiter, &opts);
  #endif
  
      opts.before = data_test_init_no_socket;
