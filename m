@@ -4,97 +4,115 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1BDABCDB470
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jun 2026 07:49:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3848CDB470
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jun 2026 07:51:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wbvr0-0001jE-1s; Tue, 23 Jun 2026 03:47:30 -0400
+	id 1wbvv4-0006EK-OD; Tue, 23 Jun 2026 03:51:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wbvqx-0001dD-Vi
- for qemu-devel@nongnu.org; Tue, 23 Jun 2026 03:47:27 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <FangSheng.Huang@amd.com>)
+ id 1wbvv1-0006Dp-Aw
+ for qemu-devel@nongnu.org; Tue, 23 Jun 2026 03:51:39 -0400
+Received: from mail-southcentralusazlp170110003.outbound.protection.outlook.com
+ ([2a01:111:f403:c10d::3] helo=SN4PR0501CU005.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wbvqw-0008Lj-8s
- for qemu-devel@nongnu.org; Tue, 23 Jun 2026 03:47:27 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1782200845;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=J2hVP0nr0sq/C2NkLYrXw5Jgv60Hz1Ty7BafXMzfQbE=;
- b=Z1wSkFGmj0H6C5eGsThAgWxu3qw7L9fydi4eDMOI/jqQfoRK1ER3sr0UisInhZeHpougmF
- cOgvPbS/viYzvAQrVnO7LD9fiHxC7LjaKmTJ4J5+UP/fQNEFOuKU/TWse8LT5YboZ2F0bB
- V8ewIYXpzor0l7i+X4no9nd+W7Zh9b8=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-511-XNWNdAdTMLKuNFxo1f8OWg-1; Tue,
- 23 Jun 2026 03:47:23 -0400
-X-MC-Unique: XNWNdAdTMLKuNFxo1f8OWg-1
-X-Mimecast-MFC-AGG-ID: XNWNdAdTMLKuNFxo1f8OWg_1782200842
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 44DFA180065C; Tue, 23 Jun 2026 07:47:22 +0000 (UTC)
-Received: from localhost (unknown [10.44.22.10])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id A77E5195608C; Tue, 23 Jun 2026 07:47:20 +0000 (UTC)
-From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Tue, 23 Jun 2026 11:44:45 +0400
-Subject: [PATCH v4 30/34] ui/gtk: handle console hotplug/unplug events
+ (Exim 4.90_1) (envelope-from <FangSheng.Huang@amd.com>)
+ id 1wbvuz-0000gt-26
+ for qemu-devel@nongnu.org; Tue, 23 Jun 2026 03:51:39 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=KFhLu2aMuR4zdXIWO0uxXjQE2PQzQiGeiXdodwgucg5cdRZExLb34fZGI/ohA+OMAaVbgjUzemi015DeGn4brUvoGoCLrCH8rPJTEeF40twxZoujG7oWB40bYQjnun0aR90rG1pgecsMj4550A5LgbDJt6SBziJaYtQKh11n4erHzrtFjW+1dWpRlPlhABKwt0jAUqHYkYsSUwfM+b/ANHId8dz8zXULgd6sJSHqZEfSUs575Fmolz8ILpyaGj9W8Lzlxmo3ZT5oXYo67DkfOtj9D+C5gICZka5plfyhGsgYgGPnqagarVUTZH3iFH5UN7C7z02OtTzKe50vH8J1KA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=LZiUKhlw28P2R4J8k9wGBtIjsAUsm9jxlr7Am36IpPg=;
+ b=otoAdVekThfFdomZ+bjNAjPhCHhslX8K0fbRuz0VnHfH/tvIXdBkbZ3RQN5c6O4Agwmw2o/8SghFjhE8xImjKU6MEhrdT3Z6+60jW/2g6MPzU4eUtSUnx5KhA4dlk+V6rGxitXkJfvQvxShYsq76q6ncvWSYNFUohCHS+h14bSqhv4PRhAGrQPqvc8naTp+YQbNdyrJ5xicHL9zYSpXvib0XbGyI2X0EdaMZgzcq8IwjH5hhc2M4JoxMdj0rV/OFdXoWPg3X+9psZevl7cbVnneCCUUWE9dmvGRyuvUD9TSTN1cxOVrrn7uwz9lKD0hb1oQj3bdkSZtor0ffAh9nsw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=nongnu.org smtp.mailfrom=amd.com; dmarc=pass
+ (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=LZiUKhlw28P2R4J8k9wGBtIjsAUsm9jxlr7Am36IpPg=;
+ b=3j+pQHVnIUTXwZ/BkWjeocwtmRGTTP2Z5Wy6GDZZFSumwwuZpan6REIkV1J5RfaizkRF+LdMy1KZTy1b176E1gb72RjKfoiatRV0wkW3CCaUGjrc/AGU/KUgDbHr0qcMxqa1ftrF+9Eve0JvW8wFtYxQEdBH2wDQabOM3ArXJKg=
+Received: from SJ0PR03CA0090.namprd03.prod.outlook.com (2603:10b6:a03:331::35)
+ by LV8PR12MB9420.namprd12.prod.outlook.com (2603:10b6:408:200::12)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.139.20; Tue, 23 Jun
+ 2026 07:51:30 +0000
+Received: from SJ5PEPF000001EB.namprd05.prod.outlook.com
+ (2603:10b6:a03:331:cafe::26) by SJ0PR03CA0090.outlook.office365.com
+ (2603:10b6:a03:331::35) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.159.12 via Frontend Transport; Tue,
+ 23 Jun 2026 07:51:29 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
+Received: from satlexmb07.amd.com (165.204.84.17) by
+ SJ5PEPF000001EB.mail.protection.outlook.com (10.167.242.199) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.21.159.10 via Frontend Transport; Tue, 23 Jun 2026 07:51:29 +0000
+Received: from k-Super-Server.amd.com (10.180.168.240) by satlexmb07.amd.com
+ (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.41; Tue, 23 Jun
+ 2026 02:51:25 -0500
+From: fanhuang <FangSheng.Huang@amd.com>
+To: <qemu-devel@nongnu.org>, <imammedo@redhat.com>, <mst@redhat.com>,
+ <david@kernel.org>, <gourry@gourry.net>
+CC: <philmd@mailo.com>, <berrange@redhat.com>, <peterx@redhat.com>,
+ <Zhigang.Luo@amd.com>, <Lianjie.Shi@amd.com>, fanhuang
+ <FangSheng.Huang@amd.com>
+Subject: [PATCH v14 01/10] hw/mem: add sp-mem device for Specific Purpose
+ Memory
+Date: Tue, 23 Jun 2026 15:50:42 +0800
+Message-ID: <20260623075051.3797975-2-FangSheng.Huang@amd.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20260623075051.3797975-1-FangSheng.Huang@amd.com>
+References: <20260623075051.3797975-1-FangSheng.Huang@amd.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260623-b4-ui-v4-30-4656aec3398d@redhat.com>
-References: <20260623-b4-ui-v4-0-4656aec3398d@redhat.com>
-In-Reply-To: <20260623-b4-ui-v4-0-4656aec3398d@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, 
- =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
- Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>, 
- Alex Williamson <alex@shazbot.org>, 
- =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, 
- Peter Maydell <peter.maydell@linaro.org>, 
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
- =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=4058;
- i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=DEvqGsGEWMW9RpYRMNCT4E2Ku7Pud+lgNF7rPteiP5s=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqOjleg2mdQ/lcmfej2xo13b72VAPxR76hf+IEx
- DcEjBrdAwOJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCajo5XgAKCRDa6OEJdZac
- 5TQHD/40yElDNU4k1VOTePOSpb+WEOqL/Gf2wvFjKNhOKa9WmYjZlwLk46zs+zH5sVSEn19E1dx
- MP6pZG9jq2Dm9G1Id8OLWvVaGmz7GqVgH5e/Iiq29BdFhp6bcDPXH2O0f0zizf2bmx/RvtXemmz
- IpDkGfQ0H9fe5DvRRaTk8fKhM66ejgSbzjvHPLa07GQU+9BjRbGztiNDCnTtwundcbEdYYF3KgF
- IkQoWQGCfFjpTpCjmmyvOHIsARCvfSwDt9NIY4SBn5XW5OCAob4nCvHRfVMcWES+9b1m+KRyJtW
- tbc645YdfNztUbv/vAebWERp7uvpRpMBzF6n9+2edhcdI4sSTopkK+tIhpTg155HNcYi5A6kaJp
- yxpgsp1lot30kLYFmlGnrOz1+jkAAxHC8wFIDTSwUsDsC2dSNL3pZVO4J1QNzcTxAdwMOUH6a77
- Bt2AF1ur9SNa1kXThtNKQYw6UbfQA0rR23BvWTzVjWeVg8Bryh0DQWBmdoEjeCzZZMbFE+zDu9B
- +pttDBjgxGw8Ba+ZEah+/uLqT2dVCZKvaBO9sMZhLxjwUmf/DiFq8cPxMMpVqIPT0pFRnDO4+X4
- U+2WSsu2vBbuLc35JGaSzf01G+Ccr5fpRutcNykbIpkWj53eWGXec/Ab8dUicDvZVmSyvMJYEav
- vOUqlaQT9KqTQeg==
-X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
- fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=marcandre.lureau@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Type: text/plain
+X-Originating-IP: [10.180.168.240]
+X-ClientProxiedBy: satlexmb08.amd.com (10.181.42.217) To satlexmb07.amd.com
+ (10.181.42.216)
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SJ5PEPF000001EB:EE_|LV8PR12MB9420:EE_
+X-MS-Office365-Filtering-Correlation-Id: eddca42d-5684-4397-600c-08ded0fc3c31
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|1800799024|376014|36860700016|82310400026|23010399003|6133799003|22082099003|18002099003|11063799006|56012099006|43062017;
+X-Microsoft-Antispam-Message-Info: rG5Me0GmekhMcEinIEAq5MKSbCHWKu0b/Yzl82TgWvdLCbPJaRW8SqS9l4P21cRzpSPaP3Ah8ZsJjOg8yvRL61LEd5/yBoTZqIYU4heoCY6RsADk9ZGvISYlTabUO38ONRQ7Wxd5Y628Ei1uxGzm+2rt4IMIDaVHn13C3dpfqr7tW8IiPznzocQC7OuP7iVzad+O4KdumK6z0hNaV1Rc77MuwN3AsXHnllijDt/z7W4aJqnxgqyDNAAW6gA7WJCceI+H7Dxpn0BKjsvxlWcLv6+xnDLUtzud0I1LMFuqZvOjtUT1y3A7sek+ruPAcNBSKQ+3DSI3U7Ys/1TDjjeof6C37J77eFE9zJPADZJisr4N/1q0Xmqn1FUygPcIH3TpuOo7zpHiIgVnhjRxoKKQDuoioBx1AbNBtJwJacUjvbIr+lxysshrFlq63pm4eBpcU8B2DUNipxnXha+BfdEBF/73wpXIhYsxpsdqp/mWSl07T9jbRgSruFLpOjzPdnIcKUzXj7b1qN7aHo6YncNKVixj9DB2CowFe/PDBaBgqqyIwBz4PC5JZB74hXjeO9XJ6VrqeLVgdFxSXDg+oT8hjaMWHOCpnSfA9rd9GYAWMvpYbW3DHfs2VS8lqoKsFaRhEYGStagGEibsySkKpajLljZSV9425eGMPDRBfq6wQ7CMl4veP20ZQgEW0yX0LpELwilJmDseCXOxp94jcdxedyIIOOmlSEdHA+o0Oq2TBYo8QEpEFThjPkMhIkRqCTOU
+X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:satlexmb07.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(13230040)(1800799024)(376014)(36860700016)(82310400026)(23010399003)(6133799003)(22082099003)(18002099003)(11063799006)(56012099006)(43062017);
+ DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: CXhzfXXks47WTv0dNDVRDCCzhLDP3McBmiHl3ZITM2ru3ZV0bJNqn+CIm377P22LARTWvzxX4ummO/2HVIfAerRS8dRjwve1xJ3E8jVDAfdH1KlFycJoYB+yvHi+4bzVFpQkMbLtuc5chcPuh06PVlu6PekfmBJgsUi3x80ZUDKiPxi3ose8KbCRDW7yt2pm6+g9o+b/mzyTG6b+OV9pdil1t1tE2ECR+8qdFAKmtowd4jedZqTVGAdQqosPQaIjvumeIyN85MHkcy0W5SxBgMfVQ5vku4mr3GInfkjJMhOsmsQuoXke0GDHVEriAeIgKSO8tkXqpvI5Vx8Fj8GhPrjjh/jt5wLr7QA1RzA0lZ2Yj7aJUsP9tCgfr6bF7Y737dx65ltgF71VCGzvsVYe2st0bhAntUhQagPuqtDS8J3DEw6t+6fkkkra8nLoLRD4
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 23 Jun 2026 07:51:29.2134 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: eddca42d-5684-4397-600c-08ded0fc3c31
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
+ Helo=[satlexmb07.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource: SJ5PEPF000001EB.namprd05.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV8PR12MB9420
+Received-SPF: permerror client-ip=2a01:111:f403:c10d::3;
+ envelope-from=FangSheng.Huang@amd.com;
+ helo=SN4PR0501CU005.outbound.protection.outlook.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,140 +128,213 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Register a console notifier so the GTK display dynamically creates and
-destroys VirtualConsole tabs when graphic consoles are added or removed
-at runtime (e.g. vfio-pci with display=on hotplug).
+Introduce a TYPE_MEMORY_DEVICE subclass `sp-mem` for boot-time
+SOFT_RESERVED memory exposed to the guest with a per-device NUMA
+proximity domain.
 
-Add skips consoles that already have a VC binding, remove skips unknown
-consoles.
+The device targets accelerator memory (HBM and similar) that the
+firmware hands to the guest OS as SOFT_RESERVED memory, so a driver
+in the guest -- rather than the kernel's general allocator -- owns
+the range.
 
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Usage:
+
+    -object memory-backend-ram,id=spm0,size=$SIZE
+    -numa node,nodeid=$N
+    -device sp-mem,id=dev0,memdev=spm0,node=$N[,addr=$GPA]
+
+The device is boot-time only (no hotplug).
+
+Signed-off-by: FangSheng Huang <FangSheng.Huang@amd.com>
+Reviewed-by: Igor Mammedov <imammedo@redhat.com>
 ---
- include/ui/gtk.h |  1 +
- ui/gtk.c         | 75 +++++++++++++++++++++++++++++++++++++++++++++++++++++++-
- 2 files changed, 75 insertions(+), 1 deletion(-)
+ include/hw/mem/sp-mem.h |  33 ++++++++++++
+ hw/mem/sp-mem.c         | 109 ++++++++++++++++++++++++++++++++++++++++
+ hw/mem/Kconfig          |   4 ++
+ hw/mem/meson.build      |   1 +
+ 4 files changed, 147 insertions(+)
+ create mode 100644 include/hw/mem/sp-mem.h
+ create mode 100644 hw/mem/sp-mem.c
 
-diff --git a/include/ui/gtk.h b/include/ui/gtk.h
-index 53d0e447a23..5c9c34a069e 100644
---- a/include/ui/gtk.h
-+++ b/include/ui/gtk.h
-@@ -141,6 +141,7 @@ struct GtkDisplayState {
-     GdkCursor *null_cursor;
-     Notifier mouse_mode_notifier;
-     VMChangeStateEntry *vmse;
-+    Notifier console_notifier;
-     gboolean free_scale;
-     gboolean keep_aspect_ratio;
- 
-diff --git a/ui/gtk.c b/ui/gtk.c
-index e7a9156f206..7078d89d679 100644
---- a/ui/gtk.c
-+++ b/ui/gtk.c
-@@ -2332,7 +2332,8 @@ static bool gd_scale_valid(double scale)
-     return scale >= VC_SCALE_MIN && scale <= VC_SCALE_MAX;
- }
- 
--static void add_gfx_console(GtkDisplayState *s, QemuConsole *con)
-+static VirtualConsole *
-+add_gfx_console(GtkDisplayState *s, QemuConsole *con)
- {
-     VirtualConsole *vc = g_new0(VirtualConsole, 1);
-     const DisplayChangeListenerOps *ops = &dcl_ops;
-@@ -2414,6 +2415,74 @@ static void add_gfx_console(GtkDisplayState *s, QemuConsole *con)
-     qemu_console_register_listener(con, &vc->gfx.dcl, ops);
- 
-     gd_connect_vc_gfx_signals(vc);
-+    return vc;
+diff --git a/include/hw/mem/sp-mem.h b/include/hw/mem/sp-mem.h
+new file mode 100644
+index 0000000000..a8951b49e6
+--- /dev/null
++++ b/include/hw/mem/sp-mem.h
+@@ -0,0 +1,33 @@
++/*
++ * Specific Purpose Memory (SPM) device
++ *
++ * TYPE_MEMORY_DEVICE subclass for boot-time-only memory exposed to the
++ * guest as an E820 SOFT_RESERVED range with a SRAT memory-affinity entry.
++ *
++ * Copyright (c) 2026 Advanced Micro Devices, Inc.
++ *
++ * Authors:
++ *  FangSheng Huang <FangSheng.Huang@amd.com>
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#ifndef QEMU_SP_MEM_H
++#define QEMU_SP_MEM_H
++
++#include "hw/core/qdev.h"
++#include "qom/object.h"
++
++#define TYPE_SP_MEM "sp-mem"
++
++OBJECT_DECLARE_SIMPLE_TYPE(SpMemDevice, SP_MEM)
++
++struct SpMemDevice {
++    DeviceState parent_obj;
++
++    HostMemoryBackend *hostmem;
++    uint32_t node;
++    uint64_t addr;
++};
++
++#endif /* QEMU_SP_MEM_H */
+diff --git a/hw/mem/sp-mem.c b/hw/mem/sp-mem.c
+new file mode 100644
+index 0000000000..d088222f54
+--- /dev/null
++++ b/hw/mem/sp-mem.c
+@@ -0,0 +1,109 @@
++/*
++ * Specific Purpose Memory (SPM) device
++ *
++ * Copyright (c) 2026 Advanced Micro Devices, Inc.
++ *
++ * Authors:
++ *  FangSheng Huang <FangSheng.Huang@amd.com>
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include "qemu/osdep.h"
++#include "qemu/module.h"
++#include "qapi/error.h"
++#include "hw/core/qdev-properties.h"
++#include "hw/core/qdev.h"
++#include "hw/mem/sp-mem.h"
++#include "hw/mem/memory-device.h"
++#include "system/hostmem.h"
++
++#define SP_MEM_MEMDEV_PROP    "memdev"
++#define SP_MEM_NODE_PROP      "node"
++#define SP_MEM_ADDR_PROP      "addr"
++
++static const Property sp_mem_properties[] = {
++    DEFINE_PROP_LINK(SP_MEM_MEMDEV_PROP, SpMemDevice, hostmem,
++                     TYPE_MEMORY_BACKEND, HostMemoryBackend *),
++    DEFINE_PROP_UINT32(SP_MEM_NODE_PROP, SpMemDevice, node, 0),
++    DEFINE_PROP_UINT64(SP_MEM_ADDR_PROP, SpMemDevice, addr, 0),
++};
++
++static uint64_t sp_mem_get_addr(const MemoryDeviceState *md)
++{
++    return object_property_get_uint(OBJECT(md), SP_MEM_ADDR_PROP,
++                                    &error_abort);
 +}
 +
-+static void gd_vc_add_gfx(GtkDisplayState *s, QemuConsole *con)
++static void sp_mem_set_addr(MemoryDeviceState *md, uint64_t addr,
++                            Error **errp)
 +{
-+    VirtualConsole *vc;
-+    int i;
-+
-+    for (i = 0; i < (int)s->vcs->len; i++) {
-+        VirtualConsole *v = g_ptr_array_index(s->vcs, i);
-+        if (v->type == GD_VC_GFX && v->gfx.dcl.con == con) {
-+            return;
-+        }
-+    }
-+
-+    vc = add_gfx_console(s, con);
-+    gtk_widget_show_all(vc->tab_item);
-+    gtk_widget_realize(vc->gfx.drawing_area);
-+
-+    if (s->free_scale) {
-+        gd_update_windowsize(vc);
-+    }
-+
-+    gd_update_caption(s);
-+    gd_rebuild_vc_menu(s);
++    object_property_set_uint(OBJECT(md), SP_MEM_ADDR_PROP, addr, errp);
 +}
 +
-+static void gd_vc_remove_gfx(GtkDisplayState *s, QemuConsole *con)
++static MemoryRegion *sp_mem_get_memory_region(MemoryDeviceState *md,
++                                              Error **errp)
 +{
-+    VirtualConsole *vc = NULL;
-+    guint idx;
++    SpMemDevice *spm = SP_MEM(md);
 +
-+    for (idx = 0; idx < s->vcs->len; idx++) {
-+        VirtualConsole *v = g_ptr_array_index(s->vcs, idx);
-+        if (v->type == GD_VC_GFX && v->gfx.dcl.con == con) {
-+            vc = v;
-+            break;
-+        }
++    if (!spm->hostmem) {
++        error_setg(errp, "'%s' property must be set", SP_MEM_MEMDEV_PROP);
++        return NULL;
 +    }
-+    if (!vc) {
++    return host_memory_backend_get_memory(spm->hostmem);
++}
++
++static void sp_mem_realize(DeviceState *dev, Error **errp)
++{
++    SpMemDevice *spm = SP_MEM(dev);
++
++    if (!spm->hostmem) {
++        error_setg(errp, "'%s' property is required", SP_MEM_MEMDEV_PROP);
 +        return;
 +    }
-+
-+    if (s->kbd_owner == vc) {
-+        gd_ungrab_keyboard(s);
++    if (host_memory_backend_is_mapped(spm->hostmem)) {
++        error_setg(errp, "memory backend '%s' is already in use",
++                   object_get_canonical_path_component(OBJECT(spm->hostmem)));
++        return;
 +    }
-+    if (s->ptr_owner == vc) {
-+        gd_ungrab_pointer(s);
-+    }
-+
-+    g_ptr_array_remove_index(s->vcs, idx);
-+    gd_rebuild_vc_menu(s);
-+    gd_update_caption(s);
++    host_memory_backend_set_mapped(spm->hostmem, true);
 +}
 +
-+static void gd_console_notify(Notifier *n, void *data)
++static void sp_mem_unrealize(DeviceState *dev)
 +{
-+    GtkDisplayState *s = container_of(n, GtkDisplayState, console_notifier);
-+    QemuConsoleEvent *event = data;
++    SpMemDevice *spm = SP_MEM(dev);
 +
-+    switch (event->type) {
-+    case QEMU_CONSOLE_ADDED:
-+        gd_vc_add_gfx(s, event->con);
-+        break;
-+    case QEMU_CONSOLE_REMOVED:
-+        gd_vc_remove_gfx(s, event->con);
-+        break;
-+    }
- }
- 
- static void gd_create_menu_view(GtkDisplayState *s, DisplayOptions *opts)
-@@ -2694,6 +2763,9 @@ static void gtk_display_init(DisplayState *ds, DisplayOptions *opts)
- 
-     gd_create_menus(s, opts);
- 
-+    s->console_notifier.notify = gd_console_notify;
-+    qemu_console_add_notifier(&s->console_notifier);
++    host_memory_backend_set_mapped(spm->hostmem, false);
++}
 +
-     gd_connect_signals(s);
++static void sp_mem_class_init(ObjectClass *oc, const void *data)
++{
++    DeviceClass *dc = DEVICE_CLASS(oc);
++    MemoryDeviceClass *mdc = MEMORY_DEVICE_CLASS(oc);
++
++    dc->desc = "SPM (Specific Purpose Memory) device";
++    dc->hotpluggable = false;
++    dc->realize = sp_mem_realize;
++    dc->unrealize = sp_mem_unrealize;
++    device_class_set_props(dc, sp_mem_properties);
++
++    mdc->get_addr            = sp_mem_get_addr;
++    mdc->set_addr            = sp_mem_set_addr;
++    mdc->get_memory_region   = sp_mem_get_memory_region;
++    mdc->get_plugged_size    = memory_device_get_region_size;
++}
++
++static const TypeInfo sp_mem_types[] = {
++    {
++        .name          = TYPE_SP_MEM,
++        .parent        = TYPE_DEVICE,
++        .class_init    = sp_mem_class_init,
++        .instance_size = sizeof(SpMemDevice),
++        .interfaces    = (InterfaceInfo[]) {
++            { TYPE_MEMORY_DEVICE },
++            { }
++        },
++    },
++};
++
++DEFINE_TYPES(sp_mem_types)
+diff --git a/hw/mem/Kconfig b/hw/mem/Kconfig
+index 73c5ae8ad9..39ddb36710 100644
+--- a/hw/mem/Kconfig
++++ b/hw/mem/Kconfig
+@@ -16,3 +16,7 @@ config CXL_MEM_DEVICE
+     bool
+     default y if CXL
+     select MEM_DEVICE
++
++config SP_MEM
++    bool
++    select MEM_DEVICE
+diff --git a/hw/mem/meson.build b/hw/mem/meson.build
+index 8c2beeb7d4..f410d75475 100644
+--- a/hw/mem/meson.build
++++ b/hw/mem/meson.build
+@@ -4,6 +4,7 @@ mem_ss.add(when: 'CONFIG_DIMM', if_true: files('pc-dimm.c'))
+ mem_ss.add(when: 'CONFIG_NPCM7XX', if_true: files('npcm7xx_mc.c'))
+ mem_ss.add(when: 'CONFIG_NVDIMM', if_true: files('nvdimm.c'))
+ mem_ss.add(when: 'CONFIG_CXL_MEM_DEVICE', if_true: files('cxl_type3.c'))
++mem_ss.add(when: 'CONFIG_SP_MEM', if_true: files('sp-mem.c'))
+ stub_ss.add(files('cxl_type3_stubs.c'))
  
-     gtk_notebook_set_show_tabs(GTK_NOTEBOOK(s->notebook), FALSE);
-@@ -2814,6 +2886,7 @@ static void gtk_display_cleanup(void)
-         return;
-     }
-     qemu_del_vm_change_state_handler(s->vmse);
-+    qemu_console_remove_notifier(&s->console_notifier);
-     qemu_remove_mouse_mode_change_notifier(&s->mouse_mode_notifier);
-     gd_clipboard_cleanup(s);
-     g_signal_handlers_disconnect_by_func(s->notebook,
-
+ stub_ss.add(files('memory-device-stubs.c'))
 -- 
-2.54.0
+2.34.1
 
 
