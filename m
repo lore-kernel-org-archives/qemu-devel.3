@@ -4,87 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47694CDB471
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jun 2026 15:25:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98123CDB471
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jun 2026 15:41:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wc2z6-0004lP-4b; Tue, 23 Jun 2026 11:24:20 -0400
+	id 1wc3FO-00013H-Re; Tue, 23 Jun 2026 11:41:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wc2z4-0004kS-6V
- for qemu-devel@nongnu.org; Tue, 23 Jun 2026 11:24:18 -0400
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wc2z0-0003Fn-72
- for qemu-devel@nongnu.org; Tue, 23 Jun 2026 11:24:17 -0400
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-490b613a17bso48515745e9.3
- for <qemu-devel@nongnu.org>; Tue, 23 Jun 2026 08:24:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=openvz.org; s=google; t=1782228252; x=1782833052; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=XzsX0Wp5kYrKeC7ZDwHnYAxGPSqeFnF2AaqMrkEjN8Q=;
- b=sz9pweLZ88LLk7tXTf8DLQpWB2Zqo816OtUNIpdJNax46MenLZiF8rrz1GT005RPvK
- EIQ8FJOt/MgV4c2h0T/SLDRAAJygFYcunljqF4sIXwkR0trV6/NjseByUWzXGEUCBG8f
- f08wx/KH8jTQYMrmBka7CZDD7Wz4MPhXLyDZ7EO924iL4JMWjTWk/UC9v3blmcynqb3Y
- HOLGM0n05pYuff8RwfUsqnbLbcCkOw/fv0guxWTa52WsNJsqjfeH5wHxyDf0vXwYrrV1
- SD5plgJRzi/cnPrFYN6uiJQWbzS2hR6QtjPvvlf3kOVuZYgCsVO4ZVuuOkhBKu/gn1F/
- qPsw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782228252; x=1782833052;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=XzsX0Wp5kYrKeC7ZDwHnYAxGPSqeFnF2AaqMrkEjN8Q=;
- b=GUKAu4QImDhU16vBkjIoa1RAfNZkqqdlEBTti2GE1dMMd1fRAwiCOwJGFCwGNoxxsj
- sGT9xnmu4+Ht8xFzVV4mvWoJrD9Y4HHN2VwnpZuvWc8ZF/a3nLCB5gmdk2nWRDPkoy7F
- kdwLaRf2xXy2lj0+OJLLUXz+/4z4asJvW8D2ym26A0KOgYtl9Js7ixCww6HcD4Y8XcL/
- 8Je8XRBLp0BuaBc7ARdlIZmrMpPq1Qkwb1Ja4LHZQA0j6gPPKqGwKEYtJKPEi6AlTqFg
- XQbWw8gojEdRZmQCcE+uxBwLKcqpR23dPxq3wchHeqbR/0oja4+NvZDGeOCpqYsAILT2
- JgAw==
-X-Gm-Message-State: AOJu0Yz/pO04iJCozUw/LCPIGsWWSXWL8ej5L4B+zPFLdGr9hMenRcXL
- vuWbmtCo//EnZDafBRScqQDxc4P+IUUeKQ7E4HmDHFRvFz9gUBeVFYvRD2Ekfk/zWtw2EBjWRJ1
- M4jfouRPyDgHk
-X-Gm-Gg: AfdE7ckUKgepvQrQPPnrjLi92WPR2RzHQcBwf6z8N8RZr5UKPcUCmX4GNHxKezPxRv6
- 9gA7UFl/b1+FRLhWC5+0FcFKUD5xo2nGPOxgdUcoxbAfhjAnkUSC1RYFxpV5ogVX3x1G0lSeZzh
- H9878GYk0fObi1fqwubpdlCAOQ6ElfZNXYLVJPRZLNlvglL0JMfsA/q/4sbIG6+9mwLgwjH/zty
- GE/ckskn55gWT+YN+ZJIhL9FDtjg3PYQzPGwkz3p63Rc0WcnD9L04oJbRFWaNsH+bbbf2u8OkJk
- l6c2rzLmzW3gF10WP0GqFzG11NpOHqpAQTOwKw935wzLC/EbGpH6Cx7/ro6kXTe6gPOrpH/N6CR
- a57WwLb8SyOH2zqbCz9HfI61pmopVRQBG6b8H9IskwI85rWMBj3cH0uLSi+AuDj60oldG4/M=
-X-Received: by 2002:a05:600c:348b:b0:490:44eb:c1ea with SMTP id
- 5b1f17b1804b1-492490a771dmr237984845e9.24.1782228251614; 
- Tue, 23 Jun 2026 08:24:11 -0700 (PDT)
-Received: from athena.sw.ru ([2a06:5b06:b600:300:406b:7279:5a3e:280f])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49240eef2basm406008895e9.2.2026.06.23.08.24.10
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 23 Jun 2026 08:24:11 -0700 (PDT)
-From: "Denis V. Lunev" <den@openvz.org>
-To: qemu-block@nongnu.org
-Cc: qemu-devel@nongnu.org, John Snow <jsnow@redhat.com>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- "Denis V. Lunev" <den@openvz.org>
-Subject: [PATCH 2/2] tests/unit/test-blockjob: cover keeping a job paused
- while a pause is pending
-Date: Tue, 23 Jun 2026 17:24:06 +0200
-Message-ID: <20260623152406.1180235-3-den@openvz.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260623152406.1180235-1-den@openvz.org>
-References: <20260623152406.1180235-1-den@openvz.org>
+ (Exim 4.90_1) (envelope-from <tangtao1634@phytium.com.cn>)
+ id 1wc3FM-000130-2K
+ for qemu-devel@nongnu.org; Tue, 23 Jun 2026 11:41:08 -0400
+Received: from zg8tmtyylji0my4xnjqumte4.icoremail.net ([162.243.164.118])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <tangtao1634@phytium.com.cn>) id 1wc3FK-0008Ss-43
+ for qemu-devel@nongnu.org; Tue, 23 Jun 2026 11:41:07 -0400
+Received: from prodtpl.icoremail.net (unknown [10.12.1.20])
+ by hzbj-icmmx-7 (Coremail) with SMTP id AQAAfwB3fmIFqTpqh7LgCw--.416S2;
+ Tue, 23 Jun 2026 23:40:53 +0800 (CST)
+Received: from [192.168.2.2] (unknown [113.246.118.219])
+ by mail (Coremail) with SMTP id AQAAf8Dw9HMBqTpqX6YMAA--.21232S2;
+ Tue, 23 Jun 2026 23:40:50 +0800 (CST)
+Message-ID: <13d1efd6-7f4c-4962-89fd-209b8b0574dc@phytium.com.cn>
+Date: Tue, 23 Jun 2026 23:40:47 +0800
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=den@openvz.org; helo=mail-wm1-x32c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+To: berrange@redhat.com
+Cc: qemu-devel@nongnu.org
+References: <20260622113152.1710585-1-berrange@redhat.com>
+Subject: Re: [PATCH 0/3] Record maintainer/reviewer Git Lab handles
+From: Tao Tang <tangtao1634@phytium.com.cn>
+In-Reply-To: <20260622113152.1710585-1-berrange@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-CM-TRANSID: AQAAf8Dw9HMBqTpqX6YMAA--.21232S2
+X-CM-SenderInfo: pwdqw3tdrrljuu6sx5pwlxzhxfrphubq/1tbiAQAPBWo5i-gJjAAAsu
+Authentication-Results: hzbj-icmmx-7; spf=neutral smtp.mail=tangtao163
+ 4@phytium.com.cn;
+X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
+ ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU8nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
+ nUUI43ZEXa7xR_UUUUUUUUU==
+Received-SPF: pass client-ip=162.243.164.118;
+ envelope-from=tangtao1634@phytium.com.cn;
+ helo=zg8tmtyylji0my4xnjqumte4.icoremail.net
+X-Spam_score_int: -25
+X-Spam_score: -2.6
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,143 +68,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a regression test for the previous commit. A job that has reached
-its pause point is spuriously re-entered (job_enter()) while a pause is
-still pending (pause_count > 0), reproducing what an overlapping drain
-does: one drain's job_resume() wakes the job while the next drain's
-job_pause() is already counted. The job must stay parked - it must not
-run job code or clear job->paused, or job_set_aio_context() could
-observe paused == false and abort.
+Hi Daniel,
 
-The test counts the job's run-loop iterations: without the fix the
-re-entered job clears job->paused, runs one iteration and re-pauses, so
-the counter advances; with the fix it stays parked and the counter is
-unchanged. It runs in the main AioContext, so job_enter() is synchronous
-and the check is deterministic.
+> Much more significantly, there are the following people present
+> in MAINTAINERS, whom are not members of the GitLab project:
+>
+> ------------------------------<snip>------------------------------
+>      Tao Tang <tangtao1634-#-phytium-#-com-#-cn>
+My gitlab account is:
 
-Signed-off-by: Denis V. Lunev <den@openvz.org>
----
- tests/unit/test-blockjob.c | 100 +++++++++++++++++++++++++++++++++++++
- 1 file changed, 100 insertions(+)
+gitlab.com/TaoTang
 
-diff --git a/tests/unit/test-blockjob.c b/tests/unit/test-blockjob.c
-index abdbe4b835..3b77d19b91 100644
---- a/tests/unit/test-blockjob.c
-+++ b/tests/unit/test-blockjob.c
-@@ -388,6 +388,105 @@ static void test_cancel_concluded(void)
-     cancel_common(s);
- }
- 
-+typedef struct PauseCountJob {
-+    BlockJob common;
-+    int n;
-+    bool should_complete;
-+} PauseCountJob;
-+
-+static void pause_count_job_complete(Job *job, Error **errp)
-+{
-+    PauseCountJob *s = container_of(job, PauseCountJob, common.job);
-+    s->should_complete = true;
-+}
-+
-+static int coroutine_fn pause_count_job_run(Job *job, Error **errp)
-+{
-+    PauseCountJob *s = container_of(job, PauseCountJob, common.job);
-+
-+    while (!s->should_complete) {
-+        if (job_is_cancelled(&s->common.job)) {
-+            return 0;
-+        }
-+        s->n++;
-+        /*
-+         * Yields; while a pause is pending the yield is skipped and the job
-+         * parks in job_pause_point() instead.
-+         */
-+        job_sleep_ns(&s->common.job, 10 * 1000 * 1000);
-+    }
-+
-+    return 0;
-+}
-+
-+static const BlockJobDriver pause_count_job_driver = {
-+    .job_driver = {
-+        .instance_size = sizeof(PauseCountJob),
-+        .free          = block_job_free,
-+        .user_resume   = block_job_user_resume,
-+        .run           = pause_count_job_run,
-+        .complete      = pause_count_job_complete,
-+    },
-+};
-+
-+/*
-+ * A job that has reached its pause point must stay paused while a pause is
-+ * still pending (pause_count > 0). An overlapping drain re-enters the job (one
-+ * drain's job_resume() wakes it while the next drain's job_pause() is already
-+ * counted); the job must not run or clear job->paused, otherwise
-+ * job_set_aio_context() can observe paused == false and abort.
-+ */
-+static void test_pause_keeps_paused(void)
-+{
-+    BlockBackend *blk;
-+    BlockJob *bjob;
-+    PauseCountJob *s;
-+    Job *job;
-+    int n0;
-+
-+    blk = create_blk(NULL);
-+    bjob = mk_job(blk, "job0", &pause_count_job_driver, true,
-+                  JOB_MANUAL_FINALIZE | JOB_MANUAL_DISMISS);
-+    s = container_of(bjob, PauseCountJob, common);
-+    job = &bjob->job;
-+    WITH_JOB_LOCK_GUARD() {
-+        job_ref_locked(job);
-+    }
-+
-+    job_start(job);
-+
-+    /* Pause the running job; it parks in job_pause_point() with paused set. */
-+    WITH_JOB_LOCK_GUARD() {
-+        job_pause_locked(job);
-+        g_assert_true(job->paused);
-+        g_assert_cmpint(job->status, ==, JOB_STATUS_PAUSED);
-+    }
-+    n0 = s->n;
-+
-+    /*
-+     * Spurious wake while the pause is still pending. The job must stay parked:
-+     * the bug clears job->paused, runs an iteration (s->n advances) and
-+     * re-pauses, exposing a paused == false window.
-+     */
-+    job_enter(job);
-+    WITH_JOB_LOCK_GUARD() {
-+        g_assert_true(job->paused);
-+    }
-+    g_assert_cmpint(s->n, ==, n0);
-+
-+    /* Resume and tear down. */
-+    WITH_JOB_LOCK_GUARD() {
-+        job_resume_locked(job);
-+    }
-+    job_cancel_sync(job, true);
-+    WITH_JOB_LOCK_GUARD() {
-+        Job *dummy = job;
-+        job_dismiss_locked(&dummy, &error_abort);
-+        job_unref_locked(job);
-+    }
-+    destroy_blk(blk);
-+}
-+
- int main(int argc, char **argv)
- {
-     qemu_init_main_loop(&error_abort);
-@@ -402,5 +501,6 @@ int main(int argc, char **argv)
-     g_test_add_func("/blockjob/cancel/standby", test_cancel_standby);
-     g_test_add_func("/blockjob/cancel/pending", test_cancel_pending);
-     g_test_add_func("/blockjob/cancel/concluded", test_cancel_concluded);
-+    g_test_add_func("/blockjob/pause/keep_paused", test_pause_keeps_paused);
-     return g_test_run();
- }
--- 
-2.53.0
+
+Thanks,
+
+Tao
 
 
