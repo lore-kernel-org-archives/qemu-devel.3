@@ -4,105 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65E7DCD4F26
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jun 2026 09:13:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF52DCDB470
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jun 2026 09:17:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wbxBh-00047f-70; Tue, 23 Jun 2026 05:12:57 -0400
+	id 1wbxFG-0005Ec-Oj; Tue, 23 Jun 2026 05:16:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wbxBg-00046s-Iu
- for qemu-devel@nongnu.org; Tue, 23 Jun 2026 05:12:56 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <qemu_oss@crudebyte.com>)
+ id 1wbxFF-0005EN-0M; Tue, 23 Jun 2026 05:16:37 -0400
+Received: from kylie.crudebyte.com ([5.189.157.229])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wbxBd-00032O-KG
- for qemu-devel@nongnu.org; Tue, 23 Jun 2026 05:12:56 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1782205972;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=XY0i4tKMDaN+wiRXwH9n8el2pNwOYOLhYvxb68wTl4Q=;
- b=hBowJQO+lDzuDsmXMdTFpJQgzddgnBcJs7PToit9Bgezl0CZoDluk5ZWbUOPrE0CodVhIP
- Qw9Si/7RnGQCLejwFVqMQ+vPowbYSZa1zIqXxlunbQnRYieRq4ZTm7h/9evTe8GZ8tXQ62
- EyLkPzbOW6iL0pYAsroEQ8YoUMs4p7w=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-209-pyYQ61h-P1-GOhCDYqP8yw-1; Tue, 23 Jun 2026 05:12:50 -0400
-X-MC-Unique: pyYQ61h-P1-GOhCDYqP8yw-1
-X-Mimecast-MFC-AGG-ID: pyYQ61h-P1-GOhCDYqP8yw_1782205970
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-4924207e640so24235165e9.3
- for <qemu-devel@nongnu.org>; Tue, 23 Jun 2026 02:12:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1782205969; x=1782810769; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=XY0i4tKMDaN+wiRXwH9n8el2pNwOYOLhYvxb68wTl4Q=;
- b=YYMLU1ch60tqS5PhfrlUatLtct1M1NEhHWep7j+5SgI4FHuPSi4EFTaovBUB+HcF1F
- fHX0mFQnesi5aTFAB2tXmKJW7lITd0LpHqavkCeNp4ZoGNGwLdAljhLVO5o+sEclw9hI
- t8tsz70zN6UD1XUrurnC88h0i3vhN/qULT4sbFbpKsNiUNF8y0BBBPpUmr5FbRorqj/q
- FbQ49bFTMtt7yhMlfzoNacSYNadjv4L6EHWW6dAkh74u3XZVaxF+MkOEIbLIBHcbA+p9
- oylfiKQ9d9yhk1PCOgh++HSC1s9s6hRT9cTW2rVMIupLgVI735DnJZ3KhbNrHM8GWZ7+
- Uadw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782205969; x=1782810769;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=XY0i4tKMDaN+wiRXwH9n8el2pNwOYOLhYvxb68wTl4Q=;
- b=DQeM3kKiOisOmxiC5VvdzD565InHvEmB2IJI8ipyH+P/V/EXPfPMrDYUMKge8X2NWz
- OvPlWmWg8p5nEhZd7ABA4fMVGcvPrza3Rv5Mnl6ZLlu9jrRjqxOhXXINaCIvN9cZeBQg
- oOjwM80mKqnLb8hZIM7C6ypauuCLV7eD92bl8STlIjnqmEJOFYvzGYAj5M3wu7wG6dAJ
- vdBgxDuzSk/seHmmE8VB5YwXKyIol98818EUee/JKiR2En3DcWinuwv/QEmAK+7lDTDW
- rF4KfEY7XdFOrgm4BnFGfpniLKsye0dbD52/pl2O9AuAIzXBYEYtevX9CvbcI+5PX0sj
- meDw==
-X-Gm-Message-State: AOJu0YyryIP/Sd63beKpWhV7dMdFXARTSEdBD2UweqhaqutPy8bfBsRo
- F/GRG8F5VMbgntEguEwbSQGchJwaR4nOo+KpGE6V5Ymh5YykZ/A7NLmM9gbNAPOcT67L20wD8Re
- NyjUaPZajvhXwXrspcjrO4fmIzCrVyg9199Xu9CQQu/gLwR4jMtuha9P6EhnhhBIU
-X-Gm-Gg: AfdE7clZE66GO1QEAQTO68y4/ztVHuMHPRqn8AJh3x3iMNnVG9Xpko5MYQzr5xyrPMv
- TmpFXh9N7hjjtf53T50Cff+4guVrTack511DaOT3nIQfqrDidrmnci4jQna4M6UD1lHQiOfUBTI
- NdJKARUwzCXajg0i2jK0S9nDHCvdVzk1rv5/4mLld/1991BqwueLwHFRcTg1z13CMtIqK7N/ENp
- N39Hjf/ydvr6/3h7PVnLrEDJEmvb4ipgJRItQV8wzhKgfXcIAxRxjRbdlDNZbVGrZYRvUsUidTX
- oOAgnyJaxEyNX33M9bDObXi274larBXSTUXeB00LrqFIbtKZBr49mo7rxpiuzo4AKaG7+OPEPbv
- DZ4tdsnjGLEOUGeEGSIXa7waCrNAG2dbY
-X-Received: by 2002:a05:600c:1549:b0:492:324d:e93f with SMTP id
- 5b1f17b1804b1-492490b80e5mr203085215e9.36.1782205969450; 
- Tue, 23 Jun 2026 02:12:49 -0700 (PDT)
-X-Received: by 2002:a05:600c:1549:b0:492:324d:e93f with SMTP id
- 5b1f17b1804b1-492490b80e5mr203084795e9.36.1782205968962; 
- Tue, 23 Jun 2026 02:12:48 -0700 (PDT)
-Received: from redhat.com (IGLD-80-230-85-71.inter.net.il. [80.230.85.71])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-466648c5413sm35313148f8f.11.2026.06.23.02.12.47
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 23 Jun 2026 02:12:48 -0700 (PDT)
-Date: Tue, 23 Jun 2026 05:12:45 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: no92 <leo@managarm.org>
-Cc: qemu-devel@nongnu.org, qemu-trivial@nongnu.org, qemu-stable@nongnu.org,
- clement.mathieu--drif@bull.com, yi.l.liu@intel.com,
- Jason Wang <jasowang@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: Re: [PATCH v2] hw/i386/x86-iommu: Correctly set pt bit in extended
- capability register
-Message-ID: <20260623051234-mutt-send-email-mst@kernel.org>
-References: <20260623082223.1431499-1-leo@managarm.org>
+ (Exim 4.90_1) (envelope-from <qemu_oss@crudebyte.com>)
+ id 1wbxFD-000491-D1; Tue, 23 Jun 2026 05:16:36 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=crudebyte.com; s=kylie; h=Content-Type:Content-Transfer-Encoding:
+ MIME-Version:References:In-Reply-To:Message-ID:Date:Subject:Cc:To:From:
+ Content-ID:Content-Description;
+ bh=6P2cA8wxhGbTxqiqXldIWqnxzb3Z+kPd731bhghbMBg=; b=turqzexMYnh80cgeYs8wlaXoyD
+ updWOaZTwoJfN4yGaECps61L8umXvLEFoKWzC0n5ByGc8YXIKW5XSLDwjRZqaMK/UVtzihwOqUsy1
+ EPs+3oNvZNFYS5dWnSZSxq59UjJcvZJqNtHaLybymJ4wspexrWnZcZNQQWrZ2sv26NXVw5YeLo4vT
+ uqZuVeTjNNt1R9Adz6XEgGvccCo8MuNU/E6fbAaJRGwXAukA4kMm3jopQ4qP0ofvU1Jfs5Blkfiws
+ prpmSUgNTN/UazshOfPulZ+zk/0Gvqbly4Al9YZYDyqT99r1kAck7X1Xy/FYL6hxtWZFMRDOhx+lX
+ kd7KTKRUFmq+UEDTmMjXwgaEbbr8+yJePHDzw/akFEcmqd+opNZt3kKF2piG5b3X47BHEVYVv/b/O
+ HpAwo6cJPlJtcuCZuGrwbBO5IqJz1/rpAmnHZF4/8R0j3RV6JcMpbYZSrqmriWNrJvulCNA17vfkT
+ QXSnn9PKoS4lgdaNc/WOApri8HaNj5rQBlKoCU0mRdKk3g9NXOAIDCaRlPtcega23b6kPjEfFAyEp
+ kVqKWLWqwkHRCCymHIpxbLcwfpgLUK9IxujEagjiyTd2wKkgfMknKnqBUXsv1hZcrzeHnNCk3EZHC
+ KR0Od2qik6sC4kLJC1wau4qBHRALoJ1SI5ln9E/dM=;
+From: Christian Schoenebeck <qemu_oss@crudebyte.com>
+To: qemu-devel@nongnu.org, qemu-stable@nongnu.org
+Cc: Greg Kurz <groug@kaod.org>, Feifan Qian <bea1e@proton.me>,
+ Stefano Stabellini <sstabellini@kernel.org>,
+ Anthony PERARD <anthony@xenproject.org>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
+Subject: Re: [PATCH v2 0/8] 9pfs: fix DoS via Treaddir (CVE-2026-9238)
+Date: Tue, 23 Jun 2026 11:16:29 +0200
+Message-ID: <12917790.O9o76ZdvQC@weasel>
+In-Reply-To: <cover.1781287774.git.qemu_oss@crudebyte.com>
+References: <cover.1781287774.git.qemu_oss@crudebyte.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260623082223.1431499-1-leo@managarm.org>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="utf-8"
+Received-SPF: pass client-ip=5.189.157.229;
+ envelope-from=qemu_oss@crudebyte.com; helo=kylie.crudebyte.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,46 +69,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jun 23, 2026 at 10:22:23AM +0200, no92 wrote:
-> With the changes in c7b2e22bd957, the `pt` bit was set in the (wrong)
-> capability register, instead of the (correct) extended capability
-> register.
+On Friday, 12 June 2026 20:22:52 CEST Christian Schoenebeck wrote:
+> Feifan Qian reported a potential DoS and unbound host allocation via
+> Treaddir request due to msize not being capped on Tversion handshake, and
+> allocation size in Treaddir being capped too late.
 > 
-> Fixes: c7b2e22bd957 ("hw/i386/x86-iommu: Remove X86IOMMUState::pt_supported field")
-> Signed-off-by: no92 <leo@managarm.org>
-> Reviewed-by: Clement Mathieu--Drif <clement.mathieu--drif@bull.com>
-> Reviewed-by: Yi Liu <yi.l.liu@intel.com>
-> ---
-> v1: https://lore.kernel.org/qemu-devel/20260622162138.1045170-1-leo@managarm.org/
+> Attack Vector of Vulnerability:
+> 
+> A malicious guest can negotiate a large 9P msize during Tversion handshake
+> and then send Treaddir request with a large 'count' parameter. The 9p
+> server would allocate host memory proportional to the negotiated 'msize'
+> for collecting directory entries, before validating that the actual reply
+> buffer can hold the response. If the reply buffer is smaller than what was
+> allocated, the response marshalling fails, but the memory has already been
+> consumed.
+> 
+> This can lead to:
+> 
+>  - Unbound host memory allocation proportional to the negotiated msize.
+>  - Denial of service against the QEMU process.
+>  - Potential OOM conditions affecting entire host system.
+> 
+> This series fixes this vulnerability on two layers.
 
-changes since v1?
+Queued on 9p.next:
+https://github.com/cschoenebeck/qemu/commits/9p.next
 
->  hw/i386/intel_iommu.c | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
+Thanks!
+
+/Christian
+ 
+> Summary of patches fixing this vulnerability:
 > 
-> diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
-> index 744cdfd2e6..d1af7a3135 100644
-> --- a/hw/i386/intel_iommu.c
-> +++ b/hw/i386/intel_iommu.c
-> @@ -4988,7 +4988,7 @@ static void vtd_cap_init(IntelIOMMUState *s)
->  {
->      X86IOMMUState *x86_iommu = X86_IOMMU_DEVICE(s);
+>  - Layer 1: Patches 1..4 cap msize during Tversion handshake to reasonable
+>    maximum value. It does so by limiting msize to the theoretical maximum
+>    msize value supported by transport implementation.
 > 
-> -    s->cap = VTD_CAP_FRO | VTD_CAP_NFR | VTD_CAP_ND | VTD_ECAP_PT |
-> +    s->cap = VTD_CAP_FRO | VTD_CAP_NFR | VTD_CAP_ND |
->               VTD_CAP_MAMV | VTD_CAP_PSI | VTD_CAP_SSLPS | VTD_CAP_DRAIN |
->               VTD_CAP_ESRTPS | VTD_CAP_MGAW(s->aw_bits);
->      if (x86_iommu->dma_translation) {
-> @@ -4999,7 +4999,7 @@ static void vtd_cap_init(IntelIOMMUState *s)
->                      s->cap |= VTD_CAP_SAGAW_48bit;
->              }
->      }
-> -    s->ecap = VTD_ECAP_QI | VTD_ECAP_IRO;
-> +    s->ecap = VTD_ECAP_QI | VTD_ECAP_IRO | VTD_ECAP_PT;
+>  - Layer 2: Patches 5..8 cap the allocated host memory in the Treaddir
+> handler specifically to the current, real response buffer size of transport
+> implementation.
 > 
->      if (x86_iommu_ir_supported(x86_iommu)) {
->          s->ecap |= VTD_ECAP_IR | VTD_ECAP_MHMV;
-> --
-> 2.54.0
+> v2:
+>   - Patch 3:
+>     - Pick the smallest limit from all Xen rings.
+>     - Return zero if Xen's ring count is zero.
+>   - Patch 7:
+>     - Use a local iovec in_sg[2] array variable to avoid potential NULL
+>       pointer dereference.
+>   - Patch 8:
+>     - Fix potential underflow if response_buffer_size() returned a value
+>       smaller than 11.
+> 
+> Christian Schoenebeck (8):
+>   hw/9pfs: add msize_limit transport callback
+>   9pfs/virtio: implement msize_limit callback
+>   9pfs/xen: implement msize_limit callback
+>   hw/9pfs: cap negotiated msize to transport limit
+>   hw/9pfs: add response_buffer_size transport callback
+>   9pfs/virtio: implement response_buffer_size callback
+>   9pfs/xen: implement response_buffer_size callback
+>   hw/9pfs: cap Treaddir allocation (CVE-2026-9238)
+> 
+>  hw/9pfs/9p.c               | 34 ++++++++++++++++++++++++++++++++--
+>  hw/9pfs/9p.h               |  2 ++
+>  hw/9pfs/virtio-9p-device.c | 17 +++++++++++++++++
+>  hw/9pfs/xen-9p-backend.c   | 31 +++++++++++++++++++++++++++++++
+>  4 files changed, 82 insertions(+), 2 deletions(-)
+
 
 
