@@ -4,107 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88548CDB479
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jun 2026 12:50:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17C8CCDB480
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jun 2026 12:50:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wc0Ya-0004Z6-7H; Tue, 23 Jun 2026 08:48:48 -0400
+	id 1wc0YX-0004Y3-Jd; Tue, 23 Jun 2026 08:48:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wc0YY-0004YD-H9
- for qemu-devel@nongnu.org; Tue, 23 Jun 2026 08:48:46 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wc0YV-0004XF-KV
+ for qemu-devel@nongnu.org; Tue, 23 Jun 2026 08:48:44 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wc0YW-00071N-Kq
- for qemu-devel@nongnu.org; Tue, 23 Jun 2026 08:48:46 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wc0YO-00070w-PC
+ for qemu-devel@nongnu.org; Tue, 23 Jun 2026 08:48:39 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1782218919;
+ s=mimecast20190719; t=1782218916;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=24x9ENDYcEXyW0GKNdB3tM4NZHVw1V9yuGNfVyt1HX4=;
- b=Gx85a84uajaVJTuni+yU8mIzfOUjrTvEMUJiz1T0RwSjd/ROfBij3F3Jdki0UgYrnkX4d1
- dybvdtF8Dt+9H+daR4YPtaTDb5OO73xF3bq7IB792DXKHvMlhWBwaKOHHmT4f0qgCL0Qec
- b5ZSm97vQkLqnZS5H2tEyLyBc5XlZMw=
+ bh=sINIeW2UHD4RjknjeKDQWmHp+p5AoJ5q9+hvtuiEzPw=;
+ b=QJR71ybO/CKB/GdJ//vONZs/MX8iHlHR4ZWq37HQzK/xz5hSjAtc1UhouTUwO8HbSYheRA
+ SIqThOYsIC5tf9/38FKAv8HiDiLPxkH4r4VVxY4CfKvXZ2w490Pg/D/NJqbWwmrZ8VnrGc
+ 1Z0auMsletdeh2+CkAHZCxnD96c/XNg=
 Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
  [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-665-ASSCnXDhNzuGG9uqK0egWQ-1; Tue, 23 Jun 2026 08:48:36 -0400
-X-MC-Unique: ASSCnXDhNzuGG9uqK0egWQ-1
-X-Mimecast-MFC-AGG-ID: ASSCnXDhNzuGG9uqK0egWQ_1782218915
+ us-mta-76-LRFzO-T_MBGLxsEw1EkrHA-1; Tue, 23 Jun 2026 08:48:35 -0400
+X-MC-Unique: LRFzO-T_MBGLxsEw1EkrHA-1
+X-Mimecast-MFC-AGG-ID: LRFzO-T_MBGLxsEw1EkrHA_1782218914
 Received: by mail-qt1-f198.google.com with SMTP id
- d75a77b69052e-519e4aaec80so82368041cf.0
- for <qemu-devel@nongnu.org>; Tue, 23 Jun 2026 05:48:35 -0700 (PDT)
+ d75a77b69052e-517787172b0so104014721cf.0
+ for <qemu-devel@nongnu.org>; Tue, 23 Jun 2026 05:48:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1782218915; x=1782823715; darn=nongnu.org;
+ d=redhat.com; s=google; t=1782218914; x=1782823714; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=24x9ENDYcEXyW0GKNdB3tM4NZHVw1V9yuGNfVyt1HX4=;
- b=gYg06P4bF3FqKIS75c77VtAJsfLa256SxRrdfYmCbVNq0WibI9B4L4eYNs72iNE3ll
- Zd/BGDic+dhb4o4XSVKxYtZ+HYeq09FyIsg4ysHyvrHfjrM2cM/tIfse8kk9kUvIMzI+
- xx1y2O53ZMbx1SLTywtcysLCuJS45c4+j9rD1kFT+KjNFeYX6jBx2TE2FaV/mDkeoN2u
- SHniw6A1u8jjW6R+SBPRXV4fJLQuBke4epyRY9t6KdymePyKx+fARRwjqPIRR0xqoTEp
- 3gRfuHrqDtusZa3PHKK2v4yllfk1aCX8WRff8v6qE2g7bKAtHJlMyvBuZjoTE3Tf9ZlB
- 4xKQ==
+ bh=sINIeW2UHD4RjknjeKDQWmHp+p5AoJ5q9+hvtuiEzPw=;
+ b=KDynU0eLBpIAgdjwHt52Sf8xrHRjeEsY3HWGBNntKm7KfQzxFSVTw/HWJ7yvWrLIUx
+ dfYU4bubKF1tQFvBrvANnQ2M79gMrIpG0VYN8HuPJXo6QV8a+03avjhI/77whVnXG/4z
+ cs4qMtjvlBkOvU0vm9q1gArKCE2Ue3YDFBejk6SmUP2kDy68aFfAF3CvX4aVjeO+thd7
+ EALsN1ptb+YsZg/i175iX9Jmjgt1y8YQgf9dxIrk64szdibEzlZTKqN9dInkVHcL+WqE
+ Y36cX7ZM3Lw4/SIhedNH6nhpAEfFXQJsSrgxNubDa7WR9D84x36FDp5SJOtk4twWsZ7J
+ f3bg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782218915; x=1782823715;
+ d=1e100.net; s=20251104; t=1782218914; x=1782823714;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=24x9ENDYcEXyW0GKNdB3tM4NZHVw1V9yuGNfVyt1HX4=;
- b=TTkCjTpa5ctXuGEpmnV0N/ig/Cf2oUu7QxMpbWi1sPAbAWZLJFkYca0JaI13eITTtb
- uEl3Y3BnuG3Lr7rsvrVwEmo5k6zUYPi7tq9fgl24ZrKlnvQ2H7cygqNUm7RBq7FEprA7
- UzuOWvnQgrkjVJi2KQmhaiaPzSPAtriMGq9RIdFeno5oysra0+NoQDoSRJTGcEMQVPuy
- F+iayvAB08PuQmwmvskcGGoJC37Q0RJeTl4iBniIoH6Vlr1pusaMFnF7j+5RyokmY1v1
- TqXEsXXrUk0BDl7709DzZ5Ajj+iY7HgZJsbYobyzT/Wgt2+P1XPHwaah6S1qx9F7XUIM
- jNNQ==
-X-Gm-Message-State: AOJu0Yw619Wt+5+EJF4Crsc1z48tjD4GjB0A/n+nzL0YIWnC1T7tyj3/
- /DNsIcb6JP1Lfn4KUZ26AQc9SlhtK5uPxT8fKki1Ces06Ago1xDnZsZtcPMHqC3ZYY3ryjBdTpX
- Ef4N47TARC4NMPlVlFT9QiA+ByW643eKxf1UhMxTd3v731SmdmX/ADFeddFjWYGrSa2XXiiJzHf
- n8c3ANNr76Cjn7d+P68EzYA2lZ3V48CU+VAZ2ikA==
-X-Gm-Gg: AfdE7ckLNCieSUR9JQazQHPTXVKywMDWiKH0bxSiXKKWgHiFWHcmjRBsJYjSvLA2jtJ
- fomZISdyoi+eKImw+QXwkRSXr5LEDb7QIlxz9h3dMDbP7bOMXA8g/NRAinLN4l1JoHOJBbWTQEd
- d6Yyha6i98MKndMzvivc4niyYiUznGTqxWopVhzwfoLLC9Gfk0ykf+1Y9JRFVKA4bA8G84Z4bxO
- Xigy6hzqqnkiQkKQOonjFxuYle+sZKZCynebTINnaZ6pajkF6KYIcoiZJo3n+sC1iibR+865hkZ
- 1JJm+ROjditaxqx5owx29gBYnT2yWr0LoosrdGzfw0Xa0vzNlr1Zv6Y2tL/WX7DpjwSNLJturt1
- Dkg==
-X-Received: by 2002:a05:622a:4289:b0:517:9d3f:8f3 with SMTP id
- d75a77b69052e-519e49158c4mr276850271cf.5.1782218915289; 
- Tue, 23 Jun 2026 05:48:35 -0700 (PDT)
-X-Received: by 2002:a05:622a:4289:b0:517:9d3f:8f3 with SMTP id
- d75a77b69052e-519e49158c4mr276849661cf.5.1782218914729; 
+ bh=sINIeW2UHD4RjknjeKDQWmHp+p5AoJ5q9+hvtuiEzPw=;
+ b=b3I2uo2hxLK2cUEi4K82cbH5OtvKZCS01qL6ZVxYFYEXGhwf+rYieYGqlvSbmc8UZv
+ 7xBmh22LPb8Q1vfigGfo6dzhad/gX/56ls1mniU3UNucaIgO8n/ndruY7b0sIwcuoSNd
+ vx1sNuKqIO69W6sBi/JWrE2N6QTXv8lckM4ArT4HhnHVTGJ+V48xqPXXzEm4MXFFLrAM
+ RdkDsDAsKePvETGs4cLLNTL/fab8dmKLppzqNe3oZaME/jBv56G8bUuIz4lCmYimAPM6
+ rJo0Y/rkNFbggfqGeX9s3Qwkv6P/9z62e2XkMew76ADutubbdf+8lYAUzS4bBmGHVMtB
+ sxow==
+X-Gm-Message-State: AOJu0YxFKqOqbjA9DpyMLOtDihlSuLcmg4z70TuSim94cn2h8yVfXEyA
+ UzrVDTbfO+LgZAlp4Q0jiaSIB/FdYlA6vC1FzS5CZjXs3Pf99hLqo/gnDwH+n2yYebnpdeFK43X
+ 5AzRPND2xlfMfq6vwFvv9tkVqQrUESjs63oxKy/vogNyG9D0xX57OYJs4rN7rlwDFDyL6PUmYVn
+ BgN4ghYNL7qQdGxPdv7qUWh6rQpa2LrdV11OBL5A==
+X-Gm-Gg: AfdE7cnx3UR2rilweU1PhW9A1WkQ0O3gcwa0IWrEzROZv2q0ad8T7Tw46uCfIABwmTu
+ 4VudrwsMgJrTNGQI+lj0jRHAb5IYWiqBX0Es6QziJAHIcQyLYg7fTPtvNfoKFOyOestt3Ans+Qi
+ be06o1157s/AGWeTUF2wDHsBF0r5WL0ZE3ka4VQpDljvEiYE993uRnwC22cyolp50p5eS8Ap+qM
+ CxVMKnrkCTiuJRfdWjxzPXLaFiIi0rO/MsdnUZ7Rav5KH7u5ODZY+35FkK4S+T5rPXFhlldTqOs
+ +kVNc0PV6o9si1kvAFBDjaWx74yRVXuz4+C1IBN/AMigcTDu+216COWWS4DZwRTuMfyZN2KapIm
+ jjQ==
+X-Received: by 2002:a05:622a:2599:b0:517:895f:1935 with SMTP id
+ d75a77b69052e-519e4a54e07mr295732791cf.13.1782218914072; 
  Tue, 23 Jun 2026 05:48:34 -0700 (PDT)
+X-Received: by 2002:a05:622a:2599:b0:517:895f:1935 with SMTP id
+ d75a77b69052e-519e4a54e07mr295731991cf.13.1782218913422; 
+ Tue, 23 Jun 2026 05:48:33 -0700 (PDT)
 Received: from x1.com ([174.91.117.157]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-51a51106a09sm22288351cf.0.2026.06.23.05.48.33
+ d75a77b69052e-51a51106a09sm22288351cf.0.2026.06.23.05.48.32
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 23 Jun 2026 05:48:34 -0700 (PDT)
+ Tue, 23 Jun 2026 05:48:32 -0700 (PDT)
 From: Peter Xu <peterx@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- David Hildenbrand <david@kernel.org>
-Subject: [PULL 11/18] system/ram-discard-manager: implement replay via
- is_populated iteration
-Date: Tue, 23 Jun 2026 08:47:52 -0400
-Message-ID: <20260623124759.125399-12-peterx@redhat.com>
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>,
+ "David Hildenbrand (Arm)" <david@kernel.org>
+Subject: [PULL 10/18] system/memory: constify section arguments
+Date: Tue, 23 Jun 2026 08:47:51 -0400
+Message-ID: <20260623124759.125399-11-peterx@redhat.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260623124759.125399-1-peterx@redhat.com>
 References: <20260623124759.125399-1-peterx@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -123,157 +125,367 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-Replace the source-level replay wrappers with a new
-replay_by_populated_state() helper that iterates the section at
-min-granularity, calls is_populated() for each chunk, and aggregates
-consecutive chunks of the same state before invoking the callback.
-
-This moves the iteration logic from individual sources into the manager,
-preparing for multi-source aggregation where the manager must combine
-state from multiple sources anyway.
-
-The replay_populated/replay_discarded vtable entries in
-RamDiscardSourceClass are no longer called but remain in the interface
-for now; they will be removed in follow-up commits along with the
-now-dead source implementations.
+The sections shouldn't be modified.
 
 Reviewed-by: Peter Xu <peterx@redhat.com>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Acked-by: David Hildenbrand <david@kernel.org>
-Link: https://lore.kernel.org/r/20260604-rdm5-v5-4-5768e6a0943d@redhat.com
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Acked-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com> # for CPR
+Acked-by: David Hildenbrand (Arm) <david@kernel.org>
+Link: https://lore.kernel.org/r/20260604-rdm5-v5-3-5768e6a0943d@redhat.com
 Signed-off-by: Peter Xu <peterx@redhat.com>
 ---
- system/ram-discard-manager.c | 85 ++++++++++++++++++++++++++----------
- 1 file changed, 61 insertions(+), 24 deletions(-)
+ include/hw/vfio/vfio-container.h     |  2 +-
+ include/hw/vfio/vfio-cpr.h           |  2 +-
+ include/system/ram-discard-manager.h | 14 +++++++-------
+ hw/vfio/cpr-legacy.c                 |  4 ++--
+ hw/vfio/listener.c                   | 10 +++++-----
+ hw/virtio/virtio-mem.c               | 10 +++++-----
+ migration/ram.c                      |  6 +++---
+ system/memory_mapping.c              |  4 ++--
+ system/ram-block-attributes.c        |  8 ++++----
+ system/ram-discard-manager.c         | 10 +++++-----
+ 10 files changed, 35 insertions(+), 35 deletions(-)
 
+diff --git a/include/hw/vfio/vfio-container.h b/include/hw/vfio/vfio-container.h
+index a7d5c5ed67..b2e7f4312c 100644
+--- a/include/hw/vfio/vfio-container.h
++++ b/include/hw/vfio/vfio-container.h
+@@ -277,7 +277,7 @@ struct VFIOIOMMUClass {
+ };
+ 
+ VFIORamDiscardListener *vfio_find_ram_discard_listener(
+-    VFIOContainer *bcontainer, MemoryRegionSection *section);
++    VFIOContainer *bcontainer, const MemoryRegionSection *section);
+ 
+ void vfio_container_region_add(VFIOContainer *bcontainer,
+                                MemoryRegionSection *section, bool cpr_remap);
+diff --git a/include/hw/vfio/vfio-cpr.h b/include/hw/vfio/vfio-cpr.h
+index 4606da500a..ecabe0c747 100644
+--- a/include/hw/vfio/vfio-cpr.h
++++ b/include/hw/vfio/vfio-cpr.h
+@@ -69,7 +69,7 @@ void vfio_cpr_giommu_remap(struct VFIOContainer *bcontainer,
+                            MemoryRegionSection *section);
+ 
+ bool vfio_cpr_ram_discard_replay_populated(
+-    struct VFIOContainer *bcontainer, MemoryRegionSection *section);
++    struct VFIOContainer *bcontainer, const MemoryRegionSection *section);
+ 
+ void vfio_cpr_save_vector_fd(struct VFIOPCIDevice *vdev, const char *name,
+                              int nr, int fd);
+diff --git a/include/system/ram-discard-manager.h b/include/system/ram-discard-manager.h
+index da55658169..b188e09a30 100644
+--- a/include/system/ram-discard-manager.h
++++ b/include/system/ram-discard-manager.h
+@@ -26,9 +26,9 @@ DECLARE_OBJ_CHECKERS(RamDiscardSource, RamDiscardSourceClass,
+ 
+ typedef struct RamDiscardListener RamDiscardListener;
+ typedef int (*NotifyRamPopulate)(RamDiscardListener *rdl,
+-                                 MemoryRegionSection *section);
++                                 const MemoryRegionSection *section);
+ typedef void (*NotifyRamDiscard)(RamDiscardListener *rdl,
+-                                 MemoryRegionSection *section);
++                                 const MemoryRegionSection *section);
+ 
+ struct RamDiscardListener {
+     /*
+@@ -86,7 +86,7 @@ static inline void ram_discard_listener_init(RamDiscardListener *rdl,
+  *
+  * Returns 0 on success, or a negative error if failed.
+  */
+-typedef int (*ReplayRamDiscardState)(MemoryRegionSection *section,
++typedef int (*ReplayRamDiscardState)(const MemoryRegionSection *section,
+                                      void *opaque);
+ 
+ /*
+@@ -151,7 +151,7 @@ struct RamDiscardSourceClass {
+      * Returns 0 on success, or a negative error if any notification failed.
+      */
+     int (*replay_populated)(const RamDiscardSource *rds,
+-                            MemoryRegionSection *section,
++                            const MemoryRegionSection *section,
+                             ReplayRamDiscardState replay_fn, void *opaque);
+ 
+     /**
+@@ -168,7 +168,7 @@ struct RamDiscardSourceClass {
+      * Returns 0 on success, or a negative error if any notification failed.
+      */
+     int (*replay_discarded)(const RamDiscardSource *rds,
+-                            MemoryRegionSection *section,
++                            const MemoryRegionSection *section,
+                             ReplayRamDiscardState replay_fn, void *opaque);
+ };
+ 
+@@ -237,7 +237,7 @@ bool ram_discard_manager_is_populated(const RamDiscardManager *rdm,
+  * Returns 0 on success, or a negative error if any notification failed.
+  */
+ int ram_discard_manager_replay_populated(const RamDiscardManager *rdm,
+-                                         MemoryRegionSection *section,
++                                         const MemoryRegionSection *section,
+                                          ReplayRamDiscardState replay_fn,
+                                          void *opaque);
+ 
+@@ -255,7 +255,7 @@ int ram_discard_manager_replay_populated(const RamDiscardManager *rdm,
+  * Returns 0 on success, or a negative error if any notification failed.
+  */
+ int ram_discard_manager_replay_discarded(const RamDiscardManager *rdm,
+-                                         MemoryRegionSection *section,
++                                         const MemoryRegionSection *section,
+                                          ReplayRamDiscardState replay_fn,
+                                          void *opaque);
+ 
+diff --git a/hw/vfio/cpr-legacy.c b/hw/vfio/cpr-legacy.c
+index c431d89973..2d40d8baea 100644
+--- a/hw/vfio/cpr-legacy.c
++++ b/hw/vfio/cpr-legacy.c
+@@ -226,7 +226,7 @@ void vfio_cpr_giommu_remap(VFIOContainer *bcontainer,
+     memory_region_iommu_replay(giommu->iommu_mr, &giommu->n);
+ }
+ 
+-static int vfio_cpr_rdm_remap(MemoryRegionSection *section, void *opaque)
++static int vfio_cpr_rdm_remap(const MemoryRegionSection *section, void *opaque)
+ {
+     RamDiscardListener *rdl = opaque;
+ 
+@@ -242,7 +242,7 @@ static int vfio_cpr_rdm_remap(MemoryRegionSection *section, void *opaque)
+  * directly, which calls vfio_legacy_cpr_dma_map.
+  */
+ bool vfio_cpr_ram_discard_replay_populated(VFIOContainer *bcontainer,
+-                                           MemoryRegionSection *section)
++                                           const MemoryRegionSection *section)
+ {
+     RamDiscardManager *rdm = memory_region_get_ram_discard_manager(section->mr);
+     VFIORamDiscardListener *vrdl =
+diff --git a/hw/vfio/listener.c b/hw/vfio/listener.c
+index 14cca678ae..109b5d61af 100644
+--- a/hw/vfio/listener.c
++++ b/hw/vfio/listener.c
+@@ -201,7 +201,7 @@ out:
+ }
+ 
+ static void vfio_ram_discard_notify_discard(RamDiscardListener *rdl,
+-                                            MemoryRegionSection *section)
++                                            const MemoryRegionSection *section)
+ {
+     VFIORamDiscardListener *vrdl = container_of(rdl, VFIORamDiscardListener,
+                                                 listener);
+@@ -219,7 +219,7 @@ static void vfio_ram_discard_notify_discard(RamDiscardListener *rdl,
+ }
+ 
+ static int vfio_ram_discard_notify_populate(RamDiscardListener *rdl,
+-                                            MemoryRegionSection *section)
++                                            const MemoryRegionSection *section)
+ {
+     VFIORamDiscardListener *vrdl = container_of(rdl, VFIORamDiscardListener,
+                                                 listener);
+@@ -461,7 +461,7 @@ static void vfio_device_error_append(VFIODevice *vbasedev, Error **errp)
+ }
+ 
+ VFIORamDiscardListener *vfio_find_ram_discard_listener(
+-    VFIOContainer *bcontainer, MemoryRegionSection *section)
++    VFIOContainer *bcontainer, const MemoryRegionSection *section)
+ {
+     VFIORamDiscardListener *vrdl;
+ 
+@@ -1149,8 +1149,8 @@ out:
+     }
+ }
+ 
+-static int vfio_ram_discard_query_dirty_bitmap(MemoryRegionSection *section,
+-                                             void *opaque)
++static int vfio_ram_discard_query_dirty_bitmap(const MemoryRegionSection *section,
++                                               void *opaque)
+ {
+     const hwaddr size = int128_get64(section->size);
+     const hwaddr iova = section->offset_within_address_space;
+diff --git a/hw/virtio/virtio-mem.c b/hw/virtio/virtio-mem.c
+index be149ee944..ec16550320 100644
+--- a/hw/virtio/virtio-mem.c
++++ b/hw/virtio/virtio-mem.c
+@@ -262,7 +262,7 @@ static int virtio_mem_for_each_plugged_range(VirtIOMEM *vmem, void *arg,
+ typedef int (*virtio_mem_section_cb)(MemoryRegionSection *s, void *arg);
+ 
+ static int virtio_mem_for_each_plugged_section(const VirtIOMEM *vmem,
+-                                               MemoryRegionSection *s,
++                                               const MemoryRegionSection *s,
+                                                void *arg,
+                                                virtio_mem_section_cb cb)
+ {
+@@ -294,7 +294,7 @@ static int virtio_mem_for_each_plugged_section(const VirtIOMEM *vmem,
+ }
+ 
+ static int virtio_mem_for_each_unplugged_section(const VirtIOMEM *vmem,
+-                                                 MemoryRegionSection *s,
++                                                 const MemoryRegionSection *s,
+                                                  void *arg,
+                                                  virtio_mem_section_cb cb)
+ {
+@@ -1680,7 +1680,7 @@ static int virtio_mem_rds_replay_cb(MemoryRegionSection *s, void *arg)
+ }
+ 
+ static int virtio_mem_rds_replay_populated(const RamDiscardSource *rds,
+-                                           MemoryRegionSection *s,
++                                           const MemoryRegionSection *s,
+                                            ReplayRamDiscardState replay_fn,
+                                            void *opaque)
+ {
+@@ -1692,11 +1692,11 @@ static int virtio_mem_rds_replay_populated(const RamDiscardSource *rds,
+ 
+     g_assert(s->mr == &vmem->memdev->mr);
+     return virtio_mem_for_each_plugged_section(vmem, s, &data,
+-                                            virtio_mem_rds_replay_cb);
++                                               virtio_mem_rds_replay_cb);
+ }
+ 
+ static int virtio_mem_rds_replay_discarded(const RamDiscardSource *rds,
+-                                           MemoryRegionSection *s,
++                                           const MemoryRegionSection *s,
+                                            ReplayRamDiscardState replay_fn,
+                                            void *opaque)
+ {
+diff --git a/migration/ram.c b/migration/ram.c
+index 6da24d7258..bd519f1931 100644
+--- a/migration/ram.c
++++ b/migration/ram.c
+@@ -860,7 +860,7 @@ static inline bool migration_bitmap_clear_dirty(RAMState *rs,
+     return ret;
+ }
+ 
+-static int dirty_bitmap_clear_section(MemoryRegionSection *section,
++static int dirty_bitmap_clear_section(const MemoryRegionSection *section,
+                                       void *opaque)
+ {
+     const hwaddr offset = section->offset_within_region;
+@@ -1588,7 +1588,7 @@ static inline void populate_read_range(RAMBlock *block, ram_addr_t offset,
+     }
+ }
+ 
+-static inline int populate_read_section(MemoryRegionSection *section,
++static inline int populate_read_section(const MemoryRegionSection *section,
+                                         void *opaque)
+ {
+     const hwaddr size = int128_get64(section->size);
+@@ -1663,7 +1663,7 @@ void ram_write_tracking_prepare(void)
+     }
+ }
+ 
+-static inline int uffd_protect_section(MemoryRegionSection *section,
++static inline int uffd_protect_section(const MemoryRegionSection *section,
+                                        void *opaque)
+ {
+     const hwaddr size = int128_get64(section->size);
+diff --git a/system/memory_mapping.c b/system/memory_mapping.c
+index da708a08ab..cacef504f6 100644
+--- a/system/memory_mapping.c
++++ b/system/memory_mapping.c
+@@ -196,7 +196,7 @@ typedef struct GuestPhysListener {
+ } GuestPhysListener;
+ 
+ static void guest_phys_block_add_section(GuestPhysListener *g,
+-                                         MemoryRegionSection *section)
++                                         const MemoryRegionSection *section)
+ {
+     const hwaddr target_start = section->offset_within_address_space;
+     const hwaddr target_end = target_start + int128_get64(section->size);
+@@ -248,7 +248,7 @@ static void guest_phys_block_add_section(GuestPhysListener *g,
+ #endif
+ }
+ 
+-static int guest_phys_ram_populate_cb(MemoryRegionSection *section,
++static int guest_phys_ram_populate_cb(const MemoryRegionSection *section,
+                                       void *opaque)
+ {
+     GuestPhysListener *g = opaque;
+diff --git a/system/ram-block-attributes.c b/system/ram-block-attributes.c
+index a72924eea7..79c7e97d9a 100644
+--- a/system/ram-block-attributes.c
++++ b/system/ram-block-attributes.c
+@@ -37,7 +37,7 @@ typedef int (*ram_block_attributes_section_cb)(MemoryRegionSection *s,
+ 
+ static int
+ ram_block_attributes_for_each_populated_section(const RamBlockAttributes *attr,
+-                                                MemoryRegionSection *section,
++                                                const MemoryRegionSection *section,
+                                                 void *arg,
+                                                 ram_block_attributes_section_cb cb)
+ {
+@@ -78,7 +78,7 @@ ram_block_attributes_for_each_populated_section(const RamBlockAttributes *attr,
+ 
+ static int
+ ram_block_attributes_for_each_discarded_section(const RamBlockAttributes *attr,
+-                                                MemoryRegionSection *section,
++                                                const MemoryRegionSection *section,
+                                                 void *arg,
+                                                 ram_block_attributes_section_cb cb)
+ {
+@@ -161,7 +161,7 @@ ram_block_attributes_rds_is_populated(const RamDiscardSource *rds,
+ 
+ static int
+ ram_block_attributes_rds_replay_populated(const RamDiscardSource *rds,
+-                                          MemoryRegionSection *section,
++                                          const MemoryRegionSection *section,
+                                           ReplayRamDiscardState replay_fn,
+                                           void *opaque)
+ {
+@@ -175,7 +175,7 @@ ram_block_attributes_rds_replay_populated(const RamDiscardSource *rds,
+ 
+ static int
+ ram_block_attributes_rds_replay_discarded(const RamDiscardSource *rds,
+-                                          MemoryRegionSection *section,
++                                          const MemoryRegionSection *section,
+                                           ReplayRamDiscardState replay_fn,
+                                           void *opaque)
+ {
 diff --git a/system/ram-discard-manager.c b/system/ram-discard-manager.c
-index 1c9ff7fda5..a907ddf370 100644
+index 3d8c85617d..1c9ff7fda5 100644
 --- a/system/ram-discard-manager.c
 +++ b/system/ram-discard-manager.c
-@@ -27,26 +27,65 @@ static bool ram_discard_source_is_populated(const RamDiscardSource *rds,
-     return rdsc->is_populated(rds, section);
+@@ -28,7 +28,7 @@ static bool ram_discard_source_is_populated(const RamDiscardSource *rds,
  }
  
--static int ram_discard_source_replay_populated(const RamDiscardSource *rds,
--                                               const MemoryRegionSection *section,
--                                               ReplayRamDiscardState replay_fn,
--                                               void *opaque)
-+/*
-+ * Iterate the section at source granularity, aggregating consecutive chunks
-+ * with matching populated state, and call replay_fn for each run.
-+ */
-+static int replay_by_populated_state(const RamDiscardManager *rdm,
-+                                     const MemoryRegionSection *section,
-+                                     bool replay_populated,
-+                                     ReplayRamDiscardState replay_fn,
-+                                     void *opaque)
+ static int ram_discard_source_replay_populated(const RamDiscardSource *rds,
+-                                               MemoryRegionSection *section,
++                                               const MemoryRegionSection *section,
+                                                ReplayRamDiscardState replay_fn,
+                                                void *opaque)
  {
--    RamDiscardSourceClass *rdsc = RAM_DISCARD_SOURCE_GET_CLASS(rds);
-+    uint64_t granularity, offset, size, end, pos, run_start = 0;
-+    bool in_run = false;
-+    int ret = 0;
- 
--    g_assert(rdsc->replay_populated);
--    return rdsc->replay_populated(rds, section, replay_fn, opaque);
--}
-+    granularity = ram_discard_source_get_min_granularity(rdm->rds, rdm->mr);
-+    offset = section->offset_within_region;
-+    size = int128_get64(section->size);
-+    end = offset + size;
-+
-+    /* Align iteration to granularity boundaries */
-+    pos = QEMU_ALIGN_DOWN(offset, granularity);
-+
-+    for (; pos < end; pos += granularity) {
-+        MemoryRegionSection chunk = {
-+            .mr = section->mr,
-+            .offset_within_region = pos,
-+            .size = int128_make64(granularity),
-+        };
-+        bool populated = ram_discard_source_is_populated(rdm->rds, &chunk);
-+
-+        if (populated == replay_populated) {
-+            if (!in_run) {
-+                run_start = pos;
-+                in_run = true;
-+            }
-+        } else if (in_run) {
-+            MemoryRegionSection tmp = *section;
-+
-+            if (memory_region_section_intersect_range(&tmp, run_start,
-+                                                      pos - run_start)) {
-+                ret = replay_fn(&tmp, opaque);
-+                if (ret) {
-+                    return ret;
-+                }
-+            }
-+            in_run = false;
-+        }
-+    }
- 
--static int ram_discard_source_replay_discarded(const RamDiscardSource *rds,
--                                               const MemoryRegionSection *section,
--                                               ReplayRamDiscardState replay_fn,
--                                               void *opaque)
--{
--    RamDiscardSourceClass *rdsc = RAM_DISCARD_SOURCE_GET_CLASS(rds);
-+    if (in_run) {
-+        MemoryRegionSection tmp = *section;
- 
--    g_assert(rdsc->replay_discarded);
--    return rdsc->replay_discarded(rds, section, replay_fn, opaque);
-+        if (memory_region_section_intersect_range(&tmp, run_start,
-+                                                  pos - run_start)) {
-+            ret = replay_fn(&tmp, opaque);
-+        }
-+    }
-+
-+    return ret;
+@@ -39,7 +39,7 @@ static int ram_discard_source_replay_populated(const RamDiscardSource *rds,
  }
  
- RamDiscardManager *ram_discard_manager_new(MemoryRegion *mr,
-@@ -78,8 +117,7 @@ int ram_discard_manager_replay_populated(const RamDiscardManager *rdm,
+ static int ram_discard_source_replay_discarded(const RamDiscardSource *rds,
+-                                               MemoryRegionSection *section,
++                                               const MemoryRegionSection *section,
+                                                ReplayRamDiscardState replay_fn,
+                                                void *opaque)
+ {
+@@ -74,7 +74,7 @@ bool ram_discard_manager_is_populated(const RamDiscardManager *rdm,
+ }
+ 
+ int ram_discard_manager_replay_populated(const RamDiscardManager *rdm,
+-                                         MemoryRegionSection *section,
++                                         const MemoryRegionSection *section,
                                           ReplayRamDiscardState replay_fn,
                                           void *opaque)
  {
--    return ram_discard_source_replay_populated(rdm->rds, section,
--                                               replay_fn, opaque);
-+    return replay_by_populated_state(rdm, section, true, replay_fn, opaque);
+@@ -83,7 +83,7 @@ int ram_discard_manager_replay_populated(const RamDiscardManager *rdm,
  }
  
  int ram_discard_manager_replay_discarded(const RamDiscardManager *rdm,
-@@ -87,8 +125,7 @@ int ram_discard_manager_replay_discarded(const RamDiscardManager *rdm,
+-                                         MemoryRegionSection *section,
++                                         const MemoryRegionSection *section,
                                           ReplayRamDiscardState replay_fn,
                                           void *opaque)
  {
--    return ram_discard_source_replay_discarded(rdm->rds, section,
--                                               replay_fn, opaque);
-+    return replay_by_populated_state(rdm, section, false, replay_fn, opaque);
+@@ -164,7 +164,7 @@ void ram_discard_manager_notify_discard_all(RamDiscardManager *rdm)
+     }
  }
  
- static void ram_discard_manager_initfn(Object *obj)
-@@ -182,8 +219,8 @@ void ram_discard_manager_register_listener(RamDiscardManager *rdm,
-     rdl->section = memory_region_section_new_copy(section);
-     QLIST_INSERT_HEAD(&rdm->rdl_list, rdl, next);
+-static int rdm_populate_cb(MemoryRegionSection *section, void *opaque)
++static int rdm_populate_cb(const MemoryRegionSection *section, void *opaque)
+ {
+     RamDiscardListener *rdl = opaque;
  
--    ret = ram_discard_source_replay_populated(rdm->rds, rdl->section,
--                                              rdm_populate_cb, rdl);
-+    ret = ram_discard_manager_replay_populated(rdm, rdl->section,
-+                                               rdm_populate_cb, rdl);
-     if (ret) {
-         error_report("%s: Replaying populated ranges failed: %s", __func__,
-                      strerror(-ret));
-@@ -208,8 +245,8 @@ int ram_discard_manager_replay_populated_to_listeners(RamDiscardManager *rdm)
-     int ret = 0;
- 
-     QLIST_FOREACH(rdl, &rdm->rdl_list, next) {
--        ret = ram_discard_source_replay_populated(rdm->rds, rdl->section,
--                                                  rdm_populate_cb, rdl);
-+        ret = ram_discard_manager_replay_populated(rdm, rdl->section,
-+                                                   rdm_populate_cb, rdl);
-         if (ret) {
-             break;
-         }
 -- 
 2.54.0
 
