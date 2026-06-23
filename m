@@ -4,36 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13D51CDB470
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jun 2026 18:27:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96AA1CDB470
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jun 2026 18:28:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wc5qS-0004ck-RA; Tue, 23 Jun 2026 14:27:37 -0400
+	id 1wc5qa-0004fk-PJ; Tue, 23 Jun 2026 14:27:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1wc5qG-0004cH-In
- for qemu-devel@nongnu.org; Tue, 23 Jun 2026 14:27:25 -0400
+ id 1wc5qP-0004cs-Jt
+ for qemu-devel@nongnu.org; Tue, 23 Jun 2026 14:27:36 -0400
 Received: from vps-ovh.mhejs.net ([145.239.82.108])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1wc5qE-0001Lo-SZ
- for qemu-devel@nongnu.org; Tue, 23 Jun 2026 14:27:24 -0400
+ id 1wc5qN-0001On-RM
+ for qemu-devel@nongnu.org; Tue, 23 Jun 2026 14:27:33 -0400
 Received: from MUA
  by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
  (Exim 4.99.1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1wc5q1-00000004mJt-04Sa; Tue, 23 Jun 2026 20:27:09 +0200
-Message-ID: <4ff8beb8-7807-4326-876b-d85eaf3024ab@maciej.szmigiero.name>
-Date: Tue, 23 Jun 2026 20:27:03 +0200
+ id 1wc5qM-00000004mKL-1Gg8; Tue, 23 Jun 2026 20:27:30 +0200
+Message-ID: <567d4d90-beea-4218-8e02-f867e10f6ffd@maciej.szmigiero.name>
+Date: Tue, 23 Jun 2026 20:27:25 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/5] migration/cpr: support vhost-vsock devices
+Subject: Re: [PATCH v2 2/5] migration: stop VM earlier for CPR
 To: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
 Cc: mst@redhat.com, sgarzare@redhat.com, farosas@suse.de,
- qemu-devel@nongnu.org, peterx@redhat.com, bchaney@akamai.com,
- mark.kanda@oracle.com, den@openvz.org
-References: <20260612165110.431376-1-andrey.drobyshev@virtuozzo.com>
+ qemu-devel@nongnu.org, peterx@redhat.com, dongli.zhang@oracle.com,
+ bchaney@akamai.com, mark.kanda@oracle.com, den@openvz.org
+References: <20260619105514.128812-1-andrey.drobyshev@virtuozzo.com>
+ <20260619105514.128812-3-andrey.drobyshev@virtuozzo.com>
 From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
 Content-Language: en-US, pl-PL
 Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
@@ -77,7 +78,7 @@ Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
  WHQjcZZbROLql/+ngphSgdthGIhVWrIMHJu1UxnRiwKc/fzDFUZ9hFL+W4ZLm+52TzMatpta
  oNdcP9rtsQjdYMNLuwysP4keDX8yBXADwJD7eQ+ryIIKh6X1lBMIWxeZG5W0DQ6/4BCUEbCe
  1DqkYRtZyUEzgAbaHliaa5t3dfCtSMz5cAbGqxarXc7bKOjA6P8hCwgP0tEypA==
-In-Reply-To: <20260612165110.431376-1-andrey.drobyshev@virtuozzo.com>
+In-Reply-To: <20260619105514.128812-3-andrey.drobyshev@virtuozzo.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=145.239.82.108;
@@ -103,26 +104,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12.06.2026 18:51, Andrey Drobyshev wrote:
-> Host<-->guest connections via vsock sockets aren't yet supported for
-> live update / CPR-style migration.  This series adds such support.
+On 19.06.2026 12:55, Andrey Drobyshev wrote:
+> During a CPR-style migration, we pass additional CPR state via an aux
+> migration channel (the cpr-transfer case).  That's done in cpr_state_save().
+> The main bulk of the migration is only sent afterwards - that's why we
+> call cpr_state_save() early on in qmp_migrate().
 > 
-> It's based on the vhost-related basis submitted earlier by Steve, Ben
-> and Mark at [0].  Patches 1-3 are rework of this submission, adjusted to
-> the latest master branch and with respect to Fabiano's review comments.
+> Previous patch placed emitting the SETUP event before cpr_state_save(),
+> since devices must be properly shut down before we send their FDs to CPR
+> target.  However, for the proper shut down to take place, we should also
+> stop operating them beforehand, i.e. stop the VM.
 > 
-> Essentially we want the host<-->guest connection to survive the CPR
-> migration.  For that to happen, we preserve the vhost FD and issue
-> VHOST_RESET_OWNER ioctl on the source side before the VHOST_SET_OWNER is
-> issued on the target.
+> Thus the desirable order for cpr-transfer case looks as follows:
 > 
-> VHOST_RESET_OWNER is currently not supported by the Linux vsock driver.
-> We've implemented this support and there's a kernel series complementary
-> to this one.
+>    SOURCE                                  TARGET
+>    ------                                  ------
+>                                        cpr_state_load() blocks
+>      |                                        |
+>      |  1. migration_stop_vm()                |
+>      |     VM stopped, devices quiesced       |
+>      |                                        | Waiting for
+>      |  2. notifiers (SETUP)                  | FDs from source
+>      |     vhost_reset_owner() releases       |
+>      |     device ownership                   |
+>      |                                        |
+>      |  3. cpr_state_save() ---- FDs -------> |
+>      |                                        |
+>      v                                        v
+>    postmigrate                        Device init begins
+>                                       - cpr_find_fd()
+>                                       - vhost_dev_init()
+>                                       - VHOST_SET_OWNER
+> 
+> So step 3 is the synchronization/cut-over point. Target proceeds immediately
+> upon receiving FDs, so steps 1-2 must complete successfully.  Otherwise:
+> 
+>    * Target's VHOST_SET_OWNER fails with -EBUSY (source still owns)
+>    * Race between source I/O and target device init
+> 
+> Let's stop the VM early (before FD transfer) to prevent this race.
+> Unlike regular migration, CPR-transfer passes memory via FD (memfd)
+> rather than copying RAM, so early VM stop should have minimal downtime.
 
-I think we normally wait with merging QEMU support for a proposed kernel
-feature until that feature is actually in kernel.
+Was this "minimum downtime impact" assertion actually tested/benchmark
+with VM under some serious load?
 
+I am especially curious how this interacts with VFIO devices that
+have a lot of data.
+> Since we call migration_stop_vm() from qmp_migrate() (i.e. from the main
+> thread), we should also balance it out by fallback resume outside of the
+> migration thread - i.e. resume in migration_iteration_finish() is not
+> enough.  One good place for this resume op is migration_cleanup().
+> However, in migration_iteration_finish() resume is gated by successful
+> block activation, so we additionally traverse the block graph nodes to
+> make sure activation did take place before doing vm_resume().
+> 
+> This patch is a rework of the change originally proposed by Steve and
+> Ben at [0].
+> 
+> [0] https://lore.kernel.org/qemu-devel/20260128-cpr-tap-v4-0-48e334d4216b@akamai.com
+> 
+> Originally-by: Steve Sistare <steven.sistare@oracle.com>
+> Originally-by: Ben Chaney <bchaney@akamai.com>
+> Signed-off-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+> ---
 Thanks,
 Maciej
 
