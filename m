@@ -4,110 +4,146 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EEDC7CDB46F
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jun 2026 09:37:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C1F6CD4F26
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jun 2026 09:49:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wbxYz-0000qE-Nq; Tue, 23 Jun 2026 05:37:01 -0400
+	id 1wbxkV-0002Ng-UB; Tue, 23 Jun 2026 05:48:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1wbxYy-0000pi-2l; Tue, 23 Jun 2026 05:37:00 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
+ id 1wbxkU-0002NL-M6
+ for qemu-devel@nongnu.org; Tue, 23 Jun 2026 05:48:54 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1wbxYw-0008NK-EM; Tue, 23 Jun 2026 05:36:59 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65N6mTcT1148280; Tue, 23 Jun 2026 09:36:55 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=bZyEr3
- dRmyRFceykhmN6ki9E1ucdnkdCyFDC9Wavq1U=; b=al3437wr7nW9feRHuk/UV4
- ZAeOnqgFVUiv4KcbtCGEr/tHbu1zNC3wQ7lKHnOS7jiq/Wp5j0KuWQzzPZmuq73b
- 7tglT0y8XeJa6rz2L1xNw5Gc8Kdi4nnM8732JKt2oTmr515EfBHYoZD/NDVFh0oC
- InG6MVkpWNLmJFGIyKB7ESraJOMha4IfGgjzaXjSxwDMqDL8cx7fPbeqeouSfOOM
- t8rjSRK7uhXuywTexjksdxFgdGKa9HybhsltLdSj91wVp9l/2aXCaleKfiT+EsRQ
- Y3I+V4eVXama2SMbiMCyBgdkWQzwgqIp0Ym/Kdsji3Bm/5A68Y9uh6Vx3MWfXbHg
- ==
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4ewjk4dqwp-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 23 Jun 2026 09:36:54 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 65N9YbI6024896;
- Tue, 23 Jun 2026 09:36:53 GMT
-Received: from smtprelay02.wdc07v.mail.ibm.com ([172.16.1.69])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4ex7dg2b56-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 23 Jun 2026 09:36:53 +0000 (GMT)
-Received: from smtpav06.dal12v.mail.ibm.com (smtpav06.dal12v.mail.ibm.com
- [10.241.53.105])
- by smtprelay02.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 65N9aqPk26280546
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 23 Jun 2026 09:36:53 GMT
-Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id D4E5258059;
- Tue, 23 Jun 2026 09:36:52 +0000 (GMT)
-Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 6BDEA58055;
- Tue, 23 Jun 2026 09:36:51 +0000 (GMT)
-Received: from [9.123.1.190] (unknown [9.123.1.190])
- by smtpav06.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 23 Jun 2026 09:36:51 +0000 (GMT)
-Message-ID: <22607674-c519-4384-a51e-51da9e7c9967@linux.ibm.com>
-Date: Tue, 23 Jun 2026 15:06:50 +0530
+ (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
+ id 1wbxkS-00027E-U5
+ for qemu-devel@nongnu.org; Tue, 23 Jun 2026 05:48:54 -0400
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 65N7kn6r3228431
+ for <qemu-devel@nongnu.org>; Tue, 23 Jun 2026 09:48:50 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ F5AFpzWujmChxvA0hg3bh2AQb6hFPXtAkXxhemqr1tU=; b=nsDf2AC+Mj8/UCJ/
+ 1e5wClZKd75A+QJdjOQPpeYy7JB44NZ3eoEXixozSz70+CaIm5yVrzaUn10HJDnm
+ GlauRfpxdOOkk+bB1FYa/qJXXnjPiw1umBG1jj9QOhsi6VWZV1VL6Jthg+6dkQRb
+ /360GKObQMBihoJIAcSsMdr6gFw/NFb2THupg+B335qnRDeAyEp+56o8PvgYzR0R
+ z1U4ZPJGustB2U6HJi2OXM6RBqZqSUX99KaXbiJP+NpNVrzv4D82a+9H0GoPjr/3
+ nbpcbAqTmlDAPI8bXXQrvdcmEHkgHTiyK5e0uK2P/perjhXA/AfClkfNRY9imDXE
+ fyf5QQ==
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
+ [209.85.222.200])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4eyp29gh60-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Tue, 23 Jun 2026 09:48:49 +0000 (GMT)
+Received: by mail-qk1-f200.google.com with SMTP id
+ af79cd13be357-91579011fd1so792994485a.1
+ for <qemu-devel@nongnu.org>; Tue, 23 Jun 2026 02:48:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1782208129; x=1782812929; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=F5AFpzWujmChxvA0hg3bh2AQb6hFPXtAkXxhemqr1tU=;
+ b=Wj+A2+5yRiE3vsg/hjyn/w72iFyIZV2CvQniTEUSO2flKQma4WG5vtTU5RFU4E9Ecm
+ dbOc9tFwvAgL/56gNSAXAeF7M55woZBSpc973GkPmSwuhNUX20C2tbekiNtKU9v0IxMo
+ ofJdgM5U/4TPiokxUC/RPPFUBPFFE1y/VbmlhCzjkThW0Q8WNpj13LMqRY7O4rZm+Dyt
+ 9S2c7nhp9uRSf+ePLXDe4Jm8c7SeQMTptWN+lLntQ/yiDTixDGxTh3T276lzxiBDWLqH
+ tJ4/9ls9Otjjxo92f7NFBzF7M3oI03Bpt4DNg3q30ikjz5/BUv0NBwvL08bQCekkhBRw
+ ePiA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1782208129; x=1782812929;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=F5AFpzWujmChxvA0hg3bh2AQb6hFPXtAkXxhemqr1tU=;
+ b=MpF+Hyh59diHuZR2x0yIzORGSDZjRJKd3ZL73/3+PqAB0HwaqhLSHL82QywIXMI68p
+ yIK8aUQdBFJzmLiYnL5PFh0kf2tc+52N3ay0PpkmEcl/IMTZDPClwRaVMSRDdjuwEQBf
+ dqpK09VV8sJggn2R4JR37XV8eAqiQ9IZtscLSDQuWevmKBhOo+0NfCNUcS4qifymo2zs
+ HeXxSYa4tacpLJm8csUn1j8YIhTEQBzcSXKxH8l3Qb7cEq0SwVQgv/udchQkTgdO9phy
+ fJl+3KxQw6l8SMneDdxJVzywzSq8Ds35IuBYoR21y1PHGJbGpoh1CoJdMX4lAQ2jtI2L
+ SKww==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ86Puxb3xqJazz8mPJ78HsDoz9qYUILkTj39hwbJqij7PLyX2TSlRrb+R/BkeHz1TOP0BASGE4ZXxLP@nongnu.org
+X-Gm-Message-State: AOJu0Yy3+3XK6tsA+w8KO/PvMYsWdA2w8+lvvJMCJUIQftMZAoa2Xud4
+ I4kUVvCg6v4V2Vh0vrr98SrFTsBsoDxYGlMZkYDldLvaNZ9A8fbzsW0j06QPlYy9qexMUPYuMaw
+ qF3Ak0hZ+bYodC/0wOlafDk8qW2/8gxpp6xu0CrCKvYK9WTDy1Lmjyji8WQ==
+X-Gm-Gg: AfdE7ckeS1dGezHotIWxddKp/UtHcIOsRTlyJeT+BYObSbmwih1yR4U34uVtrP9BjvW
+ 064zb3SSYPZcNUyGZOlBC9+Ie1vLzLqcXxJinvQYDA33F+wGUAfjzgklNLc0p3sUftItsQVB3dz
+ rE9fqt8IsqkI4UVkjGh0hiT3Djn619u0bViws8ra6z/3OvcNt/Dv49aq5tX5Bs+danDlhCiUdqG
+ ZbCQ5C/VweORpqRFu+u5YkznZRnE7YknT5h8N8YF/enfo73yxVK+aqT1sDxwY50W2i7cxdFiqvH
+ bmhvTAuoE43kSbag7EgQy9Ejp5QssKWYH9XQmrH2e9bKP3iMcEfm8L+NzcqOf+iB/dp3FgYAqHL
+ n6GGudhHHgc56g8hbQR0Z3D4KrdRCgx1nifpRv1/0g9w8
+X-Received: by 2002:a05:620a:408c:b0:915:b852:4342 with SMTP id
+ af79cd13be357-9208f832fc4mr2954554485a.18.1782208128703; 
+ Tue, 23 Jun 2026 02:48:48 -0700 (PDT)
+X-Received: by 2002:a05:620a:408c:b0:915:b852:4342 with SMTP id
+ af79cd13be357-9208f832fc4mr2954551985a.18.1782208128189; 
+ Tue, 23 Jun 2026 02:48:48 -0700 (PDT)
+Received: from [192.168.68.106] ([189.79.21.40])
+ by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-925fa56463dsm241922985a.0.2026.06.23.02.48.46
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 23 Jun 2026 02:48:47 -0700 (PDT)
+Message-ID: <9d2737e3-34f0-4f68-813b-37059615bced@oss.qualcomm.com>
+Date: Tue, 23 Jun 2026 06:48:44 -0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL SUBSYSTEM pseries 0/1] pseries: Update SLOF firmware image
- to release 20260618
-Content-Language: en-GB
-To: Thomas Huth <th.huth@posteo.eu>, Nicholas Piggin <npiggin@gmail.com>
-Cc: qemu-ppc@nongnu.org, qemu-devel@nongnu.org
-References: <20260618082623.345255-1-th.huth@posteo.eu>
-From: Harsh Prateek Bora <harshpb@linux.ibm.com>
-In-Reply-To: <20260618082623.345255-1-th.huth@posteo.eu>
+Subject: Re: [PATCH 00/24] target/riscv: move TCG files and fix --disable-tcg
+To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, liwei1518@gmail.com,
+ zhiwei_liu@linux.alibaba.com, chao.liu.zevorn@gmail.com
+References: <20260622193141.1449724-1-daniel.barboza@oss.qualcomm.com>
+ <52c3605c-345f-43d2-8cc6-794980c805fa@oss.qualcomm.com>
+ <50ce1e98-2c1f-4cbd-b191-1eac324b71b6@oss.qualcomm.com>
+ <704cfba3-e92a-498d-928b-877f7f7641fe@oss.qualcomm.com>
+From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <704cfba3-e92a-498d-928b-877f7f7641fe@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjIzMDA3NSBTYWx0ZWRfX6VCIDIBz2qRt
- xJyqiATxkVSfqxvoI1X1s1TP73Vu+jMv4ZYSp+WKLw7RCwBCs0Im8/OaPkMGtjd2wI5YOXOaWQx
- 61850VaqmgIUYkJ2eXp8cB8izcr03f4=
-X-Proofpoint-ORIG-GUID: nIHtqICTyDIDqTJYaoFPb50GYJdSO0HE
-X-Authority-Analysis: v=2.4 cv=Oph/DS/t c=1 sm=1 tr=0 ts=6a3a53b7 cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
- a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=f7IdgyKtn90A:10
- a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22
- a=p0WdMEafAAAA:8 a=Snqr5TmjRq-M2Cc8eBsA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjIzMDA3NSBTYWx0ZWRfX8dNrbLoSwZZb
- 85VHrkmsD0Jiucw5JBlm4E8JqM8d2qrq+auY55f3XKr0YVo7kMoZVZgPxkLkXx/xSHc6wU7Fi+z
- qZeu/R+oFDPfhG8gSY4SVcHXY+Y5ciltnh3u2MU4Wcn2sskTPufwAW1yC09rktjBBeJyKInCFft
- WUJo3FYPuo8Z8y8eUccdM8K2LeaL3jBqsxRbVGpQYaTSxeA78xTb+YdstS5/3yoj1jFFvoY8x/R
- h6I6MGzfkZQx3ZszCtSrUnu7ESnAIvDFzkY1LWEbQ0ORAv/Ank38rzOA9B6RlME/CJdLRa5k7E7
- l7NbDNYZIH30gjJTHKFW4kjB6T3Frx/Yt8bR/v4Jnj40VFqlAqPy6lo+eY/0w0EhRN6SCsO+8K4
- owGHes7G4uHQd0hiAnePViw1Fi7sAAjs0/u3tWBbI+A1ggQ1LTMa2fuQ+P4nl8ygDtHozkd/4xe
- FEOeDHCrCe4FzGW9SDw==
-X-Proofpoint-GUID: 2I2MoZAbyEvkyeyh_S7hsy307Dml8Q2E
+Content-Transfer-Encoding: 8bit
+X-Authority-Analysis: v=2.4 cv=LdAMLDfi c=1 sm=1 tr=0 ts=6a3a5681 cx=c_pps
+ a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=sHJf4AwOIoU3qjeHFPlg6Q==:17
+ a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
+ a=NEAV23lmAAAA:8 a=2fsAhj1rYWLWnCpaf1MA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=PEH46H7Ffwr30OY-TuGO:22
+X-Proofpoint-GUID: QZY0ENcXe2KjA_c3fxhaadmQOnMMf9Cs
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjIzMDA3OSBTYWx0ZWRfXxShh/FT/UN3L
+ 36qJ+shZHRQi9cJu5nsDo25EJwITl7IWxc/bGRbeZI1897tRWXAovX0fNJvN7e8kSYQKpdpBhQW
+ oQK7PtMbphCVvkxSEZnrqv59YCop6e4=
+X-Proofpoint-ORIG-GUID: QZY0ENcXe2KjA_c3fxhaadmQOnMMf9Cs
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjIzMDA3OSBTYWx0ZWRfX8w792ab27rpZ
+ AGv7/vsXpqDE5AhRsGbVqfc0Qjho/HszMbKfSPbTu26zr2PkhGfm7mhWwWik6MNvYHNImFr/y0a
+ MQXzZbXe2mGk7dMKUebiTrks1zKknf9DPJHWa+jHyNddRcYFraK559RPKS9BFRoHwiudEw0zUR7
+ 1e4EMoWhadeNnSa5CzgdUZZkIQEbexr46qyHP6360WkWdnzuV3WR3MaTRdWAcl9BXzIPacVDpDR
+ SYRo8ScE431Vm8RFdNFThe1K5nyjBSTRw6ykb9Qf999S5WpsIjV6i6xtmzmJhAkSmroRdzY0MYV
+ sl2jt68dtoty3JOyT9YjORz3SGlXpmNsyWeJq55zeiZSPcMWHz8ffCsJluho7OnZGDPF1MZZos+
+ J3zLwMHz+g4s+QCdVCShGeUSo4eN3pByqE7UIcbSl5uC0LUlhkuxws+ShV+1jbS19060tzBqUPV
+ mIkk6pq6ktKCyZ0OR4w==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-06-23_02,2026-06-22_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 lowpriorityscore=0 bulkscore=0 spamscore=0 priorityscore=1501
- clxscore=1011 impostorscore=0 malwarescore=0 adultscore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606230075
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=harshpb@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+ adultscore=0 priorityscore=1501 impostorscore=0 lowpriorityscore=0
+ suspectscore=0 malwarescore=0 clxscore=1015 spamscore=0 phishscore=0
+ bulkscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2606230079
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -124,69 +160,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Thomas,
 
-On 18/06/26 1:56 pm, Thomas Huth wrote:
->   Hi Harsh, hi Nicholas!
+
+On 6/22/2026 6:34 PM, Pierrick Bouvier wrote:
+> On 6/22/2026 2:23 PM, Philippe Mathieu-Daudé wrote:
+>> On 22/6/26 22:52, Pierrick Bouvier wrote:
+>>> On 6/22/2026 12:31 PM, Daniel Henrique Barboza wrote:
+>>>> Hello,
+>>>>
+>>>> This series looks scary but it's mostly trivial and mechanical work.
+>>>>
+>>>> It is yet another attempt at fixing --disable-tcg.  We have a recent
+>>>> work sent to the ML [1] and we had Phil's attempt back in 2023 [2].
+>>>> Phil's work didn't get merged and it's now too hard to rebase and
+>>>> revive, the most recent attempt got misled into the 'what is common code
+>>>> between TCG and KVM' dungeon.
+>>
+>>
+>>> It seems like series does not apply on top of master, would that be
+>>> possible to rebase it?
+>>
+>> For some reason the RISC-V series are handled distinctly than the
+>> rest of QEMU, Alistair queues work on his repository and developers
+>> are custome to base their series on top of it (otherwise Alistair
+>> can not apply them on his tree and asks for reposts), see the
+>> riscv-to-apply.next branch on https://github.com/alistair23/qemu.
 > 
-> The following changes since commit c7cf7c810153d6f5f31aa2d5c0dee9087f6b4dff:
-> 
->    Merge tag 'firmware-20260617-pull-request' of https://gitlab.com/kraxel/qemu into staging (2026-06-17 10:17:29 -0400)
-> 
-> are available in the Git repository at:
-> 
->    https://gitlab.com/huth/qemu.git tags/qemu-slof-20260618
-> 
-> for you to fetch changes up to 7abb51793e131ca374d4fb0c3f0d1878d9199069:
-> 
->    pseries: Update SLOF firmware image to release 20260618 (2026-06-18 10:08:06 +0200)
-> 
-> Note: this is not for master, this is for pseries
-> 
-> ----------------------------------------------------------------
-> - Fix parsing of ELF program headers
-> 
-> ----------------------------------------------------------------
-> Thomas Huth (1):
->        pseries: Update SLOF firmware image to release 20260618
-> 
+> Unfortunately, it makes it hard to run any kind of automated testing,
+> especially for series like this that target specific configs.
 
-Looks like updating VERSION file was missed before building the slof.bin
-(as checked in gitlab repo). Also, I see below FW version (git-xxx)
-during boot:
+Don't we have ways of saying in the commit message "these patches applies
+on top of these other patches" and then the tooling would deal with it?
+I remember patchew doing stuff like that with that "Based-on: <message-id>"
+tag.
 
-SLOF 
-********************************************************************** 
-  
-
-QEMU Starting 
-  
-
-  Build Date = Jun 18 2026 08:06:19 
-  
-
-  FW Version = git-def1516ec9340518 
-  
-
-  Press "s" to enter Open Firmware.
+At this point I would expect automatic tooling being able to understand
+some form of "this gitlab/github branch contains the patches" and do their
+thing.  Maybe there's stuff out there to help us out.
 
 
-Whereas, earlier, it used to appear like proper release timestamp:
+Thanks,
+Daniel
 
-
-SLOF **********************************************************************
-QEMU Starting
-  Build Date = Oct 26 2025 18:45:22
-  FW Version = release 20251026
-  Press "s" to enter Open Firmware.
-
-Curious to know if it's only the VERSION update needed or something more 
-(make args) ?
-
-Thanks
-Harsh
->   pc-bios/README   |   2 +-
->   pc-bios/slof.bin | Bin 994176 -> 997584 bytes
->   2 files changed, 1 insertion(+), 1 deletion(-)
 
 
