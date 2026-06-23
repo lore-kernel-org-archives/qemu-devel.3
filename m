@@ -4,92 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28DB2CDB471
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jun 2026 18:35:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41736CDB46F
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jun 2026 18:37:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wc5xT-0007gE-C8; Tue, 23 Jun 2026 14:34:51 -0400
+	id 1wc5zR-0008De-BO; Tue, 23 Jun 2026 14:36:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wc5xR-0007fw-Hu
- for qemu-devel@nongnu.org; Tue, 23 Jun 2026 14:34:49 -0400
-Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
+ (Exim 4.90_1) (envelope-from <nabihestefan@google.com>)
+ id 1wc5zJ-0008DN-Gb
+ for qemu-devel@nongnu.org; Tue, 23 Jun 2026 14:36:47 -0400
+Received: from mail-qt1-x82e.google.com ([2607:f8b0:4864:20::82e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wc5xQ-00053a-0p
- for qemu-devel@nongnu.org; Tue, 23 Jun 2026 14:34:49 -0400
-Received: by mail-pl1-x636.google.com with SMTP id
- d9443c01a7336-2c6dadfbaafso1389405ad.3
- for <qemu-devel@nongnu.org>; Tue, 23 Jun 2026 11:34:47 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <nabihestefan@google.com>)
+ id 1wc5zH-0006RS-VI
+ for qemu-devel@nongnu.org; Tue, 23 Jun 2026 14:36:45 -0400
+Received: by mail-qt1-x82e.google.com with SMTP id
+ d75a77b69052e-5177d1ff061so41391cf.1
+ for <qemu-devel@nongnu.org>; Tue, 23 Jun 2026 11:36:41 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1782239801; cv=none;
+ d=google.com; s=arc-20260327;
+ b=nOmVEU65vyAQcU5Q/48TNLSsBFPuNsK6nI+WgCzNPKaxFEHKj87wX2UX8NNq3uVFVo
+ z3WfE8P2yQvIkfh/U9C5XPcu2PiqmFMGjVxCAgpST3+j641fxaAlM5tLbkXHmNMjHLn2
+ +7MC4DhErw9JmE50llt6LofEOpl0tyN6mZiCoWOCsHGPUxiJoveINwsrp3qu6+FLxDuh
+ Ijsdb0xyIPo9akT1D9TT6pLZUPGGhSIY0ads0AA/1YQ6TPKIxniHEZrcvGmAby9zEKFq
+ 45NAWXA1k43xK5s9W0ylRUeQ+eYMlC92HiZ/OfIuuir7biwFKuGxFnufdfr7fNEP92uP
+ Cxgg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=MQ5fol70xgfG6ebJGRkuL+8d0mZTx0n8RPRg/GXYlc0=;
+ fh=QBcHwuQGX0LPfxAkokpN38512jETs0gw5tgJh66ES18=;
+ b=AvAV3g16HxM9AhGkJM7A87PemYrz0atGhGuXe5Ib//g4f62pVgJ0lpeXZqG91cvlUH
+ +GNahGjejSxHb99M/IMZ8vgyoh4WOFnNfOKbEp2HX1QKIKj9JE5xk1LJEFHWaX6hoEdH
+ Nw1BWPLuyyav50DRnfv5aYuQqkGwrPYgDAQBXkRGzJVX2pLNbED6ju9f6SkyZCLcZHQr
+ xOhOsBDKRtE0+VUw+l2ho4PVyUXXHEPCFX6Kws5y+Gy7IlSezQHzUhUau4YXxifaIVlP
+ JJq1JMkJ6e0EbRsYPamaGqm5mbGlIdD4cLv4JCtcqnRu/b7ohYajRtQflJDm97uSanY9
+ kfLw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1782239686; x=1782844486; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=g1ILwAaJz4cbvbkdosvyIu0xUaUg5RAwnGrmz2hZas4=;
- b=fnTPvcRaOKB6Tzv8PnAdoe4ywyTQcnRIwtkVaQ9u7K0BRJSRycGRQ4SYM8LusC0jMl
- P5IJpTQKYwWU3Kr3vINM0eoxYRy30HQJM5AQg5Vdr/E+cw1S7wmIgjjPLtjfjmCLuVbV
- 4bs4CZgzMCx69mj0YnNYcVf4qNp8MiJfcqmaRPfBSINy80mehm+3Tz7stjvJy9XhmSg8
- Vdw+mAsGORngCqbP2mFy87ArgpsmZJcSXAIAO0C+Z97Yp58FNJfBXsc1FubLlc4qa5WT
- j8eUi2gigraJamnNWb/WNmuLYCFElAAD3ozS+6/l9kSMbielSrXq5KH/MWBfkXiMdk9y
- nc2g==
+ d=google.com; s=20251104; t=1782239801; x=1782844601; darn=nongnu.org;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:from:to:cc:subject
+ :date:message-id:reply-to:content-type;
+ bh=MQ5fol70xgfG6ebJGRkuL+8d0mZTx0n8RPRg/GXYlc0=;
+ b=kCWHfACaCJNiVRhU0AmNLbF0EKWwC496ORSN2KcnDog31zR/ViFqlBfFPHvJpoi4mw
+ Ktf75fpEKxwKgE1K5RMwJ9Tf593FNopN9F5mjYs4XWH76RN+k5gelc/oPCYGslzuv1f3
+ wZInsIEivYLxX+1e5XhVUNp9USJD/qePutu1K2d6OFSS7FdxbvGteOvToa7utcKiIQAU
+ oqJh2M9LFJ9VdiaUYy5EJ+KdzD4BYza4kjnKZa82mdePABAMZN0VPlBztPqknvYfcdCc
+ 97uBnESL1TOUzlLde5w9O1LjnJOZjYpeHbfX8MbTQkawGndnRSeh2NS6Lfsw3oB9FHCJ
+ a3kg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782239686; x=1782844486;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=g1ILwAaJz4cbvbkdosvyIu0xUaUg5RAwnGrmz2hZas4=;
- b=Ehbowz+30/AcQlfodyNrnzSLoMqrT2+O6vDi0M4ryRMkRxu4kJkxGcrGu7HfHy54y0
- hIkwVNOYyyTn0ecs9DwjUt+n7U9QVbXHLUZ2vOb+QSEtgO1oQPHBXe7TCYrpTzKyOP6r
- YvtxUb6rQCwm/ZAxz/3h2dXdU3kS/kl15z8b2RgpX/WdnzG/WflSxq4quEnjmzsusMt6
- WidrstZKGd5a43Clp+lKCCW92acH7aMat4oCrQrSC6oG0Q6obzjfJUcT4wyLUUcFme0B
- IME4wklsvGoUdNXKGn18OY9ZlcqnA/NX0J/khf4Jzw/oFtyXBaJwvA0+SSbTCLOLCYLi
- Djhw==
-X-Gm-Message-State: AOJu0YzuU0RfMJeNZtG7TgOCxJErEexmQVPvOLBj0teWr/1a3skfqqSI
- SrKBfGkgMTmeCNS2MuYtXUwM0AIbTWkboY9ZYLWBWnyOS6XK6amGP8dtJMqMyi7J0nj9xvAhSVm
- GnJMw
-X-Gm-Gg: AfdE7clsTRt6dDb1IMh+xtybz2W9yiQKv42CPwp51PXOWkOYBspZL8Cgy0p/x93xY/j
- e2w4pp2U+fS9iZYaL1WQ7EbWPWBZKOO47gAUhzSs9WPXBFHpJ1wvaIgWA/l0OtvV3/+aEOOVPb+
- o2eo+vb09UkBbgxMU5fK7GaUQ/at4F41PeYF5VEXE2fcBnx09HhtSxopBkCvoklEfg8rB/DuUrT
- uA/Vfuk8wB46wXFavtYPi86v3YZt9FUXezmWOZVK7E69z9StPQL50uVGML4yEfY5BgMVToWnUDW
- J2Rzqbap6h3h0xOvQyFUYvi9+4bJPu1hpbR8ibB/811sUYhpwtAJLDSJWsEG1MOZBUDLbf37vdL
- kOyfcdJUZL3i8GtsYfrvxXjhiTDi+fhaP5gYL9mR+pK79lmcfXGDmoC3gKLfFZqEHMbglxKNx2Q
- 1I2MMbMRmOjY6WaWpM2uRzYrNQWnvBgAe4w34VPpz8+p8hCPxe77FFDnQIaw==
-X-Received: by 2002:a17:902:ec8f:b0:2bd:907:2cf0 with SMTP id
- d9443c01a7336-2c7e16edfd6mr343945ad.32.1782239686035; 
- Tue, 23 Jun 2026 11:34:46 -0700 (PDT)
-Received: from [192.168.0.4] (174-21-129-215.tukw.qwest.net. [174.21.129.215])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2c7436ff3b1sm111272145ad.36.2026.06.23.11.34.45
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 23 Jun 2026 11:34:45 -0700 (PDT)
-Message-ID: <67056b03-1a3f-4963-b132-a1dd048178eb@linaro.org>
-Date: Tue, 23 Jun 2026 11:34:44 -0700
+ d=1e100.net; s=20251104; t=1782239801; x=1782844601;
+ h=content-transfer-encoding:content-type:cc:to:subject:message-id
+ :date:from:in-reply-to:references:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+ :content-type;
+ bh=MQ5fol70xgfG6ebJGRkuL+8d0mZTx0n8RPRg/GXYlc0=;
+ b=QBWUz89V98xlvjV5HwGtFGFob5zlJ/W4WU1WWyTUiQhlrIjqssCN5I8aiP0P7c0VWw
+ JljFCAXO2Z9OQKRfdoftf5PfYdej2jIAUg483l4aS29HKBLZkgOuePe5d7sGQFHNZX94
+ e9HuCizKsPyGiLAn+5437arh+99DhMuhRQsUw+3a8CozGzPVoUfVDoojEKE3qbCAIFsI
+ l/hOmr37SpV8Hwxvab84YK01xpiFy5k3///Tg80EGJpjhEwSovQwJzJZxbTMnQXHjvt8
+ Jd8qfZIngvzvZ6f7Cr+YH1Wzf7ifxJOpa6NRWX0DhhLAVVQeWrrkxqkmsboIAqJuL1Uo
+ paVg==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ/c5empZAkgkmLwIa7rGOrNvqmWAfKXehSBT/xghUU24/omgzkP1I2F0y6ENOIYh4hKuOp1CFMTPSvr@nongnu.org
+X-Gm-Message-State: AOJu0Yy8ZLQCTsb74XXoYZgZ4k7s1uGzCYz6SKoEHGsrOtOjcarlb8aF
+ rWlBeLBQOn4MD3tPLWu+YyYCK4xfYoahi771yTkNrJhS0oVkYERaZLwSyDP8H2FXXt1UIZ37MR5
+ yTIxYkrAPYZAt2b4TlOf/C/kC4OEOa4weqcJNp17/
+X-Gm-Gg: AfdE7cnOrKsUMjsLkkwpTTIz/WbvI7Ow7Ft30E+l8ThL8Z7+Z7q+7VA3HQfGrPnIKPm
+ 9K1Ha7NVUIdNoLOq2kAO8Wd3Mqw7x4ManH8OnS4R1yZEDdhSp1ueT8BTAFEjAB7jYtDaJyxDPrZ
+ oOh/ZuTgkVojxUku3CNHxSt797Ro9brwsRxptL2PS35IobzgyJ2StDmX0wNsDc3wLScMyHSs4Yt
+ yMMK/Jlx6LqlclMEK7bowCE6eFw3YDIt+IHpv6plU3rL5aY3yk3ByYnL4QGShg9FPUcXJqmK5R6
+ WMBeUAqR62DCiUfyJGa180VXlnDsahBW2EdgZpAcg0SPjcHv+qqqFNddJNgh0+dvJKYv9wVwB6J
+ JFpq3B9Gtqkj0ESUktwN4Jleq
+X-Received: by 2002:ac8:7c4f:0:b0:517:5e32:2d14 with SMTP id
+ d75a77b69052e-51a6177b34emr1030011cf.10.1782239800243; Tue, 23 Jun 2026
+ 11:36:40 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 05/40] bsd-user: Add bsd-signal.h with sigaction
- through sigreturn
-To: qemu-devel@nongnu.org
-References: <20260620-misc-2026q2-v3-0-f6ce23ad8dda@bsdimp.com>
- <20260620-misc-2026q2-v3-5-f6ce23ad8dda@bsdimp.com>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20260620-misc-2026q2-v3-5-f6ce23ad8dda@bsdimp.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x636.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20260623154659.3137518-1-nabihestefan@google.com>
+ <a2891cc9-4591-4898-b0c6-b15170b815ee@linaro.org>
+ <d4391442-1a59-47da-b68a-188fd4505bd3@linaro.org>
+In-Reply-To: <d4391442-1a59-47da-b68a-188fd4505bd3@linaro.org>
+From: Nabih Estefan <nabihestefan@google.com>
+Date: Tue, 23 Jun 2026 11:36:28 -0700
+X-Gm-Features: AVVi8CcO8qqawtz-BwwQtudv3qM7niUw7oprWbODMZrRe4DQY2F21yRpQSXTGx0
+Message-ID: <CA+QoejUeNuttfy8QzNEXriTWG4V8YiwT6owP-pCiD-mkwUbZYQ@mail.gmail.com>
+Subject: Re: [PATCH] build: Use meson b_sanitize option for sanitizers
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: pbonzini@redhat.com, alex.bennee@linaro.org, laurent@vivier.eu, 
+ deller@gmx.de, pierrick.bouvier@oss.qualcomm.com, marcandre.lureau@redhat.com, 
+ berrange@redhat.com, philmd@mailo.com, zhao1.liu@intel.com, 
+ qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::82e;
+ envelope-from=nabihestefan@google.com; helo=mail-qt1-x82e.google.com
+X-Spam_score_int: -175
+X-Spam_score: -17.6
+X-Spam_bar: -----------------
+X-Spam_report: (-17.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ ENV_AND_HDR_SPF_MATCH=-0.5, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,27 +125,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/20/26 21:19, Warner Losh wrote:
-> Add the first set of signal-related system call shims: sigaction,
-> sigprocmask, sigpending, sigsuspend, and sigreturn. Also add the
-> do_sigprocmask and target_to_host_sigevent helper functions to signal.c
-> and their declarations to signal-common.h.
-> 
-> Signed-off-by: Stacey Son<sson@FreeBSD.org>
-> Signed-off-by: Kyle Evans<kevans@FreeBSD.org>
-> Signed-off-by: Jessica Clarke<jrtc27@jrtc27.com>
-> Signed-off-by: Mikaël Urankar<mikael.urankar@gmail.com>
-> Assisted-by: Claude Opus 4.6 (1M context)
-> Reviewed-by: Pierrick Bouvier<pierrick.bouvier@oss.qualcomm.com>
-> Signed-off-by: Warner Losh<imp@bsdimp.com>
-> ---
->   bsd-user/bsd-signal.h         | 151 ++++++++++++++++++++++++++++++++++++++++++
->   bsd-user/freebsd/os-syscall.c |   1 +
->   bsd-user/signal-common.h      |   4 ++
->   bsd-user/signal.c             |  67 +++++++++++++++++++
->   4 files changed, 223 insertions(+)
+Huh, I don't remember what the failure was and for all my testing I
+can't seem to reproduce it anymore.I'll run a couple more tests to see
+if I can reproduce, if not I'll just remove the override.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Thanks,
+Nabih
 
-r~
+Nabih Estefan (he/him) |  Software Engineer |   nabihestefan@google.com
+
+
+
+On Tue, Jun 23, 2026 at 10:46=E2=80=AFAM Richard Henderson
+<richard.henderson@linaro.org> wrote:
+>
+> On 6/23/26 09:53, Richard Henderson wrote:
+> > On 6/23/26 08:46, Nabih Estefan wrote:
+> >> +# gen-vdso doesn't play well with sanitizers. It originally didn't ge=
+t them due
+> >> +# to the way we passed sanitizer flags. Now that they're being passed=
+ through
+> >> +# meson wen need to override it.
+> >
+> > Details?  It's not an especially complicated program...
+>
+> FWIW, I attempted to reproduce any problem by editing build.ninja; everyt=
+hing built just
+> fine with -fsanitize=3Dundefined,address.
+>
+> So I'm not sure why you'd need to force disable here.
+>
+> r~
 
