@@ -4,86 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9FC7CDB470
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jun 2026 10:13:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A30DCDB46F
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jun 2026 10:13:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wby7e-0001qZ-9m; Tue, 23 Jun 2026 06:12:50 -0400
+	id 1wby7b-0001nB-Ji; Tue, 23 Jun 2026 06:12:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wby7d-0001ox-3s
- for qemu-devel@nongnu.org; Tue, 23 Jun 2026 06:12:49 -0400
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ id 1wby7Z-0001lp-JK
+ for qemu-devel@nongnu.org; Tue, 23 Jun 2026 06:12:45 -0400
+Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wby7a-00075B-UU
- for qemu-devel@nongnu.org; Tue, 23 Jun 2026 06:12:48 -0400
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-490cf3000f0so56695225e9.1
- for <qemu-devel@nongnu.org>; Tue, 23 Jun 2026 03:12:46 -0700 (PDT)
+ id 1wby7X-00073d-V7
+ for qemu-devel@nongnu.org; Tue, 23 Jun 2026 06:12:45 -0400
+Received: by mail-wr1-x432.google.com with SMTP id
+ ffacd0b85a97d-45fd461e4a5so4047951f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 23 Jun 2026 03:12:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1782209565; x=1782814365; darn=nongnu.org;
+ d=linaro.org; s=google; t=1782209562; x=1782814362; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=lm/EkmTZzZUIm1flwT8VMm5WScziV8Mn0QozyBxRF9o=;
- b=WNdx83PlxOmkI1ykoIJaqik09Oyh5V6Fli0DSofdEGx4pszYXVogEa5CobChBKt+ZH
- /PPLnsdFhYTSW4shRMutRSIkS2OO3rT5v9uiR81f/r2ALkaFeaP0sq7pW5Ql7Gihx4jr
- NgqrxdDeccbw6974Hl1ggJWXD4WngYWvwVcbfvB3HFeg8HvNDfKHeMNV9H3aYaTREekH
- cL+qRvqU5hR5aGOnoDz3Xjtf17taANi6reuJ3YSCH7XUuE79qey69NRPsBtb6iBESpwU
- Nap7JalfVNy0VGznMw8z1K2pzh8WkPCmjet8T0GGswR7EDYg8NMuZe3UNwShnYBEai8A
- E1rQ==
+ bh=kFZ8oV2tKeVxBSuA92dpTIn1XLzgOP+YUAVL9W69Ca8=;
+ b=QOxI6r1endIZ9XAlJyzVu/IUnVcUML4b7FGGWzPuDSQTQN0WOl/so6Ry+E7+jsV/NI
+ T7Qqe/FJ34kHUKQgL3FrV4JlJyXgohY+5QxOjomOw/erx10X7i+JBf+VxG+cAbX9bccG
+ b2EJeuEmkY0ntJSVWR0FdGVzz+IVWzC/8MmZjBKZP7uBPHHUG7WKKQ7bGQXjzXWHvG0j
+ 8nDtd7qx5ueZj/XJUkTy6j8kpl83WMcTyNIFAz3HgnsR54D71+Pl7BwPjAC/t/iL9DsY
+ W+q7c+VLAf5jCGL0n6YNrJCc90U7c1zokLTSpIxgtFzl58/YwZsv8GOP8p096tdIaJEY
+ dxUA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782209565; x=1782814365;
+ d=1e100.net; s=20251104; t=1782209562; x=1782814362;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=lm/EkmTZzZUIm1flwT8VMm5WScziV8Mn0QozyBxRF9o=;
- b=Gt7OgxIR1Tw1ejep+t1Ub/Ab6Ux61WE5iwG2exQcFAMFZlLDK0Q8eeRMNz17PmMGGx
- bvaFXqWNG0ll5gY82sFrspqENSnfFmnDel1lNk0gfJLs9jHklCr49S5QyNH8EELkXMRQ
- y/9T82YU2aWBgvSxtLRlqgDtFXWBhCnQj4ihhoohvyP99E0W0gBwhT3lSYZHCkrjOqpV
- hBa9TyVzwljo4kIFRE4KRJfN2/Xncv5NmW24wb5XyjkOartMFks0eXoY65tIAJbkhdIF
- pP4u4o2keBnE2FTv6HuQkWzJZOOwmT1HVU9HNee2OrDjp9VZ9dgMlvnObGRRo7weBmjS
- 6MzA==
-X-Gm-Message-State: AOJu0Yx73IwGTOu9icLiiooQDUfCaGwq8BF1xfQDTnD+dZwnAN/fs3IZ
- fQvR7R+O3D+ucoAWCSRacCHZzbQJA6l0P2X5r/asLslf2GiJDdHIuDGIhq2fq6jnV2/ZGkkct2y
- gj8P6xe4=
-X-Gm-Gg: AfdE7clnj3gSR8qNvw2tnGNI+Pd9/RrTSB4TWfX9+LFAKOzanpObRJaC0yooWNW/pJX
- GYMfv9BOzMA+nwmRjcDanv5CFQ3eip4DbSNbvhThtZshPX+dWtwnWyGQ0EvszYj51q19GalyPjf
- gLmrN5WjSOz0i1CyjzFZpjBjZN/67iy0XVko+wG/1J5hgDF3SabyhphUuKTBiGA/O4wM9kqQkic
- 95/D8kiAAGKs46YzqG8odVCdnYi36VLrgAIWwdeNL4kn94rsx+o7SxgfULz/9ia1Jon2/aFkVx4
- D1f6fvKumx6oVNCvhofjJTM2u2SveUsgpzzn2yzyhaxmrYOMEZfmgw+LKbNX78qYf6BHdr1ywNE
- 4UhAJ55wlylXgoskH4Pb21tZaQQO0XWQI6U1r8YUE5SvGW1fl031HhNt88329qnWZGIJxo80Xg7
- LSFDWBxcn5QlSk
-X-Received: by 2002:a05:600c:818d:b0:492:2f2e:e7e7 with SMTP id
- 5b1f17b1804b1-4925b37ec5bmr25529285e9.17.1782209565198; 
- Tue, 23 Jun 2026 03:12:45 -0700 (PDT)
+ bh=kFZ8oV2tKeVxBSuA92dpTIn1XLzgOP+YUAVL9W69Ca8=;
+ b=g/V+ogQZCE9/X6dtXyVT3k6ld+0hg1fl0gJJa52p6fbN3N++EUoQceJ4M1YTMv1Uk9
+ 2hVtFgEknxzdgHXxtfDmwNHzffhOTvzTJ78LHlaNayFEkbBke9kYi3lY4QIMOGr7pVAN
+ xjcaGuQiJAWOhTBf6OPJZ61zZTUo0TB8Cj6D4MyXq5eHzmwcHAfOB1I6AOxXq1KilGlX
+ YfCeg3cFt4KBijdNFDBmJgqlWbMPMN6B9D6RPo2BN8GtTP6k7Otiu6evqVxVxmcB5xxT
+ 3dtXI2VXlG+MB2RI4SEKiDN6pO9Ji2alZWCf0smCefstBa/39TYh5pzjPwRhHXzWTrCN
+ RGxQ==
+X-Gm-Message-State: AOJu0Yw/GYAY2kp7XD/zyd9zOMRVnyKPUvyO7+XJkD4T7eEOTnzxoeUx
+ 4Ra9qW5itbOKv2IxN6JO2ry5buVFOVl2VbjjzV/vRiKteLVWTuBKANrnKrY1DlXTWGo=
+X-Gm-Gg: AfdE7ckxtAyOqyLQvYM60knJGxjHVAxZrwH4SN32QXJqTqcwTai+sbpHTFAWgyq3Ab4
+ 8bkens+t7PezoVrgeXQZCrWVOHdSymIP+MwQ53Q99PxSHgs1ofDmU8U+gQEEKzL17hJWXYmy3rS
+ Osf62Eb7PzQpZk01QgTZb8gp0Ei610haUF8xKtI32an6N1r2/aHsrri8SI3jvTJiTUPfGDb3OV6
+ NRJu+N88Psnj9rG+NcAUwlomJXrJvw5AWAkn9InYbak7lOOBb/VkE89qHU57/kIDsk/Q+6kqckl
+ 9rKd4BhrFj1KzyWMRHmuPQTpjJEHZkMldnh7nG1Hiufl9eoJfv3mpIaj/xpGmH/MSZt88mCXmK5
+ scXSofjWC8lbaccq2Eoz/4ffqE+yhYs5khjADffgAFJpCH0/YdXXpm3StXsLUr3yGw3z+r5qGex
+ jGwvPlBbtFzsfLf97slMYrlqc=
+X-Received: by 2002:a05:6000:4715:b0:43f:ea25:20ff with SMTP id
+ ffacd0b85a97d-46adb0b5c53mr3085369f8f.29.1782209562364; 
+ Tue, 23 Jun 2026 03:12:42 -0700 (PDT)
 Received: from draig.lan ([185.124.0.195]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4923fd30078sm363917445e9.7.2026.06.23.03.12.41
+ ffacd0b85a97d-46667221da1sm34615377f8f.36.2026.06.23.03.12.39
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 23 Jun 2026 03:12:43 -0700 (PDT)
+ Tue, 23 Jun 2026 03:12:39 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 143885FD5B;
- Tue, 23 Jun 2026 11:12:39 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id AF6385FA5C;
+ Tue, 23 Jun 2026 11:12:38 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PULL v2 7/7] gitlab: update bug template for sec issues & tool
- assistance
-Date: Tue, 23 Jun 2026 11:12:38 +0100
-Message-ID: <20260623101238.3806547-8-alex.bennee@linaro.org>
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Thomas Huth <thuth@redhat.com>, John Snow <jsnow@redhat.com>,
+ Cleber Rosa <crosa@redhat.com>
+Subject: [PULL v2 3/7] python/qemu: dump a developer friendly version of
+ cmdline to logs
+Date: Tue, 23 Jun 2026 11:12:34 +0100
+Message-ID: <20260623101238.3806547-4-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260623101238.3806547-1-alex.bennee@linaro.org>
 References: <20260623101238.3806547-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x333.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::432;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x432.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,47 +106,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel P. Berrangé <berrange@redhat.com>
+Now we have the arguments nicely split up we can make _console_args a
+function call and present a slightly different version to the logs to
+save developers manually hacking the command line up.
 
-Warn that a security issue must have the "confidential" flag
-set and that any findings from automated tools must be validated
-before submission.
-
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-Message-ID: <20260619123632.1276476-1-berrange@redhat.com>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Message-ID: <20260619155657.944220-8-alex.bennee@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Message-ID: <20260619155657.944220-4-alex.bennee@linaro.org>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 
-diff --git a/.gitlab/issue_templates/bug.md b/.gitlab/issue_templates/bug.md
-index e20f586008d..faeeb002252 100644
---- a/.gitlab/issue_templates/bug.md
-+++ b/.gitlab/issue_templates/bug.md
-@@ -13,8 +13,9 @@ older than this should be reported to the distribution instead.
- See https://www.qemu.org/contribute/report-a-bug/ for additional
- guidance.
+diff --git a/python/qemu/machine/machine.py b/python/qemu/machine/machine.py
+index 18ee5ec0147..3670c8cd397 100644
+--- a/python/qemu/machine/machine.py
++++ b/python/qemu/machine/machine.py
+@@ -308,12 +308,15 @@ def _harness_args(self) -> List[str]:
+                          'chardev=mon,mode=control'])
+         return args
  
--If this is a security issue, please consult
--https://www.qemu.org/contribute/security-process/
-+If this is a security issue, ensure this ticket is marked 'confidential'
-+before submission. See https://www.qemu.org/contribute/security-process/
-+for additional guidance
- -->
+-    @property
+-    def _console_args(self) -> List[str]:
++    def _console_args(self, interactive: bool = False) -> List[str]:
+         args: List[str] = []
++        # redirect pre_console_index serials to null
+         for _ in range(self._console_index):
+             args.extend(['-serial', 'null'])
+-        if self._console_set:
++
++        if interactive:
++            args.extend(['-serial', 'mon:stdio'])
++        elif self._console_set:
+             assert self._cons_sock_pair is not None
+             fd = self._cons_sock_pair[0].fileno()
+             chardev = f"socket,id=console,fd={fd}"
+@@ -376,7 +379,7 @@ def _pre_launch(self) -> None:
+             self._wrapper,
+             [self._binary],
+             self._harness_args,
+-            self._console_args,
++            self._console_args(),
+             self._base_args,
+             self._args
+         ))
+@@ -485,6 +488,14 @@ def _launch(self) -> None:
+         """
+         self._pre_launch()
+         LOG.debug('VM launch command: %r', ' '.join(self._qemu_full_args))
++        # Log a simplified, developer-runnable command:
++        # Exclude harness-managed infrastructure args (harness_args)
++        # and wrapper.
++        debug_cmd = [self._binary]
++        debug_cmd.extend(self._console_args(interactive=True))
++        debug_cmd.extend(self._base_args)
++        debug_cmd.extend(self._args)
++        LOG.debug('Developer-runnable command: %r', ' '.join(debug_cmd))
  
- ## Host environment
-@@ -49,6 +50,12 @@ https://www.qemu.org/contribute/security-process/
- 2.
- 3.
- 
-+<!--
-+Note: if this issue was discovered with the assistance of automated
-+tooling LLM, static analysis, fuzzers), the reporter must disclose
-+that in the description. The steps to reproduce, and any other findings,
-+must be fully validated by the user of the tool prior to submission.
-+-->
- 
- ## Additional information
- 
+         # Cleaning up of this subprocess is guaranteed by _do_shutdown.
+         # pylint: disable=consider-using-with
 -- 
 2.47.3
 
