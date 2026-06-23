@@ -4,89 +4,140 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2817DCDB470
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jun 2026 17:05:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F08BCD98F2
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jun 2026 17:12:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wc4YN-0002My-P9; Tue, 23 Jun 2026 13:04:52 -0400
+	id 1wc4fJ-0005Ee-JT; Tue, 23 Jun 2026 13:12:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <163wangjack@gmail.com>)
- id 1wc4YB-0002G2-Ol
- for qemu-devel@nongnu.org; Tue, 23 Jun 2026 13:04:39 -0400
-Received: from mail-pj1-x102d.google.com ([2607:f8b0:4864:20::102d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <163wangjack@gmail.com>)
- id 1wc4Y9-0003Lf-Ul
- for qemu-devel@nongnu.org; Tue, 23 Jun 2026 13:04:39 -0400
-Received: by mail-pj1-x102d.google.com with SMTP id
- 98e67ed59e1d1-37c6cd1ac98so173260a91.0
- for <qemu-devel@nongnu.org>; Tue, 23 Jun 2026 10:04:37 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wc4fD-0005E4-LJ
+ for qemu-devel@nongnu.org; Tue, 23 Jun 2026 13:11:55 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wc4fB-0004ie-F6
+ for qemu-devel@nongnu.org; Tue, 23 Jun 2026 13:11:55 -0400
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 65NBZsWg4053144
+ for <qemu-devel@nongnu.org>; Tue, 23 Jun 2026 17:11:49 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ yN44TcWdZRN92Ft2TQTS0iHWagJ6OjygZsT7PM1CrJk=; b=mSKXAk7Ycx5aR24d
+ X2HV4O5mCfX6PZUxFxacpM97tsoS+Ep9Pzmwupj83DCncXsb5J53sHyTlvSLbb4D
+ iskXpJA5zsDbKHv1ge2VC6Bdiixlu+QkcJPyAfpwPo4lgs7mJxvOjRkqljT1mDUC
+ Yozt6jBR9ulVDPm7fiYHKKChxtJWijlIXt/POj1qWm0+7VjSIFB8GTAMMkeN1scd
+ EXh8gT+ADNosc0RnYy51apVtoNEx3WrKSlXa1o9ba1lcqRBm3gQIHjLUXtRGAtlY
+ O131IDTGGZbHZOqTBUaeTK0uicdDjRW1zaZzKp0Ah8+aRzBephKVNwmPCbnjp2qn
+ bXUWPQ==
+Received: from mail-dy1-f197.google.com (mail-dy1-f197.google.com
+ [74.125.82.197])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4eyr9yspqe-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Tue, 23 Jun 2026 17:11:49 +0000 (GMT)
+Received: by mail-dy1-f197.google.com with SMTP id
+ 5a478bee46e88-30c0a27ad86so127777eec.0
+ for <qemu-devel@nongnu.org>; Tue, 23 Jun 2026 10:11:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1782234276; x=1782839076; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1782234708; x=1782839508; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=oSaOMXjVoFPTW5HopszMbWR5/OiDDQVduHsnOIO0DKc=;
- b=cJZweZRLH2xm+A7vN8IFbqIjkU58oXe2PjNK5M0nCQl87aBuHerO6piKNjPMjAik7w
- pW05JyCffr1flwm1kQvt6Y/J1k1ooKuz2FaTCDxmfiypbLZIE+FEjITXKndBs1cDrmav
- TJeckgKBu4MJbVVKrk8usrUFv9+PNEQUxcffaknVUkOuFDnMCSWC+C3UqoSUSwkAd6m1
- Nk/l1oBjA6MtXlm8qyj6RAlKOTCZO0DvKeAXUy5uHWomGBHAQqWuPhBnjeguueU/O/VF
- 8mxYQGSE8/tiL7BVmXs7bcug9AVbKsRLkzbegWOTg3c4AHzzVuSPssiAQAMmf9BWVsU8
- qaeA==
+ bh=yN44TcWdZRN92Ft2TQTS0iHWagJ6OjygZsT7PM1CrJk=;
+ b=CBeL3C1dzPg1AuBZZ1PQ3Cio/QOR/ci9pmUP41wQ/vOaDWx5sn6/dd3679p48Et2Eg
+ tLNV7aYIAbYsEY1VsK9gMwX2IhmNhopqZo3anpLr/MR7E2ic5ay2rkE/foPwaKG0Az8O
+ 5wwz1woPbL9UeDwvslR4eV7QSNHAAZuFIdU1hZNU1jptVzhH7oPN6nnB3HZtJKev5K89
+ cojlddcDMWYRkswDYXeceCOK771vZJ7Vkpf9gvBJf1fqD+60lfvLPRFvJ+MVDmG4lt2w
+ jBVFlIoEwPz/4E/yBDreE5i4LjR5mEr+wq9dUR0H7TaJP07lG4mYPJQB6MAiliiP1ZQh
+ +0Pw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782234276; x=1782839076;
+ d=1e100.net; s=20251104; t=1782234708; x=1782839508;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=oSaOMXjVoFPTW5HopszMbWR5/OiDDQVduHsnOIO0DKc=;
- b=KyVCuSuiNjLZ1QH/2YZXzkd+CCmSptwau4IzGBI2OTVbQ0ELgW+H2cMWoHZPYYczqA
- Bv4jXueA9A2YxmolPGtyIvr7eE/lLn7K8pTvE6OszoHeb5cXdrK7oxHCmsvlGMyOukg8
- g4vHQOVZkeIN/p7ulQfSWzY5Jn5j2Me/QZfTxnizUrCQccqA1tKQcD0h8V8XXhaxMUGZ
- m2TjEEyHrIAv+MNfkijldLvvVrj4wkyvnQvgwae8dH09Lp86dlLxKgL3BOlz7439vHLi
- NFuVugyXrVCYd1MquDxisqxhIJlyqsxweJm+9YnZy0ZAZa2yMcGJ5b/gfQCTyFmRaKRc
- vUJg==
-X-Gm-Message-State: AOJu0YyB/IoruJYR2sDSy+iPKmxyEVkB1ilQWrEVy5beFf5SP6INVfSG
- vKykXwD3iF7p0yZFDUeRe6KS9NBB6lD+B+GxBBQin9xWq1cIpQVk84TmpGMjfa2n
-X-Gm-Gg: AfdE7ckS1DSEJ9CwKxigZwCTbcZ9Q42bOv/FmqLDsf2PDLKghzkkLIRr0cjuJqRk+KB
- NoL/Cllg/rmTGBGCBFieAfko9mPe/bU7DUHp5DWPODwKKtWEWv7nlFV/63sPmOpCpAoVbdQAjWI
- FBthegMNzMuNRzDZdMHlUurgvqc3aA8pxxTrQ6g2zBqlKO1Qzpbj8LXvoudLagLLQ7nfp3cLQKU
- oAwJdBY1E446QcZVdPm7Wae3V+fH1rzG7p+dNetPOirMQSC5q7VcTfVjQvvlx1IGCriKCRieYqY
- 67lfPl4JRogq0AZGEMLsoHcUtYDEDOiLppPzHVI6M/9YK5lYLMxl143icvnRixjGHrfRnJu4oK+
- W1I7k1VxEvP9C/TdXeBqrXt/00HpXWCRJn62A8eB1WgVUG8cx0ga8eY3hYfDe5FsYpDRGv7HRYA
- SS3wb1njiiM3qWc/6aed714XUX/K6rM8L/6wxsOw==
-X-Received: by 2002:a17:90b:5405:b0:36b:3ecd:88d2 with SMTP id
- 98e67ed59e1d1-37dd0d0d8d1mr4442368a91.3.1782234276101; 
- Tue, 23 Jun 2026 10:04:36 -0700 (PDT)
-Received: from localhost.localdomain ([212.135.211.99])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-37d4f225870sm10242924a91.8.2026.06.23.10.04.33
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 23 Jun 2026 10:04:35 -0700 (PDT)
-From: jack wang <163wangjack@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-trivial@nongnu.org, jack wang <163wangjack@gmail.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Jean-Christophe Dubois <jcd@tribudubois.net>,
- qemu-arm@nongnu.org (open list:i.MX25 PDK)
-Subject: [PATCH 2/3] hw/misc/imx25_ccm: Replace DPRINTF with trace events
-Date: Wed, 24 Jun 2026 01:03:53 +0800
-Message-ID: <20260623170354.43981-3-163wangjack@gmail.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260623170354.43981-1-163wangjack@gmail.com>
-References: <20260623170354.43981-1-163wangjack@gmail.com>
+ bh=yN44TcWdZRN92Ft2TQTS0iHWagJ6OjygZsT7PM1CrJk=;
+ b=QeK+psJ+nqSbbmteml1QTNMuX4LDSQKqLfRsZtOjR5+7HntjsaP0kGQJ39HStYwGmF
+ TADEgiEn2b/BEZepw6H2sqfZJ9CTzDocFg9TOf/uW9LlBGMRsupdVoV8aeKCsko9FH++
+ rS2gyRz1pk5DoQq6ab5vI8BAbEwyVmBUEqiDfiokyBalXMggvDiXxXOKoTq6pSx1nBpx
+ sM3KB9Hnm2AOg6tbC+67IFVbRAakPk21T4BJSJnJBQGoNAQsKhcTeKA1wtaFfpcK0Yuc
+ gcVXO7cbL1DU1dNdxepjDCtsRBaIUX5ToPzduGTt7Xw/1uzzDyj5M1W/wHersQePzahV
+ b31w==
+X-Gm-Message-State: AOJu0YwSNq5VPB+ypwaP2Tj7eGJL8gMctwkQehGYhiUvjY0oGIwQMg5s
+ otb7XXfJOEBLwitmTzUKmGq1tBtDcB/DlBBZ7KF0E73Yx7AhiCoQljXJ51hXOi7xXw4lM3MOnKM
+ lPwdB4PG1sY5TSzLBHo/oXFghcOubR5Y0bg/cjzmzbjZxPitGiDPRXigUoQ0ZDe5qdA==
+X-Gm-Gg: AfdE7cmU5r8SW9z6PweTN4wiGAp/MRMHrjENGrmj2ZF9fcAWMrtUsZsdOFUIPxewZp1
+ OOCeeRnweDNhv8eQE5pjqq/UlDwJkbSe1D1bCsRSmHwoKCl12ORkOYIj3lML1/H2egwVljXmuJY
+ 9MMzkCPonRJ7DoP7CFapHzMIZFqkUOugCUVOZPRIk3Vi10KisSctMJHMDkWv8OqXnZNGIcKrbju
+ 8CgLt0Dnfsi2OgbOnPx6HIx4qnKjFnThve++4GQzzvvGWd2wS+YKQAz2pH0egyeuC4T9/U02YwU
+ HuhLurDJmYfDEVemOASrX/i/T4p3tVgWde5hJhGCnJj/yzdQ8DUnt4jdH+iHPojvJtE5Ivwd+cz
+ LhM3VUddd9horLz8AofLKlrBc2PO1Sr5YK6lVmgROIcG9879MilMpwIjX/MvjGC4kNS/SYgOgkB
+ SwQDl9xA==
+X-Received: by 2002:a05:7300:5411:b0:30c:53bb:ca17 with SMTP id
+ 5a478bee46e88-30c53bbe778mr5323477eec.23.1782234707918; 
+ Tue, 23 Jun 2026 10:11:47 -0700 (PDT)
+X-Received: by 2002:a05:7300:5411:b0:30c:53bb:ca17 with SMTP id
+ 5a478bee46e88-30c53bbe778mr5323418eec.23.1782234707236; 
+ Tue, 23 Jun 2026 10:11:47 -0700 (PDT)
+Received: from QCOM-qjMf8PBlDw.qualcomm.com (216-71-219-44.dyn.novuscom.net.
+ [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-30c1ba5c25csm18186385eec.8.2026.06.23.10.11.46
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 23 Jun 2026 10:11:46 -0700 (PDT)
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+To: qemu-devel@nongnu.org, peter.maydell@linaro.org,
+ richard.henderson@linaro.org, pbonzini@redhat.com, stefanha@redhat.com
+Cc: pierrick.bouvier@oss.qualcomm.com
+Subject: [PULL 1/1] gitlab: disable macOS jobs in forks
+Date: Tue, 23 Jun 2026 10:11:37 -0700
+Message-ID: <20260623171137.1847038-2-pierrick.bouvier@oss.qualcomm.com>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260623171137.1847038-1-pierrick.bouvier@oss.qualcomm.com>
+References: <20260623171137.1847038-1-pierrick.bouvier@oss.qualcomm.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102d;
- envelope-from=163wangjack@gmail.com; helo=mail-pj1-x102d.google.com
-X-Spam_score_int: -13
-X-Spam_score: -1.4
-X-Spam_bar: -
-X-Spam_report: (-1.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- FROM_STARTS_WITH_NUMS=0.738, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-Authority-Analysis: v=2.4 cv=JYSMa0KV c=1 sm=1 tr=0 ts=6a3abe55 cx=c_pps
+ a=Uww141gWH0fZj/3QKPojxA==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
+ a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
+ a=VwQbUJbxAAAA:8 a=20KFwNOVAAAA:8 a=p0WdMEafAAAA:8 a=EUspDBNiAAAA:8
+ a=BjYdUU1l7qfxFpQLjp0A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=PxkB5W3o20Ba91AHUih5:22
+X-Proofpoint-GUID: zIUw79iZ9GqqGh9bsZv2h4dyV15HHynq
+X-Proofpoint-ORIG-GUID: zIUw79iZ9GqqGh9bsZv2h4dyV15HHynq
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjIzMDE0MSBTYWx0ZWRfXxSIxCmSBYxzn
+ LfuCQ/yvScbDWrFD7mFLFdoU6oj6HrG/EqWSFozVV+jhAya9EW8A2qKW8BBZPRkXJxdjZn5en9S
+ hIIMH9kNoxKo6x+GVsa/B4BhYqTBkYDPcym7Rbw3Q3nqQl/+0zT3kxmHx4vhH+XBPnZ/AvSFhET
+ mdx7CZwbRBZIAKmWJejyWXY8lNAO6tsVikgMR1naQf5b6PCoNQh9fvATFQgVKVG6CfRuAk8t/V6
+ sqHfCxuv4xj8RxXMPIlZpcdE8ywWAdR6LHc5stx3x243ycqhHZdKCw+S8nC3uZPbTZ9htn8IU/g
+ EbhzOKzxiDOrIS7rw2Ei7RNe4gWbcQ9HscnTRhBVVxNMVYDpTjamnoz3/npNiGU1MmBppz4/Izp
+ 5VS7FaIU9II/sUyxUGQgJKDeMwBuBE6BB2lGzGwiWdd5onzlZDxI61kvnSNwZlnDYiCwnGqETNA
+ SzVGc0SnhOzbr70WNbg==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjIzMDE0MSBTYWx0ZWRfXxtXzfuyqXx8y
+ BiE0OVm3O8pBU5vpeDOVKrGQ8n9QzGzjlSsHvtk2d8QCnxZDAFOc5j9ajsBFQRJoeYq6wsSy8ad
+ 2YN+/BA/1WBWLdLdP8ns8G7IMOdwfFI=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-23_03,2026-06-23_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 lowpriorityscore=0 priorityscore=1501 spamscore=0 adultscore=0
+ bulkscore=0 impostorscore=0 malwarescore=0 clxscore=1015 phishscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606230141
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=pierrick.bouvier@oss.qualcomm.com;
+ helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,145 +153,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
----
- hw/misc/imx25_ccm.c  | 34 ++++++++++------------------------
- hw/misc/trace-events |  9 +++++++++
- 2 files changed, 19 insertions(+), 24 deletions(-)
+From: Daniel P. Berrangé <berrange@redhat.com>
 
-diff --git a/hw/misc/imx25_ccm.c b/hw/misc/imx25_ccm.c
-index a6665d5535..1ee652a117 100644
---- a/hw/misc/imx25_ccm.c
-+++ b/hw/misc/imx25_ccm.c
-@@ -16,18 +16,8 @@
- #include "migration/vmstate.h"
- #include "qemu/log.h"
- #include "qemu/module.h"
-+#include "hw/misc/trace.h"
+The GitLab macOS runners are only available in Premium and Ultimate
+tier projects. This permits their use in QEMU upstream via the OSS
+Program membership perk, but this does not extend to forks of QEMU.
+The macOS jobs thus need to be disabled in forks, otherwise all
+pipelines will immediately report a failure due to inability to
+access a runner.
+
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Link: https://lore.kernel.org/qemu-devel/20260610091700.2772973-1-berrange@redhat.com
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+---
+ .gitlab-ci.d/base.yml              | 5 +++++
+ .gitlab-ci.d/macos.yml             | 2 ++
+ docs/devel/testing/ci-jobs.rst.inc | 7 +++++++
+ 3 files changed, 14 insertions(+)
+
+diff --git a/.gitlab-ci.d/base.yml b/.gitlab-ci.d/base.yml
+index 72eadc80733..714d2ed8a6b 100644
+--- a/.gitlab-ci.d/base.yml
++++ b/.gitlab-ci.d/base.yml
+@@ -52,6 +52,11 @@ variables:
+     - if: '$CI_PIPELINE_SOURCE == "schedule"'
+       when: never
  
--#ifndef DEBUG_IMX25_CCM
--#define DEBUG_IMX25_CCM 0
--#endif
--
--#define DPRINTF(fmt, args...) \
--    do { \
--        if (DEBUG_IMX25_CCM) { \
--            fprintf(stderr, "[%s]%s: " fmt , TYPE_IMX25_CCM, \
--                                             __func__, ##args); \
--        } \
--    } while (0)
- 
- static const char *imx25_ccm_reg_name(uint32_t reg)
- {
-@@ -118,12 +108,12 @@ static uint32_t imx25_ccm_get_mpll_clk(IMXCCMState *dev)
-         freq = imx_ccm_calc_pll(s->reg[IMX25_CCM_MPCTL_REG], CKIH_FREQ);
-     }
- 
--    DPRINTF("freq = %u\n", freq);
-+    trace_imx25_ccm_get_mpll_clk(freq);
- 
-     return freq;
- }
- 
--static uint32_t imx25_ccm_get_mcu_clk(IMXCCMState *dev)
-+static uint32_t imx25_ccm_get_mcu_clk(IMX25CCMState *dev)
- {
-     uint32_t freq;
-     IMX25CCMState *s = IMX25_CCM(dev);
-@@ -136,7 +126,7 @@ static uint32_t imx25_ccm_get_mcu_clk(IMXCCMState *dev)
- 
-     freq = freq / (1 + EXTRACT(s->reg[IMX25_CCM_CCTL_REG], ARM_CLK_DIV));
- 
--    DPRINTF("freq = %u\n", freq);
-+    trace_imx25_ccm_get_mcu_clk(freq);
- 
-     return freq;
- }
-@@ -149,7 +139,7 @@ static uint32_t imx25_ccm_get_ahb_clk(IMXCCMState *dev)
-     freq = imx25_ccm_get_mcu_clk(dev)
-            / (1 + EXTRACT(s->reg[IMX25_CCM_CCTL_REG], AHB_CLK_DIV));
- 
--    DPRINTF("freq = %u\n", freq);
-+    trace_imx25_ccm_get_ahb_clk(freq);
- 
-     return freq;
- }
-@@ -160,7 +150,7 @@ static uint32_t imx25_ccm_get_ipg_clk(IMXCCMState *dev)
- 
-     freq = imx25_ccm_get_ahb_clk(dev) / 2;
- 
--    DPRINTF("freq = %u\n", freq);
-+    trace_imx25_ccm_get_ipg_clk(freq);
- 
-     return freq;
- }
-@@ -168,7 +158,7 @@ static uint32_t imx25_ccm_get_ipg_clk(IMXCCMState *dev)
- static uint32_t imx25_ccm_get_clock_frequency(IMXCCMState *dev, IMXClk clock)
- {
-     uint32_t freq = 0;
--    DPRINTF("Clock = %d)\n", clock);
-+    trace_imx25_ccm_get_clock_frequency(clock, freq);
- 
-     switch (clock) {
-     case CLK_NONE:
-@@ -186,7 +176,7 @@ static uint32_t imx25_ccm_get_clock_frequency(IMXCCMState *dev, IMXClk clock)
-         break;
-     }
- 
--    DPRINTF("Clock = %d) = %u\n", clock, freq);
-+    trace_imx25_ccm_get_clock_frequency(clock, freq);
- 
-     return freq;
- }
-@@ -195,8 +185,6 @@ static void imx25_ccm_reset(DeviceState *dev)
- {
-     IMX25CCMState *s = IMX25_CCM(dev);
- 
--    DPRINTF("\n");
--
-     memset(s->reg, 0, IMX25_CCM_MAX_REG * sizeof(uint32_t));
-     s->reg[IMX25_CCM_MPCTL_REG] = 0x800b2c01;
-     s->reg[IMX25_CCM_UPCTL_REG] = 0x84042800;
-@@ -238,8 +226,7 @@ static uint64_t imx25_ccm_read(void *opaque, hwaddr offset, unsigned size)
-                       HWADDR_PRIx "\n", TYPE_IMX25_CCM, __func__, offset);
-     }
- 
--    DPRINTF("reg[%s] => 0x%" PRIx32 "\n", imx25_ccm_reg_name(offset >> 2),
--            value);
-+    trace_imx25_ccm_read(imx25_ccm_reg_name(offset >> 2), value);
- 
-     return value;
- }
-@@ -249,8 +236,7 @@ static void imx25_ccm_write(void *opaque, hwaddr offset, uint64_t value,
- {
-     IMX25CCMState *s = (IMX25CCMState *)opaque;
- 
--    DPRINTF("reg[%s] <= 0x%" PRIx32 "\n", imx25_ccm_reg_name(offset >> 2),
--            (uint32_t)value);
-+    trace_imx25_ccm_write(imx25_ccm_reg_name(offset >> 2), (uint32_t)value);
- 
-     if (offset < 0x70) {
-         /*
-diff --git a/hw/misc/trace-events b/hw/misc/trace-events
-index fdb4844045..ebe9b4fb22 100644
---- a/hw/misc/trace-events
-+++ b/hw/misc/trace-events
-@@ -273,6 +273,15 @@ imx6_src_reset(void) ""
- imx7_src_read(const char *reg_name, uint32_t value) "reg[%s] => 0x%" PRIx32
- imx7_src_write(const char *reg_name, uint32_t value) "reg[%s] <= 0x%" PRIx32
- 
-+# imx25_ccm.c
-+imx25_ccm_get_mpll_clk(uint32_t freq) "freq = %u"
-+imx25_ccm_get_mcu_clk(uint32_t freq) "freq = %u"
-+imx25_ccm_get_ahb_clk(uint32_t freq) "freq = %u"
-+imx25_ccm_get_ipg_clk(uint32_t freq) "freq = %u"
-+imx25_ccm_get_clock_frequency(unsigned clock, uint32_t freq) "(clock = %d) = %u"
-+imx25_ccm_read(const char *reg, uint32_t value) "reg[%s] => 0x%" PRIx32
-+imx25_ccm_write(const char *reg, uint32_t value) "reg[%s] <= 0x%" PRIx32
++    # macOS jobs can't run in forks until gitlab opens up runner availability
++    # to all tiers https://gitlab.com/groups/gitlab-org/-/work_items/8267
++    - if: '$QEMU_JOB_MACOS == "1" && $CI_PROJECT_NAMESPACE != $QEMU_CI_UPSTREAM'
++      when: never
 +
- # iotkit-sysinfo.c
- iotkit_sysinfo_read(uint64_t offset, uint64_t data, unsigned size) "IoTKit SysInfo read: offset 0x%" PRIx64 " data 0x%" PRIx64 " size %u"
- iotkit_sysinfo_write(uint64_t offset, uint64_t data, unsigned size) "IoTKit SysInfo write: offset 0x%" PRIx64 " data 0x%" PRIx64 " size %u"
+     # Publishing jobs should only run on the default branch in upstream
+     - if: '$QEMU_JOB_PUBLISH == "1" && $CI_PROJECT_NAMESPACE == $QEMU_CI_UPSTREAM && $CI_COMMIT_BRANCH != $CI_DEFAULT_BRANCH'
+       when: never
+diff --git a/.gitlab-ci.d/macos.yml b/.gitlab-ci.d/macos.yml
+index 8366b4ad564..84ad2492ca8 100644
+--- a/.gitlab-ci.d/macos.yml
++++ b/.gitlab-ci.d/macos.yml
+@@ -36,6 +36,7 @@ aarch64-macos-15-build:
+   extends: .macos_job_template
+   image: macos-15-xcode-16
+   variables:
++    QEMU_JOB_MACOS: 1
+     NAME: macos-15
+     PATH_EXTRA: /opt/homebrew/gettext/bin
+     PKG_CONFIG_PATH: /opt/homebrew/curl/lib/pkgconfig:/opt/homebrew/ncurses/lib/pkgconfig:/opt/homebrew/readline/lib/pkgconfig
+@@ -52,6 +53,7 @@ aarch64-macos-26-build:
+   extends: .macos_job_template
+   image: macos-26-xcode-26
+   variables:
++    QEMU_JOB_MACOS: 1
+     NAME: macos-26
+     DYLD_LIBRARY_PATH: /opt/homebrew/opt/expat/lib/
+     PATH_EXTRA: /opt/homebrew/gettext/bin
+diff --git a/docs/devel/testing/ci-jobs.rst.inc b/docs/devel/testing/ci-jobs.rst.inc
+index d5b081978a4..d747a7ad137 100644
+--- a/docs/devel/testing/ci-jobs.rst.inc
++++ b/docs/devel/testing/ci-jobs.rst.inc
+@@ -125,6 +125,13 @@ QEMU_JOB_FUNCTIONAL
+ 
+ The job runs the functional test suite
+ 
++QEMU_JOB_MACOS
++~~~~~~~~~~~~~~
++
++The job requires access to the macOS shared runners, which are
++only available to Premium/Ultimate tiers. This includes OSS project
++members, but not forks.
++
+ Contributor controlled runtime variables
+ ----------------------------------------
+ 
 -- 
-2.53.0
+2.47.3
 
 
