@@ -4,122 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B55ACDB46F
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jun 2026 14:23:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CEBA7CDB479
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jun 2026 14:32:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wc20L-0001bo-9l; Tue, 23 Jun 2026 10:21:33 -0400
+	id 1wc2AD-0006tx-Bb; Tue, 23 Jun 2026 10:31:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1wc20C-0001Td-99; Tue, 23 Jun 2026 10:21:26 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1wc206-0006Ea-96; Tue, 23 Jun 2026 10:21:23 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65NBmVaA1914696; Tue, 23 Jun 2026 14:21:15 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=96MOyo
- 9zEnlFPx3INOzeHJ3PsYrZFIH26tLkR5dbsRw=; b=EWlRU4bHRHHSgkrYXpdPDW
- kVXYgzoCPc1s7M4Rie7cOnJAA3XWbdCbP9qfN8HZkJj4ll2uHUb/B3Hm2sSf4RUI
- 4D6pDTUxSnXBGvFAIOPk/X+YbkSib1LBBvN7LqVCdevAPf4TKWxKNW0TUdGSRaTM
- VfK82fHJiA+wt3KWS5KyNYrlSJRiffLUJK/iKThjzmQfufu0lv305VuUxJTSJ+Cl
- 0jTmkN12Hj9RH5BjzYGtbZscYHJRO7VFhpDEDBfWlXoLCYiwW2mbkO8upF0BBba0
- zW2kf1v/5qXGblLliejsAvEdytoZJFTOY/mtY1JmkEwGRJgZDp4PS6p6SKp7PGDQ
- ==
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4ewjk4f0br-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 23 Jun 2026 14:21:14 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 65NEJnsS017000;
- Tue, 23 Jun 2026 14:21:13 GMT
-Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4ex66k3nje-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 23 Jun 2026 14:21:13 +0000 (GMT)
-Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com
- [10.20.54.104])
- by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 65NEL9qI28049744
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 23 Jun 2026 14:21:09 GMT
-Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id BBAB62004B;
- Tue, 23 Jun 2026 14:21:09 +0000 (GMT)
-Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 22EB320040;
- Tue, 23 Jun 2026 14:21:00 +0000 (GMT)
-Received: from li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com (unknown
- [9.39.19.165]) by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 23 Jun 2026 14:20:59 +0000 (GMT)
-From: Aditya Gupta <adityag@linux.ibm.com>
-To: <qemu-devel@nongnu.org>, <qemu-ppc@nongnu.org>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Shivang Upadhyay <shivangu@linux.ibm.com>
-Cc: Sourabh Jain <sourabhjain@linux.ibm.com>,
- Hari Bathini <hbathini@linux.ibm.com>, Nicholas Piggin <npiggin@gmail.com>,
- Miles Glenn <milesg@linux.ibm.com>, Fabiano Rosas <farosas@suse.de>,
- Laurent Vivier <lvivier@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, devel@lists.libvirt.org,
- Misbah Anjum N <misanjum@linux.ibm.com>,
- Anushree Mathur <anushree.mathur@linux.ibm.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- kvm@vger.kernel.org, Gautam Menghani <gautam@linux.ibm.com>,
- Chinmay Rath <rathc@linux.ibm.com>
-Subject: [PATCH 6/8] ppc/pnv: Remove Power8E and Power8NVL pnv chips
-Date: Tue, 23 Jun 2026 19:49:31 +0530
-Message-ID: <20260623141933.577981-7-adityag@linux.ibm.com>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260623141933.577981-1-adityag@linux.ibm.com>
-References: <20260623141933.577981-1-adityag@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wc2A9-0006ti-GU
+ for qemu-devel@nongnu.org; Tue, 23 Jun 2026 10:31:41 -0400
+Received: from mail-pj1-x1033.google.com ([2607:f8b0:4864:20::1033])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wc2A5-0007yC-7S
+ for qemu-devel@nongnu.org; Tue, 23 Jun 2026 10:31:39 -0400
+Received: by mail-pj1-x1033.google.com with SMTP id
+ 98e67ed59e1d1-36b9d265355so3165346a91.2
+ for <qemu-devel@nongnu.org>; Tue, 23 Jun 2026 07:31:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1782225095; x=1782829895; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=Qqm37q4UTSmHnlWgd06HdkcZ0BjfTG4E2/mRRXe9wG8=;
+ b=OhprcQnwYrPzFbks7qjYL9bFPkkSFTErdvmpFfLcbzUFF+TAwLmMylPNNQCAx7TrTg
+ z2dKdy3P81xrI2RJ5oP1WouXk3scEK2zuXHP8tYY1Wa+goqbf1ZNcKHPtbdCP3cSrdLE
+ E0UJxux1TknkWyO8LW6oeTyNo3MFR9bR6Nn9PwRnin4uEN/pHYEU+JaiBcWszpXc42VA
+ EkcyUNaIIWis2vjg7QjExTSvkny0MB0ojaVQs/BRgbiFWab6VIcg6JK7TwSziqdCyRse
+ sUqwK5FfAC6rVQ0h6MSWhT3k1zf0G3B2/sMM7dutH396x42PbGwLFgsBc3xLYzToIElm
+ ZjAw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1782225095; x=1782829895;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=Qqm37q4UTSmHnlWgd06HdkcZ0BjfTG4E2/mRRXe9wG8=;
+ b=oIwoOz3w6lhoCI1Okk+Q9WKrrChdh6GRwNUhUI9Aj9mH1yzGpwU/lCLfAnjMGMp4XS
+ 1pEZQUiLTooJJkgGtIaeEV3IvoFftxv6uLeCBurWRAtB2Kt8Zq/aaXXhHYDXCNze6ziK
+ J/0qilTUvPUavhHM0UHRod3GTyFHNMC2vRdVCpIrjiZmqIhdk6SV/eGxdqgsve2DAikh
+ OhmaSXHsiwgo+vZA2lBAWduGvoCwabjbA+ZAhjPZMXQPMaloqmxPxap8i4C0JqtsVqEj
+ sQy+BdbmuNAsf9YTt7HkTz+GfuLEKiQAU8D4uv00JPBG3evDezPPBFBuIqqqlWGXptdg
+ 43fg==
+X-Gm-Message-State: AOJu0Yy9WU2dpOgu8li5EIimnMmtQ7JFrcms/OS1HsfCk+y5wovOVod4
+ osG9VU1EAzpANSel1YM/ORS0ZdJNYSR6/ir3WrrBgXovuf/rko7Dk3HkXfTnH4ZEiQ/fTZRbcB0
+ KcDYP
+X-Gm-Gg: AfdE7ckC7KBHdnDd6qUg/zC9LWB/hthBbR7naKtfEbNk0IVPFKgqGHUM59PuNSujZDy
+ kgAEHlpEtRDx1VVw1PA17/54Pl0yLeksXk67ZowU72yJNrKsI8sqlwcZKd+bI6DMxlZq7LSj612
+ jmq0l9km1RoxF1F6WfFo+AQbhY3VhPAczAOtn9Y6er0HFjJKfImr2IIecSS1y5+dHQRO3/yqZur
+ nxeB813D0mkNCqrl6vK7W9bvAyzN3Fx0katJvQUcW3OxClufb4bOXnpbkr70EIlAiQkD0q8RqIV
+ ueMwfH/0ROhzWEr+pnO65BkDr0YWyrrWeY3Dp5fkukSeRTrJed5IKPyGLcjSrSj1h1i4mX4/wGp
+ 77Ez7EGtdf0OJuMmp5HS/PS0fIL9vh9EWpvDUSW4fOuHTURqtZulzv1KgjoBan1XSMPwUsMfvZS
+ I1C3vaU59d5mtlLJPZyBSVl9Gu/YYEXck5a6M0vDrW8QUG5HD6Op57/unNeQ==
+X-Received: by 2002:a17:902:f688:b0:2c1:f262:494d with SMTP id
+ d9443c01a7336-2c718f622d4mr202678235ad.19.1782225094551; 
+ Tue, 23 Jun 2026 07:31:34 -0700 (PDT)
+Received: from [192.168.0.4] (174-21-129-215.tukw.qwest.net. [174.21.129.215])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2c7c1ac80b1sm28575135ad.73.2026.06.23.07.31.34
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 23 Jun 2026 07:31:34 -0700 (PDT)
+Message-ID: <6e09de57-c45f-4a6e-aaec-9cf13c2646a2@linaro.org>
+Date: Tue, 23 Jun 2026 07:31:32 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjIzMDExNyBTYWx0ZWRfX0CTqQVZXd4ms
- Lls5NEOaXfHCPtoFXI4oJhstPmf0UOMaIea1nrdU0UXa/2yXfoYKRnCTqWr11S16b3dpeDVxOkr
- OHmwM8slRFM+jmE+9ctIJtlnXBpInYc=
-X-Proofpoint-ORIG-GUID: QvayJPyRZArMUL8O5D8_mHc-6aPe0DfR
-X-Authority-Analysis: v=2.4 cv=Oph/DS/t c=1 sm=1 tr=0 ts=6a3a965b cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
- a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=EUspDBNiAAAA:8
- a=VnNF1IyMAAAA:8 a=VZAblS4EJK4kQvDgE7QA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjIzMDExNyBTYWx0ZWRfX/HBNFKUC51O+
- uoi24ZdmSOmG9VAIPXIJ8QTzXw/ynwASVyZHLAglWN4uIahFj/WqklljVboMksNenBhTnXx/ryy
- GJhbwvxZZVTrHWOgV2GsWeA/UghpKETCym7i9AWyVIvRUEJv4+F14yuMX9NraNsxIwdVj6/ttiO
- 6cUQmF2Ojf+DeQnzSx0SRT3T04FSMAnoa1V1lCZOjA9DlqGJNYx/Ocuahlur01kCzSVYaec9d6U
- grQ/c5XzA/dM6b6HQxQW5c1ZuxVQJJfu8R4XREIDdFXKXRSlvwe9RlrnqzOGGKt8qzwYj3hiTmy
- KvfrfYARgkxjtX8WckPbp+CdtlEqf6DR57Kx1VPKA7Iwcj5HKYeGTatzH/v+L6YujMQzzW/Qe4f
- 5EEp3V0Gx2yUFEI72cprUhUlzPFvHNQb26Ik+miq/iIWiIHO5N9kJDRSicARMwsmM3g7C2YHKgw
- A2XSACF8a3zsMe+pGWQ==
-X-Proofpoint-GUID: htw4gd88S2S9Y9yPYA391_XJftSEFF8s
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-23_03,2026-06-23_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 lowpriorityscore=0 bulkscore=0 spamscore=0 priorityscore=1501
- clxscore=1015 impostorscore=0 malwarescore=0 adultscore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606230117
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=adityag@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, TVD_SUBJ_WIPE_DEBT=1.004 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] target/riscv: Generate illegal exception for inval.ir and
+ w.inval in U-mode
+To: qemu-devel@nongnu.org
+References: <20260622224534.1923407-1-stephensportia@gmail.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20260622224534.1923407-1-stephensportia@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1033;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1033.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -135,202 +104,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Power8E and Power8NVL were deprecated since QEMU 10.1, with
-commit 264a604e7163 ("target/ppc: Deprecate Power8E and Power8NVL")
+On 6/22/26 15:45, stephensportia@gmail.com wrote:
+> From: Portia Stephens <portias@oss.tenstorrent.com>
+> 
+> According to the priv spec "Attempting to execute SFENCE.W.INVAL or
+> SFENCE.INVAL.IR in U-mode raises an illegal-instruction exception." Fix
+> the current implementation to generate exception.
+> 
+> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3543
+> Signed-off-by: Portia Stephens <portias@oss.tenstorrent.com>
+> ---
+>   target/riscv/insn_trans/trans_svinval.c.inc | 12 ++++++++++++
+>   1 file changed, 12 insertions(+)
+> 
+> diff --git a/target/riscv/insn_trans/trans_svinval.c.inc b/target/riscv/insn_trans/trans_svinval.c.inc
+> index a06c3b214f..10cb9e32b6 100644
+> --- a/target/riscv/insn_trans/trans_svinval.c.inc
+> +++ b/target/riscv/insn_trans/trans_svinval.c.inc
+> @@ -39,6 +39,12 @@ static bool trans_sfence_w_inval(DisasContext *ctx, arg_sfence_w_inval *a)
+>   {
+>       REQUIRE_SVINVAL(ctx);
+>       REQUIRE_EXT(ctx, RVS);
+> +    if (ctx->priv == PRV_U) {
+> +        /* Set the virtual exception if virt enabled */
+> +        ctx->virt_inst_excp = ctx->virt_enabled;
+> +        gen_exception_illegal(ctx);
+> +        return false;
+> +    }
 
-Accordingly, remove usage of 8E and 8NVL chips from powernv, as it's old
-and unmaintained now.
+If you generate code, such as raising an exception, never return false.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
----
- docs/system/ppc/powernv.rst |  2 +-
- hw/ppc/pnv.c                | 62 -------------------------------------
- hw/ppc/pnv_core.c           |  2 --
- include/hw/ppc/pnv.h        |  8 -----
- tests/qtest/pnv-xscom.h     |  9 ------
- 5 files changed, 1 insertion(+), 82 deletions(-)
+False means "this is not the instruction you are looking for, continue matching".
 
-diff --git a/docs/system/ppc/powernv.rst b/docs/system/ppc/powernv.rst
-index 5154794cc8cd..1de696b588a8 100644
---- a/docs/system/ppc/powernv.rst
-+++ b/docs/system/ppc/powernv.rst
-@@ -15,7 +15,7 @@ beyond the scope of what QEMU addresses today.
- Supported devices
- -----------------
- 
-- * Multi processor support for POWER8, POWER8NVL, POWER9, Power10 and Power11.
-+ * Multi processor support for POWER8, POWER9, Power10 and Power11.
-  * XSCOM, serial communication sideband bus to configure chiplets.
-  * Simple LPC Controller.
-  * Processor Service Interface (PSI) Controller.
-diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
-index 62812f22f8cd..b669df9f175f 100644
---- a/hw/ppc/pnv.c
-+++ b/hw/ppc/pnv.c
-@@ -865,16 +865,6 @@ static ISABus *pnv_chip_power8_isa_create(PnvChip *chip, Error **errp)
-     return pnv_lpc_isa_create(&chip8->lpc, true, errp);
- }
- 
--static ISABus *pnv_chip_power8nvl_isa_create(PnvChip *chip, Error **errp)
--{
--    Pnv8Chip *chip8 = PNV8_CHIP(chip);
--    qemu_irq irq = qdev_get_gpio_in(DEVICE(&chip8->psi), PSIHB_IRQ_LPC_I2C);
--
--    qdev_connect_gpio_out_named(DEVICE(&chip8->lpc), "LPCHC", 0, irq);
--
--    return pnv_lpc_isa_create(&chip8->lpc, false, errp);
--}
--
- static ISABus *pnv_chip_power9_isa_create(PnvChip *chip, Error **errp)
- {
-     Pnv9Chip *chip9 = PNV9_CHIP(chip);
-@@ -1642,7 +1632,6 @@ static void *pnv_chip_power11_intc_get(PnvChip *chip)
-  *  EX14
-  * <EX15 reserved>
-  */
--#define POWER8E_CORE_MASK  (0x7070ull)
- #define POWER8_CORE_MASK   (0x7e7eull)
- 
- /*
-@@ -1823,30 +1812,6 @@ static uint32_t pnv_chip_power8_xscom_pcba(PnvChip *chip, uint64_t addr)
-     return ((addr >> 4) & ~0xfull) | ((addr >> 3) & 0xf);
- }
- 
--static void pnv_chip_power8e_class_init(ObjectClass *klass, const void *data)
--{
--    DeviceClass *dc = DEVICE_CLASS(klass);
--    PnvChipClass *k = PNV_CHIP_CLASS(klass);
--
--    k->chip_cfam_id = 0x221ef04980000000ull;  /* P8 Murano DD2.1 */
--    k->cores_mask = POWER8E_CORE_MASK;
--    k->num_phbs = 3;
--    k->get_pir_tir = pnv_get_pir_tir_p8;
--    k->intc_create = pnv_chip_power8_intc_create;
--    k->intc_reset = pnv_chip_power8_intc_reset;
--    k->intc_destroy = pnv_chip_power8_intc_destroy;
--    k->intc_print_info = pnv_chip_power8_intc_print_info;
--    k->isa_create = pnv_chip_power8_isa_create;
--    k->dt_populate = pnv_chip_power8_dt_populate;
--    k->pic_print_info = pnv_chip_power8_pic_print_info;
--    k->xscom_core_base = pnv_chip_power8_xscom_core_base;
--    k->xscom_pcba = pnv_chip_power8_xscom_pcba;
--    dc->desc = "PowerNV Chip POWER8E";
--
--    device_class_set_parent_realize(dc, pnv_chip_power8_realize,
--                                    &k->parent_realize);
--}
--
- static void pnv_chip_power8_class_init(ObjectClass *klass, const void *data)
- {
-     DeviceClass *dc = DEVICE_CLASS(klass);
-@@ -1871,30 +1836,6 @@ static void pnv_chip_power8_class_init(ObjectClass *klass, const void *data)
-                                     &k->parent_realize);
- }
- 
--static void pnv_chip_power8nvl_class_init(ObjectClass *klass, const void *data)
--{
--    DeviceClass *dc = DEVICE_CLASS(klass);
--    PnvChipClass *k = PNV_CHIP_CLASS(klass);
--
--    k->chip_cfam_id = 0x120d304980000000ull;  /* P8 Naples DD1.0 */
--    k->cores_mask = POWER8_CORE_MASK;
--    k->num_phbs = 4;
--    k->get_pir_tir = pnv_get_pir_tir_p8;
--    k->intc_create = pnv_chip_power8_intc_create;
--    k->intc_reset = pnv_chip_power8_intc_reset;
--    k->intc_destroy = pnv_chip_power8_intc_destroy;
--    k->intc_print_info = pnv_chip_power8_intc_print_info;
--    k->isa_create = pnv_chip_power8nvl_isa_create;
--    k->dt_populate = pnv_chip_power8_dt_populate;
--    k->pic_print_info = pnv_chip_power8_pic_print_info;
--    k->xscom_core_base = pnv_chip_power8_xscom_core_base;
--    k->xscom_pcba = pnv_chip_power8_xscom_pcba;
--    dc->desc = "PowerNV Chip POWER8NVL";
--
--    device_class_set_parent_realize(dc, pnv_chip_power8_realize,
--                                    &k->parent_realize);
--}
--
- static void pnv_chip_power9_instance_init(Object *obj)
- {
-     PnvChip *chip = PNV_CHIP(obj);
-@@ -3781,9 +3722,6 @@ static const TypeInfo types[] = {
-         .instance_size = sizeof(Pnv8Chip),
-     },
-     DEFINE_PNV8_CHIP_TYPE(TYPE_PNV_CHIP_POWER8, pnv_chip_power8_class_init),
--    DEFINE_PNV8_CHIP_TYPE(TYPE_PNV_CHIP_POWER8E, pnv_chip_power8e_class_init),
--    DEFINE_PNV8_CHIP_TYPE(TYPE_PNV_CHIP_POWER8NVL,
--                          pnv_chip_power8nvl_class_init),
- };
- 
- DEFINE_TYPES(types)
-diff --git a/hw/ppc/pnv_core.c b/hw/ppc/pnv_core.c
-index 8939515c2c34..61dc8211e32f 100644
---- a/hw/ppc/pnv_core.c
-+++ b/hw/ppc/pnv_core.c
-@@ -515,9 +515,7 @@ static const TypeInfo pnv_core_infos[] = {
-         .class_init = pnv_core_class_init,
-         .abstract       = true,
-     },
--    DEFINE_PNV_CORE_TYPE(power8, "power8e_v2.1"),
-     DEFINE_PNV_CORE_TYPE(power8, "power8_v2.0"),
--    DEFINE_PNV_CORE_TYPE(power8, "power8nvl_v1.0"),
-     DEFINE_PNV_CORE_TYPE(power9, "power9_v2.2"),
-     DEFINE_PNV_CORE_TYPE(power10, "power10_v2.0"),
-     DEFINE_PNV_CORE_TYPE(power11, "power11_v2.0"),
-diff --git a/include/hw/ppc/pnv.h b/include/hw/ppc/pnv.h
-index f8234fb3cd31..60e902d9c5bb 100644
---- a/include/hw/ppc/pnv.h
-+++ b/include/hw/ppc/pnv.h
-@@ -39,18 +39,10 @@ typedef struct Pnv10Chip Pnv11Chip;
- #define PNV_CHIP_TYPE_SUFFIX "-" TYPE_PNV_CHIP
- #define PNV_CHIP_TYPE_NAME(cpu_model) cpu_model PNV_CHIP_TYPE_SUFFIX
- 
--#define TYPE_PNV_CHIP_POWER8E PNV_CHIP_TYPE_NAME("power8e_v2.1")
--DECLARE_INSTANCE_CHECKER(PnvChip, PNV_CHIP_POWER8E,
--                         TYPE_PNV_CHIP_POWER8E)
--
- #define TYPE_PNV_CHIP_POWER8 PNV_CHIP_TYPE_NAME("power8_v2.0")
- DECLARE_INSTANCE_CHECKER(PnvChip, PNV_CHIP_POWER8,
-                          TYPE_PNV_CHIP_POWER8)
- 
--#define TYPE_PNV_CHIP_POWER8NVL PNV_CHIP_TYPE_NAME("power8nvl_v1.0")
--DECLARE_INSTANCE_CHECKER(PnvChip, PNV_CHIP_POWER8NVL,
--                         TYPE_PNV_CHIP_POWER8NVL)
--
- #define TYPE_PNV_CHIP_POWER9 PNV_CHIP_TYPE_NAME("power9_v2.2")
- DECLARE_INSTANCE_CHECKER(PnvChip, PNV_CHIP_POWER9,
-                          TYPE_PNV_CHIP_POWER9)
-diff --git a/tests/qtest/pnv-xscom.h b/tests/qtest/pnv-xscom.h
-index 8f05f59a1436..f184118ae5a6 100644
---- a/tests/qtest/pnv-xscom.h
-+++ b/tests/qtest/pnv-xscom.h
-@@ -15,9 +15,7 @@
- #define SMT                     4 /* some tests will break if less than 4 */
- 
- typedef enum PnvChipType {
--    PNV_CHIP_POWER8E,     /* AKA Murano (default) */
-     PNV_CHIP_POWER8,      /* AKA Venice */
--    PNV_CHIP_POWER8NVL,   /* AKA Naples */
-     PNV_CHIP_POWER9,      /* AKA Nimbus */
-     PNV_CHIP_POWER10,
-     PNV_CHIP_POWER11,
-@@ -40,13 +38,6 @@ static const PnvChip pnv_chips[] = {
-         .cfam_id    = 0x220ea04980000000ull,
-         .first_core = 0x1,
-         .num_i2c    = 0,
--    }, {
--        .chip_type  = PNV_CHIP_POWER8NVL,
--        .cpu_model  = "POWER8NVL",
--        .xscom_base = 0x0003fc0000000000ull,
--        .cfam_id    = 0x120d304980000000ull,
--        .first_core = 0x1,
--        .num_i2c    = 0,
-     },
-     {
-         .chip_type  = PNV_CHIP_POWER9,
--- 
-2.54.0
+True means "this is the correct instruction", regardless if that instruction is illegal to 
+be executed in the current context.
 
+
+r~
 
