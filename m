@@ -4,60 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0DBFCDB46F
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jun 2026 14:21:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37A24CDB479
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jun 2026 14:21:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wc20O-0001g2-8c; Tue, 23 Jun 2026 10:21:40 -0400
+	id 1wc201-0001KU-JZ; Tue, 23 Jun 2026 10:21:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1wc20H-0001aQ-O5; Tue, 23 Jun 2026 10:21:30 -0400
+ id 1wc1zK-00018x-T9; Tue, 23 Jun 2026 10:20:34 -0400
 Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1wc20F-0006I6-AU; Tue, 23 Jun 2026 10:21:29 -0400
+ id 1wc1zH-00061d-Sn; Tue, 23 Jun 2026 10:20:29 -0400
 Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65NBmPjq2135857; Tue, 23 Jun 2026 14:21:24 GMT
+ 65NBmEEH2135665; Tue, 23 Jun 2026 14:20:24 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=P4uDls
- zY5DX+rc7NlGrEgGeK9D2NIhXkj4pQ7n1DL6U=; b=QEsrgeh5GyA8xoT/PLz4e5
- MFESBIepPvovh82l5SUiwNKh2Bl6Zwuh89iClr8/pxkoggkMlZr2Jlg29HHaNYQd
- vjjR/K35XB8Ldu7nYoQtc+ff5Aa8JW/7jzeNvCCJekTSTAXgCTHnQzHc1z7X8FGE
- tCi9A0g6pVRnlSpylisXeU44PUZD7HgiK7b3U5dXJjH6+qqk8OEr92WjI22Ram1V
- 8M6pgFvap8OiEVY2x0jjy1pkstCHJlCjb4wIWVP7cmwqxkLO9pd1eNE65PUkCcJS
- AGbuGzj2WyT/MsLAz5qpYEPXN2MBIZb2P314iOSVuULJ93thxSSH3+n+AdLNPA+g
- ==
+ :content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=pp1; bh=lnInS4xNwokhispFI
+ Xp70mgLncEQN+v27xf/v2estt0=; b=REeXqw+7G9R6k9I4A+fs+pZBGLMEDpado
+ 6SQ8ZfFrjPiL6wyHpBGG3bBcX5b3tSLNMPz4xUGicYhhCA4Ouln9m0LifXc39RKU
+ oMKuZ1xDz40MevHHf6uHs3m7+3aYdiH8JMIm5yPqDsgAJBxqmjDZWCIWjpoQwVPT
+ lWWzrRTNCFrb07Y0h3nQoNgmGZZLoUyZjjhpHoQ3WmuoRe4XTZUc+K7YJRucBVPU
+ bXZv04oODnQQhWpPP2B2W24IZbGMktchCQSjJZYSv/UtK/hmR9m5hnlQF724o1FY
+ i5GIlv3YF6p/LO4WZWV/oOr4AD4vBkbh4ARpCDjymU4bVmQNvwsYg==
 Received: from ppma11.dal12v.mail.ibm.com
  (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4ewjhqpxka-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4ewjhqpxbd-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 23 Jun 2026 14:21:24 +0000 (GMT)
+ Tue, 23 Jun 2026 14:20:24 +0000 (GMT)
 Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 65NEJbT4005012;
- Tue, 23 Jun 2026 14:21:23 GMT
-Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4ex7vykbjp-1
+ by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 65NEJc29005016;
+ Tue, 23 Jun 2026 14:20:23 GMT
+Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4ex7vykbcx-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 23 Jun 2026 14:21:23 +0000 (GMT)
+ Tue, 23 Jun 2026 14:20:22 +0000 (GMT)
 Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com
  [10.20.54.104])
- by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 65NELJYK53543168
+ by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 65NEKJQ430343926
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 23 Jun 2026 14:21:19 GMT
+ Tue, 23 Jun 2026 14:20:19 GMT
 Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 73AA42004D;
- Tue, 23 Jun 2026 14:21:19 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 39C8C2004B;
+ Tue, 23 Jun 2026 14:20:19 +0000 (GMT)
 Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id B185D2004B;
- Tue, 23 Jun 2026 14:21:10 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id EF0FF20043;
+ Tue, 23 Jun 2026 14:20:09 +0000 (GMT)
 Received: from li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com (unknown
  [9.39.19.165]) by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 23 Jun 2026 14:21:10 +0000 (GMT)
+ Tue, 23 Jun 2026 14:20:09 +0000 (GMT)
 From: Aditya Gupta <adityag@linux.ibm.com>
 To: <qemu-devel@nongnu.org>, <qemu-ppc@nongnu.org>,
  Harsh Prateek Bora <harshpb@linux.ibm.com>,
@@ -74,35 +73,34 @@ Cc: Sourabh Jain <sourabhjain@linux.ibm.com>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  kvm@vger.kernel.org, Gautam Menghani <gautam@linux.ibm.com>,
  Chinmay Rath <rathc@linux.ibm.com>
-Subject: [PATCH 7/8] ppc/pnv: Remove Power8E and Power8NVL CPUs
-Date: Tue, 23 Jun 2026 19:49:32 +0530
-Message-ID: <20260623141933.577981-8-adityag@linux.ibm.com>
+Subject: [PATCH 1/8] tests/functional: Add remote interrupts test for PowerNV
+Date: Tue, 23 Jun 2026 19:49:26 +0530
+Message-ID: <20260623141933.577981-2-adityag@linux.ibm.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260623141933.577981-1-adityag@linux.ibm.com>
 References: <20260623141933.577981-1-adityag@linux.ibm.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
 X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Authority-Analysis: v=2.4 cv=I4VVgtgg c=1 sm=1 tr=0 ts=6a3a9664 cx=c_pps
+X-Authority-Analysis: v=2.4 cv=I4VVgtgg c=1 sm=1 tr=0 ts=6a3a9628 cx=c_pps
  a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
- a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=EUspDBNiAAAA:8
- a=VnNF1IyMAAAA:8 a=9o66lyqVio6zCVhO5FUA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjIzMDExNyBTYWx0ZWRfX3DdXbRN6e0DR
- 9OjkHDilz4qPVGcpkRhQLGwNwDpDMDSFt2mIUC3VOaNC8Xqzj71grN2ws/fxump77/eDHB8FlB3
- o9Hr3xpUpx9I0UyIPRNBbBK3Piq8Hh6130ncL6qMtclzqUxHy8RKGLRN1T3ZGSP85DWvwEoYdz+
- tHZdiByzykx5KVZfl4nfYdeaU8+ebBRxdMAzqfWmTUbEw+nq4yVZL6sCZlTPu01OH5/R7QtSOAC
- p71MaPMDOeamCUqBVZ61dpUS9Wnlm19oDwue2dCPIDyjA2374sFsScbdpBHBP83+/zz8Wx32rG2
- vBTeOxyIdkvw78AVJDZzGezbYsbSi0wjomKQSI9AQLT38XJrumTjZJ66wNvpKYfKuhvU2WNnvAG
- 0l5wvRji022ONwM/FPvSgNE44XYu+NG+YJ1GU80HDBR6bSk+xffmjiBTG9G/to3sktY6oyE0zNY
- kfiYPBYMfPqT/hiMM5A==
-X-Proofpoint-GUID: hFOx6T0ZNEEx92IFXN5Z92Xa6yT5u6Hf
-X-Proofpoint-ORIG-GUID: -zUnO8SWr6Kmkh_GKb7MrKDsHLUvpT8M
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjIzMDExNyBTYWx0ZWRfX57CGyZRuf5eR
- 8vbIg9w/he0a0EwmErGsIXlEKLK4ZJak9kLqoD5I27iD6t9BEwhTcvdYfY7bgPLy83Hi4C/YELD
- R0ldph4/7a8ZUwvdCGbieB5hvX11x7A=
+ a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
+ a=uAbxVGIbfxUO_5tXvNgY:22 a=VwQbUJbxAAAA:8 a=20KFwNOVAAAA:8 a=VnNF1IyMAAAA:8
+ a=7FOmGxExo5DkOBRayjgA:9
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjIzMDExNyBTYWx0ZWRfX8w4HVLcdUZAz
+ RlJKZTEmOfQzVSAcqc6Q81IUTt4gVsf8jP1qs1tjs+O+VZAJNmv0VxHP07DizR76S/o56uqTgpP
+ pNbGwBMv1+v/IFr54Cy8a3dQjEvAZ11vRH7GWUs098PyGjGyAnOzK7ZVw30GESmDocRWymrEzwj
+ WuyEGtqJsZyndKxsLHQe3Iz/MOxXz645iEuDqVYzYAmYFt155snjQ2koO1jyHnEFkkgRy7W2NoV
+ EGjajQyLxETSGvKXVF7jo9J8116PYcnKK2XxzVU5kZShxR2Q6gk4uY9kDAdmHqNV2J5xrq6U7wX
+ SAdH+V+IoDu7D9dphW8MDkTvq1yThkcSIVL5DAMkbbwHFv23bolPSZiyaQCh8HSCRzVXeuatAvz
+ fGQSGh7Sja10qWt1BEqewFuLiqa/ZRIuP+S0HPxF7EaDFo1wWRtqCAaAz2+9+Se7fLMWV4V0HQ3
+ FHKVF0iDNxju06vC8PQ==
+X-Proofpoint-GUID: caHrLgjB1fv9nDODXFXsJ-7-Y4Ork7fv
+X-Proofpoint-ORIG-GUID: UzFqbExD0EsGg-0Aut3-VXrHCKdADFpK
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjIzMDExNyBTYWx0ZWRfX1eF9hHhuUznO
+ 21hFAka/bIpqM4q0FTgH3Kbcn9+6OZkj/q0MzeMjc/8jhk1Q0HSZYIUtxlUCXAKs0DRzOtL0/Bk
+ n2uV/y5oRUP1NkAIuNTpTinOXcslZx8=
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-06-23_03,2026-06-23_01,2025-10-01_01
@@ -114,13 +112,13 @@ X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
  definitions=main-2606230117
 Received-SPF: pass client-ip=148.163.156.1; envelope-from=adityag@linux.ibm.com;
  helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
  RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, TVD_SUBJ_WIPE_DEBT=1.004 autolearn=no autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -136,168 +134,141 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Power8E and Power8NVL were deprecated since QEMU 10.1, with
-commit 264a604e7163 ("target/ppc: Deprecate Power8E and Power8NVL")
+In the past there have been hard to recreate issues where XIVE changes
+cause qemu crashes due to multi-socket interrupts such as in [1].
 
-Remove the corresponding 8E and 8NVL CPU cores from spapr/pseries
+Add a functional test explicitly to test whether remote interrupts work.
 
-Also, with no use of 8E and 8NVL, in powernv chips or spapr cores,
-remove the CPU definitions for the cores
+The test can also work as additional boot test for multi-socket boot,
+initrd boot test, as well as a check for e1000e to be working in powernv,
+though that's not a target goal, and are additional benefits.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+From docs/system/devices/net.rst:
+
+  In order to check that the user mode network is working, you can ping
+  the address 10.0.2.2 and verify that you got an address in the range
+  10.0.2.x from the QEMU virtual DHCP server.
+
+Hence use 10.0.2.2 with ping.
+
+[1]: https://lore.kernel.org/qemu-devel/baf6c854-832b-4a2e-922f-d34e6dadf821@redhat.com/
+
 Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
 ---
- docs/about/deprecated.rst       | 9 ---------
- docs/about/removed-features.rst | 8 ++++++++
- docs/system/ppc/pseries.rst     | 2 +-
- hw/ppc/spapr_cpu_core.c         | 2 --
- target/ppc/cpu-models.c         | 6 ------
- target/ppc/cpu-models.h         | 4 ----
- target/ppc/cpu_init.c           | 6 ------
- target/ppc/kvm.c                | 4 +---
- 8 files changed, 10 insertions(+), 31 deletions(-)
+ tests/functional/ppc64/test_powernv.py | 86 ++++++++++++++++++++++++++
+ 1 file changed, 86 insertions(+)
 
-diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
-index 97750f5edc91..3930ef08ed4b 100644
---- a/docs/about/deprecated.rst
-+++ b/docs/about/deprecated.rst
-@@ -215,15 +215,6 @@ embedded 405 for power management (OCC) and other internal tasks, it
- is theoretically possible to use QEMU to model them. Let's keep the
- CPU implementation for a while before removing all support.
+diff --git a/tests/functional/ppc64/test_powernv.py b/tests/functional/ppc64/test_powernv.py
+index 0ea6c93e4287..17d2447815f9 100755
+--- a/tests/functional/ppc64/test_powernv.py
++++ b/tests/functional/ppc64/test_powernv.py
+@@ -9,6 +9,7 @@
  
--Power8E and Power8NVL CPUs and corresponding Pnv chips (since 10.1)
--'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
--
--The Power8E and Power8NVL variants of Power8 are not really useful anymore
--in qemu, and are old and unmaintained now.
--
--The CPUs as well as corresponding Power8NVL and Power8E PnvChips will also
--be considered deprecated.
--
- System emulator machines
- ------------------------
+ from qemu_test import LinuxKernelTest, Asset
+ from qemu_test import wait_for_console_pattern
++from qemu_test import exec_command_and_wait_for_pattern
  
-diff --git a/docs/about/removed-features.rst b/docs/about/removed-features.rst
-index d1bea4d75bb4..f7a2aa326dec 100644
---- a/docs/about/removed-features.rst
-+++ b/docs/about/removed-features.rst
-@@ -1038,6 +1038,14 @@ initial RISC-V QEMU port. Its usage was always been unclear: users don't know
- what to expect from a CPU called 'any', and in fact the CPU does not do anything
- special that isn't already done by the default CPUs rv32/rv64.
+ class PowernvMachine(LinuxKernelTest):
  
-+Power8E and Power8NVL CPUs (removed in 11.1)
-+''''''''''''''''''''''''''''''''''''''''''''
+@@ -27,6 +28,9 @@ class PowernvMachine(LinuxKernelTest):
+          'buildroot/qemu_ppc64le_powernv8-2025.02/rootfs.ext2'),
+         'aee2192b692077c4bde31cb56ce474424b358f17cec323d5c94af3970c9aada2')
+ 
++    def helper_exec_shell_command(self, command):
++        exec_command_and_wait_for_pattern(self, command, '#', self.panic_message)
 +
-+The Power8E and Power8NVL variants of Power8 are not really useful anymore
-+in qemu, and are old and unmaintained.
-+Hence, the CPUs as well as corresponding Power8NVL and Power8E PnvChips have
-+been removed
+     def do_test_linux_boot(self, command_line = KERNEL_COMMON_COMMAND_LINE):
+         self.require_accelerator("tcg")
+         kernel_path = self.ASSET_KERNEL.fetch()
+@@ -71,6 +75,88 @@ def test_linux_smt_boot(self):
+         wait_for_console_pattern(self, console_pattern, self.panic_message)
+         wait_for_console_pattern(self, self.good_message, self.panic_message)
+ 
++    def test_linux_remote_interrupts(self):
++        self.require_accelerator("tcg")
++        self.set_machine('powernv')
 +
- System accelerators
- -------------------
- 
-diff --git a/docs/system/ppc/pseries.rst b/docs/system/ppc/pseries.rst
-index bbc51aa7fcdb..1477028bc5ea 100644
---- a/docs/system/ppc/pseries.rst
-+++ b/docs/system/ppc/pseries.rst
-@@ -16,7 +16,7 @@ Supported devices
- 
-  * Multi processor support for many Power processors generations:
-    - POWER7, POWER7+
--   - POWER8, POWER8NVL
-+   - POWER8
-    - POWER9
-    - Power10
-    - Power11
-diff --git a/hw/ppc/spapr_cpu_core.c b/hw/ppc/spapr_cpu_core.c
-index 41e37103c043..9a9351991c95 100644
---- a/hw/ppc/spapr_cpu_core.c
-+++ b/hw/ppc/spapr_cpu_core.c
-@@ -408,8 +408,6 @@ static const TypeInfo spapr_cpu_core_type_infos[] = {
-     DEFINE_SPAPR_CPU_CORE_TYPE("power7_v2.3"),
-     DEFINE_SPAPR_CPU_CORE_TYPE("power7p_v2.1"),
-     DEFINE_SPAPR_CPU_CORE_TYPE("power8_v2.0"),
--    DEFINE_SPAPR_CPU_CORE_TYPE("power8e_v2.1"),
--    DEFINE_SPAPR_CPU_CORE_TYPE("power8nvl_v1.0"),
-     DEFINE_SPAPR_CPU_CORE_TYPE("power9_v2.0"),
-     DEFINE_SPAPR_CPU_CORE_TYPE("power9_v2.2"),
-     DEFINE_SPAPR_CPU_CORE_TYPE("power10_v2.0"),
-diff --git a/target/ppc/cpu-models.c b/target/ppc/cpu-models.c
-index 26b6debcfc96..aa13654e83e8 100644
---- a/target/ppc/cpu-models.c
-+++ b/target/ppc/cpu-models.c
-@@ -734,12 +734,8 @@
-                 "POWER7 v2.3")
-     POWERPC_DEF("power7p_v2.1",  CPU_POWERPC_POWER7P_v21,            POWER7,
-                 "POWER7+ v2.1")
--    POWERPC_DEPRECATED_CPU("power8e_v2.1",  CPU_POWERPC_POWER8E_v21, POWER8,
--                "POWER8E v2.1", "CPU is unmaintained.")
-     POWERPC_DEF("power8_v2.0",   CPU_POWERPC_POWER8_v20,             POWER8,
-                 "POWER8 v2.0")
--    POWERPC_DEPRECATED_CPU("power8nvl_v1.0", CPU_POWERPC_POWER8NVL_v10, POWER8,
--                "POWER8NVL v1.0", "CPU is unmaintained.")
-     POWERPC_DEF("power9_v2.0",   CPU_POWERPC_POWER9_DD20,            POWER9,
-                 "POWER9 v2.0")
-     POWERPC_DEF("power9_v2.2",   CPU_POWERPC_POWER9_DD22,            POWER9,
-@@ -918,9 +914,7 @@ PowerPCCPUAlias ppc_cpu_aliases[] = {
-     { "power7", "power7_v2.3" },
-     { "power7+", "power7p_v2.1" },
-     { "power7+_v2.1", "power7p_v2.1" },
--    { "power8e", "power8e_v2.1" },
-     { "power8", "power8_v2.0" },
--    { "power8nvl", "power8nvl_v1.0" },
-     { "power9", "power9_v2.2" },
-     { "power10", "power10_v2.0" },
-     { "power11", "power11_v2.0" },
-diff --git a/target/ppc/cpu-models.h b/target/ppc/cpu-models.h
-index a439eb37ee41..ef019cdb1f3c 100644
---- a/target/ppc/cpu-models.h
-+++ b/target/ppc/cpu-models.h
-@@ -341,12 +341,8 @@ enum {
-     CPU_POWERPC_POWER7_v23         = 0x003F0203,
-     CPU_POWERPC_POWER7P_BASE       = 0x004A0000,
-     CPU_POWERPC_POWER7P_v21        = 0x004A0201,
--    CPU_POWERPC_POWER8E_BASE       = 0x004B0000,
--    CPU_POWERPC_POWER8E_v21        = 0x004B0201,
-     CPU_POWERPC_POWER8_BASE        = 0x004D0000,
-     CPU_POWERPC_POWER8_v20         = 0x004D0200,
--    CPU_POWERPC_POWER8NVL_BASE     = 0x004C0000,
--    CPU_POWERPC_POWER8NVL_v10      = 0x004C0100,
-     CPU_POWERPC_POWER9_BASE        = 0x004E0000,
-     CPU_POWERPC_POWER9_DD1         = 0x004E1100,
-     CPU_POWERPC_POWER9_DD20        = 0x004E1200,
-diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
-index a02187ce5afb..96daa7e2ab0b 100644
---- a/target/ppc/cpu_init.c
-+++ b/target/ppc/cpu_init.c
-@@ -6311,12 +6311,6 @@ static bool ppc_pvr_match_power8(PowerPCCPUClass *pcc, uint32_t pvr, bool best)
-         if (base == CPU_POWERPC_POWER8_BASE) {
-             return true;
-         }
--        if (base == CPU_POWERPC_POWER8E_BASE) {
--            return true;
--        }
--        if (base == CPU_POWERPC_POWER8NVL_BASE) {
--            return true;
--        }
-     }
-     if (base != pcc_base) {
-         return false;
-diff --git a/target/ppc/kvm.c b/target/ppc/kvm.c
-index b94c2997a07f..78a1c4a8393e 100644
---- a/target/ppc/kvm.c
-+++ b/target/ppc/kvm.c
-@@ -2437,9 +2437,7 @@ static bool kvmppc_power8_host(void)
- #ifdef TARGET_PPC64
-     {
-         uint32_t base_pvr = CPU_POWERPC_POWER_SERVER_MASK & mfpvr();
--        ret = (base_pvr == CPU_POWERPC_POWER8E_BASE) ||
--              (base_pvr == CPU_POWERPC_POWER8NVL_BASE) ||
--              (base_pvr == CPU_POWERPC_POWER8_BASE);
-+        ret = (base_pvr == CPU_POWERPC_POWER8_BASE);
-     }
- #endif /* TARGET_PPC64 */
-     return ret;
++        # have more sockets with as few CPUs as possible, increasing the
++        # probability to have remote interrupts from one chip to another
++        # also have e1000e network device to generate interrupts
++        self.vm.add_args('-smp', '4,sockets=4,threads=1')
++        self.vm.add_args('-device', 'e1000e,netdev=net0')
++        self.vm.add_args('-netdev', 'user,id=net0')
++
++        kernel_path = self.ASSET_KERNEL.fetch()
++        rootfs_path = self.ASSET_INITRD.fetch()
++        self.vm.set_console()
++        self.vm.add_args('-kernel', kernel_path,
++            '-drive',
++            f'file={rootfs_path},format=raw,if=none,id=drive0,readonly=on',
++            '-append', 'root=/dev/nvme0n1 console=hvc0',
++            '-device', 'nvme,drive=drive0,bus=pcie.2,addr=0x0,serial=1234')
++        self.vm.launch()
++
++        # Wait for boot to complete
++        console_pattern = 'CPU maps initialized for 1 thread per core'
++        wait_for_console_pattern(self, console_pattern, self.panic_message)
++        console_pattern = 'smp: Brought up 4 nodes, 4 CPUs'
++        wait_for_console_pattern(self, console_pattern, self.panic_message)
++        wait_for_console_pattern(self, 'Run /sbin/init as init process',
++                                 self.panic_message)
++
++        # Wait for login prompt and login as root (no password in buildroot)
++        wait_for_console_pattern(self, 'login:', self.panic_message)
++        exec_command_and_wait_for_pattern(self, 'root', '#', self.panic_message)
++
++        # RX, TX interrupts to chip/cpu 1 & 2 respectively
++        self.helper_exec_shell_command(
++            "export RX_IRQ=$(awk '/eth0-rx/ {print $1}' /proc/interrupts | tr -d ':')")
++        self.helper_exec_shell_command(
++            "export TX_IRQ=$(awk '/eth0-tx/ {print $1}' /proc/interrupts | tr -d ':')")
++        self.helper_exec_shell_command("echo 1 > /proc/irq/$RX_IRQ/smp_affinity_list")
++        self.helper_exec_shell_command("echo 2 > /proc/irq/$TX_IRQ/smp_affinity_list")
++
++        # Capture interrupt counts before generating traffic
++        self.helper_exec_shell_command(
++            "export RX_BEFORE=$(awk '/eth0-rx/ {print $3}' /proc/interrupts)")
++        self.helper_exec_shell_command(
++            "export TX_BEFORE=$(awk '/eth0-tx/ {print $4}' /proc/interrupts)")
++
++        # Wait up to 15 seconds for eth0 link to come up
++        self.helper_exec_shell_command(
++            "c=0; while ! ip addr show eth0 | grep 'inet 10.0.2'; do "
++            "sleep 1; c=$((c+1)); [ $c -gt 15 ] && break; done")
++
++        fail_msg="Fail"
++        self.helper_exec_shell_command(f"export FAIL={fail_msg}")
++        exec_command_and_wait_for_pattern(self,
++            "ip addr show eth0 | grep 'inet 10.0.2' || echo $FAIL",
++            '#', fail_msg)
++
++        # Generate network traffic to trigger remote interrupts
++        # Ping QEMU's user-mode network gateway (10.0.2.2)
++        self.helper_exec_shell_command("ping -W2 -c5 10.0.2.2")
++
++        # Show final interrupt counts to verify remote interrupts occurred
++        self.helper_exec_shell_command("cat /proc/interrupts | grep eth0")
++
++        # Verify interrupt counts increased (whether interrupts were delivered)
++        self.helper_exec_shell_command(
++            "export RX_AFTER=$(awk '/eth0-rx/ {print $3}' /proc/interrupts)")
++        self.helper_exec_shell_command(
++            "export TX_AFTER=$(awk '/eth0-tx/ {print $4}' /proc/interrupts)")
++
++        # Check that interrupt counts increased
++        success_msg = "Interrupts increased"
++        self.helper_exec_shell_command(f"export PASS='{success_msg}'")
++
++        exec_command_and_wait_for_pattern(self,
++            "[ $RX_AFTER -gt $RX_BEFORE ] && echo $PASS || echo $FAIL",
++            success_msg, fail_msg)
++        exec_command_and_wait_for_pattern(self,
++            "[ $TX_AFTER -gt $TX_BEFORE ] && echo $PASS || echo $FAIL",
++            success_msg, fail_msg)
++
+     def test_linux_big_boot(self):
+         self.set_machine('powernv')
+         self.vm.add_args('-smp', '16,threads=4,cores=2,sockets=2')
 -- 
 2.54.0
 
