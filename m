@@ -4,123 +4,134 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51D88CD98F2
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jun 2026 11:03:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E2FCCD98F2
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jun 2026 11:03:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wbytm-0006h2-4f; Tue, 23 Jun 2026 07:02:36 -0400
+	id 1wbyu0-0006mm-Tz; Tue, 23 Jun 2026 07:02:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wbyta-0006de-QQ
- for qemu-devel@nongnu.org; Tue, 23 Jun 2026 07:02:25 -0400
+ id 1wbyth-0006eP-KW
+ for qemu-devel@nongnu.org; Tue, 23 Jun 2026 07:02:30 -0400
 Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wbytW-00066G-HW
- for qemu-devel@nongnu.org; Tue, 23 Jun 2026 07:02:21 -0400
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+ id 1wbyte-00067E-Lx
+ for qemu-devel@nongnu.org; Tue, 23 Jun 2026 07:02:29 -0400
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65NAsgw83582623
- for <qemu-devel@nongnu.org>; Tue, 23 Jun 2026 11:02:16 GMT
+ 65NAsDJ73578601
+ for <qemu-devel@nongnu.org>; Tue, 23 Jun 2026 11:02:25 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:message-id
- :mime-version:subject:to; s=qcppdkim1; bh=VTGkAAqPBzGluCPiab/B5v
- MxXekWkb9qKi/y3skYJ+E=; b=hfD5MwmRrq5FuO7EEDoa+gFf4MHU5e6FHygclk
- rIf4TqPN/taFTpGXW8H8i1/MQABYFm7A8XceCRuuVEACMFvxqhozyJDXAXOfBF0V
- prhxV948cmfRoGqfUas613wUDeQDaLjlsHELr6tmjrD0V8NegovO7EVZyvG6Iokq
- VAloAK29uPN3GKxc78LhE0y+E5Gk2wOwyat7Ob3AEXO80hK6tDb87TA+SiuWdHKG
- xyaPvA27IRFAOn825xuFZK4HKScKgvB9wiOqR8agy8kfmQyjpxvE3z/8ZW2XcyJf
- nghbi/vsKu/tvIBvyuusmVSeyqkzIWoYWAGX+xhDkEBkH0aQ==
-Received: from mail-ot1-f72.google.com (mail-ot1-f72.google.com
- [209.85.210.72])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ey729v3fn-1
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ e7ujTj25beCliYcHaN6vgRmeikjh8fOvjTThSDgD3Oo=; b=T6XdZVd3Cle+j51j
+ fEehUceP4dVQ+gWSB/2E5H9I5r0VOWG7Qs1Faa5SZP5Ski0vcY7UekiIbtyjyMPZ
+ 6xYixoI999MRwv2Opldx2AaYtAlwQhNjC3s4clQvwFsAtJdd05pDG1mVlg+kmOD3
+ 9MZL8eqTd5ecc1iVoiChSARgPLsMb3VqBRo/nPQWmQbZ294BOxzEBNUO6FjP7jak
+ yuAn1CwZWRe6AG6bZbiB1cPBpTdNs7KmqCMVhRCIat2oaGeu7IxsfvR9bIDidpP6
+ L+1R+tqRJ8XGgVvzkkWtIIcVpCfzuDuNuL9iUAazxRdZARbHsrTiH+0jFBKqbhC0
+ fYCVjg==
+Received: from mail-oi1-f197.google.com (mail-oi1-f197.google.com
+ [209.85.167.197])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4eyppygn4t-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 23 Jun 2026 11:02:16 +0000 (GMT)
-Received: by mail-ot1-f72.google.com with SMTP id
- 46e09a7af769-7e6ec7ce0b2so4243114a34.1
- for <qemu-devel@nongnu.org>; Tue, 23 Jun 2026 04:02:16 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Tue, 23 Jun 2026 11:02:25 +0000 (GMT)
+Received: by mail-oi1-f197.google.com with SMTP id
+ 5614622812f47-48e2ce64834so1787705b6e.3
+ for <qemu-devel@nongnu.org>; Tue, 23 Jun 2026 04:02:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1782212535; x=1782817335; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=VTGkAAqPBzGluCPiab/B5vMxXekWkb9qKi/y3skYJ+E=;
- b=BUxpwoQnUJUzLke1Ob//3VlVC/MqVU/LJ5W2TCZRNzgFMR3YlGmznt1Kj04m8qysG7
- U2nDaszmgHJcUb2T/173CHK6JRduHsAZ795yoYiCQ2Hi1Emyn6SlcX3TE/dF7mrb5Oir
- zfvAGxR0GSYaF19oJQI16y4VEF1+VIO34DA7IJ0cdDH/8CJJGX5wEXASuA0AerYBig7S
- gOAFe8LFeOsL6OH5whDapC6ZCm+PiCOYCg2E7P04OA8dDPTqePmYnTuudZ1hxJ1jJmSq
- xcbsXvBJOaVWQPbBzSILWXsoXMaGvbsjYA2omojb3PbzR3qOkrBjpsJIbFV1I6tkHf5y
- RaGQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782212535; x=1782817335;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=oss.qualcomm.com; s=google; t=1782212544; x=1782817344; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=VTGkAAqPBzGluCPiab/B5vMxXekWkb9qKi/y3skYJ+E=;
- b=JVixPCys5EGY7ZSrdEh6X3v+jBE8emLaeESIsf5jGjH8qk+PRGH0RPkWKre3LIjJoG
- 0c2gqJzeW5N8OutSO0Lnp+/H6PF634Do6Qlu5oy4TyZkybZ1b4ycQ0YmBytH8XsQTiQw
- WQNVgkszxRxm8XUks/0/88jx+7k93YXIZgo/o0JejWDUXsoaclf5SxYYM9oYDzl84BWV
- 8lEEp3F3wD3yH+P3TuwYHrzrfPRIzSMOZLC5sQxb1wBtDFnFusasNnQhgJQe5GUzp3y/
- 4IVUAbcIejvxLcpgf8ZSVGXisZVJ3wzloi8CiNut/YGHOket18uIkgDuGFgCs8shxnT4
- yGhg==
-X-Gm-Message-State: AOJu0Yzn59PaIU32hrbFyu4NoZVPcZSfxfwikmQKhuwvmJKHlOnJeRYS
- lM3L2VFBLw6R4Efz/k4zN+5cK3VoP8oFZ5F+dkRap0kR+orDiti6EJVmLO68S8F2k9Wo6lSV0Bg
- yPK57NkD5urF7ii8zlUJoSwMHhX3Rwss209xPCoRAjKGbstNHbThfUGunE/RczYg1HZ8+
-X-Gm-Gg: AfdE7cknZCosbbQWk24g75evGYnQqi26ogO95yjFJ3FsqMgjJ/Gu+qt71wYgHtyMb5S
- P5yTGk23mhIDTokzWek2GucwnxhIrB5lo3eJ2TO1E6CPJRwmUUgDH4V4aEDIMm1as11k2bbZHGb
- TQjb5eUolIO3IwGdLnNs84dSpUa8PLSJvyeU7vg9XnsDsyL7ji3k7tmjAzGkHFf4r3L8mxhU7D8
- NLkzeSDB+p3f79SF8mPXnXvtNqk6wg5HWaWR8wQ4WDCOaxO8qM2KRtiTqcO6oLcHDae8mC3IY5F
- AScNpw4Q3B/l4Y0i046ZSPNHNl/vwugMyaTNJs6pYemt+xwZtJ4zmy8iBbLZvObRbd+8UKYz7vR
- LzHtDnvIw6CfaL5AClfg+WlI+LGLBkd/tUg2QNQ==
-X-Received: by 2002:a05:6830:6d05:b0:7dc:d587:af3 with SMTP id
- 46e09a7af769-7e97998fc31mr1514668a34.23.1782212535481; 
- Tue, 23 Jun 2026 04:02:15 -0700 (PDT)
-X-Received: by 2002:a05:6830:6d05:b0:7dc:d587:af3 with SMTP id
- 46e09a7af769-7e97998fc31mr1514610a34.23.1782212535002; 
- Tue, 23 Jun 2026 04:02:15 -0700 (PDT)
-Received: from localhost.localdomain ([88.187.86.199])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-466648c5ddbsm36315212f8f.12.2026.06.23.04.02.12
+ bh=e7ujTj25beCliYcHaN6vgRmeikjh8fOvjTThSDgD3Oo=;
+ b=ZtG5Mfn05GDMiv9NgXoq1g+UuscKp6TXnQMpak8NY4ui60578tPp+KoD8fcQsxu9Q0
+ qx+gmEj6xu/bGwN89+3BZ2sPRbZ02OPScQOlc2rSMc7HjJiHgLiwH0LLxvMGjejU9Msi
+ ckbBbva9yKvfa70Zx9D2bke7MbSJSkEBaYiGcFaj7hmu8gLDbKK1Ki9HpDZPgHFIpTM8
+ l41IOWuPPXeOWZbh5yV0y0sigHrZMOhjeToD020i64m2yGkPTpSgNpFlL/4F9mcusPW1
+ rjsT81Cil9iHXKvhrQwnsXwZO16SgATy0qXUcmrYGSwrWh+4lCA10FbOKZxc2md5eZdY
+ 9C+w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1782212544; x=1782817344;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=e7ujTj25beCliYcHaN6vgRmeikjh8fOvjTThSDgD3Oo=;
+ b=LJGkhFErBa4IXopyA0O7M0HSH9MAXcys7nxAHDxJTmcwFzIbcvSxY6spU+RnePtQaI
+ D+UO/arNdGnwN6bDToqeYp8YQE95eVAMF1hrcztEczEZdhDzvOca6Zp8PgDOkUaeCtNV
+ QJ7mEOGmPpzOUFlAdPpzo0YMdqK1PNPbJHjGX9avYbnHfMjt5/1Wk/BNL12LS9rJ6neX
+ I19DgpKVsAm+Xw+5C+WT14+Ngurl9xFC3WO4ICP9eb12Iu7J7kZiRybFXIUi3j1HuQ1W
+ y4/C7vbyInWzHKuypYEirgvb/cn6PyxnDE5vilNHVxIO0dzWWMwxn4lochwG96CLND6F
+ Jxmg==
+X-Gm-Message-State: AOJu0YzK+F3gsf5spuS964SgpnEYzF6yFSDgtj99bv4FRkJbRaTQ1FLu
+ 1bhz2Y3xv8/zQTx2nNRMbrnJeYs6hgUnV0V6g1HVR3LOnZgvHuneeaMDI3jh0j95ShDqyuLGVfQ
+ GJa9vuGdegIxTAv/ask8rtKsxDgolLsKsQUPeMZ2D66lgqXKZOpmMDvROMaZ+jQRvnXQ8
+X-Gm-Gg: AfdE7ck2dU/rbZiYMIeHSe7TU91yFtEZkYCZ2bcecPCRZmz6ngJ8qy4TbIiEgxMyu32
+ NwuD2VWBisn/g30F0V8VVk17O5NKbOC8Y2DLrLeqvFiLAGJxTmSzSMiBZvC1ct31PQ2Ljq62Qrz
+ vGNYiXtHYiYMoSig3JidKc7yxfG5WPU2dbK4orD3SimmoI5wWTpZul3OkWxUwulrG2bQduGJxEl
+ kn0j7iBWQaCj018teDoXAA86nsAJdTCUhh7n1t5ZP09dZHB66jcjgiPsxwJi9WViWGeuB2uSEPH
+ z3iVtQ2pmXgVTiHPB1r4JPlhWNVduxBUFMu7BMbQaSmv85F12oW+WUVbRfIuAFgDbbE59spnu6q
+ azkvvNYdEI+1uv6R53yc/9Pigy3zkwWv1o5WT5IbXm30vjEwRAl3Nl70N0sEP1rAaVd7g
+X-Received: by 2002:a05:6808:4f25:b0:489:6c24:9d26 with SMTP id
+ 5614622812f47-48f6210a3b3mr1058403b6e.27.1782212543983; 
+ Tue, 23 Jun 2026 04:02:23 -0700 (PDT)
+X-Received: by 2002:a05:6808:4f25:b0:489:6c24:9d26 with SMTP id
+ 5614622812f47-48f6210a3b3mr1058344b6e.27.1782212543522; 
+ Tue, 23 Jun 2026 04:02:23 -0700 (PDT)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4923fd1f886sm344100705e9.4.2026.06.23.04.02.21
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 23 Jun 2026 04:02:13 -0700 (PDT)
+ Tue, 23 Jun 2026 04:02:22 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, qemu-riscv@nongnu.org, qemu-ppc@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-Subject: [RFC PATCH v2 0/4] target/tcg: Rename some helpers common to various
- targets
-Date: Tue, 23 Jun 2026 13:02:04 +0200
-Message-ID: <20260623110209.26861-1-philmd@oss.qualcomm.com>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Brian Cain <brian.cain@oss.qualcomm.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Song Gao <gaosong@loongson.cn>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
+ Aurelien Jarno <aurelien@aurel32.net>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Aleksandar Rikalo <arikalo@gmail.com>
+Subject: [RFC PATCH v2 1/4] target/tcg: Rename bitswap() helpers
+Date: Tue, 23 Jun 2026 13:02:05 +0200
+Message-ID: <20260623110209.26861-2-philmd@oss.qualcomm.com>
 X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260623110209.26861-1-philmd@oss.qualcomm.com>
+References: <20260623110209.26861-1-philmd@oss.qualcomm.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjIzMDA4OSBTYWx0ZWRfXwzUkibiui5TD
- Z8SMWe+RmveeRVzfeUlYWvj0VRnNHDwfJX8SpGVD4QaE3rTmHuKyrowHptuCJnLROY3EJmFik1O
- 7E9cgXbaXJ2DxRucWBJMz39ZSlMbLxM=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjIzMDA4OSBTYWx0ZWRfX9FeGBJqtBFfP
- eWic9xOcs05cfH2E/t+v52i9MFu8E4ecsj4I8GstCGMvOoRn4r2xaA/rfsXvyg4oCooXJOifUvY
- RQ5dfuqxAtkt5fMFsRaJI1/ZK5ufv0keCseSpe6+M9djeADx51y0D3hgoDhLGtvUSVZUwOGVKr1
- L+kRWXtyzMs6AE4eJZNFBeuZ5FfRluqka5tshUgbr2Jr++2UmOznoJwIX5lbAGdH+YqCVdopGpI
- XLDBLfa9u+5X1tj5/U/g2mThjbCyTGP4lIImllW3iyy4mNmjVJbRngWq0/tFzF2W/zn7+XYa4g0
- acH3oadxJySUTtN27DReoKUa8MYWc3QiDHB7svrz2LoqI4UO8UIAgybukvdIPTUnb+oKFbg/tPE
- n0tIdCymx8byteh/Pcsszq96DmZRYCR3M66mhkRHyBbWFycJTy3/jZ0nM5aetFJtdMZXxfR+l6Q
- HS4a2XfrJMdw68Be80Q==
-X-Proofpoint-ORIG-GUID: A_VOw_nD2HdUBjyb5wD9AcLBCaSjcIyg
-X-Proofpoint-GUID: A_VOw_nD2HdUBjyb5wD9AcLBCaSjcIyg
-X-Authority-Analysis: v=2.4 cv=eN0jSnp1 c=1 sm=1 tr=0 ts=6a3a67b8 cx=c_pps
- a=+3WqYijBVYhDct2f5Fivkw==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjIzMDA4OSBTYWx0ZWRfX2BzRnCeiOxpj
+ Ux4ugALOfU83lxw27ltVwGZzPgVJC1Y3iobirV2EpXILckqP53aG5XgTrlHzJ4e2NFcfouXLMc6
+ SnZXAVyCuWKDvyBSmVE9ynClrPv8j5dyPawRLRA4zh6dMFTQukUo4/xfsLEWmyssy23oqXajiwI
+ O3mpNVqB5FU6up/cU7ccJTQoJ3DDu1QyiWZsayfZ9a1s1rm6AADQYoeeH3QpXOpdfWkSJBLu2+r
+ 8LUiyLjJLgO+5tNTVEPEwsbGUJ+pqyCkd4esgEaejndR4mTAKhtp/XEtDCMyhkUlEXR8Pa3pmSh
+ 7Wk7+WMnyDDHKHi0szPYAYL96zk/o7HEXwmZFZGmdx3QHDgNfcSholpvJWRA8BRYgZ9bGnTqmDS
+ gJ71hSyUluW9ueq/DEcthfAb5JrPcBuq3VLOhkaAbb+5TznGpHgMjeOtWPuYTQsfEr7czEHHdxE
+ bGNrwuyY/AKLRj8KNZA==
+X-Proofpoint-GUID: BH-789Tfnm9bpsnqRucGRG0DWZrXg6kn
+X-Authority-Analysis: v=2.4 cv=dvfrzVg4 c=1 sm=1 tr=0 ts=6a3a67c1 cx=c_pps
+ a=WJcna6AvsNCxL/DJwPP1KA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
  a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22
- a=gCilnUSdiZWjTjviJ0MA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=eYe2g0i6gJ5uXG_o6N4q:22
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22
+ a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=Vq8-Eo_8D2-Y-oFXv_MA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=_Y9Zt4tPzoBS9L09Snn2:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjIzMDA4OSBTYWx0ZWRfXxAMgtSvT9c5l
+ h8B5c6rZrQsVLSKkMd2OrrowarZO3cCf2+gNcq9Uant+3WBujt8ptooTqKwGl17CKvQd68PHius
+ DjaQZUMyBzqqJJzc9jZCcyPuDPZzGI8=
+X-Proofpoint-ORIG-GUID: BH-789Tfnm9bpsnqRucGRG0DWZrXg6kn
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-06-23_02,2026-06-23_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 lowpriorityscore=0 malwarescore=0 suspectscore=0 bulkscore=0
- clxscore=1015 priorityscore=1501 impostorscore=0 phishscore=0 adultscore=0
+ lowpriorityscore=0 phishscore=0 spamscore=0 adultscore=0 clxscore=1015
+ suspectscore=0 malwarescore=0 priorityscore=1501 impostorscore=0 bulkscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606230089
 Received-SPF: pass client-ip=205.220.168.131;
@@ -147,65 +158,105 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-TCG helpers are declared using the DEF_HELPER*() macros
-which imply global symbol scope. Unfortunately when building
-a single binary (containing multiple TCG 'target' frontends)
-these symbols clash.
+From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-This series takes the dumbest approach, renaming the symbols.
+In order to avoid symbol name clash when building
+a single binary, rename TCG helpers prefixing with
+the target name.
 
-There are still around 20 symbol clashes (usually FPU helpers),
-but this series is good for my proof-of-concept.
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Brian Cain <brian.cain@oss.qualcomm.com>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+---
+ target/loongarch/tcg/helper.h                   | 2 +-
+ target/mips/helper.h                            | 2 +-
+ target/loongarch/tcg/op_helper.c                | 2 +-
+ target/mips/tcg/op_helper.c                     | 2 +-
+ target/mips/tcg/translate.c                     | 2 +-
+ target/loongarch/tcg/insn_trans/trans_bit.c.inc | 4 ++--
+ 6 files changed, 7 insertions(+), 7 deletions(-)
 
-Since v1:
-- rebased on b0df6e2f2c6c45df8d4d286933799c623e124d98
-  (Merge tag 'pull-riscv-to-apply-20260616')
-
-Philippe Mathieu-Daudé (4):
-  target/tcg: Rename bitswap() helpers
-  target/tcg: Rename crc32*() helpers
-  target/tcg: Rename raise_exception() helpers
-  target/tcg: Rename set_rounding_mode() helpers
-
- target/arm/tcg/helper-defs.h                     |  4 ++--
- target/hexagon/gen_tcg.h                         |  2 +-
- target/hexagon/helper.h                          |  2 +-
- target/i386/helper.h                             |  2 +-
- target/i386/ops_sse.h                            |  2 +-
- target/loongarch/tcg/helper.h                    |  8 ++++----
- target/m68k/helper.h                             |  2 +-
- target/microblaze/helper.h                       |  2 +-
- target/mips/helper.h                             |  6 +++---
- target/ppc/helper.h                              |  2 +-
- target/riscv/helper.h                            |  2 +-
- target/sparc/helper.h                            |  2 +-
- target/i386/tcg/ops_sse_header.h.inc             |  2 +-
- target/arm/tcg/arith_helper.c                    |  4 ++--
- target/arm/tcg/translate.c                       |  4 ++--
- target/hexagon/op_helper.c                       |  2 +-
- target/hexagon/translate.c                       |  2 +-
- target/i386/tcg/excp_helper.c                    |  2 +-
- target/i386/tcg/translate.c                      |  2 +-
- target/loongarch/tcg/fpu_helper.c                |  2 +-
- target/loongarch/tcg/op_helper.c                 |  6 +++---
- target/m68k/op_helper.c                          |  2 +-
- target/m68k/translate.c                          |  2 +-
- target/microblaze/op_helper.c                    |  2 +-
- target/microblaze/translate.c                    |  2 +-
- target/mips/tcg/op_helper.c                      |  6 +++---
- target/mips/tcg/translate.c                      |  6 +++---
- target/ppc/tcg-excp_helper.c                     |  2 +-
- target/ppc/translate.c                           |  6 +++---
- target/riscv/fpu_helper.c                        |  2 +-
- target/riscv/translate.c                         |  2 +-
- target/sparc/helper.c                            |  2 +-
- target/sparc/translate.c                         |  6 +++---
- target/i386/tcg/emit.c.inc                       |  2 +-
- target/loongarch/tcg/insn_trans/trans_bit.c.inc  |  4 ++--
- .../loongarch/tcg/insn_trans/trans_extra.c.inc   | 16 ++++++++--------
- target/loongarch/tcg/insn_trans/trans_fmov.c.inc |  2 +-
- 37 files changed, 63 insertions(+), 63 deletions(-)
-
+diff --git a/target/loongarch/tcg/helper.h b/target/loongarch/tcg/helper.h
+index 8a6c62f1161..e36dd2f5de3 100644
+--- a/target/loongarch/tcg/helper.h
++++ b/target/loongarch/tcg/helper.h
+@@ -7,7 +7,7 @@ DEF_HELPER_2(raise_exception, noreturn, env, i32)
+ 
+ DEF_HELPER_FLAGS_1(bitrev_w, TCG_CALL_NO_RWG_SE, tl, tl)
+ DEF_HELPER_FLAGS_1(bitrev_d, TCG_CALL_NO_RWG_SE, tl, tl)
+-DEF_HELPER_FLAGS_1(bitswap, TCG_CALL_NO_RWG_SE, tl, tl)
++DEF_HELPER_FLAGS_1(loongarch_bitswap, TCG_CALL_NO_RWG_SE, tl, tl)
+ 
+ DEF_HELPER_FLAGS_3(asrtle_d, TCG_CALL_NO_WG, void, env, tl, tl)
+ DEF_HELPER_FLAGS_3(asrtgt_d, TCG_CALL_NO_WG, void, env, tl, tl)
+diff --git a/target/mips/helper.h b/target/mips/helper.h
+index e2b83a1d19d..f3d459982cf 100644
+--- a/target/mips/helper.h
++++ b/target/mips/helper.h
+@@ -16,7 +16,7 @@ DEF_HELPER_3(lld, tl, env, tl, i32)
+ #endif
+ #endif
+ 
+-DEF_HELPER_FLAGS_1(bitswap, TCG_CALL_NO_RWG_SE, tl, tl)
++DEF_HELPER_FLAGS_1(mips_bitswap, TCG_CALL_NO_RWG_SE, tl, tl)
+ #ifdef TARGET_MIPS64
+ DEF_HELPER_FLAGS_1(dbitswap, TCG_CALL_NO_RWG_SE, tl, tl)
+ #endif
+diff --git a/target/loongarch/tcg/op_helper.c b/target/loongarch/tcg/op_helper.c
+index e63ac66daae..35f331ca52c 100644
+--- a/target/loongarch/tcg/op_helper.c
++++ b/target/loongarch/tcg/op_helper.c
+@@ -32,7 +32,7 @@ target_ulong helper_bitrev_d(target_ulong rj)
+     return revbit64(rj);
+ }
+ 
+-target_ulong helper_bitswap(target_ulong v)
++target_ulong helper_loongarch_bitswap(target_ulong v)
+ {
+     v = ((v >> 1) & (target_ulong)0x5555555555555555ULL) |
+         ((v & (target_ulong)0x5555555555555555ULL) << 1);
+diff --git a/target/mips/tcg/op_helper.c b/target/mips/tcg/op_helper.c
+index 4502ae2b5be..83c340e38e0 100644
+--- a/target/mips/tcg/op_helper.c
++++ b/target/mips/tcg/op_helper.c
+@@ -45,7 +45,7 @@ target_ulong helper_dbitswap(target_ulong rt)
+ }
+ #endif
+ 
+-target_ulong helper_bitswap(target_ulong rt)
++target_ulong helper_mips_bitswap(target_ulong rt)
+ {
+     return (int32_t)bitswap(rt);
+ }
+diff --git a/target/mips/tcg/translate.c b/target/mips/tcg/translate.c
+index 123d2c89c3d..811492364a3 100644
+--- a/target/mips/tcg/translate.c
++++ b/target/mips/tcg/translate.c
+@@ -4842,7 +4842,7 @@ static void gen_bitswap(DisasContext *ctx, int opc, int rd, int rt)
+     gen_load_gpr(t0, rt);
+     switch (opc) {
+     case OPC_BITSWAP:
+-        gen_helper_bitswap(cpu_gpr[rd], t0);
++        gen_helper_mips_bitswap(cpu_gpr[rd], t0);
+         break;
+ #if defined(TARGET_MIPS64)
+     case OPC_DBITSWAP:
+diff --git a/target/loongarch/tcg/insn_trans/trans_bit.c.inc b/target/loongarch/tcg/insn_trans/trans_bit.c.inc
+index ee5fa003ce0..76d6ba742d5 100644
+--- a/target/loongarch/tcg/insn_trans/trans_bit.c.inc
++++ b/target/loongarch/tcg/insn_trans/trans_bit.c.inc
+@@ -194,8 +194,8 @@ TRANS(revb_2w, 64, gen_rr, EXT_NONE, EXT_NONE, gen_revb_2w)
+ TRANS(revb_d, 64, gen_rr, EXT_NONE, EXT_NONE, tcg_gen_bswap64_i64)
+ TRANS(revh_2w, 64, gen_rr, EXT_NONE, EXT_NONE, gen_revh_2w)
+ TRANS(revh_d, 64, gen_rr, EXT_NONE, EXT_NONE, gen_revh_d)
+-TRANS(bitrev_4b, ALL, gen_rr, EXT_ZERO, EXT_SIGN, gen_helper_bitswap)
+-TRANS(bitrev_8b, 64, gen_rr, EXT_NONE, EXT_NONE, gen_helper_bitswap)
++TRANS(bitrev_4b, ALL, gen_rr, EXT_ZERO, EXT_SIGN, gen_helper_loongarch_bitswap)
++TRANS(bitrev_8b, 64, gen_rr, EXT_NONE, EXT_NONE, gen_helper_loongarch_bitswap)
+ TRANS(bitrev_w, ALL, gen_rr, EXT_NONE, EXT_SIGN, gen_helper_bitrev_w)
+ TRANS(bitrev_d, 64, gen_rr, EXT_NONE, EXT_NONE, gen_helper_bitrev_d)
+ TRANS(maskeqz, ALL, gen_rrr, EXT_NONE, EXT_NONE, EXT_NONE, gen_maskeqz)
 -- 
 2.53.0
 
