@@ -4,143 +4,146 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7ED37CDB470
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jun 2026 20:29:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E12FECDB470
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jun 2026 20:41:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wc7ja-0000sN-Jf; Tue, 23 Jun 2026 16:28:38 -0400
+	id 1wc7vM-0002Ee-NH; Tue, 23 Jun 2026 16:40:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nathanc@nvidia.com>)
- id 1wc7jZ-0000sF-4y
- for qemu-devel@nongnu.org; Tue, 23 Jun 2026 16:28:37 -0400
-Received: from mail-westus3azlp170120001.outbound.protection.outlook.com
- ([2a01:111:f403:c107::1] helo=PH8PR06CU001.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
+ id 1wc7vL-0002EK-E4
+ for qemu-devel@nongnu.org; Tue, 23 Jun 2026 16:40:47 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nathanc@nvidia.com>)
- id 1wc7jX-0003IT-8P
- for qemu-devel@nongnu.org; Tue, 23 Jun 2026 16:28:36 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=NjZRlTkA8IO37Pqd5U+akFN9m7LZKOj4tk21H1WBc9qHm1rPDpVwAw5fhYkRsVTp968EFq2FBP6K2yzqz2PV3zzh0xJ4x7qAth+jLF/1PuvSa0kpY4arYZ4LUo99CmvDEKd0FdIUpY8+rzbJiyR/3eLNNzQdqbNjeBnoAhKbH+7xboiH0ogxmwkaMDNtQ2uEyfujHLtQMT5r0+OHardRK7e5ZTcp9OSEeKd9UAQ6sq0MoRHD/J2miz4VyvCJYj9ZKgXFWPUg4ziYVXJHf1GzTpRvY+T25t+fYqB5b0QYeEMCYL2h+SJ0yAKBybNznedniOG5/Jc6QJTJHT2maOZHtg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=cWth4PhzQkOEnmmrj2T9w8aGIPCN70xiYXbesduQjQo=;
- b=pUvssehkajXJeJ9NUTYyoUCTPqMeGUHBLehQUljfGaGCY7RuaOI035FbJ9xtVQQskRR2lWS+xMcy0WOsKLcGVBg6XcBLXi6LQJ88SmDwlGgDadUAfF2DybpnlIBEluTX/G0jJgjXeu3L65SK3QUjBBpl5bztWjJKDLU/b4LrlCcYHWHhnLkWIgHKbu3f0f8rcRs9UFZ68TY6LSj0QHwtbNM15BBr74aZLkdM1V76kP6jp/+jeghV8xogpYZKZlYinUUL9riencNcYy6lc4GPMV2DWKR28lx8sVxEt8VyjZRDJDoCECj6BDOfdmpT+BBOXNRLdKJBO20dfdVKA34UWQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=cWth4PhzQkOEnmmrj2T9w8aGIPCN70xiYXbesduQjQo=;
- b=eWmczvCm9tZgT+w5u6JHMv+3HElfEzidAwpXZ/iUv6PLgwNu0s5bOWtw5ugDBtC0Ax4FUr6uv8vHMGRWX0MrX+0WUZnCMj2pC0SzksQzc1Gi3TihRLJRF05/ZeDVzexIem4uYMPf4gGRLNiVAyZWdKAYBOpNxRWryOfLvIlf0dE7wArrGPFRxJ7tiR6whSCpW07IFmeLwteOi0kvBM5kvgS/lk5c+Mnj6F/e2KIxnsMJoCAGTnAC5DOU0C75c/58q0nLXFZ4kI2Dji9rwujao0UkuCHvQ20/0P3PH9vOUndgZaUpKpxNONwNi9pBJY/PsdO/9pMu7LuEDX+u43eOeQ==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from DM4PR12MB5390.namprd12.prod.outlook.com (2603:10b6:5:389::15)
- by PH0PR12MB7010.namprd12.prod.outlook.com (2603:10b6:510:21c::11) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.159.12; Tue, 23 Jun
- 2026 20:28:28 +0000
-Received: from DM4PR12MB5390.namprd12.prod.outlook.com
- ([fe80::2815:c27e:a0a:2720]) by DM4PR12MB5390.namprd12.prod.outlook.com
- ([fe80::2815:c27e:a0a:2720%6]) with mapi id 15.21.0159.012; Tue, 23 Jun 2026
- 20:28:26 +0000
-Message-ID: <ddf66baf-6208-49f1-a6b7-e9d74be2878d@nvidia.com>
-Date: Tue, 23 Jun 2026 13:28:23 -0700
+ (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
+ id 1wc7vJ-000537-G5
+ for qemu-devel@nongnu.org; Tue, 23 Jun 2026 16:40:46 -0400
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 65NJwm2V2296227
+ for <qemu-devel@nongnu.org>; Tue, 23 Jun 2026 20:40:42 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ dRay3uw/wEf+wtGyiw+Wd1o8wbGqqijUzd/7/De8VNI=; b=noqjvj2d817hONwx
+ a6WNbjnHbmJXOzbotNVRUAosefzonXCbOrsxZAiH1qK/7iO2hrkpfWUEZQBdkKIY
+ gQKUuxbhM9a8UuB3ZG8w3OxndgD2Y2ayDDhS0TBkGyyc3CNT+gZOcfqKHRUxatz1
+ QzRUkeJasFrJYNLX22B8tyoDEVqOMu7wibMOrxbFgVFS3muMxWDsbADTMwJc/vED
+ BRKs33A4DoKeoqByGJR0LOdTB6fIY/chkT8l4dPGUIkvKyjAOdRd7KJ8GwbbMjqt
+ 47CWVNCPPQiFoL14WwLAjvhDfB/fdbf84iaLBk3K6yQWhjSvOI8P6Ykb+1kL3IyD
+ uzvIlg==
+Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
+ [209.85.160.200])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4eyr28tm65-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Tue, 23 Jun 2026 20:40:42 +0000 (GMT)
+Received: by mail-qt1-f200.google.com with SMTP id
+ d75a77b69052e-519899aa6bfso3218731cf.1
+ for <qemu-devel@nongnu.org>; Tue, 23 Jun 2026 13:40:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1782247241; x=1782852041; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=dRay3uw/wEf+wtGyiw+Wd1o8wbGqqijUzd/7/De8VNI=;
+ b=ROmtfuea5XiQL4+7S+d00fepi/jz98E5IuENdApsR1GK8u82WzeCupH6c99sO4nLiG
+ knBhiKePL7Kq2Yv0mafda+PFrjuxD5eN57QWIIpLWvLiSCIfX19AY7p1JLZ7WceEjDS4
+ OVPZmgF7L+ToQ8lHwPuhaGpB8yHfASS/ICu3cNkyCT95lR1e6kVS0lbzwNNlZzZjCla0
+ cRpn3u3+/bErSTfYZqIFXQ98zzbGW6CFVpuwqZR/dYaxzBODbkZNXuficxdH+mWPRzg2
+ eR9jX+LY6o+X7lEQ2YoQE8XyLG1Vw6tt/90xDrulYBShnkttwAks0/eqxiJ5PtWbXeUC
+ 3jwg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1782247241; x=1782852041;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=dRay3uw/wEf+wtGyiw+Wd1o8wbGqqijUzd/7/De8VNI=;
+ b=Gwg8/EfkyHJ2+tNFT1o/AkAkL/rxYcF5e9RM1ie7g0xr3NdLBr+Ry1hpizkkIB7fyY
+ i9BpuKFo1El758JCSRPTW7kv1NS7/+xq7g4CiaQggGKUEZB0M0qwmIq7KmcsUEdJ+jc0
+ jbUuOMf/boFtwASW/F5H6B6xWLdMWkl43gNWe5y4skCjzIx3u8y+6/TSNGtG2/A/sfIy
+ iiR5EQXItQ9NoK/1txM4kI3kIjw7BaVA7HkSqmdhsvI9uQfbk9HKCiK0lAe2ZPk1F7B/
+ XuHia6qGW9cUCG7w5aWovO6Ib8wUOMUiLuFbY45vvlYY3EmcwVuhbaU6Ciw/pIocVsBC
+ Mt/g==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ+JoA2jJ1bVKwURQI98Fp5eh5zWGXlavXY2HyM2wBIRjIrj2feN2vv14xHF71c1Ty7qVBa2AS4zmku2@nongnu.org
+X-Gm-Message-State: AOJu0YxNuJNflTl58Y339mVw8h9z7b6YgESzpbA6X6T806/JA2MtO0KG
+ XOmthd4FUen8zvy+XJZDkEcuXVEKl/K0ojoOYSyFVuuALDmCutRCaHySzDBS9o5vaItqlJRli8I
+ B64eOJg6AYtk3Ls1X17vKn/Lkf/LSAQ7+s/s24ZUDOBRcmNCPeAn4DpCBSw==
+X-Gm-Gg: AfdE7ckeXkhNmZNk8zV8SuMhxF7rVKSyq/66WvuRtDhe+Yi8rEHUBVUpUo6zPzwtxg2
+ hei0+ApVpcdlHlt1SLK+FpaxgArMdH3uu1kUBKdncOBNtNs3JQJz2+BOEkg7EQGxAl+UWitlmr1
+ Iwu1Nwz0PaFi78TsrIQrjOq1Z1By3QZXRMCSpvcrF1cjacce4gimZabxvd1/jqevrjEDXpQc/O7
+ tIu31H0ZzFglogQKABEHGwqq6cqSRljLg5UCJ7JlmH7TWwn2U78oU6GyKUwnCsm9iGAotaQXaYI
+ zKHjU99JfHz+llgdM3iymQadxr8vifzWRXpURq+29PDxCg8IEIS5y7k8x65/nBUDFmUNbzhinJu
+ y48+zylg9Q6Lc5USPDFO9hAgUWyFANaKBFzvxjaRRk71a
+X-Received: by 2002:ac8:7f91:0:b0:517:707b:14f1 with SMTP id
+ d75a77b69052e-51a61ef6ad5mr8558931cf.46.1782247241146; 
+ Tue, 23 Jun 2026 13:40:41 -0700 (PDT)
+X-Received: by 2002:ac8:7f91:0:b0:517:707b:14f1 with SMTP id
+ d75a77b69052e-51a61ef6ad5mr8558581cf.46.1782247240662; 
+ Tue, 23 Jun 2026 13:40:40 -0700 (PDT)
+Received: from [192.168.68.103] ([189.79.21.40])
+ by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-8df82692bddsm133102246d6.43.2026.06.23.13.40.37
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 23 Jun 2026 13:40:40 -0700 (PDT)
+Message-ID: <5b6aad47-d3ba-4066-a301-9b360d03f7c5@oss.qualcomm.com>
+Date: Tue, 23 Jun 2026 17:40:36 -0300
+MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 2/2] vfio/pci: Add ats property
-From: Nathan Chen <nathanc@nvidia.com>
-To: Shameer Kolothum Thodi <skolothumtho@nvidia.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Cc: Yi Liu <yi.l.liu@intel.com>, Eric Auger <eric.auger@redhat.com>,
- Zhenzhong Duan <zhenzhong.duan@intel.com>, Alex Williamson
- <alex@shazbot.org>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- Matt Ochs <mochs@nvidia.com>, Nicolin Chen <nicolinc@nvidia.com>
-References: <20260623023540.836825-1-nathanc@nvidia.com>
- <20260623023540.836825-3-nathanc@nvidia.com>
- <SJ0PR12MB8614F88365BE0F4362ECBF84ABEE2@SJ0PR12MB8614.namprd12.prod.outlook.com>
- <e352eb01-caad-4725-8b14-710c8960fa82@nvidia.com>
+Subject: Re: [PATCH 16/24] target/riscv: gate riscv_cpu_update_mip with
+ tcg_enabled()
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, liwei1518@gmail.com,
+ zhiwei_liu@linux.alibaba.com, chao.liu.zevorn@gmail.com,
+ pierrick.bouvier@oss.qualcomm.com, Palmer Dabbelt <palmer@dabbelt.com>
+References: <20260622193141.1449724-1-daniel.barboza@oss.qualcomm.com>
+ <20260622193141.1449724-17-daniel.barboza@oss.qualcomm.com>
+ <49c4f746-41bf-4a8c-bd43-00658e101c0f@oss.qualcomm.com>
+From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 Content-Language: en-US
-In-Reply-To: <e352eb01-caad-4725-8b14-710c8960fa82@nvidia.com>
+In-Reply-To: <49c4f746-41bf-4a8c-bd43-00658e101c0f@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: SJ0PR03CA0233.namprd03.prod.outlook.com
- (2603:10b6:a03:39f::28) To DM4PR12MB5390.namprd12.prod.outlook.com
- (2603:10b6:5:389::15)
-MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DM4PR12MB5390:EE_|PH0PR12MB7010:EE_
-X-MS-Office365-Filtering-Correlation-Id: 4052f32f-48f0-4677-6012-08ded165fb11
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|23010399003|1800799024|376014|366016|4143699003|56012099006|11063799006|6133799003|22082099003|18002099003;
-X-Microsoft-Antispam-Message-Info: 0MyEJrt7JZoUC5fziqUgdr25g+1OkGB4taBpKwDEPF0ODrIE+RqzyDmft3qNib59YrEpofAfP97pnczsAeplguC974zGaGSNkuwDaOyFCGOSzF0+R2ImQ9LZ4TAeIEsw+OI9ZJA2Gk8CKImzGYDy/fVN46C35t1Dk7ldZ8AuEhFcCtOUMpzSo4gLYf8+RksNNgEc+b2UCtsRw8oEEEGPeM8tsvGDW5HIOeSjnR40o3UIWDpzODWgNBc7fSRWGTVrhl4enE8tFKLHXvyDmXeLPMP70UMsjjtW0waxV0IbGROhMUmBnYvD/pV4ex/3MWW+LFpS0EoDTSieBmBbYkxwSzV4FDb9acmScKZ96NikQ13us4/oCW8L+BvFbX0mBpFauxqCQ9FBexsO9yILpQBmjtFztFtdjK7CQzhtAO7NrcTYkBkADKvPBW4ZQBAXcj0p1KEthNeTh7bI0GEX0vHtZhU9UPuo0IEWA7la6vB9dJDHzFMd7VvHKr7uZQIC0t9ePuTjns/H0Rt1jrWOc2D/IBlC5dSqOMDf9Fd77bzRlU90+RijMJwa4Ya/42RBgZxw/FsPRQuqEQ4AwwkkS9B541/4CcfghBl6g1yaaeXCDURiW1o/rtuxYh/GHACiNjrIn0MBBwzfVAnlauzOh44hJzGJ3O/6BuPMTxGuvn7V2eo=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:DM4PR12MB5390.namprd12.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(23010399003)(1800799024)(376014)(366016)(4143699003)(56012099006)(11063799006)(6133799003)(22082099003)(18002099003);
- DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?YXYvL0tPRGhwK1lOUTErREJIcGpMTXhiME8wcjY2c2VyR0Jkd2FubVFlOUI1?=
- =?utf-8?B?WCt4Z2g1cmdPeW9WMlQ2bFV4VGtjL0tFeHV5ajFKMnVOZFRodHY3cnFWd0Nq?=
- =?utf-8?B?OC9zTlNMWmdFWUMzeFU1YVVMbW1Od3VUaTZXMXQzVElRcUNXSE5DcFl6eUhD?=
- =?utf-8?B?QTVuK2R6RjU1bnhXdGpTcnFVSTNjaFJEUHB2eFZsVlBvVjA5TFZRN04rQlgy?=
- =?utf-8?B?WklaUEF5cVA4bnl1V1phdzJjbVd4QVZ1NmhmRGVFSHpWTEwxVEpYQytLVnJm?=
- =?utf-8?B?aWh6WERENmZicEN3R3A3OTdpdCtzam1jaTdrQkhkUDJhMzlVT0tuQjZpSmlY?=
- =?utf-8?B?YWl2MWNQRGpaMGV0a1FuSjVGbkRWc2ZjbkQ3R2tTaXNGaS9SajQ1Z2h2N2xN?=
- =?utf-8?B?ajVvTTlEOHlYYW5rWTlxQzFJQngrZVIvTzVHT29sRkYzTlBLckh1UHhkY2h3?=
- =?utf-8?B?TFlNdzFDb1MwSEU1dURuZDA2a3dtVXk4emNyR1RYRTVvWTFrd1VFRmlzSjE0?=
- =?utf-8?B?a3NPMjM4RHAzd3JrOERtb2M3ck9EVTR1UnVmOWdXNEZkQ2doMXZEbU1YMFVF?=
- =?utf-8?B?T0p6RE8vRlBMZEJYMFdmWEc4TmRaN1g0d1dpTnlteTlrWVJWNW54ZklzZjFO?=
- =?utf-8?B?OFZsUks4SXR6dnpjdWRFazdTdzVpNmhIaTk3WXI2WW41OXhHbThwOUVuQ3JL?=
- =?utf-8?B?OEZOZGV4OFVpUlZHV2Q0ZFpXcHFJNitwNFBKZXZtR0lCZ05uUU1yRitNQVVK?=
- =?utf-8?B?MnFrQ3NhMTR2RCtzNWJ0NkRna2dxVEhJeGZuQXRFSkYxRVNCUi9wZE1seDhW?=
- =?utf-8?B?cEFnZ3QzeG1qeEp5YlVPdkhOYU5DWjlhNFVlWlFJbS9Va1Z6SjBYZVlBYTdj?=
- =?utf-8?B?ODZ6L2tOTmlHQktjcFM1VjE2eGVHeC8rd0pldjhPODNUaUNGR1ZwdEd6eW5a?=
- =?utf-8?B?cXI3Vncyczg3TjlBZzAyQ3Z3VjliN3c2U25LV3RUYjk1ejdCSU5oaTAyZm5V?=
- =?utf-8?B?K2M4KzJiZ3FlOTdqZjJZRXBwa2lCT2k2VWZYcTk3RThTdEszRS9XUk0rbWpH?=
- =?utf-8?B?V2NqeXVVeEIwQmhSTDc2dUZSZkFhVnBPajBJaURSTjh0c3gwQkR6WFJDdmZW?=
- =?utf-8?B?bU9rNjZ4RE13RUVNanNQVzZnLzNBenkzOWo3SVp2bWZ0bTQxZDMxLy8zSkhu?=
- =?utf-8?B?MlI2SGNENlczWU8xUFp5TGwyeUFyMmFONEpVMmp4c2pweTFVcTZiMzluTFNa?=
- =?utf-8?B?RjdxUUw3RUJDWExuRW9mQ1pDR25ab3JLQnpKcU9hbU81ZW1GRHEyb3JYSE5J?=
- =?utf-8?B?amJYQjVrdGxlcm44NmtNTnFjdENOZENManJjaU1RSjFPcmtVTzlaU0tBZjV2?=
- =?utf-8?B?RXpiN1BBZVFDaGtMN0Y5alh0MnZsaFNmeEZabnpFc0ltSkZjMXl1RUxvRWtB?=
- =?utf-8?B?bFV2bktuR0Q3bENXOUtKUTVBMUJrdUI1MWQwakNXMUJHTHZzL0ZGQkU5c2lp?=
- =?utf-8?B?SFFtRHFzV2JFRkFDR2hmekFiSDRmckVFR09qRmhZRWJncldwczh6Qm00R2pQ?=
- =?utf-8?B?ME5kVW8rYWJnTmptaW5SSzhGVkxvVXJaZlBiYmplNkY3UGRIdDQyL3RpY2p4?=
- =?utf-8?B?bEdkMHI2L1Z4RVZmSmxDVDNXNlhlL01SZmVONEpJTkRCNjQvaHJxOXZhclFu?=
- =?utf-8?B?K2h4anpmSy9sa2FWS3FsTkQ4Y1FwcTdtYXZLcVBtSDc4UTl1Tkdtb0MrU1Iv?=
- =?utf-8?B?MDAycHdycHl0emlIamdON3hOdnRIOGM2eDdvUjhQczZZVHRJdzYyS3hPdHZa?=
- =?utf-8?B?dVlKL3I5SEFGK3c4ZldrNGtUTUdBSFowREJzT1BneVBRQ2F1YjkwNmlweDJL?=
- =?utf-8?B?YWJtRXZaVk1yM291NXQ0UDcrMkJtQUJZT3lsUE5EVFoyTWtLaTZhc1RvSEd0?=
- =?utf-8?B?T2hrc1ZVRzNpZThVMytVZzUwMDJweEh6MEloNVBTamJrbHY0NTRZL0ladTdX?=
- =?utf-8?B?VnJaREFDQ29tVUZIRks4eG1FcmozL0xXUDdZOXFELzZhUlVMQ2JkV0UxclY4?=
- =?utf-8?B?UmMvaXQxcnovaFlvWm81QzRHYTRBQXEwRGpQS0RPVllnclB5djUwZ01hbHp3?=
- =?utf-8?B?Z2FSK2V5di9oV0NlQlJVSGdYY0dBMzU4V1A4cmg4MDhjMHBnUzJETStydTZL?=
- =?utf-8?B?QTh3N1VFaGpvL1MxTnc1UFcxSzh2Q1Y0UU55U1RtbS8wMTBLby83cE5uZmpC?=
- =?utf-8?B?dnI4a2pTcWsvSDZLNjYvUlpBdXVoQm0wSWF2U29tU0pHbC9iRnhKYkZjNnpS?=
- =?utf-8?B?TXBZOVdSVWROU3dPemMwZnVhVm5lQit1U05Nd2lTeE9kQWNpdGkvUT09?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 4052f32f-48f0-4677-6012-08ded165fb11
-X-MS-Exchange-CrossTenant-AuthSource: DM4PR12MB5390.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 23 Jun 2026 20:28:26.8657 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: Cw//sRro2ZUhwdx4bgIh/3wOMEZ27tZJqpfnQjqxZdmUWSRc53uudzxsb1PZg5U35fH7DruoTenQ4Z6CidDTIA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH0PR12MB7010
-Received-SPF: permerror client-ip=2a01:111:f403:c107::1;
- envelope-from=nathanc@nvidia.com;
- helo=PH8PR06CU001.outbound.protection.outlook.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjIzMDE3MCBTYWx0ZWRfX3Ml2UWrwniYV
+ sYzeimG7/yKDqRORzagruLM6AEvMh0FGc5fIVUu2kVGlHwGTp4TBfE6eXQ+1VWrDRAxl5oDfO9l
+ UuU84vWKJ8cB2T/JfOdbSjSCRENeGoc=
+X-Authority-Analysis: v=2.4 cv=b4KCJNGx c=1 sm=1 tr=0 ts=6a3aef4a cx=c_pps
+ a=JbAStetqSzwMeJznSMzCyw==:117 a=sHJf4AwOIoU3qjeHFPlg6Q==:17
+ a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22
+ a=EUspDBNiAAAA:8 a=bvpVmVbehaGjik5zenYA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=uxP6HrT_eTzRwkO_Te1X:22
+X-Proofpoint-GUID: usV99E83EhR3JKSm2G93F7O1OCe_bKMh
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjIzMDE3MCBTYWx0ZWRfX7h5SuRvLpjyb
+ 0NUSMvhY0+KFZHqhdDuHQcNzU+lx7oJBZiojy5yBBZtdAEueYgpa3tK6uSjJU6Z3SJligw6UJFV
+ xdJ9gB315Vb9KhyBRTidvpc4y2f7/K35m60Lfbg7L89sZRGa8jej9ZTSfdUHPm8AFHovILj+Mpc
+ RBbCoULpjTYMYIzdil8RPzId0LvDwLnS1wATzwAIrXLo3kigrhGzXwOIvLjR/HUAV+uGWzOonYv
+ 6D3u4ods8YXxqgrCb4p4VbNSAdSsXHZICb2MiBF4gsE5eDWv6V4veqk8SifGy9boZoPArNs4B8P
+ KECLm/f53J3ZvX1cynRE9omK7eL32bei7muWIiefpUORZ+DRQqPG4t4rP7IZD+IbL2DVjWDSGI4
+ 97ykmNcigHPDdHIoSbId8MihNikml3UKOv3GMFFdaa1nfVvU1XiZe5baSzs7UX8iTk9huVw29cf
+ CaQsPMd+yewiMERTnzw==
+X-Proofpoint-ORIG-GUID: usV99E83EhR3JKSm2G93F7O1OCe_bKMh
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-23_04,2026-06-23_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0 bulkscore=0 adultscore=0 impostorscore=0 spamscore=0
+ suspectscore=0 phishscore=0 priorityscore=1501 clxscore=1015 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606230170
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -158,143 +161,65 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 
-On 6/23/2026 12:29 PM, Nathan Chen wrote:
+On 6/22/2026 6:12 PM, Philippe Mathieu-Daudé wrote:
+> On 22/6/26 21:31, Daniel Henrique Barboza wrote:
+>> riscv_cpu_update_mip() is a TCG only call.  Its KVM equivalent is
+>> kvm_riscv_set_irq().  cpu.c gates the KVM only function with a
+>> kvm_enabled() check, making it unavailable for TCG only builds.  We need
+>> to do the same for riscv_cpu_update_mip() otherwise a KVM only build
+>> will fail because it doesn't know what this function is.
+>>
+>> Use tcg_enabled() for the couple of riscv_cpu_update_mip() calls we have
+>> unguarded in cpu.c.
+>>
+>> We have way more calls to deal with in time_helper.c which isn't using
+>> kvm_riscv_set_irq() at all. For this file create a riscv_set_irq() local
+>> helper that will choose whether to use the KVM or TCG API.
+>>
+>> The reason we're going through all this hassle in time_helper.c is
+>> because hw/int/riscv_aclint.c uses it, and if we don't do something
+>> about we won't have riscv_aclint working for KVM.  Whether this is a
+>> real problem or not and we should remove aclint support for KVM is
+>> question for another day.
+>>
+>> Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+>> ---
+>>   target/riscv/cpu.c         | 19 ++++++++++++++-----
+>>   target/riscv/time_helper.c | 33 +++++++++++++++++++++++++--------
+>>   2 files changed, 39 insertions(+), 13 deletions(-)
 > 
 > 
-> On 6/23/2026 10:01 AM, Shameer Kolothum Thodi wrote:
->>
->>> -----Original Message-----
->>> From: Nathan Chen<nathanc@nvidia.com>
->>> Sent: 23 June 2026 03:36
->>> To:qemu-devel@nongnu.org
->>> Cc: Yi Liu<yi.l.liu@intel.com>; Eric Auger<eric.auger@redhat.com>;
->>> Zhenzhong Duan<zhenzhong.duan@intel.com>; Alex Williamson
->>> <alex@shazbot.org>; Cédric Le Goater<clg@redhat.com>; Matt Ochs
->>> <mochs@nvidia.com>; Nicolin Chen<nicolinc@nvidia.com>; Shameer
->>> Kolothum Thodi<skolothumtho@nvidia.com>; Nathan Chen
->>> <nathanc@nvidia.com>
->>> Subject: [PATCH v3 2/2] vfio/pci: Add ats property
->>>
->>> From: Nathan Chen<nathanc@nvidia.com>
->>>
->>> Add an "ats" OnOffAuto property to vfio-pci. When the device has an ATS
->>> extended capability in config space but we should not expose it 
->>> (ats=off,
->>> or ats=auto and kernel reports
->>> IOMMU_HW_CAP_PCI_ATS_NOT_SUPPORTED), mask
->>> the capability so the guest does not see it.
->>>
->>> If ATS is explicitly requested but not supported by the kernel, fail
->>> device realize.
->>>
->>> This aligns with the kernel's per-device effective ATS reporting and 
->>> allows
->>> vfio-pci to mask ATS when the host kernel reports ATS as unsupported.
->>>
->>> Emit a warning when ats=on is requested but the physical device does not
->>> advertise ATS, since ATS cannot be exposed to the guest in this case.
->>>
->>> Suggested-by: Shameer Kolothum<skolothumtho@nvidia.com>
->>> Signed-off-by: Nathan Chen<nathanc@nvidia.com>
->>> ---
->>>   hw/vfio/pci.h |  1 +
->>>   hw/vfio/pci.c | 88
->>> ++++++++++++++++++++++++++++++++++++++++++++++++---
->>>   2 files changed, 85 insertions(+), 4 deletions(-)
->>>
->>> diff --git a/hw/vfio/pci.h b/hw/vfio/pci.h
->>> index c3a1f53d35..f2934f2d84 100644
->>> --- a/hw/vfio/pci.h
->>> +++ b/hw/vfio/pci.h
->>> @@ -188,6 +188,7 @@ struct VFIOPCIDevice {
->>>       bool clear_parent_atomics_on_exit;
->>>       bool skip_vsc_check;
->>>       uint16_t vpasid_cap_offset;
->>> +    OnOffAuto ats;
->>>       VFIODisplay *dpy;
->>>       Notifier irqchip_change_notifier;
->>>       VFIOPCICPR cpr;
->>> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
->>> index 9c06b25e63..c0436b4c04 100644
->>> --- a/hw/vfio/pci.c
->>> +++ b/hw/vfio/pci.c
->>> @@ -2546,10 +2546,58 @@ static bool
->>> vfio_pci_synthesize_pasid_cap(VFIOPCIDevice *vdev, Error **errp)
->>>       return true;
->>>   }
->>>
->>> -static void vfio_add_ext_cap(VFIOPCIDevice *vdev)
->>> +/*
->>> + * Determine whether ATS capability should be advertised for @vdev, 
->>> based
->>> on
->>> + * whether it was enabled on the command line and whether it is 
->>> supported
->>> + * according to the kernel.
->>> + *
->>> + * Store whether ATS capability should be advertised in @ats_needed.
->>> + *
->>> + * Returns false only when ats=on is explicitly requested but the 
->>> kernel
->>> + * reports it is not supported. Returns true in all other cases.
->>> + */
->>> +static bool vfio_pci_ats_requested_and_supported(VFIOPCIDevice *vdev,
->>> +                                                 bool *ats_needed, 
->>> Error **errp)
->>> +{
->>> +    HostIOMMUDevice *hiod = vdev->vbasedev.hiod;
->>> +    HostIOMMUDeviceClass *hiodc;
->>> +    bool ats_supported;
->>> +    *ats_needed = false;
->>> +
->>> +    if (vdev->ats == ON_OFF_AUTO_OFF) {
->>> +        return true;
->>> +    }
->>> +
->>> +    *ats_needed = true;
->>> +    if (!hiod) {
->>> +        return true;
->>> +    }
->>> +    hiodc = HOST_IOMMU_DEVICE_GET_CLASS(hiod);
->>> +    if (!hiodc || !hiodc->support_ats) {
->>> +        return true;
->>> +    }
->>> +
->>> +    ats_supported = hiodc->support_ats(hiod);
->>> +    if (vdev->ats == ON_OFF_AUTO_ON && !ats_supported) {
->>> +        error_setg(errp, "vfio-pci: ATS requested but not supported 
->>> by kernel");
->>> +        *ats_needed = false;
->>> +        return false;
->>> +    }
->>> +
->>> +    if (vdev->ats == ON_OFF_AUTO_AUTO && !ats_supported) {
->>> +        warn_report("vfio-pci: host kernel reports ATS unsupported; "
->>> +                    "ATS capability will be masked");
->>> +    }
->> This will be slightly misleading if dev doesn't have the ATS CAP at all.
->> Isn't it?  I think, the best place to do this warning is below where 
->> we know
->> ats_cap_present is set or not.
->>
->> Thanks,
->> Shameer
->>
-> Yes, I agree it would be better to put this in an else statement after 
-> it is verified that ats cap is present.
+>> diff --git a/target/riscv/time_helper.c b/target/riscv/time_helper.c
+>> index 400e917354..2679dbba6c 100644
+>> --- a/target/riscv/time_helper.c
+>> +++ b/target/riscv/time_helper.c
+>> @@ -21,19 +21,34 @@
+>>   #include "cpu_bits.h"
+>>   #include "time_helper.h"
+>>   #include "hw/intc/riscv_aclint.h"
+>> +#include "kvm/kvm_riscv.h"
+>> +#include "system/kvm.h"
+>> +#include "system/tcg.h"
+>> +
+>> +static void riscv_set_irq(RISCVCPU *cpu, int irq, int level)
+> 
+> riscv_accel_set_irq? Regardless,
+> 
+> Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+> 
 
-On second thought, placing this after verifying ats cap presence would 
-be better:
+Renamed. thx!
 
-if (vdev->ats == ON_OFF_AUTO_AUTO && ats_cap_present && !ats_needed) {
-     warn_report("vfio-pci: host kernel reports ATS unsupported; "
-                 "ATS capability will be masked");
-}
+>> +{
+>> +    if (kvm_enabled()) {
+>> +        kvm_riscv_set_irq(cpu, irq, level);
+>> +    }
+>> +
+>> +    if (tcg_enabled()) {
+>> +        riscv_cpu_update_mip(&cpu->env, irq, level);
+>> +    }
+>> +}
+> 
+> 
 
-When ats=auto, ats_needed would only be false when kernel reports ATS is 
-unsupported. And if ATS is not present, there will be no warning about 
-masking it.
-
-Thanks,
-Nathan
 
