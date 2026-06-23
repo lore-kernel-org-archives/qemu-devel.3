@@ -4,91 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 351B8CDB470
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jun 2026 17:58:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11625CD98F2
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jun 2026 17:59:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wc5O8-00077R-Tz; Tue, 23 Jun 2026 13:58:21 -0400
+	id 1wc5Of-0007mX-Cr; Tue, 23 Jun 2026 13:58:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wc5O4-00075K-4t
- for qemu-devel@nongnu.org; Tue, 23 Jun 2026 13:58:17 -0400
-Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wc5O2-0003MP-Ha
- for qemu-devel@nongnu.org; Tue, 23 Jun 2026 13:58:15 -0400
-Received: by mail-pl1-x62b.google.com with SMTP id
- d9443c01a7336-2c6c57c5bcfso1401445ad.1
- for <qemu-devel@nongnu.org>; Tue, 23 Jun 2026 10:58:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1782237493; x=1782842293; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=m6IWrhZJNYq6x4038TQAXR8G48lUi0rv/qq0/zDE44U=;
- b=jwzHMdiKqNDYLbtFxNPMeyiBWDs0QQn5wBG2lN26wHcpZmzN0g2ZRHZqUQvwmxqeDE
- R89XaWv4Md3vBZkmwheIn8X/lQJpyiwcAC7ygaPd+9n1+igyTv/tqNRw296jFjz5Fgyf
- MI36mDefvLeeMEF4c5MydUAqWI6u1uBTaC1Y54bPFxU1oYIsgjhtVAG68VlR9lK9pnl+
- hl3CgqF7geYWtgrttyFobt+51PahP3AZQRHtvmYFJ68bnJbPJvtitYuEd1aaZbzBJ/ml
- Ip8ggCLt1zusB1ICEh91IQoJMFLj/53wHLHflCD9t4ohpUUmTb6cfKWSWRYXFSbWXwjI
- 1nHw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782237493; x=1782842293;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=m6IWrhZJNYq6x4038TQAXR8G48lUi0rv/qq0/zDE44U=;
- b=sWRroEk9FIGSJa29DnvFv2OCmrTdN5D5ST+9CCmqrh69iUAYxm4XtrOghSwk3IXpXz
- RdXULKY51upbizTp/m2Z+XCA+ZL88PrwVKSwCAFgE2b9rkuxPMcBkcwjNrYvnwjMkHHU
- iyWqlARlZEcPR0P9hizjVEaIyBrwDJz7kaA7KR+qcomqJimQYzVXXTctaVllL1iIPegw
- IrLp+gyOFaDupYWdfVzcCyFXxKpRtmVTqLIJdiXQn5evgmtygZkCfRJMf7pE5LGMZ2AV
- 89r66EqBG/LpUvrmlWbO81Heaqls99RfjCyRWjVCanUrhx6LP7UG60tTai0SC0YZm6On
- bnrg==
-X-Gm-Message-State: AOJu0Yw0Umm9mT5OrG8eKjnofXhypcCtso7aPD8QrA5fg/bY2fzWkuNK
- hiIM+GMVyQL0jujlDnpsMhib4zYTZwz80xlBtQS/Iwni3Cd4LV/NLs9WR/BFHVVHaPfgYkCsYBs
- 8NcMb
-X-Gm-Gg: AfdE7cm5p1Qe93QjhcdiCOKm2JRSBM2vMMwyPvb5hy/o/IhDY2ZPZ8SQohDOM1gICLj
- B+KBZTPGsbxPoIGpUkrSWNoFDf2fbXYnpEUZ8eP7RcZU86jMfaUB9x2Dh831FQ/sHP82qKI+9IG
- JDrmY7Dd8nQdrlvJFv+UDoevqFckp8nFIduoqO92BggPrWQ7MxFEvmxJ9Pz6CWV4AmcoABLk8B6
- vEYMWSEPyKu1+naP8bn0BgUhrtLYaAoJvFAkBeY1CzceX7iI50EUGhXL4H2R2Tp2RN+m5b1e6ez
- yM+YLYIZBp/lpazdEHru1eQlkOZCr9Ru0105zrv0xpQ8pPoygMTlGhln35737UMULxOeiODaii7
- WsNMjA2ar7zAMxMnwmZYm9PMsHJEMUTmPyoO8FlBWX7VAwwM72SAhcO80R420V1fAGdSA6XsUZK
- MTCbT+tvOgY5kc/bF4eZIxkXoo0oRzm3ZkdFQIO4tqZgCAWlBsU+QMAR1wFg==
-X-Received: by 2002:a17:902:ecc1:b0:2b0:608d:d8a8 with SMTP id
- d9443c01a7336-2c718cc4b81mr221222905ad.1.1782237492511; 
- Tue, 23 Jun 2026 10:58:12 -0700 (PDT)
-Received: from [192.168.0.4] (174-21-129-215.tukw.qwest.net. [174.21.129.215])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2c7439f85f1sm117500275ad.42.2026.06.23.10.58.11
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 23 Jun 2026 10:58:12 -0700 (PDT)
-Message-ID: <f6dccc6d-1cf0-4b28-a48b-c445d3c62094@linaro.org>
-Date: Tue, 23 Jun 2026 10:58:10 -0700
+ (Exim 4.90_1) (envelope-from <dg@treblig.org>) id 1wc5Oc-0007hm-Uu
+ for qemu-devel@nongnu.org; Tue, 23 Jun 2026 13:58:51 -0400
+Received: from mx.treblig.org ([2a00:1098:5b::1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <dg@treblig.org>) id 1wc5Ob-0003U2-6j
+ for qemu-devel@nongnu.org; Tue, 23 Jun 2026 13:58:50 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=treblig.org
+ ; s=bytemarkmx;
+ h=Content-Type:MIME-Version:Message-ID:Subject:From:Date:From
+ :Subject; bh=QK86wxq1N/HMd5uhtpw2nMsv9Fo+IEfS+x0dp5sJQa8=; b=ew3/l2sImnr5PPBr
+ QE3Z2tGiDhPAnB2RZ2qPcTUP/9xcqB5VMcrpBoEHSoTTQ7OQUkpBo2oQi/MUfYhlacT+84oJ/Cfec
+ q9YVcWO2atfHHkWgnR6GAX5rXglX1vx8xBVoxiYQWEeHvsYEfwQSsmHQAwPqzUnkNSazSNYK0sOXX
+ 45Pul2EhkJa/TTF5XLL2WjdKuH98v/z7x9elrNmNQXyF9aheX/YljRQFPACHdcLAMl4PwPCcktQQB
+ 6nSsFesIBlXmuodfE3Kin+3zRu8W0QoYOD87iR2ZifoKsmwRCAmcMf+tkaq7IeX6BsHkzMOrCD/+d
+ mVWTo3vPWUUqg9fwaQ==;
+Received: from dg by mx.treblig.org with local (Exim 4.98.2)
+ (envelope-from <dg@treblig.org>) id 1wc5OV-00000009WpL-1MOQ;
+ Tue, 23 Jun 2026 17:58:43 +0000
+Date: Tue, 23 Jun 2026 17:58:43 +0000
+From: "Dr. David Alan Gilbert" <dave@treblig.org>
+To: Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org,
+ =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
+ Christian Brauner <brauner@kernel.org>, devel@lists.libvirt.org,
+ Markus Armbruster <armbru@redhat.com>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@mailo.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>
+Subject: Re: [PATCH v4 34/35] qemu-options: document new monitor-hmp and
+ monitor-qmp objects
+Message-ID: <ajrJU5TH4yOh0vnq@gallifrey>
+References: <20260623095551.2106712-1-berrange@redhat.com>
+ <20260623095551.2106712-35-berrange@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 01/40] bsd-user: catchup to locking / mapping routines
- in bsd-misc.
-To: qemu-devel@nongnu.org
-References: <20260620-misc-2026q2-v3-0-f6ce23ad8dda@bsdimp.com>
- <20260620-misc-2026q2-v3-1-f6ce23ad8dda@bsdimp.com>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20260620-misc-2026q2-v3-1-f6ce23ad8dda@bsdimp.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62b.google.com
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260623095551.2106712-35-berrange@redhat.com>
+X-Chocolate: 70 percent or better cocoa solids preferably
+X-Operating-System: Linux/6.12.88+deb13-amd64 (x86_64)
+X-Uptime: 17:55:47 up 38 days, 21:08,  2 users,  load average: 0.00, 0.00, 0.00
+User-Agent: Mutt/2.2.13 (2024-03-09)
+Received-SPF: pass client-ip=2a00:1098:5b::1; envelope-from=dg@treblig.org;
+ helo=mx.treblig.org
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -105,50 +77,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/20/26 21:19, Warner Losh wrote:
-> These were added to bsd-misc.c in a prior series. The declarations
-> logically belong here, but aren't strictly needed with the current
-> structure of the code due to include contamination.
+* Daniel P. Berrangé (berrange@redhat.com) wrote:
+> Add new docs for the `-object monitor-hmp` and `-object monitor-qmp`
+> options, updating `-mon` to state that it is legacy syntax sugar
+> for the new `-object` args.
 > 
-> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-> Signed-off-by: Warner Losh <imp@bsdimp.com>
+> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 > ---
->   bsd-user/qemu-bsd.h | 18 ++++++++++++++++++
->   1 file changed, 18 insertions(+)
+>  qemu-options.hx | 50 +++++++++++++++++++++++++++++++++++++++++++++++++
+>  1 file changed, 50 insertions(+)
 > 
-> diff --git a/bsd-user/qemu-bsd.h b/bsd-user/qemu-bsd.h
-> index 756425d18e..f7c8338213 100644
-> --- a/bsd-user/qemu-bsd.h
-> +++ b/bsd-user/qemu-bsd.h
-> @@ -32,6 +32,24 @@ int host_to_target_waitstatus(int status);
->   void h2g_rusage(const struct rusage *rusage,
->           struct target_freebsd_rusage *target_rusage);
->   
-> +/* bsd-misc.c */
-> +abi_long host_to_target_uuid(abi_ulong target_addr, struct uuid *host_uuid);
-> +
-> +abi_long target_to_host_semarray(int semid, unsigned short **host_array,
-> +        abi_ulong target_addr);
-> +abi_long host_to_target_semarray(int semid, abi_ulong target_addr,
-> +        unsigned short **host_array);
-> +
-> +abi_long target_to_host_semid_ds(struct semid_ds *host_sd,
-> +        abi_ulong target_addr);
-> +abi_long host_to_target_semid_ds(abi_ulong target_addr,
-> +        struct semid_ds *host_sd);
-> +
-> +abi_long target_to_host_msqid_ds(struct msqid_ds *host_md,
-> +        abi_ulong target_addr);
-> +abi_long host_to_target_msqid_ds(abi_ulong target_addr,
-> +        struct msqid_ds *host_md);
-> +
->   /* bsd-mem.c */
->   void target_to_host_ipc_perm__locked(struct ipc_perm *host_ip,
->           struct target_ipc_perm *target_ip);
-> 
+> diff --git a/qemu-options.hx b/qemu-options.hx
+> index c799286153..98c74cc9ff 100644
+> --- a/qemu-options.hx
+> +++ b/qemu-options.hx
 
-These are already present at the bottom of qemu-bsd.h.  Rebase error?
+<snip>
 
+> @@ -5730,6 +5740,46 @@ SRST
+>      they are specified. Note that the 'id' property must be set. These
+>      objects are placed in the '/objects' path.
+>  
+> +    ``-object monitor-hmp,id=id,chardev=chardev_id,readline=on|off``
+> +        Set up a monitor running the Human Monitor Protocol,
+> +        connected to the chardev ``chardev_id``.
+> +
+> +        The ``id`` parameter is a unique ID that can be used
+> +        to dynamically delete the monitor at runtime. Note
+> +        that monitors created using the historical syntax
+> +        will be allocated IDs following the pattern ``hmpcompatNN``.
+> +        Mixing ``-object`` with the historical monitor syntax is
+> +        discouraged.
+> +
+> +        The ``readline`` parameter, which defaults to ``on``,
+> +        controls whether the monitor provides interactive
+> +        prompts
 
-r~
+Missing full stop.
+So are you allowing a mode that I don't think was previously possible;
+HMP syntax but without readline?
+'interactive prompts' seems a strange way of putting it - 'line editing'
+is more normal isn't it?
+
+Dave
+
+-- 
+ -----Open up your eyes, open up your mind, open up your code -------   
+/ Dr. David Alan Gilbert    |       Running GNU/Linux       | Happy  \ 
+\        dave @ treblig.org |                               | In Hex /
+ \ _________________________|_____ http://www.treblig.org   |_______/
 
