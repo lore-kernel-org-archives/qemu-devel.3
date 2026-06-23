@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4164FCD4F26
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44341CDB470
 	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jun 2026 09:57:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wbxsE-0003n3-Hg; Tue, 23 Jun 2026 05:56:54 -0400
+	id 1wbxs1-0003Wi-Or; Tue, 23 Jun 2026 05:56:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wbxsB-0003ie-Ii
- for qemu-devel@nongnu.org; Tue, 23 Jun 2026 05:56:51 -0400
+ id 1wbxry-0003V1-9L
+ for qemu-devel@nongnu.org; Tue, 23 Jun 2026 05:56:38 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wbxsA-0003Xv-59
- for qemu-devel@nongnu.org; Tue, 23 Jun 2026 05:56:51 -0400
+ id 1wbxrw-0003UZ-Mc
+ for qemu-devel@nongnu.org; Tue, 23 Jun 2026 05:56:38 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1782208609;
+ s=mimecast20190719; t=1782208596;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=XsChjUp1KcbZxYJjnmda8WFjS2K5/o40Uam9XYFjjhM=;
- b=MJ6D65g88IUerNvwW6F0DRv6x67RHFuRF+QdNV2tNpVwfra8+5jBFP2oK8FR7rG39dfS6P
- q78nz3vmsD5cmRm71Md+mX9iuie/1TKBRhQ4uKNlbVy6SJcu+kj2JwbUznjhWMf8JGWGYS
- +3iDT0FbHh93q+jkyut70NmvpAJ8tug=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=KmimI47nQ6qKsuSsw8Wt1fXJdxy8LoAqdc0xiFquuQ8=;
+ b=D/qkjz+Gqng42fPbyLPejVL4VQ4mdsVAvpWiH5x0lhZbFzmotMdQpnpXhzsU8iPJ0qSReh
+ vOVSzL9UmCytuuXODEpnsBXTVrYYo/32fGP8++5Ny/xiB1ExZs3pvARIJ0ncPhB3Y5G6qt
+ hSQrv7Y2X95OxnPFgZSGJw24xKGYVn8=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-444-uvCJpXtfNKiK4qixwAn2cA-1; Tue,
- 23 Jun 2026 05:56:48 -0400
-X-MC-Unique: uvCJpXtfNKiK4qixwAn2cA-1
-X-Mimecast-MFC-AGG-ID: uvCJpXtfNKiK4qixwAn2cA_1782208606
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-652-RGnlKFJaNYW1O_JC3ZHv3Q-1; Tue,
+ 23 Jun 2026 05:56:32 -0400
+X-MC-Unique: RGnlKFJaNYW1O_JC3ZHv3Q-1
+X-Mimecast-MFC-AGG-ID: RGnlKFJaNYW1O_JC3ZHv3Q_1782208591
 Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 75E88195410D; Tue, 23 Jun 2026 09:56:45 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5D40E1955F5A; Tue, 23 Jun 2026 09:56:31 +0000 (UTC)
 Received: from berrange.com (unknown [10.44.34.133])
  by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 563651624; Tue, 23 Jun 2026 09:56:42 +0000 (UTC)
+ id 0FA54D6E; Tue, 23 Jun 2026 09:56:27 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: "Dr. David Alan Gilbert" <dave@treblig.org>,
@@ -57,9 +57,9 @@ Cc: "Dr. David Alan Gilbert" <dave@treblig.org>,
  Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH v4 13/35] monitor: use class methods for monitor_accept_input
-Date: Tue, 23 Jun 2026 10:55:29 +0100
-Message-ID: <20260623095551.2106712-14-berrange@redhat.com>
+Subject: [PATCH v4 09/35] monitor: remove 'skip_flush' field
+Date: Tue, 23 Jun 2026 10:55:25 +0100
+Message-ID: <20260623095551.2106712-10-berrange@redhat.com>
 In-Reply-To: <20260623095551.2106712-1-berrange@redhat.com>
 References: <20260623095551.2106712-1-berrange@redhat.com>
 MIME-Version: 1.0
@@ -91,98 +91,122 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This removes the need for using monitor_is_qmp() to check the
-subclass type, which is an anti-pattern.
+The 'skip_flush' field is set on the dummy throwaway HMP monitor
+object created by QMP's  'human-monitor-command', as an indication
+not to try to write data to the chardev. Instead the QMP command
+impl will grab the data straight out of the in-memory buffer.
+
+The flag is redundant, however, as the monitor code could instead
+simply check the 'fe_is_open' field on the CharFrontend, which
+will be false in the same scenarios that 'skip_flush' is true.
 
 Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- monitor/hmp.c              | 16 ++++++++++++++++
- monitor/monitor-internal.h |  5 +++++
- monitor/monitor.c          | 12 +++---------
- 3 files changed, 24 insertions(+), 9 deletions(-)
+ monitor/hmp.c              |  2 +-
+ monitor/monitor-internal.h |  4 +---
+ monitor/monitor.c          | 11 +++++++----
+ monitor/qmp-cmds.c         |  2 +-
+ monitor/qmp.c              |  2 +-
+ 5 files changed, 11 insertions(+), 10 deletions(-)
 
 diff --git a/monitor/hmp.c b/monitor/hmp.c
-index 08055839a4..1da9370ead 100644
+index d5905e2279..516aa25d4c 100644
 --- a/monitor/hmp.c
 +++ b/monitor/hmp.c
-@@ -70,6 +70,7 @@ static void monitor_hmp_set_readline(Object *obj, bool val, Error **errp)
- 
- int monitor_hmp_vprintf(Monitor *mon, const char *fmt, va_list ap)
-     G_GNUC_PRINTF(2, 0);
-+static void monitor_hmp_accept_input(Monitor *mon);
- 
- static void monitor_hmp_class_init(ObjectClass *cls, const void *data)
- {
-@@ -80,6 +81,7 @@ static void monitor_hmp_class_init(ObjectClass *cls, const void *data)
-                                    monitor_hmp_set_readline);
- 
-     moncls->vprintf = monitor_hmp_vprintf;
-+    moncls->accept_input = monitor_hmp_accept_input;
- }
- 
- static void monitor_hmp_init(Object *obj)
-@@ -100,6 +102,20 @@ int monitor_hmp_vprintf(Monitor *mon, const char *fmt, va_list ap)
-     return monitor_puts(mon, buf);
- }
- 
-+static void monitor_hmp_accept_input(Monitor *mon)
-+{
-+    qemu_mutex_lock(&mon->mon_lock);
-+    if (mon->reset_seen) {
-+        MonitorHMP *hmp = MONITOR_HMP(mon);
-+        assert(hmp->rs);
-+        readline_restart(hmp->rs);
-+        qemu_mutex_unlock(&mon->mon_lock);
-+        readline_show_prompt(hmp->rs);
-+    } else {
-+        qemu_mutex_unlock(&mon->mon_lock);
-+    }
-+}
-+
- static void monitor_command_cb(void *opaque, const char *cmdline,
-                                void *readline_opaque)
- {
-diff --git a/monitor/monitor-internal.h b/monitor/monitor-internal.h
-index 763b5c9625..592f146331 100644
---- a/monitor/monitor-internal.h
-+++ b/monitor/monitor-internal.h
-@@ -116,6 +116,11 @@ struct MonitorClass {
-      * notifications back to the client
-      */
-     void (*emit_event)(Monitor *mon, QAPIEvent event, QDict *qdict);
-+    /*
-+     * If non-NULL, perform any actions needed to prepare
-+     * the monitor to accept further client input
-+     */
-+    void (*accept_input)(Monitor *mon);
- };
- 
- struct Monitor {
-diff --git a/monitor/monitor.c b/monitor/monitor.c
-index 6f0353d9f1..2f16cd3053 100644
---- a/monitor/monitor.c
-+++ b/monitor/monitor.c
-@@ -576,16 +576,10 @@ int monitor_suspend(Monitor *mon)
- static void monitor_accept_input(void *opaque)
- {
-     Monitor *mon = opaque;
-+    MonitorClass *cls = MONITOR_GET_CLASS(mon);
- 
--    qemu_mutex_lock(&mon->mon_lock);
--    if (!monitor_is_qmp(mon) && mon->reset_seen) {
--        MonitorHMP *hmp_mon = container_of(mon, MonitorHMP, parent_obj);
--        assert(hmp_mon->rs);
--        readline_restart(hmp_mon->rs);
--        qemu_mutex_unlock(&mon->mon_lock);
--        readline_show_prompt(hmp_mon->rs);
--    } else {
--        qemu_mutex_unlock(&mon->mon_lock);
-+    if (cls->accept_input) {
-+        cls->accept_input(mon);
+@@ -1590,7 +1590,7 @@ void monitor_new_hmp(const char *chardev_id, bool use_readline, Error **errp)
+         return;
      }
  
-     qemu_chr_fe_accept_input(&mon->chr);
+-    monitor_data_init(&mon->parent_obj, false, false, false);
++    monitor_data_init(&mon->parent_obj, false, false);
+ 
+     if (mon->use_readline) {
+         mon->rs = readline_init(monitor_readline_printf,
+diff --git a/monitor/monitor-internal.h b/monitor/monitor-internal.h
+index 145d52fd71..d34f9be139 100644
+--- a/monitor/monitor-internal.h
++++ b/monitor/monitor-internal.h
+@@ -112,7 +112,6 @@ struct Monitor {
+     CharFrontend chr;
+     int suspend_cnt;            /* Needs to be accessed atomically */
+     bool is_qmp;
+-    bool skip_flush;
+     bool use_io_thread;
+ 
+     char *mon_cpu_path;
+@@ -194,8 +193,7 @@ extern QemuMutex monitor_lock;
+ extern MonitorList mon_list;
+ 
+ void monitor_complete(Monitor *mon, Error **errp);
+-void monitor_data_init(Monitor *mon, bool is_qmp, bool skip_flush,
+-                       bool use_io_thread);
++void monitor_data_init(Monitor *mon, bool is_qmp, bool use_io_thread);
+ void monitor_data_destroy(Monitor *mon);
+ int monitor_can_read(void *opaque);
+ void monitor_list_append(Monitor *mon);
+diff --git a/monitor/monitor.c b/monitor/monitor.c
+index 747ca27fd5..e3e5623a4b 100644
+--- a/monitor/monitor.c
++++ b/monitor/monitor.c
+@@ -188,7 +188,12 @@ void monitor_flush_locked(Monitor *mon)
+     size_t len;
+     const char *buf;
+ 
+-    if (mon->skip_flush) {
++    /*
++     * When used by QMP human-monitor-command, no chardev
++     * will be connected, as we want to just collect the
++     * output in the buffer
++     */
++    if (!mon->chr.fe_is_open) {
+         return;
+     }
+ 
+@@ -642,8 +647,7 @@ static void monitor_iothread_init(void)
+     mon_iothread = iothread_create("mon_iothread", &error_abort);
+ }
+ 
+-void monitor_data_init(Monitor *mon, bool is_qmp, bool skip_flush,
+-                       bool use_io_thread)
++void monitor_data_init(Monitor *mon, bool is_qmp, bool use_io_thread)
+ {
+     if (use_io_thread && !mon_iothread) {
+         monitor_iothread_init();
+@@ -651,7 +655,6 @@ void monitor_data_init(Monitor *mon, bool is_qmp, bool skip_flush,
+     qemu_mutex_init(&mon->mon_lock);
+     mon->is_qmp = is_qmp;
+     mon->outbuf = g_string_new(NULL);
+-    mon->skip_flush = skip_flush;
+     mon->use_io_thread = use_io_thread;
+ }
+ 
+diff --git a/monitor/qmp-cmds.c b/monitor/qmp-cmds.c
+index bfde769ef0..0d9adad288 100644
+--- a/monitor/qmp-cmds.c
++++ b/monitor/qmp-cmds.c
+@@ -168,7 +168,7 @@ char *qmp_human_monitor_command(const char *command_line, bool has_cpu_index,
+     char *output = NULL;
+     MonitorHMP *hmp = MONITOR_HMP(object_new(TYPE_MONITOR_HMP));
+ 
+-    monitor_data_init(&hmp->parent_obj, false, true, false);
++    monitor_data_init(&hmp->parent_obj, false, false);
+ 
+     if (has_cpu_index) {
+         int ret = monitor_set_cpu(&hmp->parent_obj, cpu_index);
+diff --git a/monitor/qmp.c b/monitor/qmp.c
+index 2a8532ef96..e3318b57db 100644
+--- a/monitor/qmp.c
++++ b/monitor/qmp.c
+@@ -572,7 +572,7 @@ void monitor_new_qmp(const char *chardev_id, bool pretty, Error **errp)
+     qemu_chr_fe_set_echo(&mon->parent_obj.chr, true);
+ 
+     /* Note: we run QMP monitor in I/O thread when @chr supports that */
+-    monitor_data_init(&mon->parent_obj, true, false,
++    monitor_data_init(&mon->parent_obj, true,
+                       qemu_chr_has_feature(mon->parent_obj.chr.chr,
+                                            QEMU_CHAR_FEATURE_GCONTEXT));
+ 
 -- 
 2.54.0
 
