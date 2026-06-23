@@ -4,55 +4,118 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF52DCDB470
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jun 2026 09:17:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20C98CD4F26
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jun 2026 09:23:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wbxFG-0005Ec-Oj; Tue, 23 Jun 2026 05:16:38 -0400
+	id 1wbxLl-00072u-JR; Tue, 23 Jun 2026 05:23:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <qemu_oss@crudebyte.com>)
- id 1wbxFF-0005EN-0M; Tue, 23 Jun 2026 05:16:37 -0400
-Received: from kylie.crudebyte.com ([5.189.157.229])
+ (Exim 4.90_1) (envelope-from <amachhiw@linux.ibm.com>)
+ id 1wbxLd-000723-MP; Tue, 23 Jun 2026 05:23:13 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <qemu_oss@crudebyte.com>)
- id 1wbxFD-000491-D1; Tue, 23 Jun 2026 05:16:36 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=crudebyte.com; s=kylie; h=Content-Type:Content-Transfer-Encoding:
- MIME-Version:References:In-Reply-To:Message-ID:Date:Subject:Cc:To:From:
- Content-ID:Content-Description;
- bh=6P2cA8wxhGbTxqiqXldIWqnxzb3Z+kPd731bhghbMBg=; b=turqzexMYnh80cgeYs8wlaXoyD
- updWOaZTwoJfN4yGaECps61L8umXvLEFoKWzC0n5ByGc8YXIKW5XSLDwjRZqaMK/UVtzihwOqUsy1
- EPs+3oNvZNFYS5dWnSZSxq59UjJcvZJqNtHaLybymJ4wspexrWnZcZNQQWrZ2sv26NXVw5YeLo4vT
- uqZuVeTjNNt1R9Adz6XEgGvccCo8MuNU/E6fbAaJRGwXAukA4kMm3jopQ4qP0ofvU1Jfs5Blkfiws
- prpmSUgNTN/UazshOfPulZ+zk/0Gvqbly4Al9YZYDyqT99r1kAck7X1Xy/FYL6hxtWZFMRDOhx+lX
- kd7KTKRUFmq+UEDTmMjXwgaEbbr8+yJePHDzw/akFEcmqd+opNZt3kKF2piG5b3X47BHEVYVv/b/O
- HpAwo6cJPlJtcuCZuGrwbBO5IqJz1/rpAmnHZF4/8R0j3RV6JcMpbYZSrqmriWNrJvulCNA17vfkT
- QXSnn9PKoS4lgdaNc/WOApri8HaNj5rQBlKoCU0mRdKk3g9NXOAIDCaRlPtcega23b6kPjEfFAyEp
- kVqKWLWqwkHRCCymHIpxbLcwfpgLUK9IxujEagjiyTd2wKkgfMknKnqBUXsv1hZcrzeHnNCk3EZHC
- KR0Od2qik6sC4kLJC1wau4qBHRALoJ1SI5ln9E/dM=;
-From: Christian Schoenebeck <qemu_oss@crudebyte.com>
-To: qemu-devel@nongnu.org, qemu-stable@nongnu.org
-Cc: Greg Kurz <groug@kaod.org>, Feifan Qian <bea1e@proton.me>,
- Stefano Stabellini <sstabellini@kernel.org>,
- Anthony PERARD <anthony@xenproject.org>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
-Subject: Re: [PATCH v2 0/8] 9pfs: fix DoS via Treaddir (CVE-2026-9238)
-Date: Tue, 23 Jun 2026 11:16:29 +0200
-Message-ID: <12917790.O9o76ZdvQC@weasel>
-In-Reply-To: <cover.1781287774.git.qemu_oss@crudebyte.com>
-References: <cover.1781287774.git.qemu_oss@crudebyte.com>
+ (Exim 4.90_1) (envelope-from <amachhiw@linux.ibm.com>)
+ id 1wbxLc-0005aN-1K; Tue, 23 Jun 2026 05:23:13 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 65N6n3ST1142953; Tue, 23 Jun 2026 09:23:10 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-type:date:from:in-reply-to:message-id:mime-version
+ :references:subject:to; s=pp1; bh=IOtiJ9y0jOvLN4XKUFnzSCrOY7onpm
+ cdNThrdwGzwZw=; b=Kq+K1k9F436RI/uJVFRZNTbfjCAv7J/p+Zk4w9cxQ45CdW
+ 4u8N2uZLcc49NeZMsb9bMQyHcrek2povU5yHVNxMKZQcHbH1nQMpa6oyddES8j2i
+ TocYMwvLmrk7XlpCGdmTchqU2KoG4eW8HkeZ+bzwYAKKROeHOAaFR2ESeIHfuKuf
+ 8PlKqfmelDi9s8EJRXLDOrjT23tzqiSQByZ+STYeG1jX5cs9DMdfNfGowEfBnjkI
+ aCgJhmnNOsauaPT27/r0+l2+Xyc6NL2uVzj+9fkMKxRgKy6u4xj/lyyxQmo0cPnl
+ FWMt6yw3O+6V6XRaDF7fZxRP1Of93OZlW8SgXrIg==
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4ewh9gdnjt-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 23 Jun 2026 09:23:07 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 65N9Je3a001354;
+ Tue, 23 Jun 2026 09:23:07 GMT
+Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4ex7vyj6a0-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 23 Jun 2026 09:23:07 +0000 (GMT)
+Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
+ [10.20.54.102])
+ by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 65N9N3Fr43581926
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 23 Jun 2026 09:23:03 GMT
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 49D0720043;
+ Tue, 23 Jun 2026 09:23:03 +0000 (GMT)
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 52A2E2004B;
+ Tue, 23 Jun 2026 09:23:01 +0000 (GMT)
+Received: from fedora (unknown [9.5.7.39])
+ by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTPS;
+ Tue, 23 Jun 2026 09:23:01 +0000 (GMT)
+Date: Tue, 23 Jun 2026 14:53:04 +0530
+From: Amit Machhiwal <amachhiw@linux.ibm.com>
+To: Vaibhav Jain <vaibhav@linux.ibm.com>
+Cc: Amit Machhiwal <amachhiw@linux.ibm.com>, qemu-ppc@nongnu.org,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Nicholas Piggin <npiggin@gmail.com>,
+ Chinmay Rath <rathc@linux.ibm.com>, Glenn Miles <milesg@linux.ibm.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, kvm@vger.kernel.org,
+ qemu-devel@nongnu.org
+Subject: Re: [PATCH v3 3/3] target/ppc/kvm: Use host compatibility mode for
+ nested guests
+Message-ID: <20260623145009.caa751f8-9a-amachhiw@linux.ibm.com>
+Mail-Followup-To: Vaibhav Jain <vaibhav@linux.ibm.com>, 
+ qemu-ppc@nongnu.org, Harsh Prateek Bora <harshpb@linux.ibm.com>, 
+ Nicholas Piggin <npiggin@gmail.com>, Chinmay Rath <rathc@linux.ibm.com>, 
+ Glenn Miles <milesg@linux.ibm.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ kvm@vger.kernel.org, qemu-devel@nongnu.org
+References: <20260616113915.25589-1-amachhiw@linux.ibm.com>
+ <20260616113915.25589-4-amachhiw@linux.ibm.com>
+ <87tsqybx39.fsf@vajain21.in.ibm.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="utf-8"
-Received-SPF: pass client-ip=5.189.157.229;
- envelope-from=qemu_oss@crudebyte.com; helo=kylie.crudebyte.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <87tsqybx39.fsf@vajain21.in.ibm.com>
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Authority-Analysis: v=2.4 cv=c62bhx9l c=1 sm=1 tr=0 ts=6a3a507c cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
+ a=kj9zAlcOel0A:10 a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=VnNF1IyMAAAA:8
+ a=tPGWoPwWrlZebnym-z0A:9 a=CjuIK1q_8ugA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjIzMDA3NSBTYWx0ZWRfX4STSnRX7xIXy
+ nxwFl102Ge08T1Ze8UgPusPPaQ4aWOhVOPNCGd5s7akuf23BP/AKCDV3PbAg/OQn31jMhriGsKG
+ nJBiY6MWGl4eic7g5fU6VYMJuRWCLf2N+IpQr0wzPSCRSnJkE3b3P6wivykYcHtfHTpm+lWEQuk
+ EJI7/89on4YibtPzzPRmRFhEebobyJz5Yv48XVtsLzsPcZNB4F4Cml+IvEXlg8YZUX0npijStj+
+ T7tXn7LrMumcPRuPYasRee21/0os/V76/G/FnKlvWL0WnW0X8WU1LHy2PhUXaGSxORMYtR9ubrT
+ V8XvSh7B4p4DykB5X/7jBgRUrBZw9mPh9p47KW0AZ6pK46LcNUuQ4JuQ23lLRSJOfZSm9zZP01P
+ fosUfuUNLVB5Kdhp39sdx9eS/dHJ9A==
+X-Proofpoint-GUID: 9Xl24Vao034gVEvNYhpmp2kFPWnkg5tr
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjIzMDA3NSBTYWx0ZWRfX58eRuSshmiei
+ Wt8NN3ZIhptlbN+pMrGeKoKl4jpt/9qRhAC/5dfCm3EOlDygmu8Kvq0a1h94q+JNqFX3GSpIkVd
+ 3pYV0H/r+jveUj892sAbsV4kRriv56o=
+X-Proofpoint-ORIG-GUID: nv2J2eB3QR4MOpHdLCGI-36W5QonI0MO
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-23_02,2026-06-22_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 lowpriorityscore=0 spamscore=0 bulkscore=0 adultscore=0
+ suspectscore=0 malwarescore=0 classifier=typeunknown authscore=0 authtc=
+ authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.22.0-2606150000 definitions=main-2606230075
+Received-SPF: pass client-ip=148.163.158.5;
+ envelope-from=amachhiw@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -69,72 +132,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Friday, 12 June 2026 20:22:52 CEST Christian Schoenebeck wrote:
-> Feifan Qian reported a potential DoS and unbound host allocation via
-> Treaddir request due to msize not being capped on Tversion handshake, and
-> allocation size in Treaddir being capped too late.
-> 
-> Attack Vector of Vulnerability:
-> 
-> A malicious guest can negotiate a large 9P msize during Tversion handshake
-> and then send Treaddir request with a large 'count' parameter. The 9p
-> server would allocate host memory proportional to the negotiated 'msize'
-> for collecting directory entries, before validating that the actual reply
-> buffer can hold the response. If the reply buffer is smaller than what was
-> allocated, the response marshalling fails, but the memory has already been
-> consumed.
-> 
-> This can lead to:
-> 
->  - Unbound host memory allocation proportional to the negotiated msize.
->  - Denial of service against the QEMU process.
->  - Potential OOM conditions affecting entire host system.
-> 
-> This series fixes this vulnerability on two layers.
+Hi Vaibhav,
 
-Queued on 9p.next:
-https://github.com/cschoenebeck/qemu/commits/9p.next
+Thanks for reviewing the patch. Please find my response below.
 
-Thanks!
+On 2026/06/19 04:45 PM, Vaibhav Jain wrote:
+> Hi Amit,
+> 
+> Thanks for the patch. My review comments inline below:
+> 
+> Amit Machhiwal <amachhiw@linux.ibm.com> writes:
+> 
+> > On POWER systems, the host CPU may run in a compatibility mode (e.g.,
+> > a Power11 processor operating in Power10 compatibility mode). When
+> > running nested KVM guests, QEMU currently derives the host CPU type
+> > using mfpvr(), which reflects the physical processor version. This can
+> > result in a mismatch between the CPU model used by QEMU and the
+> > compatibility mode enforced by the host, leading to guest boot failures
+> > such as "KVM-NESTEDv2: couldn't set guest wide elements".
+> >
+> > Update kvm_ppc_get_host_cpu_class() to check if the host is running in
+> > a compatibility mode using kvm_ppc_host_compat_pvr(). When available,
+> > use the compatibility PVR instead of the raw hardware PVR when selecting
+> > the CPU model. This ensures that QEMU selects a CPU model consistent
+> > with the host compatibility mode, allowing nested guests to boot
+> > correctly.
+> >
+> > Signed-off-by: Amit Machhiwal <amachhiw@linux.ibm.com>
+> > ---
+> >  target/ppc/kvm.c | 9 +++++++++
+> >  1 file changed, 9 insertions(+)
+> >
+> > diff --git a/target/ppc/kvm.c b/target/ppc/kvm.c
+> > index 9e5006e0c2cd..a72f237f0c8a 100644
+> > --- a/target/ppc/kvm.c
+> > +++ b/target/ppc/kvm.c
+> > @@ -2672,6 +2672,15 @@ PowerPCCPUClass *kvm_ppc_get_host_cpu_class(void)
+> >      uint32_t host_pvr = mfpvr();
+> >      PowerPCCPUClass *pvr_pcc;
+> >  
+> > +#if defined(TARGET_PPC64)
+> Use CONFIG_KVM
 
-/Christian
- 
-> Summary of patches fixing this vulnerability:
-> 
->  - Layer 1: Patches 1..4 cap msize during Tversion handshake to reasonable
->    maximum value. It does so by limiting msize to the theoretical maximum
->    msize value supported by transport implementation.
-> 
->  - Layer 2: Patches 5..8 cap the allocated host memory in the Treaddir
-> handler specifically to the current, real response buffer size of transport
-> implementation.
-> 
-> v2:
->   - Patch 3:
->     - Pick the smallest limit from all Xen rings.
->     - Return zero if Xen's ring count is zero.
->   - Patch 7:
->     - Use a local iovec in_sg[2] array variable to avoid potential NULL
->       pointer dereference.
->   - Patch 8:
->     - Fix potential underflow if response_buffer_size() returned a value
->       smaller than 11.
-> 
-> Christian Schoenebeck (8):
->   hw/9pfs: add msize_limit transport callback
->   9pfs/virtio: implement msize_limit callback
->   9pfs/xen: implement msize_limit callback
->   hw/9pfs: cap negotiated msize to transport limit
->   hw/9pfs: add response_buffer_size transport callback
->   9pfs/virtio: implement response_buffer_size callback
->   9pfs/xen: implement response_buffer_size callback
->   hw/9pfs: cap Treaddir allocation (CVE-2026-9238)
-> 
->  hw/9pfs/9p.c               | 34 ++++++++++++++++++++++++++++++++--
->  hw/9pfs/9p.h               |  2 ++
->  hw/9pfs/virtio-9p-device.c | 17 +++++++++++++++++
->  hw/9pfs/xen-9p-backend.c   | 31 +++++++++++++++++++++++++++++++
->  4 files changed, 82 insertions(+), 2 deletions(-)
+As I mentioned in the response to previous patch's review comments, the
+TARGET_PPC64 guard is needed to fix ppc32 build breakage, and CONFIG_KVM
+would be redundant since target/ppc/kvm.c is only compiled when
+CONFIG_KVM=y.
 
+Thanks,
+Amit
 
+> 
+> > +    uint32_t compat_host_pvr;
+> > +
+> > +    compat_host_pvr = kvm_ppc_host_compat_pvr();
+> > +    if (compat_host_pvr) {
+> > +        host_pvr = compat_host_pvr;
+> > +    }
+> > +#endif /* TARGET_PPC64 */
+> > +
+> >      pvr_pcc = ppc_cpu_class_by_pvr(host_pvr);
+> >      if (pvr_pcc == NULL) {
+> >          pvr_pcc = ppc_cpu_class_by_pvr_mask(host_pvr);
+> > -- 
+> > 2.50.1 (Apple Git-155)
+> >
+> >
+> 
+> -- 
+> Cheers
+> ~ Vaibhav
 
