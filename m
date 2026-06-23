@@ -4,99 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B955CDB470
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jun 2026 06:33:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F37CCD4F26
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jun 2026 06:58:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wbugC-00007r-CX; Tue, 23 Jun 2026 02:32:16 -0400
+	id 1wbv4W-0003My-LM; Tue, 23 Jun 2026 02:57:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shivangu@linux.ibm.com>)
- id 1wbugA-00007c-Iq; Tue, 23 Jun 2026 02:32:14 -0400
+ (Exim 4.90_1) (envelope-from <amachhiw@linux.ibm.com>)
+ id 1wbv4U-0003Ml-VI; Tue, 23 Jun 2026 02:57:22 -0400
 Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shivangu@linux.ibm.com>)
- id 1wbug8-0006eD-RL; Tue, 23 Jun 2026 02:32:14 -0400
+ (Exim 4.90_1) (envelope-from <amachhiw@linux.ibm.com>)
+ id 1wbv4S-0003mb-2r; Tue, 23 Jun 2026 02:57:22 -0400
 Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65N0mNm6408278; Tue, 23 Jun 2026 06:32:09 GMT
+ 65N6mQxx1207000; Tue, 23 Jun 2026 06:57:16 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:message-id:mime-version
- :subject:to; s=pp1; bh=ucU9Rb92tL5uSUoZ3qLzdeyB3F708Lcvhe0qrKFT6
- cM=; b=QgIhvWXDXRs+f5S6Xuv/B43exZrCVkhbQ5Uz1/BdtAHvDdhndCyTKySqW
- No997U9KBgVi9ls7fpYB00QAjMxHDUFpR+NN9at9Bo18BPbahoCpovK/wtPAiPvw
- TOZACkvYH0rgw+93piB6/ixZnN/xuiAqeDZvN1zJfQvqV1sQuETIZUgQsiCgRU2Y
- 7l9Wof2EruDIoS4OwJHgUdVfe0FEEJ48p8abzaxCwb29fsON76Ww759iZSqpqFTZ
- sSBbdKI8O1V2m23ij4ihHc7Up0LPQJTu0ooYSxIEVTTrxMG1iNIxVj8kjOVPY+ma
- D61OeeJolE6GuIGO0b3Iy8jzOgz+Q==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4ewjc3d12e-1
+ :content-type:date:from:in-reply-to:message-id:mime-version
+ :references:subject:to; s=pp1; bh=U9/skzFrUWP7F61OLRMfCbEGu8fb+T
+ w6bA4/X1+ZQmQ=; b=koLKZr72+VkXfdWOlP8nLHP5RmZFa0unDcFQ+gP3JMe/aJ
+ dqExrK0eWA778dHSp09lDzsounF+KTjkL3EPoRXYaD870zGmbbeWsMpK8iI4rHdx
+ VYg3bp0N23jvOMpRIdOz7Wt4yZorGich1+GAAvOc5udNFmYhYK0t+qlnJj17KHoS
+ E2rOTANvAhxZsmsg7jk3dVlspc7sYz9sr8BtOE+285r51chz53Ku5ESp2sSJz7MY
+ tJ+UbUQ3lyf2PyiZQ6YPqfwhV/43FPYC+nypR52CEZq17yvvQ+YXGASbW0asdLmb
+ QGlitydrkNEETbRMnbULvYqZdU/cPsh7nMPmMZdg==
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4ewjc3d3u9-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 23 Jun 2026 06:32:09 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 65N6Ji32029989;
- Tue, 23 Jun 2026 06:32:08 GMT
-Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4ex6ph9trd-1
+ Tue, 23 Jun 2026 06:57:16 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 65N6nxuV002277;
+ Tue, 23 Jun 2026 06:57:15 GMT
+Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4ex7vyhnh8-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 23 Jun 2026 06:32:07 +0000 (GMT)
-Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
- [10.20.54.105])
- by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 65N6W3KF29950264
+ Tue, 23 Jun 2026 06:57:15 +0000 (GMT)
+Received: from smtpav04.fra02v.mail.ibm.com (smtpav04.fra02v.mail.ibm.com
+ [10.20.54.103])
+ by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 65N6vBTN49676692
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 23 Jun 2026 06:32:03 GMT
-Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 5A42B20040;
- Tue, 23 Jun 2026 06:32:03 +0000 (GMT)
-Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 1C7C82004B;
- Tue, 23 Jun 2026 06:32:01 +0000 (GMT)
-Received: from shivang.com (unknown [9.124.222.24])
- by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 23 Jun 2026 06:32:00 +0000 (GMT)
-From: Shivang Upadhyay <shivangu@linux.ibm.com>
-To: qemu-devel@nongnu.org, qemu-ppc@nongnu.org
-Cc: adityag@linux.ibm.com, harshpb@linux.ibm.com, npiggin@gmail.com,
- milesg@linux.ibm.com, Shivang Upadhyay <shivangu@linux.ibm.com>
-Subject: [PATCH 0/2] ppc/pnv: fixing external dtb
-Date: Tue, 23 Jun 2026 12:01:54 +0530
-Message-ID: <20260623063156.1110370-1-shivangu@linux.ibm.com>
-X-Mailer: git-send-email 2.54.0
+ Tue, 23 Jun 2026 06:57:11 GMT
+Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id A1E1320043;
+ Tue, 23 Jun 2026 06:57:11 +0000 (GMT)
+Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 262C420040;
+ Tue, 23 Jun 2026 06:57:10 +0000 (GMT)
+Received: from fedora (unknown [9.5.7.39])
+ by smtpav04.fra02v.mail.ibm.com (Postfix) with ESMTPS;
+ Tue, 23 Jun 2026 06:57:09 +0000 (GMT)
+Date: Tue, 23 Jun 2026 12:27:13 +0530
+From: Amit Machhiwal <amachhiw@linux.ibm.com>
+To: Shivang Upadhyay <shivangu@linux.ibm.com>
+Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, adityag@linux.ibm.com,
+ harshpb@linux.ibm.com, npiggin@gmail.com, milesg@linux.ibm.com
+Subject: Re: [PATCH 2/2] ppc/pnv: add test to verify external DTB is honored
+Message-ID: <20260623122410.5fae6f07-db-amachhiw@linux.ibm.com>
+Mail-Followup-To: Shivang Upadhyay <shivangu@linux.ibm.com>, 
+ qemu-devel@nongnu.org, qemu-ppc@nongnu.org, adityag@linux.ibm.com, 
+ harshpb@linux.ibm.com, npiggin@gmail.com, milesg@linux.ibm.com
+References: <20260623063156.1110370-1-shivangu@linux.ibm.com>
+ <20260623063156.1110370-3-shivangu@linux.ibm.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260623063156.1110370-3-shivangu@linux.ibm.com>
 X-TM-AS-GCONF: 00
 X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Authority-Analysis: v=2.4 cv=X4Ni7mTe c=1 sm=1 tr=0 ts=6a3a2869 cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
- a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=iQ6ETzBq9ecOQQE5vZCe:22 a=VwQbUJbxAAAA:8 a=VnNF1IyMAAAA:8
- a=ufWLgvX7MhiIfYz792EA:9 a=zgiPjhLxNE0A:10 a=zZCYzV9kfG8A:10
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjIzMDA0OCBTYWx0ZWRfXy6zSmtsm8HEU
- LHWk4l4M531G+b8Y59Hee5/eVppZe51Ogbn+CJysdIOsED5uwobakusdIgs1bqSiiM9bPSJEfid
- L8Qs+ZjN1oS8UsR6P9TTH1QzSV++pzA=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjIzMDA0OCBTYWx0ZWRfX0XlVzJZg67Mt
- q7fokBZdTjqRDEP00uXfZn8yxF25iPx9piFnOXmnGo+gzKMzEeRBsYwlsY0eOdJMhbERFdr7oZk
- M/cS1Qg1UVAJaWi+vICLkFnFDyxgmuWvprSS8O+pEalPL6odZya73DxbDJ7FPjvj9t3OLuKu6RZ
- rKjo7WWiE+z2gCrbr8faXBfSm9UYbMypezZ9WODWamoVS+287nhfQGC0zdCwZKDOGcBjAsUrRj6
- EBYDU30dtcjQrZ+rwTkYz+AJxJkNULopMLu4Yv4KG1D1Jd46oq9uodfl2Z7YxFbjdOiOJsIv1NF
- ldNXuvCN2mOQKOLwDjwFbK6zVasK4MybUx1ZMjuvdBVvODMsaE7s/dkEsdtdj3YpoJ2/jq757d1
- 3I3JDmJnjDI0nl8tcjeBLikqTGor32HMMR/ZQEzhDkTELax8dSEMSs3soF/GJfOLpqSJP+ZYySJ
- tsDnCNbIgLYLDw/d7bA==
-X-Proofpoint-ORIG-GUID: xDsNtROXZtAjTg0Dn8GQhHnh6cI3dcGl
-X-Proofpoint-GUID: yM1l_OtreHvBjtCMgDAoctAmYmGQQm19
+X-Authority-Analysis: v=2.4 cv=X4Ni7mTe c=1 sm=1 tr=0 ts=6a3a2e4c cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
+ a=kj9zAlcOel0A:10 a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=ID6ng7r3AAAA:8
+ a=NEAV23lmAAAA:8 a=VnNF1IyMAAAA:8 a=z2b1RXnOswK0OTJWYjIA:9 a=CjuIK1q_8ugA:10
+ a=AkheI1RvQwOzcTXhi5f4:22
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjIzMDA1MyBTYWx0ZWRfX6q2LT+6KXSX5
+ FF1hRbpgAdS0EngQyFpVhvwtG183TRBBQql/6AE26Hd3qvVrhKzm3DFEDtJm0EtxpBE+2+AZ+9T
+ kCufc7vIQouCIrI3h+F0VuQDLJBWuDQ=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjIzMDA1MyBTYWx0ZWRfX4A4Fwuyefa2q
+ b/AtvEkqzU4rS79M4S0g7nLx9BQ+n4A0ccNceRaZi8d7+I67Uu7SPhb75sv8YJvQ5Vzb4lhnt4z
+ wJ3cGOtn4jEbvFS7t4xDciR0RiYYI0AW/FF5ChXX1daj+sOdcLhA0azpxTUNp1KQKSi/PL101GY
+ Dy8ELwImAX46pcCVCtFFwoYZU7NUUE6gpxTGFMaxCLtPuV3MR699cnnjkl2itg2gRNHJzCVT0TN
+ xgGJUJYGg0voaxmtPNImxMxnsZM+5dk2ekiQ52mJTsYl/O6hJFMc4D3hbISbfK4hcNgKY8R6Gtv
+ FA/1iauG6/cLT2vvU52nCcESdPnRAuA2FuZFneoMg7iSuhy30ljHrDGAoLPq22+LHrmmCdBcsjy
+ 94CMCRF6MmNwP+/j22EH5TofGshV/JlrQL69RURCkDcmhdL4kSU1R3VVzHSsCPg+Fb9gSPcBYnM
+ 00JuqPqiumQpmK5skQw==
+X-Proofpoint-ORIG-GUID: yx9WwmSHrrVxPv3A2QEY-E0X3p8YV-CR
+X-Proofpoint-GUID: FBbrBOlZ7zsqlDCYokwk5oWUEzUBQcan
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-23_01,2026-06-22_01,2025-10-01_01
+ definitions=2026-06-23_02,2026-06-22_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
  phishscore=0 bulkscore=0 suspectscore=0 spamscore=0 priorityscore=1501
  impostorscore=0 malwarescore=0 clxscore=1015 adultscore=0 lowpriorityscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606230048
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606230053
 Received-SPF: pass client-ip=148.163.156.1;
- envelope-from=shivangu@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
+ envelope-from=amachhiw@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
@@ -119,30 +126,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently powerpc pnv machines doesnt respect `-dtb`
-argument passed from outside. During cpu start content of
-machine->fdt is overwritten by `pnv_dt_create`.
+On 2026/06/23 12:01 PM, Shivang Upadhyay wrote:
+> Signed-off-by: Shivang Upadhyay <shivangu@linux.ibm.com>
+> ---
+>  tests/functional/ppc64/test_powernv.py | 19 +++++++++++++++++++
+>  1 file changed, 19 insertions(+)
 
-This was previously found and fixed, during the discussion
-for dumpdtb issue [1]. But reintroduced in MPIPL support
-[2]. Saddly it skipped in the review phase [3].
+The test addition looks fine, but the commit message body is missing.
+According to the official QEMU submission guidelines at:
 
-Adding a functional test for checking the external dtb case
-in powernv11.
+  https://www.qemu.org/docs/master/devel/submitting-a-patch.html#write-a-meaningful-commit-message
 
-[1] https://lore.kernel.org/all/20260323231612.GA2637687@ax162/
-[2] https://lore.kernel.org/qemu-devel/20260310124619.3909045-8-adityag@linux.ibm.com/
-[3] https://lore.kernel.org/qemu-devel/abAmBV7g_bGNw0Ax@shivang.upadyay/
+  "Commit messages should be meaningful and should stand on their own as
+  a historical record of why the changes you applied were necessary or
+  useful."
 
-Shivang Upadhyay (2):
-  ppc/pnv: avoid regenerating DTB if external DTB is present
-  ppc/pnv: add test to verify external DTB is honored
+You may want to add a commit message body in the next version.
 
- hw/ppc/pnv.c                           | 10 ++++++++--
- tests/functional/ppc64/test_powernv.py | 19 +++++++++++++++++++
- 2 files changed, 27 insertions(+), 2 deletions(-)
+Thanks,
+Amit
 
--- 
-2.54.0
-
+> 
+> diff --git a/tests/functional/ppc64/test_powernv.py b/tests/functional/ppc64/test_powernv.py
+> index 0ea6c93e42..80801ee3dc 100755
+> --- a/tests/functional/ppc64/test_powernv.py
+> +++ b/tests/functional/ppc64/test_powernv.py
+> @@ -27,6 +27,11 @@ class PowernvMachine(LinuxKernelTest):
+>           'buildroot/qemu_ppc64le_powernv8-2025.02/rootfs.ext2'),
+>          'aee2192b692077c4bde31cb56ce474424b358f17cec323d5c94af3970c9aada2')
+>  
+> +    # testdtb for power11, which contains string "hello world" in command line
+> +    ASSET_SAMPLE_DTB = Asset(
+> +        ('https://github.com/roz3x/qemu/raw/refs/heads/sample-dtb/output.dtb'),
+> +        '2dd3330561768fc5c8e4b93aa29bc44c64278d186f1e0f8c584cdf15c3f8cf43')
+> +
+>      def do_test_linux_boot(self, command_line = KERNEL_COMMON_COMMAND_LINE):
+>          self.require_accelerator("tcg")
+>          kernel_path = self.ASSET_KERNEL.fetch()
+> @@ -104,6 +109,20 @@ def do_test_ppc64_powernv(self, proc):
+>          # Device detection output driven by udev probing is sometimes cut off
+>          # from console output, suspect S14silence-console init script.
+>  
+> +    def test_ppc64_powernv_external_dtb(self):
+> +        self.set_machine('powernv11')
+> +        self.require_accelerator("tcg")
+> +
+> +        kernel_path = self.ASSET_KERNEL.fetch()
+> +        sample_dtb_path = self.ASSET_SAMPLE_DTB.fetch()
+> +        self.vm.set_console()
+> +        self.vm.add_args('-kernel', kernel_path,
+> +                         '-dtb', sample_dtb_path)
+> +        self.vm.launch()
+> +
+> +        # check if custom dtb is reflected or not
+> +        wait_for_console_pattern(self, "Kernel command line: hello world", self.panic_message)
+> +
+>      def test_powernv8(self):
+>          self.set_machine('powernv8')
+>          self.do_test_ppc64_powernv('P8')
+> -- 
+> 2.54.0
+> 
+> 
 
