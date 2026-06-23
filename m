@@ -4,147 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C1F6CD4F26
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jun 2026 09:49:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC96CCD4F26
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jun 2026 09:56:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wbxkV-0002Ng-UB; Tue, 23 Jun 2026 05:48:55 -0400
+	id 1wbxra-0003Qc-U8; Tue, 23 Jun 2026 05:56:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1wbxkU-0002NL-M6
- for qemu-devel@nongnu.org; Tue, 23 Jun 2026 05:48:54 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wbxrZ-0003Q6-HQ
+ for qemu-devel@nongnu.org; Tue, 23 Jun 2026 05:56:13 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1wbxkS-00027E-U5
- for qemu-devel@nongnu.org; Tue, 23 Jun 2026 05:48:54 -0400
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65N7kn6r3228431
- for <qemu-devel@nongnu.org>; Tue, 23 Jun 2026 09:48:50 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- F5AFpzWujmChxvA0hg3bh2AQb6hFPXtAkXxhemqr1tU=; b=nsDf2AC+Mj8/UCJ/
- 1e5wClZKd75A+QJdjOQPpeYy7JB44NZ3eoEXixozSz70+CaIm5yVrzaUn10HJDnm
- GlauRfpxdOOkk+bB1FYa/qJXXnjPiw1umBG1jj9QOhsi6VWZV1VL6Jthg+6dkQRb
- /360GKObQMBihoJIAcSsMdr6gFw/NFb2THupg+B335qnRDeAyEp+56o8PvgYzR0R
- z1U4ZPJGustB2U6HJi2OXM6RBqZqSUX99KaXbiJP+NpNVrzv4D82a+9H0GoPjr/3
- nbpcbAqTmlDAPI8bXXQrvdcmEHkgHTiyK5e0uK2P/perjhXA/AfClkfNRY9imDXE
- fyf5QQ==
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
- [209.85.222.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4eyp29gh60-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 23 Jun 2026 09:48:49 +0000 (GMT)
-Received: by mail-qk1-f200.google.com with SMTP id
- af79cd13be357-91579011fd1so792994485a.1
- for <qemu-devel@nongnu.org>; Tue, 23 Jun 2026 02:48:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1782208129; x=1782812929; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=F5AFpzWujmChxvA0hg3bh2AQb6hFPXtAkXxhemqr1tU=;
- b=Wj+A2+5yRiE3vsg/hjyn/w72iFyIZV2CvQniTEUSO2flKQma4WG5vtTU5RFU4E9Ecm
- dbOc9tFwvAgL/56gNSAXAeF7M55woZBSpc973GkPmSwuhNUX20C2tbekiNtKU9v0IxMo
- ofJdgM5U/4TPiokxUC/RPPFUBPFFE1y/VbmlhCzjkThW0Q8WNpj13LMqRY7O4rZm+Dyt
- 9S2c7nhp9uRSf+ePLXDe4Jm8c7SeQMTptWN+lLntQ/yiDTixDGxTh3T276lzxiBDWLqH
- tJ4/9ls9Otjjxo92f7NFBzF7M3oI03Bpt4DNg3q30ikjz5/BUv0NBwvL08bQCekkhBRw
- ePiA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782208129; x=1782812929;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=F5AFpzWujmChxvA0hg3bh2AQb6hFPXtAkXxhemqr1tU=;
- b=MpF+Hyh59diHuZR2x0yIzORGSDZjRJKd3ZL73/3+PqAB0HwaqhLSHL82QywIXMI68p
- yIK8aUQdBFJzmLiYnL5PFh0kf2tc+52N3ay0PpkmEcl/IMTZDPClwRaVMSRDdjuwEQBf
- dqpK09VV8sJggn2R4JR37XV8eAqiQ9IZtscLSDQuWevmKBhOo+0NfCNUcS4qifymo2zs
- HeXxSYa4tacpLJm8csUn1j8YIhTEQBzcSXKxH8l3Qb7cEq0SwVQgv/udchQkTgdO9phy
- fJl+3KxQw6l8SMneDdxJVzywzSq8Ds35IuBYoR21y1PHGJbGpoh1CoJdMX4lAQ2jtI2L
- SKww==
-X-Forwarded-Encrypted: i=1;
- AFNElJ86Puxb3xqJazz8mPJ78HsDoz9qYUILkTj39hwbJqij7PLyX2TSlRrb+R/BkeHz1TOP0BASGE4ZXxLP@nongnu.org
-X-Gm-Message-State: AOJu0Yy3+3XK6tsA+w8KO/PvMYsWdA2w8+lvvJMCJUIQftMZAoa2Xud4
- I4kUVvCg6v4V2Vh0vrr98SrFTsBsoDxYGlMZkYDldLvaNZ9A8fbzsW0j06QPlYy9qexMUPYuMaw
- qF3Ak0hZ+bYodC/0wOlafDk8qW2/8gxpp6xu0CrCKvYK9WTDy1Lmjyji8WQ==
-X-Gm-Gg: AfdE7ckeS1dGezHotIWxddKp/UtHcIOsRTlyJeT+BYObSbmwih1yR4U34uVtrP9BjvW
- 064zb3SSYPZcNUyGZOlBC9+Ie1vLzLqcXxJinvQYDA33F+wGUAfjzgklNLc0p3sUftItsQVB3dz
- rE9fqt8IsqkI4UVkjGh0hiT3Djn619u0bViws8ra6z/3OvcNt/Dv49aq5tX5Bs+danDlhCiUdqG
- ZbCQ5C/VweORpqRFu+u5YkznZRnE7YknT5h8N8YF/enfo73yxVK+aqT1sDxwY50W2i7cxdFiqvH
- bmhvTAuoE43kSbag7EgQy9Ejp5QssKWYH9XQmrH2e9bKP3iMcEfm8L+NzcqOf+iB/dp3FgYAqHL
- n6GGudhHHgc56g8hbQR0Z3D4KrdRCgx1nifpRv1/0g9w8
-X-Received: by 2002:a05:620a:408c:b0:915:b852:4342 with SMTP id
- af79cd13be357-9208f832fc4mr2954554485a.18.1782208128703; 
- Tue, 23 Jun 2026 02:48:48 -0700 (PDT)
-X-Received: by 2002:a05:620a:408c:b0:915:b852:4342 with SMTP id
- af79cd13be357-9208f832fc4mr2954551985a.18.1782208128189; 
- Tue, 23 Jun 2026 02:48:48 -0700 (PDT)
-Received: from [192.168.68.106] ([189.79.21.40])
- by smtp.gmail.com with ESMTPSA id
- af79cd13be357-925fa56463dsm241922985a.0.2026.06.23.02.48.46
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 23 Jun 2026 02:48:47 -0700 (PDT)
-Message-ID: <9d2737e3-34f0-4f68-813b-37059615bced@oss.qualcomm.com>
-Date: Tue, 23 Jun 2026 06:48:44 -0300
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wbxrX-0003SJ-KB
+ for qemu-devel@nongnu.org; Tue, 23 Jun 2026 05:56:13 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1782208570;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=2jbJGdDn1mV7YLShN6kcwXeS8ouup3eLUogwItGVtLQ=;
+ b=DCSAIAGVxVRgLj3+38lgKXrk2iQAUjMWxT1Qfm+J2fqeub7tIn+P0IzYbakXyfIANLdv4R
+ C/TSEPYJnt9WoDZYh/yiOHRQPJ+x3Qyc6WsuMetlfwkKLxlG9XzvNl2LvelZohLcmdlEPK
+ +Ne4RohIx4VC38BHq784+oOA9WW+1OY=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-383-9vHTHaaxMmOlVeaZJTqmrA-1; Tue,
+ 23 Jun 2026 05:56:07 -0400
+X-MC-Unique: 9vHTHaaxMmOlVeaZJTqmrA-1
+X-Mimecast-MFC-AGG-ID: 9vHTHaaxMmOlVeaZJTqmrA_1782208565
+Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 85CC51955F16; Tue, 23 Jun 2026 09:56:05 +0000 (UTC)
+Received: from berrange.com (unknown [10.44.34.133])
+ by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id F269B175F; Tue, 23 Jun 2026 09:56:01 +0000 (UTC)
+From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: "Dr. David Alan Gilbert" <dave@treblig.org>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Christian Brauner <brauner@kernel.org>, devel@lists.libvirt.org,
+ Markus Armbruster <armbru@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PATCH v4 02/35] monitor: replace 'common' with 'parent_obj' in
+ MonitorHMP
+Date: Tue, 23 Jun 2026 10:55:18 +0100
+Message-ID: <20260623095551.2106712-3-berrange@redhat.com>
+In-Reply-To: <20260623095551.2106712-1-berrange@redhat.com>
+References: <20260623095551.2106712-1-berrange@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 00/24] target/riscv: move TCG files and fix --disable-tcg
-To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, liwei1518@gmail.com,
- zhiwei_liu@linux.alibaba.com, chao.liu.zevorn@gmail.com
-References: <20260622193141.1449724-1-daniel.barboza@oss.qualcomm.com>
- <52c3605c-345f-43d2-8cc6-794980c805fa@oss.qualcomm.com>
- <50ce1e98-2c1f-4cbd-b191-1eac324b71b6@oss.qualcomm.com>
- <704cfba3-e92a-498d-928b-877f7f7641fe@oss.qualcomm.com>
-From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <704cfba3-e92a-498d-928b-877f7f7641fe@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=LdAMLDfi c=1 sm=1 tr=0 ts=6a3a5681 cx=c_pps
- a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=sHJf4AwOIoU3qjeHFPlg6Q==:17
- a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
- a=NEAV23lmAAAA:8 a=2fsAhj1rYWLWnCpaf1MA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=PEH46H7Ffwr30OY-TuGO:22
-X-Proofpoint-GUID: QZY0ENcXe2KjA_c3fxhaadmQOnMMf9Cs
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjIzMDA3OSBTYWx0ZWRfXxShh/FT/UN3L
- 36qJ+shZHRQi9cJu5nsDo25EJwITl7IWxc/bGRbeZI1897tRWXAovX0fNJvN7e8kSYQKpdpBhQW
- oQK7PtMbphCVvkxSEZnrqv59YCop6e4=
-X-Proofpoint-ORIG-GUID: QZY0ENcXe2KjA_c3fxhaadmQOnMMf9Cs
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjIzMDA3OSBTYWx0ZWRfX8w792ab27rpZ
- AGv7/vsXpqDE5AhRsGbVqfc0Qjho/HszMbKfSPbTu26zr2PkhGfm7mhWwWik6MNvYHNImFr/y0a
- MQXzZbXe2mGk7dMKUebiTrks1zKknf9DPJHWa+jHyNddRcYFraK559RPKS9BFRoHwiudEw0zUR7
- 1e4EMoWhadeNnSa5CzgdUZZkIQEbexr46qyHP6360WkWdnzuV3WR3MaTRdWAcl9BXzIPacVDpDR
- SYRo8ScE431Vm8RFdNFThe1K5nyjBSTRw6ykb9Qf999S5WpsIjV6i6xtmzmJhAkSmroRdzY0MYV
- sl2jt68dtoty3JOyT9YjORz3SGlXpmNsyWeJq55zeiZSPcMWHz8ffCsJluho7OnZGDPF1MZZos+
- J3zLwMHz+g4s+QCdVCShGeUSo4eN3pByqE7UIcbSl5uC0LUlhkuxws+ShV+1jbS19060tzBqUPV
- mIkk6pq6ktKCyZ0OR4w==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-23_02,2026-06-22_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 priorityscore=1501 impostorscore=0 lowpriorityscore=0
- suspectscore=0 malwarescore=0 clxscore=1015 spamscore=0 phishscore=0
- bulkscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2606230079
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 8
+X-Spam_score: 0.8
+X-Spam_bar: /
+X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -160,47 +92,267 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+The field name 'parent_obj' is standard practice for QOM structs
+so align the HMP monitor.
 
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Reviewed-by: Dr. David Alan Gilbert <dave@treblig.org>
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+---
+ monitor/hmp-cmds.c         |  2 +-
+ monitor/hmp.c              | 43 ++++++++++++++++++++------------------
+ monitor/monitor-internal.h |  2 +-
+ monitor/monitor.c          |  6 +++---
+ monitor/qmp-cmds.c         | 10 ++++-----
+ ui/ui-hmp-cmds.c           |  2 +-
+ 6 files changed, 34 insertions(+), 31 deletions(-)
 
-On 6/22/2026 6:34 PM, Pierrick Bouvier wrote:
-> On 6/22/2026 2:23 PM, Philippe Mathieu-Daudé wrote:
->> On 22/6/26 22:52, Pierrick Bouvier wrote:
->>> On 6/22/2026 12:31 PM, Daniel Henrique Barboza wrote:
->>>> Hello,
->>>>
->>>> This series looks scary but it's mostly trivial and mechanical work.
->>>>
->>>> It is yet another attempt at fixing --disable-tcg.  We have a recent
->>>> work sent to the ML [1] and we had Phil's attempt back in 2023 [2].
->>>> Phil's work didn't get merged and it's now too hard to rebase and
->>>> revive, the most recent attempt got misled into the 'what is common code
->>>> between TCG and KVM' dungeon.
->>
->>
->>> It seems like series does not apply on top of master, would that be
->>> possible to rebase it?
->>
->> For some reason the RISC-V series are handled distinctly than the
->> rest of QEMU, Alistair queues work on his repository and developers
->> are custome to base their series on top of it (otherwise Alistair
->> can not apply them on his tree and asks for reposts), see the
->> riscv-to-apply.next branch on https://github.com/alistair23/qemu.
-> 
-> Unfortunately, it makes it hard to run any kind of automated testing,
-> especially for series like this that target specific configs.
-
-Don't we have ways of saying in the commit message "these patches applies
-on top of these other patches" and then the tooling would deal with it?
-I remember patchew doing stuff like that with that "Based-on: <message-id>"
-tag.
-
-At this point I would expect automatic tooling being able to understand
-some form of "this gitlab/github branch contains the patches" and do their
-thing.  Maybe there's stuff out there to help us out.
-
-
-Thanks,
-Daniel
-
+diff --git a/monitor/hmp-cmds.c b/monitor/hmp-cmds.c
+index 443b8c785d..e139caeba9 100644
+--- a/monitor/hmp-cmds.c
++++ b/monitor/hmp-cmds.c
+@@ -287,7 +287,7 @@ void hmp_info_sync_profile(Monitor *mon, const QDict *qdict)
+ 
+ void hmp_info_history(Monitor *mon, const QDict *qdict)
+ {
+-    MonitorHMP *hmp_mon = container_of(mon, MonitorHMP, common);
++    MonitorHMP *hmp_mon = container_of(mon, MonitorHMP, parent_obj);
+     int i;
+     const char *str;
+ 
+diff --git a/monitor/hmp.c b/monitor/hmp.c
+index cc4390486e..3dde52ddbe 100644
+--- a/monitor/hmp.c
++++ b/monitor/hmp.c
+@@ -48,9 +48,9 @@ static void monitor_command_cb(void *opaque, const char *cmdline,
+ {
+     MonitorHMP *mon = opaque;
+ 
+-    monitor_suspend(&mon->common);
++    monitor_suspend(&mon->parent_obj);
+     handle_hmp_command(mon, cmdline);
+-    monitor_resume(&mon->common);
++    monitor_resume(&mon->parent_obj);
+ }
+ 
+ void monitor_read_command(MonitorHMP *mon, int show_prompt)
+@@ -73,7 +73,7 @@ int monitor_read_password(MonitorHMP *mon, ReadLineFunc *readline_func,
+         /* prompt is printed on return from the command handler */
+         return 0;
+     } else {
+-        monitor_printf(&mon->common,
++        monitor_printf(&mon->parent_obj,
+                        "terminal does not support password prompting\n");
+         return -ENOTTY;
+     }
+@@ -695,7 +695,7 @@ static const HMPCommand *monitor_parse_command(MonitorHMP *hmp_mon,
+                                                const char **cmdp,
+                                                HMPCommand *table)
+ {
+-    Monitor *mon = &hmp_mon->common;
++    Monitor *mon = &hmp_mon->parent_obj;
+     const char *p;
+     const HMPCommand *cmd;
+     char cmdname[256];
+@@ -1188,35 +1188,37 @@ void handle_hmp_command(MonitorHMP *mon, const char *cmdline)
+ 
+     if (!cmd->cmd && !cmd->cmd_info_hrt) {
+         /* FIXME: is it useful to try autoload modules here ??? */
+-        monitor_printf(&mon->common, "Command \"%.*s\" is not available.\n",
++        monitor_printf(&mon->parent_obj, "Command \"%.*s\" is not available.\n",
+                        (int)(cmdline - cmd_start), cmd_start);
+         return;
+     }
+ 
+-    qdict = monitor_parse_arguments(&mon->common, &cmdline, cmd);
++    qdict = monitor_parse_arguments(&mon->parent_obj, &cmdline, cmd);
+     if (!qdict) {
+         while (cmdline > cmd_start && qemu_isspace(cmdline[-1])) {
+             cmdline--;
+         }
+-        monitor_printf(&mon->common, "Try \"help %.*s\" for more information\n",
++        monitor_printf(&mon->parent_obj,
++                       "Try \"help %.*s\" for more information\n",
+                        (int)(cmdline - cmd_start), cmd_start);
+         return;
+     }
+ 
+     if (!cmd->coroutine) {
+         /* old_mon is non-NULL when called from qmp_human_monitor_command() */
+-        Monitor *old_mon = monitor_set_cur(qemu_coroutine_self(), &mon->common);
+-        handle_hmp_command_exec(&mon->common, cmd, qdict);
++        Monitor *old_mon = monitor_set_cur(qemu_coroutine_self(),
++                                           &mon->parent_obj);
++        handle_hmp_command_exec(&mon->parent_obj, cmd, qdict);
+         monitor_set_cur(qemu_coroutine_self(), old_mon);
+     } else {
+         HandleHmpCommandCo data = {
+-            .mon = &mon->common,
++            .mon = &mon->parent_obj,
+             .cmd = cmd,
+             .qdict = qdict,
+             .done = false,
+         };
+         Coroutine *co = qemu_coroutine_create(handle_hmp_command_co, &data);
+-        monitor_set_cur(co, &mon->common);
++        monitor_set_cur(co, &mon->parent_obj);
+         aio_co_enter(qemu_get_aio_context(), co);
+         AIO_WAIT_WHILE_UNLOCKED(NULL, !data.done);
+     }
+@@ -1434,7 +1436,7 @@ cleanup:
+ 
+ static void monitor_read(void *opaque, const uint8_t *buf, int size)
+ {
+-    MonitorHMP *mon = container_of(opaque, MonitorHMP, common);
++    MonitorHMP *mon = container_of(opaque, MonitorHMP, parent_obj);
+     int i;
+ 
+     if (mon->rs) {
+@@ -1443,7 +1445,7 @@ static void monitor_read(void *opaque, const uint8_t *buf, int size)
+         }
+     } else {
+         if (size == 0 || buf[size - 1] != 0) {
+-            monitor_printf(&mon->common, "corrupted command\n");
++            monitor_printf(&mon->parent_obj, "corrupted command\n");
+         } else {
+             handle_hmp_command(mon, (char *)buf);
+         }
+@@ -1512,26 +1514,26 @@ static void G_GNUC_PRINTF(2, 3) monitor_readline_printf(void *opaque,
+     MonitorHMP *mon = opaque;
+     va_list ap;
+     va_start(ap, fmt);
+-    monitor_vprintf(&mon->common, fmt, ap);
++    monitor_vprintf(&mon->parent_obj, fmt, ap);
+     va_end(ap);
+ }
+ 
+ static void monitor_readline_flush(void *opaque)
+ {
+     MonitorHMP *mon = opaque;
+-    monitor_flush(&mon->common);
++    monitor_flush(&mon->parent_obj);
+ }
+ 
+ void monitor_init_hmp(Chardev *chr, bool use_readline, Error **errp)
+ {
+     MonitorHMP *mon = g_new0(MonitorHMP, 1);
+ 
+-    if (!qemu_chr_fe_init(&mon->common.chr, chr, errp)) {
++    if (!qemu_chr_fe_init(&mon->parent_obj.chr, chr, errp)) {
+         g_free(mon);
+         return;
+     }
+ 
+-    monitor_data_init(&mon->common, false, false, false);
++    monitor_data_init(&mon->parent_obj, false, false, false);
+ 
+     mon->use_readline = use_readline;
+     if (mon->use_readline) {
+@@ -1542,9 +1544,10 @@ void monitor_init_hmp(Chardev *chr, bool use_readline, Error **errp)
+         monitor_read_command(mon, 0);
+     }
+ 
+-    qemu_chr_fe_set_handlers(&mon->common.chr, monitor_can_read, monitor_read,
+-                             monitor_event, NULL, &mon->common, NULL, true);
+-    monitor_list_append(&mon->common);
++    qemu_chr_fe_set_handlers(&mon->parent_obj.chr,
++                             monitor_can_read, monitor_read, monitor_event,
++                             NULL, &mon->parent_obj, NULL, true);
++    monitor_list_append(&mon->parent_obj);
+ }
+ 
+ /**
+diff --git a/monitor/monitor-internal.h b/monitor/monitor-internal.h
+index a5c4aba306..eb301ea796 100644
+--- a/monitor/monitor-internal.h
++++ b/monitor/monitor-internal.h
+@@ -128,7 +128,7 @@ struct Monitor {
+ };
+ 
+ struct MonitorHMP {
+-    Monitor common;
++    Monitor parent_obj;
+     bool use_readline;
+     /*
+      * State used only in the thread "owning" the monitor.
+diff --git a/monitor/monitor.c b/monitor/monitor.c
+index 00b93ed612..2a1b511ff4 100644
+--- a/monitor/monitor.c
++++ b/monitor/monitor.c
+@@ -132,7 +132,7 @@ static inline bool monitor_is_hmp_non_interactive(const Monitor *mon)
+         return false;
+     }
+ 
+-    return !monitor_uses_readline(container_of(mon, MonitorHMP, common));
++    return !monitor_uses_readline(container_of(mon, MonitorHMP, parent_obj));
+ }
+ 
+ static gboolean monitor_unblocked(void *do_not_use, GIOCondition cond,
+@@ -542,7 +542,7 @@ static void monitor_accept_input(void *opaque)
+ 
+     qemu_mutex_lock(&mon->mon_lock);
+     if (!monitor_is_qmp(mon) && mon->reset_seen) {
+-        MonitorHMP *hmp_mon = container_of(mon, MonitorHMP, common);
++        MonitorHMP *hmp_mon = container_of(mon, MonitorHMP, parent_obj);
+         assert(hmp_mon->rs);
+         readline_restart(hmp_mon->rs);
+         qemu_mutex_unlock(&mon->mon_lock);
+@@ -627,7 +627,7 @@ void monitor_data_destroy(Monitor *mon)
+     if (monitor_is_qmp(mon)) {
+         monitor_data_destroy_qmp(container_of(mon, MonitorQMP, common));
+     } else {
+-        readline_free(container_of(mon, MonitorHMP, common)->rs);
++        readline_free(container_of(mon, MonitorHMP, parent_obj)->rs);
+     }
+     g_string_free(mon->outbuf, true);
+     qemu_mutex_destroy(&mon->mon_lock);
+diff --git a/monitor/qmp-cmds.c b/monitor/qmp-cmds.c
+index 0c409c27dc..aa9ee8a391 100644
+--- a/monitor/qmp-cmds.c
++++ b/monitor/qmp-cmds.c
+@@ -168,10 +168,10 @@ char *qmp_human_monitor_command(const char *command_line, bool has_cpu_index,
+     char *output = NULL;
+     MonitorHMP hmp = {};
+ 
+-    monitor_data_init(&hmp.common, false, true, false);
++    monitor_data_init(&hmp.parent_obj, false, true, false);
+ 
+     if (has_cpu_index) {
+-        int ret = monitor_set_cpu(&hmp.common, cpu_index);
++        int ret = monitor_set_cpu(&hmp.parent_obj, cpu_index);
+         if (ret < 0) {
+             error_setg(errp, QERR_INVALID_PARAMETER_VALUE, "cpu-index",
+                        "a CPU number");
+@@ -181,12 +181,12 @@ char *qmp_human_monitor_command(const char *command_line, bool has_cpu_index,
+ 
+     handle_hmp_command(&hmp, command_line);
+ 
+-    WITH_QEMU_LOCK_GUARD(&hmp.common.mon_lock) {
+-        output = g_strdup(hmp.common.outbuf->str);
++    WITH_QEMU_LOCK_GUARD(&hmp.parent_obj.mon_lock) {
++        output = g_strdup(hmp.parent_obj.outbuf->str);
+     }
+ 
+ out:
+-    monitor_data_destroy(&hmp.common);
++    monitor_data_destroy(&hmp.parent_obj);
+     return output;
+ }
+ 
+diff --git a/ui/ui-hmp-cmds.c b/ui/ui-hmp-cmds.c
+index ee3e731d07..06f4030ce4 100644
+--- a/ui/ui-hmp-cmds.c
++++ b/ui/ui-hmp-cmds.c
+@@ -343,7 +343,7 @@ void hmp_change_vnc(Monitor *mon, const char *device, const char *target,
+         return;
+     }
+     if (!arg) {
+-        MonitorHMP *hmp_mon = container_of(mon, MonitorHMP, common);
++        MonitorHMP *hmp_mon = container_of(mon, MonitorHMP, parent_obj);
+         monitor_read_password(hmp_mon, hmp_change_read_arg, NULL);
+     } else {
+         qmp_change_vnc_password(arg, errp);
+-- 
+2.54.0
 
 
