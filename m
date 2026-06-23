@@ -4,105 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13804CDB471
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jun 2026 00:26:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 170ECCDB46F
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jun 2026 00:26:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wboxc-0000DY-Cc; Mon, 22 Jun 2026 20:25:52 -0400
+	id 1wboxc-0000Df-K1; Mon, 22 Jun 2026 20:25:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
- id 1wboxa-0000Bw-J9; Mon, 22 Jun 2026 20:25:50 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ id 1wboxb-0000C9-I3; Mon, 22 Jun 2026 20:25:51 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
- id 1wboxZ-0003aE-3D; Mon, 22 Jun 2026 20:25:50 -0400
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ id 1wboxZ-0003aJ-3K; Mon, 22 Jun 2026 20:25:51 -0400
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65MJmhfP3896476; Tue, 23 Jun 2026 00:25:46 GMT
+ 65MJmGOS3990942; Tue, 23 Jun 2026 00:25:47 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:message-id:mime-version
- :subject:to; s=pp1; bh=7yXoFt6D4Qg/7a6P7pGwcoqRjWCFg2Syq4ULr9AUY
- S0=; b=QLMNjEK1xwPdqR6UOpi7DsV8E6hwfIsdlXa4pEQoVjtHWMIF+NzKqnLZJ
- 0VbNOaW7qA3yw+l1viwzoRse9pL/MGeBIJi2HD6iRBCuTbnuFPOFgeurvbrZbFa2
- GaF+zVBVV5J27OLS38P6hKIHi9E9E46ub/oyExBjZGEa6rnuPr6QNe3kMxyObB98
- hVHkuGY8on7eRXAcsaZMj53pwHyxCVLYQ6n1rmvv2wdW5h5hSpEvqU3342LWemaU
- cLemhY0GtR9EeXC35HGXISOc7eQ2tQxyt0pXmGo99zihNz67GkP2rfbckAVDnY+o
- dlXorvbr172pqNFbcbO7d60HrIncw==
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4ewg9hm62g-1
+ :content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=pp1; bh=xfgv5ZGMvcU9x2RFr
+ +qrcJYF1DnVLW/79moXRLhEO7U=; b=NFgS0yUpC39fJ1dFB8iCsUghRZTECxjnd
+ 8Kg4jGx5FgOq8NR/w4a64Y9Be6u3zsR0txhqneh8pMNyROHpGJ5PSFgUICWF42MC
+ esJzegSRvpluY8+hD9N4FtfSKB/kaf0bwsmQ2OkxjMMLQN+8hAEP2BqtjCJXu15D
+ CZPuJdAfi70sBwwNO3ikgFK8MxuWPhCFkZL39tcJAWoSqzYNeYXbwzGq6jZLZgEB
+ mWxxdcb3Cw3eUQc9/DIlZn/hTNfapeg3ZiuYO3NgJQX8omxVCpGAlHagbAQPPtoR
+ xfKJKQh2h3zBL7/S2Uu3k2d0prPy2w5sYJG3//YxYDkaqydFHoEAw==
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4ewjc3bxy9-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 23 Jun 2026 00:25:44 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 65N0JdJu029842;
- Tue, 23 Jun 2026 00:25:44 GMT
-Received: from smtprelay02.dal12v.mail.ibm.com ([172.16.1.4])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4ex66k0r8d-1
+ Tue, 23 Jun 2026 00:25:46 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 65N0JfG3024620;
+ Tue, 23 Jun 2026 00:25:46 GMT
+Received: from smtprelay04.dal12v.mail.ibm.com ([172.16.1.6])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4ex7dg0h4f-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 23 Jun 2026 00:25:44 +0000 (GMT)
+ Tue, 23 Jun 2026 00:25:46 +0000 (GMT)
 Received: from smtpav05.wdc07v.mail.ibm.com (smtpav05.wdc07v.mail.ibm.com
  [10.39.53.232])
- by smtprelay02.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 65N0Pghc9044550
+ by smtprelay04.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 65N0PiN324511188
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 23 Jun 2026 00:25:43 GMT
+ Tue, 23 Jun 2026 00:25:45 GMT
 Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id C5A655805D;
- Tue, 23 Jun 2026 00:25:42 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id D3EC358053;
+ Tue, 23 Jun 2026 00:25:44 +0000 (GMT)
 Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id C3C9D58059;
- Tue, 23 Jun 2026 00:25:41 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id DA9DF5805D;
+ Tue, 23 Jun 2026 00:25:43 +0000 (GMT)
 Received: from t15.ibmuc.com (unknown [9.61.116.241])
  by smtpav05.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 23 Jun 2026 00:25:41 +0000 (GMT)
+ Tue, 23 Jun 2026 00:25:43 +0000 (GMT)
 From: jrossi@linux.ibm.com
 To: qemu-devel@nongnu.org, qemu-s390x@nongnu.org, cohuck@redhat.com,
  mjrosato@linux.ibm.com
 Cc: jrossi@linux.ibm.com, zycai@linux.ibm.com, jdaley@linux.ibm.com,
  jjherne@linux.ibm.com, farman@linux.ibm.com, nrb@linux.ibm.com
-Subject: [PATCH 0/5] s390x: Fix intermittent errors with IPL from PCI devices
- on s390x
-Date: Mon, 22 Jun 2026 20:25:34 -0400
-Message-ID: <20260623002539.126124-1-jrossi@linux.ibm.com>
+Subject: [PATCH 1/5] pc-bios/s390-ccw: Refactor byte swapping
+Date: Mon, 22 Jun 2026 20:25:35 -0400
+Message-ID: <20260623002539.126124-2-jrossi@linux.ibm.com>
 X-Mailer: git-send-email 2.43.5
+In-Reply-To: <20260623002539.126124-1-jrossi@linux.ibm.com>
+References: <20260623002539.126124-1-jrossi@linux.ibm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: N-M9CUX0zwRhGvhK4FxnHNB3mrgWiBuh
-X-Proofpoint-GUID: N-M9CUX0zwRhGvhK4FxnHNB3mrgWiBuh
-X-Authority-Analysis: v=2.4 cv=Y4XIdBeN c=1 sm=1 tr=0 ts=6a39d288 cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+X-Authority-Analysis: v=2.4 cv=X4Ni7mTe c=1 sm=1 tr=0 ts=6a39d28a cx=c_pps
+ a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
  a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=Y2IxJ9c9Rs8Kov3niI8_:22 a=VnNF1IyMAAAA:8 a=EVJvMxfN8bAWsRElkj0A:9
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjIzMDAwMCBTYWx0ZWRfXzQkU14aR1y4Z
- 1UsjiRfeDODPrPnCTvZkDqffKhsUOUbLDUxskriOuNrveN0XCoumQ7q2gMJvx2LfhOBkOzh1rQl
- DTjlxCMkbSc9vhDgkmYMCCp1piIJr9t7MxXO6LEkf3OrRBK0r+e3d3EnVsFwOAVNqTRb3j7psrz
- jvIakQ3QOH7RgKBoaAZeEXiU1voT6/VHchU8ZNC1I6ZJrOO/8ZY3C10JiI3B8DwDegP1TUyrQvZ
- QI4zrrITtm6/UqIubPuPgCkrUZ9QZccr7oDTtb+uOWtILXSQ4/y8laTQ2rB0ROPrXa7jjPealUc
- V28aYsIESL70lJOGiTID86w1QR1ZpsF1/hDKDOCwMI7eE8sxeC3grQN6gMMfgVM80NIU6E3OX3i
- T6LHgwTKXNNxyk4qERRnHbZeQY06jA5OReKJ104rkg8dBjBpJjTnSU7NEPq2Jln37/QQqbJ948v
- 9Zz2bcmBe6aLly6vQcg==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjIzMDAwMCBTYWx0ZWRfXwEmpARRRLHE1
- qoJokDjEAeAlN4dCU0DKIzhitNcNMl6pfgp0HZq6/uf8RGrLYTzW2gRdWZoa3fW4FV1Q6RxBXD4
- syk2zP6+xnQyyRtLKUrZTvvzZC3mzTI=
+ a=iQ6ETzBq9ecOQQE5vZCe:22 a=VnNF1IyMAAAA:8 a=Mh-7s8SilpXd35hLZrsA:9
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjIzMDAwMCBTYWx0ZWRfX9owW/76WuTeL
+ b56eJKvxqPs+t59QrjaaEmyywh/vxfN7daM/fB+lNUbqDFfuPuRWeMTxqCSaLA36fNMpKY1za5b
+ ZfTlLacq1/1H9WqGH4tioFchKBzW89Q=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjIzMDAwMCBTYWx0ZWRfX0p86FkAen+GS
+ ZogQ5Q5xpV9CgrasJuJhhhrmdeCeWds10oGNjpgDIFrklZvTikUuIlTuwhB6Te3JCfJ1a7nBgjm
+ DuwcrNbOktq4dTmqEODO/yqJGTIp6SxDe2baJmoF7ChVV/tdZko0Rs6weE+dIiBlDyZM3eOkCVk
+ WbV7iAxBRid6lcKlPntlTxtjvKOuKR3EnMN9JUrjGJuJTJpSvhsqMpxhdJMZNCuOhwlx1txjviF
+ lOwSL642uarxU9L65f5SKHWWtUVdr9kqUOMgFayWXsS18ku28zlzu4UtB79BSFHV2GDLNdOgI1b
+ zPuZobkRH5glYBXscyRTfwzGLSdfV8aVCOfH6HElzRMhBhzlHtWjcHXhg48kUFl0IDwqVfLtKAS
+ tKufZNlN9X8YwCaFvDUeBe2dVdkW+cIKqa6DyhTyyiYJAMOjRjaxK3BQh40B15FRKyarxI3FFvd
+ wRy4pISjTcQfdBj7flA==
+X-Proofpoint-ORIG-GUID: 6pU86svbHrQdXtvsllFrw8CP6UjKifcT
+X-Proofpoint-GUID: 6pU86svbHrQdXtvsllFrw8CP6UjKifcT
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-06-22_04,2026-06-22_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 priorityscore=1501 malwarescore=0 lowpriorityscore=0 spamscore=0
- clxscore=1015 suspectscore=0 impostorscore=0 phishscore=0 bulkscore=0
+ phishscore=0 bulkscore=0 suspectscore=0 spamscore=0 priorityscore=1501
+ impostorscore=0 malwarescore=0 clxscore=1015 adultscore=0 lowpriorityscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606230000
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=jrossi@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=jrossi@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
 X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -119,38 +120,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jared Rossi <jrossi@linux.ibm.com>
+From: Zhuoying Cai <zycai@linux.ibm.com>
 
-When booting from a PCI device on s390x there may be intermittent failures
-caused by mismatched byte swaps.  Refactor the byte swapping to ensure that
-it is properly synchronized.
+Introduce local variables to cache the byte-swapped values eliminating
+some redundant byte swap operations.  Additionally, do byte swap when
+polling to avoid a special case where endianness is preserved.
 
-Correct how the queue notification offset is calculated so that it meets the
-specification and may be used for multi-queue configurations in the future.
+Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
+Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
+---
+ pc-bios/s390-ccw/virtio.c | 24 ++++++++++++------------
+ 1 file changed, 12 insertions(+), 12 deletions(-)
 
-Handle some switch cases that were not caught for PCI devices.
-
-Jared Rossi (1):
-  pc-bios/s390-ccw: Verify virtio support when booting from PCI device
-    on s390x
-
-Joshua Daley (1):
-  pc-bios/s390-ccw: write IPLB location for virtio-blk-pci IPL
-
-Zhuoying Cai (3):
-  pc-bios/s390-ccw: Refactor byte swapping
-  pc-bios/s390-ccw: Add per-queue notification offset for multi-queue
-    virtio configurations
-  s390x: Enable boot menu for virtio pci device
-
- hw/s390x/ipl.c                |  1 +
- pc-bios/s390-ccw/main.c       |  5 ++-
- pc-bios/s390-ccw/virtio-pci.c | 57 ++++++++++++++++++++++++++---------
- pc-bios/s390-ccw/virtio-pci.h |  2 +-
- pc-bios/s390-ccw/virtio.c     | 27 +++++++++--------
- pc-bios/s390-ccw/virtio.h     |  2 ++
- 6 files changed, 64 insertions(+), 30 deletions(-)
-
+diff --git a/pc-bios/s390-ccw/virtio.c b/pc-bios/s390-ccw/virtio.c
+index 390b55c7b9..a448dc96e2 100644
+--- a/pc-bios/s390-ccw/virtio.c
++++ b/pc-bios/s390-ccw/virtio.c
+@@ -153,14 +153,14 @@ static void vr_bswap_descriptor(VRingDesc *desc)
+ 
+ void vring_send_buf(VRing *vr, void *p, int len, int flags)
+ {
+-    if (!be_ipl()) {
+-        vr->avail->idx = bswap16(vr->avail->idx);
+-    }
++    uint16_t avail_idx;
++
++    avail_idx = be_ipl() ? vr->avail->idx : bswap16(vr->avail->idx);
+ 
+     /* For follow-up chains we need to keep the first entry point */
+     if (!(flags & VRING_HIDDEN_IS_CHAIN)) {
+-        vr->avail->ring[vr->avail->idx % vr->num] = be_ipl() ? vr->next_idx :
+-                                                               bswap16(vr->next_idx);
++        vr->avail->ring[avail_idx % vr->num] = be_ipl() ? vr->next_idx :
++                                                          bswap16(vr->next_idx);
+     }
+ 
+     vr->desc[vr->next_idx].addr = (unsigned long)p;
+@@ -177,23 +177,23 @@ void vring_send_buf(VRing *vr, void *p, int len, int flags)
+ 
+     /* Chains only have a single ID */
+     if (!(flags & VRING_DESC_F_NEXT)) {
+-        vr->avail->idx++;
+-    }
+-
+-    if (!be_ipl()) {
+-        vr->avail->idx = bswap16(vr->avail->idx);
++        avail_idx++;
++        vr->avail->idx = be_ipl() ? avail_idx : bswap16(avail_idx);
+     }
+ }
+ 
+ int vr_poll(VRing *vr)
+ {
+-    if (vr->used->idx == vr->used_idx) {
++    uint16_t used_idx;
++
++    used_idx = be_ipl() ? vr->used->idx : bswap16(vr->used->idx);
++    if (used_idx == vr->used_idx) {
+         vring_notify(vr);
+         yield();
+         return 0;
+     }
+ 
+-    vr->used_idx = vr->used->idx; /* Endianness is preserved */
++    vr->used_idx = used_idx;
+     vr->next_idx = 0;
+     vr->desc[0].len = 0;
+     vr->desc[0].flags = 0;
 -- 
 2.54.0
 
