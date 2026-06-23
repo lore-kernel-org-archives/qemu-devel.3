@@ -4,97 +4,132 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1EE9CDB46F
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jun 2026 11:54:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78EC3CDB46F
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jun 2026 11:55:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wbzhi-0002Mz-2J; Tue, 23 Jun 2026 07:54:10 -0400
+	id 1wbzir-00038l-Ea; Tue, 23 Jun 2026 07:55:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wbzhh-0002Mr-7r
- for qemu-devel@nongnu.org; Tue, 23 Jun 2026 07:54:09 -0400
+ (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
+ id 1wbzip-00038Z-Dc
+ for qemu-devel@nongnu.org; Tue, 23 Jun 2026 07:55:19 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wbzhf-0004Ny-Cx
- for qemu-devel@nongnu.org; Tue, 23 Jun 2026 07:54:09 -0400
+ (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
+ id 1wbzih-0004my-Oy
+ for qemu-devel@nongnu.org; Tue, 23 Jun 2026 07:55:13 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1782215646;
+ s=mimecast20190719; t=1782215710;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=i3iyhtyI+LYda5p0ZwKJvIBQilZkxH9ydnh9GZQ2pvg=;
- b=beiaoNKqqJlhRuAWmcUx3zkNrYIU6y1meQikTaLZh56Pxf/BImwvRFr0Gwuw3yljM9gtpc
- mzMlmpitUTU6XEHK59jedsFbgVBABoU7s6ZwXHTRQr2vSzlsIJ/AJTwWju8IMrc3Z2a0A4
- X23W5H8p8yam7kPriYSg0HFAHp3wIBc=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-693-YD-R0mZPOwiN0mEUUBKIQg-1; Tue,
- 23 Jun 2026 07:54:03 -0400
-X-MC-Unique: YD-R0mZPOwiN0mEUUBKIQg-1
-X-Mimecast-MFC-AGG-ID: YD-R0mZPOwiN0mEUUBKIQg_1782215642
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8EF4B1955E90; Tue, 23 Jun 2026 11:54:01 +0000 (UTC)
-Received: from localhost (unknown [10.44.22.10])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id B13881800591; Tue, 23 Jun 2026 11:53:48 +0000 (UTC)
+ bh=EVtSagZITA/vCjnhFI8rs12EVEcRAWsW3VLlEzlIEWo=;
+ b=OiaC2tB99iKXkGN/+IF/4XDmNRDe8z6kOXcOD9Z+u5MAWEotKMG7ZPcNMfPg0Nj9Qcj9ye
+ qMOA0xlp8pQzhfSFzdVh2lrIqKYZ6U6qyCoQFJktC+wbumB2fl9BLod99zuQ9S2OzgwJWT
+ WxVY6QsZe/g0dyd9bEC/pQgnoUuaoa0=
+Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com
+ [209.85.214.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-279-EybJgsZRPQ2FqGdg1HVnbw-1; Tue, 23 Jun 2026 07:55:07 -0400
+X-MC-Unique: EybJgsZRPQ2FqGdg1HVnbw-1
+X-Mimecast-MFC-AGG-ID: EybJgsZRPQ2FqGdg1HVnbw_1782215706
+Received: by mail-pl1-f197.google.com with SMTP id
+ d9443c01a7336-2c2d0a8b5beso60159155ad.1
+ for <qemu-devel@nongnu.org>; Tue, 23 Jun 2026 04:55:07 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1782215706; cv=none;
+ d=google.com; s=arc-20240605;
+ b=JFuf/HdmVzHBrrs4Gqm92kUGuwV0nFSRrpZAH2ZGwvMGgS676Ipr+z0IwX+8pVeal+
+ 3YX2keW+NkqK3NJN5hQpT19ErpC0lx5C8jEom4YcmSM1d+wb/ECPK8g7T8lfYZAwZGCx
+ ahJV3KOCLxHVmX1heF1PXRCooyxw9qZyRtQsfL347Y9B885ejNNKet4p+x5nD0ksucCY
+ btj4pAkTf2qSH4sVeMZK5PtyuhcEWFhA0Cm843X0tLpElc/vvQ3+E8B48BbulZ8iW3rV
+ bLsnq+LlcZ9XssMK0/kupDhyJGcUrOUoYFeIUJMWlRn0zHO8PX1LurozOUR4jETrCFad
+ MEbg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=EVtSagZITA/vCjnhFI8rs12EVEcRAWsW3VLlEzlIEWo=;
+ fh=dGH/5+nH3FM7IfLV/XwXKqSxGgsCS5JoK4GdF74RF+A=;
+ b=Dp8040q50UVX+J8JRlndzAwHrqaxHZca0UlLHsZCDU+RJVv1jzvgV3gG4J447DoKQc
+ PFu0CXgb5k+H/RiHL5MUfQTksHf/QMg/lqBRKPC8Vn0uMsvUOR8aD0BVsBLdDr2NRiiK
+ G5dOyOKPqQThe+M06zEd9upeDlkHzM2CE2OFZDktnZRKJqOb1T0TlsLuKTxP1diC5Agm
+ PF5yjgxc5aS1smmmiU7KyDrkKZKjwkPRjh/Ijq63kX5V/X6/HoeSItZWvtshjPq4AcQ5
+ rHiANsVIN1qbeITEq7tBinA+KL/dMw3Gv/Ioel+M/cO6tZ8evNeh1ygdhNIhWpoe+rd/
+ WVzw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1782215706; x=1782820506; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=EVtSagZITA/vCjnhFI8rs12EVEcRAWsW3VLlEzlIEWo=;
+ b=VQJtPcjxvtsnbMpztgtmOMBQ7hWNsP+xAPVxfP2NplCiq8NM52KUbvP6BLP/Er4W7y
+ HoC5KNs+U0I/8auh+AUDhtnGu5ny/tYU22XaWtAy7hStSC53A4TIkk1v4fnOj0pNR6UB
+ zQcgieNCjZU02qlVB1H45YtBqNEYT0eOso5MRLk+MQQhxosaaiJmuoUOPOplHCHYSmLp
+ R4iiZb55oCmDQxdum1JrMJP+xUmarP0Ym+/IPBPuoey+MIXCWve76qHJUv/at5D0ue3i
+ SOZPhqbKlX4x0ke9eKT3N/EKg3DWgU5DgeSl9eQp2ZYVeAnHsg7PzOBQT9I2IO4SsT9o
+ nNEw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1782215706; x=1782820506;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=EVtSagZITA/vCjnhFI8rs12EVEcRAWsW3VLlEzlIEWo=;
+ b=VeAVXDTMjVSGi9nAOkKRQY3WBe/pEbSglyRIywfB42ARwqjGd4Y10khAOqvqBOrIS6
+ nf10vrD87KzNgK6k4i7ATwBgiOYd/Yt3F6GIWtOcwbbMJ6OjQq96B+LK9SK8JB/0Y4Lt
+ poiv68mIwD6bHm8P4GJD3c7dm7gPWWnzHJ0iR1iM3Fkb/D6VSZed+1VCYLU/YtcHAkuI
+ zFBsdmrk27tVimAWbeYbO4OgSZB4B5vzG8a7X7NVUML4x7mH/1ACoTWOSZn12FWtPud7
+ icgBOFxQj1QmjG1m9ZelpJ6xds3TxXqsfMBUHuc+fc6xqkgCQ5VV7PRA6YaagirHkTZL
+ 2cDQ==
+X-Forwarded-Encrypted: i=1;
+ AHgh+Ro4vekSfpFgxzhu1oRdUUTfnRhj200NSbT0v1va/WBckcXcuHF9Q3siVr0FFEcyoEawOcLPXNrFJKvC@nongnu.org
+X-Gm-Message-State: AOJu0Yx53pRiJSCCub98cc+8/LQazuUVx2ClWq8ONDsufWS0BlFodegQ
+ LrAoJhlEYdDAPIy6QVLDdCZppCJpCVvnWdrOJoXz5MmXMdRjdtAqhr093FYg0yzt9hA5vbw7lp4
+ DGYUiA5UrkT9yST+mDpUWDYLNKTAMPNSTEYkkKsxmOeCxLt445Kw3iEoKyYVGkdqHG0MyW8UJsm
+ l+yJxtDJUFMhUWAdlutGT2aMX3n/ivyOs=
+X-Gm-Gg: AfdE7clZpg9bDu379yCgWhWfV80CBom3BfXINI0+0C7AiBHR2lOnux1VSGYFGGRYTsl
+ QPn937lR8s7S6q91ZN+3xG43zwFJXhM+b3zhCtfiJhEI8ZnzLbgdAro9O/wWwgaV3L7YOByKaUd
+ fuioiwtARgGdB+IXgPv+fWHpTSJI3ARt4cDVooPVgxAgOWg1O67kqlm8jztBKjwrvu7EnQRk+ZM
+ xrcl4VjcXeAvIx+yjnx9IKMyki0b3D2o8KXiNR/CKe4B9SNsjW843NE9OysE4qRoO7e7vI9Nz3k
+ pD4WkJlDRGlO
+X-Received: by 2002:a17:902:d504:b0:2c2:8659:da2c with SMTP id
+ d9443c01a7336-2c7425d58aamr150441875ad.14.1782215706205; 
+ Tue, 23 Jun 2026 04:55:06 -0700 (PDT)
+X-Received: by 2002:a17:902:d504:b0:2c2:8659:da2c with SMTP id
+ d9443c01a7336-2c7425d58aamr150441605ad.14.1782215705782; Tue, 23 Jun 2026
+ 04:55:05 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH v4 32/35] monitor: add support for auto-deleting
- monitors upon close
-From: marcandre.lureau@redhat.com
-To: =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, "Dr. David Alan Gilbert" <dave@treblig.org>, 
- =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
- Christian Brauner <brauner@kernel.org>, devel@lists.libvirt.org, 
- Markus Armbruster <armbru@redhat.com>, 
- =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, 
- =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-In-Reply-To: <20260623095551.2106712-33-berrange@redhat.com>
 References: <20260623095551.2106712-1-berrange@redhat.com>
- <20260623095551.2106712-33-berrange@redhat.com>
-Date: Tue, 23 Jun 2026 15:53:37 +0400
-Message-Id: <178221561777.3416386.3900546214136378913.b4-review@b4>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=8324;
- i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=08JLV29yZoc5XTmpFr8xVJboGLTkN8J4DUsfGO8sj24=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqOnPEVPd1QoIPISvB4OopOMUOfEWv7CjlSZS9Q
- mSKpiiNkaGJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCajpzxAAKCRDa6OEJdZac
- 5YkcD/0bzE3u8loNFbDXvmXC/LdSyKQJT2KDuAGim2pHEcJt7ezPjEmiPChfsPRlGcHIZE8B9pJ
- 5qrOnkpXDNuKnI+//7rZjwh8RtilGZxPeuUwKa16mU/AJuCWjMQAj/BlgnjsbUbE3ETM59UGbfA
- gi+Rtu72is0k0VM4cgO1h/lbP6ptHzO/gwxDNb016CxjeDsWYxdvzAQzih5u8x/v4IwGMumUfgr
- 37WHZXI4poL5UtHoR3uPrCobvYQ/gN/Nlc8r4YK298rrdKqesyanSttZTgjinOXEKVgsUzeASyu
- gQCGgpmBgSzONmMQepe/OYzRpzrpUP5EuaD4eJZJD+vT8b/jOO4cvbIFdx3PGU9QvEL/y9Sk5hT
- K8cQFq6T95ig9eC/z7tJuvzWdrW9IB8SXKXuGU0IsDE8a6PC6YDnXThqbR0PTPgklja9umOWlC+
- iykNtNj3yBEp89FbAntI4sJrHGbiWJKQXOa4f0v0TPn9VkgmXDpUPkVKHFbwTqg7ADIdnHyMEDM
- cqamFZ2LdxZ1SrMyA7iowf1B545E6KWhFO0wZ053xu+LDu4+DP1Vmw7658s3d1MT2XXPnbYE/VT
- eJ7Q4x6Xhk0AQzRpYaaQWIZDcCh0UWwwsh3ZWY0SkDmlzPTHlWK6uF4g8ihitt3YQBMcv9DoeK2
- kHFMgDbi4zMubOA==
-X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
- fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=marcandre.lureau@redhat.com;
+ <ajpoEoUcQ5IxMJy1@angien.pipo.sk>
+ <ajpwIvZ9qfSgE-la@redhat.com> <ajpzlaz7kCKw0aPQ@redhat.com>
+In-Reply-To: <ajpzlaz7kCKw0aPQ@redhat.com>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
+Date: Tue, 23 Jun 2026 15:54:54 +0400
+X-Gm-Features: AVVi8CcRmb01pDDA_tPQ2vFyoAmU7iL5aSdvYEj0zUorLp08gCEY6YFYcDEM6HE
+Message-ID: <CAMxuvaxcc65N-6MWOzkXr9rXTeZ5DnvR8o4_2qjnW_EEVWEUhQ@mail.gmail.com>
+Subject: Re: [PATCH v4 00/35] monitor: turn QMP and HMP into QOM objects
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: Peter Krempa <pkrempa@redhat.com>, qemu-devel@nongnu.org, 
+ "Dr. David Alan Gilbert" <dave@treblig.org>,
+ Christian Brauner <brauner@kernel.org>, devel@lists.libvirt.org, 
+ Markus Armbruster <armbru@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@mailo.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mlureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 8
-X-Spam_score: 0.8
-X-Spam_bar: /
-X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,222 +145,100 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-> The default monitor is usually a long lived object that will exist for
-> the entire lifetime of the VM. A monitor can only service a single
-> client at a time though, and so it might be desirable to hotplug
-> additional monitors at runtime for specific tasks. If doing that,
-> however, there is a need to remove the monitor when it is no longer
-> needed.
-> 
-> Allowing a client to run "object-del" against its own monitor adds
-> complex edge cases, as it would be desirable to send the QMP response
-> despite the monitor sending it being deleted. Doing "object-del" alone
-> will also result in orphaning a character device backend instance, as
-> there is no opportunity to run the companion "chardev-del" command.
-> 
-> A simpler way to ensure cleanup is to add the concept of auto-deleting
-> monitor objects. Specifically when the "CHR_EVENT_CLOSED" event is
-> emitted, the equivalent of "object-del" + "chardev-del" can be run
-> internally. Since the transient client has already droppped its
-> monitor connection, there is no synchronization to be concerned about.
-> 
-> This is implemented via a new "close-action=none|delete" property on
-> the 'monitor-qmp' object. This concept could be extended with further
-> actions in future, for example:
-> 
->  * close-action=shutdown - graceful guest shutdown
->  * close-action=terminate - immediate guest poweroff
->  * close-action=stop - pause guest CPUs while the monitor is not
->                        connected to any client
-> 
-> This is left as an exercise for future interested contributors.
-> 
-> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-> Message-ID: <20260623095551.2106712-33-berrange@redhat.com>
+Hi
+
+On Tue, Jun 23, 2026 at 3:53=E2=80=AFPM Daniel P. Berrang=C3=A9 <berrange@r=
+edhat.com> wrote:
 >
-> diff --git a/qapi/qom.json b/qapi/qom.json
-> index 6ed510858e1..63335b8fd09 100644
-> --- a/qapi/qom.json
-> +++ b/qapi/qom.json
-> @@ -1213,18 +1213,37 @@
->    'base': 'MonitorProperties',
->    'data': { '*readline': 'bool' } }
->  
-> +
-> +##
-> +# @MonitorQMPCloseAction:
-> +#
-> +# Action to take when the character device backend is
-> +# closed.
-> +#
-> +# @none: take no action (the default)
-> +# @delete: delete both the 'monitor-qmp' object and its associated
-> +#          character device backend object
-> +#
-> +# Since 11.1
-> +##
-> +{ 'enum' : 'MonitorQMPCloseAction',
-> +  'data': ['none', 'delete'] }
-> +
->  ##
->  # @MonitorQMPProperties:
->  #
->  # Properties for the QMP monitor
->  #
->  # @pretty: whether to pretty print JSON responses (default: disabled)
-> +# @close-action: action to take when the character device backend
-> +#                is closed (default: none)
->  #
->  # Since: 11.1
->  ##
->  { 'struct': 'MonitorQMPProperties',
->    'base': 'MonitorProperties',
-> -  'data': { '*pretty': 'bool' } }
-> +  'data': { '*pretty': 'bool',
-> +            '*close-action': 'MonitorQMPCloseAction' } }
->  
->  ##
->  # @ObjectType:
-> diff --git a/monitor/monitor-internal.h b/monitor/monitor-internal.h
-> index 5522e05464b..23829f32f9a 100644
-> --- a/monitor/monitor-internal.h
-> +++ b/monitor/monitor-internal.h
-> @@ -28,6 +28,7 @@
->  #include "chardev/char-fe.h"
->  #include "monitor/monitor.h"
->  #include "qapi/qapi-types-control.h"
-> +#include "qapi/qapi-types-qom.h"
->  #include "qapi/qmp-registry.h"
->  #include "qobject/json-parser.h"
->  #include "qemu/readline.h"
-> @@ -178,7 +179,9 @@ struct MonitorQMP {
->      Monitor parent_obj;
->      JSONMessageParser parser;
->      bool pretty;
-> +    MonitorQMPCloseAction close_action;
->      bool setup_pending; /* iothread BH has not yet set up chardev handlers */
-> +    bool delete_pending; /* close_action has started 'delete' process */
->      /*
->       * When a client connects, we're in capabilities negotiation mode.
->       * @commands is &qmp_cap_negotiation_commands then.  When command
+> On Tue, Jun 23, 2026 at 12:38:10PM +0100, Daniel P. Berrang=C3=A9 wrote:
+> > On Tue, Jun 23, 2026 at 01:03:46PM +0200, Peter Krempa wrote:
+> > > On Tue, Jun 23, 2026 at 10:55:16 +0100, Daniel P. Berrang=C3=A9 via D=
+evel wrote:
+> > > > Conceptually -object and object_add/object_del should be sufficient
+> > > > for essentially all QEMU configuration....if only we ported all our
+> > > > internal custom backends/devices/etc to QOM. That is of course a bi=
+g
+> > > > job which is why it hasn't happened.
+> > > >
+> > > > This series started with the premise that the monitor is one of the
+> > > > easier areas to convert since we have no more than three classes,
+> > > > a common base, and QMP and HMP subclasses[1]. So why not give it a
+> > > > go and thus unlock the ability to dynamically create/delete monitor=
+s
+> > > > in QMP/HMP.
+> > > >
+> > > > This series does the conversion in a great many small steps to bett=
+er
+> > > > understand the implications at each stage.
+> > > >
+> > > > The high level outcome of this series is
+> > > >
+> > > >  * HMP and QMP monitors are QOM objects, 'monitor-hmp' and
+> > > >    'monitor-qmp' respectively
+> > > >
+> > > >  * Both can be cold plugged and hot plugged. QMP only, can
+> > > >    also be hot unplugged.
+> > > >
+> > > >  * '-mon' is obsolete, deprecated and replaced by '-object',
+> > > >    but -monitor, -qmp and kept  as high level syntax sugar
+> > >
+> > > I was giving this a spin by implementing libvirt support for it. The
+> > > basic usage seems to work well but I've encoutered a regression in
+> > > behaviour which happens both when the QMP monitor is instantiated usi=
+ng
+> > > the new syntax but also the old one
+> > > ( -mon chardev=3Dcharmonitor,id=3Dmonitor,mode=3Dcontrol)
+> > >
+> > > When libvirt wants to re-connect to a qemu running with these patches=
+ it
+> > > re-issues a 'qmp_capabilities' command after connecting.
+> > >
+> > > With these patches qemu does not respond to that command even when th=
+e
+> > > old syntax is used. This makes libvirt stuck when re-connecting to VM=
+s.
+> >
+> > Oh that's odd, thanks for the warning. I'll investigate this.
+>
+> /face-palm - a misplaced a line in the auto-delete code, and did not
+> have test coverage of re-opening a monitor. Try testing libvirt with
+> this additional change on top
+>
 > diff --git a/monitor/qmp.c b/monitor/qmp.c
-> index 5301927f09f..f6b7fe65bbf 100644
+> index f6b7fe65bb..10d651ca5c 100644
 > --- a/monitor/qmp.c
 > +++ b/monitor/qmp.c
-> @@ -28,6 +28,7 @@
->  #include "monitor-internal.h"
->  #include "qapi/error.h"
->  #include "qapi/qapi-commands-control.h"
-> +#include "qapi/qapi-commands-char.h"
->  #include "qobject/qdict.h"
->  #include "qobject/qjson.h"
->  #include "qobject/qlist.h"
-> @@ -103,6 +104,20 @@ static void monitor_qmp_set_pretty(Object *obj, bool val, Error **errp)
->      mon->pretty = val;
->  }
->  
-> +static int monitor_qmp_get_close_action(Object *obj, Error **errp)
-> +{
-> +    MonitorQMP *mon = MONITOR_QMP(obj);
-> +
-> +    return mon->close_action;
-> +}
-> +
-> +static void monitor_qmp_set_close_action(Object *obj, int val, Error **errp)
-> +{
-> +    MonitorQMP *mon = MONITOR_QMP(obj);
-> +
-> +    mon->close_action = val;
-> +}
-> +
->  static void monitor_qmp_emit_event(Monitor *mon, QAPIEvent event, QDict *qdict);
->  static bool monitor_qmp_requires_iothread(const Monitor *mon);
->  static void monitor_qmp_complete(UserCreatable *uc, Error **errp);
-> @@ -117,6 +132,11 @@ static void monitor_qmp_class_init(ObjectClass *cls, const void *data)
->      object_class_property_add_bool(cls, "pretty",
->                                     monitor_qmp_get_pretty,
->                                     monitor_qmp_set_pretty);
-> +    object_class_property_add_enum(cls, "close-action",
-> +                                   "MonitorQMPCloseAction",
-> +                                   &MonitorQMPCloseAction_lookup,
-> +                                   monitor_qmp_get_close_action,
-> +                                   monitor_qmp_set_close_action);
->  
->      moncls->emit_event = monitor_qmp_emit_event;
->      moncls->requires_iothread = monitor_qmp_requires_iothread;
-> @@ -550,11 +570,38 @@ static QDict *qmp_greeting(MonitorQMP *mon)
->          ver, cap_list);
->  }
->  
-> +static void monitor_qmp_self_delete_bh(void *opaque)
-> +{
-> +    MonitorQMP *mon = opaque;
-> +    g_autofree char *mon_id = object_property_get_child_name(
-> +        object_get_objects_root(), OBJECT(mon));
-> +    g_autofree char *chardev_id = g_strdup(mon->parent_obj.chardev_id);
-> +    Error *local_error = NULL;
-> +
-> +    g_assert(mon_id);
-
-If object-del beats this BH, mon_id might be NULL. Return silently?
-
-> +
-> +    user_creatable_del(mon_id, &local_error);
-> +    object_unref(mon);
-> +    if (local_error != NULL) {
-> +        error_report_err(local_error);
-> +    } else {
-> +        qmp_chardev_remove(chardev_id, NULL);
-> +    }
-> +}
-> +
->  static void monitor_qmp_event(void *opaque, QEMUChrEvent event)
->  {
->      QDict *data;
->      MonitorQMP *mon = opaque;
->  
-> +    /* Protect against race if a client drops & quickly
-> +     * reconnects - we'll have the delete BH scheduled
-> +     * so must not honour a new open request
-> +     */
-> +    if (mon->delete_pending) {
-> +        return;
-> +    }
-> +
->      switch (event) {
->      case CHR_EVENT_OPENED:
->          WITH_QEMU_LOCK_GUARD(&mon->parent_obj.mon_lock) {
-> @@ -566,6 +613,7 @@ static void monitor_qmp_event(void *opaque, QEMUChrEvent event)
+> @@ -613,7 +613,6 @@ static void monitor_qmp_event(void *opaque, QEMUChrEv=
+ent event)
 >          qobject_unref(data);
 >          break;
 >      case CHR_EVENT_CLOSED:
-> +        mon->delete_pending = true;
-
-Shouldn't it be set in the MONITOR_QMP_CLOSE_ACTION_DELETE case only?
-
+> -        mon->delete_pending =3D true;
 >          /*
 >           * Note: this is only useful when the output of the chardev
 >           * backend is still open.  For example, when the backend is
-> @@ -577,6 +625,26 @@ static void monitor_qmp_event(void *opaque, QEMUChrEvent event)
->          json_message_parser_init(&mon->parser, handle_qmp_command,
->                                   mon, NULL);
->          monitor_fdsets_cleanup();
-> +        switch (mon->close_action) {
-> +        case MONITOR_QMP_CLOSE_ACTION_NONE:
-> +            break; /* nada */
-> +        case MONITOR_QMP_CLOSE_ACTION_DELETE:
-> +            /*
-> +             * Do NOT run in the AIO context associated with the
-> +             * monitor. We need to run in the default AIO context
-> +             * which is the same context in which 'qmp_object_del'
-> +             * will execute
-> +             *
-> +             * Hold an extra ref in case a separate monitor races
-> +             * with the BH by processing an expliciti 'object-del'
+> @@ -629,6 +628,7 @@ static void monitor_qmp_event(void *opaque, QEMUChrEv=
+ent event)
+>          case MONITOR_QMP_CLOSE_ACTION_NONE:
+>              break; /* nada */
+>          case MONITOR_QMP_CLOSE_ACTION_DELETE:
+> +            mon->delete_pending =3D true;
+>              /*
+>               * Do NOT run in the AIO context associated with the
+>               * monitor. We need to run in the default AIO context
+>
+>
 
-"expliciti" -> "explicit"
+Good, I just asked the same in my review :)
 
--- 
-Marc-André Lureau <marcandre.lureau@redhat.com>
+btw, you didn't collect my r-b from v3.
+
+> With regards,
+> Daniel
+> --
+> |: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+> |: https://libvirt.org          ~~          https://entangle-photo.org :|
+> |: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+>
 
 
