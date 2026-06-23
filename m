@@ -4,101 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68F1BCDB46F
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jun 2026 15:19:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5CA8CDB46F
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jun 2026 15:24:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wc2te-0003ni-Of; Tue, 23 Jun 2026 11:18:42 -0400
+	id 1wc2z2-0004kH-Vu; Tue, 23 Jun 2026 11:24:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wc2td-0003nT-RC
- for qemu-devel@nongnu.org; Tue, 23 Jun 2026 11:18:42 -0400
-Received: from mail-yx1-xb135.google.com ([2607:f8b0:4864:20::b135])
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wc2z0-0004jT-PS
+ for qemu-devel@nongnu.org; Tue, 23 Jun 2026 11:24:15 -0400
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wc2tc-0001p8-BP
- for qemu-devel@nongnu.org; Tue, 23 Jun 2026 11:18:41 -0400
-Received: by mail-yx1-xb135.google.com with SMTP id
- 956f58d0204a3-662e7fed068so2906442d50.0
- for <qemu-devel@nongnu.org>; Tue, 23 Jun 2026 08:18:39 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1782227919; cv=none;
- d=google.com; s=arc-20240605;
- b=fJpPLBowQ5Huq9g81Q6AGNx/geXq1Ek+UiEhnAQpzPmVWZZq6Gbopbxt/vah1dos0f
- kQvJHrREMiTFJw4bBrao4g/EM6sc0TqbISS7U0gKF8ILQYqJq897Q7ay3zRFL2Cfunhb
- v2dnk+qRKZBe5V2ZV7mcRdNcK/7NXgii+5Cwh+VISdt5vrPsjtEXl6gpGPAsarcDFdLd
- O5BnIMXU887olOc2LlpII7Atn8IwV1yv2WGRbtSxHSr60EwHizaM6GJa+c2pFf0LHF3/
- OBTELq2O5ACE+Famo67COYhH5TDY1Tc3TgIPJ+JkG9PY/pSzGJqR8gTfVNzQuvTyUzkd
- C+YA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=1HikhzCygbcSREMbSxKDYoUjkFnj0CYVYDR0dfelPlI=;
- fh=OGCmJLUP0SDa9Ex01DM5bZ6kIElysIl2mTkIXt0Fcs0=;
- b=lBZRKfBOAAnoGeNhiynxuolMwDYSM4dNSHOAZSm7q5WtSoUTtW8BtckcpIdBhSEUbi
- 3+Ez9+0yEmtUbiF8Y42yXNNoKsoZMKg9dCa+YgefNpGTuYbDZL+qsZPlI1jEc6FFfhPf
- ZZZU/pTIPHtsgp4wgnztgEMYlsEGlH+Yqa9zjziTJcrEfN1vmCz1Vgz+iDzhKsK08kOg
- nbdUlvuwBjrEhh/aYmlQahwAT7LllAmpqi1bvYRvT92tVpB4nDhbx69Nbp6Qp6Z//sZ2
- lHw0bz3GWUqPlbAt2R1sKwFT1zVxTgsB9U4Wsj9eMcxAIvabGojL4ZZtriv2FMmkCUjx
- DURQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <den@openvz.org>) id 1wc2yx-0003FK-KN
+ for qemu-devel@nongnu.org; Tue, 23 Jun 2026 11:24:14 -0400
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-490b8ac62baso11424105e9.0
+ for <qemu-devel@nongnu.org>; Tue, 23 Jun 2026 08:24:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1782227919; x=1782832719; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=1HikhzCygbcSREMbSxKDYoUjkFnj0CYVYDR0dfelPlI=;
- b=wb+GuBjhy59gGxleYleuBzzwTAchkfENSv6Ou64zouSkpaLDCCpbtbv6MZ0+Y/6Gm+
- h93pPpWnU287xyJiMilAzClTiMeuPz4GHj0/hvCxyJjH/e6Qlwkm+AT1VZXC+P33Z6YE
- DwA8ir6W73j3+yLjIeHz9LwZYs2TeHDqZ+zwUq8xGaQGf7ZhkwJyVog/KSdBoCaE7/tE
- fkrVtx7J2B3OKyYDXaZfEtVSmHuvcUxSS927AM/9ht6ieVPb8kkb4JsppH2MmKBDGl88
- 6kC+BhLky+MDFefN3bsIA3KlOc7H2eCt5GfMHpSW/0HPCKWregmXAYlLJRg3AAQc2A+v
- wTQg==
+ d=openvz.org; s=google; t=1782228249; x=1782833049; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=furMavqkiQ1mMg+SFKSul/jWMUzV83r9DJ8+BFZ7JT4=;
+ b=ZVsTmTuxajfP4OOr3mSZm9pfEKvNwjXZoDkpy56PR8/G6vszg1DGhRDMikbkNDTRRY
+ IwAF5ms9mdCf/DT/gbYr4GVso0WcwVcuM/ksN45iQO5GvRVuur4HBMgDsdsRdHXLPNvG
+ +vQw2zL4ngjST5uc8RcRwNcoRSiN13X4QVzcnzRkwVyGTlVD0dv24hEdNeqroXNgdGjj
+ e7Tm5agTOfNbb5yHT2i6iBhr4ypBL7RXqMrascJBLlSrHnB7v3xm8Fi1IXQKxZ5Zo0o0
+ n8vayVt02MB8iSpnKC9zujVxTtaeIv0rbcQ3uFZCCLiwK3hC+XJifU5Nh6XNL/mtM9xo
+ dVAg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782227919; x=1782832719;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=1e100.net; s=20251104; t=1782228249; x=1782833049;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=1HikhzCygbcSREMbSxKDYoUjkFnj0CYVYDR0dfelPlI=;
- b=nvyJWID8O0A9mkVk2IAAaJ/e4RIqnzBatjkVyxN0NY2AZ0BqBfLSzAZAuVJPzQ361g
- SiCJPgfwE1WgBdI5CJElE/2Qt4+gJIKwyd06hpt6IbTFj4hc68B1LWhMewPK8IvAlaj0
- O/e/rDLJjx0aWJWI/RtzKF5UojKqol3wkN/IZAWaXR/cdOS9C8uJZXiM4F4GrRQuboum
- k6lsBvGQvs6Cq+D5zvWEps31wuQOoVa8qTB4Cvi3DB/PkqiwIJLEEJ1UIta+5MIllOIl
- axEyHDaLNy/EmjmhT3J/jZiW0nMdBTSbON7JgCIHK7bJ2nIG4EpJBCArr4K/GYDgb1WO
- FUqA==
-X-Gm-Message-State: AOJu0Yw6U1Y589siZNlWnqsQG095//9C1ETqxnRVXmBNa3FfUfTc47oA
- 7xO+X+WM4E67mLzlOGEiyWeaqn2+L5A9aGUNpRmaYCKSf5AWIUQCpaGD/YrLRifEngsm0/zDb+2
- SQYyRfRlcYGgCnfNxXKP9AJmfYb33+g19cc9KQxyHZA==
-X-Gm-Gg: AfdE7cnN7sEflZDWfSD9WgviQ+9WnqNF8XPysEGCiG+LOEGN5qMPvl+Ka6fkR0KpBhy
- iMZ8fZpwb3TEzP0IzRN0pT42TAR/s5X7J1Wl0Kjt2g/ZketpPr+lMSOC7UPgIOsdF7oS+e9jyEB
- ixaOE62Pf9/xwUyatnYQLNQ7MYZo3yarx7AWVNB6DmQVF9f14+gzcx3QX+npH2jXdGylZH6GL50
- 5RPYKgvSYw06KUUXLSjYQjg/cFqhFTMDbdbD8mEK0N9wnIfzi3ZepSBdA1eGbcz+gb6uRSqdjE4
- qUmR/ikoACRLjr2O689m69Dt3l4yin8V6kpLMX7dokkKFrj9T8tds1kb
-X-Received: by 2002:a05:690e:128e:b0:65e:1d95:29da with SMTP id
- 956f58d0204a3-6635a026a1cmr2997845d50.32.1782227918435; Tue, 23 Jun 2026
- 08:18:38 -0700 (PDT)
+ bh=furMavqkiQ1mMg+SFKSul/jWMUzV83r9DJ8+BFZ7JT4=;
+ b=jf0/rHK1bowZFGcWzTYuEPJOqSgAWTJSvudWQRDlY7iP+94MOytzDCzL9lXcedY+b8
+ B8rbbEiVWgfedViNoVXOKD0KwGjybC3C2lFBckQJM5xntr5sPP5HTANkzlq0/6dHSmzy
+ veZqKLnPnhpzpeGM1+S8gdeVY6lAA6w/OvhjIOfHKr88cgsPUO1sFD99063K7IC1Vg59
+ 9DFiIoYiUp4MmtqQYQ7HDSTCv73darzgwDsXGF3yWtmzmWrKCey2Vx/8QpvCU/Y3zhFV
+ a4/qjof0K8SXgGczHNQPXUFdgviL15iMGDblciifDqOctstT2SB1Ufv3CMsm8PuaB9NC
+ yZCg==
+X-Gm-Message-State: AOJu0YyuS6Jl+Vvx3eH3zMozIHhFpLUXBu5Nbg7r4prVNHjbCpTcEzpr
+ X0x3HNmC1MbmGlLhq70+6cIvNrxGFV9qf1Thje4kJH5ln9zqoZg6QEFUxSmn5xFUDLc=
+X-Gm-Gg: AfdE7ckPmNcixfYnD/lHYFZ27/es6f7qTiuZtW6jrrI0GFSSUPLNffgSDtvS6s8hTXX
+ hS2BsNc1Gtja11ALvAlg34aGm1iZShJhFiMRpIbWlu+PuLLNcwxynvu5jT0PjKy8KF+A/pJ6hzi
+ TPgNLCCeREDcLfJ+rLv/2uIVoFubAstA3yYXTF9m7HHlcjRpgiFvTkJ7wDnM+XupiMxWhkrGykl
+ EQ9IiNcY3eMMwpiEf49GhKsc2650lxjWgCYpLiHVGBoFhPkotSwQNwVC2NEAMWaVzp2m89aNMwP
+ A4Rj40ZVIFT+imI/b0FrPIcFRrrRHexnvZ/CzWsU1FHSiYHyFNrp2dmhIy5YpfFQJuWKpQW1+tA
+ MUqOuxt7B+dADx3Bg7Gjr05fXKU61yUkInggOlKgjZFVCWjgGrj1dvR2+EeiwFcGlq6OavbI=
+X-Received: by 2002:a05:600c:4e8f:b0:48a:53cb:8604 with SMTP id
+ 5b1f17b1804b1-4925a0c4ec8mr61102185e9.14.1782228249179; 
+ Tue, 23 Jun 2026 08:24:09 -0700 (PDT)
+Received: from athena.sw.ru ([2a06:5b06:b600:300:406b:7279:5a3e:280f])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-49240eef2basm406008895e9.2.2026.06.23.08.24.07
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 23 Jun 2026 08:24:08 -0700 (PDT)
+From: "Denis V. Lunev" <den@openvz.org>
+To: qemu-block@nongnu.org
+Cc: qemu-devel@nongnu.org, John Snow <jsnow@redhat.com>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ "Denis V. Lunev" <den@openvz.org>
+Subject: [PATCH 0/2] job: don't drop job->paused while a pause is pending
+Date: Tue, 23 Jun 2026 17:24:04 +0200
+Message-ID: <20260623152406.1180235-1-den@openvz.org>
+X-Mailer: git-send-email 2.53.0
 MIME-Version: 1.0
-References: <20260618-jmac-gpc3b-v3-0-353e546067e7@linaro.org>
-In-Reply-To: <20260618-jmac-gpc3b-v3-0-353e546067e7@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 23 Jun 2026 16:18:26 +0100
-X-Gm-Features: AVVi8Cex_iyqwGUpp_Ts8y0P6KkIZbqVIGOEv73-UmYxjupz8zTiA8P-I4SYa6U
-Message-ID: <CAFEAcA_4w9SHZDwptYYnfGhgpWOeynZQ43fjuvNZo0VDV3WuHg@mail.gmail.com>
-Subject: Re: [PATCH v3 0/6] target/arm: Add aarch64 GPC3 bypass windows
-To: Jim MacArthur <jim.macarthur@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, 
- Richard Henderson <richard.henderson@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b135;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb135.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=den@openvz.org; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,24 +95,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 18 Jun 2026 at 17:33, Jim MacArthur <jim.macarthur@linaro.org> wrote:
->
-> Adds the GPC bypass windows defined in D9.2 of the Arm ARM. D9.8 (the
-> APAS instruction) is not implemented yet.
->
-> A large part of this is testing. To test GPC effectively, we need to
-> check that memory accesses are causing exceptions, or not causing exceptions
-> as appropriate. For some tests, boot.S is altered to record certain
-> exceptions and continue executing the test. An alternative would be
-> to use gdbstub to break on locations inside the vector table and continue,
-> but this requires significant coordination between the C test binary and
-> Python test driver, so has been avoided for now.
->
-> Signed-off-by: Jim MacArthur <jim.macarthur@linaro.org>
+A guest can abort QEMU with
 
+  qemu-system-x86_64: ../job.c:379: job_set_aio_context: Assertion
+  `job->paused || job_is_completed_locked(job)' failed.
 
+when it touches a virtio-blk device whose BlockBackend lives in an
+iothread while a block job (drive-mirror / blockCopy) runs on the same
+node. It is guest-triggerable and reproduces on current master. It was
+reported against the qemu-kvm 10.0 downstream, hit by the live-migration
+validation suite when a blockdev-mirror (libvirt blockCopy) ran while
+the guest reset its virtio-blk device during boot.
 
-Applied to target-arm.next, thanks.
+Under overlapping drains job_pause_point_locked() clears job->paused on
+wake while a pause is still pending (pause_count > 0), and the
+concurrent AioContext change reads paused == false and asserts. Patch 1
+carries the full interleaving and the fix; being in the job layer it
+also covers the other bdrv_try_change_aio_context() callers
+(x-blockdev-set-iothread, blockdev hot-plug/unplug, job completion), not
+just the virtio-blk reset path.
 
--- PMM
+Patch 2 is a deterministic regression test in tests/unit/test-blockjob
+that fails without patch 1 and passes with it. It is illustrative only:
+it pins the exact invariant patch 1 restores, but the fix stands on its
+own and the test may be dropped freely.
+
+There is no iotests reproducer. iotests run under qtest, which has no
+vCPU, so the only way to change a running job's AioContext from outside
+its iothread is x-blockdev-set-iothread, which runs in the main loop
+under the BQL - the same lock the pause handshake takes - and the
+cross-thread window never opens on an idle qtest VM. Several designs
+(back-to-back set-iothread, pause/resume churn, two iothreads, a
+latency-injecting null-co feeding a throttled mirror) all pass on the
+unfixed build; a timing test that passes on broken code is worse than
+none.
+
+To reproduce on master: in the guest, tightly unbind/rebind a virtio-blk
+PCI function backed by an iothread; on the host, keep a throttled
+blockdev-mirror alive on that disk's node. The assertion fires within
+seconds; with patch 1 it runs indefinitely.
+
+checkpatch is clean; test-blockjob, test-bdrv-drain and test-block-iothread
+pass.
+
+Denis V. Lunev (2):
+  job: keep job paused across overlapping pause requests
+  tests/unit/test-blockjob: cover keeping a job paused while a pause is
+    pending
+
+ job.c                      |   9 +++-
+ tests/unit/test-blockjob.c | 100 +++++++++++++++++++++++++++++++++++++
+ 2 files changed, 108 insertions(+), 1 deletion(-)
+
+-- 
+2.53.0
+
 
