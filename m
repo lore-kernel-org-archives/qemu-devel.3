@@ -4,157 +4,199 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05340CDB471
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jun 2026 21:55:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C5E3CDB47C
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jun 2026 21:58:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wc94z-0006lm-Bo; Tue, 23 Jun 2026 17:54:49 -0400
+	id 1wc98c-0007wl-Lo; Tue, 23 Jun 2026 17:58:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wc94w-0006kp-ID
- for qemu-devel@nongnu.org; Tue, 23 Jun 2026 17:54:46 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <alejandro.j.jimenez@oracle.com>)
+ id 1wc98a-0007wc-8Q
+ for qemu-devel@nongnu.org; Tue, 23 Jun 2026 17:58:32 -0400
+Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wc94s-00058T-QE
- for qemu-devel@nongnu.org; Tue, 23 Jun 2026 17:54:45 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1782251679;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=o4vdjHFs0mMfHaV9c+rw3+sCMS3gRKk/XP22CeO5HNE=;
- b=GLS8PAv1k5xuGjdqbh9ANLTN4XPBSGo+1c9zxkqh1DZeDcgsfA0zYL0sSa+ney0TEjkhbQ
- xuTCEQmrFh4V4gr5eA/d6+RaceyEYFDKVvE9tzn5YJD/7+tZexwz2/a0m/Pt61EtZLVu3M
- sKS4E6zYsDNrsn1xyxMN9GEKNanMz4Q=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-609-6w4YtG8nP1SSN26LyolPpg-1; Tue, 23 Jun 2026 17:54:36 -0400
-X-MC-Unique: 6w4YtG8nP1SSN26LyolPpg-1
-X-Mimecast-MFC-AGG-ID: 6w4YtG8nP1SSN26LyolPpg_1782251675
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-490a767b782so2407405e9.2
- for <qemu-devel@nongnu.org>; Tue, 23 Jun 2026 14:54:36 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alejandro.j.jimenez@oracle.com>)
+ id 1wc98X-00066p-Qx
+ for qemu-devel@nongnu.org; Tue, 23 Jun 2026 17:58:32 -0400
+Received: from pps.filterd (m0246627.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 65NEBlNR079444; Tue, 23 Jun 2026 21:58:23 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=
+ corp-2025-04-25; bh=3nTCVjANg5/Xj5uMuNF88lN2ruxpOKm9YzIUE6666tQ=; b=
+ cBdMUn8qzP947Jg9dMNPTjV4WsKbvGOuuf8728jYphu3AGdKA8OB6owoWw98pF0P
+ UrtYBK4ThgYwB/zZyiT1v4swl748qYhPPa+4IMhaQYJTHSKZ+z961ULcHjkZS7SK
+ 1To2tmoA8XMvYn6mqv+VgZOS5lMgPl1i3kXsJd1E6f1gNAcqLcaSdqr2JVSTCCLJ
+ RWgxMSvnRQAf/iStTq+cBvM3uqJy0TTpSNrOV5iKO+jEykzWhLbhWcQrIdnNFqEF
+ rnD6YoQ7hN6Mvj1ce47FSO77Yccqaz3nE1q1r2y42ZWCa7EuXwgsX0R4PYKL/E62
+ CCu2qhAn7nkDXP2/IzxlWA==
+Received: from phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com
+ (phxpaimrmta02.appoci.oracle.com [147.154.114.232])
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 4ewhf1mkw4-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 23 Jun 2026 21:58:23 +0000 (GMT)
+Received: from pps.filterd
+ (phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
+ by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.7/8.18.1.7)
+ with ESMTP id 65NLwJ5f025942; Tue, 23 Jun 2026 21:58:23 GMT
+Received: from cy7pr03cu001.outbound.protection.outlook.com
+ (mail-westcentralusazon11010069.outbound.protection.outlook.com
+ [40.93.198.69])
+ by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
+ 4ewhacmeuj-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 23 Jun 2026 21:58:22 +0000 (GMT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=whIlNBiUiLrPqaOyubgk+qfrL+mdWWoCxJ3cS5i++7yYJTOkziyT39MvgLBHveksXrArGnWOgT6jWYmo+ZazNNSIVa9Y9uN2XRz47k/7l0BWYZmF3FwCDNSlJ99f6lEE60jn1UIy472pTOCZnH0dI2PHZcMYTNYmzq6heEHCh2k9W8fvYdI2QrPFxfThVP+6YeqDsTRisqZxMeofHUkQta9+TLFweo88ms5KLOYxTG6+CIrovm0NrYTaO5eXHMfOPL3+2iMT5iQPBC1c12v7iVwawrKgJIO49XCfXVit4IM7CtyC2jGTnXPaVIZwi0mAIRvYgJGSW3AyCLWAbPJaew==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=3nTCVjANg5/Xj5uMuNF88lN2ruxpOKm9YzIUE6666tQ=;
+ b=Gwg4mP4soAzjiOStdbxnEei+5+05qEdkfReiL9353tpw2a9DDi4n5q87NI/l6NGoZ4/iPMjdRChq6LwSYKS9D/8n7sn9LNWC/braSyF96Vx7pO4ekbzM+lIZJyug89nMyLebCSsUIqNML6tNxWk73NFqg5Dut/0ExLV2Kfph+qjny8p4Mqus7WKJGdjsKnYIWDw/BNWxzPv91oe9BFCM8N1B6i1q1MuY0cJDR7BxRstdp8XTTkqJylbn5Ixd/bv0CFZ2DRW/F+5rOEwMCAhUyt13t0qZU9iDxlA4A6zAgc4THXVFovhnI55jFL7sDHy2erQ3nlwoObC9UzO0HEyZhA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
+ dkim=pass header.d=oracle.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1782251675; x=1782856475; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=o4vdjHFs0mMfHaV9c+rw3+sCMS3gRKk/XP22CeO5HNE=;
- b=s4wpHnsmxQVfWtGy2FRbwca81MDVq13W3qIQ97gtoA8zzAGX8LJjEarSTTalPATLMa
- mRaclYx4d7xqxZ/8G5Gy7l5h2xu30euLKWYw2a612K2BG1/2Fgvp3J4sLbXrSpqgpDbM
- sqDhZVC3Or72cwN4y+UiHCnImr8/t0FcZ1HxZP3Yj2kvtmyXrQb2pteYoo2gSJ70lZVn
- B79SP9JLqmb3GEe16v3gPhgHZPsNBZov+fHYJ1xCUAFqrHRoOoVFO4LTOjsD0uy5Rkuz
- /zaMthQ5v5xfwVF/RtPL7vG/C5EYvp35LhPdq4GsuQQ7LHP8TNd3am0pftES4OzkucWD
- BBtA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782251675; x=1782856475;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=o4vdjHFs0mMfHaV9c+rw3+sCMS3gRKk/XP22CeO5HNE=;
- b=qFPKrpw6Zf+Il6NXluuN9uF3U3w4Jner4QY+dReEpt7FK8KFwG32QkRjcTRUfsl0yU
- vAn2Y+iJuDeYOXLRcSGt4Y+whVjQ/3umN7aX2rYWZ2CkML3zcw8DnG9qSm/oPEwxSOOT
- OqfELtWmhMBiKTxEfBMnAM6/tP8fz6XGr0wKWxWqo99DnrPpj5ZFv1FLMzoijM/JBCS6
- hOljsubLnq15Ske87dHKWyHqY/Rc8pZFiz6YZC/gp5ICE1Q0XqMXDkEKqs7MmDyRP54S
- Kj2CeOIDFO3rS/7Q8XOruyuQ/PFJ30zsqUD5oU3maZoP3J1LB3D4P9H71ePU+o6hrvLj
- XEfg==
-X-Forwarded-Encrypted: i=1;
- AFNElJ9ZgJdWe64YLt9ntSnrUyM5xNTybeRE9XhSfqn0amMv7P1wCNaEA66toLuPjlYUfAPmX2CdJVf1DiPi@nongnu.org
-X-Gm-Message-State: AOJu0Yx93dO4cO3p+dwyaTFUuj4lqdh5IkTxxAXhmV4KJePnAAbiwfzI
- NInNP43UnVWnmvIQs8DYhLArJJx7xOGLyBMeK2upZ6OypUHKlBrK4NtwShJ1L4KM1rx2LZKhJrn
- JkEtOe/ibswe4Hk8K+o3LNOp9hYVrYFVLC7LHesFhEZ0Rdp0JS0wlROdH
-X-Gm-Gg: AfdE7cnuO00wr3U9SPn6uHooWuu15trBjYQ7t5DUADibdATc86vR7WUDvb4WsQiNuZu
- A7KgerKbMPEvHw/ia2xvw2u8nXHwAIB6/8v0zZMhA67ycgHNzxFBYKuHeX4do6FKmg6PwfNTj+B
- x1oUPZeEBYu/VYIewHsw/+vXyUjvVVg9VDgKJA/S1373O4E2EoGURZWU7Rh4WllQO3f4e97K6r7
- Tywb4biTawUamTkKY8j5iNth0Lvg7aXmJk2by97VhgNh28+E3WVACa4/ezR8wWjVU1funInUU9s
- TcbKRgLWwG1EL2RAvAQPLJNnE86hJ0tKGqXoJWdfE0QV4xVC2kZxs5u2M0Mbs7Q2Q/uxBrHwuxX
- XtV3k+wNnKaKy6CNNpB9WD8p5MYyyY3YakaTQ64aAfBV950k73Zbm
-X-Received: by 2002:a05:600c:190b:b0:490:bc46:1a58 with SMTP id
- 5b1f17b1804b1-49260873583mr5129625e9.18.1782251675305; 
- Tue, 23 Jun 2026 14:54:35 -0700 (PDT)
-X-Received: by 2002:a05:600c:190b:b0:490:bc46:1a58 with SMTP id
- 5b1f17b1804b1-49260873583mr5129405e9.18.1782251674887; 
- Tue, 23 Jun 2026 14:54:34 -0700 (PDT)
-Received: from ?IPV6:2a01:cb19:8426:ae00:a924:b4e0:1ee:f5c5?
- ([2a01:cb19:8426:ae00:a924:b4e0:1ee:f5c5])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4923fd21dbdsm369377025e9.6.2026.06.23.14.54.33
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 23 Jun 2026 14:54:34 -0700 (PDT)
-Message-ID: <e3b6adaa-62f5-43ca-9c19-262ee0a2b570@redhat.com>
-Date: Tue, 23 Jun 2026 23:54:33 +0200
-MIME-Version: 1.0
+ d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=3nTCVjANg5/Xj5uMuNF88lN2ruxpOKm9YzIUE6666tQ=;
+ b=a0o4WlYbF3lLlqBXMZj4Jy2KnOThwyekYCbINPi0UfpOTwus+91a5d9LRQa0orIuKNxV7KR3eQBl+9HLj+w2rU2YjEfm3ps5d15tcBylowtswD9X/Jk9PEfwsmZlZMrFn8lESUa569WoDQyBKAtrUuSvdOhXIqT53hF9d+s4wqU=
+Received: from BLAPR10MB5041.namprd10.prod.outlook.com (2603:10b6:208:30e::6)
+ by LV3PR10MB7723.namprd10.prod.outlook.com (2603:10b6:408:1b0::10)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.139.18; Tue, 23 Jun
+ 2026 21:57:41 +0000
+Received: from BLAPR10MB5041.namprd10.prod.outlook.com
+ ([fe80::2c19:641c:14b9:b1b4]) by BLAPR10MB5041.namprd10.prod.outlook.com
+ ([fe80::2c19:641c:14b9:b1b4%4]) with mapi id 15.21.0159.012; Tue, 23 Jun 2026
+ 21:57:41 +0000
+Message-ID: <b4637fdb-c32a-4ca1-9348-3757ef93ea3e@oracle.com>
+Date: Tue, 23 Jun 2026 17:57:39 -0400
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 2/2] vfio/pci: Add ats property
-To: Nathan Chen <nathanc@nvidia.com>, qemu-devel@nongnu.org
-Cc: Yi Liu <yi.l.liu@intel.com>, Eric Auger <eric.auger@redhat.com>,
- Zhenzhong Duan <zhenzhong.duan@intel.com>, Alex Williamson
- <alex@shazbot.org>, Matt Ochs <mochs@nvidia.com>,
- Nicolin Chen <nicolinc@nvidia.com>,
- Shameer Kolothum <skolothumtho@nvidia.com>
-References: <20260623204943.989903-1-nathanc@nvidia.com>
- <20260623204943.989903-3-nathanc@nvidia.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Autocrypt: addr=clg@redhat.com; keydata=
- xsFNBFu8o3UBEADP+oJVJaWm5vzZa/iLgpBAuzxSmNYhURZH+guITvSySk30YWfLYGBWQgeo
- 8NzNXBY3cH7JX3/a0jzmhDc0U61qFxVgrPqs1PQOjp7yRSFuDAnjtRqNvWkvlnRWLFq4+U5t
- yzYe4SFMjFb6Oc0xkQmaK2flmiJNnnxPttYwKBPd98WfXMmjwAv7QfwW+OL3VlTPADgzkcqj
- 53bfZ4VblAQrq6Ctbtu7JuUGAxSIL3XqeQlAwwLTfFGrmpY7MroE7n9Rl+hy/kuIrb/TO8n0
- ZxYXvvhT7OmRKvbYuc5Jze6o7op/bJHlufY+AquYQ4dPxjPPVUT/DLiUYJ3oVBWFYNbzfOrV
- RxEwNuRbycttMiZWxgflsQoHF06q/2l4ttS3zsV4TDZudMq0TbCH/uJFPFsbHUN91qwwaN/+
- gy1j7o6aWMz+Ib3O9dK2M/j/O/Ube95mdCqN4N/uSnDlca3YDEWrV9jO1mUS/ndOkjxa34ia
- 70FjwiSQAsyIwqbRO3CGmiOJqDa9qNvd2TJgAaS2WCw/TlBALjVQ7AyoPEoBPj31K74Wc4GS
- Rm+FSch32ei61yFu6ACdZ12i5Edt+To+hkElzjt6db/UgRUeKfzlMB7PodK7o8NBD8outJGS
- tsL2GRX24QvvBuusJdMiLGpNz3uqyqwzC5w0Fd34E6G94806fwARAQABzSJDw6lkcmljIExl
- IEdvYXRlciA8Y2xnQHJlZGhhdC5jb20+wsGRBBMBCAA7FiEEoPZlSPBIlev+awtgUaNDx8/7
- 7KEFAmTLlVECGwMFCwkIBwICIgIGFQoJCAsCBBYCAwECHgcCF4AACgkQUaNDx8/77KG0eg//
- S0zIzTcxkrwJ/9XgdcvVTnXLVF9V4/tZPfB7sCp8rpDCEseU6O0TkOVFoGWM39sEMiQBSvyY
- lHrP7p7E/JYQNNLh441MfaX8RJ5Ul3btluLapm8oHp/vbHKV2IhLcpNCfAqaQKdfk8yazYhh
- EdxTBlzxPcu+78uE5fF4wusmtutK0JG0sAgq0mHFZX7qKG6LIbdLdaQalZ8CCFMKUhLptW71
- xe+aNrn7hScBoOj2kTDRgf9CE7svmjGToJzUxgeh9mIkxAxTu7XU+8lmL28j2L5uNuDOq9vl
- hM30OT+pfHmyPLtLK8+GXfFDxjea5hZLF+2yolE/ATQFt9AmOmXC+YayrcO2ZvdnKExZS1o8
- VUKpZgRnkwMUUReaF/mTauRQGLuS4lDcI4DrARPyLGNbvYlpmJWnGRWCDguQ/LBPpbG7djoy
- k3NlvoeA757c4DgCzggViqLm0Bae320qEc6z9o0X0ePqSU2f7vcuWN49Uhox5kM5L86DzjEQ
- RHXndoJkeL8LmHx8DM+kx4aZt0zVfCHwmKTkSTQoAQakLpLte7tWXIio9ZKhUGPv/eHxXEoS
- 0rOOAZ6np1U/xNR82QbF9qr9TrTVI3GtVe7Vxmff+qoSAxJiZQCo5kt0YlWwti2fFI4xvkOi
- V7lyhOA3+/3oRKpZYQ86Frlo61HU3r6d9wzOwU0EW7yjdQEQALyDNNMw/08/fsyWEWjfqVhW
- pOOrX2h+z4q0lOHkjxi/FRIRLfXeZjFfNQNLSoL8j1y2rQOs1j1g+NV3K5hrZYYcMs0xhmrZ
- KXAHjjDx7FW3sG3jcGjFW5Xk4olTrZwFsZVUcP8XZlArLmkAX3UyrrXEWPSBJCXxDIW1hzwp
- bV/nVbo/K9XBptT/wPd+RPiOTIIRptjypGY+S23HYBDND3mtfTz/uY0Jytaio9GETj+fFis6
- TxFjjbZNUxKpwftu/4RimZ7qL+uM1rG1lLWc9SPtFxRQ8uLvLOUFB1AqHixBcx7LIXSKZEFU
- CSLB2AE4wXQkJbApye48qnZ09zc929df5gU6hjgqV9Gk1rIfHxvTsYltA1jWalySEScmr0iS
- YBZjw8Nbd7SxeomAxzBv2l1Fk8fPzR7M616dtb3Z3HLjyvwAwxtfGD7VnvINPbzyibbe9c6g
- LxYCr23c2Ry0UfFXh6UKD83d5ybqnXrEJ5n/t1+TLGCYGzF2erVYGkQrReJe8Mld3iGVldB7
- JhuAU1+d88NS3aBpNF6TbGXqlXGF6Yua6n1cOY2Yb4lO/mDKgjXd3aviqlwVlodC8AwI0Sdu
- jWryzL5/AGEU2sIDQCHuv1QgzmKwhE58d475KdVX/3Vt5I9kTXpvEpfW18TjlFkdHGESM/Jx
- IqVsqvhAJkalABEBAAHCwV8EGAECAAkFAlu8o3UCGwwACgkQUaNDx8/77KEhwg//WqVopd5k
- 8hQb9VVdk6RQOCTfo6wHhEqgjbXQGlaxKHoXywEQBi8eULbeMQf5l4+tHJWBxswQ93IHBQjK
- yKyNr4FXseUI5O20XVNYDJZUrhA4yn0e/Af0IX25d94HXQ5sMTWr1qlSK6Zu79lbH3R57w9j
- hQm9emQEp785ui3A5U2Lqp6nWYWXz0eUZ0Tad2zC71Gg9VazU9MXyWn749s0nXbVLcLS0yop
- s302Gf3ZmtgfXTX/W+M25hiVRRKCH88yr6it+OMJBUndQVAA/fE9hYom6t/zqA248j0QAV/p
- LHH3hSirE1mv+7jpQnhMvatrwUpeXrOiEw1nHzWCqOJUZ4SY+HmGFW0YirWV2mYKoaGO2YBU
- wYF7O9TI3GEEgRMBIRT98fHa0NPwtlTktVISl73LpgVscdW8yg9Gc82oe8FzU1uHjU8b10lU
- XOMHpqDDEV9//r4ZhkKZ9C4O+YZcTFu+mvAY3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfA
- HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
- izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20260623204943.989903-3-nathanc@nvidia.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+Subject: Re: [PATCH 2/2] amd_iommu: Fully initialize XT interrupt message state
+To: "Michael S. Tsirkin" <mst@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, sarunkod@amd.com, pbonzini@redhat.com,
+ richard.henderson@linaro.org
+References: <20260623005813.984238-1-alejandro.j.jimenez@oracle.com>
+ <20260623005813.984238-3-alejandro.j.jimenez@oracle.com>
+ <CAFEAcA8NKB6Wg-Gsbv_NXp72PLADS=h7p7KyLCW1gRCbywESfQ@mail.gmail.com>
+ <20260623143614-mutt-send-email-mst@kernel.org>
+Content-Language: en-US
+From: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
+In-Reply-To: <20260623143614-mutt-send-email-mst@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: CH2PR10CA0025.namprd10.prod.outlook.com
+ (2603:10b6:610:4c::35) To BLAPR10MB5041.namprd10.prod.outlook.com
+ (2603:10b6:208:30e::6)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BLAPR10MB5041:EE_|LV3PR10MB7723:EE_
+X-MS-Office365-Filtering-Correlation-Id: 68a6f309-7dc6-4234-5bea-08ded172728b
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|23010399003|376014|1800799024|366016|4143699003|3023799007|56012099006|6133799003|22082099003|18002099003;
+X-Microsoft-Antispam-Message-Info: ZK8KJ5dWQxB7l4qIhkIOhVw9wX2sVMoJWm4rgJ2buIE4RMisckt6mqpVkLX6lxyFxgNRTMWs0eP7lUo6OlIyVoVD5AiJUMMyUwSturqJJwA6qxdDWh6OZzqXTBiEyoO4I/ix5hJViuDxtXtSQHuH6AM1uyQRya7zgWt6FeBvFI6y3P7tganHpRYeOQ/fxUM0yidVg4UrFHfbStDRE+toQBbPtIE3ZrB5RhfgAu1JHhqB52dg+7ya5HRc+zjLrW5Lhc59G6FGFR5nyux77oLIIqoG0giqKGQ4sQpjpIbJOpZDRfmRhi9y9+fchbSiQ0s8PimwLacuhASFdza4CORLnL5TD2Ue3RB6ARM+shR2Q32sxSnrSwO0DmCpxKaiwQP4N7KUwmQ/82xV/AcpjUPZoe7Z54aLlJC5SIIEAasmgb5pSjjftnFpG5sYmSqUHj2u9CzfFY1/a3jWf+o9VeBS6Oi7axDaqk5XLnsaYrLE80bDpU/jsRRTAcIBHl8aY9cF6dh498Y3XI0xU8nB0XNynAw+8+DhDaY7gL+y9UUA6XYZsyQCSRvkLLaSfMnmH/52l+yDGg7dapS7Q/TS5b5oLbJrkgy2wz7zXbS0umtmgrXdxLqzYoFaJdoVSSrcZepSvvST7owUyZhoKKHoLDcKm4yVYZsdxh3m21ictut7rVQ=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:BLAPR10MB5041.namprd10.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(23010399003)(376014)(1800799024)(366016)(4143699003)(3023799007)(56012099006)(6133799003)(22082099003)(18002099003);
+ DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?OFlwL3ZhaGNWUm04ekd0RUFrTGZEcmtRcDNKY0YxWnpFb2NuVDd0QTZiL0Yv?=
+ =?utf-8?B?NEJSbW1PUWxJcnRlTFFlTytFL05TNUViazYxTFFjbU9wQVJhcVpnTXl6eTNV?=
+ =?utf-8?B?aVBRZ2RsYk1oZ09XREZrMEp5ZElKTDlHV2VRcHNPbm8vSmtXZGZnemh5UG9Q?=
+ =?utf-8?B?a3ZpRUZkNmZZUmhpTEFmZGUxa1UyQ1h0bUdCM3hDTUxYSkNxZnp3d2hjaWVl?=
+ =?utf-8?B?WGIwZTBmQkY1RVFJbGNjUHFkVUJiZW9xbjJUcW8xa1QrR2Z1Qm5kSVc0QzU3?=
+ =?utf-8?B?RElLb0dLQkhWWUlwSlE5M3VTU2x1RHVMTzBwY29XMTZtWTFFRERJSTJXUnNY?=
+ =?utf-8?B?VzlndktlZC9XOVRlZ3JyRXpKYUdwMS9lSlBpYmJOVXBBaVJtc0dvZUVYelpD?=
+ =?utf-8?B?OGthNHQ2ZVhSRGtnMi92bHNDRU1iVzdld1pNVzhmc2FxVy90MVoyNHZHTU8v?=
+ =?utf-8?B?RkZQNzA5a0RMSHJMUHVjSWIrVUoxSzUxaXpBTk0xS0kxOUxVQ0xneGpRc0kz?=
+ =?utf-8?B?em5CczNOb2RJT0NDbnp6S2ZlMGl0dkRPRGsxVHIrU0haeUpuM2VYRi9VMys4?=
+ =?utf-8?B?b1pnSTBKd0xhelZRaVdxR1YrQU1vWHQyMHd3RGh0Zjd6ZTlnMzJIdEcyK09I?=
+ =?utf-8?B?K3lCbWNkY0V4VmdiYVJMeW9xYVNXRzkyaXIydmJ6eGgwN3ZVR0puVG03WUh4?=
+ =?utf-8?B?WVp2NFRoZzlCZmFQdWJPZVN3QU1ZOE9sTEs3MUxxMUNFTjhWQkQxRUlKS3Vv?=
+ =?utf-8?B?QkF6eHdxQjdtYTRaUFd0dW1EcWI2SGRSdXMxSXdVTmkyL3JCcDh0V1BpQjcr?=
+ =?utf-8?B?UG9XRnZTVlkrVk5jUFpVc1o5MzJwVGgwbDVkeHQyNEhtMW5uZjJTbExqc3pJ?=
+ =?utf-8?B?U3ZIOVZjL21UVU9pWjNxQ08xWlkwZ202eGpPT00vVGU5OUVxWFlsaDM1cU9w?=
+ =?utf-8?B?ZjRTYjlJYm10NFNGVU9PL25JU0NhYzM5SWlGMUdDTVFDZTJ4SDNaYTUrSmVp?=
+ =?utf-8?B?QitCMVBGY1l1NG13VzB3NWJwQkhuWnNieGNFcVZuQ1BZaSs5K1hsQVREL0pa?=
+ =?utf-8?B?aTdwSHViN25TV0ZzUk5UaTFYYzFIR05QZngyOFdVV2trNWpxRHlMc2hxNXAw?=
+ =?utf-8?B?NFJXZ1VVYysrWWc3SFhNVEFncGlOWXJBVDVnUjVjaE9HYUQwcGp2d1pFUmNy?=
+ =?utf-8?B?RHJmdHIzQjFCVklDRkpYZ3VEMkJEWS9LTzFFWXlvSXI2WENJSlBUbjE5cGYv?=
+ =?utf-8?B?eDdvTVl3eEFsRzhSaS9Ld1M0VFRtYTlqeHA2ay81cG9aSVZBb3hFcnZLeHRX?=
+ =?utf-8?B?VHlhamttVW1SR0RCanY4YUwyOTBTQWMzZktleSt6dzFuK1BqNnFXKzhBMVZB?=
+ =?utf-8?B?bzY4SFI0ekQzV2VCaFl3bjJ5UkVkclFuT2Y5Zmw1OWZ1d1VJbjZscGYyVUJp?=
+ =?utf-8?B?eDJ3MWxENzlmYjZ1OUxmbUZoekRGMi91djFlWTJiNGNqSkMxL3hpVDF2aXRo?=
+ =?utf-8?B?SzA1Z3hZUGw5WmJ2VU0vMkxpZ2I5VjFuQ0IyemRCdXpjaXFMMWJEUk8xS1Zr?=
+ =?utf-8?B?MUhvb3VGYmtyTVIwL0lrRnhERm9qLzBydnd6Q3JQaUpJMUY5TXp3VTM1TzBH?=
+ =?utf-8?B?eEw4YnVxOWVRL3hsUGt0MWl0aDBqN1lyaVEzYUJyUkxoaTBPK0ZwTlZEcTlR?=
+ =?utf-8?B?c05EamR4ZFVlb3VncU4zeHRZMTJyNWwyaC9Qb0tUbXZvbko1NHgvVVUxdkN0?=
+ =?utf-8?B?WmV3U3FPeGxBNm90ZTI2MnZ2U2h1NjFId05QbEQzaGdKeVU0a2VvVVVuU1lK?=
+ =?utf-8?B?UVArVWVRLzBKTVlWbVZkMFFMQVBrM1Fwa1VGVHUxbDBPZXhiWDlhRzB0WWlB?=
+ =?utf-8?B?SngreXJ1L3ppd0l6T0QvLzE1ZW1xOVJDakZrWDkyUW4rRXR3S2d5S0Z2Q1Vr?=
+ =?utf-8?B?eTVQd2lQZ3p4cGhpRUwybzBwWldpNWF1QjZqQWRCcUlLNXJpcmVLdXErcDRI?=
+ =?utf-8?B?dklmdWxibGltYndKMjMxdFQ0aFp5NThhM0VqZE9yamsxWWhHVUhJODVtcmoy?=
+ =?utf-8?B?WHQ4aDA5Vksxd29USnVnTERvc0ZDNUpQcmUxVGJweXZlSFBvaFBLTDZuVEI4?=
+ =?utf-8?B?UnpLNWZUdmswb2UyZWVJYkJWaytXUlJ3WEZZUTVuQk95aHNpYmlZM3JuSnph?=
+ =?utf-8?B?VFBDbW96bkxETm5oWnR1VG5HMEhyTG1xeEc2Q3VLUGFtLzZ6MktSdHZiam1C?=
+ =?utf-8?B?STc4QTdaOXQrZ3NIQ2JJQnRsbk8rMW1DSzdEckg2c1hlck5WZU8xSGR6eVI4?=
+ =?utf-8?B?WFFoNlVBK3AraWpGRkxxWElzdC9rNnZyTkhCSVZaK0pUQy9MQVYwYkdZVzN4?=
+ =?utf-8?Q?pckdA9iPgWUPSwts=3D?=
+X-Exchange-RoutingPolicyChecked: griu6XFJIxR0jaluotggclVkGJJK0wmalco1caLDuVfDAHIhQNo6QwESnzm17S/0Dlpn/H1pCRDexoc55cVCS5ys5Sm2avt1TDanneZd961krQGCdZh48EPPbReWvtuW6h7Kq/+Ce0H0yq+eJoUwTyLZ+ZL5aPQ5ux4Ok92jMNSmPRYFMiUM8/HdpEfRCrAjOzCjg9l9wCeJwH+ZGSC93X+VUo238G4eXfx9mKuNEvrk6P/i1E2ne5H+dszxX091joBaGNYYEJBUKn4Jo1eTpeeRiJhVaFZLOb7jQEkvqoWJ2KBfPITDpJalIJtuXuvyfC2CUzfjXAgTzXyvKL8ZsA==
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: ogcih1OPFVxLqomu1IQfp9h9+cZBAGu1ZoPetJhGKnGbGXviOLcoy6P8WK0GQvcCImtsT7vy6c/1ANZQiTugH6Eao7dgHamzdBs6eqFm8uyrrtetBVyXOVSnmFKzP/FQZZ8HSvC+06+3ljemKFQU7rbo63+xwFE8Vkpkq5ctXoJyoiUYDKjDamhC9eZg44Bn+Ertn7a6z8G8TBNpS8t3RHa5rGQUdkJznVBKu7mGpdFYWxVsmtzriM6ggaGIOIdve2h9cc84oHVSWT9Zm/5MjEL5vtDwGbCJKmAGezWJF0PDeYdj+RLd7b8D9W3yaX9MkQpw8VelV6Pyc/+0Kvy3qAzR9IarcwAYQwB9UemYLLD4fLq8x1oLvkmV+V1ibmyPW2PVkYKl2hZrTRgG0meJvZxmi0owaiTFejoN4pze/4xYP8Mt2SIFWs4ockmCt3ObXC4fdvYs3OI+ElotvQE4qRJ6smlX6+tjr5JsF1VODvSE0+9P2uHVPFFd/LqYjnGvL6r6JozPiaSk8caYCqTsQMaWgfE3txgPC5xWJLfzAL8klz8qWuCtKIYfNkcTnvWlj0Db/xxfqc14Js3z1rGLuFMPljZmgArvgu+cF/Ymb9U=
+X-OriginatorOrg: oracle.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 68a6f309-7dc6-4234-5bea-08ded172728b
+X-MS-Exchange-CrossTenant-AuthSource: BLAPR10MB5041.namprd10.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 23 Jun 2026 21:57:41.2903 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: wLxP23XBESqlpgJGR/qd9ealTS/BVu5mqtVWuiu9aR3J3xFs3GFsP6WsSV2wZmUzhI1oWxUtbiDOzIUnbIz/JcE0OF0L9PzyKDk8fulQmJ4=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV3PR10MB7723
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-23_04,2026-06-23_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0
+ phishscore=0 adultscore=0 mlxscore=0 lowpriorityscore=0 spamscore=0
+ mlxlogscore=999 suspectscore=0 malwarescore=0 classifier=spam adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2606160000 definitions=main-2606230181
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjIzMDE4MCBTYWx0ZWRfX32JGSd4YGUsS
+ g2TWSxv/6CsRzptIroCTWbXzR63506klGXCAvTA/oLmEREH1WhmurMJJJRWY6RGS6DN461RyTC+
+ iFNK6WbEX39URUjrbweNkB5OA0HyG5QqVCC9sGr5t9/enCICxJhkXwO8enPT/0zAiGHDQUISFKw
+ 07PI3nLNGwqsf4dfeCBDB+TSPDGQCHVG/bG8IMBiDy+yreo3AzpTBY3lOP9/YeXRKVZNu5Ix13x
+ Y21mrp7LgjDxh1NoLMs9wHonzS6U9TvuH3lYf9xLA9P7MpCy6p3X4HZ1HHiltChUpCDmJrRWYD1
+ a91XabBVAPazjdnIWZY+Rs5q69nwZ0qNrrk1p/ZGEbvNaL3cMIhKcANxwR8oCSpUyif7sL/J7e8
+ JxYcvpVdHcYda8IkXKGXWba3funxhREpfsAc0LSmjvcpWbdAs6o1WYzKM3WJzDpN4zQidd6gnl2
+ 8lYOWwLB+XYca/jdI4A==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjIzMDE4MCBTYWx0ZWRfX3sK/iU8lMhyG
+ AWjYHtlKPYtzsTLehWfagi/95WVwEJkOpzcDhAQxUXRqdnGhOXrl3B5VGjPxyJOgU4jZt/jMnMN
+ UrUjDDCdfsmH7ynBQ09CYRHOUhlePFFNwY9aP60PjEJAm+lkcAeH
+X-Proofpoint-ORIG-GUID: DElZzp5SkynhsljLzyVpNR1K2uipS1BB
+X-Proofpoint-GUID: DElZzp5SkynhsljLzyVpNR1K2uipS1BB
+X-Authority-Analysis: v=2.4 cv=A+lc+aWG c=1 sm=1 tr=0 ts=6a3b017f cx=c_pps
+ a=OOZaFjgC48PWsiFpTAqLcw==:117 a=OOZaFjgC48PWsiFpTAqLcw==:17
+ a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19 a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19
+ a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
+ a=FelO9ux0wxsA:10 a=GoEa3M9JfhUA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=jiCTI4zE5U7BLdzWsZGv:22 a=RD47p0oAkeU5bO7t-o6f:22 a=yPCof4ZbAAAA:8
+ a=KKAkSRfTAAAA:8 a=BSpzRPOoaSFqzjSuwjsA:9 a=QEXdDO2ut3YA:10
+ a=cvBusfyB2V15izCimMoJ:22
+Received-SPF: pass client-ip=205.220.165.32;
+ envelope-from=alejandro.j.jimenez@oracle.com; helo=mx0a-00069f02.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -170,200 +212,108 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/23/26 22:49, Nathan Chen wrote:
-> From: Nathan Chen <nathanc@nvidia.com>
-> 
-> Add an "ats" OnOffAuto property to vfio-pci. When the device has an ATS
-> extended capability in config space but we should not expose it (ats=off,
-> or ats=auto and kernel reports IOMMU_HW_CAP_PCI_ATS_NOT_SUPPORTED), mask
-> the capability so the guest does not see it.
-> 
-> If ATS is explicitly requested but not supported by the kernel, fail
-> device realize.
-> 
-> This aligns with the kernel's per-device effective ATS reporting and allows
-> vfio-pci to mask ATS when the host kernel reports ATS as unsupported.
-> 
-> Emit a warning when ats=on is requested but the physical device does not
-> advertise ATS, since ATS cannot be exposed to the guest in this case.
-> 
-> Emit a warning when ats=auto, ats cap is present on the physical device,
-> but kernel reports ATS as unsupported.
-> 
-> Suggested-by: Shameer Kolothum <skolothumtho@nvidia.com>
-> Signed-off-by: Nathan Chen <nathanc@nvidia.com>
-> ---
->   hw/vfio/pci.h |  1 +
->   hw/vfio/pci.c | 88 ++++++++++++++++++++++++++++++++++++++++++++++++---
->   2 files changed, 85 insertions(+), 4 deletions(-)
-> 
-> diff --git a/hw/vfio/pci.h b/hw/vfio/pci.h
-> index c3a1f53d35..f2934f2d84 100644
-> --- a/hw/vfio/pci.h
-> +++ b/hw/vfio/pci.h
-> @@ -188,6 +188,7 @@ struct VFIOPCIDevice {
->       bool clear_parent_atomics_on_exit;
->       bool skip_vsc_check;
->       uint16_t vpasid_cap_offset;
-> +    OnOffAuto ats;
->       VFIODisplay *dpy;
->       Notifier irqchip_change_notifier;
->       VFIOPCICPR cpr;
-> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-> index 9c06b25e63..fbec41f0f5 100644
-> --- a/hw/vfio/pci.c
-> +++ b/hw/vfio/pci.c
-> @@ -2546,10 +2546,53 @@ static bool vfio_pci_synthesize_pasid_cap(VFIOPCIDevice *vdev, Error **errp)
->       return true;
->   }
->   
-> -static void vfio_add_ext_cap(VFIOPCIDevice *vdev)
-> +/*
-> + * Determine whether ATS capability should be advertised for @vdev, based on
-> + * whether it was enabled on the command line and whether it is supported
-> + * according to the kernel.
-> + *
-> + * Store whether ATS capability should be advertised in @ats_needed.
-> + *
-> + * Returns false only when ats=on is explicitly requested but the kernel
-> + * reports it is not supported. Returns true in all other cases.
-> + */
-> +static bool vfio_pci_ats_requested_and_supported(VFIOPCIDevice *vdev,
-> +                                                 bool *ats_needed, Error **errp)
-> +{
-> +    HostIOMMUDevice *hiod = vdev->vbasedev.hiod;
-> +    HostIOMMUDeviceClass *hiodc;
-> +    bool ats_supported;
-> +    *ats_needed = false;
-> +
-> +    if (vdev->ats == ON_OFF_AUTO_OFF) {
-> +        return true;
-> +    }
-> +
-> +    *ats_needed = true;
-> +    if (!hiod) {
-> +        return true;
-> +    }
-> +    hiodc = HOST_IOMMU_DEVICE_GET_CLASS(hiod);
-> +    if (!hiodc || !hiodc->support_ats) {
-> +        return true;
-> +    }
-> +
-> +    ats_supported = hiodc->support_ats(hiod);
-> +    if (vdev->ats == ON_OFF_AUTO_ON && !ats_supported) {
-> +        error_setg(errp, "vfio-pci: ATS requested but not supported by kernel");
-> +        *ats_needed = false;
-> +        return false;
-> +    }
-> +
-> +    *ats_needed = ats_supported;
-> +    return true;
-> +}
-> +
-> +static void vfio_add_ext_cap(VFIOPCIDevice *vdev, bool ats_needed)
->   {
->       PCIDevice *pdev = PCI_DEVICE(vdev);
->       bool pasid_cap_added = false;
-> +    bool ats_cap_present = false;
->       Error *err = NULL;
->       uint32_t header;
->       uint16_t cap_id, next, size;
-> @@ -2635,7 +2678,19 @@ static void vfio_add_ext_cap(VFIOPCIDevice *vdev)
->            */
->           case PCI_EXT_CAP_ID_PASID:
->               pasid_cap_added = true;
-> -            /* fallthrough */
-> +            pcie_add_capability(pdev, cap_id, cap_ver, next, size);
-> +            break;
-> +        case PCI_EXT_CAP_ID_ATS:
-> +            ats_cap_present = true;
-> +            /*
-> +             * If ATS is requested and supported according to the kernel, add
-> +             * the ATS capability. If not supported according to the kernel or
-> +             * disabled on the qemu command line, omit the ATS cap.
-> +             */
-> +            if (ats_needed) {
-> +                pcie_add_capability(pdev, cap_id, cap_ver, next, size);
-> +            }
-> +            break;
->           default:
->               pcie_add_capability(pdev, cap_id, cap_ver, next, size);
->           }
-> @@ -2646,6 +2701,16 @@ static void vfio_add_ext_cap(VFIOPCIDevice *vdev)
->           error_report_err(err);
->       }
->   
-> +    if (vdev->ats == ON_OFF_AUTO_ON && !ats_cap_present) {
-> +        warn_report("vfio-pci: ats=on requested, but host device has no "
-> +                    "ATS extended capability");
-> +    }
-> +
-> +    if (vdev->ats == ON_OFF_AUTO_AUTO && ats_cap_present && !ats_needed) {
-> +        warn_report("vfio-pci: host kernel reports ATS unsupported; "
-> +                    "ATS capability will be masked");
-> +    }
-> +
->       /* Cleanup chain head ID if necessary */
->       if (pci_get_word(pdev->config + PCI_CONFIG_SPACE_SIZE) == 0xFFFF) {
->           pci_set_word(pdev->config + PCI_CONFIG_SPACE_SIZE, 0);
-> @@ -2657,6 +2722,7 @@ static void vfio_add_ext_cap(VFIOPCIDevice *vdev)
->   bool vfio_pci_add_capabilities(VFIOPCIDevice *vdev, Error **errp)
->   {
->       PCIDevice *pdev = PCI_DEVICE(vdev);
-> +    bool ats_needed = false;
->   
->       if (!(pdev->config[PCI_STATUS] & PCI_STATUS_CAP_LIST) ||
->           !pdev->config[PCI_CAPABILITY_LIST]) {
-> @@ -2667,7 +2733,11 @@ bool vfio_pci_add_capabilities(VFIOPCIDevice *vdev, Error **errp)
->           return false;
->       }
->   
-> -    vfio_add_ext_cap(vdev);
-> +    if (!vfio_pci_ats_requested_and_supported(vdev, &ats_needed, errp)) {
-> +        return false;
-> +    }
-> +
-> +    vfio_add_ext_cap(vdev, ats_needed);
->       return true;
->   }
->   
-> @@ -3815,6 +3885,7 @@ static const Property vfio_pci_properties[] = {
->       DEFINE_PROP_BOOL("skip-vsc-check", VFIOPCIDevice, skip_vsc_check, true),
->       DEFINE_PROP_UINT16("x-vpasid-cap-offset", VFIOPCIDevice,
->                          vpasid_cap_offset, 0),
-> +    DEFINE_PROP_ON_OFF_AUTO("ats", VFIOPCIDevice, ats, ON_OFF_AUTO_AUTO),
->   };
->   
->   static void vfio_pci_set_fd(Object *obj, const char *str, Error **errp)
-> @@ -3966,13 +4037,22 @@ static void vfio_pci_class_init(ObjectClass *klass, const void *data)
->                                             "destination when doing live "
->                                             "migration of device state via "
->                                             "multifd channels");
-> -   object_class_property_set_description(klass, /* 11.0 */
-> +    object_class_property_set_description(klass, /* 11.0 */
->                                             "x-vpasid-cap-offset",
->                                             "PCIe extended configuration space offset at which to place a "
->                                             "synthetic PASID extended capability when PASID is enabled via "
->                                             "a vIOMMU. A value of 0 (default) places the capability at the "
->                                             "end of the extended configuration space. The offset must be "
->                                             "4-byte aligned and within the PCIe extended configuration space");
-> +    object_class_property_set_description(klass, /* 11.1 */
-> +                                          "ats",
-> +                                          "Control guest visibility of the ATS PCIe extended capability. "
-> +                                          "Valid values are on, off, and auto (default). "
-> +                                          "'off' always masks ATS. "
-> +                                          "'on' requires ATS support for the device and fails realize if the "
-> +                                          "host kernel reports ATS as unavailable for this device. "
-> +                                          "'auto' masks ATS only when the host kernel reports "
-> +                                          "ATS as unavailable");
->   }
->   
->   static const TypeInfo vfio_pci_info = {
 
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
 
-Thanks,
+On 6/23/26 2:37 PM, Michael S. Tsirkin wrote:
+> On Tue, Jun 23, 2026 at 09:44:10AM +0100, Peter Maydell wrote:
+>> On Tue, 23 Jun 2026 at 01:58, Alejandro Jimenez
+>> <alejandro.j.jimenez@oracle.com> wrote:
+>>>
+>>> When IOMMU x2APIC interrupts generation (IntCapXTEn) is enabled,
+>>> amdvi_build_xt_msi_msg() builds an MSI message using the relevant values in
+>>> the XT IOMMU General Interrupt Control Register.
+>>>
+>>> Initialize the local X86IOMMUIrq structure with zero for all fields. This
+>>> ensures that X86IOMMUIrq fields not set in the XT register (e.g.
+>>> msi_addr_last_bits) are initialized before x86_iommu_irq_to_msi_message()
+>>> consumes them.
+>>>
+>>> Remove the redundant 'struct' keyword in X86IOMMUIrq irq declaration.
+>>>
+>>> CID: 1660056
+>>> Fixes: cf0210df65aa ("amd_iommu: Generate XT interrupts when xt support is enabled")
+>>> Reported-by: Peter Maydell <peter.maydell@linaro.org>
+>>> Suggested-by: Peter Maydell <peter.maydell@linaro.org>
+>>> Signed-off-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
+>>> ---
+>>>  hw/i386/amd_iommu.c | 2 +-
+>>>  1 file changed, 1 insertion(+), 1 deletion(-)
+>>>
+>>> diff --git a/hw/i386/amd_iommu.c b/hw/i386/amd_iommu.c
+>>> index 0d273fd33d..9005dc7aab 100644
+>>> --- a/hw/i386/amd_iommu.c
+>>> +++ b/hw/i386/amd_iommu.c
+>>> @@ -195,7 +195,7 @@ static void amdvi_assign_andq(AMDVIState *s, hwaddr addr, uint64_t val)
+>>>  static void amdvi_build_xt_msi_msg(AMDVIState *s, MSIMessage *msg)
+>>>  {
+>>>      union mmio_xt_intr xt_reg;
+>>> -    struct X86IOMMUIrq irq;
+>>> +    X86IOMMUIrq irq = { 0 };
+> 
+> Why don't we just initialize everything at the declaration site?
+> 
+> union mmio_xt_intr xt_reg = { .val = ... };
+> X86IOMMUIrq irq = { .... };
+> 
 
-C.
+The above makes sense, but this commit is essentially moot because my
+follow up getting rid of the bitfield usage overrides the whole thing. i.e.
+an upcoming change in v2 will do:
+
+ static void amdvi_build_xt_msi_msg(AMDVIState *s, MSIMessage *msg)
+ {
+-    union mmio_xt_intr xt_reg;
+-    X86IOMMUIrq irq = { 0 };
++    uint64_t xt_reg = amdvi_readq(s, AMDVI_MMIO_XT_GEN_INTR);
+
+-    xt_reg.val = amdvi_readq(s, AMDVI_MMIO_XT_GEN_INTR);
+-
+-    irq.vector = xt_reg.vector;
+-    irq.delivery_mode = xt_reg.delivery_mode;
+-    irq.dest_mode = xt_reg.destination_mode;
+-    irq.dest = (xt_reg.destination_hi << 24) | xt_reg.destination_lo;
+-    irq.trigger_mode = 0;
+-    irq.redir_hint = 0;
++    X86IOMMUIrq irq = {
++        .vector = FIELD_EX64(xt_reg, AMDVI_XT_GEN_INTR, VECTOR),
++        .delivery_mode = FIELD_EX64(xt_reg, AMDVI_XT_GEN_INTR, DELIVERY_MODE),
++        .dest_mode = FIELD_EX64(xt_reg, AMDVI_XT_GEN_INTR, DEST_MODE),
++        .dest = (FIELD_EX64(xt_reg, AMDVI_XT_GEN_INTR, DEST_HI) << 24) |
++                 FIELD_EX64(xt_reg, AMDVI_XT_GEN_INTR, DEST_LO),
++        .trigger_mode = 0,
++        .redir_hint = 0,
++    };
+
+which is in line with your request.
+
+The one reason I would think to keep this current commit is that it is
+intended to close the Coverity issue (CID: 1660056). But I can always just
+add that trailer to the new patch that does all of the bitfield removal
+work, it would just be "less focused".
+
+I am ready to send a v2 for this series that keeps the current two patches
+and adds 2 more removing all of the bitfield usage. Or I can just drop this
+current patch since it is folded into one of the new ones, and put the CID
+trailer on it.
+
+Please let me know what is the preferred way to handle it.
+
+>> This is fine for the Coverity problem, but you do also need to
+>> get rid of the bitfield-union as a separate issue.
+> 
+> Ideal task for AI actually.
+> 
+
+Yeah, it is pretty mechanical, but IIUC we are still not officially allowed
+to use it :).
+
+Alejandro
+
+>> Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+>>
+>> thanks
+>> -- PMM
+> 
+> 
 
 
