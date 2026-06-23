@@ -4,103 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F11DCDB46F
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jun 2026 11:28:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86C62CD98F2
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jun 2026 11:38:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wbzIJ-0005j0-EC; Tue, 23 Jun 2026 07:27:55 -0400
+	id 1wbzRQ-0007FX-LJ; Tue, 23 Jun 2026 07:37:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wbzIG-0005ih-Hp
- for qemu-devel@nongnu.org; Tue, 23 Jun 2026 07:27:52 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wbzRP-0007FO-Pz
+ for qemu-devel@nongnu.org; Tue, 23 Jun 2026 07:37:19 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wbzIE-0003pd-Oc
- for qemu-devel@nongnu.org; Tue, 23 Jun 2026 07:27:52 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wbzRN-000783-WF
+ for qemu-devel@nongnu.org; Tue, 23 Jun 2026 07:37:19 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1782214069;
+ s=mimecast20190719; t=1782214635;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=1B55lBwuXfx3+Y5RwrRALsHBWOQX92axApRUVhiSmm4=;
- b=PWg4NYjzpmtIWTCS3m1xDfehgtZtjBML3u90pmkP/8lVJW9S0WIuirvih2fBdBVThUihGZ
- vFx4HkpBqjDg/f5QGfLAXze6Eey7ref5vmEwrf4LLNON/oaqUhSKi/shLgexsfaeE/J4xK
- AC69b1l+IrYD1TjmDJTYZrybaWbr3gQ=
+ bh=j8BiA4guYFM/MXleWFCVShEP25sPyTxoU8t0O2mbvjQ=;
+ b=FEKv+7b+xEjAD/LgfpY1dcmgYDh8l9M+ox2ZTS4UZaxM6saWkaVMhx9xE40Olwv3VRpm0g
+ 2R+LEqD/H5yrh4fkLE/HTaMF8ndwNMmOuCmfVhtbYetL9hPS23pMgrRYAdzkgZJxwFTOOs
+ 7PcDGcncFUognIbES0UzGqV9GBE52fM=
 Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
  [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-61-vVEWxBj0M2G3kE38lvicpg-1; Tue, 23 Jun 2026 07:27:47 -0400
-X-MC-Unique: vVEWxBj0M2G3kE38lvicpg-1
-X-Mimecast-MFC-AGG-ID: vVEWxBj0M2G3kE38lvicpg_1782214067
+ us-mta-399-JawfkCdLPtCCAXKM-0jlCA-1; Tue, 23 Jun 2026 07:37:13 -0400
+X-MC-Unique: JawfkCdLPtCCAXKM-0jlCA-1
+X-Mimecast-MFC-AGG-ID: JawfkCdLPtCCAXKM-0jlCA_1782214632
 Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-49221de4ed4so36970735e9.0
- for <qemu-devel@nongnu.org>; Tue, 23 Jun 2026 04:27:47 -0700 (PDT)
+ 5b1f17b1804b1-490b4d3d3e6so34866355e9.0
+ for <qemu-devel@nongnu.org>; Tue, 23 Jun 2026 04:37:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1782214066; x=1782818866; darn=nongnu.org;
+ d=redhat.com; s=google; t=1782214632; x=1782819432; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=1B55lBwuXfx3+Y5RwrRALsHBWOQX92axApRUVhiSmm4=;
- b=P+n90CzseiL5x7q2rkWb69prYCzjz7iGTskXeNSHgwSwl/ekBx2ilVnZWyD7m+kev0
- OSXuVZTNOlpH04iyMQ31jSmqg9t+Pr1fAU9OE4nMQ+SdSTVQ2+ib1Y6gFJ6CSH3BTwdn
- BjAdInhwgLr4PXiJQEx1VrhVX//3xfMGpyNDNPivnpC/XTgejXiv2FuSaQvde02fkn8g
- vR0e5MOOt9jogra8TnEU5JGHIEhtKiEotYjkjzVMBBDENKmPPTpJzU447fWwiGx4Vnyx
- EmaAhx9gMyW7jkIzpBdEHmGXfb/aIP9ky5HL1Zj01GZChclQCJEddmr/PG3501fw2gwY
- iukw==
+ bh=j8BiA4guYFM/MXleWFCVShEP25sPyTxoU8t0O2mbvjQ=;
+ b=e0GMn3JiigPbpGtiLkF8r3nD6ZTG6/M7m8LuIhJv4OmN1KVkYsbA0XTB+jKWRIdCEL
+ X2crNe1HotNvE6DdCSU7NQ5hmVNi2dx8dCl5vuMRG4F2XJuHFkqtBM/GSdrbRm1KkiX8
+ 0xfqB288X3zUFRSYY84y34koJbwrnH0fIwrFT/FBN3YwXJKkR76xZXbIDA0U6BqGiUDA
+ 5rHeinAx8F6Uyt4eKN/TUEGTVOC4ARPcLA9wjtxwDNq9OvwhgFEND9gi1iTiNtdFZgrv
+ V4cRw3CG2zanI0Q8zsI/L2ISTfzxKKGuHBI8iGXg0DbQ+/z2K1keAisijybsx0cYLijq
+ IHFQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782214066; x=1782818866;
+ d=1e100.net; s=20251104; t=1782214632; x=1782819432;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=1B55lBwuXfx3+Y5RwrRALsHBWOQX92axApRUVhiSmm4=;
- b=IgNm2GDZViiuw6dOrCCIiCHxZSVIGQ+01Pj/NQdpy2ggNodFTKAnfCN/k2Zkuhl3fa
- C6DXPuiuHgXT0p16cF0TvcurOrX9tNgF15HXROh+TAk/KxrZsX72QktCjVaNOMNtIM14
- fKEwugEGiXtzvTrY/hFrUtvwhiUJliPQQbCVFHr/dqQTOYs0e0DUeU40Su3pmqL/ICqx
- IMTqzmicqAJYbZ3jfRdY+DxKZW+mLXJ7xUZBRDgkBQvTXiQY1EwXKN0+0zhinu1OUiG4
- uDoUBDDLGs8vqPl7NlfdxAinXKjhimOB9jDuuS2mtI2alz0C4nvJgBpt1tOri7Xxmup8
- ZTUQ==
-X-Forwarded-Encrypted: i=1;
- AFNElJ9+JfOg//Tf5ohndsx0AXS0Sgltlv2v4OCg7igNxZDLn9O8HBFYWpAisH5yJ3Nar3NJg+D59u1Xg7cf@nongnu.org
-X-Gm-Message-State: AOJu0YxmFCSgg8/uiE7+5rHLM9r0KrnD/+K88sPinAVsejUlCeqeDD8q
- 2uqaMCcYTaGhUSLWK2xe5PIRDpF/TqPR5yaQWjaCCk+7AIyam+M/wxmQ2qc2CTOSa3BodEZAIZb
- do2mJiGjRdlOkg6sEhTQFd7gcWDL/Xen4guVL0X4fxq+tDbNiSrKWJ2Yb
-X-Gm-Gg: AfdE7cm+Bv0soesTTmQb8Jxpb7VSzSYUGka1KEusfJ5FGnTb3AeCvp7fXpSClnG1NMO
- Hv8XWNKAb310wNaJJzmIEFugAu7Tf3xuwVaWzEiWIhJfJmMvrosfQXyiuxOGP8xQ1jJT9rwz9Y5
- dm5UW1voU2aHJIyk1yAitl10EYTcDDDz8qPahjIttLqN4dq06eJd+GeoPcpKbWlSRkr0+rUV/bJ
- CDgC3Ak2TtQ1Z/dXxJjIUPI1TS8jgUXBba4EvHlLAt75+g+2txx4kTIbjNtbTIZld1YeLyt+Eo7
- GuLPeVERSY7kVP5n1H3uuDPnkhrU9H6Bwl4sQFp55n2DPK6pBaQ88FM+kvOOpO63We5qYUAIKzb
- V1L52w0wNz24H1DhbhkCYhRnG4Do+JGC7/KAo9AwmZ6rLqISCfivgOmA=
-X-Received: by 2002:a05:600c:c058:b0:492:37e2:43f6 with SMTP id
- 5b1f17b1804b1-49240e81bbfmr229338605e9.19.1782214066578; 
- Tue, 23 Jun 2026 04:27:46 -0700 (PDT)
-X-Received: by 2002:a05:600c:c058:b0:492:37e2:43f6 with SMTP id
- 5b1f17b1804b1-49240e81bbfmr229338065e9.19.1782214066101; 
- Tue, 23 Jun 2026 04:27:46 -0700 (PDT)
+ bh=j8BiA4guYFM/MXleWFCVShEP25sPyTxoU8t0O2mbvjQ=;
+ b=S/CQlJ4LRXtTCTgb7N3BYSRXvwqepjOxuJoW2QhM2Sl6pnUQtZWZMHaQOJsAQ3eSWM
+ tgOv6dSLOUJyekR/jPmms/k85DKANz43zCZ86KRoTU0FSrmnNQMC+HNrxVVBcDdj3VEY
+ Dv7eaNOmrmCv/QzDWFVjxoTOViCaPpyuFukC/aGeKLonfmsm7a+N3tGCaFc1ZBD8DssH
+ a4qz31yTH8/7Gaz756M4dtodLyXCk+jzDDlI1m3N3PCT+Afwl1toT00UinufWOgGRQX/
+ nLj334cm4qGCm2eh45KbaHOwOu7OJTagfxkwsCPFRjqq2Fatv0lFYAcVnVI5kazTaAWr
+ LTJQ==
+X-Gm-Message-State: AOJu0Yz66MfzKUdl9/rxQgZ7MZyDdrs2kLbH3D8sMPXo7pdpvWaW0wF/
+ JhoeUa82Ta/TPGrPdK0XFEqdphtf6yBFPiqOLeLKp0P5m7sn/woeXpwaV2l+1BzoOlP6ipPiZSR
+ vN0WbadbRiI8mtsp0hJ6cPF6gqk2aa3vaNgCtQbtttQFNHmBFkoE+T7/O3qoq3ngQaN3SlNqNAk
+ XHjqR9GTDeMRPpac6+FWsQGAkNDTd95+jpng==
+X-Gm-Gg: AfdE7ckEA5yx43sUTVHn2CZ9BE1mkCtV1FgZkDMvgERFWUQJSoi7bLzejOxBjzHKheq
+ j0KxkWIrOVxo4FHaYQaA7PBOR8aeWEXo/Wzqi+xAhVmWG52Q1j5w5EL2Gis+8GqRrdP4lT8nbfl
+ SFKLvisYbLRcTdhNlhGj+W1U1LheFO0Qzb15bclSTehxS+T1qUCEpmkFZlv/HGjh2q0Z/FaQALF
+ UYEP5C/kFublyJ3LU9x/MmXoe+k2K0qASqM/ShIDZqr+6Lr3FpN6j7E0ZK7wJW7DOjBXrDfVqj0
+ bP1gD8bh8+TncHUMGguRtF9Y7MYFc28Ndfa+j9Yw+/adYvGrkslLuop+Czq9XMRtp4VGJiB+AIb
+ gf1e5kBoDsegj6TO+WoQfamYhUzY0e4YYCynzgM/zThrJsgNhgCRTsYM=
+X-Received: by 2002:a05:600c:8b03:b0:492:45a0:dcef with SMTP id
+ 5b1f17b1804b1-49249083cb4mr198289835e9.5.1782214632193; 
+ Tue, 23 Jun 2026 04:37:12 -0700 (PDT)
+X-Received: by 2002:a05:600c:8b03:b0:492:45a0:dcef with SMTP id
+ 5b1f17b1804b1-49249083cb4mr198288625e9.5.1782214630875; 
+ Tue, 23 Jun 2026 04:37:10 -0700 (PDT)
 Received: from ?IPV6:2a01:cb19:8426:ae00:2b21:b1ac:81f4:97b6?
  ([2a01:cb19:8426:ae00:2b21:b1ac:81f4:97b6])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-46666c579d4sm36173630f8f.28.2026.06.23.04.27.44
+ 5b1f17b1804b1-4923fd30078sm369708985e9.7.2026.06.23.04.37.10
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 23 Jun 2026 04:27:45 -0700 (PDT)
-Message-ID: <a0964032-3dd3-4e80-8f87-d9bd1ef537df@redhat.com>
-Date: Tue, 23 Jun 2026 13:27:43 +0200
+ Tue, 23 Jun 2026 04:37:10 -0700 (PDT)
+Message-ID: <2b70ae68-aee7-4c81-8799-6610a582dcb8@redhat.com>
+Date: Tue, 23 Jun 2026 13:37:09 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 06/34] docs: add mdpy mdev vfio display testing guide
-To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
- Alex Williamson <alex@shazbot.org>, Peter Maydell
- <peter.maydell@linaro.org>, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-References: <20260623-b4-ui-v4-0-4656aec3398d@redhat.com>
- <20260623-b4-ui-v4-6-4656aec3398d@redhat.com>
+Subject: Re: [PULL 28/41] vfio/listener: Add missing dirty tracking in
+ region_del
+To: qemu-devel@nongnu.org
+Cc: Alex Williamson <alex@shazbot.org>,
+ Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ Giovannio Cabiddu <giovanni.cabiddu@intel.com>, Yi Liu <yi.l.liu@intel.com>
+References: <20260113093637.1549214-1-clg@redhat.com>
+ <20260113093637.1549214-29-clg@redhat.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Autocrypt: addr=clg@redhat.com; keydata=
@@ -146,7 +141,7 @@ Autocrypt: addr=clg@redhat.com; keydata=
  HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
  izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
  uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20260623-b4-ui-v4-6-4656aec3398d@redhat.com>
+In-Reply-To: <20260113093637.1549214-29-clg@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
@@ -173,133 +168,100 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/23/26 09:44, Marc-André Lureau wrote:
-> Document how to test VFIO display hotplug using the kernel mdpy mdev
-> sample.
+Hello Zhenzhong,
 
+On 1/13/26 10:36, Cédric Le Goater wrote:
+> From: Zhenzhong Duan <zhenzhong.duan@intel.com>
+> 
+> If a VFIO device in guest switches from passthrough(PT) domain to block
+> domain, the whole memory address space is unmapped, but we passed a NULL
+> iotlb entry to unmap_bitmap, then bitmap query didn't happen and we lost
+> dirty pages.
+> 
+> By constructing an iotlb entry with iova = gpa for unmap_bitmap, it can
+> set dirty bits correctly.
+> 
+> For IOMMU address space, we still send NULL iotlb because VFIO don't know
+> the actual mappings in guest. It's vIOMMU's responsibility to send actual
+> unmapping notifications, e.g., vtd_address_space_unmap_in_dirty_tracking().
+> 
+> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+> Tested-by: Giovannio Cabiddu <giovanni.cabiddu@intel.com>
+> Reviewed-by: Yi Liu <yi.l.liu@intel.com>
+> Link: https://lore.kernel.org/qemu-devel/20251218062643.624796-8-zhenzhong.duan@intel.com
+> Signed-off-by: Cédric Le Goater <clg@redhat.com>
+> ---
+>   hw/vfio/listener.c | 22 +++++++++++++++++++++-
+>   1 file changed, 21 insertions(+), 1 deletion(-)
+> 
+> diff --git a/hw/vfio/listener.c b/hw/vfio/listener.c
+> index 62699cb772d786c1510318dff73973ef4d297177..813621f22f8b5ec284388f9c5f719525ec5f282c 100644
+> --- a/hw/vfio/listener.c
+> +++ b/hw/vfio/listener.c
+> @@ -713,14 +713,34 @@ static void vfio_listener_region_del(MemoryListener *listener,
+>   
+>       if (try_unmap) {
+>           bool unmap_all = false;
+> +        IOMMUTLBEntry entry = {}, *iotlb = NULL;
+>   
+>           if (int128_eq(llsize, int128_2_64())) {
+>               assert(!iova);
+>               unmap_all = true;
+>               llsize = int128_zero();
+>           }
+> +
+> +        /*
+> +         * Fake an IOTLB entry for identity mapping which is needed by dirty
+> +         * tracking when switch out of PT domain. In fact, in unmap_bitmap,
+> +         * only translated_addr field is used to set dirty bitmap.
+> +         *
+> +         * Note: When switch into PT domain from DMA domain, the whole IOMMU
+> +         * MR is deleted without iotlb, before that happen, we depend on
+> +         * vIOMMU to send unmap notification with accurate iotlb entry to
+> +         * VFIO. See vtd_address_space_unmap_in_dirty_tracking() for example,
+> +         * it is triggered during switching to block domain because vtd does
+> +         * not support direct switching from DMA to PT domain.
+> +         */
+> +        if (global_dirty_tracking && memory_region_is_ram(section->mr)) {
+> +            entry.iova = iova;
+> +            entry.translated_addr = iova;
 
+In an experiment involving a nested setup with L1 + intel_iommu,
+an L2 VM with an assigned igb VF can trigger the following QEMU
+segv :
 
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
+   bitmap_set_atomic(map=NULL, start=1, nr=1)
+   physical_memory_set_dirty_range(start=0x380004040000, length=4096)
+   physical_memory_set_dirty_lebitmap(start=0x380004040000, pages=3)
+   vfio_container_query_dirty_bitmap(translated_addr=0x380004040000)
+   vfio_legacy_dma_unmap_one(iova=0x380004040000, size=12288)
+   vfio_listener_region_del()
+
+The VT-d interrupt-remapping table is mapped pretty high and
+translated_addr ends up as a very large value. It seems that
+the correct value should be :
+
+   translated_addr = memory_region_get_ram_addr(section->mr) +
+                     section->offset_within_region;
+
+as found in vfio_iommu_map_dirty_notify() and
+and vfio_ram_discard_query_dirty_bitmap().
+
+Is that correct ?
 
 Thanks,
 
 C.
 
 
-> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-> ---
->   docs/devel/index-internals.rst |  1 +
->   docs/devel/vfio-mdpy.rst       | 90 ++++++++++++++++++++++++++++++++++++++++++
->   2 files changed, 91 insertions(+)
-> 
-> diff --git a/docs/devel/index-internals.rst b/docs/devel/index-internals.rst
-> index 7a0678cbdd3..198f155247a 100644
-> --- a/docs/devel/index-internals.rst
-> +++ b/docs/devel/index-internals.rst
-> @@ -22,6 +22,7 @@ Details about QEMU's various subsystems including how to add features to them.
->      tracing
->      uefi-vars
->      vfio-iommufd
-> +   vfio-mdpy
->      writing-monitor-commands
->      virtio-backends
->      crypto
-> diff --git a/docs/devel/vfio-mdpy.rst b/docs/devel/vfio-mdpy.rst
-> new file mode 100644
-> index 00000000000..7875d00d1e0
-> --- /dev/null
-> +++ b/docs/devel/vfio-mdpy.rst
-> @@ -0,0 +1,90 @@
-> +.. SPDX-License-Identifier: GPL-2.0-or-later
+> +            iotlb = &entry;
+> +        }
 > +
-> +===================================
-> +Testing VFIO display with mdev mdpy
-> +===================================
-> +
-> +.. contents:: Table of Contents
-> +
-> +The kernel provides a sample mediated device driver, ``mdpy``
-> +(``samples/vfio-mdev/mdpy.c``), that exposes a fake framebuffer through the VFIO
-> +display region interface. It can be used to test VFIO display support, including
-> +hotplug, without any real GPU hardware.
-> +
-> +The kernel modules
-> +==================
-> +
-> +The ``mdpy`` driver depends on the ``mdev`` subsystem. Enable, build and load
-> +the modules.
-> +
-> +The minimal set is::
-> +
-> +    CONFIG_SAMPLE_VFIO_MDEV_MDPY=m
-> +    CONFIG_SAMPLE_VFIO_MDEV_MDPY_FB=m   # guest framebuffer driver
-> +
-> +CONFIG_VFIO_MDEV is selected automatically.
-> +
-> +Verify that the driver registered successfully:
-> +
-> +.. code-block:: bash
-> +
-> +    ls /sys/devices/virtual/mdpy/mdpy/mdev_supported_types/
-> +
-> +Creating an mdev instance
-> +=========================
-> +
-> +Available types correspond to different resolutions (e.g. ``mdpy-vga``
-> +for 640x480, ``mdpy-xga`` for 1024x768, ``mdpy-hd`` for 1920x1080).
-> +
-> +Each mdev instance is identified by a UUID:
-> +
-> +.. code-block:: bash
-> +
-> +    uuid=$(uuidgen)
-> +    echo "$uuid" > /sys/devices/virtual/mdpy/mdpy/mdev_supported_types/mdpy-xga/create
-> +
-> +To remove the instance later:
-> +
-> +.. code-block:: bash
-> +
-> +    echo 1 > /sys/bus/mdev/devices/$uuid/remove
-> +
-> +Make sure your user has the necessary permissions to access the vfio group.
-> +(ex: chmod 666 /dev/vfio/16)
-> +
-> +Starting QEMU
-> +=============
-> +
-> +Boot-time attachment
-> +--------------------
-> +
-> +.. code-block:: bash
-> +
-> +    qemu-system-x86_64 -machine q35 -m 1G \
-> +        -device vfio-pci,sysfsdev=/sys/bus/mdev/devices/$uuid,display=on \
-> +        -display gtk,gl=on
-> +
-> +Hotplug via HMP
-> +---------------
-> +
-> +Start QEMU with a PCIe root port (required for PCIe hotplug) and a
-> +monitor:
-> +
-> +.. code-block:: bash
-> +
-> +    qemu-system-x86_64 -machine q35 -m 1G \
-> +        -device pcie-root-port,id=rp0,slot=1 \
-> +        -display gtk,gl=on \
-> +        -monitor stdio
-> +
-> +Then at the ``(qemu)`` prompt:
-> +
-> +.. code-block:: none
-> +
-> +    device_add vfio-pci,sysfsdev=/sys/bus/mdev/devices/<uuid>,display=on,bus=rp0,id=mdpy0
-> +
-> +To hot-unplug:
-> +
-> +.. code-block:: none
-> +
-> +    device_del mdpy0
-> 
+>           ret = vfio_container_dma_unmap(bcontainer, iova, int128_get64(llsize),
+> -                                       NULL, unmap_all);
+> +                                       iotlb, unmap_all);
+>           if (ret) {
+>               error_report("vfio_container_dma_unmap(%p, 0x%"HWADDR_PRIx", "
+>                            "0x%"HWADDR_PRIx") = %d (%s)",
 
 
