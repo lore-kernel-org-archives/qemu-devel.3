@@ -4,92 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6086ACDB479
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0764FCD98F2
 	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jun 2026 12:49:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wc0YS-0004W3-4s; Tue, 23 Jun 2026 08:48:40 -0400
+	id 1wc0Yb-0004aB-Lx; Tue, 23 Jun 2026 08:48:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wc0YN-0004V6-KV
- for qemu-devel@nongnu.org; Tue, 23 Jun 2026 08:48:36 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wc0Ya-0004ZA-7K
+ for qemu-devel@nongnu.org; Tue, 23 Jun 2026 08:48:48 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wc0YH-0006zJ-Ge
- for qemu-devel@nongnu.org; Tue, 23 Jun 2026 08:48:32 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wc0YW-00071r-LH
+ for qemu-devel@nongnu.org; Tue, 23 Jun 2026 08:48:47 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1782218907;
+ s=mimecast20190719; t=1782218922;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=hDX2xpxPgNeOlEtNfh7SmSQxG2EOjd0N5xJ4fQJcAqM=;
- b=E7rgz2+ztkMXV8vl6pRBYbEb/3+kFlE+p9QW9jftmZyHQfxS7noHZc0ghCFZLey2NwrZTL
- FuMJ6rRja30HnWoOba/EggdRbDoJ+n3BG7iOdhAzach9nuHtS36dsVtxLYTHPXwYgHm9rs
- wEZepUqn7r+w4unk7m64v4eJ1vgBv44=
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
- [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=XnHOf95eEO5Hr/V1VRLg1UJ6geTMs4NXXavyS/3wyUs=;
+ b=HztBtmJvMKO1Dne9HkV3DVwIeQ7Bf5u5N2kmqyMcl6HJVVyXKHmezsBjCcfq8Zheo06UYr
+ u3P5grjpxddoLlShWn0DHFHO4rpRoiuDoPyylwkWML9/u+4R6EtwEMIO3nvpBOKkkK9WpI
+ yBFUVUJj9kd3M9VeM4IkqzhOSX/67Cw=
+Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
+ [209.85.160.197]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-675-7xcxJg14MJy4Udd_KdG0VA-1; Tue, 23 Jun 2026 08:48:26 -0400
-X-MC-Unique: 7xcxJg14MJy4Udd_KdG0VA-1
-X-Mimecast-MFC-AGG-ID: 7xcxJg14MJy4Udd_KdG0VA_1782218906
-Received: by mail-qt1-f198.google.com with SMTP id
- d75a77b69052e-51a0761fdbdso66710761cf.1
- for <qemu-devel@nongnu.org>; Tue, 23 Jun 2026 05:48:26 -0700 (PDT)
+ us-mta-643-Cg5U7s2EN9mUZcQ0aOIU4g-1; Tue, 23 Jun 2026 08:48:39 -0400
+X-MC-Unique: Cg5U7s2EN9mUZcQ0aOIU4g-1
+X-Mimecast-MFC-AGG-ID: Cg5U7s2EN9mUZcQ0aOIU4g_1782218919
+Received: by mail-qt1-f197.google.com with SMTP id
+ d75a77b69052e-517878a92c5so100458451cf.3
+ for <qemu-devel@nongnu.org>; Tue, 23 Jun 2026 05:48:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1782218906; x=1782823706; darn=nongnu.org;
+ d=redhat.com; s=google; t=1782218919; x=1782823719; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=hDX2xpxPgNeOlEtNfh7SmSQxG2EOjd0N5xJ4fQJcAqM=;
- b=ZvyZenXejmMpY9079cs5uKbg8dvQTzMDMPpf4F6JHGuSksZyO4x1vuo/uERONrEFS4
- hvWegoON4uvQwTYcDDg1MKaVgbUFj0gs4w4xcrVuPHRpseRUURLTp7Na69exQWW4qC8H
- 8BelEF/ESGsI/k6Ltv1ZdhsmSaNOX/+MAy4a9rLHGqCSe/N7A0J5NgZyklFEBd1zvX2h
- y+bGUlDnQDK3uxobpq9t0CXROBPZemgcanHmOWrzkslfbq8tbQhlrtksrVg6j80gOFo0
- QPyK6kh//uzVT0DnJm17AgJ+N7FjTnpRg4a2guC70DTl4NpkHgllVm2S+nY3OTYI26O2
- KsSA==
+ bh=XnHOf95eEO5Hr/V1VRLg1UJ6geTMs4NXXavyS/3wyUs=;
+ b=ikBNIMJ3lxYIbJrAbm42RkvI9Y0OYV0hOQYwbgH2qcrXyh5Z+JAU0/zXtrBC/S4TQn
+ cuee0O5RCTd8dGRf9pLQK7hUuYrMVvQYkajQA4Jq3FolDEZwsbenKCVTKyUtYYYNADMS
+ LYuCrDfdFLLUZfZzDiVApKn+kJykFJPAWdE7GcfJhe+D4FGsY3y4/cYnneh3iR8Yh6PX
+ 5oJXF/ZLnS1yugbAdWZvZ6tbjepJmXK/IvRd7ZORBaviOA57ZN9/nHqRMmlrq5myBZfe
+ y40zjUQ82aEsehuOKyvZ76qeRR2xBqKrxyxFaZinZsHFQcwV8t0oEOQOINvKYdhfQBdk
+ i2Mg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782218906; x=1782823706;
+ d=1e100.net; s=20251104; t=1782218919; x=1782823719;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=hDX2xpxPgNeOlEtNfh7SmSQxG2EOjd0N5xJ4fQJcAqM=;
- b=ft2/niCXH4pu6DeER9FJycBiI8aCABk9HWN1HwEGYvz/VLWAQxwvhjUEnf/nemlmgC
- JgWcvxziQZG9bXBAEuZogbQeI5RimZJih4+RnpCKgl8ajNSl86CQsPWxo7WzxfPQZEu6
- CAjaJMN/xUz391niwsDpUpMb/0oAw951jjedLhKIvcfmSaqJhmxaumjk0XHHtaj4U8QX
- 0TEdhyIl8IDgR/QRKv13xyHFupT2PU9lsUUuxFmXUIq7qLo0Sn3SoNBkt0JobVOHSFog
- s19MgeiaXM8isMX8DTEW384eCztYYfJ9S7Z6VUcMRGyyBoYUZs395UDgpjAenu8LeFwE
- VaMA==
-X-Gm-Message-State: AOJu0YzvXRZA5lPPKovyQsvigCSP+ws8mV4t+2PH4er6fhufag7Ss3Fy
- NyYuHvzP2ZcHSysc5VKjLHnn8xpJg7bohwWfemzTNZTZ1Av0y663l9uvCQd9Ya8P7HMlD2bbMfQ
- QyJEUkw+xAXJK3O41tXaiKkDmc4uegX0mBs+U/G0V3gjhORlhfiXN5SADvNbKVzKGWEPHIUf0sj
- DSsT8NawJ2MLe0ZTabg/6aAnZQT2joXdx7joAeCA==
-X-Gm-Gg: AfdE7clHg/Zr0dtpOWKHNENYJ8oPSLpgQPz3mM2qkqOUeQxvSUzDunmmTxv6ulFntNE
- +nL4dj4b5fdH33p5bxkFFjT4tF77IM9czfFA9CqBo4qBTkKCirMsLmlADyONBkDrgC2mt5bImlC
- EsLzgff4K25731cIcKh3UiIsgDQ2KBmuy73OqYBWXgdYD89To/B2MhTMdTftEbxHJk5uT6IIvzn
- LHkxsuAJdH6Uptv+bw6BrQ0woKQIUMn4pkyJ4KN6ZeGcHv0bc4hPDrJ2PGHVqF1Jl7TqQ3/PlKc
- ghFTJvwJR+wTWCn2pND6PMAR430+BDYQJt/VMN7cj62VyaG80iPK8uNS3EemMaPW9qOpAworco+
- ROg==
-X-Received: by 2002:a05:622a:389:b0:516:df62:bdd2 with SMTP id
- d75a77b69052e-51a06b2b24cmr221712631cf.55.1782218905977; 
- Tue, 23 Jun 2026 05:48:25 -0700 (PDT)
-X-Received: by 2002:a05:622a:389:b0:516:df62:bdd2 with SMTP id
- d75a77b69052e-51a06b2b24cmr221711781cf.55.1782218905135; 
- Tue, 23 Jun 2026 05:48:25 -0700 (PDT)
+ bh=XnHOf95eEO5Hr/V1VRLg1UJ6geTMs4NXXavyS/3wyUs=;
+ b=oj7YVhhCEBuQVGt+bQLqY8iVqWpXGKGL47CEr0ZccD6BXVnbjnq7Xj5nZfHHuNYtYu
+ zeOEYy+cp8RYyr02HVPZUECpeJRokjF3Pm0nXaPyeW7vyuxX2vhL/tjoieo21kxsnDsL
+ KaQsXYjHANGZpHRsUWsFYaUh7PCPjCpbzPj4xEA6eS/blSVmhmwBDFTOCVU9e/3VBIYM
+ pbDpHDqMFFvTRI9FgcP4VO86IpMPoVoBTTPKUt/VMlmHO31alSl/s91tz5WCLl3EX/vR
+ BrBHCevnusNY15KghXMx+YVaqyBO4Js/A1Tm3ExfbsgLe/u2u2cGPWXJ7rvaVHI1HIZB
+ XDQA==
+X-Gm-Message-State: AOJu0YyTUv73oe9++PxVjA6Jxy1yNaVUSq/n27zU1YU+rYRU6Nt5m1zF
+ oYaLFF5orkSUCvMp1Lfz6Qv5cEiv6bXcW4J7tboBlkPNGMuhb0LNehfGxWxr+ymL4xMQEKkaQnP
+ dteijZVSU4AMpxUmBLfRBIQRbaFVu02nyNdfA2p+lwuJeMLOqTnEFlfJKReyB8r6Cz/zhdLut/b
+ G2I472J7jJzsnY1dPatkvxMZejj6Ay+NB+CW9BpA==
+X-Gm-Gg: AfdE7cm7NUmbo3yAgYQwwleMo9Ofwlgct546QqkeHI3qOxE5CK4v7xa1WUTIyxSkgu0
+ 1INKtjkwMvap7md99kyKj7+MhqD1zdCoPqxXFfacagYaOuiCowJdzwf4aBkBV/fZDMi2fyTTunG
+ 7DjtkNPsowARCGVEC5UY+WT73cFUngUZ6dJzPk4w9ku/CipIrUdVSWXLeK3wVjCPWQjVy9IfLwT
+ mnukkdf97rT+siNOod16wbnlgz5GrzwOCN2voNzajtPJWBJeJ5WhKeROo0d8k5fAIuA/6/cDs0e
+ zbhPYwspILZLmy4OyRWD53mFcLNjw+IB9kKkFKAuG7cvEPyYaLYmZtshnxYLYpWGPqgAIqoESPU
+ sKQ==
+X-Received: by 2002:a05:622a:7503:b0:519:f423:d3e0 with SMTP id
+ d75a77b69052e-519f99f08f6mr193504571cf.35.1782218918878; 
+ Tue, 23 Jun 2026 05:48:38 -0700 (PDT)
+X-Received: by 2002:a05:622a:7503:b0:519:f423:d3e0 with SMTP id
+ d75a77b69052e-519f99f08f6mr193504081cf.35.1782218918288; 
+ Tue, 23 Jun 2026 05:48:38 -0700 (PDT)
 Received: from x1.com ([174.91.117.157]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-51a51106a09sm22288351cf.0.2026.06.23.05.48.23
+ d75a77b69052e-51a51106a09sm22288351cf.0.2026.06.23.05.48.37
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 23 Jun 2026 05:48:24 -0700 (PDT)
+ Tue, 23 Jun 2026 05:48:37 -0700 (PDT)
 From: Peter Xu <peterx@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Mark Cave-Ayland <mark.caveayland@nutanix.com>
-Subject: [PULL 05/18] migration: Use OBJECT_DECLARE_SIMPLE_TYPE
-Date: Tue, 23 Jun 2026 08:47:46 -0400
-Message-ID: <20260623124759.125399-6-peterx@redhat.com>
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ David Hildenbrand <david@kernel.org>
+Subject: [PULL 13/18] system/ram-discard-manager: drop replay from source
+ interface
+Date: Tue, 23 Jun 2026 08:47:54 -0400
+Message-ID: <20260623124759.125399-14-peterx@redhat.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260623124759.125399-1-peterx@redhat.com>
 References: <20260623124759.125399-1-peterx@redhat.com>
@@ -120,79 +121,263 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Migration object's class has nothing special, switch to the newly
-introduced macro.
+From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-Suggested-by: Daniel P. Berrangé <berrange@redhat.com>
-Reviewed-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
-Link: https://lore.kernel.org/r/20260609172514.2037645-2-peterx@redhat.com
+Remove replay_populated and replay_discarded from RamDiscardSourceClass
+now that the RamDiscardManager handles replay iteration internally via
+is_populated.
+
+Remove the now-dead replay methods, helpers, and
+for_each_populated/discarded_section() from ram-block-attributes, which
+was the last source still carrying this code.
+
+Reviewed-by: Peter Xu <peterx@redhat.com>
+Acked-by: David Hildenbrand <david@kernel.org>
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Link: https://lore.kernel.org/r/20260604-rdm5-v5-6-5768e6a0943d@redhat.com
 Signed-off-by: Peter Xu <peterx@redhat.com>
 ---
- migration/migration.h | 9 +--------
- migration/migration.c | 7 +++----
- 2 files changed, 4 insertions(+), 12 deletions(-)
+ include/system/ram-discard-manager.h |  52 +++--------
+ system/ram-block-attributes.c        | 130 ---------------------------
+ 2 files changed, 10 insertions(+), 172 deletions(-)
 
-diff --git a/migration/migration.h b/migration/migration.h
-index 841f49b215..293ad60e07 100644
---- a/migration/migration.h
-+++ b/migration/migration.h
-@@ -263,14 +263,7 @@ void fill_destination_postcopy_migration_info(MigrationInfo *info);
- 
- #define TYPE_MIGRATION "migration"
- 
--typedef struct MigrationClass MigrationClass;
--DECLARE_OBJ_CHECKERS(MigrationState, MigrationClass,
--                     MIGRATION_OBJ, TYPE_MIGRATION)
--
--struct MigrationClass {
--    /*< private >*/
--    DeviceClass parent_class;
--};
-+OBJECT_DECLARE_SIMPLE_TYPE(MigrationState, MIGRATION);
- 
- struct MigrationState {
-     /*< private >*/
-diff --git a/migration/migration.c b/migration/migration.c
-index 074d3f2c69..278cad502a 100644
---- a/migration/migration.c
-+++ b/migration/migration.c
-@@ -297,7 +297,7 @@ void migration_object_init(void)
- {
-     /* This can only be called once. */
-     assert(!current_migration);
--    current_migration = MIGRATION_OBJ(object_new(TYPE_MIGRATION));
-+    current_migration = MIGRATION(object_new(TYPE_MIGRATION));
- 
-     /*
-      * Init the migrate incoming object as well no matter whether
-@@ -3975,7 +3975,7 @@ static void migration_class_init(ObjectClass *klass, const void *data)
- 
- static void migration_instance_finalize(Object *obj)
- {
--    MigrationState *ms = MIGRATION_OBJ(obj);
-+    MigrationState *ms = MIGRATION(obj);
- 
-     qapi_free_BitmapMigrationNodeAliasList(ms->parameters.block_bitmap_mapping);
-     qapi_free_strList(ms->parameters.cpr_exec_command);
-@@ -3993,7 +3993,7 @@ static void migration_instance_finalize(Object *obj)
- 
- static void migration_instance_init(Object *obj)
- {
--    MigrationState *ms = MIGRATION_OBJ(obj);
-+    MigrationState *ms = MIGRATION(obj);
- 
-     ms->state = MIGRATION_STATUS_NONE;
-     ms->mbps = -1;
-@@ -4040,7 +4040,6 @@ static const TypeInfo migration_type = {
+diff --git a/include/system/ram-discard-manager.h b/include/system/ram-discard-manager.h
+index b188e09a30..b5dbcb4a82 100644
+--- a/include/system/ram-discard-manager.h
++++ b/include/system/ram-discard-manager.h
+@@ -77,8 +77,8 @@ static inline void ram_discard_listener_init(RamDiscardListener *rdl,
+ /**
+  * typedef ReplayRamDiscardState:
+  *
+- * The callback handler for #RamDiscardSourceClass.replay_populated/
+- * #RamDiscardSourceClass.replay_discarded to invoke on populated/discarded
++ * The callback handler used by ram_discard_manager_replay_populated() and
++ * ram_discard_manager_replay_discarded() to invoke on populated/discarded
+  * parts.
+  *
+  * @section: the #MemoryRegionSection of populated/discarded part
+@@ -134,42 +134,6 @@ struct RamDiscardSourceClass {
       */
-     .parent = TYPE_DEVICE,
-     .class_init = migration_class_init,
--    .class_size = sizeof(MigrationClass),
-     .instance_size = sizeof(MigrationState),
-     .instance_init = migration_instance_init,
-     .instance_finalize = migration_instance_finalize,
+     bool (*is_populated)(const RamDiscardSource *rds,
+                          const MemoryRegionSection *section);
+-
+-    /**
+-     * @replay_populated:
+-     *
+-     * Call the #ReplayRamDiscardState callback for all populated parts within
+-     * the #MemoryRegionSection via the #RamDiscardSource.
+-     *
+-     * In case any call fails, no further calls are made.
+-     *
+-     * @rds: the #RamDiscardSource
+-     * @section: the #MemoryRegionSection
+-     * @replay_fn: the #ReplayRamDiscardState callback
+-     * @opaque: pointer to forward to the callback
+-     *
+-     * Returns 0 on success, or a negative error if any notification failed.
+-     */
+-    int (*replay_populated)(const RamDiscardSource *rds,
+-                            const MemoryRegionSection *section,
+-                            ReplayRamDiscardState replay_fn, void *opaque);
+-
+-    /**
+-     * @replay_discarded:
+-     *
+-     * Call the #ReplayRamDiscardState callback for all discarded parts within
+-     * the #MemoryRegionSection via the #RamDiscardSource.
+-     *
+-     * @rds: the #RamDiscardSource
+-     * @section: the #MemoryRegionSection
+-     * @replay_fn: the #ReplayRamDiscardState callback
+-     * @opaque: pointer to forward to the callback
+-     *
+-     * Returns 0 on success, or a negative error if any notification failed.
+-     */
+-    int (*replay_discarded)(const RamDiscardSource *rds,
+-                            const MemoryRegionSection *section,
+-                            ReplayRamDiscardState replay_fn, void *opaque);
+ };
+ 
+ /**
+@@ -226,8 +190,10 @@ bool ram_discard_manager_is_populated(const RamDiscardManager *rdm,
+ /**
+  * ram_discard_manager_replay_populated:
+  *
+- * A wrapper to call the #RamDiscardSourceClass.replay_populated callback
+- * of the #RamDiscardSource sources.
++ * Iterate the given #MemoryRegionSection at minimum granularity, calling
++ * #RamDiscardSourceClass.is_populated for each chunk, and invoke @replay_fn
++ * for each contiguous populated range. In case any call fails, no further
++ * calls are made.
+  *
+  * @rdm: the #RamDiscardManager
+  * @section: the #MemoryRegionSection
+@@ -244,8 +210,10 @@ int ram_discard_manager_replay_populated(const RamDiscardManager *rdm,
+ /**
+  * ram_discard_manager_replay_discarded:
+  *
+- * A wrapper to call the #RamDiscardSourceClass.replay_discarded callback
+- * of the #RamDiscardSource sources.
++ * Iterate the given #MemoryRegionSection at minimum granularity, calling
++ * #RamDiscardSourceClass.is_populated for each chunk, and invoke @replay_fn
++ * for each contiguous discarded range. In case any call fails, no further
++ * calls are made.
+  *
+  * @rdm: the #RamDiscardManager
+  * @section: the #MemoryRegionSection
+diff --git a/system/ram-block-attributes.c b/system/ram-block-attributes.c
+index 79c7e97d9a..718c7075ce 100644
+--- a/system/ram-block-attributes.c
++++ b/system/ram-block-attributes.c
+@@ -32,106 +32,6 @@ ram_block_attributes_get_block_size(void)
+     return qemu_real_host_page_size();
+ }
+ 
+-typedef int (*ram_block_attributes_section_cb)(MemoryRegionSection *s,
+-                                               void *arg);
+-
+-static int
+-ram_block_attributes_for_each_populated_section(const RamBlockAttributes *attr,
+-                                                const MemoryRegionSection *section,
+-                                                void *arg,
+-                                                ram_block_attributes_section_cb cb)
+-{
+-    unsigned long first_bit, last_bit;
+-    uint64_t offset, size;
+-    const size_t block_size = ram_block_attributes_get_block_size();
+-    int ret = 0;
+-
+-    first_bit = section->offset_within_region / block_size;
+-    first_bit = find_next_bit(attr->bitmap, attr->bitmap_size,
+-                              first_bit);
+-
+-    while (first_bit < attr->bitmap_size) {
+-        MemoryRegionSection tmp = *section;
+-
+-        offset = first_bit * block_size;
+-        last_bit = find_next_zero_bit(attr->bitmap, attr->bitmap_size,
+-                                      first_bit + 1) - 1;
+-        size = (last_bit - first_bit + 1) * block_size;
+-
+-        if (!memory_region_section_intersect_range(&tmp, offset, size)) {
+-            break;
+-        }
+-
+-        ret = cb(&tmp, arg);
+-        if (ret) {
+-            error_report("%s: Failed to notify RAM discard listener: %s",
+-                         __func__, strerror(-ret));
+-            break;
+-        }
+-
+-        first_bit = find_next_bit(attr->bitmap, attr->bitmap_size,
+-                                  last_bit + 2);
+-    }
+-
+-    return ret;
+-}
+-
+-static int
+-ram_block_attributes_for_each_discarded_section(const RamBlockAttributes *attr,
+-                                                const MemoryRegionSection *section,
+-                                                void *arg,
+-                                                ram_block_attributes_section_cb cb)
+-{
+-    unsigned long first_bit, last_bit;
+-    uint64_t offset, size;
+-    const size_t block_size = ram_block_attributes_get_block_size();
+-    int ret = 0;
+-
+-    first_bit = section->offset_within_region / block_size;
+-    first_bit = find_next_zero_bit(attr->bitmap, attr->bitmap_size,
+-                                   first_bit);
+-
+-    while (first_bit < attr->bitmap_size) {
+-        MemoryRegionSection tmp = *section;
+-
+-        offset = first_bit * block_size;
+-        last_bit = find_next_bit(attr->bitmap, attr->bitmap_size,
+-                                 first_bit + 1) - 1;
+-        size = (last_bit - first_bit + 1) * block_size;
+-
+-        if (!memory_region_section_intersect_range(&tmp, offset, size)) {
+-            break;
+-        }
+-
+-        ret = cb(&tmp, arg);
+-        if (ret) {
+-            error_report("%s: Failed to notify RAM discard listener: %s",
+-                         __func__, strerror(-ret));
+-            break;
+-        }
+-
+-        first_bit = find_next_zero_bit(attr->bitmap,
+-                                       attr->bitmap_size,
+-                                       last_bit + 2);
+-    }
+-
+-    return ret;
+-}
+-
+-
+-typedef struct RamBlockAttributesReplayData {
+-    ReplayRamDiscardState fn;
+-    void *opaque;
+-} RamBlockAttributesReplayData;
+-
+-static int ram_block_attributes_rds_replay_cb(MemoryRegionSection *section,
+-                                              void *arg)
+-{
+-    RamBlockAttributesReplayData *data = arg;
+-
+-    return data->fn(section, data->opaque);
+-}
+-
+ /* RamDiscardSource interface implementation */
+ static uint64_t
+ ram_block_attributes_rds_get_min_granularity(const RamDiscardSource *rds,
+@@ -159,34 +59,6 @@ ram_block_attributes_rds_is_populated(const RamDiscardSource *rds,
+     return first_discarded_bit > last_bit;
+ }
+ 
+-static int
+-ram_block_attributes_rds_replay_populated(const RamDiscardSource *rds,
+-                                          const MemoryRegionSection *section,
+-                                          ReplayRamDiscardState replay_fn,
+-                                          void *opaque)
+-{
+-    RamBlockAttributes *attr = RAM_BLOCK_ATTRIBUTES(rds);
+-    RamBlockAttributesReplayData data = { .fn = replay_fn, .opaque = opaque };
+-
+-    g_assert(section->mr == attr->ram_block->mr);
+-    return ram_block_attributes_for_each_populated_section(attr, section, &data,
+-        ram_block_attributes_rds_replay_cb);
+-}
+-
+-static int
+-ram_block_attributes_rds_replay_discarded(const RamDiscardSource *rds,
+-                                          const MemoryRegionSection *section,
+-                                          ReplayRamDiscardState replay_fn,
+-                                          void *opaque)
+-{
+-    RamBlockAttributes *attr = RAM_BLOCK_ATTRIBUTES(rds);
+-    RamBlockAttributesReplayData data = { .fn = replay_fn, .opaque = opaque };
+-
+-    g_assert(section->mr == attr->ram_block->mr);
+-    return ram_block_attributes_for_each_discarded_section(attr, section, &data,
+-        ram_block_attributes_rds_replay_cb);
+-}
+-
+ static bool
+ ram_block_attributes_is_valid_range(RamBlockAttributes *attr, uint64_t offset,
+                                     uint64_t size)
+@@ -346,6 +218,4 @@ static void ram_block_attributes_class_init(ObjectClass *klass,
+ 
+     rdsc->get_min_granularity = ram_block_attributes_rds_get_min_granularity;
+     rdsc->is_populated = ram_block_attributes_rds_is_populated;
+-    rdsc->replay_populated = ram_block_attributes_rds_replay_populated;
+-    rdsc->replay_discarded = ram_block_attributes_rds_replay_discarded;
+ }
 -- 
 2.54.0
 
