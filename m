@@ -4,70 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03CF0CD98F2
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jun 2026 17:34:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01CC7CD98F2
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jun 2026 17:47:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wc50z-0004BG-5w; Tue, 23 Jun 2026 13:34:25 -0400
+	id 1wc5Ct-0005Sp-Co; Tue, 23 Jun 2026 13:46:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <functioner@sjtu.edu.cn>)
- id 1wc50x-0004B7-2g
- for qemu-devel@nongnu.org; Tue, 23 Jun 2026 13:34:23 -0400
-Received: from smtp186.sjtu.edu.cn ([202.120.2.186])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <functioner@sjtu.edu.cn>)
- id 1wc50u-000899-9l
- for qemu-devel@nongnu.org; Tue, 23 Jun 2026 13:34:22 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=sjtu.edu.cn;
- s=default; t=1782236046;
- bh=TV7cCDfLsFxNTpH5fit1Hz+76NNwwSJR9b/B/CBSjnQ=;
- h=Date:Subject:To:Cc:References:From:In-Reply-To;
- b=RUhRqou5SlsDiqadpP/yeffHZvroAlUvlTxJE+UuivhEfkLmsa1HrWTrzIdmSH34n
- Y+5gKsUpS5Q/Y2DgxyINPdeRXFh/ThmajARNaZY5deuOvlZEkD75RR/Wo3nHh5pEPl
- zjIL87Abtt4wSwImp8SCIZpnzn1WQVwx04Q6bXscjLfo+4eS+zUhqjVRSCVLhD9Z3L
- m1rSUw5BuDUpFyQ1JrgCnyZSRFTy8EsuVejqaNcW4+CD4vlxDLFTAXYHf4d03wM7nd
- QvT2YhSl7dv/L73uaXVrUA//nphnMSOewaVYQKqOzyBi3nIQCI8Q+snvD+hNeAqOnW
- 9gvpGnlTWu1VQ==
-Received: from proxy188.sjtu.edu.cn (smtp188.sjtu.edu.cn [202.120.2.188])
- by smtp186.sjtu.edu.cn (Postfix) with ESMTPS id 43B752FF55B;
- Tue, 23 Jun 2026 17:34:06 +0000 (UTC)
-Received: from [10.0.1.62] (unknown [202.120.40.100])
- by proxy188.sjtu.edu.cn (Postfix) with ESMTPSA id 1D85937C8C7;
- Wed, 24 Jun 2026 01:34:05 +0800 (CST)
-Message-ID: <9039fb2c-e6db-4130-ba64-b54bd4e487ec@sjtu.edu.cn>
-Date: Wed, 24 Jun 2026 01:34:03 +0800
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wc5Cf-0005Rj-Oh
+ for qemu-devel@nongnu.org; Tue, 23 Jun 2026 13:46:30 -0400
+Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wc5Cd-0001Mv-Qg
+ for qemu-devel@nongnu.org; Tue, 23 Jun 2026 13:46:29 -0400
+Received: by mail-pf1-x42b.google.com with SMTP id
+ d2e1a72fcca58-84537777d45so221532b3a.3
+ for <qemu-devel@nongnu.org>; Tue, 23 Jun 2026 10:46:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1782236786; x=1782841586; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=X/bLx1VdehoOyIgqEyG/VdZ+NofPrbAclWoYp6o1wV4=;
+ b=QYZ2CFpyOQsAVkfs3oqU7/JMIYZ6QGCxyde4TJEFOM8vflaFhWErmQE6h4rZgDa5ac
+ OY5orSoBAJPvZGOPkssw1s2BObEkw/5rDH87/WEzW14Pvr/SmH3TlWOpv7/U7gZAuUYW
+ fiC33UhswYVCvdzqvPqU5ZX1WecjZ6JvLOv2I0aqZs5GrwCgrwhkIUjUVQRuJ2AMlqZd
+ 3h5sabwcO2eZphCbGWm9WoflshXcC938tXgQW/d59NbzaXGdRTFhXlAgVFdA1sJjUVun
+ YvXZ+KHiDT6hoTQPKdXz2Wri9eZKDQ8uIZM+sAlQhpTj+S3KCHzk3NSZ21g9aW3DLxUB
+ GVkQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1782236786; x=1782841586;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :cc:to:from:subject:user-agent:mime-version:date:message-id:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=X/bLx1VdehoOyIgqEyG/VdZ+NofPrbAclWoYp6o1wV4=;
+ b=Sql+KNIjtZtSaFxPoqj1og+4HWyj1RVuENaBxG0Ae0TLvJrjT4OgkktTF5Qy6dy8iR
+ D97lP/AFNUOii1aTVwAYmlHlFiTncEneqHVu/iE6j3+CMhmOzvaTVVQEZ+4Ahx2GUiwf
+ OS/rXnqXm5newJDb3Bd1GU9Jbxg8RXWAVGobzDwbgzvWPIYyjaVv3QIJSu1K8QRuBY2A
+ 4aDPZ7/32XMmk2QJnMbjCc1qAHJ1BMnnlNu2FLMMf1aQ0fXhalp8TdO7p6GbjdObeube
+ lCoTWU/nT7TfuXBiJ5IRhrnioRMQo7MU3T/LtNGH44bYD/cfiKGYfRvhLxbqjrLgI4k2
+ OxQA==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ/0SZu1gJMuasIJggd7nJ0TMqrsLuIbYQwm6//Ex5ViH8TPDROaQqQKSu1TcSk1Yx9gW9w7sUzo8zt+@nongnu.org
+X-Gm-Message-State: AOJu0Yx09ZATUS+yp5dYWLVEjXrjo6OcHif5vUF3SuCYn0lMXLiW9V1Q
+ uLb9Nz56cFyYQEYR5rDsVsDuDe/EbnMD60FZfYZk7bg2HZPT0L7gZhx0XYDaw9OfEoY=
+X-Gm-Gg: AfdE7cmLSFVXxZRc0oBgInOpFf4hYGo4a81PEVv/RFKNtNgl8NhsGtCr6EjFMTtgN4G
+ D6i3JkLPkZ0mQE7kLqnpfEkFEP3cCYHjdiDdb+FzodjaWOAr9CghsvgDcAalsn01VNyMcTLLwA9
+ zdaVP0beUcZbE+J7Ksbt5IYUCanfP6F7roqfR2PKP1uW97ZHPdcNvHaHpa1KNfXs6bf2Jyp9GxZ
+ R3NydfALZxzw4ajKyXdG8W7cGd44Yct6JKH8PBn+TsSreUF15PVv4uj6xLpZmrJnyhXljsR+x/D
+ g76Mqr8gulIUK7jIbs1vz0SbKqHdXy/IX0HVSnQs3phIFcYrDV0X2fOdPSSxJhkr8To2Tb0keN+
+ Fnj8Nz6sF1kSFN0L5zSQ7AOw5lNKTPc7c0hmZ4DvS9IJ63mEbzD1jbS+uoE+bv0kmhnFQu497Yt
+ l1WSXNFvP56Rdjo92ERfnBlTV0e7s2+aPScF+sf74bOvp8tLs1qsC7iOGPtA==
+X-Received: by 2002:a05:6a00:2451:b0:842:7e71:ba2 with SMTP id
+ d2e1a72fcca58-845a2c82d03mr16293b3a.27.1782236785583; 
+ Tue, 23 Jun 2026 10:46:25 -0700 (PDT)
+Received: from [192.168.0.4] (174-21-129-215.tukw.qwest.net. [174.21.129.215])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-84564d89bf2sm11124717b3a.16.2026.06.23.10.46.24
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 23 Jun 2026 10:46:25 -0700 (PDT)
+Message-ID: <d4391442-1a59-47da-b68a-188fd4505bd3@linaro.org>
+Date: Tue, 23 Jun 2026 10:46:23 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 0/1] contrib/plugins: add dlcall to call host functions
- from a guest
-To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- qemu-devel <qemu-devel@nongnu.org>
-Cc: Riku Voipio <riku.voipio@iki.fi>, Laurent Vivier <laurent@vivier.eu>,
- Alex Bennee <alex.bennee@linaro.org>, Alexandre Iooss <erdnaxe@crans.org>,
- Mahmoud Mandour <ma.mandourr@gmail.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Zhengwei Qi <qizhwei@sjtu.edu.cn>, Yun Wang <yunwang94@sjtu.edu.cn>,
- Mingyuan Xia <xiamy@ultrarisc.com>, Kailiang Xu <xukl2019@sjtu.edu.cn>
-References: <20260622163438.130746-1-functioner@sjtu.edu.cn>
- <70f7c4f9-ab2d-4a5a-b440-0599b4c16242@oss.qualcomm.com>
- <06e6901f-0f45-4f01-bd06-eb1928548367@sjtu.edu.cn>
- <9cbeb740-405d-4738-90cc-fce7eca7d9ec@oss.qualcomm.com>
- <fb504309-4e3e-48e6-9e33-108edbcbb173@sjtu.edu.cn>
- <831eeb2e-cd0e-4b47-b573-f5f9bf31ee4d@oss.qualcomm.com>
-From: Ziyang Zhang <functioner@sjtu.edu.cn>
-In-Reply-To: <831eeb2e-cd0e-4b47-b573-f5f9bf31ee4d@oss.qualcomm.com>
+Subject: Re: [PATCH] build: Use meson b_sanitize option for sanitizers
+From: Richard Henderson <richard.henderson@linaro.org>
+To: Nabih Estefan <nabihestefan@google.com>, pbonzini@redhat.com
+Cc: alex.bennee@linaro.org, laurent@vivier.eu, deller@gmx.de,
+ pierrick.bouvier@oss.qualcomm.com, marcandre.lureau@redhat.com,
+ berrange@redhat.com, philmd@mailo.com, zhao1.liu@intel.com,
+ qemu-devel@nongnu.org
+References: <20260623154659.3137518-1-nabihestefan@google.com>
+ <a2891cc9-4591-4898-b0c6-b15170b815ee@linaro.org>
+Content-Language: en-US
+In-Reply-To: <a2891cc9-4591-4898-b0c6-b15170b815ee@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=202.120.2.186;
- envelope-from=functioner@sjtu.edu.cn; helo=smtp186.sjtu.edu.cn
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -84,15 +107,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 23 Jun 2026 10:16:18 -0700, Pierrick Bouvier wrote:
-> Sure, as soon as we have this publicly available, I would be happy to
-> see this plugin merged also. Corner cases can be be solved later, it
-> doesn't have to support 100% of the libraries that exist in real world.
-Thank you! Lorelei currently only needs to add some documentation and
-integrate the host runtime with the current plugin. This won't take up
-too much time. Of course, we will also provide CI for x86_64, arm64 and
-riscv64 for everyone to review.
+On 6/23/26 09:53, Richard Henderson wrote:
+> On 6/23/26 08:46, Nabih Estefan wrote:
+>> +# gen-vdso doesn't play well with sanitizers. It originally didn't get them due
+>> +# to the way we passed sanitizer flags. Now that they're being passed through
+>> +# meson wen need to override it.
+> 
+> Details?  It's not an especially complicated program...
 
-Regards,
-Ziyang Zhang
+FWIW, I attempted to reproduce any problem by editing build.ninja; everything built just 
+fine with -fsanitize=undefined,address.
+
+So I'm not sure why you'd need to force disable here.
+
+r~
 
