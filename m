@@ -4,45 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47ED4CD98F0
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jun 2026 06:17:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3943CCD4F26
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jun 2026 06:33:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wbuRH-00037x-Az; Tue, 23 Jun 2026 02:16:51 -0400
+	id 1wbugF-00008f-6n; Tue, 23 Jun 2026 02:32:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <prcups@krgm.moe>) id 1wbuRE-000360-44
- for qemu-devel@nongnu.org; Tue, 23 Jun 2026 02:16:48 -0400
-Received: from [160.191.52.36] (helo=krgm.moe)
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <prcups@krgm.moe>) id 1wbuRB-0002Qp-H9
- for qemu-devel@nongnu.org; Tue, 23 Jun 2026 02:16:47 -0400
-Received: from yuno-loong (unknown [IPv6:2400:e920:0:e::2c])
- by krgm.moe (Postfix) with ESMTPSA id 1719E240AE91;
- Tue, 23 Jun 2026 14:16:31 +0800 (CST)
-From: SignKirigami <prcups@krgm.moe>
-To: qemu-devel@nongnu.org
-Cc: Bibo Mao <maobibo@loongson.cn>, xianglai li <lixianglai@loongson.cn>,
- SignKirigami <prcups@krgm.moe>, Hengyu Yu <yuhengyu25@mails.ucas.ac.cn>
-Subject: [PATCH v2 2/4] target/loongarch: Add guest CSR table and VM-level CSR
- infrastructure
-Date: Tue, 23 Jun 2026 14:16:13 +0800
-Message-ID: <68fabf6ef402bc029802df929ead0cdd43123950.1782194683.git.prcups@krgm.moe>
-X-Mailer: git-send-email 2.52.0
-In-Reply-To: <cover.1782194683.git.prcups@krgm.moe>
-References: <cover.1782194683.git.prcups@krgm.moe>
+ (Exim 4.90_1) (envelope-from <shivangu@linux.ibm.com>)
+ id 1wbugD-00008S-Lo; Tue, 23 Jun 2026 02:32:17 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <shivangu@linux.ibm.com>)
+ id 1wbugC-0006g3-6j; Tue, 23 Jun 2026 02:32:17 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 65N0nP2a310605; Tue, 23 Jun 2026 06:32:14 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=pp1; bh=nAxZQCkO7gPAL9PsM
+ 1ooFYJe1kt5VVBPiNbD7aR5/HY=; b=DBXnI/miurDW0H4twT/xSFNkgrckcqXZP
+ KGljDjBUvdnEwPzPr5frWNYjuVhTa5QwvRFu0RTeqcIvUl/RX0Ews3S88citfOEB
+ zkrngFcvQjZhQvInCGyzMVlcVq43VPWrOCAFjInfwflFkL12w+TpDhB9mKTqXNgj
+ DFaOwCqDZ/HTxIg2+mrPui41QJiB0nAUnMtY8AFIjY4+PJFj0Xai27HVrB0XG0Ry
+ gemS/OOllr041Bs7zr/gNdVNKPVyOJBaapuJgHuYPbDEn5VZ4jSdiYwu+o81SzKO
+ fKEaCxwzDLwV+9ahikFizNzsnTsg7KYN5Tkwr+gptwmt+Nh8fuEsw==
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4ewg9hn82p-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 23 Jun 2026 06:32:14 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 65N6JluV013946;
+ Tue, 23 Jun 2026 06:32:13 GMT
+Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4ex66k1w1q-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 23 Jun 2026 06:32:13 +0000 (GMT)
+Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
+ [10.20.54.105])
+ by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 65N6W71e61407702
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 23 Jun 2026 06:32:08 GMT
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id DA5532004B;
+ Tue, 23 Jun 2026 06:32:07 +0000 (GMT)
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 44CF720040;
+ Tue, 23 Jun 2026 06:32:05 +0000 (GMT)
+Received: from shivang.com (unknown [9.124.222.24])
+ by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Tue, 23 Jun 2026 06:32:04 +0000 (GMT)
+From: Shivang Upadhyay <shivangu@linux.ibm.com>
+To: qemu-devel@nongnu.org, qemu-ppc@nongnu.org
+Cc: adityag@linux.ibm.com, harshpb@linux.ibm.com, npiggin@gmail.com,
+ milesg@linux.ibm.com, Shivang Upadhyay <shivangu@linux.ibm.com>
+Subject: [PATCH 1/2] ppc/pnv: avoid regenerating DTB if external DTB is present
+Date: Tue, 23 Jun 2026 12:01:55 +0530
+Message-ID: <20260623063156.1110370-2-shivangu@linux.ibm.com>
+X-Mailer: git-send-email 2.54.0
+In-Reply-To: <20260623063156.1110370-1-shivangu@linux.ibm.com>
+References: <20260623063156.1110370-1-shivangu@linux.ibm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 160.191.52.36 (failed)
-Received-SPF: pass client-ip=160.191.52.36; envelope-from=prcups@krgm.moe;
- helo=krgm.moe
-X-Spam_score_int: 22
-X-Spam_score: 2.2
-X-Spam_bar: ++
-X-Spam_report: (2.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_SBL_CSS=3.335,
- RDNS_NONE=0.793, SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
- UPPERCASE_50_75=0.008 autolearn=no autolearn_force=no
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Proofpoint-ORIG-GUID: 5okkoRrHDdeAg-P6zJbOL1scL0ycB39O
+X-Proofpoint-GUID: 6WBtQO5vGsnKeWkkTZxQnLPfqLQ1KR4z
+X-Authority-Analysis: v=2.4 cv=Y4XIdBeN c=1 sm=1 tr=0 ts=6a3a286e cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+ a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
+ a=Y2IxJ9c9Rs8Kov3niI8_:22 a=VnNF1IyMAAAA:8 a=GMkvtKszqFOxO4YX43IA:9
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjIzMDA0OCBTYWx0ZWRfXxhusjXEh76Vm
+ KjRNzxcZ0oTxp8uhfMkLie8veO+VNCbdIcIJmfluo2slu9gHtnpMik/LoptpMlTo2gZ4UXtbn91
+ t9BqSqpvfI++gaXvFEIBJ0gs6j8GF3eI00xjFdq5AvsoKQT4K0OKTT7V0MbcB1umHCG9NxSKm45
+ 6oUd7J9rwEiP3Amy2FZp6YTbHyG+RbcFR2QrFkdyuk+S9c1KBjVA59oAl1ywOTOuUbyP3a/9f2f
+ QHKsktjignxbhqvHd+9bzepoAcIaN6vBWxKTBxptzkqDZcbMUFMys5sxa1UFR4iK7odqb++PiH8
+ iZf6SIjMzb0H6LWgsZ4W72YNjF4ckIjINFCvwstGGiSkVsKR5nQxtvxuxjg818WIgUNp0DBJB5Q
+ UihzUvg7Lwx6v59AIRjbxL/Eg14L8bAsqCUkDTmDc39pYBLp91UPT/g8KHIgJfZuPJxS+4b0hZ0
+ E/1N76dT56Bmdg+qbIg==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjIzMDA0OCBTYWx0ZWRfX7hmFa5BVgZyP
+ 6cOmUGamQqg93lnPOwrn6uMGerX9NCHenirInWzv0JYzAAWqA+mNAWXRMmLxr/YolzM1BvAwBQ7
+ L5V4/vyjYM7e6v1zawMB53zPobuToNo=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-23_01,2026-06-22_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0 priorityscore=1501 malwarescore=0 lowpriorityscore=0 spamscore=0
+ clxscore=1015 suspectscore=0 impostorscore=0 phishscore=0 bulkscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606230048
+Received-SPF: pass client-ip=148.163.158.5;
+ envelope-from=shivangu@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -58,228 +120,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add gcsr_info table for guest CSR register definitions with
-CSRFL_GUEST_READONLY and CSRFL_GSPR flags for sensitive register
-trapping. Add get_gcsr() lookup function. Update arch_dump.c
-to use host sys_states directly.
-
-Signed-off-by: SignKirigami <prcups@krgm.moe>
-Signed-off-by: Hengyu Yu <yuhengyu25@mails.ucas.ac.cn>
+Signed-off-by: Shivang Upadhyay <shivangu@linux.ibm.com>
 ---
- target/loongarch/arch_dump.c |   6 +-
- target/loongarch/csr.c       | 120 ++++++++++++++++++++++++++++++++++-
- target/loongarch/csr.h       |   3 +
- 3 files changed, 125 insertions(+), 4 deletions(-)
+ hw/ppc/pnv.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/target/loongarch/arch_dump.c b/target/loongarch/arch_dump.c
-index 9d84faef96..13472188ae 100644
---- a/target/loongarch/arch_dump.c
-+++ b/target/loongarch/arch_dump.c
-@@ -116,7 +116,7 @@ int loongarch_cpu_write_elf64_note(WriteCoreDumpFunction f, CPUState *cs,
- {
-     struct loongarch_note note;
-     CPULoongArchState *env = &LOONGARCH_CPU(cs)->env;
--    CPUSysState *sys = env_sys(env);
-+    CPUSysState *host = &env->sys_states[LOONGARCH_VM_LEVEL_HOST];
-     int ret, i;
- 
-     loongarch_note_init(&note, s, "CORE", 5, NT_PRSTATUS,
-@@ -127,8 +127,8 @@ int loongarch_cpu_write_elf64_note(WriteCoreDumpFunction f, CPUState *cs,
-     for (i = 0; i < 32; ++i) {
-         note.prstatus.pr_reg.gpr[i] = cpu_to_dump64(s, env->gpr[i]);
-     }
--    note.prstatus.pr_reg.csr_era  = cpu_to_dump64(s, sys->CSR_ERA);
--    note.prstatus.pr_reg.csr_badv = cpu_to_dump64(s, sys->CSR_BADV);
-+    note.prstatus.pr_reg.csr_era  = cpu_to_dump64(s, host->CSR_ERA);
-+    note.prstatus.pr_reg.csr_badv = cpu_to_dump64(s, host->CSR_BADV);
-     ret = f(&note, LOONGARCH_PRSTATUS_NOTE_SIZE, s);
-     if (ret < 0) {
-         return -1;
-diff --git a/target/loongarch/csr.c b/target/loongarch/csr.c
-index 309b826ca9..2157f55fb5 100644
---- a/target/loongarch/csr.c
-+++ b/target/loongarch/csr.c
-@@ -17,11 +17,26 @@
-     [LOONGARCH_CSR_##NAME(N)] = {                             \
-         .name   = (stringify(NAME##N)),                       \
-         .offset = CSR_OFFSET(CSR_##NAME[N]),                  \
--        .flags = CSRFL_BASIC, .readfn = NULL, .writefn = NULL           \
-+        .flags = CSRFL_BASIC, .readfn = NULL, .writefn = NULL \
+diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
+index 62812f22f8..6a636b5192 100644
+--- a/hw/ppc/pnv.c
++++ b/hw/ppc/pnv.c
+@@ -803,8 +803,14 @@ static void pnv_reset(MachineState *machine, ResetType type)
+         mpipl_write_succeeded = do_mpipl_write(pnv);
      }
  
- #define CSR_OFF_FLAGS(NAME, FL)   CSR_OFF_FUNCS(NAME, FL, NULL, NULL)
- #define CSR_OFF(NAME)             CSR_OFF_FLAGS(NAME, CSRFL_BASIC)
-+#define GCSR_OFF_FUNCS(NAME, FL, RD, WR)                  \
-+    [LOONGARCH_CSR_##NAME] = {                            \
-+        .name   = (stringify(GCSR_##NAME)),               \
-+        .offset = CPU_CSR_OFFSET(CSR_##NAME, 1),          \
-+        .flags = FL, .readfn = RD, .writefn = WR          \
-+    }
-+#define GCSR_OFF_ARRAY(NAME, N)                               \
-+    [LOONGARCH_CSR_##NAME(N)] = {                             \
-+        .name   = (stringify(GCSR_##NAME##N)),                \
-+        .offset = CPU_CSR_OFFSET(CSR_##NAME[N], 1),           \
-+        .flags = CSRFL_BASIC, .readfn = NULL, .writefn = NULL \
-+    }
-+#define GCSR_OFF_FLAGS(NAME, FL) GCSR_OFF_FUNCS(NAME, FL, NULL, NULL)
-+#define GCSR_OFF(NAME) GCSR_OFF_FLAGS(NAME, CSRFL_BASIC)
-+#define GCSR_GSPR(NAME) GCSR_OFF_FLAGS(NAME, CSRFL_GSPR)
- 
- static CSRInfo csr_info[] = {
-     CSR_OFF_FLAGS(CRMD, CSRFL_EXITTB),
-@@ -35,6 +50,8 @@ static CSRInfo csr_info[] = {
-     CSR_OFF_FLAGS(BADI, CSRFL_READONLY),
-     CSR_OFF(EENTRY),
-     CSR_OFF(TLBIDX),
-+    CSR_OFF(GTLBC),
-+    CSR_OFF(TRGP),
-     CSR_OFF(TLBEHI),
-     CSR_OFF(TLBELO0),
-     CSR_OFF(TLBELO1),
-@@ -71,6 +88,10 @@ static CSRInfo csr_info[] = {
-     CSR_OFF_FLAGS(TVAL, CSRFL_READONLY | CSRFL_IO),
-     CSR_OFF(CNTC),
-     CSR_OFF_FLAGS(TICLR, CSRFL_IO),
-+    CSR_OFF(GSTAT),
-+    CSR_OFF(GCFG),
-+    CSR_OFF_FLAGS(GINTC, CSRFL_IO),
-+    CSR_OFF(GCNTC),
-     CSR_OFF(LLBCTL),
-     CSR_OFF(IMPCTL1),
-     CSR_OFF(IMPCTL2),
-@@ -135,6 +156,87 @@ static CSRInfo csr_info[] = {
-     CSR_OFF(MSGIR),
- };
- 
-+static CSRInfo gcsr_info[] = {
-+    GCSR_OFF_FLAGS(CRMD, CSRFL_EXITTB),
-+    GCSR_OFF(PRMD),
-+    GCSR_OFF_FLAGS(EUEN, CSRFL_EXITTB),
-+    GCSR_OFF_FLAGS(MISC, CSRFL_GUEST_READONLY),
-+    GCSR_OFF(ECFG),
-+    GCSR_OFF_FLAGS(ESTAT, CSRFL_EXITTB),
-+    GCSR_OFF(ERA),
-+    GCSR_OFF(BADV),
-+    GCSR_OFF_FLAGS(BADI, CSRFL_GUEST_READONLY),
-+    GCSR_OFF(EENTRY),
-+    GCSR_OFF(TLBIDX),
-+    GCSR_GSPR(GTLBC),
-+    GCSR_GSPR(TRGP),
-+    GCSR_OFF(TLBEHI),
-+    GCSR_OFF(TLBELO0),
-+    GCSR_OFF(TLBELO1),
-+    GCSR_OFF_FLAGS(ASID, CSRFL_EXITTB),
-+    GCSR_OFF(PGDL),
-+    GCSR_OFF(PGDH),
-+    GCSR_OFF_FLAGS(PGD, CSRFL_GUEST_READONLY),
-+    GCSR_OFF(PWCL),
-+    GCSR_OFF(PWCH),
-+    GCSR_OFF(STLBPS),
-+    GCSR_OFF(RVACFG),
-+    GCSR_OFF_FLAGS(CPUID, CSRFL_GUEST_READONLY),
-+    GCSR_OFF_FLAGS(PRCFG1, CSRFL_GUEST_READONLY),
-+    GCSR_OFF_FLAGS(PRCFG2, CSRFL_GUEST_READONLY),
-+    GCSR_OFF_FLAGS(PRCFG3, CSRFL_GUEST_READONLY),
-+    GCSR_OFF_ARRAY(SAVE, 0),
-+    GCSR_OFF_ARRAY(SAVE, 1),
-+    GCSR_OFF_ARRAY(SAVE, 2),
-+    GCSR_OFF_ARRAY(SAVE, 3),
-+    GCSR_OFF_ARRAY(SAVE, 4),
-+    GCSR_OFF_ARRAY(SAVE, 5),
-+    GCSR_OFF_ARRAY(SAVE, 6),
-+    GCSR_OFF_ARRAY(SAVE, 7),
-+    GCSR_OFF_ARRAY(SAVE, 8),
-+    GCSR_OFF_ARRAY(SAVE, 9),
-+    GCSR_OFF_ARRAY(SAVE, 10),
-+    GCSR_OFF_ARRAY(SAVE, 11),
-+    GCSR_OFF_ARRAY(SAVE, 12),
-+    GCSR_OFF_ARRAY(SAVE, 13),
-+    GCSR_OFF_ARRAY(SAVE, 14),
-+    GCSR_OFF_ARRAY(SAVE, 15),
-+    GCSR_OFF(TID),
-+    GCSR_OFF_FLAGS(TCFG, CSRFL_IO),
-+    GCSR_OFF_FLAGS(TVAL, CSRFL_GUEST_READONLY | CSRFL_IO),
-+    GCSR_OFF(CNTC),
-+    GCSR_OFF_FLAGS(TICLR, CSRFL_IO),
-+    GCSR_GSPR(GSTAT),
-+    GCSR_GSPR(GCFG),
-+    GCSR_GSPR(GINTC),
-+    GCSR_GSPR(GCNTC),
-+    GCSR_OFF(LLBCTL),
-+    GCSR_GSPR(IMPCTL1),
-+    GCSR_GSPR(IMPCTL2),
-+    GCSR_OFF(TLBRENTRY),
-+    GCSR_OFF(TLBRBADV),
-+    GCSR_OFF(TLBRERA),
-+    GCSR_OFF(TLBRSAVE),
-+    GCSR_OFF(TLBRELO0),
-+    GCSR_OFF(TLBRELO1),
-+    GCSR_OFF(TLBREHI),
-+    GCSR_OFF(TLBRPRMD),
-+    GCSR_GSPR(MERRCTL),
-+    GCSR_GSPR(MERRINFO1),
-+    GCSR_GSPR(MERRINFO2),
-+    GCSR_GSPR(MERRENTRY),
-+    GCSR_GSPR(MERRERA),
-+    GCSR_GSPR(MERRSAVE),
-+    GCSR_GSPR(CTAG),
-+    GCSR_OFF_ARRAY(DMW, 0),
-+    GCSR_OFF_ARRAY(DMW, 1),
-+    GCSR_OFF_ARRAY(DMW, 2),
-+    GCSR_OFF_ARRAY(DMW, 3),
-+    GCSR_GSPR(DBG),
-+    GCSR_GSPR(DERA),
-+    GCSR_GSPR(DSAVE),
-+};
-+
- CSRInfo *get_csr(unsigned int csr_num)
- {
-     CSRInfo *csr;
-@@ -151,6 +253,22 @@ CSRInfo *get_csr(unsigned int csr_num)
-     return csr;
- }
- 
-+CSRInfo *get_gcsr(unsigned int csr_num)
-+{
-+    CSRInfo *csr;
-+
-+    if (csr_num >= ARRAY_SIZE(gcsr_info)) {
-+        return NULL;
+-    /* Regenerate device tree */
+-    fdt = pnv_dt_create(machine);
++    if (machine->dtb) {
++        int file_size; /* discard */
++        fdt = load_device_tree(machine->dtb, &file_size);
++    } else {
++        /* Regenerate device tree */
++        fdt = pnv_dt_create(machine);
 +    }
 +
-+    csr = &gcsr_info[csr_num];
-+    if (csr->flags == 0) {
-+        return NULL;
-+    }
-+
-+    return csr;
-+}
-+
- bool set_csr_flag(unsigned int csr_num, int flag)
- {
-     CSRInfo *csr;
-diff --git a/target/loongarch/csr.h b/target/loongarch/csr.h
-index c2b6b882bc..e233338dd3 100644
---- a/target/loongarch/csr.h
-+++ b/target/loongarch/csr.h
-@@ -20,6 +20,8 @@ enum {
-     CSRFL_IO       = (1 << 2),
-     CSRFL_UNUSED   = (1 << 3),
-     CSRFL_BASIC    = (1 << 4),
-+    CSRFL_GUEST_READONLY = (1 << 5),
-+    CSRFL_GSPR     = (1 << 6),
- };
+     _FDT((fdt_pack(fdt)));
  
- typedef struct {
-@@ -31,6 +33,7 @@ typedef struct {
- } CSRInfo;
- 
- CSRInfo *get_csr(unsigned int csr_num);
-+CSRInfo *get_gcsr(unsigned int csr_num);
- bool set_csr_flag(unsigned int csr_num, int flag);
- static inline unsigned int get_csr_offset(const CSRInfo *csr, int vm_level)
- {
+     /*
 -- 
-2.52.0
+2.54.0
 
 
