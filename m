@@ -4,111 +4,116 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD197CDB46F
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jun 2026 15:43:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2FECECDB46F
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jun 2026 15:45:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wc3Go-0001OC-Un; Tue, 23 Jun 2026 11:42:38 -0400
+	id 1wc3JY-00020x-44; Tue, 23 Jun 2026 11:45:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shivangu@linux.ibm.com>)
- id 1wc3Gi-0001E4-7d; Tue, 23 Jun 2026 11:42:33 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wc3JQ-0001xn-Hq
+ for qemu-devel@nongnu.org; Tue, 23 Jun 2026 11:45:20 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shivangu@linux.ibm.com>)
- id 1wc3Gg-0000GG-3P; Tue, 23 Jun 2026 11:42:31 -0400
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65NBmgI91826629; Tue, 23 Jun 2026 15:42:28 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=
- content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=JT9YY/
- qPTdIss2Pew5nqho3hYsJBKKcH8D7Y8EKJIrM=; b=KAD8KNBtWlmS3Fw1Q/hROQ
- 4QJ3tnzR3EuPrjNqg5wFGWkRuj1VisgWcbbaBIqfJtUK44LQfz0vnM3m8f9W2mxq
- DAdObUf+qA07GUbVi82WbwHwSBC5myRI7zDVhaoU6+rvKzMUrVsp9TtmmINlckfc
- uEN+5iF7kZVhGHz2vyWFxq7PTI7VrBD6C9muCFLTW/z6Cqaa0J+AqOtFRM+YiG1l
- M7XyMZB4woscZ3g8Kabp455wjELaCEPCe1tMaovuE35JUntApc4SA3KcpnEk6tW3
- IRohwcpHhdRh6uUh6M5BMZmATJn2WA4Z3lp2O61PsDTpbPOOLiH6yp+nvCKSjofg
- ==
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4ewjgsq9v2-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 23 Jun 2026 15:42:28 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 65NFYewA030341;
- Tue, 23 Jun 2026 15:42:27 GMT
-Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4ex7vykrh2-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 23 Jun 2026 15:42:27 +0000 (GMT)
-Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
- [10.20.54.100])
- by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 65NFgNhf43057428
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 23 Jun 2026 15:42:23 GMT
-Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id BC73120043;
- Tue, 23 Jun 2026 15:42:23 +0000 (GMT)
-Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 758A820040;
- Tue, 23 Jun 2026 15:42:21 +0000 (GMT)
-Received: from shivang.upadyay (unknown [9.124.220.40])
- by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 23 Jun 2026 15:42:21 +0000 (GMT)
-Message-ID: <ae00a32e337f66bff2bdd5a9a983231f0ae09ce1.camel@linux.ibm.com>
-Subject: Re: [PATCH 2/2] ppc/pnv: add test to verify external DTB is honored
-From: Shivang Upadhyay <shivangu@linux.ibm.com>
-To: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, adityag@linux.ibm.com,
- harshpb@linux.ibm.com, npiggin@gmail.com, milesg@linux.ibm.com
-Date: Tue, 23 Jun 2026 21:12:19 +0530
-In-Reply-To: <20260623122410.5fae6f07-db-amachhiw@linux.ibm.com>
-References: <20260623063156.1110370-1-shivangu@linux.ibm.com>
- <20260623063156.1110370-3-shivangu@linux.ibm.com>
- <20260623122410.5fae6f07-db-amachhiw@linux.ibm.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.58.3 (3.58.3-1.fc43) 
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wc3JL-00015x-Rg
+ for qemu-devel@nongnu.org; Tue, 23 Jun 2026 11:45:20 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1782229514;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=I5a/T4Vqnm4D5FklI48JkOMRyoCfPv+sa5L5OLPTryY=;
+ b=E7AFpzwsHuTgIvBhwcWINCso0HY7S9pp9RqKafJ2ch6FX0eYwYerDTIfhYwd3JEMSdbGR5
+ +Sn0e62+ysg2AXu09PoSFSMVaJa1UTH/vN8q7IkD10q2vWUJMtEN6O+br14XPeb/GpvBzS
+ 3n4W8rOySXuZFSr7mTVEDpfXywfLYJQ=
+Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
+ [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-526-KGYOQ8lKPnqQAjPqRqJvHQ-1; Tue, 23 Jun 2026 11:45:12 -0400
+X-MC-Unique: KGYOQ8lKPnqQAjPqRqJvHQ-1
+X-Mimecast-MFC-AGG-ID: KGYOQ8lKPnqQAjPqRqJvHQ_1782229512
+Received: by mail-qt1-f200.google.com with SMTP id
+ d75a77b69052e-51956be1f44so19728661cf.1
+ for <qemu-devel@nongnu.org>; Tue, 23 Jun 2026 08:45:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1782229512; x=1782834312; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=I5a/T4Vqnm4D5FklI48JkOMRyoCfPv+sa5L5OLPTryY=;
+ b=l2p8Okc0mUEjSKylgEgbsCaLzDox6YJOR4wvWRAXUDneuh1eMvEXrT+APFRskeZgct
+ VKBsWfUv8Ac8N+GbOB46P+VWd5kqt982aaK++HSELhJU/lZuUdYGoaijh3ZOBYIWD036
+ Xn2zTSoOqUzokkvFYmUBChZtAgSiOKyp5XAV+2Nu0mvjRxAO/QKR+kIb9tEAzTx1/r34
+ dtWexPFvlhPjviEI6E2jv3YZxPSoL2vDhv9skt9dcPaqUqbf0yW8KFd3pEvaxQLQMzB/
+ zecxXpCP+dK8ZyPfFCkTDY7CasnargxOK5DL4dA7uQxW8qrgEAaBMhUsdjwK3X0kVyAI
+ YiXQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1782229512; x=1782834312;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=I5a/T4Vqnm4D5FklI48JkOMRyoCfPv+sa5L5OLPTryY=;
+ b=rRYBNS5oAxLZMJXS2utzFFTjdESH7pRbK0+Ezsti1b20WYoHK/tKWNbxGl2ztGAyWm
+ yJ57199m3StbeAxkT3sDxoVBH5DpLqx1X4EdhbPvQXJE6YAKpKtRz/LIaeP0BrHmDTnK
+ bv32ESvf2l1tF9IkAtgzeOn69srEdtTNVvyUirxifONi02KMwgRWcJWdX52KJYvrYz4r
+ qjTZSZg5w4ZjBsBB7+jxZHJHcRrrFQY4dQVkKDzJ4nPUXMY9HxsuwES3fvnH3eor4X7L
+ P3WYDQQfdYsDvVbAFjoqeLPE8r49KMtvmnIAtZaiCEL/WGur8GxjwZzsx0ATKG1UhgJ2
+ JXWQ==
+X-Gm-Message-State: AOJu0YxTMjmn1j42qhP7NOTttrdGxGKHqIie+GYcDXH9+auz6iJRjtKa
+ 8K/3MCMldrFVj3LLRwKZZTEr2KCVpXuOjklVFNKFwVPDnsAhhkDvXVxN1XRl5APB3RcfiN/6TDQ
+ m2k4PeuL3gXX3GscDl1EP90/jSyMK/EC7IpbgQcrPyvlP6EdqI95k9h8v
+X-Gm-Gg: AfdE7cmdClAkRxP+baEh0TDp94LfLeQ7PdbSx6aE+F3zrcYpVCCaQR52xARwiNaEhkd
+ jXBcIpdzP9CDpad5UheNMc4orrzPMhY3DuJg7wB3ABz5FWwpoDWFP5T2zcP/Y9qWYNht1w6PKU7
+ 5hAIQSSlPfMFlTaYPcmDdXiC2XMaSUMYXfHjC1b+RYzpHqQaIagj3J9DDjn9dSZfz4BiEkHf5hY
+ pKLBnNMoxD/tzYttZJuFIr6exm0PlzDFWqwkTUtHEZW5Y4bz0aMrkR8TvkrthgZqNUEZ2widCzN
+ BAeRWVvJEPenyPJxWDBwje59RLuDrZNTT3PH72ajfA+q+XVurb1z0UH2rRXejjSFCaPvJHK6vXW
+ npx4DEfWXPsBcgRsBvGtnxzKsGLqnqo5kgiLMRKQ50nNEJ6UEKEaoMf3oBjFBKGMIk6+IpHKh
+X-Received: by 2002:ac8:5fc3:0:b0:517:6fc2:4760 with SMTP id
+ d75a77b69052e-51a51788b89mr60584041cf.9.1782229511556; 
+ Tue, 23 Jun 2026 08:45:11 -0700 (PDT)
+X-Received: by 2002:ac8:5fc3:0:b0:517:6fc2:4760 with SMTP id
+ d75a77b69052e-51a51788b89mr60582621cf.9.1782229510620; 
+ Tue, 23 Jun 2026 08:45:10 -0700 (PDT)
+Received: from x1.local
+ (bras-vprn-aurron9134w-lp130-03-174-91-117-157.dsl.bell.ca. [174.91.117.157])
+ by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-51a51ae9505sm28287431cf.26.2026.06.23.08.45.09
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 23 Jun 2026 08:45:09 -0700 (PDT)
+Date: Tue, 23 Jun 2026 11:45:08 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Cc: qemu-devel@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
+ Zhao Liu <zhao1.liu@intel.com>,
+ Stefano Stabellini <sstabellini@kernel.org>,
+ Anthony PERARD <anthony@xenproject.org>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>,
+ Reinoud Zandijk <reinoud@netbsd.org>,
+ Marcelo Tosatti <mtosatti@redhat.com>, Alex Williamson <alex@shazbot.org>,
+ =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
+ qemu-block@nongnu.org, xen-devel@lists.xenproject.org, kvm@vger.kernel.org
+Subject: Re: [PATCH 0/3] migration/ram: Abort on unsupported migratable RAM
+ changes
+Message-ID: <ajqqBBA3Ynxqgu_S@x1.local>
+References: <20260611-ram-v1-0-a2dacf699718@rsg.ci.i.u-tokyo.ac.jp>
+ <ajmZrT1d0QXCWTNq@x1.local>
+ <b8154a3d-5538-42e1-995b-2aeb05daa4ab@rsg.ci.i.u-tokyo.ac.jp>
 MIME-Version: 1.0
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjIzMDEyNiBTYWx0ZWRfX1/ll5OjOevtu
- UkVYZm/tN6TMaHnMS6sbo1Iw264FOpgxfiRFFZxeF+tEThRiO0hdAMHzAomeG6dMLOYD8GiX3sb
- WDY9FpP1zbWefdOkBCuRIJE2GsMH60k1cvx7lnqB6eGa9wsjMK+wYNo5xxTLfLG5ShtlVDbFiFt
- Nu+BRmKa/lEtL4aPWkwSvQm2SFrkbZ59nAf14S/y3AhUYFWx3gxuRW5tnuc2u/4rZZUrHzAMgEt
- rvsr+kEn4B/vF6W2iW2SOcnI4CVPmFA+Cp3ox4M7rURpunzr0SspNWTGIwY/TPh0Z6QDwnoe9x6
- OGD2EePhjnvjdwfCNv3Kg40+0n04ZjRNtfUhWRSDyQWSxoq75GIEvnCFOPAFkRWrWW8oqCmEAhW
- doeQEVPt0BPRikkyKmuC0yHMnoWeGVQ9iiSbiEr4iv1eAqQqdjKozHvqrk/8/EWb9q48FqKTSRd
- VETlY0b4Jr6Yq6c2m8Q==
-X-Proofpoint-GUID: 8L0cKeBLfi8UgfNN7gHtMsM-SSedujzc
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjIzMDEyNiBTYWx0ZWRfX2O4P2bWvXWiW
- 3fmIjDAekFND7FSzaR4gvqxU4q3V/K4zdyeTkr2enySeBrYH5vO4bKsnZM62C54CfF0qu0sk4Gd
- UJ8kVX0CEl7KK0i89RO5ZL7f/V4qQao=
-X-Authority-Analysis: v=2.4 cv=I/lVgtgg c=1 sm=1 tr=0 ts=6a3aa964 cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
- a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22 a=ID6ng7r3AAAA:8
- a=sQTfP1YnM9m7ZpRhDLIA:9 a=QEXdDO2ut3YA:10 a=AkheI1RvQwOzcTXhi5f4:22
-X-Proofpoint-ORIG-GUID: mkO5YJczPLq6gE6UC9tFZjmiHZlUXtIZ
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-23_03,2026-06-23_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 spamscore=0 phishscore=0 clxscore=1015 priorityscore=1501
- adultscore=0 impostorscore=0 bulkscore=0 suspectscore=0 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606230126
-Received-SPF: pass client-ip=148.163.158.5;
- envelope-from=shivangu@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <b8154a3d-5538-42e1-995b-2aeb05daa4ab@rsg.ci.i.u-tokyo.ac.jp>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -124,24 +129,133 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 2026-06-23 at 12:27 +0530, Amit Machhiwal wrote:
-> The test addition looks fine, but the commit message body is missing.
-> According to the official QEMU submission guidelines at:
->=20
-> =C2=A0
-> https://www.qemu.org/docs/master/devel/submitting-a-patch.html#write-a-me=
-aningful-commit-message
->=20
-> =C2=A0 "Commit messages should be meaningful and should stand on their ow=
-n
-> as
-> =C2=A0 a historical record of why the changes you applied were necessary
-> or
-> =C2=A0 useful."
->=20
-> You may want to add a commit message body in the next version.
+On Tue, Jun 23, 2026 at 09:05:22PM +0900, Akihiko Odaki wrote:
+> On 2026/06/23 5:23, Peter Xu wrote:
+> > On Thu, Jun 11, 2026 at 03:35:47PM +0900, Akihiko Odaki wrote:
+> > > Supersedes: <20260604-migration-v1-1-cef4a5b1bbdd@rsg.ci.i.u-tokyo.ac.jp>
+> > > ("[PATCH] system/physmem: Assert migration invariants")
+> > > 
+> > > ram_mig_ram_block_resized() already aborts migration when migratable RAM
+> > > is resized. Extend the same handling to other unsupported changes to the
+> > > migratable RAMBlock set, such as removing a migratable RAMBlock or
+> > > changing a RAMBlock's migratable state.
+> > > 
+> > > Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+> > > ---
+> > > Akihiko Odaki (3):
+> > >        system/physmem: Pass RAMBlock to RAMBlockNotifier callbacks
+> > >        system/physmem: Notify RAMBlock migratable and idstr changes
+> > >        migration/ram: Abort on unsupported migratable RAM changes
+> > 
+> > Thanks for looking at this, Akihiko.
+> > 
+> > I understand this is a protection to the system to trap error use cases.
+> > The question I have is do we have any possible way to trigger these.
+> > 
+> > I worry we add a bunch of code and notifiers, and then there's zero way to
+> > trigger, essentially add dead code.
+> > 
+> > Logically we could already add assert() on things we don't expect to
+> > happen.  This case might be slightly risky, but still I think we can also
+> > consider things like error_report_once() instead of introducing slightly
+> > complex notifiers just to cover what we think shouldn't happen.
+> > 
+> > Or do you have way to trigger any of these notifiers?
+> 
+> I simply followed what's already done for resize(), expecting resize() does
+> the correct thing and following it won't introduce a regression.
+> 
+> > 
+> > PS: today I went back and I wanted to try how the existing resize()
+> > notifier would trigger, I can't even reproduce it with David's example
+> > here:
+> > 
+> > https://lore.kernel.org/qemu-devel/20210429112708.12291-1-david@redhat.com/#t
+> > 
+> > I can trap a qemu_ram_resize(), but that's invoked with newsize==rb->size,
+> > so it didn't really notify a thing.  I don't really know how to trigger
+> > ram_block_notify_resize().  If you know, please share.
+> I made an LLM amend the reproducer. Below is its output.
+> 
+> Regards,
+> Akihiko Odaki
+> 
+> LLM output:
+> 
+> A synthetic but effective variant is to add custom ACPI filler tables so the
+> initial `etc/acpi/tables` blob is just under the 128 KiB alignment bucket,
+> then let the normal boot-time fw_cfg ACPI rebuild push it over.
+> 
+> I tested this shape:
+> 
+> ```sh
+> truncate -s 65000 /tmp/fill1
+> truncate -s 50600 /tmp/fill2
+> ```
+> 
+> Then add to the original-ish command:
+> 
+> ```sh
+> -device pcie-root-port,id=rp0,chassis=1,slot=1 \
+> -acpitable sig=FI1A,data=/tmp/fill1 \
+> -acpitable sig=FI2A,data=/tmp/fill2
+> ```
 
-Sure Amit, Ill add the body.
+These lines should inject some sections into ACPI, but I don't see why the
+acpi table would change: that should be appended right at QEMU boots, so I
+expect the ACPI table to grow indeed comparing to when without these lines,
+but not resize during VM running.  I wonder if below is hallucinations from
+the AI.
 
-~Shivang.
+> 
+> Observed via `info ramblock`:
+> 
+> ```text
+> before cont:
+> /rom@etc/acpi/tables   Used 0x0000000000020000
+> 
+> after cont:
+> /rom@etc/acpi/tables   Used 0x0000000000040000
+> ```
+> 
+> So this does produce a real RAMBlock used-size growth during boot in the
+> current tree. With migration started before `cont` using a stalled `exec:`
+> target, `info migrate` moved to `cancelling`, which is consistent with the
+> current resize-during-precopy abort path.
+> 
+> The key is not the root port itself; the key is making the ACPI table
+> rebuild cross `ACPI_BUILD_TABLE_SIZE` alignment. The filler is a bit
+> artificial, but it is a good stress variant for the exact class of bug.
+
+I did have a closer look on this whole "MR size can change" thing.
+
+We have two users: ACPI (rom_add_blob()) and other firmwares (most of them
+rom_add_file() users, very little used rom_add_blob()).
+
+AFAIU, the real resize should only happen at the 2nd user, not ACPI.
+
+ACPI seems to be able to change ROM size (PS: this is tricky to call it ROM
+in the first place: I believe it's only a data blob in fw_cfg) when e.g. it
+scans the pci bus and things changed, only happen during reboot, but it
+can't happen during migration because qdev_add is forbidden.
+
+Device ROMs can really change size if dest host has newer firmware packages
+than source, but that's another use case and I _think_ we support fine,
+except that firmwares can only grow not shrink, guarded by
+qemu_ram_resize() check on max_length.
+
+That's a pretty niche use case and nothing I can think of that on change of
+flipping migratable and so on.  So IMHO we will need to understand the
+problem better before having more notifiers.
+
+PS: I wished ACPI three use cases of ROM can be part of device states
+already, then it is out of question on MR resize complexity: the max size
+is 128K as far as I know; it doesn't need iterability... we migrate devices
+sometimes much larger than 128KB on device states.  It can be a VMSD field.
+
+Thanks,
+
+-- 
+Peter Xu
+
 
