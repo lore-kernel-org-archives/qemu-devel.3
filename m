@@ -4,117 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D00DCD98F2
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jun 2026 13:21:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48B83CDB479
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jun 2026 13:22:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wc13q-0004zr-2t; Tue, 23 Jun 2026 09:21:06 -0400
+	id 1wc14m-0005OR-8G; Tue, 23 Jun 2026 09:22:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <freude@linux.ibm.com>)
- id 1wc13o-0004zG-Df; Tue, 23 Jun 2026 09:21:04 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wc14j-0005F9-0P
+ for qemu-devel@nongnu.org; Tue, 23 Jun 2026 09:22:01 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <freude@linux.ibm.com>)
- id 1wc13m-0008Fd-9J; Tue, 23 Jun 2026 09:21:04 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65NBmxOC1806344; Tue, 23 Jun 2026 13:20:58 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:reply-to:subject:to; s=pp1;
- bh=a/d7M8mwrf5sar+WVGOUJKCk7xvbINo8FHmMndJWuBs=; b=TGLFbu0Ie7Ra
- 6/lv0dZjxH8Ff0x0TWzO1NEVdAwYQrU/NK35K0jzeDyWftWk+fhY+ME6W1+Ij4Bo
- WME2GRZhWB7WqvuqZSh9uXfllOaiGXT2QTBah4wO2IbnEVbEuBD58Wwa95wzx6Z1
- C228z8BsGtN/jMx1ug1i6C0FfnWbiJk8xH++ZMfch9DZtjZ68V8fd4vOtT24k4DH
- YLntsGf6e9bfk92jEkv/eVCjWAcMNrei6fr+JKxRWM1oV/cVETmavxYOOx4iIsXr
- HWlR0SonLoYXoKJbMekO+0U1G410V6B+uq6vK+e6O0LE8/2WgyD/wFTREckbS3nC
- cgZ390JLGw==
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4ewh9genej-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 23 Jun 2026 13:20:57 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 65NDJiC5022174;
- Tue, 23 Jun 2026 13:20:57 GMT
-Received: from smtprelay04.dal12v.mail.ibm.com ([172.16.1.6])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4ex5jwbh9u-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 23 Jun 2026 13:20:57 +0000 (GMT)
-Received: from smtpav04.wdc07v.mail.ibm.com (smtpav04.wdc07v.mail.ibm.com
- [10.39.53.231])
- by smtprelay04.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 65NDKtVp30999262
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 23 Jun 2026 13:20:56 GMT
-Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id BC67558054;
- Tue, 23 Jun 2026 13:20:55 +0000 (GMT)
-Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 5D00F58052;
- Tue, 23 Jun 2026 13:20:54 +0000 (GMT)
-Received: from ltc.linux.ibm.com (unknown [9.5.196.140])
- by smtpav04.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 23 Jun 2026 13:20:54 +0000 (GMT)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wc14h-0000A6-6Y
+ for qemu-devel@nongnu.org; Tue, 23 Jun 2026 09:22:00 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1782220918;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Bxren5Tg/q14ssji391As81Wg+07CMYH07jWoQV4Dm8=;
+ b=Pxm2fUN3f0C4zjgUNaQdVzoCGz8HKzVkz0uBj8pmkg5irPHqCIR1Ud6jT1kIfgtQDZ27Et
+ 42978xg0e/I9WJGtfIj/EPGq7xWlPFYEYyWC4JDG/3UENL/AYR2WJdI9hszs5zYX5d6IMS
+ eadzFFRvJPtmcVnHE+ixh/JnPZiFljU=
+Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
+ [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-3-BJIalF5oPCqEzSrV4ogk8Q-1; Tue, 23 Jun 2026 09:21:55 -0400
+X-MC-Unique: BJIalF5oPCqEzSrV4ogk8Q-1
+X-Mimecast-MFC-AGG-ID: BJIalF5oPCqEzSrV4ogk8Q_1782220914
+Received: by mail-ej1-f71.google.com with SMTP id
+ a640c23a62f3a-c081f1976d2so497895966b.2
+ for <qemu-devel@nongnu.org>; Tue, 23 Jun 2026 06:21:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1782220914; x=1782825714; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=Bxren5Tg/q14ssji391As81Wg+07CMYH07jWoQV4Dm8=;
+ b=YRS6L7jUSH77CEMHkGWUusQUaf3zyItsnl4H9IF+9MunwPfzYBFN9E7flEAcb4QQoc
+ FD1q/heoJhgwI+RXnh0CqFj/5xD3/Be3J1/x2jpnCO4ISEhpSnkiXyABiv2ZXNqyJLag
+ qcAUfPIfYssbUEO5Ry6FP6Cc+1EEefWeqCmEhFDxpsSpv7jOyDjbzyMfWQLEUBgOImtu
+ HyLKQi2dZBe4B3l4LMgobp6rhJfJz8XNMZYIYiwMkih6reRjzELE+BQlI6Wh29sJ35br
+ K44J4KDHvJkpEtuoQIeDvlq3VeGU7qVv7ppXHAFLMw37wYuKxYnoCX2SUeSc0PsXP0xe
+ xShw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1782220914; x=1782825714;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=Bxren5Tg/q14ssji391As81Wg+07CMYH07jWoQV4Dm8=;
+ b=YNbo/38zcinqW+KxYX3vF4ab85uI99wfjRTj1saOWYUDsCw0utTQDalD5AttREDKm3
+ yh4PatBZQmBBMJxNWRu46Kvw228wZutliaakLUWVQAxG1jzKntjWfpqC8sftIA1800G1
+ 0PF/pp5m9RvA4vZuXuRFJqWv6UlIwtmygsirWwfKiMPseDHyMw1kVpUmiWyjgeGDj0UT
+ nsM6SSivG5NCJ2gyOmnKYNV7gVgtxESQkHYA8SnRiRwTLPjkTOabYHTBHnpoKU9oCejd
+ sMW4UPHn9Upxl0cWpSvccf5vLM6lKis2RLYZ/VNC986aw8WbdgXKu4CENP8Tx2sReKEo
+ mtYg==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ9bUYgoZdknPd7XH0VUmHTt8SE1Bzc8JMu1sbtGXdRY91OYZUG4Ehw30J5XP1X8kycuTp7l3uTgZWCl@nongnu.org
+X-Gm-Message-State: AOJu0YxAcAJHWfThEC2AM7snhPTU+qxbYOoMBRqQePZ1Xrcn9FpKrxy9
+ g2VsEh7G+accTX+zNRKY5Hc17fwks1jLJYdpdyuxeI+bPrFzlHvJHaJPStf3ivK+hqimtsLzFqe
+ HhPD0RPHQ72smcvcJoQ3OO2uzAJM/KUXY3/5AZtLRH1hBUlZgRs+xDd6l
+X-Gm-Gg: AfdE7ckRJfFAIW7SkP4AJmixAMmB/KjliILGpsQdtPNjGVRx9gMAfWKKnwmLeYfohtU
+ 8UID9+2SnOWVOQSG8QNf78pF1KvOWxayXTBstExuieAddCPsMrbifHU4uEcpsLGd6Tob8IOHJaL
+ fwEa3TgHob5kCjdkufmTLx6A3nxn33j73JzcKCzHOJZNob7Zg5CvSeNiYa5Q61I460sX00W79/x
+ Mlsjb0XXcNZb5kEPNKhGMK5okYxhHIgBbGxfK1iFcUg2rBKHbY7HsuikDm0k51S8XBw/lKbpRHW
+ eEOkDVk/RW5SPtoDA5R5d5GScxXkPfjvpYKVwgj+X1GEadjQxBRJ+aR6JaK7S7OBEeaa1r+WxQy
+ q78e7caqFpkpfbkVWm8orA+yfORLQWmC0
+X-Received: by 2002:a17:907:3e9b:b0:c07:5319:4c39 with SMTP id
+ a640c23a62f3a-c097adfe5d3mr1025551566b.6.1782220913613; 
+ Tue, 23 Jun 2026 06:21:53 -0700 (PDT)
+X-Received: by 2002:a17:907:3e9b:b0:c07:5319:4c39 with SMTP id
+ a640c23a62f3a-c097adfe5d3mr1025545766b.6.1782220912849; 
+ Tue, 23 Jun 2026 06:21:52 -0700 (PDT)
+Received: from redhat.com (IGLD-80-230-85-71.inter.net.il. [80.230.85.71])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-466643f56aasm34928008f8f.6.2026.06.23.06.21.51
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 23 Jun 2026 06:21:52 -0700 (PDT)
+Date: Tue, 23 Jun 2026 09:21:49 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>
+Cc: Laurent Vivier <lvivier@redhat.com>, qemu-devel@nongnu.org,
+ Mauro Matteo Cascella <mcascell@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Amit Shah <amit@kernel.org>,
+ =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
+ qemu-stable@nongnu.org
+Subject: Re: [PATCH] hw/char/virtio-serial-bus: fix guest-triggerable OOM in
+ control_out()
+Message-ID: <20260623091744-mutt-send-email-mst@kernel.org>
+References: <20260622161144.2883799-1-lvivier@redhat.com>
+ <ajljKftAKpkoiN7w@redhat.com>
+ <20260623083557-mutt-send-email-mst@kernel.org>
+ <ajqB9ujvC6MXSRpG@redhat.com>
 MIME-Version: 1.0
-Date: Tue, 23 Jun 2026 15:20:53 +0200
-From: Harald Freudenberger <freude@linux.ibm.com>
-To: Finn Callies <fcallies@linux.ibm.com>
-Cc: richard.henderson@linaro.org, iii@linux.ibm.com, david@kernel.org,
- thuth@redhat.com, berrange@redhat.com, qemu-s390x@nongnu.org,
- qemu-devel@nongnu.org, linux390-list@tuxmaker.boeblingen.de.ibm.com,
- linux-s390@vger.kernel.org, dengler@linux.ibm.com,
- borntraeger@linux.ibm.com, cohuck@redhat.com
-Subject: Re: [PATCH v7 15/17] docs/s390: Document CPACF instructions support
-Mail-Reply-To: freude@linux.ibm.com
-In-Reply-To: <b2dd136a-828a-4771-9f9d-5da8a4f6634e@linux.ibm.com>
-References: <20260617094820.34402-1-freude@linux.ibm.com>
- <20260617094820.34402-16-freude@linux.ibm.com>
- <b2dd136a-828a-4771-9f9d-5da8a4f6634e@linux.ibm.com>
-Message-ID: <e24743de41855903880667f0f12f66bd@linux.ibm.com>
-X-Sender: freude@linux.ibm.com
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: ZOqn88ECOxjzKVnnen5mFBf5NQxqY5pW
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjIzMDEwOSBTYWx0ZWRfXykK4Z00c6twJ
- ESVZVDtcZDmcu1OLWHTyLbvuk4NiPXdbDooNFj0T43bb82OgSJKpmTpDxEmjjm1pnYV/XX83DRX
- q3SGvPqGaMjaB24JQ63GZroL7pT1RQ4=
-X-Authority-Analysis: v=2.4 cv=c62bhx9l c=1 sm=1 tr=0 ts=6a3a883a cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
- a=kj9zAlcOel0A:10 a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=VnNF1IyMAAAA:8
- a=JWg8YiNvps0iREzOQCoA:9 a=5wi_FRADO1KgGG3s:21 a=CjuIK1q_8ugA:10
- a=O8hF6Hzn-FEA:10
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjIzMDEwOSBTYWx0ZWRfX3GSFo8/vYn8K
- 6xU1nOpBGmWoRYTfU3C0GkS+m6oo9aNpqfw6wYg6PplZBebGeRCFLeFPGUUp378UK/4/6Y4NkQT
- Jr14IBYNf5eoD6qNHr1L9Y8DNDUTQlxdCQt8LtwDiYty4zS3ZEtdZG4KqqjbdRiRfkNALS1itno
- 1mTM7LhtKFoEv8JV9fY3fXzChN0VbXV2QLSHJZUQyrVHCkARtDicUE9dweZOxIm3pb/5RU7I9FS
- W9ITWmWLXvKTgfN5ERcRYrzu9AZK0YKx0FNIZyftgCFYWjDuhwFvqC7vkymTE6XYZr88lmi8Rb0
- tyZW84T+MmQ4z7IzhgPasuJ3oApeLuRF1dZn3+2KKpGLQX9eNAJCdT2PN909PiNQPSREE3Ty2rK
- iXof7bnJefkvKa5Q9WStiwEA17VS/ROabE2+BzOuelkXJsY8W4LelIsm4Cfido6S/LI9Xo87xX9
- Ql0/Ekd8xVvqqaxR3yQ==
-X-Proofpoint-ORIG-GUID: ZOqn88ECOxjzKVnnen5mFBf5NQxqY5pW
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-23_03,2026-06-23_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 impostorscore=0 adultscore=0 clxscore=1015 suspectscore=0
- priorityscore=1501 phishscore=0 spamscore=0 bulkscore=0 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606230109
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=freude@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <ajqB9ujvC6MXSRpG@redhat.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -127,175 +124,158 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: freude@linux.ibm.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026-06-18 08:28, Finn Callies wrote:
-> On 17.06.26 11:48, Harald Freudenberger wrote:
->> Add a first document covering the Qemu s390 CPACF instructions
->> and functions supported.
->> 
->> Signed-off-by: Harald Freudenberger <freude@linux.ibm.com>
+On Tue, Jun 23, 2026 at 01:54:14PM +0100, Daniel P. Berrangé wrote:
+> On Tue, Jun 23, 2026 at 08:36:30AM -0400, Michael S. Tsirkin wrote:
+> > On Mon, Jun 22, 2026 at 05:30:33PM +0100, Daniel P. Berrangé wrote:
+> > > On Mon, Jun 22, 2026 at 06:11:44PM +0200, Laurent Vivier wrote:
+> > > > A malicious guest can craft virtqueue descriptors with arbitrary lengths.
+> > > > control_out() calls iov_size() on the guest-supplied scatter-gather list
+> > > > and passes the result directly to g_malloc(), allowing a guest to force
+> > > > QEMU to attempt multi-gigabyte allocations and crash the host process.
+> > > > 
+> > > > Fix this by copying at most sizeof(struct virtio_console_control) into a
+> > > > stack-local variable instead of allocating a buffer sized by the guest.
+> > > > handle_control_message() only accesses the fixed-size id, event, and
+> > > > value fields, so no data beyond the struct was ever needed.
+> > > 
+> > > Does anyone have thoughts on whether we should treat guest initiated
+> > > unbounded allocs as a security issue ?
+> > > 
+> > > IIUC, this flaw would require root in the guest OS in order to craft
+> > > the malicious virtqueue descriptors.
+> > > 
+> > > A self-initiated crash triggered by root would not historically
+> > > be enough justification for CVE. We would require it to be triggered
+> > > by unprivileged user.
+> > > 
+> > > Nested virt with device assignment could change that equation though
+> > > as the L2 guest could be considered an unpriv user from the L1 POV.
+> > > 
+> > > Also in theory the large alloc might be large enough to consume all
+> > > host RAM but not large enough to trigger OOM kill of QEMU. This might
+> > > impact operation of other co-located VMs on the same host.
+> > 
+> > Don't see why not. We can treat it as low priority and no embargo.
 > 
-> With the one comment applied:
+> Is there any point in assigning "low" severity  CVEs ? I'm not
+> convinced downstream vendors have capacity to deal with "low"
+> CVEs anymore even if we published them.
+
+Let's ask some downstreams)
+
+qemu security policy really should spell out what is, or is not,
+considered worth a CVE.
+
+> > 
+> > > Anyone think this is bad enough to justify a CVE ? Or should we treat
+> > > these OOM scenarios maerely as "hardening" bugs, where they require
+> > > 'root' in the L1 guest ?
+> > 
+> > 
+> > > > Cc: qemu-stable@nongnu.org
+> > > > Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3585
+> > > > Signed-off-by: Laurent Vivier <lvivier@redhat.com>
+> > > > ---
+> > > >  hw/char/virtio-serial-bus.c | 34 +++++++---------------------------
+> > > >  1 file changed, 7 insertions(+), 27 deletions(-)
+> > > > 
+> > > > diff --git a/hw/char/virtio-serial-bus.c b/hw/char/virtio-serial-bus.c
+> > > > index cd234dc6db1d..c1973f0248fc 100644
+> > > > --- a/hw/char/virtio-serial-bus.c
+> > > > +++ b/hw/char/virtio-serial-bus.c
+> > > > @@ -344,22 +344,16 @@ void virtio_serial_throttle_port(VirtIOSerialPort *port, bool throttle)
+> > > >  }
+> > > >  
+> > > >  /* Guest wants to notify us of some event */
+> > > > -static void handle_control_message(VirtIOSerial *vser, void *buf, size_t len)
+> > > > +static void handle_control_message(VirtIOSerial *vser,
+> > > > +                                   struct virtio_console_control *gcpkt)
+> > > >  {
+> > > >      VirtIODevice *vdev = VIRTIO_DEVICE(vser);
+> > > >      struct VirtIOSerialPort *port;
+> > > >      VirtIOSerialPortClass *vsc;
+> > > > -    struct virtio_console_control cpkt, *gcpkt;
+> > > > +    struct virtio_console_control cpkt;
+> > > >      uint8_t *buffer;
+> > > >      size_t buffer_len;
+> > > >  
+> > > > -    gcpkt = buf;
+> > > > -
+> > > > -    if (len < sizeof(cpkt)) {
+> > > > -        /* The guest sent an invalid control packet */
+> > > > -        return;
+> > > > -    }
+> > > > -
+> > > >      cpkt.event = virtio_lduw_p(vdev, &gcpkt->event);
+> > > >      cpkt.value = virtio_lduw_p(vdev, &gcpkt->value);
+> > > >  
+> > > > @@ -457,41 +451,27 @@ static void control_in(VirtIODevice *vdev, VirtQueue *vq)
+> > > >  
+> > > >  static void control_out(VirtIODevice *vdev, VirtQueue *vq)
+> > > >  {
+> > > > +    struct virtio_console_control cpkt;
+> > > >      VirtQueueElement *elem;
+> > > >      VirtIOSerial *vser;
+> > > > -    uint8_t *buf;
+> > > >      size_t len;
+> > > >  
+> > > >      vser = VIRTIO_SERIAL(vdev);
+> > > >  
+> > > > -    len = 0;
+> > > > -    buf = NULL;
+> > > >      for (;;) {
+> > > > -        size_t cur_len;
+> > > > -
+> > > >          elem = virtqueue_pop(vq, sizeof(VirtQueueElement));
+> > > >          if (!elem) {
+> > > >              break;
+> > > >          }
+> > > >  
+> > > > -        cur_len = iov_size(elem->out_sg, elem->out_num);
+> > > > -        /*
+> > > > -         * Allocate a new buf only if we didn't have one previously or
+> > > > -         * if the size of the buf differs
+> > > > -         */
+> > > > -        if (cur_len > len) {
+> > > > -            g_free(buf);
+> > > > -
+> > > > -            buf = g_malloc(cur_len);
+> > > > -            len = cur_len;
+> > > > +        len = iov_to_buf(elem->out_sg, elem->out_num, 0, &cpkt, sizeof(cpkt));
+> > > > +        if (len == sizeof(cpkt)) {
+> > > > +            handle_control_message(vser, &cpkt);
+> > > >          }
+> > > > -        iov_to_buf(elem->out_sg, elem->out_num, 0, buf, cur_len);
+> > > >  
+> > > > -        handle_control_message(vser, buf, cur_len);
+> > > >          virtqueue_push(vq, elem, 0);
+> > > >          g_free(elem);
+> > > >      }
+> > > > -    g_free(buf);
+> > > >      virtio_notify(vdev, vq);
+> > > >  }
+> > > >  
+> > > > -- 
+> > > > 2.54.0
+> > > > 
+> > > > 
+> > > 
+> > > With regards,
+> > > Daniel
+> > > -- 
+> > > |: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+> > > |: https://libvirt.org          ~~          https://entangle-photo.org :|
+> > > |: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+> > 
 > 
-> Reviewed-by: Finn Callies <fcallies@linux.ibm.com>
-> 
->> ---
->>   docs/system/s390x/cpacf.rst  | 116 
->> +++++++++++++++++++++++++++++++++++
->>   docs/system/target-s390x.rst |   1 +
->>   2 files changed, 117 insertions(+)
->>   create mode 100644 docs/system/s390x/cpacf.rst
->> 
->> diff --git a/docs/system/s390x/cpacf.rst b/docs/system/s390x/cpacf.rst
->> new file mode 100644
->> index 0000000000..85f35b4e9c
->> --- /dev/null
->> +++ b/docs/system/s390x/cpacf.rst
->> @@ -0,0 +1,116 @@
->> +CPACF Support
->> +=============
->> +
->> +CPACF
->> +-----
->> +
->> +CP Assist for Cryptographic Function (CPACF) is a hardware-integrated
->> +coprocessor feature built into every  processor core of IBM Z and
->> +LinuxONE mainframes (s390x architecture). It provides high-speed,
->> +hardware-accelerated encryption and hashing directly on the CPU.
->> +
->> +CPACF provides a set of z/Architecture instructions (known as Message
->> +Security Assist or MSA) that execute cryptographic operations
->> +synchronously with the main processor.
->> +
->> +- Symmetric Encryption: Support for AES (128, 192, 256-bit), DES, and
->> +  Triple-DES (TDES).
->> +- Hashing: Acceleration for SHA-1, SHA-2 (up to SHA-512), SHA-3 and
->> +  SHAKE.
->> +- Random Number Generation: Pseudo Random Number Generator (PRNG) and
->> +  a hardware-based True Random Number Generator (TRNG).
->> +- Asymmetric Support: Elliptic Curve Cryptography (ECC) primitives
->> +  P-256, P-384, P-521, Montgomery/Edwards curves (e.g., Ed25519).
->> +
->> +Documentation about CPACF instructions is public available and
->> +can be found in the "z/Architecture Principles of Operation"
->> +accessible at the IBM documentation hub https://www.ibm.com/docs/en.
->> +For example the latest version as a pdf is available here:
->> +https://www.ibm.com/support/pages/zvm/library/other/22783214.pdf
->> +
->> +
->> +CPACF instructions
->> +------------------
->> +
->> +Here is a list of implemented CPACF instructions and the supported
->> +functions for each instruction:
->> +
->> +KDSA (COMPUTE DIGITAL SIGNATURE AUTHENTICATION)
->> +- Function code 0x00 - Function Query
->> +
->> +KIMD (COMPUTE INTERMEDIATE MESSAGE DIGEST)
->> +- Function code 0x00 - Function Query
->> +- Function code 0x02 - CPACF_KIMD_SHA_256
->> +- Function code 0x03 - CPACF_KIMD_SHA_512
->> +
->> +KLMD (COMPUTE LAST MESSAGE DIGEST)
->> +- Function code 0x00 - Function Query
->> +- Function code 0x02 - CPACF_KLMD_SHA_256
->> +- Function code 0x03 - CPACF_KLMD_SHA_512
->> +
->> +KM (CIPHER MESSAGE)
->> +- Function code 0x00 - Function Query
->> +- Function code 0x12 - CPACF_KM_AES_128
->> +- Function code 0x13 - CPACF_KM_AES_192
->> +- Function code 0x14 - CPACF_KM_AES_256
->> +- Function code 0x1a - CPACF_KM_PAES_128
->> +- Function code 0x1b - CPACF_KM_PAES_192
->> +- Function code 0x1c - CPACF_KM_PAES_256
->> +- Function code 0x32 - CPACF_KM_XTS_128
->> +- Function code 0x34 - CPACF_KM_XTS_256
->> +- Function code 0x3a - CPACF_KM_PXTS_128
->> +- Function code 0x3c - CPACF_KM_PXTS_256
->> +
->> +KMAC (COMPUTE MESSAGE AUTHENTICATION CODE)
->> +- Function code 0x00 - Function Query
->> +
->> +KMC (CIPHER MESSAGE WITH CHAINING)
->> +- Function code 0x00 - Function Query
->> +- Function code 0x12 - CPACF_KMC_AES_128
->> +- Function code 0x13 - CPACF_KMC_AES_192
->> +- Function code 0x14 - CPACF_KMC_AES_256
->> +- Function code 0x1a - CPACF_KMC_PAES_128
->> +- Function code 0x1b - CPACF_KMC_PAES_192
->> +- Function code 0x1c - CPACF_KMC_PAES_256
->> +
->> +KMCTR (CIPHER MESSAGE WITH COUNTER)
->> +- Function code 0x00 - Function Query
->> +- Function code 0x12 - CPACF_KMCTR_AES_128
->> +- Function code 0x13 - CPACF_KMCTR_AES_192
->> +- Function code 0x14 - CPACF_KMCTR_AES_256
->> +- Function code 0x1a - CPACF_KMCTR_PAES_128
->> +- Function code 0x1b - CPACF_KMCTR_PAES_192
->> +- Function code 0x1c - CPACF_KMCTR_PAES_256
->> +
->> +KMF (CIPHER MESSAGE WITH CIPHER FEEDBACK)
->> +- not supported
->> +
->> +KMO (CIPHER MESSAGE WITH OUTPUT FEEDBACK)
->> +- not supported
-> 
-> You list these as unsupported but KMA is missing completely. At least
-> mention it as unsupported as well as you do so for KMO and KMF or
-> leave the unsupported ones out completely.
-> 
+> With regards,
+> Daniel
+> -- 
+> |: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+> |: https://libvirt.org          ~~          https://entangle-photo.org :|
+> |: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
 
-KMA is MSA 8. I am not sure if qemu even has configured some MSA 8.
-I'll check this - but as of now all unknown instructions (and KMA is
-one of this) would result in a Operation Exception. However, at least
-KMA shold be listed then below. I'll check this maybe add KMA query
-support or at least document it here.
-
-Update: MSA 8 is listed in qemu. So i added KMA to the docu.
-
->> +
->> +PCC (PERFORM CRYPTOGRAPHIC COMPUTATION)
->> +- Function code 0x00 - Function Query
->> +- Function code 0x32 - compute XTS param AES-128
->> +- Function code 0x34 - compute XTS param AES-256
->> +- Function code 0x3a - compute XTS param Encrypted AES-128
->> +- Function code 0x3c - compute XTS param Encrypted AES-256
->> +
->> +PCKMO (PERFORM CRYPTOGRAPHIC KEY MANAGEMENT OPERATION)
->> +- Function code 0x00 - Function Query
->> +- Function code 0x12 - CPACF_PCKMO_ENC_AES_128_KEY
->> +- Function code 0x13 - CPACF_PCKMO_ENC_AES_192_KEY
->> +- Function code 0x14 - CPACF_PCKMO_ENC_AES_256_KEY
->> +
->> +PRNO (PERFORM RANDOM NUMBER OPERATION)
->> +- Function code 0x00 - Function Query
->> +- Function code 0x72 - CPACF_PRNO_TRNG
->> +
->> +Note that the use of a not supported CPACF instruction (KMF and KMO)
->> +or invocation of a not listed function will result in a Specification
->> +Exception.
->> +
->> +Not listed CPACF instructions (KMF, KMO) cause an Operation Exception
-
-                                    ^^^ here I added KMA
-
->> +when used. Not listed functions cause a Specification Exception when
->> +called. If only the query function is listed (KDSA), then the query
->> +function will return a function status word with all but the query
->> +function bit set to 0.
->> diff --git a/docs/system/target-s390x.rst 
->> b/docs/system/target-s390x.rst
->> index 94c981e732..49159826eb 100644
->> --- a/docs/system/target-s390x.rst
->> +++ b/docs/system/target-s390x.rst
->> @@ -35,3 +35,4 @@ Architectural features
->>      s390x/bootdevices
->>      s390x/protvirt
->>      s390x/cpu-topology
->> +   s390x/cpacf
 
