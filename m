@@ -4,105 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8CA7ECDB46F
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jun 2026 12:49:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6CF0CCDB47C
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jun 2026 12:49:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wc0YL-0004UY-GF; Tue, 23 Jun 2026 08:48:33 -0400
+	id 1wc0YF-0004Ti-Jj; Tue, 23 Jun 2026 08:48:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wc0YH-0004Tz-N9
- for qemu-devel@nongnu.org; Tue, 23 Jun 2026 08:48:29 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wc0YA-0004TV-FG
+ for qemu-devel@nongnu.org; Tue, 23 Jun 2026 08:48:22 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wc0YA-0006yj-8A
- for qemu-devel@nongnu.org; Tue, 23 Jun 2026 08:48:23 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wc0Y6-0006yN-1L
+ for qemu-devel@nongnu.org; Tue, 23 Jun 2026 08:48:20 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1782218899;
+ s=mimecast20190719; t=1782218896;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=NxxzS1Ry/8cdZldgWf/p8MR2BUoUQOLrlYZHskkcFmA=;
- b=BkynJU7piM/o+kYIj4rnlIge0MKevSq9PPuu+BhHuhR/g8ShrCnvabMylr3400m97G5CiF
- uvu3ZINYyR8s0JBNfYVS+7BeaqvnyIsrNIM1CW6MIxZKqF5GJ75e21qe0pB1q3iYcOv6XR
- 4yC34EaFDrB9OECLGlXgiF2D1TW3MGk=
-Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
- [209.85.160.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=Cvxt+Kd17B9fN1ONcSujVDKlJnnS8bCIAKhotmueqno=;
+ b=cZFgt4WpnXmt/Sv35fRUcTzIDD+Kn/wbUhhFrzubH9lRlVnd8ap2QGVRj6MQPMZ7GupFzW
+ pCE/PWmg7wq2FntJFwujWHTODUm1Z77j78JKD4FF+RAtOtAxOHSmuhzSjOBRNC2/6oJceE
+ gCcMM8/m2g/cuvatRHeBR/OLMTbTSMU=
+Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
+ [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-375-bL95UU_eMSCBRPrlFu4i_g-1; Tue, 23 Jun 2026 08:48:18 -0400
-X-MC-Unique: bL95UU_eMSCBRPrlFu4i_g-1
-X-Mimecast-MFC-AGG-ID: bL95UU_eMSCBRPrlFu4i_g_1782218898
-Received: by mail-qt1-f197.google.com with SMTP id
- d75a77b69052e-517d766e05aso21529301cf.0
- for <qemu-devel@nongnu.org>; Tue, 23 Jun 2026 05:48:18 -0700 (PDT)
+ us-mta-678-RQtoRvepNQOHjPLHV9IVGg-1; Tue, 23 Jun 2026 08:48:15 -0400
+X-MC-Unique: RQtoRvepNQOHjPLHV9IVGg-1
+X-Mimecast-MFC-AGG-ID: RQtoRvepNQOHjPLHV9IVGg_1782218895
+Received: by mail-qt1-f200.google.com with SMTP id
+ d75a77b69052e-5195760750bso108320971cf.0
+ for <qemu-devel@nongnu.org>; Tue, 23 Jun 2026 05:48:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1782218898; x=1782823698; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=NxxzS1Ry/8cdZldgWf/p8MR2BUoUQOLrlYZHskkcFmA=;
- b=fVJRLLPuaIfhbcufL9QTGT9oLErcZu6fAxz02CkEpFjCBfQytKcxu98qQP386vkC5V
- qeu9hL6SN8+NTayTWVaeGq327XG5EmI3sQjIhOGLV2aISJ9St2tteil3CQUK9DqKtMdL
- sDFuRHBayuVT/6qkEOWVf6AXs3b9KTLS9dkIxblRSdHLca4J9Ov/lLSynXhWFLv/BnJP
- ycpQx1xnHTFNBbb2a4J6gF2z0axxo5pyE9szI/ARLcR6mH/FFUa3wpjWBn7Z2ARUKGOd
- O9/Zy3I6Tps2RE0DdYhjriaIX04Y349An0reFoAjWa2O37R2R4w+10Ns/IKtIk5307js
- AWZQ==
+ d=redhat.com; s=google; t=1782218895; x=1782823695; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=Cvxt+Kd17B9fN1ONcSujVDKlJnnS8bCIAKhotmueqno=;
+ b=tRlq/bTHgRn3IebJ6Rljwtzv/vnMsqME6CtS5sYUdEVhHvHH9e34GfJ0MEeSc9Wcud
+ EdcwDL7PgkVxHxQv3QaxyZFeAwp7C3wipfnJZUO/M6G50oqXVa20yFEGKOG5UY+ziAMi
+ 6/2sYzLnubDLHgUltS/sGBTsbpWswoKcczrrlKs0QH/lA80zsjfrHTmhN4I06gFjAsqO
+ lbZ+q1Te7H6ALVkHC8T5BpA+TXhIN/tf9/D01qLLGVZg+Z+cmRoF4KCFfiEwE+Rqx7+x
+ CkfPvWG4LKKF3NXLXOVjqQia0HwePuqrvujUV3whgcYzNkDJEkPiQqT4xMf8kn56CORc
+ zjPw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782218898; x=1782823698;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=NxxzS1Ry/8cdZldgWf/p8MR2BUoUQOLrlYZHskkcFmA=;
- b=qbzkLv2yGmSslmTtUts8U9iQcBCaii4QAUZ1uyFK2I/7c/9lFl16Fs+/GOZGBd4i27
- CBCkoTizc254fvaMQkfSxqY+OsoH2pSeOSFqyAEWtnXrdkIhN28LJjSiOFX3SKKel73F
- eRLVFh6vmGVI5Dx7FpfOJY5iNzu41kCvr0sJd7khdibtFonkIafG9men13qqt84maroR
- yd4uNP6i9OLLYVjhAydtBVGmmxSgOVFSSxOEPdeEU45T9GnXRYJWWjbOO/lAWeJar2dt
- ECLz30f152SEN68/zyxpGh608dIrAnzrC/E+UvpcwBPDC9e3nyoe1ezlCXEL/b5GrNWH
- G8Pw==
-X-Gm-Message-State: AOJu0Yx2tl/pe3NgmcUSkNa70tKXtqVmTUfFaN6m6xOgKqNsaPBHPBAY
- K8I3nG/varMPTMwtz/0o6inZzOHg/hoKesw5wKtX7erCtWZ04dA5f3eBtQiZIa3g1TIZfyB9WbC
- +dPsWxSkSJYPHnNpKwuxVgIGy/vxBGJ1kP166vttWdtnF5xpYnEj+KdI6c8e1tE0qs09jPbedbI
- UOIW05M1Q7tNVN1y1r6yjie3j4jRgOMvih0mZG9Q==
-X-Gm-Gg: AfdE7ck1drrnVyrapB5iUkuBwRkEAEUHQOs3WpqqYO/xyU5EkF2vHrBi2fSgvufjgyO
- ZjaS+QlDq1p8zjTFUPgd9KIX3pdlYeTBRqYWNrnafGbsOCGlvayn/3kWpywNuTf4g/DQTkYc1kQ
- zKWCr+sAi1SjscR85koEJLVljbpTkf3MEfCbI49FgXvJm7Ivbf6PnP/kMBKPtzoQNquRIVRezik
- rQnLcWnkc+GBz3x5P15OKyjUbbSODziZui6v/C4NCd7WSwxoKjr6gb2XwM2/hZ2iIKviuoMn1lz
- 2diOF2/f+LGPqWHwVFCDHc5+1HVfl7gHN5nlEmPY5NHX0urM9fcXfip25uJ/6Z95/ssfMOdI5J1
- +2w==
-X-Received: by 2002:ac8:5985:0:b0:519:b82d:fe6a with SMTP id
- d75a77b69052e-51a51b6891cmr48599721cf.28.1782218897829; 
- Tue, 23 Jun 2026 05:48:17 -0700 (PDT)
-X-Received: by 2002:ac8:5985:0:b0:519:b82d:fe6a with SMTP id
- d75a77b69052e-51a51b6891cmr48598921cf.28.1782218897057; 
- Tue, 23 Jun 2026 05:48:17 -0700 (PDT)
-Received: from x1.com ([174.91.117.157]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-51a51106a09sm22288351cf.0.2026.06.23.05.48.14
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ d=1e100.net; s=20251104; t=1782218895; x=1782823695;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Cvxt+Kd17B9fN1ONcSujVDKlJnnS8bCIAKhotmueqno=;
+ b=AU4Y5mUhfzq8GqY4HeLneaEqVgkES2hEOnOWCzfCXfCQbBmY8rRVKxrvau0nfYJ665
+ St4ipHdoUgs3ZH1BXvKtqkenf2JNAu0W7wcH73u6iblan9dZxAurR9dcBAYBJPsZZxr3
+ 0U1oE7+aQJ7GTMvSkEoqudRwQ9U7cYnMi0V7CPEC1e+pvlTYVNiChfTzuRoEWexHc0zo
+ FWS77yOwYI2KKzGkOyJlAggtBOoAwV0XtRnWL9xIJJAYrmZyIkihMR1s+laYr1geTjBz
+ ax/3QJVdbKU5Q5QO0wzugLgHG2C6Azt/LeS5AAfEdW6hxFbttlKdMBOGq/syfuj5tpLA
+ HpSw==
+X-Gm-Message-State: AOJu0YyjSrp85LFSnW9WbrbcP9daBJG9w8E83rWLjWjJNDT5b3E13TSm
+ OaDYtPaG47YWrQ5WhBYVNapf2VsVd6SGsrODNqyPeLTWvxP+RGGicvxN/8V5Ud+A1pHHH8UYr4M
+ Gex8NtrNybWtmBKKqRk24GwVAWqcJp+TE6Q41PMtgdnyBaVXEx9CPhTNvvRcmn09b4+y6ej3e3B
+ f176vJu5KEekMIm6elJUBHwE3rnG9dWMtcAHHk5A==
+X-Gm-Gg: AfdE7ckDg8Fl3rSwyZT0YZFuE0mlSUNzXuQ4Aek/9w15MhcbWfPQYxSwFp2E36NARM7
+ 3Z317YZluBwotoJZ4P8rcxpbU7k0wcsOeoVTjgL9sXr64eJYpPsjjH9Rym0oAN8Cql1is9Wq8In
+ PUnLoLDUlOcEPGU3OtgBWADHRg+RaakJegiPYokO5hOR13Hn7bGO76l6IhxeSmjVEcJHzPgDykM
+ 0xX3fgG+wGhDcHN8NHAsqkzsw8oo+/gDxCTbs9H5o6hW/z4v9CytYWKOF0oAxaZdLVGMKidL8lZ
+ aB+Ef00JIyizIDt8kDQgSZtyGXZhHFWAM/PeO5hfae07NPsd1Owmnr56JkKKhyh2dmR0t60+9G4
+ 5ew==
+X-Received: by 2002:a05:622a:1a8a:b0:516:e6f3:c1f with SMTP id
+ d75a77b69052e-51a55b21c1amr33071931cf.47.1782218894539; 
  Tue, 23 Jun 2026 05:48:14 -0700 (PDT)
+X-Received: by 2002:a05:622a:1a8a:b0:516:e6f3:c1f with SMTP id
+ d75a77b69052e-51a55b21c1amr33071241cf.47.1782218893814; 
+ Tue, 23 Jun 2026 05:48:13 -0700 (PDT)
+Received: from x1.com ([174.91.117.157]) by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-51a51106a09sm22288351cf.0.2026.06.23.05.48.10
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 23 Jun 2026 05:48:11 -0700 (PDT)
 From: Peter Xu <peterx@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Paolo Bonzini <pbonzini@redhat.com>,
- "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
-Subject: [PULL 01/18] thread-pool: Allow at least 1 thread in
- thread_pool_adjust_max_threads_to_work()
-Date: Tue, 23 Jun 2026 08:47:42 -0400
-Message-ID: <20260623124759.125399-2-peterx@redhat.com>
+ Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PULL 00/18] Next patches
+Date: Tue, 23 Jun 2026 08:47:41 -0400
+Message-ID: <20260623124759.125399-1-peterx@redhat.com>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260623124759.125399-1-peterx@redhat.com>
-References: <20260623124759.125399-1-peterx@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -119,57 +114,112 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
+The following changes since commit b83371668192a705b878e909c5ae9c1233cbd5fb:
 
-thread_pool_adjust_max_threads_to_work() is supposed to give each task its
-own thread by setting the pool max thread count limit accordingly.
+  Merge tag 'pbouvier/pr/plugins-20260618' of https://gitlab.com/p-b-o/qemu into staging (2026-06-19 15:00:01 -0400)
 
-However, if there aren't any tasks currently in the pool the pool max
-thread count will be set to 0, which will trigger an assertion failure
-in thread_pool_set_max_threads() - because setting this value would
-completely block the pool by not allowing it to process any submitted
-tasks.
+are available in the Git repository at:
 
-This also can happen if a task is submitted via
-thread_pool_submit_immediate() to an empty pool but the task completes so
-quickly that by the time this function calls
-thread_pool_adjust_max_threads_to_work() the pool again has no unfinished
-tasks in it.
+  https://gitlab.com/peterx/qemu.git tags/next-pull-request
 
-Quoting from Maciej on reproducing this issue:
+for you to fetch changes up to 1f3241bcaeee0df47f72edf6abad71fe36f3b0e7:
 
-  It's difficult to reproduce in most setups.
+  system/physmem: make ram_block_discard_range() handle guest_memfd (2026-06-22 17:08:49 -0400)
 
-  My main VFIO live migration setup never hit it for more than a year,
-  other similar setup hit it recently 3 times.
+----------------------------------------------------------------
+Migration and mem pull request
 
-  On the other hand, putting sleep(5) in the middle of
-  thread_pool_submit_immediate() makes it reproduce nearly always for me.
+- Maciej's patch to fix rare crash in VFIO multifd thread pool mgmt
+- Peter's cleanup of @cpr-exec-command doc in migration.json
+- Akihiko's patch to fix a TSAN warning on ram_list operations
+- Bibo's migration-test coverage for loongarch
+- Peter's update on a-b-boot image
+- Marc-André's virtio-mem fix for CoCo
 
-Fix this by making sure that the pool is allowed to create at least 1
-thread.
+----------------------------------------------------------------
 
-Fixes: b5aa74968b27 ("thread-pool: Implement generic (non-AIO) pool support")
-Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
-Link: https://lore.kernel.org/r/b76c763f576b0fb8a35960a8e3c3da59701d2a74.1779390317.git.maciej.szmigiero@oracle.com
-[peterx: added quote into commit message on reproduce details of the issue]
-Signed-off-by: Peter Xu <peterx@redhat.com>
----
- util/thread-pool.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Akihiko Odaki (1):
+  system/physmem: Synchronize ram_list accesses
 
-diff --git a/util/thread-pool.c b/util/thread-pool.c
-index 8f8cb38d5c..4e75191c98 100644
---- a/util/thread-pool.c
-+++ b/util/thread-pool.c
-@@ -493,5 +493,5 @@ bool thread_pool_adjust_max_threads_to_work(ThreadPool *pool)
- {
-     QEMU_LOCK_GUARD(&pool->cur_work_lock);
- 
--    return thread_pool_set_max_threads(pool, pool->cur_work);
-+    return thread_pool_set_max_threads(pool, MAX(pool->cur_work, 1));
- }
+Bibo Mao (1):
+  tests/qtest/migration: Add migration test on loongarch
+
+Gavin Shan (1):
+  system/memory: Remove MAX_PHYS_ADDR
+
+Maciej S. Szmigiero (1):
+  thread-pool: Allow at least 1 thread in
+    thread_pool_adjust_max_threads_to_work()
+
+Marc-André Lureau (11):
+  system/memory: split RamDiscardManager into source and manager
+  system/memory: move RamDiscardManager to separate compilation unit
+  system/memory: constify section arguments
+  system/ram-discard-manager: implement replay via is_populated
+    iteration
+  virtio-mem: remove replay_populated/replay_discarded implementation
+  system/ram-discard-manager: drop replay from source interface
+  system/memory: implement RamDiscardManager multi-source aggregation
+  system/physmem: destroy ram block attributes before RCU-deferred
+    reclaim
+  system/memory: add RamDiscardManager reference counting and cleanup
+  tests: add unit tests for RamDiscardManager multi-source aggregation
+  system/physmem: make ram_block_discard_range() handle guest_memfd
+
+Peter Xu (3):
+  qapi/migration: Remove @cpr-exec-command doc in MigrationParameter
+  migration: Use OBJECT_DECLARE_SIMPLE_TYPE
+  migration/tests: Update a-b-boot images for all archs
+
+ MAINTAINERS                                   |    5 +
+ qapi/migration.json                           |    4 -
+ include/hw/vfio/vfio-container.h              |    2 +-
+ include/hw/vfio/vfio-cpr.h                    |    2 +-
+ include/hw/virtio/virtio-mem.h                |    3 -
+ include/system/memory.h                       |  282 +---
+ include/system/ram-discard-manager.h          |  358 +++++
+ include/system/ramblock.h                     |    5 +-
+ migration/migration.h                         |    9 +-
+ tests/qtest/migration/aarch64/a-b-kernel.h    |    2 +
+ tests/qtest/migration/bootfile.h              |    4 +
+ tests/qtest/migration/i386/a-b-bootblock.h    |    2 +
+ .../qtest/migration/loongarch64/a-b-kernel.h  |   20 +
+ tests/qtest/migration/ppc64/a-b-kernel.h      |    2 +
+ tests/qtest/migration/s390x/a-b-bios.h        |  272 ++--
+ accel/kvm/kvm-all.c                           |    2 +-
+ hw/vfio/cpr-legacy.c                          |    4 +-
+ hw/vfio/listener.c                            |   10 +-
+ hw/virtio/virtio-mem.c                        |  259 +---
+ migration/migration.c                         |    7 +-
+ migration/ram.c                               |   16 +-
+ system/memory.c                               |   88 +-
+ system/memory_mapping.c                       |    4 +-
+ system/physmem.c                              |   43 +-
+ system/ram-block-attributes.c                 |  255 +---
+ system/ram-discard-manager.c                  |  612 ++++++++
+ target/i386/kvm/tdx.c                         |    2 +-
+ tests/qtest/migration/bootfile.c              |    4 +
+ tests/qtest/migration/framework.c             |    6 +
+ tests/unit/test-ram-discard-manager-stubs.c   |   48 +
+ tests/unit/test-ram-discard-manager.c         | 1235 +++++++++++++++++
+ util/thread-pool.c                            |    2 +-
+ rust/bindings/system-sys/lib.rs               |    2 +-
+ system/meson.build                            |    1 +
+ system/trace-events                           |    2 +-
+ tests/qtest/meson.build                       |    3 +-
+ tests/qtest/migration/Makefile                |    4 +-
+ tests/qtest/migration/loongarch64/Makefile    |   20 +
+ .../qtest/migration/loongarch64/a-b-kernel.S  |   46 +
+ tests/unit/meson.build                        |    8 +-
+ 40 files changed, 2656 insertions(+), 999 deletions(-)
+ create mode 100644 include/system/ram-discard-manager.h
+ create mode 100644 tests/qtest/migration/loongarch64/a-b-kernel.h
+ create mode 100644 system/ram-discard-manager.c
+ create mode 100644 tests/unit/test-ram-discard-manager-stubs.c
+ create mode 100644 tests/unit/test-ram-discard-manager.c
+ create mode 100644 tests/qtest/migration/loongarch64/Makefile
+ create mode 100644 tests/qtest/migration/loongarch64/a-b-kernel.S
+
 -- 
 2.54.0
 
