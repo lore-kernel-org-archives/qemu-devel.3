@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 494B7CDB470
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jun 2026 09:57:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 658E7CD4F26
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jun 2026 09:57:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wbxrV-0003Pf-Lp; Tue, 23 Jun 2026 05:56:09 -0400
+	id 1wbxs5-0003X0-Gj; Tue, 23 Jun 2026 05:56:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wbxrT-0003P9-3s
- for qemu-devel@nongnu.org; Tue, 23 Jun 2026 05:56:07 -0400
+ id 1wbxs2-0003Wl-76
+ for qemu-devel@nongnu.org; Tue, 23 Jun 2026 05:56:42 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wbxrQ-0003RB-W7
- for qemu-devel@nongnu.org; Tue, 23 Jun 2026 05:56:06 -0400
+ id 1wbxs0-0003Uq-6t
+ for qemu-devel@nongnu.org; Tue, 23 Jun 2026 05:56:41 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1782208564;
+ s=mimecast20190719; t=1782208599;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=cUYJ3UEKe4C8jUuI5kgIj+58uJc+8k5jFkGzZUDjTsg=;
- b=O4+cmoY+oJMEzSAr6c7n2ExhdQ0yytjJBRWRzYioVvcKvzn9mB7yLaznEx1EKU7wJdZYAp
- 5ArddHMikfNdvfIGNOiDgUfJwa7rvXYlxVhfBBoiFQjrx1zW19jqBrDvv/xh8Wx+PUNmb4
- 8lm8j2XokBjl3xIpd2FdbORB2ufvmoA=
+ bh=nzVajuluyRlzC1DSJS8hgQNZ6gXOgkeOIGH/NAVPWgg=;
+ b=Jlk3T52mapqVN1ehTtQlK7Yyr4VXPRXG+/T0/mEB/E1JE5eQGlfuZeX/bmJ3iy5efxP/SR
+ lEKL1yRt3pkz7qauczI3y8kaxPcvRMDx7NClJ3nO+qO/16F5AfFwKG4cE/2Wz0ZLHThXmV
+ lXEy2DlvvSKQy7tpPrVMuQuSIMUWLtI=
 Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-563-OaiHdUjLNNKjAYRb4Qozeg-1; Tue,
- 23 Jun 2026 05:56:02 -0400
-X-MC-Unique: OaiHdUjLNNKjAYRb4Qozeg-1
-X-Mimecast-MFC-AGG-ID: OaiHdUjLNNKjAYRb4Qozeg_1782208561
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-329-Uiq0wMp7NUGBpRujkgnZfA-1; Tue,
+ 23 Jun 2026 05:56:36 -0400
+X-MC-Unique: Uiq0wMp7NUGBpRujkgnZfA-1
+X-Mimecast-MFC-AGG-ID: Uiq0wMp7NUGBpRujkgnZfA_1782208594
 Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 663E41955BCE; Tue, 23 Jun 2026 09:56:01 +0000 (UTC)
+ id D34311955F70; Tue, 23 Jun 2026 09:56:34 +0000 (UTC)
 Received: from berrange.com (unknown [10.44.34.133])
  by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 74FF41624; Tue, 23 Jun 2026 09:55:57 +0000 (UTC)
+ id D60AA1624; Tue, 23 Jun 2026 09:56:31 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: "Dr. David Alan Gilbert" <dave@treblig.org>,
@@ -57,9 +57,10 @@ Cc: "Dr. David Alan Gilbert" <dave@treblig.org>,
  Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH v4 01/35] qom: replace 'can_be_deleted' with 'prepare_delete'
-Date: Tue, 23 Jun 2026 10:55:17 +0100
-Message-ID: <20260623095551.2106712-2-berrange@redhat.com>
+Subject: [PATCH v4 10/35] monitor: move monitor_data_(init|destroy) into QOM
+ init/finalize
+Date: Tue, 23 Jun 2026 10:55:26 +0100
+Message-ID: <20260623095551.2106712-11-berrange@redhat.com>
 In-Reply-To: <20260623095551.2106712-1-berrange@redhat.com>
 References: <20260623095551.2106712-1-berrange@redhat.com>
 MIME-Version: 1.0
@@ -91,360 +92,250 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-While most objects can perform all their cleanup in the finalizer
-method, there can be interactions with other resources / subsystems
-/ threads which require that some cleanup be performed on an user
-creatable object before unparenting it and entering finalization.
+Start to take advantage of QOM, by using object init and finalize
+methods to replace monitor_data_init and monitor_data_destroy.
 
-The current 'can_be_deleted' method runs in the deletion path and
-is intended to be used to block deletion. While it could be used
-to perform cleanup tasks, its name suggests it should be free of
-side-effects.
-
-Generalize this by renaming it to 'prepare_delete', explicitly
-allowing for cleanup to be provided. Existing users of 'can_be_deleted'
-are re-written, which provides them with more detailed/tailored error
-messages.
+A standalone helper is provided to enable the I/O thread for QMP
+where appropriate for the chardev backend.
 
 Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- backends/cryptodev.c             | 10 +++++++---
- backends/hostmem.c               |  5 +++--
- backends/iommufd.c               | 10 +++++++---
- block/throttle-groups.c          | 10 +++++++---
- event-loop-base.c                |  8 ++++----
- include/qom/object_interfaces.h  | 26 +++++++++++++++++---------
- include/system/event-loop-base.h |  2 +-
- net/can/can_core.c               |  5 +++--
- qom/object_interfaces.c          | 14 ++++++--------
- tests/qemu-iotests/245           |  4 ++--
- util/main-loop.c                 |  5 +++--
- 11 files changed, 60 insertions(+), 39 deletions(-)
+ monitor/hmp.c              |  6 +++--
+ monitor/monitor-internal.h |  3 +--
+ monitor/monitor.c          | 46 +++++++++++++-------------------------
+ monitor/qmp-cmds.c         |  3 ---
+ monitor/qmp.c              | 34 +++++++++++++++-------------
+ 5 files changed, 40 insertions(+), 52 deletions(-)
 
-diff --git a/backends/cryptodev.c b/backends/cryptodev.c
-index 79f8882d3b..90110dc633 100644
---- a/backends/cryptodev.c
-+++ b/backends/cryptodev.c
-@@ -454,9 +454,13 @@ bool cryptodev_backend_is_ready(CryptoDevBackend *backend)
- }
+diff --git a/monitor/hmp.c b/monitor/hmp.c
+index 516aa25d4c..2bb2333da5 100644
+--- a/monitor/hmp.c
++++ b/monitor/hmp.c
+@@ -48,6 +48,10 @@ OBJECT_DEFINE_TYPE(MonitorHMP, monitor_hmp, MONITOR_HMP, MONITOR);
  
- static bool
--cryptodev_backend_can_be_deleted(UserCreatable *uc)
-+cryptodev_backend_prepare_delete(UserCreatable *uc, Error **errp)
+ static void monitor_hmp_finalize(Object *obj)
  {
--    return !cryptodev_backend_is_used(CRYPTODEV_BACKEND(uc));
-+    if (cryptodev_backend_is_used(CRYPTODEV_BACKEND(uc))) {
-+        error_setg(errp, "Cryptodev backend is still in use");
-+        return false;
++    MonitorHMP *mon = MONITOR_HMP(obj);
++    if (mon->rs) {
++        readline_free(mon->rs);
 +    }
-+    return true;
  }
  
- static void cryptodev_backend_instance_init(Object *obj)
-@@ -613,7 +617,7 @@ cryptodev_backend_class_init(ObjectClass *oc, const void *data)
-     UserCreatableClass *ucc = USER_CREATABLE_CLASS(oc);
- 
-     ucc->complete = cryptodev_backend_complete;
--    ucc->can_be_deleted = cryptodev_backend_can_be_deleted;
-+    ucc->prepare_delete = cryptodev_backend_prepare_delete;
- 
-     QTAILQ_INIT(&crypto_clients);
-     object_class_property_add(oc, "queues", "uint32",
-diff --git a/backends/hostmem.c b/backends/hostmem.c
-index cd2085fb3c..eb915c64bc 100644
---- a/backends/hostmem.c
-+++ b/backends/hostmem.c
-@@ -434,9 +434,10 @@ host_memory_backend_memory_complete(UserCreatable *uc, Error **errp)
- }
- 
- static bool
--host_memory_backend_can_be_deleted(UserCreatable *uc)
-+host_memory_backend_prepare_delete(UserCreatable *uc, Error **errp)
- {
-     if (host_memory_backend_is_mapped(MEMORY_BACKEND(uc))) {
-+        error_setg(errp, "Host memory backend is still mapped");
-         return false;
-     } else {
-         return true;
-@@ -508,7 +509,7 @@ host_memory_backend_class_init(ObjectClass *oc, const void *data)
-     UserCreatableClass *ucc = USER_CREATABLE_CLASS(oc);
- 
-     ucc->complete = host_memory_backend_memory_complete;
--    ucc->can_be_deleted = host_memory_backend_can_be_deleted;
-+    ucc->prepare_delete = host_memory_backend_prepare_delete;
- 
-     object_class_property_add_bool(oc, "merge",
-         host_memory_backend_get_merge,
-diff --git a/backends/iommufd.c b/backends/iommufd.c
-index 09624cd652..7af49f6de3 100644
---- a/backends/iommufd.c
-+++ b/backends/iommufd.c
-@@ -63,11 +63,15 @@ static void iommufd_backend_set_fd(Object *obj, const char *str, Error **errp)
-     trace_iommu_backend_set_fd(be->fd);
- }
- 
--static bool iommufd_backend_can_be_deleted(UserCreatable *uc)
-+static bool iommufd_backend_prepare_delete(UserCreatable *uc, Error **errp)
- {
-     IOMMUFDBackend *be = IOMMUFD_BACKEND(uc);
- 
--    return !be->users;
-+    if (be->users) {
-+        error_setg(errp, "IOMMUFD backend still has %d users", be->users);
-+        return false;
-+    }
-+    return true;
- }
- 
- static void iommufd_backend_complete(UserCreatable *uc, Error **errp)
-@@ -92,7 +96,7 @@ static void iommufd_backend_class_init(ObjectClass *oc, const void *data)
- {
-     UserCreatableClass *ucc = USER_CREATABLE_CLASS(oc);
- 
--    ucc->can_be_deleted = iommufd_backend_can_be_deleted;
-+    ucc->prepare_delete = iommufd_backend_prepare_delete;
-     ucc->complete = iommufd_backend_complete;
- 
-     object_class_property_add_str(oc, "fd", NULL, iommufd_backend_set_fd);
-diff --git a/block/throttle-groups.c b/block/throttle-groups.c
-index 4b1b1944c2..7836fc4c76 100644
---- a/block/throttle-groups.c
-+++ b/block/throttle-groups.c
-@@ -960,9 +960,13 @@ static void throttle_group_get_limits(Object *obj, Visitor *v,
-     visit_type_ThrottleLimits(v, name, &argp, errp);
- }
- 
--static bool throttle_group_can_be_deleted(UserCreatable *uc)
-+static bool throttle_group_prepare_delete(UserCreatable *uc, Error **errp)
- {
--    return OBJECT(uc)->ref == 1;
-+    if (OBJECT(uc)->ref > 1) {
-+        error_setg(errp, "Throttle group still has multiple references");
-+        return false;
-+    }
-+    return true;
- }
- 
- static void throttle_group_obj_class_init(ObjectClass *klass,
-@@ -972,7 +976,7 @@ static void throttle_group_obj_class_init(ObjectClass *klass,
-     UserCreatableClass *ucc = USER_CREATABLE_CLASS(klass);
- 
-     ucc->complete = throttle_group_obj_complete;
--    ucc->can_be_deleted = throttle_group_can_be_deleted;
-+    ucc->prepare_delete = throttle_group_prepare_delete;
- 
-     /* individual properties */
-     for (i = 0; i < sizeof(properties) / sizeof(ThrottleParamInfo); i++) {
-diff --git a/event-loop-base.c b/event-loop-base.c
-index 8ca143bea4..ee5987ddbf 100644
---- a/event-loop-base.c
-+++ b/event-loop-base.c
-@@ -85,13 +85,13 @@ static void event_loop_base_complete(UserCreatable *uc, Error **errp)
-     }
- }
- 
--static bool event_loop_base_can_be_deleted(UserCreatable *uc)
-+static bool event_loop_base_prepare_delete(UserCreatable *uc, Error **errp)
- {
-     EventLoopBaseClass *bc = EVENT_LOOP_BASE_GET_CLASS(uc);
-     EventLoopBase *backend = EVENT_LOOP_BASE(uc);
- 
--    if (bc->can_be_deleted) {
--        return bc->can_be_deleted(backend);
-+    if (bc->prepare_delete) {
-+        return bc->prepare_delete(backend, errp);
+ static bool monitor_hmp_get_readline(Object *obj, Error **errp)
+@@ -1590,8 +1594,6 @@ void monitor_new_hmp(const char *chardev_id, bool use_readline, Error **errp)
+         return;
      }
  
-     return true;
-@@ -102,7 +102,7 @@ static void event_loop_base_class_init(ObjectClass *klass,
- {
-     UserCreatableClass *ucc = USER_CREATABLE_CLASS(klass);
-     ucc->complete = event_loop_base_complete;
--    ucc->can_be_deleted = event_loop_base_can_be_deleted;
-+    ucc->prepare_delete = event_loop_base_prepare_delete;
- 
-     object_class_property_add(klass, "aio-max-batch", "int",
-                               event_loop_base_get_param,
-diff --git a/include/qom/object_interfaces.h b/include/qom/object_interfaces.h
-index e2b8615617..afd0fb93b2 100644
---- a/include/qom/object_interfaces.h
-+++ b/include/qom/object_interfaces.h
-@@ -20,8 +20,10 @@ typedef struct UserCreatable UserCreatable;
-  * UserCreatableClass:
-  * @parent_class: the base class
-  * @complete: callback to be called after @obj's properties are set.
-- * @can_be_deleted: callback to be called before an object is removed
-- * to check if @obj can be removed safely.
-+ * @prepare_delete: to be called before an attempt to delete @obj
-+ * to validate whether the object can be deleted and trigger any
-+ * cleanup of any resources which have to be dealt with before the
-+ * object is unparented and enters finalization.
-  *
-  * Interface is designed to work with -object/object-add/object_add
-  * commands.
-@@ -36,7 +38,9 @@ typedef struct UserCreatable UserCreatable;
-  * For objects created without using -object/object-add/object_add,
-  * @user_creatable_complete() wrapper should be called manually if
-  * object's type implements USER_CREATABLE interface and needs
-- * complete() callback to be called.
-+ * complete() callback to be called. Similarly @user_creatable_prepare_delete()
-+ * should be called manually prior to an attempt to the delete the
-+ * object.
-  */
- struct UserCreatableClass {
-     /* <private> */
-@@ -44,7 +48,7 @@ struct UserCreatableClass {
- 
-     /* <public> */
-     void (*complete)(UserCreatable *uc, Error **errp);
--    bool (*can_be_deleted)(UserCreatable *uc);
-+    bool (*prepare_delete)(UserCreatable *uc, Error **errp);
- };
- 
- /**
-@@ -61,13 +65,17 @@ struct UserCreatableClass {
- bool user_creatable_complete(UserCreatable *uc, Error **errp);
- 
- /**
-- * user_creatable_can_be_deleted:
-- * @uc: the object whose can_be_deleted() method is called if implemented
-+ * user_creatable_prepare_delete:
-+ * @uc: the user-creatable object whose prepare_delete() method is called
-+ * @errp: if an error occurs, a pointer to an area to store the error
-+ *
-+ * Wrapper to call prepare_delete() class method if defined, otherwise
-+ * does nothing.
-  *
-- * Wrapper to call can_be_deleted() method if one of types it's inherited
-- * from implements USER_CREATABLE interface.
-+ * Returns: %true on success or if prepare_delete() is not defined,
-+ *          %false on failure.
-  */
--bool user_creatable_can_be_deleted(UserCreatable *uc);
-+bool user_creatable_prepare_delete(UserCreatable *uc, Error **errp);
- 
- /**
-  * user_creatable_add_qapi:
-diff --git a/include/system/event-loop-base.h b/include/system/event-loop-base.h
-index 130629e7f3..1e1e427ac7 100644
---- a/include/system/event-loop-base.h
-+++ b/include/system/event-loop-base.h
-@@ -24,7 +24,7 @@ struct EventLoopBaseClass {
- 
-     void (*init)(EventLoopBase *base, Error **errp);
-     void (*update_params)(EventLoopBase *base, Error **errp);
--    bool (*can_be_deleted)(EventLoopBase *base);
-+    bool (*prepare_delete)(EventLoopBase *base, Error **errp);
- };
- 
- struct EventLoopBase {
-diff --git a/net/can/can_core.c b/net/can/can_core.c
-index 77fe2b8ba4..8df9375167 100644
---- a/net/can/can_core.c
-+++ b/net/can/can_core.c
-@@ -143,8 +143,9 @@ int can_bus_client_set_filters(CanBusClientState *client,
- }
- 
- 
--static bool can_bus_can_be_deleted(UserCreatable *uc)
-+static bool can_bus_prepare_delete(UserCreatable *uc, Error **errp)
- {
-+    error_setg(errp, "Deleting can bus devices is not supported");
-     return false;
- }
- 
-@@ -153,7 +154,7 @@ static void can_bus_class_init(ObjectClass *klass,
- {
-     UserCreatableClass *uc_klass = USER_CREATABLE_CLASS(klass);
- 
--    uc_klass->can_be_deleted = can_bus_can_be_deleted;
-+    uc_klass->prepare_delete = can_bus_prepare_delete;
- }
- 
- static const TypeInfo can_bus_info = {
-diff --git a/qom/object_interfaces.c b/qom/object_interfaces.c
-index 7080f85f95..6faa0b2fd9 100644
---- a/qom/object_interfaces.c
-+++ b/qom/object_interfaces.c
-@@ -32,16 +32,15 @@ bool user_creatable_complete(UserCreatable *uc, Error **errp)
-     return !*errp;
- }
- 
--bool user_creatable_can_be_deleted(UserCreatable *uc)
-+bool user_creatable_prepare_delete(UserCreatable *uc, Error **errp)
- {
+-    monitor_data_init(&mon->parent_obj, false, false);
 -
-     UserCreatableClass *ucc = USER_CREATABLE_GET_CLASS(uc);
-+    ERRP_GUARD();
+     if (mon->use_readline) {
+         mon->rs = readline_init(monitor_readline_printf,
+                                 monitor_readline_flush,
+diff --git a/monitor/monitor-internal.h b/monitor/monitor-internal.h
+index d34f9be139..6a4c3b0f37 100644
+--- a/monitor/monitor-internal.h
++++ b/monitor/monitor-internal.h
+@@ -193,8 +193,7 @@ extern QemuMutex monitor_lock;
+ extern MonitorList mon_list;
  
--    if (ucc->can_be_deleted) {
--        return ucc->can_be_deleted(uc);
--    } else {
--        return true;
-+    if (ucc->prepare_delete) {
-+        ucc->prepare_delete(uc, errp);
-     }
-+    return !*errp;
+ void monitor_complete(Monitor *mon, Error **errp);
+-void monitor_data_init(Monitor *mon, bool is_qmp, bool use_io_thread);
+-void monitor_data_destroy(Monitor *mon);
++void monitor_iothread_init(Monitor *mon);
+ int monitor_can_read(void *opaque);
+ void monitor_list_append(Monitor *mon);
+ void monitor_fdsets_cleanup(void);
+diff --git a/monitor/monitor.c b/monitor/monitor.c
+index e3e5623a4b..76df379a2c 100644
+--- a/monitor/monitor.c
++++ b/monitor/monitor.c
+@@ -80,6 +80,10 @@ static void monitor_finalize(Object *obj)
+     Monitor *mon = MONITOR(obj);
+ 
+     g_free(mon->chardev_id);
++    g_free(mon->mon_cpu_path);
++    qemu_chr_fe_deinit(&mon->chr, false);
++    g_string_free(mon->outbuf, true);
++    qemu_mutex_destroy(&mon->mon_lock);
  }
  
- void user_creatable_add_qapi(ObjectOptions *options, Error **errp)
-@@ -253,8 +252,7 @@ bool user_creatable_del(const char *id, Error **errp)
-         return false;
-     }
+ static char *monitor_get_chardev_id(Object *obj, Error **errp)
+@@ -106,6 +110,11 @@ static void monitor_class_init(ObjectClass *cls, const void *data)
  
--    if (!user_creatable_can_be_deleted(USER_CREATABLE(obj))) {
--        error_setg(errp, "object '%s' is in use, can not be deleted", id);
-+    if (!user_creatable_prepare_delete(USER_CREATABLE(obj), errp)) {
-         return false;
-     }
- 
-diff --git a/tests/qemu-iotests/245 b/tests/qemu-iotests/245
-index f96610f510..e161bcfda9 100755
---- a/tests/qemu-iotests/245
-+++ b/tests/qemu-iotests/245
-@@ -801,7 +801,7 @@ class TestBlockdevReopen(iotests.QMPTestCase):
-         # Now group1 is in use, it cannot be deleted
-         result = self.vm.qmp('object-del', id = 'group1')
-         self.assert_qmp(result, 'error/class', 'GenericError')
--        self.assert_qmp(result, 'error/desc', "object 'group1' is in use, can not be deleted")
-+        self.assert_qmp(result, 'error/desc', "Throttle group still has multiple references")
- 
-         # Default options, this switches the group back to group0
-         self.reopen(opts)
-@@ -809,7 +809,7 @@ class TestBlockdevReopen(iotests.QMPTestCase):
-         # So now we cannot delete group0
-         result = self.vm.qmp('object-del', id = 'group0')
-         self.assert_qmp(result, 'error/class', 'GenericError')
--        self.assert_qmp(result, 'error/desc', "object 'group0' is in use, can not be deleted")
-+        self.assert_qmp(result, 'error/desc', "Throttle group still has multiple references")
- 
-         # But group1 is free this time, and it can be deleted
-         self.vm.cmd('object-del', id = 'group1')
-diff --git a/util/main-loop.c b/util/main-loop.c
-index ad8645c30a..67ee06c311 100644
---- a/util/main-loop.c
-+++ b/util/main-loop.c
-@@ -218,8 +218,9 @@ static void main_loop_init(EventLoopBase *base, Error **errp)
-     mloop = m;
- }
- 
--static bool main_loop_can_be_deleted(EventLoopBase *base)
-+static bool main_loop_prepare_delete(EventLoopBase *base, Error **errp)
+ static void monitor_init(Object *obj)
  {
-+    error_setg(errp, "Deleting main loop is not supported");
-     return false;
++    Monitor *mon = MONITOR(obj);
++
++    qemu_mutex_init(&mon->mon_lock);
++    mon->is_qmp = !!object_dynamic_cast(obj, TYPE_MONITOR_QMP);
++    mon->outbuf = g_string_new(NULL);
  }
  
-@@ -229,7 +230,7 @@ static void main_loop_class_init(ObjectClass *oc, const void *class_data)
+ Monitor *monitor_cur(void)
+@@ -637,38 +646,16 @@ void monitor_list_append(Monitor *mon)
+     qemu_mutex_unlock(&monitor_lock);
  
-     bc->init = main_loop_init;
-     bc->update_params = main_loop_update_params;
--    bc->can_be_deleted = main_loop_can_be_deleted;
-+    bc->prepare_delete = main_loop_prepare_delete;
+     if (mon) {
+-        monitor_data_destroy(mon);
+         object_unparent(OBJECT(mon));
+     }
  }
  
- static const TypeInfo main_loop_info = {
+-static void monitor_iothread_init(void)
+-{
+-    mon_iothread = iothread_create("mon_iothread", &error_abort);
+-}
+-
+-void monitor_data_init(Monitor *mon, bool is_qmp, bool use_io_thread)
++void monitor_iothread_init(Monitor *mon)
+ {
+-    if (use_io_thread && !mon_iothread) {
+-        monitor_iothread_init();
++    if (!mon_iothread) {
++        mon_iothread = iothread_create("mon_iothread", &error_abort);
+     }
+-    qemu_mutex_init(&mon->mon_lock);
+-    mon->is_qmp = is_qmp;
+-    mon->outbuf = g_string_new(NULL);
+-    mon->use_io_thread = use_io_thread;
+-}
+-
+-void monitor_data_destroy(Monitor *mon)
+-{
+-    g_free(mon->mon_cpu_path);
+-    qemu_chr_fe_deinit(&mon->chr, false);
+-    if (monitor_is_qmp(mon)) {
+-        monitor_data_destroy_qmp(container_of(mon, MonitorQMP, parent_obj));
+-    } else {
+-        readline_free(container_of(mon, MonitorHMP, parent_obj)->rs);
+-    }
+-    g_string_free(mon->outbuf, true);
+-    qemu_mutex_destroy(&mon->mon_lock);
++    mon->use_io_thread = true;
+ }
+ 
+ void monitor_cleanup(void)
+@@ -686,7 +673,7 @@ void monitor_cleanup(void)
+      * Letting the iothread continue while shutting down the dispatcher
+      * means that new requests may still be coming in. This is okay,
+      * we'll just leave them in the queue without sending a response
+-     * and monitor_data_destroy() will free them.
++     * and object finalization will free them.
+      */
+     WITH_QEMU_LOCK_GUARD(&monitor_lock) {
+         qmp_dispatcher_co_shutdown = true;
+@@ -700,8 +687,8 @@ void monitor_cleanup(void)
+     /*
+      * We need to explicitly stop the I/O thread (but not destroy it),
+      * clean up the monitor resources, then destroy the I/O thread since
+-     * we need to unregister from chardev below in
+-     * monitor_data_destroy(), and chardev is not thread-safe yet
++     * we need to unregister from chardev below in object
++     * finalization, and chardev is not thread-safe yet
+      */
+     if (mon_iothread) {
+         iothread_stop(mon_iothread);
+@@ -716,7 +703,6 @@ void monitor_cleanup(void)
+         /* Permit QAPI event emission from character frontend release */
+         qemu_mutex_unlock(&monitor_lock);
+         monitor_flush(mon);
+-        monitor_data_destroy(mon);
+         qemu_mutex_lock(&monitor_lock);
+         object_unparent(OBJECT(mon));
+     }
+diff --git a/monitor/qmp-cmds.c b/monitor/qmp-cmds.c
+index 0d9adad288..6cb0b587fb 100644
+--- a/monitor/qmp-cmds.c
++++ b/monitor/qmp-cmds.c
+@@ -168,8 +168,6 @@ char *qmp_human_monitor_command(const char *command_line, bool has_cpu_index,
+     char *output = NULL;
+     MonitorHMP *hmp = MONITOR_HMP(object_new(TYPE_MONITOR_HMP));
+ 
+-    monitor_data_init(&hmp->parent_obj, false, false);
+-
+     if (has_cpu_index) {
+         int ret = monitor_set_cpu(&hmp->parent_obj, cpu_index);
+         if (ret < 0) {
+@@ -186,7 +184,6 @@ char *qmp_human_monitor_command(const char *command_line, bool has_cpu_index,
+     }
+ 
+ out:
+-    monitor_data_destroy(&hmp->parent_obj);
+     object_unref(hmp);
+     return output;
+ }
+diff --git a/monitor/qmp.c b/monitor/qmp.c
+index e3318b57db..694d303215 100644
+--- a/monitor/qmp.c
++++ b/monitor/qmp.c
+@@ -73,8 +73,16 @@ QmpCommandList qmp_commands, qmp_cap_negotiation_commands;
+ 
+ OBJECT_DEFINE_TYPE(MonitorQMP, monitor_qmp, MONITOR_QMP, MONITOR);
+ 
++static void monitor_qmp_cleanup_req_queue_locked(MonitorQMP *mon);
++
+ static void monitor_qmp_finalize(Object *obj)
+ {
++    MonitorQMP *mon = MONITOR_QMP(obj);
++
++    json_message_parser_destroy(&mon->parser);
++    qemu_mutex_destroy(&mon->qmp_queue_lock);
++    monitor_qmp_cleanup_req_queue_locked(mon);
++    g_queue_free(mon->qmp_requests);
+ }
+ 
+ static bool monitor_qmp_get_pretty(Object *obj, Error **errp)
+@@ -98,8 +106,15 @@ static void monitor_qmp_class_init(ObjectClass *cls, const void *data)
+                                    monitor_qmp_set_pretty);
+ }
+ 
++static void handle_qmp_command(void *opaque, QObject *req, Error *err);
+ static void monitor_qmp_init(Object *obj)
+ {
++    MonitorQMP *mon = MONITOR_QMP(obj);
++
++    qemu_mutex_init(&mon->qmp_queue_lock);
++    mon->qmp_requests = g_queue_new();
++
++    json_message_parser_init(&mon->parser, handle_qmp_command, mon, NULL);
+ }
+ 
+ static bool qmp_oob_enabled(MonitorQMP *mon)
+@@ -522,14 +537,6 @@ static void monitor_qmp_event(void *opaque, QEMUChrEvent event)
+     }
+ }
+ 
+-void monitor_data_destroy_qmp(MonitorQMP *mon)
+-{
+-    json_message_parser_destroy(&mon->parser);
+-    qemu_mutex_destroy(&mon->qmp_queue_lock);
+-    monitor_qmp_cleanup_req_queue_locked(mon);
+-    g_queue_free(mon->qmp_requests);
+-}
+-
+ static void monitor_qmp_setup_handlers_bh(void *opaque)
+ {
+     MonitorQMP *mon = opaque;
+@@ -572,14 +579,11 @@ void monitor_new_qmp(const char *chardev_id, bool pretty, Error **errp)
+     qemu_chr_fe_set_echo(&mon->parent_obj.chr, true);
+ 
+     /* Note: we run QMP monitor in I/O thread when @chr supports that */
+-    monitor_data_init(&mon->parent_obj, true,
+-                      qemu_chr_has_feature(mon->parent_obj.chr.chr,
+-                                           QEMU_CHAR_FEATURE_GCONTEXT));
+-
+-    qemu_mutex_init(&mon->qmp_queue_lock);
+-    mon->qmp_requests = g_queue_new();
++    if (qemu_chr_has_feature(mon->parent_obj.chr.chr,
++                             QEMU_CHAR_FEATURE_GCONTEXT)) {
++        monitor_iothread_init(&mon->parent_obj);
++    }
+ 
+-    json_message_parser_init(&mon->parser, handle_qmp_command, mon, NULL);
+     if (mon->parent_obj.use_io_thread) {
+         /*
+          * Make sure the old iowatch is gone.  It's possible when
 -- 
 2.54.0
 
