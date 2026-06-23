@@ -4,66 +4,160 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7FFFACD98F2
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jun 2026 11:25:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F11DCDB46F
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jun 2026 11:28:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wbzFO-0004xw-Bo; Tue, 23 Jun 2026 07:24:55 -0400
+	id 1wbzIJ-0005j0-EC; Tue, 23 Jun 2026 07:27:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wbzFL-0004xO-F0
- for qemu-devel@nongnu.org; Tue, 23 Jun 2026 07:24:51 -0400
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wbzIG-0005ih-Hp
+ for qemu-devel@nongnu.org; Tue, 23 Jun 2026 07:27:52 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wbzFI-0002ux-4L
- for qemu-devel@nongnu.org; Tue, 23 Jun 2026 07:24:51 -0400
-Received: from [133.11.54.183] (h183.csg.ci.i.u-tokyo.ac.jp [133.11.54.183])
- (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 65NBOWtp055976
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Tue, 23 Jun 2026 20:24:32 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=ja/009n3rniU+3gaRmKJkeboOvHS+9DQc8TfVdAQb0s=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=From:Message-ID:To:Subject:Date;
- s=rs20250326; t=1782213872; v=1;
- b=mnuAOkc3mvu1jSQ9GkT9jHLtDHCYKpF0zfge2d//upsJXNgJDf5aXwBuNnae9/ja
- kqhYFNyz1Ff6J2tHURVAiE7QzO5Ru7FHKnEZKgBNncy/rHoei4cyT4qDM/KU4OR8
- EWpcrxbI+c2JSU99/G05BSUah8uJVltnRAXtcFj93iY2id5MKRQi78d9iUARMbAa
- zeJqOUFzPhnsHre19htNasiCkFaPri9Q97bzgSdw8D83jyndKjnkA/Hkcr2P7Kan
- HHgQTARGJ7VofdlbmYcrVed4PtswjC0syHI04RT/byvjANXZ94Q3nAmQ4jSeIP4g
- hB4qKIUmQrex6YPtwkH8vw==
-Message-ID: <9844a593-5708-4eb4-8582-8400d68f318f@rsg.ci.i.u-tokyo.ac.jp>
-Date: Tue, 23 Jun 2026 20:24:31 +0900
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wbzIE-0003pd-Oc
+ for qemu-devel@nongnu.org; Tue, 23 Jun 2026 07:27:52 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1782214069;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=1B55lBwuXfx3+Y5RwrRALsHBWOQX92axApRUVhiSmm4=;
+ b=PWg4NYjzpmtIWTCS3m1xDfehgtZtjBML3u90pmkP/8lVJW9S0WIuirvih2fBdBVThUihGZ
+ vFx4HkpBqjDg/f5QGfLAXze6Eey7ref5vmEwrf4LLNON/oaqUhSKi/shLgexsfaeE/J4xK
+ AC69b1l+IrYD1TjmDJTYZrybaWbr3gQ=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-61-vVEWxBj0M2G3kE38lvicpg-1; Tue, 23 Jun 2026 07:27:47 -0400
+X-MC-Unique: vVEWxBj0M2G3kE38lvicpg-1
+X-Mimecast-MFC-AGG-ID: vVEWxBj0M2G3kE38lvicpg_1782214067
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-49221de4ed4so36970735e9.0
+ for <qemu-devel@nongnu.org>; Tue, 23 Jun 2026 04:27:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1782214066; x=1782818866; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+ bh=1B55lBwuXfx3+Y5RwrRALsHBWOQX92axApRUVhiSmm4=;
+ b=P+n90CzseiL5x7q2rkWb69prYCzjz7iGTskXeNSHgwSwl/ekBx2ilVnZWyD7m+kev0
+ OSXuVZTNOlpH04iyMQ31jSmqg9t+Pr1fAU9OE4nMQ+SdSTVQ2+ib1Y6gFJ6CSH3BTwdn
+ BjAdInhwgLr4PXiJQEx1VrhVX//3xfMGpyNDNPivnpC/XTgejXiv2FuSaQvde02fkn8g
+ vR0e5MOOt9jogra8TnEU5JGHIEhtKiEotYjkjzVMBBDENKmPPTpJzU447fWwiGx4Vnyx
+ EmaAhx9gMyW7jkIzpBdEHmGXfb/aIP9ky5HL1Zj01GZChclQCJEddmr/PG3501fw2gwY
+ iukw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1782214066; x=1782818866;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=1B55lBwuXfx3+Y5RwrRALsHBWOQX92axApRUVhiSmm4=;
+ b=IgNm2GDZViiuw6dOrCCIiCHxZSVIGQ+01Pj/NQdpy2ggNodFTKAnfCN/k2Zkuhl3fa
+ C6DXPuiuHgXT0p16cF0TvcurOrX9tNgF15HXROh+TAk/KxrZsX72QktCjVaNOMNtIM14
+ fKEwugEGiXtzvTrY/hFrUtvwhiUJliPQQbCVFHr/dqQTOYs0e0DUeU40Su3pmqL/ICqx
+ IMTqzmicqAJYbZ3jfRdY+DxKZW+mLXJ7xUZBRDgkBQvTXiQY1EwXKN0+0zhinu1OUiG4
+ uDoUBDDLGs8vqPl7NlfdxAinXKjhimOB9jDuuS2mtI2alz0C4nvJgBpt1tOri7Xxmup8
+ ZTUQ==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ9+JfOg//Tf5ohndsx0AXS0Sgltlv2v4OCg7igNxZDLn9O8HBFYWpAisH5yJ3Nar3NJg+D59u1Xg7cf@nongnu.org
+X-Gm-Message-State: AOJu0YxmFCSgg8/uiE7+5rHLM9r0KrnD/+K88sPinAVsejUlCeqeDD8q
+ 2uqaMCcYTaGhUSLWK2xe5PIRDpF/TqPR5yaQWjaCCk+7AIyam+M/wxmQ2qc2CTOSa3BodEZAIZb
+ do2mJiGjRdlOkg6sEhTQFd7gcWDL/Xen4guVL0X4fxq+tDbNiSrKWJ2Yb
+X-Gm-Gg: AfdE7cm+Bv0soesTTmQb8Jxpb7VSzSYUGka1KEusfJ5FGnTb3AeCvp7fXpSClnG1NMO
+ Hv8XWNKAb310wNaJJzmIEFugAu7Tf3xuwVaWzEiWIhJfJmMvrosfQXyiuxOGP8xQ1jJT9rwz9Y5
+ dm5UW1voU2aHJIyk1yAitl10EYTcDDDz8qPahjIttLqN4dq06eJd+GeoPcpKbWlSRkr0+rUV/bJ
+ CDgC3Ak2TtQ1Z/dXxJjIUPI1TS8jgUXBba4EvHlLAt75+g+2txx4kTIbjNtbTIZld1YeLyt+Eo7
+ GuLPeVERSY7kVP5n1H3uuDPnkhrU9H6Bwl4sQFp55n2DPK6pBaQ88FM+kvOOpO63We5qYUAIKzb
+ V1L52w0wNz24H1DhbhkCYhRnG4Do+JGC7/KAo9AwmZ6rLqISCfivgOmA=
+X-Received: by 2002:a05:600c:c058:b0:492:37e2:43f6 with SMTP id
+ 5b1f17b1804b1-49240e81bbfmr229338605e9.19.1782214066578; 
+ Tue, 23 Jun 2026 04:27:46 -0700 (PDT)
+X-Received: by 2002:a05:600c:c058:b0:492:37e2:43f6 with SMTP id
+ 5b1f17b1804b1-49240e81bbfmr229338065e9.19.1782214066101; 
+ Tue, 23 Jun 2026 04:27:46 -0700 (PDT)
+Received: from ?IPV6:2a01:cb19:8426:ae00:2b21:b1ac:81f4:97b6?
+ ([2a01:cb19:8426:ae00:2b21:b1ac:81f4:97b6])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-46666c579d4sm36173630f8f.28.2026.06.23.04.27.44
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 23 Jun 2026 04:27:45 -0700 (PDT)
+Message-ID: <a0964032-3dd3-4e80-8f87-d9bd1ef537df@redhat.com>
+Date: Tue, 23 Jun 2026 13:27:43 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 5/7] igb: Implement TRL throttling and timer resumption
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Josh Hilke <jrhilke@google.com>, qemu-devel@nongnu.org
-Cc: Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
- Jason Wang <jasowang@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- David Matlack <dmatlack@google.com>,
- Alex Williamson <alex.williamson@nvidia.com>
-References: <20260622-igb-trl-v7-0-abb960e767ac@google.com>
- <20260622-igb-trl-v7-5-abb960e767ac@google.com>
- <a1b8cd61-95d4-43ea-88db-8a9cdeba46de@oss.qualcomm.com>
-Content-Language: en-US
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <a1b8cd61-95d4-43ea-88db-8a9cdeba46de@oss.qualcomm.com>
+Subject: Re: [PATCH v4 06/34] docs: add mdpy mdev vfio display testing guide
+To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
+ Alex Williamson <alex@shazbot.org>, Peter Maydell
+ <peter.maydell@linaro.org>, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+References: <20260623-b4-ui-v4-0-4656aec3398d@redhat.com>
+ <20260623-b4-ui-v4-6-4656aec3398d@redhat.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Autocrypt: addr=clg@redhat.com; keydata=
+ xsFNBFu8o3UBEADP+oJVJaWm5vzZa/iLgpBAuzxSmNYhURZH+guITvSySk30YWfLYGBWQgeo
+ 8NzNXBY3cH7JX3/a0jzmhDc0U61qFxVgrPqs1PQOjp7yRSFuDAnjtRqNvWkvlnRWLFq4+U5t
+ yzYe4SFMjFb6Oc0xkQmaK2flmiJNnnxPttYwKBPd98WfXMmjwAv7QfwW+OL3VlTPADgzkcqj
+ 53bfZ4VblAQrq6Ctbtu7JuUGAxSIL3XqeQlAwwLTfFGrmpY7MroE7n9Rl+hy/kuIrb/TO8n0
+ ZxYXvvhT7OmRKvbYuc5Jze6o7op/bJHlufY+AquYQ4dPxjPPVUT/DLiUYJ3oVBWFYNbzfOrV
+ RxEwNuRbycttMiZWxgflsQoHF06q/2l4ttS3zsV4TDZudMq0TbCH/uJFPFsbHUN91qwwaN/+
+ gy1j7o6aWMz+Ib3O9dK2M/j/O/Ube95mdCqN4N/uSnDlca3YDEWrV9jO1mUS/ndOkjxa34ia
+ 70FjwiSQAsyIwqbRO3CGmiOJqDa9qNvd2TJgAaS2WCw/TlBALjVQ7AyoPEoBPj31K74Wc4GS
+ Rm+FSch32ei61yFu6ACdZ12i5Edt+To+hkElzjt6db/UgRUeKfzlMB7PodK7o8NBD8outJGS
+ tsL2GRX24QvvBuusJdMiLGpNz3uqyqwzC5w0Fd34E6G94806fwARAQABzSJDw6lkcmljIExl
+ IEdvYXRlciA8Y2xnQHJlZGhhdC5jb20+wsGRBBMBCAA7FiEEoPZlSPBIlev+awtgUaNDx8/7
+ 7KEFAmTLlVECGwMFCwkIBwICIgIGFQoJCAsCBBYCAwECHgcCF4AACgkQUaNDx8/77KG0eg//
+ S0zIzTcxkrwJ/9XgdcvVTnXLVF9V4/tZPfB7sCp8rpDCEseU6O0TkOVFoGWM39sEMiQBSvyY
+ lHrP7p7E/JYQNNLh441MfaX8RJ5Ul3btluLapm8oHp/vbHKV2IhLcpNCfAqaQKdfk8yazYhh
+ EdxTBlzxPcu+78uE5fF4wusmtutK0JG0sAgq0mHFZX7qKG6LIbdLdaQalZ8CCFMKUhLptW71
+ xe+aNrn7hScBoOj2kTDRgf9CE7svmjGToJzUxgeh9mIkxAxTu7XU+8lmL28j2L5uNuDOq9vl
+ hM30OT+pfHmyPLtLK8+GXfFDxjea5hZLF+2yolE/ATQFt9AmOmXC+YayrcO2ZvdnKExZS1o8
+ VUKpZgRnkwMUUReaF/mTauRQGLuS4lDcI4DrARPyLGNbvYlpmJWnGRWCDguQ/LBPpbG7djoy
+ k3NlvoeA757c4DgCzggViqLm0Bae320qEc6z9o0X0ePqSU2f7vcuWN49Uhox5kM5L86DzjEQ
+ RHXndoJkeL8LmHx8DM+kx4aZt0zVfCHwmKTkSTQoAQakLpLte7tWXIio9ZKhUGPv/eHxXEoS
+ 0rOOAZ6np1U/xNR82QbF9qr9TrTVI3GtVe7Vxmff+qoSAxJiZQCo5kt0YlWwti2fFI4xvkOi
+ V7lyhOA3+/3oRKpZYQ86Frlo61HU3r6d9wzOwU0EW7yjdQEQALyDNNMw/08/fsyWEWjfqVhW
+ pOOrX2h+z4q0lOHkjxi/FRIRLfXeZjFfNQNLSoL8j1y2rQOs1j1g+NV3K5hrZYYcMs0xhmrZ
+ KXAHjjDx7FW3sG3jcGjFW5Xk4olTrZwFsZVUcP8XZlArLmkAX3UyrrXEWPSBJCXxDIW1hzwp
+ bV/nVbo/K9XBptT/wPd+RPiOTIIRptjypGY+S23HYBDND3mtfTz/uY0Jytaio9GETj+fFis6
+ TxFjjbZNUxKpwftu/4RimZ7qL+uM1rG1lLWc9SPtFxRQ8uLvLOUFB1AqHixBcx7LIXSKZEFU
+ CSLB2AE4wXQkJbApye48qnZ09zc929df5gU6hjgqV9Gk1rIfHxvTsYltA1jWalySEScmr0iS
+ YBZjw8Nbd7SxeomAxzBv2l1Fk8fPzR7M616dtb3Z3HLjyvwAwxtfGD7VnvINPbzyibbe9c6g
+ LxYCr23c2Ry0UfFXh6UKD83d5ybqnXrEJ5n/t1+TLGCYGzF2erVYGkQrReJe8Mld3iGVldB7
+ JhuAU1+d88NS3aBpNF6TbGXqlXGF6Yua6n1cOY2Yb4lO/mDKgjXd3aviqlwVlodC8AwI0Sdu
+ jWryzL5/AGEU2sIDQCHuv1QgzmKwhE58d475KdVX/3Vt5I9kTXpvEpfW18TjlFkdHGESM/Jx
+ IqVsqvhAJkalABEBAAHCwV8EGAECAAkFAlu8o3UCGwwACgkQUaNDx8/77KEhwg//WqVopd5k
+ 8hQb9VVdk6RQOCTfo6wHhEqgjbXQGlaxKHoXywEQBi8eULbeMQf5l4+tHJWBxswQ93IHBQjK
+ yKyNr4FXseUI5O20XVNYDJZUrhA4yn0e/Af0IX25d94HXQ5sMTWr1qlSK6Zu79lbH3R57w9j
+ hQm9emQEp785ui3A5U2Lqp6nWYWXz0eUZ0Tad2zC71Gg9VazU9MXyWn749s0nXbVLcLS0yop
+ s302Gf3ZmtgfXTX/W+M25hiVRRKCH88yr6it+OMJBUndQVAA/fE9hYom6t/zqA248j0QAV/p
+ LHH3hSirE1mv+7jpQnhMvatrwUpeXrOiEw1nHzWCqOJUZ4SY+HmGFW0YirWV2mYKoaGO2YBU
+ wYF7O9TI3GEEgRMBIRT98fHa0NPwtlTktVISl73LpgVscdW8yg9Gc82oe8FzU1uHjU8b10lU
+ XOMHpqDDEV9//r4ZhkKZ9C4O+YZcTFu+mvAY3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfA
+ HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
+ izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
+ uVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <20260623-b4-ui-v4-6-4656aec3398d@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -79,161 +173,133 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026/06/23 17:58, Philippe Mathieu-Daudé wrote:
-> On 22/6/26 21:05, Josh Hilke wrote:
->> Integrate throttling logic into the transmission path. In
->> `igb_start_xmit`, check if the queue is currently throttled.  Accumulate
->> bytes sent, calculate the transmission delay based on the configured
->> target rate, and if a throttle is triggered, set the virtual timer, mark
->> the queue as throttled, and defer remaining packets.  Implement the
->> timer callback to clear the throttled state and resume transmission when
->> the timer expires.
->>
->> Signed-off-by: Josh Hilke <jrhilke@google.com>
->> ---
->>   hw/net/igb_core.c | 66 +++++++++++++++++++++++++++++++++++++++++++++ 
->> +++++++---
->>   1 file changed, 63 insertions(+), 3 deletions(-)
->>
->> diff --git a/hw/net/igb_core.c b/hw/net/igb_core.c
->> index 9a8ef15..e158837 100644
->> --- a/hw/net/igb_core.c
->> +++ b/hw/net/igb_core.c
->> @@ -97,6 +97,7 @@ igb_receive_internal(IGBCore *core, const struct 
->> iovec *iov, int iovcnt,
->>   static void igb_raise_interrupts(IGBCore *core, size_t index, 
->> uint32_t causes);
->>   static void igb_reset(IGBCore *core, bool sw);
->> +
-> 
-> Hmm?
-> 
->>   static inline void
->>   igb_raise_legacy_irq(IGBCore *core)
->>   {
->> @@ -875,6 +876,48 @@ igb_tx_enabled(IGBCore *core, const 
->> E1000ERingInfo *txi)
->>           (core->mac[TXDCTL0 + (qn * 16)] & E1000_TXDCTL_QUEUE_ENABLE);
->>   }
->> +static uint64_t igb_trl_calculate_delay(const IGBTrlQueue *q, size_t 
->> bytes_sent)
->> +{
->> +    uint32_t divisor;
->> +    uint32_t rf;
->> +
->> +    if (!igb_trl_enabled(q)) {
->> +        return 0;
->> +    }
->> +
->> +    /*
->> +     * 7.8 Transmit Rate Limiting (TRL)
->> +     *
->> +     * > RF = 1Gb/s / Target-Rate (Rate Factor) is the ratio between the
->> +     * > nominal link rate and the target maximum rate to achieve for
->> +     * > that rate controlled queue. It is a decimal number ranging from
->> +     * > 1 to 1,000 (1 Mb/s minimum target rate) at least 10-bits before
->> +     * > the hexadecimal point and 14-bits after, as required for the
->> +     * > maximum PL by which it is multiplied.
->> +     *
->> +     * The TRLRC register stores the RF in 10.14 fixed-point format:
->> +     * - Bits 13:0: Fractional part
->> +     * - Bits 23:14: Integer part
->> +     *
->> +     * Combined, the lower 24 bits of the register (23:0) represent the
->> +     * RF directly.
->> +     */
->> +    rf = MAX(extract32(q->trlrc, 0, 24), 1 << 14);
->> +
->> +    /*
->> +     * Delay = PL (Packet Length) / Target-Rate
->> +     *       = PL / (1Gb/s / RF)
->> +     *       = PL * RF / 1Gb/s
->> +     *       = PL * RF / (1G / b/B / ns/s) B/ns
->> +     *       = (bytes_sent * (RF_scaled / 2^14) / (1G / b/B / ns/s)) ns
->> +     *       = (bytes_sent * RF_scaled / (1G / b/B * 2^14 / ns/s)) ns
+On 6/23/26 09:44, Marc-André Lureau wrote:
+> Document how to test VFIO display hotplug using the kernel mdpy mdev
+> sample.
 
-s/RF_scaled/RF/g since RF is defined as including 14-bits after the 
-point, as quoted above. (i.e., RF is already defined as "scaled".)
 
-Regards,
-Akihiko Odaki
 
->> +     */
->> +    divisor = ((1000000000ULL / BITS_PER_BYTE) << 14) /
->> +              NANOSECONDS_PER_SECOND;
->> +
->> +    return (uint64_t)bytes_sent * rf / divisor;
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+
+Thanks,
+
+C.
+
+
+> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+> ---
+>   docs/devel/index-internals.rst |  1 +
+>   docs/devel/vfio-mdpy.rst       | 90 ++++++++++++++++++++++++++++++++++++++++++
+>   2 files changed, 91 insertions(+)
 > 
-> Any reason for not using muldiv64()?
-> 
->> +}
->> +
->>   static void
->>   igb_start_xmit(IGBCore *core, const IGB_TxRing *txr)
->>   {
->> @@ -883,12 +926,19 @@ igb_start_xmit(IGBCore *core, const IGB_TxRing 
->> *txr)
->>       union e1000_adv_tx_desc desc;
->>       const E1000ERingInfo *txi = txr->i;
->>       uint32_t eic = 0;
->> +    size_t bytes_sent = 0;
->> +    uint64_t delay_ns;
->>       if (!igb_tx_enabled(core, txi)) {
->>           trace_e1000e_tx_disabled();
->>           return;
->>       }
->> +    if (igb_trl_enabled(&core->trl[txi->idx]) &&
->> +        timer_pending(core->trl[txi->idx].timer)) {
->> +        return;
->> +    }
->> +
->>       d = pcie_sriov_get_vf_at_index(core->owner, txi->idx % 8);
->>       if (!d) {
->>           d = core->owner;
->> @@ -902,9 +952,16 @@ igb_start_xmit(IGBCore *core, const IGB_TxRing *txr)
->>           trace_e1000e_tx_descr((void *)(intptr_t)desc.read.buffer_addr,
->>                                 desc.read.cmd_type_len, desc.wb.status);
->> -        igb_process_tx_desc(core, d, txr->tx, &desc, txi->idx);
->> +        bytes_sent += igb_process_tx_desc(core, d, txr->tx, &desc, 
->> txi->idx);
->>           igb_ring_advance(core, txi, 1);
->>           eic |= igb_txdesc_writeback(core, base, &desc, txi);
->> +
->> +        delay_ns = igb_trl_calculate_delay(&core->trl[txi->idx], 
->> bytes_sent);
->> +        if (delay_ns > 0) {
->> +            timer_mod(core->trl[txi->idx].timer,
->> +                      qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) + delay_ns);
->> +            break;
->> +        }
->>       }
->>       if (eic) {
->> @@ -4321,7 +4378,6 @@ igb_autoneg_resume(IGBCore *core)
->>                     qemu_clock_get_ms(QEMU_CLOCK_VIRTUAL) + 500);
->>       }
->>   }
->> -
-> 
-> Hmm?
-> 
->>   bool igb_trl_enabled(const IGBTrlQueue *q)
->>   {
->>       return q->trlrc & E1000_TRLRC_RS_ENA;
->> @@ -4329,7 +4385,11 @@ bool igb_trl_enabled(const IGBTrlQueue *q)
->>   static void igb_trl_timer_cb(void *opaque)
->>   {
->> -    /* Stub */
->> +    IGBTrlQueue *trl = opaque;
->> +    IGB_TxRing txr;
->> +
->> +    igb_tx_ring_init(trl->core, &txr, trl->qidx);
->> +    igb_start_xmit(trl->core, &txr);
->>   }
->>   static void igb_trl_init(IGBCore *core)
->>
-> 
-> Modulo muldiv:
-> Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+> diff --git a/docs/devel/index-internals.rst b/docs/devel/index-internals.rst
+> index 7a0678cbdd3..198f155247a 100644
+> --- a/docs/devel/index-internals.rst
+> +++ b/docs/devel/index-internals.rst
+> @@ -22,6 +22,7 @@ Details about QEMU's various subsystems including how to add features to them.
+>      tracing
+>      uefi-vars
+>      vfio-iommufd
+> +   vfio-mdpy
+>      writing-monitor-commands
+>      virtio-backends
+>      crypto
+> diff --git a/docs/devel/vfio-mdpy.rst b/docs/devel/vfio-mdpy.rst
+> new file mode 100644
+> index 00000000000..7875d00d1e0
+> --- /dev/null
+> +++ b/docs/devel/vfio-mdpy.rst
+> @@ -0,0 +1,90 @@
+> +.. SPDX-License-Identifier: GPL-2.0-or-later
+> +
+> +===================================
+> +Testing VFIO display with mdev mdpy
+> +===================================
+> +
+> +.. contents:: Table of Contents
+> +
+> +The kernel provides a sample mediated device driver, ``mdpy``
+> +(``samples/vfio-mdev/mdpy.c``), that exposes a fake framebuffer through the VFIO
+> +display region interface. It can be used to test VFIO display support, including
+> +hotplug, without any real GPU hardware.
+> +
+> +The kernel modules
+> +==================
+> +
+> +The ``mdpy`` driver depends on the ``mdev`` subsystem. Enable, build and load
+> +the modules.
+> +
+> +The minimal set is::
+> +
+> +    CONFIG_SAMPLE_VFIO_MDEV_MDPY=m
+> +    CONFIG_SAMPLE_VFIO_MDEV_MDPY_FB=m   # guest framebuffer driver
+> +
+> +CONFIG_VFIO_MDEV is selected automatically.
+> +
+> +Verify that the driver registered successfully:
+> +
+> +.. code-block:: bash
+> +
+> +    ls /sys/devices/virtual/mdpy/mdpy/mdev_supported_types/
+> +
+> +Creating an mdev instance
+> +=========================
+> +
+> +Available types correspond to different resolutions (e.g. ``mdpy-vga``
+> +for 640x480, ``mdpy-xga`` for 1024x768, ``mdpy-hd`` for 1920x1080).
+> +
+> +Each mdev instance is identified by a UUID:
+> +
+> +.. code-block:: bash
+> +
+> +    uuid=$(uuidgen)
+> +    echo "$uuid" > /sys/devices/virtual/mdpy/mdpy/mdev_supported_types/mdpy-xga/create
+> +
+> +To remove the instance later:
+> +
+> +.. code-block:: bash
+> +
+> +    echo 1 > /sys/bus/mdev/devices/$uuid/remove
+> +
+> +Make sure your user has the necessary permissions to access the vfio group.
+> +(ex: chmod 666 /dev/vfio/16)
+> +
+> +Starting QEMU
+> +=============
+> +
+> +Boot-time attachment
+> +--------------------
+> +
+> +.. code-block:: bash
+> +
+> +    qemu-system-x86_64 -machine q35 -m 1G \
+> +        -device vfio-pci,sysfsdev=/sys/bus/mdev/devices/$uuid,display=on \
+> +        -display gtk,gl=on
+> +
+> +Hotplug via HMP
+> +---------------
+> +
+> +Start QEMU with a PCIe root port (required for PCIe hotplug) and a
+> +monitor:
+> +
+> +.. code-block:: bash
+> +
+> +    qemu-system-x86_64 -machine q35 -m 1G \
+> +        -device pcie-root-port,id=rp0,slot=1 \
+> +        -display gtk,gl=on \
+> +        -monitor stdio
+> +
+> +Then at the ``(qemu)`` prompt:
+> +
+> +.. code-block:: none
+> +
+> +    device_add vfio-pci,sysfsdev=/sys/bus/mdev/devices/<uuid>,display=on,bus=rp0,id=mdpy0
+> +
+> +To hot-unplug:
+> +
+> +.. code-block:: none
+> +
+> +    device_del mdpy0
 > 
 
 
