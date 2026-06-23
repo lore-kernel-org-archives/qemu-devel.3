@@ -4,91 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01C76CDB466
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jun 2026 00:25:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E754CDB466
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jun 2026 00:26:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wbow3-00085a-NQ; Mon, 22 Jun 2026 20:24:15 -0400
+	id 1wboxg-0000Kv-T6; Mon, 22 Jun 2026 20:25:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stephensportia@gmail.com>)
- id 1wbnOk-0001PU-N3
- for qemu-devel@nongnu.org; Mon, 22 Jun 2026 18:45:46 -0400
-Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <stephensportia@gmail.com>)
- id 1wbnOi-0004Wb-Ft
- for qemu-devel@nongnu.org; Mon, 22 Jun 2026 18:45:46 -0400
-Received: by mail-pl1-x634.google.com with SMTP id
- d9443c01a7336-2c0b9328c4aso35298635ad.0
- for <qemu-devel@nongnu.org>; Mon, 22 Jun 2026 15:45:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1782168342; x=1782773142; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=D3P9AYrpA4BY1vKyeayV+CK886D88ViD7/xJCKcwZO0=;
- b=U5gWNMapJ2uaM/a/pFts6cC1X1J2/RVrnb2VIQQNvpveC2vKwoyZZvBaPbDbr274A4
- EY/Wk5lqGYIy6D/q7criIT98SP71m1CaXDoiEusX/tLiL265S/TY6UQweUaf5poYSRn5
- /ENe4y1bX8BBpJJTUhGu/5U7DBMtjEkl90ldGGde6CQapfOBcqe4Q6TllE2KazcsGKI7
- rIm9eMMeIjsVk1Xc55PaxNjwqcVr1CMQTQdokd6/9RW6fAJ4nm942xZ3IKt+/qHU3fhB
- 7Gu569bw/iDblK6s/cmys9ov+Xc9tXj01mdehiDLLDT/r4Vdn8qOpxiCTQ105ChNSkqC
- WyOQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782168342; x=1782773142;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=D3P9AYrpA4BY1vKyeayV+CK886D88ViD7/xJCKcwZO0=;
- b=iPxUxZMgx6bo9FmSoYTkFvZh4i0XQNlAIqIbj7eqrRc124QZLK7BZFj7udX95Mfmfo
- MVg7gJqVwdoxsbzmKm25qFweOvVWNSYsiqTWYu0YCpMjjCjSUKntHDusk/q4XljCX3I2
- U2kjYW79Vd0itF1ZwSmiUt9CeaLYCUgpJeSwMzsKC5+bWHHbaJ9VlRPXQQhkaSjJsfce
- VesnRL5XvGs5y8pVHwlqfVyDvePQ76uGpBFSsJGl3sLOGibOr1dYdHwnBc2ANeEU1hF1
- 71CahTAChXK+fxT7+kqGzHC9+yoHuDQBj1WSDPJoRSNG10wtUJTaWsWOa48gL+E5Dado
- AN5g==
-X-Gm-Message-State: AOJu0YxpLquP0smVo7mY42/KtMpFBO2DL5x7/yRshgR+xyt1KYuITqJW
- B3BPTmfFyNHFq7o8FGdlYvBkB4/2tCAX0Fhqjs91KC2moNzmA4/oJMbObeLr8OWL
-X-Gm-Gg: AfdE7clzDKElgtEFMRquTlrU8yVDSsCQ3yPausu5bxhL0aqX7fUY5z6uU/s3X5uxyko
- 8CAxMeopVYr41J+xt4bQB1k7YJRAY4zabxvzuy/KwxCF5F6ArmUQpP53p4FBQHFro+8Igv/bXn5
- SrLMBVGqZhW6HoHRBpx8heKzaYj0Tl5g2pIWr0c5CDhHaKTvbTM5yjADO08xbfzWBSYK7JKM1cx
- 2he/B39Zl9Cm26kzAcMDFzGH2jlaMpl1tJYX2PTyJfodtMaEsKDvuyIFHMyGPoGhtwkYGUsQ16J
- P2m88KFgOrReH00zyGBwkt+ET01rVkx/QMgZ7JUswzGIcCViRChNBIFP/no5IpeFgLBcHCc0CQo
- fSXWFkdysKEqRC8p57ybWrGzXb6ibY106HJ7Z0PHujVG4SN4PhT9PqkQ0ollLe3z5g/gC9ceVyY
- Ro0pB2nSz2hwsazCS83HSgnEXDWmYuyO11nQ4zhm0GFH3APp4KdcC6U+/KWQ==
-X-Received: by 2002:a17:903:1a26:b0:2c0:f807:9bf3 with SMTP id
- d9443c01a7336-2c7423d65cemr125205855ad.10.1782168342240; 
- Mon, 22 Jun 2026 15:45:42 -0700 (PDT)
-Received: from lima-default.tail89d63.ts.net ([159.196.41.205])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2c7436af585sm92060885ad.5.2026.06.22.15.45.38
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 22 Jun 2026 15:45:41 -0700 (PDT)
-From: stephensportia@gmail.com
-To: qemu-devel@nongnu.org
-Cc: Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Chao Liu <chao.liu.zevorn@gmail.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Palmer Dabbelt <palmer@dabbelt.com>, Weiwei Li <liwei1518@gmail.com>,
- qemu-riscv@nongnu.org, Portia Stephens <portias@oss.tenstorrent.com>
-Subject: [PATCH] target/riscv: Generate illegal exception for inval.ir and
- w.inval in U-mode
-Date: Tue, 23 Jun 2026 08:45:34 +1000
-Message-ID: <20260622224534.1923407-1-stephensportia@gmail.com>
-X-Mailer: git-send-email 2.43.0
+ (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
+ id 1wboxf-0000JF-MF; Mon, 22 Jun 2026 20:25:55 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
+ id 1wboxe-0003cK-2o; Mon, 22 Jun 2026 20:25:55 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 65MJmU393896350; Tue, 23 Jun 2026 00:25:52 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=pp1; bh=m3QQnMA1J67/ZsLf6
+ nhOOi5kLhoE1ut6ZAqrtdZ5+Q0=; b=jqcG0cJ5GDjf0n7mYAY6ZsaOXi3SbKdpE
+ 9TuSvpwIYHUayKfmiFtgQm8rtxO9d+6XkEbs6rMYap9Nvkx7SFAGGVMcSkYhwEZx
+ WjM+QZlwTdwi7qE1rbWVjmV9xyOasemZYkQwGmlDxQrMg37q02JtTJZEpHl+J64/
+ wMTnc5+E/d2MSpwjadJoJXk6vCKNOuKcuFTOJVtpwORt6Vv4mLRoCYdY86T7mT+R
+ 693j78omnZv5lrCNciAg/cqpt6Nvr1WQ8FapYWAKqjab6rjwl1U/bxEPFTuGNmQ5
+ /uG1MuOQVq4vtADPl8/Z1vmUP/rNOtFE49L3XnECG7cmgIBbvIyxg==
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4ewg9hm62s-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 23 Jun 2026 00:25:52 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 65N0Jeo2007306;
+ Tue, 23 Jun 2026 00:25:51 GMT
+Received: from smtprelay03.wdc07v.mail.ibm.com ([172.16.1.70])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4ex5jw8utx-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 23 Jun 2026 00:25:51 +0000 (GMT)
+Received: from smtpav05.wdc07v.mail.ibm.com (smtpav05.wdc07v.mail.ibm.com
+ [10.39.53.232])
+ by smtprelay03.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 65N0PIC014549638
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 23 Jun 2026 00:25:18 GMT
+Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id AC4BF58053;
+ Tue, 23 Jun 2026 00:25:50 +0000 (GMT)
+Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id B1C7E58043;
+ Tue, 23 Jun 2026 00:25:49 +0000 (GMT)
+Received: from t15.ibmuc.com (unknown [9.61.116.241])
+ by smtpav05.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Tue, 23 Jun 2026 00:25:49 +0000 (GMT)
+From: jrossi@linux.ibm.com
+To: qemu-devel@nongnu.org, qemu-s390x@nongnu.org, cohuck@redhat.com,
+ mjrosato@linux.ibm.com
+Cc: jrossi@linux.ibm.com, zycai@linux.ibm.com, jdaley@linux.ibm.com,
+ jjherne@linux.ibm.com, farman@linux.ibm.com, nrb@linux.ibm.com
+Subject: [PATCH 4/5] pc-bios/s390-ccw: Verify virtio support when booting from
+ PCI device on s390x
+Date: Mon, 22 Jun 2026 20:25:38 -0400
+Message-ID: <20260623002539.126124-5-jrossi@linux.ibm.com>
+X-Mailer: git-send-email 2.43.5
+In-Reply-To: <20260623002539.126124-1-jrossi@linux.ibm.com>
+References: <20260623002539.126124-1-jrossi@linux.ibm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
- envelope-from=stephensportia@gmail.com; helo=mail-pl1-x634.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: -v75l5OQYMvbByB68aH758FXzIINdSiT
+X-Proofpoint-GUID: -v75l5OQYMvbByB68aH758FXzIINdSiT
+X-Authority-Analysis: v=2.4 cv=Y4XIdBeN c=1 sm=1 tr=0 ts=6a39d290 cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+ a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
+ a=Y2IxJ9c9Rs8Kov3niI8_:22 a=VnNF1IyMAAAA:8 a=vycScq5fQBvcvulrpfcA:9
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjIzMDAwMCBTYWx0ZWRfXwB+l4lV/VKBv
+ f57X0MDvQRwNPzh3sOC0xarAbegErRvT9biiCvRScF+8N8xvYo7wIzhV1rgNqEusUqKPrhnoeld
+ dVrXlEkQF8xuIPToO1fwT2e3srZfn89G8Iq/ppko8VLt2f8k8X3XQ6ox80/iFPu2Q9AySIP+SLG
+ t1UeDR4DJbLtEktdM0prn0Nq5DujpVswFhT/lMbhsdaV3d1P5TIot75t4/mmdY6jgXQJZWrsQyA
+ n3aRC6sGX42ug42CMyPW2bC/cI9QDCAltJtc0vpP/2oOa4wEjp64G6AmkIciJFT2RgXhn2aJTUn
+ ZJvV8diiw4tZ4ujHI14hLYDbsp0lT932FuXHyDCDvb0Up5lWWOyl//m3j9UaUsM3WZUTpMeVvOd
+ hNEmCFkOywAlldVjd2+93BtEVPZrKe8CztlOrnQBgwjTGDFQd8iK3gVx+16AA2Y5ZXIgUVNRDov
+ ZDPcE7fsLOGSqfT5daA==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjIzMDAwMCBTYWx0ZWRfXwXmO+GSRq1g/
+ dQqGTi2ET+i/n6LStqN5EpmfVE3Ju5ooc/U9UEcB8ZUg/5kgTvGB6pEldTVpmY/lU/2Yyg73nhM
+ PB37PogwlUUTapItX3fV2GgHDwmnMVk=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-22_04,2026-06-22_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0 priorityscore=1501 malwarescore=0 lowpriorityscore=0 spamscore=0
+ clxscore=1015 suspectscore=0 impostorscore=0 phishscore=0 bulkscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606230000
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=jrossi@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Mon, 22 Jun 2026 20:24:12 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -103,49 +121,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Portia Stephens <portias@oss.tenstorrent.com>
+From: Jared Rossi <jrossi@linux.ibm.com>
 
-According to the priv spec "Attempting to execute SFENCE.W.INVAL or
-SFENCE.INVAL.IR in U-mode raises an illegal-instruction exception." Fix
-the current implementation to generate exception.
+The virtio specification requires that each PCI device has a vendor ID of
+0x1AF4.  Verify this value before continuing with boot process.
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3543
-Signed-off-by: Portia Stephens <portias@oss.tenstorrent.com>
+Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
 ---
- target/riscv/insn_trans/trans_svinval.c.inc | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ pc-bios/s390-ccw/main.c       |  1 +
+ pc-bios/s390-ccw/virtio-pci.c | 19 +++++++++++++++++++
+ pc-bios/s390-ccw/virtio.h     |  1 +
+ 3 files changed, 21 insertions(+)
 
-diff --git a/target/riscv/insn_trans/trans_svinval.c.inc b/target/riscv/insn_trans/trans_svinval.c.inc
-index a06c3b214f..10cb9e32b6 100644
---- a/target/riscv/insn_trans/trans_svinval.c.inc
-+++ b/target/riscv/insn_trans/trans_svinval.c.inc
-@@ -39,6 +39,12 @@ static bool trans_sfence_w_inval(DisasContext *ctx, arg_sfence_w_inval *a)
- {
-     REQUIRE_SVINVAL(ctx);
-     REQUIRE_EXT(ctx, RVS);
-+    if (ctx->priv == PRV_U) {
-+        /* Set the virtual exception if virt enabled */
-+        ctx->virt_inst_excp = ctx->virt_enabled;
-+        gen_exception_illegal(ctx);
-+        return false;
-+    }
-     /* Do nothing currently */
-     return true;
+diff --git a/pc-bios/s390-ccw/main.c b/pc-bios/s390-ccw/main.c
+index 1059fda03c..567e97bf32 100644
+--- a/pc-bios/s390-ccw/main.c
++++ b/pc-bios/s390-ccw/main.c
+@@ -164,6 +164,7 @@ static bool find_fid(uint32_t fid)
+     }
+ 
+     vdev->pci_fh = entry.fh;
++    vdev->vendor_id = entry.vendor_id;
+     virtio_pci_id2type(vdev, entry.device_id);
+ 
+     return vdev->dev_type != 0;
+diff --git a/pc-bios/s390-ccw/virtio-pci.c b/pc-bios/s390-ccw/virtio-pci.c
+index 2c83ec4f13..07b53b894f 100644
+--- a/pc-bios/s390-ccw/virtio-pci.c
++++ b/pc-bios/s390-ccw/virtio-pci.c
+@@ -325,6 +325,20 @@ static int enable_pci_bus_master(void)
+     return 0;
  }
-@@ -47,6 +53,12 @@ static bool trans_sfence_inval_ir(DisasContext *ctx, arg_sfence_inval_ir *a)
- {
-     REQUIRE_SVINVAL(ctx);
-     REQUIRE_EXT(ctx, RVS);
-+    if (ctx->priv == PRV_U) {
-+        /* Set the virtual exception if virt enabled */
-+        ctx->virt_inst_excp = ctx->virt_enabled;
-+        gen_exception_illegal(ctx);
-+        return false;
+ 
++bool virtio_pci_is_supported(VDev *vdev)
++{
++    if (vdev->vendor_id == 0x1AF4) {
++        switch (vdev->dev_type) {
++        case VIRTIO_ID_BLOCK:
++            return true;
++        default:
++            return false;
++        }
 +    }
-     /* Do nothing currently */
-     return true;
- }
++
++    return false;
++}
++
+ int virtio_pci_setup(VDev *vdev)
+ {
+     VRing *vr;
+@@ -335,6 +349,11 @@ int virtio_pci_setup(VDev *vdev)
+     vdev->guessed_disk_nature = VIRTIO_GDN_NONE;
+     vdev->cmd_vr_idx = 0;
+ 
++    if (!virtio_pci_is_supported(vdev)) {
++        puts("Virtio PCI unsupported for this device ID");
++        return -ENODEV;
++    }
++
+     if (virtio_pci_read_pci_cap_config()) {
+         puts("Invalid virtio PCI capabilities");
+         return -EIO;
+diff --git a/pc-bios/s390-ccw/virtio.h b/pc-bios/s390-ccw/virtio.h
+index 75ae5bdbc2..aa307025e0 100644
+--- a/pc-bios/s390-ccw/virtio.h
++++ b/pc-bios/s390-ccw/virtio.h
+@@ -259,6 +259,7 @@ struct VDev {
+     bool scsi_device_selected;
+     ScsiDevice selected_scsi_device;
+     uint32_t pci_fh;
++    uint16_t vendor_id;
+     uint32_t max_transfer;
+     uint32_t guest_features[2];
+ };
 -- 
-2.43.0
+2.54.0
 
 
