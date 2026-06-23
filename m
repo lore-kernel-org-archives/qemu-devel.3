@@ -4,37 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2EAF1CDB470
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jun 2026 18:28:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54567CD98F2
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jun 2026 18:28:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wc5qz-00051d-LN; Tue, 23 Jun 2026 14:28:11 -0400
+	id 1wc5rD-0005I3-1T; Tue, 23 Jun 2026 14:28:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1wc5qk-0004qO-4V
- for qemu-devel@nongnu.org; Tue, 23 Jun 2026 14:27:55 -0400
+ id 1wc5qw-00051H-34
+ for qemu-devel@nongnu.org; Tue, 23 Jun 2026 14:28:07 -0400
 Received: from vps-ovh.mhejs.net ([145.239.82.108])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1wc5qi-0001RE-Dt
- for qemu-devel@nongnu.org; Tue, 23 Jun 2026 14:27:53 -0400
+ id 1wc5qs-0001VF-J6
+ for qemu-devel@nongnu.org; Tue, 23 Jun 2026 14:28:05 -0400
 Received: from MUA
  by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
  (Exim 4.99.1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1wc5qf-00000004mKj-1xjF; Tue, 23 Jun 2026 20:27:49 +0200
-Message-ID: <82e01e80-f65d-4f38-b475-5f5624587868@maciej.szmigiero.name>
-Date: Tue, 23 Jun 2026 20:27:44 +0200
+ id 1wc5qq-00000004mKv-42II; Tue, 23 Jun 2026 20:28:00 +0200
+Message-ID: <db618aff-1ddb-4048-b7ac-bdf1f38feeed@maciej.szmigiero.name>
+Date: Tue, 23 Jun 2026 20:27:55 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 4/5] vhost-vsock: preserve vhost FD during CPR
+Subject: Re: [PATCH v2 5/5] vhost-vsock: don't reset connections during CPR
 To: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
 Cc: mst@redhat.com, sgarzare@redhat.com, farosas@suse.de,
  qemu-devel@nongnu.org, peterx@redhat.com, dongli.zhang@oracle.com,
  bchaney@akamai.com, mark.kanda@oracle.com, den@openvz.org
 References: <20260619105514.128812-1-andrey.drobyshev@virtuozzo.com>
- <20260619105514.128812-5-andrey.drobyshev@virtuozzo.com>
+ <20260619105514.128812-6-andrey.drobyshev@virtuozzo.com>
 From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
 Content-Language: en-US, pl-PL
 Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
@@ -78,7 +78,7 @@ Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
  WHQjcZZbROLql/+ngphSgdthGIhVWrIMHJu1UxnRiwKc/fzDFUZ9hFL+W4ZLm+52TzMatpta
  oNdcP9rtsQjdYMNLuwysP4keDX8yBXADwJD7eQ+ryIIKh6X1lBMIWxeZG5W0DQ6/4BCUEbCe
  1DqkYRtZyUEzgAbaHliaa5t3dfCtSMz5cAbGqxarXc7bKOjA6P8hCwgP0tEypA==
-In-Reply-To: <20260619105514.128812-5-andrey.drobyshev@virtuozzo.com>
+In-Reply-To: <20260619105514.128812-6-andrey.drobyshev@virtuozzo.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=145.239.82.108;
@@ -105,97 +105,56 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 19.06.2026 12:55, Andrey Drobyshev wrote:
-> During CPR migration, instead of reopening /dev/vhost-vsock device on
-> each initialization, let's make sure the already open FD is preserved and
-> properly reused on a subsequent initialization.
+> Migration target with a vhost-vsock device in the .post_load() hook issues
+> VIRTIO_VSOCK_EVENT_TRANSPORT_RESET event to the guest.  This results into
+> the guest tearing down all its vsock connections.  That reset exists
+> because after a normal migration the cid may change.
+> 
+> However it's not true for CPR-style migration.  In this case cid remains
+> the same, and we want the connections to persist.  Thus, let's customize
+> the .post_load() hook to skip the common transport reset part in this case.
 > 
 > Signed-off-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
 > ---
->   hw/virtio/vhost-vsock.c | 25 ++++++++++++++++++++-----
->   1 file changed, 20 insertions(+), 5 deletions(-)
+>   hw/virtio/vhost-vsock.c | 15 ++++++++++++++-
+>   1 file changed, 14 insertions(+), 1 deletion(-)
 > 
 > diff --git a/hw/virtio/vhost-vsock.c b/hw/virtio/vhost-vsock.c
-> index da244eb1657..ea9a7d2149d 100644
+> index ea9a7d2149d..8b033426296 100644
 > --- a/hw/virtio/vhost-vsock.c
 > +++ b/hw/virtio/vhost-vsock.c
-> @@ -20,6 +20,7 @@
->   #include "hw/core/qdev-properties.h"
->   #include "hw/virtio/vhost-vsock.h"
->   #include "monitor/monitor.h"
-> +#include "migration/cpr.h"
->   
->   static void vhost_vsock_get_config(VirtIODevice *vdev, uint8_t *config)
->   {
-> @@ -126,6 +127,7 @@ static void vhost_vsock_device_realize(DeviceState *dev, Error **errp)
->       VHostVSockCommon *vvc = VHOST_VSOCK_COMMON(dev);
->       VirtIODevice *vdev = VIRTIO_DEVICE(dev);
->       VHostVSock *vsock = VHOST_VSOCK(dev);
-> +    DeviceState *proxy = qdev_get_parent_bus(DEVICE(vsock))->parent;
->       int vhostfd;
->       int ret;
->   
-> @@ -141,7 +143,8 @@ static void vhost_vsock_device_realize(DeviceState *dev, Error **errp)
->       }
->   
->       if (vsock->conf.vhostfd) {
-> -        vhostfd = monitor_fd_param(monitor_cur(), vsock->conf.vhostfd, errp);
-> +        vhostfd = cpr_get_fd_param(proxy->id, vsock->conf.vhostfd, 0,
-
-Is this proxy->id *guaranteed* unique in a QEMU instance?
-
-> +                                   errp);
->           if (vhostfd == -1) {
->               error_prepend(errp, "vhost-vsock: unable to parse vhostfd: ");
->               return;
-> @@ -151,10 +154,20 @@ static void vhost_vsock_device_realize(DeviceState *dev, Error **errp)
->               return;
->           }
->       } else {
-> -        vhostfd = open("/dev/vhost-vsock", O_RDWR);
-> -        if (vhostfd < 0) {
-> -            error_setg_file_open(errp, errno, "/dev/vhost-vsock");
-> -            return;
-> +        if (cpr_is_incoming()) {
-> +            vhostfd = cpr_find_fd(proxy->id, 0);
-> +            if (vhostfd < 0) {
-> +                error_setg(errp, "vhost-vsock: could not restore vhost FD "
-> +                           "for %s", proxy->id);
-> +                return;
-> +            }
-> +        } else {
-> +            vhostfd = open("/dev/vhost-vsock", O_RDWR);
-> +            if (vhostfd < 0) {
-> +                error_setg_file_open(errp, errno, "/dev/vhost-vsock");
-> +                return;
-> +            }
-> +            cpr_save_fd(proxy->id, 0, vhostfd);
->           }
->   
->           if (!qemu_set_blocking(vhostfd, false, errp)) {
->              return;
->           }
-
-So if qemu_set_blocking() fails the FD leaks (existing bug) and now also
-CPR has this dangling FD saved?
-
-Furthermore, if calls further down vhost_vsock_device_realize() fail
-AFAIK vhost_vsock_device_unrealize() won't get called so this FD won't
-be removed from CPR - even in something else in vhost stack actually closes
-this FD during error cleanup.
-
-> @@ -193,10 +206,12 @@ static void vhost_vsock_device_unrealize(DeviceState *dev)
->   {
->       VHostVSockCommon *vvc = VHOST_VSOCK_COMMON(dev);
->       VirtIODevice *vdev = VIRTIO_DEVICE(dev);
-> +    DeviceState *proxy = qdev_get_parent_bus(dev)->parent;
->   
->       /* This will stop vhost backend if appropriate. */
->       vhost_vsock_set_status(vdev, 0);
->   
-> +    cpr_delete_fd(proxy->id, 0);
->       vhost_dev_cleanup(&vvc->vhost_dev);
->       vhost_vsock_common_unrealize(vdev);
+> @@ -109,6 +109,19 @@ static uint64_t vhost_vsock_get_features(VirtIODevice *vdev,
+>       return vhost_vsock_common_get_features(vdev, requested_features, errp);
 >   }
+>   
+> +static int vhost_vsock_post_load(void *opaque, int version_id)
+> +{
+> +    /*
+> +     * For CPR the guest cid is unchanged, so don't reset vsock connections
+> +     * (the cid-change reset would otherwise tear them all down).
+> +     */
+> +    if (cpr_is_incoming()) {
+> +        return 0;
+> +    }
+> +
+> +    return vhost_vsock_common_post_load(opaque, version_id);
+> +}
+> +
+>   static const VMStateDescription vmstate_virtio_vhost_vsock = {
+>       .name = "virtio-vhost_vsock",
+>       .minimum_version_id = VHOST_VSOCK_SAVEVM_VERSION,
+> @@ -118,7 +131,7 @@ static const VMStateDescription vmstate_virtio_vhost_vsock = {
+>           VMSTATE_END_OF_LIST()
+>       },
+>       .pre_save = vhost_vsock_common_pre_save,
+> -    .post_load = vhost_vsock_common_post_load,
+> +    .post_load = vhost_vsock_post_load,
+>   };
+>   
+>   static void vhost_vsock_device_realize(DeviceState *dev, Error **errp)
+
+Looks okay on the CPR-side but I will defer to vsock reviewers to check if this
+is safe from the vhost-vsock side.
 
 Thanks,
 Maciej
