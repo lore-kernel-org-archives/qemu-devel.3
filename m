@@ -4,106 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF343CD98F2
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jun 2026 12:50:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2CB48CD98F2
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jun 2026 12:50:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wc0Yd-0004av-3i; Tue, 23 Jun 2026 08:48:51 -0400
+	id 1wc0Yd-0004bA-Ni; Tue, 23 Jun 2026 08:48:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wc0Yb-0004a4-An
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wc0Yb-0004aD-Qr
  for qemu-devel@nongnu.org; Tue, 23 Jun 2026 08:48:49 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wc0YZ-00073B-MB
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wc0YX-00071z-1x
  for qemu-devel@nongnu.org; Tue, 23 Jun 2026 08:48:49 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1782218927;
+ s=mimecast20190719; t=1782218924;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=o6j9IIN1re0pi/37Fxh9v0POSNlaYsqAG3daLdzi7VU=;
- b=Cnfh5sncQRjStSbWzDZdEpVjwyDQkgtS+trxf8SLJgYDlhPpkhJc5Vagfbp4EFwVvc2snr
- QfQvoQlZr5oODfMaFL4RRpy672QTXctnHLSdQS9Z5lxuh9/Ax6FObhC9DXq3l47n2BIykc
- tbpZtMGts50NxikrIsFFlBEDZ0/Uyjo=
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
- [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=M1S9Am+qRlQDZIfNOH3kc37vcocVYL9s7hDwmoAwKVQ=;
+ b=BVIyAJ4KeaHo4nRKQizj7cgYYVFNJIQdqxBw59+Q8XLNvtFGEp6NfjAE5UepsxlHv5Leka
+ t1/ap9XhAm+6tJoTXQZzG8INWJBuu4hkrx2r1+QvyMDqVvawrFY/lHdf2GnLTEC57ZB4rd
+ paNGH3C+Yp2rmhrxabGrDOuDdtO3RB4=
+Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
+ [209.85.160.199]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-187-MkINQp9QOGSc9JK3RO5DuQ-1; Tue, 23 Jun 2026 08:48:45 -0400
-X-MC-Unique: MkINQp9QOGSc9JK3RO5DuQ-1
-X-Mimecast-MFC-AGG-ID: MkINQp9QOGSc9JK3RO5DuQ_1782218925
-Received: by mail-qt1-f198.google.com with SMTP id
- d75a77b69052e-51a19f736a1so57297571cf.2
- for <qemu-devel@nongnu.org>; Tue, 23 Jun 2026 05:48:45 -0700 (PDT)
+ us-mta-632-q6NdylNHP3O4KyhHRex6xw-1; Tue, 23 Jun 2026 08:48:43 -0400
+X-MC-Unique: q6NdylNHP3O4KyhHRex6xw-1
+X-Mimecast-MFC-AGG-ID: q6NdylNHP3O4KyhHRex6xw_1782218922
+Received: by mail-qt1-f199.google.com with SMTP id
+ d75a77b69052e-517c65e497eso106854321cf.2
+ for <qemu-devel@nongnu.org>; Tue, 23 Jun 2026 05:48:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1782218925; x=1782823725; darn=nongnu.org;
+ d=redhat.com; s=google; t=1782218922; x=1782823722; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=o6j9IIN1re0pi/37Fxh9v0POSNlaYsqAG3daLdzi7VU=;
- b=smVxq8fQQWpYE0+azqHnHLlVFIzTx1lc2x4WEPtlEDUPQX0b6d7FYdPOq+5HbxA6J3
- yQklDojYZBfEtdxs54zOKY6Kb2SGpmro76lGzNXtmSAaAdC4NB45gdKeE4ThT2iQlAY4
- v0DeRHI/byR54HIe8vYZ6O8q8edc6Em12Dfol1vifD6MyJfkrPVwUwQipr/IhzMp8er6
- 4DcOcs57kCxNGlL+QeWqYVd/7Rzt9wOw7Ht6Ulrrhejex9p7RyWd9q3PU+S6xg7HkENI
- 1ozfcqBTjO20i3piKg5JkQsFPv94/lwGREDENQl6oz23a7aWWsFezcxI7BnB3vgeJ99p
- I4dA==
+ bh=M1S9Am+qRlQDZIfNOH3kc37vcocVYL9s7hDwmoAwKVQ=;
+ b=Mk1bgcZtqiE1jsEGsHtlEr4UrwUeA2Ai6olljYHqj9MkpO/CUOzP62r8WaFid+IN96
+ Y7XBmeNstb2sd2zxyJPHW3BI2SEwOYUGUp4D2/XIUSTXJB43ix3mTHqXM3VrllLP560U
+ 4Uzv90aj5pDRsSFrRw/VNiazRD7q+Txd8jCLtO7bzcEROkFW3ydDy4Vnj8UKu8yeblwb
+ kxTdV0bHlBPdXkwF7gKS7vB5S7UJfWHDMOZGK6n4wI2DgchqaYQ9NexcEVUb0vDsncR4
+ cNVECxqi8um41l1zbowJFIcTUjTdMhwmjMcAyc+/RZB/DrF7WrB98Py/oaUf6IeUakel
+ 0wLg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782218925; x=1782823725;
+ d=1e100.net; s=20251104; t=1782218922; x=1782823722;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=o6j9IIN1re0pi/37Fxh9v0POSNlaYsqAG3daLdzi7VU=;
- b=blE8MtSXDcIwlLQUt0wjjPMa2m2lbTvSgQzalSAeQWt6R+do3WfVmxiYMU1UmHdSXA
- 0eVYX5qyjsvSc28bJ+0hguXvbmFJbk8JFxbH9ehhLu5fEnwPJUcpOFq+ep+/zZrPbl5z
- CiSY5a4FQIlMbIXqi1VqGMiyuuIrQmRFUOFr1V8HWy7r/jlTN8KBthtPUtMfY5oQl2/j
- j6RBhSQL+JHaRihc3b58YLN4A3zT1TMUgyjKobdV78xPQ7CX3PoqkKBtZYfDU37zmMCQ
- 7YN7HVCCZ/ydVBmG0EjtNaT7s3+KkkAJvfXW+GW+OFeSi7MYWwAJOX89whqJ2qaEZXNo
- +uKQ==
-X-Gm-Message-State: AOJu0YxKcGM159mHJp5yfA7acmPItzFnBAeqznXodGpGmtdQb3UQEMTs
- 9xNJCWvzB66DJpZTo6WCKxFxW2/KoMYjtnOHQjEdIO7fVmtej7UYtJypW+ZrmZBWPf3oqoFDwnq
- 6UAVESG8gHA2XvDeuii3GKRdqqtX2uEXvt8PeZsyQGI2qgOjJmbP0XXuvZ+AaV8rpPtOuzDwVVH
- X5dq0+KYZSKRAlvB63Ybb+gpDDF3LXw2F7ivED3A==
-X-Gm-Gg: AfdE7cn2oCqhXU9mQ01Mze2IfSLBnVcC15cG143AXN/3zUy3T+uo8RGXp1o+tICUc9r
- OLbqkBXGwI0weJFa43gxtaIb7OAfQ6iJjA3j55zTbQSl95SBrHaxFKp7YQkzsru3pMJLOi3rxAz
- +DJ/gdaIC4bDuSjeuDUMCuXqtlFIPPSTtRmFjZ0/BgAJ0JCTTQzdiEkcPC7Ak7mMxU1ByfzxK4s
- sXTJ60ZWr/u8dw6tjCLyWsN2r6nTl+GMZJcuUQYqo/ClK0GRsbW/pIjQ+z8nRe1Ejin8Zf7Z08L
- QcDVOjgZEel8EAlsxxaEB+8WKShQinr/CCWpHFHbenPG5ZuFb4b7/LHq2V1ZVY7ksECVjTJUBVQ
- wkQ==
-X-Received: by 2002:a05:622a:ca:b0:516:d73d:2a34 with SMTP id
- d75a77b69052e-51a545b4a4amr43467631cf.5.1782218924779; 
- Tue, 23 Jun 2026 05:48:44 -0700 (PDT)
-X-Received: by 2002:a05:622a:ca:b0:516:d73d:2a34 with SMTP id
- d75a77b69052e-51a545b4a4amr43466991cf.5.1782218924043; 
- Tue, 23 Jun 2026 05:48:44 -0700 (PDT)
+ bh=M1S9Am+qRlQDZIfNOH3kc37vcocVYL9s7hDwmoAwKVQ=;
+ b=JnhBmvZFEh8+/Mr9DJHRikCVi16Pkn7f6320IHGGq+W8bSKsy0jiCz/NU5lYZVe7K9
+ W+XWtgReY0/yJLE9mV6RfLt3X8+mQYObHFfanr2BjONRqehx0PcTBgkSA5J7Te5qyZ/a
+ POCh6pqeRV0YTVzfvtUXa8ogAXqJLcgMFrxZK8f9jxALvfwG8FIbom2n/75lyw41fSPc
+ oN+AD7Xsl2PO2vqUqbJSN6yh2JD0F1GZsMF/jz2zKed+mCEzHNDG/sJ6woxO27sqeLHl
+ lpfV4BHxnP+81tJJDzoOi2r8PnRrzcvj/GDV+0CzE5IECHIjHSDzlAaoQCpc8+zUCHYm
+ qzpw==
+X-Gm-Message-State: AOJu0Yy9xDAUqrYlqcnCXlPgRxd+ujyqatd8ZSoMwZAg++x/aFK0m+C1
+ JByJydoL9ToQpMe71GzzyNiGn/2aLV4Qvdjj4YEzrFVfdPxbC5ToiLr5aGkJE7gXCh9wCTTRGZe
+ W6laM8Z+NvPUf7NlL0FDYCuBj6PXQHG1L+t2QY42FtZp8ZtetUNesNeLIDDSo5L6wJfryHMqNrX
+ 2Pl/Tj2FaUMwpQOEY8nU/MRW758adVBUBh9oj26w==
+X-Gm-Gg: AfdE7cnA3O256g14kt0EVEDzlSCP/mlXxMTAKtSY/dy0VGh0w+xaNAKmoIlkMVqzm7z
+ 9+++eAJvGgYvLT5ufhnDoK2XLS7jm0m4Kx6uJ66EATFF/LoTE/IDAZRSscGyy9MrtR5M9zUWyho
+ /NSG2nUaMkKapWkoc1VNCBJ6AGmbFEoKQPTs0KeKuMqF79UExs/Ot4GiSCNuSSqUie5tjb8nLtA
+ ftd574SnmrW9gwBFmBGfdV8rbebITCw2tQNdstIMCMCbn+b0zM/yqBc1uibKaO7UpngkGpgFWrH
+ M2pdhyLL5m7JGmHfzbgfm0lB16mxG0azJ0zczP0RgmSb1HtQMoMFZwL8HrtOg5I8kEoUJy42GJF
+ uAg==
+X-Received: by 2002:a05:622a:389:b0:516:df62:bdd2 with SMTP id
+ d75a77b69052e-51a06b2b24cmr221726191cf.55.1782218921907; 
+ Tue, 23 Jun 2026 05:48:41 -0700 (PDT)
+X-Received: by 2002:a05:622a:389:b0:516:df62:bdd2 with SMTP id
+ d75a77b69052e-51a06b2b24cmr221725501cf.55.1782218921111; 
+ Tue, 23 Jun 2026 05:48:41 -0700 (PDT)
 Received: from x1.com ([174.91.117.157]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-51a51106a09sm22288351cf.0.2026.06.23.05.48.42
+ d75a77b69052e-51a51106a09sm22288351cf.0.2026.06.23.05.48.38
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 23 Jun 2026 05:48:43 -0700 (PDT)
+ Tue, 23 Jun 2026 05:48:38 -0700 (PDT)
 From: Peter Xu <peterx@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PULL 16/18] system/memory: add RamDiscardManager reference counting
- and cleanup
-Date: Tue, 23 Jun 2026 08:47:57 -0400
-Message-ID: <20260623124759.125399-17-peterx@redhat.com>
+Subject: [PULL 14/18] system/memory: implement RamDiscardManager multi-source
+ aggregation
+Date: Tue, 23 Jun 2026 08:47:55 -0400
+Message-ID: <20260623124759.125399-15-peterx@redhat.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260623124759.125399-1-peterx@redhat.com>
 References: <20260623124759.125399-1-peterx@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -122,77 +122,898 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-Listeners now hold a reference to the RamDiscardManager, ensuring it
-stays alive while listeners are registered. The RDM is eagerly freed
-when the last source and listener are removed, and also unreffed during
-MemoryRegion finalization as a safety net.
+Refactor RamDiscardManager to aggregate multiple RamDiscardSource
+instances. This enables scenarios where multiple components (e.g.,
+virtio-mem and RamBlockAttributes) can coordinate memory discard
+state for the same memory region.
 
-This completes the TODO left in the previous commit and prevents both
-use-after-free and memory leaks of the RamDiscardManager.
+The aggregation uses:
+- Populated: ALL sources populated
+- Discarded: ANY source discarded
+
+When a source is added with existing listeners, they are notified
+about regions that become discarded. When a source is removed,
+listeners are notified about regions that become populated.
 
 Reviewed-by: Peter Xu <peterx@redhat.com>
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Link: https://lore.kernel.org/r/20260604-rdm5-v5-9-5768e6a0943d@redhat.com
+Link: https://lore.kernel.org/r/20260604-rdm5-v5-7-5768e6a0943d@redhat.com
 Signed-off-by: Peter Xu <peterx@redhat.com>
 ---
- system/memory.c              | 14 +++++++++++---
- system/ram-discard-manager.c |  2 ++
- 2 files changed, 13 insertions(+), 3 deletions(-)
+ include/system/memory.h              |   4 +-
+ include/system/ram-discard-manager.h | 141 +++++++--
+ hw/virtio/virtio-mem.c               |   8 +-
+ system/memory.c                      |  17 +-
+ system/ram-block-attributes.c        |   6 +-
+ system/ram-discard-manager.c         | 427 ++++++++++++++++++++++++---
+ 6 files changed, 518 insertions(+), 85 deletions(-)
 
-diff --git a/system/memory.c b/system/memory.c
-index 119fee0d34..5fc36708ec 100644
---- a/system/memory.c
-+++ b/system/memory.c
-@@ -1771,6 +1771,7 @@ static void memory_region_finalize(Object *obj)
-     memory_region_clear_coalescing(mr);
-     g_free((char *)mr->name);
-     g_free(mr->ioeventfds);
-+    object_unref(mr->rdm);
+diff --git a/include/system/memory.h b/include/system/memory.h
+index 4a700cb657..47a0e06fbf 100644
+--- a/include/system/memory.h
++++ b/include/system/memory.h
+@@ -2261,8 +2261,10 @@ int memory_region_add_ram_discard_source(MemoryRegion *mr, RamDiscardSource *sou
+  *
+  * @mr: the #MemoryRegion
+  * @source: #RamDiscardSource to remove
++ *
++ * Returns: 0 on success, or a negative error code on failure.
+  */
+-void memory_region_del_ram_discard_source(MemoryRegion *mr, RamDiscardSource *source);
++int memory_region_del_ram_discard_source(MemoryRegion *mr, RamDiscardSource *source);
+ 
+ /**
+  * memory_region_find: translate an address/size relative to a
+diff --git a/include/system/ram-discard-manager.h b/include/system/ram-discard-manager.h
+index b5dbcb4a82..05d3d31b55 100644
+--- a/include/system/ram-discard-manager.h
++++ b/include/system/ram-discard-manager.h
+@@ -170,30 +170,96 @@ struct RamDiscardSourceClass {
+  * becoming discarded in a different granularity than it was populated and the
+  * other way around.
+  */
++
++typedef struct RamDiscardSourceEntry RamDiscardSourceEntry;
++
++struct RamDiscardSourceEntry {
++    RamDiscardSource *rds;
++    QLIST_ENTRY(RamDiscardSourceEntry) next;
++};
++
+ struct RamDiscardManager {
+     Object parent;
+ 
+-    RamDiscardSource *rds;
+     MemoryRegion *mr;
++    QLIST_HEAD(, RamDiscardSourceEntry) source_list;
++    uint64_t min_granularity;
+     QLIST_HEAD(, RamDiscardListener) rdl_list;
+ };
+ 
+-RamDiscardManager *ram_discard_manager_new(MemoryRegion *mr,
+-                                           RamDiscardSource *rds);
++RamDiscardManager *ram_discard_manager_new(MemoryRegion *mr);
++
++/**
++ * ram_discard_manager_add_source:
++ *
++ * Register a #RamDiscardSource with the #RamDiscardManager. The manager
++ * aggregates state from all registered sources using AND semantics: a region
++ * is considered populated only if ALL sources report it as populated.
++ *
++ * If listeners are already registered, they will be notified about any
++ * regions that become discarded due to adding this source. Specifically,
++ * for each region that the new source reports as discarded, if all other
++ * sources reported it as populated, listeners receive a discard notification.
++ *
++ * If any listener rejects the notification (returns an error), previously
++ * notified listeners are rolled back with populate notifications and the
++ * source is not added.
++ *
++ * @rdm: the #RamDiscardManager
++ * @source: the #RamDiscardSource to add
++ *
++ * Returns: 0 on success, -EBUSY if @source is already registered, or a
++ *          negative error code if a listener rejected the state change.
++ */
++int ram_discard_manager_add_source(RamDiscardManager *rdm,
++                                   RamDiscardSource *source);
++
++/**
++ * ram_discard_manager_del_source:
++ *
++ * Unregister a #RamDiscardSource from the #RamDiscardManager.
++ *
++ * If listeners are already registered, they will be notified about any
++ * regions that become populated due to removing this source. Specifically,
++ * for each region that the removed source reported as discarded, if all
++ * remaining sources report it as populated, listeners receive a populate
++ * notification.
++ *
++ * If any listener rejects the notification (returns an error), previously
++ * notified listeners are rolled back with discard notifications and the
++ * source is not removed.
++ *
++ * @rdm: the #RamDiscardManager
++ * @source: the #RamDiscardSource to remove
++ *
++ * Returns: 0 on success, -ENOENT if @source is not registered, or a
++ *          negative error code if a listener rejected the state change.
++ */
++int ram_discard_manager_del_source(RamDiscardManager *rdm,
++                                   RamDiscardSource *source);
++
+ 
+ uint64_t ram_discard_manager_get_min_granularity(const RamDiscardManager *rdm,
+                                                  const MemoryRegion *mr);
+ 
++/**
++ * ram_discard_manager_is_populated:
++ *
++ * Check if the given memory region section is populated.
++ * If the manager has no sources, it is considered populated.
++ *
++ * @rdm: the #RamDiscardManager
++ * @section: the #MemoryRegionSection to check
++ *
++ * Returns: true if the section is populated, false otherwise.
++ */
+ bool ram_discard_manager_is_populated(const RamDiscardManager *rdm,
+                                       const MemoryRegionSection *section);
+ 
+ /**
+  * ram_discard_manager_replay_populated:
+  *
+- * Iterate the given #MemoryRegionSection at minimum granularity, calling
+- * #RamDiscardSourceClass.is_populated for each chunk, and invoke @replay_fn
+- * for each contiguous populated range. In case any call fails, no further
+- * calls are made.
++ * Call @replay_fn on regions that are populated in all sources.
+  *
+  * @rdm: the #RamDiscardManager
+  * @section: the #MemoryRegionSection
+@@ -210,10 +276,7 @@ int ram_discard_manager_replay_populated(const RamDiscardManager *rdm,
+ /**
+  * ram_discard_manager_replay_discarded:
+  *
+- * Iterate the given #MemoryRegionSection at minimum granularity, calling
+- * #RamDiscardSourceClass.is_populated for each chunk, and invoke @replay_fn
+- * for each contiguous discarded range. In case any call fails, no further
+- * calls are made.
++ * Call @replay_fn on regions that are discarded in any sources.
+  *
+  * @rdm: the #RamDiscardManager
+  * @section: the #MemoryRegionSection
+@@ -234,31 +297,61 @@ void ram_discard_manager_register_listener(RamDiscardManager *rdm,
+ void ram_discard_manager_unregister_listener(RamDiscardManager *rdm,
+                                              RamDiscardListener *rdl);
+ 
+-/*
+- * Note: later refactoring should take the source into account and the manager
+- *       should be able to aggregate multiple sources.
++/**
++ * ram_discard_manager_notify_populate:
++ *
++ * Notify listeners that a region is about to be populated by a source.
++ * For multi-source aggregation, only notifies when all sources agree
++ * the region is populated (intersection).
++ *
++ * @rdm: the #RamDiscardManager
++ * @source: the #RamDiscardSource that is populating
++ * @offset: offset within the memory region
++ * @size: size of the region being populated
++ *
++ * Returns 0 on success, or a negative error if any listener rejects.
+  */
+ int ram_discard_manager_notify_populate(RamDiscardManager *rdm,
++                                        RamDiscardSource *source,
+                                         uint64_t offset, uint64_t size);
+ 
+-/*
+- * Note: later refactoring should take the source into account and the manager
+- *       should be able to aggregate multiple sources.
++/**
++ * ram_discard_manager_notify_discard:
++ *
++ * Notify listeners that a region has been discarded by a source.
++ * For multi-source aggregation, always notifies immediately
++ * (union semantics - any source discarding makes region discarded).
++ *
++ * @rdm: the #RamDiscardManager
++ * @source: the #RamDiscardSource that is discarding
++ * @offset: offset within the memory region
++ * @size: size of the region being discarded
+  */
+ void ram_discard_manager_notify_discard(RamDiscardManager *rdm,
++                                        RamDiscardSource *source,
+                                         uint64_t offset, uint64_t size);
+ 
+-/*
+- * Note: later refactoring should take the source into account and the manager
+- *       should be able to aggregate multiple sources.
++/**
++ * ram_discard_manager_notify_discard_all:
++ *
++ * Notify listeners that all regions have been discarded by a source.
++ *
++ * @rdm: the #RamDiscardManager
++ * @source: the #RamDiscardSource that is discarding
+  */
+-void ram_discard_manager_notify_discard_all(RamDiscardManager *rdm);
++void ram_discard_manager_notify_discard_all(RamDiscardManager *rdm,
++                                            RamDiscardSource *source);
+ 
+-/*
++/**
++ * ram_discard_manager_replay_populated_to_listeners:
++ *
+  * Replay populated sections to all registered listeners.
++ * For multi-source aggregation, only replays regions where all sources
++ * are populated (intersection).
+  *
+- * Note: later refactoring should take the source into account and the manager
+- *       should be able to aggregate multiple sources.
++ * @rdm: the #RamDiscardManager
++ *
++ * Returns 0 on success, or a negative error if any notification failed.
+  */
+ int ram_discard_manager_replay_populated_to_listeners(RamDiscardManager *rdm);
+ 
+diff --git a/hw/virtio/virtio-mem.c b/hw/virtio/virtio-mem.c
+index 2b67b2882d..35e03ed759 100644
+--- a/hw/virtio/virtio-mem.c
++++ b/hw/virtio/virtio-mem.c
+@@ -264,7 +264,8 @@ static void virtio_mem_notify_unplug(VirtIOMEM *vmem, uint64_t offset,
+ {
+     RamDiscardManager *rdm = memory_region_get_ram_discard_manager(&vmem->memdev->mr);
+ 
+-    ram_discard_manager_notify_discard(rdm, offset, size);
++    ram_discard_manager_notify_discard(rdm, RAM_DISCARD_SOURCE(vmem),
++                                       offset, size);
  }
  
- Object *memory_region_owner(const MemoryRegion *mr)
-@@ -2084,11 +2085,18 @@ int memory_region_add_ram_discard_source(MemoryRegion *mr,
- int memory_region_del_ram_discard_source(MemoryRegion *mr,
+ static int virtio_mem_notify_plug(VirtIOMEM *vmem, uint64_t offset,
+@@ -272,7 +273,8 @@ static int virtio_mem_notify_plug(VirtIOMEM *vmem, uint64_t offset,
+ {
+     RamDiscardManager *rdm = memory_region_get_ram_discard_manager(&vmem->memdev->mr);
+ 
+-    return ram_discard_manager_notify_populate(rdm, offset, size);
++    return ram_discard_manager_notify_populate(rdm, RAM_DISCARD_SOURCE(vmem),
++                                               offset, size);
+ }
+ 
+ static void virtio_mem_notify_unplug_all(VirtIOMEM *vmem)
+@@ -283,7 +285,7 @@ static void virtio_mem_notify_unplug_all(VirtIOMEM *vmem)
+         return;
+     }
+ 
+-    ram_discard_manager_notify_discard_all(rdm);
++    ram_discard_manager_notify_discard_all(rdm, RAM_DISCARD_SOURCE(vmem));
+ }
+ 
+ static bool virtio_mem_is_range_plugged(const VirtIOMEM *vmem,
+diff --git a/system/memory.c b/system/memory.c
+index 5a598ca58c..119fee0d34 100644
+--- a/system/memory.c
++++ b/system/memory.c
+@@ -2073,21 +2073,22 @@ int memory_region_add_ram_discard_source(MemoryRegion *mr,
+                                          RamDiscardSource *source)
+ {
+     g_assert(memory_region_is_ram(mr));
+-    if (mr->rdm) {
+-        return -EBUSY;
++
++    if (!mr->rdm) {
++        mr->rdm = ram_discard_manager_new(mr);
+     }
+ 
+-    mr->rdm = ram_discard_manager_new(mr, RAM_DISCARD_SOURCE(source));
+-    return 0;
++    return ram_discard_manager_add_source(mr->rdm, source);
+ }
+ 
+-void memory_region_del_ram_discard_source(MemoryRegion *mr,
++int memory_region_del_ram_discard_source(MemoryRegion *mr,
                                            RamDiscardSource *source)
  {
-+    int ret;
-     g_assert(mr->rdm);
+-    g_assert(mr->rdm->rds == source);
++    g_assert(mr->rdm);
++
++    return ram_discard_manager_del_source(mr->rdm, source);
  
--    return ram_discard_manager_del_source(mr->rdm, source);
--
--    /* if there is no source and no listener left, we could free rdm */
-+    ret = ram_discard_manager_del_source(mr->rdm, source);
-+    if (ret != 0) {
-+        return ret;
-+    }
-+    if (QLIST_EMPTY(&mr->rdm->source_list) && QLIST_EMPTY(&mr->rdm->rdl_list)) {
-+        object_unref(mr->rdm);
-+        mr->rdm = NULL;
-+    }
-+    return 0;
+-    object_unref(mr->rdm);
+-    mr->rdm = NULL;
++    /* if there is no source and no listener left, we could free rdm */
  }
  
  /* Called with rcu_read_lock held.  */
-diff --git a/system/ram-discard-manager.c b/system/ram-discard-manager.c
-index 7da91bf648..4e8816e5a2 100644
---- a/system/ram-discard-manager.c
-+++ b/system/ram-discard-manager.c
-@@ -549,6 +549,7 @@ void ram_discard_manager_register_listener(RamDiscardManager *rdm,
+diff --git a/system/ram-block-attributes.c b/system/ram-block-attributes.c
+index 718c7075ce..59ec7a28eb 100644
+--- a/system/ram-block-attributes.c
++++ b/system/ram-block-attributes.c
+@@ -90,7 +90,8 @@ ram_block_attributes_notify_discard(RamBlockAttributes *attr,
+ {
+     RamDiscardManager *rdm = memory_region_get_ram_discard_manager(attr->ram_block->mr);
  
-     g_assert(section->mr == rdm->mr);
- 
-+    object_ref(rdm);
-     rdl->section = memory_region_section_new_copy(section);
-     QLIST_INSERT_HEAD(&rdm->rdl_list, rdl, next);
- 
-@@ -570,6 +571,7 @@ void ram_discard_manager_unregister_listener(RamDiscardManager *rdm,
-     memory_region_section_free_copy(rdl->section);
-     rdl->section = NULL;
-     QLIST_REMOVE(rdl, next);
-+    object_unref(rdm);
+-    ram_discard_manager_notify_discard(rdm, offset, size);
++    ram_discard_manager_notify_discard(rdm, RAM_DISCARD_SOURCE(attr),
++                                       offset, size);
  }
  
- int ram_discard_manager_replay_populated_to_listeners(RamDiscardManager *rdm)
+ static int
+@@ -99,7 +100,8 @@ ram_block_attributes_notify_populate(RamBlockAttributes *attr,
+ {
+     RamDiscardManager *rdm = memory_region_get_ram_discard_manager(attr->ram_block->mr);
+ 
+-    return ram_discard_manager_notify_populate(rdm, offset, size);
++    return ram_discard_manager_notify_populate(rdm, RAM_DISCARD_SOURCE(attr),
++                                               offset, size);
+ }
+ 
+ int ram_block_attributes_state_change(RamBlockAttributes *attr,
+diff --git a/system/ram-discard-manager.c b/system/ram-discard-manager.c
+index a907ddf370..7da91bf648 100644
+--- a/system/ram-discard-manager.c
++++ b/system/ram-discard-manager.c
+@@ -7,6 +7,7 @@
+ 
+ #include "qemu/osdep.h"
+ #include "qemu/error-report.h"
++#include "qemu/queue.h"
+ #include "system/memory.h"
+ 
+ static uint64_t ram_discard_source_get_min_granularity(const RamDiscardSource *rds,
+@@ -28,20 +29,21 @@ static bool ram_discard_source_is_populated(const RamDiscardSource *rds,
+ }
+ 
+ /*
+- * Iterate the section at source granularity, aggregating consecutive chunks
+- * with matching populated state, and call replay_fn for each run.
++ * Iterate a single source's populated or discarded regions and call
++ * replay_fn for each contiguous run.
+  */
+-static int replay_by_populated_state(const RamDiscardManager *rdm,
+-                                     const MemoryRegionSection *section,
+-                                     bool replay_populated,
+-                                     ReplayRamDiscardState replay_fn,
+-                                     void *opaque)
++static int replay_source_by_state(const RamDiscardSource *source,
++                                  const MemoryRegion *mr,
++                                  const MemoryRegionSection *section,
++                                  bool replay_populated,
++                                  ReplayRamDiscardState replay_fn,
++                                  void *opaque)
+ {
+     uint64_t granularity, offset, size, end, pos, run_start = 0;
+     bool in_run = false;
+     int ret = 0;
+ 
+-    granularity = ram_discard_source_get_min_granularity(rdm->rds, rdm->mr);
++    granularity = ram_discard_source_get_min_granularity(source, mr);
+     offset = section->offset_within_region;
+     size = int128_get64(section->size);
+     end = offset + size;
+@@ -55,7 +57,7 @@ static int replay_by_populated_state(const RamDiscardManager *rdm,
+             .offset_within_region = pos,
+             .size = int128_make64(granularity),
+         };
+-        bool populated = ram_discard_source_is_populated(rdm->rds, &chunk);
++        bool populated = ram_discard_source_is_populated(source, &chunk);
+ 
+         if (populated == replay_populated) {
+             if (!in_run) {
+@@ -88,28 +90,338 @@ static int replay_by_populated_state(const RamDiscardManager *rdm,
+     return ret;
+ }
+ 
+-RamDiscardManager *ram_discard_manager_new(MemoryRegion *mr,
+-                                           RamDiscardSource *rds)
++RamDiscardManager *ram_discard_manager_new(MemoryRegion *mr)
+ {
+     RamDiscardManager *rdm;
+ 
+     rdm = RAM_DISCARD_MANAGER(object_new(TYPE_RAM_DISCARD_MANAGER));
+-    rdm->rds = rds;
+     rdm->mr = mr;
+-    QLIST_INIT(&rdm->rdl_list);
+     return rdm;
+ }
+ 
++static void ram_discard_manager_update_granularity(RamDiscardManager *rdm)
++{
++    RamDiscardSourceEntry *entry;
++    uint64_t granularity = 0;
++
++    QLIST_FOREACH(entry, &rdm->source_list, next) {
++        uint64_t src_granularity;
++
++        src_granularity =
++            ram_discard_source_get_min_granularity(entry->rds, rdm->mr);
++        g_assert(src_granularity != 0);
++        if (granularity == 0) {
++            granularity = src_granularity;
++        } else {
++            granularity = MIN(granularity, src_granularity);
++        }
++    }
++    rdm->min_granularity = granularity;
++}
++
++static RamDiscardSourceEntry *
++ram_discard_manager_find_source(RamDiscardManager *rdm, RamDiscardSource *rds)
++{
++    RamDiscardSourceEntry *entry;
++
++    QLIST_FOREACH(entry, &rdm->source_list, next) {
++        if (entry->rds == rds) {
++            return entry;
++        }
++    }
++    return NULL;
++}
++
++static int rdl_populate_cb(const MemoryRegionSection *section, void *opaque)
++{
++    RamDiscardListener *rdl = opaque;
++    MemoryRegionSection tmp = *rdl->section;
++
++    g_assert(section->mr == rdl->section->mr);
++
++    if (!memory_region_section_intersect_range(&tmp,
++                                               section->offset_within_region,
++                                               int128_get64(section->size))) {
++        return 0;
++    }
++
++    return rdl->notify_populate(rdl, &tmp);
++}
++
++static int rdl_discard_cb(const MemoryRegionSection *section, void *opaque)
++{
++    RamDiscardListener *rdl = opaque;
++    MemoryRegionSection tmp = *rdl->section;
++
++    g_assert(section->mr == rdl->section->mr);
++
++    if (!memory_region_section_intersect_range(&tmp,
++                                               section->offset_within_region,
++                                               int128_get64(section->size))) {
++        return 0;
++    }
++
++    rdl->notify_discard(rdl, &tmp);
++    return 0;
++}
++
++static bool rdm_is_all_populated_skip(const RamDiscardManager *rdm,
++                                      const MemoryRegionSection *section,
++                                      const RamDiscardSource *skip_source)
++{
++    RamDiscardSourceEntry *entry;
++
++    QLIST_FOREACH(entry, &rdm->source_list, next) {
++        if (skip_source && entry->rds == skip_source) {
++            continue;
++        }
++        if (!ram_discard_source_is_populated(entry->rds, section)) {
++            return false;
++        }
++    }
++    return true;
++}
++
++typedef struct SourceNotifyCtx {
++    RamDiscardManager *rdm;
++    RamDiscardListener *rdl;
++    RamDiscardSource *source; /* added or removed */
++} SourceNotifyCtx;
++
++/*
++ * Unified helper to replay regions based on populated state.
++ * If replay_populated is true: replay regions where ALL sources are populated.
++ * If replay_populated is false: replay regions where ANY source is discarded.
++ */
++static int replay_by_populated_state(const RamDiscardManager *rdm,
++                                     const MemoryRegionSection *section,
++                                     const RamDiscardSource *skip_source,
++                                     bool replay_populated,
++                                     ReplayRamDiscardState replay_fn,
++                                     void *user_opaque)
++{
++    uint64_t granularity = rdm->min_granularity;
++    uint64_t offset, end_offset;
++    uint64_t run_start = 0;
++    bool in_run = false;
++    int ret = 0;
++
++    if (QLIST_EMPTY(&rdm->source_list)) {
++        if (replay_populated) {
++            return replay_fn(section, user_opaque);
++        }
++        return 0;
++    }
++
++    g_assert(granularity != 0);
++
++    offset = section->offset_within_region;
++    end_offset = offset + int128_get64(section->size);
++
++    while (offset < end_offset) {
++        MemoryRegionSection subsection = {
++            .mr = section->mr,
++            .offset_within_region = offset,
++            .size = int128_make64(MIN(granularity, end_offset - offset)),
++        };
++        bool all_populated;
++        bool included;
++
++        all_populated = rdm_is_all_populated_skip(rdm, &subsection,
++                                                     skip_source);
++        included = replay_populated ? all_populated : !all_populated;
++
++        if (included) {
++            if (!in_run) {
++                run_start = offset;
++                in_run = true;
++            }
++        } else {
++            if (in_run) {
++                MemoryRegionSection run_section = {
++                    .mr = section->mr,
++                    .offset_within_region = run_start,
++                    .size = int128_make64(offset - run_start),
++                };
++                ret = replay_fn(&run_section, user_opaque);
++                if (ret) {
++                    return ret;
++                }
++                in_run = false;
++            }
++        }
++        if (granularity > end_offset - offset) {
++            break;
++        }
++        offset += granularity;
++    }
++
++    if (in_run) {
++        MemoryRegionSection run_section = {
++            .mr = section->mr,
++            .offset_within_region = run_start,
++            .size = int128_make64(end_offset - run_start),
++        };
++        ret = replay_fn(&run_section, user_opaque);
++    }
++
++    return ret;
++}
++
++static int add_source_check_discard_cb(const MemoryRegionSection *section,
++                                       void *opaque)
++{
++    SourceNotifyCtx *ctx = opaque;
++
++    return replay_by_populated_state(ctx->rdm, section, ctx->source, true,
++                                     rdl_discard_cb, ctx->rdl);
++}
++
++static int del_source_check_populate_cb(const MemoryRegionSection *section,
++                                        void *opaque)
++{
++    SourceNotifyCtx *ctx = opaque;
++
++    return replay_by_populated_state(ctx->rdm, section, ctx->source, true,
++                                     rdl_populate_cb, ctx->rdl);
++}
++
++int ram_discard_manager_add_source(RamDiscardManager *rdm,
++                                   RamDiscardSource *source)
++{
++    RamDiscardSourceEntry *entry;
++    RamDiscardListener *rdl, *rdl2;
++    int ret = 0;
++
++    if (ram_discard_manager_find_source(rdm, source)) {
++        return -EBUSY;
++    }
++
++    /*
++     * If there are existing listeners, notify them about regions that
++     * become discarded due to adding this source. Only notify for regions
++     * that were previously populated (all other sources agreed).
++     */
++    QLIST_FOREACH(rdl, &rdm->rdl_list, next) {
++        SourceNotifyCtx ctx = {
++            .rdm = rdm,
++            .rdl = rdl,
++            /* no need to set source */
++        };
++        ret = replay_source_by_state(source, rdm->mr, rdl->section,
++                                     false,
++                                     add_source_check_discard_cb, &ctx);
++        if (ret) {
++            break;
++        }
++    }
++    if (ret) {
++        QLIST_FOREACH(rdl2, &rdm->rdl_list, next) {
++            SourceNotifyCtx ctx = {
++                .rdm = rdm,
++                .rdl = rdl2,
++            };
++            replay_source_by_state(source, rdm->mr, rdl2->section,
++                                   false,
++                                   del_source_check_populate_cb,
++                                   &ctx);
++            if (rdl == rdl2) {
++                break;
++            }
++        }
++
++        return ret;
++    }
++
++    entry = g_new0(RamDiscardSourceEntry, 1);
++    entry->rds = source;
++    QLIST_INSERT_HEAD(&rdm->source_list, entry, next);
++
++    ram_discard_manager_update_granularity(rdm);
++
++    return ret;
++}
++
++int ram_discard_manager_del_source(RamDiscardManager *rdm,
++                                   RamDiscardSource *source)
++{
++    RamDiscardSourceEntry *entry;
++    RamDiscardListener *rdl, *rdl2;
++    int ret = 0;
++
++    entry = ram_discard_manager_find_source(rdm, source);
++    if (!entry) {
++        return -ENOENT;
++    }
++
++    /*
++     * If there are existing listeners, check if any regions become
++     * populated due to removing this source.
++     */
++    QLIST_FOREACH(rdl, &rdm->rdl_list, next) {
++        SourceNotifyCtx ctx = {
++            .rdm = rdm,
++            .rdl = rdl,
++            .source = source,
++        };
++        /*
++         * From the previously discarded regions, check if any
++         * regions become populated.
++         */
++        ret = replay_source_by_state(source, rdm->mr, rdl->section,
++                                     false,
++                                     del_source_check_populate_cb,
++                                     &ctx);
++        if (ret) {
++            break;
++        }
++    }
++    if (ret) {
++        QLIST_FOREACH(rdl2, &rdm->rdl_list, next) {
++            SourceNotifyCtx ctx = {
++                .rdm = rdm,
++                .rdl = rdl2,
++                .source = source,
++            };
++            replay_source_by_state(source, rdm->mr, rdl2->section,
++                                   false,
++                                   add_source_check_discard_cb,
++                                   &ctx);
++            if (rdl == rdl2) {
++                break;
++            }
++        }
++
++        return ret;
++    }
++
++    QLIST_REMOVE(entry, next);
++    g_free(entry);
++    ram_discard_manager_update_granularity(rdm);
++    return ret;
++}
++
+ uint64_t ram_discard_manager_get_min_granularity(const RamDiscardManager *rdm,
+                                                  const MemoryRegion *mr)
+ {
+-    return ram_discard_source_get_min_granularity(rdm->rds, mr);
++    g_assert(mr == rdm->mr);
++    return rdm->min_granularity;
+ }
+ 
++/*
++ * Aggregated query: returns true only if ALL sources report populated (AND).
++ */
+ bool ram_discard_manager_is_populated(const RamDiscardManager *rdm,
+                                       const MemoryRegionSection *section)
+ {
+-    return ram_discard_source_is_populated(rdm->rds, section);
++    RamDiscardSourceEntry *entry;
++
++    QLIST_FOREACH(entry, &rdm->source_list, next) {
++        if (!ram_discard_source_is_populated(entry->rds, section)) {
++            return false;
++        }
++    }
++    return true;
+ }
+ 
+ int ram_discard_manager_replay_populated(const RamDiscardManager *rdm,
+@@ -117,7 +429,8 @@ int ram_discard_manager_replay_populated(const RamDiscardManager *rdm,
+                                          ReplayRamDiscardState replay_fn,
+                                          void *opaque)
+ {
+-    return replay_by_populated_state(rdm, section, true, replay_fn, opaque);
++    return replay_by_populated_state(rdm, section, NULL, true,
++                                     replay_fn, opaque);
+ }
+ 
+ int ram_discard_manager_replay_discarded(const RamDiscardManager *rdm,
+@@ -125,14 +438,17 @@ int ram_discard_manager_replay_discarded(const RamDiscardManager *rdm,
+                                          ReplayRamDiscardState replay_fn,
+                                          void *opaque)
+ {
+-    return replay_by_populated_state(rdm, section, false, replay_fn, opaque);
++    return replay_by_populated_state(rdm, section, NULL, false,
++                                     replay_fn, opaque);
+ }
+ 
+ static void ram_discard_manager_initfn(Object *obj)
+ {
+     RamDiscardManager *rdm = RAM_DISCARD_MANAGER(obj);
+ 
++    QLIST_INIT(&rdm->source_list);
+     QLIST_INIT(&rdm->rdl_list);
++    rdm->min_granularity = 0;
+ }
+ 
+ static void ram_discard_manager_finalize(Object *obj)
+@@ -140,74 +456,91 @@ static void ram_discard_manager_finalize(Object *obj)
+     RamDiscardManager *rdm = RAM_DISCARD_MANAGER(obj);
+ 
+     g_assert(QLIST_EMPTY(&rdm->rdl_list));
++    g_assert(QLIST_EMPTY(&rdm->source_list));
+ }
+ 
+ int ram_discard_manager_notify_populate(RamDiscardManager *rdm,
++                                        RamDiscardSource *source,
+                                         uint64_t offset, uint64_t size)
+ {
+     RamDiscardListener *rdl, *rdl2;
++    MemoryRegionSection section = {
++        .mr = rdm->mr,
++        .offset_within_region = offset,
++        .size = int128_make64(size),
++    };
+     int ret = 0;
+ 
+-    QLIST_FOREACH(rdl, &rdm->rdl_list, next) {
+-        MemoryRegionSection tmp = *rdl->section;
++    g_assert(ram_discard_manager_find_source(rdm, source));
+ 
+-        if (!memory_region_section_intersect_range(&tmp, offset, size)) {
+-            continue;
+-        }
+-        ret = rdl->notify_populate(rdl, &tmp);
++    /*
++     * Only notify about regions that are populated in ALL sources.
++     * Skip the calling source: it has implicitly declared itself populated
++     * for this range but may not have updated its bitmap yet.
++     */
++    QLIST_FOREACH(rdl, &rdm->rdl_list, next) {
++        ret = replay_by_populated_state(rdm, &section, source, true,
++                                        rdl_populate_cb, rdl);
+         if (ret) {
+             break;
+         }
+     }
+ 
+     if (ret) {
+-        /* Notify all already-notified listeners about discard. */
++        /*
++         * Rollback: notify discard for listeners we already notified,
++         * including the failing listener which may have been partially
++         * notified. Listeners must handle discard notifications for
++         * regions they didn't receive populate notifications for.
++         */
+         QLIST_FOREACH(rdl2, &rdm->rdl_list, next) {
+-            MemoryRegionSection tmp = *rdl2->section;
+-
++            replay_by_populated_state(rdm, &section, source, true,
++                                      rdl_discard_cb, rdl2);
+             if (rdl2 == rdl) {
+                 break;
+             }
+-            if (!memory_region_section_intersect_range(&tmp, offset, size)) {
+-                continue;
+-            }
+-            rdl2->notify_discard(rdl2, &tmp);
+         }
+     }
+     return ret;
+ }
+ 
+ void ram_discard_manager_notify_discard(RamDiscardManager *rdm,
++                                        RamDiscardSource *source,
+                                         uint64_t offset, uint64_t size)
+ {
+     RamDiscardListener *rdl;
+-
++    MemoryRegionSection section = {
++        .mr = rdm->mr,
++        .offset_within_region = offset,
++        .size = int128_make64(size),
++    };
++
++    g_assert(ram_discard_manager_find_source(rdm, source));
++
++    /*
++     * Only notify about ranges that were aggregately populated before this
++     * source's discard. Since the source has already updated its state,
++     * we use replay_by_populated_state with this source skipped - it will
++     * replay only the ranges where all OTHER sources are populated.
++     */
+     QLIST_FOREACH(rdl, &rdm->rdl_list, next) {
+-        MemoryRegionSection tmp = *rdl->section;
+-
+-        if (!memory_region_section_intersect_range(&tmp, offset, size)) {
+-            continue;
+-        }
+-        rdl->notify_discard(rdl, &tmp);
++        replay_by_populated_state(rdm, &section, source, true,
++                                  rdl_discard_cb, rdl);
+     }
+ }
+ 
+-void ram_discard_manager_notify_discard_all(RamDiscardManager *rdm)
++void ram_discard_manager_notify_discard_all(RamDiscardManager *rdm,
++                                            RamDiscardSource *source)
+ {
+     RamDiscardListener *rdl;
+ 
++    g_assert(ram_discard_manager_find_source(rdm, source));
++
+     QLIST_FOREACH(rdl, &rdm->rdl_list, next) {
+         rdl->notify_discard(rdl, rdl->section);
+     }
+ }
+ 
+-static int rdm_populate_cb(const MemoryRegionSection *section, void *opaque)
+-{
+-    RamDiscardListener *rdl = opaque;
+-
+-    return rdl->notify_populate(rdl, section);
+-}
+-
+ void ram_discard_manager_register_listener(RamDiscardManager *rdm,
+                                            RamDiscardListener *rdl,
+                                            MemoryRegionSection *section)
+@@ -220,7 +553,7 @@ void ram_discard_manager_register_listener(RamDiscardManager *rdm,
+     QLIST_INSERT_HEAD(&rdm->rdl_list, rdl, next);
+ 
+     ret = ram_discard_manager_replay_populated(rdm, rdl->section,
+-                                               rdm_populate_cb, rdl);
++                                               rdl_populate_cb, rdl);
+     if (ret) {
+         error_report("%s: Replaying populated ranges failed: %s", __func__,
+                      strerror(-ret));
+@@ -246,7 +579,7 @@ int ram_discard_manager_replay_populated_to_listeners(RamDiscardManager *rdm)
+ 
+     QLIST_FOREACH(rdl, &rdm->rdl_list, next) {
+         ret = ram_discard_manager_replay_populated(rdm, rdl->section,
+-                                                   rdm_populate_cb, rdl);
++                                                   rdl_populate_cb, rdl);
+         if (ret) {
+             break;
+         }
 -- 
 2.54.0
 
