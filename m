@@ -4,56 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36434CD4F26
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jun 2026 07:49:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1BDABCDB470
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jun 2026 07:49:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wbvrN-0002XO-UT; Tue, 23 Jun 2026 03:47:53 -0400
+	id 1wbvr0-0001jE-1s; Tue, 23 Jun 2026 03:47:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wbvrM-0002Q1-HV
- for qemu-devel@nongnu.org; Tue, 23 Jun 2026 03:47:52 -0400
+ id 1wbvqx-0001dD-Vi
+ for qemu-devel@nongnu.org; Tue, 23 Jun 2026 03:47:27 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wbvrK-0008TZ-U2
- for qemu-devel@nongnu.org; Tue, 23 Jun 2026 03:47:52 -0400
+ id 1wbvqw-0008Lj-8s
+ for qemu-devel@nongnu.org; Tue, 23 Jun 2026 03:47:27 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1782200870;
+ s=mimecast20190719; t=1782200845;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=xbxN/mAMtJtduNKSGnc8CLMOmhvQhZe+7JMf8JBpoeE=;
- b=LMPeu34yc0+D4/Oh9xeSJzKcV8N8p/FikrYMs+p9ExE0VczFby2BPFpcZ2I/F8G5MPrxPV
- 7VIN5UiZl/oPi9AT64XnazngINe8ufoDgIrw9fwaO0HrbnFmjBJKoQJ96xxZe96LyQCssM
- dS3WaSd1jGsWqSbEgFF8MgOXGWJChMM=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=J2hVP0nr0sq/C2NkLYrXw5Jgv60Hz1Ty7BafXMzfQbE=;
+ b=Z1wSkFGmj0H6C5eGsThAgWxu3qw7L9fydi4eDMOI/jqQfoRK1ER3sr0UisInhZeHpougmF
+ cOgvPbS/viYzvAQrVnO7LD9fiHxC7LjaKmTJ4J5+UP/fQNEFOuKU/TWse8LT5YboZ2F0bB
+ V8ewIYXpzor0l7i+X4no9nd+W7Zh9b8=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-125-_rvteuDuPDKgEUFpqHYMMw-1; Tue,
- 23 Jun 2026 03:47:45 -0400
-X-MC-Unique: _rvteuDuPDKgEUFpqHYMMw-1
-X-Mimecast-MFC-AGG-ID: _rvteuDuPDKgEUFpqHYMMw_1782200864
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-511-XNWNdAdTMLKuNFxo1f8OWg-1; Tue,
+ 23 Jun 2026 03:47:23 -0400
+X-MC-Unique: XNWNdAdTMLKuNFxo1f8OWg-1
+X-Mimecast-MFC-AGG-ID: XNWNdAdTMLKuNFxo1f8OWg_1782200842
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7351C1956042; Tue, 23 Jun 2026 07:47:44 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 44DFA180065C; Tue, 23 Jun 2026 07:47:22 +0000 (UTC)
 Received: from localhost (unknown [10.44.22.10])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 7BABA18005B3; Tue, 23 Jun 2026 07:47:42 +0000 (UTC)
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id A77E5195608C; Tue, 23 Jun 2026 07:47:20 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Tue, 23 Jun 2026 11:44:49 +0400
-Subject: [PATCH v4 34/34] tests/qtest: add D-Bus display hotplug test
+Date: Tue, 23 Jun 2026 11:44:45 +0400
+Subject: [PATCH v4 30/34] ui/gtk: handle console hotplug/unplug events
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260623-b4-ui-v4-34-4656aec3398d@redhat.com>
+Message-Id: <20260623-b4-ui-v4-30-4656aec3398d@redhat.com>
 References: <20260623-b4-ui-v4-0-4656aec3398d@redhat.com>
 In-Reply-To: <20260623-b4-ui-v4-0-4656aec3398d@redhat.com>
 To: qemu-devel@nongnu.org
@@ -67,35 +67,34 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>, 
  Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
  =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=4986;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=4058;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=Qj9RcQ/RNJdYxcuio5b6l1xNzAqRshVBUlgn/gQCRCY=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqOjleHugtq1awczxwrPe631sJZ/XWuYpHSNUtp
- mr1kRaVgzmJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCajo5XgAKCRDa6OEJdZac
- 5Rg5D/9pVvh+qjImMJXiXTX/sANWRQOf0/XqQow8vjvx4gPfc7bh4zQ+VbS3lVt3d9dQwOuOUZH
- EuNvJi0hqIyN89SM4sa09u6ULO1OsOuWPz4VC7YLfp9uHT4s+wTnuXKWIOJpsoC/+pTZtDcOWy2
- ijcSKgD+Bo1n+Dsq/1mNfZ4ct6ASp2oHrIWqrqbtbwUhqZFvwAwzVELL6tFCDbeSOYcjnJzYcrN
- wnBshLM39ksLEsxQqvsLnApRE26rWNna/75sG65ErzX1L6B9EBIvXFCeyHdZ+3L4YIUJdMltZZj
- LsiWh7CmrQEMAHMokzQBipE9N9nDziEYHuHRwmMg1vSvmKQMC3Q3LnduN2DDeiSMw6Olpl5vgOy
- pHgw2y2EjyGj1y+BDbGlLlB4vBjtJMtHl/1byM+x1D8p2ONd7S34w2qBOWh2Bq/4a65s+XnErk/
- OppWbx0jumkuporPkfq+MHCfBeFUNhokvdiT+HMJenmBllP89smoWGTiiMWxdN50sOLDYZk1kEq
- b+ahGkkzqlWOkaJh72v1Dr2f//2OB1XLxu7UGIQ6Qe2tsRHdQkMYBQP330EKaOrdwfFMpLXYVaI
- NYbRjxtBDxVK9+oGWqHCYzM/8EQUrchn514RdVxx60alX3fDNmLhlSPl8wwTMcCqMi21iDPGHA4
- pUPs9vhaONHoU2g==
+ bh=DEvqGsGEWMW9RpYRMNCT4E2Ku7Pud+lgNF7rPteiP5s=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqOjleg2mdQ/lcmfej2xo13b72VAPxR76hf+IEx
+ DcEjBrdAwOJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCajo5XgAKCRDa6OEJdZac
+ 5TQHD/40yElDNU4k1VOTePOSpb+WEOqL/Gf2wvFjKNhOKa9WmYjZlwLk46zs+zH5sVSEn19E1dx
+ MP6pZG9jq2Dm9G1Id8OLWvVaGmz7GqVgH5e/Iiq29BdFhp6bcDPXH2O0f0zizf2bmx/RvtXemmz
+ IpDkGfQ0H9fe5DvRRaTk8fKhM66ejgSbzjvHPLa07GQU+9BjRbGztiNDCnTtwundcbEdYYF3KgF
+ IkQoWQGCfFjpTpCjmmyvOHIsARCvfSwDt9NIY4SBn5XW5OCAob4nCvHRfVMcWES+9b1m+KRyJtW
+ tbc645YdfNztUbv/vAebWERp7uvpRpMBzF6n9+2edhcdI4sSTopkK+tIhpTg155HNcYi5A6kaJp
+ yxpgsp1lot30kLYFmlGnrOz1+jkAAxHC8wFIDTSwUsDsC2dSNL3pZVO4J1QNzcTxAdwMOUH6a77
+ Bt2AF1ur9SNa1kXThtNKQYw6UbfQA0rR23BvWTzVjWeVg8Bryh0DQWBmdoEjeCzZZMbFE+zDu9B
+ +pttDBjgxGw8Ba+ZEah+/uLqT2dVCZKvaBO9sMZhLxjwUmf/DiFq8cPxMMpVqIPT0pFRnDO4+X4
+ U+2WSsu2vBbuLc35JGaSzf01G+Ccr5fpRutcNykbIpkWj53eWGXec/Ab8dUicDvZVmSyvMJYEav
+ vOUqlaQT9KqTQeg==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
 Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 8
-X-Spam_score: 0.8
-X-Spam_bar: /
-X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,165 +110,138 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a qtest that verifies display consoles are dynamically added and
-removed over D-Bus when a bochs-display device is hotplugged and
-unplugged on a q35 machine.
+Register a console notifier so the GTK display dynamically creates and
+destroys VirtualConsole tabs when graphic consoles are added or removed
+at runtime (e.g. vfio-pci with display=on hotplug).
 
-The test plugs device_add a bochs-display, waits for the DEVICE_ADDED
-QMP event, and checks that the D-Bus VM interface reports a second
-console. It then device_del it, forces a system reset
-(q35 removal is ACPI-based and needs guest cooperation qtest cannot
-provide), waits for DEVICE_DELETED, and checks the console count again.
+Add skips consoles that already have a VC binding, remove skips unknown
+consoles.
 
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- tests/qtest/dbus-display-test.c | 101 +++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 99 insertions(+), 2 deletions(-)
+ include/ui/gtk.h |  1 +
+ ui/gtk.c         | 75 +++++++++++++++++++++++++++++++++++++++++++++++++++++++-
+ 2 files changed, 75 insertions(+), 1 deletion(-)
 
-diff --git a/tests/qtest/dbus-display-test.c b/tests/qtest/dbus-display-test.c
-index 5773776cad5..7838ce7323f 100644
---- a/tests/qtest/dbus-display-test.c
-+++ b/tests/qtest/dbus-display-test.c
-@@ -7,6 +7,8 @@
- #include <gio/gio.h>
- #include <gio/gunixfdlist.h>
- #include "libqtest.h"
-+#include "qobject/qdict.h"
-+#include "qobject/qstring.h"
- #include "ui/dbus-display1.h"
+diff --git a/include/ui/gtk.h b/include/ui/gtk.h
+index 53d0e447a23..5c9c34a069e 100644
+--- a/include/ui/gtk.h
++++ b/include/ui/gtk.h
+@@ -141,6 +141,7 @@ struct GtkDisplayState {
+     GdkCursor *null_cursor;
+     Notifier mouse_mode_notifier;
+     VMChangeStateEntry *vmse;
++    Notifier console_notifier;
+     gboolean free_scale;
+     gboolean keep_aspect_ratio;
  
- static GDBusConnection*
-@@ -38,11 +40,11 @@ test_dbus_p2p_from_fd(int fd)
+diff --git a/ui/gtk.c b/ui/gtk.c
+index e7a9156f206..7078d89d679 100644
+--- a/ui/gtk.c
++++ b/ui/gtk.c
+@@ -2332,7 +2332,8 @@ static bool gd_scale_valid(double scale)
+     return scale >= VC_SCALE_MIN && scale <= VC_SCALE_MAX;
  }
  
- static void
--test_setup(QTestState **qts, GDBusConnection **conn)
-+test_setup_args(QTestState **qts, GDBusConnection **conn, const char *args)
+-static void add_gfx_console(GtkDisplayState *s, QemuConsole *con)
++static VirtualConsole *
++add_gfx_console(GtkDisplayState *s, QemuConsole *con)
  {
-     int pair[2];
+     VirtualConsole *vc = g_new0(VirtualConsole, 1);
+     const DisplayChangeListenerOps *ops = &dcl_ops;
+@@ -2414,6 +2415,74 @@ static void add_gfx_console(GtkDisplayState *s, QemuConsole *con)
+     qemu_console_register_listener(con, &vc->gfx.dcl, ops);
  
--    *qts = qtest_init("-display dbus,p2p=yes -name dbus-test");
-+    *qts = qtest_init(args);
- 
-     g_assert_cmpint(qemu_socketpair(AF_UNIX, SOCK_STREAM, 0, pair), ==, 0);
- 
-@@ -52,6 +54,12 @@ test_setup(QTestState **qts, GDBusConnection **conn)
-     g_dbus_connection_start_message_processing(*conn);
- }
- 
-+static void
-+test_setup(QTestState **qts, GDBusConnection **conn)
-+{
-+    test_setup_args(qts, conn, "-display dbus,p2p=yes -name dbus-test");
+     gd_connect_vc_gfx_signals(vc);
++    return vc;
 +}
 +
- static void
- test_dbus_display_vm(void)
- {
-@@ -360,6 +368,92 @@ test_dbus_display_keyboard(void)
-     qtest_quit(qts);
- }
- 
-+static gsize
-+get_console_ids_count(GDBusConnection *conn)
++static void gd_vc_add_gfx(GtkDisplayState *s, QemuConsole *con)
 +{
-+    g_autoptr(GError) err = NULL;
-+    g_autoptr(QemuDBusDisplay1VMProxy) vm = NULL;
-+    GVariant *console_ids;
-+    gsize n_ids = 0;
++    VirtualConsole *vc;
++    int i;
 +
-+    vm = QEMU_DBUS_DISPLAY1_VM_PROXY(
-+        qemu_dbus_display1_vm_proxy_new_sync(
-+            conn,
-+            G_DBUS_PROXY_FLAGS_NONE,
-+            NULL,
-+            DBUS_DISPLAY1_ROOT "/VM",
-+            NULL,
-+            &err));
-+    g_assert_no_error(err);
-+
-+    console_ids = qemu_dbus_display1_vm_get_console_ids(
-+        QEMU_DBUS_DISPLAY1_VM(vm));
-+    if (console_ids) {
-+        n_ids = g_variant_n_children(console_ids);
-+    }
-+    return n_ids;
-+}
-+
-+static void
-+wait_device_event(QTestState *qts, const char *event_name, const char *id)
-+{
-+    QDict *resp, *data;
-+    QString *qstr;
-+
-+    for (;;) {
-+        resp = qtest_qmp_eventwait_ref(qts, event_name);
-+        data = qdict_get_qdict(resp, "data");
-+        if (!data || !qdict_get(data, "device")) {
-+            qobject_unref(resp);
-+            continue;
++    for (i = 0; i < (int)s->vcs->len; i++) {
++        VirtualConsole *v = g_ptr_array_index(s->vcs, i);
++        if (v->type == GD_VC_GFX && v->gfx.dcl.con == con) {
++            return;
 +        }
-+        qstr = qobject_to(QString, qdict_get(data, "device"));
-+        if (!strcmp(qstring_get_str(qstr), id)) {
-+            qobject_unref(resp);
++    }
++
++    vc = add_gfx_console(s, con);
++    gtk_widget_show_all(vc->tab_item);
++    gtk_widget_realize(vc->gfx.drawing_area);
++
++    if (s->free_scale) {
++        gd_update_windowsize(vc);
++    }
++
++    gd_update_caption(s);
++    gd_rebuild_vc_menu(s);
++}
++
++static void gd_vc_remove_gfx(GtkDisplayState *s, QemuConsole *con)
++{
++    VirtualConsole *vc = NULL;
++    guint idx;
++
++    for (idx = 0; idx < s->vcs->len; idx++) {
++        VirtualConsole *v = g_ptr_array_index(s->vcs, idx);
++        if (v->type == GD_VC_GFX && v->gfx.dcl.con == con) {
++            vc = v;
 +            break;
 +        }
-+        qobject_unref(resp);
 +    }
++    if (!vc) {
++        return;
++    }
++
++    if (s->kbd_owner == vc) {
++        gd_ungrab_keyboard(s);
++    }
++    if (s->ptr_owner == vc) {
++        gd_ungrab_pointer(s);
++    }
++
++    g_ptr_array_remove_index(s->vcs, idx);
++    gd_rebuild_vc_menu(s);
++    gd_update_caption(s);
 +}
 +
-+static void
-+test_dbus_display_hotplug(void)
++static void gd_console_notify(Notifier *n, void *data)
 +{
-+    g_autoptr(GDBusConnection) conn = NULL;
-+    QTestState *qts = NULL;
-+    gsize n;
++    GtkDisplayState *s = container_of(n, GtkDisplayState, console_notifier);
++    QemuConsoleEvent *event = data;
 +
-+    test_setup_args(&qts, &conn,
-+        "-machine q35"
-+        " -device pcie-root-port,id=rp0"
-+        " -display dbus,p2p=yes"
-+        " -name dbus-test");
-+
-+    n = get_console_ids_count(conn);
-+    g_assert_cmpuint(n, ==, 1);
-+
-+    qtest_qmp_device_add(qts, "bochs-display", "bochs0",
-+                         "{'bus': 'rp0'}");
-+
-+    n = get_console_ids_count(conn);
-+    g_assert_cmpuint(n, ==, 2);
-+
-+    /*
-+     * On q35, PCI device removal is ACPI-based and requires guest
-+     * acknowledgement. Since qtest has no guest OS, issue the delete
-+     * request and force removal via system reset.
-+     */
-+    qtest_qmp_device_del_send(qts, "bochs0");
-+    qtest_system_reset_nowait(qts);
-+    wait_device_event(qts, "DEVICE_DELETED", "bochs0");
-+
-+    n = get_console_ids_count(conn);
-+    g_assert_cmpuint(n, ==, 1);
-+
-+    g_clear_object(&conn);
-+    qtest_quit(qts);
-+}
-+
- int
- main(int argc, char **argv)
- {
-@@ -369,6 +463,9 @@ main(int argc, char **argv)
-     qtest_add_data_func("/dbus-display/console", GINT_TO_POINTER(false), test_dbus_display_console);
-     qtest_add_data_func("/dbus-display/console/map", GINT_TO_POINTER(true), test_dbus_display_console);
-     qtest_add_func("/dbus-display/keyboard", test_dbus_display_keyboard);
-+    if (qtest_has_machine("q35") && qtest_has_device("bochs-display")) {
-+        qtest_add_func("/dbus-display/hotplug", test_dbus_display_hotplug);
++    switch (event->type) {
++    case QEMU_CONSOLE_ADDED:
++        gd_vc_add_gfx(s, event->con);
++        break;
++    case QEMU_CONSOLE_REMOVED:
++        gd_vc_remove_gfx(s, event->con);
++        break;
 +    }
- 
-     return g_test_run();
  }
+ 
+ static void gd_create_menu_view(GtkDisplayState *s, DisplayOptions *opts)
+@@ -2694,6 +2763,9 @@ static void gtk_display_init(DisplayState *ds, DisplayOptions *opts)
+ 
+     gd_create_menus(s, opts);
+ 
++    s->console_notifier.notify = gd_console_notify;
++    qemu_console_add_notifier(&s->console_notifier);
++
+     gd_connect_signals(s);
+ 
+     gtk_notebook_set_show_tabs(GTK_NOTEBOOK(s->notebook), FALSE);
+@@ -2814,6 +2886,7 @@ static void gtk_display_cleanup(void)
+         return;
+     }
+     qemu_del_vm_change_state_handler(s->vmse);
++    qemu_console_remove_notifier(&s->console_notifier);
+     qemu_remove_mouse_mode_change_notifier(&s->mouse_mode_notifier);
+     gd_clipboard_cleanup(s);
+     g_signal_handlers_disconnect_by_func(s->notebook,
 
 -- 
 2.54.0
