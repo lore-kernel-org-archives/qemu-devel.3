@@ -4,118 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35ED7CD98F2
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jun 2026 13:24:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 591D7CDB46F
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jun 2026 13:52:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wc16r-00063d-2S; Tue, 23 Jun 2026 09:24:13 -0400
+	id 1wc1XY-0002FY-DA; Tue, 23 Jun 2026 09:51:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <freude@linux.ibm.com>)
- id 1wc16p-00062U-9N; Tue, 23 Jun 2026 09:24:11 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <utsingh@redhat.com>)
+ id 1wc147-00055W-9o
+ for qemu-devel@nongnu.org; Tue, 23 Jun 2026 09:21:23 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <freude@linux.ibm.com>)
- id 1wc16m-0003Z8-V9; Tue, 23 Jun 2026 09:24:11 -0400
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65NBn1u61858416; Tue, 23 Jun 2026 13:24:05 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:reply-to:subject:to; s=pp1;
- bh=on+0QBgqn0KWED0Zji4ZXL+ApebeYMnDHgGTNc+b7Hk=; b=cyNnsDF3xNGC
- bmJgPP0oNW+Nx3TW/qMFIOuQDZu71/rQiM/XEa+asP7qh3Ycjz+8yv+gtjtj/QY/
- zfm6UL7ojTqgKlFZz+SjICSkDRUU+kXkBiXROqyiQ2/RJCyg4xZNUgWFnXRUGoX0
- 0pcM9JIyeTThSSbYKAJ9PtDPjHIaQaDVdEdd/jHau7gxuGYrdb0PwSnf9ESGY9uv
- qNFHN5IRNlmMwgn44owtf2Ik1ZYEPSOaLNX9mntIcdnVJJZuj6KqwtPbX4mMyti0
- lnrzlVIigICo+kQOwYzdXaiIkV272zXL5c5PvgzLZaCGAHHTB7oR6moSp9F5e+Mg
- pqIX/KPyqQ==
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4ewg9hpx5b-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 23 Jun 2026 13:24:05 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 65NDJe30018678;
- Tue, 23 Jun 2026 13:24:04 GMT
-Received: from smtprelay01.wdc07v.mail.ibm.com ([172.16.1.68])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4ex56qbmn0-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 23 Jun 2026 13:24:04 +0000 (GMT)
-Received: from smtpav03.wdc07v.mail.ibm.com (smtpav03.wdc07v.mail.ibm.com
- [10.39.53.230])
- by smtprelay01.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 65NDO2Gv46662082
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 23 Jun 2026 13:24:02 GMT
-Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id CEB275805F;
- Tue, 23 Jun 2026 13:24:02 +0000 (GMT)
-Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 8641E58054;
- Tue, 23 Jun 2026 13:24:01 +0000 (GMT)
-Received: from ltc.linux.ibm.com (unknown [9.5.196.140])
- by smtpav03.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 23 Jun 2026 13:24:01 +0000 (GMT)
+ (Exim 4.90_1) (envelope-from <utsingh@redhat.com>)
+ id 1wc145-0008HX-CS
+ for qemu-devel@nongnu.org; Tue, 23 Jun 2026 09:21:23 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1782220879;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=QQTzJNCTunADVCOzzNxf5Iq4+GwioWcKVXffcodEvBw=;
+ b=JLc76nfVC95SZmappI4iAew5X/8Dsa7NebLfuNnvJ9AQd5/kfwUQ89pntqIvkPFIi2QnJb
+ MKZuyfP19Uwc+zaKpwWH4er5pB1D4PnZ1ifGTYIArm+uIVJLufXf4ENKlm+44XhEeBlIwp
+ ZXE2Qr2Z3ZRaNy0BD1tv2W2YbyZdKDg=
+Received: from mail-pf1-f200.google.com (mail-pf1-f200.google.com
+ [209.85.210.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-160-wC7YIcbcP9WkUIV6dl7Ezg-1; Tue, 23 Jun 2026 09:20:10 -0400
+X-MC-Unique: wC7YIcbcP9WkUIV6dl7Ezg-1
+X-Mimecast-MFC-AGG-ID: wC7YIcbcP9WkUIV6dl7Ezg_1782220809
+Received: by mail-pf1-f200.google.com with SMTP id
+ d2e1a72fcca58-84240683a82so840842b3a.1
+ for <qemu-devel@nongnu.org>; Tue, 23 Jun 2026 06:20:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1782220809; x=1782825609; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=QQTzJNCTunADVCOzzNxf5Iq4+GwioWcKVXffcodEvBw=;
+ b=LGqO0bEtqBSProhFN5NBLhRPR2JO+xwBhYS3LdOIzpWLUcTA/nb71FG/GlJbaBeCv1
+ 9J+zHKOh9QIBpbTvqjOgqGhXbewPvW86U2TDyZigcxpSgXmcRboZen9Rv4uaUdlW2TAX
+ ETv1KaRTkO6FsQb8cQcj6MW9l1eFYvOsv9dgZ7GGe7WcUsLnR8AV/lb7PBkCmEKoG617
+ Pe3vCJf6zL76eGJzfR29+qhIHe6suGu2yUqrEzZTXIxW+CgOizVb2lKfEG19Fzu0W7aH
+ 4+drbzCPpR/23U3oSEapVMa84ki8NzzSFTfdByS1bfDNfiEZXDlxoi4Cvgu9GmLixxK/
+ aPZg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1782220809; x=1782825609;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=QQTzJNCTunADVCOzzNxf5Iq4+GwioWcKVXffcodEvBw=;
+ b=rEuF5+g/bjK4eFWyi/fabSVxCLNCAnajpZY/O6mIlyFIIHGSQ9aTWRmalmqwWJxxqm
+ t9mth3guRkIp97nq7zMCnp6YBOTGbjemNyf16Jb/cIVZiZrfpHB1jJWr+ngQhSrX4w1Z
+ +pjHPp9B3muP/CZ170bZP/OWgPso5CUvLMR++P1eA7yyomeHwrz72iL4WxEk5N6MGR+t
+ tQBgmLdXhfxLwcT0vpjIozmr0nF5Ood/p+Cdn3QFa27jl4Uk88EcXvVxotGxVHtEiMvm
+ UB6nymoJjisdBCY7LzbNNjVqL0XbDMbza2IekqgZG2rHD1i+Zrl5djU9e9gMZP+9YTGt
+ zzDg==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ8USb61AGmO4xja6QeWd10+fEDQOV+w/mQQq1GB744liLGbBVz3l+Vxd+AO4QCuu706hrn1daF+1mCN@nongnu.org
+X-Gm-Message-State: AOJu0YxqVu8Ez4v6n+OwhEMQtrTunSVeX9Hdephx4Ducu/LfUehbeAC4
+ MZTuwVqxhMFhg5woJL+kZKrm9ij8Q5W7f2FuD1TRkOO622DlLu5/7uXxh/H086ch9fLyNpM07uc
+ FTWkxTHIWjb3AH4vTvxU0MrNVnyBaCeegpJzo64BAmoR+vtJiRHIHwN0=
+X-Gm-Gg: AfdE7clSeBxxV+zw8gwVoSsi19ociQIX8w+IV+PcpsmgyICIGWeEOuIaxFmhavqKhA8
+ kJwJ35ADpF2syU0bHU2Ms92Xr2mXnJ6rVSKrbvtj3/hWqJrfCstzfzZPiVecSy1ugTtaTFmlfyr
+ Aq+bZweET5l2va5OjGCHNar6jr2YX0bIfeTnh3fTmJPC+2r598YyLWgSHbO9lmnKyGc0eGa3vT0
+ 3NXUJ7NZiNorQPOtrIt+T7YRT6iHGaQZDjR2aCvDy89k7o5erI7o2y/UQjZ1vMYNYdGEiqgipyh
+ GuB8Me37+XwZcHzHBVa3Y1oSf9E1uwNU2QXs0tToIC3+yCwEzE1LrKviLhHLwmZCvJbIOuQrQQ7
+ JlDpX9nSWIrxmg4+a5aoYrnr2kWgwJdsTMxlclE5B33alHKbC9JJn
+X-Received: by 2002:a05:6a00:9284:b0:842:307b:b9d0 with SMTP id
+ d2e1a72fcca58-84591cec0b8mr3493369b3a.30.1782220808518; 
+ Tue, 23 Jun 2026 06:20:08 -0700 (PDT)
+X-Received: by 2002:a05:6a00:9284:b0:842:307b:b9d0 with SMTP id
+ d2e1a72fcca58-84591cec0b8mr3493281b3a.30.1782220807651; 
+ Tue, 23 Jun 2026 06:20:07 -0700 (PDT)
+Received: from utsingh-thinkpadx1carbongen12.bengluru.csb
+ ([2405:201:d019:c162:22c9:3093:86cf:366d])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-84564ecd784sm11194887b3a.54.2026.06.23.06.20.04
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 23 Jun 2026 06:20:07 -0700 (PDT)
+From: Utkarsh Singh <utsingh@redhat.com>
+To: Keith Busch <kbusch@kernel.org>,
+	Klaus Jensen <its@irrelevant.dk>
+Cc: Jesper Devantier <foss@defmacro.it>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ qemu-block@nongnu.org, qemu-devel@nongnu.org,
+ Maurizio Lombardi <mlombard@redhat.com>,
+ John Meneghini <jmeneghi@redhat.com>, Utkarsh Singh <utsingh@redhat.com>
+Subject: [PATCH] hw/nvme: add user controlled 'vid' property
+Date: Tue, 23 Jun 2026 18:49:46 +0530
+Message-ID: <20260623131946.46879-1-utsingh@redhat.com>
+X-Mailer: git-send-email 2.54.0
 MIME-Version: 1.0
-Date: Tue, 23 Jun 2026 15:24:01 +0200
-From: Harald Freudenberger <freude@linux.ibm.com>
-To: Finn Callies <fcallies@linux.ibm.com>
-Cc: richard.henderson@linaro.org, iii@linux.ibm.com, david@kernel.org,
- thuth@redhat.com, berrange@redhat.com, qemu-s390x@nongnu.org,
- qemu-devel@nongnu.org, linux390-list@tuxmaker.boeblingen.de.ibm.com,
- linux-s390@vger.kernel.org, dengler@linux.ibm.com,
- borntraeger@linux.ibm.com, cohuck@redhat.com
-Subject: Re: [PATCH v7 16/17] crypto: Add aes-helpers file to support some AES
- modes
-Mail-Reply-To: freude@linux.ibm.com
-In-Reply-To: <b8f22f51-2613-4213-a5a6-d6525b9c253e@linux.ibm.com>
-References: <20260617094820.34402-1-freude@linux.ibm.com>
- <20260617094820.34402-17-freude@linux.ibm.com>
- <b8f22f51-2613-4213-a5a6-d6525b9c253e@linux.ibm.com>
-Message-ID: <a83b80f1c5dfb9b37bd2786667a8960a@linux.ibm.com>
-X-Sender: freude@linux.ibm.com
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: ce4kH9BbpJPCbCiOmZpTTtJCgXZk4-hP
-X-Proofpoint-GUID: ce4kH9BbpJPCbCiOmZpTTtJCgXZk4-hP
-X-Authority-Analysis: v=2.4 cv=Y4XIdBeN c=1 sm=1 tr=0 ts=6a3a88f5 cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
- a=kj9zAlcOel0A:10 a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=Y2IxJ9c9Rs8Kov3niI8_:22 a=VnNF1IyMAAAA:8
- a=Cxrpp1Ua33vx6Cnz8XsA:9 a=CjuIK1q_8ugA:10
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjIzMDEwOSBTYWx0ZWRfX0eRgMEppypHB
- Mv3UtIXUfT0L15quEJFt1k8pQkesgHvrh75U2y0A16uIrp1bWplPluFElYQe1MeiqqZWBd6sC3N
- OSxNT2EZgViJpETOOA3cOGV5vVKZKw67H4OZMJlvfDGFouIqwbavGeDYWhM7hg6ftbC2tydPffy
- s1fGp1TUXekejLou6pbAdqkExBLoEdIZHCeWuUW7Rz1UM0RQwiEOmBXp402jPsKwGl0uJFplKZV
- B8IYv+4iL8+GDXcT0jwtJV1ObVihN8+zfKN0Hi/lM1TPMpAn/b3Qq08cT20aANdkIywHYTyQqiE
- 4gJe9QbbPy7kDktTFk/VXkkKuHILDHl7bRB9X3FfVE2W7f7bMuI7e5edRMWtVxWZRtLsSgEExzS
- Y+yuNZxiehbnI3W9aT5Msax0NOcfdPhO7g7txBNspnMmi/SUtm1rsqx/mGPyX7NnUNj+lmNBM5f
- x5BjGyKMCCtjNteLXcw==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjIzMDEwOSBTYWx0ZWRfXzNta9Ch6HFEF
- EYDLNBR0k2lBhWH7XHM3rAg3LKwy4hXTk2jU7KgVMe1YRjAE/0LKrws1tpORqS/POzwW/iCE9lA
- OTxxkLP2wtIiLdps6gMRVwIA+JpBDVM=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-23_03,2026-06-23_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 priorityscore=1501 malwarescore=0 lowpriorityscore=0 spamscore=0
- clxscore=1015 suspectscore=0 impostorscore=0 phishscore=0 bulkscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606230109
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=freude@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=utsingh@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Tue, 23 Jun 2026 09:51:47 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -127,40 +120,98 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: freude@linux.ibm.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026-06-18 08:31, Finn Callies wrote:
-> On 17.06.26 11:48, Harald Freudenberger wrote:
->> Add a new file crypto/aes-helpers.c with simple functions
->> to support some AES modes:
->> - AES cbc: AES_cbc_encrypt() AES_cbc_decrypt()
->> - AES ctr: AES_ctr_encrypt()
->> - AES xts: AES_xts_encrypt() AES_xts_decrypt()
->> and some AES related helpers:
->> - AES_xor()
->> - AES_xts_prep_next_tweak()
->> 
->> Signed-off-by: Harald Freudenberger <freude@linux.ibm.com>
-> 
-> I like this, but why do you do this so late in the series instead of
-> implementing it directly like that? Otherwise:
-> 
-> Reviewed-by: Finn Callies <fcallies@linux.ibm.com>
+Add a user-configurable 'vid' parameter to allow overriding the default
+PCI vendor ID. This enables testing of vendor-specific quirks in guest
+operating systems.
 
-This was a suggestion by Holger. And I want to have this separate to
-be able to remove this and the next patch without the need to rework
-the implementation.
+The parameter accepts a 16-bit hexadecimal value and defaults to Red Hat
+vendor ID (0x1b36). It is mutually exclusive with the 'use-intel-id' flag
+to prevent conflicting configurations.
 
-> 
->> ---
->>   crypto/aes-helpers.c | 101 
->> +++++++++++++++++++++++++++++++++++++++++++
->>   crypto/meson.build   |   1 +
->>   include/crypto/aes.h |  14 ++++++
->>   3 files changed, 116 insertions(+)
->>   create mode 100644 crypto/aes-helpers.c
-> 
-> [ snip ]
+Suggested-by: Maurizio Lombardi <mlombard@redhat.com>
+Suggested-by: John Meneghini <jmeneghi@redhat.com>
+Signed-off-by: Utkarsh Singh <utsingh@redhat.com>
+---
+ docs/system/devices/nvme.rst | 8 +++++++-
+ hw/nvme/ctrl.c               | 8 +++++++-
+ hw/nvme/nvme.h               | 1 +
+ 3 files changed, 15 insertions(+), 2 deletions(-)
+
+diff --git a/docs/system/devices/nvme.rst b/docs/system/devices/nvme.rst
+index 98a4401043..0c0c861579 100644
+--- a/docs/system/devices/nvme.rst
++++ b/docs/system/devices/nvme.rst
+@@ -51,7 +51,7 @@ parameters.
+ ``use-intel-id`` (default: ``off``)
+   Since QEMU 5.2, the device uses a QEMU allocated "Red Hat" PCI Device and
+   Vendor ID. Set this to ``on`` to revert to the unallocated Intel ID
+-  previously used.
++  previously used. This parameter is mutually exclusive with ``vid``.
+ 
+ ``ocp`` (default: ``off``)
+   The Open Compute Project defines the Datacenter NVMe SSD Specification that
+@@ -65,6 +65,12 @@ parameters.
+   to more closely impersonate a particular device type. The model name
+   can be a maximum of 40 characters in length.
+ 
++``vid`` (default: ``0x1b36`` for Red Hat)
++  Override the default PCI vendor ID. This can be used when needing to
++  more closely impersonate a particular device type or test vendor-specific
++  quirks. The vendor ID must be a 16-bit hexadecimal value. This parameter
++  is mutually exclusive with ``use-intel-id``.
++
+ ``firmware-version`` (default: current QEMU version number)
+   Override the default reported firmware version, which can be used when
+   needing to more closely impersonate a particular device type. The version
+diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
+index 815f39173c..2e57fd3585 100644
+--- a/hw/nvme/ctrl.c
++++ b/hw/nvme/ctrl.c
+@@ -8610,6 +8610,11 @@ static bool nvme_check_params(NvmeCtrl *n, Error **errp)
+         return false;
+     }
+ 
++    if (params->use_intel_id && params->vid != PCI_VENDOR_ID_REDHAT) {
++        error_setg(errp, "use_intel_id and vid are mutually exclusive");
++        return false;
++    }
++
+     if (params->model &&
+         strlen(params->model) > NVME_ID_CTRL_MN_MAX_LEN) {
+         error_setg(errp, "'model' parameter '%s' can be at most '%d' characters",
+@@ -8976,7 +8981,7 @@ static bool nvme_init_pci(NvmeCtrl *n, PCIDevice *pci_dev, Error **errp)
+         pci_config_set_vendor_id(pci_conf, PCI_VENDOR_ID_INTEL);
+         pci_config_set_device_id(pci_conf, PCI_DEVICE_ID_INTEL_NVME);
+     } else {
+-        pci_config_set_vendor_id(pci_conf, PCI_VENDOR_ID_REDHAT);
++        pci_config_set_vendor_id(pci_conf, n->params.vid);
+         pci_config_set_device_id(pci_conf, PCI_DEVICE_ID_REDHAT_NVME);
+     }
+ 
+@@ -9401,6 +9406,7 @@ static const Property nvme_props[] = {
+     DEFINE_PROP_STRING("serial", NvmeCtrl, params.serial),
+     DEFINE_PROP_STRING("model", NvmeCtrl, params.model),
+     DEFINE_PROP_STRING("firmware-version", NvmeCtrl, params.firmware_version),
++    DEFINE_PROP_UINT16("vid", NvmeCtrl, params.vid, PCI_VENDOR_ID_REDHAT),
+     DEFINE_PROP_UINT32("cmb_size_mb", NvmeCtrl, params.cmb_size_mb, 0),
+     DEFINE_PROP_UINT32("num_queues", NvmeCtrl, params.num_queues, 0),
+     DEFINE_PROP_UINT32("max_ioqpairs", NvmeCtrl, params.max_ioqpairs, 64),
+diff --git a/hw/nvme/nvme.h b/hw/nvme/nvme.h
+index 5ef3ebee29..25d46ae8d0 100644
+--- a/hw/nvme/nvme.h
++++ b/hw/nvme/nvme.h
+@@ -544,6 +544,7 @@ typedef struct NvmeParams {
+     char     *serial;
+     char     *model;
+     char     *firmware_version;
++    uint16_t vid;
+     uint32_t num_queues; /* deprecated since 5.1 */
+     uint32_t max_ioqpairs;
+     uint16_t msix_qsize;
+-- 
+2.54.0
+
 
