@@ -4,56 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76E79CDB470
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jun 2026 07:47:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55732CDB470
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jun 2026 07:48:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wbvqP-0006ti-28; Tue, 23 Jun 2026 03:46:53 -0400
+	id 1wbvqC-00069I-KN; Tue, 23 Jun 2026 03:46:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wbvqM-0006le-Rx
- for qemu-devel@nongnu.org; Tue, 23 Jun 2026 03:46:50 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1wbvq6-000639-Bt
+ for qemu-devel@nongnu.org; Tue, 23 Jun 2026 03:46:35 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wbvqL-0008Ij-A3
- for qemu-devel@nongnu.org; Tue, 23 Jun 2026 03:46:50 -0400
+ id 1wbvq3-0008Gl-Bm
+ for qemu-devel@nongnu.org; Tue, 23 Jun 2026 03:46:32 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1782200808;
+ s=mimecast20190719; t=1782200790;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=vE9pwrVCF8aM0xWfTmklyEyT4IZO6+MxpFsjg7EbdaY=;
- b=GudPXfbR5lKtPTvE+4EHgpwl0Tnn4CI2viR2QXhSo7sdcd+k6SCvtayBb2hMVUqVr1aXHb
- vM0DNlh6vVwM2AmTG7vxumhHtA0gEHxKFnc2KAVOigS3YA6zeoAqsg935hWiYfseJYK/ia
- 4ZqCeG2V02ce8xcgjSUkgClfCF3Ldbg=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=gAZq6fm90RH8+U0CFVr2YIwSu9l8OeLSPfjmA/gp7DY=;
+ b=XP74ZAwJHzj8mh+LpymbF3RCEIiF12gE1nDmNHRey5D3tqvZM36nEoHjkBkQ1ljrpI8WgH
+ 3Ren5dxNvuKMlqj5JGrsqVhZKwGNc0dcEiwugULXBz0BMVvlqKbkPpMsTej9LVZU3rbfqp
+ g4pCAVKb0WZmrwSXZXoKBByHVZw1/KU=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-582-APPKOgnFOSO0TIUBThpvXA-1; Tue,
- 23 Jun 2026 03:46:45 -0400
-X-MC-Unique: APPKOgnFOSO0TIUBThpvXA-1
-X-Mimecast-MFC-AGG-ID: APPKOgnFOSO0TIUBThpvXA_1782200803
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-407-czEWwAc0M-unqmWY3d-ARw-1; Tue,
+ 23 Jun 2026 03:46:27 -0400
+X-MC-Unique: czEWwAc0M-unqmWY3d-ARw-1
+X-Mimecast-MFC-AGG-ID: czEWwAc0M-unqmWY3d-ARw_1782200786
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7048D195604D; Tue, 23 Jun 2026 07:46:43 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1E1A41955E9F; Tue, 23 Jun 2026 07:46:26 +0000 (UTC)
 Received: from localhost (unknown [10.44.22.10])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 0AE0B195608E; Tue, 23 Jun 2026 07:46:41 +0000 (UTC)
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id D285A1800347; Tue, 23 Jun 2026 07:46:24 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Tue, 23 Jun 2026 11:44:38 +0400
-Subject: [PATCH v4 23/34] ui/console: add console event notifier infrastructure
+Date: Tue, 23 Jun 2026 11:44:35 +0400
+Subject: [PATCH v4 20/34] ui/cocoa: implement display cleanup
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260623-b4-ui-v4-23-4656aec3398d@redhat.com>
+Message-Id: <20260623-b4-ui-v4-20-4656aec3398d@redhat.com>
 References: <20260623-b4-ui-v4-0-4656aec3398d@redhat.com>
 In-Reply-To: <20260623-b4-ui-v4-0-4656aec3398d@redhat.com>
 To: qemu-devel@nongnu.org
@@ -67,25 +67,25 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>, 
  Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
  =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2919;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1474;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=4PGzFZLS6rKgzOHttg/VPScYJxVEdGX6PfcaaAG0RCE=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqOjleW32kOJvB8G3Cux+cjBWpqr1D26UJyv5pr
- 9JXXwWGA0aJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCajo5XgAKCRDa6OEJdZac
- 5b0xD/4u4MsiEyuD3JYmacoly/A8k2Gg3ucvF/pufIgzaxOYC3uN0fo9559P6Xzu3uMmrl2BfY8
- yURqvZhbo3TP9sBAiA1USHuDklePYzjCN+VObI/q5A4bUwVymjtHJMGHb1EMftLFbSNibpnaho0
- Yf5DGx72+dH8YS5A3PlqxH9RooWl5YRbpj7F6K/qB8Fei0ZUKx3wVY8xxcZg7NC/RtcTLkabaxb
- 1tvRKeWKMDhinkypPgZviOwE+mfEJPsNUxi9r2dMD+GOjwOa/82TY17JwqaYq9ftaEhiTuitWkM
- WWdObNcfCYgYWHShYad2YP0Pj2LHpvrPBRyYIBPecFiJefon79N1kZRAKyCYYI9TSNkQKOl1R46
- NeDJj1PTquk9iz2Np0NloeuCBar4XQ1A00BPUPa5HvbURuIFjgI8gWF5FhuUL8VActSPZjT7zIN
- 7xedj1dempG5t/WL2qR811UL4GbriBX9W65f7JUCLPJQARf8mpcNo870MhdXDQCsKGgXwQQJy0g
- ptF1+Ink+gXybgSrZTHO75ARuCMwQEq9KMeIQaHLP8n16xx9U8NzUkJN+HJtXIPlFspC2e2OlXl
- DS+tHtkM8Fww1YE+IH6CzBvcmuZWNS20FTsYcKEtewIxpRlKlTBzN4N+norGmqMps+pYH2wmnzk
- DDi9cMgxJ/RhRDg==
+ bh=HykoT1JvYFnZV/NmtGmkJ57XBE/a/Ecau6SBb5B8jB8=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqOjleM5UCU9JOBXu5efjrJAIRD2e0RYKR1bXFf
+ 8d/7dnEhHOJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCajo5XgAKCRDa6OEJdZac
+ 5Y7iEACLTA24iJwEuWKv9Zcivcg76lOSGwaBiUoUxG1ooCVz4Qr7+HoIUxt7ffzD3Hcq90LJUcn
+ sAnSqru2VXDK8nJRB30Qn372bpNtOXlyx7sCTyfwAS5aFzojX7ZV+qvfM9FOn3Z+JUNXMHf1Otv
+ u6Ptj5ribw79PAOp9TVIOjL+PX0VsopoLHwmTgQHYzL/NgSqAEixggBXtfbzf4taMxiYdRVHWo/
+ s+Wxhajw+7LQRXg8t17oGeJBfho05QVh/m7GK61Xdu6s+V4/w6fHW4RE2LULYbPQcSIk7KYhRRe
+ xz6CXaU2+JtzNaW2x8rF1MQIaIA/+fIXr+WpxPbTdkdhAqyOaSCG7LmJ9PyVfbrWV0kEPbxEijo
+ 9p9mudvUnTjmr5ppMSXI5Dbhpzg6yK0liOErDJ7kNhCse7KhrW2pzZ5CMRzhHlql8/DrLitQju6
+ 3X7q/zrIMbDfT0tHDUo68j2QOxdksUq1Y1IIxljehBtOL7TCCBtas6we/kttzVNsQ/Sxu/BNfAp
+ sAiOWQI0ngiG/CO7K5PfozlJyV1xm7lTA6cb3qMEm2h4tmmo5ukOCJA7uthuvcIfD+u/NmnWuw3
+ MSwgXRbKdMWsB6YU8WluYZDixiW8lhS87uBVTNsNc5Z2jNDSMVS98jV+TzksFYtWdJaRK82d+5R
+ 4stPLxhXDz1SGgQ==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 8
@@ -93,7 +93,7 @@ X-Spam_score: 0.8
 X-Spam_bar: /
 X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -111,98 +111,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a NotifierList to DisplayState so display backends can be notified
-when consoles are added or removed at runtime.
-
-No events are fired yet, that follows in the next commits.
+Move cbowner release from QemuCocoaAppController -dealloc to
+cocoa_display_cleanup(), since cbowner is allocated in
+cocoa_display_init() and cleanup is the symmetric teardown path.
 
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- include/ui/console.h | 18 ++++++++++++++++++
- ui/console.c         | 23 +++++++++++++++++++++++
- 2 files changed, 41 insertions(+)
+ ui/cocoa.m | 19 +++++++++++++++++--
+ 1 file changed, 17 insertions(+), 2 deletions(-)
 
-diff --git a/include/ui/console.h b/include/ui/console.h
-index 5322c56009d..29bf7228883 100644
---- a/include/ui/console.h
-+++ b/include/ui/console.h
-@@ -415,6 +415,24 @@ const char *qemu_display_get_vc(DisplayOptions *opts);
- void qemu_display_cleanup(void);
- void qemu_display_help(void);
+diff --git a/ui/cocoa.m b/ui/cocoa.m
+index e157ad01d85..3751be37922 100644
+--- a/ui/cocoa.m
++++ b/ui/cocoa.m
+@@ -1206,8 +1206,6 @@ - (void) dealloc
+     COCOA_DEBUG("QemuCocoaAppController: dealloc\n");
  
-+/*
-+ * Console notifications:
-+ * Handlers must be idempotent, it may notify multiple times.
-+ */
-+typedef enum {
-+    QEMU_CONSOLE_ADDED,
-+    QEMU_CONSOLE_REMOVED,
-+} QemuConsoleEventType;
-+
-+typedef struct QemuConsoleEvent {
-+    QemuConsoleEventType type;
-+    QemuConsole *con;
-+} QemuConsoleEvent;
-+
-+void qemu_console_add_notifier(Notifier *notifier);
-+void qemu_console_remove_notifier(Notifier *notifier);
-+void qemu_console_notify(QemuConsoleEventType type, QemuConsole *con);
-+
- /* vnc.c */
- void vnc_display_add_client(const char *id, int csock, bool skipauth);
- int vnc_display_password(const char *id, const char *password, Error **errp);
-diff --git a/ui/console.c b/ui/console.c
-index 1fe3e3a3a6c..76851bc129d 100644
---- a/ui/console.c
-+++ b/ui/console.c
-@@ -70,6 +70,7 @@ struct DisplayState {
-     bool refreshing;
+     [cocoaView release];
+-    [cbowner release];
+-    cbowner = nil;
  
-     QLIST_HEAD(, DisplayChangeListener) listeners;
-+    NotifierList console_notifiers;
- };
- 
- static DisplayState *display_state;
-@@ -84,6 +85,16 @@ static bool console_compatible_with(QemuConsole *con,
- static QemuConsole *qemu_graphic_console_lookup_unused(void);
- static void dpy_set_ui_info_timer(void *opaque);
- 
-+void qemu_console_notify(QemuConsoleEventType type, QemuConsole *con)
-+{
-+    DisplayState *ds = get_alloc_displaystate();
-+    QemuConsoleEvent event = {
-+        .type = type,
-+        .con = con,
-+    };
-+    notifier_list_notify(&ds->console_notifiers, &event);
-+}
-+
- static void gui_update(void *opaque)
- {
-     uint64_t interval = GUI_REFRESH_INTERVAL_IDLE;
-@@ -1056,10 +1067,22 @@ static DisplayState *get_alloc_displaystate(void)
- {
-     if (!display_state) {
-         display_state = g_new0(DisplayState, 1);
-+        notifier_list_init(&display_state->console_notifiers);
-     }
-     return display_state;
+     [super dealloc];
+ }
+@@ -2038,9 +2036,26 @@ static void cocoa_display_init(DisplayState *ds, DisplayOptions *opts)
+     qemu_main = cocoa_main;
  }
  
-+void qemu_console_add_notifier(Notifier *notifier)
++static void cocoa_display_cleanup(void)
 +{
-+    DisplayState *ds = get_alloc_displaystate();
-+    notifier_list_add(&ds->console_notifiers, notifier);
++    if (!kbd) {
++        return;
++    }
++
++    qemu_console_unregister_listener(&dcl);
++    g_clear_pointer(&kbd, qkbd_state_free);
++    qemu_remove_mouse_mode_change_notifier(&mouse_mode_change_notifier);
++    qemu_clipboard_peer_unregister(&cbpeer);
++    g_clear_pointer(&cbinfo, qemu_clipboard_info_unref);
++    qemu_event_destroy(&cbevent);
++    [cbowner release];
++    cbowner = nil;
 +}
 +
-+void qemu_console_remove_notifier(Notifier *notifier)
-+{
-+    notifier_remove(notifier);
-+}
-+
- /*
-  * Called by main(), after creating QemuConsoles
-  * and before initializing ui (sdl/vnc/...).
+ static QemuDisplay qemu_display_cocoa = {
+     .type       = DISPLAY_TYPE_COCOA,
+     .init       = cocoa_display_init,
++    .cleanup    = cocoa_display_cleanup,
+ };
+ 
+ static void register_cocoa(void)
 
 -- 
 2.54.0
