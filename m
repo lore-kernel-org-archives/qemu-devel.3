@@ -4,69 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26A16CDB46F
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jun 2026 16:04:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31632CDB471
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jun 2026 16:07:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wc3bE-0007gP-0Q; Tue, 23 Jun 2026 12:03:44 -0400
+	id 1wc3dz-00009B-Fd; Tue, 23 Jun 2026 12:06:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wc3b6-0007cf-S2
- for qemu-devel@nongnu.org; Tue, 23 Jun 2026 12:03:37 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1wc3do-00007p-4K
+ for qemu-devel@nongnu.org; Tue, 23 Jun 2026 12:06:25 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wc3b5-0007Sd-5B
- for qemu-devel@nongnu.org; Tue, 23 Jun 2026 12:03:36 -0400
+ id 1wc3dk-0000F7-I8
+ for qemu-devel@nongnu.org; Tue, 23 Jun 2026 12:06:21 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1782230612;
+ s=mimecast20190719; t=1782230777;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding;
- bh=ryLJiI6VAKv+23fMh2DYiM3UFe+EYNutIItneADmm/w=;
- b=Pc/STZ2ogE2zQX46qziTQEuKc9nWAPYSGSeS8sCTWMs6QxhY8yCMPrE883Rde5RvToV8px
- D3nAAekWClSEZeQsocwTwVVc1/hRt800c6mmbeNBYwDqLm2+2F68Boh5dMjpvZrB9mkfJC
- W9HVIRQCgtJQ0b/PDjCZ30V0s7/pfPc=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=urnVjdC4n79h7mkJjWeuXW4KGmz2IR+4qeDfrJ25PV4=;
+ b=GouhJloPaJn1F+Qlbb5sfhmjkAkCJzn+jjIwEaBl5ZHoB+phvR96qQfEGd8dOarKQWQitD
+ MqzIupuYRxUndzMyniojnm1HmCuT8FnZWLgpj3p8pcO2HjswT3RE+hZRyDXUMZASkVcbBC
+ C1QifGFAQq/0D1gZN/22jQ7LZGI6uhE=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-358-69augNA3PZWq0iwAnO-UFw-1; Tue,
- 23 Jun 2026 12:03:31 -0400
-X-MC-Unique: 69augNA3PZWq0iwAnO-UFw-1
-X-Mimecast-MFC-AGG-ID: 69augNA3PZWq0iwAnO-UFw_1782230610
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-655-7R0TyKIQP0GC-HLxVhFaVw-1; Tue,
+ 23 Jun 2026 12:06:15 -0400
+X-MC-Unique: 7R0TyKIQP0GC-HLxVhFaVw-1
+X-Mimecast-MFC-AGG-ID: 7R0TyKIQP0GC-HLxVhFaVw_1782230775
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 32A471802666; Tue, 23 Jun 2026 16:03:30 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id CB6A51954B17; Tue, 23 Jun 2026 16:06:14 +0000 (UTC)
 Received: from berrange.com (unknown [10.44.34.133])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 623613000B4E; Tue, 23 Jun 2026 16:03:27 +0000 (UTC)
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id E62B3180074C; Tue, 23 Jun 2026 16:06:12 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Hanna Reitz <hreitz@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- qemu-block@nongnu.org,
+Cc: qemu-block@nongnu.org, Hanna Reitz <hreitz@redhat.com>,
+ Kevin Wolf <kwolf@redhat.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH] iotests: increase timeouts for tests to 5 minutes
-Date: Tue, 23 Jun 2026 17:03:26 +0100
-Message-ID: <20260623160326.2346255-1-berrange@redhat.com>
+Subject: [PATCH] iotests: add --quiet arg to hide env variable dump
+Date: Tue, 23 Jun 2026 17:06:11 +0100
+Message-ID: <20260623160611.2347282-1-berrange@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+X-Spam_score_int: 8
+X-Spam_score: 0.8
+X-Spam_bar: /
+X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,62 +83,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently we have tests timeout set to 3 minutes, on the basis
-that they're generally done in less than a minute. I've hit a
-couple of random failures suggesting that's not sufficiently
-pessimistic. Increase the timeout to 5 minutes to have a greater
-safety net in high load scenarios.
+Every test run dumps a long list of environment variable settings.
+While this is often useful, if you are trying to reproduce a bug
+while repeatedly running a single test it can be quiet noisy. Add
+a --quiet flag to 'check' which allows the env variable dump to
+be hidden.
 
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- tests/qemu-iotests/meson.build | 15 +++++++--------
- 1 file changed, 7 insertions(+), 8 deletions(-)
+ tests/qemu-iotests/check         | 4 +++-
+ tests/qemu-iotests/testrunner.py | 7 ++++---
+ 2 files changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/tests/qemu-iotests/meson.build b/tests/qemu-iotests/meson.build
-index bc6132a0f7..8857f25f29 100644
---- a/tests/qemu-iotests/meson.build
-+++ b/tests/qemu-iotests/meson.build
-@@ -52,16 +52,17 @@ foreach driver, speed: qemu_iotests_drivers
-               '-tap', '-' + driver, item,
-               '--source-dir', meson.current_source_dir(),
-               '--build-dir', meson.current_build_dir()]
--      # Some individual tests take as long as 45 seconds
--      # Bump the timeout to 3 minutes for some headroom
--      # on slow machines to minimize spurious failures
-+      # Some individual tests take as long as 3 minutes
-+      # in high load scenarios. Bump the timeout to 5
-+      # minutes for some headroom on slow / loaded
-+      # machines to minimize spurious failures
-       test('io-' + driver + '-' + item,
-            python,
-            args: args,
-            depends: qemu_iotests_binaries,
-            env: qemu_iotests_env,
-            protocol: 'tap',
--           timeout: 180,
-+           timeout: 300,
-            suite: suites)
-     endforeach
-   endif
-@@ -94,16 +95,14 @@ foreach driver, speed: qemu_iotests_drivers
-               '-tap', '-' + driver, item,
-               '--source-dir', meson.current_source_dir(),
-               '--build-dir', meson.current_build_dir()]
--      # Some individual tests take as long as 45 seconds
--      # Bump the timeout to 3 minutes for some headroom
--      # on slow machines to minimize spurious failures
-+      # See earlier note about timeouts
-       test('io-' + driver + '-' + item,
-            python,
-            args: args,
-            depends: qemu_iotests_binaries,
-            env: qemu_iotests_env,
-            protocol: 'tap',
--           timeout: 180,
-+           timeout: 300,
-            suite: suites)
-   endforeach
- endforeach
+diff --git a/tests/qemu-iotests/check b/tests/qemu-iotests/check
+index 3941eac8e2..c8ba536970 100755
+--- a/tests/qemu-iotests/check
++++ b/tests/qemu-iotests/check
+@@ -46,6 +46,8 @@ def make_argparser() -> argparse.ArgumentParser:
+         description="Test run options",
+         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+ 
++    p.add_argument('-q', '--quiet', action='store_true',
++                   help='reduce output verbosity to only test results')
+     p.add_argument('-n', '--dry-run', action='store_true',
+                    help='show me, do not run tests')
+     p.add_argument('-j', dest='jobs', type=int, default=1,
+@@ -230,6 +232,6 @@ if __name__ == '__main__':
+         with TestRunner(env, tap=args.tap,
+                         color=args.color) as tr:
+             paths = [os.path.join(env.source_iotests, t) for t in tests]
+-            ok = tr.run_tests(paths, args.jobs)
++            ok = tr.run_tests(paths, args.jobs, args.quiet)
+             if not ok:
+                 sys.exit(1)
+diff --git a/tests/qemu-iotests/testrunner.py b/tests/qemu-iotests/testrunner.py
+index dbe2dddc32..0eb7f144df 100644
+--- a/tests/qemu-iotests/testrunner.py
++++ b/tests/qemu-iotests/testrunner.py
+@@ -376,7 +376,7 @@ def run_test(self, test: str,
+         sys.stdout.flush()
+         return res
+ 
+-    def run_tests(self, tests: List[str], jobs: int = 1) -> bool:
++    def run_tests(self, tests: List[str], jobs: int = 1, quiet: bool = False) -> bool:
+         n_run = 0
+         failed = []
+         notrun = []
+@@ -384,9 +384,10 @@ def run_tests(self, tests: List[str], jobs: int = 1) -> bool:
+ 
+         if self.tap:
+             print('TAP version 13')
+-            self.env.print_env('# ')
++            if not quiet:
++                self.env.print_env('# ')
+             print('1..%d' % len(tests))
+-        else:
++        elif not quiet:
+             self.env.print_env()
+ 
+         test_field_width = max(len(os.path.basename(t)) for t in tests) + 2
 -- 
 2.54.0
 
