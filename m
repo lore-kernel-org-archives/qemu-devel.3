@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C450CDB47F
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jun 2026 10:01:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2616ACDB480
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jun 2026 10:01:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wbxs7-0003Zi-Ap; Tue, 23 Jun 2026 05:56:47 -0400
+	id 1wbxtA-00087t-4k; Tue, 23 Jun 2026 05:57:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wbxs5-0003XH-Ir
- for qemu-devel@nongnu.org; Tue, 23 Jun 2026 05:56:45 -0400
+ id 1wbxt8-0007u7-8I
+ for qemu-devel@nongnu.org; Tue, 23 Jun 2026 05:57:50 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wbxs3-0003X1-JT
- for qemu-devel@nongnu.org; Tue, 23 Jun 2026 05:56:45 -0400
+ id 1wbxt6-0003mK-MO
+ for qemu-devel@nongnu.org; Tue, 23 Jun 2026 05:57:50 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1782208603;
+ s=mimecast20190719; t=1782208668;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ml9Wb/hhzybibso9lYWgCMYriBAQIFedGYdh4Ow1Njg=;
- b=K87cXSRThScaa8BEhA5mata95L7xQ/fDV/b40+VVPkwb7P18cgVnNLg4WZ/Y/SKRA5JDhG
- X1Oo/IgicfnZUQtmwtwqyazRfM9//1Jc0+Cj2G1gp4z80L4fHwrjiFc7gFL484RYvF8MGi
- LfgAvpc83/8a1iVT/4P6U+tppEHKVmY=
+ bh=ujsKwFFgURa1HeOejuIFxe0Lo00uy5++usFNyisU6eQ=;
+ b=PKdlI/GOO6fQWY/49HiDIVt7B25XDLUJxIVF6P+Ut0KuQZYcQJi8aTGHxuN4Zkgbl2d+1+
+ X2AdN18AKKaOyaJdmLKDQiioUkSgwFbDEDO85jVtjG+L3o3WTbcuvFCdJpJG2Jv6Z1ozN/
+ n7TmuTK4rupbryk2yggXnMusX87kgtA=
 Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-433-xpLKH80TNCOaDCMjCruxTg-1; Tue,
- 23 Jun 2026 05:56:39 -0400
-X-MC-Unique: xpLKH80TNCOaDCMjCruxTg-1
-X-Mimecast-MFC-AGG-ID: xpLKH80TNCOaDCMjCruxTg_1782208598
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-499-dzpWGB5LOjyzWIwcrd1v1A-1; Tue,
+ 23 Jun 2026 05:57:43 -0400
+X-MC-Unique: dzpWGB5LOjyzWIwcrd1v1A-1
+X-Mimecast-MFC-AGG-ID: dzpWGB5LOjyzWIwcrd1v1A_1782208662
 Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 66D5B1956070; Tue, 23 Jun 2026 09:56:38 +0000 (UTC)
+ id 6F28C19540F0; Tue, 23 Jun 2026 09:57:42 +0000 (UTC)
 Received: from berrange.com (unknown [10.44.34.133])
  by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 4E3C1D6E; Tue, 23 Jun 2026 09:56:35 +0000 (UTC)
+ id 50F6D1686; Tue, 23 Jun 2026 09:57:39 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: "Dr. David Alan Gilbert" <dave@treblig.org>,
@@ -57,9 +57,10 @@ Cc: "Dr. David Alan Gilbert" <dave@treblig.org>,
  Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH v4 11/35] monitor: use class methods for monitor_vprintf
-Date: Tue, 23 Jun 2026 10:55:27 +0100
-Message-ID: <20260623095551.2106712-12-berrange@redhat.com>
+Subject: [PATCH v4 29/35] tests/functional: add a stress test for monitor hot
+ unplug
+Date: Tue, 23 Jun 2026 10:55:45 +0100
+Message-ID: <20260623095551.2106712-30-berrange@redhat.com>
 In-Reply-To: <20260623095551.2106712-1-berrange@redhat.com>
 References: <20260623095551.2106712-1-berrange@redhat.com>
 MIME-Version: 1.0
@@ -91,102 +92,103 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This removes the need for using monitor_is_qmp() to check the
-subclass type, which is an anti-pattern.
+When unplugging a monitor there is a careful synchronization dance
+between the monitor handling the "object-del" command and the
+command processing for the monitor being deleted.
 
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Reviewed-by: Dr. David Alan Gilbert <dave@treblig.org>
+The stress test runs a busy loop of 'query-qmp-schema' on a second
+monitor, while the primary monitor requests its deletion.
+
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- monitor/hmp.c              | 13 +++++++++++++
- monitor/monitor-internal.h |  7 +++++++
- monitor/monitor.c          | 11 ++++-------
- 3 files changed, 24 insertions(+), 7 deletions(-)
+ .../generic/test_monitor_hotplug.py           | 62 +++++++++++++++++++
+ 1 file changed, 62 insertions(+)
 
-diff --git a/monitor/hmp.c b/monitor/hmp.c
-index 2bb2333da5..08055839a4 100644
---- a/monitor/hmp.c
-+++ b/monitor/hmp.c
-@@ -68,11 +68,18 @@ static void monitor_hmp_set_readline(Object *obj, bool val, Error **errp)
-     mon->use_readline = val;
- }
+diff --git a/tests/functional/generic/test_monitor_hotplug.py b/tests/functional/generic/test_monitor_hotplug.py
+index 5d8a159eb0..55af8a238f 100755
+--- a/tests/functional/generic/test_monitor_hotplug.py
++++ b/tests/functional/generic/test_monitor_hotplug.py
+@@ -6,11 +6,16 @@
+ #
+ # Copyright (c) 2026 Christian Brauner
  
-+int monitor_hmp_vprintf(Monitor *mon, const char *fmt, va_list ap)
-+    G_GNUC_PRINTF(2, 0);
++import asyncio
+ import os
++import random
++import threading
++import time
+ 
+ from qemu_test import QemuSystemTest
+ 
+ from qemu.qmp.legacy import QEMUMonitorProtocol
++from qemu.qmp import QMPClient
+ 
+ 
+ class MonitorHotplug(QemuSystemTest):
+@@ -163,6 +168,63 @@ def test_events_after_negotiation(self):
+         qmp.close()
+         self._remove_monitor()
+ 
++    def stress_mon(self, sock):
++        async def main():
++            qmp = QMPClient('testvm')
++            await qmp.connect(sock)
++            # Run query-version in a tight loop so that the
++            # monitor thread/dispatcher is very busy at the
++            # time we try to delete the monitor
++            while True:
++                try:
++                    # A command which returns a lot of data to make
++                    # it more likely we're in the I/O reply path
++                    # when deleting the monitor
++                    res = await qmp.execute('query-qmp-schema')
++                    # Some commands which generate async events
++                    # as those can trigger different code paths
++                    res = await qmp.execute('stop')
++                    res = await qmp.execute('cont')
++                except:
++                    # we'll get here if the monitor is terminated
++                    # by QEMU in which case we must disconnect
++                    # out side, but....
++                    try:
++                        await qmp.disconnect()
++                    except (ConnectionResetError, EOFError, BrokenPipeError):
++                        # ... disconnect() will probably see
++                        # errors too, but we must try to call it
++                        # regardless to cleanup asyncio state
++                        # and prevent python warnings at GC time
++                        pass
++                    return
++        asyncio.run(main())
 +
- static void monitor_hmp_class_init(ObjectClass *cls, const void *data)
- {
-+    MonitorClass *moncls = MONITOR_CLASS(cls);
++    def test_hotplug_stress(self):
++        """
++        Repeatedly hotplug and unplug a monitor, while another thread
++        concurrently issues commands on that monitor. This stresses
++        the synchronization with the monitor thread during cleanup
++        """
++        self.set_machine('none')
++        self.vm.add_args('-nodefaults')
++        self.vm.launch()
 +
-     object_class_property_add_bool(cls, "readline",
-                                    monitor_hmp_get_readline,
-                                    monitor_hmp_set_readline);
++        # Each loop sleeps at most 0.5 seconds, so this should
++        # give an upper bound of approx 5 seconds execution
++        # time which is reasonable to run by default
++        repeat = 10
++        for i in range(repeat):
++            # First cycle
++            sock = self._add_monitor()
++            print ("# stress cycle %02d/%02d" % (i, repeat))
++            stress = threading.Thread(target=self.stress_mon, args=[sock])
++            stress.start()
++            # Sleep upto 1/2 second to vary the races
++            time.sleep(random.random() / 2)
++            self._remove_monitor()
++            stress.join()
 +
-+    moncls->vprintf = monitor_hmp_vprintf;
- }
  
- static void monitor_hmp_init(Object *obj)
-@@ -87,6 +94,12 @@ static void monitor_hmp_init(Object *obj)
-     hmp->use_readline = true;
- }
- 
-+int monitor_hmp_vprintf(Monitor *mon, const char *fmt, va_list ap)
-+{
-+    g_autofree char *buf = g_strdup_vprintf(fmt, ap);
-+    return monitor_puts(mon, buf);
-+}
-+
- static void monitor_command_cb(void *opaque, const char *cmdline,
-                                void *readline_opaque)
- {
-diff --git a/monitor/monitor-internal.h b/monitor/monitor-internal.h
-index 6a4c3b0f37..23cef68153 100644
---- a/monitor/monitor-internal.h
-+++ b/monitor/monitor-internal.h
-@@ -104,6 +104,13 @@ typedef struct HMPCommand {
- 
- struct MonitorClass {
-     ObjectClass parent_class;
-+
-+    /*
-+     * If non-NULL, the monitor is able to print messages
-+     * for attention of the client user
-+     */
-+    int (*vprintf)(Monitor *mon, const char *fmt, va_list ap)
-+        G_GNUC_PRINTF(2, 0);
- };
- 
- struct Monitor {
-diff --git a/monitor/monitor.c b/monitor/monitor.c
-index 76df379a2c..8b70380d64 100644
---- a/monitor/monitor.c
-+++ b/monitor/monitor.c
-@@ -262,21 +262,18 @@ int monitor_puts(Monitor *mon, const char *str)
- 
- int monitor_vprintf(Monitor *mon, const char *fmt, va_list ap)
- {
--    char *buf;
--    int n;
-+    MonitorClass *moncls;
- 
-     if (!mon) {
-         return -1;
-     }
- 
--    if (monitor_is_qmp(mon)) {
-+    moncls = MONITOR_GET_CLASS(mon);
-+    if (!moncls->vprintf) {
-         return -1;
-     }
- 
--    buf = g_strdup_vprintf(fmt, ap);
--    n = monitor_puts(mon, buf);
--    g_free(buf);
--    return n;
-+    return moncls->vprintf(mon, fmt, ap);
- }
- 
- int monitor_printf(Monitor *mon, const char *fmt, ...)
+ if __name__ == '__main__':
+     QemuSystemTest.main()
 -- 
 2.54.0
 
