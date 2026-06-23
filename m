@@ -4,90 +4,147 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BDE01CDB470
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jun 2026 10:55:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 893CDCDB470
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jun 2026 10:55:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wbylo-00047Z-D3; Tue, 23 Jun 2026 06:54:20 -0400
+	id 1wbynE-0004iU-A7; Tue, 23 Jun 2026 06:55:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wbylm-00047P-OP
- for qemu-devel@nongnu.org; Tue, 23 Jun 2026 06:54:18 -0400
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wbylk-0004gn-Q6
- for qemu-devel@nongnu.org; Tue, 23 Jun 2026 06:54:18 -0400
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-4921e4dd62dso7667315e9.0
- for <qemu-devel@nongnu.org>; Tue, 23 Jun 2026 03:54:16 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wbynC-0004hv-Qo
+ for qemu-devel@nongnu.org; Tue, 23 Jun 2026 06:55:46 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wbynA-0005Bk-TT
+ for qemu-devel@nongnu.org; Tue, 23 Jun 2026 06:55:46 -0400
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 65NAsdlj3664027
+ for <qemu-devel@nongnu.org>; Tue, 23 Jun 2026 10:55:42 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ RdECwY0xKKMkzCz7disWb4/fR2mJrktDo7+b+W5iFXQ=; b=gawnZpEG8pDUJ1el
+ N8vizmSMMTgyaI3yiSWhb+kcBIakLmVW6JuIlS0GsLsRCvFsVVJH6P7RCORfU/rU
+ WXXO7TnAPGuWk/NPpebAgeAE3H7vxivTVIgMJGmSc6YlSig/eysAmq2LHiVAQsGw
+ 4weZX3GA0psfKgJxnKFvFbqVtDNfWKZUPVDIK6eBxLM/AB2zJrYBp2qpOOxMhDd4
+ 2Qbray8Fnt856WV/9h9NLgI1ST/C1uXNxYqB5Mus5lwwzW0FK+jKnRaitj86fojp
+ egY4jpl2UPblOp+KSajzxEe0JAL7qlC15q59DdDeq+7cdSPW4+eFFAzgZHZnY5xV
+ yFhJow==
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
+ [209.85.222.198])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4eyp29gs7u-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Tue, 23 Jun 2026 10:55:42 +0000 (GMT)
+Received: by mail-qk1-f198.google.com with SMTP id
+ af79cd13be357-92229624a71so596167485a.3
+ for <qemu-devel@nongnu.org>; Tue, 23 Jun 2026 03:55:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1782212055; x=1782816855; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=XCw9qulh7am9/yhvutit+gAtk0gU4tMU84WOELXqs18=;
- b=t8OPUiMLznzw+y8gkKBHug/mpmztBuloYXCgyF+CzobavI/s1pOVoukxX82ZzLEQoy
- JIghL6pF8Zrn4AXJNbVFyoA8NNhNU9p6X29/sW9rFrX6/Gxun2pwwY/DYe48Dmu86jaX
- 1uMu8CZQn3pqS310GqPFv4FyYJpSrrlqlnW5HDe1mwx+Xs6/zSPBArIHq4JxPdLKhjqi
- tgF9sWz4WpIYyNOwnnBcizccgTat9F+dBFvcLbDFTOmZ3x14z6IS7B0lNvZX9H/fc1nH
- OBFIJg4UWkFdG9J5Jjya/HjPjCwfSRLy5ZhrpGyRvuVp56d40t25uRhnK1f27daGGu85
- oISQ==
+ d=oss.qualcomm.com; s=google; t=1782212141; x=1782816941; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=RdECwY0xKKMkzCz7disWb4/fR2mJrktDo7+b+W5iFXQ=;
+ b=AkMYCS+NH2MVO/gsKH+FEV90kg5CSnrR1wgSN2pOfmLVqzzdyVgkIbQuNzejhcSXsG
+ 1qRpUq+angJIOlVNw9C5BNe4MUvwTXrvXwj+tzDxfq5eSZfSfbg4KkG+1setW2V4IfMe
+ 1cWP/835zXOWLdxhNUbgzN0fSGWIKtEJxasrtXMhe6jQCyYy4oykfrgL1+j5N+t1M2FZ
+ v/sMwLFnoBqu9l8FZ8x8f5vSQZkkls9G9LbIzHoCKteNtHeFmE0+zLRCUNC6vNeLSmeG
+ 7WNjFSEv1XHUTZOqKd8ZxpXAJ/gnQdq4iykgoq6u6uYBvR44NDA+RWhCkrwGD6EZP36T
+ usIQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782212055; x=1782816855;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=XCw9qulh7am9/yhvutit+gAtk0gU4tMU84WOELXqs18=;
- b=kXnf7nkBiEjtGNfvax+Ksk34eZrhGiKVbn/W6L9mMIHgOUhBB+L9RnhFCvr/GmjmsQ
- gs1Kt7i4tSIRNpPZ50q4Al5Wriem3NmdKjaqBQwA446oh4O5BgpAaZsEmVicXjAr1enM
- 25I08oVNKDBG2vwXZKPg0iv1yLI7DibkZwBv2h92mOmlJnXFvuyKTeP58b0BPuPwgKYK
- adseso0Bpuew2wzCCruRQldURYuX207wc/jBPaiDQiPJZ/QzJlEaI3yLr9KDwKIMpK6D
- AJefD9yxz4xyLuQVf3ESbELblq1E8DG/5PlrpGNaGoAFqcmkIZk5NTLG50+H60xGb0OL
- e4Ew==
-X-Gm-Message-State: AOJu0YxcS6IDGeP6RnJGpGbntopYWctu5/DrrFlg8QxqnSE0OpAT+UeE
- LOrMWxPGCQ8LqFhSdeNUeM1oV6EGexFSI6RxAHTGgCnNWfzYx41M6GdG0v5vpJpF+ocdPqFKtXr
- PKSmKjrg=
-X-Gm-Gg: AfdE7cm0jeM9w6CJrWHWweZN67LyOPrFTHYRAwX/TFYQy2wTp7JL0A/OXCH5w8SpkXo
- bWEnWqybMUxnkgBePBVd9VcoE3zjkOKtJX2MBpialWc7eR2Dhy6+VavpP2bX/HWxSruUod01xcu
- QWFMU6ov5esC28pSoAaMtxPUKLQ4G/hlzZP7KusRFeD/u/gZ6NFXI2P4gQWSivLpYS/PsQvnEp/
- Gwx9p3vSfrjXtHipmhVDMQXrsegXjOLtMwdXrh8hZRW9qTS4TfRFkxfpI3o80+3ZKj913lT111X
- 7l/SfV3nzbhdo6xjZJb5xS/spVzf5ssfLFyUYBqpf88TpMIfJ0OhHuLtf4jNvN3G4d8Fqze4M3n
- MgzjfCD4tYHj0x8vn/RrOlGooQcizxzxxxntevnvvI/2vayUl8dz9HZXeKWOgPRvdnsNA6w6Cbc
- GDfisFo+eY7nac
-X-Received: by 2002:a05:600c:4689:b0:492:38c9:b265 with SMTP id
- 5b1f17b1804b1-4925a0c5671mr43067215e9.15.1782212054837; 
- Tue, 23 Jun 2026 03:54:14 -0700 (PDT)
-Received: from draig.lan ([185.124.0.195]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-466643f56aasm33985105f8f.6.2026.06.23.03.54.13
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 23 Jun 2026 03:54:13 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id F10175F80E;
- Tue, 23 Jun 2026 11:54:12 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: marcandre.lureau@redhat.com
-Cc: qemu-devel@nongnu.org,  Gerd Hoffmann <kraxel@redhat.com>
-Subject: Re: [PATCH] vga: implement text mode character blink
-In-Reply-To: <20260525081944.1494798-1-marcandre.lureau@redhat.com> (marcandre
- lureau's message of "Mon, 25 May 2026 12:19:44 +0400")
-References: <20260525081944.1494798-1-marcandre.lureau@redhat.com>
-User-Agent: mu4e 1.14.2; emacs 30.1
-Date: Tue, 23 Jun 2026 11:54:12 +0100
-Message-ID: <87fr2dmsrv.fsf@draig.linaro.org>
+ d=1e100.net; s=20251104; t=1782212141; x=1782816941;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=RdECwY0xKKMkzCz7disWb4/fR2mJrktDo7+b+W5iFXQ=;
+ b=lCnX/y+n39Zhg81V5/N4kAoaozCFtX+Tz+Lx8R++8IDoMtw+7w0EYWmr0utnT3mALO
+ g8vwS51tiuAl/l0h94sZbxyNLJhh1aaAsy0TgFAyEnEvnTRIvwWPlyi6L7Y4KWz7Fil2
+ UuFHNC0SFJKjJkA1B9IJ3R9gCZXrHtc9nLli6clAaL7owzxEuZMuWnLs68yuvrC4Qj7T
+ osTd62by3ecmb7AQlG9Gp6r5G8BtP9sdjXMHspgwd8OZ846TK2c7FffsEaQuX9t+6S1c
+ MiyxFNKveK3B74tpvClueLCKU9Hv51vIhxOmoalThbxGy/DFHAQgIIIMN2VT7KDhNHLM
+ nTKw==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ+JPVPE6G+I6fITta6TQ6spPZqIPKWpUVrIXwmU1+fZ4S7ybK8jj+iEpjD5diC8Lsp12bj/m73aexcR@nongnu.org
+X-Gm-Message-State: AOJu0Yxnd3e4wEXEpyfs2C+zdXDnDBXLnMMegyP993g5BpCW9tYFtWJY
+ apIk2jIdKyJhfdEfEJN40YPvekc6xgv4bE++JfkCDs7ig5dyU0f3GmdL7twetB9zPOMp92MNFe4
+ 6opeRUXYS7z+Xj6k9/nlZECxUhJZeVpULTe1ExCcAlOJRomZgJYeQwAiQTQ==
+X-Gm-Gg: AfdE7cmoODd6LJeqGEDoed2EVdmegXXhCmvBnovuIn93q6kOypvlXlcayWCZRN+qMSu
+ CvsaYGxzwDkLlw7e2/Bzgf9ZQnoUXN+Ya/WiWg/yQgL1nxo8E4DLplGDdUI3hUq0kJY6DCn/t23
+ GiU81lqR7q7E6o6FcrhGCGZSSgMGno/kABfH9+V9KzUAbnVDJ7EOcuoFeq++w+7da1UNr/4o1jl
+ WB3myHcRUSBM710325jEI8TD+VdWr+a3pm3L76HCSZPlCeALP4FB8OI3pcgA1gKn2tKydPmMQ8L
+ qcQ55SL5zGUjaSO8xD2YgI1xDNcHAXt6AnHueWS22M3w8hTKeJIYFw97AdFrSuc9S55lvmbRIQT
+ IZcSmB5sZxVH7/gN+6QdBnriZEvPMEJM=
+X-Received: by 2002:a05:620a:4054:b0:915:9125:e652 with SMTP id
+ af79cd13be357-9266994e77emr328438985a.48.1782212141549; 
+ Tue, 23 Jun 2026 03:55:41 -0700 (PDT)
+X-Received: by 2002:a05:620a:4054:b0:915:9125:e652 with SMTP id
+ af79cd13be357-9266994e77emr328435785a.48.1782212141021; 
+ Tue, 23 Jun 2026 03:55:41 -0700 (PDT)
+Received: from [192.168.69.212] ([88.187.86.199])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-4666678828dsm34010336f8f.19.2026.06.23.03.55.38
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 23 Jun 2026 03:55:40 -0700 (PDT)
+Message-ID: <582f27d5-71fd-454d-9bb6-6c2cab574651@oss.qualcomm.com>
+Date: Tue, 23 Jun 2026 12:55:35 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x333.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 016/106] intel_iommu_accel: Handle PASID entry addition for
+ pc_inv_dsc request
+Content-Language: en-US
+To: "Michael S. Tsirkin" <mst@redhat.com>, qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Zhenzhong Duan <zhenzhong.duan@intel.com>, Yi Liu <yi.l.liu@intel.com>,
+ Xudong Hao <xudong.hao@intel.com>, Jason Wang <jasowang@redhat.com>,
+ =?UTF-8?Q?Cl=C3=A9ment_Mathieu--Drif?= <clement.mathieu--drif@bull.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+References: <cover.1781463125.git.mst@redhat.com>
+ <c93b82e7dde2e9c26ab743e80d19050bde988fdf.1781463125.git.mst@redhat.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+In-Reply-To: <c93b82e7dde2e9c26ab743e80d19050bde988fdf.1781463125.git.mst@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Authority-Analysis: v=2.4 cv=LdAMLDfi c=1 sm=1 tr=0 ts=6a3a662e cx=c_pps
+ a=qKBjSQ1v91RyAK45QCPf5w==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+ a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
+ a=QyXUC8HyAAAA:8 a=20KFwNOVAAAA:8 a=XIN_EfHa7MY0Yi_rO-4A:9 a=QEXdDO2ut3YA:10
+ a=NFOGd7dJGGMPyQGDc5-O:22
+X-Proofpoint-GUID: wOqWknN4rzKWoCidlcAbrL85bDIQ67Tr
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjIzMDA4OSBTYWx0ZWRfX6IHMqWXGab6V
+ wPT8n8d5eY7Q71HVYtZ13cgIk0ZtF7Eey149Q1+W/a88BQ0zS8L0PhvogvBEf22veth6F4et1xD
+ GBKGRgAGajDZzS/QevS7iTB9zoRU/FE=
+X-Proofpoint-ORIG-GUID: wOqWknN4rzKWoCidlcAbrL85bDIQ67Tr
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjIzMDA4OSBTYWx0ZWRfXwIK2eI1AV0Ri
+ x2iOUJ9awPJyloUBtl4AbG2T8G97lFQgBi4JvjQjJc+wPCwvxSl4hni9gyscOWtCegHdDRjKbYN
+ KgWzhy2vXFxmi+HZKebkq39FD3v3Oc1SXtl2Dt7rWXPv2WTqlk265hBstWum9m3oTmuN7qoWt32
+ SQdFqvv8W4uiH9qgSw5gPMGvA+ouQRSLp7d+f+oormjpLhm6qzVaeABPnstatTwiMvkjbe/LGyz
+ eccpw4wl4UL2W/gdvPUzeDw/19uIalHJGeC0yE4Hn7qUi5XEYjv/JgAiaWzl0/eBLs5y1KDZSjp
+ WUuboIJCj3/YbHasvuW6RzFVwJz81lEFAmmGSz5YnUiCtlwflNTQ8V/hvk2uxqpXSdNEArZC3Q5
+ qYwT99zHT3MGJvA0PFlJu5ungyZUsKBQCThPMnleddxn4JJCUb5VCwxL6OGS8sw3YgeBAiMx95k
+ 7uYZf0pwo7XQ65rHItg==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-23_02,2026-06-23_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0 priorityscore=1501 impostorscore=0 lowpriorityscore=0
+ suspectscore=0 malwarescore=0 clxscore=1015 spamscore=0 phishscore=0
+ bulkscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2606230089
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -104,104 +161,96 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-marcandre.lureau@redhat.com writes:
+Hi,
 
-> From: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
->
-> When bit 3 of the VGA Attribute Mode Control register is set, attribute
-> bit 7 switches from selecting bright background colors to enabling
-> character blink.
->
-> Implement this by tracking a separate blink phase timer that toggles
-> every 32 frames (matching real VGA hardware frame counter bit 5 @60hz),
-> and rendering blinking characters by replacing their foreground with
-> background during the off phase.
->
-> As with cursor, no VMState migration of the fields, as they are
-> transient display-side states.
->
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/1585
-
-I don't think this resolves all of 1585 because I think its asking for
-the other text mode features as well.
-
-> Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+On 14/6/26 21:06, Michael S. Tsirkin wrote:
+> From: Zhenzhong Duan <zhenzhong.duan@intel.com>
+> 
+> Structure VTDAddressSpace includes some elements suitable for emulated
+> device and passthrough device without PASID, e.g., address space,
+> different memory regions, etc, it is also protected by vtd iommu lock,
+> all these are useless and become a burden for passthrough device with
+> PASID.
+> 
+> When there are lots of PASIDs used in one device, the AS and MRs are
+> all registered to memory core and impact the whole system performance.
+> 
+> So instead of using VTDAddressSpace to cache pasid entry for each pasid
+> of a passthrough device, we define a light weight structure
+> VTDAccelPASIDCacheEntry with only necessary elements for each pasid. We
+> will use this struct as a parameter to conduct binding/unbinding to
+> nested hwpt and to record the current bound nested hwpt. It's also
+> designed to support IOMMU_NO_PASID.
+> 
+> VTDAccelPASIDCacheEntry is designed to only be used in intel_iommu_accel.c,
+> similarly VTDPASIDCacheEntry should only be used in hw/i386/intel_iommu.c
+> 
+> When guest creates new PASID entries, QEMU will capture the pc_inv_dsc
+> (pasid cache invalidation) request, walk through each pasid in each
+> passthrough device for valid pasid entries, create a new
+> VTDAccelPASIDCacheEntry if not existing yet.
+> 
+> IOMMU_NO_PASID of passthrough device still need to register MRs in case
+> guest does not operate in scalable mode. So for IOMMU_NO_PASID, we have
+> both VTDPASIDCacheEntry and VTDAccelPASIDCacheEntry.
+> 
+> Co-developed-by: Yi Liu <yi.l.liu@intel.com>
+> Signed-off-by: Yi Liu <yi.l.liu@intel.com>
+> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+> Tested-by: Xudong Hao <xudong.hao@intel.com>
+> Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+> Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+> Message-Id: <20260527054658.1021096-12-zhenzhong.duan@intel.com>
 > ---
->  hw/display/vga_int.h |  2 ++
->  hw/display/vga.c     | 24 +++++++++++++++++++++---
->  2 files changed, 23 insertions(+), 3 deletions(-)
->
-> diff --git a/hw/display/vga_int.h b/hw/display/vga_int.h
-> index 747b5cc6cf8..5664317ecd6 100644
-> --- a/hw/display/vga_int.h
-> +++ b/hw/display/vga_int.h
-> @@ -130,6 +130,8 @@ typedef struct VGACommonState {
->      uint8_t cursor_start, cursor_end;
->      bool cursor_visible_phase;
->      int64_t cursor_blink_time;
-> +    bool blink_visible_phase;
-> +    int64_t blink_time;
->      uint32_t cursor_offset;
->      const GraphicHwOps *hw_ops;
->      bool full_update_text;
-> diff --git a/hw/display/vga.c b/hw/display/vga.c
-> index 0ac4bf37310..ea01a889f20 100644
-> --- a/hw/display/vga.c
-> +++ b/hw/display/vga.c
-> @@ -45,8 +45,10 @@
->=20=20
->  bool have_vga =3D true;
->=20=20
-> -/* 16 state changes per vertical frame @60 Hz */
-> +/* frame counter bit 4: cursor blink toggles every 16 frames @60 Hz */
->  #define VGA_TEXT_CURSOR_PERIOD_MS       (1000 * 2 * 16 / 60)
-> +/* frame counter bit 5: character blink toggles every 32 frames @60 Hz */
-> +#define VGA_TEXT_BLINK_PERIOD_MS        (1000 * 2 * 32 / 60)
->=20=20
->  /* Address mask for non-VESA modes.  */
->  #define VGA_VRAM_SIZE                   (256 * KiB)
-> @@ -1286,6 +1288,13 @@ static void vga_draw_text(VGACommonState *s, int f=
-ull_update)
->          s->cursor_blink_time =3D now + VGA_TEXT_CURSOR_PERIOD_MS / 2;
->          s->cursor_visible_phase =3D !s->cursor_visible_phase;
->      }
-> +    if (now >=3D s->blink_time) {
-> +        s->blink_time =3D now + VGA_TEXT_BLINK_PERIOD_MS / 2;
-> +        s->blink_visible_phase =3D !s->blink_visible_phase;
-> +        if (s->ar[VGA_ATC_MODE] & 0x08) {
-> +            full_update =3D 1;
-> +        }
-> +    }
+>   hw/i386/intel_iommu.c          |   3 +
+>   hw/i386/intel_iommu_accel.c    | 156 +++++++++++++++++++++++++++++++++
+>   hw/i386/intel_iommu_accel.h    |  13 +++
+>   hw/i386/intel_iommu_internal.h |   8 ++
+>   4 files changed, 180 insertions(+)
 
-You should update the comment above vga_draw_text and remove "flashing"
-as unimplemented.
+Michael, please setup scripts/git.orderfile ;)
 
->=20=20
->      dest =3D surface_data(surface);
->      linesize =3D surface_stride(surface);
-> @@ -1317,8 +1326,17 @@ static void vga_draw_text(VGACommonState *s, int f=
-ull_update)
->  #endif
->                  font_ptr =3D font_base[(cattr >> 3) & 1];
->                  font_ptr +=3D 32 * 4 * ch;
-> -                bgcol =3D palette[cattr >> 4];
-> -                fgcol =3D palette[cattr & 0x0f];
-> +                if (s->ar[VGA_ATC_MODE] & 0x08) {
-> +                    bgcol =3D palette[(cattr >> 4) & 0x07];
-> +                    if ((cattr & 0x80) && !s->blink_visible_phase) {
-> +                        fgcol =3D bgcol;
-> +                    } else {
-> +                        fgcol =3D palette[cattr & 0x0f];
-> +                    }
-> +                } else {
-> +                    bgcol =3D palette[cattr >> 4];
-> +                    fgcol =3D palette[cattr & 0x0f];
-> +                }
->                  if (cw =3D=3D 16) {
->                      vga_draw_glyph16(d1, linesize,
->                                       font_ptr, cheight, fgcol, bgcol);
+> diff --git a/hw/i386/intel_iommu_accel.h b/hw/i386/intel_iommu_accel.h
+> index e5f0b077b4..c9b1823745 100644
+> --- a/hw/i386/intel_iommu_accel.h
+> +++ b/hw/i386/intel_iommu_accel.h
+> @@ -12,6 +12,13 @@
+>   #define HW_I386_INTEL_IOMMU_ACCEL_H
+>   #include CONFIG_DEVICES
+>   
+> +typedef struct VTDAccelPASIDCacheEntry {
+> +    VTDHostIOMMUDevice *vtd_hiod;
+> +    VTDPASIDEntry pasid_entry;
+> +    uint32_t pasid;
+> +    QLIST_ENTRY(VTDAccelPASIDCacheEntry) next;
+> +} VTDAccelPASIDCacheEntry;
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+Zhenzhong, this structure should be declared ...
+
+>   #ifdef CONFIG_VTD_ACCEL
+
+... after this guard.
+
+>   bool vtd_check_hiod_accel(IntelIOMMUState *s, VTDHostIOMMUDevice *vtd_hiod,
+>                             Error **errp);
+> @@ -20,6 +27,7 @@ bool vtd_propagate_guest_pasid(VTDAddressSpace *vtd_as, Error **errp);
+>   void vtd_flush_host_piotlb_all_locked(IntelIOMMUState *s, uint16_t domain_id,
+>                                         uint32_t pasid, hwaddr addr,
+>                                         uint64_t npages, bool ih);
+> +void vtd_accel_pasid_cache_sync(IntelIOMMUState *s, VTDPASIDCacheInfo *pc_info);
+>   void vtd_iommu_ops_update_accel(PCIIOMMUOps *ops);
+>   #else
+>   static inline bool vtd_check_hiod_accel(IntelIOMMUState *s,
+> @@ -49,6 +57,11 @@ static inline void vtd_flush_host_piotlb_all_locked(IntelIOMMUState *s,
+>   {
+>   }
+>   
+> +static inline void vtd_accel_pasid_cache_sync(IntelIOMMUState *s,
+> +                                              VTDPASIDCacheInfo *pc_info)
+> +{
+> +}
+> +
+>   static inline void vtd_iommu_ops_update_accel(PCIIOMMUOps *ops)
+>   {
+>   }
 
