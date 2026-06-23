@@ -4,54 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98123CDB471
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jun 2026 15:41:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD197CDB46F
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jun 2026 15:43:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wc3FO-00013H-Re; Tue, 23 Jun 2026 11:41:11 -0400
+	id 1wc3Go-0001OC-Un; Tue, 23 Jun 2026 11:42:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tangtao1634@phytium.com.cn>)
- id 1wc3FM-000130-2K
- for qemu-devel@nongnu.org; Tue, 23 Jun 2026 11:41:08 -0400
-Received: from zg8tmtyylji0my4xnjqumte4.icoremail.net ([162.243.164.118])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <tangtao1634@phytium.com.cn>) id 1wc3FK-0008Ss-43
- for qemu-devel@nongnu.org; Tue, 23 Jun 2026 11:41:07 -0400
-Received: from prodtpl.icoremail.net (unknown [10.12.1.20])
- by hzbj-icmmx-7 (Coremail) with SMTP id AQAAfwB3fmIFqTpqh7LgCw--.416S2;
- Tue, 23 Jun 2026 23:40:53 +0800 (CST)
-Received: from [192.168.2.2] (unknown [113.246.118.219])
- by mail (Coremail) with SMTP id AQAAf8Dw9HMBqTpqX6YMAA--.21232S2;
- Tue, 23 Jun 2026 23:40:50 +0800 (CST)
-Message-ID: <13d1efd6-7f4c-4962-89fd-209b8b0574dc@phytium.com.cn>
-Date: Tue, 23 Jun 2026 23:40:47 +0800
+ (Exim 4.90_1) (envelope-from <shivangu@linux.ibm.com>)
+ id 1wc3Gi-0001E4-7d; Tue, 23 Jun 2026 11:42:33 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <shivangu@linux.ibm.com>)
+ id 1wc3Gg-0000GG-3P; Tue, 23 Jun 2026 11:42:31 -0400
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 65NBmgI91826629; Tue, 23 Jun 2026 15:42:28 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=
+ content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=JT9YY/
+ qPTdIss2Pew5nqho3hYsJBKKcH8D7Y8EKJIrM=; b=KAD8KNBtWlmS3Fw1Q/hROQ
+ 4QJ3tnzR3EuPrjNqg5wFGWkRuj1VisgWcbbaBIqfJtUK44LQfz0vnM3m8f9W2mxq
+ DAdObUf+qA07GUbVi82WbwHwSBC5myRI7zDVhaoU6+rvKzMUrVsp9TtmmINlckfc
+ uEN+5iF7kZVhGHz2vyWFxq7PTI7VrBD6C9muCFLTW/z6Cqaa0J+AqOtFRM+YiG1l
+ M7XyMZB4woscZ3g8Kabp455wjELaCEPCe1tMaovuE35JUntApc4SA3KcpnEk6tW3
+ IRohwcpHhdRh6uUh6M5BMZmATJn2WA4Z3lp2O61PsDTpbPOOLiH6yp+nvCKSjofg
+ ==
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4ewjgsq9v2-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 23 Jun 2026 15:42:28 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 65NFYewA030341;
+ Tue, 23 Jun 2026 15:42:27 GMT
+Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4ex7vykrh2-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 23 Jun 2026 15:42:27 +0000 (GMT)
+Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
+ [10.20.54.100])
+ by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 65NFgNhf43057428
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 23 Jun 2026 15:42:23 GMT
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id BC73120043;
+ Tue, 23 Jun 2026 15:42:23 +0000 (GMT)
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 758A820040;
+ Tue, 23 Jun 2026 15:42:21 +0000 (GMT)
+Received: from shivang.upadyay (unknown [9.124.220.40])
+ by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Tue, 23 Jun 2026 15:42:21 +0000 (GMT)
+Message-ID: <ae00a32e337f66bff2bdd5a9a983231f0ae09ce1.camel@linux.ibm.com>
+Subject: Re: [PATCH 2/2] ppc/pnv: add test to verify external DTB is honored
+From: Shivang Upadhyay <shivangu@linux.ibm.com>
+To: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, adityag@linux.ibm.com,
+ harshpb@linux.ibm.com, npiggin@gmail.com, milesg@linux.ibm.com
+Date: Tue, 23 Jun 2026 21:12:19 +0530
+In-Reply-To: <20260623122410.5fae6f07-db-amachhiw@linux.ibm.com>
+References: <20260623063156.1110370-1-shivangu@linux.ibm.com>
+ <20260623063156.1110370-3-shivangu@linux.ibm.com>
+ <20260623122410.5fae6f07-db-amachhiw@linux.ibm.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.58.3 (3.58.3-1.fc43) 
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: berrange@redhat.com
-Cc: qemu-devel@nongnu.org
-References: <20260622113152.1710585-1-berrange@redhat.com>
-Subject: Re: [PATCH 0/3] Record maintainer/reviewer Git Lab handles
-From: Tao Tang <tangtao1634@phytium.com.cn>
-In-Reply-To: <20260622113152.1710585-1-berrange@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-CM-TRANSID: AQAAf8Dw9HMBqTpqX6YMAA--.21232S2
-X-CM-SenderInfo: pwdqw3tdrrljuu6sx5pwlxzhxfrphubq/1tbiAQAPBWo5i-gJjAAAsu
-Authentication-Results: hzbj-icmmx-7; spf=neutral smtp.mail=tangtao163
- 4@phytium.com.cn;
-X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
- ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU8nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
- nUUI43ZEXa7xR_UUUUUUUUU==
-Received-SPF: pass client-ip=162.243.164.118;
- envelope-from=tangtao1634@phytium.com.cn;
- helo=zg8tmtyylji0my4xnjqumte4.icoremail.net
-X-Spam_score_int: -25
-X-Spam_score: -2.6
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjIzMDEyNiBTYWx0ZWRfX1/ll5OjOevtu
+ UkVYZm/tN6TMaHnMS6sbo1Iw264FOpgxfiRFFZxeF+tEThRiO0hdAMHzAomeG6dMLOYD8GiX3sb
+ WDY9FpP1zbWefdOkBCuRIJE2GsMH60k1cvx7lnqB6eGa9wsjMK+wYNo5xxTLfLG5ShtlVDbFiFt
+ Nu+BRmKa/lEtL4aPWkwSvQm2SFrkbZ59nAf14S/y3AhUYFWx3gxuRW5tnuc2u/4rZZUrHzAMgEt
+ rvsr+kEn4B/vF6W2iW2SOcnI4CVPmFA+Cp3ox4M7rURpunzr0SspNWTGIwY/TPh0Z6QDwnoe9x6
+ OGD2EePhjnvjdwfCNv3Kg40+0n04ZjRNtfUhWRSDyQWSxoq75GIEvnCFOPAFkRWrWW8oqCmEAhW
+ doeQEVPt0BPRikkyKmuC0yHMnoWeGVQ9iiSbiEr4iv1eAqQqdjKozHvqrk/8/EWb9q48FqKTSRd
+ VETlY0b4Jr6Yq6c2m8Q==
+X-Proofpoint-GUID: 8L0cKeBLfi8UgfNN7gHtMsM-SSedujzc
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjIzMDEyNiBTYWx0ZWRfX2O4P2bWvXWiW
+ 3fmIjDAekFND7FSzaR4gvqxU4q3V/K4zdyeTkr2enySeBrYH5vO4bKsnZM62C54CfF0qu0sk4Gd
+ UJ8kVX0CEl7KK0i89RO5ZL7f/V4qQao=
+X-Authority-Analysis: v=2.4 cv=I/lVgtgg c=1 sm=1 tr=0 ts=6a3aa964 cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
+ a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22 a=ID6ng7r3AAAA:8
+ a=sQTfP1YnM9m7ZpRhDLIA:9 a=QEXdDO2ut3YA:10 a=AkheI1RvQwOzcTXhi5f4:22
+X-Proofpoint-ORIG-GUID: mkO5YJczPLq6gE6UC9tFZjmiHZlUXtIZ
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-23_03,2026-06-23_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0 spamscore=0 phishscore=0 clxscore=1015 priorityscore=1501
+ adultscore=0 impostorscore=0 bulkscore=0 suspectscore=0 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606230126
+Received-SPF: pass client-ip=148.163.158.5;
+ envelope-from=shivangu@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -68,20 +124,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Daniel,
+On Tue, 2026-06-23 at 12:27 +0530, Amit Machhiwal wrote:
+> The test addition looks fine, but the commit message body is missing.
+> According to the official QEMU submission guidelines at:
+>=20
+> =C2=A0
+> https://www.qemu.org/docs/master/devel/submitting-a-patch.html#write-a-me=
+aningful-commit-message
+>=20
+> =C2=A0 "Commit messages should be meaningful and should stand on their ow=
+n
+> as
+> =C2=A0 a historical record of why the changes you applied were necessary
+> or
+> =C2=A0 useful."
+>=20
+> You may want to add a commit message body in the next version.
 
-> Much more significantly, there are the following people present
-> in MAINTAINERS, whom are not members of the GitLab project:
->
-> ------------------------------<snip>------------------------------
->      Tao Tang <tangtao1634-#-phytium-#-com-#-cn>
-My gitlab account is:
+Sure Amit, Ill add the body.
 
-gitlab.com/TaoTang
-
-
-Thanks,
-
-Tao
-
+~Shivang.
 
