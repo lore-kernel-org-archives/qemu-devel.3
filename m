@@ -4,109 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2D16CDB471
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jun 2026 20:03:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DED81CDB480
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jun 2026 20:04:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wc7Ks-0005xv-1n; Tue, 23 Jun 2026 16:03:06 -0400
+	id 1wc7Lb-0006Lc-Qp; Tue, 23 Jun 2026 16:03:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wc7Kp-0005xG-Vg
- for qemu-devel@nongnu.org; Tue, 23 Jun 2026 16:03:04 -0400
-Received: from mail-yx1-xb135.google.com ([2607:f8b0:4864:20::b135])
+ (Exim 4.90_1) (envelope-from
+ <3nuY6agwKCq8cPQXWThiTUPcVddVaT.RdbfTbj-STkTacdcVcj.dgV@flex--nabihestefan.bounces.google.com>)
+ id 1wc7LY-0006LJ-LF
+ for qemu-devel@nongnu.org; Tue, 23 Jun 2026 16:03:49 -0400
+Received: from mail-dl1-x1249.google.com ([2607:f8b0:4864:20::1249])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wc7Ko-0004eW-I1
- for qemu-devel@nongnu.org; Tue, 23 Jun 2026 16:03:03 -0400
-Received: by mail-yx1-xb135.google.com with SMTP id
- 956f58d0204a3-662fa4a4470so268973d50.0
- for <qemu-devel@nongnu.org>; Tue, 23 Jun 2026 13:03:02 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1782244981; cv=none;
- d=google.com; s=arc-20240605;
- b=N4Ok2cREcStEf+NxKwhshPDsE3VrR0Xk7iqNsi8KfN8Zpd44uYOzb52ErWocpNp/Bi
- t0QMe2Nz3R0G5eUSvuLD2enL07nDGd6xu3pxU/7UW+v1CyAhZ36MXZXQ486WLdfzjMxm
- MlIWm8fmhH/7M0saJ2ETm0ot7QBxrEfFTqorbeqb93Mq091cfgm8ySOpdOHepIP0wsaJ
- e+jGE+6Hm2uRuPq8yk2qWr/u2U1gdg/pHZcXcpHoPn6JnpP8xj5SuZ8gaU6FxLub0Lni
- K6u6oXPokfPKGLRydmh8g5jpRPIP3KbR3lOlaar5ESEEsfTnbbW9jpoBO4D+iMeHhXPg
- 2pNg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=TrLvQubzU+/Lpc8tJLp7Tkl2EusD11p+O2+kpsWbbJU=;
- fh=ntnFdXsRCZbLHVr/o1nS8k5XTrfppuza30kytlDn5nc=;
- b=cFjwMvpiEAaJ7KpffIy4ubH1oaIJGsIfzNs5XjZyuDP49jW9zU+rDh+omECLxRnavz
- 3teFjQdoURggR/NUBhLNnkWRE1frxxLAMbmqWwoRTDeACpmwc9p6WDPPLNUF0cK4Z/CB
- Z+PQsz3P7Yivhybl6i3/lsqUlcxFHuJdzsOf3eiIHQ719JgZnmquTZBVB4NV6TfDZf/W
- OWW4uT2yAOIH9P2BLDUNAJ/blXdzAwUBkq4Gh7Bm1vd9dvlmjfsURJ2EcAIDL0ml8RQS
- UbzVbBNoV1kOs6xRJ9tKlGWkAwGLAMBIjOye7H0t3giF/Pz2aVXhJSYQFglWWYltlmnY
- nz+Q==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from
+ <3nuY6agwKCq8cPQXWThiTUPcVddVaT.RdbfTbj-STkTacdcVcj.dgV@flex--nabihestefan.bounces.google.com>)
+ id 1wc7LW-0004hY-2f
+ for qemu-devel@nongnu.org; Tue, 23 Jun 2026 16:03:48 -0400
+Received: by mail-dl1-x1249.google.com with SMTP id
+ a92af1059eb24-137fc6f8e9fso447389c88.1
+ for <qemu-devel@nongnu.org>; Tue, 23 Jun 2026 13:03:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1782244981; x=1782849781; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=TrLvQubzU+/Lpc8tJLp7Tkl2EusD11p+O2+kpsWbbJU=;
- b=uRTcADkgb7jxGim9t8gvUxcguhGud0dVciEzgUaS9Mk0MOV8NpcBpqAwHuNxiX4EUy
- rVvwx/z9QWWKzYSPmR7PjmiJTzhNhIg92JBz89+Q7jn01mYLi4N3h60smnwjMIAb6mYq
- +lavmI+gxHoU3EAu5yQWsnguY+uHaOyksQDH2LxS2IdbSWfkj2pKx3aff2qZMC8gaEoQ
- QNSwoTdE+laADPYp3r5WEuUWl7IKOST/ZlMNkbC2JDvZVivWfdaGCAYFjPidhXblbzsq
- qMI/l6Jy3cN938hfV5fzDApHq72H5XWrj852BzFce0oOMpYLfU1Y5cyJdld7KmWVmqy4
- xYRw==
+ d=google.com; s=20251104; t=1782245023; x=1782849823; darn=nongnu.org;
+ h=cc:to:from:subject:message-id:mime-version:date:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=Iw4apqtQ7sIu7G2OtOGwry3Vix6t9KUumRSelZ4ZOLs=;
+ b=GMruAKyPNap6dNyRX/dfoDgoaTvET1797MMo4rlbTrQFj47+eaACN9AlbAHZ20Juwj
+ UH1yrh9P6AhYSy9u8dOADih1qN0yn/hDwdmg9DXGnVbLev7L/gt7+2PvBra6HR05Cfnh
+ 4r/vgvsbVr9ZEM4cmaQEXtC3QleROrMCgIbOuppXG80cvk6ov+6wjhBkdEThhNlyR4I8
+ ycltO6YR2/HoE0toZGjYNVKX7Jmom7Fa67CCFm5F7HGkWPhPo4ZoEsRy2OJNM/jnWwQh
+ zq1QHCWlMfdRWwSLeDPPt72m6bvGTENSWSxotY0XdyE1zfW1T/El+2KoPsZM8DCMLpju
+ NQkQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782244981; x=1782849781;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=TrLvQubzU+/Lpc8tJLp7Tkl2EusD11p+O2+kpsWbbJU=;
- b=BdMe4aC8TrfMqeHAclg8EUdmbx0kckNv+7Pzc/WPUMSPC+JBqFTaREc5jbEksw2KUs
- zlGc/yV0Y74/aNw8Me+55EAm8Tw4ng4oQcX5w4n9ZWGXBtmWnWrhZT6DvoiPENDBEHf8
- T7+3vVD07z5lGWFWti4gGmv0fjYkptV8BvvqDqwmOWAhFgnzJe1aKO9l9sObGBSO2qEn
- 8i2RFrOLfKx21P6ut5ShK18+RXWplLPFh5ehYw4sCkxBotOOrqScgya7kfxuktpBiERr
- T1i2GHaoGS0UyNtsvOgK6bwmGUUuQCeCew+97RDzRhyue0YYFR98GiIr6XXuNOfVHXVz
- WbDg==
+ d=1e100.net; s=20251104; t=1782245023; x=1782849823;
+ h=cc:to:from:subject:message-id:mime-version:date:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=Iw4apqtQ7sIu7G2OtOGwry3Vix6t9KUumRSelZ4ZOLs=;
+ b=PLhUTTQz8irpIoRt3B+bB2x95/6IAj/KQ1cAAKjpDIFjabKQrLWkhAFpELpLhbKt6o
+ lM4fh3oeqT5+NuqfsLd6rXq09Ouc3y3WT8LhwDkhcWMSZZZna3xcFUrpgBUvIjr5r1TY
+ az26ow9cBlUCX/P7W6M1RX3xpyYDaga/jhkN7eKum6PlbP8XPFgTuV/EzbnliqIs89kR
+ KeSjAypOFWvKCQdHKN7i1YL4qZaJP34lnIi+0qWI4ZkoprkmxGVMF3s1PWqOztUWPC1F
+ fGfgg1ysvjCVCLYiBs79Q7lm9AHemaNl6AwvJASNqPtkTDw1mIKjILtA4YKL+koYQvXE
+ /2jg==
 X-Forwarded-Encrypted: i=1;
- AHgh+RoCsTPwYHs3t+J8+qLPQrXmI5L8BUOFgU6edP7uP+5eHqAsH5BbiMDhJgRY3TILxlUyO4AOXn5puKjN@nongnu.org
-X-Gm-Message-State: AOJu0YzwT47rNUyJMbO56hazE88TiajNqqB5+P8I9ywGFCqkdX3gQGXW
- DMKS4g35zJ3/znSsncdJ3Wzlr9gPtwx7CcXYnUE+aRjhy629aNkPeklde2arWM20nOng32FfCJX
- j23G/1t7o47H4cFEuM0iKMB6MhUtPYCV7zDRMExn4WA==
-X-Gm-Gg: AfdE7clvaxBOc2bYkAieDKkN8lEoUxVgh3y2xPeD5ZahSxIzX2/3vxUWvM5dz8ZIaHz
- c/XM6vbav62SkhSu1Wstl4iNj1HzqNsUOr55FzSU/Ymnc9XH42EG1dWQ4BibskPakU51RKWs1SU
- 1HhIScrZQpJ0n/9dNOegnehiUisoge8dLcb9PbrdR/4OTSKS8b8LaVqfIfA60tieQ54p80njyjS
- XfnokbBqCEa0rKXOXNHHcX4gU3GQ9k3r9a5l6tqUeAGy1dtguWhCtR8YJGuE9GNRJPG3T4CLzQk
- IQKkNK6UOWUB0J23Bn3DqmRvqp6cgYt4Cf47ig4qeSFqFMcr/AMmCZqn
-X-Received: by 2002:a05:690e:1c09:b0:65e:37bc:c759 with SMTP id
- 956f58d0204a3-6636e61cec8mr323686d50.62.1782244980904; Tue, 23 Jun 2026
- 13:03:00 -0700 (PDT)
-MIME-Version: 1.0
-References: <20260623131946.46879-1-utsingh@redhat.com>
- <CAFEAcA-nrh63fWvnVSSJExspOw28WkZyn69=YMdb5=ZA8m95uA@mail.gmail.com>
- <ajqdIS-BZeyV3lnA@kbusch-mbp>
- <ajq7-Y3oZcUu3BJK@utsingh-thinkpadx1carbongen12.bengluru.csb>
-In-Reply-To: <ajq7-Y3oZcUu3BJK@utsingh-thinkpadx1carbongen12.bengluru.csb>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 23 Jun 2026 21:02:48 +0100
-X-Gm-Features: AVVi8CdkKtH6NBGsm-uGOaoXnxIfO7IKtqqNfyIrvZI7IUvuM1qJxPvu5JhXuZU
-Message-ID: <CAFEAcA8OeYH9qCvYER9PUShXg+hyfyZEOOSfcKvxrSXff-KxEg@mail.gmail.com>
-Subject: Re: [PATCH] hw/nvme: add user controlled 'vid' property
-To: Utkarsh Singh <utsingh@redhat.com>
-Cc: Keith Busch <kbusch@kernel.org>, Klaus Jensen <its@irrelevant.dk>, 
- Jesper Devantier <foss@defmacro.it>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
- qemu-block@nongnu.org, qemu-devel@nongnu.org, 
- Maurizio Lombardi <mlombard@redhat.com>, John Meneghini <jmeneghi@redhat.com>
+ AFNElJ9Tlb16ntxm//IpA+YT+y3Pg2a0HEhDfECk7dp+EzRNRl1YYofWGgWpocAL8WRxCWHaOFkRyLOtNdxJ@nongnu.org
+X-Gm-Message-State: AOJu0YwcU1A/0A+TO7egy4ycxbWIDnF3K7U94JbBnK7E2ZPFMv/F09jD
+ KV2ttUf2ipQ9a14vBBVI5uK63/PDycYksZFoSOI/8+iKTR1OIbKsbp1xhr9r+0sAw0AqWOWZ1SV
+ Ip9b+Yx6WcPaGb88AuJmEnwP/h0yQoA==
+X-Received: from dlbuy24.prod.google.com
+ ([2002:a05:7022:1e18:b0:139:b07e:ef0b])
+ (user=nabihestefan job=prod-delivery.src-stubby-dispatcher) by
+ 2002:a05:7022:6b93:b0:137:9399:fc59 with SMTP id
+ a92af1059eb24-139d0c892c7mr176562c88.21.1782245022526; 
+ Tue, 23 Jun 2026 13:03:42 -0700 (PDT)
+Date: Tue, 23 Jun 2026 20:03:38 +0000
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.55.0.rc0.799.gd6f94ed593-goog
+Message-ID: <20260623200338.3480560-1-nabihestefan@google.com>
+Subject: [PATCH v2] build: Use meson b_sanitize option for sanitizers
+From: Nabih Estefan <nabihestefan@google.com>
+To: pbonzini@redhat.com
+Cc: alex.bennee@linaro.org, laurent@vivier.eu, deller@gmx.de, 
+ pierrick.bouvier@oss.qualcomm.com, marcandre.lureau@redhat.com, 
+ berrange@redhat.com, philmd@mailo.com, zhao1.liu@intel.com, 
+ qemu-devel@nongnu.org, Nabih Estefan <nabihestefan@google.com>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b135;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb135.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1249;
+ envelope-from=3nuY6agwKCq8cPQXWThiTUPcVddVaT.RdbfTbj-STkTacdcVcj.dgV@flex--nabihestefan.bounces.google.com;
+ helo=mail-dl1-x1249.google.com
+X-Spam_score_int: -95
+X-Spam_score: -9.6
+X-Spam_bar: ---------
+X-Spam_report: (-9.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ USER_IN_DEF_DKIM_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -122,21 +95,287 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 23 Jun 2026 at 18:01, Utkarsh Singh <utsingh@redhat.com> wrote:
->
-> On Tue, Jun 23, 2026 at 08:50:09AM -0600, Keith Busch wrote:
-> >On Tue, Jun 23, 2026 at 03:01:12PM +0100, Peter Maydell wrote:
-> >> Should we also have a "device-id" property here? Being able
-> >> to set the vendor-ID only seems unnecessarily limited, since
-> >> PCI IDs are a (vendor,device) tuple.
-> >
-> >Yes, the quirks are usually based off the same tuple, so there should be
-> >a way to set both when that's the justification for the patch.
-> Will add device-id and rename "vid" to "pci-vendor-id" in v2.
+Refactor sanitizer configuration to use Meson's built-in `b_sanitize`
+option instead of manually adding flags to `qemu_cflags` and `qemu_ldflags`.
+This ensures that sanitizer flags are correctly passed to both C and Rust
+targets, fixing linker errors when Rust and UBSan are both enabled.
 
-I don't have a strong opinion whether to have the pci- prefix
-or not, but please be consistent about whether you have it or
-not for vendor-id and device-id.
+Explicitly parse `--enable-ubsan`, `--enable-asan`, and `--enable-tsan`
+in `configure` and map them to `-Db_sanitize` meson option. Remove
+redundant custom options from `meson_options.txt`.
 
--- PMM
+How to test:
+`./configure --target-list=aarch64-softmmu --enable-ubsan --enable-rust
+ && make -j all`
+
+Before this change it will fail at the end of make, since the linker will have
+different flags, after this change it will link properly
+
+Signed-off-by: Nabih Estefan <nabihestefan@google.com>
+---
+ configure                           | 35 ++++++++++++++++++
+ meson.build                         | 55 +++++++++++++----------------
+ meson_options.txt                   |  7 +---
+ scripts/meson-buildoptions.sh       |  9 -----
+ tests/functional/x86_64/meson.build |  2 +-
+ tests/unit/meson.build              |  2 +-
+ 6 files changed, 62 insertions(+), 48 deletions(-)
+
+diff --git a/configure b/configure
+index d8bc10060e..579df2f2c8 100755
+--- a/configure
++++ b/configure
+@@ -281,6 +281,9 @@ cfi="false"
+ # which requires knowing whether --static is enabled.
+ pie=""
+ static="no"
++ubsan="false"
++asan="false"
++tsan="false"
+ 
+ # Preferred compiler:
+ #  ${CC} (if set)
+@@ -746,6 +749,18 @@ for opt do
+   ;;
+   --wasm64-32bit-address-limit)
+   ;;
++  --enable-ubsan) ubsan="true"
++  ;;
++  --disable-ubsan) ubsan="false"
++  ;;
++  --enable-asan) asan="true"
++  ;;
++  --disable-asan) asan="false"
++  ;;
++  --enable-tsan) tsan="true"
++  ;;
++  --disable-tsan) tsan="false"
++  ;;
+   # everything else has the same name in configure and meson
+   --*) meson_option_parse "$opt" "$optarg"
+   ;;
+@@ -1939,6 +1954,26 @@ if test "$skip_meson" = no; then
+ 
+   # QEMU options
+   test "$rust" != "disabled" && meson_option_add "-Drust=$rust"
++
++  # Translate asan/ubsan/tsan to b_sanitize
++  sanitizers=""
++  if test "$ubsan" = "true" && test "$asan" = "true"; then
++    sanitizers="undefined,address"
++  elif test "$ubsan" = "true"; then
++    sanitizers="undefined"
++  elif test "$asan" = "true"; then
++    sanitizers="address"
++  fi
++  if test "$tsan" = "true"; then
++    if test -n "$sanitizers"; then
++      error_exit "TSAN is not supported with other sanitizers"
++    fi
++    sanitizers="thread"
++  fi
++  if test -n "$sanitizers"; then
++    meson_option_add "-Db_sanitize=$sanitizers"
++  fi
++
+   test "$cfi" != false && meson_option_add "-Dcfi=$cfi" "-Db_lto=$cfi"
+   test "$docs" != auto && meson_option_add "-Ddocs=$docs"
+   test -n "${LIB_FUZZING_ENGINE+xxx}" && meson_option_add "-Dfuzzing_engine=$LIB_FUZZING_ENGINE"
+diff --git a/meson.build b/meson.build
+index e026851309..417c27002c 100644
+--- a/meson.build
++++ b/meson.build
+@@ -541,43 +541,35 @@ if get_option('safe_stack') and coroutine_backend != 'ucontext'
+   error('SafeStack is only supported with the ucontext coroutine backend')
+ endif
+ 
+-if get_option('asan')
+-  if cc.has_argument('-fsanitize=address')
+-    qemu_cflags = ['-fsanitize=address'] + qemu_cflags
+-    qemu_ldflags = ['-fsanitize=address'] + qemu_ldflags
+-  else
+-    error('Your compiler does not support -fsanitize=address')
+-  endif
++sanitize = get_option('b_sanitize')
++
++if sanitize.contains('address')
++  # Meson handles -fsanitize=address automatically
+ endif
+ 
+-if get_option('ubsan')
++if sanitize.contains('undefined')
+   # Detect static linking issue with ubsan:
+   # https://gcc.gnu.org/bugzilla/show_bug.cgi?id=84285
+-  if cc.links('int main(int argc, char **argv) { return argc + 1; }',
+-              args: [qemu_ldflags, '-fsanitize=undefined'])
+-    qemu_cflags += ['-fsanitize=undefined']
+-    qemu_ldflags += ['-fsanitize=undefined']
+-
+-    # Suppress undefined behaviour from function call to mismatched type.
+-    # In addition, tcg prologue does not emit function type prefix
+-    # required by function call sanitizer.
+-    if cc.has_argument('-fno-sanitize=function')
+-      qemu_cflags += ['-fno-sanitize=function']
+-    endif
+-  else
++  if not cc.links('int main(int argc, char **argv) { return argc + 1; }',
++                  args: [qemu_ldflags, '-fsanitize=undefined'])
+     error('Your compiler does not support -fsanitize=undefined')
+   endif
++
++  # Suppress undefined behaviour from function call to mismatched type.
++  # In addition, tcg prologue does not emit function type prefix
++  # required by function call sanitizer.
++  if cc.has_argument('-fno-sanitize=function')
++    qemu_cflags += ['-fno-sanitize=function']
++  endif
+ endif
+ 
+-# Thread sanitizer is, for now, much noisier than the other sanitizers;
+-# keep it separate until that is not the case.
+-if get_option('tsan')
+-  if get_option('asan') or get_option('ubsan')
++if sanitize.contains('thread')
++  if sanitize.contains('address') or sanitize.contains('undefined')
+     error('TSAN is not supported with other sanitizers')
+   endif
+   if not cc.has_function('__tsan_create_fiber',
+-                         args: '-fsanitize=thread',
+-                         prefix: '#include <sanitizer/tsan_interface.h>')
++                          args: '-fsanitize=thread',
++                          prefix: '#include <sanitizer/tsan_interface.h>')
+     error('Cannot enable TSAN due to missing fiber annotation interface')
+   endif
+   tsan_warn_suppress = []
+@@ -588,8 +580,7 @@ if get_option('tsan')
+   if cc.has_argument('-Wno-tsan')
+     tsan_warn_suppress = ['-Wno-tsan']
+   endif
+-  qemu_cflags = ['-fsanitize=thread'] + tsan_warn_suppress + qemu_cflags
+-  qemu_ldflags = ['-fsanitize=thread'] + qemu_ldflags
++  qemu_cflags += tsan_warn_suppress
+ endif
+ 
+ # Detect support for PT_GNU_RELRO + DT_BIND_NOW.
+@@ -2482,7 +2473,7 @@ if have_tcg
+   config_host_data.set('CONFIG_TCG_INTERPRETER', tcg_arch == 'tci')
+ endif
+ config_host_data.set('CONFIG_TPM', have_tpm)
+-config_host_data.set('CONFIG_TSAN', get_option('tsan'))
++config_host_data.set('CONFIG_TSAN', sanitize.contains('thread'))
+ config_host_data.set('CONFIG_USB_LIBUSB', libusb.found())
+ config_host_data.set('CONFIG_VDE', vde.found())
+ config_host_data.set('CONFIG_VHOST', have_vhost)
+@@ -2639,7 +2630,7 @@ if rdma.found()
+ endif
+ 
+ have_asan_fiber = false
+-if get_option('asan') and \
++if sanitize.contains('address') and \
+    not cc.has_function('__sanitizer_start_switch_fiber',
+                          args: '-fsanitize=address',
+                          prefix: '#include <sanitizer/asan_interface.h>')
+@@ -4768,7 +4759,9 @@ summary_info += {'memory allocator':  get_option('malloc')}
+ summary_info += {'avx2 optimization': config_host_data.get('CONFIG_AVX2_OPT')}
+ summary_info += {'avx512bw optimization': config_host_data.get('CONFIG_AVX512BW_OPT')}
+ summary_info += {'gcov':              get_option('b_coverage')}
+-summary_info += {'thread sanitizer':  get_option('tsan')}
++summary_info += {'address sanitizer': sanitize.contains('address')}
++summary_info += {'undefined behavior sanitizer': sanitize.contains('undefined')}
++summary_info += {'thread sanitizer':  sanitize.contains('thread')}
+ summary_info += {'CFI support':       get_option('cfi')}
+ if get_option('cfi')
+   summary_info += {'CFI debug support': get_option('cfi_debug')}
+diff --git a/meson_options.txt b/meson_options.txt
+index a07cb47d35..d61c0241cc 100644
+--- a/meson_options.txt
++++ b/meson_options.txt
+@@ -99,12 +99,7 @@ option('tcg_interpreter', type: 'boolean', value: false,
+        description: 'TCG with bytecode interpreter (slow)')
+ option('safe_stack', type: 'boolean', value: false,
+        description: 'SafeStack Stack Smash Protection (requires clang/llvm and coroutine backend ucontext)')
+-option('asan', type: 'boolean', value: false,
+-       description: 'enable address sanitizer')
+-option('ubsan', type: 'boolean', value: false,
+-       description: 'enable undefined behaviour sanitizer')
+-option('tsan', type: 'boolean', value: false,
+-       description: 'enable thread sanitizer')
++
+ option('stack_protector', type: 'feature', value: 'auto',
+        description: 'compiler-provided stack protection')
+ option('cfi', type: 'boolean', value: false,
+diff --git a/scripts/meson-buildoptions.sh b/scripts/meson-buildoptions.sh
+index c003985047..8d3b992ed7 100644
+--- a/scripts/meson-buildoptions.sh
++++ b/scripts/meson-buildoptions.sh
+@@ -21,7 +21,6 @@ meson_options_help() {
+   printf "%s\n" '  --disable-relocatable    toggle relocatable install'
+   printf "%s\n" '  --docdir=VALUE           Base directory for documentation installation'
+   printf "%s\n" '                           (can be empty) [share/doc]'
+-  printf "%s\n" '  --enable-asan            enable address sanitizer'
+   printf "%s\n" '  --enable-block-drv-whitelist-in-tools'
+   printf "%s\n" '                           use block whitelist also in tools instead of only'
+   printf "%s\n" '                           QEMU'
+@@ -54,8 +53,6 @@ meson_options_help() {
+   printf "%s\n" '  --enable-trace-backends=CHOICES'
+   printf "%s\n" '                           Set available tracing backends [log] (choices:'
+   printf "%s\n" '                           dtrace/ftrace/log/nop/simple/syslog/ust)'
+-  printf "%s\n" '  --enable-tsan            enable thread sanitizer'
+-  printf "%s\n" '  --enable-ubsan           enable undefined behaviour sanitizer'
+   printf "%s\n" '  --firmwarepath=VALUES    search PATH for firmware files [share/qemu-'
+   printf "%s\n" '                           firmware]'
+   printf "%s\n" '  --iasl=VALUE             Path to ACPI disassembler'
+@@ -238,8 +235,6 @@ _meson_option_parse() {
+     --disable-af-xdp) printf "%s" -Daf_xdp=disabled ;;
+     --enable-alsa) printf "%s" -Dalsa=enabled ;;
+     --disable-alsa) printf "%s" -Dalsa=disabled ;;
+-    --enable-asan) printf "%s" -Dasan=true ;;
+-    --disable-asan) printf "%s" -Dasan=false ;;
+     --enable-attr) printf "%s" -Dattr=enabled ;;
+     --disable-attr) printf "%s" -Dattr=disabled ;;
+     --audio-drv-list=*) quote_sh "-Daudio_drv_list=$2" ;;
+@@ -521,14 +516,10 @@ _meson_option_parse() {
+     --disable-tpm) printf "%s" -Dtpm=disabled ;;
+     --enable-trace-backends=*) quote_sh "-Dtrace_backends=$2" ;;
+     --with-trace-file=*) quote_sh "-Dtrace_file=$2" ;;
+-    --enable-tsan) printf "%s" -Dtsan=true ;;
+-    --disable-tsan) printf "%s" -Dtsan=false ;;
+     --enable-u2f) printf "%s" -Du2f=enabled ;;
+     --disable-u2f) printf "%s" -Du2f=disabled ;;
+     --enable-uadk) printf "%s" -Duadk=enabled ;;
+     --disable-uadk) printf "%s" -Duadk=disabled ;;
+-    --enable-ubsan) printf "%s" -Dubsan=true ;;
+-    --disable-ubsan) printf "%s" -Dubsan=false ;;
+     --enable-usb-redir) printf "%s" -Dusb_redir=enabled ;;
+     --disable-usb-redir) printf "%s" -Dusb_redir=disabled ;;
+     --enable-valgrind) printf "%s" -Dvalgrind=enabled ;;
+diff --git a/tests/functional/x86_64/meson.build b/tests/functional/x86_64/meson.build
+index 1ed10ad6c2..54af748f15 100644
+--- a/tests/functional/x86_64/meson.build
++++ b/tests/functional/x86_64/meson.build
+@@ -24,7 +24,7 @@ tests_x86_64_system_quick = [
+ # interacts badly with the sanitizer; this means the memlock
+ # test (which checks via /proc for whether pages were locked)
+ # will always fail on a sanitizer build, so don't run it.
+-if not get_option('asan')
++if not sanitize.contains('address')
+   tests_x86_64_system_quick += [ 'memlock' ]
+ endif
+ 
+diff --git a/tests/unit/meson.build b/tests/unit/meson.build
+index 01cc540a45..b0ba64d0ec 100644
+--- a/tests/unit/meson.build
++++ b/tests/unit/meson.build
+@@ -147,7 +147,7 @@ if have_system
+   # Some tests: test-char, test-qdev-global-props, and test-qga,
+   # are not runnable under TSan due to a known issue.
+   # https://github.com/google/sanitizers/issues/1116
+-  if not get_option('tsan')
++  if not sanitize.contains('thread')
+     if host_os != 'windows'
+         tests += {
+           'test-char': ['socket-helpers.c', qom, io, chardev]
+-- 
+2.55.0.rc0.799.gd6f94ed593-goog
+
 
