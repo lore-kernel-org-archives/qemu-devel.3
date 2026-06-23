@@ -4,107 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E754CDB466
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jun 2026 00:26:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6960CDB46F
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jun 2026 00:26:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wboxg-0000Kv-T6; Mon, 22 Jun 2026 20:25:56 -0400
+	id 1wboxj-0000MC-BI; Mon, 22 Jun 2026 20:25:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
- id 1wboxf-0000JF-MF; Mon, 22 Jun 2026 20:25:55 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ id 1wboxi-0000Lc-An; Mon, 22 Jun 2026 20:25:58 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
- id 1wboxe-0003cK-2o; Mon, 22 Jun 2026 20:25:55 -0400
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ id 1wboxg-0003d6-Q2; Mon, 22 Jun 2026 20:25:58 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65MJmU393896350; Tue, 23 Jun 2026 00:25:52 GMT
+ 65MJmCq74133428; Tue, 23 Jun 2026 00:25:55 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=m3QQnMA1J67/ZsLf6
- nhOOi5kLhoE1ut6ZAqrtdZ5+Q0=; b=jqcG0cJ5GDjf0n7mYAY6ZsaOXi3SbKdpE
- 9TuSvpwIYHUayKfmiFtgQm8rtxO9d+6XkEbs6rMYap9Nvkx7SFAGGVMcSkYhwEZx
- WjM+QZlwTdwi7qE1rbWVjmV9xyOasemZYkQwGmlDxQrMg37q02JtTJZEpHl+J64/
- wMTnc5+E/d2MSpwjadJoJXk6vCKNOuKcuFTOJVtpwORt6Vv4mLRoCYdY86T7mT+R
- 693j78omnZv5lrCNciAg/cqpt6Nvr1WQ8FapYWAKqjab6rjwl1U/bxEPFTuGNmQ5
- /uG1MuOQVq4vtADPl8/Z1vmUP/rNOtFE49L3XnECG7cmgIBbvIyxg==
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4ewg9hm62s-1
+ :mime-version:references:subject:to; s=pp1; bh=zhSKiO/IHmLzfM3Do
+ EVL6G2Q8QWGd7wtlJTGHm8RXHA=; b=L6VI3vl1e47PL2nMr7N7ttGA+arjdPM0g
+ 590knbf1NwuH3P13HHq6kQmsxunYh0IZeIK/8j3XHUNvC9lcr3ewKBFXGriw+7jj
+ mKrTVIY1xuQSu2aCR2yqEh3Xg1iKA8o8p950INN1l8jaYW/v7YCsP87We9zrZ1vf
+ MlnGTOkNMOq73RO2qGiKO2En0ciePcDrmtwkiIUtTwIyQPzvKHb8haOxPfrqxOxP
+ 94byqUFLyQIT654wsErSUonY285+S9TirxvNZqUE739OUfr0ckXj3+B3s6WzPNxL
+ cbsXylD23U4rLmkWtDjbovvG6RHfBiKf8Eqa6Yd/FpQjtCu0z0UDw==
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4ewjhqkv32-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 23 Jun 2026 00:25:52 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 65N0Jeo2007306;
- Tue, 23 Jun 2026 00:25:51 GMT
-Received: from smtprelay03.wdc07v.mail.ibm.com ([172.16.1.70])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4ex5jw8utx-1
+ Tue, 23 Jun 2026 00:25:54 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 65N0JdtI024608;
+ Tue, 23 Jun 2026 00:25:54 GMT
+Received: from smtprelay05.wdc07v.mail.ibm.com ([172.16.1.72])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4ex7dg0h4s-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 23 Jun 2026 00:25:51 +0000 (GMT)
+ Tue, 23 Jun 2026 00:25:54 +0000 (GMT)
 Received: from smtpav05.wdc07v.mail.ibm.com (smtpav05.wdc07v.mail.ibm.com
  [10.39.53.232])
- by smtprelay03.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 65N0PIC014549638
+ by smtprelay05.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 65N0Pqds66322826
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 23 Jun 2026 00:25:18 GMT
+ Tue, 23 Jun 2026 00:25:52 GMT
 Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id AC4BF58053;
- Tue, 23 Jun 2026 00:25:50 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 8446F58059;
+ Tue, 23 Jun 2026 00:25:52 +0000 (GMT)
 Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id B1C7E58043;
- Tue, 23 Jun 2026 00:25:49 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 7085B58043;
+ Tue, 23 Jun 2026 00:25:51 +0000 (GMT)
 Received: from t15.ibmuc.com (unknown [9.61.116.241])
  by smtpav05.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 23 Jun 2026 00:25:49 +0000 (GMT)
+ Tue, 23 Jun 2026 00:25:51 +0000 (GMT)
 From: jrossi@linux.ibm.com
 To: qemu-devel@nongnu.org, qemu-s390x@nongnu.org, cohuck@redhat.com,
  mjrosato@linux.ibm.com
 Cc: jrossi@linux.ibm.com, zycai@linux.ibm.com, jdaley@linux.ibm.com,
- jjherne@linux.ibm.com, farman@linux.ibm.com, nrb@linux.ibm.com
-Subject: [PATCH 4/5] pc-bios/s390-ccw: Verify virtio support when booting from
- PCI device on s390x
-Date: Mon, 22 Jun 2026 20:25:38 -0400
-Message-ID: <20260623002539.126124-5-jrossi@linux.ibm.com>
+ jjherne@linux.ibm.com, farman@linux.ibm.com, nrb@linux.ibm.com,
+ Jared Rossi <jrossi@us.ibm.com>
+Subject: [PATCH 5/5] s390x: Enable boot menu for virtio pci device
+Date: Mon, 22 Jun 2026 20:25:39 -0400
+Message-ID: <20260623002539.126124-6-jrossi@linux.ibm.com>
 X-Mailer: git-send-email 2.43.5
 In-Reply-To: <20260623002539.126124-1-jrossi@linux.ibm.com>
 References: <20260623002539.126124-1-jrossi@linux.ibm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: -v75l5OQYMvbByB68aH758FXzIINdSiT
-X-Proofpoint-GUID: -v75l5OQYMvbByB68aH758FXzIINdSiT
-X-Authority-Analysis: v=2.4 cv=Y4XIdBeN c=1 sm=1 tr=0 ts=6a39d290 cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+X-Authority-Analysis: v=2.4 cv=I4VVgtgg c=1 sm=1 tr=0 ts=6a39d293 cx=c_pps
+ a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
  a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=Y2IxJ9c9Rs8Kov3niI8_:22 a=VnNF1IyMAAAA:8 a=vycScq5fQBvcvulrpfcA:9
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjIzMDAwMCBTYWx0ZWRfXwB+l4lV/VKBv
- f57X0MDvQRwNPzh3sOC0xarAbegErRvT9biiCvRScF+8N8xvYo7wIzhV1rgNqEusUqKPrhnoeld
- dVrXlEkQF8xuIPToO1fwT2e3srZfn89G8Iq/ppko8VLt2f8k8X3XQ6ox80/iFPu2Q9AySIP+SLG
- t1UeDR4DJbLtEktdM0prn0Nq5DujpVswFhT/lMbhsdaV3d1P5TIot75t4/mmdY6jgXQJZWrsQyA
- n3aRC6sGX42ug42CMyPW2bC/cI9QDCAltJtc0vpP/2oOa4wEjp64G6AmkIciJFT2RgXhn2aJTUn
- ZJvV8diiw4tZ4ujHI14hLYDbsp0lT932FuXHyDCDvb0Up5lWWOyl//m3j9UaUsM3WZUTpMeVvOd
- hNEmCFkOywAlldVjd2+93BtEVPZrKe8CztlOrnQBgwjTGDFQd8iK3gVx+16AA2Y5ZXIgUVNRDov
- ZDPcE7fsLOGSqfT5daA==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjIzMDAwMCBTYWx0ZWRfXwXmO+GSRq1g/
- dQqGTi2ET+i/n6LStqN5EpmfVE3Ju5ooc/U9UEcB8ZUg/5kgTvGB6pEldTVpmY/lU/2Yyg73nhM
- PB37PogwlUUTapItX3fV2GgHDwmnMVk=
+ a=uAbxVGIbfxUO_5tXvNgY:22 a=VnNF1IyMAAAA:8 a=UmcbZtfwkcGgJE0Tj-oA:9
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjIzMDAwMCBTYWx0ZWRfXxhQbWQhd4Vi/
+ Euo1pPpgeWkY7gsooWLkQujMpZaVzryWT/9aOHEHEPD5SZLGYAg40o+vB8SmYYA1fxATKmfVWYq
+ CGyhXED7WCL3FI5aMrhFTZtka0vDUAG9Dzm3EwBsNm4ryWVeF+ZkNOePB9W4W01EiBg4w6CQK89
+ KwmFX34pOd59TwNYBSW7omOIhrFhnEBG59ITj4kNNt1TlQpdN/3AQBthpcX4MKCLfBdUawk28Az
+ VOBTjqLZDMmUtEQgkR+nsDPxZGV5RFQTK6PBqIS+COOfIQmfsMJDGJVLOGCqY34t8GhJ9PB73YG
+ 5+QNZfhULXpzQ9vX9pvMHzBQXbbH/hw7YPepcNZothzzWHNbk0AMeAe8h1VTkPHX2VuvTa905av
+ QxrLvCE6zdgnYc+7fDhdwvCTHA5CcKBtXeW4TYDYSWnFswxYm/yiFgLfjj5WBp+W7TpTWm7k2jD
+ 4LptC5w7e/iKLaXFuIQ==
+X-Proofpoint-GUID: zE1bniD_9pAk3b6a3o7Rvb3AUy9gp9td
+X-Proofpoint-ORIG-GUID: zE1bniD_9pAk3b6a3o7Rvb3AUy9gp9td
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjIzMDAwMCBTYWx0ZWRfX0fYgMgl7w3Lw
+ 6WtIhuILJarCAIfwgtgXk0jSSeEmLIV7kwcun8YScNx0DJewmSLYuAQKzrditRVaIV1Fi/VzYB3
+ 8UC5T28C9W2kU2Fufra2e2PxxwPmnz8=
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-06-22_04,2026-06-22_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 priorityscore=1501 malwarescore=0 lowpriorityscore=0 spamscore=0
- clxscore=1015 suspectscore=0 impostorscore=0 phishscore=0 bulkscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606230000
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=jrossi@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
+ lowpriorityscore=0 malwarescore=0 clxscore=1015 impostorscore=0
+ suspectscore=0 phishscore=0 bulkscore=0 spamscore=0 priorityscore=1501
+ adultscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2606230000
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=jrossi@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
 X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -121,79 +122,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jared Rossi <jrossi@linux.ibm.com>
+From: Zhuoying Cai <zycai@linux.ibm.com>
 
-The virtio specification requires that each PCI device has a vendor ID of
-0x1AF4.  Verify this value before continuing with boot process.
+Add S390_IPL_TYPE_PCI to the boot menu handling logic to enable
+interactive boot menu support for virtio PCI devices on s390x.
 
-Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
+Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
+signed-off-by: Jared Rossi <jrossi@us.ibm.com>
 ---
- pc-bios/s390-ccw/main.c       |  1 +
- pc-bios/s390-ccw/virtio-pci.c | 19 +++++++++++++++++++
- pc-bios/s390-ccw/virtio.h     |  1 +
- 3 files changed, 21 insertions(+)
+ hw/s390x/ipl.c          | 1 +
+ pc-bios/s390-ccw/main.c | 1 +
+ 2 files changed, 2 insertions(+)
 
+diff --git a/hw/s390x/ipl.c b/hw/s390x/ipl.c
+index 4cca21c621..d5fdc3ea0f 100644
+--- a/hw/s390x/ipl.c
++++ b/hw/s390x/ipl.c
+@@ -315,6 +315,7 @@ static void s390_ipl_set_boot_menu(S390IPLState *ipl)
+             return;
+         }
+         break;
++    case S390_IPL_TYPE_PCI:
+     case S390_IPL_TYPE_QEMU_SCSI:
+         break;
+     default:
 diff --git a/pc-bios/s390-ccw/main.c b/pc-bios/s390-ccw/main.c
-index 1059fda03c..567e97bf32 100644
+index 567e97bf32..be83d598e2 100644
 --- a/pc-bios/s390-ccw/main.c
 +++ b/pc-bios/s390-ccw/main.c
-@@ -164,6 +164,7 @@ static bool find_fid(uint32_t fid)
-     }
+@@ -185,6 +185,7 @@ static void menu_setup(VDev *vdev)
  
-     vdev->pci_fh = entry.fh;
-+    vdev->vendor_id = entry.vendor_id;
-     virtio_pci_id2type(vdev, entry.device_id);
- 
-     return vdev->dev_type != 0;
-diff --git a/pc-bios/s390-ccw/virtio-pci.c b/pc-bios/s390-ccw/virtio-pci.c
-index 2c83ec4f13..07b53b894f 100644
---- a/pc-bios/s390-ccw/virtio-pci.c
-+++ b/pc-bios/s390-ccw/virtio-pci.c
-@@ -325,6 +325,20 @@ static int enable_pci_bus_master(void)
-     return 0;
- }
- 
-+bool virtio_pci_is_supported(VDev *vdev)
-+{
-+    if (vdev->vendor_id == 0x1AF4) {
-+        switch (vdev->dev_type) {
-+        case VIRTIO_ID_BLOCK:
-+            return true;
-+        default:
-+            return false;
-+        }
-+    }
-+
-+    return false;
-+}
-+
- int virtio_pci_setup(VDev *vdev)
- {
-     VRing *vr;
-@@ -335,6 +349,11 @@ int virtio_pci_setup(VDev *vdev)
-     vdev->guessed_disk_nature = VIRTIO_GDN_NONE;
-     vdev->cmd_vr_idx = 0;
- 
-+    if (!virtio_pci_is_supported(vdev)) {
-+        puts("Virtio PCI unsupported for this device ID");
-+        return -ENODEV;
-+    }
-+
-     if (virtio_pci_read_pci_cap_config()) {
-         puts("Invalid virtio PCI capabilities");
-         return -EIO;
-diff --git a/pc-bios/s390-ccw/virtio.h b/pc-bios/s390-ccw/virtio.h
-index 75ae5bdbc2..aa307025e0 100644
---- a/pc-bios/s390-ccw/virtio.h
-+++ b/pc-bios/s390-ccw/virtio.h
-@@ -259,6 +259,7 @@ struct VDev {
-     bool scsi_device_selected;
-     ScsiDevice selected_scsi_device;
-     uint32_t pci_fh;
-+    uint16_t vendor_id;
-     uint32_t max_transfer;
-     uint32_t guest_features[2];
- };
+     switch (vdev->ipl_type) {
+     case S390_IPL_TYPE_CCW:
++    case S390_IPL_TYPE_PCI:
+     case S390_IPL_TYPE_QEMU_SCSI:
+         menu_set_parms(qipl.qipl_flags & BOOT_MENU_FLAG_MASK,
+                        qipl.boot_menu_timeout);
 -- 
 2.54.0
 
