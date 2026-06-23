@@ -4,93 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A96ACDB46F
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jun 2026 12:50:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF343CD98F2
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jun 2026 12:50:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wc0YZ-0004Z1-Sr; Tue, 23 Jun 2026 08:48:47 -0400
+	id 1wc0Yd-0004av-3i; Tue, 23 Jun 2026 08:48:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wc0YY-0004YC-E9
- for qemu-devel@nongnu.org; Tue, 23 Jun 2026 08:48:46 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wc0Yb-0004a4-An
+ for qemu-devel@nongnu.org; Tue, 23 Jun 2026 08:48:49 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wc0YU-00071T-Hy
- for qemu-devel@nongnu.org; Tue, 23 Jun 2026 08:48:46 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wc0YZ-00073B-MB
+ for qemu-devel@nongnu.org; Tue, 23 Jun 2026 08:48:49 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1782218919;
+ s=mimecast20190719; t=1782218927;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=GMugfKkzQoQqUMR/78UE4ehQnL4nusRrCbVz2kVTbW0=;
- b=eOD5ufHUCtbWSspLIkG0QcXDdANNtWht1GYVGgCqJf+bU4qY+HJlZIs3nLR1gFzUkk0oM8
- 0ICI2Q4YFgydxRZlVL36fE1LbwCKH7mh7bv8s+vjhq9tbH5F3gdROqjLOVUPV73rOONhgo
- ZZb+BlpmCoRBC58XLs2Ssbw+p5gjnRY=
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
- [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=o6j9IIN1re0pi/37Fxh9v0POSNlaYsqAG3daLdzi7VU=;
+ b=Cnfh5sncQRjStSbWzDZdEpVjwyDQkgtS+trxf8SLJgYDlhPpkhJc5Vagfbp4EFwVvc2snr
+ QfQvoQlZr5oODfMaFL4RRpy672QTXctnHLSdQS9Z5lxuh9/Ax6FObhC9DXq3l47n2BIykc
+ tbpZtMGts50NxikrIsFFlBEDZ0/Uyjo=
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
+ [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-649-fMc0wzIUNgitub8kt6A8ww-1; Tue, 23 Jun 2026 08:48:38 -0400
-X-MC-Unique: fMc0wzIUNgitub8kt6A8ww-1
-X-Mimecast-MFC-AGG-ID: fMc0wzIUNgitub8kt6A8ww_1782218918
-Received: by mail-qt1-f200.google.com with SMTP id
- d75a77b69052e-51a08feb103so63580171cf.2
- for <qemu-devel@nongnu.org>; Tue, 23 Jun 2026 05:48:38 -0700 (PDT)
+ us-mta-187-MkINQp9QOGSc9JK3RO5DuQ-1; Tue, 23 Jun 2026 08:48:45 -0400
+X-MC-Unique: MkINQp9QOGSc9JK3RO5DuQ-1
+X-Mimecast-MFC-AGG-ID: MkINQp9QOGSc9JK3RO5DuQ_1782218925
+Received: by mail-qt1-f198.google.com with SMTP id
+ d75a77b69052e-51a19f736a1so57297571cf.2
+ for <qemu-devel@nongnu.org>; Tue, 23 Jun 2026 05:48:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1782218918; x=1782823718; darn=nongnu.org;
+ d=redhat.com; s=google; t=1782218925; x=1782823725; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=GMugfKkzQoQqUMR/78UE4ehQnL4nusRrCbVz2kVTbW0=;
- b=ZXLXFATwFKi+7wNdtK7ZLfoxozz37g0ywLH18Pq6jiuLFcvKfppiszpxMUGOxBvCY0
- C3xU9tMQ/7VwY9O88HUKn3fkaI5sYgECYARyj6R8vC0BWtCXEZgGNpf9GRngzx74V5TB
- WVV3IXjYPNFzoK5wBhgebfDqbOlbTj+MnGcRDGDNmqtRQdjb/hy1LTd6WJTDBDRiWFdR
- fLc0d2i/0OwZ1T6QTMBVeS6lC1RzXEVh1UYSpi3p2U1kfYcWcCbEnvUG78RxuTFpCAtn
- jctY8xVQHVlm2KxYm/HBMW9aN/NzhDFDpmlORpqmvpo4Dm31c7QTi4dhWg81Ldte7kWY
- /C5g==
+ bh=o6j9IIN1re0pi/37Fxh9v0POSNlaYsqAG3daLdzi7VU=;
+ b=smVxq8fQQWpYE0+azqHnHLlVFIzTx1lc2x4WEPtlEDUPQX0b6d7FYdPOq+5HbxA6J3
+ yQklDojYZBfEtdxs54zOKY6Kb2SGpmro76lGzNXtmSAaAdC4NB45gdKeE4ThT2iQlAY4
+ v0DeRHI/byR54HIe8vYZ6O8q8edc6Em12Dfol1vifD6MyJfkrPVwUwQipr/IhzMp8er6
+ 4DcOcs57kCxNGlL+QeWqYVd/7Rzt9wOw7Ht6Ulrrhejex9p7RyWd9q3PU+S6xg7HkENI
+ 1ozfcqBTjO20i3piKg5JkQsFPv94/lwGREDENQl6oz23a7aWWsFezcxI7BnB3vgeJ99p
+ I4dA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782218918; x=1782823718;
+ d=1e100.net; s=20251104; t=1782218925; x=1782823725;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=GMugfKkzQoQqUMR/78UE4ehQnL4nusRrCbVz2kVTbW0=;
- b=iLKUPmnDbzRrmd9Hf1bhKIxaBbRnll9QwjlBWffI8EjHDgslGmPXiozck+8Fub+h0J
- xtXwZDYpLY2ywl6CbMqJtT6RSAMzjmGZiOQTpKVt2qNZ49KaStfvW4jI7S59jWFkf0Xz
- un6BddmnKRtswL/0CKEt196b2/JiQ2Hv2L4vXoDO7TbL55fS6LeVgOus9Chma2u4IAjX
- OrIG9rvy6PbtxQ3wJKxL2Kg3JSuUNl1Ta9ITLPntINlp55la4kAcJeIhg6CA2HAANThd
- tScLaQ13T+rqokEzHMdnwabSIE9EW8krzmaMdYZyLT8fX8qTsbhYD7dMcxxVfDZC+cYK
- 654A==
-X-Gm-Message-State: AOJu0YwsyFkV676YQBy9esDDPbf/9rzulvFkBzqYaYGBJsE6iKdIw2/T
- MIkxBgI5hsS8CtSSdH1D3rxc9fH//iUtSVRC2dK0u3x9Q4vN/jpdT4HGI0SPH1km/7x4xl8xltR
- PPeMNRkrblA2Ma1J+8VMt+TIMfFebY1KMPrYotTiVNeCP7i12CXZn6uEnlEB71AYB+VC154W6nm
- 6RI7LZZC060fUkJPTscun786o8zRFQCV553gSqaw==
-X-Gm-Gg: AfdE7ckg0j+J9KpH/Wz+TwShs6gb/gNSB5Rh8Z2V87sUeMYSbS6XmLz6KRtjFMbxpVY
- d+M38pAnromBZJQPwODsgI7ErEtEleQsew6ISjcZDRQR9H1EfxdoQ1cP2W0JWuGNHqLBqio7oPk
- RWrOBkmtt8NedDDjkiSuvcDgyeOlkINRYN8nMw/VRvM57Dr4Xu44aW8hxeA12BvFNjR2nkRlVUM
- 80A06P8zksbm16sn3H+C1vvkXjoBFmwqYoR1kJHMGzqqBDxWzp0bAs0FsF4hOJxEHIE2XLTq7r8
- fXEfBxamR6OSKtkMVUKh9lhO5P0BrGzqJZpeUMjmsTTQ0IDwp6pPBSZKwKp1Sph3iDK8vJ9F9t0
- a/Q==
-X-Received: by 2002:ac8:5d0e:0:b0:517:6351:b401 with SMTP id
- d75a77b69052e-519e4dd3a8bmr276013191cf.44.1782218917826; 
- Tue, 23 Jun 2026 05:48:37 -0700 (PDT)
-X-Received: by 2002:ac8:5d0e:0:b0:517:6351:b401 with SMTP id
- d75a77b69052e-519e4dd3a8bmr276012481cf.44.1782218917019; 
- Tue, 23 Jun 2026 05:48:37 -0700 (PDT)
+ bh=o6j9IIN1re0pi/37Fxh9v0POSNlaYsqAG3daLdzi7VU=;
+ b=blE8MtSXDcIwlLQUt0wjjPMa2m2lbTvSgQzalSAeQWt6R+do3WfVmxiYMU1UmHdSXA
+ 0eVYX5qyjsvSc28bJ+0hguXvbmFJbk8JFxbH9ehhLu5fEnwPJUcpOFq+ep+/zZrPbl5z
+ CiSY5a4FQIlMbIXqi1VqGMiyuuIrQmRFUOFr1V8HWy7r/jlTN8KBthtPUtMfY5oQl2/j
+ j6RBhSQL+JHaRihc3b58YLN4A3zT1TMUgyjKobdV78xPQ7CX3PoqkKBtZYfDU37zmMCQ
+ 7YN7HVCCZ/ydVBmG0EjtNaT7s3+KkkAJvfXW+GW+OFeSi7MYWwAJOX89whqJ2qaEZXNo
+ +uKQ==
+X-Gm-Message-State: AOJu0YxKcGM159mHJp5yfA7acmPItzFnBAeqznXodGpGmtdQb3UQEMTs
+ 9xNJCWvzB66DJpZTo6WCKxFxW2/KoMYjtnOHQjEdIO7fVmtej7UYtJypW+ZrmZBWPf3oqoFDwnq
+ 6UAVESG8gHA2XvDeuii3GKRdqqtX2uEXvt8PeZsyQGI2qgOjJmbP0XXuvZ+AaV8rpPtOuzDwVVH
+ X5dq0+KYZSKRAlvB63Ybb+gpDDF3LXw2F7ivED3A==
+X-Gm-Gg: AfdE7cn2oCqhXU9mQ01Mze2IfSLBnVcC15cG143AXN/3zUy3T+uo8RGXp1o+tICUc9r
+ OLbqkBXGwI0weJFa43gxtaIb7OAfQ6iJjA3j55zTbQSl95SBrHaxFKp7YQkzsru3pMJLOi3rxAz
+ +DJ/gdaIC4bDuSjeuDUMCuXqtlFIPPSTtRmFjZ0/BgAJ0JCTTQzdiEkcPC7Ak7mMxU1ByfzxK4s
+ sXTJ60ZWr/u8dw6tjCLyWsN2r6nTl+GMZJcuUQYqo/ClK0GRsbW/pIjQ+z8nRe1Ejin8Zf7Z08L
+ QcDVOjgZEel8EAlsxxaEB+8WKShQinr/CCWpHFHbenPG5ZuFb4b7/LHq2V1ZVY7ksECVjTJUBVQ
+ wkQ==
+X-Received: by 2002:a05:622a:ca:b0:516:d73d:2a34 with SMTP id
+ d75a77b69052e-51a545b4a4amr43467631cf.5.1782218924779; 
+ Tue, 23 Jun 2026 05:48:44 -0700 (PDT)
+X-Received: by 2002:a05:622a:ca:b0:516:d73d:2a34 with SMTP id
+ d75a77b69052e-51a545b4a4amr43466991cf.5.1782218924043; 
+ Tue, 23 Jun 2026 05:48:44 -0700 (PDT)
 Received: from x1.com ([174.91.117.157]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-51a51106a09sm22288351cf.0.2026.06.23.05.48.34
+ d75a77b69052e-51a51106a09sm22288351cf.0.2026.06.23.05.48.42
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 23 Jun 2026 05:48:35 -0700 (PDT)
+ Tue, 23 Jun 2026 05:48:43 -0700 (PDT)
 From: Peter Xu <peterx@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- David Hildenbrand <david@kernel.org>
-Subject: [PULL 12/18] virtio-mem: remove replay_populated/replay_discarded
- implementation
-Date: Tue, 23 Jun 2026 08:47:53 -0400
-Message-ID: <20260623124759.125399-13-peterx@redhat.com>
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
+Subject: [PULL 16/18] system/memory: add RamDiscardManager reference counting
+ and cleanup
+Date: Tue, 23 Jun 2026 08:47:57 -0400
+Message-ID: <20260623124759.125399-17-peterx@redhat.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260623124759.125399-1-peterx@redhat.com>
 References: <20260623124759.125399-1-peterx@redhat.com>
@@ -123,161 +122,77 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-The replay iteration logic has been moved into the RamDiscardManager,
-which now iterates at source granularity using is_populated(). The
-source-level replay_populated/replay_discarded methods and their
-helpers are no longer called.
+Listeners now hold a reference to the RamDiscardManager, ensuring it
+stays alive while listeners are registered. The RDM is eagerly freed
+when the last source and listener are removed, and also unreffed during
+MemoryRegion finalization as a safety net.
 
-Remove the now-dead replay methods, the VirtIOMEMReplayData struct,
-the virtio_mem_for_each_plugged/unplugged_section() helpers (only used
-by the replay methods), and the virtio_mem_section_cb typedef.
+This completes the TODO left in the previous commit and prevents both
+use-after-free and memory leaks of the RamDiscardManager.
 
 Reviewed-by: Peter Xu <peterx@redhat.com>
-Acked-by: David Hildenbrand <david@kernel.org>
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Link: https://lore.kernel.org/r/20260604-rdm5-v5-5-5768e6a0943d@redhat.com
+Link: https://lore.kernel.org/r/20260604-rdm5-v5-9-5768e6a0943d@redhat.com
 Signed-off-by: Peter Xu <peterx@redhat.com>
 ---
- hw/virtio/virtio-mem.c | 112 -----------------------------------------
- 1 file changed, 112 deletions(-)
+ system/memory.c              | 14 +++++++++++---
+ system/ram-discard-manager.c |  2 ++
+ 2 files changed, 13 insertions(+), 3 deletions(-)
 
-diff --git a/hw/virtio/virtio-mem.c b/hw/virtio/virtio-mem.c
-index ec16550320..2b67b2882d 100644
---- a/hw/virtio/virtio-mem.c
-+++ b/hw/virtio/virtio-mem.c
-@@ -259,72 +259,6 @@ static int virtio_mem_for_each_plugged_range(VirtIOMEM *vmem, void *arg,
-     return ret;
+diff --git a/system/memory.c b/system/memory.c
+index 119fee0d34..5fc36708ec 100644
+--- a/system/memory.c
++++ b/system/memory.c
+@@ -1771,6 +1771,7 @@ static void memory_region_finalize(Object *obj)
+     memory_region_clear_coalescing(mr);
+     g_free((char *)mr->name);
+     g_free(mr->ioeventfds);
++    object_unref(mr->rdm);
  }
  
--typedef int (*virtio_mem_section_cb)(MemoryRegionSection *s, void *arg);
--
--static int virtio_mem_for_each_plugged_section(const VirtIOMEM *vmem,
--                                               const MemoryRegionSection *s,
--                                               void *arg,
--                                               virtio_mem_section_cb cb)
--{
--    unsigned long first_bit, last_bit;
--    uint64_t offset, size;
--    int ret = 0;
--
--    first_bit = s->offset_within_region / vmem->block_size;
--    first_bit = find_next_bit(vmem->bitmap, vmem->bitmap_size, first_bit);
--    while (first_bit < vmem->bitmap_size) {
--        MemoryRegionSection tmp = *s;
--
--        offset = first_bit * vmem->block_size;
--        last_bit = find_next_zero_bit(vmem->bitmap, vmem->bitmap_size,
--                                      first_bit + 1) - 1;
--        size = (last_bit - first_bit + 1) * vmem->block_size;
--
--        if (!memory_region_section_intersect_range(&tmp, offset, size)) {
--            break;
--        }
--        ret = cb(&tmp, arg);
--        if (ret) {
--            break;
--        }
--        first_bit = find_next_bit(vmem->bitmap, vmem->bitmap_size,
--                                  last_bit + 2);
--    }
--    return ret;
--}
--
--static int virtio_mem_for_each_unplugged_section(const VirtIOMEM *vmem,
--                                                 const MemoryRegionSection *s,
--                                                 void *arg,
--                                                 virtio_mem_section_cb cb)
--{
--    unsigned long first_bit, last_bit;
--    uint64_t offset, size;
--    int ret = 0;
--
--    first_bit = s->offset_within_region / vmem->block_size;
--    first_bit = find_next_zero_bit(vmem->bitmap, vmem->bitmap_size, first_bit);
--    while (first_bit < vmem->bitmap_size) {
--        MemoryRegionSection tmp = *s;
--
--        offset = first_bit * vmem->block_size;
--        last_bit = find_next_bit(vmem->bitmap, vmem->bitmap_size,
--                                 first_bit + 1) - 1;
--        size = (last_bit - first_bit + 1) * vmem->block_size;
--
--        if (!memory_region_section_intersect_range(&tmp, offset, size)) {
--            break;
--        }
--        ret = cb(&tmp, arg);
--        if (ret) {
--            break;
--        }
--        first_bit = find_next_zero_bit(vmem->bitmap, vmem->bitmap_size,
--                                       last_bit + 2);
--    }
--    return ret;
--}
--
- static void virtio_mem_notify_unplug(VirtIOMEM *vmem, uint64_t offset,
-                                      uint64_t size)
+ Object *memory_region_owner(const MemoryRegion *mr)
+@@ -2084,11 +2085,18 @@ int memory_region_add_ram_discard_source(MemoryRegion *mr,
+ int memory_region_del_ram_discard_source(MemoryRegion *mr,
+                                           RamDiscardSource *source)
  {
-@@ -1667,50 +1601,6 @@ static bool virtio_mem_rds_is_populated(const RamDiscardSource *rds,
-     return virtio_mem_is_range_plugged(vmem, start_gpa, end_gpa - start_gpa);
++    int ret;
+     g_assert(mr->rdm);
+ 
+-    return ram_discard_manager_del_source(mr->rdm, source);
+-
+-    /* if there is no source and no listener left, we could free rdm */
++    ret = ram_discard_manager_del_source(mr->rdm, source);
++    if (ret != 0) {
++        return ret;
++    }
++    if (QLIST_EMPTY(&mr->rdm->source_list) && QLIST_EMPTY(&mr->rdm->rdl_list)) {
++        object_unref(mr->rdm);
++        mr->rdm = NULL;
++    }
++    return 0;
  }
  
--struct VirtIOMEMReplayData {
--    ReplayRamDiscardState fn;
--    void *opaque;
--};
--
--static int virtio_mem_rds_replay_cb(MemoryRegionSection *s, void *arg)
--{
--    struct VirtIOMEMReplayData *data = arg;
--
--    return data->fn(s, data->opaque);
--}
--
--static int virtio_mem_rds_replay_populated(const RamDiscardSource *rds,
--                                           const MemoryRegionSection *s,
--                                           ReplayRamDiscardState replay_fn,
--                                           void *opaque)
--{
--    const VirtIOMEM *vmem = VIRTIO_MEM(rds);
--    struct VirtIOMEMReplayData data = {
--        .fn = replay_fn,
--        .opaque = opaque,
--    };
--
--    g_assert(s->mr == &vmem->memdev->mr);
--    return virtio_mem_for_each_plugged_section(vmem, s, &data,
--                                               virtio_mem_rds_replay_cb);
--}
--
--static int virtio_mem_rds_replay_discarded(const RamDiscardSource *rds,
--                                           const MemoryRegionSection *s,
--                                           ReplayRamDiscardState replay_fn,
--                                           void *opaque)
--{
--    const VirtIOMEM *vmem = VIRTIO_MEM(rds);
--    struct VirtIOMEMReplayData data = {
--        .fn = replay_fn,
--        .opaque = opaque,
--    };
--
--    g_assert(s->mr == &vmem->memdev->mr);
--    return virtio_mem_for_each_unplugged_section(vmem, s, &data,
--                                                 virtio_mem_rds_replay_cb);
--}
--
- static void virtio_mem_unplug_request_check(VirtIOMEM *vmem, Error **errp)
- {
-     if (vmem->unplugged_inaccessible == ON_OFF_AUTO_OFF) {
-@@ -1766,8 +1656,6 @@ static void virtio_mem_class_init(ObjectClass *klass, const void *data)
+ /* Called with rcu_read_lock held.  */
+diff --git a/system/ram-discard-manager.c b/system/ram-discard-manager.c
+index 7da91bf648..4e8816e5a2 100644
+--- a/system/ram-discard-manager.c
++++ b/system/ram-discard-manager.c
+@@ -549,6 +549,7 @@ void ram_discard_manager_register_listener(RamDiscardManager *rdm,
  
-     rdsc->get_min_granularity = virtio_mem_rds_get_min_granularity;
-     rdsc->is_populated = virtio_mem_rds_is_populated;
--    rdsc->replay_populated = virtio_mem_rds_replay_populated;
--    rdsc->replay_discarded = virtio_mem_rds_replay_discarded;
+     g_assert(section->mr == rdm->mr);
+ 
++    object_ref(rdm);
+     rdl->section = memory_region_section_new_copy(section);
+     QLIST_INSERT_HEAD(&rdm->rdl_list, rdl, next);
+ 
+@@ -570,6 +571,7 @@ void ram_discard_manager_unregister_listener(RamDiscardManager *rdm,
+     memory_region_section_free_copy(rdl->section);
+     rdl->section = NULL;
+     QLIST_REMOVE(rdl, next);
++    object_unref(rdm);
  }
  
- static const TypeInfo virtio_mem_info = {
+ int ram_discard_manager_replay_populated_to_listeners(RamDiscardManager *rdm)
 -- 
 2.54.0
 
