@@ -4,84 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2509FCDB470
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jun 2026 10:13:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9FC7CDB470
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jun 2026 10:13:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wby7c-0001nT-Ru; Tue, 23 Jun 2026 06:12:48 -0400
+	id 1wby7e-0001qZ-9m; Tue, 23 Jun 2026 06:12:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wby7b-0001nC-Kc
- for qemu-devel@nongnu.org; Tue, 23 Jun 2026 06:12:47 -0400
-Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
+ id 1wby7d-0001ox-3s
+ for qemu-devel@nongnu.org; Tue, 23 Jun 2026 06:12:49 -0400
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wby7a-00074Q-4N
- for qemu-devel@nongnu.org; Tue, 23 Jun 2026 06:12:47 -0400
-Received: by mail-wr1-x431.google.com with SMTP id
- ffacd0b85a97d-46255b269c2so4109867f8f.3
- for <qemu-devel@nongnu.org>; Tue, 23 Jun 2026 03:12:45 -0700 (PDT)
+ id 1wby7a-00075B-UU
+ for qemu-devel@nongnu.org; Tue, 23 Jun 2026 06:12:48 -0400
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-490cf3000f0so56695225e9.1
+ for <qemu-devel@nongnu.org>; Tue, 23 Jun 2026 03:12:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1782209564; x=1782814364; darn=nongnu.org;
+ d=linaro.org; s=google; t=1782209565; x=1782814365; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=MXzDY4utHKIBDOi85XqArdivahwjfqST0fCeGtTbvGs=;
- b=Eq2x/1Fbf7RF9wu4+Vc/eGKATpgkyx7sUC62Nk6dYqoaKUtjD/9Z1K4J2ZRxmwNdWS
- 9+XgcJQvwsJ/M0we0uS/IH1QLg4QrvS3Bs4VSE2KJcucf/uejR3WdmpGxASh0A5lv/9j
- fyI6tf+37aF+GWNQq3K5eqH1tW7DkZ5727IZtf0AjWeosD+5Nh9SmeVy1WEtG00GT7qe
- FPoHV1vM/RVeu3JZK/u2bu1oltI2L9HqnW39jH4wh5aEAaJCU2KK8RMGkbR3xqVFKZMZ
- NYoAC0ZBGoa4s67pGshL6dtjFfDS0cM9iXyBAZBH2ngmmy1gMtgW02tM6NvR+2Shl9Ja
- wdaQ==
+ bh=lm/EkmTZzZUIm1flwT8VMm5WScziV8Mn0QozyBxRF9o=;
+ b=WNdx83PlxOmkI1ykoIJaqik09Oyh5V6Fli0DSofdEGx4pszYXVogEa5CobChBKt+ZH
+ /PPLnsdFhYTSW4shRMutRSIkS2OO3rT5v9uiR81f/r2ALkaFeaP0sq7pW5Ql7Gihx4jr
+ NgqrxdDeccbw6974Hl1ggJWXD4WngYWvwVcbfvB3HFeg8HvNDfKHeMNV9H3aYaTREekH
+ cL+qRvqU5hR5aGOnoDz3Xjtf17taANi6reuJ3YSCH7XUuE79qey69NRPsBtb6iBESpwU
+ Nap7JalfVNy0VGznMw8z1K2pzh8WkPCmjet8T0GGswR7EDYg8NMuZe3UNwShnYBEai8A
+ E1rQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782209564; x=1782814364;
+ d=1e100.net; s=20251104; t=1782209565; x=1782814365;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=MXzDY4utHKIBDOi85XqArdivahwjfqST0fCeGtTbvGs=;
- b=h3pWNI2TT1LEkKhSd9glLU7Kg0fxV+ilZwEibbPNOmNSovdMAg1uRjetaZeSWos7lw
- rWJKOrEsUwuBMeFNK3mVW0Ur2MyexO1HCEMoIVNmfu045u65PA+6V4NIH2fKYLatxEVu
- Cze/azrY6x+zST3IUGWbu/30hYsz+NwFrwOJGeOTMjaxAE2QwSn2XP38FSvQW2ai94x2
- 8HwDUGVjSMxtB3EgufNpNiQwhwJPIJc1hsgCiPHJ2j9zElUWBneYhg663QMQkfsiKX1e
- 6eHs4lfJulEqmkEVsZvTDAOjFKhS+MyIGJ40+bumBGgXxrBe1p1GYQgJ7ZL04Z/MGwA9
- j/Sw==
-X-Gm-Message-State: AOJu0Ywdva1ChArBxXSz7/skUUY5Vi3uR6bhma3++lG8gOgnZG2dPnki
- xxsmtqyQXsXZmI8L2fXwEIGz3tJ+C9Z6UHKwHM8/Kx67VjI7J5TAV8e8oOWdBANSVsI=
-X-Gm-Gg: AfdE7cknnhR6f0AArpgt0HLJpSPxWX67RyczeLosn4lAULrN29zZRDHaWVj5jzJVCuE
- Nf/nq2X+CmlMnpOqkCwGh8M5LKVuU/KiB66jl0/c0P1Tx5OehbTNMcfN98Drf9BLxYjsAMzGhNK
- entnvpf6HvObGHs6NjSQ0DB+oALaTPiFQOYWccpJ5ve1IQbhMJZyfYFm6f5o9Ughq8PyU9fIoSZ
- 1bfVlY/TqxpI+l+AhTpy4oH1kfdp28yQ8ccrJ8XvXQ2nmF1OqwwxI1q+nz4djaKBmkOWN3NHMAp
- DA8GQV8CjDmEkrWYXrhylHP0iQcVDeb+WHe/FP5tym4szrcSpy4itK1icHqGGlB6qCmoQKLf4+g
- bLXc2EiT06NjbbfR1EuhqdxZP8mp+M6e2zwLJD0a+0vcWMdTcWOsRcqliJZuPqV+uF17f4Y0d/n
- lYIFxJBVQktwqUTo1WB6vqImI=
-X-Received: by 2002:a05:6000:2908:b0:45d:3aa3:7f76 with SMTP id
- ffacd0b85a97d-46add184080mr3118998f8f.33.1782209564086; 
- Tue, 23 Jun 2026 03:12:44 -0700 (PDT)
+ bh=lm/EkmTZzZUIm1flwT8VMm5WScziV8Mn0QozyBxRF9o=;
+ b=Gt7OgxIR1Tw1ejep+t1Ub/Ab6Ux61WE5iwG2exQcFAMFZlLDK0Q8eeRMNz17PmMGGx
+ bvaFXqWNG0ll5gY82sFrspqENSnfFmnDel1lNk0gfJLs9jHklCr49S5QyNH8EELkXMRQ
+ y/9T82YU2aWBgvSxtLRlqgDtFXWBhCnQj4ihhoohvyP99E0W0gBwhT3lSYZHCkrjOqpV
+ hBa9TyVzwljo4kIFRE4KRJfN2/Xncv5NmW24wb5XyjkOartMFks0eXoY65tIAJbkhdIF
+ pP4u4o2keBnE2FTv6HuQkWzJZOOwmT1HVU9HNee2OrDjp9VZ9dgMlvnObGRRo7weBmjS
+ 6MzA==
+X-Gm-Message-State: AOJu0Yx73IwGTOu9icLiiooQDUfCaGwq8BF1xfQDTnD+dZwnAN/fs3IZ
+ fQvR7R+O3D+ucoAWCSRacCHZzbQJA6l0P2X5r/asLslf2GiJDdHIuDGIhq2fq6jnV2/ZGkkct2y
+ gj8P6xe4=
+X-Gm-Gg: AfdE7clnj3gSR8qNvw2tnGNI+Pd9/RrTSB4TWfX9+LFAKOzanpObRJaC0yooWNW/pJX
+ GYMfv9BOzMA+nwmRjcDanv5CFQ3eip4DbSNbvhThtZshPX+dWtwnWyGQ0EvszYj51q19GalyPjf
+ gLmrN5WjSOz0i1CyjzFZpjBjZN/67iy0XVko+wG/1J5hgDF3SabyhphUuKTBiGA/O4wM9kqQkic
+ 95/D8kiAAGKs46YzqG8odVCdnYi36VLrgAIWwdeNL4kn94rsx+o7SxgfULz/9ia1Jon2/aFkVx4
+ D1f6fvKumx6oVNCvhofjJTM2u2SveUsgpzzn2yzyhaxmrYOMEZfmgw+LKbNX78qYf6BHdr1ywNE
+ 4UhAJ55wlylXgoskH4Pb21tZaQQO0XWQI6U1r8YUE5SvGW1fl031HhNt88329qnWZGIJxo80Xg7
+ LSFDWBxcn5QlSk
+X-Received: by 2002:a05:600c:818d:b0:492:2f2e:e7e7 with SMTP id
+ 5b1f17b1804b1-4925b37ec5bmr25529285e9.17.1782209565198; 
+ Tue, 23 Jun 2026 03:12:45 -0700 (PDT)
 Received: from draig.lan ([185.124.0.195]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-466643f4b8fsm33527025f8f.2.2026.06.23.03.12.40
+ 5b1f17b1804b1-4923fd30078sm363917445e9.7.2026.06.23.03.12.41
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
  Tue, 23 Jun 2026 03:12:43 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id F1ACA5FC90;
- Tue, 23 Jun 2026 11:12:38 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id 143885FD5B;
+ Tue, 23 Jun 2026 11:12:39 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>
-Subject: [PULL v2 6/7] gitlab: remove build target hacks
-Date: Tue, 23 Jun 2026 11:12:37 +0100
-Message-ID: <20260623101238.3806547-7-alex.bennee@linaro.org>
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+Subject: [PULL v2 7/7] gitlab: update bug template for sec issues & tool
+ assistance
+Date: Tue, 23 Jun 2026 11:12:38 +0100
+Message-ID: <20260623101238.3806547-8-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260623101238.3806547-1-alex.bennee@linaro.org>
 References: <20260623101238.3806547-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::431;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x431.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,43 +106,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Since eef29e060dc (meson: build macOS signed binary as part of the
-default target) we should be able to do a plain build and everything
-just work.
+From: Daniel P. Berrangé <berrange@redhat.com>
 
+Warn that a security issue must have the "confidential" flag
+set and that any findings from automated tools must be validated
+before submission.
+
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+Message-ID: <20260619123632.1276476-1-berrange@redhat.com>
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Message-ID: <20260619155657.944220-7-alex.bennee@linaro.org>
+Message-ID: <20260619155657.944220-8-alex.bennee@linaro.org>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 
-diff --git a/.gitlab-ci.d/macos.yml b/.gitlab-ci.d/macos.yml
-index 8366b4ad564..efa0fb666e2 100644
---- a/.gitlab-ci.d/macos.yml
-+++ b/.gitlab-ci.d/macos.yml
-@@ -29,7 +29,6 @@
-     - cd build
-     - ../configure --enable-werror $CONFIGURE_ARGS || { cat config.log meson-logs/meson-log.txt; exit 1; }
-     - $MAKE -j$(sysctl -n hw.ncpu)
--    - for TARGET in $TEST_BINARIES ; do $MAKE $TARGET ; done
-     - for TARGET in $TEST_TARGETS ; do $MAKE $TARGET ; done
+diff --git a/.gitlab/issue_templates/bug.md b/.gitlab/issue_templates/bug.md
+index e20f586008d..faeeb002252 100644
+--- a/.gitlab/issue_templates/bug.md
++++ b/.gitlab/issue_templates/bug.md
+@@ -13,8 +13,9 @@ older than this should be reported to the distribution instead.
+ See https://www.qemu.org/contribute/report-a-bug/ for additional
+ guidance.
  
- aarch64-macos-15-build:
-@@ -45,8 +44,7 @@ aarch64-macos-15-build:
-         --cross-prefix-i386=i686-elf-
-         --cross-prefix-x86_64=x86_64-elf-
-         --disable-plugins
--    TEST_BINARIES: qemu-system-aarch64 qemu-system-i386 qemu-system-x86_64
--    TEST_TARGETS: check-unit run-tcg-tests-aarch64-softmmu run-tcg-tests-i386-softmmu run-tcg-tests-x86_64-softmmu
-+    TEST_TARGETS: check-unit check-tcg
+-If this is a security issue, please consult
+-https://www.qemu.org/contribute/security-process/
++If this is a security issue, ensure this ticket is marked 'confidential'
++before submission. See https://www.qemu.org/contribute/security-process/
++for additional guidance
+ -->
  
- aarch64-macos-26-build:
-   extends: .macos_job_template
-@@ -62,5 +60,4 @@ aarch64-macos-26-build:
-         --cross-prefix-i386=i686-elf-
-         --cross-prefix-x86_64=x86_64-elf-
-         --disable-plugins
--    TEST_BINARIES: qemu-system-aarch64 qemu-system-i386 qemu-system-x86_64
--    TEST_TARGETS: check-unit run-tcg-tests-aarch64-softmmu run-tcg-tests-i386-softmmu run-tcg-tests-x86_64-softmmu
-+    TEST_TARGETS: check-unit check-tcg
+ ## Host environment
+@@ -49,6 +50,12 @@ https://www.qemu.org/contribute/security-process/
+ 2.
+ 3.
+ 
++<!--
++Note: if this issue was discovered with the assistance of automated
++tooling LLM, static analysis, fuzzers), the reporter must disclose
++that in the description. The steps to reproduce, and any other findings,
++must be fully validated by the user of the tool prior to submission.
++-->
+ 
+ ## Additional information
+ 
 -- 
 2.47.3
 
