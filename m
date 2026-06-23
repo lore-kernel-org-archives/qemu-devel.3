@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB9A1CD4F26
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jun 2026 07:52:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98778CD4F26
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jun 2026 07:52:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wbvvE-0006GM-OG; Tue, 23 Jun 2026 03:51:52 -0400
+	id 1wbvvJ-0006N6-MQ; Tue, 23 Jun 2026 03:51:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <FangSheng.Huang@amd.com>)
- id 1wbvv9-0006FZ-Dt
- for qemu-devel@nongnu.org; Tue, 23 Jun 2026 03:51:48 -0400
-Received: from mail-westus3azlp170120001.outbound.protection.outlook.com
- ([2a01:111:f403:c107::1] helo=PH8PR06CU001.outbound.protection.outlook.com)
+ id 1wbvvH-0006Ls-GB
+ for qemu-devel@nongnu.org; Tue, 23 Jun 2026 03:51:55 -0400
+Received: from mail-westus3azlp170100009.outbound.protection.outlook.com
+ ([2a01:111:f403:c107::9] helo=PH7PR06CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <FangSheng.Huang@amd.com>)
- id 1wbvv7-0000hb-QC
- for qemu-devel@nongnu.org; Tue, 23 Jun 2026 03:51:47 -0400
+ id 1wbvvF-0000iL-K7
+ for qemu-devel@nongnu.org; Tue, 23 Jun 2026 03:51:55 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=dcHuwXsBx7HjcVjwlblocBAdbztEy45oSWcy/Lwj59qZG8CgzPaai8zk/Vu++0vubdGy4dGxjugTyi7LOUY+CvWbN9eYEuY9KuEJH4m/TyNMUnRgbspV4WtAGQ/1ydz8+HFDX5F09HmB2adkLQvJvAKCuBgerQ3yAuIFZZ6gVJrOIKnNMHnCQRY8evwx5X+OJaj+Elaje8hTzo2l924c1paTBBlQqr8fHypID3A8bCDuvzNqGw3I9UYENT3l7qkDmUva9Qf1cT/91R13jRMf1wjiwJJcihSy3v+oTnsSMYE9Y+TMI2FBJTHpKEAkRv7TGRYHnhv78gTvw4gDX38StQ==
+ b=UF/r0u+059bad1Yz5dUMGOhb2ve/nEE/Zadnme5BtGRfq1oRALmnXqBBXmBFYXHLyDBIy2oQSwL5HKLtVwvePw1KJ1D72c/Uhn3nf2Zb22KUUeeJgGZ4VVPmnHJBQTGuqEQUu2yVZPoNsiNzud/ZZ7nW8k8wG4xGRVA/iI48HV9b/wZvgbrcjyNFS5Yr6qbF0+MxsF3tirbx7dt0gXri5NgNG9zkBJ4UAFkejTa14/Nf3r9gbaMmeOkb8bFFSmbWNPRic3+sKhvrQI3ojhHkmdOPLLE1T62eABXqGJYWblHvLDq95v3JVy63lF0Fa7YrHeILh7oFZIt/+AAWDMayUw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=uI5ScM+oJRFbfYfZjtlPlPXO6mvy8/mwyn0hWf88JaQ=;
- b=YAjdBOkqCGOHzsb6zOKL9KuHsxisiCZDlIcQHFcAEQzpTLeuKTyAHBbxI6xpou6AI2dphKXl3N/EeAadanmZHylAqyA5I6/ghbHpZfguik2SZWn00pZKaSAAdSd4o35JzTmTjjdmddWyniL4Cq9sR+zTvUED6ZhnRn7W/GOQUPLEkKI+crEUStSsK+GLhRcacaZ/tsACetOVzfrl1Oxkk07ktgrZmbOs6F0CGk2notAtEneEuQfQoDm5R7xmEuWWIgdHEM98IxePdYU2IF/ekAUpCGu3sTHT53h+4CU9ZVDnWr/C4DTbntFqKLiEHoD/VGD6CUmiFWA3wvPotfNGig==
+ bh=IKYEAMa8cYWWXqlG84PAdCOA+Bdi4JeFtZgyp0wZXeM=;
+ b=u8ZXiFn6xm8RS0rK5mMj/64o9u5oufrpOgBq6MqsY2WxJXkv+IPZG0VxQ/rMJE3VEJ+4CzXF5InLy7TUNSqN3str5KHjPZ5u0dOA2o+Ljs/I0Euo4qFoiNNSueHHyIu4K+vj3meUSnfGykL4kARlRLJZ+I8ppSb7kyWWC7E2P7KOp3Cy/+sz76W23wATE4gcjL2YnG2DTL9YYNr5ciOPii2B+7ffnGrtHLRYbFAKJT5EtJxV/tD8UhyKhRHX/9Ptf02dAZ8HDYJ+P/v6D4p4szhsiMYmYnn+PP6JqZOL37duED97lQINN5J9AZ8QvQm2xzlsM6bhQ9CnhIL75TpIpQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
  165.204.84.17) smtp.rcpttodomain=nongnu.org smtp.mailfrom=amd.com; dmarc=pass
  (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
  dkim=none (message not signed); arc=none (0)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=uI5ScM+oJRFbfYfZjtlPlPXO6mvy8/mwyn0hWf88JaQ=;
- b=q9iKoHZT26kVyQ10tgasSAap7kpOfj18HyqiJEytStQGAaEW3ePZ+8iLmwMuPKw+3dyRXUqxfg5SjxQynf40KLGkonHZ2VfjrPSv+gwm2P914a+aeDIx7GtB1n9Hs76xtO4cOdBs4qJyEeq4zIQJA4uE4Rzkh80h0LyguHE61TU=
-Received: from SJ0PR05CA0157.namprd05.prod.outlook.com (2603:10b6:a03:339::12)
- by SA1PR12MB6727.namprd12.prod.outlook.com (2603:10b6:806:256::13)
+ bh=IKYEAMa8cYWWXqlG84PAdCOA+Bdi4JeFtZgyp0wZXeM=;
+ b=S2xQNABVVfEGLR8JUiSkd8kqmKchvRnsGmm+KVTFq/Iag4WTcm6CgnkvUgv1bxTqqMlIr05Za+iIwfJTco8N8GRlVbP+1yaKetUKIjKMF+A62LutpHMW/HhlzSLmfLqguZuHEkyN4JYLd2aYrwsTeROjYJSmaurqNRNqj71W0Bw=
+Received: from SJ0PR03CA0292.namprd03.prod.outlook.com (2603:10b6:a03:39e::27)
+ by DS0PR12MB999081.namprd12.prod.outlook.com (2603:10b6:8:2ff::20)
  with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.139.20; Tue, 23 Jun
- 2026 07:51:40 +0000
-Received: from SJ5PEPF000001EE.namprd05.prod.outlook.com
- (2603:10b6:a03:339:cafe::70) by SJ0PR05CA0157.outlook.office365.com
- (2603:10b6:a03:339::12) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.21.159.11 via Frontend Transport; Tue,
- 23 Jun 2026 07:51:40 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.139.18; Tue, 23 Jun
+ 2026 07:51:46 +0000
+Received: from SJ5PEPF000001EF.namprd05.prod.outlook.com
+ (2603:10b6:a03:39e:cafe::4b) by SJ0PR03CA0292.outlook.office365.com
+ (2603:10b6:a03:39e::27) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.21.139.20 via Frontend Transport; Tue,
+ 23 Jun 2026 07:51:46 +0000
 X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
  smtp.mailfrom=amd.com; dkim=none (message not signed)
  header.d=none;dmarc=pass action=none header.from=amd.com;
@@ -53,23 +53,22 @@ Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
  165.204.84.17 as permitted sender) receiver=protection.outlook.com;
  client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
 Received: from satlexmb07.amd.com (165.204.84.17) by
- SJ5PEPF000001EE.mail.protection.outlook.com (10.167.242.202) with Microsoft
+ SJ5PEPF000001EF.mail.protection.outlook.com (10.167.242.203) with Microsoft
  SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.21.159.10 via Frontend Transport; Tue, 23 Jun 2026 07:51:40 +0000
+ 15.21.159.10 via Frontend Transport; Tue, 23 Jun 2026 07:51:46 +0000
 Received: from k-Super-Server.amd.com (10.180.168.240) by satlexmb07.amd.com
  (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.41; Tue, 23 Jun
- 2026 02:51:37 -0500
+ 2026 02:51:43 -0500
 From: fanhuang <FangSheng.Huang@amd.com>
 To: <qemu-devel@nongnu.org>, <imammedo@redhat.com>, <mst@redhat.com>,
  <david@kernel.org>, <gourry@gourry.net>
 CC: <philmd@mailo.com>, <berrange@redhat.com>, <peterx@redhat.com>,
  <Zhigang.Luo@amd.com>, <Lianjie.Shi@amd.com>, fanhuang
  <FangSheng.Huang@amd.com>
-Subject: [PATCH v14 05/10] MAINTAINERS: cover sp-mem under Memory devices,
- add R: tag
-Date: Tue, 23 Jun 2026 15:50:46 +0800
-Message-ID: <20260623075051.3797975-6-FangSheng.Huang@amd.com>
+Subject: [PATCH v14 07/10] tests/acpi: add bios-tables-test case for sp-mem
+Date: Tue, 23 Jun 2026 15:50:48 +0800
+Message-ID: <20260623075051.3797975-8-FangSheng.Huang@amd.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20260623075051.3797975-1-FangSheng.Huang@amd.com>
 References: <20260623075051.3797975-1-FangSheng.Huang@amd.com>
@@ -81,32 +80,32 @@ X-ClientProxiedBy: satlexmb08.amd.com (10.181.42.217) To satlexmb07.amd.com
  (10.181.42.216)
 X-EOPAttributedMessage: 0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SJ5PEPF000001EE:EE_|SA1PR12MB6727:EE_
-X-MS-Office365-Filtering-Correlation-Id: 4666f5a2-b20e-4307-7e95-08ded0fc42bd
+X-MS-TrafficTypeDiagnostic: SJ5PEPF000001EF:EE_|DS0PR12MB999081:EE_
+X-MS-Office365-Filtering-Correlation-Id: 34bf975b-a4e4-45f7-e44c-08ded0fc465d
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|23010399003|376014|82310400026|1800799024|36860700016|18002099003|22082099003|11063799006|56012099006|43062017;
-X-Microsoft-Antispam-Message-Info: 9PA4sZa+6lSZNI1+WL2hJogiSNJZPGan18o971oZxnCD0M6GbU71BOU59SUh9t0DXioJhlBjs1K1eMGRSN6nxksRd5yXIFFIchCv7QVG949dUOlwrASpu1Jt0QmAslpP89ewS9Rr7VIRtbDHX0rLEWDgKxaq7CiRVIntiiEJn/4jB2Qi7d3x8pnANxMsJ31J2S3GvMueJD/042WsLM4RgcMCRG9bzDfR7Ipc4K8XuojkSZGis7SsR2wcsvGTAHQMLKHZnQRREmmn8hjkVQwD8m+12f4LBWQwYvJynNKiN+PGmQBa9sprwrlB4zjxUnaL0MhhUebscrWGrZQMYgoN9MlTKna1RPOOGsGo++Gsh60YFg6dZqT4FgblHszwtKnILggy42lWKV4/cWqrm2RJ4jDOEj/PIDHeYt2fX4g4uoWVMcRZ5ff5kzmdFL4/+mQmiBEp0wZUdMC+EfUmkn9eshxWgNDwI0iNl09uouwDAHyTRz1Ln6z09Gvdwj6H8iNOO/QN5X3yuvxQWMC9T1Q3KYg7GWCmjScJ2rO0alPSKHONdlzH/LJ0tW9+/VlgnwBdzt6Aks/E5LLsr06y7Z7y1h6DGsklMlqDa+2Kg/GEzchsiTYVi9YwyxgaFmraNRJQSygv5QpVgI0qZx9uZ/nwInozuHWzp84r3SwnBoqzzK17qJJYvxiKtm/wBoQ1zfaTXuUfspn0xS8RBlXchVL+GSdcURkpOpgpeXW3rpN2bdTMDMlAtCQgCOWM2p8X9rWY
+ ARA:13230040|82310400026|376014|23010399003|36860700016|1800799024|22082099003|18002099003|11063799006|56012099006|43062017;
+X-Microsoft-Antispam-Message-Info: +NADthi0WVY3t5GYBy67pAS+RLOAXW6bD6bcEIsT9cbdwHwA2PdYQhghMgu+JfzmF/gvx7OEwJAH5SbN5JOeYTUNuMnaWoktKJbIZng75w2VPNKgeLATUwSUfvcIEuoX5zmSaxDDNXwzDjDOuoShiKV0fwAWF5HK1LEfT8NLt0FkkJnmTHUb0oOgMLG5eQ1oMEJZyrqgsxw+uU/NBQ+A/kUMsT8ZhvqckcGeFHUeoEdn1cnMgj3c3xLBeojysfdye6Ka2YKxRbYlMICx+OzodBW9Q3SjRn9uTPH2bpWQMygd07kGhAcYIvjrQU7V17Ot0Ge9HNhjB2ML7qDsd5/Cp+HAXk6g6NZwsY8t6hO6n+WMTfI++QIYboV21gUYVSekI1SczQFUpxy7ybp8xkEEDf0HplCdUsaClD0TmRCdDOp/oOzdFpGdtRALEnusr1wp/iBHho4NCA7Ni61ybXOHK14y+WX/oO9CT8mbaqymzjKwsmjvbQFAAtWKNN4m/Br7hXV9SSMxEoWQfNM210IT8KE70NK6F3aZH23EmI1ozYz3q/TaNlt9xnHqtFOOO4DelQrJ/cG/99qoXNLkxADc4R5VZ0wib5dJg3yTQm3Oqv/UfObd0uxnSpH+T3kJEex+38yHiMneIukC+K8r9atlqX43JwkmWO95IIXzQWsGVs7L/g8jlb31NO3er83B5NzEjONGtZTpC4dYVFaWGMQYo+a9ELxuzhBUtZ//OurLm69fOEIKV/uZaWi0wSbvy4rg
 X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:satlexmb07.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230040)(23010399003)(376014)(82310400026)(1800799024)(36860700016)(18002099003)(22082099003)(11063799006)(56012099006)(43062017);
+ SFS:(13230040)(82310400026)(376014)(23010399003)(36860700016)(1800799024)(22082099003)(18002099003)(11063799006)(56012099006)(43062017);
  DIR:OUT; SFP:1101; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: kBQ42ZJyJDevBsh+HIMrN8AZRr0HoSzSB80XQ8U8Bxle98xNvLNXGY8bRfleeuw3XPrZmcysbzdQwEgJAXtSAMBiUFoDZsWS6A3m/j3+UBMUFhmXR5EhJO968k3MNCu073TZHXesEw5mB/0zPHRaKvpxbK/fUCm1DZr2ZFdO2AaJ9R0XkT9r+Cm+iz9X37Mzpf2HhKLzpUIXIn7HiIW2JhSvJFXALADWdJhPzZNGYjdIDnfgXsRnKueDK6xRTRUVq1YwGHfEDoDmRq9yoRpywg89n2UjdqABgKCDFNnp455n76uRjAEJGwWTEu2ReAQI8Wx9ZJSBp8FLuaW8wKoA39sI+4zfBBRM2m00qRZnv4LZE1ux78gTQ8O97SIIqWXZ+DQA5vWuSCutvHBQo3nSYCGCsWy/gzAd43+2rMqhlhYt1JlPCVyhhjpfblxoYZk+
+X-MS-Exchange-AntiSpam-MessageData-0: BHV91XNlteaMOAd24S59TcQTxySaZcvUIZsjVcRuFT/u3f4gP/ybmli4x/4vOR6B0LkaXP+0u500GoIJn9EUIRvpVcVwz9BgM1a8lsuAM2T1qU7lzCP4vK8FR7nxR+emE2Nz55kh5VtyJNYeNQQZFOGlrOTyLQI+wyJF8fPBiZJREjGAgI+aEkFxpZCDqxY9E4W5Z7p4GZz1pDk+AxV00chfggLk3zURbWgY0/UYrCGMgrwWwmbxnSwt29r9hPQFfIJoPC02tkNLv7Kgy1EuAI7W0pZig7xGGxAotyOjsndjZeHNu6aOA241nS19sUS8N5e0TEtON+Vgsjub5cDW7MqOOF+C3qLQNRAc5PonYXEJ6lLjwGPGz7/Th7dRUC4qfHowpc4WcP/cGaex41l9YdOUB10NCpwqejRhwV1a8AW764qX69GQwMe2z7JS92/6
 X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 23 Jun 2026 07:51:40.2550 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 4666f5a2-b20e-4307-7e95-08ded0fc42bd
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 23 Jun 2026 07:51:46.2757 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 34bf975b-a4e4-45f7-e44c-08ded0fc465d
 X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
 X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
  Helo=[satlexmb07.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: SJ5PEPF000001EE.namprd05.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthSource: SJ5PEPF000001EF.namprd05.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Anonymous
 X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA1PR12MB6727
-Received-SPF: permerror client-ip=2a01:111:f403:c107::1;
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR12MB999081
+Received-SPF: permerror client-ip=2a01:111:f403:c107::9;
  envelope-from=FangSheng.Huang@amd.com;
- helo=PH8PR06CU001.outbound.protection.outlook.com
+ helo=PH7PR06CU001.outbound.protection.outlook.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
@@ -128,34 +127,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: FangSheng Huang <FangSheng.Huang@amd.com>
-Acked-by: Igor Mammedov <imammedo@redhat.com>
-Acked-by: David Hildenbrand <david@kernel.org>
----
- MAINTAINERS | 3 +++
- 1 file changed, 3 insertions(+)
+Add a q35 bios-tables-test case that boots two sp-mem devices on
+distinct NUMA nodes within the device_memory window, exercising the
+per-kind SRAT partition (per-device ENABLED entries plus HOTPLUGGABLE
+placeholders for the remaining sub-ranges).
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 93df53d87f..08f0d11a74 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -3364,13 +3364,16 @@ F: scripts/coccinelle/memory-region-housekeeping.cocci
- Memory devices
- M: David Hildenbrand <david@kernel.org>
- M: Igor Mammedov <imammedo@redhat.com>
-+R: FangSheng Huang <FangSheng.Huang@amd.com>
- S: Supported
- F: hw/mem/memory-device*.c
- F: hw/mem/nvdimm.c
- F: hw/mem/pc-dimm.c
-+F: hw/mem/sp-mem.c
- F: include/hw/mem/memory-device.h
- F: include/hw/mem/nvdimm.h
- F: include/hw/mem/pc-dimm.h
-+F: include/hw/mem/sp-mem.h
- F: docs/nvdimm.txt
+Signed-off-by: FangSheng Huang <FangSheng.Huang@amd.com>
+Reviewed-by: Igor Mammedov <imammedo@redhat.com>
+---
+ tests/qtest/bios-tables-test.c | 21 +++++++++++++++++++++
+ 1 file changed, 21 insertions(+)
+
+diff --git a/tests/qtest/bios-tables-test.c b/tests/qtest/bios-tables-test.c
+index af6d9b5136..45abd8bd8c 100644
+--- a/tests/qtest/bios-tables-test.c
++++ b/tests/qtest/bios-tables-test.c
+@@ -1416,6 +1416,26 @@ static void test_acpi_q35_tcg_numamem(void)
+     free_test_data(&data);
+ }
  
- SPICE
++static void test_acpi_q35_tcg_sp_mem(void)
++{
++    test_data data = {};
++
++    data.machine = MACHINE_Q35;
++    data.arch    = "x86",
++    data.variant = ".spmem";
++    test_acpi_one(" -m 128M,slots=4,maxmem=1G"
++                  " -object memory-backend-ram,id=ram0,size=128M"
++                  " -numa node,nodeid=0,memdev=ram0"
++                  " -numa node,nodeid=1"
++                  " -numa node,nodeid=2"
++                  " -object memory-backend-ram,id=spm0,size=128M"
++                  " -object memory-backend-ram,id=spm1,size=128M"
++                  " -device sp-mem,id=sp0,memdev=spm0,node=1"
++                  " -device sp-mem,id=sp1,memdev=spm1,node=2",
++                  &data);
++    free_test_data(&data);
++}
++
+ static void test_acpi_q35_kvm_xapic(void)
+ {
+     test_data data = {};
+@@ -2807,6 +2827,7 @@ int main(int argc, char *argv[])
+             if (strcmp(arch, "i386")) {
+                 qtest_add_func("acpi/q35/memhp", test_acpi_q35_tcg_memhp);
+                 qtest_add_func("acpi/q35/dimmpxm", test_acpi_q35_tcg_dimm_pxm);
++                qtest_add_func("acpi/q35/sp-mem", test_acpi_q35_tcg_sp_mem);
+                 qtest_add_func("acpi/q35/acpihmat",
+                                test_acpi_q35_tcg_acpi_hmat);
+                 qtest_add_func("acpi/q35/mmio64", test_acpi_q35_tcg_mmio64);
 -- 
 2.34.1
 
