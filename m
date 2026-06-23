@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5237ACDB46F
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jun 2026 09:57:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2FBFCDB46F
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jun 2026 09:58:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wbxrr-0003SV-GL; Tue, 23 Jun 2026 05:56:31 -0400
+	id 1wbxt3-00079a-UY; Tue, 23 Jun 2026 05:57:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wbxrq-0003S9-Jg
- for qemu-devel@nongnu.org; Tue, 23 Jun 2026 05:56:30 -0400
+ id 1wbxt1-0006xT-MV
+ for qemu-devel@nongnu.org; Tue, 23 Jun 2026 05:57:43 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wbxrp-0003Tj-7q
- for qemu-devel@nongnu.org; Tue, 23 Jun 2026 05:56:30 -0400
+ id 1wbxsv-0003h0-OW
+ for qemu-devel@nongnu.org; Tue, 23 Jun 2026 05:57:40 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1782208588;
+ s=mimecast20190719; t=1782208649;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=TVLsFc4Leaz2HmQzWluoN1shnQd+30arM+66dPFIyms=;
- b=i1NPhPK5zJ4YsmY/E/0pdatxmkHqP5O+g0tkUxSed4ocanSPEvbbDkNIUpkovT6CDu5jTt
- kSZ2MWd4e0CvlZpQYS5RIGh+Nri6BA7iB5DfKZfJaG4YKuaJc4mn6drS/GMSO3LIUYwsZi
- D7EXI5PCajOo83bpKTvscLGSVNGaqVQ=
+ bh=jObDFOXIQZ2Ilsnj5eLFY5LyP5UJd+AnpueiZqhM9Lk=;
+ b=IqhgEw0qdWimi9UCbxIjZIGMTYc1TY4ozMjipIn49jfKjLUKVdhKfTrXz9sVsJ0zWivxjI
+ NfCCaj/4NWPQlrvWlWYPtvWf8qrNi2EMZVH/kPapAR12GomoPBM1qK/rAlDv+AuU3qjvSq
+ qvJK/OgmYo3qAJoUq0tOQN4t2DwQ/Sk=
 Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-687-vUNzQWJ9PcGcqkl7XYYWgQ-1; Tue,
- 23 Jun 2026 05:56:25 -0400
-X-MC-Unique: vUNzQWJ9PcGcqkl7XYYWgQ-1
-X-Mimecast-MFC-AGG-ID: vUNzQWJ9PcGcqkl7XYYWgQ_1782208584
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-577-Q_TUCwSlPu2lU-Xn4Fci0Q-1; Tue,
+ 23 Jun 2026 05:57:26 -0400
+X-MC-Unique: Q_TUCwSlPu2lU-Xn4Fci0Q-1
+X-Mimecast-MFC-AGG-ID: Q_TUCwSlPu2lU-Xn4Fci0Q_1782208645
 Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 0511418011E6; Tue, 23 Jun 2026 09:56:24 +0000 (UTC)
+ id 21B3C1802669; Tue, 23 Jun 2026 09:57:25 +0000 (UTC)
 Received: from berrange.com (unknown [10.44.34.133])
  by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id D9D19D6E; Tue, 23 Jun 2026 09:56:20 +0000 (UTC)
+ id B3940D6E; Tue, 23 Jun 2026 09:57:21 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: "Dr. David Alan Gilbert" <dave@treblig.org>,
@@ -57,9 +57,10 @@ Cc: "Dr. David Alan Gilbert" <dave@treblig.org>,
  Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH v4 07/35] monitor: add 'readline' property to HMP Monitor class
-Date: Tue, 23 Jun 2026 10:55:23 +0100
-Message-ID: <20260623095551.2106712-8-berrange@redhat.com>
+Subject: [PATCH v4 24/35] monitor: reject attempts to delete the current
+ monitor
+Date: Tue, 23 Jun 2026 10:55:40 +0100
+Message-ID: <20260623095551.2106712-25-berrange@redhat.com>
 In-Reply-To: <20260623095551.2106712-1-berrange@redhat.com>
 References: <20260623095551.2106712-1-berrange@redhat.com>
 MIME-Version: 1.0
@@ -90,74 +91,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This determines whether a human monitor runs with readline for
-interactive use, or without readline for non-interactive use by
-the GDB stub.
+From: Christian Brauner <brauner@kernel.org>
 
+If an 'object_del' command for a QMP monitor arrives targetting the
+current monitor, reject this request. If the current monitor is
+deleted, it will be impossible to send any reply and the client won't
+be able to remove the corresponding chardev backend.
+
+Note, it is not possible to rely on checking monitor_cur() because
+if 'object_del' is called via human-monitor-command, monitor_cur()
+will reflect the temporary HMP, not the QMP target that needs to
+be checked.
+
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+[DB: extracted monitor tracking from larger commit; added logic
+     to monitor_qmp_prepare_delete to reject request]
 Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- monitor/hmp.c | 27 ++++++++++++++++++++++++++-
- 1 file changed, 26 insertions(+), 1 deletion(-)
+ monitor/qmp.c | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
 
-diff --git a/monitor/hmp.c b/monitor/hmp.c
-index 4ab81b5904..d5905e2279 100644
---- a/monitor/hmp.c
-+++ b/monitor/hmp.c
-@@ -50,12 +50,37 @@ static void monitor_hmp_finalize(Object *obj)
- {
+diff --git a/monitor/qmp.c b/monitor/qmp.c
+index 0e1c3eb52b..b0535dec68 100644
+--- a/monitor/qmp.c
++++ b/monitor/qmp.c
+@@ -72,6 +72,9 @@ typedef struct QMPRequest QMPRequest;
+ 
+ QmpCommandList qmp_commands, qmp_cap_negotiation_commands;
+ 
++/* Monitor being serviced by the dispatcher.  Protected by BQL. */
++static MonitorQMP *qmp_dispatcher_current_mon;
++
+ OBJECT_DEFINE_TYPE(MonitorQMP, monitor_qmp, MONITOR_QMP, MONITOR);
+ 
+ static void monitor_qmp_cleanup_req_queue_locked(MonitorQMP *mon);
+@@ -369,6 +372,7 @@ void coroutine_fn monitor_qmp_dispatcher_co(void *data)
+          */
+ 
+         mon = req_obj->mon;
++        qmp_dispatcher_current_mon = mon;
+ 
+         /*
+          * We need to resume the monitor if handle_qmp_command()
+@@ -429,6 +433,7 @@ void coroutine_fn monitor_qmp_dispatcher_co(void *data)
+         }
+ 
+         qmp_request_free(req_obj);
++        qmp_dispatcher_current_mon = NULL;
+     }
+     qatomic_set(&qmp_dispatcher_co, NULL);
+ }
+@@ -573,6 +578,11 @@ static void monitor_qmp_event(void *opaque, QEMUChrEvent event)
+     }
  }
  
-+static bool monitor_hmp_get_readline(Object *obj, Error **errp)
++static bool monitor_qmp_dispatcher_is_servicing(MonitorQMP *mon)
 +{
-+    MonitorHMP *mon = MONITOR_HMP(obj);
-+
-+    return mon->use_readline;
++    return qmp_dispatcher_current_mon == mon;
 +}
 +
-+static void monitor_hmp_set_readline(Object *obj, bool val, Error **errp)
-+{
-+    MonitorHMP *mon = MONITOR_HMP(obj);
-+
-+    mon->use_readline = val;
-+}
-+
- static void monitor_hmp_class_init(ObjectClass *cls, const void *data)
+ static void monitor_qmp_setup_handlers_bh(void *opaque)
  {
-+    object_class_property_add_bool(cls, "readline",
-+                                   monitor_hmp_get_readline,
-+                                   monitor_hmp_set_readline);
- }
+     MonitorQMP *mon = opaque;
+@@ -646,6 +656,13 @@ static void monitor_qmp_complete(UserCreatable *uc, Error **errp)
  
- static void monitor_hmp_init(Object *obj)
+ static bool monitor_qmp_prepare_delete(UserCreatable *uc, Error **errp)
  {
-+    MonitorHMP *hmp = MONITOR_HMP(obj);
++    MonitorQMP *qmp = MONITOR_QMP(uc);
 +
-+    /*
-+     * Default to common case for external HMP use,
-+     * as opposed to non-interactive internal use
-+     * from gdbstub
-+     */
-+    hmp->use_readline = true;
++    if (monitor_qmp_dispatcher_is_servicing(qmp)) {
++        error_setg(errp, "Cannot delete the current QMP monitor");
++        return false;
++    }
++
+     error_setg(errp, "Deleting QMP monitors is not supported");
+     return false;
  }
- 
- static void monitor_command_cb(void *opaque, const char *cmdline,
-@@ -1550,6 +1575,7 @@ void monitor_new_hmp(const char *chardev_id, bool use_readline, Error **errp)
-                                         id,
-                                         errp,
-                                         "chardev", chardev_id,
-+                                        "readline", use_readline ? "yes" : "no",
-                                         NULL);
- 
-     if (!obj) {
-@@ -1566,7 +1592,6 @@ void monitor_new_hmp(const char *chardev_id, bool use_readline, Error **errp)
- 
-     monitor_data_init(&mon->parent_obj, false, false, false);
- 
--    mon->use_readline = use_readline;
-     if (mon->use_readline) {
-         mon->rs = readline_init(monitor_readline_printf,
-                                 monitor_readline_flush,
 -- 
 2.54.0
 
