@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77973CDB46F
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jun 2026 14:21:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2563BCD98F2
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jun 2026 14:21:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wc20F-0001Wn-W3; Tue, 23 Jun 2026 10:21:28 -0400
+	id 1wc1zt-0001If-HH; Tue, 23 Jun 2026 10:21:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1wc1zr-0001J2-OL; Tue, 23 Jun 2026 10:21:05 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ id 1wc1zW-0001BI-Lw; Tue, 23 Jun 2026 10:20:44 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1wc1zo-00067V-Eg; Tue, 23 Jun 2026 10:21:02 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ id 1wc1zR-00062b-4q; Tue, 23 Jun 2026 10:20:39 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65NBmIPI1983827; Tue, 23 Jun 2026 14:20:55 GMT
+ 65NBmjbr1858065; Tue, 23 Jun 2026 14:20:34 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=LGNgZMw1UEgMoxoYi
- supKjhdJLZKr9GILaxiozmZ6es=; b=tQTp5K8WOKs3FuQC+kCMehYRZb//jfN7L
- sUcediV/rJAYkOvOqfYx2nT7vKRaXzwa5D1GIh44ZwkLj/1RZJvMfvN+Y4DpDGz9
- wtT++PePUvGOWGG5phBkm7JoFUqLD1KvpR8RM3RdMkg2dLV0PZgnFDX6ELIrQrHV
- ca+4N3+b5XL71gx8xxvgB63KUYnO8foBQuureNIZGPOD1lMiXKOBhOoj/HdkGqYK
- GR/uXb4lcncz4jajNsaBlN3wz0b4m9tVqbYx+yq4kDgSRGr+iqaRpAPkfOWdBriN
- w/6QP1bUK9RF0Fh9WvV+UCM34OCdqXPyvJ6rmt29J2q9mT/ABvNaQ==
+ :mime-version:references:subject:to; s=pp1; bh=Oo1DI1cigjYHEXJlO
+ Cc4hvYNnEir0As+KBxL/muY1u8=; b=Hsxx+CX7KgDIETK0jLs1m4+EYyA4nRo/G
+ 94d0v+jT+lopFjYc37Drg9bttlAXUfKtUS2gwXIfIYWB0gOA2N0jSDOCbYpgrpp0
+ hrCki0Zw/7tbx6eghUBuFvzxrQj22cU/P53rI5vOwotEAKzbBqzDMswA/eilObKG
+ 7TlT+CBezHBvQImnFFtfeeiGgR/sITtBaEG9FUd8eX8Jdtg+pCjl4RP4zb4+1lQQ
+ Qs+3T5DDYsrwatKTk+iNrjWw7TvqCKg5nqMu03pEEu1PNyCv6EHgPGkh3fAlNa9f
+ 0zv62WQsVHtXri0tpWLSg0DAQZTlgM8NFN9vQFKPCae4LmeXGpg6w==
 Received: from ppma21.wdc07v.mail.ibm.com
  (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4ewjc3f1jn-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4ewg9hq7cp-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 23 Jun 2026 14:20:54 +0000 (GMT)
+ Tue, 23 Jun 2026 14:20:33 +0000 (GMT)
 Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 65NEJlob016983;
- Tue, 23 Jun 2026 14:20:53 GMT
-Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4ex66k3ng1-1
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 65NEJcmt016927;
+ Tue, 23 Jun 2026 14:20:33 GMT
+Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4ex66k3ne8-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 23 Jun 2026 14:20:53 +0000 (GMT)
+ Tue, 23 Jun 2026 14:20:33 +0000 (GMT)
 Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com
  [10.20.54.104])
- by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 65NEKnUH38011170
+ by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 65NEKTbF13893930
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 23 Jun 2026 14:20:49 GMT
+ Tue, 23 Jun 2026 14:20:29 GMT
 Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 6AEA92004B;
- Tue, 23 Jun 2026 14:20:49 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 33AD420043;
+ Tue, 23 Jun 2026 14:20:29 +0000 (GMT)
 Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 5CD1220040;
- Tue, 23 Jun 2026 14:20:40 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 30DD92004B;
+ Tue, 23 Jun 2026 14:20:20 +0000 (GMT)
 Received: from li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com (unknown
  [9.39.19.165]) by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 23 Jun 2026 14:20:39 +0000 (GMT)
+ Tue, 23 Jun 2026 14:20:19 +0000 (GMT)
 From: Aditya Gupta <adityag@linux.ibm.com>
 To: <qemu-devel@nongnu.org>, <qemu-ppc@nongnu.org>,
  Harsh Prateek Bora <harshpb@linux.ibm.com>,
@@ -73,10 +73,9 @@ Cc: Sourabh Jain <sourabhjain@linux.ibm.com>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  kvm@vger.kernel.org, Gautam Menghani <gautam@linux.ibm.com>,
  Chinmay Rath <rathc@linux.ibm.com>
-Subject: [PATCH 4/8] tests/functional: Use default powernv machine instead of
- power10
-Date: Tue, 23 Jun 2026 19:49:29 +0530
-Message-ID: <20260623141933.577981-5-adityag@linux.ibm.com>
+Subject: [PATCH 2/8] tests/qtest/pnv_spi: Test Power11 PNV_SPI
+Date: Tue, 23 Jun 2026 19:49:27 +0530
+Message-ID: <20260623141933.577981-3-adityag@linux.ibm.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260623141933.577981-1-adityag@linux.ibm.com>
 References: <20260623141933.577981-1-adityag@linux.ibm.com>
@@ -84,39 +83,39 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
 X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Authority-Analysis: v=2.4 cv=X4Ni7mTe c=1 sm=1 tr=0 ts=6a3a9647 cx=c_pps
+X-Proofpoint-ORIG-GUID: zY29oYf-Mng2kbSTbR7dt-ryP2AHWUcg
+X-Proofpoint-GUID: NcIYaBKxD9xmGeuaoVZd2LyEUwyfAL0Y
+X-Authority-Analysis: v=2.4 cv=Y4XIdBeN c=1 sm=1 tr=0 ts=6a3a9632 cx=c_pps
  a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
  a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=iQ6ETzBq9ecOQQE5vZCe:22 a=VnNF1IyMAAAA:8 a=MGuuq5ZBRx0t7b6k6EIA:9
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjIzMDExNyBTYWx0ZWRfX+zyd+WORj2PU
- dmrXHE767hBjw6RJhJ979j4Vh6UpusYnL78kV7hUURvigz7WTmPuf46j9Ayj3RPfsS2XOpyF+E0
- v8A4c6U9+dZ/8WsSy9K801MbX/5FVbE=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjIzMDExNyBTYWx0ZWRfX99YQK07LVY2A
- KkeiNSTjVItTySUPEWxmktgbj07oKl1LyCD+9tz4bNqyf5HRaxBYAVhh7pUbW3ZT8ZRsOZcMPwh
- haz8788WLydjHWlUQV+0fljoAJyV9z5f2YmSLjzihZ2NyjeAYMB969EsTmc5CQedPCoFpXL0vfk
- LGYvY11Og0dytfdp/60HYpjQ4yT9TUN9F2l4oZjg0xiSPxihQxXGvTifssAALmTGP8ArgK9U4xn
- knJog7tlFUD2edZpNc9SYV9RF4799v5kz2ZNMZAuluK3ApuvM5T0SQ2OZM/IIDx9s3IPdlEyyUG
- wLa/Q2WQ/+n767OQvUqIZyZrh2xtE+Dw15k1xyiM+6GNiebhJFBkKRjfOlAsh3Vray0UX4pWELy
- jlqHETCVWKSsN5I6SPW0vF0v1hvlr4bLcdzolIsYDr/y/zwVaIYgyGv7ptwZCHS4U5EX+lFXqAg
- 2HhY6QYCjfn3lEYSt9A==
-X-Proofpoint-ORIG-GUID: d6SsggomyJ5akhQGcassHHX56V947UXh
-X-Proofpoint-GUID: K_EKy-WL-ZjcJz30zDxBl_z35puNVh6D
+ a=Y2IxJ9c9Rs8Kov3niI8_:22 a=VnNF1IyMAAAA:8 a=gL735G7rtJRJJwX7cZEA:9
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjIzMDExNyBTYWx0ZWRfX/1wvyjBxzrrL
+ nm+i+w+8UHiUgK+trOC+UXpJbv/8qBT29vuxn1IGoSB5aOC2F/sKFeQOQkZikDywLJJM5/BBLPz
+ JCGTNI91hZGjci6wfX2yF+fh6zmf+fLoC+ZdvrwtaawXXyWrQuoVXl6KNO2/tF2XnYMHbdMZn4y
+ HqQjBWKWQ5j8pEX70AgnmX3z2hs7fuTJe7UmN2zTLbZ48LeXQ3Je9vea7VJI8dbJe8Zc7VC4RrT
+ uAsQqBbCoXiOyzbZvxyKdDLEOez3ByQj0IkZDsdSoIQGDlGfr17IZO0o+1662ZGStXjMzrVxuj8
+ 0FZVve1ag/dFBDM5Dp8OgetlZNYQHw6BD3ML09DFUvpmSsjyJsCeFKBvmwI+etXbpqvSXG64l/x
+ lAxk3uLicfasBXPVxrRfMWKgN9PgIK9UAMQOpmNsBvw1u6GGcfK5C2yGGkj1g0ntnPSLcot8NsE
+ +NdaPs2f8q5J3IgqDHA==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjIzMDExNyBTYWx0ZWRfX0oLe7glAZPJO
+ gOpzNFVNFbFfw7iqL0hCMue0EvvGP4tB/D8/cKXvY2NTofdBKEgGYkS5kiz1tDEYrxCvLYCja58
+ bTalRIFBMe5GJibdkySFSdk/n/lrJ90=
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-06-23_03,2026-06-23_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 bulkscore=0 suspectscore=0 spamscore=0 priorityscore=1501
- impostorscore=0 malwarescore=0 clxscore=1015 adultscore=0 lowpriorityscore=0
+ adultscore=0 priorityscore=1501 malwarescore=0 lowpriorityscore=0 spamscore=0
+ clxscore=1015 suspectscore=0 impostorscore=0 phishscore=0 bulkscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606230117
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=adityag@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=adityag@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
 X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -133,30 +132,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The default powernv machine has been recently changed to powernv11,
-though fadump functional test used powernv10
+Currently pnv-spi-seeprom-test was hardcoded to test the 4th chip in
+pnv_chips (power10 as of now).
 
-Change it to use default 'powernv' machine for the tests instead of
-being fixed to powernv10
+This requires ensuring to update the index when removing/adding entries
+in pnv_chips, such as when Power8E or Power11 gets removed/added in
+future commits.
+
+Iterate over all the chips instead, similar to other tests in
+pnv-xscom-test.c and pnv-host-i2c-test.c, but skip older chips, since
+TYPE_PNV_SPI only exists from Power10 onwards, hence skip older machines
+
+Tests all the pnv_chips similar to other qtests
 
 Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
 ---
- tests/functional/ppc64/test_fadump.py | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tests/qtest/pnv-spi-seeprom-test.c | 21 +++++++++++++++------
+ 1 file changed, 15 insertions(+), 6 deletions(-)
 
-diff --git a/tests/functional/ppc64/test_fadump.py b/tests/functional/ppc64/test_fadump.py
-index 7ea65974e0ea..c75095076b52 100755
---- a/tests/functional/ppc64/test_fadump.py
-+++ b/tests/functional/ppc64/test_fadump.py
-@@ -53,7 +53,7 @@ def do_test_fadump(self, is_kvm=False, is_powernv=False):
-             self.require_accelerator("tcg")
+diff --git a/tests/qtest/pnv-spi-seeprom-test.c b/tests/qtest/pnv-spi-seeprom-test.c
+index 44e0b92730b4..721129cd39ab 100644
+--- a/tests/qtest/pnv-spi-seeprom-test.c
++++ b/tests/qtest/pnv-spi-seeprom-test.c
+@@ -77,6 +77,7 @@ static void test_spi_seeprom(const void *data)
+     const PnvChip *chip = data;
+     QTestState *qts = NULL;
+     g_autofree char *tmp_path = NULL;
++    const char *machine = "powernv10";
+     int ret;
+     int fd;
  
-         if is_powernv:
--            self.set_machine("powernv10")
-+            self.set_machine("powernv")
-         else:
-             # SLOF takes upto >20s in startup time, use VOF
-             self.set_machine("pseries")
+@@ -87,11 +88,11 @@ static void test_spi_seeprom(const void *data)
+     g_assert(ret == 0);
+     close(fd);
+ 
+-    qts = qtest_initf("-machine powernv10 -smp 2,cores=2,"
++    qts = qtest_initf("-machine %s -smp 2,cores=2,"
+                       "threads=1 -accel tcg,thread=single -nographic "
+                       "-blockdev node-name=pib_spic2,driver=file,"
+                       "filename=%s -device 25csm04,bus=chip0.spi.2,cs=0,"
+-                      "drive=pib_spic2", tmp_path);
++                      "drive=pib_spic2", machine, tmp_path);
+     spi_seeprom_transaction(qts, chip);
+     qtest_quit(qts);
+     unlink(tmp_path);
+@@ -100,9 +101,17 @@ static void test_spi_seeprom(const void *data)
+ int main(int argc, char **argv)
+ {
+     g_test_init(&argc, &argv, NULL);
+-    char *tname = g_strdup_printf("pnv-xscom/spi-seeprom/%s",
+-            pnv_chips[3].cpu_model);
+-    qtest_add_data_func(tname, &pnv_chips[3], test_spi_seeprom);
+-    g_free(tname);
++
++    for (int i = 0; i < ARRAY_SIZE(pnv_chips); i++) {
++        /* TYPE_PNV_SPI is not instantiated for older Power8/9 machines */
++        if (pnv_chips[i].chip_type < PNV_CHIP_POWER10) {
++            continue;
++        }
++
++        char *tname = g_strdup_printf("pnv-xscom/spi-seeprom/%s",
++                pnv_chips[i].cpu_model);
++        qtest_add_data_func(tname, &pnv_chips[i], test_spi_seeprom);
++        g_free(tname);
++    }
+     return g_test_run();
+ }
 -- 
 2.54.0
 
