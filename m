@@ -4,37 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54567CD98F2
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jun 2026 18:28:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 016FDCD98F2
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jun 2026 18:28:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wc5rD-0005I3-1T; Tue, 23 Jun 2026 14:28:24 -0400
+	id 1wc5qZ-0004em-35; Tue, 23 Jun 2026 14:27:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1wc5qw-00051H-34
- for qemu-devel@nongnu.org; Tue, 23 Jun 2026 14:28:07 -0400
+ id 1wc5qH-0004cP-Jd
+ for qemu-devel@nongnu.org; Tue, 23 Jun 2026 14:27:27 -0400
 Received: from vps-ovh.mhejs.net ([145.239.82.108])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1wc5qs-0001VF-J6
- for qemu-devel@nongnu.org; Tue, 23 Jun 2026 14:28:05 -0400
+ id 1wc5qF-0001Ls-Rp
+ for qemu-devel@nongnu.org; Tue, 23 Jun 2026 14:27:25 -0400
 Received: from MUA
  by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
  (Exim 4.99.1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1wc5qq-00000004mKv-42II; Tue, 23 Jun 2026 20:28:00 +0200
-Message-ID: <db618aff-1ddb-4048-b7ac-bdf1f38feeed@maciej.szmigiero.name>
-Date: Tue, 23 Jun 2026 20:27:55 +0200
+ id 1wc5q5-00000004mJt-1nlD; Tue, 23 Jun 2026 20:27:13 +0200
+Message-ID: <8ea776eb-525f-4203-a1e8-35b16ad6cfa0@maciej.szmigiero.name>
+Date: Tue, 23 Jun 2026 20:27:13 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 5/5] vhost-vsock: don't reset connections during CPR
+Subject: Re: [PATCH v2 1/5] migration: emit SETUP notification before CPR
 To: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
 Cc: mst@redhat.com, sgarzare@redhat.com, farosas@suse.de,
  qemu-devel@nongnu.org, peterx@redhat.com, dongli.zhang@oracle.com,
  bchaney@akamai.com, mark.kanda@oracle.com, den@openvz.org
 References: <20260619105514.128812-1-andrey.drobyshev@virtuozzo.com>
- <20260619105514.128812-6-andrey.drobyshev@virtuozzo.com>
+ <20260619105514.128812-2-andrey.drobyshev@virtuozzo.com>
 From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
 Content-Language: en-US, pl-PL
 Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
@@ -78,7 +78,7 @@ Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
  WHQjcZZbROLql/+ngphSgdthGIhVWrIMHJu1UxnRiwKc/fzDFUZ9hFL+W4ZLm+52TzMatpta
  oNdcP9rtsQjdYMNLuwysP4keDX8yBXADwJD7eQ+ryIIKh6X1lBMIWxeZG5W0DQ6/4BCUEbCe
  1DqkYRtZyUEzgAbaHliaa5t3dfCtSMz5cAbGqxarXc7bKOjA6P8hCwgP0tEypA==
-In-Reply-To: <20260619105514.128812-6-andrey.drobyshev@virtuozzo.com>
+In-Reply-To: <20260619105514.128812-2-andrey.drobyshev@virtuozzo.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=145.239.82.108;
@@ -105,56 +105,31 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 19.06.2026 12:55, Andrey Drobyshev wrote:
-> Migration target with a vhost-vsock device in the .post_load() hook issues
-> VIRTIO_VSOCK_EVENT_TRANSPORT_RESET event to the guest.  This results into
-> the guest tearing down all its vsock connections.  That reset exists
-> because after a normal migration the cid may change.
+> Devices register their own callbacks to MIG_EVENT_* notifications and
+> process them accordingly.  But some devices, especially during CPR-style
+> migration, might need to be aware and process SETUP event earlier on.  One
+> such example is vhost-based devs, as they need to call RESET_OWNER ioctl
+> before the target (in the cpr-transfer case) tries to call SET_OWNER.
 > 
-> However it's not true for CPR-style migration.  In this case cid remains
-> the same, and we want the connections to persist.  Thus, let's customize
-> the .post_load() hook to skip the common transport reset part in this case.
+> Let's move SETUP notification to an earlier place in qmp_migrate().  Before
+> this change, SETUP was firing shortly before migration thread creation, and
+> FAILED notification balancing it was only fired from
+> migration_iteration_finish() (ran in the thread).  But now by moving SETUP
+> to earlier we widen the window.  Hence let's also add FAILED to
+> migration_connect_error_propagate() and the special CPR-related case in
+> migration_cancel(), to balance things out.
 > 
+> This patch is a rework of the change originally proposed by Steve and
+> Ben at [0].
+> 
+> [0] https://lore.kernel.org/qemu-devel/20260128-cpr-tap-v4-0-48e334d4216b@akamai.com
+> 
+> Originally-by: Steve Sistare <steven.sistare@oracle.com>
+> Originally-by: Ben Chaney <bchaney@akamai.com>
 > Signed-off-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
 > ---
->   hw/virtio/vhost-vsock.c | 15 ++++++++++++++-
->   1 file changed, 14 insertions(+), 1 deletion(-)
-> 
-> diff --git a/hw/virtio/vhost-vsock.c b/hw/virtio/vhost-vsock.c
-> index ea9a7d2149d..8b033426296 100644
-> --- a/hw/virtio/vhost-vsock.c
-> +++ b/hw/virtio/vhost-vsock.c
-> @@ -109,6 +109,19 @@ static uint64_t vhost_vsock_get_features(VirtIODevice *vdev,
->       return vhost_vsock_common_get_features(vdev, requested_features, errp);
->   }
->   
-> +static int vhost_vsock_post_load(void *opaque, int version_id)
-> +{
-> +    /*
-> +     * For CPR the guest cid is unchanged, so don't reset vsock connections
-> +     * (the cid-change reset would otherwise tear them all down).
-> +     */
-> +    if (cpr_is_incoming()) {
-> +        return 0;
-> +    }
-> +
-> +    return vhost_vsock_common_post_load(opaque, version_id);
-> +}
-> +
->   static const VMStateDescription vmstate_virtio_vhost_vsock = {
->       .name = "virtio-vhost_vsock",
->       .minimum_version_id = VHOST_VSOCK_SAVEVM_VERSION,
-> @@ -118,7 +131,7 @@ static const VMStateDescription vmstate_virtio_vhost_vsock = {
->           VMSTATE_END_OF_LIST()
->       },
->       .pre_save = vhost_vsock_common_pre_save,
-> -    .post_load = vhost_vsock_common_post_load,
-> +    .post_load = vhost_vsock_post_load,
->   };
->   
->   static void vhost_vsock_device_realize(DeviceState *dev, Error **errp)
-
-Looks okay on the CPR-side but I will defer to vsock reviewers to check if this
-is safe from the vhost-vsock side.
+Looks okay to me, but will wait on Peter and/or Fabiano opinion here,
+since this is core migration code.
 
 Thanks,
 Maciej
