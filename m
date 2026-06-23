@@ -4,57 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1754CDB470
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jun 2026 07:47:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D16DFCDB470
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jun 2026 07:47:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wbvqj-0000Yf-Ee; Tue, 23 Jun 2026 03:47:13 -0400
+	id 1wbvqL-0006fS-NB; Tue, 23 Jun 2026 03:46:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wbvqh-0000LI-IO
- for qemu-devel@nongnu.org; Tue, 23 Jun 2026 03:47:11 -0400
+ id 1wbvqF-0006IM-0R
+ for qemu-devel@nongnu.org; Tue, 23 Jun 2026 03:46:43 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wbvqg-0008Kl-5B
- for qemu-devel@nongnu.org; Tue, 23 Jun 2026 03:47:11 -0400
+ id 1wbvqD-0008Hm-Ag
+ for qemu-devel@nongnu.org; Tue, 23 Jun 2026 03:46:42 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1782200829;
+ s=mimecast20190719; t=1782200800;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=sg7KsGskAxUGYQuCz+J5GZpDMT7LUWwYGX21cOcPlLI=;
- b=HDWRh3ZyS0mUHYDr3XPAaps1zKdhOunyG3319DS3BjPKA3tLrCIybt+7Y3z95nSEhIcvXE
- gkeykU8PFE4/Z/y2TO0azbvfx3gdbmTkjCy7J0WZg4CaRPRdeSm2DtqWrzTZZT8pFv/B7x
- MgwxzQWW+xBIz7bYV4480gEcIdPUbOI=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=tKlxCGNKs0kk4ALX1vXp/DYEb4dpEwlOWrBgQleDG7c=;
+ b=GhJg/jFR7KMarvQex8yvwfZOnGR70zuTLL8h0nwlyW+1eNuMkpGZ/uQneyuFLx2f+f/tmy
+ UR/HPWrDypRrO8wVoM3KWOf73q1Os9G+QMS+9sKYXbvlATncBrXJF4Q5lD5XPndPT8uDBw
+ oQuEAk8Ik+lIim5Y68IujZdj+2gubsg=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-637-55tUt1aCN2GMaYh1uc94Qw-1; Tue,
- 23 Jun 2026 03:47:05 -0400
-X-MC-Unique: 55tUt1aCN2GMaYh1uc94Qw-1
-X-Mimecast-MFC-AGG-ID: 55tUt1aCN2GMaYh1uc94Qw_1782200824
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-219-iqZAkvdpOqK54doRrfLz5g-1; Tue,
+ 23 Jun 2026 03:46:39 -0400
+X-MC-Unique: iqZAkvdpOqK54doRrfLz5g-1
+X-Mimecast-MFC-AGG-ID: iqZAkvdpOqK54doRrfLz5g_1782200798
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6A9C019539A1; Tue, 23 Jun 2026 07:47:04 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 0A7111955F45; Tue, 23 Jun 2026 07:46:38 +0000 (UTC)
 Received: from localhost (unknown [10.44.22.10])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 61F521800591; Tue, 23 Jun 2026 07:47:02 +0000 (UTC)
+ id A754518005B3; Tue, 23 Jun 2026 07:46:36 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Tue, 23 Jun 2026 11:44:42 +0400
-Subject: [PATCH v4 27/34] ui/gtk: move global display settings out of
- per-console init
+Date: Tue, 23 Jun 2026 11:44:37 +0400
+Subject: [PATCH v4 22/34] ui/gtk: implement display cleanup
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260623-b4-ui-v4-27-4656aec3398d@redhat.com>
+Message-Id: <20260623-b4-ui-v4-22-4656aec3398d@redhat.com>
 References: <20260623-b4-ui-v4-0-4656aec3398d@redhat.com>
 In-Reply-To: <20260623-b4-ui-v4-0-4656aec3398d@redhat.com>
 To: qemu-devel@nongnu.org
@@ -68,21 +67,21 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>, 
  Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
  =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3093;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3764;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=qAumGrHZBnM0t7kIhTqS+Wj/lvxsIp0KF4uHpXKaqGU=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqOjleE1akOnG1LEOW5qnMW3lg9IOQU4TjCMx5d
- Nmb4D7DzeqJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCajo5XgAKCRDa6OEJdZac
- 5f41D/wKVgxWv+yVcVX3KPDCMpK9h17RPixADmUdsAaM7D02wrDSW5BnVbMoDbI5mej1MG3ALFs
- LqHYtasF4/i06i/ll8Cl3hNE6inRHZudsdn1uxwr2vP3SfJ/ehqDtTNaEQh60mcM1bdQTyBn2js
- ao+PHVw2Cy98WBZjUIx6KtNRQgNB7BgDmoXlFS8Am+69Oo9ufet9dV3XeMgSnsX73QbCLtzAh+e
- ZbxAPq6WIay71Z5UQ7k+yb7eZN0QCUxxHQFBMz3N2IsOSCPlsZAHYdqmJqHKmfEgbox5dcOBirj
- fvYZryGV1C2odBeA9Sk/VY6K5rKA0EHwOECPhyNK++Dsz7JkKPWefU7Dmzi+jhXEnNXMnSB0EH2
- YiKDp9kzp1oiA2XeticTsljSqeJegLPxSiPwIXSJj0fye7vW/sK6Ld6QD/Hklp1bja0U1ZACHFz
- UXGytVmWBXiyHOsZ1O1U+34gnGTFUkxhgRa1fpWKkx1tQCquxmBKnNHoduUQI+O74HvFieFsXTO
- knOrci2efVEKkk/+IArQYi02vcRkoFZpvYtaseHEbHv/KOm6VWibJFK9rgGD0Llt//6Ga4bFy4x
- JjAJP40UMNtabhsFJQU2HhKiLj7O8Olp1TKxJkG5BEWRVGcixPIO5gwEb/mXSsd1BppzdZCMzVp
- UUotHo+Vqiv/GcQ==
+ bh=+DG8xB4KJmLQS3EpZUbBQpkZhWCN+8ypFWbdujyuWPI=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqOjlecuR7X2WqRJ8iwPyrQbt1nMxTVH+zYN7o1
+ QgnNmS25QyJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCajo5XgAKCRDa6OEJdZac
+ 5d/uD/98p5dabwIpQ/3+eb+6pexgkonAqVHrnXURe78dXVnlwHmNzospipWbOT73piPPS5yTHjU
+ QuA8PL59ADvAFeGw268FJMPCAVTu5ke04eTSu/Ai4LQ3CohR54YDRc/ruABo8a8o2TxxiwUWgbZ
+ EcYCRF5eoDilhNlQkDbSgM68kPPiXdwjx+h+HE0f2mpIoHKbShwPtMzurP4aYrUpeEXQGhrseze
+ fD/SHnln4E1OPs5yIDXsoouhl8un80Pag9xqI4qg0f+nc35nNMtYkykFRYt+C0GtrMCMf6ATuKR
+ 9PvXmzXveBLHquHDWDDKwH248vhK6S65jW7kPVX2lA/HzeyG/GhflNntdxDsOvhH5+lZIz2mnMH
+ W+Xb+Qxj3/K/6fyqiUX2uEeATpXhvmEQhjqRj5+d0MxsIvuoTQjLGP9lWZJEugymZ//q3IjNnZB
+ mR0KVCWYqN8xe9zrd2LYplzuhkG4bZhBniV8zNNB9UMij3r5XxJOJbyYLToIy7XSzKwVuVeEmLZ
+ eOzbvmycctEEBNuQ4sUqHW49Y3hlUJg1V1t3dn4ATDI3GzsjPAjlonzr6A8cZdwBBD32HnhiUaQ
+ qDFbsdAOuQNVu+t4/9iShdRDwf3qLOrS7nTUKyYI0qucE9NaVSig4wqi6jZh93aAoqln2DFNjMu
+ acu7dNV9i/60Dmw==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
@@ -112,95 +111,116 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Move zoom_to_fit, keep_aspect_ratio and touch_slots initialisation
-from gd_vc_gfx_init() to gd_create_menu_view(). These are global
-display settings that should be set once after all consoles are
-created, not repeated on every per-console init (where the last
-iteration's values silently win).
+Add gtk_display_cleanup() to properly tear down GTK display state:
+remove console and mouse notifiers, unregister clipboard peer,
+destroy the main window and virtual consoles.
 
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- ui/gtk.c | 46 +++++++++++++++++++++++-----------------------
- 1 file changed, 23 insertions(+), 23 deletions(-)
+ include/ui/gtk.h   |  2 ++
+ ui/gtk-clipboard.c | 15 +++++++++++++++
+ ui/gtk.c           | 20 +++++++++++++++++++-
+ 3 files changed, 36 insertions(+), 1 deletion(-)
 
+diff --git a/include/ui/gtk.h b/include/ui/gtk.h
+index 3e6ce3cb48c..f4c8e6a9f00 100644
+--- a/include/ui/gtk.h
++++ b/include/ui/gtk.h
+@@ -140,6 +140,7 @@ struct GtkDisplayState {
+ 
+     GdkCursor *null_cursor;
+     Notifier mouse_mode_notifier;
++    VMChangeStateEntry *vmse;
+     gboolean free_scale;
+     gboolean keep_aspect_ratio;
+ 
+@@ -225,6 +226,7 @@ int gd_gl_area_make_current(DisplayGLCtx *dgc,
+ 
+ /* gtk-clipboard.c */
+ void gd_clipboard_init(GtkDisplayState *gd);
++void gd_clipboard_cleanup(GtkDisplayState *gd);
+ 
+ void gd_update_scale(VirtualConsole *vc, int ww, int wh, int fbw, int fbh);
+ 
+diff --git a/ui/gtk-clipboard.c b/ui/gtk-clipboard.c
+index ea9444be70f..476e6b8303c 100644
+--- a/ui/gtk-clipboard.c
++++ b/ui/gtk-clipboard.c
+@@ -235,3 +235,18 @@ void gd_clipboard_init(GtkDisplayState *gd)
+     g_signal_connect(gd->gtkcb[QEMU_CLIPBOARD_SELECTION_SECONDARY],
+                      "owner-change", G_CALLBACK(gd_owner_change), gd);
+ }
++
++void gd_clipboard_cleanup(GtkDisplayState *gd)
++{
++    if (!gd->cbpeer.name) {
++        return;
++    }
++    qemu_clipboard_peer_unregister(&gd->cbpeer);
++    g_signal_handlers_disconnect_by_data(
++        gd->gtkcb[QEMU_CLIPBOARD_SELECTION_CLIPBOARD], gd);
++    g_signal_handlers_disconnect_by_data(
++        gd->gtkcb[QEMU_CLIPBOARD_SELECTION_PRIMARY], gd);
++    g_signal_handlers_disconnect_by_data(
++        gd->gtkcb[QEMU_CLIPBOARD_SELECTION_SECONDARY], gd);
++    gd->cbpeer.name = NULL;
++}
 diff --git a/ui/gtk.c b/ui/gtk.c
-index b4dcdcd9a44..929e4cf43f7 100644
+index 2ee826b56fb..dfef1b10fe3 100644
 --- a/ui/gtk.c
 +++ b/ui/gtk.c
-@@ -2269,8 +2269,6 @@ static GSList *gd_vc_gfx_init(GtkDisplayState *s, VirtualConsole *vc,
-                               GSList *group, GtkWidget *view_menu)
- {
-     const DisplayChangeListenerOps *ops = &dcl_ops;
--    bool zoom_to_fit = false;
--    int i;
- 
-     vc->label = qemu_console_get_label(con);
-     vc->s = s;
-@@ -2350,26 +2348,6 @@ static GSList *gd_vc_gfx_init(GtkDisplayState *s, VirtualConsole *vc,
-     gd_connect_vc_gfx_signals(vc);
-     group = gd_vc_menu_init(s, vc, idx, group, view_menu);
- 
--    if (qemu_console_ui_info_supported(vc->gfx.dcl.con)) {
--        zoom_to_fit = true;
--    }
--    if (s->opts->u.gtk.has_zoom_to_fit) {
--        zoom_to_fit = s->opts->u.gtk.zoom_to_fit;
--    }
--    if (zoom_to_fit) {
--        gtk_menu_item_activate(GTK_MENU_ITEM(s->zoom_fit_item));
--        s->free_scale = true;
--    }
--
--    s->keep_aspect_ratio = true;
--    if (s->opts->u.gtk.has_keep_aspect_ratio)
--        s->keep_aspect_ratio = s->opts->u.gtk.keep_aspect_ratio;
--
--    for (i = 0; i < INPUT_EVENT_SLOTS_MAX; i++) {
--        struct touch_slot *slot = &touch_slots[i];
--        slot->tracking_id = -1;
--    }
--
-     return group;
+@@ -2505,6 +2505,7 @@ static void gd_create_menus(GtkDisplayState *s, DisplayOptions *opts)
  }
  
-@@ -2379,7 +2357,8 @@ static GtkWidget *gd_create_menu_view(GtkDisplayState *s, DisplayOptions *opts)
-     GtkWidget *view_menu;
-     GtkWidget *separator;
-     QemuConsole *con;
--    int vc;
-+    bool zoom_to_fit = false;
-+    int vc, i;
  
-     view_menu = gtk_menu_new();
-     gtk_menu_set_accel_group(GTK_MENU(view_menu), s->accel_group);
-@@ -2453,6 +2432,27 @@ static GtkWidget *gd_create_menu_view(GtkDisplayState *s, DisplayOptions *opts)
-         v = g_new0(VirtualConsole, 1);
-         g_ptr_array_add(s->vcs, v);
-         group = gd_vc_gfx_init(s, v, con, vc, group, view_menu);
-+        if (qemu_console_ui_info_supported(con)) {
-+            zoom_to_fit = true;
-+        }
-+    }
-+
-+    if (s->opts->u.gtk.has_zoom_to_fit) {
-+        zoom_to_fit = s->opts->u.gtk.zoom_to_fit;
-+    }
-+    if (zoom_to_fit) {
-+        gtk_menu_item_activate(GTK_MENU_ITEM(s->zoom_fit_item));
-+        s->free_scale = true;
-+    }
-+
-+    s->keep_aspect_ratio = true;
-+    if (s->opts->u.gtk.has_keep_aspect_ratio) {
-+        s->keep_aspect_ratio = s->opts->u.gtk.keep_aspect_ratio;
-+    }
-+
-+    for (i = 0; i < INPUT_EVENT_SLOTS_MAX; i++) {
-+        struct touch_slot *slot = &touch_slots[i];
-+        slot->tracking_id = -1;
++static GtkDisplayState *gtk_display_state;
+ static gboolean gtkinit;
+ 
+ static void gtk_display_init(DisplayState *ds, DisplayOptions *opts)
+@@ -2523,6 +2524,7 @@ static void gtk_display_init(DisplayState *ds, DisplayOptions *opts)
      }
+     assert(opts->type == DISPLAY_TYPE_GTK);
+     s = g_malloc0(sizeof(*s));
++    gtk_display_state = s;
+     s->opts = opts;
  
- #if defined(CONFIG_VTE)
+     theme = gtk_icon_theme_get_default();
+@@ -2560,7 +2562,7 @@ static void gtk_display_init(DisplayState *ds, DisplayOptions *opts)
+ 
+     s->mouse_mode_notifier.notify = gd_mouse_mode_change;
+     qemu_add_mouse_mode_change_notifier(&s->mouse_mode_notifier);
+-    qemu_add_vm_change_state_handler(gd_change_runstate, s);
++    s->vmse = qemu_add_vm_change_state_handler(gd_change_runstate, s);
+ 
+     gtk_window_set_icon_name(GTK_WINDOW(s->window), "qemu");
+ 
+@@ -2681,10 +2683,26 @@ static void early_gtk_display_init(DisplayOptions *opts)
+ #endif
+ }
+ 
++static void gtk_display_cleanup(void)
++{
++    GtkDisplayState *s = gtk_display_state;
++
++    if (!s) {
++        return;
++    }
++    qemu_del_vm_change_state_handler(s->vmse);
++    qemu_remove_mouse_mode_change_notifier(&s->mouse_mode_notifier);
++    gd_clipboard_cleanup(s);
++    g_clear_pointer(&s->window, gtk_widget_destroy);
++    g_clear_object(&s->null_cursor);
++    g_clear_pointer(&gtk_display_state, g_free);
++}
++
+ static QemuDisplay qemu_display_gtk = {
+     .type       = DISPLAY_TYPE_GTK,
+     .early_init = early_gtk_display_init,
+     .init       = gtk_display_init,
++    .cleanup    = gtk_display_cleanup,
+     .vc         = "vc",
+ };
+ 
 
 -- 
 2.54.0
