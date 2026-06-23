@@ -4,56 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8279BCDB470
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jun 2026 07:46:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53521CDB471
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jun 2026 07:46:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wbvpp-0004Ef-BU; Tue, 23 Jun 2026 03:46:17 -0400
+	id 1wbvpr-0004bP-Tx; Tue, 23 Jun 2026 03:46:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wbvpk-0003r7-CZ
- for qemu-devel@nongnu.org; Tue, 23 Jun 2026 03:46:15 -0400
+ id 1wbvpq-0004SH-JB
+ for qemu-devel@nongnu.org; Tue, 23 Jun 2026 03:46:18 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wbvpi-0008EC-V2
- for qemu-devel@nongnu.org; Tue, 23 Jun 2026 03:46:12 -0400
+ id 1wbvpo-0008F1-W9
+ for qemu-devel@nongnu.org; Tue, 23 Jun 2026 03:46:18 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1782200770;
+ s=mimecast20190719; t=1782200776;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=0slAZr5wYvHwbne6mZ/zPGy2Lj/fJ6NfvG10inQysxA=;
- b=XcFDKoWdLYSNJ/6BRhiY0isltaLGKhXl8zLgAOCSUq4Z/MeOq4mqD0eQrOqtdROhM+/b3f
- aHq7OCtW9M4rSgv2fPc1/WH+RV3ui26V8s8UklHg0ltvD2f8MVOQyGtPOiqzqjnaNnHl29
- QnBvxXt0PonxJeimXddS4P+e0o2zd6I=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=YU1H8GerhQVJe1FDeVzbXbc36iomtcVm20kGBrbfSSI=;
+ b=XzHmuuzuRZufudBKEr3CmOK4UO9VnXGW+3ViLlqh7S7ZBDXWnrBu8b+mkcJCoh7bSQ9c+x
+ uwuhAkwCXKt4AUxMVlH/WmBDB9a+T2HEOZEqPyw+4TxHtEXvxHEEUMQkIpCa9E2DqXdYrt
+ Fj44sYtzR7EqtJbsGbE4b8ZXbyxcn98=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-563-8tlS0cU4OXS_BOXxQi30Og-1; Tue,
- 23 Jun 2026 03:46:06 -0400
-X-MC-Unique: 8tlS0cU4OXS_BOXxQi30Og-1
-X-Mimecast-MFC-AGG-ID: 8tlS0cU4OXS_BOXxQi30Og_1782200765
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-107-wAvyjjaNPfWYptHhLcX6IA-1; Tue,
+ 23 Jun 2026 03:46:11 -0400
+X-MC-Unique: wAvyjjaNPfWYptHhLcX6IA-1
+X-Mimecast-MFC-AGG-ID: wAvyjjaNPfWYptHhLcX6IA_1782200770
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 43437195604D; Tue, 23 Jun 2026 07:46:05 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 52E8B1800598; Tue, 23 Jun 2026 07:46:10 +0000 (UTC)
 Received: from localhost (unknown [10.44.22.10])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 0FC9F195608E; Tue, 23 Jun 2026 07:46:03 +0000 (UTC)
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 18BAB1800347; Tue, 23 Jun 2026 07:46:08 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Tue, 23 Jun 2026 11:44:31 +0400
-Subject: [PATCH v4 16/34] ui/curses: implement display cleanup
+Date: Tue, 23 Jun 2026 11:44:32 +0400
+Subject: [PATCH v4 17/34] ui/sdl2: implement display cleanup
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260623-b4-ui-v4-16-4656aec3398d@redhat.com>
+Message-Id: <20260623-b4-ui-v4-17-4656aec3398d@redhat.com>
 References: <20260623-b4-ui-v4-0-4656aec3398d@redhat.com>
 In-Reply-To: <20260623-b4-ui-v4-0-4656aec3398d@redhat.com>
 To: qemu-devel@nongnu.org
@@ -67,35 +67,34 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>, 
  Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
  =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1612;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1871;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=CrS76SW/HLMQ3iT1E5F2L0lWK5WfDn5ZaHj1Iew5FR4=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqOjldOZTO5bwISFLx8qLBvzAKpIAFc5GVHczEX
- 7gBvUNwezSJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCajo5XQAKCRDa6OEJdZac
- 5XWwD/92m/1WUY+sW3BNkWJCZ6XCeKFqyt9YFcCcmV3S/601ajNdMg81xfoHlDOxMUnTvoNxfk1
- KATtDJoNTe7gFVHFqlmKgbT2qYUfIB3ZNvfsaxlXD5bansWEHSozsgXpu5a37mT8d5AV+MgJttn
- Nahc913l4QrrnvSRCR+Hqo+0D7nmKi2c9OGHKtkf6UJYLgwvPF46M/03FLhUNggjqQpauGG3AQe
- JU45MZ5FSweZL6YN5fU6Qtuf1H0t+dyE6xOYhBqxPs10Ey5dSwTq1Oyst0mhoutyhCVw55PTNga
- MnE4dk5qKHYveQ/O3/cDz5AXu2xVXZNNr8lb0K3lzi2AjRqOVErJAcrZFEoXF016G57w2SdvUzP
- jZaNFJjYIy9+Ym8BbJiDCw6iNVKBe+Fef7XuC08PRSN3r+09kzA94ljR8aITF7eKiLxZ9KOb1ZZ
- 7mYhFVnArE3c2ss2dxcxIeAZVG074qa/hmB83SoqkNpLluPXPprXTprs7EuK9Sz26/1DmoEpsff
- KGSc1W+AXo7L7EME0JwSMDGMApplWT7P1sb+OTExQVGyqTnG8sYTsAkAkmeSzGk02G/rDnr2Stb
- KDqcvPTym5+eGFZbTJlpIut129Q40Rc0driUsy3wbV/xcmU10V8laaud6sixRC2VMa/VlLjdmYK
- tw6FCLvnqEAxNcg==
+ bh=7LHDaJJk+7ITAySyDwrMeiayBnDzHyMzfjsfmWGNmHE=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqOjld3NaOpBx8B7MTqtmfMZFYt2uH0QFIxkW9l
+ WuF3O1Y4SqJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCajo5XQAKCRDa6OEJdZac
+ 5ZWqEACV6EEHDBdOl/efp0hsNUwMKmf1iz35c6bKlxv1Fwb6YddcrTkZXitdzIIXmg4yPjP3bfF
+ Jacrg5bYS8lNzfHpiMGUSjoc6zMLir6ln6Dh1uTGXYblTpMCGajlb08ivVClelJ0AGUJzBzuNqH
+ Wc1RvwpV5zPdihwjvL15nEH1lr9mwSYs20iOfWhTrSwXYXqgq3O5FZqNzevOgtU+WLwfQ2WWv9I
+ AiTqzP9VTtdWibUONwGfAAIicA9lm5pQcQTpQQfV52Bnx0K6iOq3caZCPUDVrdonBH87/ADs+cK
+ dAxa4FATmjc+acFp0xxI/4mHx904U3GSyOr4L7Ol+z9NYLR7f/yNsL4tNH4epaYja/En/mslCI6
+ yTW/pcDd4GdZXzPlpz10E61AL0thTSyNgrrTlfPdCAWpiBH9Nyb5nQ+BHyyakZ334D9BzIqscj8
+ xbP4XB2bLXRUYlSsozLgBjDNRQzuCPHuFir+UUnt+kYGd5AiX83BOKiaOi+ahTpzakasSEGqhv+
+ whRr5fTfQh6HSo0jXHrY8zMVsB6Bf/p+VXJ509Rua1uWtzvj2rD7pTeTAK4VRR8LGIYjMqfuPB/
+ StvaEZWnY+xpdB2sSwx0di468fD3QVsi5c0+AH8+aNnBhH/a0GmgPGr61uv/5o7xb6K9f2W4/Bd
+ ggfH62yAViZoFIA==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
 Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 8
-X-Spam_score: 0.8
-X-Spam_bar: /
-X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,59 +110,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Replace the atexit() handler with a proper cleanup callback. The new
-curses_cleanup() unregisters the display listener, destroy & free the
-allocated resources.
+Replace the atexit() handler with a proper cleanup callback. Extend
+sdl_cleanup() to unregister display listeners, free keyboard state,
+destroy windows, and clean up all cursor resources.
 
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- ui/curses.c | 17 ++++++++++++-----
- 1 file changed, 12 insertions(+), 5 deletions(-)
+ ui/sdl2.c | 23 +++++++++++++++++++----
+ 1 file changed, 19 insertions(+), 4 deletions(-)
 
-diff --git a/ui/curses.c b/ui/curses.c
-index 24d3713e57d..4db32b6168d 100644
---- a/ui/curses.c
-+++ b/ui/curses.c
-@@ -411,11 +411,19 @@ static void curses_refresh(DisplayChangeListener *dcl)
-     }
- }
+diff --git a/ui/sdl2.c b/ui/sdl2.c
+index c75f750e00e..1c97d23a47c 100644
+--- a/ui/sdl2.c
++++ b/ui/sdl2.c
+@@ -790,9 +790,25 @@ static void sdl_mouse_define(DisplayChangeListener *dcl,
  
--static void curses_atexit(void)
-+static void curses_cleanup(void)
+ static void sdl_cleanup(void)
  {
-+    if (!dcl) {
-+        return;
-+    }
+-    if (guest_sprite) {
+-        SDL_FreeCursor(guest_sprite);
++    int i;
 +
-     endwin();
--    g_free(vga_to_curses);
--    g_free(screen);
-+    qemu_console_unregister_listener(dcl);
-+    g_clear_pointer(&dcl, g_free);
-+    g_clear_pointer(&screenpad, delwin);
-+    g_clear_pointer(&vga_to_curses, g_free);
-+    g_clear_pointer(&screen, g_free);
-+    g_clear_pointer(&kbd_layout, kbd_layout_free);
++    if (!sdl2_console) {
++        return;
+     }
++
++    qemu_remove_mouse_mode_change_notifier(&mouse_mode_notifier);
++
++    for (i = 0; i < sdl2_num_outputs; i++) {
++        qemu_console_unregister_listener(&sdl2_console[i].dcl);
++        qkbd_state_free(sdl2_console[i].kbd);
++        sdl2_window_destroy(&sdl2_console[i]);
++    }
++    g_clear_pointer(&sdl2_console, g_free);
++    sdl2_num_outputs = 0;
++
++    g_clear_pointer(&guest_sprite, SDL_FreeCursor);
++    g_clear_pointer(&guest_sprite_surface, SDL_FreeSurface);
++    g_clear_pointer(&sdl_cursor_hidden, SDL_FreeCursor);
+     SDL_QuitSubSystem(SDL_INIT_VIDEO);
  }
  
- /*
-@@ -799,8 +807,6 @@ static void curses_display_init(DisplayState *ds, DisplayOptions *opts)
-     vga_to_curses = g_new0(cchar_t, 256);
-     curses_setup();
-     curses_keyboard_setup();
--    atexit(curses_atexit);
--
-     curses_winch_init();
+@@ -998,8 +1014,6 @@ static void sdl2_display_init(DisplayState *ds, DisplayOptions *o)
+         sdl_grab_start(&sdl2_console[0]);
+     }
  
-     dcl = g_new0(DisplayChangeListener, 1);
-@@ -812,6 +818,7 @@ static void curses_display_init(DisplayState *ds, DisplayOptions *opts)
- static QemuDisplay qemu_display_curses = {
-     .type       = DISPLAY_TYPE_CURSES,
-     .init       = curses_display_init,
-+    .cleanup    = curses_cleanup,
+-    atexit(sdl_cleanup);
+-
+     /* SDL's event polling (in dpy_refresh) must happen on the main thread. */
+     qemu_main = NULL;
+ }
+@@ -1008,6 +1022,7 @@ static QemuDisplay qemu_display_sdl2 = {
+     .type       = DISPLAY_TYPE_SDL,
+     .early_init = sdl2_display_early_init,
+     .init       = sdl2_display_init,
++    .cleanup    = sdl_cleanup,
  };
  
- static void register_curses(void)
+ static void register_sdl1(void)
 
 -- 
 2.54.0
