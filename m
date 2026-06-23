@@ -4,56 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55732CDB470
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jun 2026 07:48:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2CD8CD4F26
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jun 2026 07:48:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wbvqC-00069I-KN; Tue, 23 Jun 2026 03:46:40 -0400
+	id 1wbvr5-000257-FK; Tue, 23 Jun 2026 03:47:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wbvq6-000639-Bt
- for qemu-devel@nongnu.org; Tue, 23 Jun 2026 03:46:35 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1wbvr4-00023L-C1
+ for qemu-devel@nongnu.org; Tue, 23 Jun 2026 03:47:34 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wbvq3-0008Gl-Bm
- for qemu-devel@nongnu.org; Tue, 23 Jun 2026 03:46:32 -0400
+ id 1wbvr2-0008NV-UD
+ for qemu-devel@nongnu.org; Tue, 23 Jun 2026 03:47:34 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1782200790;
+ s=mimecast20190719; t=1782200852;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=gAZq6fm90RH8+U0CFVr2YIwSu9l8OeLSPfjmA/gp7DY=;
- b=XP74ZAwJHzj8mh+LpymbF3RCEIiF12gE1nDmNHRey5D3tqvZM36nEoHjkBkQ1ljrpI8WgH
- 3Ren5dxNvuKMlqj5JGrsqVhZKwGNc0dcEiwugULXBz0BMVvlqKbkPpMsTej9LVZU3rbfqp
- g4pCAVKb0WZmrwSXZXoKBByHVZw1/KU=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=/NBCtQ/LDlj7bqt4GsZQ8DDG3CW8/CbEEUHOSI/t16A=;
+ b=ElB2lZ0V4MHDPkxxnq+Bhu41RCvej5RWCvs0x2VkbdefQXZRLQLeG2HnxaG0S/vmYOq2gy
+ 0gyoPpYpBq0F0UfcOUGncqHG4VTmX26/ceFLPH9gH3Bu6q1b2HSsINn3qCh73pb3YUXyuw
+ SK5pnS+lYAhjBqfBO/T/iZjabEwIZXk=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-407-czEWwAc0M-unqmWY3d-ARw-1; Tue,
- 23 Jun 2026 03:46:27 -0400
-X-MC-Unique: czEWwAc0M-unqmWY3d-ARw-1
-X-Mimecast-MFC-AGG-ID: czEWwAc0M-unqmWY3d-ARw_1782200786
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-320-WF1hMYAdNLupsYvBDe0tlA-1; Tue,
+ 23 Jun 2026 03:47:29 -0400
+X-MC-Unique: WF1hMYAdNLupsYvBDe0tlA-1
+X-Mimecast-MFC-AGG-ID: WF1hMYAdNLupsYvBDe0tlA_1782200847
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1E1A41955E9F; Tue, 23 Jun 2026 07:46:26 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id AC21B180025C; Tue, 23 Jun 2026 07:47:27 +0000 (UTC)
 Received: from localhost (unknown [10.44.22.10])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id D285A1800347; Tue, 23 Jun 2026 07:46:24 +0000 (UTC)
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 5571D180057F; Tue, 23 Jun 2026 07:47:25 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Tue, 23 Jun 2026 11:44:35 +0400
-Subject: [PATCH v4 20/34] ui/cocoa: implement display cleanup
+Date: Tue, 23 Jun 2026 11:44:46 +0400
+Subject: [PATCH v4 31/34] ui/console: register console in QOM tree dynamically
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260623-b4-ui-v4-20-4656aec3398d@redhat.com>
+Message-Id: <20260623-b4-ui-v4-31-4656aec3398d@redhat.com>
 References: <20260623-b4-ui-v4-0-4656aec3398d@redhat.com>
 In-Reply-To: <20260623-b4-ui-v4-0-4656aec3398d@redhat.com>
 To: qemu-devel@nongnu.org
@@ -67,35 +67,34 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>, 
  Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
  =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1474;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2283;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=HykoT1JvYFnZV/NmtGmkJ57XBE/a/Ecau6SBb5B8jB8=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqOjleM5UCU9JOBXu5efjrJAIRD2e0RYKR1bXFf
- 8d/7dnEhHOJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCajo5XgAKCRDa6OEJdZac
- 5Y7iEACLTA24iJwEuWKv9Zcivcg76lOSGwaBiUoUxG1ooCVz4Qr7+HoIUxt7ffzD3Hcq90LJUcn
- sAnSqru2VXDK8nJRB30Qn372bpNtOXlyx7sCTyfwAS5aFzojX7ZV+qvfM9FOn3Z+JUNXMHf1Otv
- u6Ptj5ribw79PAOp9TVIOjL+PX0VsopoLHwmTgQHYzL/NgSqAEixggBXtfbzf4taMxiYdRVHWo/
- s+Wxhajw+7LQRXg8t17oGeJBfho05QVh/m7GK61Xdu6s+V4/w6fHW4RE2LULYbPQcSIk7KYhRRe
- xz6CXaU2+JtzNaW2x8rF1MQIaIA/+fIXr+WpxPbTdkdhAqyOaSCG7LmJ9PyVfbrWV0kEPbxEijo
- 9p9mudvUnTjmr5ppMSXI5Dbhpzg6yK0liOErDJ7kNhCse7KhrW2pzZ5CMRzhHlql8/DrLitQju6
- 3X7q/zrIMbDfT0tHDUo68j2QOxdksUq1Y1IIxljehBtOL7TCCBtas6we/kttzVNsQ/Sxu/BNfAp
- sAiOWQI0ngiG/CO7K5PfozlJyV1xm7lTA6cb3qMEm2h4tmmo5ukOCJA7uthuvcIfD+u/NmnWuw3
- MSwgXRbKdMWsB6YU8WluYZDixiW8lhS87uBVTNsNc5Z2jNDSMVS98jV+TzksFYtWdJaRK82d+5R
- 4stPLxhXDz1SGgQ==
+ bh=+6tAA5uwDh2I1DKjrGBRjiPVFRwcgi1oOVH5ZTlowwM=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqOjleF9urb3gnJSPR4XvFrpnHHW5+r477W4ehq
+ zTngZ2g0XyJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCajo5XgAKCRDa6OEJdZac
+ 5f8RD/0Y0R675/WtZK1mHt9KtTOpBeDoiOcWpDL3yv9ACKjM+dKn2jHj2bi5UQhrlOwsTR8+WSR
+ 3xNMeNXR8bt8xODZELh9/zxcOyLhhz1cyV63jh4HT/HgbQSP++iQmfxIiJjAryvfardVKaVt6RV
+ 2yjtw8uv7+c0D5o24oG2d9VVU54kDtHe/votJ7FH4FJvageUGLSS/gKJ88lSNN2+o1dDZ2yPV+k
+ AV/sizHlg6OLBg3aglif1FBJLTBTpL0phopZra95qCrFQxYm6oVMr/sU4/VfGgI8g0PqO+0SQ7p
+ jvBlp2HScxfpO3QOyER+HnOKQEHSWCJxLqKBohthlRniBsNGnaZK7DT9xJzmf4mLkcKeylo/xDm
+ 2pqxszjyy8foXZAZd1HnAkLFPO4MQKFyi5MTsyX5mge57xZRftnHhBubgtkZ0cfSzX1wp3XvmSF
+ fFeKNnE9y5wPRRVLVqBfDtFQtW5IormDUy2lLxI6UpF2W2sno5AJqPjxhB29rc6tHXZlA/Ofb2C
+ nmJLk2OHDVq3L1nV91r6KnCFG3neSg6d1uh0/or5Kb5UEC7EipyRHjwLNXs3wi0fsEPWihc3puy
+ 0oLDFGNPulzYYYJ0cvrEp5inV1+cyPOhXC0eOjATrtjwbDTqNaesWyUjBXAEE99OukWGnwxBQaz
+ OA8PxLCQKI8F3QA==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 8
-X-Spam_score: 0.8
-X-Spam_bar: /
-X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,55 +110,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Move cbowner release from QemuCocoaAppController -dealloc to
-cocoa_display_cleanup(), since cbowner is allocated in
-cocoa_display_init() and cleanup is the symmetric teardown path.
+Consoles created after init_displaystate() (e.g. hotplugged
+display devices) were never added to the /backend/console[N]
+QOM tree. Extract qemu_console_add_to_qom() and call it from
+qemu_console_register() when the display is already initialized.
 
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- ui/cocoa.m | 19 +++++++++++++++++--
- 1 file changed, 17 insertions(+), 2 deletions(-)
+ ui/console.c | 23 +++++++++++++++++------
+ 1 file changed, 17 insertions(+), 6 deletions(-)
 
-diff --git a/ui/cocoa.m b/ui/cocoa.m
-index e157ad01d85..3751be37922 100644
---- a/ui/cocoa.m
-+++ b/ui/cocoa.m
-@@ -1206,8 +1206,6 @@ - (void) dealloc
-     COCOA_DEBUG("QemuCocoaAppController: dealloc\n");
+diff --git a/ui/console.c b/ui/console.c
+index 975eaf15706..db9aaf85f59 100644
+--- a/ui/console.c
++++ b/ui/console.c
+@@ -68,6 +68,7 @@ struct DisplayState {
+     uint64_t last_update;
+     uint64_t update_interval;
+     bool refreshing;
++    bool initialized;
  
-     [cocoaView release];
--    [cbowner release];
--    cbowner = nil;
- 
-     [super dealloc];
+     QLIST_HEAD(, DisplayChangeListener) listeners;
+     NotifierList console_notifiers;
+@@ -376,6 +377,13 @@ void qemu_text_console_put_string(QemuTextConsole *s, const char *str, int len)
+     }
  }
-@@ -2038,9 +2036,26 @@ static void cocoa_display_init(DisplayState *ds, DisplayOptions *opts)
-     qemu_main = cocoa_main;
- }
  
-+static void cocoa_display_cleanup(void)
++static void qemu_console_add_to_qom(QemuConsole *con)
 +{
-+    if (!kbd) {
-+        return;
-+    }
-+
-+    qemu_console_unregister_listener(&dcl);
-+    g_clear_pointer(&kbd, qkbd_state_free);
-+    qemu_remove_mouse_mode_change_notifier(&mouse_mode_change_notifier);
-+    qemu_clipboard_peer_unregister(&cbpeer);
-+    g_clear_pointer(&cbinfo, qemu_clipboard_info_unref);
-+    qemu_event_destroy(&cbevent);
-+    [cbowner release];
-+    cbowner = nil;
++    g_autofree gchar *name = g_strdup_printf("console[%d]", con->index);
++    object_property_add_child(object_get_container("backend"),
++                              name, OBJECT(con));
 +}
 +
- static QemuDisplay qemu_display_cocoa = {
-     .type       = DISPLAY_TYPE_COCOA,
-     .init       = cocoa_display_init,
-+    .cleanup    = cocoa_display_cleanup,
- };
+ static void
+ qemu_console_register(QemuConsole *c)
+ {
+@@ -413,6 +421,10 @@ qemu_console_register(QemuConsole *c)
+             }
+         }
+     }
++
++    if (c->ds->initialized) {
++        qemu_console_add_to_qom(c);
++    }
+ }
  
- static void register_cocoa(void)
+ static void
+@@ -1089,20 +1101,19 @@ void qemu_console_remove_notifier(Notifier *notifier)
+  */
+ DisplayState *init_displaystate(void)
+ {
+-    gchar *name;
++    DisplayState *ds = get_alloc_displaystate();
+     QemuConsole *con;
+ 
+     QTAILQ_FOREACH(con, &consoles, next) {
+         /* Hook up into the qom tree here (not in object_new()), once
+          * all QemuConsoles are created and the order / numbering
+          * doesn't change any more */
+-        name = g_strdup_printf("console[%d]", con->index);
+-        object_property_add_child(object_get_container("backend"),
+-                                  name, OBJECT(con));
+-        g_free(name);
++        qemu_console_add_to_qom(con);
+     }
+ 
+-    return display_state;
++    ds->initialized = true;
++
++    return ds;
+ }
+ 
+ void qemu_graphic_console_set_hwops(QemuConsole *con,
 
 -- 
 2.54.0
