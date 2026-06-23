@@ -4,96 +4,134 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D366CDB46F
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jun 2026 10:57:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51D88CD98F2
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jun 2026 11:03:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wbyoI-00058Y-6k; Tue, 23 Jun 2026 06:56:54 -0400
+	id 1wbytm-0006h2-4f; Tue, 23 Jun 2026 07:02:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wbyoH-00058C-15
- for qemu-devel@nongnu.org; Tue, 23 Jun 2026 06:56:53 -0400
-Received: from mail-yx1-xb135.google.com ([2607:f8b0:4864:20::b135])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wbyoF-0005L9-Al
- for qemu-devel@nongnu.org; Tue, 23 Jun 2026 06:56:52 -0400
-Received: by mail-yx1-xb135.google.com with SMTP id
- 956f58d0204a3-66077e90382so5612092d50.3
- for <qemu-devel@nongnu.org>; Tue, 23 Jun 2026 03:56:50 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1782212209; cv=none;
- d=google.com; s=arc-20240605;
- b=kmNF6gaNeaUa5FDu00/vev23safsc1Fu18acca6/K6fNMp0ho/M7iXaSsFm+FkMHzH
- 7cRmHTt6P/uX7ppfxLVPIa6ghW2XotlN9xGlllmNmrHNl8Zw0ybn2PiXmYB72ZYqbyNK
- zYOlqjJQUiCRDSAVua6J92tKCai+G+/VpsanS8De1445QW/hIfnJBzibCitT7i8vcTqM
- C6Ic69Badn1O+bMnWV3LrQB0/p/8q+jkuxYxLE/vo/SjzNmGi+j++qNtUlPynidXpm7l
- 5ALbtJX3goG0qXPhFafi6yWaiZNrpCyYEiww5+4ZIOE75juFtnX3b1A0j8ppk5s2/ZRv
- b8fg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:mime-version:dkim-signature;
- bh=T3CyUloVHV802dplj8dW9sl/urT2LaE1KZyHLHTjgUc=;
- fh=cfbs5FjUGBW3lG+bIBEoCd7gPmGa/KC0n1jnW4WAKzE=;
- b=ADaBFS813A5DBaQcroLkxVP3GpxfMJDrC8G9byTNCsYOlFFi0tj2xSTba+BOWR6OlX
- hIpoDswp2PebSiLnFmcXx7/53BcFWeJ6t/nLrj84tBMG2XLcNu95SgtHBlqehRT8eQMu
- HyCF+zTFAdiYDdkwd7lMaQg7Ky/oR3OSV5cnfG3hYz9J8Oys2k5DEtOf/MSWKS22Enoe
- lH1eDGh4DxKX3mw2EODQTtkpVJwrAj7tjOKEL0gDq+y/wVGDHUU1TPcFcWda3G413Y51
- Oqi2XZP0Pebua9GSwCD4EVPZ0zYWtMgpcTTZbKnc9JL6U+NK+xO2EAOMg6jaCWSxnrKw
- zQ4w==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wbyta-0006de-QQ
+ for qemu-devel@nongnu.org; Tue, 23 Jun 2026 07:02:25 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
+ id 1wbytW-00066G-HW
+ for qemu-devel@nongnu.org; Tue, 23 Jun 2026 07:02:21 -0400
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 65NAsgw83582623
+ for <qemu-devel@nongnu.org>; Tue, 23 Jun 2026 11:02:16 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:message-id
+ :mime-version:subject:to; s=qcppdkim1; bh=VTGkAAqPBzGluCPiab/B5v
+ MxXekWkb9qKi/y3skYJ+E=; b=hfD5MwmRrq5FuO7EEDoa+gFf4MHU5e6FHygclk
+ rIf4TqPN/taFTpGXW8H8i1/MQABYFm7A8XceCRuuVEACMFvxqhozyJDXAXOfBF0V
+ prhxV948cmfRoGqfUas613wUDeQDaLjlsHELr6tmjrD0V8NegovO7EVZyvG6Iokq
+ VAloAK29uPN3GKxc78LhE0y+E5Gk2wOwyat7Ob3AEXO80hK6tDb87TA+SiuWdHKG
+ xyaPvA27IRFAOn825xuFZK4HKScKgvB9wiOqR8agy8kfmQyjpxvE3z/8ZW2XcyJf
+ nghbi/vsKu/tvIBvyuusmVSeyqkzIWoYWAGX+xhDkEBkH0aQ==
+Received: from mail-ot1-f72.google.com (mail-ot1-f72.google.com
+ [209.85.210.72])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ey729v3fn-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Tue, 23 Jun 2026 11:02:16 +0000 (GMT)
+Received: by mail-ot1-f72.google.com with SMTP id
+ 46e09a7af769-7e6ec7ce0b2so4243114a34.1
+ for <qemu-devel@nongnu.org>; Tue, 23 Jun 2026 04:02:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1782212209; x=1782817009; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
- :date:message-id:reply-to;
- bh=T3CyUloVHV802dplj8dW9sl/urT2LaE1KZyHLHTjgUc=;
- b=ZXJ+ChtZueqG+LrQVaSqaoU8ziKk1Z6TcruW1SLTWoxJDfn6h6QwPrxj6lqAdGSxuX
- 7IgOetVN2XIL3EPTFQwrHD6uism1naBpTiYNU2H0mtPEPWD+zkO2qjCQeCDF8Q0jvvvH
- 0ls630xdDzTXuii+qnzleHDdDA+0gjMpbjOVvpF3SgxSOav2Z7/VEQIqQk/Je9IJfhZp
- fdfPlOUTNe6CD6pJWSSM+Rjro8lb1uX6JSt/oVKEzWl28V39nv8UZFJhtmo5SIeBQ4yy
- k/CIAXUae0kDkwNcPtiJBNOL3AvnKnWGy0YBWcILt6GXT8Jfwbcv5UegpE2rH4N5V1wm
- wInQ==
+ d=oss.qualcomm.com; s=google; t=1782212535; x=1782817335; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=VTGkAAqPBzGluCPiab/B5vMxXekWkb9qKi/y3skYJ+E=;
+ b=BUxpwoQnUJUzLke1Ob//3VlVC/MqVU/LJ5W2TCZRNzgFMR3YlGmznt1Kj04m8qysG7
+ U2nDaszmgHJcUb2T/173CHK6JRduHsAZ795yoYiCQ2Hi1Emyn6SlcX3TE/dF7mrb5Oir
+ zfvAGxR0GSYaF19oJQI16y4VEF1+VIO34DA7IJ0cdDH/8CJJGX5wEXASuA0AerYBig7S
+ gOAFe8LFeOsL6OH5whDapC6ZCm+PiCOYCg2E7P04OA8dDPTqePmYnTuudZ1hxJ1jJmSq
+ xcbsXvBJOaVWQPbBzSILWXsoXMaGvbsjYA2omojb3PbzR3qOkrBjpsJIbFV1I6tkHf5y
+ RaGQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782212209; x=1782817009;
- h=cc:to:subject:message-id:date:from:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=T3CyUloVHV802dplj8dW9sl/urT2LaE1KZyHLHTjgUc=;
- b=PDmMEZFP+Tn5onQOKU16Oza3uLJV+dSDm9NRLRhF09G73FCLJNzSx1gxneFlwnRlmB
- py7VseMpfxztGjzFFJB0tr9uYeyU5Q+wMVU+nnBPG8I3Xa6Iyy3Qu21VeSyqppUKYfb9
- gavcpja0pLJ0wOHjixbkCLgOX5Eudptd1vLtR73GfbdY/NHAP+5wIPvO86LunIzapAX8
- 00YLJrCmF5hpxRDMsWS10AMwxLG/APxvYtc8Q/sR0p+PvNuxRWJWA4IPjvov5tJWr/7D
- eXgHq7lUfKhXo9oRVsb0pWeu3O+HevvMfkk0uJsXWsZmAvYmX78vxJfPR4wz8lrWqR0S
- dP+g==
-X-Gm-Message-State: AOJu0Yxke0f5LYOyQ9ERPf5Ft+3Zjqw5xwp3oS9j+O9w1bGpj7f2JziK
- r1beD6+4uEGYHQiFTydCt+5g4vgiLp6h3Gx7vUxLc+6cSrQqA3+DQ+b6gzV+XoUYff2aAFhEpqZ
- 05n8fUteqLz++wtGMFpKn1B7xlw5/VI214qgBZcW8j6pHqnwPE8hyTBU=
-X-Gm-Gg: AfdE7clBJvUfA/XKmX+IcR3Cvk2l4WTq+0yCSYi7jcoQwCSSY3ke9DTj7q41lTXEhJM
- ZMFb4Kf7+fIOlDJJmO/1qv16dPc6hDp5zbAq0Twb6JqgsL3cfw9Gm3+AIJvxjGwAirqi3iBuKHb
- 47NmF+Sysco/rhDEolU7S4oJ+v8gRqvDjNvAiOAIR+qrJHF0PSVArWyYZlCDY7sC+ufHKFdxwk2
- xPUwuGZWqrIk62mX6TlAhsHES1pie7gp5MymYs+8/Y7bF5jwqunywxqp2LR9VpnNlKDZJwY6eWe
- FcsA/bNibj88zHpm5EEhHCXa9NvQgBxet08USf4beBbF0cfwFllJHVJL
-X-Received: by 2002:a05:690e:130c:b0:660:6a0c:c734 with SMTP id
- 956f58d0204a3-66312db92d3mr12781327d50.17.1782212208937; Tue, 23 Jun 2026
- 03:56:48 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1782212535; x=1782817335;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=VTGkAAqPBzGluCPiab/B5vMxXekWkb9qKi/y3skYJ+E=;
+ b=JVixPCys5EGY7ZSrdEh6X3v+jBE8emLaeESIsf5jGjH8qk+PRGH0RPkWKre3LIjJoG
+ 0c2gqJzeW5N8OutSO0Lnp+/H6PF634Do6Qlu5oy4TyZkybZ1b4ycQ0YmBytH8XsQTiQw
+ WQNVgkszxRxm8XUks/0/88jx+7k93YXIZgo/o0JejWDUXsoaclf5SxYYM9oYDzl84BWV
+ 8lEEp3F3wD3yH+P3TuwYHrzrfPRIzSMOZLC5sQxb1wBtDFnFusasNnQhgJQe5GUzp3y/
+ 4IVUAbcIejvxLcpgf8ZSVGXisZVJ3wzloi8CiNut/YGHOket18uIkgDuGFgCs8shxnT4
+ yGhg==
+X-Gm-Message-State: AOJu0Yzn59PaIU32hrbFyu4NoZVPcZSfxfwikmQKhuwvmJKHlOnJeRYS
+ lM3L2VFBLw6R4Efz/k4zN+5cK3VoP8oFZ5F+dkRap0kR+orDiti6EJVmLO68S8F2k9Wo6lSV0Bg
+ yPK57NkD5urF7ii8zlUJoSwMHhX3Rwss209xPCoRAjKGbstNHbThfUGunE/RczYg1HZ8+
+X-Gm-Gg: AfdE7cknZCosbbQWk24g75evGYnQqi26ogO95yjFJ3FsqMgjJ/Gu+qt71wYgHtyMb5S
+ P5yTGk23mhIDTokzWek2GucwnxhIrB5lo3eJ2TO1E6CPJRwmUUgDH4V4aEDIMm1as11k2bbZHGb
+ TQjb5eUolIO3IwGdLnNs84dSpUa8PLSJvyeU7vg9XnsDsyL7ji3k7tmjAzGkHFf4r3L8mxhU7D8
+ NLkzeSDB+p3f79SF8mPXnXvtNqk6wg5HWaWR8wQ4WDCOaxO8qM2KRtiTqcO6oLcHDae8mC3IY5F
+ AScNpw4Q3B/l4Y0i046ZSPNHNl/vwugMyaTNJs6pYemt+xwZtJ4zmy8iBbLZvObRbd+8UKYz7vR
+ LzHtDnvIw6CfaL5AClfg+WlI+LGLBkd/tUg2QNQ==
+X-Received: by 2002:a05:6830:6d05:b0:7dc:d587:af3 with SMTP id
+ 46e09a7af769-7e97998fc31mr1514668a34.23.1782212535481; 
+ Tue, 23 Jun 2026 04:02:15 -0700 (PDT)
+X-Received: by 2002:a05:6830:6d05:b0:7dc:d587:af3 with SMTP id
+ 46e09a7af769-7e97998fc31mr1514610a34.23.1782212535002; 
+ Tue, 23 Jun 2026 04:02:15 -0700 (PDT)
+Received: from localhost.localdomain ([88.187.86.199])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-466648c5ddbsm36315212f8f.12.2026.06.23.04.02.12
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Tue, 23 Jun 2026 04:02:13 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org, qemu-riscv@nongnu.org, qemu-ppc@nongnu.org,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+Subject: [RFC PATCH v2 0/4] target/tcg: Rename some helpers common to various
+ targets
+Date: Tue, 23 Jun 2026 13:02:04 +0200
+Message-ID: <20260623110209.26861-1-philmd@oss.qualcomm.com>
+X-Mailer: git-send-email 2.53.0
 MIME-Version: 1.0
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 23 Jun 2026 11:56:37 +0100
-X-Gm-Features: AVVi8CfUzf98UbKmE-B6BfL20_6RyL2bhLyAQKTFwXAwyxrvjX3j4oU3ruYbt50
-Message-ID: <CAFEAcA_UhmCxJc16CHE=4ZR1+PA0=4-29=fEe+d+iUmhLTzpuQ@mail.gmail.com>
-Subject: QEMU net code and padding of short packets
-To: QEMU Developers <qemu-devel@nongnu.org>
-Cc: Bin Meng <bmeng.cn@gmail.com>, Jason Wang <jasowang@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b135;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb135.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjIzMDA4OSBTYWx0ZWRfXwzUkibiui5TD
+ Z8SMWe+RmveeRVzfeUlYWvj0VRnNHDwfJX8SpGVD4QaE3rTmHuKyrowHptuCJnLROY3EJmFik1O
+ 7E9cgXbaXJ2DxRucWBJMz39ZSlMbLxM=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjIzMDA4OSBTYWx0ZWRfX9FeGBJqtBFfP
+ eWic9xOcs05cfH2E/t+v52i9MFu8E4ecsj4I8GstCGMvOoRn4r2xaA/rfsXvyg4oCooXJOifUvY
+ RQ5dfuqxAtkt5fMFsRaJI1/ZK5ufv0keCseSpe6+M9djeADx51y0D3hgoDhLGtvUSVZUwOGVKr1
+ L+kRWXtyzMs6AE4eJZNFBeuZ5FfRluqka5tshUgbr2Jr++2UmOznoJwIX5lbAGdH+YqCVdopGpI
+ XLDBLfa9u+5X1tj5/U/g2mThjbCyTGP4lIImllW3iyy4mNmjVJbRngWq0/tFzF2W/zn7+XYa4g0
+ acH3oadxJySUTtN27DReoKUa8MYWc3QiDHB7svrz2LoqI4UO8UIAgybukvdIPTUnb+oKFbg/tPE
+ n0tIdCymx8byteh/Pcsszq96DmZRYCR3M66mhkRHyBbWFycJTy3/jZ0nM5aetFJtdMZXxfR+l6Q
+ HS4a2XfrJMdw68Be80Q==
+X-Proofpoint-ORIG-GUID: A_VOw_nD2HdUBjyb5wD9AcLBCaSjcIyg
+X-Proofpoint-GUID: A_VOw_nD2HdUBjyb5wD9AcLBCaSjcIyg
+X-Authority-Analysis: v=2.4 cv=eN0jSnp1 c=1 sm=1 tr=0 ts=6a3a67b8 cx=c_pps
+ a=+3WqYijBVYhDct2f5Fivkw==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+ a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22
+ a=gCilnUSdiZWjTjviJ0MA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=eYe2g0i6gJ5uXG_o6N4q:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-23_02,2026-06-23_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 lowpriorityscore=0 malwarescore=0 suspectscore=0 bulkscore=0
+ clxscore=1015 priorityscore=1501 impostorscore=0 phishscore=0 adultscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606230089
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,47 +147,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-What is the general design principle for QEMU's handling of "short"
-packets, which are less than the 60 byte ethernet frame minimum?
+TCG helpers are declared using the DEF_HELPER*() macros
+which imply global symbol scope. Unfortunately when building
+a single binary (containing multiple TCG 'target' frontends)
+these symbols clash.
 
-In commit 969e50b61a285b0 ("net: Pad short frames to minimum size
-before sending from SLiRP/TAP") we made the slirp and tap backends
-add padding to short packets before feeding them into the net
-code via qemu_send_packet() and friends, with the idea that we could
-then remove (often buggy) code from network device emulation that
-tried to handle the short-packet in its receive path.
+This series takes the dumbest approach, renaming the symbols.
 
-In commit 79b6a985 we realized we also needed to do this for the vmnet
-backend. The issue https://gitlab.com/qemu-project/qemu/-/work_items/2362
-reports that we also need to do this for socket and dgram and similar
-backends.
+There are still around 20 symbol clashes (usually FPU helpers),
+but this series is good for my proof-of-concept.
 
-I'm trying to identify what the underlying logic here is. My current
-best guess is:
- - we should always pad before feeding in a packet which is going
-   to be sent to an ethernet device model (unless that device model
-   has explicitly opted in via do_not_pad, e.g. because it really does
-   want to faithfully model the card's handling of short packets
-   and it's gone to the trouble of getting it right)
- - we should not pad before feeding in a packet which is going to
-   be sent to a network backend (i.e. where the guest is sending out
-   to slirp/tap/etc)
+Since v1:
+- rebased on b0df6e2f2c6c45df8d4d286933799c623e124d98
+  (Merge tag 'pull-riscv-to-apply-20260616')
 
-Could we do this by having qemu_send_packet() etc always pad, and
-have the slirp/tap/etc backends set the do_not_pad flag on their
-NetClientState structs to suppress this? Would that be better than
-having all the backends do "and pad this" for their sending code?
+Philippe Mathieu-Daudé (4):
+  target/tcg: Rename bitswap() helpers
+  target/tcg: Rename crc32*() helpers
+  target/tcg: Rename raise_exception() helpers
+  target/tcg: Rename set_rounding_mode() helpers
 
-At the moment the only user of do_not_pad is the virtio-net device.
-commit d4c6293041 just says "there is no need to pad" and doesn't
-give rationale. Why is this particular network device a special case?
+ target/arm/tcg/helper-defs.h                     |  4 ++--
+ target/hexagon/gen_tcg.h                         |  2 +-
+ target/hexagon/helper.h                          |  2 +-
+ target/i386/helper.h                             |  2 +-
+ target/i386/ops_sse.h                            |  2 +-
+ target/loongarch/tcg/helper.h                    |  8 ++++----
+ target/m68k/helper.h                             |  2 +-
+ target/microblaze/helper.h                       |  2 +-
+ target/mips/helper.h                             |  6 +++---
+ target/ppc/helper.h                              |  2 +-
+ target/riscv/helper.h                            |  2 +-
+ target/sparc/helper.h                            |  2 +-
+ target/i386/tcg/ops_sse_header.h.inc             |  2 +-
+ target/arm/tcg/arith_helper.c                    |  4 ++--
+ target/arm/tcg/translate.c                       |  4 ++--
+ target/hexagon/op_helper.c                       |  2 +-
+ target/hexagon/translate.c                       |  2 +-
+ target/i386/tcg/excp_helper.c                    |  2 +-
+ target/i386/tcg/translate.c                      |  2 +-
+ target/loongarch/tcg/fpu_helper.c                |  2 +-
+ target/loongarch/tcg/op_helper.c                 |  6 +++---
+ target/m68k/op_helper.c                          |  2 +-
+ target/m68k/translate.c                          |  2 +-
+ target/microblaze/op_helper.c                    |  2 +-
+ target/microblaze/translate.c                    |  2 +-
+ target/mips/tcg/op_helper.c                      |  6 +++---
+ target/mips/tcg/translate.c                      |  6 +++---
+ target/ppc/tcg-excp_helper.c                     |  2 +-
+ target/ppc/translate.c                           |  6 +++---
+ target/riscv/fpu_helper.c                        |  2 +-
+ target/riscv/translate.c                         |  2 +-
+ target/sparc/helper.c                            |  2 +-
+ target/sparc/translate.c                         |  6 +++---
+ target/i386/tcg/emit.c.inc                       |  2 +-
+ target/loongarch/tcg/insn_trans/trans_bit.c.inc  |  4 ++--
+ .../loongarch/tcg/insn_trans/trans_extra.c.inc   | 16 ++++++++--------
+ target/loongarch/tcg/insn_trans/trans_fmov.c.inc |  2 +-
+ 37 files changed, 63 insertions(+), 63 deletions(-)
 
-Are there any special cases where code calls qemu_send_packet
-or qemu_sendv_packet which aren't either "a network device"
-or "a backend"? There's net/hub.c -- I guess that should set
-do_not_pad for its inputs, so it faithfully passes through
-short packets and lets the destinations decide whether they want
-them padded or not. Anything else?
+-- 
+2.53.0
 
--- PMM
 
