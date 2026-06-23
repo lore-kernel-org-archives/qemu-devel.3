@@ -4,92 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E69FCDB479
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jun 2026 15:03:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7467FCDB479
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jun 2026 15:06:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wc2dy-00061t-1w; Tue, 23 Jun 2026 11:02:30 -0400
+	id 1wc2hs-0006i7-Ow; Tue, 23 Jun 2026 11:06:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wc2dm-00061N-TM
- for qemu-devel@nongnu.org; Tue, 23 Jun 2026 11:02:18 -0400
-Received: from mail-pg1-x531.google.com ([2607:f8b0:4864:20::531])
+ (Exim 4.90_1) (envelope-from
+ <386A6agcKCngfndehgackkcha.Ykimaiq-Zarahjkjcjq.knc@flex--jrhilke.bounces.google.com>)
+ id 1wc2hr-0006hz-Ex
+ for qemu-devel@nongnu.org; Tue, 23 Jun 2026 11:06:31 -0400
+Received: from mail-pf1-x449.google.com ([2607:f8b0:4864:20::449])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wc2dk-0005y7-KB
- for qemu-devel@nongnu.org; Tue, 23 Jun 2026 11:02:17 -0400
-Received: by mail-pg1-x531.google.com with SMTP id
- 41be03b00d2f7-c88eb5e7713so2292676a12.1
- for <qemu-devel@nongnu.org>; Tue, 23 Jun 2026 08:02:15 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from
+ <386A6agcKCngfndehgackkcha.Ykimaiq-Zarahjkjcjq.knc@flex--jrhilke.bounces.google.com>)
+ id 1wc2hp-0006nR-UA
+ for qemu-devel@nongnu.org; Tue, 23 Jun 2026 11:06:31 -0400
+Received: by mail-pf1-x449.google.com with SMTP id
+ d2e1a72fcca58-84256bee9a9so25522b3a.1
+ for <qemu-devel@nongnu.org>; Tue, 23 Jun 2026 08:06:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1782226935; x=1782831735; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=MIN0aFROdvzw/HSRo6TXyOQ/wBj+6PHJPIWvJXKdtsI=;
- b=sMC5C0BExWKgvDZ8KbA13Usz3U41rt5S9p7/eILVlPF3D7ilsoxutRPxh+EbqOoBCM
- 08sdwfHAHJvZYg7kzLl/tZuriJCzgi8temz8yd7n3a7LHwKQGKRi7blxbHwc7aYw+1MG
- DJi734LlNTljQXpVYrZh4FdvsXK6ncM1amiAEPy3UhoTZ40Hw7PMk1evYlXOC8vMmsO/
- h68dk9yOxBN+57EfXvJPXUk78FGtLn/Omy43NTQC4G/cG3b50u/eqyTwWfRIpNYIePIZ
- k60tbIqtHIbzAnAcnKs/iioT/mJofAl6YbjGAZhxjkNcmAhiBuBlkJ1463xkhZtd/QMk
- TRZg==
+ d=google.com; s=20251104; t=1782227187; x=1782831987; darn=nongnu.org;
+ h=cc:to:from:subject:message-id:mime-version:date:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=B9oqbez+uHVoqTE/liBSIPZfj6UafgqTXlaZXLuAAxY=;
+ b=cGfNdBDbmFtLWQQYBr7+JOjCkEnAAyn4/W710SZtyd3OZXIaqNM3OPydGzw3MENMHP
+ lBe9tnDbZ131srovO7fgWeWcnXlgRXIHLhXL8hkyrXlqfxLk0A8vFBdl3qF8xk8q337/
+ maVzuthQPDwKykZ6ZYdK4GFrFyxDaJJlE3wQQDwM+wWUlbGlyiFK9fIr0kAswMPDTKfa
+ Jpd+9C88tgD4mYD3LhDywtiw76Fx3ZFIGf7WwscNY/5CWr6mN2pqXrbSbBWT4q1bv3zY
+ L6eyKVqLjZa2Ip/KOoA3CoI/MAD+Pd3+/2AHxQfao3znZJDQuKcqek3iHoJyjurrOwbA
+ yJtA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782226935; x=1782831735;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=MIN0aFROdvzw/HSRo6TXyOQ/wBj+6PHJPIWvJXKdtsI=;
- b=KXCuWof61RPImivLPJItUvn1JyOi4r/dq1ARh0m8B3/sMD6fSJvDlE94eWN0r++TO4
- SC2KreradWd9Pef7J8Ae/XzZIAc2aBTR9+XwKoHGOX0+11KTzVKxEgJshTIn34zzHL4b
- Y/7oZeEMvN5HixtRvQkBhGvKqeKPglW6vtL+Yi4rquMT1qgaEldt6wxqxFhvApGA8b6T
- q3/UeBWEOr1QGnNSf5odC43BXZx9vktCAB2n9OcPhQQLtvw6RAStFNou/PRZSREUQhvT
- TKi9SSnKVaa3DT63klNQ2I59a7IO1BZ+nCeYyiRUKZM41Je6dig8fMR21y3PPP7TWXVC
- w4yA==
-X-Gm-Message-State: AOJu0YzEHYXd8MWJlBrbPPUF8RoX7HqNaFGSXph/ci/VZRlwYYFpjqAB
- Yq3LqZxU3Iudc6brEtJI3QcSmBHAVmnxWf8/IAw+M3aAtksXlhW1mN6K90Brdy3cLZkn0h3Tntr
- MfUYw
-X-Gm-Gg: AfdE7cnVi0y1E40IsZxM+R027SOF+/qsVceIkQO9XGdC2zBnBxEo4wDZ1mmDrQFdpi7
- ZG5Vqqa53pYv0UNapetsPzg9KLQ0pETnHRRyzJvX+ECSHCLQhlfHBVFYytKEG4G692zQ8OFzNJr
- ASHVv7iy4b5akvHg2nD93AJwmv1sXzNc0bSlcXr1h7TPOwKqqZjFO94/2VDn49IfE65pAV++wqP
- HFbQQsGu7+dgqjaXlirR5pW89L/SRubhQm6GarKg5zlCQ9Ivwt8/HY9Ym0LQP4dzXKKt5v4xPD5
- g+cWVFH6RZLlpu8nrKUXQfjY1/YMPlUeE7Jbp24A4IJRcQRuZlglkMuEFdtBuwzTQGab88VDI/N
- HIKeANMLVj1nzH9OFc78empXp6Vf6lRUtj8o6Ho1wuUKAs5nNbIf5AF5k1zAOLvcylGn+D5/4Ua
- mi5Q7bfFHbgHYwzi3cQ7O1x8E23DFUuyhdT7BtUm7TDquH6Ku2USYA/MmA4g==
-X-Received: by 2002:a05:6a20:d50c:b0:3b4:8cc7:c6fa with SMTP id
- adf61e73a8af0-3bd14f53736mr4292463637.10.1782226934441; 
- Tue, 23 Jun 2026 08:02:14 -0700 (PDT)
-Received: from [192.168.0.4] (174-21-129-215.tukw.qwest.net. [174.21.129.215])
- by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-c8bc326c487sm10285416a12.12.2026.06.23.08.02.13
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 23 Jun 2026 08:02:13 -0700 (PDT)
-Message-ID: <f84c28fa-392a-4fa8-825a-c85a7fb4c1fd@linaro.org>
-Date: Tue, 23 Jun 2026 08:02:12 -0700
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 05/24] target/riscv: make some riscv_sysemu_ops TCG only
-To: qemu-devel@nongnu.org
-References: <20260622193141.1449724-1-daniel.barboza@oss.qualcomm.com>
- <20260622193141.1449724-6-daniel.barboza@oss.qualcomm.com>
- <5bbeb7ee-2826-453d-b50c-60240df47954@oss.qualcomm.com>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <5bbeb7ee-2826-453d-b50c-60240df47954@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::531;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x531.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ d=1e100.net; s=20251104; t=1782227187; x=1782831987;
+ h=cc:to:from:subject:message-id:mime-version:date:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=B9oqbez+uHVoqTE/liBSIPZfj6UafgqTXlaZXLuAAxY=;
+ b=ci2ioUYHNT0z0puHUN6eIXa8hmFYibR0V3CVu9jUSzUQwMYUaawoujfKrXbGaXJWNV
+ bIwxYSJn5Rb4hWSgGTkTeLQAarjv4l3eAYdoyXumxU7up55iwEyfodwJWqjGqAORwMjQ
+ 27JFDHvcslvRNAazA9fZl7uFYDSJ4Xqg+HnmZ62n0nIbo5261qiR0S/Jn9J9NpXLwzqg
+ b94JGpfCgpKskOToOwMWtz5uNCieRzadJIZrTa6hhEvspP0+Qq1xbRB0kXAE6pC3B05/
+ YDpcHYyIQympj1U/bsTiT7/GU5hpqeDGi9Sr44X9kk9uSp0D6DHh9kc/mrkfgtR2TGom
+ aoZA==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ8q9c+Icc5fTp3d4c25M9FXaeSVwsRBu2e+GLbzO52OZR42x+F91x3XoyA3dQ7F2xCA9PI8TfrQeLVB@nongnu.org
+X-Gm-Message-State: AOJu0YwKRFjg7uX0n+4peo89RD2DoCCZ4UZPtr0525W/vbsgKcYRBmb3
+ ORj8rVNtXnFj3CaDyDSzT0AxVWVORGNOYEgSa5f5MCyyvGuhmbl66m8lamS3GKmrzF8dLElbg49
+ dA0o9xxtE
+X-Received: from pfbkq19.prod.google.com
+ ([2002:a05:6a00:4b13:b0:845:41e9:27bc])
+ (user=jrhilke job=prod-delivery.src-stubby-dispatcher) by
+ 2002:a05:6a00:1483:b0:842:74e3:48a9
+ with SMTP id d2e1a72fcca58-84597066c3fmr3780843b3a.12.1782227187037; Tue, 23
+ Jun 2026 08:06:27 -0700 (PDT)
+Date: Tue, 23 Jun 2026 15:05:58 +0000
+Mime-Version: 1.0
+X-Change-Id: 20260608-igb-trl-19be198da6f2
+X-Mailer: b4 0.14.3
+Message-ID: <20260623-igb-trl-v8-0-c9b1fc6c3304@google.com>
+Subject: [PATCH v8 0/7] igb: Implement Transmit Rate Limiting (TRL)
+From: Josh Hilke <jrhilke@google.com>
+To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, qemu-devel@nongnu.org
+Cc: Josh Hilke <jrhilke@google.com>,
+ Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>, 
+ Jason Wang <jasowang@redhat.com>, Fabiano Rosas <farosas@suse.de>, 
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
+ David Matlack <dmatlack@google.com>,
+ Alex Williamson <alex.williamson@nvidia.com>, 
+ "=?utf-8?q?Philippe_Mathieu-Daud=C3=A9?=" <philmd@oss.qualcomm.com>
+Content-Type: text/plain; charset="utf-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::449;
+ envelope-from=386A6agcKCngfndehgackkcha.Ykimaiq-Zarahjkjcjq.knc@flex--jrhilke.bounces.google.com;
+ helo=mail-pf1-x449.google.com
+X-Spam_score_int: -95
+X-Spam_score: -9.6
+X-Spam_bar: ---------
+X-Spam_report: (-9.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ USER_IN_DEF_DKIM_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,14 +99,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/22/26 14:30, Philippe Mathieu-Daudé wrote:
-> On 22/6/26 21:31, Daniel Henrique Barboza wrote:
->> monitor_get_register and phys_add_debug are TCG only.
-> 
-> They aren't... And get_phys_addr_debug() seems mandatory.
-Indeed, that hook is for gdb, and that's supposed to work with kvm too.
+This is v8 of a patch series implementing the Transmit Rate Limiter (TRL) feature for
+the Intel 82576 (igb) network device emulation in QEMU.
 
+v7: https://lists.gnu.org/archive/html/qemu-devel/2026-06/msg05440.html
 
+Changelog:
 
-r~
+v8:
+  - Fix extraneous whitespace modifications.
+  - Use muldiv64() in igb_trl_calculate_delay().
+  - Fix comment for rate factor in igb_trl_calculate_delay().
+
+Signed-off-by: Josh Hilke <jrhilke@google.com>
+---
+Josh Hilke (7):
+      igb: Define TRL registers and core state
+      igb: Add VMState support for TRL state
+      igb: Implement TRL register write and configuration
+      igb: Refactor TX path to return processed byte count
+      igb: Implement TRL throttling and timer resumption
+      igb: Add QTest for Transmit Rate Limiter register multiplexing
+      igb: Add QTest for Transmit Rate Limiter traffic throttling
+
+ hw/net/igb.c           |  43 +++++++++++
+ hw/net/igb_common.h    |   1 +
+ hw/net/igb_core.c      | 142 ++++++++++++++++++++++++++++++++--
+ hw/net/igb_core.h      |  12 +++
+ hw/net/igb_regs.h      |   5 ++
+ tests/qtest/igb-test.c | 206 +++++++++++++++++++++++++++++++++++++++++++++++++
+ 6 files changed, 404 insertions(+), 5 deletions(-)
+---
+base-commit: 98b060da3a4f92b2a994ead5b16a87e783baf77c
+change-id: 20260608-igb-trl-19be198da6f2
+
+Best regards,
+-- 
+Josh Hilke <jrhilke@google.com>
+
 
