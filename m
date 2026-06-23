@@ -4,56 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2CD8CD4F26
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jun 2026 07:48:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB148CDB470
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jun 2026 07:48:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wbvr5-000257-FK; Tue, 23 Jun 2026 03:47:35 -0400
+	id 1wbvqw-0001ZU-EK; Tue, 23 Jun 2026 03:47:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wbvr4-00023L-C1
- for qemu-devel@nongnu.org; Tue, 23 Jun 2026 03:47:34 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1wbvqu-0001Wh-CF
+ for qemu-devel@nongnu.org; Tue, 23 Jun 2026 03:47:24 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wbvr2-0008NV-UD
- for qemu-devel@nongnu.org; Tue, 23 Jun 2026 03:47:34 -0400
+ id 1wbvqs-0008LR-BF
+ for qemu-devel@nongnu.org; Tue, 23 Jun 2026 03:47:24 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1782200852;
+ s=mimecast20190719; t=1782200841;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=/NBCtQ/LDlj7bqt4GsZQ8DDG3CW8/CbEEUHOSI/t16A=;
- b=ElB2lZ0V4MHDPkxxnq+Bhu41RCvej5RWCvs0x2VkbdefQXZRLQLeG2HnxaG0S/vmYOq2gy
- 0gyoPpYpBq0F0UfcOUGncqHG4VTmX26/ceFLPH9gH3Bu6q1b2HSsINn3qCh73pb3YUXyuw
- SK5pnS+lYAhjBqfBO/T/iZjabEwIZXk=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ bh=+SnNvxCGbeXv5dknnCkzFKzyAsN7nrweo4XRyHTsaZI=;
+ b=jMAMC3O1by015S1OPc+ESzVWhajNYwf/yZTAr4wiGo6fIa/MOXJjizyjrLCzy7uizY1Wv6
+ 1IwL+hb6+SElkzpj16waQOgJncNXIAWnfErNEyqm+/7l0h+lsYjKFMx7/JSmBVFA8eRBsr
+ 5x+0kbtEe2EgnrqkRp3hmdibjLwBAPs=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-320-WF1hMYAdNLupsYvBDe0tlA-1; Tue,
- 23 Jun 2026 03:47:29 -0400
-X-MC-Unique: WF1hMYAdNLupsYvBDe0tlA-1
-X-Mimecast-MFC-AGG-ID: WF1hMYAdNLupsYvBDe0tlA_1782200847
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-657-3I-Ft_JQOYaD7aFsu-zg3Q-1; Tue,
+ 23 Jun 2026 03:47:17 -0400
+X-MC-Unique: 3I-Ft_JQOYaD7aFsu-zg3Q-1
+X-Mimecast-MFC-AGG-ID: 3I-Ft_JQOYaD7aFsu-zg3Q_1782200836
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id AC21B180025C; Tue, 23 Jun 2026 07:47:27 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 96F921805A11; Tue, 23 Jun 2026 07:47:16 +0000 (UTC)
 Received: from localhost (unknown [10.44.22.10])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 5571D180057F; Tue, 23 Jun 2026 07:47:25 +0000 (UTC)
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 167C61800347; Tue, 23 Jun 2026 07:47:14 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Tue, 23 Jun 2026 11:44:46 +0400
-Subject: [PATCH v4 31/34] ui/console: register console in QOM tree dynamically
+Date: Tue, 23 Jun 2026 11:44:44 +0400
+Subject: [PATCH v4 29/34] ui/gtk: centralize console menu and shortcut
+ management
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260623-b4-ui-v4-31-4656aec3398d@redhat.com>
+Message-Id: <20260623-b4-ui-v4-29-4656aec3398d@redhat.com>
 References: <20260623-b4-ui-v4-0-4656aec3398d@redhat.com>
 In-Reply-To: <20260623-b4-ui-v4-0-4656aec3398d@redhat.com>
 To: qemu-devel@nongnu.org
@@ -67,25 +68,25 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>, 
  Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
  =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2283;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=11639;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=+6tAA5uwDh2I1DKjrGBRjiPVFRwcgi1oOVH5ZTlowwM=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqOjleF9urb3gnJSPR4XvFrpnHHW5+r477W4ehq
- zTngZ2g0XyJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCajo5XgAKCRDa6OEJdZac
- 5f8RD/0Y0R675/WtZK1mHt9KtTOpBeDoiOcWpDL3yv9ACKjM+dKn2jHj2bi5UQhrlOwsTR8+WSR
- 3xNMeNXR8bt8xODZELh9/zxcOyLhhz1cyV63jh4HT/HgbQSP++iQmfxIiJjAryvfardVKaVt6RV
- 2yjtw8uv7+c0D5o24oG2d9VVU54kDtHe/votJ7FH4FJvageUGLSS/gKJ88lSNN2+o1dDZ2yPV+k
- AV/sizHlg6OLBg3aglif1FBJLTBTpL0phopZra95qCrFQxYm6oVMr/sU4/VfGgI8g0PqO+0SQ7p
- jvBlp2HScxfpO3QOyER+HnOKQEHSWCJxLqKBohthlRniBsNGnaZK7DT9xJzmf4mLkcKeylo/xDm
- 2pqxszjyy8foXZAZd1HnAkLFPO4MQKFyi5MTsyX5mge57xZRftnHhBubgtkZ0cfSzX1wp3XvmSF
- fFeKNnE9y5wPRRVLVqBfDtFQtW5IormDUy2lLxI6UpF2W2sno5AJqPjxhB29rc6tHXZlA/Ofb2C
- nmJLk2OHDVq3L1nV91r6KnCFG3neSg6d1uh0/or5Kb5UEC7EipyRHjwLNXs3wi0fsEPWihc3puy
- 0oLDFGNPulzYYYJ0cvrEp5inV1+cyPOhXC0eOjATrtjwbDTqNaesWyUjBXAEE99OukWGnwxBQaz
- OA8PxLCQKI8F3QA==
+ bh=V/Cmo+6kZDY14zreByoLg+HhPs6wZHDZvYC2cJIvlG0=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqOjle86lCETlRrL7o6mce6jSbuOQuK75REeqVa
+ Fg2/gG+61uJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCajo5XgAKCRDa6OEJdZac
+ 5QwlD/9LMygS/gDCNpLwX83i842tM63XRdnG99Q1W5r2CUpRI65QT+gdHy5I/Bh2sbbd5l8sGrl
+ 4mFqb1dRqmnkce00oetPfPUViWvVf/9hALyIWQfr+8ugcP/aZspvPeIVPzgZ5Bqn9KAKj5E/Hon
+ 4tItouuCnDJbptgyDAwzQjX/k+rN3JO/UhWxFGCFzFfgZG6mKKHDIOYOyc89GZ9DRQ2HCOBYP8Q
+ Qy2mZng9cu3kCPuPm3f5zmW2T++Q4dABIrT+8sR+CJWGVYmS8hlkVMjj/88ubOBU12mNe7rMNxR
+ NU5XavXIfggwOkXkuF6F3Bq+a+ceSwGduINNFxP8dqzqSOR1DshakYYS8SFMMFy9bXojscZN2kH
+ jpzFcROu4BRf1jXbipkXcLqzD0J7+Ndi6gF5YutjxyHdA3yl65iZFqiDRtplLQltGV+FCY7gSRm
+ VxcLfMH+SsCNhZuAUgJ7ihugm5D3yApYC4nCzuYccdEqH3iOm/bUWyqxioFXil/XbcEuhykTCx/
+ Kf+749mEmIb0XWYvD2Ch1XshWedaU183LvcQRfoG1ngGbGLGS5qNBPAzI0dEQN883G8lCLl34pH
+ ehWXxpJM3t5NpFCRP/EE3VlTTCUuabYAkfzI07PiVkWJ5ARRXsvwQ94cyvXZXs5Oj2tHNdxbBt3
+ eKkL8v3xyjlUY1Q==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
@@ -93,7 +94,7 @@ X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -110,79 +111,300 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Consoles created after init_displaystate() (e.g. hotplugged
-display devices) were never added to the /backend/console[N]
-QOM tree. Extract qemu_console_add_to_qom() and call it from
-qemu_console_register() when the display is already initialized.
+Replace the per-console gd_vc_menu_init() with gd_rebuild_vc_menu()
+that tears down and rebuilds all console radio menu items and
+Ctrl+Alt+N accelerators at once. This is called from initialization
+and whenever consoles are detached or reattached.
+
+Shortcuts now skip detached (windowed) consoles, so they always map
+to reachable tabs. Rename gd_vc_gfx_init() to add_gfx_console()
+and simplify the init function signatures now that menu creation is
+decoupled.
 
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- ui/console.c | 23 +++++++++++++++++------
- 1 file changed, 17 insertions(+), 6 deletions(-)
+ include/ui/gtk.h |   1 +
+ ui/gtk.c         | 127 ++++++++++++++++++++++++++++++++++++-------------------
+ 2 files changed, 85 insertions(+), 43 deletions(-)
 
-diff --git a/ui/console.c b/ui/console.c
-index 975eaf15706..db9aaf85f59 100644
---- a/ui/console.c
-+++ b/ui/console.c
-@@ -68,6 +68,7 @@ struct DisplayState {
-     uint64_t last_update;
-     uint64_t update_interval;
-     bool refreshing;
-+    bool initialized;
+diff --git a/include/ui/gtk.h b/include/ui/gtk.h
+index fb60cbfda5d..53d0e447a23 100644
+--- a/include/ui/gtk.h
++++ b/include/ui/gtk.h
+@@ -120,6 +120,7 @@ struct GtkDisplayState {
  
-     QLIST_HEAD(, DisplayChangeListener) listeners;
-     NotifierList console_notifiers;
-@@ -376,6 +377,13 @@ void qemu_text_console_put_string(QemuTextConsole *s, const char *str, int len)
+     GPtrArray *vcs;
+ 
++    GtkWidget *vc_menu_separator;
+     GtkWidget *show_tabs_item;
+     GtkWidget *untabify_item;
+     GtkWidget *show_menubar_item;
+diff --git a/ui/gtk.c b/ui/gtk.c
+index 741f7bfe373..e7a9156f206 100644
+--- a/ui/gtk.c
++++ b/ui/gtk.c
+@@ -142,6 +142,7 @@ static void gd_grab_pointer(VirtualConsole *vc, const char *reason);
+ static void gd_ungrab_pointer(GtkDisplayState *s);
+ static void gd_grab_keyboard(VirtualConsole *vc, const char *reason);
+ static void gd_ungrab_keyboard(GtkDisplayState *s);
++static void gd_rebuild_vc_menu(GtkDisplayState *s);
+ 
+ /** Utility Functions **/
+ 
+@@ -1488,7 +1489,6 @@ static gboolean gd_tab_window_close(GtkWidget *widget, GdkEvent *event,
+     GtkDisplayState *s = vc->s;
+     int page;
+ 
+-    gtk_widget_set_sensitive(vc->menu_item, true);
+     g_object_ref(vc->tab_item);
+     gtk_container_remove(GTK_CONTAINER(vc->window), vc->tab_item);
+     page = gd_vc_notebook_pos(s, vc);
+@@ -1508,6 +1508,8 @@ static gboolean gd_tab_window_close(GtkWidget *widget, GdkEvent *event,
      }
- }
+ #endif
  
-+static void qemu_console_add_to_qom(QemuConsole *con)
-+{
-+    g_autofree gchar *name = g_strdup_printf("console[%d]", con->index);
-+    object_property_add_child(object_get_container("backend"),
-+                              name, OBJECT(con));
-+}
++    gd_rebuild_vc_menu(s);
 +
- static void
- qemu_console_register(QemuConsole *c)
- {
-@@ -413,6 +421,10 @@ qemu_console_register(QemuConsole *c)
-             }
+     if (vc == gd_vc_find_by_menu(s)) {
+         gtk_widget_grab_focus(vc->focus);
+     }
+@@ -1539,7 +1541,6 @@ static void gd_menu_untabify(GtkMenuItem *item, void *opaque)
+                                        FALSE);
+     }
+     if (!vc->window) {
+-        gtk_widget_set_sensitive(vc->menu_item, false);
+         vc->window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+ #if defined(CONFIG_OPENGL)
+         if (vc->gfx.esurface) {
+@@ -1566,6 +1567,7 @@ static void gd_menu_untabify(GtkMenuItem *item, void *opaque)
+             gtk_accel_group_connect(ag, GDK_KEY_g, HOTKEY_MODIFIERS, 0, cb);
          }
+ 
++        gd_rebuild_vc_menu(s);
+         gd_update_geometry_hints(vc);
+         gd_update_caption(s);
      }
+@@ -1906,22 +1908,73 @@ static gboolean gd_configure(GtkWidget *widget,
+ 
+ /** Virtual Console Callbacks **/
+ 
+-static GSList *gd_vc_menu_init(GtkDisplayState *s, VirtualConsole *vc,
+-                               int idx, GSList *group, GtkWidget *view_menu)
++static void gd_rebuild_vc_menu(GtkDisplayState *s)
+ {
+-    vc->menu_item = gtk_radio_menu_item_new_with_mnemonic(group, vc->label);
+-    gtk_accel_group_connect(s->accel_group, GDK_KEY_1 + idx,
+-            HOTKEY_MODIFIERS, 0,
+-            g_cclosure_new_swap(G_CALLBACK(gd_accel_switch_vc), vc, NULL));
+-    gtk_accel_label_set_accel(
+-            GTK_ACCEL_LABEL(gtk_bin_get_child(GTK_BIN(vc->menu_item))),
+-            GDK_KEY_1 + idx, HOTKEY_MODIFIERS);
++    GSList *group = NULL;
++    VirtualConsole *vc;
++    GList *children;
++    gint insert_pos;
++    int shortcut_idx = 0;
++    guint i;
 +
-+    if (c->ds->initialized) {
-+        qemu_console_add_to_qom(c);
++    for (i = 0; i < s->vcs->len; i++) {
++        vc = g_ptr_array_index(s->vcs, i);
++        if (vc->menu_item) {
++            gtk_widget_destroy(vc->menu_item);
++            vc->menu_item = NULL;
++        }
++    }
++
++    for (i = 0; i < 9; i++) {
++        gtk_accel_group_disconnect_key(s->accel_group,
++                                       GDK_KEY_1 + i, HOTKEY_MODIFIERS);
++    }
++
++    /* find insertion position (just before vc_menu_separator) */
++    children = gtk_container_get_children(GTK_CONTAINER(s->view_menu));
++    insert_pos = g_list_index(children, s->vc_menu_separator);
++    g_list_free(children);
++
++    /* create new menu items for each console */
++    for (i = 0; i < s->vcs->len; i++) {
++        vc = g_ptr_array_index(s->vcs, i);
+ 
+-    g_signal_connect(vc->menu_item, "activate",
+-                     G_CALLBACK(gd_menu_switch_vc), s);
+-    gtk_menu_shell_append(GTK_MENU_SHELL(view_menu), vc->menu_item);
++        vc->menu_item = gtk_radio_menu_item_new_with_mnemonic(group,
++                                                               vc->label);
++        group = gtk_radio_menu_item_get_group(
++            GTK_RADIO_MENU_ITEM(vc->menu_item));
++
++        if (vc->window) {
++            gtk_widget_set_sensitive(vc->menu_item, false);
++        } else if (shortcut_idx < 9) {
++            guint key = GDK_KEY_1 + shortcut_idx;
++            gtk_accel_group_connect(s->accel_group, key,
++                    HOTKEY_MODIFIERS, 0,
++                    g_cclosure_new_swap(G_CALLBACK(gd_accel_switch_vc),
++                                        vc, NULL));
++            gtk_accel_label_set_accel(
++                    GTK_ACCEL_LABEL(gtk_bin_get_child(GTK_BIN(vc->menu_item))),
++                    key, HOTKEY_MODIFIERS);
++            shortcut_idx++;
++        }
+ 
+-    return gtk_radio_menu_item_get_group(GTK_RADIO_MENU_ITEM(vc->menu_item));
++        g_signal_connect(vc->menu_item, "activate",
++                         G_CALLBACK(gd_menu_switch_vc), s);
++        gtk_menu_shell_insert(GTK_MENU_SHELL(s->view_menu),
++                              vc->menu_item, insert_pos + i);
++        gtk_widget_show(vc->menu_item);
++    }
++
++    /* sync active menu item with current notebook page */
++    vc = gd_vc_find_current(s);
++    if (vc && vc->menu_item) {
++        g_signal_handlers_block_by_func(vc->menu_item,
++                                        gd_menu_switch_vc, s);
++        gtk_check_menu_item_set_active(
++            GTK_CHECK_MENU_ITEM(vc->menu_item), TRUE);
++        g_signal_handlers_unblock_by_func(vc->menu_item,
++                                          gd_menu_switch_vc, s);
 +    }
  }
  
- static void
-@@ -1089,20 +1101,19 @@ void qemu_console_remove_notifier(Notifier *notifier)
-  */
- DisplayState *init_displaystate(void)
- {
--    gchar *name;
-+    DisplayState *ds = get_alloc_displaystate();
-     QemuConsole *con;
- 
-     QTAILQ_FOREACH(con, &consoles, next) {
-         /* Hook up into the qom tree here (not in object_new()), once
-          * all QemuConsoles are created and the order / numbering
-          * doesn't change any more */
--        name = g_strdup_printf("console[%d]", con->index);
--        object_property_add_child(object_get_container("backend"),
--                                  name, OBJECT(con));
--        g_free(name);
-+        qemu_console_add_to_qom(con);
-     }
- 
--    return display_state;
-+    ds->initialized = true;
-+
-+    return ds;
+ #if defined(CONFIG_VTE)
+@@ -2064,9 +2117,8 @@ static gboolean gd_vc_in(VteTerminal *terminal, gchar *text, guint size,
+     return TRUE;
  }
  
- void qemu_graphic_console_set_hwops(QemuConsole *con,
+-static GSList *gd_vc_vte_init(GtkDisplayState *s, VirtualConsole *vc,
+-                              Chardev *chr, int idx,
+-                              GSList *group, GtkWidget *view_menu)
++static void gd_vc_vte_init(GtkDisplayState *s, VirtualConsole *vc,
++                           Chardev *chr, int idx)
+ {
+     char buffer[32];
+     GtkWidget *box;
+@@ -2082,7 +2134,6 @@ static GSList *gd_vc_vte_init(GtkDisplayState *s, VirtualConsole *vc,
+ 
+     snprintf(buffer, sizeof(buffer), "vc%d", idx);
+     vc->label = g_strdup(vc->vte.chr->label ? : buffer);
+-    group = gd_vc_menu_init(s, vc, idx, group, view_menu);
+ 
+     vc->vte.terminal = vte_terminal_new();
+     g_signal_connect(vc->vte.terminal, "commit", G_CALLBACK(gd_vc_in), vc);
+@@ -2128,20 +2179,16 @@ static GSList *gd_vc_vte_init(GtkDisplayState *s, VirtualConsole *vc,
+                              gtk_label_new(vc->label));
+ 
+     qemu_chr_be_event(vc->vte.chr, CHR_EVENT_OPENED);
+-
+-    return group;
+ }
+ 
+-static void gd_vcs_init(GtkDisplayState *s, GSList *group,
+-                        GtkWidget *view_menu)
++static void gd_vcs_init(GtkDisplayState *s)
+ {
+     int i;
+ 
+     for (i = 0; i < nb_vcs; i++) {
+         VirtualConsole *vc = g_new0(VirtualConsole, 1);
+         g_ptr_array_add(s->vcs, vc);
+-        group = gd_vc_vte_init(s, vc, vcs[i], s->vcs->len - 1,
+-                               group, view_menu);
++        gd_vc_vte_init(s, vc, vcs[i], s->vcs->len - 1);
+     }
+ }
+ #endif /* CONFIG_VTE */
+@@ -2285,12 +2332,12 @@ static bool gd_scale_valid(double scale)
+     return scale >= VC_SCALE_MIN && scale <= VC_SCALE_MAX;
+ }
+ 
+-static GSList *gd_vc_gfx_init(GtkDisplayState *s, VirtualConsole *vc,
+-                              QemuConsole *con, int idx,
+-                              GSList *group, GtkWidget *view_menu)
++static void add_gfx_console(GtkDisplayState *s, QemuConsole *con)
+ {
++    VirtualConsole *vc = g_new0(VirtualConsole, 1);
+     const DisplayChangeListenerOps *ops = &dcl_ops;
+ 
++    g_ptr_array_add(s->vcs, vc);
+     vc->label = qemu_console_get_label(con);
+     vc->s = s;
+     vc->gfx.preferred_scale = 1.0;
+@@ -2367,14 +2414,10 @@ static GSList *gd_vc_gfx_init(GtkDisplayState *s, VirtualConsole *vc,
+     qemu_console_register_listener(con, &vc->gfx.dcl, ops);
+ 
+     gd_connect_vc_gfx_signals(vc);
+-    group = gd_vc_menu_init(s, vc, idx, group, view_menu);
+-
+-    return group;
+ }
+ 
+-static GtkWidget *gd_create_menu_view(GtkDisplayState *s, DisplayOptions *opts)
++static void gd_create_menu_view(GtkDisplayState *s, DisplayOptions *opts)
+ {
+-    GSList *group = NULL;
+     GtkWidget *view_menu;
+     GtkWidget *separator;
+     QemuConsole *con;
+@@ -2382,6 +2425,7 @@ static GtkWidget *gd_create_menu_view(GtkDisplayState *s, DisplayOptions *opts)
+     int vc, i;
+ 
+     view_menu = gtk_menu_new();
++    s->view_menu = view_menu;
+     gtk_menu_set_accel_group(GTK_MENU(view_menu), s->accel_group);
+ 
+     s->full_screen_item = gtk_menu_item_new_with_mnemonic(_("_Fullscreen"));
+@@ -2445,14 +2489,11 @@ static GtkWidget *gd_create_menu_view(GtkDisplayState *s, DisplayOptions *opts)
+ 
+     /* gfx */
+     for (vc = 0;; vc++) {
+-        VirtualConsole *v;
+         con = qemu_console_lookup_by_index(vc);
+         if (!con) {
+             break;
+         }
+-        v = g_new0(VirtualConsole, 1);
+-        g_ptr_array_add(s->vcs, v);
+-        group = gd_vc_gfx_init(s, v, con, vc, group, view_menu);
++        add_gfx_console(s, con);
+         if (qemu_console_ui_info_supported(con)) {
+             zoom_to_fit = true;
+         }
+@@ -2478,11 +2519,13 @@ static GtkWidget *gd_create_menu_view(GtkDisplayState *s, DisplayOptions *opts)
+ 
+ #if defined(CONFIG_VTE)
+     /* vte */
+-    gd_vcs_init(s, group, view_menu);
++    gd_vcs_init(s);
+ #endif
+ 
+-    separator = gtk_separator_menu_item_new();
+-    gtk_menu_shell_append(GTK_MENU_SHELL(view_menu), separator);
++    s->vc_menu_separator = gtk_separator_menu_item_new();
++    gtk_menu_shell_append(GTK_MENU_SHELL(view_menu), s->vc_menu_separator);
++
++    gd_rebuild_vc_menu(s);
+ 
+     s->show_tabs_item = gtk_check_menu_item_new_with_mnemonic(_("Show _Tabs"));
+     gtk_menu_shell_append(GTK_MENU_SHELL(view_menu), s->show_tabs_item);
+@@ -2501,8 +2544,6 @@ static GtkWidget *gd_create_menu_view(GtkDisplayState *s, DisplayOptions *opts)
+             GTK_ACCEL_LABEL(gtk_bin_get_child(GTK_BIN(s->show_menubar_item))),
+             GDK_KEY_m, HOTKEY_MODIFIERS);
+     gtk_menu_shell_append(GTK_MENU_SHELL(view_menu), s->show_menubar_item);
+-
+-    return view_menu;
+ }
+ 
+ static void gd_create_menus(GtkDisplayState *s, DisplayOptions *opts)
+@@ -2511,7 +2552,7 @@ static void gd_create_menus(GtkDisplayState *s, DisplayOptions *opts)
+ 
+     s->accel_group = gtk_accel_group_new();
+     s->machine_menu = gd_create_menu_machine(s);
+-    s->view_menu = gd_create_menu_view(s, opts);
++    gd_create_menu_view(s, opts);
+ 
+     s->machine_menu_item = gtk_menu_item_new_with_mnemonic(_("_Machine"));
+     gtk_menu_item_set_submenu(GTK_MENU_ITEM(s->machine_menu_item),
 
 -- 
 2.54.0
