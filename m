@@ -4,60 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07265CDB46F
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jun 2026 13:13:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09376CDB46F
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jun 2026 13:15:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wc0wC-00028O-V5; Tue, 23 Jun 2026 09:13:13 -0400
+	id 1wc0xI-0002vY-FC; Tue, 23 Jun 2026 09:14:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jean-louis@dupond.be>)
- id 1wc0wA-00026y-MF; Tue, 23 Jun 2026 09:13:10 -0400
-Received: from apollo.dupie.be ([2001:bc8:3f2a:101::1])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wc0xG-0002v4-Ja
+ for qemu-devel@nongnu.org; Tue, 23 Jun 2026 09:14:18 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jean-louis@dupond.be>)
- id 1wc0w8-0002qe-Tr; Tue, 23 Jun 2026 09:13:10 -0400
-Received: from [IPV6:2a00:1c98:fff1:1001:aee7:ee9c:3ae8:78e2] (unknown
- [IPv6:2a00:1c98:fff1:1001:aee7:ee9c:3ae8:78e2])
- by apollo.dupie.be (Postfix) with ESMTPSA id 15D741520C8B;
- Tue, 23 Jun 2026 15:13:06 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=dupond.be; s=dkim;
- t=1782220386;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wc0xD-0003Dt-El
+ for qemu-devel@nongnu.org; Tue, 23 Jun 2026 09:14:18 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1782220453;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=+ViwtyrRXCcZpBYmP/CxlATXxSqzD7aN2zwX26kCaxU=;
- b=iFgqgpl6vJwp1keltMuUbKSqZR6Ct8/za/m4WghgPnuzNUOtPMEesSdq2gg17BNOUGDm9i
- CgxEWsXaZ/hyxKMK4fe+9dRlviQXraUFyktUjRvGrh87eWmEXAh+WKP1oHvE93taWbvc0g
- dNTLfSLkPQLd/DnkMEvp9jCBGL35xqXlBqspCE9AGNnNEnJBfljTO5gXl9R5jLH5ZI3yqH
- ZZx6Rpyt/siEn6FcaZrIJ0UhBBNya2/fm+QMCVCrKmrmldAH9d3A2zReDpzta/EuSjMUZ0
- cEhmOYStIr6GOrm0+B8phU62hJEfLaMcol62JvXPaO0x3k7U57yq3t4zuRFRUA==
-Message-ID: <1d7e5e1f-0280-49d6-be24-260d72e1c73d@dupond.be>
-Date: Tue, 23 Jun 2026 15:13:05 +0200
+ bh=MicaTRtfXpQLNYkC9KOFowZ1Oy+G+nrjeim7F+1m3EQ=;
+ b=iiEkbMa7NWaPMeqOKTlnSjeoXO4M9zsnevjINh+3f2N0m7eFJPA0aAhB/dv3Q9F9+obGPh
+ xDe0lwTDbBIaj8fsvg1pr97ypAv2yKHqSII5zvLMj/MFxbXGbmlTd5wg3V+8w08RPd08yV
+ fx2/fJmLVIwIIzIP0NJg0dn8FuxG8Zk=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-586-sXGu_ejjPGOsYEqUrthKgA-1; Tue,
+ 23 Jun 2026 09:14:09 -0400
+X-MC-Unique: sXGu_ejjPGOsYEqUrthKgA-1
+X-Mimecast-MFC-AGG-ID: sXGu_ejjPGOsYEqUrthKgA_1782220448
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1851C1955E74; Tue, 23 Jun 2026 13:14:08 +0000 (UTC)
+Received: from redhat.com (unknown [10.44.34.133])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B9C4819560A1; Tue, 23 Jun 2026 13:14:06 +0000 (UTC)
+Date: Tue, 23 Jun 2026 14:14:03 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: qemu-devel@nongnu.org,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Subject: Re: [PATCH] gitlab: disable macOS jobs in forks
+Message-ID: <ajqGm13E8eaRY81j@redhat.com>
+References: <20260610091700.2772973-1-berrange@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/3] block: measure for commit
-To: qemu-devel@nongnu.org
-Cc: Kevin Wolf <kwolf@redhat.com>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- Hanna Reitz <hreitz@redhat.com>, qemu-block@nongnu.org,
- Fiona Ebner <f.ebner@proxmox.com>, John Snow <jsnow@redhat.com>
-References: <20260608110346.3231998-1-jean-louis@dupond.be>
-Content-Language: en-US, en-GB, nl-BE
-From: Jean-Louis Dupond <jean-louis@dupond.be>
-In-Reply-To: <20260608110346.3231998-1-jean-louis@dupond.be>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2001:bc8:3f2a:101::1;
- envelope-from=jean-louis@dupond.be; helo=apollo.dupie.be
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260610091700.2772973-1-berrange@redhat.com>
+User-Agent: Mutt/2.3.2 (2026-04-26)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 8
+X-Spam_score: 0.8
+X-Spam_bar: /
+X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -70,37 +85,92 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/06/2026 13:03, Jean-Louis Dupond wrote:
-> In some cases we want to calculate the size an image will be after we commit A into B.
-> This for example on block storage, where you need to resize the target storage before you start the merge.
->
-> These commits adds the functionality to do this.
-> First of all a commit that adds bdrv_open_backing_chain_until. So we can open an image up to base image B.
->
-> And then a modified qcow2_measure that calculates the size of B after A has been merged into it.
-> This with taking into account the discard-no-unref setting of the base.
->
-> Jean-Louis Dupond (3):
->    block: add bdrv_open_backing_chain_until
->    block: support measure for commit
->    iotests/290: add test case for qemu-img measure
->
->   block.c                            | 65 +++++++++++++++++----
->   block/mirror.c                     |  2 +-
->   block/qcow2.c                      | 90 +++++++++++++++++++++++++++---
->   include/block/block-global-state.h |  7 ++-
->   qemu-img-cmds.hx                   |  4 +-
->   qemu-img.c                         | 37 ++++++++++--
->   tests/qemu-iotests/178.out.qcow2   |  6 +-
->   tests/qemu-iotests/178.out.raw     |  6 +-
->   tests/qemu-iotests/290             | 45 +++++++++++++++
->   tests/qemu-iotests/290.out         | 61 ++++++++++++++++++++
->   10 files changed, 289 insertions(+), 34 deletions(-)
+Hi Alex,
 
+Could you pick this one up for your CI queue ?
 
-Kind ping
+On Wed, Jun 10, 2026 at 10:17:00AM +0100, Daniel P. Berrangé wrote:
+> The GitLab macOS runners are only available in Premium and Ultimate
+> tier projects. This permits their use in QEMU upstream via the OSS
+> Program membership perk, but this does not extend to forks of QEMU.
+> The macOS jobs thus need to be disabled in forks, otherwise all
+> pipelines will immediately report a failure due to inability to
+> access a runner.
+> 
+> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+> ---
+>  .gitlab-ci.d/base.yml              | 5 +++++
+>  .gitlab-ci.d/macos.yml             | 2 ++
+>  docs/devel/testing/ci-jobs.rst.inc | 7 +++++++
+>  3 files changed, 14 insertions(+)
+> 
+> diff --git a/.gitlab-ci.d/base.yml b/.gitlab-ci.d/base.yml
+> index 72eadc8073..714d2ed8a6 100644
+> --- a/.gitlab-ci.d/base.yml
+> +++ b/.gitlab-ci.d/base.yml
+> @@ -52,6 +52,11 @@ variables:
+>      - if: '$CI_PIPELINE_SOURCE == "schedule"'
+>        when: never
+>  
+> +    # macOS jobs can't run in forks until gitlab opens up runner availability
+> +    # to all tiers https://gitlab.com/groups/gitlab-org/-/work_items/8267
+> +    - if: '$QEMU_JOB_MACOS == "1" && $CI_PROJECT_NAMESPACE != $QEMU_CI_UPSTREAM'
+> +      when: never
+> +
+>      # Publishing jobs should only run on the default branch in upstream
+>      - if: '$QEMU_JOB_PUBLISH == "1" && $CI_PROJECT_NAMESPACE == $QEMU_CI_UPSTREAM && $CI_COMMIT_BRANCH != $CI_DEFAULT_BRANCH'
+>        when: never
+> diff --git a/.gitlab-ci.d/macos.yml b/.gitlab-ci.d/macos.yml
+> index 8366b4ad56..84ad2492ca 100644
+> --- a/.gitlab-ci.d/macos.yml
+> +++ b/.gitlab-ci.d/macos.yml
+> @@ -36,6 +36,7 @@ aarch64-macos-15-build:
+>    extends: .macos_job_template
+>    image: macos-15-xcode-16
+>    variables:
+> +    QEMU_JOB_MACOS: 1
+>      NAME: macos-15
+>      PATH_EXTRA: /opt/homebrew/gettext/bin
+>      PKG_CONFIG_PATH: /opt/homebrew/curl/lib/pkgconfig:/opt/homebrew/ncurses/lib/pkgconfig:/opt/homebrew/readline/lib/pkgconfig
+> @@ -52,6 +53,7 @@ aarch64-macos-26-build:
+>    extends: .macos_job_template
+>    image: macos-26-xcode-26
+>    variables:
+> +    QEMU_JOB_MACOS: 1
+>      NAME: macos-26
+>      DYLD_LIBRARY_PATH: /opt/homebrew/opt/expat/lib/
+>      PATH_EXTRA: /opt/homebrew/gettext/bin
+> diff --git a/docs/devel/testing/ci-jobs.rst.inc b/docs/devel/testing/ci-jobs.rst.inc
+> index d5b081978a..d747a7ad13 100644
+> --- a/docs/devel/testing/ci-jobs.rst.inc
+> +++ b/docs/devel/testing/ci-jobs.rst.inc
+> @@ -125,6 +125,13 @@ QEMU_JOB_FUNCTIONAL
+>  
+>  The job runs the functional test suite
+>  
+> +QEMU_JOB_MACOS
+> +~~~~~~~~~~~~~~
+> +
+> +The job requires access to the macOS shared runners, which are
+> +only available to Premium/Ultimate tiers. This includes OSS project
+> +members, but not forks.
+> +
+>  Contributor controlled runtime variables
+>  ----------------------------------------
+>  
+> -- 
+> 2.54.0
+> 
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+|: https://libvirt.org          ~~          https://entangle-photo.org :|
+|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
 
 
