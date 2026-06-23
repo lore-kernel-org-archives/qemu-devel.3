@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CAB40CDB46F
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jun 2026 09:58:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39227CDB46F
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jun 2026 09:58:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wbxtF-0008ME-MQ; Tue, 23 Jun 2026 05:57:57 -0400
+	id 1wbxtM-0000Rq-NG; Tue, 23 Jun 2026 05:58:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wbxtE-0008Hk-2D
- for qemu-devel@nongnu.org; Tue, 23 Jun 2026 05:57:56 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1wbxtK-0000Kj-S6
+ for qemu-devel@nongnu.org; Tue, 23 Jun 2026 05:58:02 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wbxtC-0003mu-M1
- for qemu-devel@nongnu.org; Tue, 23 Jun 2026 05:57:55 -0400
+ id 1wbxtJ-0003no-FA
+ for qemu-devel@nongnu.org; Tue, 23 Jun 2026 05:58:02 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1782208674;
+ s=mimecast20190719; t=1782208680;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=AJh+eQ+tuQvsb4kRcuwdD5Co5Vb3Bq8AlWcEOnTCoMM=;
- b=RvcsYdHt9LDATfGNz5XeTJ527PrjK9Gta28jG2njYCHkC2sEIAw1pPXQUfnc4e6bkfLHI+
- 2VboPc0hJjeikBGBqYyzLuTKg9icW7L0JCRSvyFYg8QSKPMNY2YI/8MUhqgnpB9aKzQZEh
- 6Fdd33kGS/nXObD4cn6Yw8J0ISUChIM=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=4KMpBSzRvdqMDeW+6tu+R8DcPUswTmbpth7Uej59GZI=;
+ b=dkxCZATO7p+Kz+yHQxDYi2+ZfBYkjzm/lwmEQzbjsxJp0vkFTeH+qUFyQgdRGOG9W2tls0
+ e7Io4IX/s3CkEADT7TuppefAQ+8nzEI8Z4naL0HJhMEAK1LkgAt32xC0t3BnjLFll7Rcd/
+ 87rFLFyho11iVnYhf0iW4obGA0d4Jvg=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-327-pJsSYLx6OiaDp3swEKkTuQ-1; Tue,
- 23 Jun 2026 05:57:50 -0400
-X-MC-Unique: pJsSYLx6OiaDp3swEKkTuQ-1
-X-Mimecast-MFC-AGG-ID: pJsSYLx6OiaDp3swEKkTuQ_1782208669
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-50-leKaEOINNZGq8ucDrkIChA-1; Tue,
+ 23 Jun 2026 05:57:57 -0400
+X-MC-Unique: leKaEOINNZGq8ucDrkIChA-1
+X-Mimecast-MFC-AGG-ID: leKaEOINNZGq8ucDrkIChA_1782208676
 Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 43CDA1955DAE; Tue, 23 Jun 2026 09:57:49 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3B04D1956062; Tue, 23 Jun 2026 09:57:56 +0000 (UTC)
 Received: from berrange.com (unknown [10.44.34.133])
  by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 5ED7B3189; Tue, 23 Jun 2026 09:57:46 +0000 (UTC)
+ id 2C24030A8; Tue, 23 Jun 2026 09:57:52 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: "Dr. David Alan Gilbert" <dave@treblig.org>,
@@ -57,24 +57,23 @@ Cc: "Dr. David Alan Gilbert" <dave@treblig.org>,
  Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH v4 31/35] qom: add trace events for user creatable
- create/delete APIs
-Date: Tue, 23 Jun 2026 10:55:47 +0100
-Message-ID: <20260623095551.2106712-32-berrange@redhat.com>
+Subject: [PATCH v4 33/35] tests: switch from -mon to -object monitor-qmp
+Date: Tue, 23 Jun 2026 10:55:49 +0100
+Message-ID: <20260623095551.2106712-34-berrange@redhat.com>
 In-Reply-To: <20260623095551.2106712-1-berrange@redhat.com>
 References: <20260623095551.2106712-1-berrange@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 8
 X-Spam_score: 0.8
 X-Spam_bar: /
 X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -92,59 +91,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Use the new preferred low level option for configuring the
+QMP service in libqtest and the python Machine class used
+by tests. This will avoid triggering deprecation warnings
+after the subsequent commit.
+
 Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- qom/object_interfaces.c | 6 ++++++
- qom/trace-events        | 5 +++++
- 2 files changed, 11 insertions(+)
+ python/qemu/machine/machine.py | 4 ++--
+ tests/qtest/libqtest.c         | 2 +-
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/qom/object_interfaces.c b/qom/object_interfaces.c
-index 6faa0b2fd9..2e618a7623 100644
---- a/qom/object_interfaces.c
-+++ b/qom/object_interfaces.c
-@@ -20,12 +20,14 @@
- #include "qapi/opts-visitor.h"
- #include "qemu/config-file.h"
- #include "qemu/keyval.h"
-+#include "trace.h"
+diff --git a/python/qemu/machine/machine.py b/python/qemu/machine/machine.py
+index ebb58d5b68..5f4845f5fb 100644
+--- a/python/qemu/machine/machine.py
++++ b/python/qemu/machine/machine.py
+@@ -304,8 +304,8 @@ def _base_args(self) -> List[str]:
+                 )
+             else:
+                 moncdev = f"socket,id=mon,path={self._monitor_address}"
+-            args.extend(['-chardev', moncdev, '-mon',
+-                         'chardev=mon,mode=control'])
++            args.extend(['-chardev', moncdev, '-object',
++                         'monitor-qmp,id=qmp,chardev=mon'])
  
- bool user_creatable_complete(UserCreatable *uc, Error **errp)
- {
-     UserCreatableClass *ucc = USER_CREATABLE_GET_CLASS(uc);
-     ERRP_GUARD();
- 
-+    trace_user_creatable_complete(uc, object_get_typename(OBJECT(uc)));
-     if (ucc->complete) {
-         ucc->complete(uc, errp);
-     }
-@@ -37,9 +39,13 @@ bool user_creatable_prepare_delete(UserCreatable *uc, Error **errp)
-     UserCreatableClass *ucc = USER_CREATABLE_GET_CLASS(uc);
-     ERRP_GUARD();
- 
-+    trace_user_creatable_prepare_delete(uc, object_get_typename(OBJECT(uc)));
-     if (ucc->prepare_delete) {
-         ucc->prepare_delete(uc, errp);
-     }
-+    trace_user_creatable_prepare_delete_result(
-+        uc, object_get_typename(OBJECT(uc)),
-+        *errp ? error_get_pretty(*errp) : NULL);
-     return !*errp;
- }
- 
-diff --git a/qom/trace-events b/qom/trace-events
-index 44c63e72af..bac8472618 100644
---- a/qom/trace-events
-+++ b/qom/trace-events
-@@ -11,3 +11,8 @@ object_property_del_child(void *obj, const char *type, void *child, const char *
- object_property_parse(void *obj, const char *type, const char *name, const char *value) "obj=%p type=%s prop=%s value=%s"
- object_class_dynamic_cast_assert(const char *type, const char *target, const char *file, int line, const char *func) "type=%s->%s (%s:%d:%s)"
- object_class_property_add(const char *type, const char *name, void *value) "type=%s name=%s value=%p"
-+
-+# object_interfaces.c
-+user_creatable_complete(void *obj, const char *type) "obj=%p type=%s"
-+user_creatable_prepare_delete(void *obj, const char *type) "obj=%p type=%s"
-+user_creatable_prepare_delete_result(void *obj, const char *type, const char *msg) "obj=%p type=%s msg=%s"
+         if self._machine is not None:
+             args.extend(['-machine', self._machine])
+diff --git a/tests/qtest/libqtest.c b/tests/qtest/libqtest.c
+index 4e22c66b75..c33c799c92 100644
+--- a/tests/qtest/libqtest.c
++++ b/tests/qtest/libqtest.c
+@@ -460,7 +460,7 @@ gchar *qtest_qemu_args(const char *extra_args)
+                       "-qtest unix:%s "
+                       "-qtest-log %s "
+                       "-chardev socket,path=%s,id=char0 "
+-                      "-mon chardev=char0,mode=control "
++                      "-object monitor-qmp,id=qmp0,chardev=char0 "
+                       "-display none "
+                       "-audio none "
+                       "%s "
 -- 
 2.54.0
 
