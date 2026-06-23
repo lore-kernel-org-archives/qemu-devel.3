@@ -4,69 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 085DACDB46F
-	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jun 2026 12:06:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E7A8CDB46F
+	for <qemu-devel@archiver.kernel.org>; Tue, 23 Jun 2026 12:19:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wbztT-0000Kb-G7; Tue, 23 Jun 2026 08:06:19 -0400
+	id 1wc05p-0003LA-84; Tue, 23 Jun 2026 08:19:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wbztH-0008VO-C4; Tue, 23 Jun 2026 08:06:09 -0400
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ (Exim 4.90_1) (envelope-from <pkrempa@redhat.com>)
+ id 1wc05n-0003Kn-MX
+ for qemu-devel@nongnu.org; Tue, 23 Jun 2026 08:19:03 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wbztE-0000On-8J; Tue, 23 Jun 2026 08:06:06 -0400
-Received: from [133.11.54.183] (h183.csg.ci.i.u-tokyo.ac.jp [133.11.54.183])
- (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 65NC5MDm068220
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Tue, 23 Jun 2026 21:05:22 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=9icVwESoPEziromrElTWXlq4W6A+7nPEVg5wxcfPes8=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=From:Message-ID:To:Subject:Date;
- s=rs20250326; t=1782216322; v=1;
- b=dh2pX73k57bNitgcjzM+naWKr7Mn+CiVA2w1u0Eyi8E3uZ4EkBqjyV40LcPMs3Zp
- G421yHXRFJPMer6h4x+VabcMYOMMW+1McFGt/MCo3BPGdrbACThjlQiLjZNdonH8
- ouHUg4L1dxNiG313ZrDgoriFiRE5JRl5oEYwDa2HoWKshSSroog9NJdU718MtGs6
- 1bt+TFiSfpROxOzvm3dINrwBxFjb6G9UHSwk6EHWhWz/M1X4/ikS3lUN04byv7Xq
- Ou9E3yeBLCmjMPq8oEP5s/YkC7F1XZeJ1VTQZE502qMwptrnf/BWvWz+yWLC1VkQ
- Qm15dwUnyeh62sFEHa5ooQ==
-Message-ID: <b8154a3d-5538-42e1-995b-2aeb05daa4ab@rsg.ci.i.u-tokyo.ac.jp>
-Date: Tue, 23 Jun 2026 21:05:22 +0900
+ (Exim 4.90_1) (envelope-from <pkrempa@redhat.com>)
+ id 1wc05m-00078t-0N
+ for qemu-devel@nongnu.org; Tue, 23 Jun 2026 08:19:03 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1782217140;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=bo+FAM8pbQVnStFAVdNXS6fvMO5pG/6C3pkKbLs6QQY=;
+ b=LHIoS66FThYG0KiM5FvmJ+6jo+kiQ2RptWtsRI/qxZSOXVbJ/lyCeA4fHiGw2zlwbGETUW
+ ikzY4YMXJrw9ZMoziCVKkLLUcqcHnexdL2y5c/wAKZWYqzQxJsjU9OOmmAEbNLQUpGP4OT
+ zkWL/Jt+2F6u6IOi0Sfr/tP57D5acwg=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-668-65PJWfgkPSKekPEFGWj16Q-1; Tue,
+ 23 Jun 2026 08:18:57 -0400
+X-MC-Unique: 65PJWfgkPSKekPEFGWj16Q-1
+X-Mimecast-MFC-AGG-ID: 65PJWfgkPSKekPEFGWj16Q_1782217135
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 997841805A05; Tue, 23 Jun 2026 12:18:55 +0000 (UTC)
+Received: from angien.pipo.sk (unknown [10.44.22.6])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 11B8D1956056; Tue, 23 Jun 2026 12:18:51 +0000 (UTC)
+Date: Tue, 23 Jun 2026 14:18:48 +0200
+From: Peter Krempa <pkrempa@redhat.com>
+To: Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, "Dr. David Alan Gilbert" <dave@treblig.org>,
+ =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
+ Christian Brauner <brauner@kernel.org>, devel@lists.libvirt.org,
+ Markus Armbruster <armbru@redhat.com>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@mailo.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>
+Subject: Re: [PATCH v4 00/35] monitor: turn QMP and HMP into QOM objects
+Message-ID: <ajp5qIKek45SFUNu@angien.pipo.sk>
+References: <20260623095551.2106712-1-berrange@redhat.com>
+ <ajpoEoUcQ5IxMJy1@angien.pipo.sk> <ajpwIvZ9qfSgE-la@redhat.com>
+ <ajpzlaz7kCKw0aPQ@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/3] migration/ram: Abort on unsupported migratable RAM
- changes
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@mailo.com>, Zhao Liu <zhao1.liu@intel.com>,
- Stefano Stabellini <sstabellini@kernel.org>,
- Anthony PERARD <anthony@xenproject.org>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>,
- Reinoud Zandijk <reinoud@netbsd.org>,
- Marcelo Tosatti <mtosatti@redhat.com>, Alex Williamson <alex@shazbot.org>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- qemu-block@nongnu.org, xen-devel@lists.xenproject.org, kvm@vger.kernel.org
-References: <20260611-ram-v1-0-a2dacf699718@rsg.ci.i.u-tokyo.ac.jp>
- <ajmZrT1d0QXCWTNq@x1.local>
-Content-Language: en-US
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <ajmZrT1d0QXCWTNq@x1.local>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <ajpzlaz7kCKw0aPQ@redhat.com>
+User-Agent: Mutt/2.3.2 (2026-04-26)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pkrempa@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,93 +93,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026/06/23 5:23, Peter Xu wrote:
-> On Thu, Jun 11, 2026 at 03:35:47PM +0900, Akihiko Odaki wrote:
->> Supersedes: <20260604-migration-v1-1-cef4a5b1bbdd@rsg.ci.i.u-tokyo.ac.jp>
->> ("[PATCH] system/physmem: Assert migration invariants")
->>
->> ram_mig_ram_block_resized() already aborts migration when migratable RAM
->> is resized. Extend the same handling to other unsupported changes to the
->> migratable RAMBlock set, such as removing a migratable RAMBlock or
->> changing a RAMBlock's migratable state.
->>
->> Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
->> ---
->> Akihiko Odaki (3):
->>        system/physmem: Pass RAMBlock to RAMBlockNotifier callbacks
->>        system/physmem: Notify RAMBlock migratable and idstr changes
->>        migration/ram: Abort on unsupported migratable RAM changes
+On Tue, Jun 23, 2026 at 12:52:53 +0100, Daniel P. Berrangé wrote:
+> On Tue, Jun 23, 2026 at 12:38:10PM +0100, Daniel P. Berrangé wrote:
+> > On Tue, Jun 23, 2026 at 01:03:46PM +0200, Peter Krempa wrote:
+> > > On Tue, Jun 23, 2026 at 10:55:16 +0100, Daniel P. Berrangé via Devel wrote:
+> > > > Conceptually -object and object_add/object_del should be sufficient
+> > > > for essentially all QEMU configuration....if only we ported all our
+> > > > internal custom backends/devices/etc to QOM. That is of course a big
+> > > > job which is why it hasn't happened.
+> > > > 
+> > > > This series started with the premise that the monitor is one of the
+> > > > easier areas to convert since we have no more than three classes,
+> > > > a common base, and QMP and HMP subclasses[1]. So why not give it a
+> > > > go and thus unlock the ability to dynamically create/delete monitors
+> > > > in QMP/HMP.
+> > > > 
+> > > > This series does the conversion in a great many small steps to better
+> > > > understand the implications at each stage.
+> > > > 
+> > > > The high level outcome of this series is
+> > > > 
+> > > >  * HMP and QMP monitors are QOM objects, 'monitor-hmp' and
+> > > >    'monitor-qmp' respectively
+> > > > 
+> > > >  * Both can be cold plugged and hot plugged. QMP only, can
+> > > >    also be hot unplugged.
+> > > > 
+> > > >  * '-mon' is obsolete, deprecated and replaced by '-object',
+> > > >    but -monitor, -qmp and kept  as high level syntax sugar
+> > > 
+> > > I was giving this a spin by implementing libvirt support for it. The
+> > > basic usage seems to work well but I've encoutered a regression in
+> > > behaviour which happens both when the QMP monitor is instantiated using
+> > > the new syntax but also the old one
+> > > ( -mon chardev=charmonitor,id=monitor,mode=control)
+> > > 
+> > > When libvirt wants to re-connect to a qemu running with these patches it
+> > > re-issues a 'qmp_capabilities' command after connecting.
+> > > 
+> > > With these patches qemu does not respond to that command even when the
+> > > old syntax is used. This makes libvirt stuck when re-connecting to VMs.
+> > 
+> > Oh that's odd, thanks for the warning. I'll investigate this.
 > 
-> Thanks for looking at this, Akihiko.
+> /face-palm - a misplaced a line in the auto-delete code, and did not
+> have test coverage of re-opening a monitor. Try testing libvirt with
+> this additional change on top
 > 
-> I understand this is a protection to the system to trap error use cases.
-> The question I have is do we have any possible way to trigger these.
-> 
-> I worry we add a bunch of code and notifiers, and then there's zero way to
-> trigger, essentially add dead code.
-> 
-> Logically we could already add assert() on things we don't expect to
-> happen.  This case might be slightly risky, but still I think we can also
-> consider things like error_report_once() instead of introducing slightly
-> complex notifiers just to cover what we think shouldn't happen.
-> 
-> Or do you have way to trigger any of these notifiers?
+> diff --git a/monitor/qmp.c b/monitor/qmp.c
+> index f6b7fe65bb..10d651ca5c 100644
+> --- a/monitor/qmp.c
+> +++ b/monitor/qmp.c
+> @@ -613,7 +613,6 @@ static void monitor_qmp_event(void *opaque, QEMUChrEvent event)
+>          qobject_unref(data);
+>          break;
+>      case CHR_EVENT_CLOSED:
+> -        mon->delete_pending = true;
+>          /*
+>           * Note: this is only useful when the output of the chardev
+>           * backend is still open.  For example, when the backend is
+> @@ -629,6 +628,7 @@ static void monitor_qmp_event(void *opaque, QEMUChrEvent event)
+>          case MONITOR_QMP_CLOSE_ACTION_NONE:
+>              break; /* nada */
+>          case MONITOR_QMP_CLOSE_ACTION_DELETE:
+> +            mon->delete_pending = true;
+>              /*
+>               * Do NOT run in the AIO context associated with the
+>               * monitor. We need to run in the default AIO context
 
-I simply followed what's already done for resize(), expecting resize() 
-does the correct thing and following it won't introduce a regression.
+With this, startup, reconnect and FD passing work correctly both when
+instantiated via -object and via -mon and it satisfies the normal
+libvirt usage.
 
-> 
-> PS: today I went back and I wanted to try how the existing resize()
-> notifier would trigger, I can't even reproduce it with David's example
-> here:
-> 
-> https://lore.kernel.org/qemu-devel/20210429112708.12291-1-david@redhat.com/#t
-> 
-> I can trap a qemu_ram_resize(), but that's invoked with newsize==rb->size,
-> so it didn't really notify a thing.  I don't really know how to trigger
-> ram_block_notify_resize().  If you know, please share.
-I made an LLM amend the reproducer. Below is its output.
+Tested-by: Peter Krempa <pkrempa@redhat.com>
 
-Regards,
-Akihiko Odaki
+I've tested it with following libvirt patches:
 
-LLM output:
+https://lists.libvirt.org/archives/list/devel@lists.libvirt.org/thread/PUVLG73H35JZQPYNMHSBIVUF56EKEEC2/
 
-A synthetic but effective variant is to add custom ACPI filler tables so 
-the initial `etc/acpi/tables` blob is just under the 128 KiB alignment 
-bucket, then let the normal boot-time fw_cfg ACPI rebuild push it over.
-
-I tested this shape:
-
-```sh
-truncate -s 65000 /tmp/fill1
-truncate -s 50600 /tmp/fill2
-```
-
-Then add to the original-ish command:
-
-```sh
--device pcie-root-port,id=rp0,chassis=1,slot=1 \
--acpitable sig=FI1A,data=/tmp/fill1 \
--acpitable sig=FI2A,data=/tmp/fill2
-```
-
-Observed via `info ramblock`:
-
-```text
-before cont:
-/rom@etc/acpi/tables   Used 0x0000000000020000
-
-after cont:
-/rom@etc/acpi/tables   Used 0x0000000000040000
-```
-
-So this does produce a real RAMBlock used-size growth during boot in the 
-current tree. With migration started before `cont` using a stalled 
-`exec:` target, `info migrate` moved to `cancelling`, which is 
-consistent with the current resize-during-precopy abort path.
-
-The key is not the root port itself; the key is making the ACPI table 
-rebuild cross `ACPI_BUILD_TABLE_SIZE` alignment. The filler is a bit 
-artificial, but it is a good stress variant for the exact class of bug.
 
