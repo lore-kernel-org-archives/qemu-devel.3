@@ -4,49 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16320CDB479
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 13:39:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71630CDB481
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 13:39:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcNlr-0004QT-Ax; Wed, 24 Jun 2026 09:36:03 -0400
+	id 1wcNpJ-0005SY-9O; Wed, 24 Jun 2026 09:39:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wcNlm-0004IT-A9; Wed, 24 Jun 2026 09:36:00 -0400
+ id 1wcNpH-0005Ql-CB; Wed, 24 Jun 2026 09:39:35 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wcNlk-0000qS-Pr; Wed, 24 Jun 2026 09:35:58 -0400
+ id 1wcNpF-0001IY-K3; Wed, 24 Jun 2026 09:39:35 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1782307997; bh=wW//6R9DcVQincR5nU8HAvA6a7TrUpycElpGLnaC2BU=;
+ t=1782307999; bh=Qa5RM/R3DMq9VLRLiufaoNNUf9HV7xjAG3zxZJj488Y=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=mt/JC7utKM/D/xUFjnCEwS4FI+J77eLsQ5lbYKtf0cJIbWk6Ik7t0lna77YEKl3fy
- rLje3O7tmEyetE2d1E94p4z7aiD5o9ZzwdngKcmNRuqdTTB2qJGxfdm17Na+2x3y7S
- cG8g506xZN4dfGsrTKCbiWtu84QQlb41cme6ENGU4UUfkQVDfuq0Z+AT4KbhCNHvI3
- jZXQa9PpBmN+2xgFDcU7oBtqacpV4dbwusxmO4eHoXlwLWTVbZuiZl32ZoAvwN1BGP
- ELpIroEkRd4UGMOuBu5C2oR40uQSL7Woz2U//uUTDdlV7mMT3EdFgtObREZhFTyPiR
- 9z7sCNztNbTCw==
+ b=jUdAmoSFSUGgv7Itrb1lxVI8epLzNqyQqr6czl1cuUHZS+3nBcBP9xBxqMRgznCiu
+ lJSbnLC2LVDX2f7QIw8GYuhX8zWN9QsS7EcxoFYq+/47wUjMeeMLU8DbBdPnMuZExB
+ L6houGvYqNUJN+NrytieJIYm6srO5F03KJ6raK4Jq1haCpq956HOvqg0iKSU1BHEzg
+ eifbrTzosYaLprebD3MWhFr1RrGpam6gyvYNfhYh50JbWKKdvmIAeAuuvdPzvvWuen
+ ER94ISbLiBlQ0QivL2+bgLKhuFQ+AQVmJD8PPHVePzXuAXJHAlw1EQ2OQH07kkHVA/
+ jCB6KbUaZJUXw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 43CA71BA9D1;
- Wed, 24 Jun 2026 16:33:17 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id C44771BA9F4;
+ Wed, 24 Jun 2026 16:33:19 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id D451B3DEA20;
- Wed, 24 Jun 2026 16:33:22 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 6126F3DEA43;
+ Wed, 24 Jun 2026 16:33:25 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, GuoHan Zhao <zhaoguohan@kylinos.cn>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.2 031/107] vfio-user: reject zero migration page size
- capability
-Date: Wed, 24 Jun 2026 16:30:36 +0300
-Message-ID: <20260624133301.403266-31-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Fiona Ebner <f.ebner@proxmox.com>,
+ Kevin Wolf <kwolf@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.2 066/107] block/export/fuse: set
+ FUSE_DIRECT_IO_ALLOW_MMAP flag to fix regression
+Date: Wed, 24 Jun 2026 16:31:11 +0300
+Message-ID: <20260624133301.403266-66-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.2-20260624163118@cover.tls.msk.ru>
 References: <qemu-stable-11.0.2-20260624163118@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -71,41 +69,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: GuoHan Zhao <zhaoguohan@kylinos.cn>
+From: Fiona Ebner <f.ebner@proxmox.com>
 
-check_migr_pgsize() validates that no page-size bits smaller than
-VFIO_USER_DEF_PGSIZE are set, but it still accepts pgsize=0. This can replace
-the default migration page size with an unusable value.
+Commit 8599559580 ("fuse: Set direct_io and parallel_direct_writes")
+broke use cases that require mmap() with MAP_SHARED on the export. In
+particular, swtpm_setup using its 'file://' protocol requires this.
+From the kernel documentation [0]:
 
-Reject a zero migration page size during version capability parsing, matching
-the lower-bound check used for the DMA page-size capability.
+> To allow shared mmap, the FUSE_DIRECT_IO_ALLOW_MMAP flag may be
+> enabled in the FUSE_INIT reply.
 
-Fixes: 36227628d824 (vfio-user: implement message send infrastructure)
-Signed-off-by: GuoHan Zhao <zhaoguohan@kylinos.cn>
-Link: https://lore.kernel.org/qemu-devel/20260522081306.4186242-2-zhaoguohan@kylinos.cn
-Signed-off-by: Cédric Le Goater <clg@redhat.com>
-(cherry picked from commit 497b5c5b05ac2be00ae16c723e2445ebbc486cb2)
+Set the FUSE_DIRECT_IO_ALLOW_MMAP flag to restore compatibility with
+users requiring shared mmap. The FUSE_INIT_EXT flag needs to be set
+for the flags2 member to have an effect.
+
+[0]: https://www.kernel.org/doc/html/next/filesystems/fuse/fuse-io.html
+
+Cc: qemu-stable@nongnu.org
+Fixes: 8599559580 ("fuse: Set direct_io and parallel_direct_writes")
+Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
+Message-ID: <20260506145424.10249-3-f.ebner@proxmox.com>
+Reviewed-by: Kevin Wolf <kwolf@redhat.com>
+Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+(cherry picked from commit d1664a4058b2b4285d281d32c81ef646f78e7d9a)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/vfio-user/proxy.c b/hw/vfio-user/proxy.c
-index 3fe5b0138b..3167d27b03 100644
---- a/hw/vfio-user/proxy.c
-+++ b/hw/vfio-user/proxy.c
-@@ -1081,9 +1081,11 @@ static bool check_migr_pgsize(VFIOUserProxy *proxy, QObject *qobj, Error **errp)
-         return false;
+diff --git a/block/export/fuse.c b/block/export/fuse.c
+index 35218e3197..c0e8dfb643 100644
+--- a/block/export/fuse.c
++++ b/block/export/fuse.c
+@@ -856,7 +856,8 @@ static ssize_t coroutine_fn GRAPH_RDLOCK
+ fuse_co_init(FuseExport *exp, struct fuse_init_out *out,
+              const struct fuse_init_in *in)
+ {
+-    const uint32_t supported_flags = FUSE_ASYNC_READ | FUSE_ASYNC_DIO;
++    uint32_t supported_flags = FUSE_ASYNC_READ | FUSE_ASYNC_DIO;
++    uint32_t flags2 = 0;
+ 
+     if (in->major != 7) {
+         error_report("FUSE major version mismatch: We have 7, but kernel has %"
+@@ -871,13 +872,21 @@ fuse_co_init(FuseExport *exp, struct fuse_init_out *out,
+         return -EINVAL;
      }
  
--    /* must be larger than default */
--    if (pgsize & (VFIO_USER_DEF_PGSIZE - 1)) {
--        error_setg(errp, "pgsize 0x%"PRIx64" too small", pgsize);
-+    /* must not be zero or smaller than default */
-+    if (pgsize < VFIO_USER_DEF_PGSIZE ||
-+        (pgsize & (VFIO_USER_DEF_PGSIZE - 1))) {
-+        error_setg(errp, "%s 0x%"PRIx64" too small",
-+                   VFIO_USER_CAP_PGSIZE, pgsize);
-         return false;
-     }
++    if (!using_old_fuse_init_in(in)) {
++        /* The flags2 flags must be shifted down by 32 bits. */
++        const uint32_t supported_flags2 = FUSE_DIRECT_IO_ALLOW_MMAP >> 32;
++        /* flags2 is only considered if FUSE_INIT_EXT is set. */
++        supported_flags = supported_flags | FUSE_INIT_EXT;
++        flags2 = in->flags2 & supported_flags2;
++    }
++
+     *out = (struct fuse_init_out) {
+         .major = 7,
+         .minor = MIN(FUSE_KERNEL_MINOR_VERSION, in->minor),
+         .max_readahead = in->max_readahead,
+         .max_write = FUSE_MAX_WRITE_BYTES,
+         .flags = in->flags & supported_flags,
+-        .flags2 = 0,
++        .flags2 = flags2,
  
+         /* libfuse maximum: 2^16 - 1 */
+         .max_background = UINT16_MAX,
 -- 
 2.47.3
 
