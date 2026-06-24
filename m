@@ -4,88 +4,162 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C6E5CDB47F
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 11:47:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DFE8ACDB47F
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 11:48:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcM1u-0007AO-Ax; Wed, 24 Jun 2026 07:44:30 -0400
+	id 1wcM57-0005UP-K7; Wed, 24 Jun 2026 07:47:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wcM1q-000728-3E
- for qemu-devel@nongnu.org; Wed, 24 Jun 2026 07:44:26 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wcM55-0005Pi-NM
+ for qemu-devel@nongnu.org; Wed, 24 Jun 2026 07:47:47 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wcM1o-0008Is-AZ
- for qemu-devel@nongnu.org; Wed, 24 Jun 2026 07:44:25 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wcM54-0000rK-4D
+ for qemu-devel@nongnu.org; Wed, 24 Jun 2026 07:47:47 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1782301463;
+ s=mimecast20190719; t=1782301665;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=rA0q9DcPM5/f4+PbY7T73EQOB8BG7DyNQr5nJhN2zNI=;
- b=Lou8FuGTI9DfVpIEOi+Apf0zkKP4k6Oc/sKTqI4zCLom0j84kAiWwzizg72qMEJ7xA6d3s
- BevvBP8lHmUA9YdPO8hhxpwTiOluOoiNOjXNu1lenHEQnzxVuP1IIrdhu5jZe2Il4qPjal
- /DAO1ut51atpvx8ZgRorlUExyKcbda0=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-64-hxy01CEJPIOhHOTy1w4b1w-1; Wed,
- 24 Jun 2026 07:44:22 -0400
-X-MC-Unique: hxy01CEJPIOhHOTy1w4b1w-1
-X-Mimecast-MFC-AGG-ID: hxy01CEJPIOhHOTy1w4b1w_1782301461
-Received: from mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.95])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C09EE1801326
- for <qemu-devel@nongnu.org>; Wed, 24 Jun 2026 11:44:20 +0000 (UTC)
-Received: from localhost (unknown [10.44.24.16])
- by mx-prod-int-10.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 749C536924; Wed, 24 Jun 2026 11:44:19 +0000 (UTC)
-From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Wed, 24 Jun 2026 15:41:53 +0400
-Subject: [GIT PULL 31/35] ui/console: register console in QOM tree dynamically
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=FjsZjcaZpayI6vxjl0RKgUm8NlROnQ94/WmvUMIkQ5M=;
+ b=SKf/dXKpxHHvSPTeT7CKfn72BvK6aS4pqt3rgAj+Ws92On7KYijqJ6CnHrwO3CR6+ozlUF
+ /d37eco6XZSotnH2GWsi9N3M5q3exe4S9sHTokbKNQ0CWaSSkT4kYKDOo0Ne68tOtcZ9pw
+ VKHi0c4IkNISQKnSn8u/dmoW5NX/DQY=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-517-YM7YMtSuPvqgQ-yr5DWfJw-1; Wed, 24 Jun 2026 07:47:44 -0400
+X-MC-Unique: YM7YMtSuPvqgQ-yr5DWfJw-1
+X-Mimecast-MFC-AGG-ID: YM7YMtSuPvqgQ-yr5DWfJw_1782301663
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-490b37e1f48so6482915e9.0
+ for <qemu-devel@nongnu.org>; Wed, 24 Jun 2026 04:47:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1782301663; x=1782906463; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+ bh=FjsZjcaZpayI6vxjl0RKgUm8NlROnQ94/WmvUMIkQ5M=;
+ b=flqhWTOH14Tp+C6oYFmze5egqDjS0D6xOBQ3itBR/unF45/0j31Ta1RzLucigZK8v5
+ ec1yECDkVSi8PaDR9w5EFnG/wcX4KA9sW+SsbNotyeE/TKhPSbXsO3LIyEgu/K5/wNV4
+ IbqSxf9L2O1GD5QbDia7o7C5tKbUqNLdgG03YVzTxtTaPnXaqG0G5EoSa6PbqnN6lDxf
+ iNWpkWLjZjeHCwyecnC+BM/7wZ5zsY27+KkZ+wS+NspV6pbt7Olbha207uxYOyK6E/ez
+ bJurPxe66k+O3k1rWWpC4giiaAZ6QeKVnMkdk933Yc2lgOG/iCDt4F44wUMGtUkMz9Oo
+ GXCw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1782301663; x=1782906463;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=FjsZjcaZpayI6vxjl0RKgUm8NlROnQ94/WmvUMIkQ5M=;
+ b=YGGxcyYq+R/8WuN+rMMKkWsNOKHaJRQ7zcq5O+YBYqs11BbBdID4+an3orB2emXBHh
+ jP+txQugV8HeOp5FmDXz7QJ59ybebReuvKaLD/LPGKVUq1ReeI2E2RlAUthEbeVTJG22
+ 2ACvnmre+RzdooenK3cte2RiLhoRlGweu1oLqWUuRG/rpYu6r6509SSAh/5Mz/gabHQ6
+ eMlp2RJ/vxXVBkFI6LAhk6UR3htEwurzk6X4ZvXn8SPjYlRtuiMeIrkEuVwwkwdb4/0g
+ uRD0n0+uxqfeiuNQhsqSbQPNbb1gu0yylwdZyZTR4A1WtkZz8cIg/djxF9T9g84LlKAH
+ gUPA==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ+pAUcQlwWgEfqpiLQ1BqAS8LHAo6xE9hIwjbFj+7y80Z7DiM1DDl60sLhnw/4r7n057y1HasU8XZjl@nongnu.org
+X-Gm-Message-State: AOJu0YytkjpK9DP+U7Fzw2SkmSG5LYHGGelHq3eUk/vb2IvD2bW1euJr
+ lvcJwyeOWxeU0t2HhkKOnfpgQyLJwG+rqGcZKbdQI1VR2qUxnUmfQiVdwX+gnZzeRfJB55Z+KzN
+ +RM8JWVmneBHpvFcqki31mKBXFLCQCOgBofMLbGNzFWK1YHFJ293iqZL3
+X-Gm-Gg: AfdE7ckfetIaGEp6C8yfRxlid96/mM+8vyp1RtYeMUoy8Bh88QnPAmjBx5ngCH856M0
+ Rk7CaKAnQBwnWJRoHfT907Fy2mVTjB7U4z3Fl7RUBdIqDREnHeO6JumKuaElBjqy2ri/5Iy3+C7
+ iJIJtpdYv5YeIVhwiNDYUxePCpQTQhUVSHvIRKcCsub9sQipjxqGLDfnqkFHLa3V1ljLfuDmah5
+ OjNCSOL0o+cPggBeNuG8Q8KlP2e5E/ByOs+PFzlNjT1fOxrhYg+JXoJDAwDUevyDZnxI2jcYjGi
+ AFhkimXCFr8w3vA11fA9i4zs/jEBxxVoTGBVzkD54CSnhkRhFZ2cWVkhmQDYmCxQ5rSVW7Vp3nG
+ V98nWcAWHMd45C8h3HbzbPd7Dz9cpOaI8jr9R+KGms+hTOTCNEWrbD0s=
+X-Received: by 2002:a05:600c:3489:b0:490:b8e6:be40 with SMTP id
+ 5b1f17b1804b1-4926086e5edmr43809405e9.21.1782301662740; 
+ Wed, 24 Jun 2026 04:47:42 -0700 (PDT)
+X-Received: by 2002:a05:600c:3489:b0:490:b8e6:be40 with SMTP id
+ 5b1f17b1804b1-4926086e5edmr43808845e9.21.1782301662209; 
+ Wed, 24 Jun 2026 04:47:42 -0700 (PDT)
+Received: from ?IPV6:2a01:cb19:8426:ae00:2b21:b1ac:81f4:97b6?
+ ([2a01:cb19:8426:ae00:2b21:b1ac:81f4:97b6])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-46c1ee01c3bsm6809084f8f.10.2026.06.24.04.47.40
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 24 Jun 2026 04:47:41 -0700 (PDT)
+Message-ID: <ccbadb13-888b-495d-b894-826a8e664d3e@redhat.com>
+Date: Wed, 24 Jun 2026 13:47:40 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20260624-ui-v1-31-482147b0a7af@redhat.com>
-References: <20260624-ui-v1-0-482147b0a7af@redhat.com>
-In-Reply-To: <20260624-ui-v1-0-482147b0a7af@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Stefan Hajnoczi <stefanha@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2402;
- i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=eo/F9jEsUV6ERVf+hKfhWAKiQgI+iE7YRBT/y12gavA=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqO8JpbS5WV1kAgrMt8Z3cLs88NRNmP3Oay76ge
- FU62/ZE/kWJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCajvCaQAKCRDa6OEJdZac
- 5bZ0D/4863dZl06oYqWKtAPK7bmqvf1wshCZuR1Uv0iR9csNO8Jh27BBYCxkXiA6sNHgVm9IsEE
- dHbAd2JHAGajwv2VCcfJ/vr2NH+aO3le8Qajo8XOulacioi1yOvWAbhF1NUjR7bRj2/eeu8Ove2
- 0oqMhaqxLDyvKqkBDbaNVMjYLM4B51F1Iku8tUFQREa5uJ1i2OkTavRaw3UgdKxB/1qo5M9W6/b
- xmv9dgoNm9btt6SBdvA7ykdj6ayB4++PD+y4uUwBZf5TClje5+lkIozld28f8Fa1Gnzu3zDNos+
- XrRnQ47HcA62r8egMtTCJ0Wt4Rs7XO8McVrUxu1zm982FSNDVdNfpdI+HPWANuUd8MkQKjH47DH
- zkfUq+6jz3rgycQeCqzIXcbC2sHmGo0rcKVVLF5g/6GdXSQdQsG9xP7VpDzIWi+nH5QNUygZ8n9
- n4cwTrwZ5RdXHt/d71cF5B3YCqBJ93CPOdYSGqpXGqWPnCfqLtb7JbFPa7wVlPhuySRfAL7t1B4
- uR6tRI25usTbkjXJwdDS2jNVmu+J3LMLDIW4iWjBUxagjlDQXmiVxQDMCx0K1hki+QRS/quJ4rn
- ecR0wmXzvfV/SubdqKXkroc++Nr7kyDGphL3Y1Ux45AhwaWb6FezexpJvB11oy4x1RtQv4MG4Pe
- bAtGnmHLw5MVhCg==
-X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
- fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.6 on 10.30.177.95
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=marcandre.lureau@redhat.com;
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/8] tests/qtest/pnv_spi: Test Power11 PNV_SPI
+To: Aditya Gupta <adityag@linux.ibm.com>, qemu-devel@nongnu.org,
+ qemu-ppc@nongnu.org, Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Shivang Upadhyay <shivangu@linux.ibm.com>
+Cc: Sourabh Jain <sourabhjain@linux.ibm.com>,
+ Hari Bathini <hbathini@linux.ibm.com>, Nicholas Piggin <npiggin@gmail.com>,
+ Miles Glenn <milesg@linux.ibm.com>, Fabiano Rosas <farosas@suse.de>,
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ devel@lists.libvirt.org, Misbah Anjum N <misanjum@linux.ibm.com>,
+ Anushree Mathur <anushree.mathur@linux.ibm.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, kvm@vger.kernel.org,
+ Gautam Menghani <gautam@linux.ibm.com>, Chinmay Rath <rathc@linux.ibm.com>
+References: <20260623141933.577981-1-adityag@linux.ibm.com>
+ <20260623141933.577981-3-adityag@linux.ibm.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Autocrypt: addr=clg@redhat.com; keydata=
+ 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
+ uVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <20260623141933.577981-3-adityag@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -102,83 +176,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Consoles created after init_displaystate() (e.g. hotplugged
-display devices) were never added to the /backend/console[N]
-QOM tree. Extract qemu_console_add_to_qom() and call it from
-qemu_console_register() when the display is already initialized.
+On 6/23/26 16:19, Aditya Gupta wrote:
+> Currently pnv-spi-seeprom-test was hardcoded to test the 4th chip in
+> pnv_chips (power10 as of now).
+> 
+> This requires ensuring to update the index when removing/adding entries
+> in pnv_chips, such as when Power8E or Power11 gets removed/added in
+> future commits.
+> 
+> Iterate over all the chips instead, similar to other tests in
+> pnv-xscom-test.c and pnv-host-i2c-test.c, but skip older chips, since
+> TYPE_PNV_SPI only exists from Power10 onwards, hence skip older machines
+> 
+> Tests all the pnv_chips similar to other qtests
+> 
+> Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
+> ---
+>   tests/qtest/pnv-spi-seeprom-test.c | 21 +++++++++++++++------
+>   1 file changed, 15 insertions(+), 6 deletions(-)
+> 
+> diff --git a/tests/qtest/pnv-spi-seeprom-test.c b/tests/qtest/pnv-spi-seeprom-test.c
+> index 44e0b92730b4..721129cd39ab 100644
+> --- a/tests/qtest/pnv-spi-seeprom-test.c
+> +++ b/tests/qtest/pnv-spi-seeprom-test.c
+> @@ -77,6 +77,7 @@ static void test_spi_seeprom(const void *data)
+>       const PnvChip *chip = data;
+>       QTestState *qts = NULL;
+>       g_autofree char *tmp_path = NULL;
+> +    const char *machine = "powernv10";
+>       int ret;
+>       int fd;
+>   
+> @@ -87,11 +88,11 @@ static void test_spi_seeprom(const void *data)
+>       g_assert(ret == 0);
+>       close(fd);
+>   
+> -    qts = qtest_initf("-machine powernv10 -smp 2,cores=2,"
+> +    qts = qtest_initf("-machine %s -smp 2,cores=2,"
+>                         "threads=1 -accel tcg,thread=single -nographic "
+>                         "-blockdev node-name=pib_spic2,driver=file,"
+>                         "filename=%s -device 25csm04,bus=chip0.spi.2,cs=0,"
+> -                      "drive=pib_spic2", tmp_path);
+> +                      "drive=pib_spic2", machine, tmp_path);
+>       spi_seeprom_transaction(qts, chip);
+>       qtest_quit(qts);
+>       unlink(tmp_path);
+> @@ -100,9 +101,17 @@ static void test_spi_seeprom(const void *data)
+>   int main(int argc, char **argv)
+>   {
+>       g_test_init(&argc, &argv, NULL);
+> -    char *tname = g_strdup_printf("pnv-xscom/spi-seeprom/%s",
+> -            pnv_chips[3].cpu_model);
+> -    qtest_add_data_func(tname, &pnv_chips[3], test_spi_seeprom);
+> -    g_free(tname);
+> +
+> +    for (int i = 0; i < ARRAY_SIZE(pnv_chips); i++) {
+> +        /* TYPE_PNV_SPI is not instantiated for older Power8/9 machines */
+> +        if (pnv_chips[i].chip_type < PNV_CHIP_POWER10) {
 
-Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Message-ID: <20260623-b4-ui-v4-31-4656aec3398d@redhat.com>
----
- ui/console.c | 23 +++++++++++++++++------
- 1 file changed, 17 insertions(+), 6 deletions(-)
+Can we remove this chip_type field from the tests too ? see 248e4e924e87.
 
-diff --git a/ui/console.c b/ui/console.c
-index 975eaf15706..db9aaf85f59 100644
---- a/ui/console.c
-+++ b/ui/console.c
-@@ -68,6 +68,7 @@ struct DisplayState {
-     uint64_t last_update;
-     uint64_t update_interval;
-     bool refreshing;
-+    bool initialized;
- 
-     QLIST_HEAD(, DisplayChangeListener) listeners;
-     NotifierList console_notifiers;
-@@ -376,6 +377,13 @@ void qemu_text_console_put_string(QemuTextConsole *s, const char *str, int len)
-     }
- }
- 
-+static void qemu_console_add_to_qom(QemuConsole *con)
-+{
-+    g_autofree gchar *name = g_strdup_printf("console[%d]", con->index);
-+    object_property_add_child(object_get_container("backend"),
-+                              name, OBJECT(con));
-+}
-+
- static void
- qemu_console_register(QemuConsole *c)
- {
-@@ -413,6 +421,10 @@ qemu_console_register(QemuConsole *c)
-             }
-         }
-     }
-+
-+    if (c->ds->initialized) {
-+        qemu_console_add_to_qom(c);
-+    }
- }
- 
- static void
-@@ -1089,20 +1101,19 @@ void qemu_console_remove_notifier(Notifier *notifier)
-  */
- DisplayState *init_displaystate(void)
- {
--    gchar *name;
-+    DisplayState *ds = get_alloc_displaystate();
-     QemuConsole *con;
- 
-     QTAILQ_FOREACH(con, &consoles, next) {
-         /* Hook up into the qom tree here (not in object_new()), once
-          * all QemuConsoles are created and the order / numbering
-          * doesn't change any more */
--        name = g_strdup_printf("console[%d]", con->index);
--        object_property_add_child(object_get_container("backend"),
--                                  name, OBJECT(con));
--        g_free(name);
-+        qemu_console_add_to_qom(con);
-     }
- 
--    return display_state;
-+    ds->initialized = true;
-+
-+    return ds;
- }
- 
- void qemu_graphic_console_set_hwops(QemuConsole *con,
+> +            continue;
+> +        }
+> +
+> +        char *tname = g_strdup_printf("pnv-xscom/spi-seeprom/%s",
+> +                pnv_chips[i].cpu_model);
 
--- 
-2.54.0
+please consider g_autofree variables.
+
+> +        qtest_add_data_func(tname, &pnv_chips[i], test_spi_seeprom);
+> +        g_free(tname);
+> +    }
+>       return g_test_run();
+>   }
 
 
