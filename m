@@ -4,96 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A35D2CDB47F
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 17:42:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74961CDE000
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 17:42:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcRac-0004CW-Rn; Wed, 24 Jun 2026 13:40:45 -0400
+	id 1wcRZZ-0000br-HQ; Wed, 24 Jun 2026 13:39:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wcRaR-0003yg-Cl
- for qemu-devel@nongnu.org; Wed, 24 Jun 2026 13:40:33 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wcRaP-0004tG-5h
- for qemu-devel@nongnu.org; Wed, 24 Jun 2026 13:40:30 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-490ace40f4bso13356355e9.3
- for <qemu-devel@nongnu.org>; Wed, 24 Jun 2026 10:40:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1782322827; x=1782927627; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=J88CqxmCzdV6fdyF6jAEmjfKI9GFOxO0HLu6uoYy2LU=;
- b=iaspK99Knribu04dVkUvc9RXRAKG5bphGvS7/B87jlWb5zdgW3nage23RjoHiNdEzU
- Scsxs1RFbmi7wRASAcrT8COHo4Jfu64f8VMkS3vINuEYBUk9ROCPUYP9dsJObNypGIY0
- K4FY6oHz4rum4jbQ9q9IuRwYw1edUFYW13Qlic+/qp88Uj9eGNtR2Xts797E/ONhoitC
- BjCxn08qlSobdr0ZnGkJNgEg1bKLTfMU3OXH6FvDD4MBJCJa0F5xwn4xLSJ23h3yYr+F
- zWobZChknYmDws8bJGXF4y7g/C9nu2osa175bBBXdFMTmo5hquxaowg1wdbSuy33klpu
- i7Zw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782322827; x=1782927627;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=J88CqxmCzdV6fdyF6jAEmjfKI9GFOxO0HLu6uoYy2LU=;
- b=IZMkVaEqT1lTTRvT8sqGMf39Fd8IURLnll6ga5ZRKxee7+orULD3pmXUydC3ycln0I
- yKwBZ1XzGRPvRvkhYYuFb7nNRnmTqQF01x0dkO4bX2+MJ/rfPjt/qLJSqywGL+ij2wRl
- zkO+Jvu8FUdW4myDy93fzkmmdz1UR1TvdsC75w1nJCx/9jIljuix/xeXcyloXRF2pClB
- 9IsAqh9fkhIRqtzWjQKvmRFPF0EFJX++JzEyCuZjO9GPUp6qUFI3idyNSx70Z8gDGzN7
- K5iBqWIZS9w2w7lIRiHolTsYP3mYLSixFJTlF4F6uwuX1MRkg/1Tsz9K07nOURaX/Nnf
- H3aw==
-X-Forwarded-Encrypted: i=1;
- AFNElJ/vFOfp4Two7D2g9EZEqbdNxWSFC6Z4yOl/51mWg9yOCh4BWgVhF586GIEGE0+b3D/FO8hmaJNzUyQG@nongnu.org
-X-Gm-Message-State: AOJu0YxJxgMZLee5iR8aaUhQaGsD/4ck98FDLOzIDVwY8kPECUyHtcFq
- HWfFEn0Za0rXlwhhhfvKinHQBC9eBnSIiKhPdpeAbnOo3HkkT9t+lVv1aES5iYiDxhw=
-X-Gm-Gg: AfdE7clGD6owBkGluHZtDRLsGPv8OiuOCS/LHREW3V8s2GCDcVcY5mipzSgnrp6A725
- sUqL32fwjNWLVkIm4BJb81dO9q5FbWAXRrYFQHEkhYN/F4sKz94xhLR/op07iV7UNbijVktLd1F
- 5aKIOxvCCZzOMpNcxMSpl541VmRzO9FGrqdCQwop2SxG1lC/MFwhlL6XxpxUJQR8wcpkUHCuvzv
- XOSRAaXe9P9yO6cv1XPAU1yZk5etIU8cGhWkkkbNnxBGTezi7ZP4/YhOFmMZkWbjA7Zan/Hn3S1
- r6AQr4M9BiJ5y+79+gMDcRpD35GiZhQL6Qqmb7Bw0K/wlLiX8i+Ughegvt5LbwDxVtquR6uJCm8
- 0BMGe0Uo1wuf69BTdT2MT96X+hAzatDsYTRyIQ7h8xXLW+7UDMdEhxzuOlo0FKoFzoCaPq/xsJ4
- jwppBIBhcx9d7J
-X-Received: by 2002:a05:600c:c4a2:b0:492:59fe:4a15 with SMTP id
- 5b1f17b1804b1-49260873710mr58590515e9.24.1782322827412; 
- Wed, 24 Jun 2026 10:40:27 -0700 (PDT)
-Received: from draig.lan ([185.124.0.195]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4926404ee91sm8156405e9.14.2026.06.24.10.40.25
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 24 Jun 2026 10:40:25 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 8E1AD5F807;
- Wed, 24 Jun 2026 18:40:24 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-Cc: Brian Cain <brian.cain@oss.qualcomm.com>,  qemu-devel@nongnu.org,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- stefanha@gmail.com,  Kohei Tokunaga <ktokunaga.mail@gmail.com>
-Subject: Re: [PATCH] tests/docker: add flex and bison to emsdk-wasm64-cross
-In-Reply-To: <dd48e432-ab04-42e7-a88f-231d1c9d55fa@oss.qualcomm.com>
- ("Philippe =?utf-8?Q?Mathieu-Daud=C3=A9=22's?= message of "Wed, 24 Jun 2026
- 08:34:19 +0200")
-References: <20260624054832.610697-1-brian.cain@oss.qualcomm.com>
- <dd48e432-ab04-42e7-a88f-231d1c9d55fa@oss.qualcomm.com>
-User-Agent: mu4e 1.14.2; emacs 30.1
-Date: Wed, 24 Jun 2026 18:40:24 +0100
-Message-ID: <87wlvnj0qf.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wcRZY-0000OP-1t
+ for qemu-devel@nongnu.org; Wed, 24 Jun 2026 13:39:36 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wcRZW-0004ab-Db
+ for qemu-devel@nongnu.org; Wed, 24 Jun 2026 13:39:35 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1782322773;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=pjg3MQaAr0kIcgIv6aL0lBES8v7wwQv165yvF3BidFM=;
+ b=ZckGqI7KpmbThSFU8TzKrYNuMW77ZkYl7lyF8x5Bt/yd3fBH7QaKCrjrGZmSUUctrEdEOH
+ SZMWU059XhbvCPhHnNQao6Vm6MaICrxSeOC2p+xLFm8tz3gBtirfiKC1ALXWznD8jfESf6
+ BFDDm5zQCJa5WtlJhK45HTLGgTDYVgY=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-119-Uk366DagMJuS5ynpI9IRJw-1; Wed,
+ 24 Jun 2026 13:39:32 -0400
+X-MC-Unique: Uk366DagMJuS5ynpI9IRJw-1
+X-Mimecast-MFC-AGG-ID: Uk366DagMJuS5ynpI9IRJw_1782322771
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4BAAD1955EB1; Wed, 24 Jun 2026 17:39:31 +0000 (UTC)
+Received: from berrange.com (unknown [10.44.32.102])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id E5BAC180034F; Wed, 24 Jun 2026 17:39:27 +0000 (UTC)
+From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: devel@lists.libvirt.org,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ "Dr. David Alan Gilbert" <dave@treblig.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Christian Brauner <brauner@kernel.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Peter Krempa <pkrempa@redhat.com>
+Subject: [PATCH v5 23/35] monitor: convert from oneshot BH to persistent BH
+Date: Wed, 24 Jun 2026 18:37:39 +0100
+Message-ID: <20260624173752.2928717-24-berrange@redhat.com>
+In-Reply-To: <20260624173752.2928717-1-berrange@redhat.com>
+References: <20260624173752.2928717-1-berrange@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 8
+X-Spam_score: 0.8
+X-Spam_bar: /
+X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,45 +92,97 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Philippe Mathieu-Daud=C3=A9 <philmd@oss.qualcomm.com> writes:
+From: Christian Brauner <brauner@kernel.org>
 
-> On 24/6/26 07:48, Brian Cain wrote:
->> The hexagon idef-parser requires flex and bison as host build
->> tools.  Add them to the emsdk-wasm64-cross container image so that
->> wasm64 builds including hexagon-softmmu can find them.
->> Link:
->> https://lore.kernel.org/qemu-devel/CAJSP0QVk6wsOnPAspC4YfXRp90saKibQfD4M=
-k-44-RQo0k=3Dz3w@mail.gmail.com/
->> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
->> ---
->>   tests/docker/dockerfiles/emsdk-wasm64-cross.docker | 2 ++
->>   1 file changed, 2 insertions(+)
->> diff --git a/tests/docker/dockerfiles/emsdk-wasm64-cross.docker
->> b/tests/docker/dockerfiles/emsdk-wasm64-cross.docker
->> index 8a924816f92..5debbc77d08 100644
->> --- a/tests/docker/dockerfiles/emsdk-wasm64-cross.docker
->> +++ b/tests/docker/dockerfiles/emsdk-wasm64-cross.docker
->> @@ -19,7 +19,9 @@ ENV CXXFLAGS=3D"$CFLAGS"
->>   ENV LDFLAGS=3D"-sWASM_BIGINT -sASYNCIFY=3D1 -L$TARGET/lib"
->>   RUN apt-get update && apt-get install -y \
->>       autoconf \
->> +    bison \
->>       build-essential \
->> +    flex \
->>       libglib2.0-dev \
->>       libtool \
->>       pkgconf \
->
-> Maybe emsdk-wasm64 should have been added to lci-tool first.
-> (not your responsibility).
+Convert monitor_accept_input from a oneshot BH (aio_bh_schedule_oneshot)
+to a persistent BH (aio_bh_new + qemu_bh_schedule).  Oneshot BHs cannot
+be cancelled, so monitor_resume() racing with destruction would schedule
+a callback against memory that monitor_qmp_destroy() is about to free.
+A persistent BH can be deleted during destruction, cancelling any
+pending schedule.
 
-I don't think that will be easy on account of emsdk having to build a
-bunch of libraries to support building QEMU. If a distro provides a
-better cross environment for wasm64 then we could try.
->
-> Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@oss.qualcomm.com>
+Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
+[DB: extracted oneshot BH conversion from larger commit]
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Tested-by: Peter Krempa <pkrempa@redhat.com>
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+---
+ monitor/monitor-internal.h |  2 +-
+ monitor/monitor.c          | 25 ++++++++++++++-----------
+ 2 files changed, 15 insertions(+), 12 deletions(-)
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+diff --git a/monitor/monitor-internal.h b/monitor/monitor-internal.h
+index 012d442a20..a82e1aacb6 100644
+--- a/monitor/monitor-internal.h
++++ b/monitor/monitor-internal.h
+@@ -134,7 +134,7 @@ struct Monitor {
+     char *chardev_id;
+     CharFrontend chr;
+     int suspend_cnt;            /* Needs to be accessed atomically */
+-
++    QEMUBH *accept_input_bh;    /* persistent BH for monitor_accept_input */
+     char *mon_cpu_path;
+     QTAILQ_ENTRY(Monitor) entry;
+ 
+diff --git a/monitor/monitor.c b/monitor/monitor.c
+index bf5e8a184a..312e069bc5 100644
+--- a/monitor/monitor.c
++++ b/monitor/monitor.c
+@@ -81,6 +81,9 @@ static void monitor_finalize(Object *obj)
+ {
+     Monitor *mon = MONITOR(obj);
+ 
++    if (mon->accept_input_bh) {
++        qemu_bh_delete(mon->accept_input_bh);
++    }
+     g_free(mon->chardev_id);
+     g_free(mon->mon_cpu_path);
+     qemu_chr_fe_deinit(&mon->chr, false);
+@@ -567,15 +570,7 @@ static void monitor_accept_input(void *opaque)
+ void monitor_resume(Monitor *mon)
+ {
+     if (qatomic_dec_fetch(&mon->suspend_cnt) == 0) {
+-        AioContext *ctx;
+-
+-        if (monitor_requires_iothread(mon)) {
+-            ctx = iothread_get_aio_context(mon_iothread);
+-        } else {
+-            ctx = qemu_get_aio_context();
+-        }
+-
+-        aio_bh_schedule_oneshot(ctx, monitor_accept_input, mon);
++        qemu_bh_schedule(mon->accept_input_bh);
+     }
+ 
+     trace_monitor_suspend(mon, -1);
+@@ -691,6 +686,7 @@ void monitor_init_globals(void)
+ static void monitor_complete(UserCreatable *uc, Error **errp)
+ {
+     Monitor *mon = MONITOR(uc);
++    AioContext *ctx;
+ 
+     if (mon->chardev_id) {
+         Chardev *chr = qemu_chr_find(mon->chardev_id);
+@@ -704,9 +700,16 @@ static void monitor_complete(UserCreatable *uc, Error **errp)
+         }
+     }
+ 
+-    if (monitor_requires_iothread(mon) && !mon_iothread) {
+-        mon_iothread = iothread_create("mon_iothread", &error_abort);
++    if (monitor_requires_iothread(mon)) {
++        if (!mon_iothread) {
++            mon_iothread = iothread_create("mon_iothread", &error_abort);
++        }
++
++        ctx = iothread_get_aio_context(mon_iothread);
++    } else {
++        ctx = qemu_get_aio_context();
+     }
++    mon->accept_input_bh = aio_bh_new(ctx, monitor_accept_input, mon);
+ }
+ 
+ int monitor_new(MonitorOptions *opts, bool allow_hmp, Error **errp)
+-- 
+2.54.0
+
 
