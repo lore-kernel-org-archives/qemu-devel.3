@@ -4,45 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8FDFCDB479
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 13:42:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11D2BCDB481
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 13:43:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcNrP-0008VY-Va; Wed, 24 Jun 2026 09:41:48 -0400
+	id 1wcNmG-00062h-BU; Wed, 24 Jun 2026 09:36:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wcNr8-0008ET-QC; Wed, 24 Jun 2026 09:41:31 -0400
+ id 1wcNmF-00062E-9H; Wed, 24 Jun 2026 09:36:27 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wcNr4-0001p8-4H; Wed, 24 Jun 2026 09:41:28 -0400
+ id 1wcNmD-0000wS-Id; Wed, 24 Jun 2026 09:36:27 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1782308001; bh=mYIBBPM2w05ZoQ5erEn848OzcrIcDR1XfzXNWI3y9ow=;
+ t=1782307997; bh=u9MhEfJFgVBl71EK5UreCe/1IDcR0M1fW4f5yCNMfJM=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=gnLjWM0EKu63647scxGZkGoYtl1HTb/XQCvnrcQdgFDpFX/eiQ8xqsygh57Bn3Mwv
- oM8wGU8zJfw2PMIdAfe8SP6rUGS/kdXt587KinOv4Ma3MjpsQnkHBBDPw1yH7ldLMO
- aq9k92/hz5xkxrLxDWGO39Rxvak6NTyxaZWiltun+HOAtqITI6XoWoaRfE6vADr91q
- t/gX1qdzeRZfv/nsWJ49Bi+UpbW5b+AsQkVRLpVGdwpVtm+2LV6Y7ol2gGx+NmGyOr
- MLn3Ztk8vq1+KHd8ucJ/MGqwTUtE+VRZz+GHwSW4qWd2TUOpSyw24hohjGs/5C84QO
- UafKnkqNJJsiA==
+ b=IwU+cPsxZjhtXvSA0R0eJ767ztEk8qI03nnfBhkA5y3kU2rdmeEQOgsT33Mkh1v2U
+ Oc+Ms38OommG1BoxwxIpOaLijdUPaLQWO+IHW2C+CZw/QVyEUxNUzMWwbqTLer69zh
+ R5d5+/+ubELT2E5GT2Hwaz+1BUDZrC82b94G+kXDsISfR6fPgNSjsiCeQf1hJ3rPFU
+ olmuK8uxW+/ttm2SPIxLRZYC4MN6LCpfeLFBY+WTnnW4wokgdrh7e9y9I1Fr3iJQgQ
+ ZxrFTWzXtXVKCgTugtlyxMpkmuPZVd4BfA9z18Dm0yRQ5UtdcSRCc60q49nfV2+UE9
+ 8bCWz4fPSRv6g==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 107331BAA05;
- Wed, 24 Jun 2026 16:33:21 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id AC9441BA9D7;
+ Wed, 24 Jun 2026 16:33:17 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 9F7A73DEA54;
- Wed, 24 Jun 2026 16:33:26 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 49BEE3DEA26;
+ Wed, 24 Jun 2026 16:33:23 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Chao Liu <chao.liu.zevorn@gmail.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.2 083/107] target/riscv/cpu_helper.c: allow
- LOAD_ADDR_MIS promotion to AMO fault
-Date: Wed, 24 Jun 2026 16:31:28 +0300
-Message-ID: <20260624133301.403266-83-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ Jason Wang <jasowang@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.2 037/107] hw/net/rocker_of_dpa: Avoid unaligned
+ accesses in _of_dpa_flow_match()
+Date: Wed, 24 Jun 2026 16:30:42 +0300
+Message-ID: <20260624133301.403266-37-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.2-20260624163118@cover.tls.msk.ru>
 References: <qemu-stable-11.0.2-20260624163118@cover.tls.msk.ru>
@@ -71,40 +69,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+From: Peter Maydell <peter.maydell@linaro.org>
 
-promote_load_fault() is missing the promotion of misaligned AMO load
-addresses, i.e. RISCV_EXCP_LOAD_ADDR_MIS should be promoted to
-RISCV_EXCP_STORE_AMO_ADDR_MIS when RISCV_UW2_ALWAYS_STORE_AMO (i.e.
-always_storeamo is true).
+_of_dpa_flow_match() tries to do masked comparisons of OfDpaFlowkey
+structs by casting pointers to them to uint64_t* and then doing the
+memory accesses as 64-bit. This is undefined behaviour because the
+pointers might not be 64-bit aligned, and the UB sanitizer spots this:
 
-All other load AMO faults are already being covered.
+../../hw/net/rocker/rocker_of_dpa.c:321:20: runtime error: load of misaligned address 0x512000164044 for type 'uint64_t' (aka 'unsigned long'), which requires 8 byte alignment
+0x512000164044: note: pointer points here
+  02 00 00 00 00 00 ff ff  00 00 00 00 ff ff ff ff  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00
+              ^
+
+We do know that OfDpaFlowKey structs must be at least aligned enough
+for uint32_t accesses, because that's the type of the first field.
+Switch to using uint32_t accesses in the loop.
+
+Because the "width" field is always set via the FLOW_KEY_WIDTH macro
+and not exposed to the guest, we can adjust the macro to store the
+number of uint32_t to be checked rather than needing to change the
+loop boundary in the match function.
 
 Cc: qemu-stable@nongnu.org
-Fixes: 98f21c30f5 ("target/riscv: AMO operations always raise store/AMO fault")
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3503
-Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
-Message-ID: <20260522181353.429782-1-daniel.barboza@oss.qualcomm.com>
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-(cherry picked from commit d85a4ec06a65ccdd5c7d0f00b3e6695fc14a547a)
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Jason Wang <jasowang@redhat.com>
+(cherry picked from commit 71d027cfee8553e2ec28efa1ddd7fd0ecbadcc86)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
-index 22bab45e68..f631d008bd 100644
---- a/target/riscv/cpu_helper.c
-+++ b/target/riscv/cpu_helper.c
-@@ -2124,6 +2124,9 @@ static target_ulong promote_load_fault(target_ulong orig_cause)
+diff --git a/hw/net/rocker/rocker_of_dpa.c b/hw/net/rocker/rocker_of_dpa.c
+index 958f3006c1..3d6f55b512 100644
+--- a/hw/net/rocker/rocker_of_dpa.c
++++ b/hw/net/rocker/rocker_of_dpa.c
+@@ -99,13 +99,13 @@ typedef struct of_dpa_flow_key {
+             } nd;
+         } ipv6;
+     };
+-    int width;                       /* how many uint64_t's in key? */
++    int width;                       /* how many uint32_t's in key? */
+ } OfDpaFlowKey;
  
-     case RISCV_EXCP_LOAD_PAGE_FAULT:
-         return RISCV_EXCP_STORE_PAGE_FAULT;
-+
-+    case RISCV_EXCP_LOAD_ADDR_MIS:
-+        return RISCV_EXCP_STORE_AMO_ADDR_MIS;
-     }
+-/* Width of key which includes field 'f' in u64s, rounded up */
++/* Width of key which includes field 'f' in u32s, rounded up */
+ #define FLOW_KEY_WIDTH(f) \
+     DIV_ROUND_UP(offsetof(OfDpaFlowKey, f) + sizeof_field(OfDpaFlowKey, f), \
+-    sizeof(uint64_t))
++    sizeof(uint32_t))
  
-     /* if no promotion, return original cause */
+ typedef struct of_dpa_flow_action {
+     uint32_t goto_tbl;
+@@ -304,9 +304,9 @@ static void _of_dpa_flow_match(void *key, void *value, void *user_data)
+ {
+     OfDpaFlow *flow = value;
+     OfDpaFlowMatch *match = user_data;
+-    uint64_t *k = (uint64_t *)&flow->key;
+-    uint64_t *m = (uint64_t *)&flow->mask;
+-    uint64_t *v = (uint64_t *)&match->value;
++    uint32_t *k = (uint32_t *)&flow->key;
++    uint32_t *m = (uint32_t *)&flow->mask;
++    uint32_t *v = (uint32_t *)&match->value;
+     int i;
+ 
+     if (flow->key.tbl_id == match->value.tbl_id) {
 -- 
 2.47.3
 
