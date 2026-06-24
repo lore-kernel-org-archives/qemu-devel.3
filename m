@@ -4,88 +4,122 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52CEDCDB481
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 13:46:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8CF26CDB481
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 13:46:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcNoW-0002RJ-6y; Wed, 24 Jun 2026 09:38:48 -0400
+	id 1wcNuP-0002CL-Cy; Wed, 24 Jun 2026 09:44:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jim.macarthur@linaro.org>)
- id 1wcNnV-0001ft-Jh
- for qemu-devel@nongnu.org; Wed, 24 Jun 2026 09:37:46 -0400
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jim.macarthur@linaro.org>)
- id 1wcNnU-000179-6H
- for qemu-devel@nongnu.org; Wed, 24 Jun 2026 09:37:45 -0400
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-490b1bbcf3aso5863215e9.1
- for <qemu-devel@nongnu.org>; Wed, 24 Jun 2026 06:37:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1782308263; x=1782913063; darn=nongnu.org;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=Ee6Ws6ilv9tNM/LvFU3bwJGyeQM+X3lbEmSo0Osct8k=;
- b=TFMATFQKo/5SYtVdHKwgfFw+X6cPvmQdNTHacmZnGKx/NBQBJP4CQRq5A1+T4c2A8Z
- 23C0uAEvD38g+Q/i6NSeVLhjez2bGAKy9SPcdPBakLRKmZQ6D7L2ATmgbEk1WgYExCyw
- v3zuT3jNrSx93LKjvptRbFxEoT7HepqQdGSV7n1Hl3y7gL8LTKIzkzPq+Iw9jv//zMeE
- vab3kQxdMXXRNnniDsJhLDOvOYi6DYONbmmszhCaX8dqr6f8IVm9vccaljIFxI7LRgIW
- +8OwapGIRVeaucp4aHDo8Q0rhXJccHjQwZcEAiy78Di8Zt5BmSKaY1i7uEYkJ6jtmCC9
- XeBA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782308263; x=1782913063;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=Ee6Ws6ilv9tNM/LvFU3bwJGyeQM+X3lbEmSo0Osct8k=;
- b=PGtSGO3WFczQ36l82jYxeUSlxeJX2uvqR08OSaEvXZgZhhfFZgMSFLrj8V1B0AF4UO
- yEGMnwmXZV9WI/UjcvhegKUvwLLO3BDpcFzz/yOlZiDFRIvDk6FH9akXkm1EaB5Y5lrk
- RFtFzbRxOiOaDymRX2gjUfxMY+dUvcfJmoE9IN8uxVr6gRFD82MHr53de/lo8dRfVzxm
- ATe6TJGOs0Te8gB1CdMWhL2RR4GD5tVC6fVW8iCMrnLU6CRHCJxy3qvuAsE4Twk3pE9C
- 825AlghL+KSverb0hxY72jf8mA3P+zdFc15yjs+GW+qZ+8vIRVDzbW+JR1N9OX/j9XHu
- qWEg==
-X-Gm-Message-State: AOJu0YwWyHkLBK/dgc3t5QlOuDN8jCCM+xLIKdjT19ZY3cgZT9KZ1y5M
- X0NzvtrnM1juQMxacVYqPhot1pdfDqJbDZyf9GU6FmXfU0NsVY3+AzohsIVK0dOlTdw=
-X-Gm-Gg: AfdE7clTW2XSTQvrMpxOhuo72GPzB0KkvJ2Vxs/HxjtwlxYJeJC9uAOGEznAh2HwyYu
- TKR9ZezOT8kU7jMGhwvT5VQ0jMhOj5BWTCKFp1Wupxnyno11g3y2Wm6ZHG/wSi/4vo3NKXprS+X
- jn9fbAzDZbgy39yd/4W625pGMHcd3U6qGuglVIEfwh0SfoHaW6MkspGj+iO4SesHUgkZkytPDUd
- MIauelLJtRKM9ajc0UI3+Wr71Ogfi2JJVTSpH428y5h0NwZtcbwNvGPo2j+QIy0yxkk+t4C6cxR
- MPqQIcWq2Vn6gFBrPtmNzJ/61u8KL7KqgWJOQ75PudAR6wMRhqdrI/e18t1qK+wEMzQvGL4pjvl
- g4UHIh8dCMHlDO5AX2YwPpRDv41xl1JGmF8+M5oPWDbYypqV30rY8yaxbEXJY9nS+rB5XqCrndF
- tOdI0HasqIqapEHhc=
-X-Received: by 2002:a05:600c:8b03:b0:492:45a0:dcef with SMTP id
- 5b1f17b1804b1-49249083cb4mr270896595e9.5.1782308262621; 
- Wed, 24 Jun 2026 06:37:42 -0700 (PDT)
-Received: from [127.0.1.1] ([2a10:d582:31e:0:2e21:1ee8:260f:9a76])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-46c1e840efdsm6646334f8f.5.2026.06.24.06.37.40
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 24 Jun 2026 06:37:41 -0700 (PDT)
-From: Jim MacArthur <jim.macarthur@linaro.org>
-Date: Wed, 24 Jun 2026 14:37:29 +0100
-Subject: [PATCH v2 5/6] docs/system/arm: Add FEAT_FPRCVT to A-profile support
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1wcNuH-0001ux-0Y; Wed, 24 Jun 2026 09:44:45 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1wcNuE-0002F9-Ml; Wed, 24 Jun 2026 09:44:44 -0400
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 65OAmI8p717962; Wed, 24 Jun 2026 13:44:39 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=609Qy2
+ QRAh3UT4t+QGWfdWpflVpd5G2N8Ar3eCfS/Co=; b=lj72WA72zF4BHl8gKXU75i
+ zGZp5dZu5LorT5VaW0fFq2tYGvOyT8Ijm4X9lT4/tjxm+iDKhZr+cL3RcCThtoi7
+ 2mUMnUqVlAqE55+JGngGquQC7L5cV67qNzC06ROhunZiD6nYFzGN6jSWCXi2ZqvN
+ suQZadBUfCjNsIVCn3oa8HR3RlZ3HVOHRe++K6CzMBdKf34gc07jFVsPyTykKy7q
+ 0hG1M4XuUv+5YccQFuyCAlELbFwCkkSUvY/hk5z3dX4K9HXVEuvWUweTibud8DWh
+ pcjA5UMD/mvykAARBdZgDDuPZHktY9rkpNAPFbxaQ6YiAzpSrwuXnP8nBqsB2AXQ
+ ==
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4ewjc3mgw3-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 24 Jun 2026 13:44:37 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 65ODYhVd014807;
+ Wed, 24 Jun 2026 13:44:36 GMT
+Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4ex6phgsd2-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 24 Jun 2026 13:44:36 +0000 (GMT)
+Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com
+ [10.20.54.106])
+ by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 65ODiWf049479980
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 24 Jun 2026 13:44:32 GMT
+Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 7224F20043;
+ Wed, 24 Jun 2026 13:44:32 +0000 (GMT)
+Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 012F620040;
+ Wed, 24 Jun 2026 13:44:24 +0000 (GMT)
+Received: from li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com (unknown
+ [9.39.19.28]) by smtpav07.fra02v.mail.ibm.com (Postfix) with ESMTPS;
+ Wed, 24 Jun 2026 13:44:23 +0000 (GMT)
+Date: Wed, 24 Jun 2026 19:14:20 +0530
+From: Aditya Gupta <adityag@linux.ibm.com>
+To: Shivang Upadhyay <shivangu@linux.ibm.com>
+Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Sourabh Jain <sourabhjain@linux.ibm.com>,
+ Hari Bathini <hbathini@linux.ibm.com>, Nicholas Piggin <npiggin@gmail.com>,
+ Miles Glenn <milesg@linux.ibm.com>, Fabiano Rosas <farosas@suse.de>,
+ Laurent Vivier <lvivier@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, devel@lists.libvirt.org,
+ Misbah Anjum N <misanjum@linux.ibm.com>,
+ Anushree Mathur <anushree.mathur@linux.ibm.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ kvm@vger.kernel.org, Gautam Menghani <gautam@linux.ibm.com>,
+ Chinmay Rath <rathc@linux.ibm.com>
+Subject: Re: [PATCH 3/8] tests/qtest: Add Power11 chip & machine to qtests
+Message-ID: <ajvemcUx0k12xOIW@li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com>
+References: <20260623141933.577981-1-adityag@linux.ibm.com>
+ <20260623141933.577981-4-adityag@linux.ibm.com>
+ <54a9b8d16347f6cc94a625aca81897ba6b875385.camel@linux.ibm.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260624-jmac-fprcvt-v2-5-dc6cf8e512b6@linaro.org>
-References: <20260624-jmac-fprcvt-v2-0-dc6cf8e512b6@linaro.org>
-In-Reply-To: <20260624-jmac-fprcvt-v2-0-dc6cf8e512b6@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org, 
- Richard Henderson <richard.henderson@linaro.org>, 
- Alex Bennee <alex.bennee@linaro.org>, 
- Jim MacArthur <jim.macarthur@linaro.org>
-X-Mailer: b4 0.13.0
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=jim.macarthur@linaro.org; helo=mail-wm1-x32f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <54a9b8d16347f6cc94a625aca81897ba6b875385.camel@linux.ibm.com>
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Authority-Analysis: v=2.4 cv=X4Ni7mTe c=1 sm=1 tr=0 ts=6a3bdf46 cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+ a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=vGWFop1ilFAJY-VmeoUA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjI0MDExMCBTYWx0ZWRfX+4kUqhpMkB7t
+ m68FCHOPtNnpfeKAicOlNIiqoA0TPcgsIn063Ij33CM/EVL2D9/0osvor/V6cVxz3yd7X2aucDh
+ y4go0kmtLxd6bjYFK3NBGCPl3YJpjv0=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjI0MDExMCBTYWx0ZWRfX26F8NPrWVCHU
+ vWB8eNmTnKEjGtvMTuxFPdJmwvSt1EMCOPi/YiJKpvV1BU5eFNTB+p6CDXYnJDScZlwLSPGOiEh
+ AHqarufebHGUrG/SKKuFHlp0bKFQQTsKlKEe7xuaEGVyFZn1A51808x+GRQsDhjq1GsP/qAQbBF
+ DSggOUzcHxQdlN42W2yD5ude5mcZQHXf40uCybqhtQiAdWebVWh4I0V2zUZDYE34RAl/sRV2weL
+ /eZ+McpC5IG6S1OntEWma12EyDHJEcx/6igVZM7jmeSbAFI5MsJajTjHrX0bUFrL2g9fEq1p1Iq
+ bPzRu9O/MS08Dzo/zm6hMSUScireQWt0eeG2T3krFxhtHssiuvzYJXhq8EvdkU6gLvXSBNXlfo8
+ xTfviSdbX8zdfhnzqaCg9uA42W27mw==
+X-Proofpoint-ORIG-GUID: JVcqIU18sorVx2kxlWkqGHXMIzn6q46g
+X-Proofpoint-GUID: dqMh5Dcoww8-0RXr8jcdJ5JfqIoN99BJ
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-24_03,2026-06-23_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 phishscore=0 suspectscore=0 spamscore=0 malwarescore=0
+ adultscore=0 lowpriorityscore=0 classifier=typeunknown authscore=0 authtc=
+ authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.22.0-2606150000 definitions=main-2606240110
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=adityag@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -102,25 +136,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Jim MacArthur <jim.macarthur@linaro.org>
----
- docs/system/arm/emulation.rst | 1 +
- 1 file changed, 1 insertion(+)
+On 26/06/23 09:24PM, Shivang Upadhyay wrote:
+> On Tue, 2026-06-23 at 19:49 +0530, Aditya Gupta wrote:
+> > +static const char *pnv_get_machine_type(enum PnvChipType chip_type)
+> > +{
+> > +    if (chip_type == PNV_CHIP_POWER8) {
+> > +        return "powernv8";
+> > +    } else if (chip_type == PNV_CHIP_POWER9) {
+> > +        return "powernv9";
+> > +    } else if (chip_type == PNV_CHIP_POWER10) {
+> > +        return "powernv10";
+> > +    } else if (chip_type == PNV_CHIP_POWER11) {
+> > +        return "powernv11";
+> > +    } else {
+> > +        g_assert_not_reached();
+> > +    }
+> > +}
+> 
+> How about refactoring to the following?
+> 
+>     static const char *const machine_types[] = {
+>         [PNV_CHIP_POWER8]  = "powernv8",
+>         [PNV_CHIP_POWER9]  = "powernv9",
+>         [PNV_CHIP_POWER10] = "powernv10",
+>         [PNV_CHIP_POWER11] = "powernv11",
+>     };
+>     return machine_types[x];
 
-diff --git a/docs/system/arm/emulation.rst b/docs/system/arm/emulation.rst
-index a8072ddb67..98c028f6a6 100644
---- a/docs/system/arm/emulation.rst
-+++ b/docs/system/arm/emulation.rst
-@@ -85,6 +85,7 @@ the following architecture extensions:
- - FEAT_FPACCOMBINE (Faulting on combined pointer authentication instructions)
- - FEAT_FPACC_SPEC (Speculative behavior of combined pointer authentication instructions)
- - FEAT_FPMR (Floating-point Mode Register)
-+- FEAT_FPRCVT (Floating-Point to/from Integer in Scalar FP register)
- - FEAT_FRINTTS (Floating-point to integer instructions)
- - FEAT_FlagM (Flag manipulation instructions v2)
- - FEAT_FlagM2 (Enhancements to flag manipulation instructions)
+Has a subtle difference, that it may not assert/segfault on unknown
+value for x, I want the test to crash/fail if this is called with an
+unknown/new processor chip. I believe the if-else/switch is better as it
+handles (by 'crashing') unknown values too.
 
--- 
-2.43.0
+- Aditya G
 
+> 
+> ~Shivang.
 
