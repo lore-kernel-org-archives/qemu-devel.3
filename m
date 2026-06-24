@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3734CDB470
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 05:10:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D16FDCDB479
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 05:10:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcFrr-0004nZ-8O; Wed, 24 Jun 2026 01:09:43 -0400
+	id 1wcFn8-0004uC-K2; Wed, 24 Jun 2026 01:04:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wcFrE-0003kY-9h; Wed, 24 Jun 2026 01:09:08 -0400
+ id 1wcFn4-0004ro-Cx; Wed, 24 Jun 2026 01:04:46 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wcFrA-0005tt-BZ; Wed, 24 Jun 2026 01:09:02 -0400
+ id 1wcFn2-0005JA-S8; Wed, 24 Jun 2026 01:04:46 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1782277623; bh=SoCyYJj32vGyJYstrkzsKNblpC7iu9L6apiVqlqwOl8=;
+ t=1782277464; bh=HqZCh4j+bouB9gAQwzlePNf2AKvJxno0DAMzcBVR8YU=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=ZpN4IMzs5BQMjpH4lD2+qDFKXch+J+thNORTZc5TzvwzU02aveswI2+7xn9+4H/Lu
- teTp2X3iVRGbiFF26HDGOSx8s6x+2XakSRRx50pl06LFTn3YEFQYAmQe5CGUFTf5Y0
- WPYqXWwusp5NdgdUS4+eAhkI0XoVVSjUlcut4huDjbq/EZy4yAFN0b0gpyaESg/Lrp
- 4b5/FV/eapTx9+mGVyvV6o9Y5h6qPkjMH2HGBic6ePKmuMF0F97oGy8vt1vckD/eF3
- WbyOSBITLPhfrDjuIP+eqhHeVXh+aM2GNDQdZedrg7UtUrZSxGaFMA/FTJMol8rN0Q
- MNOHjt4CkhZqQ==
+ b=n4V47BtJqSIFj8fDt7a5qpGQzETsLXMwVXpDDtzIizQ0eosPVmo9Z5Zhq25i91mbH
+ bpXe98Q1jwfX/zT4f8Rv09n4Vp7GCnUIGPOnr/grOQrfULwsEL4E1Igz7u0SMMCg5f
+ fTFqgaL4+YmpJTe9AacF7bzb4++BtzTNg0t7yJUqhPf6R/6ocI3wOXmMTF9QANOUBn
+ 94dugVK1SBzjrPLLFE8a58FSXcT6V8nSNA2gX60UVA0287iTLbVxcEAVsI/BaAxZVW
+ pPNceH5aTkeCiwBt3g3ZhByh3uNz6RRiK7Bnh62gV27BRYjUma4lgXo1mrghW/q6EW
+ C/rCoSWZl3VCQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 4015A1BA66D;
- Wed, 24 Jun 2026 08:07:03 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id CBCD01BA635;
+ Wed, 24 Jun 2026 08:04:24 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 294F23DDB0A;
- Wed, 24 Jun 2026 08:07:08 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id B4EF13DDAC0;
+ Wed, 24 Jun 2026 08:04:29 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org,
  Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
  Alistair Francis <alistair.francis@wdc.com>,
- Chao Liu <chao.liu.zevorn@gmail.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.4 79/95] target/riscv/cpu_helper.c: add PMA access fault
-Date: Wed, 24 Jun 2026 08:05:14 +0300
-Message-ID: <20260624050541.395079-18-mjt@tls.msk.ru>
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.11 66/86] target/riscv/csr.c: do not allow mstatus
+ MPV/GVA writes
+Date: Wed, 24 Jun 2026 08:02:37 +0300
+Message-ID: <20260624050404.394225-10-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-10.2.4-20260624080454@cover.tls.msk.ru>
-References: <qemu-stable-10.2.4-20260624080454@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-10.0.11-20260624080222@cover.tls.msk.ru>
+References: <qemu-stable-10.0.11-20260624080222@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -73,151 +73,51 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 
-We're not doing anything special w.r.t PMA (Physical Memory Access)
-related faults, handling them like regular faults that will eventually
-turn to be regular page faults.
+The priv spec states the following about mstatus.MPV:
 
-Turns out we can't do that.  Priv spec section "Virtual Address
-Translation Process" mentions:
+"The MPV bit (Machine Previous Virtualization Mode) is written by the
+implementation whenever a trap is taken into M-mode."
 
-"If a store to the PTE at address a+va.vpn[i]×PTESIZE would violate a
-PMA or PMP check, raise an access-fault exception corresponding to the
-original access type."
+And, about mstatus.GVA:
 
-This means that we should handle PMA violations with access faults, like
-we're already doing with PMP.  One clear code path where we should throw
-a PMA failure, exposed by [1], is the error return from
-address_space_ld* call.
+"Field GVA (Guest Virtual Address) is written by the implementation
+whenever a trap is taken into M-mode."
 
-There's a separated issue with the error code being returned by them (it
-always return DECODE_ERROR even with 'rejected' reads) that we're going
-to work around it by assuming that we did a good job with the PTE
-address sanitization beforehand, and interpret that the error here is
-related to PMA.  This is of course not ideal but fixing this QEMU API is
-out of scope for this work.
+Both are written during riscv_cpu_do_interrupt().  They're not supposed
+to be written by userspace.  As far as write_mstatus goes these fields
+are read only.  The same applies for mstatush.MPV/mstatush.GVA.
 
-All this said, we'll set the new pmp_pma_violation flag when we have
-either a PMP or a PMA fault, and everything else shall fall into place.
-
-[1] https://gitlab.com/qemu-project/qemu/-/work_items/3502
-
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3502
+Fixes: 03dd405dd5 ("target/riscv: Support MSTATUS.MPV/GVA only when RVH is enabled")
 Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
-Message-ID: <20260522172502.320529-1-daniel.barboza@oss.qualcomm.com>
+Acked-by: Alistair Francis <alistair.francis@wdc.com>
+Message-ID: <20260514194537.2416243-2-daniel.barboza@oss.qualcomm.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-(cherry picked from commit 8e090ecfa9e5d9c225a9f6aae1e39586c182afa7)
+(cherry picked from commit 18645f19578955ec5ff2c40cd2c8753d6bc460c2)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-index ee93558668..faf8e1d151 100644
---- a/target/riscv/cpu.h
-+++ b/target/riscv/cpu.h
-@@ -131,7 +131,8 @@ enum {
-     TRANSLATE_SUCCESS,
-     TRANSLATE_FAIL,
-     TRANSLATE_PMP_FAIL,
--    TRANSLATE_G_STAGE_FAIL
-+    TRANSLATE_G_STAGE_FAIL,
-+    TRANSLATE_PMA_FAIL,
- };
+diff --git a/target/riscv/csr.c b/target/riscv/csr.c
+index a62b16feae..5e1b840087 100644
+--- a/target/riscv/csr.c
++++ b/target/riscv/csr.c
+@@ -2014,9 +2014,6 @@ static RISCVException write_mstatus(CPURISCVState *env, int csrno,
+     }
  
- /* Extension context status */
-diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
-index 97a8fe308d..e2da93700d 100644
---- a/target/riscv/cpu_helper.c
-+++ b/target/riscv/cpu_helper.c
-@@ -1374,7 +1374,22 @@ static int get_physical_address(CPURISCVState *env, hwaddr *physical,
+     if (xl != MXL_RV32 || env->debugger) {
+-        if (riscv_has_ext(env, RVH)) {
+-            mask |= MSTATUS_MPV | MSTATUS_GVA;
+-        }
+         if ((val & MSTATUS64_UXL) != 0) {
+             mask |= MSTATUS64_UXL;
          }
- 
-         if (res != MEMTX_OK) {
--            return TRANSLATE_FAIL;
-+            /*
-+             * The result of address_space_* APIs above does not take into
-+             * consideration reject reads, putting all errors in the same
-+             * cathegory (DECODE_ERROR), although there's a clear
-+             * distinction between a rejected read versus other errors
-+             * (see memory_region_dispatch_read() ->
-+             * memory_region_access_valid()).  This is something that
-+             * we might have to deal with core QEMU logic some other
-+             * day.
-+             *
-+             * For this particular error path, given that we made checks
-+             * w.r.t legal PTE address before calling those APIs, we'll
-+             * assume that anything != MEMTX_OK means a rejected read,
-+             * i.e. a PMA error.
-+             */
-+            return TRANSLATE_PMA_FAIL;
-         }
- 
-         if (riscv_cpu_sxl(env) == MXL_RV32) {
-@@ -1654,7 +1669,8 @@ static int get_physical_address(CPURISCVState *env, hwaddr *physical,
- }
- 
- static void raise_mmu_exception(CPURISCVState *env, target_ulong address,
--                                MMUAccessType access_type, bool pmp_violation,
-+                                MMUAccessType access_type,
-+                                bool pmp_pma_violation,
-                                 bool first_stage, bool two_stage,
-                                 bool two_stage_indirect)
+@@ -2053,7 +2050,7 @@ static RISCVException write_mstatush(CPURISCVState *env, int csrno,
+                                      target_ulong val)
  {
-@@ -1662,7 +1678,7 @@ static void raise_mmu_exception(CPURISCVState *env, target_ulong address,
+     uint64_t valh = (uint64_t)val << 32;
+-    uint64_t mask = riscv_has_ext(env, RVH) ? MSTATUS_MPV | MSTATUS_GVA : 0;
++    uint64_t mask = 0;
  
-     switch (access_type) {
-     case MMU_INST_FETCH:
--        if (pmp_violation) {
-+        if (pmp_pma_violation) {
-             cs->exception_index = RISCV_EXCP_INST_ACCESS_FAULT;
-         } else if (env->virt_enabled && !first_stage) {
-             cs->exception_index = RISCV_EXCP_INST_GUEST_PAGE_FAULT;
-@@ -1671,7 +1687,7 @@ static void raise_mmu_exception(CPURISCVState *env, target_ulong address,
-         }
-         break;
-     case MMU_DATA_LOAD:
--        if (pmp_violation) {
-+        if (pmp_pma_violation) {
-             cs->exception_index = RISCV_EXCP_LOAD_ACCESS_FAULT;
-         } else if (two_stage && !first_stage) {
-             cs->exception_index = RISCV_EXCP_LOAD_GUEST_ACCESS_FAULT;
-@@ -1680,7 +1696,7 @@ static void raise_mmu_exception(CPURISCVState *env, target_ulong address,
-         }
-         break;
-     case MMU_DATA_STORE:
--        if (pmp_violation) {
-+        if (pmp_pma_violation) {
-             cs->exception_index = RISCV_EXCP_STORE_AMO_ACCESS_FAULT;
-         } else if (two_stage && !first_stage) {
-             cs->exception_index = RISCV_EXCP_STORE_GUEST_AMO_ACCESS_FAULT;
-@@ -1806,7 +1822,7 @@ bool riscv_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
-     vaddr im_address;
-     hwaddr pa = 0;
-     int prot, prot2, prot_pmp;
--    bool pmp_violation = false;
-+    bool pmp_pma_violation = false;
-     bool first_stage_error = true;
-     bool two_stage_lookup = mmuidx_2stage(mmu_idx);
-     bool two_stage_indirect_error = false;
-@@ -1907,8 +1923,8 @@ bool riscv_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
-         }
-     }
- 
--    if (ret == TRANSLATE_PMP_FAIL) {
--        pmp_violation = true;
-+    if (ret == TRANSLATE_PMP_FAIL || ret == TRANSLATE_PMA_FAIL) {
-+        pmp_pma_violation = true;
-     }
- 
-     if (ret == TRANSLATE_SUCCESS) {
-@@ -1935,7 +1951,7 @@ bool riscv_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
-         cpu_check_watchpoint(cs, address, size, MEMTXATTRS_UNSPECIFIED,
-                              wp_access, retaddr);
- 
--        raise_mmu_exception(env, address, access_type, pmp_violation,
-+        raise_mmu_exception(env, address, access_type, pmp_pma_violation,
-                             first_stage_error, two_stage_lookup,
-                             two_stage_indirect_error);
-         cpu_loop_exit_restore(cs, retaddr);
+     if (riscv_cpu_cfg(env)->ext_smdbltrp) {
+         mask |= MSTATUS_MDT;
 -- 
 2.47.3
 
