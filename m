@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 909B5CDE000
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 05:06:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5B72CDB470
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 05:06:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcFoT-0007Bm-Ox; Wed, 24 Jun 2026 01:06:15 -0400
+	id 1wcFny-0005nx-NR; Wed, 24 Jun 2026 01:05:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wcFoL-00073X-7Y; Wed, 24 Jun 2026 01:06:05 -0400
+ id 1wcFnx-0005nW-WB; Wed, 24 Jun 2026 01:05:42 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wcFoJ-0005Zy-Gj; Wed, 24 Jun 2026 01:06:04 -0400
+ id 1wcFnv-0005ZJ-VF; Wed, 24 Jun 2026 01:05:41 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1782277465; bh=/fPUUu3k6sxOAiPY7znsBTJYposfoMb4ycWskbpVyQg=;
+ t=1782277465; bh=u7UyKd+bg4frYUjd5OWvNzr9eA/rRHuaP2afJs6Di2w=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=GTEBqzrE1ghfsri4h94xOKkqNSz4sxVfq+OAHeXcZmsb0kWBCFXHhRoyjtBtOoStY
- 4gILaUB6twi5hROPR3eUJnwNMhSAMCWKdCNlGL0txzqyy9HSJ2sypL1m/gEWYB52VD
- XtQCAWFP/1wNr/eMaRoOePSSVigFkXA+Ju9PzOQ+KUwASXdbpXG4rkqV/V3wGuhRnc
- nWCUnvT4F5Os7dMkLXivuOA+P3eY3c5kCxlC3DH5h++wBXcyu4YLjAP4A++W0vDnM1
- A7+0If5q/2esrGm1FyZae2hon6r/4rXLTg8MXSJnN09JGAENt5FTPZz0K3P+b17a4v
- 1kwvXCIXNIcYQ==
+ b=vOY6AvTECxc+NS670x3WzRoT6i2rAlWjzfS9konWs+LXw3WnsY7j7y8uV/ywdlKwU
+ v6E1gjA9UaZVv2WC/3EhQFm9U/KadDRYF3jWo653mpgr3ExNxRiMrP8HhnHxRlxhKt
+ J9pOAkl+l/bc2JZu2zn+FieI/hvhCFIilqAxAtMz3L3gN9iQJ0tSFPVK1R+swHSyQu
+ 6RiHT8JfZLQhHX8L5kn+n3qVB2RRGF9OZ3H6HImW2F+ldMCXVzsNjqw/5jM5rUM04N
+ YMay1PTLxrXRMkTHljY0O7kIl4w/7NB1FrQ5pGlW8PjqjrMHhZWREsYIlHN2ir96dg
+ O06+E+aJ6D8fw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 975291BA640;
+ by isrv.corpit.ru (Postfix) with ESMTP id 796D81BA63E;
  Wed, 24 Jun 2026 08:04:25 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 80F6A3DDACB;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 640013DDAC9;
  Wed, 24 Jun 2026 08:04:30 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Christian Schoenebeck <qemu_oss@crudebyte.com>,
- Feifan Qian <bea1e@proton.me>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.11 77/86] hw/9pfs: fix abort due to illegal name with
- Twstat rename
-Date: Wed, 24 Jun 2026 08:02:48 +0300
-Message-ID: <20260624050404.394225-21-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.11 75/86] target/i386: apply mod to immediate count of
+ an RCL/RCR operation
+Date: Wed, 24 Jun 2026 08:02:46 +0300
+Message-ID: <20260624050404.394225-19-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.11-20260624080222@cover.tls.msk.ru>
 References: <qemu-stable-10.0.11-20260624080222@cover.tls.msk.ru>
@@ -69,44 +69,155 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Christian Schoenebeck <qemu_oss@crudebyte.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
 
-The legacy Twstat 9p request can be used to rename files and directories.
-Unlike the other, more recent rename requests like Trename and Trenameat,
-Twstat does not validate the submitted new name before passing it to
-v9fs_complete_rename().
+RCR and RCL instructions with a count of 9 are the same as if the
+count was 0, but they generated incorrect code because the can_be_zero
+flag is false.  This causes 0 to underflow into -1 at
+tcg_gen_subi_tl(count, count, 1).
 
-A priviliged guest user with direct communication access to 9p server
-could pass a string containing '/' as new name, which causes an assertion
-fault (DoS) in local_name_to_path().
+Fix by absorbing the modulo computation into gen_shift_count(), now
+renamed gen_shift_count_1(), so that it can handle both reductions.
 
-Fix this by rejecting such strings by checking the client supplied new
-name with name_is_illegal(), similar to how Trename and Trenameat handlers
-do already.
-
-Reported-by: Feifan Qian <bea1e@proton.me>
-Fixes: 8cf89e007a ("virtio-9p: Add P9_TWSTAT support")
-Link: https://lore.kernel.org/qemu-devel/ba09716828e82992f9d8cac7f00eee0bc1c43c61.1780072238.git.qemu_oss@crudebyte.com
-Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
-(cherry picked from commit 7f5445e7e4050cc117ed4b137bb7dd1474e49d57)
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3452
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+(cherry picked from commit e38d0afade7c134cd4d675f54d26c394cc3cc31f)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/9pfs/9p.c b/hw/9pfs/9p.c
-index 7d53f070cc..0d58a5a74c 100644
---- a/hw/9pfs/9p.c
-+++ b/hw/9pfs/9p.c
-@@ -3617,6 +3617,11 @@ static void coroutine_fn v9fs_wstat(void *opaque)
-             err = -EOPNOTSUPP;
-             goto out;
-         }
-+        if (name_is_illegal(v9stat.name.data)) {
-+            err = -ENOENT;
-+            goto out;
-+        }
+diff --git a/target/i386/tcg/emit.c.inc b/target/i386/tcg/emit.c.inc
+index a22673e4b4..af1cea92be 100644
+--- a/target/i386/tcg/emit.c.inc
++++ b/target/i386/tcg/emit.c.inc
+@@ -3237,8 +3237,9 @@ static void gen_PUSHF(DisasContext *s, X86DecodedInsn *decode)
+     gen_push_v(s, s->T0);
+ }
+ 
+-static MemOp gen_shift_count(DisasContext *s, X86DecodedInsn *decode,
+-                             bool *can_be_zero, TCGv *count, int unit)
++static MemOp gen_shift_count_1(DisasContext *s, X86DecodedInsn *decode,
++                               bool *can_be_zero, TCGv *count, int unit,
++                               int mod)
+ {
+     MemOp ot = decode->op[0].ot;
+     int mask = (ot <= MO_32 ? 0x1f : 0x3f);
+@@ -3248,16 +3249,31 @@ static MemOp gen_shift_count(DisasContext *s, X86DecodedInsn *decode,
+     case X86_OP_INT:
+         *count = tcg_temp_new();
+         tcg_gen_andi_tl(*count, cpu_regs[R_ECX], mask);
 +
-         v9fs_path_write_lock(s);
-         err = v9fs_complete_rename(pdu, fidp, -1, &v9stat.name);
-         v9fs_path_unlock(s);
++        if (mod < mask) {
++            TCGv temp = tcg_temp_new();
++            assert(mod * 4 >= mask);
++            if (mod * 2 < mask) {
++                tcg_gen_subi_tl(temp, *count, mod * 2);
++                tcg_gen_movcond_tl(TCG_COND_GE, *count, temp, tcg_constant_tl(0), temp, *count);
++            }
++            tcg_gen_subi_tl(temp, *count, mod);
++            tcg_gen_movcond_tl(TCG_COND_GE, *count, temp, tcg_constant_tl(0), temp, *count);
++        }
+         *can_be_zero = true;
+         break;
+ 
+     case X86_OP_IMM:
+-        if ((decode->immediate & mask) == 0) {
++        decode->immediate &= mask;
++        if (mod < mask) {
++            decode->immediate %= mod;
++        }
++        if (decode->immediate == 0) {
+             *count = NULL;
+             break;
+         }
+         *count = tcg_temp_new();
+-        tcg_gen_movi_tl(*count, decode->immediate & mask);
++        tcg_gen_movi_tl(*count, decode->immediate);
+         break;
+ 
+     case X86_OP_SKIP:
+@@ -3272,6 +3288,13 @@ static MemOp gen_shift_count(DisasContext *s, X86DecodedInsn *decode,
+     return ot;
+ }
+ 
++static MemOp gen_shift_count(DisasContext *s, X86DecodedInsn *decode,
++                             bool *can_be_zero, TCGv *count, int unit)
++{
++    return gen_shift_count_1(s, decode, can_be_zero, count, unit,
++                             INT_MAX);
++}
++
+ /*
+  * Compute existing flags in decode->cc_src, for gen_* functions that wants
+  * to set the cc_op set to CC_OP_ADCOX.  In particular, this allows rotate
+@@ -3390,29 +3413,14 @@ static void gen_rot_overflow(X86DecodedInsn *decode, TCGv result, TCGv old,
+ /*
+  * RCx operations are invariant modulo 8*operand_size+1.  For 8 and 16-bit operands,
+  * this is less than 0x1f (the mask applied by gen_shift_count) so reduce further.
++ * FIXME: are flags updated if the count is nonzero, but a multiple of (8 << op) + 1?
+  */
+-static void gen_rotc_mod(MemOp ot, TCGv count)
++static MemOp gen_rotc_count(DisasContext *s, X86DecodedInsn *decode,
++                            bool *can_be_zero, TCGv *count, int unit)
+ {
+-    TCGv temp;
+-
+-    switch (ot) {
+-    case MO_8:
+-        temp = tcg_temp_new();
+-        tcg_gen_subi_tl(temp, count, 18);
+-        tcg_gen_movcond_tl(TCG_COND_GE, count, temp, tcg_constant_tl(0), temp, count);
+-        tcg_gen_subi_tl(temp, count, 9);
+-        tcg_gen_movcond_tl(TCG_COND_GE, count, temp, tcg_constant_tl(0), temp, count);
+-        break;
+-
+-    case MO_16:
+-        temp = tcg_temp_new();
+-        tcg_gen_subi_tl(temp, count, 17);
+-        tcg_gen_movcond_tl(TCG_COND_GE, count, temp, tcg_constant_tl(0), temp, count);
+-        break;
+-
+-    default:
+-        break;
+-    }
++    MemOp ot = decode->op[0].ot;
++    return gen_shift_count_1(s, decode, can_be_zero, count, unit,
++                             (8 << ot) + 1);
+ }
+ 
+ /*
+@@ -3433,7 +3441,7 @@ static void gen_RCL(DisasContext *s, X86DecodedInsn *decode)
+     bool have_1bit_cin, can_be_zero;
+     TCGv count;
+     TCGLabel *zero_label = NULL;
+-    MemOp ot = gen_shift_count(s, decode, &can_be_zero, &count, decode->op[2].unit);
++    MemOp ot = gen_rotc_count(s, decode, &can_be_zero, &count, decode->op[2].unit);
+     TCGv low, high, low_count;
+ 
+     if (!count) {
+@@ -3444,7 +3452,6 @@ static void gen_RCL(DisasContext *s, X86DecodedInsn *decode)
+     high = tcg_temp_new();
+     low_count = tcg_temp_new();
+ 
+-    gen_rotc_mod(ot, count);
+     have_1bit_cin = gen_eflags_adcox(s, decode, true, can_be_zero);
+     if (can_be_zero) {
+         zero_label = gen_new_label();
+@@ -3485,7 +3492,7 @@ static void gen_RCR(DisasContext *s, X86DecodedInsn *decode)
+     bool have_1bit_cin, can_be_zero;
+     TCGv count;
+     TCGLabel *zero_label = NULL;
+-    MemOp ot = gen_shift_count(s, decode, &can_be_zero, &count, decode->op[2].unit);
++    MemOp ot = gen_rotc_count(s, decode, &can_be_zero, &count, decode->op[2].unit);
+     TCGv low, high, high_count;
+ 
+     if (!count) {
+@@ -3496,7 +3503,6 @@ static void gen_RCR(DisasContext *s, X86DecodedInsn *decode)
+     high = tcg_temp_new();
+     high_count = tcg_temp_new();
+ 
+-    gen_rotc_mod(ot, count);
+     have_1bit_cin = gen_eflags_adcox(s, decode, true, can_be_zero);
+     if (can_be_zero) {
+         zero_label = gen_new_label();
 -- 
 2.47.3
 
