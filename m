@@ -4,97 +4,116 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28554CDE002
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 15:06:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B72CCDB479
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 15:11:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcPBE-000362-7C; Wed, 24 Jun 2026 11:06:20 -0400
+	id 1wcPFj-0003wc-E5; Wed, 24 Jun 2026 11:10:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wcPBA-00035T-Gv
- for qemu-devel@nongnu.org; Wed, 24 Jun 2026 11:06:16 -0400
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wcPFV-0003sl-TL
+ for qemu-devel@nongnu.org; Wed, 24 Jun 2026 11:10:49 -0400
+Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wcPB8-0001Sp-Mi
- for qemu-devel@nongnu.org; Wed, 24 Jun 2026 11:06:16 -0400
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-490cdae130cso6458955e9.0
- for <qemu-devel@nongnu.org>; Wed, 24 Jun 2026 08:06:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1782313573; x=1782918373; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=f8ufwlZ3zz5EBuU/4lkCHYixp/oTIOjbCFRp8+ljV7w=;
- b=pDRc1SFxx5FzdQt0LN8sGdFcYjhbM92zPp8OfAbTbcysZ3lJ54Uuyv68zmwG7Ou3u9
- aYdyPbuiMc11ClJ7ON4dZQdnRRjwYPuZWl6qbtbNH370z9B6vLbRsWuD5Y2xM2xXjPys
- 8A1Op2aFYBOq+XrlSHtI13iGjx9v1dGzV3ituDx054Y7txlNj69e0ceWj3H6r0x/9I3q
- EmvKopFAF6nl4QOqMRwTR3W/ZK/NxwqDrC3kxShJoykvrmhNTdjozjpkiqascT8c+7SP
- XVpKBYFfOjohfX8E/eukB593XMxbJfNS5CvS21YfLzhNmv9CqcXMiTZgPeqOv1NfKWJf
- pzUA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782313573; x=1782918373;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=f8ufwlZ3zz5EBuU/4lkCHYixp/oTIOjbCFRp8+ljV7w=;
- b=m+a53nN4jUx4GEfygXFbRfTlJms4KM1myf3cUO2sYNMBmIVNb5nJpM+xxQ0YQTqKzx
- VFH1uaNn4x5nqLSv0RBGosJFB3fgHk3xlbh7xsHTP7S0kUeILvlGYEkLdKBwy5l3w+Lg
- xOkaNILBLNQTIT4eUfHGdInG9OR7L8NNFsJea+JCjXZ4czxbo97Eti88a/OC7gyFPC2Q
- gsiZtqWyry5JPEVCc2g+83wbIb4+xGkUzB43UbVzHGGlXilVYXr2fdtuTRv1iuRoc/MO
- YyCSj/Bil1hblqCDhjzIApo7dPWigRYZm2MyRQIC77mhK2XP4sV+h1qNfdaAsqyxYeIL
- O4Tw==
-X-Gm-Message-State: AOJu0YxfNfBd6nZvB8AggExLf0xX3vHxa8CXZ2U5ViIlKxKUU4/0IVRW
- w0E9dT507tJ7M4DwjiWtSqtYWLVHmz3e4/R7BROfbrOXQqFMXE8JnkDibwcOk8zSfl4=
-X-Gm-Gg: AfdE7cnzDCWF6V8vJcRFFpe2iWzFXE7MYANsix/5GWoyTXRu3wWm3JajTXjMyURnTbX
- yYToOTXU1Jo8I/EUkYy6boZrVchb2NxD04zIFn4jQ/Pt07VO2YAE16E4V1n/uvlrZ1CeiecAB0w
- UIq3oujpbBY2ktFM7Bb34wvswxGssneL4xnZeWj2dwQcdj8xal9lbFSkMZl9m+SIjqNrcwjviXG
- gOWdIhL/jm/5FxPnFWgR4xGLZHVFYtwu9mBNQNLhGpJLtlSXA0JgsGsNyumE1Yu7mlG0vPP9b4b
- fVm2hyqnX7K9xiDV8hm1vgILKPsJWsBAsI9HTAisow7J+vvTbJagWL6YDJw7M4AMmsVcoXEhtMe
- cuhUGgBYYSWdpugExyrcFMwUPc/ajWhLHghrRE/+FHuX1a1n69dkwsUmLF5PI/x1crqD5dgbEj+
- gW5R/Spll15qD/
-X-Received: by 2002:a05:600d:844f:10b0:492:5e20:3ee9 with SMTP id
- 5b1f17b1804b1-49260840bbemr43176615e9.6.1782313572494; 
- Wed, 24 Jun 2026 08:06:12 -0700 (PDT)
-Received: from draig.lan ([185.124.0.195]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-492494496d8sm376292155e9.9.2026.06.24.08.06.11
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 24 Jun 2026 08:06:11 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id CBE155F807;
- Wed, 24 Jun 2026 16:06:10 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org,  Thomas Huth <thuth@redhat.com>,  Paolo Bonzini
- <pbonzini@redhat.com>,  Manos Pitsidianakis
- <manos.pitsidianakis@linaro.org>,  Daniel P . =?utf-8?Q?Berrang=C3=A9?=
- <berrange@redhat.com>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>,
- qemu-arm@nongnu.org,  Richard Henderson <richard.henderson@linaro.org>,
- Alexandre Iooss <erdnaxe@crans.org>,  Peter Maydell
- <peter.maydell@linaro.org>,  Gustavo Romero <gustavo.romero@linaro.org>
-Subject: Re: [PATCH 05/27] tests/tcg/meson.build: introduce exe_name
-In-Reply-To: <20260609214745.772536-6-pierrick.bouvier@oss.qualcomm.com>
- (Pierrick Bouvier's message of "Tue, 9 Jun 2026 14:47:23 -0700")
-References: <20260609214745.772536-1-pierrick.bouvier@oss.qualcomm.com>
- <20260609214745.772536-6-pierrick.bouvier@oss.qualcomm.com>
-User-Agent: mu4e 1.14.2; emacs 30.1
-Date: Wed, 24 Jun 2026 16:06:10 +0100
-Message-ID: <87pl1gj7vh.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wcPFT-0001zg-6b
+ for qemu-devel@nongnu.org; Wed, 24 Jun 2026 11:10:44 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 41DFC75E74;
+ Wed, 24 Jun 2026 15:10:40 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1782313840; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=0qFTVWixYb867stxe2//gz19SJR2pKN1zyiu8tDH4ew=;
+ b=MYY4Ih0nUFfor8zh3LAXLZuJOGZoZ5CJqRfJXi2TGze0oMN2SuXEtgYL7dq6CPdrncCtdr
+ nLgVIVvZ4NgwvSMfI33ndkNDUXPQ8Hd0LvSlil6osFFlWumX94TgyizR+GYMuazRZaP8vu
+ a0JlbGvuECxyU39t1zyP4M9MNCuJqwQ=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1782313840;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=0qFTVWixYb867stxe2//gz19SJR2pKN1zyiu8tDH4ew=;
+ b=W/aYIzHznVq6sfs+1vmXqbAyskJDHutEWCE0KQ3Wm18H2JFt2okejiCAP1/6KepuRRXESw
+ Q+axkvQyJmNAcuCQ==
+Authentication-Results: smtp-out2.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=MYY4Ih0n;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b="W/aYIzHz"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1782313840; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=0qFTVWixYb867stxe2//gz19SJR2pKN1zyiu8tDH4ew=;
+ b=MYY4Ih0nUFfor8zh3LAXLZuJOGZoZ5CJqRfJXi2TGze0oMN2SuXEtgYL7dq6CPdrncCtdr
+ nLgVIVvZ4NgwvSMfI33ndkNDUXPQ8Hd0LvSlil6osFFlWumX94TgyizR+GYMuazRZaP8vu
+ a0JlbGvuECxyU39t1zyP4M9MNCuJqwQ=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1782313840;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=0qFTVWixYb867stxe2//gz19SJR2pKN1zyiu8tDH4ew=;
+ b=W/aYIzHznVq6sfs+1vmXqbAyskJDHutEWCE0KQ3Wm18H2JFt2okejiCAP1/6KepuRRXESw
+ Q+axkvQyJmNAcuCQ==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id D4EFF779A8;
+ Wed, 24 Jun 2026 15:10:39 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id 9E3zKG/zO2oNbQAAD6G6ig
+ (envelope-from <farosas@suse.de>); Wed, 24 Jun 2026 15:10:39 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Aadeshveer Singh <aadeshveer07@gmail.com>, qemu-devel@nongnu.org
+Cc: peterx@redhat.com, pbonzini@redhat.com, philmd@mailo.com,
+ lvivier@redhat.com, ayoub@saferwall.com, Aadeshveer Singh
+ <aadeshveer07@gmail.com>
+Subject: Re: [RFC PATCH 4/5] migration: write up code to run fast snapshot
+ load in qemu_loadvm_state
+In-Reply-To: <20260618032010.88755-5-aadeshveer07@gmail.com>
+References: <20260618032010.88755-1-aadeshveer07@gmail.com>
+ <20260618032010.88755-5-aadeshveer07@gmail.com>
+Date: Wed, 24 Jun 2026 12:10:29 -0300
+Message-ID: <87y0g4nfdm.fsf@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x336.google.com
+Content-Type: text/plain
+X-Rspamd-Action: no action
+X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[]; FREEMAIL_ENVRCPT(0.00)[gmail.com];
+ TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FREEMAIL_TO(0.00)[gmail.com,nongnu.org];
+ FUZZY_RATELIMITED(0.00)[rspamd.com];
+ RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
+ MIME_TRACE(0.00)[0:+]; ARC_NA(0.00)[];
+ FREEMAIL_CC(0.00)[redhat.com,mailo.com,saferwall.com,gmail.com];
+ RCVD_TLS_ALL(0.00)[]; DKIM_TRACE(0.00)[suse.de:+];
+ RCVD_COUNT_TWO(0.00)[2]; FROM_EQ_ENVFROM(0.00)[];
+ FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[];
+ MID_RHS_MATCH_FROM(0.00)[];
+ RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+ RCPT_COUNT_SEVEN(0.00)[8]; MISSING_XM_UA(0.00)[];
+ RCVD_VIA_SMTP_AUTH(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid, suse.de:dkim,
+ imap1.dmz-prg2.suse.org:helo, imap1.dmz-prg2.suse.org:rdns]
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+X-Rspamd-Queue-Id: 41DFC75E74
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
+ envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -111,79 +130,176 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> writes:
+Aadeshveer Singh <aadeshveer07@gmail.com> writes:
 
-> We add possibility to duplicate a test executable for a given source
-> file. This is needed when different cflags need to be used (like
-> vectorized vs non-vectorized for instance, like sve tests in aarch64).
+> When both mapped-ram and postcopy-ram are set, divert from
+> qemu_loadvm_state to run fast snapshot load
 >
-> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+> Initialize postcopy RAM state and register RAM Blocks with userfaultfd
+> via ram_postcopy_incoming_init() and postcopy_ram_incoming_setup().
+> Launch fault thread before VM to serve faults for some hardwares
+> emulation that need to read RAM (like vapic devices). Populate bitmaps
+> and offset tables while reading file in qemu_loadvm_state_main. Call to
+> qemu_loadvm_state_postcopy() which starts the VM using
+> loadvm_postcopy_handle_run_bh() and launches eager load thread.
+>
+> Skip scheduling process_incoming_migration_bh() in
+> process_incoming_migration_co(), for fast snapshot load as the state
+> cleanup is managed by eager load thread on completion.
+>
+> Skip setting migration status to ACTIVE in process_incoming_migration_co
+> and set set it to POSTCOPY_DEVICE in qemu_loadvm_state() itself.
+>
+> Remove the capability check that rejected mapped-ram and postcopy-ram
+> being set simultaneously, as this combination now corresponds to fast
+> snapshot load. The corresponding test will be updated in following
+> patch.
+>
+> Signed-off-by: Aadeshveer Singh <aadeshveer07@gmail.com>
 > ---
->  tests/tcg/meson.build | 17 +++++++++++++++--
->  1 file changed, 15 insertions(+), 2 deletions(-)
+>  migration/migration.c | 10 ++++++---
+>  migration/options.c   |  6 -----
+>  migration/savevm.c    | 52 +++++++++++++++++++++++++++++++++++++++++--
+>  migration/savevm.h    |  2 ++
+>  4 files changed, 59 insertions(+), 11 deletions(-)
 >
-> diff --git a/tests/tcg/meson.build b/tests/tcg/meson.build
-> index 72d1a9f8986..2c6d85c586a 100644
-> --- a/tests/tcg/meson.build
-> +++ b/tests/tcg/meson.build
-> @@ -11,6 +11,7 @@ tcg_tests =3D {}
->  #     'tests': [
->  #       {
->  #         'src_file': {
-> +#           'exe_name': ['provide an alternative binary name'],
->  #         }
->  #       },
->  #       ...
-> @@ -18,10 +19,10 @@ tcg_tests =3D {}
->  #   }
->  # }
->  #
-> -# Every test executable, is built only once.
-> +# Every test executable, identified by 'exe_name' is built only once.
->  # Tests for a given src use the same executable by default, and their de=
-finition
->  # is guaranteed to be unique also.
-> -# Default name is derived from src.
-> +# Default name is derived from src if 'exe_name' is omitted.
->=20=20
->  # plugins come first, as we need to build the list
->  subdir('plugins')
-> @@ -47,11 +48,23 @@ foreach target, plan: tcg_tests
->=20=20
->    foreach t : tests
->      foreach src, setup: t
-> +      # return a clear error if user mispell a setup entry
-> +      foreach key, _ : setup
-> +        if key not in [
-> +                       'exe_name',
-> +                       ]
-> +          error('unknown tcg setup entry \'' + key + '\' for test ' + sr=
-c)
-> +        endif
-> +      endforeach
+> diff --git a/migration/migration.c b/migration/migration.c
+> index 074d3f2c69..e1ac310e20 100644
+> --- a/migration/migration.c
+> +++ b/migration/migration.c
+> @@ -756,8 +756,10 @@ process_incoming_migration_co(void *opaque)
+>  
+>      mis->largest_page_size = qemu_ram_pagesize_largest();
+>      postcopy_state_set(POSTCOPY_INCOMING_NONE);
+> -    migrate_set_state(&mis->state, MIGRATION_STATUS_SETUP,
+> -                      MIGRATION_STATUS_ACTIVE);
+> +    if (!migrate_fast_snapshot_load()) {
+> +        migrate_set_state(&mis->state, MIGRATION_STATUS_SETUP,
+> +                          MIGRATION_STATUS_ACTIVE);
+> +    }
+>  
+>      mis->loadvm_co = qemu_coroutine_self();
+>      ret = qemu_loadvm_state(mis->from_src_file, &local_err);
+> @@ -786,7 +788,9 @@ process_incoming_migration_co(void *opaque)
+>          colo_incoming_co();
+>      }
+>  
+> -    migration_bh_schedule(process_incoming_migration_bh, mis);
+> +    if (!migrate_fast_snapshot_load()) {
+> +        migration_bh_schedule(process_incoming_migration_bh, mis);
+> +    }
+
+This inconspicuous 4 line hunk will cause bugs for years to come. =D
+
+We should try to include the fast_snapshot actions within the incoming
+BH so the paths are the same in both types of migration. Ideally we'd
+merge all the BHs in a single one.
+
+>      goto out;
+>  
+>  fail:
+> diff --git a/migration/options.c b/migration/options.c
+> index 5f80dd5b42..3f447cf7b2 100644
+> --- a/migration/options.c
+> +++ b/migration/options.c
+> @@ -732,12 +732,6 @@ bool migrate_caps_check(bool *old_caps, bool *new_caps, Error **errp)
+>                         "Mapped-ram migration is incompatible with xbzrle");
+>              return false;
+>          }
+> -
+> -        if (new_caps[MIGRATION_CAPABILITY_POSTCOPY_RAM]) {
+> -            error_setg(errp,
+> -                       "Mapped-ram migration is incompatible with postcopy");
+> -            return false;
+> -        }
+
+Just checking: Does this allow any type of migration that is not covered
+by this series?
+
+>      }
+>  
+>      /*
+> diff --git a/migration/savevm.c b/migration/savevm.c
+> index 23adaf9dd9..f10cc3c2fc 100644
+> --- a/migration/savevm.c
+> +++ b/migration/savevm.c
+> @@ -2959,6 +2959,32 @@ static bool postcopy_pause_incoming(MigrationIncomingState *mis)
+>      return true;
+>  }
+>  
+> +/*
+> + * Starts the VM and launches the eager thread for fast snapshot load
+> + */
+> +int qemu_loadvm_state_postcopy(QEMUFile *f, MigrationIncomingState *mis,
+> +                               Error **errp)
+> +{
+> +    ERRP_GUARD();
+> +    int ret = 0;
 > +
->        # meson '/' operator drops left operand if right is an absolute pa=
-th
->        src =3D folder / src
->        file =3D files(src)
->        test =3D fs.name(file)
->        exe_name =3D fs.stem(src)
-> +      if 'exe_name' in setup
-> +        exe_name =3D setup['exe_name']
-> +      endif
->
-
-Would it be better to put exe_name =3D fs.stem(src) in an else leg?
-
-Anyway:
-
-Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
-
-
->        exe_name =3D target + '-' + exe_name
->        test_name =3D exe_name
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+> +    postcopy_state_set(POSTCOPY_INCOMING_RUNNING);
+> +
+> +    migration_bh_schedule(loadvm_postcopy_handle_run_bh, mis);
+> +
+> +    migrate_set_state(&mis->state, MIGRATION_STATUS_POSTCOPY_DEVICE,
+> +                      MIGRATION_STATUS_POSTCOPY_ACTIVE);
+> +
+> +    ret = postcopy_ram_eager_load_setup(mis);
+> +    if (ret) {
+> +        error_prepend(errp,
+> +                      "Failed to setup eager load for fast snapshot load: ");
+> +        return ret;
+> +    }
+> +
+> +    return ret;
+> +}
+> +
+>  int qemu_loadvm_state_main(QEMUFile *f, MigrationIncomingState *mis,
+>                             Error **errp)
+>  {
+> @@ -3067,8 +3093,30 @@ int qemu_loadvm_state(QEMUFile *f, Error **errp)
+>  
+>      cpu_synchronize_all_pre_loadvm();
+>  
+> -    ret = qemu_loadvm_state_main(f, mis, errp);
+> -    qemu_event_set(&mis->main_thread_load_event);
+> +    if (migrate_fast_snapshot_load()) {
+> +        migrate_set_state(&mis->state, MIGRATION_STATUS_SETUP,
+> +                          MIGRATION_STATUS_POSTCOPY_DEVICE);
+> +
+> +        if (ram_postcopy_incoming_init(mis, errp)) {
+> +            return -EINVAL;
+> +        }
+> +
+> +        postcopy_state_set(POSTCOPY_INCOMING_LISTENING);
+> +        if (postcopy_ram_incoming_setup(mis)) {
+> +            return -EINVAL;
+> +        }
+> +
+> +        ret = qemu_loadvm_state_main(f, mis, errp);
+> +
+> +        qemu_event_set(&mis->main_thread_load_event);
+> +
+> +        if (ret == 0) {
+> +            ret = qemu_loadvm_state_postcopy(f, mis, errp);
+> +        }
+> +    } else {
+> +        ret = qemu_loadvm_state_main(f, mis, errp);
+> +        qemu_event_set(&mis->main_thread_load_event);
+> +    }
+>  
+>      trace_qemu_loadvm_state_post_main(ret);
+>  
+> diff --git a/migration/savevm.h b/migration/savevm.h
+> index 96fdf96d4e..9656acd7fe 100644
+> --- a/migration/savevm.h
+> +++ b/migration/savevm.h
+> @@ -67,6 +67,8 @@ void qemu_savevm_send_postcopy_ram_discard(QEMUFile *f, const char *name,
+>  int qemu_save_device_state(QEMUFile *f, Error **errp);
+>  int qemu_loadvm_state(QEMUFile *f, Error **errp);
+>  void qemu_loadvm_state_cleanup(MigrationIncomingState *mis);
+> +int qemu_loadvm_state_postcopy(QEMUFile *f, MigrationIncomingState *mis,
+> +                               Error **errp);
+>  int qemu_loadvm_state_main(QEMUFile *f, MigrationIncomingState *mis,
+>                             Error **errp);
+>  int qemu_load_device_state(QEMUFile *f, Error **errp);
 
