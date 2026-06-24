@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D00BFCDB47F
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 11:43:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6C01CDB47F
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 11:43:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcM0e-0001sc-Ex; Wed, 24 Jun 2026 07:43:12 -0400
+	id 1wcM0t-0003MJ-DG; Wed, 24 Jun 2026 07:43:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wcM0b-0001Xn-W1
- for qemu-devel@nongnu.org; Wed, 24 Jun 2026 07:43:10 -0400
+ id 1wcM0n-0003Ed-61
+ for qemu-devel@nongnu.org; Wed, 24 Jun 2026 07:43:21 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wcM0a-00082u-Ai
- for qemu-devel@nongnu.org; Wed, 24 Jun 2026 07:43:09 -0400
+ id 1wcM0l-00085q-Ee
+ for qemu-devel@nongnu.org; Wed, 24 Jun 2026 07:43:20 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1782301387;
+ s=mimecast20190719; t=1782301398;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=qqlC+42zhqeavMxeGPBfk4oSuGA+H9bM4iKdmjjAK00=;
- b=fsXwJDi6CDoMukPrZVmIOgqN/Yz+yo4FaMxVQJq9UpFewhwbt2M43lnwZSE+sLshFOd3tf
- 5C9BvrcJikFyjL7H5hQwKfLVdkRXlNGPWiLxrDERv+/CqjTQQQse3DGG/rO/AZbVUFDNKw
- 4ylbsLd0jVL0GHKzJaWmToNdKea3i0s=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ bh=wp+gOa7w6okWnqQG9NLVesU9AKbObvi0L3iuKa4JSGk=;
+ b=b6ZHocN3koeem4zd67HuMLo7UXC6s/NmOKjcNvSyOlPf7T5KLCPAZzjh2OhX8MTbG+OAEe
+ 6z44Nb/wpbrww0NxWd+r6yneirt2UW4Igp//KGVt0nRn68VAA2mzx7a5e9+NNZSCqrbIaw
+ Z2OhZPuTcAnbyMyNjXvDHlAA18ndUBA=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-619-xItnjq6RPciAPrkQJUIUYg-1; Wed,
- 24 Jun 2026 07:43:05 -0400
-X-MC-Unique: xItnjq6RPciAPrkQJUIUYg-1
-X-Mimecast-MFC-AGG-ID: xItnjq6RPciAPrkQJUIUYg_1782301385
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-437-gIIE2ibROFSJ4lKQONWxJg-1; Wed,
+ 24 Jun 2026 07:43:17 -0400
+X-MC-Unique: gIIE2ibROFSJ4lKQONWxJg-1
+X-Mimecast-MFC-AGG-ID: gIIE2ibROFSJ4lKQONWxJg_1782301396
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 167EC1801F09
- for <qemu-devel@nongnu.org>; Wed, 24 Jun 2026 11:43:05 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id CDA2B18005A9
+ for <qemu-devel@nongnu.org>; Wed, 24 Jun 2026 11:43:16 +0000 (UTC)
 Received: from localhost (unknown [10.44.24.16])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 2924C30001A7; Wed, 24 Jun 2026 11:43:03 +0000 (UTC)
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 82338180058F; Wed, 24 Jun 2026 11:43:15 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Wed, 24 Jun 2026 15:41:39 +0400
-Subject: [GIT PULL 17/35] ui/sdl2: implement display cleanup
+Date: Wed, 24 Jun 2026 15:41:41 +0400
+Subject: [GIT PULL 19/35] ui/egl: implement display and EGL cleanup
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260624-ui-v1-17-482147b0a7af@redhat.com>
+Message-Id: <20260624-ui-v1-19-482147b0a7af@redhat.com>
 References: <20260624-ui-v1-0-482147b0a7af@redhat.com>
 In-Reply-To: <20260624-ui-v1-0-482147b0a7af@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Stefan Hajnoczi <stefanha@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1990;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3887;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=6KH6pNQc0gVStN1cYPWY3mNbdZp2tOf24qcFW+Wjd2k=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqO8Jnj5anSkhlL6HKM97uUlLMJ+OdLqJgTib7z
- Y6Mi2JbfbaJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCajvCZwAKCRDa6OEJdZac
- 5bk/D/9Fl7zMYUgJMKL193xv0K7cqoj55wwrMNAiYS5+3y2jRyl6U1/MuUdAXyOlImGEMULWV6J
- mrGXTjYaPJZ3YbylTuIk0uW+QFdzgOngjrpbdqtXAh2WG2IcinM4AnjhU/Z4zDJuY7KREtnhD6P
- nROi91zxuTL4bG2K3wGe3rKieNpctXR9qG0iFJ/eAkZIYJkRCcdfTDjQQLp41ump8atgt7GeLTz
- Lhy8c7KfRL/NXlBAENFh+tSwajjYUrUiw+ge+slY4/uudZ7WMPplTy/BwH29buOVtoB3/cL1YrY
- a5Ykhl3FcccIOcK6qY1u/Sf4Uo1htfMC8oxPLFKYbE3P1h30taRY9O2ckT9XgVxLsJ8LPF7fSWn
- 2f+RzYVB9LGBZrlxXG+z3/+K7t2vpfYv9AOniBu8uD7lKc+ioi+NFSs4rW1A7xZsjAGUKTyeNiH
- jOhiiAIHPA/zZ4zPsClzKNB2XOXkZL4hDajFm1vu0hDMwfE8NLqNIT4EOrfn0hpEyYofRy1BFK+
- sFGUFML+UC86IuOcn4v+VUsNHop9opTggCpGSU5u4UNnN9vhHa3gci4Gw9VAiFklhJbXtzrfOkH
- ktRFX2rMpTl7u/ZHRGdqnO+QbJ/izfXHqWDSrqkWHFhRbF1g2SamhJEHlR6yuBiiECMgEXPxVhv
- oz6zk0Sh+RdC5nQ==
+ bh=jca7AjPmYbnDHRocndRnhM7EYaiMpafKt5/Xsb12RME=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqO8JoK5IEwXgBVK3nIEpS4l15TIy5Z8SnAp0vf
+ nV0A04AfXOJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCajvCaAAKCRDa6OEJdZac
+ 5cpfEACTT4Y0rPMkfa05vklKxlAAAHATVTD71sxGOv4K9XDDjONHHu7NrbpDN2HL/ue5+VLh4+J
+ XfgyfljS9+g9IQnZ0hcZkwPJy7s71zdLxzeOFYH9yzIPEdgILHmA8wbugIEz1Ymm+gzwJX9l2gM
+ pq9t2/t/dv7w/5cA0c3R361IUMPYbHGmy0AlsvS1XuGL1pPsGUwUk9sGo4wDEloRTHdM9uj9zyo
+ VSwCBcv/Qm+FWPCStaUlIqQeXPYh9zbu7xmjyX1ltIVRX4hwP0cLYjezQ8cLIEDYQ66L12yvTuq
+ KxYyEtmef2VwdVekWrkPah8a7HXYZScAQmxaZciEc0n+O4EwcI2spsLnL+KQNzwVlDPH7TSSdMu
+ Ix7B+sLeCMogmPp7+dRXLgtqXWC5813jZq343jNjNqHUc+GD87vYK2rH5X1ZOkHhGLQULGoSXcb
+ Vwgl3FnEOJw6PUduLSG1pumWGkICL9y43PzJhHL///qaPKt9KQphUEhe69OZBqpBNqFnnQbKzyR
+ 7JOEE+i+3oyOtOOMvmAq5PVMXmjFjOKNxeS7NLp81OBjse/1AmuWBgz024760laT8rhN8P/Q/JK
+ Q8UcrzEhQmNy54AHkjlI2tytrQInHK0hFZD1dsSvlH9YJc/rttq6iaCMbid9WV1OoXUIK4xFUJK
+ vhH2nUxn8Jq0G8A==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
 Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -102,66 +102,131 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Replace the atexit() handler with a proper cleanup callback. Extend
-sdl_cleanup() to unregister display listeners, free keyboard state,
-destroy windows, and clean up all cursor resources.
+Add egl_cleanup() to tear down the EGL render node context, GBM device,
+and EGL display. Add egl_headless_cleanup() to unregister listeners,
+destroy framebuffers, and free per-console state tracked via a new
+GPtrArray.
 
 Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Message-ID: <20260623-b4-ui-v4-17-4656aec3398d@redhat.com>
+Message-ID: <20260623-b4-ui-v4-19-4656aec3398d@redhat.com>
 ---
- ui/sdl2.c | 23 +++++++++++++++++++----
- 1 file changed, 19 insertions(+), 4 deletions(-)
+ include/ui/egl-helpers.h |  1 +
+ ui/egl-headless.c        | 31 +++++++++++++++++++++++++++++++
+ ui/egl-helpers.c         | 19 +++++++++++++++++++
+ 3 files changed, 51 insertions(+)
 
-diff --git a/ui/sdl2.c b/ui/sdl2.c
-index c75f750e00e..1c97d23a47c 100644
---- a/ui/sdl2.c
-+++ b/ui/sdl2.c
-@@ -790,9 +790,25 @@ static void sdl_mouse_define(DisplayChangeListener *dcl,
+diff --git a/include/ui/egl-helpers.h b/include/ui/egl-helpers.h
+index c97a0d5c248..405ddd91259 100644
+--- a/include/ui/egl-helpers.h
++++ b/include/ui/egl-helpers.h
+@@ -81,6 +81,7 @@ EGLContext qemu_egl_init_ctx(void);
+ bool qemu_egl_has_dmabuf(void);
  
- static void sdl_cleanup(void)
- {
--    if (guest_sprite) {
--        SDL_FreeCursor(guest_sprite);
-+    int i;
+ bool egl_init(const char *rendernode, DisplayGLMode mode, Error **errp);
++void egl_cleanup(void);
+ 
+ const char *qemu_egl_get_error_string(void);
+ 
+diff --git a/ui/egl-headless.c b/ui/egl-headless.c
+index 878bfebb40c..ba27efcf4c3 100644
+--- a/ui/egl-headless.c
++++ b/ui/egl-headless.c
+@@ -9,6 +9,7 @@
+ 
+ typedef struct egl_dpy {
+     DisplayChangeListener dcl;
++    DisplayGLCtx *ctx;
+     DisplaySurface *ds;
+     QemuGLShader *gls;
+     egl_fb guest_fb;
+@@ -19,6 +20,8 @@ typedef struct egl_dpy {
+     uint32_t pos_y;
+ } egl_dpy;
+ 
++static GPtrArray *egl_dpys;
 +
-+    if (!sdl2_console) {
+ /* ------------------------------------------------------------------ */
+ 
+ static void egl_refresh(DisplayChangeListener *dcl)
+@@ -220,6 +223,8 @@ static void egl_headless_init(DisplayState *ds, DisplayOptions *opts)
+     egl_dpy *edpy;
+     int idx;
+ 
++    egl_dpys = g_ptr_array_new();
++
+     for (idx = 0;; idx++) {
+         DisplayGLCtx *ctx;
+ 
+@@ -232,15 +237,41 @@ static void egl_headless_init(DisplayState *ds, DisplayOptions *opts)
+         edpy->gls = qemu_gl_init_shader();
+         ctx = g_new0(DisplayGLCtx, 1);
+         ctx->ops = &eglctx_ops;
++        edpy->ctx = ctx;
+         qemu_console_set_display_gl_ctx(con, ctx);
+         qemu_console_register_listener(con, &edpy->dcl, &egl_ops);
++        g_ptr_array_add(egl_dpys, edpy);
++    }
++}
++
++static void egl_headless_cleanup(void)
++{
++    if (!egl_dpys) {
 +        return;
      }
 +
-+    qemu_remove_mouse_mode_change_notifier(&mouse_mode_notifier);
++    for (guint i = 0; i < egl_dpys->len; i++) {
++        egl_dpy *edpy = g_ptr_array_index(egl_dpys, i);
 +
-+    for (i = 0; i < sdl2_num_outputs; i++) {
-+        qemu_console_unregister_listener(&sdl2_console[i].dcl);
-+        qkbd_state_free(sdl2_console[i].kbd);
-+        sdl2_window_destroy(&sdl2_console[i]);
++        qemu_console_unregister_listener(&edpy->dcl);
++        qemu_console_set_display_gl_ctx(edpy->dcl.con, NULL);
++        egl_fb_destroy(&edpy->guest_fb);
++        egl_fb_destroy(&edpy->cursor_fb);
++        egl_fb_destroy(&edpy->blit_fb);
++        qemu_gl_fini_shader(edpy->gls);
++        g_free(edpy->ctx);
++        g_free(edpy);
 +    }
-+    g_clear_pointer(&sdl2_console, g_free);
-+    sdl2_num_outputs = 0;
++    g_clear_pointer(&egl_dpys, g_ptr_array_unref);
 +
-+    g_clear_pointer(&guest_sprite, SDL_FreeCursor);
-+    g_clear_pointer(&guest_sprite_surface, SDL_FreeSurface);
-+    g_clear_pointer(&sdl_cursor_hidden, SDL_FreeCursor);
-     SDL_QuitSubSystem(SDL_INIT_VIDEO);
++    egl_cleanup();
  }
  
-@@ -998,8 +1014,6 @@ static void sdl2_display_init(DisplayState *ds, DisplayOptions *o)
-         sdl_grab_start(&sdl2_console[0]);
-     }
- 
--    atexit(sdl_cleanup);
--
-     /* SDL's event polling (in dpy_refresh) must happen on the main thread. */
-     qemu_main = NULL;
- }
-@@ -1008,6 +1022,7 @@ static QemuDisplay qemu_display_sdl2 = {
-     .type       = DISPLAY_TYPE_SDL,
-     .early_init = sdl2_display_early_init,
-     .init       = sdl2_display_init,
-+    .cleanup    = sdl_cleanup,
+ static QemuDisplay qemu_display_egl = {
+     .type       = DISPLAY_TYPE_EGL_HEADLESS,
+     .early_init = early_egl_headless_init,
+     .init       = egl_headless_init,
++    .cleanup    = egl_headless_cleanup,
  };
  
- static void register_sdl1(void)
+ static void register_egl(void)
+diff --git a/ui/egl-helpers.c b/ui/egl-helpers.c
+index 069a5249554..d689f187c4e 100644
+--- a/ui/egl-helpers.c
++++ b/ui/egl-helpers.c
+@@ -733,3 +733,22 @@ bool egl_init(const char *rendernode, DisplayGLMode mode, Error **errp)
+     display_opengl = 1;
+     return true;
+ }
++
++void egl_cleanup(void)
++{
++    if (qemu_egl_rn_ctx) {
++        eglDestroyContext(qemu_egl_display, qemu_egl_rn_ctx);
++        qemu_egl_rn_ctx = NULL;
++    }
++
++#ifdef CONFIG_GBM
++    g_clear_pointer(&qemu_egl_rn_gbm_dev, gbm_device_destroy);
++    g_clear_fd(&qemu_egl_rn_fd, NULL);
++#endif
++
++    if (qemu_egl_display) {
++        eglReleaseThread();
++        eglTerminate(qemu_egl_display);
++        qemu_egl_display = NULL;
++    }
++}
 
 -- 
 2.54.0
