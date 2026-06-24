@@ -4,123 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15C94CDE000
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 20:01:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 985E2CDB47F
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 20:01:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcTmK-0006z0-JE; Wed, 24 Jun 2026 16:00:56 -0400
+	id 1wcTl8-0005Zb-IK; Wed, 24 Jun 2026 15:59:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1wcTmI-0006se-TG; Wed, 24 Jun 2026 16:00:54 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <alejandro.j.jimenez@oracle.com>)
+ id 1wcTl1-0005XQ-27
+ for qemu-devel@nongnu.org; Wed, 24 Jun 2026 15:59:36 -0400
+Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1wcTmG-0008V3-TV; Wed, 24 Jun 2026 16:00:54 -0400
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65OJmfVi1948456; Wed, 24 Jun 2026 20:00:40 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=96MOyo
- 9zEnlFPx3INOzeHJ3PsYrZFIH26tLkR5dbsRw=; b=LzJb+G1bRSgQ+KIIIhPV0u
- IPisTRRP/Y6pOl4Mjc9HcnAvxXmVImNYg46Tda//Rr72/JsHdX0NVNZMnomnNwBa
- 0e5wI2/eGYiMifJqOvdYCMevWEP7SaCbZLHM0PJDZwx4K9ykQPvUjz5AgKNwsXMX
- AahEpcTIzof3yIxagYP8CK7io1VwHHpUuS+nUvhqG9wqDjK5f92zlQ/ySFFl98rS
- Chy3tbVWT+V7XdIJe3tZjrHvS2ZoYKlAFDX+ypwdZ7yIRiHtAzxu9MTGZck//Af5
- /gkRhDn/qI3Px1fVZdm5/AKUkMoBRNuq7lC12/wuUX+hcuS9yQtpjEYhFpe8H0tQ
- ==
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4ewg9hxagx-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 24 Jun 2026 20:00:39 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 65OJnxu9015156;
- Wed, 24 Jun 2026 20:00:39 GMT
-Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4ex56qjr9k-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 24 Jun 2026 20:00:38 +0000 (GMT)
-Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com
- [10.20.54.106])
- by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 65OK0ZdA48628158
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 24 Jun 2026 20:00:35 GMT
-Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 5800D20040;
- Wed, 24 Jun 2026 20:00:35 +0000 (GMT)
-Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 9846E20043;
- Wed, 24 Jun 2026 20:00:25 +0000 (GMT)
-Received: from li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com (unknown
- [9.39.20.104]) by smtpav07.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Wed, 24 Jun 2026 20:00:24 +0000 (GMT)
-From: Aditya Gupta <adityag@linux.ibm.com>
-To: <qemu-devel@nongnu.org>, <qemu-ppc@nongnu.org>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Shivang Upadhyay <shivangu@linux.ibm.com>,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Cc: Sourabh Jain <sourabhjain@linux.ibm.com>,
- Hari Bathini <hbathini@linux.ibm.com>, Nicholas Piggin <npiggin@gmail.com>,
- Miles Glenn <milesg@linux.ibm.com>, Fabiano Rosas <farosas@suse.de>,
- Laurent Vivier <lvivier@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, devel@lists.libvirt.org,
- Misbah Anjum N <misanjum@linux.ibm.com>,
- Anushree Mathur <anushree.mathur@linux.ibm.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- kvm@vger.kernel.org, Gautam Menghani <gautam@linux.ibm.com>,
- Chinmay Rath <rathc@linux.ibm.com>
-Subject: [PATCH v2 6/8] ppc/pnv: Remove Power8E and Power8NVL pnv chips
-Date: Thu, 25 Jun 2026 01:29:22 +0530
-Message-ID: <20260624195924.1422821-7-adityag@linux.ibm.com>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260624195924.1422821-1-adityag@linux.ibm.com>
-References: <20260624195924.1422821-1-adityag@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <alejandro.j.jimenez@oracle.com>)
+ id 1wcTkx-00083T-S9
+ for qemu-devel@nongnu.org; Wed, 24 Jun 2026 15:59:34 -0400
+Received: from pps.filterd (m0246630.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 65OEVS6C2527729; Wed, 24 Jun 2026 19:59:29 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
+ :content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=corp-2025-04-25; bh=OUFZt
+ Fg7qRiGCcLKQXHwRtNRRrNsoo0+mVnCRSt8Fx8=; b=H0GMNe45qVkcc0bz+YNn+
+ kPyDS1bvwjQ9iD7ckw3ykoRBOvQvViUxPOrVZJAXU+3VRBacmZyF4aRCv4j8jupZ
+ xflM0x3t0mMd0USlKf7hmCfKY5Kl3jMpeJjxwZD5YSiA606JlKopSZfYM0Dq9j7X
+ +8Kk7hODpZBFJzWufMiDZIGsg7d2VfBNoSZ9DWbKQPDK68nybwpsMoSdxizlt6By
+ epZ5LwM43w2ZmvaaqJP6Cjtyj61SWMMOMbz4ZKr8TtSEMsD2NGqqQeYaH+E71XC6
+ aXAU1PQez/YjVpKbCJxPQkJ0E8x9USQZzkE1zOkY1ZE8j6PuYrPUNy7ZmQU1o7tX
+ g==
+Received: from iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com
+ (iadpaimrmta01.appoci.oracle.com [130.35.100.223])
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 4ewh9c627p-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 24 Jun 2026 19:59:28 +0000 (GMT)
+Received: from pps.filterd
+ (iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
+ by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (8.18.1.7/8.18.1.7)
+ with ESMTP id 65OJwbBi009017; Wed, 24 Jun 2026 19:59:27 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+ by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
+ 4ewhas3kxh-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 24 Jun 2026 19:59:27 +0000 (GMT)
+Received: from iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com
+ (iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
+ by pps.reinject (8.18.1.12/8.18.1.12) with ESMTP id 65OJuO8I004335;
+ Wed, 24 Jun 2026 19:59:27 GMT
+Received: from alaljime-e5-test-20240903-1847.osdevelopmeniad.oraclevcn.com
+ (alaljime-e5-test-20240903-1847.allregionaliads.osdevelopmeniad.oraclevcn.com
+ [100.100.250.206])
+ by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTP id
+ 4ewhas3kwx-4; Wed, 24 Jun 2026 19:59:27 +0000 (GMT)
+From: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
+To: qemu-devel@nongnu.org
+Cc: peter.maydell@linaro.org, mst@redhat.com, sarunkod@amd.com,
+ pbonzini@redhat.com, richard.henderson@linaro.org,
+ alejandro.j.jimenez@oracle.com
+Subject: [PATCH v2 3/4] amd_iommu: Decode IRTEs without bitfields
+Date: Wed, 24 Jun 2026 19:59:24 +0000
+Message-ID: <20260624195925.1254462-4-alejandro.j.jimenez@oracle.com>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260624195925.1254462-1-alejandro.j.jimenez@oracle.com>
+References: <20260624195925.1254462-1-alejandro.j.jimenez@oracle.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-ORIG-GUID: uqTc-MBH9iVdHBd49E9H8Xxu73D1ghfe
-X-Proofpoint-GUID: ZDZgnZokdvB_zWgVjNyyjaPt0ra_J_iM
-X-Authority-Analysis: v=2.4 cv=Y4XIdBeN c=1 sm=1 tr=0 ts=6a3c3768 cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
- a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=Y2IxJ9c9Rs8Kov3niI8_:22 a=EUspDBNiAAAA:8
- a=VnNF1IyMAAAA:8 a=VZAblS4EJK4kQvDgE7QA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjI0MDE2NiBTYWx0ZWRfX9HC8LuN9rSSG
- /t4l57sg0KNPXd3u1pgVSncEqK94UQYILWAVmT1RVJPbav/D4kLEkn5phXyujY8/O8OFaek1Qrz
- +hZ7wGhcgK8ujpQ2OA2L6mUH+S4tOxEiFDmPbZi9juWc+8jLDYx5LGOvp2/+aO3GdiSYGWoNdif
- HOn+bHOKVpMvwdYzKmyPPuHdBJB+DqqUrF1riNBTm6RMRx/HvcsUXac2/AnTveZkJMrZdnDJLcJ
- sbcv75pT3nRaiV6H9bfpnY9egg1xcntn6PL62M+AsQOMHR0fPosNcK/iYV17P3OqLC7GBqT3o/w
- sktBcXfGU8OJ6q/i00yl330zDhNdnCcWCe/QYOvRRsyX3EAcyrj3MgA5KJSOhqd2AZF2lY87gvK
- KYR5Q5rdryHlioiuqe9jPA2lT0oS2a1Woq+LD2TXTf9eiZRQnr9KO0kQH32QIkq/06tyePq2Etl
- rqF7vM9B8g8WSFLafLA==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjI0MDE2NiBTYWx0ZWRfX7a98RjqtAVJC
- WJjAnmRDmFtSjkd+eouPuI9FOC5l1tlM60i02PDXoOluvoZzUKl3sWo76ZQWXzofAQ0wBt52VGk
- 06PRixNswRGchrp5qio6LltBv+D4/Ts=
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-06-24_04,2026-06-24_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 priorityscore=1501 malwarescore=0 lowpriorityscore=0 spamscore=0
- clxscore=1015 suspectscore=0 impostorscore=0 phishscore=0 bulkscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606240166
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=adityag@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, TVD_SUBJ_WIPE_DEBT=1.004 autolearn=no autolearn_force=no
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 phishscore=0
+ adultscore=0 malwarescore=0 mlxlogscore=922 mlxscore=0 suspectscore=0
+ bulkscore=0 spamscore=0 lowpriorityscore=0 classifier=spam adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2606160000 definitions=main-2606240167
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjI0MDE2NyBTYWx0ZWRfX0gPnhCJAZtmA
+ PntliiVjhVIHGaKwSRIxeWgX6sM6zfsCTy0MXgIkiffJ1AH35UVK8oq4gLGp5iU4Y8ARoXr7m7C
+ teIc04fKyrJlsdbL/BaqVFBFLYVw8oBHInrMu+RMnm4HZOS/tytAI1vBjianwGjvSt5kacXDZqS
+ Fw2NShEgflN0Y5pHJIIsI5tVU5eBmpyefOMy11vrCfhQLIHdXDMQF082NXjHZcWYgu2PmlxcksU
+ HFDATk3SDX/RPaeeYzweS37dUULsD/VTJGfB3YETbr6JgPfD1lBGvb1RN8m5MWZ9INIlDMEU3/9
+ jOWs0JJjPYSOn/7FJw+DwX9TanvoDzXLN1Fyhw9uwS6fm3kAmIuh04PG3xb/O0ZZPjZvTHVJq8j
+ ErY87VlocTRm/tn5IKcQXzqAIWEBhuKOqplRzOpnwtxY1av/8ck=
+X-Authority-Analysis: v=2.4 cv=Rd+gzVtv c=1 sm=1 tr=0 ts=6a3c3720 b=1 cx=c_pps
+ a=zPCbziy225d3KhSqZt3L1A==:117
+ a=zPCbziy225d3KhSqZt3L1A==:17
+ a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22 a=jiCTI4zE5U7BLdzWsZGv:22
+ a=x4eqshVgHu-cdnggieHk:22 a=KKAkSRfTAAAA:8 a=yPCof4ZbAAAA:8
+ a=iN8GYCbXJNbl4wqCgcoA:9 a=cvBusfyB2V15izCimMoJ:22 a=5yU3S35YU4bGjq-dph-N:22
+ a=Bho9c0fBagfJEIQBS7DQ:22 cc=ntf awl=host:12312
+X-Proofpoint-GUID: XtwmcBG-sQICpxAwhxih42mVl3x4zIGT
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjI0MDE2NyBTYWx0ZWRfX7YyUSGlX5PMe
+ HkoEEK+hmGdKALdyJx7mO9oRkEn0IDgIbUL6xTnxu9EQkbi0Ton0F1X6vuKBeme2Azg+9ZRCiFt
+ LuPW1fCAdy1AC4eaQmSulg5urL6vfpRtMfUpHctMTeC4Lt8qcpFM
+X-Proofpoint-ORIG-GUID: XtwmcBG-sQICpxAwhxih42mVl3x4zIGT
+Received-SPF: pass client-ip=205.220.177.32;
+ envelope-from=alejandro.j.jimenez@oracle.com; helo=mx0b-00069f02.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -136,202 +119,280 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Power8E and Power8NVL were deprecated since QEMU 10.1, with
-commit 264a604e7163 ("target/ppc: Deprecate Power8E and Power8NVL")
+Interrupt remapping table entries are data stored in guest memory in
+little-endian format. Decoding them with bitfields depends on host bitfield
+layout and the value returned from dma_memory_read() is not portable to
+big-endian hosts.
 
-Accordingly, remove usage of 8E and 8NVL chips from powernv, as it's old
-and unmaintained now.
+Replace the legacy and GA IRTE bitfield definitions with explicit FIELD()
+definitions. Convert the guest memory values returned from dma_memory_read()
+with le32_to_cpu() or le64_to_cpu(), then extract relevant fields using
+FIELD_EX32() or FIELD_EX64() as appropriate to match the IRTE format.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
+Fixes: b44159fe0078 ("x86_iommu/amd: Add interrupt remap support when VAPIC is not enabled")
+Fixes: 135f866e609c ("x86_iommu/amd: Add interrupt remap support when VAPIC is enabled")
+Reported-by: Peter Maydell <peter.maydell@linaro.org>
+Suggested-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
 ---
- docs/system/ppc/powernv.rst |  2 +-
- hw/ppc/pnv.c                | 62 -------------------------------------
- hw/ppc/pnv_core.c           |  2 --
- include/hw/ppc/pnv.h        |  8 -----
- tests/qtest/pnv-xscom.h     |  9 ------
- 5 files changed, 1 insertion(+), 82 deletions(-)
+ hw/i386/amd_iommu.c | 93 +++++++++++++++++++++++++++++++++------------
+ hw/i386/amd_iommu.h | 49 ------------------------
+ 2 files changed, 69 insertions(+), 73 deletions(-)
 
-diff --git a/docs/system/ppc/powernv.rst b/docs/system/ppc/powernv.rst
-index 5154794cc8cd..1de696b588a8 100644
---- a/docs/system/ppc/powernv.rst
-+++ b/docs/system/ppc/powernv.rst
-@@ -15,7 +15,7 @@ beyond the scope of what QEMU addresses today.
- Supported devices
- -----------------
+diff --git a/hw/i386/amd_iommu.c b/hw/i386/amd_iommu.c
+index c634928d3c..fdd05d9171 100644
+--- a/hw/i386/amd_iommu.c
++++ b/hw/i386/amd_iommu.c
+@@ -89,6 +89,11 @@ typedef struct AMDVIIOTLBKey {
+     uint16_t devid;
+ } AMDVIIOTLBKey;
  
-- * Multi processor support for POWER8, POWER8NVL, POWER9, Power10 and Power11.
-+ * Multi processor support for POWER8, POWER9, Power10 and Power11.
-  * XSCOM, serial communication sideband bus to configure chiplets.
-  * Simple LPC Controller.
-  * Processor Service Interface (PSI) Controller.
-diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
-index 62812f22f8cd..b669df9f175f 100644
---- a/hw/ppc/pnv.c
-+++ b/hw/ppc/pnv.c
-@@ -865,16 +865,6 @@ static ISABus *pnv_chip_power8_isa_create(PnvChip *chip, Error **errp)
-     return pnv_lpc_isa_create(&chip8->lpc, true, errp);
++typedef struct AMDVIIrteGA {
++    uint64_t ga_lo;
++    uint64_t ga_hi;
++} AMDVIIrteGA;
++
+ /* XT IOMMU General Interrupt Control Register layout */
+ FIELD(AMDVI_XT_GEN_INTR, DEST_MODE, 2, 1)
+ FIELD(AMDVI_XT_GEN_INTR, DEST_LO, 8, 24)
+@@ -96,6 +101,37 @@ FIELD(AMDVI_XT_GEN_INTR, VECTOR, 32, 8)
+ FIELD(AMDVI_XT_GEN_INTR, DELIVERY_MODE, 40, 1)
+ FIELD(AMDVI_XT_GEN_INTR, DEST_HI, 56, 8)
+ 
++/* Interrupt Remapping Table Fields Formats */
++
++/* Basic 32-bit IRTE layout (GAEn=0) */
++FIELD(AMDVI_IRTE, VALID, 0, 1)
++FIELD(AMDVI_IRTE, SUP_IOPF, 1, 1)
++FIELD(AMDVI_IRTE, INT_TYPE, 2, 3)
++FIELD(AMDVI_IRTE, RQ_EOI, 5, 1)
++FIELD(AMDVI_IRTE, DM, 6, 1)
++FIELD(AMDVI_IRTE, GUEST_MODE, 7, 1)
++FIELD(AMDVI_IRTE, DESTINATION, 8, 8)
++FIELD(AMDVI_IRTE, VECTOR, 16, 8)
++
++/* 128-bit IRTE layout (GAEn=1) */
++FIELD(AMDVI_IRTE_GA_LO, VALID, 0, 1)
++FIELD(AMDVI_IRTE_GA_LO, SUP_IOPF, 1, 1)
++FIELD(AMDVI_IRTE_GA_LO, INT_TYPE, 2, 3)
++FIELD(AMDVI_IRTE_GA_LO, RQ_EOI, 5, 1)
++FIELD(AMDVI_IRTE_GA_LO, DM, 6, 1)
++FIELD(AMDVI_IRTE_GA_LO, GUEST_MODE, 7, 1)
++/*
++ * In the 128-bit IRTE format, XT mode uses IRTE_GA_LOW.Destination[23:0]
++ * together with IRTE_GA_HI.DestinationHi[7:0] to construct a 32-bit x2APIC
++ * destination.
++ * Without XTEn (i.e. when x2APIC support is not enabled), only
++ * IRTE_GA_LOW.Destination[7:0] is used.
++ */
++FIELD(AMDVI_IRTE_GA_LO, DESTINATION, 8, 24)
++
++FIELD(AMDVI_IRTE_GA_HI, VECTOR, 0, 8)
++FIELD(AMDVI_IRTE_GA_HI, DESTINATION_HI, 56, 8)
++
+ uint64_t amdvi_extended_feature_register(AMDVIState *s)
+ {
+     uint64_t feature = AMDVI_DEFAULT_EXT_FEATURES;
+@@ -1983,7 +2019,7 @@ static IOMMUTLBEntry amdvi_translate(IOMMUMemoryRegion *iommu, hwaddr addr,
  }
  
--static ISABus *pnv_chip_power8nvl_isa_create(PnvChip *chip, Error **errp)
--{
--    Pnv8Chip *chip8 = PNV8_CHIP(chip);
--    qemu_irq irq = qdev_get_gpio_in(DEVICE(&chip8->psi), PSIHB_IRQ_LPC_I2C);
--
--    qdev_connect_gpio_out_named(DEVICE(&chip8->lpc), "LPCHC", 0, irq);
--
--    return pnv_lpc_isa_create(&chip8->lpc, false, errp);
--}
--
- static ISABus *pnv_chip_power9_isa_create(PnvChip *chip, Error **errp)
+ static int amdvi_get_irte(AMDVIState *s, MSIMessage *origin, uint64_t *dte,
+-                          union irte *irte, uint16_t devid)
++                          uint32_t *irte, uint16_t devid)
  {
-     Pnv9Chip *chip9 = PNV9_CHIP(chip);
-@@ -1642,7 +1632,6 @@ static void *pnv_chip_power11_intc_get(PnvChip *chip)
-  *  EX14
-  * <EX15 reserved>
-  */
--#define POWER8E_CORE_MASK  (0x7070ull)
- #define POWER8_CORE_MASK   (0x7e7eull)
+     uint64_t irte_root, offset;
  
- /*
-@@ -1823,30 +1812,6 @@ static uint32_t pnv_chip_power8_xscom_pcba(PnvChip *chip, uint64_t addr)
-     return ((addr >> 4) & ~0xfull) | ((addr >> 3) & 0xf);
+@@ -1998,7 +2034,8 @@ static int amdvi_get_irte(AMDVIState *s, MSIMessage *origin, uint64_t *dte,
+         return -AMDVI_IR_GET_IRTE;
+     }
+ 
+-    trace_amdvi_ir_irte_val(irte->val);
++    *irte = le32_to_cpu(*irte);
++    trace_amdvi_ir_irte_val(*irte);
+ 
+     return 0;
+ }
+@@ -2010,8 +2047,9 @@ static int amdvi_int_remap_legacy(AMDVIState *iommu,
+                                   X86IOMMUIrq *irq,
+                                   uint16_t sid)
+ {
++    uint8_t int_type;
++    uint32_t irte;
+     int ret;
+-    union irte irte;
+ 
+     /* get interrupt remapping table */
+     ret = amdvi_get_irte(iommu, origin, dte, &irte, sid);
+@@ -2019,32 +2057,33 @@ static int amdvi_int_remap_legacy(AMDVIState *iommu,
+         return ret;
+     }
+ 
+-    if (!irte.fields.valid) {
++    if (!FIELD_EX32(irte, AMDVI_IRTE, VALID)) {
+         trace_amdvi_ir_target_abort("RemapEn is disabled");
+         return -AMDVI_IR_TARGET_ABORT;
+     }
+ 
+-    if (irte.fields.guest_mode) {
++    if (FIELD_EX32(irte, AMDVI_IRTE, GUEST_MODE)) {
+         error_report_once("guest mode is not zero");
+         return -AMDVI_IR_ERR;
+     }
+ 
+-    if (irte.fields.int_type > AMDVI_IOAPIC_INT_TYPE_ARBITRATED) {
++    int_type = FIELD_EX32(irte, AMDVI_IRTE, INT_TYPE);
++    if (int_type > AMDVI_IOAPIC_INT_TYPE_ARBITRATED) {
+         error_report_once("reserved int_type");
+         return -AMDVI_IR_ERR;
+     }
+ 
+-    irq->delivery_mode = irte.fields.int_type;
+-    irq->vector = irte.fields.vector;
+-    irq->dest_mode = irte.fields.dm;
+-    irq->redir_hint = irte.fields.rq_eoi;
+-    irq->dest = irte.fields.destination;
++    irq->delivery_mode = int_type;
++    irq->vector = FIELD_EX32(irte, AMDVI_IRTE, VECTOR);
++    irq->dest_mode = FIELD_EX32(irte, AMDVI_IRTE, DM);
++    irq->redir_hint = FIELD_EX32(irte, AMDVI_IRTE, RQ_EOI);
++    irq->dest = FIELD_EX32(irte, AMDVI_IRTE, DESTINATION);
+ 
+     return 0;
  }
  
--static void pnv_chip_power8e_class_init(ObjectClass *klass, const void *data)
--{
--    DeviceClass *dc = DEVICE_CLASS(klass);
--    PnvChipClass *k = PNV_CHIP_CLASS(klass);
--
--    k->chip_cfam_id = 0x221ef04980000000ull;  /* P8 Murano DD2.1 */
--    k->cores_mask = POWER8E_CORE_MASK;
--    k->num_phbs = 3;
--    k->get_pir_tir = pnv_get_pir_tir_p8;
--    k->intc_create = pnv_chip_power8_intc_create;
--    k->intc_reset = pnv_chip_power8_intc_reset;
--    k->intc_destroy = pnv_chip_power8_intc_destroy;
--    k->intc_print_info = pnv_chip_power8_intc_print_info;
--    k->isa_create = pnv_chip_power8_isa_create;
--    k->dt_populate = pnv_chip_power8_dt_populate;
--    k->pic_print_info = pnv_chip_power8_pic_print_info;
--    k->xscom_core_base = pnv_chip_power8_xscom_core_base;
--    k->xscom_pcba = pnv_chip_power8_xscom_pcba;
--    dc->desc = "PowerNV Chip POWER8E";
--
--    device_class_set_parent_realize(dc, pnv_chip_power8_realize,
--                                    &k->parent_realize);
--}
--
- static void pnv_chip_power8_class_init(ObjectClass *klass, const void *data)
+ static int amdvi_get_irte_ga(AMDVIState *s, MSIMessage *origin, uint64_t *dte,
+-                             struct irte_ga *irte, uint16_t devid)
++                             AMDVIIrteGA *irte, uint16_t devid)
  {
-     DeviceClass *dc = DEVICE_CLASS(klass);
-@@ -1871,30 +1836,6 @@ static void pnv_chip_power8_class_init(ObjectClass *klass, const void *data)
-                                     &k->parent_realize);
+     uint64_t irte_root, offset;
+ 
+@@ -2058,7 +2097,9 @@ static int amdvi_get_irte_ga(AMDVIState *s, MSIMessage *origin, uint64_t *dte,
+         return -AMDVI_IR_GET_IRTE;
+     }
+ 
+-    trace_amdvi_ir_irte_ga_val(irte->hi.val, irte->lo.val);
++    irte->ga_lo = le64_to_cpu(irte->ga_lo);
++    irte->ga_hi = le64_to_cpu(irte->ga_hi);
++    trace_amdvi_ir_irte_ga_val(irte->ga_hi, irte->ga_lo);
+     return 0;
  }
  
--static void pnv_chip_power8nvl_class_init(ObjectClass *klass, const void *data)
--{
--    DeviceClass *dc = DEVICE_CLASS(klass);
--    PnvChipClass *k = PNV_CHIP_CLASS(klass);
--
--    k->chip_cfam_id = 0x120d304980000000ull;  /* P8 Naples DD1.0 */
--    k->cores_mask = POWER8_CORE_MASK;
--    k->num_phbs = 4;
--    k->get_pir_tir = pnv_get_pir_tir_p8;
--    k->intc_create = pnv_chip_power8_intc_create;
--    k->intc_reset = pnv_chip_power8_intc_reset;
--    k->intc_destroy = pnv_chip_power8_intc_destroy;
--    k->intc_print_info = pnv_chip_power8_intc_print_info;
--    k->isa_create = pnv_chip_power8nvl_isa_create;
--    k->dt_populate = pnv_chip_power8_dt_populate;
--    k->pic_print_info = pnv_chip_power8_pic_print_info;
--    k->xscom_core_base = pnv_chip_power8_xscom_core_base;
--    k->xscom_pcba = pnv_chip_power8_xscom_pcba;
--    dc->desc = "PowerNV Chip POWER8NVL";
--
--    device_class_set_parent_realize(dc, pnv_chip_power8_realize,
--                                    &k->parent_realize);
--}
--
- static void pnv_chip_power9_instance_init(Object *obj)
+@@ -2069,8 +2110,9 @@ static int amdvi_int_remap_ga(AMDVIState *iommu,
+                               X86IOMMUIrq *irq,
+                               uint16_t sid)
  {
-     PnvChip *chip = PNV_CHIP(obj);
-@@ -3781,9 +3722,6 @@ static const TypeInfo types[] = {
-         .instance_size = sizeof(Pnv8Chip),
-     },
-     DEFINE_PNV8_CHIP_TYPE(TYPE_PNV_CHIP_POWER8, pnv_chip_power8_class_init),
--    DEFINE_PNV8_CHIP_TYPE(TYPE_PNV_CHIP_POWER8E, pnv_chip_power8e_class_init),
--    DEFINE_PNV8_CHIP_TYPE(TYPE_PNV_CHIP_POWER8NVL,
--                          pnv_chip_power8nvl_class_init),
- };
++    AMDVIIrteGA irte;
++    uint8_t int_type;
+     int ret;
+-    struct irte_ga irte;
  
- DEFINE_TYPES(types)
-diff --git a/hw/ppc/pnv_core.c b/hw/ppc/pnv_core.c
-index 8939515c2c34..61dc8211e32f 100644
---- a/hw/ppc/pnv_core.c
-+++ b/hw/ppc/pnv_core.c
-@@ -515,9 +515,7 @@ static const TypeInfo pnv_core_infos[] = {
-         .class_init = pnv_core_class_init,
-         .abstract       = true,
-     },
--    DEFINE_PNV_CORE_TYPE(power8, "power8e_v2.1"),
-     DEFINE_PNV_CORE_TYPE(power8, "power8_v2.0"),
--    DEFINE_PNV_CORE_TYPE(power8, "power8nvl_v1.0"),
-     DEFINE_PNV_CORE_TYPE(power9, "power9_v2.2"),
-     DEFINE_PNV_CORE_TYPE(power10, "power10_v2.0"),
-     DEFINE_PNV_CORE_TYPE(power11, "power11_v2.0"),
-diff --git a/include/hw/ppc/pnv.h b/include/hw/ppc/pnv.h
-index f8234fb3cd31..60e902d9c5bb 100644
---- a/include/hw/ppc/pnv.h
-+++ b/include/hw/ppc/pnv.h
-@@ -39,18 +39,10 @@ typedef struct Pnv10Chip Pnv11Chip;
- #define PNV_CHIP_TYPE_SUFFIX "-" TYPE_PNV_CHIP
- #define PNV_CHIP_TYPE_NAME(cpu_model) cpu_model PNV_CHIP_TYPE_SUFFIX
+     /* get interrupt remapping table */
+     ret = amdvi_get_irte_ga(iommu, origin, dte, &irte, sid);
+@@ -2078,30 +2120,33 @@ static int amdvi_int_remap_ga(AMDVIState *iommu,
+         return ret;
+     }
  
--#define TYPE_PNV_CHIP_POWER8E PNV_CHIP_TYPE_NAME("power8e_v2.1")
--DECLARE_INSTANCE_CHECKER(PnvChip, PNV_CHIP_POWER8E,
--                         TYPE_PNV_CHIP_POWER8E)
+-    if (!irte.lo.fields_remap.valid) {
++    if (!FIELD_EX64(irte.ga_lo, AMDVI_IRTE_GA_LO, VALID)) {
+         trace_amdvi_ir_target_abort("RemapEn is disabled");
+         return -AMDVI_IR_TARGET_ABORT;
+     }
+ 
+-    if (irte.lo.fields_remap.guest_mode) {
++    if (FIELD_EX64(irte.ga_lo, AMDVI_IRTE_GA_LO, GUEST_MODE)) {
+         error_report_once("guest mode is not zero");
+         return -AMDVI_IR_ERR;
+     }
+ 
+-    if (irte.lo.fields_remap.int_type > AMDVI_IOAPIC_INT_TYPE_ARBITRATED) {
++    int_type = FIELD_EX64(irte.ga_lo, AMDVI_IRTE_GA_LO, INT_TYPE);
++    if (int_type > AMDVI_IOAPIC_INT_TYPE_ARBITRATED) {
+         error_report_once("reserved int_type is set");
+         return -AMDVI_IR_ERR;
+     }
+ 
+-    irq->delivery_mode = irte.lo.fields_remap.int_type;
+-    irq->vector = irte.hi.fields.vector;
+-    irq->dest_mode = irte.lo.fields_remap.dm;
+-    irq->redir_hint = irte.lo.fields_remap.rq_eoi;
++    irq->delivery_mode = int_type;
++    irq->vector = FIELD_EX64(irte.ga_hi, AMDVI_IRTE_GA_HI, VECTOR);
++    irq->dest_mode = FIELD_EX64(irte.ga_lo, AMDVI_IRTE_GA_LO, DM);
++    irq->redir_hint = FIELD_EX64(irte.ga_lo, AMDVI_IRTE_GA_LO, RQ_EOI);
+     if (iommu->xten) {
+-        irq->dest = irte.lo.fields_remap.destination |
+-                    (irte.hi.fields.destination_hi << 24);
++        irq->dest = FIELD_EX64(irte.ga_lo, AMDVI_IRTE_GA_LO, DESTINATION) |
++                    (FIELD_EX64(irte.ga_hi, AMDVI_IRTE_GA_HI, DESTINATION_HI)
++                    << 24);
+     } else {
+-        irq->dest = irte.lo.fields_remap.destination & 0xff;
++        irq->dest = FIELD_EX64(irte.ga_lo, AMDVI_IRTE_GA_LO, DESTINATION) &
++                    0xff;
+     }
+ 
+     return 0;
+diff --git a/hw/i386/amd_iommu.h b/hw/i386/amd_iommu.h
+index ca4440a4c1..687691ec1c 100644
+--- a/hw/i386/amd_iommu.h
++++ b/hw/i386/amd_iommu.h
+@@ -291,55 +291,6 @@
+ #define AMDVI_DEV_LINT0_PASS_MASK       (1ULL << 62)
+ #define AMDVI_DEV_LINT1_PASS_MASK       (1ULL << 63)
+ 
+-/* Interrupt remapping table fields (Guest VAPIC not enabled) */
+-union irte {
+-    uint32_t val;
+-    struct {
+-        uint32_t valid:1,
+-                 no_fault:1,
+-                 int_type:3,
+-                 rq_eoi:1,
+-                 dm:1,
+-                 guest_mode:1,
+-                 destination:8,
+-                 vector:8,
+-                 rsvd:8;
+-    } fields;
+-};
 -
- #define TYPE_PNV_CHIP_POWER8 PNV_CHIP_TYPE_NAME("power8_v2.0")
- DECLARE_INSTANCE_CHECKER(PnvChip, PNV_CHIP_POWER8,
-                          TYPE_PNV_CHIP_POWER8)
- 
--#define TYPE_PNV_CHIP_POWER8NVL PNV_CHIP_TYPE_NAME("power8nvl_v1.0")
--DECLARE_INSTANCE_CHECKER(PnvChip, PNV_CHIP_POWER8NVL,
--                         TYPE_PNV_CHIP_POWER8NVL)
+-/* Interrupt remapping table fields (Guest VAPIC is enabled) */
+-union irte_ga_lo {
+-  uint64_t val;
 -
- #define TYPE_PNV_CHIP_POWER9 PNV_CHIP_TYPE_NAME("power9_v2.2")
- DECLARE_INSTANCE_CHECKER(PnvChip, PNV_CHIP_POWER9,
-                          TYPE_PNV_CHIP_POWER9)
-diff --git a/tests/qtest/pnv-xscom.h b/tests/qtest/pnv-xscom.h
-index 8f05f59a1436..f184118ae5a6 100644
---- a/tests/qtest/pnv-xscom.h
-+++ b/tests/qtest/pnv-xscom.h
-@@ -15,9 +15,7 @@
- #define SMT                     4 /* some tests will break if less than 4 */
+-  /* For int remapping */
+-  struct {
+-      uint64_t  valid:1,
+-                no_fault:1,
+-                /* ------ */
+-                int_type:3,
+-                rq_eoi:1,
+-                dm:1,
+-                /* ------ */
+-                guest_mode:1,
+-                destination:24,
+-                rsvd_1:32;
+-  } fields_remap;
+-};
+-
+-union irte_ga_hi {
+-  uint64_t val;
+-  struct {
+-      uint64_t  vector:8,
+-                rsvd_2:48,
+-                destination_hi:8;
+-  } fields;
+-};
+-
+-struct irte_ga {
+-  union irte_ga_lo lo;
+-  union irte_ga_hi hi;
+-};
+-
+ #define TYPE_AMD_IOMMU_DEVICE "amd-iommu"
+ OBJECT_DECLARE_SIMPLE_TYPE(AMDVIState, AMD_IOMMU_DEVICE)
  
- typedef enum PnvChipType {
--    PNV_CHIP_POWER8E,     /* AKA Murano (default) */
-     PNV_CHIP_POWER8,      /* AKA Venice */
--    PNV_CHIP_POWER8NVL,   /* AKA Naples */
-     PNV_CHIP_POWER9,      /* AKA Nimbus */
-     PNV_CHIP_POWER10,
-     PNV_CHIP_POWER11,
-@@ -40,13 +38,6 @@ static const PnvChip pnv_chips[] = {
-         .cfam_id    = 0x220ea04980000000ull,
-         .first_core = 0x1,
-         .num_i2c    = 0,
--    }, {
--        .chip_type  = PNV_CHIP_POWER8NVL,
--        .cpu_model  = "POWER8NVL",
--        .xscom_base = 0x0003fc0000000000ull,
--        .cfam_id    = 0x120d304980000000ull,
--        .first_core = 0x1,
--        .num_i2c    = 0,
-     },
-     {
-         .chip_type  = PNV_CHIP_POWER9,
 -- 
-2.54.0
+2.47.3
 
 
