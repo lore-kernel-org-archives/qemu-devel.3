@@ -4,121 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F5CFCDB479
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 20:02:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F233CDB47F
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 20:17:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcTlt-00062W-IT; Wed, 24 Jun 2026 16:00:29 -0400
+	id 1wcU1S-0006oW-PR; Wed, 24 Jun 2026 16:16:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1wcTlq-000619-VB; Wed, 24 Jun 2026 16:00:26 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
+ id 1wcU1C-0006nN-7i
+ for qemu-devel@nongnu.org; Wed, 24 Jun 2026 16:16:21 -0400
+Received: from vps-ovh.mhejs.net ([145.239.82.108])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1wcTlp-0008Po-Ev; Wed, 24 Jun 2026 16:00:26 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65OJmOB91996115; Wed, 24 Jun 2026 20:00:17 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=LGNgZMw1UEgMoxoYi
- supKjhdJLZKr9GILaxiozmZ6es=; b=W2dEsZEbGCdz5xtarYIobraun54quXAfj
- kF+zR05+PHcoHiEGPCsh9ENA0vovLAEG2xBTCLpDboZbO8j6ZUxvcJddVaijUHxy
- PK5SBsnAxdEW/C3AvNDrg5j6lW3VE6xCREC9fxRen2IZyi97pdXDAebU6tyezKeB
- VfDymOFd32psAclckOaFQP8TCg5jJj+7eM7XB4uB5kmEPn3Zo4tcdlLNVKdCwHXQ
- QScX4ISASBEAD2CMhe9+yX6Hnu+ispaDgpgwHP5VIx92pADjQZXvO1bD2hL+XPIU
- ILBcFxCu9ZpS0RqAWFX919LvN79sZ9rKvP9JCGvvOrsCZfHBYDymg==
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4ewjk4p883-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 24 Jun 2026 20:00:17 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 65OJnxI7015172;
- Wed, 24 Jun 2026 20:00:16 GMT
-Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4ex56qjr61-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 24 Jun 2026 20:00:16 +0000 (GMT)
-Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com
- [10.20.54.106])
- by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 65OK0CLt49873202
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 24 Jun 2026 20:00:12 GMT
-Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 7F4ED20040;
- Wed, 24 Jun 2026 20:00:12 +0000 (GMT)
-Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 2066720043;
- Wed, 24 Jun 2026 20:00:05 +0000 (GMT)
-Received: from li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com (unknown
- [9.39.20.104]) by smtpav07.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Wed, 24 Jun 2026 20:00:04 +0000 (GMT)
-From: Aditya Gupta <adityag@linux.ibm.com>
-To: <qemu-devel@nongnu.org>, <qemu-ppc@nongnu.org>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Shivang Upadhyay <shivangu@linux.ibm.com>,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Cc: Sourabh Jain <sourabhjain@linux.ibm.com>,
- Hari Bathini <hbathini@linux.ibm.com>, Nicholas Piggin <npiggin@gmail.com>,
- Miles Glenn <milesg@linux.ibm.com>, Fabiano Rosas <farosas@suse.de>,
- Laurent Vivier <lvivier@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, devel@lists.libvirt.org,
- Misbah Anjum N <misanjum@linux.ibm.com>,
- Anushree Mathur <anushree.mathur@linux.ibm.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- kvm@vger.kernel.org, Gautam Menghani <gautam@linux.ibm.com>,
- Chinmay Rath <rathc@linux.ibm.com>
-Subject: [PATCH v2 4/8] tests/functional: Use default powernv machine instead
- of power10
-Date: Thu, 25 Jun 2026 01:29:20 +0530
-Message-ID: <20260624195924.1422821-5-adityag@linux.ibm.com>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260624195924.1422821-1-adityag@linux.ibm.com>
-References: <20260624195924.1422821-1-adityag@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
+ id 1wcU19-0002eZ-3K
+ for qemu-devel@nongnu.org; Wed, 24 Jun 2026 16:16:17 -0400
+Received: from MUA
+ by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
+ (Exim 4.99.1) (envelope-from <mhej@vps-ovh.mhejs.net>)
+ id 1wcU0u-00000004qOH-2RiY; Wed, 24 Jun 2026 22:16:00 +0200
+Message-ID: <aa188582-33bd-4ef4-a264-a8a0d46e85bc@maciej.szmigiero.name>
+Date: Wed, 24 Jun 2026 22:15:55 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjI0MDE2NiBTYWx0ZWRfXxv87nPtQRv7R
- lO1zGUaWMozXwZlqQFxM9J4foGJ/QrAHYsHLC3sTOYFtw45gzLYOtCfTmUpSWwvrsFFCLQ//JRQ
- pJH9vGnswYv3Oy4eKS41md2KlsUUfx4=
-X-Proofpoint-ORIG-GUID: 8VkoNBec-9E40k3G5aQtcm53aqIfPvN_
-X-Authority-Analysis: v=2.4 cv=Oph/DS/t c=1 sm=1 tr=0 ts=6a3c3751 cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
- a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=U7nrCbtTmkRpXpFmAIza:22 a=VnNF1IyMAAAA:8 a=MGuuq5ZBRx0t7b6k6EIA:9
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjI0MDE2NiBTYWx0ZWRfX3sR7MPMGiUDd
- n073VvJBiYUs3EIJxWoKsEvuPvG8zi64QtW9hHhdfiIeTViEF2OAdOQZTiu3JDQ2o9Kl7XjYAmB
- PlUZGgdodWQDFeffylI1Y/CmFPjB8j1omy15AVpXuvJmvGVlUQE77tCOzJjYzYOSauBLsOt/NZw
- 2WY48IcctAmlVSn3Vid8WP2Vnj/gAiycYGHkoJyxfBMnR/YRa3bWhW2+Xaa1EUrlR+6I7674liX
- iRalk0Z0+My4hJIBfbqpxRaGOd9RV+pqyguBd7LRG6i1WI1dXDuTpm4t9/lu4xiZs7KW5iuqodw
- P/Xc4EC89FoCGMVE+4rpK7Euq/KgVq8w7RYvZv1kE/XSA+C0avcL+pwCUYYvxCCLf1YW2ierHIs
- QqKUOT4a6UhoKGXZTJUlOCYFlUWIgJwb68lPELossQ/a8tUdGnZZw9YiRF7PMme1kE13bVtRGw3
- HmNuxG38SnDUNgBuS6w==
-X-Proofpoint-GUID: zicWHFkl4wqKgqTKnd7OuHeyxRl4bYaG
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-24_04,2026-06-24_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 lowpriorityscore=0 bulkscore=0 spamscore=0 priorityscore=1501
- clxscore=1015 impostorscore=0 malwarescore=0 adultscore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606240166
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=adityag@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 3/5] vhost: reset vhost devices for CPR
+To: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+Cc: mst@redhat.com, sgarzare@redhat.com, farosas@suse.de,
+ qemu-devel@nongnu.org, peterx@redhat.com, dongli.zhang@oracle.com,
+ bchaney@akamai.com, mark.kanda@oracle.com, den@openvz.org
+References: <20260619105514.128812-1-andrey.drobyshev@virtuozzo.com>
+ <20260619105514.128812-4-andrey.drobyshev@virtuozzo.com>
+ <d258f5fc-5c67-456a-be2e-49b0c7e1f4aa@maciej.szmigiero.name>
+ <b62c8e66-85d5-4441-96be-8c779ab9be0a@virtuozzo.com>
+From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
+Content-Language: en-US, pl-PL
+Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
+ 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
+In-Reply-To: <b62c8e66-85d5-4441-96be-8c779ab9be0a@virtuozzo.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=145.239.82.108;
+ envelope-from=mhej@vps-ovh.mhejs.net; helo=vps-ovh.mhejs.net
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.249, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -134,31 +106,127 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The default powernv machine has been recently changed to powernv11,
-though fadump functional test used powernv10
+On 24.06.2026 17:49, Andrey Drobyshev wrote:
+> On 6/23/26 9:27 PM, Maciej S. Szmigiero wrote:
+>> On 19.06.2026 12:55, Andrey Drobyshev wrote:
+>>> When preserving a vhost fd using CPR, call VHOST_RESET_OWNER prior to CPR
+>>> in old QEMU.  Otherwise, new QEMU will fail when it calls VHOST_SET_OWNER
+>>> during vhost_dev_init.
+>>>
+>>> This patch is a rework of the change originally proposed by Steve, Ben
+>>> and Mark at [0].
+>>>
+>>> [0] https://lore.kernel.org/qemu-devel/20260128-cpr-tap-v4-0-48e334d4216b@akamai.com
+>>>
+>>> Originally-by: Mark Kanda <mark.kanda@oracle.com>
+>>> Originally-by: Steve Sistare <steven.sistare@oracle.com>
+>>> Originally-by: Ben Chaney <bchaney@akamai.com>
+>>> Signed-off-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+>>> ---
+>>>    hw/virtio/vhost-kernel.c          |  6 ++++++
+>>>    hw/virtio/vhost.c                 | 33 +++++++++++++++++++++++++++++++
+>>>    include/hw/virtio/vhost-backend.h |  1 +
+>>>    include/hw/virtio/vhost.h         |  1 +
+>>>    4 files changed, 41 insertions(+)
+>>>
+>>> diff --git a/hw/virtio/vhost-kernel.c b/hw/virtio/vhost-kernel.c
+>>> index 3390b48c6f1..55d316b88e9 100644
+>>> --- a/hw/virtio/vhost-kernel.c
+>>> +++ b/hw/virtio/vhost-kernel.c
+>>> @@ -261,6 +261,11 @@ static int vhost_kernel_set_owner(struct vhost_dev *dev)
+>>>        return vhost_kernel_call(dev, VHOST_SET_OWNER, NULL);
+>>>    }
+>>>    
+>>> +static int vhost_kernel_reset_owner(struct vhost_dev *dev)
+>>> +{
+>>> +    return vhost_kernel_call(dev, VHOST_RESET_OWNER, NULL);
+>>> +}
+>>> +
+>>>    static int vhost_kernel_get_vq_index(struct vhost_dev *dev, int idx)
+>>>    {
+>>>        assert(idx >= dev->vq_index && idx < dev->vq_index + dev->nvqs);
+>>> @@ -385,6 +390,7 @@ const VhostOps kernel_ops = {
+>>>            .vhost_get_features_ex = vhost_kernel_get_features,
+>>>            .vhost_set_backend_cap = vhost_kernel_set_backend_cap,
+>>>            .vhost_set_owner = vhost_kernel_set_owner,
+>>> +        .vhost_reset_owner = vhost_kernel_reset_owner,
+>>>            .vhost_get_vq_index = vhost_kernel_get_vq_index,
+>>>            .vhost_vsock_set_guest_cid = vhost_kernel_vsock_set_guest_cid,
+>>>            .vhost_vsock_set_running = vhost_kernel_vsock_set_running,
+>>> diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
+>>> index af41841b529..1521b50cbff 100644
+>>> --- a/hw/virtio/vhost.c
+>>> +++ b/hw/virtio/vhost.c
+>>> @@ -24,6 +24,7 @@
+>>>    #include "standard-headers/linux/vhost_types.h"
+>>>    #include "hw/virtio/virtio-bus.h"
+>>>    #include "hw/mem/memory-device.h"
+>>> +#include "migration/misc.h"
+>>>    #include "migration/blocker.h"
+>>>    #include "migration/qemu-file-types.h"
+>>>    #include "system/dma.h"
+>>> @@ -1667,6 +1668,32 @@ static int vhost_dev_init_features(struct vhost_dev *hdev)
+>>>        return r;
+>>>    }
+>>>    
+>>> +static int vhost_cpr_notifier(NotifierWithReturn *notifier,
+>>> +                              MigrationEvent *e, Error **errp)
+>>> +{
+>>> +    struct vhost_dev *dev;
+>>> +    int r;
+>>> +
+>>> +    dev = container_of(notifier, struct vhost_dev, cpr_notifier);
+>>> +
+>>> +    if (dev->vhost_ops->backend_type != VHOST_BACKEND_TYPE_KERNEL) {
+>>> +        return 0;
+>>> +    }
+>>> +
+>>> +    if (e->type == MIG_EVENT_SETUP) {
+>>> +        r = dev->vhost_ops->vhost_reset_owner(dev);
+>>> +        if (r < 0) {
+>>> +            VHOST_OPS_DEBUG(r, "vhost_reset_owner failed");
+>>
+>> Shouldn't we abort the migration attempt here?
+>>
+> 
+> Hmm yes, I think you're right. We shouldn't proceed and should do
+> error_setg_errno() and return r < 0 instead.
+> 
+>>> +        }
+>>> +    } else if (e->type == MIG_EVENT_FAILED) {
+>>> +        r = dev->vhost_ops->vhost_set_owner(dev);
+>>> +        if (r < 0) {
+>>> +            VHOST_OPS_DEBUG(r, "vhost_set_owner failed");
+>>
+>> What would be the impact on the guest of this failure?
+>>
+>> Shouldn't we *at least* unconditionally print error here?
+>> Maybe even more if guest would be unsafe in this condition?
+> 
+> Agreed. Should report error as well.  The only catch is we might also
+> get into this branch after unsuccessful qmp_migrate() -> SETUP ->
+> vhost_reset_owner() -> migration_connect_error_propagate() -> FAILED.
+> Then we'll attempt set_owner for a device whose owner we didn't reset.
+> So we should probably add some bool flag which would signalize whether
+> device has its owner currently set or not, and only attempt set_owner if
+> reset_owner took place.
 
-Change it to use default 'powernv' machine for the tests instead of
-being fixed to powernv10
+Yeah, for sure we shouldn't log spurious errors.
 
-Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
----
- tests/functional/ppc64/test_fadump.py | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+> But you got me doubtful about what can happen to the guest if on FAILED
+> we couldn't restore owner.  Realistically enough, we can at least get
+> -ENOMEM during high memory pressure, which is likely to leave vsock dead.
+> 
+> WDYT?
+Here, I will probably need to defer to vsock maintainers and reviewers
+expertise on what would happen to the guest in this scenerio.
 
-diff --git a/tests/functional/ppc64/test_fadump.py b/tests/functional/ppc64/test_fadump.py
-index 7ea65974e0ea..c75095076b52 100755
---- a/tests/functional/ppc64/test_fadump.py
-+++ b/tests/functional/ppc64/test_fadump.py
-@@ -53,7 +53,7 @@ def do_test_fadump(self, is_kvm=False, is_powernv=False):
-             self.require_accelerator("tcg")
- 
-         if is_powernv:
--            self.set_machine("powernv10")
-+            self.set_machine("powernv")
-         else:
-             # SLOF takes upto >20s in startup time, use VOF
-             self.set_machine("pseries")
--- 
-2.54.0
+My concern is whether such failure won't create some unsafe condition in
+the guest - on the other hand if it just means that vsock sockets in the
+guest will return ECONNRESET (or similar) then it isn't that a big deal
+(but still worth reporting).
+
+Thanks,
+Maciej
 
 
