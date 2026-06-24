@@ -4,114 +4,115 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56234CDB47F
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 12:57:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70BA8CDB481
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 13:02:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcN9k-00067c-Dp; Wed, 24 Jun 2026 08:56:40 -0400
+	id 1wcNEp-0006ww-1k; Wed, 24 Jun 2026 09:01:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
- id 1wcN9i-000677-FA; Wed, 24 Jun 2026 08:56:38 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
+ id 1wcNEn-0006wA-U5
+ for qemu-devel@nongnu.org; Wed, 24 Jun 2026 09:01:53 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
- id 1wcN9g-0008H8-Pa; Wed, 24 Jun 2026 08:56:38 -0400
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65OAn2oM562336; Wed, 24 Jun 2026 12:56:25 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=L0Tf7p
- Th20Nh40eQ/2RakmStbSdoVnFscjmsQrWoQ7o=; b=bOxhBONHzVz9oJ2F5s2hLY
- ebj/fboggtnQ5f9+cqquXygO+5UUr5Oc078kWkueE+lIb/svY59bzVCkXEVUNCHo
- zcZBoEP/a3ViIbbsIP0inEl8MknT47BPjnYSlPQ/QqIJEp/mQa52iF27SMEH+sZt
- vaSAiSNM+d7IzdMyk/9EyUzZM9z89La2o0f+5flhx6BXvg2FmK+dG0G9HcUVJbsu
- pra+Di4un3yCDxwzKP3fay4fjjplSOS3VBm8sg2RT6Gb81wq+92HuzVdJx8aqMs8
- kBijfcI70WzCdAhrMrvT3hA51avtKzxqCrj2akvF1s/78sIc7f6TQ0QJWxsxZWBQ
- ==
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4ewjgsuw2v-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 24 Jun 2026 12:56:23 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 65OCnkGd002546;
- Wed, 24 Jun 2026 12:56:23 GMT
-Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4ex7dg8bxe-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 24 Jun 2026 12:56:22 +0000 (GMT)
-Received: from smtpav04.fra02v.mail.ibm.com (smtpav04.fra02v.mail.ibm.com
- [10.20.54.103])
- by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 65OCuJiQ43057440
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 24 Jun 2026 12:56:19 GMT
-Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 0BF3720043;
- Wed, 24 Jun 2026 12:56:19 +0000 (GMT)
-Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 9EB8720040;
- Wed, 24 Jun 2026 12:56:18 +0000 (GMT)
-Received: from [0.0.0.0] (unknown [9.111.35.104])
- by smtpav04.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Wed, 24 Jun 2026 12:56:18 +0000 (GMT)
-Message-ID: <e516de9c-e9fb-45af-aa5e-8cb9dbf1e3f3@linux.ibm.com>
-Date: Wed, 24 Jun 2026 14:56:18 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v8 01/18] target/s390x: Fix wrong address handling in
- address loops
-To: Harald Freudenberger <freude@linux.ibm.com>, richard.henderson@linaro.org, 
- david@kernel.org, thuth@redhat.com, berrange@redhat.com
-Cc: qemu-s390x@nongnu.org, qemu-devel@nongnu.org,
- linux390-list@tuxmaker.boeblingen.de.ibm.com,
- linux-s390@vger.kernel.org, dengler@linux.ibm.com,
- borntraeger@linux.ibm.com, fcallies@linux.ibm.com, cohuck@redhat.com
-References: <20260624081029.23815-1-freude@linux.ibm.com>
- <20260624081029.23815-2-freude@linux.ibm.com>
-Content-Language: en-US
-From: Ilya Leoshkevich <iii@linux.ibm.com>
-In-Reply-To: <20260624081029.23815-2-freude@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjI0MDEwNiBTYWx0ZWRfXzyiPplXsq14D
- NMuf2UjkTZU7sdEWTGKvzTZhjHYPk9YIk5CxU6ENNtqrgsY4L1BqOyVFSvMTcjUzOmqXIldMg02
- CamBSjLqQm2rr9gZ6lMijPZS3GFnKgSl3u4r3v0TpcvYBQrKf4Ik7+lPkxzFYw9IIXWHBaswPtV
- smLPCtvSTrCwxSblf0MOgDQub1yn9o8iHM5bv9yBW6cgcUC7jegeeaNEwAaOox/jj3sOVjJ0bsA
- mVAHuQfIDc0KInUGYVmEzVLEPnA7182pvW0UMScY6Hw4VqdT3tXQB/ZOuT1aZtz6RvyiXTGewbg
- FDoIxZzDNQvh+YuasZs8G8GjkSCJkV5DOIfv6Ub0FxDQnsBmfNUnb7nMhsrEAHvkI8rYAFuAxaC
- UeRkxIO/hbWRUH7r7cM/izuwgX9nSg==
-X-Proofpoint-GUID: y3bp4mlRxJcW5cmzwMn-AoblMJWYWv6o
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjI0MDEwNiBTYWx0ZWRfX7h6+BZcSH7J/
- reLQOY2p1gO6OOR4x61q2GJUb44srojYY0e7J5dYqnUpVs/dZGcQZnLeJfxi2KNGuyi383tCunF
- 5GGhyaS/rRtoSIyFqq6fBSTgUFZhi/s=
-X-Authority-Analysis: v=2.4 cv=I/lVgtgg c=1 sm=1 tr=0 ts=6a3bd3f8 cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
- a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22 a=VnNF1IyMAAAA:8
- a=KHZQTp77v83W7mwugnYA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: y3bp4mlRxJcW5cmzwMn-AoblMJWYWv6o
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-24_03,2026-06-23_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 phishscore=0 spamscore=0 adultscore=0 bulkscore=0
- suspectscore=0 malwarescore=0 classifier=typeunknown authscore=0 authtc=
- authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.22.0-2606150000 definitions=main-2606240106
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=iii@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+ (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
+ id 1wcNEm-0000fN-7o
+ for qemu-devel@nongnu.org; Wed, 24 Jun 2026 09:01:53 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1782306110;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=AHJ1rOwbIA72gkH2eQ2L5h6O9Oy3A0Mj05wz7AUfmjs=;
+ b=JifCpK2ej34a6UIqhdZ7CUHng5UJ/ep3PraNfHBVea1Vmjmc7ht+HT94jheyLJh9w6jSVg
+ mhGtIpU571WmXzIt29AXjAoRA/+8hEqU/HQm6kYyuX14j5vzaKl51LO+GZRpy+gBzxFovF
+ ZfonGZvCTp1b1BpOtpFqjQt2JkJ3e3Y=
+Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com
+ [209.85.214.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-421-nd94CwOtPbq21tgWZsyqsg-1; Wed, 24 Jun 2026 09:01:49 -0400
+X-MC-Unique: nd94CwOtPbq21tgWZsyqsg-1
+X-Mimecast-MFC-AGG-ID: nd94CwOtPbq21tgWZsyqsg_1782306108
+Received: by mail-pl1-f200.google.com with SMTP id
+ d9443c01a7336-2c7ef28ce24so2274055ad.1
+ for <qemu-devel@nongnu.org>; Wed, 24 Jun 2026 06:01:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1782306108; x=1782910908; darn=nongnu.org;
+ h=to:references:message-id:content-transfer-encoding:cc:date
+ :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=AHJ1rOwbIA72gkH2eQ2L5h6O9Oy3A0Mj05wz7AUfmjs=;
+ b=Ej+QS5xI+j9aZqQnOTeQ8q070zY1njyZtXyjUiy7AAOm78wEXIJ/ld3+AGH2Ogemdf
+ 7SXGUhJNiQzt1cFeXiKNaK4Eo6Bq5u6iCfx8RsbPEE5Vnr63LCS7tEvV1nGCuzA5C/Ej
+ IyqsqnYAchqtf7VX3Low62YZyk8mxiysrkfNOdFugbYukiWfj4To0bNXisnthto5dxsQ
+ dJxdT57A/rd6b65kfLLeQfd/9rxL9f7BCwUsilqkxlCPZ8hL8Qim6saGusM595KTvEzd
+ aDUlHSii58VqZ6S7nQcM0wHlEhfSi7CGhBaLkJXESylQx40rfXHIaC6lk0CLG9LFQZW7
+ RAIg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1782306108; x=1782910908;
+ h=to:references:message-id:content-transfer-encoding:cc:date
+ :in-reply-to:from:subject:mime-version:x-gm-gg:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=AHJ1rOwbIA72gkH2eQ2L5h6O9Oy3A0Mj05wz7AUfmjs=;
+ b=owvEFmNf1BpkqbVtiSseR11vbpS4tqJUGiRXq7syRURwAF6TEedsgGDLIa+IohFg90
+ BK9gwCJMSk9jY4KVq391zPUSmQsS/RXHgOOZWDVHtz40kf57qGgSRJgX7nDJShAz83H1
+ AUFuwjCxc6zVI1ARkLqK7q4A3GBaxpkuhjuzAALyAqs09enp/6uw/GHaDuPkzgPzoN0k
+ zPin5Yk9CWr1PYz4e1xk3V+6t5fpTEH6Dkp/Z8UiKcy1yOeVA6xw8clhljuhR0QHg3BF
+ fhI1nRcrj9sqrrjXzmaFSwMxZZ0osNQO+/qKI3HpIPfbrQMUkoEi+1DpVZ+NLhObiwv+
+ mt2A==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RoLchPJBhD954r64N9BxpKDqmFYAphLI4IqL80C6yyDI0kglqjn7own8N7hnTfliINAmAIxnJIsrlkd@nongnu.org
+X-Gm-Message-State: AOJu0YyxvTtcfXitdgR+IUn6tJMWjZeyNC6A2Y0w+nsQEylt5ptJqG2t
+ xquv5315/GMJoGrfsKQuu0cOGPGVEN2Yw2DleOfPAuaeqSnCC2m0o2Xpy+hiBr5y+3SiKvkzVSE
+ kQMMdK18pLFspS8hPk6QZ37Y1D5phLxFWIEnYVPfVNbj9HyJHI8TcYlbPR0gFpD7B
+X-Gm-Gg: AfdE7ckKx1i12SR1PRlx64FFW/m+SpPw+pZSTMBEMpYLdB5dy4jfONItl79+5lBam1K
+ 8gO1f+d+rdk7MkZH2a9DQKgXtRy7MnMHf4Cjjrzs3juG3CH3+E+qbBjKE4eGemwq7bUOw30/sis
+ 5GaTEHqtqEPZbh5VdmdhT+iHaup3DcrfTTCgVKqGaM3dj4fA61eIGicf+dUPoR1iSIh0SrYEhoo
+ tS0wgdr3irpnvnbzZl7OYrFTVpDEGnPHYNZm0cJo07ZhnawRgrmk7Bf3JhR+VHTQUgmLsXNy4wI
+ LCVy8Mjk/EjLp7XJbxsZQk3yxU1ofusNKKTgGI1PLMhdttqUSupk1RHfklFHupGJN9/A3h5fENP
+ jJa2aZM744e+Zdjd6zNY0bEkSNmgJ66i7geE/VIucnw9IFFsCnbsBOYM7cXn04Baw
+X-Received: by 2002:a17:903:4b27:b0:2c6:e146:79ac with SMTP id
+ d9443c01a7336-2c7c7592b72mr77844965ad.7.1782306107843; 
+ Wed, 24 Jun 2026 06:01:47 -0700 (PDT)
+X-Received: by 2002:a17:903:4b27:b0:2c6:e146:79ac with SMTP id
+ d9443c01a7336-2c7c7592b72mr77844025ad.7.1782306106872; 
+ Wed, 24 Jun 2026 06:01:46 -0700 (PDT)
+Received: from smtpclient.apple ([110.227.100.91])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2c7436af22bsm130162515ad.10.2026.06.24.06.01.44
+ (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+ Wed, 24 Jun 2026 06:01:46 -0700 (PDT)
+Content-Type: text/plain;
+	charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.600.51.1.1\))
+Subject: Re: [PATCH v1 4/8] hw/misc/vmlaunchupdate: Introduce hypervisor
+ fw-cfg interface support
+From: Ani Sinha <anisinha@redhat.com>
+In-Reply-To: <ajvDMzTGk91aJl9d@sirius.home.kraxel.org>
+Date: Wed, 24 Jun 2026 18:31:31 +0530
+Cc: Stefano Garzarella <sgarzare@redhat.com>, Alex Graf <graf@amazon.com>,
+ qemu-devel@nongnu.org
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <129574FC-96A4-4E0C-81E8-338E68DD3675@redhat.com>
+References: <20260624055339.46862-1-anisinha@redhat.com>
+ <20260624055339.46862-5-anisinha@redhat.com>
+ <ajudPOcejMvGTTJB@sirius.home.kraxel.org>
+ <602FAB73-36A1-41A0-97AA-7541102F23A4@redhat.com>
+ <ajvDMzTGk91aJl9d@sirius.home.kraxel.org>
+To: Gerd Hoffman <kraxel@redhat.com>
+X-Mailer: Apple Mail (2.3864.600.51.1.1)
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=anisinha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -129,47 +130,82 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 
-On 6/24/26 10:09, Harald Freudenberger wrote:
-> With the introduction of the address wrapping function
-> wrap_address() the result can't be used to walk the
-> source address any more. So introduce a new local variable
-> to hold the wrapped address to avoid mixing source and
-> wrapped address value.
-> 
-> Fixes: fcc2699d41 ("target/s390x: Have MSA helper pass a mmu_idx argument")
-> Signed-off-by: Harald Freudenberger <freude@linux.ibm.com>
-> ---
->   target/s390x/tcg/crypto_helper.c | 16 ++++++++--------
->   1 file changed, 8 insertions(+), 8 deletions(-)
+> On 24 Jun 2026, at 5:32=E2=80=AFPM, Gerd Hoffman <kraxel@redhat.com> =
+wrote:
+>=20
+>  Hi,
+>=20
+>>> I'm wondering whenever we should better keep the original file, so =
+we
+>>> have the option to switch back.
+>>>=20
+>>> With a boot workflow like this ...
+>>>=20
+>>> (1) boot qemu firmware
+>>> (2) some efi app loads igvm with guest firmware + kernel
+>>> (3) reset
+>>> (4) boot guest-supplied firmware
+>>> (5) guest-supplied firmware boots into the bundled kernel
+>>>     (without even looking at the ESP).
+>>>=20
+>>> ... you are now in a situation where the guest can't load a =
+different
+>>> IGVM file (say with an updated kernel) using the same workflow.
+>>=20
+>> Why? Why would the fw-cfg interface not be used again to reset to a =
+new IGVM that loads a new kernel?
+>=20
+> The guest has no access to the qemu firmware so resetting to that (to
+> get the process start at (1) again) is not so easy.  Certainly harder
+> for the guest that for qemu doing it (or offer the option to do it via
+> some control bit).
+>=20
+> The other option would be to have some linux driver for this allowing
+> linux tools (instead of an efi app or bootloader) loading a new igvm
+> file on kernel package updates.  Implies we'll need two different ways
+> to load IGVM files.  I'd much prefer not doing that.
+>=20
+>>>> +++ b/include/hw/misc/vmlaunchupdate.h
+>>>=20
+>>> I think it makes sense to have two include files, one for the API =
+and
+>>> one for the qemu internals.
+>>=20
+>> Where would you put the api header file?
+>=20
+> standard-headers/misc/ looks good to me.
 
-If I take as an example AMODE 24 and look at the third loop iteration,
-with the current code in master I would get:
+Hmm, checkpatch is not happy
 
-     ((((addr & 0xffffff) + 8) & 0xffffff) + 8) & 0xffffff
+ERROR: headers imported from Linux should be self-contained in a patch =
+with no other changes
+#89: FILE: include/standard-headers/misc/vmlaunchupdate.h:1:
++/*
 
-and with your patch it would be:
 
-     (addr + 8 + 8) & 0xffffff
+>=20
+>>> .. instead of signaling success indirectly by clearing fields.  =
+There is
+>>> room anyway right after the version field.
+>>>=20
+>>>> +    uint64_t fw_image_addr;
+>>>> +    uint32_t fw_image_size;
+>>>=20
+>>> uint64_t?
+>>=20
+>> I would leave this as 32 bits. 64 bit idvm file size is too big, no?
+>=20
+> With u32 we'll get 4 bytes padding, so we do not safe any space in the
+> struct.  Also initrds can be quite big, the standard anaconda install
+> initrd for fedora 44 is 252M, this is not *that* far away from 32bit
+> max.  Also you never know what people do once they have the =
+opportunity.
+> It certainly is possible to build igvm files loading your complete
+> multi-gigabyte workload into memory, verified by launch measurement,
+> then run it without ever accessing disk storage.
+>=20
+> take care,
+>  Gerd
 
-which is undeniably more elegant, but otherwise looks equivalent to me.
-
-What is the functional issue here?
-
-> diff --git a/target/s390x/tcg/crypto_helper.c b/target/s390x/tcg/crypto_helper.c
-> index ae392bce0e..29ad2aff43 100644
-> --- a/target/s390x/tcg/crypto_helper.c
-> +++ b/target/s390x/tcg/crypto_helper.c
-> @@ -126,8 +126,8 @@ static void sha512_read_icv(CPUS390XState *env, const int mmu_idx,
->       const MemOpIdx oi = make_memop_idx(MO_BE | MO_64 | MO_UNALN, mmu_idx);
->   
->       for (int i = 0; i < 8; i++, addr += 8) {
-> -        addr = wrap_address(env, addr);
-> -        a[i] = cpu_ldq_mmu(env, addr, oi, ra);
-> +        uint64_t _addr = wrap_address(env, addr);
-> +        a[i] = cpu_ldq_mmu(env, _addr, oi, ra);
->       }
->   }
-
-[...]
 
 
