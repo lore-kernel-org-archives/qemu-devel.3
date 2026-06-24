@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74E1DCDB47F
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 20:00:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB910CDB479
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 20:00:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcTlV-0005kC-0t; Wed, 24 Jun 2026 16:00:05 -0400
+	id 1wcTlr-00061T-8E; Wed, 24 Jun 2026 16:00:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1wcTlT-0005jc-3G; Wed, 24 Jun 2026 16:00:03 -0400
+ id 1wcTln-0005tG-Ld; Wed, 24 Jun 2026 16:00:25 -0400
 Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1wcTlQ-00087n-S6; Wed, 24 Jun 2026 16:00:02 -0400
+ id 1wcTli-0008Og-SN; Wed, 24 Jun 2026 16:00:22 -0400
 Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65OJmK5O2206005; Wed, 24 Jun 2026 19:59:52 GMT
+ 65OJmZJx2206229; Wed, 24 Jun 2026 20:00:11 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=itEPHjlihKme6XKmq
- scOCKtTt7IZki58B+u0D7S5efo=; b=FqUxXWytTyqeNMyFjrX24VucKpxaH+hdR
- Vu12Qu9u5uDgkPNpYYzcE19VltGdPYSLY0T3w9kE9998SYWs1qRvagYB9JciUutt
- Prw/AGcw/1dcoV6UWUg/SHasB/d0LrOEt1KZGoAqneIhwBiCHoozrriJXmp9/CaH
- EGeSdd1snYwxEaI5KeGcMM7HUYBR7r6W8Jqx8ncJJiZBEyCh2OcfHN4biiEtJZIU
- xuRZVsQoGnFzMybiAXJHukiLnrA+fbmf5yOn+3jmW1dHapEGkZLiZd0ru32pCOD1
- xqUH3KKlnCwHpnJfqyGSquKLuPnbfPCI023prtNXe30udAGENRovw==
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4ewjhqx55a-1
+ :mime-version:references:subject:to; s=pp1; bh=uTGxBLk28racsfCyG
+ kVDMN8Sm2SrtFnSSupbMELVHwU=; b=P3xlQJn8ejf95WHCVjpDj5S+Y7Z5BdnS5
+ ZDTqZWAFj/f6iwVdx1iKDFmRRJwHSiHwDTNpwxGV04Z93iFL2ZJScoHHe59i7hsc
+ xQlgWSeUtCG4vsLgs4PsbOPmcfJCw1ai+Ph4ESWLZHZXaLn6IzZf/4dQgW/sNOtp
+ ltr6Ml/8mCGLbYIoFRXKpTmbgvUW26diAywzMilkWd2oCzk7eQXkNYtxYphJkGe4
+ /0PYcXQt9EMOIWPJeSft7uDVJOGBjfD36VP+XgptRFDmtPdEJ3JKeMdYgLkTMtxH
+ a4rWSzvZt95hESF/9e9aPmDA9q4kbN5C7agVFobaH5wtnO7/iDMvg==
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4ewjhqx58u-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 24 Jun 2026 19:59:51 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 65OJo0bq029540;
- Wed, 24 Jun 2026 19:59:50 GMT
-Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4ex7dgaa1m-1
+ Wed, 24 Jun 2026 20:00:09 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 65OJnxmt025066;
+ Wed, 24 Jun 2026 20:00:08 GMT
+Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4ex7vyt7cw-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 24 Jun 2026 19:59:49 +0000 (GMT)
+ Wed, 24 Jun 2026 20:00:08 +0000 (GMT)
 Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com
  [10.20.54.106])
- by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 65OJxkEn48627992
+ by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 65OK04qC26149266
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 24 Jun 2026 19:59:46 GMT
+ Wed, 24 Jun 2026 20:00:04 GMT
 Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 53CF22004B;
- Wed, 24 Jun 2026 19:59:46 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 82B8620043;
+ Wed, 24 Jun 2026 20:00:04 +0000 (GMT)
 Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id E3E8A20040;
- Wed, 24 Jun 2026 19:59:36 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id CD87A20040;
+ Wed, 24 Jun 2026 19:59:56 +0000 (GMT)
 Received: from li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com (unknown
  [9.39.20.104]) by smtpav07.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Wed, 24 Jun 2026 19:59:36 +0000 (GMT)
+ Wed, 24 Jun 2026 19:59:56 +0000 (GMT)
 From: Aditya Gupta <adityag@linux.ibm.com>
 To: <qemu-devel@nongnu.org>, <qemu-ppc@nongnu.org>,
  Harsh Prateek Bora <harshpb@linux.ibm.com>,
@@ -74,10 +74,9 @@ Cc: Sourabh Jain <sourabhjain@linux.ibm.com>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  kvm@vger.kernel.org, Gautam Menghani <gautam@linux.ibm.com>,
  Chinmay Rath <rathc@linux.ibm.com>
-Subject: [PATCH v2 1/8] tests/functional: Add remote interrupts test for
- PowerNV
-Date: Thu, 25 Jun 2026 01:29:17 +0530
-Message-ID: <20260624195924.1422821-2-adityag@linux.ibm.com>
+Subject: [PATCH v2 3/8] tests/qtest: Add Power11 chip & machine to qtests
+Date: Thu, 25 Jun 2026 01:29:19 +0530
+Message-ID: <20260624195924.1422821-4-adityag@linux.ibm.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260624195924.1422821-1-adityag@linux.ibm.com>
 References: <20260624195924.1422821-1-adityag@linux.ibm.com>
@@ -85,23 +84,22 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
 X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Authority-Analysis: v=2.4 cv=I4VVgtgg c=1 sm=1 tr=0 ts=6a3c3737 cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
+X-Authority-Analysis: v=2.4 cv=I4VVgtgg c=1 sm=1 tr=0 ts=6a3c3749 cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
  a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=uAbxVGIbfxUO_5tXvNgY:22 a=VwQbUJbxAAAA:8 a=20KFwNOVAAAA:8 a=VnNF1IyMAAAA:8
- a=7FOmGxExo5DkOBRayjgA:9
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjI0MDE2NiBTYWx0ZWRfX89J63wOXw8Ra
- vzZJXbPnwOzttX9YiX9h10RhFqQuQudoqoXzudgLEc69nPfWXZChF+lHjrK07vvLguP4dTqe1CH
- hncZppEAsSZh2/opi3EHMcZ6L5kBvC//GowX/s2d5qG5wvjlUWpaG4wP8wDGz0XIOfV67bAGNL8
- Liiaro/nxCKBKZKsR/dUpVyxEUwl5S/h7t4J153H2VoW61aicJLe6NUpJnBPRRX2KkaoOnf2cGH
- QudGhM2bYo8PED79cV8q5my2fVcaRTKpsa3TelhpdQe6ZbxC1B9RB4wFZTp/rsJ2c2+w887syx6
- DXp8RBRCHVslop4KxcNykTvE8Q5sPloFiX+CkWxCB2+G8DqFILVDTbKX/tixnG36JEyFZ51Dxlb
- pBU88bU7kbmmChNtu56KGoijDnuHsQ==
-X-Proofpoint-GUID: Pivekpt6RLpGMTw17nsk0bIp8UTgcDM-
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjI0MDE2NiBTYWx0ZWRfXyqJsFY6RAKAm
- SNA/w2MjSg8GDlTXkPrZtQLBA5AFEymYuGTx5MEGjn+FkPAGC0PpPTpXXXV7Eehj3GdqAn2ggkp
- wG3KiscyU+8E7Brh/cofm6it0DGzy7Q=
-X-Proofpoint-ORIG-GUID: yu-SfuxbcVFroDTiYQQcFjc0JTUqJS4i
+ a=uAbxVGIbfxUO_5tXvNgY:22 a=VnNF1IyMAAAA:8 a=ecs4qFjb3cSJlp2yJ8oA:9
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjI0MDE2NiBTYWx0ZWRfXxkIVVmNfqOqf
+ RNM+TaJMO64J0x4v3AC284i7MgOoCiYq3N7t6HT4M7CN8aYbK4hnTejnFdQkUxW0Wvs4cnEOfW2
+ +DUbfP2647TKXPJYuhnZx0IJiSIqSBIZ7AUxUqeD62KGAA4QiTNNTZ6tuG8hRMF3J/Hcbif0pKu
+ qMho9wlPfv3wUEZj/NbsbB+P5h6y/GmJNqfu0hxBMHVvwVYoynqCBMI3r5zVhsczI+lSMxH0/Vk
+ 24MvvpN5Zh/KT/m6NRS3kfKhJnb4bHC8DotR6yG9/p8vmh09GiP86w/OGgdILLZV2rQEvbuMOJU
+ HYRlgPSN2RmBJk8icNLXz0e4sK3WoyESuAd3nft+4TStyRtJ8Vsiyu/H8U3BYPkleBX3whmqyqR
+ c19lYq20JNr04dzW1Ns10bQWctw0SQ==
+X-Proofpoint-GUID: maTB3T5mhitHOFwYM8nwRHwEI2NqMFL1
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjI0MDE2NiBTYWx0ZWRfX7/HYrNF+4SSU
+ 7EvALrWiddN1EsTUWznEtlndRV4mAEg/o0EffyNfKk6WOQnVuStIg0LqPNRSVwLakkSuu3nNxXZ
+ 9Wv7/WsRoYi2UH2otU2uV0WEieqs2Sk=
+X-Proofpoint-ORIG-GUID: edWdOq8zFdF2E9MrztUjR24mUXzzcGo-
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-06-24_04,2026-06-24_01,2025-10-01_01
@@ -134,150 +132,214 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In the past there have been hard to recreate issues where XIVE changes
-cause qemu crashes due to multi-socket interrupts such as in [1].
+Previously the machines/chips tested by qtest was till Power10, update
+the tests to also test PowerNV11 and Power11 PNV Chip
 
-Add a functional test explicitly to test whether remote interrupts work.
+Since if-else-if ladder was common pattern to get machine type,
+implement pnv_get_machine_type so new processor cases can be implemented
+in one location in pnv_get_machine_type
 
-The test can also work as additional boot test for multi-socket boot,
-initrd boot test, as well as a check for e1000e to be working in powernv,
-though that's not a target goal, and are additional benefits.
-
-From docs/system/devices/net.rst:
-
-  In order to check that the user mode network is working, you can ping
-  the address 10.0.2.2 and verify that you got an address in the range
-  10.0.2.x from the QEMU virtual DHCP server.
-
-Hence use 10.0.2.2 with ping.
-
-[1]: https://lore.kernel.org/qemu-devel/baf6c854-832b-4a2e-922f-d34e6dadf821@redhat.com/
+While at it, also add g_autofree to allocation by g_strdup_printf in
+modified tests
 
 Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
 ---
- tests/functional/ppc64/test_powernv.py | 95 ++++++++++++++++++++++++++
- 1 file changed, 95 insertions(+)
+ tests/qtest/pnv-host-i2c-test.c    | 10 ++++-----
+ tests/qtest/pnv-spi-seeprom-test.c |  2 +-
+ tests/qtest/pnv-xive2-test.c       |  2 +-
+ tests/qtest/pnv-xscom-test.c       | 22 +++++---------------
+ tests/qtest/pnv-xscom.h            | 33 +++++++++++++++++++++++++++---
+ 5 files changed, 41 insertions(+), 28 deletions(-)
 
-diff --git a/tests/functional/ppc64/test_powernv.py b/tests/functional/ppc64/test_powernv.py
-index 0ea6c93e4287..9760f58ee41e 100755
---- a/tests/functional/ppc64/test_powernv.py
-+++ b/tests/functional/ppc64/test_powernv.py
-@@ -9,6 +9,7 @@
+diff --git a/tests/qtest/pnv-host-i2c-test.c b/tests/qtest/pnv-host-i2c-test.c
+index 51e613ebdcb2..5fd54f9de771 100644
+--- a/tests/qtest/pnv-host-i2c-test.c
++++ b/tests/qtest/pnv-host-i2c-test.c
+@@ -402,15 +402,14 @@ static void reset_all(QTestState *qts, const PnvChip *chip)
+ static void test_host_i2c(const void *data)
+ {
+     const PnvChip *chip = data;
++    const char *machine = pnv_get_machine_type(chip->chip_type);
+     QTestState *qts;
+-    const char *machine = "powernv8";
+     PnvI2cCtlr ctlr;
+     PnvI2cDev pca9552;
+     PnvI2cDev pca9554;
  
- from qemu_test import LinuxKernelTest, Asset
- from qemu_test import wait_for_console_pattern
-+from qemu_test import exec_command_and_wait_for_pattern
+-    if (chip->chip_type == PNV_CHIP_POWER9) {
+-        machine = "powernv9";
+-    } else if (chip->chip_type == PNV_CHIP_POWER10) {
++    /* i2c is initialised for rainier in case of P10 */
++    if (chip->chip_type == PNV_CHIP_POWER10) {
+         machine = "powernv10-rainier";
+     }
  
- class PowernvMachine(LinuxKernelTest):
+@@ -473,10 +472,9 @@ static void add_test(const char *name, void (*test)(const void *data))
+     int i;
  
-@@ -27,6 +28,17 @@ class PowernvMachine(LinuxKernelTest):
-          'buildroot/qemu_ppc64le_powernv8-2025.02/rootfs.ext2'),
-         'aee2192b692077c4bde31cb56ce474424b358f17cec323d5c94af3970c9aada2')
+     for (i = 0; i < ARRAY_SIZE(pnv_chips); i++) {
+-        char *tname = g_strdup_printf("pnv-xscom/%s/%s", name,
++        g_autofree char *tname = g_strdup_printf("pnv-xscom/%s/%s", name,
+                                       pnv_chips[i].cpu_model);
+         qtest_add_data_func(tname, &pnv_chips[i], test);
+-        g_free(tname);
+     }
+ }
  
-+    def shell_exec_command_check_fail(self, command):
-+        fail_msg="Fail"
-+        self.shell_exec_command(f"export __FAIL_MSG={fail_msg}")
-+
-+        # If the exit code for the command is non 0, print fail message
-+        command = command + " || echo $__FAIL_MSG"
-+        exec_command_and_wait_for_pattern(self, command, '#', fail_msg)
-+
-+    def shell_exec_command(self, command):
-+        exec_command_and_wait_for_pattern(self, command, '#', self.panic_message)
-+
-     def do_test_linux_boot(self, command_line = KERNEL_COMMON_COMMAND_LINE):
-         self.require_accelerator("tcg")
-         kernel_path = self.ASSET_KERNEL.fetch()
-@@ -71,6 +83,89 @@ def test_linux_smt_boot(self):
-         wait_for_console_pattern(self, console_pattern, self.panic_message)
-         wait_for_console_pattern(self, self.good_message, self.panic_message)
+diff --git a/tests/qtest/pnv-spi-seeprom-test.c b/tests/qtest/pnv-spi-seeprom-test.c
+index 1a78e8d966a5..8bb30eb649aa 100644
+--- a/tests/qtest/pnv-spi-seeprom-test.c
++++ b/tests/qtest/pnv-spi-seeprom-test.c
+@@ -77,7 +77,7 @@ static void test_spi_seeprom(const void *data)
+     const PnvChip *chip = data;
+     QTestState *qts = NULL;
+     g_autofree char *tmp_path = NULL;
+-    const char *machine = "powernv10";
++    const char *machine = pnv_get_machine_type(chip->chip_type);
+     int ret;
+     int fd;
  
-+    def test_linux_remote_interrupts(self):
-+        self.require_accelerator("tcg")
-+        self.set_machine('powernv')
+diff --git a/tests/qtest/pnv-xive2-test.c b/tests/qtest/pnv-xive2-test.c
+index 5313d4ef18b7..80de9d09ed09 100644
+--- a/tests/qtest/pnv-xive2-test.c
++++ b/tests/qtest/pnv-xive2-test.c
+@@ -548,7 +548,7 @@ static void test_xive(void)
+ {
+     QTestState *qts;
+ 
+-    qts = qtest_initf("-M powernv10 -smp %d,cores=1,threads=%d -nographic "
++    qts = qtest_initf("-M powernv11 -smp %d,cores=1,threads=%d -nographic "
+                       "-nodefaults -serial mon:stdio -S "
+                       "-d guest_errors -trace '*xive*'",
+                       SMT, SMT);
+diff --git a/tests/qtest/pnv-xscom-test.c b/tests/qtest/pnv-xscom-test.c
+index c814c0f4f5b1..94b50c071c02 100644
+--- a/tests/qtest/pnv-xscom-test.c
++++ b/tests/qtest/pnv-xscom-test.c
+@@ -28,15 +28,9 @@ static void test_xscom_cfam_id(QTestState *qts, const PnvChip *chip)
+ static void test_cfam_id(const void *data)
+ {
+     const PnvChip *chip = data;
+-    const char *machine = "powernv8";
++    const char *machine = pnv_get_machine_type(chip->chip_type);
+     QTestState *qts;
+ 
+-    if (chip->chip_type == PNV_CHIP_POWER9) {
+-        machine = "powernv9";
+-    } else if (chip->chip_type == PNV_CHIP_POWER10) {
+-        machine = "powernv10";
+-    }
+-
+     qts = qtest_initf("-M %s -accel tcg -cpu %s",
+                       machine, chip->cpu_model);
+     test_xscom_cfam_id(qts, chip);
+@@ -57,7 +51,8 @@ static void test_cfam_id(const void *data)
+ 
+ static void test_xscom_core(QTestState *qts, const PnvChip *chip)
+ {
+-    if (chip->chip_type == PNV_CHIP_POWER10) {
++    if ((chip->chip_type == PNV_CHIP_POWER10) ||
++        (chip->chip_type == PNV_CHIP_POWER11)) {
+         uint32_t first_core_thread_state =
+                  PNV_XSCOM_P10_EC_BASE(chip->first_core) + 0x412;
+         uint64_t thread_state;
+@@ -84,14 +79,8 @@ static void test_xscom_core(QTestState *qts, const PnvChip *chip)
+ static void test_core(const void *data)
+ {
+     const PnvChip *chip = data;
++    const char *machine = pnv_get_machine_type(chip->chip_type);
+     QTestState *qts;
+-    const char *machine = "powernv8";
+-
+-    if (chip->chip_type == PNV_CHIP_POWER9) {
+-        machine = "powernv9";
+-    } else if (chip->chip_type == PNV_CHIP_POWER10) {
+-        machine = "powernv10";
+-    }
+ 
+     qts = qtest_initf("-M %s -accel tcg -cpu %s",
+                       machine, chip->cpu_model);
+@@ -104,10 +93,9 @@ static void add_test(const char *name, void (*test)(const void *data))
+     int i;
+ 
+     for (i = 0; i < ARRAY_SIZE(pnv_chips); i++) {
+-        char *tname = g_strdup_printf("pnv-xscom/%s/%s", name,
++        g_autofree char *tname = g_strdup_printf("pnv-xscom/%s/%s", name,
+                                       pnv_chips[i].cpu_model);
+         qtest_add_data_func(tname, &pnv_chips[i], test);
+-        g_free(tname);
+     }
+ }
+ 
+diff --git a/tests/qtest/pnv-xscom.h b/tests/qtest/pnv-xscom.h
+index 5aa1701ea768..8f05f59a1436 100644
+--- a/tests/qtest/pnv-xscom.h
++++ b/tests/qtest/pnv-xscom.h
+@@ -9,6 +9,9 @@
+ #ifndef PNV_XSCOM_H
+ #define PNV_XSCOM_H
+ 
++#include <stdint.h>
++#include <assert.h>
 +
-+        # Have below setup in this test:
-+        # 1. e1000e attached to pcie.6, which is from 7th PHB, belonging to 2nd
-+        #    socket (chip 1), in a powernv boot with default 6 PHBs per socket
-+        # 2. CPU on 2nd socket (chip 1) disabled
-+        # 3. RX IRQ's affinity to chip 2, and TX IRQ's affinity to chip 3
-+        #
-+        # Then ping is done, to generate interrupts from e1000e which should go
-+        # to IRQ server on the remote sockets
-+        self.vm.add_args('-smp', '4,sockets=4,threads=1')
-+        self.vm.add_args('-netdev', 'user,id=net0')
-+        self.vm.add_args('-device', 'e1000e,netdev=net0,bus=pcie.6')
+ #define SMT                     4 /* some tests will break if less than 4 */
+ 
+ typedef enum PnvChipType {
+@@ -17,6 +20,7 @@ typedef enum PnvChipType {
+     PNV_CHIP_POWER8NVL,   /* AKA Naples */
+     PNV_CHIP_POWER9,      /* AKA Nimbus */
+     PNV_CHIP_POWER10,
++    PNV_CHIP_POWER11,
+ } PnvChipType;
+ 
+ typedef struct PnvChip {
+@@ -60,15 +64,23 @@ static const PnvChip pnv_chips[] = {
+         .first_core = 0x0,
+         .num_i2c    = 4,
+     },
++    {
++        .chip_type  = PNV_CHIP_POWER11,
++        .cpu_model  = "Power11",
++        .xscom_base = 0x000603fc00000000ull,
++        .cfam_id    = 0x220da04980000000ull,
++        .first_core = 0x0,
++        .num_i2c    = 0,
++    },
+ };
+ 
+ static inline uint64_t pnv_xscom_addr(const PnvChip *chip, uint32_t pcba)
+ {
+     uint64_t addr = chip->xscom_base;
+ 
+-    if (chip->chip_type == PNV_CHIP_POWER10) {
+-        addr |= ((uint64_t) pcba << 3);
+-    } else if (chip->chip_type == PNV_CHIP_POWER9) {
++    if ((chip->chip_type == PNV_CHIP_POWER11) ||
++        (chip->chip_type == PNV_CHIP_POWER10) ||
++        (chip->chip_type == PNV_CHIP_POWER9)) {
+         addr |= ((uint64_t) pcba << 3);
+     } else {
+         addr |= (((uint64_t) pcba << 4) & ~0xffull) |
+@@ -77,4 +89,19 @@ static inline uint64_t pnv_xscom_addr(const PnvChip *chip, uint32_t pcba)
+     return addr;
+ }
+ 
++static const char *pnv_get_machine_type(enum PnvChipType chip_type)
++{
++    if (chip_type == PNV_CHIP_POWER8) {
++        return "powernv8";
++    } else if (chip_type == PNV_CHIP_POWER9) {
++        return "powernv9";
++    } else if (chip_type == PNV_CHIP_POWER10) {
++        return "powernv10";
++    } else if (chip_type == PNV_CHIP_POWER11) {
++        return "powernv11";
++    } else {
++        g_assert_not_reached();
++    }
++}
 +
-+        kernel_path = self.ASSET_KERNEL.fetch()
-+        rootfs_path = self.ASSET_INITRD.fetch()
-+        self.vm.set_console()
-+        self.vm.add_args('-kernel', kernel_path,
-+            '-drive',
-+            f'file={rootfs_path},format=raw,if=none,id=drive0,readonly=on',
-+            '-append', 'root=/dev/nvme0n1 console=hvc0',
-+            '-device', 'nvme,drive=drive0,bus=pcie.2,addr=0x0,serial=1234')
-+        self.vm.launch()
-+
-+        # Wait for boot to complete
-+        console_pattern = 'CPU maps initialized for 1 thread per core'
-+        wait_for_console_pattern(self, console_pattern, self.panic_message)
-+        console_pattern = 'smp: Brought up 4 nodes, 4 CPUs'
-+        wait_for_console_pattern(self, console_pattern, self.panic_message)
-+        wait_for_console_pattern(self, 'Run /sbin/init as init process',
-+                                 self.panic_message)
-+
-+        # Wait for login prompt and login as root (no password in buildroot)
-+        wait_for_console_pattern(self, 'login:', self.panic_message)
-+        exec_command_and_wait_for_pattern(self, 'root', '#', self.panic_message)
-+
-+        # e1000e is connected to socket 1, disable the CPU on socket 1
-+        self.shell_exec_command("echo 0 > /sys/devices/system/cpu/cpu1/online")
-+        self.shell_exec_command(
-+            "export CPU1_STATE=$(cat /sys/devices/system/cpu/cpu1/online)")
-+        self.shell_exec_command_check_fail("[ $CPU1_STATE -eq 0 ]")
-+
-+        # RX, TX interrupts to chip/cpu 2 & 3 respectively
-+        self.shell_exec_command(
-+            "export RX_IRQ=$(awk '/eth0-rx/ {print $1}' /proc/interrupts | tr -d ':')")
-+        self.shell_exec_command(
-+            "export TX_IRQ=$(awk '/eth0-tx/ {print $1}' /proc/interrupts | tr -d ':')")
-+        self.shell_exec_command("echo 2 > /proc/irq/$RX_IRQ/smp_affinity_list")
-+        self.shell_exec_command("echo 3 > /proc/irq/$TX_IRQ/smp_affinity_list")
-+
-+        # Capture interrupt counts before generating traffic
-+        self.shell_exec_command(
-+            "export RX_BEFORE=$(awk '/eth0-rx/ {print $3}' /proc/interrupts)")
-+        self.shell_exec_command(
-+            "export TX_BEFORE=$(awk '/eth0-tx/ {print $4}' /proc/interrupts)")
-+
-+        # Wait up to 15 seconds for eth0 link to come up
-+        self.shell_exec_command(
-+            "c=0; while ! ip addr show eth0 | grep 'inet 10.0.2'; do "
-+            "sleep 1; c=$((c+1)); [ $c -gt 15 ] && break; done")
-+
-+        self.shell_exec_command_check_fail(
-+            "ip addr show eth0 | grep 'inet 10.0.2'")
-+
-+        # Generate network traffic to trigger remote interrupts
-+        # Ping QEMU's user-mode network gateway (10.0.2.2)
-+        self.shell_exec_command("ping -W2 -c5 10.0.2.2")
-+
-+        # Show final interrupt counts to verify remote interrupts occurred
-+        self.shell_exec_command("cat /proc/interrupts | grep eth0")
-+
-+        # Verify interrupt counts increased (whether interrupts were delivered)
-+        self.shell_exec_command(
-+            "export RX_AFTER=$(awk '/eth0-rx/ {print $3}' /proc/interrupts)")
-+        self.shell_exec_command(
-+            "export TX_AFTER=$(awk '/eth0-tx/ {print $4}' /proc/interrupts)")
-+
-+        # Check that interrupt counts increased
-+        self.shell_exec_command_check_fail("[ $RX_AFTER -gt $RX_BEFORE ]")
-+        self.shell_exec_command_check_fail("[ $TX_AFTER -gt $TX_BEFORE ]")
-+
-     def test_linux_big_boot(self):
-         self.set_machine('powernv')
-         self.vm.add_args('-smp', '16,threads=4,cores=2,sockets=2')
+ #endif /* PNV_XSCOM_H */
 -- 
 2.54.0
 
