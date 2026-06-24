@@ -4,46 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F1E7CDB479
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 05:07:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7142CDB470
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 05:07:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcFnU-0005DM-C1; Wed, 24 Jun 2026 01:05:12 -0400
+	id 1wcFnw-0005kC-7b; Wed, 24 Jun 2026 01:05:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wcFnR-0005B3-Nf; Wed, 24 Jun 2026 01:05:09 -0400
+ id 1wcFnu-0005iV-Ix; Wed, 24 Jun 2026 01:05:38 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wcFnP-0005K5-Qp; Wed, 24 Jun 2026 01:05:09 -0400
+ id 1wcFns-0005Xe-Q0; Wed, 24 Jun 2026 01:05:38 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1782277464; bh=3pmqdTuQKL7Ee46dsIVEijwBx9RjPavHAyp1CRdfrm0=;
+ t=1782277465; bh=mGDgxVxCW6hBSpD+z7PQ+9nZVyN4TQfbAFhcRu3OUZI=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=sSuLIbsnTgSVw2yrC4A3pKgBQmEyrXdaiqNJLNcEmjwjERTP6vYCL/7ypJrTtm5NV
- VHMr0IuUZUnY4huQeawoVxLWIBu9n7JDqKqZi8+Mk6wcbBk+R8pZPfCBuFsDwKzvT0
- ZUNBL+9HUp/BZDQncxoJOGi3ECjsecRZwg7+UuxKCej2XX/Ow7qCcnRAbm5uMtx5qU
- oghOwxG/zN7AC9V2uCF9I02bWDVHcVgY7J9RavqE+a/w1XzboTs+ja/VPeUIbdt98G
- A6LKen9zcPOEVoKzG6GT1JXY2lv62ddTJfqblvH8wMVvsoiPByStL7MhmvhhzqaguX
- y6gZTuLMRHR7A==
+ b=TkwkoGoHlYewnofX5yb2s3G5XqbvFI/tbFsGLuSRuAnRyF6ygcoaEbHAysV0PahCE
+ xmUcKG/DEEAxqaXSX5eiYFJzkIfmuVBmLsorDHcmkg71GjeW8bTii2C+VnbSHdRsP1
+ 2/LzRtTdeQBuHyGoP0dKY06N11OcwwvTJF3qHLfuytzvCCtHdzi81oTiJcyGqYqFm/
+ eZuiWyseCUwlS7Q09VVPvDmu7G+8BHHchlp+cXACtHyTzX3r/ZJJzKMePvIT0PqHpv
+ 771JeOr+XY3BISxlRifz3gPafO2eCPh3JlupvkjsXtZ5Hf2boel3/8lkkPWz6B3h1s
+ n9RRcfj7wwoHA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id EE56B1BA637;
- Wed, 24 Jun 2026 08:04:24 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 51BA91BA63C;
+ Wed, 24 Jun 2026 08:04:25 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id D4A2F3DDAC2;
- Wed, 24 Jun 2026 08:04:29 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 307B03DDAC7;
+ Wed, 24 Jun 2026 08:04:30 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Chao Liu <chao.liu.zevorn@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>,
+Cc: qemu-stable@nongnu.org, Abhigyan Kumar <314abh@gmail.com>,
  Alistair Francis <alistair.francis@wdc.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.11 68/86] disas/riscv.c: add 'cbo' insns to disassembler
-Date: Wed, 24 Jun 2026 08:02:39 +0300
-Message-ID: <20260624050404.394225-12-mjt@tls.msk.ru>
+Subject: [Stable-10.0.11 73/86] target/riscv: mask vxrm csrw write to the low
+ 2 bits
+Date: Wed, 24 Jun 2026 08:02:44 +0300
+Message-ID: <20260624050404.394225-17-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.11-20260624080222@cover.tls.msk.ru>
 References: <qemu-stable-10.0.11-20260624080222@cover.tls.msk.ru>
@@ -72,93 +71,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+From: Abhigyan Kumar <314abh@gmail.com>
 
-We forgot to add 'cbo' insns to disas/riscv.c.  The result is that the
-disassembler recognizes all of them as 'lq', an insn that happens to
-share the same opcode space.
+Citing the RISC-V specification:
 
-While we're at it reorder cbo_* entries in insn32.decode using opcode
-order instead of insn name.
+    "The vector fixed-point rounding-mode register holds a two-bit
+    read-write rounding-mode field in the least-significant bits
+    (vxrm[1:0]). The upper bits, vxrm[XLEN-1:2], should be written as
+    zeros."
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3480
-Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-ID: <20260519204714.1376551-1-daniel.barboza@oss.qualcomm.com>
+QEMU wrote full value into env->vxrm causing read of upper bits too.
+Used existing macros for bit-masking. Previous had a hard-coded value.
+
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3470
+Signed-off-by: Abhigyan Kumar <314abh@gmail.com>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Message-ID: <20260530102100.78150-1-314abh@gmail.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-(cherry picked from commit 9273cda72293ed2f414a0f239c4ac78fb7838c0e)
+(cherry picked from commit 9f550a0b630672f4831d9115e66d208ed71cf252)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/disas/riscv.c b/disas/riscv.c
-index 85cd2a9c2a..980da7f7e1 100644
---- a/disas/riscv.c
-+++ b/disas/riscv.c
-@@ -984,6 +984,10 @@ typedef enum {
-     rv_op_ssamoswap_d = 953,
-     rv_op_c_sspush = 954,
-     rv_op_c_sspopchk = 955,
-+    rv_op_cbo_inval = 956,
-+    rv_op_cbo_clean = 957,
-+    rv_op_cbo_flush = 958,
-+    rv_op_cbo_zero = 959,
- } rv_op;
+diff --git a/target/riscv/csr.c b/target/riscv/csr.c
+index 9d1ef159b5..a5c1143a7b 100644
+--- a/target/riscv/csr.c
++++ b/target/riscv/csr.c
+@@ -955,7 +955,7 @@ static RISCVException write_vxrm(CPURISCVState *env, int csrno,
+ #if !defined(CONFIG_USER_ONLY)
+     env->mstatus |= MSTATUS_VS;
+ #endif
+-    env->vxrm = val;
++    env->vxrm = val & (VCSR_VXRM >> VCSR_VXRM_SHIFT);
+     return RISCV_EXCP_NONE;
+ }
  
- /* register names */
-@@ -2254,6 +2258,10 @@ const rv_opcode_data rvi_opcode_data[] = {
-       rv_op_sspush, 0 },
-     { "c.sspopchk", rv_codec_cmop_ss, rv_fmt_rs1, NULL, rv_op_sspopchk,
-       rv_op_sspopchk, 0 },
-+   { "cbo.inval", rv_codec_r, rv_fmt_rs1, NULL, 0, 0, 0 },
-+   { "cbo.clean", rv_codec_r, rv_fmt_rs1, NULL, 0, 0, 0 },
-+   { "cbo.flush", rv_codec_r, rv_fmt_rs1, NULL, 0, 0, 0 },
-+   { "cbo.zero", rv_codec_r, rv_fmt_rs1, NULL, 0, 0, 0 },
- };
- 
- /* CSR names */
-@@ -2875,7 +2883,26 @@ static void decode_inst_opcode(rv_decode *dec, rv_isa isa)
-             switch ((inst >> 12) & 0b111) {
-             case 0: op = rv_op_fence; break;
-             case 1: op = rv_op_fence_i; break;
--            case 2: op = rv_op_lq; break;
-+            case 2:
-+               /*
-+                * 'lq' shares the "(...) 010 ..... 0001111" opcode space
-+                * with 'cbo' insns.  Check the next 5 bits to select
-+                * what we want:
-+                *
-+                * cbo_inval  0000000 00000 ..... 010 00000 0001111
-+                * cbo_clean  0000000 00001 ..... 010 00000 0001111
-+                * cbo_flush  0000000 00010 ..... 010 00000 0001111
-+                * cbo_zero   0000000 00100 ..... 010 00000 0001111
-+                *
-+                * Anything that doesn't match these will default to 'lq'.
-+                */
-+               switch ((inst >> 17) & 0b11111) {
-+               case 0: op = rv_op_cbo_inval; break;
-+               case 1: op = rv_op_cbo_clean; break;
-+               case 2: op = rv_op_cbo_flush; break;
-+               case 4: op = rv_op_cbo_zero; break;
-+               default: op = rv_op_lq; break;
-+               }
-             }
-             break;
-         case 4:
-diff --git a/target/riscv/insn32.decode b/target/riscv/insn32.decode
-index cd23b1f3a9..564b745c48 100644
---- a/target/riscv/insn32.decode
-+++ b/target/riscv/insn32.decode
-@@ -199,9 +199,9 @@ ldu      ............   ..... 111 ..... 0000011 @i
- {
-   [
-     # *** RV32 Zicbom Standard Extension ***
-+    cbo_inval  0000000 00000 ..... 010 00000 0001111 @sfence_vm
-     cbo_clean  0000000 00001 ..... 010 00000 0001111 @sfence_vm
-     cbo_flush  0000000 00010 ..... 010 00000 0001111 @sfence_vm
--    cbo_inval  0000000 00000 ..... 010 00000 0001111 @sfence_vm
- 
-     # *** RV32 Zicboz Standard Extension ***
-     cbo_zero   0000000 00100 ..... 010 00000 0001111 @sfence_vm
 -- 
 2.47.3
 
