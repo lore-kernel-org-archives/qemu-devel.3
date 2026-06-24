@@ -4,47 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CCE59CDB481
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 13:36:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4BB7ECDE003
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 13:37:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcNlJ-0003L1-4b; Wed, 24 Jun 2026 09:35:29 -0400
+	id 1wcNlM-0003SV-Fn; Wed, 24 Jun 2026 09:35:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wcNlH-0003KO-R8; Wed, 24 Jun 2026 09:35:27 -0400
+ id 1wcNlK-0003Mv-Sg; Wed, 24 Jun 2026 09:35:30 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wcNlF-0000mD-V6; Wed, 24 Jun 2026 09:35:27 -0400
+ id 1wcNlJ-0000p7-8q; Wed, 24 Jun 2026 09:35:30 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1782307996; bh=qo7CUVoBJT6J/Xn9BS8biH/2dl+pou5Ie/pG+aXu1z8=;
+ t=1782307997; bh=WoDzbd+bsFS1hjb4l+NXgUrDQ81yYUUXj+/8Gg3rZ10=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=W8b2VkbqLe75vnHqAhyIwUFo3DP7Fv4x20w5faKqrlf784gU6zTF1rSpkF6BE0sYF
- pGLhuFqynwoB6GLUSwQTHMeLz7dZ8YW5Xd4CxRH/UYz+1GLYd6zRo179AFPXAy/Oul
- AGiSxfYcw7Ts1+1C+9WTsziUnHsSqvupkIJIZqtnvWqGEUdoEQuQ9VB3JYFnbl2+gD
- 2yJvB3mR7Xx1D0aSAWEJV65/Sm/oiwng2rHJ3oxBbh7dqxUhJUatzq4RjZZa42zCK0
- dVSnpiwoeSnHci41ZY+w8BuFc9AWU1flMV2SammflaAnX35xHDtIKMPciZvaLZvAUQ
- 1rr04crKIiXBw==
+ b=c2BaL8V+d+UqCd5UHwMSfeEXaLs/8A3A91Vx6PZ41dYWkfhytGjCiqrk0KASN2sxO
+ caRl0UOGZcDCbZUgtq3qH5J1yVK+ZfYPdw4Dfy158aMyYZJC8iJfW1YTKD2Nc1nKkn
+ G68LGBIXhxUGrNImuWtWSTJhzKIti1aqnzxDs6Y+886Ut6t3RKWWwIKf2RYsc5VZ80
+ 8/qlKFaMA4I83Q/Bg7RjP9n8N8eyE6/h97ZGqtUh2ffp0LklbRUjBYQLoa2ghfzR2D
+ F0R20m8z+z5QAjjJxKRWpiUcBCbPoNaDwEngiN1fuTru/GGXH8EllliUF1iKSLifq4
+ DmtJdl/5hsQTg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id D15FE1BA9CB;
- Wed, 24 Jun 2026 16:33:16 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 014761BA9CD;
+ Wed, 24 Jun 2026 16:33:17 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 6E6D93DEA1A;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 9275E3DEA1C;
  Wed, 24 Jun 2026 16:33:22 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Jinjie Ruan <ruanjinjie@huawei.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.2 025/107] mc146818rtc: Fix get_guest_rtc_ns() overflow
- bug
-Date: Wed, 24 Jun 2026 16:30:30 +0300
-Message-ID: <20260624133301.403266-25-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.2 027/107] target/arm: SVE2 FMAXP, FMINP must honour AH=1
+Date: Wed, 24 Jun 2026 16:30:32 +0300
+Message-ID: <20260624133301.403266-27-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.2-20260624163118@cover.tls.msk.ru>
 References: <qemu-stable-11.0.2-20260624163118@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -69,96 +70,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jinjie Ruan <ruanjinjie@huawei.com>
+From: Peter Maydell <peter.maydell@linaro.org>
 
-In get_guest_rtc_ns(), "s->base_rtc" is uint64_t, which multiplied by
-"NANOSECONDS_PER_SECOND" may overflow the uint64_t type, which will
-cause the QEMU Linux Virtual Machine's RTC time to jump and in turn
-triggers a kernel Soft Lockup and ultimately leads to a crash.
+The behaviour of floating-point maximum and minimum insns has
+some odd special cases when FPCR.AH=1. We get this right in most
+places (for instance, the ASIMD FMAXP, FMINP) but forgot about
+it for the SVE2 versions of FMAXP and FMINP.
 
-Fix it by avoiding adding s->base_rtc in get_guest_rtc_ns_offset(),
-because get_guest_rtc_ns() is used either take the remainder of
-NANOSECONDS_PER_SECOND or take the quotient of NANOSECONDS_PER_SECOND.
-
-Fixes: 56038ef6234e ("RTC: Update the RTC clock only when reading it")
-Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
-Link: https://lore.kernel.org/r/20260114013257.3500578-1-ruanjinjie@huawei.com
 Cc: qemu-stable@nongnu.org
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit 4b6c088c88ccc9e7cafc72759c99742b3993f9f7)
+Fixes: 384433e70983 ("target/arm: Implement FPCR.AH semantics for FMINP and FMAXP")
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+Message-id: 20260521122913.1565011-2-peter.maydell@linaro.org
+(cherry picked from commit 446050c4dfe4566ae3fcba9c6588c89a66ed4b33)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/rtc/mc146818rtc.c b/hw/rtc/mc146818rtc.c
-index ccbb279716..bcab018c7c 100644
---- a/hw/rtc/mc146818rtc.c
-+++ b/hw/rtc/mc146818rtc.c
-@@ -77,12 +77,13 @@ static inline bool rtc_running(MC146818RtcState *s)
-             (s->cmos_data[RTC_REG_A] & 0x70) <= 0x20);
- }
+diff --git a/target/arm/tcg/helper-sve-defs.h b/target/arm/tcg/helper-sve-defs.h
+index c3541a8ca8..cd05dd0fb4 100644
+--- a/target/arm/tcg/helper-sve-defs.h
++++ b/target/arm/tcg/helper-sve-defs.h
+@@ -2914,6 +2914,20 @@ DEF_HELPER_FLAGS_6(sve2_fminp_zpzz_s, TCG_CALL_NO_RWG,
+ DEF_HELPER_FLAGS_6(sve2_fminp_zpzz_d, TCG_CALL_NO_RWG,
+                    void, ptr, ptr, ptr, ptr, fpst, i32)
  
--static uint64_t get_guest_rtc_ns(MC146818RtcState *s)
-+/*
-+ * Note: get_rtc_ns_since_last_update() does not include the base_rtc seconds
-+ * value.  This does not matter if the caller only needs the nanoseconds part.
-+ */
-+static uint64_t get_rtc_ns_since_last_update(MC146818RtcState *s)
- {
--    uint64_t guest_clock = qemu_clock_get_ns(rtc_clock);
--
--    return s->base_rtc * NANOSECONDS_PER_SECOND +
--        guest_clock - s->last_update + s->offset;
-+    return qemu_clock_get_ns(rtc_clock) - s->last_update + s->offset;
- }
++DEF_HELPER_FLAGS_6(sve2_ah_fmaxp_zpzz_h, TCG_CALL_NO_RWG,
++                   void, ptr, ptr, ptr, ptr, fpst, i32)
++DEF_HELPER_FLAGS_6(sve2_ah_fmaxp_zpzz_s, TCG_CALL_NO_RWG,
++                   void, ptr, ptr, ptr, ptr, fpst, i32)
++DEF_HELPER_FLAGS_6(sve2_ah_fmaxp_zpzz_d, TCG_CALL_NO_RWG,
++                   void, ptr, ptr, ptr, ptr, fpst, i32)
++
++DEF_HELPER_FLAGS_6(sve2_ah_fminp_zpzz_h, TCG_CALL_NO_RWG,
++                   void, ptr, ptr, ptr, ptr, fpst, i32)
++DEF_HELPER_FLAGS_6(sve2_ah_fminp_zpzz_s, TCG_CALL_NO_RWG,
++                   void, ptr, ptr, ptr, ptr, fpst, i32)
++DEF_HELPER_FLAGS_6(sve2_ah_fminp_zpzz_d, TCG_CALL_NO_RWG,
++                   void, ptr, ptr, ptr, ptr, fpst, i32)
++
+ DEF_HELPER_FLAGS_5(sve2_eor3, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, ptr, i32)
+ DEF_HELPER_FLAGS_5(sve2_bcax, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, ptr, i32)
+ DEF_HELPER_FLAGS_5(sve2_bsl1n, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, ptr, i32)
+diff --git a/target/arm/tcg/sve_helper.c b/target/arm/tcg/sve_helper.c
+index 062d8881bd..179cbd74fb 100644
+--- a/target/arm/tcg/sve_helper.c
++++ b/target/arm/tcg/sve_helper.c
+@@ -778,6 +778,14 @@ DO_ZPZZ_PAIR_FP(sve2_fminp_zpzz_h, float16, H1_2, float16_min)
+ DO_ZPZZ_PAIR_FP(sve2_fminp_zpzz_s, float32, H1_4, float32_min)
+ DO_ZPZZ_PAIR_FP(sve2_fminp_zpzz_d, float64, H1_8, float64_min)
  
- static void rtc_coalesced_timer_update(MC146818RtcState *s)
-@@ -258,7 +259,7 @@ static void check_update_timer(MC146818RtcState *s)
-         return;
-     }
++DO_ZPZZ_PAIR_FP(sve2_ah_fmaxp_zpzz_h, float16, H1_2, helper_vfp_ah_maxh)
++DO_ZPZZ_PAIR_FP(sve2_ah_fmaxp_zpzz_s, float32, H1_4, helper_vfp_ah_maxs)
++DO_ZPZZ_PAIR_FP(sve2_ah_fmaxp_zpzz_d, float64, H1_8, helper_vfp_ah_maxd)
++
++DO_ZPZZ_PAIR_FP(sve2_ah_fminp_zpzz_h, float16, H1_2, helper_vfp_ah_minh)
++DO_ZPZZ_PAIR_FP(sve2_ah_fminp_zpzz_s, float32, H1_4, helper_vfp_ah_mins)
++DO_ZPZZ_PAIR_FP(sve2_ah_fminp_zpzz_d, float64, H1_8, helper_vfp_ah_mind)
++
+ #undef DO_ZPZZ_PAIR_FP
  
--    guest_nsec = get_guest_rtc_ns(s) % NANOSECONDS_PER_SECOND;
-+    guest_nsec = get_rtc_ns_since_last_update(s) % NANOSECONDS_PER_SECOND;
-     next_update_time = qemu_clock_get_ns(rtc_clock)
-         + NANOSECONDS_PER_SECOND - guest_nsec;
+ /* Three-operand expander, controlled by a predicate, in which the
+diff --git a/target/arm/tcg/translate-sve.c b/target/arm/tcg/translate-sve.c
+index 5bace3fda1..6a5c508743 100644
+--- a/target/arm/tcg/translate-sve.c
++++ b/target/arm/tcg/translate-sve.c
+@@ -7666,8 +7666,8 @@ TRANS_FEAT_NONSTREAMING(HISTSEG, aa64_sve2, gen_gvec_ool_arg_zzz,
+ DO_ZPZZ_FP(FADDP, aa64_sme_or_sve2, sve2_faddp_zpzz)
+ DO_ZPZZ_FP(FMAXNMP, aa64_sme_or_sve2, sve2_fmaxnmp_zpzz)
+ DO_ZPZZ_FP(FMINNMP, aa64_sme_or_sve2, sve2_fminnmp_zpzz)
+-DO_ZPZZ_FP(FMAXP, aa64_sme_or_sve2, sve2_fmaxp_zpzz)
+-DO_ZPZZ_FP(FMINP, aa64_sme_or_sve2, sve2_fminp_zpzz)
++DO_ZPZZ_AH_FP(FMAXP, aa64_sme_or_sve2, sve2_fmaxp_zpzz, sve2_ah_fmaxp_zpzz)
++DO_ZPZZ_AH_FP(FMINP, aa64_sme_or_sve2, sve2_fminp_zpzz, sve2_ah_fminp_zpzz)
  
-@@ -510,7 +511,7 @@ static void cmos_ioport_write(void *opaque, hwaddr addr,
-                 /* if disabling set mode, update the time */
-                 if ((s->cmos_data[RTC_REG_B] & REG_B_SET) &&
-                     (s->cmos_data[RTC_REG_A] & 0x70) <= 0x20) {
--                    s->offset = get_guest_rtc_ns(s) % NANOSECONDS_PER_SECOND;
-+                    s->offset = get_rtc_ns_since_last_update(s) % NANOSECONDS_PER_SECOND;
-                     rtc_set_time(s);
-                 }
-             }
-@@ -623,10 +624,8 @@ static void rtc_update_time(MC146818RtcState *s)
- {
-     struct tm ret;
-     time_t guest_sec;
--    int64_t guest_nsec;
- 
--    guest_nsec = get_guest_rtc_ns(s);
--    guest_sec = guest_nsec / NANOSECONDS_PER_SECOND;
-+    guest_sec = s->base_rtc + get_rtc_ns_since_last_update(s) / NANOSECONDS_PER_SECOND;
-     gmtime_r(&guest_sec, &ret);
- 
-     /* Is SET flag of Register B disabled? */
-@@ -637,7 +636,7 @@ static void rtc_update_time(MC146818RtcState *s)
- 
- static int update_in_progress(MC146818RtcState *s)
- {
--    int64_t guest_nsec;
-+    uint64_t guest_nsec;
- 
-     if (!rtc_running(s)) {
-         return 0;
-@@ -652,7 +651,7 @@ static int update_in_progress(MC146818RtcState *s)
-         }
-     }
- 
--    guest_nsec = get_guest_rtc_ns(s);
-+    guest_nsec = get_rtc_ns_since_last_update(s);
-     /* UIP bit will be set at last 244us of every second. */
-     if ((guest_nsec % NANOSECONDS_PER_SECOND) >=
-         (NANOSECONDS_PER_SECOND - UIP_HOLD_LENGTH)) {
+ static bool do_fmmla(DisasContext *s, arg_rrrr_esz *a,
+                      gen_helper_gvec_4_ptr *fn)
 -- 
 2.47.3
 
