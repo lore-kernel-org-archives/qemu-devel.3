@@ -4,79 +4,164 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35C6FCDB479
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 16:44:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50393CDB47F
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 16:45:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcQhW-0002p6-B6; Wed, 24 Jun 2026 12:43:46 -0400
+	id 1wcQih-0003aI-0f; Wed, 24 Jun 2026 12:44:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wcQhU-0002oq-Sh
- for qemu-devel@nongnu.org; Wed, 24 Jun 2026 12:43:44 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wcQif-0003Yv-TT
+ for qemu-devel@nongnu.org; Wed, 24 Jun 2026 12:44:57 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wcQhS-0002iF-Mi
- for qemu-devel@nongnu.org; Wed, 24 Jun 2026 12:43:44 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wcQie-0002mT-C8
+ for qemu-devel@nongnu.org; Wed, 24 Jun 2026 12:44:57 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1782319420;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
+ s=mimecast20190719; t=1782319495;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=9IMEYyqnrllioeSyvrKu6tFVDFSVnS4gOwwC3CkCX5M=;
- b=KFCx5UjLetrjPl3fh0s6Rg6Te+dEWE+L82W7/rBLzQXzFrAjMOrndlTrF3QiaSzsKTmi6J
- dCQMCZKfJJZg1vFsbunpgbREpMrItF9kgPbuLXWilpW/RylN2wtRWDloFDBTozY3zQ1lGN
- YzhxaaDwk/+U7wYIYtlMAp9beIFyJxM=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-43-clRvNhvJO8ijatfTmNptYQ-1; Wed,
- 24 Jun 2026 12:43:37 -0400
-X-MC-Unique: clRvNhvJO8ijatfTmNptYQ-1
-X-Mimecast-MFC-AGG-ID: clRvNhvJO8ijatfTmNptYQ_1782319416
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 230B61955F68; Wed, 24 Jun 2026 16:43:36 +0000 (UTC)
-Received: from redhat.com (unknown [10.44.32.102])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 629A91956041; Wed, 24 Jun 2026 16:43:33 +0000 (UTC)
-Date: Wed, 24 Jun 2026 17:43:30 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-Subject: Re: [PATCH v2 1/2] gitlab: introduce files mapping GitLab accounts
- to real names
-Message-ID: <ajwJMlxZHrZIjxWA@redhat.com>
-References: <20260624122936.2706393-1-berrange@redhat.com>
- <20260624122936.2706393-2-berrange@redhat.com>
- <87echw12fa.fsf@suse.de>
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=U/w9A5NkYf1505G0HkTRB7rAtX6H+f/I3wXhWE6/+vs=;
+ b=UoqNTlURHO1edHfR3oDLehLSuBhx+uKgYNhELHj24OgDQBIPLAXZaOcgxpY8V/dfnt+ZKn
+ idUIV8EsieTO6n9EnFb7xDdyhmJfr3ggRp9CRAqcD9HyZfRm9ODFm0m8z5qhQt524lIcox
+ zLi9ic8U7UvjXIug+HbMc3DR7wG+dAM=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-595-NO5wHVS7O8-i82UH8fm3kA-1; Wed, 24 Jun 2026 12:44:54 -0400
+X-MC-Unique: NO5wHVS7O8-i82UH8fm3kA-1
+X-Mimecast-MFC-AGG-ID: NO5wHVS7O8-i82UH8fm3kA_1782319493
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-4642a5651d4so1228099f8f.2
+ for <qemu-devel@nongnu.org>; Wed, 24 Jun 2026 09:44:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1782319493; x=1782924293; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+ bh=U/w9A5NkYf1505G0HkTRB7rAtX6H+f/I3wXhWE6/+vs=;
+ b=pnzNRT7NUOBt3KJo9AuaaAQdptHALcvcqx2pPLGyHpN/t1GKyAaCfBE36eUF0jCjtx
+ xdbCz//kCq2LD3hD5Sn0ZbgdjH2kYDenEq8LcTKAKCXl1F4wRZ0ol3jJwHPRrH+p+ZfR
+ DQACkdKHu+1HtA6G7PzF3obFSrA7Nfn3NBn7PqAQtg5xA6jxFKpb6FVPVHj1lXz/bJSc
+ wpjonv69U4b8molHC8tswLsq6evnkmXRyT2qQJ64lA5beEcJRjevvR8Kw45dVPkxnmCx
+ pZklN4k2GgzOjxDwU1DNw1lr9LLP+NEru5q64WQ2sN/QeNfH5DWV1FVVaf4OhjGrv0u/
+ rk2Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1782319493; x=1782924293;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=U/w9A5NkYf1505G0HkTRB7rAtX6H+f/I3wXhWE6/+vs=;
+ b=T0vZoWMucZLI2yjII5ABzPRFPa+z0m6B5r6FP0WEPgvo35Pcfd1hM7dFKyO039dHM2
+ WXQFFOkyP88qWHipKr3RPMTkh4AGepaKZL+miH+8Gtfs+I81VPY6eUfY+clB6Di/YUeX
+ ouPN5CFqMvC2zI8oMYOfbCuQBpcB0VDQ1H8LTqDFMPaxySLmSq91KZCDl5px9RiZqVU2
+ oyRhXBGYb4PdvnoTYjD444o1pLI29vxyeA7X2YWVxBKq0H3p+Z01Td7jaZEG0EkcukYU
+ XGcxw9zuUKl0a9pai7zrXzAuZiX6YTNKtMLZGzB7Y5lZ2/B1+ysW2olyohpYNN/cyMjk
+ bDvA==
+X-Gm-Message-State: AOJu0YyZ6sjWz7etMEXF96AHHlPatXvuPeUQasMuahepwBsZpSufcm8s
+ KJ2iAZy30/sUSlA27Pi7gcOMqEiedRkbYtPuE9MRPGFFLSGsDS0kiYyNJ3+7pXjq84wq1VOpr0C
+ FFI36mrZN/l3fX2wYYeMLtvyS3oqOTFtXIwz2q5PDjrrBFpY3+eTuFCdD
+X-Gm-Gg: AfdE7cmrBrpZ7F3FBfScltQDmIhi5wGeowAlxJmq+f2BhZKqeno/yE5Y5mNPccR2032
+ ncsGcvE3/csbG7PWuq3v30zVn3zXZI4hz2/RRF2keL/AMSFk0pcECmGkfjJn+UftwR37jJUbYRM
+ KOp/xIt49El0TS99U3Ua5m6dg9gVg0AR7PGyCUStFxymzjOjrTpkHw94ppXfp54WdcCNoeSNO8d
+ gEeBnxsmKkUR7SpHwNDNYvtFJ9HT/baeUTc+x3YGD6+dr5Z059N5EM1XLKHEfos5Q1dISTIEa3g
+ gSNsfYqge+UeYy6c+igoAHrnYOBc3CgIuFjl5XddwkNLZ75CDh2Ale52VmY3b+RtiICGEVoQNi0
+ TY8aIvmASQtlMIZ0qZZQRVgH3RQnxNeluNk6vQsvv4yINozZwHaV7
+X-Received: by 2002:a05:600c:5491:b0:490:b294:c652 with SMTP id
+ 5b1f17b1804b1-492608726b3mr60484365e9.20.1782319492731; 
+ Wed, 24 Jun 2026 09:44:52 -0700 (PDT)
+X-Received: by 2002:a05:600c:5491:b0:490:b294:c652 with SMTP id
+ 5b1f17b1804b1-492608726b3mr60483805e9.20.1782319492216; 
+ Wed, 24 Jun 2026 09:44:52 -0700 (PDT)
+Received: from ?IPV6:2a01:cb19:8426:ae00:a924:b4e0:1ee:f5c5?
+ ([2a01:cb19:8426:ae00:a924:b4e0:1ee:f5c5])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-46c1ee01d46sm7307969f8f.13.2026.06.24.09.44.50
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 24 Jun 2026 09:44:51 -0700 (PDT)
+Message-ID: <6833bccf-afa8-4633-85b1-f61347034594@redhat.com>
+Date: Wed, 24 Jun 2026 18:44:50 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/8] tests/qtest/pnv_spi: Test Power11 PNV_SPI
+To: Aditya Gupta <adityag@linux.ibm.com>
+Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Shivang Upadhyay <shivangu@linux.ibm.com>,
+ Sourabh Jain <sourabhjain@linux.ibm.com>,
+ Hari Bathini <hbathini@linux.ibm.com>, Nicholas Piggin <npiggin@gmail.com>,
+ Miles Glenn <milesg@linux.ibm.com>, Fabiano Rosas <farosas@suse.de>,
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ devel@lists.libvirt.org, Misbah Anjum N <misanjum@linux.ibm.com>,
+ Anushree Mathur <anushree.mathur@linux.ibm.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, kvm@vger.kernel.org,
+ Gautam Menghani <gautam@linux.ibm.com>, Chinmay Rath <rathc@linux.ibm.com>
+References: <20260623141933.577981-1-adityag@linux.ibm.com>
+ <20260623141933.577981-3-adityag@linux.ibm.com>
+ <ccbadb13-888b-495d-b894-826a8e664d3e@redhat.com>
+ <ajvkrq3e1103wLH7@li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Autocrypt: addr=clg@redhat.com; keydata=
+ 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
+ uVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <ajvkrq3e1103wLH7@li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <87echw12fa.fsf@suse.de>
-User-Agent: Mutt/2.3.2 (2026-04-26)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 8
-X-Spam_score: 0.8
-X-Spam_bar: /
-X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,272 +174,61 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jun 24, 2026 at 10:41:13AM -0300, Fabiano Rosas wrote:
-> Daniel P. Berrangé <berrange@redhat.com> writes:
+On 6/24/26 16:28, Aditya Gupta wrote:
+> On 26/06/24 01:47PM, Cédric Le Goater wrote:
+>> On 6/23/26 16:19, Aditya Gupta wrote:
+>>> <...snip...>
+>>>
+>>>        g_test_init(&argc, &argv, NULL);
+>>> -    char *tname = g_strdup_printf("pnv-xscom/spi-seeprom/%s",
+>>> -            pnv_chips[3].cpu_model);
+>>> -    qtest_add_data_func(tname, &pnv_chips[3], test_spi_seeprom);
+>>> -    g_free(tname);
+>>> +
+>>> +    for (int i = 0; i < ARRAY_SIZE(pnv_chips); i++) {
+>>> +        /* TYPE_PNV_SPI is not instantiated for older Power8/9 machines */
+>>> +        if (pnv_chips[i].chip_type < PNV_CHIP_POWER10) {
+>>
+>> Can we remove this chip_type field from the tests too ? see 248e4e924e87.
 > 
-> > It is desirable to be able to discover the GitLab account handle
-> > assocaited with a real name in the MAINTAINERS file.
-> >
-> > Rather that duplicating the same account handle multiple times,
-> > inline with the MAINTAINERS file entries, this introduces mapping
-> > files:
-> >
-> >   * .gitlab-map-auto - data automatically queried from GitLab
-> >     using the 'glab' tool and REST API
-> >   * .gitlab-map-manual - manual overrides/augmentation for
-> >     cases where the MAINTAINERS real name does not match the
-> >     GitLab account real name
-> >
-> 
-> Could we maybe use the username/username entries in .gitlab-map-auto to
-> validate what's being added as username/realname to .gitlab-map-manual?
-> So we don't accept by accident a mapping of
-> random-username/real-maintainer-name.
+> I went through the usage, and don't see any fix currently, as the
+> PnvChip structure these qtests are using is basic, and we need some way
+> to identify the chip type, for things like which machine to use, xscom
+> addresses, and to skip/do specific things for particular chip type.
+> I went through the mentioned commit and its parent, seems it was
+> possible with the compat property being handled by respective
+> class_init. So currently I don't see a better way, what do you think ?
 
-Yes, we could put that in the 'check' script.
+OK. Thanks for looking.
 
-> 
-> > The former would need refreshing when we add new MAINTAINERS
-> > entries, if the person had to be added as a GitLab account
-> > member. For this purpose scripts/gitlab-map-update can be
-> > used, assuming the user has the 'glab' client tool present
-> > and configured with an access token.
-> >
-> > To audit how many maintainers have GitLab handles present/missing
-> > scripts/gitlab-map-check can run a report.
-> >
-> 
-> On the same line as above, what about entries in .gitlab-map-manual that
-> don't correspond to any MAINTAINERS entry?
+C.
 
-That would be stale data, but it is harmless as it means that
-get_maintainers.pl would never be trying to look up any
-gitlab account for that real name.
 
 > 
-> >   $ ./scripts/gitlab-map-check
-> >   Missing GitLab handle: Akihiko Odaki
-> >   Missing GitLab handle: Albert Esteve
-> >   ....
-> >   Missing GitLab handle: Zhenzhong Duan
-> >   Missing GitLab handle: Zhuoying Cai
-> >   GitLab handles missing: 161 / present: 57
-> >
-> > Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-> > ---
-> >  .gitlab-map-auto          | 83 +++++++++++++++++++++++++++++++++++++++
-> >  .gitlab-map-manual        | 18 +++++++++
-> >  scripts/gitlab-map-check  | 23 +++++++++++
-> >  scripts/gitlab-map-update | 44 +++++++++++++++++++++
-> >  4 files changed, 168 insertions(+)
-> >  create mode 100644 .gitlab-map-auto
-> >  create mode 100644 .gitlab-map-manual
-> >  create mode 100755 scripts/gitlab-map-check
-> >  create mode 100755 scripts/gitlab-map-update
-> >
-> > diff --git a/.gitlab-map-auto b/.gitlab-map-auto
-> > new file mode 100644
-> > index 0000000000..defecb2c9f
-> > --- /dev/null
-> > +++ b/.gitlab-map-auto
-> > @@ -0,0 +1,83 @@
-> > +# This file is auto-generated by scripts/autolab-map-update
-> > +#
-> > +# This GitLab map associates GitLab account handles
-> > +# with real names, in order to allow mapping from
-> > +# MAINTAINERS entries. The format of entries is
-> > +#
-> > +#    {gitlab-handle}<tab>{real name}
-> > +#
-> > +# Manual overrides must be placed in .gitlab-map-manual
-> > +a1xndr	Alexander Bulekov
-> > +adi-g15-ibm	Aditya Gupta
-> > +agraf	Alexander Graf
-> > +alex.williamson	Alex Williamson
-> > +aliang1	Aihua Liang
-> > +alistair23	Alistair Francis
-> > +anisinha	Ani Sinha
-> > +anthony-linaro	Anthony Roberts
-> > +berrange	Daniel P. Berrangé
-> > +birkelund	Klaus Jensen
-> > +bonzini	Paolo Bonzini
-> > +bonzini	Paolo Bonzini
-> > +brian-cain	Brian Cain
-> > +bsdimp	Warner Losh
-> > +cborntra	Christian Borntraeger
-> > +cleber.gnu	Cleber Rosa
-> > +clegoate	Cédric Le Goater
-> > +cohuck	Cornelia Huck
-> > +cota_	Emilio Cota
-> > +dagrh	Dr. David Alan Gilbert
-> > +danielhb	Daniel Henrique Barboza
-> > +davidhildenbrand	David Hildenbrand
-> > +dgibson	dgibson
-> > +dwmw2	David Woodhouse
-> > +ebblake	Eric Blake
-> > +ehabkost	Eduardo Habkost
-> > +eldondev	Eldon
-> > +epilys	Manos Pitsidianakis
-> > +famzheng	Fam Zheng
-> > +farosas	Fabiano Rosas
-> > +gkurz	Greg Kurz
-> > +gusbromero	Gustavo Romero
-> > +harshpb	Harsh Prateek Bora
-> > +hdeller	Helge Deller
-> > +hreitz	Hanna Czenczek
-> > +imammedo	Igor Mammedov
-> > +jasowang	Jason Wang
-> > +jmacarthur	Jim MacArthur
-> > +jsnow	John Snow
-> > +juan.quintela	Juan Quintela
-> > +kbastian-qemu	Bastian Koppelmann
-> > +kmwolf	Kevin Wolf
-> > +kostyanf14	Kostiantyn Kostiuk
-> > +kraxel	Gerd Hoffmann
-> > +lbmeng	Bin Meng
-> > +legoater	Cédric Le Goater
-> > +lvivier	Laurent Vivier
-> > +marcandre.lureau	Marc-André Lureau
-> > +marcandre.lureau-rh	Marc-André Lureau
-> > +mcayland	Mark Cave-Ayland
-> > +mdroth	Michael Roth
-> > +mediouni-m	M. Mediouni
-> > +mjt0k	Michael Tokarev
-> > +mstredhat	MST
-> > +npiggin	npiggin
-> > +pauldzim	Paul Zimmerman
-> > +philmd	Philippe Mathieu-Daudé
-> > +philmd	Philippe Mathieu-Daudé
-> > +pierrick.bouvier	Pierrick Bouvier
-> > +pipo.sk	Peter Krempa
-> > +pkrempa	Peter Krempa (work)
-> > +pm215	Peter Maydell
-> > +qemu-janitor	Qemu Janitor
-> > +rth7680	Richard Henderson
-> > +schoenebeck	Christian Schoenebeck
-> > +sgarzarella	Stefano Garzarella
-> > +stefanberger	Stefan Berger
-> > +stefanha	Stefan Hajnoczi
-> > +stefanha	Stefan Hajnoczi
-> > +stsquad	Alex Bennée
-> > +stweil	Stefan Weil
-> > +thuth	Thomas Huth
-> > +vsementsov	Vladimir Sementsov-Ogievskiy
-> > +xcancerberox	Joaquin de Andres
-> > diff --git a/.gitlab-map-manual b/.gitlab-map-manual
-> > new file mode 100644
-> > index 0000000000..7326971cdd
-> > --- /dev/null
-> > +++ b/.gitlab-map-manual
-> > @@ -0,0 +1,18 @@
-> > +# This GitLab map associates GitLab account handles
-> > +# with real names, in order to allow mapping from
-> > +# MAINTAINERS entries. The format of entries is
-> > +#
-> > +#    {gitlab-handle}<tab>{real name}
-> > +#
-> > +# This file is manually written, to augment the
-> > +# auto-generated data in .gitlab-map-auto. This
-> > +# needed where a GitLab account real name does
-> > +# not exactly match the MAINTAINERS file real
-> > +# name.
-> > +#
-> > +berrange	Daniel P. Berrange
-> > +dgibson	David Gibson
-> > +hreitz	Hanna Reitz 
-> > +mstredhat	Michael S. Tsirkin
-> > +npiggin	Nicholas Piggin
-> > +mediouni-m	Mohamed Mediouni
-> > diff --git a/scripts/gitlab-map-check b/scripts/gitlab-map-check
-> > new file mode 100755
-> > index 0000000000..69d5b8258a
-> > --- /dev/null
-> > +++ b/scripts/gitlab-map-check
-> > @@ -0,0 +1,23 @@
-> > +#!/bin/sh
-> > +# SPDX-License-Identifier: GPL-2.0-or-later
-> > +
-> > +missing=0
-> > +present=0
-> > +
-> > +grep -E '^(R|M):' MAINTAINERS | \
-> > +sed -E -e 's/^(M|R): //' -e 's/ <.*//' | \
-> > +sort | uniq > names.txt
-> > +while IFS= read -r NAME
-> > +do
-> > +  grep "$NAME" .gitlab-map-{auto,manual} > /dev/null
-> > +  if test $? != 0
-> > +  then
-> > +    echo "Missing GitLab handle: $NAME"
-> > +    missing=$(($missing + 1))
-> > +  else
-> > +    present=$(($present + 1))
-> > +  fi
-> > +done < names.txt
-> > +rm -f names.txt
-> > +
-> > +echo "GitLab handles missing: $missing / present: $present"
-> > diff --git a/scripts/gitlab-map-update b/scripts/gitlab-map-update
-> > new file mode 100755
-> > index 0000000000..9fe07a98ee
-> > --- /dev/null
-> > +++ b/scripts/gitlab-map-update
-> > @@ -0,0 +1,44 @@
-> > +#!/bin/sh
-> > +# SPDX-License-Identifier: GPL-2.0-or-later
-> > +
-> > +echo "Checking authentication token status"
-> > +glab auth status
-> > +
-> > +if test $? != 0
-> > +then
-> > +  echo "ERROR: not authenticated with gitlab.com"
-> > +  exit 1
-> > +fi
-> > +
-> > +if ! test -f .gitlab-map-auto
-> > +then
-> > +  echo "ERROR: cannot find existing '.gitlab-map-auto file'"
-> > +  echo "ERROR: this must be executed from the root of the"
-> > +  echo "ERROR: git repository checkout"
-> > +  exit 1
-> > +fi
-> > +
-> > +fail=0
-> > +echo "Updating member list from qemu-project"
-> > +glab api --paginate /groups/qemu-project/members | \
-> > +    jq -r -c '.[] | [.username, .name] | @tsv' | \
-> > +    grep -v '^group_3038080_bot' > \
-> > +    .gitlab-map-auto.tmp
-> > +test $? != 0 && fail=1
-> > +
-> > +echo "Updating member list from qemu-project/qemu"
-> > +glab api --paginate /projects/qemu-project%2fqemu/members | \
-> > +    jq -r -c '.[] | [.username, .name] | @tsv' >> \
-> > +    .gitlab-map-auto.tmp
-> > +test $? != 0 && fail=1
-> > +
-> > +if test $fail == 0
-> > +then
-> > +  grep '^#' .gitlab-map-auto > .gitlab-map-auto.new
-> > +  LC_ALL=C sort .gitlab-map-auto.tmp >> .gitlab-map-auto.new
-> > +  mv .gitlab-map-auto.new .gitlab-map-auto
-> > +  echo "OK: GitLab member list updated"
-> > +else
-> > +  echo "ERROR: Updating member list failed"
-> > +fi
-> > +rm -f .gitlab-map-auto.tmp
+>>
+>>> +            continue;
+>>> +        }
+>>> +
+>>> +        char *tname = g_strdup_printf("pnv-xscom/spi-seeprom/%s",
+>>> +                pnv_chips[i].cpu_model);
+>>
+>> please consider g_autofree variables.
 > 
-
-With regards,
-Daniel
--- 
-|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-|: https://libvirt.org          ~~          https://entangle-photo.org :|
-|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+> Sure cedric, will use it in v2.
+> 
+> Thanks,
+> - Aditya G
+> 
+>>
+>>> +        qtest_add_data_func(tname, &pnv_chips[i], test_spi_seeprom);
+>>> +        g_free(tname);
+>>> +    }
+>>>        return g_test_run();
+>>>    }
+>>
+> 
 
 
