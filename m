@@ -4,124 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66BBFCDB479
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EAB5ECDE002
 	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 14:28:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcOap-0001Fm-JF; Wed, 24 Jun 2026 10:28:43 -0400
+	id 1wcOaw-0001Xz-Ti; Wed, 24 Jun 2026 10:28:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1wcOak-0001DM-1o; Wed, 24 Jun 2026 10:28:39 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wcOau-0001VS-29
+ for qemu-devel@nongnu.org; Wed, 24 Jun 2026 10:28:48 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1wcOai-0000mo-Hv; Wed, 24 Jun 2026 10:28:37 -0400
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65OAmi8Z596217; Wed, 24 Jun 2026 14:28:26 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=Z94kfi
- UAm93RXBLrLcspjQdZC+Vm7C1VeVzQvsKK9Gg=; b=Hh0MPPdk0hb0hJHcxGBE6D
- VCuk0MGK1hJVdGvW/ee98DSg6OSE0USKGdZFFK//dqYFPetQ/gmQ3eDH+emRAm6D
- ZS7maag1Pam218SIPLHVDc8aJ0tAZxvyisMmeW46vS3yUHjcpom4kKXUosYKVYah
- t/nkhdKTrgZFrOhMv6yhpvxvk6dl0hNZebu4Dajkyz2PDKqAIBljKSlC5IcaTYat
- OIR5xp8vpyUZyIrjXHCooUurjA25FQw49SPoueJuqHa6cZ6BRTY8JlfgdkSoVNax
- hFG/8TQ9JPepAWpuw5T33osmxl9TGmoKftKO1oqSHZXpKmWONmCHlS7WatuHTXkA
- ==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4ewg9hvse6-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 24 Jun 2026 14:28:26 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 65OEJjms003828;
- Wed, 24 Jun 2026 14:28:25 GMT
-Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4ex6phh03m-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 24 Jun 2026 14:28:25 +0000 (GMT)
-Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
- [10.20.54.100])
- by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 65OESLmb39911934
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 24 Jun 2026 14:28:21 GMT
-Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 3956E2004B;
- Wed, 24 Jun 2026 14:28:21 +0000 (GMT)
-Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 5B7F420043;
- Wed, 24 Jun 2026 14:28:14 +0000 (GMT)
-Received: from li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com (unknown
- [9.39.19.28]) by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTPS;
- Wed, 24 Jun 2026 14:28:14 +0000 (GMT)
-Date: Wed, 24 Jun 2026 19:58:11 +0530
-From: Aditya Gupta <adityag@linux.ibm.com>
-To: =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Shivang Upadhyay <shivangu@linux.ibm.com>,
- Sourabh Jain <sourabhjain@linux.ibm.com>,
- Hari Bathini <hbathini@linux.ibm.com>, Nicholas Piggin <npiggin@gmail.com>,
- Miles Glenn <milesg@linux.ibm.com>, Fabiano Rosas <farosas@suse.de>,
- Laurent Vivier <lvivier@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, devel@lists.libvirt.org,
- Misbah Anjum N <misanjum@linux.ibm.com>,
- Anushree Mathur <anushree.mathur@linux.ibm.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- kvm@vger.kernel.org, Gautam Menghani <gautam@linux.ibm.com>,
- Chinmay Rath <rathc@linux.ibm.com>
-Subject: Re: [PATCH 2/8] tests/qtest/pnv_spi: Test Power11 PNV_SPI
-Message-ID: <ajvkrq3e1103wLH7@li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com>
-References: <20260623141933.577981-1-adityag@linux.ibm.com>
- <20260623141933.577981-3-adityag@linux.ibm.com>
- <ccbadb13-888b-495d-b894-826a8e664d3e@redhat.com>
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wcOas-0000oO-1Q
+ for qemu-devel@nongnu.org; Wed, 24 Jun 2026 10:28:47 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1782311323;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=nft1FJkaR8RruG3DipMG+IA54+9Qc9LeJUQlQ4FUC2g=;
+ b=GjOEHKrqepJZuMNL+4xQawduBW/kqBfSN8y67j5EO5KGJdC5XmcztNKD0NMG+y5VczDKSW
+ Kaf27ID9s24Epy5htU4yVrOxJhp11iV5GQKW+uvSk+U7agF6/b/MXKrZRjOQDQVGlTbw7t
+ kc0RjCLTvv+H/BFUv7WGjto3DyJZHX8=
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
+ [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-672-dXkONqsrPr2JCvTsh15xtg-1; Wed, 24 Jun 2026 10:28:42 -0400
+X-MC-Unique: dXkONqsrPr2JCvTsh15xtg-1
+X-Mimecast-MFC-AGG-ID: dXkONqsrPr2JCvTsh15xtg_1782311321
+Received: by mail-qv1-f71.google.com with SMTP id
+ 6a1803df08f44-8ddd042321dso20359906d6.3
+ for <qemu-devel@nongnu.org>; Wed, 24 Jun 2026 07:28:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1782311321; x=1782916121; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=nft1FJkaR8RruG3DipMG+IA54+9Qc9LeJUQlQ4FUC2g=;
+ b=CwyVhGH0dQKyR+mRORTMFUQ7iddWbZlPnLvKxiOhcvbKkfaD+2la/cryT81r5CgwK0
+ 0cAE5hBvBF22mmZlu7u5XZKuLst0umeG6aGDu+sTf558KlBKtpYzJk1eN8banKQ2fAvz
+ w+4TtbkbQNEQpeDHM9ARwvZQMDkAdUx3+TUJi8p28AOzbpk1K5pAx+xWcy8xRG14dOeE
+ RJVPUE5GFSrDfqFRif3Q483xrNu3erqOlm6T1dLhBFkQiS1XCJrbDWuhBloHnqSOv+Gi
+ DSM8yNT1sNE3z3/4PQKHQ7BR7PyTuvNm0OlnQf9+zdpudbDL2SrnqXGL0iJgvccnMa3c
+ WYbA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1782311321; x=1782916121;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=nft1FJkaR8RruG3DipMG+IA54+9Qc9LeJUQlQ4FUC2g=;
+ b=XRFw17GF//iD0B8+6FzxhwdT7YCDGkNxvZgDlRzDIF/5wzQpBQfqoB1rB3KZbLWnJ0
+ J/PlEjKOlWxSYooh/s9Y0gX1oAPT6Q+r3NMp6hcjyY4huvYROXPq2uxLdW/Y0C2BmELf
+ z65IwEjnlKfgD3lgarqYoUdTBeLTnCcQlQxEtY/Xwrms5xlipwHhdV1CKnDuNu2yoil2
+ wbLaLHtrsZZTqS6K/cOHdbF9Vp34g7ID62pUjsHzE0pMrZO5skDtiRG/TKbnjAIpd37q
+ yFrJQRHUZmUuv1ryjgVDX+0y2/ZXFUMIncY7WAymXbMVnMD1mkmq2IPTamr4uHJczVEm
+ keMg==
+X-Gm-Message-State: AOJu0YzHDo0oPeuWsRTJUXaZ0VzcyamtfYF1zUL5spYlreaZD8tnr/U4
+ UDH3ieeb311Tma27b2uioesrJAkQQt3K+CLvjjnFD7zF0+rDPtQj9C3zRa2W/H7kFkO31LlZ0k4
+ BWE49u3Mp6lmcPvoac16Sw4fPzhhRifYBDnjUIrgCvimS61ZMFKSNjmli
+X-Gm-Gg: AfdE7cnX/1rUkopj9G/Q9kvyZUwaMk8QKghL8I8M2uGq5Ns8lOFSCH1y5TQpzen1jQD
+ WSV8dkW8qw5Lk43gDsLpnJaoQSvovrxeY9yWvFC6Rb+RLsZfE1cUWjgKOGxDpSHZ8Mpal4H1tTv
+ FVoz0YXlgbEFOlX1m8ZMJucNSm9YshMsHH13UM5DnVY6Z2X4M7CDstXyOS46y7DTi7OqGIho5zj
+ qM39gamLUTtZl2lR25IFxEN10t7DSRzJzCbSUj/AWlEephfLT5qpBMuU/wFMgupy7CPp+ziLhRv
+ nVdVfGHosFun/IDFjBeEjn/cTMs7hz5bmXR3olavsO7LsJbkpnrAaAai4r3GBYLPtBcsTWs2uYa
+ zhtRb02bDLsa4l6jF8fN4mSwsPRmlPuSezIepndebQpVKn2W5Bepqb21WUbS24cvRg6GwJNbj
+X-Received: by 2002:a05:6214:488e:b0:8cc:d29:9f78 with SMTP id
+ 6a1803df08f44-8df8f90f599mr370865476d6.11.1782311321207; 
+ Wed, 24 Jun 2026 07:28:41 -0700 (PDT)
+X-Received: by 2002:a05:6214:488e:b0:8cc:d29:9f78 with SMTP id
+ 6a1803df08f44-8df8f90f599mr370864456d6.11.1782311320365; 
+ Wed, 24 Jun 2026 07:28:40 -0700 (PDT)
+Received: from x1.local
+ (bras-vprn-aurron9134w-lp130-03-174-91-117-157.dsl.bell.ca. [174.91.117.157])
+ by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-8df82b67affsm155129476d6.45.2026.06.24.07.28.38
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 24 Jun 2026 07:28:39 -0700 (PDT)
+Date: Wed, 24 Jun 2026 10:28:31 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Aadeshveer Singh <aadeshveer07@gmail.com>
+Cc: qemu-devel@nongnu.org, farosas@suse.de, pbonzini@redhat.com,
+ philmd@mailo.com, lvivier@redhat.com, ayoub@saferwall.com
+Subject: Re: [RFC PATCH 1/5] migration: add RAM Block fields and helpers for
+ fast snapshot load
+Message-ID: <ajvpj_pxXpvGWKb4@x1.local>
+References: <20260618032010.88755-1-aadeshveer07@gmail.com>
+ <20260618032010.88755-2-aadeshveer07@gmail.com>
+ <ajlhiEZ4TdBFvdMu@x1.local>
+ <CA++cPvJGwOQpSD3zTNAmpxE2JSCZrh5K4taVuAavDMOggBLcJQ@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <ccbadb13-888b-495d-b894-826a8e664d3e@redhat.com>
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-ORIG-GUID: yd7cnFL-Hqr7q59kOnWpf8H5qR1nFYMU
-X-Proofpoint-GUID: owxjWKmysTP1Im0zzj-cl3bfbk_27wXf
-X-Authority-Analysis: v=2.4 cv=Y4XIdBeN c=1 sm=1 tr=0 ts=6a3be98a cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
- a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=Y2IxJ9c9Rs8Kov3niI8_:22 a=L1eJwh8xV2WiUtXmEVcA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjI0MDExOSBTYWx0ZWRfXwnCS++JGfZD4
- OgvsumcDmMalEHtsT1JdlTqElSpdrYi9VDZ7pmjk4aJxvbGG2N0zfAgLSQkAMD5sOaOCZGkQbTX
- 38sywR2aDVjKL8jrDb16NyGUzi4RZShkKy1vv6UILpY8PoHyeNOk9bmygknpuMXx4I93kmHWUU1
- s+h92iGeH7+bgBpamaq27BvGgnRZr3y+77iGCJuxVRrnd0CUj4rCPH0IkrjCTs3nC9d9i92pdUh
- vEwV7jd9Wo2WnEH5pD7EekL//8ShQwURkn1pnFQDOPWIluiNlPLvCe19ylgEhy5VKtF55yxK/oe
- bOZarNIvWVBkGqQefonpJAPxdrLwnH0/Tk+tfl2T4fwelo0EhO0t62PlkVe++j2Z6LrbGVnBygz
- P3ZdzaxqhqAu/fIx6FV6B7ZSYwT5A3YxaVMVcBbhKXo6UrA4diXF0GM7mN0EBXycfhrE0iKcoLp
- L+VssEkkHjoJUG3vbvg==
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjI0MDExOSBTYWx0ZWRfX/0IzTN0UF8yA
- O5XaC2CiEAdbZc1q+Rozr1dgsNiwep2HJuOylrk84/U04HvsO8u8WoGFSIusoaBpcZPUzo5w7kl
- 4CxcHmMRuekbXjgfgimElDc6Z24JxlA=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-24_03,2026-06-23_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 priorityscore=1501 malwarescore=0 lowpriorityscore=0 spamscore=0
- clxscore=1015 suspectscore=0 impostorscore=0 phishscore=0 bulkscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606240119
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=adityag@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+In-Reply-To: <CA++cPvJGwOQpSD3zTNAmpxE2JSCZrh5K4taVuAavDMOggBLcJQ@mail.gmail.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -137,49 +123,132 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 26/06/24 01:47PM, Cédric Le Goater wrote:
-> On 6/23/26 16:19, Aditya Gupta wrote:
-> > <...snip...>
+On Wed, Jun 24, 2026 at 12:36:16PM +0530, Aadeshveer Singh wrote:
+> On Mon, Jun 22, 2026 at 9:53 PM Peter Xu <peterx@redhat.com> wrote:
 > >
-> >       g_test_init(&argc, &argv, NULL);
-> > -    char *tname = g_strdup_printf("pnv-xscom/spi-seeprom/%s",
-> > -            pnv_chips[3].cpu_model);
-> > -    qtest_add_data_func(tname, &pnv_chips[3], test_spi_seeprom);
-> > -    g_free(tname);
-> > +
-> > +    for (int i = 0; i < ARRAY_SIZE(pnv_chips); i++) {
-> > +        /* TYPE_PNV_SPI is not instantiated for older Power8/9 machines */
-> > +        if (pnv_chips[i].chip_type < PNV_CHIP_POWER10) {
+> > On Thu, Jun 18, 2026 at 08:50:06AM +0530, Aadeshveer Singh wrote:
+> > > Add two fields per RAMBlock:
+> > >
+> > > - nonzeropages: Mirrors the mapped-ram bitmap for storing which pages
+> > >   are present in file and which are zero.
+> > > - pending_bmap: Bitmap to store internal state of which pages have been
+> > >   read by some thread to ensure coordination between threads.
+> > >
+> > > Both fields are allocated and initialized in ram_load_setup and freed in
+> > > ram_load_cleanup. nonzeropages is populated in parse_ramblock_mapped_ram
+> > > eliminating the use of a temporary bitmap.
+> > >
+> > > Change ram_load() to load using ram_load_precopy() in case of fast
+> > > snapshot load.
+> > >
+> > > Also add migrate_fast_snapshot_load() returning true when both
+> > > postcopy-ram and mapped-ram capabilities are set.
+> > >
+> > > Update qemu_get_buffer_at() to not set error to make it thread safe. All
+> > > the callers of qemu_get_buffer_at(), take care of error handling.
+> > >
+> > > Signed-off-by: Aadeshveer Singh <aadeshveer07@gmail.com>
+> > > ---
+> > >  include/system/ramblock.h |  8 +++++
+> > >  migration/options.c       |  5 ++++
+> > >  migration/options.h       |  1 +
+> > >  migration/qemu-file.c     | 10 +------
+> > >  migration/ram.c           | 61 ++++++++++++++++++++++++++++++++-------
+> > >  5 files changed, 65 insertions(+), 20 deletions(-)
+> > >
+> > > diff --git a/include/system/ramblock.h b/include/system/ramblock.h
+> > > index 4435f8d55f..73275d0459 100644
+> > > --- a/include/system/ramblock.h
+> > > +++ b/include/system/ramblock.h
+> > > @@ -60,6 +60,14 @@ struct RAMBlock {
+> > >
+> > >      /* Bitmap of already received pages.  Only used on destination side. */
+> > >      unsigned long *receivedmap;
+> > > +    /* Bitmap of zero pages. Used for fast snapshot load. */
+> > > +    unsigned long *nonzeropages;
+> >
+> > We have file_bmap, only used on source for now.  I think we can safely
+> > reuse it by caching the pointer allocated.
+> Agreed will drop nonzeropages and reuse file_bmap for this in v2
 > 
-> Can we remove this chip_type field from the tests too ? see 248e4e924e87.
+> >
+> > > +    /*
+> > > +     * Bitmap for pages that are yet to be read from disk. It is required for
+> > > +     * fault thread and eager thread to keep note of which pages are currently
+> > > +     * being read. Used by fast snapshot load.
+> > > +     */
+> > > +    unsigned long *pending_bmap;
+> >
+> > We have receivedmap right above, and it's always allocated on dest.  IIUC
+> > we can directly use it.
+> >
+> > It's also already set by uffd helpers, see qemu_ufd_copy_ioctl().
+> > Currently it's a bit ugly put under a "if (!ret)"..  if you want you can
+> > clean it up a bit.
+> >
+> > There, we may want to skip page_requested or page_request_mutex operations
+> > for file load because they're not necessary.
+> >
+> 
+> I looked into reusing receivedmap here instead of creating
+> pending_bmap, but doing so creates a race condition that breaks the
+> postcopy blocktime calculations.
+> 
+> receivedmap strictly tracks pages that have been successfully placed
+> in the VM. My pending_bmap tracks pages that any thread is actively
+> loading (reading from disk).
 
-I went through the usage, and don't see any fix currently, as the
-PnvChip structure these qtests are using is basic, and we need some way
-to identify the chip type, for things like which machine to use, xscom
-addresses, and to skip/do specific things for particular chip type.
-I went through the mentioned commit and its parent, seems it was
-possible with the compat property being handled by respective
-class_init. So currently I don't see a better way, what do you think ?
+Yes, I think if we want to reuse the bitmap, we need to redefine
+receivedmap a little bit.
+
+Remote postcopy needs to remember it not only to maintain the GTree for
+page_requested, but also when postcopy is interrupted it needs to sync the
+bitmap to source to know what exactly have landed destination.  Here
+setting the bit _after_ the placement is critical.
+
+In your case, you don't need to remember "what pages we have loaded".
+
+So if we could redefine receivedmap in your case to be "who will place this
+page, eager load thread or fault thread", then it could work.
+
+Said that, maybe this will need some work to make it work, you can evaluate
+how much needed before going too deep.  Then if you think it's still easier
+to have the new bitmap, then it's still ok to consider having it.
+
+It may also matter on how you plan to refactor qemu_ufd_copy_ioctl(),
+maybe.  So you can take all these problems together in mind when
+considering the final decision.
 
 > 
-> > +            continue;
-> > +        }
-> > +
-> > +        char *tname = g_strdup_printf("pnv-xscom/spi-seeprom/%s",
-> > +                pnv_chips[i].cpu_model);
+> If we use receivedmap to track in-load pages, and a vCPU faults on a
+> page that the eager thread is currently reading, the fault thread will
+> see the bit set in receivedmap. It will then incorrectly assume the
+> page is already in the VM and skip tracking the blocktime for that
+> fault, even though the eager thread hasn't actually called place_page
+> yet. Keeping pending_bmap separate ensures the fault thread accurately
+> tracks blocktime until placement is actually complete.
 > 
-> please consider g_autofree variables.
+> Regarding the cleanup in qemu_ufd_copy_ioctl(), I agree we can skip
+> the page_requested operations for the file load. I also noticed a
+> potential race where if the eager thread places a page just before the
+> fault thread attempts to, we might hit an assert there. I will look
+> into returning safely instead of asserting to harden this, and I will
+> include the cleanup in v2.
 
-Sure cedric, will use it in v2.
+What is the assertion about?
+
+Logically if the fault thread will atomically fetch and set the bitmap bits
+(either your new bitmap, or reuse receivedmap), then it should already see
+the eager thread set the bit already, so it should avoid further playing
+with the page.  Vice versa.
+
+But as long as you have clue on how to resolve it and move on, we're good!
+You can mention that in the next cover letter then we can review it in the
+next version directly.
 
 Thanks,
-- Aditya G
 
-> 
-> > +        qtest_add_data_func(tname, &pnv_chips[i], test_spi_seeprom);
-> > +        g_free(tname);
-> > +    }
-> >       return g_test_run();
-> >   }
-> 
+-- 
+Peter Xu
+
 
