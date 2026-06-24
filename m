@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D386CCDB479
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 17:40:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2BB4DCDB47F
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 17:41:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcRa2-0003L5-Gh; Wed, 24 Jun 2026 13:40:06 -0400
+	id 1wcRZT-00087i-GZ; Wed, 24 Jun 2026 13:39:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wcRa0-0003FE-TO
- for qemu-devel@nongnu.org; Wed, 24 Jun 2026 13:40:05 -0400
+ id 1wcRZR-0007wx-BR
+ for qemu-devel@nongnu.org; Wed, 24 Jun 2026 13:39:29 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wcRZz-0004fO-Bq
- for qemu-devel@nongnu.org; Wed, 24 Jun 2026 13:40:04 -0400
+ id 1wcRZP-0004Zb-5y
+ for qemu-devel@nongnu.org; Wed, 24 Jun 2026 13:39:29 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1782322802;
+ s=mimecast20190719; t=1782322766;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=o1rJcZ14dB8JQNOyy+L2uBZqp+ZSHNsTjFAdWWw+MTQ=;
- b=AdMq5GTSOqWhGsDdj0acnwUbDCrINYCHXCkNJwAGCjpEBIdQLHOnnAUDEQOcIdHUrFGJgt
- KQGm8/VTFU9XB8x8t6cHvFoO8lssGOCViewxebrZUFoJLKNXQ/wXbus7hsqZLt7LiRhFGh
- Leni3K29yBGie09Bs+mV59Z0+uhLOOk=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=49VmJdPBQFt7XW7Zwm56uj3jkNQpAb7KfbJJGWpDGNc=;
+ b=hiX3vxSNmHyG7DVMO9OPxfn6XLpJgb6zAdDhkKr8/Q89vqXkHlWVbAjfooj14dH2hPZOnV
+ UFGMf/sA6kOvX2MQmEnFUWqw76nABKolv8optD92GHVq5hhN7Ea0W+I115DLAeaRq5is2n
+ 8r6ouGtq/EV4axuhHi/33IFAJAIWAXU=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-478-kGl-W-u8NKuu7mags4NB0Q-1; Wed,
- 24 Jun 2026 13:39:59 -0400
-X-MC-Unique: kGl-W-u8NKuu7mags4NB0Q-1
-X-Mimecast-MFC-AGG-ID: kGl-W-u8NKuu7mags4NB0Q_1782322798
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-146-RwPXa1d8MUuOBAgAK-vKMw-1; Wed,
+ 24 Jun 2026 13:39:24 -0400
+X-MC-Unique: RwPXa1d8MUuOBAgAK-vKMw-1
+X-Mimecast-MFC-AGG-ID: RwPXa1d8MUuOBAgAK-vKMw_1782322763
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 05C1B1956060; Wed, 24 Jun 2026 17:39:58 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 95D771954237; Wed, 24 Jun 2026 17:39:23 +0000 (UTC)
 Received: from berrange.com (unknown [10.44.32.102])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id CE3D5180034F; Wed, 24 Jun 2026 17:39:54 +0000 (UTC)
+ id 5532A180034F; Wed, 24 Jun 2026 17:39:20 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: devel@lists.libvirt.org,
@@ -58,9 +58,10 @@ Cc: devel@lists.libvirt.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Peter Krempa <pkrempa@redhat.com>
-Subject: [PATCH v5 30/35] qom: add method for getting the "id" of a QOM object
-Date: Wed, 24 Jun 2026 18:37:46 +0100
-Message-ID: <20260624173752.2928717-31-berrange@redhat.com>
+Subject: [PATCH v5 21/35] monitor: eliminate monitor_is_hmp_non_interactive
+ method
+Date: Wed, 24 Jun 2026 18:37:37 +0100
+Message-ID: <20260624173752.2928717-22-berrange@redhat.com>
 In-Reply-To: <20260624173752.2928717-1-berrange@redhat.com>
 References: <20260624173752.2928717-1-berrange@redhat.com>
 MIME-Version: 1.0
@@ -92,72 +93,187 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The 'user_creatable_del' method doesn't want the 'Object *', but
-instead the "id" of the object to be deleted. While most of its
-work could be done with the "Object *" alone, purging the QemuOpts
-values needs the "id".
+The monitor_is_hmp_non_interactive method is used by
+monitor_suspend and monitor_resume, to make them a no-op
+if the HMP does not use readline.
 
-The "id" is not recorded against an Object though, it is indirectly
-stored as a property linking the parent and child objects together.
-Add an accessor that can fetch this property name.
+There are only a handful of callers of suspend/resume and
+they can be made to skip the call when readline is not
+present.
 
 Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 Tested-by: Peter Krempa <pkrempa@redhat.com>
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- include/qom/object.h | 10 ++++++++++
- qom/object.c         | 17 +++++++++++++++++
- 2 files changed, 27 insertions(+)
+ include/monitor/monitor.h      |  2 +-
+ migration/migration-hmp-cmds.c |  5 ++++-
+ monitor/hmp-cmds.c             |  5 ++++-
+ monitor/hmp.c                  | 11 ++++++++---
+ monitor/monitor.c              | 30 +-----------------------------
+ 5 files changed, 18 insertions(+), 35 deletions(-)
 
-diff --git a/include/qom/object.h b/include/qom/object.h
-index 11f55613fc..216d2a30f6 100644
---- a/include/qom/object.h
-+++ b/include/qom/object.h
-@@ -1759,6 +1759,16 @@ ObjectProperty *object_property_try_add_child(Object *obj, const char *name,
- ObjectProperty *object_property_add_child(Object *obj, const char *name,
-                                           Object *child);
+diff --git a/include/monitor/monitor.h b/include/monitor/monitor.h
+index 3f730cffee..ffda343585 100644
+--- a/include/monitor/monitor.h
++++ b/include/monitor/monitor.h
+@@ -34,7 +34,7 @@ int monitor_new(MonitorOptions *opts, bool allow_hmp, Error **errp);
+ int monitor_new_opts(QemuOpts *opts, Error **errp);
+ void monitor_cleanup(void);
  
-+/**
-+ * object_property_get_child_name:
-+ * @obj: the object that owns the property
-+ * @child: the object referenced by the child property
-+ *
-+ * Return the property name against which @child is registered
-+ * with @obj, or NULL if @obj is not a parent of @child.
-+ */
-+char *object_property_get_child_name(Object *obj, Object *child);
-+
- typedef enum {
-     /* Unref the link pointer when the property is deleted */
-     OBJ_PROP_LINK_STRONG = 0x1,
-diff --git a/qom/object.c b/qom/object.c
-index f79b2cf361..66bbd1488b 100644
---- a/qom/object.c
-+++ b/qom/object.c
-@@ -1952,6 +1952,23 @@ object_property_add_child(Object *obj, const char *name,
-     return object_property_try_add_child(obj, name, child, &error_abort);
+-int monitor_suspend(Monitor *mon);
++void monitor_suspend(Monitor *mon);
+ void monitor_resume(Monitor *mon);
+ 
+ int monitor_get_fd(Monitor *mon, const char *fdname, Error **errp);
+diff --git a/migration/migration-hmp-cmds.c b/migration/migration-hmp-cmds.c
+index 8b385f560e..502ca704da 100644
+--- a/migration/migration-hmp-cmds.c
++++ b/migration/migration-hmp-cmds.c
+@@ -19,6 +19,7 @@
+ #include "monitor/hmp.h"
+ #include "monitor/hmp-completion.h"
+ #include "monitor/monitor.h"
++#include "monitor/monitor-internal.h"
+ #include "qapi/error.h"
+ #include "qapi/qapi-commands-migration.h"
+ #include "qapi/qapi-visit-migration.h"
+@@ -853,12 +854,14 @@ void hmp_migrate(Monitor *mon, const QDict *qdict)
+ 
+     if (!detach) {
+         HMPMigrationStatus *status;
++        MonitorHMP *hmp = MONITOR_HMP(mon);
+ 
+-        if (monitor_suspend(mon) < 0) {
++        if (!hmp->use_readline) {
+             monitor_printf(mon, "terminal does not allow synchronous "
+                            "migration, continuing detached\n");
+             return;
+         }
++        monitor_suspend(mon);
+ 
+         status = g_malloc0(sizeof(*status));
+         status->mon = mon;
+diff --git a/monitor/hmp-cmds.c b/monitor/hmp-cmds.c
+index e139caeba9..e9fb8d827a 100644
+--- a/monitor/hmp-cmds.c
++++ b/monitor/hmp-cmds.c
+@@ -129,7 +129,10 @@ void hmp_info_version(Monitor *mon, const QDict *qdict)
+ 
+ void hmp_quit(Monitor *mon, const QDict *qdict)
+ {
+-    monitor_suspend(mon);
++    MonitorHMP *hmp = MONITOR_HMP(mon);
++    if (hmp->use_readline) {
++        monitor_suspend(mon);
++    }
+     qmp_quit(NULL);
  }
  
-+char *object_property_get_child_name(Object *obj, Object *child)
-+{
-+    ObjectProperty *prop;
-+    GHashTableIter iter;
-+    gpointer key, value;
-+
-+    g_hash_table_iter_init(&iter, obj->properties);
-+    while (g_hash_table_iter_next(&iter, &key, &value)) {
-+        prop = value;
-+        if (object_property_is_child(prop) && prop->opaque == child) {
-+            return g_strdup(prop->name);
-+        }
-+    }
-+    return NULL;
-+}
-+
-+
- void object_property_allow_set_link(const Object *obj, const char *name,
-                                     Object *val, Error **errp)
+diff --git a/monitor/hmp.c b/monitor/hmp.c
+index 1da9370ead..b8cccdcde3 100644
+--- a/monitor/hmp.c
++++ b/monitor/hmp.c
+@@ -1528,13 +1528,16 @@ static void monitor_read(void *opaque, const uint8_t *buf, int size)
+ static void monitor_event(void *opaque, QEMUChrEvent event)
  {
+     Monitor *mon = opaque;
++    MonitorHMP *hmp = MONITOR_HMP(mon);
+ 
+     switch (event) {
+     case CHR_EVENT_MUX_IN:
+         qemu_mutex_lock(&mon->mon_lock);
+         if (mon->mux_out) {
+             mon->mux_out = 0;
+-            monitor_resume(mon);
++            if (hmp->use_readline) {
++                monitor_resume(mon);
++            }
+         }
+         qemu_mutex_unlock(&mon->mon_lock);
+         break;
+@@ -1547,7 +1550,9 @@ static void monitor_event(void *opaque, QEMUChrEvent event)
+             } else {
+                 monitor_flush_locked(mon);
+             }
+-            monitor_suspend(mon);
++            if (hmp->use_readline) {
++                monitor_suspend(mon);
++            }
+             mon->mux_out = 1;
+         }
+         qemu_mutex_unlock(&mon->mon_lock);
+@@ -1558,7 +1563,7 @@ static void monitor_event(void *opaque, QEMUChrEvent event)
+                        "information\n", QEMU_VERSION);
+         qemu_mutex_lock(&mon->mon_lock);
+         mon->reset_seen = 1;
+-        if (!mon->mux_out) {
++        if (!mon->mux_out && hmp->use_readline) {
+             /* Suspend-resume forces the prompt to be printed.  */
+             monitor_suspend(mon);
+             monitor_resume(mon);
+diff --git a/monitor/monitor.c b/monitor/monitor.c
+index 6ed586fc4f..f88364a574 100644
+--- a/monitor/monitor.c
++++ b/monitor/monitor.c
+@@ -155,25 +155,6 @@ bool monitor_requires_iothread(const Monitor *mon)
+     return cls->requires_iothread && cls->requires_iothread(mon);
+ }
+ 
+-/**
+- * Is @mon is using readline?
+- * Note: not all HMP monitors use readline, e.g., gdbserver has a
+- * non-interactive HMP monitor, so readline is not used there.
+- */
+-static inline bool monitor_uses_readline(const MonitorHMP *mon)
+-{
+-    return mon->use_readline;
+-}
+-
+-static inline bool monitor_is_hmp_non_interactive(const Monitor *mon)
+-{
+-    if (!object_dynamic_cast(OBJECT(mon), TYPE_MONITOR_HMP)) {
+-        return false;
+-    }
+-
+-    return !monitor_uses_readline(container_of(mon, MonitorHMP, parent_obj));
+-}
+-
+ static gboolean monitor_unblocked(void *do_not_use, GIOCondition cond,
+                                   void *opaque)
+ {
+@@ -548,12 +529,8 @@ static gboolean qapi_event_throttle_equal(const void *a, const void *b)
+     return TRUE;
+ }
+ 
+-int monitor_suspend(Monitor *mon)
++void monitor_suspend(Monitor *mon)
+ {
+-    if (monitor_is_hmp_non_interactive(mon)) {
+-        return -ENOTTY;
+-    }
+-
+     qatomic_inc(&mon->suspend_cnt);
+ 
+     if (monitor_requires_iothread(mon)) {
+@@ -565,7 +542,6 @@ int monitor_suspend(Monitor *mon)
+     }
+ 
+     trace_monitor_suspend(mon, 1);
+-    return 0;
+ }
+ 
+ static void monitor_accept_input(void *opaque)
+@@ -582,10 +558,6 @@ static void monitor_accept_input(void *opaque)
+ 
+ void monitor_resume(Monitor *mon)
+ {
+-    if (monitor_is_hmp_non_interactive(mon)) {
+-        return;
+-    }
+-
+     if (qatomic_dec_fetch(&mon->suspend_cnt) == 0) {
+         AioContext *ctx;
+ 
 -- 
 2.54.0
 
