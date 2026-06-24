@@ -4,47 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8FCB9CDB479
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 05:13:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73713CDB479
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 05:13:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcFq6-0002Zz-V1; Wed, 24 Jun 2026 01:07:55 -0400
+	id 1wcFpO-0001dG-GF; Wed, 24 Jun 2026 01:07:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wcFpo-0002Vp-Io; Wed, 24 Jun 2026 01:07:39 -0400
+ id 1wcFpF-0001VB-5h; Wed, 24 Jun 2026 01:07:02 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wcFpk-0005jt-VM; Wed, 24 Jun 2026 01:07:35 -0400
+ id 1wcFpC-0005gs-Fz; Wed, 24 Jun 2026 01:07:00 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1782277622; bh=cTPGTHio96Tmfg3qRopVfRHWj/QeTHyHESYeiFRwVNI=;
+ t=1782277477; bh=t1r/Gde0xqZ9jcUIzaFauDj/B6ySgKLEBdzfU1EFZfY=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=FO7WBH9HgF2U+UC2Ce1gYGlEGSGuuQ3MMkluWDOH9BTiZGIPS+PliQxTy6SHX0/63
- 07hH9NecJhelTycfC2cCP8OI2BUd5EN43PPpvpV4Y8yFyBDkNJrOy0t95LgPzVRKoQ
- wK960Yoey+M/pTN+eNwphf69BfGxOEMFnMC2JxbWxwKVVYKvgiF9tkmO37dgNwOpGS
- ULYEpgOQowpKQpIphUo8bbMTxdq4rc9vpbPhIPvX0HhhjMdqotrIw94WBcG+ssZlN1
- EVeFSRXpyXoRJ5OrjN6H3Vn83QZY5B9QHQSvyFToPzUrM2OVUN0d0BrHk9N9JwQmxs
- cHG5ItaCgAoZg==
+ b=COKeJFJ4uk5XHI8n8zQdRISaOTma1/wNm5QCY13p51VUpD2mvGMAjLlfTu8wANU4j
+ S5yGrQEenrDv3cM07YzrzWkBj9N7Op2am1fqNvI75G6WUp7KItB6T5Luuig/cn317a
+ Q/raKuhfVStU9zHINobah159C/1b6zCytHWkP23DUPXc3zEIadwdQ7jK1jxy/DxXBP
+ pqQx47TFYfdJkgVf/1UbLa7k/6J2ZuHgsqTbFkj4ThCh3F+YZV3R57kTMrq6MNThYe
+ imjvsRzAkb4mzp36hTIeL1ZBGpKLkRoA+WdbtPBSnkcP2cFtxRSFhlcBIYujcIlR4N
+ z2FH63McEcc6g==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 4145D1BA65F;
- Wed, 24 Jun 2026 08:07:02 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 26D811BA64C;
+ Wed, 24 Jun 2026 08:04:37 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 295BE3DDAFC;
- Wed, 24 Jun 2026 08:07:07 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 0FAF63DDAD4;
+ Wed, 24 Jun 2026 08:04:42 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Alejandro Jimenez <alejandro.j.jimenez@oracle.com>,
- Sairaj Kodilkar <sarunkod@amd.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.4 65/95] amd_iommu: Update command buffer head ptr in
- MMIO region after wraparound
-Date: Wed, 24 Jun 2026 08:05:00 +0300
-Message-ID: <20260624050541.395079-4-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Akshit Yadav <valium7171@gmail.com>,
+ Helge Deller <deller@gmx.de>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.11 86/86] linux-user: Fix AT_PHDR when program headers
+ are relocated into their own segment
+Date: Wed, 24 Jun 2026 08:02:57 +0300
+Message-ID: <20260624050404.394225-30-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-10.2.4-20260624080454@cover.tls.msk.ru>
-References: <qemu-stable-10.2.4-20260624080454@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-10.0.11-20260624080222@cover.tls.msk.ru>
+References: <qemu-stable-10.0.11-20260624080222@cover.tls.msk.ru>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
@@ -70,49 +69,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
+From: Akshit Yadav <valium7171@gmail.com>
 
-When processing a command, amdvi_cmdbuf_run() increments cmdbuf_head and
-writes it to the emulated MMIO register space before checking whether it
-has reached the end of the command buffer.
+When a binary is patched or relocated such that the program header table is
+moved into a separate PT_LOAD segment (rather than sitting at the start of the
+first loadable segment), QEMU's AT_PHDR auxv entry becomes incorrect. The
+loader was computing AT_PHDR as load_addr + e_phoff, which assumes the headers
+are mapped 1:1 from file offset 0. This breaks when the headers are elsewhere.
 
-If the incremented value reaches the end of the buffer and the tail pointer
-is zero, the loop exits and the COMMAND_HEAD offset still contains an
-unwrapped value. There are no errors in command processing since internal
-cmdbuf_head state is always correctly updated, but the spec defines the
-CmdHeadPtr field in MMIO Offset 2000h Command Buffer Head Pointer Register
-as RW i.e. guest-visible, so it should be kept consistent.
+The Linux kernel instead locates the PT_LOAD segment that contains e_phoff,
+then computes the in-memory address as p_vaddr + (e_phoff - p_offset). This
+correctly handles relocated headers.
 
-Wrap cmdbuf_head before updating COMMAND_HEAD so the MMIO-visible register
-always matches the internal command buffer head pointer position.
+Fix by:
+1. Add phdr_addr field to image_info to cache the resolved address.
+2. Initialize to load_addr + e_phoff (fallback for headers outside any PT_LOAD).
+3. In the PT_LOAD mapping loop, detect if the segment contains e_phoff and
+   override with the segment-relative address.
+4. Use info->phdr_addr for AT_PHDR instead of the incorrect formula.
 
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
-Reviewed-by: Sairaj Kodilkar <sarunkod@amd.com>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-Id: <20260512150044.334867-1-alejandro.j.jimenez@oracle.com>
-(cherry picked from commit 3c98e446af825b5806c1e5cd1244b2431b15e884)
+Signed-off-by: Akshit Yadav <valium7171@gmail.com>
+Reviewed-by: Helge Deller <deller@gmx.de>
+(cherry picked from commit 156e536a7b9700018aaa2437072c14e3376340a7)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/i386/amd_iommu.c b/hw/i386/amd_iommu.c
-index 29e2014c68..c4b3a9c78d 100644
---- a/hw/i386/amd_iommu.c
-+++ b/hw/i386/amd_iommu.c
-@@ -1475,12 +1475,12 @@ static void amdvi_cmdbuf_run(AMDVIState *s)
-         trace_amdvi_command_exec(s->cmdbuf_head, s->cmdbuf_tail, s->cmdbuf);
-         amdvi_cmdbuf_exec(s);
-         s->cmdbuf_head += AMDVI_COMMAND_SIZE;
--        amdvi_writeq_raw(s, AMDVI_MMIO_COMMAND_HEAD, s->cmdbuf_head);
+diff --git a/linux-user/elfload.c b/linux-user/elfload.c
+index a791396ead..fdc84de4ba 100644
+--- a/linux-user/elfload.c
++++ b/linux-user/elfload.c
+@@ -2627,7 +2627,7 @@ static abi_ulong create_elf_tables(abi_ulong p, int argc, int envc,
+     /* There must be exactly DLINFO_ITEMS entries here, or the assert
+      * on info->auxv_len will trigger.
+      */
+-    NEW_AUX_ENT(AT_PHDR, (abi_ulong)(info->load_addr + exec->e_phoff));
++    NEW_AUX_ENT(AT_PHDR, (abi_ulong)(info->phdr_addr));
+     NEW_AUX_ENT(AT_PHENT, (abi_ulong)(sizeof (struct elf_phdr)));
+     NEW_AUX_ENT(AT_PHNUM, (abi_ulong)(exec->e_phnum));
+     NEW_AUX_ENT(AT_PAGESZ, (abi_ulong)(TARGET_PAGE_SIZE));
+@@ -3398,6 +3398,12 @@ static void load_elf_image(const char *image_name, const ImageSource *src,
+     info->data_offset = load_bias;
+     info->load_addr = load_addr;
+     info->entry = ehdr->e_entry + load_bias;
++    /*
++     * Fallback for AT_PHDR if the program headers do not fall within
++     * any PT_LOAD segment (see the loop below, which overrides this with
++     * the correct in-memory address when a containing segment is found).
++     */
++    info->phdr_addr = load_addr + ehdr->e_phoff;
+     info->start_code = -1;
+     info->end_code = 0;
+     info->start_data = -1;
+@@ -3452,6 +3458,19 @@ static void load_elf_image(const char *image_name, const ImageSource *src,
+             vaddr_ef = vaddr + eppnt->p_filesz;
+             vaddr_em = vaddr + eppnt->p_memsz;
  
-         /* wrap head pointer */
-         if (s->cmdbuf_head >= s->cmdbuf_len * AMDVI_COMMAND_SIZE) {
-             s->cmdbuf_head = 0;
-         }
-+        amdvi_writeq_raw(s, AMDVI_MMIO_COMMAND_HEAD, s->cmdbuf_head);
-     }
- }
- 
++            /*
++             * If this segment contains the program headers, record their
++             * in-memory address for AT_PHDR. This matches the kernel, which
++             * locates the headers via the containing PT_LOAD rather than
++             * assuming load_addr + e_phoff (false when the phdrs are not
++             * mapped 1:1 from file offset 0, e.g. relocated into their own
++             * segment by a binary patcher).
++             */
++            if (eppnt->p_offset <= ehdr->e_phoff &&
++                ehdr->e_phoff < eppnt->p_offset + eppnt->p_filesz) {
++                info->phdr_addr = vaddr + (ehdr->e_phoff - eppnt->p_offset);
++            }
++
+             /*
+              * Some segments may be completely empty, with a non-zero p_memsz
+              * but no backing file segment.
+diff --git a/linux-user/qemu.h b/linux-user/qemu.h
+index f2b16ef54b..a8ead75074 100644
+--- a/linux-user/qemu.h
++++ b/linux-user/qemu.h
+@@ -25,6 +25,7 @@
+ struct image_info {
+         abi_ulong       load_bias;
+         abi_ulong       load_addr;
++        abi_ulong       phdr_addr;
+         abi_ulong       start_code;
+         abi_ulong       end_code;
+         abi_ulong       start_data;
 -- 
 2.47.3
 
