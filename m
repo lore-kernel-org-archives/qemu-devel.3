@@ -4,141 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1785FCDB479
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 18:49:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B444CDB479
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 19:01:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcSec-0002pB-LD; Wed, 24 Jun 2026 14:48:54 -0400
+	id 1wcSps-0007MC-0U; Wed, 24 Jun 2026 15:00:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wcSeY-0002oY-CQ
- for qemu-devel@nongnu.org; Wed, 24 Jun 2026 14:48:50 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1wcSph-0007Ln-W2; Wed, 24 Jun 2026 15:00:22 -0400
+Received: from forwardcorp1d.mail.yandex.net ([178.154.239.200])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wcSeW-0001PG-D3
- for qemu-devel@nongnu.org; Wed, 24 Jun 2026 14:48:49 -0400
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65OHiu1R3832113
- for <qemu-devel@nongnu.org>; Wed, 24 Jun 2026 18:48:42 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- tQJgaxQIf+0WdlA1H+KgOF0reIHJgs9/u5UqfA+dqdc=; b=RYO0k2lDHlsdKqf1
- qjXv/ppZOOr6Vby9ZbTxK6QX7ueT7HDVZe2rnyVz3xYcS+CfEJxNv9+f63YL81bz
- KmxVRWkpWyEUjWxrP0VXZ/EBQgs5wB2o/usFRMNzWm3f58tmWN0ELv7bTQsJ5uuk
- K1yWa9aAuYxjYb7w2t09iS5L5fEP/DMww8tu5L9XS9rdalOX5313Yk9viomhl1HL
- sLbxTnS2ps1fdKXvc1E4W3KMvQSYxgiR9VzEKQMgn5nCX2POE7fY3PGKn38ULpNM
- a8mrih+z1iqUzZcQ7UvLu488Al5nMgCBs1JB+XjcoZIe+gDZ0lKKgBtjf6t03wAy
- JIOcWg==
-Received: from mail-dl1-f72.google.com (mail-dl1-f72.google.com [74.125.82.72])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f0j7drr2u-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 24 Jun 2026 18:48:42 +0000 (GMT)
-Received: by mail-dl1-f72.google.com with SMTP id
- a92af1059eb24-1394c3ee7f2so5172816c88.1
- for <qemu-devel@nongnu.org>; Wed, 24 Jun 2026 11:48:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1782326921; x=1782931721; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=tQJgaxQIf+0WdlA1H+KgOF0reIHJgs9/u5UqfA+dqdc=;
- b=jJUY6SKwBfc2w0QFiP3cu9adJ4KHhJJp0a4WgHiN86OAVULVYmcr/kqpwhx8078oRi
- mEOM7R3opk1/8FXlCfAt4x79e6f+DKpSDklGvpk6fdcFZD8hAH3jZeV7Nl5McHGfwTiF
- sX9MjIMEqxzu9rzfjNQK7eGzkKNPVeIh/mPGw8cFzJjYhcaYOipUD28CwkaS+fGUipIh
- LimBtP0GgjugJ/wX8nSqO9/nbxE8Cvjh0h1GZUfaOsyyOlz58UxvaO9Wme8jv/mdd20V
- 6h2dyqM3N+snNnRB92O5H2Bkxf1a7uq0quwD7ZOIX0JrQC5/Ghjx+opDMVNAd4pKhRm+
- AGug==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782326921; x=1782931721;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=tQJgaxQIf+0WdlA1H+KgOF0reIHJgs9/u5UqfA+dqdc=;
- b=PjPi97rYk2RZUpbyZgUsqmG6yiyaFYkBhL221nZmbLGdR8Qysbp8ZtRIow6LLsAzZX
- VZmghfGDXfrX1g2idherMU2cW+K7eK8FFXbs3AkK+vACfmw8kmcaoLt4kKpnEvZeh0ZO
- cszG9MITCAK9rXMk3FRrZKUFZZXKCjkiXXnxGM/hzP7FMxSiDVnOAdYtG4hwfnxzGaoi
- k0w9TgKaCwnOTH1ZySW9RVFpp1fcnpBnA7figfvgjTv2Z+Vl5b3XCL7RiCckmEjiGBcd
- yPq5zKdftcTMa0ybSK/FFtVv0O9ZKux64hDsraYUQKkZqgvdzdtfoczPkmaMQFQN5WeD
- IpjQ==
-X-Forwarded-Encrypted: i=1;
- AFNElJ+DBCAmDt7IpymoW51Ll55VbSjTE38Bildt4Us09MnK0DfCc4RE3vic+VTs8TmOJ67xbuCRQWIJyn+V@nongnu.org
-X-Gm-Message-State: AOJu0YzjyH9PrS9a5POiWFq84TjY8kXESTRsQBJd3MSGDJI+I+aLKxkD
- cqyCjg8AixLWe4aarSPi9rAXW6ZxP2fxI/czYgmjS7zx/v7U65/j83WZFn6OCj+p6usE+xpKtkv
- vSpkIHdgRPBgvcXdyGyGk9n3F94t+IrIcbdSq6NDh+BqwWWNPAo6fovAgeA==
-X-Gm-Gg: AfdE7clWkrT4IJcgQyJOblviKaDc6g8BiAHAyVZcdnXaWfHSw90zgZy8uKA92LPkBJa
- V9pi8aEvAygA0gA32RjDppw5QT8tFz0/I9i+RkBYbO/FDXEVk3JOmb2qHeT7Dfrq0Q6qcoMNQBb
- y/szCO4vQLaZPPXifL1IKo+do7xmYhKv/gFxHhIA91dCHNWbGOJGatO7nsOnBPIc6fYjJvIvMd1
- +Pzt+MNa6P5WUchx2d2T57acMVZaiw1vspsVXUHD8dQFoMwyfPAulpAU2BI25+US1WZ45kANuDj
- bp3YiISHxcG2sIZnkTpmUxH1q8+TqMd+64DvJ6x2M0psky9ZJWGrYSoNSSz5iNs9mc1oFPIwUfA
- 5goXmdX6lS4P6/GHrxTt85QrTIqyLENK+K5hmw9ncS9s+A0ceBrkwLdZb7eZl56GEgCb4A0ZZDM
- FYZ8I=
-X-Received: by 2002:a05:7022:69a4:b0:138:49ea:f487 with SMTP id
- a92af1059eb24-139d0c040f2mr4122687c88.6.1782326921309; 
- Wed, 24 Jun 2026 11:48:41 -0700 (PDT)
-X-Received: by 2002:a05:7022:69a4:b0:138:49ea:f487 with SMTP id
- a92af1059eb24-139d0c040f2mr4122668c88.6.1782326920729; 
- Wed, 24 Jun 2026 11:48:40 -0700 (PDT)
-Received: from [192.168.1.170] (216-71-219-44.dyn.novuscom.net.
- [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-139d91006bcsm952532c88.13.2026.06.24.11.48.39
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 24 Jun 2026 11:48:40 -0700 (PDT)
-Message-ID: <53dcdeeb-997c-4ab1-a17a-2a28b507790b@oss.qualcomm.com>
-Date: Wed, 24 Jun 2026 11:48:38 -0700
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1wcSpe-0003jf-PK; Wed, 24 Jun 2026 15:00:21 -0400
+Received: from mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net
+ [IPv6:2a02:6b8:c42:94a9:0:640:a3fa:0])
+ by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id 71B7D805EF;
+ Wed, 24 Jun 2026 22:00:13 +0300 (MSK)
+Received: from [IPV6:2a02:6bf:8080:c3c::1:22] (unknown
+ [2a02:6bf:8080:c3c::1:22])
+ by mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net (smtpcorp) with ESMTPSA
+ id C0e080BXAKo0-l8yvQP6V; Wed, 24 Jun 2026 22:00:12 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1782327612;
+ bh=lAyJc5eFEmtzxDhbNKtJZAtPou6JlAhr9CFp5bGI8wg=;
+ h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
+ b=gIXanjCpmtoXZ9Z+fulhRrQvnL8AjtiHo4qf+xiOgVNuS++No6ka0UIOz1D5yQyHn
+ gorxN8O30M9eh1usP5e0I1hFVuFKcnefun7K5Gsq1ydWHPKfddno0M+Ht7AAThvSnJ
+ BW4aqKPW0MifdpRw465mwebudWQdUKAZW8AHbxYo=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-68.klg.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Message-ID: <d535e60b-2cda-4d1d-b076-abb0652e113f@yandex-team.ru>
+Date: Wed, 24 Jun 2026 22:00:12 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] tests/docker: add flex and bison to emsdk-wasm64-cross
-To: Brian Cain <brian.cain@oss.qualcomm.com>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>, stefanha@gmail.com, 
- Kohei Tokunaga <ktokunaga.mail@gmail.com>
-References: <20260624054832.610697-1-brian.cain@oss.qualcomm.com>
-From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <20260624054832.610697-1-brian.cain@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-GUID: 5-_En52O1GanBjxeDBepV7iG51GmgVqk
-X-Authority-Analysis: v=2.4 cv=NvHhtcdJ c=1 sm=1 tr=0 ts=6a3c268a cx=c_pps
- a=bS7HVuBVfinNPG3f6cIo3Q==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
- a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22
- a=VwQbUJbxAAAA:8 a=pGLkceISAAAA:8 a=EUspDBNiAAAA:8 a=DvgQ1PzX-81DNFkKbFgA:9
- a=QEXdDO2ut3YA:10 a=vBUdepa8ALXHeOFLBtFW:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjI0MDE1NiBTYWx0ZWRfX0mP0VEhUafH5
- GO/D8oHAHWjpNdyQdipQSW3wvgZyUPkX6OgJWPhO0dpMPK5qk7UeDEgJWlez+dizetx55BaqG+N
- v3BAaKhRqh7gafy/sqNyd7H119H0a7g=
-X-Proofpoint-ORIG-GUID: 5-_En52O1GanBjxeDBepV7iG51GmgVqk
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjI0MDE1NiBTYWx0ZWRfX+sKSoUK6YiiR
- LDkTODvxk+DRWXzN2tqGLKVkFkOPAUPzAbVhYsCkkUvc7Z4cSoRWdI9UVlBCBNblXk4eXx34oiB
- YuVIngCjDEkD6gqtJ2FMhvI2OXiVL+loQgdsSxxht14+on5fEHCaDksg35b55b734VMSN7t0FD1
- N+vGPXcKAnNAzANIeI8SOsr6yzVMudretRbEsaeE3nySPCo5aAEWNlMfDm3pJkfggo3TNPembtR
- aKTJlJG++frj774WNXsZIQylh/Kcwjl6v7DsuBxQvUDsz9SZ1zsUvkObKmi81kKSHMSZzzTvtQr
- nHvXTBTgoOYGFWSZfahQjKC3rgT8FvVDFHr6g9E5c6aW8kSiu2Qv8e14Rr63Xf7rTkknnp3rIh+
- AOv4Yudl2fGc5oSPmRkT3JWUUOfe2tHZnaykgnWOzXruVNfupLkl2Y40iKNYvnGVdGoeTah1a0o
- VkqVb+xWLHyyYCapIqg==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-24_03,2026-06-24_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 priorityscore=1501 suspectscore=0 adultscore=0 impostorscore=0
- phishscore=0 spamscore=0 bulkscore=0 lowpriorityscore=0 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606240156
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Subject: Re: [PATCH 2/3] block: support measure for commit
+To: Jean-Louis Dupond <jean-louis@dupond.be>, qemu-devel@nongnu.org
+Cc: Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ qemu-block@nongnu.org, Fiona Ebner <f.ebner@proxmox.com>,
+ John Snow <jsnow@redhat.com>
+References: <20260608110346.3231998-1-jean-louis@dupond.be>
+ <20260608110346.3231998-3-jean-louis@dupond.be>
+Content-Language: ru, en-US
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+In-Reply-To: <20260608110346.3231998-3-jean-louis@dupond.be>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=178.154.239.200;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -155,34 +76,318 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/23/2026 10:48 PM, Brian Cain wrote:
-> The hexagon idef-parser requires flex and bison as host build
-> tools.  Add them to the emsdk-wasm64-cross container image so that
-> wasm64 builds including hexagon-softmmu can find them.
+08.06.26 14:03, Jean-Louis Dupond пишет:
+> Add a new option to qemu-img measure to specify the base node you want
+> to merge the image into.
+> This will open all the images between top and base, and calculate the
+> size required for merging this layer into the base image.
 > 
-> Link: https://lore.kernel.org/qemu-devel/CAJSP0QVk6wsOnPAspC4YfXRp90saKibQfD4Mk-44-RQo0k=z3w@mail.gmail.com/
-> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
+> Also modify the calculation so it takes into account the
+> discard-no-unref setting of the base image.
+> If discard-no-unref is enabled on the base, discarded blocks in the
+> layers above the base will not free clusters in the base image, but will
+> only mark them ZERO.
+> 
+> [1]: https://gitlab.com/qemu-project/qemu/-/issues/2369
+> 
+> Signed-off-by: Jean-Louis Dupond <jean-louis@dupond.be>
 > ---
->  tests/docker/dockerfiles/emsdk-wasm64-cross.docker | 2 ++
->  1 file changed, 2 insertions(+)
+>   block/qcow2.c                    | 90 ++++++++++++++++++++++++++++----
+>   qemu-img-cmds.hx                 |  4 +-
+>   qemu-img.c                       | 37 +++++++++++--
+>   tests/qemu-iotests/178.out.qcow2 |  6 +--
+>   tests/qemu-iotests/178.out.raw   |  6 +--
+>   5 files changed, 121 insertions(+), 22 deletions(-)
 > 
-> diff --git a/tests/docker/dockerfiles/emsdk-wasm64-cross.docker b/tests/docker/dockerfiles/emsdk-wasm64-cross.docker
-> index 8a924816f92..5debbc77d08 100644
-> --- a/tests/docker/dockerfiles/emsdk-wasm64-cross.docker
-> +++ b/tests/docker/dockerfiles/emsdk-wasm64-cross.docker
-> @@ -19,7 +19,9 @@ ENV CXXFLAGS="$CFLAGS"
->  ENV LDFLAGS="-sWASM_BIGINT -sASYNCIFY=1 -L$TARGET/lib"
->  RUN apt-get update && apt-get install -y \
->      autoconf \
-> +    bison \
->      build-essential \
-> +    flex \
->      libglib2.0-dev \
->      libtool \
->      pkgconf \
+> diff --git a/block/qcow2.c b/block/qcow2.c
+> index 81fd299b4c..3e3578e831 100644
+> --- a/block/qcow2.c
+> +++ b/block/qcow2.c
+> @@ -5231,6 +5231,8 @@ static BlockMeasureInfo *qcow2_measure(QemuOpts *opts, BlockDriverState *in_bs,
+>       bool has_backing_file;
+>       bool has_luks;
+>       bool extended_l2;
+> +    BlockDriverState *base_bs = NULL;
+> +    bool base_discard_no_unref = false;
+>       size_t l2e_size;
+>   
+>       /* Parse image creation options */
+> @@ -5311,6 +5313,21 @@ static BlockMeasureInfo *qcow2_measure(QemuOpts *opts, BlockDriverState *in_bs,
+>               goto err;
+>           }
+>   
+> +        base_bs = bdrv_find_base(in_bs);
+> +        /*
+> +         * bdrv_find_base() returns in_bs itself when the image has no backing
+> +         * chain. Then this can stay NULL.
+> +         */
+> +        if (base_bs == in_bs) {
+> +            base_bs = NULL;
+> +        }
+> +        if (base_bs && base_bs->drv &&
+> +            !strcmp(base_bs->drv->format_name, "qcow2")) {
+> +            BDRVQcow2State *base_s = base_bs->opaque;
+> +
+> +            base_discard_no_unref = base_s->discard_no_unref;
+> +        }
+> +
+>           virtual_size = ROUND_UP(ssize, cluster_size);
+>   
+>           if (has_backing_file) {
+> @@ -5326,8 +5343,10 @@ static BlockMeasureInfo *qcow2_measure(QemuOpts *opts, BlockDriverState *in_bs,
+>   
+>               for (offset = 0; offset < ssize; offset += pnum) {
+>                   int ret;
+> +                int retp = 0;
+> +                bool count = false;
+>   
+> -                ret = bdrv_block_status_above(in_bs, NULL, offset,
+> +                ret = bdrv_block_status_above(in_bs, base_bs, offset,
+>                                                 ssize - offset, &pnum, NULL,
+>                                                 NULL);
+>                   if (ret < 0) {
+> @@ -5336,15 +5355,68 @@ static BlockMeasureInfo *qcow2_measure(QemuOpts *opts, BlockDriverState *in_bs,
+>                       goto err;
+>                   }
+>   
+> -                if (ret & BDRV_BLOCK_ZERO) {
+> +                if (ret & BDRV_BLOCK_ZERO && !base_bs &&
+> +                    !base_discard_no_unref) {
+>                       /* Skip zero regions (safe with no backing file) */
+> -                } else if ((ret & (BDRV_BLOCK_DATA | BDRV_BLOCK_ALLOCATED)) ==
+> -                           (BDRV_BLOCK_DATA | BDRV_BLOCK_ALLOCATED)) {
+> -                    /* Extend pnum to end of cluster for next iteration */
+> -                    pnum = ROUND_UP(offset + pnum, cluster_size) - offset;
+> -
+> -                    /* Count clusters we've seen */
+> -                    required += offset % cluster_size + pnum;
+> +                } else {
+> +                    /*
+> +                     * If there is a base image in the chain, query its
+> +                     * allocation status for this region so we can decide
+> +                     * whether the cluster survives a commit into the base.
+> +                     */
+> +                    if (base_bs) {
+> +                        int64_t pnum_base = 0;
+> +                        retp = bdrv_block_status_above(base_bs, NULL, offset,
+> +                                            ssize - offset, &pnum_base, NULL,
+> +                                            NULL);
+> +                        if (retp < 0) {
+> +                            error_setg_errno(&local_err, -retp,
+> +                                    "Unable to get block status of the base");
+> +                            goto err;
+> +                        }
+> +                        /*
+> +                         * If the base contiguous block is smaller,
+> +                         * use that pnum, so the next iteration starts with
+> +                         * the smallest offset.
+> +                         */
+> +                        if (pnum_base > 0 && pnum_base < pnum) {
+> +                            pnum = pnum_base;
+> +                        }
+> +                    }
+> +
+> +                    if ((ret & (BDRV_BLOCK_DATA | BDRV_BLOCK_ALLOCATED)) ==
+> +                        (BDRV_BLOCK_DATA | BDRV_BLOCK_ALLOCATED)) {
+> +                        /* The overlay has its own data here; it is written. */
+> +                        count = true;
+> +                    } else if (base_discard_no_unref) {
+> +                        /*
+> +                         * With discard-no-unref enabled on the base, clusters
+> +                         * allocated in the base keep their reference when the
+> +                         * overlay is committed (discarded clusters are only
+> +                         * marked zero), so count any cluster that has a valid
+> +                         * offset in the base.
+> +                         */
+> +                        count = retp & BDRV_BLOCK_OFFSET_VALID;
+> +                    } else {
+> +                        /*
+> +                         * Without discard-no-unref, committing the overlay
+> +                         * frees the base clusters that the overlay discards
+> +                         * (the overlay marks them zero). Every other cluster
+> +                         * that is allocated in the base is retained, so count
+> +                         * it unless the overlay zeroes it out.
+> +                         */
+> +                        count = (retp & BDRV_BLOCK_ALLOCATED) &&
+> +                                !((ret & BDRV_BLOCK_ALLOCATED) &&
+> +                                  (ret & BDRV_BLOCK_ZERO));
+> +                    }
+> +
+> +                    if (count) {
+> +                        /* Extend pnum to end of cluster for next iteration */
+> +                        pnum = ROUND_UP(offset + pnum, cluster_size) - offset;
+> +
+> +                        /* Count clusters we've seen */
+> +                        required += offset % cluster_size + pnum;
+> +                    }
+>                   }
+>               }
+>           }
+> diff --git a/qemu-img-cmds.hx b/qemu-img-cmds.hx
+> index 6bc8265cfb..f3f5c63773 100644
+> --- a/qemu-img-cmds.hx
+> +++ b/qemu-img-cmds.hx
+> @@ -78,9 +78,9 @@ SRST
+>   ERST
+>   
+>   DEF("measure", img_measure,
+> -"measure [--output=ofmt] [-O output_fmt] [-o options] [--size N | [--object objectdef] [--image-opts] [-f fmt] [-l snapshot_param] filename]")
+> +"measure [--output=ofmt] [-O output_fmt] [-o options] [--size N | [--object objectdef] [--image-opts] [-f fmt] [-l snapshot_param] [-b base] filename]")
+>   SRST
+> -.. option:: measure [--output=OFMT] [-O OUTPUT_FMT] [-o OPTIONS] [--size N | [--object OBJECTDEF] [--image-opts] [-f FMT] [-l SNAPSHOT_PARAM] FILENAME]
+> +.. option:: measure [--output=OFMT] [-O OUTPUT_FMT] [-o OPTIONS] [--size N | [--object OBJECTDEF] [--image-opts] [-f FMT] [-l SNAPSHOT_PARAM] [-b BASE] FILENAME]
+>   ERST
+>   
+>   DEF("snapshot", img_snapshot,
+> diff --git a/qemu-img.c b/qemu-img.c
+> index c42dd4e995..0aa53d7ef8 100644
+> --- a/qemu-img.c
+> +++ b/qemu-img.c
+> @@ -5653,6 +5653,7 @@ static int img_measure(const img_cmd_t *ccmd, int argc, char **argv)
+>       BlockBackend *in_blk = NULL;
+>       BlockDriver *drv;
+>       const char *filename = NULL;
+> +    const char *base_filename = NULL;
+>       const char *fmt = NULL;
+>       const char *out_fmt = "raw";
+>       char *options = NULL;
+> @@ -5676,6 +5677,7 @@ static int img_measure(const img_cmd_t *ccmd, int argc, char **argv)
+>           {"image-opts", no_argument, 0, OPTION_IMAGE_OPTS},
+>           {"source-image-opts", no_argument, 0, OPTION_IMAGE_OPTS}, /* img_convert */
+>           {"snapshot", required_argument, 0, 'l'},
+> +        {"base", required_argument, 0, 'b'},
+>           {"target-format", required_argument, 0, 'O'},
+>           {"target-format-options", required_argument, 0, 'o'}, /* img_convert */
+>           {"options", required_argument, 0, 'o'},
+> @@ -5686,11 +5688,11 @@ static int img_measure(const img_cmd_t *ccmd, int argc, char **argv)
+>           {0, 0, 0, 0}
+>       };
+>   
+> -    while ((c = getopt_long(argc, argv, "hf:l:O:o:Us:",
+> +    while ((c = getopt_long(argc, argv, "hf:l:b:O:o:Us:",
+>                               long_options, NULL)) != -1) {
+>           switch (c) {
+>           case 'h':
+> -            cmd_help(ccmd, "[-f FMT|--image-opts] [-l SNAPSHOT]\n"
+> +            cmd_help(ccmd, "[-f FMT|--image-opts] [-l SNAPSHOT] [-b BASE]\n"
+>   "       [-O TARGET_FMT] [-o TARGET_FMT_OPTS] [--output human|json]\n"
+>   "       [--object OBJDEF] (--size SIZE | FILE)\n"
+>   ,
+> @@ -5701,6 +5703,8 @@ static int img_measure(const img_cmd_t *ccmd, int argc, char **argv)
+>   "     instead of a file name (incompatible with --format)\n"
+>   "  -l, --snapshot SNAPSHOT\n"
+>   "     use this snapshot in FILE as source\n"
+> +"  -b, --base BASE\n"
+> +"     open FILE backing chain up to BASE (inclusive)\n"
+>   "  -O, --target-format TARGET_FMT\n"
+>   "     desired target/output image format (default: raw)\n"
+>   "  -o TARGET_FMT_OPTS\n"
+> @@ -5738,6 +5742,9 @@ static int img_measure(const img_cmd_t *ccmd, int argc, char **argv)
+>                   snapshot_name = optarg;
+>               }
+>               break;
+> +        case 'b':
+> +            base_filename = optarg;
+> +            break;
+>           case 'O':
+>               out_fmt = optarg;
+>               break;
+> @@ -5773,8 +5780,10 @@ static int img_measure(const img_cmd_t *ccmd, int argc, char **argv)
+>           filename = argv[optind];
+>       }
+>   
+> -    if (!filename && (image_opts || fmt || snapshot_name || sn_opts)) {
+> -        error_report("--image-opts, -f, and -l require a filename argument.");
+> +    if (!filename && (image_opts || fmt || snapshot_name || sn_opts ||
+> +                      base_filename)) {
+> +        error_report("--image-opts, -f, -l, and -b require a filename "
+> +                     "argument.");
+>           goto out;
+>       }
+>       if (filename && img_size != -1) {
+> @@ -5787,12 +5796,30 @@ static int img_measure(const img_cmd_t *ccmd, int argc, char **argv)
+>       }
+>   
+>       if (filename) {
+> -        in_blk = img_open(image_opts, filename, fmt, 0,
+> +        int src_flags = 0;
+> +
+> +        /*
+> +         * When measuring with --base, avoid opening the full backing chain.
+> +         * We selectively open only up to the requested base afterwards.
+> +         */
+> +        if (base_filename) {
+> +            src_flags |= BDRV_O_NO_BACKING;
+> +        }
 
-Feel free to pull this directly as part of an Hexagon PR.
+so, for new option, we disable opening the whole backing chain...
 
-Regards,
-Pierrick
+> +
+> +        in_blk = img_open(image_opts, filename, fmt, src_flags,
+>                             false, false, force_share);
+>           if (!in_blk) {
+>               goto out;
+>           }
+>   
+
+and then (partly) open it by hand,
+
+Hm. Why do we need it? Because of new logic in qcow2_measure(), which rely
+on backing chain being onlny partly opened, and we calculate the measure
+for the opened part.
+
+IMO, that's too complicated way. More native would be add a parameter
+BlockDriverState *base_bs into bdrv_measure(), and make use of it, and
+do not modify opening the chain at all.
+
+> +        if (base_filename) {
+> +            if (bdrv_open_backing_chain_until(blk_bs(in_blk), base_filename,
+> +                                              &local_err) < 0) {
+> +                error_report_err(local_err);
+> +                goto out;
+> +            }
+> +        }
+> +
+>           if (sn_opts) {
+>               bdrv_snapshot_load_tmp(blk_bs(in_blk),
+>                       qemu_opt_get(sn_opts, SNAPSHOT_OPT_ID),
+> diff --git a/tests/qemu-iotests/178.out.qcow2 b/tests/qemu-iotests/178.out.qcow2
+> index 61506b519f..0984a74a50 100644
+> --- a/tests/qemu-iotests/178.out.qcow2
+> +++ b/tests/qemu-iotests/178.out.qcow2
+> @@ -6,9 +6,9 @@ qemu-img: Either --size N or one filename must be specified.
+>   qemu-img: --size N cannot be used together with a filename.
+>   qemu-img: At most one filename argument is allowed.
+>   qemu-img: Either --size N or one filename must be specified.
+> -qemu-img: --image-opts, -f, and -l require a filename argument.
+> -qemu-img: --image-opts, -f, and -l require a filename argument.
+> -qemu-img: --image-opts, -f, and -l require a filename argument.
+> +qemu-img: --image-opts, -f, -l, and -b require a filename argument.
+> +qemu-img: --image-opts, -f, -l, and -b require a filename argument.
+> +qemu-img: --image-opts, -f, -l, and -b require a filename argument.
+>   qemu-img: Invalid option list: ,
+>   qemu-img: Invalid parameter 'snapshot.foo'
+>   qemu-img: Failed in parsing snapshot param 'snapshot.foo=bar'
+> diff --git a/tests/qemu-iotests/178.out.raw b/tests/qemu-iotests/178.out.raw
+> index 6d994a433a..81249e718b 100644
+> --- a/tests/qemu-iotests/178.out.raw
+> +++ b/tests/qemu-iotests/178.out.raw
+> @@ -6,9 +6,9 @@ qemu-img: Either --size N or one filename must be specified.
+>   qemu-img: --size N cannot be used together with a filename.
+>   qemu-img: At most one filename argument is allowed.
+>   qemu-img: Either --size N or one filename must be specified.
+> -qemu-img: --image-opts, -f, and -l require a filename argument.
+> -qemu-img: --image-opts, -f, and -l require a filename argument.
+> -qemu-img: --image-opts, -f, and -l require a filename argument.
+> +qemu-img: --image-opts, -f, -l, and -b require a filename argument.
+> +qemu-img: --image-opts, -f, -l, and -b require a filename argument.
+> +qemu-img: --image-opts, -f, -l, and -b require a filename argument.
+>   qemu-img: Invalid option list: ,
+>   qemu-img: Invalid parameter 'snapshot.foo'
+>   qemu-img: Failed in parsing snapshot param 'snapshot.foo=bar'
+
+
+-- 
+Best regards,
+Vladimir
 
