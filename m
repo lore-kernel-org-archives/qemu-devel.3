@@ -4,49 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7FCACDB479
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 05:06:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9DB2BCDB479
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 05:07:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcFnx-0005mA-0P; Wed, 24 Jun 2026 01:05:41 -0400
+	id 1wcFo0-00063Y-U0; Wed, 24 Jun 2026 01:05:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wcFnv-0005jn-O1; Wed, 24 Jun 2026 01:05:39 -0400
+ id 1wcFnz-0005sh-4P; Wed, 24 Jun 2026 01:05:43 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wcFnu-0005Z5-4H; Wed, 24 Jun 2026 01:05:39 -0400
+ id 1wcFnx-0005ZY-5A; Wed, 24 Jun 2026 01:05:42 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1782277465; bh=XToyEyO85k0wvOXd+H658vKKXC4nhak7e7vcR3tu/po=;
+ t=1782277465; bh=A1MCwyl77Bp0YQFINDzK2G0lg+C2TQkZSW5Vst+i5pI=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=vDka8qkvRY2YPkw5++qcFuAWSQopb6G276k1ql9CCF6xn2ZHHUOLv79txEhEUuQHR
- WSlb7JMUHp5SC3ObPLAdAVk9qBPO7CiLzQixyfxhZSg/6unuV8jcCUqfBlG+VrkFMX
- B8CS35eH+E2lehfWUG4Cmb/4tAeGjecVLWASKuilY1/puy6Z2DOrzGWtsZ47KKX6Ui
- r+jR6aWFxdTJ9QG687Kl5tYym/zWxDmiqfSidCscwZKYzMULrh6OeIX395L4Z4U/kL
- 8LV1PMKGjCWXr168yJFgIwLGbZeZHZ4r3eyf+3gHL343HsHy/o3DyanyfDcpTpZKdi
- xKM3zV9PD8cRA==
+ b=wpCp2ezwOzu40u1vn1wSOREtDOUDVWxslBtWAMM3UKLE5qvY4jFxZM76kmBxgMmN5
+ 3VUzloDJkvLIguyReIuP4j7bsRG2CUikb7M8D2etqq9Dk7GwjaeqRp8fu32kwo5P0g
+ MxgR1CC6ojcjBnDuZasiMAe+qIBZBbJUyr9LKqDJsvs0YJhv3GKKAm/sHKYCKHW1jt
+ PYD7mfrkX4xmZUTercfwV3tY3oGc/NkcNJ22l/ZkuxA8+1UVrp7v0aaJG9yeajqMLZ
+ GEsPQV0n6+Mp9zokdDB9xv/S7DV7WtHxvzEaMqW1gXniwfhtYMlzY6OoMzUOEWGtVW
+ wHNkyv650ICbg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 6BEF61BA63D;
+ by isrv.corpit.ru (Postfix) with ESMTP id 889211BA63F;
  Wed, 24 Jun 2026 08:04:25 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 4A92B3DDAC8;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 721183DDACA;
  Wed, 24 Jun 2026 08:04:30 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>,
- Feifan Qian <bea1e@proton.me>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.11 74/86] hw/uefi: fix parse_hexstr
-Date: Wed, 24 Jun 2026 08:02:45 +0300
-Message-ID: <20260624050404.394225-18-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Mathias Krause <minipli@grsecurity.net>,
+ Paolo Bonzini <pbonzini@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.11 76/86] gdbstub: Update x86 control register bits
+Date: Wed, 24 Jun 2026 08:02:47 +0300
+Message-ID: <20260624050404.394225-20-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.11-20260624080222@cover.tls.msk.ru>
 References: <qemu-stable-10.0.11-20260624080222@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -71,34 +68,111 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Gerd Hoffmann <kraxel@redhat.com>
+From: Mathias Krause <minipli@grsecurity.net>
 
-Make sure we actually have two input characters available before going
-to parse two hex digits.  Fixes one byte buffer overflow of the output
-buffer in case the input string has an odd number of characters.
+The control register bits haven't been updated in a few years, making
+them lack behind features QEMU ganied in these years.
 
-Fixes: CVE-2026-48915
-Fixes: 12058948abdf ("hw/uefi: add var-service-json.c + qapi for NV vars.")
-Reported-by: Feifan Qian <bea1e@proton.me>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
-Message-ID: <20260526135948.599148-1-kraxel@redhat.com>
-(cherry picked from commit d6601a7e1c2452100ed7e4b1d74a70b9acc0abe6)
+Update them to the current version of the SDM and sort the 32bit version
+to be in line with all the other definitions (descending order).
+
+This should remove confusion when debugging, for example, CET-enabled
+guests:
+
+- before the change:
+  (gdb) info registers cr4
+  cr4            0x8000f0            [ PGE MCE PAE PSE ]
+
+- after the change:
+  (gdb) info registers cr4
+  cr4            0x8000f0            [ CET PGE MCE PAE PSE ]
+
+Signed-off-by: Mathias Krause <minipli@grsecurity.net>
+Link: https://lore.kernel.org/r/20260327143413.254227-1-minipli@grsecurity.net
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+(cherry picked from commit 88d39a2937ebad64b8aed8247450e1a6ddf274be)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/uefi/var-service-json.c b/hw/uefi/var-service-json.c
-index f5f1556833..8621b86c5c 100644
---- a/hw/uefi/var-service-json.c
-+++ b/hw/uefi/var-service-json.c
-@@ -98,7 +98,7 @@ static void parse_hexstr(void *dest, char *src, int len)
-     uint8_t *data = dest;
-     size_t i;
+diff --git a/gdb-xml/i386-32bit.xml b/gdb-xml/i386-32bit.xml
+index 7a66a02b67..1dec40e1d2 100644
+--- a/gdb-xml/i386-32bit.xml
++++ b/gdb-xml/i386-32bit.xml
+@@ -87,27 +87,34 @@
+   </flags>
  
--    for (i = 0; i < len; i += 2) {
-+    for (i = 0; i + 1 < len; i += 2) {
-         *(data++) =
-             parse_hexchar(src[i]) << 4 |
-             parse_hexchar(src[i + 1]);
+   <flags id="i386_cr4" size="4">
+-	<field name="VME" start="0" end="0"/>
+-	<field name="PVI" start="1" end="1"/>
+-	<field name="TSD" start="2" end="2"/>
+-	<field name="DE" start="3" end="3"/>
+-	<field name="PSE" start="4" end="4"/>
+-	<field name="PAE" start="5" end="5"/>
+-	<field name="MCE" start="6" end="6"/>
+-	<field name="PGE" start="7" end="7"/>
+-	<field name="PCE" start="8" end="8"/>
+-	<field name="OSFXSR" start="9" end="9"/>
+-	<field name="OSXMMEXCPT" start="10" end="10"/>
+-	<field name="UMIP" start="11" end="11"/>
+-	<field name="LA57" start="12" end="12"/>
+-	<field name="VMXE" start="13" end="13"/>
+-	<field name="SMXE" start="14" end="14"/>
+-	<field name="FSGSBASE" start="16" end="16"/>
+-	<field name="PCIDE" start="17" end="17"/>
+-	<field name="OSXSAVE" start="18" end="18"/>
+-	<field name="SMEP" start="20" end="20"/>
+-	<field name="SMAP" start="21" end="21"/>
++	<field name="LAM_SUP" start="28" end="28"/>
++	<field name="LASS" start="27" end="27"/>
++	<field name="UINTR" start="25" end="25"/>
++	<field name="PKS" start="24" end="24"/>
++	<field name="CET" start="23" end="23"/>
++	<field name="PKE" start="22" end="22"/>
+ 	<field name="PKE" start="22" end="22"/>
++	<field name="SMAP" start="21" end="21"/>
++	<field name="SMEP" start="20" end="20"/>
++	<field name="KL" start="19" end="19"/>
++	<field name="OSXSAVE" start="18" end="18"/>
++	<field name="PCIDE" start="17" end="17"/>
++	<field name="FSGSBASE" start="16" end="16"/>
++	<field name="SMXE" start="14" end="14"/>
++	<field name="VMXE" start="13" end="13"/>
++	<field name="LA57" start="12" end="12"/>
++	<field name="UMIP" start="11" end="11"/>
++	<field name="OSXMMEXCPT" start="10" end="10"/>
++	<field name="OSFXSR" start="9" end="9"/>
++	<field name="PCE" start="8" end="8"/>
++	<field name="PGE" start="7" end="7"/>
++	<field name="MCE" start="6" end="6"/>
++	<field name="PAE" start="5" end="5"/>
++	<field name="PSE" start="4" end="4"/>
++	<field name="DE" start="3" end="3"/>
++	<field name="TSD" start="2" end="2"/>
++	<field name="PVI" start="1" end="1"/>
++	<field name="VME" start="0" end="0"/>
+   </flags>
+ 
+   <flags id="i386_efer" size="4">
+diff --git a/gdb-xml/i386-64bit.xml b/gdb-xml/i386-64bit.xml
+index 6d88969211..9ac9164e6a 100644
+--- a/gdb-xml/i386-64bit.xml
++++ b/gdb-xml/i386-64bit.xml
+@@ -102,9 +102,16 @@
+   </flags>
+ 
+   <flags id="x64_cr4" size="8">
++	<field name="FRED" start="32" end="32"/>
++	<field name="LAM_SUP" start="28" end="28"/>
++	<field name="LASS" start="27" end="27"/>
++	<field name="UINTR" start="25" end="25"/>
++	<field name="PKS" start="24" end="24"/>
++	<field name="CET" start="23" end="23"/>
+ 	<field name="PKE" start="22" end="22"/>
+ 	<field name="SMAP" start="21" end="21"/>
+ 	<field name="SMEP" start="20" end="20"/>
++	<field name="KL" start="19" end="19"/>
+ 	<field name="OSXSAVE" start="18" end="18"/>
+ 	<field name="PCIDE" start="17" end="17"/>
+ 	<field name="FSGSBASE" start="16" end="16"/>
 -- 
 2.47.3
 
