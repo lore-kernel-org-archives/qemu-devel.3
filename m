@@ -4,91 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C109CDB479
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 22:49:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F04FCDE002
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 22:49:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcWOh-0001Jr-5P; Wed, 24 Jun 2026 18:48:43 -0400
+	id 1wcWP9-0001QX-7q; Wed, 24 Jun 2026 18:49:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1wcWOf-0001JS-Jh
- for qemu-devel@nongnu.org; Wed, 24 Jun 2026 18:48:41 -0400
-Received: from mail-ej1-x633.google.com ([2a00:1450:4864:20::633])
+ id 1wcWP8-0001Pc-6t
+ for qemu-devel@nongnu.org; Wed, 24 Jun 2026 18:49:10 -0400
+Received: from mail-ej1-x62a.google.com ([2a00:1450:4864:20::62a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1wcWOd-0006yp-AV
- for qemu-devel@nongnu.org; Wed, 24 Jun 2026 18:48:41 -0400
-Received: by mail-ej1-x633.google.com with SMTP id
- a640c23a62f3a-bec3ffb95dbso253111766b.0
- for <qemu-devel@nongnu.org>; Wed, 24 Jun 2026 15:48:38 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1782341318; cv=none;
+ id 1wcWP6-00073E-OS
+ for qemu-devel@nongnu.org; Wed, 24 Jun 2026 18:49:09 -0400
+Received: by mail-ej1-x62a.google.com with SMTP id
+ a640c23a62f3a-c0868ca8738so265342166b.0
+ for <qemu-devel@nongnu.org>; Wed, 24 Jun 2026 15:49:08 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1782341347; cv=none;
  d=google.com; s=arc-20240605;
- b=FflDqywv/TIzOy71hZVFVOYbChd5xOCTNCqJTkECyQ834CQaeaXlfhcExV67rXY/jn
- 5hSgsmF/V6CYw0e2aG3xw18cCiIlUOWprjh3efo5jgy4jDseHB3Y09zoxZ+k3KGIvz0Z
- NRDffPQXsrjDAmAbVT17tHaKXBa2bJmH0FoqMIQX5lyzqdnTZLXWc5bnU6AcW5Znpsps
- mcMMrWwSUmMvj8QUYNZHssaZXe+LZM+Mz6BZPLyaNv0ICa831bPc0FLbnrk4n5FZ2HkI
- yBQisrIavZ3xk0HEbd7La/XwvJ9wKHqzz8g/0nkJdlyRtUTixSJKrqMd/7waGtnDunnj
- VL6g==
+ b=jH8ZDwCamRF8V3Pkm3RQ1T7vFhaDrBe9n8P61QcH68aCet3yOLA8WyU+L1P8GXzBlE
+ r7PgteaLYandNZM5a63z9febDDUNz1fvtHDOW0X1RD0KvwHGQT/S/6pslwqGeu63FI+H
+ e3jgH/+r2J62iGpw3kmeBOrA8s8dlDf/mn6HGfIBDik8C5u/bP4XroogJyRjQPmv6vo+
+ LVW19FMl6p+necvp7fH6ZV3DP/4duy/6v8vlbnoz7dFxhUpM2yU9u7FVjE2Nx9EM4hT5
+ taqzvgrgo+YllZl+5mwvLdPQmXb99SYIzQRpCNHRE5q5i0dimBNqZwyDhJovBTsyrrMO
+ Cxlw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=6krzKx3HwtJ+MNvkW0uVVfBtwDpKFmXsm+IEYGdbGcA=;
+ bh=ExDSGjqgbfHxBtaFFK7Otwja6OanufXG0dVYkSjoL38=;
  fh=dEcCJoizW0PIXIsgsrNAtfPedPj0hmKZvH/dXrAI1HE=;
- b=axqyquNMjkqtz3svOOABJv+VRVUay/eOtyGsmHk3Fu7yQXLtZtZbIuIY8UFFKcTm31
- VlSkjxNgdiU4TN+PQqgGjHVGJbZS4VFJhDfB6PkS5JXEF4/zWm15SvcD3wxB7psQ/tmd
- gHri/l4lbTh8w9RMp8D6LXfUjeQGiysFtdLo70JaBc1aQx7ZDpc8oRxiIL7Ia1gqKJLG
- GKsPiZibovqw40F48LxwuaoGR8zifRZirIt7llGMBJJTBW08wDIi9u3L2hBnU1sbdjem
- FHoQ6drEMhPNJP4G4EE8DhG6B4hZt2A3eyC2roJgKmQtGHLqbUMBkvCShfdSHKiSJO+k
- lKwg==; darn=nongnu.org
+ b=SBSMm8oOKMk/7gevaDff1ZdcGwpuHZFwg5Y1Mt6NaNJWv8k1YkvZyOI9UdX3umbhCU
+ nFFV9lOp29Th9s5fdLWeItD9rlJ7vBrH/aZGBvB526dI2mfPXcb5nd2YHd5xdVy7mrhg
+ eDn1RBolRNeyGaG5YOu6PqP7DWwfnopFy4vBBKjYPOD62okPGRZOg1FWXrFKwr5M+HSt
+ bwCx7MeMDVm65I/1ArJFOFW/HmAFAzhHAlBDNbCmSIDqoolntmz6WN0190RGYf84weRz
+ ftW3v5jh4ITj1vJOinwWMR6tQJ1KVcULMYRRTzU1gBNUhxvCb+o7nTgXa/tfakLgxbDH
+ 9JnQ==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1782341318; x=1782946118; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1782341347; x=1782946147; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=6krzKx3HwtJ+MNvkW0uVVfBtwDpKFmXsm+IEYGdbGcA=;
- b=pExjyTXLqS387jJ2mxaNx1cWmuPGAQm1ZqwI8NE8mpz8jnuE3Xa3Q8RF6lBO1XDsh3
- 8sqP4a5eHPo1C5DTDaguVFxK1spV2cF5ngEDyb/Eflpa8A/aavpJJQlnQCzcj584k9YD
- TEIYKmvD1cnBFClTy4tq9BxDZIf9pmhXCAh7jEmqoE4VJFFFeaJlGwIpheLnNvcVn8FH
- KCT91YKueVQ/efwpM2Ba3tVh69pGBKJuADWHicDg/PI55tNRmojfalq9bDaJuUx3ttZg
- HCsQkx4ttg1YTkaJdR4nMVB89kY55nw73e6DvsNQDGAQSrSkrT9bGAVu9xN1EuMcMB+6
- 3Q+Q==
+ bh=ExDSGjqgbfHxBtaFFK7Otwja6OanufXG0dVYkSjoL38=;
+ b=s+TOti60XtrE7fllGSQ4mU8LxT/zTMG4OLEJcWCaboYsjAm+Bxd+COl3aM/u/dsZ16
+ lOSKkFE/DXnaigiy0j5sZjN45Nv8epNSJCFAzgrziQxPlofRmAwM5442+3HiTRonp1IW
+ DXMvIcJS0w0asR57w2l5MSjZ1uab1Lu4qW20790mW0rUJjPBrVU7ZBBalC7/fDnN9Etj
+ UYpNKlJMPtQhzByFyc2fP501EysCw3rsH6vrSfDVSVOu25/rjq5kBBfcejFH3XbwGDmR
+ Voz0ly/bkIsS3ejGf9CRettuXyVb7FIoXOOLGYJZk7GMZ0rjG/aYrbhE6eKcXWiR+h/E
+ CVNg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782341318; x=1782946118;
+ d=1e100.net; s=20251104; t=1782341347; x=1782946147;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=6krzKx3HwtJ+MNvkW0uVVfBtwDpKFmXsm+IEYGdbGcA=;
- b=nCCCkHtMi5a/EJQ8WTUIKQoXbOvbPqipAYDS65RSLOe3ebmGt+W2V4EQuO1B+Z/tyM
- OLC0UEKxwelGds+o4DKfeJueg4w8cqlhG2YtIQmckuS+gu9bzsb/IKjHbmMl6imq1XBC
- 5K+nyFLuvokO5XL1wRpiZwx+QIdequiIAnqcrvbx5hwgVNh7X1JwlAkbZQRkkwAhxxVm
- EmncqqBzEmskO+Z1OB1e3/0wB/K09IKpB8dgLv3slslxEJ5fLKVzNNG2qCblwQ7faeHM
- 1CXeLb9CXhy+njJ6dEgbWr0vf/bp8o6z6DmJ5tHiqjPoj1ZuAgVo7GYMEDmWrgIUC/yP
- 3WIA==
-X-Gm-Message-State: AOJu0YzG+EEInTl2dUTNB15xfFd8EXsLQ8FJ4sGVNUYn5u/Dcp3rXoRw
- tMES7FbX/RZmSlUHffQsEnK8PGOfgshEhek6Dz9Q5D5DW4mG2jzLi/JZKmwUuypkLkUQfwP+dh+
- Jl9fqyPilNAoqKoqaRoRHuRuRDsI9ugc=
-X-Gm-Gg: AfdE7cm9BIo6R4QXBU1pVeJm1H5mErd3CRKfiigMUWPy5COiALs0KUF0m5pUfT8WHla
- d0hBkXSmfQN7iJ38cneBrCzUwzU1V6DKidlERCjhKXJgEpIVZWL+LAKvxXE8KUVap71INKHXsG9
- GnkIcyyxMLchWXS6J0T/8f39dR4gcF5KN7xBTe50ulZq6PqLCpDtRqL8mSO0LhlkfoqI5VAK6Qn
- 8snXMRKdHThA0SYppikUwQHE2GpB700X9Zqo3460mtGXnhlnDp/RwuY28sMEJ896x+OT0b8
-X-Received: by 2002:a17:907:e112:b0:c11:f52a:4e70 with SMTP id
- a640c23a62f3a-c11f52a5d58mr185945166b.44.1782341317676; Wed, 24 Jun 2026
- 15:48:37 -0700 (PDT)
+ bh=ExDSGjqgbfHxBtaFFK7Otwja6OanufXG0dVYkSjoL38=;
+ b=UQaHWoHizdaX0PlqC1U39TgIvXON72KzHy65RxxC/93xjZi/m9y/4eUKZ8fovNcqeM
+ qDVdGNcf+rVojvZYit9YFVZXuI0bhHP99DCq49HoPPV+cOkdG7g9DWq+mN/K41qZisym
+ SH01CjIZMXj1LhQpnjeYWZoWa+PLlWqihzxSiwtE44NCzlxPT3aQuMCXNG/jfClPwUYe
+ Ju8cpvVSNluOnlYzhszSylvCRnKllmKYxv1d8Xcd1FXZavUYwgY5PUQU2wBdVxwh2xFK
+ JKlN2dlCnceebabgTi3WerUge8f5CxZHCsjO/uPCkypejoC5WhOJyNOnTx6FlxG/ZK24
+ ggbg==
+X-Gm-Message-State: AOJu0Yxs/6HDqRgyNwgn7Z2QrtunGwQ2R1kmEO74IkQI2T9y9arIH7dt
+ CZs2me+hIt15s1MQ5CcndTNPUhEooPO5K2LtWCBhaUoqliC1OEZlqIzpkeOkDFRHXQ1TAEzS2Is
+ cigfdR1oaPs4D2eiiZwBqCssHy50+ReU=
+X-Gm-Gg: AfdE7cnPWcAv24bwOTPXIuteP4m14Nr1D2OyaYuyP5v9+1HjdEO8WJvNv/FnK9vkJiA
+ yUP9TIrG8c203puYTORBd7dsvGQFB1R5YBuxA+8ATfoqqTAX7tzY41bJDGxt5F3LKq68/78W2Uc
+ aOIH3+V6zWv1cbCmdHZ9ruboWILxwHz3pSY5vMWMwm/7C34S8X/SCkFi+mzk78ZS1E3FNk+n6nt
+ JmaWj14uFGiWbMFeAOzxnK8JNNaJRQBalmk64VOuLlaKs5jwZyCizToYbgL9rSUrbqPREQj
+X-Received: by 2002:a17:907:3e13:b0:bef:12f:346b with SMTP id
+ a640c23a62f3a-c119d75f9demr289865866b.15.1782341346647; Wed, 24 Jun 2026
+ 15:49:06 -0700 (PDT)
 MIME-Version: 1.0
 References: <20260624070851.13342-1-zhangckid@gmail.com>
- <20260624070851.13342-5-zhangckid@gmail.com>
- <20260624171941.GC109308@fedora>
-In-Reply-To: <20260624171941.GC109308@fedora>
+ <20260624070851.13342-4-zhangckid@gmail.com>
+ <20260624171008.GB109308@fedora>
+In-Reply-To: <20260624171008.GB109308@fedora>
 From: Zhang Chen <zhangckid@gmail.com>
-Date: Thu, 25 Jun 2026 06:47:59 +0800
-X-Gm-Features: AVVi8CfUqloslzMp8ELjFcfiJNcUKuWgKUTIItUqAOXaG_Vgn4Tn5NJdf2oggZo
-Message-ID: <CAK3tnvK+vOFoGXtFUyuRXD_xZH7ob2VmUhJbBE=zY1Em=XTH7Q@mail.gmail.com>
-Subject: Re: [PATCH V9 04/17] iothread: introduce
- iothread_unsafe_get_aio_context()
+Date: Thu, 25 Jun 2026 06:48:30 +0800
+X-Gm-Features: AVVi8CfldkSX3_R57o_ZWUZT0a7PDxNwLW4WfBTYIM2a6UgBtBpF8mcLr9yRStM
+Message-ID: <CAK3tnvJ3bHVBrBqgDwRE0nZoV9J8LLqScUh5M-Jmbu9nC6Rmtw@mail.gmail.com>
+Subject: Re: [PATCH V9 03/17] iothread: tracking iothread users with holder
+ name
 To: Stefan Hajnoczi <stefanha@redhat.com>
 Cc: qemu-devel <qemu-devel@nongnu.org>,
  "Dr . David Alan Gilbert" <dave@treblig.org>, 
@@ -98,8 +98,8 @@ Cc: qemu-devel <qemu-devel@nongnu.org>,
  Jason Wang <jasowang@redhat.com>, Fam Zheng <fam@euphon.net>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::633;
- envelope-from=zhangckid@gmail.com; helo=mail-ej1-x633.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62a;
+ envelope-from=zhangckid@gmail.com; helo=mail-ej1-x62a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -125,44 +125,29 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On Thu, Jun 25, 2026 at 2:33=E2=80=AFAM Stefan Hajnoczi <stefanha@redhat.co=
 m> wrote:
 >
-> On Wed, Jun 24, 2026 at 03:08:38PM +0800, Zhang Chen wrote:
-> > diff --git a/include/system/iothread.h b/include/system/iothread.h
-> > index b483bbfab3..064c05e78d 100644
-> > --- a/include/system/iothread.h
-> > +++ b/include/system/iothread.h
-> > @@ -71,6 +71,12 @@ DECLARE_INSTANCE_CHECKER(IOThread, IOTHREAD,
+> On Wed, Jun 24, 2026 at 03:08:37PM +0800, Zhang Chen wrote:
+> > @@ -70,6 +71,9 @@ DECLARE_INSTANCE_CHECKER(IOThread, IOTHREAD,
 > >  char *iothread_get_id(IOThread *iothread);
 > >  IOThread *iothread_by_id(const char *id);
 > >  AioContext *iothread_get_aio_context(IOThread *iothread);
-> > +/*
-> > + * The iothread_unsafe_get_aio_context() is a low-level unsafe way of =
-getting
-> > + * the AioContext, recommend migrating to the new API with IOThreadHol=
-der
-> > + * as much as possible.
+> > +AioContext *iothread_ref_and_get_aio_context(IOThread *iothread,
+> > +                                             const IOThreadHolder *hol=
+der);
+> > +void iothread_put_aio_context(IOThread *iothread, const IOThreadHolder=
+ *holder);
 >
-> This should describe the safety concerns and when it is okay to use this
-> API. Something like:
->
->   Normally the IOThread's AioContext is fetched using
->   iothread_ref_and_get_aio_context(), but there are legacy callers
->   without a clear ref/unref lifecycle. They cannot unref (e.g. because
->   they do not have an IOThread pointer), so provide an unsafe way to
->   fetch the AioContext without holding a reference count. This unsafe
->   API serves legacy callers - do not use it in new code.
+> There should be doc comments for these new APIs. One constraint that
+> should be documented is that these APIs are not thread-safe and must be
+> called under the Big QEMU Lock (BQL) (this is necessary both to avoid
+> holders list race conditions and because object_unref() can invoke
+> finalize callbacks that expect to run under the BQL).
 
-Looks better~ will change it in next version.
+OK, I will add comments like this in next version:
+ + /*
+ +  * The iothread_get_aio_context() and iothread_put_aio_context() are not
+ +  * thread-safe and must be called under the Big QEMU Lock (BQL).
+ +  */
 
 Thanks
-
 Chen
-
->
-> > + */
-> > +AioContext *iothread_unsafe_get_aio_context(IOThread *iothread);
-> >  AioContext *iothread_ref_and_get_aio_context(IOThread *iothread,
-> >                                               const IOThreadHolder *hol=
-der);
-> >  void iothread_put_aio_context(IOThread *iothread, const IOThreadHolder=
- *holder);
 
