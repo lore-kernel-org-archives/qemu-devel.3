@@ -4,83 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0878CDB481
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD55CCDB471
 	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 12:09:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcMPz-0006mI-MR; Wed, 24 Jun 2026 08:09:24 -0400
+	id 1wcMQ0-0006mv-1Q; Wed, 24 Jun 2026 08:09:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <shrihari.s@samsung.com>)
- id 1wcHA5-00060y-LK
- for qemu-devel@nongnu.org; Wed, 24 Jun 2026 02:32:37 -0400
-Received: from mailout3.samsung.com ([203.254.224.33])
+ id 1wcGqw-0001Ae-H7
+ for qemu-devel@nongnu.org; Wed, 24 Jun 2026 02:12:51 -0400
+Received: from mailout1.samsung.com ([203.254.224.24])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <shrihari.s@samsung.com>)
- id 1wcHA3-0003Ww-Mm
- for qemu-devel@nongnu.org; Wed, 24 Jun 2026 02:32:37 -0400
-Received: from epcas5p1.samsung.com (unknown [182.195.41.39])
- by mailout3.samsung.com (KnoxPortal) with ESMTP id
- 20260624063229epoutp03fa1eed6f29d5f7b6022d3c0cd3a761a3~78LfG0E-82911429114epoutp03P
- for <qemu-devel@nongnu.org>; Wed, 24 Jun 2026 06:32:29 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout3.samsung.com
- 20260624063229epoutp03fa1eed6f29d5f7b6022d3c0cd3a761a3~78LfG0E-82911429114epoutp03P
+ id 1wcGqr-00015k-Uq
+ for qemu-devel@nongnu.org; Wed, 24 Jun 2026 02:12:50 -0400
+Received: from epcas5p4.samsung.com (unknown [182.195.41.42])
+ by mailout1.samsung.com (KnoxPortal) with ESMTP id
+ 20260624061232epoutp01d18f5eb506bca95798bcef618d966c58~776EdR9Td1663516635epoutp01E
+ for <qemu-devel@nongnu.org>; Wed, 24 Jun 2026 06:12:32 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.samsung.com
+ 20260624061232epoutp01d18f5eb506bca95798bcef618d966c58~776EdR9Td1663516635epoutp01E
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
- s=mail20170921; t=1782282749;
- bh=gCHdlJptgPPRCutW3+PXA89oSW/TTgj5oE//NghhidA=;
+ s=mail20170921; t=1782281552;
+ bh=kY/dxQYx/wRPEf2qC748CpGM1a3g+t0/zv46gOr+qAY=;
  h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
- b=az+5u/Yo7w0+HYUn+asvfWcAb58uOAOLJCVZh2KmXmQZWpz5CoiNOb9YHJZNVVDiw
- 0v6MreaRks2ZrLnTivDOyCzlKyzKO3u2TyMB1tIL85sEjYCjz6bJy2w/4OmXyn9igW
- WsxQhjRW+IasdOwurMQqYgNal79zIjFpkiz2GyX4=
-Received: from epsnrtp02.localdomain (unknown [182.195.42.154]) by
+ b=oh3W1FePv07XnqAelEFW8Q1pHVwG+ADlorSBlcPlORMD+FT9ETvo7JJEYRgXh7OZY
+ /8KS9rzeonXIOS8vWBeBr7bHSXW+q18fNtzf6aBmnAbpJyAafwRAeeA714I6TT2nZh
+ ENonRAj6ASBEBOBgjGdLNn0mfaUlhLPOjKRQm05I=
+Received: from epsnrtp03.localdomain (unknown [182.195.42.155]) by
  epcas5p4.samsung.com (KnoxPortal) with ESMTPS id
- 20260624063229epcas5p45c6fe4ae66c36bdd7aeb15bb5898de10~78LenQtu32641426414epcas5p42;
- Wed, 24 Jun 2026 06:32:29 +0000 (GMT)
-Received: from epcas5p2.samsung.com (unknown [182.195.38.91]) by
- epsnrtp02.localdomain (Postfix) with ESMTP id 4glXDD28LMz2SSKj; Wed, 24 Jun
- 2026 06:32:28 +0000 (GMT)
+ 20260624061232epcas5p43790b4403384ebc55187f2fb90e34c6c~776DwZAjB0689606896epcas5p4N;
+ Wed, 24 Jun 2026 06:12:32 +0000 (GMT)
+Received: from epcas5p1.samsung.com (unknown [182.195.38.89]) by
+ epsnrtp03.localdomain (Postfix) with ESMTP id 4glWnC1CKLz3hhTD; Wed, 24 Jun
+ 2026 06:12:31 +0000 (GMT)
 Received: from epsmtip1.samsung.com (unknown [182.195.34.30]) by
  epcas5p4.samsung.com (KnoxPortal) with ESMTPA id
- 20260624063227epcas5p4c3143473afa38b85d5eddca403d89ccd~78Ldb8W7A2605926059epcas5p4l;
- Wed, 24 Jun 2026 06:32:27 +0000 (GMT)
+ 20260624061230epcas5p419894dd4d2e612f7712f1ec7ae940ce0~776ChX7yz3046330463epcas5p4b;
+ Wed, 24 Jun 2026 06:12:30 +0000 (GMT)
 Received: from arun-B560M-DS3H-V2 (unknown [107.99.41.170]) by
  epsmtip1.samsung.com (KnoxPortal) with ESMTPA id
- 20260624063225epsmtip1d570a3c9d6de2cb92616bcd7e65ff6e3~78LbmT1MG1927019270epsmtip1I;
- Wed, 24 Jun 2026 06:32:25 +0000 (GMT)
-Date: Wed, 24 Jun 2026 19:51:14 +0530
+ 20260624061228epsmtip1b208377c679fed6ea71d1c7e754271e5~776ACMl-O2928929289epsmtip1P;
+ Wed, 24 Jun 2026 06:12:27 +0000 (GMT)
+Date: Wed, 24 Jun 2026 19:31:03 +0530
 From: Shrihari E S <shrihari.s@samsung.com>
 To: Jonathan Cameron <jic23@kernel.org>
 Cc: linux-cxl@vger.kernel.org, linux-pci@vger.kernel.org,
  qemu-devel@nongnu.org, cpgs@samsung.com, arun.george@samsung.com,
  vikash.k5@samsung.com, s.neeraj@samsung.com, dongjoo.seo1@samsung.com,
  dave@stgolabs.net, gost.dev@samsung.com
-Subject: Re: [RFC 4/8] hw/cxl: Add Streamlined Virtual Channel (SVC)
- property to CXL ports
-Message-ID: <20260624142114.pvrshhaueuaszg7i@arun-B560M-DS3H-V2>
+Subject: Re: [RFC 1/8] hw/pci: Refactor flitmode from PCIESlot to PCIEPort.
+Message-ID: <20260624140103.thavawn667tfs4tg@arun-B560M-DS3H-V2>
 MIME-Version: 1.0
-In-Reply-To: <20260616182159.6c618a75@jic23-huawei>
-X-CMS-MailID: 20260624063227epcas5p4c3143473afa38b85d5eddca403d89ccd
+In-Reply-To: <20260616142730.7fb0a465@jic23-huawei>
+X-CMS-MailID: 20260624061230epcas5p419894dd4d2e612f7712f1ec7ae940ce0
 X-Msg-Generator: CA
 Content-Type: multipart/mixed;
- boundary="----uxXJsHHh-Fg65yNB0vIi5XNifLwzhKyLgsuI88_8PeeXN_vP=_53357_"
+ boundary="----LzjFyProJtBlqpjpUA7CxzsXX7e_8S7ToqyYf_kYrViRiBfb=_5314c_"
 CMS-TYPE: 105P
 X-CPGSPASS: Y
 cpgsPolicy: CPGSC10-542,Y
 X-CFilter-Loop: Reflected
-X-CMS-RootMailID: 20260609104521epcas5p1d91703d83cfe9fd9d38506a64fa276a7
+X-CMS-RootMailID: 20260609104503epcas5p12628cd89d0ef9210c856d2518dc790cb
 References: <20260609105836.3702787-1-shrihari.s@samsung.com>
- <CGME20260609104521epcas5p1d91703d83cfe9fd9d38506a64fa276a7@epcas5p1.samsung.com>
- <20260609105836.3702787-5-shrihari.s@samsung.com>
- <20260616182159.6c618a75@jic23-huawei>
-Received-SPF: pass client-ip=203.254.224.33;
- envelope-from=shrihari.s@samsung.com; helo=mailout3.samsung.com
-X-Spam_score_int: -12
-X-Spam_score: -1.3
-X-Spam_bar: -
-X-Spam_report: (-1.3 / 5.0 requ) BAYES_00=-1.9, DATE_IN_FUTURE_06_12=1.947,
+ <CGME20260609104503epcas5p12628cd89d0ef9210c856d2518dc790cb@epcas5p1.samsung.com>
+ <20260609105836.3702787-2-shrihari.s@samsung.com>
+ <20260616142730.7fb0a465@jic23-huawei>
+Received-SPF: pass client-ip=203.254.224.24;
+ envelope-from=shrihari.s@samsung.com; helo=mailout1.samsung.com
+X-Spam_score_int: -28
+X-Spam_score: -2.9
+X-Spam_bar: --
+X-Spam_report: (-2.9 / 5.0 requ) BAYES_00=-1.9, DATE_IN_FUTURE_06_12=1.947,
  DKIMWL_WL_HIGH=-0.445, DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1,
- DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001,
+ DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H3=0.001,
  RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_PASS=-0.001,
  SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -99,55 +98,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-------uxXJsHHh-Fg65yNB0vIi5XNifLwzhKyLgsuI88_8PeeXN_vP=_53357_
+------LzjFyProJtBlqpjpUA7CxzsXX7e_8S7ToqyYf_kYrViRiBfb=_5314c_
 Content-Type: text/plain; charset="utf-8"; format="flowed"
 Content-Disposition: inline
 
-On 16/06/26 06:21PM, Jonathan Cameron wrote:
->On Tue,  9 Jun 2026 16:28:32 +0530
->Shrihari E S <shrihari.s@samsung.com> wrote:
->
->> Add Unordered IO (UIO) dependent property SVC to CXL ports
->> (Root, Upstream and Downstream).
->>
->> The following properties are added to CXL ports:
->>     - x-uio-svc: Enable UIO traffic via SVC3 (mandatory path)
->>     - x-uio-svc-opt: Enable UIO traffic via SVC4 (optional path)
->>
->> Note: 256B flit mode property was already added in CXL ports, so reused it.
->>
->> Signed-off-by: Shrihari E S <shrihari.s@samsung.com>
->> Signed-off-by: Dongjoo Seo <dongjoo.seo1@samsung.com>
->> ---
->>  static void cxl_dsp_class_init(ObjectClass *oc, const void *data)
 >> diff --git a/hw/pci-bridge/cxl_root_port.c b/hw/pci-bridge/cxl_root_port.c
->> index e82685d1ab..83fb5968b8 100644
+>> index 0ee18ef5c3..df69c5200f 100644
 >> --- a/hw/pci-bridge/cxl_root_port.c
 >> +++ b/hw/pci-bridge/cxl_root_port.c
->> @@ -53,6 +53,7 @@ typedef struct CXLRootPort {
->>      CPMUState cpmu;
->>      MemoryRegion cpmu_registers;
->>      PCIResReserve res_reserve;
->> +    bool uio_capable;
->I'd bring these in with a patch that uses them.
 >
->This whole thing is simple enough maybe just have it as part of a commit
->that uses the properties.
+>>  static void cxl_rp_dvsec_write_config(PCIDevice *dev, uint32_t addr,
+>> diff --git a/hw/pci/pcie.c b/hw/pci/pcie.c
+>> index 1de0b1e4fd..d452199d85 100644
+>> --- a/hw/pci/pcie.c
+>> +++ b/hw/pci/pcie.c
+>> @@ -217,7 +217,7 @@ static void pcie_cap_fill_slot_lnk(PCIDevice *dev)
+>>          /* the PCI_EXP_LNKSTA_DLLLA will be set in the hotplug function */
+>>      }
+>>
+>> -    pcie_cap_fill_lnk(exp_cap, s->width, s->speed, s->flitmode);
+>> +    pcie_cap_fill_lnk(exp_cap, s->width, s->speed, s->parent_obj.flitmode);
 >
+>I think we should use a cast to the parent object type rather than going directly
+>into s->parent_obj.  PCIE_PORT(s)->flitmode.
 
 Hi Jonathan,
 
-   Yeah sure will move this field to the patch that uses it. Thought it would be
-   a prep patch for the patch that really uses this feature.
+Got your point and it makes sense, will change that in the next version of this patch series. Thanks for the suggestion.
 
-Thanks,
+>
+>>  }
+>
 
->>  } CXLRootPort;
-
-
-------uxXJsHHh-Fg65yNB0vIi5XNifLwzhKyLgsuI88_8PeeXN_vP=_53357_
+------LzjFyProJtBlqpjpUA7CxzsXX7e_8S7ToqyYf_kYrViRiBfb=_5314c_
 Content-Type: text/plain; charset="utf-8"
 
 
-------uxXJsHHh-Fg65yNB0vIi5XNifLwzhKyLgsuI88_8PeeXN_vP=_53357_--
+------LzjFyProJtBlqpjpUA7CxzsXX7e_8S7ToqyYf_kYrViRiBfb=_5314c_--
 
