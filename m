@@ -4,43 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2037CDE002
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 13:43:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0453CDB481
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 13:43:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcNml-0006n5-4I; Wed, 24 Jun 2026 09:37:00 -0400
+	id 1wcNsX-0002X3-2A; Wed, 24 Jun 2026 09:42:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wcNmj-0006iT-Qh; Wed, 24 Jun 2026 09:36:57 -0400
+ id 1wcNsS-0002P0-Oh; Wed, 24 Jun 2026 09:42:53 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wcNmi-0000zN-7P; Wed, 24 Jun 2026 09:36:57 -0400
+ id 1wcNsQ-0001yT-S3; Wed, 24 Jun 2026 09:42:52 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1782307998; bh=lRK4NhiR2fBV89rabH41NE98LJMgN+fdDW4JciwJ5Yk=;
+ t=1782308001; bh=BizYKPonuqh83YxKZA002CnSJeSjU0Wy/O3qLhenGNE=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=oS9KId8yfsmU5O9YAZo6lX8Ksgi7cJstGoG3aTWS8Fn6ORXyZIUPRAUsguAePl6ti
- VzT39qsqmJjg9AQMESdLRQDxuYIhnzy7qjV1Xv4A/YTFBKEKAbCGjffnVq3+IFjhVv
- P01g8iehj99J2EkLzIIdlLc5IGnHu1v1gJSxztcHP6Y1AGH8/cr2IlfL4Zl1kQbOsn
- +9TKc63mFD8u0kfky9H3GPCrL1dZqSu7UepYKVvabyEU9zWE2wxXQVNdKuDYVXZpqU
- J33K3TCNfqXT7wGdHsCjp9tand86QzPHh30U1B1WIo80awCZ6vo1i0J1bUx+C29LpE
- HKFNYOaxAx4bw==
+ b=m/0GJn5YTG+8aEheE2A2T2sgRJyFJG6ClEZn9TbEeAHKZvWh/9qX30n8PfNwSxXUQ
+ BARDbC0CyEG/S6llBK/amqMHcYeP5+bIJr/gpjfAixp+PHBIRiLHPTAaaETeGpEn4o
+ U5Ne3kqivObOAJ+ub6WvWT8Khwil7NmkXf9fUIw4wjT52BXcW6yESBOf4EhPaC61Av
+ yAy771nMrS16w+HyVj7hyamCW9+bHPQQpj+NGVOIcUT/K+D3WP5s1m5Z62sBzovt2p
+ kokFJlw4cECrdF2MEZkwvwWRdeD9O6aVWN9Rocx9csxtBuOnNJSpNdYOw+R5/QO5l7
+ dKEZHeiz9dN0g==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 24F791BA9DD;
- Wed, 24 Jun 2026 16:33:18 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id F19AC1BAA12;
+ Wed, 24 Jun 2026 16:33:21 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id AE11E3DEA2C;
- Wed, 24 Jun 2026 16:33:23 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 8E5B93DEA61;
+ Wed, 24 Jun 2026 16:33:27 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Christian Schoenebeck <qemu_oss@crudebyte.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.2 043/107] hw/9pfs: add NULL check in
- v9fs_path_is_ancestor()
-Date: Wed, 24 Jun 2026 16:30:48 +0300
-Message-ID: <20260624133301.403266-43-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Mathias Krause <minipli@grsecurity.net>,
+ Paolo Bonzini <pbonzini@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.2 096/107] gdbstub: Update x86 control register bits
+Date: Wed, 24 Jun 2026 16:31:41 +0300
+Message-ID: <20260624133301.403266-96-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.2-20260624163118@cover.tls.msk.ru>
 References: <qemu-stable-11.0.2-20260624163118@cover.tls.msk.ru>
@@ -69,34 +68,111 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Christian Schoenebeck <qemu_oss@crudebyte.com>
+From: Mathias Krause <minipli@grsecurity.net>
 
-Add NULL check for s1->data and s2->data before using them in
-string operations. This prevents potential crashes when dealing
-with uninitialized paths.
+The control register bits haven't been updated in a few years, making
+them lack behind features QEMU ganied in these years.
 
-This is just a defensive measure. We are currently never passing
-NULL to this function.
+Update them to the current version of the SDM and sort the 32bit version
+to be in line with all the other definitions (descending order).
 
-Link: https://lore.kernel.org/qemu-devel/3348c4d683f061c23083bd45994d527be4fb7cbc.1779126034.git.qemu_oss@crudebyte.com
-Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
-(cherry picked from commit abb0cc02fb56e2432837e34b80fe68768f95e774)
+This should remove confusion when debugging, for example, CET-enabled
+guests:
+
+- before the change:
+  (gdb) info registers cr4
+  cr4            0x8000f0            [ PGE MCE PAE PSE ]
+
+- after the change:
+  (gdb) info registers cr4
+  cr4            0x8000f0            [ CET PGE MCE PAE PSE ]
+
+Signed-off-by: Mathias Krause <minipli@grsecurity.net>
+Link: https://lore.kernel.org/r/20260327143413.254227-1-minipli@grsecurity.net
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+(cherry picked from commit 88d39a2937ebad64b8aed8247450e1a6ddf274be)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/9pfs/9p.c b/hw/9pfs/9p.c
-index e2713b9eee..e590c414ab 100644
---- a/hw/9pfs/9p.c
-+++ b/hw/9pfs/9p.c
-@@ -241,6 +241,9 @@ int v9fs_name_to_path(V9fsState *s, V9fsPath *dirpath,
-  */
- static int v9fs_path_is_ancestor(V9fsPath *s1, V9fsPath *s2)
- {
-+    if (!s1->data || !s2->data) {
-+        return 0;
-+    }
-     if (!strncmp(s1->data, s2->data, s1->size - 1)) {
-         if (s2->data[s1->size - 1] == '\0' || s2->data[s1->size - 1] == '/') {
-             return 1;
+diff --git a/gdbstub/gdb-xml/i386-32bit.xml b/gdbstub/gdb-xml/i386-32bit.xml
+index 7a66a02b67..1dec40e1d2 100644
+--- a/gdbstub/gdb-xml/i386-32bit.xml
++++ b/gdbstub/gdb-xml/i386-32bit.xml
+@@ -87,27 +87,34 @@
+   </flags>
+ 
+   <flags id="i386_cr4" size="4">
+-	<field name="VME" start="0" end="0"/>
+-	<field name="PVI" start="1" end="1"/>
+-	<field name="TSD" start="2" end="2"/>
+-	<field name="DE" start="3" end="3"/>
+-	<field name="PSE" start="4" end="4"/>
+-	<field name="PAE" start="5" end="5"/>
+-	<field name="MCE" start="6" end="6"/>
+-	<field name="PGE" start="7" end="7"/>
+-	<field name="PCE" start="8" end="8"/>
+-	<field name="OSFXSR" start="9" end="9"/>
+-	<field name="OSXMMEXCPT" start="10" end="10"/>
+-	<field name="UMIP" start="11" end="11"/>
+-	<field name="LA57" start="12" end="12"/>
+-	<field name="VMXE" start="13" end="13"/>
+-	<field name="SMXE" start="14" end="14"/>
+-	<field name="FSGSBASE" start="16" end="16"/>
+-	<field name="PCIDE" start="17" end="17"/>
+-	<field name="OSXSAVE" start="18" end="18"/>
+-	<field name="SMEP" start="20" end="20"/>
+-	<field name="SMAP" start="21" end="21"/>
++	<field name="LAM_SUP" start="28" end="28"/>
++	<field name="LASS" start="27" end="27"/>
++	<field name="UINTR" start="25" end="25"/>
++	<field name="PKS" start="24" end="24"/>
++	<field name="CET" start="23" end="23"/>
++	<field name="PKE" start="22" end="22"/>
+ 	<field name="PKE" start="22" end="22"/>
++	<field name="SMAP" start="21" end="21"/>
++	<field name="SMEP" start="20" end="20"/>
++	<field name="KL" start="19" end="19"/>
++	<field name="OSXSAVE" start="18" end="18"/>
++	<field name="PCIDE" start="17" end="17"/>
++	<field name="FSGSBASE" start="16" end="16"/>
++	<field name="SMXE" start="14" end="14"/>
++	<field name="VMXE" start="13" end="13"/>
++	<field name="LA57" start="12" end="12"/>
++	<field name="UMIP" start="11" end="11"/>
++	<field name="OSXMMEXCPT" start="10" end="10"/>
++	<field name="OSFXSR" start="9" end="9"/>
++	<field name="PCE" start="8" end="8"/>
++	<field name="PGE" start="7" end="7"/>
++	<field name="MCE" start="6" end="6"/>
++	<field name="PAE" start="5" end="5"/>
++	<field name="PSE" start="4" end="4"/>
++	<field name="DE" start="3" end="3"/>
++	<field name="TSD" start="2" end="2"/>
++	<field name="PVI" start="1" end="1"/>
++	<field name="VME" start="0" end="0"/>
+   </flags>
+ 
+   <flags id="i386_efer" size="4">
+diff --git a/gdbstub/gdb-xml/i386-64bit.xml b/gdbstub/gdb-xml/i386-64bit.xml
+index 6d88969211..9ac9164e6a 100644
+--- a/gdbstub/gdb-xml/i386-64bit.xml
++++ b/gdbstub/gdb-xml/i386-64bit.xml
+@@ -102,9 +102,16 @@
+   </flags>
+ 
+   <flags id="x64_cr4" size="8">
++	<field name="FRED" start="32" end="32"/>
++	<field name="LAM_SUP" start="28" end="28"/>
++	<field name="LASS" start="27" end="27"/>
++	<field name="UINTR" start="25" end="25"/>
++	<field name="PKS" start="24" end="24"/>
++	<field name="CET" start="23" end="23"/>
+ 	<field name="PKE" start="22" end="22"/>
+ 	<field name="SMAP" start="21" end="21"/>
+ 	<field name="SMEP" start="20" end="20"/>
++	<field name="KL" start="19" end="19"/>
+ 	<field name="OSXSAVE" start="18" end="18"/>
+ 	<field name="PCIDE" start="17" end="17"/>
+ 	<field name="FSGSBASE" start="16" end="16"/>
 -- 
 2.47.3
 
