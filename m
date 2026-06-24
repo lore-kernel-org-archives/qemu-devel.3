@@ -4,97 +4,195 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F52BCDB47F
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 20:48:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C23C3CDB479
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 21:18:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcUVn-0000nR-Jj; Wed, 24 Jun 2026 16:47:55 -0400
+	id 1wcUz3-0007Ln-Nv; Wed, 24 Jun 2026 17:18:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wcUVj-0000n3-O6
- for qemu-devel@nongnu.org; Wed, 24 Jun 2026 16:47:52 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1wcUz1-0007Lb-P5
+ for qemu-devel@nongnu.org; Wed, 24 Jun 2026 17:18:07 -0400
+Received: from mout.gmx.net ([212.227.15.15])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wcUVh-0007pe-9b
- for qemu-devel@nongnu.org; Wed, 24 Jun 2026 16:47:51 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1782334067;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=wlF2FAE63fjCpxbQDu1lhcuNq54SWZdqx5MLerXQXQI=;
- b=ciiw7+RYlGzGBfKPzhtNk0thWx9m6zhEP0XGKaR/lCdr3zpsANXrHS85hA4UeG8Z0xnvDH
- PNpVHdAJ5lgPQPvD1n79qWtWXBjILSWtgvHccsJyYW563xj9NJL2gZXE6DUsHHb4ru0395
- OEIES2dmqX1YFKj6eB5qeJKu4HCDqeA=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-344-bHidcB2eOEqP7rIhp6w-GA-1; Wed,
- 24 Jun 2026 16:47:43 -0400
-X-MC-Unique: bHidcB2eOEqP7rIhp6w-GA-1
-X-Mimecast-MFC-AGG-ID: bHidcB2eOEqP7rIhp6w-GA_1782334061
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 05E9418052CE; Wed, 24 Jun 2026 20:47:41 +0000 (UTC)
-Received: from localhost (unknown [10.44.24.16])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 10CF01956041; Wed, 24 Jun 2026 20:47:38 +0000 (UTC)
+ (Exim 4.90_1) (envelope-from <deller@gmx.de>) id 1wcUyz-0005I2-Ty
+ for qemu-devel@nongnu.org; Wed, 24 Jun 2026 17:18:07 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
+ s=s31663417; t=1782335871; x=1782940671; i=deller@gmx.de;
+ bh=L2Dolwwui+YISEqZ6L/3jlrBqVCuqYGGxcTI1+PKn1k=;
+ h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
+ References:From:In-Reply-To:Content-Type:
+ Content-Transfer-Encoding:cc:content-transfer-encoding:
+ content-type:date:from:message-id:mime-version:reply-to:subject:
+ to;
+ b=rK1KjO+7dKagi14oqplUrNl2CBMBfRIfmm9qNwWefhKBPxLu7mMC3UFVRa6BtSsA
+ Uu/NPSRDCERY7XWMRC69vaI+XyFsfKWmP0gbgzI+FLDMqrrtFW/3pTEQMFebqhqV6
+ ELMmJGexSwku9TsUYqBrYpZXmr4xkIetirjisfOfZH/pXgEnrEUlelk+sTi1qEMtn
+ 9/7j2EsK3lLCrzfZOdETYA8o3ZMak2giiCPUIx15quLwFx1VIl/5qyVXZ5z+FMuFl
+ /gDwBTHZgNA/9hipST9fYvyBDyUUk7ex4t4TVF05FHM1arBptfCnuZxEwfanFVuJt
+ zPd0/6THi5D1uK4Y/A==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from client.hidden.invalid by mail.gmx.net (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MtOGa-1xQc1Q3g9G-010OSi; Wed, 24
+ Jun 2026 23:17:50 +0200
+Message-ID: <1727f2bc-162a-479d-bcdd-87b58d139913@gmx.de>
+Date: Wed, 24 Jun 2026 23:17:49 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH v5 32/35] monitor: add support for auto-deleting
- monitors upon close
-From: marcandre.lureau@redhat.com
-To: =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, devel@lists.libvirt.org, 
- =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
- Markus Armbruster <armbru@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
- "Dr. David Alan Gilbert" <dave@treblig.org>, 
- =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>, 
- Christian Brauner <brauner@kernel.org>, 
- =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>, 
- Peter Krempa <pkrempa@redhat.com>
-In-Reply-To: <20260624173752.2928717-33-berrange@redhat.com>
-References: <20260624173752.2928717-1-berrange@redhat.com>
- <20260624173752.2928717-33-berrange@redhat.com>
-Date: Thu, 25 Jun 2026 00:47:30 +0400
-Message-Id: <178233405051.3955748.10990724544083287885.b4-review@b4>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=12943;
- i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=9njed6RM8Uge1MKbnhLnFSUQa0J3dgCgL6FZYg2eHMw=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqPEJmPlQ3qrrCW4wEmf3A0Y/M+kteXd0rhYOss
- zLeL4qSGb2JAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCajxCZgAKCRDa6OEJdZac
- 5crFD/49ye1gAALlI64tboTELFWEbCTsceXnvldRtg5lV0w3lsqO1bawW5YDACK7PHdX+omn8oB
- qg8SYAOTjriscPskHyqYitypuFSAARYcoy7Zg4INU/br3yUGhjaINMDfUNSCP98f1Bhe28I+gWE
- Vi5vQvwXc98gS04TXbLXY8StRdSf1gDg14j5+OjRXp/17azIqkcbCLqdRA8Q7ce5saw2jboEMWL
- 5JDTRJXmXmTHxLEmjpjAB6bbydvBFqNRZkZof6FkA9tbFgG6Ru7nO8Fbc+lPYpigmqKWl0JhBAg
- cqAIQvYsrUDUX/hjBvkH6w3yULLmhMG/GvSTlk5geTUJ7pAXiqPGIAQ0An+m3sap/IIkjNdRZTi
- eGGorlURcnAo+Ut5p/8XtQrbDg8LW4MluHuXhTgF+3KkSRONN9ZTV1+Qr7i4nLjII9annc2BgmB
- tLdEXLUCiOUbbY2dwsbgH4FjJenC/G7U7jByq3jFlbbXaCbAbLyBYzlzMRZEcAt5yM3jmaBZW6i
- amC4M7RFsbXVeqx7iDP49FX6pGUalp8KCbO7Pad5lB72qGskyXhsANLIrYJK6Hc9t+DVNMiNL2F
- c69aNNLmmumCrRGz4f5hjzETCxTJ4+LhiyO3yRMbVz9LCTOTDOH5tNsIh6ogsaPB5OUzJmEaAId
- HAGgsJcqXp2hgBA==
-X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
- fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=marcandre.lureau@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/2] linux-user/xtensa: save/restore FP registers across
+ signal delivery
+To: Michael Tokarev <mjt@tls.msk.ru>, Matt Turner <mattst88@gmail.com>,
+ qemu-devel@nongnu.org
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ Laurent Vivier <laurent@vivier.eu>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Max Filippov <jcmvbkbc@gmail.com>
+References: <20260610152648.677463-2-mattst88@gmail.com>
+ <20260612141406.1211912-1-mattst88@gmail.com>
+ <e17b14a6-575e-4b7f-9a3c-6ace863602d0@tls.msk.ru>
+Content-Language: en-US
+From: Helge Deller <deller@gmx.de>
+Autocrypt: addr=deller@gmx.de; keydata=
+ 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
+In-Reply-To: <e17b14a6-575e-4b7f-9a3c-6ace863602d0@tls.msk.ru>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:JsMd3BMMOUNze41I0rz2tmtfexdyV5hHbiNDjXhBLM/ZpG5LOP2
+ DkCxKxTeTrrr3o9qrlgEC7tR7HKJ0GnXrTJmGQOmltwIVUoK1r1VL+HSdwdNVjYS/t0PjJr
+ 3/ibdIoKknS5Ex5f81nAXzRingHqECzJQezpkgkWL48jgdKSXVG3TjgOwxEu4Fgt/+Wu4dy
+ fhyWihf9fkPqwoqVrhMcg==
+UI-OutboundReport: notjunk:1;M01:P0:hzdNoMj/fsg=;yxwcdbJuQBH7rH9K61A7yWdEPIg
+ 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
+ w1N86JhoY=
+Received-SPF: pass client-ip=212.227.15.15; envelope-from=deller@gmx.de;
+ helo=mout.gmx.net
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,342 +208,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-> The default monitor is usually a long lived object that will exist for
-> the entire lifetime of the VM. A monitor can only service a single
-> client at a time though, and so it might be desirable to hotplug
-> additional monitors at runtime for specific tasks. If doing that,
-> however, there is a need to remove the monitor when it is no longer
-> needed.
-> 
-> Allowing a client to run "object-del" against its own monitor adds
-> complex edge cases, as it would be desirable to send the QMP response
-> despite the monitor sending it being deleted. Doing "object-del" alone
-> will also result in orphaning a character device backend instance, as
-> there is no opportunity to run the companion "chardev-del" command.
-> 
-> A simpler way to ensure cleanup is to add the concept of auto-deleting
-> monitor objects. Specifically when the "CHR_EVENT_CLOSED" event is
-> emitted, the equivalent of "object-del" + "chardev-del" can be run
-> internally. Since the transient client has already droppped its
-> monitor connection, there is no synchronization to be concerned about.
-> 
-> This is implemented via a new "close-action=none|delete" property on
-> the 'monitor-qmp' object. This concept could be extended with further
-> actions in future, for example:
-> 
->  * close-action=shutdown - graceful guest shutdown
->  * close-action=terminate - immediate guest poweroff
->  * close-action=stop - pause guest CPUs while the monitor is not
->                        connected to any client
-> 
-> This is left as an exercise for future interested contributors.
-> 
-> Tested-by: Peter Krempa <pkrempa@redhat.com>
-> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-> Message-ID: <20260624173752.2928717-33-berrange@redhat.com>
->
-> diff --git a/qapi/qom.json b/qapi/qom.json
-> index 6affb70a594..b4c49a2e8b9 100644
-> --- a/qapi/qom.json
-> +++ b/qapi/qom.json
-> @@ -1213,18 +1213,37 @@
->    'base': 'MonitorProperties',
->    'data': { '*readline': 'bool' } }
->  
-> +
-> +##
-> +# @MonitorQMPCloseAction:
-> +#
-> +# Action to take when the character device backend is
-> +# closed.
-> +#
-> +# @none: take no action (the default)
-> +# @delete: delete both the 'monitor-qmp' object and its associated
-> +#          character device backend object
-> +#
-> +# Since 11.1
+On 6/24/26 00:04, Michael Tokarev wrote:
+> On 12.06.2026 17:14, Matt Turner wrote:
+>> Add support for saving and restoring f0-f15 across signal delivery.
+>> The target_xtensa_xtregs_fp struct carries 32-bit f-regs for cores
+>> with XTENSA_OPTION_FP_COPROCESSOR; target_xtensa_xtregs_dfp carries
+>> 64-bit f-regs for cores with XTENSA_OPTION_DFP_COPROCESSOR.
+>>
+>> Lock the xtregs region via lock_user before reading on sigreturn,
+>> since sc_xtregs is a user-space pointer that may lie outside the
+>> locked sigframe.
+>=20
+> Now this is kind of fun.
+>=20
+>> @@ -282,7 +360,9 @@ long do_rt_sigreturn(CPUXtensaState *env)
+>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 target_to_host_sigset(&set, &frame->uc.t=
+uc_sigmask);
+>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 set_sigmask(&set);
+>> -=C2=A0=C2=A0=C2=A0 restore_sigcontext(env, frame);
+>> +=C2=A0=C2=A0=C2=A0 if (!restore_sigcontext(env, frame)) {
+>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 goto badframe;
+>> +=C2=A0=C2=A0=C2=A0 }
+>=20
+> There's another patch for linux-user/xtensa which is queued up for
+> the stable series:
+>=20
+> 54e08dbe8f linux-user/xtensa: fix unlock of uninitialized frame pointer =
+on sigreturn
+>=20
+> This patch (fix unlock of frame pointer) removes `goto badframe` from
+> this same function.=C2=A0 With that patch applied, the compiler complain=
+s:
+>=20
+>  =C2=A0linux-user/xtensa/signal.c: In function =E2=80=98do_rt_sigreturn=
+=E2=80=99:
+>  =C2=A0linux-user/xtensa/signal.c:293:1: error: label =E2=80=98badframe=
+=E2=80=99 defined but not used [-Werror=3Dunused-label]
+>  =C2=A0cc1: all warnings being treated as errors
+>=20
+> and the build fails.
+>=20
+> But this works on master because of this patch (6858e3a71c save/restore
+> FP registers").
+>=20
+> So, I should either extend 54e08dbe8f in stable series to remove the
+> now-unused label, or include this 6858e3a71c change *too* (with the
+> previous 7e859bacea).
+>=20
+> Does it hurt to pick 7e859bacea and 6858e3a71c to the stable series?
+> This feels like another bugfix too, but a bit more involved.=C2=A0 And i=
+t
+> builds at passes all tests, at least.
 
-should be "Since: 11.1" (worth a new check perhaps)
+I suggest to pull in all patches to keep difference to head minimal.
 
-> +##
-> +{ 'enum' : 'MonitorQMPCloseAction',
-
-extra space, vs the usual '{ 'enum':'.
-
-> +  'data': ['none', 'delete'] }
-> +
->  ##
->  # @MonitorQMPProperties:
->  #
->  # Properties for the QMP monitor
->  #
->  # @pretty: whether to pretty print JSON responses (default: disabled)
-> +# @close-action: action to take when the character device backend
-> +#                is closed (default: none)
->  #
->  # Since: 11.1
->  ##
->  { 'struct': 'MonitorQMPProperties',
->    'base': 'MonitorProperties',
-> -  'data': { '*pretty': 'bool' } }
-> +  'data': { '*pretty': 'bool',
-> +            '*close-action': 'MonitorQMPCloseAction' } }
->  
->  ##
->  # @ObjectType:
-> diff --git a/monitor/monitor-internal.h b/monitor/monitor-internal.h
-> index 5522e05464b..23829f32f9a 100644
-> --- a/monitor/monitor-internal.h
-> +++ b/monitor/monitor-internal.h
-> @@ -28,6 +28,7 @@
->  #include "chardev/char-fe.h"
->  #include "monitor/monitor.h"
->  #include "qapi/qapi-types-control.h"
-> +#include "qapi/qapi-types-qom.h"
->  #include "qapi/qmp-registry.h"
->  #include "qobject/json-parser.h"
->  #include "qemu/readline.h"
-> @@ -178,7 +179,9 @@ struct MonitorQMP {
->      Monitor parent_obj;
->      JSONMessageParser parser;
->      bool pretty;
-> +    MonitorQMPCloseAction close_action;
->      bool setup_pending; /* iothread BH has not yet set up chardev handlers */
-> +    bool delete_pending; /* close_action has started 'delete' process */
->      /*
->       * When a client connects, we're in capabilities negotiation mode.
->       * @commands is &qmp_cap_negotiation_commands then.  When command
-> diff --git a/monitor/qmp.c b/monitor/qmp.c
-> index 5301927f09f..1057b0d12ba 100644
-> --- a/monitor/qmp.c
-> +++ b/monitor/qmp.c
-> @@ -28,6 +28,7 @@
->  #include "monitor-internal.h"
->  #include "qapi/error.h"
->  #include "qapi/qapi-commands-control.h"
-> +#include "qapi/qapi-commands-char.h"
->  #include "qobject/qdict.h"
->  #include "qobject/qjson.h"
->  #include "qobject/qlist.h"
-> @@ -103,6 +104,20 @@ static void monitor_qmp_set_pretty(Object *obj, bool val, Error **errp)
->      mon->pretty = val;
->  }
->  
-> +static int monitor_qmp_get_close_action(Object *obj, Error **errp)
-> +{
-> +    MonitorQMP *mon = MONITOR_QMP(obj);
-> +
-> +    return mon->close_action;
-> +}
-> +
-> +static void monitor_qmp_set_close_action(Object *obj, int val, Error **errp)
-> +{
-> +    MonitorQMP *mon = MONITOR_QMP(obj);
-> +
-> +    mon->close_action = val;
-> +}
-> +
->  static void monitor_qmp_emit_event(Monitor *mon, QAPIEvent event, QDict *qdict);
->  static bool monitor_qmp_requires_iothread(const Monitor *mon);
->  static void monitor_qmp_complete(UserCreatable *uc, Error **errp);
-> @@ -117,6 +132,11 @@ static void monitor_qmp_class_init(ObjectClass *cls, const void *data)
->      object_class_property_add_bool(cls, "pretty",
->                                     monitor_qmp_get_pretty,
->                                     monitor_qmp_set_pretty);
-> +    object_class_property_add_enum(cls, "close-action",
-> +                                   "MonitorQMPCloseAction",
-> +                                   &MonitorQMPCloseAction_lookup,
-> +                                   monitor_qmp_get_close_action,
-> +                                   monitor_qmp_set_close_action);
->  
->      moncls->emit_event = monitor_qmp_emit_event;
->      moncls->requires_iothread = monitor_qmp_requires_iothread;
-> @@ -550,11 +570,45 @@ static QDict *qmp_greeting(MonitorQMP *mon)
->          ver, cap_list);
->  }
->  
-> +static void monitor_qmp_self_delete_bh(void *opaque)
-> +{
-> +    MonitorQMP *mon = opaque;
-> +    g_autofree char *mon_id = object_property_get_child_name(
-> +        object_get_objects_root(), OBJECT(mon));
-> +    g_autofree char *chardev_id = g_strdup(mon->parent_obj.chardev_id);
-> +    Error *local_error = NULL;
-> +
-> +    if (!mon_id) {
-> +        /* Another monitor raced & ran 'object-del' on 'mon'
-> +         * before this BH got scheduled, so we have a ref on
-> +         * mon but it is already unparented.
-> +         */
-> +        object_unref(mon);
-> +        return;
-> +    }
-> +
-> +    user_creatable_del(mon_id, &local_error);
-> +    object_unref(mon);
-> +    if (local_error != NULL) {
-> +        error_report_err(local_error);
-> +    } else {
-> +        qmp_chardev_remove(chardev_id, NULL);
-> +    }
-> +}
-> +
->  static void monitor_qmp_event(void *opaque, QEMUChrEvent event)
->  {
->      QDict *data;
->      MonitorQMP *mon = opaque;
->  
-> +    /* Protect against race if a client drops & quickly
-> +     * reconnects - we'll have the delete BH scheduled
-> +     * so must not honour a new open request
-> +     */
-> +    if (mon->delete_pending) {
-> +        return;
-> +    }
-> +
->      switch (event) {
->      case CHR_EVENT_OPENED:
->          WITH_QEMU_LOCK_GUARD(&mon->parent_obj.mon_lock) {
-> @@ -577,6 +631,27 @@ static void monitor_qmp_event(void *opaque, QEMUChrEvent event)
->          json_message_parser_init(&mon->parser, handle_qmp_command,
->                                   mon, NULL);
->          monitor_fdsets_cleanup();
-> +        switch (mon->close_action) {
-> +        case MONITOR_QMP_CLOSE_ACTION_NONE:
-> +            break; /* nada */
-> +        case MONITOR_QMP_CLOSE_ACTION_DELETE:
-> +            mon->delete_pending = true;
-> +            /*
-> +             * Do NOT run in the AIO context associated with the
-> +             * monitor. We need to run in the default AIO context
-> +             * which is the same context in which 'qmp_object_del'
-> +             * will execute
-> +             *
-> +             * Hold an extra ref in case a separate monitor races
-> +             * with the BH by processing an explicit 'object-del'
-> +             */
-> +            object_ref(mon);
-> +            aio_bh_schedule_oneshot(qemu_get_aio_context(),
-> +                                    monitor_qmp_self_delete_bh, mon);
-> +            break;
-> +        default:
-> +            g_assert_not_reached();
-> +        }
->          break;
->      case CHR_EVENT_BREAK:
->      case CHR_EVENT_MUX_IN:
-> diff --git a/tests/functional/generic/test_monitor_hotplug.py b/tests/functional/generic/test_monitor_hotplug.py
-> index 55af8a238f9..86092e781c9 100755
-> --- a/tests/functional/generic/test_monitor_hotplug.py
-> +++ b/tests/functional/generic/test_monitor_hotplug.py
-> @@ -25,7 +25,7 @@ def setUp(self):
->          sock_dir = self.socket_dir()
->          self._sock_path = os.path.join(sock_dir.name, 'hotplug.sock')
->  
-> -    def _add_monitor(self):
-> +    def _add_monitor(self, autodelete=False):
->          """Create a chardev + monitor and return the socket path."""
->          sock = self._sock_path
->          self.vm.cmd('chardev-add', id='hotplug-chr', backend={
-> @@ -39,9 +39,15 @@ def _add_monitor(self):
->                  'wait': False,
->              }
->          })
-> -        self.vm.cmd('object-add', id='hotplug-mon',
-> -                    qom_type='monitor-qmp',
-> -                    chardev='hotplug-chr')
-> +        if autodelete:
-> +            self.vm.cmd('object-add', id='hotplug-mon',
-> +                        qom_type='monitor-qmp',
-> +                        chardev='hotplug-chr',
-> +                        close_action='delete')
-> +        else:
-> +            self.vm.cmd('object-add', id='hotplug-mon',
-> +                        qom_type='monitor-qmp',
-> +                        chardev='hotplug-chr')
->          return sock
->  
->      def _remove_monitor(self):
-> @@ -118,6 +124,75 @@ def test_self_removal(self):
->          # Clean up the chardev
->          self.vm.cmd('chardev-remove', id='hotplug-chr')
->  
-> +    def test_auto_delete(self):
-> +        """
-> +        A dynamically-added monitor configured with 'close-action=delete'
-> +        should see itself deleted when the client is closed.
-> +        """
-> +        self.set_machine('none')
-> +        self.vm.add_args('-nodefaults')
-> +        self.vm.launch()
-> +
-> +        sock = self._add_monitor(autodelete=True)
-> +
-> +        cdevs = [c["label"] for c in self.vm.cmd('query-chardev')]
-> +        objs = [o["name"] for o in self.vm.cmd('qom-list', path='/objects')]
-> +        assert ('hotplug-chr' in cdevs)
-> +        assert ('hotplug-mon' in objs)
-> +
-> +        qmp = QEMUMonitorProtocol(sock)
-> +        greeting = qmp.connect(negotiate=True)
-> +        self.assertIn('QMP', greeting)
-> +
-> +        cdevs = [c["label"] for c in self.vm.cmd('query-chardev')]
-> +        objs = [o["name"] for o in self.vm.cmd('qom-list', path='/objects')]
-> +        assert ('hotplug-chr' in cdevs)
-> +        assert ('hotplug-mon' in objs)
-> +
-> +        qmp.close()
-> +
-> +        # Wait upto 10 seconds max for chardev to auto-delete, which
-> +        # is hopefully enough for reliability under high load
-> +        for i in range(int(10 / 0.2)):
-> +            cdevs = [c["label"] for c in self.vm.cmd('query-chardev')]
-> +            if 'hotplug-chr' not in cdevs:
-> +                break
-> +            # Wait a little more then try again
-> +            time.sleep(0.2)
-> +
-> +        cdevs = [c["label"] for c in self.vm.cmd('query-chardev')]
-> +        objs = [o["name"] for o in self.vm.cmd('qom-list', path='/objects')]
-> +        assert ('hotplug-chr' not in cdevs)
-> +        assert ('hotplug-mon' not in objs)
-> +
-> +    def test_reconnect(self):
-> +        """
-> +        A dynamically-added monitor configured without 'close-action'
-> +        should allow reconnects after the client is closed.
-> +        """
-> +        self.set_machine('none')
-> +        self.vm.add_args('-nodefaults')
-> +        self.vm.launch()
-> +
-> +        sock = self._add_monitor()
-> +
-> +        qmp = QEMUMonitorProtocol(sock)
-> +        qmp.connect(negotiate=True)
-> +
-> +        resp = qmp.cmd_obj({'execute': 'query-chardev'})
-> +        self.assertIn('return', resp)
-> +
-> +        qmp.close()
-> +
-> +        qmp = QEMUMonitorProtocol(sock)
-> +        qmp.connect(negotiate=True)
-> +
-> +        resp = qmp.cmd_obj({'execute': 'query-chardev'})
-> +        self.assertIn('return', resp)
-> +
-> +        qmp.close()
-> +        self._remove_monitor()
-> +
->      def test_large_response(self):
->          """
->          Send a command with a large response (query-qmp-schema) on a
-
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-
--- 
-Marc-André Lureau <marcandre.lureau@redhat.com>
-
+Helge
 
