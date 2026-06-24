@@ -4,91 +4,143 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0982DCDB471
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 11:45:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39302CDE004
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 11:45:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcM1j-0005sh-L7; Wed, 24 Jun 2026 07:44:19 -0400
+	id 1wcM2o-0000dt-3J; Wed, 24 Jun 2026 07:45:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wcM1g-0005iJ-6W
- for qemu-devel@nongnu.org; Wed, 24 Jun 2026 07:44:16 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
+ id 1wcM2c-0000Y3-Ne
+ for qemu-devel@nongnu.org; Wed, 24 Jun 2026 07:45:16 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wcM1c-0008Gq-No
- for qemu-devel@nongnu.org; Wed, 24 Jun 2026 07:44:15 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1782301451;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=UQ+AmLqOBXswCrNh2TEozyDCdA3KR/XjPZRFYDEEfn0=;
- b=ejTzU0tFHboqjGc8y6uv/TXr5Goujc1oYFVKuefoaylIiKXeKB6jBbHXRxE3Eu0jdsSpYu
- ZTiEGVeIzXQpArx5VrQuwsaQnfq9k0jS47FcRKNYSP9WjCcTdSDIFhwYR8WiK/oEkRPEQN
- RmQCx6USxL2c77dVmT5eJyeoShD12go=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-533-ybv6DdIjOx27AW6RJ8S4OQ-1; Wed,
- 24 Jun 2026 07:44:10 -0400
-X-MC-Unique: ybv6DdIjOx27AW6RJ8S4OQ-1
-X-Mimecast-MFC-AGG-ID: ybv6DdIjOx27AW6RJ8S4OQ_1782301449
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8D0761955F44
- for <qemu-devel@nongnu.org>; Wed, 24 Jun 2026 11:44:09 +0000 (UTC)
-Received: from localhost (unknown [10.44.24.16])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 4A218180028B; Wed, 24 Jun 2026 11:44:07 +0000 (UTC)
-From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Wed, 24 Jun 2026 15:41:51 +0400
-Subject: [GIT PULL 29/35] ui/gtk: centralize console menu and shortcut
- management
+ (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
+ id 1wcM2X-0000IP-H4
+ for qemu-devel@nongnu.org; Wed, 24 Jun 2026 07:45:11 -0400
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 65OANlkU2586224
+ for <qemu-devel@nongnu.org>; Wed, 24 Jun 2026 11:45:07 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ aURg9Rydjqo1qjZk9/UBXUGEZKeCe7brLhZ8ZDxQ7hM=; b=BSZpdC/3X9l1/Sva
+ 09/6gGb3eTW6RD7lez28Y4cjuouzd8j2XetJM9ZNHMZ7U+Ja2hvyfwYSi4vF0TiA
+ MYU6dC6WTG4lc0kM97gw13wwYi8girriiu+CgJK2UttMU8IZkdKUTAcUPaKtsxEO
+ k0pNgrOB3kBmWghbVKqoz0Puu346gyrjOo4yRg3tjrP6n4vF5y1TPA6863fOg1Ad
+ fDVt1eJoARc0isnGBfrW+8a1+O7bn15v/n5iBUgznQVDozMb8VrW2qkV3VUuXd/R
+ bdGDtYFnYWUeYu7cKM7WgD/Ebw/1co5InBQ4IlXXDrViYAv4zCGnymMR3Si5oRmC
+ VysS5g==
+Received: from mail-dl1-f72.google.com (mail-dl1-f72.google.com [74.125.82.72])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f05aqa0w9-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Wed, 24 Jun 2026 11:45:06 +0000 (GMT)
+Received: by mail-dl1-f72.google.com with SMTP id
+ a92af1059eb24-139d0f4a9a7so1150078c88.0
+ for <qemu-devel@nongnu.org>; Wed, 24 Jun 2026 04:45:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1782301505; x=1782906305; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=aURg9Rydjqo1qjZk9/UBXUGEZKeCe7brLhZ8ZDxQ7hM=;
+ b=in0aUKaN+9r0ZRB+NmbdX56x0vJv9N/3bvqDssxwraKRwvWfQZkjw/tL3m8qDfvd+A
+ oHiU6Bx/S9FVS5JjGBTGRdlxi3FeylVQfrdahLqhalhN73g2Yg8Bz03+32VeLE18UB89
+ WFfN/Nq+NDhdUtEIyYVUi5+viMA5qeQWV+/Qp/mHUATcu1Edj/FQJV0Z/YVLTuIAM26f
+ rS1se1FQ/q+m1+YzVhe6MzECWeSRJYD5J1zNYA/LQyA31dfRkbdwiDzG5aX5TtDZ2/5k
+ QFedhfQLWFEynuSnIwOgjU1WFh7jmkIaO3YpOFAvqzGhIzhwKJptCynBW7dXD/XU1Jtv
+ eodg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1782301505; x=1782906305;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=aURg9Rydjqo1qjZk9/UBXUGEZKeCe7brLhZ8ZDxQ7hM=;
+ b=omuq9nJ0WGja5RePPBmrFAiHy6Eg0qgESv0vN4qWtfO6mzNkRfB6bYQ23Vr/fo29Rd
+ QLUNLOA7Y1yv8/cZhrpsZgc0D+k6PtLtOIckNUIbIMzjV6Q1dZ0Er2DFznVgWayNQlZP
+ TOT0pIrVs/lSpTGrYep0wnNgDDotv3NzHpLlnWcc0e2v3FBgNTIc4CZO+WyAUn3eX3Je
+ MHP+VMCpPIJH55IEwxc3MA8U4vvGvkCrCZGhbVPcG3lOrYDaO2vIWcPghFNn27K35517
+ mkZL5jKtdkLsel0y0b0UkdxbFpIBulDncB97bA9Ebsx0ozWXjtR34fr5urtOZAGhv7ga
+ mRUQ==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ/VT4fpuDv3qjRu5kR4gDYDZzJhO6fK5cGvE8ctATQfqwTump+K3nIfcTMJNmcDUrb+VXGf2aXZKsNp@nongnu.org
+X-Gm-Message-State: AOJu0Yz1WfR0nAfbDsL2Z9NuRhQ6NC5SU51MeaF0CDBb+AZvDIfMa01X
+ tLfzQBZ1MyeFwX13RgJLiK5b+M1g1G1nlvGJ4JVuNFo/dXxyq1OVUveBAsP4tTTvb/6rrhOLS3g
+ eMyIlJ/SqmzcETxlTXtFHNfWrogtnuJn8IthPaVpSZ447PLy1IzwG/rpsBA==
+X-Gm-Gg: AfdE7ckXemVhebkCmJxor6icU7/bvEryr+ZUcXxc65ZAlC3doQQz1CSE7Cc1o8o7pMB
+ JmEL28plXk3dtvcBGr6xPjSWgghmNZ675igHEy8CD6JlVmZFfvWAhidBufDQJm7OuNuUndhQdxE
+ ECmohYC8TOXd8noCiCoZl2N1GcfF4hjgG17SNK2ZgPXfWTzH2pnTsXjeFp/3uyELMPO9PUp9HNr
+ hQkgy+gputRL1DxOGEBCS5vgnT+3kLv2LrX5InROBtVlxJ1vM/a1GySk+0Rt2jQluOMz6NmG8wK
+ LECmOa7rgKjHd+ZP0Kiwn4wMhZqoM8M3lyflFv3fSa5sKQbTgZ9Nhx73WKb67wDR8Wqoj56HD4A
+ ecZ0oErHWEwhYi0kFZARfuCzfsb0AyESKPPvCGsi2o4fX
+X-Received: by 2002:a05:7022:239a:b0:128:cf80:deea with SMTP id
+ a92af1059eb24-139d0bf341bmr2136416c88.1.1782301505401; 
+ Wed, 24 Jun 2026 04:45:05 -0700 (PDT)
+X-Received: by 2002:a05:7022:239a:b0:128:cf80:deea with SMTP id
+ a92af1059eb24-139d0bf341bmr2136398c88.1.1782301504852; 
+ Wed, 24 Jun 2026 04:45:04 -0700 (PDT)
+Received: from [192.168.68.103] ([189.79.21.40])
+ by smtp.gmail.com with ESMTPSA id
+ a92af1059eb24-139add5bd68sm21667597c88.11.2026.06.24.04.45.02
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 24 Jun 2026 04:45:04 -0700 (PDT)
+Message-ID: <861851aa-b3ab-4dd1-8edf-dbeb008750d6@oss.qualcomm.com>
+Date: Wed, 24 Jun 2026 08:45:00 -0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20260624-ui-v1-29-482147b0a7af@redhat.com>
-References: <20260624-ui-v1-0-482147b0a7af@redhat.com>
-In-Reply-To: <20260624-ui-v1-0-482147b0a7af@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Stefan Hajnoczi <stefanha@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=11758;
- i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=zRVnHYFnOTV49gZmsELLbX0EIR4iua2PFIT11izje5w=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqO8JoT3HAYSAQLJpwI2c16B+Nf9FHIoAWQ90I2
- dA5Uj3n1RWJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCajvCaAAKCRDa6OEJdZac
- 5VPoD/9eQWVdmj5vr6/iA1cbfCDGWBiYQVGK/xzYag0GU105e1jXy25TTwAAIb0wj9YaVnNV0Qa
- s1+N94vOirseWFdultFvA5EFtRplB1FNGE5TQQTqG/mbE0eK6wzQSkU+vHuKZZdVrHgtxA5271Z
- n1dDzCtskiDVNs9W91FmN5FFVxZcvMBtWQQs11HqRFwxl6IIMpax6xiCQnR9bEMi+L2QSpQTUJP
- DASlLAcXhmN2sr1xFMbhv8xgALY7Q/sd9/Rmq50XHnBTFg3r5hizmh3dtvMvzOlpkvau7IyUypi
- bxsLlSxMsXHiCjJfmBb9dlLIjMF2VAlSJtHpsAYTyouaVJn+MHgbKrXKSSDPWlmLAbpCPNr4veK
- /5Cq3ojygM1iawdDA50Gr2FYDwzoMPFhiO7nKZLAjtcpuZoYDnfrAraKkPMGws3rxFBtrfoed1n
- T6ZmMnng5QIYG4zkdKLLRBfB31IiOHZMz94Lk2mpaZvu68kjDEgVXjEf0Is3H6RHpoB2n6+yFIp
- DDi7g6fiVu+wjeHWnT+FLEhyJ+6p/OnttZwBXVQWcKpdEyBdf2TZKgaI4o2p2ZXT6YgtbfzrKHI
- Ct5f9XAgSInmZoWT7DAT1piLGyo2EdUMms82Gv1WG8kYzhN9VeGEXeEwNQBkOT004z8/ZOP3sgb
- jNeR3xSMeNZU/4w==
-X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
- fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=marcandre.lureau@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 8
-X-Spam_score: 0.8
-X-Spam_bar: /
-X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] target/riscv: Generate illegal exception for inval.ir and
+ w.inval in U-mode
+To: stephensportia@gmail.com, qemu-devel@nongnu.org
+Cc: Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Chao Liu <chao.liu.zevorn@gmail.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>, Weiwei Li <liwei1518@gmail.com>,
+ qemu-riscv@nongnu.org, Portia Stephens <portias@oss.tenstorrent.com>
+References: <20260622224534.1923407-1-stephensportia@gmail.com>
+From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <20260622224534.1923407-1-stephensportia@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjI0MDA5NyBTYWx0ZWRfXwzrW5VyRXnZw
+ lXo3ciyIQmahO1MRH2hThESnU++8X69aTi9yG+OzK+Kco3GIPuUHcRW6/L/7JwPURa4LnNdoofL
+ Tc91i15R4v5RZu3T4HJUlsqArvY/+KY=
+X-Proofpoint-GUID: cQ2uoqKvplq42KnwwM6XwcPvlg_dTrSv
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjI0MDA5NyBTYWx0ZWRfXx62bfn49idoc
+ s2mPOBbmtBtFeguOwNVcI5VjRqhIfP0BxD6Nse4DnJq35j0wp8fShksReYprEJGU7gxUwZuFcVK
+ xdnfbXJSsP8uXJPtk6YYt/r/pOMSP/kF635ENqSU5NH1l6dC2OF9uA7Dl0CLrAeydnWhxSldSDG
+ 0SyV37wjZ3xZKJcaVzoTyaiFanDa2GWxHxbuL6JE1e4mGrikCq/UKvfDKRWhtnMUUSzj2uRbNEm
+ iv+SuWscV4K59aE+DEfQg9r+h0rrrFnvuz5MHYXMl6Sx4AJsPAwzdoVbCkKxMidP+4WchXM7TRE
+ tx1FNjE+JZatuGverXhCDn/wHh9DbRNgdZ/EZOi0jknPtp4Fusfb6gnbyI4qomadHtmyZG2GVTm
+ CBAmy4Z6rJgtrXqIpbrOSgxylKdkbA==
+X-Authority-Analysis: v=2.4 cv=UphT8ewB c=1 sm=1 tr=0 ts=6a3bc342 cx=c_pps
+ a=bS7HVuBVfinNPG3f6cIo3Q==:117 a=sHJf4AwOIoU3qjeHFPlg6Q==:17
+ a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
+ a=p0WdMEafAAAA:8 a=pGLkceISAAAA:8 a=t9496tuAAAAA:8 a=QYG0MOca-knv6KCjgzUA:9
+ a=QEXdDO2ut3YA:10 a=vBUdepa8ALXHeOFLBtFW:22 a=4wQ91nGE5lQcD7eh5OX0:22
+X-Proofpoint-ORIG-GUID: cQ2uoqKvplq42KnwwM6XwcPvlg_dTrSv
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-24_03,2026-06-23_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0 adultscore=0 phishscore=0 spamscore=0 suspectscore=0
+ malwarescore=0 bulkscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2606240097
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,304 +156,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Replace the per-console gd_vc_menu_init() with gd_rebuild_vc_menu()
-that tears down and rebuilds all console radio menu items and
-Ctrl+Alt+N accelerators at once. This is called from initialization
-and whenever consoles are detached or reattached.
+Hi,
 
-Shortcuts now skip detached (windowed) consoles, so they always map
-to reachable tabs. Rename gd_vc_gfx_init() to add_gfx_console()
-and simplify the init function signatures now that menu creation is
-decoupled.
+On 6/22/2026 7:45 PM, stephensportia@gmail.com wrote:
+> From: Portia Stephens <portias@oss.tenstorrent.com>
+> 
+> According to the priv spec "Attempting to execute SFENCE.W.INVAL or
+> SFENCE.INVAL.IR in U-mode raises an illegal-instruction exception." Fix
+> the current implementation to generate exception.
+> 
+> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3543
+> Signed-off-by: Portia Stephens <portias@oss.tenstorrent.com>
+> ---
+>   target/riscv/insn_trans/trans_svinval.c.inc | 12 ++++++++++++
+>   1 file changed, 12 insertions(+)
+> 
+> diff --git a/target/riscv/insn_trans/trans_svinval.c.inc b/target/riscv/insn_trans/trans_svinval.c.inc
+> index a06c3b214f..10cb9e32b6 100644
+> --- a/target/riscv/insn_trans/trans_svinval.c.inc
+> +++ b/target/riscv/insn_trans/trans_svinval.c.inc
+> @@ -39,6 +39,12 @@ static bool trans_sfence_w_inval(DisasContext *ctx, arg_sfence_w_inval *a)
+>   {
+>       REQUIRE_SVINVAL(ctx);
+>       REQUIRE_EXT(ctx, RVS);
+> +    if (ctx->priv == PRV_U) {
+> +        /* Set the virtual exception if virt enabled */
+> +        ctx->virt_inst_excp = ctx->virt_enabled;
+> +        gen_exception_illegal(ctx);
+> +        return false;
+> +    }
 
-Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Message-ID: <20260623-b4-ui-v4-29-4656aec3398d@redhat.com>
----
- include/ui/gtk.h |   1 +
- ui/gtk.c         | 127 ++++++++++++++++++++++++++++++++++++-------------------
- 2 files changed, 85 insertions(+), 43 deletions(-)
+I am afraid that the bug is already fixed in master by:
 
-diff --git a/include/ui/gtk.h b/include/ui/gtk.h
-index fb60cbfda5d..53d0e447a23 100644
---- a/include/ui/gtk.h
-+++ b/include/ui/gtk.h
-@@ -120,6 +120,7 @@ struct GtkDisplayState {
- 
-     GPtrArray *vcs;
- 
-+    GtkWidget *vc_menu_separator;
-     GtkWidget *show_tabs_item;
-     GtkWidget *untabify_item;
-     GtkWidget *show_menubar_item;
-diff --git a/ui/gtk.c b/ui/gtk.c
-index 741f7bfe373..e7a9156f206 100644
---- a/ui/gtk.c
-+++ b/ui/gtk.c
-@@ -142,6 +142,7 @@ static void gd_grab_pointer(VirtualConsole *vc, const char *reason);
- static void gd_ungrab_pointer(GtkDisplayState *s);
- static void gd_grab_keyboard(VirtualConsole *vc, const char *reason);
- static void gd_ungrab_keyboard(GtkDisplayState *s);
-+static void gd_rebuild_vc_menu(GtkDisplayState *s);
- 
- /** Utility Functions **/
- 
-@@ -1488,7 +1489,6 @@ static gboolean gd_tab_window_close(GtkWidget *widget, GdkEvent *event,
-     GtkDisplayState *s = vc->s;
-     int page;
- 
--    gtk_widget_set_sensitive(vc->menu_item, true);
-     g_object_ref(vc->tab_item);
-     gtk_container_remove(GTK_CONTAINER(vc->window), vc->tab_item);
-     page = gd_vc_notebook_pos(s, vc);
-@@ -1508,6 +1508,8 @@ static gboolean gd_tab_window_close(GtkWidget *widget, GdkEvent *event,
-     }
- #endif
- 
-+    gd_rebuild_vc_menu(s);
-+
-     if (vc == gd_vc_find_by_menu(s)) {
-         gtk_widget_grab_focus(vc->focus);
-     }
-@@ -1539,7 +1541,6 @@ static void gd_menu_untabify(GtkMenuItem *item, void *opaque)
-                                        FALSE);
-     }
-     if (!vc->window) {
--        gtk_widget_set_sensitive(vc->menu_item, false);
-         vc->window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
- #if defined(CONFIG_OPENGL)
-         if (vc->gfx.esurface) {
-@@ -1566,6 +1567,7 @@ static void gd_menu_untabify(GtkMenuItem *item, void *opaque)
-             gtk_accel_group_connect(ag, GDK_KEY_g, HOTKEY_MODIFIERS, 0, cb);
-         }
- 
-+        gd_rebuild_vc_menu(s);
-         gd_update_geometry_hints(vc);
-         gd_update_caption(s);
-     }
-@@ -1906,22 +1908,73 @@ static gboolean gd_configure(GtkWidget *widget,
- 
- /** Virtual Console Callbacks **/
- 
--static GSList *gd_vc_menu_init(GtkDisplayState *s, VirtualConsole *vc,
--                               int idx, GSList *group, GtkWidget *view_menu)
-+static void gd_rebuild_vc_menu(GtkDisplayState *s)
- {
--    vc->menu_item = gtk_radio_menu_item_new_with_mnemonic(group, vc->label);
--    gtk_accel_group_connect(s->accel_group, GDK_KEY_1 + idx,
--            HOTKEY_MODIFIERS, 0,
--            g_cclosure_new_swap(G_CALLBACK(gd_accel_switch_vc), vc, NULL));
--    gtk_accel_label_set_accel(
--            GTK_ACCEL_LABEL(gtk_bin_get_child(GTK_BIN(vc->menu_item))),
--            GDK_KEY_1 + idx, HOTKEY_MODIFIERS);
-+    GSList *group = NULL;
-+    VirtualConsole *vc;
-+    GList *children;
-+    gint insert_pos;
-+    int shortcut_idx = 0;
-+    guint i;
-+
-+    for (i = 0; i < s->vcs->len; i++) {
-+        vc = g_ptr_array_index(s->vcs, i);
-+        if (vc->menu_item) {
-+            gtk_widget_destroy(vc->menu_item);
-+            vc->menu_item = NULL;
-+        }
-+    }
-+
-+    for (i = 0; i < 9; i++) {
-+        gtk_accel_group_disconnect_key(s->accel_group,
-+                                       GDK_KEY_1 + i, HOTKEY_MODIFIERS);
-+    }
-+
-+    /* find insertion position (just before vc_menu_separator) */
-+    children = gtk_container_get_children(GTK_CONTAINER(s->view_menu));
-+    insert_pos = g_list_index(children, s->vc_menu_separator);
-+    g_list_free(children);
-+
-+    /* create new menu items for each console */
-+    for (i = 0; i < s->vcs->len; i++) {
-+        vc = g_ptr_array_index(s->vcs, i);
- 
--    g_signal_connect(vc->menu_item, "activate",
--                     G_CALLBACK(gd_menu_switch_vc), s);
--    gtk_menu_shell_append(GTK_MENU_SHELL(view_menu), vc->menu_item);
-+        vc->menu_item = gtk_radio_menu_item_new_with_mnemonic(group,
-+                                                               vc->label);
-+        group = gtk_radio_menu_item_get_group(
-+            GTK_RADIO_MENU_ITEM(vc->menu_item));
-+
-+        if (vc->window) {
-+            gtk_widget_set_sensitive(vc->menu_item, false);
-+        } else if (shortcut_idx < 9) {
-+            guint key = GDK_KEY_1 + shortcut_idx;
-+            gtk_accel_group_connect(s->accel_group, key,
-+                    HOTKEY_MODIFIERS, 0,
-+                    g_cclosure_new_swap(G_CALLBACK(gd_accel_switch_vc),
-+                                        vc, NULL));
-+            gtk_accel_label_set_accel(
-+                    GTK_ACCEL_LABEL(gtk_bin_get_child(GTK_BIN(vc->menu_item))),
-+                    key, HOTKEY_MODIFIERS);
-+            shortcut_idx++;
-+        }
- 
--    return gtk_radio_menu_item_get_group(GTK_RADIO_MENU_ITEM(vc->menu_item));
-+        g_signal_connect(vc->menu_item, "activate",
-+                         G_CALLBACK(gd_menu_switch_vc), s);
-+        gtk_menu_shell_insert(GTK_MENU_SHELL(s->view_menu),
-+                              vc->menu_item, insert_pos + i);
-+        gtk_widget_show(vc->menu_item);
-+    }
-+
-+    /* sync active menu item with current notebook page */
-+    vc = gd_vc_find_current(s);
-+    if (vc && vc->menu_item) {
-+        g_signal_handlers_block_by_func(vc->menu_item,
-+                                        gd_menu_switch_vc, s);
-+        gtk_check_menu_item_set_active(
-+            GTK_CHECK_MENU_ITEM(vc->menu_item), TRUE);
-+        g_signal_handlers_unblock_by_func(vc->menu_item,
-+                                          gd_menu_switch_vc, s);
-+    }
- }
- 
- #if defined(CONFIG_VTE)
-@@ -2064,9 +2117,8 @@ static gboolean gd_vc_in(VteTerminal *terminal, gchar *text, guint size,
-     return TRUE;
- }
- 
--static GSList *gd_vc_vte_init(GtkDisplayState *s, VirtualConsole *vc,
--                              Chardev *chr, int idx,
--                              GSList *group, GtkWidget *view_menu)
-+static void gd_vc_vte_init(GtkDisplayState *s, VirtualConsole *vc,
-+                           Chardev *chr, int idx)
- {
-     char buffer[32];
-     GtkWidget *box;
-@@ -2082,7 +2134,6 @@ static GSList *gd_vc_vte_init(GtkDisplayState *s, VirtualConsole *vc,
- 
-     snprintf(buffer, sizeof(buffer), "vc%d", idx);
-     vc->label = g_strdup(vc->vte.chr->label ? : buffer);
--    group = gd_vc_menu_init(s, vc, idx, group, view_menu);
- 
-     vc->vte.terminal = vte_terminal_new();
-     g_signal_connect(vc->vte.terminal, "commit", G_CALLBACK(gd_vc_in), vc);
-@@ -2128,20 +2179,16 @@ static GSList *gd_vc_vte_init(GtkDisplayState *s, VirtualConsole *vc,
-                              gtk_label_new(vc->label));
- 
-     qemu_chr_be_event(vc->vte.chr, CHR_EVENT_OPENED);
--
--    return group;
- }
- 
--static void gd_vcs_init(GtkDisplayState *s, GSList *group,
--                        GtkWidget *view_menu)
-+static void gd_vcs_init(GtkDisplayState *s)
- {
-     int i;
- 
-     for (i = 0; i < nb_vcs; i++) {
-         VirtualConsole *vc = g_new0(VirtualConsole, 1);
-         g_ptr_array_add(s->vcs, vc);
--        group = gd_vc_vte_init(s, vc, vcs[i], s->vcs->len - 1,
--                               group, view_menu);
-+        gd_vc_vte_init(s, vc, vcs[i], s->vcs->len - 1);
-     }
- }
- #endif /* CONFIG_VTE */
-@@ -2285,12 +2332,12 @@ static bool gd_scale_valid(double scale)
-     return scale >= VC_SCALE_MIN && scale <= VC_SCALE_MAX;
- }
- 
--static GSList *gd_vc_gfx_init(GtkDisplayState *s, VirtualConsole *vc,
--                              QemuConsole *con, int idx,
--                              GSList *group, GtkWidget *view_menu)
-+static void add_gfx_console(GtkDisplayState *s, QemuConsole *con)
- {
-+    VirtualConsole *vc = g_new0(VirtualConsole, 1);
-     const DisplayChangeListenerOps *ops = &dcl_ops;
- 
-+    g_ptr_array_add(s->vcs, vc);
-     vc->label = qemu_console_get_label(con);
-     vc->s = s;
-     vc->gfx.preferred_scale = 1.0;
-@@ -2367,14 +2414,10 @@ static GSList *gd_vc_gfx_init(GtkDisplayState *s, VirtualConsole *vc,
-     qemu_console_register_listener(con, &vc->gfx.dcl, ops);
- 
-     gd_connect_vc_gfx_signals(vc);
--    group = gd_vc_menu_init(s, vc, idx, group, view_menu);
--
--    return group;
- }
- 
--static GtkWidget *gd_create_menu_view(GtkDisplayState *s, DisplayOptions *opts)
-+static void gd_create_menu_view(GtkDisplayState *s, DisplayOptions *opts)
- {
--    GSList *group = NULL;
-     GtkWidget *view_menu;
-     GtkWidget *separator;
-     QemuConsole *con;
-@@ -2382,6 +2425,7 @@ static GtkWidget *gd_create_menu_view(GtkDisplayState *s, DisplayOptions *opts)
-     int vc, i;
- 
-     view_menu = gtk_menu_new();
-+    s->view_menu = view_menu;
-     gtk_menu_set_accel_group(GTK_MENU(view_menu), s->accel_group);
- 
-     s->full_screen_item = gtk_menu_item_new_with_mnemonic(_("_Fullscreen"));
-@@ -2445,14 +2489,11 @@ static GtkWidget *gd_create_menu_view(GtkDisplayState *s, DisplayOptions *opts)
- 
-     /* gfx */
-     for (vc = 0;; vc++) {
--        VirtualConsole *v;
-         con = qemu_console_lookup_by_index(vc);
-         if (!con) {
-             break;
-         }
--        v = g_new0(VirtualConsole, 1);
--        g_ptr_array_add(s->vcs, v);
--        group = gd_vc_gfx_init(s, v, con, vc, group, view_menu);
-+        add_gfx_console(s, con);
-         if (qemu_console_ui_info_supported(con)) {
-             zoom_to_fit = true;
-         }
-@@ -2478,11 +2519,13 @@ static GtkWidget *gd_create_menu_view(GtkDisplayState *s, DisplayOptions *opts)
- 
- #if defined(CONFIG_VTE)
-     /* vte */
--    gd_vcs_init(s, group, view_menu);
-+    gd_vcs_init(s);
- #endif
- 
--    separator = gtk_separator_menu_item_new();
--    gtk_menu_shell_append(GTK_MENU_SHELL(view_menu), separator);
-+    s->vc_menu_separator = gtk_separator_menu_item_new();
-+    gtk_menu_shell_append(GTK_MENU_SHELL(view_menu), s->vc_menu_separator);
-+
-+    gd_rebuild_vc_menu(s);
- 
-     s->show_tabs_item = gtk_check_menu_item_new_with_mnemonic(_("Show _Tabs"));
-     gtk_menu_shell_append(GTK_MENU_SHELL(view_menu), s->show_tabs_item);
-@@ -2501,8 +2544,6 @@ static GtkWidget *gd_create_menu_view(GtkDisplayState *s, DisplayOptions *opts)
-             GTK_ACCEL_LABEL(gtk_bin_get_child(GTK_BIN(s->show_menubar_item))),
-             GDK_KEY_m, HOTKEY_MODIFIERS);
-     gtk_menu_shell_append(GTK_MENU_SHELL(view_menu), s->show_menubar_item);
--
--    return view_menu;
- }
- 
- static void gd_create_menus(GtkDisplayState *s, DisplayOptions *opts)
-@@ -2511,7 +2552,7 @@ static void gd_create_menus(GtkDisplayState *s, DisplayOptions *opts)
- 
-     s->accel_group = gtk_accel_group_new();
-     s->machine_menu = gd_create_menu_machine(s);
--    s->view_menu = gd_create_menu_view(s, opts);
-+    gd_create_menu_view(s, opts);
- 
-     s->machine_menu_item = gtk_menu_item_new_with_mnemonic(_("_Machine"));
-     gtk_menu_item_set_submenu(GTK_MENU_ITEM(s->machine_menu_item),
+commit a4a35544e43220657f718a5d0be5ab49c6129000
+Author: Zephyr Li <fritchleybohrer@gmail.com>
+Date:   Fri May 22 11:31:44 2026 +0800
 
--- 
-2.54.0
+     target/riscv: Reject Svinval instructions in U-mode
+
+
+We now have this macro that is called in all those insns:
+
+/* Test if priv level is M or S. */
+#define REQUIRE_PRIV_MS(ctx) do {          \
+     if (ctx->priv == PRV_U) {              \
+         return false;                      \
+     }                                      \
+} while (0)
+
+
+That said, your code is setting virtual exceptions too.  Feel free to re-send
+this patch enhancing the REQUIRE_PRIV_MS() macro to do the same.
+
+
+I'll close the gitlab bug as dup/already fixed.  Thanks,
+Daniel
+
+
+
+>       /* Do nothing currently */
+>       return true;
+>   }
+> @@ -47,6 +53,12 @@ static bool trans_sfence_inval_ir(DisasContext *ctx, arg_sfence_inval_ir *a)
+>   {
+>       REQUIRE_SVINVAL(ctx);
+>       REQUIRE_EXT(ctx, RVS);
+> +    if (ctx->priv == PRV_U) {
+> +        /* Set the virtual exception if virt enabled */
+> +        ctx->virt_inst_excp = ctx->virt_enabled;
+> +        gen_exception_illegal(ctx);
+> +        return false;
+> +    }
+>       /* Do nothing currently */
+>       return true;
+>   }
 
 
