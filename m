@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A38EDCDB479
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 17:40:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D386CCDB479
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 17:40:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcRZx-00034e-Qf; Wed, 24 Jun 2026 13:40:01 -0400
+	id 1wcRa2-0003L5-Gh; Wed, 24 Jun 2026 13:40:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wcRZv-00030N-Rd
- for qemu-devel@nongnu.org; Wed, 24 Jun 2026 13:39:59 -0400
+ id 1wcRa0-0003FE-TO
+ for qemu-devel@nongnu.org; Wed, 24 Jun 2026 13:40:05 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wcRZt-0004dS-Qe
- for qemu-devel@nongnu.org; Wed, 24 Jun 2026 13:39:59 -0400
+ id 1wcRZz-0004fO-Bq
+ for qemu-devel@nongnu.org; Wed, 24 Jun 2026 13:40:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1782322797;
+ s=mimecast20190719; t=1782322802;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=gHcDmHbgJI4p+ZIwjwIx//lexhs8DCr8CWxaidW5nWE=;
- b=I+OJogePdHL85f4t7G6gwv197ekN6Qr1uCjPe5RJWGYIJGD0qrBRwW6+oPRn+Dg1z3y0zw
- 0htmqNX1R4MgXoezYaQS7dSW1eEAf63rZ3r9bjvnH7NP5bYiLcmF5EvhDlHWfSdqsvDygP
- c7BAZ1/OvoiYumEXMXZbSsm1xhlERdI=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=o1rJcZ14dB8JQNOyy+L2uBZqp+ZSHNsTjFAdWWw+MTQ=;
+ b=AdMq5GTSOqWhGsDdj0acnwUbDCrINYCHXCkNJwAGCjpEBIdQLHOnnAUDEQOcIdHUrFGJgt
+ KQGm8/VTFU9XB8x8t6cHvFoO8lssGOCViewxebrZUFoJLKNXQ/wXbus7hsqZLt7LiRhFGh
+ Leni3K29yBGie09Bs+mV59Z0+uhLOOk=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-630-cEpnaqcLOtOI8avT8MA4fQ-1; Wed,
- 24 Jun 2026 13:39:51 -0400
-X-MC-Unique: cEpnaqcLOtOI8avT8MA4fQ-1
-X-Mimecast-MFC-AGG-ID: cEpnaqcLOtOI8avT8MA4fQ_1782322790
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-478-kGl-W-u8NKuu7mags4NB0Q-1; Wed,
+ 24 Jun 2026 13:39:59 -0400
+X-MC-Unique: kGl-W-u8NKuu7mags4NB0Q-1
+X-Mimecast-MFC-AGG-ID: kGl-W-u8NKuu7mags4NB0Q_1782322798
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7DB521955EA6; Wed, 24 Jun 2026 17:39:50 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 05C1B1956060; Wed, 24 Jun 2026 17:39:58 +0000 (UTC)
 Received: from berrange.com (unknown [10.44.32.102])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 37800180034F; Wed, 24 Jun 2026 17:39:46 +0000 (UTC)
+ id CE3D5180034F; Wed, 24 Jun 2026 17:39:54 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: devel@lists.libvirt.org,
@@ -58,10 +58,9 @@ Cc: devel@lists.libvirt.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Peter Krempa <pkrempa@redhat.com>
-Subject: [PATCH v5 28/35] tests/functional: add e2e test for dynamic QMP
- monitor hotplug
-Date: Wed, 24 Jun 2026 18:37:44 +0100
-Message-ID: <20260624173752.2928717-29-berrange@redhat.com>
+Subject: [PATCH v5 30/35] qom: add method for getting the "id" of a QOM object
+Date: Wed, 24 Jun 2026 18:37:46 +0100
+Message-ID: <20260624173752.2928717-31-berrange@redhat.com>
 In-Reply-To: <20260624173752.2928717-1-berrange@redhat.com>
 References: <20260624173752.2928717-1-berrange@redhat.com>
 MIME-Version: 1.0
@@ -93,239 +92,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Christian Brauner <brauner@kernel.org>
+The 'user_creatable_del' method doesn't want the 'Object *', but
+instead the "id" of the object to be deleted. While most of its
+work could be done with the "Object *" alone, purging the QemuOpts
+values needs the "id".
 
-Add functional tests that exercise dynamic monitor hotplug with real
-socket connections:
+The "id" is not recorded against an Object though, it is indirectly
+stored as a property linking the parent and child objects together.
+Add an accessor that can fetch this property name.
 
-- Hotplug cycle: chardev-add a unix socket, object-add, connect to the
-  socket, receive the QMP greeting, negotiate capabilities, send
-  query-version, disconnect, remove the monitor and chardev, then repeat
-  the entire cycle a second time to verify cleanup and reuse.
-
-- Self-removal: a dynamically-added monitor sends object-del
-  targeting itself, verifying that the request is rejected
-
-- Large response: send query-qmp-schema on a dynamic monitor to
-  exercise the output buffer flush path with a large response payload.
-
-- Events after negotiation: trigger STOP/RESUME events via the main
-  monitor and verify they are delivered on the dynamic monitor.
-
-This complements the qtest unit tests by verifying that a real QMP
-client can connect to a dynamically-added monitor and exchange messages.
-
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
-[DB: modified to use object-add/object-del; adjust self-removal test
- to validate rejection of request]
 Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 Tested-by: Peter Krempa <pkrempa@redhat.com>
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- MAINTAINERS                                   |   1 +
- tests/functional/generic/meson.build          |   1 +
- .../generic/test_monitor_hotplug.py           | 168 ++++++++++++++++++
- 3 files changed, 170 insertions(+)
- create mode 100755 tests/functional/generic/test_monitor_hotplug.py
+ include/qom/object.h | 10 ++++++++++
+ qom/object.c         | 17 +++++++++++++++++
+ 2 files changed, 27 insertions(+)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 93df53d87f..c74ffe56ae 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -3616,6 +3616,7 @@ F: docs/interop/*qmp-*
- F: scripts/qmp/
- F: tests/qtest/qmp-test.c
- F: tests/qtest/qmp-cmd-test.c
-+F: tests/functional/generic/test_monitor_hotplug.py
- T: git https://repo.or.cz/qemu/armbru.git qapi-next
+diff --git a/include/qom/object.h b/include/qom/object.h
+index 11f55613fc..216d2a30f6 100644
+--- a/include/qom/object.h
++++ b/include/qom/object.h
+@@ -1759,6 +1759,16 @@ ObjectProperty *object_property_try_add_child(Object *obj, const char *name,
+ ObjectProperty *object_property_add_child(Object *obj, const char *name,
+                                           Object *child);
  
- qtest
-diff --git a/tests/functional/generic/meson.build b/tests/functional/generic/meson.build
-index 09763c5d22..c94105c62e 100644
---- a/tests/functional/generic/meson.build
-+++ b/tests/functional/generic/meson.build
-@@ -4,6 +4,7 @@ tests_generic_system = [
-   'empty_cpu_model',
-   'info_usernet',
-   'linters',
-+  'monitor_hotplug',
-   'version',
-   'vnc',
- ]
-diff --git a/tests/functional/generic/test_monitor_hotplug.py b/tests/functional/generic/test_monitor_hotplug.py
-new file mode 100755
-index 0000000000..5d8a159eb0
---- /dev/null
-+++ b/tests/functional/generic/test_monitor_hotplug.py
-@@ -0,0 +1,168 @@
-+#!/usr/bin/env python3
-+#
-+# SPDX-License-Identifier: GPL-2.0-or-later
-+#
-+# Functional test for dynamic QMP monitor hotplug
-+#
-+# Copyright (c) 2026 Christian Brauner
++/**
++ * object_property_get_child_name:
++ * @obj: the object that owns the property
++ * @child: the object referenced by the child property
++ *
++ * Return the property name against which @child is registered
++ * with @obj, or NULL if @obj is not a parent of @child.
++ */
++char *object_property_get_child_name(Object *obj, Object *child);
 +
-+import os
+ typedef enum {
+     /* Unref the link pointer when the property is deleted */
+     OBJ_PROP_LINK_STRONG = 0x1,
+diff --git a/qom/object.c b/qom/object.c
+index f79b2cf361..66bbd1488b 100644
+--- a/qom/object.c
++++ b/qom/object.c
+@@ -1952,6 +1952,23 @@ object_property_add_child(Object *obj, const char *name,
+     return object_property_try_add_child(obj, name, child, &error_abort);
+ }
+ 
++char *object_property_get_child_name(Object *obj, Object *child)
++{
++    ObjectProperty *prop;
++    GHashTableIter iter;
++    gpointer key, value;
 +
-+from qemu_test import QemuSystemTest
-+
-+from qemu.qmp.legacy import QEMUMonitorProtocol
-+
-+
-+class MonitorHotplug(QemuSystemTest):
-+
-+    def setUp(self):
-+        super().setUp()
-+        sock_dir = self.socket_dir()
-+        self._sock_path = os.path.join(sock_dir.name, 'hotplug.sock')
-+
-+    def _add_monitor(self):
-+        """Create a chardev + monitor and return the socket path."""
-+        sock = self._sock_path
-+        self.vm.cmd('chardev-add', id='hotplug-chr', backend={
-+            'type': 'socket',
-+            'data': {
-+                'addr': {
-+                    'type': 'unix',
-+                    'data': {'path': sock}
-+                },
-+                'server': True,
-+                'wait': False,
-+            }
-+        })
-+        self.vm.cmd('object-add', id='hotplug-mon',
-+                    qom_type='monitor-qmp',
-+                    chardev='hotplug-chr')
-+        return sock
-+
-+    def _remove_monitor(self):
-+        """Remove the monitor + chardev."""
-+        self.vm.cmd('object-del', id='hotplug-mon')
-+        self.vm.cmd('chardev-remove', id='hotplug-chr')
-+
-+    def _connect_and_handshake(self, sock_path):
-+        """
-+        Connect to the dynamic monitor socket, perform the QMP
-+        greeting and capability negotiation, send a command, then
-+        disconnect.
-+        """
-+        qmp = QEMUMonitorProtocol(sock_path)
-+
-+        # connect(negotiate=True) receives the greeting, validates it,
-+        # and sends qmp_capabilities automatically.
-+        greeting = qmp.connect(negotiate=True)
-+        self.assertIn('QMP', greeting)
-+        self.assertIn('version', greeting['QMP'])
-+        self.assertIn('capabilities', greeting['QMP'])
-+
-+        # Send a real command to prove the session is fully functional
-+        resp = qmp.cmd_obj({'execute': 'query-version'})
-+        self.assertIn('return', resp)
-+        self.assertIn('qemu', resp['return'])
-+
-+        qmp.close()
-+
-+    def test_hotplug_cycle(self):
-+        """
-+        Hotplug a monitor, do the full QMP handshake, unplug it,
-+        then repeat the whole cycle a second time.
-+        """
-+        self.set_machine('none')
-+        self.vm.add_args('-nodefaults')
-+        self.vm.launch()
-+
-+        # First cycle
-+        sock = self._add_monitor()
-+        self._connect_and_handshake(sock)
-+        self._remove_monitor()
-+
-+        # Second cycle -- same ids, same path, must work
-+        sock = self._add_monitor()
-+        self._connect_and_handshake(sock)
-+        self._remove_monitor()
-+
-+    def test_self_removal(self):
-+        """
-+        A dynamically-added monitor sends object-del targeting
-+        itself.  Verify the request is rejected, but the monitor
-+        can still be deleted from outside its own context.
-+        """
-+        self.set_machine('none')
-+        self.vm.add_args('-nodefaults')
-+        self.vm.launch()
-+
-+        sock = self._add_monitor()
-+
-+        qmp = QEMUMonitorProtocol(sock)
-+        greeting = qmp.connect(negotiate=True)
-+        self.assertIn('QMP', greeting)
-+
-+        # Self-removal: the dynamic monitor raises error
-+        resp = qmp.cmd_obj({'execute': 'object-del',
-+                            'arguments': {'id': 'hotplug-mon'}})
-+        self.assertIn('error', resp)
-+
-+        qmp.close()
-+
-+        resp = self.vm.cmd('object-del', id='hotplug-mon')
-+
-+        # Clean up the chardev
-+        self.vm.cmd('chardev-remove', id='hotplug-chr')
-+
-+    def test_large_response(self):
-+        """
-+        Send a command with a large response (query-qmp-schema) on a
-+        dynamically-added monitor to exercise the output buffer flush
-+        path.
-+        """
-+        self.set_machine('none')
-+        self.vm.add_args('-nodefaults')
-+        self.vm.launch()
-+
-+        sock = self._add_monitor()
-+
-+        qmp = QEMUMonitorProtocol(sock)
-+        qmp.connect(negotiate=True)
-+
-+        resp = qmp.cmd_obj({'execute': 'query-qmp-schema'})
-+        self.assertIn('return', resp)
-+        self.assertIsInstance(resp['return'], list)
-+        self.assertGreater(len(resp['return']), 0)
-+
-+        qmp.close()
-+        self._remove_monitor()
-+
-+    def test_events_after_negotiation(self):
-+        """
-+        Verify that QMP events are delivered on a dynamically-added
-+        monitor after capability negotiation completes.
-+        """
-+        self.set_machine('none')
-+        self.vm.add_args('-nodefaults')
-+        self.vm.launch()
-+
-+        sock = self._add_monitor()
-+
-+        qmp = QEMUMonitorProtocol(sock)
-+        qmp.connect(negotiate=True)
-+
-+        # Trigger a STOP event via the main monitor, then read it
-+        # from the dynamic monitor.
-+        self.vm.cmd('stop')
-+        resp = qmp.pull_event(wait=True)
-+        self.assertEqual(resp['event'], 'STOP')
-+
-+        self.vm.cmd('cont')
-+        resp = qmp.pull_event(wait=True)
-+        self.assertEqual(resp['event'], 'RESUME')
-+
-+        qmp.close()
-+        self._remove_monitor()
++    g_hash_table_iter_init(&iter, obj->properties);
++    while (g_hash_table_iter_next(&iter, &key, &value)) {
++        prop = value;
++        if (object_property_is_child(prop) && prop->opaque == child) {
++            return g_strdup(prop->name);
++        }
++    }
++    return NULL;
++}
 +
 +
-+if __name__ == '__main__':
-+    QemuSystemTest.main()
+ void object_property_allow_set_link(const Object *obj, const char *name,
+                                     Object *val, Error **errp)
+ {
 -- 
 2.54.0
 
