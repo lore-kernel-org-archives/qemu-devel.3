@@ -4,49 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C48CCDB479
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 13:38:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32F5DCDB481
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 13:38:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcNmk-0006l9-Lu; Wed, 24 Jun 2026 09:36:58 -0400
+	id 1wcNlt-0004jA-Dy; Wed, 24 Jun 2026 09:36:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wcNmf-0006Yo-OD; Wed, 24 Jun 2026 09:36:53 -0400
+ id 1wcNlo-0004IX-Bi; Wed, 24 Jun 2026 09:36:00 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wcNmd-0000xb-QY; Wed, 24 Jun 2026 09:36:53 -0400
+ id 1wcNlm-0000sL-Jf; Wed, 24 Jun 2026 09:36:00 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1782307997; bh=Wqggm+YI9CGOXrC37tB98c0M6KNUDE9ZIppSxjX+MCI=;
+ t=1782307997; bh=jdO06w1bx/0mcHC/4q+Ne5w93oHOj/sR1DdBi8Mfk7I=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=S62EN56Jy92Usuy9FptzZ1Dot/ymDsY3W7lxtQW+rWz/kX/EZ37+1vh+4eFN31BRM
- yy1OL8mBTROwq3rDaWNEbwRBnLtA6Cks042gGLV1DjICaxlGJQc7MgD9V9sSxkGWYz
- omydD9gtdxQnMNaHJBnUMG3pNH7v7iT0XQ/Q22Wd/78M8PZXfaOG0IlXCWX8t1bLJC
- 3vT4VgkgMaNqSNJuS33KgN1bjlxx9f3A2J9Hjj7rYdP7NDpivkG0HrliJZiTwLn7dm
- 5Rzxr0+imAvyGBoCQZchXEyNwPuMCmuKnd/MWG9im2zOsYahaOBeFqyhFf/srqNAuP
- 3kMssNd/q8gsg==
+ b=yI6sal8ldZis1gvWbZVrAaVXP7wBQOC7z0uer1yr+8HuPRcr/UVjha8h3hAh08NWg
+ SN7NWoYqHtzWvTGV7Lv2cqOLlLm2kULgYfULgbTB4F0oeWLiH75e/mF0M99GZ/4zKA
+ 60cdcBxfpEzfw80yh7hVtNNNNug4Ah22kEJsbCVr4ZPnv7vIrgVh2x9UkaXiJinPiC
+ lvXWqlnSdEBWmklOiBnMfjSfc1d/mNDRekPoXzH2SQaxuESM/UvoZjDUWSl/Tjioxc
+ wqKIzcNHHjBkxaapJiJIHVJCyqHCS0VOgiV8X7w6jCGOSOewbdmiuU9v0U9ysHyw1q
+ mq6KnVebNe6yA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id DFCDD1BA9DA;
+ by isrv.corpit.ru (Postfix) with ESMTP id 55F001BA9D2;
  Wed, 24 Jun 2026 16:33:17 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 796253DEA29;
- Wed, 24 Jun 2026 16:33:23 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id E4C103DEA21;
+ Wed, 24 Jun 2026 16:33:22 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Matt Turner <mattst88@gmail.com>,
- Yoshinori Sato <yoshinori.sato@nifty.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Helge Deller <deller@gmx.de>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.2 040/107] linux-user/sh4: preserve T/M/Q bits across
- signal delivery
-Date: Wed, 24 Jun 2026 16:30:45 +0300
-Message-ID: <20260624133301.403266-40-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Chenyi Qiang <chenyi.qiang@intel.com>,
+ Farrah Chen <farrah.chen@intel.com>,
+ Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.2 032/107] vfio/container: Restrict dma_map_file() to
+ shared RAM or RAM devices
+Date: Wed, 24 Jun 2026 16:30:37 +0300
+Message-ID: <20260624133301.403266-32-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.2-20260624163118@cover.tls.msk.ru>
 References: <qemu-stable-11.0.2-20260624163118@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -71,97 +73,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Matt Turner <mattst88@gmail.com>
+From: Chenyi Qiang <chenyi.qiang@intel.com>
 
-QEMU keeps the SH4 T, M and Q status-register bits outside env->sr, in
-the dedicated env->sr_t, env->sr_m and env->sr_q fields; cpu_read_sr()
-folds them back into the architectural SR value and cpu_write_sr()
-splits them back out.
+vfio_container_dma_map() uses dma_map_file() whenever a RAMBlock has an
+fd and the VFIO IOMMU backend supports file-based DMA mapping. That is
+not correct for private file-backed guest RAM.
 
-setup_sigcontext() saved the bare env->sr (so the T/M/Q bits were always
-zero in the signal frame) and restore_sigcontext() wrote the value
-straight back into env->sr without updating sr_t/sr_m/sr_q. As a result
-the T bit was never preserved across signal delivery: on sigreturn the
-interrupted code resumed with whatever T value the signal handler last
-left behind. Any conditional branch (or addc/subc/rotcl/div1, etc.)
-immediately following the interrupted instruction could then take the
-wrong path.
+dma_map_file() resolves PFNs from the backing file, but private guest
+RAM mappings (MAP_PRIVATE) can run on different PFNs than the file
+because they are subject to copy-on-write (COW) anomalies. As a result,
+using dma_map_file() on a privately mapped RAMBlock can program DMA
+against pages that do not back QEMU's actual guest memory.
 
-This is the cause of the long-standing intermittent failures of the
-tests/tcg/multiarch/signals.c test on sh4, which was marked BROKEN. With
-a SIGRTMIN timer firing every millisecond across many threads, the race
-was hit a few percent of the time and corrupted the guest heap, surfacing
-as a SIGSEGV in memset, a malloc assertion, or an rseq registration abort.
+Fix this by using dma_map_file() only for shared mapped RAMBlocks
+(MAP_SHARED) or RAM device regions.
 
-Traced on a deterministic rr recording: a cmp/hi set T=0, the timer
-signal interrupted the very next instruction (a bf), the handler left
-T=1, and the resumed bf took glibc calloc's MORECORE_CLEARS branch,
-using the old top-chunk size as the clear length for a freshly split
-small chunk and running memset off the end of the heap.
-
-Fix setup_sigcontext()/restore_sigcontext() to use cpu_read_sr() and
-cpu_write_sr() so the T, M and Q bits round-trip correctly, and drop the
-BROKEN annotation on the sh4 signals test.
-
-Fixes: c3b5bc8ab3 ("SH4: Signal handling for the user space emulator, by Magnus Damm.")
-Cc: qemu-stable@nongnu.org
-Reviewed-by: Yoshinori Sato <yoshinori.sato@nifty.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Matt Turner <mattst88@gmail.com>
-Signed-off-by: Helge Deller <deller@gmx.de>
-(cherry picked from commit 6bf4c0295cccf74f3c5c0b674328b97d6fd1505c)
+Fixes: fb32965b6dd8 ("vfio/iommufd: use IOMMU_IOAS_MAP_FILE")
+Reported-by: Farrah Chen <farrah.chen@intel.com>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=220776
+Reviewed-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+Suggested-by: Cédric Le Goater <clg@redhat.com>
+Signed-off-by: Chenyi Qiang <chenyi.qiang@intel.com>
+Link: https://lore.kernel.org/qemu-devel/20260527101109.71781-1-chenyi.qiang@intel.com
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Signed-off-by: Cédric Le Goater <clg@redhat.com>
+(cherry picked from commit e6c47bebdf8628e635e1ba970919ca96d572dbbe)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/linux-user/sh4/signal.c b/linux-user/sh4/signal.c
-index d70be24c38..cc36425c49 100644
---- a/linux-user/sh4/signal.c
-+++ b/linux-user/sh4/signal.c
-@@ -131,8 +131,10 @@ static void setup_sigcontext(struct target_sigcontext *sc,
-     COPY(gregs[14]); COPY(gregs[15]);
-     COPY(gbr); COPY(mach);
-     COPY(macl); COPY(pr);
--    COPY(sr); COPY(pc);
-+    COPY(pc);
- #undef COPY
-+    /* The T, M and Q bits live outside env->sr; fold them back in. */
-+    __put_user(cpu_read_sr(regs), &sc->sc_sr);
+diff --git a/hw/vfio/container.c b/hw/vfio/container.c
+index 4c2816b574..56bd9ac009 100644
+--- a/hw/vfio/container.c
++++ b/hw/vfio/container.c
+@@ -74,15 +74,43 @@ void vfio_address_space_insert(VFIOAddressSpace *space,
+     bcontainer->space = space;
+ }
  
-     for (i=0; i<16; i++) {
-         __put_user(regs->fregs[i], &sc->sc_fpregs[i]);
-@@ -159,8 +161,14 @@ static void restore_sigcontext(CPUSH4State *regs, struct target_sigcontext *sc)
-     COPY(gregs[14]); COPY(gregs[15]);
-     COPY(gbr); COPY(mach);
-     COPY(macl); COPY(pr);
--    COPY(sr); COPY(pc);
-+    COPY(pc);
- #undef COPY
-+    /* The T, M and Q bits live outside env->sr; unfold them. */
-+    {
-+        uint32_t sr;
-+        __get_user(sr, &sc->sc_sr);
-+        cpu_write_sr(regs, sr);
++static bool vfio_container_can_dma_map_file(VFIOContainer *bcontainer,
++                                            MemoryRegion *mr, int *fd)
++{
++    VFIOIOMMUClass *vioc = VFIO_IOMMU_GET_CLASS(bcontainer);
++    RAMBlock *rb = mr->ram_block;
++
++    if (!vioc->dma_map_file || !rb) {
++        return false;
 +    }
++
++    *fd = qemu_ram_get_fd(rb);
++    if (*fd < 0) {
++        return false;
++    }
++
++    /*
++     * We can use IOMMU DMA mapping (IOMMU_IOAS_MAP_FILE) for :
++     *
++     * 1) Guest RAM blocks explicitly configured as shared (MAP_SHARED)
++     * 2) RAM device sub-regions (MMIO BARs)
++     *
++     * Private RAM mappings (MAP_PRIVATE) are strictly excluded. Because
++     * they are subject to copy-on-write (COW) anomalies, their underlying
++     * PFNs can permanently diverge from the backing file
++     */
++    return qemu_ram_is_shared(rb) || memory_region_is_ram_device(mr);
++}
++
+ int vfio_container_dma_map(VFIOContainer *bcontainer,
+                            hwaddr iova, uint64_t size,
+                            void *vaddr, bool readonly, MemoryRegion *mr)
+ {
+     VFIOIOMMUClass *vioc = VFIO_IOMMU_GET_CLASS(bcontainer);
+-    RAMBlock *rb = mr->ram_block;
+-    int mfd = rb ? qemu_ram_get_fd(rb) : -1;
++    int mfd;
  
-     for (i=0; i<16; i++) {
-         __get_user(regs->fregs[i], &sc->sc_fpregs[i]);
-diff --git a/tests/tcg/sh4/Makefile.target b/tests/tcg/sh4/Makefile.target
-index 7852fa62d8..b7a8737be0 100644
---- a/tests/tcg/sh4/Makefile.target
-+++ b/tests/tcg/sh4/Makefile.target
-@@ -3,13 +3,6 @@
- # SuperH specific tweaks
- #
+-    if (mfd >= 0 && vioc->dma_map_file) {
++    if (vfio_container_can_dma_map_file(bcontainer, mr, &mfd)) {
++        RAMBlock *rb = mr->ram_block;
+         unsigned long start = vaddr - qemu_ram_get_host_addr(rb);
+         unsigned long offset = qemu_ram_get_fd_offset(rb);
  
--# This triggers failures for sh4-linux about 10% of the time.
--# Random SIGSEGV at unpredictable guest address, cause unknown.
--run-signals: signals
--	$(call skip-test, $<, "BROKEN")
--run-plugin-signals-with-%:
--	$(call skip-test, $<, "BROKEN")
--
- VPATH += $(SRC_PATH)/tests/tcg/sh4
- 
- test-macl: CFLAGS += -O -g
 -- 
 2.47.3
 
