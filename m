@@ -4,43 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38B8ACDB479
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 05:13:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7845CCDB470
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 05:13:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcFpU-0001rR-0s; Wed, 24 Jun 2026 01:07:16 -0400
+	id 1wcFss-0005jX-LK; Wed, 24 Jun 2026 01:10:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wcFpP-0001kt-KH; Wed, 24 Jun 2026 01:07:12 -0400
+ id 1wcFsI-0005Gz-6v; Wed, 24 Jun 2026 01:10:16 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wcFpN-0005jQ-VM; Wed, 24 Jun 2026 01:07:11 -0400
+ id 1wcFsF-00068l-CJ; Wed, 24 Jun 2026 01:10:09 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1782277622; bh=DC1BgqHBoI1k3WWCTLWWaR1dMwXHuLi8xxTwjqA3UVs=;
+ t=1782277633; bh=1SQrUs/J8qxQ0tTKePHRCk8HlcCtFT4tkMdG/+dWCeg=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=Zu0pef2DL7VfsaaGDsHg3gHStVzM1NU2YbN2j47mlpfdJCg59Qja4buOeq9IgIFsh
- gzoK61zEuyZPWCK9+5W3sUKB6LGMqzoXDnrIeEd+CsL2pa2hkiPpUthHaDTnkN/mKV
- 9CDUTKzPOjCrVlQwRvncoGBhfEMs18gkYNI24LhmBNI7BOXtMrHCdYFmBSRtV7YA5b
- cKVaVB6lmOlx2all27amoYIByJqVrPPJj9H/2SoHjY+CpR7Oen9dhIxfh6fEP/Le0P
- 0uoAFJwHxZDdMVqdIlrZlRWT6NLovcwJTRQyseN/DwW+fV57TyLfvoQ9aqqNtX0AKZ
- r2YExMKW142pg==
+ b=avGbs/Q1MYPReLOoEJn4YBESGDVC6ztJ2b6dQNkQCvuf8kG8ulEK9xiRx4gODBs0t
+ 6lBU8ecsM/V/HyRnL4QH7lDmSOLvQlVsbnUWl5/FyQnaXqtVI5TMZMCKRZ93YwJqt7
+ g9bmO/Qs2m7WNRVHejsAVTUJ7giKCLb1DApzdeT5DXwAbZ57dI2F/BM+5M0Nk2GBwN
+ SOBQyQij5tHRUSiTKLeUjw1ujhmA4rVqD+rp++U8/KfZOjxXKN2i0SEXDeUQPPC3Rp
+ dpT12iJjkGhW3kMykv8LPRMAwQfZGkGDfoTWIZyo2Py0tT8vQR/EKHoy1KOIerDEuh
+ oPOTciRTWEQnA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 1B05B1BA65D;
- Wed, 24 Jun 2026 08:07:02 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 236DB1BA679;
+ Wed, 24 Jun 2026 08:07:13 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 04CBD3DDAFA;
- Wed, 24 Jun 2026 08:07:07 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 0BB6A3DDB16;
+ Wed, 24 Jun 2026 08:07:18 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- Dominique Martinet <dominique.martinet@atmark-techno.com>,
+Cc: qemu-stable@nongnu.org, Matt Turner <mattst88@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
  Helge Deller <deller@gmx.de>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.4 63/95] linux-user: add preadv2/preadv2
-Date: Wed, 24 Jun 2026 08:04:58 +0300
-Message-ID: <20260624050541.395079-2-mjt@tls.msk.ru>
+Subject: [Stable-10.2.4 91/95] linux-user/xtensa: save/restore FP registers
+ across signal delivery
+Date: Wed, 24 Jun 2026 08:05:26 +0300
+Message-ID: <20260624050541.395079-30-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.2.4-20260624080454@cover.tls.msk.ru>
 References: <qemu-stable-10.2.4-20260624080454@cover.tls.msk.ru>
@@ -69,86 +70,182 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Dominique Martinet <dominique.martinet@atmark-techno.com>
+From: Matt Turner <mattst88@gmail.com>
 
-Some programs apparently use these, like the python test suite.
+Add support for saving and restoring f0-f15 across signal delivery.
+The target_xtensa_xtregs_fp struct carries 32-bit f-regs for cores
+with XTENSA_OPTION_FP_COPROCESSOR; target_xtensa_xtregs_dfp carries
+64-bit f-regs for cores with XTENSA_OPTION_DFP_COPROCESSOR.
 
-The flags argument (rwf_t) is an int, with values shared on all arches
-and does not need translating.
+Lock the xtregs region via lock_user before reading on sigreturn,
+since sc_xtregs is a user-space pointer that may lie outside the
+locked sigframe.
 
-This was tested manually with the following python script:
-```
-import os
-fd = os.open('test', os.O_RDWR|os.O_CREAT)
-os.pwritev(fd, [b'test', b'ok'], 0, os.RWF_HIPRI)
-buf = [bytearray(3), bytearray(10)]
-os.preadv(fd, buf, 0, os.RWF_HIPRI)
-print(buf[0])
-print(buf[1])
-```
-
-Signed-off-by: Dominique Martinet <dominique.martinet@atmark-techno.com>
-Reviewed-by: Helge Deller <deller@gmx.de>
+Signed-off-by: Matt Turner <mattst88@gmail.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Helge Deller <deller@gmx.de>
-(cherry picked from commit fb4c08147ba79c552897427a42e3b24b38712786)
+(cherry picked from commit 6858e3a71cc41510937bec0950eb4e42e33ba5f2)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-index d8c920bcff..95530bd8c8 100644
---- a/linux-user/syscall.c
-+++ b/linux-user/syscall.c
-@@ -744,6 +744,11 @@ safe_syscall5(ssize_t, preadv, int, fd, const struct iovec *, iov, int, iovcnt,
-               unsigned long, pos_l, unsigned long, pos_h)
- safe_syscall5(ssize_t, pwritev, int, fd, const struct iovec *, iov, int, iovcnt,
-               unsigned long, pos_l, unsigned long, pos_h)
-+safe_syscall6(ssize_t, preadv2, int, fd, const struct iovec *, iov, int, iovcnt,
-+              unsigned long, pos_l, unsigned long, pos_h, __kernel_rwf_t, flags)
-+safe_syscall6(ssize_t, pwritev2, int, fd, const struct iovec *, iov,
-+              int, iovcnt, unsigned long, pos_l, unsigned long, pos_h,
-+              __kernel_rwf_t, flags)
- safe_syscall3(int, connect, int, fd, const struct sockaddr *, addr,
-               socklen_t, addrlen)
- safe_syscall6(ssize_t, sendto, int, fd, const void *, buf, size_t, len,
-@@ -11852,6 +11857,39 @@ static abi_long do_syscall1(CPUArchState *cpu_env, int num, abi_long arg1,
-            }
-         }
-         return ret;
-+#endif
-+#if defined(TARGET_NR_preadv2)
-+    case TARGET_NR_preadv2:
-+        {
-+            struct iovec *vec = lock_iovec(VERIFY_WRITE, arg2, arg3, 0);
-+            if (vec != NULL) {
-+                unsigned long low, high;
+diff --git a/linux-user/xtensa/signal.c b/linux-user/xtensa/signal.c
+index ef8b0c3a27..e3f9da322b 100644
+--- a/linux-user/xtensa/signal.c
++++ b/linux-user/xtensa/signal.c
+@@ -21,6 +21,7 @@
+ #include "user-internals.h"
+ #include "signal-common.h"
+ #include "linux-user/trace.h"
++#include "target/xtensa/cpu.h"
+ 
+ struct target_sigcontext {
+     abi_ulong sc_pc;
+@@ -43,10 +44,25 @@ struct target_ucontext {
+     target_sigset_t tuc_sigmask;
+ };
+ 
++struct target_xtensa_xtregs_fp {
++    uint32_t f[16];
++    uint32_t fcr;
++    uint32_t fsr;
++};
 +
-+                target_to_host_low_high(arg4, arg5, &low, &high);
-+                ret = get_errno(safe_preadv2(arg1, vec, arg3, low, high, arg6));
-+                unlock_iovec(vec, arg2, arg3, 1);
-+            } else {
-+                ret = -host_to_target_errno(errno);
-+           }
-+        }
-+        return ret;
-+#endif
-+#if defined(TARGET_NR_pwritev2)
-+    case TARGET_NR_pwritev2:
-+        {
-+            struct iovec *vec = lock_iovec(VERIFY_READ, arg2, arg3, 1);
-+            if (vec != NULL) {
-+                unsigned long low, high;
++struct target_xtensa_xtregs_dfp {
++    uint64_t f[16];
++    uint32_t fcr;
++    uint32_t fsr;
++};
 +
-+                target_to_host_low_high(arg4, arg5, &low, &high);
-+                ret = get_errno(safe_pwritev2(arg1, vec, arg3, low, high,
-+                                              arg6));
-+                unlock_iovec(vec, arg2, arg3, 0);
-+            } else {
-+                ret = -host_to_target_errno(errno);
-+           }
+ struct target_rt_sigframe {
+     target_siginfo_t info;
+     struct target_ucontext uc;
+-    /* TODO: xtregs */
++    union {
++        struct target_xtensa_xtregs_fp fp;
++        struct target_xtensa_xtregs_dfp dfp;
++    } xtregs;
+     uint8_t retcode[6];
+     abi_ulong window[4];
+ };
+@@ -107,6 +123,7 @@ static int flush_window_regs(CPUXtensaState *env)
+ }
+ 
+ static int setup_sigcontext(struct target_rt_sigframe *frame,
++                            abi_ulong frame_addr,
+                             CPUXtensaState *env)
+ {
+     struct target_sigcontext *sc = &frame->uc.tuc_mcontext;
+@@ -123,8 +140,25 @@ static int setup_sigcontext(struct target_rt_sigframe *frame,
+     for (i = 0; i < 16; ++i) {
+         __put_user(env->regs[i], sc->sc_a + i);
+     }
+-    __put_user(0, &sc->sc_xtregs);
+-    /* TODO: xtregs */
++    if (xtensa_option_enabled(env->config, XTENSA_OPTION_DFP_COPROCESSOR)) {
++        for (i = 0; i < 16; ++i) {
++            __put_user(env->fregs[i].f64, &frame->xtregs.dfp.f[i]);
 +        }
-+        return ret;
- #endif
-     case TARGET_NR_getsid:
-         return get_errno(getsid(arg1));
++        __put_user(env->uregs[FCR], &frame->xtregs.dfp.fcr);
++        __put_user(cpu_get_fsr(env), &frame->xtregs.dfp.fsr);
++        __put_user(frame_addr + offsetof(struct target_rt_sigframe, xtregs),
++                   &sc->sc_xtregs);
++    } else if (xtensa_option_enabled(env->config, XTENSA_OPTION_FP_COPROCESSOR)) {
++        for (i = 0; i < 16; ++i) {
++            __put_user(env->fregs[i].f32[FP_F32_LOW], &frame->xtregs.fp.f[i]);
++        }
++        __put_user(env->uregs[FCR], &frame->xtregs.fp.fcr);
++        __put_user(cpu_get_fsr(env), &frame->xtregs.fp.fsr);
++        __put_user(frame_addr + offsetof(struct target_rt_sigframe, xtregs),
++                   &sc->sc_xtregs);
++    } else {
++        __put_user(0, &sc->sc_xtregs);
++    }
+     return 1;
+ }
+ 
+@@ -190,7 +224,7 @@ void setup_rt_frame(int sig, struct target_sigaction *ka,
+     __put_user(0, &frame->uc.tuc_flags);
+     __put_user(0, &frame->uc.tuc_link);
+     target_save_altstack(&frame->uc.tuc_stack, env);
+-    if (!setup_sigcontext(frame, env)) {
++    if (!setup_sigcontext(frame, frame_addr, env)) {
+         unlock_user_struct(frame, frame_addr, 0);
+         goto give_sigsegv;
+     }
+@@ -243,8 +277,8 @@ give_sigsegv:
+     force_sigsegv(sig);
+ }
+ 
+-static void restore_sigcontext(CPUXtensaState *env,
+-                               struct target_rt_sigframe *frame)
++static int restore_sigcontext(CPUXtensaState *env,
++                              struct target_rt_sigframe *frame)
+ {
+     struct target_sigcontext *sc = &frame->uc.tuc_mcontext;
+     uint32_t ps;
+@@ -266,7 +300,51 @@ static void restore_sigcontext(CPUXtensaState *env,
+     for (i = 0; i < 16; ++i) {
+         __get_user(env->regs[i], sc->sc_a + i);
+     }
+-    /* TODO: xtregs */
++    {
++        abi_ulong xtregs_addr;
++
++        __get_user(xtregs_addr, &sc->sc_xtregs);
++        if (xtregs_addr) {
++            if (xtensa_option_enabled(env->config,
++                                      XTENSA_OPTION_DFP_COPROCESSOR)) {
++                struct target_xtensa_xtregs_dfp *xtregs;
++                uint32_t fcr, fsr;
++
++                xtregs = lock_user(VERIFY_READ, xtregs_addr,
++                                   sizeof(*xtregs), 1);
++                if (!xtregs) {
++                    return 0;
++                }
++                for (i = 0; i < 16; ++i) {
++                    __get_user(env->fregs[i].f64, &xtregs->f[i]);
++                }
++                __get_user(fcr, &xtregs->fcr);
++                __get_user(fsr, &xtregs->fsr);
++                unlock_user(xtregs, xtregs_addr, 0);
++                cpu_set_fcr(env, fcr);
++                cpu_set_fsr(env, fsr);
++            } else if (xtensa_option_enabled(env->config,
++                                             XTENSA_OPTION_FP_COPROCESSOR)) {
++                struct target_xtensa_xtregs_fp *xtregs;
++                uint32_t fcr, fsr;
++
++                xtregs = lock_user(VERIFY_READ, xtregs_addr,
++                                   sizeof(*xtregs), 1);
++                if (!xtregs) {
++                    return 0;
++                }
++                for (i = 0; i < 16; ++i) {
++                    __get_user(env->fregs[i].f32[FP_F32_LOW], &xtregs->f[i]);
++                }
++                __get_user(fcr, &xtregs->fcr);
++                __get_user(fsr, &xtregs->fsr);
++                unlock_user(xtregs, xtregs_addr, 0);
++                cpu_set_fcr(env, fcr);
++                cpu_set_fsr(env, fsr);
++            }
++        }
++    }
++    return 1;
+ }
+ 
+ long do_rt_sigreturn(CPUXtensaState *env)
+@@ -282,7 +360,9 @@ long do_rt_sigreturn(CPUXtensaState *env)
+     target_to_host_sigset(&set, &frame->uc.tuc_sigmask);
+     set_sigmask(&set);
+ 
+-    restore_sigcontext(env, frame);
++    if (!restore_sigcontext(env, frame)) {
++        goto badframe;
++    }
+     target_restore_altstack(&frame->uc.tuc_stack, env);
+ 
+     unlock_user_struct(frame, frame_addr, 0);
 -- 
 2.47.3
 
