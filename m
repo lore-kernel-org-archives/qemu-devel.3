@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 477C4CDB470
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 05:15:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 362C3CDB470
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 05:15:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcFqt-0003C2-Kt; Wed, 24 Jun 2026 01:08:43 -0400
+	id 1wcFsy-0006GP-9u; Wed, 24 Jun 2026 01:10:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wcFqb-0002v3-9k; Wed, 24 Jun 2026 01:08:27 -0400
+ id 1wcFsC-00058l-Lq; Wed, 24 Jun 2026 01:10:06 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wcFqY-0005rR-V2; Wed, 24 Jun 2026 01:08:24 -0400
+ id 1wcFs9-00060U-MX; Wed, 24 Jun 2026 01:10:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1782277622; bh=MZR1dT1Xu/xpbUTvjXCTyifENBZV1TTudSGngA4genE=;
+ t=1782277633; bh=PYtYvqgGCF+Ra84yICK45oGFpkSRSx93p+fzViqmjpU=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=X/7H7+S320X7/XT2FRLyHvWQepBRg+Nmcy585MT4NIYhZz6rUXIR+7u25XMV7iR0X
- NAImbF+gGRjn1JtzXPjnFs1pMLpFMcIL8msoO3zJBC0juQilfymVGonqb5CC579H9C
- KXPegrdQM/B4BBH+/PN42JnUc4DOD8563tkKnCp8+UBVw99YRqx2eyVUyR2ZjT0SE8
- O3vhPynwMaCGwrONscbk8bKFM4ryYIgmBf32BnMAbqKguW6pOMO96ERkJ9ccUhMu2l
- Te1+gCgiaG6jftt8h6qRM9pC4o5SZbEObtCpIi3l1jwUOqnmOed2ehRvr+J2qU7nD/
- rvbyLHxuMR4tQ==
+ b=NeiXzYTUuhhF8i1/43a8oawZgBbTzZ4eUDyn9Sl8yhkiU/KTt+fdPpifVlTrQd6OM
+ jA2CZHE8Roj3+MAWUssMIMkbMPQQhO172AF4gh59j6J3WB36DikUTxjVJeemm1X/lr
+ +uEAwWtf/ugx2fpu+IPooepa+/j+jV48vZ7ka+zI7Fzrp3URARS58sJLX2xMdqkGib
+ FgFsGZGVuXV84ybpNxkESEJBhVHh6GHpBK6Qi8KG5s173ukXgmc9tt2jIkeOElWK26
+ SrigJdx9DSzq90k/ws6gtbd3kS81aKKP6O1tYsHFDV8sWNuXNd1mwKEQ4ohh168N4C
+ UfpXi5fbpw7IQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id E507B1BA668;
- Wed, 24 Jun 2026 08:07:02 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 0006D1BA677;
+ Wed, 24 Jun 2026 08:07:12 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id CF3003DDB05;
- Wed, 24 Jun 2026 08:07:07 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id DDC383DDB14;
+ Wed, 24 Jun 2026 08:07:17 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Alistair Francis <alistair.francis@wdc.com>,
+Cc: qemu-stable@nongnu.org, Ryan Zhang <ryan.zhang@nxp.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.4 74/95] target/riscv/csr.c: do not allow mstatus
- MPV/GVA writes
-Date: Wed, 24 Jun 2026 08:05:09 +0300
-Message-ID: <20260624050541.395079-13-mjt@tls.msk.ru>
+Subject: [Stable-10.2.4 89/95] ui/sdl2: Set GL ES profile before creating
+ initial GL context
+Date: Wed, 24 Jun 2026 08:05:24 +0300
+Message-ID: <20260624050541.395079-28-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.2.4-20260624080454@cover.tls.msk.ru>
 References: <qemu-stable-10.2.4-20260624080454@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -71,53 +71,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+From: Ryan Zhang <mailto>
 
-The priv spec states the following about mstatus.MPV:
+When the user selects GLES via '-display sdl,gl=es', we need to set
+SDL_GL_CONTEXT_PROFILE_MASK to SDL_GL_CONTEXT_PROFILE_ES before
+calling SDL_GL_CreateContext(). This ensures SDL_GL_LoadLibrary()
+loads the correct GLES driver instead of the desktop OpenGL driver.
 
-"The MPV bit (Machine Previous Virtualization Mode) is written by the
-implementation whenever a trap is taken into M-mode."
+Fix the below issue: qemu-system-aarch64: /usr/src/debug/libepoxy
+/1.5.10/src/dispatch_common.c:872: epoxy_get_proc_address: Assertion
+`0 && "Couldn't find current GLX or EGL context.\n"' failed.
 
-And, about mstatus.GVA:
+sdl2_gl_create_context() already sets the profile mask correctly for
+ES mode, but the initial context created in sdl2_window_create() is
+missing the same treatment.
 
-"Field GVA (Guest Virtual Address) is written by the implementation
-whenever a trap is taken into M-mode."
+Fixes:da3f7a3ab9ea0091955b58f8909dfcee01f4043e ("ui/sdl: try to instantiate the matching opengl renderer")
 
-Both are written during riscv_cpu_do_interrupt().  They're not supposed
-to be written by userspace.  As far as write_mstatus goes these fields
-are read only.  The same applies for mstatush.MPV/mstatush.GVA.
-
-Fixes: 03dd405dd5 ("target/riscv: Support MSTATUS.MPV/GVA only when RVH is enabled")
-Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Acked-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20260514194537.2416243-2-daniel.barboza@oss.qualcomm.com>
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-(cherry picked from commit 18645f19578955ec5ff2c40cd2c8753d6bc460c2)
+Signed-off-by: ryan.zhang@nxp.com
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Message-ID: <DU2PR04MB9018BB3650BA218438C01F2A83042@DU2PR04MB9018.eurprd04.prod.outlook.com>
+(cherry picked from commit 490a3e1867f025c68fa13db766b5c8da16c6eca4)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-index 9f81cd3960..c6362677ba 100644
---- a/target/riscv/csr.c
-+++ b/target/riscv/csr.c
-@@ -2027,9 +2027,6 @@ static RISCVException write_mstatus(CPURISCVState *env, int csrno,
-     }
+diff --git a/ui/sdl2.c b/ui/sdl2.c
+index 032dc14bc3..3543fe662d 100644
+--- a/ui/sdl2.c
++++ b/ui/sdl2.c
+@@ -109,6 +109,8 @@ void sdl2_window_create(struct sdl2_console *scon)
  
-     if (xl != MXL_RV32 || env->debugger) {
--        if (riscv_has_ext(env, RVH)) {
--            mask |= MSTATUS_MPV | MSTATUS_GVA;
--        }
-         if ((val & MSTATUS64_UXL) != 0) {
-             mask |= MSTATUS64_UXL;
+         if (scon->opts->gl == DISPLAY_GL_MODE_ES) {
+             driver = "opengles2";
++            SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK,
++                                SDL_GL_CONTEXT_PROFILE_ES);
          }
-@@ -2066,7 +2063,7 @@ static RISCVException write_mstatush(CPURISCVState *env, int csrno,
-                                      target_ulong val, uintptr_t ra)
- {
-     uint64_t valh = (uint64_t)val << 32;
--    uint64_t mask = riscv_has_ext(env, RVH) ? MSTATUS_MPV | MSTATUS_GVA : 0;
-+    uint64_t mask = 0;
  
-     if (riscv_cpu_cfg(env)->ext_smdbltrp) {
-         mask |= MSTATUS_MDT;
+         SDL_SetHint(SDL_HINT_RENDER_DRIVER, driver);
 -- 
 2.47.3
 
