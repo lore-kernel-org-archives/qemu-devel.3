@@ -4,124 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52C4CCDE001
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 15:23:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9AF3CDB479
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 15:27:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcPQk-00062F-B9; Wed, 24 Jun 2026 11:22:22 -0400
+	id 1wcPV6-00022r-Di; Wed, 24 Jun 2026 11:26:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1wcPQa-000614-Hb; Wed, 24 Jun 2026 11:22:12 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1wcPQY-0004Ld-9P; Wed, 24 Jun 2026 11:22:12 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65OEmOvO1229091; Wed, 24 Jun 2026 15:21:55 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=goJ4v1
- nhY/z3nlmgG0teKC+QhVS6raLvFZ3QsdvBVzg=; b=iBjNAQOWu1J/4MvE/wJ8TC
- fyfGQC2FM7od5uyikZ0BlLMMvEnm+20aiIrnLzrCNnJlXXxRfDXxEfsVdOfpnl7m
- 425Uv74wjDIHCw7kI7Or2gpCabh46vHCJKXhuNXfNA60FMZfHzanmWbHwVgCaDPE
- 6tAl4jhQtBeW+mcj9unM2SGPGhxUpJk5QGfX+Ey7JbjQCHj4QUKSo7F3i0SJlTHR
- tWVfjVGV3VGFAw3isae4ENlWunOxhTtnZIW0HS/+qc3CZXaqJewBKC3assj561Tn
- FP5WCssc4bTjAC1WScKTSjB9jVAW2YKhX/qFwr7+/3ONcBILx/R2vf9JQNxYB5Ww
- ==
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4ewh9gms9y-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 24 Jun 2026 15:21:55 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 65OFJiiX029008;
- Wed, 24 Jun 2026 15:21:54 GMT
-Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4ex5jwhdey-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 24 Jun 2026 15:21:54 +0000 (GMT)
-Received: from smtpav02.fra02v.mail.ibm.com (smtpav02.fra02v.mail.ibm.com
- [10.20.54.101])
- by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 65OFLoWF28377446
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 24 Jun 2026 15:21:50 GMT
-Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 98C2620043;
- Wed, 24 Jun 2026 15:21:50 +0000 (GMT)
-Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id C168520040;
- Wed, 24 Jun 2026 15:21:39 +0000 (GMT)
-Received: from li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com (unknown
- [9.39.19.28]) by smtpav02.fra02v.mail.ibm.com (Postfix) with ESMTPS;
- Wed, 24 Jun 2026 15:21:39 +0000 (GMT)
-Date: Wed, 24 Jun 2026 20:51:35 +0530
-From: Aditya Gupta <adityag@linux.ibm.com>
-To: Shivang Upadhyay <shivangu@linux.ibm.com>
-Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Sourabh Jain <sourabhjain@linux.ibm.com>,
- Hari Bathini <hbathini@linux.ibm.com>, Nicholas Piggin <npiggin@gmail.com>,
- Miles Glenn <milesg@linux.ibm.com>, Fabiano Rosas <farosas@suse.de>,
- Laurent Vivier <lvivier@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, devel@lists.libvirt.org,
- Misbah Anjum N <misanjum@linux.ibm.com>,
- Anushree Mathur <anushree.mathur@linux.ibm.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- kvm@vger.kernel.org, Gautam Menghani <gautam@linux.ibm.com>,
- Chinmay Rath <rathc@linux.ibm.com>
-Subject: Re: [PATCH 1/8] tests/functional: Add remote interrupts test for
- PowerNV
-Message-ID: <ajvr5gPPLsu7GcA5@li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com>
-References: <20260623141933.577981-1-adityag@linux.ibm.com>
- <20260623141933.577981-2-adityag@linux.ibm.com>
- <4de3eafc3c47799d0b503076b0d71be7cf261b61.camel@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wcPV2-00022b-Lf
+ for qemu-devel@nongnu.org; Wed, 24 Jun 2026 11:26:49 -0400
+Received: from smtp-out1.suse.de ([195.135.223.130])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wcPV1-00055B-19
+ for qemu-devel@nongnu.org; Wed, 24 Jun 2026 11:26:48 -0400
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 11F986DB17;
+ Wed, 24 Jun 2026 15:26:45 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1782314805; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=rreAsGiUGIR9EX2+HGXCOgeF+rh0mjH7AmI70H99RY8=;
+ b=ZGjHHkdAKyznIQjxHtlxjJ3qpusQvKWVZs2tS5DV5u1aBBmLUBhrCM+wXi3EZE7Sij3J1o
+ D6btT0e7R3MSYx6ZwbX9JJxiBEM5GEPtIgpuHm3XF7Urb4V6saGB8rOiG7NnKUAF7KOWep
+ YtjRPCZh5LwC0U6qFgqMq515NdF2qZg=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1782314805;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=rreAsGiUGIR9EX2+HGXCOgeF+rh0mjH7AmI70H99RY8=;
+ b=ZsI+oMC134NMz/BbrSkPOIQCdjJ3vtzhsVuw9/DFpSISaHR3GqxPxjnE2xVWAQGtPUh0nN
+ nZFwasRlP/l206Bg==
+Authentication-Results: smtp-out1.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1782314805; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=rreAsGiUGIR9EX2+HGXCOgeF+rh0mjH7AmI70H99RY8=;
+ b=ZGjHHkdAKyznIQjxHtlxjJ3qpusQvKWVZs2tS5DV5u1aBBmLUBhrCM+wXi3EZE7Sij3J1o
+ D6btT0e7R3MSYx6ZwbX9JJxiBEM5GEPtIgpuHm3XF7Urb4V6saGB8rOiG7NnKUAF7KOWep
+ YtjRPCZh5LwC0U6qFgqMq515NdF2qZg=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1782314805;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=rreAsGiUGIR9EX2+HGXCOgeF+rh0mjH7AmI70H99RY8=;
+ b=ZsI+oMC134NMz/BbrSkPOIQCdjJ3vtzhsVuw9/DFpSISaHR3GqxPxjnE2xVWAQGtPUh0nN
+ nZFwasRlP/l206Bg==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id A4F40779A8;
+ Wed, 24 Jun 2026 15:26:44 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id nZxKHTT3O2oCfQAAD6G6ig
+ (envelope-from <farosas@suse.de>); Wed, 24 Jun 2026 15:26:44 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Dongli Zhang <dongli.zhang@oracle.com>, qemu-devel@nongnu.org
+Cc: dave@treblig.org, peterx@redhat.com, maciej.szmigiero@oracle.com,
+ mark.kanda@oracle.com, bchaney@akamai.com
+Subject: Re: [PATCH 1/1] migration/cpr: Add HMP support for cpr-transfer
+In-Reply-To: <20260621072646.517545-1-dongli.zhang@oracle.com>
+References: <20260621072646.517545-1-dongli.zhang@oracle.com>
+Date: Wed, 24 Jun 2026 12:26:42 -0300
+Message-ID: <87v7b8neml.fsf@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <4de3eafc3c47799d0b503076b0d71be7cf261b61.camel@linux.ibm.com>
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-GUID: iKYhyKYc85gGO_m8A2cbWXoE9orJb-ia
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjI0MDEyOCBTYWx0ZWRfX0EP5lrMlLL3M
- T1+/aeaAgDUsMA/TRM5y+3BLE0mXSKcKupSbGsMG+BDkQ6ku9wiZPULNfD/3xbm6h8a7qagD2lW
- 3co31WNhhHNVDJN+xHJYUMSReSe/5MU=
-X-Authority-Analysis: v=2.4 cv=c62bhx9l c=1 sm=1 tr=0 ts=6a3bf613 cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
- a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=8OfXivTFFpb-axvt66UA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjI0MDEyOCBTYWx0ZWRfX9W2slgDuvEk0
- FwR8Q1zsLbEUDkly5nh+/xFZKc2eT3WHDRxmBlMJMj3Y9FDaf+g0QoDZMeU96A9PT9FX94t9IuA
- EY8ra5Lp16jA8MDaJDwB2730yI3Qwi8h6MKH6+5dDjOk+ZgE2RP48PqkuV5hLnbbzjEht9fukAG
- mRyEu3NkuoMlRXj5YJvUD41ks8kp2W6bcKRIW4RkndAzZY+2d7ff7bXpWAvsoLNtwEWzwIWtCey
- JXaYfShj9bp9SC1H3SPa5sGaNaO55Jxnd8f9vdCPFiEc3/KkySPl6exjqvLdwev2jQEe7Ip8R9X
- 6DTBVZuBlv/1OQzU6TkPXKbqa12jIQqCJUBbOmbzR8GM0owXlOVkDAS/WevjrZNIbmLwkSoDRE/
- 0vpQMcxObe2Y9opczJ7PHUs9t0jM85ReRlRxRBMHHVz1ihco4bfY6g9oUk2XKK2ArywfUoGnuuQ
- BKf4vjjN/j9mjc4MtHA==
-X-Proofpoint-ORIG-GUID: EcV8BSPjPxMycR1mjL20WeJsoQWgdFl1
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-24_03,2026-06-24_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 impostorscore=0 adultscore=0 clxscore=1015 suspectscore=0
- priorityscore=1501 phishscore=0 spamscore=0 bulkscore=0 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606240128
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=adityag@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain
+X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.20)[-0.999]; MIME_GOOD(-0.10)[text/plain];
+ MIME_TRACE(0.00)[0:+]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ ARC_NA(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FUZZY_RATELIMITED(0.00)[rspamd.com]; RCVD_TLS_ALL(0.00)[];
+ FROM_HAS_DN(0.00)[]; MISSING_XM_UA(0.00)[];
+ RCVD_COUNT_TWO(0.00)[2]; FROM_EQ_ENVFROM(0.00)[];
+ TO_DN_SOME(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; RCPT_COUNT_SEVEN(0.00)[7];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid,imap1.dmz-prg2.suse.org:helo]
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -138,23 +114,106 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 26/06/23 09:17PM, Shivang Upadhyay wrote:
-> On Tue, 2026-06-23 at 19:49 +0530, Aditya Gupta wrote:
-> > +        # Check that interrupt counts increased
-> > +        success_msg = "Interrupts increased"
-> > +        self.helper_exec_shell_command(f"export
-> > PASS='{success_msg}'")
-> This is a great idea. Maybe in future we can pull this to a saperate
-> function? something like the following.
-> 
->   self.is_booted = True
->   shell_check_pass_fail_command("asdf")
+Dongli Zhang <dongli.zhang@oracle.com> writes:
 
-Makes sense. Will have a helper in v2.
+> Currently the cpr-transfer source QEMU instance cannot be driven entirely
+> via HMP.  The source must use QMP in order to specify both the
+> main migration channel and the CPR channel.
+>
+> Extend the HMP migrate command with an optional CPR channel URI. When the
+> migration mode is cpr-transfer, HMP uses this URI to build a
+> CPR MigrationChannel in addition to the main migration channel. The new
+> argument is rejected unless the migration mode is cpr-transfer, so existing
+> HMP migrate usage is unchanged.
+>
+> For example, source QEMU HMP commands can be something like below. The
+> "unix:/tmp/cpr.sock" is for CPR URI.
+>
+> (qemu) migrate_set_parameter mode cpr-transfer
+> (qemu) migrate tcp:0:50002 unix:/tmp/cpr.sock
+>
+> Signed-off-by: Dongli Zhang <dongli.zhang@oracle.com>
+> ---
+>  hmp-commands.hx                | 11 +++++++----
+>  migration/migration-hmp-cmds.c | 18 ++++++++++++++++++
+>  2 files changed, 25 insertions(+), 4 deletions(-)
+>
+> diff --git a/hmp-commands.hx b/hmp-commands.hx
+> index 7ae2468a3d..021e51b142 100644
+> --- a/hmp-commands.hx
+> +++ b/hmp-commands.hx
+> @@ -928,16 +928,17 @@ ERST
+>  
+>      {
+>          .name       = "migrate",
+> -        .args_type  = "detach:-d,resume:-r,uri:s",
+> -        .params     = "[-d] [-r] uri",
+> +        .args_type  = "detach:-d,resume:-r,uri:s,uri-cpr:s?",
+> +        .params     = "[-d] [-r] uri [uri-cpr]",
+>          .help       = "migrate to URI (using -d to not wait for completion)"
+> -		      "\n\t\t\t -r to resume a paused postcopy migration",
+> +		      "\n\t\t\t -r to resume a paused postcopy migration"
+> +		      "\n\t\t\t uri-cpr specifies CPR URI for cpr-transfer mode",
+>          .cmd        = hmp_migrate,
+>      },
+>  
+>  
+>  SRST
+> -``migrate [-d] [-r]`` *uri*
+> +``migrate [-d] [-r]`` *uri* [*uri-cpr*]
+>    Migrate the VM to *uri*.
+>  
+>    ``-d``
+> @@ -945,6 +946,8 @@ SRST
+>      query an ongoing migration process, use "info migrate".
+>    ``-r``
+>      Resume a paused postcopy migration.
+> +  ``uri-cpr``
+> +    Specify CPR URI for cpr-transfer mode. It must be a UNIX domain socket.
+>  ERST
+>  
+>      {
+> diff --git a/migration/migration-hmp-cmds.c b/migration/migration-hmp-cmds.c
+> index 8b385f560e..42ca652bb3 100644
+> --- a/migration/migration-hmp-cmds.c
+> +++ b/migration/migration-hmp-cmds.c
+> @@ -836,9 +836,11 @@ void hmp_migrate(Monitor *mon, const QDict *qdict)
+>      bool detach = qdict_get_try_bool(qdict, "detach", false);
+>      bool resume = qdict_get_try_bool(qdict, "resume", false);
+>      const char *uri = qdict_get_str(qdict, "uri");
+> +    const char *uri_cpr = qdict_get_try_str(qdict, "uri-cpr");
+>      Error *err = NULL;
+>      g_autoptr(MigrationChannelList) caps = NULL;
+>      g_autoptr(MigrationChannel) channel = NULL;
+> +    g_autoptr(MigrationChannel) channel_cpr = NULL;
+>  
+>      if (!migrate_uri_parse(uri, &channel, &err)) {
+>          hmp_handle_error(mon, err);
+> @@ -846,6 +848,22 @@ void hmp_migrate(Monitor *mon, const QDict *qdict)
+>      }
+>      QAPI_LIST_PREPEND(caps, g_steal_pointer(&channel));
+>  
+> +    if (uri_cpr) {
+> +        if (migrate_mode() != MIG_MODE_CPR_TRANSFER) {
+> +            error_setg(&err, "uri-cpr requires cpr-transfer mode");
 
-Thanks,
-- Aditya G
+Most users probably won't know what an uri-cpr is. Maybe: "a second uri
+can only be used in cpr-transfer mode".
 
-> 
-> ~Shivang.
+> +            hmp_handle_error(mon, err);
+> +            return;
+> +        }
+> +
+> +        if (!migrate_uri_parse(uri_cpr, &channel_cpr, &err)) {
+> +            hmp_handle_error(mon, err);
+> +            return;
+> +        }
+> +
+> +        channel_cpr->channel_type = MIGRATION_CHANNEL_TYPE_CPR;
+> +        QAPI_LIST_PREPEND(caps, g_steal_pointer(&channel_cpr));
+> +    }
+> +
+>      qmp_migrate(NULL, true, caps, true, resume, &err);
+>      if (hmp_handle_error(mon, err)) {
+>          return;
 
