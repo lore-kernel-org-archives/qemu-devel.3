@@ -4,86 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD55CCDB471
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 12:09:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4469CDE002
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 12:09:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcMQ0-0006mv-1Q; Wed, 24 Jun 2026 08:09:24 -0400
+	id 1wcMPw-0006mG-Kn; Wed, 24 Jun 2026 08:09:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shrihari.s@samsung.com>)
- id 1wcGqw-0001Ae-H7
- for qemu-devel@nongnu.org; Wed, 24 Jun 2026 02:12:51 -0400
-Received: from mailout1.samsung.com ([203.254.224.24])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shrihari.s@samsung.com>)
- id 1wcGqr-00015k-Uq
- for qemu-devel@nongnu.org; Wed, 24 Jun 2026 02:12:50 -0400
-Received: from epcas5p4.samsung.com (unknown [182.195.41.42])
- by mailout1.samsung.com (KnoxPortal) with ESMTP id
- 20260624061232epoutp01d18f5eb506bca95798bcef618d966c58~776EdR9Td1663516635epoutp01E
- for <qemu-devel@nongnu.org>; Wed, 24 Jun 2026 06:12:32 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.samsung.com
- 20260624061232epoutp01d18f5eb506bca95798bcef618d966c58~776EdR9Td1663516635epoutp01E
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
- s=mail20170921; t=1782281552;
- bh=kY/dxQYx/wRPEf2qC748CpGM1a3g+t0/zv46gOr+qAY=;
- h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
- b=oh3W1FePv07XnqAelEFW8Q1pHVwG+ADlorSBlcPlORMD+FT9ETvo7JJEYRgXh7OZY
- /8KS9rzeonXIOS8vWBeBr7bHSXW+q18fNtzf6aBmnAbpJyAafwRAeeA714I6TT2nZh
- ENonRAj6ASBEBOBgjGdLNn0mfaUlhLPOjKRQm05I=
-Received: from epsnrtp03.localdomain (unknown [182.195.42.155]) by
- epcas5p4.samsung.com (KnoxPortal) with ESMTPS id
- 20260624061232epcas5p43790b4403384ebc55187f2fb90e34c6c~776DwZAjB0689606896epcas5p4N;
- Wed, 24 Jun 2026 06:12:32 +0000 (GMT)
-Received: from epcas5p1.samsung.com (unknown [182.195.38.89]) by
- epsnrtp03.localdomain (Postfix) with ESMTP id 4glWnC1CKLz3hhTD; Wed, 24 Jun
- 2026 06:12:31 +0000 (GMT)
-Received: from epsmtip1.samsung.com (unknown [182.195.34.30]) by
- epcas5p4.samsung.com (KnoxPortal) with ESMTPA id
- 20260624061230epcas5p419894dd4d2e612f7712f1ec7ae940ce0~776ChX7yz3046330463epcas5p4b;
- Wed, 24 Jun 2026 06:12:30 +0000 (GMT)
-Received: from arun-B560M-DS3H-V2 (unknown [107.99.41.170]) by
- epsmtip1.samsung.com (KnoxPortal) with ESMTPA id
- 20260624061228epsmtip1b208377c679fed6ea71d1c7e754271e5~776ACMl-O2928929289epsmtip1P;
- Wed, 24 Jun 2026 06:12:27 +0000 (GMT)
-Date: Wed, 24 Jun 2026 19:31:03 +0530
-From: Shrihari E S <shrihari.s@samsung.com>
-To: Jonathan Cameron <jic23@kernel.org>
-Cc: linux-cxl@vger.kernel.org, linux-pci@vger.kernel.org,
- qemu-devel@nongnu.org, cpgs@samsung.com, arun.george@samsung.com,
- vikash.k5@samsung.com, s.neeraj@samsung.com, dongjoo.seo1@samsung.com,
- dave@stgolabs.net, gost.dev@samsung.com
-Subject: Re: [RFC 1/8] hw/pci: Refactor flitmode from PCIESlot to PCIEPort.
-Message-ID: <20260624140103.thavawn667tfs4tg@arun-B560M-DS3H-V2>
+ (Exim 4.90_1) (envelope-from <suunj1331@gmail.com>)
+ id 1wcJUD-0001AS-DW
+ for qemu-devel@nongnu.org; Wed, 24 Jun 2026 05:01:33 -0400
+Received: from mail-pj1-x1033.google.com ([2607:f8b0:4864:20::1033])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <suunj1331@gmail.com>)
+ id 1wcJUB-0007kF-VX
+ for qemu-devel@nongnu.org; Wed, 24 Jun 2026 05:01:33 -0400
+Received: by mail-pj1-x1033.google.com with SMTP id
+ 98e67ed59e1d1-37cb36ca63bso507667a91.0
+ for <qemu-devel@nongnu.org>; Wed, 24 Jun 2026 02:01:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1782291690; x=1782896490; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=oAFwvu0IIrO9LQu68/GCI7YYJ8LSf/BV4HbSMpLrHYo=;
+ b=c0x+e1cye9xsFdU6hXEDteP2PPkqxi4JpI4l272YmW0sQwq/u/FDU74F5McSCK8338
+ SUCaWt0t+xo1rnVaxU6/eRkMtEZcxwlXBuRhNDiFtrmMuDVBqBANLrvAo4gflnNrKQOs
+ yTxHzgHDVhpN9pwyXfHTYXDFr3SGqFdRtgp2dm+fim4xgXM9FevsKncM3EkB4iMOcWxa
+ MTtvYfBa+wbnnwetFRiZBhI7hBiepyF5r1X0U03pgZUBwxdfvkz2Qbtftac+80GmO6f/
+ EPa7E7F/pR1u+WtTuaDewxcHdWyzIUN5U0mABM03Id6AR4XOtmovhuNkx4AkNdJXMaXu
+ Q0+Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1782291690; x=1782896490;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=oAFwvu0IIrO9LQu68/GCI7YYJ8LSf/BV4HbSMpLrHYo=;
+ b=Yc+mILoLe5QP1iOVwL252tHR65flQ1L/bz7W4OP6vZb16QXpi5Nxr8FpKYS09MS+Wf
+ cVyAsEk8dCJpsqIwnmPn/dzBxHc90wTA5cAEhvxJaPxhVyaYuVdb1nwEhOJa0qqQV4AR
+ z7w2antNGuvGWOgw0fIqDq5A6Fln3inqRkJMZ35oomb5Uva7uPOEtSRosQ+cTcz9xpyk
+ H8M1h7N4ygBzJKj4oN7PF0UMmz2bPWNkkInT6DVDnFVIWIGr9OORDIuGzXpzZP8xP8Is
+ YlDrnNWRaED2pmBUn9YfB8OJ7tpqkmgUIGGLDFr5PGD4qtqea5JjSkvL2Nb5vonqXQQU
+ K2xw==
+X-Gm-Message-State: AOJu0Yxl5H0APLLLK+UViRKoqxD8DVcejQtkobHP3mJuLF+SYnzVkpUo
+ M9QkXcv6Vqdkf5T//BpW9G3YybMvnJO82q12NMuL1szYu9mpvPscj2JeOhXKtVdq83k=
+X-Gm-Gg: AfdE7ckqBiPWJT4Yi/Eyg68h2u9siAJb8XSLHQBYtVyvzwD5D4bMTDOhdUjG4+z2e2d
+ DYj4TtL308o3tD3/vBIGEcTy9W3bKjRDT6Up3igAiVXBfUgmeZ3xH77Nsjdsn4/PfSd6nAVylMz
+ ot2lZAPC4fg5ZvhN5O/uz52PhmKcWEatPa3cMKa1bbzaKRtI67m/5EFvnby2C4oqkuiWBJUJMdc
+ DCXQnAxYLkGCUvbErgjwJc7TTltsNcMb4BdsJj0kRpFXeJrEthjKvyBOe7s7tqGwm9OhBdLzQ+5
+ uAp5lmUDeZ48g0e4yL1TSgFFOB57gl4xDW37NpLCXaJsSkwltOVSca3ajUoOtrC/94e1DOzIstT
+ 2EGhyJg/zFIopMfT11c0+n0MHi3sYmLAFNbPIsX6sahjPVYIm33PNccSWcPgBtd/vR9tRa2jRIU
+ 6+e27JYzf7CqcVQ0vX6QLBQc7iq6TLpsc7P5tQ
+X-Received: by 2002:a17:90b:2d4b:b0:36b:8baa:a683 with SMTP id
+ 98e67ed59e1d1-37de428c477mr2618004a91.19.1782291689964; 
+ Wed, 24 Jun 2026 02:01:29 -0700 (PDT)
+Received: from fedora ([61.74.238.173]) by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-c8bc2c8d8a9sm12257944a12.5.2026.06.24.02.01.27
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 24 Jun 2026 02:01:29 -0700 (PDT)
+From: SeungJu Cheon <suunj1331@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, alistair.francis@wdc.com,
+ liwei1518@gmail.com, daniel.barboza@oss.qualcomm.com,
+ zhiwei_liu@linux.alibaba.com, chao.liu.zevorn@gmail.com,
+ SeungJu Cheon <suunj1331@gmail.com>
+Subject: [PATCH] target/riscv: Fix vsstatus.UXL reserved value
+Date: Wed, 24 Jun 2026 18:00:52 +0900
+Message-ID: <20260624090052.463075-1-suunj1331@gmail.com>
+X-Mailer: git-send-email 2.52.0
 MIME-Version: 1.0
-In-Reply-To: <20260616142730.7fb0a465@jic23-huawei>
-X-CMS-MailID: 20260624061230epcas5p419894dd4d2e612f7712f1ec7ae940ce0
-X-Msg-Generator: CA
-Content-Type: multipart/mixed;
- boundary="----LzjFyProJtBlqpjpUA7CxzsXX7e_8S7ToqyYf_kYrViRiBfb=_5314c_"
-CMS-TYPE: 105P
-X-CPGSPASS: Y
-cpgsPolicy: CPGSC10-542,Y
-X-CFilter-Loop: Reflected
-X-CMS-RootMailID: 20260609104503epcas5p12628cd89d0ef9210c856d2518dc790cb
-References: <20260609105836.3702787-1-shrihari.s@samsung.com>
- <CGME20260609104503epcas5p12628cd89d0ef9210c856d2518dc790cb@epcas5p1.samsung.com>
- <20260609105836.3702787-2-shrihari.s@samsung.com>
- <20260616142730.7fb0a465@jic23-huawei>
-Received-SPF: pass client-ip=203.254.224.24;
- envelope-from=shrihari.s@samsung.com; helo=mailout1.samsung.com
-X-Spam_score_int: -28
-X-Spam_score: -2.9
-X-Spam_bar: --
-X-Spam_report: (-2.9 / 5.0 requ) BAYES_00=-1.9, DATE_IN_FUTURE_06_12=1.947,
- DKIMWL_WL_HIGH=-0.445, DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1,
- DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H3=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_PASS=-0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1033;
+ envelope-from=suunj1331@gmail.com; helo=mail-pj1-x1033.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Wed, 24 Jun 2026 08:09:17 -0400
+X-Mailman-Approved-At: Wed, 24 Jun 2026 08:09:16 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -98,41 +100,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-------LzjFyProJtBlqpjpUA7CxzsXX7e_8S7ToqyYf_kYrViRiBfb=_5314c_
-Content-Type: text/plain; charset="utf-8"; format="flowed"
-Content-Disposition: inline
+By the priv spec the value "3" is marked as 'Reserved' for
+mstatus.UXL. write_mstatus() rejects this value, but
+write_vsstatus() does not, allowing the reserved value to be
+written and read back unchanged.
 
->> diff --git a/hw/pci-bridge/cxl_root_port.c b/hw/pci-bridge/cxl_root_port.c
->> index 0ee18ef5c3..df69c5200f 100644
->> --- a/hw/pci-bridge/cxl_root_port.c
->> +++ b/hw/pci-bridge/cxl_root_port.c
->
->>  static void cxl_rp_dvsec_write_config(PCIDevice *dev, uint32_t addr,
->> diff --git a/hw/pci/pcie.c b/hw/pci/pcie.c
->> index 1de0b1e4fd..d452199d85 100644
->> --- a/hw/pci/pcie.c
->> +++ b/hw/pci/pcie.c
->> @@ -217,7 +217,7 @@ static void pcie_cap_fill_slot_lnk(PCIDevice *dev)
->>          /* the PCI_EXP_LNKSTA_DLLLA will be set in the hotplug function */
->>      }
->>
->> -    pcie_cap_fill_lnk(exp_cap, s->width, s->speed, s->flitmode);
->> +    pcie_cap_fill_lnk(exp_cap, s->width, s->speed, s->parent_obj.flitmode);
->
->I think we should use a cast to the parent object type rather than going directly
->into s->parent_obj.  PCIE_PORT(s)->flitmode.
+Handle a vsstatus.UXL = 3 write by writing the current 'xl'
+instead.
 
-Hi Jonathan,
+Fixes: f310df58bd2 ("target/riscv: Enable uxl field write")
+Signed-off-by: SeungJu Cheon <suunj1331@gmail.com>
+---
+ target/riscv/csr.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-Got your point and it makes sense, will change that in the next version of this patch series. Thanks for the suggestion.
+diff --git a/target/riscv/csr.c b/target/riscv/csr.c
+index dd9726fcf4..4c1da61824 100644
+--- a/target/riscv/csr.c
++++ b/target/riscv/csr.c
+@@ -5226,7 +5226,15 @@ static RISCVException write_vsstatus(CPURISCVState *env, int csrno,
+     uint64_t mask = (target_ulong)-1;
+     if ((val & VSSTATUS64_UXL) == 0) {
+         mask &= ~VSSTATUS64_UXL;
++    } else {
++        uint64_t uxl = (val & VSSTATUS64_UXL) >> 32;
++        if (uxl == 3) {
++            int xl = riscv_cpu_mxl(env);
++            val = deposit64(val, 32, 2,
++                            xl == MXL_RV128 ? MXL_RV64 : xl);
++        }
+     }
++
+     if ((env->henvcfg & HENVCFG_DTE)) {
+         if ((val & SSTATUS_SDT) != 0) {
+             val &= ~SSTATUS_SIE;
+-- 
+2.52.0
 
->
->>  }
->
-
-------LzjFyProJtBlqpjpUA7CxzsXX7e_8S7ToqyYf_kYrViRiBfb=_5314c_
-Content-Type: text/plain; charset="utf-8"
-
-
-------LzjFyProJtBlqpjpUA7CxzsXX7e_8S7ToqyYf_kYrViRiBfb=_5314c_--
 
