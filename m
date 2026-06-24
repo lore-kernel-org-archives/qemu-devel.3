@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B294CDB470
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 05:14:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CAEBACDB47F
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 05:14:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcFrp-0004Zx-DW; Wed, 24 Jun 2026 01:09:41 -0400
+	id 1wcFrs-0004pP-2i; Wed, 24 Jun 2026 01:09:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wcFrg-0003yS-HJ; Wed, 24 Jun 2026 01:09:35 -0400
+ id 1wcFqo-00037o-Sb; Wed, 24 Jun 2026 01:08:42 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wcFrc-0005wH-Lr; Wed, 24 Jun 2026 01:09:31 -0400
+ id 1wcFql-0005t9-3i; Wed, 24 Jun 2026 01:08:37 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1782277623; bh=XToyEyO85k0wvOXd+H658vKKXC4nhak7e7vcR3tu/po=;
+ t=1782277623; bh=0qeQG38BzP/Bizi+dlJAjX3FnMzZTa7jiRiX9fH3TzQ=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=CSliQscnlq6cGa8G4iDMcKsmG/KZdZHAjRoWp/Eg17f9Uv4GTaC8tHnJhXqxSF45h
- 47XaA98ZpEClcQ4zHFfTIITmwVMKsLAH3kHnjQ7hWcarOQBg0gtkE8fl+XdGSdk4nc
- Hn7t8awdgx7IxeJ8QfDGN+Xwl5M6+7IqNK9+BCq4V8ufdTIIspq0/xHAKUuCxk64rY
- 48jRDFHzbFXIy5e90+CeuxMypQlD97Eu6JMrcKTSMe4p+SpQ1OYsmcosgLo+1cvu6W
- sIiCNzrkT+ST+42Az7LZ2BMJ09oR0gojXuaXE6DG+VhEXgBmZsNXRqiFF8f5GmrhPB
- Iwo2caiwGZDDA==
+ b=lwDSOh1jrseKJUi0AZmri0mtUIdQY1/8eg4z88UMgmuLXSZLrJ1NSZaQvPWuCO4fj
+ GoOYMNcjPGZjIVOYsOD3AbA7w5HOH+6s/QB8msLOOQ0MDZRtSw/tkDktFpOPR79WAo
+ T657ziCBr5/XCSpY44LtoJFQGPHCeFJbpatUkFkE6H+Da1TQtEToDoTzmNPY5bKt68
+ TlAW3MSoML0VvG+rQiJnXJVMiK2o2bsNDIDAMcIgU+nRuPom61KOFCydcMvaQhRPnn
+ tvXyplHsjvu255p2sIL7fkPg7TPMhrwWIgAoPhWKOVb6FWqrVAiT8DIVe2g+2LTYuH
+ YtcuJWmj78eXw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 934C31BA671;
+ by isrv.corpit.ru (Postfix) with ESMTP id 210701BA66B;
  Wed, 24 Jun 2026 08:07:03 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 725C33DDB0E;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 0B2943DDB08;
  Wed, 24 Jun 2026 08:07:08 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>,
- Feifan Qian <bea1e@proton.me>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+Cc: qemu-stable@nongnu.org,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.4 83/95] hw/uefi: fix parse_hexstr
-Date: Wed, 24 Jun 2026 08:05:18 +0300
-Message-ID: <20260624050541.395079-22-mjt@tls.msk.ru>
+Subject: [Stable-10.2.4 77/95] target/riscv/insn_trans/trans_rvzicbo.c.inc:
+ save opcode before helpers
+Date: Wed, 24 Jun 2026 08:05:12 +0300
+Message-ID: <20260624050541.395079-16-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.2.4-20260624080454@cover.tls.msk.ru>
 References: <qemu-stable-10.2.4-20260624080454@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -71,34 +71,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Gerd Hoffmann <kraxel@redhat.com>
+From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 
-Make sure we actually have two input characters available before going
-to parse two hex digits.  Fixes one byte buffer overflow of the output
-buffer in case the input string has an odd number of characters.
+All helpers from this file can trigger ILLEGAL_INSN exceptions via
+check_zicbo_envcfg() directly, bypassing the usual exception code from
+translate.c.   If we don't save the opcode before each helper,
+riscv_raise_exception() is triggered and env->bins won't be unwind during
+cpu_loop_exit_restore() (code path cpu_restore_state ->
+cpu_restore_state_from_tb() -> restore_state_to_opc()).
 
-Fixes: CVE-2026-48915
-Fixes: 12058948abdf ("hw/uefi: add var-service-json.c + qapi for NV vars.")
-Reported-by: Feifan Qian <bea1e@proton.me>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
-Message-ID: <20260526135948.599148-1-kraxel@redhat.com>
-(cherry picked from commit d6601a7e1c2452100ed7e4b1d74a70b9acc0abe6)
+And finally, in riscv_cpu_do_interrupt(), we will set (m)tval = 0 when we can,
+instead, set it to the cbo opcode that generated the exception.
+
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3380
+Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Message-ID: <20260520214704.1943652-1-daniel.barboza@oss.qualcomm.com>
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+(cherry picked from commit d6c5855c76b2ea849adb0fb91379dbb1e5a94dca)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/uefi/var-service-json.c b/hw/uefi/var-service-json.c
-index f5f1556833..8621b86c5c 100644
---- a/hw/uefi/var-service-json.c
-+++ b/hw/uefi/var-service-json.c
-@@ -98,7 +98,7 @@ static void parse_hexstr(void *dest, char *src, int len)
-     uint8_t *data = dest;
-     size_t i;
+diff --git a/target/riscv/insn_trans/trans_rvzicbo.c.inc b/target/riscv/insn_trans/trans_rvzicbo.c.inc
+index 15711c3140..096f7dde27 100644
+--- a/target/riscv/insn_trans/trans_rvzicbo.c.inc
++++ b/target/riscv/insn_trans/trans_rvzicbo.c.inc
+@@ -33,6 +33,8 @@ static bool trans_cbo_clean(DisasContext *ctx, arg_cbo_clean *a)
+     REQUIRE_ZICBOM(ctx);
+     TCGv src = get_address(ctx, a->rs1, 0);
  
--    for (i = 0; i < len; i += 2) {
-+    for (i = 0; i + 1 < len; i += 2) {
-         *(data++) =
-             parse_hexchar(src[i]) << 4 |
-             parse_hexchar(src[i + 1]);
++    /* The helper may raise ILLEGAL_INSN -- record binv for unwind. */
++    decode_save_opc(ctx, 0);
+     gen_helper_cbo_clean_flush(tcg_env, src);
+     return true;
+ }
+@@ -42,6 +44,8 @@ static bool trans_cbo_flush(DisasContext *ctx, arg_cbo_flush *a)
+     REQUIRE_ZICBOM(ctx);
+     TCGv src = get_address(ctx, a->rs1, 0);
+ 
++    /* The helper may raise ILLEGAL_INSN -- record binv for unwind. */
++    decode_save_opc(ctx, 0);
+     gen_helper_cbo_clean_flush(tcg_env, src);
+     return true;
+ }
+@@ -51,6 +55,8 @@ static bool trans_cbo_inval(DisasContext *ctx, arg_cbo_inval *a)
+     REQUIRE_ZICBOM(ctx);
+     TCGv src = get_address(ctx, a->rs1, 0);
+ 
++    /* The helper may raise ILLEGAL_INSN -- record binv for unwind. */
++    decode_save_opc(ctx, 0);
+     gen_helper_cbo_inval(tcg_env, src);
+     return true;
+ }
+@@ -60,6 +66,8 @@ static bool trans_cbo_zero(DisasContext *ctx, arg_cbo_zero *a)
+     REQUIRE_ZICBOZ(ctx);
+     TCGv src = get_address(ctx, a->rs1, 0);
+ 
++    /* The helper may raise ILLEGAL_INSN -- record binv for unwind. */
++    decode_save_opc(ctx, 0);
+     gen_helper_cbo_zero(tcg_env, src);
+     return true;
+ }
 -- 
 2.47.3
 
