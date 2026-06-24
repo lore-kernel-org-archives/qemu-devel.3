@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D20FECDE003
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 13:34:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E956CDE004
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 13:34:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcNkS-0008U0-2M; Wed, 24 Jun 2026 09:34:36 -0400
+	id 1wcNjZ-00076j-F3; Wed, 24 Jun 2026 09:33:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wcNkO-0008RE-PD; Wed, 24 Jun 2026 09:34:33 -0400
+ id 1wcNjJ-00070Q-OI; Wed, 24 Jun 2026 09:33:28 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wcNkN-0000Ut-14; Wed, 24 Jun 2026 09:34:32 -0400
+ id 1wcNjG-0000Nz-Vr; Wed, 24 Jun 2026 09:33:24 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1782307996; bh=5LTbrdiZZKvPaIrNvB8ScBmmfWMVGkV6wGymiQXW1SQ=;
+ t=1782307995; bh=ruH2hkT0kSahVJDVkJVWgjKgRpyoHENjlyJWh/U7KsQ=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=Yb+7MnkFSy14CNzg0GRVsQZsC/Jm7SBkkk9VqJKlkwpPaMK08b3qUN9dI+4OWnETE
- KMT/jy0WH7P5VYyvCgKR4koW2oi7krpjzZpxtRL+JD9b4yN92kg7rU3sGsv3NXA0t7
- ku2T7RjeDkePTOavQ0YrPrtsIRuvTd57gGpT9dNpV2d4toMQU0/eXDCocr+wYx6a+2
- K9vOD5D2p6b6VmG0VbcLFhE3P5MgpLQ4YkFVGDBZlES4Kkp+AJwXLfUbFVVsqe4Ibi
- SAUWf83TyC1Ena3tXN7wn1fweep4I1iQrlpB8mNlOhEGeV0KJWIS5usog/yQeKEM2Y
- mBWsMzTPvhUcA==
+ b=q4QerLIaJfJMpxRnzPn8MYl4nxrweDQ2NwJBsrgdrwaGhIUmGfrJ2Xqkd1ir4nR9r
+ dyRYvYLpszazvZtQq5Giykgmg+cCtLUHrwP6x0AC89nJKyUFv0tTr/8SJJoAfBqjPY
+ eT7dul2si2B607J/Meu+xZ3IUa8UGOwWpLwQw23aoL8/voH96eHxc0lLdJc0Hh5a42
+ RFsP6G3uQjtuhQ191Xzz4YuJ71r1wZkoWBsNUroyPgRqHuiJ+eVp7DeYSmYgHro6dA
+ 7dfhu+fnWDHFzEywbMNq8qO14AY517qC+Dm0cHAv9E0v+Tm1cGyOwaF0VS4GTGc2Xj
+ fn0exebCRLdFg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 432691BA9C2;
- Wed, 24 Jun 2026 16:33:16 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 50C7E1BA9B4;
+ Wed, 24 Jun 2026 16:33:15 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id D456A3DEA11;
- Wed, 24 Jun 2026 16:33:21 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id DF4953DEA03;
+ Wed, 24 Jun 2026 16:33:20 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Matt Turner <mattst88@gmail.com>,
- Helge Deller <deller@gmx.de>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.2 016/107] linux-user/mips64: fix mipsn32
- elf_core_copy_regs entry width
-Date: Wed, 24 Jun 2026 16:30:21 +0300
-Message-ID: <20260624133301.403266-16-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Frank Chang <frank.chang@sifive.com>,
+ Max Chou <max.chou@sifive.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.2 002/107] target/riscv: Update MISA.C for Zc* extensions
+Date: Wed, 24 Jun 2026 16:30:07 +0300
+Message-ID: <20260624133301.403266-2-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.2-20260624163118@cover.tls.msk.ru>
 References: <qemu-stable-11.0.2-20260624163118@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -70,84 +70,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Matt Turner <mattst88@gmail.com>
+From: Frank Chang <frank.chang@sifive.com>
 
-For mipsn32 (TARGET_ABI32=y, TARGET_LONG_BITS=64):
-  abi_ulong = uint32_t (4 bytes) — for pointers and ABI-sized fields
-  target_ulong = uint64_t (8 bytes) — for general-purpose registers
+MISA.C is set if the following extensions are selected:
+  * Zca and not F.
+  * Zca, Zcf and F (but not D) is specified (RV32 only).
+  * Zca, Zcf and Zcd if D is specified (RV32 only).
+  * Zca, Zcd if D is specified (RV64 only).
 
-linux-user/elfload.c allocates target_elf_prstatus using the
-mips64/target_elf.h definition where target_elf_gregset_t has
-target_ulong reserved[45] (8 bytes each, 360 bytes total).
+Therefore, MISA.C must be set according to the Zc* extension rules.
 
-However, in linux-user/mips64/elfload.c, #include "target_elf.h" inside
-the included mips/elfload.c resolves to mips/target_elf.h (compiler
-searches the file's own directory first), where the union uses abi_ulong
-reserved[45].  For mipsn32 this gives 4-byte entries (180 bytes), not
-the 8-byte entries (360 bytes) that elfload.c actually allocated.
+Warn the user if RVC is explicitly disabled but MISA.C is required by
+the rules above.
 
-Writing via r->reserved[34] therefore lands at byte offset 34*4=136
-instead of the correct 34*8=272, silently zeroing the EPC in the core
-file.
-
-Fix by casting the pointer to target_ulong * so writes always use 8-byte
-slots and land at the offsets matching the allocated layout.
-
-This does not change behavior for mips64 (N64) where abi_ulong already
-equals target_ulong (both 8 bytes).
-
-Signed-off-by: Matt Turner <mattst88@gmail.com>
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Helge Deller <deller@gmx.de>
-(cherry picked from commit 6033df08e93df313771b6637230de2d66bdc09cb)
+Signed-off-by: Frank Chang <frank.chang@sifive.com>
+Reviewed-by: Max Chou <max.chou@sifive.com>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Message-ID: <20260424050509.3935180-2-frank.chang@sifive.com>
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+(cherry picked from commit f0433a8bc4ac5626499ff09ba5d165dbf7a4a980)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/linux-user/mips64/elfload.c b/linux-user/mips64/elfload.c
-index 9081ae8111..e4d84a7bd6 100644
---- a/linux-user/mips64/elfload.c
-+++ b/linux-user/mips64/elfload.c
-@@ -15,16 +15,31 @@
-  */
- void elf_core_copy_regs(target_elf_gregset_t *r, const CPUMIPSState *env)
- {
--    /* R0 is always 0; r->reserved is zero-initialised by the caller */
-+    /*
-+     * linux-user/elfload.c allocates target_elf_prstatus using the
-+     * definition from mips64/target_elf.h, where target_elf_gregset_t
-+     * has target_ulong reserved[45] (8 bytes each = 360 bytes total).
-+     *
-+     * But in this compilation unit, "#include target_elf.h" resolved to
-+     * mips/target_elf.h (wrong directory), so our local target_elf_gregset_t
-+     * has abi_ulong reserved[45] which is only 4 bytes each for mipsn32.
-+     * Using r->reserved[i] would write to the wrong offsets for mipsn32.
-+     *
-+     * Cast to target_ulong * to always write 8-byte entries at the correct
-+     * positions, matching the layout that elfload.c allocated.
-+     */
-+    target_ulong *regs = (target_ulong *)r;
-+
-+    /* R0 is always 0; buffer is zero-initialised by the caller */
-     for (int i = 1; i < 32; i++) {
--        r->reserved[i] = tswap64(env->active_tc.gpr[i]);
-+        regs[i] = tswap64(env->active_tc.gpr[i]);
+diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
+index 988b2d905f..800b7dce5d 100644
+--- a/target/riscv/tcg/tcg-cpu.c
++++ b/target/riscv/tcg/tcg-cpu.c
+@@ -1150,6 +1150,44 @@ static void riscv_cpu_enable_implied_rules(RISCVCPU *cpu)
      }
--    r->reserved[26] = 0;   /* k0 */
--    r->reserved[27] = 0;   /* k1 */
--    r->reserved[32] = tswap64(env->active_tc.LO[0]);
--    r->reserved[33] = tswap64(env->active_tc.HI[0]);
--    r->reserved[34] = tswap64(env->active_tc.PC);
--    r->reserved[35] = tswap64(env->CP0_BadVAddr);
--    r->reserved[36] = tswap64(env->CP0_Status);
--    r->reserved[37] = tswap64(env->CP0_Cause);
-+    regs[26] = 0;   /* k0 */
-+    regs[27] = 0;   /* k1 */
-+    regs[32] = tswap64(env->active_tc.LO[0]);
-+    regs[33] = tswap64(env->active_tc.HI[0]);
-+    regs[34] = tswap64(env->active_tc.PC);
-+    regs[35] = tswap64(env->CP0_BadVAddr);
-+    regs[36] = tswap64(env->CP0_Status);
-+    regs[37] = tswap64(env->CP0_Cause);
  }
+ 
++/*
++ * MISA.C is set if the following extensions are selected:
++ *   - Zca and not F.
++ *   - Zca, Zcf and F (but not D) is specified on RV32.
++ *   - Zca, Zcf and Zcd if D is specified on RV32.
++ *   - Zca, Zcd if D is specified on RV64.
++ */
++static void riscv_cpu_update_misa_c(RISCVCPU *cpu)
++{
++    CPURISCVState *env = &cpu->env;
++    bool set_misa_c = false;
++
++    if (riscv_has_ext(env, RVC)) {
++        return;
++    }
++
++    if (cpu->cfg.ext_zca && !riscv_has_ext(env, RVF)) {
++        set_misa_c = true;
++    } else if (riscv_cpu_mxl(env) == MXL_RV32 &&
++               cpu->cfg.ext_zca && cpu->cfg.ext_zcf &&
++               (riscv_has_ext(env, RVD) ? cpu->cfg.ext_zcd :
++                                          riscv_has_ext(env, RVF))) {
++        set_misa_c = true;
++    } else if (riscv_cpu_mxl(env) == MXL_RV64 &&
++               cpu->cfg.ext_zca && cpu->cfg.ext_zcd) {
++        set_misa_c = true;
++    }
++
++    if (set_misa_c) {
++        if (cpu_misa_ext_is_user_set(RVC)) {
++            warn_report("RVC mandated by Zca/Zcf/Zcd extensions");
++            return;
++        }
++
++        riscv_cpu_set_misa_ext(env, env->misa_ext | RVC);
++    }
++}
++
+ void riscv_tcg_cpu_finalize_features(RISCVCPU *cpu, Error **errp)
+ {
+     CPURISCVState *env = &cpu->env;
+@@ -1157,6 +1195,7 @@ void riscv_tcg_cpu_finalize_features(RISCVCPU *cpu, Error **errp)
+ 
+     riscv_cpu_init_implied_exts_rules();
+     riscv_cpu_enable_implied_rules(cpu);
++    riscv_cpu_update_misa_c(cpu);
+ 
+     riscv_cpu_validate_misa_priv(env, &local_err);
+     if (local_err != NULL) {
 -- 
 2.47.3
 
