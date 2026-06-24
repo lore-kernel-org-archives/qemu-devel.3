@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90F2ECDB479
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 17:42:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FB24CDB47F
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 17:42:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcRaI-0003cH-Cd; Wed, 24 Jun 2026 13:40:22 -0400
+	id 1wcRZy-00036K-Q6; Wed, 24 Jun 2026 13:40:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wcRaG-0003a1-P7
- for qemu-devel@nongnu.org; Wed, 24 Jun 2026 13:40:20 -0400
+ id 1wcRZx-00033t-Cg
+ for qemu-devel@nongnu.org; Wed, 24 Jun 2026 13:40:01 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wcRaF-0004hN-4s
- for qemu-devel@nongnu.org; Wed, 24 Jun 2026 13:40:20 -0400
+ id 1wcRZv-0004dj-Or
+ for qemu-devel@nongnu.org; Wed, 24 Jun 2026 13:40:01 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1782322818;
+ s=mimecast20190719; t=1782322799;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Lz8lk2IsqKnoGRepbUtaYXVM/MId6jWWp/KBsh/Qpm8=;
- b=KA2rcSc7W9kObCKEG5g/IfSgJBAfQfofplA4TKn/l2vn5gm5IqhFc6za73MYQ6OpkaB7CP
- kZV+3mhYTF0qJD9+7+1LKVst5oolpOs3khM4g6ZtFk15HlNpTOfyD98UUIG24m6idc12je
- 6OFK/bxGm+QAPXwAUQMkcGC1jcKkQKs=
+ bh=d1ncO9vn+ZIS+PTHi9PgVZbJYipsd40hqXYNJp/rezk=;
+ b=Gd/OBUhJ8XQvI4bk6oMyqfyDANfD95VjxIOAQY7O6kc3Ai8b1eJP/GrXTQ8RtF2FBHuB1z
+ gcgnzTtMqWhmiBk9CbJSL0GM2W4EcIZ8k5u3gYTOF5G/wX/TJZI9avKm4/vJlsk2ppnpBg
+ kFhCo3M+oMV/A08iUEn3sVkShJooPp4=
 Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-649-xcb-Jw8rPzalj9fxawf5Sw-1; Wed,
- 24 Jun 2026 13:40:15 -0400
-X-MC-Unique: xcb-Jw8rPzalj9fxawf5Sw-1
-X-Mimecast-MFC-AGG-ID: xcb-Jw8rPzalj9fxawf5Sw_1782322813
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-75-e_TfHvT8Ml-j4uByYT9aAQ-1; Wed,
+ 24 Jun 2026 13:39:55 -0400
+X-MC-Unique: e_TfHvT8Ml-j4uByYT9aAQ-1
+X-Mimecast-MFC-AGG-ID: e_TfHvT8Ml-j4uByYT9aAQ_1782322794
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B9D3918005A5; Wed, 24 Jun 2026 17:40:13 +0000 (UTC)
+ id 607FE180065A; Wed, 24 Jun 2026 17:39:54 +0000 (UTC)
 Received: from berrange.com (unknown [10.44.32.102])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 80FCF180028B; Wed, 24 Jun 2026 17:40:10 +0000 (UTC)
+ id 04358180034F; Wed, 24 Jun 2026 17:39:50 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: devel@lists.libvirt.org,
@@ -58,10 +58,10 @@ Cc: devel@lists.libvirt.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Peter Krempa <pkrempa@redhat.com>
-Subject: [PATCH v5 34/35] qemu-options: document new monitor-hmp and
- monitor-qmp objects
-Date: Wed, 24 Jun 2026 18:37:50 +0100
-Message-ID: <20260624173752.2928717-35-berrange@redhat.com>
+Subject: [PATCH v5 29/35] tests/functional: add a stress test for monitor hot
+ unplug
+Date: Wed, 24 Jun 2026 18:37:45 +0100
+Message-ID: <20260624173752.2928717-30-berrange@redhat.com>
 In-Reply-To: <20260624173752.2928717-1-berrange@redhat.com>
 References: <20260624173752.2928717-1-berrange@redhat.com>
 MIME-Version: 1.0
@@ -92,84 +92,105 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add new docs for the `-object monitor-hmp` and `-object monitor-qmp`
-options, updating `-mon` to state that it is legacy syntax sugar
-for the new `-object` args.
+When unplugging a monitor there is a careful synchronization dance
+between the monitor handling the "object-del" command and the
+command processing for the monitor being deleted.
+
+The stress test runs a busy loop of 'query-qmp-schema' on a second
+monitor, while the primary monitor requests its deletion.
 
 Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 Tested-by: Peter Krempa <pkrempa@redhat.com>
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- qemu-options.hx | 49 +++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 49 insertions(+)
+ .../generic/test_monitor_hotplug.py           | 62 +++++++++++++++++++
+ 1 file changed, 62 insertions(+)
 
-diff --git a/qemu-options.hx b/qemu-options.hx
-index c799286153..a804d5b880 100644
---- a/qemu-options.hx
-+++ b/qemu-options.hx
-@@ -4980,6 +4980,16 @@ SRST
-       -mon chardev=mon1,mode=control,pretty=on
+diff --git a/tests/functional/generic/test_monitor_hotplug.py b/tests/functional/generic/test_monitor_hotplug.py
+index 5d8a159eb0..55af8a238f 100755
+--- a/tests/functional/generic/test_monitor_hotplug.py
++++ b/tests/functional/generic/test_monitor_hotplug.py
+@@ -6,11 +6,16 @@
+ #
+ # Copyright (c) 2026 Christian Brauner
  
-     enables the QMP monitor on localhost port 4444 with pretty-printing.
-+
-+    The use of ``-mon mode=readline`` is historical syntax sugar
-+    for the new ``-object monitor-hmp`` option, each use of which
-+    creates an object with the ID ``hmpcompatNNN`` where ``NNN`` is
-+    a counter starting from 0.
-+
-+    The use of ``-mon mode=control`` is historical syntax sugar
-+    for the new ``-object monitor-qmp`` option, each use of which
-+    creates an object with the ID ``qmpcompatNNN`` where ``NNN`` is
-+    a counter starting from 0.
- ERST
++import asyncio
+ import os
++import random
++import threading
++import time
  
- DEF("debugcon", HAS_ARG, QEMU_OPTION_debugcon, \
-@@ -5730,6 +5740,45 @@ SRST
-     they are specified. Note that the 'id' property must be set. These
-     objects are placed in the '/objects' path.
+ from qemu_test import QemuSystemTest
  
-+    ``-object monitor-hmp,id=id,chardev=chardev_id,readline=on|off``
-+        Set up a monitor running the Human Monitor Protocol,
-+        connected to the chardev ``chardev_id``.
+ from qemu.qmp.legacy import QEMUMonitorProtocol
++from qemu.qmp import QMPClient
+ 
+ 
+ class MonitorHotplug(QemuSystemTest):
+@@ -163,6 +168,63 @@ def test_events_after_negotiation(self):
+         qmp.close()
+         self._remove_monitor()
+ 
++    def stress_mon(self, sock):
++        async def main():
++            qmp = QMPClient('testvm')
++            await qmp.connect(sock)
++            # Run query-version in a tight loop so that the
++            # monitor thread/dispatcher is very busy at the
++            # time we try to delete the monitor
++            while True:
++                try:
++                    # A command which returns a lot of data to make
++                    # it more likely we're in the I/O reply path
++                    # when deleting the monitor
++                    res = await qmp.execute('query-qmp-schema')
++                    # Some commands which generate async events
++                    # as those can trigger different code paths
++                    res = await qmp.execute('stop')
++                    res = await qmp.execute('cont')
++                except:
++                    # we'll get here if the monitor is terminated
++                    # by QEMU in which case we must disconnect
++                    # out side, but....
++                    try:
++                        await qmp.disconnect()
++                    except (ConnectionResetError, EOFError, BrokenPipeError):
++                        # ... disconnect() will probably see
++                        # errors too, but we must try to call it
++                        # regardless to cleanup asyncio state
++                        # and prevent python warnings at GC time
++                        pass
++                    return
++        asyncio.run(main())
 +
-+        The ``id`` parameter is a unique ID that can be used
-+        to dynamically delete the monitor at runtime. Note
-+        that monitors created using the historical syntax
-+        will be allocated IDs following the pattern ``hmpcompatNN``.
-+        Mixing ``-object`` with the historical monitor syntax is
-+        discouraged.
++    def test_hotplug_stress(self):
++        """
++        Repeatedly hotplug and unplug a monitor, while another thread
++        concurrently issues commands on that monitor. This stresses
++        the synchronization with the monitor thread during cleanup
++        """
++        self.set_machine('none')
++        self.vm.add_args('-nodefaults')
++        self.vm.launch()
 +
-+        The ``readline`` parameter, which defaults to ``on``,
-+        controls whether the monitor provides line editing.
++        # Each loop sleeps at most 0.5 seconds, so this should
++        # give an upper bound of approx 5 seconds execution
++        # time which is reasonable to run by default
++        repeat = 10
++        for i in range(repeat):
++            # First cycle
++            sock = self._add_monitor()
++            print ("# stress cycle %02d/%02d" % (i, repeat))
++            stress = threading.Thread(target=self.stress_mon, args=[sock])
++            stress.start()
++            # Sleep upto 1/2 second to vary the races
++            time.sleep(random.random() / 2)
++            self._remove_monitor()
++            stress.join()
 +
-+    ``-object monitor-qmp,id=id,chardev=chardev_id,pretty=on|off,close-action=none|delete``
-+        Set up a monitor running the QEMU Monitor Protocol,
-+        connected to the chardev ``chardev_id``.
-+
-+        The ``id`` parameter is a unique ID that can be used
-+        to dynamically delete the monitor at runtime. Note
-+        that monitors created using the historical syntax
-+        will be allocated IDs following the pattern ``qmpcompatNN``.
-+        Mixing ``-object`` with the historical monitor syntax is
-+        discouraged.
-+
-+        The ``pretty`` parameter, which defaults to ``off``,
-+        controls whether the monitor responses are pretty
-+        printed as multi-line indented JSON, as opposed to
-+        constrained to a single line without extraneous
-+        whitespace.
-+
-+        The ``close-action`` parameter, which defaults to ``none``,
-+        controls what happens when the connection to the monitor
-+        is terminated by the user. If set to ``delete``, then the
-+        ``monitor-qmp`` object and its associated character
-+        device are both immediately deleted. This can be useful
-+        if an extra monitor was hotplugged for a specific task
-+        and should be unplugged when completed.
-+
-     ``-object memory-backend-file,id=id,size=size,mem-path=dir,share=on|off,discard-data=on|off,merge=on|off,dump=on|off,prealloc=on|off,host-nodes=host-nodes,policy=default|preferred|bind|interleave,align=align,offset=offset,readonly=on|off,rom=on|off|auto``
-         Creates a memory file backend object, which can be used to back
-         the guest RAM with huge pages.
+ 
+ if __name__ == '__main__':
+     QemuSystemTest.main()
 -- 
 2.54.0
 
