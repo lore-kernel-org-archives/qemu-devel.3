@@ -4,44 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE7FFCDB481
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 13:47:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D06CCDE002
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 13:47:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcNt4-0003w1-2j; Wed, 24 Jun 2026 09:43:30 -0400
+	id 1wcNn6-0008Nc-GG; Wed, 24 Jun 2026 09:37:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wcNsx-0003A6-CA; Wed, 24 Jun 2026 09:43:23 -0400
+ id 1wcNn4-0008LN-1S; Wed, 24 Jun 2026 09:37:18 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wcNsv-00024j-KY; Wed, 24 Jun 2026 09:43:23 -0400
+ id 1wcNn2-0000zM-BJ; Wed, 24 Jun 2026 09:37:17 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1782308007; bh=1SQrUs/J8qxQ0tTKePHRCk8HlcCtFT4tkMdG/+dWCeg=;
+ t=1782307998; bh=Ghl0ZtyIs4gKQ1+JEGboppp/jddtSue3ilOs0f6SYAE=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=fVnSMjlrF9sYpwbGZkxpW+r1A4uiyzSOnPhGGV9xWT1RmBBpT1ZLxD1pYACiYLGL8
- wwvt4clhg8yo+OHtZ1J3hUvNccDTepIM7Aw2VjxAWcN95GyFpnQv8YulClYK2v2Lbv
- ll0zC48NkMZzujqssB/OSeNc3Q3GbqaiLqlMVQvJflQDe8AY2kZ8MVS7cklMsmqIoD
- 1cqE68Y8F/4m6b6m2lTyn8Jcc3lwf7/qe9MP/94pYfp4WeCI0ta/fQUmxW872spHw1
- 97ctunht1DuX0yv2p86zmJHB4SaFZyW7XWObn18PVjLS5Bi/UGJT749OsKGHf5uYnG
- LvRL4tueJVQPw==
+ b=IdHk4oJW9X0fljcUazYqMLvTDzPUQ/d0448/k8cEp6/AJTtgqc+SOXg+7RShQiSct
+ VOLMF0NqfsnFX+1QNsnLjJXz1/sTpb6mpKxnZkZiVstYyueZFPlQyNlcav5mYUZ/2b
+ UXWhavP0GzMM89iwBfq97OUXqYSb1MhndL+Y2nKdSbkT/YKC9Mv+NRyyf/QcXOTbdv
+ JIWdlhpw2UK42S11hMsVR5bYDtPItJkywihmJY6D+xcMOj783dEM0DCbzS89YlgY0Q
+ ZEtSN/e7o1yN+s3PJqqrImDXeEmlWOXG/SDz7cURdQEU1gOrPPWpLsbWr3JXcmWlAT
+ OZpHFUJXw0RhQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 460101BAA19;
- Wed, 24 Jun 2026 16:33:27 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 0E2781BA9DC;
+ Wed, 24 Jun 2026 16:33:18 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id D5E173DEA68;
- Wed, 24 Jun 2026 16:33:32 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 9F1F23DEA2B;
+ Wed, 24 Jun 2026 16:33:23 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org, Matt Turner <mattst88@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>,
  Helge Deller <deller@gmx.de>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.2 103/107] linux-user/xtensa: save/restore FP registers
- across signal delivery
-Date: Wed, 24 Jun 2026 16:31:48 +0300
-Message-ID: <20260624133301.403266-103-mjt@tls.msk.ru>
+Subject: [Stable-11.0.2 042/107] linux-user/s390x: restore fpu_status rounding
+ mode from FPC on sigreturn
+Date: Wed, 24 Jun 2026 16:30:47 +0300
+Message-ID: <20260624133301.403266-42-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.2-20260624163118@cover.tls.msk.ru>
 References: <qemu-stable-11.0.2-20260624163118@cover.tls.msk.ru>
@@ -72,180 +71,107 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Matt Turner <mattst88@gmail.com>
 
-Add support for saving and restoring f0-f15 across signal delivery.
-The target_xtensa_xtregs_fp struct carries 32-bit f-regs for cores
-with XTENSA_OPTION_FP_COPROCESSOR; target_xtensa_xtregs_dfp carries
-64-bit f-regs for cores with XTENSA_OPTION_DFP_COPROCESSOR.
+QEMU keeps the s390x floating-point control register (FPC) in env->fpc.
+The rounding mode bits [2:0] of FPC are reflected into the derived
+env->fpu_status via set_float_rounding_mode(); every architectural
+write to FPC goes through HELPER(sfpc) which keeps the two in sync.
 
-Lock the xtregs region via lock_user before reading on sigreturn,
-since sc_xtregs is a user-space pointer that may lie outside the
-locked sigframe.
+restore_sigregs() restored FPC with a direct assignment:
 
+    __get_user(env->fpc, &sc->fpregs.fpc);
+
+This wrote env->fpc correctly but never updated env->fpu_status, so on
+sigreturn the interrupted code resumed with whatever rounding mode the
+signal handler last installed in fpu_status.
+
+Factor the two-step "write fpc + sync fpu_status" logic out of
+HELPER(sfpc) into cpu_s390x_load_fpc(), declare it in cpu.h, and call
+it from restore_sigregs() in place of the direct assignment.
+
+cpu_s390x_load_fpc() partially reuses the sanity check from
+HELPER(sfpc): if the FPC value has an invalid rounding mode or reserved
+bits set, it falls back to 0, matching the kernel's fpu_lfpc_safe()
+behavior where a corrupt signal frame value causes a specification
+exception and 0 is used instead.
+
+HELPER(sfpc) now calls cpu_s390x_load_fpc() after its full
+specification-exception check, including the FEAT_FLOATING_POINT_EXT
+test that is not needed for the signal restore path.
+
+Fixes: 2941e0fa05 ("linux-user/s390x: Save/restore fpc when handling a signal")
+Cc: qemu-stable@nongnu.org
 Signed-off-by: Matt Turner <mattst88@gmail.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Helge Deller <deller@gmx.de>
-(cherry picked from commit 6858e3a71cc41510937bec0950eb4e42e33ba5f2)
+(cherry picked from commit 2762cd51ee033dccb3167110376dd125244cc819)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/linux-user/xtensa/signal.c b/linux-user/xtensa/signal.c
-index ef8b0c3a27..e3f9da322b 100644
---- a/linux-user/xtensa/signal.c
-+++ b/linux-user/xtensa/signal.c
-@@ -21,6 +21,7 @@
- #include "user-internals.h"
- #include "signal-common.h"
- #include "linux-user/trace.h"
-+#include "target/xtensa/cpu.h"
- 
- struct target_sigcontext {
-     abi_ulong sc_pc;
-@@ -43,10 +44,25 @@ struct target_ucontext {
-     target_sigset_t tuc_sigmask;
- };
- 
-+struct target_xtensa_xtregs_fp {
-+    uint32_t f[16];
-+    uint32_t fcr;
-+    uint32_t fsr;
-+};
-+
-+struct target_xtensa_xtregs_dfp {
-+    uint64_t f[16];
-+    uint32_t fcr;
-+    uint32_t fsr;
-+};
-+
- struct target_rt_sigframe {
-     target_siginfo_t info;
-     struct target_ucontext uc;
--    /* TODO: xtregs */
-+    union {
-+        struct target_xtensa_xtregs_fp fp;
-+        struct target_xtensa_xtregs_dfp dfp;
-+    } xtregs;
-     uint8_t retcode[6];
-     abi_ulong window[4];
- };
-@@ -107,6 +123,7 @@ static int flush_window_regs(CPUXtensaState *env)
- }
- 
- static int setup_sigcontext(struct target_rt_sigframe *frame,
-+                            abi_ulong frame_addr,
-                             CPUXtensaState *env)
- {
-     struct target_sigcontext *sc = &frame->uc.tuc_mcontext;
-@@ -123,8 +140,25 @@ static int setup_sigcontext(struct target_rt_sigframe *frame,
-     for (i = 0; i < 16; ++i) {
-         __put_user(env->regs[i], sc->sc_a + i);
+diff --git a/linux-user/s390x/signal.c b/linux-user/s390x/signal.c
+index 96d1c8d11c..28ad80bde4 100644
+--- a/linux-user/s390x/signal.c
++++ b/linux-user/s390x/signal.c
+@@ -332,7 +332,11 @@ static void restore_sigregs(CPUS390XState *env, target_sigregs *sc)
+     for (i = 0; i < 16; i++) {
+         __get_user(env->aregs[i], &sc->regs.acrs[i]);
      }
--    __put_user(0, &sc->sc_xtregs);
--    /* TODO: xtregs */
-+    if (xtensa_option_enabled(env->config, XTENSA_OPTION_DFP_COPROCESSOR)) {
-+        for (i = 0; i < 16; ++i) {
-+            __put_user(env->fregs[i].f64, &frame->xtregs.dfp.f[i]);
-+        }
-+        __put_user(env->uregs[FCR], &frame->xtregs.dfp.fcr);
-+        __put_user(cpu_get_fsr(env), &frame->xtregs.dfp.fsr);
-+        __put_user(frame_addr + offsetof(struct target_rt_sigframe, xtregs),
-+                   &sc->sc_xtregs);
-+    } else if (xtensa_option_enabled(env->config, XTENSA_OPTION_FP_COPROCESSOR)) {
-+        for (i = 0; i < 16; ++i) {
-+            __put_user(env->fregs[i].f32[FP_F32_LOW], &frame->xtregs.fp.f[i]);
-+        }
-+        __put_user(env->uregs[FCR], &frame->xtregs.fp.fcr);
-+        __put_user(cpu_get_fsr(env), &frame->xtregs.fp.fsr);
-+        __put_user(frame_addr + offsetof(struct target_rt_sigframe, xtregs),
-+                   &sc->sc_xtregs);
-+    } else {
-+        __put_user(0, &sc->sc_xtregs);
-+    }
-     return 1;
- }
- 
-@@ -190,7 +224,7 @@ void setup_rt_frame(int sig, struct target_sigaction *ka,
-     __put_user(0, &frame->uc.tuc_flags);
-     __put_user(0, &frame->uc.tuc_link);
-     target_save_altstack(&frame->uc.tuc_stack, env);
--    if (!setup_sigcontext(frame, env)) {
-+    if (!setup_sigcontext(frame, frame_addr, env)) {
-         unlock_user_struct(frame, frame_addr, 0);
-         goto give_sigsegv;
-     }
-@@ -243,8 +277,8 @@ give_sigsegv:
-     force_sigsegv(sig);
- }
- 
--static void restore_sigcontext(CPUXtensaState *env,
--                               struct target_rt_sigframe *frame)
-+static int restore_sigcontext(CPUXtensaState *env,
-+                              struct target_rt_sigframe *frame)
- {
-     struct target_sigcontext *sc = &frame->uc.tuc_mcontext;
-     uint32_t ps;
-@@ -266,7 +300,51 @@ static void restore_sigcontext(CPUXtensaState *env,
-     for (i = 0; i < 16; ++i) {
-         __get_user(env->regs[i], sc->sc_a + i);
-     }
--    /* TODO: xtregs */
+-    __get_user(env->fpc, &sc->fpregs.fpc);
 +    {
-+        abi_ulong xtregs_addr;
-+
-+        __get_user(xtregs_addr, &sc->sc_xtregs);
-+        if (xtregs_addr) {
-+            if (xtensa_option_enabled(env->config,
-+                                      XTENSA_OPTION_DFP_COPROCESSOR)) {
-+                struct target_xtensa_xtregs_dfp *xtregs;
-+                uint32_t fcr, fsr;
-+
-+                xtregs = lock_user(VERIFY_READ, xtregs_addr,
-+                                   sizeof(*xtregs), 1);
-+                if (!xtregs) {
-+                    return 0;
-+                }
-+                for (i = 0; i < 16; ++i) {
-+                    __get_user(env->fregs[i].f64, &xtregs->f[i]);
-+                }
-+                __get_user(fcr, &xtregs->fcr);
-+                __get_user(fsr, &xtregs->fsr);
-+                unlock_user(xtregs, xtregs_addr, 0);
-+                cpu_set_fcr(env, fcr);
-+                cpu_set_fsr(env, fsr);
-+            } else if (xtensa_option_enabled(env->config,
-+                                             XTENSA_OPTION_FP_COPROCESSOR)) {
-+                struct target_xtensa_xtregs_fp *xtregs;
-+                uint32_t fcr, fsr;
-+
-+                xtregs = lock_user(VERIFY_READ, xtregs_addr,
-+                                   sizeof(*xtregs), 1);
-+                if (!xtregs) {
-+                    return 0;
-+                }
-+                for (i = 0; i < 16; ++i) {
-+                    __get_user(env->fregs[i].f32[FP_F32_LOW], &xtregs->f[i]);
-+                }
-+                __get_user(fcr, &xtregs->fcr);
-+                __get_user(fsr, &xtregs->fsr);
-+                unlock_user(xtregs, xtregs_addr, 0);
-+                cpu_set_fcr(env, fcr);
-+                cpu_set_fsr(env, fsr);
-+            }
-+        }
++        uint32_t fpc;
++        __get_user(fpc, &sc->fpregs.fpc);
++        cpu_s390x_load_fpc(env, fpc);
 +    }
-+    return 1;
+     for (i = 0; i < 16; i++) {
+         __get_user(*get_freg(env, i), &sc->fpregs.fprs[i]);
+     }
+diff --git a/target/s390x/cpu.h b/target/s390x/cpu.h
+index 40bc1f0741..6826cda1c0 100644
+--- a/target/s390x/cpu.h
++++ b/target/s390x/cpu.h
+@@ -896,6 +896,7 @@ void s390_init_sigp(void);
+ /* helper.c */
+ void s390_cpu_set_psw(CPUS390XState *env, uint64_t mask, uint64_t addr);
+ uint64_t s390_cpu_get_psw_mask(CPUS390XState *env);
++void cpu_s390x_load_fpc(CPUS390XState *env, uint32_t fpc);
+ 
+ /* outside of target/s390x/ */
+ S390CPU *s390_cpu_addr2state(uint16_t cpu_addr);
+diff --git a/target/s390x/tcg/fpu_helper.c b/target/s390x/tcg/fpu_helper.c
+index 122994960a..6152d14aa9 100644
+--- a/target/s390x/tcg/fpu_helper.c
++++ b/target/s390x/tcg/fpu_helper.c
+@@ -952,6 +952,19 @@ static const int fpc_to_rnd[8] = {
+     float_round_to_odd,
+ };
+ 
++void cpu_s390x_load_fpc(CPUS390XState *env, uint32_t fpc)
++{
++    /*
++     * Mimic kernel fpu_lfpc_safe(): a corrupt signal frame value that would
++     * trigger a specification exception instead results in FPC being set to 0.
++     */
++    if (fpc_to_rnd[fpc & 0x7] == -1 || fpc & 0x03030088u) {
++        fpc = 0;
++    }
++    env->fpc = fpc;
++    set_float_rounding_mode(fpc_to_rnd[fpc & 0x7], &env->fpu_status);
++}
++
+ /* set fpc */
+ void HELPER(sfpc)(CPUS390XState *env, uint64_t fpc)
+ {
+@@ -959,12 +972,7 @@ void HELPER(sfpc)(CPUS390XState *env, uint64_t fpc)
+         (!s390_has_feat(S390_FEAT_FLOATING_POINT_EXT) && fpc & 0x4)) {
+         tcg_s390_program_interrupt(env, PGM_SPECIFICATION, GETPC());
+     }
+-
+-    /* Install everything in the main FPC.  */
+-    env->fpc = fpc;
+-
+-    /* Install the rounding mode in the shadow fpu_status.  */
+-    set_float_rounding_mode(fpc_to_rnd[fpc & 0x7], &env->fpu_status);
++    cpu_s390x_load_fpc(env, fpc);
  }
  
- long do_rt_sigreturn(CPUXtensaState *env)
-@@ -282,7 +360,9 @@ long do_rt_sigreturn(CPUXtensaState *env)
-     target_to_host_sigset(&set, &frame->uc.tuc_sigmask);
-     set_sigmask(&set);
- 
--    restore_sigcontext(env, frame);
-+    if (!restore_sigcontext(env, frame)) {
-+        goto badframe;
-+    }
-     target_restore_altstack(&frame->uc.tuc_stack, env);
- 
-     unlock_user_struct(frame, frame_addr, 0);
+ /* set fpc and signal */
 -- 
 2.47.3
 
