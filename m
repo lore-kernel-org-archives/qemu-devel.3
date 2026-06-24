@@ -4,93 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F233CDB47F
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 20:17:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F52BCDB47F
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 20:48:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcU1S-0006oW-PR; Wed, 24 Jun 2026 16:16:35 -0400
+	id 1wcUVn-0000nR-Jj; Wed, 24 Jun 2026 16:47:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1wcU1C-0006nN-7i
- for qemu-devel@nongnu.org; Wed, 24 Jun 2026 16:16:21 -0400
-Received: from vps-ovh.mhejs.net ([145.239.82.108])
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1wcUVj-0000n3-O6
+ for qemu-devel@nongnu.org; Wed, 24 Jun 2026 16:47:52 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1wcU19-0002eZ-3K
- for qemu-devel@nongnu.org; Wed, 24 Jun 2026 16:16:17 -0400
-Received: from MUA
- by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
- (Exim 4.99.1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1wcU0u-00000004qOH-2RiY; Wed, 24 Jun 2026 22:16:00 +0200
-Message-ID: <aa188582-33bd-4ef4-a264-a8a0d46e85bc@maciej.szmigiero.name>
-Date: Wed, 24 Jun 2026 22:15:55 +0200
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1wcUVh-0007pe-9b
+ for qemu-devel@nongnu.org; Wed, 24 Jun 2026 16:47:51 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1782334067;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=wlF2FAE63fjCpxbQDu1lhcuNq54SWZdqx5MLerXQXQI=;
+ b=ciiw7+RYlGzGBfKPzhtNk0thWx9m6zhEP0XGKaR/lCdr3zpsANXrHS85hA4UeG8Z0xnvDH
+ PNpVHdAJ5lgPQPvD1n79qWtWXBjILSWtgvHccsJyYW563xj9NJL2gZXE6DUsHHb4ru0395
+ OEIES2dmqX1YFKj6eB5qeJKu4HCDqeA=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-344-bHidcB2eOEqP7rIhp6w-GA-1; Wed,
+ 24 Jun 2026 16:47:43 -0400
+X-MC-Unique: bHidcB2eOEqP7rIhp6w-GA-1
+X-Mimecast-MFC-AGG-ID: bHidcB2eOEqP7rIhp6w-GA_1782334061
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 05E9418052CE; Wed, 24 Jun 2026 20:47:41 +0000 (UTC)
+Received: from localhost (unknown [10.44.24.16])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 10CF01956041; Wed, 24 Jun 2026 20:47:38 +0000 (UTC)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/5] vhost: reset vhost devices for CPR
-To: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
-Cc: mst@redhat.com, sgarzare@redhat.com, farosas@suse.de,
- qemu-devel@nongnu.org, peterx@redhat.com, dongli.zhang@oracle.com,
- bchaney@akamai.com, mark.kanda@oracle.com, den@openvz.org
-References: <20260619105514.128812-1-andrey.drobyshev@virtuozzo.com>
- <20260619105514.128812-4-andrey.drobyshev@virtuozzo.com>
- <d258f5fc-5c67-456a-be2e-49b0c7e1f4aa@maciej.szmigiero.name>
- <b62c8e66-85d5-4441-96be-8c779ab9be0a@virtuozzo.com>
-From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
-Content-Language: en-US, pl-PL
-Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
- 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
-In-Reply-To: <b62c8e66-85d5-4441-96be-8c779ab9be0a@virtuozzo.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=145.239.82.108;
- envelope-from=mhej@vps-ovh.mhejs.net; helo=vps-ovh.mhejs.net
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.249, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+Subject: Re: [PATCH v5 32/35] monitor: add support for auto-deleting
+ monitors upon close
+From: marcandre.lureau@redhat.com
+To: =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, devel@lists.libvirt.org, 
+ =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
+ Markus Armbruster <armbru@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
+ "Dr. David Alan Gilbert" <dave@treblig.org>, 
+ =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>, 
+ Christian Brauner <brauner@kernel.org>, 
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>, 
+ Peter Krempa <pkrempa@redhat.com>
+In-Reply-To: <20260624173752.2928717-33-berrange@redhat.com>
+References: <20260624173752.2928717-1-berrange@redhat.com>
+ <20260624173752.2928717-33-berrange@redhat.com>
+Date: Thu, 25 Jun 2026 00:47:30 +0400
+Message-Id: <178233405051.3955748.10990724544083287885.b4-review@b4>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=12943;
+ i=marcandre.lureau@redhat.com; h=from:subject:message-id;
+ bh=9njed6RM8Uge1MKbnhLnFSUQa0J3dgCgL6FZYg2eHMw=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqPEJmPlQ3qrrCW4wEmf3A0Y/M+kteXd0rhYOss
+ zLeL4qSGb2JAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCajxCZgAKCRDa6OEJdZac
+ 5crFD/49ye1gAALlI64tboTELFWEbCTsceXnvldRtg5lV0w3lsqO1bawW5YDACK7PHdX+omn8oB
+ qg8SYAOTjriscPskHyqYitypuFSAARYcoy7Zg4INU/br3yUGhjaINMDfUNSCP98f1Bhe28I+gWE
+ Vi5vQvwXc98gS04TXbLXY8StRdSf1gDg14j5+OjRXp/17azIqkcbCLqdRA8Q7ce5saw2jboEMWL
+ 5JDTRJXmXmTHxLEmjpjAB6bbydvBFqNRZkZof6FkA9tbFgG6Ru7nO8Fbc+lPYpigmqKWl0JhBAg
+ cqAIQvYsrUDUX/hjBvkH6w3yULLmhMG/GvSTlk5geTUJ7pAXiqPGIAQ0An+m3sap/IIkjNdRZTi
+ eGGorlURcnAo+Ut5p/8XtQrbDg8LW4MluHuXhTgF+3KkSRONN9ZTV1+Qr7i4nLjII9annc2BgmB
+ tLdEXLUCiOUbbY2dwsbgH4FjJenC/G7U7jByq3jFlbbXaCbAbLyBYzlzMRZEcAt5yM3jmaBZW6i
+ amC4M7RFsbXVeqx7iDP49FX6pGUalp8KCbO7Pad5lB72qGskyXhsANLIrYJK6Hc9t+DVNMiNL2F
+ c69aNNLmmumCrRGz4f5hjzETCxTJ4+LhiyO3yRMbVz9LCTOTDOH5tNsIh6ogsaPB5OUzJmEaAId
+ HAGgsJcqXp2hgBA==
+X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
+ fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=marcandre.lureau@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,127 +110,342 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 24.06.2026 17:49, Andrey Drobyshev wrote:
-> On 6/23/26 9:27 PM, Maciej S. Szmigiero wrote:
->> On 19.06.2026 12:55, Andrey Drobyshev wrote:
->>> When preserving a vhost fd using CPR, call VHOST_RESET_OWNER prior to CPR
->>> in old QEMU.  Otherwise, new QEMU will fail when it calls VHOST_SET_OWNER
->>> during vhost_dev_init.
->>>
->>> This patch is a rework of the change originally proposed by Steve, Ben
->>> and Mark at [0].
->>>
->>> [0] https://lore.kernel.org/qemu-devel/20260128-cpr-tap-v4-0-48e334d4216b@akamai.com
->>>
->>> Originally-by: Mark Kanda <mark.kanda@oracle.com>
->>> Originally-by: Steve Sistare <steven.sistare@oracle.com>
->>> Originally-by: Ben Chaney <bchaney@akamai.com>
->>> Signed-off-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
->>> ---
->>>    hw/virtio/vhost-kernel.c          |  6 ++++++
->>>    hw/virtio/vhost.c                 | 33 +++++++++++++++++++++++++++++++
->>>    include/hw/virtio/vhost-backend.h |  1 +
->>>    include/hw/virtio/vhost.h         |  1 +
->>>    4 files changed, 41 insertions(+)
->>>
->>> diff --git a/hw/virtio/vhost-kernel.c b/hw/virtio/vhost-kernel.c
->>> index 3390b48c6f1..55d316b88e9 100644
->>> --- a/hw/virtio/vhost-kernel.c
->>> +++ b/hw/virtio/vhost-kernel.c
->>> @@ -261,6 +261,11 @@ static int vhost_kernel_set_owner(struct vhost_dev *dev)
->>>        return vhost_kernel_call(dev, VHOST_SET_OWNER, NULL);
->>>    }
->>>    
->>> +static int vhost_kernel_reset_owner(struct vhost_dev *dev)
->>> +{
->>> +    return vhost_kernel_call(dev, VHOST_RESET_OWNER, NULL);
->>> +}
->>> +
->>>    static int vhost_kernel_get_vq_index(struct vhost_dev *dev, int idx)
->>>    {
->>>        assert(idx >= dev->vq_index && idx < dev->vq_index + dev->nvqs);
->>> @@ -385,6 +390,7 @@ const VhostOps kernel_ops = {
->>>            .vhost_get_features_ex = vhost_kernel_get_features,
->>>            .vhost_set_backend_cap = vhost_kernel_set_backend_cap,
->>>            .vhost_set_owner = vhost_kernel_set_owner,
->>> +        .vhost_reset_owner = vhost_kernel_reset_owner,
->>>            .vhost_get_vq_index = vhost_kernel_get_vq_index,
->>>            .vhost_vsock_set_guest_cid = vhost_kernel_vsock_set_guest_cid,
->>>            .vhost_vsock_set_running = vhost_kernel_vsock_set_running,
->>> diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
->>> index af41841b529..1521b50cbff 100644
->>> --- a/hw/virtio/vhost.c
->>> +++ b/hw/virtio/vhost.c
->>> @@ -24,6 +24,7 @@
->>>    #include "standard-headers/linux/vhost_types.h"
->>>    #include "hw/virtio/virtio-bus.h"
->>>    #include "hw/mem/memory-device.h"
->>> +#include "migration/misc.h"
->>>    #include "migration/blocker.h"
->>>    #include "migration/qemu-file-types.h"
->>>    #include "system/dma.h"
->>> @@ -1667,6 +1668,32 @@ static int vhost_dev_init_features(struct vhost_dev *hdev)
->>>        return r;
->>>    }
->>>    
->>> +static int vhost_cpr_notifier(NotifierWithReturn *notifier,
->>> +                              MigrationEvent *e, Error **errp)
->>> +{
->>> +    struct vhost_dev *dev;
->>> +    int r;
->>> +
->>> +    dev = container_of(notifier, struct vhost_dev, cpr_notifier);
->>> +
->>> +    if (dev->vhost_ops->backend_type != VHOST_BACKEND_TYPE_KERNEL) {
->>> +        return 0;
->>> +    }
->>> +
->>> +    if (e->type == MIG_EVENT_SETUP) {
->>> +        r = dev->vhost_ops->vhost_reset_owner(dev);
->>> +        if (r < 0) {
->>> +            VHOST_OPS_DEBUG(r, "vhost_reset_owner failed");
->>
->> Shouldn't we abort the migration attempt here?
->>
+> The default monitor is usually a long lived object that will exist for
+> the entire lifetime of the VM. A monitor can only service a single
+> client at a time though, and so it might be desirable to hotplug
+> additional monitors at runtime for specific tasks. If doing that,
+> however, there is a need to remove the monitor when it is no longer
+> needed.
 > 
-> Hmm yes, I think you're right. We shouldn't proceed and should do
-> error_setg_errno() and return r < 0 instead.
+> Allowing a client to run "object-del" against its own monitor adds
+> complex edge cases, as it would be desirable to send the QMP response
+> despite the monitor sending it being deleted. Doing "object-del" alone
+> will also result in orphaning a character device backend instance, as
+> there is no opportunity to run the companion "chardev-del" command.
 > 
->>> +        }
->>> +    } else if (e->type == MIG_EVENT_FAILED) {
->>> +        r = dev->vhost_ops->vhost_set_owner(dev);
->>> +        if (r < 0) {
->>> +            VHOST_OPS_DEBUG(r, "vhost_set_owner failed");
->>
->> What would be the impact on the guest of this failure?
->>
->> Shouldn't we *at least* unconditionally print error here?
->> Maybe even more if guest would be unsafe in this condition?
+> A simpler way to ensure cleanup is to add the concept of auto-deleting
+> monitor objects. Specifically when the "CHR_EVENT_CLOSED" event is
+> emitted, the equivalent of "object-del" + "chardev-del" can be run
+> internally. Since the transient client has already droppped its
+> monitor connection, there is no synchronization to be concerned about.
 > 
-> Agreed. Should report error as well.  The only catch is we might also
-> get into this branch after unsuccessful qmp_migrate() -> SETUP ->
-> vhost_reset_owner() -> migration_connect_error_propagate() -> FAILED.
-> Then we'll attempt set_owner for a device whose owner we didn't reset.
-> So we should probably add some bool flag which would signalize whether
-> device has its owner currently set or not, and only attempt set_owner if
-> reset_owner took place.
-
-Yeah, for sure we shouldn't log spurious errors.
-
-> But you got me doubtful about what can happen to the guest if on FAILED
-> we couldn't restore owner.  Realistically enough, we can at least get
-> -ENOMEM during high memory pressure, which is likely to leave vsock dead.
+> This is implemented via a new "close-action=none|delete" property on
+> the 'monitor-qmp' object. This concept could be extended with further
+> actions in future, for example:
 > 
-> WDYT?
-Here, I will probably need to defer to vsock maintainers and reviewers
-expertise on what would happen to the guest in this scenerio.
+>  * close-action=shutdown - graceful guest shutdown
+>  * close-action=terminate - immediate guest poweroff
+>  * close-action=stop - pause guest CPUs while the monitor is not
+>                        connected to any client
+> 
+> This is left as an exercise for future interested contributors.
+> 
+> Tested-by: Peter Krempa <pkrempa@redhat.com>
+> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+> Message-ID: <20260624173752.2928717-33-berrange@redhat.com>
+>
+> diff --git a/qapi/qom.json b/qapi/qom.json
+> index 6affb70a594..b4c49a2e8b9 100644
+> --- a/qapi/qom.json
+> +++ b/qapi/qom.json
+> @@ -1213,18 +1213,37 @@
+>    'base': 'MonitorProperties',
+>    'data': { '*readline': 'bool' } }
+>  
+> +
+> +##
+> +# @MonitorQMPCloseAction:
+> +#
+> +# Action to take when the character device backend is
+> +# closed.
+> +#
+> +# @none: take no action (the default)
+> +# @delete: delete both the 'monitor-qmp' object and its associated
+> +#          character device backend object
+> +#
+> +# Since 11.1
 
-My concern is whether such failure won't create some unsafe condition in
-the guest - on the other hand if it just means that vsock sockets in the
-guest will return ECONNRESET (or similar) then it isn't that a big deal
-(but still worth reporting).
+should be "Since: 11.1" (worth a new check perhaps)
 
-Thanks,
-Maciej
+> +##
+> +{ 'enum' : 'MonitorQMPCloseAction',
+
+extra space, vs the usual '{ 'enum':'.
+
+> +  'data': ['none', 'delete'] }
+> +
+>  ##
+>  # @MonitorQMPProperties:
+>  #
+>  # Properties for the QMP monitor
+>  #
+>  # @pretty: whether to pretty print JSON responses (default: disabled)
+> +# @close-action: action to take when the character device backend
+> +#                is closed (default: none)
+>  #
+>  # Since: 11.1
+>  ##
+>  { 'struct': 'MonitorQMPProperties',
+>    'base': 'MonitorProperties',
+> -  'data': { '*pretty': 'bool' } }
+> +  'data': { '*pretty': 'bool',
+> +            '*close-action': 'MonitorQMPCloseAction' } }
+>  
+>  ##
+>  # @ObjectType:
+> diff --git a/monitor/monitor-internal.h b/monitor/monitor-internal.h
+> index 5522e05464b..23829f32f9a 100644
+> --- a/monitor/monitor-internal.h
+> +++ b/monitor/monitor-internal.h
+> @@ -28,6 +28,7 @@
+>  #include "chardev/char-fe.h"
+>  #include "monitor/monitor.h"
+>  #include "qapi/qapi-types-control.h"
+> +#include "qapi/qapi-types-qom.h"
+>  #include "qapi/qmp-registry.h"
+>  #include "qobject/json-parser.h"
+>  #include "qemu/readline.h"
+> @@ -178,7 +179,9 @@ struct MonitorQMP {
+>      Monitor parent_obj;
+>      JSONMessageParser parser;
+>      bool pretty;
+> +    MonitorQMPCloseAction close_action;
+>      bool setup_pending; /* iothread BH has not yet set up chardev handlers */
+> +    bool delete_pending; /* close_action has started 'delete' process */
+>      /*
+>       * When a client connects, we're in capabilities negotiation mode.
+>       * @commands is &qmp_cap_negotiation_commands then.  When command
+> diff --git a/monitor/qmp.c b/monitor/qmp.c
+> index 5301927f09f..1057b0d12ba 100644
+> --- a/monitor/qmp.c
+> +++ b/monitor/qmp.c
+> @@ -28,6 +28,7 @@
+>  #include "monitor-internal.h"
+>  #include "qapi/error.h"
+>  #include "qapi/qapi-commands-control.h"
+> +#include "qapi/qapi-commands-char.h"
+>  #include "qobject/qdict.h"
+>  #include "qobject/qjson.h"
+>  #include "qobject/qlist.h"
+> @@ -103,6 +104,20 @@ static void monitor_qmp_set_pretty(Object *obj, bool val, Error **errp)
+>      mon->pretty = val;
+>  }
+>  
+> +static int monitor_qmp_get_close_action(Object *obj, Error **errp)
+> +{
+> +    MonitorQMP *mon = MONITOR_QMP(obj);
+> +
+> +    return mon->close_action;
+> +}
+> +
+> +static void monitor_qmp_set_close_action(Object *obj, int val, Error **errp)
+> +{
+> +    MonitorQMP *mon = MONITOR_QMP(obj);
+> +
+> +    mon->close_action = val;
+> +}
+> +
+>  static void monitor_qmp_emit_event(Monitor *mon, QAPIEvent event, QDict *qdict);
+>  static bool monitor_qmp_requires_iothread(const Monitor *mon);
+>  static void monitor_qmp_complete(UserCreatable *uc, Error **errp);
+> @@ -117,6 +132,11 @@ static void monitor_qmp_class_init(ObjectClass *cls, const void *data)
+>      object_class_property_add_bool(cls, "pretty",
+>                                     monitor_qmp_get_pretty,
+>                                     monitor_qmp_set_pretty);
+> +    object_class_property_add_enum(cls, "close-action",
+> +                                   "MonitorQMPCloseAction",
+> +                                   &MonitorQMPCloseAction_lookup,
+> +                                   monitor_qmp_get_close_action,
+> +                                   monitor_qmp_set_close_action);
+>  
+>      moncls->emit_event = monitor_qmp_emit_event;
+>      moncls->requires_iothread = monitor_qmp_requires_iothread;
+> @@ -550,11 +570,45 @@ static QDict *qmp_greeting(MonitorQMP *mon)
+>          ver, cap_list);
+>  }
+>  
+> +static void monitor_qmp_self_delete_bh(void *opaque)
+> +{
+> +    MonitorQMP *mon = opaque;
+> +    g_autofree char *mon_id = object_property_get_child_name(
+> +        object_get_objects_root(), OBJECT(mon));
+> +    g_autofree char *chardev_id = g_strdup(mon->parent_obj.chardev_id);
+> +    Error *local_error = NULL;
+> +
+> +    if (!mon_id) {
+> +        /* Another monitor raced & ran 'object-del' on 'mon'
+> +         * before this BH got scheduled, so we have a ref on
+> +         * mon but it is already unparented.
+> +         */
+> +        object_unref(mon);
+> +        return;
+> +    }
+> +
+> +    user_creatable_del(mon_id, &local_error);
+> +    object_unref(mon);
+> +    if (local_error != NULL) {
+> +        error_report_err(local_error);
+> +    } else {
+> +        qmp_chardev_remove(chardev_id, NULL);
+> +    }
+> +}
+> +
+>  static void monitor_qmp_event(void *opaque, QEMUChrEvent event)
+>  {
+>      QDict *data;
+>      MonitorQMP *mon = opaque;
+>  
+> +    /* Protect against race if a client drops & quickly
+> +     * reconnects - we'll have the delete BH scheduled
+> +     * so must not honour a new open request
+> +     */
+> +    if (mon->delete_pending) {
+> +        return;
+> +    }
+> +
+>      switch (event) {
+>      case CHR_EVENT_OPENED:
+>          WITH_QEMU_LOCK_GUARD(&mon->parent_obj.mon_lock) {
+> @@ -577,6 +631,27 @@ static void monitor_qmp_event(void *opaque, QEMUChrEvent event)
+>          json_message_parser_init(&mon->parser, handle_qmp_command,
+>                                   mon, NULL);
+>          monitor_fdsets_cleanup();
+> +        switch (mon->close_action) {
+> +        case MONITOR_QMP_CLOSE_ACTION_NONE:
+> +            break; /* nada */
+> +        case MONITOR_QMP_CLOSE_ACTION_DELETE:
+> +            mon->delete_pending = true;
+> +            /*
+> +             * Do NOT run in the AIO context associated with the
+> +             * monitor. We need to run in the default AIO context
+> +             * which is the same context in which 'qmp_object_del'
+> +             * will execute
+> +             *
+> +             * Hold an extra ref in case a separate monitor races
+> +             * with the BH by processing an explicit 'object-del'
+> +             */
+> +            object_ref(mon);
+> +            aio_bh_schedule_oneshot(qemu_get_aio_context(),
+> +                                    monitor_qmp_self_delete_bh, mon);
+> +            break;
+> +        default:
+> +            g_assert_not_reached();
+> +        }
+>          break;
+>      case CHR_EVENT_BREAK:
+>      case CHR_EVENT_MUX_IN:
+> diff --git a/tests/functional/generic/test_monitor_hotplug.py b/tests/functional/generic/test_monitor_hotplug.py
+> index 55af8a238f9..86092e781c9 100755
+> --- a/tests/functional/generic/test_monitor_hotplug.py
+> +++ b/tests/functional/generic/test_monitor_hotplug.py
+> @@ -25,7 +25,7 @@ def setUp(self):
+>          sock_dir = self.socket_dir()
+>          self._sock_path = os.path.join(sock_dir.name, 'hotplug.sock')
+>  
+> -    def _add_monitor(self):
+> +    def _add_monitor(self, autodelete=False):
+>          """Create a chardev + monitor and return the socket path."""
+>          sock = self._sock_path
+>          self.vm.cmd('chardev-add', id='hotplug-chr', backend={
+> @@ -39,9 +39,15 @@ def _add_monitor(self):
+>                  'wait': False,
+>              }
+>          })
+> -        self.vm.cmd('object-add', id='hotplug-mon',
+> -                    qom_type='monitor-qmp',
+> -                    chardev='hotplug-chr')
+> +        if autodelete:
+> +            self.vm.cmd('object-add', id='hotplug-mon',
+> +                        qom_type='monitor-qmp',
+> +                        chardev='hotplug-chr',
+> +                        close_action='delete')
+> +        else:
+> +            self.vm.cmd('object-add', id='hotplug-mon',
+> +                        qom_type='monitor-qmp',
+> +                        chardev='hotplug-chr')
+>          return sock
+>  
+>      def _remove_monitor(self):
+> @@ -118,6 +124,75 @@ def test_self_removal(self):
+>          # Clean up the chardev
+>          self.vm.cmd('chardev-remove', id='hotplug-chr')
+>  
+> +    def test_auto_delete(self):
+> +        """
+> +        A dynamically-added monitor configured with 'close-action=delete'
+> +        should see itself deleted when the client is closed.
+> +        """
+> +        self.set_machine('none')
+> +        self.vm.add_args('-nodefaults')
+> +        self.vm.launch()
+> +
+> +        sock = self._add_monitor(autodelete=True)
+> +
+> +        cdevs = [c["label"] for c in self.vm.cmd('query-chardev')]
+> +        objs = [o["name"] for o in self.vm.cmd('qom-list', path='/objects')]
+> +        assert ('hotplug-chr' in cdevs)
+> +        assert ('hotplug-mon' in objs)
+> +
+> +        qmp = QEMUMonitorProtocol(sock)
+> +        greeting = qmp.connect(negotiate=True)
+> +        self.assertIn('QMP', greeting)
+> +
+> +        cdevs = [c["label"] for c in self.vm.cmd('query-chardev')]
+> +        objs = [o["name"] for o in self.vm.cmd('qom-list', path='/objects')]
+> +        assert ('hotplug-chr' in cdevs)
+> +        assert ('hotplug-mon' in objs)
+> +
+> +        qmp.close()
+> +
+> +        # Wait upto 10 seconds max for chardev to auto-delete, which
+> +        # is hopefully enough for reliability under high load
+> +        for i in range(int(10 / 0.2)):
+> +            cdevs = [c["label"] for c in self.vm.cmd('query-chardev')]
+> +            if 'hotplug-chr' not in cdevs:
+> +                break
+> +            # Wait a little more then try again
+> +            time.sleep(0.2)
+> +
+> +        cdevs = [c["label"] for c in self.vm.cmd('query-chardev')]
+> +        objs = [o["name"] for o in self.vm.cmd('qom-list', path='/objects')]
+> +        assert ('hotplug-chr' not in cdevs)
+> +        assert ('hotplug-mon' not in objs)
+> +
+> +    def test_reconnect(self):
+> +        """
+> +        A dynamically-added monitor configured without 'close-action'
+> +        should allow reconnects after the client is closed.
+> +        """
+> +        self.set_machine('none')
+> +        self.vm.add_args('-nodefaults')
+> +        self.vm.launch()
+> +
+> +        sock = self._add_monitor()
+> +
+> +        qmp = QEMUMonitorProtocol(sock)
+> +        qmp.connect(negotiate=True)
+> +
+> +        resp = qmp.cmd_obj({'execute': 'query-chardev'})
+> +        self.assertIn('return', resp)
+> +
+> +        qmp.close()
+> +
+> +        qmp = QEMUMonitorProtocol(sock)
+> +        qmp.connect(negotiate=True)
+> +
+> +        resp = qmp.cmd_obj({'execute': 'query-chardev'})
+> +        self.assertIn('return', resp)
+> +
+> +        qmp.close()
+> +        self._remove_monitor()
+> +
+>      def test_large_response(self):
+>          """
+>          Send a command with a large response (query-qmp-schema) on a
+
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+
+-- 
+Marc-André Lureau <marcandre.lureau@redhat.com>
 
 
