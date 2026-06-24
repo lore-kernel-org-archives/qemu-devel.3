@@ -4,50 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22E04CDB479
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 05:11:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13AEDCDB470
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 05:11:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcFn4-0004s4-PK; Wed, 24 Jun 2026 01:04:46 -0400
+	id 1wcFnu-0005eg-3D; Wed, 24 Jun 2026 01:05:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wcFmy-0004n1-Hk; Wed, 24 Jun 2026 01:04:40 -0400
+ id 1wcFns-0005bL-L5; Wed, 24 Jun 2026 01:05:36 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wcFmw-0005H2-Jc; Wed, 24 Jun 2026 01:04:39 -0400
+ id 1wcFnq-0005XM-FJ; Wed, 24 Jun 2026 01:05:36 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1782277464; bh=d7opk2Xa97uV2FkuLbY8eu2qrVn55daJy9OwhsI0JY8=;
+ t=1782277465; bh=7BqlqLaaist4BkgHD8Dt8zxx7+xT78UnpZkTDT0CL4Q=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=Cra233Fck+mlokpYPOpVA81wSmJgYQM0DD+Ng1sx2KNWRRSzKQ3RqQxrajW6M4ejD
- L60KeTuI6H8mKR/zFUR9HYQOZ1WxsOpFwkMzoZefKRkiOTxCljP1pFsm+cSGpZcr/c
- QYtySoxCSsyXbmYpG3HK6AfT26saXYXFBC53zZjaT00l9EbUg9kXTfs4FdotKq37JB
- 8xiqKo++5HnA+3k3iAwHIyTjLCLAo80HvLIy4uz9J4R+zx4o0Z5j7cqkxYVB8LQefX
- 2rnJfaDqh384oT5orQdQTubKXNuhwDpY1zd81xunebTtq2R1u2ohCKUIHLVXXyRHRz
- YUQigvQK7/QAw==
+ b=w4mU9akBn5pomUTrtR3HVyODGhfxVJvG+2mGsRf6Y1qTuSjwTB6+qZexRt5JS7Ew7
+ VAbepdjWVtPDFS/+R+kHHr1V8BOa8kFQS1Zjh02hQZ6aYf8ZOVNxoOpbWPN4hB9i4X
+ Dr8soIRbqJXI7B178wmOqbCJ1joZeoYZQjfyLSMc5qGUfMM1hNNxiL5gZGgSW5AniX
+ unBCKna09o5ZBaBy+kItI7uv7qycgIwCHg31MN9MmnSxcoqNlgoF8FSHC8upg1R3m4
+ O8AWcwzj28QOqhh/CBGA52QMeJL2vO1kePQe/964P/PF+3FWW4Qa3+ZeY/sI/S8Svt
+ DI+QQskSleZRA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 82EB61BA631;
- Wed, 24 Jun 2026 08:04:24 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 3805F1BA63B;
+ Wed, 24 Jun 2026 08:04:25 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 6AB213DDABC;
- Wed, 24 Jun 2026 08:04:29 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 21A2A3DDAC6;
+ Wed, 24 Jun 2026 08:04:30 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Stefano Garzarella <sgarzare@redhat.com>,
- DARKNAVY <vr@darknavy.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.11 62/86] libvhost-user: fix buffer overflow in
- virtqueue_read_indirect_desc()
-Date: Wed, 24 Jun 2026 08:02:33 +0300
-Message-ID: <20260624050404.394225-6-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.11 72/86] disas/riscv.c: fix inst_length()
+Date: Wed, 24 Jun 2026 08:02:43 +0300
+Message-ID: <20260624050404.394225-16-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.11-20260624080222@cover.tls.msk.ru>
 References: <qemu-stable-10.0.11-20260624080222@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -72,64 +70,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Stefano Garzarella <sgarzare@redhat.com>
+From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 
-virtqueue_read_indirect_desc() copies an indirect descriptor table
-into a buffer in chunks when the table crosses a memory region
-boundary. The destination is a struct vring_desc pointer but is
-advanced by a byte count, so each increment moves the pointer by
-read_len elements instead of read_len bytes, writing beyond the
-buffer.
+inst_length() can return 0 if 'inst' happens to not match any known
+encoding (like [1]).  Returning 0 is not desirable, even for unknown
+encodings, given that it will cause a loop in target_disas() later on.
 
-Use a char pointer for the destination so that the arithmetic
-advances correctly.
+The most recent version of the RISC-V unpriv spec ditched the
+sophisticated instruction-length encoding.  We're now supporting only
+16-bit and 32-bit length instructions, where:
 
-While at it, change the source from a struct vring_desc pointer
-to a void pointer: when the table is split across regions,
-vu_gpa_to_va() can return a pointer into the middle of a descriptor,
-so casting it to a struct vring_desc pointer is wrong. The pointer is
-only used as a memcpy() source, so a void pointer is fine.
+"All the 32-bit instructions in the base ISA have their lowest two bits
+set to 11.  The optional compressed 16-bit instruction-set extensions
+have their lowest two bits equal to 00, 01, or 10."
 
-Fixes: CVE-2026-6425
-Fixes: 293084a719 ("libvhost-user: Support across-memory-boundary access")
-Cc: qemu-stable@nongnu.org
-Reported-by: DARKNAVY <vr@darknavy.com>
-Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-Id: <20260417132645.121192-2-sgarzare@redhat.com>
-(cherry picked from commit 85805ee887be4adddb1f1a34f526968adc95e582)
+So the code is now simpler, never returning 0, and in fact it's the same
+thing we're already doing in insn_len() from target/riscv/internals.h.
+Due to include shenarigans we can't use that function in disas/riscv.c,
+but I believe we can cut ourselves some slack this time and not lose
+sleep over a 1 line of duplicated logic.  We're documenting it though!
+
+[1] https://gitlab.com/qemu-project/qemu/-/work_items/3479
+
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3479
+Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Message-ID: <20260527200355.2068879-2-daniel.barboza@oss.qualcomm.com>
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+(cherry picked from commit 758dce9c98af4f3ef26eada48a484a7d60258636)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/subprojects/libvhost-user/libvhost-user.c b/subprojects/libvhost-user/libvhost-user.c
-index 9c630c2170..014d210748 100644
---- a/subprojects/libvhost-user/libvhost-user.c
-+++ b/subprojects/libvhost-user/libvhost-user.c
-@@ -2391,8 +2391,9 @@ static int
- virtqueue_read_indirect_desc(VuDev *dev, struct vring_desc *desc,
-                              uint64_t addr, size_t len)
+diff --git a/disas/riscv.c b/disas/riscv.c
+index 980da7f7e1..2d8add3212 100644
+--- a/disas/riscv.c
++++ b/disas/riscv.c
+@@ -5083,26 +5083,10 @@ static bool check_constraints(rv_decode *dec, const rvc_constraint *c)
+     return true;
+ }
+ 
+-/* instruction length */
+-
++/* Same as insn_len() from target/riscv/internals.h */
+ static size_t inst_length(rv_inst inst)
  {
--    struct vring_desc *ori_desc;
-+    char *dst_desc = (char *)desc;
-     uint64_t read_len;
-+    void *ori_desc;
+-    /* NOTE: supports maximum instruction size of 64-bits */
+-
+-    /*
+-     * instruction length coding
+-     *
+-     *      aa - 16 bit aa != 11
+-     *   bbb11 - 32 bit bbb != 111
+-     *  011111 - 48 bit
+-     * 0111111 - 64 bit
+-     */
+-
+-    return (inst &      0b11) != 0b11      ? 2
+-         : (inst &   0b11100) != 0b11100   ? 4
+-         : (inst &  0b111111) == 0b011111  ? 6
+-         : (inst & 0b1111111) == 0b0111111 ? 8
+-         : 0;
++    return (inst & 3) == 3 ? 4 : 2;
+ }
  
-     if (len > (VIRTQUEUE_MAX_SIZE * sizeof(struct vring_desc))) {
-         return -1;
-@@ -2409,10 +2410,10 @@ virtqueue_read_indirect_desc(VuDev *dev, struct vring_desc *desc,
-             return -1;
-         }
- 
--        memcpy(desc, ori_desc, read_len);
-+        memcpy(dst_desc, ori_desc, read_len);
-         len -= read_len;
-         addr += read_len;
--        desc += read_len;
-+        dst_desc += read_len;
-     }
- 
-     return 0;
+ /* format instruction */
 -- 
 2.47.3
 
