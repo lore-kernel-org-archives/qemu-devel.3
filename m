@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7293DCDB471
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 11:44:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA0C5CDE002
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 11:45:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcM1m-0006QP-9o; Wed, 24 Jun 2026 07:44:22 -0400
+	id 1wcM26-0007dh-2x; Wed, 24 Jun 2026 07:44:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wcM1k-00065p-9b
- for qemu-devel@nongnu.org; Wed, 24 Jun 2026 07:44:20 -0400
+ id 1wcM24-0007UO-Pm
+ for qemu-devel@nongnu.org; Wed, 24 Jun 2026 07:44:40 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wcM1i-0008Hq-4R
- for qemu-devel@nongnu.org; Wed, 24 Jun 2026 07:44:19 -0400
+ id 1wcM23-0008NJ-5S
+ for qemu-devel@nongnu.org; Wed, 24 Jun 2026 07:44:40 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1782301457;
+ s=mimecast20190719; t=1782301478;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=LMJGqPCB7/Q2ImivU61P/WtWAZlTP9zza2YC/cPPjIg=;
- b=TS/h2b0E+maFWDj/jEbVchd1kxLHeuNzngckShNCO4mcJSxh2NAUtusH6/HdZn0+9uBH4R
- NZnvpJ4llsSrt4b9TrymLAjud2Yb2rgbKP+f6JB/IxBT/QB47cUXmR+6g2PYkO1kmycMFf
- A7o0QQ3RvNxRnuu8oMzAdZGbSw372Gw=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=Y9HL0Um6kBW91xJ8S0xBGfdPNY/jI5DPqhpdawHVeCU=;
+ b=Q9Qy8umvyveOHuJ4xecaVRGGr+kBZsKXWgjCm6L7MyPfn0wfVI49vQuNvSHHrkxKQytRGs
+ gw+csbXE6uX8y05FWx43CvseJNuDMm9QbNK/6HknVruFT4ip28T+W7h7a82Z9gwH2KVcw8
+ zzo1szLedHUUgNPduCh9cEA6/XUuX10=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-590-z10TLBsrPwiOD2fra6sYNg-1; Wed,
- 24 Jun 2026 07:44:16 -0400
-X-MC-Unique: z10TLBsrPwiOD2fra6sYNg-1
-X-Mimecast-MFC-AGG-ID: z10TLBsrPwiOD2fra6sYNg_1782301455
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-670-UIaACyiUMN20Ovn5GY_yHQ-1; Wed,
+ 24 Jun 2026 07:44:37 -0400
+X-MC-Unique: UIaACyiUMN20Ovn5GY_yHQ-1
+X-Mimecast-MFC-AGG-ID: UIaACyiUMN20Ovn5GY_yHQ_1782301476
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 70AC71955F11
- for <qemu-devel@nongnu.org>; Wed, 24 Jun 2026 11:44:15 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 50131195608F
+ for <qemu-devel@nongnu.org>; Wed, 24 Jun 2026 11:44:36 +0000 (UTC)
 Received: from localhost (unknown [10.44.24.16])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 3253D195609F; Wed, 24 Jun 2026 11:44:13 +0000 (UTC)
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 1B96E30001A7; Wed, 24 Jun 2026 11:44:34 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Wed, 24 Jun 2026 15:41:52 +0400
-Subject: [GIT PULL 30/35] ui/gtk: handle console hotplug/unplug events
+Date: Wed, 24 Jun 2026 15:41:56 +0400
+Subject: [GIT PULL 34/35] tests/qtest: add D-Bus display hotplug test
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260624-ui-v1-30-482147b0a7af@redhat.com>
+Message-Id: <20260624-ui-v1-34-482147b0a7af@redhat.com>
 References: <20260624-ui-v1-0-482147b0a7af@redhat.com>
 In-Reply-To: <20260624-ui-v1-0-482147b0a7af@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Stefan Hajnoczi <stefanha@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=4177;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=5105;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=EHnnlH/qv29Cu9NeDZAM54dpMmMb6B5GcdzhzH2LPr0=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqO8JpuoTXJwjl4C5c+oerk0Nt4SrVaOSNLOLRY
- dlm8amzyHyJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCajvCaQAKCRDa6OEJdZac
- 5be3D/9DuTr0/mgyfZC+B7tM1y0TFA1exlGnFMwZncL+IQfukOLO6iA7L1q1wqRePyBKh5YFa+n
- YSuaeEgW/Uo/dULbIS+QNHEYeIiIS9nsidHRWNweXvolsSvAm5gxkXkITecss2h8TXvuZ6f/6as
- k20/5uMeNJ1XQxKvni12jyuLncBgAOukYSh8X+ALMWjjiQZsLLGzfNUydXJ5dUdABq4WLxxwktJ
- OoZyhm4fTDevBA7rbwBqfGdtBiDEzVlw022/Az3PGvQg4KjPaO/0Ea+aEor+ridsvYKqxFol1Qt
- BUGQ9MBfCQgZGi/aep/FL1Bco88OpK8bX4WnOucx5Kv3eqAJHFTiBinma8EsdBk1JqEG/Lfu1b1
- TUvL63JqC9LfdJ1LyasIMa8Xs/SFYPRSZsIWXdHS4V/qQyIvkNGguO3yGQfRqFoANY401PLKgej
- Cud3zNNnHhgd3stVFLUSZSJV/NisxGQP61mESDr7CXBC2asjFUdb/NDXPFiWLSziqaMnt+JwxZh
- jVMit32SUSlSoJQ4mkimn4HuLNkMXaJzpD1xt7U4KvQZzZJvZ3IHh4yu9lOf+WblPnPKyuWw27h
- 1KEfPNi5PeriBKgNihmpsnb3lbpcyVg3cXQYYjs0ZF07KcyPSjazIU3fUx8qCQKQzfeEwlgRs6p
- JP/LtS5OUbXZ70Q==
+ bh=4V5lLEpnMWH65LJiWlW1jqcq8EjqVL2+wiVFWhhSGi0=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqO8JpfV9toiCqaXB7dXmS0wZ1OIuZN8u5myM7T
+ qJ8nRBppbmJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCajvCaQAKCRDa6OEJdZac
+ 5XGpD/9U+DbsTG4zx0vQ1tKCm1QpiiDJgEINza3AMO422+OOdBiiacYw7UaHlXqZVBRChZ8CnbU
+ 73h8nxSf1nug6WWVXbiWRXnIHgMwBBeXKRF5OHfruHrBYZkrrA1baaKogbViaPoxiPbec/PRkWS
+ AO224FxflWLqybm3BziK1lo7L2m8R/HsdhjmKBZ7mUqbJKqwwMKjcv8fzZ2/vfv/XpUveLNIyKA
+ TckmDKKfZ7yJltsn3Urh1ENmJXXqme8vp0oXRQmWabYdkr3M6dab2M/ir24gtdxSnOZJDpLePn+
+ BfquLQWG1ZigdligJc5UI5bhkEANulA1AHUU+waeYx1NXrHpx+BWMbLNBTS89hWEMcoV5bkUeo+
+ +cA1vDb93Ip/ELeB3LXzJIzQadzP29urnUDYTabs4xd+8nKx54ZrAswy6T++QJM3bqoE5jYJhwK
+ +AAR00LZTDAFV19/Jmd5bYj7/ezk/sCzf2haznZe3cwFGQIMW2Q0qx8u/Hw8UlEgz+wVwvm/gDl
+ ax/npXIau/XBNFJ0UX/ecQz2YvUjAzmQ6lR8J2RokFJCYDrYpTOkdjK8GyLdvY1sVWEpuDNsDEf
+ d85/xKj70luhfAsUn8UXWKdHjHnQfn7tIvec7GdvOyKoEYMb8wAbwCybS6Vfjy6jQEpX3S74xq0
+ PCzAIeKQ0K5px4w==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
 Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -103,140 +103,167 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Register a console notifier so the GTK display dynamically creates and
-destroys VirtualConsole tabs when graphic consoles are added or removed
-at runtime (e.g. vfio-pci with display=on hotplug).
+Add a qtest that verifies display consoles are dynamically added and
+removed over D-Bus when a bochs-display device is hotplugged and
+unplugged on a q35 machine.
 
-Add skips consoles that already have a VC binding, remove skips unknown
-consoles.
+The test plugs device_add a bochs-display, waits for the DEVICE_ADDED
+QMP event, and checks that the D-Bus VM interface reports a second
+console. It then device_del it, forces a system reset
+(q35 removal is ACPI-based and needs guest cooperation qtest cannot
+provide), waits for DEVICE_DELETED, and checks the console count again.
 
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
 Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Message-ID: <20260623-b4-ui-v4-30-4656aec3398d@redhat.com>
+Message-ID: <20260623-b4-ui-v4-34-4656aec3398d@redhat.com>
 ---
- include/ui/gtk.h |  1 +
- ui/gtk.c         | 75 +++++++++++++++++++++++++++++++++++++++++++++++++++++++-
- 2 files changed, 75 insertions(+), 1 deletion(-)
+ tests/qtest/dbus-display-test.c | 101 +++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 99 insertions(+), 2 deletions(-)
 
-diff --git a/include/ui/gtk.h b/include/ui/gtk.h
-index 53d0e447a23..5c9c34a069e 100644
---- a/include/ui/gtk.h
-+++ b/include/ui/gtk.h
-@@ -141,6 +141,7 @@ struct GtkDisplayState {
-     GdkCursor *null_cursor;
-     Notifier mouse_mode_notifier;
-     VMChangeStateEntry *vmse;
-+    Notifier console_notifier;
-     gboolean free_scale;
-     gboolean keep_aspect_ratio;
+diff --git a/tests/qtest/dbus-display-test.c b/tests/qtest/dbus-display-test.c
+index 5773776cad5..7838ce7323f 100644
+--- a/tests/qtest/dbus-display-test.c
++++ b/tests/qtest/dbus-display-test.c
+@@ -7,6 +7,8 @@
+ #include <gio/gio.h>
+ #include <gio/gunixfdlist.h>
+ #include "libqtest.h"
++#include "qobject/qdict.h"
++#include "qobject/qstring.h"
+ #include "ui/dbus-display1.h"
  
-diff --git a/ui/gtk.c b/ui/gtk.c
-index e7a9156f206..7078d89d679 100644
---- a/ui/gtk.c
-+++ b/ui/gtk.c
-@@ -2332,7 +2332,8 @@ static bool gd_scale_valid(double scale)
-     return scale >= VC_SCALE_MIN && scale <= VC_SCALE_MAX;
+ static GDBusConnection*
+@@ -38,11 +40,11 @@ test_dbus_p2p_from_fd(int fd)
  }
  
--static void add_gfx_console(GtkDisplayState *s, QemuConsole *con)
-+static VirtualConsole *
-+add_gfx_console(GtkDisplayState *s, QemuConsole *con)
+ static void
+-test_setup(QTestState **qts, GDBusConnection **conn)
++test_setup_args(QTestState **qts, GDBusConnection **conn, const char *args)
  {
-     VirtualConsole *vc = g_new0(VirtualConsole, 1);
-     const DisplayChangeListenerOps *ops = &dcl_ops;
-@@ -2414,6 +2415,74 @@ static void add_gfx_console(GtkDisplayState *s, QemuConsole *con)
-     qemu_console_register_listener(con, &vc->gfx.dcl, ops);
+     int pair[2];
  
-     gd_connect_vc_gfx_signals(vc);
-+    return vc;
+-    *qts = qtest_init("-display dbus,p2p=yes -name dbus-test");
++    *qts = qtest_init(args);
+ 
+     g_assert_cmpint(qemu_socketpair(AF_UNIX, SOCK_STREAM, 0, pair), ==, 0);
+ 
+@@ -52,6 +54,12 @@ test_setup(QTestState **qts, GDBusConnection **conn)
+     g_dbus_connection_start_message_processing(*conn);
+ }
+ 
++static void
++test_setup(QTestState **qts, GDBusConnection **conn)
++{
++    test_setup_args(qts, conn, "-display dbus,p2p=yes -name dbus-test");
 +}
 +
-+static void gd_vc_add_gfx(GtkDisplayState *s, QemuConsole *con)
+ static void
+ test_dbus_display_vm(void)
+ {
+@@ -360,6 +368,92 @@ test_dbus_display_keyboard(void)
+     qtest_quit(qts);
+ }
+ 
++static gsize
++get_console_ids_count(GDBusConnection *conn)
 +{
-+    VirtualConsole *vc;
-+    int i;
++    g_autoptr(GError) err = NULL;
++    g_autoptr(QemuDBusDisplay1VMProxy) vm = NULL;
++    GVariant *console_ids;
++    gsize n_ids = 0;
 +
-+    for (i = 0; i < (int)s->vcs->len; i++) {
-+        VirtualConsole *v = g_ptr_array_index(s->vcs, i);
-+        if (v->type == GD_VC_GFX && v->gfx.dcl.con == con) {
-+            return;
++    vm = QEMU_DBUS_DISPLAY1_VM_PROXY(
++        qemu_dbus_display1_vm_proxy_new_sync(
++            conn,
++            G_DBUS_PROXY_FLAGS_NONE,
++            NULL,
++            DBUS_DISPLAY1_ROOT "/VM",
++            NULL,
++            &err));
++    g_assert_no_error(err);
++
++    console_ids = qemu_dbus_display1_vm_get_console_ids(
++        QEMU_DBUS_DISPLAY1_VM(vm));
++    if (console_ids) {
++        n_ids = g_variant_n_children(console_ids);
++    }
++    return n_ids;
++}
++
++static void
++wait_device_event(QTestState *qts, const char *event_name, const char *id)
++{
++    QDict *resp, *data;
++    QString *qstr;
++
++    for (;;) {
++        resp = qtest_qmp_eventwait_ref(qts, event_name);
++        data = qdict_get_qdict(resp, "data");
++        if (!data || !qdict_get(data, "device")) {
++            qobject_unref(resp);
++            continue;
 +        }
-+    }
-+
-+    vc = add_gfx_console(s, con);
-+    gtk_widget_show_all(vc->tab_item);
-+    gtk_widget_realize(vc->gfx.drawing_area);
-+
-+    if (s->free_scale) {
-+        gd_update_windowsize(vc);
-+    }
-+
-+    gd_update_caption(s);
-+    gd_rebuild_vc_menu(s);
-+}
-+
-+static void gd_vc_remove_gfx(GtkDisplayState *s, QemuConsole *con)
-+{
-+    VirtualConsole *vc = NULL;
-+    guint idx;
-+
-+    for (idx = 0; idx < s->vcs->len; idx++) {
-+        VirtualConsole *v = g_ptr_array_index(s->vcs, idx);
-+        if (v->type == GD_VC_GFX && v->gfx.dcl.con == con) {
-+            vc = v;
++        qstr = qobject_to(QString, qdict_get(data, "device"));
++        if (!strcmp(qstring_get_str(qstr), id)) {
++            qobject_unref(resp);
 +            break;
 +        }
++        qobject_unref(resp);
 +    }
-+    if (!vc) {
-+        return;
-+    }
-+
-+    if (s->kbd_owner == vc) {
-+        gd_ungrab_keyboard(s);
-+    }
-+    if (s->ptr_owner == vc) {
-+        gd_ungrab_pointer(s);
-+    }
-+
-+    g_ptr_array_remove_index(s->vcs, idx);
-+    gd_rebuild_vc_menu(s);
-+    gd_update_caption(s);
 +}
 +
-+static void gd_console_notify(Notifier *n, void *data)
++static void
++test_dbus_display_hotplug(void)
 +{
-+    GtkDisplayState *s = container_of(n, GtkDisplayState, console_notifier);
-+    QemuConsoleEvent *event = data;
++    g_autoptr(GDBusConnection) conn = NULL;
++    QTestState *qts = NULL;
++    gsize n;
 +
-+    switch (event->type) {
-+    case QEMU_CONSOLE_ADDED:
-+        gd_vc_add_gfx(s, event->con);
-+        break;
-+    case QEMU_CONSOLE_REMOVED:
-+        gd_vc_remove_gfx(s, event->con);
-+        break;
++    test_setup_args(&qts, &conn,
++        "-machine q35"
++        " -device pcie-root-port,id=rp0"
++        " -display dbus,p2p=yes"
++        " -name dbus-test");
++
++    n = get_console_ids_count(conn);
++    g_assert_cmpuint(n, ==, 1);
++
++    qtest_qmp_device_add(qts, "bochs-display", "bochs0",
++                         "{'bus': 'rp0'}");
++
++    n = get_console_ids_count(conn);
++    g_assert_cmpuint(n, ==, 2);
++
++    /*
++     * On q35, PCI device removal is ACPI-based and requires guest
++     * acknowledgement. Since qtest has no guest OS, issue the delete
++     * request and force removal via system reset.
++     */
++    qtest_qmp_device_del_send(qts, "bochs0");
++    qtest_system_reset_nowait(qts);
++    wait_device_event(qts, "DEVICE_DELETED", "bochs0");
++
++    n = get_console_ids_count(conn);
++    g_assert_cmpuint(n, ==, 1);
++
++    g_clear_object(&conn);
++    qtest_quit(qts);
++}
++
+ int
+ main(int argc, char **argv)
+ {
+@@ -369,6 +463,9 @@ main(int argc, char **argv)
+     qtest_add_data_func("/dbus-display/console", GINT_TO_POINTER(false), test_dbus_display_console);
+     qtest_add_data_func("/dbus-display/console/map", GINT_TO_POINTER(true), test_dbus_display_console);
+     qtest_add_func("/dbus-display/keyboard", test_dbus_display_keyboard);
++    if (qtest_has_machine("q35") && qtest_has_device("bochs-display")) {
++        qtest_add_func("/dbus-display/hotplug", test_dbus_display_hotplug);
 +    }
+ 
+     return g_test_run();
  }
- 
- static void gd_create_menu_view(GtkDisplayState *s, DisplayOptions *opts)
-@@ -2694,6 +2763,9 @@ static void gtk_display_init(DisplayState *ds, DisplayOptions *opts)
- 
-     gd_create_menus(s, opts);
- 
-+    s->console_notifier.notify = gd_console_notify;
-+    qemu_console_add_notifier(&s->console_notifier);
-+
-     gd_connect_signals(s);
- 
-     gtk_notebook_set_show_tabs(GTK_NOTEBOOK(s->notebook), FALSE);
-@@ -2814,6 +2886,7 @@ static void gtk_display_cleanup(void)
-         return;
-     }
-     qemu_del_vm_change_state_handler(s->vmse);
-+    qemu_console_remove_notifier(&s->console_notifier);
-     qemu_remove_mouse_mode_change_notifier(&s->mouse_mode_notifier);
-     gd_clipboard_cleanup(s);
-     g_signal_handlers_disconnect_by_func(s->notebook,
 
 -- 
 2.54.0
