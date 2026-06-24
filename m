@@ -4,45 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DABD3CDB479
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 03:09:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C094CD4F26
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 03:20:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcDyo-0007zh-KT; Tue, 23 Jun 2026 23:08:46 -0400
+	id 1wcE9n-0001JA-Sa; Tue, 23 Jun 2026 23:20:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wcDym-0007z1-Jr; Tue, 23 Jun 2026 23:08:44 -0400
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1wcE9m-0001IQ-92
+ for qemu-devel@nongnu.org; Tue, 23 Jun 2026 23:20:06 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wcDyk-0008Gc-47; Tue, 23 Jun 2026 23:08:44 -0400
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1wcE9j-0001x8-I2
+ for qemu-devel@nongnu.org; Tue, 23 Jun 2026 23:20:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1782270512; bh=pHrKlUuwWTGNC+r3kidOOspKk+/7LsT26HVguD3sPNE=;
+ t=1782271193; bh=7EXmYH5/NJ+kjsPQGe4ZYHhn8OVpt6XX9qB7Azut7LI=;
  h=Date:Subject:To:Cc:References:From:In-Reply-To;
- b=q8SQX+olc8/VQYtABQuwV/EKFGwARicskWDkv6phkpq7FU0vEq5OqTAuSIrR5HKIK
- dA5uFtqLNK8RJtf0lSiLzAuseL7JysWRnmXLam+Vhz1eC3jaqRU0Ls0hhSNPuRiS3M
- +3bwlxFIK/fJzSRd7MNiDj+Mjq8u/XRTg9lxdIwT/B0cBDAVJ79AW0D5CGJWn/w/+3
- KeR0gjkKR/StcncbV55oSVzlEg+8ga1VkB9v+FIoaoq5GdYlrisPvDa5b6vqGsS9uG
- 7hn1Kq9ExHy/4JF872/WLdAXw0Ca5YyGlg7zorM/9m+deolcTmgTJgH9IJavl5U/wO
- fdv0igtSL1BJg==
+ b=cHFYrLiTRLpLucNObOp6hoB10ti3q0+j9PytGbjJV0uN1EGIcr1U9CQpdlXIEso3S
+ kkU5hzA7xAyWaLSD1S2u51msy8a5nPZhQMKGtslNdkbo/aT+FWowua+wyAx4lqO8NN
+ h/ENh4jLfZxYTZMSE+ePf6mGiA9kBvAHcQXG/An+BezgN6nFUgRM4MxBttz2a5kL2C
+ C/W5TLHNbSHPg97jiqV19rGgrPAabGph71m1v0NWpQPi6+t1hYxy6CXMyO3aFYi2Uj
+ ifDxVKFg8YJQ9fzxoVrGFrkarujQn/olNO4oA/tEenei9Sw07TDAgPYycNhHSazRh0
+ chYkN6UWUvZMg==
 Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by isrv.corpit.ru (Postfix) with ESMTP id 9208D1BA5A3;
- Wed, 24 Jun 2026 06:08:32 +0300 (MSK)
-Message-ID: <df169853-c8a8-4904-91fd-c3d339d54bb7@tls.msk.ru>
-Date: Wed, 24 Jun 2026 06:08:36 +0300
+ by isrv.corpit.ru (Postfix) with ESMTP id 460041BA5A9;
+ Wed, 24 Jun 2026 06:19:53 +0300 (MSK)
+Message-ID: <1abc987a-a077-4140-8aa0-df67e298d038@tls.msk.ru>
+Date: Wed, 24 Jun 2026 06:19:57 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 1/4] linux-user: Fix AT_PHDR when program headers are
- relocated into their own segment
-To: Helge Deller <deller@kernel.org>, qemu-devel@nongnu.org,
- Stefan Hajnoczi <stefanha@gmail.com>
-Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Laurent Vivier <laurent@vivier.eu>, deller@gmx.de,
- Akshit Yadav <valium7171@gmail.com>, qemu-stable <qemu-stable@nongnu.org>
-References: <20260618215411.22057-1-deller@kernel.org>
- <20260618215411.22057-2-deller@kernel.org>
+Subject: Re: [GIT PULL 27/27] ui/sdl2: Set GL ES profile before creating
+ initial GL context
+To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ qemu-devel@nongnu.org
+Cc: Stefan Hajnoczi <stefanha@redhat.com>
+References: <20260617-ui-input-v1-0-79e9aedc5899@redhat.com>
+ <20260617-ui-input-v1-27-79e9aedc5899@redhat.com>
 Content-Language: en-US, ru-RU
 From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
@@ -88,9 +86,9 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
  ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
  3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-In-Reply-To: <20260618215411.22057-2-deller@kernel.org>
+In-Reply-To: <20260617-ui-input-v1-27-79e9aedc5899@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
 X-Spam_score_int: -19
@@ -114,41 +112,10 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 19.06.2026 00:54, Helge Deller wrote:
-> From: Akshit Yadav <valium7171@gmail.com>
-> 
-> When a binary is patched or relocated such that the program header table is
-> moved into a separate PT_LOAD segment (rather than sitting at the start of the
-> first loadable segment), QEMU's AT_PHDR auxv entry becomes incorrect. The
-> loader was computing AT_PHDR as load_addr + e_phoff, which assumes the headers
-> are mapped 1:1 from file offset 0. This breaks when the headers are elsewhere.
-> 
-> The Linux kernel instead locates the PT_LOAD segment that contains e_phoff,
-> then computes the in-memory address as p_vaddr + (e_phoff - p_offset). This
-> correctly handles relocated headers.
-> 
-> Fix by:
-> 1. Add phdr_addr field to image_info to cache the resolved address.
-> 2. Initialize to load_addr + e_phoff (fallback for headers outside any PT_LOAD).
-> 3. In the PT_LOAD mapping loop, detect if the segment contains e_phoff and
->     override with the segment-relative address.
-> 4. Use info->phdr_addr for AT_PHDR instead of the incorrect formula.
-> 
-> Signed-off-by: Akshit Yadav <valium7171@gmail.com>
-> Reviewed-by: Helge Deller <deller@gmx.de>
-> ---
->   linux-user/elfload.c | 21 ++++++++++++++++++++-
->   linux-user/qemu.h    |  1 +
->   2 files changed, 21 insertions(+), 1 deletion(-)
+On 17.06.2026 18:23, Marc-André Lureau wrote:
+> From: Ryan Zhang <mailto>
 
-Despite being a sort-of niche issue, it looks like a good candidate for
-stable qemu series too, - this didn't come out of void and had real
-impact.
-
-I'm picking this one up for current stable qemu series (10.0, 10.2, 11.0),
-please let me know if I shouldn't.
-
-Thanks,
+Oops...
 
 /mjt
 
