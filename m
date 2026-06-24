@@ -4,44 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89976CDB481
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C48CCDB479
 	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 13:38:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcNmF-000626-8H; Wed, 24 Jun 2026 09:36:27 -0400
+	id 1wcNmk-0006l9-Lu; Wed, 24 Jun 2026 09:36:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wcNmB-0005uM-Ij; Wed, 24 Jun 2026 09:36:23 -0400
+ id 1wcNmf-0006Yo-OD; Wed, 24 Jun 2026 09:36:53 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wcNm9-0000sm-Rk; Wed, 24 Jun 2026 09:36:23 -0400
+ id 1wcNmd-0000xb-QY; Wed, 24 Jun 2026 09:36:53 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1782307997; bh=1SLei3wOec+IuksXol0hfWzvxEzayfmod70lDXMUvdU=;
+ t=1782307997; bh=Wqggm+YI9CGOXrC37tB98c0M6KNUDE9ZIppSxjX+MCI=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=NTOSYzzBNIYHxE+0mNSdfTPVztLJbEFK9vuFmNp4N7QCt+jCmqpM+1VqNyPf1TJqb
- oc6UM6NLqonx3uqoRIKDO3wTdqf5HKVrX04r/eRE/9VS2mB7I10NnP1duDTNjtUy+M
- h9NAclPVD2a1dFC/4QSSSAhS+Cm5l0hXy9R1VtVYys6c2S8LiYUqfz5QczFUE9Rld6
- EOR9IWqj8LpwZ9OwV+BzZ4EMnEg4diFJTbHES7djyYGBHlkKcaHUKlc8UGAg9PXqvo
- lIrpUebfilzoh60Z0L4NX9gdijx0+NXX799BwjHrAl/IzxUXl9+dAhorFIjlr8h5id
- 1bBlrmW0xwNsw==
+ b=S62EN56Jy92Usuy9FptzZ1Dot/ymDsY3W7lxtQW+rWz/kX/EZ37+1vh+4eFN31BRM
+ yy1OL8mBTROwq3rDaWNEbwRBnLtA6Cks042gGLV1DjICaxlGJQc7MgD9V9sSxkGWYz
+ omydD9gtdxQnMNaHJBnUMG3pNH7v7iT0XQ/Q22Wd/78M8PZXfaOG0IlXCWX8t1bLJC
+ 3vT4VgkgMaNqSNJuS33KgN1bjlxx9f3A2J9Hjj7rYdP7NDpivkG0HrliJZiTwLn7dm
+ 5Rzxr0+imAvyGBoCQZchXEyNwPuMCmuKnd/MWG9im2zOsYahaOBeFqyhFf/srqNAuP
+ 3kMssNd/q8gsg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 7E8801BA9D4;
+ by isrv.corpit.ru (Postfix) with ESMTP id DFCDD1BA9DA;
  Wed, 24 Jun 2026 16:33:17 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 1B8A33DEA23;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 796253DEA29;
  Wed, 24 Jun 2026 16:33:23 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+Cc: qemu-stable@nongnu.org, Matt Turner <mattst88@gmail.com>,
+ Yoshinori Sato <yoshinori.sato@nifty.com>,
  Richard Henderson <richard.henderson@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.2 034/107] target/arm: Don't assert if 64-bit EL2 AT
- insn sees a Domain fault
-Date: Wed, 24 Jun 2026 16:30:39 +0300
-Message-ID: <20260624133301.403266-34-mjt@tls.msk.ru>
+ Helge Deller <deller@gmx.de>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.2 040/107] linux-user/sh4: preserve T/M/Q bits across
+ signal delivery
+Date: Wed, 24 Jun 2026 16:30:45 +0300
+Message-ID: <20260624133301.403266-40-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.2-20260624163118@cover.tls.msk.ru>
 References: <qemu-stable-11.0.2-20260624163118@cover.tls.msk.ru>
@@ -70,54 +71,97 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: Matt Turner <mattst88@gmail.com>
 
-The Domain fault type can only happen for 32-bit short-format
-descriptors.  This means that it almost never needs to be encoded in
-a long-format fault status code.  However, there is one corner case
-where we do need to report it as a long-format FSC: if a 64-bit EL2
-does an AT insn on an AArch32 EL1&0 translation regime that is using
-short-descriptors and that translation operation hits a Domain fault,
-then this is reported in the PAR_EL1 in long-format.
+QEMU keeps the SH4 T, M and Q status-register bits outside env->sr, in
+the dedicated env->sr_t, env->sr_m and env->sr_q fields; cpu_read_sr()
+folds them back into the architectural SR value and cpu_write_sr()
+splits them back out.
 
-The PAR_EL1 register description defines that this should be reported
-as 0b111101 for a level 1 Domain fault or 0b111110 for a level 2
-Domain fault.
+setup_sigcontext() saved the bare env->sr (so the T/M/Q bits were always
+zero in the signal frame) and restore_sigcontext() wrote the value
+straight back into env->sr without updating sr_t/sr_m/sr_q. As a result
+the T bit was never preserved across signal delivery: on sigreturn the
+interrupted code resumed with whatever T value the signal handler last
+left behind. Any conditional branch (or addc/subc/rotcl/div1, etc.)
+immediately following the interrupted instruction could then take the
+wrong path.
 
-The Arm ARM pseudocode special cases this in the function
-AArch64_PARFaultStatus() (because no other "fault to LFSC" code path
-can be a Domain fault).  For QEMU, implement it in arm_fi_to_lfsc().
+This is the cause of the long-standing intermittent failures of the
+tests/tcg/multiarch/signals.c test on sh4, which was marked BROKEN. With
+a SIGRTMIN timer firing every millisecond across many threads, the race
+was hit a few percent of the time and corrupted the guest heap, surfacing
+as a SIGSEGV in memset, a malloc assertion, or an rseq registration abort.
 
+Traced on a deterministic rr recording: a cmp/hi set T=0, the timer
+signal interrupted the very next instruction (a bf), the handler left
+T=1, and the resumed bf took glibc calloc's MORECORE_CLEARS branch,
+using the old top-chunk size as the clear length for a freshly split
+small chunk and running memset off the end of the heap.
+
+Fix setup_sigcontext()/restore_sigcontext() to use cpu_read_sr() and
+cpu_write_sr() so the T, M and Q bits round-trip correctly, and drop the
+BROKEN annotation on the sh4 signals test.
+
+Fixes: c3b5bc8ab3 ("SH4: Signal handling for the user space emulator, by Magnus Damm.")
 Cc: qemu-stable@nongnu.org
-Fixes: 1fa498fe0de97 ("target/arm: Provide fault type enum and FSR conversion functions")
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3512
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Yoshinori Sato <yoshinori.sato@nifty.com>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20260526174155.2491217-1-peter.maydell@linaro.org
-(cherry picked from commit bb957530471c792a9a51e822a6c2fa8398cc48f6)
+Signed-off-by: Matt Turner <mattst88@gmail.com>
+Signed-off-by: Helge Deller <deller@gmx.de>
+(cherry picked from commit 6bf4c0295cccf74f3c5c0b674328b97d6fd1505c)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/arm/internals.h b/target/arm/internals.h
-index 85980f0e69..556c0729c7 100644
---- a/target/arm/internals.h
-+++ b/target/arm/internals.h
-@@ -872,6 +872,16 @@ static inline uint32_t arm_fi_to_lfsc(ARMMMUFaultInfo *fi)
-         assert(fi->level >= 0 && fi->level <= 3);
-         fsc = 0b001100 | fi->level;
-         break;
-+    case ARMFault_Domain:
-+        /*
-+         * This can only happen when doing an AT insn at EL2 for an AArch32
-+         * stage 1 EL1&0 translation regime using short-descriptors, and
-+         * the translation hits a Domain fault. This needs to be reported in
-+         * the long-format PAR. Compare pseudocode AArch64_PARFaultStatus().
-+         */
-+        assert(fi->level == 1 || fi->level == 2);
-+        fsc = 0b111100 | fi->level;
-+        break;
-     case ARMFault_Translation:
-         assert(fi->level >= -1 && fi->level <= 3);
-         if (fi->level < 0) {
+diff --git a/linux-user/sh4/signal.c b/linux-user/sh4/signal.c
+index d70be24c38..cc36425c49 100644
+--- a/linux-user/sh4/signal.c
++++ b/linux-user/sh4/signal.c
+@@ -131,8 +131,10 @@ static void setup_sigcontext(struct target_sigcontext *sc,
+     COPY(gregs[14]); COPY(gregs[15]);
+     COPY(gbr); COPY(mach);
+     COPY(macl); COPY(pr);
+-    COPY(sr); COPY(pc);
++    COPY(pc);
+ #undef COPY
++    /* The T, M and Q bits live outside env->sr; fold them back in. */
++    __put_user(cpu_read_sr(regs), &sc->sc_sr);
+ 
+     for (i=0; i<16; i++) {
+         __put_user(regs->fregs[i], &sc->sc_fpregs[i]);
+@@ -159,8 +161,14 @@ static void restore_sigcontext(CPUSH4State *regs, struct target_sigcontext *sc)
+     COPY(gregs[14]); COPY(gregs[15]);
+     COPY(gbr); COPY(mach);
+     COPY(macl); COPY(pr);
+-    COPY(sr); COPY(pc);
++    COPY(pc);
+ #undef COPY
++    /* The T, M and Q bits live outside env->sr; unfold them. */
++    {
++        uint32_t sr;
++        __get_user(sr, &sc->sc_sr);
++        cpu_write_sr(regs, sr);
++    }
+ 
+     for (i=0; i<16; i++) {
+         __get_user(regs->fregs[i], &sc->sc_fpregs[i]);
+diff --git a/tests/tcg/sh4/Makefile.target b/tests/tcg/sh4/Makefile.target
+index 7852fa62d8..b7a8737be0 100644
+--- a/tests/tcg/sh4/Makefile.target
++++ b/tests/tcg/sh4/Makefile.target
+@@ -3,13 +3,6 @@
+ # SuperH specific tweaks
+ #
+ 
+-# This triggers failures for sh4-linux about 10% of the time.
+-# Random SIGSEGV at unpredictable guest address, cause unknown.
+-run-signals: signals
+-	$(call skip-test, $<, "BROKEN")
+-run-plugin-signals-with-%:
+-	$(call skip-test, $<, "BROKEN")
+-
+ VPATH += $(SRC_PATH)/tests/tcg/sh4
+ 
+ test-macl: CFLAGS += -O -g
 -- 
 2.47.3
 
