@@ -4,44 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8F0DCDB481
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 13:49:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5F95CDB479
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 13:50:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcNoa-00033A-QD; Wed, 24 Jun 2026 09:38:53 -0400
+	id 1wcNrM-0008KI-H2; Wed, 24 Jun 2026 09:41:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wcNo4-0001ux-7U; Wed, 24 Jun 2026 09:38:24 -0400
+ id 1wcNr3-00080v-0d; Wed, 24 Jun 2026 09:41:25 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wcNo0-00019J-6Z; Wed, 24 Jun 2026 09:38:19 -0400
+ id 1wcNr1-0001om-5M; Wed, 24 Jun 2026 09:41:24 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1782307998; bh=FCs91j2jahY7iqlzgzBO1t4k/xo/nVlyyBYkVbrJbIo=;
+ t=1782308000; bh=CEWfNtl3ujQvy6+5b3hQDwhS9J6oM/M5tL9TtqaGx10=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=AfaBqjQbZXiQvD/7JYpNLbNBUMdPtbX5I0YV22ZnOO7zn9ipW2Ku7NtX7liyRzx9s
- cKSc4oxgw20MM27JuzW0fafUmbHUO3Q8LAD0T8HZxdCv+iNNuIsrSJnR9tc+GqZ5tL
- 37QoXIoaYanYXa+IKC/mTSSq5HMrI2xoAj7Uqu7068xU+cT6pAVSyFpoVouFNr4Kn0
- /litUqhWomPM8Mp5J4I1uuvXxYHjd6MHnj7nSi1+lywS4uogi9ac9QsErtzAE2qkHZ
- +OzhvpujFZVPtnQQXs+npLnX7nJScLNQzbdQ1pbR9BDrMdlWzXBxanjVP39KEFgTno
- jfG5RrZbn0y0Q==
+ b=v04wyeFjXmqvu5F8gtSI0WXANV1U43dv3qtFeY1chhP7AneIKkMy6IzickNtqXR0f
+ cCepAJBo2swUf1iQUFejCIqSf5179+ZW2zicb3j7P76Fi3tDeARqRdx5SeccX2Oaid
+ tfAzWbJPvU3CQ0OJWkTse1rgb6F6xq/i+Tga+q5sTJKN7jQJicBUZYKmDCmIcxYmin
+ DeCyuaRWPU5vHIC9XXoAcwpnrYvfb4Bzux/lW7g00kj63a78R0OFMPaabehVVOTVvf
+ en9QbY7J6r6qvRH0XBisXZa/n9GW56NpJ1HrcT+Y/CidLdvWB8fKYfMVPGsROM8TN1
+ kLqN7FimDW2aA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id CFD961BA9E7;
- Wed, 24 Jun 2026 16:33:18 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id F30851BAA04;
+ Wed, 24 Jun 2026 16:33:20 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 6BE073DEA36;
- Wed, 24 Jun 2026 16:33:24 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 861593DEA53;
+ Wed, 24 Jun 2026 16:33:26 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.2 053/107] gitlab: add initial MacOS 15 on gitlab runner
-Date: Wed, 24 Jun 2026 16:30:58 +0300
-Message-ID: <20260624133301.403266-53-mjt@tls.msk.ru>
+ =?UTF-8?q?Eugenio=20P=C3=A9rez?= <eperezma@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.2 082/107] virtio: Allow to fill a whole virtqueue in
+ order
+Date: Wed, 24 Jun 2026 16:31:27 +0300
+Message-ID: <20260624133301.403266-82-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.2-20260624163118@cover.tls.msk.ru>
 References: <qemu-stable-11.0.2-20260624163118@cover.tls.msk.ru>
@@ -71,143 +71,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alex Bennée <alex.bennee@linaro.org>
+From: Eugenio Pérez <eperezma@redhat.com>
 
-The gitlab runners are currently in beta but available to projects on
-the Premium and Ultimate plans (which QEMU is via the Open Source
-program).
+As the while steps < max_steps is already one less than the vq size, the
+right maximum max_steps variable is queue length, not the maximum
+possible remainder of % vq->vring.num.
 
-We install some compilers via brew so we can run some of the check-tcg
-softmmu test cases.
-
-We disable rust as the version is too old.
-
-We disable plugins because we haven't taught the test harness about
-.dynlib vs .so yet.
-
-There is a discrepancy between the vars and version of MacOS because
-lcitool needs teaching about other versions (although I don't think it
-matters as brew is shared across versions).
-
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Message-ID: <20260526110243.470002-7-alex.bennee@linaro.org>
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-(cherry picked from commit 7684e78132905393e604014dce3185def4114108)
+Fixes: b44135daa37 ("virtio: virtqueue_ordered_fill - VIRTIO_F_IN_ORDER support")
+Signed-off-by: Eugenio Pérez <eperezma@redhat.com>
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Message-Id: <20260304173535.2702587-2-eperezma@redhat.com>
+(cherry picked from commit eceff0982f97cc79a26883b93f8eac05cd126dd8)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/.gitlab-ci.d/macos-14.vars b/.gitlab-ci.d/macos-14.vars
-new file mode 100644
-index 0000000000..def77cfdea
---- /dev/null
-+++ b/.gitlab-ci.d/macos-14.vars
-@@ -0,0 +1,16 @@
-+# THIS FILE WAS AUTO-GENERATED
-+#
-+#  $ lcitool variables macos-14 qemu
-+#
-+# https://gitlab.com/libvirt/libvirt-ci
-+
-+CCACHE='/opt/homebrew/bin/ccache'
-+CPAN_PKGS=''
-+CROSS_PKGS=''
-+MAKE='/opt/homebrew/bin/gmake'
-+NINJA='/opt/homebrew/bin/ninja'
-+PACKAGING_COMMAND='brew'
-+PIP3='/opt/homebrew/bin/pip3'
-+PKGS='bash bc bindgen bison bzip2 capstone ccache cmocka coreutils ctags curl dbus diffutils dtc flex gcovr gettext git glib gnu-sed gnutls gtk+3 gtk-vnc jemalloc jpeg-turbo json-c libcbor libepoxy libffi libgcrypt libiscsi libnfs libpng libslirp libssh libtasn1 libusb llvm lzo make meson mtools ncurses nettle ninja pixman pkg-config python-setuptools python3 rpm2cpio rust sdl2 sdl2_image snappy socat sparse spice-protocol swtpm tesseract usbredir vde vte3 vulkan-tools xorriso zlib zstd'
-+PYPI_PKGS='PyYAML numpy pillow sphinx sphinx-rtd-theme tomli'
-+PYTHON='/opt/homebrew/bin/python3'
-diff --git a/.gitlab-ci.d/macos.yml b/.gitlab-ci.d/macos.yml
-new file mode 100644
-index 0000000000..c93bf12a29
---- /dev/null
-+++ b/.gitlab-ci.d/macos.yml
-@@ -0,0 +1,47 @@
-+.macos_job_template:
-+  extends: .base_job_template
-+  stage: build
-+  tags:
-+    - saas-macos-large-m2pro
-+  needs: []
-+  timeout: 80m
-+  artifacts:
-+    name: "$CI_JOB_NAME-$CI_COMMIT_REF_SLUG"
-+    expire_in: 7 days
-+    paths:
-+      - build/meson-logs/
-+      - build/tests/tcg/
-+    reports:
-+      junit: build/meson-logs/*.junit.xml
-+    when: always
-+  before_script:
-+    - set -o allexport
-+    - source .gitlab-ci.d/macos-14.vars
-+    - set +o allexport
-+    - export PATH="$PATH_EXTRA:$PATH"
-+    - export PKG_CONFIG_PATH="$PKG_CONFIG_PATH"
-+    - brew update
-+    - brew install $PKGS
-+    - brew install gdb aarch64-elf-gcc i686-elf-gcc x86_64-elf-gcc
-+    - if test -n "$PYPI_PKGS" ; then PYLIB=$($PYTHON -c 'import sysconfig; print(sysconfig.get_path("stdlib"))'); rm -f $PYLIB/EXTERNALLY-MANAGED; $PIP3 install --break-system-packages $PYPI_PKGS ; fi
-+  script:
-+    - mkdir build
-+    - cd build
-+    - ../configure --enable-werror $CONFIGURE_ARGS || { cat config.log meson-logs/meson-log.txt; exit 1; }
-+    - $MAKE -j$(sysctl -n hw.ncpu)
-+    - for TARGET in $TEST_TARGETS ; do $MAKE $TARGET ; done
-+
-+aarch64-macos-15-build:
-+  extends: .macos_job_template
-+  image: macos-15-xcode-16
-+  variables:
-+    NAME: macos-15
-+    PATH_EXTRA: /opt/homebrew/gettext/bin
-+    PKG_CONFIG_PATH: /opt/homebrew/curl/lib/pkgconfig:/opt/homebrew/ncurses/lib/pkgconfig:/opt/homebrew/readline/lib/pkgconfig
-+    CONFIGURE_ARGS:
-+        --target-list=aarch64-softmmu,i386-softmmu,x86_64-softmmu
-+        --cross-prefix-aarch64=aarch64-elf-
-+        --cross-prefix-i386=i686-elf-
-+        --cross-prefix-x86_64=x86_64-elf-
-+        --disable-plugins
-+    TEST_TARGETS: check-unit run-tcg-tests-aarch64-softmmu run-tcg-tests-i386-softmmu run-tcg-tests-x86_64-softmmu
-diff --git a/.gitlab-ci.d/qemu-project.yml b/.gitlab-ci.d/qemu-project.yml
-index 4d914c4897..9cbb5fe787 100644
---- a/.gitlab-ci.d/qemu-project.yml
-+++ b/.gitlab-ci.d/qemu-project.yml
-@@ -19,3 +19,4 @@ include:
-   - local: '/.gitlab-ci.d/custom-runners.yml'
-   - local: '/.gitlab-ci.d/cirrus.yml'
-   - local: '/.gitlab-ci.d/windows.yml'
-+  - local: '/.gitlab-ci.d/macos.yml'
-diff --git a/tests/lcitool/refresh b/tests/lcitool/refresh
-index fa4a16e358..4289cc381a 100755
---- a/tests/lcitool/refresh
-+++ b/tests/lcitool/refresh
-@@ -87,6 +87,12 @@ def generate_cirrus(target, trailer=None):
-     generate(filename, cmd, trailer)
+diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
+index 8fcf6cfd0b..b337c50c74 100644
+--- a/hw/virtio/virtio.c
++++ b/hw/virtio/virtio.c
+@@ -986,7 +986,7 @@ static void virtqueue_ordered_fill(VirtQueue *vq, const VirtQueueElement *elem,
+      * We shouldn't need to increase 'i' by more than or equal to
+      * the distance between used_idx and last_avail_idx (max_steps).
+      */
+-    max_steps = (vq->last_avail_idx - vq->used_idx) % vq->vring.num;
++    max_steps = MIN(vq->last_avail_idx - vq->used_idx, vq->vring.num);
  
- 
-+def generate_vars(target, trailer=None):
-+    filename = Path(src_dir, ".gitlab-ci.d", target + ".vars")
-+    cmd = lcitool_cmd + ["variables", "--format", "shell", target, "qemu"]
-+    generate(filename, cmd, trailer)
-+
-+
- def generate_pkglist(vm, target, project="qemu"):
-     filename = Path(src_dir, "tests", "vm", "generated", vm + ".json")
-     cmd = lcitool_cmd + ["variables", "--format", "json", target, project]
-@@ -312,6 +318,11 @@ try:
-     #
-     generate_cirrus("freebsd-14")
- 
-+    #
-+    # GitLab packages lists
-+    #
-+    generate_vars("macos-14")
-+
-     #
-     # VM packages lists
-     #
+     /* Search for element in vq->used_elems */
+     while (steps < max_steps) {
 -- 
 2.47.3
 
