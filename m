@@ -4,48 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4490CDB481
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 13:39:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16320CDB479
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 13:39:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcNmD-0005yC-5F; Wed, 24 Jun 2026 09:36:25 -0400
+	id 1wcNlr-0004QT-Ax; Wed, 24 Jun 2026 09:36:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wcNmC-0005wT-5d; Wed, 24 Jun 2026 09:36:24 -0400
+ id 1wcNlm-0004IT-A9; Wed, 24 Jun 2026 09:36:00 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wcNmA-0000t0-Jz; Wed, 24 Jun 2026 09:36:23 -0400
+ id 1wcNlk-0000qS-Pr; Wed, 24 Jun 2026 09:35:58 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1782307997; bh=i+yfxhU/CaItktIbTAcONgxmHDsA/PtMAephYUbH82s=;
+ t=1782307997; bh=wW//6R9DcVQincR5nU8HAvA6a7TrUpycElpGLnaC2BU=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=tfTVz6/PP4KR6YDUOI7QLWNyxoeABoKo0o0M/WiYPP/f4hRyeqaH6QwL5kEnblmF4
- szNko3BLte9Pw2tvziG7G3skoZRAQRjTCZZxF0w+YZUun1M/bd0sc81/V6I8KIBK30
- DgO6/7ma8ip1Hd3QcByP/9NCVtds7hUmXmjVDqYJnFolnivBoqs8w6fBtY3+plxilU
- cWqhcn/Pexkc5PQXlGRDDULjHB2HZZxwNWJLxotNV5f4TVEcHQBcKGu+jvbjL5YP+Z
- JEgr4wFFk0F2Zl06LNiCC/Jc3h39+umVDO6WWTyKHdc3c6DQlHwcgzzn4gJB64r6Kc
- ruwMQeXEaMSxw==
+ b=mt/JC7utKM/D/xUFjnCEwS4FI+J77eLsQ5lbYKtf0cJIbWk6Ik7t0lna77YEKl3fy
+ rLje3O7tmEyetE2d1E94p4z7aiD5o9ZzwdngKcmNRuqdTTB2qJGxfdm17Na+2x3y7S
+ cG8g506xZN4dfGsrTKCbiWtu84QQlb41cme6ENGU4UUfkQVDfuq0Z+AT4KbhCNHvI3
+ jZXQa9PpBmN+2xgFDcU7oBtqacpV4dbwusxmO4eHoXlwLWTVbZuiZl32ZoAvwN1BGP
+ ELpIroEkRd4UGMOuBu5C2oR40uQSL7Woz2U//uUTDdlV7mMT3EdFgtObREZhFTyPiR
+ 9z7sCNztNbTCw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 8D8D51BA9D5;
+ by isrv.corpit.ru (Postfix) with ESMTP id 43CA71BA9D1;
  Wed, 24 Jun 2026 16:33:17 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 2A9CA3DEA24;
- Wed, 24 Jun 2026 16:33:23 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id D451B3DEA20;
+ Wed, 24 Jun 2026 16:33:22 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
+Cc: qemu-stable@nongnu.org, GuoHan Zhao <zhaoguohan@kylinos.cn>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.2 035/107] target/arm: SME BFCVT,
- BFCVTN have "Alternate BFloat16 behaviors"
-Date: Wed, 24 Jun 2026 16:30:40 +0300
-Message-ID: <20260624133301.403266-35-mjt@tls.msk.ru>
+Subject: [Stable-11.0.2 031/107] vfio-user: reject zero migration page size
+ capability
+Date: Wed, 24 Jun 2026 16:30:36 +0300
+Message-ID: <20260624133301.403266-31-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.2-20260624163118@cover.tls.msk.ru>
 References: <qemu-stable-11.0.2-20260624163118@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -70,41 +71,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: GuoHan Zhao <zhaoguohan@kylinos.cn>
 
-The Arm ARM A1.5.10 notes that some instructions have "Alternate
-Bfloat16 behaviors" when FPCR.AH == 1.  We implement these using the
-FPST_AH and FPST_AH_F16 fp_status words.  The list includes the SME
-BFVCT (single-precision to BFloat16) and BFCVTN, but we forgot to
-make those use FPST_AH_F16 when we implemented them. (We get the
-ASIMD and SVE insns on the list right.)
+check_migr_pgsize() validates that no page-size bits smaller than
+VFIO_USER_DEF_PGSIZE are set, but it still accepts pgsize=0. This can replace
+the default migration page size with an unusable value.
 
-Add the missing logic to select the right FPST.
+Reject a zero migration page size during version capability parsing, matching
+the lower-bound check used for the DMA page-size capability.
 
-Cc: qemu-stable@nongnu.org
-Fixes: 465d36db0e1 ("target/arm: Implement SME2 BFCVT, BFCVTN, FCVT, FCVTN")
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Message-id: 20260521180854.1744788-1-peter.maydell@linaro.org
-(cherry picked from commit ca33de98447c2c2825c1af73cfacf4f65a9bc6c6)
+Fixes: 36227628d824 (vfio-user: implement message send infrastructure)
+Signed-off-by: GuoHan Zhao <zhaoguohan@kylinos.cn>
+Link: https://lore.kernel.org/qemu-devel/20260522081306.4186242-2-zhaoguohan@kylinos.cn
+Signed-off-by: Cédric Le Goater <clg@redhat.com>
+(cherry picked from commit 497b5c5b05ac2be00ae16c723e2445ebbc486cb2)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/arm/tcg/translate-sme.c b/target/arm/tcg/translate-sme.c
-index 7d25ac5a51..6064ed8697 100644
---- a/target/arm/tcg/translate-sme.c
-+++ b/target/arm/tcg/translate-sme.c
-@@ -1418,9 +1418,9 @@ static bool do_zz_fpst(DisasContext *s, arg_zz_n *a, int data,
- }
+diff --git a/hw/vfio-user/proxy.c b/hw/vfio-user/proxy.c
+index 3fe5b0138b..3167d27b03 100644
+--- a/hw/vfio-user/proxy.c
++++ b/hw/vfio-user/proxy.c
+@@ -1081,9 +1081,11 @@ static bool check_migr_pgsize(VFIOUserProxy *proxy, QObject *qobj, Error **errp)
+         return false;
+     }
  
- TRANS_FEAT(BFCVT, aa64_sme2, do_zz_fpst, a, 0,
--           FPST_A64, gen_helper_sme2_bfcvt)
-+           s->fpcr_ah ? FPST_AH : FPST_A64, gen_helper_sme2_bfcvt)
- TRANS_FEAT(BFCVTN, aa64_sme2, do_zz_fpst, a, 0,
--           FPST_A64, gen_helper_sme2_bfcvtn)
-+           s->fpcr_ah ? FPST_AH : FPST_A64, gen_helper_sme2_bfcvtn)
- TRANS_FEAT(FCVT_n, aa64_sme2, do_zz_fpst, a, 0,
-            FPST_A64, gen_helper_sme2_fcvt_n)
- TRANS_FEAT(FCVTN, aa64_sme2, do_zz_fpst, a, 0,
+-    /* must be larger than default */
+-    if (pgsize & (VFIO_USER_DEF_PGSIZE - 1)) {
+-        error_setg(errp, "pgsize 0x%"PRIx64" too small", pgsize);
++    /* must not be zero or smaller than default */
++    if (pgsize < VFIO_USER_DEF_PGSIZE ||
++        (pgsize & (VFIO_USER_DEF_PGSIZE - 1))) {
++        error_setg(errp, "%s 0x%"PRIx64" too small",
++                   VFIO_USER_CAP_PGSIZE, pgsize);
+         return false;
+     }
+ 
 -- 
 2.47.3
 
