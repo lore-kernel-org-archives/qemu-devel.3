@@ -4,102 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A6BACDB479
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 15:50:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2287ACDB47F
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 15:52:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcPrs-0004Zs-1T; Wed, 24 Jun 2026 11:50:24 -0400
+	id 1wcPtD-0006O5-L8; Wed, 24 Jun 2026 11:51:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wcPrq-0004Ye-G3
- for qemu-devel@nongnu.org; Wed, 24 Jun 2026 11:50:22 -0400
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wcPro-0000EY-Nr
- for qemu-devel@nongnu.org; Wed, 24 Jun 2026 11:50:22 -0400
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-4926046fbc5so91175e9.0
- for <qemu-devel@nongnu.org>; Wed, 24 Jun 2026 08:50:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1782316218; x=1782921018; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=G2H2ri/oSMaHNxjWTJsX+4cgbNnxXsBrVDobbD4DnQA=;
- b=tahuueV5ki2r/IN0F5+01gcNsBWXCq0KKJYhS27WLRQsIQNfL1Bl8VvkmI25OUowP8
- KxK4NmQw7hT0VW3/SXVI2+bePibSusTqo4MaMSpICrKXQi83CjfKbt/3WqJxF+GeDFn4
- P116NzrswJFlBpVaLOH9XoHY2EPdkel2la5VG37KPECes9tYX3bD0z/nYINsXJ7thNvs
- oTZvo7TThrTyqcKRW4RTnZjeICHMMsJjdECUh9WQKlvZnHORgbAEwiHPK3PS69Usx8aH
- C9ThJqd95ZFqxJNYeR7REtocCjwC3T5YJ2IEfC79LPYU6T/AcYecwCRmBT6buMYbiJ6X
- VYjw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782316218; x=1782921018;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=G2H2ri/oSMaHNxjWTJsX+4cgbNnxXsBrVDobbD4DnQA=;
- b=bWT1QlHdZSHJ9nxVVLenABOgVqRAiPLiy3X30MU3sD0yoDoanAjUAjoAn/8DKAEeHP
- JST79NhFckaxxUKvAqhYxEtflZ55y70gvqiBWxT94yzx/EPECygwPz//qSFiHGFgOzAr
- zDn2d2yjh0R3wTEmch3Wab5r90alj+KxZqU7aNW6Bld7y/8mz6zMIBxvpUPbYGlHGrw0
- pFeaV/TZzg76xdwsxDJx5a9rALu+cdU+RR3IqAD59w8x0BR03vjei014jYPV4vBivJQ8
- KBU3qRVIJGDnbjUUbaW49mr6aciAKNEQhgsRwbAtwIT2ADyuwLpIiX9H2rf59AV0ldjq
- WS9g==
-X-Forwarded-Encrypted: i=1;
- AFNElJ+UbAxNIFegmSJujC9BDJYUp8PVbbT5ncb3XMWE++WmhmZJ3dG9VW5FOTdlxJ/aKuEQ3sYWICfZRqUa@nongnu.org
-X-Gm-Message-State: AOJu0YybKg2ufZOXYu4u82kIq2Ph8JSvT/HGluGq+S2N1xlyqIfoUu1B
- O4445uNMIZw3/FePBxdeMAPtBP9JuIMTkGkY+DIZBjkyQCGDwgER7OCOQnxP11hH2RY=
-X-Gm-Gg: AfdE7clxpZNk2IfaWh/b6zPKJ7dAr1kUCEuHzzjc5KssXhOmbRr2bTlwtOnt/MYr5WW
- nlaslbHq5yg4gYj4H/qZYUOM0pwWruWooea4E1+VOtNq4Z0dTGyrOkEx0U0F0sw94sQPJERgnMj
- bxkhTQAkdKjr2tTmrvjbT5Th01BPQOrXiRpCDgvBdWd19twH18Bnt/7m9SiVjrIu4cJ3/+SGTha
- rBmEK1LrsI7SC82TSgXmMhS8zr3TkUtYYSyUZYBJjDAIkzmyAk64169l8mKxaZWm5GZp0y0xssD
- 8UGgLyZfmuqoHz4zXLWp4PRAoL8q84lS5tIhatXmZ2mMZiFLHylr0x0AkxKkNStbxCBncx6ysKf
- Azc5OsIl9Aj4OZ9AG+6gNb/b/eMIX3LZG+25Eo2GNsht7F+MUCqXoL3J1by87457+9F8at1hhj8
- n/Vtt0oPItPPgi
-X-Received: by 2002:a05:600c:4f82:b0:48f:e230:29f5 with SMTP id
- 5b1f17b1804b1-492632b6eccmr14212025e9.16.1782316218457; 
- Wed, 24 Jun 2026 08:50:18 -0700 (PDT)
-Received: from draig.lan ([185.124.0.195]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49264023b18sm1547555e9.4.2026.06.24.08.50.17
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 24 Jun 2026 08:50:17 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id DB2905F807;
- Wed, 24 Jun 2026 16:50:16 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- qemu-devel@nongnu.org,  Thomas Huth <thuth@redhat.com>,  Paolo Bonzini
- <pbonzini@redhat.com>,  =?utf-8?Q?Daniel_P_=2E_Berrang=C3=A9?=
- <berrange@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-arm@nongnu.org,
- Richard Henderson <richard.henderson@linaro.org>,  Alexandre Iooss
- <erdnaxe@crans.org>,  Peter Maydell <peter.maydell@linaro.org>,  Gustavo
- Romero <gustavo.romero@linaro.org>
-Subject: Re: [PATCH 06/27] tests/tcg/meson.build: introduce test_name
-In-Reply-To: <tgemmc.ymcxyhiodn9w@linaro.org> (Manos Pitsidianakis's message
- of "Wed, 10 Jun 2026 10:08:21 +0300")
-References: <20260609214745.772536-1-pierrick.bouvier@oss.qualcomm.com>
- <20260609214745.772536-7-pierrick.bouvier@oss.qualcomm.com>
- <tgemmc.ymcxyhiodn9w@linaro.org>
-User-Agent: mu4e 1.14.2; emacs 30.1
-Date: Wed, 24 Jun 2026 16:50:16 +0100
-Message-ID: <87jyroj5tz.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1wcPtB-0006HJ-Et
+ for qemu-devel@nongnu.org; Wed, 24 Jun 2026 11:51:45 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1wcPt9-0000Op-RJ
+ for qemu-devel@nongnu.org; Wed, 24 Jun 2026 11:51:45 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1782316302;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=0wQw3F58kKOwdOP9EEyWiVOpFCJrrB10Xbt5ETReVSM=;
+ b=XXObMniFu+qAHfLGnUd9MtTk8JEpCIZ/rk2fSrgVSdf020rsgulcnDHFB6+4rSlV1d3RNH
+ XFUbRU2WbcYwcguv+fINwQ2l4udAlrLsjU3+IzBJW1ViDyaZBUobyDW5ttiU4yHHZVRiXG
+ VpVWsAQnljN0il2atR00J72E2z5aB1E=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-638-YMVdVaXDP-eNFNvOfzyeGg-1; Wed,
+ 24 Jun 2026 11:51:40 -0400
+X-MC-Unique: YMVdVaXDP-eNFNvOfzyeGg-1
+X-Mimecast-MFC-AGG-ID: YMVdVaXDP-eNFNvOfzyeGg_1782316299
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id BC85A1955E74; Wed, 24 Jun 2026 15:51:38 +0000 (UTC)
+Received: from localhost (unknown [10.2.16.69])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 94A7B3000B56; Wed, 24 Jun 2026 15:51:37 +0000 (UTC)
+Date: Wed, 24 Jun 2026 11:51:33 -0400
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: Zhang Chen <zhangckid@gmail.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>,
+ "Dr . David Alan Gilbert" <dave@treblig.org>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
+ Jason Wang <jasowang@redhat.com>, Fam Zheng <fam@euphon.net>
+Subject: Re: [PATCH V9 02/17] iothread: introduce iothread_ref/unref to track
+ attached devices
+Message-ID: <20260624155133.GA109308@fedora>
+References: <20260624070851.13342-1-zhangckid@gmail.com>
+ <20260624070851.13342-3-zhangckid@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="uK51Yeq1TJa2SLW3"
+Content-Disposition: inline
+In-Reply-To: <20260624070851.13342-3-zhangckid@gmail.com>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 8
+X-Spam_score: 0.8
+X-Spam_bar: /
+X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,94 +91,113 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Manos Pitsidianakis <manos.pitsidianakis@linaro.org> writes:
 
-> On Wed, 10 Jun 2026 00:47, Pierrick Bouvier <pierrick.bouvier@oss.qualcom=
-m.com> wrote:
->>We add possibility to duplicate a test for a given src. This allows to
->>declare several tests that still share the same executable, thus saving
->>space and compile time.
->>
->>A side note to mention that meson perfectly supports declaring several
->>tests with the same name. However, we prevent that to force dev to
->>clarify what is the intent of each individual test.
->>
->>Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
->>---
->> tests/tcg/meson.build | 14 ++++++++++----
->> 1 file changed, 10 insertions(+), 4 deletions(-)
->>
->>diff --git a/tests/tcg/meson.build b/tests/tcg/meson.build
->>index 2c6d85c586a..bb0184732fd 100644
->>--- a/tests/tcg/meson.build
->>+++ b/tests/tcg/meson.build
->>@@ -12,6 +12,7 @@ tcg_tests =3D {}
->> #       {
->> #         'src_file': {
->> #           'exe_name': ['provide an alternative binary name'],
->>+#           'test_name': ['provide an alternative test name'],
->> #         }
->> #       },
->> #       ...
->>@@ -21,8 +22,8 @@ tcg_tests =3D {}
->> #
->> # Every test executable, identified by 'exe_name' is built only once.
->> # Tests for a given src use the same executable by default, and their de=
-finition
->>-# is guaranteed to be unique also.
->>-# Default name is derived from src if 'exe_name' is omitted.
->>+# is guaranteed to be unique also. They can be duplicated by setting 'te=
-st_name'.
->
-> While it's clear in the patch description, it might be a good idea to
-> explain that "duplication" means using the same executable here, for
-> clarity, if you respin this series.
+--uK51Yeq1TJa2SLW3
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-additional versions of the test can be added by setting 'test_name'?
+On Wed, Jun 24, 2026 at 03:08:36PM +0800, Zhang Chen wrote:
+> Currently, IOThreads do not maintain a record of which devices are
+> associated with them. This makes it difficult to monitor the
+> workload distribution of IOThreads, especially in complex
+> hotplug scenarios involving multiple virtio-blk or virtio-scsi devices.
+>=20
+> This patch introduces a reference counting and tracking mechanism
+> within the IOThread object:
+>=20
+> - iothread_ref(): Prepends the device's IOThreadHolder to a list.
+> - iothread_unref(): Searches for the IOThreadHolder using a custom
+>   string comparison (g_strcmp0), releases the associated memory
+>   upon a successful match.
+> - holders: A GList storing the IOThreadHolder of attached devices
+>   for runtime introspection.
+>=20
+> A later commit will add QMP commands to let management applications
+> query the attachment status of IOThreads.
+>=20
+> Signed-off-by: Zhang Chen <zhangckid@gmail.com>
+> ---
+>  include/system/iothread.h |  5 +++
+>  iothread.c                | 94 +++++++++++++++++++++++++++++++++++++++
+>  qapi/misc.json            | 61 +++++++++++++++++++++++++
+>  3 files changed, 160 insertions(+)
 
->
->>+# Default name is derived from src if 'exe_name' and 'test_name' are omi=
-tted.
->> # plugins come first, as we need to build the list
->> subdir('plugins')
->>@@ -51,7 +52,7 @@ foreach target, plan: tcg_tests
->>       # return a clear error if user mispell a setup entry
->>       foreach key, _ : setup
->>         if key not in [
->>-                       'exe_name',
->>+                       'exe_name', 'test_name',
->>                        ]
->>           error('unknown tcg setup entry \'' + key + '\' for test ' + sr=
-c)
->
->
-> Unrelated to this patch, but you could refactor the ['exe_name',
-> 'test_name'] etc key set outside and print the list of valid keys in
-> the error message as well for UX.
->
->>         endif
->>@@ -66,8 +67,13 @@ foreach target, plan: tcg_tests
->>         exe_name =3D setup['exe_name']
->>       endif
->> -      exe_name =3D target + '-' + exe_name
->>       test_name =3D exe_name
->>+      if 'test_name' in setup
->>+        test_name =3D setup['test_name']
->>+      endif
->>+
->>+      exe_name =3D target + '-' + exe_name
->>+      test_name =3D target + '-' + test_name
->>       if test_name in added_tests
->>         error('test ' + test_name + ' was already added: ' +
->> -- 2.43.0
->>
->
->
-> LGTM (feel free to ignore the comments)
->
-> Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Minor comments below. This patch looks good overall:
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+
+> diff --git a/include/system/iothread.h b/include/system/iothread.h
+> index a1ef7696cb..b9207ad829 100644
+> --- a/include/system/iothread.h
+> +++ b/include/system/iothread.h
+> @@ -50,6 +50,11 @@ struct IOThread {
+>      bool stopping;              /* has iothread_stop() been called? */
+>      bool running;               /* should iothread_run() continue? */
+>      int thread_id;
+> +    /*
+> +     * The list elements are of type IOThreadHolder, which can
+> +     * represent either a QOM path or a block node name.
+
+This comment duplicates the IOThreadHolder types and will become
+outdated easily. It might already be outdated (there are 3 types, not
+just the 2 mentioned in the comment). I suggest replacing it with
+something like:
+
+  /* List of iothread_ref() holders (elements are of type IOThreadHolder) */
+
+> +static int iothread_holder_compare(gconstpointer a, gconstpointer b)
+> +{
+> +    const IOThreadHolder *holder_a =3D a;
+> +    const IOThreadHolder *holder_b =3D b;
+> +    const char *name_a, *name_b;
+> +
+> +    if (holder_a->type !=3D holder_b->type) {
+> +        return -1;
+> +    }
+> +
+> +    switch (holder_a->type) {
+> +    case IO_THREAD_HOLDER_KIND_QOM_OBJECT:
+> +        name_a =3D holder_a->u.qom_object.qom_path;
+> +        name_b =3D holder_b->u.qom_object.qom_path;
+> +        break;
+> +    case IO_THREAD_HOLDER_KIND_BLOCK_NODE:
+> +        name_a =3D holder_a->u.block_node.node_name;
+> +        name_b =3D holder_b->u.block_node.node_name;
+> +        break;
+> +    case IO_THREAD_HOLDER_KIND_MONITOR_NAME:
+> +        name_a =3D holder_a->u.monitor_name.monitor_name;
+> +        name_b =3D holder_b->u.monitor_name.monitor_name;
+> +        break;
+> +    default:
+> +       /*
+> +        * This should not happen. If it does, name_a/b remains
+> +        * NULL and g_strcmp0 will handle it safely.
+> +        */
+> +        name_a =3D NULL;
+> +        name_b =3D NULL;
+
+return -1 would be simpler and safer. g_strcmp0(NULL, NULL) returns 0,
+so callers will think they have found a match and proceed with their
+operation - it will likely result in undefined behavior since memory is
+probably corrupted if we got here. It's safer to fail the comparison so
+the caller does not proceed.
+
+--uK51Yeq1TJa2SLW3
+Content-Type: application/pgp-signature; name=signature.asc
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmo7/QUACgkQnKSrs4Gr
+c8h48Qf/ZyUpEoKSTiBlj66hvavvcIyhf2gXLAd4QNjlrG3nMaHQPuAJPrGonYY9
+mX/jW1tdpCDoLtrIZa8RyTg8utfglfD6fX8sRQrvKHzbG6mOac5Rvrj/72q2GAwv
+RaPJj/5wQhxudnCIRxMEyK7Vm8qwqclSZC9eUMaFj5vUYZz1G7WJGLuZnkjmwPcf
+8sRiu5SMRxMO47Q/0jfXgddxrX69OyOrnuDOEj2eDjy8WWMEWntQqJLddbljXYep
+LCYA78jLRKWa8fj9rCJQPTUbDrjAs3BZz1FikTTWlO+inwfroiE1knCLs3H1rTrN
+o7FZxNhTls9XlE+kuhWE8u+QuTzazA==
+=cqgf
+-----END PGP SIGNATURE-----
+
+--uK51Yeq1TJa2SLW3--
+
 
