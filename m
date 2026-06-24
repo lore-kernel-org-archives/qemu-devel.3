@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65683CDB479
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 15:57:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36F12CDB479
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 15:57:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcPyJ-0001Fo-TQ; Wed, 24 Jun 2026 11:57:03 -0400
+	id 1wcPyM-0001GM-8b; Wed, 24 Jun 2026 11:57:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ganeshredcobra@gmail.com>)
- id 1wcPHo-0004zN-UZ
- for qemu-devel@nongnu.org; Wed, 24 Jun 2026 11:13:09 -0400
-Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
+ id 1wcOsJ-0000Rs-Hr
+ for qemu-devel@nongnu.org; Wed, 24 Jun 2026 10:46:47 -0400
+Received: from mail-ej1-x62a.google.com ([2a00:1450:4864:20::62a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <ganeshredcobra@gmail.com>)
- id 1wcPHn-0002GY-IJ
- for qemu-devel@nongnu.org; Wed, 24 Jun 2026 11:13:08 -0400
-Received: by mail-wr1-x42f.google.com with SMTP id
- ffacd0b85a97d-4629051c9d1so787795f8f.2
- for <qemu-devel@nongnu.org>; Wed, 24 Jun 2026 08:13:07 -0700 (PDT)
+ id 1wcOsI-0006D4-4g
+ for qemu-devel@nongnu.org; Wed, 24 Jun 2026 10:46:47 -0400
+Received: by mail-ej1-x62a.google.com with SMTP id
+ a640c23a62f3a-bed19623d6eso150281366b.1
+ for <qemu-devel@nongnu.org>; Wed, 24 Jun 2026 07:46:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1782313986; x=1782918786; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1782312404; x=1782917204; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=QlfJoCXbjDGNlYb+upE3XSiaOkS1IdA89W46SKGJydE=;
- b=nsQBU/xxWgaChdgtlsv0a1Zsb4YBvpClRigOKdZVvgLI473h7CAE6fI71MgfdHRLA4
- f4Fy40do3BrJp1G7xUoi7ulnGrwP0PmNyhk4A8lpZ4Lmfk5M2DMpGvWD7wn1RNPrHNU7
- wpN7qH0m7H6OwcR+87EcDOW2rJ3F8fmsFqOHnWoSZECEzIuoiguaCD2xXG689UJtwFR+
- Rkzce/u0F3vgHm5PBsAWYn2cHVZ1eUHJ32VbWWDc3jhhSYAH5vfbO0HH1Fn6Jy8NbZ3W
- A/uyybx/qYpeKqzbGz5BjSMNiqPxNAF7yBHjNinPyrbMStCM0DgjjCkstXkJ5s60UvnD
- G/FQ==
+ bh=d26vkdadn3vAzOoQFZxQmkUGh5WiA2B8Lzok9c8Anpk=;
+ b=QKDjUtjLViAr+qEslojiWIC2VOtU6X60bP2ogkqxdHhkP22SXS7PhM+uBysTPxUt/a
+ 80p6v1rGetLgCsfTT22H/VlUixk+pq+/vwsorAuLQTSyHPKk8ANnuOOiHvaNSU3oFejw
+ 4yY/hZCKoSj4+EM3KL+P666YXgStKlwPsRsIb+Ptu8Vbjk6gTT5vHTjHUJcRb91oHXw2
+ 0yzPRYCjVykEkt682qpPHQ6YWbburoUfduPqxy+eRfuvSCY84aeQB4OR3r+t51riKTKt
+ pAD+lqd4/sl21XmknlX+y64h5nRDH/l7zEumXm7s3YAD8j4Gw6fPrN7TMGNHO4J9dCfN
+ Hq5Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782313986; x=1782918786;
+ d=1e100.net; s=20251104; t=1782312404; x=1782917204;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=QlfJoCXbjDGNlYb+upE3XSiaOkS1IdA89W46SKGJydE=;
- b=emlt0nS331ZmPxC1Z636HlsD+WS8Fwk2vSbtFwrl6+hWJnKyjAKNo/slpLk8LcK/xm
- ncAn5Hj3oa/zmk9iv61yUQrqeSVov+qeeeHAv8xujdOOUQLm9GZ7YFlmoy8i77Hn1Utr
- WhWqzXVbUh/tLGsxNKWA+CSx+pg1LB8TBdCI12rfZMd8EnO0bAyFXo+FS/H5zKna3Y52
- luZj5RlBYO4W+9aBd3TzfXsJAQQFIJxbUMTBuqdG8BGU/y7lYU9fdOYldYONLe6jyvND
- N4lpSETZZi0l6/YtTXkbOxFyX//9r3PDO0JZjhOjQUUclhV6Du3agGFRyneHKNB3Ot2S
- nR9g==
+ bh=d26vkdadn3vAzOoQFZxQmkUGh5WiA2B8Lzok9c8Anpk=;
+ b=rPeJl0Z/EW4E9HidNQpLZ8Xa25uS9+fpHoPvBssfP68CKN748oo9OB1KzrPz21DA8K
+ 8BALoG2Jw4BfbmzzeRyAwgYCLuEEnOJsjjJqNOeFsCky21BdftaubcsEx4HlT7GqNplP
+ UtfK94OxNFWzNAAiukVDN8BTC1HC5qX8/Wq6yPX0A9TGwGb2Y7odm12BnzS15YvBLTIk
+ Qljpiw7JE4I6q5RZ6HggI1FLcxPigkmadh3tM/SkpF4gVCxHcSnBy3BZlRlOtooj2RBy
+ G+IxOtmtyjDJ0eqnZ2/fwF81v6/VdL2UbIlkQIbRi+WM1aQSqs9siO7VXItVwB3X6cRs
+ ck0g==
 X-Forwarded-Encrypted: i=1;
- AHgh+Rq/G1eSJTk2skNsBSZfU/AFGChzjE0yvwDCLKLoOmJ3OYPKM5gelQHnCtEEIGiXTVz4cFddXybBbF18@nongnu.org
-X-Gm-Message-State: AOJu0Yw2BUvKe9AtCBX6j1qnchvJ4o96tmzazpKJy9reqdjG1ZEi1IpM
- yCLfL66k+khFvLC9zA+C/sGJbJEugEM4+tc5g6p4bHHLGjiwNu5AhKxD
-X-Gm-Gg: AfdE7cnQQL9gOjnpmi6GYL2i4EdP6cZ69wPby2u+emyvy9G1wWZxsZXo46f3d4cebus
- BqtNtKjib1O/5jV9wIVlsUNRBuf6X/a50UmE/yuKxV8CG4WpYRXPyI6jvTxsExGhXu1SdbtY6ux
- XYUtdbFjkdOzHRHxx31JSRt0oO0AMSkoTqwsNKB+WjUkOD9cLGcjcQTXPEgEpVD2P+L0B+U0s5F
- QsS+7fL1VSNvdMIZgjri+cmMyU+AO8lznCIDVoTHrng6eNW/5IRaKVcq5iebgXN0tjwrxNjwLcb
- kXfddC6e5spaY6ZVEWD2dCToCPJpnckXu0XsKz7LFNEM05LIIGrUg3pASg85vpC4nlOhkispwKW
- Z6T7PFyo/KpOC57UcdbtoziO6FST5VGxCllsKS8qN4JiVWqzpsEpfJSPKA9SbSPlGs/M4GrmxLT
- n6REUV9J6inxliV7CsoNN1pHQPNrg=
-X-Received: by 2002:a05:6000:41f8:b0:460:e4d:bd46 with SMTP id
- ffacd0b85a97d-46c0bd7c9d6mr5653052f8f.21.1782313985667; 
- Wed, 24 Jun 2026 08:13:05 -0700 (PDT)
+ AFNElJ+gUD8WB7Pc9F1+NbR7DjsE2YJ78mkX5Qo2Rnvxi9cXZjFkus+3L7QdOCckAZAmzpqnSQf07Rn+K+mq@nongnu.org
+X-Gm-Message-State: AOJu0YygBO/ROyA4vQSENFfV/rhdwTBJ6hd+5D36ej7DZxP6csyMqJ+F
+ nbQGhzphuptVmgcNUiVkKNiupqyvZ8WL2uKyd524b5/HSQkDhBZ/Y1z8
+X-Gm-Gg: AfdE7ckodg9y4tvs8GWbv0g0F5Jt3GXrq5CniAjZNlpFOYjboXbTLHfZVioOi24SqKR
+ lNZyyNRZj6JsRA9T03Q783jpQscVYmcdKTs+KfyXmBQtK3RsshxjNesPkUy/8tbHEqqGoy6ZHCg
+ aMrj7lWrOgDHmYeE5ttfNiNW3wPgO+oEhqrG9GplU7puWE98qQ+yNpT568yVZfyZOzN2tuW5mKu
+ JpB5V+ko8ho47hC7htXrb0ybmtVCVem+Y8Z2mfZqPhYR0QThMGGbSxj2caOhO5m2H5pL274K/Q0
+ 0cvWEWj4QiePQdfJTK88w4XLlODrFSkjZvApxnliFNhMaBrFpnI0VvDBctWOh5vgHdUSH20YpcN
+ +1e2wZNPLgMxZOo8T5ajYGaiiDpnhLqzDFnY9FzG30yMbi9WP3hfDPBkXY/btV5CfVICWeSK+f0
+ yLCEdEsQLl46pOqaGgU1ZU6mjv8b0=
+X-Received: by 2002:a17:906:4785:b0:c07:a892:8df2 with SMTP id
+ a640c23a62f3a-c107cf16332mr480828866b.7.1782312403566; 
+ Wed, 24 Jun 2026 07:46:43 -0700 (PDT)
 Received: from localhost.localdomain ([86.2.40.231])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-46c2279b7d7sm7283417f8f.31.2026.06.24.08.13.05
+ ffacd0b85a97d-46c1e840eefsm8177109f8f.1.2026.06.24.07.46.42
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 24 Jun 2026 08:13:05 -0700 (PDT)
+ Wed, 24 Jun 2026 07:46:43 -0700 (PDT)
 From: Ganesh Harshan <ganeshredcobra@gmail.com>
 To: philmd@mailo.com
 Cc: zhao1.liu@intel.com, qemu-devel@nongnu.org,
  Ganesh Harshan <ganeshredcobra@gmail.com>
-Subject: [PATCH] hw/core: fix else placement in sysbus.c
-Date: Wed, 24 Jun 2026 11:13:02 -0400
-Message-ID: <20260624151302.31280-1-ganeshredcobra@gmail.com>
+Subject: [PATCH] hw/core: fix block comment style in cpu-common.c
+Date: Wed, 24 Jun 2026 10:46:38 -0400
+Message-ID: <20260624144638.30990-1-ganeshredcobra@gmail.com>
 X-Mailer: git-send-email 2.47.3
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
- envelope-from=ganeshredcobra@gmail.com; helo=mail-wr1-x42f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62a;
+ envelope-from=ganeshredcobra@gmail.com; helo=mail-ej1-x62a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -85,7 +85,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Wed, 24 Jun 2026 11:57:03 -0400
+X-Mailman-Approved-At: Wed, 24 Jun 2026 11:57:02 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -100,28 +100,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Move else to the same line as the closing brace to comply
-with coding style guidelines.
+Move the opening block comment delimiter to a separate line
+to comply with QEMU coding style guidelines
 
 Signed-off-by: Ganesh Harshan <ganeshredcobra@gmail.com>
 ---
- hw/core/sysbus.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ hw/core/cpu-common.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/hw/core/sysbus.c b/hw/core/sysbus.c
-index 3e1160ee92..c07afaa802 100644
---- a/hw/core/sysbus.c
-+++ b/hw/core/sysbus.c
-@@ -132,8 +132,7 @@ static void sysbus_mmio_map_common(SysBusDevice *dev, int n, hwaddr addr,
-                                             addr,
-                                             dev->mmio[n].memory,
-                                             priority);
--    }
--    else {
-+    } else {
-         memory_region_add_subregion(get_system_memory(),
-                                     addr,
-                                     dev->mmio[n].memory);
+diff --git a/hw/core/cpu-common.c b/hw/core/cpu-common.c
+index e314f916f8..6c9127cc30 100644
+--- a/hw/core/cpu-common.c
++++ b/hw/core/cpu-common.c
+@@ -249,7 +249,8 @@ static void cpu_common_realizefn(DeviceState *dev, Error **errp)
+     CPUState *cpu = CPU(dev);
+     Object *machine = qdev_get_machine();
+ 
+-    /* qdev_get_machine() can return something that's not TYPE_MACHINE
++    /*
++     * qdev_get_machine() can return something that's not TYPE_MACHINE
+      * if this is one of the user-only emulators; in that case there's
+      * no need to check the ignore_memory_transaction_failures board flag.
+      */
 -- 
 2.47.3
 
