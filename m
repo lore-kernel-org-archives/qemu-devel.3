@@ -4,91 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5046FCDE000
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 22:49:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C109CDB479
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 22:49:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcWOY-0001IN-Ig; Wed, 24 Jun 2026 18:48:34 -0400
+	id 1wcWOh-0001Jr-5P; Wed, 24 Jun 2026 18:48:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1wcWOV-0001Hv-8f
- for qemu-devel@nongnu.org; Wed, 24 Jun 2026 18:48:31 -0400
-Received: from mail-ej1-x62d.google.com ([2a00:1450:4864:20::62d])
+ id 1wcWOf-0001JS-Jh
+ for qemu-devel@nongnu.org; Wed, 24 Jun 2026 18:48:41 -0400
+Received: from mail-ej1-x633.google.com ([2a00:1450:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1wcWOT-0006xq-Hh
- for qemu-devel@nongnu.org; Wed, 24 Jun 2026 18:48:31 -0400
-Received: by mail-ej1-x62d.google.com with SMTP id
- a640c23a62f3a-c074ac8adaaso199081966b.3
- for <qemu-devel@nongnu.org>; Wed, 24 Jun 2026 15:48:28 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1782341307; cv=none;
+ id 1wcWOd-0006yp-AV
+ for qemu-devel@nongnu.org; Wed, 24 Jun 2026 18:48:41 -0400
+Received: by mail-ej1-x633.google.com with SMTP id
+ a640c23a62f3a-bec3ffb95dbso253111766b.0
+ for <qemu-devel@nongnu.org>; Wed, 24 Jun 2026 15:48:38 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1782341318; cv=none;
  d=google.com; s=arc-20240605;
- b=kmq9eqqjGMFJ1ZUYnqSDbPDJb8kzKFPrtDwKF/cXpvLJN9CfEFfs9PyahWhsEBown9
- fnTL3D0kWR9LJQLz3BcfAWbNRqOPKdRn+eDT4p9VRCAWSNjyB1wR7tNnfXorffop9yVq
- zPTKewzV4/ypm4FAJAXrIV+xjmYvn3oyFytvzQuaIU4hhEkt6qnKaZjC2AEkXMnGrHMp
- DlR4gu9UDqBHLWhFrc9F8Pu+vcSGlNLC+ZXEb3C1pj0fWa4Y92zzB8mGL3qZC5lUqHra
- 8hiSZb3y/mMGEEDZBwtDNv1BZmZU2x0IIbXx2ZXzD+eAbKNmj5hsfI8Uqc39yGJMIUIg
- dLTA==
+ b=FflDqywv/TIzOy71hZVFVOYbChd5xOCTNCqJTkECyQ834CQaeaXlfhcExV67rXY/jn
+ 5hSgsmF/V6CYw0e2aG3xw18cCiIlUOWprjh3efo5jgy4jDseHB3Y09zoxZ+k3KGIvz0Z
+ NRDffPQXsrjDAmAbVT17tHaKXBa2bJmH0FoqMIQX5lyzqdnTZLXWc5bnU6AcW5Znpsps
+ mcMMrWwSUmMvj8QUYNZHssaZXe+LZM+Mz6BZPLyaNv0ICa831bPc0FLbnrk4n5FZ2HkI
+ yBQisrIavZ3xk0HEbd7La/XwvJ9wKHqzz8g/0nkJdlyRtUTixSJKrqMd/7waGtnDunnj
+ VL6g==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=cKcuGnCnmQHvmskSwk8bfzkCEdThBfeWpGr00nk3ark=;
+ bh=6krzKx3HwtJ+MNvkW0uVVfBtwDpKFmXsm+IEYGdbGcA=;
  fh=dEcCJoizW0PIXIsgsrNAtfPedPj0hmKZvH/dXrAI1HE=;
- b=d7hsDwEqKLjwvSw20dLl72Cq4tj0Wjf6I3AKnmU+gcrpxVqDoY84csZfp98kp4toNc
- 5JinKZO70BX0URKNZq9QYvsJzxO9PHhQDW82kWRnl9BJ/xjUhEbliTKlGFpeT9MitXY0
- S/tS4CGAqgORnndEQGx0u95mWWHZorFjoTpR/MNSpm1zzrZRWjH4+jyj1lub7tZtdVuN
- cAxuCP+x3L7XdlqnrwVSGlX+/BuCgctX3GFBOIPBV+SzjcvCZWO9GoedrzAYCNepw4uO
- oGZxwy3onzGdiqCjBq4ccTxwvv3KB6EQKLdsA/vLVvWGUais59nEectnz4ElUigGEAb9
- CfLw==; darn=nongnu.org
+ b=axqyquNMjkqtz3svOOABJv+VRVUay/eOtyGsmHk3Fu7yQXLtZtZbIuIY8UFFKcTm31
+ VlSkjxNgdiU4TN+PQqgGjHVGJbZS4VFJhDfB6PkS5JXEF4/zWm15SvcD3wxB7psQ/tmd
+ gHri/l4lbTh8w9RMp8D6LXfUjeQGiysFtdLo70JaBc1aQx7ZDpc8oRxiIL7Ia1gqKJLG
+ GKsPiZibovqw40F48LxwuaoGR8zifRZirIt7llGMBJJTBW08wDIi9u3L2hBnU1sbdjem
+ FHoQ6drEMhPNJP4G4EE8DhG6B4hZt2A3eyC2roJgKmQtGHLqbUMBkvCShfdSHKiSJO+k
+ lKwg==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1782341307; x=1782946107; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1782341318; x=1782946118; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=cKcuGnCnmQHvmskSwk8bfzkCEdThBfeWpGr00nk3ark=;
- b=T0QVn9btsyX6OLZgLFTtsZHvBZcsysFW53zFNG3uFeZUj6CZwQDT0JXrWdT7NKotCk
- AwK77bfqaaVJxBNupQ0yv9YVfptsH1h0SuDb+aQJFBBh23dIqVSYH1zz3ygXKfm8XaJW
- wuQG24txjUpU9adlx9DKYcY9FIYXYJCM2+aDHZ8xDY/aqjcu8EVE3FcuPyV0qEQQ9Fx9
- jif/rJKp2A06zMaWnsNm/yc7VxqBf6pGbby0mqd7XCPIluZM/96zdD/uuPOf/YKF9Vxl
- 9ZV7c1oxw0qkTJnOwhxhaDVSKr1Ip1siH9gSewWSmPxgx9z08qg9XpVbhZWMj1Iz3pAo
- FMWA==
+ bh=6krzKx3HwtJ+MNvkW0uVVfBtwDpKFmXsm+IEYGdbGcA=;
+ b=pExjyTXLqS387jJ2mxaNx1cWmuPGAQm1ZqwI8NE8mpz8jnuE3Xa3Q8RF6lBO1XDsh3
+ 8sqP4a5eHPo1C5DTDaguVFxK1spV2cF5ngEDyb/Eflpa8A/aavpJJQlnQCzcj584k9YD
+ TEIYKmvD1cnBFClTy4tq9BxDZIf9pmhXCAh7jEmqoE4VJFFFeaJlGwIpheLnNvcVn8FH
+ KCT91YKueVQ/efwpM2Ba3tVh69pGBKJuADWHicDg/PI55tNRmojfalq9bDaJuUx3ttZg
+ HCsQkx4ttg1YTkaJdR4nMVB89kY55nw73e6DvsNQDGAQSrSkrT9bGAVu9xN1EuMcMB+6
+ 3Q+Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782341307; x=1782946107;
+ d=1e100.net; s=20251104; t=1782341318; x=1782946118;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=cKcuGnCnmQHvmskSwk8bfzkCEdThBfeWpGr00nk3ark=;
- b=Ym8KLyDI+T+t5x4u9N4o4Pu6W0hvqhLQWA/zkShg8LHeFTK7Nt+/O7NuqyIWZ1brf2
- PomyFESz6bepOIN9/UQxxIxqvOWhnZ3mTsdyfidwEszHUNTqSA9ECUxjG4eJ566L9RLe
- FM7o2FDgldQ/Wi/avIuizkjHO1gOES1u2iAOodtbwgOYyyl7Hqh0UHOez+sYTsbr+EQq
- yTZVMZUw7k3SYnYAkP6rqlu18QTYLVjtLXQ0+CKx88Zc3N8ekPaXLd11HdpY2PqQv4r4
- JcjuOpE7baj4VIERmfghrjzzMn3OwVbeY9c0fqIQhC8lSPITkYtqW9IvYUIsK3SMg5Ls
- fvqA==
-X-Gm-Message-State: AOJu0Yzh2ArMrIZtzM2lg+O053uiIDwc38wrxcNRqQ2tU3amlVpi+y8q
- 5zp6qxyzTdej5+i8g7kKtT955P9pgtT//4dx9SKJg6d4S+/U6d0gN6liBIS21fDrCXGWm949Awa
- QQOs6KjJLuzjMWnC8iDSPL4ylpYjFAN8=
-X-Gm-Gg: AfdE7cnY/zwpXlD+nFVrScF/BYMe6iiStiPHSq0S/Tqay3tl1kcwFDwqIKLoLU0z5XV
- nrbXQMkrmMjDQI2CHVjjv/djPfw7K5s+kwQahVih9KHeGnv6zfew04p/JuCQ2RQGoSQwrbHjGjN
- Uoe0ESSGODHgZfA6kHf703LY/pt6DYK/8OpmSAOVDwsWSyOfF5bNnckCOMMjoT9tpSuZbX418Kq
- OYZhrqWnazjdD8YJKKYHUlml4QXDagQ9B4ALZxZp1OxsBJ/mKbbN3cVrK8xmtf0xNt6W688
-X-Received: by 2002:a17:907:e105:b0:c11:efec:6ca9 with SMTP id
- a640c23a62f3a-c11efecd9admr163104666b.8.1782341306670; Wed, 24 Jun 2026
- 15:48:26 -0700 (PDT)
+ bh=6krzKx3HwtJ+MNvkW0uVVfBtwDpKFmXsm+IEYGdbGcA=;
+ b=nCCCkHtMi5a/EJQ8WTUIKQoXbOvbPqipAYDS65RSLOe3ebmGt+W2V4EQuO1B+Z/tyM
+ OLC0UEKxwelGds+o4DKfeJueg4w8cqlhG2YtIQmckuS+gu9bzsb/IKjHbmMl6imq1XBC
+ 5K+nyFLuvokO5XL1wRpiZwx+QIdequiIAnqcrvbx5hwgVNh7X1JwlAkbZQRkkwAhxxVm
+ EmncqqBzEmskO+Z1OB1e3/0wB/K09IKpB8dgLv3slslxEJ5fLKVzNNG2qCblwQ7faeHM
+ 1CXeLb9CXhy+njJ6dEgbWr0vf/bp8o6z6DmJ5tHiqjPoj1ZuAgVo7GYMEDmWrgIUC/yP
+ 3WIA==
+X-Gm-Message-State: AOJu0YzG+EEInTl2dUTNB15xfFd8EXsLQ8FJ4sGVNUYn5u/Dcp3rXoRw
+ tMES7FbX/RZmSlUHffQsEnK8PGOfgshEhek6Dz9Q5D5DW4mG2jzLi/JZKmwUuypkLkUQfwP+dh+
+ Jl9fqyPilNAoqKoqaRoRHuRuRDsI9ugc=
+X-Gm-Gg: AfdE7cm9BIo6R4QXBU1pVeJm1H5mErd3CRKfiigMUWPy5COiALs0KUF0m5pUfT8WHla
+ d0hBkXSmfQN7iJ38cneBrCzUwzU1V6DKidlERCjhKXJgEpIVZWL+LAKvxXE8KUVap71INKHXsG9
+ GnkIcyyxMLchWXS6J0T/8f39dR4gcF5KN7xBTe50ulZq6PqLCpDtRqL8mSO0LhlkfoqI5VAK6Qn
+ 8snXMRKdHThA0SYppikUwQHE2GpB700X9Zqo3460mtGXnhlnDp/RwuY28sMEJ896x+OT0b8
+X-Received: by 2002:a17:907:e112:b0:c11:f52a:4e70 with SMTP id
+ a640c23a62f3a-c11f52a5d58mr185945166b.44.1782341317676; Wed, 24 Jun 2026
+ 15:48:37 -0700 (PDT)
 MIME-Version: 1.0
 References: <20260624070851.13342-1-zhangckid@gmail.com>
- <20260624070851.13342-3-zhangckid@gmail.com>
- <20260624155133.GA109308@fedora>
-In-Reply-To: <20260624155133.GA109308@fedora>
+ <20260624070851.13342-5-zhangckid@gmail.com>
+ <20260624171941.GC109308@fedora>
+In-Reply-To: <20260624171941.GC109308@fedora>
 From: Zhang Chen <zhangckid@gmail.com>
-Date: Thu, 25 Jun 2026 06:47:49 +0800
-X-Gm-Features: AVVi8CeNTouTTb_HVEsupgsjDTwr1vWBB5xW2XQPlBFaW0p1t2BE4qrJrh4O9EA
-Message-ID: <CAK3tnv+apnBGoyaXqt-CO2rtkC6L_WaQRmYmw9wQbQ4pci=b3Q@mail.gmail.com>
-Subject: Re: [PATCH V9 02/17] iothread: introduce iothread_ref/unref to track
- attached devices
+Date: Thu, 25 Jun 2026 06:47:59 +0800
+X-Gm-Features: AVVi8CfUqloslzMp8ELjFcfiJNcUKuWgKUTIItUqAOXaG_Vgn4Tn5NJdf2oggZo
+Message-ID: <CAK3tnvK+vOFoGXtFUyuRXD_xZH7ob2VmUhJbBE=zY1Em=XTH7Q@mail.gmail.com>
+Subject: Re: [PATCH V9 04/17] iothread: introduce
+ iothread_unsafe_get_aio_context()
 To: Stefan Hajnoczi <stefanha@redhat.com>
 Cc: qemu-devel <qemu-devel@nongnu.org>,
  "Dr . David Alan Gilbert" <dave@treblig.org>, 
@@ -98,8 +98,8 @@ Cc: qemu-devel <qemu-devel@nongnu.org>,
  Jason Wang <jasowang@redhat.com>, Fam Zheng <fam@euphon.net>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::62d;
- envelope-from=zhangckid@gmail.com; helo=mail-ej1-x62d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::633;
+ envelope-from=zhangckid@gmail.com; helo=mail-ej1-x633.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -122,106 +122,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jun 24, 2026 at 11:51=E2=80=AFPM Stefan Hajnoczi <stefanha@redhat.c=
-om> wrote:
+On Thu, Jun 25, 2026 at 2:33=E2=80=AFAM Stefan Hajnoczi <stefanha@redhat.co=
+m> wrote:
 >
-> On Wed, Jun 24, 2026 at 03:08:36PM +0800, Zhang Chen wrote:
-> > Currently, IOThreads do not maintain a record of which devices are
-> > associated with them. This makes it difficult to monitor the
-> > workload distribution of IOThreads, especially in complex
-> > hotplug scenarios involving multiple virtio-blk or virtio-scsi devices.
-> >
-> > This patch introduces a reference counting and tracking mechanism
-> > within the IOThread object:
-> >
-> > - iothread_ref(): Prepends the device's IOThreadHolder to a list.
-> > - iothread_unref(): Searches for the IOThreadHolder using a custom
-> >   string comparison (g_strcmp0), releases the associated memory
-> >   upon a successful match.
-> > - holders: A GList storing the IOThreadHolder of attached devices
-> >   for runtime introspection.
-> >
-> > A later commit will add QMP commands to let management applications
-> > query the attachment status of IOThreads.
-> >
-> > Signed-off-by: Zhang Chen <zhangckid@gmail.com>
-> > ---
-> >  include/system/iothread.h |  5 +++
-> >  iothread.c                | 94 +++++++++++++++++++++++++++++++++++++++
-> >  qapi/misc.json            | 61 +++++++++++++++++++++++++
-> >  3 files changed, 160 insertions(+)
->
-> Minor comments below. This patch looks good overall:
->
-> Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
-
-Thanks~
-
->
+> On Wed, Jun 24, 2026 at 03:08:38PM +0800, Zhang Chen wrote:
 > > diff --git a/include/system/iothread.h b/include/system/iothread.h
-> > index a1ef7696cb..b9207ad829 100644
+> > index b483bbfab3..064c05e78d 100644
 > > --- a/include/system/iothread.h
 > > +++ b/include/system/iothread.h
-> > @@ -50,6 +50,11 @@ struct IOThread {
-> >      bool stopping;              /* has iothread_stop() been called? */
-> >      bool running;               /* should iothread_run() continue? */
-> >      int thread_id;
-> > +    /*
-> > +     * The list elements are of type IOThreadHolder, which can
-> > +     * represent either a QOM path or a block node name.
+> > @@ -71,6 +71,12 @@ DECLARE_INSTANCE_CHECKER(IOThread, IOTHREAD,
+> >  char *iothread_get_id(IOThread *iothread);
+> >  IOThread *iothread_by_id(const char *id);
+> >  AioContext *iothread_get_aio_context(IOThread *iothread);
+> > +/*
+> > + * The iothread_unsafe_get_aio_context() is a low-level unsafe way of =
+getting
+> > + * the AioContext, recommend migrating to the new API with IOThreadHol=
+der
+> > + * as much as possible.
 >
-> This comment duplicates the IOThreadHolder types and will become
-> outdated easily. It might already be outdated (there are 3 types, not
-> just the 2 mentioned in the comment). I suggest replacing it with
-> something like:
+> This should describe the safety concerns and when it is okay to use this
+> API. Something like:
 >
->   /* List of iothread_ref() holders (elements are of type IOThreadHolder)=
- */
->
+>   Normally the IOThread's AioContext is fetched using
+>   iothread_ref_and_get_aio_context(), but there are legacy callers
+>   without a clear ref/unref lifecycle. They cannot unref (e.g. because
+>   they do not have an IOThread pointer), so provide an unsafe way to
+>   fetch the AioContext without holding a reference count. This unsafe
+>   API serves legacy callers - do not use it in new code.
 
-OK, Sorry, I forgot to update the comments with the patch version updates.
-
-> > +static int iothread_holder_compare(gconstpointer a, gconstpointer b)
-> > +{
-> > +    const IOThreadHolder *holder_a =3D a;
-> > +    const IOThreadHolder *holder_b =3D b;
-> > +    const char *name_a, *name_b;
-> > +
-> > +    if (holder_a->type !=3D holder_b->type) {
-> > +        return -1;
-> > +    }
-> > +
-> > +    switch (holder_a->type) {
-> > +    case IO_THREAD_HOLDER_KIND_QOM_OBJECT:
-> > +        name_a =3D holder_a->u.qom_object.qom_path;
-> > +        name_b =3D holder_b->u.qom_object.qom_path;
-> > +        break;
-> > +    case IO_THREAD_HOLDER_KIND_BLOCK_NODE:
-> > +        name_a =3D holder_a->u.block_node.node_name;
-> > +        name_b =3D holder_b->u.block_node.node_name;
-> > +        break;
-> > +    case IO_THREAD_HOLDER_KIND_MONITOR_NAME:
-> > +        name_a =3D holder_a->u.monitor_name.monitor_name;
-> > +        name_b =3D holder_b->u.monitor_name.monitor_name;
-> > +        break;
-> > +    default:
-> > +       /*
-> > +        * This should not happen. If it does, name_a/b remains
-> > +        * NULL and g_strcmp0 will handle it safely.
-> > +        */
-> > +        name_a =3D NULL;
-> > +        name_b =3D NULL;
->
-> return -1 would be simpler and safer. g_strcmp0(NULL, NULL) returns 0,
-> so callers will think they have found a match and proceed with their
-> operation - it will likely result in undefined behavior since memory is
-> probably corrupted if we got here. It's safer to fail the comparison so
-> the caller does not proceed.
-
-OK.
+Looks better~ will change it in next version.
 
 Thanks
 
-
 Chen
+
+>
+> > + */
+> > +AioContext *iothread_unsafe_get_aio_context(IOThread *iothread);
+> >  AioContext *iothread_ref_and_get_aio_context(IOThread *iothread,
+> >                                               const IOThreadHolder *hol=
+der);
+> >  void iothread_put_aio_context(IOThread *iothread, const IOThreadHolder=
+ *holder);
 
