@@ -4,44 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CFAB6CDB479
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 05:15:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5415CDB47F
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 05:15:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcFsy-0006I2-Rp; Wed, 24 Jun 2026 01:10:53 -0400
+	id 1wcFrv-0004wD-5p; Wed, 24 Jun 2026 01:09:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wcFsj-0005Uo-Ln; Wed, 24 Jun 2026 01:10:42 -0400
+ id 1wcFrG-0003lJ-Ql; Wed, 24 Jun 2026 01:09:11 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wcFsh-0006FB-AG; Wed, 24 Jun 2026 01:10:37 -0400
+ id 1wcFrB-0005vh-M9; Wed, 24 Jun 2026 01:09:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1782277633; bh=EZxTBcW+Nv+J+qL6TFpeLuirw8GBD5VwhTyxmqUOqmc=;
+ t=1782277623; bh=7BqlqLaaist4BkgHD8Dt8zxx7+xT78UnpZkTDT0CL4Q=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=bwyKWsepu6vUhGn+wqlaiRAjkyeOKx1tXvLAOUJEUL50mBFUzEHm57Ful3LtmYr2V
- RHuljhBKBy6bIS43AyjyIOFAGqPzaTcbfbztjfEe8/IlDdvSojhYMeYMFZmDGaG9zM
- UPLfbZVYqA0yLfnZHcSvFQVx0DkrMkMSBWFmWAHtJaLbnjbcks3VRJy44BQmli4Llr
- ul4J8CWH8RVzm2C4YPI3e5vFgXCA2lw3Np47OZIL1i9EkzB93NKg5nMTJCZpqXKNI8
- NEsaYd+DyPRe3NLs9Z559fdn6PPBPicxRWpqqAbcr5Tqu6VWqRot7MoiUEHTQmcU6V
- 0LvE1E2Zvq9dg==
+ b=K4r8BqAcv/Yyi/Z9zq/4+ddrmGKfEV3QjAO9U1LnfPWhU+UKCTkv976q2d5pq9GRO
+ x2vZwK/QE5HOBMFBRCM9+BZhPGiDE59sSQjZ7OxdANg8dz+TPZGKZ0DSyAHn7ujLzt
+ z8s9vPM0DUx3FWTba2n5axVW/XPnMvcnf7YKBhRn+ub88+ByPOEeX+ZCqOOkTObgc/
+ t7rjdMELtOzdf/SnxhaF5cDq/BDxqVazvorsROmhhQf5ZbYXDAL+1wwVcjh1O1GmEi
+ mEQuy3oZ36f8l02oOeHP6Mj+F2wrK+EWNzrC2rvYadZCs4Iq7eXAhbHF9XpT5dKmwt
+ 7zJUB4ZT5pscw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 5ED3A1BA67C;
- Wed, 24 Jun 2026 08:07:13 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 5DC201BA66F;
+ Wed, 24 Jun 2026 08:07:03 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 479C93DDB19;
- Wed, 24 Jun 2026 08:07:18 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 48E393DDB0C;
+ Wed, 24 Jun 2026 08:07:08 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Aditya Gupta <adityag@linux.ibm.com>,
- Zexiang Zhang <chan9yan9@gmail.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+Cc: qemu-stable@nongnu.org,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.4 94/95] hw/pci: Replace assert with bounds check and
- return
-Date: Wed, 24 Jun 2026 08:05:29 +0300
-Message-ID: <20260624050541.395079-33-mjt@tls.msk.ru>
+Subject: [Stable-10.2.4 81/95] disas/riscv.c: fix inst_length()
+Date: Wed, 24 Jun 2026 08:05:16 +0300
+Message-ID: <20260624050541.395079-20-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.2.4-20260624080454@cover.tls.msk.ru>
 References: <qemu-stable-10.2.4-20260624080454@cover.tls.msk.ru>
@@ -70,58 +70,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Aditya Gupta <adityag@linux.ibm.com>
+From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 
-As reported in https://gitlab.com/qemu-project/qemu/-/work_items/3334,
-callers of 'pci_host_config_{read,write}_common' can pass length as 8,
-causing an assert failure
+inst_length() can return 0 if 'inst' happens to not match any known
+encoding (like [1]).  Returning 0 is not desirable, even for unknown
+encodings, given that it will cause a loop in target_disas() later on.
 
-The original issue with pnv_phb3 triggering the assert was fixed in a
-previous commit
+The most recent version of the RISC-V unpriv spec ditched the
+sophisticated instruction-length encoding.  We're now supporting only
+16-bit and 32-bit length instructions, where:
 
-Instead of asserting on invalid length, check if the length is valid
-(<=4), otherwise return (with the failure error code in read)
+"All the 32-bit instructions in the base ISA have their lowest two bits
+set to 11.  The optional compressed 16-bit instruction-set extensions
+have their lowest two bits equal to 00, 01, or 10."
 
-Reported-by: Zexiang Zhang <chan9yan9@gmail.com>
-Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-Id: <20260326190438.734239-3-adityag@linux.ibm.com>
-(cherry picked from commit c7209c56718107fefd5deae140a450954d31ff2b)
+So the code is now simpler, never returning 0, and in fact it's the same
+thing we're already doing in insn_len() from target/riscv/internals.h.
+Due to include shenarigans we can't use that function in disas/riscv.c,
+but I believe we can cut ourselves some slack this time and not lose
+sleep over a 1 line of duplicated logic.  We're documenting it though!
+
+[1] https://gitlab.com/qemu-project/qemu/-/work_items/3479
+
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3479
+Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Message-ID: <20260527200355.2068879-2-daniel.barboza@oss.qualcomm.com>
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+(cherry picked from commit 758dce9c98af4f3ef26eada48a484a7d60258636)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/pci/pci_host.c b/hw/pci/pci_host.c
-index 7179d99178..9a0f80da53 100644
---- a/hw/pci/pci_host.c
-+++ b/hw/pci/pci_host.c
-@@ -81,7 +81,12 @@ void pci_host_config_write_common(PCIDevice *pci_dev, uint32_t addr,
-         return;
-     }
+diff --git a/disas/riscv.c b/disas/riscv.c
+index 980da7f7e1..2d8add3212 100644
+--- a/disas/riscv.c
++++ b/disas/riscv.c
+@@ -5083,26 +5083,10 @@ static bool check_constraints(rv_decode *dec, const rvc_constraint *c)
+     return true;
+ }
  
--    assert(len <= 4);
-+    if (len > 4) {
-+        PCI_DPRINTF("%s: invalid length access: addr " HWADDR_FMT_plx " \
-+            len %d val %"PRIx32"\n", __func__, addr, len, val);
-+        return;
-+    }
-+
-     /* non-zero functions are only exposed when function 0 is present,
-      * allowing direct removal of unexposed functions.
-      */
-@@ -106,7 +111,12 @@ uint32_t pci_host_config_read_common(PCIDevice *pci_dev, uint32_t addr,
-         return ~0x0;
-     }
+-/* instruction length */
+-
++/* Same as insn_len() from target/riscv/internals.h */
+ static size_t inst_length(rv_inst inst)
+ {
+-    /* NOTE: supports maximum instruction size of 64-bits */
+-
+-    /*
+-     * instruction length coding
+-     *
+-     *      aa - 16 bit aa != 11
+-     *   bbb11 - 32 bit bbb != 111
+-     *  011111 - 48 bit
+-     * 0111111 - 64 bit
+-     */
+-
+-    return (inst &      0b11) != 0b11      ? 2
+-         : (inst &   0b11100) != 0b11100   ? 4
+-         : (inst &  0b111111) == 0b011111  ? 6
+-         : (inst & 0b1111111) == 0b0111111 ? 8
+-         : 0;
++    return (inst & 3) == 3 ? 4 : 2;
+ }
  
--    assert(len <= 4);
-+    if (len > 4) {
-+        PCI_DPRINTF("%s: invalid length access: addr " HWADDR_FMT_plx " \
-+            len %d val %"PRIx32"\n", __func__, addr, len, val);
-+        return ~0x0;
-+    }
-+
-     /* non-zero functions are only exposed when function 0 is present,
-      * allowing direct removal of unexposed functions.
-      */
+ /* format instruction */
 -- 
 2.47.3
 
