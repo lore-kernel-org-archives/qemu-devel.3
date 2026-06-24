@@ -4,92 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4AB6CDE000
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7579CDE002
 	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 05:54:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcGZA-00071G-Fa; Wed, 24 Jun 2026 01:54:28 -0400
+	id 1wcGZG-00072v-Bk; Wed, 24 Jun 2026 01:54:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1wcGZ4-00070X-Kv
- for qemu-devel@nongnu.org; Wed, 24 Jun 2026 01:54:23 -0400
+ id 1wcGZD-00071X-HQ
+ for qemu-devel@nongnu.org; Wed, 24 Jun 2026 01:54:32 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1wcGZ3-00063f-1Y
- for qemu-devel@nongnu.org; Wed, 24 Jun 2026 01:54:22 -0400
+ id 1wcGZA-00064n-8s
+ for qemu-devel@nongnu.org; Wed, 24 Jun 2026 01:54:30 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1782280460;
+ s=mimecast20190719; t=1782280466;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=IlIB0gyVXIdZ9I8a3u7xyO2vP3rsljTTT0Q5gAGep+E=;
- b=J3Zq754/W1u8mJbdwLcEmJUxTFblFmZe+bN0EBi7DLC5xsPSyz2JRLHHyAwH04WZpLbB7N
- uL0IWdyS7uJ+BsUTcGvdD533MPRdeGK9EUSmFcEYYaNq5f6Ha+TqKz6Fksnugmc+U4Qr6V
- N+GID/no7IVl+ceKASekUBfV+LFMjJ8=
+ bh=ssW03Dn5AeZWkODFXTT7NI4oiMDlz/9jXiRM25HGFig=;
+ b=OeOVE6Gg8jEjY5Mir0Aieyneg6QIXulvwjE8/ozizU/AdmjDvN+1wSqIsYPedQH5rtbeUZ
+ I/AFAuZuO0+0M5Bc/0Q3+y6KQSN0y36nDhub4u/skUxNz69kfwltGRYwKbub6dDvFJDTA+
+ k/rPG5w4T9yqGFjhO82HutzeXcSUDfE=
 Received: from mail-dy1-f198.google.com (mail-dy1-f198.google.com
  [74.125.82.198]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-618-6SeZwH7cNYq-HF44q88H4g-1; Wed, 24 Jun 2026 01:54:18 -0400
-X-MC-Unique: 6SeZwH7cNYq-HF44q88H4g-1
-X-Mimecast-MFC-AGG-ID: 6SeZwH7cNYq-HF44q88H4g_1782280458
+ us-mta-352-uNPHT6eQNBCRhK3Y1BbKmw-1; Wed, 24 Jun 2026 01:54:24 -0400
+X-MC-Unique: uNPHT6eQNBCRhK3Y1BbKmw-1
+X-Mimecast-MFC-AGG-ID: uNPHT6eQNBCRhK3Y1BbKmw_1782280464
 Received: by mail-dy1-f198.google.com with SMTP id
- 5a478bee46e88-30c13bb8ca9so832812eec.0
- for <qemu-devel@nongnu.org>; Tue, 23 Jun 2026 22:54:18 -0700 (PDT)
+ 5a478bee46e88-30c03c1dda3so2116695eec.1
+ for <qemu-devel@nongnu.org>; Tue, 23 Jun 2026 22:54:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1782280458; x=1782885258; darn=nongnu.org;
+ d=redhat.com; s=google; t=1782280464; x=1782885264; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=IlIB0gyVXIdZ9I8a3u7xyO2vP3rsljTTT0Q5gAGep+E=;
- b=UAgKix9wcV+2ckQZmbKT87iCXTauykTp6n/6BERh7+SFxsSMTQbI7BQN2YlnbKwTob
- ChQQfvRfnOmjQ2JvWXnJQz40XHK/rmzoMFjW7xoHt9XJzCykjpzcW79bkwLVtLt11+ay
- Q1v+KSpCHAKxBMW2dBpXauTlbWQ1ELdm9bAxpljhlIehp/luHyqj95uAa1tHVuTWGSus
- ChCK9a7Pe1OeJ9G3vHzV46e3BewFmsg2pn0DkySGXkcBwTV1BEt+ne7wBS+49/WZ19ed
- AknXTrz7l0b7UyH0DcVkK4Jr3kT2jJQryUF514JoFYllWnpICXASfN+q1tdwwvYxhHsk
- cvIw==
+ bh=ssW03Dn5AeZWkODFXTT7NI4oiMDlz/9jXiRM25HGFig=;
+ b=rbxWcjDPAKRu8U/15JV579yi8wu8EeO+V0HNRFo6P3gC0kLLAvszI8NGzc5Zj5GKl/
+ 7KEelmiGHP8o3ysht73ViPoHJYb3rdhnYAJx/xq+8kwRxAjcbnLtEfUsLHLcWeMqw0t3
+ Pe+GAdJqsEpPkvNT5veLml2EfzA2mBe3R/tZV7lJI65SqY/E2L8BDHDkLggynwuH+3je
+ mu5U6JKLxR+C+tgTXCH0ppr+ak2xKeaegkIXFtAdICHplTvdW/2WMLxO4pYdpBcXhp1O
+ xkbbv08k9ZJd9Wt6XZFxMRJTx0M+deq+mLe2ZHJd6WlM50/lAiKtZ8SB2M+xVEpButrF
+ GYuA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782280458; x=1782885258;
+ d=1e100.net; s=20251104; t=1782280464; x=1782885264;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=IlIB0gyVXIdZ9I8a3u7xyO2vP3rsljTTT0Q5gAGep+E=;
- b=rsEPrGciNSHNatWJD0IBTwUYoZRv77QiYck6R4Ph1/IWidCR85K0UV5k7PPgekmhTD
- 0BeZrDGQe2abzi87lG8XNLhxJ8FYsnrZuPX5skb8oEOyohXt5ix/8rNzzjLLDLGKr6sJ
- FTr6c1BbNqe0FwIstxn2pKhC8OqqwVEc/ykW6Dfrm1DCm8dT99b2ENm+MU3kx/Tuvv0Q
- nzx0CYXGl6CarY3BC8Oa1/EiSv39ear3udZvgMD5kaor2Nx7hhOeyvBYP03ydbXHE1bO
- 0vKIATCikqKo8ru0nDwLAgdRcozAND5T3srv4MaTAKIYKwkygvLKcjqH+14u6ReCPduO
- VD+w==
-X-Gm-Message-State: AOJu0YyXAVgNnvmM3u1cjY+8AQ5Ted+srI4ovwbKqarGwnv5r3adtg54
- 4PXPmi2Bb1+pGbF56KNkqik1oPHZvt80OdgP9N+w0bIxDurgY/gwVYYfUUKpLcKhyz4gWDOxoxH
- 4gzn/yYNH3M3hNI7gGMHOF2TXWOLQ4NDHDjL30NmQeEPZE33DAhFdAe7U
-X-Gm-Gg: AfdE7cl9Kp/VS2kwCDdTY4Irt+/yNTYOtkcQ5/ff+7/77/Iq17BeuMkJpDLa5prKd+N
- 09MYVIjofMcs4pwQ4i/wxG+ds+kDV6u7MqqPn7F+B7BIfRDIjCdr/OVPGITYVrbm48t65j8i2/P
- f+sz1ZrjKMTabjg+KVnqEXjXF7vWsDZvebY0ROAehbqD7tl5jG9KT2ydO+qSPbL4SWnQU22xpTT
- tq6m03M6qPaNs1CRDxavrrOl2m/FHer15y1iSxLdSP4IKb/hVbIgmEY9tngv6gY4LtdNkSVmnIN
- YDQ00nH14QdGrIxbEDVKcycfJwTlDH9Ir5mZPQToVi2Pe8EINyFup5eK+VUaGa8eiyegwCDB+na
- OzH42PSYw1epKh3HabZ5SjQ6Ji+e4M31WVVX7c3wu4vU9
-X-Received: by 2002:a05:7300:7245:b0:30b:c4e3:8235 with SMTP id
- 5a478bee46e88-30c68def98bmr2162752eec.27.1782280457570; 
- Tue, 23 Jun 2026 22:54:17 -0700 (PDT)
-X-Received: by 2002:a05:7300:7245:b0:30b:c4e3:8235 with SMTP id
- 5a478bee46e88-30c68def98bmr2162734eec.27.1782280457027; 
- Tue, 23 Jun 2026 22:54:17 -0700 (PDT)
+ bh=ssW03Dn5AeZWkODFXTT7NI4oiMDlz/9jXiRM25HGFig=;
+ b=n8WY6jGmqHQlyWrk2Rp2XNpx4FIdNYb1g5YFvlkvIXUMu19T2D6FG6KjUI2WmwgZnl
+ 4u2ctp+83P8+bB/DN0jTBpE03ralthwqqMX8yRMhenx9C8by6Mcnv3yTs3lZf6QCvlWC
+ v4BP1EEJ6kizED/fZhzcEHL+erCHnOi0YbbXroPcNmDPOzYfHUno4XKOV/M1RDionOVU
+ 0+Z/154MBlySlVInv8bf6ZI6W+MbkfW7BgpzqjO7q2BaYx8G+JlIOGtC0Vh9JBK1qy6K
+ iVwrRg87VIGQqehkl6iq5fLyEgme2kUz2ujZ7L+L9bKYjx97yoaFsOlf6sVGZS9FqlGT
+ lYtQ==
+X-Forwarded-Encrypted: i=1;
+ AHgh+RqkbHSrk3bY659pB/zQhUN+44W3pQNQ3C8vtwCkkFQDCUhN2+0FG3Ew8nD+bIH01hXAg2vAhHYsCJUe@nongnu.org
+X-Gm-Message-State: AOJu0YzCMv7abLQXkd3irBD3J7dvyRyEVdfXfpKSY3oAr18jItvDDGLB
+ XPQprajXvwgA9UhRN3+POulMOfYKFS2uZgeu+0tr179pOZZAXH27duh45wknaq6ZLeMJbOrX9xM
+ 6vXMPi8OnTtXR2wBQ0vxRtschsnkYeJC0fygVsY0VyjOST2wviKt21+l1
+X-Gm-Gg: AfdE7ckZ9161A/D5WXJPpCCfxNwP+YuqdOJXJWfiJd7Xk0pb3gTB8Pmh1zALBmxaHf6
+ PfOk8STnYMo10/NDCifhBexZ800InNCKhWN3KftDqZ1wXhQIXpyGNtOpqhJC9aCzByJ0tK+BcS9
+ 4KyOY8yFQ1LrpM8B1g+BRx7CN0PQM0plfAhNAuGPbl+p4aC0LDl1qebroxpV2G21CKd8VxUI78e
+ 2F8hHXVQCXVd3y4VZQJfx5AUZfwmc8aMsvW5Fr/6lY4wblw+csQb3Rr9fRHK1jAqX0zMaV1wDew
+ 8HBuZqL3Z2UsUecyFNoLqisyr91aGOFmLA2kPAleQ204sTKEswFzgxbWoZohtLrDPzYarSFaEpt
+ HCOXJI9YcXZy/quUgt2isB0jzA6mWp9+sD9hFVpkc/kua
+X-Received: by 2002:a05:7300:ac8a:b0:304:6d18:3646 with SMTP id
+ 5a478bee46e88-30c1d5955c6mr13998205eec.0.1782280463486; 
+ Tue, 23 Jun 2026 22:54:23 -0700 (PDT)
+X-Received: by 2002:a05:7300:ac8a:b0:304:6d18:3646 with SMTP id
+ 5a478bee46e88-30c1d5955c6mr13998192eec.0.1782280462847; 
+ Tue, 23 Jun 2026 22:54:22 -0700 (PDT)
 Received: from rhel9-box.lan ([110.227.100.91])
  by smtp.googlemail.com with ESMTPSA id
- 5a478bee46e88-30c1bd8d6edsm21075803eec.14.2026.06.23.22.54.14
+ 5a478bee46e88-30c1bd8d6edsm21075803eec.14.2026.06.23.22.54.20
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 23 Jun 2026 22:54:15 -0700 (PDT)
+ Tue, 23 Jun 2026 22:54:22 -0700 (PDT)
 From: Ani Sinha <anisinha@redhat.com>
-To: Gerd Hoffmann <kraxel@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>, Ani Sinha <anisinha@redhat.com>
-Cc: qemu-devel@nongnu.org
-Subject: [PATCH v1 2/8] igvm: track memory regions
-Date: Wed, 24 Jun 2026 11:23:24 +0530
-Message-ID: <20260624055339.46862-3-anisinha@redhat.com>
+To: Ani Sinha <anisinha@redhat.com>, Gerd Hoffman <kraxel@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>
+Cc: Alex Graf <graf@amazon.com>,
+	qemu-devel@nongnu.org
+Subject: [PATCH v1 4/8] hw/misc/vmlaunchupdate: Introduce hypervisor fw-cfg
+ interface support
+Date: Wed, 24 Jun 2026 11:23:26 +0530
+Message-ID: <20260624055339.46862-5-anisinha@redhat.com>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20260624055339.46862-1-anisinha@redhat.com>
 References: <20260624055339.46862-1-anisinha@redhat.com>
@@ -119,99 +123,426 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Gerd Hoffmann <kraxel@redhat.com>
+VM launch update is a mechanism where the virtual machines can use IGVM
+file bundle to boot into a trusted execution environment without
+having to depend on a untrusted party to provide the IGVM bundle or firmware
+image. This is particularly useful for confidential virtual machines that
+are deployed in the cloud where the tenant and the cloud provider are two
+different entities. In this scenario, virtual machines can bring their own
+trusted IGVM file containing a trusted firmware image
+bundled as a part of their filesystem and then use this hypervisor interface
+to update to a trusted and deterministic boot state.
+This also allows the guests to have a consistent measurements on the firmware
+image.
 
-Memory regions added by the current IGVM needs to be tracked so that they can be
-freed when a new IGVM is loaded.
+Currently, this mechanism only works if the VM was started with IGVM in the
+first place.
 
-Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
+This change introduces support for the fw-cfg based hypervisor interface
+and the corresponding device.The change also includes the
+specification document for this interface. The interface is made generic
+enough so that guests are free to use their own ABI to pass required
+information between initial and trusted execution contexts (where they are
+running their own trusted boot state) without the hypervisor getting
+involved in between.
+
+Currently, this device is only supported for x86 machines. Presence of
+IGVM host libraries is also required for parsing IGVM files. Hence, the device
+cannot be initialized for other machine types or hosts where IGVM support
+is not present. Trying to initialize it for arm for example will lead to failure:
+
+$ ./qemu-system-arm -device vm-launch-update -machine virt
+qemu-system-arm: -device vmfwupdate: This machine does not support vm-launch-update device
+
+Functional and qtests will be added in a subsequent patch.
+
+CC: Alex Graf <graf@amazon.com>
+CC: Gerd Hoffman <kraxel@redhat.com>
+
+Signed-off-by: Ani Sinha <anisinha@redhat.com>
 ---
- backends/igvm-cfg.c            |  1 +
- backends/igvm.c                | 17 +++++++++--------
- include/system/igvm-internal.h |  6 ++++++
- 3 files changed, 16 insertions(+), 8 deletions(-)
+ hw/misc/meson.build              |   3 +
+ hw/misc/trace-events             |   5 +
+ hw/misc/vmlaunchupdate.c         | 236 +++++++++++++++++++++++++++++++
+ include/hw/misc/vmlaunchupdate.h |  85 +++++++++++
+ include/system/igvm.h            |   2 +
+ 5 files changed, 331 insertions(+)
+ create mode 100644 hw/misc/vmlaunchupdate.c
+ create mode 100644 include/hw/misc/vmlaunchupdate.h
 
-diff --git a/backends/igvm-cfg.c b/backends/igvm-cfg.c
-index e1f09855f6..38438a7b1e 100644
---- a/backends/igvm-cfg.c
-+++ b/backends/igvm-cfg.c
-@@ -65,6 +65,7 @@ static void igvm_complete(UserCreatable *uc, Error **errp)
-     IgvmCfg *igvm = IGVM_CFG(uc);
+diff --git a/hw/misc/meson.build b/hw/misc/meson.build
+index 23265f6035..b8c7de295e 100644
+--- a/hw/misc/meson.build
++++ b/hw/misc/meson.build
+@@ -163,6 +163,9 @@ specific_ss.add(when: 'CONFIG_MIPS_ITU', if_true: files('mips_itu.c'))
  
-     igvm->file = qigvm_file_init(igvm->filename, errp);
-+    QTAILQ_INIT(&igvm->memory_regions);
- }
+ specific_ss.add(when: 'CONFIG_RISCV_MIPS_CMGCR', if_true: files('riscv_cmgcr.c'))
+ specific_ss.add(when: 'CONFIG_RISCV_MIPS_CPC', if_true: files('riscv_cpc.c'))
++if igvm.found()
++   specific_ss.add(when: 'CONFIG_FW_CFG_DMA', if_true: files('vmlaunchupdate.c'))
++endif
  
- OBJECT_DEFINE_TYPE_WITH_INTERFACES(IgvmCfg, igvm_cfg, IGVM_CFG, OBJECT,
-diff --git a/backends/igvm.c b/backends/igvm.c
-index 2995e82cee..1c9751812d 100644
---- a/backends/igvm.c
-+++ b/backends/igvm.c
-@@ -206,7 +206,7 @@ static void *qigvm_prepare_memory(QIgvm *ctx, uint64_t addr, uint64_t size,
-                                   int region_identifier, Error **errp)
- {
-     ERRP_GUARD();
--    MemoryRegion *igvm_pages = NULL;
-+    IgvmMemoryRegion *imr = NULL;
-     Int128 gpa_region_size;
-     MemoryRegionSection mrs =
-         memory_region_find(get_system_memory(), addr, size);
-@@ -240,23 +240,24 @@ static void *qigvm_prepare_memory(QIgvm *ctx, uint64_t addr, uint64_t size,
-          */
-         g_autofree char *region_name =
-             g_strdup_printf("igvm.%X", region_identifier);
--        igvm_pages = g_new0(MemoryRegion, 1);
-+        imr = g_new0(IgvmMemoryRegion, 1);
-         if (ctx->machine_state->cgs &&
-             ctx->machine_state->cgs->require_guest_memfd) {
--            if (!memory_region_init_ram_guest_memfd(igvm_pages, NULL,
-+            if (!memory_region_init_ram_guest_memfd(&imr->mr, NULL,
-                                                     region_name, size, errp)) {
--                g_free(igvm_pages);
-+                g_free(imr);
-                 return NULL;
-             }
-         } else {
--            if (!memory_region_init_ram(igvm_pages, NULL, region_name, size,
-+            if (!memory_region_init_ram(&imr->mr, NULL, region_name, size,
-                                         errp)) {
--                g_free(igvm_pages);
-+                g_free(imr);
-                 return NULL;
-             }
-         }
--        memory_region_add_subregion(get_system_memory(), addr, igvm_pages);
--        return memory_region_get_ram_ptr(igvm_pages);
-+        memory_region_add_subregion(get_system_memory(), addr, &imr->mr);
-+        QTAILQ_INSERT_TAIL(&ctx->cfg->memory_regions, imr, next);
-+        return memory_region_get_ram_ptr(&imr->mr);
-     }
- }
+ system_ss.add(when: 'CONFIG_SBSA_REF', if_true: files('sbsa_ec.c'))
  
-diff --git a/include/system/igvm-internal.h b/include/system/igvm-internal.h
-index b55b35328a..cab74cfd1d 100644
---- a/include/system/igvm-internal.h
-+++ b/include/system/igvm-internal.h
-@@ -18,6 +18,11 @@
- #include "system/confidential-guest-support.h"
- #include <igvm/igvm.h>
- 
-+typedef struct IgvmMemoryRegion {
-+    QTAILQ_ENTRY(IgvmMemoryRegion) next;
-+    MemoryRegion mr;
-+} IgvmMemoryRegion;
+diff --git a/hw/misc/trace-events b/hw/misc/trace-events
+index b88accc437..f440987501 100644
+--- a/hw/misc/trace-events
++++ b/hw/misc/trace-events
+@@ -417,3 +417,8 @@ iommu_testdev_dma_read(uint64_t gva, uint32_t len) "gva=0x%" PRIx64 " len=%u"
+ iommu_testdev_dma_verify(uint32_t expected, uint32_t actual) "expected=0x%x actual=0x%x"
+ iommu_testdev_dma_result(uint32_t result) "DMA completed result=0x%x"
+ iommu_testdev_dma_armed(bool armed) "armed=%d"
 +
- struct IgvmCfg {
-     Object parent_obj;
++# vmlaunchupdate.c
++launch_update_write(void) ""
++vmlaunch_reset(void) ""
++vm_launchupdate_finalize(void) ""
+diff --git a/hw/misc/vmlaunchupdate.c b/hw/misc/vmlaunchupdate.c
+new file mode 100644
+index 0000000000..b19cf6b8cd
+--- /dev/null
++++ b/hw/misc/vmlaunchupdate.c
+@@ -0,0 +1,236 @@
++/*
++ * Guest driven VM launch component update (using IGVM) device
++ * For details and specification, please look at docs/specs/vmlaunchupdate.rst.
++ *
++ * Copyright (C) 2026 Red Hat, Inc.
++ *
++ * Authors: Ani Sinha <anisinha@redhat.com>
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include "qemu/osdep.h"
++#include "qapi/error.h"
++#include "qemu/module.h"
++#include "system/physmem.h"
++#include "system/reset.h"
++#include "qemu/target-info-qapi.h"
++#include "hw/nvram/fw_cfg.h"
++#include "hw/core/qdev-properties.h"
++#include "hw/i386/pc.h"
++#include "exec/cpu-common.h"
++#include "hw/misc/vmlaunchupdate.h"
++#include "system/igvm.h"
++#include "system/igvm-internal.h"
++#include "qemu/error-report.h"
++#include "trace.h"
++
++static bool disabled;
++
++static bool vmlaunchupdate_supported(void)
++{
++    return target_arch() == SYS_EMU_TARGET_X86_64;
++}
++
++static void init_vm_launch_update(VMLaunchUpdateState *s)
++{
++    s->launch_update.capabilities = VM_LAUNCHUPDATE_FORMAT_IGVM;
++
++    if (disabled) {
++        s->launch_update.control = VM_LAUNCHUPDATE_CTL_DISABLE;
++    }
++
++    s->launch_update.version = VM_LAUNCHUPDATE_VERSION;
++    return;
++}
++
++static void clear_init_vm_launch_update(VMLaunchUpdateState *s)
++{
++    memset(&s->launch_update, 0, sizeof(s->launch_update));
++    init_vm_launch_update(s);
++}
++
++static int process_x86_igvm(VMLaunchUpdateState *s,
++                            uint64_t fw_image_addr, uint32_t fw_image_size)
++{
++    X86MachineState *x86machine = X86_MACHINE(qdev_get_machine());
++    IgvmCfg *igvmc = x86machine->igvm;
++    IgvmHandle igvm;
++    void *image_addr_ptr;
++    hwaddr len;
++
++    if (!igvmc) {
++        /* The VM was not started with an IGVM, bail */
++        info_report("guest was not initially started with IGVM, "
++                    "not chnaging launch state.");
++        return -1;
++    }
++
++    if (!fw_image_addr || !fw_image_size) {
++        return -1;
++    }
++
++    len = (hwaddr) fw_image_size;
++    image_addr_ptr = physical_memory_map((hwaddr) fw_image_addr,
++                                         (hwaddr *) &len, 0);
++
++    if (!image_addr_ptr || (len < fw_image_size)) {
++        warn_report("vmlaunchupdate: Invalid guest addresses.");
++        physical_memory_unmap(image_addr_ptr, len, 0, 0);
++        return -1;
++    }
++
++    igvm = igvm_new_from_binary(image_addr_ptr, fw_image_size);
++    if (igvm < 0) {
++        warn_report("vmlaunchupdate: Unable to parse IGVM file %"
++                    PRIx64 ": %d", fw_image_addr, fw_image_size);
++        return -1;
++    }
++
++    /* free previous file context */
++    if (igvmc->file >= 0) {
++        igvm_free(igvmc->file);
++    }
++    g_free(igvmc->filename);
++    /* set new context */
++    igvmc->file = igvm;
++
++
++    /* free existing memory regions and ram blocks */
++    qigvm_cleanup_memory(igvmc);
++
++    physical_memory_unmap(image_addr_ptr, len, 0, 0);
++    info_report("vmlaunchupdate: new IGVM context set");
++
++    return 0;
++}
++
++static void launch_update_write(void *dev, off_t offset, size_t len)
++{
++    VMLaunchUpdateState *s = VMLAUNCHUPDATE(dev);
++    uint64_t addr;
++    uint32_t size;
++
++    if (disabled) {
++        return;
++    }
++
++    if (s->launch_update.control & VM_LAUNCHUPDATE_CTL_DISABLE) {
++        disabled = true;
++        return;
++    }
++
++
++    /* process guest provided IGVM image */
++    if (s->launch_update.control & VM_LAUNCHUPDATE_FORMAT_IGVM) {
++        if (target_arch() == SYS_EMU_TARGET_X86_64) {
++            addr = le64_to_cpu(s->launch_update.fw_image_addr);
++            size = le32_to_cpu(s->launch_update.fw_image_size);
++            if (process_x86_igvm(s, addr, size) < 0) {
++                goto end;
++            }
++
++        }
++        /* process other machines here when support is added */
++    }
++
++    /* clear the addresses */
++    s->launch_update.fw_image_addr = 0x0;
++    s->launch_update.fw_image_size = 0x0;
++
++ end:
++    trace_launch_update_write();
++
++    return;
++}
++
++static void launch_update_select(void *dev)
++{
++    VMLaunchUpdateState *s = VMLAUNCHUPDATE(dev);
++    init_vm_launch_update(s);
++}
++
++static void vmlaunch_reset(Object *obj, ResetType type)
++{
++    trace_vmlaunch_reset();
++}
++
++static ResettableState *vmlaunch_reset_state(Object *obj)
++{
++    VMLaunchUpdateState *s = VMLAUNCHUPDATE(obj);
++
++    return &s->reset_state;
++}
++
++static void vm_launchupdate_realize(DeviceState *dev, Error **errp)
++{
++    VMLaunchUpdateState *s = VMLAUNCHUPDATE(dev);
++    FWCfgState *fw_cfg = fw_cfg_find();
++
++    /* multiple devices are not supported */
++    if (!vm_launchupdate_find()) {
++        error_setg(errp, "at most one %s device is permitted",
++                   TYPE_VMLAUNCHUPDATE);
++        return;
++    }
++
++    /* if current machine is not supported, do not initialize */
++    if (!vmlaunchupdate_supported()) {
++        error_setg(errp,
++                   "This machine does not support vm-launch-update device");
++        return;
++    }
++
++    /* fw_cfg with DMA support is necessary to support this device */
++    if (!fw_cfg || !fw_cfg_dma_enabled(fw_cfg)) {
++        error_setg(errp, "%s device requires fw_cfg",
++                   TYPE_VMLAUNCHUPDATE);
++        return;
++    }
++
++    fw_cfg_add_file_callback(fw_cfg, FILE_VMLAUNCHUPDATE,
++                             launch_update_select, launch_update_write, s,
++                             &s->launch_update,
++                             sizeof(s->launch_update),
++                             false);
++
++    clear_init_vm_launch_update(s);
++    /*
++     * This device requires to register a global reset because it is
++     * not plugged to a bus (which, as its QOM parent, would reset it).
++     */
++    qemu_register_resettable(OBJECT(s));
++}
++
++static void vm_launchupdate_finalize(Object *obj)
++{
++    qemu_unregister_resettable(obj);
++    trace_vm_launchupdate_finalize();
++}
++
++static void vmlaunchupdate_device_class_init(ObjectClass *klass,
++                                             const void *data)
++{
++    DeviceClass *dc = DEVICE_CLASS(klass);
++    ResettableClass *rc = RESETTABLE_CLASS(klass);
++
++    /* we are not interested in migration - so no need to populate dc->vmsd */
++    dc->desc = "VM launch state update device";
++    dc->realize = vm_launchupdate_realize;
++    dc->hotpluggable = false;
++    set_bit(DEVICE_CATEGORY_MISC, dc->categories);
++    rc->phases.hold = vmlaunch_reset;
++    rc->get_state = vmlaunch_reset_state;
++}
++
++static const TypeInfo vmlaunchupdate_device_types[] = {
++    {
++        .name              = TYPE_VMLAUNCHUPDATE,
++        .parent            = TYPE_DEVICE,
++        .instance_size     = sizeof(VMLaunchUpdateState),
++        .class_init        = vmlaunchupdate_device_class_init,
++        .instance_finalize = vm_launchupdate_finalize,
++    },
++};
++
++DEFINE_TYPES(vmlaunchupdate_device_types)
+diff --git a/include/hw/misc/vmlaunchupdate.h b/include/hw/misc/vmlaunchupdate.h
+new file mode 100644
+index 0000000000..1d13f4b176
+--- /dev/null
++++ b/include/hw/misc/vmlaunchupdate.h
+@@ -0,0 +1,85 @@
++/*
++ * Guest driven VM launch state update device via IGVM.
++ * For details and specification, please look at docs/specs/vmlaunchupdate.rst.
++ *
++ * Copyright (C) 2026 Red Hat, Inc.
++ *
++ * Authors: Ani Sinha <anisinha@redhat.com>
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ *
++ */
++#ifndef VMLAUNCHUPDATE_H
++#define VMLAUNCHUPDATE_H
++
++#include "hw/core/qdev.h"
++#include "qom/object.h"
++#include "qemu/units.h"
++#include "system/igvm-cfg.h"
++
++#define TYPE_VMLAUNCHUPDATE "vm-launch-update"
++
++/* fw-cfg file definition */
++#define FILE_VMLAUNCHUPDATE "etc/vmlaunchupdate"
++
++/* version */
++#define VM_LAUNCHUPDATE_VERSION 0x01
++
++/* format bits, used by both 'capabilities' and 'control'  */
++
++/* igvm */
++#define VM_LAUNCHUPDATE_FORMAT_IGVM           (1ULL << 32)
++
++/* 'control' field bits  */
++
++/* disable vmlaunchupdate interface */
++#define VM_LAUNCHUPDATE_CTL_DISABLE            (1 << 0)
++
++typedef struct {
++    /* api version */
++    uint16_t version;
++
++    /* VMM capabilities, read-only. */
++    uint64_t capabilities;
++    /* control bits, see VMFWUPDATE_CTL_* */
++    uint64_t control;
++
++    /*
++     * address and size of the IGVM image.  Will be cleared when
++     * the write completes successfully and IGVM file is correctly parsed.
++     */
++    uint64_t fw_image_addr;
++    uint32_t fw_image_size;
++
++    /*
++     * address + size of opaque blob.  The guest can use this to pass on
++     * information, for example which memory region the linux kernel has been
++     * loaded to.  writable, will be kept intact on firmware update.
++     */
++    uint64_t opaque_addr;
++    uint64_t opaque_size;
++
++} VMLaunchUpdate;
++
++typedef struct VMLaunchUpdateState {
++    DeviceState parent_obj;
++    VMLaunchUpdate launch_update;
++    ResettableState reset_state;
++} VMLaunchUpdateState;
++
++
++typedef struct VMLaunchUpdateStateClass {
++    ObjectClass parent_class;
++} VMLaunchUpdateStateClass;
++
++OBJECT_DECLARE_SIMPLE_TYPE(VMLaunchUpdateState, VMLAUNCHUPDATE);
++
++/* returns NULL unless there is exactly one device */
++static inline VMLaunchUpdateState *vm_launchupdate_find(void)
++{
++    Object *o = object_resolve_path_type("", TYPE_VMLAUNCHUPDATE, NULL);
++
++    return o ? VMLAUNCHUPDATE(o) : NULL;
++}
++
++#endif
+diff --git a/include/system/igvm.h b/include/system/igvm.h
+index e219f1a4ed..e6879550b1 100644
+--- a/include/system/igvm.h
++++ b/include/system/igvm.h
+@@ -22,6 +22,8 @@ int qigvm_process_file(IgvmCfg *igvm, MachineState *machine_state,
+                        bool onlyVpContext, Error **errp);
+ void qigvm_cleanup_memory(IgvmCfg *igvm);
  
-@@ -29,6 +34,7 @@ struct IgvmCfg {
-     char *filename;
-     IgvmHandle file;
-     ResettableState reset_state;
-+    QTAILQ_HEAD(, IgvmMemoryRegion) memory_regions;
- };
- 
- typedef struct QIgvmParameterData {
++void qigvm_free_memory_regions(void);
++
+ /* x86 native */
+ int qigvm_x86_get_mem_map_entry(int index,
+                                 ConfidentialGuestMemoryMapEntry *entry,
 -- 
 2.42.0
 
