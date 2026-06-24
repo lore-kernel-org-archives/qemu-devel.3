@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7142CDB470
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 05:07:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2CDC1CDB479
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 05:07:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcFnw-0005kC-7b; Wed, 24 Jun 2026 01:05:40 -0400
+	id 1wcFnW-0005F7-TX; Wed, 24 Jun 2026 01:05:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wcFnu-0005iV-Ix; Wed, 24 Jun 2026 01:05:38 -0400
+ id 1wcFnV-0005E2-2J; Wed, 24 Jun 2026 01:05:13 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wcFns-0005Xe-Q0; Wed, 24 Jun 2026 01:05:38 -0400
+ id 1wcFnT-0005Wr-9C; Wed, 24 Jun 2026 01:05:12 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1782277465; bh=mGDgxVxCW6hBSpD+z7PQ+9nZVyN4TQfbAFhcRu3OUZI=;
+ t=1782277465; bh=IhNVclDUMaus2rwfO2mybnyaGZeWt1k693tUlRr1w+Q=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=TkwkoGoHlYewnofX5yb2s3G5XqbvFI/tbFsGLuSRuAnRyF6ygcoaEbHAysV0PahCE
- xmUcKG/DEEAxqaXSX5eiYFJzkIfmuVBmLsorDHcmkg71GjeW8bTii2C+VnbSHdRsP1
- 2/LzRtTdeQBuHyGoP0dKY06N11OcwwvTJF3qHLfuytzvCCtHdzi81oTiJcyGqYqFm/
- eZuiWyseCUwlS7Q09VVPvDmu7G+8BHHchlp+cXACtHyTzX3r/ZJJzKMePvIT0PqHpv
- 771JeOr+XY3BISxlRifz3gPafO2eCPh3JlupvkjsXtZ5Hf2boel3/8lkkPWz6B3h1s
- n9RRcfj7wwoHA==
+ b=ELIcOHf+sCIr5N6bqwMY28jfiKuFKUBJOGGfH3HjAL4eJBy2j36gHhundsS68u6ik
+ UtD5GrFwvyY25yrehEpRmoy7tx65id4Y02PqceXl9kKFHnLUfCzYJOWhXxsfWFOluC
+ cJHItVnMbBx3qvK9+VJwcL9kptITSRgLefy48G6TvNWjKzlqylJyiwo3zIY0QnDeTY
+ VY81rep8qmeSpSYqfte9/hiebndMld5TlpKdyJlQ13Y2VFUVxIoo48OnOJNyVfXihV
+ LrGNOwxzTj70F4SRAUXXP6UoPuLj1nK2CwA2v5q/dSGvZ/5VUEXIviwNHLKGrzOXYf
+ b8uX0CcWafRDg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 51BA91BA63C;
+ by isrv.corpit.ru (Postfix) with ESMTP id 1825A1BA639;
  Wed, 24 Jun 2026 08:04:25 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 307B03DDAC7;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 01E7E3DDAC4;
  Wed, 24 Jun 2026 08:04:30 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Abhigyan Kumar <314abh@gmail.com>,
- Alistair Francis <alistair.francis@wdc.com>,
+Cc: qemu-stable@nongnu.org,
  Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.11 73/86] target/riscv: mask vxrm csrw write to the low
- 2 bits
-Date: Wed, 24 Jun 2026 08:02:44 +0300
-Message-ID: <20260624050404.394225-17-mjt@tls.msk.ru>
+Subject: [Stable-10.0.11 70/86] target/riscv/cpu_helper.c: fault with reserved
+ PTE.PBMT val
+Date: Wed, 24 Jun 2026 08:02:41 +0300
+Message-ID: <20260624050404.394225-14-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.11-20260624080222@cover.tls.msk.ru>
 References: <qemu-stable-10.0.11-20260624080222@cover.tls.msk.ru>
@@ -71,40 +71,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Abhigyan Kumar <314abh@gmail.com>
+From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 
-Citing the RISC-V specification:
+We need to fault during any access done while PTE bits 62-61 are both
+set, according to the RISC-V priv spec.
 
-    "The vector fixed-point rounding-mode register holds a two-bit
-    read-write rounding-mode field in the least-significant bits
-    (vxrm[1:0]). The upper bits, vxrm[XLEN-1:2], should be written as
-    zeros."
-
-QEMU wrote full value into env->vxrm causing read of upper bits too.
-Used existing macros for bit-masking. Previous had a hard-coded value.
-
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3470
-Signed-off-by: Abhigyan Kumar <314abh@gmail.com>
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3494
+Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Message-ID: <20260530102100.78150-1-314abh@gmail.com>
+Message-ID: <20260521130727.2311629-1-daniel.barboza@oss.qualcomm.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-(cherry picked from commit 9f550a0b630672f4831d9115e66d208ed71cf252)
+(cherry picked from commit 3e33da68f1db7ab586063b708aa571086e7400ce)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-index 9d1ef159b5..a5c1143a7b 100644
---- a/target/riscv/csr.c
-+++ b/target/riscv/csr.c
-@@ -955,7 +955,7 @@ static RISCVException write_vxrm(CPURISCVState *env, int csrno,
- #if !defined(CONFIG_USER_ONLY)
-     env->mstatus |= MSTATUS_VS;
- #endif
--    env->vxrm = val;
-+    env->vxrm = val & (VCSR_VXRM >> VCSR_VXRM_SHIFT);
-     return RISCV_EXCP_NONE;
- }
+diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
+index dc21c4ee44..8703d136a2 100644
+--- a/target/riscv/cpu_helper.c
++++ b/target/riscv/cpu_helper.c
+@@ -1490,6 +1490,25 @@ static int get_physical_address(CPURISCVState *env, hwaddr *physical,
+                 return TRANSLATE_FAIL;
+             }
  
++            /*
++             * priv spec, "Svpbmt" chapter:
++             * "For non-leaf PTEs, bits 62-61 are reserved for future
++             * standard use.  Until their use is defined by a standard
++             * extension, they must be cleared by software for forward
++             * compatibility, or else a page-fault exception is raised."
++             *
++             * For leaf PTEs the same bits are also reserved but in that
++             * case the page-fault is mandatory.  Make both cases consistent
++             * by also page faulting here.
++             */
++            if ((pte & PTE_PBMT) == PTE_PBMT) {
++                qemu_log_mask(LOG_GUEST_ERROR, "%s: PBMT bits 62 and 61 are "
++                        "reserved but are set in PTE: "
++                        "addr: 0x%" HWADDR_PRIx " pte: 0x" TARGET_FMT_lx "\n",
++                        __func__, pte_addr, pte);
++                return TRANSLATE_FAIL;
++            }
++
+             if (!riscv_cpu_cfg(env)->ext_svnapot && (pte & PTE_N)) {
+                 /* Reserved without Svnapot extension */
+                 qemu_log_mask(LOG_GUEST_ERROR, "%s: N bit set in PTE, "
+@@ -1542,6 +1561,23 @@ static int get_physical_address(CPURISCVState *env, hwaddr *physical,
+         return TRANSLATE_FAIL;
+     }
+ 
++    /*
++     * priv spec, "Svpbmt" chapter:
++     * "For leaf PTEs, setting bits 62-61 to the value 3 is reserved
++     * for future standard use. Until this value is defined by a
++     * standard extension, using this reserved value in a leaf PTE
++     * raises a page-fault exception. "
++     *
++     * Raise a fault if 62-61 (i.e. PTE_PBMT) are set.
++     */
++    if ((pte & PTE_PBMT) == PTE_PBMT) {
++        qemu_log_mask(LOG_GUEST_ERROR, "%s: PBMT bits 62 and 61 are "
++                      "reserved but are set in leaf PTE: "
++                      "addr: 0x%" HWADDR_PRIx " pte: 0x" TARGET_FMT_lx "\n",
++                      __func__, pte_addr, pte);
++        return TRANSLATE_FAIL;
++    }
++
+     target_ulong rwx = pte & (PTE_R | PTE_W | PTE_X);
+     /* Check for reserved combinations of RWX flags. */
+     switch (rwx) {
 -- 
 2.47.3
 
