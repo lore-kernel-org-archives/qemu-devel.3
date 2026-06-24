@@ -4,56 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68957CDB479
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 13:51:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74540CDE002
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 13:51:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcNou-0004aQ-Se; Wed, 24 Jun 2026 09:39:13 -0400
+	id 1wcNnu-0001ok-Ay; Wed, 24 Jun 2026 09:38:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wcNot-0004Re-2W; Wed, 24 Jun 2026 09:39:11 -0400
-Received: from isrv.corpit.ru ([212.248.84.144])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wcNor-0001Fz-2l; Wed, 24 Jun 2026 09:39:10 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1782307999; bh=NeizuiU9CNw1ZzTV6M1T2A/yYQYGEMCvWTUWZVtOwzs=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=CYUvUy68FFgNUN53GnvmoXskDC/Ln6AHDdDWv9MF2zH/5e4APnD01aqUnxq9hhzz/
- SWhzCMnEuZwrYtEfqLgzfMvClsi6H4tIWFnfxfueN13umY/DJxjptRrYUV54K9SnmB
- m8l0nNgREXVyRvQz/pyQYS7sjqwrcWXNKtwFJkQ9zZkEI+T/JYhJ3aDTTNNEf/uSz5
- JPYRRTW2K+qoCQLzMUOEOLZ6iLGrRy02E8xINNW+KDauAJVjZcmIdwKUZmMLtwgoEG
- L8OHJm5is+Uh1lQWNtj8euPd2qNPzRzjgyrjeYyIWi9Oh81GXRnLg4WZF7yCbhg9d2
- GZxz2LvYrMyAQ==
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 95F911BA9F1;
- Wed, 24 Jun 2026 16:33:19 +0300 (MSK)
-Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 329E03DEA40;
- Wed, 24 Jun 2026 16:33:25 +0300 (MSK)
-From: Michael Tokarev <mjt@tls.msk.ru>
-To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
- "Denis V. Lunev" <den@openvz.org>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.2 063/107] iotests/046: Test that discard/write_zeroes
- wait for dependencies
-Date: Wed, 24 Jun 2026 16:31:08 +0300
-Message-ID: <20260624133301.403266-63-mjt@tls.msk.ru>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-11.0.2-20260624163118@cover.tls.msk.ru>
-References: <qemu-stable-11.0.2-20260624163118@cover.tls.msk.ru>
+ (Exim 4.90_1) (envelope-from <jim.macarthur@linaro.org>)
+ id 1wcNnR-0001b2-UP
+ for qemu-devel@nongnu.org; Wed, 24 Jun 2026 09:37:42 -0400
+Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <jim.macarthur@linaro.org>)
+ id 1wcNnQ-00015h-9X
+ for qemu-devel@nongnu.org; Wed, 24 Jun 2026 09:37:41 -0400
+Received: by mail-wr1-x434.google.com with SMTP id
+ ffacd0b85a97d-4624a44e152so912854f8f.2
+ for <qemu-devel@nongnu.org>; Wed, 24 Jun 2026 06:37:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1782308258; x=1782913058; darn=nongnu.org;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=DY8kuxxNwlc1FK61o3Rtv6tRPc70RdExCw4u34E/thM=;
+ b=C/s9YA7OkkM/iZOA1LtiwOEWM9QSxktiXDsc1Q+x9EqHpV7Iis4rm9mLJydyygcrAK
+ DweexJ0biAhYZpbgBDUJJni2G0+DRa74Mj2h3uV8n7T35IrBD2T7gYoyF3ASwOYffiqP
+ +gbobjBdFSGha5nUwQQbjD+5t0jU1VJ+Ddadx8bKhBx5+DIIj2LPJIgstwu00vmlsu3K
+ iQJF2VbZJ/aKqycPLOVk00LpTkP9PS0WxPAIH+J9y7m9VH0aNOU0vlJ/3opoouYcaTGx
+ 9Zh9779wxQUkyCHxRX4DB5hsSQ/ScLoow+Pl47HCwVCJXSAOedSGPvQljMULfBrkhwsK
+ /I/A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1782308258; x=1782913058;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=DY8kuxxNwlc1FK61o3Rtv6tRPc70RdExCw4u34E/thM=;
+ b=hlfztVOOE9QnTjI0C387ajSGYUzO1nyjNLsZmMFOPZwcAXNozgPo0NADpw25gbnkL+
+ zP3AHmu3HcT2YO0r/KEObU7fLO+crjjuUdgZANX8/hZf6OAep0zhIEXQEH87SSAFeLaE
+ u+Q2TDvcDjeoALQVfLXsEa1Ana1gsRlf/lQZ6mztPvd4wm/fmxGaH3AwVwEeuYRguuQ9
+ hPW8RlfuN/pr3KDwU4sXN4hFJQ9Kfc/1UruSiThEJBesVvYQSURxrIRkGsciAS5cJpf6
+ mWv2o3vm0Z2MqsGwKsY2yQuzDUuFfp0QAZ0sGQ9l4cdXycwHFczPz58dVSD73R3Lt24U
+ 6LeQ==
+X-Gm-Message-State: AOJu0YxgDOyqbFLieDZPobG3MyRcz2JcnQGKcgbaJC/uJyqYf0TvsvFx
+ chE/iMJfxM3zKRlfOyM+V7Hr4JoJ3NMNs4MUB5w0/ci2n7306n1y++94Z0WyGvmRM2k=
+X-Gm-Gg: AfdE7cl6mdc2oy72Kxz6wzXSucHQi3c69g/dFPI6FmvmnizJ5T5crfkDftBD/K3TZIX
+ vbGGE6Kr1rrtrvOBCbOTzr9WLtGZgHeJM/6hIvxBIFBYAPL1wgVtqy9sHyzLhp64tF0j880Kknl
+ fTUkidIRznAqG4tZLKgE8ZTJaH1jEtbgTxVuA4rYZsNYBNNJEk9CCisgruRLgEiyBhHoIAVXo+J
+ N2flMzSXZaqGtep/sqWqvKX8pPvi0t1VYcAhhShHTp5Gin5XLJ1KijSRdHsdGoghTO4rfpMtrxa
+ fqaOWIgXZGXsSHWaf5IOJ/4vsYAnGmaUknSeoMmTsYYt+UTbar/qGYPy3P1bodyZcU9dGNO8974
+ aVqZ5cB9wvjmQy98kjTgbOTnvwzytkkcTqYAro5FGkft/ZXjKRijRXW2p5pWBcexFh/DCfUNEK6
+ 6g0k62i2HqV08mDwSF7OVfLWzOpA==
+X-Received: by 2002:a05:6000:2911:b0:43b:5672:efe with SMTP id
+ ffacd0b85a97d-46c04a35bd8mr5927872f8f.9.1782308258474; 
+ Wed, 24 Jun 2026 06:37:38 -0700 (PDT)
+Received: from [127.0.1.1] ([2a10:d582:31e:0:2e21:1ee8:260f:9a76])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-46c1e840efdsm6646334f8f.5.2026.06.24.06.37.37
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 24 Jun 2026 06:37:37 -0700 (PDT)
+From: Jim MacArthur <jim.macarthur@linaro.org>
+Date: Wed, 24 Jun 2026 14:37:26 +0100
+Subject: [PATCH v2 2/6] target/arm/tcg: Allow vector FP conversions with FPRCVT
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260624-jmac-fprcvt-v2-2-dc6cf8e512b6@linaro.org>
+References: <20260624-jmac-fprcvt-v2-0-dc6cf8e512b6@linaro.org>
+In-Reply-To: <20260624-jmac-fprcvt-v2-0-dc6cf8e512b6@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org, 
+ Richard Henderson <richard.henderson@linaro.org>, 
+ Alex Bennee <alex.bennee@linaro.org>, 
+ Jim MacArthur <jim.macarthur@linaro.org>
+X-Mailer: b4 0.13.0
+Received-SPF: pass client-ip=2a00:1450:4864:20::434;
+ envelope-from=jim.macarthur@linaro.org; helo=mail-wr1-x434.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -69,139 +102,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Kevin Wolf <kwolf@redhat.com>
+FEAT_FPRCVT allows the vector forms of FCVTXX and [US]CVTF in streaming
+mode which would otherwise only be available in nonstreaming mode.
 
-This is a regression test for the bug fixed in the previous commit where
-discard and write_zeroes operations wouldn't consider their dependencies
-in s->cluster_allocs. Without the fix, this results in a corrupted
-image.
+Signed-off-by: Jim MacArthur <jim.macarthur@linaro.org>
+---
+ target/arm/tcg/translate-a64.c | 18 ++++++++++++++++--
+ 1 file changed, 16 insertions(+), 2 deletions(-)
 
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-Message-ID: <20260427170520.101242-5-kwolf@redhat.com>
-Reviewed-by: Denis V. Lunev <den@openvz.org>
-Tested-by: Denis V. Lunev <den@openvz.org>
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-(cherry picked from commit 389f5bcc744d3ddc127d550a57261aed9bbba1f3)
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
+index 07f985a5f0..1a0868eaf0 100644
+--- a/target/arm/tcg/translate-a64.c
++++ b/target/arm/tcg/translate-a64.c
+@@ -9915,7 +9915,14 @@ static bool do_cvtf_f(DisasContext *s, arg_fcvt *a, MemOp src_mop_int,
+                       bool is_signed)
+ {
+     TCGv_i64 tcg_int;
+-    int check = fp_access_check_scalar_hsd(s, a->esz);
++    int check;
++
++    /* FEAT_FPRCVT allows vector forms in streaming mode */
++    if (dc_isar_feature(aa64_fprcvt, s)) {
++        s->is_nonstreaming = false;
++    }
++
++    check = fp_access_check_scalar_hsd(s, a->esz);
+ 
+     if (check <= 0) {
+         return check == 0;
+@@ -10120,7 +10127,14 @@ static bool do_fcvt_f(DisasContext *s, arg_fcvt *a,
+                       ARMFPRounding rmode, bool is_signed)
+ {
+     TCGv_i64 tcg_int;
+-    int check = fp_access_check_scalar_hsd(s, a->esz);
++    int check;
++
++    /* FEAT_FPRCVT allows vector forms in streaming mode */
++    if (dc_isar_feature(aa64_fprcvt, s)) {
++        s->is_nonstreaming = false;
++    }
++
++    check = fp_access_check_scalar_hsd(s, a->esz);
+ 
+     if (check <= 0) {
+         return check == 0;
 
-diff --git a/tests/qemu-iotests/046 b/tests/qemu-iotests/046
-index 4c9ed4d26e..e03dd40147 100755
---- a/tests/qemu-iotests/046
-+++ b/tests/qemu-iotests/046
-@@ -184,6 +184,48 @@ aio_write -P 160 0x104000 0x18000
- resume A
- aio_flush
- EOF
-+
-+# Create a pre-allocated zero cluster, then start a write on it and discard it
-+# before the L2 update is made
-+cat  <<EOF
-+write -P 181 0x120000 0x10000
-+write -z 0x120000 0x10000
-+
-+break write_aio A
-+aio_write -P 180 0x120000 0x10000
-+wait_break A
-+aio_discard 0x120000 0x10000
-+resume A
-+aio_flush
-+EOF
-+
-+# Create a pre-allocated zero cluster, then start a write on it and a
-+# concurrent zero write with MAY_UNMAP before the L2 update is made
-+cat  <<EOF
-+write -P 181 0x130000 0x10000
-+write -z 0x130000 0x10000
-+
-+break write_aio A
-+aio_write -P 180 0x130000 0x10000
-+wait_break A
-+aio_write -z -u 0x130000 0x10000
-+resume A
-+aio_flush
-+EOF
-+
-+# Create a pre-allocated zero cluster, then start a write on it and a
-+# concurrent zero write without MAY_UNMAP before the L2 update is made
-+cat  <<EOF
-+write -P 181 0x140000 0x10000
-+write -z 0x140000 0x10000
-+
-+break write_aio A
-+aio_write -P 180 0x140000 0x10000
-+wait_break A
-+aio_write -z 0x140000 0x10000
-+resume A
-+aio_flush
-+EOF
- }
- 
- overlay_io | $QEMU_IO blkdebug::"$TEST_IMG" | _filter_qemu_io |\
-@@ -264,6 +306,10 @@ verify_io()
-     # Undefined content for 0x10c000 0x8000
-     echo read -P 160 0x114000 0x8000
-     echo read -P 17  0x11c000 0x4000
-+
-+    echo read -P 0   0x120000 0x10000
-+    echo read -P 0   0x130000 0x10000
-+    echo read -P 0   0x140000 0x10000
- }
- 
- verify_io | $QEMU_IO "$TEST_IMG" | _filter_qemu_io
-diff --git a/tests/qemu-iotests/046.out b/tests/qemu-iotests/046.out
-index b1a03f4041..6341df335c 100644
---- a/tests/qemu-iotests/046.out
-+++ b/tests/qemu-iotests/046.out
-@@ -139,6 +139,36 @@ wrote XXX/XXX bytes at offset XXX
- XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
- wrote XXX/XXX bytes at offset XXX
- XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+wrote XXX/XXX bytes at offset XXX
-+XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+wrote XXX/XXX bytes at offset XXX
-+XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+blkdebug: Suspended request 'A'
-+blkdebug: Resuming request 'A'
-+wrote XXX/XXX bytes at offset XXX
-+XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+discarded  XXX/XXX bytes at offset XXX
-+XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+wrote XXX/XXX bytes at offset XXX
-+XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+wrote XXX/XXX bytes at offset XXX
-+XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+blkdebug: Suspended request 'A'
-+blkdebug: Resuming request 'A'
-+wrote XXX/XXX bytes at offset XXX
-+XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+wrote XXX/XXX bytes at offset XXX
-+XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+wrote XXX/XXX bytes at offset XXX
-+XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+wrote XXX/XXX bytes at offset XXX
-+XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+blkdebug: Suspended request 'A'
-+blkdebug: Resuming request 'A'
-+wrote XXX/XXX bytes at offset XXX
-+XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+wrote XXX/XXX bytes at offset XXX
-+XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
- 
- == Verify image content ==
- read 65536/65536 bytes at offset 0
-@@ -239,5 +269,11 @@ read 32768/32768 bytes at offset 1130496
- 32 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
- read 16384/16384 bytes at offset 1163264
- 16 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+read 65536/65536 bytes at offset 1179648
-+64 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+read 65536/65536 bytes at offset 1245184
-+64 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
-+read 65536/65536 bytes at offset 1310720
-+64 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
- No errors were found on the image.
- *** done
 -- 
-2.47.3
+2.43.0
 
 
