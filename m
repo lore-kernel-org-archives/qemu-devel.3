@@ -4,43 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB478CDB470
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 05:15:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CFAB6CDB479
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 05:15:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcFsy-0006I3-Rm; Wed, 24 Jun 2026 01:10:52 -0400
+	id 1wcFsy-0006I2-Rp; Wed, 24 Jun 2026 01:10:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wcFsj-0005Un-Lj; Wed, 24 Jun 2026 01:10:42 -0400
+ id 1wcFsj-0005Uo-Ln; Wed, 24 Jun 2026 01:10:42 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wcFsh-0006Gk-Iz; Wed, 24 Jun 2026 01:10:37 -0400
+ id 1wcFsh-0006FB-AG; Wed, 24 Jun 2026 01:10:37 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1782277633; bh=Keok8i8qUdh8lw5p9O3kG49/Lx9jiNE6zo1Es59rBbU=;
+ t=1782277633; bh=EZxTBcW+Nv+J+qL6TFpeLuirw8GBD5VwhTyxmqUOqmc=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=Z0kg1DMyC0ObHuquafRIEgz52V4OydC8z2Kc9Jm9E58z1hbbRsCltaJ580D25idVt
- BF+Tu3E1RLLKa9AQYHi6YWpuD+AMQNw5BK3s/eAij8W8A4Ow7OfQgfh8I9qFZKUQlh
- gz7oiZN0N6DKYusf8UItENYVLsHbdpoxc7P7DOI4cz/+Igkqi8bO06NhWe7V0mFNZD
- OWDCjvVIgC6PH8mYVakIlojtsN23vHSi4CC9jbsSHnIECvOhreL93Gc3U3A1Z3XGcP
- gFqjLsiYJbuYm1JAepEVz5OLC2EVofbuCU2olNwG71Y2GN9l8Y1Lv2otvjAyv4hfHh
- SIN/LjYUSz7cw==
+ b=bwyKWsepu6vUhGn+wqlaiRAjkyeOKx1tXvLAOUJEUL50mBFUzEHm57Ful3LtmYr2V
+ RHuljhBKBy6bIS43AyjyIOFAGqPzaTcbfbztjfEe8/IlDdvSojhYMeYMFZmDGaG9zM
+ UPLfbZVYqA0yLfnZHcSvFQVx0DkrMkMSBWFmWAHtJaLbnjbcks3VRJy44BQmli4Llr
+ ul4J8CWH8RVzm2C4YPI3e5vFgXCA2lw3Np47OZIL1i9EkzB93NKg5nMTJCZpqXKNI8
+ NEsaYd+DyPRe3NLs9Z559fdn6PPBPicxRWpqqAbcr5Tqu6VWqRot7MoiUEHTQmcU6V
+ 0LvE1E2Zvq9dg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 6E27C1BA67D;
+ by isrv.corpit.ru (Postfix) with ESMTP id 5ED3A1BA67C;
  Wed, 24 Jun 2026 08:07:13 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 587713DDB1A;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 479C93DDB19;
  Wed, 24 Jun 2026 08:07:18 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Akshit Yadav <valium7171@gmail.com>,
- Helge Deller <deller@gmx.de>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.4 95/95] linux-user: Fix AT_PHDR when program headers
- are relocated into their own segment
-Date: Wed, 24 Jun 2026 08:05:30 +0300
-Message-ID: <20260624050541.395079-34-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Aditya Gupta <adityag@linux.ibm.com>,
+ Zexiang Zhang <chan9yan9@gmail.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.2.4 94/95] hw/pci: Replace assert with bounds check and
+ return
+Date: Wed, 24 Jun 2026 08:05:29 +0300
+Message-ID: <20260624050541.395079-33-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.2.4-20260624080454@cover.tls.msk.ru>
 References: <qemu-stable-10.2.4-20260624080454@cover.tls.msk.ru>
@@ -69,88 +70,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Akshit Yadav <valium7171@gmail.com>
+From: Aditya Gupta <adityag@linux.ibm.com>
 
-When a binary is patched or relocated such that the program header table is
-moved into a separate PT_LOAD segment (rather than sitting at the start of the
-first loadable segment), QEMU's AT_PHDR auxv entry becomes incorrect. The
-loader was computing AT_PHDR as load_addr + e_phoff, which assumes the headers
-are mapped 1:1 from file offset 0. This breaks when the headers are elsewhere.
+As reported in https://gitlab.com/qemu-project/qemu/-/work_items/3334,
+callers of 'pci_host_config_{read,write}_common' can pass length as 8,
+causing an assert failure
 
-The Linux kernel instead locates the PT_LOAD segment that contains e_phoff,
-then computes the in-memory address as p_vaddr + (e_phoff - p_offset). This
-correctly handles relocated headers.
+The original issue with pnv_phb3 triggering the assert was fixed in a
+previous commit
 
-Fix by:
-1. Add phdr_addr field to image_info to cache the resolved address.
-2. Initialize to load_addr + e_phoff (fallback for headers outside any PT_LOAD).
-3. In the PT_LOAD mapping loop, detect if the segment contains e_phoff and
-   override with the segment-relative address.
-4. Use info->phdr_addr for AT_PHDR instead of the incorrect formula.
+Instead of asserting on invalid length, check if the length is valid
+(<=4), otherwise return (with the failure error code in read)
 
-Signed-off-by: Akshit Yadav <valium7171@gmail.com>
-Reviewed-by: Helge Deller <deller@gmx.de>
-(cherry picked from commit 156e536a7b9700018aaa2437072c14e3376340a7)
+Reported-by: Zexiang Zhang <chan9yan9@gmail.com>
+Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Message-Id: <20260326190438.734239-3-adityag@linux.ibm.com>
+(cherry picked from commit c7209c56718107fefd5deae140a450954d31ff2b)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/linux-user/elfload.c b/linux-user/elfload.c
-index 0e757787d2..b995a85eaf 100644
---- a/linux-user/elfload.c
-+++ b/linux-user/elfload.c
-@@ -699,7 +699,7 @@ static abi_ulong create_elf_tables(abi_ulong p, int argc, int envc,
-     /* There must be exactly DLINFO_ITEMS entries here, or the assert
-      * on info->auxv_len will trigger.
-      */
--    NEW_AUX_ENT(AT_PHDR, (abi_ulong)(info->load_addr + exec->e_phoff));
-+    NEW_AUX_ENT(AT_PHDR, (abi_ulong)(info->phdr_addr));
-     NEW_AUX_ENT(AT_PHENT, (abi_ulong)(sizeof (struct elf_phdr)));
-     NEW_AUX_ENT(AT_PHNUM, (abi_ulong)(exec->e_phnum));
-     NEW_AUX_ENT(AT_PAGESZ, (abi_ulong)(TARGET_PAGE_SIZE));
-@@ -1469,6 +1469,12 @@ static void load_elf_image(const char *image_name, const ImageSource *src,
-     info->data_offset = load_bias;
-     info->load_addr = load_addr;
-     info->entry = ehdr->e_entry + load_bias;
-+    /*
-+     * Fallback for AT_PHDR if the program headers do not fall within
-+     * any PT_LOAD segment (see the loop below, which overrides this with
-+     * the correct in-memory address when a containing segment is found).
-+     */
-+    info->phdr_addr = load_addr + ehdr->e_phoff;
-     info->start_code = -1;
-     info->end_code = 0;
-     info->start_data = -1;
-@@ -1523,6 +1529,19 @@ static void load_elf_image(const char *image_name, const ImageSource *src,
-             vaddr_ef = vaddr + eppnt->p_filesz;
-             vaddr_em = vaddr + eppnt->p_memsz;
+diff --git a/hw/pci/pci_host.c b/hw/pci/pci_host.c
+index 7179d99178..9a0f80da53 100644
+--- a/hw/pci/pci_host.c
++++ b/hw/pci/pci_host.c
+@@ -81,7 +81,12 @@ void pci_host_config_write_common(PCIDevice *pci_dev, uint32_t addr,
+         return;
+     }
  
-+            /*
-+             * If this segment contains the program headers, record their
-+             * in-memory address for AT_PHDR. This matches the kernel, which
-+             * locates the headers via the containing PT_LOAD rather than
-+             * assuming load_addr + e_phoff (false when the phdrs are not
-+             * mapped 1:1 from file offset 0, e.g. relocated into their own
-+             * segment by a binary patcher).
-+             */
-+            if (eppnt->p_offset <= ehdr->e_phoff &&
-+                ehdr->e_phoff < eppnt->p_offset + eppnt->p_filesz) {
-+                info->phdr_addr = vaddr + (ehdr->e_phoff - eppnt->p_offset);
-+            }
+-    assert(len <= 4);
++    if (len > 4) {
++        PCI_DPRINTF("%s: invalid length access: addr " HWADDR_FMT_plx " \
++            len %d val %"PRIx32"\n", __func__, addr, len, val);
++        return;
++    }
 +
-             /*
-              * Some segments may be completely empty, with a non-zero p_memsz
-              * but no backing file segment.
-diff --git a/linux-user/qemu.h b/linux-user/qemu.h
-index 7f98fb2607..a9dda4bbd7 100644
---- a/linux-user/qemu.h
-+++ b/linux-user/qemu.h
-@@ -26,6 +26,7 @@
- struct image_info {
-         abi_ulong       load_bias;
-         abi_ulong       load_addr;
-+        abi_ulong       phdr_addr;
-         abi_ulong       start_code;
-         abi_ulong       end_code;
-         abi_ulong       start_data;
+     /* non-zero functions are only exposed when function 0 is present,
+      * allowing direct removal of unexposed functions.
+      */
+@@ -106,7 +111,12 @@ uint32_t pci_host_config_read_common(PCIDevice *pci_dev, uint32_t addr,
+         return ~0x0;
+     }
+ 
+-    assert(len <= 4);
++    if (len > 4) {
++        PCI_DPRINTF("%s: invalid length access: addr " HWADDR_FMT_plx " \
++            len %d val %"PRIx32"\n", __func__, addr, len, val);
++        return ~0x0;
++    }
++
+     /* non-zero functions are only exposed when function 0 is present,
+      * allowing direct removal of unexposed functions.
+      */
 -- 
 2.47.3
 
