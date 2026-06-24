@@ -4,113 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53348CDB481
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 14:14:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B836DCDB479
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 14:22:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcOMD-0000tx-Ng; Wed, 24 Jun 2026 10:13:37 -0400
+	id 1wcOUD-0006NK-8p; Wed, 24 Jun 2026 10:21:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wcOM5-0000tM-FA
- for qemu-devel@nongnu.org; Wed, 24 Jun 2026 10:13:29 -0400
-Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1wcOUB-0006My-3E
+ for qemu-devel@nongnu.org; Wed, 24 Jun 2026 10:21:51 -0400
+Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wcOLs-0006Yv-CL
- for qemu-devel@nongnu.org; Wed, 24 Jun 2026 10:13:18 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 5B29676087;
- Wed, 24 Jun 2026 14:13:12 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1782310393; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=Nh9fuyMvTLDyYp8hOlh8VJ6SZ878Ag/1mlv0365pJv4=;
- b=o3kgL3rIqbW3BX1WUen22kwEma3hP1GzSXjHjtHOBrryv/KiZEsidpmb4GQO1xRyrV9Hr7
- pPzGrzgXAoxZ+J2oEMA1fh+5S9op4j5A1Q+w/piFLdCO6NTvkMXgNeBaE0OzZGXStEH5MA
- 8V+WFFtzHF6VTEjnWNvjyfjXYyyF/9Y=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1782310393;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=Nh9fuyMvTLDyYp8hOlh8VJ6SZ878Ag/1mlv0365pJv4=;
- b=/SylvyXek4bujQR9uiJ+E1hAyyroT1drktJmHUMDf/akB6997cqrArQJo0spj2UR0ID9r+
- O/0szrtFg2aUi0AQ==
-Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=FS09SwoT;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b="H/CxjJo7"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1782310392; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=Nh9fuyMvTLDyYp8hOlh8VJ6SZ878Ag/1mlv0365pJv4=;
- b=FS09SwoTkaUIK3QgVM3COzSBGWUw9Qgy5wgzsFeQzpiMvYxi9DkhLWUazDiVb9Gpk9BWIS
- UeC75jC8Y5Pdlu8xUS/61nMCAdKfS0Js+qSGcw5ktmOjdFOOyZm1gVdX8OJDSjI/y1egT0
- LEy0hCJcRPzEm1spOe7zlmjMPLKXTQI=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1782310392;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=Nh9fuyMvTLDyYp8hOlh8VJ6SZ878Ag/1mlv0365pJv4=;
- b=H/CxjJo7LmsVczh+P26PBdpc4FXNesg7JJk2NwzY+ypRUMFCARkxCFAluT49DfeOo77Fuu
- cUtF1kpiskZuUIAw==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id ECEEA779A8;
- Wed, 24 Jun 2026 14:13:11 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id 9pa6LvflO2q8NAAAD6G6ig
- (envelope-from <farosas@suse.de>); Wed, 24 Jun 2026 14:13:11 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Aadeshveer Singh <aadeshveer07@gmail.com>, qemu-devel@nongnu.org
-Cc: peterx@redhat.com, pbonzini@redhat.com, philmd@mailo.com,
- lvivier@redhat.com, ayoub@saferwall.com, Aadeshveer Singh
- <aadeshveer07@gmail.com>
-Subject: Re: [RFC PATCH 0/5] migration: fast snapshot load
-In-Reply-To: <20260618032010.88755-1-aadeshveer07@gmail.com>
-References: <20260618032010.88755-1-aadeshveer07@gmail.com>
-Date: Wed, 24 Jun 2026 11:13:05 -0300
-Message-ID: <878q84owlq.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1wcOU9-0007y6-Kv
+ for qemu-devel@nongnu.org; Wed, 24 Jun 2026 10:21:50 -0400
+Received: by mail-wr1-x436.google.com with SMTP id
+ ffacd0b85a97d-46cbf263113so526220f8f.1
+ for <qemu-devel@nongnu.org>; Wed, 24 Jun 2026 07:21:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1782310907; x=1782915707; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=VnXpZMdqQfKdjZBdNd7Tc2qVPloMYt9KTFGuavuUuWg=;
+ b=Ts2cvjoy9WWzENpacOubIElRK0fWnrRsHW+lJy58yxawPYnMQ1vXk5Kvex7lx1W+td
+ uRcWiD21X1Vb7XPVqIaQJioeozlty3wRI3i0z+X/43Dh1ULW/+SO2zmMs/XI4qUuC+F5
+ Y90D2p4WLIcno/EtGjGSdUm4tgUdEvqU3hlDR5GzfJhHqQBm/ERFoKD422KJQFHAqRNE
+ EmFfBvYd8ndI6A+87xqDnVkh6H/ZJQXLU4DBgJGJnN6Js3pCn5l8u7iFHswur/btumAv
+ vvs3FFOrNxYbG8pkU+vsed0t5PP0FM937Cd8e8XGhHLcCkesG23jim9QNCAPVTZg24GQ
+ g7zA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1782310907; x=1782915707;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=VnXpZMdqQfKdjZBdNd7Tc2qVPloMYt9KTFGuavuUuWg=;
+ b=EEA9w15cWV6UpbHl7fD+93afijRAWLaIOei5nAFpROHmwLCa9LzV0GXYH3ORid2mcp
+ 7P6P1krryQ/GGwQhhmAyOa4pOoiVqd/oEoCmR2PwT/CZrS2WHNpyf+5AqK5ljRu18sH2
+ g82FEYng3k8TRE9FeLtlcI0uiXdLQjrpqZVmh+VaDKw0IXAcR9+RkaW+OxxpELk+TQbi
+ Drg9zjt70DyyRLjIrU23o3XtnzN8hdpPnMDH9YN1mMMM4aFhn3DwJ480E0KFnQWfaL6P
+ otvGHYeS9VNj8TOt0QYvGSH9vamUqZ94l8MZ81+1xi5w/Lq15IsmG2fgtEZ7hU4WJ7kz
+ PvRw==
+X-Gm-Message-State: AOJu0YwR4t6pgsHUzNj/wsjj6K19s33tTO8tdC6jmmk7Lr/oVFB6guT5
+ k40ggvxEnOJW/X6d1bUayroNGGlkMoj5JWmPFZvcOJhaucBirzzMya7f8aQ8DepWk+w=
+X-Gm-Gg: AfdE7ckuYQGxPWU05ZDCms+g0V8WsCm5cC86u/7AL79Z6knltWpU8DOfw73OvpHTVNl
+ H9eMFWebU27cSQNn3F+XjvhL2nLNgMSUiW6h64qm7XseA1Qd6rD9v/5oUp5kz476f18VCxaKa1b
+ PxF2UfWf896PHK+gculGOTHn8RWu5duCnRUpCThlqsdVcVQry+8u+kjf6+YKxFGF5hrYESvO2P+
+ D8eKGbPivUP8+YrHSGOD/FmfuuCXoLpak5prHbzwlH4W6X/iVu/7UKmA3UeomaVIFYkB9jMQwOZ
+ i5W0OmxSr/yM2p2qLuEk2F9TjdQfUjYyIWYsjKpXLmZ0ji1lTumc7r5BxrUxmiGt52Fu7AN8NJJ
+ ubXwpONpjpy/dKIdHzxqZSaZcYzBwnbuXYl4Mby00F+PnFQskEiCBmXpXIYH+j/sVNoOLr6hx11
+ LWkM+XCHCEWv1i
+X-Received: by 2002:a05:600c:6097:b0:492:4a56:68fa with SMTP id
+ 5b1f17b1804b1-49260872e27mr52303015e9.24.1782310906988; 
+ Wed, 24 Jun 2026 07:21:46 -0700 (PDT)
+Received: from draig.lan ([185.124.0.195]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4923fd30078sm459101905e9.7.2026.06.24.07.21.46
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 24 Jun 2026 07:21:46 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 4F26B5F80B;
+ Wed, 24 Jun 2026 15:21:45 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org,  Thomas Huth <thuth@redhat.com>,  Paolo Bonzini
+ <pbonzini@redhat.com>,  Manos Pitsidianakis
+ <manos.pitsidianakis@linaro.org>,  Daniel P . =?utf-8?Q?Berrang=C3=A9?=
+ <berrange@redhat.com>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>,
+ qemu-arm@nongnu.org,  Richard Henderson <richard.henderson@linaro.org>,
+ Alexandre Iooss <erdnaxe@crans.org>,  Peter Maydell
+ <peter.maydell@linaro.org>,  Gustavo Romero <gustavo.romero@linaro.org>
+Subject: Re: [PATCH 01/27] tests/tcg/multiarch/system/memory.c: remove
+ unused variable
+In-Reply-To: <20260609214745.772536-2-pierrick.bouvier@oss.qualcomm.com>
+ (Pierrick Bouvier's message of "Tue, 9 Jun 2026 14:47:19 -0700")
+References: <20260609214745.772536-1-pierrick.bouvier@oss.qualcomm.com>
+ <20260609214745.772536-2-pierrick.bouvier@oss.qualcomm.com>
+User-Agent: mu4e 1.14.2; emacs 30.1
+Date: Wed, 24 Jun 2026 15:21:45 +0100
+Message-ID: <87cxxgkohy.fsf@draig.linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; FREEMAIL_ENVRCPT(0.00)[gmail.com];
- TO_MATCH_ENVRCPT_ALL(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FREEMAIL_TO(0.00)[gmail.com,nongnu.org];
- RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
- FUZZY_RATELIMITED(0.00)[rspamd.com]; MIME_TRACE(0.00)[0:+];
- ARC_NA(0.00)[];
- FREEMAIL_CC(0.00)[redhat.com,mailo.com,saferwall.com,gmail.com];
- RCVD_TLS_ALL(0.00)[]; DKIM_TRACE(0.00)[suse.de:+];
- RCVD_COUNT_TWO(0.00)[2]; FROM_EQ_ENVFROM(0.00)[];
- FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[];
- MID_RHS_MATCH_FROM(0.00)[];
- RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- RCPT_COUNT_SEVEN(0.00)[8]; MISSING_XM_UA(0.00)[];
- RCVD_VIA_SMTP_AUTH(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid,suse.de:dkim]
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Rspamd-Queue-Id: 5B29676087
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
- envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::436;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -127,79 +112,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Aadeshveer Singh <aadeshveer07@gmail.com> writes:
+Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> writes:
 
-> This RFC implements a "fast snapshot load" mechanism to significantly
-> reduce the perceived resume time of a VM from a snapshot file.
+> Caught this since by compiling this file with -Wall, -Werror.
 >
-> Currently, resuming a VM from a snapshot file requires loading all RAM
-> pages into the QEMU instance before execution begins. This extension
-> allows the user to run the VM nearly instantly by loading only the
-> required device states up front and loading RAM pages lazily, by
-> trapping access to pages that have not yet been loaded.
+> ../tests/tcg/aarch64/system/../../multiarch/system/memory.c: In function =
+=E2=80=98init_test_data_s8=E2=80=99:
+> ../tests/tcg/aarch64/system/../../multiarch/system/memory.c:97:18: error:=
+ unused variable =E2=80=98bottom=E2=80=99 [-Werror=3Dunused-variable]
+>    97 |     uint8_t top, bottom, *ptr =3D &test_data[0];
+>       |                  ^~~~~~
+> ../tests/tcg/aarch64/system/../../multiarch/system/memory.c:97:13: error:=
+ unused variable =E2=80=98top=E2=80=99 [-Werror=3Dunused-variable]
+>    97 |     uint8_t top, bottom, *ptr =3D &test_data[0];
+>       |             ^~~
+> ../tests/tcg/aarch64/system/../../multiarch/system/memory.c: In function =
+=E2=80=98read_test_data_s8=E2=80=99:
+> ../tests/tcg/aarch64/system/../../multiarch/system/memory.c:384:14: error=
+: unused variable =E2=80=98ok=E2=80=99 [-Werror=3Dunused-variable]
+>   384 |         bool ok;
+>       |
 >
-> Using the Linux userfaultfd syscall, a fault thread catches all page
-> faults caused by the guest and loads in the pages required to keep
-> the VM running. Concurrently, an eager background thread iteratively
-> loads all remaining pages into RAM so the guest does not have to
-> depend on the fault thread indefinitely.
->
-> Much of code is reused from postcopy for fault handling and precopy
-> for reading mapped ram file. Implementation revolves around two
-> threads named the fault thread and eager load thread. Fault thread as
-> name suggests catches page faults by the guest and serves them using
-> userfaultfd. Postcopy fault thread is reused but instead of requesting
-> source for a page it loads the page directly by reading form file. In
-> order to remove the dependency of guest on fault thread indefinitely
-> the eager load thread loads in the entire RAM sequentially, and after
-> iterating through the entire RAM signals fault thread to exit and
-> calls cleanup.
->
-> In order to prevent the case of a page being loaded twice(in the
-> case when eager load thread is loading it and fault thread also
-> tries to serve fault on same page) a bitmap called pending_bmap is
-> used to track pages which are pending and not being loaded by any
-> thread. Atomic operations on this bitmap allows coordination between
-> threads to prevent any unwanted behaviours
->
+> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 
-How does it work if a second savevm happens while the RAM has not been
-yet entirely loaded?
+Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
 
-> This patch was tested using a Debian 13 bare minimum system and Fedora
-> 44 KDE, snapshots for both are loaded successfully with no error.
->
-> Next Steps:
-> - Add testing framework, in qtest and unit tests
-> - Add support for postcopy-blocktime
-> - Update documentation
->
-> Future direction:
-> - Add support for hugepages
-> - Add support for multifd
-> - Add support for vhost-user
->
-> Aadeshveer Singh (5):
->   migration: add RAM Block fields and helpers for fast snapshot load
->   migration: add support for fault thread to load pages from disk
->   migration: add eager load thread for fast snapshot load
->   migration: write up code to run fast snapshot load in
->     qemu_loadvm_state
->   migration/tests: remove capability conflict test
->     postcopy-ram+mapped-ram
->
->  include/system/ramblock.h          |   8 ++
->  migration/migration.c              |  10 +-
->  migration/migration.h              |   5 +
->  migration/options.c                |  11 +-
->  migration/options.h                |   1 +
->  migration/postcopy-ram.c           | 167 ++++++++++++++++++++++++++---
->  migration/postcopy-ram.h           |   2 +
->  migration/qemu-file.c              |  10 +-
->  migration/ram.c                    |  61 +++++++++--
->  migration/savevm.c                 |  52 ++++++++-
->  migration/savevm.h                 |   2 +
->  migration/trace-events             |   2 +
->  tests/qtest/migration/misc-tests.c |  52 ---------
->  13 files changed, 283 insertions(+), 100 deletions(-)
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
