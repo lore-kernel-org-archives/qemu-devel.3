@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4329FCDB47F
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 17:40:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C4BECDB479
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 17:40:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcRZk-00027A-7A; Wed, 24 Jun 2026 13:39:48 -0400
+	id 1wcRaB-0003Ww-74; Wed, 24 Jun 2026 13:40:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wcRZf-0001gQ-Fy
- for qemu-devel@nongnu.org; Wed, 24 Jun 2026 13:39:43 -0400
+ id 1wcRa8-0003Wf-VX
+ for qemu-devel@nongnu.org; Wed, 24 Jun 2026 13:40:12 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wcRZd-0004ba-JI
- for qemu-devel@nongnu.org; Wed, 24 Jun 2026 13:39:42 -0400
+ id 1wcRa6-0004gX-Rs
+ for qemu-devel@nongnu.org; Wed, 24 Jun 2026 13:40:12 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1782322780;
+ s=mimecast20190719; t=1782322810;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=qct9syha0Ea7OHzgDYRSm3VM3WvVH27KZLPe/ILOwPE=;
- b=H2oQsDSg6DKIwKNi6B2Ne+xbKya3n1rXBZFA51ZYZDTtkdkSo+q0phajly0/1hSMAswOGR
- jCdJBWslH5uvGaidE+aF3fp+ezUGUHc6Q3LobZ5RgiR9/YC8RIc+RjIxyqfUwFzEvhXfJ4
- LoO3h0506SxyNcnHHd/voKuy/mYwb04=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ bh=KZ818oC779+VWCiuGiA4oz4vM0HGeQeVUHVMqzE07oU=;
+ b=A/9QoKdkSQhHv3TzNrhdLDfGFlvOSTNB0iCzBO+Q8geSnMyTVo3utYHLvkrq8u2cLtxSJh
+ o7TvEMOAK6Mpdk78Cknlk7aJEEp+AxcQuc6O0VpBOXpZo8AddqRTiUXYmyHh6MzPjSSwyD
+ K46+iai8Qw93+Ro9uruw/iz9sEeMsQQ=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-413-UzOxt4_TNuyq2NBaJpqcKw-1; Wed,
- 24 Jun 2026 13:39:36 -0400
-X-MC-Unique: UzOxt4_TNuyq2NBaJpqcKw-1
-X-Mimecast-MFC-AGG-ID: UzOxt4_TNuyq2NBaJpqcKw_1782322775
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-315-chHDJbxFMsqBRwCY-KS_yA-1; Wed,
+ 24 Jun 2026 13:40:07 -0400
+X-MC-Unique: chHDJbxFMsqBRwCY-KS_yA-1
+X-Mimecast-MFC-AGG-ID: chHDJbxFMsqBRwCY-KS_yA_1782322806
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5873E180059D; Wed, 24 Jun 2026 17:39:35 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5001E1805A10; Wed, 24 Jun 2026 17:40:06 +0000 (UTC)
 Received: from berrange.com (unknown [10.44.32.102])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id D4064180028B; Wed, 24 Jun 2026 17:39:31 +0000 (UTC)
+ id 184E7180028B; Wed, 24 Jun 2026 17:40:02 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: devel@lists.libvirt.org,
@@ -58,10 +58,10 @@ Cc: devel@lists.libvirt.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Peter Krempa <pkrempa@redhat.com>
-Subject: [PATCH v5 24/35] monitor: reject attempts to delete the current
- monitor
-Date: Wed, 24 Jun 2026 18:37:40 +0100
-Message-ID: <20260624173752.2928717-25-berrange@redhat.com>
+Subject: [PATCH v5 32/35] monitor: add support for auto-deleting monitors upon
+ close
+Date: Wed, 24 Jun 2026 18:37:48 +0100
+Message-ID: <20260624173752.2928717-33-berrange@redhat.com>
 In-Reply-To: <20260624173752.2928717-1-berrange@redhat.com>
 References: <20260624173752.2928717-1-berrange@redhat.com>
 MIME-Version: 1.0
@@ -92,84 +92,337 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Christian Brauner <brauner@kernel.org>
+The default monitor is usually a long lived object that will exist for
+the entire lifetime of the VM. A monitor can only service a single
+client at a time though, and so it might be desirable to hotplug
+additional monitors at runtime for specific tasks. If doing that,
+however, there is a need to remove the monitor when it is no longer
+needed.
 
-If an 'object_del' command for a QMP monitor arrives targetting the
-current monitor, reject this request. If the current monitor is
-deleted, it will be impossible to send any reply and the client won't
-be able to remove the corresponding chardev backend.
+Allowing a client to run "object-del" against its own monitor adds
+complex edge cases, as it would be desirable to send the QMP response
+despite the monitor sending it being deleted. Doing "object-del" alone
+will also result in orphaning a character device backend instance, as
+there is no opportunity to run the companion "chardev-del" command.
 
-Note, it is not possible to rely on checking monitor_cur() because
-if 'object_del' is called via human-monitor-command, monitor_cur()
-will reflect the temporary HMP, not the QMP target that needs to
-be checked.
+A simpler way to ensure cleanup is to add the concept of auto-deleting
+monitor objects. Specifically when the "CHR_EVENT_CLOSED" event is
+emitted, the equivalent of "object-del" + "chardev-del" can be run
+internally. Since the transient client has already droppped its
+monitor connection, there is no synchronization to be concerned about.
 
-Signed-off-by: Christian Brauner (Amutable) <brauner@kernel.org>
-[DB: extracted monitor tracking from larger commit; added logic
-     to monitor_qmp_prepare_delete to reject request]
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+This is implemented via a new "close-action=none|delete" property on
+the 'monitor-qmp' object. This concept could be extended with further
+actions in future, for example:
+
+ * close-action=shutdown - graceful guest shutdown
+ * close-action=terminate - immediate guest poweroff
+ * close-action=stop - pause guest CPUs while the monitor is not
+                       connected to any client
+
+This is left as an exercise for future interested contributors.
+
 Tested-by: Peter Krempa <pkrempa@redhat.com>
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- monitor/qmp.c | 17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
+ monitor/monitor-internal.h                    |  3 +
+ monitor/qmp.c                                 | 75 +++++++++++++++++
+ qapi/qom.json                                 | 21 ++++-
+ .../generic/test_monitor_hotplug.py           | 83 ++++++++++++++++++-
+ 4 files changed, 177 insertions(+), 5 deletions(-)
 
+diff --git a/monitor/monitor-internal.h b/monitor/monitor-internal.h
+index 5522e05464..23829f32f9 100644
+--- a/monitor/monitor-internal.h
++++ b/monitor/monitor-internal.h
+@@ -28,6 +28,7 @@
+ #include "chardev/char-fe.h"
+ #include "monitor/monitor.h"
+ #include "qapi/qapi-types-control.h"
++#include "qapi/qapi-types-qom.h"
+ #include "qapi/qmp-registry.h"
+ #include "qobject/json-parser.h"
+ #include "qemu/readline.h"
+@@ -178,7 +179,9 @@ struct MonitorQMP {
+     Monitor parent_obj;
+     JSONMessageParser parser;
+     bool pretty;
++    MonitorQMPCloseAction close_action;
+     bool setup_pending; /* iothread BH has not yet set up chardev handlers */
++    bool delete_pending; /* close_action has started 'delete' process */
+     /*
+      * When a client connects, we're in capabilities negotiation mode.
+      * @commands is &qmp_cap_negotiation_commands then.  When command
 diff --git a/monitor/qmp.c b/monitor/qmp.c
-index 0e1c3eb52b..b0535dec68 100644
+index 5301927f09..1057b0d12b 100644
 --- a/monitor/qmp.c
 +++ b/monitor/qmp.c
-@@ -72,6 +72,9 @@ typedef struct QMPRequest QMPRequest;
- 
- QmpCommandList qmp_commands, qmp_cap_negotiation_commands;
- 
-+/* Monitor being serviced by the dispatcher.  Protected by BQL. */
-+static MonitorQMP *qmp_dispatcher_current_mon;
-+
- OBJECT_DEFINE_TYPE(MonitorQMP, monitor_qmp, MONITOR_QMP, MONITOR);
- 
- static void monitor_qmp_cleanup_req_queue_locked(MonitorQMP *mon);
-@@ -369,6 +372,7 @@ void coroutine_fn monitor_qmp_dispatcher_co(void *data)
-          */
- 
-         mon = req_obj->mon;
-+        qmp_dispatcher_current_mon = mon;
- 
-         /*
-          * We need to resume the monitor if handle_qmp_command()
-@@ -429,6 +433,7 @@ void coroutine_fn monitor_qmp_dispatcher_co(void *data)
-         }
- 
-         qmp_request_free(req_obj);
-+        qmp_dispatcher_current_mon = NULL;
-     }
-     qatomic_set(&qmp_dispatcher_co, NULL);
- }
-@@ -573,6 +578,11 @@ static void monitor_qmp_event(void *opaque, QEMUChrEvent event)
-     }
+@@ -28,6 +28,7 @@
+ #include "monitor-internal.h"
+ #include "qapi/error.h"
+ #include "qapi/qapi-commands-control.h"
++#include "qapi/qapi-commands-char.h"
+ #include "qobject/qdict.h"
+ #include "qobject/qjson.h"
+ #include "qobject/qlist.h"
+@@ -103,6 +104,20 @@ static void monitor_qmp_set_pretty(Object *obj, bool val, Error **errp)
+     mon->pretty = val;
  }
  
-+static bool monitor_qmp_dispatcher_is_servicing(MonitorQMP *mon)
++static int monitor_qmp_get_close_action(Object *obj, Error **errp)
 +{
-+    return qmp_dispatcher_current_mon == mon;
++    MonitorQMP *mon = MONITOR_QMP(obj);
++
++    return mon->close_action;
 +}
 +
- static void monitor_qmp_setup_handlers_bh(void *opaque)
- {
-     MonitorQMP *mon = opaque;
-@@ -646,6 +656,13 @@ static void monitor_qmp_complete(UserCreatable *uc, Error **errp)
- 
- static bool monitor_qmp_prepare_delete(UserCreatable *uc, Error **errp)
- {
-+    MonitorQMP *qmp = MONITOR_QMP(uc);
++static void monitor_qmp_set_close_action(Object *obj, int val, Error **errp)
++{
++    MonitorQMP *mon = MONITOR_QMP(obj);
 +
-+    if (monitor_qmp_dispatcher_is_servicing(qmp)) {
-+        error_setg(errp, "Cannot delete the current QMP monitor");
-+        return false;
++    mon->close_action = val;
++}
++
+ static void monitor_qmp_emit_event(Monitor *mon, QAPIEvent event, QDict *qdict);
+ static bool monitor_qmp_requires_iothread(const Monitor *mon);
+ static void monitor_qmp_complete(UserCreatable *uc, Error **errp);
+@@ -117,6 +132,11 @@ static void monitor_qmp_class_init(ObjectClass *cls, const void *data)
+     object_class_property_add_bool(cls, "pretty",
+                                    monitor_qmp_get_pretty,
+                                    monitor_qmp_set_pretty);
++    object_class_property_add_enum(cls, "close-action",
++                                   "MonitorQMPCloseAction",
++                                   &MonitorQMPCloseAction_lookup,
++                                   monitor_qmp_get_close_action,
++                                   monitor_qmp_set_close_action);
+ 
+     moncls->emit_event = monitor_qmp_emit_event;
+     moncls->requires_iothread = monitor_qmp_requires_iothread;
+@@ -550,11 +570,45 @@ static QDict *qmp_greeting(MonitorQMP *mon)
+         ver, cap_list);
+ }
+ 
++static void monitor_qmp_self_delete_bh(void *opaque)
++{
++    MonitorQMP *mon = opaque;
++    g_autofree char *mon_id = object_property_get_child_name(
++        object_get_objects_root(), OBJECT(mon));
++    g_autofree char *chardev_id = g_strdup(mon->parent_obj.chardev_id);
++    Error *local_error = NULL;
++
++    if (!mon_id) {
++        /* Another monitor raced & ran 'object-del' on 'mon'
++         * before this BH got scheduled, so we have a ref on
++         * mon but it is already unparented.
++         */
++        object_unref(mon);
++        return;
 +    }
 +
-     error_setg(errp, "Deleting QMP monitors is not supported");
-     return false;
- }
++    user_creatable_del(mon_id, &local_error);
++    object_unref(mon);
++    if (local_error != NULL) {
++        error_report_err(local_error);
++    } else {
++        qmp_chardev_remove(chardev_id, NULL);
++    }
++}
++
+ static void monitor_qmp_event(void *opaque, QEMUChrEvent event)
+ {
+     QDict *data;
+     MonitorQMP *mon = opaque;
+ 
++    /* Protect against race if a client drops & quickly
++     * reconnects - we'll have the delete BH scheduled
++     * so must not honour a new open request
++     */
++    if (mon->delete_pending) {
++        return;
++    }
++
+     switch (event) {
+     case CHR_EVENT_OPENED:
+         WITH_QEMU_LOCK_GUARD(&mon->parent_obj.mon_lock) {
+@@ -577,6 +631,27 @@ static void monitor_qmp_event(void *opaque, QEMUChrEvent event)
+         json_message_parser_init(&mon->parser, handle_qmp_command,
+                                  mon, NULL);
+         monitor_fdsets_cleanup();
++        switch (mon->close_action) {
++        case MONITOR_QMP_CLOSE_ACTION_NONE:
++            break; /* nada */
++        case MONITOR_QMP_CLOSE_ACTION_DELETE:
++            mon->delete_pending = true;
++            /*
++             * Do NOT run in the AIO context associated with the
++             * monitor. We need to run in the default AIO context
++             * which is the same context in which 'qmp_object_del'
++             * will execute
++             *
++             * Hold an extra ref in case a separate monitor races
++             * with the BH by processing an explicit 'object-del'
++             */
++            object_ref(mon);
++            aio_bh_schedule_oneshot(qemu_get_aio_context(),
++                                    monitor_qmp_self_delete_bh, mon);
++            break;
++        default:
++            g_assert_not_reached();
++        }
+         break;
+     case CHR_EVENT_BREAK:
+     case CHR_EVENT_MUX_IN:
+diff --git a/qapi/qom.json b/qapi/qom.json
+index 6affb70a59..b4c49a2e8b 100644
+--- a/qapi/qom.json
++++ b/qapi/qom.json
+@@ -1213,18 +1213,37 @@
+   'base': 'MonitorProperties',
+   'data': { '*readline': 'bool' } }
+ 
++
++##
++# @MonitorQMPCloseAction:
++#
++# Action to take when the character device backend is
++# closed.
++#
++# @none: take no action (the default)
++# @delete: delete both the 'monitor-qmp' object and its associated
++#          character device backend object
++#
++# Since 11.1
++##
++{ 'enum' : 'MonitorQMPCloseAction',
++  'data': ['none', 'delete'] }
++
+ ##
+ # @MonitorQMPProperties:
+ #
+ # Properties for the QMP monitor
+ #
+ # @pretty: whether to pretty print JSON responses (default: disabled)
++# @close-action: action to take when the character device backend
++#                is closed (default: none)
+ #
+ # Since: 11.1
+ ##
+ { 'struct': 'MonitorQMPProperties',
+   'base': 'MonitorProperties',
+-  'data': { '*pretty': 'bool' } }
++  'data': { '*pretty': 'bool',
++            '*close-action': 'MonitorQMPCloseAction' } }
+ 
+ ##
+ # @ObjectType:
+diff --git a/tests/functional/generic/test_monitor_hotplug.py b/tests/functional/generic/test_monitor_hotplug.py
+index 55af8a238f..86092e781c 100755
+--- a/tests/functional/generic/test_monitor_hotplug.py
++++ b/tests/functional/generic/test_monitor_hotplug.py
+@@ -25,7 +25,7 @@ def setUp(self):
+         sock_dir = self.socket_dir()
+         self._sock_path = os.path.join(sock_dir.name, 'hotplug.sock')
+ 
+-    def _add_monitor(self):
++    def _add_monitor(self, autodelete=False):
+         """Create a chardev + monitor and return the socket path."""
+         sock = self._sock_path
+         self.vm.cmd('chardev-add', id='hotplug-chr', backend={
+@@ -39,9 +39,15 @@ def _add_monitor(self):
+                 'wait': False,
+             }
+         })
+-        self.vm.cmd('object-add', id='hotplug-mon',
+-                    qom_type='monitor-qmp',
+-                    chardev='hotplug-chr')
++        if autodelete:
++            self.vm.cmd('object-add', id='hotplug-mon',
++                        qom_type='monitor-qmp',
++                        chardev='hotplug-chr',
++                        close_action='delete')
++        else:
++            self.vm.cmd('object-add', id='hotplug-mon',
++                        qom_type='monitor-qmp',
++                        chardev='hotplug-chr')
+         return sock
+ 
+     def _remove_monitor(self):
+@@ -118,6 +124,75 @@ def test_self_removal(self):
+         # Clean up the chardev
+         self.vm.cmd('chardev-remove', id='hotplug-chr')
+ 
++    def test_auto_delete(self):
++        """
++        A dynamically-added monitor configured with 'close-action=delete'
++        should see itself deleted when the client is closed.
++        """
++        self.set_machine('none')
++        self.vm.add_args('-nodefaults')
++        self.vm.launch()
++
++        sock = self._add_monitor(autodelete=True)
++
++        cdevs = [c["label"] for c in self.vm.cmd('query-chardev')]
++        objs = [o["name"] for o in self.vm.cmd('qom-list', path='/objects')]
++        assert ('hotplug-chr' in cdevs)
++        assert ('hotplug-mon' in objs)
++
++        qmp = QEMUMonitorProtocol(sock)
++        greeting = qmp.connect(negotiate=True)
++        self.assertIn('QMP', greeting)
++
++        cdevs = [c["label"] for c in self.vm.cmd('query-chardev')]
++        objs = [o["name"] for o in self.vm.cmd('qom-list', path='/objects')]
++        assert ('hotplug-chr' in cdevs)
++        assert ('hotplug-mon' in objs)
++
++        qmp.close()
++
++        # Wait upto 10 seconds max for chardev to auto-delete, which
++        # is hopefully enough for reliability under high load
++        for i in range(int(10 / 0.2)):
++            cdevs = [c["label"] for c in self.vm.cmd('query-chardev')]
++            if 'hotplug-chr' not in cdevs:
++                break
++            # Wait a little more then try again
++            time.sleep(0.2)
++
++        cdevs = [c["label"] for c in self.vm.cmd('query-chardev')]
++        objs = [o["name"] for o in self.vm.cmd('qom-list', path='/objects')]
++        assert ('hotplug-chr' not in cdevs)
++        assert ('hotplug-mon' not in objs)
++
++    def test_reconnect(self):
++        """
++        A dynamically-added monitor configured without 'close-action'
++        should allow reconnects after the client is closed.
++        """
++        self.set_machine('none')
++        self.vm.add_args('-nodefaults')
++        self.vm.launch()
++
++        sock = self._add_monitor()
++
++        qmp = QEMUMonitorProtocol(sock)
++        qmp.connect(negotiate=True)
++
++        resp = qmp.cmd_obj({'execute': 'query-chardev'})
++        self.assertIn('return', resp)
++
++        qmp.close()
++
++        qmp = QEMUMonitorProtocol(sock)
++        qmp.connect(negotiate=True)
++
++        resp = qmp.cmd_obj({'execute': 'query-chardev'})
++        self.assertIn('return', resp)
++
++        qmp.close()
++        self._remove_monitor()
++
+     def test_large_response(self):
+         """
+         Send a command with a large response (query-qmp-schema) on a
 -- 
 2.54.0
 
