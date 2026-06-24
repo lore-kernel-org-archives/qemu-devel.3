@@ -4,50 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8D59CDB470
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 05:08:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0BCE0CDB479
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 05:09:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcFn5-0004sF-Du; Wed, 24 Jun 2026 01:04:47 -0400
+	id 1wcFn5-0004sL-Hd; Wed, 24 Jun 2026 01:04:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wcFn0-0004nt-6I; Wed, 24 Jun 2026 01:04:42 -0400
+ id 1wcFn3-0004r1-6g; Wed, 24 Jun 2026 01:04:45 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wcFmy-0005HF-Ja; Wed, 24 Jun 2026 01:04:41 -0400
+ id 1wcFn1-0005Ie-JV; Wed, 24 Jun 2026 01:04:44 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1782277464; bh=gHDs/HtfRmKLqu7Xc07ZeNMMhlhMCC/Q7xG8i/OcEfs=;
+ t=1782277464; bh=JrMxlFLvzCDrqf9iyohQHCe7BScFl0mnAcGHWd1xZuA=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=Y/pIp46DfXOUNKgwh9QayTbQxGDHxbcJdYtH4OiVLLvhbUcCS2Xb/obAba0SWjLte
- 5iegwGsebfPDJNVL2qz5wRNzDfIn/hf9im9/TA1oggZ5FDDKB3kmJ9AyTZHUQkbsDe
- quy7hq9HD8z4MRS81VlgZ0VBgVeeQK8ivyr6hZJerOhXlLk7vK/Fh6pRznXNPP8OnQ
- q5Pi8cFyrMf9jY+VPHVTSAhskLV1bKHGZe3NaXdDre77XNxUFJbBCP7sGd/gTe0ZCT
- vcmVuKi2vP75+GLFRxh5GKLtbZzRAp5V8AGl4VLNMSTiGHE+IPcW8GLYs11nesW1rP
- rOkocSlclZsGQ==
+ b=EAIyp/5hluul2VN4j7Kih3HgVLhU8BCfE3Q443kOAq2kJSq0673hE3uptGkR93GAf
+ EIL45b/DWw5aHDhWYbcdJc2uAb2iHly1Q5pRq8wEWP9KGUIfH4eAkExKDxZB3bFgjb
+ dF9DErNnxeNIVCPKrl+0cDNvEEsPpHXqgoThYuAb/eEuVIf9wA+aXSvG9yvXdP45GJ
+ po2LB1VxTwBwRI2sCQw5uVX4qxXLjWQTGWANr4hKwOdsIIYn3YIlMEhewBZujKdBFe
+ CDWCaI1yLV+/ffc3Hhg48oXd3VY+PCquqCX0LCqMzm7j+hIbDCJzhEnrdPnRKZ4hSy
+ 3cGwPMWtws3VQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 940451BA632;
+ by isrv.corpit.ru (Postfix) with ESMTP id BC95D1BA634;
  Wed, 24 Jun 2026 08:04:24 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 7ABDF3DDABD;
+ by tsrv.corpit.ru (Postfix) with ESMTP id A57C73DDABF;
  Wed, 24 Jun 2026 08:04:29 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Stefano Garzarella <sgarzare@redhat.com>,
- DARKNAVY <vr@darknavy.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.11 63/86] libvduse: fix buffer overflow in
- vduse_queue_read_indirect_desc()
-Date: Wed, 24 Jun 2026 08:02:34 +0300
-Message-ID: <20260624050404.394225-7-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Chao Liu <chao.liu.zevorn@gmail.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.11 65/86] target/riscv/cpu_helper.c: allow LOAD_ADDR_MIS
+ promotion to AMO fault
+Date: Wed, 24 Jun 2026 08:02:36 +0300
+Message-ID: <20260624050404.394225-9-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.11-20260624080222@cover.tls.msk.ru>
 References: <qemu-stable-10.0.11-20260624080222@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -72,64 +71,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Stefano Garzarella <sgarzare@redhat.com>
+From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 
-vduse_queue_read_indirect_desc() copies an indirect descriptor table
-into a buffer in chunks when the table crosses a memory region
-boundary. The destination is a struct vring_desc pointer but is
-advanced by a byte count, so each increment moves the pointer by
-read_len elements instead of read_len bytes, writing beyond the
-buffer.
+promote_load_fault() is missing the promotion of misaligned AMO load
+addresses, i.e. RISCV_EXCP_LOAD_ADDR_MIS should be promoted to
+RISCV_EXCP_STORE_AMO_ADDR_MIS when RISCV_UW2_ALWAYS_STORE_AMO (i.e.
+always_storeamo is true).
 
-Use a char pointer for the destination so that the arithmetic
-advances correctly.
+All other load AMO faults are already being covered.
 
-While at it, change the source from a struct vring_desc pointer
-to a void pointer: when the table is split across regions,
-iova_to_va() can return a pointer into the middle of a descriptor,
-so casting it to a struct vring_desc pointer is wrong. The pointer is
-only used as a memcpy() source, so a void pointer is fine.
-
-Fixes: CVE-2026-6425
-Fixes: a6caeee811 ("libvduse: Add VDUSE (vDPA Device in Userspace) library")
 Cc: qemu-stable@nongnu.org
-Reported-by: DARKNAVY <vr@darknavy.com>
-Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-Id: <20260417132645.121192-3-sgarzare@redhat.com>
-(cherry picked from commit 9f1b6d013d42b112680b435af9a9dff331b3fbaf)
+Fixes: 98f21c30f5 ("target/riscv: AMO operations always raise store/AMO fault")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3503
+Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
+Message-ID: <20260522181353.429782-1-daniel.barboza@oss.qualcomm.com>
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+(cherry picked from commit d85a4ec06a65ccdd5c7d0f00b3e6695fc14a547a)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/subprojects/libvduse/libvduse.c b/subprojects/libvduse/libvduse.c
-index 21ffbb5b8d..df9ca5e56f 100644
---- a/subprojects/libvduse/libvduse.c
-+++ b/subprojects/libvduse/libvduse.c
-@@ -465,8 +465,9 @@ static int
- vduse_queue_read_indirect_desc(VduseDev *dev, struct vring_desc *desc,
-                                uint64_t addr, size_t len)
- {
--    struct vring_desc *ori_desc;
-+    char *dst_desc = (char *)desc;
-     uint64_t read_len;
-+    void *ori_desc;
+diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
+index 59f6d00774..dc21c4ee44 100644
+--- a/target/riscv/cpu_helper.c
++++ b/target/riscv/cpu_helper.c
+@@ -2218,6 +2218,9 @@ static target_ulong promote_load_fault(target_ulong orig_cause)
  
-     if (len > (VIRTQUEUE_MAX_SIZE * sizeof(struct vring_desc))) {
-         return -1;
-@@ -483,10 +484,10 @@ vduse_queue_read_indirect_desc(VduseDev *dev, struct vring_desc *desc,
-             return -1;
-         }
- 
--        memcpy(desc, ori_desc, read_len);
-+        memcpy(dst_desc, ori_desc, read_len);
-         len -= read_len;
-         addr += read_len;
--        desc += read_len;
-+        dst_desc += read_len;
+     case RISCV_EXCP_LOAD_PAGE_FAULT:
+         return RISCV_EXCP_STORE_PAGE_FAULT;
++
++    case RISCV_EXCP_LOAD_ADDR_MIS:
++        return RISCV_EXCP_STORE_AMO_ADDR_MIS;
      }
  
-     return 0;
+     /* if no promotion, return original cause */
 -- 
 2.47.3
 
