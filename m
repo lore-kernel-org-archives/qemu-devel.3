@@ -4,49 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85EF5CDE004
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 05:06:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 909B5CDE000
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 05:06:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcFn0-0004ng-BY; Wed, 24 Jun 2026 01:04:42 -0400
+	id 1wcFoT-0007Bm-Ox; Wed, 24 Jun 2026 01:06:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wcFmq-0004jB-9B; Wed, 24 Jun 2026 01:04:34 -0400
+ id 1wcFoL-00073X-7Y; Wed, 24 Jun 2026 01:06:05 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wcFmo-0005Fd-FA; Wed, 24 Jun 2026 01:04:31 -0400
+ id 1wcFoJ-0005Zy-Gj; Wed, 24 Jun 2026 01:06:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1782277463; bh=vAyKN8+M9jEln4kJ8vKcewQrLe0bjr8DlYPubHyvRMc=;
+ t=1782277465; bh=/fPUUu3k6sxOAiPY7znsBTJYposfoMb4ycWskbpVyQg=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=B5Oejxju0wsa8zS5gwT0DHjmhRLwX/vN9XyUvfmnoA7LoQCNROsT760Jr6YY/iHjq
- OR55KTg24CNeMnvCoUUdjnul11DL91G++a5R8GjnkaFV8hHtFN4sHzk5oNcHl/klZf
- hDYD7KuXDZZFrH3LEvP5UVuYJYin67ioPgAIIrUowDhw9WqaYp6/MTFF0g2rmxigwX
- 7fhHxwMiSbDOSbaUKEslOIsDPLlL4JyHqz4zgENtdHEYeuHbIVjRibxsWovkML3DKu
- 91XsZNv70tG6RLsNEZ4J1a0B90B119UVgBvqcARi7KSQPEYOzmhpTCpdmPB+IwHzTl
- IS1ojiBi/w4CA==
+ b=GTEBqzrE1ghfsri4h94xOKkqNSz4sxVfq+OAHeXcZmsb0kWBCFXHhRoyjtBtOoStY
+ 4gILaUB6twi5hROPR3eUJnwNMhSAMCWKdCNlGL0txzqyy9HSJ2sypL1m/gEWYB52VD
+ XtQCAWFP/1wNr/eMaRoOePSSVigFkXA+Ju9PzOQ+KUwASXdbpXG4rkqV/V3wGuhRnc
+ nWCUnvT4F5Os7dMkLXivuOA+P3eY3c5kCxlC3DH5h++wBXcyu4YLjAP4A++W0vDnM1
+ A7+0If5q/2esrGm1FyZae2hon6r/4rXLTg8MXSJnN09JGAENt5FTPZz0K3P+b17a4v
+ 1kwvXCIXNIcYQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id E23261BA62C;
- Wed, 24 Jun 2026 08:04:23 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 975291BA640;
+ Wed, 24 Jun 2026 08:04:25 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id C37583DDAB7;
- Wed, 24 Jun 2026 08:04:28 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 80F6A3DDACB;
+ Wed, 24 Jun 2026 08:04:30 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Thomas Huth <thuth@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Laurent Vivier <laurent@vivier.eu>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.11 57/86] system/rtc: Fix a possible year-2038 integer
- overflow problem
-Date: Wed, 24 Jun 2026 08:02:28 +0300
-Message-ID: <20260624050404.394225-1-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Christian Schoenebeck <qemu_oss@crudebyte.com>,
+ Feifan Qian <bea1e@proton.me>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.11 77/86] hw/9pfs: fix abort due to illegal name with
+ Twstat rename
+Date: Wed, 24 Jun 2026 08:02:48 +0300
+Message-ID: <20260624050404.394225-21-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.11-20260624080222@cover.tls.msk.ru>
 References: <qemu-stable-10.0.11-20260624080222@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -71,43 +69,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Thomas Huth <thuth@redhat.com>
+From: Christian Schoenebeck <qemu_oss@crudebyte.com>
 
-rtc_realtime_clock_offset is initialized with:
+The legacy Twstat 9p request can be used to rename files and directories.
+Unlike the other, more recent rename requests like Trename and Trenameat,
+Twstat does not validate the submitted new name before passing it to
+v9fs_complete_rename().
 
-  rtc_realtime_clock_offset = qemu_clock_get_ms(QEMU_CLOCK_REALTIME) / 1000;
+A priviliged guest user with direct communication access to 9p server
+could pass a string containing '/' as new name, which causes an assertion
+fault (DoS) in local_name_to_path().
 
-And QEMU_CLOCK_REALTIME might be based on gettimeofday() in certain
-cases (see get_clock_realtime() in include/qemu/timer.h). So this
-counter will exceed 32 bits in the year 2038, thus we should not
-store this value in a normal integer variable. Change it to a time_t
-to fix the problem.
-And while we're at it, also adjust the nearby rtc_host_datetime_offset
-variable to be on the safe side in the related code.
+Fix this by rejecting such strings by checking the client supplied new
+name with name_is_illegal(), similar to how Trename and Trenameat handlers
+do already.
 
-Signed-off-by: Thomas Huth <thuth@redhat.com>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Reviewed-by: Laurent Vivier <laurent@vivier.eu>
-Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
+Reported-by: Feifan Qian <bea1e@proton.me>
+Fixes: 8cf89e007a ("virtio-9p: Add P9_TWSTAT support")
+Link: https://lore.kernel.org/qemu-devel/ba09716828e82992f9d8cac7f00eee0bc1c43c61.1780072238.git.qemu_oss@crudebyte.com
+Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
+(cherry picked from commit 7f5445e7e4050cc117ed4b137bb7dd1474e49d57)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-(cherry picked from commit ae84c738e40339cc0f22773dd4692de529d88739)
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/system/rtc.c b/system/rtc.c
-index 56951288c4..f7eca982b0 100644
---- a/system/rtc.c
-+++ b/system/rtc.c
-@@ -40,8 +40,8 @@ static enum {
-     RTC_BASE_DATETIME,
- } rtc_base_type = RTC_BASE_UTC;
- static time_t rtc_ref_start_datetime;
--static int rtc_realtime_clock_offset; /* used only with QEMU_CLOCK_REALTIME */
--static int rtc_host_datetime_offset = -1; /* valid & used only with
-+static time_t rtc_realtime_clock_offset; /* used only with QEMU_CLOCK_REALTIME */
-+static time_t rtc_host_datetime_offset = -1; /* valid & used only with
-                                              RTC_BASE_DATETIME */
- QEMUClockType rtc_clock;
- /***********************************************************/
+diff --git a/hw/9pfs/9p.c b/hw/9pfs/9p.c
+index 7d53f070cc..0d58a5a74c 100644
+--- a/hw/9pfs/9p.c
++++ b/hw/9pfs/9p.c
+@@ -3617,6 +3617,11 @@ static void coroutine_fn v9fs_wstat(void *opaque)
+             err = -EOPNOTSUPP;
+             goto out;
+         }
++        if (name_is_illegal(v9stat.name.data)) {
++            err = -ENOENT;
++            goto out;
++        }
++
+         v9fs_path_write_lock(s);
+         err = v9fs_complete_rename(pdu, fidp, -1, &v9stat.name);
+         v9fs_path_unlock(s);
 -- 
 2.47.3
 
