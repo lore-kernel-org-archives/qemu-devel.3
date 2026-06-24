@@ -4,141 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00416CDB481
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 13:20:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3296CCDE002
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 13:34:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcNVl-0004cE-EY; Wed, 24 Jun 2026 09:19:25 -0400
+	id 1wcNj6-0006vH-Jx; Wed, 24 Jun 2026 09:33:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wcNVk-0004bw-2v
- for qemu-devel@nongnu.org; Wed, 24 Jun 2026 09:19:24 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1wcNj5-0006te-0U; Wed, 24 Jun 2026 09:33:11 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wcNVh-0004SM-PX
- for qemu-devel@nongnu.org; Wed, 24 Jun 2026 09:19:23 -0400
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65OANe4x3047220
- for <qemu-devel@nongnu.org>; Wed, 24 Jun 2026 13:19:19 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- QQ7F+ZEqARvzDlpnQwu/hLNxiy5ZkMCsOaCZdFD1Ons=; b=Roxz5Tm/zPX6xp28
- 7wpFQo4vz9FW6ofg7viYgX8f4yn8o0jHTTtMHQS77C0VGE8MUFxN++g2UIeiJdht
- RMTcbaCKOixOk+tErdoITUjivKaHK5JKKylgTAEA3BjwJFxbVniJHJiN+9SXmRZp
- XVIGO9Vshyi4AH7VOP7kz1zF/XkCtA33J/KZOC7y6OeHtMSjRfp/wgUmLJq2qN+A
- pdiK2MmdhbmnzVdlb+Izzgs0hScOluDp1GOt2kRfq69nMy2YXpd8MFuK2S15PXPx
- hEZcLJYwVvqfR1HZ8p9Q3DToxtXc/899hqRLtcDfbI0TQr1/DVZuvyggt34eGT8O
- 835vUA==
-Received: from mail-ua1-f69.google.com (mail-ua1-f69.google.com
- [209.85.222.69])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f05ar2cjr-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 24 Jun 2026 13:19:18 +0000 (GMT)
-Received: by mail-ua1-f69.google.com with SMTP id
- a1e0cc1a2514c-966df3665efso189128241.0
- for <qemu-devel@nongnu.org>; Wed, 24 Jun 2026 06:19:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1782307158; x=1782911958; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=QQ7F+ZEqARvzDlpnQwu/hLNxiy5ZkMCsOaCZdFD1Ons=;
- b=VD/WZEl42ZKCJ8OIa7Ft1fLWaKOdRNxr0E0xY2tND6RF4c2gk3k8AKGgcbZump0dTB
- XpvCnns8QBTkmN2S+43DvE7rG345gElx+1GZcQ6nFY0iIyka/yqDEDJP/Ubm1DeUThsp
- 9CDGql1qQ52aTlDUN7yN0vO+hi2mLx0Yy4aE6oLKnr5g180Ok68OMcl0tpXm/7x8VABE
- bR5tr40xRvy631efTnlNKHKljsnuohyzu3taL96yNtYGq9QdPmnAgS4GKRHbT3TD3Ov7
- 28ikZ0Q73q2u8YNMJQr/rPEkym+QP32fIgWRh+RvQdlIJNGYy8ctY2fZWMwjqlWnd7nJ
- sCzg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782307158; x=1782911958;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=QQ7F+ZEqARvzDlpnQwu/hLNxiy5ZkMCsOaCZdFD1Ons=;
- b=NYlnWU0t7fN6qi2b6h4MB91UlXwR9acOKQuU4p7gB+KAqsxEBlVzizElMvd7ubbagZ
- 2A2mTMBrw1il+gQi8Yc+yzRgoEs5mtJCrIS9xOLlmTs022bi/lFl+kh2c+iR0y4ndWZN
- 7KcM7/GR3XOy32/LJmlobAtGXw8srbrcxYh3tmFdDcd3EYM/0e13V911vJHQkn4hdCs/
- r6FRVe66uyQtYzrJpUZTC1PvTHIKMDgux8jv6LvCj7wcAC98t5FzctDj1Z0Th+sfkeGc
- 6UgTGxfuPNwAag0HpRBMaDCPiaOLqQP2q2jaSzaREDoNtdKgW/LgpJyZoBSpMkNauHtx
- j54g==
-X-Forwarded-Encrypted: i=1;
- AHgh+RrlPyhvek9DZE8L7R6LHFijOR4UQxkYOc7Dd8zfykntTg2HetidgUuxs3PE/OJ5FwkhwOLK/nnAVWrE@nongnu.org
-X-Gm-Message-State: AOJu0Yxg6PIs6BiWGCj028BC4f8CqG1Wf5D6zPnk0xdvCWXKRVvFLIml
- p0nT8YBH/nGsaEKkDDN/Jxkg2Vpc6rAXkRayCeF+ht7OuLK/Hc6+/klwkTdZq+h3LoyWJdSqOjR
- c/wQN5gV+9DtSowjUJP9fIQD+bW+sfZXY22vJ/AQSMD4Kr9ZOKAn7r6uY2g==
-X-Gm-Gg: AfdE7cn3zhCnIqu4SgKK7SJ+oPq38ETPSgYeGjiip1AH9gs7Q+KtdcBVk2QlLKA9GPB
- YYs2VM0ojk0ywtPRNEfk+wvUsqJDGjdhhBQ6NKpCuV86jXWPOsGJ0QIKW/+/CMHmSgNVd29Omy0
- f1eL8vDtXWuuVUMuujT0sTYdDsx5d84Y6sJYxZwNv5CMm4gv9rytSduPoFJOtjHdY9p3BgcBZVz
- /l/fte4NJgF5OnMvfaxXCA+0SBl7QKiIyeHnffyWqUbz4oawQ+J/KGExl6TH46m587BhV53gpZA
- gqBRMXPLJnhxMdkKJrIPVjeypZkKh/2exsHMBNyqFHOXCcV6YmHyFvdx8hn0rOAz8ElBPgv8fIp
- 6mUrb7OfKa1A1BYod71h/GosJivuluzdlPt6yE2pYKI2R/Y4P0kqfP8HLyAV2Tw==
-X-Received: by 2002:a05:6102:4b19:b0:631:81d6:e15c with SMTP id
- ada2fe7eead31-72fd548f5femr3819190137.4.1782307158078; 
- Wed, 24 Jun 2026 06:19:18 -0700 (PDT)
-X-Received: by 2002:a05:6102:4b19:b0:631:81d6:e15c with SMTP id
- ada2fe7eead31-72fd548f5femr3819137137.4.1782307157595; 
- Wed, 24 Jun 2026 06:19:17 -0700 (PDT)
-Received: from [192.168.69.212] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-c0c610e5280sm671310566b.53.2026.06.24.06.19.16
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 24 Jun 2026 06:19:16 -0700 (PDT)
-Message-ID: <96b2433f-f2ef-4c68-84de-2ef3508d8809@oss.qualcomm.com>
-Date: Wed, 24 Jun 2026 15:19:15 +0200
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1wcNj1-0000Mw-4L; Wed, 24 Jun 2026 09:33:10 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
+ t=1782307976; bh=4tVuM3Lvzge7q08UeYEBBhFNwu0omwEUwUZCTTHmaK8=;
+ h=From:To:Cc:Subject:Date;
+ b=qWGgY+wM9Ulac3GXTrYuB6a0muvnJdbU7qrtVXyq88RmG8bW4oJbvaeXBVo+UOWJ1
+ fg1t6s9lS9zmiMOhYH3NCg7OR+Uo2smC39idjXpMesP4E4tkvNin+oDbE8RrFoJT55
+ QiC2VXAXRoilQgnByvyplnTcSr2LksSb4iYY2DEbfF7h8WxwLU4TpN6uOqBQGyMBZ4
+ zhPTz0gAYiVAmHn4r7qQrjmrETCjn5eS4GLm2SM4G1ZUcWDjJ/bsQl2EpPNfWbjNsE
+ h246OpH2Mf/6YSF+mpTSe3Y1OWKkB+38t+3vk5M5i9vHMtnZKQ5+8AJT9G2yOpHkMq
+ QftO1t3nnHo+g==
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 84B2A1BA9B2;
+ Wed, 24 Jun 2026 16:32:56 +0300 (MSK)
+Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 1FE933DEA01;
+ Wed, 24 Jun 2026 16:33:02 +0300 (MSK)
+From: Michael Tokarev <mjt@tls.msk.ru>
+To: qemu-devel@nongnu.org
+Cc: qemu-stable@nongnu.org,
+	Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.2 v2 000/107] Patch Round-up for stable 11.0.2,
+ freeze on 2026-07-04 (frozen)
+Date: Wed, 24 Jun 2026 16:30:05 +0300
+Message-ID: <qemu-stable-11.0.2-20260624163118@cover.tls.msk.ru>
+X-Mailer: git-send-email 2.47.3
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/2] Record maintainer/reviewer Git Lab handles
-Content-Language: en-US
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Fabiano Rosas <farosas@suse.de>
-References: <20260624122936.2706393-1-berrange@redhat.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <20260624122936.2706393-1-berrange@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: ewxJold_p_4Zj60tmgPgTZoschU5QFYl
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjI0MDExMCBTYWx0ZWRfX02xLbUuQW/ww
- TsLKxRMw2ClPCqnfMyNzAYMyLjWePemjpLWilPc/z4NiCnkZXUxYistYMsjnIQ8prRNEoUvTjF9
- slnsKUDZj4a5q0qNMyJvS2abcBj9+oE=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjI0MDExMCBTYWx0ZWRfX5Tsph7HT2xNE
- A1VN0gTP4iRUdDexBGyNyNp+cfiEN9cn98kX5iF/8iIt/I6rrTGJY1nUeOfPPedziPMHlH7GvCs
- OgO7tS3ot09UNx32O7ryGx2uwOfdCbI79wYJVjJvgxlNtICK8T/qrJY+cSO5d8eUTcvdVOL/sSJ
- RKWoLnXw6sViY9cczL6DLYldgaXIQYBk15S546zLoNh+2IP59CGxELVlRH3B5unWcsMWzOjkuzC
- r10xynmG2vRGWbshdzP4nCgml2iLsA/dxvsnjJpxES2/SqwLm7cbseaHOxpJAQhl+q4Dp+cpAcr
- BLLFzefOOUsug9OHGb5XoQcWqBvGdSqNHiuYcUzRpSOF1/g9x0RkVOnYhplq+I0D2va74EctrQI
- lSZWlbqLE1ms25Syc5gIy3EE4LuWnw==
-X-Proofpoint-GUID: ewxJold_p_4Zj60tmgPgTZoschU5QFYl
-X-Authority-Analysis: v=2.4 cv=EuLiaycA c=1 sm=1 tr=0 ts=6a3bd956 cx=c_pps
- a=UbhLPJ621ZpgOD2l3yZY1w==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
- a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22
- a=REwzQqOBAAAA:8 a=EUspDBNiAAAA:8 a=wwC0Tf_8k3USRPEzTx0A:9
- a=m58AqG6LaQXCb49P:21 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=TOPH6uDL9cOC6tEoww4z:22 a=8XF_WGNd4qQvm41dh321:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-24_03,2026-06-23_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 lowpriorityscore=0 suspectscore=0 adultscore=0 malwarescore=0
- phishscore=0 spamscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2606240110
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -155,221 +68,242 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 24/6/26 14:29, Daniel P. BerrangÃ© wrote:
-> When triaging GitLab issues, whether regular bugs or security
-> disclosures, we need to be able to assign suitable accounts.
-> 
-> We can only assign Git Lab handles for accounts that are members
-> of the QEMU group, or QEMU repository with the "Reporter" role
-> or higher.
-> 
-> Currently one needs to run 'get_maintainer.pl -f <file>' to get
-> the maintainer / reviewer names & emails, and then look in the
-> GitLab members page to see if there is a match.
-> 
-> This simplifies that by including the GitLab handle alongside
-> the email addresses:
-> 
-> The GitLab account handle -> real name mapping is stored in
-> separate files .gitlab-map-auto & .gitlab-map-manual to avoid
-> redundancy in the MAINTAINERS file. The former file is
-> auto-generated and catches 99% of the mappings, the latter is
-> for manual fixups.
-> 
-> With this series applied as is, we get the following stats
-> 
-> $ ./scripts/gitlab-map-check
-> Missing GitLab handle: Akihiko Odaki
-> Missing GitLab handle: Albert Esteve
-> Missing GitLab handle: Alberto Garcia
-> Missing GitLab handle: Alejandro Jimenez
-> Missing GitLab handle: Aleksandar Rikalo
-> Missing GitLab handle: Alessandro Di Federico
-> Missing GitLab handle: Alexandre Iooss
-> Missing GitLab handle: Alexandre Ratchov
-> Missing GitLab handle: Alexey Kardashevskiy
-> Missing GitLab handle: Amit Shah
-> Missing GitLab handle: Andrew Jeffery
-> Missing GitLab handle: Anthony PERARD
-> Missing GitLab handle: Anton Johansson
-> Missing GitLab handle: Antony Pavlov
-> Missing GitLab handle: Ari Sundholm
-> Missing GitLab handle: Artyom Tarasenko
-> Missing GitLab handle: Aurelien Jarno
-> Missing GitLab handle: BALATON Zoltan
-> Missing GitLab handle: Ben Chaney
-> Missing GitLab handle: Bernhard Beschow
-> Missing GitLab handle: Bibo Mao
-> Missing GitLab handle: Brad Smith
-> Missing GitLab handle: Canokeys.org
-> Missing GitLab handle: Chao Liu
-> Missing GitLab handle: Chinmay Rath
-> Missing GitLab handle: Christoph Muellner
-> Missing GitLab handle: Clément Chigot
-> Missing GitLab handle: Clément Mathieu--Drif
-> Missing GitLab handle: Collin Walling
-> Missing GitLab handle: Corey Minyard
-> Missing GitLab handle: Darren Kenny
-> Missing GitLab handle: Denis V. Lunev
-> Missing GitLab handle: Dmitry Fleytman
-> Missing GitLab handle: Dmitry Osipenko
-> Missing GitLab handle: Dorjoy Chowdhury
-> Missing GitLab handle: Doru Blânzeanu
-> Missing GitLab handle: Edgar E. Iglesias
-> Missing GitLab handle: Elena Ufimtseva
-> Missing GitLab handle: Eric Auger
-> Missing GitLab handle: Eric Farman
-> Missing GitLab handle: Eugenio Pérez
-> Missing GitLab handle: Farhan Ali
-> Missing GitLab handle: Felipe Balbi
-> Missing GitLab handle: Francisco Iglesias
-> Missing GitLab handle: Frederic Konrad
-> Missing GitLab handle: Gaurav Sharma
-> Missing GitLab handle: Gautam Gala
-> Missing GitLab handle: Gautam Menghani
-> Missing GitLab handle: Giuseppe Lettieri
-> Missing GitLab handle: Glenn Miles
-> Missing GitLab handle: Gonglei
-> Missing GitLab handle: Haixu Cui
-> Missing GitLab handle: Halil Pasic
-> Missing GitLab handle: Hao Wu
-> Missing GitLab handle: Hari Bathini
-> Missing GitLab handle: Hendrik Brueckner
-> Missing GitLab handle: Hervé Poussineau
-> Missing GitLab handle: Hongren (Zenithal) Zheng
-> Missing GitLab handle: Huacai Chen
-> Missing GitLab handle: Hyman Huang
-> Missing GitLab handle: Ilya Dryomov
-> Missing GitLab handle: Ilya Leoshkevich
-> Missing GitLab handle: Ilya Maximets
-> Missing GitLab handle: Jagannathan Raman
-> Missing GitLab handle: Jamin Lin
-> Missing GitLab handle: Jan Kiszka
-> Missing GitLab handle: Jared Rossi
-> Missing GitLab handle: Jason Herne
-> Missing GitLab handle: Jean-Christophe Dubois
-> Missing GitLab handle: Jesper Devantier
-> Missing GitLab handle: Jeuk Kim
-> Missing GitLab handle: Jiaxun Yang
-> Missing GitLab handle: Jiri Pirko
-> Missing GitLab handle: Jiri Slaby
-> Missing GitLab handle: Joe Komlodi
-> Missing GitLab handle: Joel Stanley
-> Missing GitLab handle: John Levon
-> Missing GitLab handle: Jonathan Cameron
-> Missing GitLab handle: Kane Chen
-> Missing GitLab handle: Kashyap Chamarthy
-> Missing GitLab handle: Keith Busch
-> Missing GitLab handle: Kohei Tokunaga
-> Missing GitLab handle: Kuan-Wei Chiu
-> Missing GitLab handle: Kyle Evans
-> Missing GitLab handle: Leif Lindholm
-> Missing GitLab handle: Liu Zhiwei
-> Missing GitLab handle: LIU Zhiwei
-> Missing GitLab handle: Li-Wen Hsu
-> Missing GitLab handle: Li Zhijian
-> Missing GitLab handle: Luc Michel
-> Missing GitLab handle: Lukas Straub
-> Missing GitLab handle: Maciej S. Szmigiero
-> Missing GitLab handle: Mads Ynddal
-> Missing GitLab handle: Magnus Kulke
-> Missing GitLab handle: Maksim Davydov
-> Missing GitLab handle: Marcelo Tosatti
-> Missing GitLab handle: Mark Kanda
-> Missing GitLab handle: Markus Armbruster
-> Missing GitLab handle: Mathieu Poirier
-> Missing GitLab handle: Matthew Rosato
-> Missing GitLab handle: Mauro Carvalho Chehab
-> Missing GitLab handle: Max Filippov
-> Missing GitLab handle: Michael Rolnik
-> Missing GitLab handle: Milan Zamazal
-> Missing GitLab handle: Nabih Estefan
-> Missing GitLab handle: Niek Linnenbank
-> Missing GitLab handle: Ninad Palsule
-> Missing GitLab handle: Palmer Dabbelt
-> Missing GitLab handle: Patrick Leis
-> Missing GitLab handle: Paul Durrant
-> Missing GitLab handle: Pavel Pisa
-> Missing GitLab handle: Pedro Barbuda
-> Missing GitLab handle: Peter Lieven
-> Missing GitLab handle: Peter Xu
-> Missing GitLab handle: Phil Dennis-Jordan
-> Missing GitLab handle: Philipp Tomsich
-> Missing GitLab handle: Ran Wang
-> Missing GitLab handle: Raphael Norwitz
-> Missing GitLab handle: Reinoud Zandijk
-> Missing GitLab handle: Richard W.M. Jones
-> Missing GitLab handle: Roman Bolshakov
-> Missing GitLab handle: Sai Pavan Boddu
-> Missing GitLab handle: Sairaj Kodilkar
-> Missing GitLab handle: Samuel Tardieu
-> Missing GitLab handle: Samuel Thibault
-> Missing GitLab handle: Sergio Lopez
-> Missing GitLab handle: Song Gao
-> Missing GitLab handle: Sourabh
-> Missing GitLab handle: Sourabh Jain
-> Missing GitLab handle: Sriram Yagnaraman
-> Missing GitLab handle: Stafford Horne
-> Missing GitLab handle: Stefano Stabellini
-> Missing GitLab handle: Steven Lee
-> Missing GitLab handle: Strahinja Jankovic
-> Missing GitLab handle: Subbaraya Sundeep
-> Missing GitLab handle: Sunil V L
-> Missing GitLab handle: Sven Schnelle
-> Missing GitLab handle: Tao Tang
-> Missing GitLab handle: Thanos Makatos
-> Missing GitLab handle: Titus Rwantare
-> Missing GitLab handle: Tomita Moeko
-> Missing GitLab handle: Tony Krowiak
-> Missing GitLab handle: Troy Lee
-> Missing GitLab handle: Tyrone Ting
-> Missing GitLab handle: Vikram Garhwal
-> Missing GitLab handle: Viktor Prutyanov
-> Missing GitLab handle: Vincenzo Maffione
-> Missing GitLab handle: Viresh Kumar
-> Missing GitLab handle: WANG Xuerui
-> Missing GitLab handle: Wei Liu
-> Missing GitLab handle: Weiwei Li
-> Missing GitLab handle: Xie Yongji
-> Missing GitLab handle: Yi Liu
-> Missing GitLab handle: Yonggang Luo
-> Missing GitLab handle: Yoshinori Sato
-> Missing GitLab handle: Yuri Benditovich
-> Missing GitLab handle: Zhang Chen
-> Missing GitLab handle: Zhao Liu
-> Missing GitLab handle: zhenwei pi
-> Missing GitLab handle: Zhenzhong Duan
-> Missing GitLab handle: Zhuoying Cai
-> GitLab handles missing: 161 / present: 57
-> 
-> Plenty of those will have GitLab accounts, but are simply not members
-> of QEMU. Plenty more probably aren't registered with GitLab at all.
-> 
-> Short of emailing all of those people directly, I don't see a good
-> way to identify their GitLab accounts (if any), in order to invite
-> them to the QEMU project. I don't want to blindly invite accounts
-> which merely have the same name on GitLab as there's too much risk
-> of getting a mis-match.
-> 
-> Changed in v2:
-> 
->   - Don't store data in MAINTAINERS file, use a separate mapping
->   - Don't require a --gitlab flag to get_maintainer.pl, always
->     show the handle
->   - Add scripts for updating & analysing the mappings
-> 
-> Daniel P. Berrangé (2):
->    gitlab: introduce files mapping GitLab accounts to real names
->    get_maintainer: add ability to report Git Lab handle
+The following patches are queued for QEMU stable v11.0.2:
 
-No clue why Hanna is listed here...
+  https://gitlab.com/qemu-project/qemu/-/commits/staging-11.0
 
-Applying: gitlab: introduce files mapping GitLab accounts to real names
-Applying: get_maintainer: add ability to report Git Lab handle
-.git/rebase-apply/patch:121: trailing whitespace.
-hreitz	Hanna Reitz
-warning: 1 line adds whitespace errors.
+Patch freeze is 2026-07-04 (frozen), and the release is planned for 2026-07-06:
 
-Anyhow,
-Tested-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+  https://wiki.qemu.org/Planning/11.0
+
+Please respond here or CC qemu-stable@nongnu.org on any additional patches
+you think should (or shouldn't) be included in the release.
+
+The changes which are staging for inclusion, with the original commit hash
+from master branch, are given below the bottom line.
+
+Thanks!
+
+/mjt
+
+--------------------------------------
+01 27b127d7348a Daniel P. Berrangé:
+   crypto: fix client side anonymous TLS credentials
+02 f0433a8bc4ac Frank Chang:
+   target/riscv: Update MISA.C for Zc* extensions
+03 613bb1949fff Frank Chang:
+   target/riscv: Update MISA.X for non-standard extensions
+04 fcbd93e96be2 Andrew Jones:
+   hw/riscv/riscv-iommu: Fix Svnapot 64KB pages
+05 249483623242 Zishun Yi:
+   target/riscv: Allow mseccfg access based on ext_zicfilp
+06 caf3bef5f01e Anton Blanchard:
+   target/riscv: rvv: Handle source overlap of vector widening reduction 
+   instructions
+07 e07077a76607 Frank Chang:
+   hw/char: Check interrupt after txctrl register is written
+08 a0946caf1d9e Abhigyan Kumar:
+   target/riscv: Fix medeleg[11] read-only zero bit for M-mode ECALL
+09 612f22c19db8 Zishun Yi:
+   target/riscv/pmp: Fix integer overflow in TOR and NA4 address computation
+10 eccb1d694025 Zishun Yi:
+   target/riscv: Add mseccfg to VMStateDescription
+11 27f9566dcd98 Alistair Francis:
+   target/riscv: Update the local interrupt mask
+12 8158a74f0a0d Zishun Yi:
+   target/riscv: clear mseccfg on reset for all dependent extensions
+13 53cc9747ed7c Daniel Henrique Barboza:
+   target/riscv/csr.c: fix read of pmpaddr(0-63) CSRs
+14 02284108376a Portia Stephens:
+   target/riscv: Make hpmcounterh return the upper 32-bits
+15 dd3a906d3505 Matt Turner:
+   linux-user/mips64: fix elf_core_copy_regs register layout in core files
+16 6033df08e93d Matt Turner:
+   linux-user/mips64: fix mipsn32 elf_core_copy_regs entry width
+17 ae18df638fb4 Daniel P. Berrangé:
+   ui/vnc: fix OOB read access in VNC SASL mechname array
+18 c3c6226fa481 Daniel P. Berrangé:
+   ui/vnc: fix OOB write in VNC stats array
+19 46ee49034d26 Daniel P. Berrangé:
+   ui/vnc: fix OOB write in lossy rect worker code
+20 d0c7b82d3a89 Daniel P. Berrangé:
+   ui/vnc: fix OOB read updating VNC update frequency stats
+21 e56b4bbff1df Heechan Kang:
+   ui: fix validation of VNC extended clipboard data length
+22 5297a0fc6531 Paolo Bonzini:
+   lsi53c895a: fix use-after-free of cancelled request
+23 4494dec8c2bf Paolo Bonzini:
+   lsi53c895a: clear tag byte when processing messages
+24 153dc2fa7bbe Paolo Bonzini:
+   apic: fix delivery bitmask with modified xAPIC ids
+25 4b6c088c88cc Jinjie Ruan:
+   mc146818rtc: Fix get_guest_rtc_ns() overflow bug
+26 6864bec553b2 Denis V. Lunev:
+   block/linux-aio: bound ioq_submit() recursion depth
+27 446050c4dfe4 Peter Maydell:
+   target/arm: SVE2 FMAXP, FMINP must honour AH=1
+28 aa42300f86d1 Peter Maydell:
+   target/arm: Use FPST_A64_F16 for SVE FCVTLT_hs
+29 23ece2805f9a Peter Maydell:
+   target/arm: Set correct fp flags for FLOGB when FPCR.AH = 1
+30 ab89d02dac6f GuoHan Zhao:
+   vfio-user: reject zero DMA page size capability
+31 497b5c5b05ac GuoHan Zhao:
+   vfio-user: reject zero migration page size capability
+32 e6c47bebdf86 Chenyi Qiang:
+   vfio/container: Restrict dma_map_file() to shared RAM or RAM devices
+33 f12e7ba6f438 Richard Henderson:
+   target/arm: Enable REVD for SVE2.1
+34 bb957530471c Peter Maydell:
+   target/arm: Don't assert if 64-bit EL2 AT insn sees a Domain fault
+35 ca33de98447c Peter Maydell:
+   target/arm: SME BFCVT, BFCVTN have "Alternate BFloat16 behaviors"
+36 8526b7d6b67b Peter Maydell:
+   hw/net/rocker_of_dpa: Check group ID pointers are not NULL
+37 71d027cfee85 Peter Maydell:
+   hw/net/rocker_of_dpa: Avoid unaligned accesses in _of_dpa_flow_match()
+38 3f50dd46664b Matt Turner:
+   linux-user/ppc: restore fp_status from FPSCR on sigreturn
+39 84b920ccb5ee Matt Turner:
+   linux-user/mips: save/restore FCSR across signal delivery
+40 6bf4c0295ccc Matt Turner:
+   linux-user/sh4: preserve T/M/Q bits across signal delivery
+41 a740f17ed0fb Matt Turner:
+   linux-user/sh4: restore FP rounding mode on sigreturn
+42 2762cd51ee03 Matt Turner:
+   linux-user/s390x: restore fpu_status rounding mode from FPC on sigreturn
+43 abb0cc02fb56 Christian Schoenebeck:
+   hw/9pfs: add NULL check in v9fs_path_is_ancestor()
+44 dbaf84e148b0 Christian Schoenebeck:
+   hw/9pfs: change V9fsPath.size to size_t and v9fs_path_sprintf() return 
+   type
+45 54dd352c5926 Christian Schoenebeck:
+   hw/9pfs: add error handling to v9fs_fix_path()
+46 3802c0e755a5 Christian Schoenebeck:
+   hw/9pfs: let callers of v9fs_path_sprintf() and v9fs_fix_path() handle 
+   errors
+47 be33c56898f8 Christian Schoenebeck:
+   tests/qtest/libqos: add qvirtqueue_reset_pool() for descriptor pool reset
+48 198627807a6b Christian Schoenebeck:
+   tests/9pfs: add deep absolute path test
+49 5a8da7e979f1 sin99xx:
+   9pfs: fix missing rename lock in v9fs_co_readdir_many (CVE-2026-48004)
+50 c131ae56c13f Denis V. Lunev:
+   util/envlist: fix prefix-match in envlist_unsetenv() name lookup
+51 05221c600a5f Denis V. Lunev:
+   tests/unit: add test-envlist covering setenv/unsetenv name matching
+52 984b192bdf37 Alex Bennée:
+   ci: drop cirrus MacOS build
+53 7684e7813290 Alex Bennée:
+   gitlab: add initial MacOS 15 on gitlab runner
+54 4023f38b50a4 Stefan Hajnoczi:
+   gitlab: remove x64-freebsd-14-build Cirrus job
+55 29c042c6e9d4 Stefan Hajnoczi:
+   lcitool: remove Cirrus CI support
+56 1f1ccb6f3c48 Alexandra Winter:
+   target/s390x: Make container ids in SysIB_15x 1-based
+57 442f727b8beb Farhan Ali:
+   s390x/pci: Fix interrupt forwarding disable for interpreted devices
+58 2d3dc20d9d71 Jithu Joseph:
+   hw/i3c: fix CMD/data FIFO depth reset values to match real silicon
+59 b4e28c304bc5 Fiona Ebner:
+   block/io: fallback to bounce buffer if BLKZEROOUT is not supported 
+   because of alignment
+60 aeea0c2804c4 Stefan Hajnoczi:
+   virtio-blk: add missing VIRTIO_BLK_T_SCSI_CMD size check (CVE-2026-48914)
+61 7f8466e2ce62 Kevin Wolf:
+   qemu-io: Add 'aio_discard' command
+62 b8bfb1478d61 Kevin Wolf:
+   qcow2: Fix corruption on discard during write with COW
+63 389f5bcc744d Kevin Wolf:
+   iotests/046: Test that discard/write_zeroes wait for dependencies
+64 1d47eb689835 Thomas Lamprecht:
+   qcow2: Fix data loss on zero write with detect-zeroes=unmap
+65 817cc2d045d2 Fiona Ebner:
+   block/export/fuse: use struct fuse_init_in
+66 d1664a4058b2 Fiona Ebner:
+   block/export/fuse: set FUSE_DIRECT_IO_ALLOW_MMAP flag to fix regression
+67 ba20257d9b45 Fiona Ebner:
+   iotests: test shared mmap for fuse export
+68 7e573b660fef Fabiano Rosas:
+   qed: Don't try to flush during incoming migration
+69 163f9a4e0651 Munkhbaatar Enkhbaatar:
+   hw/usb/hcd-ohci: Clean up USBPacket before freeing ISO TD packet
+70 a6a1f92d5a23 Richard Henderson:
+   fpu: Handle all rounding modes in partsN_uncanon_normal
+71 767c32fe6983 Xinhui Yang:
+   linux-user: implement fsmount(2) series of syscalls
+72 6e0aa9f6c731 Xinhui Yang:
+   linux-user/strace: add fsmount series of syscalls
+73 ae84c738e403 Thomas Huth:
+   system/rtc: Fix a possible year-2038 integer overflow problem
+74 fb4c08147ba7 Dominique Martinet:
+   linux-user: add preadv2/preadv2
+75 3097d54016ea Paolo Bonzini:
+   amd_iommu: restrict command buffer head/tail ranges to ring size
+76 3c98e446af82 Alejandro Jimenez:
+   amd_iommu: Update command buffer head ptr in MMIO region after wraparound
+77 8a1c09cbd3fe Costas Argyris:
+   tests/qtest: Add amd-iommu command buffer head wrap test
+78 85805ee887be Stefano Garzarella:
+   libvhost-user: fix buffer overflow in virtqueue_read_indirect_desc()
+79 9f1b6d013d42 Stefano Garzarella:
+   libvduse: fix buffer overflow in vduse_queue_read_indirect_desc()
+80 786550e2d38a Alejandro Jimenez:
+   amd_iommu: Follow root pointer before page walk and use 1-based levels
+81 291aa70ad254 Alejandro Jimenez:
+   amd_iommu: Reject non-decreasing NextLevel in fetch_pte()
+82 eceff0982f97 Eugenio Pérez:
+   virtio: Allow to fill a whole virtqueue in order
+83 d85a4ec06a65 Daniel Henrique Barboza:
+   target/riscv/cpu_helper.c: allow LOAD_ADDR_MIS promotion to AMO fault
+84 109856754cbd Daniel Henrique Barboza:
+   target/riscv/tcg: disable svpbmt if satp_mode < sv39
+85 18645f195789 Daniel Henrique Barboza:
+   target/riscv/csr.c: do not allow mstatus MPV/GVA writes
+86 ddfd33f19658 Daniel Henrique Barboza:
+   target/riscv/csr.c: fix mstatus.UXL reserved value
+87 9273cda72293 Daniel Henrique Barboza:
+   disas/riscv.c: add 'cbo' insns to disassembler
+88 d6c5855c76b2 Daniel Henrique Barboza:
+   target/riscv/insn_trans/trans_rvzicbo.c.inc: save opcode before helpers
+89 3e33da68f1db Daniel Henrique Barboza:
+   target/riscv/cpu_helper.c: fault with reserved PTE.PBMT val
+90 8e090ecfa9e5 Daniel Henrique Barboza:
+   target/riscv/cpu_helper.c: add PMA access fault
+91 601c8494c6c7 Daniel Henrique Barboza:
+   target/riscv/tcg: disable svnapot if satp_mode < sv39
+92 758dce9c98af Daniel Henrique Barboza:
+   disas/riscv.c: fix inst_length()
+93 9f550a0b6306 Abhigyan Kumar:
+   target/riscv: mask vxrm csrw write to the low 2 bits
+94 d6601a7e1c24 Gerd Hoffmann:
+   hw/uefi: fix parse_hexstr
+95 e38d0afade7c Paolo Bonzini:
+   target/i386: apply mod to immediate count of an RCL/RCR operation
+96 88d39a2937eb Mathias Krause:
+   gdbstub: Update x86 control register bits
+97 7f5445e7e405 Christian Schoenebeck:
+   hw/9pfs: fix abort due to illegal name with Twstat rename
+98 08750e31fcdc Christian Schoenebeck:
+   hw/9pfs: reject . and .. in Twstat rename
+99 6157908503f9 Akihiko Odaki:
+   ui/sdl2: Explicitly specify EGL platform
+100 490a3e1867f0 Ryan Zhang:
+   ui/sdl2: Set GL ES profile before creating initial GL context
+101 06fd39e426bb Scott J. Goldman:
+   target/arm/hvf: Stop pre-allocating cpreg_vmstate arrays
+102 7e859bacea09 Matt Turner:
+   target/xtensa: add cpu_set_fcr/fsr helpers to sync fp_status
+103 6858e3a71cc4 Matt Turner:
+   linux-user/xtensa: save/restore FP registers across signal delivery
+104 54e08dbe8f2a Matt Turner:
+   linux-user/xtensa: fix unlock of uninitialized frame pointer on sigreturn
+105 218109781209 Aditya Gupta:
+   ppc/pnv_phb3: Error out on invalid config access
+106 c7209c567181 Aditya Gupta:
+   hw/pci: Replace assert with bounds check and return
+107 156e536a7b97 Akshit Yadav:
+   linux-user: Fix AT_PHDR when program headers are relocated into their own 
+   segment
 
