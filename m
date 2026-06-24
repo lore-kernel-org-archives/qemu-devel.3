@@ -4,47 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8323DCDB479
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 05:12:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1142FCDB479
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 05:12:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcFoz-0000eV-IO; Wed, 24 Jun 2026 01:06:45 -0400
+	id 1wcFsx-0006El-US; Wed, 24 Jun 2026 01:10:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wcFon-0007zm-AA; Wed, 24 Jun 2026 01:06:34 -0400
+ id 1wcFsg-0005TO-7y; Wed, 24 Jun 2026 01:10:36 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wcFok-0005ed-Tz; Wed, 24 Jun 2026 01:06:33 -0400
+ id 1wcFse-0006Eu-JS; Wed, 24 Jun 2026 01:10:33 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1782277476; bh=BJg6yYSOIkZ9haWeoQiGVGiLT3hNMNgNX/+hlHo72/8=;
+ t=1782277633; bh=ekq0rO0hCdSR5ANrUDr0DKPn0pe+f7zJdwuJFqrYcYc=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=TmC7uPBL0Ca03i1Reat0SeFZtKO3kslKFTpDnlFy6tJJ8yA508O3J00zYrNYGPuuQ
- f/Xzv1R53k6f0usXAYYfyGzqV9NRUc+wMeOU+vLDtxA/2rDXhLE3Eho+JqbqSRXhiZ
- VsQ0SkWstw8YonXKBvj45JYO2UVdQq9YjU4smOh2P5uJQO4dV6rOeBiJlGgZoUOaRM
- ujn2hUiwZyIgB/W1zVau6yuGGGnmGriItzVHEVbE36KKgUw3f+BmrG7YBVju+moJVL
- LgJzESGQY2b0OOV9Z/ehlcRjTyabsCxnsJyn8CvwXU7rKOBpMLoMkRJc0vLF5HDLy1
- 9rcg7WaEt1M3w==
+ b=cHvo+Hv5nnoO4nv1GdES4+ODEhyx1NVtB91ofUgvGPcclNhbITSKjpJbKphz/pnb9
+ Tm6FbKAGrzigdL7Z9CW+bm/aP+lKgh5y27B3QocWYWLI6K7Pgt/UMMcB1tpDJ+i/eK
+ PQ/lylK2JewuwMvm4m/r+4x0cj8PlEhR12WDQwmOa8WaLgCdfn4vo0nPlDJolYbHKL
+ F/p0Sr2kXnV4BSDAO73QDLAaGSUvNDuGknERVI3w1R9/ECXxxAMji6DJR/KIuiyaBs
+ 7lpCv0zz5sqQPiNXNmtM48+i0F/FsIKqJs8MdyOMBGmvJ5W+RkbghuejfPm6r6GO3Q
+ yyftPhpSzn6IQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id CE1EF1BA648;
- Wed, 24 Jun 2026 08:04:36 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 4D2981BA67B;
+ Wed, 24 Jun 2026 08:07:13 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id B51CD3DDAD0;
- Wed, 24 Jun 2026 08:04:41 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 35D533DDB18;
+ Wed, 24 Jun 2026 08:07:18 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Matt Turner <mattst88@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Helge Deller <deller@gmx.de>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.11 82/86] linux-user/xtensa: save/restore FP registers
- across signal delivery
-Date: Wed, 24 Jun 2026 08:02:53 +0300
-Message-ID: <20260624050404.394225-26-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Aditya Gupta <adityag@linux.ibm.com>,
+ Zexiang Zhang <chan9yan9@gmail.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.2.4 93/95] ppc/pnv_phb3: Error out on invalid config access
+Date: Wed, 24 Jun 2026 08:05:28 +0300
+Message-ID: <20260624050541.395079-32-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-10.0.11-20260624080222@cover.tls.msk.ru>
-References: <qemu-stable-10.0.11-20260624080222@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-10.2.4-20260624080454@cover.tls.msk.ru>
+References: <qemu-stable-10.2.4-20260624080454@cover.tls.msk.ru>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
@@ -70,182 +69,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Matt Turner <mattst88@gmail.com>
+From: Aditya Gupta <adityag@linux.ibm.com>
 
-Add support for saving and restoring f0-f15 across signal delivery.
-The target_xtensa_xtregs_fp struct carries 32-bit f-regs for cores
-with XTENSA_OPTION_FP_COPROCESSOR; target_xtensa_xtregs_dfp carries
-64-bit f-regs for cores with XTENSA_OPTION_DFP_COPROCESSOR.
+PHB in Power8 supports 8 byte registers, and hence the ops structure
+allows accessing of 8 bytes in 'pnv_phb3_reg_ops'
 
-Lock the xtregs region via lock_user before reading on sigreturn,
-since sc_xtregs is a user-space pointer that may lie outside the
-locked sigframe.
+Both 'pnv_phb3_reg_read' & 'pnv_phb3_reg_write' pass the arguments as is
+to 'pnv_phb3_config_{read,write}', if offset is PHB_CONFIG_DATA.
 
-Signed-off-by: Matt Turner <mattst88@gmail.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Helge Deller <deller@gmx.de>
-(cherry picked from commit 6858e3a71cc41510937bec0950eb4e42e33ba5f2)
+This when called with size as 8, causes following assert failure in
+'pci_host_config_read_common' & 'pci_host_config_write_common':
+
+    assert(len <= 4);
+
+Validate that size is <=4, before jumping to pci_host_config_{read,write}_common
+
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3334
+Reported-by: Zexiang Zhang <chan9yan9@gmail.com>
+Fixes: 9ae1329ee2fe ("ppc/pnv: Add models for POWER8 PHB3 PCIe Host bridge")
+Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Message-Id: <20260326190438.734239-2-adityag@linux.ibm.com>
+(cherry picked from commit 218109781209f9d77242b2cdf743acac8bc3b893)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/linux-user/xtensa/signal.c b/linux-user/xtensa/signal.c
-index 6514b8dd57..fb1a3b86c1 100644
---- a/linux-user/xtensa/signal.c
-+++ b/linux-user/xtensa/signal.c
-@@ -21,6 +21,7 @@
- #include "user-internals.h"
- #include "signal-common.h"
- #include "linux-user/trace.h"
-+#include "target/xtensa/cpu.h"
+diff --git a/hw/pci-host/pnv_phb3.c b/hw/pci-host/pnv_phb3.c
+index 5d8383fac3..6cd66e705f 100644
+--- a/hw/pci-host/pnv_phb3.c
++++ b/hw/pci-host/pnv_phb3.c
+@@ -475,6 +475,11 @@ void pnv_phb3_reg_write(void *opaque, hwaddr off, uint64_t val, unsigned size)
  
- struct target_sigcontext {
-     abi_ulong sc_pc;
-@@ -43,10 +44,25 @@ struct target_ucontext {
-     target_sigset_t tuc_sigmask;
- };
- 
-+struct target_xtensa_xtregs_fp {
-+    uint32_t f[16];
-+    uint32_t fcr;
-+    uint32_t fsr;
-+};
-+
-+struct target_xtensa_xtregs_dfp {
-+    uint64_t f[16];
-+    uint32_t fcr;
-+    uint32_t fsr;
-+};
-+
- struct target_rt_sigframe {
-     target_siginfo_t info;
-     struct target_ucontext uc;
--    /* TODO: xtregs */
-+    union {
-+        struct target_xtensa_xtregs_fp fp;
-+        struct target_xtensa_xtregs_dfp dfp;
-+    } xtregs;
-     uint8_t retcode[6];
-     abi_ulong window[4];
- };
-@@ -107,6 +123,7 @@ static int flush_window_regs(CPUXtensaState *env)
- }
- 
- static int setup_sigcontext(struct target_rt_sigframe *frame,
-+                            abi_ulong frame_addr,
-                             CPUXtensaState *env)
- {
-     struct target_sigcontext *sc = &frame->uc.tuc_mcontext;
-@@ -123,8 +140,25 @@ static int setup_sigcontext(struct target_rt_sigframe *frame,
-     for (i = 0; i < 16; ++i) {
-         __put_user(env->regs[i], sc->sc_a + i);
-     }
--    __put_user(0, &sc->sc_xtregs);
--    /* TODO: xtregs */
-+    if (xtensa_option_enabled(env->config, XTENSA_OPTION_DFP_COPROCESSOR)) {
-+        for (i = 0; i < 16; ++i) {
-+            __put_user(env->fregs[i].f64, &frame->xtregs.dfp.f[i]);
+     /* Special case configuration data */
+     if ((off & 0xfffc) == PHB_CONFIG_DATA) {
++        if (size > 4) {
++            phb3_error(phb, "Invalid config access, offset: 0x%"PRIx64" size: %d",
++                      off, size);
++            return;
 +        }
-+        __put_user(env->uregs[FCR], &frame->xtregs.dfp.fcr);
-+        __put_user(cpu_get_fsr(env), &frame->xtregs.dfp.fsr);
-+        __put_user(frame_addr + offsetof(struct target_rt_sigframe, xtregs),
-+                   &sc->sc_xtregs);
-+    } else if (xtensa_option_enabled(env->config, XTENSA_OPTION_FP_COPROCESSOR)) {
-+        for (i = 0; i < 16; ++i) {
-+            __put_user(env->fregs[i].f32[FP_F32_LOW], &frame->xtregs.fp.f[i]);
-+        }
-+        __put_user(env->uregs[FCR], &frame->xtregs.fp.fcr);
-+        __put_user(cpu_get_fsr(env), &frame->xtregs.fp.fsr);
-+        __put_user(frame_addr + offsetof(struct target_rt_sigframe, xtregs),
-+                   &sc->sc_xtregs);
-+    } else {
-+        __put_user(0, &sc->sc_xtregs);
-+    }
-     return 1;
- }
- 
-@@ -190,7 +224,7 @@ void setup_rt_frame(int sig, struct target_sigaction *ka,
-     __put_user(0, &frame->uc.tuc_flags);
-     __put_user(0, &frame->uc.tuc_link);
-     target_save_altstack(&frame->uc.tuc_stack, env);
--    if (!setup_sigcontext(frame, env)) {
-+    if (!setup_sigcontext(frame, frame_addr, env)) {
-         unlock_user_struct(frame, frame_addr, 0);
-         goto give_sigsegv;
+         pnv_phb3_config_write(phb, off & 0x3, size, val);
+         return;
      }
-@@ -244,8 +278,8 @@ give_sigsegv:
-     return;
- }
+@@ -597,6 +602,11 @@ uint64_t pnv_phb3_reg_read(void *opaque, hwaddr off, unsigned size)
+     uint64_t val;
  
--static void restore_sigcontext(CPUXtensaState *env,
--                               struct target_rt_sigframe *frame)
-+static int restore_sigcontext(CPUXtensaState *env,
-+                              struct target_rt_sigframe *frame)
- {
-     struct target_sigcontext *sc = &frame->uc.tuc_mcontext;
-     uint32_t ps;
-@@ -267,7 +301,51 @@ static void restore_sigcontext(CPUXtensaState *env,
-     for (i = 0; i < 16; ++i) {
-         __get_user(env->regs[i], sc->sc_a + i);
-     }
--    /* TODO: xtregs */
-+    {
-+        abi_ulong xtregs_addr;
-+
-+        __get_user(xtregs_addr, &sc->sc_xtregs);
-+        if (xtregs_addr) {
-+            if (xtensa_option_enabled(env->config,
-+                                      XTENSA_OPTION_DFP_COPROCESSOR)) {
-+                struct target_xtensa_xtregs_dfp *xtregs;
-+                uint32_t fcr, fsr;
-+
-+                xtregs = lock_user(VERIFY_READ, xtregs_addr,
-+                                   sizeof(*xtregs), 1);
-+                if (!xtregs) {
-+                    return 0;
-+                }
-+                for (i = 0; i < 16; ++i) {
-+                    __get_user(env->fregs[i].f64, &xtregs->f[i]);
-+                }
-+                __get_user(fcr, &xtregs->fcr);
-+                __get_user(fsr, &xtregs->fsr);
-+                unlock_user(xtregs, xtregs_addr, 0);
-+                cpu_set_fcr(env, fcr);
-+                cpu_set_fsr(env, fsr);
-+            } else if (xtensa_option_enabled(env->config,
-+                                             XTENSA_OPTION_FP_COPROCESSOR)) {
-+                struct target_xtensa_xtregs_fp *xtregs;
-+                uint32_t fcr, fsr;
-+
-+                xtregs = lock_user(VERIFY_READ, xtregs_addr,
-+                                   sizeof(*xtregs), 1);
-+                if (!xtregs) {
-+                    return 0;
-+                }
-+                for (i = 0; i < 16; ++i) {
-+                    __get_user(env->fregs[i].f32[FP_F32_LOW], &xtregs->f[i]);
-+                }
-+                __get_user(fcr, &xtregs->fcr);
-+                __get_user(fsr, &xtregs->fsr);
-+                unlock_user(xtregs, xtregs_addr, 0);
-+                cpu_set_fcr(env, fcr);
-+                cpu_set_fsr(env, fsr);
-+            }
+     if ((off & 0xfffc) == PHB_CONFIG_DATA) {
++        if (size > 4) {
++            phb3_error(phb, "Invalid config access, offset: 0x%"PRIx64" size: %d",
++                      off, size);
++            return ~0ull;
 +        }
-+    }
-+    return 1;
- }
+         return pnv_phb3_config_read(phb, off & 0x3, size);
+     }
  
- long do_rt_sigreturn(CPUXtensaState *env)
-@@ -283,7 +361,9 @@ long do_rt_sigreturn(CPUXtensaState *env)
-     target_to_host_sigset(&set, &frame->uc.tuc_sigmask);
-     set_sigmask(&set);
- 
--    restore_sigcontext(env, frame);
-+    if (!restore_sigcontext(env, frame)) {
-+        goto badframe;
-+    }
-     target_restore_altstack(&frame->uc.tuc_stack, env);
- 
-     unlock_user_struct(frame, frame_addr, 0);
 -- 
 2.47.3
 
