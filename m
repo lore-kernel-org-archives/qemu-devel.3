@@ -4,100 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A215BCDB479
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 06:57:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22A19CDB470
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 07:01:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcHYG-0001Ox-Vp; Wed, 24 Jun 2026 02:57:37 -0400
+	id 1wcHbV-0002P5-N9; Wed, 24 Jun 2026 03:00:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <bmeng.cn@gmail.com>)
- id 1wcHY6-0001NC-AV
- for qemu-devel@nongnu.org; Wed, 24 Jun 2026 02:57:26 -0400
-Received: from mail-yx1-xb134.google.com ([2607:f8b0:4864:20::b134])
+ (Exim 4.90_1) (envelope-from <aadeshveer07@gmail.com>)
+ id 1wcHb2-0002O6-OP
+ for qemu-devel@nongnu.org; Wed, 24 Jun 2026 03:00:32 -0400
+Received: from mail-lj1-x230.google.com ([2a00:1450:4864:20::230])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <bmeng.cn@gmail.com>)
- id 1wcHY4-00073Z-F1
- for qemu-devel@nongnu.org; Wed, 24 Jun 2026 02:57:26 -0400
-Received: by mail-yx1-xb134.google.com with SMTP id
- 956f58d0204a3-664345f8645so87262d50.3
- for <qemu-devel@nongnu.org>; Tue, 23 Jun 2026 23:57:23 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1782284242; cv=none;
+ (Exim 4.90_1) (envelope-from <aadeshveer07@gmail.com>)
+ id 1wcHb1-0007dP-3H
+ for qemu-devel@nongnu.org; Wed, 24 Jun 2026 03:00:28 -0400
+Received: by mail-lj1-x230.google.com with SMTP id
+ 38308e7fff4ca-396775c26e0so4996201fa.2
+ for <qemu-devel@nongnu.org>; Wed, 24 Jun 2026 00:00:25 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1782284424; cv=none;
  d=google.com; s=arc-20240605;
- b=FW0mcFOKwc+CfdDSF4/oVM2CrlU3097Fm8+jPMIg6q4/eD5WjjrHHLbJVNuqA6ImXE
- 6Mru3m9l115eRoQki5c20gqjdVgSV1FrlYQGjR/Gn3J0jfb90gfSZZj0KWXHEc0H3Ewl
- 4l6Nud7tqunW9VkrietMTFplL1ja9qK1zkM20jLgaU7oozDKwWWwE05ENzODZzL2CGWL
- l5QXvBDK24jvJHhUqoQNkmQYro8waH7SGNRLShjHxWR5Zg8aysvBaIsiy91cFNWrJA1b
- 9ZBV9/gJZj9VSEqAjTsXQ3DQjehy2AfoZgSYGUks7NL3G8V+P8XXrKHbD4wI+wrUbsgT
- mYDg==
+ b=Cnzzf7948Tv/Qc2gOBWA7COdI/SwHhWKyQavzJzbLaXDbAQyako5ZoYggEkJw/1fqC
+ qVM0/Pv53PtQMs1vv2xlxTAYuJOUct58GR86Qv6CiW/Sf9WLXsDlObWQetBk4aTa1cuc
+ TnLCaiEpRKKan+4QmB4LN4iGVWFrVRJFFCjHFyI8drLlfC/yOkvm3uE+QfRpVh3EaNYw
+ RMSmovxDbmU05HxZiQoa8Mvtf9BmyLtQuBh9Ihq7k4pRiuH0zuwEdT0MPyBRZ3p7GqYm
+ ldNABrHStmTdgaQBNNWojqnpWC3Qo+G+HHh0zOJlMZeTTSmnoH5Wz2CbedlbJ5nKGD0z
+ A5GA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=vUxJ9wYroSmT3LaDYRIni82gR/F/LwscVpaXjcN9BbQ=;
- fh=lQ2JeqdPLK5m79TkyaIfIjf4mxrp7E3SOgrqek3tz2k=;
- b=NteKTaOBTSTwv8uENjVhCm7jBQqndI0aXfHNIS/u/8VkqisTiQi+rCpBBO1Hsw9R1n
- dzdHNKJXI6IvX8QM2vPtknau2AauYTsFaCImIlOSwV3YO3i3eK5XZk+5ljWL8eTt72TH
- W/OxxQtFtleNyE6eeXBmqz1ScUMCo9JjfABEE2WemBjtiapyJLrVApcfdwdFn2mhPvaM
- Bks6Gus/GhjyXx7fQQn+nG7/AQERGf3j/umqoylk2JYIkFgHWSBL8n4hfE75dZ7dXdnF
- pvw85HUZ37w0ayHjb+03iQ9qXHY735XZ3HewVpU0Rs1gcEJy5G3PXzhjRF+4bPmvgrAT
- 191g==; darn=nongnu.org
+ bh=SOMNCpBj2/OB3fkY3Fi14HpqYh7ZZNk+9OdN2fYxJD8=;
+ fh=NT0kq7NgLJ0wOp/qMyvn1NIPXsDSAQYGUZFkUZ2OApE=;
+ b=ilXNv0lRQ6khh46wC+ELtGI6uIbNeH+nLhUMdnBtK1ZB66crkmCwQCckkTddvoEFPq
+ S/yIQtszwR0dMDlNvoLf1IvOiURvEP9BnykEbCTcQM6Qxjv8yZOAwwCWONSeF4JRjTRW
+ c1d7uYQ/gRxhRJB9Wq+FitWyVtEc80IqPYj6gUa31eMwbj4XtlQ1P0NbLy+UZrpZ+SNQ
+ c7WahEWfA1LBRlLmrAnAnvgzMALE022cvvadlwAvEFaozpK9MtmmNFu7iQFkgAy8qkCb
+ ZPeYPBQn4AOXTqg7sqDpoKZ95ENRU5NT4XiGHZJl4OzLG8KsXmBwe4l1/p0NQTfZxhMM
+ hF8A==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1782284242; x=1782889042; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1782284424; x=1782889224; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=vUxJ9wYroSmT3LaDYRIni82gR/F/LwscVpaXjcN9BbQ=;
- b=RXOAW5SK9uB4VpQot8LMr8RJHzfXx4PJLZ5kDdXWsbqGTCmrxyW4AT4KtwY4rPqsBH
- xP0FuyenbqEVCk29Hp0O50sM+jnFu7goG6DNk40wJ/WA9TMdOfVM6dyJU1k+toKK/cM7
- oTWbn7BOEOeXcnim2D4CL3l4EJSTq60LFvG4eLNTmMYsqmFAshtWhQruYGl0+h9U0OMp
- 3J5ZSJmjUWEVUuk3ozq4WH3Urr1sLA+QlpTQ0HrJRBryeu6YIcasdX8LedOVpLE5ZeF/
- mIkvOTCh5v28ydrltnLtj9ynxiXwohr5o4FCIwxovf876qc2oHluXaT1wHzOC8JhM0Kl
- TQtg==
+ bh=SOMNCpBj2/OB3fkY3Fi14HpqYh7ZZNk+9OdN2fYxJD8=;
+ b=N3a5beGXd4jyY0l/vuu+uRLQyoekmn5FzuoFVNv6WSkY2JQJq3sTh4KR8ugqm5gEB6
+ F9nYbfbe+CgW47AreFtR0wnJmvggO6go9e2AItzOzkYA3yrr9xb3W4QD4gfgyW8dXod/
+ CplZHJNTSpfiUalCernBt484dsJJXx5Jxj5Qd/J3yT9ZFPLyccMykQLS0UWauMgFmBNx
+ /2HbUQJIheyCtH24tKbHY7Om+OZpCnNriNBYnZdmheWQlCnI/PMcLjivXYSGew5hR1y9
+ ejMN9fbP7mc1UDm2sD/FXuRP9EFjlCgoUh28ATmms0hWgq4OusoG+wGfHJnjNv1dRPN1
+ IIcw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782284242; x=1782889042;
+ d=1e100.net; s=20251104; t=1782284424; x=1782889224;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=vUxJ9wYroSmT3LaDYRIni82gR/F/LwscVpaXjcN9BbQ=;
- b=dUiV7Bq2OFamwzDCZFEqO0lqmnH0iYKdlaYel/Niz7Noqfy78zE3R5SzyE3KR3oU+g
- s0Wr8PEEBBqjB/JRxne5PAwGmiLojf91lFY7H550Y5UIYyRbAzH9i2TZetgra+rSRuqk
- dt20qZUzi+yNrHVHonOAeYRuM0Xk41KOemZfIAHWkp9ErLWFCV/5O2WYG8UTNz+2qGpB
- V6k9nrimUC7uf4xSowxdhlacHX84+CXmHV9Ni8ItbsFB9MzrxkZ9aRcK6rMgmvm07YhT
- Nr1u95HuIoqwkb21bI+TyS+3OnjYZ3lEes0wmBlxzKH/0ZHcUpYMXyuiz2eoY69w+f7x
- SmXw==
-X-Gm-Message-State: AOJu0YySXyaGqLp2xOQCijSmJARwNzWqbAp3HfdS8pnNqi4QmghIdB72
- 7YKywcYf5QWgpr74WaXEqAyJ4TK0kiPcyAjG+wXLKO1AT80AVkJVWna3VEtuIhPlunMuzy/Ojck
- smOxKKcmUaBlhRulqRD+JusGNxSO8+yQ=
-X-Gm-Gg: AfdE7cnL3bXZ8rvmsJ5P7YGftQCh/JXCHMp/N/txT/Xx9gIRu16w9rzP/m9U2KOxtJv
- /b0lHRVTWoB+xwhkuobjPC3JAW8QHyVbvvd4fTNvk5rAn/X9DdEKRNafD/wt02A12cF/PoVO4r7
- pFdwP5xHt8tzWtDPBq/iNXnp+KjYkfEMqJefwIt7XlkUQby/2uCqXJtjUeDlQaIlTDprb3ARMCA
- Ag7LZWjvbgpFuMfuePGkbCnVa5VtfOP3NTKJn87vzIDtwP+0f8jTbWrBDZAdo/RC1L4gCjVEp9/
- MT2e0xz/XpiEBwUh69+eG6myVmun9GM=
-X-Received: by 2002:a05:690e:124d:b0:662:e26f:cd10 with SMTP id
- 956f58d0204a3-6635a377cadmr5195466d50.51.1782284242140; Tue, 23 Jun 2026
- 23:57:22 -0700 (PDT)
+ bh=SOMNCpBj2/OB3fkY3Fi14HpqYh7ZZNk+9OdN2fYxJD8=;
+ b=iX+l/SqE1dL+DGMLVUmQyyoiXFrwqpmP+KB+WMKP5EmVHnNGOrql5KUHBs2HPYjQEC
+ kO4j7AxRimYLHg7jlh7RdKUWKaZk4ew90774hDXZpUtyj6GCb4quzkRkqiRWEMm/h2ay
+ 6u0qL6BjCBEa7TEJmTJRMV/y0uk8erzuReLKxV9txkVml5mdlZxQmd/tWDjAWSnTTRMC
+ VkNH+HNkZdNvfZOOR1hceVc4stt5qqfFPyzGmLy44r0riKbUg589J3Z5s/qcheHIE7tf
+ jVXgYOtsm34UEz4qJDgU/WsstAHh+ydmE2vrrkV2uL6RFlYN2zDhLI6NK3hscGTOwaMB
+ ypqQ==
+X-Gm-Message-State: AOJu0YxmTNN7gYlzdm1DBQBu9o2EPHSrfjrgkHgsN1910LuW4Vvi26nK
+ ZlXEyNvkFzdASUreNAbE1Fx8y+aPIV6nKqdZaN9xUxoCX4/UFMmZuzp0yTun1OUJTij2A3bcK72
+ rGfdILeSPJnZvcN7ssmqqsemS2qJ9sOA=
+X-Gm-Gg: AfdE7ckulKba9U8j63yWSdpexweWDssdb2/N8zCfHThQ/ZWdEf5s6Y/sJprRD2gZuG6
+ xEgGUiV0L+HnitmRDSk8AyrqxFqHdMzcp/czqrVhhnaHnn8tu1s3OBBAvXuvXYTPba1qOODPiVQ
+ FY2FWU/my4dK6A4w2kPZ4kgiXSKDO8sKFeKaa2LjEgfXW1zBQkFKOIS3qbjks/6TrdKQyCLUkUm
+ zXrTQ7YUJO8QECNAubtqcS/Qc9HuZTVxN6/Ue+ps7MzBfnmQFjeUKh1Tp2uilRKlIJ6EU57w9kk
+ NZq2CvJ5o3cM6oYMRwA+4P3k5bT7EZa4d8NAQmCXyzrPbGAWV4fRxxJjC4cAm9MTinBcLQc=
+X-Received: by 2002:a05:651c:1994:b0:399:83a4:4f0c with SMTP id
+ 38308e7fff4ca-39a27e24d94mr14792091fa.20.1782284423204; Wed, 24 Jun 2026
+ 00:00:23 -0700 (PDT)
 MIME-Version: 1.0
-References: <CAFEAcA_UhmCxJc16CHE=4ZR1+PA0=4-29=fEe+d+iUmhLTzpuQ@mail.gmail.com>
-In-Reply-To: <CAFEAcA_UhmCxJc16CHE=4ZR1+PA0=4-29=fEe+d+iUmhLTzpuQ@mail.gmail.com>
-From: Bin Meng <bmeng.cn@gmail.com>
-Date: Wed, 24 Jun 2026 14:57:09 +0800
-X-Gm-Features: AVVi8CeCah8jVATbzTJEbyhWUPILJzNjgqK42sE0xmNU9cDMbGV7J4ODCsUSxIY
-Message-ID: <CAEUhbmW=02DNwVH7pLtuWBzEnEVJiJNrZVcys-pLY_cS0uro1Q@mail.gmail.com>
-Subject: Re: QEMU net code and padding of short packets
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: QEMU Developers <qemu-devel@nongnu.org>, Jason Wang <jasowang@redhat.com>
+References: <20260618032010.88755-1-aadeshveer07@gmail.com>
+ <CA++cPvLSxOLmLDpq4AwYndT1jvu6j17YQLxUexLX1MkxMtCznw@mail.gmail.com>
+ <ajmKyRQtzOl7rCIM@x1.local>
+In-Reply-To: <ajmKyRQtzOl7rCIM@x1.local>
+From: Aadeshveer Singh <aadeshveer07@gmail.com>
+Date: Wed, 24 Jun 2026 12:30:10 +0530
+X-Gm-Features: AVVi8CdkjS55qcb836yL5WpbSZEYFWZvRFtGFq_e7WJHRWpPUsxw29y_ZJ3xLa8
+Message-ID: <CA++cPv+PTr50FmcmwKgb8_U4j12f_u_Dets=LifSNL3m9X7XXA@mail.gmail.com>
+Subject: Re: [RFC PATCH 0/5] migration: fast snapshot load
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, farosas@suse.de, pbonzini@redhat.com, 
+ philmd@mailo.com, lvivier@redhat.com, ayoub@saferwall.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b134;
- envelope-from=bmeng.cn@gmail.com; helo=mail-yx1-xb134.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+Received-SPF: pass client-ip=2a00:1450:4864:20::230;
+ envelope-from=aadeshveer07@gmail.com; helo=mail-lj1-x230.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -117,87 +121,78 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Hi Peter,
 
-On Tue, Jun 23, 2026 at 6:56=E2=80=AFPM Peter Maydell <peter.maydell@linaro=
-.org> wrote:
+Thank you for the detailed review of the RFC.
+I agree with the feedback across the series. For v2, I will:
+- Squash the blocktime patch directly into Patch 4 as you suggested.
+- Apply the QEMU styling fixes (reverse christmas tree,
+g_clear_pointer, macro braces).
+- Replace the g_assert() calls with standard Error errp propagation to
+gracefully handle disk read failures.
+- Move the capability conflict test removal to Patch 1.
+I have one architectural clarification regarding the bitmap usage on
+Patch 1, which I will reply to inline on that specific thread. I will
+get to work on v2.
+
+Thank you,
+Aadeshveer Singh
+
+On Tue, Jun 23, 2026 at 12:49=E2=80=AFAM Peter Xu <peterx@redhat.com> wrote=
+:
 >
-> What is the general design principle for QEMU's handling of "short"
-> packets, which are less than the 60 byte ethernet frame minimum?
+> On Fri, Jun 19, 2026 at 06:48:57PM +0530, Aadeshveer Singh wrote:
+> > From 70ab2949ef99968c2fc16e6a0d9860a993514367 Mon Sep 17 00:00:00 2001
+> > From: Aadeshveer Singh <aadeshveer07@gmail.com>
+> > Date: Fri, 19 Jun 2026 18:12:36 +0530
+> > Subject: [PATCH] migration: postcopy-blocktime support for fast snapsho=
+t load
+> >
+> > Add postcopy-blocktime support to fast snapshot load by calling
+> > mark_postcopy_blocktime_begin(), on all page faults intercepted by faul=
+t
+> > thread.
+> >
+> > There is no need to call mark_postcopy_blocktime_end(), as
+> > postcopy_mapped_ram_load_page() calls postcopy_place_page() and
+> > postcopy_place_page_zero() which call the end marking internally.
+> >
+> > Signed-off-by: Aadeshveer Singh <aadeshveer07@gmail.com>
+> > ---
+> >  migration/postcopy-ram.c | 6 ++++++
+> >  1 file changed, 6 insertions(+)
+> >
+> > diff --git a/migration/postcopy-ram.c b/migration/postcopy-ram.c
+> > index 0ee294a381..2f4698fbed 100644
+> > --- a/migration/postcopy-ram.c
+> > +++ b/migration/postcopy-ram.c
+> > @@ -1436,6 +1436,12 @@ static void *postcopy_ram_fault_thread(void *opa=
+que)
+> >                                                  msg.arg.pagefault.feat=
+.ptid);
+> >
+> >              if (migrate_fast_snapshot_load()) {
+> > +                WITH_QEMU_LOCK_GUARD(&mis->page_request_mutex)
+> > +                {
+> > +                    mark_postcopy_blocktime_begin(msg.arg.pagefault.ad=
+dress,
+> > +                                                  msg.arg.pagefault.fe=
+at.ptid,
+> > +                                                  rb);
+> > +                }
+> >                  if (postcopy_mapped_ram_load_page(
+> >                          mis, rb, rb_offset, msg.arg.pagefault.address,=
+ 1)) {
+> >                      break;
 >
-> In commit 969e50b61a285b0 ("net: Pad short frames to minimum size
-> before sending from SLiRP/TAP") we made the slirp and tap backends
-> add padding to short packets before feeding them into the net
-> code via qemu_send_packet() and friends, with the idea that we could
-> then remove (often buggy) code from network device emulation that
-> tried to handle the short-packet in its receive path.
+> Let's squash this directly to your core patch 4, then mention it in the
+> commit log.
 >
-> In commit 79b6a985 we realized we also needed to do this for the vmnet
-> backend. The issue https://gitlab.com/qemu-project/qemu/-/work_items/2362
-> reports that we also need to do this for socket and dgram and similar
-> backends.
+> Even if I left quite some comments, most of them are small nitpicks. It's
+> good to know there're only a few postcopy functions need some touch, and
+> most logics can be reused.
 >
-> I'm trying to identify what the underlying logic here is. My current
-> best guess is:
->  - we should always pad before feeding in a packet which is going
->    to be sent to an ethernet device model (unless that device model
->    has explicitly opted in via do_not_pad, e.g. because it really does
->    want to faithfully model the card's handling of short packets
->    and it's gone to the trouble of getting it right)
->  - we should not pad before feeding in a packet which is going to
->    be sent to a network backend (i.e. where the guest is sending out
->    to slirp/tap/etc)
+> The RFC series looks a great start, thank you!
 >
-
-Yes, your two bullets match the intent of the original series.
-
-The do_not_pad flag was intended to describe a property of the
-destination. Packets delivered to an Ethernet device model should
-normally be padded, unless that model explicitly wants to handle short
-frames itself. In the other direction, a backend should receive what
-the device model actually transmitted, since TX padding behaviour is
-part of the device being modelled.
-
-> Could we do this by having qemu_send_packet() etc always pad, and
-> have the slirp/tap/etc backends set the do_not_pad flag on their
-> NetClientState structs to suppress this? Would that be better than
-> having all the backends do "and pad this" for their sending code?
+> --
+> Peter Xu
 >
-
-I agree that centralizing this in the net core is preferable to adding
-padding separately to every backend. I would also consider making
-do_not_pad the default for qemu_new_net_client() users, since those
-are the backends and hub ports, while qemu_new_nic() users would
-retain the default padding policy. That avoids repeating the same
-omission for new backends.
-
-> At the moment the only user of do_not_pad is the virtio-net device.
-> commit d4c6293041 just says "there is no need to pad" and doesn't
-> give rationale. Why is this particular network device a special case?
->
-
-virtio-net was made an exception because it is a length-delimited
-paravirtual interface rather than a physical MAC. Its receive path can
-deliver a short Ethernet packet such as a 42-byte ARP packet directly
-to the guest, so padding it is unnecessary and changes the packet
-length visible to the guest.
-
-> Are there any special cases where code calls qemu_send_packet
-> or qemu_sendv_packet which aren't either "a network device"
-> or "a backend"? There's net/hub.c -- I guess that should set
-> do_not_pad for its inputs, so it faithfully passes through
-> short packets and lets the destinations decide whether they want
-> them padded or not. Anything else?
->
-
-Yep, there are a few things to take care of:
-
-* qemu_sendv_packet*() needs the same handling as qemu_send_packet*().
-* qemu_receive_packet() bypasses the send path for device loopback.
-Its current net_peer_needs_padding(nc) check would become wrong once
-backends or hub ports set do_not_pad: the receiver there is nc itself,
-not nc->peer.
-* Hub ports should opt out on the ingress side, allowing each
-destination to make its own padding decision.
-
-Regards,
-Bin
 
