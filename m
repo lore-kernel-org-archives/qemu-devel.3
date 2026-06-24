@@ -4,44 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35CC2CDB481
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 13:44:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A418CDE005
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 13:44:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcNsJ-0001GN-Dc; Wed, 24 Jun 2026 09:42:44 -0400
+	id 1wcNtQ-0006Ny-5F; Wed, 24 Jun 2026 09:43:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wcNs2-0000zx-Ju; Wed, 24 Jun 2026 09:42:30 -0400
+ id 1wcNtN-0006Ci-MF; Wed, 24 Jun 2026 09:43:49 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wcNs0-0001vn-5L; Wed, 24 Jun 2026 09:42:25 -0400
+ id 1wcNtL-00028X-Vu; Wed, 24 Jun 2026 09:43:49 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1782308001; bh=ry6mtzO4AFtcMZbYpxL6+brjFsNbamMA5dDuVzUFZB8=;
+ t=1782308007; bh=Keok8i8qUdh8lw5p9O3kG49/Lx9jiNE6zo1Es59rBbU=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=ESgq6gTe3h2eD2gG4dWZy0rh4Bq1+LSGfU23zIZ+L9cl7MvB/HfEBDlOTjVbn1BqX
- RIc2QTUGrkolTwlhTOgzYvErPlVlpGUv4H192gHsEbn6khkZg+ab08sRfULDZTe/mI
- tpzrb0OUCNeKHZpquDQ3pYgSX08JZ6XT1hoF7CPWvgDVLaCFWCfQ13iG0fWA5NuKGw
- MLvxtdjtTQeF8nllE7St/eA4GPSoyPwrtWC7WTzulTJGeaR9YOul6+/Qe7J2wWbRj8
- zTGCoahYaGM+883pCxkc415aIqeBhgQ5KXYTpd2Tg5a4HHpxhZo+P0iXk27CuQozoM
- iGSuksX4zg4wQ==
+ b=AbudlXmcF5PXcVLIRkOT+McpjlhnnDsoPXEQ0EdI182T8kIcRYOuiEgP916soUNFf
+ e/l9fYmeooRe5JOUD0fQh6u6FwQAO7LH05G6Jb2GWSFn2NF8kkspSu2eRMQOisyC1r
+ yXKDkGFkUMwG/YQiXaI3b7ql6q8ZSKEsYGT7ozE7kDe/65COBXwZNf117omqILFA7w
+ sD4k14BCv7zPJ2Cdd120FWfwZPtH4gGc4/X1jKWTL+qjvLf0t9x2WZOrZoavuf29fk
+ Kq+4n/rjE2wio4nsk1PvhgfZKdF6OabhED5UFPHK01mXBDMVqb9gH1vUBwUEdzQ6Vp
+ Z5uCFT7wTKWJQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 9DD571BAA0E;
- Wed, 24 Jun 2026 16:33:21 +0300 (MSK)
-Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 3B1603DEA5D;
+ by isrv.corpit.ru (Postfix) with ESMTP id C62C21BAA1D;
  Wed, 24 Jun 2026 16:33:27 +0300 (MSK)
+Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 62CBE3DEA6C;
+ Wed, 24 Jun 2026 16:33:33 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.2 092/107] disas/riscv.c: fix inst_length()
-Date: Wed, 24 Jun 2026 16:31:37 +0300
-Message-ID: <20260624133301.403266-92-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Akshit Yadav <valium7171@gmail.com>,
+ Helge Deller <deller@gmx.de>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.2 107/107] linux-user: Fix AT_PHDR when program headers
+ are relocated into their own segment
+Date: Wed, 24 Jun 2026 16:31:52 +0300
+Message-ID: <20260624133301.403266-107-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.2-20260624163118@cover.tls.msk.ru>
 References: <qemu-stable-11.0.2-20260624163118@cover.tls.msk.ru>
@@ -70,69 +69,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+From: Akshit Yadav <valium7171@gmail.com>
 
-inst_length() can return 0 if 'inst' happens to not match any known
-encoding (like [1]).  Returning 0 is not desirable, even for unknown
-encodings, given that it will cause a loop in target_disas() later on.
+When a binary is patched or relocated such that the program header table is
+moved into a separate PT_LOAD segment (rather than sitting at the start of the
+first loadable segment), QEMU's AT_PHDR auxv entry becomes incorrect. The
+loader was computing AT_PHDR as load_addr + e_phoff, which assumes the headers
+are mapped 1:1 from file offset 0. This breaks when the headers are elsewhere.
 
-The most recent version of the RISC-V unpriv spec ditched the
-sophisticated instruction-length encoding.  We're now supporting only
-16-bit and 32-bit length instructions, where:
+The Linux kernel instead locates the PT_LOAD segment that contains e_phoff,
+then computes the in-memory address as p_vaddr + (e_phoff - p_offset). This
+correctly handles relocated headers.
 
-"All the 32-bit instructions in the base ISA have their lowest two bits
-set to 11.  The optional compressed 16-bit instruction-set extensions
-have their lowest two bits equal to 00, 01, or 10."
+Fix by:
+1. Add phdr_addr field to image_info to cache the resolved address.
+2. Initialize to load_addr + e_phoff (fallback for headers outside any PT_LOAD).
+3. In the PT_LOAD mapping loop, detect if the segment contains e_phoff and
+   override with the segment-relative address.
+4. Use info->phdr_addr for AT_PHDR instead of the incorrect formula.
 
-So the code is now simpler, never returning 0, and in fact it's the same
-thing we're already doing in insn_len() from target/riscv/internals.h.
-Due to include shenarigans we can't use that function in disas/riscv.c,
-but I believe we can cut ourselves some slack this time and not lose
-sleep over a 1 line of duplicated logic.  We're documenting it though!
-
-[1] https://gitlab.com/qemu-project/qemu/-/work_items/3479
-
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3479
-Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20260527200355.2068879-2-daniel.barboza@oss.qualcomm.com>
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-(cherry picked from commit 758dce9c98af4f3ef26eada48a484a7d60258636)
+Signed-off-by: Akshit Yadav <valium7171@gmail.com>
+Reviewed-by: Helge Deller <deller@gmx.de>
+(cherry picked from commit 156e536a7b9700018aaa2437072c14e3376340a7)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/disas/riscv.c b/disas/riscv.c
-index 0ed8a3b5ed..5a61d1bb80 100644
---- a/disas/riscv.c
-+++ b/disas/riscv.c
-@@ -5083,26 +5083,10 @@ static bool check_constraints(rv_decode *dec, const rvc_constraint *c)
-     return true;
- }
+diff --git a/linux-user/elfload.c b/linux-user/elfload.c
+index 0e757787d2..b995a85eaf 100644
+--- a/linux-user/elfload.c
++++ b/linux-user/elfload.c
+@@ -699,7 +699,7 @@ static abi_ulong create_elf_tables(abi_ulong p, int argc, int envc,
+     /* There must be exactly DLINFO_ITEMS entries here, or the assert
+      * on info->auxv_len will trigger.
+      */
+-    NEW_AUX_ENT(AT_PHDR, (abi_ulong)(info->load_addr + exec->e_phoff));
++    NEW_AUX_ENT(AT_PHDR, (abi_ulong)(info->phdr_addr));
+     NEW_AUX_ENT(AT_PHENT, (abi_ulong)(sizeof (struct elf_phdr)));
+     NEW_AUX_ENT(AT_PHNUM, (abi_ulong)(exec->e_phnum));
+     NEW_AUX_ENT(AT_PAGESZ, (abi_ulong)(TARGET_PAGE_SIZE));
+@@ -1469,6 +1469,12 @@ static void load_elf_image(const char *image_name, const ImageSource *src,
+     info->data_offset = load_bias;
+     info->load_addr = load_addr;
+     info->entry = ehdr->e_entry + load_bias;
++    /*
++     * Fallback for AT_PHDR if the program headers do not fall within
++     * any PT_LOAD segment (see the loop below, which overrides this with
++     * the correct in-memory address when a containing segment is found).
++     */
++    info->phdr_addr = load_addr + ehdr->e_phoff;
+     info->start_code = -1;
+     info->end_code = 0;
+     info->start_data = -1;
+@@ -1523,6 +1529,19 @@ static void load_elf_image(const char *image_name, const ImageSource *src,
+             vaddr_ef = vaddr + eppnt->p_filesz;
+             vaddr_em = vaddr + eppnt->p_memsz;
  
--/* instruction length */
--
-+/* Same as insn_len() from target/riscv/internals.h */
- static size_t inst_length(rv_inst inst)
- {
--    /* NOTE: supports maximum instruction size of 64-bits */
--
--    /*
--     * instruction length coding
--     *
--     *      aa - 16 bit aa != 11
--     *   bbb11 - 32 bit bbb != 111
--     *  011111 - 48 bit
--     * 0111111 - 64 bit
--     */
--
--    return (inst &      0b11) != 0b11      ? 2
--         : (inst &   0b11100) != 0b11100   ? 4
--         : (inst &  0b111111) == 0b011111  ? 6
--         : (inst & 0b1111111) == 0b0111111 ? 8
--         : 0;
-+    return (inst & 3) == 3 ? 4 : 2;
- }
- 
- /* format instruction */
++            /*
++             * If this segment contains the program headers, record their
++             * in-memory address for AT_PHDR. This matches the kernel, which
++             * locates the headers via the containing PT_LOAD rather than
++             * assuming load_addr + e_phoff (false when the phdrs are not
++             * mapped 1:1 from file offset 0, e.g. relocated into their own
++             * segment by a binary patcher).
++             */
++            if (eppnt->p_offset <= ehdr->e_phoff &&
++                ehdr->e_phoff < eppnt->p_offset + eppnt->p_filesz) {
++                info->phdr_addr = vaddr + (ehdr->e_phoff - eppnt->p_offset);
++            }
++
+             /*
+              * Some segments may be completely empty, with a non-zero p_memsz
+              * but no backing file segment.
+diff --git a/linux-user/qemu.h b/linux-user/qemu.h
+index 7f98fb2607..a9dda4bbd7 100644
+--- a/linux-user/qemu.h
++++ b/linux-user/qemu.h
+@@ -26,6 +26,7 @@
+ struct image_info {
+         abi_ulong       load_bias;
+         abi_ulong       load_addr;
++        abi_ulong       phdr_addr;
+         abi_ulong       start_code;
+         abi_ulong       end_code;
+         abi_ulong       start_data;
 -- 
 2.47.3
 
