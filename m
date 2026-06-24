@@ -4,43 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A418CDE005
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 13:44:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43A2DCDB479
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 13:45:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcNtQ-0006Ny-5F; Wed, 24 Jun 2026 09:43:52 -0400
+	id 1wcNry-0000wR-Ah; Wed, 24 Jun 2026 09:42:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wcNtN-0006Ci-MF; Wed, 24 Jun 2026 09:43:49 -0400
+ id 1wcNrc-0000ZO-WD; Wed, 24 Jun 2026 09:42:02 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wcNtL-00028X-Vu; Wed, 24 Jun 2026 09:43:49 -0400
+ id 1wcNrb-0001ux-4f; Wed, 24 Jun 2026 09:42:00 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1782308007; bh=Keok8i8qUdh8lw5p9O3kG49/Lx9jiNE6zo1Es59rBbU=;
+ t=1782308001; bh=uPPwjcq5ppvp1MZms9UGGsAC3WsimsfdOd6fgW4/rrI=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=AbudlXmcF5PXcVLIRkOT+McpjlhnnDsoPXEQ0EdI182T8kIcRYOuiEgP916soUNFf
- e/l9fYmeooRe5JOUD0fQh6u6FwQAO7LH05G6Jb2GWSFn2NF8kkspSu2eRMQOisyC1r
- yXKDkGFkUMwG/YQiXaI3b7ql6q8ZSKEsYGT7ozE7kDe/65COBXwZNf117omqILFA7w
- sD4k14BCv7zPJ2Cdd120FWfwZPtH4gGc4/X1jKWTL+qjvLf0t9x2WZOrZoavuf29fk
- Kq+4n/rjE2wio4nsk1PvhgfZKdF6OabhED5UFPHK01mXBDMVqb9gH1vUBwUEdzQ6Vp
- Z5uCFT7wTKWJQ==
+ b=LXbTwhQxHaC2LeICA+3E108fwED0XJSBoKmNcLZlIJGS+bwNfcrsgZSEfOxb9Nlh7
+ 1mzTJt9b+mXrJhdADTVUbEmM1Y9QLHmhc9ueVtohpAfsnWUt9FSygdTtwD6qH7nj0p
+ Qvr1qZXKeV5Sfk2AkKOJOrN/foMT6g9cjNwQLv6hecD+le1TxDsmeP5BYFKZ1F6B62
+ 6IeGm9GNnrACB03jOvCDUaKb7OZlRZ9McPHTeGIBEjsyATcUtV52HFxAxiORPw+zNP
+ GWYRZK0mtZ7dI3/bL6EnHokRv6UKkWbbpoOJ8Gvc3x3qeYiWwAwjhAU4VUnRk+Zdl5
+ ifAtQzrYuBA3Q==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id C62C21BAA1D;
- Wed, 24 Jun 2026 16:33:27 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 6EB1F1BAA0B;
+ Wed, 24 Jun 2026 16:33:21 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 62CBE3DEA6C;
- Wed, 24 Jun 2026 16:33:33 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 0C4563DEA5A;
+ Wed, 24 Jun 2026 16:33:27 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Akshit Yadav <valium7171@gmail.com>,
- Helge Deller <deller@gmx.de>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.2 107/107] linux-user: Fix AT_PHDR when program headers
- are relocated into their own segment
-Date: Wed, 24 Jun 2026 16:31:52 +0300
-Message-ID: <20260624133301.403266-107-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.2 089/107] target/riscv/cpu_helper.c: fault with
+ reserved PTE.PBMT val
+Date: Wed, 24 Jun 2026 16:31:34 +0300
+Message-ID: <20260624133301.403266-89-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.2-20260624163118@cover.tls.msk.ru>
 References: <qemu-stable-11.0.2-20260624163118@cover.tls.msk.ru>
@@ -69,88 +71,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Akshit Yadav <valium7171@gmail.com>
+From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 
-When a binary is patched or relocated such that the program header table is
-moved into a separate PT_LOAD segment (rather than sitting at the start of the
-first loadable segment), QEMU's AT_PHDR auxv entry becomes incorrect. The
-loader was computing AT_PHDR as load_addr + e_phoff, which assumes the headers
-are mapped 1:1 from file offset 0. This breaks when the headers are elsewhere.
+We need to fault during any access done while PTE bits 62-61 are both
+set, according to the RISC-V priv spec.
 
-The Linux kernel instead locates the PT_LOAD segment that contains e_phoff,
-then computes the in-memory address as p_vaddr + (e_phoff - p_offset). This
-correctly handles relocated headers.
-
-Fix by:
-1. Add phdr_addr field to image_info to cache the resolved address.
-2. Initialize to load_addr + e_phoff (fallback for headers outside any PT_LOAD).
-3. In the PT_LOAD mapping loop, detect if the segment contains e_phoff and
-   override with the segment-relative address.
-4. Use info->phdr_addr for AT_PHDR instead of the incorrect formula.
-
-Signed-off-by: Akshit Yadav <valium7171@gmail.com>
-Reviewed-by: Helge Deller <deller@gmx.de>
-(cherry picked from commit 156e536a7b9700018aaa2437072c14e3376340a7)
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3494
+Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Message-ID: <20260521130727.2311629-1-daniel.barboza@oss.qualcomm.com>
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+(cherry picked from commit 3e33da68f1db7ab586063b708aa571086e7400ce)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/linux-user/elfload.c b/linux-user/elfload.c
-index 0e757787d2..b995a85eaf 100644
---- a/linux-user/elfload.c
-+++ b/linux-user/elfload.c
-@@ -699,7 +699,7 @@ static abi_ulong create_elf_tables(abi_ulong p, int argc, int envc,
-     /* There must be exactly DLINFO_ITEMS entries here, or the assert
-      * on info->auxv_len will trigger.
-      */
--    NEW_AUX_ENT(AT_PHDR, (abi_ulong)(info->load_addr + exec->e_phoff));
-+    NEW_AUX_ENT(AT_PHDR, (abi_ulong)(info->phdr_addr));
-     NEW_AUX_ENT(AT_PHENT, (abi_ulong)(sizeof (struct elf_phdr)));
-     NEW_AUX_ENT(AT_PHNUM, (abi_ulong)(exec->e_phnum));
-     NEW_AUX_ENT(AT_PAGESZ, (abi_ulong)(TARGET_PAGE_SIZE));
-@@ -1469,6 +1469,12 @@ static void load_elf_image(const char *image_name, const ImageSource *src,
-     info->data_offset = load_bias;
-     info->load_addr = load_addr;
-     info->entry = ehdr->e_entry + load_bias;
-+    /*
-+     * Fallback for AT_PHDR if the program headers do not fall within
-+     * any PT_LOAD segment (see the loop below, which overrides this with
-+     * the correct in-memory address when a containing segment is found).
-+     */
-+    info->phdr_addr = load_addr + ehdr->e_phoff;
-     info->start_code = -1;
-     info->end_code = 0;
-     info->start_data = -1;
-@@ -1523,6 +1529,19 @@ static void load_elf_image(const char *image_name, const ImageSource *src,
-             vaddr_ef = vaddr + eppnt->p_filesz;
-             vaddr_em = vaddr + eppnt->p_memsz;
+diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
+index f631d008bd..d64c4d2e80 100644
+--- a/target/riscv/cpu_helper.c
++++ b/target/riscv/cpu_helper.c
+@@ -1396,6 +1396,25 @@ static int get_physical_address(CPURISCVState *env, hwaddr *physical,
+                 return TRANSLATE_FAIL;
+             }
  
 +            /*
-+             * If this segment contains the program headers, record their
-+             * in-memory address for AT_PHDR. This matches the kernel, which
-+             * locates the headers via the containing PT_LOAD rather than
-+             * assuming load_addr + e_phoff (false when the phdrs are not
-+             * mapped 1:1 from file offset 0, e.g. relocated into their own
-+             * segment by a binary patcher).
++             * priv spec, "Svpbmt" chapter:
++             * "For non-leaf PTEs, bits 62-61 are reserved for future
++             * standard use.  Until their use is defined by a standard
++             * extension, they must be cleared by software for forward
++             * compatibility, or else a page-fault exception is raised."
++             *
++             * For leaf PTEs the same bits are also reserved but in that
++             * case the page-fault is mandatory.  Make both cases consistent
++             * by also page faulting here.
 +             */
-+            if (eppnt->p_offset <= ehdr->e_phoff &&
-+                ehdr->e_phoff < eppnt->p_offset + eppnt->p_filesz) {
-+                info->phdr_addr = vaddr + (ehdr->e_phoff - eppnt->p_offset);
++            if ((pte & PTE_PBMT) == PTE_PBMT) {
++                qemu_log_mask(LOG_GUEST_ERROR, "%s: PBMT bits 62 and 61 are "
++                        "reserved but are set in PTE: "
++                        "addr: 0x%" HWADDR_PRIx " pte: 0x" TARGET_FMT_lx "\n",
++                        __func__, pte_addr, pte);
++                return TRANSLATE_FAIL;
 +            }
 +
-             /*
-              * Some segments may be completely empty, with a non-zero p_memsz
-              * but no backing file segment.
-diff --git a/linux-user/qemu.h b/linux-user/qemu.h
-index 7f98fb2607..a9dda4bbd7 100644
---- a/linux-user/qemu.h
-+++ b/linux-user/qemu.h
-@@ -26,6 +26,7 @@
- struct image_info {
-         abi_ulong       load_bias;
-         abi_ulong       load_addr;
-+        abi_ulong       phdr_addr;
-         abi_ulong       start_code;
-         abi_ulong       end_code;
-         abi_ulong       start_data;
+             if (!riscv_cpu_cfg(env)->ext_svnapot && (pte & PTE_N)) {
+                 /* Reserved without Svnapot extension */
+                 qemu_log_mask(LOG_GUEST_ERROR, "%s: N bit set in PTE, "
+@@ -1448,6 +1467,23 @@ static int get_physical_address(CPURISCVState *env, hwaddr *physical,
+         return TRANSLATE_FAIL;
+     }
+ 
++    /*
++     * priv spec, "Svpbmt" chapter:
++     * "For leaf PTEs, setting bits 62-61 to the value 3 is reserved
++     * for future standard use. Until this value is defined by a
++     * standard extension, using this reserved value in a leaf PTE
++     * raises a page-fault exception. "
++     *
++     * Raise a fault if 62-61 (i.e. PTE_PBMT) are set.
++     */
++    if ((pte & PTE_PBMT) == PTE_PBMT) {
++        qemu_log_mask(LOG_GUEST_ERROR, "%s: PBMT bits 62 and 61 are "
++                      "reserved but are set in leaf PTE: "
++                      "addr: 0x%" HWADDR_PRIx " pte: 0x" TARGET_FMT_lx "\n",
++                      __func__, pte_addr, pte);
++        return TRANSLATE_FAIL;
++    }
++
+     target_ulong rwx = pte & (PTE_R | PTE_W | PTE_X);
+     /* Check for reserved combinations of RWX flags. */
+     switch (rwx) {
 -- 
 2.47.3
 
