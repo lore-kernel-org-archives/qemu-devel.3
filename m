@@ -4,49 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E091CDB479
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 05:14:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2AE14CDB479
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 05:14:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcFrl-00044q-Ag; Wed, 24 Jun 2026 01:09:37 -0400
+	id 1wcFoV-0007Ca-0G; Wed, 24 Jun 2026 01:06:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wcFqb-0002uf-7y; Wed, 24 Jun 2026 01:08:27 -0400
+ id 1wcFoM-00075Z-Ct; Wed, 24 Jun 2026 01:06:07 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wcFqW-0005pi-VV; Wed, 24 Jun 2026 01:08:24 -0400
+ id 1wcFoK-0005aA-IA; Wed, 24 Jun 2026 01:06:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1782277622; bh=bEJwbZH2Ng3U2UqlGmEAoVUd6jBA72yoLTfhhUkvOQc=;
+ t=1782277465; bh=oRGK0B+S+iE7XuNGYpnPHYkqJVVU5eGIhpl2mfV2J00=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=fZ9X9dPJlLHg8QFUBIc0+fNv+yHjzJeUDV2+ypy7YLUruCDofqzofV0MEgoK7BeVp
- 9D7IB3a7frGduNCoDhVAU3NmYR4Watxbku0PQxnzc0XTUUJu5Fm7aSw7QN1TbZbmIJ
- b6cKjYJq46JX/Z5D8GoZzz9f1ZwOU7FGiZNoyJSc48py1FkA9+YGj0Y6aktVX3RCPd
- sFF2Wgu+/2A5wuyc7r94AbRRdzM1dr/YHZ/6QjF112OktuwFuCIfI+89lOD5R3uB20
- xqqTC8Yj4JamBeuWXayU6QA3EfwL4a6Zcjet+9G22F6LFfBPQlxvlBc/ZvMLTXjYwQ
- XJNXDLEA3KTYQ==
+ b=ovm1tsfaMnrfzhpwC6cVsF6qiaQPAsKkdP2uJNPghd4ghyKUTe3l1vPHwM8LTG+o8
+ zQYiXoi7+REJo9ZgxZjFsn+Yk5xnvBOYHYmVtL/jFaphgaDYUejejjOvuq2NzYf6ea
+ onxncdSJtlOspnWB/jRuIixOb8/wKHD9GlGOlbZQhpNJdENOqEKnTLYD+fYoamqDhQ
+ FK7yKfwOG/yiPXrF+6X0ciOccsYPDbLF/REozOyPde5lzRr3412ognM4MmMyJ4GXtb
+ vAet1lFvCM3TZEIM8WNuf/YzOuuSe2mB3rPJTOj6ZHQALuQ8tnHtu7Oknu/PN7b/mK
+ fILVnidgVWiqA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id D5E4E1BA667;
- Wed, 24 Jun 2026 08:07:02 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id A45B71BA641;
+ Wed, 24 Jun 2026 08:04:25 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id BF5833DDB04;
- Wed, 24 Jun 2026 08:07:07 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 8FAED3DDACC;
+ Wed, 24 Jun 2026 08:04:30 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Chao Liu <chao.liu.zevorn@gmail.com>,
- Alistair Francis <alistair.francis@wdc.com>,
+Cc: qemu-stable@nongnu.org, Christian Schoenebeck <qemu_oss@crudebyte.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.4 73/95] target/riscv/tcg: disable svpbmt if satp_mode <
- sv39
-Date: Wed, 24 Jun 2026 08:05:08 +0300
-Message-ID: <20260624050541.395079-12-mjt@tls.msk.ru>
+Subject: [Stable-10.0.11 78/86] hw/9pfs: reject . and .. in Twstat rename
+Date: Wed, 24 Jun 2026 08:02:49 +0300
+Message-ID: <20260624050404.394225-22-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-10.2.4-20260624080454@cover.tls.msk.ru>
-References: <qemu-stable-10.2.4-20260624080454@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-10.0.11-20260624080222@cover.tls.msk.ru>
+References: <qemu-stable-10.0.11-20260624080222@cover.tls.msk.ru>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
@@ -72,66 +68,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+From: Christian Schoenebeck <qemu_oss@crudebyte.com>
 
-Priv spec chapter "Svpbmt Extension for Page-Based Memory Types, Version
-1.0" mentions that "The Svpbmt extension depends on the Sv39
-extension.".
+The other Trename and Trenameat handlers already reject "." and ".."
+as new name on rename requests by returning -EISDIR in this case.
 
-We're not doing any satp checks when enabling svpbmt.  This causes
-problems with the riscv32 'max' CPU that happens to be enabling svpbmt
-even though it doesn't support the required satp mode.  In fact all rv32
-CPUs are allowing menvcfg.PBMTE writes, which doesn't make sense for
-them in any circunstance since svpbmt is not possible for rv32 at this
-moment [1].
+The legacy Twstat rename handler is missing this validation. While passing
+"." or ".." does not trigger a crash as fixed by the previous patch (since
+the fs backend driver's system calls handle these gracefully), it creates
+a behavioral inconsistency, as it is semantically meaningless to rename a
+file to a directory reference in the first place.
 
-This also impacts rv64 CPUs that are running in satp 'bare' mode and are
-reporting svpbmt in the riscv,isa.
+Fix this by rejecting "." and ".." in Twstat rename handler with -EISDIR
+to match behavior of Trename and Trenameat handlers.
 
-All these problems can be solved by disabling svpbmt if satp_mode is not
-at least sv39.  The problem reported in [1] goes away because we'll
-never enable MENVCFG_PBMTE write mask in write_menvcfgh().  We're also
-become consistent with how svpbmt is enabled for rv64.
-
-In case the user enables svpbmt in the command line using an invalid setup,
-not just disable svpbmt but also throw a warning:
-
-$ ./build/qemu-system-riscv64 -M virt,dumpdtb=fdt.dtb \
-    -cpu max,sv39=off,sv48=off,sv57=off,sv64=off,svpbmt=on
-qemu-system-riscv64: warning: svpbmt requires at least satp sv39, current satp mode: none
-
-[1] https://gitlab.com/qemu-project/qemu/-/work_items/3473
-
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3473
-Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
-Message-ID: <20260519114858.316532-1-daniel.barboza@oss.qualcomm.com>
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-(cherry picked from commit 109856754cbd4c98db49e67071b620945a4ee2a9)
+Fixes: 8cf89e007a ("virtio-9p: Add P9_TWSTAT support")
+Link: https://lore.kernel.org/qemu-devel/662333331d371c6c343c8091161de8eaa121880e.1780072238.git.qemu_oss@crudebyte.com
+Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
+(cherry picked from commit 08750e31fcdccf5352dc3b44475ed5ba6bc80221)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
-index 22ced1ed1b..c4dfa4ac09 100644
---- a/target/riscv/tcg/tcg-cpu.c
-+++ b/target/riscv/tcg/tcg-cpu.c
-@@ -861,6 +861,17 @@ void riscv_cpu_validate_set_extensions(RISCVCPU *cpu, Error **errp)
-         return;
-     }
- 
-+#ifndef CONFIG_USER_ONLY
-+    if (cpu->cfg.ext_svpbmt && cpu->cfg.max_satp_mode < VM_1_10_SV39) {
-+        cpu->cfg.ext_svpbmt = false;
-+        if (cpu_cfg_ext_is_user_set(CPU_CFG_OFFSET(ext_svpbmt))) {
-+            warn_report("svpbmt requires at least satp sv39, "
-+                        "current satp mode: %s",
-+                        satp_mode_str(cpu->cfg.max_satp_mode,
-+                                     riscv_cpu_is_32bit(cpu)));
+diff --git a/hw/9pfs/9p.c b/hw/9pfs/9p.c
+index 0d58a5a74c..34ac2c3c9a 100644
+--- a/hw/9pfs/9p.c
++++ b/hw/9pfs/9p.c
+@@ -3621,6 +3621,10 @@ static void coroutine_fn v9fs_wstat(void *opaque)
+             err = -ENOENT;
+             goto out;
+         }
++        if (!strcmp(".", v9stat.name.data) || !strcmp("..", v9stat.name.data)) {
++            err = -EISDIR;
++            goto out;
 +        }
-+    }
-+#endif
-     /*
-      * Disable isa extensions based on priv spec after we
-      * validated and set everything we need.
+ 
+         v9fs_path_write_lock(s);
+         err = v9fs_complete_rename(pdu, fidp, -1, &v9stat.name);
 -- 
 2.47.3
 
