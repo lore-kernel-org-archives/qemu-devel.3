@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F3CBCDB479
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 13:48:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E7BBCDB481
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 13:48:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcNmL-00066w-1g; Wed, 24 Jun 2026 09:36:34 -0400
+	id 1wcNsq-0002wc-7T; Wed, 24 Jun 2026 09:43:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wcNmH-000646-T9; Wed, 24 Jun 2026 09:36:29 -0400
+ id 1wcNsX-0002dM-8O; Wed, 24 Jun 2026 09:42:57 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wcNmG-0000x0-Bg; Wed, 24 Jun 2026 09:36:29 -0400
+ id 1wcNsV-000221-Fd; Wed, 24 Jun 2026 09:42:56 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1782307997; bh=LlFJ5MNrrFqn2jreYasQuWyv+SrH/nQ9Zgl3Dd/fIBM=;
+ t=1782308002; bh=UionjM9okuVr30pX3e19TeiANShrLy3DkF/YO9W4QMI=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=q9HZVhk7GgOufYFqQBurSTeJbv8lyZaMygO9ByCnQ9mIm/cmN50J8WC3f13/bcq5S
- TVOeJQz+8jQBpVOHbbd3QdxPohWrRCqchyxu5+OKxvffbaN6NCK1Q99+3lj/76ewHe
- ldk25r8ZpKdDcQwpN8xqSTdArfZ8GB3ngRbBBIhL1JkE7QDOvfqOwsn19AAwB9F+83
- O5xt1Rx7Gxn+EJuKnWSiyCssFFEQt078VeWRVmmx3mqQO/M64qquwf1lmfQi9EiJ6w
- r2w1iWD9lwVnd74tFyPoYdEj3jKb2CcpIKsiPI6n0FTjrvl54lT0lE70pZwVm8nHQi
- j2yK2BpWsqCCg==
+ b=DaFF0XkaT/qq4zb2Ie8MJV04OdrfQSKtAo2+jCILPlGUwOdr17O8mZkQXgRzklGjp
+ MLqxJ7VaTHCVfYJ8dhS0pSqGHZ4h+kfRQjH6ET9WXagoYpMm/DmxHm032rBzs40mto
+ /Q149K97NUhE+YFdIlbRViIKCA7ROpgYfuSaiIqAojPxwrcrnlWt9Rly1QkANo1Z+/
+ hDU4Mq5TRZeK1TUakg8xwya7NhMJZPYXG/tBjAY8rjlzFOp0kTRBu+Vx2WzZlKATdi
+ Zul1lGQXqLluCYezq9kcHFuQ5gpy402xJEq35RUVrwy26jja+/WuxFdi8g5GskBwn5
+ Y41fjoRfAwLbA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id BDAB21BA9D8;
- Wed, 24 Jun 2026 16:33:17 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 290201BAA15;
+ Wed, 24 Jun 2026 16:33:22 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 58E6D3DEA27;
- Wed, 24 Jun 2026 16:33:23 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id BA22F3DEA64;
+ Wed, 24 Jun 2026 16:33:27 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Matt Turner <mattst88@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Helge Deller <deller@gmx.de>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.2 038/107] linux-user/ppc: restore fp_status from FPSCR
- on sigreturn
-Date: Wed, 24 Jun 2026 16:30:43 +0300
-Message-ID: <20260624133301.403266-38-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.2 099/107] ui/sdl2: Explicitly specify EGL platform
+Date: Wed, 24 Jun 2026 16:31:44 +0300
+Message-ID: <20260624133301.403266-99-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.2-20260624163118@cover.tls.msk.ru>
 References: <qemu-stable-11.0.2-20260624163118@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -70,48 +70,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Matt Turner <mattst88@gmail.com>
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 
-restore_user_regs() restores the PPC FPSCR with a direct assignment:
+Mesa's eglGetDisplay() chooses the native EGL platform from
+EGL_PLATFORM, limited autodetection, or the build-time default. If that
+selects Wayland while SDL is using the X11 video backend, Mesa can treat
+the X11 Display pointer as a wl_display and crash during eglInitialize().
 
-    env->fpscr = (uint32_t) fpscr;
+Probe EGL with the X11 platform explicitly before enabling
+SDL_HINT_VIDEO_X11_FORCE_EGL.
 
-ppc_store_fpscr() exists precisely to write FPSCR and keep the derived
-env->fp_status in sync: it calls fpscr_set_rounding_mode() to update
-the softfloat rounding mode, and set_float_rebias_overflow/underflow()
-to reflect the FP_OE/FP_UE enable bits.  The direct assignment bypasses
-all of this.
-
-On sigreturn, interrupted code resumes with whatever rounding mode and
-overflow/underflow-rebias state the signal handler last installed in
-fp_status, rather than the state that was saved at signal delivery.
-
-Replace the direct assign with ppc_store_fpscr().  The FPSCR_MTFS_MASK
-applied inside ppc_store_fpscr() only excludes the computed FP_FEX and
-FP_VX bits, which it re-derives correctly from the exception and enable
-bits in the restored value.
-
-Fixes: bcd4933a23 ("linux-user: ppc signal handling")
-Cc: qemu-stable@nongnu.org
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Matt Turner <mattst88@gmail.com>
-Signed-off-by: Helge Deller <deller@gmx.de>
-(cherry picked from commit 3f50dd46664bdf94f10aca8b76dc4dcb9182a5ae)
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3540
+Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Message-ID: <20260611-sdl-v1-1-93d4a51684bb@rsg.ci.i.u-tokyo.ac.jp>
+(cherry picked from commit 6157908503f9a5a14d17a8ecf8cc3308107e1458)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/linux-user/ppc/signal.c b/linux-user/ppc/signal.c
-index a9c10e0987..ab1afea30a 100644
---- a/linux-user/ppc/signal.c
-+++ b/linux-user/ppc/signal.c
-@@ -420,7 +420,7 @@ static void restore_user_regs(CPUPPCState *env,
-             __get_user(*fpr, &frame->mc_fregs[i]);
-         }
-         __get_user(fpscr, &frame->mc_fregs[32]);
--        env->fpscr = (uint32_t) fpscr;
-+        ppc_store_fpscr(env, (uint32_t) fpscr);
+diff --git a/include/ui/egl-helpers.h b/include/ui/egl-helpers.h
+index acf993fcf5..c97a0d5c24 100644
+--- a/include/ui/egl-helpers.h
++++ b/include/ui/egl-helpers.h
+@@ -61,6 +61,11 @@ void egl_dmabuf_create_fence(QemuDmaBuf *dmabuf);
+ 
+ EGLSurface qemu_egl_init_surface_x11(EGLContext ectx, EGLNativeWindowType win);
+ 
++#if defined(CONFIG_X11) || defined(CONFIG_GBM) || defined(WIN32)
++EGLDisplay qemu_egl_get_display(EGLNativeDisplayType native,
++                                EGLenum platform);
++#endif
++
+ #if defined(CONFIG_X11) || defined(CONFIG_GBM)
+ 
+ int qemu_egl_init_dpy_x11(EGLNativeDisplayType dpy, DisplayGLMode mode);
+diff --git a/ui/egl-helpers.c b/ui/egl-helpers.c
+index e3f2872cc1..069a524955 100644
+--- a/ui/egl-helpers.c
++++ b/ui/egl-helpers.c
+@@ -520,8 +520,8 @@ EGLSurface qemu_egl_init_surface_x11(EGLContext ectx, EGLNativeWindowType win)
+  * platform extensions (EGL_KHR_platform_gbm and friends) yet it doesn't seem
+  * like mesa will be able to advertise these (even though it can do EGL 1.5).
+  */
+-static EGLDisplay qemu_egl_get_display(EGLNativeDisplayType native,
+-                                       EGLenum platform)
++EGLDisplay qemu_egl_get_display(EGLNativeDisplayType native,
++                                EGLenum platform)
+ {
+     EGLDisplay dpy = EGL_NO_DISPLAY;
+ 
+diff --git a/ui/sdl2.c b/ui/sdl2.c
+index 987ad334bb..9dd5e305e1 100644
+--- a/ui/sdl2.c
++++ b/ui/sdl2.c
+@@ -862,7 +862,8 @@ static void sdl2_set_hint_x11_force_egl(void)
      }
  
- #if !defined(TARGET_PPC64)
+     /* Prefer EGL over GLX to get dma-buf support. */
+-    egl_display = eglGetDisplay((EGLNativeDisplayType)x_disp);
++    egl_display = qemu_egl_get_display((EGLNativeDisplayType)x_disp,
++                                       EGL_PLATFORM_X11_KHR);
+ 
+     if (egl_display != EGL_NO_DISPLAY) {
+         /*
 -- 
 2.47.3
 
