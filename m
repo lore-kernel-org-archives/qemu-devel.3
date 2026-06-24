@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A380CDE003
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 13:48:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99FF2CDE004
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 13:48:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcNt2-0003jM-MS; Wed, 24 Jun 2026 09:43:28 -0400
+	id 1wcNoU-0002EC-AO; Wed, 24 Jun 2026 09:38:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wcNsw-00037I-KD; Wed, 24 Jun 2026 09:43:23 -0400
+ id 1wcNne-0001jR-Ob; Wed, 24 Jun 2026 09:38:00 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wcNsu-00022w-NW; Wed, 24 Jun 2026 09:43:22 -0400
+ id 1wcNnZ-00018L-VY; Wed, 24 Jun 2026 09:37:52 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1782308007; bh=wjkwm/YElTmVmb2fMrsoqfIHt476Avlk2JWVfCZUdEQ=;
+ t=1782307998; bh=JXs/WU3mOiJFzXrfD96WT7o1RIgEL0n70leqESDJyxU=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=Xg0Xgs1c89TJsoF+BCxuO26M2G8QHqCOI9tqyv2XBCZhjF/2H5MzMPh57P94uH8qA
- 3Ha4Y36xaSi5CDxy/wrSDV4sS2iE0TyniRJ9zaNxykoWoNJqClvtFUoDTnyE9v+QK6
- BpgMo8clxPdjoLXyLK7jRKnpTdwmHP2aJonYQH268jN/TTR/SbqKgsu+0UPtwgDVpA
- ltmFCWpPxKhpfpSJi12wazH8GhaOzyqFzxr6eNb/xnQaG3Rhm1q2seWnxYb7AO1QkJ
- U+2rxLmXNxtP3LkbJ4bWBWnf1KZAo/DcwG+zeBgGAqCHdIYHm9P9lnNk64OvwONvG0
- 2+5XWaclsaxtw==
+ b=N9P0oOgXJw+ulwGCOhwQY+7h3FS8+QPJ6C8jl340ZKmctXrJHu1MbhnIBHuECf2b5
+ uPuTL3eH6tAhI6qdyxXBXSzzUSI835q+/G6Cm3lpyoWURkABTDk/4cbmQP9q2vAwI1
+ 0EI0oSHjeJh1iZ3lrZcmprZpVETqaPiapC/ZSctFlXeCDugWsrfFW5/uCCW4nx1exi
+ asP5loavLNZvXMIgRHtE7mUWW4o/E79rnxZbu6mi/MIqken5ZnLPK/W6GDdmhaVYiq
+ GgAzr9TUYZhof8TcBW2lk+a2P2bid5qa2fWWSJhYQeH16GX/Nnj9gfcACvLjyvVpMt
+ brPRIQK5MnOKA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 35ECA1BAA18;
- Wed, 24 Jun 2026 16:33:27 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id AD1521BA9E5;
+ Wed, 24 Jun 2026 16:33:18 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id C71473DEA67;
- Wed, 24 Jun 2026 16:33:32 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 4532A3DEA34;
+ Wed, 24 Jun 2026 16:33:24 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Matt Turner <mattst88@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Helge Deller <deller@gmx.de>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.2 102/107] target/xtensa: add cpu_set_fcr/fsr helpers to
- sync fp_status
-Date: Wed, 24 Jun 2026 16:31:47 +0300
-Message-ID: <20260624133301.403266-102-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
+ Stefan Hajnoczi <stefanha@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.2 051/107] tests/unit: add test-envlist covering
+ setenv/unsetenv name matching
+Date: Wed, 24 Jun 2026 16:30:56 +0300
+Message-ID: <20260624133301.403266-51-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.2-20260624163118@cover.tls.msk.ru>
 References: <qemu-stable-11.0.2-20260624163118@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -71,150 +71,246 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Matt Turner <mattst88@gmail.com>
+From: "Denis V. Lunev" <den@openvz.org>
 
-Factor FCR→fp_status and FSR→fp_status synchronisation out of the
-wur_fpu{2k,}_fcr/wur_fpu_fsr helpers into cpu_set_fcr(), cpu_set_fsr(),
-and cpu_get_fsr(). Signal delivery code needs to restore the FP rounding
-mode and exception flags without duplicating the flag-mapping tables.
+util/envlist had no test coverage. Add tests/unit/test-envlist
+exercising the public envlist API and pinning down the prefix-match
+hazard fixed in the previous commit:
 
-cpu_set_fcr() applies the union mask 0xfffff07f (superset of the
-wur_fpu_fcr mask 0x0000007f and the wur_fpu2k_fcr mask 0xfffff07f) so
-that FCR bits valid only on fpu2k configs are preserved while MBZ bits
-7-11 are always cleared.
+  - envlist_unsetenv("FOO") must not remove an entry named "FOOBAR";
+  - envlist_setenv("FOO=...") must not replace an existing "FOOBAR=..."
+    entry placed earlier in the list (envlist_setenv() inserts at the
+    head, so the first prefix match wins under the old strncmp rule).
 
-Signed-off-by: Matt Turner <mattst88@gmail.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Helge Deller <deller@gmx.de>
-(cherry picked from commit 7e859bacea09a626c239f14ab9c01f13d5225723)
+Also cover the rest of the contract: head-insertion order observed
+through envlist_to_environ(), replacement of an existing variable,
+the count argument of envlist_to_environ(), and the documented EINVAL
+paths (NULL inputs, setenv without '=', unsetenv with '=').
+
+Signed-off-by: Denis V. Lunev <den@openvz.org>
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+Message-id: 20260520212628.479772-3-den@openvz.org
+Cc: Stefan Hajnoczi <stefanha@redhat.com>
+Cc: Markus Armbruster <armbru@redhat.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>
+Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
+(cherry picked from commit 05221c600a5f3ef657d71aeaea632c5f1bab3a2d)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/xtensa/cpu.h b/target/xtensa/cpu.h
-index 2219292484..68effb44de 100644
---- a/target/xtensa/cpu.h
-+++ b/target/xtensa/cpu.h
-@@ -643,6 +643,10 @@ static inline void xtensa_select_static_vectors(CPUXtensaState *env,
+diff --git a/tests/unit/meson.build b/tests/unit/meson.build
+index 41e8b06c33..f768e882a4 100644
+--- a/tests/unit/meson.build
++++ b/tests/unit/meson.build
+@@ -48,6 +48,7 @@ tests = {
+   'test-qapi-util': [],
+   'test-interval-tree': [],
+   'test-fifo': [],
++  'test-envlist': [],
  }
- void xtensa_runstall(CPUXtensaState *env, bool runstall);
  
-+uint32_t cpu_get_fsr(CPUXtensaState *env);
-+void cpu_set_fcr(CPUXtensaState *env, uint32_t v);
-+void cpu_set_fsr(CPUXtensaState *env, uint32_t v);
+ if have_system or have_tools
+diff --git a/tests/unit/test-envlist.c b/tests/unit/test-envlist.c
+new file mode 100644
+index 0000000000..53813dd4de
+--- /dev/null
++++ b/tests/unit/test-envlist.c
+@@ -0,0 +1,196 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++/*
++ * envlist tests
++ *
++ * Copyright 2026 Virtuozzo International GmbH
++ *
++ * Authors:
++ *  Denis V. Lunev <den@openvz.org>
++ */
 +
- #define XTENSA_OPTION_BIT(opt) (((uint64_t)1) << (opt))
- #define XTENSA_OPTION_ALL (~(uint64_t)0)
- 
-diff --git a/target/xtensa/fpu_helper.c b/target/xtensa/fpu_helper.c
-index 5358060c50..2e51cabe3f 100644
---- a/target/xtensa/fpu_helper.c
-+++ b/target/xtensa/fpu_helper.c
-@@ -64,46 +64,39 @@ void xtensa_use_first_nan(CPUXtensaState *env, bool use_first)
-                              &env->fp_status);
- }
- 
--void HELPER(wur_fpu2k_fcr)(CPUXtensaState *env, uint32_t v)
-+uint32_t cpu_get_fsr(CPUXtensaState *env)
- {
--    static const int rounding_mode[] = {
--        float_round_nearest_even,
--        float_round_to_zero,
--        float_round_up,
--        float_round_down,
--    };
-+    uint32_t flags = 0;
-+    int fef = get_float_exception_flags(&env->fp_status);
-+    unsigned i;
- 
--    env->uregs[FCR] = v & 0xfffff07f;
--    set_float_rounding_mode(rounding_mode[v & 3], &env->fp_status);
-+    for (i = 0; i < ARRAY_SIZE(xtensa_fp_flag_map); ++i) {
-+        if (fef & xtensa_fp_flag_map[i].softfloat_fp_flag) {
-+            flags |= xtensa_fp_flag_map[i].xtensa_fp_flag;
++#include "qemu/osdep.h"
++#include "qemu/envlist.h"
++
++static void free_environ(char **env)
++{
++    char **p;
++
++    for (p = env; *p != NULL; p++) {
++        g_free(*p);
++    }
++    g_free(env);
++}
++
++static const char *find_env(char **env, const char *name)
++{
++    size_t name_len = strlen(name);
++    char **p;
++
++    for (p = env; *p != NULL; p++) {
++        if (strncmp(*p, name, name_len) == 0 && (*p)[name_len] == '=') {
++            return *p + name_len + 1;
 +        }
 +    }
-+    return flags << XTENSA_FSR_FLAGS_SHIFT;
- }
- 
--void HELPER(wur_fpu_fcr)(CPUXtensaState *env, uint32_t v)
-+void cpu_set_fcr(CPUXtensaState *env, uint32_t v)
- {
--    static const int rounding_mode[] = {
-+    static const FloatRoundMode rounding_mode[] = {
-         float_round_nearest_even,
-         float_round_to_zero,
-         float_round_up,
-         float_round_down,
-     };
- 
--    if (v & 0xfffff000) {
--        qemu_log_mask(LOG_GUEST_ERROR,
--                      "MBZ field of FCR is written non-zero: %08x\n", v);
--    }
--    env->uregs[FCR] = v & 0x0000007f;
-+    env->uregs[FCR] = v & 0xfffff07f;
-     set_float_rounding_mode(rounding_mode[v & 3], &env->fp_status);
- }
- 
--void HELPER(wur_fpu_fsr)(CPUXtensaState *env, uint32_t v)
-+void cpu_set_fsr(CPUXtensaState *env, uint32_t v)
- {
-     uint32_t flags = v >> XTENSA_FSR_FLAGS_SHIFT;
-     int fef = 0;
-     unsigned i;
- 
--    if (v & 0xfffff000) {
--        qemu_log_mask(LOG_GUEST_ERROR,
--                      "MBZ field of FSR is written non-zero: %08x\n", v);
--    }
-     env->uregs[FSR] = v & 0x00000f80;
-     for (i = 0; i < ARRAY_SIZE(xtensa_fp_flag_map); ++i) {
-         if (flags & xtensa_fp_flag_map[i].xtensa_fp_flag) {
-@@ -113,19 +106,35 @@ void HELPER(wur_fpu_fsr)(CPUXtensaState *env, uint32_t v)
-     set_float_exception_flags(fef, &env->fp_status);
- }
- 
--uint32_t HELPER(rur_fpu_fsr)(CPUXtensaState *env)
-+void HELPER(wur_fpu2k_fcr)(CPUXtensaState *env, uint32_t v)
- {
--    uint32_t flags = 0;
--    int fef = get_float_exception_flags(&env->fp_status);
--    unsigned i;
-+    cpu_set_fcr(env, v);
-+}
- 
--    for (i = 0; i < ARRAY_SIZE(xtensa_fp_flag_map); ++i) {
--        if (fef & xtensa_fp_flag_map[i].softfloat_fp_flag) {
--            flags |= xtensa_fp_flag_map[i].xtensa_fp_flag;
--        }
-+void HELPER(wur_fpu_fcr)(CPUXtensaState *env, uint32_t v)
-+{
-+    if (v & 0xfffff000) {
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "MBZ field of FCR is written non-zero: %08x\n", v);
-     }
--    env->uregs[FSR] = flags << XTENSA_FSR_FLAGS_SHIFT;
--    return flags << XTENSA_FSR_FLAGS_SHIFT;
-+    cpu_set_fcr(env, v & 0x0000007f);
++    return NULL;
 +}
 +
-+void HELPER(wur_fpu_fsr)(CPUXtensaState *env, uint32_t v)
++static void test_envlist_basic(void)
 +{
-+    if (v & 0xfffff000) {
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "MBZ field of FSR is written non-zero: %08x\n", v);
-+    }
-+    cpu_set_fsr(env, v);
++    envlist_t *el = envlist_create();
++    char **env;
++    size_t count;
++
++    /* empty list */
++    env = envlist_to_environ(el, &count);
++    g_assert_cmpuint(count, ==, 0);
++    g_assert_null(env[0]);
++    free_environ(env);
++
++    /* add */
++    g_assert_cmpint(envlist_setenv(el, "A=1"), ==, 0);
++    g_assert_cmpint(envlist_setenv(el, "B=2"), ==, 0);
++
++    env = envlist_to_environ(el, &count);
++    g_assert_cmpuint(count, ==, 2);
++    g_assert_cmpstr(find_env(env, "A"), ==, "1");
++    g_assert_cmpstr(find_env(env, "B"), ==, "2");
++    free_environ(env);
++
++    /* replace */
++    g_assert_cmpint(envlist_setenv(el, "A=42"), ==, 0);
++    env = envlist_to_environ(el, &count);
++    g_assert_cmpuint(count, ==, 2);
++    g_assert_cmpstr(find_env(env, "A"), ==, "42");
++    g_assert_cmpstr(find_env(env, "B"), ==, "2");
++    free_environ(env);
++
++    /* unset existing */
++    g_assert_cmpint(envlist_unsetenv(el, "A"), ==, 0);
++    env = envlist_to_environ(el, &count);
++    g_assert_cmpuint(count, ==, 1);
++    g_assert_null(find_env(env, "A"));
++    g_assert_cmpstr(find_env(env, "B"), ==, "2");
++    free_environ(env);
++
++    /* unset non-existing is a no-op success */
++    g_assert_cmpint(envlist_unsetenv(el, "NOPE"), ==, 0);
++    env = envlist_to_environ(el, &count);
++    g_assert_cmpuint(count, ==, 1);
++    free_environ(env);
++
++    envlist_free(el);
 +}
 +
-+uint32_t HELPER(rur_fpu_fsr)(CPUXtensaState *env)
++/*
++ * envlist_setenv() inserts at the head; envlist_to_environ() walks
++ * head-to-tail, so the last setenv comes out first.
++ */
++static void test_envlist_head_insertion_order(void)
 +{
-+    uint32_t fsr = cpu_get_fsr(env);
++    envlist_t *el = envlist_create();
++    char **env;
++    size_t count;
 +
-+    env->uregs[FSR] = fsr;
-+    return fsr;
- }
- 
- float64 HELPER(abs_d)(float64 v)
++    g_assert_cmpint(envlist_setenv(el, "A=1"), ==, 0);
++    g_assert_cmpint(envlist_setenv(el, "B=2"), ==, 0);
++    g_assert_cmpint(envlist_setenv(el, "C=3"), ==, 0);
++
++    env = envlist_to_environ(el, &count);
++    g_assert_cmpuint(count, ==, 3);
++    g_assert_cmpstr(env[0], ==, "C=3");
++    g_assert_cmpstr(env[1], ==, "B=2");
++    g_assert_cmpstr(env[2], ==, "A=1");
++    g_assert_null(env[3]);
++
++    free_environ(env);
++    envlist_free(el);
++}
++
++static void test_envlist_einval(void)
++{
++    envlist_t *el = envlist_create();
++
++    /* NULL list */
++    g_assert_cmpint(envlist_setenv(NULL, "A=1"), ==, EINVAL);
++    g_assert_cmpint(envlist_unsetenv(NULL, "A"), ==, EINVAL);
++
++    /* NULL string */
++    g_assert_cmpint(envlist_setenv(el, NULL), ==, EINVAL);
++    g_assert_cmpint(envlist_unsetenv(el, NULL), ==, EINVAL);
++
++    /* setenv: missing '=' */
++    g_assert_cmpint(envlist_setenv(el, "NOEQ"), ==, EINVAL);
++
++    /* unsetenv: name must not contain '=' */
++    g_assert_cmpint(envlist_unsetenv(el, "A=B"), ==, EINVAL);
++
++    envlist_free(el);
++}
++
++/*
++ * Regression: envlist_unsetenv("FOO") must not remove an entry named
++ * "FOOBAR" -- the previous strncmp(entry, name, strlen(name)) lookup
++ * prefix-matched. To trigger the bug, the longer-named entry has to
++ * be ahead of the target in the list: envlist_setenv() inserts at
++ * the head, so we add FOO first and FOOBAR last.
++ */
++static void test_envlist_unsetenv_no_prefix_match(void)
++{
++    envlist_t *el = envlist_create();
++    char **env;
++    size_t count;
++
++    g_assert_cmpint(envlist_setenv(el, "FOO=y"), ==, 0);
++    g_assert_cmpint(envlist_setenv(el, "FOOBAR=x"), ==, 0);
++
++    g_assert_cmpint(envlist_unsetenv(el, "FOO"), ==, 0);
++
++    env = envlist_to_environ(el, &count);
++    g_assert_cmpuint(count, ==, 1);
++    g_assert_cmpstr(find_env(env, "FOOBAR"), ==, "x");
++    g_assert_null(find_env(env, "FOO"));
++
++    free_environ(env);
++    envlist_free(el);
++}
++
++/*
++ * envlist_setenv() must not replace a prior FOOBAR=... entry when
++ * setting FOO=... The pre-fix code happened to be safe here only
++ * because it included the trailing '=' byte in its strncmp length;
++ * this test pins down the post-fix contract that the name boundary
++ * is a property of the entry, not of the encoded form.
++ */
++static void test_envlist_setenv_no_prefix_match(void)
++{
++    envlist_t *el = envlist_create();
++    char **env;
++    size_t count;
++
++    g_assert_cmpint(envlist_setenv(el, "FOOBAR=x"), ==, 0);
++    g_assert_cmpint(envlist_setenv(el, "FOO=y"), ==, 0);
++
++    env = envlist_to_environ(el, &count);
++    g_assert_cmpuint(count, ==, 2);
++    g_assert_cmpstr(find_env(env, "FOOBAR"), ==, "x");
++    g_assert_cmpstr(find_env(env, "FOO"), ==, "y");
++
++    free_environ(env);
++    envlist_free(el);
++}
++
++int main(int argc, char *argv[])
++{
++    g_test_init(&argc, &argv, NULL);
++
++    g_test_add_func("/envlist/basic", test_envlist_basic);
++    g_test_add_func("/envlist/head_insertion_order",
++                    test_envlist_head_insertion_order);
++    g_test_add_func("/envlist/einval", test_envlist_einval);
++    g_test_add_func("/envlist/unsetenv_no_prefix_match",
++                    test_envlist_unsetenv_no_prefix_match);
++    g_test_add_func("/envlist/setenv_no_prefix_match",
++                    test_envlist_setenv_no_prefix_match);
++
++    return g_test_run();
++}
 -- 
 2.47.3
 
