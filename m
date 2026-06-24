@@ -4,42 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 040B1CDE002
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 13:48:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE267CDB481
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 13:48:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcNpL-0005WG-4Q; Wed, 24 Jun 2026 09:39:39 -0400
+	id 1wcNsM-0001du-A5; Wed, 24 Jun 2026 09:42:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wcNpJ-0005UL-Gb; Wed, 24 Jun 2026 09:39:37 -0400
+ id 1wcNs7-00010w-1j; Wed, 24 Jun 2026 09:42:31 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wcNpH-0001Iy-Lw; Wed, 24 Jun 2026 09:39:37 -0400
+ id 1wcNs5-0001yD-4p; Wed, 24 Jun 2026 09:42:30 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1782307999; bh=DvcG+/emGldtmPeJDW0d3whJBKyCeFHS8szQ3LhN0e0=;
+ t=1782308001; bh=h9zV7rUphTw7kX5AsxS5PvVvjPl4MDSruwhLFemulHs=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=grknz3PeTe6QompirRChMVPhqBSv4oY7SnfYviNCXDDvK5QWMp3akcEZVT0V85ijN
- tQVLg41FouGfXZpQYLP+JVX8UBVmtUmK1omn/+ZP+r1aG0C9Cs9pCA1FB+gXe/BfVk
- ArlJxgEZJpOet7wUdD7QBWes0stgRYJMB2NirJfbIcVbya7aYczOABKZA+5dbkV1s9
- ymKmUiA6+36j8n2qlZmiDTtpyM1TEZANuHAqQCPX94D5uXqo3ILsNo7zt9Kco7kbiB
- dHeqzKzKRfgU6ipOBmKFKZK4JR2XJ9hjIS2tBx4Ty3GR0qVAHv2onuPR1LDdlr/xSq
- 0PXq777a1hgIg==
+ b=urgck4hbgjBY4pVZExFRn6nU3jU2/+31QhHpwtZBaI0v0aEKZGltcQVUvNxvf+TDa
+ C9hfpv+7EfY+rrPsg+QhiDTUOng9b/argty/Mbt4OH5q950ZsoUzBh5GBib3em/ZSc
+ yDO7Bqmlt6HRbOHTa8DwxNE53/RJvYY15haEJDraOqwCJyDxqmaSrNUnPSzE62J+fN
+ 2PXZJZoxMTz/QlzIusWqY+Mpwq4U+W9YXHK1xprZhY1Tl8aeRkmycBVA7QwSgRwnqg
+ biHbqnyaXUI2aZEtnut9OJofjaEo152JpQCJNbW1t3pswZIgAdsQz1AJDkjkDMU+dM
+ GZRVBt/XMcvow==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id D37241BA9F5;
- Wed, 24 Jun 2026 16:33:19 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id E1FDC1BAA11;
+ Wed, 24 Jun 2026 16:33:21 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 70ED43DEA44;
- Wed, 24 Jun 2026 16:33:25 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 801933DEA60;
+ Wed, 24 Jun 2026 16:33:27 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Fiona Ebner <f.ebner@proxmox.com>,
- Kevin Wolf <kwolf@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.2 067/107] iotests: test shared mmap for fuse export
-Date: Wed, 24 Jun 2026 16:31:12 +0300
-Message-ID: <20260624133301.403266-67-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.2 095/107] target/i386: apply mod to immediate count of
+ an RCL/RCR operation
+Date: Wed, 24 Jun 2026 16:31:40 +0300
+Message-ID: <20260624133301.403266-95-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.2-20260624163118@cover.tls.msk.ru>
 References: <qemu-stable-11.0.2-20260624163118@cover.tls.msk.ru>
@@ -68,142 +69,155 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Fiona Ebner <f.ebner@proxmox.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
 
-This test would have worked before commit 8599559580 ("fuse: Set
-direct_io and parallel_direct_writes") and is working again since
-commit HEAD~1 ("block/export/fuse: set FUSE_DIRECT_IO_ALLOW_MMAP flag
-to fix regression").
+RCR and RCL instructions with a count of 9 are the same as if the
+count was 0, but they generated incorrect code because the can_be_zero
+flag is false.  This causes 0 to underflow into -1 at
+tcg_gen_subi_tl(count, count, 1).
 
-Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
-Message-ID: <20260506145424.10249-4-f.ebner@proxmox.com>
-Reviewed-by: Kevin Wolf <kwolf@redhat.com>
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-(cherry picked from commit ba20257d9b45c28f23a66b3f79bebffd6322ff76)
+Fix by absorbing the modulo computation into gen_shift_count(), now
+renamed gen_shift_count_1(), so that it can handle both reductions.
+
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3452
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+(cherry picked from commit e38d0afade7c134cd4d675f54d26c394cc3cc31f)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/tests/qemu-iotests/tests/fuse-mmap-shared b/tests/qemu-iotests/tests/fuse-mmap-shared
-new file mode 100755
-index 0000000000..52941a3bb6
---- /dev/null
-+++ b/tests/qemu-iotests/tests/fuse-mmap-shared
-@@ -0,0 +1,105 @@
-+#!/usr/bin/env python3
-+# group: rw
-+#
-+# Test that a FUSE export can be mmap()-ed with MAP_SHARED
-+#
-+# Copyright (C) 2026 Proxmox Server Solutions GmbH
-+#
-+# SPDX-License-Identifier: GPL-2.0-or-later
+diff --git a/target/i386/tcg/emit.c.inc b/target/i386/tcg/emit.c.inc
+index ce636b6c56..8eca66b696 100644
+--- a/target/i386/tcg/emit.c.inc
++++ b/target/i386/tcg/emit.c.inc
+@@ -3244,8 +3244,9 @@ static void gen_PUSHF(DisasContext *s, X86DecodedInsn *decode)
+     assume_cc_op(s, CC_OP_EFLAGS);
+ }
+ 
+-static MemOp gen_shift_count(DisasContext *s, X86DecodedInsn *decode,
+-                             bool *can_be_zero, TCGv *count, int unit)
++static MemOp gen_shift_count_1(DisasContext *s, X86DecodedInsn *decode,
++                               bool *can_be_zero, TCGv *count, int unit,
++                               int mod)
+ {
+     MemOp ot = decode->op[0].ot;
+     int mask = (ot <= MO_32 ? 0x1f : 0x3f);
+@@ -3255,16 +3256,31 @@ static MemOp gen_shift_count(DisasContext *s, X86DecodedInsn *decode,
+     case X86_OP_INT:
+         *count = tcg_temp_new();
+         tcg_gen_andi_tl(*count, cpu_regs[R_ECX], mask);
 +
-+import os
-+import itertools
-+import mmap
-+from mmap import MAP_SHARED
-+from pathlib import Path
-+
-+import iotests
-+from iotests import qemu_img, qemu_io, QemuStorageDaemon
-+
-+def test_fuse_support(mount_point):
-+    test_qsd = QemuStorageDaemon('--blockdev', 'null-co,node-name=node0',
-+                                 qmp=True)
-+    res = test_qsd.qmp('block-export-add', {
-+        'id': 'exp0',
-+        'type': 'fuse',
-+        'node-name': 'node0',
-+        'mountpoint': mount_point,
-+        'allow-other': 'off'
-+    })
-+    test_qsd.stop()
-+    if 'error' in res:
-+        assert (res['error']['desc'] ==
-+                "Parameter 'type' does not accept value 'fuse'")
-+        iotests.notrun('No FUSE support')
-+
-+# Shared mmap when using direct IO is only supported for Linux kernels >= 6.6
-+# with commit e78662e818f94 ("fuse: add a new fuse init flag to relax
-+# estrictions in no cache mode").
-+def test_linux_kernel_support():
-+    [major, minor] = map(int, os.uname().release.split('.')[:2])
-+    if major < 6 or (major == 6 and minor < 6):
-+        iotests.notrun('No kernel support for shared mmap with direct IO')
-+
-+image_size = 1 * 1024 * 1024
-+image = os.path.join(iotests.test_dir, 'image.' + iotests.imgfmt)
-+fuse_mount_point = os.path.join(iotests.test_dir, 'export.fuse')
-+Path(fuse_mount_point).touch()
-+
-+test_fuse_support(fuse_mount_point)
-+test_linux_kernel_support()
-+
-+class TestMmapShared(iotests.QMPTestCase):
-+
-+    def setUp(self):
-+        qemu_img('create', '-f', iotests.imgfmt, image, str(image_size))
-+        qemu_io(image, '-c', f'write -P 23 0 {image_size}')
-+
-+        self.qsd = QemuStorageDaemon(qmp=True)
-+
-+        self.qsd.cmd('blockdev-add', {
-+            'node-name': 'node0',
-+            'driver': iotests.imgfmt,
-+            'file': {
-+                'driver': 'file',
-+                'filename': image
++        if (mod < mask) {
++            TCGv temp = tcg_temp_new();
++            assert(mod * 4 >= mask);
++            if (mod * 2 < mask) {
++                tcg_gen_subi_tl(temp, *count, mod * 2);
++                tcg_gen_movcond_tl(TCG_COND_GE, *count, temp, tcg_constant_tl(0), temp, *count);
 +            }
-+        })
++            tcg_gen_subi_tl(temp, *count, mod);
++            tcg_gen_movcond_tl(TCG_COND_GE, *count, temp, tcg_constant_tl(0), temp, *count);
++        }
+         *can_be_zero = true;
+         break;
+ 
+     case X86_OP_IMM:
+-        if ((decode->immediate & mask) == 0) {
++        decode->immediate &= mask;
++        if (mod < mask) {
++            decode->immediate %= mod;
++        }
++        if (decode->immediate == 0) {
+             *count = NULL;
+             break;
+         }
+         *count = tcg_temp_new();
+-        tcg_gen_movi_tl(*count, decode->immediate & mask);
++        tcg_gen_movi_tl(*count, decode->immediate);
+         break;
+ 
+     case X86_OP_SKIP:
+@@ -3279,6 +3295,13 @@ static MemOp gen_shift_count(DisasContext *s, X86DecodedInsn *decode,
+     return ot;
+ }
+ 
++static MemOp gen_shift_count(DisasContext *s, X86DecodedInsn *decode,
++                             bool *can_be_zero, TCGv *count, int unit)
++{
++    return gen_shift_count_1(s, decode, can_be_zero, count, unit,
++                             INT_MAX);
++}
 +
-+        self.qsd.cmd('block-export-add', {
-+            'id': 'exp0',
-+            'type': 'fuse',
-+            'node-name': 'node0',
-+            'mountpoint': fuse_mount_point,
-+            'writable': True,
-+            'allow-other': 'off'
-+        })
-+
-+    def tearDown(self):
-+        self.stop_qsd()
-+        os.remove(image)
-+        os.remove(fuse_mount_point)
-+
-+    def stop_qsd(self):
-+        if self.qsd:
-+            self.qsd.stop()
-+            self.qsd = None
-+
-+    def test_mmap_shared(self):
-+        with open(fuse_mount_point, 'r+b') as file:
-+            with mmap.mmap(file.fileno(), image_size, flags=MAP_SHARED) as mm:
-+                buf = bytearray(image_size)
-+                buf[:] = itertools.repeat(23, image_size)
-+                assert mm.read(image_size) == buf
-+                buf[:] = itertools.repeat(42, image_size)
-+                mm.seek(0)
-+                mm.write(buf)
-+                mm.flush()
-+        self.stop_qsd()
-+        qemu_io(image, '-c', f'read -P 42 0 {image_size}')
-+
-+if __name__ == '__main__':
-+    # LUKS would require key-secret in blockdev-add
-+    iotests.main(supported_fmts=['generic'],
-+                 unsupported_fmts=['luks'],
-+                 supported_protocols=['file'],
-+                 supported_platforms=['linux'])
-diff --git a/tests/qemu-iotests/tests/fuse-mmap-shared.out b/tests/qemu-iotests/tests/fuse-mmap-shared.out
-new file mode 100644
-index 0000000000..ae1213e6f8
---- /dev/null
-+++ b/tests/qemu-iotests/tests/fuse-mmap-shared.out
-@@ -0,0 +1,5 @@
-+.
-+----------------------------------------------------------------------
-+Ran 1 tests
-+
-+OK
+ /*
+  * Compute existing flags in decode->cc_src, for gen_* functions that wants
+  * to set the cc_op set to CC_OP_ADCOX.  In particular, this allows rotate
+@@ -3397,29 +3420,14 @@ static void gen_rot_overflow(X86DecodedInsn *decode, TCGv result, TCGv old,
+ /*
+  * RCx operations are invariant modulo 8*operand_size+1.  For 8 and 16-bit operands,
+  * this is less than 0x1f (the mask applied by gen_shift_count) so reduce further.
++ * FIXME: are flags updated if the count is nonzero, but a multiple of (8 << op) + 1?
+  */
+-static void gen_rotc_mod(MemOp ot, TCGv count)
++static MemOp gen_rotc_count(DisasContext *s, X86DecodedInsn *decode,
++                            bool *can_be_zero, TCGv *count, int unit)
+ {
+-    TCGv temp;
+-
+-    switch (ot) {
+-    case MO_8:
+-        temp = tcg_temp_new();
+-        tcg_gen_subi_tl(temp, count, 18);
+-        tcg_gen_movcond_tl(TCG_COND_GE, count, temp, tcg_constant_tl(0), temp, count);
+-        tcg_gen_subi_tl(temp, count, 9);
+-        tcg_gen_movcond_tl(TCG_COND_GE, count, temp, tcg_constant_tl(0), temp, count);
+-        break;
+-
+-    case MO_16:
+-        temp = tcg_temp_new();
+-        tcg_gen_subi_tl(temp, count, 17);
+-        tcg_gen_movcond_tl(TCG_COND_GE, count, temp, tcg_constant_tl(0), temp, count);
+-        break;
+-
+-    default:
+-        break;
+-    }
++    MemOp ot = decode->op[0].ot;
++    return gen_shift_count_1(s, decode, can_be_zero, count, unit,
++                             (8 << ot) + 1);
+ }
+ 
+ /*
+@@ -3440,7 +3448,7 @@ static void gen_RCL(DisasContext *s, X86DecodedInsn *decode)
+     bool have_1bit_cin, can_be_zero;
+     TCGv count;
+     TCGLabel *zero_label = NULL;
+-    MemOp ot = gen_shift_count(s, decode, &can_be_zero, &count, decode->op[2].unit);
++    MemOp ot = gen_rotc_count(s, decode, &can_be_zero, &count, decode->op[2].unit);
+     TCGv low, high, low_count;
+ 
+     if (!count) {
+@@ -3451,7 +3459,6 @@ static void gen_RCL(DisasContext *s, X86DecodedInsn *decode)
+     high = tcg_temp_new();
+     low_count = tcg_temp_new();
+ 
+-    gen_rotc_mod(ot, count);
+     have_1bit_cin = gen_eflags_adcox(s, decode, true, can_be_zero);
+     if (can_be_zero) {
+         zero_label = gen_new_label();
+@@ -3492,7 +3499,7 @@ static void gen_RCR(DisasContext *s, X86DecodedInsn *decode)
+     bool have_1bit_cin, can_be_zero;
+     TCGv count;
+     TCGLabel *zero_label = NULL;
+-    MemOp ot = gen_shift_count(s, decode, &can_be_zero, &count, decode->op[2].unit);
++    MemOp ot = gen_rotc_count(s, decode, &can_be_zero, &count, decode->op[2].unit);
+     TCGv low, high, high_count;
+ 
+     if (!count) {
+@@ -3503,7 +3510,6 @@ static void gen_RCR(DisasContext *s, X86DecodedInsn *decode)
+     high = tcg_temp_new();
+     high_count = tcg_temp_new();
+ 
+-    gen_rotc_mod(ot, count);
+     have_1bit_cin = gen_eflags_adcox(s, decode, true, can_be_zero);
+     if (can_be_zero) {
+         zero_label = gen_new_label();
 -- 
 2.47.3
 
