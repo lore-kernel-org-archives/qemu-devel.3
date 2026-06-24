@@ -4,93 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2ED08CDB479
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 07:16:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B098CDB479
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 07:16:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcHq8-00048v-Rp; Wed, 24 Jun 2026 03:16:04 -0400
+	id 1wcHqm-0004WW-Mj; Wed, 24 Jun 2026 03:16:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wcHq7-00048n-Dh
- for qemu-devel@nongnu.org; Wed, 24 Jun 2026 03:16:03 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wcHqk-0004W8-Sc
+ for qemu-devel@nongnu.org; Wed, 24 Jun 2026 03:16:42 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wcHq5-0004YD-Vi
- for qemu-devel@nongnu.org; Wed, 24 Jun 2026 03:16:03 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wcHqj-0004bO-D7
+ for qemu-devel@nongnu.org; Wed, 24 Jun 2026 03:16:42 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1782285360;
+ s=mimecast20190719; t=1782285400;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=JN1Ao6WEVvEQ7sk5rN2xxsW4b8vgnEjZfLFDDL3tjGY=;
- b=BHFMaH3rMJbs5jJNgYIc/a0T3qTA35rgOIWM8nZgtYdt2ATwQ2w4qBlamtykQ1KcupAgeP
- N0bLctnS3skB96nxxERPHqiz0auVZyoS124O2nlJgup18HAxxMI6U2aLqdoIhROlxmF9Hn
- YsSpJ8D+RH/K+qfreWB9ARaTWZciAe0=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=hQ/vGf0qXdW11TwKepvfckc2LrAvE+KdMl1iHL+v9ls=;
+ b=ZPggu2qIjorGQv1l8l0P5DsHWL6e5MGJwBGRsYdN/gWgHJMUIkXCfM/Z+w4Zr5mkcSgVy8
+ SfEqA6ze93oTSmK5In6D1gIeZV8yT1oKhrvauKiMlVddDgO71GMUJyh+TO3kAvcYPeTi87
+ NWttH+GhRHiFNbR0pS/PCsomQ8VDV50=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-66-p6DhJNlaN4ajt0afoMhTSg-1; Wed, 24 Jun 2026 03:15:59 -0400
-X-MC-Unique: p6DhJNlaN4ajt0afoMhTSg-1
-X-Mimecast-MFC-AGG-ID: p6DhJNlaN4ajt0afoMhTSg_1782285358
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-490bae3a39bso5090605e9.1
- for <qemu-devel@nongnu.org>; Wed, 24 Jun 2026 00:15:59 -0700 (PDT)
+ us-mta-44-0N0Pz03WPtmytyXEiSaGZA-1; Wed, 24 Jun 2026 03:16:39 -0400
+X-MC-Unique: 0N0Pz03WPtmytyXEiSaGZA-1
+X-Mimecast-MFC-AGG-ID: 0N0Pz03WPtmytyXEiSaGZA_1782285398
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-460129ef947so384424f8f.1
+ for <qemu-devel@nongnu.org>; Wed, 24 Jun 2026 00:16:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1782285358; x=1782890158; darn=nongnu.org;
+ d=redhat.com; s=google; t=1782285398; x=1782890198; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=JN1Ao6WEVvEQ7sk5rN2xxsW4b8vgnEjZfLFDDL3tjGY=;
- b=lJjQEEKo2Mardp51uwUx1YfuXPjdTWB6Qs0b0r6AA14F8HItoCyF1KYyVx8F3ddptM
- i4H0O+63Tm1YLcvohqk7l3qHNFrw+IeAdOJ4d+dvqCOiYkIi8lDoQDXKIFSNkdzA5rnt
- tdGfbE0j/qp0L9BhuLO0CaCyPl/bxBmSkWPc2d4Z046qcvfdIVWjp28BrIv9zFBOpfXm
- jN4XcOebbiWq50AWkqL0tkkLiiZ2mBvtC2k+iQNNkFr7q1/EC90xlOQif/ZMDYTJPuV7
- htjFBy/bcv/KEcs1pr24mls/kYdwhjw/H7bhhM4prgfoCKeWiew+H5aNBMwNDnqJ6/4j
- OOFw==
+ bh=hQ/vGf0qXdW11TwKepvfckc2LrAvE+KdMl1iHL+v9ls=;
+ b=htd4oIKKuksN0HDywcfxFLH0Zt06Faul7qk6XagwY6TmagOjOK7lp+WDVoAGKk7xxJ
+ ZtFVLvZANGUOOZOb24P8R0auCUvB29WhTmo10KpB68tS9Bi4xGIsdVB2tGIGzYGZw0wM
+ t8y0aHRzifCxIf3U1U+4930IAzCAHziCfkN+cPEPxhluSm7JqCbzABI73FAciNa/wLxA
+ bQQLb/zYg5KpD9egtqjNj/wypuf/PWwgVHpkn6pg9MAhJ941fc6uxad9fZpFyIxtF6tu
+ q0QSjUvgYWO9UA1bfBBVTEGans+CgLh83YPnrLSM6ejK9fGg8a6IGAM6lIEIp+rgNmJS
+ Rk+Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782285358; x=1782890158;
+ d=1e100.net; s=20251104; t=1782285398; x=1782890198;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=JN1Ao6WEVvEQ7sk5rN2xxsW4b8vgnEjZfLFDDL3tjGY=;
- b=As0VRT0fcI+qRwAAl2UZPgm1+CYz6EXOaVinhCDBWK0Jv3+m/GRDjR5N9wlQuSzLc6
- jz2b2mkppM9jXynVUxBykzgOefWRGWnrEQPJ2Gz0pgLWgiEJyEJRt5Qr7GQGAj2CHqmz
- f1adtLTEnn+0ZTXCCPo8xB6CQlFX/XLM9+8GjGVjx6MXeDReAnjUT/Pt8BoVx5Zi3Y2t
- iwJK1PWwApt4IfhjmVc9TKsHFMkNibXGjiLYaTFm8DLicoY9Ddr2xBIYGaIM6GicSNhf
- s8kmcoBgkfORFPu51FzhWBJBeSy9WenfXH21Ayy+kQkngHgSkVwQvqeHVwI3DZ97eudh
- K1Mw==
+ bh=hQ/vGf0qXdW11TwKepvfckc2LrAvE+KdMl1iHL+v9ls=;
+ b=k0ykPpdyZidSYbwy1QiYX/Na63hVvQEY9G0RTegGDlK5+p39dwrvfT38Or7NYatD0/
+ bTVvEMqeN/e2jzYY7SCX6OGpRwqyBuRmiv/ZJxjgAhwcb/i6jRBfPs0CThQY53E+FAEp
+ z692BJyFy+H4eYiISNnX1F6nfAx0Y5+p9F3OiRy5bZImcIghujCmaR6TySpFSSD6EHiC
+ Zqcsz+12DtR0jmQTq59gD4YY/RBDPo+7dHzJhr2QaAVp4urr/Jbh3MWKylgPHiNlKelx
+ GfQQvfcnBOxeBu02kvnbVih4iGWt4iaOTLYJOR5+d+oCdpHjSmuTu95rv7QozHuZJDq4
+ MQwg==
 X-Forwarded-Encrypted: i=1;
- AFNElJ/tfPqb0ESwJGvGl1vhwZd4TvXs2ADru9QnOx4cmljLrbM0paduRgr7dJEMOWVK65FyzsyVhyXQP6Mq@nongnu.org
-X-Gm-Message-State: AOJu0Yx7GxGXOZP7Fpr5S5DdSoqHDWegVj+c53XLUQxJ//DV2MS0i6kv
- ZElqw7Z9E8ov3dvH9R4IUl7s49M3iKndcg8c4GcTJeHgZ6eX/jfS1eMRes24I7dGCgblqoo59zK
- +afwJKtcpIk7tC/GVkjCPTlnjq78NDzO4nzWOpfXtXEQutS5LsqXGPFc0
-X-Gm-Gg: AfdE7cmuSS0Sx2lOxAXtMzaWF5LJmH4EhiUDQxiugqnYGzmM9ERO5xsxK0A0J2zqciM
- 4zZcV2zd//sOEbgmpkg0Oghi7IlPjr66A2/zArQHp2/5byN+WejfcgAoukHsaRsO2r7ckWDdRWg
- G9J107Jy0anLDkMd2SYAtEZeTsPbUyhDEdJ14/ExhMdOEjSiCz5i4r52obmNl7IIiWrz0ijqRQI
- N5Po5RHHLqkBimecw0eL5z36NVuhCbc1mPP7zdZQWO4ty5fS5VQTHtP59rwrWFXKUffO6ddggxo
- RNBEsBHl5GXhbCb7YAEYn2+lwkTsDRP0mlcdftTWJ59WoIj8gx15ZYkNqG5wD4T8aKWM2+zei1o
- X0Xj5ZHhfJGhXiLEJItwblbt5p3IFfXXYgQwOATM8MmBdZRkULEgXJaA=
-X-Received: by 2002:a05:600c:4fc8:b0:491:ba04:2ce4 with SMTP id
- 5b1f17b1804b1-4925b364cc4mr91976265e9.16.1782285358197; 
- Wed, 24 Jun 2026 00:15:58 -0700 (PDT)
-X-Received: by 2002:a05:600c:4fc8:b0:491:ba04:2ce4 with SMTP id
- 5b1f17b1804b1-4925b364cc4mr91975635e9.16.1782285357699; 
- Wed, 24 Jun 2026 00:15:57 -0700 (PDT)
+ AHgh+Rq1cPhCZYPF14h+87ZkrjvmvIvGVbeLfN4MXiCqTWEAy/C/mQpDRphOxA7J467/utZ36NohBda99ONb@nongnu.org
+X-Gm-Message-State: AOJu0Yzlbj3LC2WHt+TZBu8bJ6S4tC10yrJ+lOM7r/Q2dNTeiTGHYk3O
+ 7L4B5cKID5FfpQDpm6h132ZQl6rT8shQ7+hM62nQ2l/mltC/JS2yNDT4mNxjvLmz/RtFikcY8xp
+ HIQcsOe/6fjRSeu8bOGMzRPAypKSxKBtDJySCvwWil4eqBi/wMeqmyWr+
+X-Gm-Gg: AfdE7cl0QeeETYbWguPCKLlwGthQ4YcmLZ2xR/aGh9uSuBwNI21ZTWwbfGOFX6/LycT
+ O46M06Z4Qw1xHLhkOeaUGxiB/PGr9t09Npllty5HvVyxrvyauumVDMRc7yt7dhCYtScBbeUhveX
+ rasYDOPNqQ0TarkWsqnl2QjqpBQBOoJcMEG0KSaCun+uZfxUOpsQVztX8IUAxHQEhcCtZexcf7i
+ x/pNmdauIq9Rldem5PXG3MnVQRrynp+gZkYiUC/IzzOfrIIpTLD2at0YibfwAaoUuNmhVQQunSb
+ eIpzmu4lyyy6h21uGp+mwx9dHWY8l5o69UXMv+0EzOJjXJKGAVbPc3L40J07rE6MNe6QHGT/iVc
+ Hwl6fdcltEHROWMr2ONX5A0grLTMSL/k1KBnEAymnEWgplh9qXrL6YEM=
+X-Received: by 2002:a05:6000:2992:20b0:452:c246:ab69 with SMTP id
+ ffacd0b85a97d-46c04ff8f2amr2510951f8f.13.1782285397861; 
+ Wed, 24 Jun 2026 00:16:37 -0700 (PDT)
+X-Received: by 2002:a05:6000:2992:20b0:452:c246:ab69 with SMTP id
+ ffacd0b85a97d-46c04ff8f2amr2510887f8f.13.1782285397334; 
+ Wed, 24 Jun 2026 00:16:37 -0700 (PDT)
 Received: from ?IPV6:2a01:cb19:8426:ae00:2b21:b1ac:81f4:97b6?
  ([2a01:cb19:8426:ae00:2b21:b1ac:81f4:97b6])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-49260915286sm75277075e9.1.2026.06.24.00.15.56
+ ffacd0b85a97d-46c1ee01d51sm3267111f8f.15.2026.06.24.00.16.35
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 24 Jun 2026 00:15:57 -0700 (PDT)
-Message-ID: <1d32c715-877c-4587-b161-99452d170db5@redhat.com>
-Date: Wed, 24 Jun 2026 09:15:55 +0200
+ Wed, 24 Jun 2026 00:16:36 -0700 (PDT)
+Message-ID: <3972d4ca-8a7c-4028-8743-bf6277299766@redhat.com>
+Date: Wed, 24 Jun 2026 09:16:35 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 01/14] migration: Propagate errors in
- migration_completion_precopy()
+Subject: Re: [PATCH v4 14/14] migration: Enable new switchover-ack
 To: Avihai Horon <avihaih@nvidia.com>, qemu-devel@nongnu.org
 Cc: Alex Williamson <alex@shazbot.org>, Peter Xu <peterx@redhat.com>,
  Fabiano Rosas <farosas@suse.de>,
@@ -105,10 +104,9 @@ Cc: Alex Williamson <alex@shazbot.org>, Peter Xu <peterx@redhat.com>,
  Cornelia Huck <cohuck@redhat.com>, Eric Blake <eblake@redhat.com>,
  Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
  John Snow <jsnow@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Maor Gottlieb <maorg@nvidia.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+ Maor Gottlieb <maorg@nvidia.com>
 References: <20260622101214.25770-1-avihaih@nvidia.com>
- <20260622101214.25770-2-avihaih@nvidia.com>
+ <20260622101214.25770-15-avihaih@nvidia.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Autocrypt: addr=clg@redhat.com; keydata=
@@ -154,7 +152,7 @@ Autocrypt: addr=clg@redhat.com; keydata=
  HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
  izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
  uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20260622101214.25770-2-avihaih@nvidia.com>
+In-Reply-To: <20260622101214.25770-15-avihaih@nvidia.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
@@ -181,36 +179,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
->       if (ret) {
-> +        qemu_file_get_error_obj(f, errp);
-> +        error_prepend(errp, "Failed to save iterable device state: ");
->           return ret;
->       }
+On 6/22/26 12:12, Avihai Horon wrote:
+> Now that VFIO has implemented new switchover-ack, enable it for new
+> machines and keep legacy behavior for old machines.
+> 
+> Signed-off-by: Avihai Horon <avihaih@nvidia.com>
+> ---
+>   hw/core/machine.c   | 1 +
+>   migration/options.c | 3 +--
+>   2 files changed, 2 insertions(+), 2 deletions(-)
+> 
+> diff --git a/hw/core/machine.c b/hw/core/machine.c
+> index 9a10e45aab..a4af779357 100644
+> --- a/hw/core/machine.c
+> +++ b/hw/core/machine.c
+> @@ -48,6 +48,7 @@ GlobalProperty hw_compat_11_0[] = {
+>       { TYPE_ARM_SMMUV3, "ril", "on" },
+>       { TYPE_ARM_SMMUV3, "ssidsize", "0" },
+>       { TYPE_ARM_SMMUV3, "oas", "44" },
+> +    { "migration", "switchover-ack-legacy", "on" },
+>   };
+>   const size_t hw_compat_11_0_len = G_N_ELEMENTS(hw_compat_11_0);
 >   
-> -    /* TODO: pass error upper */
-> -    ret = qemu_savevm_state_non_iterable(f, &local_err);
-> +    ret = qemu_savevm_state_non_iterable(f, errp);
->       if (ret) {
-> -        migrate_error_propagate(s, error_copy(local_err));
-> -        error_report_err(local_err);
->           return ret;
->       }
+> diff --git a/migration/options.c b/migration/options.c
+> index 4c9b25372e..dfce19405d 100644
+> --- a/migration/options.c
+> +++ b/migration/options.c
+> @@ -110,9 +110,8 @@ const Property migration_properties[] = {
+>                        preempt_pre_7_2, false),
+>       DEFINE_PROP_BOOL("multifd-clean-tls-termination", MigrationState,
+>                        multifd_clean_tls_termination, true),
+> -    /* Use legacy until VFIO implements new switchover-ack */
+>       DEFINE_PROP_BOOL("switchover-ack-legacy", MigrationState,
+> -                     switchover_ack_legacy, true),
+> +                     switchover_ack_legacy, false),
 >   
->       qemu_savevm_state_end_precopy(s, f);
->   
-> -    return qemu_fflush(f);
-> +    ret = qemu_fflush(f);
-> +    if (ret) {
-> +        qemu_file_get_error_obj(f, errp);
-> +        error_prepend(errp, "%s: Failed to flush QEMUFile", __func__);
-
-This error_prepend is not consistent with the previous. When applying,
-I will change it to :
-
-         error_prepend(errp, "Failed to flush QEMUFile: ");
-
-
-With that,
+>       /* Migration parameters */
+>       DEFINE_PROP_UINT8("x-throttle-trigger-threshold", MigrationState,
 
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
 
