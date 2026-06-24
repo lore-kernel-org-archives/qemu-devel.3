@@ -4,49 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BFF9ACDB470
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 05:13:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8FCB9CDB479
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 05:13:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcFoZ-0007YN-9e; Wed, 24 Jun 2026 01:06:19 -0400
+	id 1wcFq6-0002Zz-V1; Wed, 24 Jun 2026 01:07:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wcFoP-0007Ap-H1; Wed, 24 Jun 2026 01:06:09 -0400
+ id 1wcFpo-0002Vp-Io; Wed, 24 Jun 2026 01:07:39 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wcFoN-0005di-Sa; Wed, 24 Jun 2026 01:06:09 -0400
+ id 1wcFpk-0005jt-VM; Wed, 24 Jun 2026 01:07:35 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1782277476; bh=ylRD3FLvc+MwoHh+YbAD+GRu9KzjAXC6DydIi10G1Rk=;
+ t=1782277622; bh=cTPGTHio96Tmfg3qRopVfRHWj/QeTHyHESYeiFRwVNI=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=qmyYmg/tlH9O0eZMVAg7yfWug4vb/wyZ9AZnWxCsrmzFp7goO+A1pj4xx1fPuXkQI
- CBDD9m1BpfhlcuZRNCblskZSy9eMjKXZjFegDtsaPTYLUqogl59qJI5i1m2J6pK2bm
- AYf8TRlr9Nuqf4DIY4o5FwEhiSwFq7CuxmZBaF5eK1HlQras9IPJdJ3oC4+IK1gQLF
- CgEvWVMHg+C557RzoHeI+FDgAgYIse9NDuRYu7o4yTWKfLuXIsQoVG/gx4emC8R01L
- 4vtLLfS3siVH11K8Cx2BINvW9uwltWbwvHW93D79vsbvdfhCwz4dNEDXrGJssAf6x/
- /iGa0tjnqasMw==
+ b=FO7WBH9HgF2U+UC2Ce1gYGlEGSGuuQ3MMkluWDOH9BTiZGIPS+PliQxTy6SHX0/63
+ 07hH9NecJhelTycfC2cCP8OI2BUd5EN43PPpvpV4Y8yFyBDkNJrOy0t95LgPzVRKoQ
+ wK960Yoey+M/pTN+eNwphf69BfGxOEMFnMC2JxbWxwKVVYKvgiF9tkmO37dgNwOpGS
+ ULYEpgOQowpKQpIphUo8bbMTxdq4rc9vpbPhIPvX0HhhjMdqotrIw94WBcG+ssZlN1
+ EVeFSRXpyXoRJ5OrjN6H3Vn83QZY5B9QHQSvyFToPzUrM2OVUN0d0BrHk9N9JwQmxs
+ cHG5ItaCgAoZg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id AB0401BA646;
- Wed, 24 Jun 2026 08:04:36 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 4145D1BA65F;
+ Wed, 24 Jun 2026 08:07:02 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 92E833DDACE;
- Wed, 24 Jun 2026 08:04:41 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 295BE3DDAFC;
+ Wed, 24 Jun 2026 08:07:07 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Ryan Zhang <ryan.zhang@nxp.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+Cc: qemu-stable@nongnu.org, Alejandro Jimenez <alejandro.j.jimenez@oracle.com>,
+ Sairaj Kodilkar <sarunkod@amd.com>, "Michael S. Tsirkin" <mst@redhat.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.11 80/86] ui/sdl2: Set GL ES profile before creating
- initial GL context
-Date: Wed, 24 Jun 2026 08:02:51 +0300
-Message-ID: <20260624050404.394225-24-mjt@tls.msk.ru>
+Subject: [Stable-10.2.4 65/95] amd_iommu: Update command buffer head ptr in
+ MMIO region after wraparound
+Date: Wed, 24 Jun 2026 08:05:00 +0300
+Message-ID: <20260624050541.395079-4-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-10.0.11-20260624080222@cover.tls.msk.ru>
-References: <qemu-stable-10.0.11-20260624080222@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-10.2.4-20260624080454@cover.tls.msk.ru>
+References: <qemu-stable-10.2.4-20260624080454@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -71,42 +70,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Ryan Zhang <mailto>
+From: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
 
-When the user selects GLES via '-display sdl,gl=es', we need to set
-SDL_GL_CONTEXT_PROFILE_MASK to SDL_GL_CONTEXT_PROFILE_ES before
-calling SDL_GL_CreateContext(). This ensures SDL_GL_LoadLibrary()
-loads the correct GLES driver instead of the desktop OpenGL driver.
+When processing a command, amdvi_cmdbuf_run() increments cmdbuf_head and
+writes it to the emulated MMIO register space before checking whether it
+has reached the end of the command buffer.
 
-Fix the below issue: qemu-system-aarch64: /usr/src/debug/libepoxy
-/1.5.10/src/dispatch_common.c:872: epoxy_get_proc_address: Assertion
-`0 && "Couldn't find current GLX or EGL context.\n"' failed.
+If the incremented value reaches the end of the buffer and the tail pointer
+is zero, the loop exits and the COMMAND_HEAD offset still contains an
+unwrapped value. There are no errors in command processing since internal
+cmdbuf_head state is always correctly updated, but the spec defines the
+CmdHeadPtr field in MMIO Offset 2000h Command Buffer Head Pointer Register
+as RW i.e. guest-visible, so it should be kept consistent.
 
-sdl2_gl_create_context() already sets the profile mask correctly for
-ES mode, but the initial context created in sdl2_window_create() is
-missing the same treatment.
+Wrap cmdbuf_head before updating COMMAND_HEAD so the MMIO-visible register
+always matches the internal command buffer head pointer position.
 
-Fixes:da3f7a3ab9ea0091955b58f8909dfcee01f4043e ("ui/sdl: try to instantiate the matching opengl renderer")
-
-Signed-off-by: ryan.zhang@nxp.com
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Message-ID: <DU2PR04MB9018BB3650BA218438C01F2A83042@DU2PR04MB9018.eurprd04.prod.outlook.com>
-(cherry picked from commit 490a3e1867f025c68fa13db766b5c8da16c6eca4)
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
+Reviewed-by: Sairaj Kodilkar <sarunkod@amd.com>
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Message-Id: <20260512150044.334867-1-alejandro.j.jimenez@oracle.com>
+(cherry picked from commit 3c98e446af825b5806c1e5cd1244b2431b15e884)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/ui/sdl2.c b/ui/sdl2.c
-index b00e421f7f..c798654c99 100644
---- a/ui/sdl2.c
-+++ b/ui/sdl2.c
-@@ -109,6 +109,8 @@ void sdl2_window_create(struct sdl2_console *scon)
+diff --git a/hw/i386/amd_iommu.c b/hw/i386/amd_iommu.c
+index 29e2014c68..c4b3a9c78d 100644
+--- a/hw/i386/amd_iommu.c
++++ b/hw/i386/amd_iommu.c
+@@ -1475,12 +1475,12 @@ static void amdvi_cmdbuf_run(AMDVIState *s)
+         trace_amdvi_command_exec(s->cmdbuf_head, s->cmdbuf_tail, s->cmdbuf);
+         amdvi_cmdbuf_exec(s);
+         s->cmdbuf_head += AMDVI_COMMAND_SIZE;
+-        amdvi_writeq_raw(s, AMDVI_MMIO_COMMAND_HEAD, s->cmdbuf_head);
  
-         if (scon->opts->gl == DISPLAY_GL_MODE_ES) {
-             driver = "opengles2";
-+            SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK,
-+                                SDL_GL_CONTEXT_PROFILE_ES);
+         /* wrap head pointer */
+         if (s->cmdbuf_head >= s->cmdbuf_len * AMDVI_COMMAND_SIZE) {
+             s->cmdbuf_head = 0;
          }
++        amdvi_writeq_raw(s, AMDVI_MMIO_COMMAND_HEAD, s->cmdbuf_head);
+     }
+ }
  
-         SDL_SetHint(SDL_HINT_RENDER_DRIVER, driver);
 -- 
 2.47.3
 
