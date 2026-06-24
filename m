@@ -4,50 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E980ACDB481
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 13:36:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0FDE1CDE002
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 13:36:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcNja-00078f-UQ; Wed, 24 Jun 2026 09:33:43 -0400
+	id 1wcNlQ-0003bD-GW; Wed, 24 Jun 2026 09:35:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wcNjP-00072v-Nf; Wed, 24 Jun 2026 09:33:34 -0400
+ id 1wcNlM-0003TK-HM; Wed, 24 Jun 2026 09:35:32 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wcNjM-0000Ob-Fl; Wed, 24 Jun 2026 09:33:30 -0400
+ id 1wcNlK-0000pS-Tk; Wed, 24 Jun 2026 09:35:32 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1782307995; bh=rsMHcXMYMMN7Tj2tvLEWxPX3ekn7XpT0o/qUhhvEK6Q=;
+ t=1782307997; bh=6xlNGyXQ+fCOU4K82Yr9pLl9TrVrEkNSH6c86ZKUM2U=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=SjzFemGqKo1t4/ncJo5j3CjcYvAvZL0rxiX9kvEWgARK7epb8rt7AW9DMMqHlfaLX
- TzFwuNR3tTGg7mYSmbwJJ5nOAfATTwRtjUl/+vsNO86XAWjtuwBNS66K8sq5Od4Hds
- CGd1Wr60yfJ+/0dQWpYOXIP8vsNRctBJFvVWvczZR4jcPD3hx8YtmhyV3mBVqDxShD
- mUeXXwb4/CILxArlTEZqwH+GyqpWKyeGogEEt+QmA0TexHzf5HLt7qPeGPEWJNEOTK
- YkN5Vlly6fiTY9/khdreK8ZtRV3fiQiBB50A7Vnm5+2fNTWQoA4yW1q8sEnwWsPf8H
- wGS0D/H9CULgQ==
+ b=YlM15+CLRoelmgiKLe4KVgKOlBa0TLegkOwIHuPk/cDED0TONcI6gtXCKu8IXIhL7
+ uklltNMIYTVnTl50t+oqnD4EnJ01BYj6jsXs/i/hrk3QF6BOJdYT67x8zKcWXKhZoi
+ BTKpUJuj0Ccq6ywlQKDwjmJr2upnSbKtwFfM2866IomUMX+qRWkj9UhZwYXdW1teAt
+ 0pxHH9b1nSsdNIUL7eTNWnNPj1YSbf160BPgaRQXPpfTmPq2VSjF5kpxBZ5gbiSk6M
+ WRQxhobUyk4mlI+3vHrF+6k9Oc7STxI79LW3kCl1+xXY4c8qE76AmvQCthvj7zImB+
+ QmiO9aj89IxEg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 642CD1BA9B5;
- Wed, 24 Jun 2026 16:33:15 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 11DD91BA9CE;
+ Wed, 24 Jun 2026 16:33:17 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id F19873DEA04;
- Wed, 24 Jun 2026 16:33:20 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id A136D3DEA1D;
+ Wed, 24 Jun 2026 16:33:22 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Frank Chang <frank.chang@sifive.com>,
- Max Chou <max.chou@sifive.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Alistair Francis <alistair.francis@wdc.com>,
+Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.2 003/107] target/riscv: Update MISA.X for non-standard
- extensions
-Date: Wed, 24 Jun 2026 16:30:08 +0300
-Message-ID: <20260624133301.403266-3-mjt@tls.msk.ru>
+Subject: [Stable-11.0.2 028/107] target/arm: Use FPST_A64_F16 for SVE FCVTLT_hs
+Date: Wed, 24 Jun 2026 16:30:33 +0300
+Message-ID: <20260624133301.403266-28-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.2-20260624163118@cover.tls.msk.ru>
 References: <qemu-stable-11.0.2-20260624163118@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -72,65 +71,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Frank Chang <frank.chang@sifive.com>
+From: Peter Maydell <peter.maydell@linaro.org>
 
-MISA.X is set if there are any non-standard extensions.
-We should set MISA.X when any of the vendor extensions is enabled.
+We should be using the F16-specific float_status for conversions from
+half-precision, because halfprec inputs never set Input Denormal.  If
+we use the FPST_A64 fpstatus then we will incorrectly set FPCR.IDC
+for input-denormals when FPCR.AH=1.
 
-Signed-off-by: Frank Chang <frank.chang@sifive.com>
-Reviewed-by: Max Chou <max.chou@sifive.com>
-Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20260424050509.3935180-3-frank.chang@sifive.com>
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-(cherry picked from commit 613bb1949fffc4aeb9e554e35fecc7d6f7ddd27b)
+In commit e07b48995aaa we updated most of the halfprec-to-other
+conversion insns to use FPST_A64_F16 as part of implementing
+FEAT_AHP.  However we missed the SVE FCVTLT instruction, which has a
+halfprec-to-single encoding.
+
+Correct the FPST we use for the hs variant of FCVTLT.
+
+Cc: qemu-stable@nongnu.org
+Fixes: e07b48995aaa ("target/arm: Use FPST_A64_F16 for halfprec-to-other conversions")a
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20260521122913.1565011-3-peter.maydell@linaro.org
+(cherry picked from commit aa42300f86d172d7252f0cb95c2efd7570ad6b8f)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-index 35d1f6362c..a6adf6efc6 100644
---- a/target/riscv/cpu.h
-+++ b/target/riscv/cpu.h
-@@ -69,6 +69,7 @@ typedef struct CPUArchState CPURISCVState;
- #define RVH RV('H')
- #define RVG RV('G')
- #define RVB RV('B')
-+#define RVX RV('X')
+diff --git a/target/arm/tcg/translate-sve.c b/target/arm/tcg/translate-sve.c
+index 6a5c508743..f9dfda4a7a 100644
+--- a/target/arm/tcg/translate-sve.c
++++ b/target/arm/tcg/translate-sve.c
+@@ -7826,7 +7826,7 @@ TRANS_FEAT(BFCVTNT, aa64_sme_sve_bf16, gen_gvec_fpst_arg_zpz,
+            s->fpcr_ah ? FPST_AH : FPST_A64)
  
- extern const uint32_t misa_bits[];
- const char *riscv_get_misa_ext_name(uint32_t bit);
-diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
-index 800b7dce5d..c5505414ae 100644
---- a/target/riscv/tcg/tcg-cpu.c
-+++ b/target/riscv/tcg/tcg-cpu.c
-@@ -1188,6 +1188,20 @@ static void riscv_cpu_update_misa_c(RISCVCPU *cpu)
-     }
- }
+ TRANS_FEAT(FCVTLT_hs, aa64_sme_or_sve2, gen_gvec_fpst_arg_zpz,
+-           gen_helper_sve2_fcvtlt_hs, a, 0, FPST_A64)
++           gen_helper_sve2_fcvtlt_hs, a, 0, FPST_A64_F16)
+ TRANS_FEAT(FCVTLT_sd, aa64_sme_or_sve2, gen_gvec_fpst_arg_zpz,
+            gen_helper_sve2_fcvtlt_sd, a, 0, FPST_A64)
  
-+/* MISA.X is set when any of the non-standard extensions is enabled. */
-+static void riscv_cpu_update_misa_x(RISCVCPU *cpu)
-+{
-+    CPURISCVState *env = &cpu->env;
-+    const RISCVCPUMultiExtConfig *arr = riscv_cpu_vendor_exts;
-+
-+    for (int i = 0; arr[i].name != NULL; i++) {
-+        if (isa_ext_is_enabled(cpu, arr[i].offset)) {
-+            riscv_cpu_set_misa_ext(env, env->misa_ext | RVX);
-+            break;
-+        }
-+    }
-+}
-+
- void riscv_tcg_cpu_finalize_features(RISCVCPU *cpu, Error **errp)
- {
-     CPURISCVState *env = &cpu->env;
-@@ -1196,6 +1210,7 @@ void riscv_tcg_cpu_finalize_features(RISCVCPU *cpu, Error **errp)
-     riscv_cpu_init_implied_exts_rules();
-     riscv_cpu_enable_implied_rules(cpu);
-     riscv_cpu_update_misa_c(cpu);
-+    riscv_cpu_update_misa_x(cpu);
- 
-     riscv_cpu_validate_misa_priv(env, &local_err);
-     if (local_err != NULL) {
 -- 
 2.47.3
 
