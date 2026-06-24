@@ -4,144 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6CB2ECDE000
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 21:24:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7374CDB479
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 22:18:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcV3y-0001yf-0k; Wed, 24 Jun 2026 17:23:14 -0400
+	id 1wcVuX-0003tC-9V; Wed, 24 Jun 2026 18:17:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wcV3w-0001yG-97
- for qemu-devel@nongnu.org; Wed, 24 Jun 2026 17:23:12 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wcV3u-0006OJ-M6
- for qemu-devel@nongnu.org; Wed, 24 Jun 2026 17:23:12 -0400
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65OJj1QH3754182
- for <qemu-devel@nongnu.org>; Wed, 24 Jun 2026 21:23:07 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- ZXwK9O66w60JCuAFOojGCj+5+pZoODHDMXTyfNck9/8=; b=NSxITkL0VTZCxeJ0
- w612n3FyyG+OXWS2lc/kQecxL1s8l1ZqbzLMUenF3epb8c6pKccjq4xu8S3mvjwz
- 4hkkuEytXNGvYkn3ulLwJoxTd05RE81padFuiF+pj2dp4bUG6TkqrIsbxqO7Gl8p
- RtCXhroIDZfMRXBm9YVy9QwPBaEZne8FpxcOIdc/jPwX9I/+CISxHdKy/JFZLoWO
- 2DhZy5QG6OLwaW+qr8gK5WngU5Kc/0n/1blljGnIvahzyg7BIRMsA8OBXN6qmanH
- n5SztzZFVdCO0FG2Ws6cje5DLvPxjmhdglyb1QJPbznxKxeJX2I2o1NaVR1Kpx62
- 5jxcRw==
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f05bfcb3x-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 24 Jun 2026 21:23:07 +0000 (GMT)
-Received: by mail-qk1-f199.google.com with SMTP id
- af79cd13be357-91931144870so277395985a.1
- for <qemu-devel@nongnu.org>; Wed, 24 Jun 2026 14:23:07 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <y.sanjeevreddy@gmail.com>)
+ id 1wcVPk-0006VO-GN
+ for qemu-devel@nongnu.org; Wed, 24 Jun 2026 17:45:44 -0400
+Received: from mail-dy1-x132e.google.com ([2607:f8b0:4864:20::132e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <y.sanjeevreddy@gmail.com>)
+ id 1wcVPi-0003dY-6i
+ for qemu-devel@nongnu.org; Wed, 24 Jun 2026 17:45:43 -0400
+Received: by mail-dy1-x132e.google.com with SMTP id
+ 5a478bee46e88-30c713f37c2so283545eec.0
+ for <qemu-devel@nongnu.org>; Wed, 24 Jun 2026 14:45:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1782336187; x=1782940987; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=ZXwK9O66w60JCuAFOojGCj+5+pZoODHDMXTyfNck9/8=;
- b=co5fS5XkmZY14h08m8shsLoZ2pXqTZA3tTwqYh9G4q2Zf0qEe/0ScNAtu+iNmRTIp5
- 44yQp+ecZZrOXpySl76/xm3baAUi6l6Zi2VSkmrTNWrC1bK44nDrF05NpXm4qb/vTdMF
- hNcmLz2f4cuYUwPugRn+5yOA9kNhjrkA1MkC2TJqYQfaUd3or/SRu59Jx5QQtOqt67vp
- 2wvyvhv9pawdfdPBaNSsmWG9gpSJzH+I3F/y3xhVoZn2LgWa75NXTAaQ2uG9RnZpbqpo
- cKnCXj0DWuGk2SvEF24EbsJDq1E/FwIynfdxmp3JqXfQ4xBKT3/U+izlSmu9Lqbuhm3m
- 1Akg==
+ d=gmail.com; s=20251104; t=1782337540; x=1782942340; darn=nongnu.org;
+ h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+ :date:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=/vghZDYVubbr7+CnA9I+jTZNdgR/7bQvlz7v7ZesAyM=;
+ b=Ic/AkdGhnx8vGrzjFmwwnwbkHrIi2Nv/jo+DAKYD6c3R48RdAYFwDIuoyeZdd6mZJc
+ GqRVdNEg34AMtYZiOhgKjW6hcud1E3/i5fWQDnJcIWPm2aRN0Gn7vWFFh1j5BEikw3Hm
+ L3jPWzmhwJH2xzuDkIzSFeE2Ty3KYCRK9Bla5Y4z6cte5xQiUzGK1g5JKiEDQM76LpYe
+ j8n3ZAGyMPJgilspeSGcqX0g+ViGvpSwysJL6/gkU33eQx+3eXC8Oaj0D3/VARtiyx0T
+ w79E3Q7vD+ZcxmSN1MBEYbRelaQdCj6qGS1VnxGnjhKja+GsoykzRJBRGADFI7Wakyn/
+ OuCg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782336187; x=1782940987;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=ZXwK9O66w60JCuAFOojGCj+5+pZoODHDMXTyfNck9/8=;
- b=fSkriB05LypNY8gLn5tQEa7wzZuUH2ZIqeM/90EGdRzB/DTDlXN195j24fBMxfSOLv
- dxKBwGJWXq8ipBDLVdmlndv1c/0SInGCdSKkUuTBahgteg1SZGXuL7po+YEzcF4+Ka/i
- 9X1QugN8lpPwJFe/xQHLfF8XuA7K7hC5xJBB6Ih6Y0PU3kxBSiLWxUDPCq78sHMkc3DM
- mdS5VhcaMsYNVwlwoJR5glXib5pZ9wC1DfwNLQzgvm76OZnkxkvE1MuA4/nPIMFbXqeA
- d48CHg+8TiW//2XakdcPf81kUNFmtcEp0v27gtSOeryMcKBDfUhgjWbTMx2qvTNBJzxB
- 7gyg==
-X-Forwarded-Encrypted: i=1;
- AFNElJ++WtD9m5VpKvtjm5MdQ93cK5auvuEvDbFdQ7v9NrTAJsopkcByczW9AivMzMFek2wVEto8BPeGdl3Q@nongnu.org
-X-Gm-Message-State: AOJu0YwbVCkOBYO9RCvwThUhXvFMKQzSRAviHqbykC3zT1zpE4L1wVwW
- 1/jerqhbcik8ksF35Jc+4SE/I8zKRmNe37aeRsVZnV8vHWFvY/RFHBEay9BV9spOMENuksOUDCc
- xfxmPu6hkfIk6KFAi+RpQhclIQLxzwCBl4pyZlJmYFGRMPXXuvOD8UKrQQQ==
-X-Gm-Gg: AfdE7cm3evzJBwyh3MHlWyiQZNvVjgWm5iZsgcS+kA7oJVvuMV7W7z7UaLzkwrliVZD
- rx8aF2G/kk40kWcSoIltXBP4/RZ+GHcbPnRq/TPwb7Ok4SGuSjkLFZAGQre3UqsLW9+rtmYQA3G
- oBNofw5zT3OyPzFmkY9g9lqGmh3WjHx72XWlRx6fgll0Qh9ORsMC6fiTLNLmlNfPOb9eub8VAIa
- e6b4LENQFmIZCgqbtruaM9MiFmgvATWWGm7w184qNwdM1qL+VxlJ+e7afNPUBI5YmZiEOuEQLiO
- Q0oVM99rOhb2TxIP6Z3r6rgLxl2N8UH7i6pxUocjqk8QaP+s+PaJF2iyPkcDBCxp7wMIrmofcI5
- Ikh2cVAFXUUzgkdH48S1bKTBS0mVGyGpYgULYpNWYLWPS72tFDFjw93rvvHMTkA==
-X-Received: by 2002:a05:620a:1a28:b0:915:c4de:7ac2 with SMTP id
- af79cd13be357-92646678987mr1467850485a.30.1782336186652; 
- Wed, 24 Jun 2026 14:23:06 -0700 (PDT)
-X-Received: by 2002:a05:620a:1a28:b0:915:c4de:7ac2 with SMTP id
- af79cd13be357-92646678987mr1467843485a.30.1782336185989; 
- Wed, 24 Jun 2026 14:23:05 -0700 (PDT)
-Received: from [192.168.69.212] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-46c1ee01d51sm8350817f8f.15.2026.06.24.14.23.04
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 24 Jun 2026 14:23:05 -0700 (PDT)
-Message-ID: <e095935c-ab2f-404e-889b-c2b96aaf6e4c@oss.qualcomm.com>
-Date: Wed, 24 Jun 2026 23:23:03 +0200
+ d=1e100.net; s=20251104; t=1782337540; x=1782942340;
+ h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+ :date:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=/vghZDYVubbr7+CnA9I+jTZNdgR/7bQvlz7v7ZesAyM=;
+ b=I0XeS+HBJrbtULtvBEwMkQfIjC1EvkwuKd6guzV8YDcJuvW0KkTN3Mnkds9WE2wUdV
+ a/hx1y5xOZJ4WROGzK9OCjzYT5JiUWFnjZrVJjNOGoq+RSejd1UnzTgsYqJMOhw2mKEc
+ XldTthzXIu16j/r3dw5LrH+CCxedY1gU16nB8NOR8XGLZa4bXK9PpgB/wE8tB8IHAJcH
+ tk2TWKs/BlqmdEbrgtzQLBCYkFQf61jRJkfLsVWLxCXJfwwmwdkmfm4qiX9GjsCMUhqU
+ 9MCSIKWuSTuox+5BiO+gIbIXLT4zUYcoojQvyA3DZ96Lyk6CAsrQAEcjDLxhjUz+cbrx
+ 3Yng==
+X-Gm-Message-State: AOJu0YxNEd4pHqYV/dIPenbVVKIa2nMU5YuMxRLxZttfFnaGy4O1j7+C
+ 7V95mcnc5lhQ3TjGOPoeC8bMTFBkcAP5tD4/nnDgL8V/zFcpYPJjr2Fr
+X-Gm-Gg: AfdE7cnTWltScb8kXWRFAPxIgTG6na0HUbHuKHW3iV5J/RpVYqK4zSLQ+OlItmX1B0G
+ wEqSkABFe5xJ2RKacz6bbJH6riYtU0NVk5wzjn9N5ioQJZCFFYE6gbQbOBxuOWnyP+7Ywt72Pns
+ dSzvxJgwH7q9d1DVZ2kkXt7qsL/fFxVUJGIsin6luVEX1Nxf5gd9i+OvmtH0mHrPIa919G6OqPm
+ MVe+0vTQ+Gm1YkBGlWcwtl2o9efkLWwgCDhN5uKSXNTVsbGJz6xtJS34PurEFbx0D2lEIFtIDpj
+ wIt8KDC+0KASVetNgdcScHWaQaLoXCq2HuGSuY5i93qF+ZfXOSueNcZC1bJpxyjwtEFukfBmxQ/
+ ZcQ7GdfFFUxYJou2mjEYJnXseC/Wz29Zo/gTQTJZBk2l7fF2bz8Q4YwbPou5Cuq+T8K0/eC7jKg
+ FNFNT1MKSMszx2WxvTAxTOHYRm++A17eupFRPhuqKPM5PqVnXL5bhsqkXx
+X-Received: by 2002:a05:7300:72c4:b0:30c:a0f:3bd0 with SMTP id
+ 5a478bee46e88-30c78e617fbmr1714620eec.13.1782337539809; 
+ Wed, 24 Jun 2026 14:45:39 -0700 (PDT)
+Received: from [127.0.0.1] (67-2-23-151.slkc.qwest.net. [67.2.23.151])
+ by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-30c7c4ca240sm1690287eec.4.2026.06.24.14.45.38
+ (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+ Wed, 24 Jun 2026 14:45:39 -0700 (PDT)
+From: Sanjeeva Yerrapureddy <y.sanjeevreddy@gmail.com>
+Date: Wed, 24 Jun 2026 15:45:32 -0600
+Subject: [PATCH] hw/net/net_tx_pkt: clamp payload_len to IP header length
+ for padded frames
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/4] amd_iommu: Decode XT interrupt control register
- without bitfields
-Content-Language: en-US
-To: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>, qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org, mst@redhat.com, sarunkod@amd.com,
- pbonzini@redhat.com, richard.henderson@linaro.org
-References: <20260624195925.1254462-1-alejandro.j.jimenez@oracle.com>
- <20260624195925.1254462-3-alejandro.j.jimenez@oracle.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <20260624195925.1254462-3-alejandro.j.jimenez@oracle.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=X8Bi7mTe c=1 sm=1 tr=0 ts=6a3c4abb cx=c_pps
- a=HLyN3IcIa5EE8TELMZ618Q==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
- a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22
- a=KKAkSRfTAAAA:8 a=yPCof4ZbAAAA:8 a=EUspDBNiAAAA:8 a=LfsA7Cq2GQzuzbZ-N0YA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=bTQJ7kPSJx9SKPbeHEYW:22
- a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-GUID: Xz7ZqOEmHuaKqGuKPTU-VqAatjLuvXvY
-X-Proofpoint-ORIG-GUID: Xz7ZqOEmHuaKqGuKPTU-VqAatjLuvXvY
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjI0MDE3OSBTYWx0ZWRfXxgw1skWeKABU
- YMMRuIOuPBzwtJFnsf80a9ZK9OBCCfSzd1OKSHot+R8+sbFmk6ZuY9mgyiKpo/INibOiEXSQqZ4
- 9r+jYvLIQvBgAPmPKFW8fcLyUVYeWT0=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjI0MDE3OSBTYWx0ZWRfXyVcLk0NplTvX
- 7BDDiPhODbs946j4dzlkEJQ0K3YXa4K2O+J2LKNqH/TNopu9nVU0CUBZynYxzKSmw5sQDBouGl+
- /ImRJeHYLe5WtwfgvV83kLUvx9YBTqH3pemmyIlzW8s417bBrMA154PeZgqGIgWGgyQnaiojIlA
- dsoRqgSmcnRadyJ120ixJwhusymckhqZ+YmCp163v2bLkvS1F0jL/N3MAXC6IH/1fTP557qEI1H
- UtYSzdt7zzcAMi5croNLqLzQLdZzoMTfzACu7mqSZDq7TBYHbj8HaJzy5xX2VGPZ4SenfpyNSyV
- 7N4usVU/C+3XP6wsazD7jtkYQo6K71Z0rvtTlMvBCwVeMQpmc5iquKQCev6WP0pLO9nAUoJtzr0
- Qu375SxRq5ZWfAQXLjk3oRmGe9tMVg==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-24_04,2026-06-24_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 bulkscore=0 phishscore=0 malwarescore=0 adultscore=0
- spamscore=0 lowpriorityscore=0 classifier=typeunknown authscore=0 authtc=
- authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.22.0-2606150000 definitions=main-2606240179
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260624-net-tx-pkt-ip-length-padding-v1-1-7a22fe9b4e40@gmail.com>
+X-B4-Tracking: v=1; b=H4sIAPxPPGoC/yXMwQrCMAwA0F8ZORuYrRvTXxEPtU27qMTSRhmM/
+ btVj+/yVqhUmCqcuhUKvbnyUxr2uw787CQRcmgG05uxH80BhRR1wXxX5IwPkqQzZhcCS8LBTdE
+ O09Ha6KEVuVDk5defL3/X1/VGXr8nbNsH+ARDS4AAAAA=
+X-Change-ID: 20260624-net-tx-pkt-ip-length-padding-5a8f358933fc
+To: qemu-devel@nongnu.org
+Cc: Dmitry Fleytman <dmitry.fleytman@gmail.com>, 
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
+ Jason Wang <jasowang@redhat.com>, 
+ Sanjeeva Yerrapureddy <y.sanjeevreddy@gmail.com>
+X-Mailer: b4 0.15.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1782337538; l=5110;
+ i=y.sanjeevreddy@gmail.com; s=20260624-gmail; h=from:subject:message-id;
+ bh=daH8nWF3nNK7cB/peJAGgwGdhRfDkIQUCopx72tC86o=;
+ b=nMfcNu49UQlWF9P9vxYABogjSQ7UexEXSIff/g4SmC5TQEHg/5J1SMySFGUJRdYTQNI/Zn81v
+ yeTJl+BXFLRBOHzUKlFcQxP1jmoI3p+TKae2uugmoso4iVKCOBCApAE
+X-Developer-Key: i=y.sanjeevreddy@gmail.com; a=ed25519;
+ pk=3ELbcw0bH36IEv3JvxqzTAgl5rrkOyv/tQHQzhpObAU=
+Received-SPF: pass client-ip=2607:f8b0:4864:20::132e;
+ envelope-from=y.sanjeevreddy@gmail.com; helo=mail-dy1-x132e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Wed, 24 Jun 2026 18:17:32 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -156,28 +113,110 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 24/6/26 21:59, Alejandro Jimenez wrote:
-> The XT IOMMU General Interrupt Control Register is a guest-visible MMIO
-> register. Decoding it with bitfields depends on host bitfield layout and is
-> not portable to big-endian hosts.
-> 
-> Fix this by removing union mmio_xt_intr and explicitly extracting fields
-> with FIELD_EX64() from the full register value returned by amdvi_readq(),
-> which has already been converted to host endianness.
-> 
-> Using a designated initializer for X86IOMMUIrq also ensures fields not
-> provided by the XT register (e.g. msi_addr_last_bits) are initialized before
-> x86_iommu_irq_to_msi_message() uses them.
-> 
-> CID: 1660056
-> Fixes: cf0210df65aa ("amd_iommu: Generate XT interrupts when xt support is enabled")
-> Reported-by: Peter Maydell <peter.maydell@linaro.org>
-> Suggested-by: Peter Maydell <peter.maydell@linaro.org>
-> Signed-off-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
-> ---
->   hw/i386/amd_iommu.c | 28 ++++++++++++++++++----------
->   hw/i386/amd_iommu.h | 14 --------------
->   2 files changed, 18 insertions(+), 24 deletions(-)
+When a guest transmits a short Ethernet frame, iov_size() returns the
+wire length including any Ethernet padding bytes added to reach the
+minimum 60-byte frame size.  net_tx_pkt_rebuild_payload() used that
+inflated size directly as payload_len.  net_tx_pkt_update_ip_hdr_
+checksum() then rewrites the IP Total Length (IPv4) or Payload Length
+(IPv6) field using this value, producing a malformed packet on the
+wire: the receiver interprets Ethernet padding bytes as IP payload.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+In practice this breaks protocol stacks that validate IP lengths
+strictly.  A nested ESXi host running on OpenStack using the e1000e
+emulation sends short TCP ACK packets in response to a Windows guest's
+virtio TLS client hello, which get padded to 60 bytes; the inflated IP
+Total Length corrupts the IP header seen by Windows, causing TLS
+handshakes and TCP connections to fail.
+
+Fix net_tx_pkt_rebuild_payload() to read the IP header's declared
+length and clamp payload_len accordingly:
+
+  IPv4: ip_total_len - l3_hdr_len
+  IPv6: ip6_plen adjusted for parsed extension headers
+
+Guard both paths against malformed guest packets where the header-
+declared length is shorter than the IP header itself; without the
+guard the unsigned subtraction would underflow, producing a huge
+payload_len.  Fall back to the raw iov_size() value in that case.
+
+Signed-off-by: Sanjeeva Yerrapureddy <y.sanjeevreddy@gmail.com>
+---
+ hw/net/net_tx_pkt.c | 55 ++++++++++++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 54 insertions(+), 1 deletion(-)
+
+diff --git a/hw/net/net_tx_pkt.c b/hw/net/net_tx_pkt.c
+index 903238dca2..d3549a4378 100644
+--- a/hw/net/net_tx_pkt.c
++++ b/hw/net/net_tx_pkt.c
+@@ -274,7 +274,60 @@ static bool net_tx_pkt_parse_headers(struct NetTxPkt *pkt)
+ 
+ static void net_tx_pkt_rebuild_payload(struct NetTxPkt *pkt)
+ {
+-    pkt->payload_len = iov_size(pkt->raw, pkt->raw_frags) - pkt->hdr_len;
++    size_t raw_payload_len = iov_size(pkt->raw, pkt->raw_frags) - pkt->hdr_len;
++    struct iovec *l2hdr = &pkt->vec[NET_TX_PKT_L2HDR_FRAG];
++    uint16_t l3_proto = eth_get_l3_proto(l2hdr, 1, l2hdr->iov_len);
++
++    /*
++     * Clamp payload_len to what the IP header says, not what iov_size()
++     * returns. When a short frame is padded to the Ethernet minimum of 60
++     * bytes, iov_size() includes the padding. Using that inflated size as
++     * payload_len causes net_tx_pkt_update_ip_hdr_checksum() to rewrite the
++     * IP total/payload length to include Ethernet padding, making the packet
++     * malformed (receiver may treat padding as payload or miscalculate
++     * checksums). Clamp to the guest-provided IP length instead.
++     *
++     * IPv4: ip_len is the total length including the IP header.
++     * IPv6: ip6_plen is the payload length after the base 40-byte header
++     *       (extension headers are included in ip6_plen but also in
++     *       l3_hdr_len, so subtract them out).
++     */
++    if (l3_proto == ETH_P_IP) {
++        uint16_t ip_total_len = be16_to_cpu(pkt->l3_hdr.ip.ip_len);
++        size_t l3_hdr_len = pkt->vec[NET_TX_PKT_L3HDR_FRAG].iov_len;
++        /*
++         * Guard against malformed packets where ip_total_len is zero or
++         * smaller than the IP header itself. Without this check, the
++         * subtraction (ip_total_len - l3_hdr_len) would underflow (both
++         * types are unsigned), producing a huge payload_len and corrupting
++         * the packet. Fall back to the raw iov_size value in that case.
++         */
++        if (ip_total_len > l3_hdr_len) {
++            pkt->payload_len = MIN(raw_payload_len, ip_total_len - l3_hdr_len);
++        } else {
++            pkt->payload_len = raw_payload_len;
++        }
++    } else if (l3_proto == ETH_P_IPV6) {
++        uint16_t ip6_payload_len = be16_to_cpu(pkt->l3_hdr.ip6.ip6_plen);
++        size_t l3_hdr_len = pkt->vec[NET_TX_PKT_L3HDR_FRAG].iov_len;
++        size_t ext_hdr_len = l3_hdr_len - sizeof(struct ip6_header);
++        /*
++         * Guard against malformed packets where ip6_plen is zero or does
++         * not cover the extension headers that were already parsed. Without
++         * this check, the subtraction (ip6_payload_len - ext_hdr_len) would
++         * underflow (unsigned), producing a huge payload_len. Fall back to
++         * the raw iov_size value in that case.
++         */
++        if (ip6_payload_len > ext_hdr_len) {
++            pkt->payload_len = MIN(raw_payload_len,
++                                   ip6_payload_len - ext_hdr_len);
++        } else {
++            pkt->payload_len = raw_payload_len;
++        }
++    } else {
++        pkt->payload_len = raw_payload_len;
++    }
++
+     pkt->payload_frags = iov_copy(&pkt->vec[NET_TX_PKT_PL_START_FRAG],
+                                 pkt->max_payload_frags,
+                                 pkt->raw, pkt->raw_frags,
+
+---
+base-commit: b83371668192a705b878e909c5ae9c1233cbd5fb
+change-id: 20260624-net-tx-pkt-ip-length-padding-5a8f358933fc
+
+Best regards,
+--  
+Sanjeeva Yerrapureddy <y.sanjeevreddy@gmail.com>
+
 
