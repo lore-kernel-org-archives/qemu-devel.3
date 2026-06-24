@@ -4,89 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74540CDE002
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 13:51:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9016ECDB479
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 14:14:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcNnu-0001ok-Ay; Wed, 24 Jun 2026 09:38:10 -0400
+	id 1wcOMG-0000vM-KZ; Wed, 24 Jun 2026 10:13:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jim.macarthur@linaro.org>)
- id 1wcNnR-0001b2-UP
- for qemu-devel@nongnu.org; Wed, 24 Jun 2026 09:37:42 -0400
-Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jim.macarthur@linaro.org>)
- id 1wcNnQ-00015h-9X
- for qemu-devel@nongnu.org; Wed, 24 Jun 2026 09:37:41 -0400
-Received: by mail-wr1-x434.google.com with SMTP id
- ffacd0b85a97d-4624a44e152so912854f8f.2
- for <qemu-devel@nongnu.org>; Wed, 24 Jun 2026 06:37:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1782308258; x=1782913058; darn=nongnu.org;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=DY8kuxxNwlc1FK61o3Rtv6tRPc70RdExCw4u34E/thM=;
- b=C/s9YA7OkkM/iZOA1LtiwOEWM9QSxktiXDsc1Q+x9EqHpV7Iis4rm9mLJydyygcrAK
- DweexJ0biAhYZpbgBDUJJni2G0+DRa74Mj2h3uV8n7T35IrBD2T7gYoyF3ASwOYffiqP
- +gbobjBdFSGha5nUwQQbjD+5t0jU1VJ+Ddadx8bKhBx5+DIIj2LPJIgstwu00vmlsu3K
- iQJF2VbZJ/aKqycPLOVk00LpTkP9PS0WxPAIH+J9y7m9VH0aNOU0vlJ/3opoouYcaTGx
- 9Zh9779wxQUkyCHxRX4DB5hsSQ/ScLoow+Pl47HCwVCJXSAOedSGPvQljMULfBrkhwsK
- /I/A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782308258; x=1782913058;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=DY8kuxxNwlc1FK61o3Rtv6tRPc70RdExCw4u34E/thM=;
- b=hlfztVOOE9QnTjI0C387ajSGYUzO1nyjNLsZmMFOPZwcAXNozgPo0NADpw25gbnkL+
- zP3AHmu3HcT2YO0r/KEObU7fLO+crjjuUdgZANX8/hZf6OAep0zhIEXQEH87SSAFeLaE
- u+Q2TDvcDjeoALQVfLXsEa1Ana1gsRlf/lQZ6mztPvd4wm/fmxGaH3AwVwEeuYRguuQ9
- hPW8RlfuN/pr3KDwU4sXN4hFJQ9Kfc/1UruSiThEJBesVvYQSURxrIRkGsciAS5cJpf6
- mWv2o3vm0Z2MqsGwKsY2yQuzDUuFfp0QAZ0sGQ9l4cdXycwHFczPz58dVSD73R3Lt24U
- 6LeQ==
-X-Gm-Message-State: AOJu0YxgDOyqbFLieDZPobG3MyRcz2JcnQGKcgbaJC/uJyqYf0TvsvFx
- chE/iMJfxM3zKRlfOyM+V7Hr4JoJ3NMNs4MUB5w0/ci2n7306n1y++94Z0WyGvmRM2k=
-X-Gm-Gg: AfdE7cl6mdc2oy72Kxz6wzXSucHQi3c69g/dFPI6FmvmnizJ5T5crfkDftBD/K3TZIX
- vbGGE6Kr1rrtrvOBCbOTzr9WLtGZgHeJM/6hIvxBIFBYAPL1wgVtqy9sHyzLhp64tF0j880Kknl
- fTUkidIRznAqG4tZLKgE8ZTJaH1jEtbgTxVuA4rYZsNYBNNJEk9CCisgruRLgEiyBhHoIAVXo+J
- N2flMzSXZaqGtep/sqWqvKX8pPvi0t1VYcAhhShHTp5Gin5XLJ1KijSRdHsdGoghTO4rfpMtrxa
- fqaOWIgXZGXsSHWaf5IOJ/4vsYAnGmaUknSeoMmTsYYt+UTbar/qGYPy3P1bodyZcU9dGNO8974
- aVqZ5cB9wvjmQy98kjTgbOTnvwzytkkcTqYAro5FGkft/ZXjKRijRXW2p5pWBcexFh/DCfUNEK6
- 6g0k62i2HqV08mDwSF7OVfLWzOpA==
-X-Received: by 2002:a05:6000:2911:b0:43b:5672:efe with SMTP id
- ffacd0b85a97d-46c04a35bd8mr5927872f8f.9.1782308258474; 
- Wed, 24 Jun 2026 06:37:38 -0700 (PDT)
-Received: from [127.0.1.1] ([2a10:d582:31e:0:2e21:1ee8:260f:9a76])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-46c1e840efdsm6646334f8f.5.2026.06.24.06.37.37
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 24 Jun 2026 06:37:37 -0700 (PDT)
-From: Jim MacArthur <jim.macarthur@linaro.org>
-Date: Wed, 24 Jun 2026 14:37:26 +0100
-Subject: [PATCH v2 2/6] target/arm/tcg: Allow vector FP conversions with FPRCVT
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1wcOM6-0000tb-Rw
+ for qemu-devel@nongnu.org; Wed, 24 Jun 2026 10:13:33 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1wcOM3-0006Z8-Ln
+ for qemu-devel@nongnu.org; Wed, 24 Jun 2026 10:13:30 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1782310398;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=HoTLy72hsjzaCW4u8adniCfvGR5Gay/W66gkz1kuIZQ=;
+ b=W0OvjqA/6HDrJiCqbhAmWaByCCjnsDnNfwsjfTwXcliCDSDFqzuPu9qcT+EUmDWcfktfxm
+ aQ5AuljpGwYyycBx4fIj5udSAryPhNrIocgrft+XoJeW1qsgM0F0LunwZqfcqy5fujziUY
+ eb3THHLwmRpAhGnCBh9puZZ474YSpLg=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-679-0TRKS9XKP7ueho4zIMiBjg-1; Wed,
+ 24 Jun 2026 10:13:10 -0400
+X-MC-Unique: 0TRKS9XKP7ueho4zIMiBjg-1
+X-Mimecast-MFC-AGG-ID: 0TRKS9XKP7ueho4zIMiBjg_1782310389
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id F3FE91953995; Wed, 24 Jun 2026 14:13:08 +0000 (UTC)
+Received: from sirius.home.kraxel.org (unknown [10.44.48.8])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 7C1423000B55; Wed, 24 Jun 2026 14:13:08 +0000 (UTC)
+Received: by sirius.home.kraxel.org (Postfix, from userid 1000)
+ id 36D84180078A; Wed, 24 Jun 2026 16:13:07 +0200 (CEST)
+Date: Wed, 24 Jun 2026 16:13:07 +0200
+From: Gerd Hoffman <kraxel@redhat.com>
+To: Ani Sinha <anisinha@redhat.com>
+Cc: Stefano Garzarella <sgarzare@redhat.com>, Alex Graf <graf@amazon.com>, 
+ qemu-devel@nongnu.org
+Subject: Re: [PATCH v1 4/8] hw/misc/vmlaunchupdate: Introduce hypervisor
+ fw-cfg interface support
+Message-ID: <ajvkMcvEaIcWtT6M@sirius.home.kraxel.org>
+References: <20260624055339.46862-1-anisinha@redhat.com>
+ <20260624055339.46862-5-anisinha@redhat.com>
+ <ajudPOcejMvGTTJB@sirius.home.kraxel.org>
+ <602FAB73-36A1-41A0-97AA-7541102F23A4@redhat.com>
+ <ajvDMzTGk91aJl9d@sirius.home.kraxel.org>
+ <129574FC-96A4-4E0C-81E8-338E68DD3675@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260624-jmac-fprcvt-v2-2-dc6cf8e512b6@linaro.org>
-References: <20260624-jmac-fprcvt-v2-0-dc6cf8e512b6@linaro.org>
-In-Reply-To: <20260624-jmac-fprcvt-v2-0-dc6cf8e512b6@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org, 
- Richard Henderson <richard.henderson@linaro.org>, 
- Alex Bennee <alex.bennee@linaro.org>, 
- Jim MacArthur <jim.macarthur@linaro.org>
-X-Mailer: b4 0.13.0
-Received-SPF: pass client-ip=2a00:1450:4864:20::434;
- envelope-from=jim.macarthur@linaro.org; helo=mail-wr1-x434.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <129574FC-96A4-4E0C-81E8-338E68DD3675@redhat.com>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=kraxel@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 8
+X-Spam_score: 0.8
+X-Spam_bar: /
+X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,52 +90,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-FEAT_FPRCVT allows the vector forms of FCVTXX and [US]CVTF in streaming
-mode which would otherwise only be available in nonstreaming mode.
+> >> Where would you put the api header file?
+> > 
+> > standard-headers/misc/ looks good to me.
+> 
+> Hmm, checkpatch is not happy
+> 
+> ERROR: headers imported from Linux should be self-contained in a patch with no other changes
+> #89: FILE: include/standard-headers/misc/vmlaunchupdate.h:1:
+> +/*
 
-Signed-off-by: Jim MacArthur <jim.macarthur@linaro.org>
----
- target/arm/tcg/translate-a64.c | 18 ++++++++++++++++--
- 1 file changed, 16 insertions(+), 2 deletions(-)
+Make adding include/standard-headers/misc/vmlaunchupdate.h a
+separate patch then?
 
-diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
-index 07f985a5f0..1a0868eaf0 100644
---- a/target/arm/tcg/translate-a64.c
-+++ b/target/arm/tcg/translate-a64.c
-@@ -9915,7 +9915,14 @@ static bool do_cvtf_f(DisasContext *s, arg_fcvt *a, MemOp src_mop_int,
-                       bool is_signed)
- {
-     TCGv_i64 tcg_int;
--    int check = fp_access_check_scalar_hsd(s, a->esz);
-+    int check;
-+
-+    /* FEAT_FPRCVT allows vector forms in streaming mode */
-+    if (dc_isar_feature(aa64_fprcvt, s)) {
-+        s->is_nonstreaming = false;
-+    }
-+
-+    check = fp_access_check_scalar_hsd(s, a->esz);
- 
-     if (check <= 0) {
-         return check == 0;
-@@ -10120,7 +10127,14 @@ static bool do_fcvt_f(DisasContext *s, arg_fcvt *a,
-                       ARMFPRounding rmode, bool is_signed)
- {
-     TCGv_i64 tcg_int;
--    int check = fp_access_check_scalar_hsd(s, a->esz);
-+    int check;
-+
-+    /* FEAT_FPRCVT allows vector forms in streaming mode */
-+    if (dc_isar_feature(aa64_fprcvt, s)) {
-+        s->is_nonstreaming = false;
-+    }
-+
-+    check = fp_access_check_scalar_hsd(s, a->esz);
- 
-     if (check <= 0) {
-         return check == 0;
+checkpatch doesn't complain about the location but about the patch
+doing other stuff too.
 
--- 
-2.43.0
+take care,
+  Gerd
 
 
