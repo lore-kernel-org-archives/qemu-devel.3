@@ -4,79 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98954CDB47F
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 17:42:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A35D2CDB47F
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 17:42:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcRah-0004KI-7S; Wed, 24 Jun 2026 13:40:47 -0400
+	id 1wcRac-0004CW-Rn; Wed, 24 Jun 2026 13:40:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wcRaV-00044y-D1
- for qemu-devel@nongnu.org; Wed, 24 Jun 2026 13:40:38 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wcRaT-0004uF-Hq
- for qemu-devel@nongnu.org; Wed, 24 Jun 2026 13:40:35 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1782322832;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=vyKmhJZ9ZTKwVwy/dtj2qUF9eA1epn+1O+ZfCkokJTU=;
- b=QVCxZVhVScGoeU6CicGZM6nsWHCDQllv0ANYeUkk1w4fw3aK8eyPgHlEOKlHpgIeGje+Ah
- FPbzJwLautQrAIYl83UwrmtQJsLohEDPSTExTKKjZSazkrObreWdz/TRMvYBjxuKlWXu1C
- Fc3A5424a44g/FH6r5VQxGUHE3CMqFU=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-106-M83ep0GpO5OmF0l1qQ2tQw-1; Wed,
- 24 Jun 2026 13:40:24 -0400
-X-MC-Unique: M83ep0GpO5OmF0l1qQ2tQw-1
-X-Mimecast-MFC-AGG-ID: M83ep0GpO5OmF0l1qQ2tQw_1782322817
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9FF811955E91; Wed, 24 Jun 2026 17:40:17 +0000 (UTC)
-Received: from berrange.com (unknown [10.44.32.102])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 400F2180028B; Wed, 24 Jun 2026 17:40:13 +0000 (UTC)
-From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: devel@lists.libvirt.org,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Markus Armbruster <armbru@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- "Dr. David Alan Gilbert" <dave@treblig.org>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Christian Brauner <brauner@kernel.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Peter Krempa <pkrempa@redhat.com>
-Subject: [PATCH v5 35/35] docs: mark '-mon' as deprecated in favour of -object
-Date: Wed, 24 Jun 2026 18:37:51 +0100
-Message-ID: <20260624173752.2928717-36-berrange@redhat.com>
-In-Reply-To: <20260624173752.2928717-1-berrange@redhat.com>
-References: <20260624173752.2928717-1-berrange@redhat.com>
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1wcRaR-0003yg-Cl
+ for qemu-devel@nongnu.org; Wed, 24 Jun 2026 13:40:33 -0400
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1wcRaP-0004tG-5h
+ for qemu-devel@nongnu.org; Wed, 24 Jun 2026 13:40:30 -0400
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-490ace40f4bso13356355e9.3
+ for <qemu-devel@nongnu.org>; Wed, 24 Jun 2026 10:40:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1782322827; x=1782927627; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=J88CqxmCzdV6fdyF6jAEmjfKI9GFOxO0HLu6uoYy2LU=;
+ b=iaspK99Knribu04dVkUvc9RXRAKG5bphGvS7/B87jlWb5zdgW3nage23RjoHiNdEzU
+ Scsxs1RFbmi7wRASAcrT8COHo4Jfu64f8VMkS3vINuEYBUk9ROCPUYP9dsJObNypGIY0
+ K4FY6oHz4rum4jbQ9q9IuRwYw1edUFYW13Qlic+/qp88Uj9eGNtR2Xts797E/ONhoitC
+ BjCxn08qlSobdr0ZnGkJNgEg1bKLTfMU3OXH6FvDD4MBJCJa0F5xwn4xLSJ23h3yYr+F
+ zWobZChknYmDws8bJGXF4y7g/C9nu2osa175bBBXdFMTmo5hquxaowg1wdbSuy33klpu
+ i7Zw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1782322827; x=1782927627;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=J88CqxmCzdV6fdyF6jAEmjfKI9GFOxO0HLu6uoYy2LU=;
+ b=IZMkVaEqT1lTTRvT8sqGMf39Fd8IURLnll6ga5ZRKxee7+orULD3pmXUydC3ycln0I
+ yKwBZ1XzGRPvRvkhYYuFb7nNRnmTqQF01x0dkO4bX2+MJ/rfPjt/qLJSqywGL+ij2wRl
+ zkO+Jvu8FUdW4myDy93fzkmmdz1UR1TvdsC75w1nJCx/9jIljuix/xeXcyloXRF2pClB
+ 9IsAqh9fkhIRqtzWjQKvmRFPF0EFJX++JzEyCuZjO9GPUp6qUFI3idyNSx70Z8gDGzN7
+ K5iBqWIZS9w2w7lIRiHolTsYP3mYLSixFJTlF4F6uwuX1MRkg/1Tsz9K07nOURaX/Nnf
+ H3aw==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ/vFOfp4Two7D2g9EZEqbdNxWSFC6Z4yOl/51mWg9yOCh4BWgVhF586GIEGE0+b3D/FO8hmaJNzUyQG@nongnu.org
+X-Gm-Message-State: AOJu0YxJxgMZLee5iR8aaUhQaGsD/4ck98FDLOzIDVwY8kPECUyHtcFq
+ HWfFEn0Za0rXlwhhhfvKinHQBC9eBnSIiKhPdpeAbnOo3HkkT9t+lVv1aES5iYiDxhw=
+X-Gm-Gg: AfdE7clGD6owBkGluHZtDRLsGPv8OiuOCS/LHREW3V8s2GCDcVcY5mipzSgnrp6A725
+ sUqL32fwjNWLVkIm4BJb81dO9q5FbWAXRrYFQHEkhYN/F4sKz94xhLR/op07iV7UNbijVktLd1F
+ 5aKIOxvCCZzOMpNcxMSpl541VmRzO9FGrqdCQwop2SxG1lC/MFwhlL6XxpxUJQR8wcpkUHCuvzv
+ XOSRAaXe9P9yO6cv1XPAU1yZk5etIU8cGhWkkkbNnxBGTezi7ZP4/YhOFmMZkWbjA7Zan/Hn3S1
+ r6AQr4M9BiJ5y+79+gMDcRpD35GiZhQL6Qqmb7Bw0K/wlLiX8i+Ughegvt5LbwDxVtquR6uJCm8
+ 0BMGe0Uo1wuf69BTdT2MT96X+hAzatDsYTRyIQ7h8xXLW+7UDMdEhxzuOlo0FKoFzoCaPq/xsJ4
+ jwppBIBhcx9d7J
+X-Received: by 2002:a05:600c:c4a2:b0:492:59fe:4a15 with SMTP id
+ 5b1f17b1804b1-49260873710mr58590515e9.24.1782322827412; 
+ Wed, 24 Jun 2026 10:40:27 -0700 (PDT)
+Received: from draig.lan ([185.124.0.195]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4926404ee91sm8156405e9.14.2026.06.24.10.40.25
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 24 Jun 2026 10:40:25 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 8E1AD5F807;
+ Wed, 24 Jun 2026 18:40:24 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+Cc: Brian Cain <brian.cain@oss.qualcomm.com>,  qemu-devel@nongnu.org,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ stefanha@gmail.com,  Kohei Tokunaga <ktokunaga.mail@gmail.com>
+Subject: Re: [PATCH] tests/docker: add flex and bison to emsdk-wasm64-cross
+In-Reply-To: <dd48e432-ab04-42e7-a88f-231d1c9d55fa@oss.qualcomm.com>
+ ("Philippe =?utf-8?Q?Mathieu-Daud=C3=A9=22's?= message of "Wed, 24 Jun 2026
+ 08:34:19 +0200")
+References: <20260624054832.610697-1-brian.cain@oss.qualcomm.com>
+ <dd48e432-ab04-42e7-a88f-231d1c9d55fa@oss.qualcomm.com>
+User-Agent: mu4e 1.14.2; emacs 30.1
+Date: Wed, 24 Jun 2026 18:40:24 +0100
+Message-ID: <87wlvnj0qf.fsf@draig.linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 8
-X-Spam_score: 0.8
-X-Spam_bar: /
-X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,166 +109,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The high level `-qmp` and `-monitor` options can remain as convenience
-wrappers, but the low level `-mon` is completed obsoleted by the new
-`-object` support with 'monitor-qmp' and 'monitor-hmp' types.
+Philippe Mathieu-Daud=C3=A9 <philmd@oss.qualcomm.com> writes:
 
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Tested-by: Peter Krempa <pkrempa@redhat.com>
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
----
- docs/about/deprecated.rst               | 10 ++++++++++
- docs/devel/writing-monitor-commands.rst |  4 ++--
- docs/system/arm/xenpvh.rst              |  4 ++--
- docs/system/i386/xen.rst                |  3 ++-
- docs/system/i386/xenpvh.rst             |  4 ++--
- qemu-options.hx                         | 11 ++++++-----
- system/vl.c                             |  2 ++
- 7 files changed, 26 insertions(+), 12 deletions(-)
+> On 24/6/26 07:48, Brian Cain wrote:
+>> The hexagon idef-parser requires flex and bison as host build
+>> tools.  Add them to the emsdk-wasm64-cross container image so that
+>> wasm64 builds including hexagon-softmmu can find them.
+>> Link:
+>> https://lore.kernel.org/qemu-devel/CAJSP0QVk6wsOnPAspC4YfXRp90saKibQfD4M=
+k-44-RQo0k=3Dz3w@mail.gmail.com/
+>> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
+>> ---
+>>   tests/docker/dockerfiles/emsdk-wasm64-cross.docker | 2 ++
+>>   1 file changed, 2 insertions(+)
+>> diff --git a/tests/docker/dockerfiles/emsdk-wasm64-cross.docker
+>> b/tests/docker/dockerfiles/emsdk-wasm64-cross.docker
+>> index 8a924816f92..5debbc77d08 100644
+>> --- a/tests/docker/dockerfiles/emsdk-wasm64-cross.docker
+>> +++ b/tests/docker/dockerfiles/emsdk-wasm64-cross.docker
+>> @@ -19,7 +19,9 @@ ENV CXXFLAGS=3D"$CFLAGS"
+>>   ENV LDFLAGS=3D"-sWASM_BIGINT -sASYNCIFY=3D1 -L$TARGET/lib"
+>>   RUN apt-get update && apt-get install -y \
+>>       autoconf \
+>> +    bison \
+>>       build-essential \
+>> +    flex \
+>>       libglib2.0-dev \
+>>       libtool \
+>>       pkgconf \
+>
+> Maybe emsdk-wasm64 should have been added to lci-tool first.
+> (not your responsibility).
 
-diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
-index 97750f5edc..8370fc5680 100644
---- a/docs/about/deprecated.rst
-+++ b/docs/about/deprecated.rst
-@@ -61,6 +61,16 @@ The ``debug-threads`` option of the ``-name`` argument is now
- ignored. Thread naming is unconditionally enabled for all platforms
- where it is supported.
- 
-+``-mon`` option (since 11.1)
-+''''''''''''''''''''''''''''
-+
-+The ``-mon`` option was the generic mechanism for creating monitor objects
-+if the convenience ``-qmp`` or ``-monitor`` options were not flexible
-+enough. The monitor objects have been converted to QOM, so ``-mon mode=readline``
-+is replaced by ``-object monitor-hmp`` and ``-mon mode=control`` is replaced
-+by ``-object monitor-qmp``. The short convenience options are not deprecated,
-+only ``-mon``.
-+
- QEMU Machine Protocol (QMP) commands
- ------------------------------------
- 
-diff --git a/docs/devel/writing-monitor-commands.rst b/docs/devel/writing-monitor-commands.rst
-index 930da5cd06..7ae7efe327 100644
---- a/docs/devel/writing-monitor-commands.rst
-+++ b/docs/devel/writing-monitor-commands.rst
-@@ -52,8 +52,8 @@ shown here.
- First, QEMU should be started like this::
- 
-  # qemu-system-TARGET [...] \
--     -chardev socket,id=qmp,port=4444,host=localhost,server=on \
--     -mon chardev=qmp,mode=control,pretty=on
-+     -chardev socket,id=chrqmp0,port=4444,host=localhost,server=on \
-+     -object monitor-qmp,chardev=chrqmp0,pretty=on,id=qmp0
- 
- Then, in a different terminal::
- 
-diff --git a/docs/system/arm/xenpvh.rst b/docs/system/arm/xenpvh.rst
-index 430ac2c02e..511af63e3d 100644
---- a/docs/system/arm/xenpvh.rst
-+++ b/docs/system/arm/xenpvh.rst
-@@ -27,9 +27,9 @@ Sample QEMU xenpvh commands for running and connecting with Xen:
- 
-     qemu-system-aarch64 -xen-domid 1 \
-       -chardev socket,id=libxl-cmd,path=qmp-libxl-1,server=on,wait=off \
--      -mon chardev=libxl-cmd,mode=control \
-+      -object monitor-qmp,id=qmp0,chardev=libxl-cmd \
-       -chardev socket,id=libxenstat-cmd,path=qmp-libxenstat-1,server=on,wait=off \
--      -mon chardev=libxenstat-cmd,mode=control \
-+      -object monitor-qmp,id=qmp1,chardev=libxenstat-cmd \
-       -xen-attach -name guest0 -vnc none -display none -nographic \
-       -machine xenpvh -m 1301 \
-       -chardev socket,id=chrtpm,path=tmp/vtpm2/swtpm-sock \
-diff --git a/docs/system/i386/xen.rst b/docs/system/i386/xen.rst
-index 46db5f34c1..6ff5cdb1e4 100644
---- a/docs/system/i386/xen.rst
-+++ b/docs/system/i386/xen.rst
-@@ -79,7 +79,8 @@ of type ``xen-console`` to connect to it. For the Xen console equivalent of
- the handy ``-serial mon:stdio`` option, for example:
- 
- .. parsed-literal::
--   -chardev stdio,mux=on,id=char0,signal=off -mon char0 \\
-+   -chardev stdio,mux=on,id=char0,signal=off \\
-+   -object monitor-hmp,chardev=char0,id=hmp0 \\
-    -device xen-console,chardev=char0
- 
- The Xen network device is ``xen-net-device``, which becomes the default NIC
-diff --git a/docs/system/i386/xenpvh.rst b/docs/system/i386/xenpvh.rst
-index 354250f073..904778e3f5 100644
---- a/docs/system/i386/xenpvh.rst
-+++ b/docs/system/i386/xenpvh.rst
-@@ -33,9 +33,9 @@ case you need to construct one manually:
- 
-     qemu-system-i386 -xen-domid 3 -no-shutdown        \
-       -chardev socket,id=libxl-cmd,path=/var/run/xen/qmp-libxl-3,server=on,wait=off \
--      -mon chardev=libxl-cmd,mode=control             \
-+      -object monitor-qmp,id=qmp0,chardev=libxl-cmd   \
-       -chardev socket,id=libxenstat-cmd,path=/var/run/xen/qmp-libxenstat-3,server=on,wait=off \
--      -mon chardev=libxenstat-cmd,mode=control        \
-+      -object monitor-qmp,id=qmp1,chardev=libxenstat-cmd \
-       -nodefaults                                     \
-       -no-user-config                                 \
-       -xen-attach -name g0                            \
-diff --git a/qemu-options.hx b/qemu-options.hx
-index a804d5b880..999dca7444 100644
---- a/qemu-options.hx
-+++ b/qemu-options.hx
-@@ -4137,7 +4137,7 @@ The general form of a character device option is:
-     ::
- 
-         -chardev stdio,mux=on,id=char0 \
--        -mon chardev=char0,mode=readline \
-+        -object monitor-hmp,id=hmp0,chardev=char0 \
-         -serial chardev:char0 \
-         -serial chardev:char0
- 
-@@ -4149,7 +4149,7 @@ The general form of a character device option is:
-     ::
- 
-         -chardev stdio,mux=on,id=char0 \
--        -mon chardev=char0,mode=readline \
-+        -object monitor-hmp,id=hmp0,chardev=char0 \
-         -parallel chardev:char0 \
-         -chardev tcp,...,mux=on,id=char1 \
-         -serial chardev:char1 \
-@@ -4950,7 +4950,8 @@ SRST
-         -qmp tcp:localhost:4444,server=on,wait=off
- 
-     Not all options are configurable via this syntax; for maximum
--    flexibility use the ``-mon`` option and an accompanying ``-chardev``.
-+    flexibility use ``-object monitor-qmp`` and an accompanying
-+    ``-chardev``.
- 
- ERST
- DEF("qmp-pretty", HAS_ARG, QEMU_OPTION_qmp_pretty, \
-@@ -4981,12 +4982,12 @@ SRST
- 
-     enables the QMP monitor on localhost port 4444 with pretty-printing.
- 
--    The use of ``-mon mode=readline`` is historical syntax sugar
-+    The use of ``-mon mode=readline`` is deprecated syntax sugar
-     for the new ``-object monitor-hmp`` option, each use of which
-     creates an object with the ID ``hmpcompatNNN`` where ``NNN`` is
-     a counter starting from 0.
- 
--    The use of ``-mon mode=control`` is historical syntax sugar
-+    The use of ``-mon mode=control`` is deprecated syntax sugar
-     for the new ``-object monitor-qmp`` option, each use of which
-     creates an object with the ID ``qmpcompatNNN`` where ``NNN`` is
-     a counter starting from 0.
-diff --git a/system/vl.c b/system/vl.c
-index 79ed2be449..a7b6d37452 100644
---- a/system/vl.c
-+++ b/system/vl.c
-@@ -3240,6 +3240,8 @@ void qemu_init(int argc, char **argv)
-                 default_monitor = 0;
-                 break;
-             case QEMU_OPTION_mon:
-+                warn_report_once("'-mon' is deprecated, use '-object' with "
-+                                 "'monitor-hmp' or 'monitor-qmp' types instead");
-                 if (!qemu_opts_parse_noisily(qemu_find_opts("mon"), optarg,
-                                              true)) {
-                     exit(1);
--- 
-2.54.0
+I don't think that will be easy on account of emsdk having to build a
+bunch of libraries to support building QEMU. If a distro provides a
+better cross environment for wasm64 then we could try.
+>
+> Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@oss.qualcomm.com>
 
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
