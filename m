@@ -4,88 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B9E5CDB481
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 13:42:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8FDFCDB479
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 13:42:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcNoR-00021h-IP; Wed, 24 Jun 2026 09:38:43 -0400
+	id 1wcNrP-0008VY-Va; Wed, 24 Jun 2026 09:41:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jim.macarthur@linaro.org>)
- id 1wcNnW-0001gu-UR
- for qemu-devel@nongnu.org; Wed, 24 Jun 2026 09:37:47 -0400
-Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jim.macarthur@linaro.org>)
- id 1wcNnV-00017P-3j
- for qemu-devel@nongnu.org; Wed, 24 Jun 2026 09:37:46 -0400
-Received: by mail-wr1-x431.google.com with SMTP id
- ffacd0b85a97d-45ef29c5561so686429f8f.0
- for <qemu-devel@nongnu.org>; Wed, 24 Jun 2026 06:37:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1782308264; x=1782913064; darn=nongnu.org;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=2NDL9GgJTskgV85Mg/cUiyt7YaGnfBnRCfyqg2zl2uk=;
- b=IDk3Xwv9lhnZNSZB7BIGmChY9S62o7arNEWU25sR9gCVU0UlnlnFEIKpe2J2QIHhfs
- v1UxuE7MYI3RsHuTKqcchracEt566slnDuQ1qeNObgd5lZiBhrLverL4Q0lk5F0WlmKH
- DcfN7PBMNyYPFmiS7a0vyAS6Amjm01hSuRWNk0cdXQEDtnrH4fW59Irzn5ynYwU1LAdo
- LXADIN3uVnx0tZQkdxqk80xQSaOo8BMTrh+WNVC6LtmeqqvXRTgHa//7cZerwY4serHo
- 2/2OFbG8qKz7h5KwhPWE82TPR1WmX6zd6n/nmHdG/0vRJ5Kisq7v9ie/QkNJi7R2D0Ru
- 20KQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782308264; x=1782913064;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=2NDL9GgJTskgV85Mg/cUiyt7YaGnfBnRCfyqg2zl2uk=;
- b=W0fvrnGyfRm4U10SQyrNzM7WxDen727BlF2/2PXwOQXqXrt+AINpY4XgPtzNY/fr50
- nQddM3kg1EQqGcr+hP8ctqSYarbxsC39KmCNb9x2l4g1ejHMeQLjHIYy+W3F5MdjTh0T
- 5hIRqNS7lE21P0FWXEAlD8Hb3OYPkIM51DG/J29uqP08OB4rJLzt7lxllZYdpU/OoYzm
- kj2KNzk9/fl5rlm+3YvysplRaCkohLmqtf7AXGj9MQ7twIWqYIrdAYeYfjKsgaBTedum
- OvPkPiurziu1iQuKXtrqChkfR1Pc1urRa5BE5oEWkjHeefdRopf9isiuSywfyjR7a5d+
- A+wQ==
-X-Gm-Message-State: AOJu0YzyeaxmimjVzI6yFGc1f2XUDI1oAuSFjbzCGAFwB5F6acgHl/jf
- LFNtymNrImV5OZlasL+LTcTPTdscsy+ew8Pt3mVhBjnYvQi2MdnAWXNCabyN7GeANJ0=
-X-Gm-Gg: AfdE7cnlTlgGNZ3QRonFwUVQUn/7FJyezQAaqOEZ+L87P8zGTRq0QIjxeAfV/Jaloma
- kv6SL95Payfidnq/bldC3UqSL9gx7aTXvcgG1Wez6MogBSF+q/q9Ovjp/hvXbUYEZKinkaRE31d
- HOI2IT2YceDg9B/xsY81zv9G7sEfutd3EYAuDMlpSZgxtYUHYXzWx0j864zdyBqmGC9CeUOumbz
- tR6/dBT1M8HI/eoMeOzYLtf598N6X4L6uOlLaHLukPU6pycKtQuY81WRbCbpxwKW2ABq4egmfkO
- YmSgLEbBTFCBAtzMaeeKGWb5wmsQllrU9ZwDFe1aka0/rvb6bexZsDG/hLarkviNXbCGVmd+Ddd
- 3Puu/TJGrsj8k4WAYIPZyufdHmE++HYjvi3A78aDHkPXoHPyJ2bt6iSmJoiVYJiE1YxwLK4kNSc
- qAmNmO3I/o2+9DdHWBfamylkvmbQ==
-X-Received: by 2002:a5d:63c8:0:b0:460:70ff:fe14 with SMTP id
- ffacd0b85a97d-46c0af15c37mr4130065f8f.42.1782308263725; 
- Wed, 24 Jun 2026 06:37:43 -0700 (PDT)
-Received: from [127.0.1.1] ([2a10:d582:31e:0:2e21:1ee8:260f:9a76])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-46c1e840efdsm6646334f8f.5.2026.06.24.06.37.42
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 24 Jun 2026 06:37:43 -0700 (PDT)
-From: Jim MacArthur <jim.macarthur@linaro.org>
-Date: Wed, 24 Jun 2026 14:37:30 +0100
-Subject: [PATCH v2 6/6] tests/tcg/arm: Tests for new FPRCVT instructions
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260624-jmac-fprcvt-v2-6-dc6cf8e512b6@linaro.org>
-References: <20260624-jmac-fprcvt-v2-0-dc6cf8e512b6@linaro.org>
-In-Reply-To: <20260624-jmac-fprcvt-v2-0-dc6cf8e512b6@linaro.org>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1wcNr8-0008ET-QC; Wed, 24 Jun 2026 09:41:31 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1wcNr4-0001p8-4H; Wed, 24 Jun 2026 09:41:28 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
+ t=1782308001; bh=mYIBBPM2w05ZoQ5erEn848OzcrIcDR1XfzXNWI3y9ow=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References;
+ b=gnLjWM0EKu63647scxGZkGoYtl1HTb/XQCvnrcQdgFDpFX/eiQ8xqsygh57Bn3Mwv
+ oM8wGU8zJfw2PMIdAfe8SP6rUGS/kdXt587KinOv4Ma3MjpsQnkHBBDPw1yH7ldLMO
+ aq9k92/hz5xkxrLxDWGO39Rxvak6NTyxaZWiltun+HOAtqITI6XoWoaRfE6vADr91q
+ t/gX1qdzeRZfv/nsWJ49Bi+UpbW5b+AsQkVRLpVGdwpVtm+2LV6Y7ol2gGx+NmGyOr
+ MLn3Ztk8vq1+KHd8ucJ/MGqwTUtE+VRZz+GHwSW4qWd2TUOpSyw24hohjGs/5C84QO
+ UafKnkqNJJsiA==
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 107331BAA05;
+ Wed, 24 Jun 2026 16:33:21 +0300 (MSK)
+Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 9F7A73DEA54;
+ Wed, 24 Jun 2026 16:33:26 +0300 (MSK)
+From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org, 
- Richard Henderson <richard.henderson@linaro.org>, 
- Alex Bennee <alex.bennee@linaro.org>, 
- Jim MacArthur <jim.macarthur@linaro.org>
-X-Mailer: b4 0.13.0
-Received-SPF: pass client-ip=2a00:1450:4864:20::431;
- envelope-from=jim.macarthur@linaro.org; helo=mail-wr1-x431.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Cc: qemu-stable@nongnu.org,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Chao Liu <chao.liu.zevorn@gmail.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.2 083/107] target/riscv/cpu_helper.c: allow
+ LOAD_ADDR_MIS promotion to AMO fault
+Date: Wed, 24 Jun 2026 16:31:28 +0300
+Message-ID: <20260624133301.403266-83-mjt@tls.msk.ru>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <qemu-stable-11.0.2-20260624163118@cover.tls.msk.ru>
+References: <qemu-stable-11.0.2-20260624163118@cover.tls.msk.ru>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -102,79 +71,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We autodetect the presence of FPRCVT in the test cross compiler,
-which is a recent feature in GCC and not supported by many distros
-yet. If this is in place, we compile the existing fcvt.c test with
-an extra compiler flag which uses the new SIMD instructions; the
-output from the test is unchanged.
+From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 
-The existing [US]CVTF instructions do not have a test, so no new
-tests are added for the SIMD versions. They have been tested manually
-to check the new SIMD versions produce the same numerical results as
-the existing versions.
+promote_load_fault() is missing the promotion of misaligned AMO load
+addresses, i.e. RISCV_EXCP_LOAD_ADDR_MIS should be promoted to
+RISCV_EXCP_STORE_AMO_ADDR_MIS when RISCV_UW2_ALWAYS_STORE_AMO (i.e.
+always_storeamo is true).
 
-Signed-off-by: Jim MacArthur <jim.macarthur@linaro.org>
----
- tests/tcg/aarch64/Makefile.target | 14 +++++++++++++-
- tests/tcg/arm/fcvt.c              |  7 +++++++
- 2 files changed, 20 insertions(+), 1 deletion(-)
+All other load AMO faults are already being covered.
 
-diff --git a/tests/tcg/aarch64/Makefile.target b/tests/tcg/aarch64/Makefile.target
-index 6203ac9b51..32f2689273 100644
---- a/tests/tcg/aarch64/Makefile.target
-+++ b/tests/tcg/aarch64/Makefile.target
-@@ -28,9 +28,21 @@ config-cc.mak: Makefile
- 	    $(call cc-option,-march=armv8.5-a,              CROSS_CC_HAS_ARMV8_5); \
- 	    $(call cc-option,-mbranch-protection=standard,  CROSS_CC_HAS_ARMV8_BTI); \
- 	    $(call cc-option,-march=armv8.5-a+memtag,       CROSS_CC_HAS_ARMV8_MTE); \
--	    $(call cc-option,-Wa$(COMMA)-march=armv9-a+sme $$fnia, CROSS_AS_HAS_ARMV9_SME)) 3> config-cc.mak
-+	    $(call cc-option,-Wa$(COMMA)-march=armv9-a+sme $$fnia, CROSS_AS_HAS_ARMV9_SME); \
-+	    $(call cc-option,-march=armv9-a+fprcvt,         CROSS_CC_HAS_ARMV9_FPRCVT)) 3> config-cc.mak
- -include config-cc.mak
+Cc: qemu-stable@nongnu.org
+Fixes: 98f21c30f5 ("target/riscv: AMO operations always raise store/AMO fault")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3503
+Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
+Message-ID: <20260522181353.429782-1-daniel.barboza@oss.qualcomm.com>
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+(cherry picked from commit d85a4ec06a65ccdd5c7d0f00b3e6695fc14a547a)
+Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+
+diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
+index 22bab45e68..f631d008bd 100644
+--- a/target/riscv/cpu_helper.c
++++ b/target/riscv/cpu_helper.c
+@@ -2124,6 +2124,9 @@ static target_ulong promote_load_fault(target_ulong orig_cause)
  
-+ifneq ($(CROSS_CC_HAS_ARMV9_FPRCVT),)
-+AARCH64_TESTS += fcvt-fprcvt
-+fcvt-fprcvt: LDFLAGS += -lm
-+fcvt-fprcvt: CFLAGS += $(CROSS_CC_HAS_ARMV9_FPRCVT) -DFPRCVT
-+fcvt-fprcvt: fcvt.c
-+	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) $< -o $@ $(LDFLAGS)
-+run-fcvt-fprcvt: fcvt-fprcvt
-+	$(call run-test,$<,$(QEMU) $<)
-+	$(call diff-out,$<,$(AARCH64_SRC)/fcvt.ref)
-+endif
+     case RISCV_EXCP_LOAD_PAGE_FAULT:
+         return RISCV_EXCP_STORE_PAGE_FAULT;
 +
- ifneq ($(CROSS_CC_HAS_ARMV8_2),)
- AARCH64_TESTS += dcpop
- dcpop: CFLAGS += $(CROSS_CC_HAS_ARMV8_2)
-diff --git a/tests/tcg/arm/fcvt.c b/tests/tcg/arm/fcvt.c
-index ecebbb0247..7c0cc4367e 100644
---- a/tests/tcg/arm/fcvt.c
-+++ b/tests/tcg/arm/fcvt.c
-@@ -171,8 +171,14 @@ static void convert_single_to_integer(void)
- #if defined(__arm__)
-         /* asm("vcvt.s32.f32 %s0, %s1" : "=t" (output) : "t" (input)); */
-         output = input;
-+#else
-+#ifdef FPRCVT
-+        asm("fcvtzs d0, %s1\r\n"
-+            "fmov %0, d0" :
-+            "=r" (output) : "w" (input));
- #else
-         asm("fcvtzs %0, %s1" : "=r" (output) : "w" (input));
-+#endif
- #endif
-         print_int64(i, output);
++    case RISCV_EXCP_LOAD_ADDR_MIS:
++        return RISCV_EXCP_STORE_AMO_ADDR_MIS;
      }
-@@ -425,6 +431,7 @@ int main(int argc, char *argv[argc])
-     convert_double_to_integer();
-     convert_half_to_integer();
  
-+
-     /* And now with ARM alternative FP16 */
- #if defined(__arm__)
-     asm("vmrs r1, fpscr\n\t"
-
+     /* if no promotion, return original cause */
 -- 
-2.43.0
+2.47.3
 
 
