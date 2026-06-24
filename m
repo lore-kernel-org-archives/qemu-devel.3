@@ -4,44 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3787CDB479
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 05:07:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F1E7CDB479
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 05:07:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcFow-0000Ei-KC; Wed, 24 Jun 2026 01:06:42 -0400
+	id 1wcFnU-0005DM-C1; Wed, 24 Jun 2026 01:05:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wcFor-00082M-1x; Wed, 24 Jun 2026 01:06:38 -0400
+ id 1wcFnR-0005B3-Nf; Wed, 24 Jun 2026 01:05:09 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wcFoo-0005gJ-LW; Wed, 24 Jun 2026 01:06:36 -0400
+ id 1wcFnP-0005K5-Qp; Wed, 24 Jun 2026 01:05:09 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1782277477; bh=AXICw6Ex/uCQ9FWMvHjX3VLiMLRwXNo8HFGHVaeQiTU=;
+ t=1782277464; bh=3pmqdTuQKL7Ee46dsIVEijwBx9RjPavHAyp1CRdfrm0=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=QYdRzva08rmwjPiRBBlkwWmANHbjruEtpTdP7U2gdysviY6TQmhHrroDWJB+fB1Cf
- uL+T7xkWZZb/Tevd3C6fZRxo3qjXu9JrAGYFLdYzS29vZGkQkJzxWoJUruvJvvtnPv
- vWcSFhLaGMDl3QIFxCCnUfhSO0fnReIEkQFX529Khk2iiqBqJeZUuHwflM0oN8OqMm
- XQo3UCRrWLwL4M8O3yTNcKL5xJm6dRjVMG5BNk38uDyN8juByTmwdqeZ4xQ/GJM504
- aleA0uHTG+j+sC9mXTSCZKvfpHfLT5G0zWVFDZ2/sEIHX9whY35YKrFFUHwwYM2eAa
- IcfPYrrw8wvDA==
+ b=sSuLIbsnTgSVw2yrC4A3pKgBQmEyrXdaiqNJLNcEmjwjERTP6vYCL/7ypJrTtm5NV
+ VHMr0IuUZUnY4huQeawoVxLWIBu9n7JDqKqZi8+Mk6wcbBk+R8pZPfCBuFsDwKzvT0
+ ZUNBL+9HUp/BZDQncxoJOGi3ECjsecRZwg7+UuxKCej2XX/Ow7qCcnRAbm5uMtx5qU
+ oghOwxG/zN7AC9V2uCF9I02bWDVHcVgY7J9RavqE+a/w1XzboTs+ja/VPeUIbdt98G
+ A6LKen9zcPOEVoKzG6GT1JXY2lv62ddTJfqblvH8wMVvsoiPByStL7MhmvhhzqaguX
+ y6gZTuLMRHR7A==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 0556E1BA64A;
- Wed, 24 Jun 2026 08:04:37 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id EE56B1BA637;
+ Wed, 24 Jun 2026 08:04:24 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id E02DD3DDAD2;
- Wed, 24 Jun 2026 08:04:41 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id D4A2F3DDAC2;
+ Wed, 24 Jun 2026 08:04:29 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Aditya Gupta <adityag@linux.ibm.com>,
- Zexiang Zhang <chan9yan9@gmail.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+Cc: qemu-stable@nongnu.org,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Chao Liu <chao.liu.zevorn@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Alistair Francis <alistair.francis@wdc.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.11 84/86] ppc/pnv_phb3: Error out on invalid config
- access
-Date: Wed, 24 Jun 2026 08:02:55 +0300
-Message-ID: <20260624050404.394225-28-mjt@tls.msk.ru>
+Subject: [Stable-10.0.11 68/86] disas/riscv.c: add 'cbo' insns to disassembler
+Date: Wed, 24 Jun 2026 08:02:39 +0300
+Message-ID: <20260624050404.394225-12-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.11-20260624080222@cover.tls.msk.ru>
 References: <qemu-stable-10.0.11-20260624080222@cover.tls.msk.ru>
@@ -70,59 +72,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Aditya Gupta <adityag@linux.ibm.com>
+From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 
-PHB in Power8 supports 8 byte registers, and hence the ops structure
-allows accessing of 8 bytes in 'pnv_phb3_reg_ops'
+We forgot to add 'cbo' insns to disas/riscv.c.  The result is that the
+disassembler recognizes all of them as 'lq', an insn that happens to
+share the same opcode space.
 
-Both 'pnv_phb3_reg_read' & 'pnv_phb3_reg_write' pass the arguments as is
-to 'pnv_phb3_config_{read,write}', if offset is PHB_CONFIG_DATA.
+While we're at it reorder cbo_* entries in insn32.decode using opcode
+order instead of insn name.
 
-This when called with size as 8, causes following assert failure in
-'pci_host_config_read_common' & 'pci_host_config_write_common':
-
-    assert(len <= 4);
-
-Validate that size is <=4, before jumping to pci_host_config_{read,write}_common
-
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3334
-Reported-by: Zexiang Zhang <chan9yan9@gmail.com>
-Fixes: 9ae1329ee2fe ("ppc/pnv: Add models for POWER8 PHB3 PCIe Host bridge")
-Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-Id: <20260326190438.734239-2-adityag@linux.ibm.com>
-(cherry picked from commit 218109781209f9d77242b2cdf743acac8bc3b893)
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3480
+Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-ID: <20260519204714.1376551-1-daniel.barboza@oss.qualcomm.com>
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+(cherry picked from commit 9273cda72293ed2f414a0f239c4ac78fb7838c0e)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/pci-host/pnv_phb3.c b/hw/pci-host/pnv_phb3.c
-index 82884e1e92..3c0956f994 100644
---- a/hw/pci-host/pnv_phb3.c
-+++ b/hw/pci-host/pnv_phb3.c
-@@ -474,6 +474,11 @@ void pnv_phb3_reg_write(void *opaque, hwaddr off, uint64_t val, unsigned size)
+diff --git a/disas/riscv.c b/disas/riscv.c
+index 85cd2a9c2a..980da7f7e1 100644
+--- a/disas/riscv.c
++++ b/disas/riscv.c
+@@ -984,6 +984,10 @@ typedef enum {
+     rv_op_ssamoswap_d = 953,
+     rv_op_c_sspush = 954,
+     rv_op_c_sspopchk = 955,
++    rv_op_cbo_inval = 956,
++    rv_op_cbo_clean = 957,
++    rv_op_cbo_flush = 958,
++    rv_op_cbo_zero = 959,
+ } rv_op;
  
-     /* Special case configuration data */
-     if ((off & 0xfffc) == PHB_CONFIG_DATA) {
-+        if (size > 4) {
-+            phb3_error(phb, "Invalid config access, offset: 0x%"PRIx64" size: %d",
-+                      off, size);
-+            return;
-+        }
-         pnv_phb3_config_write(phb, off & 0x3, size, val);
-         return;
-     }
-@@ -596,6 +601,11 @@ uint64_t pnv_phb3_reg_read(void *opaque, hwaddr off, unsigned size)
-     uint64_t val;
+ /* register names */
+@@ -2254,6 +2258,10 @@ const rv_opcode_data rvi_opcode_data[] = {
+       rv_op_sspush, 0 },
+     { "c.sspopchk", rv_codec_cmop_ss, rv_fmt_rs1, NULL, rv_op_sspopchk,
+       rv_op_sspopchk, 0 },
++   { "cbo.inval", rv_codec_r, rv_fmt_rs1, NULL, 0, 0, 0 },
++   { "cbo.clean", rv_codec_r, rv_fmt_rs1, NULL, 0, 0, 0 },
++   { "cbo.flush", rv_codec_r, rv_fmt_rs1, NULL, 0, 0, 0 },
++   { "cbo.zero", rv_codec_r, rv_fmt_rs1, NULL, 0, 0, 0 },
+ };
  
-     if ((off & 0xfffc) == PHB_CONFIG_DATA) {
-+        if (size > 4) {
-+            phb3_error(phb, "Invalid config access, offset: 0x%"PRIx64" size: %d",
-+                      off, size);
-+            return ~0ull;
-+        }
-         return pnv_phb3_config_read(phb, off & 0x3, size);
-     }
+ /* CSR names */
+@@ -2875,7 +2883,26 @@ static void decode_inst_opcode(rv_decode *dec, rv_isa isa)
+             switch ((inst >> 12) & 0b111) {
+             case 0: op = rv_op_fence; break;
+             case 1: op = rv_op_fence_i; break;
+-            case 2: op = rv_op_lq; break;
++            case 2:
++               /*
++                * 'lq' shares the "(...) 010 ..... 0001111" opcode space
++                * with 'cbo' insns.  Check the next 5 bits to select
++                * what we want:
++                *
++                * cbo_inval  0000000 00000 ..... 010 00000 0001111
++                * cbo_clean  0000000 00001 ..... 010 00000 0001111
++                * cbo_flush  0000000 00010 ..... 010 00000 0001111
++                * cbo_zero   0000000 00100 ..... 010 00000 0001111
++                *
++                * Anything that doesn't match these will default to 'lq'.
++                */
++               switch ((inst >> 17) & 0b11111) {
++               case 0: op = rv_op_cbo_inval; break;
++               case 1: op = rv_op_cbo_clean; break;
++               case 2: op = rv_op_cbo_flush; break;
++               case 4: op = rv_op_cbo_zero; break;
++               default: op = rv_op_lq; break;
++               }
+             }
+             break;
+         case 4:
+diff --git a/target/riscv/insn32.decode b/target/riscv/insn32.decode
+index cd23b1f3a9..564b745c48 100644
+--- a/target/riscv/insn32.decode
++++ b/target/riscv/insn32.decode
+@@ -199,9 +199,9 @@ ldu      ............   ..... 111 ..... 0000011 @i
+ {
+   [
+     # *** RV32 Zicbom Standard Extension ***
++    cbo_inval  0000000 00000 ..... 010 00000 0001111 @sfence_vm
+     cbo_clean  0000000 00001 ..... 010 00000 0001111 @sfence_vm
+     cbo_flush  0000000 00010 ..... 010 00000 0001111 @sfence_vm
+-    cbo_inval  0000000 00000 ..... 010 00000 0001111 @sfence_vm
  
+     # *** RV32 Zicboz Standard Extension ***
+     cbo_zero   0000000 00100 ..... 010 00000 0001111 @sfence_vm
 -- 
 2.47.3
 
