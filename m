@@ -4,46 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73713CDB479
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 05:13:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38B8ACDB479
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 05:13:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcFpO-0001dG-GF; Wed, 24 Jun 2026 01:07:10 -0400
+	id 1wcFpU-0001rR-0s; Wed, 24 Jun 2026 01:07:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wcFpF-0001VB-5h; Wed, 24 Jun 2026 01:07:02 -0400
+ id 1wcFpP-0001kt-KH; Wed, 24 Jun 2026 01:07:12 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wcFpC-0005gs-Fz; Wed, 24 Jun 2026 01:07:00 -0400
+ id 1wcFpN-0005jQ-VM; Wed, 24 Jun 2026 01:07:11 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1782277477; bh=t1r/Gde0xqZ9jcUIzaFauDj/B6ySgKLEBdzfU1EFZfY=;
+ t=1782277622; bh=DC1BgqHBoI1k3WWCTLWWaR1dMwXHuLi8xxTwjqA3UVs=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=COKeJFJ4uk5XHI8n8zQdRISaOTma1/wNm5QCY13p51VUpD2mvGMAjLlfTu8wANU4j
- S5yGrQEenrDv3cM07YzrzWkBj9N7Op2am1fqNvI75G6WUp7KItB6T5Luuig/cn317a
- Q/raKuhfVStU9zHINobah159C/1b6zCytHWkP23DUPXc3zEIadwdQ7jK1jxy/DxXBP
- pqQx47TFYfdJkgVf/1UbLa7k/6J2ZuHgsqTbFkj4ThCh3F+YZV3R57kTMrq6MNThYe
- imjvsRzAkb4mzp36hTIeL1ZBGpKLkRoA+WdbtPBSnkcP2cFtxRSFhlcBIYujcIlR4N
- z2FH63McEcc6g==
+ b=Zu0pef2DL7VfsaaGDsHg3gHStVzM1NU2YbN2j47mlpfdJCg59Qja4buOeq9IgIFsh
+ gzoK61zEuyZPWCK9+5W3sUKB6LGMqzoXDnrIeEd+CsL2pa2hkiPpUthHaDTnkN/mKV
+ 9CDUTKzPOjCrVlQwRvncoGBhfEMs18gkYNI24LhmBNI7BOXtMrHCdYFmBSRtV7YA5b
+ cKVaVB6lmOlx2all27amoYIByJqVrPPJj9H/2SoHjY+CpR7Oen9dhIxfh6fEP/Le0P
+ 0uoAFJwHxZDdMVqdIlrZlRWT6NLovcwJTRQyseN/DwW+fV57TyLfvoQ9aqqNtX0AKZ
+ r2YExMKW142pg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 26D811BA64C;
- Wed, 24 Jun 2026 08:04:37 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 1B05B1BA65D;
+ Wed, 24 Jun 2026 08:07:02 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 0FAF63DDAD4;
- Wed, 24 Jun 2026 08:04:42 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 04CBD3DDAFA;
+ Wed, 24 Jun 2026 08:07:07 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Akshit Yadav <valium7171@gmail.com>,
+Cc: qemu-stable@nongnu.org,
+ Dominique Martinet <dominique.martinet@atmark-techno.com>,
  Helge Deller <deller@gmx.de>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.11 86/86] linux-user: Fix AT_PHDR when program headers
- are relocated into their own segment
-Date: Wed, 24 Jun 2026 08:02:57 +0300
-Message-ID: <20260624050404.394225-30-mjt@tls.msk.ru>
+Subject: [Stable-10.2.4 63/95] linux-user: add preadv2/preadv2
+Date: Wed, 24 Jun 2026 08:04:58 +0300
+Message-ID: <20260624050541.395079-2-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-10.0.11-20260624080222@cover.tls.msk.ru>
-References: <qemu-stable-10.0.11-20260624080222@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-10.2.4-20260624080454@cover.tls.msk.ru>
+References: <qemu-stable-10.2.4-20260624080454@cover.tls.msk.ru>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
@@ -69,88 +69,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Akshit Yadav <valium7171@gmail.com>
+From: Dominique Martinet <dominique.martinet@atmark-techno.com>
 
-When a binary is patched or relocated such that the program header table is
-moved into a separate PT_LOAD segment (rather than sitting at the start of the
-first loadable segment), QEMU's AT_PHDR auxv entry becomes incorrect. The
-loader was computing AT_PHDR as load_addr + e_phoff, which assumes the headers
-are mapped 1:1 from file offset 0. This breaks when the headers are elsewhere.
+Some programs apparently use these, like the python test suite.
 
-The Linux kernel instead locates the PT_LOAD segment that contains e_phoff,
-then computes the in-memory address as p_vaddr + (e_phoff - p_offset). This
-correctly handles relocated headers.
+The flags argument (rwf_t) is an int, with values shared on all arches
+and does not need translating.
 
-Fix by:
-1. Add phdr_addr field to image_info to cache the resolved address.
-2. Initialize to load_addr + e_phoff (fallback for headers outside any PT_LOAD).
-3. In the PT_LOAD mapping loop, detect if the segment contains e_phoff and
-   override with the segment-relative address.
-4. Use info->phdr_addr for AT_PHDR instead of the incorrect formula.
+This was tested manually with the following python script:
+```
+import os
+fd = os.open('test', os.O_RDWR|os.O_CREAT)
+os.pwritev(fd, [b'test', b'ok'], 0, os.RWF_HIPRI)
+buf = [bytearray(3), bytearray(10)]
+os.preadv(fd, buf, 0, os.RWF_HIPRI)
+print(buf[0])
+print(buf[1])
+```
 
-Signed-off-by: Akshit Yadav <valium7171@gmail.com>
+Signed-off-by: Dominique Martinet <dominique.martinet@atmark-techno.com>
 Reviewed-by: Helge Deller <deller@gmx.de>
-(cherry picked from commit 156e536a7b9700018aaa2437072c14e3376340a7)
+Signed-off-by: Helge Deller <deller@gmx.de>
+(cherry picked from commit fb4c08147ba79c552897427a42e3b24b38712786)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/linux-user/elfload.c b/linux-user/elfload.c
-index a791396ead..fdc84de4ba 100644
---- a/linux-user/elfload.c
-+++ b/linux-user/elfload.c
-@@ -2627,7 +2627,7 @@ static abi_ulong create_elf_tables(abi_ulong p, int argc, int envc,
-     /* There must be exactly DLINFO_ITEMS entries here, or the assert
-      * on info->auxv_len will trigger.
-      */
--    NEW_AUX_ENT(AT_PHDR, (abi_ulong)(info->load_addr + exec->e_phoff));
-+    NEW_AUX_ENT(AT_PHDR, (abi_ulong)(info->phdr_addr));
-     NEW_AUX_ENT(AT_PHENT, (abi_ulong)(sizeof (struct elf_phdr)));
-     NEW_AUX_ENT(AT_PHNUM, (abi_ulong)(exec->e_phnum));
-     NEW_AUX_ENT(AT_PAGESZ, (abi_ulong)(TARGET_PAGE_SIZE));
-@@ -3398,6 +3398,12 @@ static void load_elf_image(const char *image_name, const ImageSource *src,
-     info->data_offset = load_bias;
-     info->load_addr = load_addr;
-     info->entry = ehdr->e_entry + load_bias;
-+    /*
-+     * Fallback for AT_PHDR if the program headers do not fall within
-+     * any PT_LOAD segment (see the loop below, which overrides this with
-+     * the correct in-memory address when a containing segment is found).
-+     */
-+    info->phdr_addr = load_addr + ehdr->e_phoff;
-     info->start_code = -1;
-     info->end_code = 0;
-     info->start_data = -1;
-@@ -3452,6 +3458,19 @@ static void load_elf_image(const char *image_name, const ImageSource *src,
-             vaddr_ef = vaddr + eppnt->p_filesz;
-             vaddr_em = vaddr + eppnt->p_memsz;
- 
-+            /*
-+             * If this segment contains the program headers, record their
-+             * in-memory address for AT_PHDR. This matches the kernel, which
-+             * locates the headers via the containing PT_LOAD rather than
-+             * assuming load_addr + e_phoff (false when the phdrs are not
-+             * mapped 1:1 from file offset 0, e.g. relocated into their own
-+             * segment by a binary patcher).
-+             */
-+            if (eppnt->p_offset <= ehdr->e_phoff &&
-+                ehdr->e_phoff < eppnt->p_offset + eppnt->p_filesz) {
-+                info->phdr_addr = vaddr + (ehdr->e_phoff - eppnt->p_offset);
-+            }
+diff --git a/linux-user/syscall.c b/linux-user/syscall.c
+index d8c920bcff..95530bd8c8 100644
+--- a/linux-user/syscall.c
++++ b/linux-user/syscall.c
+@@ -744,6 +744,11 @@ safe_syscall5(ssize_t, preadv, int, fd, const struct iovec *, iov, int, iovcnt,
+               unsigned long, pos_l, unsigned long, pos_h)
+ safe_syscall5(ssize_t, pwritev, int, fd, const struct iovec *, iov, int, iovcnt,
+               unsigned long, pos_l, unsigned long, pos_h)
++safe_syscall6(ssize_t, preadv2, int, fd, const struct iovec *, iov, int, iovcnt,
++              unsigned long, pos_l, unsigned long, pos_h, __kernel_rwf_t, flags)
++safe_syscall6(ssize_t, pwritev2, int, fd, const struct iovec *, iov,
++              int, iovcnt, unsigned long, pos_l, unsigned long, pos_h,
++              __kernel_rwf_t, flags)
+ safe_syscall3(int, connect, int, fd, const struct sockaddr *, addr,
+               socklen_t, addrlen)
+ safe_syscall6(ssize_t, sendto, int, fd, const void *, buf, size_t, len,
+@@ -11852,6 +11857,39 @@ static abi_long do_syscall1(CPUArchState *cpu_env, int num, abi_long arg1,
+            }
+         }
+         return ret;
++#endif
++#if defined(TARGET_NR_preadv2)
++    case TARGET_NR_preadv2:
++        {
++            struct iovec *vec = lock_iovec(VERIFY_WRITE, arg2, arg3, 0);
++            if (vec != NULL) {
++                unsigned long low, high;
 +
-             /*
-              * Some segments may be completely empty, with a non-zero p_memsz
-              * but no backing file segment.
-diff --git a/linux-user/qemu.h b/linux-user/qemu.h
-index f2b16ef54b..a8ead75074 100644
---- a/linux-user/qemu.h
-+++ b/linux-user/qemu.h
-@@ -25,6 +25,7 @@
- struct image_info {
-         abi_ulong       load_bias;
-         abi_ulong       load_addr;
-+        abi_ulong       phdr_addr;
-         abi_ulong       start_code;
-         abi_ulong       end_code;
-         abi_ulong       start_data;
++                target_to_host_low_high(arg4, arg5, &low, &high);
++                ret = get_errno(safe_preadv2(arg1, vec, arg3, low, high, arg6));
++                unlock_iovec(vec, arg2, arg3, 1);
++            } else {
++                ret = -host_to_target_errno(errno);
++           }
++        }
++        return ret;
++#endif
++#if defined(TARGET_NR_pwritev2)
++    case TARGET_NR_pwritev2:
++        {
++            struct iovec *vec = lock_iovec(VERIFY_READ, arg2, arg3, 1);
++            if (vec != NULL) {
++                unsigned long low, high;
++
++                target_to_host_low_high(arg4, arg5, &low, &high);
++                ret = get_errno(safe_pwritev2(arg1, vec, arg3, low, high,
++                                              arg6));
++                unlock_iovec(vec, arg2, arg3, 0);
++            } else {
++                ret = -host_to_target_errno(errno);
++           }
++        }
++        return ret;
+ #endif
+     case TARGET_NR_getsid:
+         return get_errno(getsid(arg1));
 -- 
 2.47.3
 
