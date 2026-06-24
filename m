@@ -4,88 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85613CDB47C
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 00:07:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51532CDB479
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 00:08:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcB9J-0007Vf-1S; Tue, 23 Jun 2026 20:07:25 -0400
+	id 1wcB92-0007Qt-Ug; Tue, 23 Jun 2026 20:07:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1wcB9F-0007UP-Gc
- for qemu-devel@nongnu.org; Tue, 23 Jun 2026 20:07:21 -0400
+ id 1wcB8x-0007QI-FF
+ for qemu-devel@nongnu.org; Tue, 23 Jun 2026 20:07:04 -0400
 Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1wcB9D-0003D4-QE
- for qemu-devel@nongnu.org; Tue, 23 Jun 2026 20:07:21 -0400
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+ id 1wcB8u-0003Bz-TU
+ for qemu-devel@nongnu.org; Tue, 23 Jun 2026 20:07:02 -0400
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65NK0uE71177304
- for <qemu-devel@nongnu.org>; Wed, 24 Jun 2026 00:07:08 GMT
+ 65NK0IUv973558
+ for <qemu-devel@nongnu.org>; Wed, 24 Jun 2026 00:07:00 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- IxPWJh8zmFovY0aWY54Yi7sQk2Aa12IwMKCPVPgpVmQ=; b=OSkLF9Tcz0N4lzlQ
- JyFkDw625brarS+qfGevQOoQYcKmtxXhvSD9AJJHKmyU+ATGrAk6RJFeurR3bWji
- YZvJkvPY1+mYwX1KyAfjw7hCvp/EAV7J7WeI7EP0zLsHDf++GqWave2tIi4MmGDE
- MC8uIUBrOmYxc0gHMgLPyGAf+V/JzC6pXtCViKQskT7l9epa8iukBLjokp/ddBZ+
- aAVdxMLNWFGAxTg5OAqBgGYC8Vb1rXBfe81EiNVCn4LtprthSAkxMBAjtOHlLKIg
- KSBlpeTEZX5glNseBk+o9IKzDL4CGtTsnFh8fOZ9LYBIPNd0Ug1f2dd/KU/6GUAy
- f90MPw==
+ cc:content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=qcppdkim1; bh=C2rMfFWTL/1
+ +5pznB7RLcCvBAec1n4x9PcUZHGb/jms=; b=Zb69ZoNUfkejMgymO+Z6jZe3huA
+ avJfuR+9uJwhD86At2qMoGb4j/ISdQIOB4+bK7JXXpPKCrAP0JaNf3RBgxpPlP/Q
+ hm6IJeHu+mF6msLJNmtGUmvCPWefqZqB9btTzqR7xEsPOfikZmAxxiclMwcNtPmP
+ 7zkPhOsiyEqK9XlliFU3HAUwz93ejDrbcyeEWyJlLrhmsug21p0m4RTied7X6dzE
+ sGtPXeGx5yZIE2jKYobRh8K9+zBu999B3um9CvzyRsrS7NcaXh05wvP2PqvNxBjX
+ 5CZNXpBxFAJY2JzhB4WmygTPhy6lWM4pVMrJeZyunyRaOwPQ6IEfD89fx5w==
 Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
  [209.85.219.71])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4eyqe6bd93-1
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f004p0sj6-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 24 Jun 2026 00:07:08 +0000 (GMT)
+ for <qemu-devel@nongnu.org>; Wed, 24 Jun 2026 00:06:59 +0000 (GMT)
 Received: by mail-qv1-f71.google.com with SMTP id
- 6a1803df08f44-8dd3fe99e80so7779856d6.1
- for <qemu-devel@nongnu.org>; Tue, 23 Jun 2026 17:07:08 -0700 (PDT)
+ 6a1803df08f44-8dc4d71a6abso12778086d6.2
+ for <qemu-devel@nongnu.org>; Tue, 23 Jun 2026 17:06:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1782259628; x=1782864428; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1782259619; x=1782864419; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=IxPWJh8zmFovY0aWY54Yi7sQk2Aa12IwMKCPVPgpVmQ=;
- b=TdTWl/9UvORQCiX6fK2pMvYggY+oWt8iXWnwZmVdd/PZ6OLWAk0z6f1t0Xh2Om/gYs
- IMVyQ8r0Pvq0LymAMeyrin4IhBTnJLt/mVJliNcP4Jok7HAcdb3Tyt3GOJutemgKBI9W
- 3+Pn9Xt6Uec0ocQzwNkxd/nxooq7+i8uCBtx2Dcq/oTpgAaWrFwYJA7hOeY42eqYfqCL
- ofxJGJY5kP93mRK6A11xv1JElteXFpn/WUtUbYfb3ZVDB2Khf4rGal/t+53jhwh6CZE2
- UYjgZgVW0m3Evodxreh9b8LJwA6+ZxTRJjWEky1lFx/mQGc0+mz0Omw8N1yBthHXI10q
- dXBQ==
+ bh=C2rMfFWTL/1+5pznB7RLcCvBAec1n4x9PcUZHGb/jms=;
+ b=j6i7OyBiMN9WBgGuM9TzdKM82imPtec0PqbxHsZ0mJ1u1zmlM6vfnDXiMBYf7+KelN
+ M+YUxis4Nsx3l0yafWaGnpmlj+oqaDJ5libEWKLCmCIzKIwVcYq6KCkrPzroe+h+3k+2
+ UXz1+itmFkW329h4vLvt5fD/1cQvNC/POLGfkUfQisVZEwbVYInMdns3rBoOxu91euIK
+ i5lTnTopubtoiPSsHLunQDpJ1wsH6GCsfLjH1dLfYbObAN7TRlxQq4Rly9ezbXKE9v+D
+ WDKsjbJbX1WrOP9Gs3YtU+Oz2zTfAzsxxqd9m9OeF09/wS+blPgyLwQGo8gGzOPIHsHT
+ R8RA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782259628; x=1782864428;
+ d=1e100.net; s=20251104; t=1782259619; x=1782864419;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=IxPWJh8zmFovY0aWY54Yi7sQk2Aa12IwMKCPVPgpVmQ=;
- b=gTgh88Em+n2iHivbUgxcF5X84P/DHebyVpn5aoH4NKLlNdjmIuR/jKjBzKWSBRTWWp
- Xev4jAgqi1C+xwnXNRfsqscWnK4d/69s1NHsOShyhTqcUHoKL8yZD1IYDOof2h9VvAqu
- Od9ugzCduDG+bLcIJOQESVkVzIdaJ0xQmuyRN3JzmKfPunUjfcruVeBu7a/C49ekR5HP
- A70DnG9t1iBgDtwMv6zaBrehEdXUh8I+DW7Q3yxHQh7hnd+3ykav3oEIWuOXKuYm2Kmp
- 1gPTMnhVAf/FUJH84TOt4IApU/30ZdWJZnf5KCEPMWTt8Pi88VJ1fJeb/PLJV9thlZ4m
- S+SQ==
-X-Gm-Message-State: AOJu0YynMl3Yihp0eV3o6cAwv/gI5CZ2+woPsue5fQYCalzo1F4QF1Vz
- BiVfsHoGApIjLeLbivFGC1GNKL6Sj55ljio2/tJ5YoTePEERmnsO+snqjWdVhbv6YbGxd/NG2k3
- u0jI2CMnSspbTc0y4BqXMRvOGlHIWV54IFYS1q0YmURoha0raxDNLOc3LidXyIFO64w==
-X-Gm-Gg: AfdE7cmZ9knT3NCLWmC3sJ84m7aLV5Sy2txjOlyKXi6uULVQIu9FFrhqF/lZQ7cPnbj
- o9UrDVkptutHeiBz/hxIkhqKwQkV3Hq8dnxSXDZiFnLch6Ct2wOpHwrMkudY2jpmiRBHQYfpovT
- Df2m5YUSyslRnWBtnAW/giQQEOCAK/kkgB8ptIalwYXHXF1hW2l+gp1nvemOcJC6EXXVbvZ9NS+
- rGgFPSRzi6eE2sSGEmZFrYSgOhWL0XIiP+nABZmQdeGBRJ/5BEKPj09an2V5aE+J5qNwhcDSl82
- xmLYGk4yjMs4x7guMMQFYxM7L+6mtR0rls2s1NasPkqD9r6ZBbupbClqTJ3+nIdRLJ4kpgriUSP
- vQBPr6f8G8SbBPu2ip6WYVQc9uh+IYDUpcQfIQ5DAq0XYgA==
-X-Received: by 2002:a05:6214:230b:b0:8dc:f889:d67d with SMTP id
- 6a1803df08f44-8e535eee784mr23167526d6.36.1782259627899; 
- Tue, 23 Jun 2026 17:07:07 -0700 (PDT)
-X-Received: by 2002:a05:6214:230b:b0:8dc:f889:d67d with SMTP id
- 6a1803df08f44-8e535eee784mr23166726d6.36.1782259627394; 
- Tue, 23 Jun 2026 17:07:07 -0700 (PDT)
+ bh=C2rMfFWTL/1+5pznB7RLcCvBAec1n4x9PcUZHGb/jms=;
+ b=c3kL4nKDz+77AHIoM1hsYufaIaVtfPxXg7/pML8d8oRVtqOhgKNnlJI/dluLRPqe+q
+ 3nbkBGI7X1OXOwlqJWb2Oqiav+BzosavkkVD+8wrOjQCspWIqwpnZmhu9PqWOYBdvRDl
+ Eftz9XqhT7deMVnXJCdwX/Th1LKWsg3t0jgRKgu0UaOuLS9wuQbhpot1NdZ1HQmzHRCD
+ KIgiMDP8sEfbcyOHnY3rWLadWU8chvMoF2Zx7SlG5+scZhkrEKnIDQdZHO48kHqBOvRr
+ 5PnFCt0Zr0ckxHx8oIE5ufFHS09k9Y/hd0QZnHh+utFegwPRWlJaaJs1A9Ecz8pUt5z/
+ /zdg==
+X-Gm-Message-State: AOJu0Yyf6CDVImNHztacYqRwXLRPnMUzqsggGof/Vh0kthaBJFh0bm1r
+ uyhm4FLfAG9hUsQeT9UxA8yGZvIfcynEOXkevroAg1eydAkbFGHE7MweZ9jLVfLknwWEFhWzKRZ
+ cI37DxJmLt8zeeGvoktaCGeSx54WPkwAa5UrNY0squyx2vGQm6Pzokg2M7O9xUaQ02w==
+X-Gm-Gg: AfdE7cnrB/tSD2Ifke+z3wM0+Ek2lmWsoRGTnXqmJpvVU4Xl0Nxp7VB0FazVn11fO1U
+ WhJlgWGLG/coQ2qj2zdAUZrRHUerbvZH+iV+3n6a66CT+pj8lKh2bThQpkQt63edR3TZvMEwdE9
+ XFnzHzYxbRM1ZwE7ef31Hai9TiYdGubER/OyjobmmWzjoxAjdtHpacFqrvkgnlVFsiaYDSiVr8T
+ We9JTWPW+HBDKeocpQ7gDEWVUsGUGAM8c1T8gTDu4tql/Hn7BxOmKnaiPCWBF6SRQGTBnatOYWm
+ LcEfxkDC6ueUQy60L5JeH124iHqUp0Ffjid5tRwJEzKZcLySAcPD2dbJiml6obVDaCgS6y0UQFf
+ 1oVJLV9KGZYj+gIKlb4Jf2NZ68XwLulqjKxoar53+Eogujw==
+X-Received: by 2002:a05:6214:508b:b0:8d1:ae7a:7d79 with SMTP id
+ 6a1803df08f44-8e53111a649mr23682386d6.41.1782259619131; 
+ Tue, 23 Jun 2026 17:06:59 -0700 (PDT)
+X-Received: by 2002:a05:6214:508b:b0:8d1:ae7a:7d79 with SMTP id
+ 6a1803df08f44-8e53111a649mr23681766d6.41.1782259618582; 
+ Tue, 23 Jun 2026 17:06:58 -0700 (PDT)
 Received: from QCOM-UWl2o8bcGT.qualcomm.com ([189.79.21.40])
  by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-8df81cdec56sm142422976d6.32.2026.06.23.17.07.04
+ 6a1803df08f44-8df81cdec56sm142422976d6.32.2026.06.23.17.06.56
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 23 Jun 2026 17:07:06 -0700 (PDT)
+ Tue, 23 Jun 2026 17:06:58 -0700 (PDT)
 From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, liwei1518@gmail.com,
@@ -94,43 +93,40 @@ Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, liwei1518@gmail.com,
  fritchleybohrer@gmail.com,
  Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
  Palmer Dabbelt <palmer@dabbelt.com>
-Subject: [PATCH v2 09/24] target/riscv: move csr.h to tcg subdir
-Date: Tue, 23 Jun 2026 21:06:16 -0300
-Message-ID: <20260624000632.2149359-10-daniel.barboza@oss.qualcomm.com>
+Subject: [PATCH v2 06/24] target/riscv: move pmu.h to tcg subdir
+Date: Tue, 23 Jun 2026 21:06:13 -0300
+Message-ID: <20260624000632.2149359-7-daniel.barboza@oss.qualcomm.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260624000632.2149359-1-daniel.barboza@oss.qualcomm.com>
 References: <20260624000632.2149359-1-daniel.barboza@oss.qualcomm.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: -QdjYW7nTkD6cETrqOYSZaVhCKz0t1mh
-X-Proofpoint-ORIG-GUID: -QdjYW7nTkD6cETrqOYSZaVhCKz0t1mh
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjIzMDE5OSBTYWx0ZWRfX7YBrHQ1n1To5
- MfM3JwB+X3e5mN2v2mFszrVaWsi8Dc1uC9SbxzSCk6bgmI7iwZ5uKjlA8kxxHLNWPfWXrE+GEiA
- jqIv4gMHfsKw7Ll2I0+Hur2Ffx9o7D4=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjIzMDE5OSBTYWx0ZWRfXzZ7LrIpNu5Yw
- 7t+D6gMuqLOvhgZxYcze3zOejLuRyfHrwGuCssMoflD8Q5x6wRY87whcrjPSWq6kwpDd25ahdSq
- pOXNLfg7U7ZWYyB/Cm8U85CFohtRgOcoqEtCtXnvxXIQemv/Qkg4bU2jp+6dlNDeigCyUewCi4I
- 9KbTHF8NBVlXtOClZFPhBZd/yhVy3J3lyMn1oJyDx71d7yTE9tRUqHDWZ+H6s81domL5+ui88FB
- BfjdtPs8tKZNQPivfxP8aC1Mt9yw8iavDrmL6512gJZtJPRksaBpNBthlswg/DTab6onkqz3WII
- cONrAxqnkP7vYrQ1qG3t1m76D4P+ivCkOhsJGq0ralV+ksiHgnBVkkneCsuCRZ7t0D4+nnlT/Kb
- nXJ+y7I2SpKMxk8GE9sT/EgbScjaDqdNeEJ81ga92ICpU+UAIP8+FSV83sS6K2D438wqvACcihU
- brkvXXw04GLATT8Wa7Q==
-X-Authority-Analysis: v=2.4 cv=OeKoyBTY c=1 sm=1 tr=0 ts=6a3b1fac cx=c_pps
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjIzMDE5OSBTYWx0ZWRfX0Nu8sJq19Tr0
+ pMhtW3XlvM/FK+iPP1+B3YvFt2NaD6M1XNW/Z13yrRO40q/ZpvqoVRHDciOf7FDZSg7tmqJYOOJ
+ ybMMA5om7Js5t9hPz8OpuCtB0KWHbWQ=
+X-Proofpoint-ORIG-GUID: eHWsy7ea8r_DGml_AGwD3GJGKCmXCwZz
+X-Proofpoint-GUID: eHWsy7ea8r_DGml_AGwD3GJGKCmXCwZz
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjIzMDE5OSBTYWx0ZWRfXxHSQSaDnhl4z
+ JZ9pI5S9oqR66+e2Usod9v7TjwU/8nLeR3EGn0ChUh7WkqmHaldlumFz/FXlTliYV52nU56RWYq
+ PWhbTYFIMfFH8Qj6zhbKRr+cl2Q9mSaKPhZjfCx5HC6dJd89OyiPWxui8da47dH16JJsGvQrXuk
+ L9+UH0pZoWwEgsn2e+52qJZr3ACslCMLlh58hClJc08+c6PXee8xW/dge6GLlsocmFvYpbzCVyr
+ VErO1wxtlvrEVV7cWA+QJ+pcpZDBgJMYt8RFpzRq9ix/CuHnopvTDD9cxIelNnL+o6UpwmthP1R
+ 4lcqv5y8zJKbEarQZruqXEcG64mywDHFNRSDK9QpVyJVk/iRa6zKxaVaTweWXrWmaztoHJJm1TF
+ Rw+z7zak+G5UYOkxegKvrc3o4EMgI7+FqPooBnWNmDwPemc+JpK3MbEOSRYtm4jlP25noIAvg9B
+ 7gIDtbbvudAl9zTUsag==
+X-Authority-Analysis: v=2.4 cv=Q9TiJY2a c=1 sm=1 tr=0 ts=6a3b1fa3 cx=c_pps
  a=UgVkIMxJMSkC9lv97toC5g==:117 a=sHJf4AwOIoU3qjeHFPlg6Q==:17
- a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22
- a=EUspDBNiAAAA:8 a=82-PFmB8izlBMBISFaoA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=1HOtulTD9v-eNWfpl4qZ:22
+ a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22 a=EUspDBNiAAAA:8
+ a=KqZ3gCmnYdtU6Ji4SLwA:9 a=1HOtulTD9v-eNWfpl4qZ:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-06-23_04,2026-06-23_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 impostorscore=0 spamscore=0 malwarescore=0 adultscore=0
- suspectscore=0 clxscore=1015 priorityscore=1501 lowpriorityscore=0
- bulkscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2606230199
+ priorityscore=1501 suspectscore=0 spamscore=0 phishscore=0 bulkscore=0
+ malwarescore=0 clxscore=1015 impostorscore=0 adultscore=0 lowpriorityscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606230199
 Received-SPF: pass client-ip=205.220.180.131;
  envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
 X-Spam_score_int: -27
@@ -155,145 +151,182 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-After KVM is no longer reliant on csr.h move it to the TGC only land.
+riscv_pmu_generate_fdt_node() can be moved to fdt_common.c since it has
+no PMU TCG internals.
+
+With this change we can remove pmu.h from 'virt.c', which is now
+becoming a tcg header since we're moving it to the tcg subdir.
 
 Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 ---
- target/riscv/cpu.c            | 2 +-
- target/riscv/gdbstub.c        | 2 +-
- target/riscv/monitor.c        | 2 +-
- target/riscv/riscv-qmp-cmds.c | 2 +-
- target/riscv/tcg/csr.c        | 2 +-
- target/riscv/{ => tcg}/csr.h  | 0
- target/riscv/tcg/mips_csr.c   | 2 +-
- target/riscv/tcg/op_helper.c  | 2 +-
- target/riscv/tcg/pmp.c        | 2 +-
- target/riscv/tcg/th_csr.c     | 2 +-
- 10 files changed, 9 insertions(+), 9 deletions(-)
- rename target/riscv/{ => tcg}/csr.h (100%)
+ hw/riscv/fdt-common.c         | 52 +++++++++++++++++++++++++++++++++++
+ hw/riscv/virt.c               |  1 -
+ include/hw/riscv/fdt-common.h |  1 +
+ target/riscv/tcg/pmu.c        | 52 -----------------------------------
+ target/riscv/{ => tcg}/pmu.h  |  1 -
+ 5 files changed, 53 insertions(+), 54 deletions(-)
+ rename target/riscv/{ => tcg}/pmu.h (95%)
 
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index 5d44f993e4..96c92de2ee 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -24,7 +24,7 @@
- #include "qemu/guest-random.h"
- #include "cpu.h"
- #include "cpu_vendorid.h"
--#include "target/riscv/csr.h"
-+#include "target/riscv/tcg/csr.h"
- #include "internals.h"
- #include "qapi/error.h"
- #include "qapi/visitor.h"
-diff --git a/target/riscv/gdbstub.c b/target/riscv/gdbstub.c
-index a2bbaf7f07..f0a5e0d86f 100644
---- a/target/riscv/gdbstub.c
-+++ b/target/riscv/gdbstub.c
-@@ -21,7 +21,7 @@
- #include "gdbstub/helpers.h"
- #include "cpu.h"
- #include "internals.h"
--#include "target/riscv/csr.h"
-+#include "target/riscv/tcg/csr.h"
+diff --git a/hw/riscv/fdt-common.c b/hw/riscv/fdt-common.c
+index e0e31af09b..aa143a618b 100644
+--- a/hw/riscv/fdt-common.c
++++ b/hw/riscv/fdt-common.c
+@@ -230,3 +230,55 @@ void create_fdt_plic(void *fdt, hwaddr addr, uint64_t size,
+     }
+     qemu_fdt_setprop_cell(fdt, nodename, "phandle", plic_phandle);
+ }
++
++/*
++ * To keep it simple, any event can be mapped to any programmable counters in
++ * QEMU. The generic cycle & instruction count events can also be monitored
++ * using programmable counters. In that case, mcycle & minstret must continue
++ * to provide the correct value as well. Heterogeneous PMU per hart is not
++ * supported yet. Thus, number of counters are same across all harts.
++ */
++void riscv_pmu_generate_fdt_node(void *fdt, uint32_t cmask, char *pmu_name)
++{
++    uint32_t fdt_event_ctr_map[15] = {};
++
++   /*
++    * The event encoding is specified in the SBI specification
++    * Event idx is a 20bits wide number encoded as follows:
++    * event_idx[19:16] = type
++    * event_idx[15:0] = code
++    * The code field in cache events are encoded as follows:
++    * event_idx.code[15:3] = cache_id
++    * event_idx.code[2:1] = op_id
++    * event_idx.code[0:0] = result_id
++    */
++
++   /* SBI_PMU_HW_CPU_CYCLES: 0x01 : type(0x00) */
++   fdt_event_ctr_map[0] = cpu_to_be32(0x00000001);
++   fdt_event_ctr_map[1] = cpu_to_be32(0x00000001);
++   fdt_event_ctr_map[2] = cpu_to_be32(cmask | 1 << 0);
++
++   /* SBI_PMU_HW_INSTRUCTIONS: 0x02 : type(0x00) */
++   fdt_event_ctr_map[3] = cpu_to_be32(0x00000002);
++   fdt_event_ctr_map[4] = cpu_to_be32(0x00000002);
++   fdt_event_ctr_map[5] = cpu_to_be32(cmask | 1 << 2);
++
++   /* SBI_PMU_HW_CACHE_DTLB : 0x03 READ : 0x00 MISS : 0x00 type(0x01) */
++   fdt_event_ctr_map[6] = cpu_to_be32(0x00010019);
++   fdt_event_ctr_map[7] = cpu_to_be32(0x00010019);
++   fdt_event_ctr_map[8] = cpu_to_be32(cmask);
++
++   /* SBI_PMU_HW_CACHE_DTLB : 0x03 WRITE : 0x01 MISS : 0x00 type(0x01) */
++   fdt_event_ctr_map[9] = cpu_to_be32(0x0001001B);
++   fdt_event_ctr_map[10] = cpu_to_be32(0x0001001B);
++   fdt_event_ctr_map[11] = cpu_to_be32(cmask);
++
++   /* SBI_PMU_HW_CACHE_ITLB : 0x04 READ : 0x00 MISS : 0x00 type(0x01) */
++   fdt_event_ctr_map[12] = cpu_to_be32(0x00010021);
++   fdt_event_ctr_map[13] = cpu_to_be32(0x00010021);
++   fdt_event_ctr_map[14] = cpu_to_be32(cmask);
++
++   /* This a OpenSBI specific DT property documented in OpenSBI docs */
++   qemu_fdt_setprop(fdt, pmu_name, "riscv,event-to-mhpmcounters",
++                    fdt_event_ctr_map, sizeof(fdt_event_ctr_map));
++}
+diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
+index 92c30a6f4c..a1cf8210be 100644
+--- a/hw/riscv/virt.c
++++ b/hw/riscv/virt.c
+@@ -30,7 +30,6 @@
+ #include "hw/char/serial-mm.h"
+ #include "target/riscv/cpu.h"
+ #include "hw/core/sysbus-fdt.h"
+-#include "target/riscv/pmu.h"
+ #include "hw/riscv/riscv_hart.h"
+ #include "hw/riscv/iommu.h"
+ #include "hw/riscv/riscv-iommu-bits.h"
+diff --git a/include/hw/riscv/fdt-common.h b/include/hw/riscv/fdt-common.h
+index 017278b611..1729a6abc6 100644
+--- a/include/hw/riscv/fdt-common.h
++++ b/include/hw/riscv/fdt-common.h
+@@ -35,4 +35,5 @@ void create_fdt_plic(void *fdt, hwaddr addr, uint64_t size,
+                      uint32_t addr_cells, uint32_t *plic_cells,
+                      uint32_t cells_size, uint32_t ndev_sources,
+                      bool numa_enabled, int socket);
++void riscv_pmu_generate_fdt_node(void *fdt, uint32_t cmask, char *pmu_name);
+ #endif
+diff --git a/target/riscv/tcg/pmu.c b/target/riscv/tcg/pmu.c
+index 3444400bd2..38ad2737e1 100644
+--- a/target/riscv/tcg/pmu.c
++++ b/target/riscv/tcg/pmu.c
+@@ -27,58 +27,6 @@
  
- struct TypeSize {
-     const char *gdb_type;
-diff --git a/target/riscv/monitor.c b/target/riscv/monitor.c
-index 7aacd1d89c..f8042db9cd 100644
---- a/target/riscv/monitor.c
-+++ b/target/riscv/monitor.c
-@@ -22,7 +22,7 @@
- #include "qemu/ctype.h"
- #include "qemu/qemu-print.h"
- #include "cpu.h"
--#include "target/riscv/csr.h"
-+#include "target/riscv/tcg/csr.h"
- #include "cpu_bits.h"
- #include "monitor/monitor.h"
- #include "monitor/hmp.h"
-diff --git a/target/riscv/riscv-qmp-cmds.c b/target/riscv/riscv-qmp-cmds.c
-index b94e8391ed..2647deef91 100644
---- a/target/riscv/riscv-qmp-cmds.c
-+++ b/target/riscv/riscv-qmp-cmds.c
-@@ -35,7 +35,7 @@
- #include "system/tcg.h"
- #include "cpu-qom.h"
- #include "cpu.h"
--#include "target/riscv/csr.h"
-+#include "target/riscv/tcg/csr.h"
+ #define RISCV_TIMEBASE_FREQ 1000000000 /* 1Ghz */
  
- static void riscv_cpu_add_definition(gpointer data, gpointer user_data)
+-/*
+- * To keep it simple, any event can be mapped to any programmable counters in
+- * QEMU. The generic cycle & instruction count events can also be monitored
+- * using programmable counters. In that case, mcycle & minstret must continue
+- * to provide the correct value as well. Heterogeneous PMU per hart is not
+- * supported yet. Thus, number of counters are same across all harts.
+- */
+-void riscv_pmu_generate_fdt_node(void *fdt, uint32_t cmask, char *pmu_name)
+-{
+-    uint32_t fdt_event_ctr_map[15] = {};
+-
+-   /*
+-    * The event encoding is specified in the SBI specification
+-    * Event idx is a 20bits wide number encoded as follows:
+-    * event_idx[19:16] = type
+-    * event_idx[15:0] = code
+-    * The code field in cache events are encoded as follows:
+-    * event_idx.code[15:3] = cache_id
+-    * event_idx.code[2:1] = op_id
+-    * event_idx.code[0:0] = result_id
+-    */
+-
+-   /* SBI_PMU_HW_CPU_CYCLES: 0x01 : type(0x00) */
+-   fdt_event_ctr_map[0] = cpu_to_be32(0x00000001);
+-   fdt_event_ctr_map[1] = cpu_to_be32(0x00000001);
+-   fdt_event_ctr_map[2] = cpu_to_be32(cmask | 1 << 0);
+-
+-   /* SBI_PMU_HW_INSTRUCTIONS: 0x02 : type(0x00) */
+-   fdt_event_ctr_map[3] = cpu_to_be32(0x00000002);
+-   fdt_event_ctr_map[4] = cpu_to_be32(0x00000002);
+-   fdt_event_ctr_map[5] = cpu_to_be32(cmask | 1 << 2);
+-
+-   /* SBI_PMU_HW_CACHE_DTLB : 0x03 READ : 0x00 MISS : 0x00 type(0x01) */
+-   fdt_event_ctr_map[6] = cpu_to_be32(0x00010019);
+-   fdt_event_ctr_map[7] = cpu_to_be32(0x00010019);
+-   fdt_event_ctr_map[8] = cpu_to_be32(cmask);
+-
+-   /* SBI_PMU_HW_CACHE_DTLB : 0x03 WRITE : 0x01 MISS : 0x00 type(0x01) */
+-   fdt_event_ctr_map[9] = cpu_to_be32(0x0001001B);
+-   fdt_event_ctr_map[10] = cpu_to_be32(0x0001001B);
+-   fdt_event_ctr_map[11] = cpu_to_be32(cmask);
+-
+-   /* SBI_PMU_HW_CACHE_ITLB : 0x04 READ : 0x00 MISS : 0x00 type(0x01) */
+-   fdt_event_ctr_map[12] = cpu_to_be32(0x00010021);
+-   fdt_event_ctr_map[13] = cpu_to_be32(0x00010021);
+-   fdt_event_ctr_map[14] = cpu_to_be32(cmask);
+-
+-   /* This a OpenSBI specific DT property documented in OpenSBI docs */
+-   qemu_fdt_setprop(fdt, pmu_name, "riscv,event-to-mhpmcounters",
+-                    fdt_event_ctr_map, sizeof(fdt_event_ctr_map));
+-}
+-
+ static bool riscv_pmu_counter_valid(RISCVCPU *cpu, uint32_t ctr_idx)
  {
-diff --git a/target/riscv/tcg/csr.c b/target/riscv/tcg/csr.c
-index d447204721..572a39d660 100644
---- a/target/riscv/tcg/csr.c
-+++ b/target/riscv/tcg/csr.c
-@@ -21,7 +21,7 @@
- #include "qemu/log.h"
- #include "qemu/timer.h"
- #include "cpu.h"
--#include "target/riscv/csr.h"
-+#include "target/riscv/tcg/csr.h"
- #include "tcg/tcg-cpu.h"
- #include "pmu.h"
- #include "time_helper.h"
-diff --git a/target/riscv/csr.h b/target/riscv/tcg/csr.h
-similarity index 100%
-rename from target/riscv/csr.h
-rename to target/riscv/tcg/csr.h
-diff --git a/target/riscv/tcg/mips_csr.c b/target/riscv/tcg/mips_csr.c
-index 609718f288..884030e91d 100644
---- a/target/riscv/tcg/mips_csr.c
-+++ b/target/riscv/tcg/mips_csr.c
-@@ -10,7 +10,7 @@
- #include "qemu/osdep.h"
- #include "cpu.h"
- #include "cpu_vendorid.h"
--#include "target/riscv/csr.h"
-+#include "target/riscv/tcg/csr.h"
- 
- /* Static MIPS CSR state storage */
- static struct {
-diff --git a/target/riscv/tcg/op_helper.c b/target/riscv/tcg/op_helper.c
-index 775fd431d6..003f6ebb31 100644
---- a/target/riscv/tcg/op_helper.c
-+++ b/target/riscv/tcg/op_helper.c
-@@ -20,7 +20,7 @@
- 
- #include "qemu/osdep.h"
- #include "cpu.h"
--#include "target/riscv/csr.h"
-+#include "target/riscv/tcg/csr.h"
- #include "internals.h"
- #include "exec/cputlb.h"
- #include "accel/tcg/cpu-ldst.h"
-diff --git a/target/riscv/tcg/pmp.c b/target/riscv/tcg/pmp.c
-index d93563c36b..41b55519a8 100644
---- a/target/riscv/tcg/pmp.c
-+++ b/target/riscv/tcg/pmp.c
-@@ -23,7 +23,7 @@
- #include "qemu/log.h"
- #include "qapi/error.h"
- #include "cpu.h"
--#include "target/riscv/csr.h"
-+#include "target/riscv/tcg/csr.h"
- #include "trace.h"
- #include "exec/cputlb.h"
- #include "exec/page-protection.h"
-diff --git a/target/riscv/tcg/th_csr.c b/target/riscv/tcg/th_csr.c
-index 431f4cc286..e6f642991c 100644
---- a/target/riscv/tcg/th_csr.c
-+++ b/target/riscv/tcg/th_csr.c
-@@ -22,7 +22,7 @@
- #include "qemu/osdep.h"
- #include "cpu.h"
- #include "cpu_vendorid.h"
--#include "target/riscv/csr.h"
-+#include "target/riscv/tcg/csr.h"
- 
- /* Extended M-mode control registers of T-Head */
- #define CSR_TH_MXSTATUS        0x7c0
+     if (ctr_idx < 3 || ctr_idx >= RV_MAX_MHPMCOUNTERS ||
+diff --git a/target/riscv/pmu.h b/target/riscv/tcg/pmu.h
+similarity index 95%
+rename from target/riscv/pmu.h
+rename to target/riscv/tcg/pmu.h
+index b4f1e469a2..de2fae1fb4 100644
+--- a/target/riscv/pmu.h
++++ b/target/riscv/tcg/pmu.h
+@@ -31,7 +31,6 @@ void riscv_pmu_init(RISCVCPU *cpu, Error **errp);
+ int riscv_pmu_update_event_map(CPURISCVState *env, uint64_t value,
+                                uint32_t ctr_idx);
+ int riscv_pmu_incr_ctr(RISCVCPU *cpu, enum riscv_pmu_event_idx event_idx);
+-void riscv_pmu_generate_fdt_node(void *fdt, uint32_t cmask, char *pmu_name);
+ int riscv_pmu_setup_timer(CPURISCVState *env, uint64_t value,
+                           uint32_t ctr_idx);
+ void riscv_pmu_update_fixed_ctrs(CPURISCVState *env, privilege_mode_t newpriv,
 -- 
 2.43.0
 
