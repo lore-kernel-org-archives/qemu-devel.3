@@ -4,43 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71630CDB481
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 13:39:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5237ACDE002
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 13:40:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcNpJ-0005SY-9O; Wed, 24 Jun 2026 09:39:37 -0400
+	id 1wcNoV-0002JB-9a; Wed, 24 Jun 2026 09:38:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wcNpH-0005Ql-CB; Wed, 24 Jun 2026 09:39:35 -0400
+ id 1wcNnY-0001hh-IC; Wed, 24 Jun 2026 09:37:49 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wcNpF-0001IY-K3; Wed, 24 Jun 2026 09:39:35 -0400
+ id 1wcNnW-00014d-No; Wed, 24 Jun 2026 09:37:48 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1782307999; bh=Qa5RM/R3DMq9VLRLiufaoNNUf9HV7xjAG3zxZJj488Y=;
+ t=1782307998; bh=ubdO+zpxQThsSC68lkwISaMv3bI5tKubzpj/X8KopDg=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=jUdAmoSFSUGgv7Itrb1lxVI8epLzNqyQqr6czl1cuUHZS+3nBcBP9xBxqMRgznCiu
- lJSbnLC2LVDX2f7QIw8GYuhX8zWN9QsS7EcxoFYq+/47wUjMeeMLU8DbBdPnMuZExB
- L6houGvYqNUJN+NrytieJIYm6srO5F03KJ6raK4Jq1haCpq956HOvqg0iKSU1BHEzg
- eifbrTzosYaLprebD3MWhFr1RrGpam6gyvYNfhYh50JbWKKdvmIAeAuuvdPzvvWuen
- ER94ISbLiBlQ0QivL2+bgLKhuFQ+AQVmJD8PPHVePzXuAXJHAlw1EQ2OQH07kkHVA/
- jCB6KbUaZJUXw==
+ b=s+Ww2xFa100XL0+wNRd0dV5pYHumIwwXLYhYsnKvpekXU4SWBpaoIJKXIgKz5vZKE
+ WtnS8kys35bOFW9Vi+KoQw+g375ZQpefds2GtameUx4R3hmXyXq9py+t6kZA0YJQj6
+ p9g657++rIJIqMm3P8MhI6A1IdueM36YYf2nWIg/m4FUOhOCsEgdXcl4SJUmQstNd3
+ 7kEfd11lL/fZgptjROkvwt+/Of57lbOU8x1bfRX5iNBBJbdbZosZkwuYDla9qOvq4T
+ A2PrjUnkliiNmOLpLzHuCU90jUSZ13GnzZ1FHV1UQTiiRl14oWVr2rjSGi94hysqSv
+ WXJTouxfp9BJw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id C44771BA9F4;
- Wed, 24 Jun 2026 16:33:19 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 857801BA9E3;
+ Wed, 24 Jun 2026 16:33:18 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 6126F3DEA43;
- Wed, 24 Jun 2026 16:33:25 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 2192F3DEA32;
+ Wed, 24 Jun 2026 16:33:24 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Fiona Ebner <f.ebner@proxmox.com>,
- Kevin Wolf <kwolf@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.2 066/107] block/export/fuse: set
- FUSE_DIRECT_IO_ALLOW_MMAP flag to fix regression
-Date: Wed, 24 Jun 2026 16:31:11 +0300
-Message-ID: <20260624133301.403266-66-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, sin99xx <sin99xx@proton.me>,
+ Christian Schoenebeck <qemu_oss@crudebyte.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.2 049/107] 9pfs: fix missing rename lock in
+ v9fs_co_readdir_many (CVE-2026-48004)
+Date: Wed, 24 Jun 2026 16:30:54 +0300
+Message-ID: <20260624133301.403266-49-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.2-20260624163118@cover.tls.msk.ru>
 References: <qemu-stable-11.0.2-20260624163118@cover.tls.msk.ru>
@@ -69,68 +70,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Fiona Ebner <f.ebner@proxmox.com>
+From: sin99xx <sin99xx@proton.me>
 
-Commit 8599559580 ("fuse: Set direct_io and parallel_direct_writes")
-broke use cases that require mmap() with MAP_SHARED on the export. In
-particular, swtpm_setup using its 'file://' protocol requires this.
-From the kernel documentation [0]:
+v9fs_co_readdir_many() dispatches do_readdir_many() to a worker thread
+that reads V9fsFidState's path.data without holding a rename lock.
 
-> To allow shared mmap, the FUSE_DIRECT_IO_ALLOW_MMAP flag may be
-> enabled in the FUSE_INIT reply.
+A concurrent rename request, e.g. of its parent dir, causes the FID's
+absolute path to be altered by freeing the old path string and
+assigning a new one. This causes a heap-use-after-free race condition
+while do_readdir_many() is still accessing the old object.
 
-Set the FUSE_DIRECT_IO_ALLOW_MMAP flag to restore compatibility with
-users requiring shared mmap. The FUSE_INIT_EXT flag needs to be set
-for the flags2 member to have an effect.
+This allows a DoS by an unprivileged guest user.
 
-[0]: https://www.kernel.org/doc/html/next/filesystems/fuse/fuse-io.html
+Fix this by wrapping the worker thread dispatch block within a pair of
+v9fs_path_read_lock() and v9fs_path_unlock() calls, like it's done at
+other places.
 
-Cc: qemu-stable@nongnu.org
-Fixes: 8599559580 ("fuse: Set direct_io and parallel_direct_writes")
-Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
-Message-ID: <20260506145424.10249-3-f.ebner@proxmox.com>
-Reviewed-by: Kevin Wolf <kwolf@redhat.com>
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-(cherry picked from commit d1664a4058b2b4285d281d32c81ef646f78e7d9a)
+Fixes: 2149675b195f ("9pfs: add new function v9fs_co_readdir_many()")
+Fixes: CVE-2026-48004
+Reported-by: sin99xx <sin99xx@proton.me>
+Signed-off-by: sin99xx <sin99xx@proton.me>
+[Christian Schoenebeck: add commit log message]
+Link: https://lore.kernel.org/qemu-devel/E1wPkYi-000adH-4E@kylie.crudebyte.com
+Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
+(cherry picked from commit 5a8da7e979f1f56b1cab82c2354833f309f1a78f)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/block/export/fuse.c b/block/export/fuse.c
-index 35218e3197..c0e8dfb643 100644
---- a/block/export/fuse.c
-+++ b/block/export/fuse.c
-@@ -856,7 +856,8 @@ static ssize_t coroutine_fn GRAPH_RDLOCK
- fuse_co_init(FuseExport *exp, struct fuse_init_out *out,
-              const struct fuse_init_in *in)
+diff --git a/hw/9pfs/codir.c b/hw/9pfs/codir.c
+index bce7dd96e9..5568399343 100644
+--- a/hw/9pfs/codir.c
++++ b/hw/9pfs/codir.c
+@@ -220,13 +220,16 @@ int coroutine_fn v9fs_co_readdir_many(V9fsPDU *pdu, V9fsFidState *fidp,
+                                       bool dostat)
  {
--    const uint32_t supported_flags = FUSE_ASYNC_READ | FUSE_ASYNC_DIO;
-+    uint32_t supported_flags = FUSE_ASYNC_READ | FUSE_ASYNC_DIO;
-+    uint32_t flags2 = 0;
+     int err = 0;
++    V9fsState *s = pdu->s;
  
-     if (in->major != 7) {
-         error_report("FUSE major version mismatch: We have 7, but kernel has %"
-@@ -871,13 +872,21 @@ fuse_co_init(FuseExport *exp, struct fuse_init_out *out,
-         return -EINVAL;
+     if (v9fs_request_cancelled(pdu)) {
+         return -EINTR;
      }
++    v9fs_path_read_lock(s);
+     v9fs_co_run_in_worker({
+         err = do_readdir_many(pdu, fidp, entries, offset, maxsize, dostat);
+     });
++    v9fs_path_unlock(s);
+     return err;
+ }
  
-+    if (!using_old_fuse_init_in(in)) {
-+        /* The flags2 flags must be shifted down by 32 bits. */
-+        const uint32_t supported_flags2 = FUSE_DIRECT_IO_ALLOW_MMAP >> 32;
-+        /* flags2 is only considered if FUSE_INIT_EXT is set. */
-+        supported_flags = supported_flags | FUSE_INIT_EXT;
-+        flags2 = in->flags2 & supported_flags2;
-+    }
-+
-     *out = (struct fuse_init_out) {
-         .major = 7,
-         .minor = MIN(FUSE_KERNEL_MINOR_VERSION, in->minor),
-         .max_readahead = in->max_readahead,
-         .max_write = FUSE_MAX_WRITE_BYTES,
-         .flags = in->flags & supported_flags,
--        .flags2 = 0,
-+        .flags2 = flags2,
- 
-         /* libfuse maximum: 2^16 - 1 */
-         .max_background = UINT16_MAX,
 -- 
 2.47.3
 
