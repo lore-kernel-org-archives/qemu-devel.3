@@ -4,58 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 710A4CDB47C
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 10:30:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5AEACDB479
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 10:30:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcKql-0006n6-RW; Wed, 24 Jun 2026 06:28:55 -0400
+	id 1wcKqc-0006jz-Hd; Wed, 24 Jun 2026 06:28:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1wcKqk-0006mB-09
- for qemu-devel@nongnu.org; Wed, 24 Jun 2026 06:28:54 -0400
+ id 1wcKqa-0006jP-FX
+ for qemu-devel@nongnu.org; Wed, 24 Jun 2026 06:28:44 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1wcKqi-0007B7-LL
- for qemu-devel@nongnu.org; Wed, 24 Jun 2026 06:28:53 -0400
+ id 1wcKqY-00078K-Lv
+ for qemu-devel@nongnu.org; Wed, 24 Jun 2026 06:28:44 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1782296932;
+ s=mimecast20190719; t=1782296921;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=WjFTpdwQIaE79YV3syPDPnn+JV1JhF7PJ2yrcTZS4iY=;
- b=THVJ+eWqjydYt3Otr3KfJClcuIOID+Sbin1aQk/GHIsJ/l3DXBL7i/9lMmqIn34o2k2TqN
- qPrMLuiTxtrrdxiPob5Gn4tAjhnVdtctT4XX9Sudha4Uun8oQxZDkhDA1jOm+HovzAEtAW
- Cy231Jd/7axn5zjuOc21da1eFGF72N8=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=YcreBT6yOPwaacOWLfu2u1EniV6qHpkGam79kBzQUp0=;
+ b=V0SQzL+RvnnMjP5atzqtS6ZAyddWpD78UX1+aH40r4q4XRCkto7hbwyfYZ5vN4RxWHFb97
+ OEsuapdm2muFuWpF9LHNXxVHEOXgri7ZeDQT41n1RJZNMMI7C29U44FyxroBUVsEy3xaFT
+ fL79AHlZGnAZBxUMNmLk2CsijIigKVc=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-168-nrokYGKBOpKlVxVCdo0b3Q-1; Wed,
- 24 Jun 2026 06:28:50 -0400
-X-MC-Unique: nrokYGKBOpKlVxVCdo0b3Q-1
-X-Mimecast-MFC-AGG-ID: nrokYGKBOpKlVxVCdo0b3Q_1782296929
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-390-qoZDtgWwN-OeiwqYvGylBg-1; Wed,
+ 24 Jun 2026 06:28:40 -0400
+X-MC-Unique: qoZDtgWwN-OeiwqYvGylBg-1
+X-Mimecast-MFC-AGG-ID: qoZDtgWwN-OeiwqYvGylBg_1782296918
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 22F4219560B4; Wed, 24 Jun 2026 10:28:49 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id ADB841801BE0; Wed, 24 Jun 2026 10:28:38 +0000 (UTC)
 Received: from dell-r430-03.lab.eng.brq2.redhat.com
  (dell-r430-03.lab.eng.brq2.redhat.com [10.37.153.18])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id E5B3330001A7; Wed, 24 Jun 2026 10:28:46 +0000 (UTC)
+ id 2B8BD30001A7; Wed, 24 Jun 2026 10:28:35 +0000 (UTC)
 From: Igor Mammedov <imammedo@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: mst@redhat.com, eauger@redhat.com, peter.maydell@linaro.org,
  shannon.zhaosl@gmail.com, rad@semihalf.com, leif.lindholm@oss.qualcomm.com,
  qemu-arm@nongnu.org, Eric Auger <eric.auger@redhat.com>
-Subject: [PATCH v3 05/17] arm: sbsa-gwdt: add 'wdat' option
-Date: Wed, 24 Jun 2026 12:28:18 +0200
-Message-ID: <20260624102830.1355552-6-imammedo@redhat.com>
+Subject: [PATCH v3 01/17] arm: sbsa_gwdt: fixup default "clock-frequency"
+Date: Wed, 24 Jun 2026 12:28:14 +0200
+Message-ID: <20260624102830.1355552-2-imammedo@redhat.com>
 In-Reply-To: <20260624102830.1355552-1-imammedo@redhat.com>
 References: <20260624102830.1355552-1-imammedo@redhat.com>
 MIME-Version: 1.0
@@ -64,14 +64,13 @@ Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 8
-X-Spam_score: 0.8
-X-Spam_bar: /
-X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,52 +86,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-it will be used by arm/virt board, to pick WDAT compatible watchdog impl.
-and act as switch over to WDAT ACPI table vesus default GTDT ACPI table.
+Comment about keeping legacy freq, is wrong to begin with
+(should be 62.5MHz), but that value also doesn't make
+sense anymore as the watchdog is used only by un-versioned
+SBSA board and the later has hard-coded it to 1GHz.
+
+Other potential user (arm/virt) also has system clock at 1GHz.
+
+Drop misleading comment about legacy and set default to 1GHz
+to match both boards. (not that it does matter, since users are
+setting frequency to match CPU's one explicitly)
 
 Signed-off-by: Igor Mammedov <imammedo@redhat.com>
 Reviewed-by: Eric Auger <eric.auger@redhat.com>
 ---
- include/hw/watchdog/sbsa_gwdt.h | 1 +
- hw/watchdog/sbsa_gwdt.c         | 9 +++++++++
- 2 files changed, 10 insertions(+)
+ hw/watchdog/sbsa_gwdt.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/include/hw/watchdog/sbsa_gwdt.h b/include/hw/watchdog/sbsa_gwdt.h
-index 8941dcff9e..5ad7c7a798 100644
---- a/include/hw/watchdog/sbsa_gwdt.h
-+++ b/include/hw/watchdog/sbsa_gwdt.h
-@@ -73,6 +73,7 @@ typedef struct SBSA_GWDTState {
-     uint32_t woru;
-     uint32_t wcvl;
-     uint32_t wcvu;
-+    bool wdat;
- } SBSA_GWDTState;
- 
- #endif /* WDT_SBSA_GWDT_H */
 diff --git a/hw/watchdog/sbsa_gwdt.c b/hw/watchdog/sbsa_gwdt.c
-index c4dd8005b7..1678ab85db 100644
+index 7ade5c6f18..b739a3ce3c 100644
 --- a/hw/watchdog/sbsa_gwdt.c
 +++ b/hw/watchdog/sbsa_gwdt.c
-@@ -265,6 +265,14 @@ static void wdt_sbsa_gwdt_realize(DeviceState *dev, Error **errp)
- 
-     sysbus_init_irq(sbd, &s->irq);
- 
-+    /*
-+     * WDAT spec: "The clock interval that the WDT uses must be
-+     * greater than or equal to 1 millisecond."
-+     */
-+    if (s->wdat) {
-+        s->freq = 1000;
-+    }
-+
-     s->timer = timer_new_ns(QEMU_CLOCK_VIRTUAL, sbsa_gwdt_timer_sysinterrupt,
-                 dev);
- }
-@@ -276,6 +284,7 @@ static const Property wdt_sbsa_gwdt_props[] = {
+@@ -264,11 +264,10 @@ static void wdt_sbsa_gwdt_realize(DeviceState *dev, Error **errp)
+ static const Property wdt_sbsa_gwdt_props[] = {
+     /*
+      * Timer frequency in Hz. This must match the frequency used by
+-     * the CPU's generic timer. Default 62.5Hz matches QEMU's legacy
+-     * CPU timer frequency default.
++     * the CPU's generic timer.
       */
      DEFINE_PROP_UINT64("clock-frequency", struct SBSA_GWDTState, freq,
-                        1000000000),
-+    DEFINE_PROP_BOOL("wdat", struct SBSA_GWDTState, wdat, false),
+-                       62500000),
++                       1000000000),
  };
  
  static void wdt_sbsa_gwdt_class_init(ObjectClass *klass, const void *data)
