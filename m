@@ -4,45 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 436ABCDB479
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 13:49:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8F0DCDB481
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 13:49:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcNsH-000189-Jv; Wed, 24 Jun 2026 09:42:41 -0400
+	id 1wcNoa-00033A-QD; Wed, 24 Jun 2026 09:38:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wcNre-0000ZY-LD; Wed, 24 Jun 2026 09:42:04 -0400
+ id 1wcNo4-0001ux-7U; Wed, 24 Jun 2026 09:38:24 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wcNrc-0001vF-Gm; Wed, 24 Jun 2026 09:42:02 -0400
+ id 1wcNo0-00019J-6Z; Wed, 24 Jun 2026 09:38:19 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1782308001; bh=xyeWbwDuQ+aowg9DTN9j7L2dMVeci73X2nXvAfRyHbI=;
+ t=1782307998; bh=FCs91j2jahY7iqlzgzBO1t4k/xo/nVlyyBYkVbrJbIo=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=v309/pJwDcMAeqdbq0xt4nQeCv8MtPX9+TQ8lo1vS+3IFH1kfjo+UvRnWdYpwZ1Hw
- NTW9eR1EpUM1DHhryNOca4MkkAvTr/03sMhq8gj7OTIq1jbEwZI8hU//WS29dUpNbR
- dRaVKFabwJZ/l+JrmNyGILo1KmaUT/vzDoRqC45QLwE6a0CvZLYAVcdha9aZT7A+x4
- +DjphKGhiKCrnrJqDgZY7PCOufRXJDnPQDtUoLhFA9CsEUGq1Ozp8SYWh5DlceZ+g4
- JlkAohkGcvzPoNqDCo8YrT0aRQ/a5Hzvfhe9LGSMXwbGbIISXA6wQY32NOxZPM1/g6
- llcNQG1vwPb/Q==
+ b=AfaBqjQbZXiQvD/7JYpNLbNBUMdPtbX5I0YV22ZnOO7zn9ipW2Ku7NtX7liyRzx9s
+ cKSc4oxgw20MM27JuzW0fafUmbHUO3Q8LAD0T8HZxdCv+iNNuIsrSJnR9tc+GqZ5tL
+ 37QoXIoaYanYXa+IKC/mTSSq5HMrI2xoAj7Uqu7068xU+cT6pAVSyFpoVouFNr4Kn0
+ /litUqhWomPM8Mp5J4I1uuvXxYHjd6MHnj7nSi1+lywS4uogi9ac9QsErtzAE2qkHZ
+ +OzhvpujFZVPtnQQXs+npLnX7nJScLNQzbdQ1pbR9BDrMdlWzXBxanjVP39KEFgTno
+ jfG5RrZbn0y0Q==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 7F46B1BAA0C;
- Wed, 24 Jun 2026 16:33:21 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id CFD961BA9E7;
+ Wed, 24 Jun 2026 16:33:18 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 1AD303DEA5B;
- Wed, 24 Jun 2026 16:33:27 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 6BE073DEA36;
+ Wed, 24 Jun 2026 16:33:24 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Chao Liu <chao.liu.zevorn@gmail.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.2 090/107] target/riscv/cpu_helper.c: add PMA access
- fault
-Date: Wed, 24 Jun 2026 16:31:35 +0300
-Message-ID: <20260624133301.403266-90-mjt@tls.msk.ru>
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.2 053/107] gitlab: add initial MacOS 15 on gitlab runner
+Date: Wed, 24 Jun 2026 16:30:58 +0300
+Message-ID: <20260624133301.403266-53-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.2-20260624163118@cover.tls.msk.ru>
 References: <qemu-stable-11.0.2-20260624163118@cover.tls.msk.ru>
@@ -72,153 +71,143 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+From: Alex Bennée <alex.bennee@linaro.org>
 
-We're not doing anything special w.r.t PMA (Physical Memory Access)
-related faults, handling them like regular faults that will eventually
-turn to be regular page faults.
+The gitlab runners are currently in beta but available to projects on
+the Premium and Ultimate plans (which QEMU is via the Open Source
+program).
 
-Turns out we can't do that.  Priv spec section "Virtual Address
-Translation Process" mentions:
+We install some compilers via brew so we can run some of the check-tcg
+softmmu test cases.
 
-"If a store to the PTE at address a+va.vpn[i]×PTESIZE would violate a
-PMA or PMP check, raise an access-fault exception corresponding to the
-original access type."
+We disable rust as the version is too old.
 
-This means that we should handle PMA violations with access faults, like
-we're already doing with PMP.  One clear code path where we should throw
-a PMA failure, exposed by [1], is the error return from
-address_space_ld* call.
+We disable plugins because we haven't taught the test harness about
+.dynlib vs .so yet.
 
-There's a separated issue with the error code being returned by them (it
-always return DECODE_ERROR even with 'rejected' reads) that we're going
-to work around it by assuming that we did a good job with the PTE
-address sanitization beforehand, and interpret that the error here is
-related to PMA.  This is of course not ideal but fixing this QEMU API is
-out of scope for this work.
+There is a discrepancy between the vars and version of MacOS because
+lcitool needs teaching about other versions (although I don't think it
+matters as brew is shared across versions).
 
-All this said, we'll set the new pmp_pma_violation flag when we have
-either a PMP or a PMA fault, and everything else shall fall into place.
-
-[1] https://gitlab.com/qemu-project/qemu/-/work_items/3502
-
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3502
-Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
-Message-ID: <20260522172502.320529-1-daniel.barboza@oss.qualcomm.com>
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-(cherry picked from commit 8e090ecfa9e5d9c225a9f6aae1e39586c182afa7)
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Message-ID: <20260526110243.470002-7-alex.bennee@linaro.org>
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+(cherry picked from commit 7684e78132905393e604014dce3185def4114108)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-index a6adf6efc6..8a77682627 100644
---- a/target/riscv/cpu.h
-+++ b/target/riscv/cpu.h
-@@ -131,7 +131,8 @@ enum {
-     TRANSLATE_SUCCESS,
-     TRANSLATE_FAIL,
-     TRANSLATE_PMP_FAIL,
--    TRANSLATE_G_STAGE_FAIL
-+    TRANSLATE_G_STAGE_FAIL,
-+    TRANSLATE_PMA_FAIL,
- };
+diff --git a/.gitlab-ci.d/macos-14.vars b/.gitlab-ci.d/macos-14.vars
+new file mode 100644
+index 0000000000..def77cfdea
+--- /dev/null
++++ b/.gitlab-ci.d/macos-14.vars
+@@ -0,0 +1,16 @@
++# THIS FILE WAS AUTO-GENERATED
++#
++#  $ lcitool variables macos-14 qemu
++#
++# https://gitlab.com/libvirt/libvirt-ci
++
++CCACHE='/opt/homebrew/bin/ccache'
++CPAN_PKGS=''
++CROSS_PKGS=''
++MAKE='/opt/homebrew/bin/gmake'
++NINJA='/opt/homebrew/bin/ninja'
++PACKAGING_COMMAND='brew'
++PIP3='/opt/homebrew/bin/pip3'
++PKGS='bash bc bindgen bison bzip2 capstone ccache cmocka coreutils ctags curl dbus diffutils dtc flex gcovr gettext git glib gnu-sed gnutls gtk+3 gtk-vnc jemalloc jpeg-turbo json-c libcbor libepoxy libffi libgcrypt libiscsi libnfs libpng libslirp libssh libtasn1 libusb llvm lzo make meson mtools ncurses nettle ninja pixman pkg-config python-setuptools python3 rpm2cpio rust sdl2 sdl2_image snappy socat sparse spice-protocol swtpm tesseract usbredir vde vte3 vulkan-tools xorriso zlib zstd'
++PYPI_PKGS='PyYAML numpy pillow sphinx sphinx-rtd-theme tomli'
++PYTHON='/opt/homebrew/bin/python3'
+diff --git a/.gitlab-ci.d/macos.yml b/.gitlab-ci.d/macos.yml
+new file mode 100644
+index 0000000000..c93bf12a29
+--- /dev/null
++++ b/.gitlab-ci.d/macos.yml
+@@ -0,0 +1,47 @@
++.macos_job_template:
++  extends: .base_job_template
++  stage: build
++  tags:
++    - saas-macos-large-m2pro
++  needs: []
++  timeout: 80m
++  artifacts:
++    name: "$CI_JOB_NAME-$CI_COMMIT_REF_SLUG"
++    expire_in: 7 days
++    paths:
++      - build/meson-logs/
++      - build/tests/tcg/
++    reports:
++      junit: build/meson-logs/*.junit.xml
++    when: always
++  before_script:
++    - set -o allexport
++    - source .gitlab-ci.d/macos-14.vars
++    - set +o allexport
++    - export PATH="$PATH_EXTRA:$PATH"
++    - export PKG_CONFIG_PATH="$PKG_CONFIG_PATH"
++    - brew update
++    - brew install $PKGS
++    - brew install gdb aarch64-elf-gcc i686-elf-gcc x86_64-elf-gcc
++    - if test -n "$PYPI_PKGS" ; then PYLIB=$($PYTHON -c 'import sysconfig; print(sysconfig.get_path("stdlib"))'); rm -f $PYLIB/EXTERNALLY-MANAGED; $PIP3 install --break-system-packages $PYPI_PKGS ; fi
++  script:
++    - mkdir build
++    - cd build
++    - ../configure --enable-werror $CONFIGURE_ARGS || { cat config.log meson-logs/meson-log.txt; exit 1; }
++    - $MAKE -j$(sysctl -n hw.ncpu)
++    - for TARGET in $TEST_TARGETS ; do $MAKE $TARGET ; done
++
++aarch64-macos-15-build:
++  extends: .macos_job_template
++  image: macos-15-xcode-16
++  variables:
++    NAME: macos-15
++    PATH_EXTRA: /opt/homebrew/gettext/bin
++    PKG_CONFIG_PATH: /opt/homebrew/curl/lib/pkgconfig:/opt/homebrew/ncurses/lib/pkgconfig:/opt/homebrew/readline/lib/pkgconfig
++    CONFIGURE_ARGS:
++        --target-list=aarch64-softmmu,i386-softmmu,x86_64-softmmu
++        --cross-prefix-aarch64=aarch64-elf-
++        --cross-prefix-i386=i686-elf-
++        --cross-prefix-x86_64=x86_64-elf-
++        --disable-plugins
++    TEST_TARGETS: check-unit run-tcg-tests-aarch64-softmmu run-tcg-tests-i386-softmmu run-tcg-tests-x86_64-softmmu
+diff --git a/.gitlab-ci.d/qemu-project.yml b/.gitlab-ci.d/qemu-project.yml
+index 4d914c4897..9cbb5fe787 100644
+--- a/.gitlab-ci.d/qemu-project.yml
++++ b/.gitlab-ci.d/qemu-project.yml
+@@ -19,3 +19,4 @@ include:
+   - local: '/.gitlab-ci.d/custom-runners.yml'
+   - local: '/.gitlab-ci.d/cirrus.yml'
+   - local: '/.gitlab-ci.d/windows.yml'
++  - local: '/.gitlab-ci.d/macos.yml'
+diff --git a/tests/lcitool/refresh b/tests/lcitool/refresh
+index fa4a16e358..4289cc381a 100755
+--- a/tests/lcitool/refresh
++++ b/tests/lcitool/refresh
+@@ -87,6 +87,12 @@ def generate_cirrus(target, trailer=None):
+     generate(filename, cmd, trailer)
  
- /* Extension context status */
-diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
-index d64c4d2e80..665d0f7181 100644
---- a/target/riscv/cpu_helper.c
-+++ b/target/riscv/cpu_helper.c
-@@ -1374,7 +1374,22 @@ static int get_physical_address(CPURISCVState *env, hwaddr *physical,
-         }
  
-         if (res != MEMTX_OK) {
--            return TRANSLATE_FAIL;
-+            /*
-+             * The result of address_space_* APIs above does not take into
-+             * consideration reject reads, putting all errors in the same
-+             * cathegory (DECODE_ERROR), although there's a clear
-+             * distinction between a rejected read versus other errors
-+             * (see memory_region_dispatch_read() ->
-+             * memory_region_access_valid()).  This is something that
-+             * we might have to deal with core QEMU logic some other
-+             * day.
-+             *
-+             * For this particular error path, given that we made checks
-+             * w.r.t legal PTE address before calling those APIs, we'll
-+             * assume that anything != MEMTX_OK means a rejected read,
-+             * i.e. a PMA error.
-+             */
-+            return TRANSLATE_PMA_FAIL;
-         }
++def generate_vars(target, trailer=None):
++    filename = Path(src_dir, ".gitlab-ci.d", target + ".vars")
++    cmd = lcitool_cmd + ["variables", "--format", "shell", target, "qemu"]
++    generate(filename, cmd, trailer)
++
++
+ def generate_pkglist(vm, target, project="qemu"):
+     filename = Path(src_dir, "tests", "vm", "generated", vm + ".json")
+     cmd = lcitool_cmd + ["variables", "--format", "json", target, project]
+@@ -312,6 +318,11 @@ try:
+     #
+     generate_cirrus("freebsd-14")
  
-         if (riscv_cpu_sxl(env) == MXL_RV32) {
-@@ -1654,7 +1669,8 @@ static int get_physical_address(CPURISCVState *env, hwaddr *physical,
- }
- 
- static void raise_mmu_exception(CPURISCVState *env, target_ulong address,
--                                MMUAccessType access_type, bool pmp_violation,
-+                                MMUAccessType access_type,
-+                                bool pmp_pma_violation,
-                                 bool first_stage, bool two_stage,
-                                 bool two_stage_indirect)
- {
-@@ -1662,7 +1678,7 @@ static void raise_mmu_exception(CPURISCVState *env, target_ulong address,
- 
-     switch (access_type) {
-     case MMU_INST_FETCH:
--        if (pmp_violation) {
-+        if (pmp_pma_violation) {
-             cs->exception_index = RISCV_EXCP_INST_ACCESS_FAULT;
-         } else if (env->virt_enabled && !first_stage) {
-             cs->exception_index = RISCV_EXCP_INST_GUEST_PAGE_FAULT;
-@@ -1671,7 +1687,7 @@ static void raise_mmu_exception(CPURISCVState *env, target_ulong address,
-         }
-         break;
-     case MMU_DATA_LOAD:
--        if (pmp_violation) {
-+        if (pmp_pma_violation) {
-             cs->exception_index = RISCV_EXCP_LOAD_ACCESS_FAULT;
-         } else if (two_stage && !first_stage) {
-             cs->exception_index = RISCV_EXCP_LOAD_GUEST_ACCESS_FAULT;
-@@ -1680,7 +1696,7 @@ static void raise_mmu_exception(CPURISCVState *env, target_ulong address,
-         }
-         break;
-     case MMU_DATA_STORE:
--        if (pmp_violation) {
-+        if (pmp_pma_violation) {
-             cs->exception_index = RISCV_EXCP_STORE_AMO_ACCESS_FAULT;
-         } else if (two_stage && !first_stage) {
-             cs->exception_index = RISCV_EXCP_STORE_GUEST_AMO_ACCESS_FAULT;
-@@ -1806,7 +1822,7 @@ bool riscv_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
-     vaddr im_address;
-     hwaddr pa = 0;
-     int prot, prot2, prot_pmp;
--    bool pmp_violation = false;
-+    bool pmp_pma_violation = false;
-     bool first_stage_error = true;
-     bool two_stage_lookup = mmuidx_2stage(mmu_idx);
-     bool two_stage_indirect_error = false;
-@@ -1907,8 +1923,8 @@ bool riscv_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
-         }
-     }
- 
--    if (ret == TRANSLATE_PMP_FAIL) {
--        pmp_violation = true;
-+    if (ret == TRANSLATE_PMP_FAIL || ret == TRANSLATE_PMA_FAIL) {
-+        pmp_pma_violation = true;
-     }
- 
-     if (ret == TRANSLATE_SUCCESS) {
-@@ -1935,7 +1951,7 @@ bool riscv_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
-         cpu_check_watchpoint(cs, address, size, MEMTXATTRS_UNSPECIFIED,
-                              wp_access, retaddr);
- 
--        raise_mmu_exception(env, address, access_type, pmp_violation,
-+        raise_mmu_exception(env, address, access_type, pmp_pma_violation,
-                             first_stage_error, two_stage_lookup,
-                             two_stage_indirect_error);
-         cpu_loop_exit_restore(cs, retaddr);
++    #
++    # GitLab packages lists
++    #
++    generate_vars("macos-14")
++
+     #
+     # VM packages lists
+     #
 -- 
 2.47.3
 
