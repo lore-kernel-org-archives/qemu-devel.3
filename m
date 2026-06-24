@@ -4,48 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A0A5CDB479
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 13:37:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2778CDB481
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 13:37:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcNk5-0007Uw-1g; Wed, 24 Jun 2026 09:34:13 -0400
+	id 1wcNk1-0007SP-VS; Wed, 24 Jun 2026 09:34:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wcNk3-0007U1-Br; Wed, 24 Jun 2026 09:34:11 -0400
+ id 1wcNk0-0007QC-9z; Wed, 24 Jun 2026 09:34:08 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wcNk1-0000Uf-Nk; Wed, 24 Jun 2026 09:34:11 -0400
+ id 1wcNjy-0000Sg-OE; Wed, 24 Jun 2026 09:34:08 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1782307996; bh=VpUXHEeZq4VCjeyy0rgRt2Of/KA2IN5KTxh0zZi1P0I=;
+ t=1782307996; bh=Buh3wzvyJ5YPdIEyfbrsL/XcS/pQ3fOnyg/b6Lqqf10=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=YJBZ6tAFE0bKwB2iPABZHN/3XcV8SANDGm6Nw1CbK1W7FcH6nXCcvv2DUBl6Mj1QL
- 4GlyvRdx0jXR7gbeNNCeoyASo3eb43pbNA8paRAHCmWMr9KuZh+Llo9pwVy+NoPOB0
- FvgqJvs1M0T31mdCFkhwNBTVDQc+ltgo+r7WcUBQUF/r7qbxAk3kcVVfpYKtfCFp7l
- k/T72XEBc5ch8CmciabuXFLWMePDXWl6anlabu0//zu8fRXGgUBY6KMB/gd+lPPRIE
- D5oAAuI54JkUjbWCK3jbptLmtP+hgfF34877+oqo7oaxLsgnjeLoAB7+C7uDO+Rs+w
- QCAEdrklNWNgg==
+ b=duZUL1ywpnlujHQXzYK6YY/msfBSePxtgcDXaTifwOVDPF5EOHxcjtmF4p8KxRmw4
+ qpJF28YW670bd7v+iBcaoSLpoceBNCxZnspuJqAy7dPFK5lXVxpEfuCDguP7VWCX9l
+ smn4/11rp+LjxKBwyTEqeVEjUXCIGJ4nouCB10+1SuuDJ8UK+e2Rq1oN1jVEeyUE/R
+ 9McdkZWM+oTwFwLKeNC1e7LWk9cNLms3EcE+VAxceV636o/5Fs2BzcNy6+UjEpumv1
+ zyhW/i6eARY5ml8mbksp9SB5HU4EI9NynEqsazHhdEJVyvCBX19p9L85TTVcN9ouce
+ x9kcZ1MmGlrXg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 340491BA9C1;
+ by isrv.corpit.ru (Postfix) with ESMTP id 163981BA9BF;
  Wed, 24 Jun 2026 16:33:16 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id C56F53DEA10;
+ by tsrv.corpit.ru (Postfix) with ESMTP id A71423DEA0E;
  Wed, 24 Jun 2026 16:33:21 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Matt Turner <mattst88@gmail.com>,
- Helge Deller <deller@gmx.de>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.2 015/107] linux-user/mips64: fix elf_core_copy_regs
- register layout in core files
-Date: Wed, 24 Jun 2026 16:30:20 +0300
-Message-ID: <20260624133301.403266-15-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.2 013/107] target/riscv/csr.c: fix read of pmpaddr(0-63)
+ CSRs
+Date: Wed, 24 Jun 2026 16:30:18 +0300
+Message-ID: <20260624133301.403266-13-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.2-20260624163118@cover.tls.msk.ru>
 References: <qemu-stable-11.0.2-20260624163118@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -70,92 +71,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Matt Turner <mattst88@gmail.com>
+From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 
-mips64/elfload.c uses #include "../mips/elfload.c" to share code. When
-the compiler processes mips/elfload.c the quoted #include "target_elf.h"
-resolves relative to the including file's directory, so it picks up
-mips/target_elf.h instead of mips64/target_elf.h.  mips/target_elf.h
-pulls in mips/target_ptrace.h, whose target_pt_regs has a pad0[6] field
-before regs[].  As a result elf_core_copy_regs writes:
+The priv spec defines, for RV64, that the upper 10 bits of
+pmpaddr0-pmpaddr63 are WARL and are supposed to be cleared.
 
-  r->pt.regs[i]   -> reserved[6+i]   (shifted by 6 from the correct index)
-  r->pt.cp0_epc   -> reserved[40]    (correct mips64 N64 index is 34)
+After this patch, using the bug reproducer in [1], writing
+ffffffffffffffff in pmpaddr0 and reading it back now results in
+003fffffffffffff.  Here's the 'diff -cp' dump before and after
+this change:
 
-The Linux kernel and glibc both use the mips64 N64 layout (no pad0): EPC
-at reserved[34].  Debuggers and libunwind reading the core with N64
-constants therefore see a completely wrong register set — EPC points to
-GP, RA holds the branch target instead of the link address, etc.
+*************** IN:
+*** 5272,5278 ****
+   pmpcfg10 0000000000000000
+   pmpcfg12 0000000000000000
+   pmpcfg14 0000000000000000
+!  pmpaddr0 ffffffffffffffff
+   pmpaddr1 0000000000000000
+   pmpaddr2 0000000000000000
+   pmpaddr3 0000000000000000
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Message-ID: <20260514123342.2139464-1-daniel.barboza@oss.qualcomm.com>
 
-Fix by:
- - Guarding the mips32 elf_core_copy_regs in mips/elfload.c with #ifndef
-   TARGET_MIPS64 so it is not compiled for mips64/mipsn32 targets.
- - Providing a mips64-specific elf_core_copy_regs in mips64/elfload.c
-   that writes directly to r->reserved[i] with the correct N64 indices,
-   bypassing the struct field names that are tainted by the wrong header
-   include.
-
-The mipsn32 (TARGET_ABI_MIPSN32) and mips64el targets are covered by the
-same mips64/elfload.c and benefit from the same fix.
-
-Signed-off-by: Matt Turner <mattst88@gmail.com>
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Helge Deller <deller@gmx.de>
-(cherry picked from commit dd3a906d3505561d9cb3367b82c5475acca50b6b)
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+(cherry picked from commit 53cc9747ed7c9b95ba084d614976dd48c9a57a97)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/linux-user/mips/elfload.c b/linux-user/mips/elfload.c
-index cc5bbf05ab..1a46e180cf 100644
---- a/linux-user/mips/elfload.c
-+++ b/linux-user/mips/elfload.c
-@@ -131,6 +131,7 @@ const char *get_elf_base_platform(CPUState *cs)
- #undef MATCH_PLATFORM_INSN
- 
- /* See linux kernel: arch/mips/kernel/process.c:elf_dump_regs.  */
-+#ifndef TARGET_MIPS64
- void elf_core_copy_regs(target_elf_gregset_t *r, const CPUMIPSState *env)
+diff --git a/target/riscv/csr.c b/target/riscv/csr.c
+index d65d176fe8..cf1fe6041c 100644
+--- a/target/riscv/csr.c
++++ b/target/riscv/csr.c
+@@ -5304,6 +5304,23 @@ static RISCVException read_pmpaddr(CPURISCVState *env, int csrno,
+                                    target_ulong *val)
  {
-     for (int i = 1; i < ARRAY_SIZE(env->active_tc.gpr); i++) {
-@@ -146,3 +147,4 @@ void elf_core_copy_regs(target_elf_gregset_t *r, const CPUMIPSState *env)
-     r->pt.cp0_status = tswapl(env->CP0_Status);
-     r->pt.cp0_cause = tswapl(env->CP0_Cause);
- }
-+#endif
-diff --git a/linux-user/mips64/elfload.c b/linux-user/mips64/elfload.c
-index b719555e65..9081ae8111 100644
---- a/linux-user/mips64/elfload.c
-+++ b/linux-user/mips64/elfload.c
-@@ -1 +1,30 @@
- #include "../mips/elfload.c"
+     *val = pmpaddr_csr_read(env, csrno - CSR_PMPADDR0);
 +
-+/*
-+ * mips/elfload.c defines elf_core_copy_regs guarded by #ifndef TARGET_MIPS64.
-+ *
-+ * We must provide the mips64 version here.  We cannot use r->pt.regs[] because
-+ * when mips/elfload.c is #include'd above its "#include "target_elf.h"" resolves
-+ * to mips/target_elf.h (compiler searches the including file's directory first),
-+ * which pulls in mips/target_ptrace.h.  That struct has pad0[6] before regs[],
-+ * so r->pt.regs[i] writes to reserved[6+i] — offset by 6 from what the kernel
-+ * and glibc expect for the N64 ABI (EPC at reserved[34], not reserved[40]).
-+ *
-+ * Write directly to reserved[] using the mips64 N64 index layout:
-+ *   R0-R31 at reserved[0..31], LO at [32], HI at [33], EPC at [34].
-+ */
-+void elf_core_copy_regs(target_elf_gregset_t *r, const CPUMIPSState *env)
-+{
-+    /* R0 is always 0; r->reserved is zero-initialised by the caller */
-+    for (int i = 1; i < 32; i++) {
-+        r->reserved[i] = tswap64(env->active_tc.gpr[i]);
++    /*
++     * For RV64, bits 54-63 of the address registers
++     * PMPAADDR(0-63) is a WARL zero field (priv spec,
++     * section "Physical Memory Protection CSRs").
++     *
++     * We'll have to add an annoying TARGET_RISCV64 gate
++     * here to avoid complaints about masking bits 0-53
++     * of a potential 32 bit target_ulong '*var'.
++     */
++#ifdef TARGET_RISCV64
++    if (env->misa_mxl == MXL_RV64
++        && csrno >= CSR_PMPADDR0 && csrno <= CSR_PMPADDR63) {
++        target_ulong read_mask = MAKE_64BIT_MASK(0, 54);
++        *val &= read_mask;
 +    }
-+    r->reserved[26] = 0;   /* k0 */
-+    r->reserved[27] = 0;   /* k1 */
-+    r->reserved[32] = tswap64(env->active_tc.LO[0]);
-+    r->reserved[33] = tswap64(env->active_tc.HI[0]);
-+    r->reserved[34] = tswap64(env->active_tc.PC);
-+    r->reserved[35] = tswap64(env->CP0_BadVAddr);
-+    r->reserved[36] = tswap64(env->CP0_Status);
-+    r->reserved[37] = tswap64(env->CP0_Cause);
-+}
++#endif
+     return RISCV_EXCP_NONE;
+ }
+ 
 -- 
 2.47.3
 
