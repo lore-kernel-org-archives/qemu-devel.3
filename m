@@ -4,93 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6281CDE003
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 12:47:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20482CDB47F
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 12:48:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcMzR-0003R2-Ex; Wed, 24 Jun 2026 08:46:01 -0400
+	id 1wcN1L-0005mu-9q; Wed, 24 Jun 2026 08:47:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wcMz2-00038B-17
- for qemu-devel@nongnu.org; Wed, 24 Jun 2026 08:45:38 -0400
-Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wcMyy-0006NH-Ud
- for qemu-devel@nongnu.org; Wed, 24 Jun 2026 08:45:35 -0400
-Received: by mail-wr1-x42a.google.com with SMTP id
- ffacd0b85a97d-46255b269c2so697143f8f.3
- for <qemu-devel@nongnu.org>; Wed, 24 Jun 2026 05:45:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1782305130; x=1782909930; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=OxKAmxXDbdUwrSn2RL88EjStXd/xDaL2uq1O996DDgY=;
- b=re31eqDB+iOUd2K9MGWcXVpVxe1SEF7mh2wSvuFL6qy+1hOY4iPmLCyotknHf7yMt1
- HY62a+eQ05VK0um/WmNYamrjWhGQ+Uj1N70CG6YXyU4mMxOkVPyhH9RD6Jum+rs8RgNe
- 4MP3UPPnStTVet6GYLEQp5qRoEm9jMneB03GBfTmE9A+/gcY+TcFnnwq/GK4MXW+vRse
- gjN/Fak9XciNF7giVZhI20DHmRvP5EdVjnQrXTl9wTa2Iuk8m5q6CbABgPH5Dx5o3jl8
- ReECAseU+y5hp1LNcDpaVSszllJeXjugPaJ8GA0NuOrHH30KAF37BlxW8G4B7TyQbHEk
- OjFw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782305130; x=1782909930;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=OxKAmxXDbdUwrSn2RL88EjStXd/xDaL2uq1O996DDgY=;
- b=j8Y7SRY4rsl433K1C3HG/05TQx9pVXXcwntW8RTSIJO3H32aFVX3/GEreVeL+5Te1x
- 7ooaCRpSrz5hwotvDrlbIYyt1cyudT17X+09xkC9v9g3ZgyYuqqCL3PUf+jx2EzcJdEF
- Gt/GRRYAtg1J9RjbWN24ryx9ZusKVGlcckXC7bV5uO7ZP0gCSR8Z+U+iwmK7r86V2Nsy
- p5Yi4XTJ/Q7xQ38KQQXQw9eOonJUfHnhiSWvPjAzsHxtDGhmUn6IK7noNs1lhqqiwxCC
- 3Nr2lXrzErEwziwMXbprTwJZnMm8ute6dtNGAB7Gcx9wkraoFVnAz0/mPfrGy6u2QeQz
- nurQ==
-X-Gm-Message-State: AOJu0YzFW3bnNu15Vy7xdglpYwo6mPUrG9wAEb/04O/5+xLWc3pBWuH5
- RrPDnmLe5TB/XBwLuAJugcfOTlLRSQuS8MfrBVNjjcXjYlKwLAxoBCe6ZkYrfkBoAY0=
-X-Gm-Gg: AfdE7clHFRQa//tYb7vdc0zj1O0oEJH83nM37pD7CI/eUsm7HM3yuhEyMnqjfXRuQfx
- w4UFHKjuceGGBluXKNztkZbNMfVTw6ojKSb5mXbDysbJOswwu1ML9Y53W96iNL7Z0cbeUk+4X1V
- 6dungFAaoZ0deSzQzw3KUyCqg9hjVaoJsa8qwC7rzEuQtp+LFaxcMygYZqg+V2IOa4/GiHR6bwj
- zTcTqCltD70z0exsQ/sNh6k2xaVMZb+tQgT2t52gVCFEeBKtUp1jehncnjH2f6RoB/sz/NqNUEu
- HhXlPf/LQr/Adxt9S9M5eVXbZkf4/MTnyye4YMakSy8HnRiABc1JkyY9Yc7kOuRtemmmzkU7dz0
- hRVQq3hsUzCirH9dDcJ1oy2BWBK7/GkDGC/oIi+0uN/8NwkAA3ZxVCz95x6xvRIkfUpsOJbbY+M
- Dz44SIhLAYlx/M
-X-Received: by 2002:a05:6000:4685:b0:461:a161:8102 with SMTP id
- ffacd0b85a97d-46c06ad9fcdmr4336513f8f.28.1782305130576; 
- Wed, 24 Jun 2026 05:45:30 -0700 (PDT)
-Received: from draig.lan ([185.124.0.195]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-46caad603b3sm3590250f8f.7.2026.06.24.05.45.29
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 24 Jun 2026 05:45:29 -0700 (PDT)
-Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 678935F9D4;
- Wed, 24 Jun 2026 13:45:28 +0100 (BST)
-From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wcN0h-0004o1-E3
+ for qemu-devel@nongnu.org; Wed, 24 Jun 2026 08:47:25 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wcN0e-0006YE-8N
+ for qemu-devel@nongnu.org; Wed, 24 Jun 2026 08:47:17 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1782305235;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=U2A4QuDgemvw1Sf+etVFj4hgRALEHALqTXi3Iy1ErUg=;
+ b=AKRrXG8UrlyyL+cfOw3a1fK6heS/2UnGcW32yxOv/i+uCPNFezf5hxtdutu33K+m5oWVJc
+ mCOV2Verxomjs2JadIQWoWFXXii17VOy4ABT5Ob+oC8dYtCRF+QIaK0yhio66VH+FstEEh
+ RFWwOr//UbMCWXw1Dbdwb6FTSRqmnxg=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-211-K3xmHSqMNyeshdYPz4O4CQ-1; Wed,
+ 24 Jun 2026 08:47:12 -0400
+X-MC-Unique: K3xmHSqMNyeshdYPz4O4CQ-1
+X-Mimecast-MFC-AGG-ID: K3xmHSqMNyeshdYPz4O4CQ_1782305231
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 40B761956080; Wed, 24 Jun 2026 12:47:11 +0000 (UTC)
+Received: from berrange.com (unknown [10.44.49.57])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id C94791956049; Wed, 24 Jun 2026 12:47:09 +0000 (UTC)
+From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-arm@nongnu.org,
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PATCH v3 4/6] target/arm: gate check on scr_el3 behind
- ARM_FEATURE_EL3 check
-Date: Wed, 24 Jun 2026 13:45:25 +0100
-Message-ID: <20260624124527.1018912-5-alex.bennee@linaro.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260624124527.1018912-1-alex.bennee@linaro.org>
-References: <20260624124527.1018912-1-alex.bennee@linaro.org>
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PATCH v2 5/6] gitlab: pull before_script logic into
+ .base_meson_job_template
+Date: Wed, 24 Jun 2026 13:46:56 +0100
+Message-ID: <20260624124657.2725376-6-berrange@redhat.com>
+In-Reply-To: <20260624124657.2725376-1-berrange@redhat.com>
+References: <20260624124657.2725376-1-berrange@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x42a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 8
+X-Spam_score: 0.8
+X-Spam_bar: /
+X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,39 +87,134 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We shouldn't be reading SCR_EL3 unless ARM_FEATURE_EL3 is enabled, if
-it is then we check SCR_ECVEN allows tweaking the offset.
+This ensures that all jobs have the $JOBS env set and capture the
+packages.txt content (where available) in their logs, and all use
+the job section headers.
 
-Suggested-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
-v2
-  - don't bail early - if there is no EL3 we still honour CNTHCTL_EL2
----
- target/arm/helper.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ .gitlab-ci.d/base.yml                |  9 +++++++++
+ .gitlab-ci.d/buildtest-template.yml  | 24 ++----------------------
+ .gitlab-ci.d/crossbuild-template.yml | 12 ------------
+ 3 files changed, 11 insertions(+), 34 deletions(-)
 
-diff --git a/target/arm/helper.c b/target/arm/helper.c
-index 9b843857e5d..4273e3c5395 100644
---- a/target/arm/helper.c
-+++ b/target/arm/helper.c
-@@ -1413,10 +1413,10 @@ void gt_rme_post_el_change(ARMCPU *cpu, void *ignored)
+diff --git a/.gitlab-ci.d/base.yml b/.gitlab-ci.d/base.yml
+index 6289c7e5c3..a75fb37d61 100644
+--- a/.gitlab-ci.d/base.yml
++++ b/.gitlab-ci.d/base.yml
+@@ -143,6 +143,15 @@ variables:
+       - build/meson-logs
+     reports:
+       junit: build/meson-logs/*.junit.xml
++  before_script:
++    - source scripts/ci/gitlab-ci-section
++    - section_start setup "Pre-script setup"
++    - JOBS=$(expr $(nproc) + 1)
++    # Prevent logs (if any) from prior build job artifacts
++    # from being duplicated in the new job artifacts
++    - rm -f build/meson-logs/*
++    - test -f /packages.txt && cat /packages.txt
++    - section_end setup
  
- static uint64_t gt_phys_raw_cnt_offset(CPUARMState *env)
- {
--    if ((env->cp15.scr_el3 & SCR_ECVEN) &&
--        FIELD_EX64(env->cp15.cnthctl_el2, CNTHCTL, ECV) &&
--        arm_is_el2_enabled(env) &&
--        (arm_hcr_el2_eff(env) & (HCR_E2H | HCR_TGE)) != (HCR_E2H | HCR_TGE)) {
-+    if ((!arm_feature(env, ARM_FEATURE_EL3) || (env->cp15.scr_el3 & SCR_ECVEN))
-+        && FIELD_EX64(env->cp15.cnthctl_el2, CNTHCTL, ECV)
-+        && arm_is_el2_enabled(env)
-+        && (arm_hcr_el2_eff(env) & (HCR_E2H | HCR_TGE)) != (HCR_E2H | HCR_TGE)) {
-         return env->cp15.cntpoff_el2;
-     }
-     return 0;
+ .base_meson_ccache_job_template:
+   extends: .base_meson_job_template
+diff --git a/.gitlab-ci.d/buildtest-template.yml b/.gitlab-ci.d/buildtest-template.yml
+index 8dfd17a0b5..11d7a75667 100644
+--- a/.gitlab-ci.d/buildtest-template.yml
++++ b/.gitlab-ci.d/buildtest-template.yml
+@@ -3,12 +3,6 @@
+   extends: .base_meson_ccache_job_template
+   stage: build
+   image: $CI_REGISTRY_IMAGE/qemu/$IMAGE:$QEMU_CI_CONTAINER_TAG
+-  before_script:
+-    - source scripts/ci/gitlab-ci-section
+-    - section_start setup "Pre-script setup"
+-    - JOBS=$(expr $(nproc) + 1)
+-    - cat /packages.txt
+-    - section_end setup
+   script:
+     - !reference [.base_meson_ccache_job_template, script]
+     - du -sh .git
+@@ -74,11 +68,6 @@
+ 
+ .native_test_job_template:
+   extends: .common_test_job_template
+-  before_script:
+-    # Prevent logs from the build job that run earlier
+-    # from being duplicated in the test job artifacts
+-    - rm -f build/meson-logs/*
+-
+ 
+ .functional_test_job_template:
+   extends: .common_test_job_template
+@@ -96,27 +85,18 @@
+       - build/tests/functional/*/*/*.log
+     reports:
+       junit: build/meson-logs/*.junit.xml
+-  before_script:
+-    - export QEMU_TEST_ALLOW_UNTRUSTED_CODE=1
+-    - export QEMU_TEST_CACHE_DIR=${CI_PROJECT_DIR}/functional-cache
+-    # Prevent logs from the build job that run earlier
+-    # from being duplicated in the test job artifacts
+-    - rm -f build/meson-logs/*
+   after_script:
+     - cd build
+     - du -chs ${CI_PROJECT_DIR}/*-cache
+   variables:
+     QEMU_JOB_FUNCTIONAL: 1
++    QEMU_TEST_ALLOW_UNTRUSTED_CODE: 1
++    QEMU_TEST_CACHE_DIR: ${CI_PROJECT_DIR}/functional-cache
+ 
+ .wasm_build_job_template:
+   extends: .base_meson_job_template
+   stage: build
+   image: $CI_REGISTRY_IMAGE/qemu/$IMAGE:$QEMU_CI_CONTAINER_TAG
+-  before_script:
+-    - source scripts/ci/gitlab-ci-section
+-    - section_start setup "Pre-script setup"
+-    - JOBS=$(expr $(nproc) + 1)
+-    - section_end setup
+   script:
+     - du -sh .git
+     - mkdir build
+diff --git a/.gitlab-ci.d/crossbuild-template.yml b/.gitlab-ci.d/crossbuild-template.yml
+index aadae26844..94423814a7 100644
+--- a/.gitlab-ci.d/crossbuild-template.yml
++++ b/.gitlab-ci.d/crossbuild-template.yml
+@@ -3,12 +3,6 @@
+   stage: build
+   image: $CI_REGISTRY_IMAGE/qemu/$IMAGE:$QEMU_CI_CONTAINER_TAG
+   timeout: 80m
+-  before_script:
+-    - source scripts/ci/gitlab-ci-section
+-    - section_start setup "Pre-script setup"
+-    - JOBS=$(expr $(nproc) + 1)
+-    - cat /packages.txt
+-    - section_end setup
+   script:
+     - !reference [.base_meson_ccache_job_template, script]
+     - mkdir build
+@@ -48,9 +42,6 @@
+   stage: build
+   image: $CI_REGISTRY_IMAGE/qemu/$IMAGE:$QEMU_CI_CONTAINER_TAG
+   timeout: 60m
+-  before_script:
+-    - source scripts/ci/gitlab-ci-section
+-    - JOBS=$(expr $(nproc) + 1)
+   script:
+     - !reference [.base_meson_ccache_job_template, script]
+     - mkdir build
+@@ -73,9 +64,6 @@
+   extends: .base_meson_ccache_job_template
+   stage: build
+   image: $CI_REGISTRY_IMAGE/qemu/$IMAGE:$QEMU_CI_CONTAINER_TAG
+-  before_script:
+-    - source scripts/ci/gitlab-ci-section
+-    - JOBS=$(expr $(nproc) + 1)
+   script:
+     - !reference [.base_meson_ccache_job_template, script]
+     - mkdir build
 -- 
-2.47.3
+2.54.0
 
 
