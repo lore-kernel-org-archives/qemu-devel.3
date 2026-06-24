@@ -4,43 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 322ECCDB479
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 05:14:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E091CDB479
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 05:14:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcFqY-0002qx-4c; Wed, 24 Jun 2026 01:08:22 -0400
+	id 1wcFrl-00044q-Ag; Wed, 24 Jun 2026 01:09:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wcFpv-0002Wd-1O; Wed, 24 Jun 2026 01:07:44 -0400
+ id 1wcFqb-0002uf-7y; Wed, 24 Jun 2026 01:08:27 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wcFpo-0005kE-L8; Wed, 24 Jun 2026 01:07:39 -0400
+ id 1wcFqW-0005pi-VV; Wed, 24 Jun 2026 01:08:24 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1782277622; bh=qWXL5mRYAbvxI93203RuLrL7Mu57SB9BYiGfhMuCE/k=;
+ t=1782277622; bh=bEJwbZH2Ng3U2UqlGmEAoVUd6jBA72yoLTfhhUkvOQc=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=dZyQ0FIDyAm6J6dSUOXQbwm4hnOZjDaD+mTjFmcsVcHX1CdzggoQvsn7YmdVQfAw1
- JNluPkNKIWEvJ4ioCbKQ4Z5iPHNlDatWxneTDiUFbpkpxx6ntgzPwfAFrWS6HiX/gu
- spyPIwJNneISwOZlgMR1ZY+nQeDRzEsohcQIQgBYHjvrM90gcjzBkjRlm5etfQbd0s
- L+a9hT3zZZmjxbiKjrItHk3340UxUErYTwKxxG8jfx3MQKH15eicjX82fJH8gqYf67
- becSJ8bR/F11tgTwalpo+6PwzDNGzGuEBA1jK9ExZ817tR09x/Tbbny7lQMwhmWrTl
- MYbsgAjt75UeQ==
+ b=fZ9X9dPJlLHg8QFUBIc0+fNv+yHjzJeUDV2+ypy7YLUruCDofqzofV0MEgoK7BeVp
+ 9D7IB3a7frGduNCoDhVAU3NmYR4Watxbku0PQxnzc0XTUUJu5Fm7aSw7QN1TbZbmIJ
+ b6cKjYJq46JX/Z5D8GoZzz9f1ZwOU7FGiZNoyJSc48py1FkA9+YGj0Y6aktVX3RCPd
+ sFF2Wgu+/2A5wuyc7r94AbRRdzM1dr/YHZ/6QjF112OktuwFuCIfI+89lOD5R3uB20
+ xqqTC8Yj4JamBeuWXayU6QA3EfwL4a6Zcjet+9G22F6LFfBPQlxvlBc/ZvMLTXjYwQ
+ XJNXDLEA3KTYQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 514F11BA660;
+ by isrv.corpit.ru (Postfix) with ESMTP id D5E4E1BA667;
  Wed, 24 Jun 2026 08:07:02 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 3B1AB3DDAFD;
+ by tsrv.corpit.ru (Postfix) with ESMTP id BF5833DDB04;
  Wed, 24 Jun 2026 08:07:07 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Costas Argyris <costas.argyris@amd.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.4 66/95] tests/qtest: Add amd-iommu command buffer head
- wrap test
-Date: Wed, 24 Jun 2026 08:05:01 +0300
-Message-ID: <20260624050541.395079-5-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Chao Liu <chao.liu.zevorn@gmail.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.2.4 73/95] target/riscv/tcg: disable svpbmt if satp_mode <
+ sv39
+Date: Wed, 24 Jun 2026 08:05:08 +0300
+Message-ID: <20260624050541.395079-12-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.2.4-20260624080454@cover.tls.msk.ru>
 References: <qemu-stable-10.2.4-20260624080454@cover.tls.msk.ru>
@@ -69,132 +72,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Costas Argyris <costas.argyris@amd.com>
+From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 
-Add a qtest for AMD IOMMU command buffer head pointer wraparound.
-The test programs a command buffer, fills it with COMPLETION_WAIT commands,
-advances the tail to consume all but the final entry, then wraps the tail
-to zero to force the final command to advance CmdHeadPtr past the end of
-the buffer. The guest-visible CmdHeadPtr register must then wrap back to zero.
+Priv spec chapter "Svpbmt Extension for Page-Based Memory Types, Version
+1.0" mentions that "The Svpbmt extension depends on the Sv39
+extension.".
 
-This covers the case fixed by an earlier CmdHeadPtr wraparound patch.
+We're not doing any satp checks when enabling svpbmt.  This causes
+problems with the riscv32 'max' CPU that happens to be enabling svpbmt
+even though it doesn't support the required satp mode.  In fact all rv32
+CPUs are allowing menvcfg.PBMTE writes, which doesn't make sense for
+them in any circunstance since svpbmt is not possible for rv32 at this
+moment [1].
 
-The Linux kernel AMD IOMMU driver is not affected by this bug because it
-uses COMPLETION_WAIT with a memory store doorbell to detect command progress.
+This also impacts rv64 CPUs that are running in satp 'bare' mode and are
+reporting svpbmt in the riscv,isa.
 
-Signed-off-by: Costas Argyris <costas.argyris@amd.com>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-Id: <20260530183458.7778-1-costas.argyris@amd.com>
-(cherry picked from commit 8a1c09cbd3fe776a467398700c610cd126ee8a59)
+All these problems can be solved by disabling svpbmt if satp_mode is not
+at least sv39.  The problem reported in [1] goes away because we'll
+never enable MENVCFG_PBMTE write mask in write_menvcfgh().  We're also
+become consistent with how svpbmt is enabled for rv64.
+
+In case the user enables svpbmt in the command line using an invalid setup,
+not just disable svpbmt but also throw a warning:
+
+$ ./build/qemu-system-riscv64 -M virt,dumpdtb=fdt.dtb \
+    -cpu max,sv39=off,sv48=off,sv57=off,sv64=off,svpbmt=on
+qemu-system-riscv64: warning: svpbmt requires at least satp sv39, current satp mode: none
+
+[1] https://gitlab.com/qemu-project/qemu/-/work_items/3473
+
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3473
+Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
+Message-ID: <20260519114858.316532-1-daniel.barboza@oss.qualcomm.com>
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+(cherry picked from commit 109856754cbd4c98db49e67071b620945a4ee2a9)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 63e9ba521b..a759198345 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -3939,6 +3939,7 @@ M: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
- R: Sairaj Kodilkar <sarunkod@amd.com>
- S: Supported
- F: hw/i386/amd_iommu*
-+F: tests/qtest/amd-iommu-test.c
+diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
+index 22ced1ed1b..c4dfa4ac09 100644
+--- a/target/riscv/tcg/tcg-cpu.c
++++ b/target/riscv/tcg/tcg-cpu.c
+@@ -861,6 +861,17 @@ void riscv_cpu_validate_set_extensions(RISCVCPU *cpu, Error **errp)
+         return;
+     }
  
- OpenSBI Firmware
- L: qemu-riscv@nongnu.org
-diff --git a/tests/qtest/amd-iommu-test.c b/tests/qtest/amd-iommu-test.c
-new file mode 100644
-index 0000000000..fb28511588
---- /dev/null
-+++ b/tests/qtest/amd-iommu-test.c
-@@ -0,0 +1,76 @@
-+/*
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "libqtest.h"
-+#include "hw/i386/amd_iommu.h"
-+
-+#define CMDBUF_ADDR       0x200000
-+#define CMDBUF_LEN_FIELD  8
-+#define CMDBUF_ENTRIES    (1U << CMDBUF_LEN_FIELD)
-+
-+static inline uint64_t amdvi_reg_readq(QTestState *s, uint64_t offset)
-+{
-+    return qtest_readq(s, AMDVI_BASE_ADDR + offset);
-+}
-+
-+static inline void amdvi_reg_writeq(QTestState *s, uint64_t offset,
-+                                    uint64_t val)
-+{
-+    qtest_writeq(s, AMDVI_BASE_ADDR + offset, val);
-+}
-+
-+static void test_cmdbuf_head_wrap(void)
-+{
-+    QTestState *s;
-+    uint64_t head;
-+    int i;
-+    /* 16 bytes per command */
-+    struct {
-+        uint64_t qw0;
-+        uint64_t qw1;
-+    } cmdbuf[CMDBUF_ENTRIES];
-+
-+    if (!qtest_has_machine("q35")) {
-+        g_test_skip("q35 machine not available");
-+        return;
++#ifndef CONFIG_USER_ONLY
++    if (cpu->cfg.ext_svpbmt && cpu->cfg.max_satp_mode < VM_1_10_SV39) {
++        cpu->cfg.ext_svpbmt = false;
++        if (cpu_cfg_ext_is_user_set(CPU_CFG_OFFSET(ext_svpbmt))) {
++            warn_report("svpbmt requires at least satp sv39, "
++                        "current satp mode: %s",
++                        satp_mode_str(cpu->cfg.max_satp_mode,
++                                     riscv_cpu_is_32bit(cpu)));
++        }
 +    }
-+
-+    s = qtest_init("-M q35 -device amd-iommu");
-+
-+    /* fill the command buffer with COMPLETION_WAIT (no-op) commands */
-+    for (i = 0; i < CMDBUF_ENTRIES; i++) {
-+        cmdbuf[i].qw0 = (uint64_t)AMDVI_CMD_COMPLETION_WAIT << 60;
-+        cmdbuf[i].qw1 = 0;
-+    }
-+    qtest_memwrite(s, CMDBUF_ADDR, cmdbuf, sizeof(cmdbuf));
-+
-+    /* point the IOMMU at the command buffer and set its length */
-+    amdvi_reg_writeq(s, AMDVI_MMIO_COMMAND_BASE,
-+                     CMDBUF_ADDR | ((uint64_t)CMDBUF_LEN_FIELD << 56));
-+
-+    /* enable the IOMMU and its command buffer processor */
-+    amdvi_reg_writeq(s, AMDVI_MMIO_CONTROL,
-+                     AMDVI_MMIO_CONTROL_AMDVIEN | AMDVI_MMIO_CONTROL_CMDBUFLEN);
-+
-+    /* advance tail to the last entry, consuming all but the final entry */
-+    amdvi_reg_writeq(s, AMDVI_MMIO_COMMAND_TAIL,
-+                     (CMDBUF_ENTRIES - 1) * AMDVI_COMMAND_SIZE);
-+
-+    /* wrap tail to 0, consuming the final entry and completing the buffer */
-+    amdvi_reg_writeq(s, AMDVI_MMIO_COMMAND_TAIL, 0);
-+
-+    /* after consuming all entries the IOMMU must wrap CmdHeadPtr to 0 */
-+    head = amdvi_reg_readq(s, AMDVI_MMIO_COMMAND_HEAD);
-+    g_assert((head & AMDVI_MMIO_CMDBUF_HEAD_MASK) == 0);
-+
-+    qtest_quit(s);
-+}
-+
-+int main(int argc, char **argv)
-+{
-+    g_test_init(&argc, &argv, NULL);
-+    qtest_add_func("/q35/amd-iommu/cmdbuf-head-wrap", test_cmdbuf_head_wrap);
-+    return g_test_run();
-+}
-diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
-index 669d07c06b..cddb08604b 100644
---- a/tests/qtest/meson.build
-+++ b/tests/qtest/meson.build
-@@ -94,6 +94,7 @@ qtests_i386 = \
-   (config_all_devices.has_key('CONFIG_SB16') ? ['fuzz-sb16-test'] : []) +                   \
-   (config_all_devices.has_key('CONFIG_SDHCI_PCI') ? ['fuzz-sdcard-test'] : []) +            \
-   (config_all_devices.has_key('CONFIG_ESP_PCI') ? ['am53c974-test'] : []) +                 \
-+  (config_all_devices.has_key('CONFIG_AMD_IOMMU') ? ['amd-iommu-test'] : []) +             \
-   (config_all_devices.has_key('CONFIG_VTD') ? ['intel-iommu-test'] : []) +                 \
-   (host_os != 'windows' and                                                                \
-    config_all_devices.has_key('CONFIG_ACPI_ERST') ? ['erst-test'] : []) +                   \
++#endif
+     /*
+      * Disable isa extensions based on priv spec after we
+      * validated and set everything we need.
 -- 
 2.47.3
 
