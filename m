@@ -4,113 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC776CDB481
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 14:40:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4BF25CDB479
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 14:40:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcOlc-0007Pi-AN; Wed, 24 Jun 2026 10:39:52 -0400
+	id 1wcOlT-0007OV-O1; Wed, 24 Jun 2026 10:39:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
- id 1wcOla-0007PA-MI; Wed, 24 Jun 2026 10:39:50 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
- id 1wcOlY-0002zC-Tb; Wed, 24 Jun 2026 10:39:50 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65OAmhCW718393; Wed, 24 Jun 2026 14:39:45 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=+Ft7Pp
- kjN5pKGFDHK6GMtcKuVmn6gXqBIT6M4oiH0Ww=; b=hnTYTbaqJgffzPOkiTHD2y
- 2EZ27uzO6+mdOAZYRqDeVCD/1cRY5NjK+74mtF4sGsZUiEt/PCFRU2HPgh6POHK0
- KBSpXSNM4cAlzQBSLIQG+scfqgFPme7qvxd8IO/rUc9u9Zip3Vq6W2gz2K+9lpKh
- hqRRYRPaJ/UIF5LJxnFeT0ftNpkTvX2EnOFDjlp2xA0A1N0y1Mau/117XYmAacWM
- 2QqL0O5a37hyInol0yuuOdQU95IR8sEqsew7JN7rzdznvCDUV1tatzs1XFltgiat
- Lcb0pQwvcDH2agfo8/LKVAasfS54FDREQbbtHbBjrkca+XOiEwOihHGdkvWkbG5g
- ==
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4ewjc3mt0y-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 24 Jun 2026 14:39:43 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 65OEYoDX023220;
- Wed, 24 Jun 2026 14:39:43 GMT
-Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4ex7vyrswm-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 24 Jun 2026 14:39:42 +0000 (GMT)
-Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com
- [10.20.54.106])
- by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 65OEddHO42533286
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 24 Jun 2026 14:39:39 GMT
-Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 331FB20043;
- Wed, 24 Jun 2026 14:39:39 +0000 (GMT)
-Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id CC09F20040;
- Wed, 24 Jun 2026 14:39:38 +0000 (GMT)
-Received: from [0.0.0.0] (unknown [9.111.35.104])
- by smtpav07.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Wed, 24 Jun 2026 14:39:38 +0000 (GMT)
-Message-ID: <8bbe6ff3-624f-4466-bf67-246a84c1809a@linux.ibm.com>
-Date: Wed, 24 Jun 2026 16:39:38 +0200
+ (Exim 4.90_1) (envelope-from <suunj1331@gmail.com>)
+ id 1wcOlS-0007OG-Mo
+ for qemu-devel@nongnu.org; Wed, 24 Jun 2026 10:39:42 -0400
+Received: from mail-lf1-x132.google.com ([2a00:1450:4864:20::132])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <suunj1331@gmail.com>)
+ id 1wcOlR-0002qU-1E
+ for qemu-devel@nongnu.org; Wed, 24 Jun 2026 10:39:42 -0400
+Received: by mail-lf1-x132.google.com with SMTP id
+ 2adb3069b0e04-5aa5edf347eso770310e87.3
+ for <qemu-devel@nongnu.org>; Wed, 24 Jun 2026 07:39:40 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1782311979; cv=none;
+ d=google.com; s=arc-20240605;
+ b=gacSxYB7XkSKdPN7Inu9S0WO6V1GGkCVZ0rA7pNtV1IvVXc2WzMzZtK7X423PKvyBF
+ hgy/r6fTdD1VQdZwLWAdRPKdXfR4P1Qu4HS8g8kduz9r1/61XYViyr2ulP07XNU1untU
+ t/mthv5QlGAW+mnzEcXJ4gLAiRz8spfs0s5PMZJ5bTprUQHzW7X2yEhjl2liWU52arSW
+ lK4pkAfPVU7DBZaO8KO9lES+FPRc+R17ur5UVHQ261MjUIuyLBCmDHrrHtzb1rnvfP6V
+ uWdGj7u30XyjzcAu1Kq0cUe1tNuC7kYUbRnBYH2/5EqH4G+hufImT3UVrJlUM22WQ6Vx
+ UgwQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=ToX7vzujzwu1ZERuBXKxJH0zW2dxltUXq9k0R/akn1s=;
+ fh=wYzagAB4gBox6BnyUupwAxJd/jAPk4OH9R+vBVeHg0o=;
+ b=LcNXrCYTzoAnzVJG7mdhT3fXEKCF2KqmBzQrhrcLweRUZvV4zOv8aBs4208jx3WQwV
+ FvaRgwUROY8b+ZIEy/7TkwdnMf3IOrDP9vhHiu7p81rSBDjSaUBjkn2iCUVZqWEkii2h
+ KaZmVkhoI8wIFRhzO7UcL60rra7S+vmQ3BMq5D2A7Hz/9btcO8ZcKAgdJwhxP/cViuKj
+ RKkn46dFGmwUkW2SPbLnl2kdas1RlNs3dnP1m+rNsRjLhDnmKkQjfBAFIfxPph8QFxDB
+ bev2xufl/xF+aUt+IkXXwHSoXzikC43QXoLBEUKw4DB7ktShG9Gx5BAIN2R5gkFyFla8
+ 4W2w==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1782311979; x=1782916779; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=ToX7vzujzwu1ZERuBXKxJH0zW2dxltUXq9k0R/akn1s=;
+ b=Y6DwHvj4Hi02c7dqQQOM3GCxVrCUj4UJHHJoRSkSicphG8xqun6fsJLRDb0PVJAI7C
+ wFq0eugvuoGQQJlEZE27FJW/Ae1omjVkC1qAAtrDSl3QFIfj5u+2AzohQbhQQgPivowN
+ +UnuBRcTuzK/O0nYi13TyRY6ZzOH2nas3/ckc/QHL03LP71jn38OCpiJWowGCFpnLQdI
+ gU9RtBtZkGTTayne0rHrwH0Ld+w7+jHWnO2Ds0QlrEN1x2mpvDYp/kiKx7H4EgPJ3w/n
+ Yhgz/Z8+B9XyDIJpt62qLDCuoxkq3c13e0RKsnxKRTrxWwB9aAXOCruJPZBGC4a6IjBM
+ 5/wg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1782311979; x=1782916779;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=ToX7vzujzwu1ZERuBXKxJH0zW2dxltUXq9k0R/akn1s=;
+ b=R6TAO0XHF1/9UjyG0oMfB+8rhBSibbohqAlUY8dhcjrw9V1d6pQ/Lc42P+7xOGFD+A
+ j8lhlgIz3aS5NsaeZDSTYszsOklgehrsiJTQn5+k3VeU6Xe9gHQ582+AhxbwHsN37zU2
+ s+KQJB57bCiRrrgsRlx9skdbeIfwCsfH42s/apgspQWIwSCeKLncQn+DpNqqUpkYK2nE
+ 7MXfjXAfxhEB/veAd7aAUNxrviLwJJAUABZFBFKcc+l+3ijVOZciS+pAuiqf07TOCcS0
+ G6kUWaHseB6FZfGGaJodorZxckFlwKxGwdFDUj0wgFcR7mlDb+rbAVGo9W8l5k21NsH6
+ fklA==
+X-Gm-Message-State: AOJu0Yzw9mhau3lgH3rXKrjd1b+SZwvaDSauK284S9S3rgwbrPXkQoGz
+ zeBLP61qjqdkKp6rMHM5RhwkWVBo02PK2DQvrdmOBeP6tYiTGavwzHU9P6XxIFt6o71k8Fw9zOT
+ AeM4Vb84Qn8nYvpfr5vR29Ya+yvohP48=
+X-Gm-Gg: AfdE7clu2PxwXTVuS7FEWlBsiVhY8B64iD3iTemCKtjWTY1vMj/2I4EpmjozFUOgbBF
+ ICCkC3BonPr0zRRlOoFNneJg94lfoGpdDatxZIpD/syqMUnR1M7f5lt9v7+CPSlgEduWPBUSHEc
+ XtAE5VrnE02TC9IST5vUUxINcmJvQbaP/ycB2YkEsCWW/XavIinrFdFqBBp6ERX9QlSwZqTdtPe
+ aUREYiHQnqiS5c2ttuK0+TXwrNQmnC5VU+M6meHAwPRGyyvnTsRH1GsXvQmm2RtS7YCUSHTnMZ+
+ aaLQG5nQ/ePQK5xwVXItNCHn5dnH
+X-Received: by 2002:a05:6512:ac3:b0:5ad:5079:483a with SMTP id
+ 2adb3069b0e04-5addb81cdc8mr2481854e87.12.1782311978267; Wed, 24 Jun 2026
+ 07:39:38 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v8 04/18] target/s390x: Support cpacf sha256
-To: Harald Freudenberger <freude@linux.ibm.com>, richard.henderson@linaro.org, 
- david@kernel.org, thuth@redhat.com, berrange@redhat.com
-Cc: qemu-s390x@nongnu.org, qemu-devel@nongnu.org,
- linux390-list@tuxmaker.boeblingen.de.ibm.com,
- linux-s390@vger.kernel.org, dengler@linux.ibm.com,
- borntraeger@linux.ibm.com, fcallies@linux.ibm.com, cohuck@redhat.com
-References: <20260624081029.23815-1-freude@linux.ibm.com>
- <20260624081029.23815-5-freude@linux.ibm.com>
-Content-Language: en-US
-From: Ilya Leoshkevich <iii@linux.ibm.com>
-In-Reply-To: <20260624081029.23815-5-freude@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=X4Ni7mTe c=1 sm=1 tr=0 ts=6a3bec2f cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
- a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=VnNF1IyMAAAA:8
- a=STxvwRUYNqjuMKLQNtwA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjI0MDExOSBTYWx0ZWRfX2mxZrl2KHf9W
- aAVdTS7Pls9o3YvNQKxApv/PtWhVYuCWDLsCWUetweGGvUngxxNVqwFnpKcldi7yCQcBmsIfdnb
- Jdrw/H+lILT+QV6W+0ouB6sFro+ymTg=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjI0MDExOSBTYWx0ZWRfX2hUFFxyn39fJ
- 5y7kXl+M4XBzdGaeuiKF9ssdlx+1ULMwnahloK+zxiR2nedq1x8XdovUJoYGHGEbO/Li9Qfw57t
- 7RteWvnRfNYc3qq2lxbcW/PL+k/uChfWCxriY07tWzUzGHok3BYxKWc0lqkOwF8pcf1W/lLQYQa
- CmOIwd/ZdyxfimTkdKcw8cZTTXScdIDEGv9j0yldcq9NyV8J4zIbAsX3nulpu+ja4EZJb4YR/Wx
- hh4kWgZWrYp3g3X6jpl79K+v0iT31jXKNxKv2rlE+zcdlNTDOrOvBcH9BsfzT1WuGK7dh4CZ5lN
- XmbVsSHBUX9qRCEpQU2Tah9AZHtznq3zSQyhuQFeS/vjlNinovB3ViPuXntn1lxZIUTXWimpoIU
- bA/NMSXRTTx9v9LemLT+K+0HvDJOLw==
-X-Proofpoint-ORIG-GUID: 5sVcjEtsyWGFLTETlfmXTWWFP7Sa6Vso
-X-Proofpoint-GUID: 5sVcjEtsyWGFLTETlfmXTWWFP7Sa6Vso
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-24_03,2026-06-23_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 phishscore=0 suspectscore=0 spamscore=0 malwarescore=0
- adultscore=0 lowpriorityscore=0 classifier=typeunknown authscore=0 authtc=
- authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.22.0-2606150000 definitions=main-2606240119
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=iii@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20260624090052.463075-1-suunj1331@gmail.com>
+ <4e78cb10-dbed-4f22-b104-43f45595f86e@oss.qualcomm.com>
+In-Reply-To: <4e78cb10-dbed-4f22-b104-43f45595f86e@oss.qualcomm.com>
+From: SeungJu Cheon <suunj1331@gmail.com>
+Date: Wed, 24 Jun 2026 23:39:25 +0900
+X-Gm-Features: AVVi8Cfi9Fp5VXWps5xvboHpH-iCiLiocVwAL6y-rxjSIlQVuREeeA5h2QZ264M
+Message-ID: <CAGwK=3oHc_gep8fuoC8F7uQyEMxMvnrcJ_6F4HeSNOXtiJ_ggw@mail.gmail.com>
+Subject: Re: [PATCH] target/riscv: Fix vsstatus.UXL reserved value
+To: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, palmer@dabbelt.com, 
+ alistair.francis@wdc.com, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, 
+ chao.liu.zevorn@gmail.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::132;
+ envelope-from=suunj1331@gmail.com; helo=mail-lf1-x132.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -126,23 +119,103 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Thanks for the review, Daniel.
 
+I'll add a helper function and resend as v2.
 
-On 6/24/26 10:10, Harald Freudenberger wrote:
-> Add a new file cpacf_sha256.c which implements sha256.
-> Add support for the sha256 subfuction for CPACF kimd and klmd.
-> 
-> Signed-off-by: Harald Freudenberger <freude@linux.ibm.com>
-> Tested-by: Holger Dengler <dengler@linux.ibm.com>
-> Reviewed-by: Finn Callies <fcallies@linux.ibm.com>
-> ---
->   target/s390x/gen-features.c      |   2 +
->   target/s390x/tcg/cpacf.h         |   5 +
->   target/s390x/tcg/cpacf_sha256.c  | 232 +++++++++++++++++++++++++++++++
->   target/s390x/tcg/crypto_helper.c |   8 ++
->   target/s390x/tcg/meson.build     |   1 +
->   5 files changed, 248 insertions(+)
->   create mode 100644 target/s390x/tcg/cpacf_sha256.c
+Best regards,
+SeungJu
 
-Reviewed-by: Ilya Leoshkevich <iii@linux.ibm.com>
+On Wed, Jun 24, 2026 at 9:34=E2=80=AFPM Daniel Henrique Barboza
+<daniel.barboza@oss.qualcomm.com> wrote:
+>
+> Hello,
+>
+> On 6/24/2026 6:00 AM, SeungJu Cheon wrote:
+> > By the priv spec the value "3" is marked as 'Reserved' for
+> > mstatus.UXL. write_mstatus() rejects this value, but
+> > write_vsstatus() does not, allowing the reserved value to be
+> > written and read back unchanged.
+> >
+> > Handle a vsstatus.UXL =3D 3 write by writing the current 'xl'
+> > instead.
+> >
+> > Fixes: f310df58bd2 ("target/riscv: Enable uxl field write")
+> > Signed-off-by: SeungJu Cheon <suunj1331@gmail.com>
+> > ---
+> >   target/riscv/csr.c | 8 ++++++++
+> >   1 file changed, 8 insertions(+)
+> >
+> > diff --git a/target/riscv/csr.c b/target/riscv/csr.c
+> > index dd9726fcf4..4c1da61824 100644
+> > --- a/target/riscv/csr.c
+> > +++ b/target/riscv/csr.c
+> > @@ -5226,7 +5226,15 @@ static RISCVException write_vsstatus(CPURISCVSta=
+te *env, int csrno,
+> >       uint64_t mask =3D (target_ulong)-1;
+> >       if ((val & VSSTATUS64_UXL) =3D=3D 0) {
+> >           mask &=3D ~VSSTATUS64_UXL;
+> > +    } else {
+> > +        uint64_t uxl =3D (val & VSSTATUS64_UXL) >> 32;
+> > +        if (uxl =3D=3D 3) {
+> > +            int xl =3D riscv_cpu_mxl(env);
+> > +            val =3D deposit64(val, 32, 2,
+> > +                            xl =3D=3D MXL_RV128 ? MXL_RV64 : xl);
+> > +        }
+> >       }
+>
+> This is similar to what was done here:
+>
+> commit ddfd33f1965804fc4a718d8d46bc150525c2f9db
+> Author: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+> Date:   Thu May 14 16:45:37 2026 -0300
+>
+>      target/riscv/csr.c: fix mstatus.UXL reserved value
+>
+>
+> diff --git a/target/riscv/csr.c b/target/riscv/csr.c
+> index 83ca354bf0..d004a4bfb4 100644
+> --- a/target/riscv/csr.c
+> +++ b/target/riscv/csr.c
+> @@ -2045,7 +2045,17 @@ static RISCVException write_mstatus(CPURISCVState =
+*env, int csrno,
+>
+>       if (xl !=3D MXL_RV32 || env->debugger) {
+>           if ((val & MSTATUS64_UXL) !=3D 0) {
+> +            uint64_t uxl =3D val & MSTATUS64_UXL >> 32;
+>               mask |=3D MSTATUS64_UXL;
+> +
+> +            /*
+> +             * uxl =3D 3 is reserved so write the current xl instead.
+> +             * In case xl =3D MXL_RV128 (3) write MXL_RV64.
+> +             */
+> +            if (uxl =3D=3D 3) {
+> +                uxl =3D xl =3D=3D MXL_RV128 ? MXL_RV64 : xl;
+> +                val =3D deposit64(val, 32, 2, uxl);
+> +            }
+>           }
+>       }
+>
+>
+> But that patch fixed just write_mstatus().
+>
+> I suggest adding a local helper riscv_write_uxl (feel free to choose anot=
+her better
+> name) to encapsulate this logic and then use it in both mstatus and vssta=
+tus to
+> write UXL:
+>
+>   val =3D riscv_write_uxl(val)
+>
+>
+> Thanks,
+> Daniel
+>
+>
+>
+> > +
+> >       if ((env->henvcfg & HENVCFG_DTE)) {
+> >           if ((val & SSTATUS_SDT) !=3D 0) {
+> >               val &=3D ~SSTATUS_SIE;
+>
 
