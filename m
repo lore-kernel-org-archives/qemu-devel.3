@@ -4,46 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59F75CDB481
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 13:49:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66EE1CDE004
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 13:49:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcNsb-0002mq-OI; Wed, 24 Jun 2026 09:43:03 -0400
+	id 1wcNsK-0001QN-JE; Wed, 24 Jun 2026 09:42:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wcNsV-0002Yk-OT; Wed, 24 Jun 2026 09:42:55 -0400
+ id 1wcNs5-00010Z-Eh; Wed, 24 Jun 2026 09:42:31 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wcNsU-00021l-6P; Wed, 24 Jun 2026 09:42:55 -0400
+ id 1wcNs4-0001y1-15; Wed, 24 Jun 2026 09:42:29 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1782308002; bh=J0rHM6wTNz+A/ze9gmNWyp+H/Vifrhgz0ISNPvz8rK8=;
+ t=1782308001; bh=XToyEyO85k0wvOXd+H658vKKXC4nhak7e7vcR3tu/po=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=heOqvoPx2LM7KYkkgfuqSJi8Fw20cRZIbPIaxMNTfcp1/pB81FA9UD1ImklCJCnoX
- eVx/ic3pOOcAo9T5IKsoNoKNSxZh91/LMTBPFQw8/K3UnTaiJXKpFU++JGTB3+gali
- SZLHtWa6RH/idFEqa0LPz0JkVOrQ7Dcp02vne5PHI4a+zYRBcWDi4mpffP1MB0f4HB
- EmuyikTd1fyvaCDzIwDfiLm0lNxy+rirHbqfgt+BNOv4u9H/t0N0+PVUjjskbh3xH7
- CK7k4wQmkzDIl6l5j5LDOK75p3bHkjGZpC/wD9gfmwrFgm1CNkpN/6KRvYsZFyypK7
- W7N91JUTBOsTA==
+ b=qKrOa6/JrbVpytpjrAU+vJONSs0K58S5KvKWv2no431pQfgVln3O+VQAl3shcTl1t
+ DZYt1++zabdHFxgwVH9FG7awdipNyphec+cnEM7mBvWt7mI9ruhdtNnac+UKeyCKzC
+ L85qzezM7ew7BdERZcu6sJw6/rwBIdplhyUZnopN1D4Agd3LNP1Gqqqd+Js968hjaB
+ NAhCd4SyxWmnqdYgyTOQB0k+2PCWnMaALxOW7cK0XDtn307P05N1PRIvaz0kQln9L3
+ vut9Q6ZeJouzCQlOvHlsSXOr12R2cPBIEtrIUPa2jtUK3eOyCQ7cSWs8WU5Wq73yX2
+ 9Gik2kEQkTgGw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 19B2E1BAA14;
- Wed, 24 Jun 2026 16:33:22 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id D3E491BAA10;
+ Wed, 24 Jun 2026 16:33:21 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id AC9853DEA63;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 63BB23DEA5F;
  Wed, 24 Jun 2026 16:33:27 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Christian Schoenebeck <qemu_oss@crudebyte.com>,
+Cc: qemu-stable@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>,
+ Feifan Qian <bea1e@proton.me>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.2 098/107] hw/9pfs: reject . and .. in Twstat rename
-Date: Wed, 24 Jun 2026 16:31:43 +0300
-Message-ID: <20260624133301.403266-98-mjt@tls.msk.ru>
+Subject: [Stable-11.0.2 094/107] hw/uefi: fix parse_hexstr
+Date: Wed, 24 Jun 2026 16:31:39 +0300
+Message-ID: <20260624133301.403266-94-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.2-20260624163118@cover.tls.msk.ru>
 References: <qemu-stable-11.0.2-20260624163118@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -68,41 +71,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Christian Schoenebeck <qemu_oss@crudebyte.com>
+From: Gerd Hoffmann <kraxel@redhat.com>
 
-The other Trename and Trenameat handlers already reject "." and ".."
-as new name on rename requests by returning -EISDIR in this case.
+Make sure we actually have two input characters available before going
+to parse two hex digits.  Fixes one byte buffer overflow of the output
+buffer in case the input string has an odd number of characters.
 
-The legacy Twstat rename handler is missing this validation. While passing
-"." or ".." does not trigger a crash as fixed by the previous patch (since
-the fs backend driver's system calls handle these gracefully), it creates
-a behavioral inconsistency, as it is semantically meaningless to rename a
-file to a directory reference in the first place.
-
-Fix this by rejecting "." and ".." in Twstat rename handler with -EISDIR
-to match behavior of Trename and Trenameat handlers.
-
-Fixes: 8cf89e007a ("virtio-9p: Add P9_TWSTAT support")
-Link: https://lore.kernel.org/qemu-devel/662333331d371c6c343c8091161de8eaa121880e.1780072238.git.qemu_oss@crudebyte.com
-Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
-(cherry picked from commit 08750e31fcdccf5352dc3b44475ed5ba6bc80221)
+Fixes: CVE-2026-48915
+Fixes: 12058948abdf ("hw/uefi: add var-service-json.c + qapi for NV vars.")
+Reported-by: Feifan Qian <bea1e@proton.me>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
+Message-ID: <20260526135948.599148-1-kraxel@redhat.com>
+(cherry picked from commit d6601a7e1c2452100ed7e4b1d74a70b9acc0abe6)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/9pfs/9p.c b/hw/9pfs/9p.c
-index f84698bfcc..936e4e9349 100644
---- a/hw/9pfs/9p.c
-+++ b/hw/9pfs/9p.c
-@@ -3642,6 +3642,10 @@ static void coroutine_fn v9fs_wstat(void *opaque)
-             err = -ENOENT;
-             goto out;
-         }
-+        if (!strcmp(".", v9stat.name.data) || !strcmp("..", v9stat.name.data)) {
-+            err = -EISDIR;
-+            goto out;
-+        }
+diff --git a/hw/uefi/var-service-json.c b/hw/uefi/var-service-json.c
+index f5f1556833..8621b86c5c 100644
+--- a/hw/uefi/var-service-json.c
++++ b/hw/uefi/var-service-json.c
+@@ -98,7 +98,7 @@ static void parse_hexstr(void *dest, char *src, int len)
+     uint8_t *data = dest;
+     size_t i;
  
-         v9fs_path_write_lock(s);
-         err = v9fs_complete_rename(pdu, fidp, -1, &v9stat.name);
+-    for (i = 0; i < len; i += 2) {
++    for (i = 0; i + 1 < len; i += 2) {
+         *(data++) =
+             parse_hexchar(src[i]) << 4 |
+             parse_hexchar(src[i + 1]);
 -- 
 2.47.3
 
