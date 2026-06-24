@@ -4,50 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C521ACDB481
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 13:39:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CEBF7CDB479
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 13:39:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcNlT-0003oA-AR; Wed, 24 Jun 2026 09:35:40 -0400
+	id 1wcNor-0004JC-WC; Wed, 24 Jun 2026 09:39:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wcNlN-0003Zk-Tr; Wed, 24 Jun 2026 09:35:34 -0400
+ id 1wcNop-00045V-IP; Wed, 24 Jun 2026 09:39:07 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wcNlM-0000pq-BY; Wed, 24 Jun 2026 09:35:33 -0400
+ id 1wcNon-0001FS-J4; Wed, 24 Jun 2026 09:39:07 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1782307997; bh=avXEFBMXyDcCefkdmfwuGAjiUyl870djlo++1qvZzJI=;
+ t=1782307999; bh=yBluAs/gE8DSO3TfUiji3YFG4b/s0M7RfG8jpYCyV4I=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=jztRKFimmbAYIJ5jP6OWiW4dF59pPTNN+GgS6Whv2897xYVA1k/qO+XK9T4FMefdh
- ZxO36ajUIYzdgyxfvcDxgJU2FiiRBa6fbJudb1eD6iyvHeDJpgrctqRSohJi5zUcHu
- 8gh0MW6c6c/jUYmUV0S8sID12pnu9wOS6oGwMZAAylfw2AUOEcIW1mlgHZR+TvOXFs
- forlIfx/jFD0ymW8DlxHYajDtc+E/q3vDB8QuMMdodhqEKxIiSWNOV4AamPVASZPNe
- G4LmQfBAtlO0I5gMKMpMjHIAdsZElVDCaPKpoAzLHovQX3pNtsv2oNECwT76K1dksR
- xSQf49/cg7mUA==
+ b=h2J+x+3mnizxuoibvR5sgJXUaRe0DpIlwhXcz0rly50tThvyg3IwFsS7T9EWwtNHw
+ K9tWlteSIO8d6Zok4+bL62FfomXgY3RpsCI0C4RKo2ccG0Lep7zOJ3g4mcWjQG+s3Q
+ KJoXtHQfAIYhIiarTAJmtyWuwYPVyrrNWR6t+8W9doMgSZfMgWfmpsto/Pm/9Xwy7K
+ xQ2ExVVZ0sG6xkmV+QqJalUhXbBPmVvXPfnKVj2KE3lpFBD30+3xBexVmJPo9PXk5c
+ KxnleM5xoANHlEMzTqZ7BAc7Bdy2IXP/TpxARWPEdtxzlST7H/PPWIf6cyHPXKIrxZ
+ IRYO9KI+7acvw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 230B51BA9CF;
- Wed, 24 Jun 2026 16:33:17 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 766701BA9EF;
+ Wed, 24 Jun 2026 16:33:19 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id B2C2E3DEA1E;
- Wed, 24 Jun 2026 16:33:22 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 1329A3DEA3E;
+ Wed, 24 Jun 2026 16:33:25 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.2 029/107] target/arm: Set correct fp flags for FLOGB
- when FPCR.AH = 1
-Date: Wed, 24 Jun 2026 16:30:34 +0300
-Message-ID: <20260624133301.403266-29-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
+ "Denis V. Lunev" <den@openvz.org>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.2 061/107] qemu-io: Add 'aio_discard' command
+Date: Wed, 24 Jun 2026 16:31:06 +0300
+Message-ID: <20260624133301.403266-61-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.2-20260624163118@cover.tls.msk.ru>
 References: <qemu-stable-11.0.2-20260624163118@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -72,56 +68,154 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: Kevin Wolf <kwolf@redhat.com>
 
-Our implementation of the FLOGB insn does the operations entirely
-in the helper function, without needing to use fpu functions.
-This means it needs to handle all the fp status flags itself.
-We aren't setting float_flag_input_denormal_used when we
-use (i.e. do not flush to zero) an input denormal, which means
-that FPCR.IDC isn't set when it should be for FPCR.AH=1.
-We missed this when we added float_flag_input_denormal_used
-and made the fpu/ code set it.
+Testing interactions between multiple requests that include discard
+requests require that qemu-io can do the discard asynchronously, like it
+already does for reads and writes. To this effect, add an 'aio_discard'
+command.
 
-Add the missing float_raise().
-
-Cc: qemu-stable@nongnu.org
-Fixes: d38a57a3f ("target/arm: Enable FEAT_AFP for '-cpu max'")
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20260521122913.1565011-4-peter.maydell@linaro.org
-(cherry picked from commit 23ece2805f9a3f90f317aac1b49ee45783b57636)
+Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+Message-ID: <20260427170520.101242-3-kwolf@redhat.com>
+Reviewed-by: Denis V. Lunev <den@openvz.org>
+Tested-by: Denis V. Lunev <den@openvz.org>
+Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+(cherry picked from commit 7f8466e2ce620e3c6a6e2f32d616367174d4dbe9)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/arm/tcg/sve_helper.c b/target/arm/tcg/sve_helper.c
-index 179cbd74fb..d884ba474f 100644
---- a/target/arm/tcg/sve_helper.c
-+++ b/target/arm/tcg/sve_helper.c
-@@ -5036,6 +5036,7 @@ static int16_t do_float16_logb_as_int(float16 a, float_status *s)
-         if (frac != 0) {
-             if (!get_flush_inputs_to_zero(s)) {
-                 /* denormal: bias - fractional_zeros */
-+                float_raise(float_flag_input_denormal_used, s);
-                 return -15 - clz32(frac);
-             }
-             /* flush to zero */
-@@ -5064,6 +5065,7 @@ static int32_t do_float32_logb_as_int(float32 a, float_status *s)
-         if (frac != 0) {
-             if (!get_flush_inputs_to_zero(s)) {
-                 /* denormal: bias - fractional_zeros */
-+                float_raise(float_flag_input_denormal_used, s);
-                 return -127 - clz32(frac);
-             }
-             /* flush to zero */
-@@ -5092,6 +5094,7 @@ static int64_t do_float64_logb_as_int(float64 a, float_status *s)
-         if (frac != 0) {
-             if (!get_flush_inputs_to_zero(s)) {
-                 /* denormal: bias - fractional_zeros */
-+                float_raise(float_flag_input_denormal_used, s);
-                 return -1023 - clz64(frac);
-             }
-             /* flush to zero */
+diff --git a/qemu-io-cmds.c b/qemu-io-cmds.c
+index f6d077908f..de4c1966fe 100644
+--- a/qemu-io-cmds.c
++++ b/qemu-io-cmds.c
+@@ -2218,6 +2218,120 @@ static int discard_f(BlockBackend *blk, int argc, char **argv)
+     return 0;
+ }
+ 
++static void aio_discard_help(void)
++{
++    printf(
++"\n"
++" asynchronously discards a range of bytes from the given offset\n"
++"\n"
++" Example:\n"
++" 'aio_discard 512 1k' - discards 1 kilobyte from 512 bytes into the file\n"
++"\n"
++" Discards a segment of the currently open file.\n"
++" -C, -- report statistics in a machine parsable format\n"
++" -q, -- quiet mode, do not show I/O statistics\n"
++" The discard is performed asynchronously and the aio_flush command must be\n"
++" used to ensure all outstanding aio requests have been completed.\n"
++" Note that due to its asynchronous nature, this command will be\n"
++" considered successful once the request is submitted, independently\n"
++" of potential I/O errors.\n"
++"\n");
++}
++
++static int aio_discard_f(BlockBackend *blk, int argc, char **argv);
++
++static const cmdinfo_t aio_discard_cmd = {
++    .name       = "aio_discard",
++    .cfunc      = aio_discard_f,
++    .perm       = BLK_PERM_WRITE,
++    .argmin     = 2,
++    .argmax     = -1,
++    .args       = "[-Cq] off len",
++    .oneline    = "asynchronously discards a number of bytes",
++    .help       = aio_discard_help,
++};
++
++static void aio_discard_done(void *opaque, int ret)
++{
++    struct aio_ctx *ctx = opaque;
++    struct timespec t2;
++
++    clock_gettime(CLOCK_MONOTONIC, &t2);
++
++    if (ret < 0) {
++        printf("aio_discard failed: %s\n", strerror(-ret));
++        block_acct_failed(blk_get_stats(ctx->blk), &ctx->acct);
++        goto out;
++    }
++
++    block_acct_done(blk_get_stats(ctx->blk), &ctx->acct);
++
++    if (ctx->qflag) {
++        goto out;
++    }
++
++    /* Finally, report back -- -C gives a parsable format */
++    t2 = tsub(t2, ctx->t1);
++    print_report("discarded ", &t2, ctx->offset, ctx->qiov.size,
++                 ctx->qiov.size, 1, ctx->Cflag);
++out:
++    g_free(ctx);
++}
++
++static int aio_discard_f(BlockBackend *blk, int argc, char **argv)
++{
++    int c, ret;
++    int64_t count;
++    struct aio_ctx *ctx = g_new0(struct aio_ctx, 1);
++
++    ctx->blk = blk;
++
++    while ((c = getopt(argc, argv, "Cq")) != -1) {
++        switch (c) {
++        case 'C':
++            ctx->Cflag = true;
++            break;
++        case 'q':
++            ctx->qflag = true;
++            break;
++        default:
++            g_free(ctx);
++            qemuio_command_usage(&aio_discard_cmd);
++            return -EINVAL;
++        }
++    }
++
++    if (optind != argc - 2) {
++        g_free(ctx);
++        qemuio_command_usage(&aio_discard_cmd);
++        return -EINVAL;
++    }
++
++    ctx->offset = cvtnum(argv[optind]);
++    if (ctx->offset < 0) {
++        ret = ctx->offset;
++        print_cvtnum_err(ret, argv[optind]);
++        g_free(ctx);
++        return ret;
++    }
++    optind++;
++
++    count = cvtnum(argv[optind]);
++    if (count < 0) {
++        print_cvtnum_err(count, argv[optind]);
++        g_free(ctx);
++        return count;
++    }
++
++    clock_gettime(CLOCK_MONOTONIC, &ctx->t1);
++    ctx->qiov.size = count;
++    block_acct_start(blk_get_stats(blk), &ctx->acct, ctx->qiov.size,
++                     BLOCK_ACCT_UNMAP);
++    blk_aio_pdiscard(blk, ctx->offset, count, aio_discard_done, ctx);
++
++    return 0;
++}
++
+ static int alloc_f(BlockBackend *blk, int argc, char **argv)
+ {
+     BlockDriverState *bs = blk_bs(blk);
+@@ -2800,6 +2914,7 @@ static void __attribute((constructor)) init_qemuio_commands(void)
+     qemuio_add_command(&length_cmd);
+     qemuio_add_command(&info_cmd);
+     qemuio_add_command(&discard_cmd);
++    qemuio_add_command(&aio_discard_cmd);
+     qemuio_add_command(&alloc_cmd);
+     qemuio_add_command(&map_cmd);
+     qemuio_add_command(&reopen_cmd);
 -- 
 2.47.3
 
