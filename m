@@ -4,43 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72AB6CDB481
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 13:44:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9556CCDE002
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 13:44:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcNt5-00049o-Ec; Wed, 24 Jun 2026 09:43:31 -0400
+	id 1wcNrk-0000jF-9l; Wed, 24 Jun 2026 09:42:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wcNsz-0003T3-SD; Wed, 24 Jun 2026 09:43:25 -0400
+ id 1wcNrZ-0000Nq-1X; Wed, 24 Jun 2026 09:41:57 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wcNsy-00025B-8f; Wed, 24 Jun 2026 09:43:25 -0400
+ id 1wcNrX-0001sN-4r; Wed, 24 Jun 2026 09:41:56 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1782308007; bh=OF7kv8ty/UyH3XtZD3bgYaY8b9DOoJzTV7jeCA7mvHw=;
+ t=1782308001; bh=NJu5fj1Zrg+RCUjSQsJZtEbF98yRPCsiDRVzepx5cNM=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=N6byTTWMUq5gMxkMFMiku2+HdHaC5NkJ9LKfWoKCUc5Enpe8a7hvMRdm3jeU1FjKJ
- nBr0Li6OoNZn1NOaDnTSSvxjWRzGZ5TTNv+1KSSNMQuOiAPIw3Ek3BFHyRjnwf7K7d
- q5A6y/pwQza7EY/nCGzJE6cmguRs7ssQ4AxNizpEwThEd1TtwqRWTCZTPY6nwE7eOi
- ZcwOihwdnsPnj9yjyA+R//EKv1RIr8CxitAe+AlEbLbY7BFCJuRaxtLD8L4OsYgTFG
- JKlVxo2wcInCkEZUSJ8NTagwi8f3mT29/sIW7mFj1YxCIufW8x5SECOE2D//v4cFij
- 0JbkwUcYBq1vw==
+ b=hUrPEx0jKFbX1G389Xqh+JU67VaEViRHMQSl6xmpG4gc+a2Rol/TxRP5suyTimS2o
+ EBy+OnZSYyeG9VayKarF9RM0XHce7gsIiVvXZIO2uEwhNIF/NfcBB87IvlFfrPb7Sc
+ ZjOm23sUu7nG3OEMB2H7RrdPW21mlEK5t0s0fWqlW7IrHP+aJu1a0gaNyEXN8vDc+I
+ SJTdLNLoHjvD0mGIOLKic59KIssgA6AvByRB4VwT2hSq9+7ZDsOqN66DtRB+az8huP
+ MnQortfCGDINSrihgcLmhO5JUtNogjGrLiqUVj8Z2flwcra11GnZp98p4KYRHoYpDU
+ uw4S/w1+flNzw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 5E7D71BAA1A;
- Wed, 24 Jun 2026 16:33:27 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 5145D1BAA09;
+ Wed, 24 Jun 2026 16:33:21 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id E5EF03DEA69;
- Wed, 24 Jun 2026 16:33:32 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id E01633DEA58;
+ Wed, 24 Jun 2026 16:33:26 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Matt Turner <mattst88@gmail.com>,
- Helge Deller <deller@gmx.de>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.2 104/107] linux-user/xtensa: fix unlock of
- uninitialized frame pointer on sigreturn
-Date: Wed, 24 Jun 2026 16:31:49 +0300
-Message-ID: <20260624133301.403266-104-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Chao Liu <chao.liu.zevorn@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.2 087/107] disas/riscv.c: add 'cbo' insns to disassembler
+Date: Wed, 24 Jun 2026 16:31:32 +0300
+Message-ID: <20260624133301.403266-87-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.2-20260624163118@cover.tls.msk.ru>
 References: <qemu-stable-11.0.2-20260624163118@cover.tls.msk.ru>
@@ -69,33 +72,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Matt Turner <mattst88@gmail.com>
+From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 
-If lock_user_struct fails, frame is uninitialized but the badframe
-label unconditionally calls unlock_user_struct on it. Handle the
-lock failure inline so badframe is only reached with a valid lock.
+We forgot to add 'cbo' insns to disas/riscv.c.  The result is that the
+disassembler recognizes all of them as 'lq', an insn that happens to
+share the same opcode space.
 
-Signed-off-by: Matt Turner <mattst88@gmail.com>
-Cc: qemu-stable@nongnu.org
-Reviewed-by: Helge Deller <deller@gmx.de>
-Signed-off-by: Helge Deller <deller@gmx.de>
-(cherry picked from commit 54e08dbe8f2aeca57e3b1a5eab09a9fec88c1c67)
+While we're at it reorder cbo_* entries in insn32.decode using opcode
+order instead of insn name.
+
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3480
+Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-ID: <20260519204714.1376551-1-daniel.barboza@oss.qualcomm.com>
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+(cherry picked from commit 9273cda72293ed2f414a0f239c4ac78fb7838c0e)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/linux-user/xtensa/signal.c b/linux-user/xtensa/signal.c
-index e3f9da322b..4990c50045 100644
---- a/linux-user/xtensa/signal.c
-+++ b/linux-user/xtensa/signal.c
-@@ -355,7 +355,8 @@ long do_rt_sigreturn(CPUXtensaState *env)
+diff --git a/disas/riscv.c b/disas/riscv.c
+index 6f2667482d..0ed8a3b5ed 100644
+--- a/disas/riscv.c
++++ b/disas/riscv.c
+@@ -984,6 +984,10 @@ typedef enum {
+     rv_op_ssamoswap_d = 953,
+     rv_op_c_sspush = 954,
+     rv_op_c_sspopchk = 955,
++    rv_op_cbo_inval = 956,
++    rv_op_cbo_clean = 957,
++    rv_op_cbo_flush = 958,
++    rv_op_cbo_zero = 959,
+ } rv_op;
  
-     trace_user_do_rt_sigreturn(env, frame_addr);
-     if (!lock_user_struct(VERIFY_READ, frame, frame_addr, 1)) {
--        goto badframe;
-+        force_sig(TARGET_SIGSEGV);
-+        return -QEMU_ESIGRETURN;
-     }
-     target_to_host_sigset(&set, &frame->uc.tuc_sigmask);
-     set_sigmask(&set);
+ /* register names */
+@@ -2254,6 +2258,10 @@ const rv_opcode_data rvi_opcode_data[] = {
+       rv_op_sspush, 0 },
+     { "c.sspopchk", rv_codec_cmop_ss, rv_fmt_rs1, NULL, rv_op_sspopchk,
+       rv_op_sspopchk, 0 },
++   { "cbo.inval", rv_codec_r, rv_fmt_rs1, NULL, 0, 0, 0 },
++   { "cbo.clean", rv_codec_r, rv_fmt_rs1, NULL, 0, 0, 0 },
++   { "cbo.flush", rv_codec_r, rv_fmt_rs1, NULL, 0, 0, 0 },
++   { "cbo.zero", rv_codec_r, rv_fmt_rs1, NULL, 0, 0, 0 },
+ };
+ 
+ /* CSR names */
+@@ -2875,7 +2883,26 @@ static void decode_inst_opcode(rv_decode *dec, rv_isa isa)
+             switch ((inst >> 12) & 0b111) {
+             case 0: op = rv_op_fence; break;
+             case 1: op = rv_op_fence_i; break;
+-            case 2: op = rv_op_lq; break;
++            case 2:
++               /*
++                * 'lq' shares the "(...) 010 ..... 0001111" opcode space
++                * with 'cbo' insns.  Check the next 5 bits to select
++                * what we want:
++                *
++                * cbo_inval  0000000 00000 ..... 010 00000 0001111
++                * cbo_clean  0000000 00001 ..... 010 00000 0001111
++                * cbo_flush  0000000 00010 ..... 010 00000 0001111
++                * cbo_zero   0000000 00100 ..... 010 00000 0001111
++                *
++                * Anything that doesn't match these will default to 'lq'.
++                */
++               switch ((inst >> 17) & 0b11111) {
++               case 0: op = rv_op_cbo_inval; break;
++               case 1: op = rv_op_cbo_clean; break;
++               case 2: op = rv_op_cbo_flush; break;
++               case 4: op = rv_op_cbo_zero; break;
++               default: op = rv_op_lq; break;
++               }
+             }
+             break;
+         case 4:
+diff --git a/target/riscv/insn32.decode b/target/riscv/insn32.decode
+index 6e35c4b1e6..21272fdb50 100644
+--- a/target/riscv/insn32.decode
++++ b/target/riscv/insn32.decode
+@@ -207,9 +207,9 @@ ldu      ............   ..... 111 ..... 0000011 @i
+ {
+   [
+     # *** RV32 Zicbom Standard Extension ***
++    cbo_inval  0000000 00000 ..... 010 00000 0001111 @sfence_vm
+     cbo_clean  0000000 00001 ..... 010 00000 0001111 @sfence_vm
+     cbo_flush  0000000 00010 ..... 010 00000 0001111 @sfence_vm
+-    cbo_inval  0000000 00000 ..... 010 00000 0001111 @sfence_vm
+ 
+     # *** RV32 Zicboz Standard Extension ***
+     cbo_zero   0000000 00100 ..... 010 00000 0001111 @sfence_vm
 -- 
 2.47.3
 
