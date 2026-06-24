@@ -4,146 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5768ACDB479
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 16:43:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35C6FCDB479
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 16:44:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcQgs-0002Zp-1I; Wed, 24 Jun 2026 12:43:06 -0400
+	id 1wcQhW-0002p6-B6; Wed, 24 Jun 2026 12:43:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1wcQgq-0002ZQ-Ci
- for qemu-devel@nongnu.org; Wed, 24 Jun 2026 12:43:04 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wcQhU-0002oq-Sh
+ for qemu-devel@nongnu.org; Wed, 24 Jun 2026 12:43:44 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1wcQgo-0002fb-84
- for qemu-devel@nongnu.org; Wed, 24 Jun 2026 12:43:04 -0400
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65OFfLtO3301062
- for <qemu-devel@nongnu.org>; Wed, 24 Jun 2026 16:42:59 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- 08xMVtcPU9aNDwBr/6YtUFxpftYU+nnvK8OHIg9s0mk=; b=fui+YcFtBcrRvaZ9
- SKYSbDMAFp/cM0zcwevjsWu89TN3LVkwZGTOoXvgp9KqwNR/4vLE25P71GHMaeLO
- c1j+6K5pohkvx9QolAF0HMoYgw2NjB7DNJqRGLpeRT0Z220cJ7YLFAxZUH5FpvLH
- 2xNiIyeYxdvp2SR6bmquxUttZVf3ssqUR3oC5SiqZXkwN5xFUpCcsr6IWe+XwQCy
- MoUT5pPQLh0xecRW1HKBuuNroWPU2k7xFPZLyDjYI8O/A6/5hhnueMgbYmWZNlph
- Z0K04tcYdlzqFgh8H6f97r6MkOb3EAEqLEZ95sKEEWgd0o83M2nUM71g3cYh1/Tc
- 8VVlJg==
-Received: from mail-dy1-f200.google.com (mail-dy1-f200.google.com
- [74.125.82.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f05aqb9yg-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 24 Jun 2026 16:42:59 +0000 (GMT)
-Received: by mail-dy1-f200.google.com with SMTP id
- 5a478bee46e88-30c17f62afdso44069eec.0
- for <qemu-devel@nongnu.org>; Wed, 24 Jun 2026 09:42:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1782319379; x=1782924179; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=08xMVtcPU9aNDwBr/6YtUFxpftYU+nnvK8OHIg9s0mk=;
- b=MOQivOJ0Wf/ELQ4YeotUHGmvHWNmDbYCvXQtoyWEp/66Bhve/IH8Rx4RoVhjki02IF
- 4TGtXP56adtdcuRjlzic35iJ6qHumY4oOSjahjjP3aoRgqHkx0X6k7BdfeNWdYMKdLJC
- +JW/IN5mhFuHPR91etDoSf3hFckAsgtcLt8bwp5i3BxPrz5wR9LCsan7GOZbGN02JNkj
- vQbwtzkZWkLE7OQEYj/rvHLJRwze92haf/27PDOWPZ3/5dcB9FcsJdoHJlsYWFCMUsO8
- 9p29ADsIYYqvKOPmbtAgG6UsOOq//KLAXdHYVmnZ8dFe9D9bUQY/ltvaZc7RhKt9AR9O
- WbZg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782319379; x=1782924179;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=08xMVtcPU9aNDwBr/6YtUFxpftYU+nnvK8OHIg9s0mk=;
- b=BUnPjUnXJ1uizrVmklkSlsdkvSCnT/Vd7BdWjGZfRbnrdHze09TK8kleBaY0dcLKKq
- 4cN23f4wnqYMdmSExfy1tluY9taiL4djpTcFNDoOSYPZRA4PSKSWEf0FZikkAKPUuoFA
- NOkOhq5ZM+jMxr/K5N4mTqlrVtnzvwxPg+dn0k8VsiM5B7MLyLZgxacBi5mBRc89Xv1v
- 2xN1SfIZwt7vH+VIy7wMj2xbKJcya8bzwSb12sYGzfy7x/9ar9VsHPh9lRXt/GZqmy4F
- OjagnzwPf09MNnMC/d8+Vs1YqsXry/fehfEZ2/Yg+9J6ZYQzoM9dCChHwiOKE+qRZLY6
- 0mwQ==
-X-Forwarded-Encrypted: i=1;
- AHgh+RrHF8JFh5OSgowfxxwlPBpB95vmhBjNOotCEXEqBrdhU2IxpipIOu2Gbr+BGcg8UiiDEu9PWYEQEBw3@nongnu.org
-X-Gm-Message-State: AOJu0YzIe6SJ/CYr+WleTDYTCkSKUX1PL4DQXO/XwZgTKZKx8+iqq1FA
- pwRk8h7dRDRZhzyvOjB6wf/xGCagYhMfX1Sq8PRyJ2bRUww0fx6ropesMvfpizmoUAJYnCMjLyO
- zK1gc2JIMHVew5VDvssjnBhHYhCRaag61BVpeUSjJYTfKcJjWjvKLstyK8A==
-X-Gm-Gg: AfdE7cnQDNJSuyE2WtRipKWzVnDPhwLJr1ds1QjmSUbqdcCigFaDn7ZQG0DP9iyUreM
- 585TNjwIxqHY+mSGAv2kMQLDo1W3NV1uEgWteb6cu21zOAot/0C6XW9vRG8r88T7G+EfBTQjV5n
- pS6whTaufVeVuk0gsemLt6EaFNIy7exQZF8WLs5lXOBbL2X7/FQNHdpvLf0f7v9ujLqybbio/rH
- FcraYW7vuJfngIEO/y3pFMN/MQO7c7Ci3E9zxGUhN1lxLxF2d8yNWXdPIjxG0/RLQM8Qlv37VK3
- husPypJimOJvfialk8NQbHY9BNMdz/eZBn8lNO1VRx4Xd3F6w9gQ3LCiKg0/C6UK89/QmxoqZZJ
- zLY5rYv5Znjqov1vih6xy2hzp+dGMLnJekap/xy13z3Ha
-X-Received: by 2002:a05:7301:7106:b0:2f4:d190:37bf with SMTP id
- 5a478bee46e88-30c5563f2e8mr4507537eec.16.1782319378827; 
- Wed, 24 Jun 2026 09:42:58 -0700 (PDT)
-X-Received: by 2002:a05:7301:7106:b0:2f4:d190:37bf with SMTP id
- 5a478bee46e88-30c5563f2e8mr4507498eec.16.1782319378075; 
- Wed, 24 Jun 2026 09:42:58 -0700 (PDT)
-Received: from [192.168.68.103] ([189.79.21.40])
- by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-30c7c8b1ae5sm400755eec.16.2026.06.24.09.42.51
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 24 Jun 2026 09:42:57 -0700 (PDT)
-Message-ID: <9279723a-b079-4749-b3a5-e6e7ecfd2121@oss.qualcomm.com>
-Date: Wed, 24 Jun 2026 13:42:48 -0300
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wcQhS-0002iF-Mi
+ for qemu-devel@nongnu.org; Wed, 24 Jun 2026 12:43:44 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1782319420;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=9IMEYyqnrllioeSyvrKu6tFVDFSVnS4gOwwC3CkCX5M=;
+ b=KFCx5UjLetrjPl3fh0s6Rg6Te+dEWE+L82W7/rBLzQXzFrAjMOrndlTrF3QiaSzsKTmi6J
+ dCQMCZKfJJZg1vFsbunpgbREpMrItF9kgPbuLXWilpW/RylN2wtRWDloFDBTozY3zQ1lGN
+ YzhxaaDwk/+U7wYIYtlMAp9beIFyJxM=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-43-clRvNhvJO8ijatfTmNptYQ-1; Wed,
+ 24 Jun 2026 12:43:37 -0400
+X-MC-Unique: clRvNhvJO8ijatfTmNptYQ-1
+X-Mimecast-MFC-AGG-ID: clRvNhvJO8ijatfTmNptYQ_1782319416
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 230B61955F68; Wed, 24 Jun 2026 16:43:36 +0000 (UTC)
+Received: from redhat.com (unknown [10.44.32.102])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 629A91956041; Wed, 24 Jun 2026 16:43:33 +0000 (UTC)
+Date: Wed, 24 Jun 2026 17:43:30 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+Subject: Re: [PATCH v2 1/2] gitlab: introduce files mapping GitLab accounts
+ to real names
+Message-ID: <ajwJMlxZHrZIjxWA@redhat.com>
+References: <20260624122936.2706393-1-berrange@redhat.com>
+ <20260624122936.2706393-2-berrange@redhat.com>
+ <87echw12fa.fsf@suse.de>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/4] hw/riscv/virt: Add CXL support to the RISC-V virt
- machine
-To: Chen Pei <cp0613@linux.alibaba.com>, jic23@kernel.org, pbonzini@redhat.com,
- palmer@dabbelt.com, alistair.francis@wdc.com, liwei1518@gmail.com,
- zhiwei_liu@linux.alibaba.com, chao.liu.zevorn@gmail.com,
- sunilvl@ventanamicro.com, dave.jiang@intel.com,
- alison.schofield@intel.com, imammedo@redhat.com, mst@redhat.com,
- guoren@kernel.org
-Cc: qemu-riscv@nongnu.org, qemu-devel@nongnu.org, linux-cxl@vger.kernel.org
-References: <20260618093827.3507-1-cp0613@linux.alibaba.com>
- <20260618093827.3507-2-cp0613@linux.alibaba.com>
-From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <20260618093827.3507-2-cp0613@linux.alibaba.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjI0MDE0MCBTYWx0ZWRfXzfdYlVg5H5lC
- sDxgho8C5Q2FcFUHM9+Taw/5D2IYwZCyCq/EGWpEQGavlQHMT5fEDLaMeZPKWJFZiguzpRv8GWQ
- aghtNwfqIcmq41XOcCwB4XZQ+l+FHCk=
-X-Proofpoint-GUID: w2uElITmQXWm2fR-Dt_acSV1h-ljzZ2o
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjI0MDE0MCBTYWx0ZWRfX4x9C3K3Fw86U
- T6difVidffEoWZd/L4Lz/pKTQYH8UF1vqto1XORCqcXHSwkwaB/NNK2I4hYIlMGXqeNUIWFXDSf
- lkTfplEaQBSu+DEe0g9ZZ7LwdjCRfoqtPwsEHvaAXdecq+wVFmArRhlCICRJBFoufxVeV1HwAb+
- 8WZ/eN0/lHFLLoEHVUfoZM0RxvGydJGiYA1O3xq2b4n/D1VjHTtT/wlrKMJrjyzGyfKnytCT5L8
- zwA3v7x1875ez81aKYS5uTkBoCKXVeHlCv+xhhRSSAwwZj6AzN0MNdkzDCkWnRbByNLC/TZeZMv
- oSvvGqCYgdU3T3JwxU/h10llnU35ATULyqPPlwrs3WVFEyvBbGV06hL+pWCFb+vb8YZ7WzmqWIP
- 882BnLFG//PLlOwYBguld8sdp9xrpw==
-X-Authority-Analysis: v=2.4 cv=UphT8ewB c=1 sm=1 tr=0 ts=6a3c0913 cx=c_pps
- a=PfFC4Oe2JQzmKTvty2cRDw==:117 a=sHJf4AwOIoU3qjeHFPlg6Q==:17
- a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
- a=SRrdq9N9AAAA:8 a=OKAgqmDqJgUB0MQQqyQA:9 a=QEXdDO2ut3YA:10
- a=6Ab_bkdmUrQuMsNx7PHu:22
-X-Proofpoint-ORIG-GUID: w2uElITmQXWm2fR-Dt_acSV1h-ljzZ2o
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-24_03,2026-06-24_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 adultscore=0 phishscore=0 spamscore=0 suspectscore=0
- malwarescore=0 bulkscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2606240140
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <87echw12fa.fsf@suse.de>
+User-Agent: Mutt/2.3.2 (2026-04-26)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 8
+X-Spam_score: 0.8
+X-Spam_bar: /
+X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -156,214 +89,272 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
-
-On 6/18/2026 6:38 AM, Chen Pei wrote:
-> Enable CXL support on the RISC-V virt machine following the same
-> approach used by the ARM virt machine:
-> - Add PXB and ACPI_CXL Kconfig selections
-> - Add CXLState and PCIBus pointer to RISCVVirtState
-> - Register CXL machine properties via cxl_machine_init()
-> - Create CXL host register region above the PCIe high MMIO region
-> - Call cxl_hook_up_pxb_registers() and cxl_fmws_link_targets() at
->    machine_done time
-> - Map Fixed Memory Windows above the CXL host register region
-> - Add ACPI0017 device in DSDT and build CEDT table in virt-acpi-build.c
+On Wed, Jun 24, 2026 at 10:41:13AM -0300, Fabiano Rosas wrote:
+> Daniel P. Berrangé <berrange@redhat.com> writes:
 > 
-> Signed-off-by: Chen Pei <cp0613@linux.alibaba.com>
-> ---
->   hw/riscv/Kconfig           |  2 ++
->   hw/riscv/virt-acpi-build.c | 20 +++++++++++++++++++
->   hw/riscv/virt.c            | 40 ++++++++++++++++++++++++++++++++++++++
->   include/hw/riscv/virt.h    |  3 +++
->   4 files changed, 65 insertions(+)
+> > It is desirable to be able to discover the GitLab account handle
+> > assocaited with a real name in the MAINTAINERS file.
+> >
+> > Rather that duplicating the same account handle multiple times,
+> > inline with the MAINTAINERS file entries, this introduces mapping
+> > files:
+> >
+> >   * .gitlab-map-auto - data automatically queried from GitLab
+> >     using the 'glab' tool and REST API
+> >   * .gitlab-map-manual - manual overrides/augmentation for
+> >     cases where the MAINTAINERS real name does not match the
+> >     GitLab account real name
+> >
 > 
-> diff --git a/hw/riscv/Kconfig b/hw/riscv/Kconfig
-> index 2518b04175..ebd0355f09 100644
-> --- a/hw/riscv/Kconfig
-> +++ b/hw/riscv/Kconfig
-> @@ -66,8 +66,10 @@ config RISCV_VIRT
->       select VIRTIO_MMIO
->       select FW_CFG_DMA
->       select PLATFORM_BUS
-> +    select PXB
->       select ACPI
->       select ACPI_PCI
-> +    select ACPI_CXL
->   
->   config SHAKTI_C
->       bool
-> diff --git a/hw/riscv/virt-acpi-build.c b/hw/riscv/virt-acpi-build.c
-> index 413d47d70e..309d64b322 100644
-> --- a/hw/riscv/virt-acpi-build.c
-> +++ b/hw/riscv/virt-acpi-build.c
-> @@ -29,12 +29,16 @@
->   #include "hw/acpi/aml-build.h"
->   #include "hw/acpi/pci.h"
->   #include "hw/acpi/utils.h"
-> +#include "hw/acpi/cxl.h"
->   #include "hw/intc/riscv_aclint.h"
->   #include "hw/nvram/fw_cfg_acpi.h"
->   #include "hw/pci-host/gpex.h"
-> +#include "hw/pci/pci_bus.h"
->   #include "hw/riscv/virt.h"
->   #include "hw/riscv/numa.h"
->   #include "hw/virtio/virtio-acpi.h"
-> +#include "hw/cxl/cxl.h"
-> +#include "hw/cxl/cxl_host.h"
->   #include "kvm/kvm_riscv.h"
->   #include "migration/vmstate.h"
->   #include "qapi/error.h"
-> @@ -503,6 +507,17 @@ static void build_dsdt(GArray *table_data,
->           acpi_dsdt_add_gpex_host(scope, PCIE_IRQ + VIRT_IRQCHIP_NUM_SOURCES * 2);
->       }
->   
-> +    if (s->cxl_devices_state.is_enabled) {
-> +        Aml *cxl_dev = aml_device("CXLM");
-> +        aml_append(cxl_dev, aml_name_decl("_HID", aml_string("ACPI0017")));
-> +        Aml *method = aml_method("_STA", 0, AML_NOTSERIALIZED);
-> +        aml_append(method, aml_return(aml_int(0x0B)));
-> +        aml_append(cxl_dev, method);
-> +        build_cxl_dsm_method(cxl_dev);
-> +
-> +        aml_append(scope, cxl_dev);
-> +    }
-> +
->       aml_append(dsdt, scope);
->   
->       /* copy AML table into ACPI tables blob and patch header there */
-> @@ -910,6 +925,11 @@ static void virt_acpi_build(RISCVVirtState *s, AcpiBuildTables *tables)
->                      s->oem_table_id);
->       }
->   
-> +    if (s->cxl_devices_state.is_enabled) {
-> +        cxl_build_cedt(table_offsets, tables_blob, tables->linker,
-> +                       s->oem_id, s->oem_table_id, &s->cxl_devices_state);
-> +    }
-> +
->       if (ms->numa_state->num_nodes > 0) {
->           acpi_add_table(table_offsets, tables_blob);
->           build_srat(tables_blob, tables->linker, s);
-> diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
-> index ce64eaaef7..84b91b4322 100644
-> --- a/hw/riscv/virt.c
-> +++ b/hw/riscv/virt.c
-> @@ -55,6 +55,8 @@
->   #include "hw/pci/pci.h"
->   #include "hw/pci-host/gpex.h"
->   #include "hw/display/ramfb.h"
-> +#include "hw/cxl/cxl.h"
-> +#include "hw/cxl/cxl_host.h"
->   #include "hw/acpi/aml-build.h"
->   #include "qapi/qapi-visit-common.h"
->   #include "hw/virtio/virtio-iommu.h"
-> @@ -1259,9 +1261,27 @@ static inline DeviceState *gpex_pcie_init(MemoryRegion *sys_mem,
->       }
->   
->       GPEX_HOST(dev)->gpex_cfg.bus = PCI_HOST_BRIDGE(dev)->bus;
-> +    s->pci_bus = PCI_HOST_BRIDGE(dev)->bus;
->       return dev;
->   }
->   
-> +static void create_cxl_host_reg_region(RISCVVirtState *s)
-> +{
-> +    MemoryRegion *sysmem = get_system_memory();
-> +    MemoryRegion *mr = &s->cxl_devices_state.host_mr;
-> +    hwaddr base;
-> +
-> +    if (!s->cxl_devices_state.is_enabled) {
-> +        return;
-> +    }
-> +
-> +    base = virt_high_pcie_memmap.base + virt_high_pcie_memmap.size;
-> +    base = ROUND_UP(base, 64 * KiB);
-> +
-> +    memory_region_init(mr, OBJECT(s), "cxl_host_reg", 64 * KiB * 16);
-> +    memory_region_add_subregion(sysmem, base, mr);
-> +}
-> +
->   static FWCfgState *create_fw_cfg(const MachineState *ms, hwaddr base)
->   {
->       FWCfgState *fw_cfg;
-> @@ -1426,6 +1446,13 @@ static void virt_machine_done(Notifier *notifier, void *data)
->                                        machine_done);
->       MachineState *machine = MACHINE(s);
->       hwaddr start_addr = s->memmap[VIRT_DRAM].base;
-> +
-> +    cxl_hook_up_pxb_registers(s->pci_bus, &s->cxl_devices_state,
-> +                              &error_fatal);
-> +
-> +    if (s->cxl_devices_state.is_enabled) {
-> +        cxl_fmws_link_targets(&error_fatal);
-> +    }
->       hwaddr firmware_end_addr;
->       vaddr kernel_start_addr;
->       const char *firmware_name = riscv_default_firmware_name(&s->soc[0]);
-> @@ -1663,6 +1690,17 @@ static void virt_machine_init(MachineState *machine)
->               ROUND_UP(virt_high_pcie_memmap.base, virt_high_pcie_memmap.size);
->       }
->   
-> +    create_cxl_host_reg_region(s);
-> +
-> +    if (s->cxl_devices_state.is_enabled) {
-> +        hwaddr cxl_base = virt_high_pcie_memmap.base +
-> +                          virt_high_pcie_memmap.size;
-> +        cxl_base += memory_region_size(&s->cxl_devices_state.host_mr);
-> +        cxl_base = ROUND_UP(cxl_base, 256 * MiB);
-> +        cxl_fmws_set_memmap(cxl_base, UINT64_MAX);
-> +        cxl_fmws_update_mmio();
-> +    }
-> +
+> Could we maybe use the username/username entries in .gitlab-map-auto to
+> validate what's being added as username/realname to .gitlab-map-manual?
+> So we don't accept by accident a mapping of
+> random-username/real-maintainer-name.
 
-create_cxl_host_reg_region() is doing the same check:
+Yes, we could put that in the 'check' script.
 
-if (!s->cxl_devices_state.is_enabled) {
-(...)
+> 
+> > The former would need refreshing when we add new MAINTAINERS
+> > entries, if the person had to be added as a GitLab account
+> > member. For this purpose scripts/gitlab-map-update can be
+> > used, assuming the user has the 'glab' client tool present
+> > and configured with an access token.
+> >
+> > To audit how many maintainers have GitLab handles present/missing
+> > scripts/gitlab-map-check can run a report.
+> >
+> 
+> On the same line as above, what about entries in .gitlab-map-manual that
+> don't correspond to any MAINTAINERS entry?
 
-Maybe we could squash these update_mmio() lines in the same helper to have
-everything CXL related in the same place.  The helper would need to be
-renamed to something more appropriate (e.g. cxl_host_state_init() since we're
-at init time).
+That would be stale data, but it is harmless as it means that
+get_maintainers.pl would never be trying to look up any
+gitlab account for that real name.
 
+> 
+> >   $ ./scripts/gitlab-map-check
+> >   Missing GitLab handle: Akihiko Odaki
+> >   Missing GitLab handle: Albert Esteve
+> >   ....
+> >   Missing GitLab handle: Zhenzhong Duan
+> >   Missing GitLab handle: Zhuoying Cai
+> >   GitLab handles missing: 161 / present: 57
+> >
+> > Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+> > ---
+> >  .gitlab-map-auto          | 83 +++++++++++++++++++++++++++++++++++++++
+> >  .gitlab-map-manual        | 18 +++++++++
+> >  scripts/gitlab-map-check  | 23 +++++++++++
+> >  scripts/gitlab-map-update | 44 +++++++++++++++++++++
+> >  4 files changed, 168 insertions(+)
+> >  create mode 100644 .gitlab-map-auto
+> >  create mode 100644 .gitlab-map-manual
+> >  create mode 100755 scripts/gitlab-map-check
+> >  create mode 100755 scripts/gitlab-map-update
+> >
+> > diff --git a/.gitlab-map-auto b/.gitlab-map-auto
+> > new file mode 100644
+> > index 0000000000..defecb2c9f
+> > --- /dev/null
+> > +++ b/.gitlab-map-auto
+> > @@ -0,0 +1,83 @@
+> > +# This file is auto-generated by scripts/autolab-map-update
+> > +#
+> > +# This GitLab map associates GitLab account handles
+> > +# with real names, in order to allow mapping from
+> > +# MAINTAINERS entries. The format of entries is
+> > +#
+> > +#    {gitlab-handle}<tab>{real name}
+> > +#
+> > +# Manual overrides must be placed in .gitlab-map-manual
+> > +a1xndr	Alexander Bulekov
+> > +adi-g15-ibm	Aditya Gupta
+> > +agraf	Alexander Graf
+> > +alex.williamson	Alex Williamson
+> > +aliang1	Aihua Liang
+> > +alistair23	Alistair Francis
+> > +anisinha	Ani Sinha
+> > +anthony-linaro	Anthony Roberts
+> > +berrange	Daniel P. Berrangé
+> > +birkelund	Klaus Jensen
+> > +bonzini	Paolo Bonzini
+> > +bonzini	Paolo Bonzini
+> > +brian-cain	Brian Cain
+> > +bsdimp	Warner Losh
+> > +cborntra	Christian Borntraeger
+> > +cleber.gnu	Cleber Rosa
+> > +clegoate	Cédric Le Goater
+> > +cohuck	Cornelia Huck
+> > +cota_	Emilio Cota
+> > +dagrh	Dr. David Alan Gilbert
+> > +danielhb	Daniel Henrique Barboza
+> > +davidhildenbrand	David Hildenbrand
+> > +dgibson	dgibson
+> > +dwmw2	David Woodhouse
+> > +ebblake	Eric Blake
+> > +ehabkost	Eduardo Habkost
+> > +eldondev	Eldon
+> > +epilys	Manos Pitsidianakis
+> > +famzheng	Fam Zheng
+> > +farosas	Fabiano Rosas
+> > +gkurz	Greg Kurz
+> > +gusbromero	Gustavo Romero
+> > +harshpb	Harsh Prateek Bora
+> > +hdeller	Helge Deller
+> > +hreitz	Hanna Czenczek
+> > +imammedo	Igor Mammedov
+> > +jasowang	Jason Wang
+> > +jmacarthur	Jim MacArthur
+> > +jsnow	John Snow
+> > +juan.quintela	Juan Quintela
+> > +kbastian-qemu	Bastian Koppelmann
+> > +kmwolf	Kevin Wolf
+> > +kostyanf14	Kostiantyn Kostiuk
+> > +kraxel	Gerd Hoffmann
+> > +lbmeng	Bin Meng
+> > +legoater	Cédric Le Goater
+> > +lvivier	Laurent Vivier
+> > +marcandre.lureau	Marc-André Lureau
+> > +marcandre.lureau-rh	Marc-André Lureau
+> > +mcayland	Mark Cave-Ayland
+> > +mdroth	Michael Roth
+> > +mediouni-m	M. Mediouni
+> > +mjt0k	Michael Tokarev
+> > +mstredhat	MST
+> > +npiggin	npiggin
+> > +pauldzim	Paul Zimmerman
+> > +philmd	Philippe Mathieu-Daudé
+> > +philmd	Philippe Mathieu-Daudé
+> > +pierrick.bouvier	Pierrick Bouvier
+> > +pipo.sk	Peter Krempa
+> > +pkrempa	Peter Krempa (work)
+> > +pm215	Peter Maydell
+> > +qemu-janitor	Qemu Janitor
+> > +rth7680	Richard Henderson
+> > +schoenebeck	Christian Schoenebeck
+> > +sgarzarella	Stefano Garzarella
+> > +stefanberger	Stefan Berger
+> > +stefanha	Stefan Hajnoczi
+> > +stefanha	Stefan Hajnoczi
+> > +stsquad	Alex Bennée
+> > +stweil	Stefan Weil
+> > +thuth	Thomas Huth
+> > +vsementsov	Vladimir Sementsov-Ogievskiy
+> > +xcancerberox	Joaquin de Andres
+> > diff --git a/.gitlab-map-manual b/.gitlab-map-manual
+> > new file mode 100644
+> > index 0000000000..7326971cdd
+> > --- /dev/null
+> > +++ b/.gitlab-map-manual
+> > @@ -0,0 +1,18 @@
+> > +# This GitLab map associates GitLab account handles
+> > +# with real names, in order to allow mapping from
+> > +# MAINTAINERS entries. The format of entries is
+> > +#
+> > +#    {gitlab-handle}<tab>{real name}
+> > +#
+> > +# This file is manually written, to augment the
+> > +# auto-generated data in .gitlab-map-auto. This
+> > +# needed where a GitLab account real name does
+> > +# not exactly match the MAINTAINERS file real
+> > +# name.
+> > +#
+> > +berrange	Daniel P. Berrange
+> > +dgibson	David Gibson
+> > +hreitz	Hanna Reitz 
+> > +mstredhat	Michael S. Tsirkin
+> > +npiggin	Nicholas Piggin
+> > +mediouni-m	Mohamed Mediouni
+> > diff --git a/scripts/gitlab-map-check b/scripts/gitlab-map-check
+> > new file mode 100755
+> > index 0000000000..69d5b8258a
+> > --- /dev/null
+> > +++ b/scripts/gitlab-map-check
+> > @@ -0,0 +1,23 @@
+> > +#!/bin/sh
+> > +# SPDX-License-Identifier: GPL-2.0-or-later
+> > +
+> > +missing=0
+> > +present=0
+> > +
+> > +grep -E '^(R|M):' MAINTAINERS | \
+> > +sed -E -e 's/^(M|R): //' -e 's/ <.*//' | \
+> > +sort | uniq > names.txt
+> > +while IFS= read -r NAME
+> > +do
+> > +  grep "$NAME" .gitlab-map-{auto,manual} > /dev/null
+> > +  if test $? != 0
+> > +  then
+> > +    echo "Missing GitLab handle: $NAME"
+> > +    missing=$(($missing + 1))
+> > +  else
+> > +    present=$(($present + 1))
+> > +  fi
+> > +done < names.txt
+> > +rm -f names.txt
+> > +
+> > +echo "GitLab handles missing: $missing / present: $present"
+> > diff --git a/scripts/gitlab-map-update b/scripts/gitlab-map-update
+> > new file mode 100755
+> > index 0000000000..9fe07a98ee
+> > --- /dev/null
+> > +++ b/scripts/gitlab-map-update
+> > @@ -0,0 +1,44 @@
+> > +#!/bin/sh
+> > +# SPDX-License-Identifier: GPL-2.0-or-later
+> > +
+> > +echo "Checking authentication token status"
+> > +glab auth status
+> > +
+> > +if test $? != 0
+> > +then
+> > +  echo "ERROR: not authenticated with gitlab.com"
+> > +  exit 1
+> > +fi
+> > +
+> > +if ! test -f .gitlab-map-auto
+> > +then
+> > +  echo "ERROR: cannot find existing '.gitlab-map-auto file'"
+> > +  echo "ERROR: this must be executed from the root of the"
+> > +  echo "ERROR: git repository checkout"
+> > +  exit 1
+> > +fi
+> > +
+> > +fail=0
+> > +echo "Updating member list from qemu-project"
+> > +glab api --paginate /groups/qemu-project/members | \
+> > +    jq -r -c '.[] | [.username, .name] | @tsv' | \
+> > +    grep -v '^group_3038080_bot' > \
+> > +    .gitlab-map-auto.tmp
+> > +test $? != 0 && fail=1
+> > +
+> > +echo "Updating member list from qemu-project/qemu"
+> > +glab api --paginate /projects/qemu-project%2fqemu/members | \
+> > +    jq -r -c '.[] | [.username, .name] | @tsv' >> \
+> > +    .gitlab-map-auto.tmp
+> > +test $? != 0 && fail=1
+> > +
+> > +if test $fail == 0
+> > +then
+> > +  grep '^#' .gitlab-map-auto > .gitlab-map-auto.new
+> > +  LC_ALL=C sort .gitlab-map-auto.tmp >> .gitlab-map-auto.new
+> > +  mv .gitlab-map-auto.new .gitlab-map-auto
+> > +  echo "OK: GitLab member list updated"
+> > +else
+> > +  echo "ERROR: Updating member list failed"
+> > +fi
+> > +rm -f .gitlab-map-auto.tmp
+> 
 
-Patch LGTM otherwise. Thanks,
+With regards,
 Daniel
-
->       /* register system main memory (actual RAM) */
->       memory_region_add_subregion(system_memory, s->memmap[VIRT_DRAM].base,
->                                   machine->ram);
-> @@ -1769,6 +1807,8 @@ static void virt_machine_instance_init(Object *obj)
->       s->oem_table_id = g_strndup(ACPI_BUILD_APPNAME8, 8);
->       s->acpi = ON_OFF_AUTO_AUTO;
->       s->iommu_sys = ON_OFF_AUTO_AUTO;
-> +
-> +    cxl_machine_init(obj, &s->cxl_devices_state);
->   }
->   
->   static char *virt_get_aia_guests(Object *obj, Error **errp)
-> diff --git a/include/hw/riscv/virt.h b/include/hw/riscv/virt.h
-> index 18a2a323a3..7d559ac610 100644
-> --- a/include/hw/riscv/virt.h
-> +++ b/include/hw/riscv/virt.h
-> @@ -24,6 +24,7 @@
->   #include "hw/core/sysbus.h"
->   #include "hw/block/flash.h"
->   #include "hw/intc/riscv_imsic.h"
-> +#include "hw/cxl/cxl.h"
->   
->   #define VIRT_CPUS_MAX_BITS             9
->   #define VIRT_CPUS_MAX                  (1 << VIRT_CPUS_MAX_BITS)
-> @@ -64,6 +65,8 @@ struct RISCVVirtState {
->       struct GPEXHost *gpex_host;
->       OnOffAuto iommu_sys;
->       uint16_t pci_iommu_bdf;
-> +    CXLState cxl_devices_state;
-> +    PCIBus *pci_bus;
->   };
->   
->   enum {
+-- 
+|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+|: https://libvirt.org          ~~          https://entangle-photo.org :|
+|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
 
 
