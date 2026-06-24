@@ -4,140 +4,160 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58240CDE002
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 15:28:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C8E6CDE002
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 15:34:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcPWJ-0002ru-Gv; Wed, 24 Jun 2026 11:28:07 -0400
+	id 1wcPbi-0006Kd-Op; Wed, 24 Jun 2026 11:33:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wcPWH-0002rB-Sw
- for qemu-devel@nongnu.org; Wed, 24 Jun 2026 11:28:05 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <mark.caveayland@nutanix.com>)
+ id 1wcPbg-0006K8-Rv; Wed, 24 Jun 2026 11:33:40 -0400
+Received: from mx0a-002c1b01.pphosted.com ([148.163.151.68])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wcPWF-0005Cs-VS
- for qemu-devel@nongnu.org; Wed, 24 Jun 2026 11:28:05 -0400
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65OEfTxv3441283
- for <qemu-devel@nongnu.org>; Wed, 24 Jun 2026 15:28:02 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- +CcllFIADbnJ7iDFpRkcqYANUuInZfS8zsUDMA93rBU=; b=LNFivBBU4NFQKmwA
- 00pVJYg1mhjpeOgZHoLizsKpWA1gnDJsYCSokw/CXnWZ3N/VXtpVBNq1YUfXjpYe
- jVN/WfCvZmeXi98Og07L++oCc3xflVg1yiNwQuSVlKrrAvZoXIt/FDp1/uH8Xfp3
- TZu+3ivjKU6pkuczW7/vecvbvOm8S5slFSxv3TioAhMtbiWzQBq0fHtmkF0/MVpx
- +WX3lMkZGlVbJxuIhqa8oJS9vtkX17rlogYQ8XVKO7VZBvJFPdiU3FYQAVUPe9px
- nqjKrsCFZSYRpegQVbDvB4070JHdtCigufytxJBMCwsY4RLmAxsWQEey48+BSPIw
- zEhVWw==
-Received: from mail-vk1-f200.google.com (mail-vk1-f200.google.com
- [209.85.221.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f0apq1vdx-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 24 Jun 2026 15:28:02 +0000 (GMT)
-Received: by mail-vk1-f200.google.com with SMTP id
- 71dfb90a1353d-5bbd01d56ecso249565e0c.3
- for <qemu-devel@nongnu.org>; Wed, 24 Jun 2026 08:28:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1782314881; x=1782919681; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=+CcllFIADbnJ7iDFpRkcqYANUuInZfS8zsUDMA93rBU=;
- b=ir1hZDnM54IFUkmB+SHXttMSGYZpmBhYhYdx7Itfl7Ku1GXFuv8K3kMHSk0DdHIDw1
- co4WjnBN+4ezFRikdhOpJrm4ZZBpmwLO4VRoEA8toTIANIB9E/QSJKxW2paZSrhySLIB
- B1KiQFgQstlli+SMXWwEcrxn95HQz/MaJW6sdU+k9cZ/jEv2uhfOZgaRH6yxmdSrhgkz
- 71YEcsVw7T/Os1uqQmJCMOBElGHiTcM+fhzR3fE4l4aIu/qfDAno/Iji5fIU6ywpHbVi
- Z/C+xf1K1tSVUoo6XowOd5WG34217Hj/OijHL5nHVc5/QYCqhlFs2FvqdAsFvU+bpkbF
- woVw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782314881; x=1782919681;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=+CcllFIADbnJ7iDFpRkcqYANUuInZfS8zsUDMA93rBU=;
- b=fcDsB7NZIpRKrNz3qXxmPTamtg71Qb+HB4qLwxBzJFUbIl0QZ2dTYON7QGJJsRB/V+
- WI48y8bLt4dazk1bg1bsKAf6YBA1EFGWQ+t/myBt1z5jmuBDeiPag0ddAujeJGxIA8Pr
- dJU0Pm7rEDElYtr6Chue+LKrvU7KXc/0zVpr7l4mCnygIBUcNXlcGD9xrN7TjEurCtvA
- jnyZmlSkguqQbBW8oMMi8KT30BhBs9LHq4rR9SAKvDWuVATKVkJTT28H6rG3dSxwVVpC
- UqaZl2UEDiZ1p8ncAWYMesIVSF7RdqjOxet+R221z/nPzEa/miBi9LO1R0MwA2kboxfF
- IzCw==
-X-Forwarded-Encrypted: i=1;
- AHgh+RoVtpPL/kHg41USHofrQToE+Xp7PFme1I5x875ibO/x4BBrrfZvvHv5y6gMSNWJlbY13/Pw0G7547UD@nongnu.org
-X-Gm-Message-State: AOJu0YzTSzKtIPcIR5dQc9d/mGAFYlCfpvrRX+bsNHUQ9E/TILf26oZn
- Wyjo+MI2CopJnEdOPxwRgw1K3whc+bSbJ0fKMthjkSSXrjZgm4QU4eks0Ym6WhiP61BO/WRtj9y
- 5GisAEsc5w4RV1Zka6d7lzuywfw3TRRrswfvBLWhx6prLAfiR+qNcL3D4zw==
-X-Gm-Gg: AfdE7cknMdDneiV3d6troLEuxSdXQIsyzGrfoMKH9hqJn10j/buXPaj9BpMjmuF/sd2
- 39KnoUYC5eCkgIcI+/KjIQxxYLR2FPPIn1orsKJGDConcJANFIcfJY4l/jmnfK6ypn9DB3zA1gd
- k8QoueEgUc6kdMAD1ufCxVnAsBNGanog6vDGnllbRhcuoZ9XxBdQcHfEtYYarvBRALQORXxbYMx
- gwF9778A4s4JkTQXlKsUvK5UDIRB3W7Gn6dVMcFN/7nfDEe6sMSxbWRM0rTwygZ03zJN4D62CxW
- kb+iHJNJipvbEGSuSde7xQ83xeRG99lg3pHul/C9FiEzV9nqvWl/UzJt/V49LHbWOgYdc+SuXjV
- +3Wu7RPRUCbhEzaKu5tx5l1timDiYRKgULuou30vwBmXisVnbE3dpxnS5xix9kw==
-X-Received: by 2002:a05:6102:4412:b0:6d4:ba3e:bf97 with SMTP id
- ada2fe7eead31-72b649460bamr11327419137.4.1782314881358; 
- Wed, 24 Jun 2026 08:28:01 -0700 (PDT)
-X-Received: by 2002:a05:6102:4412:b0:6d4:ba3e:bf97 with SMTP id
- ada2fe7eead31-72b649460bamr11327402137.4.1782314880845; 
- Wed, 24 Jun 2026 08:28:00 -0700 (PDT)
-Received: from [192.168.69.212] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4926401a2dasm356905e9.2.2026.06.24.08.27.59
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 24 Jun 2026 08:28:00 -0700 (PDT)
-Message-ID: <fac41663-74bb-4c42-b084-b75ef08c26e7@oss.qualcomm.com>
-Date: Wed, 24 Jun 2026 17:27:59 +0200
+ (Exim 4.90_1) (envelope-from <mark.caveayland@nutanix.com>)
+ id 1wcPbf-0005yP-10; Wed, 24 Jun 2026 11:33:40 -0400
+Received: from pps.filterd (m0127838.ppops.net [127.0.0.1])
+ by mx0a-002c1b01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 65OEgpVV2494771; Wed, 24 Jun 2026 08:33:28 -0700
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com; h=
+ content-transfer-encoding:content-type:date:from:message-id
+ :mime-version:subject:to; s=proofpoint20171006; bh=H6LGWe1wYYnyC
+ o23XIqqxKeC5SwYSq2p2N4IALZ0bOo=; b=BGo6KlG19+kXDAd4P3JDTzZuwTdQ5
+ +AvnMFOBwmoTGfLkgK8mhirLM8YTy0MvotfP0EZvHSW7jzK5g5Cx0rJqQ61Vs6kj
+ pimiPUmcc3yxbtuTBMMHoblznDhmPe554jikOXnys2y558CMUHKKtPBsts9qomDM
+ okQeFCMWokPbMDd6P7aFv2QxYtrOE6uEFU7LhLvnFpJ0vfFxi3YgyW8cDsalHyI/
+ 4MsKsoTkrtn7mMYDpKrIcH3LTww7cavAOpjx07aAHz53pSA7hFjCz1QEsVS911hx
+ cBonvF03L9Ue1+ui4DTSLJueVSZeG35z4ShLqTqUOfcJy+CGh1i0FO09g==
+Received: from bn1pr04cu002.outbound.protection.outlook.com
+ (mail-eastus2azon11020115.outbound.protection.outlook.com [52.101.56.115])
+ by mx0a-002c1b01.pphosted.com (PPS) with ESMTPS id 4f006t2cec-1
+ (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+ Wed, 24 Jun 2026 08:33:28 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=rlgUR36f2MwwiMqMnexnm8RC9lnL//wh9WFzgnVrEY5vuLfVDgV95Diqd1+UdYqzU72bEopl3V70FYbT9flk9Kusuotbf5N7oSDieJk4dB2ecVR2ihp4adEe10IRAC7ofURlDhUvEdAQVCApqbQKoi1pZ6Ke7dGPAZbIf9LR0x0we7IjrC5DeCA76I6T5sCNRwag6g6ZvcCmpijhJLdBACEg0NhV3T2YpLXgVSF5ERi6SejPBeMkiZpSKj4yn/M6U3gh7EN7LK48cn7T2dq9arvtL/xSSgQRxjPYJ2oghRojA8RzVJugOnBEt3TvnD71f00s+rHMWC1+D1toa3E+1Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=H6LGWe1wYYnyCo23XIqqxKeC5SwYSq2p2N4IALZ0bOo=;
+ b=EbRR5kYGqJNZ+I/NgoxZVfb2yRXNP9VTx51k5SWydqeO5U9LojtC43+awLsGjWDM+d2ViJS6TQXRqtTUaraYADmsq6oW1yAJeshjT44sVX/vPVKsswX3kH9VtfOr6C1ntA9jAHi1WcdnOjavk1MufpQFS6nGb47UTHN2X03N1NZa0o/muDZM/tz7/aWBYFVLBtPX+WbahV7wjqoQgk/u4Vf8oMvfmFgUQBaCE9p7oEqaqr5+Ag35hYf4sANsKcWoOGF/94MUy/Wf6AMva5PvX1p88iTGSTIN2ddw4nW5lap2fwDKFtrqzZEf0rgLl1gmiZUSa7fZ35nhErD23eps7A==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nutanix.com; dmarc=pass action=none header.from=nutanix.com;
+ dkim=pass header.d=nutanix.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=H6LGWe1wYYnyCo23XIqqxKeC5SwYSq2p2N4IALZ0bOo=;
+ b=sG/Imv8TrdmFKA59C8hYbrNAfyam/u70KMf6I7bM2nYh2JXAqVZIFqkSZlezO8845OKyeR4N0uqeTZKHoCrhY4VN1+v2kT6XrFNSEs3dcZ//cGSdLoqQJK3EIYcFF1M1w1X7DBZmVKqEWo0xq772sQegg74IOD4nS8UFUA9hB4TTO+PAcfZuAG727HUioEviPz+rS6o4glq0reZwbg+K41ICq7J6icwxXvRvnwpUk1Dn6l5ykK5avuYgVCXPbNMER8lWoAUFW7vft8tKqjL40DTmIftzqtS+NKnTLrlhOUpI+QYi9tOX08mwCkOZmacYWAlP20y88yvVCK9iY0SMHw==
+Received: from PH0PR02MB7159.namprd02.prod.outlook.com (2603:10b6:510:16::8)
+ by MN6PR02MB10656.namprd02.prod.outlook.com (2603:10b6:208:4f8::18) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.21.159.13; Wed, 24 Jun
+ 2026 15:33:26 +0000
+Received: from PH0PR02MB7159.namprd02.prod.outlook.com
+ ([fe80::8e97:bc32:822c:b250]) by PH0PR02MB7159.namprd02.prod.outlook.com
+ ([fe80::8e97:bc32:822c:b250%3]) with mapi id 15.21.0159.015; Wed, 24 Jun 2026
+ 15:33:26 +0000
+From: Mark Cave-Ayland <mark.caveayland@nutanix.com>
+To: alistair@alistair23.me, peter.maydell@linaro.org, kfting@nuvoton.com,
+ wuhaotsh@google.com, pbonzini@redhat.com, berrange@redhat.com,
+ qemu-arm@nongnu.org, qemu-devel@nongnu.org
+Subject: [PATCH 0/2] hw/adc: convert object props to class props
+Date: Wed, 24 Jun 2026 16:32:28 +0100
+Message-ID: <20260624153322.1470576-1-mark.caveayland@nutanix.com>
+X-Mailer: git-send-email 2.43.0
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: PR1P264CA0145.FRAP264.PROD.OUTLOOK.COM
+ (2603:10a6:102:346::19) To PH0PR02MB7159.namprd02.prod.outlook.com
+ (2603:10b6:510:16::8)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 4/8] hw/misc/vmlaunchupdate: Introduce hypervisor
- fw-cfg interface support
-Content-Language: en-US
-To: Ani Sinha <anisinha@redhat.com>, Gerd Hoffman <kraxel@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>
-Cc: Alex Graf <graf@amazon.com>, qemu-devel@nongnu.org
-References: <20260624055339.46862-1-anisinha@redhat.com>
- <20260624055339.46862-5-anisinha@redhat.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <20260624055339.46862-5-anisinha@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjI0MDEyOSBTYWx0ZWRfX4Hus8/P6TpC2
- igq/usmpI2C56pfh2AsHjWbOTcnzechjknWDJqDxT5iZXUiq7MaC2jvosq3gv0pHDR0flrmSJ7c
- Gx2K4j7ukAMVLePJ+2Z83XvFc7XdEFY=
-X-Proofpoint-GUID: r1TehrHvogP729LvFK81E1rm-oq-oGlC
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjI0MDEyOSBTYWx0ZWRfX5w4JJ84tJOMp
- Ok5Nw4bQwHil/+TUHI4uHK/+FNd7uHzf9vtVlfC7XA8FXFiZ29CSaPJhB+GJh6KnIt6Ve+xQJRU
- f/HSRA0tZmXgle7kozcOkMvZ9RcF90n9l/KVPC6APhG6CcRL5LsBk2sZTjRBtSlvZkmXaxwpIZc
- O0M7paTqJ8e35cSOGDYwmbqNoZZ1bafDWyM1Lh/SVcROdS+SyvN/1j5oNbPI2ZadSeGj45SJbLD
- 5qagofQQ546M0Nr539MNpEtcEx3AmzM6fozA0Fg8EH4L4240PnugfdczAEI3SiyLj3aDfrSLjs1
- juPNySrh4MUeKTKrz3+E4sVIkQZF5z355oERMzLAlRtjsmP+OGuKf9l4vU5v0Vtho96ihc0+fZr
- C/tVxiTxYLbM9BYlGSMQpfN/EimGpQ==
-X-Authority-Analysis: v=2.4 cv=NpbhtcdJ c=1 sm=1 tr=0 ts=6a3bf782 cx=c_pps
- a=wuOIiItHwq1biOnFUQQHKA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
- a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
- a=vggBfdFIAAAA:8 a=20KFwNOVAAAA:8 a=ichw21_qVSj6RiBJHn4A:9 a=QEXdDO2ut3YA:10
- a=XD7yVLdPMpWraOa8Un9W:22
-X-Proofpoint-ORIG-GUID: r1TehrHvogP729LvFK81E1rm-oq-oGlC
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: PH0PR02MB7159:EE_|MN6PR02MB10656:EE_
+X-MS-Office365-Filtering-Correlation-Id: 7715a9f8-b573-4150-9190-08ded205ef10
+x-proofpoint-crosstenant: true
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|1800799024|366016|376014|23010399003|18002099003|56012099006; 
+X-Microsoft-Antispam-Message-Info: FsMERo6+uQexi+IDD6oMLphc4C74+erOrt/vKuB6S8ZjkBcBFu+SFC5SbfleC4oRNbvWQytyWL/GZ/8elIN1RXOFFxzpyDNWW74bj52cCIapmS6cXZvP3rFu+OJemHxIrVOyXL0khDkWizUWIWK3e7suIFz1DWMAZwHPepdsUeGRR0Bvcf9xEXT48oEPaGShB0MSkcTstpUnAlSr2hmnFdlE79WPhC0wSiOwRmjBT2+F13Cph9TIffqOC5UxtUZffvvQKNEyT9n+2p2rTbKNzmxcstRkxPXTl2rJgH11ZwYuU3CfhmeJ6+LDfxm7NuisnU3Rxmg5WbOqZh1VAvrMWb9wto1zy0cpV/MBy7kvw0uArv9MVsbiQBx2JM7eY2hm4LpoTrydXvuk131yA327xUkRiQbqzmmCBLwLgl4BNk/Qb9Mw75gXveGUgxytjICbNfvbq7cp0ItGl4OyQrx6R92LN/x05D28yAQPJ9l7Q+qcSEuatPOHeZp4/BF1E7iTOI7E351/h8N3irhSQAhy0fRXT+ImIvMXDHB2fPSqashvsZcfL2NeYWc8j3cN4B8mX0OLWJ+bkPyDjpY2QpKqXABYYjgA/DnTHgMvkkmrRAwMxCQctRllpaTyis85yBXeVpqt6N5G0ve1tl08HmE8CnG5v1hZjM0F5Yc3ENCTdMI=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:PH0PR02MB7159.namprd02.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(1800799024)(366016)(376014)(23010399003)(18002099003)(56012099006);
+ DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?Jts3eveVYCvyS+dBFQ361k0zBRfFWi/aLkOTDS8iZeFukzTK4nn0xFjodsiM?=
+ =?us-ascii?Q?icfUMSUk9EGlZ/dYQ0Hm5M5jbWZQVo5Se8DufviOwn+R2xkPJr3pW/tchVnx?=
+ =?us-ascii?Q?3kv/ZJkap3Z4bbIt5rWwYT1j+Pk0iyLAlIP8X3ayGiiwS6LB8gPV2P+7RrcQ?=
+ =?us-ascii?Q?l3y2sV5OGkKPQ5RejaQhk0juZQO529xwSnSN6fvi72no4f6EC56OeHjYYGlY?=
+ =?us-ascii?Q?Dyz9dMAWWEX8RevJPn2UYXE8w2/fz0dYn2UwlI//qjSbXbWSBJYOOtmoscG/?=
+ =?us-ascii?Q?/3+CaXmtO8Hi4YzhftysO2T2CrX1AN0L5WTy9eDVvk1L9zLp7PgpFzfkkmYo?=
+ =?us-ascii?Q?25qgj3T7o4t7moL88U7FV5fEsh53R+m27bPIaDT5gGyhsFSyPeDdqK6tYsNu?=
+ =?us-ascii?Q?UQDSlwFpsDn8LZ74X6XA3CB7rzs3G+eGa3z3HgCDTx+2eMM+F+q/1Za9TWTf?=
+ =?us-ascii?Q?vF4NcRMdfMxeXPmt6ugUAyuNXHL23O+J/EvVPHXpOtKIniZreZMl3aGtUOtP?=
+ =?us-ascii?Q?LBm4uxaDP89FAX7pOi7XmoTa4MgUWStolcpcW0PDVYEWqVLTrc4L7Kp6A22T?=
+ =?us-ascii?Q?GkXZbIitEsyCTmfUKirsrjV/VPkYbmLYUWH95UzPHuj0NYc9qtiVHcbObWP8?=
+ =?us-ascii?Q?9gHkSPTYJCrT7JoLF4jGLD44ob8ciHUmFxVBLDHKflEhlau6xPNpgPLNmdaz?=
+ =?us-ascii?Q?C/aLGHEy1LHIqIGceOZCM/Rb2rdO6aBgC7KC0+bD1meMf0zBfL/P5JwINAeh?=
+ =?us-ascii?Q?rXxLGw1pRwtM2TpD6EjNUQS9MatjKyLcqHvkqGoqPQ93R/xFvYNPflC1m7T4?=
+ =?us-ascii?Q?Dl60UgH6NSb9jenOnuIrvwRsv1d8oDEeTDAjy4smM26DikXqn2/KrBWxVW+d?=
+ =?us-ascii?Q?1VNLWP8uO16PoxpmdyuDbvc5ETW2Lkj7pBEy2RW+5EpCWvidYp7tsYV4V4FB?=
+ =?us-ascii?Q?JqWL1jrNuUkrrHr00A7BpzCdJ8GK48QGlbiBU2Y84E/fXdjz1VvQ4VsJy8T5?=
+ =?us-ascii?Q?RFMFd5swGuqgbB/GFtlrygcxFgmj2Q8WWgogTJTdqcHsEsk2gh3t98YU2MP5?=
+ =?us-ascii?Q?GdHBR7c01SvZ7/0ZMJDxwB+7bbMPqmrAJaR17okOad43ZZDVlcYlq2nLeYqF?=
+ =?us-ascii?Q?2BoP9KJ+F/fNc538xgbwEoB/tP8tysLnDHpPkJXYpKByGMjqQdyF+h2t138J?=
+ =?us-ascii?Q?O1vHmLW8cR4Gdj+hOcn2dKhjzrRWQ8PbTG7X3TnqlfguGrNQR9l2rPkGbmOf?=
+ =?us-ascii?Q?FC/igP+4DjF8y+4w3HTrFip68PJ/9zxqZQHdKe60ZzM+qooSPWTDWacQL/as?=
+ =?us-ascii?Q?3ESDvoIL3W89QVea9xgSKdeqGwhG1mRddA7P0nvVKzuSUGOf4hstCZx9GeVd?=
+ =?us-ascii?Q?0TjiREeNf06NIuBpSXOCQHbMVOMGGqz22J1+mnxeS/yaoCJCCbK92lDzXqUI?=
+ =?us-ascii?Q?b8HDLAmlD2aN1XDBI+XEJSI1ENskZzIIUJuI3tWcLr99LcEhNC64jC/In2em?=
+ =?us-ascii?Q?RnBW/PGPLTo6XnTEgmoVBWH0yDNasWYiBK3Igg9vLmPfRrOVyb3UKDUVpPso?=
+ =?us-ascii?Q?NzsKhogAEuQeMgZyDoSNfQ7mWEcBaFd0vqwLFNAOy93XTzIM9+WUaPVpfKBW?=
+ =?us-ascii?Q?4EhfsjiIHrMJ8suaQ4gQCibYwcV0d/fNwKMOrFg0O7SfX+iL2V5pA6isfAn3?=
+ =?us-ascii?Q?MFOlaoI1UB+osVN06NDK+6gpMxOtO4VAdq6zd6O64bcZZiWkxB/GgCzO0f3S?=
+ =?us-ascii?Q?NSzwM77if9JeA3jc9E+gUQuFUAVLvGg=3D?=
+X-Exchange-RoutingPolicyChecked: biWBL1ywTTqxGVfni0J7ZJKjFNgPl9ZsCnRT17hvjFdvgIHLaeVmqfKLjIL3s3W+YP04zZtJsP+xUc6bRLfvFu20SkrgOwrGawQGT50hrz8bPOHEF+W64JlzL/sEvTbGJWZInAm2uX65udR25GCHJ3xGtbGqvcXJR7lwvrcw7f4iWDcHgH8xEK6aJBXPutNEMt1q7aCD+W5xtldaOlrDI1AEBlszYN3/R0odgfkb9s9KvT8eVvvLcCcm0OCacAq/aBiKdQVGFmaI6Ex2PWJm+PjIvCOY2RZgutxmCZi4IWDhnlmKMOCYgIv9r0bpdjpAy6PTYbjZaLG7DRjXeHIIpA==
+X-OriginatorOrg: nutanix.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 7715a9f8-b573-4150-9190-08ded205ef10
+X-MS-Exchange-CrossTenant-AuthSource: PH0PR02MB7159.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 24 Jun 2026 15:33:26.1485 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: bb047546-786f-4de1-bd75-24e5b6f79043
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: N7M6c4lNs9TpIcdNk7KNzfF3vnDGbmbqrrtlm9seVy07t4QBAZFx1CC1h+gaMiExATDECRPNeWADXrEOuFqvwL+plg/semPsGVMv2jwe1h4=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN6PR02MB10656
+X-Proofpoint-GUID: PDXgZKjPST53ZSTUeDqoJLY6SliJAZUU
+X-Proofpoint-ORIG-GUID: PDXgZKjPST53ZSTUeDqoJLY6SliJAZUU
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjI0MDEzMCBTYWx0ZWRfX1AmaKzH0HqSJ
+ HaBpClyljz4njU8yn4LZj3ypaNmcypCcVDeUKLxuz+X7Yoezq1atMPdXwGRYJP0A/R5JCq7JMqF
+ FE9fhpOBAAeAuU14+Y3UsHVwMVVnK/E=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjI0MDEzMCBTYWx0ZWRfX5DQRIv2NZhVD
+ 9qYY0f3XHJmvGodDH1k/Ob2RMlVycgywJ40aeaf7rs7QjKTCeF/o7hh5qZnHzjXsx/+Q0HYFLIB
+ kmpCezOP99RtziTAzq9ICLvodmC8iRmt9pIztPR072nOq+tybTnypXBak/2pT7axo7cV2cTxoRP
+ 9rN1/4EdgWK8Q52pz5hHbYmuSfoZKYlhpYAjhS5O8SFyI8stWSq445kEYtXFYcHBAOGJ5zpdIyQ
+ Y0k7c/bHItdmsfFDaMp5ENfsOq4ZedPLXD7qBopdXLcJEFIpmjPK00dvMnv+Hsk+/Y94NH4/rkg
+ GvgeDdOzGArpLVOU2B5PCH6sXwuzF803156xo2VvkDmzGx6Bl8HZaslKt4Rk/UZrrUno2tWGw3N
+ PRgEEQyWf2vB/deUeMjJRvT1fSVPxElHmL8uKknxUFKTst6sz/DWJ+KkgNZtkC1Va9Yx+uk/7w2
+ o0GEtHCMcXU58srQ3oA==
+X-Authority-Analysis: v=2.4 cv=Xfi5Co55 c=1 sm=1 tr=0 ts=6a3bf8c8 cx=c_pps
+ a=Oahh2kgEN5ymB8sO0SiNEQ==:117 a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19
+ a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19 a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19
+ a=xqWC_Br6kY4A:10 a=FelO9ux0wxsA:10 a=0kUYKlekyDsA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=VofLwUrZ8Iiv6rRUPXIb:22 a=1L6crL_YRTbalZ11mEUO:22
+ a=64Cc0HZtAAAA:8 a=Oov7GBWg82k6lRvLM3MA:9
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-06-24_03,2026-06-24_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 adultscore=0 bulkscore=0 spamscore=0 suspectscore=0
- phishscore=0 malwarescore=0 classifier=typeunknown authscore=0 authtc=
- authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.22.0-2606150000 definitions=main-2606240129
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Proofpoint-Spam-Reason: safe
+Received-SPF: pass client-ip=148.163.151.68;
+ envelope-from=mark.caveayland@nutanix.com; helo=mx0a-002c1b01.pphosted.com
+X-Spam_score_int: -31
+X-Spam_score: -3.2
+X-Spam_bar: ---
+X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -155,148 +175,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 24/6/26 07:53, Ani Sinha wrote:
-> VM launch update is a mechanism where the virtual machines can use IGVM
-> file bundle to boot into a trusted execution environment without
-> having to depend on a untrusted party to provide the IGVM bundle or firmware
-> image. This is particularly useful for confidential virtual machines that
-> are deployed in the cloud where the tenant and the cloud provider are two
-> different entities. In this scenario, virtual machines can bring their own
-> trusted IGVM file containing a trusted firmware image
-> bundled as a part of their filesystem and then use this hypervisor interface
-> to update to a trusted and deterministic boot state.
-> This also allows the guests to have a consistent measurements on the firmware
-> image.
-> 
-> Currently, this mechanism only works if the VM was started with IGVM in the
-> first place.
-> 
-> This change introduces support for the fw-cfg based hypervisor interface
-> and the corresponding device.The change also includes the
-> specification document for this interface. The interface is made generic
-> enough so that guests are free to use their own ABI to pass required
-> information between initial and trusted execution contexts (where they are
-> running their own trusted boot state) without the hypervisor getting
-> involved in between.
-> 
-> Currently, this device is only supported for x86 machines. Presence of
-> IGVM host libraries is also required for parsing IGVM files. Hence, the device
-> cannot be initialized for other machine types or hosts where IGVM support
-> is not present. Trying to initialize it for arm for example will lead to failure:
-> 
-> $ ./qemu-system-arm -device vm-launch-update -machine virt
-> qemu-system-arm: -device vmfwupdate: This machine does not support vm-launch-update device
-> 
-> Functional and qtests will be added in a subsequent patch.
-> 
-> CC: Alex Graf <graf@amazon.com>
-> CC: Gerd Hoffman <kraxel@redhat.com>
-> 
-> Signed-off-by: Ani Sinha <anisinha@redhat.com>
-> ---
->   hw/misc/meson.build              |   3 +
->   hw/misc/trace-events             |   5 +
->   hw/misc/vmlaunchupdate.c         | 236 +++++++++++++++++++++++++++++++
->   include/hw/misc/vmlaunchupdate.h |  85 +++++++++++
->   include/system/igvm.h            |   2 +
->   5 files changed, 331 insertions(+)
->   create mode 100644 hw/misc/vmlaunchupdate.c
->   create mode 100644 include/hw/misc/vmlaunchupdate.h
+Since the use of object props is effectively deprecated, here is an attempt
+to convert all use of object props in hw/adc to class props. The eventual
+aim is to continue working through the codebase, removing all remaining uses
+of object props.
+
+The series is lightly tested: it passes "make check", GitLab CI and some
+simple local tests. I'm mostly interested for feedback on the conversion
+strategy, and to get a feel for the best way to merge this series since once
+the basic conversion patterns are in place, the same patterns can be applied
+elsewhere and it would be good to minimise the merge window for such changes.
+
+Signed-off-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
 
 
-> diff --git a/include/hw/misc/vmlaunchupdate.h b/include/hw/misc/vmlaunchupdate.h
-> new file mode 100644
-> index 0000000000..1d13f4b176
-> --- /dev/null
-> +++ b/include/hw/misc/vmlaunchupdate.h
-> @@ -0,0 +1,85 @@
-> +/*
-> + * Guest driven VM launch state update device via IGVM.
-> + * For details and specification, please look at docs/specs/vmlaunchupdate.rst.
-> + *
-> + * Copyright (C) 2026 Red Hat, Inc.
-> + *
-> + * Authors: Ani Sinha <anisinha@redhat.com>
-> + *
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + *
-> + */
-> +#ifndef VMLAUNCHUPDATE_H
-> +#define VMLAUNCHUPDATE_H
-> +
-> +#include "hw/core/qdev.h"
-> +#include "qom/object.h"
-> +#include "qemu/units.h"
-> +#include "system/igvm-cfg.h"
-> +
-> +#define TYPE_VMLAUNCHUPDATE "vm-launch-update"
-> +
-> +/* fw-cfg file definition */
-> +#define FILE_VMLAUNCHUPDATE "etc/vmlaunchupdate"
-> +
-> +/* version */
-> +#define VM_LAUNCHUPDATE_VERSION 0x01
-> +
-> +/* format bits, used by both 'capabilities' and 'control'  */
-> +
-> +/* igvm */
-> +#define VM_LAUNCHUPDATE_FORMAT_IGVM           (1ULL << 32)
-> +
-> +/* 'control' field bits  */
-> +
-> +/* disable vmlaunchupdate interface */
-> +#define VM_LAUNCHUPDATE_CTL_DISABLE            (1 << 0)
-> +
-> +typedef struct {
-> +    /* api version */
-> +    uint16_t version;
-> +
-> +    /* VMM capabilities, read-only. */
-> +    uint64_t capabilities;
-> +    /* control bits, see VMFWUPDATE_CTL_* */
-> +    uint64_t control;
-> +
-> +    /*
-> +     * address and size of the IGVM image.  Will be cleared when
-> +     * the write completes successfully and IGVM file is correctly parsed.
-> +     */
-> +    uint64_t fw_image_addr;
-> +    uint32_t fw_image_size;
-> +
-> +    /*
-> +     * address + size of opaque blob.  The guest can use this to pass on
-> +     * information, for example which memory region the linux kernel has been
-> +     * loaded to.  writable, will be kept intact on firmware update.
-> +     */
-> +    uint64_t opaque_addr;
-> +    uint64_t opaque_size;
-> +
-> +} VMLaunchUpdate;
-> +
-> +typedef struct VMLaunchUpdateState {
-> +    DeviceState parent_obj;
-> +    VMLaunchUpdate launch_update;
-> +    ResettableState reset_state;
-> +} VMLaunchUpdateState;
-> +
-> +
-> +typedef struct VMLaunchUpdateStateClass {
-> +    ObjectClass parent_class;
-> +} VMLaunchUpdateStateClass;
-> +
-> +OBJECT_DECLARE_SIMPLE_TYPE(VMLaunchUpdateState, VMLAUNCHUPDATE);
-> +
-> +/* returns NULL unless there is exactly one device */
-> +static inline VMLaunchUpdateState *vm_launchupdate_find(void)
-> +{
-> +    Object *o = object_resolve_path_type("", TYPE_VMLAUNCHUPDATE, NULL);
-> +
-> +    return o ? VMLAUNCHUPDATE(o) : NULL;
-> +}
+Mark Cave-Ayland (2):
+  qom: add support for array class properties
+  hw/adc/npcm7xx_adc.c: convert NPCM7XX_ADC object props to class props
 
-Is this inline really justified?
+ hw/adc/npcm7xx_adc.c | 75 +++++++++++++++++++++++++++++++++++++++-----
+ qom/object.c         | 27 ++++++++++++++++
+ 2 files changed, 95 insertions(+), 7 deletions(-)
 
-> +
-> +#endif
+-- 
+2.43.0
 
 
