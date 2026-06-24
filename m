@@ -4,88 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BFB7BCD4F26
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 00:11:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5985CDB479
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 00:11:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcB9j-0007w2-Mh; Tue, 23 Jun 2026 20:07:51 -0400
+	id 1wcB9I-0007VU-VR; Tue, 23 Jun 2026 20:07:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1wcB9S-0007Xz-F5
- for qemu-devel@nongnu.org; Tue, 23 Jun 2026 20:07:36 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ id 1wcB9C-0007ST-SU
+ for qemu-devel@nongnu.org; Tue, 23 Jun 2026 20:07:18 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1wcB9Q-0003Ja-IF
- for qemu-devel@nongnu.org; Tue, 23 Jun 2026 20:07:34 -0400
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+ id 1wcB9A-0003Cm-Jn
+ for qemu-devel@nongnu.org; Tue, 23 Jun 2026 20:07:18 -0400
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65NJwr57613932
- for <qemu-devel@nongnu.org>; Wed, 24 Jun 2026 00:07:31 GMT
+ 65NK04Lc1191161
+ for <qemu-devel@nongnu.org>; Wed, 24 Jun 2026 00:07:05 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- TCwdhiMRj9ZQNqm4F7nb8HIrgeLaw/oBfD3H8vDFPjs=; b=cSZDs6u0FEWIDfJj
- oPPY8ON8O+wpfeNzMkL9JiP7Ya5mX+LozOJJTJ2hK2FTUV7FPz4o87rrzQRBv2ZU
- TI2jaehElzD6bLZQ1zx/4GYRmVUt+sRJ93wTiarGc5yX6Jqbqs7WQT1V+Vjw5/9/
- LUomJzfEjxEUgTQqee9vxRt9D3ZDypXnBkzBGOLSMu7XGP6/yDEjvjkBykymPDb1
- IaxhLEHCDJWEYphQ+DpdodQ16dvYOuutWpSXe1eJcJw9CZubvGRrA7tcfXGKc+Gc
- rWAfsIkaCSaYk3mmwamHmCZhlKK3d8uukjJpOwSP4hhiGDtFoa3cfAyb8TJhXhbg
- WUf1AA==
-Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
- [209.85.219.70])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4eyppykjfm-1
+ F0Isirr0MlsSsKy41gDn9B8vpEig/F5As+5NVwCdPXU=; b=RnDuMRzyOlPS0Bfv
+ O5JpzpIN1Xxnk7jznjIbND7sVJLvqnbChCSe7tl2VtV6dJZF1BWaNb9YICa5vO+W
+ GmErMSNZOP2TrURlqu58FrCdPs3khQzemd+VoIiDWM2PwckxYFIvb3DG5CNXh0RT
+ bqRS4T2JoUKV8BfiTmVYh2ucGhUVHJ4b30fWh3G9bpwIecqNSR2HKLp6JjdyxMly
+ G1bO6pyVtfzsEuGa0W7hN9J67u3kD971XP+SECJ0FD1jlcfuvXv+EPZoK3BklUEX
+ xnoke7s/YXMwVjYBXRsu/8erozCosPM7xBnbGhFXSuT5EqcRJuu7Zeu7XZcYp0mh
+ VDlC9Q==
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
+ [209.85.219.72])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4eytvh2evp-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 24 Jun 2026 00:07:30 +0000 (GMT)
-Received: by mail-qv1-f70.google.com with SMTP id
- 6a1803df08f44-8dc0a6ab3bbso14301736d6.1
- for <qemu-devel@nongnu.org>; Tue, 23 Jun 2026 17:07:29 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Wed, 24 Jun 2026 00:07:05 +0000 (GMT)
+Received: by mail-qv1-f72.google.com with SMTP id
+ 6a1803df08f44-8db6a7471baso10844626d6.0
+ for <qemu-devel@nongnu.org>; Tue, 23 Jun 2026 17:07:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1782259649; x=1782864449; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1782259625; x=1782864425; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=TCwdhiMRj9ZQNqm4F7nb8HIrgeLaw/oBfD3H8vDFPjs=;
- b=hScTkjTYbahNPrVJmD+slQ33ddcbZGRZmQ8MOS4bErnvy8jLjfrRGyFNBQLAIIuXQO
- s01JMIvBzCGWuDJnNJWDEKfTlJN9+HXLjJbLviX4BManm8c/qJTkbf8zs/hkaXP4MDSm
- mR891QKNJKQ6U0mPrPnafF65NBuEgIWFwu/wqniorPjGySmGVM+fbGnoSus2bdCS4+m4
- ZnnsfuSk+FqJfayIRy4PBNlXFK/RntB9OEX/MkN99PDejkhYCe3AVPK+rh3knm+CPtd4
- lzJQcFw6nmVPpah5vntsBnYU6zMH1M/yJQpx0u+Ix7cIfDjsDCENY9KTtj5tBFFJx2lU
- v8MQ==
+ bh=F0Isirr0MlsSsKy41gDn9B8vpEig/F5As+5NVwCdPXU=;
+ b=HAsf9tD9PFZiL1sLyAcmxOZlkH8BUheTnxDWLEcyoVI9ecwLzAqH1VTy2rH56d1EQL
+ QNduFl4IRSEv9CKNyyQjBHobdaOFdd0Hnw9x65eclr9Wnk3Zx8vNPzAUvLLrUKKOQQiV
+ zpevYtuavKBYtlYpYhvCLNT5HMVObychf4Wu9g0XOsv7apTm3fLFqXrQq5MAW/DC1dat
+ cfytducqdtsnJsuxUPaW40My60bYxI4uIc2V4Gl7+2LBBUePdqOhGqv7zc/Qo0V+sSJI
+ PYxBQwfY4I5GIzPOgCVckIzwHdcbzt5BjpbvyjbBMZ8uhh04AyBUWBMZwEbOssnT92TZ
+ DmLA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782259649; x=1782864449;
+ d=1e100.net; s=20251104; t=1782259625; x=1782864425;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=TCwdhiMRj9ZQNqm4F7nb8HIrgeLaw/oBfD3H8vDFPjs=;
- b=OrrR9AbxHi3OkYMtjMx+fyy5U7PpJzt1W9hmU1WhaX/TTYNZ0somPg6uoIojElsgXQ
- R8LxpZqomCAkSY5l7r5zUtArkCc29zl63EPUbCDMGFcMhdRp1tuwrbCtakICQNmI+yWy
- pSJYgu3Paywrugf6PxLhF3qgzMKzHyBiz/Qaqo0xLYl3ORivEmMuJGoyIeJvyMk/X5nl
- J6kPzFcSgCxcS/SAtAgzquE+qM7l21LpieJRRp7DHQ4GQy4+Lu+KTIU76FYxW5sVQwxx
- XDVrJ4fLSrRqKuf6AtuVsg2TsDWICUq72luifLHKEaHDkgvkkY7fXnyFGgsewaujM67b
- Ak5w==
-X-Gm-Message-State: AOJu0Yw4GMb7VlEij5xlBeZ1WDP1RzZsZd9dRLVmXzjjAELZNaHvnS5a
- 79raofPWyh3WDZLCADGTWldwbSw5BiX/4Tr3CS3jxugXraPw0H0KB+l6ck1PXKfszzDCVvu/wpi
- 0h9tQQy5xKWrgQ/os7FFXzgRg8nM4GMz+94Kg0hGEgYxv+1avqLsmqGPAtI+fhssiiw==
-X-Gm-Gg: AfdE7clog2zn6s0wnA9N9j1nG/e7DEq+RsZk8BYrt+9JuiS2+0e6vUPpIP1BP5v+FWp
- og7FZEyKs8Tpgd07lRz5dKkfU0WFR5mn/KzexztRjbPj88h+/soPD5Y0Npo2cjbsx2hMGgA2lf3
- xySwUp1NdAkPiI14WBxtdUrH6h0JXHRQuUM9f49EIpLk5CzEEXaXRSPnEfrU9i4Ob0G0/r0JRGu
- VWvTMQyNbtBk6Wgj7GPfT5GHz3n69SNEuTYMKsDFBjdBTYCkGefH4RdwhLEXmXJ2yyFwOvVxO/1
- uFTSDfvi4Ah19jQpphNzDqgIz8uDUJfwjfgRGduJxD4flSbwWVvGYWxZx56MEjEZnslYhFy6pKY
- HjB/IqPF3PfI9A0EXbQOVocEmQQjBHX3SCJJCID4A49jvnw==
-X-Received: by 2002:a05:6214:3286:b0:8df:9ea9:72e6 with SMTP id
- 6a1803df08f44-8e52d7d6229mr25857656d6.5.1782259648991; 
- Tue, 23 Jun 2026 17:07:28 -0700 (PDT)
-X-Received: by 2002:a05:6214:3286:b0:8df:9ea9:72e6 with SMTP id
- 6a1803df08f44-8e52d7d6229mr25856966d6.5.1782259648384; 
- Tue, 23 Jun 2026 17:07:28 -0700 (PDT)
+ bh=F0Isirr0MlsSsKy41gDn9B8vpEig/F5As+5NVwCdPXU=;
+ b=jHeM/CMio0ZP7f5mP8wy66EcehSfmOuTqjZ4Kkl51tds1nFxyg/dT3sPWXsNnnAM0j
+ F3244AMI+LiMHRQ5gqPdRqpEh6ZFWmvdE82gBgFrHpfkil57G2VOtv0Tb/+U4MdHjf/j
+ KT+Zds+Gg3UmlHa7ApvDjmjZqODheLpEQtK3W6gp8QNty6neGWwuRIS3HdAodpwHmjhi
+ mL005mi1tYfu4Z5YkrnLmt14CTPN7FOaHJyoeEAUYj3celFtOkF8qqn07jignWUsoEGl
+ 1jJ607RbF4JDlA3VyPMAo3NzCdiURY3aeIZNKVQLPadVo3r6x4KQR15jTvDUbnXN/FH+
+ hU7A==
+X-Gm-Message-State: AOJu0YyC9Tav+upEa8ZQcsogUA78K1encDN5Nf/F4/Kn7zIu+b5DoBPE
+ ltnud9nryaDe47aquvpSvec+Ox1VmR1Z5exsUNcFoF9VmztdvXP60Ilqj8VOMkoKGNYQltQYPPl
+ A7oGbwV+Ku+49aIDFlgeikObkgHAbPZUHDnT4uHRfWN1ytPLoLbImxOFcULiqrRI97A==
+X-Gm-Gg: AfdE7cm25EgpoumQltQ6RE6K1ybBuX2jSDqH7Lv70NE0a2LSalbpO/HUWE43nV3gbZK
+ r1jwQ5xe81QbVzVYPZ417ZCX0wcK62RK2XqzsGNi+c1Wj+tMLEnOdKKn+WVIV11WSHB3ssXQKUc
+ dGAwtiTxo4gWXWQlW782YRxQssR3BkKDJlNGg8TeqGXwZFaxe6bWdSQzm+uy3LdCooyrN0zlxF8
+ f/e7Rjd961ZuQEvOKYPfJ/ckWIrbmAhMqZFo/v9S9qz81iDuBYazRDXEPSqektY8HFnmrXA2k7M
+ xZs1hepComAknPlV4UspTyJPllSFNwGCnHBpxsYklo0qvAoNFWz0siQe69bEm5PUSV/76TlQ6V4
+ 0WU4lqFBaU29Sc2d9o3OwY5XXN7W2l7yNnVnLfr0XBOPK2Q==
+X-Received: by 2002:a05:6214:2429:b0:8cc:2a92:48e4 with SMTP id
+ 6a1803df08f44-8e535cfea4amr22373856d6.32.1782259624980; 
+ Tue, 23 Jun 2026 17:07:04 -0700 (PDT)
+X-Received: by 2002:a05:6214:2429:b0:8cc:2a92:48e4 with SMTP id
+ 6a1803df08f44-8e535cfea4amr22373366d6.32.1782259624543; 
+ Tue, 23 Jun 2026 17:07:04 -0700 (PDT)
 Received: from QCOM-UWl2o8bcGT.qualcomm.com ([189.79.21.40])
  by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-8df81cdec56sm142422976d6.32.2026.06.23.17.07.26
+ 6a1803df08f44-8df81cdec56sm142422976d6.32.2026.06.23.17.07.02
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 23 Jun 2026 17:07:27 -0700 (PDT)
+ Tue, 23 Jun 2026 17:07:04 -0700 (PDT)
 From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, liwei1518@gmail.com,
@@ -94,51 +94,51 @@ Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, liwei1518@gmail.com,
  fritchleybohrer@gmail.com,
  Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
  Palmer Dabbelt <palmer@dabbelt.com>
-Subject: [PATCH v2 16/24] target/riscv: gate riscv_cpu_update_mip with
- tcg_enabled()
-Date: Tue, 23 Jun 2026 21:06:23 -0300
-Message-ID: <20260624000632.2149359-17-daniel.barboza@oss.qualcomm.com>
+Subject: [PATCH v2 08/24] target/riscv: remove csr.h from kvm-cpu.c
+Date: Tue, 23 Jun 2026 21:06:15 -0300
+Message-ID: <20260624000632.2149359-9-daniel.barboza@oss.qualcomm.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260624000632.2149359-1-daniel.barboza@oss.qualcomm.com>
 References: <20260624000632.2149359-1-daniel.barboza@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjIzMDE5OSBTYWx0ZWRfXyEObXIsrBO2f
- pT2CUWrKexu4OHFbZbhOFIi4oU/XdKwY+sD646dntpSYJbf7RxWNcbytEZVDQDz0vKGvIWoWfRH
- fTbKwKMbhk7mWAUAOKK4EzottYSP4j58w6FNk4AQmm/QmCdESsguw7Urn3LyBHGrNLIy/+X2VGs
- 4xii9pm3rMgibISXVRjJE00v7+2tnBWIvpFThE0nXjVjs9J7sPebSv+QIXp9aK8zso4wJsSpmNB
- gH4juC+j6JlGPKJSkFygm9pZ48r4OneurTiAxpUt4vlcpJh0ZRcKXL4E+ZBsAJhXFDLMNKOwd9a
- ph3lKL/gPLDFAWtbMJa2k4s/GQVuioBWorzUeQTxwELamMq1lXFX017DdiGlqRTIkCLK55U3iO6
- w67DVem9KhTxbWJlR5JF+ps/NTH2LQ==
-X-Proofpoint-GUID: ncMSgYGFtvL3JX4ggFn1_KqjA3dZHWck
-X-Authority-Analysis: v=2.4 cv=dvfrzVg4 c=1 sm=1 tr=0 ts=6a3b1fc2 cx=c_pps
- a=oc9J++0uMp73DTRD5QyR2A==:117 a=sHJf4AwOIoU3qjeHFPlg6Q==:17
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjIzMDE5OSBTYWx0ZWRfXzrI8RwkLAom5
+ ga0LU2RT5w0zWQlpQVYU1GDoPttERbOIGbR4i6SJA2tCSAfRMxROwQ1FZ9CmO6l2xt3ffa7AXZT
+ tnN+rHFJZ2Gs27G4PE9bPewj9WZxC52RGaAH9l7LkaYtm8xEOpNWGJKndJ32kAjfkq0yIFzsPG0
+ MPLDmEOqF92l/f3p8tPa3b0kvuBkd3+R982hLzCZfyBy18/LQRwdGrUZrVzVTKnPXvGN/BXOpiP
+ gl5/3WHpWkoYk9WkIhIGREVFHvZT5uswJ+NcjLrAfVlzFUDbuRYYMZ8o2I6hCjrXfDg4UV0biaI
+ 1vxuNgR9xGQS+NqiziyYNKHb2lQh51E6n3HS/Fc+ABZtHhUB9CAzytUgHDHU9ZD4OMnwIGLgSai
+ PZSckRX31QMvzLA4eCARSLAlgmJr6NO55LM0zwyy+Ld+WE9P7Gt95gYqtNS1wTNeEhMjK+zKOxQ
+ dRi02JhCTBp+VuImWCA==
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjIzMDE5OSBTYWx0ZWRfXz0qL6emN0vKF
+ +8oD3Gv/WZ9FWjn7Y7GiHjvd+sr14yaV1EJIIsAgGdEtzH7EX8xVJ9Z4Ss7RWK5V+wGD3y9+L2m
+ DP+mfEt2mirxlsRpeHGXAbmg6+DBEIw=
+X-Proofpoint-GUID: dmn-EkQe61vxui_N8cAb9wm716Sp5Qz_
+X-Authority-Analysis: v=2.4 cv=AJDhMgPs c=1 sm=1 tr=0 ts=6a3b1fa9 cx=c_pps
+ a=7E5Bxpl4vBhpaufnMqZlrw==:117 a=sHJf4AwOIoU3qjeHFPlg6Q==:17
  a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22
- a=EUspDBNiAAAA:8 a=pBdMQyqLZ6fKue3OrpUA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=iYH6xdkBrDN1Jqds4HTS:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjIzMDE5OSBTYWx0ZWRfX7sCFDENwgpnZ
- Q5QGtparerlla/KAkXhhKtFlNBRrj39owKeoy30Ls0XQD3AcAqlURmDeB9EOAWH+vNYRPoywBFg
- xmuP22iRISXDbViy9bssPFhq35qhiMU=
-X-Proofpoint-ORIG-GUID: ncMSgYGFtvL3JX4ggFn1_KqjA3dZHWck
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
+ a=EUspDBNiAAAA:8 a=6BMwLXxoa7YWeqrhhxoA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=pJ04lnu7RYOZP9TFuWaZ:22
+X-Proofpoint-ORIG-GUID: dmn-EkQe61vxui_N8cAb9wm716Sp5Qz_
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-06-23_04,2026-06-23_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 phishscore=0 adultscore=0 spamscore=0 suspectscore=0
- malwarescore=0 bulkscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2606230199
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+ lowpriorityscore=0 adultscore=0 impostorscore=0 clxscore=1015 phishscore=0
+ malwarescore=0 suspectscore=0 bulkscore=0 priorityscore=1501 spamscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606230199
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -154,174 +154,154 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-riscv_cpu_update_mip() is a TCG only call.  Its KVM equivalent is
-kvm_riscv_set_irq().  cpu.c gates the KVM only function with a
-kvm_enabled() check, making it unavailable for TCG only builds.  We need
-to do the same for riscv_cpu_update_mip() otherwise a KVM only build
-will fail because it doesn't know what this function is.
-
-Use tcg_enabled() for the couple of riscv_cpu_update_mip() calls we have
-unguarded in cpu.c.
-
-We have way more calls to deal with in time_helper.c which isn't using
-kvm_riscv_set_irq() at all, so create a riscv_accel_set_irq() local
-helper that will choose whether to use the KVM or TCG API.
-
-The reason we're going through all this hassle in time_helper.c is
-because hw/int/riscv_aclint.c uses it, and if we don't do something
-about we won't have riscv_aclint working for KVM.  Whether this is a
-real problem or not and we should remove aclint support for KVM is
-question for another day.
+Move riscv_new_csr_seed from csr.c to cpu.c since this function is
+shared with KVM.  With that we can remove the csr.h from kvm-cpu.c.
 
 Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 ---
- target/riscv/cpu.c         | 19 ++++++++++++++-----
- target/riscv/time_helper.c | 33 +++++++++++++++++++++++++--------
- 2 files changed, 39 insertions(+), 13 deletions(-)
+ target/riscv/cpu.c         | 30 ++++++++++++++++++++++++++++++
+ target/riscv/cpu.h         |  3 ++-
+ target/riscv/csr.h         |  3 ---
+ target/riscv/kvm/kvm-cpu.c |  1 -
+ target/riscv/tcg/csr.c     | 29 -----------------------------
+ 5 files changed, 32 insertions(+), 34 deletions(-)
 
 diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index 7bd5bc0fc1..8f9d2967ef 100644
+index fe47ae64c9..5d44f993e4 100644
 --- a/target/riscv/cpu.c
 +++ b/target/riscv/cpu.c
-@@ -1336,14 +1336,18 @@ static void riscv_cpu_set_irq(void *opaque, int irq, int level)
-         case IRQ_M_EXT:
-             if (kvm_enabled()) {
-                 kvm_riscv_set_irq(cpu, irq, level);
--            } else {
-+            }
-+
-+            if (tcg_enabled()) {
-                 riscv_cpu_update_mip(env, 1 << irq, BOOL_TO_MASK(level));
-             }
-              break;
-         case IRQ_S_EXT:
-             if (kvm_enabled()) {
-                 kvm_riscv_set_irq(cpu, irq, level);
--            } else {
-+            }
-+
-+            if (tcg_enabled()) {
-                 env->external_seip = level;
-                 riscv_cpu_update_mip(env, 1 << irq,
-                                      BOOL_TO_MASK(level | env->software_seip));
-@@ -1370,9 +1374,14 @@ static void riscv_cpu_set_irq(void *opaque, int irq, int level)
-             env->hgeip |= 1ULL << irq;
-         }
+@@ -21,6 +21,7 @@
+ #include "qemu/qemu-print.h"
+ #include "qemu/ctype.h"
+ #include "qemu/log.h"
++#include "qemu/guest-random.h"
+ #include "cpu.h"
+ #include "cpu_vendorid.h"
+ #include "target/riscv/csr.h"
+@@ -536,6 +537,35 @@ static void riscv_register_custom_csrs(RISCVCPU *cpu, const RISCVCSR *csr_list)
+ }
+ #endif
  
--        /* Update mip.SGEIP bit */
--        riscv_cpu_update_mip(env, MIP_SGEIP,
--                             BOOL_TO_MASK(!!(env->hgeie & env->hgeip)));
-+        if (kvm_enabled()) {
-+            kvm_riscv_set_irq(cpu, irq, level);
-+        }
-+        if (tcg_enabled()) {
-+            /* Update mip.SGEIP bit */
-+            riscv_cpu_update_mip(env, MIP_SGEIP,
-+                                 BOOL_TO_MASK(!!(env->hgeie & env->hgeip)));
-+        }
-     } else {
-         g_assert_not_reached();
-     }
-diff --git a/target/riscv/time_helper.c b/target/riscv/time_helper.c
-index 400e917354..ede1a4c2a3 100644
---- a/target/riscv/time_helper.c
-+++ b/target/riscv/time_helper.c
-@@ -21,19 +21,34 @@
- #include "cpu_bits.h"
- #include "time_helper.h"
- #include "hw/intc/riscv_aclint.h"
-+#include "kvm/kvm_riscv.h"
-+#include "system/kvm.h"
-+#include "system/tcg.h"
-+
-+static void riscv_accel_set_irq(RISCVCPU *cpu, int irq, int level)
++/* Used by csr.c and the KVM driver */
++target_ulong riscv_new_csr_seed(target_ulong new_value,
++                                target_ulong write_mask)
 +{
-+    if (kvm_enabled()) {
-+        kvm_riscv_set_irq(cpu, irq, level);
++    uint16_t random_v;
++    Error *random_e = NULL;
++    int random_r;
++    target_ulong rval;
++
++    random_r = qemu_guest_getrandom(&random_v, 2, &random_e);
++    if (unlikely(random_r < 0)) {
++        /*
++         * Failed, for unknown reasons in the crypto subsystem.
++         * The best we can do is log the reason and return a
++         * failure indication to the guest.  There is no reason
++         * we know to expect the failure to be transitory, so
++         * indicate DEAD to avoid having the guest spin on WAIT.
++         */
++        qemu_log_mask(LOG_UNIMP, "%s: Crypto failure: %s",
++                      __func__, error_get_pretty(random_e));
++        error_free(random_e);
++        rval = SEED_OPST_DEAD;
++    } else {
++        rval = random_v | SEED_OPST_ES16;
 +    }
 +
-+    if (tcg_enabled()) {
-+        riscv_cpu_update_mip(&cpu->env, irq, level);
-+    }
++    return rval;
 +}
 +
- 
- static void riscv_vstimer_cb(void *opaque)
+ static ObjectClass *riscv_cpu_class_by_name(const char *cpu_model)
  {
-     RISCVCPU *cpu = opaque;
-     CPURISCVState *env = &cpu->env;
-     env->vstime_irq = 1;
--    riscv_cpu_update_mip(env, 0, BOOL_TO_MASK(1));
-+    riscv_accel_set_irq(cpu, 0, BOOL_TO_MASK(1));
- }
+     ObjectClass *oc;
+diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+index 70b8729bd7..c0e9098728 100644
+--- a/target/riscv/cpu.h
++++ b/target/riscv/cpu.h
+@@ -972,7 +972,8 @@ bool riscv_cpu_accelerator_compatible(RISCVCPU *cpu);
+ extern const bool valid_vm_1_10_32[], valid_vm_1_10_64[];
  
- static void riscv_stimer_cb(void *opaque)
- {
-     RISCVCPU *cpu = opaque;
--    riscv_cpu_update_mip(&cpu->env, MIP_STIP, BOOL_TO_MASK(1));
-+    riscv_accel_set_irq(cpu, MIP_STIP, BOOL_TO_MASK(1));
- }
+ void riscv_cpu_register_gdb_regs_for_features(CPUState *cs);
+-
++target_ulong riscv_new_csr_seed(target_ulong new_value,
++                                target_ulong write_mask);
+ const char *satp_mode_str(uint8_t satp_mode, bool is_32_bit);
  
- /*
-@@ -48,6 +63,7 @@ void riscv_timer_write_timecmp(CPURISCVState *env, QEMUTimer *timer,
-     RISCVAclintMTimerState *mtimer = env->rdtime_fn_arg;
-     uint32_t timebase_freq;
-     uint64_t rtc_r;
-+    RISCVCPU *cpu;
+ const char *priv_spec_to_str(int priv_version);
+diff --git a/target/riscv/csr.h b/target/riscv/csr.h
+index c791260f83..73d874ee98 100644
+--- a/target/riscv/csr.h
++++ b/target/riscv/csr.h
+@@ -12,9 +12,6 @@
+ #include "exec/target_long.h"
+ #include "cpu_bits.h"
  
-     if (!riscv_cpu_cfg(env)->ext_sstc || !env->rdtime_fn ||
-         !env->rdtime_fn_arg || !get_field(env->menvcfg, MENVCFG_STCE)) {
-@@ -63,6 +79,7 @@ void riscv_timer_write_timecmp(CPURISCVState *env, QEMUTimer *timer,
+-target_ulong riscv_new_csr_seed(target_ulong new_value,
+-                                target_ulong write_mask);
+-
+ RISCVException riscv_csrr(CPURISCVState *env, int csrno,
+                           target_ulong *ret_value);
  
-     timebase_freq = mtimer->timebase_freq;
-     rtc_r = env->rdtime_fn(env->rdtime_fn_arg) + delta;
-+    cpu = env_archcpu(env);
+diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
+index 39d48a9db4..dcdaf7f2b3 100644
+--- a/target/riscv/kvm/kvm-cpu.c
++++ b/target/riscv/kvm/kvm-cpu.c
+@@ -31,7 +31,6 @@
+ #include "system/kvm.h"
+ #include "system/kvm_int.h"
+ #include "cpu.h"
+-#include "target/riscv/csr.h"
+ #include "trace.h"
+ #include "accel/accel-cpu-target.h"
+ #include "hw/pci/pci.h"
+diff --git a/target/riscv/tcg/csr.c b/target/riscv/tcg/csr.c
+index b460860409..d447204721 100644
+--- a/target/riscv/tcg/csr.c
++++ b/target/riscv/tcg/csr.c
+@@ -29,7 +29,6 @@
+ #include "exec/icount.h"
+ #include "accel/tcg/cpu-loop.h"
+ #include "accel/tcg/getpc.h"
+-#include "qemu/guest-random.h"
+ #include "qapi/error.h"
+ #include "tcg/insn-start-words.h"
+ #include "internals.h"
+@@ -5577,34 +5576,6 @@ static RISCVException write_mnstatus(CPURISCVState *env, int csrno,
+ #endif
  
-     if (timecmp <= rtc_r) {
-         /*
-@@ -71,9 +88,9 @@ void riscv_timer_write_timecmp(CPURISCVState *env, QEMUTimer *timer,
-          */
-         if (timer_irq == MIP_VSTIP) {
-             env->vstime_irq = 1;
--            riscv_cpu_update_mip(env, 0, BOOL_TO_MASK(1));
-+            riscv_accel_set_irq(cpu, 0, BOOL_TO_MASK(1));
-         } else {
--            riscv_cpu_update_mip(env, MIP_STIP, BOOL_TO_MASK(1));
-+            riscv_accel_set_irq(cpu, MIP_STIP, BOOL_TO_MASK(1));
-         }
-         return;
-     }
-@@ -81,9 +98,9 @@ void riscv_timer_write_timecmp(CPURISCVState *env, QEMUTimer *timer,
-     /* Clear the [VS|S]TIP bit in mip */
-     if (timer_irq == MIP_VSTIP) {
-         env->vstime_irq = 0;
--        riscv_cpu_update_mip(env, 0, BOOL_TO_MASK(0));
-+        riscv_accel_set_irq(cpu, 0, BOOL_TO_MASK(0));
-     } else {
--        riscv_cpu_update_mip(env, timer_irq, BOOL_TO_MASK(0));
-+        riscv_accel_set_irq(cpu, timer_irq, BOOL_TO_MASK(0));
-     }
- 
-     /*
-@@ -151,7 +168,7 @@ static void riscv_timer_disable_timecmp(CPURISCVState *env, QEMUTimer *timer,
- {
-     /* Disable S-mode Timer IRQ and HW-based STIP */
-     if ((timer_irq == MIP_STIP) && !get_field(env->menvcfg, MENVCFG_STCE)) {
--        riscv_cpu_update_mip(env, timer_irq, BOOL_TO_MASK(0));
-+        riscv_accel_set_irq(env_archcpu(env), timer_irq, BOOL_TO_MASK(0));
-         timer_del(timer);
-         return;
-     }
-@@ -161,7 +178,7 @@ static void riscv_timer_disable_timecmp(CPURISCVState *env, QEMUTimer *timer,
-         (!get_field(env->menvcfg, MENVCFG_STCE) ||
-          !get_field(env->henvcfg, HENVCFG_STCE))) {
-         env->vstime_irq = 0;
--        riscv_cpu_update_mip(env, 0, BOOL_TO_MASK(0));
-+        riscv_accel_set_irq(env_archcpu(env), 0, BOOL_TO_MASK(0));
-         timer_del(timer);
-         return;
-     }
+ /* Crypto Extension */
+-target_ulong riscv_new_csr_seed(target_ulong new_value,
+-                                target_ulong write_mask)
+-{
+-    uint16_t random_v;
+-    Error *random_e = NULL;
+-    int random_r;
+-    target_ulong rval;
+-
+-    random_r = qemu_guest_getrandom(&random_v, 2, &random_e);
+-    if (unlikely(random_r < 0)) {
+-        /*
+-         * Failed, for unknown reasons in the crypto subsystem.
+-         * The best we can do is log the reason and return a
+-         * failure indication to the guest.  There is no reason
+-         * we know to expect the failure to be transitory, so
+-         * indicate DEAD to avoid having the guest spin on WAIT.
+-         */
+-        qemu_log_mask(LOG_UNIMP, "%s: Crypto failure: %s",
+-                      __func__, error_get_pretty(random_e));
+-        error_free(random_e);
+-        rval = SEED_OPST_DEAD;
+-    } else {
+-        rval = random_v | SEED_OPST_ES16;
+-    }
+-
+-    return rval;
+-}
+-
+ static RISCVException rmw_seed(CPURISCVState *env, int csrno,
+                                target_ulong *ret_value,
+                                target_ulong new_value,
 -- 
 2.43.0
 
