@@ -4,149 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F806CDB47C
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 10:12:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41018CDB47C
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 10:29:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcKaU-0004mH-Ng; Wed, 24 Jun 2026 06:12:06 -0400
+	id 1wcKqY-0006j9-UK; Wed, 24 Jun 2026 06:28:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wcKaT-0004m9-Jq
- for qemu-devel@nongnu.org; Wed, 24 Jun 2026 06:12:05 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wcKaR-0004ht-Tz
- for qemu-devel@nongnu.org; Wed, 24 Jun 2026 06:12:05 -0400
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65O5tu0r2438899
- for <qemu-devel@nongnu.org>; Wed, 24 Jun 2026 10:12:02 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- gZ9T77xPvqS7q08Fxc9Dhe2gSWfXHqU9L7RCio2fYN8=; b=gOBqTaGU3WZue8gA
- BUTtq7X/q3yxNZOmjrpFKPVaxInn7ZICTfUtq9KZAbVOLtbv0ztfMXpdNz6K34Pu
- eLPuG62cSU5hvEGLJHUtJYer3JIFLtUdi1WeQT0Yu8dIZFCu67PJALA2BP5ZJZnq
- IIwT6ydL0LLJ77i+5ama/FpnU1ybCtdGvhtboI7Kba/QsXHhjPxUu48qg6MWV4nV
- /K1+Y+2AipisdC3DLhDhexmfIFbCoZZ8U0LnMD3vfxHnEp2QHrv57t6jbyL/j3X/
- uWEo1q1ZU9MEF2VJvPs6EriAyn6Aa7aExKjyv+IJfFOIzxiXTel/X/5pduAfVF2N
- pKx7pw==
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
- [209.85.222.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f05ar1qg2-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 24 Jun 2026 10:12:02 +0000 (GMT)
-Received: by mail-qk1-f197.google.com with SMTP id
- af79cd13be357-9214bfa3b98so138219285a.0
- for <qemu-devel@nongnu.org>; Wed, 24 Jun 2026 03:12:02 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1wcKqW-0006iR-L7
+ for qemu-devel@nongnu.org; Wed, 24 Jun 2026 06:28:40 -0400
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1wcKqU-00077K-Sv
+ for qemu-devel@nongnu.org; Wed, 24 Jun 2026 06:28:40 -0400
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-49241896317so3861115e9.3
+ for <qemu-devel@nongnu.org>; Wed, 24 Jun 2026 03:28:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1782295921; x=1782900721; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=gZ9T77xPvqS7q08Fxc9Dhe2gSWfXHqU9L7RCio2fYN8=;
- b=ZjdDhiICwe/vG6/6KhVp8HvX5g8z6jl/g/iovLGs4351ZUFKHZ71iudt+luU9g47d6
- es+DyHGJlYNzQdcxKTzdYZqBN4u+FOF22xOmBAEgejWi55BuByC+gCvc5g1Z47CBO0Yo
- JabD0CyYkYM2KClWvYgAnO04Cd6rap37+b0oZgA+hM+YaUXfv+CIo7QeVthDCJ7CLY7i
- rvBRT5mjeyaxP3VEXeUpxOqgd30f6iAVEsyxCn1EZ/IBvfjl92rO+ntley5Mz3wpZDSy
- kG7boSaAqdj0xAQQd+xk3VdAQ1ZbdaNEKzxwkTiSUeiOKY/QIeImd6NMMJ/mpR0YIiBM
- JpaA==
+ d=linaro.org; s=google; t=1782296916; x=1782901716; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=NzEtnUwLamRHMHtQXPitkpxP2yQEJDMokR1kTzHs1kI=;
+ b=HC7X4g3awx/JObpgQZY5uXAYjgJNHe7wlJCVdD82RGA5jOevq6nF6AASIQO9UF93K/
+ h8wacSdAaQSDvz2LmuDx00ED0niBntdDOIwVDuAQ2HMgHU9b3Iv2FZakZkazg3siHhwz
+ n+bveGboDuRJDeml9TiO57dYNg4j/+TovtWeBeGBs2fhGuLsNOtP1bTVtKWOlvurEqSD
+ mS2Ywd6+yD9kmgNMUfGeLrbFRdBnuC0/fCiN+UWu8k5kfF+i7x3GYTsBcvFFH9a2qI/N
+ lPe8OfmyTPLHM5boMSrS8zPOl7uZHs3XhH4IOk+db6ouqw0zhp4qWQlqIHkL0W/1p0YB
+ 51tw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782295921; x=1782900721;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=gZ9T77xPvqS7q08Fxc9Dhe2gSWfXHqU9L7RCio2fYN8=;
- b=ApOq0vLHR9WoRts9k6fjrqe7xwPsMZgCbkIXo2WrUK+qb/HMbni3Pt2n3SprwqxlHw
- l361V64GwXoQkNVJqRf3AxoAxfBsb+Dm0h6cR2dyvjA1Zoh58D5/f70uWP3Gj+y7OX6S
- cULEUOxmfr2XJ6paKVgSkVyIKar+x/SmYLtc7288L6w0j7Hyp2B1uWT6jxqPSwIXogul
- +L5H0BNOiSFkJVQNFxJunfcnFjzj8FR2lW+2/tD9zZTG1JSq3PX6/SOdTgfEl5FVtgbg
- gziEuyrKvNT53fXvPCj8vtpQg8HsFb6IKRuSq9emJeLAycHANWWbUw8aNy4rk4Ugtpef
- sYcw==
+ d=1e100.net; s=20251104; t=1782296916; x=1782901716;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=NzEtnUwLamRHMHtQXPitkpxP2yQEJDMokR1kTzHs1kI=;
+ b=mv49cKDXAC9HzmlOADF6gPRlL/4MLRgZLaSpmwtMVTG+ZcHuSqfLwFN0PFLJ28FZMb
+ /V54jTDTy3PPg9aB2CxCWIL2iMsfDcJHyl9dcmWsTBvY571UvsxMNhZ1FU47CBUomUbI
+ ERPn0xFeZOtuR14x13rHkmqNSN8Q9x0X9KNwt0miNqOD8q72bcLFCN8HifOybG5DWc26
+ l0Dcx1jB0GCRxBznoBal61hZaReneGtO4xtI3zUhnIWYNDsluPH4LuM4h2cZms9lBxf4
+ MbDIq/fWwByLUHPeU+CkBUkJTNkwdVVk+PckgFU1Mpc+jiN8ALYjygYHiRB+MW0I19Ai
+ Y4xg==
 X-Forwarded-Encrypted: i=1;
- AFNElJ8sLYc4GD+kBxbKqAeTjwXwL9BOpO2TaI1dH3Bmj9VzmqK1gAlnO7ZR/LU02LQ1hwUh33Hh2LRW4Cmq@nongnu.org
-X-Gm-Message-State: AOJu0Yw0UZiEUs4HQtaNNodRwyKxemUvrILCl16O/orjfz+VK1T0CUFS
- wBi3FzLfATCws9e56h0JRasd3hAwHoO6HwPobyI+8Y6d9o/FVNmvrDZOOq2CdOORM20kR+1h3Ey
- 3NIOxTfv3KYWnOGRVG3TLsGH1fTDKq7st2C/TyIWLwRhb4nIF4V9eEmZaJw==
-X-Gm-Gg: AfdE7cl9swsMic3kvmEFuecb8PPT90HRQeDJzbLjfdJjiq4x2nlJXgxeb7Qsfht8Ns9
- s5p9GOrQplrOPTkBH5Wlmp6fmI8g6rmutJa211RfdW8BhvhvRUNUyR4r+JttHujRwvVPLdhSvI4
- 4IhP79E5Z98UUNbOhGSN6QXuHLVyY1R/aSyqb8HBvrKxzhbAkjYrVq/AgsuDMM9YEMnJ/4RsX8p
- VDSFWjSdcdV6rbdZaNwGz+Xkdc07+6G1gPbAnTPkBv/WhLQjoS7Otvz0isgTuJPPagvJZzho3VD
- Zn/ECYPE+UvLFHtkDfb2oizRpIrolVay+fnl7j6AJ1g9KdSotB2rIxOT+efE3vUY+0RmsGt7XqC
- 1z0HRCgYfO+GqM+wWFUJHYz8c14ZRcLUj4IIhpZ4aKwi17f0vrb2r4b99MgTkig==
-X-Received: by 2002:a05:620a:444f:b0:925:4655:aa0f with SMTP id
- af79cd13be357-92783d3fbb1mr395001085a.35.1782295921550; 
- Wed, 24 Jun 2026 03:12:01 -0700 (PDT)
-X-Received: by 2002:a05:620a:444f:b0:925:4655:aa0f with SMTP id
- af79cd13be357-92783d3fbb1mr394997885a.35.1782295921082; 
- Wed, 24 Jun 2026 03:12:01 -0700 (PDT)
-Received: from [192.168.69.212] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-46c22b73badsm5543225f8f.33.2026.06.24.03.11.59
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 24 Jun 2026 03:12:00 -0700 (PDT)
-Message-ID: <455b2cb5-f362-45e4-b728-0adbacbb0f88@oss.qualcomm.com>
-Date: Wed, 24 Jun 2026 12:11:59 +0200
+ AFNElJ9iX5kMrzPN7ImUq3MSaRn/5kdK+hmmYhPLjwg2S6P7tnBv0f4a3OBRoVWbzJ6QgXb9fS/bxepwQN7Z@nongnu.org
+X-Gm-Message-State: AOJu0YzkJLeHmIlfeX0MsKh34oI0pHYyWdED4GgL5woWth8Nc1lUHaLd
+ /KcbA5/xb1bqx0qYZl6nRj7vG7wja3hYxszj58a8UHChsUaEg+MS35S7U/buf7eGOmM=
+X-Gm-Gg: AfdE7clA3ID69tEYTicCRIMSBhHL4U8HyVvjooX9NXzrkG7IhZyyfOefwebOuAoUGfc
+ ms8IB5/EcNJ7tkguotiVN7n5EmKzEuPb6BUPT9fEVEunHkM7JG6CebWM8nqeFl3k73bwEoy1MfF
+ ll7aZPJS50qKY3i8iM8H/SKnqXwJgTX4QCqjf0rFPXNblX+xsTtSn3JHETrOq9rUD6Ozqf+LCaG
+ F+o2uIskpxaEPBptsDbhkd8wVRiYjZLIO0y9ZnKId92vFDEr0Ge3FyX5FqHNNcr7nmeaTdPEP14
+ AkO56PIulCXAORT3O/3GhTimQMC4nct9jJJ0pxibmM5Zm5coYqL6rjp1GBvpEEDhJW2D8OD3Q3r
+ 6101Rtom8OXI+fVxY6Tsa6+orTuOwYBnG3CuTT17GElGfdfFwyRycckvckwn0a1Hs9D6lHIk5D7
+ yxHwYKKeAvu7Ce
+X-Received: by 2002:a05:600c:c04f:b0:492:348:ba08 with SMTP id
+ 5b1f17b1804b1-4926084d6f6mr26999315e9.16.1782296916352; 
+ Wed, 24 Jun 2026 03:28:36 -0700 (PDT)
+Received: from draig.lan ([185.124.0.195]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-492494496cdsm330339785e9.10.2026.06.24.03.28.35
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 24 Jun 2026 03:28:35 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id B157D5F803;
+ Wed, 24 Jun 2026 11:28:34 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  Linisha
+ <linisha232@gmail.com>,  qemu-devel@nongnu.org,  pbonzini@redhat.com,
+ mjt@tls.msk.ru,  philmd@mailo.com
+Subject: Re: [PATCH] docs/system: clarify pflash0 and pflash1 are virt-only
+ options
+In-Reply-To: <CAFEAcA9GSZXV5z=KDMLvM7enC1EqHwBt--=YOYb8HW6m=EHnqQ@mail.gmail.com>
+ (Peter Maydell's message of "Wed, 24 Jun 2026 09:47:54 +0100")
+References: <20260623205839.1294-1-linisha232@gmail.com>
+ <ajuD4L_ZDEg8TI2R@redhat.com>
+ <CAFEAcA9GSZXV5z=KDMLvM7enC1EqHwBt--=YOYb8HW6m=EHnqQ@mail.gmail.com>
+User-Agent: mu4e 1.14.2; emacs 30.1
+Date: Wed, 24 Jun 2026 11:28:34 +0100
+Message-ID: <87v7b8kzal.fsf@draig.linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 016/106] intel_iommu_accel: Handle PASID entry addition for
- pc_inv_dsc request
-Content-Language: en-US
-To: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Cc: Peter Maydell <peter.maydell@linaro.org>, "Liu, Yi L" <yi.l.liu@intel.com>,
- "Hao, Xudong" <xudong.hao@intel.com>, Jason Wang <jasowang@redhat.com>,
- =?UTF-8?Q?Cl=C3=A9ment_Mathieu--Drif?= <clement.mathieu--drif@bull.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>
-References: <cover.1781463125.git.mst@redhat.com>
- <c93b82e7dde2e9c26ab743e80d19050bde988fdf.1781463125.git.mst@redhat.com>
- <582f27d5-71fd-454d-9bb6-6c2cab574651@oss.qualcomm.com>
- <IA3PR11MB9136FD0ACC5901A0FC8B55F092ED2@IA3PR11MB9136.namprd11.prod.outlook.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <IA3PR11MB9136FD0ACC5901A0FC8B55F092ED2@IA3PR11MB9136.namprd11.prod.outlook.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: 1oZfjRRIvz_w306Hi2lMUkjAlTBpUoqS
-X-Authority-Analysis: v=2.4 cv=EuLiaycA c=1 sm=1 tr=0 ts=6a3bad72 cx=c_pps
- a=50t2pK5VMbmlHzFWWp8p/g==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
- a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22
- a=VwQbUJbxAAAA:8 a=KKAkSRfTAAAA:8 a=6IYIET9UmWKdtAJgz3sA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=IoWCM6iH3mJn3m4BftBB:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjI0MDA4NCBTYWx0ZWRfXy+ZnvKCrD5TL
- dHuSVBW3J82LJBSze4oSvw9oEspejQEG8W0aghna4TMHaMTmmnUD5bbhboBtQ2TEFVATb0nteXp
- sjk3vQvKqHi7x4Yh4ZVi+4V2+1CM8wg=
-X-Proofpoint-GUID: 1oZfjRRIvz_w306Hi2lMUkjAlTBpUoqS
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjI0MDA4NCBTYWx0ZWRfX98OwYglmXe8J
- nMfgVvv3czUbbsHoMQ9TvnzN0yIUTb73tAjQCFwdAPi/l+FTox872r1Vbty1caFH0k24RuAqEEx
- 4Wr5m63P6qVxxMibmJQVujuURLueCOXNvXiGdCxIY19q9a8+B1fiNR5G3Rbi/0O+jjEVyJwVQtL
- wngUtX+p6DOYsf90ChT0CmK5OH2hH2lwKYVyuurmmoxwdlnvDwx8VhWi7aJs+fMIrfls2Jwrl85
- jeqnsHmWq7CmIimov2+G37/uBroGlSBlL/rf3EG86zIwm6pUQQjXOfXVa900PbrFOYFyJuGgix4
- AFrsEdii1K6dFmkRRe2tnssDfr4cGmwjxOpkG/8EKd32csdFNOzN4h78aaLnH6ouNuJIH8hkzKY
- EQ5oc0Z1wJVUEoc1F1IuM0yosLYv9v2HTooD7AnpH6UzptMgrJcaFsr2X3epNs1D8E59ai36E9j
- u0dh5qdu0LiaWBII+Cw==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-24_02,2026-06-23_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 impostorscore=0 lowpriorityscore=0 suspectscore=0 adultscore=0
- malwarescore=0 phishscore=0 clxscore=1015 priorityscore=1501 spamscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606240084
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -163,30 +110,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 24/6/26 09:46, Duan, Zhenzhong wrote:
-> Hi Philippe,
-> 
->>> +typedef struct VTDAccelPASIDCacheEntry {
->>> +    VTDHostIOMMUDevice *vtd_hiod;
->>> +    VTDPASIDEntry pasid_entry;
->>> +    uint32_t pasid;
->>> +    QLIST_ENTRY(VTDAccelPASIDCacheEntry) next;
->>> +} VTDAccelPASIDCacheEntry;
->>
->> Zhenzhong, this structure should be declared ...
->>
->>>    #ifdef CONFIG_VTD_ACCEL
->>
->> ... after this guard.
-> 
-> Indeed. It doesn’t impact build process, build pass with or without fix.
+Peter Maydell <peter.maydell@linaro.org> writes:
 
-I didn't complain about build failure in the main repository ;)
+> On Wed, 24 Jun 2026 at 08:15, Daniel P. Berrang=C3=A9 <berrange@redhat.co=
+m> wrote:
+>>
+>> On Wed, Jun 24, 2026 at 02:28:39AM +0530, Linisha wrote:
+>> > The pflash0 and pflash1 machine options shown in the Aarch64 virt
+>> > example are only available for virt machine types on Arm, RISC-V,
+>> > and LoongArch architectures. Add a note to clarify this for users
+>> > who may try these options on x86 machines and be confused when
+>> > they are not available.
+>> >
+>> > Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3254
+>> > Signed-off-by: Linisha <linisha232@gmail.com>
+>> > ---
+>> >  docs/system/introduction.rst | 6 ++++++
+>> >  1 file changed, 6 insertions(+)
+>> >
+>> > diff --git a/docs/system/introduction.rst b/docs/system/introduction.r=
+st
+>> > index bec7291e47..0c400aefb6 100644
+>> > --- a/docs/system/introduction.rst
+>> > +++ b/docs/system/introduction.rst
+>> > @@ -158,6 +158,12 @@ virtualisation so we can use KVM inside the emula=
+ted guest. As the
+>> >  ``virt`` machine comes with some built in pflash devices we give them
+>> >  names so we can override the defaults later.
+>> >
+>> > +.. note::
+>> > +   The ``pflash0`` and ``pflash1`` machine options are specific to the
+>> > +   ``virt`` machine type on Arm, RISC-V, and LoongArch architectures.
+>> > +   They are not available on x86 machines, which use ``-bios`` or
+>> > +   ``-pflash`` for firmware instead.
+>>
+>> No this is wrong.
+>>
+>> The pflash0 and pflash1 properties apply to x86 pc & q35 machines too.
+>>
+>> -pflash is a legacy syntax which remaps to pflash0 and pflash1 internall=
+y,
+>> but also applies to other machines which don't use the new pflash0/pflas=
+h1
+>> properties.
+>
+> I think it is probably worth having something in the intro text that
+> makes the point that for QEMU all architectures and machines are
+> potentially different, and that options and command lines that work
+> on for example an x86 PC machine will not necessarily work on
+> an Arm machine, and so on. But we should do that as a kind of
+> general warning somewhere near the start.
 
-> I can send a fix together with PRQ v3 series if you will not send it.
-> 
-> Just curious, how do you catch this?:)
+That was the intention with the wording:
 
-Rebasing this patch:
-https://lore.kernel.org/qemu-devel/20260225031658.32095-3-philmd@linaro.org/
+  QEMU provides a rich and complex API which can be overwhelming to
+  understand. While some architectures can boot something with just a
+  disk image, those examples elide a lot of details with defaults that
+  may not be optimal for modern systems.
+
+  For a non-x86 system where we emulate a broad range of machine types,
+  the command lines are generally more explicit in defining the machine
+  and boot behaviour.
+
+but it could probably be improved. Aside from working mostly on Arm I
+chose the example because the default PC command lines are very prone to
+using the old legacy shortcuts.
+
+>
+> The bug report notes that "./build/x86/qemu-system-x86_64 -M pc,help"
+> does not list the pflash0 and pflash1 options. I think this is because
+> we set these up as alias properties on the actual flash device object
+> in pc_pflash_create(), so they don't exist as class properties that
+> "help" can introspect on.
+>
+> -- PMM
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
