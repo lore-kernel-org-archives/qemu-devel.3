@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E50FFCDB479
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 05:15:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 477C4CDB470
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 05:15:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcFru-0004tk-Is; Wed, 24 Jun 2026 01:09:46 -0400
+	id 1wcFqt-0003C2-Kt; Wed, 24 Jun 2026 01:08:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wcFrA-0003jQ-C2; Wed, 24 Jun 2026 01:09:02 -0400
+ id 1wcFqb-0002v3-9k; Wed, 24 Jun 2026 01:08:27 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wcFr8-0005vF-NZ; Wed, 24 Jun 2026 01:09:00 -0400
+ id 1wcFqY-0005rR-V2; Wed, 24 Jun 2026 01:08:24 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1782277623; bh=U7R+V6IlvlHdwkAQNd8JonznFZH6z7iHMaclk71PXVE=;
+ t=1782277622; bh=MZR1dT1Xu/xpbUTvjXCTyifENBZV1TTudSGngA4genE=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=pF30R9ERRPOR9saZVgQTlNNd10VCLy0uuvxPnGT3aBqohSoN7CS6gyn/Lns8GmvB/
- DwlSoTaz5HuXeJZ92NnDWZYIDh5zzVQ6SUjidETdBRx58/3bVA5PHY/TBMlmFY5XYG
- LCe3AmMXOmj0GZXdhNE7sj1UqmWx5uuDZZ5PHvq8FFgBqdxzDP8U4Q3x/F2iyu/pJz
- ww1e9ju4VFRFMyfbRHxsFYqEVMpVy4OrQ/0Y7mUo4E4JgZy8RMsJ8BdxQklwV7N/zO
- Q+0cR0B3UcsfKhvJGZ2d7ExRVm3OJAhB66ZgNYFval9YX5CDJlj4jUvTchmuBFU37z
- iJSkQPsXMy1/Q==
+ b=X/7H7+S320X7/XT2FRLyHvWQepBRg+Nmcy585MT4NIYhZz6rUXIR+7u25XMV7iR0X
+ NAImbF+gGRjn1JtzXPjnFs1pMLpFMcIL8msoO3zJBC0juQilfymVGonqb5CC579H9C
+ KXPegrdQM/B4BBH+/PN42JnUc4DOD8563tkKnCp8+UBVw99YRqx2eyVUyR2ZjT0SE8
+ O3vhPynwMaCGwrONscbk8bKFM4ryYIgmBf32BnMAbqKguW6pOMO96ERkJ9ccUhMu2l
+ Te1+gCgiaG6jftt8h6qRM9pC4o5SZbEObtCpIi3l1jwUOqnmOed2ehRvr+J2qU7nD/
+ rvbyLHxuMR4tQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 4F7BB1BA66E;
- Wed, 24 Jun 2026 08:07:03 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id E507B1BA668;
+ Wed, 24 Jun 2026 08:07:02 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 3976C3DDB0B;
- Wed, 24 Jun 2026 08:07:08 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id CF3003DDB05;
+ Wed, 24 Jun 2026 08:07:07 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org,
  Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
  Alistair Francis <alistair.francis@wdc.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.4 80/95] target/riscv/tcg: disable svnapot if satp_mode
- < sv39
-Date: Wed, 24 Jun 2026 08:05:15 +0300
-Message-ID: <20260624050541.395079-19-mjt@tls.msk.ru>
+Subject: [Stable-10.2.4 74/95] target/riscv/csr.c: do not allow mstatus
+ MPV/GVA writes
+Date: Wed, 24 Jun 2026 08:05:09 +0300
+Message-ID: <20260624050541.395079-13-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.2.4-20260624080454@cover.tls.msk.ru>
 References: <qemu-stable-10.2.4-20260624080454@cover.tls.msk.ru>
@@ -73,50 +73,51 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 
-We did a recent change to disable svpbmt if satp_mode < sv39 that was
-discovered via a gitlab report.
+The priv spec states the following about mstatus.MPV:
 
-This time we don't have an opened bug but the problem is similar: RISC-V
-privileged ISA, chapter '"Svnapot" Extension for NAPOT Translation
-Contiguity, Version 1.0' states:
+"The MPV bit (Machine Previous Virtualization Mode) is written by the
+implementation whenever a trap is taken into M-mode."
 
-"The Svnapot extension depends on the Sv39 extension."
+And, about mstatus.GVA:
 
-Do the same thing with svnapot, including the user warning in case we
-try to enable it without the required satp_mode:
+"Field GVA (Guest Virtual Address) is written by the implementation
+whenever a trap is taken into M-mode."
 
-$ ./build/qemu-system-riscv64 -M virt,dumpdtb=fdt.dtb \
-     -cpu max,sv39=off,sv48=off,sv57=off,sv64=off,svnapot=on
-qemu-system-riscv64: warning: svnapot requires at least satp sv39, current satp mode: none
+Both are written during riscv_cpu_do_interrupt().  They're not supposed
+to be written by userspace.  As far as write_mstatus goes these fields
+are read only.  The same applies for mstatush.MPV/mstatush.GVA.
 
+Fixes: 03dd405dd5 ("target/riscv: Support MSTATUS.MPV/GVA only when RVH is enabled")
 Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20260527213034.2094103-1-daniel.barboza@oss.qualcomm.com>
+Acked-by: Alistair Francis <alistair.francis@wdc.com>
+Message-ID: <20260514194537.2416243-2-daniel.barboza@oss.qualcomm.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-(cherry picked from commit 601c8494c6c7e73f5b3f30b5823de2c13c003990)
+(cherry picked from commit 18645f19578955ec5ff2c40cd2c8753d6bc460c2)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
-index c4dfa4ac09..8f8da3e612 100644
---- a/target/riscv/tcg/tcg-cpu.c
-+++ b/target/riscv/tcg/tcg-cpu.c
-@@ -871,6 +871,16 @@ void riscv_cpu_validate_set_extensions(RISCVCPU *cpu, Error **errp)
-                                      riscv_cpu_is_32bit(cpu)));
-         }
+diff --git a/target/riscv/csr.c b/target/riscv/csr.c
+index 9f81cd3960..c6362677ba 100644
+--- a/target/riscv/csr.c
++++ b/target/riscv/csr.c
+@@ -2027,9 +2027,6 @@ static RISCVException write_mstatus(CPURISCVState *env, int csrno,
      }
-+
-+    if (cpu->cfg.ext_svnapot && cpu->cfg.max_satp_mode < VM_1_10_SV39) {
-+        cpu->cfg.ext_svnapot = false;
-+        if (cpu_cfg_ext_is_user_set(CPU_CFG_OFFSET(ext_svnapot))) {
-+            warn_report("svnapot requires at least satp sv39, "
-+                        "current satp mode: %s",
-+                        satp_mode_str(cpu->cfg.max_satp_mode,
-+                                      riscv_cpu_is_32bit(cpu)));
-+        }
-+    }
- #endif
-     /*
-      * Disable isa extensions based on priv spec after we
+ 
+     if (xl != MXL_RV32 || env->debugger) {
+-        if (riscv_has_ext(env, RVH)) {
+-            mask |= MSTATUS_MPV | MSTATUS_GVA;
+-        }
+         if ((val & MSTATUS64_UXL) != 0) {
+             mask |= MSTATUS64_UXL;
+         }
+@@ -2066,7 +2063,7 @@ static RISCVException write_mstatush(CPURISCVState *env, int csrno,
+                                      target_ulong val, uintptr_t ra)
+ {
+     uint64_t valh = (uint64_t)val << 32;
+-    uint64_t mask = riscv_has_ext(env, RVH) ? MSTATUS_MPV | MSTATUS_GVA : 0;
++    uint64_t mask = 0;
+ 
+     if (riscv_cpu_cfg(env)->ext_smdbltrp) {
+         mask |= MSTATUS_MDT;
 -- 
 2.47.3
 
