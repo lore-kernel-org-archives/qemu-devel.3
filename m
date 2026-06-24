@@ -4,97 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41018CDB47C
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85715CDE000
 	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 10:29:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcKqY-0006j9-UK; Wed, 24 Jun 2026 06:28:42 -0400
+	id 1wcKr0-0006xD-Rc; Wed, 24 Jun 2026 06:29:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wcKqW-0006iR-L7
- for qemu-devel@nongnu.org; Wed, 24 Jun 2026 06:28:40 -0400
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wcKqU-00077K-Sv
- for qemu-devel@nongnu.org; Wed, 24 Jun 2026 06:28:40 -0400
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-49241896317so3861115e9.3
- for <qemu-devel@nongnu.org>; Wed, 24 Jun 2026 03:28:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1782296916; x=1782901716; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=NzEtnUwLamRHMHtQXPitkpxP2yQEJDMokR1kTzHs1kI=;
- b=HC7X4g3awx/JObpgQZY5uXAYjgJNHe7wlJCVdD82RGA5jOevq6nF6AASIQO9UF93K/
- h8wacSdAaQSDvz2LmuDx00ED0niBntdDOIwVDuAQ2HMgHU9b3Iv2FZakZkazg3siHhwz
- n+bveGboDuRJDeml9TiO57dYNg4j/+TovtWeBeGBs2fhGuLsNOtP1bTVtKWOlvurEqSD
- mS2Ywd6+yD9kmgNMUfGeLrbFRdBnuC0/fCiN+UWu8k5kfF+i7x3GYTsBcvFFH9a2qI/N
- lPe8OfmyTPLHM5boMSrS8zPOl7uZHs3XhH4IOk+db6ouqw0zhp4qWQlqIHkL0W/1p0YB
- 51tw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782296916; x=1782901716;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=NzEtnUwLamRHMHtQXPitkpxP2yQEJDMokR1kTzHs1kI=;
- b=mv49cKDXAC9HzmlOADF6gPRlL/4MLRgZLaSpmwtMVTG+ZcHuSqfLwFN0PFLJ28FZMb
- /V54jTDTy3PPg9aB2CxCWIL2iMsfDcJHyl9dcmWsTBvY571UvsxMNhZ1FU47CBUomUbI
- ERPn0xFeZOtuR14x13rHkmqNSN8Q9x0X9KNwt0miNqOD8q72bcLFCN8HifOybG5DWc26
- l0Dcx1jB0GCRxBznoBal61hZaReneGtO4xtI3zUhnIWYNDsluPH4LuM4h2cZms9lBxf4
- MbDIq/fWwByLUHPeU+CkBUkJTNkwdVVk+PckgFU1Mpc+jiN8ALYjygYHiRB+MW0I19Ai
- Y4xg==
-X-Forwarded-Encrypted: i=1;
- AFNElJ9iX5kMrzPN7ImUq3MSaRn/5kdK+hmmYhPLjwg2S6P7tnBv0f4a3OBRoVWbzJ6QgXb9fS/bxepwQN7Z@nongnu.org
-X-Gm-Message-State: AOJu0YzkJLeHmIlfeX0MsKh34oI0pHYyWdED4GgL5woWth8Nc1lUHaLd
- /KcbA5/xb1bqx0qYZl6nRj7vG7wja3hYxszj58a8UHChsUaEg+MS35S7U/buf7eGOmM=
-X-Gm-Gg: AfdE7clA3ID69tEYTicCRIMSBhHL4U8HyVvjooX9NXzrkG7IhZyyfOefwebOuAoUGfc
- ms8IB5/EcNJ7tkguotiVN7n5EmKzEuPb6BUPT9fEVEunHkM7JG6CebWM8nqeFl3k73bwEoy1MfF
- ll7aZPJS50qKY3i8iM8H/SKnqXwJgTX4QCqjf0rFPXNblX+xsTtSn3JHETrOq9rUD6Ozqf+LCaG
- F+o2uIskpxaEPBptsDbhkd8wVRiYjZLIO0y9ZnKId92vFDEr0Ge3FyX5FqHNNcr7nmeaTdPEP14
- AkO56PIulCXAORT3O/3GhTimQMC4nct9jJJ0pxibmM5Zm5coYqL6rjp1GBvpEEDhJW2D8OD3Q3r
- 6101Rtom8OXI+fVxY6Tsa6+orTuOwYBnG3CuTT17GElGfdfFwyRycckvckwn0a1Hs9D6lHIk5D7
- yxHwYKKeAvu7Ce
-X-Received: by 2002:a05:600c:c04f:b0:492:348:ba08 with SMTP id
- 5b1f17b1804b1-4926084d6f6mr26999315e9.16.1782296916352; 
- Wed, 24 Jun 2026 03:28:36 -0700 (PDT)
-Received: from draig.lan ([185.124.0.195]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-492494496cdsm330339785e9.10.2026.06.24.03.28.35
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 24 Jun 2026 03:28:35 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id B157D5F803;
- Wed, 24 Jun 2026 11:28:34 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  Linisha
- <linisha232@gmail.com>,  qemu-devel@nongnu.org,  pbonzini@redhat.com,
- mjt@tls.msk.ru,  philmd@mailo.com
-Subject: Re: [PATCH] docs/system: clarify pflash0 and pflash1 are virt-only
- options
-In-Reply-To: <CAFEAcA9GSZXV5z=KDMLvM7enC1EqHwBt--=YOYb8HW6m=EHnqQ@mail.gmail.com>
- (Peter Maydell's message of "Wed, 24 Jun 2026 09:47:54 +0100")
-References: <20260623205839.1294-1-linisha232@gmail.com>
- <ajuD4L_ZDEg8TI2R@redhat.com>
- <CAFEAcA9GSZXV5z=KDMLvM7enC1EqHwBt--=YOYb8HW6m=EHnqQ@mail.gmail.com>
-User-Agent: mu4e 1.14.2; emacs 30.1
-Date: Wed, 24 Jun 2026 11:28:34 +0100
-Message-ID: <87v7b8kzal.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1wcKqz-0006wk-Ol
+ for qemu-devel@nongnu.org; Wed, 24 Jun 2026 06:29:09 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1wcKqw-0007ET-Na
+ for qemu-devel@nongnu.org; Wed, 24 Jun 2026 06:29:09 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1782296946;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=v2ZHcRnnDKpabZVFml4+n/8swazbhX4IspMtuEpM8+g=;
+ b=JsEZCAYcfUn+y8sm8iN4sDhYONXuO1SPW49nOLYU0Aba5DlUJ92dB2k1+eipRPvSP7Rs8n
+ dmYY6n4a2Xv6/U9TliI2nOlUGuL+Mkyl+seeEV3JqO/BUEkUs/GJC5X1uvqHmtMK+PuYbm
+ 4uKo5oVTpVeKGG/ikAIR5K9KGse61aE=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-435-HS-zQFRyNBa30oIeY4scYA-1; Wed,
+ 24 Jun 2026 06:29:02 -0400
+X-MC-Unique: HS-zQFRyNBa30oIeY4scYA-1
+X-Mimecast-MFC-AGG-ID: HS-zQFRyNBa30oIeY4scYA_1782296941
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 51AE71955F7C; Wed, 24 Jun 2026 10:29:01 +0000 (UTC)
+Received: from dell-r430-03.lab.eng.brq2.redhat.com
+ (dell-r430-03.lab.eng.brq2.redhat.com [10.37.153.18])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 65D3E30001A7; Wed, 24 Jun 2026 10:28:59 +0000 (UTC)
+From: Igor Mammedov <imammedo@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: mst@redhat.com, eauger@redhat.com, peter.maydell@linaro.org,
+ shannon.zhaosl@gmail.com, rad@semihalf.com, leif.lindholm@oss.qualcomm.com,
+ qemu-arm@nongnu.org
+Subject: [PATCH v3 10/17] tests: acpi: arm/virt: update expected WDAT blob
+Date: Wed, 24 Jun 2026 12:28:23 +0200
+Message-ID: <20260624102830.1355552-11-imammedo@redhat.com>
+In-Reply-To: <20260624102830.1355552-1-imammedo@redhat.com>
+References: <20260624102830.1355552-1-imammedo@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 8
+X-Spam_score: 0.8
+X-Spam_bar: /
+X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,82 +87,172 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Maydell <peter.maydell@linaro.org> writes:
+replace blank table with a new one:
 
-> On Wed, 24 Jun 2026 at 08:15, Daniel P. Berrang=C3=A9 <berrange@redhat.co=
-m> wrote:
->>
->> On Wed, Jun 24, 2026 at 02:28:39AM +0530, Linisha wrote:
->> > The pflash0 and pflash1 machine options shown in the Aarch64 virt
->> > example are only available for virt machine types on Arm, RISC-V,
->> > and LoongArch architectures. Add a note to clarify this for users
->> > who may try these options on x86 machines and be confused when
->> > they are not available.
->> >
->> > Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3254
->> > Signed-off-by: Linisha <linisha232@gmail.com>
->> > ---
->> >  docs/system/introduction.rst | 6 ++++++
->> >  1 file changed, 6 insertions(+)
->> >
->> > diff --git a/docs/system/introduction.rst b/docs/system/introduction.r=
-st
->> > index bec7291e47..0c400aefb6 100644
->> > --- a/docs/system/introduction.rst
->> > +++ b/docs/system/introduction.rst
->> > @@ -158,6 +158,12 @@ virtualisation so we can use KVM inside the emula=
-ted guest. As the
->> >  ``virt`` machine comes with some built in pflash devices we give them
->> >  names so we can override the defaults later.
->> >
->> > +.. note::
->> > +   The ``pflash0`` and ``pflash1`` machine options are specific to the
->> > +   ``virt`` machine type on Arm, RISC-V, and LoongArch architectures.
->> > +   They are not available on x86 machines, which use ``-bios`` or
->> > +   ``-pflash`` for firmware instead.
->>
->> No this is wrong.
->>
->> The pflash0 and pflash1 properties apply to x86 pc & q35 machines too.
->>
->> -pflash is a legacy syntax which remaps to pflash0 and pflash1 internall=
-y,
->> but also applies to other machines which don't use the new pflash0/pflas=
-h1
->> properties.
->
-> I think it is probably worth having something in the intro text that
-> makes the point that for QEMU all architectures and machines are
-> potentially different, and that options and command lines that work
-> on for example an x86 PC machine will not necessarily work on
-> an Arm machine, and so on. But we should do that as a kind of
-> general warning somewhere near the start.
+  [000h 0000 004h]                   Signature : "WDAT"    [Watchdog Action Table]
+  [004h 0004 004h]                Table Length : 00000104
+  [008h 0008 001h]                    Revision : 01
+  [009h 0009 001h]                    Checksum : 3B
+  [00Ah 0010 006h]                      Oem ID : "BOCHS "
+  [010h 0016 008h]                Oem Table ID : "BXPC    "
+  [018h 0024 004h]                Oem Revision : 00000001
+  [01Ch 0028 004h]             Asl Compiler ID : "BXPC"
+  [020h 0032 004h]       Asl Compiler Revision : 00000001
 
-That was the intention with the wording:
+  [024h 0036 004h]               Header Length : 00000020
+  [028h 0040 002h]                 PCI Segment : 00FF
+  [02Ah 0042 001h]                     PCI Bus : FF
+  [02Bh 0043 001h]                  PCI Device : FF
+  [02Ch 0044 001h]                PCI Function : FF
+  [02Dh 0045 003h]                    Reserved : 000000
+  [030h 0048 004h]                Timer Period : 00000001
+  [034h 0052 004h]                   Max Count : 000927C0
+  [038h 0056 004h]                   Min Count : 00001388
+  [03Ch 0060 001h]       Flags (decoded below) : 81
+                                       Enabled : 1
+                           Stopped When Asleep : 1
+  [03Dh 0061 003h]                    Reserved : 000000
+  [040h 0064 004h]        Watchdog Entry Count : 00000008
 
-  QEMU provides a rich and complex API which can be overwhelming to
-  understand. While some architectures can boot something with just a
-  disk image, those examples elide a lot of details with defaults that
-  may not be optimal for modern systems.
+  [044h 0068 001h]             Watchdog Action : 08
+  [045h 0069 001h]                 Instruction : 00
+  [046h 0070 002h]                    Reserved : 0000
 
-  For a non-x86 system where we emulate a broad range of machine types,
-  the command lines are generally more explicit in defining the machine
-  and boot behaviour.
+  [048h 0072 00Ch]             Register Region : [Generic Address Structure]
+  [048h 0072 001h]                    Space ID : 00 [SystemMemory]
+  [049h 0073 001h]                   Bit Width : 20
+  [04Ah 0074 001h]                  Bit Offset : 00
+  [04Bh 0075 001h]        Encoded Access Width : 03 [DWord Access:32]
+  [04Ch 0076 008h]                     Address : 000000000C001000
 
-but it could probably be improved. Aside from working mostly on Arm I
-chose the example because the default PC command lines are very prone to
-using the old legacy shortcuts.
+  [054h 0084 004h]                       Value : 00000001
+  [058h 0088 004h]               Register Mask : 00000001
 
->
-> The bug report notes that "./build/x86/qemu-system-x86_64 -M pc,help"
-> does not list the pflash0 and pflash1 options. I think this is because
-> we set these up as alias properties on the actual flash device object
-> in pc_pflash_create(), so they don't exist as class properties that
-> "help" can introspect on.
->
-> -- PMM
+  [05Ch 0092 001h]             Watchdog Action : 01
+  [05Dh 0093 001h]                 Instruction : 02
+  [05Eh 0094 002h]                    Reserved : 0000
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+  [060h 0096 00Ch]             Register Region : [Generic Address Structure]
+  [060h 0096 001h]                    Space ID : 00 [SystemMemory]
+  [061h 0097 001h]                   Bit Width : 20
+  [062h 0098 001h]                  Bit Offset : 00
+  [063h 0099 001h]        Encoded Access Width : 03 [DWord Access:32]
+  [064h 0100 008h]                     Address : 000000000C000000
+
+  [06Ch 0108 004h]                       Value : 00000001
+  [070h 0112 004h]               Register Mask : 00000007
+
+  [074h 0116 001h]             Watchdog Action : 06
+  [075h 0117 001h]                 Instruction : 03
+  [076h 0118 002h]                    Reserved : 0000
+
+  [078h 0120 00Ch]             Register Region : [Generic Address Structure]
+  [078h 0120 001h]                    Space ID : 00 [SystemMemory]
+  [079h 0121 001h]                   Bit Width : 20
+  [07Ah 0122 001h]                  Bit Offset : 00
+  [07Bh 0123 001h]        Encoded Access Width : 03 [DWord Access:32]
+  [07Ch 0124 008h]                     Address : 000000000C001008
+
+  [084h 0132 004h]                       Value : 00000000
+  [088h 0136 004h]               Register Mask : FFFFFFFF
+
+  [08Ch 0140 001h]             Watchdog Action : 09
+  [08Dh 0141 001h]                 Instruction : 82
+  [08Eh 0142 002h]                    Reserved : 0000
+
+  [090h 0144 00Ch]             Register Region : [Generic Address Structure]
+  [090h 0144 001h]                    Space ID : 00 [SystemMemory]
+  [091h 0145 001h]                   Bit Width : 20
+  [092h 0146 001h]                  Bit Offset : 00
+  [093h 0147 001h]        Encoded Access Width : 03 [DWord Access:32]
+  [094h 0148 008h]                     Address : 000000000C001000
+
+  [09Ch 0156 004h]                       Value : 00000001
+  [0A0h 0160 004h]               Register Mask : 00000001
+
+  [0A4h 0164 001h]             Watchdog Action : 0A
+  [0A5h 0165 001h]                 Instruction : 00
+  [0A6h 0166 002h]                    Reserved : 0000
+
+  [0A8h 0168 00Ch]             Register Region : [Generic Address Structure]
+  [0A8h 0168 001h]                    Space ID : 00 [SystemMemory]
+  [0A9h 0169 001h]                   Bit Width : 20
+  [0AAh 0170 001h]                  Bit Offset : 00
+  [0ABh 0171 001h]        Encoded Access Width : 03 [DWord Access:32]
+  [0ACh 0172 008h]                     Address : 000000000C001000
+
+  [0B4h 0180 004h]                       Value : 00000000
+  [0B8h 0184 004h]               Register Mask : 00000001
+
+  [0BCh 0188 001h]             Watchdog Action : 0B
+  [0BDh 0189 001h]                 Instruction : 82
+  [0BEh 0190 002h]                    Reserved : 0000
+
+  [0C0h 0192 00Ch]             Register Region : [Generic Address Structure]
+  [0C0h 0192 001h]                    Space ID : 00 [SystemMemory]
+  [0C1h 0193 001h]                   Bit Width : 20
+  [0C2h 0194 001h]                  Bit Offset : 00
+  [0C3h 0195 001h]        Encoded Access Width : 03 [DWord Access:32]
+  [0C4h 0196 008h]                     Address : 000000000C001000
+
+  [0CCh 0204 004h]                       Value : 00000000
+  [0D0h 0208 004h]               Register Mask : 00000001
+
+  [0D4h 0212 001h]             Watchdog Action : 20
+  [0D5h 0213 001h]                 Instruction : 00
+  [0D6h 0214 002h]                    Reserved : 0000
+
+  [0D8h 0216 00Ch]             Register Region : [Generic Address Structure]
+  [0D8h 0216 001h]                    Space ID : 00 [SystemMemory]
+  [0D9h 0217 001h]                   Bit Width : 20
+  [0DAh 0218 001h]                  Bit Offset : 00
+  [0DBh 0219 001h]        Encoded Access Width : 03 [DWord Access:32]
+  [0DCh 0220 008h]                     Address : 000000000C001000
+
+  [0E4h 0228 004h]                       Value : 00000004
+  [0E8h 0232 004h]               Register Mask : 00000004
+
+  [0ECh 0236 001h]             Watchdog Action : 21
+  [0EDh 0237 001h]                 Instruction : 82
+  [0EEh 0238 002h]                    Reserved : 0000
+
+  [0F0h 0240 00Ch]             Register Region : [Generic Address Structure]
+  [0F0h 0240 001h]                    Space ID : 00 [SystemMemory]
+  [0F1h 0241 001h]                   Bit Width : 20
+  [0F2h 0242 001h]                  Bit Offset : 00
+  [0F3h 0243 001h]        Encoded Access Width : 03 [DWord Access:32]
+  [0F4h 0244 008h]                     Address : 000000000C000000
+
+  [0FCh 0252 004h]                       Value : 00000004
+  [100h 0256 004h]               Register Mask : 00000004
+
+Raw Table Data: Length 260 (0x104)
+
+Signed-off-by: Igor Mammedov <imammedo@redhat.com>
+---
+ tests/qtest/bios-tables-test-allowed-diff.h |   1 -
+ tests/data/acpi/aarch64/virt/WDAT.wdat      | Bin 0 -> 260 bytes
+ 2 files changed, 1 deletion(-)
+
+diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
+index 135186b40b..dfb8523c8b 100644
+--- a/tests/qtest/bios-tables-test-allowed-diff.h
++++ b/tests/qtest/bios-tables-test-allowed-diff.h
+@@ -1,2 +1 @@
+ /* List of comma-separated changed AML files to ignore */
+-"tests/data/acpi/aarch64/virt/WDAT.wdat",
+diff --git a/tests/data/acpi/aarch64/virt/WDAT.wdat b/tests/data/acpi/aarch64/virt/WDAT.wdat
+index e69de29bb2d1d6434b8b29ae775ad8c2e48c5391..d5adacf9114637d8803d08906ff1e29ac61f5fe0 100644
+GIT binary patch
+literal 260
+zcmZXOK@NgI3`O4vF`x@byg*$Mjv=^kCkZBU9awQJZ&p(1B&bcAwm<K;ecx}dG(f1E
+zXZz@-8M;<PBmmZ16+lr{z~)btGhbi?GEanrk^*Op%cs@+r=JYk@zHbs;iGQ%_k0R#
+Y9+OSa{H}$nYB)I0_dnOT-}Sg>0T&h&0RR91
+
+literal 0
+HcmV?d00001
+
+-- 
+2.47.3
+
 
