@@ -4,89 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1BD41CDB479
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 13:51:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0D52CDB479
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 13:51:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcNnu-0001pa-CR; Wed, 24 Jun 2026 09:38:10 -0400
+	id 1wcNnH-0000qb-QG; Wed, 24 Jun 2026 09:37:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jim.macarthur@linaro.org>)
- id 1wcNnR-0001b0-GE
- for qemu-devel@nongnu.org; Wed, 24 Jun 2026 09:37:42 -0400
-Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jim.macarthur@linaro.org>)
- id 1wcNnP-00015U-1U
- for qemu-devel@nongnu.org; Wed, 24 Jun 2026 09:37:41 -0400
-Received: by mail-wr1-x430.google.com with SMTP id
- ffacd0b85a97d-46cbf263113so451463f8f.1
- for <qemu-devel@nongnu.org>; Wed, 24 Jun 2026 06:37:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1782308257; x=1782913057; darn=nongnu.org;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=UlZ896BeqyhkD81qJ6H2fkNDE7k7k0fjc04jxwIjh1Y=;
- b=ypZYdOB8aBC8E62GAw9hDf0yAks05b8roCkkI78JsXygrarpg37cBPh1aJO8YCW6LU
- Qe0Pb1wruGb357OHcjTJPux+1Swn4aMngB2t+i5odSYDlfLZa6aNFmHmlQVTZ0EpG6iC
- KVV4drnD5lQr81d9m0/P0o19p6FzdCAgak6F86lqAPiGoTcn3v7mlmm7PKjGtAmTNIy3
- OqW8o5ekaIfJxFWPVia4KPPjl036/FlxGOkSh+2YJSSBld/XSop1reN5mP0DsjpjFsA5
- cFgp5cWDnkw1DeSAmUN8EWieMUF3kRGNHzxr/YqgRpEBN4I64rfWr2OVrvpwYj6NsDNM
- gtPw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782308257; x=1782913057;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=UlZ896BeqyhkD81qJ6H2fkNDE7k7k0fjc04jxwIjh1Y=;
- b=RuUi6bBUBuhwXSDOHTl34LyVJoJKy3lhxbcm392E6pPI6vhNyazHL6QZA5MFFucr8D
- +vUVWR/hFr49faKD55rxX33LHAz6DgvIpRmZSIVSzegzh/eHkWD3Xqh8yHCLZ3hOMV9O
- C18kxJjYZ5feXstzRK3ctLjC67byRtz9ouZyl4c2YzSe8lEpJSQcAqXnvFjNfaD82RQt
- 0lRqxiSpq+n4BfQbkdmt3ASNbu96pXQdwd9wexK6rLOlxhu3RmVuzLOOos/0sFN6PYgT
- csZDCft9AabblE85WHFjjtpzj+hVLDWpl7VirVgCFN1ttahW5pUJInuD3iX95q0zfwAf
- NPDA==
-X-Gm-Message-State: AOJu0Yxz5h+JQRT8t1FZRcyigZ1UYc0At/aa+Dy8DEaq2ofxxrmSyRa/
- KB+fSXrXphcpj2KMemX3PPf0R97rRISgOiIL86SY3Qi4TknBL8qnMB7jpGNU4CEWIY4=
-X-Gm-Gg: AfdE7ckH5czWfhK8SGI0z27EvP1bvAVANgTHhaPlvizhs2An2ewX5J5Kp8I7Tv6teE3
- yVxCvcdejxD0Rd4nTKIyEbFWeC8G43E9V30jqrA8ZKa7M5+W801uF0UNo+t3jSTrOOMfug/CA5x
- yZMY5Ae26HZYgYYyyty5lUxbGlqbhgKlRPutd6+TDEJKgmTCMXGa7TzWfFwE5gEggwsxByyUn/B
- +P5LnGosXbhmrIR//5FzSIGUwBTlKPLDANrMDSLoDsDWDTvJpZMaAkAXZ2+NZhVeueNquaA3VJY
- AO1c4aKPWfq5H17pT65M+5aZYVP44RWd4uA+zpTHahIlIECKoZBhCFMud2aX4r7ajpn3PzVIp9h
- cyLLOCljOdq/UJEVRSCzpIEcboiddLbVwGu4mLFlwsJbvmj59HlBtJapOv4bbxnZ4t1J9BAz8bD
- DEKp2f76GEpMDqVrc=
-X-Received: by 2002:a05:6000:4313:b0:452:6aaf:76cb with SMTP id
- ffacd0b85a97d-46c0951d960mr6099417f8f.1.1782308257280; 
- Wed, 24 Jun 2026 06:37:37 -0700 (PDT)
-Received: from [127.0.1.1] ([2a10:d582:31e:0:2e21:1ee8:260f:9a76])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-46c1e840efdsm6646334f8f.5.2026.06.24.06.37.36
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 24 Jun 2026 06:37:36 -0700 (PDT)
-From: Jim MacArthur <jim.macarthur@linaro.org>
-Date: Wed, 24 Jun 2026 14:37:25 +0100
-Subject: [PATCH v2 1/6] target/arm/tcg: Implement new instructions for FPRCVT
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260624-jmac-fprcvt-v2-1-dc6cf8e512b6@linaro.org>
-References: <20260624-jmac-fprcvt-v2-0-dc6cf8e512b6@linaro.org>
-In-Reply-To: <20260624-jmac-fprcvt-v2-0-dc6cf8e512b6@linaro.org>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1wcNnB-0000GH-2E; Wed, 24 Jun 2026 09:37:25 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1wcNn9-000140-9K; Wed, 24 Jun 2026 09:37:24 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
+ t=1782307998; bh=y7G/QIRnRsuPk7/oRZJGZMI9BKG1yQA33e2zndC2EKs=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References;
+ b=OyptgZ5iN8x7H0nbd4iR0eONsVzMjfLVrEQf1U1ZY2Mepxxyg3ec7ROQTVYJK6rfg
+ AVSB3o04RBNsoxvHH3Lnfkml/B9GfY9zzC6fR68uFMbFLSJKeA6l1obn76iI4Ncuwn
+ KhMowH9rVppESLwFlfp+czF6k3Rvlgu+7gjnQyXY2E8/v9DOlEX2Cdoh/Uy6d1zRZs
+ 3cYaGYKjFef64VJqrh1YxIpGeLNGLd6WpoZtX56loUi7LnuqiRgQJIqXuJKMrFZSSV
+ k7yJx1LtCzHp3vx3MurvCz91Obv5uMqLzUbIT2MbKvpZEuCVrbjklBBp0mchu4fU1K
+ cObkANDnXqK+Q==
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 67B4F1BA9E1;
+ Wed, 24 Jun 2026 16:33:18 +0300 (MSK)
+Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 03DA43DEA30;
+ Wed, 24 Jun 2026 16:33:24 +0300 (MSK)
+From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org, 
- Richard Henderson <richard.henderson@linaro.org>, 
- Alex Bennee <alex.bennee@linaro.org>, 
- Jim MacArthur <jim.macarthur@linaro.org>
-X-Mailer: b4 0.13.0
-Received-SPF: pass client-ip=2a00:1450:4864:20::430;
- envelope-from=jim.macarthur@linaro.org; helo=mail-wr1-x430.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Cc: qemu-stable@nongnu.org, Christian Schoenebeck <qemu_oss@crudebyte.com>,
+ Fabiano Rosas <farosas@suse.de>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.2 047/107] tests/qtest/libqos: add
+ qvirtqueue_reset_pool() for descriptor pool reset
+Date: Wed, 24 Jun 2026 16:30:52 +0300
+Message-ID: <20260624133301.403266-47-mjt@tls.msk.ru>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <qemu-stable-11.0.2-20260624163118@cover.tls.msk.ru>
+References: <qemu-stable-11.0.2-20260624163118@cover.tls.msk.ru>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,172 +69,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Adds the opcode format for the SIMD versions of FCVTXX and [US]CVTF.
-These use very similar logic to the FP-to-general and general-to-FP
-register versions which exist, but use another SIMD/FP register
-as source or destination. The source and destination size rules are
-slightly different.
+From: Christian Schoenebeck <qemu_oss@crudebyte.com>
 
-Signed-off-by: Jim MacArthur <jim.macarthur@linaro.org>
----
- target/arm/cpu-features.h      |  5 +++
- target/arm/tcg/a64.decode      | 15 +++++++++
- target/arm/tcg/translate-a64.c | 71 +++++++++++++++++++++++++++++++++++++-----
- 3 files changed, 83 insertions(+), 8 deletions(-)
+Add a function to reset the virtqueue descriptor pool state without
+reinitializing the device. This is useful for tests that issue a high
+number of requests and are limited by the simplified virtio test
+driver's descriptor tracking, which decrements num_free but never
+increments it back.
 
-diff --git a/target/arm/cpu-features.h b/target/arm/cpu-features.h
-index a80b251589..aba95f4253 100644
---- a/target/arm/cpu-features.h
-+++ b/target/arm/cpu-features.h
-@@ -1665,6 +1665,11 @@ static inline bool isar_feature_aa64_f8mm4(const ARMISARegisters *id)
-     return FIELD_EX64_IDREG(id, ID_AA64FPFR0, F8MM4);
- }
- 
-+static inline bool isar_feature_aa64_fprcvt(const ARMISARegisters *id)
-+{
-+    return FIELD_EX64_IDREG(id, ID_AA64ISAR3, FPRCVT);
-+}
-+
- /*
-  * Combinations of feature tests, for ease of use with TRANS_FEAT.
-  */
-diff --git a/target/arm/tcg/a64.decode b/target/arm/tcg/a64.decode
-index 28cd1faf61..5b6f156d08 100644
---- a/target/arm/tcg/a64.decode
-+++ b/target/arm/tcg/a64.decode
-@@ -1456,6 +1456,21 @@ FCVTZU_g        . 0011110 .. 111001 000000 ..... .....  @icvt
- FCVTAS_g        . 0011110 .. 100100 000000 ..... .....  @icvt
- FCVTAU_g        . 0011110 .. 100101 000000 ..... .....  @icvt
- 
-+# Conversion between floating-point and integer (SIMD & FP)
-+SCVTF_simd      . 0011110 .. 111100 000000 ..... .....  @icvt
-+UCVTF_simd      . 0011110 .. 111101 000000 ..... .....  @icvt
-+
-+FCVTAS_g_simd   . 0011110 .. 111010 000000 ..... .....  @icvt
-+FCVTAU_g_simd   . 0011110 .. 111011 000000 ..... .....  @icvt
-+FCVTMS_g_simd   . 0011110 .. 110100 000000 ..... .....  @icvt
-+FCVTMU_g_simd   . 0011110 .. 110101 000000 ..... .....  @icvt
-+FCVTNS_g_simd   . 0011110 .. 101010 000000 ..... .....  @icvt
-+FCVTNU_g_simd   . 0011110 .. 101011 000000 ..... .....  @icvt
-+FCVTPS_g_simd   . 0011110 .. 110010 000000 ..... .....  @icvt
-+FCVTPU_g_simd   . 0011110 .. 110011 000000 ..... .....  @icvt
-+FCVTZS_g_simd   . 0011110 .. 110110 000000 ..... .....  @icvt
-+FCVTZU_g_simd   . 0011110 .. 110111 000000 ..... .....  @icvt
-+
- FJCVTZS         0 0011110 01 111110 000000 ..... .....  @rr
- 
- FMOV_ws         0 0011110 00 100110 000000 ..... .....  @rr
-diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
-index 227719ef25..07f985a5f0 100644
---- a/target/arm/tcg/translate-a64.c
-+++ b/target/arm/tcg/translate-a64.c
-@@ -9905,12 +9905,14 @@ TRANS(SCVTF_g, do_cvtf_g, a, true)
- TRANS(UCVTF_g, do_cvtf_g, a, false)
- 
- /*
-- * [US]CVTF (vector), scalar version.
-- * Which sounds weird, but really just means input from fp register
-+ * [US]CVTF (vector), scalar or SIMD version.
-+ * Which sounds weird, but really just means input from FP/SIMD register
-  * instead of input from general register.  Input and output element
-- * size are always equal.
-+ * size are always equal for the scalar version and different for the
-+ * SIMD version.
-  */
--static bool do_cvtf_f(DisasContext *s, arg_fcvt *a, bool is_signed)
-+static bool do_cvtf_f(DisasContext *s, arg_fcvt *a, MemOp src_mop_int,
-+                      bool is_signed)
- {
-     TCGv_i64 tcg_int;
-     int check = fp_access_check_scalar_hsd(s, a->esz);
-@@ -9918,14 +9920,18 @@ static bool do_cvtf_f(DisasContext *s, arg_fcvt *a, bool is_signed)
-     if (check <= 0) {
-         return check == 0;
-     }
--
-     tcg_int = tcg_temp_new_i64();
--    read_vec_element(s, tcg_int, a->rn, 0, a->esz | (is_signed ? MO_SIGN : 0));
-+    read_vec_element(s, tcg_int, a->rn, 0,
-+                     src_mop_int | (is_signed ? MO_SIGN : 0));
-     return do_cvtf_scalar(s, a->esz, a->rd, a->shift, tcg_int, is_signed);
- }
- 
--TRANS(SCVTF_f, do_cvtf_f, a, true)
--TRANS(UCVTF_f, do_cvtf_f, a, false)
-+TRANS(SCVTF_f, do_cvtf_f, a, a->esz, true)
-+TRANS(UCVTF_f, do_cvtf_f, a, a->esz, false)
-+TRANS_FEAT(SCVTF_simd, aa64_fprcvt, do_cvtf_f, a,
-+           a->sf ? MO_64 : MO_32, true)
-+TRANS_FEAT(UCVTF_simd, aa64_fprcvt, do_cvtf_f, a,
-+           a->sf ? MO_64 : MO_32, false)
- 
- static void do_fcvt_scalar(DisasContext *s, MemOp out, MemOp esz,
-                            TCGv_i64 tcg_out, int shift, int rn,
-@@ -10044,6 +10050,34 @@ static bool do_fcvt_g(DisasContext *s, arg_fcvt *a,
+The function is safe for synchronous test code where requests are
+sent and completed before the next request is issued.
+
+Acked-by: Fabiano Rosas <farosas@suse.de>
+Link: https://lore.kernel.org/qemu-devel/96cf23eea1204b34443218fe76bd4a5eaf9163e8.1779126034.git.qemu_oss@crudebyte.com
+Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
+(cherry picked from commit be33c56898f8b18617cff91525f0b68abee8de07)
+Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+
+diff --git a/tests/qtest/libqos/virtio.c b/tests/qtest/libqos/virtio.c
+index 010ff40834..ccbb325222 100644
+--- a/tests/qtest/libqos/virtio.c
++++ b/tests/qtest/libqos/virtio.c
+@@ -464,6 +464,29 @@ bool qvirtqueue_get_buf(QTestState *qts, QVirtQueue *vq, uint32_t *desc_idx,
      return true;
  }
  
 +/*
-+ * Floating point to int conversion, but puts the result
-+ * in a SIMD register.
++ * qvirtqueue_reset_pool:
++ * @vq: The virtqueue to reset
++ *
++ * Reset the descriptor pool state without reinitializing the device.
++ * This is useful for tests that issue a high number of requests and
++ * are limited by the simplified virtio test driver's descriptor tracking,
++ * which decrements num_free but never increments it back.
++ *
++ * This is only safe for synchronous test code where requests are
++ * sent and completed before the next request is issued. Do not use
++ * with asynchronous code where multiple requests may be in-flight.
++ *
++ * Note: This only resets the available descriptor pool (free_head,
++ * num_free). The used ring position (last_used_idx) is NOT reset
++ * and should continue to track consumed responses across iterations.
 + */
-+static bool do_fcvt_simd(DisasContext *s, arg_fcvt *a,
-+                      ARMFPRounding rmode, bool is_signed)
++void qvirtqueue_reset_pool(QVirtQueue *vq)
 +{
-+    TCGv_i64 tcg_int;
-+    int check = fp_access_check_scalar_hsd(s, a->esz);
-+
-+    if (check <= 0) {
-+        return check == 0;
-+    }
-+    /*
-+     * a->sf should specify destination size (64 bit or 32 bit)
-+     * a->esz specifies source size
-+     */
-+    tcg_int = tcg_temp_new_i64();
-+    do_fcvt_scalar(s, (a->sf ? MO_64 : MO_32) | (is_signed ? MO_SIGN : 0),
-+                   a->esz, tcg_int, a->shift, a->rn, rmode);
-+
-+    if (!s->fpcr_nep) {
-+        clear_vec(s, a->rd);
-+    }
-+    write_vec_element(s, tcg_int, a->rd, 0, (a->sf ? MO_64 : MO_32));
-+    return true;
++    vq->free_head = 0;
++    vq->num_free = vq->size;
 +}
 +
- TRANS(FCVTNS_g, do_fcvt_g, a, FPROUNDING_TIEEVEN, true)
- TRANS(FCVTNU_g, do_fcvt_g, a, FPROUNDING_TIEEVEN, false)
- TRANS(FCVTPS_g, do_fcvt_g, a, FPROUNDING_POSINF, true)
-@@ -10055,6 +10089,27 @@ TRANS(FCVTZU_g, do_fcvt_g, a, FPROUNDING_ZERO, false)
- TRANS(FCVTAS_g, do_fcvt_g, a, FPROUNDING_TIEAWAY, true)
- TRANS(FCVTAU_g, do_fcvt_g, a, FPROUNDING_TIEAWAY, false)
+ void qvirtqueue_set_used_event(QTestState *qts, QVirtQueue *vq, uint16_t idx)
+ {
+     g_assert(vq->event);
+diff --git a/tests/qtest/libqos/virtio.h b/tests/qtest/libqos/virtio.h
+index e238f1726f..f17be0b9b6 100644
+--- a/tests/qtest/libqos/virtio.h
++++ b/tests/qtest/libqos/virtio.h
+@@ -150,6 +150,8 @@ void qvirtqueue_kick(QTestState *qts, QVirtioDevice *d, QVirtQueue *vq,
+ bool qvirtqueue_get_buf(QTestState *qts, QVirtQueue *vq, uint32_t *desc_idx,
+                         uint32_t *len);
  
-+TRANS_FEAT(FCVTNS_g_simd, aa64_fprcvt, do_fcvt_simd, a,
-+           FPROUNDING_TIEEVEN, true)
-+TRANS_FEAT(FCVTNU_g_simd, aa64_fprcvt, do_fcvt_simd, a,
-+           FPROUNDING_TIEEVEN, false)
-+TRANS_FEAT(FCVTPS_g_simd, aa64_fprcvt, do_fcvt_simd, a,
-+           FPROUNDING_POSINF, true)
-+TRANS_FEAT(FCVTPU_g_simd, aa64_fprcvt, do_fcvt_simd, a,
-+           FPROUNDING_POSINF, false)
-+TRANS_FEAT(FCVTMS_g_simd, aa64_fprcvt, do_fcvt_simd, a,
-+           FPROUNDING_NEGINF, true)
-+TRANS_FEAT(FCVTMU_g_simd, aa64_fprcvt, do_fcvt_simd, a,
-+           FPROUNDING_NEGINF, false)
-+TRANS_FEAT(FCVTZS_g_simd, aa64_fprcvt, do_fcvt_simd, a,
-+           FPROUNDING_ZERO, true)
-+TRANS_FEAT(FCVTZU_g_simd, aa64_fprcvt, do_fcvt_simd, a,
-+           FPROUNDING_ZERO, false)
-+TRANS_FEAT(FCVTAS_g_simd, aa64_fprcvt, do_fcvt_simd, a,
-+           FPROUNDING_TIEAWAY, true)
-+TRANS_FEAT(FCVTAU_g_simd, aa64_fprcvt, do_fcvt_simd, a,
-+           FPROUNDING_TIEAWAY, false)
++void qvirtqueue_reset_pool(QVirtQueue *vq);
 +
- /*
-  * FCVT* (vector), scalar version.
-  * Which sounds weird, but really just means output to fp register
-
+ void qvirtqueue_set_used_event(QTestState *qts, QVirtQueue *vq, uint16_t idx);
+ 
+ void qvirtio_start_device(QVirtioDevice *vdev);
 -- 
-2.43.0
+2.47.3
 
 
