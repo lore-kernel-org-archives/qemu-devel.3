@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2D56CDE002
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 13:45:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36A99CDB479
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 13:46:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcNrV-0000GT-Or; Wed, 24 Jun 2026 09:41:55 -0400
+	id 1wcNqj-0007uS-8E; Wed, 24 Jun 2026 09:41:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wcNrB-0008F7-Gy; Wed, 24 Jun 2026 09:41:35 -0400
+ id 1wcNqf-0007sO-N8; Wed, 24 Jun 2026 09:41:01 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wcNrA-0001rh-0t; Wed, 24 Jun 2026 09:41:33 -0400
+ id 1wcNqd-0001nP-9Z; Wed, 24 Jun 2026 09:41:01 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1782308001; bh=IKgs5bsnyOSKcYnwzV+SHFl/xquAUuTC6KqQdb72ZbU=;
+ t=1782308000; bh=ETGA5e2j1inKLrkrRC3C9TsrU/3uSvhIAGjtp79kSZ0=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=IRMFmP8ALpsMJWGUnmvuMcsdl1hl+nqkNzk7BI7je/a4vpFGKhncMApgKivFeML9j
- QBEpmOtA7rb6f8q0nQQ7mc8nGgCL5UTWMtrAjSoa+5RghVLBKrPOQkHxDMCvnZEbB7
- zgScUqoVvefQxcqnyryKfU0pOc6zNKjCT5kgF5clxt7MQxe1u2a6yBHsyTTXw9PJec
- rw2hWhJwQZSV9Zwvhbvslq2FUh5W66ANdqKo+0i5tdWnMUWhRIsUL3moHJeUddYzVK
- ACAiQoBDwJ3CGOajc2S+JvCQQx4CknDC13p+BHeQY18CTC2kmUhBZhFH7vcm0K50jS
- oRnxNEEuUlBHw==
+ b=k5zuY+qfoXg6GTC0sonO5a9E1y6r1YQNEtdxTHzkIkan//mFP+FOtgyK4LrIg1Rd8
+ toWaYw5vqfJxdpyEnpUTmmWTy8HbtwkAxroemkiBr1+s/ZDNm8IRz6X2PY1ZpZiOMO
+ CxeTS3IdVGTwiyYzTPtSHCf75YfN5QO8lTmPhsf4/lo03zRkHgxZsdjWpBXZ6SAnbl
+ NOPgTounQIzSOHsjWg7FT9qxHKYBH7lvXVMj5e8qyT5CH+mvklt0mbJruSze4nQoZj
+ mpyLw6pg3dUOveIfbFbYb9Gh+BvAz1kO+jaEDmJbwuze1VRy0cYMOBXrVIsOdQRjDy
+ VrpmFAE8suqOQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 318591BAA07;
- Wed, 24 Jun 2026 16:33:21 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id CA2521BAA02;
+ Wed, 24 Jun 2026 16:33:20 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id C1C273DEA56;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 64A523DEA51;
  Wed, 24 Jun 2026 16:33:26 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Alistair Francis <alistair.francis@wdc.com>,
+Cc: qemu-stable@nongnu.org, Alejandro Jimenez <alejandro.j.jimenez@oracle.com>,
+ David Hoppenbrouwers <qemu@demindiro.com>,
+ Sairaj Kodilkar <sarunkod@amd.com>, "Michael S. Tsirkin" <mst@redhat.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.2 085/107] target/riscv/csr.c: do not allow mstatus
- MPV/GVA writes
-Date: Wed, 24 Jun 2026 16:31:30 +0300
-Message-ID: <20260624133301.403266-85-mjt@tls.msk.ru>
+Subject: [Stable-11.0.2 080/107] amd_iommu: Follow root pointer before page
+ walk and use 1-based levels
+Date: Wed, 24 Jun 2026 16:31:25 +0300
+Message-ID: <20260624133301.403266-80-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.2-20260624163118@cover.tls.msk.ru>
 References: <qemu-stable-11.0.2-20260624163118@cover.tls.msk.ru>
@@ -71,53 +71,245 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+From: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
 
-The priv spec states the following about mstatus.MPV:
+DTE[Mode] and PTE NextLevel encode page table levels as 1-based values, but
+fetch_pte() currently uses a 0-based level counter, making the logic
+harder to follow and requiring conversions between DTE mode and level.
 
-"The MPV bit (Machine Previous Virtualization Mode) is written by the
-implementation whenever a trap is taken into M-mode."
+Switch the page table walk logic to use 1-based level accounting in
+fetch_pte() and the relevant macro helpers. To further simplify the page
+walking loop, split the root page table access from the walk i.e. rework
+fetch_pte() to follow the DTE Page Table Root Pointer and retrieve the top
+level pagetable entry before entering the loop, then iterate only over the
+PDE/PTE entries.
 
-And, about mstatus.GVA:
+The reworked algorithm fixes a page walk bug where the page size was
+calculated for the next level before checking if the current PTE was already
+a leaf/hugepage. That caused hugepage mappings to be reported as 4K pages,
+leading to performance degradation and failures in some setups.
 
-"Field GVA (Guest Virtual Address) is written by the implementation
-whenever a trap is taken into M-mode."
-
-Both are written during riscv_cpu_do_interrupt().  They're not supposed
-to be written by userspace.  As far as write_mstatus goes these fields
-are read only.  The same applies for mstatush.MPV/mstatush.GVA.
-
-Fixes: 03dd405dd5 ("target/riscv: Support MSTATUS.MPV/GVA only when RVH is enabled")
-Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Acked-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20260514194537.2416243-2-daniel.barboza@oss.qualcomm.com>
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-(cherry picked from commit 18645f19578955ec5ff2c40cd2c8753d6bc460c2)
+Fixes: a74bb3110a5b ("amd_iommu: Add helpers to walk AMD v1 Page Table format")
+Cc: qemu-stable@nongnu.org
+Reported-by: David Hoppenbrouwers <qemu@demindiro.com>
+Reviewed-By: David Hoppenbrouwers <qemu@demindiro.com>
+Reviewed-by: Sairaj Kodilkar <sarunkod@amd.com>
+Signed-off-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Message-Id: <20260330212817.992673-2-alejandro.j.jimenez@oracle.com>
+(cherry picked from commit 786550e2d38a92e90c13eb9d57e3a72d7ab38d51)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-index 0f14ea4689..ec4aa357b4 100644
---- a/target/riscv/csr.c
-+++ b/target/riscv/csr.c
-@@ -2027,9 +2027,6 @@ static RISCVException write_mstatus(CPURISCVState *env, int csrno,
+diff --git a/hw/i386/amd_iommu.c b/hw/i386/amd_iommu.c
+index 5d6a405263..bc083d0073 100644
+--- a/hw/i386/amd_iommu.c
++++ b/hw/i386/amd_iommu.c
+@@ -648,6 +648,52 @@ static uint64_t large_pte_page_size(uint64_t pte)
+     return PTE_LARGE_PAGE_SIZE(pte);
+ }
+ 
++/*
++ * Validate DTE fields and extract permissions and top level data required to
++ * initiate the page table walk.
++ *
++ * On success, returns 0 and stores:
++ *   - top_level: highest page-table level encoded in DTE[Mode]
++ *   - dte_perms: effective permissions from the DTE
++ *
++ * On failure, returns -AMDVI_FR_PT_ROOT_INV. This includes cases where:
++ *   - DTE permissions disallow read AND write
++ *   - DTE[Mode] is invalid for translation
++ *   - IOVA exceeds the address width supported by DTE[Mode]
++ * In all such cases a page walk must be aborted.
++ */
++static uint64_t amdvi_get_top_pt_level_and_perms(hwaddr address, uint64_t dte,
++                                                 uint8_t *top_level,
++                                                 IOMMUAccessFlags *dte_perms)
++{
++    *dte_perms = amdvi_get_perms(dte);
++    if (*dte_perms == IOMMU_NONE) {
++        return -AMDVI_FR_PT_ROOT_INV;
++    }
++
++    /* Verifying a valid mode is encoded in DTE */
++    *top_level = get_pte_translation_mode(dte);
++
++    /*
++     * Page Table Root pointer is only valid for GPA->SPA translation on
++     * supported modes.
++     */
++    if (*top_level == 0 || *top_level > 6) {
++        return -AMDVI_FR_PT_ROOT_INV;
++    }
++
++    /*
++     * If IOVA is larger than the max supported by the highest pgtable level,
++     * there is nothing to do.
++     */
++    if (address > PT_LEVEL_MAX_ADDR(*top_level)) {
++        /* IOVA too large for the current DTE */
++        return -AMDVI_FR_PT_ROOT_INV;
++    }
++
++    return 0;
++}
++
+ /*
+  * Helper function to fetch a PTE using AMD v1 pgtable format.
+  * On successful page walk, returns 0 and pte parameter points to a valid PTE.
+@@ -662,40 +708,49 @@ static uint64_t large_pte_page_size(uint64_t pte)
+ static uint64_t fetch_pte(AMDVIAddressSpace *as, hwaddr address, uint64_t dte,
+                           uint64_t *pte, hwaddr *page_size)
+ {
+-    IOMMUAccessFlags perms = amdvi_get_perms(dte);
+-
+-    uint8_t level, mode;
+     uint64_t pte_addr;
++    uint8_t pt_level, next_pt_level;
++    IOMMUAccessFlags perms;
++    int ret;
+ 
+-    *pte = dte;
+     *page_size = 0;
+ 
+-    if (perms == IOMMU_NONE) {
+-        return -AMDVI_FR_PT_ROOT_INV;
+-    }
+-
+     /*
+-     * The Linux kernel driver initializes the default mode to 3, corresponding
+-     * to a 39-bit GPA space, where each entry in the pagetable translates to a
+-     * 1GB (2^30) page size.
++     * Verify the DTE is properly configured before page walk, and extract
++     * top pagetable level and permissions.
+      */
+-    level = mode = get_pte_translation_mode(dte);
+-    assert(mode > 0 && mode < 7);
++    ret = amdvi_get_top_pt_level_and_perms(address, dte, &pt_level, &perms);
++    if (ret < 0) {
++        return ret;
++    }
+ 
+     /*
+-     * If IOVA is larger than the max supported by the current pgtable level,
+-     * there is nothing to do.
++     * Retrieve the top pagetable entry by following the DTE Page Table Root
++     * Pointer and indexing the top level table using the IOVA from the request.
+      */
+-    if (address > PT_LEVEL_MAX_ADDR(mode - 1)) {
+-        /* IOVA too large for the current DTE */
++    pte_addr = NEXT_PTE_ADDR(dte, pt_level, address);
++    *pte = amdvi_get_pte_entry(as->iommu_state, pte_addr, as->devfn);
++
++    if (*pte == (uint64_t)-1) {
++        /*
++         * A returned PTE of -1 here indicates a failure to read the top level
++         * page table from guest memory. A page walk is not possible and page
++         * size must be returned as 0.
++         */
+         return -AMDVI_FR_PT_ROOT_INV;
      }
  
-     if (xl != MXL_RV32 || env->debugger) {
--        if (riscv_has_ext(env, RVH)) {
--            mask |= MSTATUS_MPV | MSTATUS_GVA;
--        }
-         if ((val & MSTATUS64_UXL) != 0) {
-             mask |= MSTATUS64_UXL;
-         }
-@@ -2066,7 +2063,7 @@ static RISCVException write_mstatush(CPURISCVState *env, int csrno,
-                                      target_ulong val, uintptr_t ra)
- {
-     uint64_t valh = (uint64_t)val << 32;
--    uint64_t mask = riscv_has_ext(env, RVH) ? MSTATUS_MPV | MSTATUS_GVA : 0;
-+    uint64_t mask = 0;
+-    do {
+-        level -= 1;
++    /*
++     * Calculate page size for the top level page table entry.
++     * This ensures correct results for a single level Page Table setup.
++     */
++    *page_size = PTE_LEVEL_PAGE_SIZE(pt_level);
  
-     if (riscv_cpu_cfg(env)->ext_smdbltrp) {
-         mask |= MSTATUS_MDT;
+-        /* Update the page_size */
+-        *page_size = PTE_LEVEL_PAGE_SIZE(level);
++    /*
++     * The root page table entry and its level have been determined. Begin the
++     * page walk.
++     */
++    while (pt_level > 0) {
+ 
+         /* Permission bits are ANDed at every level, including the DTE */
+         perms &= amdvi_get_perms(*pte);
+@@ -708,37 +763,34 @@ static uint64_t fetch_pte(AMDVIAddressSpace *as, hwaddr address, uint64_t dte,
+             return 0;
+         }
+ 
++        next_pt_level = PTE_NEXT_LEVEL(*pte);
++
+         /* Large or Leaf PTE found */
+-        if (PTE_NEXT_LEVEL(*pte) == 7 || PTE_NEXT_LEVEL(*pte) == 0) {
++        if (next_pt_level == 0 || next_pt_level == 7) {
+             /* Leaf PTE found */
+             break;
+         }
+ 
++        pt_level = next_pt_level;
++
+         /*
+-         * Index the pgtable using the IOVA bits corresponding to current level
+-         * and walk down to the lower level.
++         * The current entry is a Page Directory Entry. Descend to the lower
++         * page table level encoded in current pte, and index the new table
++         * using the appropriate IOVA bits to retrieve the new entry.
+          */
+-        pte_addr = NEXT_PTE_ADDR(*pte, level, address);
++        *page_size = PTE_LEVEL_PAGE_SIZE(pt_level);
++
++        pte_addr = NEXT_PTE_ADDR(*pte, pt_level, address);
+         *pte = amdvi_get_pte_entry(as->iommu_state, pte_addr, as->devfn);
+ 
+         if (*pte == (uint64_t)-1) {
+-            /*
+-             * A returned PTE of -1 indicates a failure to read the page table
+-             * entry from guest memory.
+-             */
+-            if (level == mode - 1) {
+-                /* Failure to retrieve the Page Table from Root Pointer */
+-                *page_size = 0;
+-                return -AMDVI_FR_PT_ROOT_INV;
+-            } else {
+-                /* Failure to read PTE. Page walk skips a page_size chunk */
+-                return -AMDVI_FR_PT_ENTRY_INV;
+-            }
++            /* Failure to read PTE. Page walk skips a page_size chunk */
++            return -AMDVI_FR_PT_ENTRY_INV;
+         }
+-    } while (level > 0);
++    }
++
++    assert(PTE_NEXT_LEVEL(*pte) == 0 || PTE_NEXT_LEVEL(*pte) == 7);
+ 
+-    assert(PTE_NEXT_LEVEL(*pte) == 0 || PTE_NEXT_LEVEL(*pte) == 7 ||
+-           level == 0);
+     /*
+      * Page walk ends when Next Level field on PTE shows that either a leaf PTE
+      * or a series of large PTEs have been reached. In the latter case, even if
+diff --git a/hw/i386/amd_iommu.h b/hw/i386/amd_iommu.h
+index 302ccca512..7af3c742b7 100644
+--- a/hw/i386/amd_iommu.h
++++ b/hw/i386/amd_iommu.h
+@@ -186,17 +186,16 @@
+ 
+ #define IOMMU_PTE_PRESENT(pte)          ((pte) & AMDVI_PTE_PR)
+ 
+-/* Using level=0 for leaf PTE at 4K page size */
+-#define PT_LEVEL_SHIFT(level)           (12 + ((level) * 9))
++/* Using level=1 for leaf PTE at 4K page size */
++#define PT_LEVEL_SHIFT(level)           (12 + (((level) - 1) * 9))
+ 
+ /* Return IOVA bit group used to index the Page Table at specific level */
+ #define PT_LEVEL_INDEX(level, iova)     (((iova) >> PT_LEVEL_SHIFT(level)) & \
+                                         GENMASK64(8, 0))
+ 
+-/* Return the max address for a specified level i.e. max_oaddr */
+-#define PT_LEVEL_MAX_ADDR(x)    (((x) < 5) ? \
+-                                ((1ULL << PT_LEVEL_SHIFT((x + 1))) - 1) : \
+-                                (~(0ULL)))
++/* Return the maximum output address for a specified page table level */
++#define PT_LEVEL_MAX_ADDR(level)    (((level) > 5) ? (~(0ULL)) : \
++                                    ((1ULL << PT_LEVEL_SHIFT((level) + 1)) - 1))
+ 
+ /* Extract the NextLevel field from PTE/PDE */
+ #define PTE_NEXT_LEVEL(pte)     (((pte) & AMDVI_PTE_NEXT_LEVEL_MASK) >> 9)
 -- 
 2.47.3
 
