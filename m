@@ -4,43 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61DF0CDE002
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96312CDE003
 	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 13:51:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcNn9-0008W8-Qk; Wed, 24 Jun 2026 09:37:23 -0400
+	id 1wcNtP-0006J4-A9; Wed, 24 Jun 2026 09:43:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wcNn6-0008PF-Rc; Wed, 24 Jun 2026 09:37:20 -0400
+ id 1wcNtN-0006BU-1p; Wed, 24 Jun 2026 09:43:49 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wcNn5-0000zy-4l; Wed, 24 Jun 2026 09:37:20 -0400
+ id 1wcNtL-00025k-CN; Wed, 24 Jun 2026 09:43:48 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1782307998; bh=hruUjaXdQAdvaQCyFc5bpqH3UnncxRCYx7iu6J++zHc=;
+ t=1782308007; bh=13Qb9Nx8cR17potvT3cEjjnap4gymQSQ/97ixQ0MK/M=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=SsAjep88y2nQJwOCVS1vUQCa8N7rJIMKaxWcenV2REY4GeGply2U1K3SJ5RKfjvco
- yQGg62lK085IkmRTM4G3p/pjL0UdVh9GXRUNsruZPOf52vjSm2RbZd2GM/Nyg37kWj
- L9YX5sTARYLvZVbaKAQWn056efIVrLjFvrOncdSqzDUOr3YXzZ6CIbQYNpoBtnlZ48
- w2t55i4xktfIlFAVGOJik6/PvY2GswRZbEp+qhw9SE05fhfRKSC9dw9Vovegrz38Rg
- myywrNQ/cLBeEKORW4zUOnxSeXj7fO0YnzgwMhBpxxslAY4JvsKo40MwXe4U4V6tV0
- ObFlhG8y25D5Q==
+ b=CxFDJDANKgUZ159bR7sjWGeixXrVB+vE3Xr5/ajKw9mRGDDBPHpkyYYD79CYEAHrE
+ IRSbJnO+sRATA7SWk2NSTh21okqB1N46peJFc5K/0GwrJGuzkHpz8FTpNgNkL/+IRR
+ oq2VnTE3ec0PucfciqeYQeZBWdgzbg8ECG79cLUE+mG3B6rxql456zaayZe6wzZA74
+ fE+BJ8npmiiM2dV9Ulm0C32IgC4mPlfs4bh5jx/Fpo37q9i2CRmsXQT0+4x+q3Kr+V
+ D2tqK9pHo6EwWBTv54Tn0h52L3slgE5+3oaiKzd6+mDk17nyG2slRLLRqgYQFiC5b+
+ qD/pdWbLhOW5A==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 30A2B1BA9DE;
- Wed, 24 Jun 2026 16:33:18 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id B679D1BAA1C;
+ Wed, 24 Jun 2026 16:33:27 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id C444E3DEA2D;
- Wed, 24 Jun 2026 16:33:23 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 1D0823DEA6B;
+ Wed, 24 Jun 2026 16:33:33 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Christian Schoenebeck <qemu_oss@crudebyte.com>,
+Cc: qemu-stable@nongnu.org, Aditya Gupta <adityag@linux.ibm.com>,
+ Zexiang Zhang <chan9yan9@gmail.com>, "Michael S. Tsirkin" <mst@redhat.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.2 044/107] hw/9pfs: change V9fsPath.size to size_t and
- v9fs_path_sprintf() return type
-Date: Wed, 24 Jun 2026 16:30:49 +0300
-Message-ID: <20260624133301.403266-44-mjt@tls.msk.ru>
+Subject: [Stable-11.0.2 106/107] hw/pci: Replace assert with bounds check and
+ return
+Date: Wed, 24 Jun 2026 16:31:51 +0300
+Message-ID: <20260624133301.403266-106-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.2-20260624163118@cover.tls.msk.ru>
 References: <qemu-stable-11.0.2-20260624163118@cover.tls.msk.ru>
@@ -69,79 +70,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Christian Schoenebeck <qemu_oss@crudebyte.com>
+From: Aditya Gupta <adityag@linux.ibm.com>
 
-- Change V9fsPath.size from uint16_t to size_t to support paths larger
-  than 65536 bytes.
+As reported in https://gitlab.com/qemu-project/qemu/-/work_items/3334,
+callers of 'pci_host_config_{read,write}_common' can pass length as 8,
+causing an assert failure
 
-- Change v9fs_path_sprintf() return type from void to int to allow error
-  reporting.
+The original issue with pnv_phb3 triggering the assert was fixed in a
+previous commit
 
-Link: https://lore.kernel.org/qemu-devel/2d2348d94ff43fbe4cc0aea24fb312c5c15ee809.1779126034.git.qemu_oss@crudebyte.com
-Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
-(cherry picked from commit dbaf84e148b0c8b66dcb47788a6bb13806e401e4)
+Instead of asserting on invalid length, check if the length is valid
+(<=4), otherwise return (with the failure error code in read)
+
+Reported-by: Zexiang Zhang <chan9yan9@gmail.com>
+Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Message-Id: <20260326190438.734239-3-adityag@linux.ibm.com>
+(cherry picked from commit c7209c56718107fefd5deae140a450954d31ff2b)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/fsdev/file-op-9p.h b/fsdev/file-op-9p.h
-index b85c9934de..e8d0661c4b 100644
---- a/fsdev/file-op-9p.h
-+++ b/fsdev/file-op-9p.h
-@@ -112,7 +112,7 @@ struct FsContext {
- };
+diff --git a/hw/pci/pci_host.c b/hw/pci/pci_host.c
+index 91e3885c7f..2a7fdfa563 100644
+--- a/hw/pci/pci_host.c
++++ b/hw/pci/pci_host.c
+@@ -81,7 +81,12 @@ void pci_host_config_write_common(PCIDevice *pci_dev, uint32_t addr,
+         return;
+     }
  
- struct V9fsPath {
--    uint16_t size;
-+    size_t size;
-     char *data;
- };
- P9ARRAY_DECLARE_TYPE(V9fsPath);
-diff --git a/hw/9pfs/9p.c b/hw/9pfs/9p.c
-index e590c414ab..88894ec9d2 100644
---- a/hw/9pfs/9p.c
-+++ b/hw/9pfs/9p.c
-@@ -203,16 +203,24 @@ void v9fs_path_free(V9fsPath *path)
- }
- 
- 
--void v9fs_path_sprintf(V9fsPath *path, const char *fmt, ...)
-+int v9fs_path_sprintf(V9fsPath *path, const char *fmt, ...)
- {
-     va_list ap;
-+    int ret;
- 
-     v9fs_path_free(path);
- 
-     va_start(ap, fmt);
--    /* Bump the size for including terminating NULL */
--    path->size = g_vasprintf(&path->data, fmt, ap) + 1;
-+    ret = g_vasprintf(&path->data, fmt, ap);
-     va_end(ap);
-+    if (ret < 0) {
-+        error_report_once("9pfs: unusual path formatting failure; "
-+                         "invalidating associated FID");
-+        return -1;
+-    assert(len <= 4);
++    if (len > 4) {
++        PCI_DPRINTF("%s: invalid length access: addr " HWADDR_FMT_plx " \
++            len %d val %"PRIx32"\n", __func__, addr, len, val);
++        return;
 +    }
-+    /* Bump the size for including terminating NULL */
-+    path->size = ret + 1;
-+    return 0;
- }
++
+     /* non-zero functions are only exposed when function 0 is present,
+      * allowing direct removal of unexposed functions.
+      */
+@@ -106,7 +111,12 @@ uint32_t pci_host_config_read_common(PCIDevice *pci_dev, uint32_t addr,
+         return ~0x0;
+     }
  
- void v9fs_path_copy(V9fsPath *dst, const V9fsPath *src)
-diff --git a/hw/9pfs/9p.h b/hw/9pfs/9p.h
-index 65cc45e344..b2df659b0e 100644
---- a/hw/9pfs/9p.h
-+++ b/hw/9pfs/9p.h
-@@ -456,8 +456,8 @@ static inline uint8_t v9fs_request_cancelled(V9fsPDU *pdu)
- void coroutine_fn v9fs_reclaim_fd(V9fsPDU *pdu);
- void v9fs_path_init(V9fsPath *path);
- void v9fs_path_free(V9fsPath *path);
--void G_GNUC_PRINTF(2, 3) v9fs_path_sprintf(V9fsPath *path, const char *fmt,
--                                           ...);
-+int G_GNUC_PRINTF(2, 3) v9fs_path_sprintf(V9fsPath *path, const char *fmt,
-+                                          ...);
- void v9fs_path_copy(V9fsPath *dst, const V9fsPath *src);
- size_t v9fs_readdir_response_size(V9fsString *name);
- int v9fs_name_to_path(V9fsState *s, V9fsPath *dirpath,
+-    assert(len <= 4);
++    if (len > 4) {
++        PCI_DPRINTF("%s: invalid length access: addr " HWADDR_FMT_plx " \
++            len %d val %"PRIx32"\n", __func__, addr, len, val);
++        return ~0x0;
++    }
++
+     /* non-zero functions are only exposed when function 0 is present,
+      * allowing direct removal of unexposed functions.
+      */
 -- 
 2.47.3
 
