@@ -4,46 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8033CDB470
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 05:11:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8BCDFCDB470
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 05:11:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcFsz-0006Iu-8N; Wed, 24 Jun 2026 01:10:53 -0400
+	id 1wcFou-0008LO-G9; Wed, 24 Jun 2026 01:06:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wcFsD-0005AT-Vy; Wed, 24 Jun 2026 01:10:07 -0400
+ id 1wcFop-00080D-CM; Wed, 24 Jun 2026 01:06:36 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wcFs7-00060B-6x; Wed, 24 Jun 2026 01:10:05 -0400
+ id 1wcFon-0005g8-NH; Wed, 24 Jun 2026 01:06:34 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1782277623; bh=rDoSpkcHWAiFmP4GfKDYkJZkLTO1o/Do4A26mzxUBkQ=;
+ t=1782277476; bh=usMZM7M+9l6b23eNbxzBJIa2XlYXMIfDrAq3jEZrnFs=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=a3YZjiuJmiOGiOKLrBCvslsLal3F99bdIE/m8rLLCO+idjoG3/1lxcdU3E9bjXp5K
- VdqbHDodSmC/JAhIGZ98q+XG6DGbp6DXSs6DpEI1Q1HY399D7CQWtwZxQcjO+WZQIL
- aWHVZQsPTe8cq0Nlkcm59Y9wkPVVRt4rw41Ujqnr4l/EZ0g6tXltnUi7OIbd8mHjil
- 3UC2eZ7UUgooSRJ/vDLhxj1GzxCIAzjgtNcajLWAedTQ4dyIN9PS29uYNVXEMaerHS
- O790scKUQjHs+fxZWnOJNaQbkTD9E4SSjZhIQDjnbcSUhec63de2HRpuax9SvwSHXB
- Cya7BkFGMJ6KA==
+ b=LRzI5OrLejjGOGcA9i2iaidlvgIsFFCuGzBeqSfJOa/TEL8rx5pa4WwYSa7vlPjC8
+ L0ykKC3n8NA+93cdZUSfXDkYkQMLN3WHDbP58WcJl9hwLWZ5SC1F1x8uQeMOtBcIqI
+ h7BJDTHjcv7V0xVSK0sfx7Kc8G8e43LCLSglQ42Q4IeMGFxN3avXpo5DAh9unQkazg
+ S1hHp/qmj5wdgJKljtvAgj/XqrsaMuhIwVGH3yo1IWHP8NAV8Zt/pXIN2ZBwGWU5NN
+ skkKb3SNQZOOjtZxi6igLH54NpaM7xpHz/AeWeGIRj6VVbEtsvfceFzkRb5N7ElLhL
+ Dx5ztaABUSmdQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id D75071BA676;
- Wed, 24 Jun 2026 08:07:03 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id E72EF1BA649;
+ Wed, 24 Jun 2026 08:04:36 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id C35F43DDB13;
- Wed, 24 Jun 2026 08:07:08 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id C6A783DDAD1;
+ Wed, 24 Jun 2026 08:04:41 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Christian Schoenebeck <qemu_oss@crudebyte.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.4 88/95] hw/9pfs: consolidate name validation with
- check_name()
-Date: Wed, 24 Jun 2026 08:05:23 +0300
-Message-ID: <20260624050541.395079-27-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Matt Turner <mattst88@gmail.com>,
+ Helge Deller <deller@gmx.de>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.11 83/86] linux-user/xtensa: fix unlock of uninitialized
+ frame pointer on sigreturn
+Date: Wed, 24 Jun 2026 08:02:54 +0300
+Message-ID: <20260624050404.394225-27-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-10.2.4-20260624080454@cover.tls.msk.ru>
-References: <qemu-stable-10.2.4-20260624080454@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-10.0.11-20260624080222@cover.tls.msk.ru>
+References: <qemu-stable-10.0.11-20260624080222@cover.tls.msk.ru>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
@@ -69,215 +69,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Christian Schoenebeck <qemu_oss@crudebyte.com>
+From: Matt Turner <mattst88@gmail.com>
 
-Add a new, shared helper function check_name() that consolidates the name
-validation logic (illegal name check and "." / ".." rejection) currently
-spread over multiple 9p handlers, unnecessarily duplicating code.
+If lock_user_struct fails, frame is uninitialized but the badframe
+label unconditionally calls unlock_user_struct on it. Handle the
+lock failure inline so badframe is only reached with a valid lock.
 
-This is pure refactoring with no behavior change. The existing error code
-semantics are preserved: rename operations return -EISDIR, create
-operations return -EEXIST.
-
-Note: These current error codes actually differ from native Linux system
-calls (e.g. rename() returns -EBUSY, open(O_CREAT) returns -EISDIR). The 9P
-protocol does not mandate specific error codes for these validation errors.
-Hence consolidating to a single error code (e.g., -EINVAL) for all cases
-could be considered in the future for simplicity reason.
-
-This change reduces code duplication across 9 functions:
-
-- v9fs_lcreate
-- v9fs_create
-- v9fs_symlink
-- v9fs_link
-- v9fs_rename
-- v9fs_renameat
-- v9fs_wstat
-- v9fs_mknod
-- v9fs_mkdir
-
-Link: https://lore.kernel.org/qemu-devel/0573103880129eb543f07b68c77e86f2f572f6bf.1780072238.git.qemu_oss@crudebyte.com
-Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
-(cherry picked from commit 116db2986b11c914217bbd1547815b6c7efb944a)
+Signed-off-by: Matt Turner <mattst88@gmail.com>
+Cc: qemu-stable@nongnu.org
+Reviewed-by: Helge Deller <deller@gmx.de>
+Signed-off-by: Helge Deller <deller@gmx.de>
+(cherry picked from commit 54e08dbe8f2aeca57e3b1a5eab09a9fec88c1c67)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/9pfs/9p.c b/hw/9pfs/9p.c
-index abc54e169c..5b3626221c 100644
---- a/hw/9pfs/9p.c
-+++ b/hw/9pfs/9p.c
-@@ -1823,6 +1823,25 @@ static bool name_is_illegal(const char *name)
-     return !*name || strchr(name, '/') != NULL;
- }
+diff --git a/linux-user/xtensa/signal.c b/linux-user/xtensa/signal.c
+index fb1a3b86c1..49a4d4bb53 100644
+--- a/linux-user/xtensa/signal.c
++++ b/linux-user/xtensa/signal.c
+@@ -356,7 +356,8 @@ long do_rt_sigreturn(CPUXtensaState *env)
  
-+static int check_name(const char *name, V9fsPDU *pdu)
-+{
-+    int request_type = pdu->id;
-+
-+    if (name_is_illegal(name)) {
-+        return -ENOENT;
-+    }
-+    if (!strcmp(name, ".") || !strcmp(name, "..")) {
-+        /*
-+         * TODO: The different error codes here are just there to preserve
-+         * pre-existing behaviour of 9p server. In future it might make sense to
-+         * consolidate this and e.g. just return -EINVAL for everyone.
-+         */
-+        return (request_type == P9_TRENAME || request_type == P9_TRENAMEAT ||
-+                request_type == P9_TWSTAT) ? -EISDIR : -EEXIST;
-+    }
-+    return 0;
-+}
-+
- static bool same_stat_id(const struct stat *a, const struct stat *b)
- {
-     return a->st_dev == b->st_dev && a->st_ino == b->st_ino;
-@@ -2173,13 +2192,8 @@ static void coroutine_fn v9fs_lcreate(void *opaque)
+     trace_user_do_rt_sigreturn(env, frame_addr);
+     if (!lock_user_struct(VERIFY_READ, frame, frame_addr, 1)) {
+-        goto badframe;
++        force_sig(TARGET_SIGSEGV);
++        return -QEMU_ESIGRETURN;
      }
-     trace_v9fs_lcreate(pdu->tag, pdu->id, dfid, flags, mode, gid);
- 
--    if (name_is_illegal(name.data)) {
--        err = -ENOENT;
--        goto out_nofid;
--    }
--
--    if (!strcmp(".", name.data) || !strcmp("..", name.data)) {
--        err = -EEXIST;
-+    err = check_name(name.data, pdu);
-+    if (err < 0) {
-         goto out_nofid;
-     }
- 
-@@ -2861,13 +2875,8 @@ static void coroutine_fn v9fs_create(void *opaque)
-     }
-     trace_v9fs_create(pdu->tag, pdu->id, fid, name.data, perm, mode);
- 
--    if (name_is_illegal(name.data)) {
--        err = -ENOENT;
--        goto out_nofid;
--    }
--
--    if (!strcmp(".", name.data) || !strcmp("..", name.data)) {
--        err = -EEXIST;
-+    err = check_name(name.data, pdu);
-+    if (err < 0) {
-         goto out_nofid;
-     }
- 
-@@ -3055,13 +3064,8 @@ static void coroutine_fn v9fs_symlink(void *opaque)
-     }
-     trace_v9fs_symlink(pdu->tag, pdu->id, dfid, name.data, symname.data, gid);
- 
--    if (name_is_illegal(name.data)) {
--        err = -ENOENT;
--        goto out_nofid;
--    }
--
--    if (!strcmp(".", name.data) || !strcmp("..", name.data)) {
--        err = -EEXIST;
-+    err = check_name(name.data, pdu);
-+    if (err < 0) {
-         goto out_nofid;
-     }
- 
-@@ -3148,13 +3152,8 @@ static void coroutine_fn v9fs_link(void *opaque)
-     }
-     trace_v9fs_link(pdu->tag, pdu->id, dfid, oldfid, name.data);
- 
--    if (name_is_illegal(name.data)) {
--        err = -ENOENT;
--        goto out_nofid;
--    }
--
--    if (!strcmp(".", name.data) || !strcmp("..", name.data)) {
--        err = -EEXIST;
-+    err = check_name(name.data, pdu);
-+    if (err < 0) {
-         goto out_nofid;
-     }
- 
-@@ -3385,13 +3384,8 @@ static void coroutine_fn v9fs_rename(void *opaque)
-         goto out_nofid;
-     }
- 
--    if (name_is_illegal(name.data)) {
--        err = -ENOENT;
--        goto out_nofid;
--    }
--
--    if (!strcmp(".", name.data) || !strcmp("..", name.data)) {
--        err = -EISDIR;
-+    err = check_name(name.data, pdu);
-+    if (err < 0) {
-         goto out_nofid;
-     }
- 
-@@ -3526,14 +3520,12 @@ static void coroutine_fn v9fs_renameat(void *opaque)
-         goto out_err;
-     }
- 
--    if (name_is_illegal(old_name.data) || name_is_illegal(new_name.data)) {
--        err = -ENOENT;
-+    err = check_name(old_name.data, pdu);
-+    if (err < 0) {
-         goto out_err;
-     }
--
--    if (!strcmp(".", old_name.data) || !strcmp("..", old_name.data) ||
--        !strcmp(".", new_name.data) || !strcmp("..", new_name.data)) {
--        err = -EISDIR;
-+    err = check_name(new_name.data, pdu);
-+    if (err < 0) {
-         goto out_err;
-     }
- 
-@@ -3638,12 +3630,8 @@ static void coroutine_fn v9fs_wstat(void *opaque)
-             err = -EOPNOTSUPP;
-             goto out;
-         }
--        if (name_is_illegal(v9stat.name.data)) {
--            err = -ENOENT;
--            goto out;
--        }
--        if (!strcmp(".", v9stat.name.data) || !strcmp("..", v9stat.name.data)) {
--            err = -EISDIR;
-+        err = check_name(v9stat.name.data, pdu);
-+        if (err < 0) {
-             goto out;
-         }
- 
-@@ -3776,13 +3764,8 @@ static void coroutine_fn v9fs_mknod(void *opaque)
-     }
-     trace_v9fs_mknod(pdu->tag, pdu->id, fid, mode, major, minor);
- 
--    if (name_is_illegal(name.data)) {
--        err = -ENOENT;
--        goto out_nofid;
--    }
--
--    if (!strcmp(".", name.data) || !strcmp("..", name.data)) {
--        err = -EEXIST;
-+    err = check_name(name.data, pdu);
-+    if (err < 0) {
-         goto out_nofid;
-     }
- 
-@@ -3938,13 +3921,8 @@ static void coroutine_fn v9fs_mkdir(void *opaque)
-     }
-     trace_v9fs_mkdir(pdu->tag, pdu->id, fid, name.data, mode, gid);
- 
--    if (name_is_illegal(name.data)) {
--        err = -ENOENT;
--        goto out_nofid;
--    }
--
--    if (!strcmp(".", name.data) || !strcmp("..", name.data)) {
--        err = -EEXIST;
-+    err = check_name(name.data, pdu);
-+    if (err < 0) {
-         goto out_nofid;
-     }
- 
+     target_to_host_sigset(&set, &frame->uc.tuc_sigmask);
+     set_sigmask(&set);
 -- 
 2.47.3
 
