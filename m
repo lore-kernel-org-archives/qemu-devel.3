@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 297CECDB470
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 05:11:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F8BDCDB470
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 05:11:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcFra-0003q2-OQ; Wed, 24 Jun 2026 01:09:28 -0400
+	id 1wcFoy-0000LI-5v; Wed, 24 Jun 2026 01:06:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wcFq8-0002gn-SV; Wed, 24 Jun 2026 01:07:58 -0400
+ id 1wcFot-0008AB-3o; Wed, 24 Jun 2026 01:06:39 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wcFq3-0005oW-J5; Wed, 24 Jun 2026 01:07:53 -0400
+ id 1wcFor-0005gZ-6f; Wed, 24 Jun 2026 01:06:38 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1782277622; bh=JBv4zpUjRuIacUcZc+qmKN642mR69WzuBoCa7wJyfBI=;
+ t=1782277477; bh=JqtPwIWvKxJK58K7mcCpSfNf6wbZQ/ak6JBOWbHzjTQ=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=bVbDjH594g0v2xq174uCo3PJPM1Z5249x1ju7/TbNT2ukKgu95bZse+zhXWZ4hWO6
- E1p1XGBIvHBM+kwIp64N/QE3Rtx72gO0/cgXj53JFk9B4e+i/q0egeyHtrj57OaDLj
- r3uXwjVbWPTpUbgNm+4GKkR6vrPr5lChs/Xo58e1iQtLt0RpdwGLbClicx+lwnB9yl
- UJ+glQiCZyPtEAsD876AVix6Ghkga3Zo3XrRLNyMOZCiuIP6MBkFPsS6fig2w4n3zu
- A59fqPLjsgfJHhI18Ma40RRDlG0vmwPvF/bHO149+X0V8uXv1G0FsmXpaBqMUT3fev
- PY+dxdHFTWXOw==
+ b=ZUuA1WzqT7JigL7+WE/QoSSpnje1RRxVmvPTHNjuKOqO26VcoXNIBgClzzF7Wum3a
+ 3k+qzrgatHU718bIjDWjMYC8eHPSh8/quVQSjQgZ/kSPfNN2lexoqyxMfzdaiAI8L1
+ 1bXnH4XV6gEiYCVki2QqDfWXiQVNfxAIFwRWkmW+8NXCa4pPLktkQvhaLxOdQqUyPP
+ dlgkoVhnSlIzAhZIJFpPykAZ4aC5Oh4YNuWceDzXq8aS3YGfZPTYk+iMEtTqJyYQsH
+ falyDrh3wdq8vEFtgEVakoYbJ+9v/M3AbeKWw2hElo9Zmx/2hsMih9f5H2D5BlF14A
+ TW0Wh5pdjjxbA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 9BFC71BA664;
- Wed, 24 Jun 2026 08:07:02 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 16F571BA64B;
+ Wed, 24 Jun 2026 08:04:37 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 8601B3DDB01;
- Wed, 24 Jun 2026 08:07:07 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id F26E03DDAD3;
+ Wed, 24 Jun 2026 08:04:41 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Alejandro Jimenez <alejandro.j.jimenez@oracle.com>,
- Sairaj Kodilkar <sarunkod@amd.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+Cc: qemu-stable@nongnu.org, Aditya Gupta <adityag@linux.ibm.com>,
+ Zexiang Zhang <chan9yan9@gmail.com>, "Michael S. Tsirkin" <mst@redhat.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.4 70/95] amd_iommu: Reject non-decreasing NextLevel in
- fetch_pte()
-Date: Wed, 24 Jun 2026 08:05:05 +0300
-Message-ID: <20260624050541.395079-9-mjt@tls.msk.ru>
+Subject: [Stable-10.0.11 85/86] hw/pci: Replace assert with bounds check and
+ return
+Date: Wed, 24 Jun 2026 08:02:56 +0300
+Message-ID: <20260624050404.394225-29-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-10.2.4-20260624080454@cover.tls.msk.ru>
-References: <qemu-stable-10.2.4-20260624080454@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-10.0.11-20260624080222@cover.tls.msk.ru>
+References: <qemu-stable-10.0.11-20260624080222@cover.tls.msk.ru>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
@@ -70,41 +70,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
+From: Aditya Gupta <adityag@linux.ibm.com>
 
-The AMD-Vi specification requires that the NextLevel field for a page table
-entry must not be greater or equal to the current page table entry level.
-Enforce this to avoid infinite page walk loops on corrupted or buggy guest
-page tables.
+As reported in https://gitlab.com/qemu-project/qemu/-/work_items/3334,
+callers of 'pci_host_config_{read,write}_common' can pass length as 8,
+causing an assert failure
 
-The initial implementation of fetch_pte() did not implement this check, but
-was not vulnerable since the page walk code explicitly decremented the level
-instead of retrieving it from the page table entry.
+The original issue with pnv_phb3 triggering the assert was fixed in a
+previous commit
 
-Cc: qemu-stable@nongnu.org
-Reviewed-by: Sairaj Kodilkar <sarunkod@amd.com>
-Signed-off-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
+Instead of asserting on invalid length, check if the length is valid
+(<=4), otherwise return (with the failure error code in read)
+
+Reported-by: Zexiang Zhang <chan9yan9@gmail.com>
+Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-Id: <20260330212817.992673-3-alejandro.j.jimenez@oracle.com>
-(cherry picked from commit 291aa70ad254b6c48012dbfd16a4af0978ea1b84)
+Message-Id: <20260326190438.734239-3-adityag@linux.ibm.com>
+(cherry picked from commit c7209c56718107fefd5deae140a450954d31ff2b)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/i386/amd_iommu.c b/hw/i386/amd_iommu.c
-index 86dab42624..a7991b2790 100644
---- a/hw/i386/amd_iommu.c
-+++ b/hw/i386/amd_iommu.c
-@@ -771,6 +771,10 @@ static uint64_t fetch_pte(AMDVIAddressSpace *as, hwaddr address, uint64_t dte,
-             break;
-         }
+diff --git a/hw/pci/pci_host.c b/hw/pci/pci_host.c
+index 56f7f28a1a..37a8d186d6 100644
+--- a/hw/pci/pci_host.c
++++ b/hw/pci/pci_host.c
+@@ -81,7 +81,12 @@ void pci_host_config_write_common(PCIDevice *pci_dev, uint32_t addr,
+         return;
+     }
  
-+        /* Next level must always be less than current level */
-+        if (pt_level <= next_pt_level) {
-+            return -AMDVI_FR_PT_ENTRY_INV;
-+        }
-         pt_level = next_pt_level;
+-    assert(len <= 4);
++    if (len > 4) {
++        PCI_DPRINTF("%s: invalid length access: addr " HWADDR_FMT_plx " \
++            len %d val %"PRIx32"\n", __func__, addr, len, val);
++        return;
++    }
++
+     /* non-zero functions are only exposed when function 0 is present,
+      * allowing direct removal of unexposed functions.
+      */
+@@ -106,7 +111,12 @@ uint32_t pci_host_config_read_common(PCIDevice *pci_dev, uint32_t addr,
+         return ~0x0;
+     }
  
-         /*
+-    assert(len <= 4);
++    if (len > 4) {
++        PCI_DPRINTF("%s: invalid length access: addr " HWADDR_FMT_plx " \
++            len %d val %"PRIx32"\n", __func__, addr, len, val);
++        return ~0x0;
++    }
++
+     /* non-zero functions are only exposed when function 0 is present,
+      * allowing direct removal of unexposed functions.
+      */
 -- 
 2.47.3
 
