@@ -4,76 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08CC3CDB471
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 11:42:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F7B6CDB47F
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 11:43:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcLzo-0007nt-CB; Wed, 24 Jun 2026 07:42:20 -0400
+	id 1wcM0A-00087v-Bg; Wed, 24 Jun 2026 07:42:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wcLzj-0007kr-Tm
- for qemu-devel@nongnu.org; Wed, 24 Jun 2026 07:42:16 -0400
+ id 1wcLzw-0007pE-3p
+ for qemu-devel@nongnu.org; Wed, 24 Jun 2026 07:42:31 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wcLzi-0007dA-Af
- for qemu-devel@nongnu.org; Wed, 24 Jun 2026 07:42:15 -0400
+ id 1wcLzt-0007g5-LO
+ for qemu-devel@nongnu.org; Wed, 24 Jun 2026 07:42:26 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1782301333;
+ s=mimecast20190719; t=1782301344;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=W+CyLVCmYr4kkIYUQEAm4+vhE3xyEAp/Xrk5Da/iYU8=;
- b=TUmDiptJtrwcXmZFQ8t7fNFvqncpWpLIXvpPD9do1UUnWqrhFJ3pNzuOuYvxCdL1IeextV
- HfTpLlMyer0U5NLUTCdS3UtZflEoEEeJyt/2HAaOQ0n6AHn72Y4NzAUgm+YYcH1EGc/lOB
- reA6OcChgKienh27tRbtbfe4AHxluG8=
+ bh=y2smrojAx1RvUhqG1ZWT81uzIAxkwAuZYAeo0lV4SJ8=;
+ b=eYbXIant+zXIvZ3Zfk3jpoifLFW1GC443GY0RFXkA5Bv3olmDmkctHyJxQnwOAwjh0+WgN
+ lsJIJHVsc57BGtVRn6y8mIHdf/zUnp2MRH5KNXTVGuBzlcHPdUmn6s/GlGmCGxQrZKRxxf
+ 0T0qyAGoO6iL2A56NnUSQPujBkB0VII=
 Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-464-TJHMypT6Ny6VKcQBQ8JH1A-1; Wed,
- 24 Jun 2026 07:42:12 -0400
-X-MC-Unique: TJHMypT6Ny6VKcQBQ8JH1A-1
-X-Mimecast-MFC-AGG-ID: TJHMypT6Ny6VKcQBQ8JH1A_1782301331
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-572-nKOjbaO9OwW9KZcItI7TNw-1; Wed,
+ 24 Jun 2026 07:42:23 -0400
+X-MC-Unique: nKOjbaO9OwW9KZcItI7TNw-1
+X-Mimecast-MFC-AGG-ID: nKOjbaO9OwW9KZcItI7TNw_1782301342
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 97D58180025E
- for <qemu-devel@nongnu.org>; Wed, 24 Jun 2026 11:42:11 +0000 (UTC)
+ id 7D5C91800675
+ for <qemu-devel@nongnu.org>; Wed, 24 Jun 2026 11:42:22 +0000 (UTC)
 Received: from localhost (unknown [10.44.24.16])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 61F97180058F; Wed, 24 Jun 2026 11:42:09 +0000 (UTC)
+ id 8D162180058F; Wed, 24 Jun 2026 11:42:21 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Wed, 24 Jun 2026 15:41:29 +0400
-Subject: [GIT PULL 07/35] glib-compat: add fallback for g_clear_fd/g_autofd
+Date: Wed, 24 Jun 2026 15:41:31 +0400
+Subject: [GIT PULL 09/35] ui/dbus: remove mouse handler on dispose
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260624-ui-v1-7-482147b0a7af@redhat.com>
+Message-Id: <20260624-ui-v1-9-482147b0a7af@redhat.com>
 References: <20260624-ui-v1-0-482147b0a7af@redhat.com>
 In-Reply-To: <20260624-ui-v1-0-482147b0a7af@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Stefan Hajnoczi <stefanha@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1582;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=889;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=irLOfrxiAbZTlFF1dzBMOLxOonS+emEKXBZLXRSOrIM=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqO8JmA74NihK1UafBmCqXbDSeM+n1wItAamhIl
- 7JizEZpvteJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCajvCZgAKCRDa6OEJdZac
- 5dBTEACJniTTzaUiWu5QBLNnCpxPt8OxlNJnR/uCqem/+fnX2H81zPBslcJ4jyNtpcz5y36WO+6
- ftQ6MeOGhGB5f3U5jTKM+dTSmQlR1JByn2HY7luqf46e1p0irWxKYJSvljcG5EOAp4Uw+/9y7Iz
- ox6Hflhh9MQrt5uX0ReCg+whJJYnp1Nqye/UVo9bNbZkTSfcIrSRVDxdwdz9G2Z58Unz9379+dx
- y+ioIYgk36s0MV/Jfm5c6vR9Y8CJovxL/knH8xDAIGlHVoUH42CW6DSqrwsZJFBN2NdbWdsbwt2
- ZgG/bU070VRn5aq0qgQNSumtI0PN8Cvf/KhRkiKYFqrOlPk/nUIIVMhg5evAF/XPN8923J5mnMu
- ige8GFWtxZQdYB5gRmIJlMtYh3lLcmoxQJFpvFK8Lx9gX+8n2ebDC/2+v/T0YTk0gsc1XqSi6Ak
- Iz5jmv/z5aKpqbfWL61EscmmR3u17TkLZwLa336vY3nZ7IsYzu6lMYirVmQZYGvo7pP07v8ocmW
- 89yOuhoKTHpBKxJZmVryv5e9pu+IwWX7heP0+Vh5h9+TijkCSZlw3NZ6H94T658WR2WEWVhONBY
- EYqZN+IiVxHN+Np9ZmwjKXJHzA1dcan59ebabVioQBcwjUEArHH62IJtBgOW0MYmYmzDW8ju3FZ
- 4+VCM3qBfR+ScLQ==
+ bh=tf/GwfRlyVIbAtoL67IvBgK+QJwN8oMS4UmojIw4ED0=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqO8JnN6oSQ0os7qHANXZJdH9PwdypimyS+AL0V
+ yhvs2w1VJuJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCajvCZwAKCRDa6OEJdZac
+ 5c7AD/kBgX8ia+XxX2Q68PZK9hvIsiU+XYhIAicjPOcMRaZF+sZTMaDeSfv266wGz1+ANpfsF1U
+ Xpb1BhJznBvsMN0muFMp9lEi4wizWlR5ZBLUzEznzSC9sx289kGOivgzOFX0lJcet0X+VwVXpzJ
+ BlP7RyihCwxA4R7jnp3sTHsEurOfJevBKY8mQuV6E9+qM67wiLv+Cy4wWH9/JD6XZXQbBrlTVwY
+ cNMnkLhI9GTbyogjWd+mQW+KNRvlCN2aWJqDRSSICCsC3+VFTk18PHJK7ljIAABYNC+n2xMn5YS
+ 5bgWy86MIzm/9DXo63SRJpx0c3JYUf8xkf9wqkV7XQ5zJVfzkRaFv31HTDXb155BrERfdPrAnmK
+ 78Xp9Uj2o9bO02JsRJ2NVTQUI95SVXYv4lhCv2iJd5IseQYzSP93FD/bJYFGv+nq0K18F5axT+1
+ t97tAoxfLGAuIUVQYCaJttsx4YW5wvnVlQ8++mwu592rzNbnQ7LiD0iHe8K9gfZNiFx07F1zlXt
+ 2fr+0u3HnFZnUgca1gM85Ob1Wb2AChIWx0PYmXIHfYFEB0cSNm0GE+IOpyIifWYZ8K0HPpsWgX7
+ EaYtXhR5c2b0x/+fuQOgPmZeFYGCYRurUAve8OAekxwuVHPCypsQCp4XZIdpZOvbfhNixzMHQVP
+ zQYJ2Xu+Ls4z+gg==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
@@ -102,63 +102,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Those helpers were added in glib 2.76.
-
+Fixes: 142ca628a7 ("ui: add a D-Bus display backend")
 Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Message-ID: <20260623-b4-ui-v4-7-4656aec3398d@redhat.com>
+Message-ID: <20260623-b4-ui-v4-9-4656aec3398d@redhat.com>
 ---
- include/glib-compat.h | 29 +++++++++++++++++++++++++++++
- 1 file changed, 29 insertions(+)
+ ui/dbus-console.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/include/glib-compat.h b/include/glib-compat.h
-index 2e32b90f051..32ee2afdcdf 100644
---- a/include/glib-compat.h
-+++ b/include/glib-compat.h
-@@ -30,6 +30,7 @@
- #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+diff --git a/ui/dbus-console.c b/ui/dbus-console.c
+index 9e154da1eca..bdbc208cf01 100644
+--- a/ui/dbus-console.c
++++ b/ui/dbus-console.c
+@@ -154,6 +154,7 @@ dbus_display_console_dispose(GObject *object)
  
- #include <glib.h>
-+#include <glib/gstdio.h>
- #if defined(G_OS_UNIX)
- #include <glib-unix.h>
- #include <sys/types.h>
-@@ -129,6 +130,34 @@ qemu_g_test_slow(void)
- #define g_test_thorough() qemu_g_test_slow()
- #define g_test_quick() (!qemu_g_test_slow())
- 
-+static inline gboolean g_clear_fd_qemu(int *fd_ptr, GError **error)
-+{
-+#if GLIB_CHECK_VERSION(2, 76, 0)
-+    return g_clear_fd(fd_ptr, error);
-+#else
-+    int fd = *fd_ptr;
-+
-+    *fd_ptr = -1;
-+
-+    if (fd < 0) {
-+        return TRUE;
-+    }
-+
-+    return g_close(fd, error);
-+#endif
-+}
-+#define g_clear_fd(fd, err) g_clear_fd_qemu(fd, err)
-+
-+#if !GLIB_CHECK_VERSION(2, 76, 0)
-+static inline void _g_clear_fd_ignore_error(int *fd_ptr)
-+{
-+    int errsv = errno;
-+    g_clear_fd(fd_ptr, NULL);
-+    errno = errsv;
-+}
-+#define g_autofd __attribute__((cleanup(_g_clear_fd_ignore_error)))
-+#endif
-+
- #pragma GCC diagnostic pop
- 
- #ifndef G_NORETURN
+     qemu_input_led_notifier_remove(&ddc->led_notifier);
+     qemu_console_unregister_listener(&ddc->dcl);
++    qemu_remove_mouse_mode_change_notifier(&ddc->mouse_mode_notifier);
+     g_clear_object(&ddc->iface_touch);
+     g_clear_object(&ddc->iface_mouse);
+     g_clear_object(&ddc->iface_kbd);
 
 -- 
 2.54.0
