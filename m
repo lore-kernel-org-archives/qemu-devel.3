@@ -4,109 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 587E9CDE000
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 08:13:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46A3FCDB470
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 08:19:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcIhX-0005lQ-TK; Wed, 24 Jun 2026 04:11:15 -0400
+	id 1wcIoe-0005Iz-HY; Wed, 24 Jun 2026 04:18:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <freude@linux.ibm.com>)
- id 1wcIh2-0005cy-1k; Wed, 24 Jun 2026 04:10:45 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1wcIoW-0005Ia-GF
+ for qemu-devel@nongnu.org; Wed, 24 Jun 2026 04:18:29 -0400
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <freude@linux.ibm.com>)
- id 1wcIgz-0005hC-JL; Wed, 24 Jun 2026 04:10:43 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65O6ISjW4169407; Wed, 24 Jun 2026 08:10:38 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=9nvbiobzW6c4vrhRP
- he8+O6Go596FMA38Ec2mNO7saQ=; b=S9VUerK0B7a5vG5MYAAhoG/cengJRAgeL
- ze875haQ+lWJN4MHevunsZI6xP6la+yHL3oANdgGpsmuNtFg8b74YhSbHrSNtgjw
- ozIh1VRE8FYIbZ30s1E21Y2/h1NpagWwTVuQyKCUHCyYuHP5W8mdEkfujsECfEz/
- WUxpDFujdrUPnGYASQT1qwojjj1QM7bAEi+VM5KYdzOTm9BZgh0uboE3LvR/otDd
- LEOBv9uKgAv1vqP0t8KZQYYfXA7cGFoh0BcB8tALkEDivF4A3G5UYIAk2wpgoewd
- vIH5UQCSamHTl6szCldngZCMe7vYvHHn6lOWXcmDFZ2hSQlA+f7HQ==
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4ewh9gjx8j-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 24 Jun 2026 08:10:36 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 65O84mm5005650;
- Wed, 24 Jun 2026 08:10:36 GMT
-Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4ex66k7kau-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 24 Jun 2026 08:10:36 +0000 (GMT)
-Received: from smtpav04.fra02v.mail.ibm.com (smtpav04.fra02v.mail.ibm.com
- [10.20.54.103])
- by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 65O8AW9p49152342
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 24 Jun 2026 08:10:32 GMT
-Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id EEC7120040;
- Wed, 24 Jun 2026 08:10:31 +0000 (GMT)
-Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id A807F20043;
- Wed, 24 Jun 2026 08:10:31 +0000 (GMT)
-Received: from funtu2.ibm.com (unknown [9.224.92.54])
- by smtpav04.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Wed, 24 Jun 2026 08:10:31 +0000 (GMT)
-From: Harald Freudenberger <freude@linux.ibm.com>
-To: richard.henderson@linaro.org, iii@linux.ibm.com, david@kernel.org,
- thuth@redhat.com, berrange@redhat.com
-Cc: qemu-s390x@nongnu.org, qemu-devel@nongnu.org,
- linux390-list@tuxmaker.boeblingen.de.ibm.com,
- linux-s390@vger.kernel.org, dengler@linux.ibm.com,
- borntraeger@linux.ibm.com, fcallies@linux.ibm.com, cohuck@redhat.com
-Subject: [PATCH v8 05/18] target/s390x: Support AES ECB for cpacf km
- instruction
-Date: Wed, 24 Jun 2026 10:10:02 +0200
-Message-ID: <20260624081029.23815-6-freude@linux.ibm.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260624081029.23815-1-freude@linux.ibm.com>
-References: <20260624081029.23815-1-freude@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1wcIoS-0006vS-Jy
+ for qemu-devel@nongnu.org; Wed, 24 Jun 2026 04:18:27 -0400
+Received: from [133.11.54.183] (h183.csg.ci.i.u-tokyo.ac.jp [133.11.54.183])
+ (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 65O8I9On077808
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Wed, 24 Jun 2026 17:18:09 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=RYFPazQlvG04DF5dwHkiOQTGNIHLCeP2WZRLvOD2Vj4=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=From:Message-ID:To:Subject:Date;
+ s=rs20250326; t=1782289089; v=1;
+ b=RoSg0xC9HKGjDKZhvYX3mXET6iH9wBvl/4lA1qQVSDWd7SgZlLReOaL2Y/Gk07Vh
+ ebh/Qvq070imQnG6jEJ3ExwtC4jsgQ/IKYnBPFQVHh5JjzqBOMFheE41RSW0699N
+ r8zZJoU1HtX6/H1DE7clkkzbyzAkA2SQDNhflwJT9VzFxxpC3Nj2SKH9IocwZ1C9
+ EcbKGm3hmLJldsx3tuQbfWPJuMlKvDIK8nWotoZR24rgGKmwItyfpl7LdwCX2XjE
+ /DG3Qi+enrqGyKKWXSBlh3nujW/2rZYy1ElvF6pUOr9x3MsshbMLe8aky6F3/w1S
+ i/zyaQ1PiZvRAjgNrch8DA==
+Message-ID: <ff0bcd39-afd6-4842-9cd5-3e39e56ec901@rsg.ci.i.u-tokyo.ac.jp>
+Date: Wed, 24 Jun 2026 17:18:09 +0900
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=c62bhx9l c=1 sm=1 tr=0 ts=6a3b90fc cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
- a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=V8glGbnc2Ofi9Qvn3v5h:22 a=VnNF1IyMAAAA:8 a=UeJqcyLMtA2A8E2_xXgA:9
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjI0MDA2MyBTYWx0ZWRfX6C+oov0AgLHF
- 2WZqvy5XDWUvHvCJiz/9MWED4RkGuBeOoFkYU8jttbsSMnl1UBjHxIVM017/xmd4+pTS8xUlRGf
- Bb4iJDG9wQPGmcoBeBE9A84S0mpxFzX6nDcjCO/cofcVuvAfFEXRD8QV75uYgO23vlCn8m+GUr8
- Wh7Yi4ypAlP/NQUoiTSrOIVIod9E/yL6+lzblFpQtes/GJeP+g2nDKR6GklrLFv1fiLEJVUV2zH
- pd1Bj2SceNsDUSzTLKpGocJvKjMNl+2Qej780wiNBZpUvNniiHUkh2JKJPvxKqGYfI3svplKo03
- OO/autzb5JTjDOKUCtpir7B2A82TYuYfs2fMT6xqirEbAYL9OPUJX7xoUPp+NSMI6t3yOldpIhR
- UnNusA/tPUhyce7mIElLETILClfa4Q==
-X-Proofpoint-GUID: xeonF5jEzxfUEyuoP3xGDEcTBYDBnwNe
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjI0MDA2MyBTYWx0ZWRfX1w+BtI9znQBW
- OOhAx84mWAW5MT9hZtRdyvPJNnJaDS7el/WVvonoKUNIl1m8dA9MsSmeCQaTzzwiCIngEqczRKI
- 8HJRn1I63eb/6tETBvSt217GjG6VMCQ=
-X-Proofpoint-ORIG-GUID: xeonF5jEzxfUEyuoP3xGDEcTBYDBnwNe
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-24_02,2026-06-23_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 lowpriorityscore=0 spamscore=0 bulkscore=0 adultscore=0
- suspectscore=0 malwarescore=0 classifier=typeunknown authscore=0 authtc=
- authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.22.0-2606150000 definitions=main-2606240063
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=freude@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v8 0/7] igb: Implement Transmit Rate Limiting (TRL)
+To: Josh Hilke <jrhilke@google.com>, qemu-devel@nongnu.org
+Cc: Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
+ Jason Wang <jasowang@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ David Matlack <dmatlack@google.com>,
+ Alex Williamson <alex.williamson@nvidia.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
+References: <20260623-igb-trl-v8-0-c9b1fc6c3304@google.com>
+Content-Language: en-US
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <20260623-igb-trl-v8-0-c9b1fc6c3304@google.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -122,224 +77,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Support the subfunctions CPACF_KM_AES_128, CPACF_KM_AES_192
-and CPACF_KM_AES_256 for the cpacf km instruction.
+On 2026/06/24 0:05, Josh Hilke wrote:
+> This is v8 of a patch series implementing the Transmit Rate Limiter (TRL) feature for
+> the Intel 82576 (igb) network device emulation in QEMU.
+> 
+> v7: https://lists.gnu.org/archive/html/qemu-devel/2026-06/msg05440.html
+> 
+> Changelog:
+> 
+> v8:
+>    - Fix extraneous whitespace modifications.
+>    - Use muldiv64() in igb_trl_calculate_delay().
+>    - Fix comment for rate factor in igb_trl_calculate_delay().>
+> Signed-off-by: Josh Hilke <jrhilke@google.com>
 
-Signed-off-by: Harald Freudenberger <freude@linux.ibm.com>
-Tested-by: Holger Dengler <dengler@linux.ibm.com>
-Reviewed-by: Finn Callies <fcallies@linux.ibm.com>
----
- target/s390x/gen-features.c      |   3 +
- target/s390x/tcg/cpacf.h         |   6 ++
- target/s390x/tcg/cpacf_aes.c     | 113 +++++++++++++++++++++++++++++++
- target/s390x/tcg/crypto_helper.c |  24 +++++++
- target/s390x/tcg/meson.build     |   1 +
- 5 files changed, 147 insertions(+)
- create mode 100644 target/s390x/tcg/cpacf_aes.c
+For the whole series:
 
-diff --git a/target/s390x/gen-features.c b/target/s390x/gen-features.c
-index 5cf5b92c37..a35d1fd2f9 100644
---- a/target/s390x/gen-features.c
-+++ b/target/s390x/gen-features.c
-@@ -921,6 +921,9 @@ static uint16_t qemu_MAX[] = {
-     S390_FEAT_KLMD_SHA_256,
-     S390_FEAT_KLMD_SHA_512,
-     S390_FEAT_PRNO_TRNG,
-+    S390_FEAT_KM_AES_128,
-+    S390_FEAT_KM_AES_192,
-+    S390_FEAT_KM_AES_256,
- };
- 
- /****** END FEATURE DEFS ******/
-diff --git a/target/s390x/tcg/cpacf.h b/target/s390x/tcg/cpacf.h
-index e2fc149d2b..2c6263fc7f 100644
---- a/target/s390x/tcg/cpacf.h
-+++ b/target/s390x/tcg/cpacf.h
-@@ -21,4 +21,10 @@ int cpacf_sha512(CPUS390XState *env, const int mmu_idx, uintptr_t ra,
-                  uint64_t param_addr, uint64_t *message_reg, uint64_t *len_reg,
-                  uint32_t type);
- 
-+/* from cpacf_aes.c */
-+int cpacf_aes_ecb(CPUS390XState *env, const int mmu_idx, uintptr_t ra,
-+                  uint64_t param_addr, uint64_t *dst_ptr_reg,
-+                  uint64_t *src_ptr_reg, uint64_t *src_len_reg,
-+                  uint32_t type, uint8_t fc, uint8_t mod);
-+
- #endif
-diff --git a/target/s390x/tcg/cpacf_aes.c b/target/s390x/tcg/cpacf_aes.c
-new file mode 100644
-index 0000000000..ba836f1473
---- /dev/null
-+++ b/target/s390x/tcg/cpacf_aes.c
-@@ -0,0 +1,113 @@
-+/*
-+ *  s390 cpacf aes
-+ *
-+ *  Authors:
-+ *   Harald Freudenberger <freude@linux.ibm.com>
-+ *
-+ * This work is licensed under the terms of the GNU GPL, version 2 or later.
-+ * See the COPYING file in the top-level directory.
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "s390x-internal.h"
-+#include "tcg_s390x.h"
-+#include "accel/tcg/cpu-ldst-common.h"
-+#include "accel/tcg/cpu-mmu-index.h"
-+#include "crypto/aes.h"
-+#include "cpacf.h"
-+
-+static void aes_read_block(CPUS390XState *env, const int mmu_idx,
-+                           uint64_t addr, uint8_t *a, uintptr_t ra)
-+{
-+    const MemOpIdx oi = make_memop_idx(MO_8, mmu_idx);
-+    uint64_t _addr;
-+
-+    for (int i = 0; i < AES_BLOCK_SIZE; i++, addr += 1) {
-+        _addr = wrap_address(env, addr);
-+        a[i] = cpu_ldb_mmu(env, _addr, oi, ra);
-+    }
-+}
-+
-+static void aes_write_block(CPUS390XState *env, const int mmu_idx,
-+                            uint64_t addr, uint8_t *a, uintptr_t ra)
-+{
-+    const MemOpIdx oi = make_memop_idx(MO_8, mmu_idx);
-+    uint64_t _addr;
-+
-+    for (int i = 0; i < AES_BLOCK_SIZE; i++, addr += 1) {
-+        _addr = wrap_address(env, addr);
-+        cpu_stb_mmu(env, _addr, a[i], oi, ra);
-+    }
-+}
-+
-+int cpacf_aes_ecb(CPUS390XState *env, const int mmu_idx, uintptr_t ra,
-+                  uint64_t param_addr, uint64_t *dst_ptr_reg,
-+                  uint64_t *src_ptr_reg, uint64_t *src_len_reg,
-+                  uint32_t type, uint8_t fc, uint8_t mod)
-+{
-+    enum { MAX_BLOCKS_PER_RUN = 8192 / AES_BLOCK_SIZE };
-+    const MemOpIdx oi = make_memop_idx(MO_8, mmu_idx);
-+    uint8_t in[AES_BLOCK_SIZE], out[AES_BLOCK_SIZE];
-+    uint64_t addr, len = *src_len_reg, done = 0;
-+    int i, keysize, addr_reg_size = 64;
-+    uint8_t key[32];
-+    AES_KEY exkey;
-+
-+    g_assert(type == S390_FEAT_TYPE_KM);
-+    switch (fc) {
-+    case 0x12: /* CPACF_KM_AES_128 */
-+        keysize = 16;
-+        break;
-+    case 0x13: /* CPACF_KM_AES_192 */
-+        keysize = 24;
-+        break;
-+    case 0x14: /* CPACF_KM_AES_256 */
-+        keysize = 32;
-+        break;
-+    default:
-+        g_assert_not_reached();
-+    }
-+
-+    if (!(env->psw.mask & PSW_MASK_64)) {
-+        len = (uint32_t)len;
-+        addr_reg_size = (env->psw.mask & PSW_MASK_32) ? 32 : 24;
-+    }
-+
-+    /* length has to be properly aligned. */
-+    if (!QEMU_IS_ALIGNED(len, AES_BLOCK_SIZE)) {
-+        tcg_s390_program_interrupt(env, PGM_SPECIFICATION, ra);
-+    }
-+
-+    /* fetch key from param block */
-+    for (i = 0; i < keysize; i++) {
-+        addr = wrap_address(env, param_addr + i);
-+        key[i] = cpu_ldb_mmu(env, addr, oi, ra);
-+    }
-+
-+    /* expand key */
-+    if (mod) {
-+        AES_set_decrypt_key(key, keysize * 8, &exkey);
-+    } else {
-+        AES_set_encrypt_key(key, keysize * 8, &exkey);
-+    }
-+
-+    /* process up to MAX_BLOCKS_PER_RUN aes blocks */
-+    for (i = 0; i < MAX_BLOCKS_PER_RUN && len >= AES_BLOCK_SIZE; i++) {
-+        aes_read_block(env, mmu_idx, *src_ptr_reg + done, in, ra);
-+        if (mod) {
-+            AES_decrypt(in, out, &exkey);
-+        } else {
-+            AES_encrypt(in, out, &exkey);
-+        }
-+        aes_write_block(env, mmu_idx, *dst_ptr_reg + done, out, ra);
-+        len -= AES_BLOCK_SIZE, done += AES_BLOCK_SIZE;
-+    }
-+
-+    *src_ptr_reg = deposit64(*src_ptr_reg, 0, addr_reg_size,
-+                             *src_ptr_reg + done);
-+    *dst_ptr_reg = deposit64(*dst_ptr_reg, 0, addr_reg_size,
-+                             *dst_ptr_reg + done);
-+    *src_len_reg -= done;
-+
-+    return !len ? 0 : 3;
-+}
-diff --git a/target/s390x/tcg/crypto_helper.c b/target/s390x/tcg/crypto_helper.c
-index 4e86a72433..28baebaad4 100644
---- a/target/s390x/tcg/crypto_helper.c
-+++ b/target/s390x/tcg/crypto_helper.c
-@@ -89,6 +89,27 @@ static int cpacf_klmd(CPUS390XState *env, const int mmu_idx, const uintptr_t ra,
-     return rc;
- }
- 
-+static int cpacf_km(CPUS390XState *env, const int mmu_idx, uintptr_t ra,
-+                    uint32_t r1, uint32_t r2, uint32_t r3,
-+                    uint8_t fc, uint8_t mod)
-+{
-+    int rc = 0;
-+
-+    switch (fc) {
-+    case 0x12: /* CPACF_KM_AES_128 */
-+    case 0x13: /* CPACF_KM_AES_192 */
-+    case 0x14: /* CPACF_KM_AES_256 */
-+        rc = cpacf_aes_ecb(env, mmu_idx, ra, env->regs[1],
-+                           &env->regs[r1], &env->regs[r2], &env->regs[r2 + 1],
-+                           S390_FEAT_TYPE_KM, fc, mod);
-+        break;
-+    default:
-+        tcg_s390_program_interrupt(env, PGM_SPECIFICATION, ra);
-+    }
-+
-+    return rc;
-+}
-+
- static int cpacf_ppno(CPUS390XState *env, const int mmu_idx, uintptr_t ra,
-                       uint32_t r1, uint32_t r2, uint32_t r3, uint8_t fc)
- {
-@@ -153,6 +174,9 @@ uint32_t HELPER(msa)(CPUS390XState *env, uint32_t r1, uint32_t r2, uint32_t r3,
-     case S390_FEAT_TYPE_KLMD:
-         rc = cpacf_klmd(env, mmu_idx, ra, r1, r2, r3, fc);
-         break;
-+    case S390_FEAT_TYPE_KM:
-+        rc = cpacf_km(env, mmu_idx, ra, r1, r2, r3, fc, mod);
-+        break;
-     case S390_FEAT_TYPE_PPNO:
-         rc = cpacf_ppno(env, mmu_idx, ra, r1, r2, r3, fc);
-         break;
-diff --git a/target/s390x/tcg/meson.build b/target/s390x/tcg/meson.build
-index 8ae8da9708..6f2e75764b 100644
---- a/target/s390x/tcg/meson.build
-+++ b/target/s390x/tcg/meson.build
-@@ -5,6 +5,7 @@ s390x_ss.add(when: 'CONFIG_TCG', if_true: files(
- ))
- s390x_common_ss.add(when: 'CONFIG_TCG', if_true: files(
-   'cc_helper.c',
-+  'cpacf_aes.c',
-   'cpacf_sha256.c',
-   'cpacf_sha512.c',
-   'crypto_helper.c',
--- 
-2.43.0
+Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+
+Regards,
+Akihiko Odaki
+
+> ---
+> Josh Hilke (7):
+>        igb: Define TRL registers and core state
+>        igb: Add VMState support for TRL state
+>        igb: Implement TRL register write and configuration
+>        igb: Refactor TX path to return processed byte count
+>        igb: Implement TRL throttling and timer resumption
+>        igb: Add QTest for Transmit Rate Limiter register multiplexing
+>        igb: Add QTest for Transmit Rate Limiter traffic throttling
+> 
+>   hw/net/igb.c           |  43 +++++++++++
+>   hw/net/igb_common.h    |   1 +
+>   hw/net/igb_core.c      | 142 ++++++++++++++++++++++++++++++++--
+>   hw/net/igb_core.h      |  12 +++
+>   hw/net/igb_regs.h      |   5 ++
+>   tests/qtest/igb-test.c | 206 +++++++++++++++++++++++++++++++++++++++++++++++++
+>   6 files changed, 404 insertions(+), 5 deletions(-)
+> ---
+> base-commit: 98b060da3a4f92b2a994ead5b16a87e783baf77c
+> change-id: 20260608-igb-trl-19be198da6f2
+> 
+> Best regards,
 
 
