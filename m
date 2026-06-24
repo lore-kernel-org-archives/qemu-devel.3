@@ -4,74 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF66CCDE000
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 10:31:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC61DCDB47C
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 10:31:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcKrH-000777-IH; Wed, 24 Jun 2026 06:29:28 -0400
+	id 1wcKtB-0002jF-Oo; Wed, 24 Jun 2026 06:31:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1wcKrF-000762-5A
- for qemu-devel@nongnu.org; Wed, 24 Jun 2026 06:29:25 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1wcKrD-0007HU-Nq
- for qemu-devel@nongnu.org; Wed, 24 Jun 2026 06:29:24 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1782296963;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=TSn0YlKNIrGhiGyyc7mHGoMTOpJjhPKEHsQv9XyR10o=;
- b=DF2juVTjFJyxg56utJbwehng5a87s1/ThKHA3E5K4c56vx9d/M910flAJ6zgFheoUH0NuY
- IDlhxbXL2chB8VllYlR8hdbQuqm/sw0+yE9a6AplBN8kiSBXhtUCjiC1MAyfXsi0ITJmi8
- NH6LdWOZ2TkRt7qZ4/GKgXJ2sDURQ6Q=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-695-YkLKGIjEPMej8ETdxIYnPQ-1; Wed,
- 24 Jun 2026 06:29:19 -0400
-X-MC-Unique: YkLKGIjEPMej8ETdxIYnPQ-1
-X-Mimecast-MFC-AGG-ID: YkLKGIjEPMej8ETdxIYnPQ_1782296958
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 732491954B35; Wed, 24 Jun 2026 10:29:18 +0000 (UTC)
-Received: from dell-r430-03.lab.eng.brq2.redhat.com
- (dell-r430-03.lab.eng.brq2.redhat.com [10.37.153.18])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 72F0030001A7; Wed, 24 Jun 2026 10:29:16 +0000 (UTC)
-From: Igor Mammedov <imammedo@redhat.com>
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1wcKsi-0002Xs-Rd
+ for qemu-devel@nongnu.org; Wed, 24 Jun 2026 06:31:00 -0400
+Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1wcKsf-0007gd-Fc
+ for qemu-devel@nongnu.org; Wed, 24 Jun 2026 06:30:56 -0400
+Received: by mail-wr1-x42c.google.com with SMTP id
+ ffacd0b85a97d-461edb387ddso995234f8f.3
+ for <qemu-devel@nongnu.org>; Wed, 24 Jun 2026 03:30:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1782297052; x=1782901852; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=ps+nLp3Q4CfPMJGduuipgUZanX4xJ5a30/iMTqcTrBM=;
+ b=QCL3NZQH2tmHZ9aNB+OApswDgsZ2C7amI8SWMObbHG5C9F/rZZjgHDxGFrZH5lqZp2
+ NipG4bYPSTQVYYhgJQx4og3NIF1lx4UlAEEeL7TXLtfoTuton5uIAmhWDQHL/C+yGvSy
+ KXeRxXiD7vtLxVaxfTtiTVnHmFR1QqQf4jO7rXOZDeW+vQoPLrTCRh64arvjRGq1qf8d
+ w9jxWQTyJ7aG7qwO3ZR3fO3J2BO7E6kZap2Q+MXFtT/cOG9bbOSx58x6IqBwkGcCB/Ne
+ hRrlSXYYOOjIDG1lukQ6fyKp5j+QBuTZI1QpE1S3STgHF39IUpq5W77emEdkTfF2is8C
+ pMnA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1782297052; x=1782901852;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=ps+nLp3Q4CfPMJGduuipgUZanX4xJ5a30/iMTqcTrBM=;
+ b=CzPXD1mmh+YYeqkt6Jk6bP2r+FdBM/99qjbV41u+Fj7a7lIVWCNtnhsUXOzWKmyGXg
+ deHg5Jq8EH/sia0/letRUWqYKtrKbskl36oFmA/knBd0NS1G/uHFeoJp09rxscDzU+xN
+ vxAMhxFhi3c4L3+v6xzZWZpl7f+e+xxy/8XuEPhOQk5uKpx6a6WOi2ZUpQJAptbjcY7m
+ tvRyskDo61GijzCMG7H13o3SyRsvrDudhTCGRgSU26BXJRUOfBoUvkCP6VsZWsmxqPx2
+ lrpw8TR0ebnw5fSBDsDJTprWDiZ7eHXUDsYagby9d4F1vXOdlzuvVk2/yfFJt9z9deY7
+ pntw==
+X-Gm-Message-State: AOJu0Yxcwn597ip5e596l/F8Tw6ZDfqaRNs9hABax5V2qkyhu53ikaO8
+ VZA6elg7APWYzWWEt5V8XtoXHj5SJOT1C+rf4fGMmeXZzVou5vyQcMlVDWr3fcFuBHw=
+X-Gm-Gg: AfdE7cm0wlHEVeoQp5bZv4g5/NTfIeDVPR+5+b4V7xD4W7e1JdlJne/jGnhnFeEKDeL
+ jNYASnR9F1SDg53R/OPKibGeUZoaxeSs61EtETXAiQYlNaxJOPz5c1SFX4KTdHEMd8GXx0RCORB
+ Y9Ny28pT51eIEiR6Te8162Z7kPlNRCwTH5JNj5r12gSe1gH70rMToNaVdQh/oMXn9YNNPWdMVQQ
+ Gn/e5hwczX1Cqo67ImhRb8bgefOvmuKGexsuFya6uzvX15Pi+3E/RR6nSMVtRLT1Av2sBOYylBi
+ 0Zj3qMiFesXmACvqGQylTWdqAB5/8UJZv1xe47n5ga/vsq4KMcL6Ib4J4lDI9wxyH0FzSGoJU4G
+ TIHoQ3YgJrR4hT6LRKbnv1kZWmsxbVd+PF4yXOu4Fbne6VGc7KeOxjN9xbEMeJUEjXC+C8hPms2
+ IMQI43WvJgjV/SAtogiUNXFDQ=
+X-Received: by 2002:a5d:490e:0:b0:461:a169:f965 with SMTP id
+ ffacd0b85a97d-46c0b8b182bmr2896485f8f.34.1782297051850; 
+ Wed, 24 Jun 2026 03:30:51 -0700 (PDT)
+Received: from draig.lan ([185.124.0.195]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-46c221d9405sm6263592f8f.22.2026.06.24.03.30.50
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 24 Jun 2026 03:30:50 -0700 (PDT)
+Received: from draig.lan (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 021645F9CD;
+ Wed, 24 Jun 2026 11:30:50 +0100 (BST)
+From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: mst@redhat.com, eauger@redhat.com, peter.maydell@linaro.org,
- shannon.zhaosl@gmail.com, rad@semihalf.com, leif.lindholm@oss.qualcomm.com,
- qemu-arm@nongnu.org
-Subject: [PATCH v3 17/17] sbsa-gwdt: limit compare_value to INT64_MAX
-Date: Wed, 24 Jun 2026 12:28:30 +0200
-Message-ID: <20260624102830.1355552-18-imammedo@redhat.com>
-In-Reply-To: <20260624102830.1355552-1-imammedo@redhat.com>
-References: <20260624102830.1355552-1-imammedo@redhat.com>
+Cc: kvm@vger.kernel.org, Troy Lee <leetroy@gmail.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Hao Wu <wuhaotsh@google.com>,
+ Kane Chen <kane_chen@aspeedtech.com>,
+ Mohamed Mediouni <mohamed@unpredictable.fr>,
+ Steven Lee <steven_lee@aspeedtech.com>, Joel Stanley <joel@jms.id.au>,
+ Jamin Lin <jamin_lin@aspeedtech.com>,
+ Pedro Barbuda <pbarbuda@microsoft.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Tyrone Ting <kfting@nuvoton.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, qemu-arm@nongnu.org,
+ Alexander Graf <agraf@csgraf.de>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+Subject: [PATCH v9 3/7] target/arm: do not clear halting reason in has_work
+ helper
+Date: Wed, 24 Jun 2026 11:30:45 +0100
+Message-ID: <20260624103049.884930-4-alex.bennee@linaro.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260624103049.884930-1-alex.bennee@linaro.org>
+References: <20260624103049.884930-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 8
-X-Spam_score: 0.8
-X-Spam_bar: /
-X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x42c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,69 +114,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-QEMU timer subsystem uses int64_t, so WCV values with bit 63 set
-overflow and cause the timer to fire immediately. The SBSA spec
-defines WCV as an unsigned 64-bit compare value, so such values
-are valid per spec and represent far-future deadlines (however
-unpractical).
+The helper will be called multiple times as we exit a loop and until
+we actually restart (via arm_cpu_exec_halt) we should leave the
+condition the same.
 
-Windows in GTDT mode writes WCV in two 32-bit halves while the
-watchdog is running:
-
- sbsa-gwdt_control_write [0x8]  <- 0xffffffff    # WOR (~4 sec)
- sbsa-gwdt_control_write [0x0]  <- 0x1           # WCS enable
- sbsa-gwdt_control_write [0x14] <- 0xffffffff    # WCVU (intermediate)
- sbsa-gwdt_control_write [0x10] <- 0xa906ca28    # WCVL
- sbsa-gwdt_control_write [0x14] <- 0xecb1        # WCVU (final)
-
-The intermediate WCVU write (0xffffffff) creates a WCV above
-INT64_MAX, which overflows QEMU's signed timer and fires
-immediately — triggering WS0 => WS1 => reboot before the final
-WCVU write lands.
-
-Clamp WCV to INT64_MAX to avoid timer API overflow.
-
-Note: Windows' GTDT watchdog usage is also fragile under
-virtualization. It programs a short WOR (~4 sec), enables WCS,
-and relies on a subsequent WCV write to push the deadline far
-into the future — never using WRR for explicit refresh. On bare
-metal the WCS=>WCV gap is negligible, but in a VM the vCPU can
-be preempted between MMIO accesses while the clock keeps
-ticking, potentially expiring the short WOR timeout before the
-WCV override lands.
-
-Signed-off-by: Igor Mammedov <imammedo@redhat.com>
+Fixes: 6fd2fcdc61b (target/arm: teach arm_cpu_has_work about halting reasons)
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 ---
- hw/watchdog/sbsa_gwdt.c        | 2 ++
- tests/qtest/bios-tables-test.c | 2 +-
- 2 files changed, 3 insertions(+), 1 deletion(-)
+ include/hw/core/sysemu-cpu-ops.h | 3 +++
+ target/arm/cpu.c                 | 4 ++--
+ 2 files changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/hw/watchdog/sbsa_gwdt.c b/hw/watchdog/sbsa_gwdt.c
-index fb67db9672..ff7adbcb0f 100644
---- a/hw/watchdog/sbsa_gwdt.c
-+++ b/hw/watchdog/sbsa_gwdt.c
-@@ -122,6 +122,8 @@ static void sbsa_gwdt_update_timer(SBSA_GWDTState *s, WdtRefreshType rtype)
+diff --git a/include/hw/core/sysemu-cpu-ops.h b/include/hw/core/sysemu-cpu-ops.h
+index 8be6a84bd54..9a45596169a 100644
+--- a/include/hw/core/sysemu-cpu-ops.h
++++ b/include/hw/core/sysemu-cpu-ops.h
+@@ -18,6 +18,9 @@
+ typedef struct SysemuCPUOps {
+     /**
+      * @has_work: Callback for checking if there is work to do.
++     *
++     * This function should be idempotent (i.e. not change state) as
++     * it will likely be queried multiple times before a CPU resumes.
+      */
+     bool (*has_work)(CPUState *cpu); /* MANDATORY NON-NULL */
+     /**
+diff --git a/target/arm/cpu.c b/target/arm/cpu.c
+index 86aae36ae55..597e0626e7f 100644
+--- a/target/arm/cpu.c
++++ b/target/arm/cpu.c
+@@ -158,7 +158,6 @@ static bool arm_cpu_has_work(CPUState *cs)
+      * A wake-up event should only wake us if we are halted on a WFE
+      */
+     if (cpu->env.halt_reason == HALT_WFE && cpu->env.event_register) {
+-        cpu->env.halt_reason = NOT_HALTED;
+         return true;
      }
  
-     timeout = (uint64_t)s->wcvu << 32 | s->wcvl;
-+    /* clamp timeout to INT64_MAX to avoid timer overflow */
-+    timeout &= INT64_MAX;
-     timer_mod(s->timer, timeout);
+@@ -170,7 +169,6 @@ static bool arm_cpu_has_work(CPUState *cs)
+                            | CPU_INTERRUPT_NMI | CPU_INTERRUPT_VINMI | CPU_INTERRUPT_VFNMI
+                            | CPU_INTERRUPT_VFIQ | CPU_INTERRUPT_VIRQ | CPU_INTERRUPT_VSERR
+                            | CPU_INTERRUPT_EXITTB)) {
+-        cpu->env.halt_reason = NOT_HALTED;
+         return true;
+     }
+ 
+@@ -878,6 +876,8 @@ bool arm_cpu_exec_halt(CPUState *cs)
+         if (cpu->wfxt_timer) {
+             timer_del(cpu->wfxt_timer);
+         }
++        /* clear the halt reason */
++        cpu->env.halt_reason = NOT_HALTED;
+     }
+     return leave_halt;
  }
- 
-diff --git a/tests/qtest/bios-tables-test.c b/tests/qtest/bios-tables-test.c
-index 94fc95c8e1..370b0fd2e6 100644
---- a/tests/qtest/bios-tables-test.c
-+++ b/tests/qtest/bios-tables-test.c
-@@ -2308,7 +2308,7 @@ static void test_acpi_aarch64_virt_tcg_gtdt_wd(void)
-         .scan_len = 128ULL * MiB,
-     };
- 
--    test_acpi_one("-cpu cortex-a57 " "-device sbsa-gwdt", &data);
-+    test_acpi_one("-cpu cortex-a57 -device sbsa-gwdt", &data);
-     free_test_data(&data);
- }
- 
 -- 
 2.47.3
 
