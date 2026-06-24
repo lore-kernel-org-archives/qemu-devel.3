@@ -4,89 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 644FBCDE003
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 13:49:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6732ECDB481
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 13:49:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcNoU-0002Bq-2Y; Wed, 24 Jun 2026 09:38:46 -0400
+	id 1wcNqF-0007EP-K7; Wed, 24 Jun 2026 09:40:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jim.macarthur@linaro.org>)
- id 1wcNnT-0001eu-ML
- for qemu-devel@nongnu.org; Wed, 24 Jun 2026 09:37:45 -0400
-Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jim.macarthur@linaro.org>)
- id 1wcNnS-00016G-9C
- for qemu-devel@nongnu.org; Wed, 24 Jun 2026 09:37:43 -0400
-Received: by mail-wr1-x431.google.com with SMTP id
- ffacd0b85a97d-4633193af19so840736f8f.2
- for <qemu-devel@nongnu.org>; Wed, 24 Jun 2026 06:37:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1782308261; x=1782913061; darn=nongnu.org;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=Dbmh3RMHWGextp8wn1iIt5XsGX3XsKMosrBI26uzcks=;
- b=VNeVEvXkaZP6985Otz+EEPnFTKLfdvU3WtAGbpTgsAj0VK/QMMLxejKLiRDIUWko+n
- 1y3BX15Xqio43zmNHysqUFiI2V2MjhqP6Xa2DRtrheSC7TYRE0EtKTxKsLENB/WVscgL
- FyZfZ8bjW/P3Cz1uAib0UvdiIpy7A+1EkMsvotYwcMlH8ims9lFiijvNEms5mzaZAdWQ
- RjB7CYkKckkSQaio+GTApngtwDmLr82Dh9VjgptvGGKsZ+KC4eLIn4Fby5Aw0VUV49G1
- x3i7kI5qQicSN/hHNKc2BT3LibSvbwao52fx9+XRxt+PBqY5rIlKzp49CGeQPfx0Oqmi
- uuxA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782308261; x=1782913061;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=Dbmh3RMHWGextp8wn1iIt5XsGX3XsKMosrBI26uzcks=;
- b=Fz+If3WF+NBF+5iRU2AzzZVOH6mS9fabBj4oxQUOHehhmW1KYn1gJz/zk/7ZH1elGg
- cYIZQVuOqEEjGARWPUiWahbYasMrXHncbVtUG1pIskMuy02wnqlY2KengsfNIEFrb8Pu
- drevT2KW5UA9JO7JuOLWK7dgOG+K6Pf8TRq795b0khn/m3g94b1+eQAFw/jlJEX7XQnt
- CL3oBbfYZy6dLuZXkzUTlCBIwKeaYCQJzd9RdUKWc7xjfJYaGmFawS2Zl5P4tZdmDeKr
- BTJtwhaxKW+UCckV3V1aAjPoyet45OgmrfYgoARCiHtMbkFEGESolHYxEngydyfEHgNJ
- 39ww==
-X-Gm-Message-State: AOJu0YxAYQgC/KO9+pIZxRC13I6SPMyCE7/vLzqLNj9Zi1Vbhjt1rBzf
- g6wSDgpDQ3Ma0dBWusS61MEKG+3RpKRAckQId0OCidViMF109m4gy6XeYvM6yNW5dCQ=
-X-Gm-Gg: AfdE7cnwaFl5YI64ID+S52cbj/jH7JZiE7zHnEsI2qZ6/yMIYiLOAn/j0GDAxC9eTsv
- C6fgI9W7UxvT5LONGc2MtkElya2ufSEghkRJI1kvvkXKF5igmpy3kPlaq40SjZk/CvPS2c5DUoc
- ubxj8SCVOQj8hLv7f66b8pwfWMRmJLUS88ufNm4IsVTtPWAltrxja3FImcztRNyU4raC1OOO/N6
- BIuB6QQm6uMwk3LGfsTwBatISeejJNVbwL7G7Wt2/bkfHtOxkKrQUx0M4qXvhRKa+9NWEWSlZ2w
- CYfkfSlC1UdbhV57pdEKass9vlyLgg7GjPUnztCRLCGNtSVfmkiJYPVXZj1OlATvShDAR0K3luT
- k4ZK/4yEbR0AoD2hWa4KhNYPX2SVcQ22KOSmwvZmqPhrupFrodhSGNfy8Z/Nz1PKL2NzsvQ86eu
- DmSJ/yrXsOg7l0y/nrKNdvKUwc0A==
-X-Received: by 2002:a05:6000:2c04:b0:46d:32:3340 with SMTP id
- ffacd0b85a97d-46d0032353dmr966946f8f.36.1782308260654; 
- Wed, 24 Jun 2026 06:37:40 -0700 (PDT)
-Received: from [127.0.1.1] ([2a10:d582:31e:0:2e21:1ee8:260f:9a76])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-46c1e840efdsm6646334f8f.5.2026.06.24.06.37.39
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 24 Jun 2026 06:37:40 -0700 (PDT)
-From: Jim MacArthur <jim.macarthur@linaro.org>
-Date: Wed, 24 Jun 2026 14:37:28 +0100
-Subject: [PATCH v2 4/6] linux-user/aarch64/elfload.c: Add FPRCVT
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260624-jmac-fprcvt-v2-4-dc6cf8e512b6@linaro.org>
-References: <20260624-jmac-fprcvt-v2-0-dc6cf8e512b6@linaro.org>
-In-Reply-To: <20260624-jmac-fprcvt-v2-0-dc6cf8e512b6@linaro.org>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1wcNqD-00079s-Ul; Wed, 24 Jun 2026 09:40:33 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1wcNqC-0001bA-0e; Wed, 24 Jun 2026 09:40:33 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
+ t=1782308000; bh=J49kia/tO7O8THwkyjKfcO3OkGNeHdw8KGvAjrobIlA=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References;
+ b=tC/AworgqtD2K/wEdm/j4ccWU3QEnsYG3Uf5eIdJ56Abk93Z2/DH1ReHv13ZrUcSw
+ keuhmdzglKexRntbBz/o7fnfL/Qjg4gMHClDYhsltxXrJk8K+kJSLTpZuGb6Dgj5id
+ zLeXIaN9LzBIvwQHA8q/j8Bxpnmb7uh5RN5e/2pBHeH47zsvAKvC6UHXMN7pUswE2u
+ F9TOrmUqLBNKP7W+Hsj9hHl1s2REApwqCWNuIUblOb03Zqi09Um6rwJClNMxbIzN5L
+ XplfodA/sn3pBenWnifFqyj3Ji8gcxMgtalH9M+6GLB7l9+uCYKz2u5OL6IgTYX35U
+ xg4YeMM8WEThQ==
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 831A71BA9FE;
+ Wed, 24 Jun 2026 16:33:20 +0300 (MSK)
+Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 1F4033DEA4D;
+ Wed, 24 Jun 2026 16:33:26 +0300 (MSK)
+From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org, 
- Richard Henderson <richard.henderson@linaro.org>, 
- Alex Bennee <alex.bennee@linaro.org>, 
- Jim MacArthur <jim.macarthur@linaro.org>
-X-Mailer: b4 0.13.0
-Received-SPF: pass client-ip=2a00:1450:4864:20::431;
- envelope-from=jim.macarthur@linaro.org; helo=mail-wr1-x431.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Cc: qemu-stable@nongnu.org, Alejandro Jimenez <alejandro.j.jimenez@oracle.com>,
+ Sairaj Kodilkar <sarunkod@amd.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.2 076/107] amd_iommu: Update command buffer head ptr in
+ MMIO region after wraparound
+Date: Wed, 24 Jun 2026 16:31:21 +0300
+Message-ID: <20260624133301.403266-76-mjt@tls.msk.ru>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <qemu-stable-11.0.2-20260624163118@cover.tls.msk.ru>
+References: <qemu-stable-11.0.2-20260624163118@cover.tls.msk.ru>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,25 +70,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Jim MacArthur <jim.macarthur@linaro.org>
----
- linux-user/aarch64/elfload.c | 1 +
- 1 file changed, 1 insertion(+)
+From: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
 
-diff --git a/linux-user/aarch64/elfload.c b/linux-user/aarch64/elfload.c
-index 4887a3a7b7..4487d047bb 100644
---- a/linux-user/aarch64/elfload.c
-+++ b/linux-user/aarch64/elfload.c
-@@ -173,6 +173,7 @@ abi_ulong get_elf_hwcap(CPUState *cs)
-     GET_FEATURE_ID(aa64_cmpbr, ARM_HWCAP_A64_CMPBR);
-     GET_FEATURE_ID(aa64_f8mm8, ARM_HWCAP_A64_F8MM8);
-     GET_FEATURE_ID(aa64_f8mm4, ARM_HWCAP_A64_F8MM4);
-+    GET_FEATURE_ID(aa64_fprcvt, ARM_HWCAP_A64_FPRCVT);
+When processing a command, amdvi_cmdbuf_run() increments cmdbuf_head and
+writes it to the emulated MMIO register space before checking whether it
+has reached the end of the command buffer.
+
+If the incremented value reaches the end of the buffer and the tail pointer
+is zero, the loop exits and the COMMAND_HEAD offset still contains an
+unwrapped value. There are no errors in command processing since internal
+cmdbuf_head state is always correctly updated, but the spec defines the
+CmdHeadPtr field in MMIO Offset 2000h Command Buffer Head Pointer Register
+as RW i.e. guest-visible, so it should be kept consistent.
+
+Wrap cmdbuf_head before updating COMMAND_HEAD so the MMIO-visible register
+always matches the internal command buffer head pointer position.
+
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
+Reviewed-by: Sairaj Kodilkar <sarunkod@amd.com>
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Message-Id: <20260512150044.334867-1-alejandro.j.jimenez@oracle.com>
+(cherry picked from commit 3c98e446af825b5806c1e5cd1244b2431b15e884)
+Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+
+diff --git a/hw/i386/amd_iommu.c b/hw/i386/amd_iommu.c
+index 197e452e3c..5d6a405263 100644
+--- a/hw/i386/amd_iommu.c
++++ b/hw/i386/amd_iommu.c
+@@ -1475,12 +1475,12 @@ static void amdvi_cmdbuf_run(AMDVIState *s)
+         trace_amdvi_command_exec(s->cmdbuf_head, s->cmdbuf_tail, s->cmdbuf);
+         amdvi_cmdbuf_exec(s);
+         s->cmdbuf_head += AMDVI_COMMAND_SIZE;
+-        amdvi_writeq_raw(s, AMDVI_MMIO_COMMAND_HEAD, s->cmdbuf_head);
  
-     return hwcaps;
+         /* wrap head pointer */
+         if (s->cmdbuf_head >= s->cmdbuf_len * AMDVI_COMMAND_SIZE) {
+             s->cmdbuf_head = 0;
+         }
++        amdvi_writeq_raw(s, AMDVI_MMIO_COMMAND_HEAD, s->cmdbuf_head);
+     }
  }
-
+ 
 -- 
-2.43.0
+2.47.3
 
 
