@@ -4,49 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31400CDB479
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 13:50:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C33CACDB481
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 13:50:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcNq8-00070M-TN; Wed, 24 Jun 2026 09:40:29 -0400
+	id 1wcNtM-0006B2-Rt; Wed, 24 Jun 2026 09:43:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wcNq7-0006zk-0L; Wed, 24 Jun 2026 09:40:27 -0400
+ id 1wcNtK-00061L-L0; Wed, 24 Jun 2026 09:43:46 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wcNq5-0001Sj-HG; Wed, 24 Jun 2026 09:40:26 -0400
+ id 1wcNtI-00025H-RX; Wed, 24 Jun 2026 09:43:46 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1782308000; bh=vAyKN8+M9jEln4kJ8vKcewQrLe0bjr8DlYPubHyvRMc=;
+ t=1782308007; bh=oSBt1no7uW7UsqIIUgO+H9H6J1W2PuuatD0PtVI1C58=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=YHfXlDQDb/VhuM4xaAt0TWOUymWOXgcu8jonIg+rUGbLSICJVmzLS6nUGiZSGRrSV
- xelU0R6m4q8Y7cTosK6H8XnbVxLg35tRNCuJH9ei049+u24FI0L3D4AsMP2uStdf1y
- QBX/5AzaiFFMPlraEqPpgNkqrHQUo/eYla0209ZK+/XNJuWqe6nZu4I4gO5jE4ttcA
- dRFT1KJs8/XCZbp8xkp3LPWbsJ4VzWf+KPpfFX8R+zkeAx4oArIkpvSA2HXLm+g0ol
- Q3Nm2Mac22KuoGcAyIW6XIWqJhaoQ1iQYzqae+rSrqMWaJIJ68C7mCqC1m6j6PlYL1
- HEuT44Z7Y3HXA==
+ b=K7e086MafkcD3IWb+kLr5CG8Whxa+L3F2l/ABKr9v8VH8hCG0haH8TOPD/RGpzzVO
+ JBYycDG9AsWQZjuercAehmU3npEFJ6Oj+vojSCgcG2j36j/8vrJ9lhXza5h14kLAza
+ 8Ze6gM+8azFCO9E8Jv+N3rVnUz771tMgBEijs5FnqIiHFpkEXVmmGfSH9Vwk2mjvcH
+ KeEQW54+ZeSb56hW4UxUx61r0M2qFTsROUOavA7CRB7qons7BqPCl2z3f+r187ytXc
+ +ThgDFx2TFFrOHKJHUnqkAGszmVbH3sZEFAzAEuDjnKsyWcUcUIpnzGkplOfnF4xeW
+ ZXb0NT5IpiXdg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 53F3F1BA9FB;
- Wed, 24 Jun 2026 16:33:20 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 709FA1BAA1B;
+ Wed, 24 Jun 2026 16:33:27 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id E40813DEA4A;
- Wed, 24 Jun 2026 16:33:25 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 0AD593DEA6A;
+ Wed, 24 Jun 2026 16:33:33 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Thomas Huth <thuth@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Laurent Vivier <laurent@vivier.eu>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.2 073/107] system/rtc: Fix a possible year-2038 integer
- overflow problem
-Date: Wed, 24 Jun 2026 16:31:18 +0300
-Message-ID: <20260624133301.403266-73-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Aditya Gupta <adityag@linux.ibm.com>,
+ Zexiang Zhang <chan9yan9@gmail.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.2 105/107] ppc/pnv_phb3: Error out on invalid config
+ access
+Date: Wed, 24 Jun 2026 16:31:50 +0300
+Message-ID: <20260624133301.403266-105-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.2-20260624163118@cover.tls.msk.ru>
 References: <qemu-stable-11.0.2-20260624163118@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -71,43 +70,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Thomas Huth <thuth@redhat.com>
+From: Aditya Gupta <adityag@linux.ibm.com>
 
-rtc_realtime_clock_offset is initialized with:
+PHB in Power8 supports 8 byte registers, and hence the ops structure
+allows accessing of 8 bytes in 'pnv_phb3_reg_ops'
 
-  rtc_realtime_clock_offset = qemu_clock_get_ms(QEMU_CLOCK_REALTIME) / 1000;
+Both 'pnv_phb3_reg_read' & 'pnv_phb3_reg_write' pass the arguments as is
+to 'pnv_phb3_config_{read,write}', if offset is PHB_CONFIG_DATA.
 
-And QEMU_CLOCK_REALTIME might be based on gettimeofday() in certain
-cases (see get_clock_realtime() in include/qemu/timer.h). So this
-counter will exceed 32 bits in the year 2038, thus we should not
-store this value in a normal integer variable. Change it to a time_t
-to fix the problem.
-And while we're at it, also adjust the nearby rtc_host_datetime_offset
-variable to be on the safe side in the related code.
+This when called with size as 8, causes following assert failure in
+'pci_host_config_read_common' & 'pci_host_config_write_common':
 
-Signed-off-by: Thomas Huth <thuth@redhat.com>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Reviewed-by: Laurent Vivier <laurent@vivier.eu>
-Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
+    assert(len <= 4);
+
+Validate that size is <=4, before jumping to pci_host_config_{read,write}_common
+
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3334
+Reported-by: Zexiang Zhang <chan9yan9@gmail.com>
+Fixes: 9ae1329ee2fe ("ppc/pnv: Add models for POWER8 PHB3 PCIe Host bridge")
+Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Message-Id: <20260326190438.734239-2-adityag@linux.ibm.com>
+(cherry picked from commit 218109781209f9d77242b2cdf743acac8bc3b893)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-(cherry picked from commit ae84c738e40339cc0f22773dd4692de529d88739)
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/system/rtc.c b/system/rtc.c
-index 56951288c4..f7eca982b0 100644
---- a/system/rtc.c
-+++ b/system/rtc.c
-@@ -40,8 +40,8 @@ static enum {
-     RTC_BASE_DATETIME,
- } rtc_base_type = RTC_BASE_UTC;
- static time_t rtc_ref_start_datetime;
--static int rtc_realtime_clock_offset; /* used only with QEMU_CLOCK_REALTIME */
--static int rtc_host_datetime_offset = -1; /* valid & used only with
-+static time_t rtc_realtime_clock_offset; /* used only with QEMU_CLOCK_REALTIME */
-+static time_t rtc_host_datetime_offset = -1; /* valid & used only with
-                                              RTC_BASE_DATETIME */
- QEMUClockType rtc_clock;
- /***********************************************************/
+diff --git a/hw/pci-host/pnv_phb3.c b/hw/pci-host/pnv_phb3.c
+index d6ab515337..4ffdb4ce31 100644
+--- a/hw/pci-host/pnv_phb3.c
++++ b/hw/pci-host/pnv_phb3.c
+@@ -475,6 +475,11 @@ void pnv_phb3_reg_write(void *opaque, hwaddr off, uint64_t val, unsigned size)
+ 
+     /* Special case configuration data */
+     if ((off & 0xfffc) == PHB_CONFIG_DATA) {
++        if (size > 4) {
++            phb3_error(phb, "Invalid config access, offset: 0x%"PRIx64" size: %d",
++                      off, size);
++            return;
++        }
+         pnv_phb3_config_write(phb, off & 0x3, size, val);
+         return;
+     }
+@@ -597,6 +602,11 @@ uint64_t pnv_phb3_reg_read(void *opaque, hwaddr off, unsigned size)
+     uint64_t val;
+ 
+     if ((off & 0xfffc) == PHB_CONFIG_DATA) {
++        if (size > 4) {
++            phb3_error(phb, "Invalid config access, offset: 0x%"PRIx64" size: %d",
++                      off, size);
++            return ~0ull;
++        }
+         return pnv_phb3_config_read(phb, off & 0x3, size);
+     }
+ 
 -- 
 2.47.3
 
