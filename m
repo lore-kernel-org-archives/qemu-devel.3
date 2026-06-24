@@ -4,47 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9AE8DCDE002
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 13:43:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73D37CDE004
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 13:43:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcNmj-0006dt-AN; Wed, 24 Jun 2026 09:36:57 -0400
+	id 1wcNkY-0000JT-9q; Wed, 24 Jun 2026 09:34:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wcNmc-0006UG-AO; Wed, 24 Jun 2026 09:36:52 -0400
+ id 1wcNkT-00005c-Eg; Wed, 24 Jun 2026 09:34:37 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wcNma-0000xA-N7; Wed, 24 Jun 2026 09:36:50 -0400
+ id 1wcNkR-0000XV-Sa; Wed, 24 Jun 2026 09:34:37 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1782307997; bh=qPeqdKxBJoa6vMIIrWN4BZr+z637BJiDM9Ba4X2UnAY=;
+ t=1782307996; bh=lGk/OGkifKx4LKSM9herBoN6ehFZjTS6Al80zJPhBAI=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=lHbxZ5t5kKDJroHHlNdJ+W24I/3dKBD1Q9hGzuQSxQA3lH0cq8CU48ILc6pHmXzWX
- ZL8TmeBeDmG7o+mwM32KIGDyjpNBbF26LvWQwJPdKXhcvtOvMY8tzHO6860VlxGDw3
- WsvmFwgg2QiN3QLs0KNNyQyhERvuiOKxAwhqwLuv34KeoI3HCZspXMTUZn1Vjm1Idv
- iYEEJtIW42ElUXT7CIet2sABn5Fp9FqFAb/0z70G0FAVfmPA9jgJBxp7ri9zgf0RTe
- sMtIr87Epl51bsw6r6XsYOCokkArst/oLRLgrcKFFaLkYWr4SerCOTxBnQgw5x1vjZ
- OS5hrZDlH8Erg==
+ b=MSA/Uy49bccgyvkyyXCOakwLLo9MohGKCIFlzOkhfSzCXEZPNR+JyaHrvd4H8Ssie
+ Cyw8NGzKpDTCtKSNSYorAMS9slngIm8LCw8DBQazNuTE8LwzInvrGPXHahmMh428m7
+ ZxLLNmoxVeYlLujuVAXjodRMkrpxKImBo7QMwRjYV9k6OFz+4wgd0p/PFLVQ9RcyrI
+ HG5qcyi+CMcZ7S+dSLWX0pVUtlWinr/J9HoP+JyQ/8bdWgLu+G089DDdUTFryNGZ3O
+ yiKJASrD7jdHD8IO7737X4gbJPrNE9R5VRkybadyQXHU5pOG5CwBS4E+/YvngCQ330
+ dW4NeO2vxCm1A==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id CD0951BA9D9;
- Wed, 24 Jun 2026 16:33:17 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 733F01BA9C5;
+ Wed, 24 Jun 2026 16:33:16 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 69F6A3DEA28;
- Wed, 24 Jun 2026 16:33:23 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 0F4563DEA14;
+ Wed, 24 Jun 2026 16:33:22 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Matt Turner <mattst88@gmail.com>,
- Helge Deller <deller@gmx.de>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.2 039/107] linux-user/mips: save/restore FCSR across
- signal delivery
-Date: Wed, 24 Jun 2026 16:30:44 +0300
-Message-ID: <20260624133301.403266-39-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.2 019/107] ui/vnc: fix OOB write in lossy rect worker
+ code
+Date: Wed, 24 Jun 2026 16:30:24 +0300
+Message-ID: <20260624133301.403266-19-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.2-20260624163118@cover.tls.msk.ru>
 References: <qemu-stable-11.0.2-20260624163118@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -69,98 +72,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Matt Turner <mattst88@gmail.com>
+From: Daniel P. Berrangé <berrange@redhat.com>
 
-QEMU keeps the MIPS FPU control/status register (FCSR, fcr31) in
-env->active_fpu.fcr31.  The rounding mode, flush-to-zero (FS), and
-NaN-2008 mode bits in fcr31 are reflected into the derived
-env->active_fpu.fp_status via set_float_rounding_mode() and friends;
-every architectural write to FCSR goes through helper_ctc1() which
-calls restore_fp_status() to keep the two in sync.
+Incorrect calculation of the boundary condition when tracking lossy
+rectangles in the worker thread will result in an OOB write which
+can corrupt further worker state, and/or trigger any guard pages
+that may lie beyond the VncWorker struct. This can be triggered
+through careful choice of the display resolution in the guest
+OS by an unprivileged user.
 
-Both target_sigcontext variants (O32 and N32/N64) have an sc_fpc_csr
-field that holds FCSR, but setup_sigcontext() never wrote it and
-restore_sigcontext() never read it.  As a result:
-
-  - The signal frame always delivered sc_fpc_csr == 0 to the handler,
-    so sigaction(SA_SIGINFO) handlers that inspect the interrupted
-    context see the wrong FCSR.
-
-  - On sigreturn, active_fpu.fcr31 retained whatever value the signal
-    handler last installed (if any), and active_fpu.fp_status was
-    never resynced.  Interrupted code resumed with the wrong rounding
-    mode, FS flag, and NaN-2008 semantics.
-
-Fix setup_sigcontext() to save fcr31 into sc_fpc_csr.  Fix
-restore_sigcontext() to read it back (masked to fcr31_rw_bitmask as
-the kernel does) and call cpu_mips_restore_fp_status() to resync
-fp_status from the restored fcr31.
-
-Add cpu_mips_restore_fp_status() in target/mips/fpu.c (which already
-defines ieee_rm and includes fpu_helper.h), and declare it in cpu.h.
-
-Fixes: 084d0497a0 ("mips-linux-user: Save and restore fpu and dsp from sigcontext")
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Matt Turner <mattst88@gmail.com>
-Signed-off-by: Helge Deller <deller@gmx.de>
-(cherry picked from commit 84b920ccb5ee5287747af2d36d1ece6367b6a40e)
+Fixes: CVE-2026-48002
+Reported-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+Message-ID: <20260521103353.1645561-4-berrange@redhat.com>
+[Marc-André - added assert() suggest by philmd@linaro.org]
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+(cherry picked from commit 46ee49034d26d04d95ba8f3183d4fbfa9d2b89b4)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/linux-user/mips/signal.c b/linux-user/mips/signal.c
-index d69a5d73dd..1b10012726 100644
---- a/linux-user/mips/signal.c
-+++ b/linux-user/mips/signal.c
-@@ -134,6 +134,7 @@ static inline void setup_sigcontext(CPUMIPSState *regs,
-     for (i = 0; i < 32; ++i) {
-         __put_user(regs->active_fpu.fpr[i].d, &sc->sc_fpregs[i]);
+diff --git a/ui/vnc.c b/ui/vnc.c
+index ccc73bd7aa..8ab44c830c 100644
+--- a/ui/vnc.c
++++ b/ui/vnc.c
+@@ -2994,13 +2994,15 @@ void vnc_sent_lossy_rect(VncWorker *worker, int x, int y, int w, int h)
+ {
+     int i, j;
+ 
+-    w = (x + w) / VNC_STAT_RECT;
+-    h = (y + h) / VNC_STAT_RECT;
++    w = DIV_ROUND_UP((x + w), VNC_STAT_RECT);
++    h = DIV_ROUND_UP((y + h), VNC_STAT_RECT);
++    assert(h <= VNC_STAT_ROWS);
++    assert(w <= VNC_STAT_COLS);
+     x /= VNC_STAT_RECT;
+     y /= VNC_STAT_RECT;
+ 
+-    for (j = y; j <= h; j++) {
+-        for (i = x; i <= w; i++) {
++    for (j = y; j < h; j++) {
++        for (i = x; i < w; i++) {
+             worker->lossy_rect[j][i] = 1;
+         }
      }
-+    __put_user(regs->active_fpu.fcr31, &sc->sc_fpc_csr);
- }
- 
- static inline void
-@@ -165,6 +166,12 @@ restore_sigcontext(CPUMIPSState *regs, struct target_sigcontext *sc)
-     for (i = 0; i < 32; ++i) {
-         __get_user(regs->active_fpu.fpr[i].d, &sc->sc_fpregs[i]);
-     }
-+    {
-+        uint32_t fcr31;
-+        __get_user(fcr31, &sc->sc_fpc_csr);
-+        regs->active_fpu.fcr31 = fcr31 & regs->active_fpu.fcr31_rw_bitmask;
-+        cpu_mips_restore_fp_status(regs);
-+    }
- }
- 
- /*
-diff --git a/target/mips/cpu.h b/target/mips/cpu.h
-index ed662135cb..3b4da9887b 100644
---- a/target/mips/cpu.h
-+++ b/target/mips/cpu.h
-@@ -1366,6 +1366,9 @@ void cpu_mips_clock_init(MIPSCPU *cpu);
- /* helper.c */
- target_ulong exception_resume_pc(CPUMIPSState *env);
- 
-+/* fpu.c */
-+void cpu_mips_restore_fp_status(CPUMIPSState *env);
-+
- /**
-  * mips_cpu_create_with_clock:
-  * @typename: a MIPS CPU type.
-diff --git a/target/mips/fpu.c b/target/mips/fpu.c
-index c7c487c1f9..8b661865ca 100644
---- a/target/mips/fpu.c
-+++ b/target/mips/fpu.c
-@@ -17,6 +17,11 @@ const FloatRoundMode ieee_rm[4] = {
-     float_round_down
- };
- 
-+void cpu_mips_restore_fp_status(CPUMIPSState *env)
-+{
-+    restore_fp_status(env);
-+}
-+
- const char fregnames[32][4] = {
-     "f0",  "f1",  "f2",  "f3",  "f4",  "f5",  "f6",  "f7",
-     "f8",  "f9",  "f10", "f11", "f12", "f13", "f14", "f15",
 -- 
 2.47.3
 
