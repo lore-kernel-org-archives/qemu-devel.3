@@ -4,42 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA501CDB481
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 13:40:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EFA0ACDB479
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 13:40:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcNlt-0004k6-L0; Wed, 24 Jun 2026 09:36:05 -0400
+	id 1wcNoX-0002YK-2R; Wed, 24 Jun 2026 09:38:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wcNlp-0004Mj-7g; Wed, 24 Jun 2026 09:36:01 -0400
+ id 1wcNne-0001jQ-Mr; Wed, 24 Jun 2026 09:38:00 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wcNln-0000sV-MU; Wed, 24 Jun 2026 09:36:00 -0400
+ id 1wcNnY-000187-V7; Wed, 24 Jun 2026 09:37:50 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1782307997; bh=OQcZflaaAdCO1CU6lugVRJpFmRJmYwX7C3Bxhwi4Fi0=;
+ t=1782307998; bh=L7RCWWMvQS+EFrMDUd1cQg3OODBBHJtF30sWO9d+Tds=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=TFhkbAmqjJhoeV+as6oySZs/x72qm6GuC6Nb9VvgUtPiFwq/yOlUJpjaRGs49og1F
- gm3QNSHwc2J90KvTP3WmlVcm4i22PrjZ35qDlQebabjYA6nr80WguQMXRd8NbHVTyZ
- 1Pntvp9m+U76hzyIfvvujcIjXupeoTCNOi5G+SQHttAly8pmSTOg8s0ubmFZrKLKfQ
- +49XnPJHkg/J/1C32iEqlteo8aiF5zD34TWBKjdLAogV3L0oscN+oohQyQ5LPhANLE
- joWhmd/3iCBjA/xsGM9aL/tAP9mf8LP1wkFDLC2RVZpZwTyRUE1y/lTxy7bEh0uCTR
- QTU85UtOwTkmg==
+ b=lCNCAKaQXMY3Ngn5Tv8RSMf0ZLYnt2Bx5U9V3qxWSqtrvupOvP3/jUO5k82+Vs9ei
+ 6GgZ7Ntgtl6nVcPRq3dt0LJZStZ0aeFobA5BLu2KKaiIUpuJE+cK85DeL7wlldgosH
+ VW1E9AzCZCgA2yGvga57cZ3LvxVzeL8tSpGfeuO/ByEOBP8ecFvbdgHUM5GgRvE+UP
+ vnOyNIVpAW2uI6TE+CLXQBYfcjTBWboAfNIKqYpM1rhVxoBa6dvTlN+0q7gxdCZlSL
+ twskqPzayE1XiqibjNxTrXJFhgE5EiJw0JEMBBjt0gPcnnakVT62w1JaLFmzR8Vi8U
+ PaanL1kWTijyw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 6F2CB1BA9D3;
- Wed, 24 Jun 2026 16:33:17 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 985401BA9E4;
+ Wed, 24 Jun 2026 16:33:18 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 0259C3DEA22;
- Wed, 24 Jun 2026 16:33:23 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 320DF3DEA33;
+ Wed, 24 Jun 2026 16:33:24 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.2 033/107] target/arm: Enable REVD for SVE2.1
-Date: Wed, 24 Jun 2026 16:30:38 +0300
-Message-ID: <20260624133301.403266-33-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
+ Stefan Hajnoczi <stefanha@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.2 050/107] util/envlist: fix prefix-match in
+ envlist_unsetenv() name lookup
+Date: Wed, 24 Jun 2026 16:30:55 +0300
+Message-ID: <20260624133301.403266-50-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.2-20260624163118@cover.tls.msk.ru>
 References: <qemu-stable-11.0.2-20260624163118@cover.tls.msk.ru>
@@ -68,30 +71,112 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+From: "Denis V. Lunev" <den@openvz.org>
 
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20260522220408.235438-1-richard.henderson@linaro.org
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-(cherry picked from commit f12e7ba6f43803ec73c92b4ebeee6187113ba1fc)
+envlist_unsetenv() looked up the entry to remove with
+strncmp(entry->ev_var, env, strlen(env)). The comparison length is
+the requested name's length, so any stored entry whose name *starts*
+with that name compares equal. envlist_setenv() inserts at the head
+of the list, so the first hit wins: with FOO=... stored first and
+FOOBAR=... stored afterward, envlist_unsetenv("FOO") iterates from
+the head, matches FOOBAR=... on the prefix, and drops it instead of
+FOO=...
+
+linux-user and bsd-user reach this code via the -U command-line
+switch, so the bug is reachable from a normal qemu-user invocation.
+
+envlist_setenv() used the same strncmp pattern but with
+envname_len = (eq_sign - env + 1), so the '=' byte sat inside the
+compared window and acted as an implicit boundary. setenv was
+therefore not buggy -- but the safety lived in the byte layout of
+ev_var rather than in the entry, so a future edit could easily
+drift the two sites apart again.
+
+Store the name length on each entry at insertion time and compare
+with explicit length equality plus memcmp via a small helper. Use
+the helper at both lookup sites so the boundary becomes a
+structural property of the entry: envlist_unsetenv() stops
+prefix-matching, and envlist_setenv()'s self-search no longer
+depends on the '=' byte serving as a sentinel.
+
+Fixes: 04a6dfebb6b5 ("linux-user: Add generic env variable handling")
+Signed-off-by: Denis V. Lunev <den@openvz.org>
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+Message-id: 20260520212628.479772-2-den@openvz.org
+Cc: Stefan Hajnoczi <stefanha@redhat.com>
+Cc: Markus Armbruster <armbru@redhat.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>
+Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
+(cherry picked from commit c131ae56c13ffe6bd7089cf0d9bd00a7c2dbc71f)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/arm/tcg/translate-sve.c b/target/arm/tcg/translate-sve.c
-index f9dfda4a7a..a05967f4fb 100644
---- a/target/arm/tcg/translate-sve.c
-+++ b/target/arm/tcg/translate-sve.c
-@@ -2992,7 +2992,8 @@ TRANS_FEAT(REVH, aa64_sme_or_sve, gen_gvec_ool_arg_zpz, revh_fns[a->esz], a, 0)
- TRANS_FEAT(REVW, aa64_sme_or_sve, gen_gvec_ool_arg_zpz,
-            a->esz == 3 ? gen_helper_sve_revw_d : NULL, a, 0)
+diff --git a/util/envlist.c b/util/envlist.c
+index 15fdbb109d..196c92c190 100644
+--- a/util/envlist.c
++++ b/util/envlist.c
+@@ -3,7 +3,8 @@
+ #include "qemu/envlist.h"
  
--TRANS_FEAT(REVD, aa64_sme, gen_gvec_ool_arg_zpz, gen_helper_sme_revd_q, a, 0)
-+TRANS_FEAT(REVD, aa64_sme_or_sve2p1, gen_gvec_ool_arg_zpz,
-+           gen_helper_sme_revd_q, a, 0)
+ struct envlist_entry {
+-    const char *ev_var;            /* actual env value */
++    const char *ev_var;            /* actual env value: "NAME=VALUE" */
++    size_t ev_name_len;            /* length of NAME (offset of '=') */
+     QLIST_ENTRY(envlist_entry) ev_link;
+ };
  
- TRANS_FEAT(SPLICE, aa64_sme_or_sve, gen_gvec_ool_arg_zpzz,
-            gen_helper_sve_splice, a, a->esz)
+@@ -12,6 +13,13 @@ struct envlist {
+     size_t el_count;                        /* number of entries */
+ };
+ 
++static inline bool envlist_name_eq(const struct envlist_entry *entry,
++                                   const char *name, size_t name_len)
++{
++    return entry->ev_name_len == name_len &&
++           memcmp(entry->ev_var, name, name_len) == 0;
++}
++
+ /*
+  * Allocates new envlist and returns pointer to it.
+  */
+@@ -67,7 +75,7 @@ envlist_setenv(envlist_t *envlist, const char *env)
+     /* find out first equals sign in given env */
+     if ((eq_sign = strchr(env, '=')) == NULL)
+         return (EINVAL);
+-    envname_len = eq_sign - env + 1;
++    envname_len = eq_sign - env;
+ 
+     /*
+      * If there already exists variable with given name
+@@ -76,8 +84,9 @@ envlist_setenv(envlist_t *envlist, const char *env)
+      */
+     for (entry = envlist->el_entries.lh_first; entry != NULL;
+         entry = entry->ev_link.le_next) {
+-        if (strncmp(entry->ev_var, env, envname_len) == 0)
++        if (envlist_name_eq(entry, env, envname_len)) {
+             break;
++        }
+     }
+ 
+     if (entry != NULL) {
+@@ -90,6 +99,7 @@ envlist_setenv(envlist_t *envlist, const char *env)
+ 
+     entry = g_malloc(sizeof(*entry));
+     entry->ev_var = g_strdup(env);
++    entry->ev_name_len = envname_len;
+     QLIST_INSERT_HEAD(&envlist->el_entries, entry, ev_link);
+ 
+     return (0);
+@@ -119,8 +129,9 @@ envlist_unsetenv(envlist_t *envlist, const char *env)
+     envname_len = strlen(env);
+     for (entry = envlist->el_entries.lh_first; entry != NULL;
+         entry = entry->ev_link.le_next) {
+-        if (strncmp(entry->ev_var, env, envname_len) == 0)
++        if (envlist_name_eq(entry, env, envname_len)) {
+             break;
++        }
+     }
+     if (entry != NULL) {
+         QLIST_REMOVE(entry, ev_link);
 -- 
 2.47.3
 
