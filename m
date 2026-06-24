@@ -4,45 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48C5CCDB481
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 13:34:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C987CDE002
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 13:34:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcNk1-0007Qd-7t; Wed, 24 Jun 2026 09:34:09 -0400
+	id 1wcNjc-0007BB-U6; Wed, 24 Jun 2026 09:33:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wcNjy-0007Od-GQ; Wed, 24 Jun 2026 09:34:06 -0400
+ id 1wcNjY-00074d-3p; Wed, 24 Jun 2026 09:33:40 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wcNjw-0000RH-Sh; Wed, 24 Jun 2026 09:34:06 -0400
+ id 1wcNjV-0000Py-M9; Wed, 24 Jun 2026 09:33:39 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1782307996; bh=nBTl9hK8MG28XPQTMfA9qQqImj/KPixRdgkMHL6YTeQ=;
+ t=1782307995; bh=x8Obbye/RcP9958V3Ik52SIuaNnuyPM0y+vpzi01500=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=WrjggXBGDZ0mhp1P5/jIveGMNfjIjZjPKexjYoTHO2z0ESn9q9IiSsMfjna3oX12k
- Mp5xNUWbT92R4Ih9GcPz9CJYREngrHXjgFmvJu3wphHFAw94j9TMQfA4Ys+tBbUg+m
- EGMlrMmY1tFEBqkVZaVt20lE8ECE67qV9wU49TEYTFGWjIih8KCPLsBlZHrMOYhYjo
- YOfHnYr0P/cLKKtquhTVPmenBsILaIMhQUTgXXBJbTv6MS6CkDqNp58Kb+SM+fP8Bw
- +2Jnf0oLkp9rLK15OAJXPYDW6+VA6cYjKhTC35lx36Aph5avZomfSH+3/mujVcyyLa
- rJYj3Xjl9ODNw==
+ b=qdjI3CEpO+S69CGcNqc63BUiVVuzCE7nzmljUWn41+dbHmNC6OdKQCjyt9X2yZCJS
+ +TG4cBECjc0Fhh7vWpP6LtXA9uApFMrDNZDKa5N33yWkKW4TqjaNcuxlo6wSalOonA
+ VQCPN5JsKiYe3NRPqwStuUNkfDMQgF34i/keFxHHzhwBGaRThtOPcSBTdlt7p8ysp8
+ 9bDhehvy2sRcX08aSXqvhQnapfJ3mwSWuWCxza0aEfJTMT3XpE1P0VjhhXxwk5mbeu
+ CFca+45buvc8OIvOSYV1GCfqAz6wf0Fb/JWerikIxSC6A2cI2pJMo3vzVv6iCtaAzW
+ E9uai7QKFEsKQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 06E901BA9BE;
- Wed, 24 Jun 2026 16:33:16 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id BF1B21BA9BA;
+ Wed, 24 Jun 2026 16:33:15 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 965953DEA0D;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 5C6813DEA09;
  Wed, 24 Jun 2026 16:33:21 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Zishun Yi <vulab@iscas.ac.cn>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+Cc: qemu-stable@nongnu.org, Abhigyan Kumar <314abh@gmail.com>,
  Alistair Francis <alistair.francis@wdc.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.2 012/107] target/riscv: clear mseccfg on reset for all
- dependent extensions
-Date: Wed, 24 Jun 2026 16:30:17 +0300
-Message-ID: <20260624133301.403266-12-mjt@tls.msk.ru>
+Subject: [Stable-11.0.2 008/107] target/riscv: Fix medeleg[11] read-only zero
+ bit for M-mode ECALL
+Date: Wed, 24 Jun 2026 16:30:13 +0300
+Message-ID: <20260624133301.403266-8-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.2-20260624163118@cover.tls.msk.ru>
 References: <qemu-stable-11.0.2-20260624163118@cover.tls.msk.ru>
@@ -71,48 +70,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Zishun Yi <vulab@iscas.ac.cn>
+From: Abhigyan Kumar <314abh@gmail.com>
 
-Currently, the `mseccfg` CSR is only cleared to 0 during reset if the
-`ext_smepmp` is enabled. However, this register is now shared by
-several other extensions such as `zkr`, `smmpm`, and `zicfilp`.
+RISC-V Privileged Specification 3.1.8 (Machine Trap Delegation Registers
+(medeleg and mideleg)) mentions:
 
-Fix by clearing `mseccfg` if any dependent extension is present, and
-adjusting the relevant comments.
+"For exceptions that cannot occur in less privileged modes, the
+corresponding medeleg bits should be read-only zero. In particular,
+medeleg[11] is read-only zero."
 
-This vulnerability was discovered and reported by SpecHunter, an
-AI-driven architecture specification analysis tool.
+QEMU incorrectly included RISCV_EXCP_M_ECALL in DELEGABLE_EXCPS. It
+allowed the 11th bit to be written and read as set. Fixed by removing it
+from the DELEGABLE_EXCPS mask, adhering to the specification.
 
-Link: https://github.com/yizishun/rv-isa-sec/blob/master/output/riscv-svvptc/pr-134/qemu.txt
-Signed-off-by: Zishun Yi <vulab@iscas.ac.cn>
-Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Message-ID: <20260512052240.330815-1-vulab@iscas.ac.cn>
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3438
+Signed-off-by: Abhigyan Kumar <314abh@gmail.com>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Message-ID: <20260427060849.749179-2-314abh@gmail.com>
+[ Changes by AF:
+ - Remove comment
+]
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-(cherry picked from commit 8158a74f0a0db8626d7836eb03eca7aba46c18b5)
+(cherry picked from commit a0946caf1d9ec21446ebdcb5eab2400baa4323ae)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index 8ac935ac06..269ea35f6d 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -754,10 +754,14 @@ static void riscv_cpu_reset_hold(Object *obj, ResetType type)
- 
-     /*
-      * Clear mseccfg and unlock all the PMP entries upon reset.
--     * This is allowed as per the priv and smepmp specifications
--     * and is needed to clear stale entries across reboots.
-+     * This is required as per the priv, smepmp, and other security
-+     * extension specifications that share this CSR, and is needed
-+     * to clear stale entries across reboots.
-      */
--    if (riscv_cpu_cfg(env)->ext_smepmp) {
-+    if (riscv_cpu_cfg(env)->ext_smepmp ||
-+        riscv_cpu_cfg(env)->ext_zkr ||
-+        riscv_cpu_cfg(env)->ext_smmpm ||
-+        riscv_cpu_cfg(env)->ext_zicfilp) {
-         env->mseccfg = 0;
-     }
- 
+diff --git a/target/riscv/csr.c b/target/riscv/csr.c
+index 51e668b46d..35e98df420 100644
+--- a/target/riscv/csr.c
++++ b/target/riscv/csr.c
+@@ -1789,7 +1789,6 @@ static const uint64_t all_ints = M_MODE_INTERRUPTS | S_MODE_INTERRUPTS |
+                          (1ULL << (RISCV_EXCP_U_ECALL)) | \
+                          (1ULL << (RISCV_EXCP_S_ECALL)) | \
+                          (1ULL << (RISCV_EXCP_VS_ECALL)) | \
+-                         (1ULL << (RISCV_EXCP_M_ECALL)) | \
+                          (1ULL << (RISCV_EXCP_INST_PAGE_FAULT)) | \
+                          (1ULL << (RISCV_EXCP_LOAD_PAGE_FAULT)) | \
+                          (1ULL << (RISCV_EXCP_STORE_PAGE_FAULT)) | \
 -- 
 2.47.3
 
