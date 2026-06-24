@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D167ECDB479
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 07:11:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3458CDB470
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 07:11:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcHlC-0005oY-6V; Wed, 24 Jun 2026 03:11:01 -0400
+	id 1wcHlS-0006EJ-FL; Wed, 24 Jun 2026 03:11:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1wcHk4-0005CX-CP
- for qemu-devel@nongnu.org; Wed, 24 Jun 2026 03:09:51 -0400
-Received: from mail-pj1-x102f.google.com ([2607:f8b0:4864:20::102f])
+ id 1wcHkF-0005L9-7e
+ for qemu-devel@nongnu.org; Wed, 24 Jun 2026 03:10:00 -0400
+Received: from mail-pg1-x529.google.com ([2607:f8b0:4864:20::529])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1wcHk2-00036J-Pr
- for qemu-devel@nongnu.org; Wed, 24 Jun 2026 03:09:48 -0400
-Received: by mail-pj1-x102f.google.com with SMTP id
- 98e67ed59e1d1-37c64d34032so906609a91.0
- for <qemu-devel@nongnu.org>; Wed, 24 Jun 2026 00:09:46 -0700 (PDT)
+ id 1wcHkD-000371-L3
+ for qemu-devel@nongnu.org; Wed, 24 Jun 2026 03:09:58 -0400
+Received: by mail-pg1-x529.google.com with SMTP id
+ 41be03b00d2f7-c8ce8f2e235so412842a12.2
+ for <qemu-devel@nongnu.org>; Wed, 24 Jun 2026 00:09:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1782284985; x=1782889785; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1782284996; x=1782889796; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=e3JgrbyUDIxuz3YPnS0kJVMN3cW2e7N1UfUsJRso3As=;
- b=jDJfEHHJnZDzj1aj37hhWZdSQq2+2btowVVNuaoYYrzxHeSbEHDeoqzGlKdWjeipjV
- xsqxekpbpD5AYLqqOwAKQ87jhjSAwORTI2zEj3Ad4RwzMitJ2m8kQwy/HT07YC5AQQs7
- Zzm2fB4xvGfM4aErggG3Gfh1+klla+xhL9bqRa3XqdGJSKW7Qh7IfLUEP++MEBJp/GAM
- jA6+SxUSxvHO/sHzRHtMFq/52F+GcMBPcnolbHscGaULUzd7gpHO6JVvNZalNGgzoVfb
- CjkTgpiVwAsejg0revKIlP//8nE3p3BfmAbmXZyUPFC7XmaYUsyCvS7d+gK1yeKwdgrf
- 8Whg==
+ bh=7t5cTU126FnpUwkoAoirKGUM08oblbAVX84J7t/Z2ng=;
+ b=IxQxmtPHAzTEP/1jhGpllS4sujqpY+VjpW8qRJIUyw2O0OLZp4cnnuYxXvCHFY5Jxg
+ P9cbQJeLX9Nigcwu+1a55XxNPGg/Y2r7/K2M+BZX/0jyyYlthbmV6GEZjwd6JnfyalHu
+ sceI4Df6DN7mvnPlVvf0WoHI4BSndthbz++yDHcH+bFTycBuldH5reOKXbjQ8ErQqlbw
+ SyPT7BZs9fiJ2eMlDGC2nJSMpV1PpHFTMmpb4BPh4aEuqXeI7Dcl5okpRcX4mnItW3Ey
+ bc0PGwehQ16p60EFeWm7ZE8wL0e6wWfEmfTkhnVJTuAwt5i2adMjAkuJS2dAkmJWD8Xm
+ KLaQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782284985; x=1782889785;
+ d=1e100.net; s=20251104; t=1782284996; x=1782889796;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=e3JgrbyUDIxuz3YPnS0kJVMN3cW2e7N1UfUsJRso3As=;
- b=dOgd+mT4omOFkjvFhrSRAWmwg/OVyNCY7Ua+Cj2nDpo9AoPqJ6Aa69RGhqIu8so53E
- 2SU3v6AkPdpUiiHXgBTt+PZ+dRelO6Sif3Qkt5bxhQ/R90VJ7S0F4sk0U4xU6/fpYkjV
- odLRBOiTSnNnV5xTUu7YEd3AnnDogARolI6tf4rlvaIwoV24RvaInQZDmJVu0QJHNbsf
- hlt9KoTh0WusfVQd8jbE8/g3e06MQ43zKm3Z5ivdz2ud57Juvbl5MarrZxkE9x+IO9f5
- 1mK5RfOOYluXf1OniuhkuoCG6XARY7oC456I2HdnpRVTssqZG5HM+RP/7e/JaQFM6Ber
- oqvQ==
-X-Gm-Message-State: AOJu0Yxh2Irf+tUvI/iAqUKRcdgo2wKFzCWRaqzf5qFw3blywimz0zEn
- jqEqAHrDjwdawXPm7dmmSHjZzOsfQvd/T5xb6nJW+ymm9N/3/iYrO8LY8ST1AS7vMsM=
-X-Gm-Gg: AfdE7cnULkMc7wppmVmEAYtwo0WME7Blqdf/NPgyfbr7km0WqujHHSxDZI6cWzGH4UI
- oo3DlbJcxyoruFrbcUT6akHCN1noIdWqr2cB7c4yd1mjufI7cSQN3UZOXFJ4HZK6+QwyC6MDeo9
- UCevD9vHFthdpvP31e/0FMPnyWtjqjSI722UmJpz67FYuL+b91AZTUrhujmBVuEqTfSSCW4JuXX
- 5qXD7rqksnaKd/xehqYot/76XJYJGHrsfnStxm7NFMk/yPXEd30XBLcCYJsA6ou4DUvCl/C+f9s
- 4Hk3VH0D35lBMtrJYhDZqKbDs9klMl/c1akMLpJiFAwl24BWJDxKTbBAFbnj8GPDUM3Yawjtc3+
- Rb6CxU9npegQvwzL1BdDfsaDh4DLexG00t4dM/SHryGiy9tpfKvjWS1VHqWe7B/fyseGoHYWYNE
- pzsyzymrB5B86PiGYIQE2dn5sGHcmwLMykSEmKXjnOb5wYqOl/sXj+
-X-Received: by 2002:a17:90b:2692:b0:35a:10b6:1208 with SMTP id
- 98e67ed59e1d1-37dcd754648mr5862672a91.14.1782284985325; 
- Wed, 24 Jun 2026 00:09:45 -0700 (PDT)
+ bh=7t5cTU126FnpUwkoAoirKGUM08oblbAVX84J7t/Z2ng=;
+ b=mfNJe/fdzoepetIJV2YiaBZS0uUzxEWRMF6z1qOj6ONbSMnHs1JP4O5SWqRPuO7cik
+ O/RNN8Vwzf+OyuPJetvwGKAqC0iNt7sUBDF17g6wZ4P7RptVsjP6NqqhSXy8MByi4ijS
+ cTqBw9dHf1eVpntHhMCNPE6nKrUvfYvqK0SnJ1Hq1dVJ2rzojc9YIGBT0AqDPzhHrlNE
+ fyD8bZVIRBdhQry0EAx9WjoZwScbk+l0OF1TXB0yK+90sWFBbYwBdE9uyM5W1dzC+uZ8
+ swSj5yFYD1A2PWOYU6tRDOjqY1wIHEI24yhrqUmRf0KynoMPnzsVw6hTDtSrYmzb/OZ0
+ KwXw==
+X-Gm-Message-State: AOJu0YxUtSTPBGWSultLhFqR5bzd+eE7ifjqP7PVpbUqePMJ2XJfTqFR
+ p/QzQ02zOES/kfDr0mQuhDgszbvzbcThs3FdHf4Spai4SxfZdWU7He7XEkB3DCSYCsw=
+X-Gm-Gg: AfdE7cljCD5GFTOUg+iOaqGCG883iqr+RaecbXPw4kQ3kKQGQ8mHSg0saqwxdETAhJC
+ CMsajoxl4oObbJt+x8dzbjdcfqpgQ0Ob82w0Ij7XhXkxSskMKbzB4uhliVjCCefcdo+BVyvyZOJ
+ KPouLWGRk9S4UYGfasCh9UVkyivXcDCQwCN1BgNj/SlO4Kr8M4A/Z+a+LdbUFGUtl6D0WrQDAMB
+ eRYBfYuoSOODKBoKzpUZM91PMgSIISZx+AdYMUGd+WCZqFGw+ohyGjN+PEokvaEmNGKFtraLMR8
+ bkBP2Nk+JJnHvXKtDz05WHIkOS2fgdtXtMLKWfvPaNMgbe+EUZpiPisFiJjstGR1nVx/DnFkn3f
+ 92nXS2s7Al01Lt1z1WgTpmPTGxTHny6mY3LX1kXEMuVej8FHjsXU5+VW7Pm8SK7a4Gope9Snb2I
+ XIom1yu6mfH00a7307wGbWJrLR0ABvf4xU3Gf6r5vYwKbxXCqpr/CM
+X-Received: by 2002:a05:6a20:3d10:b0:38b:eadd:449a with SMTP id
+ adf61e73a8af0-3bd2d2ec5d7mr2686736637.38.1782284996465; 
+ Wed, 24 Jun 2026 00:09:56 -0700 (PDT)
 Received: from ZBMac-LWN10QXKQ0.taila0cd24.ts.net
  ([2408:80e0:41fc:0:fe49::1277]) by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-c8bc2c8e92asm10736569a12.2.2026.06.24.00.09.41
+ 41be03b00d2f7-c8bc2c8e92asm10736569a12.2.2026.06.24.00.09.53
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 24 Jun 2026 00:09:44 -0700 (PDT)
+ Wed, 24 Jun 2026 00:09:56 -0700 (PDT)
 From: Zhang Chen <zhangckid@gmail.com>
 To: qemu-devel <qemu-devel@nongnu.org>,
  "Dr . David Alan Gilbert" <dave@treblig.org>,
@@ -73,17 +73,17 @@ To: qemu-devel <qemu-devel@nongnu.org>,
  Kevin Wolf <kwolf@redhat.com>, Jason Wang <jasowang@redhat.com>,
  Fam Zheng <fam@euphon.net>
 Cc: Zhang Chen <zhangckid@gmail.com>
-Subject: [PATCH V9 11/17] net/colo: track IOThread references using path-based
- holder
-Date: Wed, 24 Jun 2026 15:08:45 +0800
-Message-ID: <20260624070851.13342-12-zhangckid@gmail.com>
+Subject: [PATCH V9 14/17] xen-block: Update tracking iothread users with
+ holder name
+Date: Wed, 24 Jun 2026 15:08:48 +0800
+Message-ID: <20260624070851.13342-15-zhangckid@gmail.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20260624070851.13342-1-zhangckid@gmail.com>
 References: <20260624070851.13342-1-zhangckid@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102f;
- envelope-from=zhangckid@gmail.com; helo=mail-pj1-x102f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::529;
+ envelope-from=zhangckid@gmail.com; helo=mail-pg1-x529.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,94 +106,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Convert colo-compare to use the iothread_ref_and_get_aio_context()
-and iothread_put_aio_context() APIs. This ensures that IOThread
-references are tracked using the COLO object's canonical QOM path
-as the holder ID.
-
-This refactoring improves IOThread lifecycle traceability and aligns
-the code with modern QEMU iothread reference management patterns.
+Replace raw object_ref/unref calls with iothread_get/put_aio_context.
 
 Signed-off-by: Zhang Chen <zhangckid@gmail.com>
 ---
- net/colo-compare.c | 29 +++++++++++++++++++----------
- 1 file changed, 19 insertions(+), 10 deletions(-)
+ hw/block/dataplane/xen-block.c | 19 ++++++++++++++++---
+ 1 file changed, 16 insertions(+), 3 deletions(-)
 
-diff --git a/net/colo-compare.c b/net/colo-compare.c
-index 823b8aa323..4f180936e3 100644
---- a/net/colo-compare.c
-+++ b/net/colo-compare.c
-@@ -130,6 +130,7 @@ struct CompareState {
-     GHashTable *connection_track_table;
+diff --git a/hw/block/dataplane/xen-block.c b/hw/block/dataplane/xen-block.c
+index 48c2e315f3..b5bf8d359f 100644
+--- a/hw/block/dataplane/xen-block.c
++++ b/hw/block/dataplane/xen-block.c
+@@ -621,9 +621,15 @@ XenBlockDataPlane *xen_block_dataplane_create(XenDevice *xendev,
+     QLIST_INIT(&dataplane->freelist);
  
-     IOThread *iothread;
-+    AioContext *iothread_ctx;
-     GMainContext *worker_context;
-     QEMUTimer *packet_check_timer;
- 
-@@ -926,9 +927,7 @@ void colo_notify_compares_event(void *opaque, int event, Error **errp)
- 
- static void colo_compare_timer_init(CompareState *s)
- {
--    AioContext *ctx = iothread_get_aio_context(s->iothread);
--
--    s->packet_check_timer = aio_timer_new(ctx, QEMU_CLOCK_HOST,
-+    s->packet_check_timer = aio_timer_new(s->iothread_ctx, QEMU_CLOCK_HOST,
-                                 SCALE_MS, check_old_packet_regular,
-                                 s);
-     timer_mod(s->packet_check_timer, qemu_clock_get_ms(QEMU_CLOCK_HOST) +
-@@ -968,8 +967,15 @@ static void colo_compare_handle_event(void *opaque)
- 
- static void colo_compare_iothread(CompareState *s)
- {
--    AioContext *ctx = iothread_get_aio_context(s->iothread);
--    object_ref(OBJECT(s->iothread));
-+    g_autofree char *path = object_get_canonical_path(OBJECT(s));
-+    IOThreadHolder io_holder = {
-+        .type = IO_THREAD_HOLDER_KIND_QOM_OBJECT,
-+        .u.qom_object.qom_path = (char *)path,
-+    };
-+
-+    AioContext *ctx = iothread_ref_and_get_aio_context(s->iothread, &io_holder);
-+
-+    s->iothread_ctx = ctx;
-     s->worker_context = iothread_get_g_main_context(s->iothread);
- 
-     qemu_chr_fe_set_handlers(&s->chr_pri_in, compare_chr_can_read,
-@@ -1408,6 +1414,7 @@ static void colo_compare_finalize(Object *obj)
- {
-     CompareState *s = COLO_COMPARE(obj);
-     CompareState *tmp;
-+    g_autofree char *path = object_get_canonical_path(OBJECT(s));
- 
-     qemu_mutex_lock(&colo_compare_mutex);
-     QTAILQ_FOREACH(tmp, &net_compares, next) {
-@@ -1434,18 +1441,20 @@ static void colo_compare_finalize(Object *obj)
-     g_clear_pointer(&s->event_bh, qemu_bh_delete);
- 
-     if (s->iothread) {
--        AioContext *ctx = iothread_get_aio_context(s->iothread);
--
--        AIO_WAIT_WHILE(ctx, !s->out_sendco.done);
-+        AIO_WAIT_WHILE(s->iothread_ctx, !s->out_sendco.done);
-         if (s->notify_dev) {
--            AIO_WAIT_WHILE(ctx, !s->notify_sendco.done);
-+            AIO_WAIT_WHILE(s->iothread_ctx, !s->notify_sendco.done);
-         }
- 
-         /* Release all unhandled packets after compare thread exited */
-         g_queue_foreach(&s->conn_list, colo_flush_packets, s);
-         AIO_WAIT_WHILE(NULL, !s->out_sendco.done);
- 
--        object_unref(OBJECT(s->iothread));
+     if (iothread) {
++        g_autofree char *path = object_get_canonical_path(OBJECT(xendev));
 +        IOThreadHolder io_holder = {
 +            .type = IO_THREAD_HOLDER_KIND_QOM_OBJECT,
 +            .u.qom_object.qom_path = (char *)path,
 +        };
-+        iothread_put_aio_context(s->iothread, &io_holder);
++
+         dataplane->iothread = iothread;
+-        object_ref(OBJECT(dataplane->iothread));
+-        dataplane->ctx = iothread_get_aio_context(dataplane->iothread);
++        dataplane->ctx = iothread_ref_and_get_aio_context(dataplane->iothread,
++                                                          &io_holder);
+     } else {
+         dataplane->ctx = qemu_get_aio_context();
+     }
+@@ -652,7 +658,14 @@ void xen_block_dataplane_destroy(XenBlockDataPlane *dataplane)
+ 
+     qemu_bh_delete(dataplane->bh);
+     if (dataplane->iothread) {
+-        object_unref(OBJECT(dataplane->iothread));
++        g_autofree char *path = object_get_canonical_path(
++                                        OBJECT(dataplane->xendev));
++        IOThreadHolder io_holder = {
++            .type = IO_THREAD_HOLDER_KIND_QOM_OBJECT,
++            .u.qom_object.qom_path = (char *)path,
++        };
++
++        iothread_put_aio_context(dataplane->iothread, &io_holder);
      }
  
-     g_queue_clear(&s->conn_list);
+     g_free(dataplane);
 -- 
 2.49.0
 
