@@ -4,42 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1599ECDE003
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0CD08CDE002
 	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 13:42:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcNnA-000065-17; Wed, 24 Jun 2026 09:37:24 -0400
+	id 1wcNmG-00062d-7I; Wed, 24 Jun 2026 09:36:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wcNn7-0008Pu-OS; Wed, 24 Jun 2026 09:37:21 -0400
+ id 1wcNmE-00061r-VD; Wed, 24 Jun 2026 09:36:26 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wcNn5-000138-HK; Wed, 24 Jun 2026 09:37:20 -0400
+ id 1wcNmD-0000wI-1S; Wed, 24 Jun 2026 09:36:26 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1782307998; bh=O/VAYKtFT/ySzeCdN9vtq7zt1BEiR6EfG4DYJe0VKwM=;
+ t=1782307997; bh=y3EvD+HGZtAGlIf1KZvi3tGEQakW/9VhWWOSw41RWQc=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=GAxO5eluqsTOoFUFgMZP2lil8xsbGruFfYaToLFqhqXXJfbJQM3KK+9lDCm7IM1Rg
- D/JlIKjq1ydok054k9FF/5uk4X0Vf2SYbJ2Cp8+EAYe5zxXLXQ9kmX/Nkfaak21/pB
- 8LO4kLPwtUx+TiFxd7wwkp9uVYkylXakv+QlMhUNfLAqVgjzoRWnhTwULsUGEwxsvt
- 0sjgp+8Fufd1EwX3cGB9JaBrCLif2E4afxaN3J8LwWkdptfAEOqfg0bVPzqcJdO9dQ
- MsZKcl8YUE478n4PJ8hOhDpFzK0mokQeNTAXzK9wkmTFR/Zx0yqY2b5vhR2pIoHb5d
- PgtdsU5wHZWyQ==
+ b=otZSJrX39i0Xt4X0moSJ+hJ7i/BK14xxCIp5zS41Yhz+oVYDkQtbmc8Lf2fm6R7BO
+ u69BjNjqmaYvNPnqkDYWIx8Fr1dwkDBX+usiuDf6019vXAtIzWQqql0Zp8xj2XMRWW
+ r1B3GYUEKiYIWHYlMH/JoPE4yd2C7kHJ/7C1LRm82zKYXQ3Zq5HfpYBweQ1pg/uGTb
+ ZD/iZLGekKfpAuZqGz8gGD9ufqN0NidrtXmlwyeRp9VFvcu47T+MtnxjoGvnwsuGTd
+ dXnrylikEutltKpD/ep+Z9WUhXmljuWtMXSUBkmENZa3gFEvuwDkiZjC3kcbOBILkK
+ gj2Ua4coIKkWw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 490001BA9DF;
- Wed, 24 Jun 2026 16:33:18 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 9D3B41BA9D6;
+ Wed, 24 Jun 2026 16:33:17 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id D0B933DEA2E;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 39A323DEA25;
  Wed, 24 Jun 2026 16:33:23 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Christian Schoenebeck <qemu_oss@crudebyte.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.2 045/107] hw/9pfs: add error handling to v9fs_fix_path()
-Date: Wed, 24 Jun 2026 16:30:50 +0300
-Message-ID: <20260624133301.403266-45-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ Jason Wang <jasowang@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.2 036/107] hw/net/rocker_of_dpa: Check group ID pointers
+ are not NULL
+Date: Wed, 24 Jun 2026 16:30:41 +0300
+Message-ID: <20260624133301.403266-36-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.2-20260624163118@cover.tls.msk.ru>
 References: <qemu-stable-11.0.2-20260624163118@cover.tls.msk.ru>
@@ -68,39 +69,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Christian Schoenebeck <qemu_oss@crudebyte.com>
+From: Peter Maydell <peter.maydell@linaro.org>
 
-Update v9fs_fix_path() to return int and propagate errors from
-v9fs_path_sprintf(). This allows callers to detect and handle
-path formatting failures.
+In of_dpa_cmd_add_l2_flood(), we use rocker_tlv_parse_nested()
+to fill in a tlvs[] array. If the guest command is valid then
+the entries should be pointers to TLV data items with group IDs.
+However, if the guest gives us bogus data then rocker_tlv_parse_nested()
+indicates this by leaving the tlvs[] entries NULL. In the other
+places that use this function, we check for this before using
+the value, but here we forgot, and the result is that QEMU can
+crash:
 
-Link: https://lore.kernel.org/qemu-devel/a0592741a918b7cbe751980ec7ec0c03f505924c.1779126034.git.qemu_oss@crudebyte.com
-Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
-(cherry picked from commit 54dd352c59269fdb5241e7b6dbcecaff107e7f5a)
+#0  __memcpy_avx_unaligned_erms () at ../sysdeps/x86_64/multiarch/memmove-vec-unaligned-erms.S:331
+#1  0x00005555574f7137 in __asan_memcpy ()
+#2  0x0000555558106792 in ldl_he_p (ptr=0x8) at /home/pm215/qemu/include/qemu/bswap.h:278
+#3  0x0000555558106755 in ldl_le_p (ptr=0x8) at /home/pm215/qemu/include/qemu/bswap.h:311
+#4  0x00005555580f85ed in rocker_tlv_get_le32 (tlv=0x0) at ../../hw/net/rocker/rocker_tlv.h:114
+#5  0x000055555810a8ad in of_dpa_cmd_add_l2_flood (of_dpa=0x506000082e38, group=0x503000b4e440, group_tlvs=0x7fff68702c20)
+    at ../../hw/net/rocker/rocker_of_dpa.c:2032
+#6  0x0000555558108a74 in of_dpa_cmd_group_do (of_dpa=0x506000082e38, group_id=1073741824, group=0x503000b4e440, group_tlvs=0x7fff68702c20)
+    at ../../hw/net/rocker/rocker_of_dpa.c:2115
+#7  0x0000555558108730 in of_dpa_cmd_group_add (of_dpa=0x506000082e38, group_id=1073741824, group_tlvs=0x7fff68702c20)
+    at ../../hw/net/rocker/rocker_of_dpa.c:2135
+#8  0x00005555580f66ec in of_dpa_group_cmd
+    (of_dpa=0x506000082e38, info=0x514000072e40, buf=0x5070002356c0 "\001", cmd=7, group_tlvs=0x7fff68702c20)
+    at ../../hw/net/rocker/rocker_of_dpa.c:2194
+
+Check for NULL values and return an error.
+
+Cc: qemu-stable@nongnu.org
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/1851
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Jason Wang <jasowang@redhat.com>
+(cherry picked from commit 8526b7d6b67beda0c83e4a8aec1449475fe5dd65)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/9pfs/9p.c b/hw/9pfs/9p.c
-index 88894ec9d2..d704de644f 100644
---- a/hw/9pfs/9p.c
-+++ b/hw/9pfs/9p.c
-@@ -1417,13 +1417,15 @@ static void print_sg(struct iovec *sg, int cnt)
- }
+diff --git a/hw/net/rocker/rocker_of_dpa.c b/hw/net/rocker/rocker_of_dpa.c
+index 3190a0e75c..958f3006c1 100644
+--- a/hw/net/rocker/rocker_of_dpa.c
++++ b/hw/net/rocker/rocker_of_dpa.c
+@@ -2029,6 +2029,10 @@ static int of_dpa_cmd_add_l2_flood(OfDpa *of_dpa, OfDpaGroup *group,
+                             group_tlvs[ROCKER_TLV_OF_DPA_GROUP_IDS]);
  
- /* Will call this only for path name based fid */
--static void v9fs_fix_path(V9fsPath *dst, V9fsPath *src, int len)
-+static int v9fs_fix_path(V9fsPath *dst, V9fsPath *src, int len)
- {
-     V9fsPath str;
-+    int ret;
-     v9fs_path_init(&str);
-     v9fs_path_copy(&str, dst);
--    v9fs_path_sprintf(dst, "%s%s", src->data, str.data + len);
-+    ret = v9fs_path_sprintf(dst, "%s%s", src->data, str.data + len);
-     v9fs_path_free(&str);
-+    return ret;
- }
+     for (i = 0; i < group->l2_flood.group_count; i++) {
++        if (!tlvs[i + 1]) {
++            err = -ROCKER_EINVAL;
++            goto err_out;
++        }
+         group->l2_flood.group_ids[i] = rocker_tlv_get_le32(tlvs[i + 1]);
+     }
  
- static inline bool is_ro_export(FsContext *ctx)
 -- 
 2.47.3
 
