@@ -4,46 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0453CDB481
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 13:43:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E22CCCDB479
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 13:43:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcNsX-0002X3-2A; Wed, 24 Jun 2026 09:42:57 -0400
+	id 1wcNkZ-0000O6-GM; Wed, 24 Jun 2026 09:34:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wcNsS-0002P0-Oh; Wed, 24 Jun 2026 09:42:53 -0400
+ id 1wcNkU-0000Ai-RI; Wed, 24 Jun 2026 09:34:38 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wcNsQ-0001yT-S3; Wed, 24 Jun 2026 09:42:52 -0400
+ id 1wcNkT-0000Xn-AE; Wed, 24 Jun 2026 09:34:38 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1782308001; bh=BizYKPonuqh83YxKZA002CnSJeSjU0Wy/O3qLhenGNE=;
+ t=1782307996; bh=OwdSBD4V2b4+B8glKB7Gyvjax4SKaYALuDPpDERSKxU=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=m/0GJn5YTG+8aEheE2A2T2sgRJyFJG6ClEZn9TbEeAHKZvWh/9qX30n8PfNwSxXUQ
- BARDbC0CyEG/S6llBK/amqMHcYeP5+bIJr/gpjfAixp+PHBIRiLHPTAaaETeGpEn4o
- U5Ne3kqivObOAJ+ub6WvWT8Khwil7NmkXf9fUIw4wjT52BXcW6yESBOf4EhPaC61Av
- yAy771nMrS16w+HyVj7hyamCW9+bHPQQpj+NGVOIcUT/K+D3WP5s1m5Z62sBzovt2p
- kokFJlw4cECrdF2MEZkwvwWRdeD9O6aVWN9Rocx9csxtBuOnNJSpNdYOw+R5/QO5l7
- dKEZHeiz9dN0g==
+ b=w+VQdKdCqlAb6XwFQqNuSrhNTHYoPbPitSCXVb5G4RHKAJSiEJL0d7PdY9jdTMkfe
+ iENEYpbPVy1sof4g6KHUp0mU/t9JL/i6uxmXuFjjZlh16Dg7U3pHjgv4sWDYbbl/KV
+ bQqVEDcSa8dJM4jCjpo+4tiC8mlMs+FFc52+Zryf2iG2SEpcVDWF5ufjeOhSOZIKgk
+ WVQ+ooVXtC7Pm6RzJrWJPVCW2rfqueYN5rf4IqhXfe2wAseCTqRfx7BDIPo20PAsRO
+ 9dzVRY7ShFjTZ/IX90JnuvdxidkN9+8GFUAWMDb9lJD87/ypZVyLoXcVMgerKn16n5
+ YsP8tPFGu9ReQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id F19AC1BAA12;
- Wed, 24 Jun 2026 16:33:21 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 841E41BA9C6;
+ Wed, 24 Jun 2026 16:33:16 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 8E5B93DEA61;
- Wed, 24 Jun 2026 16:33:27 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 1F6E33DEA15;
+ Wed, 24 Jun 2026 16:33:22 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Mathias Krause <minipli@grsecurity.net>,
- Paolo Bonzini <pbonzini@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.2 096/107] gdbstub: Update x86 control register bits
-Date: Wed, 24 Jun 2026 16:31:41 +0300
-Message-ID: <20260624133301.403266-96-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ boy juju <agx1657748706@gmail.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.2 020/107] ui/vnc: fix OOB read updating VNC update
+ frequency stats
+Date: Wed, 24 Jun 2026 16:30:25 +0300
+Message-ID: <20260624133301.403266-20-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.2-20260624163118@cover.tls.msk.ru>
 References: <qemu-stable-11.0.2-20260624163118@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -68,111 +73,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Mathias Krause <minipli@grsecurity.net>
+From: Daniel P. Berrangé <berrange@redhat.com>
 
-The control register bits haven't been updated in a few years, making
-them lack behind features QEMU ganied in these years.
+Incorrect loop bounds in vnc_update_freq result in iterating past the
+last row and past the last column in the VNC stats array. With suitably
+chosen dimensions this could be a OOB read that accesses memory beyond
+the VncDisplay struct that the stats array is embedded in.
 
-Update them to the current version of the SDM and sort the 32bit version
-to be in line with all the other definitions (descending order).
+Should this hit a guard page, it could trigger a guest crash. If it
+does not, then the VNC frequency stats will be updated with garbage.
 
-This should remove confusion when debugging, for example, CET-enabled
-guests:
-
-- before the change:
-  (gdb) info registers cr4
-  cr4            0x8000f0            [ PGE MCE PAE PSE ]
-
-- after the change:
-  (gdb) info registers cr4
-  cr4            0x8000f0            [ CET PGE MCE PAE PSE ]
-
-Signed-off-by: Mathias Krause <minipli@grsecurity.net>
-Link: https://lore.kernel.org/r/20260327143413.254227-1-minipli@grsecurity.net
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit 88d39a2937ebad64b8aed8247450e1a6ddf274be)
+Fixes: CVE-2026-48003
+Reported-by: boy juju <agx1657748706@gmail.com>
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+Message-ID: <20260521103353.1645561-5-berrange@redhat.com>
+(cherry picked from commit d0c7b82d3a89dd9c863f8aa69b07360c648ca9fb)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/gdbstub/gdb-xml/i386-32bit.xml b/gdbstub/gdb-xml/i386-32bit.xml
-index 7a66a02b67..1dec40e1d2 100644
---- a/gdbstub/gdb-xml/i386-32bit.xml
-+++ b/gdbstub/gdb-xml/i386-32bit.xml
-@@ -87,27 +87,34 @@
-   </flags>
+diff --git a/ui/vnc.c b/ui/vnc.c
+index 8ab44c830c..1b5fc8117a 100644
+--- a/ui/vnc.c
++++ b/ui/vnc.c
+@@ -3105,12 +3105,14 @@ double vnc_update_freq(VncState *vs, int x, int y, int w, int h)
+     int i, j;
+     double total = 0;
+     int num = 0;
++    int x_end = x + w;
++    int y_end = y + h;
  
-   <flags id="i386_cr4" size="4">
--	<field name="VME" start="0" end="0"/>
--	<field name="PVI" start="1" end="1"/>
--	<field name="TSD" start="2" end="2"/>
--	<field name="DE" start="3" end="3"/>
--	<field name="PSE" start="4" end="4"/>
--	<field name="PAE" start="5" end="5"/>
--	<field name="MCE" start="6" end="6"/>
--	<field name="PGE" start="7" end="7"/>
--	<field name="PCE" start="8" end="8"/>
--	<field name="OSFXSR" start="9" end="9"/>
--	<field name="OSXMMEXCPT" start="10" end="10"/>
--	<field name="UMIP" start="11" end="11"/>
--	<field name="LA57" start="12" end="12"/>
--	<field name="VMXE" start="13" end="13"/>
--	<field name="SMXE" start="14" end="14"/>
--	<field name="FSGSBASE" start="16" end="16"/>
--	<field name="PCIDE" start="17" end="17"/>
--	<field name="OSXSAVE" start="18" end="18"/>
--	<field name="SMEP" start="20" end="20"/>
--	<field name="SMAP" start="21" end="21"/>
-+	<field name="LAM_SUP" start="28" end="28"/>
-+	<field name="LASS" start="27" end="27"/>
-+	<field name="UINTR" start="25" end="25"/>
-+	<field name="PKS" start="24" end="24"/>
-+	<field name="CET" start="23" end="23"/>
-+	<field name="PKE" start="22" end="22"/>
- 	<field name="PKE" start="22" end="22"/>
-+	<field name="SMAP" start="21" end="21"/>
-+	<field name="SMEP" start="20" end="20"/>
-+	<field name="KL" start="19" end="19"/>
-+	<field name="OSXSAVE" start="18" end="18"/>
-+	<field name="PCIDE" start="17" end="17"/>
-+	<field name="FSGSBASE" start="16" end="16"/>
-+	<field name="SMXE" start="14" end="14"/>
-+	<field name="VMXE" start="13" end="13"/>
-+	<field name="LA57" start="12" end="12"/>
-+	<field name="UMIP" start="11" end="11"/>
-+	<field name="OSXMMEXCPT" start="10" end="10"/>
-+	<field name="OSFXSR" start="9" end="9"/>
-+	<field name="PCE" start="8" end="8"/>
-+	<field name="PGE" start="7" end="7"/>
-+	<field name="MCE" start="6" end="6"/>
-+	<field name="PAE" start="5" end="5"/>
-+	<field name="PSE" start="4" end="4"/>
-+	<field name="DE" start="3" end="3"/>
-+	<field name="TSD" start="2" end="2"/>
-+	<field name="PVI" start="1" end="1"/>
-+	<field name="VME" start="0" end="0"/>
-   </flags>
+     x =  QEMU_ALIGN_DOWN(x, VNC_STAT_RECT);
+     y =  QEMU_ALIGN_DOWN(y, VNC_STAT_RECT);
  
-   <flags id="i386_efer" size="4">
-diff --git a/gdbstub/gdb-xml/i386-64bit.xml b/gdbstub/gdb-xml/i386-64bit.xml
-index 6d88969211..9ac9164e6a 100644
---- a/gdbstub/gdb-xml/i386-64bit.xml
-+++ b/gdbstub/gdb-xml/i386-64bit.xml
-@@ -102,9 +102,16 @@
-   </flags>
- 
-   <flags id="x64_cr4" size="8">
-+	<field name="FRED" start="32" end="32"/>
-+	<field name="LAM_SUP" start="28" end="28"/>
-+	<field name="LASS" start="27" end="27"/>
-+	<field name="UINTR" start="25" end="25"/>
-+	<field name="PKS" start="24" end="24"/>
-+	<field name="CET" start="23" end="23"/>
- 	<field name="PKE" start="22" end="22"/>
- 	<field name="SMAP" start="21" end="21"/>
- 	<field name="SMEP" start="20" end="20"/>
-+	<field name="KL" start="19" end="19"/>
- 	<field name="OSXSAVE" start="18" end="18"/>
- 	<field name="PCIDE" start="17" end="17"/>
- 	<field name="FSGSBASE" start="16" end="16"/>
+-    for (j = y; j <= y + h; j += VNC_STAT_RECT) {
+-        for (i = x; i <= x + w; i += VNC_STAT_RECT) {
++    for (j = y; j < y_end; j += VNC_STAT_RECT) {
++        for (i = x; i < x_end; i += VNC_STAT_RECT) {
+             total += vnc_stat_rect(vs->vd, i, j)->freq;
+             num++;
+         }
 -- 
 2.47.3
 
