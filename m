@@ -4,42 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC3F6CDB479
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 13:45:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2D56CDE002
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 13:45:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcNoZ-0002tE-Lw; Wed, 24 Jun 2026 09:38:51 -0400
+	id 1wcNrV-0000GT-Or; Wed, 24 Jun 2026 09:41:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wcNnX-0001hG-Hf; Wed, 24 Jun 2026 09:37:48 -0400
+ id 1wcNrB-0008F7-Gy; Wed, 24 Jun 2026 09:41:35 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wcNnV-00014P-Ni; Wed, 24 Jun 2026 09:37:47 -0400
+ id 1wcNrA-0001rh-0t; Wed, 24 Jun 2026 09:41:33 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1782307998; bh=sq3wfnIuv+1QgSiiJ3QDn+46DBYkyT99RJCkygeD7uc=;
+ t=1782308001; bh=IKgs5bsnyOSKcYnwzV+SHFl/xquAUuTC6KqQdb72ZbU=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=rF0w6fTK8K5oHlg30iGchV1f2lcSM6DJ7qROJ+sligU4xvTJkcSspCiphH/tyAFkx
- B2zCuOwkdlHDcX0Pek+ISYcApG/6bUBYXN1qLKo0wWaocNRgYDemLQDpbOPiFnBLHq
- ItSKiDPlMPi1SJCjc3zQIi5fML70u/loxexYiBNquAFa1SXVVayBgHzzaJbgLE4ay5
- QkaqDPqPdR9eZ+mAxjTuH9vR+yQVq84pjkWVDzzoaNf6uSdF42UjN1aQfsD8Wh8qC2
- h+OlHfR3LaNBdsLv51N8EOVeWa6828RoNGGYgnf133Q9tbz4RRKOKHzgyJhx9lAq5P
- 8eWlzNSDg+aUg==
+ b=IRMFmP8ALpsMJWGUnmvuMcsdl1hl+nqkNzk7BI7je/a4vpFGKhncMApgKivFeML9j
+ QBEpmOtA7rb6f8q0nQQ7mc8nGgCL5UTWMtrAjSoa+5RghVLBKrPOQkHxDMCvnZEbB7
+ zgScUqoVvefQxcqnyryKfU0pOc6zNKjCT5kgF5clxt7MQxe1u2a6yBHsyTTXw9PJec
+ rw2hWhJwQZSV9Zwvhbvslq2FUh5W66ANdqKo+0i5tdWnMUWhRIsUL3moHJeUddYzVK
+ ACAiQoBDwJ3CGOajc2S+JvCQQx4CknDC13p+BHeQY18CTC2kmUhBZhFH7vcm0K50jS
+ oRnxNEEuUlBHw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 753A51BA9E2;
- Wed, 24 Jun 2026 16:33:18 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 318591BAA07;
+ Wed, 24 Jun 2026 16:33:21 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 13FB83DEA31;
- Wed, 24 Jun 2026 16:33:24 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id C1C273DEA56;
+ Wed, 24 Jun 2026 16:33:26 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Christian Schoenebeck <qemu_oss@crudebyte.com>,
+Cc: qemu-stable@nongnu.org,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.2 048/107] tests/9pfs: add deep absolute path test
-Date: Wed, 24 Jun 2026 16:30:53 +0300
-Message-ID: <20260624133301.403266-48-mjt@tls.msk.ru>
+Subject: [Stable-11.0.2 085/107] target/riscv/csr.c: do not allow mstatus
+ MPV/GVA writes
+Date: Wed, 24 Jun 2026 16:31:30 +0300
+Message-ID: <20260624133301.403266-85-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.2-20260624163118@cover.tls.msk.ru>
 References: <qemu-stable-11.0.2-20260624163118@cover.tls.msk.ru>
@@ -68,117 +71,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Christian Schoenebeck <qemu_oss@crudebyte.com>
+From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 
-Add fs_deep_absolute_path test that creates a deep directory
-structure with an absolute path length exceeding 16-bit range
-(i.e. >65536) to verify the previous buffer overflow fix.
+The priv spec states the following about mstatus.MPV:
 
-This is a slow test (may take several seconds) and therefore
-registered as "slow" test and not running by default.
+"The MPV bit (Machine Previous Virtualization Mode) is written by the
+implementation whenever a trap is taken into M-mode."
 
-Use -m slow to run this test.
+And, about mstatus.GVA:
 
-Link: https://gitlab.com/qemu-project/qemu/-/issues/3358
-Link: https://lore.kernel.org/qemu-devel/933552b2cfc2c442fac7f4e68c777dce20ee8d7e.1779126034.git.qemu_oss@crudebyte.com
-Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
-(cherry picked from commit 198627807a6b94e2aab157cf345f98edb1ac1a7a)
+"Field GVA (Guest Virtual Address) is written by the implementation
+whenever a trap is taken into M-mode."
+
+Both are written during riscv_cpu_do_interrupt().  They're not supposed
+to be written by userspace.  As far as write_mstatus goes these fields
+are read only.  The same applies for mstatush.MPV/mstatush.GVA.
+
+Fixes: 03dd405dd5 ("target/riscv: Support MSTATUS.MPV/GVA only when RVH is enabled")
+Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Acked-by: Alistair Francis <alistair.francis@wdc.com>
+Message-ID: <20260514194537.2416243-2-daniel.barboza@oss.qualcomm.com>
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+(cherry picked from commit 18645f19578955ec5ff2c40cd2c8753d6bc460c2)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/tests/qtest/virtio-9p-test.c b/tests/qtest/virtio-9p-test.c
-index ac38ccf595..1c69d41e33 100644
---- a/tests/qtest/virtio-9p-test.c
-+++ b/tests/qtest/virtio-9p-test.c
-@@ -14,6 +14,7 @@
+diff --git a/target/riscv/csr.c b/target/riscv/csr.c
+index 0f14ea4689..ec4aa357b4 100644
+--- a/target/riscv/csr.c
++++ b/target/riscv/csr.c
+@@ -2027,9 +2027,6 @@ static RISCVException write_mstatus(CPURISCVState *env, int csrno,
+     }
  
- #include "qemu/osdep.h"
- #include "qemu/module.h"
-+#include "libqos/virtio.h"
- #include "libqos/virtio-9p-client.h"
- 
- #define twalk(...) v9fs_twalk((TWalkOpt) __VA_ARGS__)
-@@ -752,6 +753,72 @@ static void fs_use_after_unlink(void *obj, void *data,
-     g_assert_cmpint(attr.size, ==, 2001);
- }
- 
-+/* https://gitlab.com/qemu-project/qemu/-/issues/3358 */
-+static void fs_deep_absolute_path(void *obj, void *data,
-+                                  QGuestAllocator *t_alloc)
-+{
-+    QVirtio9P *v9p = obj;
-+    v9fs_set_allocator(t_alloc);
-+
-+    if (!g_test_slow()) {
-+        g_test_skip("This is a slow test, run with -m slow");
-+        return;
-+    }
-+
-+    GString *path = g_string_new("/");
-+    char name[256];
-+    uint32_t current_fid = 0;
-+
-+    tattach({ .client = v9p });
-+
-+    /* Create deep directory structure until absolute path length
-+     * exceeds 16-bit range.
-+     */
-+    while (path->len <= 65536) {
-+        /* use 255-byte name (NAME_MAX) to reduce iterations to ~257 */
-+        memset(name, 'A', 255);
-+        name[255] = '\0';
-+
-+        /* create the directory relative to current FID */
-+        tmkdir({
-+            .client = v9p,
-+            .dfid = current_fid,
-+            .name = name
-+        });
-+
-+        /* just for locally tracking the current path length */
-+        g_string_append(path, name);
-+        g_string_append(path, "/");
-+
-+        /* acquire new FID for the newly created directory */
-+        char *wnames[] = { name };
-+        current_fid = twalk({
-+            .client = v9p,
-+            .fid = current_fid,
-+            .nwname = 1,
-+            .wnames = wnames
-+        }).newfid;
-+
-+        /* Reset descriptor pool to avoid exhaustion. The simplified
-+         * virtio test driver does never free descriptors back to the pool
-+         * after use, so we must manually reset it for the required high
-+         * amount of 9p requests here.
-+         */
-+        qvirtqueue_reset_pool(v9p->vq);
-+    }
-+
-+    /* check if the deepest directory is accessible */
-+    v9fs_attr attr = {};
-+    tgetattr({
-+        .client = v9p,
-+        .fid = current_fid,
-+        .request_mask = P9_GETATTR_BASIC,
-+        .rgetattr.attr = &attr
-+    });
-+
-+    g_string_free(path, TRUE);
-+}
-+
- static void cleanup_9p_local_driver(void *data)
+     if (xl != MXL_RV32 || env->debugger) {
+-        if (riscv_has_ext(env, RVH)) {
+-            mask |= MSTATUS_MPV | MSTATUS_GVA;
+-        }
+         if ((val & MSTATUS64_UXL) != 0) {
+             mask |= MSTATUS64_UXL;
+         }
+@@ -2066,7 +2063,7 @@ static RISCVException write_mstatush(CPURISCVState *env, int csrno,
+                                      target_ulong val, uintptr_t ra)
  {
-     /* remove previously created test dir when test is completed */
-@@ -819,6 +886,8 @@ static void register_virtio_9p_test(void)
-                  &opts);
-     qos_add_test("local/use_after_unlink", "virtio-9p", fs_use_after_unlink,
-                  &opts);
-+    qos_add_test("local/deep_absolute_path", "virtio-9p",
-+                 fs_deep_absolute_path, &opts);
- }
+     uint64_t valh = (uint64_t)val << 32;
+-    uint64_t mask = riscv_has_ext(env, RVH) ? MSTATUS_MPV | MSTATUS_GVA : 0;
++    uint64_t mask = 0;
  
- libqos_init(register_virtio_9p_test);
+     if (riscv_cpu_cfg(env)->ext_smdbltrp) {
+         mask |= MSTATUS_MDT;
 -- 
 2.47.3
 
