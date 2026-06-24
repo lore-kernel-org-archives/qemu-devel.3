@@ -4,59 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19F4CCDB47F
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 20:01:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00CABCDB479
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 20:01:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcTle-0005m0-IJ; Wed, 24 Jun 2026 16:00:14 -0400
+	id 1wcTmP-0007Ds-KA; Wed, 24 Jun 2026 16:01:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1wcTlb-0005lW-RE; Wed, 24 Jun 2026 16:00:11 -0400
+ id 1wcTmN-0007DH-KF; Wed, 24 Jun 2026 16:00:59 -0400
 Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1wcTla-0008NZ-24; Wed, 24 Jun 2026 16:00:11 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ id 1wcTmL-0008WN-QO; Wed, 24 Jun 2026 16:00:59 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65OJmMBx1996108; Wed, 24 Jun 2026 20:00:02 GMT
+ 65OJmHET2205944; Wed, 24 Jun 2026 20:00:50 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=tp4dRXM3N+W3L+j/k
- FbUayQVnIAbx21aJY4VWa75ZF8=; b=Iu4lx57kWAtjJcTWKNTJv5qDTk6F1rqKk
- qmVO3Vi0MguX3E0KBTSz/reS9xCDdL4lmhD+jHvZkIaPwWs5KvO4C0tiUIecpyne
- XBZg42LsB4AdjDGsbqHAgW6uRCBxuHK59ajNNaVevIUVJ+TRsjZ9k9T0XBTYjjJM
- 3Yi47onDgUxk2YFP+phHFJPp73Z7O31ePyFvx4XGf0tz99CkgXsH9HiWkOWEVVa+
- dEAJQ8kyiTGRVddqhPeNGOfX68RACAp5VZwtA++FWNADqKEM2OJ4ozjzpMohSkev
- YHJuj0IKmIUQbRl120Qb51MA4k+VNicIGgZsGN8HEkpbRiAgq7giA==
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4ewjk4p84r-1
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=P4uDls
+ zY5DX+rc7NlGrEgGeK9D2NIhXkj4pQ7n1DL6U=; b=SwVFSTuynKLWiJBtXgNHwW
+ hGoBkWf1wu6zosrO6qg6i7aFfZ6cppOOW/lMkFLRGzSMFHg+OCjbQkhb9KAB08iI
+ U75FicgbICmBoGi9hRvcDHKd6R2eXb1MdjlULO/b4IUKHbD9jZLplajU3LD3iqfT
+ Ui0OToRIabp4YczVe6NkUFs1QJ/CFgi+LRfLLO2l1+tEWbqmapDAceoyj2PPJIIP
+ gg1eutO8Eoms9a7qf2VLMEph2hP31Rk3d8QWGCLUwwaXpgSDG+Rh5NaoQTVgzbcr
+ f5jdapKLq/oBBs57hFzD+pu6WomIwyQdM4PGZ8CZdCztht2ghaBHhtcCSxHd+bzw
+ ==
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4ewjhqx5cs-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 24 Jun 2026 20:00:00 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 65OJo0BF029539;
- Wed, 24 Jun 2026 19:59:59 GMT
-Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4ex7dgaa2q-1
+ Wed, 24 Jun 2026 20:00:49 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 65OJo3bG012312;
+ Wed, 24 Jun 2026 20:00:48 GMT
+Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4ex66kahjp-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 24 Jun 2026 19:59:59 +0000 (GMT)
+ Wed, 24 Jun 2026 20:00:48 +0000 (GMT)
 Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com
  [10.20.54.106])
- by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 65OJxubm42270980
+ by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 65OK0iBE52625860
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 24 Jun 2026 19:59:56 GMT
+ Wed, 24 Jun 2026 20:00:44 GMT
 Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 2308320040;
- Wed, 24 Jun 2026 19:59:56 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 6205C20040;
+ Wed, 24 Jun 2026 20:00:44 +0000 (GMT)
 Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 33F402004D;
- Wed, 24 Jun 2026 19:59:47 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id E89C52004B;
+ Wed, 24 Jun 2026 20:00:35 +0000 (GMT)
 Received: from li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com (unknown
  [9.39.20.104]) by smtpav07.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Wed, 24 Jun 2026 19:59:46 +0000 (GMT)
+ Wed, 24 Jun 2026 20:00:35 +0000 (GMT)
 From: Aditya Gupta <adityag@linux.ibm.com>
 To: <qemu-devel@nongnu.org>, <qemu-ppc@nongnu.org>,
  Harsh Prateek Bora <harshpb@linux.ibm.com>,
@@ -74,49 +75,53 @@ Cc: Sourabh Jain <sourabhjain@linux.ibm.com>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  kvm@vger.kernel.org, Gautam Menghani <gautam@linux.ibm.com>,
  Chinmay Rath <rathc@linux.ibm.com>
-Subject: [PATCH v2 2/8] tests/qtest/pnv_spi: Test Power11 PNV_SPI
-Date: Thu, 25 Jun 2026 01:29:18 +0530
-Message-ID: <20260624195924.1422821-3-adityag@linux.ibm.com>
+Subject: [PATCH v2 7/8] ppc/pnv: Remove Power8E and Power8NVL CPUs
+Date: Thu, 25 Jun 2026 01:29:23 +0530
+Message-ID: <20260624195924.1422821-8-adityag@linux.ibm.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260624195924.1422821-1-adityag@linux.ibm.com>
 References: <20260624195924.1422821-1-adityag@linux.ibm.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
 X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Authority-Analysis: v=2.4 cv=Oph/DS/t c=1 sm=1 tr=0 ts=6a3c3741 cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
- a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=U7nrCbtTmkRpXpFmAIza:22 a=VnNF1IyMAAAA:8 a=gL735G7rtJRJJwX7cZEA:9
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjI0MDE2NiBTYWx0ZWRfX+ikg8SP6vMZS
- fF1YcYjuZzPm6rTuktOo1tBdlheZPp/Fve9tlsiZ8Qd2bDY+b51Mjp2ccMMCsrM5EFe/iempxmT
- XVGHN1CDcytAcKHDGqD9WIGQBo7Jy8B3wIWZEeRhg19YC697oSjOGnA5Wr0y4jqqH1P0LoSLUBj
- d62x6Q++5Fk1ouaFAqloea5GR/HiqdmIEvLqBU3gw94ij9iTVYdw+cxetbU5FOFHu79+M8Mfe2Q
- udRz5D4dNpvFxDKV1UFLGrDhQNMUbtxCD8EjY6cHEtH+kSdOtSs8X4QvJtao3tdlrlzBLBWawJc
- Ya/3qNUoL9Usib7lmvE6AiGgZFBu/3moOg8m0pbcnd63Sei+oEufIVM6lni6M59K6ghq1O0cLc0
- Y1mJ36EGtHj61xOZGRQpQPZxdXk0mQ==
-X-Proofpoint-GUID: GtFDswCqYbLVY19alg42B8Lp3vDj5-cH
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjI0MDE2NiBTYWx0ZWRfXwiYCs2pbpJii
- VuQzTyPTq89U6tGF9atNAyPMGHOqXNtb+GAcFOCdixqYaFk2S/aB+LjIUKG4CsEYPtzm/ye7RcA
- 9wrVl9YyFMzLrdFItBHAE1yTaJAz0i4=
-X-Proofpoint-ORIG-GUID: NVOCfKR053570ktUQUhC7RLYxF1lZeru
+X-Authority-Analysis: v=2.4 cv=I4VVgtgg c=1 sm=1 tr=0 ts=6a3c3772 cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+ a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=EUspDBNiAAAA:8
+ a=VnNF1IyMAAAA:8 a=9o66lyqVio6zCVhO5FUA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjI0MDE2NiBTYWx0ZWRfX3AZux1gQXGnw
+ wE8IT56DT/dd03Su1cfQMkzQxSgPWo5hAyUQhw8veWsqN3zUq93u6KSUaPCLi0jbWVs8DKdcpR/
+ gzvJ4ZrSiVF7y7dtQsa0/PTkjgIDcSw+I194kx8NSMn0I1i+9yAuo7nNJoC/3z9sazdrp1k4Dgy
+ Xoco3uY0AXYoUIguM6hp+SRdb8VZK/s2bFJunebhh6neq16pfVH4B1c8Q1N7NLNNiPS1gwYXn1o
+ GS/zsme3xRxkLOsZl4DQ31F86h5UdDXcR7BmtJvb0qA5E6W++9h8GhFW9yFooVkiQoies5WF0QD
+ Hz5DtRN/rXwhZoE38yaoid7eKHiypd955lmS58dNsimvLd38gasPr8AGA7FyXcHt5klPCriLkUh
+ CEeUqDbk+p7Tr7M38ktnPZZhnKlrmMTZL0K/HhxPlPi/LP1xRHzGvw4g2QuTJsOknJDRXSMJL1P
+ 7IPSeGNjRJVYldq80Jg==
+X-Proofpoint-GUID: Z1pBRgJKzLWoC6vqfcQysD3XUBpK8J1g
+X-Proofpoint-ORIG-GUID: BLzZ2oT-srU4w5QdyLw3QyPCYrgbuWs3
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjI0MDE2NiBTYWx0ZWRfXzSxp0CepZsFG
+ 1VE4B96vitAv8evwaXeWpqLUSqPyQXGYJcNmErcZCmOja0wJNRN77lmG9oVHQxRnVbUUvJkBUQe
+ OIsvtoHWjrcDYlKZlDUei7JtqRWFJgs=
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-06-24_04,2026-06-24_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 lowpriorityscore=0 bulkscore=0 spamscore=0 suspectscore=0
- malwarescore=0 adultscore=0 classifier=typeunknown authscore=0 authtc=
- authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.22.0-2606150000 definitions=main-2606240166
+ lowpriorityscore=0 malwarescore=0 clxscore=1015 impostorscore=0
+ suspectscore=0 phishscore=0 bulkscore=0 spamscore=0 priorityscore=1501
+ adultscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
+ definitions=main-2606240166
 Received-SPF: pass client-ip=148.163.156.1; envelope-from=adityag@linux.ibm.com;
  helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
  RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001, TVD_SUBJ_WIPE_DEBT=1.004 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -132,71 +137,168 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently pnv-spi-seeprom-test was hardcoded to test the 4th chip in
-pnv_chips (power10 as of now).
+Power8E and Power8NVL were deprecated since QEMU 10.1, with
+commit 264a604e7163 ("target/ppc: Deprecate Power8E and Power8NVL")
 
-This requires ensuring to update the index when removing/adding entries
-in pnv_chips, such as when Power8E or Power11 gets removed/added in
-future commits.
+Remove the corresponding 8E and 8NVL CPU cores from spapr/pseries
 
-Iterate over all the chips instead, similar to other tests in
-pnv-xscom-test.c and pnv-host-i2c-test.c, but skip older chips, since
-TYPE_PNV_SPI only exists from Power10 onwards, hence skip older machines
+Also, with no use of 8E and 8NVL, in powernv chips or spapr cores,
+remove the CPU definitions for the cores
 
-Tests all the pnv_chips similar to other qtests
-
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
 ---
- tests/qtest/pnv-spi-seeprom-test.c | 20 ++++++++++++++------
- 1 file changed, 14 insertions(+), 6 deletions(-)
+ docs/about/deprecated.rst       | 9 ---------
+ docs/about/removed-features.rst | 8 ++++++++
+ docs/system/ppc/pseries.rst     | 2 +-
+ hw/ppc/spapr_cpu_core.c         | 2 --
+ target/ppc/cpu-models.c         | 6 ------
+ target/ppc/cpu-models.h         | 4 ----
+ target/ppc/cpu_init.c           | 6 ------
+ target/ppc/kvm.c                | 4 +---
+ 8 files changed, 10 insertions(+), 31 deletions(-)
 
-diff --git a/tests/qtest/pnv-spi-seeprom-test.c b/tests/qtest/pnv-spi-seeprom-test.c
-index 44e0b92730b4..1a78e8d966a5 100644
---- a/tests/qtest/pnv-spi-seeprom-test.c
-+++ b/tests/qtest/pnv-spi-seeprom-test.c
-@@ -77,6 +77,7 @@ static void test_spi_seeprom(const void *data)
-     const PnvChip *chip = data;
-     QTestState *qts = NULL;
-     g_autofree char *tmp_path = NULL;
-+    const char *machine = "powernv10";
-     int ret;
-     int fd;
+diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
+index 97750f5edc91..3930ef08ed4b 100644
+--- a/docs/about/deprecated.rst
++++ b/docs/about/deprecated.rst
+@@ -215,15 +215,6 @@ embedded 405 for power management (OCC) and other internal tasks, it
+ is theoretically possible to use QEMU to model them. Let's keep the
+ CPU implementation for a while before removing all support.
  
-@@ -87,11 +88,11 @@ static void test_spi_seeprom(const void *data)
-     g_assert(ret == 0);
-     close(fd);
+-Power8E and Power8NVL CPUs and corresponding Pnv chips (since 10.1)
+-'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+-
+-The Power8E and Power8NVL variants of Power8 are not really useful anymore
+-in qemu, and are old and unmaintained now.
+-
+-The CPUs as well as corresponding Power8NVL and Power8E PnvChips will also
+-be considered deprecated.
+-
+ System emulator machines
+ ------------------------
  
--    qts = qtest_initf("-machine powernv10 -smp 2,cores=2,"
-+    qts = qtest_initf("-machine %s -smp 2,cores=2,"
-                       "threads=1 -accel tcg,thread=single -nographic "
-                       "-blockdev node-name=pib_spic2,driver=file,"
-                       "filename=%s -device 25csm04,bus=chip0.spi.2,cs=0,"
--                      "drive=pib_spic2", tmp_path);
-+                      "drive=pib_spic2", machine, tmp_path);
-     spi_seeprom_transaction(qts, chip);
-     qtest_quit(qts);
-     unlink(tmp_path);
-@@ -100,9 +101,16 @@ static void test_spi_seeprom(const void *data)
- int main(int argc, char **argv)
- {
-     g_test_init(&argc, &argv, NULL);
--    char *tname = g_strdup_printf("pnv-xscom/spi-seeprom/%s",
--            pnv_chips[3].cpu_model);
--    qtest_add_data_func(tname, &pnv_chips[3], test_spi_seeprom);
--    g_free(tname);
+diff --git a/docs/about/removed-features.rst b/docs/about/removed-features.rst
+index d1bea4d75bb4..f7a2aa326dec 100644
+--- a/docs/about/removed-features.rst
++++ b/docs/about/removed-features.rst
+@@ -1038,6 +1038,14 @@ initial RISC-V QEMU port. Its usage was always been unclear: users don't know
+ what to expect from a CPU called 'any', and in fact the CPU does not do anything
+ special that isn't already done by the default CPUs rv32/rv64.
+ 
++Power8E and Power8NVL CPUs (removed in 11.1)
++''''''''''''''''''''''''''''''''''''''''''''
 +
-+    for (int i = 0; i < ARRAY_SIZE(pnv_chips); i++) {
-+        /* TYPE_PNV_SPI is not instantiated for older Power8/9 machines */
-+        if (pnv_chips[i].chip_type < PNV_CHIP_POWER10) {
-+            continue;
-+        }
++The Power8E and Power8NVL variants of Power8 are not really useful anymore
++in qemu, and are old and unmaintained.
++Hence, the CPUs as well as corresponding Power8NVL and Power8E PnvChips have
++been removed
 +
-+        g_autofree char *tname = g_strdup_printf("pnv-xscom/spi-seeprom/%s",
-+                pnv_chips[i].cpu_model);
-+        qtest_add_data_func(tname, &pnv_chips[i], test_spi_seeprom);
-+    }
-     return g_test_run();
- }
+ System accelerators
+ -------------------
+ 
+diff --git a/docs/system/ppc/pseries.rst b/docs/system/ppc/pseries.rst
+index bbc51aa7fcdb..1477028bc5ea 100644
+--- a/docs/system/ppc/pseries.rst
++++ b/docs/system/ppc/pseries.rst
+@@ -16,7 +16,7 @@ Supported devices
+ 
+  * Multi processor support for many Power processors generations:
+    - POWER7, POWER7+
+-   - POWER8, POWER8NVL
++   - POWER8
+    - POWER9
+    - Power10
+    - Power11
+diff --git a/hw/ppc/spapr_cpu_core.c b/hw/ppc/spapr_cpu_core.c
+index 41e37103c043..9a9351991c95 100644
+--- a/hw/ppc/spapr_cpu_core.c
++++ b/hw/ppc/spapr_cpu_core.c
+@@ -408,8 +408,6 @@ static const TypeInfo spapr_cpu_core_type_infos[] = {
+     DEFINE_SPAPR_CPU_CORE_TYPE("power7_v2.3"),
+     DEFINE_SPAPR_CPU_CORE_TYPE("power7p_v2.1"),
+     DEFINE_SPAPR_CPU_CORE_TYPE("power8_v2.0"),
+-    DEFINE_SPAPR_CPU_CORE_TYPE("power8e_v2.1"),
+-    DEFINE_SPAPR_CPU_CORE_TYPE("power8nvl_v1.0"),
+     DEFINE_SPAPR_CPU_CORE_TYPE("power9_v2.0"),
+     DEFINE_SPAPR_CPU_CORE_TYPE("power9_v2.2"),
+     DEFINE_SPAPR_CPU_CORE_TYPE("power10_v2.0"),
+diff --git a/target/ppc/cpu-models.c b/target/ppc/cpu-models.c
+index 26b6debcfc96..aa13654e83e8 100644
+--- a/target/ppc/cpu-models.c
++++ b/target/ppc/cpu-models.c
+@@ -734,12 +734,8 @@
+                 "POWER7 v2.3")
+     POWERPC_DEF("power7p_v2.1",  CPU_POWERPC_POWER7P_v21,            POWER7,
+                 "POWER7+ v2.1")
+-    POWERPC_DEPRECATED_CPU("power8e_v2.1",  CPU_POWERPC_POWER8E_v21, POWER8,
+-                "POWER8E v2.1", "CPU is unmaintained.")
+     POWERPC_DEF("power8_v2.0",   CPU_POWERPC_POWER8_v20,             POWER8,
+                 "POWER8 v2.0")
+-    POWERPC_DEPRECATED_CPU("power8nvl_v1.0", CPU_POWERPC_POWER8NVL_v10, POWER8,
+-                "POWER8NVL v1.0", "CPU is unmaintained.")
+     POWERPC_DEF("power9_v2.0",   CPU_POWERPC_POWER9_DD20,            POWER9,
+                 "POWER9 v2.0")
+     POWERPC_DEF("power9_v2.2",   CPU_POWERPC_POWER9_DD22,            POWER9,
+@@ -918,9 +914,7 @@ PowerPCCPUAlias ppc_cpu_aliases[] = {
+     { "power7", "power7_v2.3" },
+     { "power7+", "power7p_v2.1" },
+     { "power7+_v2.1", "power7p_v2.1" },
+-    { "power8e", "power8e_v2.1" },
+     { "power8", "power8_v2.0" },
+-    { "power8nvl", "power8nvl_v1.0" },
+     { "power9", "power9_v2.2" },
+     { "power10", "power10_v2.0" },
+     { "power11", "power11_v2.0" },
+diff --git a/target/ppc/cpu-models.h b/target/ppc/cpu-models.h
+index a439eb37ee41..ef019cdb1f3c 100644
+--- a/target/ppc/cpu-models.h
++++ b/target/ppc/cpu-models.h
+@@ -341,12 +341,8 @@ enum {
+     CPU_POWERPC_POWER7_v23         = 0x003F0203,
+     CPU_POWERPC_POWER7P_BASE       = 0x004A0000,
+     CPU_POWERPC_POWER7P_v21        = 0x004A0201,
+-    CPU_POWERPC_POWER8E_BASE       = 0x004B0000,
+-    CPU_POWERPC_POWER8E_v21        = 0x004B0201,
+     CPU_POWERPC_POWER8_BASE        = 0x004D0000,
+     CPU_POWERPC_POWER8_v20         = 0x004D0200,
+-    CPU_POWERPC_POWER8NVL_BASE     = 0x004C0000,
+-    CPU_POWERPC_POWER8NVL_v10      = 0x004C0100,
+     CPU_POWERPC_POWER9_BASE        = 0x004E0000,
+     CPU_POWERPC_POWER9_DD1         = 0x004E1100,
+     CPU_POWERPC_POWER9_DD20        = 0x004E1200,
+diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
+index a02187ce5afb..96daa7e2ab0b 100644
+--- a/target/ppc/cpu_init.c
++++ b/target/ppc/cpu_init.c
+@@ -6311,12 +6311,6 @@ static bool ppc_pvr_match_power8(PowerPCCPUClass *pcc, uint32_t pvr, bool best)
+         if (base == CPU_POWERPC_POWER8_BASE) {
+             return true;
+         }
+-        if (base == CPU_POWERPC_POWER8E_BASE) {
+-            return true;
+-        }
+-        if (base == CPU_POWERPC_POWER8NVL_BASE) {
+-            return true;
+-        }
+     }
+     if (base != pcc_base) {
+         return false;
+diff --git a/target/ppc/kvm.c b/target/ppc/kvm.c
+index b94c2997a07f..78a1c4a8393e 100644
+--- a/target/ppc/kvm.c
++++ b/target/ppc/kvm.c
+@@ -2437,9 +2437,7 @@ static bool kvmppc_power8_host(void)
+ #ifdef TARGET_PPC64
+     {
+         uint32_t base_pvr = CPU_POWERPC_POWER_SERVER_MASK & mfpvr();
+-        ret = (base_pvr == CPU_POWERPC_POWER8E_BASE) ||
+-              (base_pvr == CPU_POWERPC_POWER8NVL_BASE) ||
+-              (base_pvr == CPU_POWERPC_POWER8_BASE);
++        ret = (base_pvr == CPU_POWERPC_POWER8_BASE);
+     }
+ #endif /* TARGET_PPC64 */
+     return ret;
 -- 
 2.54.0
 
