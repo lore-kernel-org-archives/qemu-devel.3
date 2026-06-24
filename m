@@ -4,42 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9DB2BCDB479
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 05:07:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3A89CDB470
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 05:07:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcFo0-00063Y-U0; Wed, 24 Jun 2026 01:05:45 -0400
+	id 1wcFn3-0004rT-Rm; Wed, 24 Jun 2026 01:04:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wcFnz-0005sh-4P; Wed, 24 Jun 2026 01:05:43 -0400
+ id 1wcFmv-0004lS-2U; Wed, 24 Jun 2026 01:04:38 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wcFnx-0005ZY-5A; Wed, 24 Jun 2026 01:05:42 -0400
+ id 1wcFms-0005GU-Tk; Wed, 24 Jun 2026 01:04:36 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1782277465; bh=A1MCwyl77Bp0YQFINDzK2G0lg+C2TQkZSW5Vst+i5pI=;
+ t=1782277464; bh=LDuTVytEB5yPW9EHHai0ZUStwAKUWdEBdDZsmYwEGww=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=wpCp2ezwOzu40u1vn1wSOREtDOUDVWxslBtWAMM3UKLE5qvY4jFxZM76kmBxgMmN5
- 3VUzloDJkvLIguyReIuP4j7bsRG2CUikb7M8D2etqq9Dk7GwjaeqRp8fu32kwo5P0g
- MxgR1CC6ojcjBnDuZasiMAe+qIBZBbJUyr9LKqDJsvs0YJhv3GKKAm/sHKYCKHW1jt
- PYD7mfrkX4xmZUTercfwV3tY3oGc/NkcNJ22l/ZkuxA8+1UVrp7v0aaJG9yeajqMLZ
- GEsPQV0n6+Mp9zokdDB9xv/S7DV7WtHxvzEaMqW1gXniwfhtYMlzY6OoMzUOEWGtVW
- wHNkyv650ICbg==
+ b=fD3bozArNYyoIVLUxmgT/vBk5swdRFlqHSCUiqRNqLTJxYLndcB/zqDW9u2xcCcMQ
+ 2h17EVJX5/SE1Zj22jDnPm8Xdhzkf7hk2TNNj/+PoZJqOkckRn/7/q3UP4Iwhow+ZF
+ qt3JfLxFjcDlf3JtrLdAdwzXSoaQOmNBp37b7Ukmp6XaldCkrfxJr1fdTw9xvfppHo
+ ciDJASvsfpuRn2iREns46AefqXKCH38oAnv+/ygZYzhuZO0DTj+IrKoJW5HoGZ3CHW
+ dEuAh69lc/RkMxe58kXyUzgpiFYC0mzS/ZbpPWPsNl10R72qAncvaYT2ih46+XkL8O
+ 0AhDWoQFs1reQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 889211BA63F;
- Wed, 24 Jun 2026 08:04:25 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 627531BA62F;
+ Wed, 24 Jun 2026 08:04:24 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 721183DDACA;
- Wed, 24 Jun 2026 08:04:30 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 494B93DDABA;
+ Wed, 24 Jun 2026 08:04:29 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Mathias Krause <minipli@grsecurity.net>,
- Paolo Bonzini <pbonzini@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.11 76/86] gdbstub: Update x86 control register bits
-Date: Wed, 24 Jun 2026 08:02:47 +0300
-Message-ID: <20260624050404.394225-20-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Alejandro Jimenez <alejandro.j.jimenez@oracle.com>,
+ Sairaj Kodilkar <sarunkod@amd.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.11 60/86] amd_iommu: Update command buffer head ptr in
+ MMIO region after wraparound
+Date: Wed, 24 Jun 2026 08:02:31 +0300
+Message-ID: <20260624050404.394225-4-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.11-20260624080222@cover.tls.msk.ru>
 References: <qemu-stable-10.0.11-20260624080222@cover.tls.msk.ru>
@@ -68,111 +70,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Mathias Krause <minipli@grsecurity.net>
+From: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
 
-The control register bits haven't been updated in a few years, making
-them lack behind features QEMU ganied in these years.
+When processing a command, amdvi_cmdbuf_run() increments cmdbuf_head and
+writes it to the emulated MMIO register space before checking whether it
+has reached the end of the command buffer.
 
-Update them to the current version of the SDM and sort the 32bit version
-to be in line with all the other definitions (descending order).
+If the incremented value reaches the end of the buffer and the tail pointer
+is zero, the loop exits and the COMMAND_HEAD offset still contains an
+unwrapped value. There are no errors in command processing since internal
+cmdbuf_head state is always correctly updated, but the spec defines the
+CmdHeadPtr field in MMIO Offset 2000h Command Buffer Head Pointer Register
+as RW i.e. guest-visible, so it should be kept consistent.
 
-This should remove confusion when debugging, for example, CET-enabled
-guests:
+Wrap cmdbuf_head before updating COMMAND_HEAD so the MMIO-visible register
+always matches the internal command buffer head pointer position.
 
-- before the change:
-  (gdb) info registers cr4
-  cr4            0x8000f0            [ PGE MCE PAE PSE ]
-
-- after the change:
-  (gdb) info registers cr4
-  cr4            0x8000f0            [ CET PGE MCE PAE PSE ]
-
-Signed-off-by: Mathias Krause <minipli@grsecurity.net>
-Link: https://lore.kernel.org/r/20260327143413.254227-1-minipli@grsecurity.net
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit 88d39a2937ebad64b8aed8247450e1a6ddf274be)
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
+Reviewed-by: Sairaj Kodilkar <sarunkod@amd.com>
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Message-Id: <20260512150044.334867-1-alejandro.j.jimenez@oracle.com>
+(cherry picked from commit 3c98e446af825b5806c1e5cd1244b2431b15e884)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/gdb-xml/i386-32bit.xml b/gdb-xml/i386-32bit.xml
-index 7a66a02b67..1dec40e1d2 100644
---- a/gdb-xml/i386-32bit.xml
-+++ b/gdb-xml/i386-32bit.xml
-@@ -87,27 +87,34 @@
-   </flags>
+diff --git a/hw/i386/amd_iommu.c b/hw/i386/amd_iommu.c
+index 4405ce8988..8efebd3eea 100644
+--- a/hw/i386/amd_iommu.c
++++ b/hw/i386/amd_iommu.c
+@@ -583,12 +583,12 @@ static void amdvi_cmdbuf_run(AMDVIState *s)
+         trace_amdvi_command_exec(s->cmdbuf_head, s->cmdbuf_tail, s->cmdbuf);
+         amdvi_cmdbuf_exec(s);
+         s->cmdbuf_head += AMDVI_COMMAND_SIZE;
+-        amdvi_writeq_raw(s, AMDVI_MMIO_COMMAND_HEAD, s->cmdbuf_head);
  
-   <flags id="i386_cr4" size="4">
--	<field name="VME" start="0" end="0"/>
--	<field name="PVI" start="1" end="1"/>
--	<field name="TSD" start="2" end="2"/>
--	<field name="DE" start="3" end="3"/>
--	<field name="PSE" start="4" end="4"/>
--	<field name="PAE" start="5" end="5"/>
--	<field name="MCE" start="6" end="6"/>
--	<field name="PGE" start="7" end="7"/>
--	<field name="PCE" start="8" end="8"/>
--	<field name="OSFXSR" start="9" end="9"/>
--	<field name="OSXMMEXCPT" start="10" end="10"/>
--	<field name="UMIP" start="11" end="11"/>
--	<field name="LA57" start="12" end="12"/>
--	<field name="VMXE" start="13" end="13"/>
--	<field name="SMXE" start="14" end="14"/>
--	<field name="FSGSBASE" start="16" end="16"/>
--	<field name="PCIDE" start="17" end="17"/>
--	<field name="OSXSAVE" start="18" end="18"/>
--	<field name="SMEP" start="20" end="20"/>
--	<field name="SMAP" start="21" end="21"/>
-+	<field name="LAM_SUP" start="28" end="28"/>
-+	<field name="LASS" start="27" end="27"/>
-+	<field name="UINTR" start="25" end="25"/>
-+	<field name="PKS" start="24" end="24"/>
-+	<field name="CET" start="23" end="23"/>
-+	<field name="PKE" start="22" end="22"/>
- 	<field name="PKE" start="22" end="22"/>
-+	<field name="SMAP" start="21" end="21"/>
-+	<field name="SMEP" start="20" end="20"/>
-+	<field name="KL" start="19" end="19"/>
-+	<field name="OSXSAVE" start="18" end="18"/>
-+	<field name="PCIDE" start="17" end="17"/>
-+	<field name="FSGSBASE" start="16" end="16"/>
-+	<field name="SMXE" start="14" end="14"/>
-+	<field name="VMXE" start="13" end="13"/>
-+	<field name="LA57" start="12" end="12"/>
-+	<field name="UMIP" start="11" end="11"/>
-+	<field name="OSXMMEXCPT" start="10" end="10"/>
-+	<field name="OSFXSR" start="9" end="9"/>
-+	<field name="PCE" start="8" end="8"/>
-+	<field name="PGE" start="7" end="7"/>
-+	<field name="MCE" start="6" end="6"/>
-+	<field name="PAE" start="5" end="5"/>
-+	<field name="PSE" start="4" end="4"/>
-+	<field name="DE" start="3" end="3"/>
-+	<field name="TSD" start="2" end="2"/>
-+	<field name="PVI" start="1" end="1"/>
-+	<field name="VME" start="0" end="0"/>
-   </flags>
+         /* wrap head pointer */
+         if (s->cmdbuf_head >= s->cmdbuf_len * AMDVI_COMMAND_SIZE) {
+             s->cmdbuf_head = 0;
+         }
++        amdvi_writeq_raw(s, AMDVI_MMIO_COMMAND_HEAD, s->cmdbuf_head);
+     }
+ }
  
-   <flags id="i386_efer" size="4">
-diff --git a/gdb-xml/i386-64bit.xml b/gdb-xml/i386-64bit.xml
-index 6d88969211..9ac9164e6a 100644
---- a/gdb-xml/i386-64bit.xml
-+++ b/gdb-xml/i386-64bit.xml
-@@ -102,9 +102,16 @@
-   </flags>
- 
-   <flags id="x64_cr4" size="8">
-+	<field name="FRED" start="32" end="32"/>
-+	<field name="LAM_SUP" start="28" end="28"/>
-+	<field name="LASS" start="27" end="27"/>
-+	<field name="UINTR" start="25" end="25"/>
-+	<field name="PKS" start="24" end="24"/>
-+	<field name="CET" start="23" end="23"/>
- 	<field name="PKE" start="22" end="22"/>
- 	<field name="SMAP" start="21" end="21"/>
- 	<field name="SMEP" start="20" end="20"/>
-+	<field name="KL" start="19" end="19"/>
- 	<field name="OSXSAVE" start="18" end="18"/>
- 	<field name="PCIDE" start="17" end="17"/>
- 	<field name="FSGSBASE" start="16" end="16"/>
 -- 
 2.47.3
 
