@@ -4,53 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 519DECDB47F
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 08:36:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 708A4CDB47F
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 08:38:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcJ4q-0001AG-KJ; Wed, 24 Jun 2026 04:35:23 -0400
+	id 1wcJ7h-0001jo-2I; Wed, 24 Jun 2026 04:38:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wcJ4g-00013J-HH
- for qemu-devel@nongnu.org; Wed, 24 Jun 2026 04:35:11 -0400
+ id 1wcJ7f-0001jV-F5
+ for qemu-devel@nongnu.org; Wed, 24 Jun 2026 04:38:15 -0400
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wcJ4d-00041p-JU
- for qemu-devel@nongnu.org; Wed, 24 Jun 2026 04:35:10 -0400
+ id 1wcJ7d-0004Ow-KX
+ for qemu-devel@nongnu.org; Wed, 24 Jun 2026 04:38:15 -0400
 Received: from [133.11.54.183] (h183.csg.ci.i.u-tokyo.ac.jp [133.11.54.183])
  (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 65O8YpZG085352
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 65O8c2RQ086452
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Wed, 24 Jun 2026 17:34:51 +0900 (JST)
+ Wed, 24 Jun 2026 17:38:02 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=0AaJqk3KD62/sk8GamWIn+QQHskCLQwaOeT74dWVarA=; 
+DKIM-Signature: a=rsa-sha256; bh=F3fl9cvW1/kFyW3YL8+6Fe9fKdICmYGVJxY95acM58U=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=From:Message-ID:To:Subject:Date;
- s=rs20250326; t=1782290091; v=1;
- b=ZXkGqc3ywijYAjry7vIYn+gi5Ce/Ut4ThRsGVw4LNdh+cqJIYbcEguPTWPV9JFU/
- svpei/PszJznjE0QeHghQ6kYOmMJ0+qvldzaPntJ14J9PePN7WPDrKAR3uT4FRvP
- kqYSIfQ5MCRZX+Jhf5Yp4Ewu6Muhq+mHkRnaxBXmdQEXUxZjz5JFNC4n7l5aHAuL
- Acjl/UDx8CMywkcj2kCKFZxDJP0KFnTAEKQEnImm0MuntXqawnMtTw//nDu5QK37
- rFvU/lqeTD+EAuOgrDTiB+qUXhBtSpO3tHoNNnUWzhBj+M9+24JqPjwufbvlml/T
- cp/iph7oIU4niDFUNfmkhA==
-Message-ID: <8d873098-5ed2-46e1-86e7-83dd5e706c21@rsg.ci.i.u-tokyo.ac.jp>
-Date: Wed, 24 Jun 2026 17:34:51 +0900
+ s=rs20250326; t=1782290282; v=1;
+ b=rfGE9l7meSpXo4SSSiQVXyisINUKarBGsG8oOI6p5z434Xvc+lr8FvYiiw7H+VI1
+ 76jLDSMNymCB4wiwVYUYNQ5F+TH4WKYit+xbzcJHmpX1wgxCOVYbFkZJxpFP3VlE
+ cSJeQ6Hti998RmM5mgtcAT9EXVl4416ER+B7WZYbngo8k6JvLjZb/1WGtYxhlqNc
+ UAUp28AngBkdjLiqpeHMJ1dvKsRFj3hnpLooWlIFrOM3ClYm6lLuKU9BuwHM7HU7
+ lWwVivyrRdJoIE+DdEAck0VSjunYJnkvOYJlYQVxfp7n0H4/0ZoUquYQkj8zVEpt
+ KsuADqNXavMRsqxGyugPuQ==
+Message-ID: <c5391af9-832d-4b63-b517-188f927b8a21@rsg.ci.i.u-tokyo.ac.jp>
+Date: Wed, 24 Jun 2026 17:38:02 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/3] virtio-gpu: use unsigned shift for scanout bitmask
- operations
+Subject: Re: [PATCH 2/3] virtio-gpu-virgl: replace fprintf(stderr) with
+ qemu_log_mask and trace events
 To: Bin Guo <guobin@linux.alibaba.com>, alex.bennee@linaro.org
 Cc: mst@redhat.com, dmitry.osipenko@collabora.com, qemu-devel@nongnu.org
 References: <cover.1782270919.git.guobin@linux.alibaba.com>
- <22d21cfbe4466c27e33e979717957f48673d4647.1782270919.git.guobin@linux.alibaba.com>
+ <c6641369b55274965251a16bb420f9744445cfa2.1782270919.git.guobin@linux.alibaba.com>
 Content-Language: en-US
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <22d21cfbe4466c27e33e979717957f48673d4647.1782270919.git.guobin@linux.alibaba.com>
+In-Reply-To: <c6641369b55274965251a16bb420f9744445cfa2.1782270919.git.guobin@linux.alibaba.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=49.212.243.89;
  envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
 X-Spam_score_int: -16
@@ -75,78 +75,87 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 2026/06/24 14:55, Bin Guo wrote:
-> The scanout_bitmask field is uint32_t, but all six bit operations used
-> the signed literal `1 << shift`.  When the shift count reaches 31 this
-> is undefined behavior (signed integer overflow).  Replace every
-> occurrence with `1U << shift` to perform an unsigned shift, which is
-> well-defined for all bit positions 0-31.
+> Three places in virtio-gpu-virgl.c used fprintf(stderr) directly,
+> bypassing QEMU's logging and tracing infrastructure:
+> 
+>    1. Command error reporting in virgl_cmd_process() — replace with
+>       qemu_log_mask(LOG_GUEST_ERROR, ...) so the message is filtered
+>       via -d guest_errors, consistent with virtio-gpu.c.
+> 
+>    2. Statistics output in virtio_gpu_print_stats() — replace with
+>       trace_virtio_gpu_virgl_stats() so the data is captured by the
+>       tracing subsystem instead of unconditionally hitting stderr.
 
-I think we can make use of the BIT() macro.
+Requiring both stats=on and the -trace option is inconvenient. Using 
+trace_event_get_state() instead of keeping the stats property may be a 
+good idea.
 
 Regards,
 Akihiko Odaki
 
 > 
-> No functional change; the result is already stored in a uint32_t, so
-> the generated code is identical on most platforms.
+>    3. Idle statistics message — replace with
+>       trace_virtio_gpu_virgl_stats_idle() to preserve the existing
+>       "idle" indication without stderr pollution.
+> 
+> Add the two new trace events to hw/display/trace-events.
 > 
 > Signed-off-by: Bin Guo <guobin@linux.alibaba.com>
 > ---
->   hw/display/virtio-gpu.c | 12 ++++++------
->   1 file changed, 6 insertions(+), 6 deletions(-)
+>   hw/display/trace-events       |  2 ++
+>   hw/display/virtio-gpu-virgl.c | 15 +++++++--------
+>   2 files changed, 9 insertions(+), 8 deletions(-)
 > 
-> diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
-> index 88526051a9..9dfffa270a 100644
-> --- a/hw/display/virtio-gpu.c
-> +++ b/hw/display/virtio-gpu.c
-> @@ -387,7 +387,7 @@ void virtio_gpu_disable_scanout(VirtIOGPU *g, int scanout_id)
+> diff --git a/hw/display/trace-events b/hw/display/trace-events
+> index 4bfc457fba..cf1e852b45 100644
+> --- a/hw/display/trace-events
+> +++ b/hw/display/trace-events
+> @@ -58,6 +58,8 @@ virtio_gpu_fence_resp(uint64_t fence) "fence 0x%" PRIx64
+>   virtio_gpu_inc_inflight_fences(uint32_t inflight) "in-flight+ %u"
+>   virtio_gpu_dec_inflight_fences(uint32_t inflight) "in-flight- %u"
+>   virtio_gpu_cmd_suspended(uint32_t cmd) "cmd 0x%x"
+> +virtio_gpu_virgl_stats(int requests, int max_inflight, int req_3d, int bytes_3d) "stats: vq req %d, max_inflight %d -- 3D %d (%d bytes)"
+> +virtio_gpu_virgl_stats_idle(void) "stats: idle"
 >   
->       res = virtio_gpu_find_resource(g, scanout->resource_id);
->       if (res) {
-> -        res->scanout_bitmask &= ~(1 << scanout_id);
-> +        res->scanout_bitmask &= ~(1U << scanout_id);
+>   # qxl.c
+>   disable qxl_io_write_vga(int qid, const char *mode, uint32_t addr, uint32_t val) "%d %s addr=%u val=%u"
+> diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
+> index b992ffc44e..afb0d0984a 100644
+> --- a/hw/display/virtio-gpu-virgl.c
+> +++ b/hw/display/virtio-gpu-virgl.c
+> @@ -1129,8 +1129,8 @@ void virtio_gpu_virgl_process_cmd(VirtIOGPU *g,
+>           return;
 >       }
->   
->       qemu_console_set_surface(scanout->con, NULL);
-> @@ -405,7 +405,7 @@ static void virtio_gpu_resource_destroy(VirtIOGPU *g,
->   
->       if (res->scanout_bitmask) {
->           for (i = 0; i < g->parent_obj.conf.max_outputs; i++) {
-> -            if (res->scanout_bitmask & (1 << i)) {
-> +            if (res->scanout_bitmask & (1U << i)) {
->                   virtio_gpu_disable_scanout(g, i);
->               }
->           }
-> @@ -571,7 +571,7 @@ static void virtio_gpu_resource_flush(VirtIOGPU *g,
->       for (i = 0; i < g->parent_obj.conf.max_outputs; i++) {
->           QemuRect rect;
->   
-> -        if (!(res->scanout_bitmask & (1 << i))) {
-> +        if (!(res->scanout_bitmask & (1U << i))) {
->               continue;
->           }
->           scanout = &g->parent_obj.scanout[i];
-> @@ -605,10 +605,10 @@ void virtio_gpu_update_scanout(VirtIOGPU *g,
->       scanout = &g->parent_obj.scanout[scanout_id];
->       ores = virtio_gpu_find_resource(g, scanout->resource_id);
->       if (ores) {
-> -        ores->scanout_bitmask &= ~(1 << scanout_id);
-> +        ores->scanout_bitmask &= ~(1U << scanout_id);
+>       if (cmd->error) {
+> -        fprintf(stderr, "%s: ctrl 0x%x, error 0x%x\n", __func__,
+> -                cmd->cmd_hdr.type, cmd->error);
+> +        qemu_log_mask(LOG_GUEST_ERROR, "%s: ctrl 0x%x, error 0x%x\n",
+> +                      __func__, cmd->cmd_hdr.type, cmd->error);
+>           virtio_gpu_ctrl_response_nodata(g, cmd, cmd->error);
+>           return;
 >       }
+> @@ -1370,17 +1370,16 @@ static void virtio_gpu_print_stats(void *opaque)
+>       VirtIOGPUGL *gl = VIRTIO_GPU_GL(g);
 >   
-> -    res->scanout_bitmask |= (1 << scanout_id);
-> +    res->scanout_bitmask |= (1U << scanout_id);
->       scanout->resource_id = res->resource_id;
->       scanout->x = r->x;
->       scanout->y = r->y;
-> @@ -1490,7 +1490,7 @@ static int virtio_gpu_post_load(void *opaque, int version_id)
->           if (scanout->cursor.resource_id) {
->               update_cursor(g, &scanout->cursor);
->           }
-> -        res->scanout_bitmask |= (1 << i);
-> +        res->scanout_bitmask |= (1U << i);
+>       if (g->stats.requests) {
+> -        fprintf(stderr, "stats: vq req %4d, %3d -- 3D %4d (%5d)\n",
+> -                g->stats.requests,
+> -                g->stats.max_inflight,
+> -                g->stats.req_3d,
+> -                g->stats.bytes_3d);
+> +        trace_virtio_gpu_virgl_stats(g->stats.requests,
+> +                                     g->stats.max_inflight,
+> +                                     g->stats.req_3d,
+> +                                     g->stats.bytes_3d);
+>           g->stats.requests     = 0;
+>           g->stats.max_inflight = 0;
+>           g->stats.req_3d       = 0;
+>           g->stats.bytes_3d     = 0;
+>       } else {
+> -        fprintf(stderr, "stats: idle\r");
+> +        trace_virtio_gpu_virgl_stats_idle();
 >       }
->   
->       return 0;
+>       timer_mod(gl->print_stats, qemu_clock_get_ms(QEMU_CLOCK_VIRTUAL) + 1000);
+>   }
 
 
