@@ -4,47 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A459CDB470
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 05:15:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2FA1ECDB470
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 05:15:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcFsu-0005xq-Kl; Wed, 24 Jun 2026 01:10:49 -0400
+	id 1wcFsr-0005YJ-8x; Wed, 24 Jun 2026 01:10:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wcFrl-00048t-EI; Wed, 24 Jun 2026 01:09:37 -0400
+ id 1wcFsH-0005Gx-Gn; Wed, 24 Jun 2026 01:10:16 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wcFrj-0005zM-Bd; Wed, 24 Jun 2026 01:09:37 -0400
+ id 1wcFsE-000631-5Q; Wed, 24 Jun 2026 01:10:08 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1782277623; bh=vOCxBM5w75AosGPis0SATr9wwhSYZ1M0Sv+bsT0QAr8=;
+ t=1782277633; bh=BeCM0RUuRRvOh24wgT1LYrTgGlkDqTNpjYmrIFgqr0w=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=iT144FUOnC6/GJv+DGzJSHY5Y1xSk6AtAQheHu/zkZfdVOIxZKVkEUjdJ/LYzO1qD
- eqFTbt6Y1ukLsstbG7BAMuTvaWV/vFU/jIib/wfLVtyiU6TKBj5dIRvIpYhwZ/lHbD
- nl8ylFRaSeI6380sZBEIUFKLLy8dA+38nBgLscxiIfPK1sdue0hOuf5Y5/zhdWrMKL
- /CQivb5iAr00bfYIBzlQ8TaXN2iQ/SYfuIzn5iYHpuD5cnCv1IuQr931HS8AkFlMVi
- zFDRE/1IMvY2F2OREKoL0QVH4MSoE7pso2ILWt71242aRC1sbjdRRg+bFMd9BPgxkn
- 9kubYjgS2FEOw==
+ b=p50qv2zsMAMGddw5HF8sCoko6QEBLM/fDuUle+uXmTVpbzPE9Fwa06Ztq2LKGxoea
+ 5sOXYsftGKnINkTzP5pxDyBCgvjZ1ej3dzSdrBV6PwQAF/3yBzYKOtBDJkm1SliAWi
+ T/oxQPePntbcv0pyMykCkf/wP7cF07Vlop6iTdXANlRi5RT6K1ZixMU8DgG65h3tNM
+ 4zHpJZzRnZPfECAYoH66YpFd+b93R8LVETeUcfdlZJNJk51H2H7ZbM/yhSksgtD8C7
+ bHkWcxxJEaXhxPUjauDE12t0PZNCFRuSV0pyBlzODuQtKwy+8PEol+RPGCCE8OgobC
+ AryLGvtdiwaRg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id BD9511BA674;
- Wed, 24 Jun 2026 08:07:03 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 113131BA678;
+ Wed, 24 Jun 2026 08:07:13 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id A8C393DDB11;
- Wed, 24 Jun 2026 08:07:08 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id EDB5B3DDB15;
+ Wed, 24 Jun 2026 08:07:17 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Christian Schoenebeck <qemu_oss@crudebyte.com>,
- Feifan Qian <bea1e@proton.me>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.4 86/95] hw/9pfs: fix abort due to illegal name with
- Twstat rename
-Date: Wed, 24 Jun 2026 08:05:21 +0300
-Message-ID: <20260624050541.395079-25-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Matt Turner <mattst88@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Helge Deller <deller@gmx.de>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.2.4 90/95] target/xtensa: add cpu_set_fcr/fsr helpers to
+ sync fp_status
+Date: Wed, 24 Jun 2026 08:05:25 +0300
+Message-ID: <20260624050541.395079-29-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.2.4-20260624080454@cover.tls.msk.ru>
 References: <qemu-stable-10.2.4-20260624080454@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -69,44 +71,150 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Christian Schoenebeck <qemu_oss@crudebyte.com>
+From: Matt Turner <mattst88@gmail.com>
 
-The legacy Twstat 9p request can be used to rename files and directories.
-Unlike the other, more recent rename requests like Trename and Trenameat,
-Twstat does not validate the submitted new name before passing it to
-v9fs_complete_rename().
+Factor FCR→fp_status and FSR→fp_status synchronisation out of the
+wur_fpu{2k,}_fcr/wur_fpu_fsr helpers into cpu_set_fcr(), cpu_set_fsr(),
+and cpu_get_fsr(). Signal delivery code needs to restore the FP rounding
+mode and exception flags without duplicating the flag-mapping tables.
 
-A priviliged guest user with direct communication access to 9p server
-could pass a string containing '/' as new name, which causes an assertion
-fault (DoS) in local_name_to_path().
+cpu_set_fcr() applies the union mask 0xfffff07f (superset of the
+wur_fpu_fcr mask 0x0000007f and the wur_fpu2k_fcr mask 0xfffff07f) so
+that FCR bits valid only on fpu2k configs are preserved while MBZ bits
+7-11 are always cleared.
 
-Fix this by rejecting such strings by checking the client supplied new
-name with name_is_illegal(), similar to how Trename and Trenameat handlers
-do already.
-
-Reported-by: Feifan Qian <bea1e@proton.me>
-Fixes: 8cf89e007a ("virtio-9p: Add P9_TWSTAT support")
-Link: https://lore.kernel.org/qemu-devel/ba09716828e82992f9d8cac7f00eee0bc1c43c61.1780072238.git.qemu_oss@crudebyte.com
-Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
-(cherry picked from commit 7f5445e7e4050cc117ed4b137bb7dd1474e49d57)
+Signed-off-by: Matt Turner <mattst88@gmail.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Helge Deller <deller@gmx.de>
+(cherry picked from commit 7e859bacea09a626c239f14ab9c01f13d5225723)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/9pfs/9p.c b/hw/9pfs/9p.c
-index 0c162614f8..7c65d4f7d1 100644
---- a/hw/9pfs/9p.c
-+++ b/hw/9pfs/9p.c
-@@ -3638,6 +3638,11 @@ static void coroutine_fn v9fs_wstat(void *opaque)
-             err = -EOPNOTSUPP;
-             goto out;
-         }
-+        if (name_is_illegal(v9stat.name.data)) {
-+            err = -ENOENT;
-+            goto out;
-+        }
+diff --git a/target/xtensa/cpu.h b/target/xtensa/cpu.h
+index 74122ebe15..e7c7eefa73 100644
+--- a/target/xtensa/cpu.h
++++ b/target/xtensa/cpu.h
+@@ -643,6 +643,10 @@ static inline void xtensa_select_static_vectors(CPUXtensaState *env,
+ }
+ void xtensa_runstall(CPUXtensaState *env, bool runstall);
+ 
++uint32_t cpu_get_fsr(CPUXtensaState *env);
++void cpu_set_fcr(CPUXtensaState *env, uint32_t v);
++void cpu_set_fsr(CPUXtensaState *env, uint32_t v);
 +
-         v9fs_path_write_lock(s);
-         err = v9fs_complete_rename(pdu, fidp, -1, &v9stat.name);
-         v9fs_path_unlock(s);
+ #define XTENSA_OPTION_BIT(opt) (((uint64_t)1) << (opt))
+ #define XTENSA_OPTION_ALL (~(uint64_t)0)
+ 
+diff --git a/target/xtensa/fpu_helper.c b/target/xtensa/fpu_helper.c
+index 5358060c50..2e51cabe3f 100644
+--- a/target/xtensa/fpu_helper.c
++++ b/target/xtensa/fpu_helper.c
+@@ -64,46 +64,39 @@ void xtensa_use_first_nan(CPUXtensaState *env, bool use_first)
+                              &env->fp_status);
+ }
+ 
+-void HELPER(wur_fpu2k_fcr)(CPUXtensaState *env, uint32_t v)
++uint32_t cpu_get_fsr(CPUXtensaState *env)
+ {
+-    static const int rounding_mode[] = {
+-        float_round_nearest_even,
+-        float_round_to_zero,
+-        float_round_up,
+-        float_round_down,
+-    };
++    uint32_t flags = 0;
++    int fef = get_float_exception_flags(&env->fp_status);
++    unsigned i;
+ 
+-    env->uregs[FCR] = v & 0xfffff07f;
+-    set_float_rounding_mode(rounding_mode[v & 3], &env->fp_status);
++    for (i = 0; i < ARRAY_SIZE(xtensa_fp_flag_map); ++i) {
++        if (fef & xtensa_fp_flag_map[i].softfloat_fp_flag) {
++            flags |= xtensa_fp_flag_map[i].xtensa_fp_flag;
++        }
++    }
++    return flags << XTENSA_FSR_FLAGS_SHIFT;
+ }
+ 
+-void HELPER(wur_fpu_fcr)(CPUXtensaState *env, uint32_t v)
++void cpu_set_fcr(CPUXtensaState *env, uint32_t v)
+ {
+-    static const int rounding_mode[] = {
++    static const FloatRoundMode rounding_mode[] = {
+         float_round_nearest_even,
+         float_round_to_zero,
+         float_round_up,
+         float_round_down,
+     };
+ 
+-    if (v & 0xfffff000) {
+-        qemu_log_mask(LOG_GUEST_ERROR,
+-                      "MBZ field of FCR is written non-zero: %08x\n", v);
+-    }
+-    env->uregs[FCR] = v & 0x0000007f;
++    env->uregs[FCR] = v & 0xfffff07f;
+     set_float_rounding_mode(rounding_mode[v & 3], &env->fp_status);
+ }
+ 
+-void HELPER(wur_fpu_fsr)(CPUXtensaState *env, uint32_t v)
++void cpu_set_fsr(CPUXtensaState *env, uint32_t v)
+ {
+     uint32_t flags = v >> XTENSA_FSR_FLAGS_SHIFT;
+     int fef = 0;
+     unsigned i;
+ 
+-    if (v & 0xfffff000) {
+-        qemu_log_mask(LOG_GUEST_ERROR,
+-                      "MBZ field of FSR is written non-zero: %08x\n", v);
+-    }
+     env->uregs[FSR] = v & 0x00000f80;
+     for (i = 0; i < ARRAY_SIZE(xtensa_fp_flag_map); ++i) {
+         if (flags & xtensa_fp_flag_map[i].xtensa_fp_flag) {
+@@ -113,19 +106,35 @@ void HELPER(wur_fpu_fsr)(CPUXtensaState *env, uint32_t v)
+     set_float_exception_flags(fef, &env->fp_status);
+ }
+ 
+-uint32_t HELPER(rur_fpu_fsr)(CPUXtensaState *env)
++void HELPER(wur_fpu2k_fcr)(CPUXtensaState *env, uint32_t v)
+ {
+-    uint32_t flags = 0;
+-    int fef = get_float_exception_flags(&env->fp_status);
+-    unsigned i;
++    cpu_set_fcr(env, v);
++}
+ 
+-    for (i = 0; i < ARRAY_SIZE(xtensa_fp_flag_map); ++i) {
+-        if (fef & xtensa_fp_flag_map[i].softfloat_fp_flag) {
+-            flags |= xtensa_fp_flag_map[i].xtensa_fp_flag;
+-        }
++void HELPER(wur_fpu_fcr)(CPUXtensaState *env, uint32_t v)
++{
++    if (v & 0xfffff000) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "MBZ field of FCR is written non-zero: %08x\n", v);
+     }
+-    env->uregs[FSR] = flags << XTENSA_FSR_FLAGS_SHIFT;
+-    return flags << XTENSA_FSR_FLAGS_SHIFT;
++    cpu_set_fcr(env, v & 0x0000007f);
++}
++
++void HELPER(wur_fpu_fsr)(CPUXtensaState *env, uint32_t v)
++{
++    if (v & 0xfffff000) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "MBZ field of FSR is written non-zero: %08x\n", v);
++    }
++    cpu_set_fsr(env, v);
++}
++
++uint32_t HELPER(rur_fpu_fsr)(CPUXtensaState *env)
++{
++    uint32_t fsr = cpu_get_fsr(env);
++
++    env->uregs[FSR] = fsr;
++    return fsr;
+ }
+ 
+ float64 HELPER(abs_d)(float64 v)
 -- 
 2.47.3
 
