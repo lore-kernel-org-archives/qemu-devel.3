@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55AF5CDB479
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 07:10:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F95CCDB479
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 07:11:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcHkE-00058B-TC; Wed, 24 Jun 2026 03:10:00 -0400
+	id 1wcHkx-0005bt-BQ; Wed, 24 Jun 2026 03:10:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1wcHjp-00055a-73
- for qemu-devel@nongnu.org; Wed, 24 Jun 2026 03:09:36 -0400
-Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
+ id 1wcHjy-00056f-3p
+ for qemu-devel@nongnu.org; Wed, 24 Jun 2026 03:09:42 -0400
+Received: from mail-pg1-x531.google.com ([2607:f8b0:4864:20::531])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1wcHjn-00034q-KC
- for qemu-devel@nongnu.org; Wed, 24 Jun 2026 03:09:32 -0400
-Received: by mail-pf1-x42d.google.com with SMTP id
- d2e1a72fcca58-84236f9b638so382112b3a.2
- for <qemu-devel@nongnu.org>; Wed, 24 Jun 2026 00:09:31 -0700 (PDT)
+ id 1wcHju-00035U-Vh
+ for qemu-devel@nongnu.org; Wed, 24 Jun 2026 03:09:41 -0400
+Received: by mail-pg1-x531.google.com with SMTP id
+ 41be03b00d2f7-c8b49639fbaso458947a12.0
+ for <qemu-devel@nongnu.org>; Wed, 24 Jun 2026 00:09:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1782284970; x=1782889770; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1782284978; x=1782889778; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=8lo3KDUXnmI1WFH1r1IpwCFbofsm72XzCt2U1uX/RYQ=;
- b=HIP2YK3ul+1vsMnNM23am3VdxRLBh+NBILPgoMSBncZQe4LOQPe9Yfp/mDWmilGISc
- LhJnUmtV9s47nSQsOY79PzazKE9jo7RBIuWn86N6qz6sdE5VuWPuzLDAmMJlUTIRBDbj
- d4PBmwHx5gCvCPE6pNho6KQykOMjAzvBGZywgOp1DNBbgMmQBRrt+Q3SCpO40uI+E56u
- xW1IucS/UEmjRv90Mz88lRrvBkRD8cTCYWp9rYJVGcbwZJKQIFCwR1HIJGE499p+a0HR
- M2iJHj47roQ5lZOuolTzldDCf8jZ0fF4L06R6mdZJonvwXYBaS/8pSIOoT74jWnE44Ql
- Bldg==
+ bh=31eqi3lh8ZxCXKz2hnzO9aMe8wTk2WViYcoK9qnefZM=;
+ b=TncLBJemzOC+5pyJP8Mzmws8tJtT5We3fSrV+ORyimFs01HXm67gVRG8vwEHN6USFk
+ AWnTMsfnrfMzBWlSNfC5saLz/Hw1JrOZTQWcvuCB2Is1bd0Gdh5Lmd3hxu2sWQN7FQP8
+ XIDMx0QY6uLbB7RnvvGfa5DJrDuHOLCqYKn6YiEdtjFnMyDa3Q5wiZ9ZIQnZaE2MFrKG
+ qTOb+vjfXrbvb8rixdaf3uJf1XGXYgFZqJBJQXrgiGBjKTKgPuIZHjyq132VJQk1lvVC
+ pkLFK07toQgNvkGpzbgcEOYRDN+3w3m3ER2XzDMMzTgx09onORXks/zyyIQs++tb5DYS
+ r7Ng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782284970; x=1782889770;
+ d=1e100.net; s=20251104; t=1782284978; x=1782889778;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=8lo3KDUXnmI1WFH1r1IpwCFbofsm72XzCt2U1uX/RYQ=;
- b=lYTHt3Xwp9QitTPXIbfXzPq2lTWHoKiyz/cMkXcJcw3mPPBx10Ki2MCsr/1OREHjXK
- ka4n91jD00apZMxcodo8eS6SlMMM/p//Gf2cI8CUQFGAt5TjCCNI8M29kmyx6H0m0+bd
- xz1F7fLdJ08CKGcpdtxsl4Mr4HahfEgQupIsbR+2tyJrc/etZYv3jk4K11ObqhL8yPBp
- 7KIKE8rmhHCGX9PSh0zVpwQGnVLNgWn2okK4szBUlkmCY/4aTN7/mDxcktqwVdeH3xJM
- g8OC7q7YOrZzo7UiZA+/Aky+F4rbPZ72vkx2AyP4RHDnjOM5LIPkYqRl+voXXiRHx1Yg
- TtCA==
-X-Gm-Message-State: AOJu0Yy+5fT9odIwstuDxQD2dXHVfliEL3UaY/jsdbP81e1eBl+l8s3q
- Hvv+GeUY0NHMr1xzylm2MeqaJv15lexYbj2lV/AseTDdbEMX1Qk+a5wU+oLFESz84cM=
-X-Gm-Gg: AfdE7cmGsnkkJj4ot0G4siYLo/fTEYbwDCSBn5KmJbRcSPFc8D10Tbxo96mCPrtLGob
- NTLzp+PmExkj11F1xBe4kMhrgPYvzVCmVfjHUQVo1Oo/zvNEDX1r4FJoPHcOts/L9ibfkm5iXjG
- p+KTOXUav9s0FF7uYpPOujSZ4QAoAE9orgWXR9jFzR/HFV8NrUl83EKHoHH+35DeEcqAP8vaQqI
- hD1m8VYqZ/XKTwgB6eDoaZ5zDGYJXR4/EAnWEK8usZTUHQ7m/i0J1v5vV6Y6ySngKAHeTJPCniM
- 7xsbdZQFE3zvigp9H2KppIQ+ZcVN0gfpUmE9KfH22rC7/kJ72YbIMBa3Xsi3bVK/k/8D+SLTprN
- 4yFOiesvkuzBXDMUyOsPZObOYln6JBOYhjmxD+FSnEnqZFWD1i745Rb+YbbsQ9Lw2/7Oy8V/f4s
- kBI+Mn8lFWuNPTNP9Nsh+2GP1Hm/VKagu97JZ/LWPSTfM03YHlDJgJ
-X-Received: by 2002:a05:6a00:cc2:b0:842:83d1:ee6d with SMTP id
- d2e1a72fcca58-845a28d45b0mr3139630b3a.45.1782284970226; 
- Wed, 24 Jun 2026 00:09:30 -0700 (PDT)
+ bh=31eqi3lh8ZxCXKz2hnzO9aMe8wTk2WViYcoK9qnefZM=;
+ b=QgRxItyUxJoILXIRhJl5YWoZZ89g/GU5hcpJ791Sjq/314O7Oilmycr4yo4DAHWikc
+ JsraFEZn7ON7eJRGCqRzjkRpY+oCss03vYFjytS5ACMwcwsU53SqFMnkZlrrMOaL7jE0
+ Yy0dX9+r5tCyNEIPoSn4fv6mslsnnelvnd9cSt7oyFaUT9lkJB6kSYySDriC5DugtP7U
+ xoQPzbTdk1Gd/zj9rjODzfUygO6wYSfnkhdXVuvgksP7CWENc7LRcoxowKEe4VW6q164
+ WaStSX8/p84ovMsnYenwvQY3Ck60dfOVdFfe7aIsAHkiWiB6l8vgaGR4MH+z27x908q9
+ 3WbQ==
+X-Gm-Message-State: AOJu0YyH5fiKFgL1EN3ii1ch5qgkPWPFBIYzJ/Y9PwXJaUdZhG0dsp3U
+ Hkf+iWTV1LVd16WugNQjwy8etLqy2o0BprTpDwJMYAHgOXXUiuDwaA2jc3Kz6Jk7KOI=
+X-Gm-Gg: AfdE7cm1ReQfYGHzME8t3ri4VkVyuZkxG292/Ogr77u1G0Gg9p2x7veTWC2Q/YGCk6+
+ F8ByujlxQFhY04ts58WQIWWOWKCRuE+XR8RTCK9+UU5gAJbn/b4ljgrwGEBwqOQn8ke9DByZq8l
+ qaT+KvNikJYnOMNMH0UL/dVG726gXOO9Bam+4Jro9uTiGq71vAjddOYrsb4/z5zNpb9gDAKH5dA
+ 8zZppcjt08h9ghKMUYPVtO5o5TU4KZEt0hx5h6R1TjzXT2l3vlvSQ35jbJequFJFA0CZViVP6DZ
+ 9b3xd1d4sqK2GTonoaKMHGClrUI3t3Bzqgqmw8hOBGdfhvknYhSgqMHjZCv0oksSZRekIH2kRDs
+ Z5dDUvt+pXB3jwRmI3xDknbHG8NTqf6pMXwG1z7rzQj8KCfmnZBUytuieAFrc6jZ1758+qRoquB
+ KVGBTSqmYl3d2k6M/3B1bDnx44EEg4TpmEKPvjyuOIC/+w+Sew2cli
+X-Received: by 2002:a05:6a20:c916:b0:3b3:2703:124 with SMTP id
+ adf61e73a8af0-3bd152357b7mr7792865637.39.1782284977684; 
+ Wed, 24 Jun 2026 00:09:37 -0700 (PDT)
 Received: from ZBMac-LWN10QXKQ0.taila0cd24.ts.net
  ([2408:80e0:41fc:0:fe49::1277]) by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-c8bc2c8e92asm10736569a12.2.2026.06.24.00.09.26
+ 41be03b00d2f7-c8bc2c8e92asm10736569a12.2.2026.06.24.00.09.34
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 24 Jun 2026 00:09:29 -0700 (PDT)
+ Wed, 24 Jun 2026 00:09:37 -0700 (PDT)
 From: Zhang Chen <zhangckid@gmail.com>
 To: qemu-devel <qemu-devel@nongnu.org>,
  "Dr . David Alan Gilbert" <dave@treblig.org>,
@@ -73,17 +73,17 @@ To: qemu-devel <qemu-devel@nongnu.org>,
  Kevin Wolf <kwolf@redhat.com>, Jason Wang <jasowang@redhat.com>,
  Fam Zheng <fam@euphon.net>
 Cc: Zhang Chen <zhangckid@gmail.com>
-Subject: [PATCH V9 07/17] monitor: support iothread ref/unref for anonymous
- monitors
-Date: Wed, 24 Jun 2026 15:08:41 +0800
-Message-ID: <20260624070851.13342-8-zhangckid@gmail.com>
+Subject: [PATCH V9 09/17] virtio-vq-mapping: track iothread-vq-mapping
+ references using device path
+Date: Wed, 24 Jun 2026 15:08:43 +0800
+Message-ID: <20260624070851.13342-10-zhangckid@gmail.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20260624070851.13342-1-zhangckid@gmail.com>
 References: <20260624070851.13342-1-zhangckid@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
- envelope-from=zhangckid@gmail.com; helo=mail-pf1-x42d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::531;
+ envelope-from=zhangckid@gmail.com; helo=mail-pg1-x531.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,60 +106,160 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Implement iothread registration and unregistration within monitor data lifecycle
-helpers using IOThreadHolder.
-
-When an explicit monitor ID is missing, fall back to utilizing the chardev
-label as a safe identifier for iothread_ref/put operations. This enables
-accurate tracking for anonymous monitors while keeping 'mon->id' as NULL.
+Replace raw object_ref/unref calls with iothread_get/put_aio_context
+in iothread-vq-mapping. This allows tracking IOThread users via
+the device's canonical QOM path, improving lifecycle traceability
+for virtio-blk and virtio-scsi devices.
 
 Signed-off-by: Zhang Chen <zhangckid@gmail.com>
 ---
- monitor/monitor.c | 24 ++++++++++++++++++++++--
- 1 file changed, 22 insertions(+), 2 deletions(-)
+ hw/block/virtio-blk.c                   |  8 +++++++-
+ hw/scsi/virtio-scsi-dataplane.c         |  9 +++++++--
+ hw/virtio/iothread-vq-mapping.c         | 20 +++++++++++++++-----
+ include/hw/virtio/iothread-vq-mapping.h |  6 +++++-
+ 4 files changed, 34 insertions(+), 9 deletions(-)
 
-diff --git a/monitor/monitor.c b/monitor/monitor.c
-index 65749f931e..c3eec8c069 100644
---- a/monitor/monitor.c
-+++ b/monitor/monitor.c
-@@ -612,8 +612,18 @@ void monitor_data_init(Monitor *mon, bool is_qmp, bool skip_flush,
- {
-     mon->id = id ? g_strdup(id) : NULL;
+diff --git a/hw/block/virtio-blk.c b/hw/block/virtio-blk.c
+index 9cb9f1fb2b..30e9fcf870 100644
+--- a/hw/block/virtio-blk.c
++++ b/hw/block/virtio-blk.c
+@@ -1487,9 +1487,12 @@ static bool virtio_blk_vq_aio_context_init(VirtIOBlock *s, Error **errp)
+     s->vq_aio_context = g_new(AioContext *, conf->num_queues);
  
--    if (use_io_thread && !mon_iothread) {
--        monitor_iothread_init();
-+    if (use_io_thread) {
-+        if (!mon_iothread) {
-+            monitor_iothread_init();
-+        }
+     if (conf->iothread_vq_mapping_list) {
++        g_autofree char *path = object_get_canonical_path(OBJECT(vdev));
 +
-+        /* Setup the chr->label as the backup ID for iothread_ref/unref */
-+        IOThreadHolder holder = {
-+            .type = IO_THREAD_HOLDER_KIND_MONITOR_NAME,
-+            .u.monitor_name.monitor_name = id ? (char *)mon->id :
-+                                                (char *)mon->chr.chr->label,
-+        };
-+        iothread_ref_and_get_aio_context(mon_iothread, &holder);
+         if (!iothread_vq_mapping_apply(conf->iothread_vq_mapping_list,
+                                        s->vq_aio_context,
+                                        conf->num_queues,
++                                       path,
+                                        errp)) {
+             g_free(s->vq_aio_context);
+             s->vq_aio_context = NULL;
+@@ -1521,7 +1524,10 @@ static void virtio_blk_vq_aio_context_cleanup(VirtIOBlock *s)
+     assert(!s->ioeventfd_started);
+ 
+     if (conf->iothread_vq_mapping_list) {
+-        iothread_vq_mapping_cleanup(conf->iothread_vq_mapping_list);
++        g_autofree char *path = object_get_canonical_path(
++                                OBJECT(VIRTIO_DEVICE(s)));
++
++        iothread_vq_mapping_cleanup(conf->iothread_vq_mapping_list, path);
      }
-     qemu_mutex_init(&mon->mon_lock);
-     mon->is_qmp = is_qmp;
-@@ -624,6 +634,16 @@ void monitor_data_init(Monitor *mon, bool is_qmp, bool skip_flush,
  
- void monitor_data_destroy(Monitor *mon)
+     if (conf->iothread) {
+diff --git a/hw/scsi/virtio-scsi-dataplane.c b/hw/scsi/virtio-scsi-dataplane.c
+index 95f13fb7c2..26ecefd547 100644
+--- a/hw/scsi/virtio-scsi-dataplane.c
++++ b/hw/scsi/virtio-scsi-dataplane.c
+@@ -65,9 +65,11 @@ void virtio_scsi_dataplane_setup(VirtIOSCSI *s, Error **errp)
+     s->vq_aio_context[1] = qemu_get_aio_context();
+ 
+     if (vs->conf.iothread_vq_mapping_list) {
++        g_autofree char *path = object_get_canonical_path(OBJECT(vdev));
++
+         if (!iothread_vq_mapping_apply(vs->conf.iothread_vq_mapping_list,
+                     &s->vq_aio_context[VIRTIO_SCSI_VQ_NUM_FIXED],
+-                    vs->conf.num_queues, errp)) {
++                    vs->conf.num_queues, path, errp)) {
+             g_free(s->vq_aio_context);
+             s->vq_aio_context = NULL;
+             return;
+@@ -94,7 +96,10 @@ void virtio_scsi_dataplane_cleanup(VirtIOSCSI *s)
+     VirtIOSCSICommon *vs = VIRTIO_SCSI_COMMON(s);
+ 
+     if (vs->conf.iothread_vq_mapping_list) {
+-        iothread_vq_mapping_cleanup(vs->conf.iothread_vq_mapping_list);
++        g_autofree char *path = object_get_canonical_path(
++                                OBJECT(VIRTIO_DEVICE(s)));
++
++        iothread_vq_mapping_cleanup(vs->conf.iothread_vq_mapping_list, path);
+     }
+ 
+     if (vs->conf.iothread) {
+diff --git a/hw/virtio/iothread-vq-mapping.c b/hw/virtio/iothread-vq-mapping.c
+index 55ce62986c..2cb48dd387 100644
+--- a/hw/virtio/iothread-vq-mapping.c
++++ b/hw/virtio/iothread-vq-mapping.c
+@@ -77,6 +77,7 @@ bool iothread_vq_mapping_apply(
+         IOThreadVirtQueueMappingList *list,
+         AioContext **vq_aio_context,
+         uint16_t num_queues,
++        const char *holder,
+         Error **errp)
  {
-+    if (mon->use_io_thread && mon_iothread) {
-+        IOThreadHolder holder = {
-+            .type = IO_THREAD_HOLDER_KIND_MONITOR_NAME,
-+            .u.monitor_name.monitor_name = mon->id ? (char *)mon->id :
-+                                           (char *)mon->chr.chr->label,
+     IOThreadVirtQueueMappingList *node;
+@@ -93,10 +94,13 @@ bool iothread_vq_mapping_apply(
+ 
+     for (node = list; node; node = node->next) {
+         IOThread *iothread = iothread_by_id(node->value->iothread);
+-        AioContext *ctx = iothread_get_aio_context(iothread);
++        IOThreadHolder io_holder = {
++            .type = IO_THREAD_HOLDER_KIND_QOM_OBJECT,
++            .u.qom_object.qom_path = (char *)holder,
++        };
+ 
+-        /* Released in virtio_blk_vq_aio_context_cleanup() */
+-        object_ref(OBJECT(iothread));
++        AioContext *ctx = iothread_ref_and_get_aio_context(iothread,
++                                                           &io_holder);
+ 
+         if (node->value->vqs) {
+             uint16List *vq;
+@@ -120,13 +124,19 @@ bool iothread_vq_mapping_apply(
+     return true;
+ }
+ 
+-void iothread_vq_mapping_cleanup(IOThreadVirtQueueMappingList *list)
++void iothread_vq_mapping_cleanup(IOThreadVirtQueueMappingList *list,
++                                 const char *holder)
+ {
+     IOThreadVirtQueueMappingList *node;
+ 
+     for (node = list; node; node = node->next) {
+         IOThread *iothread = iothread_by_id(node->value->iothread);
+-        object_unref(OBJECT(iothread));
++        IOThreadHolder io_holder = {
++            .type = IO_THREAD_HOLDER_KIND_QOM_OBJECT,
++            .u.qom_object.qom_path = (char *)holder,
 +        };
 +
-+        iothread_put_aio_context(mon_iothread, &holder);
-+    }
-+
-     g_free(mon->mon_cpu_path);
-     qemu_chr_fe_deinit(&mon->chr, false);
-     if (monitor_is_qmp(mon)) {
++        iothread_put_aio_context(iothread, &io_holder);
+     }
+ }
+ 
+diff --git a/include/hw/virtio/iothread-vq-mapping.h b/include/hw/virtio/iothread-vq-mapping.h
+index 57335c3703..0d39caddf3 100644
+--- a/include/hw/virtio/iothread-vq-mapping.h
++++ b/include/hw/virtio/iothread-vq-mapping.h
+@@ -17,6 +17,7 @@
+  * @list: The mapping of virtqueues to IOThreads.
+  * @vq_aio_context: The array of AioContext pointers to fill in.
+  * @num_queues: The length of @vq_aio_context.
++ * @holder: The QOM paths for attached device.
+  * @errp: If an error occurs, a pointer to the area to store the error.
+  *
+  * Fill in the AioContext for each virtqueue in the @vq_aio_context array given
+@@ -31,15 +32,18 @@ bool iothread_vq_mapping_apply(
+         IOThreadVirtQueueMappingList *list,
+         AioContext **vq_aio_context,
+         uint16_t num_queues,
++        const char *holder,
+         Error **errp);
+ 
+ /**
+  * iothread_vq_mapping_cleanup:
+  * @list: The mapping of virtqueues to IOThreads.
++ * @holder: The QOM paths for attached device.
+  *
+  * Release IOThread object references that were acquired by
+  * iothread_vq_mapping_apply().
+  */
+-void iothread_vq_mapping_cleanup(IOThreadVirtQueueMappingList *list);
++void iothread_vq_mapping_cleanup(IOThreadVirtQueueMappingList *list,
++                                 const char *holder);
+ 
+ #endif /* HW_VIRTIO_IOTHREAD_VQ_MAPPING_H */
 -- 
 2.49.0
 
