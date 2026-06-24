@@ -4,98 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00E9ACDB479
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 17:25:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FE0DCDB47F
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 17:27:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcRLS-0002tb-Qm; Wed, 24 Jun 2026 13:25:02 -0400
+	id 1wcRN3-0003PG-Mu; Wed, 24 Jun 2026 13:26:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wcRLG-0002sx-O7
- for qemu-devel@nongnu.org; Wed, 24 Jun 2026 13:24:53 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ id 1wcRN2-0003P8-AV
+ for qemu-devel@nongnu.org; Wed, 24 Jun 2026 13:26:40 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wcRLF-0000jk-4m
- for qemu-devel@nongnu.org; Wed, 24 Jun 2026 13:24:50 -0400
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+ id 1wcRN0-0001iS-IH
+ for qemu-devel@nongnu.org; Wed, 24 Jun 2026 13:26:39 -0400
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65OFfgfZ3756511
- for <qemu-devel@nongnu.org>; Wed, 24 Jun 2026 17:24:46 GMT
+ 65OFfIqh3293831
+ for <qemu-devel@nongnu.org>; Wed, 24 Jun 2026 17:26:36 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- 7khpyy0KMZ9m6bjepM+MHL9rPEOEHxRLNu+PKq1qyV8=; b=BXkL8C5twlSzIvB+
- 3d/75CIQOSnIg5Rye5fT/4WsXYCDcsiF0xDadSy0l/THvHWdm3l+vOiE29ozXmnk
- gvrFUxdKJTEZod+J3J54Rj4vecEPp3bjIGuBeWJqoaYUm5uJ2MOG2GG3Q0zZuOTX
- lYwQXP2LjP2Zs9RnYcTSA2merXW8bR59M07ekpN53EpwnX9IKWYJi1qiQGJ5rFyj
- xMLwBDHWMUP+/Y7glnhekMQ4xpv+QNNWlrOLbStcMkusAbf7dnvF6/1mhwsjAdzo
- 5mlVsXnUOuZSp+JiA+48vNcJLY+zKNwECWMTyEiP0BonIxWtqSLZJAct2Oj7n8rw
- j4KhzA==
+ aktBDcjx22QZa2HbenOKUuvfvQBk5+fnNxUTHpZYdgE=; b=a1jB31zK8/ffhWy6
+ q0IB3/t7hnOwGEaZ3C4GX1cpK/3oLEXlFoPi38kc1knqIL/321CC5vpyeZCTB30p
+ hvcr3VBNVyDuP765t2tf7ln116zPgy+ceXLhfV5l7rR/DbtRToZ+b6WFlnuijcWu
+ VX1tq+XylrxrSVHvewr5YhAjPIZOD3th5aigL4d5jw/N5sJco8ZfI53SrZx3vTEi
+ naE18asxZAN9ezQQZoTMiQxpvDmmRyOtTOM8Q/lSYY+kr8OO9wZBby0WvzbN+B3y
+ FjBi/5fFhdL9L3FbxvN+vh3XCePrHjfqoDcv6FL/oWM2TSBJ0zgWLX+7tMK1d0HC
+ ebDEbw==
 Received: from mail-vs1-f72.google.com (mail-vs1-f72.google.com
  [209.85.217.72])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f05ar3esu-1
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f00evcb61-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 24 Jun 2026 17:24:45 +0000 (GMT)
+ for <qemu-devel@nongnu.org>; Wed, 24 Jun 2026 17:26:35 +0000 (GMT)
 Received: by mail-vs1-f72.google.com with SMTP id
- ada2fe7eead31-6a2b8b91dc5so519977137.2
- for <qemu-devel@nongnu.org>; Wed, 24 Jun 2026 10:24:45 -0700 (PDT)
+ ada2fe7eead31-6c5794db0eeso1264088137.2
+ for <qemu-devel@nongnu.org>; Wed, 24 Jun 2026 10:26:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1782321885; x=1782926685; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1782321994; x=1782926794; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=7khpyy0KMZ9m6bjepM+MHL9rPEOEHxRLNu+PKq1qyV8=;
- b=BOw084LTIo7ywNEg50xXAAzjltCVh5skpWNHe+/Eu21Qokdxk7M4d2puY5dreet3jG
- LyvzfpbSn3zCN9CyI66f/jC5cwNoX/Q2F4Mjq8CY838y9guZ2GI/U0UJKEo+Qs6zVvrX
- hnRqy6Oojsm/vzKSMI9opz8m6k5ytoxMZMOm2upxLeM0DAlnKRmVtxNLJu+rIKGj0PBx
- eqwbKBVGD2w8hha1hm5sVRHT711uLhAchGG7IcylO3ST9UIbQdTaGlS/k3Fs3o6H2AJ3
- ei9BjQOJNFg6ipaiA9KnERVDTv9GVbmcnFnhuR0wnyNIC8IH+G8TblNzEMsYbpWRGJae
- UyYw==
+ bh=aktBDcjx22QZa2HbenOKUuvfvQBk5+fnNxUTHpZYdgE=;
+ b=BE0QMDVPr5deACr67lSDpCbBga6eMEsmcNw+Y/QkUlcMEdjP9JjAlYAmK2Ld3V1ltH
+ XPd5MSTarZcl6vodBNz7ye05OFv8iRDdxfeVEfQFw9clxlRjI87qxj4lsWRuXynrU7Bp
+ 7tMGzx6EV03rcEsuW7mYkOEHnQ5c9SB4Cr+P+IaC23VoUGAENbdkBT8ArBxJAHR1POcB
+ 55eG+RYCmMCNozULHFOu0jxvWVh4gec2/+zfrV+/r4j/y/ffCWYqBaZ7js12VXS24SxQ
+ 3+T2SGXD+2WVru8F+TvBwHzLJkRSQ9DmRSGNJrR0Pt14V7mDnMJYStnUUCV/Awov0vi/
+ JzUQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782321885; x=1782926685;
+ d=1e100.net; s=20251104; t=1782321994; x=1782926794;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=7khpyy0KMZ9m6bjepM+MHL9rPEOEHxRLNu+PKq1qyV8=;
- b=A6NqRVPhaPYTs4g+5k0cDY/UI1VF2Mxd6PpwcaBcpBq62boQSrFGCsiIO1gII0TEM/
- wBMX5FGKY2oicZruJBJ+wPA0Q07cX4KhRTgKC55inpF05gGANwAdiixDavM4rDf0N0Kz
- /ZZThtg04r0JVOiBccclaVuQWOTiOgHJhByzDk9Fi/5OKB88xMEgxllH9zQ97Zw9zhhs
- cfJ59IlJNS/qI+l4s4qj8Q1AI+0uHcSOJ5glKTAx+HMdweyVzo7VF1JmUU94yd5Q2DDe
- 49aJwxxChZuFEGVexxDvDM1i5zeQSTXwTK9Jg2oGWSMrCBR4mk8gXGd007gZ/O4wenZ9
- EXOA==
-X-Gm-Message-State: AOJu0Yz1GWZ5ok/tshiTZQj43OGuWjHnBuW60gA7vE04YwSrAI+bshH0
- 25NdzxTJcGjbfAkYO+ZWeJfpamKEZvsXAZuvC5MHyTHu7i+KboHXM6RieB+3yygKkxXA8oujYRs
- hu/Aq0ux2+zbfeC0gGU3E8pgyF6Gg7pI9V/IudhoHAeog2QQT3mmRXf7gTw==
-X-Gm-Gg: AfdE7cmmPrKSUbJfVADY7T2EiV+jDodMplXWfQJ9vRZsKzlbhGAoKQoD5QynKJchtA/
- OAs/Se02KLSIsIXlG5gtHnqwXGl0tpMZl/5fIi8eFQJoM2Xlt8n96Aqc3w3fNdVCNOmTw1NSbYk
- 7Im0UgSbd6p8d/VqiRlisDxGN7b+IqpcW0oGi7LdUCMOw/pAIwtxEG4N2AmKnxHNr/xtJLgYeZ1
- WtHFIRNgR5PoUU+jjPEqKjDzg2PVmaJkScI8aLzD66PMwcprUpS8scXT3OTy9aHltAAiVrmP2Bq
- LtYVW+h7pI8r+2lZwgK7K+41LrPkpZStkPw5mBexxaVM/dRTaL46icmv5VXdaRc55KBolbJ7k21
- bJevIfI424M1Wf09zOy5RfOXg68Rjzz9b985bVw6TLB+/JlLA7T70O6xEiH5NYQ==
-X-Received: by 2002:a05:6102:1490:b0:631:3377:dbc7 with SMTP id
- ada2fe7eead31-7311552ef75mr2640139137.20.1782321885071; 
- Wed, 24 Jun 2026 10:24:45 -0700 (PDT)
-X-Received: by 2002:a05:6102:1490:b0:631:3377:dbc7 with SMTP id
- ada2fe7eead31-7311552ef75mr2639853137.20.1782321879731; 
- Wed, 24 Jun 2026 10:24:39 -0700 (PDT)
+ bh=aktBDcjx22QZa2HbenOKUuvfvQBk5+fnNxUTHpZYdgE=;
+ b=k/pVkNQaK15i/gCFC8GRrYaHxhX5XkSA4bhEgGvIbG28pCh5wz9sbT5+K2IYwE2UdM
+ x4bR322YmFeGrfZe9NsqD77odeB/ZD8y4IbYvhObbPljmW9nnF7Ie8C55LbE9+q6JMb1
+ ZAWqnWStN9RHa6Y8JhDxyl7foielF3sowflkVR0BGYTUl4B/9lZTSRzNsF2Wo9LeAwe+
+ HjEvjRxjXFMruG9iXrp3WyXWdAg2T9WnLOH3xladyMm57zsOw8ELh15/xzHYtKlJHrv/
+ /0VIdtmCKrEpOv5bt6/2MX5TiBoz9tGAJjo1TxgCB5jwRZdA5j20ayii9mK+IfnxmlMZ
+ 1GCA==
+X-Forwarded-Encrypted: i=1;
+ AHgh+Rpm5KnJPMP/c+htWs1oL6rN24pDrb7oG2m36WpNECbbLCMKQXUbUiwP9d95Km+j5/kevI0YD2wyZ1ry@nongnu.org
+X-Gm-Message-State: AOJu0YwveYykZRuNK2oTJf8hylGBcXrf8xuLGmyWU2M2FGzuvF2a4Fti
+ kLmn+IrgPqSDOJd0ROnmJ9VyMxXoztBvpxSq5Fbde3cqSFKoggBpcWJRVB7QMpeTV3Wo0vf0Tgg
+ taKz0h3kSTW4Oe2cb96SP+F8vwxP9o8tN7D3uMt5F8eIlRdvX8ikyRkYiBQ==
+X-Gm-Gg: AfdE7cnNISKozLb6Qo4e0EC9CQx3jLF3So3WxOFOr/UENmXv03PZDXuFui/aEUnUU5U
+ SmaBCuCAwYS/IR/EJKlQ5CA13YizpdS3g9ei7JVeJ/1asFIj2Y3eVLFLDfHE6/suyxsKTibF5TO
+ d2teyOUj0DKJN+yBMaSnzHSNaYDhaqEq5fCp2nsodz7QbX7XDa6B9Tqnz07+z0vOCFdShmCVU6t
+ xguFbgl79AvT8zpEIOQrk62MAYIguXhAIq9Cp/WVMkFYO8yhgJ03QUEg6CHZu4krhOb7Eerj6tR
+ Tb6ghOwuUbIP5vvkD6/m4NTZ5p+i+jOiIfGTONDlYVcByw8nlNiRMHsFXombTndzUA5coeb4Tf/
+ Sl+xw1RMeGM4gzYwj7LkII6d8nVlspoAjvUNbItqLOEfX1a6tr4CP2cZFwiSIWg==
+X-Received: by 2002:a05:6102:2c1a:b0:633:c6c4:b321 with SMTP id
+ ada2fe7eead31-73114f0d03dmr2414431137.18.1782321994417; 
+ Wed, 24 Jun 2026 10:26:34 -0700 (PDT)
+X-Received: by 2002:a05:6102:2c1a:b0:633:c6c4:b321 with SMTP id
+ ada2fe7eead31-73114f0d03dmr2414415137.18.1782321994023; 
+ Wed, 24 Jun 2026 10:26:34 -0700 (PDT)
 Received: from [192.168.69.212] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-46c1ee01d51sm7059804f8f.15.2026.06.24.10.24.38
+ ffacd0b85a97d-46c1ee018e8sm8824508f8f.11.2026.06.24.10.26.32
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 24 Jun 2026 10:24:39 -0700 (PDT)
-Message-ID: <b48769df-a283-40dc-b323-3c07a5ea2c26@oss.qualcomm.com>
-Date: Wed, 24 Jun 2026 19:24:37 +0200
+ Wed, 24 Jun 2026 10:26:33 -0700 (PDT)
+Message-ID: <b51d117c-a80a-4122-8ef1-a8b6c780c724@oss.qualcomm.com>
+Date: Wed, 24 Jun 2026 19:26:32 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/5] docs/specs/fw_cfg: Document all architecture register
- layouts
+Subject: Re: [PATCH 2/5] hw/nvram/fw_cfg: Enforce standard layout for
+ fw_cfg_init_mem_dma()
 Content-Language: en-US
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>,
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
+Cc: Gerd Hoffmann <kraxel@redhat.com>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  Paolo Bonzini <pbonzini@redhat.com>,
  "Michael S. Tsirkin" <mst@redhat.com>, Sergio Lopez <slp@redhat.com>,
@@ -107,48 +109,45 @@ Cc: qemu-devel@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>,
  Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
  Chao Liu <chao.liu.zevorn@gmail.com>
 References: <20260529174639.451353-1-peter.maydell@linaro.org>
- <20260529174639.451353-2-peter.maydell@linaro.org>
- <931c8511-8c13-4134-b562-d4766d1a101c@mailo.com>
- <CAFEAcA_9KQsiCM0WGFYEonu-Afrv=zVrssv2ar2DgG1AMrw2yw@mail.gmail.com>
+ <20260529174639.451353-3-peter.maydell@linaro.org>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <CAFEAcA_9KQsiCM0WGFYEonu-Afrv=zVrssv2ar2DgG1AMrw2yw@mail.gmail.com>
+In-Reply-To: <20260529174639.451353-3-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: WWpbElekqaReFDdeLV57OA06ACytEdc2
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjI0MDE0NSBTYWx0ZWRfX5roHFlXmWWNT
- +ZXiDnvFXUPTWtkyjsSj0Nq/wsScuLibNcEVHxnThhNBr0z7nS6yRXpdxOKfCaPhj4NzllNVad/
- UCClwXmc2cFtPUlC9FLriOgKtEj/F34=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjI0MDE0NSBTYWx0ZWRfX1UFGpTAx+lab
- Mz143qTOHvvQ2vXyZ+SWM6p6YKmKwO4APGflNlabFv6op0bWaFF10HV54VBOBZtH17EIWZp0JkE
- c0B/weOqqTdpfZeCDiLmlFwfdp/o4Pl1z6z4MFRoDl/RCz8f6yFT73rR3XfYS14uc9sRtYiN3wf
- OdXmt3f80zzUKI7akWqd8llImPDcQEsbjEx4+0Wg02XU4I2q+JFHlTgNTxikGIrXDUws5W1jfRQ
- vgk/mzjFEB9SbHsEN+hj0Hg7ee6bR2w2swmIeU7othdUuxRT7iOnnlwm2JqF6mLetHtqTakUMYT
- tFLElQN+27gtk5nUnQq1yjuZBNahEbqZ9/lypTJIogbnc6NMqKLwr/LOIoWs6auKx7csgd6NDVE
- 3VGBm6pHeOcr7I1iQrUy5GtQdNgChQ==
-X-Proofpoint-GUID: WWpbElekqaReFDdeLV57OA06ACytEdc2
-X-Authority-Analysis: v=2.4 cv=EuLiaycA c=1 sm=1 tr=0 ts=6a3c12dd cx=c_pps
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjI0MDE0NSBTYWx0ZWRfX0t/Po8oXk5z4
+ B6SeAT8ukI9iAKqgK89k3p4cOXdxdu0XsNYgTlWkYv+w4ABKlQuIw70gj4I42kDNDKDQv8DRwlG
+ mOuYGwggEuJtvkEFZhnpn+DyC4fGvHU=
+X-Authority-Analysis: v=2.4 cv=JbaMa0KV c=1 sm=1 tr=0 ts=6a3c134b cx=c_pps
  a=DUEm7b3gzWu7BqY5nP7+9g==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
  a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22
- a=S56xvJB5AAAA:8 a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=1m688CsLQ5TUZgtBZRUA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=-aSRE8QhW-JAV6biHavz:22
- a=MH9Ivq0PDQRhlrFuIVvX:22 a=cvBusfyB2V15izCimMoJ:22
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=YMgV9FUhrdKAYTUUvYB2:22
+ a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=IIRpaH2KrgeeHQje89cA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=-aSRE8QhW-JAV6biHavz:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjI0MDE0NSBTYWx0ZWRfX9y2XRTU5PQDK
+ /3hrYx8hCBTSPBmcJjOiRGpvaS0phwTAjWSQWFFRy/H2Dn46hGWb4F8+A9YX/eqR9utQvfIBiKK
+ B2IMUskDYPc9P66tk5jYiygXfN/ye1CCfMfdhjXY0JLsIYflJoIcSwGeigRcawVoiYe51UUcJcp
+ fcAdihle0ddc/lvr60Os7Q9fb6CxD8IZIqpmVgyWag4efc0efv9b/NP6YT4sbPojGMDcZfScjnk
+ k937Or4S/Z21TDOvMOlbH5lyhVwyi1WCndDioJm3zEeAIdIOxrQ3zUwHUpSVrbgLgbhc1oDrJb6
+ hDSkfNwwEKkyb/rd3ZoQdk+qd8YR/+YiKHbQmXmKaXWPM2AavDg5IVHrqOenpy3vq8BOETijXS6
+ eu+C85eUG7MK1l8WZ/LFzUM3vaylnQ==
+X-Proofpoint-ORIG-GUID: JwzlHDSf972PGRp4I20sHQSnHguqmWKo
+X-Proofpoint-GUID: JwzlHDSf972PGRp4I20sHQSnHguqmWKo
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-06-24_03,2026-06-24_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 lowpriorityscore=0 suspectscore=0 adultscore=0 malwarescore=0
- phishscore=0 spamscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2606240145
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+ bulkscore=0 phishscore=0 lowpriorityscore=0 spamscore=0 malwarescore=0
+ suspectscore=0 adultscore=0 classifier=typeunknown authscore=0 authtc=
+ authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.22.0-2606150000 definitions=main-2606240145
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -165,99 +164,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 16/6/26 11:29, Peter Maydell wrote:
-> On Wed, 3 Jun 2026 at 08:08, Philippe Mathieu-Daudé <philmd@mailo.com> wrote:
->>
->> Hi Peter,
->>
->> On 29/5/26 19:46, Peter Maydell wrote:
->>> We implement the fw_cfg device for more architectures and machines
->>> that we let on about in our documentation.  Luckily most of the new
->>> ones (notably riscv and loongarch) have followed the straightforward
->>> layout that the Arm virt board picked.
->>>
->>> Restructure the documentation to present this as the "standard"
->>> layout, followed by the other layouts used by various other boards
->>> for historical reasons.  This adds PA-RISC, SPARC, PPC and MIPS.
->>>
->>> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
->>> ---
->>>    docs/specs/fw_cfg.rst | 28 ++++++++++++++++++++++++----
->>>    1 file changed, 24 insertions(+), 4 deletions(-)
->>>
->>> diff --git a/docs/specs/fw_cfg.rst b/docs/specs/fw_cfg.rst
->>> index 31ae31576b..7e2fe0851d 100644
->>> --- a/docs/specs/fw_cfg.rst
->>> +++ b/docs/specs/fw_cfg.rst
->>> @@ -84,15 +84,35 @@ increasing address order, similar to memcpy().
->>>    Register Locations
->>>    ------------------
->>>
->>> +For a memory-mapped fw_cfg device, the standard register layout is:
->>> +
->>> +    * base address : Data Register (64 bit)
->>> +    * base address + 8 : Selector Register (16 bit)
->>> +    * base address + 16 : DMA Address Register (64 bit)
->>> +
->>> +Some architectures or machines have a different layout for historical reasons:
->>> +
->>>    x86, x86_64
->>>        * Selector Register IOport: 0x510
->>>        * Data Register IOport:     0x511
->>>        * DMA Address IOport:       0x514
->>> +64-bit SPARC:
->>> +    * base address : Selector Register (16 bit)
->>> +    * base address + 1 : Data Register (8 bit)
->>
->> IIUC they have both the same base address.
+On 29/5/26 19:46, Peter Maydell wrote:
+> Currently fw_cfg_init_mem_dma() allows the caller to customize the
+> register layout, by specifying separately the offsets for control,
+> data and DMA registers, plus the width of the data register.
 > 
-> This one's confusing, because the code for both sparc64 and x86
-> fw_cfg is more lax than what we document.
+> In practice, all the boards using this function specify the same
+> standard layout: "base + 8, base, 8, base + 16", meaning that the
+> data register is 8 bytes and the registers are data at offset 0,
+> control/selector at offset 8, and DMA at offset 16.
 > 
-> The sun4u code does:
->      qdev_prop_set_bit(dev, "dma_enabled", false);
-> and:
->      memory_region_add_subregion(pci_address_space_io(ebus), BIOS_CFG_IOPORT,
->                                  &FW_CFG_IO(dev)->comb_iomem);
+> Allowing every board to be different is gratuitous and useless
+> variation which leads to code in guest OSes having architecture
+> ifdeffery to cope with it.  Avoid potentially introducing any more of
+> this by removing all the arguments from fw_cfg_init_mem_dma(), so
+> that the callers only specify the base address.
 > 
-> so it uses the fw_cfg's comb_iomem MemoryRegion. This is the
-> same thing the x86 ioport version uses (except that for sparc64 we
-> disable the DMA register), so it's the same layout, with
-> the selector register at the base address and the data register
-> nominally at an offset 1 greater than that.
-> 
-> The implementation in fw_cfg.c (fw_cfg_comb_mem_ops) doesn't actually
-> check the address, only the size of data written, and dispatches like this:
->   - 1 byte writes are ignored (they used to be data writes in ancient QEMU)
->   - 2 byte writes are selector register writes
->   - 1 byte reads are data register reads
->   - everything else is rejected by the .valid.accepts function
-> and you can use either baseaddr or baseaddr+1 for any of that.
-> 
-> What I opted to document here is (a) the same thing we already
-> document for the x86 ioport interface, which uses comb_iomem
-> and so also is not actually checking the address values, and
-> (b) what the Linux driver in drivers/firmware/qemu_fw_cfg.c uses:
-> 
-> # elif (defined(CONFIG_X86) || defined(CONFIG_SPARC64)) /* x86, sun4u */
-> #  define FW_CFG_CTRL_OFF 0x00
-> #  define FW_CFG_DATA_OFF 0x01
-> #  define FW_CFG_DMA_OFF 0x04
-> # else
-> 
-> We could document the lax conditions that our implementation
-> actually enforces for both sparc and x86, I guess, but they
-> felt to me more like an accident of implementation. What do
-> you think?
-
-Looking at it as an accident of the implementation, we are good
-indeed. Thanks for the clarification.
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> ---
+>   hw/arm/virt.c             |  2 +-
+>   hw/loongarch/fw_cfg.c     |  3 +--
+>   hw/nvram/fw_cfg.c         | 10 ++++------
+>   hw/riscv/virt.c           |  3 +--
+>   include/hw/nvram/fw_cfg.h | 23 ++++++++++++++++++++---
+>   5 files changed, 27 insertions(+), 14 deletions(-)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-
-> 
-> thanks
-> -- PMM
-> 
-
 
