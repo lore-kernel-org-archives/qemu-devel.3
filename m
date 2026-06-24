@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1748FCDB479
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 17:39:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B4DBCDB47F
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 17:39:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcRYk-000746-3L; Wed, 24 Jun 2026 13:38:46 -0400
+	id 1wcRYm-00074Y-3z; Wed, 24 Jun 2026 13:38:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wcRYg-00070i-N3
- for qemu-devel@nongnu.org; Wed, 24 Jun 2026 13:38:42 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1wcRYi-00072r-RZ
+ for qemu-devel@nongnu.org; Wed, 24 Jun 2026 13:38:44 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wcRYY-0004Ro-St
- for qemu-devel@nongnu.org; Wed, 24 Jun 2026 13:38:37 -0400
+ id 1wcRYa-0004SL-MD
+ for qemu-devel@nongnu.org; Wed, 24 Jun 2026 13:38:41 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1782322710;
+ s=mimecast20190719; t=1782322715;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=w70jiRK0B35xqZ52IBYiay1rKxV48E/XHct+5x3csOE=;
- b=IidjGczqZY/W5LHPLMT7i7XY05QfWRvFkhDslg8CtJTKd3HCro8k4mTGwyW+SFK6KwEE/3
- EsO6BcRQZozcsOc4d8KkBki229XTB0FrRUvaKP9mJt4KZviNNdLgd4jZBNLb9vfL/RSofP
- xG1a4gW3+yPT78TRWBZXA7aibjTW7u0=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=ezohllC5Ih/htDofQ0Y1tPBXbOVdg9FZE9a0AtuxZP0=;
+ b=E2if+zdrdT8Y16J8pJgec/K4F2NQqnbnR25LtHaYp2bGO+Juiv6kgPBAn7YS8WMld6nLWU
+ cTriOYmKbIjqPw9TkyYGnRGJCbO9Ysmc52lxIzsKOn0tkcXx34w7wIxdQaWRtxv4XINDnM
+ RY5/dqq1458iyM6GQxZH27t6C2tYVIA=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-638-hynlOBviMc2Mu0qpmumlag-1; Wed,
- 24 Jun 2026 13:38:29 -0400
-X-MC-Unique: hynlOBviMc2Mu0qpmumlag-1
-X-Mimecast-MFC-AGG-ID: hynlOBviMc2Mu0qpmumlag_1782322707
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-587-kJ343L45NpKdoRD3Ww4PhA-1; Wed,
+ 24 Jun 2026 13:38:33 -0400
+X-MC-Unique: kJ343L45NpKdoRD3Ww4PhA-1
+X-Mimecast-MFC-AGG-ID: kJ343L45NpKdoRD3Ww4PhA_1782322712
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8F6B81805A06; Wed, 24 Jun 2026 17:38:27 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9063D1956094; Wed, 24 Jun 2026 17:38:31 +0000 (UTC)
 Received: from berrange.com (unknown [10.44.32.102])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id EBD7E180034F; Wed, 24 Jun 2026 17:38:23 +0000 (UTC)
+ id 2FF37180028B; Wed, 24 Jun 2026 17:38:27 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: devel@lists.libvirt.org,
@@ -58,24 +58,25 @@ Cc: devel@lists.libvirt.org,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Peter Krempa <pkrempa@redhat.com>
-Subject: [PATCH v5 07/35] monitor: add 'readline' property to HMP Monitor class
-Date: Wed, 24 Jun 2026 18:37:23 +0100
-Message-ID: <20260624173752.2928717-8-berrange@redhat.com>
+Subject: [PATCH v5 08/35] monitor: add 'pretty' property to QMP Monitor class
+Date: Wed, 24 Jun 2026 18:37:24 +0100
+Message-ID: <20260624173752.2928717-9-berrange@redhat.com>
 In-Reply-To: <20260624173752.2928717-1-berrange@redhat.com>
 References: <20260624173752.2928717-1-berrange@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+X-Spam_score_int: 8
+X-Spam_score: 0.8
+X-Spam_bar: /
+X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,75 +92,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This determines whether a human monitor runs with readline for
-interactive use, or without readline for non-interactive use by
-the GDB stub.
+This determines whether the QMP JSON responses are pretty printed
+with newlines and indentation, or compact with no extra whitespace.
 
 Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 Tested-by: Peter Krempa <pkrempa@redhat.com>
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- monitor/hmp.c | 27 ++++++++++++++++++++++++++-
- 1 file changed, 26 insertions(+), 1 deletion(-)
+ monitor/qmp.c | 20 ++++++++++++++++++--
+ 1 file changed, 18 insertions(+), 2 deletions(-)
 
-diff --git a/monitor/hmp.c b/monitor/hmp.c
-index 4ab81b5904..d5905e2279 100644
---- a/monitor/hmp.c
-+++ b/monitor/hmp.c
-@@ -50,12 +50,37 @@ static void monitor_hmp_finalize(Object *obj)
+diff --git a/monitor/qmp.c b/monitor/qmp.c
+index 0abf2677f9..2a8532ef96 100644
+--- a/monitor/qmp.c
++++ b/monitor/qmp.c
+@@ -77,8 +77,25 @@ static void monitor_qmp_finalize(Object *obj)
  {
  }
  
-+static bool monitor_hmp_get_readline(Object *obj, Error **errp)
++static bool monitor_qmp_get_pretty(Object *obj, Error **errp)
 +{
-+    MonitorHMP *mon = MONITOR_HMP(obj);
++    MonitorQMP *mon = MONITOR_QMP(obj);
 +
-+    return mon->use_readline;
++    return mon->pretty;
 +}
 +
-+static void monitor_hmp_set_readline(Object *obj, bool val, Error **errp)
++static void monitor_qmp_set_pretty(Object *obj, bool val, Error **errp)
 +{
-+    MonitorHMP *mon = MONITOR_HMP(obj);
++    MonitorQMP *mon = MONITOR_QMP(obj);
 +
-+    mon->use_readline = val;
++    mon->pretty = val;
 +}
 +
- static void monitor_hmp_class_init(ObjectClass *cls, const void *data)
+ static void monitor_qmp_class_init(ObjectClass *cls, const void *data)
  {
-+    object_class_property_add_bool(cls, "readline",
-+                                   monitor_hmp_get_readline,
-+                                   monitor_hmp_set_readline);
++    object_class_property_add_bool(cls, "pretty",
++                                   monitor_qmp_get_pretty,
++                                   monitor_qmp_set_pretty);
  }
  
- static void monitor_hmp_init(Object *obj)
- {
-+    MonitorHMP *hmp = MONITOR_HMP(obj);
-+
-+    /*
-+     * Default to common case for external HMP use,
-+     * as opposed to non-interactive internal use
-+     * from gdbstub
-+     */
-+    hmp->use_readline = true;
- }
- 
- static void monitor_command_cb(void *opaque, const char *cmdline,
-@@ -1550,6 +1575,7 @@ void monitor_new_hmp(const char *chardev_id, bool use_readline, Error **errp)
+ static void monitor_qmp_init(Object *obj)
+@@ -538,6 +555,7 @@ void monitor_new_qmp(const char *chardev_id, bool pretty, Error **errp)
                                          id,
                                          errp,
                                          "chardev", chardev_id,
-+                                        "readline", use_readline ? "yes" : "no",
++                                        "pretty", pretty ? "yes" : "no",
                                          NULL);
  
      if (!obj) {
-@@ -1566,7 +1592,6 @@ void monitor_new_hmp(const char *chardev_id, bool use_readline, Error **errp)
+@@ -558,8 +576,6 @@ void monitor_new_qmp(const char *chardev_id, bool pretty, Error **errp)
+                       qemu_chr_has_feature(mon->parent_obj.chr.chr,
+                                            QEMU_CHAR_FEATURE_GCONTEXT));
  
-     monitor_data_init(&mon->parent_obj, false, false, false);
+-    mon->pretty = pretty;
+-
+     qemu_mutex_init(&mon->qmp_queue_lock);
+     mon->qmp_requests = g_queue_new();
  
--    mon->use_readline = use_readline;
-     if (mon->use_readline) {
-         mon->rs = readline_init(monitor_readline_printf,
-                                 monitor_readline_flush,
 -- 
 2.54.0
 
