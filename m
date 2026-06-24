@@ -4,69 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4A5DCDB479
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 17:43:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9604CDB479
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 17:49:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcRZR-0007xu-N0; Wed, 24 Jun 2026 13:39:29 -0400
+	id 1wcRiq-0003iC-5F; Wed, 24 Jun 2026 13:49:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wcRZI-0007U8-6T
- for qemu-devel@nongnu.org; Wed, 24 Jun 2026 13:39:21 -0400
+ id 1wcRio-0003hh-E5
+ for qemu-devel@nongnu.org; Wed, 24 Jun 2026 13:49:10 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wcRZG-0004YU-Lu
- for qemu-devel@nongnu.org; Wed, 24 Jun 2026 13:39:19 -0400
+ id 1wcRim-0006BY-Lz
+ for qemu-devel@nongnu.org; Wed, 24 Jun 2026 13:49:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1782322756;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ s=mimecast20190719; t=1782323347;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ZZrM5fOskwl+JBf9uANf+y6dk2/mlPVy4FXHK5L6GrI=;
- b=JS1ay22nQu9keE8J1+pp9vGU5eP/SQUx8tqM/6xRK/vfnf3C9blDDrRNsH36WsomFioX9N
- JIlgYtn/xM3EsxpeCFlTwtCwslyFIJDPDBA1a6mq7DBD8J9tlWRLFie6Mcwjy2O3U6zj5m
- LG/AkoY6qqjwXoCzoKSmrdZkRtCRfok=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=E6hFrtTvVhuF0/dqY/dXfE5wyfYXbeqNh3zsMqCY128=;
+ b=QwKhd1OhWb8A4TPFpRo+z9+9hre6h0P+86RXNyQRSSLnLljGFiLU5AHAvPLARil9yr+SL5
+ jM+CvQJ2lxjvxsNVfc5+l+OmoIEy1rsK7foWnPvzc9vPVGhg1flrmMBBJ2LQ/hB+5kXjAA
+ xONdraAl2jslzYOEnM67A64Pm37z3YM=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-615-nA8ulpKnMoabQSidctlH4A-1; Wed,
- 24 Jun 2026 13:39:13 -0400
-X-MC-Unique: nA8ulpKnMoabQSidctlH4A-1
-X-Mimecast-MFC-AGG-ID: nA8ulpKnMoabQSidctlH4A_1782322752
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-591-uEBQOXD2NUiYQmxkjsI9ZA-1; Wed,
+ 24 Jun 2026 13:49:01 -0400
+X-MC-Unique: uEBQOXD2NUiYQmxkjsI9ZA-1
+X-Mimecast-MFC-AGG-ID: uEBQOXD2NUiYQmxkjsI9ZA_1782323340
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 26A4C19540DE; Wed, 24 Jun 2026 17:39:12 +0000 (UTC)
-Received: from berrange.com (unknown [10.44.32.102])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id CA672180028B; Wed, 24 Jun 2026 17:39:08 +0000 (UTC)
-From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: devel@lists.libvirt.org,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Markus Armbruster <armbru@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- "Dr. David Alan Gilbert" <dave@treblig.org>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Christian Brauner <brauner@kernel.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Peter Krempa <pkrempa@redhat.com>
-Subject: [PATCH v5 18/35] monitor: use dynamic cast in QMP commands
-Date: Wed, 24 Jun 2026 18:37:34 +0100
-Message-ID: <20260624173752.2928717-19-berrange@redhat.com>
-In-Reply-To: <20260624173752.2928717-1-berrange@redhat.com>
-References: <20260624173752.2928717-1-berrange@redhat.com>
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2AC0519560B3; Wed, 24 Jun 2026 17:49:00 +0000 (UTC)
+Received: from redhat.com (unknown [10.44.32.102])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id AB79D3000239; Wed, 24 Jun 2026 17:48:57 +0000 (UTC)
+Date: Wed, 24 Jun 2026 18:48:54 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Brian Cain <brian.cain@oss.qualcomm.com>, qemu-devel@nongnu.org,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ stefanha@gmail.com, Kohei Tokunaga <ktokunaga.mail@gmail.com>
+Subject: Re: [PATCH] tests/docker: add flex and bison to emsdk-wasm64-cross
+Message-ID: <ajwYhu9lClShuhVj@redhat.com>
+References: <20260624054832.610697-1-brian.cain@oss.qualcomm.com>
+ <dd48e432-ab04-42e7-a88f-231d1c9d55fa@oss.qualcomm.com>
+ <87wlvnj0qf.fsf@draig.linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+In-Reply-To: <87wlvnj0qf.fsf@draig.linaro.org>
+User-Agent: Mutt/2.3.2 (2026-04-26)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 8
@@ -89,50 +89,55 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Rather than asserting monitor_is_qmp(), use a QOM cast via
-MONITOR_QMP which performs an assert already.
+On Wed, Jun 24, 2026 at 06:40:24PM +0100, Alex Bennée wrote:
+> Philippe Mathieu-Daudé <philmd@oss.qualcomm.com> writes:
+> 
+> > On 24/6/26 07:48, Brian Cain wrote:
+> >> The hexagon idef-parser requires flex and bison as host build
+> >> tools.  Add them to the emsdk-wasm64-cross container image so that
+> >> wasm64 builds including hexagon-softmmu can find them.
+> >> Link:
+> >> https://lore.kernel.org/qemu-devel/CAJSP0QVk6wsOnPAspC4YfXRp90saKibQfD4Mk-44-RQo0k=z3w@mail.gmail.com/
+> >> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
+> >> ---
+> >>   tests/docker/dockerfiles/emsdk-wasm64-cross.docker | 2 ++
+> >>   1 file changed, 2 insertions(+)
+> >> diff --git a/tests/docker/dockerfiles/emsdk-wasm64-cross.docker
+> >> b/tests/docker/dockerfiles/emsdk-wasm64-cross.docker
+> >> index 8a924816f92..5debbc77d08 100644
+> >> --- a/tests/docker/dockerfiles/emsdk-wasm64-cross.docker
+> >> +++ b/tests/docker/dockerfiles/emsdk-wasm64-cross.docker
+> >> @@ -19,7 +19,9 @@ ENV CXXFLAGS="$CFLAGS"
+> >>   ENV LDFLAGS="-sWASM_BIGINT -sASYNCIFY=1 -L$TARGET/lib"
+> >>   RUN apt-get update && apt-get install -y \
+> >>       autoconf \
+> >> +    bison \
+> >>       build-essential \
+> >> +    flex \
+> >>       libglib2.0-dev \
+> >>       libtool \
+> >>       pkgconf \
+> >
+> > Maybe emsdk-wasm64 should have been added to lci-tool first.
+> > (not your responsibility).
+> 
+> I don't think that will be easy on account of emsdk having to build a
+> bunch of libraries to support building QEMU. If a distro provides a
+> better cross environment for wasm64 then we could try.
 
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Tested-by: Peter Krempa <pkrempa@redhat.com>
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
----
- monitor/qmp-cmds-control.c | 12 ++----------
- 1 file changed, 2 insertions(+), 10 deletions(-)
+Yeah, there's rather too much custom stuff going on in our emsdk
+dockerfile to make it practical to add to lcitool.
 
-diff --git a/monitor/qmp-cmds-control.c b/monitor/qmp-cmds-control.c
-index af6a2a118b..8fe0876a3d 100644
---- a/monitor/qmp-cmds-control.c
-+++ b/monitor/qmp-cmds-control.c
-@@ -72,11 +72,7 @@ static bool qmp_caps_accept(MonitorQMP *mon, QMPCapabilityList *list,
- void qmp_qmp_capabilities(bool has_enable, QMPCapabilityList *enable,
-                           Error **errp)
- {
--    Monitor *cur_mon = monitor_cur();
--    MonitorQMP *mon;
--
--    assert(monitor_is_qmp(cur_mon));
--    mon = container_of(cur_mon, MonitorQMP, parent_obj);
-+    MonitorQMP *mon = MONITOR_QMP(monitor_cur());
- 
-     if (mon->commands == &qmp_commands) {
-         error_set(errp, ERROR_CLASS_COMMAND_NOT_FOUND,
-@@ -122,11 +118,7 @@ static void query_commands_cb(const QmpCommand *cmd, void *opaque)
- CommandInfoList *qmp_query_commands(Error **errp)
- {
-     CommandInfoList *list = NULL;
--    Monitor *cur_mon = monitor_cur();
--    MonitorQMP *mon;
--
--    assert(monitor_is_qmp(cur_mon));
--    mon = container_of(cur_mon, MonitorQMP, parent_obj);
-+    MonitorQMP *mon = MONITOR_QMP(monitor_cur());
- 
-     qmp_for_each_command(mon->commands, query_commands_cb, &list);
- 
+
+With regards,
+Daniel
 -- 
-2.54.0
+|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+|: https://libvirt.org          ~~          https://entangle-photo.org :|
+|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
 
 
