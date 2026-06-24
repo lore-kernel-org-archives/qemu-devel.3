@@ -4,145 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D1C5CDB479
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 10:47:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E34ACDB47C
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 10:48:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcL8c-0003JL-Lm; Wed, 24 Jun 2026 06:47:22 -0400
+	id 1wcL90-0003VB-VO; Wed, 24 Jun 2026 06:47:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wcL8b-0003JD-3B
- for qemu-devel@nongnu.org; Wed, 24 Jun 2026 06:47:21 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wcL8z-0003UE-Ri
+ for qemu-devel@nongnu.org; Wed, 24 Jun 2026 06:47:45 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wcL8Z-0001xV-Cm
- for qemu-devel@nongnu.org; Wed, 24 Jun 2026 06:47:20 -0400
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65OANlE12586221
- for <qemu-devel@nongnu.org>; Wed, 24 Jun 2026 10:47:17 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- hkR4IJSKEuCIzSX8PalMwKxB+AXbGXYpK1dFegbaPxc=; b=SN6btQsKEWb30Cqh
- yZVLdv7p23SNtDpimqAszGfeOOC82brBO/A52x0C/NO+54LE5r6RTyi7GDsr6AjU
- +gdyNle9H/Q/NhMe07YTpTc5C2VSZUuVyi/UQoQvYe4vGxjCKpIUo/VydTNaHA5I
- oW5DNmyEgBZQD8rmnk2VRLJl1mcHKhLQsRCVwcLcBqBlzlqoOLEveJY6qrxTwxvL
- 10uAdgu39lBUW+Tj9IthkzJNSyQwd3hwN12SLZFB3/ogg1GLRAHiXzY9cdZbY297
- sNPGZuwDWLLRtx6Rl4RsI9eWIMuCq1ZkhLS7pDW3uZ/94BhR6WykYlq/5ilOh2+1
- dK0rUQ==
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
- [209.85.222.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f05aq9u17-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 24 Jun 2026 10:47:12 +0000 (GMT)
-Received: by mail-qk1-f200.google.com with SMTP id
- af79cd13be357-92045e86763so383371985a.1
- for <qemu-devel@nongnu.org>; Wed, 24 Jun 2026 03:47:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1782298031; x=1782902831; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=hkR4IJSKEuCIzSX8PalMwKxB+AXbGXYpK1dFegbaPxc=;
- b=OtpcINk5RwJKsfe4Rf7OOjH9j+++uXJCm/CivWn4+b43gXti+ztjax1TAnTBhPObTu
- Pm+BXb5I5agTqSYiEbAZdx+CUUQx2VN6oTtd7sEo+gIiDlgg0wlcP+BiKZ6/xMM/Up/W
- iECY2mv5mCZBgDttkOPk/Ya+26aCni9Vxr87p00u6QVDP3YuUf5u01Jq7yY8/jT/ZfEV
- NP9rYK8g37ic3L7EQB4RIMhyOVUj3JgSQChS/pAIVfROTRwIamUWo0u32JXiDjes394g
- 1DS25hUJRkZf5/EL/jt3plksRfTB7ETTM5pnYVR97VFB63gd8W9Tt9HhT/8WGXXKwR0g
- 7A0A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782298031; x=1782902831;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=hkR4IJSKEuCIzSX8PalMwKxB+AXbGXYpK1dFegbaPxc=;
- b=S4kAWQJd4UgV4Mtg733f8eoUILWyGRP+jTr7yLhGBm6rbh1ptfbi5V8F5JwWn6IGJz
- C3yuYbEeV4WIMdxSPrAroohL5XbIMneIUFNLwA7PNATRvDhYXiIqijpA9/1sSqac1hUy
- NHWrHa27glpJ/6YNAUwkV54hOC82xirvSyVWguW5EAQl0XAzIYA4hZaQYuKH0H1ZI+ND
- nDz2x2+Ef+LZDPcG5+xrxe8Be5FtLsIX1rzeViA9FPCubueJ1nUQXoUZz5NU5hxoEnui
- DY4ZsS/Hb7KlQFEQxWwvGf59sGoRhdIHA2emDp46KmoD6dYcuN5rDaran8oAB1DYN8oK
- ppQA==
-X-Forwarded-Encrypted: i=1;
- AFNElJ8WvF/0OVSVhHT94CO/RHjlHZGtpRN8j2+6OyDrxAoDv/Sh13gOFX6/y8W5w2zpaf1USw3FGuJA0Q3V@nongnu.org
-X-Gm-Message-State: AOJu0Yw930K1B2EFBXX4EFceVIB7qclJODjNLJdbP71GS4nNaq3dm2+X
- diTGtD2Dvr8hnDoIGTOvzYueaxzEzuVtSY2KWIAvZYOrnC3ldDIMs5EpxD3qlsmR8cdl55zeT7c
- x7R3yVu+6DJu6BWF9hUjs8sob9ASFPSN8yJ/hq+B2IO6Tu35aqAFTQSkcBQ==
-X-Gm-Gg: AfdE7cmPXXCHQXDrTRrsSNjJRncf+EbrLNeGxyb8D5v3yFJUwpsSaqw1eZoKZqXHUD6
- IUW2Ke0xYLL6WCBXZ1k/2LpYrRU7d9q6ktVELbqd464r14kUPOol9G48ok0qdSrwWqXoVew3qqb
- FRwp5x1IXlQuDNRVO9XhlakYo6cQfZwZX6jFCZmxIxpUJ4s4eVgyqkXiXDkAHtK5mefS1DwRrWe
- u1O17hoiGtwGbMNDLtnuTRPDrGurwE1GIwkOXEIIB7I0qzrn97RseWyegDXOeTFV4gN/3EaA6Z6
- feVaQ1Nx6gZuijtpyQ0LKXtzgEMM0/AZ3WyU3zkE5J2tB4MXf2ps+uAL3YyU8bo+Qno/S3H2/O3
- tLKeb5im5B0SdvDHzbKIXLqPSu/RjxawvGRHSvhZCk7B3Q1Z4pucm9qFendqyKw==
-X-Received: by 2002:a05:620a:2684:b0:924:eef7:d017 with SMTP id
- af79cd13be357-926029ee7c9mr1048911385a.31.1782298031609; 
- Wed, 24 Jun 2026 03:47:11 -0700 (PDT)
-X-Received: by 2002:a05:620a:2684:b0:924:eef7:d017 with SMTP id
- af79cd13be357-926029ee7c9mr1048909285a.31.1782298031104; 
- Wed, 24 Jun 2026 03:47:11 -0700 (PDT)
-Received: from [192.168.69.212] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-46c221d93d8sm10328886f8f.23.2026.06.24.03.47.09
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 24 Jun 2026 03:47:10 -0700 (PDT)
-Message-ID: <76024e07-d14a-4808-a68d-07185ec4726b@oss.qualcomm.com>
-Date: Wed, 24 Jun 2026 12:47:09 +0200
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wcL8y-00027U-Aq
+ for qemu-devel@nongnu.org; Wed, 24 Jun 2026 06:47:45 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1782298063;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=N8IrcjKVSGRrrQkxP5YIgWZCLBm8ejeVytx94BD743I=;
+ b=NTWDfQ6BsOmIdFi7fJif1gD+CINDIUThVeuat1lDze/hjqZg7it437n4SEtQIOiGlaVEfB
+ 4lMbY5q13nfcNOMGH8P6svm6iYnZaz4mqd0mQu71S1fFeRlmf6KBmgEKSNXOU2FY9rNYB0
+ SxPxDKO6KgvVAuM2FypiaM6gdVG/ELk=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-201-Pa9kjjP7OOaViw0Uj39CTg-1; Wed,
+ 24 Jun 2026 06:47:39 -0400
+X-MC-Unique: Pa9kjjP7OOaViw0Uj39CTg-1
+X-Mimecast-MFC-AGG-ID: Pa9kjjP7OOaViw0Uj39CTg_1782298057
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C7E1C18052EA; Wed, 24 Jun 2026 10:47:36 +0000 (UTC)
+Received: from redhat.com (unknown [10.44.49.57])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9F2B5180049F; Wed, 24 Jun 2026 10:47:29 +0000 (UTC)
+Date: Wed, 24 Jun 2026 11:47:25 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Aditya Gupta <adityag@linux.ibm.com>
+Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Shivang Upadhyay <shivangu@linux.ibm.com>,
+ Sourabh Jain <sourabhjain@linux.ibm.com>,
+ Hari Bathini <hbathini@linux.ibm.com>, Nicholas Piggin <npiggin@gmail.com>,
+ Miles Glenn <milesg@linux.ibm.com>, Fabiano Rosas <farosas@suse.de>,
+ Laurent Vivier <lvivier@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, devel@lists.libvirt.org,
+ Misbah Anjum N <misanjum@linux.ibm.com>,
+ Anushree Mathur <anushree.mathur@linux.ibm.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ kvm@vger.kernel.org, Gautam Menghani <gautam@linux.ibm.com>,
+ Chinmay Rath <rathc@linux.ibm.com>
+Subject: Re: [PATCH 8/8] MAINTAINERS: Add self as maintainer for PowerNV
+Message-ID: <aju1vc-yqJoaK7CO@redhat.com>
+References: <20260623141933.577981-1-adityag@linux.ibm.com>
+ <20260623141933.577981-9-adityag@linux.ibm.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5/5] accel/tcg: Remove pre-vCPU
- ignore_memory_transaction_failures flag
-Content-Language: en-US
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
- Zhao Liu <zhao1.liu@intel.com>
-References: <20260616153432.92939-1-philmd@oss.qualcomm.com>
- <20260616153432.92939-6-philmd@oss.qualcomm.com>
- <2cf33941-82f9-4497-b7be-2fd61c4275e9@linaro.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <2cf33941-82f9-4497-b7be-2fd61c4275e9@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjI0MDA4OSBTYWx0ZWRfXwea6Ly1R8IMM
- aGFBkFXtpPiw0O+LpQs0xmyPZ93yrBBv0ISfTMnCoaftIMYynV/xgTEuPk5itMm3s7NWqq7esBg
- q9F0NWWDV9bwAzkhV9ENrYGg+DUa7fo=
-X-Proofpoint-GUID: 2rls9uEiObt10GQgcfUq4zt_VBsSPW23
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjI0MDA4OSBTYWx0ZWRfX59hktkkjLtxh
- WGxBL7TNB8p9PxkOzV/PJ3XR6+/sLf22AdkQvV5kbd/hkG5Jd9nBTtKI5wi55+5LB0qL7ej5kOX
- BEhhiyKF5HA/jHo9AglRR6DtzgKsiLsnjqyIzo4qKqKDZVMF8YhdF39467Y+403wnCHOuW0wquL
- oyvTfy/NEsaxansjroUOTFkKdTWxZsSqRj4Kem81qSA4XC7pCkj2d3wfFavWZIWHlmUD5oFPLSM
- U1U84y8evGVdTSSTy3mbMs5udCrEwcTbi0ENaE54RBxSJlbaEsCRp781gk+sQiX+t1OImtlmSoi
- aPr2okB0dvYuG5vydWvVXqnem7f5nP2kvUDRSIFZdOBIF25olu0panPYqpscPwuU7dTKCky/sp6
- jXYRXftO91WAyopzSLGChYRoN8l8Vw==
-X-Authority-Analysis: v=2.4 cv=UphT8ewB c=1 sm=1 tr=0 ts=6a3bb5b0 cx=c_pps
- a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
- a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
- a=ZaDHDpGZsxRR_M2j62IA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=PEH46H7Ffwr30OY-TuGO:22
-X-Proofpoint-ORIG-GUID: 2rls9uEiObt10GQgcfUq4zt_VBsSPW23
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-24_03,2026-06-23_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 adultscore=0 phishscore=0 spamscore=0 suspectscore=0
- malwarescore=0 bulkscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2606240089
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=philmd@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260623141933.577981-9-adityag@linux.ibm.com>
+User-Agent: Mutt/2.3.2 (2026-04-26)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -155,27 +95,47 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 16/6/26 19:58, Richard Henderson wrote:
-> On 6/16/26 08:34, Philippe Mathieu-Daudé wrote:
->> @@ -1291,8 +1294,10 @@ static void io_failed(CPUState *cpu, 
->> CPUTLBEntryFull *full, vaddr addr,
->>                         unsigned size, MMUAccessType access_type, int 
->> mmu_idx,
->>                         MemTxResult response, uintptr_t retaddr)
->>   {
->> -    if (!cpu->ignore_memory_transaction_failures
->> -        && cpu->cc->tcg_ops->do_transaction_failed) {
->> +    if (unlikely(tcg_ignore_memory_transaction_failures)) {
->> +        return;
->> +    }
+On Tue, Jun 23, 2026 at 07:49:33PM +0530, Aditya Gupta wrote:
+> Add myself as maintainer for PowerNV machine, and remove the
+> reviewer entry
 > 
-> Any reason not to pull this from MACHINE_CLASS(current_machine) instead 
-> of a global?
+> Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
+> ---
+>  MAINTAINERS | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
+> 
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index 93df53d87f63..67f65bff3913 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -1646,7 +1646,8 @@ F: tests/functional/ppc64/test_tuxrun.py
+>  
+>  PowerNV (Non-Virtualized)
+>  M: Nicholas Piggin <npiggin@gmail.com>
+> -R: Aditya Gupta <adityag@linux.ibm.com>
+> +M: Aditya Gupta <adityag@linux.ibm.com>
+> +G: @adi-g15-ibm
 
-Restrict this TCG specific handling out of CPU common. I'll see as
-an alternative to defer the check to late TCG TLB init, allowing
-to make the boolean non-global.
+Please drop the G: line, as I'm changing the approach for recording
+this info to be more automatic.
+
+>  R: Glenn Miles <milesg@linux.ibm.com>
+>  R: Harsh Prateek Bora <harshpb@linux.ibm.com>
+>  L: qemu-ppc@nongnu.org
+> -- 
+> 2.54.0
+> 
+> 
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+|: https://libvirt.org          ~~          https://entangle-photo.org :|
+|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+
 
