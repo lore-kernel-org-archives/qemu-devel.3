@@ -4,50 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1BE0ACDE005
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56399CDE006
 	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 13:48:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcNrK-0008JQ-Fy; Wed, 24 Jun 2026 09:41:44 -0400
+	id 1wcNoa-0002v3-1a; Wed, 24 Jun 2026 09:38:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wcNr8-0008EU-IQ; Wed, 24 Jun 2026 09:41:31 -0400
+ id 1wcNoF-00020c-AW; Wed, 24 Jun 2026 09:38:34 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wcNr4-0001ql-G6; Wed, 24 Jun 2026 09:41:29 -0400
+ id 1wcNo5-00019x-Vu; Wed, 24 Jun 2026 09:38:25 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1782308001; bh=eQvSMPmomQqwaPPkfKeVvtAg7zOdGaHkyz/lMko70sI=;
+ t=1782307998; bh=zb56gFXKrBxhm7F3CspMLidaMJreYiHvIKwE6YJdNk8=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=MF7Msi5B2HkXKKK7pKEOLr6eYligD6VdOdVqW7Fwl5iCnv8a/w8w8DXkCSTnJInt8
- aZ4gwfrzu5fiw63BCIi1fWdDUqOVVFGbc9FcwrMfxPaq7tF7Hra0SynJ2ptRgOI0Ap
- 6mboBs1Z4IqV2e6fSUdYrSUVuAqoBP7Nu7IQvXoaE2QUMV6L5fM0nFsHb+ZXEpFo5p
- TuMR6qdUNxcKF7EGINp6N0RExPHd5JNZSXiOtE7BqWizkmbg5wG5gOWkQrtUtaXflC
- 13j/aN8vlGE5WU9o3hxeDO9Y79PLkyRV49rfsfiCH7rBOgOUaedvNx3cVdtr+lVOpz
- GgNsW1kTRWTcA==
+ b=q7/hbEFEfi0hsohtRI9rVWCWqmBGF55NtPGwFCjFlhIiJRz1hRfKGoAAIb81NE1VD
+ Lc+OkxuEN6eWmmiHfJHOAgOM7BGkAcJzYbMjyzJH/PqFeNwKuRkbf0YsxBe9KFUx3T
+ st7O7tqWdGSQU1ET4lR1eD8Bo/9Py9fX9Sjf35Dfa9u8Y9ySFpBWYiu7/MfHZYNSVx
+ DNBO/4aE0KndkRIr2rh5zszITfi3nRi56uBPq8EGG3pUb3pUNIg/kjTAkl1xw1+F0z
+ uJhEMUvfgXZ7gD+RFD4Y+PuaO4KdN8XfGabfdR2BkzMS8G22khago/r1drEv8OgLs4
+ KeElObOt/JeJw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 214A51BAA06;
- Wed, 24 Jun 2026 16:33:21 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id E35A21BA9E8;
+ Wed, 24 Jun 2026 16:33:18 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id B106C3DEA55;
- Wed, 24 Jun 2026 16:33:26 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 7C8533DEA37;
+ Wed, 24 Jun 2026 16:33:24 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Chao Liu <chao.liu.zevorn@gmail.com>,
- Alistair Francis <alistair.francis@wdc.com>,
+Cc: qemu-stable@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Warner Losh <imp@bsdimp.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@mailo.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.2 084/107] target/riscv/tcg: disable svpbmt if satp_mode
- < sv39
-Date: Wed, 24 Jun 2026 16:31:29 +0300
-Message-ID: <20260624133301.403266-84-mjt@tls.msk.ru>
+Subject: [Stable-11.0.2 054/107] gitlab: remove x64-freebsd-14-build Cirrus job
+Date: Wed, 24 Jun 2026 16:30:59 +0300
+Message-ID: <20260624133301.403266-54-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.2-20260624163118@cover.tls.msk.ru>
 References: <qemu-stable-11.0.2-20260624163118@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -72,66 +72,98 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+From: Stefan Hajnoczi <stefanha@redhat.com>
 
-Priv spec chapter "Svpbmt Extension for Page-Based Memory Types, Version
-1.0" mentions that "The Svpbmt extension depends on the Sv39
-extension.".
+Cirrus has shut down and the x64-freebsd-14-build is failing:
+https://gitlab.com/qemu-project/qemu/-/jobs/14656732122
 
-We're not doing any satp checks when enabling svpbmt.  This causes
-problems with the riscv32 'max' CPU that happens to be enabling svpbmt
-even though it doesn't support the required satp mode.  In fact all rv32
-CPUs are allowing menvcfg.PBMTE writes, which doesn't make sense for
-them in any circunstance since svpbmt is not possible for rv32 at this
-moment [1].
+Remove the x64-freebsd-14-build job to get the CI pipeline passing
+again. The next commit will be to remove Cirrus integration from the
+GitLab YAML and lcitool since it is no longer used.
 
-This also impacts rv64 CPUs that are running in satp 'bare' mode and are
-reporting svpbmt in the riscv,isa.
-
-All these problems can be solved by disabling svpbmt if satp_mode is not
-at least sv39.  The problem reported in [1] goes away because we'll
-never enable MENVCFG_PBMTE write mask in write_menvcfgh().  We're also
-become consistent with how svpbmt is enabled for rv64.
-
-In case the user enables svpbmt in the command line using an invalid setup,
-not just disable svpbmt but also throw a warning:
-
-$ ./build/qemu-system-riscv64 -M virt,dumpdtb=fdt.dtb \
-    -cpu max,sv39=off,sv48=off,sv57=off,sv64=off,svpbmt=on
-qemu-system-riscv64: warning: svpbmt requires at least satp sv39, current satp mode: none
-
-[1] https://gitlab.com/qemu-project/qemu/-/work_items/3473
-
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3473
-Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
-Message-ID: <20260519114858.316532-1-daniel.barboza@oss.qualcomm.com>
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-(cherry picked from commit 109856754cbd4c98db49e67071b620945a4ee2a9)
+Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Reviewed-by: Warner Losh <imp@bsdimp.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@mailo.com>
+Message-id: 20260602162457.828969-2-stefanha@redhat.com
+Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
+(cherry picked from commit 4023f38b50a42a9a936ee3c1c3a9642110e42916)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
-index c5505414ae..24496b0d8a 100644
---- a/target/riscv/tcg/tcg-cpu.c
-+++ b/target/riscv/tcg/tcg-cpu.c
-@@ -874,6 +874,17 @@ void riscv_cpu_validate_set_extensions(RISCVCPU *cpu, Error **errp)
-         return;
-     }
+diff --git a/.gitlab-ci.d/cirrus.yml b/.gitlab-ci.d/cirrus.yml
+index b71ab090b6..4769d00c67 100644
+--- a/.gitlab-ci.d/cirrus.yml
++++ b/.gitlab-ci.d/cirrus.yml
+@@ -30,17 +30,3 @@
+     - cirrus-run -v --show-build-log always .gitlab-ci.d/cirrus/$NAME.yml
+   variables:
+     QEMU_JOB_CIRRUS: 1
+-
+-x64-freebsd-14-build:
+-  extends: .cirrus_build_job
+-  variables:
+-    NAME: freebsd-14
+-    CIRRUS_VM_INSTANCE_TYPE: freebsd_instance
+-    CIRRUS_VM_IMAGE_SELECTOR: image_family
+-    CIRRUS_VM_IMAGE_NAME: freebsd-14-3
+-    CIRRUS_VM_CPUS: 8
+-    CIRRUS_VM_RAM: 8G
+-    UPDATE_COMMAND: pkg update; pkg upgrade -y
+-    INSTALL_COMMAND: pkg install -y
+-    CONFIGURE_ARGS: --target-list-exclude=arm-softmmu,i386-softmmu,mips64el-softmmu,mipsel-softmmu,mips-softmmu,ppc-softmmu,sh4eb-softmmu,xtensa-softmmu --enable-rust
+-    TEST_TARGETS: check
+diff --git a/.gitlab-ci.d/cirrus/freebsd-14.vars b/.gitlab-ci.d/cirrus/freebsd-14.vars
+deleted file mode 100644
+index 98fbde6cc6..0000000000
+--- a/.gitlab-ci.d/cirrus/freebsd-14.vars
++++ /dev/null
+@@ -1,16 +0,0 @@
+-# THIS FILE WAS AUTO-GENERATED
+-#
+-#  $ lcitool variables freebsd-14 qemu
+-#
+-# https://gitlab.com/libvirt/libvirt-ci
+-
+-CCACHE='/usr/local/bin/ccache'
+-CPAN_PKGS=''
+-CROSS_PKGS=''
+-MAKE='/usr/local/bin/gmake'
+-NINJA='/usr/local/bin/ninja'
+-PACKAGING_COMMAND='pkg'
+-PIP3='/usr/local/bin/pip'
+-PKGS='alsa-lib bash bison bzip2 ca_root_nss capstone4 ccache4 cmocka coreutils ctags curl cyrus-sasl dbus diffutils dtc flex fusefs-libs3 gettext git glib gmake gnutls gsed gtk-vnc gtk3 json-c libepoxy libffi libgcrypt libjpeg-turbo libnfs libslirp libspice-server libssh libtasn1 llvm lzo2 meson mtools ncurses nettle ninja opencv pixman pkgconf png py311-numpy py311-pillow py311-pip py311-pyyaml py311-setuptools py311-sphinx py311-sphinx_rtd_theme py311-tomli py311-wheel python3 rpm2cpio rust rust-bindgen-cli sdl2 sdl2_image snappy sndio socat spice-protocol tesseract usbredir virglrenderer vte3 vulkan-tools xorriso zstd'
+-PYPI_PKGS=''
+-PYTHON='/usr/local/bin/python3'
+diff --git a/MAINTAINERS b/MAINTAINERS
+index ad215eced8..8cc89d4feb 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -4502,9 +4502,7 @@ FreeBSD Hosted Continuous Integration
+ M: Ed Maste <emaste@freebsd.org>
+ M: Li-Wen Hsu <lwhsu@freebsd.org>
+ S: Maintained
+-F: .gitlab-ci.d/cirrus/freebsd*
+ F: tests/vm/freebsd
+-W: https://cirrus-ci.com/github/qemu/qemu
  
-+#ifndef CONFIG_USER_ONLY
-+    if (cpu->cfg.ext_svpbmt && cpu->cfg.max_satp_mode < VM_1_10_SV39) {
-+        cpu->cfg.ext_svpbmt = false;
-+        if (cpu_cfg_ext_is_user_set(CPU_CFG_OFFSET(ext_svpbmt))) {
-+            warn_report("svpbmt requires at least satp sv39, "
-+                        "current satp mode: %s",
-+                        satp_mode_str(cpu->cfg.max_satp_mode,
-+                                     riscv_cpu_is_32bit(cpu)));
-+        }
-+    }
-+#endif
-     /*
-      * Disable isa extensions based on priv spec after we
-      * validated and set everything we need.
+ Functional testing framework
+ M: Thomas Huth <th.huth+qemu@posteo.eu>
+diff --git a/tests/lcitool/refresh b/tests/lcitool/refresh
+index 4289cc381a..ad6a1e6fe8 100755
+--- a/tests/lcitool/refresh
++++ b/tests/lcitool/refresh
+@@ -313,11 +313,6 @@ try:
+                         enable_rust=False,
+                         trailer="".join(debian_all_test_cross_compilers))
+ 
+-    #
+-    # Cirrus packages lists for GitLab
+-    #
+-    generate_cirrus("freebsd-14")
+-
+     #
+     # GitLab packages lists
+     #
 -- 
 2.47.3
 
