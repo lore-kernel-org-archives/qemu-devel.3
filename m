@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 144D7CDB471
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1BD7CDB47F
 	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 11:42:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcM09-00082X-A8; Wed, 24 Jun 2026 07:42:41 -0400
+	id 1wcLzW-0007am-DJ; Wed, 24 Jun 2026 07:42:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wcLzs-0007oj-Bw
- for qemu-devel@nongnu.org; Wed, 24 Jun 2026 07:42:26 -0400
+ id 1wcLzU-0007aH-Lo
+ for qemu-devel@nongnu.org; Wed, 24 Jun 2026 07:42:00 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wcLzp-0007ei-NK
- for qemu-devel@nongnu.org; Wed, 24 Jun 2026 07:42:22 -0400
+ id 1wcLzT-0007aW-5h
+ for qemu-devel@nongnu.org; Wed, 24 Jun 2026 07:42:00 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1782301339;
+ s=mimecast20190719; t=1782301318;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=TewsrQjOEEfUbtJfnRuG82VZIS4a9rgFezYVmFt14qI=;
- b=go8UpGPnPnYN2UqeGKO/K04pAPUwK51nkIGSs16rASu7AVXf406HF7WImo5djvBErl1db7
- zzrWY5KUFB/xfoP3qXmJAowPGdaIlFN6FTcZZUed1BRV/UwxPjUz/nMLi17Dvkdfi/WthM
- ALFKGEzYWHEwYhtuUCFiboYUMpS+G1E=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=vczqbItL4HK30XxRE+DcjNlBuXut/LSRWV0zFWitP9w=;
+ b=SQcrR31QVlGZN9eKGKLaBTiU17bUwA8sYUIr6WN5wps6FTmcul7AP5Y9/WvQPQ9R6Ei25C
+ zmvC+qVHRxoR4CiCarDjElKOECGwCdjRT27PEonjFmztMZWtj/hzwZxfsTzHiBRWc8mxK/
+ Cc70uppNlBORCJidrcYoThnqAuCvCeQ=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-663-KFn8AkvCO2Sp9_3PnuXetw-1; Wed,
- 24 Jun 2026 07:42:17 -0400
-X-MC-Unique: KFn8AkvCO2Sp9_3PnuXetw-1
-X-Mimecast-MFC-AGG-ID: KFn8AkvCO2Sp9_3PnuXetw_1782301337
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-639--HBPgmWXPx62XmgzD177gw-1; Wed,
+ 24 Jun 2026 07:41:56 -0400
+X-MC-Unique: -HBPgmWXPx62XmgzD177gw-1
+X-Mimecast-MFC-AGG-ID: -HBPgmWXPx62XmgzD177gw_1782301316
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 0421A1955D97
- for <qemu-devel@nongnu.org>; Wed, 24 Jun 2026 11:42:17 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 0ABCE1955F07
+ for <qemu-devel@nongnu.org>; Wed, 24 Jun 2026 11:41:56 +0000 (UTC)
 Received: from localhost (unknown [10.44.24.16])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 7FA1E30001A7; Wed, 24 Jun 2026 11:42:15 +0000 (UTC)
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 9ECBA1955F7A; Wed, 24 Jun 2026 11:41:54 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Wed, 24 Jun 2026 15:41:30 +0400
-Subject: [GIT PULL 08/35] util: make notifer_remove() safer
+Date: Wed, 24 Jun 2026 15:41:26 +0400
+Subject: [GIT PULL 04/35] scripts/lsan_suppressions: suppress fontconfig leaks
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260624-ui-v1-8-482147b0a7af@redhat.com>
+Message-Id: <20260624-ui-v1-4-482147b0a7af@redhat.com>
 References: <20260624-ui-v1-0-482147b0a7af@redhat.com>
 In-Reply-To: <20260624-ui-v1-0-482147b0a7af@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Stefan Hajnoczi <stefanha@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=793;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1016;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=yLgBs2ho0OvcmQtzdxufCxHOw5F5fjwZkyxkY+89Asc=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqO8JnyvMbRCKXmDk5vL/EMP1dsB34XMyTJfzoh
- hv8hrO0j/+JAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCajvCZwAKCRDa6OEJdZac
- 5SOzEACnILAM/66Azt1a8OmsvOjvrSTFVVZysEDW3cKIOf+uzpuGPbR9JrYI5gq31n9YgKw0vMO
- UWiHrmEtcbF55n6lLhxsN+sKZRoX0r9dqwR4nrrTjcMnCKATPrmz6MRlyHmN9XItAbtFqjiOMBf
- Ratj7ZdfxqBNJhJBqjOTTYenhBt1o5MVaX+gAFdvTQT+ITVF+khtSKairsw8DdrGLzDJo6QNjiI
- QwVZQOokhf6Fcu8WTgTNp2wObpy/TADof0orcfmNfzvPyXp/aoPkUaCBe2VwDuAVR/OJmEEP7hH
- g+xf6/qMUFX2v0nYRuhw/LPXIrw03G9sRm+0MmBWj6y+1+j58O/OyGPqHUiQ5cWnFziBlg+3PJd
- Zin5b6RStNcmb6jkbIlY9DM/e5+dRAwvgpsPU+XNvOrwgBpdRP4IDqa0Brz1c6BwsDNblJBk0ze
- f0T0G3jKqg+tNh/l6/XFy/AAmDuP4LnWRoIotWRrA5Dt5tmYq6bn6B662SGoT+BTgYPelbpI0as
- /+Ujrw2yJvkTvaVnL5KKnVuJdLKMm7vNVPTCGpX+EwT+OjgnwM9g2ItgGXMAxNEKznLpUuVoAea
- IHuAtiMUTXacOXcKdf4/FwwI5QOKiIy9nbbIXFJy8yqJpHt3iOafZN1b0H9BITYwi4SqjJukA5m
- YaWRcJQUQjt56iA==
+ bh=zt/pQu2Inuys4dVDvXDp2sUcT8roo/0x8IoywLFrTpE=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqO8Jm7ADrHuTxxZ4ttFFSt+QhGYP6qVvxET6hM
+ ZEiODqjO/iJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCajvCZgAKCRDa6OEJdZac
+ 5aGwD/9rjrTUdpP1zNPilGd0uBAhNAeF7a4vJ6Dq0x/Vz1gb8fgX/QGpZ1R6oJdjRrBQ4HmWNZI
+ BqR8FscSOkjy+qirmBOgvyeAi+b6/hmM0xw+YvgSmSfRaQbewGbt/qiciZNvcb8Yi+Dl8MITDYL
+ EDtQhk/89ADHxqT2ChsBGvwH/affha0eHXCgu+7GZNC+uFT8fqRFHFvNZYmnd4GH0hkuBS2xiuC
+ zEQ8QwDhmuPIe0TYuVoiUmsJ/7M/p6f21N96cokuyUNWUySZ9whYDaNyW2WaCd+e1hKsZg8ceDl
+ lMMCyZt7VE9OvZXzhhAmlYiLp6Y6aWdILgHoxiHcDFO7O7ph/9qwhRL7iKSrNhZaV0lXsZ9hn34
+ uqWJXuC9Mgjkj8wPm1JQfpIiLCaU4qDxswoNsxQUGIyy0B6lDxYetxX2NqY5aSmdLqiHeLk6PyX
+ OEXH5rCgL/8vQBGT6xAbARFOiGofXZngdXxZ38nLhb0A3msiSZL95xAA3BC/MHI3zQWDoZxIC/d
+ lghNuThIQCU4Wt+hkc2OsDU5QrShRnBEcUspg3r96xYwAj9SlZdJRreGL9yNa0jbn1B0WbXWzJ/
+ Fy1/c/okEzWi0UhZWl33hHq3OMrONcyoeNxY47JkkPjzV/pz8ApnrdJitTAAcAUWH4thmSWw0gh
+ 4WT2WArf+LSe+Ng==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
 Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -103,29 +103,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Allow to call multiple time notifier_remove() safely.
-This shoudn't impact performance in any measurable way...
+Those are annoying reports for gtk/sdl etc.
 
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Message-ID: <20260623-b4-ui-v4-8-4656aec3398d@redhat.com>
+Message-ID: <20260623-b4-ui-v4-4-4656aec3398d@redhat.com>
 ---
- util/notify.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ scripts/lsan_suppressions.txt | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/util/notify.c b/util/notify.c
-index c6e158ffb33..24420a7288e 100644
---- a/util/notify.c
-+++ b/util/notify.c
-@@ -28,7 +28,7 @@ void notifier_list_add(NotifierList *list, Notifier *notifier)
+diff --git a/scripts/lsan_suppressions.txt b/scripts/lsan_suppressions.txt
+index 30256bc6d01..f3b827facff 100644
+--- a/scripts/lsan_suppressions.txt
++++ b/scripts/lsan_suppressions.txt
+@@ -10,6 +10,10 @@ leak:/lib64/libtcmalloc_minimal.so.4
+ # libxkbcommon also leaks in qemu-keymap
+ leak:/lib64/libxkbcommon.so.0
  
- void notifier_remove(Notifier *notifier)
- {
--    QLIST_REMOVE(notifier, node);
-+    QLIST_SAFE_REMOVE(notifier, node);
- }
- 
- void notifier_list_notify(NotifierList *list, void *data)
++# libfontconfig leaks are notorious, for ex
++# https://gitlab.freedesktop.org/fontconfig/fontconfig/-/work_items/519
++leak:libfontconfig.so
++
+ # g_set_user_dirs() deliberately leaks the previous cached g_get_user_*
+ # values. This is documented in upstream glib's valgrind-format
+ # suppression file:
 
 -- 
 2.54.0
