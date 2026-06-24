@@ -4,46 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 046BACDE002
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 13:34:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48C5CCDB481
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 13:34:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcNjc-0007A6-0H; Wed, 24 Jun 2026 09:33:44 -0400
+	id 1wcNk1-0007Qd-7t; Wed, 24 Jun 2026 09:34:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wcNjR-00072x-ED; Wed, 24 Jun 2026 09:33:34 -0400
+ id 1wcNjy-0007Od-GQ; Wed, 24 Jun 2026 09:34:06 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wcNjP-0000Ox-P9; Wed, 24 Jun 2026 09:33:33 -0400
+ id 1wcNjw-0000RH-Sh; Wed, 24 Jun 2026 09:34:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1782307995; bh=RRilm8J/FA34uAbj7pNEW/b/xFYBDEIAPFSEmcy+wOg=;
+ t=1782307996; bh=nBTl9hK8MG28XPQTMfA9qQqImj/KPixRdgkMHL6YTeQ=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=Ciz2Iw80ce8FY6ha1dy27q0JjP1nkUU+dOjioGOEixIk2BMo/wZviouE19Bo4KYs4
- BlKF82QfDEMSu1NBG6cXf8F5eaMkwmv7Q91ebVRL/N9q/cMt4mb8uPbRy79VIovBly
- aFJ8MnVKnbD94tPwc3SqPq8eVj7AdXDJTBF6sgtZZbYdbRpMgsjttmiH//rMGGpoz+
- yGouK7DnHqA4oLz1eSVypSgk1jrRTQuSdyA5wUwAaGXjdNXTVsK/6Q75NZHK9n3BJm
- /GOPIu3pz1qpc57kiEVrGoObjoq8/o++/+4WctqJpR7g+koSxhF8M7mepF5wZjFCCb
- xVoJDMQG4GTPg==
+ b=WrjggXBGDZ0mhp1P5/jIveGMNfjIjZjPKexjYoTHO2z0ESn9q9IiSsMfjna3oX12k
+ Mp5xNUWbT92R4Ih9GcPz9CJYREngrHXjgFmvJu3wphHFAw94j9TMQfA4Ys+tBbUg+m
+ EGMlrMmY1tFEBqkVZaVt20lE8ECE67qV9wU49TEYTFGWjIih8KCPLsBlZHrMOYhYjo
+ YOfHnYr0P/cLKKtquhTVPmenBsILaIMhQUTgXXBJbTv6MS6CkDqNp58Kb+SM+fP8Bw
+ +2Jnf0oLkp9rLK15OAJXPYDW6+VA6cYjKhTC35lx36Aph5avZomfSH+3/mujVcyyLa
+ rJYj3Xjl9ODNw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 8CC531BA9B7;
- Wed, 24 Jun 2026 16:33:15 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 06E901BA9BE;
+ Wed, 24 Jun 2026 16:33:16 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 264933DEA06;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 965953DEA0D;
  Wed, 24 Jun 2026 16:33:21 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org, Zishun Yi <vulab@iscas.ac.cn>,
- Chao Liu <chao.liu.zevorn@gmail.com>,
  Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
  Alistair Francis <alistair.francis@wdc.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.2 005/107] target/riscv: Allow mseccfg access based on
- ext_zicfilp
-Date: Wed, 24 Jun 2026 16:30:10 +0300
-Message-ID: <20260624133301.403266-5-mjt@tls.msk.ru>
+Subject: [Stable-11.0.2 012/107] target/riscv: clear mseccfg on reset for all
+ dependent extensions
+Date: Wed, 24 Jun 2026 16:30:17 +0300
+Message-ID: <20260624133301.403266-12-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.2-20260624163118@cover.tls.msk.ru>
 References: <qemu-stable-11.0.2-20260624163118@cover.tls.msk.ru>
@@ -74,45 +73,46 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Zishun Yi <vulab@iscas.ac.cn>
 
-The Zicfilp extension adds the MLPE field to the mseccfg CSR. According
-to the RISC-V Privileged Specification, mseccfg exists if any extension
-that adds a field to it is implemented.
+Currently, the `mseccfg` CSR is only cleared to 0 during reset if the
+`ext_smepmp` is enabled. However, this register is now shared by
+several other extensions such as `zkr`, `smmpm`, and `zicfilp`.
 
-Currently, the `have_mseccfg()` predicate function checks for Smepmp,
-Zkr, and Smmpm, but misses Zicfilp. As a result, if a CPU is configured
-with `zicfilp=true` but without the other extensions, accessing the
-mseccfg CSR will incorrectly raise an illegal instruction exception.
+Fix by clearing `mseccfg` if any dependent extension is present, and
+adjusting the relevant comments.
 
-This patch adds the missing check for `ext_zicfilp` to ensure the CSR
-is properly accessible when the Zicfilp extension is enabled.
+This vulnerability was discovered and reported by SpecHunter, an
+AI-driven architecture specification analysis tool.
 
-This issue was discovered and reported by SpecHunter, an AI-driven
-architecture specification analysis tool.
-
-Link: https://github.com/yizishun/rv-isa-sec/blob/master/output/riscv-isa-manual/pr-2561/qemu.txt
+Link: https://github.com/yizishun/rv-isa-sec/blob/master/output/riscv-svvptc/pr-134/qemu.txt
 Signed-off-by: Zishun Yi <vulab@iscas.ac.cn>
-Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
 Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20260511072705.3015986-1-vulab@iscas.ac.cn>
+Message-ID: <20260512052240.330815-1-vulab@iscas.ac.cn>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-(cherry picked from commit 249483623242c1b9ad4a1600083bea534620917a)
+(cherry picked from commit 8158a74f0a0db8626d7836eb03eca7aba46c18b5)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-index 29dd596ae4..51e668b46d 100644
---- a/target/riscv/csr.c
-+++ b/target/riscv/csr.c
-@@ -770,6 +770,9 @@ static RISCVException have_mseccfg(CPURISCVState *env, int csrno)
-     if (riscv_cpu_cfg(env)->ext_smmpm) {
-         return RISCV_EXCP_NONE;
-     }
-+    if (riscv_cpu_cfg(env)->ext_zicfilp) {
-+        return RISCV_EXCP_NONE;
-+    }
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index 8ac935ac06..269ea35f6d 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -754,10 +754,14 @@ static void riscv_cpu_reset_hold(Object *obj, ResetType type)
  
-     return RISCV_EXCP_ILLEGAL_INST;
- }
+     /*
+      * Clear mseccfg and unlock all the PMP entries upon reset.
+-     * This is allowed as per the priv and smepmp specifications
+-     * and is needed to clear stale entries across reboots.
++     * This is required as per the priv, smepmp, and other security
++     * extension specifications that share this CSR, and is needed
++     * to clear stale entries across reboots.
+      */
+-    if (riscv_cpu_cfg(env)->ext_smepmp) {
++    if (riscv_cpu_cfg(env)->ext_smepmp ||
++        riscv_cpu_cfg(env)->ext_zkr ||
++        riscv_cpu_cfg(env)->ext_smmpm ||
++        riscv_cpu_cfg(env)->ext_zicfilp) {
+         env->mseccfg = 0;
+     }
+ 
 -- 
 2.47.3
 
