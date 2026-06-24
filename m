@@ -4,135 +4,134 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A604CDB479
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 13:03:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97963CDB479
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 13:10:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcNG2-0007P9-FZ; Wed, 24 Jun 2026 09:03:10 -0400
+	id 1wcNML-0002At-Sa; Wed, 24 Jun 2026 09:09:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wcNG0-0007Om-Fi
- for qemu-devel@nongnu.org; Wed, 24 Jun 2026 09:03:09 -0400
+ id 1wcNMK-0002Ah-Ra
+ for qemu-devel@nongnu.org; Wed, 24 Jun 2026 09:09:40 -0400
 Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <philmd@oss.qualcomm.com>)
- id 1wcNFy-0000pp-TX
- for qemu-devel@nongnu.org; Wed, 24 Jun 2026 09:03:08 -0400
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+ id 1wcNMI-0001tf-Sd
+ for qemu-devel@nongnu.org; Wed, 24 Jun 2026 09:09:40 -0400
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65OANXRM2869019
- for <qemu-devel@nongnu.org>; Wed, 24 Jun 2026 13:03:05 GMT
+ 65OANWnO3069789
+ for <qemu-devel@nongnu.org>; Wed, 24 Jun 2026 13:09:36 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- VAwPhzEbnfqxWQxRoYfaHDBxDDx4abpcUJtWYIuWAT8=; b=MvIS31SV0hirhurZ
- y7WqUcBCLQKrgW1XhrmgEQBtysdK8phy335/pu+QqNEllvJVQqU/uCaMK2fVWIFF
- Z5n8DLdounOewwWGgy/baOcyOfZE0Ip4GnNkYrISJ1bhXA7sZybkn5eN+bxTVDfW
- fQIVHXonniLhDIzA+GSo4KAvSB/wOUvluFOoiDSY2h3oCx3Z/19twQyT8GVERCUi
- qDuE9erSGGyfSISWF9KJPMR34Oil0I5Sm6XCcWAPAEsV59FvWNaR7JDbPvgkiFqy
- Blk1JTN7Ss0IEUZ2XnEDORbLUNutBMS+3Wn6fW6nW5qpv1sU1+SZXduTohrDIsbX
- nUGHjQ==
-Received: from mail-pg1-f197.google.com (mail-pg1-f197.google.com
- [209.85.215.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f0apq18nh-1
+ rr84W34NWGZ4znxcDeOfwqn+qFsWSVAB6n5oBVdn1dM=; b=eO+/TdFHVxexIXL1
+ N4A+vwsoSEglLP+fX1oGFpXC/QSypvwIZ8lf/hswmhfYXMEPj93Y/5iF1reh32+d
+ k4tklB/8LnCMv7chfwC5xa2iA2zONORDVtP4f5vKD+LGXKAv0Wzvls4O+DdnM9Gd
+ iCKaV857EU2ks9P1uHeTmQqYkj77fkle55F7x92PcmQawhI9HianVQoaiP+s/n7H
+ Hr7giVvoDVjWRrZBKTagFqINdoMxDGVrwjhxEFHg6UwbR9b7/VGMp9eaqSbFp59s
+ DKypKEskuWeiXOtsqY/2cWpn4nC5qC1sJmcp2ezvqBLzBGqs+UWdsZNBfXkSd8Ry
+ 8XJhCQ==
+Received: from mail-oi1-f200.google.com (mail-oi1-f200.google.com
+ [209.85.167.200])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f0d5g0nw3-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 24 Jun 2026 13:03:04 +0000 (GMT)
-Received: by mail-pg1-f197.google.com with SMTP id
- 41be03b00d2f7-c890bac374eso1075661a12.1
- for <qemu-devel@nongnu.org>; Wed, 24 Jun 2026 06:03:04 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Wed, 24 Jun 2026 13:09:35 +0000 (GMT)
+Received: by mail-oi1-f200.google.com with SMTP id
+ 5614622812f47-4893fc86bebso1550149b6e.0
+ for <qemu-devel@nongnu.org>; Wed, 24 Jun 2026 06:09:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1782306184; x=1782910984; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1782306575; x=1782911375; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=VAwPhzEbnfqxWQxRoYfaHDBxDDx4abpcUJtWYIuWAT8=;
- b=jKexZhnnQgqWfUA8M+tk9YDNrzSqLsHXbuqlhDkhFyG7wI9k+0pNOUX7d16EQUTKi7
- PgrjJ5vXb9DFaSi5ahmuW1vbNR/H+cOH9jkaUD9ePfiBopz51v4CICA6LEenjEm+9Wox
- f8uXFDeVS2b92J/L48w7uKK0HH5F5LeJg33pydCfj57MicJUsPzv+91Tkh5ylmrLok9t
- C+H72+O8Za8ef/ukYNa1igEFDZ1Saa+Jj/F3UiIWsB0IwygZccMKX9KanPJBOWOB55Yj
- 7/iMZy0/tpD6ZZgmOE/Scl2bZ0LtVsvux0/qtsiPa5TnP8o0TQhCnEJYawMQSd9L+JZ9
- ryUA==
+ bh=rr84W34NWGZ4znxcDeOfwqn+qFsWSVAB6n5oBVdn1dM=;
+ b=CbswyIQUFN7Qv347Yi4wsm52g/2nNW/pXhBI4hkhkffzaOwVz5LXIasHdfazfA3J09
+ z8Mh8OA9H/zT2ya+WYsKEJ3/x7+xdiRSf6iZ7xTyuP5qkMshOytmqepi2ptHvLrmehad
+ njuX0t/vomePfVsdq4h+K6+A/mMWEiXwUfd9wsXX/DcstIAguPYqawAw+QOiddhP7jmI
+ UXfGX9YYxJcvzM1WfyaShazsipfj5jqqRmRwniPgxOtsGUB316j3/pmyScrbfwpvxd9Z
+ mcO4SBi4cPmyXCz5eAwhqc6zaiZjrk6AY8MJ5hzDbUBILJl8bqeEV18ebv3huUTkvE8l
+ hzyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782306184; x=1782910984;
+ d=1e100.net; s=20251104; t=1782306575; x=1782911375;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=VAwPhzEbnfqxWQxRoYfaHDBxDDx4abpcUJtWYIuWAT8=;
- b=bxwfjL+0pdLv1UB0dx8uK5jXdvZ/0xviukmgXMNhzhX0VJxdjbCW1BfY3LGHcH4qyw
- Y0rVjv9QBXfuM/Emn0cL5PeItq3dFw8JT3xPIa7KhZLnRQPyYqY//db2kBhC3biR1cCd
- sqp0LM/N1WEfhUOHsetz71libDhhMHLdyPc/R2UwRZn0jbUdNsLKtJde6XTP9ZQbs5xH
- 4o1UiOMU8DjWdGmOf6oZ7V2ouS2085WFBfN0aDCXLVk4BfWKOtfxxduwTv4eXDswY8aZ
- gIak76tlvdiWu0lsJG13QxDKrcBwXs7duM5N/YIYzU5ifkNy/2hpJaQJwJ/ispDS9FNr
- OVZw==
+ bh=rr84W34NWGZ4znxcDeOfwqn+qFsWSVAB6n5oBVdn1dM=;
+ b=RfFV/9HDLV5yGHMYTzt3lqM3ivSPhzdXtLKeJeZOhGcJzsMZDk2yygAQg8JvpPMIhy
+ lVxajP/OW1PVX+N4ImaViP46G9cZH1FUsBkY8zxteO+wy6cRghGuLdl3I12ZZ+Et+axf
+ UXfRjPxAfUGngHeDoPgREW5pJ1QUgNbS0yz5pbmXHvWMxfV4Q7HqrHGZvkoQngHKQj8e
+ Hodc5B911Z/xa7D4wvB6MLnvdi025MfgdTV9DiA6Ne1La6ssrHsLaxqiqdLnI3FIt8i7
+ vss4/b0GwKhaBvikuuXSjYQkk1D8SyAQU/h7GE+gjc6KnN+euvKvNjuJhGq5Ivh+3xTh
+ /siQ==
 X-Forwarded-Encrypted: i=1;
- AFNElJ+yfjX5MAYYOnC6OwX5zRxn5SXvdAPXWtkkVhzoQuA/7CUaivq6J91+vZUx9X6Q8GgfI8WjQcDqnXPN@nongnu.org
-X-Gm-Message-State: AOJu0YxKyzNA8y1p6VVxmELFTOdnapanAJr7axNewPhDtF+tbxGdRTpc
- oasgCVjguK+9KGHtM8kaX4pKjUmwcoG+SbSqTqwP3qMbuYsA6jZWNfbPAGKBy56IJbtMUH/EsYn
- Bog/12ZgdUNdKEZYgdc/sAv8KX/x/crmr6SCab2lA97O6o8dSAgnjnlgg8Q==
-X-Gm-Gg: AfdE7cmSiPbCwLoUO/Ioqt4Be0ug3NSyYcfM1btGIuQv1hGeEV4uXfN8YJtDvn79T4Z
- fKEC8Lc1fOtfsL3QXGOpsJzUzx10w2FUP9pniHCrRrLIQAKchZQ/2LCtTGOYage3DibsjoKXb7R
- 1HfU24iR76KyLKlhfLI/egYhaCFcxtCHar73TvQ3A/60u3eELDOt0lOznP/a7i2nZPD0z95YTh+
- ySxpDYTyLJbVozH22NnCpuTFOk5LlwNAOHtQSUbwXTLY1Syz1cAMwJ4AGguOHtVhKBmYqz39qzk
- 1zF9z6wk5zy8yxS4GqIR1VbiQalzIIONuHtaIY4G0SCUeDROAxazkt0tmZ2aMuUMKl+5i3ATcix
- qoLj/USt2V5BmRPW0GPIGJFaUJs/alFmaFT6+s9gP8eU4Qe0cu32pF3R6i+n4qw==
-X-Received: by 2002:a05:6a20:734a:b0:3bb:2842:ef32 with SMTP id
- adf61e73a8af0-3bd2cced379mr3864438637.0.1782306183944; 
- Wed, 24 Jun 2026 06:03:03 -0700 (PDT)
-X-Received: by 2002:a05:6a20:734a:b0:3bb:2842:ef32 with SMTP id
- adf61e73a8af0-3bd2cced379mr3864335637.0.1782306183109; 
- Wed, 24 Jun 2026 06:03:03 -0700 (PDT)
+ AFNElJ9tYcQlLdTFui57lXy0B5LLmXPYDxiXDg11gdtkPgCg7c8/2hCEroRP/EQgBVBhVVfnoNIgv4XsHT91@nongnu.org
+X-Gm-Message-State: AOJu0YxtdxqVc/GFXkW7oW/YVgpHrTqomH1ocGiE3cbspfDqOlVOa1Bw
+ lXCx3/RNsG5BokIm3jIGL1KVMB0TkXHEWroyn3x9QCLntvtvtgrUvXM2xVzBZxpnMfk5PW0atHk
+ OANIfpBaPGf7IcqcOLStdF+DCDfqU/rDEgwlfpqflk1+xtknOp6Z+lPTOng==
+X-Gm-Gg: AfdE7cmYXsL5PSpBLJwcVmcIl75lw3Xk2MS7GWmKz2umqH6yDdWvFaQvmdTU+7KVtVK
+ jl9oUvG3TPCm/ySrgtOnSkUQ312hoz4MFoi7DQIH+4Sk5G4xjE9vln+80/rAob6GDaEXSCsv2Ho
+ 6uCZQTvroWBb8eAXZveeL+id3Px7NJv7wwDKtgUYPwqV2DVFRf0yie39CiP6L7TBorFJ3SMGfDv
+ FA2pNqeez20mFV6WbXoqlD0Hvelybqi3tuFzz2ZrbQt7qEO1wplj3tFm5fDxO90csEFbBUhDha7
+ wgyrDkIy6eudrYWfMrs6kib2UyMQNFRzPm/kZTGX2UP+ao/Kjob1El/AuA3k7ZEbDFGbBoXq28k
+ CjqBpd/6rQORQMHnqaOvVN6j7fsoq83sLJHz0VJw52Gw2BjA1CwDnC5ay6cMVnA==
+X-Received: by 2002:a05:6808:1a25:b0:487:55d8:ec22 with SMTP id
+ 5614622812f47-4907818d7b0mr2017761b6e.1.1782306574926; 
+ Wed, 24 Jun 2026 06:09:34 -0700 (PDT)
+X-Received: by 2002:a05:6808:1a25:b0:487:55d8:ec22 with SMTP id
+ 5614622812f47-4907818d7b0mr2017730b6e.1.1782306574477; 
+ Wed, 24 Jun 2026 06:09:34 -0700 (PDT)
 Received: from [192.168.69.212] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-697f46e0d15sm1084395a12.14.2026.06.24.06.03.00
+ 4fb4d7f45d1cf-697f49d73fdsm1097366a12.22.2026.06.24.06.09.33
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 24 Jun 2026 06:03:01 -0700 (PDT)
-Message-ID: <782d666a-43ea-4692-9961-d33c2758f4c2@oss.qualcomm.com>
-Date: Wed, 24 Jun 2026 15:03:00 +0200
+ Wed, 24 Jun 2026 06:09:33 -0700 (PDT)
+Message-ID: <e950ef17-1316-4581-8f36-0674516ce471@oss.qualcomm.com>
+Date: Wed, 24 Jun 2026 15:09:32 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/6] gitlab: remove unused .cross_test_artifacts
- template
+Subject: Re: [PATCH v2 1/2] gitlab: introduce files mapping GitLab accounts to
+ real names
 Content-Language: en-US
 To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
  qemu-devel@nongnu.org
 Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-References: <20260624124657.2725376-1-berrange@redhat.com>
- <20260624124657.2725376-2-berrange@redhat.com>
+ Fabiano Rosas <farosas@suse.de>
+References: <20260624122936.2706393-1-berrange@redhat.com>
+ <20260624122936.2706393-2-berrange@redhat.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>
-In-Reply-To: <20260624124657.2725376-2-berrange@redhat.com>
+In-Reply-To: <20260624122936.2706393-2-berrange@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjI0MDEwNyBTYWx0ZWRfX5y6jMrIBePF+
- 3pQ/IXpkFcS2hCtPlLv8yoqikfrb4Z3L9STU8ize4siHylZRadnHwMvkakyU/OpLYpYFRIJryEh
- 6L+agqsNmiKBbjQq8ZRxSQmrJt/6+yI=
-X-Proofpoint-GUID: nXJh6AklM3xjIrF8SXbYMVVtqT5ifjzH
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjI0MDEwNyBTYWx0ZWRfX7QocCYiXDGAq
- 9liD9YpqkXMFafaxG+bQvRN0kxGrvhRHFIBvIEmjSivChgHo3yokby/fMhsQ85ey9EE/2PYKgmL
- GTLwqaVmL5wPBhypHiHJavC9gY/xKj8dIbS4MZiw4VJ8+HEfNmtEA4F7LIOFh3DEkLygAOvsYij
- a3oGYk3ymSWbWL/Tmet8WRuTXOUemgNx5jo0Z0yvhCKEGDFo6x07SAKh1vwfhh9ia/Mi2eE8xq7
- U1ACa6vyABwPbnCF+JXYuFBMov6/LWW0JPv/8OXyT2C24K1Xp7whZ71V074lNpWBx+F2v0c04CI
- RLKLwzz6cqEL4krzoFiqZm9mYnERtndGihYmSVOrrMKJ2xxAU0NiWexOoe/BuwXsLTrATT9eXXb
- 8tM14BavrX0leK1/5sc/BoR+pqiB1A==
-X-Authority-Analysis: v=2.4 cv=NpbhtcdJ c=1 sm=1 tr=0 ts=6a3bd588 cx=c_pps
- a=rz3CxIlbcmazkYymdCej/Q==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
+X-Authority-Analysis: v=2.4 cv=LdMMLDfi c=1 sm=1 tr=0 ts=6a3bd70f cx=c_pps
+ a=AKZTfHrQPB8q3CcvmcIuDA==:117 a=4s3hRJSeHn4rkQlkrse1kQ==:17
  a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=M51BFTxLslgA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
- a=KKAkSRfTAAAA:8 a=20KFwNOVAAAA:8 a=EUspDBNiAAAA:8 a=9y1irYOGVe-Q7SqiQz4A:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=bFCP_H2QrGi7Okbo017w:22
- a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-ORIG-GUID: nXJh6AklM3xjIrF8SXbYMVVtqT5ifjzH
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
+ a=EUspDBNiAAAA:8 a=20KFwNOVAAAA:8 a=IFbzoKzz5nuzO0_TNRMA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=pF_qn-MSjDawc0seGVz6:22
+X-Proofpoint-ORIG-GUID: H6AoJFMN3K59jrgRFx8ARSES8oxJFCLf
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjI0MDEwOSBTYWx0ZWRfX7FuZpowDPOJx
+ yNw6TJKYLbIpgL862JRpaTd36bq2Pw4Rd+55Eq0P+TFT66tvRsKCzYze8xMqok2RDmDirf1vdM8
+ LCY/WZXu+kN2BBrst40SRoZELPvQAAbj9elyfxK7AeuT+0CuPQXlILhE/FYlDdcUGupluMz+/QD
+ dFo0nRKh8NjKJyvs1b9wnYx/Ate+DDYRu/6EALMMWpjxJb00Zx66qCJq7uiUfqgAQD8VozBlB8A
+ MUdwbnd15HjWrCkgwILPLY4P51EygNrXFY3IRKdDtpKsBs3Ym30R5yxkoG3HU/PpmFGV0tAkp08
+ HbWmHz+Zi1Rc0AiiEhsm/yfyKW+bCjHJL6jy+SYeT7EFp/kE+EIDH1ShqUmsBE+HIEfr9PvXIpb
+ iGhJ9mqTiI7YLOdBVgGFrw5/tHh4/w==
+X-Proofpoint-GUID: H6AoJFMN3K59jrgRFx8ARSES8oxJFCLf
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjI0MDEwOSBTYWx0ZWRfX+od1VpVzUa+T
+ tnBlRnFcVPbZ988DBiz2TAoFNb5lZ9/HZCgl4+FztdyUIg/GhMkm9mj7k2dbliwyloy0JCFXr27
+ BNwq0XZceQnWjGe2Um+zZCyQAsvy9SM=
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-06-24_03,2026-06-23_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 adultscore=0 bulkscore=0 spamscore=0 suspectscore=0
- phishscore=0 malwarescore=0 classifier=typeunknown authscore=0 authtc=
+ spamscore=0 phishscore=0 bulkscore=0 adultscore=0 malwarescore=0
+ lowpriorityscore=0 suspectscore=0 classifier=typeunknown authscore=0 authtc=
  authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.22.0-2606150000 definitions=main-2606240107
+ engine=8.22.0-2606150000 definitions=main-2606240109
 Received-SPF: pass client-ip=205.220.180.131;
  envelope-from=philmd@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
 X-Spam_score_int: -27
@@ -157,19 +156,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 24/6/26 14:46, Daniel P. BerrangÃ© wrote:
-> This is unused since
+On 24/6/26 14:29, Daniel P. BerrangÃ© wrote:
+> It is desirable to be able to discover the GitLab account handle
+> assocaited with a real name in the MAINTAINERS file.
 > 
->    commit 0d1137550bbf3af7ebe34801a9bff5a4839cc34e
->    Author: Richard Henderson <richard.henderson@linaro.org>
->    Date:   Thu Dec 18 09:58:33 2025 +1100
+> Rather that duplicating the same account handle multiple times,
+> inline with the MAINTAINERS file entries, this introduces mapping
+> files:
 > 
->      gitlab: Remove 32-bit host testing
+>    * .gitlab-map-auto - data automatically queried from GitLab
+>      using the 'glab' tool and REST API
+>    * .gitlab-map-manual - manual overrides/augmentation for
+>      cases where the MAINTAINERS real name does not match the
+>      GitLab account real name
+
+Thanks, much simpler to maintain!
+
+Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
+
+> The former would need refreshing when we add new MAINTAINERS
+> entries, if the person had to be added as a GitLab account
+> member. For this purpose scripts/gitlab-map-update can be
+> used, assuming the user has the 'glab' client tool present
+> and configured with an access token.
+> 
+> To audit how many maintainers have GitLab handles present/missing
+> scripts/gitlab-map-check can run a report.
+> 
+>    $ ./scripts/gitlab-map-check
+>    Missing GitLab handle: Akihiko Odaki
+>    Missing GitLab handle: Albert Esteve
+>    ....
+>    Missing GitLab handle: Zhenzhong Duan
+>    Missing GitLab handle: Zhuoying Cai
+>    GitLab handles missing: 161 / present: 57
 > 
 > Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 > ---
->   .gitlab-ci.d/crossbuild-template.yml | 12 ------------
->   1 file changed, 12 deletions(-)
+>   .gitlab-map-auto          | 83 +++++++++++++++++++++++++++++++++++++++
+>   .gitlab-map-manual        | 18 +++++++++
+>   scripts/gitlab-map-check  | 23 +++++++++++
+>   scripts/gitlab-map-update | 44 +++++++++++++++++++++
+>   4 files changed, 168 insertions(+)
+>   create mode 100644 .gitlab-map-auto
+>   create mode 100644 .gitlab-map-manual
+>   create mode 100755 scripts/gitlab-map-check
+>   create mode 100755 scripts/gitlab-map-update
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
 
