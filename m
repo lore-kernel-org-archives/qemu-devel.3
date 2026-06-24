@@ -4,122 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8CF26CDB481
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 13:46:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE7FFCDB481
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 13:47:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcNuP-0002CL-Cy; Wed, 24 Jun 2026 09:44:53 -0400
+	id 1wcNt4-0003w1-2j; Wed, 24 Jun 2026 09:43:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1wcNuH-0001ux-0Y; Wed, 24 Jun 2026 09:44:45 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1wcNsx-0003A6-CA; Wed, 24 Jun 2026 09:43:23 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1wcNuE-0002F9-Ml; Wed, 24 Jun 2026 09:44:44 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65OAmI8p717962; Wed, 24 Jun 2026 13:44:39 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=609Qy2
- QRAh3UT4t+QGWfdWpflVpd5G2N8Ar3eCfS/Co=; b=lj72WA72zF4BHl8gKXU75i
- zGZp5dZu5LorT5VaW0fFq2tYGvOyT8Ijm4X9lT4/tjxm+iDKhZr+cL3RcCThtoi7
- 2mUMnUqVlAqE55+JGngGquQC7L5cV67qNzC06ROhunZiD6nYFzGN6jSWCXi2ZqvN
- suQZadBUfCjNsIVCn3oa8HR3RlZ3HVOHRe++K6CzMBdKf34gc07jFVsPyTykKy7q
- 0hG1M4XuUv+5YccQFuyCAlELbFwCkkSUvY/hk5z3dX4K9HXVEuvWUweTibud8DWh
- pcjA5UMD/mvykAARBdZgDDuPZHktY9rkpNAPFbxaQ6YiAzpSrwuXnP8nBqsB2AXQ
- ==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4ewjc3mgw3-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 24 Jun 2026 13:44:37 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 65ODYhVd014807;
- Wed, 24 Jun 2026 13:44:36 GMT
-Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4ex6phgsd2-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 24 Jun 2026 13:44:36 +0000 (GMT)
-Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com
- [10.20.54.106])
- by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 65ODiWf049479980
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 24 Jun 2026 13:44:32 GMT
-Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 7224F20043;
- Wed, 24 Jun 2026 13:44:32 +0000 (GMT)
-Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 012F620040;
- Wed, 24 Jun 2026 13:44:24 +0000 (GMT)
-Received: from li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com (unknown
- [9.39.19.28]) by smtpav07.fra02v.mail.ibm.com (Postfix) with ESMTPS;
- Wed, 24 Jun 2026 13:44:23 +0000 (GMT)
-Date: Wed, 24 Jun 2026 19:14:20 +0530
-From: Aditya Gupta <adityag@linux.ibm.com>
-To: Shivang Upadhyay <shivangu@linux.ibm.com>
-Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Sourabh Jain <sourabhjain@linux.ibm.com>,
- Hari Bathini <hbathini@linux.ibm.com>, Nicholas Piggin <npiggin@gmail.com>,
- Miles Glenn <milesg@linux.ibm.com>, Fabiano Rosas <farosas@suse.de>,
- Laurent Vivier <lvivier@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, devel@lists.libvirt.org,
- Misbah Anjum N <misanjum@linux.ibm.com>,
- Anushree Mathur <anushree.mathur@linux.ibm.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- kvm@vger.kernel.org, Gautam Menghani <gautam@linux.ibm.com>,
- Chinmay Rath <rathc@linux.ibm.com>
-Subject: Re: [PATCH 3/8] tests/qtest: Add Power11 chip & machine to qtests
-Message-ID: <ajvemcUx0k12xOIW@li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com>
-References: <20260623141933.577981-1-adityag@linux.ibm.com>
- <20260623141933.577981-4-adityag@linux.ibm.com>
- <54a9b8d16347f6cc94a625aca81897ba6b875385.camel@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1wcNsv-00024j-KY; Wed, 24 Jun 2026 09:43:23 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
+ t=1782308007; bh=1SQrUs/J8qxQ0tTKePHRCk8HlcCtFT4tkMdG/+dWCeg=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References;
+ b=fVnSMjlrF9sYpwbGZkxpW+r1A4uiyzSOnPhGGV9xWT1RmBBpT1ZLxD1pYACiYLGL8
+ wwvt4clhg8yo+OHtZ1J3hUvNccDTepIM7Aw2VjxAWcN95GyFpnQv8YulClYK2v2Lbv
+ ll0zC48NkMZzujqssB/OSeNc3Q3GbqaiLqlMVQvJflQDe8AY2kZ8MVS7cklMsmqIoD
+ 1cqE68Y8F/4m6b6m2lTyn8Jcc3lwf7/qe9MP/94pYfp4WeCI0ta/fQUmxW872spHw1
+ 97ctunht1DuX0yv2p86zmJHB4SaFZyW7XWObn18PVjLS5Bi/UGJT749OsKGHf5uYnG
+ LvRL4tueJVQPw==
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 460101BAA19;
+ Wed, 24 Jun 2026 16:33:27 +0300 (MSK)
+Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by tsrv.corpit.ru (Postfix) with ESMTP id D5E173DEA68;
+ Wed, 24 Jun 2026 16:33:32 +0300 (MSK)
+From: Michael Tokarev <mjt@tls.msk.ru>
+To: qemu-devel@nongnu.org
+Cc: qemu-stable@nongnu.org, Matt Turner <mattst88@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Helge Deller <deller@gmx.de>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.2 103/107] linux-user/xtensa: save/restore FP registers
+ across signal delivery
+Date: Wed, 24 Jun 2026 16:31:48 +0300
+Message-ID: <20260624133301.403266-103-mjt@tls.msk.ru>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <qemu-stable-11.0.2-20260624163118@cover.tls.msk.ru>
+References: <qemu-stable-11.0.2-20260624163118@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <54a9b8d16347f6cc94a625aca81897ba6b875385.camel@linux.ibm.com>
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Authority-Analysis: v=2.4 cv=X4Ni7mTe c=1 sm=1 tr=0 ts=6a3bdf46 cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
- a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=vGWFop1ilFAJY-VmeoUA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjI0MDExMCBTYWx0ZWRfX+4kUqhpMkB7t
- m68FCHOPtNnpfeKAicOlNIiqoA0TPcgsIn063Ij33CM/EVL2D9/0osvor/V6cVxz3yd7X2aucDh
- y4go0kmtLxd6bjYFK3NBGCPl3YJpjv0=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjI0MDExMCBTYWx0ZWRfX26F8NPrWVCHU
- vWB8eNmTnKEjGtvMTuxFPdJmwvSt1EMCOPi/YiJKpvV1BU5eFNTB+p6CDXYnJDScZlwLSPGOiEh
- AHqarufebHGUrG/SKKuFHlp0bKFQQTsKlKEe7xuaEGVyFZn1A51808x+GRQsDhjq1GsP/qAQbBF
- DSggOUzcHxQdlN42W2yD5ude5mcZQHXf40uCybqhtQiAdWebVWh4I0V2zUZDYE34RAl/sRV2weL
- /eZ+McpC5IG6S1OntEWma12EyDHJEcx/6igVZM7jmeSbAFI5MsJajTjHrX0bUFrL2g9fEq1p1Iq
- bPzRu9O/MS08Dzo/zm6hMSUScireQWt0eeG2T3krFxhtHssiuvzYJXhq8EvdkU6gLvXSBNXlfo8
- xTfviSdbX8zdfhnzqaCg9uA42W27mw==
-X-Proofpoint-ORIG-GUID: JVcqIU18sorVx2kxlWkqGHXMIzn6q46g
-X-Proofpoint-GUID: dqMh5Dcoww8-0RXr8jcdJ5JfqIoN99BJ
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-24_03,2026-06-23_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 phishscore=0 suspectscore=0 spamscore=0 malwarescore=0
- adultscore=0 lowpriorityscore=0 classifier=typeunknown authscore=0 authtc=
- authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.22.0-2606150000 definitions=main-2606240110
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=adityag@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -136,40 +70,183 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 26/06/23 09:24PM, Shivang Upadhyay wrote:
-> On Tue, 2026-06-23 at 19:49 +0530, Aditya Gupta wrote:
-> > +static const char *pnv_get_machine_type(enum PnvChipType chip_type)
-> > +{
-> > +    if (chip_type == PNV_CHIP_POWER8) {
-> > +        return "powernv8";
-> > +    } else if (chip_type == PNV_CHIP_POWER9) {
-> > +        return "powernv9";
-> > +    } else if (chip_type == PNV_CHIP_POWER10) {
-> > +        return "powernv10";
-> > +    } else if (chip_type == PNV_CHIP_POWER11) {
-> > +        return "powernv11";
-> > +    } else {
-> > +        g_assert_not_reached();
-> > +    }
-> > +}
-> 
-> How about refactoring to the following?
-> 
->     static const char *const machine_types[] = {
->         [PNV_CHIP_POWER8]  = "powernv8",
->         [PNV_CHIP_POWER9]  = "powernv9",
->         [PNV_CHIP_POWER10] = "powernv10",
->         [PNV_CHIP_POWER11] = "powernv11",
->     };
->     return machine_types[x];
+From: Matt Turner <mattst88@gmail.com>
 
-Has a subtle difference, that it may not assert/segfault on unknown
-value for x, I want the test to crash/fail if this is called with an
-unknown/new processor chip. I believe the if-else/switch is better as it
-handles (by 'crashing') unknown values too.
+Add support for saving and restoring f0-f15 across signal delivery.
+The target_xtensa_xtregs_fp struct carries 32-bit f-regs for cores
+with XTENSA_OPTION_FP_COPROCESSOR; target_xtensa_xtregs_dfp carries
+64-bit f-regs for cores with XTENSA_OPTION_DFP_COPROCESSOR.
 
-- Aditya G
+Lock the xtregs region via lock_user before reading on sigreturn,
+since sc_xtregs is a user-space pointer that may lie outside the
+locked sigframe.
 
-> 
-> ~Shivang.
+Signed-off-by: Matt Turner <mattst88@gmail.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Helge Deller <deller@gmx.de>
+(cherry picked from commit 6858e3a71cc41510937bec0950eb4e42e33ba5f2)
+Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+
+diff --git a/linux-user/xtensa/signal.c b/linux-user/xtensa/signal.c
+index ef8b0c3a27..e3f9da322b 100644
+--- a/linux-user/xtensa/signal.c
++++ b/linux-user/xtensa/signal.c
+@@ -21,6 +21,7 @@
+ #include "user-internals.h"
+ #include "signal-common.h"
+ #include "linux-user/trace.h"
++#include "target/xtensa/cpu.h"
+ 
+ struct target_sigcontext {
+     abi_ulong sc_pc;
+@@ -43,10 +44,25 @@ struct target_ucontext {
+     target_sigset_t tuc_sigmask;
+ };
+ 
++struct target_xtensa_xtregs_fp {
++    uint32_t f[16];
++    uint32_t fcr;
++    uint32_t fsr;
++};
++
++struct target_xtensa_xtregs_dfp {
++    uint64_t f[16];
++    uint32_t fcr;
++    uint32_t fsr;
++};
++
+ struct target_rt_sigframe {
+     target_siginfo_t info;
+     struct target_ucontext uc;
+-    /* TODO: xtregs */
++    union {
++        struct target_xtensa_xtregs_fp fp;
++        struct target_xtensa_xtregs_dfp dfp;
++    } xtregs;
+     uint8_t retcode[6];
+     abi_ulong window[4];
+ };
+@@ -107,6 +123,7 @@ static int flush_window_regs(CPUXtensaState *env)
+ }
+ 
+ static int setup_sigcontext(struct target_rt_sigframe *frame,
++                            abi_ulong frame_addr,
+                             CPUXtensaState *env)
+ {
+     struct target_sigcontext *sc = &frame->uc.tuc_mcontext;
+@@ -123,8 +140,25 @@ static int setup_sigcontext(struct target_rt_sigframe *frame,
+     for (i = 0; i < 16; ++i) {
+         __put_user(env->regs[i], sc->sc_a + i);
+     }
+-    __put_user(0, &sc->sc_xtregs);
+-    /* TODO: xtregs */
++    if (xtensa_option_enabled(env->config, XTENSA_OPTION_DFP_COPROCESSOR)) {
++        for (i = 0; i < 16; ++i) {
++            __put_user(env->fregs[i].f64, &frame->xtregs.dfp.f[i]);
++        }
++        __put_user(env->uregs[FCR], &frame->xtregs.dfp.fcr);
++        __put_user(cpu_get_fsr(env), &frame->xtregs.dfp.fsr);
++        __put_user(frame_addr + offsetof(struct target_rt_sigframe, xtregs),
++                   &sc->sc_xtregs);
++    } else if (xtensa_option_enabled(env->config, XTENSA_OPTION_FP_COPROCESSOR)) {
++        for (i = 0; i < 16; ++i) {
++            __put_user(env->fregs[i].f32[FP_F32_LOW], &frame->xtregs.fp.f[i]);
++        }
++        __put_user(env->uregs[FCR], &frame->xtregs.fp.fcr);
++        __put_user(cpu_get_fsr(env), &frame->xtregs.fp.fsr);
++        __put_user(frame_addr + offsetof(struct target_rt_sigframe, xtregs),
++                   &sc->sc_xtregs);
++    } else {
++        __put_user(0, &sc->sc_xtregs);
++    }
+     return 1;
+ }
+ 
+@@ -190,7 +224,7 @@ void setup_rt_frame(int sig, struct target_sigaction *ka,
+     __put_user(0, &frame->uc.tuc_flags);
+     __put_user(0, &frame->uc.tuc_link);
+     target_save_altstack(&frame->uc.tuc_stack, env);
+-    if (!setup_sigcontext(frame, env)) {
++    if (!setup_sigcontext(frame, frame_addr, env)) {
+         unlock_user_struct(frame, frame_addr, 0);
+         goto give_sigsegv;
+     }
+@@ -243,8 +277,8 @@ give_sigsegv:
+     force_sigsegv(sig);
+ }
+ 
+-static void restore_sigcontext(CPUXtensaState *env,
+-                               struct target_rt_sigframe *frame)
++static int restore_sigcontext(CPUXtensaState *env,
++                              struct target_rt_sigframe *frame)
+ {
+     struct target_sigcontext *sc = &frame->uc.tuc_mcontext;
+     uint32_t ps;
+@@ -266,7 +300,51 @@ static void restore_sigcontext(CPUXtensaState *env,
+     for (i = 0; i < 16; ++i) {
+         __get_user(env->regs[i], sc->sc_a + i);
+     }
+-    /* TODO: xtregs */
++    {
++        abi_ulong xtregs_addr;
++
++        __get_user(xtregs_addr, &sc->sc_xtregs);
++        if (xtregs_addr) {
++            if (xtensa_option_enabled(env->config,
++                                      XTENSA_OPTION_DFP_COPROCESSOR)) {
++                struct target_xtensa_xtregs_dfp *xtregs;
++                uint32_t fcr, fsr;
++
++                xtregs = lock_user(VERIFY_READ, xtregs_addr,
++                                   sizeof(*xtregs), 1);
++                if (!xtregs) {
++                    return 0;
++                }
++                for (i = 0; i < 16; ++i) {
++                    __get_user(env->fregs[i].f64, &xtregs->f[i]);
++                }
++                __get_user(fcr, &xtregs->fcr);
++                __get_user(fsr, &xtregs->fsr);
++                unlock_user(xtregs, xtregs_addr, 0);
++                cpu_set_fcr(env, fcr);
++                cpu_set_fsr(env, fsr);
++            } else if (xtensa_option_enabled(env->config,
++                                             XTENSA_OPTION_FP_COPROCESSOR)) {
++                struct target_xtensa_xtregs_fp *xtregs;
++                uint32_t fcr, fsr;
++
++                xtregs = lock_user(VERIFY_READ, xtregs_addr,
++                                   sizeof(*xtregs), 1);
++                if (!xtregs) {
++                    return 0;
++                }
++                for (i = 0; i < 16; ++i) {
++                    __get_user(env->fregs[i].f32[FP_F32_LOW], &xtregs->f[i]);
++                }
++                __get_user(fcr, &xtregs->fcr);
++                __get_user(fsr, &xtregs->fsr);
++                unlock_user(xtregs, xtregs_addr, 0);
++                cpu_set_fcr(env, fcr);
++                cpu_set_fsr(env, fsr);
++            }
++        }
++    }
++    return 1;
+ }
+ 
+ long do_rt_sigreturn(CPUXtensaState *env)
+@@ -282,7 +360,9 @@ long do_rt_sigreturn(CPUXtensaState *env)
+     target_to_host_sigset(&set, &frame->uc.tuc_sigmask);
+     set_sigmask(&set);
+ 
+-    restore_sigcontext(env, frame);
++    if (!restore_sigcontext(env, frame)) {
++        goto badframe;
++    }
+     target_restore_altstack(&frame->uc.tuc_stack, env);
+ 
+     unlock_user_struct(frame, frame_addr, 0);
+-- 
+2.47.3
+
 
