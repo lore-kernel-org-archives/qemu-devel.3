@@ -4,92 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7374CDB479
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 22:18:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5046FCDE000
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 22:49:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcVuX-0003tC-9V; Wed, 24 Jun 2026 18:17:33 -0400
+	id 1wcWOY-0001IN-Ig; Wed, 24 Jun 2026 18:48:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <y.sanjeevreddy@gmail.com>)
- id 1wcVPk-0006VO-GN
- for qemu-devel@nongnu.org; Wed, 24 Jun 2026 17:45:44 -0400
-Received: from mail-dy1-x132e.google.com ([2607:f8b0:4864:20::132e])
+ (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
+ id 1wcWOV-0001Hv-8f
+ for qemu-devel@nongnu.org; Wed, 24 Jun 2026 18:48:31 -0400
+Received: from mail-ej1-x62d.google.com ([2a00:1450:4864:20::62d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <y.sanjeevreddy@gmail.com>)
- id 1wcVPi-0003dY-6i
- for qemu-devel@nongnu.org; Wed, 24 Jun 2026 17:45:43 -0400
-Received: by mail-dy1-x132e.google.com with SMTP id
- 5a478bee46e88-30c713f37c2so283545eec.0
- for <qemu-devel@nongnu.org>; Wed, 24 Jun 2026 14:45:41 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
+ id 1wcWOT-0006xq-Hh
+ for qemu-devel@nongnu.org; Wed, 24 Jun 2026 18:48:31 -0400
+Received: by mail-ej1-x62d.google.com with SMTP id
+ a640c23a62f3a-c074ac8adaaso199081966b.3
+ for <qemu-devel@nongnu.org>; Wed, 24 Jun 2026 15:48:28 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1782341307; cv=none;
+ d=google.com; s=arc-20240605;
+ b=kmq9eqqjGMFJ1ZUYnqSDbPDJb8kzKFPrtDwKF/cXpvLJN9CfEFfs9PyahWhsEBown9
+ fnTL3D0kWR9LJQLz3BcfAWbNRqOPKdRn+eDT4p9VRCAWSNjyB1wR7tNnfXorffop9yVq
+ zPTKewzV4/ypm4FAJAXrIV+xjmYvn3oyFytvzQuaIU4hhEkt6qnKaZjC2AEkXMnGrHMp
+ DlR4gu9UDqBHLWhFrc9F8Pu+vcSGlNLC+ZXEb3C1pj0fWa4Y92zzB8mGL3qZC5lUqHra
+ 8hiSZb3y/mMGEEDZBwtDNv1BZmZU2x0IIbXx2ZXzD+eAbKNmj5hsfI8Uqc39yGJMIUIg
+ dLTA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=cKcuGnCnmQHvmskSwk8bfzkCEdThBfeWpGr00nk3ark=;
+ fh=dEcCJoizW0PIXIsgsrNAtfPedPj0hmKZvH/dXrAI1HE=;
+ b=d7hsDwEqKLjwvSw20dLl72Cq4tj0Wjf6I3AKnmU+gcrpxVqDoY84csZfp98kp4toNc
+ 5JinKZO70BX0URKNZq9QYvsJzxO9PHhQDW82kWRnl9BJ/xjUhEbliTKlGFpeT9MitXY0
+ S/tS4CGAqgORnndEQGx0u95mWWHZorFjoTpR/MNSpm1zzrZRWjH4+jyj1lub7tZtdVuN
+ cAxuCP+x3L7XdlqnrwVSGlX+/BuCgctX3GFBOIPBV+SzjcvCZWO9GoedrzAYCNepw4uO
+ oGZxwy3onzGdiqCjBq4ccTxwvv3KB6EQKLdsA/vLVvWGUais59nEectnz4ElUigGEAb9
+ CfLw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1782337540; x=1782942340; darn=nongnu.org;
- h=cc:to:message-id:content-transfer-encoding:mime-version:subject
- :date:from:from:to:cc:subject:date:message-id:reply-to;
- bh=/vghZDYVubbr7+CnA9I+jTZNdgR/7bQvlz7v7ZesAyM=;
- b=Ic/AkdGhnx8vGrzjFmwwnwbkHrIi2Nv/jo+DAKYD6c3R48RdAYFwDIuoyeZdd6mZJc
- GqRVdNEg34AMtYZiOhgKjW6hcud1E3/i5fWQDnJcIWPm2aRN0Gn7vWFFh1j5BEikw3Hm
- L3jPWzmhwJH2xzuDkIzSFeE2Ty3KYCRK9Bla5Y4z6cte5xQiUzGK1g5JKiEDQM76LpYe
- j8n3ZAGyMPJgilspeSGcqX0g+ViGvpSwysJL6/gkU33eQx+3eXC8Oaj0D3/VARtiyx0T
- w79E3Q7vD+ZcxmSN1MBEYbRelaQdCj6qGS1VnxGnjhKja+GsoykzRJBRGADFI7Wakyn/
- OuCg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782337540; x=1782942340;
- h=cc:to:message-id:content-transfer-encoding:mime-version:subject
- :date:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=gmail.com; s=20251104; t=1782341307; x=1782946107; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=/vghZDYVubbr7+CnA9I+jTZNdgR/7bQvlz7v7ZesAyM=;
- b=I0XeS+HBJrbtULtvBEwMkQfIjC1EvkwuKd6guzV8YDcJuvW0KkTN3Mnkds9WE2wUdV
- a/hx1y5xOZJ4WROGzK9OCjzYT5JiUWFnjZrVJjNOGoq+RSejd1UnzTgsYqJMOhw2mKEc
- XldTthzXIu16j/r3dw5LrH+CCxedY1gU16nB8NOR8XGLZa4bXK9PpgB/wE8tB8IHAJcH
- tk2TWKs/BlqmdEbrgtzQLBCYkFQf61jRJkfLsVWLxCXJfwwmwdkmfm4qiX9GjsCMUhqU
- 9MCSIKWuSTuox+5BiO+gIbIXLT4zUYcoojQvyA3DZ96Lyk6CAsrQAEcjDLxhjUz+cbrx
- 3Yng==
-X-Gm-Message-State: AOJu0YxNEd4pHqYV/dIPenbVVKIa2nMU5YuMxRLxZttfFnaGy4O1j7+C
- 7V95mcnc5lhQ3TjGOPoeC8bMTFBkcAP5tD4/nnDgL8V/zFcpYPJjr2Fr
-X-Gm-Gg: AfdE7cnTWltScb8kXWRFAPxIgTG6na0HUbHuKHW3iV5J/RpVYqK4zSLQ+OlItmX1B0G
- wEqSkABFe5xJ2RKacz6bbJH6riYtU0NVk5wzjn9N5ioQJZCFFYE6gbQbOBxuOWnyP+7Ywt72Pns
- dSzvxJgwH7q9d1DVZ2kkXt7qsL/fFxVUJGIsin6luVEX1Nxf5gd9i+OvmtH0mHrPIa919G6OqPm
- MVe+0vTQ+Gm1YkBGlWcwtl2o9efkLWwgCDhN5uKSXNTVsbGJz6xtJS34PurEFbx0D2lEIFtIDpj
- wIt8KDC+0KASVetNgdcScHWaQaLoXCq2HuGSuY5i93qF+ZfXOSueNcZC1bJpxyjwtEFukfBmxQ/
- ZcQ7GdfFFUxYJou2mjEYJnXseC/Wz29Zo/gTQTJZBk2l7fF2bz8Q4YwbPou5Cuq+T8K0/eC7jKg
- FNFNT1MKSMszx2WxvTAxTOHYRm++A17eupFRPhuqKPM5PqVnXL5bhsqkXx
-X-Received: by 2002:a05:7300:72c4:b0:30c:a0f:3bd0 with SMTP id
- 5a478bee46e88-30c78e617fbmr1714620eec.13.1782337539809; 
- Wed, 24 Jun 2026 14:45:39 -0700 (PDT)
-Received: from [127.0.0.1] (67-2-23-151.slkc.qwest.net. [67.2.23.151])
- by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-30c7c4ca240sm1690287eec.4.2026.06.24.14.45.38
- (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
- Wed, 24 Jun 2026 14:45:39 -0700 (PDT)
-From: Sanjeeva Yerrapureddy <y.sanjeevreddy@gmail.com>
-Date: Wed, 24 Jun 2026 15:45:32 -0600
-Subject: [PATCH] hw/net/net_tx_pkt: clamp payload_len to IP header length
- for padded frames
+ bh=cKcuGnCnmQHvmskSwk8bfzkCEdThBfeWpGr00nk3ark=;
+ b=T0QVn9btsyX6OLZgLFTtsZHvBZcsysFW53zFNG3uFeZUj6CZwQDT0JXrWdT7NKotCk
+ AwK77bfqaaVJxBNupQ0yv9YVfptsH1h0SuDb+aQJFBBh23dIqVSYH1zz3ygXKfm8XaJW
+ wuQG24txjUpU9adlx9DKYcY9FIYXYJCM2+aDHZ8xDY/aqjcu8EVE3FcuPyV0qEQQ9Fx9
+ jif/rJKp2A06zMaWnsNm/yc7VxqBf6pGbby0mqd7XCPIluZM/96zdD/uuPOf/YKF9Vxl
+ 9ZV7c1oxw0qkTJnOwhxhaDVSKr1Ip1siH9gSewWSmPxgx9z08qg9XpVbhZWMj1Iz3pAo
+ FMWA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1782341307; x=1782946107;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=cKcuGnCnmQHvmskSwk8bfzkCEdThBfeWpGr00nk3ark=;
+ b=Ym8KLyDI+T+t5x4u9N4o4Pu6W0hvqhLQWA/zkShg8LHeFTK7Nt+/O7NuqyIWZ1brf2
+ PomyFESz6bepOIN9/UQxxIxqvOWhnZ3mTsdyfidwEszHUNTqSA9ECUxjG4eJ566L9RLe
+ FM7o2FDgldQ/Wi/avIuizkjHO1gOES1u2iAOodtbwgOYyyl7Hqh0UHOez+sYTsbr+EQq
+ yTZVMZUw7k3SYnYAkP6rqlu18QTYLVjtLXQ0+CKx88Zc3N8ekPaXLd11HdpY2PqQv4r4
+ JcjuOpE7baj4VIERmfghrjzzMn3OwVbeY9c0fqIQhC8lSPITkYtqW9IvYUIsK3SMg5Ls
+ fvqA==
+X-Gm-Message-State: AOJu0Yzh2ArMrIZtzM2lg+O053uiIDwc38wrxcNRqQ2tU3amlVpi+y8q
+ 5zp6qxyzTdej5+i8g7kKtT955P9pgtT//4dx9SKJg6d4S+/U6d0gN6liBIS21fDrCXGWm949Awa
+ QQOs6KjJLuzjMWnC8iDSPL4ylpYjFAN8=
+X-Gm-Gg: AfdE7cnY/zwpXlD+nFVrScF/BYMe6iiStiPHSq0S/Tqay3tl1kcwFDwqIKLoLU0z5XV
+ nrbXQMkrmMjDQI2CHVjjv/djPfw7K5s+kwQahVih9KHeGnv6zfew04p/JuCQ2RQGoSQwrbHjGjN
+ Uoe0ESSGODHgZfA6kHf703LY/pt6DYK/8OpmSAOVDwsWSyOfF5bNnckCOMMjoT9tpSuZbX418Kq
+ OYZhrqWnazjdD8YJKKYHUlml4QXDagQ9B4ALZxZp1OxsBJ/mKbbN3cVrK8xmtf0xNt6W688
+X-Received: by 2002:a17:907:e105:b0:c11:efec:6ca9 with SMTP id
+ a640c23a62f3a-c11efecd9admr163104666b.8.1782341306670; Wed, 24 Jun 2026
+ 15:48:26 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260624-net-tx-pkt-ip-length-padding-v1-1-7a22fe9b4e40@gmail.com>
-X-B4-Tracking: v=1; b=H4sIAPxPPGoC/yXMwQrCMAwA0F8ZORuYrRvTXxEPtU27qMTSRhmM/
- btVj+/yVqhUmCqcuhUKvbnyUxr2uw787CQRcmgG05uxH80BhRR1wXxX5IwPkqQzZhcCS8LBTdE
- O09Ha6KEVuVDk5defL3/X1/VGXr8nbNsH+ARDS4AAAAA=
-X-Change-ID: 20260624-net-tx-pkt-ip-length-padding-5a8f358933fc
-To: qemu-devel@nongnu.org
-Cc: Dmitry Fleytman <dmitry.fleytman@gmail.com>, 
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
- Jason Wang <jasowang@redhat.com>, 
- Sanjeeva Yerrapureddy <y.sanjeevreddy@gmail.com>
-X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1782337538; l=5110;
- i=y.sanjeevreddy@gmail.com; s=20260624-gmail; h=from:subject:message-id;
- bh=daH8nWF3nNK7cB/peJAGgwGdhRfDkIQUCopx72tC86o=;
- b=nMfcNu49UQlWF9P9vxYABogjSQ7UexEXSIff/g4SmC5TQEHg/5J1SMySFGUJRdYTQNI/Zn81v
- yeTJl+BXFLRBOHzUKlFcQxP1jmoI3p+TKae2uugmoso4iVKCOBCApAE
-X-Developer-Key: i=y.sanjeevreddy@gmail.com; a=ed25519;
- pk=3ELbcw0bH36IEv3JvxqzTAgl5rrkOyv/tQHQzhpObAU=
-Received-SPF: pass client-ip=2607:f8b0:4864:20::132e;
- envelope-from=y.sanjeevreddy@gmail.com; helo=mail-dy1-x132e.google.com
+References: <20260624070851.13342-1-zhangckid@gmail.com>
+ <20260624070851.13342-3-zhangckid@gmail.com>
+ <20260624155133.GA109308@fedora>
+In-Reply-To: <20260624155133.GA109308@fedora>
+From: Zhang Chen <zhangckid@gmail.com>
+Date: Thu, 25 Jun 2026 06:47:49 +0800
+X-Gm-Features: AVVi8CeNTouTTb_HVEsupgsjDTwr1vWBB5xW2XQPlBFaW0p1t2BE4qrJrh4O9EA
+Message-ID: <CAK3tnv+apnBGoyaXqt-CO2rtkC6L_WaQRmYmw9wQbQ4pci=b3Q@mail.gmail.com>
+Subject: Re: [PATCH V9 02/17] iothread: introduce iothread_ref/unref to track
+ attached devices
+To: Stefan Hajnoczi <stefanha@redhat.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>,
+ "Dr . David Alan Gilbert" <dave@treblig.org>, 
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>, 
+ "Michael S . Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Kevin Wolf <kwolf@redhat.com>, 
+ Jason Wang <jasowang@redhat.com>, Fam Zheng <fam@euphon.net>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::62d;
+ envelope-from=zhangckid@gmail.com; helo=mail-ej1-x62d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,7 +108,6 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Wed, 24 Jun 2026 18:17:32 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -113,110 +122,106 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When a guest transmits a short Ethernet frame, iov_size() returns the
-wire length including any Ethernet padding bytes added to reach the
-minimum 60-byte frame size.  net_tx_pkt_rebuild_payload() used that
-inflated size directly as payload_len.  net_tx_pkt_update_ip_hdr_
-checksum() then rewrites the IP Total Length (IPv4) or Payload Length
-(IPv6) field using this value, producing a malformed packet on the
-wire: the receiver interprets Ethernet padding bytes as IP payload.
+On Wed, Jun 24, 2026 at 11:51=E2=80=AFPM Stefan Hajnoczi <stefanha@redhat.c=
+om> wrote:
+>
+> On Wed, Jun 24, 2026 at 03:08:36PM +0800, Zhang Chen wrote:
+> > Currently, IOThreads do not maintain a record of which devices are
+> > associated with them. This makes it difficult to monitor the
+> > workload distribution of IOThreads, especially in complex
+> > hotplug scenarios involving multiple virtio-blk or virtio-scsi devices.
+> >
+> > This patch introduces a reference counting and tracking mechanism
+> > within the IOThread object:
+> >
+> > - iothread_ref(): Prepends the device's IOThreadHolder to a list.
+> > - iothread_unref(): Searches for the IOThreadHolder using a custom
+> >   string comparison (g_strcmp0), releases the associated memory
+> >   upon a successful match.
+> > - holders: A GList storing the IOThreadHolder of attached devices
+> >   for runtime introspection.
+> >
+> > A later commit will add QMP commands to let management applications
+> > query the attachment status of IOThreads.
+> >
+> > Signed-off-by: Zhang Chen <zhangckid@gmail.com>
+> > ---
+> >  include/system/iothread.h |  5 +++
+> >  iothread.c                | 94 +++++++++++++++++++++++++++++++++++++++
+> >  qapi/misc.json            | 61 +++++++++++++++++++++++++
+> >  3 files changed, 160 insertions(+)
+>
+> Minor comments below. This patch looks good overall:
+>
+> Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
 
-In practice this breaks protocol stacks that validate IP lengths
-strictly.  A nested ESXi host running on OpenStack using the e1000e
-emulation sends short TCP ACK packets in response to a Windows guest's
-virtio TLS client hello, which get padded to 60 bytes; the inflated IP
-Total Length corrupts the IP header seen by Windows, causing TLS
-handshakes and TCP connections to fail.
+Thanks~
 
-Fix net_tx_pkt_rebuild_payload() to read the IP header's declared
-length and clamp payload_len accordingly:
+>
+> > diff --git a/include/system/iothread.h b/include/system/iothread.h
+> > index a1ef7696cb..b9207ad829 100644
+> > --- a/include/system/iothread.h
+> > +++ b/include/system/iothread.h
+> > @@ -50,6 +50,11 @@ struct IOThread {
+> >      bool stopping;              /* has iothread_stop() been called? */
+> >      bool running;               /* should iothread_run() continue? */
+> >      int thread_id;
+> > +    /*
+> > +     * The list elements are of type IOThreadHolder, which can
+> > +     * represent either a QOM path or a block node name.
+>
+> This comment duplicates the IOThreadHolder types and will become
+> outdated easily. It might already be outdated (there are 3 types, not
+> just the 2 mentioned in the comment). I suggest replacing it with
+> something like:
+>
+>   /* List of iothread_ref() holders (elements are of type IOThreadHolder)=
+ */
+>
 
-  IPv4: ip_total_len - l3_hdr_len
-  IPv6: ip6_plen adjusted for parsed extension headers
+OK, Sorry, I forgot to update the comments with the patch version updates.
 
-Guard both paths against malformed guest packets where the header-
-declared length is shorter than the IP header itself; without the
-guard the unsigned subtraction would underflow, producing a huge
-payload_len.  Fall back to the raw iov_size() value in that case.
+> > +static int iothread_holder_compare(gconstpointer a, gconstpointer b)
+> > +{
+> > +    const IOThreadHolder *holder_a =3D a;
+> > +    const IOThreadHolder *holder_b =3D b;
+> > +    const char *name_a, *name_b;
+> > +
+> > +    if (holder_a->type !=3D holder_b->type) {
+> > +        return -1;
+> > +    }
+> > +
+> > +    switch (holder_a->type) {
+> > +    case IO_THREAD_HOLDER_KIND_QOM_OBJECT:
+> > +        name_a =3D holder_a->u.qom_object.qom_path;
+> > +        name_b =3D holder_b->u.qom_object.qom_path;
+> > +        break;
+> > +    case IO_THREAD_HOLDER_KIND_BLOCK_NODE:
+> > +        name_a =3D holder_a->u.block_node.node_name;
+> > +        name_b =3D holder_b->u.block_node.node_name;
+> > +        break;
+> > +    case IO_THREAD_HOLDER_KIND_MONITOR_NAME:
+> > +        name_a =3D holder_a->u.monitor_name.monitor_name;
+> > +        name_b =3D holder_b->u.monitor_name.monitor_name;
+> > +        break;
+> > +    default:
+> > +       /*
+> > +        * This should not happen. If it does, name_a/b remains
+> > +        * NULL and g_strcmp0 will handle it safely.
+> > +        */
+> > +        name_a =3D NULL;
+> > +        name_b =3D NULL;
+>
+> return -1 would be simpler and safer. g_strcmp0(NULL, NULL) returns 0,
+> so callers will think they have found a match and proceed with their
+> operation - it will likely result in undefined behavior since memory is
+> probably corrupted if we got here. It's safer to fail the comparison so
+> the caller does not proceed.
 
-Signed-off-by: Sanjeeva Yerrapureddy <y.sanjeevreddy@gmail.com>
----
- hw/net/net_tx_pkt.c | 55 ++++++++++++++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 54 insertions(+), 1 deletion(-)
+OK.
 
-diff --git a/hw/net/net_tx_pkt.c b/hw/net/net_tx_pkt.c
-index 903238dca2..d3549a4378 100644
---- a/hw/net/net_tx_pkt.c
-+++ b/hw/net/net_tx_pkt.c
-@@ -274,7 +274,60 @@ static bool net_tx_pkt_parse_headers(struct NetTxPkt *pkt)
- 
- static void net_tx_pkt_rebuild_payload(struct NetTxPkt *pkt)
- {
--    pkt->payload_len = iov_size(pkt->raw, pkt->raw_frags) - pkt->hdr_len;
-+    size_t raw_payload_len = iov_size(pkt->raw, pkt->raw_frags) - pkt->hdr_len;
-+    struct iovec *l2hdr = &pkt->vec[NET_TX_PKT_L2HDR_FRAG];
-+    uint16_t l3_proto = eth_get_l3_proto(l2hdr, 1, l2hdr->iov_len);
-+
-+    /*
-+     * Clamp payload_len to what the IP header says, not what iov_size()
-+     * returns. When a short frame is padded to the Ethernet minimum of 60
-+     * bytes, iov_size() includes the padding. Using that inflated size as
-+     * payload_len causes net_tx_pkt_update_ip_hdr_checksum() to rewrite the
-+     * IP total/payload length to include Ethernet padding, making the packet
-+     * malformed (receiver may treat padding as payload or miscalculate
-+     * checksums). Clamp to the guest-provided IP length instead.
-+     *
-+     * IPv4: ip_len is the total length including the IP header.
-+     * IPv6: ip6_plen is the payload length after the base 40-byte header
-+     *       (extension headers are included in ip6_plen but also in
-+     *       l3_hdr_len, so subtract them out).
-+     */
-+    if (l3_proto == ETH_P_IP) {
-+        uint16_t ip_total_len = be16_to_cpu(pkt->l3_hdr.ip.ip_len);
-+        size_t l3_hdr_len = pkt->vec[NET_TX_PKT_L3HDR_FRAG].iov_len;
-+        /*
-+         * Guard against malformed packets where ip_total_len is zero or
-+         * smaller than the IP header itself. Without this check, the
-+         * subtraction (ip_total_len - l3_hdr_len) would underflow (both
-+         * types are unsigned), producing a huge payload_len and corrupting
-+         * the packet. Fall back to the raw iov_size value in that case.
-+         */
-+        if (ip_total_len > l3_hdr_len) {
-+            pkt->payload_len = MIN(raw_payload_len, ip_total_len - l3_hdr_len);
-+        } else {
-+            pkt->payload_len = raw_payload_len;
-+        }
-+    } else if (l3_proto == ETH_P_IPV6) {
-+        uint16_t ip6_payload_len = be16_to_cpu(pkt->l3_hdr.ip6.ip6_plen);
-+        size_t l3_hdr_len = pkt->vec[NET_TX_PKT_L3HDR_FRAG].iov_len;
-+        size_t ext_hdr_len = l3_hdr_len - sizeof(struct ip6_header);
-+        /*
-+         * Guard against malformed packets where ip6_plen is zero or does
-+         * not cover the extension headers that were already parsed. Without
-+         * this check, the subtraction (ip6_payload_len - ext_hdr_len) would
-+         * underflow (unsigned), producing a huge payload_len. Fall back to
-+         * the raw iov_size value in that case.
-+         */
-+        if (ip6_payload_len > ext_hdr_len) {
-+            pkt->payload_len = MIN(raw_payload_len,
-+                                   ip6_payload_len - ext_hdr_len);
-+        } else {
-+            pkt->payload_len = raw_payload_len;
-+        }
-+    } else {
-+        pkt->payload_len = raw_payload_len;
-+    }
-+
-     pkt->payload_frags = iov_copy(&pkt->vec[NET_TX_PKT_PL_START_FRAG],
-                                 pkt->max_payload_frags,
-                                 pkt->raw, pkt->raw_frags,
+Thanks
 
----
-base-commit: b83371668192a705b878e909c5ae9c1233cbd5fb
-change-id: 20260624-net-tx-pkt-ip-length-padding-5a8f358933fc
 
-Best regards,
---  
-Sanjeeva Yerrapureddy <y.sanjeevreddy@gmail.com>
-
+Chen
 
