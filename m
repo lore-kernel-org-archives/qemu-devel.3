@@ -4,48 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F8BDCDB470
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 05:11:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22E04CDB479
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 05:11:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcFoy-0000LI-5v; Wed, 24 Jun 2026 01:06:44 -0400
+	id 1wcFn4-0004s4-PK; Wed, 24 Jun 2026 01:04:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wcFot-0008AB-3o; Wed, 24 Jun 2026 01:06:39 -0400
+ id 1wcFmy-0004n1-Hk; Wed, 24 Jun 2026 01:04:40 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wcFor-0005gZ-6f; Wed, 24 Jun 2026 01:06:38 -0400
+ id 1wcFmw-0005H2-Jc; Wed, 24 Jun 2026 01:04:39 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1782277477; bh=JqtPwIWvKxJK58K7mcCpSfNf6wbZQ/ak6JBOWbHzjTQ=;
+ t=1782277464; bh=d7opk2Xa97uV2FkuLbY8eu2qrVn55daJy9OwhsI0JY8=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=ZUuA1WzqT7JigL7+WE/QoSSpnje1RRxVmvPTHNjuKOqO26VcoXNIBgClzzF7Wum3a
- 3k+qzrgatHU718bIjDWjMYC8eHPSh8/quVQSjQgZ/kSPfNN2lexoqyxMfzdaiAI8L1
- 1bXnH4XV6gEiYCVki2QqDfWXiQVNfxAIFwRWkmW+8NXCa4pPLktkQvhaLxOdQqUyPP
- dlgkoVhnSlIzAhZIJFpPykAZ4aC5Oh4YNuWceDzXq8aS3YGfZPTYk+iMEtTqJyYQsH
- falyDrh3wdq8vEFtgEVakoYbJ+9v/M3AbeKWw2hElo9Zmx/2hsMih9f5H2D5BlF14A
- TW0Wh5pdjjxbA==
+ b=Cra233Fck+mlokpYPOpVA81wSmJgYQM0DD+Ng1sx2KNWRRSzKQ3RqQxrajW6M4ejD
+ L60KeTuI6H8mKR/zFUR9HYQOZ1WxsOpFwkMzoZefKRkiOTxCljP1pFsm+cSGpZcr/c
+ QYtySoxCSsyXbmYpG3HK6AfT26saXYXFBC53zZjaT00l9EbUg9kXTfs4FdotKq37JB
+ 8xiqKo++5HnA+3k3iAwHIyTjLCLAo80HvLIy4uz9J4R+zx4o0Z5j7cqkxYVB8LQefX
+ 2rnJfaDqh384oT5orQdQTubKXNuhwDpY1zd81xunebTtq2R1u2ohCKUIHLVXXyRHRz
+ YUQigvQK7/QAw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 16F571BA64B;
- Wed, 24 Jun 2026 08:04:37 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 82EB61BA631;
+ Wed, 24 Jun 2026 08:04:24 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id F26E03DDAD3;
- Wed, 24 Jun 2026 08:04:41 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 6AB213DDABC;
+ Wed, 24 Jun 2026 08:04:29 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Aditya Gupta <adityag@linux.ibm.com>,
- Zexiang Zhang <chan9yan9@gmail.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.11 85/86] hw/pci: Replace assert with bounds check and
- return
-Date: Wed, 24 Jun 2026 08:02:56 +0300
-Message-ID: <20260624050404.394225-29-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Stefano Garzarella <sgarzare@redhat.com>,
+ DARKNAVY <vr@darknavy.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.11 62/86] libvhost-user: fix buffer overflow in
+ virtqueue_read_indirect_desc()
+Date: Wed, 24 Jun 2026 08:02:33 +0300
+Message-ID: <20260624050404.394225-6-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.11-20260624080222@cover.tls.msk.ru>
 References: <qemu-stable-10.0.11-20260624080222@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -70,58 +72,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Aditya Gupta <adityag@linux.ibm.com>
+From: Stefano Garzarella <sgarzare@redhat.com>
 
-As reported in https://gitlab.com/qemu-project/qemu/-/work_items/3334,
-callers of 'pci_host_config_{read,write}_common' can pass length as 8,
-causing an assert failure
+virtqueue_read_indirect_desc() copies an indirect descriptor table
+into a buffer in chunks when the table crosses a memory region
+boundary. The destination is a struct vring_desc pointer but is
+advanced by a byte count, so each increment moves the pointer by
+read_len elements instead of read_len bytes, writing beyond the
+buffer.
 
-The original issue with pnv_phb3 triggering the assert was fixed in a
-previous commit
+Use a char pointer for the destination so that the arithmetic
+advances correctly.
 
-Instead of asserting on invalid length, check if the length is valid
-(<=4), otherwise return (with the failure error code in read)
+While at it, change the source from a struct vring_desc pointer
+to a void pointer: when the table is split across regions,
+vu_gpa_to_va() can return a pointer into the middle of a descriptor,
+so casting it to a struct vring_desc pointer is wrong. The pointer is
+only used as a memcpy() source, so a void pointer is fine.
 
-Reported-by: Zexiang Zhang <chan9yan9@gmail.com>
-Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
+Fixes: CVE-2026-6425
+Fixes: 293084a719 ("libvhost-user: Support across-memory-boundary access")
+Cc: qemu-stable@nongnu.org
+Reported-by: DARKNAVY <vr@darknavy.com>
+Signed-off-by: Stefano Garzarella <sgarzare@redhat.com>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-Id: <20260326190438.734239-3-adityag@linux.ibm.com>
-(cherry picked from commit c7209c56718107fefd5deae140a450954d31ff2b)
+Message-Id: <20260417132645.121192-2-sgarzare@redhat.com>
+(cherry picked from commit 85805ee887be4adddb1f1a34f526968adc95e582)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/pci/pci_host.c b/hw/pci/pci_host.c
-index 56f7f28a1a..37a8d186d6 100644
---- a/hw/pci/pci_host.c
-+++ b/hw/pci/pci_host.c
-@@ -81,7 +81,12 @@ void pci_host_config_write_common(PCIDevice *pci_dev, uint32_t addr,
-         return;
+diff --git a/subprojects/libvhost-user/libvhost-user.c b/subprojects/libvhost-user/libvhost-user.c
+index 9c630c2170..014d210748 100644
+--- a/subprojects/libvhost-user/libvhost-user.c
++++ b/subprojects/libvhost-user/libvhost-user.c
+@@ -2391,8 +2391,9 @@ static int
+ virtqueue_read_indirect_desc(VuDev *dev, struct vring_desc *desc,
+                              uint64_t addr, size_t len)
+ {
+-    struct vring_desc *ori_desc;
++    char *dst_desc = (char *)desc;
+     uint64_t read_len;
++    void *ori_desc;
+ 
+     if (len > (VIRTQUEUE_MAX_SIZE * sizeof(struct vring_desc))) {
+         return -1;
+@@ -2409,10 +2410,10 @@ virtqueue_read_indirect_desc(VuDev *dev, struct vring_desc *desc,
+             return -1;
+         }
+ 
+-        memcpy(desc, ori_desc, read_len);
++        memcpy(dst_desc, ori_desc, read_len);
+         len -= read_len;
+         addr += read_len;
+-        desc += read_len;
++        dst_desc += read_len;
      }
  
--    assert(len <= 4);
-+    if (len > 4) {
-+        PCI_DPRINTF("%s: invalid length access: addr " HWADDR_FMT_plx " \
-+            len %d val %"PRIx32"\n", __func__, addr, len, val);
-+        return;
-+    }
-+
-     /* non-zero functions are only exposed when function 0 is present,
-      * allowing direct removal of unexposed functions.
-      */
-@@ -106,7 +111,12 @@ uint32_t pci_host_config_read_common(PCIDevice *pci_dev, uint32_t addr,
-         return ~0x0;
-     }
- 
--    assert(len <= 4);
-+    if (len > 4) {
-+        PCI_DPRINTF("%s: invalid length access: addr " HWADDR_FMT_plx " \
-+            len %d val %"PRIx32"\n", __func__, addr, len, val);
-+        return ~0x0;
-+    }
-+
-     /* non-zero functions are only exposed when function 0 is present,
-      * allowing direct removal of unexposed functions.
-      */
+     return 0;
 -- 
 2.47.3
 
