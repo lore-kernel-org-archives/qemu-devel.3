@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C987CDE002
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 13:34:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D20FECDE003
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 13:34:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcNjc-0007BB-U6; Wed, 24 Jun 2026 09:33:45 -0400
+	id 1wcNkS-0008U0-2M; Wed, 24 Jun 2026 09:34:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wcNjY-00074d-3p; Wed, 24 Jun 2026 09:33:40 -0400
+ id 1wcNkO-0008RE-PD; Wed, 24 Jun 2026 09:34:33 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wcNjV-0000Py-M9; Wed, 24 Jun 2026 09:33:39 -0400
+ id 1wcNkN-0000Ut-14; Wed, 24 Jun 2026 09:34:32 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1782307995; bh=x8Obbye/RcP9958V3Ik52SIuaNnuyPM0y+vpzi01500=;
+ t=1782307996; bh=5LTbrdiZZKvPaIrNvB8ScBmmfWMVGkV6wGymiQXW1SQ=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=qdjI3CEpO+S69CGcNqc63BUiVVuzCE7nzmljUWn41+dbHmNC6OdKQCjyt9X2yZCJS
- +TG4cBECjc0Fhh7vWpP6LtXA9uApFMrDNZDKa5N33yWkKW4TqjaNcuxlo6wSalOonA
- VQCPN5JsKiYe3NRPqwStuUNkfDMQgF34i/keFxHHzhwBGaRThtOPcSBTdlt7p8ysp8
- 9bDhehvy2sRcX08aSXqvhQnapfJ3mwSWuWCxza0aEfJTMT3XpE1P0VjhhXxwk5mbeu
- CFca+45buvc8OIvOSYV1GCfqAz6wf0Fb/JWerikIxSC6A2cI2pJMo3vzVv6iCtaAzW
- E9uai7QKFEsKQ==
+ b=Yb+7MnkFSy14CNzg0GRVsQZsC/Jm7SBkkk9VqJKlkwpPaMK08b3qUN9dI+4OWnETE
+ KMT/jy0WH7P5VYyvCgKR4koW2oi7krpjzZpxtRL+JD9b4yN92kg7rU3sGsv3NXA0t7
+ ku2T7RjeDkePTOavQ0YrPrtsIRuvTd57gGpT9dNpV2d4toMQU0/eXDCocr+wYx6a+2
+ K9vOD5D2p6b6VmG0VbcLFhE3P5MgpLQ4YkFVGDBZlES4Kkp+AJwXLfUbFVVsqe4Ibi
+ SAUWf83TyC1Ena3tXN7wn1fweep4I1iQrlpB8mNlOhEGeV0KJWIS5usog/yQeKEM2Y
+ mBWsMzTPvhUcA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id BF1B21BA9BA;
- Wed, 24 Jun 2026 16:33:15 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 432691BA9C2;
+ Wed, 24 Jun 2026 16:33:16 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 5C6813DEA09;
+ by tsrv.corpit.ru (Postfix) with ESMTP id D456A3DEA11;
  Wed, 24 Jun 2026 16:33:21 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Abhigyan Kumar <314abh@gmail.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.2 008/107] target/riscv: Fix medeleg[11] read-only zero
- bit for M-mode ECALL
-Date: Wed, 24 Jun 2026 16:30:13 +0300
-Message-ID: <20260624133301.403266-8-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Matt Turner <mattst88@gmail.com>,
+ Helge Deller <deller@gmx.de>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.2 016/107] linux-user/mips64: fix mipsn32
+ elf_core_copy_regs entry width
+Date: Wed, 24 Jun 2026 16:30:21 +0300
+Message-ID: <20260624133301.403266-16-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.2-20260624163118@cover.tls.msk.ru>
 References: <qemu-stable-11.0.2-20260624163118@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -70,42 +70,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Abhigyan Kumar <314abh@gmail.com>
+From: Matt Turner <mattst88@gmail.com>
 
-RISC-V Privileged Specification 3.1.8 (Machine Trap Delegation Registers
-(medeleg and mideleg)) mentions:
+For mipsn32 (TARGET_ABI32=y, TARGET_LONG_BITS=64):
+  abi_ulong = uint32_t (4 bytes) — for pointers and ABI-sized fields
+  target_ulong = uint64_t (8 bytes) — for general-purpose registers
 
-"For exceptions that cannot occur in less privileged modes, the
-corresponding medeleg bits should be read-only zero. In particular,
-medeleg[11] is read-only zero."
+linux-user/elfload.c allocates target_elf_prstatus using the
+mips64/target_elf.h definition where target_elf_gregset_t has
+target_ulong reserved[45] (8 bytes each, 360 bytes total).
 
-QEMU incorrectly included RISCV_EXCP_M_ECALL in DELEGABLE_EXCPS. It
-allowed the 11th bit to be written and read as set. Fixed by removing it
-from the DELEGABLE_EXCPS mask, adhering to the specification.
+However, in linux-user/mips64/elfload.c, #include "target_elf.h" inside
+the included mips/elfload.c resolves to mips/target_elf.h (compiler
+searches the file's own directory first), where the union uses abi_ulong
+reserved[45].  For mipsn32 this gives 4-byte entries (180 bytes), not
+the 8-byte entries (360 bytes) that elfload.c actually allocated.
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3438
-Signed-off-by: Abhigyan Kumar <314abh@gmail.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20260427060849.749179-2-314abh@gmail.com>
-[ Changes by AF:
- - Remove comment
-]
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-(cherry picked from commit a0946caf1d9ec21446ebdcb5eab2400baa4323ae)
+Writing via r->reserved[34] therefore lands at byte offset 34*4=136
+instead of the correct 34*8=272, silently zeroing the EPC in the core
+file.
+
+Fix by casting the pointer to target_ulong * so writes always use 8-byte
+slots and land at the offsets matching the allocated layout.
+
+This does not change behavior for mips64 (N64) where abi_ulong already
+equals target_ulong (both 8 bytes).
+
+Signed-off-by: Matt Turner <mattst88@gmail.com>
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Helge Deller <deller@gmx.de>
+(cherry picked from commit 6033df08e93df313771b6637230de2d66bdc09cb)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-index 51e668b46d..35e98df420 100644
---- a/target/riscv/csr.c
-+++ b/target/riscv/csr.c
-@@ -1789,7 +1789,6 @@ static const uint64_t all_ints = M_MODE_INTERRUPTS | S_MODE_INTERRUPTS |
-                          (1ULL << (RISCV_EXCP_U_ECALL)) | \
-                          (1ULL << (RISCV_EXCP_S_ECALL)) | \
-                          (1ULL << (RISCV_EXCP_VS_ECALL)) | \
--                         (1ULL << (RISCV_EXCP_M_ECALL)) | \
-                          (1ULL << (RISCV_EXCP_INST_PAGE_FAULT)) | \
-                          (1ULL << (RISCV_EXCP_LOAD_PAGE_FAULT)) | \
-                          (1ULL << (RISCV_EXCP_STORE_PAGE_FAULT)) | \
+diff --git a/linux-user/mips64/elfload.c b/linux-user/mips64/elfload.c
+index 9081ae8111..e4d84a7bd6 100644
+--- a/linux-user/mips64/elfload.c
++++ b/linux-user/mips64/elfload.c
+@@ -15,16 +15,31 @@
+  */
+ void elf_core_copy_regs(target_elf_gregset_t *r, const CPUMIPSState *env)
+ {
+-    /* R0 is always 0; r->reserved is zero-initialised by the caller */
++    /*
++     * linux-user/elfload.c allocates target_elf_prstatus using the
++     * definition from mips64/target_elf.h, where target_elf_gregset_t
++     * has target_ulong reserved[45] (8 bytes each = 360 bytes total).
++     *
++     * But in this compilation unit, "#include target_elf.h" resolved to
++     * mips/target_elf.h (wrong directory), so our local target_elf_gregset_t
++     * has abi_ulong reserved[45] which is only 4 bytes each for mipsn32.
++     * Using r->reserved[i] would write to the wrong offsets for mipsn32.
++     *
++     * Cast to target_ulong * to always write 8-byte entries at the correct
++     * positions, matching the layout that elfload.c allocated.
++     */
++    target_ulong *regs = (target_ulong *)r;
++
++    /* R0 is always 0; buffer is zero-initialised by the caller */
+     for (int i = 1; i < 32; i++) {
+-        r->reserved[i] = tswap64(env->active_tc.gpr[i]);
++        regs[i] = tswap64(env->active_tc.gpr[i]);
+     }
+-    r->reserved[26] = 0;   /* k0 */
+-    r->reserved[27] = 0;   /* k1 */
+-    r->reserved[32] = tswap64(env->active_tc.LO[0]);
+-    r->reserved[33] = tswap64(env->active_tc.HI[0]);
+-    r->reserved[34] = tswap64(env->active_tc.PC);
+-    r->reserved[35] = tswap64(env->CP0_BadVAddr);
+-    r->reserved[36] = tswap64(env->CP0_Status);
+-    r->reserved[37] = tswap64(env->CP0_Cause);
++    regs[26] = 0;   /* k0 */
++    regs[27] = 0;   /* k1 */
++    regs[32] = tswap64(env->active_tc.LO[0]);
++    regs[33] = tswap64(env->active_tc.HI[0]);
++    regs[34] = tswap64(env->active_tc.PC);
++    regs[35] = tswap64(env->CP0_BadVAddr);
++    regs[36] = tswap64(env->CP0_Status);
++    regs[37] = tswap64(env->CP0_Cause);
+ }
 -- 
 2.47.3
 
