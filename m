@@ -4,44 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3A89CDB470
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 05:07:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3787CDB479
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 05:07:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcFn3-0004rT-Rm; Wed, 24 Jun 2026 01:04:45 -0400
+	id 1wcFow-0000Ei-KC; Wed, 24 Jun 2026 01:06:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wcFmv-0004lS-2U; Wed, 24 Jun 2026 01:04:38 -0400
+ id 1wcFor-00082M-1x; Wed, 24 Jun 2026 01:06:38 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wcFms-0005GU-Tk; Wed, 24 Jun 2026 01:04:36 -0400
+ id 1wcFoo-0005gJ-LW; Wed, 24 Jun 2026 01:06:36 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1782277464; bh=LDuTVytEB5yPW9EHHai0ZUStwAKUWdEBdDZsmYwEGww=;
+ t=1782277477; bh=AXICw6Ex/uCQ9FWMvHjX3VLiMLRwXNo8HFGHVaeQiTU=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=fD3bozArNYyoIVLUxmgT/vBk5swdRFlqHSCUiqRNqLTJxYLndcB/zqDW9u2xcCcMQ
- 2h17EVJX5/SE1Zj22jDnPm8Xdhzkf7hk2TNNj/+PoZJqOkckRn/7/q3UP4Iwhow+ZF
- qt3JfLxFjcDlf3JtrLdAdwzXSoaQOmNBp37b7Ukmp6XaldCkrfxJr1fdTw9xvfppHo
- ciDJASvsfpuRn2iREns46AefqXKCH38oAnv+/ygZYzhuZO0DTj+IrKoJW5HoGZ3CHW
- dEuAh69lc/RkMxe58kXyUzgpiFYC0mzS/ZbpPWPsNl10R72qAncvaYT2ih46+XkL8O
- 0AhDWoQFs1reQ==
+ b=QYdRzva08rmwjPiRBBlkwWmANHbjruEtpTdP7U2gdysviY6TQmhHrroDWJB+fB1Cf
+ uL+T7xkWZZb/Tevd3C6fZRxo3qjXu9JrAGYFLdYzS29vZGkQkJzxWoJUruvJvvtnPv
+ vWcSFhLaGMDl3QIFxCCnUfhSO0fnReIEkQFX529Khk2iiqBqJeZUuHwflM0oN8OqMm
+ XQo3UCRrWLwL4M8O3yTNcKL5xJm6dRjVMG5BNk38uDyN8juByTmwdqeZ4xQ/GJM504
+ aleA0uHTG+j+sC9mXTSCZKvfpHfLT5G0zWVFDZ2/sEIHX9whY35YKrFFUHwwYM2eAa
+ IcfPYrrw8wvDA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 627531BA62F;
- Wed, 24 Jun 2026 08:04:24 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 0556E1BA64A;
+ Wed, 24 Jun 2026 08:04:37 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 494B93DDABA;
- Wed, 24 Jun 2026 08:04:29 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id E02DD3DDAD2;
+ Wed, 24 Jun 2026 08:04:41 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Alejandro Jimenez <alejandro.j.jimenez@oracle.com>,
- Sairaj Kodilkar <sarunkod@amd.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+Cc: qemu-stable@nongnu.org, Aditya Gupta <adityag@linux.ibm.com>,
+ Zexiang Zhang <chan9yan9@gmail.com>, "Michael S. Tsirkin" <mst@redhat.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.11 60/86] amd_iommu: Update command buffer head ptr in
- MMIO region after wraparound
-Date: Wed, 24 Jun 2026 08:02:31 +0300
-Message-ID: <20260624050404.394225-4-mjt@tls.msk.ru>
+Subject: [Stable-10.0.11 84/86] ppc/pnv_phb3: Error out on invalid config
+ access
+Date: Wed, 24 Jun 2026 08:02:55 +0300
+Message-ID: <20260624050404.394225-28-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.11-20260624080222@cover.tls.msk.ru>
 References: <qemu-stable-10.0.11-20260624080222@cover.tls.msk.ru>
@@ -70,48 +70,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
+From: Aditya Gupta <adityag@linux.ibm.com>
 
-When processing a command, amdvi_cmdbuf_run() increments cmdbuf_head and
-writes it to the emulated MMIO register space before checking whether it
-has reached the end of the command buffer.
+PHB in Power8 supports 8 byte registers, and hence the ops structure
+allows accessing of 8 bytes in 'pnv_phb3_reg_ops'
 
-If the incremented value reaches the end of the buffer and the tail pointer
-is zero, the loop exits and the COMMAND_HEAD offset still contains an
-unwrapped value. There are no errors in command processing since internal
-cmdbuf_head state is always correctly updated, but the spec defines the
-CmdHeadPtr field in MMIO Offset 2000h Command Buffer Head Pointer Register
-as RW i.e. guest-visible, so it should be kept consistent.
+Both 'pnv_phb3_reg_read' & 'pnv_phb3_reg_write' pass the arguments as is
+to 'pnv_phb3_config_{read,write}', if offset is PHB_CONFIG_DATA.
 
-Wrap cmdbuf_head before updating COMMAND_HEAD so the MMIO-visible register
-always matches the internal command buffer head pointer position.
+This when called with size as 8, causes following assert failure in
+'pci_host_config_read_common' & 'pci_host_config_write_common':
 
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
-Reviewed-by: Sairaj Kodilkar <sarunkod@amd.com>
+    assert(len <= 4);
+
+Validate that size is <=4, before jumping to pci_host_config_{read,write}_common
+
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3334
+Reported-by: Zexiang Zhang <chan9yan9@gmail.com>
+Fixes: 9ae1329ee2fe ("ppc/pnv: Add models for POWER8 PHB3 PCIe Host bridge")
+Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-Id: <20260512150044.334867-1-alejandro.j.jimenez@oracle.com>
-(cherry picked from commit 3c98e446af825b5806c1e5cd1244b2431b15e884)
+Message-Id: <20260326190438.734239-2-adityag@linux.ibm.com>
+(cherry picked from commit 218109781209f9d77242b2cdf743acac8bc3b893)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/i386/amd_iommu.c b/hw/i386/amd_iommu.c
-index 4405ce8988..8efebd3eea 100644
---- a/hw/i386/amd_iommu.c
-+++ b/hw/i386/amd_iommu.c
-@@ -583,12 +583,12 @@ static void amdvi_cmdbuf_run(AMDVIState *s)
-         trace_amdvi_command_exec(s->cmdbuf_head, s->cmdbuf_tail, s->cmdbuf);
-         amdvi_cmdbuf_exec(s);
-         s->cmdbuf_head += AMDVI_COMMAND_SIZE;
--        amdvi_writeq_raw(s, AMDVI_MMIO_COMMAND_HEAD, s->cmdbuf_head);
+diff --git a/hw/pci-host/pnv_phb3.c b/hw/pci-host/pnv_phb3.c
+index 82884e1e92..3c0956f994 100644
+--- a/hw/pci-host/pnv_phb3.c
++++ b/hw/pci-host/pnv_phb3.c
+@@ -474,6 +474,11 @@ void pnv_phb3_reg_write(void *opaque, hwaddr off, uint64_t val, unsigned size)
  
-         /* wrap head pointer */
-         if (s->cmdbuf_head >= s->cmdbuf_len * AMDVI_COMMAND_SIZE) {
-             s->cmdbuf_head = 0;
-         }
-+        amdvi_writeq_raw(s, AMDVI_MMIO_COMMAND_HEAD, s->cmdbuf_head);
+     /* Special case configuration data */
+     if ((off & 0xfffc) == PHB_CONFIG_DATA) {
++        if (size > 4) {
++            phb3_error(phb, "Invalid config access, offset: 0x%"PRIx64" size: %d",
++                      off, size);
++            return;
++        }
+         pnv_phb3_config_write(phb, off & 0x3, size, val);
+         return;
      }
- }
+@@ -596,6 +601,11 @@ uint64_t pnv_phb3_reg_read(void *opaque, hwaddr off, unsigned size)
+     uint64_t val;
+ 
+     if ((off & 0xfffc) == PHB_CONFIG_DATA) {
++        if (size > 4) {
++            phb3_error(phb, "Invalid config access, offset: 0x%"PRIx64" size: %d",
++                      off, size);
++            return ~0ull;
++        }
+         return pnv_phb3_config_read(phb, off & 0x3, size);
+     }
  
 -- 
 2.47.3
