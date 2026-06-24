@@ -4,92 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31348CDE004
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 07:13:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4279ACDB470
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 07:15:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcHjZ-0004zO-Al; Wed, 24 Jun 2026 03:09:17 -0400
+	id 1wcHpG-0003Hf-RI; Wed, 24 Jun 2026 03:15:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1wcHjX-0004z2-E3
- for qemu-devel@nongnu.org; Wed, 24 Jun 2026 03:09:15 -0400
-Received: from mail-pg1-x52f.google.com ([2607:f8b0:4864:20::52f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1wcHjV-0002wI-3R
- for qemu-devel@nongnu.org; Wed, 24 Jun 2026 03:09:15 -0400
-Received: by mail-pg1-x52f.google.com with SMTP id
- 41be03b00d2f7-c89370405aaso261487a12.0
- for <qemu-devel@nongnu.org>; Wed, 24 Jun 2026 00:09:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1782284951; x=1782889751; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=H9zFq1iyzk05zoEMX2h9nWXYnORUY596qmXYMUCTaFo=;
- b=mPJW1IFlVE2Skr3f1hN4mmiO3kvfpEvqbmXECp99di/0I6D3LS19R0ky64FgzZ+ODO
- nnFKUZtX4HGZwn1fL0nh2b0oM6f9ibDtiG4pgK+u7xxoLjT9JJUfgA5I+30lO3o2pzJt
- Ll8W+oI9C6M5fbCDwWGbZMxmPVf2Q8B5nc4pgoPQVwd79deQCnV722bu7n243TY9JjUD
- 21bgOmYBMf46OLwXOqDpyAMCGGPsYBMVpE/0TDNNrFZ/bPz/T/ue+XczlFB9/5MFdYLG
- 1nbyBbRWQLfBm6RKAKLLj83VxDIHAAyIEri+g+BP1thQVHaUYFFXqqSadXYgRBkeECTr
- oy6Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782284951; x=1782889751;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=H9zFq1iyzk05zoEMX2h9nWXYnORUY596qmXYMUCTaFo=;
- b=bxSQ1BwmmAaadCQ66+PyB4KlA0BoSVV4JtlW9B+dlwN3GhMIs+ylRES9PAo3WaW8ss
- bt155jPtZUCh0deQTD5QPtAv6/UMtCSP4QA4+s3isuUWhA0GSGVQj1W0knyPuEuRD6Nl
- eEwGarSldThckQK2J0upWck94IQTOoq5Qb5Wkc6+6uLACknJi7wmKk6S0bbCpILYyrDo
- KQ8t9kRIr6bUQwMH/AFNTfU62nQ0NGRnsOzil5MLLYFrCAE82Tt49bxBQ+QMTlM7wgur
- T2OM7IrHAZtjZN1oBT0yRS0DwqjfOfAXyZpJog6MCj/LZLiok7RcwZPgubzKgMmRB04h
- V1Vg==
-X-Gm-Message-State: AOJu0YzdhnPI9fkQZ2OlX7XqebfKUWrR2w+7oMI+V42nnRE38ePxXNlG
- f1vpZL8gC0QOvsseZotIsXUdVuAMhrqY6NLPmliZyBTxBys7DyontzKLc/nVJ74nc4E=
-X-Gm-Gg: AfdE7ckoFOzW/zIY4O3KmluzqUlL/rqKKOEFB1HjAdbsk3zaTKNpVBw6GNXGHT/mwIU
- IYPVOgocUnXCFtsWnJHvsyHWMH9sFBDO6ZWSuS6VDPj7WVHI5s9+FOsq1kxI6EL26NV0ul4FoTJ
- FbU2FMHn6J/NJZSBKJImDxG/0x9WW+STe6wJJJ3Kt5jiym3mKaCGh1vhikujlVthEvtFM5/5QpP
- pF3cXxFvaUVhcqFPTW8L+dOcJ3fKSZK8iYvV6Cc94DW5/S1DRZkN7k4gOSLw4fst4h/Fr3/SG1y
- H4uIUOaBjdMqZ9jqF/tOzTd+8u/TG+MteV+GxaSEjeKTpghY0Is4lCkIH6EvTdl63IkBI8o0kRc
- f/NkHq0XpUtSvf0O0d9ks2Q0Onmx7cXnKcS7EDUF6c7aiG8Ws4ZzJWQrc8dgjcpHruFhe3SGiEp
- YB0FKepHE7uAVxpY39WLWCR+yglu4XJx7V6pLdJnArGGlxVFAUXIUo
-X-Received: by 2002:a05:6a21:648c:b0:3b3:1c7b:ff9 with SMTP id
- adf61e73a8af0-3bd152914a0mr8102967637.46.1782284951377; 
- Wed, 24 Jun 2026 00:09:11 -0700 (PDT)
-Received: from ZBMac-LWN10QXKQ0.taila0cd24.ts.net
- ([2408:80e0:41fc:0:fe49::1277]) by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-c8bc2c8e92asm10736569a12.2.2026.06.24.00.09.07
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 24 Jun 2026 00:09:10 -0700 (PDT)
-From: Zhang Chen <zhangckid@gmail.com>
-To: qemu-devel <qemu-devel@nongnu.org>,
- "Dr . David Alan Gilbert" <dave@treblig.org>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- "Michael S . Tsirkin" <mst@redhat.com>,
- Stefan Hajnoczi <stefanha@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Kevin Wolf <kwolf@redhat.com>, Jason Wang <jasowang@redhat.com>,
- Fam Zheng <fam@euphon.net>
-Cc: Zhang Chen <zhangckid@gmail.com>
-Subject: [PATCH V9 02/17] iothread: introduce iothread_ref/unref to track
- attached devices
-Date: Wed, 24 Jun 2026 15:08:36 +0800
-Message-ID: <20260624070851.13342-3-zhangckid@gmail.com>
-X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20260624070851.13342-1-zhangckid@gmail.com>
-References: <20260624070851.13342-1-zhangckid@gmail.com>
+ (Exim 4.90_1) (envelope-from <qemu_oss@crudebyte.com>)
+ id 1wcHpF-0003H9-Fz; Wed, 24 Jun 2026 03:15:09 -0400
+Received: from kylie.crudebyte.com ([5.189.157.229])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <qemu_oss@crudebyte.com>)
+ id 1wcHpD-0004U4-Pn; Wed, 24 Jun 2026 03:15:09 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=crudebyte.com; s=kylie; h=Content-Type:Content-Transfer-Encoding:
+ MIME-Version:References:In-Reply-To:Message-ID:Date:Subject:Cc:To:From:
+ Content-ID:Content-Description;
+ bh=gAtt68WLOO/DZchlbTbR0A9VlwhIaNNy8uMnmyS5uHY=; b=Q33QedjmyuP3kcgCZaFj9nSNp0
+ aR/T0ghoFFwQwe9krQ1EEKi4/cocppHkOZLJfehZBemwkbxO+oR77B2CLHs/59/Rivcb7J8xY2eCg
+ Gpt3HnWAZgSMRyzOAs3FCFm5hy5o2F8vfEfMxAJ5ymPa0Vok9C+MnF8zkP3+K1u74Ndp6vuA6vreA
+ sJoa6Jc2k+sVzAdn2Vl6njICxpniGPH32ejYL69FQprUUIwYVLgsPIBehw4BJ2rwulKZESaEpjh6G
+ wvJTYw7lGrRYDmJ2oFQ/1JmqL/oWMiviJtzFUuCvOhgcYpUqEITYxnP3Bf0NdB0IHcgbTgwuNrBWP
+ /00OlqI5LSJpP+BZQnlaJrFcqx26+sGpxMD0yLAl59o0/Iu/De9jc89/H5KvodoL5V67wIgCu9G84
+ ddsTtzvofyJ3aby/AOEqAK+yJXVjpTN+jRw+9fh/8yu2ErzL2X8sInIK2no2HdFDC4v07QYPyYIbh
+ z5yMBeX297T84tCFaMyPt/Omne3izpK33BU6wOA82jDwKHOnGj01iAg2s/YU9vuyUB115COb9Pq5N
+ pGLM+1ZQ4jKpPuBahgFfOoBcgwo4AZ7KoHtLnurH4TxPQYDgQQ1ciY+GGiJlvQlLdERACfBTPgoPL
+ k04kaQxqiGbaI2z0HoDUEH1jb3ZZj/YBVlaxCdrnA=;
+From: Christian Schoenebeck <qemu_oss@crudebyte.com>
+To: qemu-devel@nongnu.org, Greg Kurz <groug@kaod.org>
+Cc: qemu-stable@nongnu.org, Michael Tokarev <mjt@tls.msk.ru>
+Subject: Re: [Stable-10.0.11 79/86] hw/9pfs: consolidate name validation with
+ check_name()
+Date: Wed, 24 Jun 2026 09:15:02 +0200
+Message-ID: <2414838.ElGaqSPkdT@weasel>
+In-Reply-To: <20260624050404.394225-23-mjt@tls.msk.ru>
+References: <qemu-stable-10.0.11-20260624080222@cover.tls.msk.ru>
+ <20260624050404.394225-23-mjt@tls.msk.ru>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52f;
- envelope-from=zhangckid@gmail.com; helo=mail-pg1-x52f.google.com
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="utf-8"
+Received-SPF: pass client-ip=5.189.157.229;
+ envelope-from=qemu_oss@crudebyte.com; helo=kylie.crudebyte.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -106,232 +68,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently, IOThreads do not maintain a record of which devices are
-associated with them. This makes it difficult to monitor the
-workload distribution of IOThreads, especially in complex
-hotplug scenarios involving multiple virtio-blk or virtio-scsi devices.
+Hi Michael,
 
-This patch introduces a reference counting and tracking mechanism
-within the IOThread object:
+On Wednesday, 24 June 2026 07:02:50 CEST Michael Tokarev wrote:
+> From: Christian Schoenebeck <qemu_oss@crudebyte.com>
+> 
+> Add a new, shared helper function check_name() that consolidates the name
+> validation logic (illegal name check and "." / ".." rejection) currently
+> spread over multiple 9p handlers, unnecessarily duplicating code.
+> 
+> This is pure refactoring with no behavior change. The existing error code
+> semantics are preserved: rename operations return -EISDIR, create
+> operations return -EEXIST.
 
-- iothread_ref(): Prepends the device's IOThreadHolder to a list.
-- iothread_unref(): Searches for the IOThreadHolder using a custom
-  string comparison (g_strcmp0), releases the associated memory
-  upon a successful match.
-- holders: A GList storing the IOThreadHolder of attached devices
-  for runtime introspection.
+Note that this particular patch is actually not a fix. It is just code 
+deduplication. So my expecation was that this patch would not go to the stable 
+branches, therefore I intentionally omitted to CC qemu-stable on this patch.
 
-A later commit will add QMP commands to let management applications
-query the attachment status of IOThreads.
+/Christian
+ 
+> Note: These current error codes actually differ from native Linux system
+> calls (e.g. rename() returns -EBUSY, open(O_CREAT) returns -EISDIR). The 9P
+> protocol does not mandate specific error codes for these validation errors.
+> Hence consolidating to a single error code (e.g., -EINVAL) for all cases
+> could be considered in the future for simplicity reason.
+> 
+> This change reduces code duplication across 9 functions:
+> 
+> - v9fs_lcreate
+> - v9fs_create
+> - v9fs_symlink
+> - v9fs_link
+> - v9fs_rename
+> - v9fs_renameat
+> - v9fs_wstat
+> - v9fs_mknod
+> - v9fs_mkdir
+> 
+> Link:
+> https://lore.kernel.org/qemu-devel/0573103880129eb543f07b68c77e86f2f572f6bf
+> .1780072238.git.qemu_oss@crudebyte.com Signed-off-by: Christian Schoenebeck
+> <qemu_oss@crudebyte.com>
+> (cherry picked from commit 116db2986b11c914217bbd1547815b6c7efb944a)
+> Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-Signed-off-by: Zhang Chen <zhangckid@gmail.com>
----
- include/system/iothread.h |  5 +++
- iothread.c                | 94 +++++++++++++++++++++++++++++++++++++++
- qapi/misc.json            | 61 +++++++++++++++++++++++++
- 3 files changed, 160 insertions(+)
 
-diff --git a/include/system/iothread.h b/include/system/iothread.h
-index a1ef7696cb..b9207ad829 100644
---- a/include/system/iothread.h
-+++ b/include/system/iothread.h
-@@ -50,6 +50,11 @@ struct IOThread {
-     bool stopping;              /* has iothread_stop() been called? */
-     bool running;               /* should iothread_run() continue? */
-     int thread_id;
-+    /*
-+     * The list elements are of type IOThreadHolder, which can
-+     * represent either a QOM path or a block node name.
-+     */
-+    GList *holders;
- 
-     /* AioContext poll parameters */
-     int64_t poll_max_ns;
-diff --git a/iothread.c b/iothread.c
-index 3558535b40..3301b8d495 100644
---- a/iothread.c
-+++ b/iothread.c
-@@ -25,6 +25,92 @@
- #include "qemu/rcu.h"
- #include "qemu/main-loop.h"
- 
-+/*
-+ * iothread_ref:
-+ * @iothread: the iothread to track
-+ * @holder: the IOThreadHolder object initialized by the caller
-+ *
-+ * Add the @holder to the iothread's tracking list.
-+ */
-+static void iothread_ref(IOThread *iothread, const IOThreadHolder *holder)
-+{
-+    assert(holder);
-+    IOThreadHolder *h = g_new0(IOThreadHolder, 1);
-+
-+    h->type = holder->type;
-+    switch (holder->type) {
-+    case IO_THREAD_HOLDER_KIND_QOM_OBJECT:
-+        h->u.qom_object.qom_path = g_strdup(holder->u.qom_object.qom_path);
-+        break;
-+    case IO_THREAD_HOLDER_KIND_BLOCK_NODE:
-+        h->u.block_node.node_name =
-+            g_strdup(holder->u.block_node.node_name);
-+        break;
-+    case IO_THREAD_HOLDER_KIND_MONITOR_NAME:
-+        h->u.monitor_name.monitor_name =
-+            g_strdup(holder->u.monitor_name.monitor_name);
-+        break;
-+    default:
-+        g_assert_not_reached();
-+    }
-+
-+    iothread->holders = g_list_prepend(iothread->holders, h);
-+}
-+
-+static int iothread_holder_compare(gconstpointer a, gconstpointer b)
-+{
-+    const IOThreadHolder *holder_a = a;
-+    const IOThreadHolder *holder_b = b;
-+    const char *name_a, *name_b;
-+
-+    if (holder_a->type != holder_b->type) {
-+        return -1;
-+    }
-+
-+    switch (holder_a->type) {
-+    case IO_THREAD_HOLDER_KIND_QOM_OBJECT:
-+        name_a = holder_a->u.qom_object.qom_path;
-+        name_b = holder_b->u.qom_object.qom_path;
-+        break;
-+    case IO_THREAD_HOLDER_KIND_BLOCK_NODE:
-+        name_a = holder_a->u.block_node.node_name;
-+        name_b = holder_b->u.block_node.node_name;
-+        break;
-+    case IO_THREAD_HOLDER_KIND_MONITOR_NAME:
-+        name_a = holder_a->u.monitor_name.monitor_name;
-+        name_b = holder_b->u.monitor_name.monitor_name;
-+        break;
-+    default:
-+       /*
-+        * This should not happen. If it does, name_a/b remains
-+        * NULL and g_strcmp0 will handle it safely.
-+        */
-+        name_a = NULL;
-+        name_b = NULL;
-+    }
-+
-+    return g_strcmp0(name_a, name_b);
-+}
-+
-+/*
-+ * This function removes the @holder from the @iothread's tracking list.
-+ * The @holder must match the one used previously in iothread_ref().
-+ * It is a programming error to call this with a @holder that is not
-+ * currently associated with the @iothread.
-+ */
-+static void iothread_unref(IOThread *iothread, const IOThreadHolder *holder)
-+{
-+    assert(holder);
-+    GList *link = g_list_find_custom(iothread->holders, holder,
-+                                     (GCompareFunc)iothread_holder_compare);
-+
-+    assert(link);
-+
-+    IOThreadHolder *h = (IOThreadHolder *)link->data;
-+    qapi_free_IOThreadHolder(h);
-+    iothread->holders = g_list_delete_link(iothread->holders, link);
-+}
-+
- static void *iothread_run(void *opaque)
- {
-     IOThread *iothread = opaque;
-@@ -356,6 +442,14 @@ char *iothread_get_id(IOThread *iothread)
- 
- AioContext *iothread_get_aio_context(IOThread *iothread)
- {
-+    /* Remove in next patch for build */
-+    IOThreadHolder holder = {
-+        .type = IO_THREAD_HOLDER_KIND_QOM_OBJECT,
-+        .u.qom_object.qom_path = (char *)"tmp_path",
-+    };
-+    iothread_ref(iothread, &holder);
-+    iothread_unref(iothread, &holder);
-+
-     return iothread->ctx;
- }
- 
-diff --git a/qapi/misc.json b/qapi/misc.json
-index c71a5fe657..d9f82f0922 100644
---- a/qapi/misc.json
-+++ b/qapi/misc.json
-@@ -67,6 +67,67 @@
- ##
- { 'command': 'query-name', 'returns': 'NameInfo', 'allow-preconfig': true }
- 
-+
-+##
-+# @IOThreadHolderBlockNode:
-+#
-+# @node-name: A block node.
-+#
-+# Since: 11.1
-+#
-+##
-+{ 'struct': 'IOThreadHolderBlockNode',
-+  'data': { 'node-name': 'str' } }
-+
-+##
-+# @IOThreadHolderQomObject:
-+#
-+# @qom-path: A QOM Object.
-+#
-+# Since: 11.1
-+#
-+##
-+{ 'struct': 'IOThreadHolderQomObject',
-+  'data': { 'qom-path': 'str' } }
-+
-+##
-+# @IOThreadHolderMonitor:
-+#
-+# @monitor-name: A HMP/QMP monitor.
-+#
-+# Since: 11.1
-+#
-+##
-+{ 'struct': 'IOThreadHolderMonitor',
-+  'data': { 'monitor-name': 'str' } }
-+
-+##
-+# @IOThreadHolderKind:
-+#
-+# @block-node: A block node.
-+# @qom-object: A QOM Object.
-+# @monitor-name: A HMP/QMP monitor.
-+#
-+# Since: 11.1
-+##
-+{ 'enum': 'IOThreadHolderKind',
-+  'data': [ 'block-node', 'qom-object', 'monitor-name' ] }
-+
-+##
-+# @IOThreadHolder:
-+#
-+# @type: the kind of I/O thread holder.
-+#
-+# Since: 11.1
-+##
-+{ 'union': 'IOThreadHolder',
-+  'base': { 'type': 'IOThreadHolderKind' },
-+  'discriminator': 'type',
-+  'data': {
-+    'block-node': 'IOThreadHolderBlockNode',
-+    'qom-object': 'IOThreadHolderQomObject',
-+    'monitor-name': 'IOThreadHolderMonitor' } }
-+
- ##
- # @IOThreadInfo:
- #
--- 
-2.49.0
 
 
