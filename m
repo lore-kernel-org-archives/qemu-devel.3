@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4BB7ECDE003
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 13:37:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A0A5CDB479
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 13:37:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcNlM-0003SV-Fn; Wed, 24 Jun 2026 09:35:32 -0400
+	id 1wcNk5-0007Uw-1g; Wed, 24 Jun 2026 09:34:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wcNlK-0003Mv-Sg; Wed, 24 Jun 2026 09:35:30 -0400
+ id 1wcNk3-0007U1-Br; Wed, 24 Jun 2026 09:34:11 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wcNlJ-0000p7-8q; Wed, 24 Jun 2026 09:35:30 -0400
+ id 1wcNk1-0000Uf-Nk; Wed, 24 Jun 2026 09:34:11 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1782307997; bh=WoDzbd+bsFS1hjb4l+NXgUrDQ81yYUUXj+/8Gg3rZ10=;
+ t=1782307996; bh=VpUXHEeZq4VCjeyy0rgRt2Of/KA2IN5KTxh0zZi1P0I=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=c2BaL8V+d+UqCd5UHwMSfeEXaLs/8A3A91Vx6PZ41dYWkfhytGjCiqrk0KASN2sxO
- caRl0UOGZcDCbZUgtq3qH5J1yVK+ZfYPdw4Dfy158aMyYZJC8iJfW1YTKD2Nc1nKkn
- G68LGBIXhxUGrNImuWtWSTJhzKIti1aqnzxDs6Y+886Ut6t3RKWWwIKf2RYsc5VZ80
- 8/qlKFaMA4I83Q/Bg7RjP9n8N8eyE6/h97ZGqtUh2ffp0LklbRUjBYQLoa2ghfzR2D
- F0R20m8z+z5QAjjJxKRWpiUcBCbPoNaDwEngiN1fuTru/GGXH8EllliUF1iKSLifq4
- DmtJdl/5hsQTg==
+ b=YJBZ6tAFE0bKwB2iPABZHN/3XcV8SANDGm6Nw1CbK1W7FcH6nXCcvv2DUBl6Mj1QL
+ 4GlyvRdx0jXR7gbeNNCeoyASo3eb43pbNA8paRAHCmWMr9KuZh+Llo9pwVy+NoPOB0
+ FvgqJvs1M0T31mdCFkhwNBTVDQc+ltgo+r7WcUBQUF/r7qbxAk3kcVVfpYKtfCFp7l
+ k/T72XEBc5ch8CmciabuXFLWMePDXWl6anlabu0//zu8fRXGgUBY6KMB/gd+lPPRIE
+ D5oAAuI54JkUjbWCK3jbptLmtP+hgfF34877+oqo7oaxLsgnjeLoAB7+C7uDO+Rs+w
+ QCAEdrklNWNgg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 014761BA9CD;
- Wed, 24 Jun 2026 16:33:17 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 340491BA9C1;
+ Wed, 24 Jun 2026 16:33:16 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 9275E3DEA1C;
- Wed, 24 Jun 2026 16:33:22 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id C56F53DEA10;
+ Wed, 24 Jun 2026 16:33:21 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.2 027/107] target/arm: SVE2 FMAXP, FMINP must honour AH=1
-Date: Wed, 24 Jun 2026 16:30:32 +0300
-Message-ID: <20260624133301.403266-27-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Matt Turner <mattst88@gmail.com>,
+ Helge Deller <deller@gmx.de>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.2 015/107] linux-user/mips64: fix elf_core_copy_regs
+ register layout in core files
+Date: Wed, 24 Jun 2026 16:30:20 +0300
+Message-ID: <20260624133301.403266-15-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.2-20260624163118@cover.tls.msk.ru>
 References: <qemu-stable-11.0.2-20260624163118@cover.tls.msk.ru>
@@ -70,80 +70,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: Matt Turner <mattst88@gmail.com>
 
-The behaviour of floating-point maximum and minimum insns has
-some odd special cases when FPCR.AH=1. We get this right in most
-places (for instance, the ASIMD FMAXP, FMINP) but forgot about
-it for the SVE2 versions of FMAXP and FMINP.
+mips64/elfload.c uses #include "../mips/elfload.c" to share code. When
+the compiler processes mips/elfload.c the quoted #include "target_elf.h"
+resolves relative to the including file's directory, so it picks up
+mips/target_elf.h instead of mips64/target_elf.h.  mips/target_elf.h
+pulls in mips/target_ptrace.h, whose target_pt_regs has a pad0[6] field
+before regs[].  As a result elf_core_copy_regs writes:
 
+  r->pt.regs[i]   -> reserved[6+i]   (shifted by 6 from the correct index)
+  r->pt.cp0_epc   -> reserved[40]    (correct mips64 N64 index is 34)
+
+The Linux kernel and glibc both use the mips64 N64 layout (no pad0): EPC
+at reserved[34].  Debuggers and libunwind reading the core with N64
+constants therefore see a completely wrong register set — EPC points to
+GP, RA holds the branch target instead of the link address, etc.
+
+Fix by:
+ - Guarding the mips32 elf_core_copy_regs in mips/elfload.c with #ifndef
+   TARGET_MIPS64 so it is not compiled for mips64/mipsn32 targets.
+ - Providing a mips64-specific elf_core_copy_regs in mips64/elfload.c
+   that writes directly to r->reserved[i] with the correct N64 indices,
+   bypassing the struct field names that are tainted by the wrong header
+   include.
+
+The mipsn32 (TARGET_ABI_MIPSN32) and mips64el targets are covered by the
+same mips64/elfload.c and benefit from the same fix.
+
+Signed-off-by: Matt Turner <mattst88@gmail.com>
 Cc: qemu-stable@nongnu.org
-Fixes: 384433e70983 ("target/arm: Implement FPCR.AH semantics for FMINP and FMAXP")
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
-Message-id: 20260521122913.1565011-2-peter.maydell@linaro.org
-(cherry picked from commit 446050c4dfe4566ae3fcba9c6588c89a66ed4b33)
+Signed-off-by: Helge Deller <deller@gmx.de>
+(cherry picked from commit dd3a906d3505561d9cb3367b82c5475acca50b6b)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/arm/tcg/helper-sve-defs.h b/target/arm/tcg/helper-sve-defs.h
-index c3541a8ca8..cd05dd0fb4 100644
---- a/target/arm/tcg/helper-sve-defs.h
-+++ b/target/arm/tcg/helper-sve-defs.h
-@@ -2914,6 +2914,20 @@ DEF_HELPER_FLAGS_6(sve2_fminp_zpzz_s, TCG_CALL_NO_RWG,
- DEF_HELPER_FLAGS_6(sve2_fminp_zpzz_d, TCG_CALL_NO_RWG,
-                    void, ptr, ptr, ptr, ptr, fpst, i32)
+diff --git a/linux-user/mips/elfload.c b/linux-user/mips/elfload.c
+index cc5bbf05ab..1a46e180cf 100644
+--- a/linux-user/mips/elfload.c
++++ b/linux-user/mips/elfload.c
+@@ -131,6 +131,7 @@ const char *get_elf_base_platform(CPUState *cs)
+ #undef MATCH_PLATFORM_INSN
  
-+DEF_HELPER_FLAGS_6(sve2_ah_fmaxp_zpzz_h, TCG_CALL_NO_RWG,
-+                   void, ptr, ptr, ptr, ptr, fpst, i32)
-+DEF_HELPER_FLAGS_6(sve2_ah_fmaxp_zpzz_s, TCG_CALL_NO_RWG,
-+                   void, ptr, ptr, ptr, ptr, fpst, i32)
-+DEF_HELPER_FLAGS_6(sve2_ah_fmaxp_zpzz_d, TCG_CALL_NO_RWG,
-+                   void, ptr, ptr, ptr, ptr, fpst, i32)
+ /* See linux kernel: arch/mips/kernel/process.c:elf_dump_regs.  */
++#ifndef TARGET_MIPS64
+ void elf_core_copy_regs(target_elf_gregset_t *r, const CPUMIPSState *env)
+ {
+     for (int i = 1; i < ARRAY_SIZE(env->active_tc.gpr); i++) {
+@@ -146,3 +147,4 @@ void elf_core_copy_regs(target_elf_gregset_t *r, const CPUMIPSState *env)
+     r->pt.cp0_status = tswapl(env->CP0_Status);
+     r->pt.cp0_cause = tswapl(env->CP0_Cause);
+ }
++#endif
+diff --git a/linux-user/mips64/elfload.c b/linux-user/mips64/elfload.c
+index b719555e65..9081ae8111 100644
+--- a/linux-user/mips64/elfload.c
++++ b/linux-user/mips64/elfload.c
+@@ -1 +1,30 @@
+ #include "../mips/elfload.c"
 +
-+DEF_HELPER_FLAGS_6(sve2_ah_fminp_zpzz_h, TCG_CALL_NO_RWG,
-+                   void, ptr, ptr, ptr, ptr, fpst, i32)
-+DEF_HELPER_FLAGS_6(sve2_ah_fminp_zpzz_s, TCG_CALL_NO_RWG,
-+                   void, ptr, ptr, ptr, ptr, fpst, i32)
-+DEF_HELPER_FLAGS_6(sve2_ah_fminp_zpzz_d, TCG_CALL_NO_RWG,
-+                   void, ptr, ptr, ptr, ptr, fpst, i32)
-+
- DEF_HELPER_FLAGS_5(sve2_eor3, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, ptr, i32)
- DEF_HELPER_FLAGS_5(sve2_bcax, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, ptr, i32)
- DEF_HELPER_FLAGS_5(sve2_bsl1n, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, ptr, i32)
-diff --git a/target/arm/tcg/sve_helper.c b/target/arm/tcg/sve_helper.c
-index 062d8881bd..179cbd74fb 100644
---- a/target/arm/tcg/sve_helper.c
-+++ b/target/arm/tcg/sve_helper.c
-@@ -778,6 +778,14 @@ DO_ZPZZ_PAIR_FP(sve2_fminp_zpzz_h, float16, H1_2, float16_min)
- DO_ZPZZ_PAIR_FP(sve2_fminp_zpzz_s, float32, H1_4, float32_min)
- DO_ZPZZ_PAIR_FP(sve2_fminp_zpzz_d, float64, H1_8, float64_min)
- 
-+DO_ZPZZ_PAIR_FP(sve2_ah_fmaxp_zpzz_h, float16, H1_2, helper_vfp_ah_maxh)
-+DO_ZPZZ_PAIR_FP(sve2_ah_fmaxp_zpzz_s, float32, H1_4, helper_vfp_ah_maxs)
-+DO_ZPZZ_PAIR_FP(sve2_ah_fmaxp_zpzz_d, float64, H1_8, helper_vfp_ah_maxd)
-+
-+DO_ZPZZ_PAIR_FP(sve2_ah_fminp_zpzz_h, float16, H1_2, helper_vfp_ah_minh)
-+DO_ZPZZ_PAIR_FP(sve2_ah_fminp_zpzz_s, float32, H1_4, helper_vfp_ah_mins)
-+DO_ZPZZ_PAIR_FP(sve2_ah_fminp_zpzz_d, float64, H1_8, helper_vfp_ah_mind)
-+
- #undef DO_ZPZZ_PAIR_FP
- 
- /* Three-operand expander, controlled by a predicate, in which the
-diff --git a/target/arm/tcg/translate-sve.c b/target/arm/tcg/translate-sve.c
-index 5bace3fda1..6a5c508743 100644
---- a/target/arm/tcg/translate-sve.c
-+++ b/target/arm/tcg/translate-sve.c
-@@ -7666,8 +7666,8 @@ TRANS_FEAT_NONSTREAMING(HISTSEG, aa64_sve2, gen_gvec_ool_arg_zzz,
- DO_ZPZZ_FP(FADDP, aa64_sme_or_sve2, sve2_faddp_zpzz)
- DO_ZPZZ_FP(FMAXNMP, aa64_sme_or_sve2, sve2_fmaxnmp_zpzz)
- DO_ZPZZ_FP(FMINNMP, aa64_sme_or_sve2, sve2_fminnmp_zpzz)
--DO_ZPZZ_FP(FMAXP, aa64_sme_or_sve2, sve2_fmaxp_zpzz)
--DO_ZPZZ_FP(FMINP, aa64_sme_or_sve2, sve2_fminp_zpzz)
-+DO_ZPZZ_AH_FP(FMAXP, aa64_sme_or_sve2, sve2_fmaxp_zpzz, sve2_ah_fmaxp_zpzz)
-+DO_ZPZZ_AH_FP(FMINP, aa64_sme_or_sve2, sve2_fminp_zpzz, sve2_ah_fminp_zpzz)
- 
- static bool do_fmmla(DisasContext *s, arg_rrrr_esz *a,
-                      gen_helper_gvec_4_ptr *fn)
++/*
++ * mips/elfload.c defines elf_core_copy_regs guarded by #ifndef TARGET_MIPS64.
++ *
++ * We must provide the mips64 version here.  We cannot use r->pt.regs[] because
++ * when mips/elfload.c is #include'd above its "#include "target_elf.h"" resolves
++ * to mips/target_elf.h (compiler searches the including file's directory first),
++ * which pulls in mips/target_ptrace.h.  That struct has pad0[6] before regs[],
++ * so r->pt.regs[i] writes to reserved[6+i] — offset by 6 from what the kernel
++ * and glibc expect for the N64 ABI (EPC at reserved[34], not reserved[40]).
++ *
++ * Write directly to reserved[] using the mips64 N64 index layout:
++ *   R0-R31 at reserved[0..31], LO at [32], HI at [33], EPC at [34].
++ */
++void elf_core_copy_regs(target_elf_gregset_t *r, const CPUMIPSState *env)
++{
++    /* R0 is always 0; r->reserved is zero-initialised by the caller */
++    for (int i = 1; i < 32; i++) {
++        r->reserved[i] = tswap64(env->active_tc.gpr[i]);
++    }
++    r->reserved[26] = 0;   /* k0 */
++    r->reserved[27] = 0;   /* k1 */
++    r->reserved[32] = tswap64(env->active_tc.LO[0]);
++    r->reserved[33] = tswap64(env->active_tc.HI[0]);
++    r->reserved[34] = tswap64(env->active_tc.PC);
++    r->reserved[35] = tswap64(env->CP0_BadVAddr);
++    r->reserved[36] = tswap64(env->CP0_Status);
++    r->reserved[37] = tswap64(env->CP0_Cause);
++}
 -- 
 2.47.3
 
