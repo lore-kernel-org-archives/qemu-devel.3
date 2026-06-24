@@ -4,45 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04374CDE002
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 13:44:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5EFB8CDB481
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 13:44:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcNrk-0000fw-1Z; Wed, 24 Jun 2026 09:42:08 -0400
+	id 1wcNol-0003Qj-D7; Wed, 24 Jun 2026 09:39:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wcNrb-0000Wv-1K; Wed, 24 Jun 2026 09:41:59 -0400
+ id 1wcNoJ-00021b-1d; Wed, 24 Jun 2026 09:38:38 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wcNrY-0001sl-Ff; Wed, 24 Jun 2026 09:41:58 -0400
+ id 1wcNoG-0001CV-NI; Wed, 24 Jun 2026 09:38:34 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1782308001; bh=0qeQG38BzP/Bizi+dlJAjX3FnMzZTa7jiRiX9fH3TzQ=;
+ t=1782307999; bh=/yCG3jEExQpedxSgTR2/aw27BcSv2Xz3e8r7g1a46fI=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=XpIIdxPu+nmac1Zf0rCf0hZwIoAduGJV2AHwdkjS3iZuPl7oWLh4i8NduJMVUuQvH
- rVFNu+YL2a6s5cvNy6HrHJ74UsF8nXWMdgJCNbCjsrSaXubFwo9K1/TLHZnWwd1WOp
- RurF+viLP5Smm6/fACNHnqbTwCCLuUzu/86v1bL0G+nuPaSzXulpPgktAX9W87ZuQy
- 97WAMmivJoYbaeoSke5qIj6izR7730G0fQUMXEV3jMDcyTGV3DVRirp/5majYY20LS
- mjIiDrRHnkOfcLx5lDvYRgVqPQvMl8NJ9CXLkvRDtiCye2ZZit/9qrXCZB5guhpfnJ
- 2BW6yw6ROSK0A==
+ b=gqdYMyc6kSjcYJiWDB7VDznPFOFMNz66iVwucHONf9V0bwsLm53XiZdc0IFkFD4Ic
+ HE+1Em30pWCsUnN7WtZqQ9X62v78OGxTzShObWVf4ADADyhtQ+Dr/0d26oomZKqJJ6
+ AWnbex+KODYfMW1YCnQWmc5X0QUyKpJpzvMcKX//DdiBeifK7cZTJ0w0UuFINdRJHw
+ qPVVmdF0O4woUAChG+jt5W9JQrMy8ZIrRfYdEhBSYlue58fINMQ09ArX58tMqujEc6
+ dcsIBs93iLW4o3rz4nl9s4mDzn3BmUI+WoJig7vt+sDF09yhac75tKVbNa4S0yUvlg
+ rYIR2T6XbQUUQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 6074E1BAA0A;
- Wed, 24 Jun 2026 16:33:21 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 154451BA9EA;
+ Wed, 24 Jun 2026 16:33:19 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id F15443DEA59;
- Wed, 24 Jun 2026 16:33:26 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id A17EE3DEA39;
+ Wed, 24 Jun 2026 16:33:24 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Alistair Francis <alistair.francis@wdc.com>,
+Cc: qemu-stable@nongnu.org, Alexandra Winter <wintera@linux.ibm.com>,
+ Hendrik Brueckner <brueckner@linux.ibm.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Gautam Gala <ggala@linux.ibm.com>, Cornelia Huck <cohuck@redhat.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.2 088/107] target/riscv/insn_trans/trans_rvzicbo.c.inc:
- save opcode before helpers
-Date: Wed, 24 Jun 2026 16:31:33 +0300
-Message-ID: <20260624133301.403266-88-mjt@tls.msk.ru>
+Subject: [Stable-11.0.2 056/107] target/s390x: Make container ids in SysIB_15x
+ 1-based
+Date: Wed, 24 Jun 2026 16:31:01 +0300
+Message-ID: <20260624133301.403266-56-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.2-20260624163118@cover.tls.msk.ru>
 References: <qemu-stable-11.0.2-20260624163118@cover.tls.msk.ru>
@@ -71,66 +72,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+From: Alexandra Winter <wintera@linux.ibm.com>
 
-All helpers from this file can trigger ILLEGAL_INSN exceptions via
-check_zicbo_envcfg() directly, bypassing the usual exception code from
-translate.c.   If we don't save the opcode before each helper,
-riscv_raise_exception() is triggered and env->bins won't be unwind during
-cpu_loop_exit_restore() (code path cpu_restore_state ->
-cpu_restore_state_from_tb() -> restore_state_to_opc()).
+The Container Id in a container-type TLE of SysIB_15x is defined as 8-bit
+unsigned nonzero integer. Make stsi fc 15 emulation architecture compliant,
+by starting the container ids at 1 for the lowest numbered container.
 
-And finally, in riscv_cpu_do_interrupt(), we will set (m)tval = 0 when we can,
-instead, set it to the cbo opcode that generated the exception.
+The qemu misbehaviour without this patch becomes obvious due to a recently
+proposed kernel fix. Older linux kernels pass the container ids from stsi
+fc15 unchanged to sysfs, i.e. starting at 1 on s390 hardware. This resulted
+in off-by-one values when compared to the values from HMC. A Linux kernel
+fix is being proposed to correct the sysfs topology ids by -1, so they
+start at 0, e.g. when displayed by 'lscpu -ye'. In case a KVM guest with a
+fixed kernel runs on a host with a qemu without this fix, this can result
+in container ids erroneously being shown as 255.
+Example (Fixed guest on unfixed qemu):
+$ lscpu -ye
+CPU NODE DRAWER BOOK SOCKET CORE L1d:L1i:L2 ONLINE CONFIGURED POLARIZATION ADDRESS
+  0    0    255  255    255    0 0:0:0         yes yes        vert-medium  0
+  1    0    255  255      0    1 1:1:1         yes yes        vert-medium  1
+After this fix:
+$ lscpu -ye
+CPU NODE DRAWER BOOK SOCKET CORE L1d:L1i:L2 ONLINE CONFIGURED POLARIZATION ADDRESS
+  0    0      0    0      0    0 0:0:0         yes yes        vert-medium  0
+  1    0      0    0      1    1 1:1:1         yes yes        vert-medium  1
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3380
-Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20260520214704.1943652-1-daniel.barboza@oss.qualcomm.com>
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-(cherry picked from commit d6c5855c76b2ea849adb0fb91379dbb1e5a94dca)
+Fixes: f4f54b582f ("target/s390x/cpu topology: handle STSI(15) and build the SYSIB")
+Signed-off-by: Alexandra Winter <wintera@linux.ibm.com>
+Acked-by: Hendrik Brueckner <brueckner@linux.ibm.com>
+Acked-by: Christian Borntraeger <borntraeger@linux.ibm.com>
+Reviewed-by: Gautam Gala <ggala@linux.ibm.com>
+Message-ID: <20260511134909.43802-1-wintera@linux.ibm.com>
+Signed-off-by: Cornelia Huck <cohuck@redhat.com>
+(cherry picked from commit 1f1ccb6f3c48a2cd80e874d66afeef2dc28a65f3)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/riscv/insn_trans/trans_rvzicbo.c.inc b/target/riscv/insn_trans/trans_rvzicbo.c.inc
-index 15711c3140..096f7dde27 100644
---- a/target/riscv/insn_trans/trans_rvzicbo.c.inc
-+++ b/target/riscv/insn_trans/trans_rvzicbo.c.inc
-@@ -33,6 +33,8 @@ static bool trans_cbo_clean(DisasContext *ctx, arg_cbo_clean *a)
-     REQUIRE_ZICBOM(ctx);
-     TCGv src = get_address(ctx, a->rs1, 0);
+diff --git a/target/s390x/kvm/stsi-topology.c b/target/s390x/kvm/stsi-topology.c
+index c8d6389cd8..af3fd8ad1b 100644
+--- a/target/s390x/kvm/stsi-topology.c
++++ b/target/s390x/kvm/stsi-topology.c
+@@ -90,9 +90,9 @@ static int stsi_topology_fill_sysib(S390TopologyList *topology_list,
+     int last_drawer = -1;
+     int last_book = -1;
+     int last_socket = -1;
+-    int drawer_id = 0;
+-    int book_id = 0;
+-    int socket_id = 0;
++    int drawer_id = 1;
++    int book_id = 1;
++    int socket_id = 1;
+     int n = sizeof(SysIB_151x);
  
-+    /* The helper may raise ILLEGAL_INSN -- record binv for unwind. */
-+    decode_save_opc(ctx, 0);
-     gen_helper_cbo_clean_flush(tcg_env, src);
-     return true;
- }
-@@ -42,6 +44,8 @@ static bool trans_cbo_flush(DisasContext *ctx, arg_cbo_flush *a)
-     REQUIRE_ZICBOM(ctx);
-     TCGv src = get_address(ctx, a->rs1, 0);
- 
-+    /* The helper may raise ILLEGAL_INSN -- record binv for unwind. */
-+    decode_save_opc(ctx, 0);
-     gen_helper_cbo_clean_flush(tcg_env, src);
-     return true;
- }
-@@ -51,6 +55,8 @@ static bool trans_cbo_inval(DisasContext *ctx, arg_cbo_inval *a)
-     REQUIRE_ZICBOM(ctx);
-     TCGv src = get_address(ctx, a->rs1, 0);
- 
-+    /* The helper may raise ILLEGAL_INSN -- record binv for unwind. */
-+    decode_save_opc(ctx, 0);
-     gen_helper_cbo_inval(tcg_env, src);
-     return true;
- }
-@@ -60,6 +66,8 @@ static bool trans_cbo_zero(DisasContext *ctx, arg_cbo_zero *a)
-     REQUIRE_ZICBOZ(ctx);
-     TCGv src = get_address(ctx, a->rs1, 0);
- 
-+    /* The helper may raise ILLEGAL_INSN -- record binv for unwind. */
-+    decode_save_opc(ctx, 0);
-     gen_helper_cbo_zero(tcg_env, src);
-     return true;
- }
+     QTAILQ_FOREACH(entry, topology_list, next) {
+@@ -103,12 +103,12 @@ static int stsi_topology_fill_sysib(S390TopologyList *topology_list,
+         if (level > 3 && drawer_change) {
+             SYSIB_GUARD(n, sizeof(SYSIBContainerListEntry));
+             p = fill_container(p, 3, drawer_id++);
+-            book_id = 0;
++            book_id = 1;
+         }
+         if (level > 2 && book_change) {
+             SYSIB_GUARD(n, sizeof(SYSIBContainerListEntry));
+             p = fill_container(p, 2, book_id++);
+-            socket_id = 0;
++            socket_id = 1;
+         }
+         if (socket_change) {
+             SYSIB_GUARD(n, sizeof(SYSIBContainerListEntry));
 -- 
 2.47.3
 
