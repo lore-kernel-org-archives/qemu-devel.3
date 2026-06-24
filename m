@@ -4,50 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3757DCDB479
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 13:43:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A229CDE004
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 13:43:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcNpk-0006RN-H2; Wed, 24 Jun 2026 09:40:04 -0400
+	id 1wcNk3-0007Ty-Al; Wed, 24 Jun 2026 09:34:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wcNpj-0006QW-DN; Wed, 24 Jun 2026 09:40:03 -0400
+ id 1wcNk1-0007Qw-HA; Wed, 24 Jun 2026 09:34:09 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wcNph-0001Jm-Np; Wed, 24 Jun 2026 09:40:03 -0400
+ id 1wcNjz-0000UO-SY; Wed, 24 Jun 2026 09:34:09 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1782308000; bh=OJlFeqPSPJI/9JHSpoI1kmMeeq87tuzghZZQuthmz0c=;
+ t=1782307996; bh=EQ1/T6K5U0ItJX7O+kcFKps+jhA1+1znygudWJ+5mdI=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=Wa7/2HXNa7OBRdAhJjA5pUo2iOGbu+/2zJXGwffhzf9eOmgezDmZ1AgKTNt/UqXz5
- eJ3wm0pb5XeAQhnKqMDeV9Qx4KA0L5SPAKDWuxy5rq1LTaFFX15SA8tp6tcdO9hj+x
- fk8ncHoe0rfw9+XnO7kLwJ8ayMf9DoNZTcDwUVIu1/1rhbwSvxU/gcFPpiZY8S871U
- iU7z/2Ma8/XM9LPF2V0krqF2LUN0XDaDkhfdNolkpkw7ocWsju2lin65tSrTyceFoe
- R2nWajxg2HIOw5BGoseBm25YKT4xfoFErzmWbwfJzE1lBAND0L24IVeM61RAgR1TaM
- jsoTfsstQCMEg==
+ b=OuNhG8JjIHnWXUGEImY78GQ++zHweAbOQBVoyxwpx+S1rsy4MqyO48XDY54AhQphA
+ 8SvtFZak4gBtMIoBs5+yOPZvR04YbgsjnbToxd+8JyJN+WlR0HsVAH8d/DNPT2XZmq
+ W8PfZdeqMYtqXeESTya0Sn0o7Ed65cxNHHxWKnPwyED9bS7NZEmnK9PuGvvEGmOOTl
+ QFckbFbyr8aKlajPWNs94Qp2yPDgauPSGgrtKvSZZzyzcRnvtvd5KELsdJFnvB9JWs
+ AqYo9b++4P8SAfKt8bvPlnGFUpTaihq+ueAXbuTj/E7kcTuti4s0gSxXcneJs1O8xT
+ xcIiS4cxVPDWg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 25C461BA9F8;
- Wed, 24 Jun 2026 16:33:20 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 251881BA9C0;
+ Wed, 24 Jun 2026 16:33:16 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id AAB043DEA47;
- Wed, 24 Jun 2026 16:33:25 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id B657E3DEA0F;
+ Wed, 24 Jun 2026 16:33:21 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+Cc: qemu-stable@nongnu.org, Portia Stephens <portias@oss.tenstorrent.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.2 070/107] fpu: Handle all rounding modes in
- partsN_uncanon_normal
-Date: Wed, 24 Jun 2026 16:31:15 +0300
-Message-ID: <20260624133301.403266-70-mjt@tls.msk.ru>
+Subject: [Stable-11.0.2 014/107] target/riscv: Make hpmcounterh return the
+ upper 32-bits
+Date: Wed, 24 Jun 2026 16:30:19 +0300
+Message-ID: <20260624133301.403266-14-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.2-20260624163118@cover.tls.msk.ru>
 References: <qemu-stable-11.0.2-20260624163118@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -72,33 +70,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+From: Portia Stephens <portias@oss.tenstorrent.com>
 
-Missed float_round_nearest_even_max when recomputing round.
+The counter value was not being bitshifted for a hpmcounterh read
+resulting in hpmcounterh returning the bottom 32-bits.
 
-CC: qemu-stable@nongnu.org
-Fixes: 72330260cdb ("softfloat: Add float_round_nearest_even_max")
-Reported-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@oss.qualcomm.com>
-Message-id: 20260608190155.637067-2-richard.henderson@linaro.org
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-(cherry picked from commit a6a1f92d5a2368882e9b6851b6ab8b9a56d71a8c)
+Fixes:  cfc96df65e01 ("target/riscv: Remove upper_half from riscv_pmu_ctr_get_fixed_counters_val")
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3498
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Portia Stephens <portias@oss.tenstorrent.com>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Message-ID: <20260519043352.3685866-1-stephensportia@gmail.com>
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+(cherry picked from commit 02284108376a6bcfdd56a11de1c6e0bcc3d0e53b)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/fpu/softfloat-parts.c.inc b/fpu/softfloat-parts.c.inc
-index 3c323c0cec..edfcbeb80b 100644
---- a/fpu/softfloat-parts.c.inc
-+++ b/fpu/softfloat-parts.c.inc
-@@ -431,6 +431,7 @@ static void partsN(uncanon_normal)(FloatPartsN *p, float_status *s,
-             /* Need to recompute round-to-even/round-to-odd. */
-             switch (s->float_rounding_mode) {
-             case float_round_nearest_even:
-+            case float_round_nearest_even_max:
-                 if (N > 64 && frac_lsb == 0) {
-                     inc = ((p->frac_hi & 1) ||
-                            (p->frac_lo & round_mask) != frac_lsbm1
+diff --git a/target/riscv/csr.c b/target/riscv/csr.c
+index cf1fe6041c..0f14ea4689 100644
+--- a/target/riscv/csr.c
++++ b/target/riscv/csr.c
+@@ -1392,8 +1392,9 @@ RISCVException riscv_pmu_read_ctr(CPURISCVState *env, target_ulong *val,
+      */
+     if (riscv_pmu_ctr_monitor_cycles(env, ctr_idx) ||
+         riscv_pmu_ctr_monitor_instructions(env, ctr_idx)) {
+-        *val = riscv_pmu_ctr_get_fixed_counters_val(env, ctr_idx) -
+-                                                    ctr_prev + ctr_val;
++        uint64_t cntr = riscv_pmu_ctr_get_fixed_counters_val(env, ctr_idx) -
++                                                             ctr_prev + ctr_val;
++        *val = extract64(cntr, start, length);
+     } else {
+         *val = ctr_val;
+     }
 -- 
 2.47.3
 
