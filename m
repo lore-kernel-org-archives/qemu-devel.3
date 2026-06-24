@@ -4,44 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44AC1CDB481
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 13:40:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA501CDB481
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 13:40:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcNpM-0005XF-2G; Wed, 24 Jun 2026 09:39:40 -0400
+	id 1wcNlt-0004k6-L0; Wed, 24 Jun 2026 09:36:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wcNpL-0005Wc-69; Wed, 24 Jun 2026 09:39:39 -0400
+ id 1wcNlp-0004Mj-7g; Wed, 24 Jun 2026 09:36:01 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wcNpI-0001JA-TP; Wed, 24 Jun 2026 09:39:38 -0400
+ id 1wcNln-0000sV-MU; Wed, 24 Jun 2026 09:36:00 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1782307999; bh=sfQCC5CgFR1Bz1gV5P/NZ8E4hv3um15ceX7Klvs2YNc=;
+ t=1782307997; bh=OQcZflaaAdCO1CU6lugVRJpFmRJmYwX7C3Bxhwi4Fi0=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=DycWhdsLytPhMXZDcqH0FLi7oruteSJbdXzLwGiWXEjUP3xa2K6t7LNcfjKx6t3w6
- baJDO75DW8e0xMZIRcIG2FtmAVFGwRBtS3MtdO9nGUd74lZD10ws4acTrIFoveBZyu
- MFXXqoVEO0z+iNf1WQNUTLEW5F+jHU44cYqX1cPcPJAAl8dEzOiKPidTCQ+84xICYi
- M/BYJcI5BFu7/AcISn+eFbAB1yMYbfOCsFOFEGQgJRXRtJ/8U5J2fmfjzLQU1A1DFv
- HruesYeSopnu4IhzSwMEFXlH+HlmTkOq387IyUIqvKafVyeCANVF9wgSKdh1/3gxAA
- htlSUE0DNK42g==
+ b=TFhkbAmqjJhoeV+as6oySZs/x72qm6GuC6Nb9VvgUtPiFwq/yOlUJpjaRGs49og1F
+ gm3QNSHwc2J90KvTP3WmlVcm4i22PrjZ35qDlQebabjYA6nr80WguQMXRd8NbHVTyZ
+ 1Pntvp9m+U76hzyIfvvujcIjXupeoTCNOi5G+SQHttAly8pmSTOg8s0ubmFZrKLKfQ
+ +49XnPJHkg/J/1C32iEqlteo8aiF5zD34TWBKjdLAogV3L0oscN+oohQyQ5LPhANLE
+ joWhmd/3iCBjA/xsGM9aL/tAP9mf8LP1wkFDLC2RVZpZwTyRUE1y/lTxy7bEh0uCTR
+ QTU85UtOwTkmg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id E44D21BA9F6;
- Wed, 24 Jun 2026 16:33:19 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 6F2CB1BA9D3;
+ Wed, 24 Jun 2026 16:33:17 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 7FD863DEA45;
- Wed, 24 Jun 2026 16:33:25 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 0259C3DEA22;
+ Wed, 24 Jun 2026 16:33:23 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Fabiano Rosas <farosas@suse.de>,
- Stefan Hajnoczi <stefanha@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.2 068/107] qed: Don't try to flush during incoming
- migration
-Date: Wed, 24 Jun 2026 16:31:13 +0300
-Message-ID: <20260624133301.403266-68-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.2 033/107] target/arm: Enable REVD for SVE2.1
+Date: Wed, 24 Jun 2026 16:30:38 +0300
+Message-ID: <20260624133301.403266-33-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.2-20260624163118@cover.tls.msk.ru>
 References: <qemu-stable-11.0.2-20260624163118@cover.tls.msk.ru>
@@ -70,147 +68,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Fabiano Rosas <farosas@suse.de>
+From: Richard Henderson <richard.henderson@linaro.org>
 
-It's not possible to access the image file while there is an incoming
-migration in progress, the QEMU process doesn't hold any locks to the
-storage at this point so nodes are inactive. Attempting to flush leads
-to an assert at bdrv_co_write_req_prepare():
-
-   assert(!(bs->open_flags & BDRV_O_INACTIVE))
-
-The issue is reproducible by running iotest 181 on a host under cpu
-load. The migration must coincide with the header already containing
-the QED_F_NEED_CHECK flag.
-
-The sequence of events is as follows, with the respective call stacks
-referenced below:
-
-During block device init, bdrv_qed_attach_aio_context() starts the
-'need_check' timer. The timer will not fire during incoming migration
-as it uses QEMU_CLOCK_VIRTUAL (to avoid this very issue, as the code
-comment indicates).                                                   (0)
-
-However, there's still bdrv_qed_drain_begin() which uses the fact that
-the timer is live to decide whether to start the
-qed_need_check_timer_entry() directly.                                (1)
-
-The qed_need_check_timer_entry() eventually calls into
-qed_write_header() -> bdrv_co_pwrite() leading to the assert.         (2)
-
-Skip creating the 'need_check' timer whenever the image is inactive.
-
-The stacks:
-
-(0) == issues timer_mod ==
- #6  in qed_start_need_check_timer       at ../block/qed.c:340
- #7  in bdrv_qed_attach_aio_context      at ../block/qed.c:373
- #8  in bdrv_qed_do_open                 at ../block/qed.c:556
- #9  in bdrv_qed_open_entry              at ../block/qed.c:582
- #10 in coroutine_trampoline             at ../util/coroutine-ucontext.c:175
- #0  in qemu_coroutine_switch<+120>      at ../util/coroutine-ucontext.c:321
- #1  in qemu_aio_coroutine_enter<+356>   at ../util/qemu-coroutine.c:293
- #2  in aio_co_enter<+179>               at ../util/async.c:710
- #3  in aio_co_wake<+53>                 at ../util/async.c:695
- #4  in thread_pool_co_cb<+47>           at ../util/thread-pool.c:283
- #5  in thread_pool_completion_bh<+241>  at ../util/thread-pool.c:202
- #6  in aio_bh_call<+109>                at ../util/async.c:173
- #7  in aio_bh_poll<+299>                at ../util/async.c:220
- #8  in aio_poll<+690>                   at ../util/aio-posix.c:745
- #9  in bdrv_qed_open<+392>              at ../block/qed.c:607
- #10 in bdrv_open_driver<+327>           at ../block.c:1678
- #11 in bdrv_open_common<+1619>          at ../block.c:2008
- #12 in bdrv_open_inherit<+2556>         at ../block.c:4191
- #13 in bdrv_open<+118>                  at ../block.c:4286
- #14 in blk_new_open<+199>               at ../block/block-backend.c:458
- #15 in blockdev_init<+2011>             at ../blockdev.c:612
- #16 in drive_new<+3008>                 at ../blockdev.c:1008
- #17 in drive_init_func<+51>             at ../system/vl.c:662
- #18 in qemu_opts_foreach<+227>          at ../util/qemu-option.c:1148
- #19 in configure_blockdev<+350>         at ../system/vl.c:721
- #20 in qemu_create_early_backends<+343> at ../system/vl.c:2076
- #21 in qemu_init<+12483>                at ../system/vl.c:3778
- #22 in main<+46>                        at ../system/main.c:71
-
-(1) == sees timer_pending ==
- #6  in bdrv_qed_drain_begin             at ../block/qed.c:391
- #7  in bdrv_do_drained_begin            at ../block/io.c:366
- #8  in bdrv_do_drained_begin_quiesce    at ../block/io.c:386
- #9  in bdrv_child_cb_drained_begin      at ../block.c:1207
- #10 in bdrv_parent_drained_begin_single at ../block/io.c:133
- #11 in bdrv_parent_drained_begin        at ../block/io.c:64
- #12 in bdrv_do_drained_begin            at ../block/io.c:364
- #13 in bdrv_drained_begin               at ../block/io.c:393
- #14 in blk_drain                        at ../block/block-backend.c:2101
- #15 in blk_unref                        at ../block/block-backend.c:544
- #16 in bdrv_open_inherit                at ../block.c:4197
- #17 in bdrv_open                        at ../block.c:4286
- #18 in blk_new_open                     at ../block/block-backend.c:458
- #19 in blockdev_init                    at ../blockdev.c:612
- #20 in drive_new                        at ../blockdev.c:1008
- #21 in drive_init_func                  at ../system/vl.c:662
- #22 in qemu_opts_foreach                at ../util/qemu-option.c:1148
- #23 in configure_blockdev               at ../system/vl.c:721
- #24 in qemu_create_early_backends       at ../system/vl.c:2076
- #25 in qemu_init                        at ../system/vl.c:3778
- #26 in main                             at ../system/main.c:71
-
-(2) == crashes ==
- #5  in __assert_fail (assertion="!(bs->open_flags & BDRV_O_INACTIVE)", file="../block/io.c", line=1977
- #6  in bdrv_co_write_req_prepare  at ../block/io.c:1977
- #7  in bdrv_aligned_pwritev       at ../block/io.c:2099
- #8  in bdrv_co_pwritev_part       at ../block/io.c:2316
- #9  in bdrv_co_pwritev            at ../block/io.c:2233
- #10 in bdrv_co_pwrite             at ../include/block/block_int-io.h:77
- #11 in qed_write_header           at ../block/qed.c:128
- #12 in qed_need_check_timer       at ../block/qed.c:305
- #13 in qed_need_check_timer_entry at ../block/qed.c:319
-
-Note that this issue is not exactly the same as what's been reported
-in Gitlab, but given how easily this reproduces, I imagine it has to
-be happening in that setup as well.
-
-Link: https://gitlab.com/qemu-project/qemu/-/work_items/3515
-Signed-off-by: Fabiano Rosas <farosas@suse.de>
-Message-ID: <20260603193813.2327596-1-farosas@suse.de>
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
-Reviewed-by: Kevin Wolf <kwolf@redhat.com>
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-(cherry picked from commit 7e573b660fefdebd21cb755d0d34bb5942fd3af3)
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20260522220408.235438-1-richard.henderson@linaro.org
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+(cherry picked from commit f12e7ba6f43803ec73c92b4ebeee6187113ba1fc)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/block/qed.c b/block/qed.c
-index da23a83d62..0eccfa21c9 100644
---- a/block/qed.c
-+++ b/block/qed.c
-@@ -351,16 +351,22 @@ static void bdrv_qed_detach_aio_context(BlockDriverState *bs)
- {
-     BDRVQEDState *s = bs->opaque;
+diff --git a/target/arm/tcg/translate-sve.c b/target/arm/tcg/translate-sve.c
+index f9dfda4a7a..a05967f4fb 100644
+--- a/target/arm/tcg/translate-sve.c
++++ b/target/arm/tcg/translate-sve.c
+@@ -2992,7 +2992,8 @@ TRANS_FEAT(REVH, aa64_sme_or_sve, gen_gvec_ool_arg_zpz, revh_fns[a->esz], a, 0)
+ TRANS_FEAT(REVW, aa64_sme_or_sve, gen_gvec_ool_arg_zpz,
+            a->esz == 3 ? gen_helper_sve_revw_d : NULL, a, 0)
  
--    qed_cancel_need_check_timer(s);
--    timer_free(s->need_check_timer);
--    s->need_check_timer = NULL;
-+    if (s->need_check_timer) {
-+        qed_cancel_need_check_timer(s);
-+        timer_free(s->need_check_timer);
-+        s->need_check_timer = NULL;
-+    }
- }
+-TRANS_FEAT(REVD, aa64_sme, gen_gvec_ool_arg_zpz, gen_helper_sme_revd_q, a, 0)
++TRANS_FEAT(REVD, aa64_sme_or_sve2p1, gen_gvec_ool_arg_zpz,
++           gen_helper_sme_revd_q, a, 0)
  
--static void bdrv_qed_attach_aio_context(BlockDriverState *bs,
--                                        AioContext *new_context)
-+static void GRAPH_RDLOCK bdrv_qed_attach_aio_context(BlockDriverState *bs,
-+                                                     AioContext *new_context)
- {
-     BDRVQEDState *s = bs->opaque;
- 
-+    if (bdrv_is_inactive(bs)) {
-+        return;
-+    }
-+
-     s->need_check_timer = aio_timer_new(new_context,
-                                         QEMU_CLOCK_VIRTUAL, SCALE_NS,
-                                         qed_need_check_timer_cb, s);
+ TRANS_FEAT(SPLICE, aa64_sme_or_sve, gen_gvec_ool_arg_zpzz,
+            gen_helper_sve_splice, a, a->esz)
 -- 
 2.47.3
 
