@@ -4,43 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE267CDB481
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 13:48:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ACDB6CDB481
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 13:48:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcNsM-0001du-A5; Wed, 24 Jun 2026 09:42:46 -0400
+	id 1wcNpG-0005Og-AN; Wed, 24 Jun 2026 09:39:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wcNs7-00010w-1j; Wed, 24 Jun 2026 09:42:31 -0400
+ id 1wcNpE-0005LC-4b; Wed, 24 Jun 2026 09:39:32 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wcNs5-0001yD-4p; Wed, 24 Jun 2026 09:42:30 -0400
+ id 1wcNpB-0001G2-5O; Wed, 24 Jun 2026 09:39:31 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1782308001; bh=h9zV7rUphTw7kX5AsxS5PvVvjPl4MDSruwhLFemulHs=;
+ t=1782307999; bh=effkG/M7ewMd9+pWv2wvWsr68cl3JK9vqRmhBkgxO6k=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=urgck4hbgjBY4pVZExFRn6nU3jU2/+31QhHpwtZBaI0v0aEKZGltcQVUvNxvf+TDa
- C9hfpv+7EfY+rrPsg+QhiDTUOng9b/argty/Mbt4OH5q950ZsoUzBh5GBib3em/ZSc
- yDO7Bqmlt6HRbOHTa8DwxNE53/RJvYY15haEJDraOqwCJyDxqmaSrNUnPSzE62J+fN
- 2PXZJZoxMTz/QlzIusWqY+Mpwq4U+W9YXHK1xprZhY1Tl8aeRkmycBVA7QwSgRwnqg
- biHbqnyaXUI2aZEtnut9OJofjaEo152JpQCJNbW1t3pswZIgAdsQz1AJDkjkDMU+dM
- GZRVBt/XMcvow==
+ b=lnZpLHgiso3BCL+XppDu2RG+V6Il03XoAzTFa3cmEXs8OFkEv+hHXX0bV6IVtlp7a
+ 0u0Pn2Mn/vxrDbyPVjITcqbwGkykjlYpk/WE96RChS8ftZr6IAIEzIczcE70VgChiO
+ wQthYSNoXwUI5NBTiFDuOmGSy2lZGBJGOJZ8y3teK+V7JmvKUYpMYRHS/AB5+HVh9D
+ ieTWXTdREzUGJL6wb0eCuOrc1cJm3C6y5ji22kbDZjViiP54iWd/AZLpGefyeyIs0q
+ JbQjPZWS6i0JA90fGi0r5Wjd9fIdaBxxc52oKErDe2BD7KWxeJueCh7KZi6m3FcaWA
+ 0DCw+UVC5NPLQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id E1FDC1BAA11;
- Wed, 24 Jun 2026 16:33:21 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id A6C341BA9F2;
+ Wed, 24 Jun 2026 16:33:19 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 801933DEA60;
- Wed, 24 Jun 2026 16:33:27 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 42C393DEA41;
+ Wed, 24 Jun 2026 16:33:25 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+Cc: qemu-stable@nongnu.org, Thomas Lamprecht <t.lamprecht@proxmox.com>,
+ Fiona Ebner <f.ebner@proxmox.com>, Kevin Wolf <kwolf@redhat.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.2 095/107] target/i386: apply mod to immediate count of
- an RCL/RCR operation
-Date: Wed, 24 Jun 2026 16:31:40 +0300
-Message-ID: <20260624133301.403266-95-mjt@tls.msk.ru>
+Subject: [Stable-11.0.2 064/107] qcow2: Fix data loss on zero write with
+ detect-zeroes=unmap
+Date: Wed, 24 Jun 2026 16:31:09 +0300
+Message-ID: <20260624133301.403266-64-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.2-20260624163118@cover.tls.msk.ru>
 References: <qemu-stable-11.0.2-20260624163118@cover.tls.msk.ru>
@@ -69,155 +70,187 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Paolo Bonzini <pbonzini@redhat.com>
+From: Thomas Lamprecht <t.lamprecht@proxmox.com>
 
-RCR and RCL instructions with a count of 9 are the same as if the
-count was 0, but they generated incorrect code because the can_be_zero
-flag is false.  This causes 0 to underflow into -1 at
-tcg_gen_subi_tl(count, count, 1).
+Commit b8bfb1478d ("qcow2: Fix corruption on discard during write with
+COW") added a wait_for_dependencies() at the start of
+qcow2_subcluster_zeroize(). That fixes the inconsistency it set out to
+fix, but turns the lock-protected pre-check in the caller,
+qcow2_co_pwrite_zeroes(), into a stale one: the wait yields s->lock,
+so an in-flight allocating write whose QCowL2Meta is already on
+s->cluster_allocs (but whose L2 entry is not yet linked) gets to link
+its entry during the yield. When the zeroize wakes, the cluster is now
+NORMAL, and with BDRV_REQ_MAY_UNMAP the free path in zero_in_l2_slice()
+unmaps the just-written cluster, silently dropping the data write's
+payload.
 
-Fix by absorbing the modulo computation into gen_shift_count(), now
-renamed gen_shift_count_1(), so that it can handle both reductions.
+This is reachable with detect-zeroes=unmap (the default for VirtIO
+disks with discard on in Proxmox VE), under which the block layer
+auto-promotes all-zero buffers to BDRV_REQ_ZERO_WRITE |
+BDRV_REQ_MAY_UNMAP. A memory-constrained Debian guest running 'apt
+full-upgrade' on such a disk reproduces it as random SIGSEGVs:
+swapped-out code pages come back as zero.
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3452
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit e38d0afade7c134cd4d675f54d26c394cc3cc31f)
+Wait for in-flight dependencies before the lock-protected check in
+qcow2_co_pwrite_zeroes(). If a write linked its L2 entry during the
+wait, the type check now fails and the block layer falls back to a
+bounce-buffered zero write that only touches the requested subrange,
+preserving the racing write's data. Promote wait_for_dependencies() to
+qcow2_wait_for_dependencies() so qcow2.c can call it.
+
+Fixes: b8bfb1478d ("qcow2: Fix corruption on discard during write with COW")
+Fixes: 7534bb105b ("qcow2: Fix corruption on discard during write with COW") in 11.0.x series
+Cc: qemu-stable@nongnu.org
+Tested-by: Fiona Ebner <f.ebner@proxmox.com>
+Reviewed-by: Fiona Ebner <f.ebner@proxmox.com>
+Signed-off-by: Thomas Lamprecht <t.lamprecht@proxmox.com>
+Message-ID: <20260522151318.238064-1-t.lamprecht@proxmox.com>
+[kwolf: Reverted unnecessary change to 'nr' assignment]
+Reviewed-by: Kevin Wolf <kwolf@redhat.com>
+Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+(cherry picked from commit 1d47eb68983577a4e06fe1c165d90e128b191b86)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/i386/tcg/emit.c.inc b/target/i386/tcg/emit.c.inc
-index ce636b6c56..8eca66b696 100644
---- a/target/i386/tcg/emit.c.inc
-+++ b/target/i386/tcg/emit.c.inc
-@@ -3244,8 +3244,9 @@ static void gen_PUSHF(DisasContext *s, X86DecodedInsn *decode)
-     assume_cc_op(s, CC_OP_EFLAGS);
+diff --git a/block/qcow2-cluster.c b/block/qcow2-cluster.c
+index 8b1e80bd0b..e02fae6a0c 100644
+--- a/block/qcow2-cluster.c
++++ b/block/qcow2-cluster.c
+@@ -1474,9 +1474,9 @@ static int coroutine_fn handle_dependencies(BlockDriverState *bs,
+     return 0;
  }
  
--static MemOp gen_shift_count(DisasContext *s, X86DecodedInsn *decode,
--                             bool *can_be_zero, TCGv *count, int unit)
-+static MemOp gen_shift_count_1(DisasContext *s, X86DecodedInsn *decode,
-+                               bool *can_be_zero, TCGv *count, int unit,
-+                               int mod)
+-static void coroutine_mixed_fn wait_for_dependencies(BlockDriverState *bs,
+-                                                     uint64_t guest_offset,
+-                                                     uint64_t bytes)
++void coroutine_mixed_fn qcow2_wait_for_dependencies(BlockDriverState *bs,
++                                                    uint64_t guest_offset,
++                                                    uint64_t bytes)
  {
-     MemOp ot = decode->op[0].ot;
-     int mask = (ot <= MO_32 ? 0x1f : 0x3f);
-@@ -3255,16 +3256,31 @@ static MemOp gen_shift_count(DisasContext *s, X86DecodedInsn *decode,
-     case X86_OP_INT:
-         *count = tcg_temp_new();
-         tcg_gen_andi_tl(*count, cpu_regs[R_ECX], mask);
-+
-+        if (mod < mask) {
-+            TCGv temp = tcg_temp_new();
-+            assert(mod * 4 >= mask);
-+            if (mod * 2 < mask) {
-+                tcg_gen_subi_tl(temp, *count, mod * 2);
-+                tcg_gen_movcond_tl(TCG_COND_GE, *count, temp, tcg_constant_tl(0), temp, *count);
-+            }
-+            tcg_gen_subi_tl(temp, *count, mod);
-+            tcg_gen_movcond_tl(TCG_COND_GE, *count, temp, tcg_constant_tl(0), temp, *count);
-+        }
-         *can_be_zero = true;
-         break;
+     BDRVQcow2State *s = bs->opaque;
+     QCowL2Meta *m = NULL;
+@@ -2035,7 +2035,7 @@ int qcow2_cluster_discard(BlockDriverState *bs, uint64_t offset,
+      * We don't need to allocate a QCowL2Meta for the discard operation because
+      * s->lock is held for the duration of the whole operation.
+      */
+-    wait_for_dependencies(bs, offset, bytes);
++    qcow2_wait_for_dependencies(bs, offset, bytes);
  
-     case X86_OP_IMM:
--        if ((decode->immediate & mask) == 0) {
-+        decode->immediate &= mask;
-+        if (mod < mask) {
-+            decode->immediate %= mod;
-+        }
-+        if (decode->immediate == 0) {
-             *count = NULL;
-             break;
+     /* Caller must pass aligned values, except at image end */
+     assert(QEMU_IS_ALIGNED(offset, s->cluster_size));
+@@ -2204,7 +2204,7 @@ int coroutine_fn qcow2_subcluster_zeroize(BlockDriverState *bs, uint64_t offset,
+      * We don't need to allocate a QCowL2Meta for the zeroize operation because
+      * s->lock is held for the duration of the whole operation.
+      */
+-    wait_for_dependencies(bs, offset, bytes);
++    qcow2_wait_for_dependencies(bs, offset, bytes);
+ 
+     /* If we have to stay in sync with an external data file, zero out
+      * s->data_file first. */
+diff --git a/block/qcow2.c b/block/qcow2.c
+index 81fd299b4c..19271b10a4 100644
+--- a/block/qcow2.c
++++ b/block/qcow2.c
+@@ -4234,10 +4234,16 @@ qcow2_co_pwrite_zeroes(BlockDriverState *bs, int64_t offset, int64_t bytes,
          }
-         *count = tcg_temp_new();
--        tcg_gen_movi_tl(*count, decode->immediate & mask);
-+        tcg_gen_movi_tl(*count, decode->immediate);
-         break;
  
-     case X86_OP_SKIP:
-@@ -3279,6 +3295,13 @@ static MemOp gen_shift_count(DisasContext *s, X86DecodedInsn *decode,
-     return ot;
- }
+         qemu_co_mutex_lock(&s->lock);
+-        /* We can have new write after previous check */
+         offset -= head;
+         bytes = s->subcluster_size;
+         nr = s->subcluster_size;
++        /*
++         * Wait for in-flight allocating writes first: otherwise the type
++         * check below could pass on UNALLOCATED while a yet-to-link_l2 write
++         * completes during qcow2_subcluster_zeroize()'s own wait, letting the
++         * resumed MAY_UNMAP discard the just-written data.
++         */
++        qcow2_wait_for_dependencies(bs, offset, bytes);
+         ret = qcow2_get_host_offset(bs, offset, &nr, &off, &type);
+         if (ret < 0 ||
+             (type != QCOW2_SUBCLUSTER_UNALLOCATED_PLAIN &&
+diff --git a/block/qcow2.h b/block/qcow2.h
+index 192a45d596..ce517040c4 100644
+--- a/block/qcow2.h
++++ b/block/qcow2.h
+@@ -966,6 +966,10 @@ int coroutine_fn GRAPH_RDLOCK
+ qcow2_subcluster_zeroize(BlockDriverState *bs, uint64_t offset, uint64_t bytes,
+                          int flags);
  
-+static MemOp gen_shift_count(DisasContext *s, X86DecodedInsn *decode,
-+                             bool *can_be_zero, TCGv *count, int unit)
-+{
-+    return gen_shift_count_1(s, decode, can_be_zero, count, unit,
-+                             INT_MAX);
-+}
++void coroutine_mixed_fn
++qcow2_wait_for_dependencies(BlockDriverState *bs, uint64_t guest_offset,
++                            uint64_t bytes);
 +
- /*
-  * Compute existing flags in decode->cc_src, for gen_* functions that wants
-  * to set the cc_op set to CC_OP_ADCOX.  In particular, this allows rotate
-@@ -3397,29 +3420,14 @@ static void gen_rot_overflow(X86DecodedInsn *decode, TCGv result, TCGv old,
- /*
-  * RCx operations are invariant modulo 8*operand_size+1.  For 8 and 16-bit operands,
-  * this is less than 0x1f (the mask applied by gen_shift_count) so reduce further.
-+ * FIXME: are flags updated if the count is nonzero, but a multiple of (8 << op) + 1?
-  */
--static void gen_rotc_mod(MemOp ot, TCGv count)
-+static MemOp gen_rotc_count(DisasContext *s, X86DecodedInsn *decode,
-+                            bool *can_be_zero, TCGv *count, int unit)
- {
--    TCGv temp;
--
--    switch (ot) {
--    case MO_8:
--        temp = tcg_temp_new();
--        tcg_gen_subi_tl(temp, count, 18);
--        tcg_gen_movcond_tl(TCG_COND_GE, count, temp, tcg_constant_tl(0), temp, count);
--        tcg_gen_subi_tl(temp, count, 9);
--        tcg_gen_movcond_tl(TCG_COND_GE, count, temp, tcg_constant_tl(0), temp, count);
--        break;
--
--    case MO_16:
--        temp = tcg_temp_new();
--        tcg_gen_subi_tl(temp, count, 17);
--        tcg_gen_movcond_tl(TCG_COND_GE, count, temp, tcg_constant_tl(0), temp, count);
--        break;
--
--    default:
--        break;
--    }
-+    MemOp ot = decode->op[0].ot;
-+    return gen_shift_count_1(s, decode, can_be_zero, count, unit,
-+                             (8 << ot) + 1);
+ int GRAPH_RDLOCK
+ qcow2_expand_zero_clusters(BlockDriverState *bs,
+                            BlockDriverAmendStatusCB *status_cb,
+diff --git a/tests/qemu-iotests/046 b/tests/qemu-iotests/046
+index e03dd40147..0d84b5c1c7 100755
+--- a/tests/qemu-iotests/046
++++ b/tests/qemu-iotests/046
+@@ -226,6 +226,26 @@ aio_write -z 0x140000 0x10000
+ resume A
+ aio_flush
+ EOF
++
++# Start an allocating write to a previously unallocated cluster and, before
++# its L2 update is linked, issue a concurrent sub-cluster zero write with
++# MAY_UNMAP that targets a disjoint range within the same cluster. The zero
++# write's head/tail are zero (cluster is unallocated), so qcow2_co_pwrite_zeroes
++# would expand it to the full subcluster. Without waiting for dependencies
++# before the zero write's "unallocated" type check, that check passes,
++# qcow2_subcluster_zeroize then yields in wait_for_dependencies, the allocating
++# write links its L2 entry, and the resumed zeroize unmaps the cluster -
++# silently discarding the just-written data. Waiting first makes the zero write
++# fall back to a bounce-buffered real write, which only touches its own
++# subrange.
++cat <<EOF
++break write_aio A
++aio_write -P 180 0x200000 0x4000
++wait_break A
++aio_write -z -u 0x204000 0x4000
++resume A
++aio_flush
++EOF
  }
  
- /*
-@@ -3440,7 +3448,7 @@ static void gen_RCL(DisasContext *s, X86DecodedInsn *decode)
-     bool have_1bit_cin, can_be_zero;
-     TCGv count;
-     TCGLabel *zero_label = NULL;
--    MemOp ot = gen_shift_count(s, decode, &can_be_zero, &count, decode->op[2].unit);
-+    MemOp ot = gen_rotc_count(s, decode, &can_be_zero, &count, decode->op[2].unit);
-     TCGv low, high, low_count;
+ overlay_io | $QEMU_IO blkdebug::"$TEST_IMG" | _filter_qemu_io |\
+@@ -310,6 +330,9 @@ verify_io()
+     echo read -P 0   0x120000 0x10000
+     echo read -P 0   0x130000 0x10000
+     echo read -P 0   0x140000 0x10000
++
++    echo read -P 180 0x200000 0x4000
++    echo read -P 0   0x204000 0xc000
+ }
  
-     if (!count) {
-@@ -3451,7 +3459,6 @@ static void gen_RCL(DisasContext *s, X86DecodedInsn *decode)
-     high = tcg_temp_new();
-     low_count = tcg_temp_new();
+ verify_io | $QEMU_IO "$TEST_IMG" | _filter_qemu_io
+diff --git a/tests/qemu-iotests/046.out b/tests/qemu-iotests/046.out
+index 6341df335c..137cf527f1 100644
+--- a/tests/qemu-iotests/046.out
++++ b/tests/qemu-iotests/046.out
+@@ -169,6 +169,12 @@ wrote XXX/XXX bytes at offset XXX
+ XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
+ wrote XXX/XXX bytes at offset XXX
+ XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++blkdebug: Suspended request 'A'
++blkdebug: Resuming request 'A'
++wrote XXX/XXX bytes at offset XXX
++XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++wrote XXX/XXX bytes at offset XXX
++XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
  
--    gen_rotc_mod(ot, count);
-     have_1bit_cin = gen_eflags_adcox(s, decode, true, can_be_zero);
-     if (can_be_zero) {
-         zero_label = gen_new_label();
-@@ -3492,7 +3499,7 @@ static void gen_RCR(DisasContext *s, X86DecodedInsn *decode)
-     bool have_1bit_cin, can_be_zero;
-     TCGv count;
-     TCGLabel *zero_label = NULL;
--    MemOp ot = gen_shift_count(s, decode, &can_be_zero, &count, decode->op[2].unit);
-+    MemOp ot = gen_rotc_count(s, decode, &can_be_zero, &count, decode->op[2].unit);
-     TCGv low, high, high_count;
- 
-     if (!count) {
-@@ -3503,7 +3510,6 @@ static void gen_RCR(DisasContext *s, X86DecodedInsn *decode)
-     high = tcg_temp_new();
-     high_count = tcg_temp_new();
- 
--    gen_rotc_mod(ot, count);
-     have_1bit_cin = gen_eflags_adcox(s, decode, true, can_be_zero);
-     if (can_be_zero) {
-         zero_label = gen_new_label();
+ == Verify image content ==
+ read 65536/65536 bytes at offset 0
+@@ -275,5 +281,9 @@ read 65536/65536 bytes at offset 1245184
+ 64 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
+ read 65536/65536 bytes at offset 1310720
+ 64 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++read 16384/16384 bytes at offset 2097152
++16 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++read 49152/49152 bytes at offset 2113536
++48 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
+ No errors were found on the image.
+ *** done
 -- 
 2.47.3
 
