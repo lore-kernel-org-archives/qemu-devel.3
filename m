@@ -4,44 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3500CDE002
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 13:47:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD9F7CDE003
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 13:47:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcNop-0003zO-Gs; Wed, 24 Jun 2026 09:39:07 -0400
+	id 1wcNlL-0003Mz-30; Wed, 24 Jun 2026 09:35:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wcNom-0003Zk-77; Wed, 24 Jun 2026 09:39:04 -0400
+ id 1wcNlJ-0003Lp-G2; Wed, 24 Jun 2026 09:35:29 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wcNok-0001Do-6H; Wed, 24 Jun 2026 09:39:03 -0400
+ id 1wcNlH-0000n1-OA; Wed, 24 Jun 2026 09:35:29 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1782307999; bh=8HHM1w7x1VDQswcT8xzFVme9fABgIN0/85/hbVFQpwc=;
+ t=1782307996; bh=Y5IXrWGf9fd6lqmrWDpBY6sNZwdv47Q9g5caZWHM55s=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=jdAae8yFgS+c1LanrI/lCCVucWIpZg5Ov4qisXKcXKNh7txLkK+fmjFAzG4xAOB6U
- Y7ThLptR1PYMXO1h9INAMxnC8w64QsJtipmAyd+5kVE3f7QydUvPhHH2Ie1IWoErdh
- F+hWJAUR9NU5u45kyXnRvifdf76IOrvQ+kOE9mtme7+JcSRDbxCw7Ae+E90+lSU6Qy
- 425WKkknxlkFt8mlvsZ0iyScI/CgqSP+/jM6WusJNjqXNfWs4vm/Nzbq4am/J2AAZd
- NRNRkCeyAwPlzTf/40qlY0RlLSCl8OxHWGg+OGXjWSJoQcp4jK6zU07DPdwM2AofDc
- Du5E3ab9e70/Q==
+ b=UH9x9jN6YdejMFSpB3kVpl4R7FlI4fh8Rb+/OMWQYleK5oDtpXx+Nuwm5aDQY8r48
+ ZHFvQGCbRczcNyR5loT/mTzr/k5C+Y7/6c1wv5NtVHNRkXcVzByxeb8qlhlRA7OrUb
+ fq4HJ5L3kGfjwErKBuEIqCOCtINeHHpkmtGeS4EuuoHgOri9a+uRi3hpFpw0ZyYrey
+ 4el/XcHQl24bKCUMPguvf1WeAOQSejls0sMSj/VTCVKdGQSQF03ISEIctKCN9vZeVP
+ uIeZaAQcpXDibfKbL93qUKAJ/VD8CCKAgqv37O60xi1l0hTTYS5nOPJTdfwqba8q4L
+ tTbHn/gouPDHQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 66DB91BA9EE;
- Wed, 24 Jun 2026 16:33:19 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id E5F101BA9CC;
+ Wed, 24 Jun 2026 16:33:16 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 011893DEA3D;
- Wed, 24 Jun 2026 16:33:24 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 7E1093DEA1B;
+ Wed, 24 Jun 2026 16:33:22 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>,
- Feifan Qian <bea1e@proton.me>, Paolo Bonzini <pbonzini@redhat.com>,
- Kevin Wolf <kwolf@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-11.0.2 060/107] virtio-blk: add missing VIRTIO_BLK_T_SCSI_CMD
- size check (CVE-2026-48914)
-Date: Wed, 24 Jun 2026 16:31:05 +0300
-Message-ID: <20260624133301.403266-60-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-11.0.2 026/107] block/linux-aio: bound ioq_submit() recursion
+ depth
+Date: Wed, 24 Jun 2026 16:30:31 +0300
+Message-ID: <20260624133301.403266-26-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-11.0.2-20260624163118@cover.tls.msk.ru>
 References: <qemu-stable-11.0.2-20260624163118@cover.tls.msk.ru>
@@ -70,50 +71,127 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Stefan Hajnoczi <stefanha@redhat.com>
+From: "Denis V. Lunev" <den@openvz.org>
 
-Check that the iovec containing struct virtio_scsi_inhdr is large enough
-before storing an error value there.
+qemu_laio_process_completions() wraps its body in defer_call_begin /
+defer_call_end. Inside the section, completion callbacks wake coroutines
+that queue new aiocbs; laio_do_submit() defers laio_deferred_fn. At the
+bottom of qemu_laio_process_completions() the defer_call_end() fires
+laio_deferred_fn, which calls ioq_submit(), closing the cycle:
 
-Feifan Qian <bea1e@proton.me> pointed out that this can be used to
-corrupt heap memory when the descriptor uses an MMIO address and a
-length of 1, forcing QEMU to allocate a 1-byte heap bounce buffer.
-virtio_stl_p() stores 4 bytes and therefore corrupts whatever is beyond
-the bounce buffer.
+  ioq_submit
+    -> io_submit(2)                           // some sync completions
+    -> qemu_laio_process_completions          // defer_call_begin
+         -> aio_co_wake                       // resumes coroutine
+              -> laio_do_submit
+                   -> defer_call(laio_deferred_fn, s)   // enqueued
+         -> defer_call_end                    // nesting drops to 0
+              -> laio_deferred_fn
+                   -> ioq_submit              // +1 stack frame, loop
 
-Fixes: CVE-2026-48914
-Fixes: f34e73cd69bd ("virtio-blk: report non-zero status when failing SG_IO requests")
-Reported-by: Feifan Qian <bea1e@proton.me>
-Cc: Paolo Bonzini <pbonzini@redhat.com>
+When io_submit(2) returns asynchronously (O_DIRECT) the cycle
+terminates in one extra frame: the fresh aiocb is still in flight, no
+completion is drained, no coroutine wakes, no new submission queues.
+When submissions complete synchronously (non-O_DIRECT, or per-descriptor
+drivers such as vmdk) each level enqueues more work for the next
+defer_call_end() to drain, so recursion grows without bound and QEMU
+crashes with SIGSEGV on the thread guard page.
+
+The cycle was closed by two performance commits, each correct in
+isolation:
+
+  076682885d ("block/linux-aio: convert to blk_io_plug_call() API")
+    -- introduced laio_deferred_fn and wired
+       laio_do_submit -> defer_call(laio_deferred_fn, s).
+
+  84d61e5f36 ("virtio: use defer_call() in virtio_irqfd_notify()")
+    -- added defer_call_begin/end around qemu_laio_process_completions
+       so virtio-irqfd notifications batch across a completion pass.
+
+The supported aio=native + cache=none pairing keeps submissions
+asynchronous, so the cycle stays bounded; nothing in the code enforces
+that contract. Observed in production as a SIGSEGV during a backup job
+configured with --cached + aio=native; reproducible on upstream with
+qemu-io against vmdk.
+
+Cap ioq_submit() recursion with a counter on LaioQueue, which is only
+accessed from the AioContext home thread. On overflow, return without
+submitting. The pending work is drained by s->completion_bh, which
+qemu_laio_process_completions() has already scheduled on entry -- no
+work is lost; one event-loop round-trip of latency is paid only when
+the bound is hit, which cannot happen on a supported configuration.
+
+Signed-off-by: Denis V. Lunev <den@openvz.org>
+CC: Kevin Wolf <kwolf@redhat.com>
+CC: Hanna Reitz <hreitz@redhat.com>
+CC: Stefan Hajnoczi <stefanha@redhat.com>
+CC: Paolo Bonzini <pbonzini@redhat.com>
+Message-ID: <20260520142503.251959-2-den@openvz.org>
 Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
-Message-ID: <20260526154957.1741622-1-stefanha@redhat.com>
-Reviewed-by: Kevin Wolf <kwolf@redhat.com>
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-(cherry picked from commit aeea0c2804c42f24915467a1e4c70e649e39b8e0)
+(cherry picked from commit 6864bec553b2e37699739615e604fc3c7bae0e1d)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/block/virtio-blk.c b/hw/block/virtio-blk.c
-index 9cb9f1fb2b..6b92066aff 100644
---- a/hw/block/virtio-blk.c
-+++ b/hw/block/virtio-blk.c
-@@ -199,10 +199,16 @@ static void virtio_blk_handle_scsi(VirtIOBlockReq *req)
+diff --git a/block/linux-aio.c b/block/linux-aio.c
+index 0a7424fbb3..5aaf2e8514 100644
+--- a/block/linux-aio.c
++++ b/block/linux-aio.c
+@@ -36,6 +36,19 @@
+ /* Maximum number of requests in a batch. (default value) */
+ #define DEFAULT_MAX_BATCH 32
  
-     /*
-      * The scsi inhdr is placed in the second-to-last input segment, just
--     * before the regular inhdr.
-+     * before the regular inhdr. VIRTIO implementations normally do not rely on
-+     * the precise message framing, but legacy implementations did and so we do
-+     * too for the legacy virtio-blk SCSI request type.
-      *
-      * Just put anything nonzero so that the ioctl fails in the guest.
-      */
-+    if (elem->in_sg[elem->in_num - 2].iov_len != sizeof(*scsi)) {
-+        status = VIRTIO_BLK_S_IOERR;
-+        goto fail;
++/*
++ * Bound on how deep ioq_submit() may recurse on a single LaioQueue via the
++ * ioq_submit -> qemu_laio_process_completions -> defer_call_end ->
++ * laio_deferred_fn -> ioq_submit cycle. The cycle terminates naturally
++ * when io_submit(2) returns asynchronously (O_DIRECT), but can grow
++ * without bound when submissions complete synchronously. On overflow
++ * the caller returns without submitting; the outermost
++ * qemu_laio_process_completions() has already scheduled s->completion_bh
++ * (via qemu_bh_schedule() at the top of that function), which resumes
++ * submission from the next event-loop dispatch.
++ */
++#define IOQ_SUBMIT_MAX_DEPTH 8
++
+ struct qemu_laiocb {
+     Coroutine *co;
+     LinuxAioState *ctx;
+@@ -61,6 +74,7 @@ typedef struct {
+     unsigned int in_queue;
+     unsigned int in_flight;
+     bool blocked;
++    unsigned int submit_depth;
+     QSIMPLEQ_HEAD(, qemu_laiocb) pending;
+ } LaioQueue;
+ 
+@@ -331,6 +345,7 @@ static void ioq_init(LaioQueue *io_q)
+     io_q->in_queue = 0;
+     io_q->in_flight = 0;
+     io_q->blocked = false;
++    io_q->submit_depth = 0;
+ }
+ 
+ static void ioq_submit(LinuxAioState *s)
+@@ -340,6 +355,11 @@ static void ioq_submit(LinuxAioState *s)
+     QEMU_UNINITIALIZED struct iocb *iocbs[MAX_EVENTS];
+     QSIMPLEQ_HEAD(, qemu_laiocb) completed;
+ 
++    if (s->io_q.submit_depth >= IOQ_SUBMIT_MAX_DEPTH) {
++        return;
 +    }
-     scsi = (void *)elem->in_sg[elem->in_num - 2].iov_base;
-     virtio_stl_p(vdev, &scsi->errors, 255);
-     status = VIRTIO_BLK_S_UNSUPP;
++    s->io_q.submit_depth++;
++
+     do {
+         if (s->io_q.in_flight >= MAX_EVENTS) {
+             break;
+@@ -385,6 +405,8 @@ static void ioq_submit(LinuxAioState *s)
+          * pended requests will be submitted from there.
+          */
+     }
++
++    s->io_q.submit_depth--;
+ }
+ 
+ static uint64_t laio_max_batch(LinuxAioState *s, uint64_t dev_max_batch)
 -- 
 2.47.3
 
