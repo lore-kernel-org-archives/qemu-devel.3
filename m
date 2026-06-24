@@ -4,103 +4,119 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05C00CDB47F
-	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 20:00:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19F4CCDB47F
+	for <qemu-devel@archiver.kernel.org>; Wed, 24 Jun 2026 20:01:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcTl8-0005ZA-Cb; Wed, 24 Jun 2026 15:59:42 -0400
+	id 1wcTle-0005m0-IJ; Wed, 24 Jun 2026 16:00:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alejandro.j.jimenez@oracle.com>)
- id 1wcTl2-0005XR-A5
- for qemu-devel@nongnu.org; Wed, 24 Jun 2026 15:59:36 -0400
-Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1wcTlb-0005lW-RE; Wed, 24 Jun 2026 16:00:11 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alejandro.j.jimenez@oracle.com>)
- id 1wcTl0-00084e-QB
- for qemu-devel@nongnu.org; Wed, 24 Jun 2026 15:59:36 -0400
-Received: from pps.filterd (m0246632.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65OEVFdp2562352; Wed, 24 Jun 2026 19:59:29 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
- :content-transfer-encoding:date:from:message-id:mime-version
- :subject:to; s=corp-2025-04-25; bh=mnJjVbHWDRE7lon15/r7YUtGbzFZo
- Mohrf1wfktidIQ=; b=RrF6Yj92CqmTxFVanLHDDIxNQdS3En6eAeiZoqpZ27mtz
- gWKCMh9s2405sZ4f25lkJelrE4KfSH/7FdCENAGxkPOmNFMF3bE4hnZJuCw+gZet
- qO1obpEuMGEmB7kau5EobgZfkSmjNRRwCi1pFtznVNnl8++hk23yJ7zx3OqQAQlO
- 4IyZbTo2pCmGSM8z0/ejZl1aAE+J40V25OW4mYo3WBIkrsdqXTs5FU9JL3drBjdW
- zXFTqSQiUW6Pl/0D9AVhiZLOmu2q+k6+nu23EkPZn3z2omY26A+VQzsYvOpycdOH
- SRu8fsiAZu9AT9tux/B0UQ8j/18CBF6L1dbHI63qA==
-Received: from iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com
- (iadpaimrmta01.appoci.oracle.com [130.35.100.223])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 4ewjfue1vt-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 24 Jun 2026 19:59:27 +0000 (GMT)
-Received: from pps.filterd
- (iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
- by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (8.18.1.7/8.18.1.7)
- with ESMTP id 65OJwbDX008967; Wed, 24 Jun 2026 19:59:26 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
- by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
- 4ewhas3kx3-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 24 Jun 2026 19:59:26 +0000 (GMT)
-Received: from iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com
- (iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.18.1.12/8.18.1.12) with ESMTP id 65OJuO8C004335;
- Wed, 24 Jun 2026 19:59:26 GMT
-Received: from alaljime-e5-test-20240903-1847.osdevelopmeniad.oraclevcn.com
- (alaljime-e5-test-20240903-1847.allregionaliads.osdevelopmeniad.oraclevcn.com
- [100.100.250.206])
- by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTP id
- 4ewhas3kwx-1; Wed, 24 Jun 2026 19:59:26 +0000 (GMT)
-From: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
-To: qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org, mst@redhat.com, sarunkod@amd.com,
- pbonzini@redhat.com, richard.henderson@linaro.org,
- alejandro.j.jimenez@oracle.com
-Subject: [PATCH v2 0/4] amd_iommu: Fix Coverity and endianness issues
-Date: Wed, 24 Jun 2026 19:59:21 +0000
-Message-ID: <20260624195925.1254462-1-alejandro.j.jimenez@oracle.com>
-X-Mailer: git-send-email 2.47.3
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1wcTla-0008NZ-24; Wed, 24 Jun 2026 16:00:11 -0400
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 65OJmMBx1996108; Wed, 24 Jun 2026 20:00:02 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=pp1; bh=tp4dRXM3N+W3L+j/k
+ FbUayQVnIAbx21aJY4VWa75ZF8=; b=Iu4lx57kWAtjJcTWKNTJv5qDTk6F1rqKk
+ qmVO3Vi0MguX3E0KBTSz/reS9xCDdL4lmhD+jHvZkIaPwWs5KvO4C0tiUIecpyne
+ XBZg42LsB4AdjDGsbqHAgW6uRCBxuHK59ajNNaVevIUVJ+TRsjZ9k9T0XBTYjjJM
+ 3Yi47onDgUxk2YFP+phHFJPp73Z7O31ePyFvx4XGf0tz99CkgXsH9HiWkOWEVVa+
+ dEAJQ8kyiTGRVddqhPeNGOfX68RACAp5VZwtA++FWNADqKEM2OJ4ozjzpMohSkev
+ YHJuj0IKmIUQbRl120Qb51MA4k+VNicIGgZsGN8HEkpbRiAgq7giA==
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4ewjk4p84r-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 24 Jun 2026 20:00:00 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 65OJo0BF029539;
+ Wed, 24 Jun 2026 19:59:59 GMT
+Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4ex7dgaa2q-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 24 Jun 2026 19:59:59 +0000 (GMT)
+Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com
+ [10.20.54.106])
+ by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 65OJxubm42270980
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 24 Jun 2026 19:59:56 GMT
+Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 2308320040;
+ Wed, 24 Jun 2026 19:59:56 +0000 (GMT)
+Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 33F402004D;
+ Wed, 24 Jun 2026 19:59:47 +0000 (GMT)
+Received: from li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com (unknown
+ [9.39.20.104]) by smtpav07.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Wed, 24 Jun 2026 19:59:46 +0000 (GMT)
+From: Aditya Gupta <adityag@linux.ibm.com>
+To: <qemu-devel@nongnu.org>, <qemu-ppc@nongnu.org>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Shivang Upadhyay <shivangu@linux.ibm.com>,
+ =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Cc: Sourabh Jain <sourabhjain@linux.ibm.com>,
+ Hari Bathini <hbathini@linux.ibm.com>, Nicholas Piggin <npiggin@gmail.com>,
+ Miles Glenn <milesg@linux.ibm.com>, Fabiano Rosas <farosas@suse.de>,
+ Laurent Vivier <lvivier@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, devel@lists.libvirt.org,
+ Misbah Anjum N <misanjum@linux.ibm.com>,
+ Anushree Mathur <anushree.mathur@linux.ibm.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ kvm@vger.kernel.org, Gautam Menghani <gautam@linux.ibm.com>,
+ Chinmay Rath <rathc@linux.ibm.com>
+Subject: [PATCH v2 2/8] tests/qtest/pnv_spi: Test Power11 PNV_SPI
+Date: Thu, 25 Jun 2026 01:29:18 +0530
+Message-ID: <20260624195924.1422821-3-adityag@linux.ibm.com>
+X-Mailer: git-send-email 2.54.0
+In-Reply-To: <20260624195924.1422821-1-adityag@linux.ibm.com>
+References: <20260624195924.1422821-1-adityag@linux.ibm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Authority-Analysis: v=2.4 cv=Oph/DS/t c=1 sm=1 tr=0 ts=6a3c3741 cx=c_pps
+ a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
+ a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
+ a=U7nrCbtTmkRpXpFmAIza:22 a=VnNF1IyMAAAA:8 a=gL735G7rtJRJJwX7cZEA:9
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjI0MDE2NiBTYWx0ZWRfX+ikg8SP6vMZS
+ fF1YcYjuZzPm6rTuktOo1tBdlheZPp/Fve9tlsiZ8Qd2bDY+b51Mjp2ccMMCsrM5EFe/iempxmT
+ XVGHN1CDcytAcKHDGqD9WIGQBo7Jy8B3wIWZEeRhg19YC697oSjOGnA5Wr0y4jqqH1P0LoSLUBj
+ d62x6Q++5Fk1ouaFAqloea5GR/HiqdmIEvLqBU3gw94ij9iTVYdw+cxetbU5FOFHu79+M8Mfe2Q
+ udRz5D4dNpvFxDKV1UFLGrDhQNMUbtxCD8EjY6cHEtH+kSdOtSs8X4QvJtao3tdlrlzBLBWawJc
+ Ya/3qNUoL9Usib7lmvE6AiGgZFBu/3moOg8m0pbcnd63Sei+oEufIVM6lni6M59K6ghq1O0cLc0
+ Y1mJ36EGtHj61xOZGRQpQPZxdXk0mQ==
+X-Proofpoint-GUID: GtFDswCqYbLVY19alg42B8Lp3vDj5-cH
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjI0MDE2NiBTYWx0ZWRfXwiYCs2pbpJii
+ VuQzTyPTq89U6tGF9atNAyPMGHOqXNtb+GAcFOCdixqYaFk2S/aB+LjIUKG4CsEYPtzm/ye7RcA
+ 9wrVl9YyFMzLrdFItBHAE1yTaJAz0i4=
+X-Proofpoint-ORIG-GUID: NVOCfKR053570ktUQUhC7RLYxF1lZeru
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
  definitions=2026-06-24_04,2026-06-24_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 phishscore=0
- adultscore=0 malwarescore=0 mlxlogscore=603 mlxscore=0 suspectscore=0
- bulkscore=0 spamscore=0 lowpriorityscore=0 classifier=spam adjust=0
- reason=mlx scancount=1 engine=8.19.0-2606160000 definitions=main-2606240167
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjI0MDE2NyBTYWx0ZWRfX/lBnWeO2scrK
- Yle2N6Eo+N6UcPxJmcOoNC+4azADiiZzFWgSBwNqez1BlpDpYjIxdFsGvwDz4C1pII+SdeYwACv
- xugKjubyEIGg5MCSJnGUbdGsebQpuK4Svuxx9TxTO3VEHO9vVHxh
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjI0MDE2NyBTYWx0ZWRfXzWPXJWrSMfM+
- YSmNXdTlSWxf7W4FfGFwRZROypHWtNH+oWqxwAmXtFRazTfJ+1nGL+SESvM2B0Le+BmTSLpn5yD
- hYTNQsSDW83NLwcu+C5+UG46K97s7uU2Z44YTuyZ7KUwKaGrO9ciN1AEbcUhsPFHCEJP5u58VqJ
- lVeoRIP7ejifyQIJrprUlTjoNVgjnCsUzCGhewQ+zUNCctuAedwkkP8wOT4shkA/6Et9dcf8qq4
- Pvh89jjEG5T+5nzMqHvql48t0DM+UjSsrzoApeQJuhZLBAK5UjawOe+RQda82w6aDDfL62nVbUM
- 0xD0kHJY6RGtImoSVEO+sWl63XHuSQwBTkxJau0szo7/iYP4V0RYIFkGR1QDNWSWFEa2ozNxmg4
- /ZLPiVtsIMMFKetjXBHI93CnDZvmjqFBLfP+BdQdUbwfLTlV3ik=
-X-Proofpoint-ORIG-GUID: GRYCitEm9vWc0oSLrXfocwRangouxklf
-X-Proofpoint-GUID: GRYCitEm9vWc0oSLrXfocwRangouxklf
-X-Authority-Analysis: v=2.4 cv=FtI1OWrq c=1 sm=1 tr=0 ts=6a3c371f b=1 cx=c_pps
- a=zPCbziy225d3KhSqZt3L1A==:117
- a=zPCbziy225d3KhSqZt3L1A==:17
- a=FelO9ux0wxsA:10 a=VkNPw1HP01LnGYTKEx00:22 a=jiCTI4zE5U7BLdzWsZGv:22
- a=3I1J8UUJPc9JN9BFgKH3:22 a=VwQbUJbxAAAA:8 a=yPCof4ZbAAAA:8
- a=ZDHTvDlGPrLvpomD27cA:9 a=5yU3S35YU4bGjq-dph-N:22 a=Bho9c0fBagfJEIQBS7DQ:22
- cc=ntf awl=host:12312
-Received-SPF: pass client-ip=205.220.177.32;
- envelope-from=alejandro.j.jimenez@oracle.com; helo=mx0b-00069f02.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 lowpriorityscore=0 bulkscore=0 spamscore=0 suspectscore=0
+ malwarescore=0 adultscore=0 classifier=typeunknown authscore=0 authtc=
+ authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.22.0-2606150000 definitions=main-2606240166
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=adityag@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,38 +132,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This series fixes the AMD vIOMMU issues reported from the 11.1 pull request
-Coverity scan, plus follow-up review comments pointing out bitfield usage and
-big-endian hosts compatibility concerns.
+Currently pnv-spi-seeprom-test was hardcoded to test the 4th chip in
+pnv_chips (power10 as of now).
 
-Although patches 3 and 4 fix correctness issues in big-endian hosts, these are
-longstanding portability bugs rather than recent regressions, so I have not CC'd
-qemu-stable on them.
+This requires ensuring to update the index when removing/adding entries
+in pnv_chips, such as when Power8E or Power11 gets removed/added in
+future commits.
 
-Thank you,
-Alejandro
+Iterate over all the chips instead, similar to other tests in
+pnv-xscom-test.c and pnv-host-i2c-test.c, but skip older chips, since
+TYPE_PNV_SPI only exists from Power10 onwards, hence skip older machines
 
-Changes since v1:
-https://lore.kernel.org/all/20260623005813.984238-1-alejandro.j.jimenez@oracle.com/
-- Added Peter's Reviewed-by to patch 1.
-- Dropped the standalone "Fully initialize XT interrupt message state" patch.
-  Patch 2 now fixes CID 1660056 and removes the XT bitfield union.
-- Added two patches to remove IRTE bitfield decoding and fix command buffer
-  endianness handling.
+Tests all the pnv_chips similar to other qtests
 
-Alejandro Jimenez (4):
-  amd_iommu: Return int from page walk status helpers
-  amd_iommu: Decode XT interrupt control register without bitfields
-  amd_iommu: Decode IRTEs without bitfields
-  amd_iommu: Fix endianness handling for command buffer entries
+Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
+---
+ tests/qtest/pnv-spi-seeprom-test.c | 20 ++++++++++++++------
+ 1 file changed, 14 insertions(+), 6 deletions(-)
 
- hw/i386/amd_iommu.c | 164 +++++++++++++++++++++++++++++++-------------
- hw/i386/amd_iommu.h |  63 -----------------
- 2 files changed, 118 insertions(+), 109 deletions(-)
-
-
-base-commit: b83371668192a705b878e909c5ae9c1233cbd5fb
+diff --git a/tests/qtest/pnv-spi-seeprom-test.c b/tests/qtest/pnv-spi-seeprom-test.c
+index 44e0b92730b4..1a78e8d966a5 100644
+--- a/tests/qtest/pnv-spi-seeprom-test.c
++++ b/tests/qtest/pnv-spi-seeprom-test.c
+@@ -77,6 +77,7 @@ static void test_spi_seeprom(const void *data)
+     const PnvChip *chip = data;
+     QTestState *qts = NULL;
+     g_autofree char *tmp_path = NULL;
++    const char *machine = "powernv10";
+     int ret;
+     int fd;
+ 
+@@ -87,11 +88,11 @@ static void test_spi_seeprom(const void *data)
+     g_assert(ret == 0);
+     close(fd);
+ 
+-    qts = qtest_initf("-machine powernv10 -smp 2,cores=2,"
++    qts = qtest_initf("-machine %s -smp 2,cores=2,"
+                       "threads=1 -accel tcg,thread=single -nographic "
+                       "-blockdev node-name=pib_spic2,driver=file,"
+                       "filename=%s -device 25csm04,bus=chip0.spi.2,cs=0,"
+-                      "drive=pib_spic2", tmp_path);
++                      "drive=pib_spic2", machine, tmp_path);
+     spi_seeprom_transaction(qts, chip);
+     qtest_quit(qts);
+     unlink(tmp_path);
+@@ -100,9 +101,16 @@ static void test_spi_seeprom(const void *data)
+ int main(int argc, char **argv)
+ {
+     g_test_init(&argc, &argv, NULL);
+-    char *tname = g_strdup_printf("pnv-xscom/spi-seeprom/%s",
+-            pnv_chips[3].cpu_model);
+-    qtest_add_data_func(tname, &pnv_chips[3], test_spi_seeprom);
+-    g_free(tname);
++
++    for (int i = 0; i < ARRAY_SIZE(pnv_chips); i++) {
++        /* TYPE_PNV_SPI is not instantiated for older Power8/9 machines */
++        if (pnv_chips[i].chip_type < PNV_CHIP_POWER10) {
++            continue;
++        }
++
++        g_autofree char *tname = g_strdup_printf("pnv-xscom/spi-seeprom/%s",
++                pnv_chips[i].cpu_model);
++        qtest_add_data_func(tname, &pnv_chips[i], test_spi_seeprom);
++    }
+     return g_test_run();
+ }
 -- 
-2.47.3
+2.54.0
 
 
