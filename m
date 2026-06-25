@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E607ACDE00C
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jun 2026 22:38:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E721CDE00E
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jun 2026 22:38:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcsfn-0005Ej-Nq; Thu, 25 Jun 2026 18:35:51 -0400
+	id 1wcsfn-0005Er-UZ; Thu, 25 Jun 2026 18:35:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wcsf1-0004ap-SI
- for qemu-devel@nongnu.org; Thu, 25 Jun 2026 18:35:08 -0400
-Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
+ id 1wcsf5-0004ax-5Y
+ for qemu-devel@nongnu.org; Thu, 25 Jun 2026 18:35:14 -0400
+Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wcsev-0002L9-Ne
- for qemu-devel@nongnu.org; Thu, 25 Jun 2026 18:35:01 -0400
-Received: by mail-pf1-x436.google.com with SMTP id
- d2e1a72fcca58-84594492c26so200536b3a.2
- for <qemu-devel@nongnu.org>; Thu, 25 Jun 2026 15:33:18 -0700 (PDT)
+ id 1wcsev-0002Km-Nf
+ for qemu-devel@nongnu.org; Thu, 25 Jun 2026 18:35:03 -0400
+Received: by mail-pf1-x42b.google.com with SMTP id
+ d2e1a72fcca58-845a3c05e40so144415b3a.1
+ for <qemu-devel@nongnu.org>; Thu, 25 Jun 2026 15:32:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1782426732; x=1783031532; darn=nongnu.org;
+ d=linaro.org; s=google; t=1782426730; x=1783031530; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=N2qvPCvAlb5yeTP6nFMpGkPdpxWzC532ymb18S8maJ0=;
- b=amicl6Mp//DbhzMaM9QZdteeNCheqfKtDfRX80RRUn6V8NpOZIz0Ay7qKM9az+81+g
- nCv4wh+AkF9ItUtHLnYugjewuuQRH13HLsmUBr5dxeD8xB2YXZ06jcywabXeuaBCbYeh
- EvYX35rgapQx0zWkpdNjsACM+AVCDOy8rt129FRl1+HBwxk8TlhHEuC/WKcylQ6MpF2N
- dNh7X5xFJ+ReQ7UgyuGBgD+QcmSI0GcuF5S7IDhsFM6wtXWfYkjQyieDwPx/6fGSs+40
- uCtIVoWWK2oyAAMyu4dIj4G+eq7C91Lt4gtoDVoh2v5udrxMUDL1KcF/46px+oa1HUDO
- Pqvw==
+ bh=R4A9Ap27XbbVolHxaR32K8uSrPV73tTCewHI2hJj05w=;
+ b=ey/bi03BBjbEcpVJa5QfMrux8Xpn2ZRCX8zbo0JQAZhIKfQQGX+zWjFG0rBiLUME/N
+ RjnRcaFy/LUz3+EJ1bqmID3+2IVlxRVkkOWPYCL+3HNWRkWhhazcEByyqRXhSK2Xdb+7
+ yyqDfQfF9PVVrIqEUAStoPcTzvHL3hn+H3rqISM2+qlEDLOs6fLEOSMLwAeWTWb43+EN
+ 8swwJwyrd9u+4LFGaGWguJwdXaCjlueM/Xgx0VwmLhIjjS+U+zvq34OFfMqgKFeW3JKu
+ guknr1ZRPON6omUN+lZevSorEAN3XHfYddOQqWSpZ74+kYUe3T/+HuPsDduzu1K4cbLF
+ qgbQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782426732; x=1783031532;
+ d=1e100.net; s=20251104; t=1782426730; x=1783031530;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=N2qvPCvAlb5yeTP6nFMpGkPdpxWzC532ymb18S8maJ0=;
- b=UpYAvdV4U4E/iX227nFSAtG9NvvwnC54vNjem2yTlRc9hjjWn2WvIUp1Z7nBcvf84D
- +bakHXZdJSWZG0yLoHk6Jxz7D0erq7w5nsEzTH2MKv+kafJAtDPXiKt7W5lG7mRa9ZHf
- 885XZG0HYUm/XKt2/3VbSc5C8kDGS1g+1ROJ1k6JSNF4WvV/Dd7OucjJGu+41HBNELtI
- KiwEgrZF6cm8NHRUGbhjKPc3dkU/DUBlDbHoyOOQ3QRqA/b4OYFG5KgE2gXBJHJPIutL
- L0WyXVPoHQorCmJ+UjlO6JpkBVCFBmemXPO6lGl1quGhPmHXc6/QZS44yCAmzw9YBPm8
- GZ5A==
-X-Gm-Message-State: AOJu0YwpYIhE5XcBdJWCHDBpGMsLfUZtUWu3sWgokV25frKzILV/L2nV
- NSNSppSBvnvbamJZ6wBzwI/zhvaFDP1mLyVyRePaSb077pDEsCMrcTg/eoZlmGdukzztAvmB/HJ
- Ls2B5
-X-Gm-Gg: AfdE7ckIvCfHlPTTeNkTMeYHJDcCITh01oFuPs6tfrrUv6kDN6x0SH/tqiv1ffaDi+L
- W7wEYVp+jFlCgDlle4j+q2BNsJKqEv+VfPaNlUJR/E302Aq90utLSdgmbuDVZLCCC9PU7iSkyex
- X2HFfaIgkpBLIP1FTLoJrAgkUyReEN/STKVQRl3PlxWBjPgtmE6SJFghJvn3BWZyyQOtl1ty+Sv
- WYH+A8By/I0N8ZnxQqk4uwl36Ub2G54aJpnISb744woHsDz8Kw94hQnAqfpYERNzEZJbwtKCewX
- FY57qukT0zv+Y4MdZCkWBy6HOxV8uG2/bT5x0unOd5jyq5X4Qqtci8gfLwSyoZdHCvv0C74WsRp
- qxP2Qfi0pd7DQtuf9HhU7xK1LUEZhdpTiq32NOD1dDZo0rjfXVfnPe+IavF6FlTNktWygf3yfY4
- gCVXMcgMaXoiu4Zz92ma6jm+FNM3T2CxoCx08wJQUMWcdv15S6Dw==
-X-Received: by 2002:a05:6a00:2344:b0:82f:3a1e:5618 with SMTP id
- d2e1a72fcca58-845b3ab5607mr5422904b3a.22.1782426732132; 
- Thu, 25 Jun 2026 15:32:12 -0700 (PDT)
+ bh=R4A9Ap27XbbVolHxaR32K8uSrPV73tTCewHI2hJj05w=;
+ b=n95twRr2ITaEV34jUjytJAk+j7LqZjoLonSAnJlrVI2HUqTTxa7AH09yu0V7s9Yvhn
+ 0Y4FtppQtNSTyYvMilbks/DO8yXz2Ol3pkwcwbC9B0s5q33kDiDq+LB7yEw5o0VbOjRo
+ 0Z9KUijCrPphR23B3Cj4KXGJBsPBlx6u5gbdjIznPNVyG6pmSokaYj174mCsZCP5SEA6
+ dTtVQxk/2QA9rs+uUkB1XrLHTeM/bpmrnFc1PTzGjFAkZI0Me3QYANMfAkLeQtXrng/d
+ e3IOUahfA7TU2IqSKfybJGLjLd+gc3qcsn9i0M28RZh9+Xdgg4jGrPbRT7D7g/5dwdoO
+ rX5g==
+X-Gm-Message-State: AOJu0YwWASsFY6qXfK4WyhnfLgd21H0jYhrzxMp2altjMr0VvverjI8m
+ YIop+gtYwF6QnV80ZaFK79/ISGKLaqkcM3vQjSky+KelzfC/Fp+HzAaRrIIdP0jAU1PXucVlBmO
+ 524Bp
+X-Gm-Gg: AfdE7cnws6n4yfrIcVa/w5u2FVmgShL7iNWba14/gk6rG9Px3rzU+vqChohkH8o0yjO
+ AglNt2xDZsSUG0f4l05/dVLwK3Y/Lx50hxgzz7Sh74XedFt/2cKki8iyBNUFGMC0HaGty0ipB5J
+ tFd/me/gv8fHFhFgxCoRcd/YwR5SnvKLFBLgLU+2P0sbQILHV5nk4WMJwpSJQPbICmHBQeY2yrn
+ BWg5HMyevKGR4eDurrEtW6Gc4netas2y0o/Ne5KsTfEvozHTZUH2lqhRDX01VODZRundT+w+6/k
+ e2VW25NuAofVc4mcjBjXsEzBKyzAptBDFYysx9L4IVfwemCLkYBC/3Lm05zQpLGJpSG7ESuhRDv
+ jysPHJ4kZlr/y/5TbV0xyDuVc0WEhm6mpJGfZDASVugx9ejqzv9/zJk+RueEvX/wiYdLdB/shC/
+ ngYXK7wJiLuRlBdODi5ztimJCozwn0GJKUXHWuT+bNFNLjL8M5eT7pdxMrWQjP
+X-Received: by 2002:a05:6a00:ccc:b0:845:3fea:965 with SMTP id
+ d2e1a72fcca58-845b3b71200mr5198212b3a.23.1782426730200; 
+ Thu, 25 Jun 2026 15:32:10 -0700 (PDT)
 Received: from stoup.. (174-21-129-215.tukw.qwest.net. [174.21.129.215])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-845a412e5e9sm5450139b3a.54.2026.06.25.15.32.11
+ d2e1a72fcca58-845a412e5e9sm5450139b3a.54.2026.06.25.15.32.09
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 25 Jun 2026 15:32:11 -0700 (PDT)
+ Thu, 25 Jun 2026 15:32:09 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org
-Subject: [PATCH 15/15] target/arm: Enable FEAT_SME_MOP4 for -cpu max
-Date: Thu, 25 Jun 2026 15:32:00 -0700
-Message-ID: <20260625223200.763198-16-richard.henderson@linaro.org>
+Subject: [PATCH 12/15] target/arm: Implement UMOP4[AS] (2-way)
+Date: Thu, 25 Jun 2026 15:31:57 -0700
+Message-ID: <20260625223200.763198-13-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260625223200.763198-1-richard.henderson@linaro.org>
 References: <20260625223200.763198-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x436.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,47 +102,67 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- linux-user/aarch64/elfload.c  | 1 +
- target/arm/tcg/cpu64.c        | 1 +
- docs/system/arm/emulation.rst | 1 +
- 3 files changed, 3 insertions(+)
+ target/arm/tcg/helper-sme-defs.h | 3 +++
+ target/arm/tcg/sme_helper.c      | 3 +++
+ target/arm/tcg/translate-sme.c   | 3 +++
+ target/arm/tcg/sme.decode        | 2 ++
+ 4 files changed, 11 insertions(+)
 
-diff --git a/linux-user/aarch64/elfload.c b/linux-user/aarch64/elfload.c
-index 42aeb29306..5c5fd17d68 100644
---- a/linux-user/aarch64/elfload.c
-+++ b/linux-user/aarch64/elfload.c
-@@ -174,6 +174,7 @@ abi_ulong get_elf_hwcap(CPUState *cs)
-     GET_FEATURE_ID(aa64_f8mm8, ARM_HWCAP_A64_F8MM8);
-     GET_FEATURE_ID(aa64_f8mm4, ARM_HWCAP_A64_F8MM4);
-     GET_FEATURE_ID(aa64_ssve_aes, ARM_HWCAP_A64_SME_AES);
-+    GET_FEATURE_ID(aa64_sme_mop4, ARM_HWCAP_A64_SME_SMOP4);
+diff --git a/target/arm/tcg/helper-sme-defs.h b/target/arm/tcg/helper-sme-defs.h
+index 3da40d9f33..38b23690d1 100644
+--- a/target/arm/tcg/helper-sme-defs.h
++++ b/target/arm/tcg/helper-sme-defs.h
+@@ -382,6 +382,9 @@ DEF_HELPER_FLAGS_5(sme_ah_fmop4s_sh, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, env,
  
-     return hwcaps;
- }
-diff --git a/target/arm/tcg/cpu64.c b/target/arm/tcg/cpu64.c
-index 42bff58e76..da2940a41e 100644
---- a/target/arm/tcg/cpu64.c
-+++ b/target/arm/tcg/cpu64.c
-@@ -1383,6 +1383,7 @@ void aarch64_max_tcg_initfn(Object *obj)
-     SET_IDREG(isar, ID_AA64DFR0, t);
+ DEF_HELPER_FLAGS_4(sme_smop4a_sh, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
+ DEF_HELPER_FLAGS_4(sme_smop4s_sh, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
++DEF_HELPER_FLAGS_4(sme_umop4a_sh, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
++DEF_HELPER_FLAGS_4(sme_umop4s_sh, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
++
+ DEF_HELPER_FLAGS_4(sme_smop4a_sb, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
+ DEF_HELPER_FLAGS_4(sme_smop4s_sb, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
+ DEF_HELPER_FLAGS_4(sme_smop4a_dh, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
+diff --git a/target/arm/tcg/sme_helper.c b/target/arm/tcg/sme_helper.c
+index 5a9e3b8398..fd085850ed 100644
+--- a/target/arm/tcg/sme_helper.c
++++ b/target/arm/tcg/sme_helper.c
+@@ -2953,6 +2953,9 @@ void HELPER(sme_##NAME)(void *vza, void *vzn, void *vzm, uint32_t desc) \
+ IMOP4_2WAY(smop4a_sh, +, int32_t, int16_t, int16_t)
+ IMOP4_2WAY(smop4s_sh, -, int32_t, int16_t, int16_t)
  
-     t = GET_IDREG(isar, ID_AA64SMFR0);
-+    t = FIELD_DP64(t, ID_AA64SMFR0, SMOP4, 1);    /* FEAT_SME_MOP4 */
-     t = FIELD_DP64(t, ID_AA64SMFR0, AES, 1);      /* FEAT_SSVE_AES */
-     t = FIELD_DP64(t, ID_AA64SMFR0, SF8DP2, 1);   /* FEAT_SSVE_FP8DOT2 */
-     t = FIELD_DP64(t, ID_AA64SMFR0, SF8DP4, 1);   /* FEAT_SSVE_FP8DOT4 */
-diff --git a/docs/system/arm/emulation.rst b/docs/system/arm/emulation.rst
-index 7b85ec6146..3d711d76b7 100644
---- a/docs/system/arm/emulation.rst
-+++ b/docs/system/arm/emulation.rst
-@@ -173,6 +173,7 @@ the following architecture extensions:
- - FEAT_SME_F8F32 (SME2 ZA-targeting FP8 multiply-accumulate, dot product, and outer product to single-precision instructions)
- - FEAT_SME_I16I64 (16-bit to 64-bit integer widening outer product instructions)
- - FEAT_SME_LUTv2 (Lookup table instructions with 4-bit indices and 8-bit elements)
-+- FEAT_SME_MOP4 (Quarter-tile outer product instructions)
- - FEAT_SSVE_AES (Streaming SVE Mode Advanced Encryption Standard and 128-bit polynomial multiply long instructions)
- - FEAT_SSVE_FP8DOT2 (SVE2 FP8 2-way dot product to half-precision instructions in Streaming SVE mode)
- - FEAT_SSVE_FP8DOT4 (SVE2 FP8 4-way dot product to single-precision instructions in Streaming SVE mode)
++IMOP4_2WAY(umop4a_sh, +, int32_t, uint16_t, uint16_t)
++IMOP4_2WAY(umop4s_sh, -, int32_t, uint16_t, uint16_t)
++
+ #undef IMOP4_2WAY
+ 
+ #define IMOP4_4WAY(NAME, OP, TYPED, TYPEN, TYPEM)                       \
+diff --git a/target/arm/tcg/translate-sme.c b/target/arm/tcg/translate-sme.c
+index fce07b2565..a8fcb0630d 100644
+--- a/target/arm/tcg/translate-sme.c
++++ b/target/arm/tcg/translate-sme.c
+@@ -2110,6 +2110,9 @@ static bool do_mop4_int(DisasContext *s, arg_mop4 *a, MemOp esz,
+ 
+ TRANS_FEAT(SMOP4_sh, aa64_sme_mop4, do_mop4_int, a, MO_32,
+            a->s ? gen_helper_sme_smop4s_sh : gen_helper_sme_smop4a_sh)
++TRANS_FEAT(UMOP4_sh, aa64_sme_mop4, do_mop4_int, a, MO_32,
++           a->s ? gen_helper_sme_umop4s_sh : gen_helper_sme_umop4a_sh)
++
+ TRANS_FEAT(SMOP4_sb, aa64_sme_mop4, do_mop4_int, a, MO_32,
+            a->s ? gen_helper_sme_smop4s_sb : gen_helper_sme_smop4a_sb)
+ TRANS_FEAT(SMOP4_dh, aa64_sme_mop4_i16i64, do_mop4_int, a, MO_64,
+diff --git a/target/arm/tcg/sme.decode b/target/arm/tcg/sme.decode
+index e3ba15bad8..9c761f1934 100644
+--- a/target/arm/tcg/sme.decode
++++ b/target/arm/tcg/sme.decode
+@@ -1118,6 +1118,8 @@ FMOP4A_sb       1000 0000 011. ...0 0000 00.. ..00 00..         @mop4_o2_s0
+ FMOP4A_hb       1000 0000 001. ...0 0000 00.. ..00 100.         @mop4_o1_s0
+ 
+ SMOP4_sh        1000 0000 000. ...0 1000 00.. ..0. 10..         @mop4_o2
++UMOP4_sh        1000 0001 000. ...0 1000 00.. ..0. 10..         @mop4_o2
++
+ SMOP4_sb        1000 0000 000. ...0 1000 00.. ..0. 00..         @mop4_o2
+ SMOP4_dh        1010 0000 110. ...0 0000 00.. ..0. 1...         @mop4_o3
+ 
 -- 
 2.43.0
 
