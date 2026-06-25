@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81A2CCDB466
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6DC1CDE002
 	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jun 2026 08:10:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcf9M-0001i5-IO; Thu, 25 Jun 2026 04:09:28 -0400
+	id 1wcf9M-0001j7-Q1; Thu, 25 Jun 2026 04:09:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alexander@mihalicyn.com>)
- id 1wcf9I-0001gv-2b
- for qemu-devel@nongnu.org; Thu, 25 Jun 2026 04:09:24 -0400
-Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
+ id 1wcf9D-0001eC-UV
+ for qemu-devel@nongnu.org; Thu, 25 Jun 2026 04:09:20 -0400
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alexander@mihalicyn.com>)
- id 1wcf9G-0007v3-Ho
- for qemu-devel@nongnu.org; Thu, 25 Jun 2026 04:09:23 -0400
-Received: by mail-wr1-x429.google.com with SMTP id
- ffacd0b85a97d-46cbe01d4b6so947861f8f.2
- for <qemu-devel@nongnu.org>; Thu, 25 Jun 2026 01:09:22 -0700 (PDT)
+ id 1wcf9A-0007t1-Tw
+ for qemu-devel@nongnu.org; Thu, 25 Jun 2026 04:09:19 -0400
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-4926046fbc5so7635285e9.0
+ for <qemu-devel@nongnu.org>; Thu, 25 Jun 2026 01:09:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=mihalicyn.com; s=mihalicyn; t=1782374961; x=1782979761; darn=nongnu.org;
+ d=mihalicyn.com; s=mihalicyn; t=1782374954; x=1782979754; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=3oLkQQvmPQBpNbaPrb0k9ibPB5UgzM32tGf27u8O5Wg=;
- b=YN5eHOKs0S6h0iBxUP8EFtMNbi+gIOmWwIaZDxAPsAcBR616sbk37dVD6GPduHS2Sk
- rRuN0/n90IV1WbHNisJd27cGSMhHUgyCO894odOrd9qme06IdhBhUKz/K1l1ddquliR5
- 1+tldEyGDlVMS8VOfgxrPNnf7mhJ7PV4YxkeE=
+ bh=bLJxlS0/VNCvUknk3SrcUo8jmkLA2OeYVti9LC75F2g=;
+ b=O4tYK74UEaI/mlAB/dTFVVVzAvl7l9EgMZuSI/SK4jWFT9HMJQVy9HqSx0cO0VBaEd
+ LJyHJAvQKxI13KC3NlfPz/xSLS0uBK6TL5MstjMkC0Xq3HSAIUIk52NkIpXG8RR5Imdo
+ UGCZHUdIAQEOGVzRJF7th5eDzZLu0RyavtjYw=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782374961; x=1782979761;
+ d=1e100.net; s=20251104; t=1782374954; x=1782979754;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=3oLkQQvmPQBpNbaPrb0k9ibPB5UgzM32tGf27u8O5Wg=;
- b=GmvtAfscz6MW2Xgk1S7Q8WW3roh//qqZ0Y6M/D9nwbvvn+10lZ8qcCBZYrtH6gW9Aq
- SVr0Jkzcm3GyOnMUkjgkmxA+Zzqyw3b6W77HpSV4EUQr/5OdxM4TodxUoqcBFZMvy/bP
- y/Jp6ZjUcjrHJ5/jka6MrJxUG7cPnEsqq080EsGCkedPuvueZ4i0LVlRAh/8R5cpBkK2
- F9f156Yz5ehZ+hFqngzmxdWAwSxPJY1pzMlib60bdgPdk5/vcZ2ltzdHGX6g/EB1ig8N
- za3lfhsbaEn0a4Y/4a0qmpo8ejNlygQRhT+EPpfHC6uKSjKOLyQtO4TWqwkb/GXkCYB0
- obDw==
-X-Gm-Message-State: AOJu0YwyIucE6YW6lS3tj31OFbmUSHypJtZ/gZNlZ5GK956GJ69AlZbN
- jpqEZ7EW0H0RIUz1mgKsNHc/tUU1lPEohy6qpvuqlqXR/5v9wEUslfyFRVYsQHqPOCAaDRzagPJ
- yPr1wXWwDJQ==
-X-Gm-Gg: AfdE7clbDAD8Plq9DZQB6OUSyHgjrOKV9fyE5t5HqEKSjXblu3KNIezZKzZqle/jLtY
- /PGsVwathEBInDEPovkmQtm27aTBbJgLk05zb/lBIBXwEGEOJRYtVvWVHNKskEAJWffCYZsH8La
- GnSGndkPu/P+P1R3aAn8ob12oyl2U06+i+uPlMJau7mnTDZVXYsUixGpo/hRxm1UgD2rapublTu
- 5VoQhfpUqHkMNFhhlRBvnGc47JRk/7E8SWIGlsvTgbeVlj5ITYAyQyOTNSygNTazr0EoDDVf6Sn
- FhcBcCvK32pvqZTnNlMMip364SfVU2GXhwgO5EGTs1b5O1Brm2CD1kWPCDS761nBMZvUDW3zCf2
- y8s0ZSUaXhPVteLsrwXLy0FXMVYhsQ0BBMUgwlLn2h3c5pgdz3ZYuIiH4mHi6/HQNsCn0DvKhRu
- As6vdSogHlifxOVt+ktPjorbvIzt+rnoFnXbvEl0AAezURFunglYCTV5J6DFULlM3J555QJQ/5w
- wJPMNn/E0FdRrS4MLUCiHo=
-X-Received: by 2002:a05:6000:1841:b0:451:3b12:9bca with SMTP id
- ffacd0b85a97d-46dc20763ecmr2130614f8f.25.1782374960701; 
- Thu, 25 Jun 2026 01:09:20 -0700 (PDT)
+ bh=bLJxlS0/VNCvUknk3SrcUo8jmkLA2OeYVti9LC75F2g=;
+ b=N7wcDMAprqDqnmndflEBb75wGf8aLFk6LnjbTo/U49FFtdZvMAlo3rW4Y0xcLqkuRU
+ PuwSRVL6mvVWxAZQpmW8jPTip5GfflZLraL5J87YKBLQFscq2Rdg9mxEk/xaGxSfgY49
+ UU9LsoQb2p5F/tZe50kFwMqaOoktE2ghkTXYdM20NYgF8xIaH9XXEJzbys8YUxMqEN81
+ OFUY9xGXVMOIDBM9w2Tl+P59+HGWXWefCvJzLKfuzyG4mgFlz1G2HEX+IKG7abgW4NrK
+ PK59savN05x7nvVMPZK/+P+0VE4ETqH2Q0hUMP8jZ4Ubg8q7wjvnP0nvEJsxDc15sPmm
+ WCNw==
+X-Gm-Message-State: AOJu0Yyogv/kDA7V+DRF8mLRzm904hEcC00YVuOJRsJOGmAY2B9MhJrv
+ 5dP32rIVbIUxPteuiFznyZqMv6wNUOqRZiLbhsZnc4+704ujluPh7CpVZWpgc3TjaU27uEeIFc6
+ 1BVNYQSoD9A==
+X-Gm-Gg: AfdE7cmPb0LfDs3LZjYD/R+/RU4H6H+C0ojx5wBPnx/w9h1mPVmX76t7LvsrjzGXk6U
+ NqjP7EHQLts5I4CJFHRKnid02r+8IfEiCQqKV+T3Kn0HX0Nb7iJX4RUq2tv82S78dkUzGAB3CW1
+ Lz8EtWIZe8kE6L/h6AK0T41r4/e8MURKxr4D9ParQew/rmNnk0aP2an1rglQPfcHIrFL/xH+WEq
+ 7SyaWlQKwYKmU/3W2MsKKqbJN1V8W7KOs8UUD8nomANJ1YGLG6I/vPOuCNpyn5+rNN1/9KoD4zm
+ yuIA30FyQENheWful08/in22kzcezawoneXAUU+RwdF5lSVok0fh8oI1/5MZOBJLKHoQj5MV3xn
+ LcD6kq8lj2p6WA6lAGyDP/9wN/B1WnUzsktKJTFrB4MkeC+ZyagRG0GScdJwvuO6vnEL2Pfef6a
+ 2NxGapl/ar9ncniJFJXoXqSHNeh5dtdm9ww6lOKsr9qlY12rJQVNJWx8u7++jd6KQKikqb4QL4Z
+ FR0t0xKbE2y
+X-Received: by 2002:a05:600c:4fc2:b0:48a:53cb:8604 with SMTP id
+ 5b1f17b1804b1-49266423f79mr16515045e9.14.1782374954472; 
+ Thu, 25 Jun 2026 01:09:14 -0700 (PDT)
 Received: from alex-laptop.lan
  (p200300cf574a720090e98b0d86cf6583.dip0.t-ipconnect.de.
  [2003:cf:574a:7200:90e9:8b0d:86cf:6583])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-46dcbac0c9dsm3086950f8f.19.2026.06.25.01.09.19
+ ffacd0b85a97d-46dcbac0c9dsm3086950f8f.19.2026.06.25.01.09.13
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 25 Jun 2026 01:09:19 -0700 (PDT)
+ Thu, 25 Jun 2026 01:09:13 -0700 (PDT)
 From: Alexander Mikhalitsyn <alexander@mihalicyn.com>
 To: qemu-devel@nongnu.org
 Cc: "Michael S. Tsirkin" <mst@redhat.com>,
@@ -75,17 +75,17 @@ Cc: "Michael S. Tsirkin" <mst@redhat.com>,
  Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
  Alexander Mikhalitsyn <alexander@mihalicyn.com>,
  Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
-Subject: [PATCH 7/9] hw/audio/virtio-sound: introduce virtio_snd_set_active()
-Date: Thu, 25 Jun 2026 10:09:08 +0200
-Message-ID: <20260625080910.30569-8-alexander@mihalicyn.com>
+Subject: [PATCH 2/9] hw/audio/virtio-sound: allocate an array of streams
+Date: Thu, 25 Jun 2026 10:09:03 +0200
+Message-ID: <20260625080910.30569-3-alexander@mihalicyn.com>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260625080910.30569-1-alexander@mihalicyn.com>
 References: <20260625080910.30569-1-alexander@mihalicyn.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::429;
- envelope-from=alexander@mihalicyn.com; helo=mail-wr1-x429.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=alexander@mihalicyn.com; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -110,55 +110,112 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Volker Rümelin <vr_qemu@t-online.de>
 
-Split out the function virtio_snd_pcm_set_active() from
-virtio_snd_pcm_start_stop(). A later patch also needs this
-new funcion. There is no functional change.
+It is much easier to migrate an array of structs than individual
+structs that are accessed via a pointer to a pointer to an array
+of pointers to struct.
+
+For this reason, allocate an array of streams in
+virtio_snd_realize() and initialise all stream variables that
+are constant at runtime immediately after allocation.
+
+This makes it easier to remove the virtio_snd_set_pcm_params()
+and virtio_snd_pcm_prepare() calls in the realisation phase and
+to migrate the audio streams of the virtio sound device after
+the next few patches.
 
 Signed-off-by: Volker Rümelin <vr_qemu@t-online.de>
 Signed-off-by: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
 ---
- hw/audio/virtio-snd.c | 21 ++++++++++++++++-----
- 1 file changed, 16 insertions(+), 5 deletions(-)
+ hw/audio/virtio-snd.c         | 35 ++++++++++++++++++++++-------------
+ include/hw/audio/virtio-snd.h |  1 +
+ 2 files changed, 23 insertions(+), 13 deletions(-)
 
 diff --git a/hw/audio/virtio-snd.c b/hw/audio/virtio-snd.c
-index 48a6ca9f09c..53f9066ab24 100644
+index 6eb31e2838e..ebf2ec4b3f6 100644
 --- a/hw/audio/virtio-snd.c
 +++ b/hw/audio/virtio-snd.c
-@@ -461,6 +461,21 @@ static void virtio_snd_pcm_open(VirtIOSoundPCMStream *stream)
-     }
- }
+@@ -436,12 +436,9 @@ static uint32_t virtio_snd_pcm_prepare(VirtIOSound *s, uint32_t stream_id)
  
-+/*
-+ * Activate/deactivate a stream.
-+ *
-+ * @stream: VirtIOSoundPCMStream *stream
-+ * @active: whether to activate or deactivate the stream
-+ */
-+static void virtio_snd_pcm_set_active(VirtIOSoundPCMStream *stream, bool active)
-+{
-+    if (stream->info.direction == VIRTIO_SND_D_OUTPUT) {
-+        audio_be_set_active_out(stream->s->audio_be, stream->voice.out, active);
-+    } else {
-+        audio_be_set_active_in(stream->s->audio_be, stream->voice.in, active);
-+    }
-+}
+     stream = virtio_snd_pcm_get_stream(s, stream_id);
+     if (stream == NULL) {
+-        stream = g_new0(VirtIOSoundPCMStream, 1);
++        stream = &s->streams[stream_id];
+         stream->active = false;
+-        stream->id = stream_id;
+-        stream->s = s;
+         stream->latency_bytes = 0;
+-        QSIMPLEQ_INIT(&stream->queue);
+ 
+         /*
+          * stream_id >= s->snd_conf.streams was checked before so this is
+@@ -451,14 +448,6 @@ static uint32_t virtio_snd_pcm_prepare(VirtIOSound *s, uint32_t stream_id)
+     }
+ 
+     virtio_snd_get_qemu_audsettings(&as, params);
+-    stream->info.direction = stream_id < s->snd_conf.streams / 2 +
+-        (s->snd_conf.streams & 1) ? VIRTIO_SND_D_OUTPUT : VIRTIO_SND_D_INPUT;
+-    stream->info.hdr.hda_fn_nid = VIRTIO_SOUND_HDA_FN_NID;
+-    stream->info.features = 0;
+-    stream->info.channels_min = 1;
+-    stream->info.channels_max = as.nchannels;
+-    stream->info.formats = supported_formats;
+-    stream->info.rates = supported_rates;
+     stream->params = *params;
+ 
+     stream->positions[0] = VIRTIO_SND_CHMAP_FL;
+@@ -1046,6 +1035,25 @@ static void virtio_snd_realize(DeviceState *dev, Error **errp)
+     vsnd->vmstate =
+         qemu_add_vm_change_state_handler(virtio_snd_vm_state_change, vsnd);
+ 
++    vsnd->streams = g_new0(VirtIOSoundPCMStream, vsnd->snd_conf.streams);
 +
- /*
-  * Close a stream and free all its resources.
-  *
-@@ -597,11 +612,7 @@ static uint32_t virtio_snd_pcm_start_stop(VirtIOSound *s,
-         stream->state = VSND_PCMSTREAM_STATE_STOPPED;
++    for (uint32_t i = 0; i < vsnd->snd_conf.streams; i++) {
++        VirtIOSoundPCMStream *stream = &vsnd->streams[i];
++
++        stream->id = i;
++        stream->s = vsnd;
++        QSIMPLEQ_INIT(&stream->queue);
++        stream->info.hdr.hda_fn_nid = VIRTIO_SOUND_HDA_FN_NID;
++        stream->info.features = 0;
++        stream->info.formats = supported_formats;
++        stream->info.rates = supported_rates;
++        stream->info.direction =
++            i < vsnd->snd_conf.streams / 2 + (vsnd->snd_conf.streams & 1)
++            ? VIRTIO_SND_D_OUTPUT : VIRTIO_SND_D_INPUT;
++        stream->info.channels_min = 1;
++        stream->info.channels_max = 2;
++    }
++
+     vsnd->pcm.streams =
+         g_new0(VirtIOSoundPCMStream *, vsnd->snd_conf.streams);
+     vsnd->pcm.pcm_params =
+@@ -1314,12 +1322,13 @@ static void virtio_snd_unrealize(DeviceState *dev)
+             if (stream) {
+                 virtio_snd_process_cmdq(stream->s);
+                 virtio_snd_pcm_close(stream);
+-                g_free(stream);
+             }
+         }
+         g_free(vsnd->pcm.streams);
      }
- 
--    if (stream->info.direction == VIRTIO_SND_D_OUTPUT) {
--        audio_be_set_active_out(s->audio_be, stream->voice.out, start);
--    } else {
--        audio_be_set_active_in(s->audio_be, stream->voice.in, start);
--    }
-+    virtio_snd_pcm_set_active(stream, start);
- 
-     return cpu_to_le32(VIRTIO_SND_S_OK);
- }
+     g_free(vsnd->pcm.pcm_params);
++    g_free(vsnd->streams);
++    vsnd->streams = NULL;
+     virtio_delete_queue(vsnd->queues[VIRTIO_SND_VQ_CONTROL]);
+     virtio_delete_queue(vsnd->queues[VIRTIO_SND_VQ_EVENT]);
+     virtio_delete_queue(vsnd->queues[VIRTIO_SND_VQ_TX]);
+diff --git a/include/hw/audio/virtio-snd.h b/include/hw/audio/virtio-snd.h
+index fce7d1feea2..d65e6ba85be 100644
+--- a/include/hw/audio/virtio-snd.h
++++ b/include/hw/audio/virtio-snd.h
+@@ -214,6 +214,7 @@ struct VirtIOSound {
+     VirtQueue *queues[VIRTIO_SND_VQ_MAX];
+     uint64_t features;
+     VirtIOSoundPCM pcm;
++    VirtIOSoundPCMStream *streams;
+     AudioBackend *audio_be;
+     VMChangeStateEntry *vmstate;
+     virtio_snd_config snd_conf;
 -- 
 2.47.3
 
