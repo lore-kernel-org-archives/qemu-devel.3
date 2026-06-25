@@ -4,100 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9495BCDE00B
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jun 2026 20:56:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD9C5CDE00E
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jun 2026 20:58:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcr7e-0005HV-95; Thu, 25 Jun 2026 16:56:30 -0400
+	id 1wcr9H-0006F2-E9; Thu, 25 Jun 2026 16:58:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wcr7d-0005H3-5c
- for qemu-devel@nongnu.org; Thu, 25 Jun 2026 16:56:29 -0400
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1wcr9G-0006En-4l
+ for qemu-devel@nongnu.org; Thu, 25 Jun 2026 16:58:10 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wcr7c-00062O-08
- for qemu-devel@nongnu.org; Thu, 25 Jun 2026 16:56:28 -0400
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1wcr9E-0006Kh-Ba
+ for qemu-devel@nongnu.org; Thu, 25 Jun 2026 16:58:09 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1782420987;
+ s=mimecast20190719; t=1782421087;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=cyh9GNwkSeiWX8VVWJet6cmrStrv1Y1BhHYKMAKCy08=;
- b=BE4o+rVLO3pnPI1/T+SuHah/7ntI2s8Q/xrUccHahmDWM74CWXCef5PMSp/2SAuDzJEkmh
- t710xLHShUI4zVRuEuXJWIM8NQO3TYb7asTvuql7KpUZ407m7RyZzYyUGisxGP4Wmlg+0D
- ONTjnfPseNBxjJeWW1gqndSLM9v/usY=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-592-Veg9FvU1OYudK7NVHzkl0Q-1; Thu, 25 Jun 2026 16:56:26 -0400
-X-MC-Unique: Veg9FvU1OYudK7NVHzkl0Q-1
-X-Mimecast-MFC-AGG-ID: Veg9FvU1OYudK7NVHzkl0Q_1782420985
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-490a767c7dcso2073035e9.2
- for <qemu-devel@nongnu.org>; Thu, 25 Jun 2026 13:56:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1782420985; x=1783025785; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=cyh9GNwkSeiWX8VVWJet6cmrStrv1Y1BhHYKMAKCy08=;
- b=jMXKsGDL95H0/gg8kBnVigWCiDDknU247NtlfWmBSzpiX1UHvo9+c/9nsUPXeIGZLr
- SSb1P4Mj2No9W63ZldS50uUaEsc71AFJKmsUknJawgoknAWbqsGDE14w/DyZRfmByeU+
- ScQVXUIw67mItXcL38Y33/NLiJOQz+XOndZCN4/nXCL7TMHSQqhCtg800iB1fW1o/zTU
- Zn8Dez4uR3LgYJZRjFQnjX72Beyz84ubKnMrmBISw7NIBOyJfX8OqbUSr7qIxZHcmpV3
- metXltZq+Ch4F/fvKRck00n79PD/A9k+hIVMS/SRVJsGEl5hvVbyl/nMpcBb+CETHJDY
- UeMA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782420985; x=1783025785;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=cyh9GNwkSeiWX8VVWJet6cmrStrv1Y1BhHYKMAKCy08=;
- b=BJG6EJZH7kBrDsLWL3mt2axVBeYSwsP2hAkfZ7qb7UiK7AcNGjLFu20r6sq8LEsB3P
- qbCOtTOHMT8+KxFzOVwOLrT83Q2uTvfRhUh4U73YwyWQt9n3XLrXNAg5RsyzVXN1Aoeo
- XBEAikqA8KOrSKP0QWGPeslMcJv8xUBr4v4V00X9a9a2rq4pIox49MHXhhfZuBsQmdad
- 31n3Xq7J/568CiDI6ewqLn7EAZlYMwFDLAMiFTEcnsNTEWsSGzpJgbjnYMlSd6AU02f/
- hlOXMWmRpUNqLIoeVbKim1qDaKhnBP9pHqkQYnAXpaUIFGx7uI4+yH/ZgQPipfrhbk4n
- c+YQ==
-X-Gm-Message-State: AOJu0YyrrsT56ZFWsUxnoC0akv3p0TBBSrIBkLTIryWKTnPXx8Os4Ioj
- ui9abFhU4sNbBLIQW7zQfl8soBSBqGJwRY1GTw5d+lPNL/uIvVTlEAgL5IDOBzGzW0mtCN+CoP0
- 15Sel8msredKiusbc1gqR14wpJu4jkLc40XHI6TqfWKyTmM3GoNdflH5n
-X-Gm-Gg: AfdE7clDV3ppEiAFiANT/QG9XNx2NX4lq3/YnCFDfMFkFlQpBjlup9UuufVfirbxzgN
- HshxxwaSQmBhE7+e6u1M0HJ7mYIsRkqjUz/5I+3u3VgtB44KOqgTDpWL8WKHhO+E+/M7U+ayt8g
- DfagH3bQqIbNVWEmfQA6+FmrVTfB4px62SEgdHt7k+Hbp7fyj0mNqtvYEbh9HAezUq814HrSrLW
- SuRqBdgkDBGDp2kJ22ksUj7usqppnEUnOMkHeaRlVZNb1fiIvrAhSn8rze1jaif6aRGZCIZfnwT
- Vd/MYuqOPqYnlin1brA061uWA9/qmnOXAeuZFkj8j940EbNl+4Y+ojdGfpS/O8S4cz0l1vIKNT9
- JjODNdqs8kK15rAy3OcCWsWi7GM+tIoD2n1z9++9UOdEhTk6yOZFcZHT6UEe1Yg/Sz+nMo5cj8U
- diDc6hxFXQcQeZ7vWk
-X-Received: by 2002:a05:600c:c0d2:20b0:492:5855:1548 with SMTP id
- 5b1f17b1804b1-492668933b1mr49117765e9.27.1782420984878; 
- Thu, 25 Jun 2026 13:56:24 -0700 (PDT)
-X-Received: by 2002:a05:600c:c0d2:20b0:492:5855:1548 with SMTP id
- 5b1f17b1804b1-492668933b1mr49117665e9.27.1782420984591; 
- Thu, 25 Jun 2026 13:56:24 -0700 (PDT)
-Received: from [192.168.10.48] ([151.95.124.208])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4926a6ff928sm6276185e9.1.2026.06.25.13.56.23
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 25 Jun 2026 13:56:23 -0700 (PDT)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: Xiaoyao Li <xiaoyao.li@intel.com>
-Cc: qemu-devel@nongnu.org,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Chenyi Qiang <chenyi.qiang@intel.com>
-Subject: Re: [PATCH 0/3] i386/tdx: TDX cleanup and CPUID fixes
-Date: Thu, 25 Jun 2026 22:56:22 +0200
-Message-ID: <20260625205622.1676711-1-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260512082108.621596-1-xiaoyao.li@intel.com>
-References: 
+ bh=LwKoPcR35kbNduIVnK3Sf7vnoc0Sxur6DzZB1wsSaf4=;
+ b=MDNFoUg1pKdMWhbvBhgzPXtZ9wNQSRbiJrsZs2MW1hmrT+jyFlNUyIi4Tnimo5WwYzsWme
+ +uvZOqbGCeS/c1zyBreSQy8kZ7bZjVH5z7t6Lpyz3plQlP2SXZxfMxhWNapenmA+dy6XFA
+ mLo1E3NOKmNIpM6mBzzmhhdn88Y7mkU=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-676-h1N7bPrWN4K3qSddpW60wQ-1; Thu,
+ 25 Jun 2026 16:58:05 -0400
+X-MC-Unique: h1N7bPrWN4K3qSddpW60wQ-1
+X-Mimecast-MFC-AGG-ID: h1N7bPrWN4K3qSddpW60wQ_1782421084
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A96391806CA2; Thu, 25 Jun 2026 20:58:04 +0000 (UTC)
+Received: from localhost (unknown [10.2.16.255])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 4337B195608D; Thu, 25 Jun 2026 20:58:04 +0000 (UTC)
+Date: Thu, 25 Jun 2026 16:58:03 -0400
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: Brian Cain <brian.cain@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org
+Subject: Re: [PULL v3 00/76] hex queue
+Message-ID: <20260625205803.GA267975@fedora>
+References: <20260625141633.449487-1-brian.cain@oss.qualcomm.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="OAp5ZFWGSRCswb6M"
+Content-Disposition: inline
+In-Reply-To: <20260625141633.449487-1-brian.cain@oss.qualcomm.com>
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
@@ -121,8 +83,114 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Queued, thanks.
 
-Paolo
+--OAp5ZFWGSRCswb6M
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On Thu, Jun 25, 2026 at 07:15:17AM -0700, Brian Cain wrote:
+> The following changes since commit b83371668192a705b878e909c5ae9c1233cbd5=
+fb:
+>=20
+>   Merge tag 'pbouvier/pr/plugins-20260618' of https://gitlab.com/p-b-o/qe=
+mu into staging (2026-06-19 15:00:01 -0400)
+>=20
+> are available in the Git repository at:
+>=20
+>   https://github.com/qualcomm/qemu tags/pull-hex-20260625
+>=20
+> for you to fetch changes up to 0281aa50c4792fd091e00051031aa927ea0790ea:
+>=20
+>   tests/qtest: Add hexagon boot-serial-test (2026-06-24 22:18:47 -0700)
+>=20
+> ----------------------------------------------------------------
+> hex queue sysemu v3
+>=20
+> w/`tests/docker: add flex and bison to emsdk-wasm64-cross`, now passes:
+>=20
+>     Program flex found: YES (/usr/bin/flex)
+>     Program bison found: YES 3.8.2 (/usr/bin/bison)
+>     ...
+>     Build-time dependency glib-2.0 found: YES 2.72.4
+>     ...
+>     Build targets in project: 527
+>     ...
+>     [1421/1421] Linking target qemu-system-hexagon.js
+
+There is another wasm-related hexagon failure:
+
+https://gitlab.com/qemu-project/qemu/-/jobs/15042103056#L9777
+
+Note that I also applied 20260625193320.260312-1-stefanha@redhat.com to
+solve a zlib.net tarball 404 error that breaks the emsdk-wasm64-cross
+image. The mailing list is slow right now, so just in case you don't
+have that email, here is a copy of it:
+
+=46rom: Stefan Hajnoczi <stefanha@redhat.com>
+Subject: [PATCH] tests/docker: bump emsdk-wasm64-cross zlib version to 1.3.2
+Date: Thu, 25 Jun 2026 15:33:20 -0400
+Message-ID: <20260625193320.260312-1-stefanha@redhat.com>
+
+Container image builds have started failing because zlib.net no longer
+hosts the 1.3.1 tarball. Move to the 1.3.2 release from February 17,
+2026.
+
+  $ make docker-image-emsdk-wasm64-cross
+  changing dir to build for make "docker-image-emsdk-wasm64-cross"...
+  make[1]: Entering directory 'qemu/build'
+    BUILD   emsdk-wasm64-cross
+  ...
+  xz: (stdin): File format not recognized
+  tar: Child returned status 1
+  tar: Error is not recoverable: exiting now
+  Error: building at STEP "RUN curl -Ls https://zlib.net/zlib-$ZLIB_VERSION=
+=2Etar.xz |     tar xJC /zlib --strip-components=3D1": while running runtim=
+e: exit status 2
+  make[1]: *** [qemu/tests/docker/Makefile.include:43: docker-image-emsdk-w=
+asm64-cross] Error 2
+  make[1]: Leaving directory 'qemu/build'
+  make: *** [GNUmakefile:6: build] Error 2
+
+Cc: Kohei Tokunaga <ktokunaga.mail@gmail.com>
+Cc: Brian Cain <brian.cain@oss.qualcomm.com>
+Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
+---
+ tests/docker/dockerfiles/emsdk-wasm64-cross.docker | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/tests/docker/dockerfiles/emsdk-wasm64-cross.docker b/tests/doc=
+ker/dockerfiles/emsdk-wasm64-cross.docker
+index 8a924816f92..cbe20c7193e 100644
+--- a/tests/docker/dockerfiles/emsdk-wasm64-cross.docker
++++ b/tests/docker/dockerfiles/emsdk-wasm64-cross.docker
+@@ -1,7 +1,7 @@
+ # syntax =3D docker/dockerfile:1.5
+
+ ARG EMSDK_VERSION_QEMU=3D4.0.10
+-ARG ZLIB_VERSION=3D1.3.1
++ARG ZLIB_VERSION=3D1.3.2
+ ARG GLIB_MINOR_VERSION=3D2.84
+ ARG GLIB_VERSION=3D${GLIB_MINOR_VERSION}.0
+ ARG PIXMAN_VERSION=3D0.44.2
+--
+2.54.0
+
+--OAp5ZFWGSRCswb6M
+Content-Type: application/pgp-signature; name=signature.asc
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmo9llsACgkQnKSrs4Gr
+c8jG1gf/UIQ79dAIHKIAPti2UZuw8+jEvQs/IJzSrh6oWe+bj8AuTsGRqsmOejKb
+PZIv67y1w0Pm/YxP+JFZs/vUhYdGHWUobnohMTV5A1kpPraZM8C4sARp673k4Gvn
+mIg7j7KtlFdFUMerKkDHmqurNkqqZr4cld8w1CuXOOdiR6GL6e2ZImd9VlTbjIpn
+to5KitxhIwI0phie03RGJ4GqSBQ/Yvs2KBO+/uy4J+OGpH1WbifRGEwq4/NGWJXg
+OIQ5asKykelKZRLnWgQ0r1VhKaPyq1vcEcaWIqnD4G64xtVAjQVy5fjazTdnJ7J8
+2reqLW9dwOHTGpIQHLwebSCtR/0wEQ==
+=iQTk
+-----END PGP SIGNATURE-----
+
+--OAp5ZFWGSRCswb6M--
 
 
