@@ -4,146 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 607D3CDE009
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jun 2026 19:39:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A040CDE000
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jun 2026 19:54:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcpue-0004Qe-NR; Thu, 25 Jun 2026 15:39:00 -0400
+	id 1wcq8c-0007QU-Mi; Thu, 25 Jun 2026 15:53:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wcpuc-0004QV-QY
- for qemu-devel@nongnu.org; Thu, 25 Jun 2026 15:38:58 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wcpua-0002Od-Vo
- for qemu-devel@nongnu.org; Thu, 25 Jun 2026 15:38:58 -0400
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65PFe5NL2161732
- for <qemu-devel@nongnu.org>; Thu, 25 Jun 2026 19:38:53 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- +JQYEF0aGyKy+CM2OteYhqx5HBRms9/kJBmLEu7pxug=; b=eoCReN0QyY7YKebn
- 4hzoaCTPjrb9R8fObAdd9OiXvU1kWU+2qJt+WmWwbPfDwFDCIN2cEc0jzUjzGhdW
- hOQth0/CkEhsOZ0Je9qDsvvndIlnDSH5EE/wMCjze78W5A267le9NjL2z3nFz+us
- YA6NDZNxaQfOt5swzv8TiC8OqQioJD1W4bwuCnVJF9y+o8QK7bPYSaGN5q2X+Skm
- LDmf7nCNSqba5zlABW5C78XlYAM3fE362Mj+9cFTa7206J+XYkNdrV+gB0goaZjr
- uZVUPf8h6IU17DqYtfEC4N9PcWOY80bhCanLRHBFwzneAtL+dsTGBaq4cT8uRzOD
- MVeypQ==
-Received: from mail-dy1-f198.google.com (mail-dy1-f198.google.com
- [74.125.82.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f0ymv2yve-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 25 Jun 2026 19:38:52 +0000 (GMT)
-Received: by mail-dy1-f198.google.com with SMTP id
- 5a478bee46e88-30c17bc96afso650145eec.0
- for <qemu-devel@nongnu.org>; Thu, 25 Jun 2026 12:38:52 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1wcq8b-0007Ph-3M
+ for qemu-devel@nongnu.org; Thu, 25 Jun 2026 15:53:25 -0400
+Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1wcq8Z-0006aM-Bq
+ for qemu-devel@nongnu.org; Thu, 25 Jun 2026 15:53:24 -0400
+Received: by mail-ed1-x52b.google.com with SMTP id
+ 4fb4d7f45d1cf-693c69b97e7so349118a12.2
+ for <qemu-devel@nongnu.org>; Thu, 25 Jun 2026 12:53:23 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1782417202; cv=none;
+ d=google.com; s=arc-20260327;
+ b=DTLE6VtszyJCMlG3BK+zVbHD0UowMVbZA5kpLj9HcVFeJxanh50biJipiBCOVtG9qA
+ X0vO/dNUnto0Cc5PlG4aDkzbuEnZIWCkCi1SjG+7PgRNt4t+4iZ9zo5U7YshTu4qGXvR
+ 1fVVdR6JvQwCwNbG8bJKQAZUBNwFCTpZX80QP+arABZiHGsKxqYGSCSGbzvYI4dgfO/G
+ SkgylcPLeJcrOo+x9YKt4cSfQeHskm/VQ1ifvq7VLtAFN9lEHAYKaxWX9dtwxlEVN4ly
+ kvdGcNLMkgKjwtpvzOuCJFlWot6lHmWGHBZgJuG1nV7yD6Vxn3q4VYiVJgke4gz6qWcS
+ t5cw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20260327; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=hQ1dbLbWR4hrX2njvx97uq4oDtup4JEVDPajJW5uXbM=;
+ fh=0Jwhlc9AHdcGYRTVndGRK3EjGfvOa1nGV6BKtBQ7YfI=;
+ b=W3+iaOgIGQIzR7rPnDdh/phyJms0J3j4JDOsSiRh3oW+Asjtdn0r2p1QX1/83HNVY9
+ OG6Q3nISOuWwjh07qbllFSOMllf5so/bhUh/k5UCVLF5d4FYSdfD6/5msdJzKpOHLgJO
+ 15NqItkn4lWA20gOVQg7wLOSnLN9IYiPj+KBL3CWWpRNRAQ+rVZJyCdOp+RnU2bH+QzX
+ QccJ1ss0512iP2VjNQ667aR8ZoA/AEZKHqhmKq8cca68rY9/c3xZvC0SbdGmxI9SLmoF
+ nnpy/FGDh81uL5ru2wMABQ+vpJ5zCHIybTbhobH0jiC3mPadxwFeoorFLpTk0rqSryng
+ fsNw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1782416332; x=1783021132; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=+JQYEF0aGyKy+CM2OteYhqx5HBRms9/kJBmLEu7pxug=;
- b=F4r+BwluYyqRcidlUzbkSbmfzI97GMYqWpg1UOfyD/ZEBPRC/NODQKiN2jp6jyaSRN
- 5cYc6YqeAcQFA5irn8BYNZpgQ5a/WIfIDwKsmTZumUNTDtGC3yDsRMRqZ4Fqo5jGkLOa
- 8f/r3JFO9g8bGjIIDKeJwxRhoqyEO7JDkrOI94ucSvHy66WjiDK1OXKbYAw9b1VSOPj6
- Cj0pUk3Y6ZLLhcskp0DCtmRPYcHIYFpuqsEhQV2SZ+7v7wL+8vvg/WqgnNCCxmDDEP1v
- xKtpzalmN/V2OauJPw2Xv3kTwAhTomEt7t5+6l8O551m4jGkyC502UFzjejrY2jPxM4J
- HXXQ==
+ d=gmail.com; s=20251104; t=1782417202; x=1783022002; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=hQ1dbLbWR4hrX2njvx97uq4oDtup4JEVDPajJW5uXbM=;
+ b=CjgRIjdIkftHgMy2vvu/JYVGkBZ+p25AxI3gaUHhVj/059n2uA/GTTDM7D3BNsQY5D
+ eXfcQZBOcR0yXJ075eR8IOvb7Stb3tO6YBRhEvk51fiXBP2pmnlEQTBL1NkmoaUNb78m
+ dqBN1BvZawJ0sOWdgMa4maG2U653UhJ+VarkLsOx7FfkfeOvuhhi/c496ecYLqQhYG5r
+ XaVKPHg5OJEWHIfYn5sU2rdrdT39a83nKHZPIl/yXrebC+pXtFMCU0qVNw57+m0k159N
+ 67XzcM+3R0G7WyPq0XLXWtNz/wdMQV72FMkgelx0S5F5u1N3OuugAdsmrLJGzjLdkipM
+ EWBw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782416332; x=1783021132;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=+JQYEF0aGyKy+CM2OteYhqx5HBRms9/kJBmLEu7pxug=;
- b=Dh2v3+/8rJuS4gSEKIMM6OgUGxRJE2/Kz5ItP+GhOOfL7xIrnXRTejkHjgzFnhcqoD
- znpmxim6oI/Zbe9u57t9JOZuyslYVGBtqzt7opMbc6kU6YmMv6gJ/AqZfNQAZlkgt43H
- EGVY9DO6J+xBhXWh4QqaQ1SXR6FhKjkL9xQYm0Lx522PIHm9WaodYrUlPO+9Y0StQInN
- 35CK3RzHVMPnEbg7Ythcu848kpAsi0kMcvRVENDO6PNR7JPATSghLiLVPY39z/LGLO5x
- OZkGpPJ6zswnWjTs/CSBPZWJRZI8B/DPlSyFwAKXKC2EXrnSxPAUIyztpAeLveHzr1rp
- lLww==
+ d=1e100.net; s=20251104; t=1782417202; x=1783022002;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=hQ1dbLbWR4hrX2njvx97uq4oDtup4JEVDPajJW5uXbM=;
+ b=AuovUsF1P4fXaAzkF5Vk/r2eCIysdaHZ2aV3rHUJPIOkSIz8k0P1A2LLxt8ZHdruPJ
+ thm1LuXBYqYhUkGPQqqiKmFclDCnT2n+VkyS8v7XVMqlnN3i5ArjgILGtgPUaNS2MKex
+ JzCfcz2ETfZ1lIxwA4j4P/l4DGIa5SvxJU4qyKsyGYL2/r6OWnguSrpgrR17sRlaTHhg
+ psKHyDCGfae/NmHoji1PsFOfA84XVLiluY18C8bo4gZQQrYUtuxZYo4l0orcpYGuvOYM
+ ApiG6cvl6W88lyu336/SGKUztofwiZ1YGJk8iSN4ghVhxMfLG44WoWBMe+9Kk3TAAjbZ
+ CnmQ==
 X-Forwarded-Encrypted: i=1;
- AHgh+RpkpzdM9U2wgAISkCdaAWh++0UaDjKEhj+pIIC9wiyAdb0jvkfyRNSuBdRBtFeOvPU8qDLZFT/U8Zz9@nongnu.org
-X-Gm-Message-State: AOJu0Yy5H1eKq1ZBhkZBfSD+1f1iAtrQnLYrDxoJAlXboUOVCKHtRGea
- kOmS/q+E7Ake/RHou+qPWpnJ29M67FuX+UzYWNUB2Tf1Yql4tIQ/SZqrjIj/3qhFzjYDdY6/9ec
- OZenvSCP6u99zdZp53pSozyF6sTZUfhgA/LB6MRcq3xl73IMa00zoRW5p5A==
-X-Gm-Gg: AfdE7cmig5Qo2sYCw1jU/yq8f+A+6vG54kb3wJ/0yMrpJKeqHmTYnitpy19Ac2uCtUg
- aGJD9Cqxb0M6/z9hHGr4+yEG4RVszRrUN7AXhIUaGbtGDMBaf8olMSXJ5P+zJ3md+rJpPN4yykO
- to8mf8wH5LWcc6lurEiNavj7ztNtwgB55QE5sAY5XIPgRhDNm5pZfFDJXLkeH35/jZ8qo1RKBGe
- xpUvEcLKWPQjQ0x4cQr1SKXAgb14Lu0mak8WATTO2BuYnfo9BVah2xVkm3YqL5NeloE2E5lqixs
- PL0kZlrvCIGUPpn8NKF08GE7Lud/3v2QxRrcURgKfb4iMcuJMC8RZu2fgw1WZE9HlJCh5+VTUNR
- j/qWoI12fPzmNITTxPuprXEiHCEApDgaAzOI6JV6XEGRrpykhh9CIwxt0653dFHalZOJO2C3sUD
- NBiCc=
-X-Received: by 2002:a05:7300:2146:b0:2f2:8857:17f6 with SMTP id
- 5a478bee46e88-30c84b6cffdmr4501086eec.4.1782416331927; 
- Thu, 25 Jun 2026 12:38:51 -0700 (PDT)
-X-Received: by 2002:a05:7300:2146:b0:2f2:8857:17f6 with SMTP id
- 5a478bee46e88-30c84b6cffdmr4501048eec.4.1782416331394; 
- Thu, 25 Jun 2026 12:38:51 -0700 (PDT)
-Received: from [192.168.1.170] (216-71-219-44.dyn.novuscom.net.
- [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-30c7cac87dcsm12274697eec.31.2026.06.25.12.38.50
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 25 Jun 2026 12:38:50 -0700 (PDT)
-Message-ID: <c7d5dbd0-f140-4eb7-bd86-21eecf8d1597@oss.qualcomm.com>
-Date: Thu, 25 Jun 2026 12:38:49 -0700
+ AHgh+RpJ+PwFFADWuSkRM2I4RWREr6Suptf2lR9tHGDoHLGY93qg1b3MxmvyktYYWE1hhBazdrb78aed/iDr@nongnu.org
+X-Gm-Message-State: AOJu0YxrtGxfCaH4rZ5fy63gGDkvihWjS662tU7E8V2O3VAavCDUXEmt
+ 92cIgE7wnSetsYvQMNIi81aj7MQFVYkfOLLL7mVQ8dHxusFgJ+nPWX7BOmr2oGj79TUIqWkPk+w
+ FtVoslRVnGraaTiE496NxAptHBfCj9UQ=
+X-Gm-Gg: AfdE7cko3dYX0C9MlnDwopvGqg+c3OlGZqMMNxMUJglGvDVoe2BsFtXFz9BpFkbYgst
+ W21YpPquP0HXXXlm0YAL4rkG1V5KHaa30H/BjoBN+rJ+o60tFZXDwbr3A23abYCv3Z9osLNNpxY
+ XHUX+dLbaP945DXyljf6ObIkv86PI3iuVKrcLvCGwDfou+Rtm8DrNPBL7f8WwtN7UsWCB2PUOEQ
+ t6tMWB+oQ0kBWMnZbYRpbrmGgSzWzVu7kXNkBBZYUduliGA0IU6BUwjflyq+TpVWYPqrJ4gzwhZ
+ vaE6/sNAyqyxGKChwWxhazuuivCS1fP+Vg7QxIRMPg==
+X-Received: by 2002:a05:6402:13cb:b0:697:973f:cf01 with SMTP id
+ 4fb4d7f45d1cf-69810ae47b1mr390277a12.20.1782417201573; Thu, 25 Jun 2026
+ 12:53:21 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] tests/docker: bump emsdk-wasm64-cross zlib version to
- 1.3.2
-To: Stefan Hajnoczi <stefanha@redhat.com>, qemu-devel@nongnu.org
-Cc: Kohei Tokunaga <ktokunaga.mail@gmail.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Brian Cain <brian.cain@oss.qualcomm.com>
-References: <20260625193320.260312-1-stefanha@redhat.com>
-From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <20260625193320.260312-1-stefanha@redhat.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Authority-Analysis: v=2.4 cv=DqBmPm/+ c=1 sm=1 tr=0 ts=6a3d83cc cx=c_pps
- a=wEP8DlPgTf/vqF+yE6f9lg==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
- a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22
- a=fXms6y0vAAAA:8 a=pGLkceISAAAA:8 a=EUspDBNiAAAA:8 a=20KFwNOVAAAA:8
- a=vpyjAW9b8HGVlQNqSUoA:9 a=QEXdDO2ut3YA:10 a=bBxd6f-gb0O0v-kibOvt:22
- a=c6Zb8eaUoX5VaqycxFvw:22
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjI1MDE2OSBTYWx0ZWRfX0gzRUeD1sxCq
- Yw0RR/5EEp38+lfu4/NYSjHFdK7KE8gZjCYHpfhi3eRHzMtQUF9fgG9bLgRqxNWtq7iB52RyOui
- w+0hTPQvbNra135wY/GqyhYbkxlUcSI=
-X-Proofpoint-ORIG-GUID: y9ReYuqGedEp1utuIce6BLRkSUgrOGvR
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjI1MDE2OSBTYWx0ZWRfX5ZjajTmA6iKO
- j2DduiYcLiE8UaE5Js/FRKeUO2mi5eINiWG2CT8nn6YZjMzAnXO6t0+ETamDmaTXBDnNO1ndibF
- 7XjgwMxDyzYg/f/jACaNpgeSiDfPlzZNxjZIOErAzhREHLlONmZs2gqHtct99w3jPL/EN4nfYH2
- eBovBXm480o39FtnpLUq4cOOh28Dxi9XD0bsdTnuycwZHv3iFXIasBmZpTmgIYddSU/FOn+tCM6
- RCh1CFLaU2u8LkDTfZ1kunpdBj6MfL41GgXlzW5nOGkZqe+MqoUdc2/kxjRAcAKY3zvXpx4ifSg
- pQOfs42W0nl0YjAcIufNMm/4JQJlBLEvpuwzcyffyTD47OqWnOmp3OBRGlAIKhc7bzunr4/yjpR
- Z4F7bAZFA4ngXolIARSpuWz5/FrMezyQ4Rwayb9w54MokC2jxZDRYXgVbkM4Ia6kBXXc8IvTkHY
- +RjtdxmL2mPh2Cn8RIQ==
-X-Proofpoint-GUID: y9ReYuqGedEp1utuIce6BLRkSUgrOGvR
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-25_02,2026-06-24_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 lowpriorityscore=0 priorityscore=1501 malwarescore=0
- suspectscore=0 bulkscore=0 adultscore=0 spamscore=0 impostorscore=0
- phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2606150000
- definitions=main-2606250169
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+References: <CAJSP0QXRy1Dc_MwqtU_gS1+jOdrW=Vk6YynP75q5HP3Rz_CpTA@mail.gmail.com>
+ <904444A5-0120-4BE6-8E11-C7167F2A3BDB@unpredictable.fr>
+ <D91DC576-2462-4652-9E8C-5A7C96791622@unpredictable.fr>
+In-Reply-To: <D91DC576-2462-4652-9E8C-5A7C96791622@unpredictable.fr>
+From: Stefan Hajnoczi <stefanha@gmail.com>
+Date: Thu, 25 Jun 2026 15:53:08 -0400
+X-Gm-Features: AVVi8CerOeDtKLBSE0iRXCHuf-QAHRPNo3va0SkpYPmtvHVJ0oUObTv4O8R7hZc
+Message-ID: <CAJSP0QWBpXN-=iu_13y3k_4z4uZJX7NPTgFH16CSBn30EYTrAg@mail.gmail.com>
+Subject: Re: macOS builds broken in CI
+To: Mohamed Mediouni <mohamed@unpredictable.fr>, Emmanuel Blot <eblot@meta.com>
+Cc: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ qemu-devel <qemu-devel@nongnu.org>, Peter Maydell <peter.maydell@linaro.org>, 
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
+ envelope-from=stefanha@gmail.com; helo=mail-ed1-x52b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -160,36 +121,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/25/2026 12:33 PM, Stefan Hajnoczi wrote:
-> Container image builds have started failing because zlib.net no longer
-> hosts the 1.3.1 tarball. Move to the 1.3.2 release from February 17,
-> 2026.
-> 
->   $ make docker-image-emsdk-wasm64-cross
->   changing dir to build for make "docker-image-emsdk-wasm64-cross"...
->   make[1]: Entering directory 'qemu/build'
->     BUILD   emsdk-wasm64-cross
->   ...
->   xz: (stdin): File format not recognized
->   tar: Child returned status 1
->   tar: Error is not recoverable: exiting now
->   Error: building at STEP "RUN curl -Ls https://zlib.net/zlib-$ZLIB_VERSION.tar.xz |     tar xJC /zlib --strip-components=1": while running runtime: exit status 2
->   make[1]: *** [qemu/tests/docker/Makefile.include:43: docker-image-emsdk-wasm64-cross] Error 2
->   make[1]: Leaving directory 'qemu/build'
->   make: *** [GNUmakefile:6: build] Error 2
-> 
-> Cc: Kohei Tokunaga <ktokunaga.mail@gmail.com>
-> Cc: Brian Cain <brian.cain@oss.qualcomm.com>
-> Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
-> ---
->  tests/docker/dockerfiles/emsdk-wasm64-cross.docker | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
+On Thu, Jun 25, 2026 at 3:15=E2=80=AFPM Mohamed Mediouni
+<mohamed@unpredictable.fr> wrote:
+>
+>
+>
+> > On 25. Jun 2026, at 21:11, Mohamed Mediouni <mohamed@unpredictable.fr> =
+wrote:
+> >
+> >
+> >
+> >> On 25. Jun 2026, at 20:38, Stefan Hajnoczi <stefanha@gmail.com> wrote:
+> >>
+> >> Hi Alex,
+> >> tests/tcg/multiarch/system/Makefile.softmmu-target's
+> >> run-gdbstub-interrupt seems to be broken on GitLab CI macOS runners. 5
+> >> days ago it still passed, but now rerunning the pipeline on the same
+> >> commit ID fails:
+> >>
+> >> - Good (5 days ago): https://gitlab.com/qemu-project/qemu/-/pipelines/=
+2615134022
+> >> - Bad (today): https://gitlab.com/qemu-project/qemu/-/pipelines/262970=
+4018
+> >>
+> >> I've tried many CI runs with different pull requests applied on top of
+> >> qemu.git/master and they fail in the same way. Maybe it's an
+> >> environmental thing with the macOS runners?
+> >>
+> >> It's unclear where the SIGKILL (Error 137) comes from. Could it be an
+> >> out-of-memory condition on macOS runners?
+> >
+> > Hi,
+> >
+> > SIGKILL is the known symptom for failure during signature verification
+> > by AMFI.
+> >
+> > Now that we don=E2=80=99t have separate -unsigned binaries anymore but =
+relying
+> > on in-place ad-hoc (w/o certificate) signing with entitlements we might
+> > have issues linked to that.
+> >
+> > In the past file modification had issues with verification tied to the
+> > inode and the workaround being a reboot or a cat binary > new_binary;
+> > chmod +x new_binary so that the old (now out of sync) signing state is =
+lost
+> >
+> This is highlighted in the software update context in: https://developer.=
+apple.com/documentation/security/updating-mac-software
+>
+> > This code is incorrect because it modifies the command-line tool=E2=80=
+=99s executable file in place. macOS caches information about the code=E2=
+=80=99s signature in the kernel. It doesn=E2=80=99t flush that cache when y=
+ou modify the file=E2=80=99s contents. Modifying the file in place yields a=
+ mismatch between the file=E2=80=99s contents and the in-kernel cache, whic=
+h can cause a hard-to-reproduce code-signing crash the next time you run th=
+e tool.
+> > While this example uses a command-line tool to demonstrate the issue, u=
+pdating any file that contains signed code might trigger this code-signing =
+crash. That includes executables, frameworks, dynamic libraries, and bundle=
+s.
+> > To update a file that contains signed code without risking this crash, =
+write the updated code to a temporary file and replace the existing file wi=
+th that temporary one:
+>
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Nice, thanks for sharing this! Do you want to send a patch to fix this?
 
-Feel free to pull this asap.
-
-Regards,
-Pierrick
+Stefan
 
