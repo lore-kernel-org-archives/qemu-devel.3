@@ -4,91 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A30E5CDE00B
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jun 2026 19:22:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0207CDE009
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jun 2026 19:34:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcpe4-0001bb-MP; Thu, 25 Jun 2026 15:21:52 -0400
+	id 1wcppU-0003JY-17; Thu, 25 Jun 2026 15:33:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <linisha232@gmail.com>)
- id 1wcpe2-0001bL-JB
- for qemu-devel@nongnu.org; Thu, 25 Jun 2026 15:21:50 -0400
-Received: from mail-pg1-x536.google.com ([2607:f8b0:4864:20::536])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <linisha232@gmail.com>)
- id 1wcpe1-0006Rr-0H
- for qemu-devel@nongnu.org; Thu, 25 Jun 2026 15:21:50 -0400
-Received: by mail-pg1-x536.google.com with SMTP id
- 41be03b00d2f7-c8584e80d59so95502a12.2
- for <qemu-devel@nongnu.org>; Thu, 25 Jun 2026 12:21:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1782415307; x=1783020107; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=diWzBbTQHTYaigM28DCbI/5KBH8pHlvi2XM56QB4yhI=;
- b=Hgt+8iOmhht/kkk53FhB75VU4E+n2YiVySgdazHstYRYW2HUd1liZuyqChcWZd4BtA
- SQqCe64Dh+e4szlwff9ovCrYjXW0qDF3jHspqxwfoV8NH6nsWmmzMQWdBTiA2igIOiX2
- LZoT98kyq+5GMzuRSwS7q13O9iGmYc8bc3LbxgareeAKwlzv5U+sTld5CDDvw1uvJepJ
- Jko/uMImIWiWg8vtW6EpVtir9ZaAriiefukkJK4uS8wE/ALjcE/hZKf9RQT63Q/3vOG0
- NnU8j80TNqb+ozGztRypTYP7rMmi2DWu/nNBlBFYS0QxCDKlao/f3+izEknkYVplLDS4
- 3PkQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782415307; x=1783020107;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=diWzBbTQHTYaigM28DCbI/5KBH8pHlvi2XM56QB4yhI=;
- b=iE/4U8zwkNgabEaGg9ZNDLgr1YUZepvFO/CAfDmo5LJyEd+CoPQCtGcc+WjNCqBRY8
- BVFtH2+CgaUR/ijW91MsDVHXvMiE1nLLJs8YeD/CyMajk/5xkPyEiBNipBVai4GMYMll
- sNXvFyONkkKmufF9o5eCMwCj0rkBsadgzt2D/Y5Bcl9dkuL+UOqZMwFW8fsUFd4k9qiR
- 0++kLuQc+f5K6U9kzT4MDTtSh39PSJhqzRic9y5lFFHGALj2Njmo52Xt7ZoHcWPthiTB
- OixsFzjp2H2TANIUjokBFVSJHt6GXPlW+cFiAtCtc6/EwwyitzoJnIO5AaNioE/T7DOf
- EJHg==
-X-Gm-Message-State: AOJu0Yzysk7fpbJUViL3c5dqyeFNs5zzqlSYBItEF+RyXIWuvpTDHNw0
- RVCTu/58eMoBeAXk9RMRztDtGp5UDTqpgsEPl0QVXxdQiKTfXf+38o5h3weJZg==
-X-Gm-Gg: AfdE7cld57gOW14rR0IXTqE3J1UgMoSzTntNqO+Y/9DjdDPDW1o2Qu6glmYjp2VfLMH
- V5pjObKdRonDd7cznU5ry9MkvagKi7e6ztq2RxnKEHPJprhplt46BsK6SYxcOZj/D5KWNHQwaDc
- +Fdes1A8wDqOCAKiaZETiAX5Ev8xIDpaTtaUcfuegKyLI4E2wTs3AiRUsmSFdXz5V2n2CO1L4DK
- 9oVMflGJSQcXwk2hlahDn+mk3U48cXDgInM7mnl57/seofXZx5Ay7ReauqIei5IYA9fDi9GBs2X
- 57XOQ3mhDMrLZEE3N/xVILE6jqa80TeYpgAKyForJFjMGgsxyiR5jq6ohOLE2UyHQBTYHLXvaWq
- HF14xwZe4l32BqerHirbS/Qs/jBTsutC36o0uGP7GNONuluU9ZHwCEyVeeIPBpqnwJ56cVQBQo1
- GuWip8ITKS5jhK9Dg188kmL8ehpneypW6jPfkEd2OBxA==
-X-Received: by 2002:a05:6a21:998a:b0:3b3:f46:1efa with SMTP id
- adf61e73a8af0-3bd4afc7bd6mr4820325637.42.1782415306948; 
- Thu, 25 Jun 2026 12:21:46 -0700 (PDT)
-Received: from localhost.localdomain ([103.171.172.198])
- by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-c92bc1e0a90sm2223492a12.15.2026.06.25.12.21.43
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 25 Jun 2026 12:21:46 -0700 (PDT)
-From: Linisha <linisha232@gmail.com>
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1wcppL-0003Hz-75
+ for qemu-devel@nongnu.org; Thu, 25 Jun 2026 15:33:35 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1wcppJ-0000xD-MK
+ for qemu-devel@nongnu.org; Thu, 25 Jun 2026 15:33:30 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1782416007;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=h/SmY6yVvNmqusFF/LfBaJsLaHgoY2vneNH16wzA4hM=;
+ b=cm9oA5yWrRtJHu5qxEyXQ6fTgU1god16NCeOJ8uLT9ifVlzKK2p58FtOLw5sRFJC0DDHY+
+ Ff1DBoSQMC6J44U2gpZBY/E8sYDpUAqi8tWYA+lZD2ntakt3ZrLvdMEakbaUHFSgNa7GJT
+ zzRYKH5iiZrOX2nEaZlcIrk39E22AOQ=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-257-NA9i-zPlP82ws_0InOywFg-1; Thu,
+ 25 Jun 2026 15:33:26 -0400
+X-MC-Unique: NA9i-zPlP82ws_0InOywFg-1
+X-Mimecast-MFC-AGG-ID: NA9i-zPlP82ws_0InOywFg_1782416003
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A17ED18001DE; Thu, 25 Jun 2026 19:33:23 +0000 (UTC)
+Received: from localhost (unknown [10.2.16.255])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 1E07518001D2; Thu, 25 Jun 2026 19:33:21 +0000 (UTC)
+From: Stefan Hajnoczi <stefanha@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: alex.bennee@linaro.org, peter.maydell@linaro.org, pbonzini@redhat.com,
- mjt@tls.msk.ru, philmd@mailo.com, berrange@redhat.com,
- Linisha <linisha232@gmail.com>
-Subject: [PATCH v2] docs/system: add general note about architecture and
- machine differences
-Date: Fri, 26 Jun 2026 00:51:19 +0530
-Message-ID: <20260625192121.1887-1-linisha232@gmail.com>
-X-Mailer: git-send-email 2.47.0.windows.1
-In-Reply-To: <20260623205839.1294-1-linisha232@gmail.com>
-References: <20260623205839.1294-1-linisha232@gmail.com>
+Cc: Kohei Tokunaga <ktokunaga.mail@gmail.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>,
+ Brian Cain <brian.cain@oss.qualcomm.com>
+Subject: [PATCH] tests/docker: bump emsdk-wasm64-cross zlib version to 1.3.2
+Date: Thu, 25 Jun 2026 15:33:20 -0400
+Message-ID: <20260625193320.260312-1-stefanha@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::536;
- envelope-from=linisha232@gmail.com; helo=mail-pg1-x536.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,46 +83,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a note near the start of the introduction explaining that QEMU options, properties, and command lines may differ between target architectures and machine types. This helps prevent confusion when examples shown for one architecture do not work for another, such as the pflash0/pflash1 options visible in -machine help on some machines but not others.
+Container image builds have started failing because zlib.net no longer
+hosts the 1.3.1 tarball. Move to the 1.3.2 release from February 17,
+2026.
 
-Suggested-by: Peter Maydell <peter.maydell@linaro.org>
+  $ make docker-image-emsdk-wasm64-cross
+  changing dir to build for make "docker-image-emsdk-wasm64-cross"...
+  make[1]: Entering directory 'qemu/build'
+    BUILD   emsdk-wasm64-cross
+  ...
+  xz: (stdin): File format not recognized
+  tar: Child returned status 1
+  tar: Error is not recoverable: exiting now
+  Error: building at STEP "RUN curl -Ls https://zlib.net/zlib-$ZLIB_VERSION.tar.xz |     tar xJC /zlib --strip-components=1": while running runtime: exit status 2
+  make[1]: *** [qemu/tests/docker/Makefile.include:43: docker-image-emsdk-wasm64-cross] Error 2
+  make[1]: Leaving directory 'qemu/build'
+  make: *** [GNUmakefile:6: build] Error 2
 
-Buglink: https://gitlab.com/qemu-project/qemu/-/issues/3254
-Signed-off-by: Linisha <linisha232@gmail.com>
+Cc: Kohei Tokunaga <ktokunaga.mail@gmail.com>
+Cc: Brian Cain <brian.cain@oss.qualcomm.com>
+Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
 ---
+ tests/docker/dockerfiles/emsdk-wasm64-cross.docker | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-v2: Take a different approach based on review feedback from Daniel
-    Berrangé and Peter Maydell. Instead of incorrectly claiming
-    pflash0/pflash1 are virt-only (they actually work on x86 pc/q35
-    machines too), add a general note near the start of the introduction
-    about how options, properties, and command lines may differ between
-    target architectures and machine types.
-
-
- docs/system/introduction.rst | 9 +++++++++
- 1 file changed, 9 insertions(+)
-
-diff --git a/docs/system/introduction.rst b/docs/system/introduction.rst
-index bec7291e47..8d9ef61d26 100644
---- a/docs/system/introduction.rst
-+++ b/docs/system/introduction.rst
-@@ -1,6 +1,15 @@
- Introduction
- ============
+diff --git a/tests/docker/dockerfiles/emsdk-wasm64-cross.docker b/tests/docker/dockerfiles/emsdk-wasm64-cross.docker
+index 8a924816f92..cbe20c7193e 100644
+--- a/tests/docker/dockerfiles/emsdk-wasm64-cross.docker
++++ b/tests/docker/dockerfiles/emsdk-wasm64-cross.docker
+@@ -1,7 +1,7 @@
+ # syntax = docker/dockerfile:1.5
  
-+.. note::
-+   QEMU supports many different target CPU architectures and many
-+   different machine types for each architecture. Options, properties,
-+   and command lines that work for one architecture or machine type
-+   will not necessarily work on another. The examples shown in this
-+   manual are specific to the architecture and machine type being
-+   demonstrated. When in doubt, consult the documentation for your
-+   specific target architecture and machine type.
-+
- .. _Accelerators:
- 
- Virtualisation Accelerators
+ ARG EMSDK_VERSION_QEMU=4.0.10
+-ARG ZLIB_VERSION=1.3.1
++ARG ZLIB_VERSION=1.3.2
+ ARG GLIB_MINOR_VERSION=2.84
+ ARG GLIB_VERSION=${GLIB_MINOR_VERSION}.0
+ ARG PIXMAN_VERSION=0.44.2
 -- 
-2.47.0.windows.1
+2.54.0
 
 
