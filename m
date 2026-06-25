@@ -4,148 +4,118 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C7B9CDE000
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jun 2026 16:30:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E561CDE000
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jun 2026 16:48:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcmxZ-000143-2p; Thu, 25 Jun 2026 12:29:49 -0400
+	id 1wcnEg-000155-5L; Thu, 25 Jun 2026 12:47:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1wcmxX-00013n-PO
- for qemu-devel@nongnu.org; Thu, 25 Jun 2026 12:29:47 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wcnEW-000147-4Q
+ for qemu-devel@nongnu.org; Thu, 25 Jun 2026 12:47:21 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1wcmxV-000558-S8
- for qemu-devel@nongnu.org; Thu, 25 Jun 2026 12:29:47 -0400
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 65PFdvja2510949
- for <qemu-devel@nongnu.org>; Thu, 25 Jun 2026 16:29:43 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- frOH9uM9RUyqGUjmnClzsXZKSWUDl1YsRr58UHTvyPk=; b=mkpsmh6OdAo+iCMs
- Ur5XzkZcHGi/pXshVgRdqf8PBcOMdE3nJo5MeMxR+IKDz0TmaCxFbeTUlwl5ndRQ
- LjT2SD7P5J34hl19Lh6AsFl3PdLZU1vBGfSDQ6J3svSi3/OhJfPw8aVFMueQbcBw
- Y0w2f2rOllp1RCfam5y2tbmOrDiXwoX3pUalyJOQzUAddVCKG/NnEMCGT17NOLQR
- 5I/28oqoZ3pjxsJ+gzixhZqbulRRrGlsuPDSB+PESRFnwgOo0DyI21CbpYGVW4aF
- +NI+IPLzQInQGE9aq1XOoAzSHxeMkdtz5tEpAm7vfdB5OLbFBNMFNGV+no/7ADQj
- E/ZqRw==
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
- [209.85.222.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f16jg8cq4-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 25 Jun 2026 16:29:43 +0000 (GMT)
-Received: by mail-qk1-f198.google.com with SMTP id
- af79cd13be357-91579011fd1so9880285a.1
- for <qemu-devel@nongnu.org>; Thu, 25 Jun 2026 09:29:43 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wcnES-0007v1-8p
+ for qemu-devel@nongnu.org; Thu, 25 Jun 2026 12:47:19 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1782406035;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=mv2e/saDz5F/Jj5ghuxYree2ZuUFNTyvAA+473uasE4=;
+ b=CKG1mHWdH/s9i5Q71/KhaxEVvv7vG/YXPFGdp01kFBUcyv0zssOWz//Xv8TmGaxrTyLkkQ
+ BhrE6vsm0Yf467JyFdohM38z6onvXloBi1odtHIUZYwUNCOm46mHACQZ02d+4ki6QlYXk7
+ HgiRX1S+8FdyM5x8dsRPPbRDrSDebCQ=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-668-PJX_5Jq1OFCGw4ZVCzk9sA-1; Thu, 25 Jun 2026 12:47:14 -0400
+X-MC-Unique: PJX_5Jq1OFCGw4ZVCzk9sA-1
+X-Mimecast-MFC-AGG-ID: PJX_5Jq1OFCGw4ZVCzk9sA_1782406032
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-4625e71d3ccso1006071f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 25 Jun 2026 09:47:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1782404982; x=1783009782; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=frOH9uM9RUyqGUjmnClzsXZKSWUDl1YsRr58UHTvyPk=;
- b=QFktQS7RTeOxDMUY+5jeSyMTF0ySLM6BaE6RQJik3TC6gYz8uLI2dGZDHYQcNUqlYq
- FIu7dNZ+CfYK7fR16p/G6Mwrz9aW7QOmS3fSfyI95nKuq846zZj2U+fIXaQcYZKz+Ux8
- 6He91HMjai5pqux788WmiTNBHX8qg8T5o1BSE/r0ZRHgFB/6tWvF9aNHYkJ8tutc4l1n
- X7tbDxZZjQe6zLlzLnrz3f5h/7A1FrAyPl7mJW/w4JSKLVAvyA4u9DNGBa3BNWCBxoPn
- EYXU9u6xcW2qNiA4Oa8q36dWjidAPJn1w1uielyFJ0D9/HPmTgageZSuGpT2Gt4g7P7x
- btYQ==
+ d=redhat.com; s=google; t=1782406032; x=1783010832; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=mv2e/saDz5F/Jj5ghuxYree2ZuUFNTyvAA+473uasE4=;
+ b=B+QxXNI9QYm/LgTYy0t2JjPwlkwjkhGokpDI6SV/8Njp5cBN/RkP4eprQuejGAPcXK
+ 4K5xNKqA2gmw8SURcFlA5HfeI7omPbDLVjOwit57dc3/PChEfWTVT6z/+Nb0824MG/dM
+ Vg1aM2S6RIVL1CQgCDVNluCufdPGN5K/9/XufaooG1pZHSH8DfoGFHKACEEXvUQ6QvSu
+ aJotrf9CsCwKBZtaSudLxtiqNn3DUHWPoPtvZqL2aTp+4M8TtK/mVQ7jd3+jjOSPXjlf
+ EPhhs/7nSGtnvFEnk7R79/CZicbu3PQie4VE38KJPPka5PGaovF23S1iSR7zPv0TXPgT
+ V15A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782404982; x=1783009782;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=frOH9uM9RUyqGUjmnClzsXZKSWUDl1YsRr58UHTvyPk=;
- b=SNxUT08ZnQ73ud7CNDv57/94cvYyJ7AsQG7PyldEA9+lDHK7/EBCCw7CFLRfhBFKbZ
- 9UMtUiF2soueakDP7gQNKy4TGeB/EoCM2qWf3kYotTO7/qBJDPPmcPmbGD7b/K7gGOe0
- k2cmTW0UYUBUJ9z7azWBtf2wVtFm6L+o1pZETX0C5ZXHkKYZoSkle9RHzPDmHKVmP10a
- SAcv9J9QYHjcrIbqJtVaDmB+uHAIRkHlLYi5LJkb2RhiWxxDQVCR5exsKCeIljc/9QWO
- Cu0/IyDicB0SJngJidt8CEcNi/vpR9WsU3El43cscQVKTRsDyOgtg3T6WSbxXTj6FnOG
- EmPg==
+ d=1e100.net; s=20251104; t=1782406032; x=1783010832;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=mv2e/saDz5F/Jj5ghuxYree2ZuUFNTyvAA+473uasE4=;
+ b=tNXDqysnwcH0VpaeDgTX5ltZRpvrSJ8QPsHXaZvcSXuti5uhp707H2W6zbd7HNGQ8J
+ /E7ff+EgdmzU72D5QEkiHcZVlpum86ArCCAzUpv/1Fe1mNhewzYKm3NTzjDg18EdOdpc
+ hdV0BpkSlwRXoZ5t1nyaY+XtI4RnGKgKE/ooAz49t/imsXhElZX2pW9JRJUGPrCvqj97
+ nKIODzombMv20MIn2ePCn76/6457Gn2Dj/5bOFRA+aY9DRMUv6YvPfi0TGfKAs/lcVnj
+ LxTg1CU3Qq9vhaBwXnCIXpVZyB3kUUXG5atxtVJdysFnHGOTFP10dujAAl1vbPIb6pdR
+ 4oPg==
 X-Forwarded-Encrypted: i=1;
- AFNElJ+1PdX7OdGuDfC0Hkl2qFLuQxA2vbI3QeTNwOaWrYv6wEou27+bTQhs8pfXzs9k/cL1GCor85f4bJnU@nongnu.org
-X-Gm-Message-State: AOJu0YxkbOej5Vg+Zxlp1jGgu+LHuOJ44+xCj0oB+dzCNnMCjMeaV3W5
- EXsFYYIFHc0V3hfh5ISiZ31NZCFfXuiFda8auJ8t9JowdcDstGdSPQS7nhgG9CY9n1IO3cnlr7F
- EwpgjuflfGZScVtn1PhlfzSmO79zBa9w2Fpr84KzIzuZr1ASDr0pxUhrzYA==
-X-Gm-Gg: AfdE7ckuS2lRpisa1a1za9WpgIbMWGp0cc7SF2V+jypuFXyylJA8IGmRirwqdj5STv6
- Xp77wCA49cdk/Wbi6mz9E9Yc471GtvH31XTz9oAeYJyp86s09lQq+WWOskDTg1UXf+B3IXhegGk
- JgLH3V0DI159hyTwhrxBH8bKGFRV9h2SvB530LHugFIHY0gUyj0XrbnliuUN+bxQQh8Z3jbfSZT
- CglFhvNVrjw1ekrBcmr4Cskc4rhlhmwPPhowcrQG3dhQF2JQJ92KFdv3RmbrInOljva7dSMzqD2
- DgnehF3hH8mrEcG8NYjcZeTRr2ZDX4TbcEqecoPKoLYbl2C0dnPZQXyosNH0RLEuOgXOkClgcxG
- +ehlL6waG0XJzAr1ro8KOE48MFf1TQU3zd86w9j1mtS1S
-X-Received: by 2002:a05:620a:318e:b0:915:9051:ba2 with SMTP id
- af79cd13be357-9293ddaeba9mr476274685a.49.1782404982535; 
- Thu, 25 Jun 2026 09:29:42 -0700 (PDT)
-X-Received: by 2002:a05:620a:318e:b0:915:9051:ba2 with SMTP id
- af79cd13be357-9293ddaeba9mr476265685a.49.1782404981868; 
- Thu, 25 Jun 2026 09:29:41 -0700 (PDT)
-Received: from [192.168.68.103] ([189.79.21.40])
+ AFNElJ/aEbxbYvzxrt5V98WpWjLeVpWxuQ6Vmf5ostWgkjSGZ77GzpHlv8sMpPzY5uZ3aGEIeG2L8/iDS8kM@nongnu.org
+X-Gm-Message-State: AOJu0YwyfEdN72vGBXLdcXTa3TMTT3z8VaeVzK6+RSgMTBsvJ5xDLhEV
+ Spr6k1FQ58ToVVyZXoMDATM9yo7LflKgUEyA/3iNov+fBjAnoiE8v55g0/vG6gcAP1kEIjAjfVp
+ so2cMeUPqSXLn1D7tLTXa7vx+qujURF8qH4JOCjP5PSKT+z3r6SPN/hR4NgL+dkDR
+X-Gm-Gg: AfdE7cnTsX6w/9oePbFFx/jV23LB1TZTmKvrtrgZBDVloBByBOQxjHnO9q7gISircTy
+ XWEwGh93P57ejLC3WqoUQO8qNyyGEvaavr85epEeuUM0GIKNrYlxuqvLBCcDX5NjcVUhsZd7hlT
+ Sdk5ttGsfab41pGIicHoUstLv6cpqIXWrhbR/5XZkFY4UsQn5bMcFDWgfeUIERflsPuOgKNGbTJ
+ J+FwJgxLNwspp4XHORb0bi1QF3zRjjm+jvz3YxjDj0CqUnOLaEN+Nwtwi9lrETrue+9+AdksiD4
+ VQOSz2YvhbrMKh5XaSD/oWvUtQzuoFKA+xwymVn6l+n190Qa+IRC7T4vzQiEfPiFGLkXDO0GBUT
+ LVQV6vD4bBJUTSkRjIeuGzk+zC4IinHpp
+X-Received: by 2002:a05:600c:5756:b0:492:690e:9fb8 with SMTP id
+ 5b1f17b1804b1-492690ea0b0mr5458345e9.15.1782406031821; 
+ Thu, 25 Jun 2026 09:47:11 -0700 (PDT)
+X-Received: by 2002:a05:600c:5756:b0:492:690e:9fb8 with SMTP id
+ 5b1f17b1804b1-492690ea0b0mr5457955e9.15.1782406031191; 
+ Thu, 25 Jun 2026 09:47:11 -0700 (PDT)
+Received: from redhat.com (IGLD-80-230-85-71.inter.net.il. [80.230.85.71])
  by smtp.gmail.com with ESMTPSA id
- af79cd13be357-925fa56463dsm874621085a.0.2026.06.25.09.29.39
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 25 Jun 2026 09:29:41 -0700 (PDT)
-Message-ID: <18878720-7dd1-4463-9a42-e4b91cfcfaf6@oss.qualcomm.com>
-Date: Thu, 25 Jun 2026 13:29:37 -0300
+ ffacd0b85a97d-46dd5f9da4fsm7012260f8f.23.2026.06.25.09.47.08
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 25 Jun 2026 09:47:10 -0700 (PDT)
+Date: Thu, 25 Jun 2026 12:47:06 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: Gavin Shan <gshan@redhat.com>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org, peterx@redhat.com, alex@shazbot.org,
+ richard.henderson@linaro.org, berrange@redhat.com,
+ philmd@oss.qualcomm.com, philmd@mailo.com, david@kernel.org,
+ clg@redhat.com, pbonzini@redhat.com, phrdina@redhat.com,
+ jugraham@redhat.com, liugang24219@sangfor.com.cn,
+ dinghui@sangfor.com.cn, shan.gavin@gmail.com
+Subject: Re: [PATCH v3 1/2] system/memory: Use qemu_ram_{copy, move}() in ram
+ device region accessors
+Message-ID: <20260625123119-mutt-send-email-mst@kernel.org>
+References: <20260616052552.389021-1-gshan@redhat.com>
+ <20260616052552.389021-2-gshan@redhat.com>
+ <CAFEAcA-mf14=jpRFHarAbN6AbQwvW=Yu6WB1JiNMsECEdaxD3A@mail.gmail.com>
+ <20260625070551-mutt-send-email-mst@kernel.org>
+ <CAFEAcA8YJZq9TqrUd0zTnewAdVDm5y6UV7BJQZ0C60TZ=RT98Q@mail.gmail.com>
+ <20260625091334-mutt-send-email-mst@kernel.org>
+ <CAFEAcA8xK+t3-prEphtkq-o9UY2mgS6cowhs880GOaxL9dKSGw@mail.gmail.com>
+ <20260625101817-mutt-send-email-mst@kernel.org>
+ <CAFEAcA8-Un+Q1yBDqLWCLPRwtgTA_VhJqGobgZChrFhAeVfG8A@mail.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/riscv: Report QEMU CPU archid as 42
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
- Charlie Jenkins <thecharlesjenkins@gmail.com>, qemu-devel@nongnu.org
-Cc: Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, Weiwei Li
- <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Chao Liu <chao.liu.zevorn@gmail.com>,
- Atish Patra <atish.patra@linux.dev>, qemu-riscv@nongnu.org
-References: <20260624-marchid-v1-1-a0af7997071f@gmail.com>
- <15e2ffbd-cb14-4767-ab56-e647fdc38b15@oss.qualcomm.com>
- <88192e79-65af-4c91-9824-99dc810c7cd0@oss.qualcomm.com>
-From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <88192e79-65af-4c91-9824-99dc810c7cd0@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjI1MDE0MSBTYWx0ZWRfX6gqYD19jAdyZ
- ezrmk9551OWvLWjgnT7Hr0sxsokEx+Fnxrtt8/z+5R8eT0Z4/hXz8deW/zlnoJUMwtsNWeAeMIh
- iXXH3Mx17u8ErgLgWMjHVR+e+7N14grZrs4OrI8incMxURp70+hwjFVb0aspVoqMQlyA/LUicG3
- +r4X9/BYPiHhjfzxyVDwC8y12oWty4qfbaSVy7ON+tlARPGiQLI612tJcpxX2y03jnyvP/9NVqc
- YS+qmio6+abr8GRgd3CzUqdgYc0qz8X2oiSSmStKLObl66FXQidIs5MhGVHBF/TBSnSXOx41p3F
- lvKIdEXRGoL3f9pqciVXmtTyqe71OIdv14y1eGI0ghRpee16ztiok8YF1r5rz2RYzcVDghIYVeu
- UTbGBA86otmQbU6JCl3S7ry9auUGfncCXGmVt0X+cv4tT/7tpCD8AAPfsm5NQvHsCX8fKDPlWnz
- dwJ22eJzqdhYML7upXw==
-X-Proofpoint-ORIG-GUID: 1GsHPrt_e1MuN_3_tvq_ZYxwtSG8Qi60
-X-Proofpoint-Spam-Info: AW1haW4tMjYwNjI1MDE0MSBTYWx0ZWRfX+A2JhQ/kNx5z
- RxuwnjaB34f8IvaHbk1A5lW4c2Y8YNHiKIpBgNr4+uhoOllHEF+FqCV8Sc2N9WvdAyLlPvGKwUJ
- ZDOYeMqFRjxiJKUwCr3iuHpa4UojAiE=
-X-Authority-Analysis: v=2.4 cv=daqwG3Xe c=1 sm=1 tr=0 ts=6a3d5777 cx=c_pps
- a=qKBjSQ1v91RyAK45QCPf5w==:117 a=sHJf4AwOIoU3qjeHFPlg6Q==:17
- a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22
- a=xvfqbYfxAAAA:20 a=VwQbUJbxAAAA:8 a=pGLkceISAAAA:8 a=h0uksLzaAAAA:8
- a=CtIvD7FJ-Gc6_f__wLwA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=NFOGd7dJGGMPyQGDc5-O:22 a=MSi_79tMYmZZG2gvAgS0:22 a=bA3UWDv6hWIuX7UZL3qL:22
-X-Proofpoint-GUID: 1GsHPrt_e1MuN_3_tvq_ZYxwtSG8Qi60
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-06-25_02,2026-06-24_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 clxscore=1015 priorityscore=1501 impostorscore=0 suspectscore=0
- bulkscore=0 adultscore=0 phishscore=0 malwarescore=0 lowpriorityscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606250141
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAFEAcA8-Un+Q1yBDqLWCLPRwtgTA_VhJqGobgZChrFhAeVfG8A@mail.gmail.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -161,154 +131,87 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Thu, Jun 25, 2026 at 04:23:47PM +0100, Peter Maydell wrote:
+> On Thu, 25 Jun 2026 at 15:52, Michael S. Tsirkin <mst@redhat.com> wrote:
+> > I think there is exactly 1 kinda reasonable case. A 2 byte read/write at
+> > offset 0x1 within a dword. This maps nicely to even classical PCI byte
+> > enable mechanism and so yes it works if your CPU can initiate these
+> > things, and it's atomic.
+> >
+> > I tried reading LEDCTL on e1000e:
+> >
+> >        byte  @ 0xe00: 0x64
+> >        byte  @ 0xe01: 0x2a
+> >        byte  @ 0xe02: 0x00
+> >        byte  @ 0xe03: 0x00
+> >        word  @ 0xe00: 0x2a64
+> >        word  @ 0xe01: 0x002a
+> >
+> > Works fine.
+> 
+> The e1000e datasheet actually documents what it does in this
+> case (slightly surprising, since hardware engineers love to
+> leave this kind of corner case undocumented):
+> 
+> # For registers that should be accessed as 32-bit double words,
+> # partial writes (less than a 32-bit double word) does not take
+> # effect (such as, the write is ignored).
+> # Partial reads
+> # return all 32 bits of data regardless of the byte enables.
+> #
+> # Note: Partial reads to clear-by-read registers (such as, ICR)
+> # can have unexpected results since all 32 bits are actually read
+> # regardless of the byte enables. Partial reads should not be done.
+> 
+> So for this specific device that access is out-of-spec.
+
+You mean that access to clear by read should not be done, right?
+
+> I guess what I'm wondering is: can we just have code
+> that does an aligned exact-width access in the 1/2/4/8
+> byte aligned case, and the host's best approximation to
+> an unaligned exact-width access for the 2/4/8 byte
+> unaligned case?
+
+That's my idea, too.
+
+> (so on sparc you get multiple smaller
+> accesses, and on most archs including x86 and arm you
+> get an unaligned load).
+
+I thought unaligned load from uncacheable on arm is
+also a fault?
+
+> That would mean the guest could
+> potentially provoke a fault on the load/store on an
+> access to a passthrough device, but if you give the
+> guest passthrough access it can very likely provoke
+> a fault anyway, depending on exactly what the device is.
+> 
+> I think the most likely reason for an unaligned access
+> in this codepath is "it's actually RAM, either really
+> host RAM or else something memory-like in a BAR", and
+> either way if the guest does a 4-byte unaligned access
+> then doing a 4-byte unaligned access seems better than
+> second-guessing it, even on non-x86.
+> 
+> -- PMM
+
+Right though remember: whether it's RAM doesn't matter. What matters is
+how we map it.  qemu might fault because it maps NC but guest maps
+cacheable and it's ok.
+
+But, all this in theory. At a high level, I personally think going with
+what you propose as a 1st approximation is entirely reasonable, except
+for one thing: we really should not crash qemu, since access can be from
+guest userspace.
+
+qemu should know how things are mapped, and predict it will fault.
+Approximating by splitting in that case sounds reasonable.
 
 
-On 6/25/2026 12:10 PM, Philippe Mathieu-Daudé wrote:
-> Hi,
-> 
-> On 25/6/26 14:13, Daniel Henrique Barboza wrote:
->> Hi,
->>
->> On 6/25/2026 3:26 AM, Charlie Jenkins wrote:
->>> When a non-vendor CPU is used, report the archid as 42 which has been
->>> allocated for QEMU in the riscv isa manual [1]. This can help software
->>> check if it is running in QEMU.
->>>
->>> [1] https://github.com/riscv/riscv-isa-manual/blob/main/marchid.md
->>>
->>> Signed-off-by: Charlie Jenkins <thecharlesjenkins@gmail.com>
->>> ---
->>> This series was original proposed by Palmer Dabbelt [1] with a follow up
->>> by Daniel Henrique Barboza. This patch implement's Daniel's suggestion.
->>>
->>> When booting with a non-vendor CPU such as with the qemu arg "-cpu rv64"
->>> marchid will now be reported as 42.
->>>
->>>> qemu-system-riscv64 ... -cpu rv64
->>>
->>> processor       : 0
->>> hart            : 0
->>> isa             : rv64imafdch_zicbom_zicbop_zicboz_ziccrse_zicntr_zicsr_zifencei_zihintntl_zihintpause_zihpm_zaamo_zalrsc_zawrs_zfa_zca_zcd_zba_zbb_zbc_zbs_sstc_svadu_svvptc
->>> mmu             : sv57
->>> mvendorid       : 0x0
->>> marchid         : 0x2a
->>> mimpid          : 0x0
->>> hart isa        : rv64imafdch_zicbom_zicbop_zicboz_ziccrse_zicntr_zicsr_zifencei_zihintntl_zihintpause_zihpm_zaamo_zalrsc_zawrs_zfa_zca_zcd_zba_zbb_zbc_zbs_sstc_svadu_svvptc
->>>
->>> When booting with a vendor CPU like veyron-v1, the proper marchid will
->>> still appear.
->>>
->>>> qemu-system-riscv64 ... -cpu veyron-v1
->>>
->>> processor       : 0
->>> hart            : 0
->>> isa             : rv64imafdch_zicbom_zicboz_ziccrse_zicntr_zicsr_zifencei_zihpm_zaamo_zalrsc_zca_zcd_zba_zbb_zbc_zbs_smaia_smstateen_ssaia_sscofpmf_sstc_svinval_svnapot_svpbmt
->>> mmu             : sv48
->>> mvendorid       : 0x61f
->>> marchid         : 0x8000000000010000
->>> mimpid          : 0x111
->>> hart isa        : rv64imafdch_zicbom_zicboz_ziccrse_zicntr_zicsr_zifencei_zihpm_zaamo_zalrsc_zca_zcd_zba_zbb_zbc_zbs_smaia_smstateen_ssaia_sscofpmf_sstc_svinval_svnapot_svpbmt
->>>
->>> [1] https://lore.kernel.org/all/20240131182430.20174-1- palmer@rivosinc.com/
->>
->> Thanks for linking the discussion.  I have but a vague memory of it and the link
->> helped.
->>
->>
->>> ---
->>>   target/riscv/cpu.c | 9 +++++++++
->>>   1 file changed, 9 insertions(+)
->>>
->>> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
->>> index fa497e5e8a..59d63f82c2 100644
->>> --- a/target/riscv/cpu.c
->>> +++ b/target/riscv/cpu.c
->>> @@ -44,6 +44,9 @@
->>>   #endif
->>>   /* RISC-V CPU definitions */
->>> +#define RISCV_CPU_MVENDORID 0
->>> +#define RISCV_CPU_MARCHID 42
-> 
-> Worth adding a comment (possibly linking to the previous URL)
-> making explicit this is an assigned number and not the answer
-> for the ultimate question of life, the universe, and everything.
 
-Don't forget to thank for all the fish!
-
-> 
->>> +#define RISCV_CPU_MIMPID 0
->>>   static const char riscv_single_letter_exts[] = "IEMAFDQCBPVH";
->>>   const uint32_t misa_bits[] = {RVI, RVE, RVM, RVA, RVF, RVD, RVV,
->>>                                 RVC, RVS, RVU, RVH, RVG, RVB, 0};
->>> @@ -1198,6 +1201,12 @@ static void riscv_cpu_init(Object *obj)
->>>       }
->>>   #endif
->>> +    if (!riscv_cpu_is_vendor(obj)) {
->>> +        RISCV_CPU(obj)->cfg.mvendorid = RISCV_CPU_MVENDORID;
->>> +        RISCV_CPU(obj)->cfg.marchid = RISCV_CPU_MARCHID;
->>> +        RISCV_CPU(obj)->cfg.mimpid = RISCV_CPU_MIMPID;
->>> +    }
->>> +
->>
->> Two things:
->>
->> - we have a 'cpu' pointer at the start so you can use cpu->cfg... instead;
-> 
-> Yep, cleaner.
-> 
->>
->> - the "cpu_is_vendor" check shouldn't be needed.  Whatever is set as default during
->> cpu_init() must be overwritten by CPUDef settings done in each DEFINE_RISCV_CPU()
->> macro.
->>
->> This happens at this point:
->>
->>
->>      env->misa_ext_mask = env->misa_ext = mcc->def->misa_ext;
->>      riscv_cpu_cfg_merge(&cpu->cfg, &mcc->def->cfg);  <================
->>
->> Therefore we can remove the "cpu_is_vendor" check and just assign the default QEMU IDs
->> as long as we do it before cpu_cfg_merge(e.g. right after "cpu-  >cfg.max_satp_mode = -1;").
->> If we do that we'll ensure that all CPUs will carry the RVI archid 42 unless told otherwise
->> by the CPU definition.
->>
->> Yes, this will end up changing the IDs for vendor CPUs that don't set their own IDs.  This is
->> fine - if the CPU doesn't bother setting its own ID this means that the CPU is perfectly
->> fine with whatever default ID QEMU will provide.
-> 
-> Should we check for unset marchid and warn or even not accept config
-> with this field unset?
-
-Hmmm maybe we can adopt a new policy where new CPUs must have an explicit
-ID set, even if zero, to be clear that the CPU doesn't care about the
-field.  But I wouldn't bother about existing vendor CPUs that doesn't set
-mvendorid TBH ... people will most likely complain about existing CPUs
-throwing warnings that they weren't throwing before.
-
-
-Cheers,
-Daniel
-
-> 
->>
->>
->> Thanks,
->> Daniel
->>
->>
->>>       accel_cpu_instance_init(CPU(obj));
->>>   }
->>>
->>> ---
->>> base-commit: b83371668192a705b878e909c5ae9c1233cbd5fb
->>> change-id: 20260624-marchid-80d176b873d8
->>>
->>> Best regards,
->>> -- 
->>> - Charlie
->>>
->>
->>
-> 
+-- 
+MST
 
 
