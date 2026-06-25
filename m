@@ -4,56 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F21C7CDE00E
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jun 2026 21:23:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4ACCCCDE010
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jun 2026 21:23:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcrWm-000773-IF; Thu, 25 Jun 2026 17:22:28 -0400
+	id 1wcrWU-0006B6-Qy; Thu, 25 Jun 2026 17:22:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wcrWk-00071n-Fj
- for qemu-devel@nongnu.org; Thu, 25 Jun 2026 17:22:26 -0400
+ id 1wcrWT-000620-5r
+ for qemu-devel@nongnu.org; Thu, 25 Jun 2026 17:22:09 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wcrWi-00041V-Qi
- for qemu-devel@nongnu.org; Thu, 25 Jun 2026 17:22:26 -0400
+ id 1wcrWR-0003ut-9Z
+ for qemu-devel@nongnu.org; Thu, 25 Jun 2026 17:22:08 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1782422544;
+ s=mimecast20190719; t=1782422526;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=fEpLNtezLZ5gi9gc6tBA5aF7JHFme/l1NsetAdVdzOU=;
- b=OkcmTMTosLaNholxmeiBjGfvRimp/0funMbbD7YbENNom0P5O80Ob+/tBEb8exBUztNxp7
- bPoz5dzpLfw//hoQryxJWJBLxebJTNengl2lkbC6knej7/EXqUqH+ADSPj9Qe7sA3GIl26
- FLA60ZDyaa4b8HL9FVLGxXxXsHJvUyE=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ bh=a8MqeA40QOR+nIk2+32wAxE8AqwLWXQRv12gEo1E+W8=;
+ b=ZeN4DMV+5+jgA/67PopCrGKCPYPThUKp3f177islpG4/X0ejBlUgrBl8ZZLbdd/ldtBTrl
+ mtoluxuO+SCpNLamT2xHCY5XotT5Vfo8POO7gZvhGzmUoyBDQAb04peMzgQCDYk/5S0tqx
+ rQDnbe7KFy5lnXbuKe1gKXSISRIUVu0=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-180-j7KBVDziOHyqtkD-dyaJIw-1; Thu,
- 25 Jun 2026 17:22:21 -0400
-X-MC-Unique: j7KBVDziOHyqtkD-dyaJIw-1
-X-Mimecast-MFC-AGG-ID: j7KBVDziOHyqtkD-dyaJIw_1782422540
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-478-UIe2FwMCP_GRLPLQ8LnJZw-1; Thu,
+ 25 Jun 2026 17:22:05 -0400
+X-MC-Unique: UIe2FwMCP_GRLPLQ8LnJZw-1
+X-Mimecast-MFC-AGG-ID: UIe2FwMCP_GRLPLQ8LnJZw_1782422524
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 13451185FC5C; Thu, 25 Jun 2026 21:22:20 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 73F7A1835E2B; Thu, 25 Jun 2026 21:22:04 +0000 (UTC)
 Received: from localhost (unknown [10.44.24.16])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id D2D6C30001BE; Thu, 25 Jun 2026 21:22:18 +0000 (UTC)
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 3E1731800661; Thu, 25 Jun 2026 21:22:02 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Fri, 26 Jun 2026 01:19:32 +0400
-Subject: [PATCH v2 31/39] util: guard monitor_vprintf callers with CONFIG_HMP
+Date: Fri, 26 Jun 2026 01:19:29 +0400
+Subject: [PATCH v2 28/39] build-sys: add 'hmp' option
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260626-qemu-no-hmp-v2-31-8af31bc54c61@redhat.com>
+Message-Id: <20260626-qemu-no-hmp-v2-28-8af31bc54c61@redhat.com>
 References: <20260626-qemu-no-hmp-v2-0-8af31bc54c61@redhat.com>
 In-Reply-To: <20260626-qemu-no-hmp-v2-0-8af31bc54c61@redhat.com>
 To: qemu-devel@nongnu.org
@@ -61,24 +61,24 @@ Cc: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@mailo.com>, 
  =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
  Markus Armbruster <armbru@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3044;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3029;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=HwWHsZFMKZdWXTYjOmgerggdHu8TDi5XpVZ7v+nyDlk=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqPZteeCm0gKmQ12qklaBF9GyVLpZSjexlVIxFt
- 5XZ9V3TjB2JAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaj2bXgAKCRDa6OEJdZac
- 5dUcD/42ygnbSspFamHFW6w0RVngWqKxe1uHVu+McRl+5omXH1RHMnGpHNyb7djnrkrJtu3OzJL
- LQoELuS6W7j9OGx5wce/EMh9llOlq6AOby3JU5P0PtCSYEmVkmceW1Rh/V6uTMR/8uVnryTPye6
- AuCu+61A0zZZOchGA0Q14p6g8MryIzwt6UgGW8oJoaljRZwZPL5hiovOJlOhx88YfUrjuheco2m
- aohzwhHPIPyutF65cS7uPfOfMLCUIOhNomYOnVev4JZDKZs0Lna9BeYblb0PBMboHXEgtQCIpSy
- wmWEcWasH9M2xnJU54LX5gv9++4LUmg7+bDfNl6Qi+rw8tQK7XfS0oz32LHPcjxYMf/GrZTG3Fh
- kG7XbPGTB/2FPFHXHuPEbMxFC9TlPjWgiWX3I9aF5ef9CWAEcwmVLI15HSzeBmvPRYlHMQzLCQU
- 1Tb5ibq23BCvdk6wmeO2U/iIllb8caWKmIFixo3VV0QBXL1XgCIzjWYRvONTBX8ungBiTpwDrVT
- LTd8z7Jf+gybgp+nrGnf8EVdkG7lpyxZo//NCdsbxBgBjHX3ZjXS9WEk0qEWqKRf38rYP7vu6ck
- og8c0Yz4zussZW3d7AJoXs0c7kaidZvYIOedtKb2txw+uxVJio0sKiWxQWd2BC5jib9ygE/eLry
- dHxpfk8f/69eV5w==
+ bh=uCNypvAhoJYTu2L3kXSPIUPn8bgO6jkCWdgE1SDj+5g=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBqPZtdl4aoNK8PvcrV+xc7RC2ONZvdKuuO9cfIx
+ JL+atUvniaJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaj2bXQAKCRDa6OEJdZac
+ 5fRBD/0ZtDOjSO+r8zi8Fb2c1JDNYrfs4G6ylfaQH/G+JstmpT5LUksjN7e8XXlX6MMwwqaiOoR
+ YSQszUytME0Mi9VfJSoQbPGxFVDvW4Ff18EAjo/FchKJWzD3gQEzkXXUBR7eu10vF7mIuPw5fVr
+ Ade/JauuZ0HbfkgsHVgN8CUd+3Npef3CvRBtTISUj4ZpzCftBfSTI5nj1h5ErpYYudMpttQfuE9
+ VlitRQmwUxSsZ6Hyaw3LR1N9t0KjRRdS2FRmYL9nZnvE9PiPXJhfQHIxe1AlY+aDZUSFqa4sJ8V
+ iZ6nQvObqKfz6DCB6diLeetaRD/aydaW0y0k5v+2S4O+7o7d+vVseQWmsTpHHEyc9vDLOsqVupQ
+ h5VWVdvodQrk1C0Du0gkx7v7frYYW3uOZstofjHoqJP7Dcg0yV4XWv2VDb2KfVawo8J9t0wy+oi
+ +Hvz0+rtCwX/tmg9ZcfoBApmPkGUe4eFF/C45jqVcoJGSVwj9dyZ4BLXoAqdtGE17X+8Y50dSfq
+ a48KLGyXJqficvsH8I7kghLjgr9fcYymOTuy9BN622PSdVC2mbM88Li0joO7RHFWVavUbeJIz9B
+ 5yOgZZU6sjnymhhWDnX3hgXu2LQl4qvj1Px5T9GviTsJepe9V4dmq+inqtEF+lTmfOXRZtLYzOs
+ MySALw/9FKoiNrg==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
 Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -104,102 +104,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Guard calls to monitor_vprintf in error-report and qemu-print so
-they compile without HMP. When CONFIG_HMP is not set,
-error_vprintf_mon falls back directly to stderr and qemu_vfprintf
-returns -1 for NULL streams.
+Add an option to enable/disable HMP support, default to true. The
+following commits are going to make --disable-hmp gradually working.
 
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- tests/unit/test-util-sockets.c | 4 +++-
- tools/qemu-vnc/stubs.c         | 2 ++
- util/error-report.c            | 8 +++++---
- util/qemu-print.c              | 6 ++++++
- 4 files changed, 16 insertions(+), 4 deletions(-)
+ meson.build                   | 4 ++++
+ meson_options.txt             | 2 ++
+ scripts/meson-buildoptions.sh | 3 +++
+ 3 files changed, 9 insertions(+)
 
-diff --git a/tests/unit/test-util-sockets.c b/tests/unit/test-util-sockets.c
-index b9f2453e299..23ebe1e26b5 100644
---- a/tests/unit/test-util-sockets.c
-+++ b/tests/unit/test-util-sockets.c
-@@ -73,8 +73,10 @@ int monitor_get_fd(Monitor *mon, const char *fdname, Error **errp)
-  */
- Monitor *monitor_cur(void) { return cur_mon; }
- Monitor *monitor_set_cur(Coroutine *co, Monitor *mon) { abort(); }
--int monitor_vprintf(Monitor *mon, const char *fmt, va_list ap) { abort(); }
- bool monitor_cur_is_qmp(void) { abort(); };
-+#ifdef CONFIG_HMP
-+int monitor_vprintf(Monitor *mon, const char *fmt, va_list ap) { abort(); }
-+#endif
+diff --git a/meson.build b/meson.build
+index e026851309e..824ba695801 100644
+--- a/meson.build
++++ b/meson.build
+@@ -247,6 +247,9 @@ have_vhost_net = have_vhost_net_kernel or have_vhost_net_user or have_vhost_net_
  
- #ifndef _WIN32
- static void test_socket_fd_pass_name_good(void)
-diff --git a/tools/qemu-vnc/stubs.c b/tools/qemu-vnc/stubs.c
-index a865ce85f04..f476dd6d956 100644
---- a/tools/qemu-vnc/stubs.c
-+++ b/tools/qemu-vnc/stubs.c
-@@ -46,10 +46,12 @@ Monitor *monitor_set_cur(Coroutine *co, Monitor *mon)
-     return NULL;
- }
+ have_tcg = get_option('tcg').allowed() and (have_system or have_user)
  
-+#ifdef CONFIG_HMP
- int monitor_vprintf(Monitor *mon, const char *fmt, va_list ap)
- {
-     return -1;
- }
-+#endif
++have_hmp = get_option('hmp') \
++  .disable_auto_if(not have_system) \
++  .allowed()
+ have_tools = get_option('tools') \
+   .disable_auto_if(not have_system) \
+   .allowed()
+@@ -2254,6 +2257,7 @@ endif
+ config_host_data = configuration_data()
  
- /*
-  * Link-time stubs for VMState symbols referenced by VNC code.
-diff --git a/util/error-report.c b/util/error-report.c
-index f832ad9b6b6..e2e46281455 100644
---- a/util/error-report.c
-+++ b/util/error-report.c
-@@ -40,11 +40,13 @@ error_vprintf_mon(Monitor *cur_mon, const char *fmt, va_list ap)
-      * IOW this will only print if in HMP, otherwise we
-      * fallback to stderr for QMP / no-monitor scenarios.
-      */
-+#ifdef CONFIG_HMP
-     int ret = monitor_vprintf(cur_mon, fmt, ap);
--    if (ret == -1) {
--        ret = vfprintf(stderr, fmt, ap);
-+    if (ret != -1) {
-+        return ret;
-     }
--    return ret;
-+#endif
-+    return vfprintf(stderr, fmt, ap);
- }
- 
- /*
-diff --git a/util/qemu-print.c b/util/qemu-print.c
-index 7b9591035e5..ee80000722b 100644
---- a/util/qemu-print.c
-+++ b/util/qemu-print.c
-@@ -20,10 +20,12 @@
-  */
- int qemu_vprintf(const char *fmt, va_list ap)
- {
-+#ifdef CONFIG_HMP
-     Monitor *cur_mon = monitor_cur();
-     if (cur_mon) {
-         return monitor_vprintf(cur_mon, fmt, ap);
-     }
-+#endif
-     return vprintf(fmt, ap);
- }
- 
-@@ -52,7 +54,11 @@ int qemu_printf(const char *fmt, ...)
- int qemu_vfprintf(FILE *stream, const char *fmt, va_list ap)
- {
-     if (!stream) {
-+#ifdef CONFIG_HMP
-         return monitor_vprintf(monitor_cur(), fmt, ap);
-+#else
-+        return -1;
-+#endif
-     }
-     return vfprintf(stream, fmt, ap);
- }
+ config_host_data.set('CONFIG_HAVE_RUST', have_rust)
++config_host_data.set('CONFIG_HMP', have_hmp)
+ audio_drivers_selected = []
+ if have_system
+   audio_drivers_available = {
+diff --git a/meson_options.txt b/meson_options.txt
+index a07cb47d35e..d8f59cf92ca 100644
+--- a/meson_options.txt
++++ b/meson_options.txt
+@@ -111,6 +111,8 @@ option('cfi', type: 'boolean', value: false,
+        description: 'Control-Flow Integrity (CFI)')
+ option('cfi_debug', type: 'boolean', value: false,
+        description: 'Verbose errors in case of CFI violation')
++option('hmp', type : 'feature', value : 'auto',
++       description: 'HMP monitor support')
+ option('multiprocess', type: 'feature', value: 'auto',
+        description: 'Out of process device emulation support')
+ option('relocatable', type : 'boolean', value : true,
+diff --git a/scripts/meson-buildoptions.sh b/scripts/meson-buildoptions.sh
+index c003985047c..5a67e59a167 100644
+--- a/scripts/meson-buildoptions.sh
++++ b/scripts/meson-buildoptions.sh
+@@ -125,6 +125,7 @@ meson_options_help() {
+   printf "%s\n" '  gtk             GTK+ user interface'
+   printf "%s\n" '  guest-agent     Build QEMU Guest Agent'
+   printf "%s\n" '  guest-agent-msi Build MSI package for the QEMU Guest Agent'
++  printf "%s\n" '  hmp             HMP monitor support'
+   printf "%s\n" '  hv-balloon      hv-balloon driver (requires Glib 2.68+ GTree API)'
+   printf "%s\n" '  hvf             HVF acceleration support'
+   printf "%s\n" '  iconv           Font glyph conversion support'
+@@ -339,6 +340,8 @@ _meson_option_parse() {
+     --disable-guest-agent-msi) printf "%s" -Dguest_agent_msi=disabled ;;
+     --enable-hexagon-idef-parser) printf "%s" -Dhexagon_idef_parser=true ;;
+     --disable-hexagon-idef-parser) printf "%s" -Dhexagon_idef_parser=false ;;
++    --enable-hmp) printf "%s" -Dhmp=enabled ;;
++    --disable-hmp) printf "%s" -Dhmp=disabled ;;
+     --enable-hv-balloon) printf "%s" -Dhv_balloon=enabled ;;
+     --disable-hv-balloon) printf "%s" -Dhv_balloon=disabled ;;
+     --enable-hvf) printf "%s" -Dhvf=enabled ;;
 
 -- 
 2.54.0
