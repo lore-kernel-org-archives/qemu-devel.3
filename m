@@ -4,79 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52A24CDB479
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jun 2026 15:16:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA6DFCDB479
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jun 2026 15:17:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcloT-0001da-4q; Thu, 25 Jun 2026 11:16:21 -0400
+	id 1wclp3-0001zf-8d; Thu, 25 Jun 2026 11:16:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1wcloR-0001dJ-3D
- for qemu-devel@nongnu.org; Thu, 25 Jun 2026 11:16:19 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1wclp1-0001xl-M0
+ for qemu-devel@nongnu.org; Thu, 25 Jun 2026 11:16:55 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1wcloP-0006wr-JF
- for qemu-devel@nongnu.org; Thu, 25 Jun 2026 11:16:18 -0400
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1wclp0-00070s-9O
+ for qemu-devel@nongnu.org; Thu, 25 Jun 2026 11:16:55 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1782400575;
+ s=mimecast20190719; t=1782400613;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=ijmkcJLwfy7WXVzwajK3zF/OHNAh6AIbhYrV6rOlwpc=;
- b=CD/E0dMiAACTS5fqPD+fDq3GIL6brXfxGUrM9hJB7omwZRF2O5J7UfwzXHIG/0I2aFuC1X
- pHO6kw2IY3D+QojpA1iri14trsmZI5kWA7A4WWk3ZQyQb30nNgEFefLWppM4KXLcKlwncb
- db5qw8wC5279LuwB7hBIQkBhh25pqTI=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=fYlsWv6kvhcT8wS2M1NuxJVTS/kjOGvKZLgsdwiNai4=;
+ b=NPO8w/sgZdHWNmLaqT8YmH+czM0Wu4+cIZXm8UsSlQKTdCVhf+2QU/OCl1ZMCrNMmd9lhd
+ xqklInb4mgBwZRW8HxGBxy177nxHZh6LpxJXmx0E1zCS+RV+4yg61pGmJdzQdPolE+cVwc
+ z7+gVhxbuyWmbK+16KOTNGu3j/s7Y6c=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-654-OHqg7XEbM9upf5J-FVX9xg-1; Thu,
- 25 Jun 2026 11:16:14 -0400
-X-MC-Unique: OHqg7XEbM9upf5J-FVX9xg-1
-X-Mimecast-MFC-AGG-ID: OHqg7XEbM9upf5J-FVX9xg_1782400573
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-589-el0OVin7NAGnwwWSgCmsqg-1; Thu,
+ 25 Jun 2026 11:16:48 -0400
+X-MC-Unique: el0OVin7NAGnwwWSgCmsqg-1
+X-Mimecast-MFC-AGG-ID: el0OVin7NAGnwwWSgCmsqg_1782400607
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D5CD01805A2D; Thu, 25 Jun 2026 15:16:12 +0000 (UTC)
-Received: from localhost (unknown [10.2.16.255])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id DEEE6195608C; Thu, 25 Jun 2026 15:16:11 +0000 (UTC)
-Date: Thu, 25 Jun 2026 11:16:08 -0400
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: Zhang Chen <zhangckid@gmail.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>,
- "Dr . David Alan Gilbert" <dave@treblig.org>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- "Michael S . Tsirkin" <mst@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- Jason Wang <jasowang@redhat.com>, Fam Zheng <fam@euphon.net>
-Subject: Re: [PATCH V9 05/17] block/export: track IOThread reference in
- BlockExport
-Message-ID: <20260625151608.GA160758@fedora>
-References: <20260624070851.13342-1-zhangckid@gmail.com>
- <20260624070851.13342-6-zhangckid@gmail.com>
- <20260624175143.GD109308@fedora>
- <CAK3tnvLhx9HipFENkMm-pdOqvLZUYDdF=VuFzQ=gyD4TV__eSw@mail.gmail.com>
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 8A498197751B; Thu, 25 Jun 2026 15:16:47 +0000 (UTC)
+Received: from [10.44.33.146] (unknown [10.44.33.146])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id A63F918005A4; Thu, 25 Jun 2026 15:16:45 +0000 (UTC)
+Message-ID: <db21ca7e-de25-46f3-b1a3-b199d35a7bcb@redhat.com>
+Date: Thu, 25 Jun 2026 17:16:44 +0200
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="78rTaFhkzbaqydzB"
-Content-Disposition: inline
-In-Reply-To: <CAK3tnvLhx9HipFENkMm-pdOqvLZUYDdF=VuFzQ=gyD4TV__eSw@mail.gmail.com>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 6/9] target/i386: query mshv accel for supported cpuids
+To: Magnus Kulke <magnuskulke@linux.microsoft.com>, qemu-devel@nongnu.org
+Cc: Wei Liu <wei.liu@kernel.org>, Zhao Liu <zhao1.liu@intel.com>,
+ Wei Liu <liuwe@microsoft.com>, Magnus Kulke <magnuskulke@microsoft.com>
+References: <20260416121116.527927-1-magnuskulke@linux.microsoft.com>
+ <20260416121116.527927-7-magnuskulke@linux.microsoft.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=pbonzini@redhat.com; keydata=
+ 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
+In-Reply-To: <20260416121116.527927-7-magnuskulke@linux.microsoft.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+X-Spam_score_int: 8
+X-Spam_score: 0.8
+X-Spam_bar: /
+X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,76 +123,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 4/16/26 14:11, Magnus Kulke wrote:
+> We implement mshv_get_supported_cpuid() and invoke it in
+> x86_cpu_get_supported_feature_word() retrieve the cpu features that the
+> host is supporting. Initially we mask the virtualization capabilitities
+> potentially we might need to mask more in the future.
 
---78rTaFhkzbaqydzB
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Hopefully not - the difference between what the host and the guest 
+support is not something that QEMU can know.
 
-On Thu, Jun 25, 2026 at 07:06:26AM +0800, Zhang Chen wrote:
-> On Thu, Jun 25, 2026 at 2:33=E2=80=AFAM Stefan Hajnoczi <stefanha@redhat.=
-com> wrote:
-> >
-> > On Wed, Jun 24, 2026 at 03:08:39PM +0800, Zhang Chen wrote:
-> > > Users currently lack visibility into which block exports
-> > > are utilizing specific IOThreads. This patch integrates IOThread
-> > > referencing into the BlockExport lifecycle.
-> > >
-> > > - Add iothreads array and holder_name to BlockExport struct.
-> > > - Use iothread_ref_and_get_aio_context during export creation.
-> > > - Implement proper cleanup in blk_exp_add fail path and blk_exp_delet=
-e_bh.
-> > > - Support both single and multi-iothread export configurations.
-> > >
-> > > This ensures IOThread 'holders' status correctly reflects active block
-> > > exports for better debugging and resource tracking.
-> > >
-> > > Signed-off-by: Zhang Chen <zhangckid@gmail.com>
-> > > ---
-> > >  block/export/export.c  | 63 ++++++++++++++++++++++++++++++++++++----=
---
-> > >  include/block/export.h |  6 ++++
-> > >  2 files changed, 60 insertions(+), 9 deletions(-)
-> >
-> > If AI was used to generate this patch series, please see QEMU's AI
-> > policy:
-> > https://www.qemu.org/docs/master/devel/code-provenance.html#use-of-ai-g=
-enerated-content
-> >
-> > This feels like AI generated code in that it is verbose and has lots of
-> > structure (e.g. commit messages that look like an AI summary of the code
-> > change), but the details are not correct (misleading comments, leaks,
-> > etc).
-> >
-> > I will pause my review at this patch and wait for your response.
->=20
-> I used the AI for parts of commit messages.
-> Please continue to review code parts and skip the commit message parts,
-> I will remove all AI-generated commit messages in next version.
->=20
-> Sorry, I just noticed the discussion:
-> [PATCH v2] docs/devel: relax policy on AI-generated contributions
+Apart from that, there's nothing that stands out so I'm applying the series.
 
-By the way, the existing policy already allows using AI for code review.
-I recommend doing this before sending patches.
-
-Stefan
-
---78rTaFhkzbaqydzB
-Content-Type: application/pgp-signature; name=signature.asc
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmo9RjgACgkQnKSrs4Gr
-c8jaGgf/Xt0I5bzK6R6TDK8vkNI2R+n3PANEIgRPBzwp/S9afYynBxilnJ9f3d+8
-qBK95OOQOaal5B7UessnjyespZq81tBINgqOTx5PZOL+DtMYUMIYA8RFEpJZwmFe
-ixoocnhY4A+NB4Sjr7UDKLc01FUdTG5sK0hmCDx5Iml5+Kun7IHz/G/dddQkNqYl
-8ASPJWKO3FXY7GmcUo3PdZpwOpQ7mDb2QP5Z8l9pzEfsZo49afmIQ9dHT9EaCp4t
-pTjBhJI8HY0fm7d364Pc0/0pJjgbbZ4gZgWnYbC5BUad1g3DgHyK+DeaWbRawwyz
-HcEAv3jwng1fkL6afA9R8XqPPwP0eA==
-=3L/S
------END PGP SIGNATURE-----
-
---78rTaFhkzbaqydzB--
+Paolo
 
 
