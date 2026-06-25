@@ -4,92 +4,147 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34378CDE002
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jun 2026 16:20:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C7B9CDE000
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jun 2026 16:30:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcmo4-0005pp-LP; Thu, 25 Jun 2026 12:20:00 -0400
+	id 1wcmxZ-000143-2p; Thu, 25 Jun 2026 12:29:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wcmo3-0005pR-HF
- for qemu-devel@nongnu.org; Thu, 25 Jun 2026 12:19:59 -0400
-Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wcmo1-0003qo-GT
- for qemu-devel@nongnu.org; Thu, 25 Jun 2026 12:19:59 -0400
-Received: by mail-wr1-x436.google.com with SMTP id
- ffacd0b85a97d-46cbf263113so1955420f8f.1
- for <qemu-devel@nongnu.org>; Thu, 25 Jun 2026 09:19:56 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
+ id 1wcmxX-00013n-PO
+ for qemu-devel@nongnu.org; Thu, 25 Jun 2026 12:29:47 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
+ id 1wcmxV-000558-S8
+ for qemu-devel@nongnu.org; Thu, 25 Jun 2026 12:29:47 -0400
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 65PFdvja2510949
+ for <qemu-devel@nongnu.org>; Thu, 25 Jun 2026 16:29:43 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ frOH9uM9RUyqGUjmnClzsXZKSWUDl1YsRr58UHTvyPk=; b=mkpsmh6OdAo+iCMs
+ Ur5XzkZcHGi/pXshVgRdqf8PBcOMdE3nJo5MeMxR+IKDz0TmaCxFbeTUlwl5ndRQ
+ LjT2SD7P5J34hl19Lh6AsFl3PdLZU1vBGfSDQ6J3svSi3/OhJfPw8aVFMueQbcBw
+ Y0w2f2rOllp1RCfam5y2tbmOrDiXwoX3pUalyJOQzUAddVCKG/NnEMCGT17NOLQR
+ 5I/28oqoZ3pjxsJ+gzixhZqbulRRrGlsuPDSB+PESRFnwgOo0DyI21CbpYGVW4aF
+ +NI+IPLzQInQGE9aq1XOoAzSHxeMkdtz5tEpAm7vfdB5OLbFBNMFNGV+no/7ADQj
+ E/ZqRw==
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
+ [209.85.222.198])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4f16jg8cq4-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Thu, 25 Jun 2026 16:29:43 +0000 (GMT)
+Received: by mail-qk1-f198.google.com with SMTP id
+ af79cd13be357-91579011fd1so9880285a.1
+ for <qemu-devel@nongnu.org>; Thu, 25 Jun 2026 09:29:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1782404395; x=1783009195; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Bj7X5I6CCUGv3cEHugrfroZPva44IefEq//8zcmRGsA=;
- b=zAqsaSChpIK6QL3SC9rGcTHyAWqUEFaxFWlpl8o9ccA8uk+S4q8xNBLOfyBDwAIOfa
- AN0fFVFXB5YfPw2OvE0zLlixLd0y8yJaAOq/Ej66bRdEHOlFDEQSDPDaHtXFWBDjgizf
- MPSQ4eC2xsVZnISEbuubVEoeGf/QqmN5hTCIgYGt5SfbEURSOuPAYPi9zi6qXIYuknmT
- SoGzfyziicOryoQAfEXIhHyNKZyKGecYV8d0YGF4ywn6kxLPRads7wyQetQLRargMaCi
- ri7B3/zkC6WWtrTY/s271BHA3Vn84zxN7gx/ZLrRInteCHpWU/JoKNjuZhuMqvU6r+5w
- cr1w==
+ d=oss.qualcomm.com; s=google; t=1782404982; x=1783009782; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=frOH9uM9RUyqGUjmnClzsXZKSWUDl1YsRr58UHTvyPk=;
+ b=QFktQS7RTeOxDMUY+5jeSyMTF0ySLM6BaE6RQJik3TC6gYz8uLI2dGZDHYQcNUqlYq
+ FIu7dNZ+CfYK7fR16p/G6Mwrz9aW7QOmS3fSfyI95nKuq846zZj2U+fIXaQcYZKz+Ux8
+ 6He91HMjai5pqux788WmiTNBHX8qg8T5o1BSE/r0ZRHgFB/6tWvF9aNHYkJ8tutc4l1n
+ X7tbDxZZjQe6zLlzLnrz3f5h/7A1FrAyPl7mJW/w4JSKLVAvyA4u9DNGBa3BNWCBxoPn
+ EYXU9u6xcW2qNiA4Oa8q36dWjidAPJn1w1uielyFJ0D9/HPmTgageZSuGpT2Gt4g7P7x
+ btYQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782404395; x=1783009195;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Bj7X5I6CCUGv3cEHugrfroZPva44IefEq//8zcmRGsA=;
- b=UaXw1t0X6Y8vo/5oBxNSN/Y78vsxj4qU+ykmxZrh3zYEHhcr4ZDQ3arQpDzZJzahAp
- 8KOkbzAs5mzl7t10TZtkcus4yuT/pv39liSC5q0DGfUSCUHE5R/iCkpPh/KtYTMN5pLn
- mYZblLVknN9wNzWhm8FoW+gpfO2G7wdzhW+VnIVx08NBEBgrex1nr7MalscD9F02oRFW
- 51n9VwNKo7wSjrJOCyukDHvrXf3nhiZmPt/sbr5QmVUXdLxTBg1fC/K22MDBai/xXPFS
- mq0udgRkkaVo8f21owSg/f3r/ghs0QBENeh/ktCaVYCm0yLZJRrcmFpjxAFoRtEvvLhf
- Q5zA==
-X-Gm-Message-State: AOJu0YzIT+p3k5iy9MC+pulePMaWCmbIX+ruizIOkYrzJ5UJvtkpjbKh
- mDIUZIFSaeKFrEMacOa1YQ5SS21E0vLOzd2TEupUBdqoFfL3NIAd2OickPiTz1WXCBk=
-X-Gm-Gg: AfdE7cmDqqOTI1/bWFCa3xopVkeWUasR+kwhDYFnvX7xlSNyyElVKZCU3KsSFV3CkSV
- +bdGQe6jdczeAwNA27fq+AoQoTkNwBtnQK4W6F1lb21u3FNGa9/CTS6HFhyeYsB+51E2RoizcJB
- eQtNQ0wEBqmfqJ/No538i8INRU/9wut1fhAm/x7fkVXwrzicpPCF6QH+i3gLb8BcfopfiCQgLZ8
- F4FnrkEg5XhBz8lM1fxrd6JYtStxhjWTaNPf8RWBRG0DCbCJIep8zOmOkhBJ4SXG8BYSGfymSl1
- UTk6bMq8Rr1+s2+ikqofs8XJjF9UYixLQh15/0W4Tbp5Nf7CsphG18XT5J/R/R9TeZ73+rtY8Ug
- a3qdjX39B1tO9lxDmeQIFLfIrYW7Yw+Pf5SH01aYckNjys4JWaLZhe/e+yQ4WsCVbkzxqdKyxGk
- erOqN+sT1isRuA
-X-Received: by 2002:a05:6000:461a:b0:46d:a16b:d21 with SMTP id
- ffacd0b85a97d-46dc1aa69b1mr4572281f8f.39.1782404395481; 
- Thu, 25 Jun 2026 09:19:55 -0700 (PDT)
-Received: from draig.lan ([185.124.0.195]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-46dc10e8f3bsm7721356f8f.2.2026.06.25.09.19.54
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 25 Jun 2026 09:19:54 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id C85BF5F8E5;
- Thu, 25 Jun 2026 17:19:53 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Jim MacArthur <jim.macarthur@linaro.org>
-Cc: qemu-devel@nongnu.org,  Peter Maydell <peter.maydell@linaro.org>,
- qemu-arm@nongnu.org,  Richard Henderson <richard.henderson@linaro.org>
-Subject: Re: [PATCH v2 1/6] target/arm/tcg: Implement new instructions for
- FPRCVT
-In-Reply-To: <20260624-jmac-fprcvt-v2-1-dc6cf8e512b6@linaro.org> (Jim
- MacArthur's message of "Wed, 24 Jun 2026 14:37:25 +0100")
-References: <20260624-jmac-fprcvt-v2-0-dc6cf8e512b6@linaro.org>
- <20260624-jmac-fprcvt-v2-1-dc6cf8e512b6@linaro.org>
-User-Agent: mu4e 1.14.2; emacs 30.1
-Date: Thu, 25 Jun 2026 17:19:53 +0100
-Message-ID: <87y0g2h9sm.fsf@draig.linaro.org>
+ d=1e100.net; s=20251104; t=1782404982; x=1783009782;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=frOH9uM9RUyqGUjmnClzsXZKSWUDl1YsRr58UHTvyPk=;
+ b=SNxUT08ZnQ73ud7CNDv57/94cvYyJ7AsQG7PyldEA9+lDHK7/EBCCw7CFLRfhBFKbZ
+ 9UMtUiF2soueakDP7gQNKy4TGeB/EoCM2qWf3kYotTO7/qBJDPPmcPmbGD7b/K7gGOe0
+ k2cmTW0UYUBUJ9z7azWBtf2wVtFm6L+o1pZETX0C5ZXHkKYZoSkle9RHzPDmHKVmP10a
+ SAcv9J9QYHjcrIbqJtVaDmB+uHAIRkHlLYi5LJkb2RhiWxxDQVCR5exsKCeIljc/9QWO
+ Cu0/IyDicB0SJngJidt8CEcNi/vpR9WsU3El43cscQVKTRsDyOgtg3T6WSbxXTj6FnOG
+ EmPg==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ+1PdX7OdGuDfC0Hkl2qFLuQxA2vbI3QeTNwOaWrYv6wEou27+bTQhs8pfXzs9k/cL1GCor85f4bJnU@nongnu.org
+X-Gm-Message-State: AOJu0YxkbOej5Vg+Zxlp1jGgu+LHuOJ44+xCj0oB+dzCNnMCjMeaV3W5
+ EXsFYYIFHc0V3hfh5ISiZ31NZCFfXuiFda8auJ8t9JowdcDstGdSPQS7nhgG9CY9n1IO3cnlr7F
+ EwpgjuflfGZScVtn1PhlfzSmO79zBa9w2Fpr84KzIzuZr1ASDr0pxUhrzYA==
+X-Gm-Gg: AfdE7ckuS2lRpisa1a1za9WpgIbMWGp0cc7SF2V+jypuFXyylJA8IGmRirwqdj5STv6
+ Xp77wCA49cdk/Wbi6mz9E9Yc471GtvH31XTz9oAeYJyp86s09lQq+WWOskDTg1UXf+B3IXhegGk
+ JgLH3V0DI159hyTwhrxBH8bKGFRV9h2SvB530LHugFIHY0gUyj0XrbnliuUN+bxQQh8Z3jbfSZT
+ CglFhvNVrjw1ekrBcmr4Cskc4rhlhmwPPhowcrQG3dhQF2JQJ92KFdv3RmbrInOljva7dSMzqD2
+ DgnehF3hH8mrEcG8NYjcZeTRr2ZDX4TbcEqecoPKoLYbl2C0dnPZQXyosNH0RLEuOgXOkClgcxG
+ +ehlL6waG0XJzAr1ro8KOE48MFf1TQU3zd86w9j1mtS1S
+X-Received: by 2002:a05:620a:318e:b0:915:9051:ba2 with SMTP id
+ af79cd13be357-9293ddaeba9mr476274685a.49.1782404982535; 
+ Thu, 25 Jun 2026 09:29:42 -0700 (PDT)
+X-Received: by 2002:a05:620a:318e:b0:915:9051:ba2 with SMTP id
+ af79cd13be357-9293ddaeba9mr476265685a.49.1782404981868; 
+ Thu, 25 Jun 2026 09:29:41 -0700 (PDT)
+Received: from [192.168.68.103] ([189.79.21.40])
+ by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-925fa56463dsm874621085a.0.2026.06.25.09.29.39
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 25 Jun 2026 09:29:41 -0700 (PDT)
+Message-ID: <18878720-7dd1-4463-9a42-e4b91cfcfaf6@oss.qualcomm.com>
+Date: Thu, 25 Jun 2026 13:29:37 -0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::436;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x436.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] target/riscv: Report QEMU CPU archid as 42
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Charlie Jenkins <thecharlesjenkins@gmail.com>, qemu-devel@nongnu.org
+Cc: Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, Weiwei Li
+ <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Chao Liu <chao.liu.zevorn@gmail.com>,
+ Atish Patra <atish.patra@linux.dev>, qemu-riscv@nongnu.org
+References: <20260624-marchid-v1-1-a0af7997071f@gmail.com>
+ <15e2ffbd-cb14-4767-ab56-e647fdc38b15@oss.qualcomm.com>
+ <88192e79-65af-4c91-9824-99dc810c7cd0@oss.qualcomm.com>
+From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <88192e79-65af-4c91-9824-99dc810c7cd0@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNjI1MDE0MSBTYWx0ZWRfX6gqYD19jAdyZ
+ ezrmk9551OWvLWjgnT7Hr0sxsokEx+Fnxrtt8/z+5R8eT0Z4/hXz8deW/zlnoJUMwtsNWeAeMIh
+ iXXH3Mx17u8ErgLgWMjHVR+e+7N14grZrs4OrI8incMxURp70+hwjFVb0aspVoqMQlyA/LUicG3
+ +r4X9/BYPiHhjfzxyVDwC8y12oWty4qfbaSVy7ON+tlARPGiQLI612tJcpxX2y03jnyvP/9NVqc
+ YS+qmio6+abr8GRgd3CzUqdgYc0qz8X2oiSSmStKLObl66FXQidIs5MhGVHBF/TBSnSXOx41p3F
+ lvKIdEXRGoL3f9pqciVXmtTyqe71OIdv14y1eGI0ghRpee16ztiok8YF1r5rz2RYzcVDghIYVeu
+ UTbGBA86otmQbU6JCl3S7ry9auUGfncCXGmVt0X+cv4tT/7tpCD8AAPfsm5NQvHsCX8fKDPlWnz
+ dwJ22eJzqdhYML7upXw==
+X-Proofpoint-ORIG-GUID: 1GsHPrt_e1MuN_3_tvq_ZYxwtSG8Qi60
+X-Proofpoint-Spam-Info: AW1haW4tMjYwNjI1MDE0MSBTYWx0ZWRfX+A2JhQ/kNx5z
+ RxuwnjaB34f8IvaHbk1A5lW4c2Y8YNHiKIpBgNr4+uhoOllHEF+FqCV8Sc2N9WvdAyLlPvGKwUJ
+ ZDOYeMqFRjxiJKUwCr3iuHpa4UojAiE=
+X-Authority-Analysis: v=2.4 cv=daqwG3Xe c=1 sm=1 tr=0 ts=6a3d5777 cx=c_pps
+ a=qKBjSQ1v91RyAK45QCPf5w==:117 a=sHJf4AwOIoU3qjeHFPlg6Q==:17
+ a=IkcTkHD0fZMA:10 a=FelO9ux0wxsA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22
+ a=xvfqbYfxAAAA:20 a=VwQbUJbxAAAA:8 a=pGLkceISAAAA:8 a=h0uksLzaAAAA:8
+ a=CtIvD7FJ-Gc6_f__wLwA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=NFOGd7dJGGMPyQGDc5-O:22 a=MSi_79tMYmZZG2gvAgS0:22 a=bA3UWDv6hWIuX7UZL3qL:22
+X-Proofpoint-GUID: 1GsHPrt_e1MuN_3_tvq_ZYxwtSG8Qi60
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-06-25_02,2026-06-24_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 clxscore=1015 priorityscore=1501 impostorscore=0 suspectscore=0
+ bulkscore=0 adultscore=0 phishscore=0 malwarescore=0 lowpriorityscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2606150000 definitions=main-2606250141
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -106,192 +161,154 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Jim MacArthur <jim.macarthur@linaro.org> writes:
 
-> Adds the opcode format for the SIMD versions of FCVTXX and [US]CVTF.
-> These use very similar logic to the FP-to-general and general-to-FP
-> register versions which exist, but use another SIMD/FP register
-> as source or destination. The source and destination size rules are
-> slightly different.
->
-> Signed-off-by: Jim MacArthur <jim.macarthur@linaro.org>
-> ---
->  target/arm/cpu-features.h      |  5 +++
->  target/arm/tcg/a64.decode      | 15 +++++++++
->  target/arm/tcg/translate-a64.c | 71 ++++++++++++++++++++++++++++++++++++=
-+-----
->  3 files changed, 83 insertions(+), 8 deletions(-)
->
-> diff --git a/target/arm/cpu-features.h b/target/arm/cpu-features.h
-> index a80b251589..aba95f4253 100644
-> --- a/target/arm/cpu-features.h
-> +++ b/target/arm/cpu-features.h
-> @@ -1665,6 +1665,11 @@ static inline bool isar_feature_aa64_f8mm4(const A=
-RMISARegisters *id)
->      return FIELD_EX64_IDREG(id, ID_AA64FPFR0, F8MM4);
->  }
->=20=20
-> +static inline bool isar_feature_aa64_fprcvt(const ARMISARegisters *id)
-> +{
-> +    return FIELD_EX64_IDREG(id, ID_AA64ISAR3, FPRCVT);
-> +}
-> +
->  /*
->   * Combinations of feature tests, for ease of use with TRANS_FEAT.
->   */
-> diff --git a/target/arm/tcg/a64.decode b/target/arm/tcg/a64.decode
-> index 28cd1faf61..5b6f156d08 100644
-> --- a/target/arm/tcg/a64.decode
-> +++ b/target/arm/tcg/a64.decode
-> @@ -1456,6 +1456,21 @@ FCVTZU_g        . 0011110 .. 111001 000000 ..... .=
-....  @icvt
->  FCVTAS_g        . 0011110 .. 100100 000000 ..... .....  @icvt
->  FCVTAU_g        . 0011110 .. 100101 000000 ..... .....  @icvt
->=20=20
-> +# Conversion between floating-point and integer (SIMD & FP)
-> +SCVTF_simd      . 0011110 .. 111100 000000 ..... .....  @icvt
-> +UCVTF_simd      . 0011110 .. 111101 000000 ..... .....  @icvt
-> +
-> +FCVTAS_g_simd   . 0011110 .. 111010 000000 ..... .....  @icvt
-> +FCVTAU_g_simd   . 0011110 .. 111011 000000 ..... .....  @icvt
-> +FCVTMS_g_simd   . 0011110 .. 110100 000000 ..... .....  @icvt
-> +FCVTMU_g_simd   . 0011110 .. 110101 000000 ..... .....  @icvt
-> +FCVTNS_g_simd   . 0011110 .. 101010 000000 ..... .....  @icvt
-> +FCVTNU_g_simd   . 0011110 .. 101011 000000 ..... .....  @icvt
-> +FCVTPS_g_simd   . 0011110 .. 110010 000000 ..... .....  @icvt
-> +FCVTPU_g_simd   . 0011110 .. 110011 000000 ..... .....  @icvt
-> +FCVTZS_g_simd   . 0011110 .. 110110 000000 ..... .....  @icvt
-> +FCVTZU_g_simd   . 0011110 .. 110111 000000 ..... .....  @icvt
-> +
->  FJCVTZS         0 0011110 01 111110 000000 ..... .....  @rr
->=20=20
->  FMOV_ws         0 0011110 00 100110 000000 ..... .....  @rr
-> diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a6=
-4.c
-> index 227719ef25..07f985a5f0 100644
-> --- a/target/arm/tcg/translate-a64.c
-> +++ b/target/arm/tcg/translate-a64.c
-> @@ -9905,12 +9905,14 @@ TRANS(SCVTF_g, do_cvtf_g, a, true)
->  TRANS(UCVTF_g, do_cvtf_g, a, false)
->=20=20
->  /*
-> - * [US]CVTF (vector), scalar version.
-> - * Which sounds weird, but really just means input from fp register
-> + * [US]CVTF (vector), scalar or SIMD version.
-> + * Which sounds weird, but really just means input from FP/SIMD register
->   * instead of input from general register.  Input and output element
-> - * size are always equal.
-> + * size are always equal for the scalar version and different for the
-> + * SIMD version.
->   */
-> -static bool do_cvtf_f(DisasContext *s, arg_fcvt *a, bool is_signed)
-> +static bool do_cvtf_f(DisasContext *s, arg_fcvt *a, MemOp src_mop_int,
-> +                      bool is_signed)
->  {
->      TCGv_i64 tcg_int;
->      int check =3D fp_access_check_scalar_hsd(s, a->esz);
-> @@ -9918,14 +9920,18 @@ static bool do_cvtf_f(DisasContext *s, arg_fcvt *=
-a, bool is_signed)
->      if (check <=3D 0) {
->          return check =3D=3D 0;
->      }
-> -
->      tcg_int =3D tcg_temp_new_i64();
-> -    read_vec_element(s, tcg_int, a->rn, 0, a->esz | (is_signed ? MO_SIGN=
- : 0));
-> +    read_vec_element(s, tcg_int, a->rn, 0,
-> +                     src_mop_int | (is_signed ? MO_SIGN : 0));
->      return do_cvtf_scalar(s, a->esz, a->rd, a->shift, tcg_int, is_signed=
-);
->  }
->=20=20
-> -TRANS(SCVTF_f, do_cvtf_f, a, true)
-> -TRANS(UCVTF_f, do_cvtf_f, a, false)
-> +TRANS(SCVTF_f, do_cvtf_f, a, a->esz, true)
-> +TRANS(UCVTF_f, do_cvtf_f, a, a->esz, false)
-> +TRANS_FEAT(SCVTF_simd, aa64_fprcvt, do_cvtf_f, a,
-> +           a->sf ? MO_64 : MO_32, true)
-> +TRANS_FEAT(UCVTF_simd, aa64_fprcvt, do_cvtf_f, a,
-> +           a->sf ? MO_64 : MO_32, false)
->=20=20
->  static void do_fcvt_scalar(DisasContext *s, MemOp out, MemOp esz,
->                             TCGv_i64 tcg_out, int shift, int rn,
-> @@ -10044,6 +10050,34 @@ static bool do_fcvt_g(DisasContext *s, arg_fcvt =
-*a,
->      return true;
->  }
->=20=20
-> +/*
-> + * Floating point to int conversion, but puts the result
-> + * in a SIMD register.
-> + */
-> +static bool do_fcvt_simd(DisasContext *s, arg_fcvt *a,
-> +                      ARMFPRounding rmode, bool is_signed)
-> +{
-> +    TCGv_i64 tcg_int;
-> +    int check =3D fp_access_check_scalar_hsd(s, a->esz);
-> +
 
-I did test with:
+On 6/25/2026 12:10 PM, Philippe Mathieu-Daudé wrote:
+> Hi,
+> 
+> On 25/6/26 14:13, Daniel Henrique Barboza wrote:
+>> Hi,
+>>
+>> On 6/25/2026 3:26 AM, Charlie Jenkins wrote:
+>>> When a non-vendor CPU is used, report the archid as 42 which has been
+>>> allocated for QEMU in the riscv isa manual [1]. This can help software
+>>> check if it is running in QEMU.
+>>>
+>>> [1] https://github.com/riscv/riscv-isa-manual/blob/main/marchid.md
+>>>
+>>> Signed-off-by: Charlie Jenkins <thecharlesjenkins@gmail.com>
+>>> ---
+>>> This series was original proposed by Palmer Dabbelt [1] with a follow up
+>>> by Daniel Henrique Barboza. This patch implement's Daniel's suggestion.
+>>>
+>>> When booting with a non-vendor CPU such as with the qemu arg "-cpu rv64"
+>>> marchid will now be reported as 42.
+>>>
+>>>> qemu-system-riscv64 ... -cpu rv64
+>>>
+>>> processor       : 0
+>>> hart            : 0
+>>> isa             : rv64imafdch_zicbom_zicbop_zicboz_ziccrse_zicntr_zicsr_zifencei_zihintntl_zihintpause_zihpm_zaamo_zalrsc_zawrs_zfa_zca_zcd_zba_zbb_zbc_zbs_sstc_svadu_svvptc
+>>> mmu             : sv57
+>>> mvendorid       : 0x0
+>>> marchid         : 0x2a
+>>> mimpid          : 0x0
+>>> hart isa        : rv64imafdch_zicbom_zicbop_zicboz_ziccrse_zicntr_zicsr_zifencei_zihintntl_zihintpause_zihpm_zaamo_zalrsc_zawrs_zfa_zca_zcd_zba_zbb_zbc_zbs_sstc_svadu_svvptc
+>>>
+>>> When booting with a vendor CPU like veyron-v1, the proper marchid will
+>>> still appear.
+>>>
+>>>> qemu-system-riscv64 ... -cpu veyron-v1
+>>>
+>>> processor       : 0
+>>> hart            : 0
+>>> isa             : rv64imafdch_zicbom_zicboz_ziccrse_zicntr_zicsr_zifencei_zihpm_zaamo_zalrsc_zca_zcd_zba_zbb_zbc_zbs_smaia_smstateen_ssaia_sscofpmf_sstc_svinval_svnapot_svpbmt
+>>> mmu             : sv48
+>>> mvendorid       : 0x61f
+>>> marchid         : 0x8000000000010000
+>>> mimpid          : 0x111
+>>> hart isa        : rv64imafdch_zicbom_zicboz_ziccrse_zicntr_zicsr_zifencei_zihpm_zaamo_zalrsc_zca_zcd_zba_zbb_zbc_zbs_smaia_smstateen_ssaia_sscofpmf_sstc_svinval_svnapot_svpbmt
+>>>
+>>> [1] https://lore.kernel.org/all/20240131182430.20174-1- palmer@rivosinc.com/
+>>
+>> Thanks for linking the discussion.  I have but a vague memory of it and the link
+>> helped.
+>>
+>>
+>>> ---
+>>>   target/riscv/cpu.c | 9 +++++++++
+>>>   1 file changed, 9 insertions(+)
+>>>
+>>> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+>>> index fa497e5e8a..59d63f82c2 100644
+>>> --- a/target/riscv/cpu.c
+>>> +++ b/target/riscv/cpu.c
+>>> @@ -44,6 +44,9 @@
+>>>   #endif
+>>>   /* RISC-V CPU definitions */
+>>> +#define RISCV_CPU_MVENDORID 0
+>>> +#define RISCV_CPU_MARCHID 42
+> 
+> Worth adding a comment (possibly linking to the previous URL)
+> making explicit this is an assigned number and not the answer
+> for the ultimate question of life, the universe, and everything.
 
-  g_assert(s->is_nonstreaming =3D=3D false);
+Don't forget to thank for all the fish!
 
-which shows trans_FAIL or aarch64_tr_translate_insn setting had done
-whatever it was supposed to.
+> 
+>>> +#define RISCV_CPU_MIMPID 0
+>>>   static const char riscv_single_letter_exts[] = "IEMAFDQCBPVH";
+>>>   const uint32_t misa_bits[] = {RVI, RVE, RVM, RVA, RVF, RVD, RVV,
+>>>                                 RVC, RVS, RVU, RVH, RVG, RVB, 0};
+>>> @@ -1198,6 +1201,12 @@ static void riscv_cpu_init(Object *obj)
+>>>       }
+>>>   #endif
+>>> +    if (!riscv_cpu_is_vendor(obj)) {
+>>> +        RISCV_CPU(obj)->cfg.mvendorid = RISCV_CPU_MVENDORID;
+>>> +        RISCV_CPU(obj)->cfg.marchid = RISCV_CPU_MARCHID;
+>>> +        RISCV_CPU(obj)->cfg.mimpid = RISCV_CPU_MIMPID;
+>>> +    }
+>>> +
+>>
+>> Two things:
+>>
+>> - we have a 'cpu' pointer at the start so you can use cpu->cfg... instead;
+> 
+> Yep, cleaner.
+> 
+>>
+>> - the "cpu_is_vendor" check shouldn't be needed.  Whatever is set as default during
+>> cpu_init() must be overwritten by CPUDef settings done in each DEFINE_RISCV_CPU()
+>> macro.
+>>
+>> This happens at this point:
+>>
+>>
+>>      env->misa_ext_mask = env->misa_ext = mcc->def->misa_ext;
+>>      riscv_cpu_cfg_merge(&cpu->cfg, &mcc->def->cfg);  <================
+>>
+>> Therefore we can remove the "cpu_is_vendor" check and just assign the default QEMU IDs
+>> as long as we do it before cpu_cfg_merge(e.g. right after "cpu-  >cfg.max_satp_mode = -1;").
+>> If we do that we'll ensure that all CPUs will carry the RVI archid 42 unless told otherwise
+>> by the CPU definition.
+>>
+>> Yes, this will end up changing the IDs for vendor CPUs that don't set their own IDs.  This is
+>> fine - if the CPU doesn't bother setting its own ID this means that the CPU is perfectly
+>> fine with whatever default ID QEMU will provide.
+> 
+> Should we check for unset marchid and warn or even not accept config
+> with this field unset?
 
-> +    if (check <=3D 0) {
-> +        return check =3D=3D 0;
-> +    }
-> +    /*
-> +     * a->sf should specify destination size (64 bit or 32 bit)
-> +     * a->esz specifies source size
-> +     */
-> +    tcg_int =3D tcg_temp_new_i64();
-> +    do_fcvt_scalar(s, (a->sf ? MO_64 : MO_32) | (is_signed ? MO_SIGN : 0=
-),
-> +                   a->esz, tcg_int, a->shift, a->rn, rmode);
-> +
-> +    if (!s->fpcr_nep) {
-> +        clear_vec(s, a->rd);
-> +    }
-> +    write_vec_element(s, tcg_int, a->rd, 0, (a->sf ? MO_64 : MO_32));
-> +    return true;
-> +}
-> +
->  TRANS(FCVTNS_g, do_fcvt_g, a, FPROUNDING_TIEEVEN, true)
->  TRANS(FCVTNU_g, do_fcvt_g, a, FPROUNDING_TIEEVEN, false)
->  TRANS(FCVTPS_g, do_fcvt_g, a, FPROUNDING_POSINF, true)
-> @@ -10055,6 +10089,27 @@ TRANS(FCVTZU_g, do_fcvt_g, a, FPROUNDING_ZERO, f=
-alse)
->  TRANS(FCVTAS_g, do_fcvt_g, a, FPROUNDING_TIEAWAY, true)
->  TRANS(FCVTAU_g, do_fcvt_g, a, FPROUNDING_TIEAWAY, false)
->=20=20
-> +TRANS_FEAT(FCVTNS_g_simd, aa64_fprcvt, do_fcvt_simd, a,
-> +           FPROUNDING_TIEEVEN, true)
-> +TRANS_FEAT(FCVTNU_g_simd, aa64_fprcvt, do_fcvt_simd, a,
-> +           FPROUNDING_TIEEVEN, false)
-> +TRANS_FEAT(FCVTPS_g_simd, aa64_fprcvt, do_fcvt_simd, a,
-> +           FPROUNDING_POSINF, true)
-> +TRANS_FEAT(FCVTPU_g_simd, aa64_fprcvt, do_fcvt_simd, a,
-> +           FPROUNDING_POSINF, false)
-> +TRANS_FEAT(FCVTMS_g_simd, aa64_fprcvt, do_fcvt_simd, a,
-> +           FPROUNDING_NEGINF, true)
-> +TRANS_FEAT(FCVTMU_g_simd, aa64_fprcvt, do_fcvt_simd, a,
-> +           FPROUNDING_NEGINF, false)
-> +TRANS_FEAT(FCVTZS_g_simd, aa64_fprcvt, do_fcvt_simd, a,
-> +           FPROUNDING_ZERO, true)
-> +TRANS_FEAT(FCVTZU_g_simd, aa64_fprcvt, do_fcvt_simd, a,
-> +           FPROUNDING_ZERO, false)
-> +TRANS_FEAT(FCVTAS_g_simd, aa64_fprcvt, do_fcvt_simd, a,
-> +           FPROUNDING_TIEAWAY, true)
-> +TRANS_FEAT(FCVTAU_g_simd, aa64_fprcvt, do_fcvt_simd, a,
-> +           FPROUNDING_TIEAWAY, false)
-> +
->  /*
->   * FCVT* (vector), scalar version.
->   * Which sounds weird, but really just means output to fp register
+Hmmm maybe we can adopt a new policy where new CPUs must have an explicit
+ID set, even if zero, to be clear that the CPU doesn't care about the
+field.  But I wouldn't bother about existing vendor CPUs that doesn't set
+mvendorid TBH ... people will most likely complain about existing CPUs
+throwing warnings that they weren't throwing before.
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+
+Cheers,
+Daniel
+
+> 
+>>
+>>
+>> Thanks,
+>> Daniel
+>>
+>>
+>>>       accel_cpu_instance_init(CPU(obj));
+>>>   }
+>>>
+>>> ---
+>>> base-commit: b83371668192a705b878e909c5ae9c1233cbd5fb
+>>> change-id: 20260624-marchid-80d176b873d8
+>>>
+>>> Best regards,
+>>> -- 
+>>> - Charlie
+>>>
+>>
+>>
+> 
+
 
