@@ -4,86 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0113CDB47F
-	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jun 2026 08:17:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0543CCDB466
+	for <qemu-devel@archiver.kernel.org>; Thu, 25 Jun 2026 08:34:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wcfG8-0007Br-4o; Thu, 25 Jun 2026 04:16:28 -0400
+	id 1wcfWe-0003Zr-Cy; Thu, 25 Jun 2026 04:33:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <suunj1331@gmail.com>)
- id 1wcfFh-00079y-GU
- for qemu-devel@nongnu.org; Thu, 25 Jun 2026 04:16:20 -0400
-Received: from mail-pg1-x534.google.com ([2607:f8b0:4864:20::534])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <suunj1331@gmail.com>)
- id 1wcfFf-0001e0-HQ
- for qemu-devel@nongnu.org; Thu, 25 Jun 2026 04:16:00 -0400
-Received: by mail-pg1-x534.google.com with SMTP id
- 41be03b00d2f7-c892a0ef503so1097174a12.2
- for <qemu-devel@nongnu.org>; Thu, 25 Jun 2026 01:15:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1782375357; x=1782980157; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=2o7sKN6n20YLRxgIgS5cX38Zxp20rf7inv0GaVmEH7A=;
- b=ld9K9fG4irz9kDSyzyvCvvvM+yf0YNPpFoM1t4KweROEHnmrvwi5B9mEKNtRSvkf8d
- HUNRWfm+a733wEzYr7vR6El0NEnr5OcukXR1p24ynrPFCSB9RGdvYemdcbuns1Tx8lkK
- Hv/DNF+WlAwHBZM649WdLskwecKKAD/ekqfx6vv2pgihjIitXpvUs0yRqv2kXgzIQfAM
- 3GESnavij5qr3bzBJ/+rLn0DCwSCx2w/Jnxpkg672/J6FY+bXpgSe8B9040Vm8yWF1+C
- L1nawFnj0Udzmv73WcV9B9MHRC22e9nYyNNUNhBlSFlmfEK7SGidYrOy0NxzFzbuwcoi
- vJtA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1782375357; x=1782980157;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=2o7sKN6n20YLRxgIgS5cX38Zxp20rf7inv0GaVmEH7A=;
- b=YEnTas0zPxaPBI7pFO4z3kjvS5FmmsWqbuUEJIQefN7pBeagBkFxxxeJJpluyJsut5
- x/+0dqevwle1s8xL3yIg+7Qqocvf8pxZMFx0b7ffKaaQz2LGXnq4+JMDRr+h1/IxJO2o
- s9B0segtUZZgTVK7uPxgPSu2hNgXdC4+V/E0UHwuR+6Bfqy8qozTxWLSMEb8ZQ9jOIiY
- cUjxASD63drfX1nIc+qSrLvhGKAuTKYkwR8U8ppkiODhf09HIpEf4yplM8cJtRXPspM9
- kONKOy/FVtrb3YyxnLOOyLe8EHbUrXH497yFsav45XIFwhaR3VO7HTnuPrT3iYCPs7wc
- 9FYg==
-X-Gm-Message-State: AOJu0YyOlH9QdE4BmDMimXp5hQ8IMlWa4KgbyoP/36Ikie8h93wrwSYC
- 7W0TEcAqVl1KnC2xNQ7BRNTvFlGdsI0a4yVE/rQok4v/0Xv2r4MobnyR4yHf/g==
-X-Gm-Gg: AfdE7cnxMLiY3rEv1hZcZe0mNrWeJ8v+sN+anP4yUSuF+px6fbaLmoHDCXFYiwcHIg1
- NeQeRGC5cuZEglhz8ILQDkK05CA9LstKs4DWwe1iUl6X4+kIu490j14ptXWSpHf2q2QQRM/3F4t
- 0RHjbsl7JoTEcy09LtD5MivF/BZ/8PmAZoV+JQGiuvNueBnKkLCUyArvB0cGYxXSOSmxQX+UO0K
- xWKgLtWRIk4iQ6kM+mCo49/ugDM11CFwTRhzkZIkxJWkUCO67T6mSEvRheNItgyyTzLYlaBB0Un
- Uk+OSgZhvDBD2KGXEcpt4nzJwGLvpqqPgxpMEKntcdaPv6Mr2OT3D9npqMJB4OWOQdyTGBP1mnH
- qQjlNzjtWCN9+y03xSltNW10RZ5RiTktQtagshz3QLDulyxw5JVzZHtESR7HRr/pv9Ewyz6elgL
- nrPEsaBMc5CsTJk1vd68hxU8vgB7XVaDBYrU3K
-X-Received: by 2002:a05:6a21:8cc7:b0:3bb:21ad:40d8 with SMTP id
- adf61e73a8af0-3bd4afac2acmr1982946637.39.1782375356831; 
- Thu, 25 Jun 2026 01:15:56 -0700 (PDT)
-Received: from fedora ([61.74.238.173]) by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-c92bc1e0d10sm1188683a12.21.2026.06.25.01.15.54
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 25 Jun 2026 01:15:56 -0700 (PDT)
-From: SeungJu Cheon <suunj1331@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, alistair.francis@wdc.com,
- liwei1518@gmail.com, daniel.barboza@oss.qualcomm.com,
- zhiwei_liu@linux.alibaba.com, chao.liu.zevorn@gmail.com,
- SeungJu Cheon <suunj1331@gmail.com>
-Subject: [PATCH v2] target/riscv: Apply UXL WARL handling to vsstatus
-Date: Thu, 25 Jun 2026 17:15:21 +0900
-Message-ID: <20260625081521.595683-1-suunj1331@gmail.com>
-X-Mailer: git-send-email 2.52.0
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wcfWL-0003Yx-OK
+ for qemu-devel@nongnu.org; Thu, 25 Jun 2026 04:33:17 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wcfWJ-0004qj-1u
+ for qemu-devel@nongnu.org; Thu, 25 Jun 2026 04:33:12 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1782376390;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=rQqNoEuB8Z87x4GVApUX90M7TlHPqfzGZvJ9FujVa2A=;
+ b=MPI9EV7LyPBDfDr77n2HfeS+s/rDOBB5SjD+f1CrxEktb+udSkjLKs5yloPZYlSvVW+dfE
+ ezzuN1enwXL792VoAczaPXp5iZ+z6ucKdR/5wbbLZPhTMFAQh/654XvdGLX8bYOWNP0RY4
+ 0xUAsgG4wgGXk1yktKPWSbQFNk4f78c=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-198-MUBvrgN4O2uRE5cgNOqcKg-1; Thu,
+ 25 Jun 2026 04:33:04 -0400
+X-MC-Unique: MUBvrgN4O2uRE5cgNOqcKg-1
+X-Mimecast-MFC-AGG-ID: MUBvrgN4O2uRE5cgNOqcKg_1782376382
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 858A1195604A; Thu, 25 Jun 2026 08:33:01 +0000 (UTC)
+Received: from redhat.com (unknown [10.44.50.47])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id EB5561955F7C; Thu, 25 Jun 2026 08:32:54 +0000 (UTC)
+Date: Thu, 25 Jun 2026 09:32:51 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Aditya Gupta <adityag@linux.ibm.com>
+Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@oss.qualcomm.com>,
+ Shivang Upadhyay <shivangu@linux.ibm.com>,
+ Sourabh Jain <sourabhjain@linux.ibm.com>,
+ Hari Bathini <hbathini@linux.ibm.com>, Nicholas Piggin <npiggin@gmail.com>,
+ Miles Glenn <milesg@linux.ibm.com>, Fabiano Rosas <farosas@suse.de>,
+ Laurent Vivier <lvivier@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, devel@lists.libvirt.org,
+ Misbah Anjum N <misanjum@linux.ibm.com>,
+ Anushree Mathur <anushree.mathur@linux.ibm.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ kvm@vger.kernel.org, Gautam Menghani <gautam@linux.ibm.com>,
+ Chinmay Rath <rathc@linux.ibm.com>
+Subject: Re: [PATCH v2 4/8] tests/functional: Use default powernv machine
+ instead of power10
+Message-ID: <ajznoPrHDJEtVGCX@redhat.com>
+References: <20260624195924.1422821-1-adityag@linux.ibm.com>
+ <20260624195924.1422821-5-adityag@linux.ibm.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::534;
- envelope-from=suunj1331@gmail.com; helo=mail-pg1-x534.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+In-Reply-To: <20260624195924.1422821-5-adityag@linux.ibm.com>
+User-Agent: Mutt/2.3.2 (2026-04-26)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 8
+X-Spam_score: 0.8
+X-Spam_bar: /
+X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.445,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,79 +100,30 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-write_mstatus() already handles the reserved UXL value by writing a
-legal value instead.
+On Thu, Jun 25, 2026 at 01:29:20AM +0530, Aditya Gupta wrote:
+> The default powernv machine has been recently changed to powernv11,
+> though fadump functional test used powernv10
+> 
+> Change it to use default 'powernv' machine for the tests instead of
+> being fixed to powernv10
+> 
+> Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
+> ---
+>  tests/functional/ppc64/test_fadump.py | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 
-Apply the same handling when writing vsstatus so that reserved UXL
-values follow the same WARL behavior.
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 
-Factor the common logic into a local helper riscv_write_uxl() and use
-it for both mstatus and vsstatus.
 
-Suggested-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Fixes: f310df58bd2 ("target/riscv: Enable uxl field write")
-Signed-off-by: SeungJu Cheon <suunj1331@gmail.com>
----
- target/riscv/csr.c | 27 +++++++++++++++++----------
- 1 file changed, 17 insertions(+), 10 deletions(-)
-
-diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-index dd9726fcf4..12f1ce5180 100644
---- a/target/riscv/csr.c
-+++ b/target/riscv/csr.c
-@@ -2012,6 +2012,20 @@ static target_ulong legalize_mpp(CPURISCVState *env, target_ulong old_mpp,
-     return val;
- }
- 
-+static uint64_t riscv_write_uxl(CPURISCVState *env, uint64_t val,
-+                                uint64_t field)
-+{
-+    RISCVMXL xl = riscv_cpu_mxl(env);
-+    uint64_t uxl = get_field(val, field);
-+
-+    if (uxl == MXL_RV128) {
-+        uxl = xl == MXL_RV128 ? MXL_RV64 : xl;
-+        val = set_field(val, field, uxl);
-+    }
-+
-+    return val;
-+}
-+
- static RISCVException write_mstatus(CPURISCVState *env, int csrno,
-                                     target_ulong val, uintptr_t ra)
- {
-@@ -2058,17 +2072,8 @@ static RISCVException write_mstatus(CPURISCVState *env, int csrno,
- 
-     if (xl != MXL_RV32 || env->debugger) {
-         if ((val & MSTATUS64_UXL) != 0) {
--            uint64_t uxl = val & MSTATUS64_UXL >> 32;
-             mask |= MSTATUS64_UXL;
--
--            /*
--             * uxl = 3 is reserved so write the current xl instead.
--             * In case xl = MXL_RV128 (3) write MXL_RV64.
--             */
--            if (uxl == 3) {
--                uxl = xl == MXL_RV128 ? MXL_RV64 : xl;
--                val = deposit64(val, 32, 2, uxl);
--            }
-+            val = riscv_write_uxl(env, val, MSTATUS64_UXL);
-         }
-     }
- 
-@@ -5226,6 +5231,8 @@ static RISCVException write_vsstatus(CPURISCVState *env, int csrno,
-     uint64_t mask = (target_ulong)-1;
-     if ((val & VSSTATUS64_UXL) == 0) {
-         mask &= ~VSSTATUS64_UXL;
-+    } else {
-+        val = riscv_write_uxl(env, val, VSSTATUS64_UXL);
-     }
-     if ((env->henvcfg & HENVCFG_DTE)) {
-         if ((val & SSTATUS_SDT) != 0) {
+With regards,
+Daniel
 -- 
-2.52.0
+|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+|: https://libvirt.org          ~~          https://entangle-photo.org :|
+|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
 
 
